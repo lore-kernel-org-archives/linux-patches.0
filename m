@@ -1,225 +1,75 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB23387574
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C5E1C4A20;
+	Mon,  2 Mar 2026 19:24:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772477197; cv=none; b=n1tWMxp9j8ejIrGwE05y3tpUo/6QcVMAlnWLzfdnvS/qCO/bA4DSm4FmBMLWJ1zxhUtX88d8tZVNHZikjsWpMGiD/KCvjmYH0EKQhuHiIIv6xV6BskrY61/KHeZjLCCNmfN1N6kFHoKIX9WiRPX2gH0SpKnRQJnbNu5ijUjyowA=
+	t=1772479457; cv=none; b=kZJ1BFiLhVJ7VoPdxYJntZQcvI8u5QLTn2SAaijOuREtmk+aHhWVdvXWF3zCFLXQLQHpQNi96U5T3d/MVBRg7WRMI0dQeBsvwxCvXSp5BAB1LqhdPZQqh5isrHSh11HQCk0NUuUrHT2Boks9Pkcf6OT9wNfB2O+YADLyD2w4RhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772477197; c=relaxed/simple;
-	bh=z+I4Oh28rTlzW4CAMClsLNIZcZbgb28hRpbqm0vRka4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+pyd049X6Y7P1nL0d+nBw2oJd4qrQo40qXsk/UFXUcP3iG3xwdDJ/mvRNlwStqMzY/rH6s7DKnOgMG1EDGqUrv2x3IlS2iS7935Xj9o3JaSnupWpUnzcQEX+xWI4MuNuqIcvmgOnUqe2bnwLTbqt2tuPQUX7ezH2oV7h4lT/14=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=S4kbU/lb; arc=none smtp.client-ip=192.198.163.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	s=arc-20240116; t=1772479457; c=relaxed/simple;
+	bh=eUqn82idSjwQqVfXkynhtMkUOLhTsl3oVSTJl5R+I+Q=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=F5fZf4OAm9UlqXhu4GVgKFTIDbGrrSrOF834Bw1YMan8fFYlNfHv04kRnnoegl7Wpxu49LNO6sF4410kj8eSGvIEMez/tuJVgcL+9ffO/u+LeMKF0Gw5gRm7FKxVdnIO1AJkkkWBu2iU6l3LuycSThrTlL7b+z2UXhF6NMt004o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tQZJfFQc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="S4kbU/lb"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772477195; x=1804013195;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=z+I4Oh28rTlzW4CAMClsLNIZcZbgb28hRpbqm0vRka4=;
-  b=S4kbU/lb803+Q475Mu/kA2FvDsZyghCJoderwHuqWUmTFMiX3w8Rz5BB
-   0K/c2DVvdJqMoujqF69d1E92ajtvhKIIR8mauscT84wh2jxYIeGrnVxmf
-   cYd2cW6z4VFnu9sjE69FPN4b2ZnsmRHfNbpXXNl7cGsJxRpF7kvzVQvQl
-   mlP7Fl+SHA/7ZulIO2K1D7T5DEC8igZKxkvQ1Je36ZcbxIeNErl3B/qBc
-   rzfPZVMBpWF8sUN/SSgTCStqhDG+b2tRdbcFyewBH+oKzrsXUxccpdxV9
-   Fit4eVIk42LIBxiRe3l1nVj2DX9edAPdQikndxV1H7xQZRrdXUCrmp2An
-   w==;
-X-CSE-ConnectionGUID: 4Oeh5T8nQKiO6/bkgmPYEQ==
-X-CSE-MsgGUID: LNqN2aF/S/GAPDECW6KpKg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84135530"
-X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
-   d="scan'208";a="84135530"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:27 -0800
-X-CSE-ConnectionGUID: uGAxpUKASqiLqiHIjSHJtA==
-X-CSE-MsgGUID: PIXfq16aSIuuUlWyNKAmcw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
-   d="scan'208";a="255604107"
-Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
-From: Reinette Chatre <reinette.chatre@intel.com>
-To: tony.luck@intel.com,
-	james.morse@arm.com,
-	Dave.Martin@arm.com,
-	babu.moger@amd.com,
-	bp@alien8.de,
-	tglx@linutronix.de,
-	dave.hansen@linux.intel.com
-Cc: x86@kernel.org,
-	hpa@zytor.com,
-	ben.horgan@arm.com,
-	fustini@kernel.org,
-	fenghuay@nvidia.com,
-	peternewman@google.com,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	reinette.chatre@intel.com
-Subject: [PATCH 11/11] fs/resctrl: Communicate resource group deleted error via last_cmd_status
-Date: Mon,  2 Mar 2026 10:46:17 -0800
-Message-ID: <f5d06640a0c0a43601abb3be3593a20dcef56ea6.1772476561.git.reinette.chatre@intel.com>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1772476561.git.reinette.chatre@intel.com>
-References: <cover.1772476561.git.reinette.chatre@intel.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tQZJfFQc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC456C19423;
+	Mon,  2 Mar 2026 19:24:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772479457;
+	bh=eUqn82idSjwQqVfXkynhtMkUOLhTsl3oVSTJl5R+I+Q=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=tQZJfFQc7frvWLCkNAIvTZzWKjzfeokStTQ1u6Dq24q4BXts6IMbPjhiTbaKApWvQ
+	 PCEGP6n8318iFyMGlqiXajOiNzDHy0bbTkWG+Fat7POq8RzQt43GKOVh6na/HYWwNR
+	 jiG0pdHKUfMjVu5Pz76DU7GOzvczNY1+QTNePh2Rh8wbylTBZlYhJWMMU2oKGNPBLi
+	 pZm3XQm1hn9prR9mlOxkvcwDOJQmO8d64E0ZAN9ueXlJq6bjJIqeEUaOY6zs5cIZov
+	 VGBnfhh8qt/OeQHBp8drAcS1poxdixKsc5Qkvr0pdn71xWWf2z7RCSa5BaIraM6cWE
+	 bmj9n01fMq6Vw==
+Date: Mon, 2 Mar 2026 21:24:13 +0200
+From: Leon Romanovsky <leon@kernel.org>
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
+	linux-rdma@vger.kernel.org,
+	Selvin Xavier <selvin.xavier@broadcom.com>,
+	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
+	patches@lists.linux.dev
+Subject: Re: [PATCH v2 00/13] Provide udata helpers and use them in bnxt_re
+Message-ID: <20260302192413.GS12611@unreal>
+References: <0-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <0-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
 
-User space expects last_cmd_status to contain additional information if
-any resctrl command fails.
+On Thu, Feb 26, 2026 at 09:11:03PM -0400, Jason Gunthorpe wrote:
+> Add new helpers that entirely execute the expected common patterns for
+> driver data uAPI forward and backwards compatibility so that drivers don't
+> have to open code these.
 
-A resctrl command may be blocked waiting on the rdtgroup_mutex waiting for
-another command to finish and find that once the mutex is available that
-the resource group has since been deleted. In this scenario the command
-will fail while last_cmd_status contains either "ok" if the last_cmd_status
-buffer is empty or an outdated error from a previous command failure if
-last_cmd_status buffer has content.
+<...>
 
-Include clearing of last_cmd_status buffer as part of
-rdtgroup_kn_lock_live() that is used to obtain access and needed locking
-to a resource group before attempting a command on the group. With the
-last_cmd_status buffer ready, provide an appropriate message to user space
-if the resource group has been deleted.
+> Since bnxt_re has never implemented these rules correctly and now does,
+> provide a UCTX flag to tell userspace about it. If
+> BNXT_RE_UCNTX_CMASK_UAPI_COMPAT_SUPPORTED is not set then userspace must
+> not use any request or response fields beyond the current kernel uAPI.
+> 
+> Using any new fields is only possible on kernels with the flag.
 
-No last_cmd_status treatment is needed for the remaining failure of
-rdtgroup_kn_lock_live() encountering a non-existent resource group since
-that could only occur during an attempt to obtain a resource group lock
-on a file in info/ which is an invalid usage.
+Does a similar flag exist in any other driver? If so, we should consider
+making it global to ib_uverbs. If not, keeping it bnxt_re‑specific is
+sufficient.
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
----
- fs/resctrl/ctrlmondata.c |  3 ---
- fs/resctrl/monitor.c     |  2 --
- fs/resctrl/rdtgroup.c    | 14 +++++---------
- 3 files changed, 5 insertions(+), 14 deletions(-)
+Thanks
 
-diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
-index 7b90c36ff0a6..9915f714e26a 100644
---- a/fs/resctrl/ctrlmondata.c
-+++ b/fs/resctrl/ctrlmondata.c
-@@ -317,7 +317,6 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-@@ -434,7 +433,6 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
- 			}
- 		} else if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 			if (!rdtgrp->plr->d) {
--				rdt_last_cmd_clear();
- 				rdt_last_cmd_puts("Cache domain offline\n");
- 				ret = -ENODEV;
- 			} else {
-@@ -475,7 +473,6 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 6c499a0bd435..73893a7e14e0 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -1632,7 +1632,6 @@ int mbm_L3_assignments_show(struct kernfs_open_file *of, struct seq_file *s, voi
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
- 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
- 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
- 		ret = -EINVAL;
-@@ -1772,7 +1771,6 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 3b3acc748d03..09d688bee0a3 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -359,7 +359,6 @@ static int rdtgroup_cpus_show(struct kernfs_open_file *of,
- 	if (rdtgrp) {
- 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 			if (!rdtgrp->plr->d) {
--				rdt_last_cmd_clear();
- 				rdt_last_cmd_puts("Cache domain offline\n");
- 				ret = -ENODEV;
- 			} else {
-@@ -522,8 +521,6 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
--
- 	if (!buf || nbytes == 0) {
- 		rdt_last_cmd_puts("Invalid input\n");
- 		ret = -EINVAL;
-@@ -783,7 +780,6 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
- 		rdtgroup_kn_unlock(of->kn);
- 		return -ENOENT;
- 	}
--	rdt_last_cmd_clear();
- 
- 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED ||
- 	    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
-@@ -1464,7 +1460,6 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
- 		return -ENOENT;
- 	}
- 
--	rdt_last_cmd_clear();
- 	/* Valid input requires a trailing newline */
- 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
- 		rdt_last_cmd_puts("Invalid input\n");
-@@ -1601,7 +1596,6 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
- 
- 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
- 		if (!rdtgrp->plr->d) {
--			rdt_last_cmd_clear();
- 			rdt_last_cmd_puts("Cache domain offline\n");
- 			ret = -ENODEV;
- 		} else {
-@@ -2639,10 +2633,14 @@ struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn)
- 
- 	cpus_read_lock();
- 	mutex_lock(&rdtgroup_mutex);
-+	rdt_last_cmd_clear();
- 
- 	/* Was this group deleted while we waited? */
--	if (rdtgrp->flags & RDT_DELETED)
-+	if (rdtgrp->flags & RDT_DELETED) {
-+		rdt_last_cmd_printf("Resource group %s deleted. No commands possible.\n",
-+				    rdt_kn_name(rdtgrp->kn));
- 		return NULL;
-+	}
- 
- 	return rdtgrp;
- }
-@@ -3765,8 +3763,6 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
- 		goto out_unlock;
- 	}
- 
--	rdt_last_cmd_clear();
--
- 	/*
- 	 * Check that the parent directory for a monitor group is a "mon_groups"
- 	 * directory.
--- 
-2.50.1
-
+> 
+> A series converting all drivers to these new helpers is on github, I will
+> send it later:
+> 
+> https://github.com/jgunthorpe/linux/commits/rdma_uapi/
