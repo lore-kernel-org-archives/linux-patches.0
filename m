@@ -1,171 +1,67 @@
-Received: from MW6PR02CU001.outbound.protection.outlook.com (mail-westus2azon11012009.outbound.protection.outlook.com [52.101.48.9])
+Received: from bregans-1.gladserv.net (bregans-1.gladserv.net [185.128.211.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F89347D941
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 19:36:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.48.9
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772480194; cv=fail; b=TZAM/HQjmtdWnwJ22gbwEuyy7etI6Hc22418bTCnIpH1TnaIdTRVWj5sMud0sfIg+zO5+lKchETt92kagXyAPNI7dAD2M60SnHmPmLkrN3MVRQfsXBHdPWDWCKlCqtVPgWZ4BIIWfrJShyWZ7MXtmp/O1PBjl2kNFOA46tjna/4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772480194; c=relaxed/simple;
-	bh=vzrfg2bxVkitaDJZvve/5r1SnPevxaUEaLxy5zkGiU4=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=JXvmoj4vLSWh154HZJzrK0YvHGvDRRsKu8qNv5+S6M8aIUAclep9zLqOa3If+QEYzLqcEb9qIdPGvFHf5zJEvZN8hl5DcKag9hXVa9WnGM4V1jD9KrUJLSwCY2PtKem0bBaztRfxjHTJuPf704PXRhwDWWPrPHBhOoyrMuPwvzs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=YYS0Ci6q; arc=fail smtp.client-ip=52.101.48.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="YYS0Ci6q"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=fXh4R31u+P3SQflYE80W2JuARtRZ2axhc8Z9sep/GaESoO7XZe6MbClJF2/vYUs3r8rqWovnbvKx5ifdv6YmfnWLWY1Ex/jCB/2x7sEzsWr1SWFupWzVpf+utIdW1jjukgcuHnlmFjvNzjuNWPyKXFxWm4Je+e3mLR/Vn2482jXBtmJ1UjEC1xevRGidN4GPRQjdxCsPhTj7EXfcHJeJL/ymhct+I4d96Is1/sKrhrfnxW+1GqO41tn5HISlqcsMVAFfriyI3LZUXy2t2ORcJQtd1VSpWqgwcx65JL3mqcsPIeW9jM5Q+w27Uxzwo/EO8ppe7A0QLnoy968N08ailQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=j9Ai/c1C3m0Z1Rq9u9FKoRa3I+l4cJUq6kPt1T8FTZE=;
- b=U20UQOMGeJjpm24zIQWoN3LZyQtAhEKGL+VEXgTaYvRBHDkQAKk13Ex0tGOrB7WF3CocrV87J46R+rTLJ1KZeP75PyPZ7vpGg+RB7Aeb4HDjGUhW024bbRloSDBGfzh9sDBF5Wz3waIYglRaPTW7A/WPpIKN8CbyHpFWpLqACW/W+FQTgT3O9QuiXL4qjDYi+HpBwTH4kyz4ms70Nt2lKy2UZnysM8TBQTDYFJjaTXYpTZCTjesFWM4JfuqC4nFqnBj4/6qdIij3FVF3FA4va33G0/voHAUN1KAINNCJQbPF3A5pcTFwxuiDjXIIWWUjQX7+0f3oh1ASSV1MMzNZSA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=j9Ai/c1C3m0Z1Rq9u9FKoRa3I+l4cJUq6kPt1T8FTZE=;
- b=YYS0Ci6qEq9CBtIMGtFhEvvCOeJxLTGys0jaHLbX+9O9Ge2InWBRK0r9AC3RURU0GrE3SbAlt6kcgO8bpj5baYxRNp7joto4bfDCaFttTFryp4kXpt907XeIfAHvJzLyY+6ZednT0VczKcddhE8/Iawv6VOQdRBvIsGOQN69s/ToN3xyh5qboR6KvglyOiFyea37sqYPoPfIAVpQiqzw9yHbPkf9uESeum22fdUjOk174zUJrT8inNqxNHo20OLeuZXpOlceA72F8vVrvyl4ECM6iYEZp1Gws6C9mIAvqKfnZh/UfjwVoRPhTzwTHk4rKgBo/htnt/FESjz5rkIhlw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by SA0PR12MB4493.namprd12.prod.outlook.com (2603:10b6:806:72::24) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.22; Mon, 2 Mar
- 2026 19:36:30 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Mon, 2 Mar 2026
- 19:36:30 +0000
-Date: Mon, 2 Mar 2026 15:36:29 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Leon Romanovsky <leon@kernel.org>
-Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>,
-	patches@lists.linux.dev
-Subject: Re: [PATCH v2 02/13] RDMA/core: Add rdma_udata_to_dev()
-Message-ID: <20260302193629.GY5933@nvidia.com>
-References: <0-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
- <2-v2-13af4a900857+4f13-bnxt_re_uapi_jgg@nvidia.com>
- <20260302193056.GT12611@unreal>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260302193056.GT12611@unreal>
-X-ClientProxiedBy: MN2PR14CA0015.namprd14.prod.outlook.com
- (2603:10b6:208:23e::20) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81122E54D1;
+	Mon,  2 Mar 2026 19:46:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.211.58
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772480811; cv=none; b=IshJLn+U1+5U9dpZDmGI1BiYmznbm8/uJoYt8C+kEmgZ47e74HrdZZDPkcHoh8ZSyC+G82mjE2Uz41UZLPt+d1tZ0rq8A/VH1VOunl0xRVDWQWgNUhAOZv3CAhDWsNQMzQo31+YOy3YFROvB589Nghlzjr/FmH5Kbsq4tdsO5ns=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772480811; c=relaxed/simple;
+	bh=YnvBRQ4D7WmIPP7Jo0M1C2cHWB/wmhg9ump9fzSpnbg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=J7lbLrbgaGGaNOrcHlWKvKtnEdPbBUf/Jmpg2QzpdSA8SZDABNFD+Ex9hKa82hMHDEordtnKFfaL0cvOgFYQLJ3BRNTHCaahyatyZKJe7fqcwSE7LW7YLU5peXuL7vYfCw2AMRr2WXuiilhFp4+LCa2+lBMUKcp8wPtndSY+JT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.211.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+Date: Mon, 2 Mar 2026 19:46:39 +0000
+From: Brett A C Sheffield <bacs@librecast.net>
+To: Peter Schneider <pschneider1968@googlemail.com>
+Cc: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	gregkh@linuxfoundation.org, patches@lists.linux.dev,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@nabladev.com,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 000/533] 6.1.165-rc2 review
+Message-ID: <aaXpH1EiNugoQwaD@auntie>
+References: <20260302160943.2522184-1-sashal@kernel.org>
+ <66461c13-1bb3-473c-b57f-adba9db4f756@googlemail.com>
+ <aaXNiwFkUEy8SaTm@laps>
+ <abe2fb5f-61b3-4597-b27b-c6c61f5efc7d@googlemail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|SA0PR12MB4493:EE_
-X-MS-Office365-Filtering-Correlation-Id: aa51ab0c-dcda-4e9b-84fa-08de789300e6
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
-X-Microsoft-Antispam-Message-Info:
-	T4f2/jEehsQbBPortSo6vAJbgNiiRVK4w21PINuwce75IqzZSnvQ4PVY7uQbycgEFtX/d6GsuHCwAY278/Wgt82YRv/hiyppMZ7EZ1/2F7wqIUzxnIdQVUu07VwL0Wh7bi97S2IeOsO+LEd4v8yviHJKol2TB27Nj/6/4mqPFiCzo26SvkBgosWP4custIBoq98loUl6oPw7tbBXZhLoYxnrhlUhu5B51wTG8GcSvzLF64zDJmX3foVw1jN0TU3ALXqaOcdpMXN+otkQzUu5bPk2KrDGWN4Cb2TnGp2oDIfaNdq48YXduEQFnkK3lc4gw6X1KUarL+ZRPaRYLj05n+67e8160GzVb8wX2qXPuPZ6cGBMlVx0P4xcnjTGAfvNjR36d8rBhvk4RkVp/06bkIaCLLFqfNbyl//F9Qo+OJgtMSU/fBEpcK+CyxNKuLm+CR3i/OzkQm6XvqF4/sanBGOnXBDlvjJYW01Zqd8iNvJnM3xgLiONfFRWWBO9eqKuZ7qk2GSsRb4DsRRdhr2Jx3bqoDcyn35br0Kd1lszLjaVYpZCHv+YfLrqmkGOS+heSqONA+RAqQPQsx604l/LXtM22MLnN7i1nKFbtW3T9gMmJ/8fUKQ18P5tv3EGWmYNDzjDUz+VJoyF8Dc2I/Y4ZZG2+IJKMPCElsYfcW/Wh+kipq9GGxmVVYFIsV1E1x1yGjAVYdJ6n64beGEPCwLeqhShmq+85QNr/R1RMfzFEc0=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?UkAJwyECuoXjz3jEPU5y+3aWHmeNViG16JZ5NvGn+qP4vD42p7mURoU2XfKZ?=
- =?us-ascii?Q?2Xxd9CkxL0QrQfPBCBqR7AhcWVdHuylvaGVXTrUrRvT+cFbdnwKC+DZ9Ntbt?=
- =?us-ascii?Q?3kRsGp3SAqSUf6RFVmL8oLoEFlTCSwv/vvgqlKGNaN73JUtRtU8v0cw2Y/Sg?=
- =?us-ascii?Q?+ZwO/TbDfzdhrRKDwQyRRhedkdeRh7W34NBP8cg5mVmpTwlUdo/tdI4ZTASd?=
- =?us-ascii?Q?NgF0cfLgOB48VhEgcmocGotZORjY4tTpFtNX66J3nFhagyFrVWOGoO+EF/Dg?=
- =?us-ascii?Q?czC6OOJBsHQwpMrP3B/rl/Z7KZ0hSYUv8xxE5Df5DxYMQn48M1AqBw08jOwX?=
- =?us-ascii?Q?pMaVCvApVP0/2eR0zBy2+0uBaD5DPHASWbWRBg/8r74zTOQQNLByGxoUcFRx?=
- =?us-ascii?Q?g6eyf1lPpzG5efCqCIXKZGv7VvQUFat0JdGrLg9XzTM3fOneUuGUqn0hYtWj?=
- =?us-ascii?Q?ne2qwANlpCocfTfoOokPrkxM9qgiDGJ8JA2FIHqsy90jbpR+kSnKSKUjaqwN?=
- =?us-ascii?Q?jzJ1n457DDq0otQzpUdx393QsPeS4VZ69N8YVPiHE9XNWiAUrIeC3SmhwAIe?=
- =?us-ascii?Q?glJXSS4fWNszdE/gTh4A5WvaxjDU+0oGMrieG2I90m5pet3wcf9h8DR9X5OX?=
- =?us-ascii?Q?g4wh9MiFs3m/ynA6kEbatzL6WyVis/y+RfqyPfPenrPxqkAUcO1pII11z+CE?=
- =?us-ascii?Q?3fDTzrwiwz4gQxwmA9I6VsfBadta+Iczw0Dm8muYElvNEnN8AyCV8ooMYC8X?=
- =?us-ascii?Q?6T3ncMv7Lzg36lacNy3//3//xf9iWN0dNVTCeF2DtjUy548N5EOAP47eqMQY?=
- =?us-ascii?Q?ptP7ykriDH4i/teSX+3tWVS303i7s7xDgDsetawBFJcbLHr/v3oJPio2Oxs8?=
- =?us-ascii?Q?S/o0I/tGsgYLPz/qttK653LvQfsxiyIoEpypffp9WJYSn5Uek0x8qWuSw090?=
- =?us-ascii?Q?Hri28I8AkVuhoya1XZDGoN3T9Noqu/9lpG/+QaID+nQJOWpwTgPYUAO6vRnu?=
- =?us-ascii?Q?DvZ4APzGoFxsUAm9oVMWs2tHKy/sOGtEFoN+It9ct6GZgV02B5X0+pnb13nP?=
- =?us-ascii?Q?r1G0IR57g38ME+rTgLWj4isnrSJxtwps304RPHIsTD0HikEBUr5dSrPgweCL?=
- =?us-ascii?Q?QxOXfGIG5z5OyifbIOmAurV8pvIZzG8I+O3KnaGnBFq0xXpQdnOCbJWhElAk?=
- =?us-ascii?Q?7pXYolbKSy9tHaNqUidz01B/RHBAsvHJYbMIP2g3WFyOxWd5AkCKRrcoWDEk?=
- =?us-ascii?Q?+tYnucL1JMse1i0O06+I517BWUxVhztR7mKJF10K1m/3JFkry6xq6MnHvpOW?=
- =?us-ascii?Q?Su0Ct27TR65rWYlswkwPLDj3cB4UVCTC4oxGfDFuORNU7Vv8thIQ9cERkEKX?=
- =?us-ascii?Q?giec7xQduMjiFAI8hrxNEPQ/NlLmSK8AETUgKXld1QnFVt1KG0RSBR1dcCyH?=
- =?us-ascii?Q?O82ZsexAGrGx5tzv+JSqlq3pEWLQl1ddbjo5JIpB5/JxB0ZZfW9IbEACP6ZF?=
- =?us-ascii?Q?fPcOwGLVkV825ZLP0nqYApLCEd0zua+lv659TVJK0Gy7S8YZqYfR9MU82oWb?=
- =?us-ascii?Q?bKKJ/3Y5/Gi5pj+PUZRFKwbYRZJvFQQahciVtw7QajvcY0a/FVXnZKh5fiKF?=
- =?us-ascii?Q?TeIz03YsfTb6bOO/9DUQYp6tufkLuL8QoqBM+bWG8THap7gMtTdDIsAS/vHn?=
- =?us-ascii?Q?epm8Iy/B94vVLdKr42Y6mbEAc+xkWSDYrKA2XaCcsDmsQHM827hHjzpHV/dy?=
- =?us-ascii?Q?NHPaLaOqgQ=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: aa51ab0c-dcda-4e9b-84fa-08de789300e6
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 19:36:30.6224
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: diCbP9Pg3k/GFfwCLJaJ2GrI4VEhdJAChIHT7hhavKZ55IGqe1S3T8XUxy9nTQSD
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR12MB4493
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <abe2fb5f-61b3-4597-b27b-c6c61f5efc7d@googlemail.com>
 
-On Mon, Mar 02, 2026 at 09:30:56PM +0200, Leon Romanovsky wrote:
-
-> > +struct ib_device *rdma_udata_to_dev(struct ib_udata *udata)
-> > +{
-> > +	struct uverbs_attr_bundle *bundle =
-> > +		rdma_udata_to_uverbs_attr_bundle(udata);
-> > +
-> > +	lockdep_assert_held(&bundle->ufile->device->disassociate_srcu);
-> > +
-> > +	if (bundle->context)
-> > +		return bundle->context->device;
-> > +
-> > +	/*
-> > +	 * If the context hasn't been created yet use the ufile's dev, but it
-> > +	 * might be NULL if we are racing with disassociate.
-> > +	 */
-> > +	return srcu_dereference(bundle->ufile->device->ib_dev,
-> > +				&bundle->ufile->device->disassociate_srcu);
-> > +}
-> > +EXPORT_SYMBOL(rdma_udata_to_dev);
+On 2026-03-02 18:57, Peter Schneider wrote:
+> Am 02.03.2026 um 18:48 schrieb Sasha Levin:
+> [...]
 > 
-> Thanks for this function, looks great, however I wonder about use of it
-> in debug prints. What about changing:
+> > I'll drop it and push the -rc2 branch again for all affected kernels.
+> > 
 > 
-> +       ibdev_dbg(
-> +               rdma_udata_to_dev(udata),
-> ...
-> 
-> to be something
-> +       udata_dbg(
-> +               udata,
-> ....
-> 
-> Together with keeping this rdma_udata_to_dev() function.
+> Wouldn't it better to push a -rc3 branch then, so as to not create confusion? (I'm confused now... 🤔🙄)
 
-I thought about that, and looked at it, but the entire flow to build
-the dbg prints goes through alot of common infrastructure and it
-rapidly became a big pain to put the udata through like that.
+Agreed. When we're in the middle of testing, please don't force-push over the
+top. It makes a mess. I just spend quite a while retesting because suddenly my
+branch was out of sync and I thought I'd broken something.
 
-All drivers should be able to get the dev from their own information
-so shouldn't be using the udata version at all.
+Once you've called it, keep it.
 
-Thus I'd prefer this since it probably won't be more than these couple
-callers from the core code.
+TBH it would make life a *lot* easier if RCs were properly tagged as such.
 
-Arguably discouraging drivers from using it is a positive.
+Cheers,
 
-Jason
+Brett
