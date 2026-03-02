@@ -1,114 +1,142 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DCA230DD22
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:35:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EAD319847
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772476550; cv=none; b=LvPjYKHMsGVriJOgJ/OR8FeP6zKk1Sa17FcLOUsDK65htTJvr6IQz/QFc8KeaE5hTBtV+YBPzfKX3chk2+FEQ0ClrSYzMBRbYZwK7pnPC/G2EsKsvukzeBu6GeGLRho5FHhr0FgYsub402gCO4ha8e3AG+NIqv9lRm0MSTKAIhU=
+	t=1772477189; cv=none; b=ZrrNlvhr1WEieSvVfxwWi4d4s8gJ8ySxZ5b2EU9Ppvih/Hj9a8u2tHWi+UddCADlPBQ7K/Epcej/bAuipSAEECYvFpM9UJeVJ5KHPL0d++AiuTxGAz8ND/PGxWI2j+tjiTHPmc9e9+53M1ssIngkip8dyKz5rVb6uf2CZttQkuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772476550; c=relaxed/simple;
-	bh=2GOT22Az5eN2ZgabxgUYSIFjxuWVaCdnROj8IMw8bGs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UHWH0VjvpVhqSzjYzcZ3FafsN3ffAjmiYGyOuNmEzj3aEtfRF9VugtyrKQCZhVXiZJe+EN8GVMJL6Em90T/e2satiQgYct/NkDPIyIm2g2iRF7MQ3tkiKFv3h9Hgc82DL7I72rDO28syWuGClWqUN0iQwUGQSGxQwHkk/LCxbQo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cN9DKkmw; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1772477189; c=relaxed/simple;
+	bh=lPprbTGisbGA0s+d/uOwEM9KiYptDpYY2nJtKbgMbQQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=hZRV+ZM1vTKv9XHaMuefBphKj0K21lmCckvaPYzNkTpnvbdW4kyr4rT3nMz8Dyb5rPdU8PGQkBGoARZ+yvWE+eaX6VE29MlxEvd13SaU0aIAMTsU/hesrzjcuSE3WQJzM3Qc9QC+cxgq2VGC6nXB/or/jbPWekXBCwi/r5f3aTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MRNrB7/w; arc=none smtp.client-ip=192.198.163.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cN9DKkmw"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-5062fc5d86aso44221941cf.1
-        for <patches@lists.linux.dev>; Mon, 02 Mar 2026 10:35:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772476548; x=1773081348; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=quSkEi1mQq0UcBslufuyU8hzVY2CrrAMv3rCqHOKUos=;
-        b=cN9DKkmwAdK4hV5rSeZ6f8OplgEqVV/M3wv0aC7tL++0QiptPaPOA7mqy/ulRIIM5r
-         8V7IkcEsAy0LhvKZqAs+8OFZCiOB0+mRYVTVRlRf33Rof/drGhHAReVUNW1rHTjx0BtQ
-         WLw51P6G/z202JkpO0LO6BleEIQJWm4L9rY07ahLMZ0qU57xdwqLjwbaq0tZ8Z2laubX
-         08DWJGVFzjC5kd93Ei+VZ5sFVCMi3a9sJgFwmliie127cFHXOG5YjKcCRqt4xsYv3aH6
-         TX6WbOI5HHknUtBb4uxDkJvWsKX/jYXyw0TPZXCPa6N+WKoJLmzclp7EH8aEyNhAmCxS
-         0ATg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772476548; x=1773081348;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=quSkEi1mQq0UcBslufuyU8hzVY2CrrAMv3rCqHOKUos=;
-        b=CXQF/69171zc/kUzBLAFl1Ln4UqjX3SZ0Z/n4ulxcrilxqhGujUh2jpYTX7tkn5qnp
-         dq5gOdV0n229j6/JR/72w/AqwszBzpyj8Redu0CuvrIQRdNc1OZYfZ2ESgUou296IhNt
-         JJplxhkLeY61nufcSK0DiT2Tu2Qjnzx7FzmC41IWSbSzjGUiFJy8NZJxdwR0IfpyOnIv
-         VehAsVCK7uOxrD6p/tHb26pwoLKWaI1hfi0Vu1TNLjtQA8Jno/MnUVwuRWXU9zF0FqwR
-         4emi8yowuumF+hi8+rJjx5itN+UnERx3MFRXf7q3UCA8/DimF7wmJhKRxyf0tQ63jPLE
-         9hrg==
-X-Forwarded-Encrypted: i=1; AJvYcCVEs/xcK9eDGVGLTh3ugYIvL4tMTzAQb3n7J0HurnrbTZVt0Ae7remr+1oUZ+E54GUmHHIGJJdc@lists.linux.dev
-X-Gm-Message-State: AOJu0Ywnz2gVtozOyjg1fs4h5eBFRRF74W6XR4/qjdogOutZAA1/1i41
-	N/EIcjSEN2NIOx59CX2NjldkqfxbLCmZQxH0SrzJXTJlref86cEYaaq9
-X-Gm-Gg: ATEYQzwDl5Y5QuvP+oU5xF8e9uo2QLiwUUnOnvKETzPdPj521C4Tvfbyam3QJUG7vaa
-	7g76dR4lsCRddxdrpYFuPL6UaPuevPSzb/EwUn/R9a1anC5FhKhdrr/b3+sGaCsoSmShllOjWk4
-	7A7Ve5sijBpOT7jd0LXYWno8aBJRbm9ooBONBgzniAP74eFjrwUdsOioSvcuHM+V3t141iPzpxX
-	fFhw75Ud5tmwIGug0rRpbNA1VRwlnkudzAaMmsuV2MXRELEIqQm2YcHIKAoIsUUDHRiHQoSb13C
-	palfEycy2UZyExnjWJ9PFmTwhVNCpqPxvty6lbhpijzS4Tl1oIa9Y8O7XntM6s2D0T9AcdmFu/7
-	Qf93DO+X82OqukB1PO8XJv45gYp3RLtt0nrHe7TTce1IohSwtFqZfO3fuoohV/kzds0u/QzCRrv
-	TeHrRB7UMeI3YOVjXhQvGdhM1sbUj7W3j0Z8nAoKC5/OMxMr0Qhg==
-X-Received: by 2002:a05:622a:1988:b0:4ee:197a:e809 with SMTP id d75a77b69052e-50752886490mr160353761cf.75.1772476547995;
-        Mon, 02 Mar 2026 10:35:47 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-899eab5cf2asm51032266d6.13.2026.03.02.10.35.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Mar 2026 10:35:46 -0800 (PST)
-Message-ID: <1bdea3bc-1028-497a-b422-c14c3de6f129@gmail.com>
-Date: Mon, 2 Mar 2026 10:35:42 -0800
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MRNrB7/w"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772477188; x=1804013188;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=lPprbTGisbGA0s+d/uOwEM9KiYptDpYY2nJtKbgMbQQ=;
+  b=MRNrB7/wT3O7LWWbbhQZeh4Ybdb6JIZQoXtINcqO5oN2ieTuJuCNyl45
+   k2TG9IEQlkeD/yGl3kPan64HRKcwqGq5zRGoCrp4pW0/+79bdzr/aK384
+   RYBJYWT4H9UXuzdZXCYBiRe5CzxT0wK8EL1ABsylqLWTourAwDV0N0SUA
+   +r428a1dsjfUiJDSmmL5J7AiCvH/FdzbWUOCkmbF+In/nmJg9l7oPk3dB
+   yPzLQOTKGgJrKZRfAY5xcddSaSG7W7Uae4Kca8ZpDJBxaV/paRuZxRqsD
+   wu8L/fWN1nGCW10KlvEQubdRyLJ7azk4S+7xTqV36cd221yGUAIEgA60V
+   g==;
+X-CSE-ConnectionGUID: xqNA9o3WRVWH1wc7C6rZ7w==
+X-CSE-MsgGUID: AzjE2hxNSZaOAD2ff63QNA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84135426"
+X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
+   d="scan'208";a="84135426"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
+X-CSE-ConnectionGUID: JCQRu/dqQ8KB0ZBbsmdL4A==
+X-CSE-MsgGUID: SEJPw139QMm+4U2hSuKJcg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
+   d="scan'208";a="255604077"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: tony.luck@intel.com,
+	james.morse@arm.com,
+	Dave.Martin@arm.com,
+	babu.moger@amd.com,
+	bp@alien8.de,
+	tglx@linutronix.de,
+	dave.hansen@linux.intel.com
+Cc: x86@kernel.org,
+	hpa@zytor.com,
+	ben.horgan@arm.com,
+	fustini@kernel.org,
+	fenghuay@nvidia.com,
+	peternewman@google.com,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	reinette.chatre@intel.com
+Subject: [PATCH 01/11] fs/resctrl: Add missing return value descriptions
+Date: Mon,  2 Mar 2026 10:46:07 -0800
+Message-ID: <e973d6a29193d6de7d9335600076d7ec3af9610b.1772476561.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1772476561.git.reinette.chatre@intel.com>
+References: <cover.1772476561.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5.10 000/334] 5.10.252-rc2 review
-To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260302161007.2523181-1-sashal@kernel.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260302161007.2523181-1-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 3/2/26 08:10, Sasha Levin wrote:
-> 
-> This is the start of the stable review cycle for the 5.10.252 release.
-> There are 334 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed Mar  4 04:10:05 PM UTC 2026.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
->          https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-5.10.y&id2=v5.10.251
-> or in the git tree and branch at:
->          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> Thanks,
-> Sasha
-> 
-> -------------
+Using the stricter "./tools/docs/kernel-doc -Wall -v" to verify proper
+formatting of documentation comments includes warnings related to return
+markup on functions that are omitted during the default verification
+checks. This stricter verification reports a couple of missing return
+descriptions in resctrl:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+    Warning: .../fs/resctrl/rdtgroup.c:1536 No description found for return value of 'rdtgroup_cbm_to_size'
+    Warning: .../fs/resctrl/rdtgroup.c:3131 No description found for return value of 'mon_get_kn_priv'
+    Warning: .../fs/resctrl/rdtgroup.c:3523 No description found for return value of 'cbm_ensure_valid'
+    Warning: .../fs/resctrl/monitor.c:238 No description found for return value of 'resctrl_find_cleanest_closid'
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Add the missing return descriptions.
+
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
+ fs/resctrl/monitor.c  | 2 ++
+ fs/resctrl/rdtgroup.c | 6 ++++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 0cd5476a483a..93db7c1cd7be 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -234,6 +234,8 @@ static struct rmid_entry *resctrl_find_free_rmid(u32 closid)
+  *
+  * When the CLOSID and RMID are independent numbers, the first free CLOSID will
+  * be returned.
++ *
++ * Return: Free CLOSID on success, < 0 on failure.
+  */
+ int resctrl_find_cleanest_closid(void)
+ {
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index ba8d503551cd..3c9508fc558d 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -1519,6 +1519,8 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+  *
+  * @cbm is unsigned long, even if only 32 bits are used to make the
+  * bitmap functions work correctly.
++ *
++ * Return: size in bytes, 0 on failure.
+  */
+ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
+ 				  struct rdt_ctrl_domain *d, unsigned long cbm)
+@@ -3102,6 +3104,8 @@ static void rmdir_all_sub(void)
+  * @mevt:   The type of event file being created.
+  * @do_sum: Whether SNC summing monitors are being created. Only set
+  *	    when @rid == RDT_RESOURCE_L3.
++ *
++ * Return: Pointer to mon_data private data of the event, NULL on failure.
+  */
+ static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+ 					struct mon_evt *mevt,
+@@ -3496,6 +3500,8 @@ static int mkdir_mondata_all(struct kernfs_node *parent_kn,
+  * resource group is initialized. The user can follow this with a
+  * modification to the CBM if the default does not satisfy the
+  * requirements.
++ *
++ * Return: A CBM that is valid for resource @r.
+  */
+ static u32 cbm_ensure_valid(u32 _val, struct rdt_resource *r)
+ {
 -- 
-Florian
+2.50.1
+
