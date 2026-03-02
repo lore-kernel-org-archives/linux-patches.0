@@ -1,67 +1,70 @@
-Received: from CY7PR03CU001.outbound.protection.outlook.com (mail-westcentralusazon11010008.outbound.protection.outlook.com [40.93.198.8])
+Received: from CH5PR02CU005.outbound.protection.outlook.com (mail-northcentralusazon11012044.outbound.protection.outlook.com [40.107.200.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BED33B951
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 11:43:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.198.8
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7063227FD76
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 13:01:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.200.44
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772451826; cv=fail; b=UQ0W5KAZJxabPoS5M6+iZa71AadJSybQbZ6WKhUD0LLx07gw6L/b8DJQ7ebGe2bu4ryXmTK2W2r/GHLEgRJekFZzu9JAaEjJBPfRu8CdXaKRVbf+Wda9v7Zb+zkm8jq5l/20VvrK+wrcvB/5JkWc+DFzcBnN7jRw/5ENuPdkncM=
+	t=1772456480; cv=fail; b=I8Je8WF3rzDJkBWJ7AMB8bqGYOxQzCIWdw8sFQcYkJJCLQshfMS9KfsnoApKnwr7nMWPVTwnP7tXfPQ8tB2QSW1aUKq2rgGATM+f5MZ5ZGfOsriTT17P/7kBy+/BBqoecilpssx+1YIS69cwzROHLHtEShoLbCN8gpUyyhxYE44=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772451826; c=relaxed/simple;
-	bh=RVTNqvSivlpgGeB/P5hLppp8WCDHMx3AC7jt0VlGCLU=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=C187ojz6b+Fuv+IaLUAKJ/JrYxcGtJdSVmNtZgY27rJ6u9B7yuWCLNFBFP5jL5JRuDILNadkjQjt3ZsqD6cNMInC134tMzDh8JcaDk9eyoQ+SU+EGbwv+BRn2qVtxNKe2Ux0r+to6yzFBKknpEn/3gPV/RCONT2H2hrcQXT1Nl8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=HVAaMsLV; arc=fail smtp.client-ip=40.93.198.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
+	s=arc-20240116; t=1772456480; c=relaxed/simple;
+	bh=otl2Un076yp9W4+wIvlfDYlhCGdEkNuXMZMFckOISZo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
+	 Content-Disposition:In-Reply-To:MIME-Version; b=Hlfs/XAJSoHtH73yGHd5edBlGnHLEcHk7L9NfNRaOZBptTppgs11u/OvICtrEupWWY40OSiXvJ5dmqqoJE7i5xuJgbyiHSgsFtG6Z1e+opjphICiDidmNVCsqCwCdeb617QqCZT1milDD11DtxFjANvIdbTUOqcA/qE0ObmBcf0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=jFP3wpzO; arc=fail smtp.client-ip=40.107.200.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="HVAaMsLV"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="jFP3wpzO"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uMd/UR6shbc6hJgg8SK9mcZLr+vidiQhfWPJqBLSetKIOFofN9S0yw8AUy0ZOp5tqq6GstAZafc1dN6I/nxEMXQI5ygtoCS0fn40m5r/1VCkdIZy/TqysLSPOSue4S2OfPPadDyv6TcQ45U/lqYkV8fcecaJX1uPY6emc8836AdPic5Js9I42vDIW7oDPR8I68yktWuk7UH6xlDoD7e4gcaZQpBwlAPR3GSKZfINJ0z3FXdrBeDmJ/jnTw5G336FBKKIq5LMetr2zhp3qEwQ8BkDGuZrpadEF5QnodBLDpHxXCnYYV76mMbv0NP/LeYEd/3aucoI7CkD+jM173ydVw==
+ b=uiGUd8m2jnROz2SNq6S8ka7r0olIUCMhvy0aefEH5HUYnOgGSKeit29Cb/azQRu/VTQ4qTrf7XuFUNH7uu2FclhCzs2vsCes11Y95gU6OKlilETjeLRlciPG7IP0yqfUZ32+ZeoesI4YANNWO2YnR6A7aMN/cPsBFVJ3GX2Qaqx1aP6rquYy8L7Os6YC6XVh2yg4HyNBi3lIa7mJeZhCUT2DfZwZIeFPkijN7xz0COVGtem48Ug2NcXaScFELVxWW3JLRz0JQzqytEzKdIREKlkv5sfMA48ZCJUQNG5Uz1fTfQoy38cKYPHsn+T1CN2TdYpKUF4sex11SAsc0IL7Ug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/C43wIqH54Zm4JpG1HZ+wUQ6D5reWdnglZXHt+WRwmM=;
- b=iXJgNcguwuCuh7Xs2qGTdHSsrltGaOrdJ0MMD7GjSnOwiXLEKtSuzynm1s/XwQK8u6mFyLNB1TuYM46frUtnXbWoquSiwLqSjGawfVH8aiGa/PjVxxRCFFEtORpQt5WEKmHL/h9kRS45nwREVdb18uSDbkbsbTmhKD6SddgPs4i02u3SfC88Y9BRz4LkEgBcySqEng0kSSpnLXRrjZp1+CcqFotepDFOTYpE8xUHVSuiA+zaVHDA6Ps5wrzM+lGoLiWLBHhzskUB5a7oQbnIZGOVtWyTdubhPaeDt1B9QIMU8rX5gNxNu7RW+mN35EaLA/F0OMHaIU+nF9IwUr3voQ==
+ bh=P+o2wlpXB1bK/DdnAp3VPWeW9yYsMqjwgTNXOJLusUk=;
+ b=ngqFbf3xZhGiqaNpySylZ4pmstWjN0nz1M4ObHObn+FP3gZe/KbuyxvNidc/ag/d8owpvlx/p4qxjQa3SdjXYfjOVoJqhWfXun2VLZ8ppB0K3K0iL1421jry5KEC7wwjKy7lRuz2DLZJsEqKzxL3mG2B1cX0qh+9bv/iiTqqma057tfCeHYe0NSQy4tNq40HSPLtjN3W7qsWAJBxtaXyeICr7AAJRxCL+SA1KKRwgxgtEW2Kcx5K4sIBmocSaPKh0S0WFh0QEqTY87zrpG9OD1RQ7djshLKY/wPS5oCmUZ4UiMEgK6f/QqpG+FUtim/S7aWItp5c5/4hFR44jbA8qg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/C43wIqH54Zm4JpG1HZ+wUQ6D5reWdnglZXHt+WRwmM=;
- b=HVAaMsLVEbV0H3NK6R2TZeOH2TKjnxX4oPA7xGoTYpwKkWPqRfegtTrbMvDdGucfcjYKGDGeKsvaY79cuACbg9wgD6j0qr+vnCc8azI5y+JvmoYdO5PJCdNl1cjFMi95pqWufwiQdjBI2bZzQD6UNgQsTPcfOvkNIV0pBaAuoCc=
+ bh=P+o2wlpXB1bK/DdnAp3VPWeW9yYsMqjwgTNXOJLusUk=;
+ b=jFP3wpzOxj2sqvZv8+iyv7NfJ3RiVlw1HWYbxnH4hoZ23MniMH9PALJPYyWCPH+tUdoayfg6E/ZgyQ5nubcRu4GkhMHMbXPP0Cnpzk5sp7JvNXxXZRkRpoWHiiiZAtCJYJ9XDlTu26t9ZGCyZvF0UtFrBuwmtKvgscDGKkBO/5HR6S7w8Pm0Mcp6/RLWAjxeEHaIE0aCEM/rHDVdVsL2uGnn6fTPTHQrUhIbtjw3ZHKiLDPliVxso/2CotYLQMaOoPAl8tonY322KcXQF56BRWXnyvyZE5a+BTKPmzgLN2DyoMyMmrf2D5KpNFpLSmXCgrZnPmxd8G+HlQ3zTmQjsg==
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com (2603:10b6:510:13c::22)
- by SAWPR12MB999140.namprd12.prod.outlook.com (2603:10b6:806:4e2::11) with
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH7PR12MB5656.namprd12.prod.outlook.com (2603:10b6:510:13b::10) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.14; Mon, 2 Mar
- 2026 11:43:41 +0000
-Received: from PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c]) by PH7PR12MB5685.namprd12.prod.outlook.com
- ([fe80::ce69:cfae:774d:a65c%5]) with mapi id 15.20.9654.014; Mon, 2 Mar 2026
- 11:43:41 +0000
-Message-ID: <7c30f527-abc4-43a9-a11c-9233015b0a59@amd.com>
-Date: Mon, 2 Mar 2026 12:43:34 +0100
-User-Agent: Mozilla Thunderbird
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9632.22; Mon, 2 Mar
+ 2026 13:01:15 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.014; Mon, 2 Mar 2026
+ 13:01:14 +0000
+Date: Mon, 2 Mar 2026 09:01:13 -0400
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: Christian =?utf-8?B?S8O2bmln?= <christian.koenig@amd.com>
+Cc: David Airlie <airlied@gmail.com>, dri-devel@lists.freedesktop.org,
+	intel-gfx@lists.freedesktop.org,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	linaro-mm-sig@lists.linaro.org, linux-media@vger.kernel.org,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Simona Vetter <simona@ffwll.ch>,
+	Sumit Semwal <sumit.semwal@linaro.org>,
+	Tvrtko Ursulin <tursulin@ursulin.net>, patches@lists.linux.dev
 Subject: Re: [PATCH 0/5] Replace the dmabuf custom test framework with kunit
-To: Jason Gunthorpe <jgg@nvidia.com>, David Airlie <airlied@gmail.com>,
- dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
- Jani Nikula <jani.nikula@linux.intel.com>,
- Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
- linaro-mm-sig@lists.linaro.org, linux-media@vger.kernel.org,
- Rodrigo Vivi <rodrigo.vivi@intel.com>, Simona Vetter <simona@ffwll.ch>,
- Sumit Semwal <sumit.semwal@linaro.org>, Tvrtko Ursulin <tursulin@ursulin.net>
-Cc: patches@lists.linux.dev
+Message-ID: <20260302130113.GV5933@nvidia.com>
 References: <0-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-In-Reply-To: <0-v1-0a349a394eff+14110-dmabuf_kunit_jgg@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0391.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:cf::15) To PH7PR12MB5685.namprd12.prod.outlook.com
- (2603:10b6:510:13c::22)
+ <7c30f527-abc4-43a9-a11c-9233015b0a59@amd.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7c30f527-abc4-43a9-a11c-9233015b0a59@amd.com>
+X-ClientProxiedBy: BL1PR13CA0013.namprd13.prod.outlook.com
+ (2603:10b6:208:256::18) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -69,183 +72,87 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH7PR12MB5685:EE_|SAWPR12MB999140:EE_
-X-MS-Office365-Filtering-Correlation-Id: f53124c4-3f14-481f-1952-08de7850f35d
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB5656:EE_
+X-MS-Office365-Filtering-Correlation-Id: d7dcc66f-32d4-40d7-c9f2-08de785bc932
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|1800799024|376014|7416014|366016|7053199007|921020;
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
 X-Microsoft-Antispam-Message-Info:
-	WNQHN4GFAi8mktbTG/FuOYRsNkMauQ4tp7Gjj5KFShMiP3SxagVQHWUYWgcJs41pCF6Gpn9FX7NwlNgbscnWCUZUFhI5TeMlODZNX4LbImwgy0tfnqmvQ4o2oHup1732RR9dKV381ZFnQ+wbLIQ3gdaNRW3DqihiskWd6dOTGmDRQFycfiHTOd8KlP8MNnzgAl7ZLo28v+Mx6pq6qNIR5Ua7JkG9bS57fMwSNj147z+3KOcpybe4Mtxg+MJIIBT29EiLhZ1QDiequ2o01jv5n5CkkgKi8v/h6FV6Si7gYQNrts5U/icxOAwJNLLmKQ2vKgEvp/tMpl3Z5qp5He9fpacQlLlfMPeIxcaqMJ/4OXQU5Ugi0A+xMyYb5keY8t4hj9O77wdVhIA5SVe1O9SENYyLhaR4WetNrYmEXTaNmesuyc/2SvxtRJ8bKk60hM805LhxZVNDSe1tx0pRNMKHhmAguU579s4cGu3703DdzopqMfi2rlRwZaJwzPrDuTZRU7RXYX7N/rbPAoZJ+Mq9JJx/1XBHGv5g08dMvNGhU1C+UGLey0u+AKu50cquYykluy0KOKZ3tEkZchcCN/jDKUoYvXDt/1v+EO43GydG1Tx5ttau6KYYDVj4dS5NxkjVu5fBO68wyY+K3DTR5KadQi7cooeIYTOnXrB5FUaNK7SdTm80jnHNizlvpNYD+BK6AIjEIkrJiOiSUu4ycv5PEWK1BrL0W5W7fKkDTjDuDtgk+5e8rkHNLZ0TrfIGInuduZSnKuALOPQw0692brrqt0tfuUkvCgJCujl6I0BiCow=
+	kaQN46E8hTbqy+dFeC5eJvrm3jzvhUv9+toRqe0aAPg7yn+MqVgRrxY5OdDWoRlsG6bDBYGk+7ZKEMSmMICU396eMB0L2GaN6n6bd0yB67p1umgsn7O8W8Wg2dAJVAhsoadJS+b5kfJYEyrv31YUSlaaSZSi/bf2KcAUuNDYpRPXU9+lsJ/gu0f1r47mXbKRUYjYTqZIoyQt8I+S8k0jgpJYxIOGsVfytZWzh+YKN6b0+rPSxIbnzkGbyOcFEV2MiC5MnJe0N6rtIgGQPer/Xlo3iowWwdOrzJO9ZCADo7TvT3DDA+nMCAWB9TU9keFOrDkADxkoRno57/x75nFDntvTevWdOUhDpWQh/E4Q96IH5mr7CLvdxxKxjIeoMb7ZrhT0bCa90HumtfPS+WUf30SB6WoIDt0e/kE0kglfNoHda2jxTSOj4KNsKeTtJP3keDsL+WwAM6p5X4AUBf1cZHbwlRHQJmNQsro0m5xxDWjG5WAJNToX992jcuEEhXemV9ltmwkDV+kKiGdIOfbvo28BojM715gMEaq3NxDLjzTJZXYcHlkffpA/Ozg8XVQMUH2k9X5j0BHaTvbCtXUfpvvv59MdTcaR0P9WRZ308JDP4qNMq9nX1mX3eEXgg4UxqAnGx/dcRSt2lUj7rtnKzMtmK2Zx56jmN03M4vjWDn1vDDRkPoDJFIIlhISk/Dwlu6FvYc1oIvaWpqIQbgkut8DmQaKu7ztMfB19vxEIJNY=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH7PR12MB5685.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007)(921020);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(7416014)(1800799024);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?cFhEZm9tYUswcGRZSnkzU0dJbFh6aXI5Rm5Fak13YUdERTNEV2pNdDdUazlV?=
- =?utf-8?B?WlArV0lGNldxQkIwczJzQlZaT0xMQVkxZE1oaHF4c2xwZ2hWV1BHaVVkUXVC?=
- =?utf-8?B?dFU4ejBtb0xTTlBQWkVrUGlEUVRmYk9iTy9hSUVZSkhEOXROTHMvak1RSlhn?=
- =?utf-8?B?U3FNNGFpcGhUYmF3Z09nbEN0dEZ2S2tGTFhTMjVZQTVGdEJxdnFzRFVpRHdU?=
- =?utf-8?B?NExkbUM0WTV1YmJITDZaK0syaEtiRkJHV0F6QU1qelF2bXBHRzBnRkthUVBj?=
- =?utf-8?B?MEY3Q3B2QW0xQ1JOM0gvYXIwSU90dFpVR1hGUDBOTjYzMit5c3YxNlRWa3BN?=
- =?utf-8?B?ZzBmQkNQMlRadlV2NlVQdTFMOWtaRlpXbG16ekZ6Yno2QUlOMlhXVnZHUjQ5?=
- =?utf-8?B?MjVYZ2I5Z0FVK1p6WmpmNDkwaDdUdzBZLzVwTStTTVI2cWJWb3dncFFtdVBJ?=
- =?utf-8?B?TERTS0p5bnpPTCtReGVhc3NGaEN5WHVVRzJTamxRQ1JxQ2hqU01QbWhiT2d1?=
- =?utf-8?B?VFo4ZlVMVmU3TUZUYkJxVkhMSFVWam9hWHhDeHF3TXBSM0JKYkRNL3Z0UkFF?=
- =?utf-8?B?Z1hQSDRTbGlaU0V3M0NWR3ZodlhDczV3SkJkSUtDZzYxY2lpQ24xVlFnNHph?=
- =?utf-8?B?QXFWUm45OXN6Qk1KelJlY0FvT0ppcHdRREd3NDRvNzl3UGdpUm14TjArejhk?=
- =?utf-8?B?UXl3bkFqdmpibXBkWE8wbkx3Q2w2cmE0MDhMMVhmLzhNV1RLUXEyQThxVUgr?=
- =?utf-8?B?OUdpaGVSU3lLdGJLNDU5bzk5VFd4RGs5NXEwSjZkczAxRVNpSnlIL1BEMFpK?=
- =?utf-8?B?WnZBTzJKRXFIRE1vQi8vL1BackE1cFUwVUVhdmJLOUVIWlEzdFQ3cU9VdGdo?=
- =?utf-8?B?UWxFdnoxSEpxcjc5ZmNtVFhSbEx5b1U5dFBIT2s2alJ5VWtFa0NGWE9ka0hM?=
- =?utf-8?B?NVdlZUp5akF0MXdHekNLOTdsQjRPWkdDNDJnRVpMYm53cS9lTUNaTTAwc2ow?=
- =?utf-8?B?QUpzd2xtc3R6NU1WZkFMck5id0xFUUJzOEsrU2Z2cTNSdUlFbjFtK2xrQzIr?=
- =?utf-8?B?WFlmUWlrVTB4UjN6MldEaytBT25aTTBScWJjMm1weS9OcEhIZ0Z3eE9WSFVB?=
- =?utf-8?B?MzRLZ1FzbW9odXBTWSsyM09lRnBEazVOVCtvS0VUbUZaY3JxWE9aMmZVNUZY?=
- =?utf-8?B?V0cvcGkvWUVnbFZxOG1EOVNxVWR1RGdkdU5mLzRUaFIzTzJqMjljdEU1dG9Q?=
- =?utf-8?B?ZjAxS0NTSUdYamdrdE9zRFNnK1FtQ1NHQmUxZVdPbnJjSkJ6Q3d0L2oyQ3JC?=
- =?utf-8?B?M2hBalN1U0s0aGljUUg1cjl2dzJNeTBjOTdRSFVVTC9qWmZrS3lmNTU5QW1S?=
- =?utf-8?B?d1NScHNKYkdLUUQrbnkvUXJvKzlEb0NsTXJ1bGtZSXBIdzlrSmZ2VUpONVpt?=
- =?utf-8?B?ME90aVFmZTlCVkdVNHQ0MDllQkszd3B5WUhZQ0VkN3BEclp6ZGtsVXJZczln?=
- =?utf-8?B?Nzk0ekNYUGdBNVdnVkE4emthS0srMG45WG9LNzNhakRHZjBOL0VGc0NCS3c5?=
- =?utf-8?B?Q21PYlhVcm5oRkxlV2FyMmpHOGpBbkJpQnNXYW94SjYxSkJ5OStjL1U3Umky?=
- =?utf-8?B?a3dXTGhXUm1mTm5qb3dVbFZIV1hldFg1aWVsOGVMcnR0VXNiVVNLb1pUeEZR?=
- =?utf-8?B?L01qQW1uTHF4enkvZWs1SWVSVERjUFMxREpWVmNWREtRYmV0ODhacE91a2JC?=
- =?utf-8?B?Z0pzcGFtMHpmMnJxNlBYTzByV2lENldQaHd6UVVZS1JMRVBydFp5M0ZWamdU?=
- =?utf-8?B?OFBDbzk1WlVkblB0cUw0NCtsSlVOMkJUdWFPL2cvYVdvUFZBNkFMT0UxR2Va?=
- =?utf-8?B?LzNCb2JFdC85WEhKZnJFMTZHM3VETEN2Z212aGRjV0E1ZThVYjE5SWQvUUVR?=
- =?utf-8?B?U0g2M2QrUThrQWxleVVkMW5CeUJEZlFkU3A5OHFTbGdkbC9ubGdHTzJFekJN?=
- =?utf-8?B?VzA3ZU5XaEJzVS8vVEpETDJtMEFSSWJjYTd0S250U3NVVytpSXpmbUhZS1Bn?=
- =?utf-8?B?RkI0M2tTdGdsMWY4MzdYMklEeFVCcS9QRytldkZsYi9Db0ZKZ3MvcUJ2aU00?=
- =?utf-8?B?QytCL21ZVzcrRXhzcnVJaDRYZG1TSlZtRTMrNzhFem5pNzgwZERQdzBLa2J2?=
- =?utf-8?B?aERVNTdwRE9TeUZ3YkpyV0Z2R0ZPb01LeFR0ZUFEQmprRnI0YVpCVFoyam13?=
- =?utf-8?B?bnpEejJmMVk4ZEtNMGVpakVhUHUwZ3g0VmdsL0lQanppV3kxY0J1WlBaTHA3?=
- =?utf-8?Q?SxIGHX7q5E8mMDgjfq?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f53124c4-3f14-481f-1952-08de7850f35d
-X-MS-Exchange-CrossTenant-AuthSource: PH7PR12MB5685.namprd12.prod.outlook.com
+	=?utf-8?B?MUpQREJINVlPWVc0M3IwVUZIaWtka3dxbnl6bUtvdDVUREYrT1BIbVg0L2JX?=
+ =?utf-8?B?K3VoMjZHLzdzZTFGQVhEY3A4dnpxVDFmMHI1Y2dUbTFvQ1c2S0h6UzRZam1u?=
+ =?utf-8?B?UjEraXdwSFpjTHExVEZ2bnhpeUpGaTVnZENyc0ROWkdmYWdDWDZqZDFsZ3lH?=
+ =?utf-8?B?WWdBS2NKbHJUNmdnanZZZDZlNW1kdmszblNJNEJBZjdWYld5Tlkvb3FKOXJO?=
+ =?utf-8?B?Ry9PZ0w4aGlmaDRpeTJIbHNHTmwrZmZHMFdJWTZtckdnQ1JDVkdUN1pkTnhi?=
+ =?utf-8?B?WE9FSWZSQVhMVGpkVlFWTVozd3dnS0xzY1V6Q1JQYUgrV3ZrNjFYdnlQa1lo?=
+ =?utf-8?B?YXlQY2ZRUHFRZEpibWFWUkN5TjhQeTVKM0M2Y2hMZ3orUXRaRlNrbytCZlJs?=
+ =?utf-8?B?SmtJaTNxZS9OMTRmNEIzUkdNbXlVYlJMM0xtNkFXemtTRTIwdkMzaWlOeW0v?=
+ =?utf-8?B?Q1NaZE9sQ1dsbFE5Q0g1eWxFTzlab056QUFmZGRCNERpMXlWS1YwVFN5emEv?=
+ =?utf-8?B?L1k4UnhSdHd6bW9LelYxaDE5MjZjME1ZV0ZFSHFGUGhpN3B4VlFmTG9QM1JX?=
+ =?utf-8?B?dk5YS1Z4TUNVMmQ0WHlaVHVyOXpudzFoS0xpdzRPejdQZHFoL0FxMzVENFlE?=
+ =?utf-8?B?LzRpaEhFVGtsbklkRElhMURNUXF5Z2RuYlRlOHUxdzQweGhsbmwrZCtrdFdY?=
+ =?utf-8?B?czREaUttajlJMkZIMXZoa1hHREFqS09KSTNsYWgwdDdLWFdOYXNNVnc4ZkRJ?=
+ =?utf-8?B?akhEWHg3NUpBUmdmb3lDVDNLM0IzSERlNUVEVm1RTUlZSEdtTTdubnVDQmdM?=
+ =?utf-8?B?a3dHUE5EL21ZOEk1dDJ3akVsQ2xBM0V5UHh1dUQ2SVdTWXpHMEpydHBoOTkz?=
+ =?utf-8?B?ZjdJdkhXWE9VbFZHTU5PbHFodGx2bGlZYmx4MEtFYzRLcWJTTURoQXZabFJP?=
+ =?utf-8?B?MXZHQkpaQkxvZGhHNE5PeEhPOWhGZzdQRzhpeHNaampoTXV4WCtueXdkWXRi?=
+ =?utf-8?B?RGlyRjJocWUwK3VVTTdUSEtPNUo2S3dTZ1BVeVRxVjJTUWZ5ZGV3eE40NFQz?=
+ =?utf-8?B?ZFFDb2JndFE2TGViMEo4Uk1tc0YxdWpVZkV5cTVwbWFlbmppTFJpNmZwMXpQ?=
+ =?utf-8?B?aHBudW02djdCbS9pRHFCK1FnWXBaM1kranFkNkFKOFdzcG11MUVDbEpnU0lp?=
+ =?utf-8?B?VHVyTXVlQ2h0QlgvOXhFS1g0bmtvNEhqdldTeWhWTVBZclpJR0dJM2ZNUjZM?=
+ =?utf-8?B?MWcrNG04L1pUZHpGa2FUYTdhSVNWZWZ6bm9vczFiSDkwcm40aWdQaVRVdDdX?=
+ =?utf-8?B?UGppaHF1OWpWL2dPcEx6MERudFVrSDJWaVRFNGVQRXNyY29vbWdOeFhJaXlY?=
+ =?utf-8?B?VjZmeG50WHpIQW9ubVp4aHFoWU5TV1ZyRnpUeFdzMXBocWdiV0Y0TmRPOHFL?=
+ =?utf-8?B?cmFYSXd1U2lybkh3RTE4aE52QU8rVmxSQjhvQU0wbGlPaThKWVMya2EyeDY1?=
+ =?utf-8?B?bHE1K1RFQ25KWWxrMktxRVJXWTlBMVAvNXJ5NVlFVjR4b1o2NVVYK3BlWE5B?=
+ =?utf-8?B?QlFobzBSbWJiVVByenZ5OWRkTmxJWGJHR28rSHFSQkVldWt5bmlLUTI1REJm?=
+ =?utf-8?B?bXZLTElnWGQyTlpIa0NEbXEvZ0crb2J6ZldQMmQzT0ZDbXJNYWlPOXlqN2NE?=
+ =?utf-8?B?Z1VEOWZBTGZTVzNKejBIZml3RDQwcnpZTEVpOVVlS3dXVTlVSkxWV3c1M21H?=
+ =?utf-8?B?cEdhSEVVVUt5c1hwNlV5Q3gyOGYyRy81cHJRLzB1K3J3aVBFY1A4aXU4MHJS?=
+ =?utf-8?B?c05JOGpWQzlFVHduYzR6OTZ2aWZRK1ZQZGVVdnFHQ09xNXFrdHN0N2l3aHBt?=
+ =?utf-8?B?Wktla3JVMjg1TGo0MzlqVCtzeG9pK3R3SHJpZnZJdW0wSTI1eFZTdGhid1NM?=
+ =?utf-8?B?TytPdU5zcmNsdDBzOEZ6ZkFaa0o2UlZPekVlQWZUQm8xZGprL2ZILzRPZ25B?=
+ =?utf-8?B?TDIxY0lEWGZlc1lhd0lCc3VhdVAzMzFpSW4zZ3h1RGJLN3BmbllYclNjNEZm?=
+ =?utf-8?B?TlMzWkFpZ0hrNGRNcjJnMWN0dzQzaHNabE52ZG9zZnF5cWRmMExHaFhpd1hw?=
+ =?utf-8?B?bzNydnZJQ0Z0Vk9XSkdaYUNLSWRtdzdNVkhXVk1QQnZhcVJTWVJ1aVZQQzFW?=
+ =?utf-8?B?SDdSZ2I4ZWoyZi9JQytXbEhxZjkzWTBxUmdEWVVtcXdjR1lHc3Y4VlNQQ29V?=
+ =?utf-8?B?bi9nYWdGdUEvRmdKYzNidWtvK3lVdTZGWjZxenBqTWR3VHFIa2J2ZFl6N3ln?=
+ =?utf-8?B?Z0ExcnFMdkVqWnZxM2thRDFIZVdzNkZVMVZKWDNRTjJPTytVb0hZZz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d7dcc66f-32d4-40d7-c9f2-08de785bc932
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 11:43:41.2558
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2026 13:01:14.8233
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: I1h0o0D3pn/6lUYv7F6SOL82eu7kc/GJRN5GkHn+I3HdYgFGpvc64VcDlNWFtVXF
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SAWPR12MB999140
+X-MS-Exchange-CrossTenant-UserPrincipalName: TtqQhApGP+lYZ8IxD5RUmassMLP4YE3ecL6QP3IpQukTcNAEbWlUvwnRYj/JT4DT
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB5656
 
-On 3/1/26 19:57, Jason Gunthorpe wrote:
-> Using kunit to write tests for new work on dmabuf is coming up:
+On Mon, Mar 02, 2026 at 12:43:34PM +0100, Christian König wrote:
+> On 3/1/26 19:57, Jason Gunthorpe wrote:
+> > Using kunit to write tests for new work on dmabuf is coming up:
+> > 
+> > https://lore.kernel.org/all/26-v1-b5cab63049c0+191af-dmabuf_map_type_jgg@nvidia.com/
+> > 
+> > Replace the custom test framework with kunit to avoid maintaining two
+> > concurrent test frameworks.
 > 
-> https://lore.kernel.org/all/26-v1-b5cab63049c0+191af-dmabuf_map_type_jgg@nvidia.com/
+> Oh, yes that was on my todo list for like an eternity as well.
 > 
-> Replace the custom test framework with kunit to avoid maintaining two
-> concurrent test frameworks.
+> No idea when or even if I have time to review that, but feel free to
+> add my Acked-by should that go upstream.
 
-Oh, yes that was on my todo list for like an eternity as well.
+I'm confused by this statement, aren't you the person who would send
+it upstream?
 
-No idea when or even if I have time to review that, but feel free to add my Acked-by should that go upstream.
+It is just a kunit, I wouldn't expect an intensive review. The tests
+still run after all
 
-Regards,
-Christian.
-
-> 
-> The conversion minimizes code changes and uses simple pattern-oriented
-> reworks to reduce the chance of breaking any tests. Aside from adding the
-> kunit_test_suite() boilerplate, the conversion follows a number of
-> patterns:
-> 
-> Test failures without cleanup. For example:
->    if (!ptr)
->        return -ENOMEM;
-> Becomes:
->    KUNIT_ASSERT_NOT_NULL(test, ptr);
-> 
-> In kunit ASSERT longjumps out of the test.
-> 
-> Check for error, fail and cleanup:
->    if (err) {
->        pr_err("msg\n");
->        goto cleanup;
->    }
-> Becomes:
->    if (err) {
->        KUNIT_FAIL(test, "msg");
->        goto cleanup;
->    }
-> Preserve the existing failure messages and cleanup code.
-> 
-> Cases where the test returns err but prints no message:
->    if (err)
->        goto cleanup;
-> Becomes:
->    if (err) {
->        KUNIT_FAIL(test, "msg");
->        goto cleanup;
->    }
-> Use KUNIT_FAIL to retain the 'cleanup on err' behavior.
-> 
-> Overall, the conversion is straightforward.
-> 
-> The result can be run with kunit.py:
-> 
->     $ tools/testing/kunit/kunit.py run --build_dir build_kunit_x86_64 --arch x86_64 --kunitconfig ./drivers/dma-buf/.kunitconfig
->     [20:37:23] Configuring KUnit Kernel ...
->     [20:37:23] Building KUnit Kernel ...
->     Populating config with:
->     $ make ARCH=x86_64 O=build_kunit_x86_64 olddefconfig
->     Building with:
->     $ make all compile_commands.json scripts_gdb ARCH=x86_64 O=build_kunit_x86_64 --jobs=20
->     [20:37:29] Starting KUnit Kernel (1/1)...
->     [20:37:29] ============================================================
->     Running tests with:
->     $ qemu-system-x86_64 -nodefaults -m 1024 -kernel build_kunit_x86_64/arch/x86/boot/bzImage -append 'kunit.enable=1 console=ttyS0 kunit_shutdown=reboot' -no-reboot -nographic -accel kvm -accel hvf -accel tcg -serial stdio -bios qboot.rom
->     [20:37:30] ================ dma-buf-resv (5 subtests) =================
->     [20:37:30] [PASSED] test_sanitycheck
->     [20:37:30] ===================== test_signaling  ======================
->     [20:37:30] [PASSED] kernel
->     [20:37:30] [PASSED] write
->     [20:37:30] [PASSED] read
->     [20:37:30] [PASSED] bookkeep
->     [20:37:30] ================= [PASSED] test_signaling ==================
->     ...
->     [20:37:35] Testing complete. Ran 50 tests: passed: 49, skipped: 1
->     [20:37:35] Elapsed time: 12.635s total, 0.001s configuring, 6.551s building, 6.017s running
-> 
-> One test that requires two CPUs is skipped since the default VM has a
-> single CPU and cannot run the test.
-> 
-> All other usual ways to run kunit work as well, and all tests are placed
-> in a module to provide more options for how they are run.
-> 
-> AI was used to do the large scale semantic search and replaces described
-> above, then everything was hand checked. AI also deduced the issue with
-> test_race_signal_callback() in a couple of seconds from the kunit
-> crash (!!), again was hand checked though I am not so familiar with this
-> test to be fully certain this is the best answer.
-> 
-> Jason Gunthorpe (5):
->   dma-buf: Change st-dma-resv.c to use kunit
->   dma-buf: Change st-dma-fence.c to use kunit
->   dma-buf: Change st-dma-fence-unwrap.c to use kunit
->   dma-buf: Change st-dma-fence-chain.c to use kunit
->   dma-buf: Remove the old selftest
-> 
->  drivers/dma-buf/.kunitconfig          |   2 +
->  drivers/dma-buf/Kconfig               |  11 +-
->  drivers/dma-buf/Makefile              |   5 +-
->  drivers/dma-buf/selftest.c            | 167 ---------------
->  drivers/dma-buf/selftest.h            |  30 ---
->  drivers/dma-buf/selftests.h           |  16 --
->  drivers/dma-buf/st-dma-fence-chain.c  | 217 +++++++++----------
->  drivers/dma-buf/st-dma-fence-unwrap.c | 290 +++++++++++---------------
->  drivers/dma-buf/st-dma-fence.c        | 200 ++++++++----------
->  drivers/dma-buf/st-dma-resv.c         | 145 +++++++------
->  drivers/gpu/drm/i915/Kconfig.debug    |   2 +-
->  11 files changed, 394 insertions(+), 691 deletions(-)
->  create mode 100644 drivers/dma-buf/.kunitconfig
->  delete mode 100644 drivers/dma-buf/selftest.c
->  delete mode 100644 drivers/dma-buf/selftest.h
->  delete mode 100644 drivers/dma-buf/selftests.h
-> 
-> 
-> base-commit: 41dae5ac5e157b0bb260f381eb3df2f4a4610205
-
+Thanks,
+Jason
