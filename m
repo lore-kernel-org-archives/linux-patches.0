@@ -1,46 +1,45 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9EAD319847
-	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76FD4288D0
+	for <patches@lists.linux.dev>; Mon,  2 Mar 2026 18:46:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772477189; cv=none; b=ZrrNlvhr1WEieSvVfxwWi4d4s8gJ8ySxZ5b2EU9Ppvih/Hj9a8u2tHWi+UddCADlPBQ7K/Epcej/bAuipSAEECYvFpM9UJeVJ5KHPL0d++AiuTxGAz8ND/PGxWI2j+tjiTHPmc9e9+53M1ssIngkip8dyKz5rVb6uf2CZttQkuk=
+	t=1772477189; cv=none; b=Poc0AWeYQN/JdYIVD8tUNzemApxKEM0UkOsDEo2QkwFctpCZq7cSrPgMzN98SfuqnGHlyE3UQIe7V2VdzojQmTx6UDeWnKtNFYW8qlbOxD2fKlRhMyNiHQoIiOLiBEs05vpKEtcVHpEhQP9SdOsgyejvVPXceVFCyKCVxwl8qZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1772477189; c=relaxed/simple;
-	bh=lPprbTGisbGA0s+d/uOwEM9KiYptDpYY2nJtKbgMbQQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hZRV+ZM1vTKv9XHaMuefBphKj0K21lmCckvaPYzNkTpnvbdW4kyr4rT3nMz8Dyb5rPdU8PGQkBGoARZ+yvWE+eaX6VE29MlxEvd13SaU0aIAMTsU/hesrzjcuSE3WQJzM3Qc9QC+cxgq2VGC6nXB/or/jbPWekXBCwi/r5f3aTc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MRNrB7/w; arc=none smtp.client-ip=192.198.163.11
+	bh=OSu8IUWQWVNeLAe7zHYbaScIgdWCpnVgJ5f1AJGirxU=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fO9edzVBpleehk7SQW/w75ebX4yv5PJbU9a0oGDezTxkoMtvD5oerMJ3j/ubu15Vc024KwaBAM+4GML/rN/jYeihqUhFmcoSAC0bwu2YS1IoFWq6lP22vIOoEx8Xr/rwfjBz66ojND9aCy0nVObutdmA+2GRiZjSCFd1efiyyTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=YK50DUds; arc=none smtp.client-ip=192.198.163.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MRNrB7/w"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="YK50DUds"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772477188; x=1804013188;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=lPprbTGisbGA0s+d/uOwEM9KiYptDpYY2nJtKbgMbQQ=;
-  b=MRNrB7/wT3O7LWWbbhQZeh4Ybdb6JIZQoXtINcqO5oN2ieTuJuCNyl45
-   k2TG9IEQlkeD/yGl3kPan64HRKcwqGq5zRGoCrp4pW0/+79bdzr/aK384
-   RYBJYWT4H9UXuzdZXCYBiRe5CzxT0wK8EL1ABsylqLWTourAwDV0N0SUA
-   +r428a1dsjfUiJDSmmL5J7AiCvH/FdzbWUOCkmbF+In/nmJg9l7oPk3dB
-   yPzLQOTKGgJrKZRfAY5xcddSaSG7W7Uae4Kca8ZpDJBxaV/paRuZxRqsD
-   wu8L/fWN1nGCW10KlvEQubdRyLJ7azk4S+7xTqV36cd221yGUAIEgA60V
-   g==;
-X-CSE-ConnectionGUID: xqNA9o3WRVWH1wc7C6rZ7w==
-X-CSE-MsgGUID: AzjE2hxNSZaOAD2ff63QNA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84135426"
+  t=1772477187; x=1804013187;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=OSu8IUWQWVNeLAe7zHYbaScIgdWCpnVgJ5f1AJGirxU=;
+  b=YK50DUdssuvMeHVOL60xtQXA0mZySKS0Qcgz3DGNPSb/RRBG2emZ3OiR
+   /M2GohOsKGD0cINr98suMtMW67ZBF4oT9NertWHVr0Od2B6wExrR/QGne
+   f/rzWz3RWUiTyG0jOX/mqZ1ICFLg+Hlx+ai/YQUVAhlagtF6M6d8uYPBc
+   dMrwBvtMwu1fEkVfQlX/DBs7VqtcZJA5ZztJu7xj4JQNc0lEQ60tB0gq3
+   Q3vZrqATtMsAu7YgeSRDckgFLgdqg3ziqGucQW5gPes2ZefRouqbOx12X
+   cHM3Sf+mSSkWfk7wHDEa/SftRy8T4HRj+/h6E4d6+7UhEMsEWOn7oyHwp
+   Q==;
+X-CSE-ConnectionGUID: OaJ/O8U4QQWmxYKxVyjuMw==
+X-CSE-MsgGUID: xOJ3prFlS32oSzSiSwd6aw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11717"; a="84135417"
 X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
-   d="scan'208";a="84135426"
+   d="scan'208";a="84135417"
 Received: from orviesa001.jf.intel.com ([10.64.159.141])
   by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
-X-CSE-ConnectionGUID: JCQRu/dqQ8KB0ZBbsmdL4A==
-X-CSE-MsgGUID: SEJPw139QMm+4U2hSuKJcg==
+X-CSE-ConnectionGUID: /KXGgAEyRge9JcWsfoHOEg==
+X-CSE-MsgGUID: M13Mlu4aTpCJhY5XEsjLbQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,320,1763452800"; 
-   d="scan'208";a="255604077"
+   d="scan'208";a="255604074"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Mar 2026 10:46:26 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,83 +59,93 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH 01/11] fs/resctrl: Add missing return value descriptions
-Date: Mon,  2 Mar 2026 10:46:07 -0800
-Message-ID: <e973d6a29193d6de7d9335600076d7ec3af9610b.1772476561.git.reinette.chatre@intel.com>
+Subject: [PATCH 00/11] x86,fs/resctrl: Improve resctrl quality and consistency
+Date: Mon,  2 Mar 2026 10:46:06 -0800
+Message-ID: <cover.1772476561.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <cover.1772476561.git.reinette.chatre@intel.com>
-References: <cover.1772476561.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Using the stricter "./tools/docs/kernel-doc -Wall -v" to verify proper
-formatting of documentation comments includes warnings related to return
-markup on functions that are omitted during the default verification
-checks. This stricter verification reports a couple of missing return
-descriptions in resctrl:
+Hi Everybody,
 
-    Warning: .../fs/resctrl/rdtgroup.c:1536 No description found for return value of 'rdtgroup_cbm_to_size'
-    Warning: .../fs/resctrl/rdtgroup.c:3131 No description found for return value of 'mon_get_kn_priv'
-    Warning: .../fs/resctrl/rdtgroup.c:3523 No description found for return value of 'cbm_ensure_valid'
-    Warning: .../fs/resctrl/monitor.c:238 No description found for return value of 'resctrl_find_cleanest_closid'
+This is a collection of resctrl cleanups assembled together for convenience
+and simpler tracking. I'd be happy to split them up if it makes review and/or
+handling easier.
 
-Add the missing return descriptions.
+Summary of changes:
 
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
----
- fs/resctrl/monitor.c  | 2 ++
- fs/resctrl/rdtgroup.c | 6 ++++++
- 2 files changed, 8 insertions(+)
+- Let resctrl pass stricter checks from various tools to provide a cleaner
+  baseline with the goal to promote healthier contributions:
+  - ./tools/docs/kernel-doc -Wall -v <files>
+  - Build with W=12
+  - ./scripts/coccicheck
+  - Static checkers
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 0cd5476a483a..93db7c1cd7be 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -234,6 +234,8 @@ static struct rmid_entry *resctrl_find_free_rmid(u32 closid)
-  *
-  * When the CLOSID and RMID are independent numbers, the first free CLOSID will
-  * be returned.
-+ *
-+ * Return: Free CLOSID on success, < 0 on failure.
-  */
- int resctrl_find_cleanest_closid(void)
- {
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index ba8d503551cd..3c9508fc558d 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -1519,6 +1519,8 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
-  *
-  * @cbm is unsigned long, even if only 32 bits are used to make the
-  * bitmap functions work correctly.
-+ *
-+ * Return: size in bytes, 0 on failure.
-  */
- unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
- 				  struct rdt_ctrl_domain *d, unsigned long cbm)
-@@ -3102,6 +3104,8 @@ static void rmdir_all_sub(void)
-  * @mevt:   The type of event file being created.
-  * @do_sum: Whether SNC summing monitors are being created. Only set
-  *	    when @rid == RDT_RESOURCE_L3.
-+ *
-+ * Return: Pointer to mon_data private data of the event, NULL on failure.
-  */
- static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
- 					struct mon_evt *mevt,
-@@ -3496,6 +3500,8 @@ static int mkdir_mondata_all(struct kernfs_node *parent_kn,
-  * resource group is initialized. The user can follow this with a
-  * modification to the CBM if the default does not satisfy the
-  * requirements.
-+ *
-+ * Return: A CBM that is valid for resource @r.
-  */
- static u32 cbm_ensure_valid(u32 _val, struct rdt_resource *r)
- {
+- Use accurate and consistent type for all uses of resource ID.
+
+- In the unlikely scenario that resctrl picked a wrong CPU to read an event
+  from, pass the error through to user space instead of claiming to succeed
+  and returning a (wrong) result.
+
+- Since inception of last_cmd_status feature there have been mismatches
+  between resctrl file operation failures and the contents of
+  info/last_cmd_status. This pattern keeps propagating with each new resctrl
+  feature. Establish a new baseline with a new pattern that ensures
+  info/last_cmd_status contains an accurate failure description that matches
+  the most recent resctrl file operation failure.
+
+One potential open:
+
+There remains an inconsistency between resctrl file operations that do/can
+_not_ fail and the contents of info/last_cmd_status. If a resctrl
+file operation fails and an informational error is printed to last_cmd_status
+then a subsequent reading of a resctrl file (specifically most of the files
+found in info/) may succeed while info/last_cmd_status may or may not return
+the error from previous failure.
+
+Ensuring last_cmd_status is reset on every read carries the cost of taking
+rdtgroup_mutex on several more user space initiated paths and thus increase
+contention on rdtgroup_mutex. I opted to not make this change and instead
+focus this work on ensuring that last_cmd_status is accurate whenever there is
+a failure during any resctrl file operation. Please let me know if you have
+opinions in this regard.
+
+Any feedback is appreciated.
+
+Regards,
+
+Reinette
+
+
+Reinette Chatre (11):
+  fs/resctrl: Add missing return value descriptions
+  fs/resctrl: Avoid "may be used uninitialized" warning
+  fs/resctrl: Use correct format specifier for printing error pointers
+  x86/resctrl: Protect against bad shift
+  fs/resctrl: Use accurate type for rdt_resource::rid
+  fs/resctrl: Pass error reading event through to user space
+  fs/resctrl: Add last_cmd_status support for writes to
+    max_threshold_occupancy
+  fs/resctrl: Use accurate and symmetric exit flows
+  fs/resctrl: Use stricter checks on input to cpus/cpus_list file
+  fs/resctrl: Change last_cmd_status custom during input parsing
+  fs/resctrl: Communicate resource group deleted error via
+    last_cmd_status
+
+ arch/x86/kernel/cpu/resctrl/core.c |   4 +-
+ fs/resctrl/ctrlmondata.c           |  70 +++++++++-------
+ fs/resctrl/monitor.c               |  80 +++++++++++--------
+ fs/resctrl/pseudo_lock.c           |   2 +-
+ fs/resctrl/rdtgroup.c              | 124 ++++++++++++++++++-----------
+ include/linux/resctrl.h            |   8 +-
+ 6 files changed, 173 insertions(+), 115 deletions(-)
+
 -- 
 2.50.1
 
