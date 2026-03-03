@@ -1,133 +1,100 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28A523D6480
-	for <patches@lists.linux.dev>; Tue,  3 Mar 2026 14:15:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.222.177
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772547338; cv=pass; b=lPDrNgmizNf/Rhnes8DCQOOBQl+nNZ0EHE+y8u8ZhyoMf6mH2VCD1IIvu1uQ0THApFVQmXNdQ2buIpkcvTVo2WSJYwvw6z/C/oyh4TtShPNwXjC++EWXtGN8f1bQZPItkhfy8tdznTSp2xLmmoA6vHygLGh0Dxjxf15Gk+XaeOU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772547338; c=relaxed/simple;
-	bh=wWJbpY/42fHgMyOjdlR2gjXY5cxvMff7kY1YRZ1JHWI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Kd3hv3RlWdwLVhsWIkeEpTsK2TJLh+XTzBxnHBgvc7cyBmPzQokBK7LcThAhc+0i+tpIG0z43NVQJqi2XnutOzFgF61tcCDldxswFKXPOKPDARuJ8oTkH4vryfeyFamwwWgnyHgVXM244Ct6nzvfYSGXgdmAuBu1l6AJUNQgqpY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com; spf=pass smtp.mailfrom=ciq.com; dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b=kvn7tsW+; arc=pass smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=ciq.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ciq.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ciq.com header.i=@ciq.com header.b="kvn7tsW+"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-8c6f21c2d81so549572585a.2
-        for <patches@lists.linux.dev>; Tue, 03 Mar 2026 06:15:37 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772547336; cv=none;
-        d=google.com; s=arc-20240605;
-        b=dgMEUUFyZe284oz/MCHRG9+w1PM4dKnkDEXcYyRY9J+x1bQdHOJ73B51+S9xXGj5MP
-         hVBEyNNssFQdjri38Z1qigy8CjK1pB8/aH7r71ohskyyrGuuMZuR+fGU0QPvSJSCAkmH
-         D1Xan15DkXerxAWR8oDDbAGeKOuWI5YovEVFDN1bzWLYukphtzxxmEBejm2Mc15TVdN/
-         9bL3t8fXDcS4v9juW3/3ao1a5yJRpyVTZPPLRz35ubdnvm9CIEitGPA9vJvt3rY9d7at
-         nRrHkHVM995tnalVax76UjrQ1KpIT0+UE/D0CkV98fK6taUxNZKftJjaeU07DUCjfwhQ
-         3alg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=M67oupMhXrY0+DWlqzwxQF9Ii8HtL6+92EQ63WLDIvc=;
-        fh=9S8i2Mp8CMj4GKW90QUmRCjOoAI5piS7+cEaywAE09w=;
-        b=fvdzpJ8GbbxWOeKWQjoDoCEdPIX4LskvWy4sUnweZAxUc3+plM53cbHdZf6GJn5mBI
-         VMMRlFx+0dWQYwOguBmmrxlJCJR4iQBavEW5N9HSt4glDq70fyTYqfjCbhIMdeYGp6DY
-         ujNAAnnXkEgJMG0xCfth8wmqjNTzTA9lLlIqeZw4FlY/jtoqJxZrfpPvzF0QMDhoa3C6
-         btm/fknENODK+1UpdPDqYXMDkXjgi4LXMNaP1M8r7VqxioD3BKXwzRflPodvLFH5llR2
-         6TX7s3GAhUsPnMxeYEdSmJnrvubrbto8TC7fHdULDQw7uGSLu7gpah8pK3rsXSgwODgl
-         EGOw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ciq.com; s=s1; t=1772547336; x=1773152136; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=M67oupMhXrY0+DWlqzwxQF9Ii8HtL6+92EQ63WLDIvc=;
-        b=kvn7tsW+rQk1roJKxlLxlh9++2fyYHa6ouuXgMb6lOes5qJuWzQAYrXyKqrxR+jPCr
-         WCXznipQP9W8tZ3/PgQ+oX7SJ0CpHop3/iUz14zVnl5GB7/sI+lPonXgc6oRsHyBuZkt
-         xGzVURyBi2fZwO1c2UFdFSSCTeh/pK88h2Ne4NDfO+JYBy7aX/dJ1qF3zyBh6LqMX6uJ
-         Y9S6JoissOn6wN1BGH9omFkzxCOPq+iNLG3TpEkow6pEn0rxGMOw8u6wjeDAH3vNyGun
-         UJ88YnbeLiOlG2hmOhtkgoj5M75N9F6RHu7i4t8Qa9+ZaUeE1nXg6ZR3HVBzvj/dx7Pv
-         +RCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772547336; x=1773152136;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=M67oupMhXrY0+DWlqzwxQF9Ii8HtL6+92EQ63WLDIvc=;
-        b=P0Kj1YyT3Hco9/IttvxEViMNOKAHN7rMTP34FI1iaOYyk/6G6k4x3JGBUy0AU9Hw5s
-         HcmV68ipQDmVhMwQ6IavjK+elZozaiPvqdtyYfehbOPQ/eRNeZpSyYYoDEhJD7Ujxwfj
-         A/SLkoANoYGW1FhuRCQ/JuFEcdmH0GVL2++EZ5e6gAowFGF75UWHI5XgSpHQOiocMYPL
-         MnQPkVENcrz+xKFizm9EWHmQqMFqb2OVe/Z632nVMONojQGoBEuy1ewEWlzAWLwgWvny
-         28mLjpXM0/kmCZ6znsEj2DBAMg4RoMJ9ZPQ9nNc2SJSlng6PY2TrqWT90h1ndsWbOVbq
-         fhDg==
-X-Forwarded-Encrypted: i=1; AJvYcCVvYuIuTvBU4xrDu9JXnaOnkUI/k/Z3QBgCBwdIN+TUAjO55DDQ/icV8UB5agRcjXrQqTMeZZGY@lists.linux.dev
-X-Gm-Message-State: AOJu0YzQxzRHx06iSbq5+710Xty/jNxLpgtLkZZDzqLBzb+r8wIWIRk/
-	XsLlMxuglY0K/SFxu1tqQT74fCnESv7vQdt7iECLRiEZHu7I/h5tZg6IUTnH/RA7H/9DNOdXwIv
-	C0v8So53ymcf0iwFg2gLAkAElVbpc1TekaWBS8y+EhQ==
-X-Gm-Gg: ATEYQzx7+GZtpmqkJj8f3OiFDxgNd1hAYfPNzFm0SCz5NyKW7Q1kWksX/ZJ1pCIKcNU
-	sl0Fku7KBHHxAps8st6VieR6YdVJch0sojSMxZGWbgaFmgcp3fnTWXQlzIE7b4mDo4YS/uBGg4U
-	m6ChI2iWe9jyGRwl3c1kVm2P2IgsyP/3qjwi1rfA20DgI3YWgvnB3jyF8UQoln3QluoSvmwPLNJ
-	iUhjNlaoXIgHUq1f7zflKlVLI5lX5mEti7bhVtCYWn6S+eRXrhuLOymDMm9f3egWNkDkvnZXcYv
-	N7XPapn9QqEM2/sSt5I=
-X-Received: by 2002:a05:620a:4509:b0:8c5:338b:bfa0 with SMTP id
- af79cd13be357-8cbc8e7dc6dmr2032573685a.20.1772547336078; Tue, 03 Mar 2026
- 06:15:36 -0800 (PST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 411433B4E8F;
+	Tue,  3 Mar 2026 15:56:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772553404; cv=none; b=pUUgaUkx9g3fhPXyhKPTINU14MoQKuVg6cHYrW6jKKYLR8hurud7F+clFhVg+ny28dKMPZQ2+4yiBY/HdmQJsTJxu1tYCcFGmvUi0D0yMk5IC2IZP0cu1UfHLZhHJ4XfhZzA378lPpCC12g8Q31IF+nrmPx9BiDQ7iTbKN6pAsY=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772553404; c=relaxed/simple;
+	bh=WFUnFr4evtmCzH8JW6blMP6xP61XMvgyDaCg/e7985E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=OEI55kMrDpLckb6/CTgiDhgA+bn5RQ9btCrpWxPoTZXwtdPsfe0NqnfN4HwLMf7UyUNtR/nKwgXs6QCo+FfrQCIuTSP4LqqqOTEAIDqxIpzUnZz+6qosL+FJR9t2+Am6JYwx9K5JbT9I4MdhzS1BEBUtP5UBKRC12qg/tk3pZhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 6BCC5339;
+	Tue,  3 Mar 2026 07:56:36 -0800 (PST)
+Received: from [10.57.56.165] (unknown [10.57.56.165])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 862BC3F73B;
+	Tue,  3 Mar 2026 07:56:40 -0800 (PST)
+Message-ID: <ed985e72-dbfe-4d60-b5f1-581ba58e3c18@arm.com>
+Date: Tue, 3 Mar 2026 15:56:38 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260302160918.2520730-1-sashal@kernel.org>
-In-Reply-To: <20260302160918.2520730-1-sashal@kernel.org>
-From: Brett Mastbergen <bmastbergen@ciq.com>
-Date: Tue, 3 Mar 2026 09:15:24 -0500
-X-Gm-Features: AaiRm53-OaYjRfWbC9pMghHZGosU3gXJ2IxK_UISbdkSNGhbNsynY5rfwvgLYP4
-Message-ID: <CAOBMUvjE=nLRuRiD6gt_oFvC0gd6zqGK96kT+PoL8x-r9xAF1g@mail.gmail.com>
-Subject: Re: [PATCH 6.12 000/956] 6.12.75-rc2 review
-To: Sasha Levin <sashal@kernel.org>
-Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org, 
-	gregkh@linuxfoundation.org, patches@lists.linux.dev, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
-	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
-	sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rc 1/2] iommu: Do not call drivers for empty gathers
+To: Jason Gunthorpe <jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>,
+ Will Deacon <will@kernel.org>,
+ Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+ Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+ Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org
+References: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
+ <13e28ac2-a4d6-466a-aef2-7b3d7d9167bd@arm.com>
+ <20260303130420.GB972761@nvidia.com>
+From: Robin Murphy <robin.murphy@arm.com>
+Content-Language: en-GB
+In-Reply-To: <20260303130420.GB972761@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 2, 2026 at 11:27=E2=80=AFAM Sasha Levin <sashal@kernel.org> wro=
-te:
->
->
-> This is the start of the stable review cycle for the 6.12.75 release.
-> There are 956 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed Mar  4 04:09:04 PM UTC 2026.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stab=
-le-rc.git/patch/?id=3Dlinux-6.12.y&id2=3Dv6.12.74
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.12.y
-> and the diffstat can be found below.
->
-> Thanks,
-> Sasha
->
+On 2026-03-03 1:04 pm, Jason Gunthorpe wrote:
+> On Tue, Mar 03, 2026 at 12:53:28PM +0000, Robin Murphy wrote:
+> 
+>>> Further, there are several callers that can trigger empty gathers,
+>>> especially in unusual conditions. For example iommu_map_nosync() will call
+>>> a 0 size unmap on some error paths. Also in VFIO, iommupt and other
+>>> places.
+>>
+>> My instinct is still to tidy up the 0-length unmap case(s), but I guess
+>> iommu_iotlb_sync() is itself also a public API where being more robust
+>> against erroneous usage is no bad thing.
+> 
+> I also wanted to do that but found enough problematic cases I lost
+> confidence I could reliably catch them all..
 
-Builds successfully.  Boots and works on qemu and Dell XPS 15 9520 w/
-Intel Core i7-12600H
+I reckon an early "if (!size) return 0;" in iommu_unmap() would suffice 
+to cover the internal error cleanup paths and most careless external 
+users. However if we don't trust iommu_unmap_fast() users to always do 
+the right thing either then we want this check in iommu_iotlb_sync() 
+anyway, at which point the iommu_unmap() check would really only serve 
+to skip a bit more unnecessary work on error cleanup paths, and do we 
+really care about optimising errors? Hence I'm satisfied that this patch 
+does in fact seem to be the best option.
 
-Tested-by: Brett Mastbergen <bmastbergen@ciq.com>
+>>> -	if (domain->ops->iotlb_sync)
+>>> +	if (domain->ops->iotlb_sync &&
+>>> +	    likely(iotlb_gather->start < iotlb_gather->end))
+>>
+>> Elsewhere we just use "gather->end != 0" as the "non-empty" condition; how
+>> concerned are we about defending against more-intentionally malformed
+>> gathers here?
+> 
+> I choose this deliberately to protect the driver, a malformed gather
+> that is 0 sized, or negative sized looks like it will have Weird
+> Things happen in drivers.
+> 
+> We could further classify the < and WARN_ON the malformed cases, but I
+> don't want to pass negative sized gathers into drivers. We'd probably
+> also have to de-inline the function if more is added. Do you have a
+> preference?
 
-Thanks,
-Brett
+No, that's fine, I just wanted to confirm the intent - this isn't a 
+place where we should need to be concerned about micro-optimising to 
+maybe save a load and an extra ALU op or two, just that I don't think 
+it's worth doing any more than strictly necessary for our own 
+robustness. Thus there's no need to change the check in 
+iommu_iotlb_gather_is_disjoint() either, as that now just serves to skip 
+the redundant reinitialisation of an already-empty gather, which is 
+justifiably a different thing from the actual validity-of-sync condition 
+anyway.
+
+Cheers,
+Robin.
