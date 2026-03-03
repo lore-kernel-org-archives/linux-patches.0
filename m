@@ -1,128 +1,163 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (mail-westusazon11012063.outbound.protection.outlook.com [52.101.43.63])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF37D382398
-	for <patches@lists.linux.dev>; Tue,  3 Mar 2026 08:31:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772526693; cv=none; b=AMjIalxxJUvgIwIsgGT4Fe5PLr9LVhX+TJmx0PyP2qL6BCb+2Xb/RR818b4+M5Gh3BaNLwUX8tPmRot+YF4HA45fP/WgK6TGWVsaxzeBmJ7UaVDG6tEDGizNnWN+H3fOrYInDPJcRB2m61gH3geoIUEtJ5cpmmKaHC3MMDJ/xGQ=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772526693; c=relaxed/simple;
-	bh=Ki/OJPffb844O+vTtB6WCYGxVXcZKdwWDSXsiOrfVZY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=upYDCfHUd0QyKvYp83uk4Q+VuA/XkjHCX7u/ZVF6MI91YQzMBUv7pQiFoZU9Ab/D66IvWCoZtX1mP8WqQ16X2whrXRPXDqFjWAq4Cj+yBSelrPu9ZtX2OQXxzTAJb10zok5Bj5t50LGUt+/KZcPGYiC6GeU5z0c017Zi6bcac7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K51jjfbA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VZm429iv; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103DF45948;
+	Tue,  3 Mar 2026 09:08:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.43.63
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772528919; cv=fail; b=grhOT9VmVSfi8Q9pSZGkKLYNaoAbdgT+yq/Y8rTcUg2RuPWwz9Q2TVCpRADQCni4VP7ZOKZN9RIen4l2Lu2BNdifE/5xAlh6nHd6WP/LkOzcdOcIHbiSyA+9dGvUe2F2SwQk+hr5hFO8vPHDhDncGdi1qBkFwrUXQ6SKi/kcsHk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772528919; c=relaxed/simple;
+	bh=KGP2DN6WIO1FHHEfijrcU9cj2FeLSMIj8bo5Vu72m0A=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=BvC2YJ57tjk5hnaR9KDeBnZWP4wadOljUx80oOTMuVP3cWYOn8sfOC8YKc+c3F3DJDDBQMeuo0AGH87/KGDVaRjPY5WGG1K+o+zSRIMbBDFf/VUoPuENTmmghbA90lo9b/UsEWJavjGbPHgXZ6ExwdQITq6Gg58yXHxZY6b9Zts=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com; spf=fail smtp.mailfrom=amd.com; dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b=SQnPyT6q; arc=fail smtp.client-ip=52.101.43.63
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amd.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=amd.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K51jjfbA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VZm429iv"
-Received: from phl-compute-11.internal (phl-compute-11.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0ABA01400051;
-	Tue,  3 Mar 2026 03:31:31 -0500 (EST)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 03 Mar 2026 03:31:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1772526691;
-	 x=1772613091; bh=jF8P8AkCF4V++kE9eDOyXQahSASYk5G5v2HjlhpRmIw=; b=
-	K51jjfbAPP4gui2zrzzXz3QsdhuSe5LE0Xx2mfB0TWOE1L9wy7zRGCs3dVsBph5K
-	Ekis6GR7j9SYF9z8AD/9ZYAxC7VTOqTL6GKrXk1RpNqsNxM8lWawaTgV2ymEZ52K
-	7s2Lsei7+a8deX9KVUPG4uR8E7SMFYNhZiZZSW/pmbt0sR01Dd2In2Q/xNoJ1CET
-	b9DqmFFAwJqezh12fUSgqp7boZxvHkoYm3Hq7YL69QaJuUJLMLmCQ/P83rAkkXQG
-	TuxMeY4Ktrj01/EM78oknDJkwiqyKyEEQbyg3PXdN3cOKaxILW4Qu7IUzvCO8wcn
-	+zTjHBTvY37XXEaRxL1/XA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1772526691; x=
-	1772613091; bh=jF8P8AkCF4V++kE9eDOyXQahSASYk5G5v2HjlhpRmIw=; b=V
-	Zm429ivd/qi1RYr1c7rXILg8ib/VF5hsavFhQIzLRFO3evWStyPIugKbyL2E7u1p
-	MyAvNZUwEAnpHkSvNi/9qIgmhJG1kgwAdfLDWJ4Cfag5nhSFaDjXJgW0yRoK/DXt
-	S4oZji6DojxyCGOcOTB0tipCmRVt4s7IopqHXp4sQF/y1eK5zjasVrWgV/OzKjYX
-	sWHESF49okFejMcFCPA+TMs8IzEMrocvUwzPzt14XCP82tGSHwW9WTKFiNjrrC0d
-	lrI/bNtanyV/RoowOyD2JdYbEsd1ONLl8M3dqU9GBhWXQ7l6rILLcLg7CGnBXmfm
-	riRADwuR+1pDGCP40MzAw==
-X-ME-Sender: <xms:YpymaWDX_yiAY3tgqFi03VbfSqXTGQpaQGunEwbf0lXNqeg5ag-K5Q>
-    <xme:YpymaQ6o_eazreXr25jXJt7lDkZd6AyCB6RymiGS0cAAYiba3V5ZqciLo4mAoM-ax
-    MKV7BmcL-d3q5uhgfr6PvwH4f4o6Cgwf046tbj4WKUq3YdI7azmpC4>
-X-ME-Received: <xmr:Ypymaasvn841D3LnqV1oRUpm65ojxzdgLDXkJqjVUx14zcdzFR_loUySg4NLjmIffvq1D-cD5skzmZceTsNeFBoYJ2FgAw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddviedtudduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
-    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
-    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopedvuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epshgrshhhrghlsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghr
-    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthgrsghlvgesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgrhgvghhkhheslhhinhhugihf
-    ohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehprghttghhvghssehlihhsthhsrd
-    hlihhnuhigrdguvghvpdhrtghpthhtohepthhorhhvrghlughssehlihhnuhigqdhfohhu
-    nhgurghtihhonhdrohhrghdprhgtphhtthhopegrkhhpmheslhhinhhugidqfhhouhhnug
-    grthhiohhnrdhorhhgpdhrtghpthhtoheplhhinhhugiesrhhovggtkhdquhhsrdhnvght
-    pdhrtghpthhtohepshhhuhgrhheskhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:YpymaQyfENhbsUQ574Nkj41I22Czbp7Xtn9Yk0i2WpI81-jJ2xryxg>
-    <xmx:YpymaaaEN5ArrjkwX7RRnDakHhfPKZiYuk8EiGEj9wy3bNqJ5offpg>
-    <xmx:YpymaX5GlDDCmysZzKrYbHBQ4VNLmZgkPMOsT9pBmkOuA1HZPeuAPg>
-    <xmx:YpymaR7VxGwypJkJY6MuiylMG7WvvUenk9WwpNvoA0mpo_9GvbnjVA>
-    <xmx:Y5ymaRuhbHDBYPnTmjuzfhJtB5nboU6dzsyydxJ4FB6c4qUO7CfCpfEr>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Mar 2026 03:31:28 -0500 (EST)
-Message-ID: <1ccbd22d-2323-4f20-998a-3ab04526434f@pobox.com>
-Date: Tue, 3 Mar 2026 00:31:27 -0800
+	dkim=pass (1024-bit key) header.d=amd.com header.i=@amd.com header.b="SQnPyT6q"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=niuaqjkEj7Id0AfV8BBkKqXU/0BG1ix8bUu2pChrhDWyr8qjtsQQq91BVwdI7MQx2Ml+NF7ub7j1swOkzxCQ8TPxcz4UB+u5rnYJE9Vmfe0snRPPkxRGZCDXRaBwohC6xBCXZk8cAbVBE5BVv8UmCMI38ELrcgmgbKVNvZHmfoe2Z9iI/sk4rZG7m8q5GJGB1pWQzZFXzDKFh5wUQlkcGednKYNNKwKVQU71Zp5+ATrljV9L4p3qhNhXQ39DBPxC8K7oxi5gts5UgvW67IvkoVur4mGZfvVb9u0PYeMKmPnbh5n95aFZAzUD8LToXzPT97atlUYKvK4kQjCstjtw5w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iSqJftoRTHc8HepBkB0N8f8iTS0b/ne8vSDwhpwEOKk=;
+ b=uwHBcUq1uCtX0PPvpOy7alisOe0CqAkOq6+zjP5hRxgx1nM1SDWR6qippCX3fVObLFTjvJjb00lzND/CY0YujtOPhvbucHJILQPBO98rMn3706KHneejROdLuOf+Tu2a6gMBA0PAP25UeX3nT4cUfNawRM4Ub6fk+luMyusuzbs3PIHLHKUV+SCVw6NITo8ZXmCfYWVhkOtzgeyPvbjlHKNZOvhJdq1VZzA2IWju+B37JC22/rJEnHnMbBxicIlwrIv2EuCcyc8csJbCjnR18r18ZliMs5DK7y/FRo0qG/PeQCM+1vUaD3EM9n8lWZ46LTNyOAb2dCd3/7z9Y6ZTqw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iSqJftoRTHc8HepBkB0N8f8iTS0b/ne8vSDwhpwEOKk=;
+ b=SQnPyT6qSRWewd/9ZnCPyIU3u37K1XqOBavlorplDrBu4F2lwFL1c3wF0orDJzGjN7703fRR069oOrbT9a7RXpoq2D8frZxdyEqtiOuH6iB6aipvKWFjbp0XL+1BIiIO4YVIHxc8llhT+7KjNZIlg2Eg1dIIndj6PONq12JMy9A=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MN0PR12MB5761.namprd12.prod.outlook.com (2603:10b6:208:374::6)
+ by MW6PR12MB8833.namprd12.prod.outlook.com (2603:10b6:303:23f::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.21; Tue, 3 Mar
+ 2026 09:08:35 +0000
+Received: from MN0PR12MB5761.namprd12.prod.outlook.com
+ ([fe80::b0f2:27be:4ba6:3288]) by MN0PR12MB5761.namprd12.prod.outlook.com
+ ([fe80::b0f2:27be:4ba6:3288%4]) with mapi id 15.20.9654.015; Tue, 3 Mar 2026
+ 09:08:35 +0000
+Message-ID: <eda00619-86a8-491f-9990-160ff9c77a11@amd.com>
+Date: Tue, 3 Mar 2026 14:38:27 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rc 1/2] iommu: Do not call drivers for empty gathers
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Will Deacon <will@kernel.org>
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+ Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+ Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org
+References: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MA5P287CA0210.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:a01:1ab::16) To MN0PR12MB5761.namprd12.prod.outlook.com
+ (2603:10b6:208:374::6)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.18 000/757] 6.18.16-rc2 review
-To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260302160853.2519610-1-sashal@kernel.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260302160853.2519610-1-sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN0PR12MB5761:EE_|MW6PR12MB8833:EE_
+X-MS-Office365-Filtering-Correlation-Id: 15a41ecf-f31e-44d1-3a48-08de79047310
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|1800799024|366016|376014|7416014|7053199007;
+X-Microsoft-Antispam-Message-Info:
+	2U4a4C5BO7Tx5c7UpWL8o1dbuVGI5B+8gphpdHCzmQJWu2xsWiPEOTN8BPRX/oipKPEy07p5MgIXLhxtC+ufUknYyJr3vn8CKfcqY90zMWM8NP071tyuI9LX+OJBwNu3NO9j2qIrFk5dZY9piABh5rR1s1goWLkruGNTTKL2S/TTJskZP3vBIbAWzq/xqIJ6WTMTWFTtFzqZE/wJ+yOCgcrNA62ntkzvWBQkArHBRpxJY/4xV6YoBLoX6Tyh/QQepsCThsHp9SLfhpn3go9bWCmsGK5jX92hosLM1qNla58pMMoNrxxUHbPUUVzzHERU0ko44idTcyOFP0byZtRBGE8MyPSkFFP8p1bbkrQj704f90EGZFK1/b95mtkUDMofxFCriIXEoBnxgyBGKNoLCqgH2VkN14HV0FkvD/gbtGuTGVVPwMs2L4V9Dg5Kl52OjsvvfdZJe+QiBcBP8ifjL7oe4tFdtYx5uz39K1if32sANgQ5yDfxib47S9usNmxGanKpDP1OmdDO/gvL6SeDYDTOrXwxOauclNQBMxzJLAZwkBbEhft2IKdXyXJF/NV4y8rQ39dx1KZSF2E2SGW1Cxn3yXF4vI/CoRcEuXisei6gnWhmn6KQEJ3Ac2p3wkUmwGbkcmt1coR+iMBQGyT244Li5w41XqZ4gLkulEdPMqz6o4jeIunL2BkC9A4Ew327Z9pkmlnuxcCj/vKUPFGsN9V3Qe/wsru4MIEAFX3g+GI=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN0PR12MB5761.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(7416014)(7053199007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SDF3Y253ckRiTEJ5d2xKS1RDNVpYdGxOemxzVTRsaHZwN0VBeHhLUXE4VmNr?=
+ =?utf-8?B?cmFuUytrS0wvanlQK2tUNmc2UHBZb1V3Y3NYYVZHS3RmRU5XWWd6Z1pjYkRC?=
+ =?utf-8?B?SFhObU1GdGc1ellBeSt0dUxjQWl3Y296N1RlcSsrQ1pQL1Y0UzhJQ0FtNm1z?=
+ =?utf-8?B?ZGlNUUNJL1NkYTMrY1R6OURQaUY3SjNTYjE0Q0d0QWlCUUc5RUxRTUlVclcv?=
+ =?utf-8?B?ZDNBaXRMMXlLYlVYaklKd2FUeTB2cytuYXlyRkF1b3J6aGtQUmxxbEx6TGNw?=
+ =?utf-8?B?TXljVXd2dEVOY3hyNlVpN3RpV2l0ZlM1T0xTTUdMcTE3VXovWUZzYmhQbWNh?=
+ =?utf-8?B?UENBanJXNVM2WllqSlVCL1owaDBNdjQycmpXMmwyd3FleFFVa25iVUVoa1dF?=
+ =?utf-8?B?MW9zcStya1ZCQ3FvWEtTbDVDWXRIcmVKWnFNN2VLZy9CdldFL3lveE9XUFpi?=
+ =?utf-8?B?YmpWOFRqUGdxWXppei9TTFFWWlRETTFqMnV3NVV5ZEZaUDhiY0FPM1FxaW1Q?=
+ =?utf-8?B?ald0Y3BHOUx4VkNxNFZORm1nMnJCTE40VmxlM2tsb0hkeW9NM0JUVkFVdG9K?=
+ =?utf-8?B?bnYwa25rK1kyYjdaWm9WRXBzYmVxbWxUSUU4SFk3MStYTU82UXJ0SndhQUFJ?=
+ =?utf-8?B?NmY5eWFjaGNuOThtUmowYURYeGtDK2ZJYVJkU1Vlb29FMTFBWWE1Vkx2TjU1?=
+ =?utf-8?B?NVVOMzFHSG53NHYyYVJHMFlmbVNtYWt2c3Nvc0hibDRIV1d4TklvOG12cWxC?=
+ =?utf-8?B?YU1qUGpkQmhVNXlleHRsZVgzcFY1TS9ibDh5SW9LdzNvamloY3dMc3lFcVp5?=
+ =?utf-8?B?bk5kdlVuNGhWUmp4dkV0dGxMWHlSbTMrVlZBbDQvNndZaWxjcFlOcWhWVlZv?=
+ =?utf-8?B?KzJEMlBiOU0rMUtVckVnSThXeEJkVXVoNzd1bDhwN2hyS1ZFYUZpTFFmYkpP?=
+ =?utf-8?B?WCtLS2o1Mlh3TTFDYXVUd0ZvOVhUMnd1c3N1UzllRjlwU2JDcHVOWmwyb0Zp?=
+ =?utf-8?B?N2g0blpuT2UzRkc3Ly9mc2dsQnRITm5GenFxektQOExuN04ramQ4TGo0SFBu?=
+ =?utf-8?B?dlE1MDl0ZWw1aFJnTDVrSzUzT1VhckNNRXFIRzZTbGkxTWhvNlB6RktJOVhr?=
+ =?utf-8?B?RnVYbFhSSzlCRW5zbFBvVlZLSWpHTnVSWjQwK05ja2k4ZTF1RUxsekRHbkRG?=
+ =?utf-8?B?MGMrQ3B4b01XZFdqVFE3dkE4WThVbitaNkRPb0hmUnV0d2N6L1ZuSGZSeUMy?=
+ =?utf-8?B?ZHAvdW1EblpEcU5TdWlyTS95dm1Id243WDRjZnFpSHhQZWp5cHFzQ1pDRHVV?=
+ =?utf-8?B?N2RIS3JzUTF2M2NLUGdKbEsxRmhmYmx0UUwwcTRrdXF4MHNIZTZyQmJkMnJJ?=
+ =?utf-8?B?OUJIeW5RaVQxUldxR09yUDBaK0MxR1V2TGZxUVlwaVZSQlBRSHA5RHF3R1lq?=
+ =?utf-8?B?Ny9xWXVuUUpQYlpHYjBJMGdhY2hGYmVpWTdSVURxTjVPZWJJb1NmLzBSdDBO?=
+ =?utf-8?B?YTB5SmhlQlVuNXJkS0lFMVhSU3ovYm5rWTkrLzNERCt0emNJVC95YmdpeFZQ?=
+ =?utf-8?B?ZjZLV2RXOVRSV0ZIVnk5Qm8zRjZSWS9vdUowa0dMTVN0d2k5SGpzcE85bG9D?=
+ =?utf-8?B?a095ZFhWZ1EzZDBrcjVyWFNvQmJ1YkFnMDR4WkFSdHl6MTRGYnJTYUNCMmpO?=
+ =?utf-8?B?SERjbDJGZUd5dGpWYmhOMDdJS3MyWitCMU5BN3V3NnZvc0J2bnM2M2t5UTNT?=
+ =?utf-8?B?SmcrVXM2Q0kvSzNEM2d5SHo3NmlQTzEycFAzSXZiQ2loaUY5ajRCYU1NL3hZ?=
+ =?utf-8?B?RmxRNXpGMGpRVnluQWU3TW93TWxYL3grNjQxbUxTVmdnZlpnK0loUmFpTmFi?=
+ =?utf-8?B?bU9SSUNCcFYxeWlMODd6ckxOMFMxRTNrYnArK1JjL0V4NTV6Wk01QzFBeEhn?=
+ =?utf-8?B?enZ3VjFYVlNjL2RyTGhpMEF4bWJtUVFsNE9yZFdOaDJPajN5SklzZzNDYkpm?=
+ =?utf-8?B?Z0NPajNnVlRlVG1SQlFmNVJ5TDN3OVpnRGo2b3VzUFN0b0QxSW4xQTAxQ3hV?=
+ =?utf-8?B?d3hoTEpWYmRsc0RoTlVIdEF6cFdTNUNXNkFPN0IzVHI4Tm1OR2sxYytybDBT?=
+ =?utf-8?B?UTdmbHdCN2ZzZnRoMWxKb1YvNEk0N0E0bXU5YXlCNG9PVld1ekxWMmkvM1FQ?=
+ =?utf-8?B?VlVmWSs5SThRak0rTzF5eGhtbDd5WElHcVpmejczUEpZcEFaUjNSNmFHeG4r?=
+ =?utf-8?B?V05PcDFHWlhWTk9ZRTZQTkI4VG9aQXdZVXkrS0lPbGFQaUpNTFFTK1hyTjFW?=
+ =?utf-8?B?KzcxL25zcU44Y2VMRVcxT09kbHU0QWlYUlBTYisrd1FhY2Z1ZFZjdz09?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 15a41ecf-f31e-44d1-3a48-08de79047310
+X-MS-Exchange-CrossTenant-AuthSource: MN0PR12MB5761.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Mar 2026 09:08:35.2194
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 3iwrZLgy3et3b67LHDYY2CzflKJDo4nvWrPBgDygwE43uUM8GzCRhvhp3J3rgoT4pw59924dM65S2UbnTwvkHw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW6PR12MB8833
 
-On 3/2/26 08:08, Sasha Levin wrote:
-> This is the start of the stable review cycle for the 6.18.16 release.
-> There are 757 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 3/3/2026 3:52 AM, Jason Gunthorpe wrote:
+> An empty gather is coded with start=U64_MAX, end=0 and several drivers go
+> on to convert that to a size with:
 > 
-> Responses should be made by Wed Mar  4 04:08:47 PM UTC 2026.
-> Anything received after that time might be too late.
+>  end - start + 1
 > 
-> The whole patch series can be found in one patch at:
->          https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/patch/?id=linux-6.18.y&id2=v6.18.15
-> or in the git tree and branch at:
->          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-> and the diffstat can be found below.
+> Which gives 2 for an empty gather. This then causes Weird Stuff to
+> happen (for example an UBSAN splat in VT-d) that is hopefully harmless,
+> but maybe not.
 > 
-> Thanks,
-> Sasha
+> Prevent drivers from being called right in iommu_iotlb_sync().
+> 
+> Auditing shows that AMD, Intel, Mediatek and RSIC-V drivers all do things
+> on these empty gathers.
+> 
+> Further, there are several callers that can trigger empty gathers,
+> especially in unusual conditions. For example iommu_map_nosync() will call
+> a 0 size unmap on some error paths. Also in VFIO, iommupt and other
+> places.
+> 
+> Cc: stable@vger.kernel.org
+> Reported-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+> Closes: https://lore.kernel.org/r/11145826.aFP6jjVeTY@jkrzyszt-mobl2.ger.corp.intel.com
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-Tested on 2 systems (1 amd64, 1 arm64). Working well, no regressions
-observed.
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+-Vasant
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
