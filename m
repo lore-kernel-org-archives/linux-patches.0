@@ -1,101 +1,97 @@
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com [209.85.208.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1297C330B3F
-	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 07:04:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.175
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772607885; cv=pass; b=POqaBnlqHMKbmfyQYRkxWOj0c5Z6NlZn4B36uFwGCNxmZ/SyDkH4lgEgffj9DqwhiI7It37nmGCy4x5kozMQABMAic32Q5m93x43XRF7pjjgIVdME2eF5PQm0de+yJSdNzba3AbKCZnWKgWKANOJKuR9qlL7j8awYn7MW1Z+tQM=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772607885; c=relaxed/simple;
-	bh=6dEl8w70zIx7RtQmGCGj7N9KErbBGgqHKuP+EANQx9w=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=g46/kcguaOQuwnLpTrQdJ8mfX4/TyDKOj7om12eR570o19cZPm6w0hNHG3nEs2Z7jDa3uqdDjTenV3gWSq5Qg/4Dye5ny14tTDPpHhr19mxkH4FsD2kK97SIBmV+GImeTQEcOFEMLHwYNVfhEpV2j/X46RvMgHn8dSU9uWUoIjU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwQsOpPm; arc=pass smtp.client-ip=209.85.208.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B5183090F5;
+	Wed,  4 Mar 2026 07:20:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.15
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772608842; cv=none; b=kBF3T7DZcCyEQZZ4gc+TDFBUQI0WqKHS+g4G2bk1gdV1kj/TU215We43oJYA4yTHXcIb1bgGezqR5G2R4huezye4pjAB3Q1jfFlIsgIgH5Nxhg6mWmzBHt9WsK/vwGFCJ9tOmpv7PGy16fkClZ00evWJoTcTpzfOw8FZxSjTrp4=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772608842; c=relaxed/simple;
+	bh=D6GYEd3d6gvnRsSCgzPjSlNov5PrrHCdZ5y8IBebYA8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=D/5FkAdmZdWBcLHtiRGOTV44Ct7Vny/uIUPAW3CQurwbU+FdfAYVwnj1VOKN1PKlu8rAxXYx5ysKP4OFVpO7OMeOFKsBS2TYGmIMVwIwr83ZIAHlv3baDliWj77IBTesZ90RG/kbZUGLCRnSXE8G1ddsuWwmOzCB5L6QcP6+rsM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=UlVO+fkh; arc=none smtp.client-ip=198.175.65.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwQsOpPm"
-Received: by mail-lj1-f175.google.com with SMTP id 38308e7fff4ca-389fac627c9so99786531fa.0
-        for <patches@lists.linux.dev>; Tue, 03 Mar 2026 23:04:43 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772607882; cv=none;
-        d=google.com; s=arc-20240605;
-        b=apTx9a4Aq+9HeTXscj7HTUGTpTZlPvh8zf25+9e3c8hcfm6jiIT6fUr7xXQeUGL3Dx
-         PfmGXpKV9c+eOB0T7cvOOoqvfkyMUPmzL59zG1N+kQy65K/+5kqHqvhrNk6vjN/R0UEW
-         HOazfX7c3qkZUtDcEs+VF1HG2HpYzDoI8/B7X6TCoK6VsXSkyCMqPINStgHU1B/eaXsE
-         jrQG3ySAzI1uwuM6n+6jNrwIUXT3oCOWTsd7RNWVR35c4WENYiFLEFiqVwfBVCpc67GV
-         YqFz4gCV4sRbG7TgCurwwOVMB7tu1kBCXM+NAmnSiN4n4SLFG0xOyzTlm/feUpbrHbfe
-         FJcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=lhp76GkJEmISlLLUIZ/1Y1LEXHD4rOCe8Qv7+jklxAg=;
-        fh=P8wcS48xQTHvU9a8ufeOUR0Ngvu21ze3muYpFNBBS/E=;
-        b=KMUznEzwodQghy9/86FoKdO1nWX/BmVopxVSZknuwKU2ZZdhG9SyhID5afYGIODtWu
-         3NSXMLQLkYdz/nCcdeQGiGv+bQlUvyBTNtzt3PfSiqHyWOJYbaoqydUAp9eFKz6zhkfC
-         qP96mVFz0u5EnSzZhiw+3sW7FQZOeg86BXc6em9OEMhvcOcBIV4Dfd+nfG0rCr7pmMR0
-         JMAzAuB52jsDO0UR35hVFLw70T9w+kwEzmOrOPoU2Z6u9Pwc/fC/kQwjC1gzOx/Zf7qW
-         2q/oylmheMIuhfkr0wldSgQjMMB1HZ7T4CqY2O+nB4x9DjZxy+vuEaPCS1bFR8qDtu8N
-         aMcw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1772607882; x=1773212682; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lhp76GkJEmISlLLUIZ/1Y1LEXHD4rOCe8Qv7+jklxAg=;
-        b=AwQsOpPmDgubq3PLsbV5U/ypPFuXfLlAnf2ByudZa7zlS2aiMWEm6jtmmPwGD3rubb
-         5+Su5DygzpLdKD/70T750/COblKoNEK8J1kaBK4XGW26zQs6+DcbPyKkTRgE7Iaw5H6n
-         zdyaXBUnqd+V8ggndVYDgJn50jyGg+w4Lo9LQiMQpX7x/Hi6kuAeOzF7vibG6onykNc4
-         A9A8l+BAbbS1xFZKCPjp6O/yOgF5K/srdtAOxe8kw8YB77onzsTv+KW2sgijAPQlsuTO
-         ZVnypzSPJTeQZ4q/dinVMIzE3PdsDt3GMxZjKA503wi1xMbQt1Zqrs5SidDIP4VIBdoQ
-         NgOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772607882; x=1773212682;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lhp76GkJEmISlLLUIZ/1Y1LEXHD4rOCe8Qv7+jklxAg=;
-        b=Of8pJaJJhzQBmgD8Jj8kEm5aJHmBGwf9KuYda+yQxWBybd0fZpz8eOlUAfc51Wntbd
-         13Mab9xAZwVc3Q+p3riYgL0G4L94I2xyU1SQ8hEH5tYASFBrZjeLmsxGaj2qFQnwaIOA
-         ByixL4TJOb88iXCUxHDGFMW6wAvrq2xpDzYgdDTEASJ2X0EH/EdFQyqIn2S057rXB53z
-         S20U4fuvsf/Q4q1kOUQO4ZGvXsngz2dVu8PXS4QbpmHKmdLNyNa4yrlXLDCXyuW7Cgtw
-         bTefr4PwP4YpKd6MnfPzLYxwyXJe2ErJb0Qw9RkcyJp7FyU4Td9zBEr6t/kOkDGPA3bW
-         iqdg==
-X-Forwarded-Encrypted: i=1; AJvYcCX20TbazLDIi9l2iFtesRU7kfu1jdJeONRw5tpe1BIAIikPaT5ceR83zAXURYNWfViffjQrGFJ2@lists.linux.dev
-X-Gm-Message-State: AOJu0YxxN04yf7hmdK9tmH0hA7LlhfTokf4YGwNzT3r3psKSA3K1bKU1
-	obT5pK5SYDF0UIjjOBm8ZwHu9q2r8JpsKFJdqMy6xeNmhCUbjod5U4CDR/I9DWfY6qo85MZh6wy
-	g5y7uCi8bd0ux+A1X1iEOMkq+aL9BrDQ=
-X-Gm-Gg: ATEYQzztIwVnl9C09xN8cBJtEtr5qw4xVrh1xcIJjNh/EG1QqvtdHsrpHXrefiw1A8m
-	epUeHrbSd7S73AsgG79BDg54/oP0Z+nehUHF2lfaH+s2B9OvAYGIIfHVlNRltQt6sFUMMjwUC0d
-	377u1LO5XGqQNJ5B97MZXRdv6LMuuc2NDFbwISP1fElPfUeuQuGEZi1rQJ66ObDj93ymBXY0Pnz
-	SISciKOYoCN70fAwaKCKtAceKoRZHKqi8SAJmhBCiYFAE2MizzfinXr1gF/LHpDKXqjVMc/TkB+
-	LQ4VgHrfup3+zj08cKF+9SCtU8+ekwItKYFb9Pmh2zyRB225gSrbdWo=
-X-Received: by 2002:a2e:bc05:0:b0:38a:519:f788 with SMTP id
- 38308e7fff4ca-38a2c58db91mr8351931fa.2.1772607881955; Tue, 03 Mar 2026
- 23:04:41 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="UlVO+fkh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772608841; x=1804144841;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=D6GYEd3d6gvnRsSCgzPjSlNov5PrrHCdZ5y8IBebYA8=;
+  b=UlVO+fkh5Q4IrFml9byh0x9g/nwvu47b2zM3fXS9h1vDENbcUmBpS/IR
+   KBCiMWDYQ0Ez+w2jenmuAhVAUp4OaQCAu5vTj0SdRgVOyjIbBSawWUAzM
+   C2Kj7b2KUm0qieCLy2HAWshXBBWmh1TxN+cyDv1yy46pildfYmqr8vR8p
+   dpXuIWsDIuhAYhyAyl07rCY4GlW2uSl+fwilih/dcAMLRE90o6O4d6tYG
+   5usU/yBJk4cD9O+z/aZlbNc0ZlEBp5GUI97Xirv0K9lJjj4N7yOcWozft
+   ZEfb0DzlQuEGLQPVwLgvffuXjbWulPptsir/KxrrHGpzrb56MqIS2hkOB
+   A==;
+X-CSE-ConnectionGUID: wNxE4JS2SZ+iwZ1Kw5kIVA==
+X-CSE-MsgGUID: skYmZPJFQ0qXrxhRz64h+A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11718"; a="77268460"
+X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
+   d="scan'208";a="77268460"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+  by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 23:20:29 -0800
+X-CSE-ConnectionGUID: Rg4hloOgT4eSbbO7WSHaNA==
+X-CSE-MsgGUID: 8gdJvCT/Tuy8Xmcr03vmSw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
+   d="scan'208";a="248733762"
+Received: from allen-sbox.sh.intel.com (HELO [10.239.159.30]) ([10.239.159.30])
+  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 23:20:27 -0800
+Message-ID: <3b745716-b24a-46be-95a3-fe1e34e005fb@linux.intel.com>
+Date: Wed, 4 Mar 2026 15:19:48 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260217200006.470920131@linuxfoundation.org> <20260217200007.474729104@linuxfoundation.org>
-In-Reply-To: <20260217200007.474729104@linuxfoundation.org>
-From: Evans Jahja <evansjahja13@gmail.com>
-Date: Wed, 4 Mar 2026 16:03:53 +0900
-X-Gm-Features: AaiRm53Vja5JYzpG6D8Y2tyXvfolXw8N_dbbJiJeoIODtNRKq8EUaFhzuL0pkbo
-Message-ID: <CAAq5pW_ETivN5trn1CN4XPbHf=uya3TmjTmvwmaaMZVnjqf=8Q@mail.gmail.com>
-Subject: Re: [PATCH 6.18 26/43] arm64: dts: mediatek: mt8183: Add missing
- endpoint IDs to display graph
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	Chen-Yu Tsai <wenst@chromium.org>, =?UTF-8?Q?Otto_Pfl=C3=BCger?= <otto.pflueger@abscue.de>, 
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>, 
-	Thorsten Leemhuis <regressions@leemhuis.info>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH rc 1/2] iommu: Do not call drivers for empty gathers
+To: Jason Gunthorpe <jgg@nvidia.com>, iommu@lists.linux.dev,
+ Joerg Roedel <joro@8bytes.org>, Robin Murphy <robin.murphy@arm.com>,
+ Will Deacon <will@kernel.org>
+Cc: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+ Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+ Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
+ Pasha Tatashin <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
+ Samiullah Khawaja <skhawaja@google.com>, stable@vger.kernel.org
+References: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
+Content-Language: en-US
+From: Baolu Lu <baolu.lu@linux.intel.com>
+In-Reply-To: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> 6.18-stable review patch.  If anyone has any objections, please let me know.
+On 3/3/26 06:22, Jason Gunthorpe wrote:
+> An empty gather is coded with start=U64_MAX, end=0 and several drivers go
+> on to convert that to a size with:
+> 
+>   end - start + 1
+> 
+> Which gives 2 for an empty gather. This then causes Weird Stuff to
+> happen (for example an UBSAN splat in VT-d) that is hopefully harmless,
+> but maybe not.
+> 
+> Prevent drivers from being called right in iommu_iotlb_sync().
+> 
+> Auditing shows that AMD, Intel, Mediatek and RSIC-V drivers all do things
+> on these empty gathers.
+> 
+> Further, there are several callers that can trigger empty gathers,
+> especially in unusual conditions. For example iommu_map_nosync() will call
+> a 0 size unmap on some error paths. Also in VFIO, iommupt and other
+> places.
+> 
+> Cc:stable@vger.kernel.org
+> Reported-by: Janusz Krzysztofik<janusz.krzysztofik@linux.intel.com>
+> Closes:https://lore.kernel.org/r/11145826.aFP6jjVeTY@jkrzyszt- 
+> mobl2.ger.corp.intel.com
+> Signed-off-by: Jason Gunthorpe<jgg@nvidia.com>
 
-I reported this but unfortunately life gets in the way and I am unable
-to test, please go ahead with the release. Thanks for the hard work!
+Reviewed-by: Lu Baolu <baolu.lu@linux.intel.com>
