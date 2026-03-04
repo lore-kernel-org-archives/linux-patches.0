@@ -1,278 +1,352 @@
-Received: from mail-pl1-f227.google.com (mail-pl1-f227.google.com [209.85.214.227])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E19237EFF6
-	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 14:53:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.214.227
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 165A932A3EC
+	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 15:18:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.12
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772635991; cv=pass; b=m5WY17qX4Dp5enAzLS6gZ3CkeZbnu1g/lC+y4HdA9qnq+Zwy+soo95htC9MIWbswUMNPQJTcr2et+BfoZK7LWzakYSaxYxA3hSwbNXDLs0LnEmIAuQksSEowa79k56xDY3uaH9r9/Wug1WJfr7XAIsgkyGdsvurvvHVU+M3q64o=
+	t=1772637519; cv=fail; b=oDaPb5KFWCMc6CxhF+fw8ri2RlAMt8CjoBcb57jPqitaca5w8qHEt9t8fEJD8zTNNK7e7hNs/kQ8UvyVdaA05s93YyU/Ff8CspSkw4zFlvmdWdxNA9jkjCPSep98+I6F6T6VBBR4IEMcdgpU8PfM+aIedaTsSMOmQjtIh6H8ovo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772635991; c=relaxed/simple;
-	bh=3TYH9FSAOSu/tN/0u7rHzY8wEI1qzJkbFzO45qqSKz8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LrrcFCGwijEgu6ciihL2Thq1xaK5vUn6vtf4tmdukzA3g7XAbzBkMeNIrbsITTczdRP7Wj3hIwTMXkiGlUoKt9mfTDUwiRcaSITjnUPH544j0bHieVMkCjccvaBBexyKGxIW+Ict1owEZG8NRKmANJpJm1E8l/itNboCwcHpEt4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com; spf=fail smtp.mailfrom=broadcom.com; dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b=LHcHwvPl; arc=pass smtp.client-ip=209.85.214.227
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=broadcom.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=broadcom.com
+	s=arc-20240116; t=1772637519; c=relaxed/simple;
+	bh=lyjWuP00WqMvBORFbx6Gm1NJwogOVsxPkoBrLixPb9k=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=fPLyv544QQK6Fs6Av843ud24NYmtEvrAqatopvUrcUJJhTIbqr57mridCx6oanpbvzIsgf09TIk/eqvc//kBF5+X9zSJi2IEPJbdr1OgTW4L6UDFEYuOigLPW7U3RJQcN6c3C3AaazHYz8PsYPrnB/hnBoofZ+Piq7k0V5sl46o=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=nw6SZPiq; arc=fail smtp.client-ip=192.198.163.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=broadcom.com header.i=@broadcom.com header.b="LHcHwvPl"
-Received: by mail-pl1-f227.google.com with SMTP id d9443c01a7336-2ae3a2f6007so30852415ad.2
-        for <patches@lists.linux.dev>; Wed, 04 Mar 2026 06:53:10 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1772635990; x=1773240790;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature:x-gm-gg:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=lnho2s0CNgBebofmlEXmTQA6fDfCUNQWFGtdJw9wQ3g=;
-        b=SiV/8XB2m0r1F3EvqT3xdWIAVm2SZd373NQIHf69/t4WqbmQyENPqAnAnyzBJBBAKq
-         5g6UaXkMwXAYQd3wn1H7a5AGOYF0/c50jY+hRhlXs0CevsIzoNu0zjgVGMduekQJPh+X
-         xlz+nk0bsn/FKlcYtdoUWUJ4PWT50Q/PyN7GXTMnpnYDXLysmiEH0nqbRXcCrL+xznwO
-         T5U7NRWWbyZPFQ1xncCGFMT2ADcRITg8soLWT+6K/rEFej0mUicExrHrWqXWy1dM5U3l
-         Aqo4nt4Pg+Kk0FxfmkT6etAJM54HKgWkEn5N1A8x5MtQdXW/NfhdOBCGFF+XSiBxy4hu
-         xm9w==
-X-Forwarded-Encrypted: i=2; AJvYcCXlw63pZnahTUai43vVPhjrPXcw1SxXSBwrf3oD50tQlumhwXupblO8uN7JIGDnsSNqLdHZ1qmJ@lists.linux.dev
-X-Gm-Message-State: AOJu0YyFNR1+aSksijkx+Ofqvw23zbSFVvARZfcIaGIJqIzuisMtQgJW
-	UbABV2YciHCcVIKRUXm9mTZvFkzZeuqrYgL8nSbDQD+T3EmH0Ay27fuJTWLXrw8e5iY3Ue8/Zi+
-	ldXcXESy7c/ztEoMWygByX5BL+v6SfvJTsB1az5nDLOscGM3aqZlhzrZ+CgbH1Tq/rE4a0WI66N
-	Gs/hVgCFLooMJXH+d4ZczJV9a2hiDaVxo2JJF0RT5wAGo0qMRkSqotdZ7JwTrAxCiZc8W18YXYd
-	dRuMf3ApBbU3aE8OMmI3lms
-X-Gm-Gg: ATEYQzyycFxumyqfZHeL8x4fpa5toXhChv2vk+iPJk4yjqMyNucZMyuFE0wyaXZBkky
-	erVZiE9WoIOLJYbsTVA7+qj/khCe9g1iWEwJyDKLwvtYPAY/fhG+HIC+Q3GqAisu9m6G5ALORz4
-	nLHN7k5/Z1qPBhMNPH/bd52wT5BMh7XBCDtbZ6n1uQ4TRGGXdEYV3NOUhI5N3F0khw4ZDV0PHHq
-	aft7Lr0w/OahFtWYVDno28WkDFkQXYPUgCGxZ/5AeiXLGvg9NzjTkHIqJiDqZRaSm4OM34vyYs8
-	J8/wNn3rH81Uw0SRk5NAgehoDBsAnWYwMjgh/HhPe9hlVhCFYWcKz+4tazNMIhE9e0Bqyst6a6C
-	Qb/J9ecaBWeUxx5mcS2kI2KKITYfsQsPtCbsJ02FaHwxuw5khAlM7sakc2HYOl19YUp8Fx/g0Qb
-	G2gDdXLLtEXo4bh3CrnRhqkhyEJEf5/3VzYfBwV6y9efeMHVI3AbpjazbKi9YYcsyV0Lsrtg4=
-X-Received: by 2002:a17:902:e5c2:b0:2ae:5a55:3ded with SMTP id d9443c01a7336-2ae6ab6b4ccmr25256245ad.45.1772635989630;
-        Wed, 04 Mar 2026 06:53:09 -0800 (PST)
-Received: from smtp-us-east1-p01-i01-si01.dlp.protect.broadcom.com (address-144-49-247-103.dlp.protect.broadcom.com. [144.49.247.103])
-        by smtp-relay.gmail.com with ESMTPS id d9443c01a7336-2ae47c5c786sm15449415ad.11.2026.03.04.06.53.09
-        for <patches@lists.linux.dev>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Mar 2026 06:53:09 -0800 (PST)
-X-Relaying-Domain: broadcom.com
-X-CFilter-Loop: Reflected
-Received: by mail-wr1-f70.google.com with SMTP id ffacd0b85a97d-439cbc5fb4fso288388f8f.0
-        for <patches@lists.linux.dev>; Wed, 04 Mar 2026 06:53:08 -0800 (PST)
-ARC-Seal: i=1; a=rsa-sha256; t=1772635987; cv=none;
-        d=google.com; s=arc-20240605;
-        b=ZNuCUfF+yB0AIgoAVeFR8qV7D/OWnGsSfV53GhXlDzsbF12lujzK61/5oyDVDlnuUO
-         JimUsX04Yukazp7pBygpGpOT/3ltnJWsYFY4Yptpn54DMXPnP4hA3tb+C4NCck4tJCw5
-         n+yue6pTyzu1q3JppDWHK8Zv1UvseGCdbIiGJWpQf3mwTs1hXMp9WgqrmW0hsHQeTFK3
-         QYib3rB5ugltFmVWmS7QJH0SOZ1ar47+wB5mjrqD6xDni3i2eczbEtdi3va2uulrEW5Y
-         sYwXS7G/+BqvqMTxez4j2mXfUL9sIuPG+tShPqRosYLhtQtl599VXQF8Y4kRvPfCRzVb
-         oA7Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=lnho2s0CNgBebofmlEXmTQA6fDfCUNQWFGtdJw9wQ3g=;
-        fh=HeTpgpjI3kzIKXBVVm03nVMCb/83NYCM+aaNYbgZkeo=;
-        b=Sknchu4pGfl1Nu3G6YAVb+zOmPT8/grrcXy+ZiktAd/0ffjYbbmwUOTvKA5QeSRgW+
-         8NJJ1ezcifIqdrGFbgeZy9gqog25VAhH7oxwiytx2gyk6Gi9daHgU6hfkkT8+7JoJY7v
-         xuB2oYzybXLc4uDXMpJFFTBGZM2IlVHJNup5n5RrXQFBri3xa9Ho8Ko++SAakWWKuyyu
-         FvbbDm3aPWsXGA8AEB4BY8yX6Sy6EF3+fURLNXTBGMUu401zMaq1jYgcSbKbpz8ouCYz
-         IkgS+dzTPUvjdrT9QDaVYjoxhMKok9aTSj2o7KeHd0xYOqMHag9ObxulMnUsUdte0Nul
-         NhEg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google; t=1772635987; x=1773240787; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=lnho2s0CNgBebofmlEXmTQA6fDfCUNQWFGtdJw9wQ3g=;
-        b=LHcHwvPl1nTV3cf+Tv6+cEBFehenxzWsB5bj8e1ohh5Eh0LpKEjlIdmLSCQ/phafTj
-         QEEkRb5XgsBrnCC6ghp5Jsiym9V/zQAnRMt0iscfBPnd+mQ9Od+2mDYQS3H8YW6rbqIo
-         VCEsOMluWtY648y/7oBVQ6hcxfd4ttGQGo/xI=
-X-Forwarded-Encrypted: i=1; AJvYcCXMVlmr3obBgG3Y7gf50hnsdyKU+jn0wf0GCjJbQZJS8V2D9p9o39TRvWCa5561OzAGjyxZkFG5@lists.linux.dev
-X-Received: by 2002:a05:6000:2912:b0:439:b886:20da with SMTP id ffacd0b85a97d-439c7fb0c37mr3904858f8f.17.1772635986602;
-        Wed, 04 Mar 2026 06:53:06 -0800 (PST)
-X-Received: by 2002:a05:6000:2912:b0:439:b886:20da with SMTP id
- ffacd0b85a97d-439c7fb0c37mr3904800f8f.17.1772635986016; Wed, 04 Mar 2026
- 06:53:06 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="nw6SZPiq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772637517; x=1804173517;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=lyjWuP00WqMvBORFbx6Gm1NJwogOVsxPkoBrLixPb9k=;
+  b=nw6SZPiq52Mvjplp/Y7Wvl3h0wEmXDZFTSanx9aeFvlrMwqeYUJtcAWz
+   v6Q5mp/oTxYw8//Bz5Eh+lvHUGsyNOMCGKJ1qSXtwEAHog5iC7ilcWOQo
+   KhBaG7g8V0I1VM2L5Que1BJv4whbXzy8Kw6w7yqad2nx/HVhqzCu85FMr
+   gYW0WAQ5KoZqDhzgJAFy9htkUPNIdsYYYWAIlP03DfWM6hasPIMloPga/
+   PmlP3gDkt17prP5SSLSypzI6UrAkLQR5yhaLhDqQSwCOFWYjLtq6cuAWs
+   kl2sAspZREWDpmyI8TqbTO8EJXmOeXu0VwuRCyW1JPEXg3UHBOu0jE/d0
+   Q==;
+X-CSE-ConnectionGUID: Zbs4a6fZStOPvCSaFzKEuA==
+X-CSE-MsgGUID: 7zI9Ans5RDOzdmm5caONAg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11719"; a="77571183"
+X-IronPort-AV: E=Sophos;i="6.21,324,1763452800"; 
+   d="scan'208";a="77571183"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2026 07:18:36 -0800
+X-CSE-ConnectionGUID: 1aMdJKvaQuySNxuhrL99og==
+X-CSE-MsgGUID: ReLwVqkCQUungqfUStH3tw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.21,324,1763452800"; 
+   d="scan'208";a="215302963"
+Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Mar 2026 07:18:36 -0800
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 4 Mar 2026 07:18:35 -0800
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 4 Mar 2026 07:18:35 -0800
+Received: from SN4PR0501CU005.outbound.protection.outlook.com (40.93.194.38)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 4 Mar 2026 07:18:34 -0800
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=MaORRHkfhvEI01ZTsxcxeUm+SkikO2WWleJGD4glqadOze4rH7s8fGLjNmXsEp+tYSNKf2/iqx58Rwx9jI6Ezj1BXgQFoka6S+n72wPoqU5t3tvrdlnecdL/3xt1fHyCETwUiqV2H3V5AyVLvZDk2Pm20cVUcz4L9HGyBw9c1Iv3TsLUahi+6cSU5UZYmWRNdEcDFBVKXpOXFpt8RcEa1/39MgItvUrbde6cXhpAvz6Arv3JumA8Tmu5l837LOidQdTmJk3pXoB0bD/9C3w0A7UQyUFeInBIlWiz2QjXBV/gCdJQYD4z8Rq5J1nD04sxWkX36AO3JD/8npzN32Y0Nw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CA2RIwvQGQQ+w9AGErbvrCc4BrO7TEEJ9Zn9gbxr+nw=;
+ b=sE9+8Jt89z/XlI4R1I4v71uRSAERJTU2vpPicdu/zpEFqNf5mYA3fRyt7QOpng1eRzWLNx6sWMbkTOVUzVkWu1pbVPPJSFezlo4QvYwF6fPWpJbHcyHLV37Or7Iz9r58TIzicnuRKt5zb3e3eHklTVA40vy4rHnsfLtJEL2O0c3cx0psG8Pp2471H6BbiFFZJ6RApGATrp4SeF/hh7HE86ljY+B+vkapIn5uirDL3vApZ1C/gqYpJerWJ2d1DFk4vK1zQOOJTuh2nHEEB5GHIFfpB1OyXi8AXEuswKFbfv3HVn3JhtkZ3W4PV4C1voeBL8kppvU4/1dXi7F48nN5cg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM4PR11MB6020.namprd11.prod.outlook.com (2603:10b6:8:61::19) by
+ IA4PR11MB8990.namprd11.prod.outlook.com (2603:10b6:208:56b::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Wed, 4 Mar
+ 2026 15:18:32 +0000
+Received: from DM4PR11MB6020.namprd11.prod.outlook.com
+ ([fe80::3058:1480:e4ac:5765]) by DM4PR11MB6020.namprd11.prod.outlook.com
+ ([fe80::3058:1480:e4ac:5765%6]) with mapi id 15.20.9654.022; Wed, 4 Mar 2026
+ 15:18:32 +0000
+Message-ID: <4b6cd592-ab84-4dcb-ab86-ecb1be3482c7@intel.com>
+Date: Wed, 4 Mar 2026 23:18:21 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/9] selftests/resctrl: Fixes and improvements focused
+ on Intel platforms
+To: Reinette Chatre <reinette.chatre@intel.com>
+CC: <fenghuay@nvidia.com>, <peternewman@google.com>, <zide.chen@intel.com>,
+	<dapeng1.mi@linux.intel.com>, <ben.horgan@arm.com>,
+	<linux-kselftest@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>, <shuah@kernel.org>, <Dave.Martin@arm.com>,
+	<james.morse@arm.com>, <babu.moger@amd.com>, <ilpo.jarvinen@linux.intel.com>,
+	<tony.luck@intel.com>
+References: <cover.1772582958.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: "Chen, Yu C" <yu.c.chen@intel.com>
+In-Reply-To: <cover.1772582958.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG3P274CA0024.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:be::36)
+ To DM4PR11MB6020.namprd11.prod.outlook.com (2603:10b6:8:61::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v3-bd56dd443069+49-bnxt_re_uapi_jgg@nvidia.com>
- <13-v3-bd56dd443069+49-bnxt_re_uapi_jgg@nvidia.com> <CAHHeUGW5aOHbhETW624fM_MSkXAqUgw=T+6skPaA=R3py+9EQQ@mail.gmail.com>
- <20260304141149.GO972761@nvidia.com>
-In-Reply-To: <20260304141149.GO972761@nvidia.com>
-From: Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Date: Wed, 4 Mar 2026 20:22:54 +0530
-X-Gm-Features: AaiRm50uoJCcSQYZgdb957JNsYl5fxpfWzbvWOnVYNeV0tioMWbd1EDEYi703Qo
-Message-ID: <CAHHeUGWuWCnLw4-mqAPhPt+f_qZThjOBQU9V=x0MyCO7bkxyqA@mail.gmail.com>
-Subject: Re: [PATCH v3 13/13] RDMA: Add IB_UVERBS_CORE_SUPPORT_ROBUST_UDATA
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>, Leon Romanovsky <leon@kernel.org>, 
-	linux-rdma@vger.kernel.org, Selvin Xavier <selvin.xavier@broadcom.com>, 
-	patches@lists.linux.dev, 
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-X-DetectorID-Processed: b00c1d49-9d2e-4205-b15f-d015386d3d5e
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000526ef3064c33fae9"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM4PR11MB6020:EE_|IA4PR11MB8990:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1be7e51a-5d34-4ade-a210-08de7a014b9b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014;
+X-Microsoft-Antispam-Message-Info: uQMH6kBv+fCn1ooiI7Ju3cWaOBorRvcUPa/Mv3LaoT2Gcut6HqcjEeR6HKV+vmNPJ/5f7Uv2AWQL9MAXXSSCuf/uvDJT+RLy4zp4rqHkQfO8WFtg81zgVhkaUYot/xum/BVSMntRjNANZh1EgfhgKkww1fe0aeiXq1x04ewkYoKM3I8tNALGbadrojnsGSGk5OwU6cqaOFAEwv3MMmUWVEh5xsp3oJ3loNqAlSWWy3hTF2WZhsQN+ifDCwdrf/WheLVjSo7X9vbmrjL86muGASjgME1VPFAzLQBuvjLyv+xAyz70RlQtdOaJ8647DNH9s7IQUGK3uqaHykUaJ4fv+hdGm1cVW7MQRXIE+0cC30wmerlqnAbldPrOKCWfFHV3+fNxnhZmIRmBe5RuPcZkKPH4RXPRmEELJy8EtdcvR30t7YR0S2csCEdtPZv6Uof0tFdEBg8o9KFAdl4096cKfq2FbRbyrsTQDpmL3nY4koYecPc8n9efi6gXtlTg7B5y26pcKCuGj2jWA0AMdr2J5uIdvyNQCiyi5T5ASr1+8Th2ASZetZa8brZfIyt5nWeSXpYQcKXv4cUpd7ZgsCck8U0sSVDJSDhg2rSe70qS8YfRx4wxhNrG/OiCngdPVq0kAVT+Xialyir9MP2coZbAU2UNRqPjf4AYmy+53H7eH8lKyvQ/pNXFHFtEehmM7n0FFj+MWummhwr+PnMJOAyfHT/UN7ekmPxuVWYgAhPWIEoTGQsFptkXOLC6gqR3cn2m
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR11MB6020.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?R2o2UVVxdGxXVFdUaFAvbkVjL3RJM00wY3hjYzgxR3RqL3B6eWJrMlB2T00v?=
+ =?utf-8?B?QVBrMCtEUlZWNXpRTWNkaHJiWkxCQXRuM2JLOVVTOVNkKzN6MWR1MDFWNlpr?=
+ =?utf-8?B?L0JJUVIvdCtNalVJYWl6MnlKcTNRUE5yaXVZdXo5Ykd5Z3AzNnNhYVJ1R0FW?=
+ =?utf-8?B?YUUzQ25kaVRqMjBMeUwyejNLNUdLYUVlYUJBRW5HTVNYbndtSVp1Zll6OW1s?=
+ =?utf-8?B?OHQ5b3JjRGpnVlhlUXB0dFVuRzNpVjk0clJCbUhzOStya3RnS1pKRTBLV3Np?=
+ =?utf-8?B?Nit4eWdLMW9rOTM4YjJiVHpRYUtONGxPc082R3FCOTdnMU1aRlpFdnViV3RE?=
+ =?utf-8?B?YzRSS1p4RENnWHNQRDJwVTVrR1pJdkhMTlZzWis0ZnRWd01nOGxQNEU1NEF3?=
+ =?utf-8?B?cDhyaVdnSTFYRy9jSWNPbVBuYjZ2NmFzeTJ3OFgyMVoyNUZYQ1JjVmxXN2hm?=
+ =?utf-8?B?WVl0aDNSMVNUZU1wN21pVDFBamdLU0R3L0d5RDZCRkdGb3BkTCtqbWw3R1py?=
+ =?utf-8?B?Qk0yOUE3Z3J3V21lUlgvVXRLak1Gd3ZDVnZOam81RmRtenlxRytEbFFyOWlI?=
+ =?utf-8?B?NFhiK2NrWDVKVExobEZ6Qlc5K29KWjVIdW1KV1JFdFoxTUpmWmFEUU8vV0RX?=
+ =?utf-8?B?SXZSaC9pY25Oa012TGFrYnV5Sm1WcGprU2hUaDhCSmdSRVZtQWZEZ3paWG5p?=
+ =?utf-8?B?alk5ZjY0ZFVXc2VHLzgya0x5TWdYUDhNSE1rWHV6QUxoMzkxWFZ2M3RSdzUx?=
+ =?utf-8?B?ZXVMamVyalFkRmhLd1VGRk5YWVMvVUNBU3F0SzFVeElZRnZibWdNMFNSMzFZ?=
+ =?utf-8?B?VGE2cHZkVGNPc0VGM3N1QVZDYWE0T1hkZi9VRHE4MXkwM3BjUTREL2RIVDN1?=
+ =?utf-8?B?QnZqb0pGZ3E4bUhaRnE3b1liY0wvTlo4WUE2WmlKWmVERk1mUFg1aVk5SGEy?=
+ =?utf-8?B?L1hsWDc0bUxnejdjRWxrTU42RitWM21tdEZzVmJQeUNWTG9kaW5TRGtGZ1pi?=
+ =?utf-8?B?RHBPSk5nUVg1VzB5WmVTNW93S2VyK0xmN2lIRVJpZzE4a1g0UG8xUGhuYU10?=
+ =?utf-8?B?bkYzZEVZRFpaUkttUTZjcGE5d2FROFhhWURzRk1Hb2NCT0tzQ3V0UkFXUThI?=
+ =?utf-8?B?MlE2dzQzcTRnUEdGK2h5OElZMUhSVUE4YTBoR0psOTZkYXQ0N0ZsVXFaL0Zv?=
+ =?utf-8?B?THd5QjF2cENVd1NMSGNibStpVGV5eUlsTDlDeGw1dnRGRkVRYThGek9taHZo?=
+ =?utf-8?B?QlFuR1d2SWtwWVlNanNFKzRpckJ2WVVwWmVMc0picUE5MlVNdVZISHU5UHdk?=
+ =?utf-8?B?bkxETFVETmY4WDNpTndDNWtFcHg1VEV0andGL0ZuL1huQnNJcC8yL3cxUFFr?=
+ =?utf-8?B?aHlSaVhFaUdlL2lLUXZJU1NpaVA5eElBMXlYSjQwTjBjbnRlMktKdndwMU9h?=
+ =?utf-8?B?THdnV3VoWlBISjg3d0RUNytJWFFRZC9MUDNaUTZsUUs2NVJ6Z2xuTEMwdmxs?=
+ =?utf-8?B?ZWZNRUZucVFQUzM4djZ2WEljbm1EQ1kra0g5RVprNWtxQTFmWVFUSWNQLzh0?=
+ =?utf-8?B?MDl6b1ZnWkhPakRXSlBBOUk4Y25VS0FiVTExWEV6U0FFSDMxN0U1dUxOMTdB?=
+ =?utf-8?B?SGwzektySWdiZ1NvYWpCbTQ5cmFDNThoRElFcE1MaUlIZU9yS0llNkQ4dWJo?=
+ =?utf-8?B?NERJalFIdkQxbDk4amJ6KzkxNXhEVHZQdjBsSkx4aWlRRDdycktaWGg3S25C?=
+ =?utf-8?B?UVdQNzZlVWdSaXVLbWdDMUt5aUlHemtOa05QNnVGZnpPQVpSQlNZUDdsZGZW?=
+ =?utf-8?B?S0dkZHdIYWx1SkpXOUNsQzY3Q0lNWlg5NjlQYTRtYWk1cEJUNDgzcHdHdGtJ?=
+ =?utf-8?B?a1VHTmt2UDc0QUxyV0RJSnN6VVp1ek1ZMUlNVlNjNFZjYWVGaDRCQm1yUUpV?=
+ =?utf-8?B?dXVFSi9md1Rka1F1S2xkQ3VhdDhza01TTGFWeXkweU0xN2VWWGF5Ylo2Z2FE?=
+ =?utf-8?B?Q3dpakJsYVNvSlFZSWRLVjRhTnNobnlENW9HSVFsbUNmYmdDWC9RUzMyWmxT?=
+ =?utf-8?B?NTNicENRUFFsUk1RM0ZkWFBFMVdtZ0pObzZTMUJza08zVVFxa3FpNFdIY1ZS?=
+ =?utf-8?B?bkhsbng3YnZqeXI1aEJ0NVF3M0FkUWd3VVNmOWUwaERHSkRESENqOHRDaW1l?=
+ =?utf-8?B?UU5NN0xOUXh4UHBFbWNVOXZaY0lDcnZjTm82TCtRWWdEOVBCRHhFczlrUnJL?=
+ =?utf-8?B?WjdLZ1BBNkFLSXc3b2RRZThDSjVxc1VDZ3BZUWlzNFpaR0pBamFHZ3RuMkp0?=
+ =?utf-8?B?eFBzSzRkQWdQR0FGNnM1eHJWcHJSVVpWT0wyb21JUkxhMVB2d1VmZz09?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1be7e51a-5d34-4ade-a210-08de7a014b9b
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6020.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Mar 2026 15:18:32.0341
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RCEY34MaGrLYqBTfKHOZmz6M0goLnMM5/posCVJ0wppJ8T+bF9Q46wBZLCUoa4HN8mr8H1GjjMdqWEi9Fa1/9A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB8990
+X-OriginatorOrg: intel.com
 
---000000000000526ef3064c33fae9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 3/4/2026 8:19 AM, Reinette Chatre wrote:
+> Changes since v1:
+> - The new perf interface that resctrl selftests can utilize has been accepted and
+>    merged into v7.0-rc2. This series can thus now be considered for inclusion.
+>    For reference,
+>    commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+>    The resctrl selftest changes making use of the new perf interface are backward
+>    compatible. The selftests do not require a v7.0-rc2 kernel to run but the
+>    tests can only pass on recent Intel platforms running v7.0-rc2 or later.
+> - Combine the two outstanding resctrl selftest submissions into one series
+>    for easier tracking:
+>    https://lore.kernel.org/lkml/084e82b5c29d75f16f24af8768d50d39ba0118a5.1769101788.git.reinette.chatre@intel.com/
+>    https://lore.kernel.org/lkml/cover.1770406608.git.reinette.chatre@intel.com/
+> - Fix typo in changelog of "selftests/resctrl: Improve accuracy of cache
+>    occupancy test": "the data my be in L2" -> "the data my be in L2"
+> - Add Zide Chen's RB tags.
+> 
+> Cover letter updated to be accurate wrt perf changes:
+> 
+> The resctrl selftests fail on recent Intel platforms. Intermittent failures
+> in the CAT test and permanent failures of MBM and MBA tests on new platforms
+> like Sierra Forest and Granite Rapids.
+> 
+> The MBM and MBA resctrl selftests both generate memory traffic and compare the
+> memory bandwidth measurements between the iMC PMUs and MBM to determine pass or
+> fail. Both these tests are failing on recent platforms like Sierra Forest and
+> Granite Rapids that have two events that need to be read and combined
+> for a total memory bandwidth count instead of the single event available on
+> earlier platforms.
+> 
+> resctrl selftests prefer to obtain event details via sysfs instead of adding
+> model specific details on which events to read. Enhancements to perf to expose
+> the new event details are available since:
+>   commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+> This series demonstrates use of the new sysfs interface to perf to
+> obtain to obtain accurate iMC read memory bandwidth measurements.
+> 
+> An additional issue with all the tests is that these selftests are part
+> performance tests and determine pass/fail on performance heuristics selected
+> after running the tests on a variety of platforms. When new platforms
+> arrive the previous heuristics may cause the tests to fail. These failures are
+> not because of an issue with the resctrl subsystem the tests intend to test
+> but because of the architectural changes in the new platforms.
+> 
+> Adapt the resctrl tests to not be as sensitive to architectural changes
+> while adjusting the remaining heuristics to ensure tests pass on a variety
+> of platforms. More details in individual patches.
+> 
+> Tested by running 100 iterations of all tests on Emerald Rapids, Granite
+> Rapids, Sapphire Rapids, Ice Lake, Sierra Forest, and Broadwell.
+> 
 
-On Wed, Mar 4, 2026 at 7:41=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wro=
-te:
->
-> On Wed, Mar 04, 2026 at 12:05:11PM +0530, Sriharsha Basavapatna wrote:
-> > On Wed, Mar 4, 2026 at 1:20=E2=80=AFAM Jason Gunthorpe <jgg@nvidia.com>=
- wrote:
-> > >
-> > > This flag can be set by drivers once they have finished auditing and
-> > > implementing the full udata support on every udata operation.
-> > >
-> > > My intention going forward is that driver authors proposing new udata=
- uAPI
-> > > for their drivers must first do the work and set this flag.
-> > >
-> > > If this flag is not set the userspace should not try to use udata bas=
-ed
-> > > uAPI newer than this commit, though on a case by case basis it may be=
- OK
-> > > based on what checks historical kernels performed on the specific cal=
-l.
-> > >
-> > > Since bnxt_re is audited now, it is the first driver to set the flag.
-> > >
-> > > Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> > > ---
-> > >  drivers/infiniband/core/device.c                  | 1 +
-> > >  drivers/infiniband/core/uverbs_std_types_device.c | 8 ++++++++
-> > >  drivers/infiniband/hw/bnxt_re/main.c              | 1 +
-> > >  include/rdma/ib_verbs.h                           | 6 ++++++
-> > >  include/uapi/rdma/ib_user_ioctl_verbs.h           | 1 +
-> > >  5 files changed, 17 insertions(+)
-> > >
-> > > diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/co=
-re/device.c
-> > > index 558b73940d6681..5b4fb47cbaeee6 100644
-> > > --- a/drivers/infiniband/core/device.c
-> > > +++ b/drivers/infiniband/core/device.c
-> > > @@ -2706,6 +2706,7 @@ void ib_set_device_ops(struct ib_device *dev, c=
-onst struct ib_device_ops *ops)
-> > >
-> > >         dev_ops->uverbs_no_driver_id_binding |=3D
-> > >                 ops->uverbs_no_driver_id_binding;
-> > > +       dev_ops->uverbs_robust_udata |=3D dev_ops->uverbs_robust_udat=
-a;
-> > this should be: dev_ops->uverbs_robust_udata |=3D ops->uverbs_robust_ud=
-ata;
->
-> Oops, are you OK otherwise?
->
-> Thanks,
-> Jason
-Yes, it worked with this minor change.
-Thanks,
--Harsha
+Tested on a GNR with SNC3, without this patch I saw MBM/MBA failures.
+With this patch applied on v7.0-rc2, I did not see any errors:
+  sudo ./resctrl_tests
+TAP version 13
+# Pass: Check kernel supports resctrl filesystem
+# Pass: Check resctrl mountpoint "/sys/fs/resctrl" exists
+# resctrl filesystem not mounted
+# dmesg: [   16.192737] resctrl: Sub-NUMA Cluster mode detected with 3 
+nodes per L3 cache
+# dmesg: [   16.287785] resctrl: L3 allocation detected
+# dmesg: [   16.287961] resctrl: L2 allocation detected
+# dmesg: [   16.288093] resctrl: MB allocation detected
+# dmesg: [   16.288186] resctrl: L3 monitoring detected
+1..6
+# SNC-3 mode discovered.
+# Starting MBM test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Writing benchmark parameters to resctrl FS
+# Benchmark PID: 5503
+# Write schema "MB:0=100" to resctrl FS
+# Checking for pass/fail
+# Pass: Check MBM diff within 15%
+# avg_diff_per: 2%
+# Span (MB): 640
+# avg_bw_imc: 8815
+# avg_bw_resc: 8570
+ok 1 MBM: test
+# Starting MBA test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Writing benchmark parameters to resctrl FS
+# Benchmark PID: 5506
+# Write schema "MB:0=10" to resctrl FS
+# Write schema "MB:0=20" to resctrl FS
+# Write schema "MB:0=30" to resctrl FS
+# Write schema "MB:0=40" to resctrl FS
+# Write schema "MB:0=50" to resctrl FS
+# Write schema "MB:0=60" to resctrl FS
+# Write schema "MB:0=70" to resctrl FS
+# Write schema "MB:0=80" to resctrl FS
+# Write schema "MB:0=90" to resctrl FS
+# Write schema "MB:0=100" to resctrl FS
+# Results are displayed in (MB)
+# Bandwidth below threshold (2500 MiB). Dropping results from MBA 
+schemata 10.
+# Bandwidth below threshold (2500 MiB). Dropping results from MBA 
+schemata 20.
+# Bandwidth below threshold (2500 MiB). Dropping results from MBA 
+schemata 30.
+# Bandwidth below threshold (2500 MiB). Dropping results from MBA 
+schemata 40.
+# Bandwidth below threshold (2500 MiB). Dropping results from MBA 
+schemata 50.
+# Pass: Check MBA diff within 15% for schemata 60
+# avg_diff_per: 6%
+# avg_bw_imc: 4669
+# avg_bw_resc: 4355
+# Pass: Check MBA diff within 15% for schemata 70
+# avg_diff_per: 5%
+# avg_bw_imc: 5556
+# avg_bw_resc: 5231
+# Pass: Check MBA diff within 15% for schemata 80
+# avg_diff_per: 5%
+# avg_bw_imc: 6257
+# avg_bw_resc: 5942
+# Pass: Check MBA diff within 15% for schemata 90
+# avg_diff_per: 4%
+# avg_bw_imc: 7126
+# avg_bw_resc: 6804
+# Pass: Check MBA diff within 15% for schemata 100
+# avg_diff_per: 3%
+# avg_bw_imc: 9246
+# avg_bw_resc: 8901
+# Pass: Check schemata change using MBA
+ok 2 MBA: test
+# Starting CMT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :167772160
+# Writing benchmark parameters to resctrl FS
+# Write schema "L3:0=ffe0" to resctrl FS
+# Write schema "L3:0=1f" to resctrl FS
+# Write schema "L2:1=0x1" to resctrl FS
+# Benchmark PID: 5508
+# Checking for pass/fail
+# Pass: Check cache miss rate within 15%
+# Percent diff=0
+# Number of bits: 5
+# Average LLC val: 52264960
+# Cache span (bytes): 52428800
+ok 3 CMT: test
+# Starting L3_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Cache size :167772160
+# Writing benchmark parameters to resctrl FS
+# Write schema "L2:1=0x1" to resctrl FS
+# Write schema "L3:0=3f80" to resctrl FS
+# Write schema "L3:0=7f" to resctrl FS
+# Write schema "L3:0=3fe0" to resctrl FS
+# Write schema "L3:0=1f" to resctrl FS
+# Write schema "L3:0=3ff8" to resctrl FS
+# Write schema "L3:0=7" to resctrl FS
+# Write schema "L3:0=3ffe" to resctrl FS
+# Write schema "L3:0=1" to resctrl FS
+# Checking for pass/fail
+# Number of bits: 7
+# Average LLC val: 620490
+# Cache span (lines): 1146880
+# Pass: Check cache miss rate increased
+# Number of bits: 5
+# Average LLC val: 1149986
+# Cache span (lines): 819200
+# Pass: Check cache miss rate increased
+# Number of bits: 3
+# Average LLC val: 1604363
+# Cache span (lines): 491520
+# Pass: Check cache miss rate increased
+# Number of bits: 1
+# Average LLC val: 2285082
+# Cache span (lines): 163840
+ok 4 L3_CAT: test
+# Starting L3_NONCONT_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Write schema "L3:0=ff" to resctrl FS
+# Write schema "L3:0=fc3f" to resctrl FS
+ok 5 L3_NONCONT_CAT: test
+# Starting L2_NONCONT_CAT test ...
+# Mounting resctrl to "/sys/fs/resctrl"
+# Write schema "L2:1=ff" to resctrl FS
+# Write schema "L2:1=fc3f" to resctrl FS
+ok 6 L2_NONCONT_CAT: test
+# Totals: pass:6 fail:0 xfail:0 xpass:0 skip:0 error:0
 
---000000000000526ef3064c33fae9
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+Tested-by: Chen Yu <yu.c.chen@intel.com>
 
-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
-tJVewHuOmXgWQxNWV7Oiszu1d9xAcqyj65s1PrEIIaHnxEM3eTK+teecLEy8QymZjjDTrCHg4x36
-2AczdlQAIiq5TSAucGja5VP8g1zTnfL/RAxEZvLS471GABptArolXY2hMVHdVEYcTduZlu8aHARc
-phXveOB5/l3bPqpMVf2aFalv4ab733Aw6cPuQkbtwpMFifp9Y3s/0HGBfADomK4OeDTDJfuvCp8g
-a907E48SjOJBGkh6c6B3ace2XH+CyB7+WBsoK6hsrV5twAXSe7frgP4lN/4Cm2isQl3D7vXM3PBQ
-ddI2aZzmewTfbgZptt4KCUhZh+t7FGB6ZKppQ++Rx0zsGN1s71MtjJnhXvJyPs9UyL1n7KQPTEX/
-07kwIwdMjxC/hpbZmVq0mVccpMy7FYlTuiwFD+TEnhmxGDTVTJ267fcfrySVBHioA7vugeXaX3yL
-SqGQdCWnsz5LyCxWvcfI7zjiXJLwefechLp0LWEBIH5+0fJPB1lfiy1DUutGDJTh9WZHeXfVVFsf
-rSQ3y0VaTqBESMjYsJnFFYQJ9tZJScBluOYacW6gqPGC6EU+bNYC1wpngwVayaQQMIIGszCCBJug
-AwIBAgIMPiCpKhlPGjqoQ++SMA0GCSqGSIb3DQEBCwUAMFIxCzAJBgNVBAYTAkJFMRkwFwYDVQQK
-ExBHbG9iYWxTaWduIG52LXNhMSgwJgYDVQQDEx9HbG9iYWxTaWduIEdDQyBSNiBTTUlNRSBDQSAy
-MDIzMB4XDTI1MDYyMDEzNTQwNVoXDTI3MDYyMTEzNTQwNVowgfIxCzAJBgNVBAYTAlVTMRMwEQYD
-VQQIEwpDYWxpZm9ybmlhMREwDwYDVQQHEwhTYW4gSm9zZTEZMBcGA1UEYRMQTlRSVVMrREUtNjYx
-MDExNzEUMBIGA1UEBBMLQmFzYXZhcGF0bmExEjAQBgNVBCoTCVNyaWhhcnNoYTEWMBQGA1UEChMN
-QlJPQURDT00gSU5DLjErMCkGA1UEAwwic3JpaGFyc2hhLmJhc2F2YXBhdG5hQGJyb2FkY29tLmNv
-bTExMC8GCSqGSIb3DQEJARYic3JpaGFyc2hhLmJhc2F2YXBhdG5hQGJyb2FkY29tLmNvbTCCASIw
-DQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAKS3kXt4zVFK0i5F3y88WV5rV0rr2S3nOVTaCGMB
-o6Se8pIb2HJcdpQ4rMiJuIRSyG2XDWv6OB+66eM/6cD2oklFcdzpC4/eYOQFWJ/XM8+ms6HT7P5e
-uE7sY6CeUzLzHNjcRwVgZRWlELghY7DIW9fbMzRNDFsbxuIN/7eSofavP1q7PF3+DqhHZpmrVkDu
-vcEBTRZSn8NWZ0Xhy4a+Y3KN2W55hh6pWQWO0lt2TtpyaqYp95egJGqDUPtqydci+qrBzXbL05Q0
-gcK0NfqGJwLsEVqxHwzz/jRrzKBYKQEK4Bpau91oxVGLmxy1nQDiyI1121xyvsJBDctKH245XZkC
-AwEAAaOCAeYwggHiMA4GA1UdDwEB/wQEAwIFoDAMBgNVHRMBAf8EAjAAMIGTBggrBgEFBQcBAQSB
-hjCBgzBGBggrBgEFBQcwAoY6aHR0cDovL3NlY3VyZS5nbG9iYWxzaWduLmNvbS9jYWNlcnQvZ3Nn
-Y2NyNnNtaW1lY2EyMDIzLmNydDA5BggrBgEFBQcwAYYtaHR0cDovL29jc3AuZ2xvYmFsc2lnbi5j
-b20vZ3NnY2NyNnNtaW1lY2EyMDIzMGUGA1UdIAReMFwwCQYHZ4EMAQUDAzALBgkrBgEEAaAyASgw
-QgYKKwYBBAGgMgoDAjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9y
-ZXBvc2l0b3J5LzBBBgNVHR8EOjA4MDagNKAyhjBodHRwOi8vY3JsLmdsb2JhbHNpZ24uY29tL2dz
-Z2NjcjZzbWltZWNhMjAyMy5jcmwwLQYDVR0RBCYwJIEic3JpaGFyc2hhLmJhc2F2YXBhdG5hQGJy
-b2FkY29tLmNvbTATBgNVHSUEDDAKBggrBgEFBQcDBDAfBgNVHSMEGDAWgBQAKTaeXHq6D68tUC3b
-oCOFGLCgkjAdBgNVHQ4EFgQU9Dwqof/Zp1ZdK6zi7XdRGdBWQt0wDQYJKoZIhvcNAQELBQADggIB
-AKzx/6ognUMhNv+rh7iQOeHdGA7WMDixk+zrD7TZL6O5DPqXfFqaTLpswyruTymA3AVxZkMJyF6D
-zOAsRfU23BjVlgC95zl1glr7DorZW7B/CQDwbLHlkFy92Oa3E+gBzwdiDMjnq6tOW5p83zoVqiV4
-qm4OwC9JILEkslV4uZVXHPm5cZoOQURTECE2BN34Qhg5qD3EKYqOTeMVRed1qQiIPqQv1b4xjPVS
-qBwNPl7/4TJGiZGnRB7FsNnNUQRJONnEFifM3KGqjbqA4F8BhLXCYjqtBxxCGA5506StNfsjT8UU
-28E6lcuJXC4hQXau+xXQ5GWqS4ecWwm22FAVy/i8FJVfXPTJnZeixmqaadbIU3fOJs5+XfyNkU2T
-mlCafSr7KgV570M6tITSyminW/7rc8hdznGYypCNa+45JYJTaK4x1+Ejptaxc7TCS12B1zQNCxa7
-AHX5PZra3SpDb7g1p1i1Ax0JVJTkThiCSNDbiauVn7xIJpf+H8HC6O2ddGmtKUxe6NseFnSGJsi6
-7lO/cU+TpduV7w3weUy+nHhp+GsbClfvAGhFAs/GkyONExCwwIEVlFp9Mj5JLAgB+ceMbojBIoaO
-d5rOzdIII5FDwKAAqyjHuniYLrP0xIH4L5kWOAy+LudP4PSze7uAxTiCiSJg5AaNBTa5NuwTnSX6
-MYICVzCCAlMCAQEwYjBSMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTEo
-MCYGA1UEAxMfR2xvYmFsU2lnbiBHQ0MgUjYgU01JTUUgQ0EgMjAyMwIMPiCpKhlPGjqoQ++SMA0G
-CWCGSAFlAwQCAQUAoIHHMC8GCSqGSIb3DQEJBDEiBCBJz7vTD4Z50Y+u2eB16pfu99T9xWLvxY3J
-51yQqCgU2TAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJBTEPFw0yNjAzMDQx
-NDUzMDdaMFwGCSqGSIb3DQEJDzFPME0wCwYJYIZIAWUDBAEqMAsGCWCGSAFlAwQBFjALBglghkgB
-ZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEHMAsGCWCGSAFlAwQCATANBgkqhkiG9w0BAQEF
-AASCAQB8ySJNHktzX9STXa0ZKrcLsc0/KGA0lkTydbVcbgEtMIZGe26X1/lXu/dSiLrIhD0kUhwh
-sr+6VWSsA10RgYOblxrZg1/CrFzg/upd5Nyc6gR4eG2hYrgxSw3Ho76PfieNbYh5v6zqq2r6bMMI
-gxr4yLtJNx/rVg2KhlxK+U/qKDvdiI6XiUPjXDNqGy69YUaBSZz26aHIlVPKraySEQWG/OBrwsAc
-haGlDEeDUk8mr7ftbk6rsQJLMh8tj2JhTx9wd+MUPGox4pQxz666bB+9Tm7uI1edJZnXvsbiC93d
-h6EdpVMgNZkam1SCeWe+zVMfDc6+hrt8CvcEH7lvPtrI
---000000000000526ef3064c33fae9--
+thanks,
+Chenyu
+
