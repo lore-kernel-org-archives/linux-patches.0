@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546632F5485
-	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 00:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7946F2EBDFA
+	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 00:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772583592; cv=none; b=bX/0lrPKe+jT2DSPioeT0iOcWI+DnVNYgh8f9fuL9OSlQajJG7lk7z2lIXXwk9oqOvIJd8s81xyo0DszaM3q0Rh0FmuxSJrXUm52PNsB6CbPE1D535jXxGu5lmz7/4aJA5eBQCSEBa/NmEQoq1UbAmaMpWGz7qJn+LGLmPC+PY4=
+	t=1772583593; cv=none; b=p+/mIpFmbmQOz1girHGSA2cX8NotWddzImz7f98jx9Hr0D8HHtKkimpxMVk2zuHnHU8TQF3EyMQnzCaE70Zl4dNmBP/RzDk2HbRul8+tqmxT6ZY1My4AhAWPj0brCwDd8/fy/xMqW5sX91cFapArSctTkewvkihmpcFYwtvs1Fo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772583592; c=relaxed/simple;
-	bh=aYBwxsXexDx1wpURXe2fS8HHTkWNax3PozdPsyGor0A=;
+	s=arc-20240116; t=1772583593; c=relaxed/simple;
+	bh=cBIUYkcTaLcFGaaS2gjR42fcrLXFw9Kcvy5bKM/KiC8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFba5kU0e42uEV+AAsmij4evq2SyYK7GteNbYhlvDTB5eTXmpkr8JhGLJmlHYZzTkFhigf/xcleyUGZ1kqAAK7pGZeNOfkouF9YqcVSMSnWUDb6gQfJQsRKPyReHOlvvkGFJmSUMHDA5bQ++bSltn4ppfvbh0AvrQT+EmNcjArw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TyZEEIaF; arc=none smtp.client-ip=198.175.65.19
+	 MIME-Version; b=AkyzEY47u4g3tBVj9SeF4dyghiSff96XDvi/l5ASOUPHjOHOfW9OkbKNEFwenkzBaGqUg7sm6qBqpgibmNEU2NrOhD82CM7i5oH4RXMqhn1GheOpz8MItllL0taVmFd1PbuWInjd9TN97BuzNHw23zLUfZu3Ibv18bAYc2Ms6rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Pin5FH6r; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TyZEEIaF"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Pin5FH6r"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772583591; x=1804119591;
+  t=1772583592; x=1804119592;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=aYBwxsXexDx1wpURXe2fS8HHTkWNax3PozdPsyGor0A=;
-  b=TyZEEIaF2frBT00Sm+3dnXHI6FMvqpfugUC0xOFRpLu2eRqMffIND5Vg
-   o7dkggAJ28OXqlc+sh6QBB+YpuAmkqd0u0bVl+sAtMBK+AdsgOJKRRUK9
-   Q40lK2Gs2TgQdIOHaxbHfsNNbf/R1i2MSPsfNTA7vWEbRxcD8VxxKX9Xr
-   pGCj7pXjWTKOVkY0PSmm1xxHfHuVOwaRzD4Zh38ihMWhDeI3RmLxmca4J
-   KCMptZpaWPrts2dNDRfpSJ6897hbaDRmoETUKigDkOXVopUYhtWdtvPIm
-   MxOIkgSBtpnfuLaxp0o1oZqHNZDvd3X9dfQ6wC8W4PAIWATVEsf4QvTf6
-   g==;
-X-CSE-ConnectionGUID: NK4A355HRmaCDZWgdmND1Q==
-X-CSE-MsgGUID: MYpX3ArkQH2aOVylTGZR2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11718"; a="73545025"
+  bh=cBIUYkcTaLcFGaaS2gjR42fcrLXFw9Kcvy5bKM/KiC8=;
+  b=Pin5FH6rB60bBvnMEXZzOKgifoMmJ3JmxB475EEpMACazNzLmKXdlwuu
+   yaRbBTkLYCyqlZX7sPwAfAcRFFwo4d2OVZWTUewqIEZJbgNo067iX3lh9
+   b6Op2nETro25HFNdpEG9MFnET8Idh8VjsaHel8SsLQy1Ri7ZbDMJMydKL
+   TlU73s21ybpepXLcEDx+P0fdWYR74eASKwrULp1i+jkkRn0G+QHaC3C1Q
+   yn8vnJXkkWyJnyWXAT5qrXIX73D6VBcqw+aHO8XP5nylzsdX+DU+YOsqF
+   eLF/VdxrOLecoVEteqpNZxqWGC24yDBgrmtADgqBdo5KE1/WZejf5ppg4
+   Q==;
+X-CSE-ConnectionGUID: MUqnU3i2S5issAMhUbGtow==
+X-CSE-MsgGUID: JQ3SsNypT5O3LJWG64Jhyg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11718"; a="73545044"
 X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
-   d="scan'208";a="73545025"
+   d="scan'208";a="73545044"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
   by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 16:19:45 -0800
-X-CSE-ConnectionGUID: B6q6jkzhSKGE+CeXyVUKlA==
-X-CSE-MsgGUID: jPmpRjvbTx2VCLnSfzI3tw==
+X-CSE-ConnectionGUID: +N+uQ2N4SXSYV95RFeDglA==
+X-CSE-MsgGUID: 11b0snK6QLWNaiYU1Kb7+A==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
-   d="scan'208";a="218120397"
+   d="scan'208";a="218120407"
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 16:19:45 -0800
 From: Reinette Chatre <reinette.chatre@intel.com>
@@ -60,9 +60,9 @@ Cc: fenghuay@nvidia.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v2 5/9] selftests/resctrl: Increase size of buffer used in MBM and MBA tests
-Date: Tue,  3 Mar 2026 16:19:34 -0800
-Message-ID: <e684ae7dfacb9c26ce59bf5d6f85b4f27cd387d0.1772582958.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 8/9] selftests/resctrl: Simplify perf usage in CAT test
+Date: Tue,  3 Mar 2026 16:19:37 -0800
+Message-ID: <42ea6df7c8c8aceecdd1037f09b13b4cc34521f6.1772582958.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1772582958.git.reinette.chatre@intel.com>
 References: <cover.1772582958.git.reinette.chatre@intel.com>
@@ -74,47 +74,144 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Errata for Sierra Forest [1] (SRF42) and Granite Rapids[2] (GNR12)
-describe the problem that MBM on Intel RDT may overcount memory bandwidth
-measurements. The resctrl tests compare memory bandwidth reported by iMC
-PMU to that reported by MBM causing the tests to fail on these systems
-depending on the settings of the platform related to the errata.
+The CAT test relies on the PERF_COUNT_HW_CACHE_MISSES event to determine if
+modifying a cache portion size is successful. This event is configured to
+report the data as part of an event group, but no other events are added to
+the group.
 
-Since the resctrl tests need to run under various conditions it is not
-possible to ensure system settings are such that MBM will not overcount.
-It has been observed that the overcounting can be controlled via the
-buffer size used in the MBM and MBA tests that rely on comparisons
-between iMC PMU and MBM measurements.
-
-Running the MBM test on affected platforms with different buffer sizes it
-can be observed that the difference between iMC PMU and MBM counts reduce
-as the buffer size increases. After increasing the buffer size to more
-than 4X the differences between iMC PMU and MBM become insignificant.
-
-Increase the buffer size used in MBM and MBA tests to 4X L3 size to reduce
-possibility of tests failing due to difference in counts reported by iMC
-PMU and MBM.
+Remove the unnecessary PERF_FORMAT_GROUP format setting. This eliminates
+the need for struct perf_event_read and results in read() of the associated
+file descriptor to return just one value associated with the
+PERF_COUNT_HW_CACHE_MISSES event of interest.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Link: https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/sierra-forest/xeon-6700-series-processor-with-e-cores-specification-update/errata-details/ # [1]
-Link: https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/birch-stream/xeon-6900-6700-6500-series-processors-with-p-cores-specification-update/011US/errata-details/ # [2]
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/resctrl/cache.c    | 17 +++++------------
+ tools/testing/selftests/resctrl/cat_test.c |  4 +---
+ tools/testing/selftests/resctrl/resctrl.h  | 11 +----------
+ 3 files changed, 7 insertions(+), 25 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index 19a01a52dc1a..b9fa7968cd6e 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -139,6 +139,6 @@ ssize_t get_fill_buf_size(int cpu_no, const char *cache_type)
- 	if (ret)
+diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
+index 1ff1104e6575..03313a5ff905 100644
+--- a/tools/testing/selftests/resctrl/cache.c
++++ b/tools/testing/selftests/resctrl/cache.c
+@@ -10,7 +10,6 @@ void perf_event_attr_initialize(struct perf_event_attr *pea, __u64 config)
+ 	memset(pea, 0, sizeof(*pea));
+ 	pea->type = PERF_TYPE_HARDWARE;
+ 	pea->size = sizeof(*pea);
+-	pea->read_format = PERF_FORMAT_GROUP;
+ 	pea->exclude_kernel = 1;
+ 	pea->exclude_hv = 1;
+ 	pea->exclude_idle = 1;
+@@ -37,19 +36,13 @@ int perf_event_reset_enable(int pe_fd)
+ 	return 0;
+ }
+ 
+-void perf_event_initialize_read_format(struct perf_event_read *pe_read)
+-{
+-	memset(pe_read, 0, sizeof(*pe_read));
+-	pe_read->nr = 1;
+-}
+-
+ int perf_open(struct perf_event_attr *pea, pid_t pid, int cpu_no)
+ {
+ 	int pe_fd;
+ 
+ 	pe_fd = perf_event_open(pea, pid, cpu_no, -1, PERF_FLAG_FD_CLOEXEC);
+ 	if (pe_fd == -1) {
+-		ksft_perror("Error opening leader");
++		ksft_perror("Unable to set up performance monitoring");
+ 		return -1;
+ 	}
+ 
+@@ -132,9 +125,9 @@ static int print_results_cache(const char *filename, pid_t bm_pid, __u64 llc_val
+  *
+  * Return: =0 on success. <0 on failure.
+  */
+-int perf_event_measure(int pe_fd, struct perf_event_read *pe_read,
+-		       const char *filename, pid_t bm_pid)
++int perf_event_measure(int pe_fd, const char *filename, pid_t bm_pid)
+ {
++	__u64 value;
+ 	int ret;
+ 
+ 	/* Stop counters after one span to get miss rate */
+@@ -142,13 +135,13 @@ int perf_event_measure(int pe_fd, struct perf_event_read *pe_read,
+ 	if (ret < 0)
  		return ret;
  
--	return cache_total_size * 2 > MINIMUM_SPAN ?
--			cache_total_size * 2 : MINIMUM_SPAN;
-+	return cache_total_size * 4 > MINIMUM_SPAN ?
-+			cache_total_size * 4 : MINIMUM_SPAN;
+-	ret = read(pe_fd, pe_read, sizeof(*pe_read));
++	ret = read(pe_fd, &value, sizeof(value));
+ 	if (ret == -1) {
+ 		ksft_perror("Could not get perf value");
+ 		return -1;
+ 	}
+ 
+-	return print_results_cache(filename, bm_pid, pe_read->values[0].value);
++	return print_results_cache(filename, bm_pid, value);
  }
+ 
+ /*
+diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
+index 8bc47f06679a..6aac03147d41 100644
+--- a/tools/testing/selftests/resctrl/cat_test.c
++++ b/tools/testing/selftests/resctrl/cat_test.c
+@@ -135,7 +135,6 @@ static int cat_test(const struct resctrl_test *test,
+ 		    struct resctrl_val_param *param,
+ 		    size_t span, unsigned long current_mask)
+ {
+-	struct perf_event_read pe_read;
+ 	struct perf_event_attr pea;
+ 	cpu_set_t old_affinity;
+ 	unsigned char *buf;
+@@ -159,7 +158,6 @@ static int cat_test(const struct resctrl_test *test,
+ 		goto reset_affinity;
+ 
+ 	perf_event_attr_initialize(&pea, PERF_COUNT_HW_CACHE_MISSES);
+-	perf_event_initialize_read_format(&pe_read);
+ 	pe_fd = perf_open(&pea, bm_pid, uparams->cpu);
+ 	if (pe_fd < 0) {
+ 		ret = -1;
+@@ -192,7 +190,7 @@ static int cat_test(const struct resctrl_test *test,
+ 
+ 			fill_cache_read(buf, span, true);
+ 
+-			ret = perf_event_measure(pe_fd, &pe_read, param->filename, bm_pid);
++			ret = perf_event_measure(pe_fd, param->filename, bm_pid);
+ 			if (ret)
+ 				goto free_buf;
+ 		}
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 861bf25f2f28..e04b313dd7f7 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -148,13 +148,6 @@ struct resctrl_val_param {
+ 	struct fill_buf_param	*fill_buf;
+ };
+ 
+-struct perf_event_read {
+-	__u64 nr;			/* The number of events */
+-	struct {
+-		__u64 value;		/* The value of the event */
+-	} values[2];
+-};
+-
+ /*
+  * Memory location that consumes values compiler must not optimize away.
+  * Volatile ensures writes to this location cannot be optimized away by
+@@ -210,11 +203,9 @@ unsigned int count_bits(unsigned long n);
+ int snc_kernel_support(void);
+ 
+ void perf_event_attr_initialize(struct perf_event_attr *pea, __u64 config);
+-void perf_event_initialize_read_format(struct perf_event_read *pe_read);
+ int perf_open(struct perf_event_attr *pea, pid_t pid, int cpu_no);
+ int perf_event_reset_enable(int pe_fd);
+-int perf_event_measure(int pe_fd, struct perf_event_read *pe_read,
+-		       const char *filename, pid_t bm_pid);
++int perf_event_measure(int pe_fd, const char *filename, pid_t bm_pid);
+ int measure_llc_resctrl(const char *filename, pid_t bm_pid);
+ void show_cache_info(int no_of_bits, __u64 avg_llc_val, size_t cache_span, bool lines);
+ 
 -- 
 2.50.1
 
