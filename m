@@ -1,57 +1,46 @@
-Received: from mail115-79.sinamail.sina.com.cn (mail115-79.sinamail.sina.com.cn [218.30.115.79])
+Received: from n169-110.mail.139.com (n169-110.mail.139.com [120.232.169.110])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F3C23537DD
-	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 02:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.79
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E220342CA2
+	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 05:56:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=120.232.169.110
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772593053; cv=none; b=hLMOHVaRl/TPXihQVhKsgVHzYNlkSNlU5k1OeWv+OHiGpz/deGkbkkvGO7vQt9WOcgx616QgYl+qEdQJSuCLLBJKY61LUqseUwDe5Qr5Z/cxdKCf9yi+FPfvE0Ehd5sKI1Q4VAW/8IXVDs+1cHnvz0QdIEhG8MKT42qN4K6pOHM=
+	t=1772603775; cv=none; b=CLPbURwmwnYIN4wm7dIDx/cxWlIvf3oh7PqcJSuLc4HpuYOD+t4NUvDXtMUTiqSpKzxqSjhbvV2P4thtvnZA7qN0sNVqnmSZxjFeyyjrT41nwI8zNWQtcE4DgU3l9axOsUHyI3PYm6TOP9B4Fs35h0E7VQ5swNEhtATthXQpJR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772593053; c=relaxed/simple;
-	bh=qkeRbo78B+2gM+r2nbeXSUfeM0u2W8lSayzGSDjRBRc=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=alReXCWbkZiSSSG2cu0H8YPHue62v4qh453hnq8OQ7qodbBOnPTR4MBDMgD8hQRYsAxeYJ2d+gjPcRi1NskrntEQ2NEQW0seD6zkVbO0iLO2h3f/qaNfekFNcaULbbp534PANmvAnLPuPiPbmz9suzpgaeVqM+G7AI7KspolA6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=Wh2MP7Fu; arc=none smtp.client-ip=218.30.115.79
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
+	s=arc-20240116; t=1772603775; c=relaxed/simple;
+	bh=RERDU0kupy1mzuigYZrGNTxQEUs2twFXLeDd5M2jrAg=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=mneqeBweL91n4XWRzvJMWp+fU5iKRqPtZb/Jg3M/70QZNrlWE6RK8luQsf9q8I1512AJwg3bIBxsA53nHxfPBtl+O0o2OG9Zy8QMKnUa1PuPzP0YfJoEOMv8TH27qIdH2QE/T5eP7/s53v2Ug3D87YQVmyH6CNVvMvDkzA+5K68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com; spf=pass smtp.mailfrom=139.com; dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b=e7UCsD2M; arc=none smtp.client-ip=120.232.169.110
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=139.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=139.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="Wh2MP7Fu"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1772593049;
-	bh=DCsWQhNqFPEinGuq6D8087JmXqNHHQaNhOmiVDfpepM=;
-	h=From:Subject:Date:Message-Id;
-	b=Wh2MP7FuVtwFGixupGwVwA24K0+RckFi3fPlIya9nqsUY3ppc+gBaU+yitdC2Lhda
-	 PjwwEOm78x4xox73A4PRssuwmI+VHqvJf7c4m7m1MrUweDefX+5A2Of5uX3+5FI04r
-	 Y+usc50onLmq/QSkDu0SeVCr6VI8yfC3bnmvFmx8=
-X-SMAIL-HELO: NTT-kernel-dev
-Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.22) with ESMTP
-	id 69A79F9400002FF7; Wed, 4 Mar 2026 10:57:26 +0800 (CST)
-X-Sender: jianqkang@sina.cn
-X-Auth-ID: jianqkang@sina.cn
-Authentication-Results: sina.cn;
-	 spf=none smtp.mailfrom=jianqkang@sina.cn;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 7820897602635
-X-SMAIL-UIID: 7B04746125BA4BD6BB653162830FBA2D-20260304-105726-1
-From: Jianqiang kang <jianqkang@sina.cn>
+	dkim=pass (1024-bit key) header.d=139.com header.i=@139.com header.b="e7UCsD2M"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=139.com; s=dkim; l=0;
+	h=from:subject:message-id:to:cc:mime-version;
+	bh=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=;
+	b=e7UCsD2MOD4MMoPDrRgpNNek75SzEkuS7iI4o+kPYHSbp8bYm9ClPK9x2WHHYIml0jskhPTdazl46
+	 3rspptUfDpLxPtmx5JIoPHcwIBMKmpBtbcEvFHxR8y2uEFs9LQWlZ81Hu68DX0Buyp+UMw0+cxTgCg
+	 YFskyGjzNXlc5glg=
+X-RM-TagInfo: emlType=0                                       
+X-RM-SPAM:                                                                                        
+X-RM-SPAM-FLAG:00000000
+Received:from NTT-kernel-dev (unknown[60.247.85.88])
+	by rmsmtp-lg-appmail-06-12084 (RichMail) with SMTP id 2f3469a7c96a766-00770;
+	Wed, 04 Mar 2026 13:55:58 +0800 (CST)
+X-RM-TRANSID:2f3469a7c96a766-00770
+From: Li hongliang <1468888505@139.com>
 To: gregkh@linuxfoundation.org,
 	stable@vger.kernel.org,
-	qiang.zhang1211@gmail.com
+	chao@kernel.org
 Cc: patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org,
-	paulmck@kernel.org,
-	frederic@kernel.org,
-	quic_neeraju@quicinc.com,
-	josh@joshtriplett.org,
-	rostedt@goodmis.org,
-	mathieu.desnoyers@efficios.com,
-	jiangshanlai@gmail.com,
-	joel@joelfernandes.org,
-	rcu@vger.kernel.org,
-	neeraj.upadhyay@kernel.org
-Subject: [PATCH 6.6.y] rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access
-Date: Wed,  4 Mar 2026 10:57:24 +0800
-Message-Id: <20260304025724.2365669-1-jianqkang@sina.cn>
+	jaegeuk@kernel.org,
+	daehojeong@google.com,
+	linux-f2fs-devel@lists.sourceforge.net
+Subject: [PATCH 6.6.y] f2fs: zone: fix to avoid inconsistence in between SIT and SSA
+Date: Wed,  4 Mar 2026 13:55:56 +0800
+Message-Id: <20260304055556.2595295-1-1468888505@139.com>
 X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -61,63 +50,75 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
+[ Upstream commit 773704c1ef96a8b70d0d186ab725f50548de82c4 ]
 
-In the preparation stage of CPU online, if the corresponding
-the rdp's->nocb_cb_kthread does not exist, will be created,
-there is a situation where the rdp's rcuop kthreads creation fails,
-and then de-offload this CPU's rdp, does not assign this CPU's
-rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
-rdp's->rdp_gp->nocb_gp_kthread is still valid.
+w/ below testcase, it will cause inconsistence in between SIT and SSA.
 
-This will cause the subsequent re-offload operation of this offline
-CPU, which will pass the conditional check and the kthread_unpark()
-will access invalid rdp's->nocb_cb_kthread pointer.
+create_null_blk 512 2 1024 1024
+mkfs.f2fs -m /dev/nullb0
+mount /dev/nullb0 /mnt/f2fs/
+touch /mnt/f2fs/file
+f2fs_io pinfile set /mnt/f2fs/file
+fallocate -l 4GiB /mnt/f2fs/file
 
-This commit therefore use rdp's->nocb_gp_kthread instead of
-rdp_gp's->nocb_gp_kthread for safety check.
+F2FS-fs (nullb0): Inconsistent segment (0) type [1, 0] in SSA and SIT
+CPU: 5 UID: 0 PID: 2398 Comm: fallocate Tainted: G           O       6.13.0-rc1 #84
+Tainted: [O]=OOT_MODULE
+Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xb3/0xd0
+ dump_stack+0x14/0x20
+ f2fs_handle_critical_error+0x18c/0x220 [f2fs]
+ f2fs_stop_checkpoint+0x38/0x50 [f2fs]
+ do_garbage_collect+0x674/0x6e0 [f2fs]
+ f2fs_gc_range+0x12b/0x230 [f2fs]
+ f2fs_allocate_pinning_section+0x5c/0x150 [f2fs]
+ f2fs_expand_inode_data+0x1cc/0x3c0 [f2fs]
+ f2fs_fallocate+0x3c3/0x410 [f2fs]
+ vfs_fallocate+0x15f/0x4b0
+ __x64_sys_fallocate+0x4a/0x80
+ x64_sys_call+0x15e8/0x1b80
+ do_syscall_64+0x68/0x130
+ entry_SYSCALL_64_after_hwframe+0x67/0x6f
+RIP: 0033:0x7f9dba5197ca
+F2FS-fs (nullb0): Stopped filesystem due to reason: 4
 
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+The reason is f2fs_gc_range() may try to migrate block in curseg, however,
+its SSA block is not uptodate due to the last summary block data is still
+in cache of curseg.
+
+In this patch, we add a condition in f2fs_gc_range() to check whether
+section is opened or not, and skip block migration for opened section.
+
+Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 [ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Signed-off-by: Li hongliang <1468888505@139.com>
 ---
- kernel/rcu/tree_nocb.h | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/f2fs/gc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/rcu/tree_nocb.h b/kernel/rcu/tree_nocb.h
-index 8993b2322be2..a3d613f063a8 100644
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1221,7 +1221,6 @@ static long rcu_nocb_rdp_offload(void *arg)
- 	struct rcu_segcblist *cblist = &rdp->cblist;
- 	unsigned long flags;
- 	int wake_gp;
--	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 8122135bb1ff..791b29ed6e47 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2005,6 +2005,9 @@ int f2fs_gc_range(struct f2fs_sb_info *sbi,
+ 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
+ 		};
  
- 	WARN_ON_ONCE(rdp->cpu != raw_smp_processor_id());
- 	/*
-@@ -1231,7 +1230,7 @@ static long rcu_nocb_rdp_offload(void *arg)
- 	if (!rdp->nocb_gp_rdp)
- 		return -EINVAL;
- 
--	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
-+	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
- 		return -EINVAL;
- 
- 	pr_info("Offloading %d\n", rdp->cpu);
-@@ -1260,7 +1259,7 @@ static long rcu_nocb_rdp_offload(void *arg)
- 	 */
- 	wake_gp = rdp_offload_toggle(rdp, true, flags);
- 	if (wake_gp)
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		wake_up_process(rdp->nocb_gp_kthread);
- 	swait_event_exclusive(rdp->nocb_state_wq,
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_CB) &&
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_GP));
++		if (IS_CURSEC(sbi, GET_SEC_FROM_SEG(sbi, segno)))
++			continue;
++
+ 		do_garbage_collect(sbi, segno, &gc_list, FG_GC,
+ 						dry_run_sections == 0);
+ 		put_gc_inode(&gc_list);
 -- 
 2.34.1
+
 
