@@ -1,190 +1,151 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.18])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02AD633F59D
-	for <patches@lists.linux.dev>; Tue,  3 Mar 2026 23:26:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.18
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772580391; cv=fail; b=QBct1qXZEr5NFhvocj1COXIyy3OeFopXWJp9pnA3l4HEOHSxJ6IT2I4Z4MwNa5U0O5JUE+1l/bU1kGnO/THwru5RSGaIFHPD8lTKObwBWJ4GFlvXUdEAmWPgLTo3+rot7kgXvUNfsvmEdEHALMAXFJqvKO4Ptdk5fLsfZNv6RyY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772580391; c=relaxed/simple;
-	bh=SaT8bQNOF31fWamiSqqesrCs0TzuAPgFhbZWPO7YR5Y=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=YgJwyZ1QRPIBx6PW5Oc874Rh44GKeaE0uBlkMLwmxnTndg5UgU0cllYNuMgQGAVqQqYoukpplZP4p0EMxjwIriEEty8mPuXekPw0Nl1j7InciQACBwhwt/lflGePvblGEo3qoSzKnNA2lu0BQB8l+1xiuMt/G8pE0mk6CaPv7hE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AozXOPxb; arc=fail smtp.client-ip=192.198.163.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC01255F2C
+	for <patches@lists.linux.dev>; Wed,  4 Mar 2026 00:19:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.19
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772583587; cv=none; b=mTVpMxwZUlr5TaaSeFUmMkTxjNqobuEUjqcnm5HXVk3FWF9suhzOfS2mfsgufKbAzL9YTgfOisKA4u4W2/pN/kSuZuM4GPa++rJqtELf6x1S0jeWBAzDJfYWSVcugRoFp68e2VOAjij1BF0lX5OLEkHrU1sHhL0LZINt5wE8j2c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772583587; c=relaxed/simple;
+	bh=Nj/Jxt+UN+W7OM90f3ydgSAdEW3cXmj0uO+enNGrzNo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=NN25UDqwSeTIVlGknfeNitwasAXQgg+9Ix3kYvyD292eNqcGZDqD2+/mrVwMMkQ03J+5L5+tZk1+UmM3AbiwItS3Lp1xBehi+zA6xWCy0cKnwtJyzETZKdMgDSCfCEui5tA+9G4bvBxCmyzyWfClXlaEjdmuX0axG4VxJttD5P0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=dHTNcNk1; arc=none smtp.client-ip=198.175.65.19
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AozXOPxb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="dHTNcNk1"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772580390; x=1804116390;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=SaT8bQNOF31fWamiSqqesrCs0TzuAPgFhbZWPO7YR5Y=;
-  b=AozXOPxbORN5SNt+1LnB62vaaoSRrn3ECqm7Xo79Rhv3hzZCPNynow+4
-   6C18rHyeJRV/iQJ3/wVJBIOSt3bKRG8xLbnglFRW7snfqxKVlRZXCYvQI
-   bjBBncOuTWFOlTHGcmholHDhp8I3AXVO/IYfkgv0OLTMWPo1myRLKrmSt
-   wsU8R9nxnHhIwjseVQTevtTAFgeku8I9y34AFeFhYUyylKqCk/dthfnhO
-   n/o+zp67xdt7nN3eICAWgLRiiaN/GvOqeOcH0cv7TFgJ88OCDoaf64C7Y
-   YqsdANv0b2kTARkkVsggN5UA32oSdNj51TuHw7n7KT1T/N6jT8xjU/TUo
-   g==;
-X-CSE-ConnectionGUID: 02v1jLifStKR4UocN+hymw==
-X-CSE-MsgGUID: YbTirVCEQxOCs6azG0fupg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11718"; a="72833093"
-X-IronPort-AV: E=Sophos;i="6.21,322,1763452800"; 
-   d="scan'208";a="72833093"
-Received: from fmviesa005.fm.intel.com ([10.60.135.145])
-  by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 15:26:29 -0800
-X-CSE-ConnectionGUID: 6QtsAjlvS+qh59gRUv+4Og==
-X-CSE-MsgGUID: KEai6590SliRBIk17qiO0g==
+  t=1772583585; x=1804119585;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=Nj/Jxt+UN+W7OM90f3ydgSAdEW3cXmj0uO+enNGrzNo=;
+  b=dHTNcNk1Vqt+l4LBRQb21CvrRwPMApbyN9QkA+UEr85/nSJZA4oxObY7
+   NBRV4B0tvX1igSp3oX7SrpqifsosP75azQM8mwGsysx7bQXHSLFWURXat
+   ny9QYB2Ael6+qAaa6JDZtXY/IekeAooUZQexOgVEL3QW4HmqqoST6QlIc
+   twm5KvB+7EZRbAzhq/iENALLinoxI4omYac7JMPCh6eUnQwcQZEta+ur7
+   khW/QE0a94Iv6+BQvdOLZLedOLYiy288vjioxDvS/Det9xMHhiqykbRvF
+   bHPACpLo0Bi124qZbppwLBwmhMNHcJLh9rHr+QFPGs2ez3zZsqOHWSnOs
+   Q==;
+X-CSE-ConnectionGUID: 57XeXS21Q5mjk3hvMkkeuA==
+X-CSE-MsgGUID: 9FGmXI3kQfaacMLwuepTWQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11718"; a="73544989"
+X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
+   d="scan'208";a="73544989"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 16:19:44 -0800
+X-CSE-ConnectionGUID: YzSeqomwT2+lWnzOIfWxXw==
+X-CSE-MsgGUID: Dat+9dNnQ/Ouf87MPD1Uzg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.21,322,1763452800"; 
-   d="scan'208";a="222821339"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 15:26:29 -0800
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 3 Mar 2026 15:26:28 -0800
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Tue, 3 Mar 2026 15:26:28 -0800
-Received: from CH4PR04CU002.outbound.protection.outlook.com (40.107.201.16) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 3 Mar 2026 15:26:28 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=F4UqMcaCgIYPt1oZFsaZY0s40A/in9gMF0XQCv7IWMbKko2eigi6COE81K+5i+z904kvKC/Y0lREEZJuGHhamW9Mp9pm1qCvCflNIbevSBfEc5EH7C59L5HTCSqXHmE5uD8YCuRPhTWUl/Y6RTxrwa8OrOnnQh7l/mZr3D8GdFApyYsDRJS/RiH4OI+rZX180ORXcMcQg5jC77Tsmuw+DstTJHgxHurMLMSiiPRo1EhZ1Dl/RIRQKMnNzkQKhHMxUSANrCX9EbOfspO93l+DDFT7uTgGJOFpFsF14ZH1mIlA2rheGgnoKLrEs8zqx4fugZe5AShCApqoH/oG9lsUEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SaT8bQNOF31fWamiSqqesrCs0TzuAPgFhbZWPO7YR5Y=;
- b=uOWmqdjivx7o2kVV1ZSCbxI4sDmoxtmoTVWylXvCDk8qX65QA9PPccui/M/vNGH3hVw9fpipkB2ZD3OW++BWM2ldZFyFi6Gnq5FukPyaN/VkdVv5YHHkHwCUfw3vlllMV1paasRoC+ZYKZsSkXxw0p9sAefBEPydiK5avESDV+BJdDaNlfm3e7fqIrRwM4bLkeinPsqwQ60BJmfFAbZJ64+QbTb0aywFKBrsDHX0M6rCxigQp1rzuw/8bL4FqW1UYG1fpyFo9MeV2I0W1yOsxAHSc893l3wmI10vFJYeFvhAhNCYr36Yf3CA5dI+ih8fDzNGBHh+cHbJ45DaFozxFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com (2603:10b6:a03:48a::9)
- by PH8PR11MB6880.namprd11.prod.outlook.com (2603:10b6:510:228::19) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9654.22; Tue, 3 Mar
- 2026 23:26:25 +0000
-Received: from SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6]) by SJ1PR11MB6083.namprd11.prod.outlook.com
- ([fe80::3454:2577:75f2:60a6%7]) with mapi id 15.20.9654.022; Tue, 3 Mar 2026
- 23:26:24 +0000
-From: "Luck, Tony" <tony.luck@intel.com>
-To: "Chatre, Reinette" <reinette.chatre@intel.com>
-CC: "james.morse@arm.com" <james.morse@arm.com>, "Dave.Martin@arm.com"
-	<Dave.Martin@arm.com>, "babu.moger@amd.com" <babu.moger@amd.com>,
-	"bp@alien8.de" <bp@alien8.de>, "tglx@linutronix.de" <tglx@linutronix.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>, "x86@kernel.org"
-	<x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>, "ben.horgan@arm.com"
-	<ben.horgan@arm.com>, "fustini@kernel.org" <fustini@kernel.org>,
-	"fenghuay@nvidia.com" <fenghuay@nvidia.com>, "peternewman@google.com"
-	<peternewman@google.com>, "linux-kernel@vger.kernel.org"
-	<linux-kernel@vger.kernel.org>, "patches@lists.linux.dev"
-	<patches@lists.linux.dev>
-Subject: RE: [PATCH 05/11] fs/resctrl: Use accurate type for rdt_resource::rid
-Thread-Topic: [PATCH 05/11] fs/resctrl: Use accurate type for
- rdt_resource::rid
-Thread-Index: AQHcqnTlWVUnwzR6X0CNTY4AreCz1bWdH/+AgAAM4ACAAA1FgIAAK2oAgAAOwYA=
-Date: Tue, 3 Mar 2026 23:26:24 +0000
-Message-ID: <SJ1PR11MB6083F6CC8D8B848FF56C5D8FFC7FA@SJ1PR11MB6083.namprd11.prod.outlook.com>
-References: <cover.1772476561.git.reinette.chatre@intel.com>
- <956a7f8c9ff85b873ec85159a66d5e3c8b468d70.1772476561.git.reinette.chatre@intel.com>
- <aacmf_CM52gHRMot@agluck-desk3>
- <a3343e9b-e481-4282-a775-651a516164a1@intel.com>
- <aac8baGgAWgpWSH2@agluck-desk3>
- <29ae7f66-9e98-4350-9dd6-6781dcd5d0c0@intel.com>
-In-Reply-To: <29ae7f66-9e98-4350-9dd6-6781dcd5d0c0@intel.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR11MB6083:EE_|PH8PR11MB6880:EE_
-x-ms-office365-filtering-correlation-id: b01298bd-b98a-41ee-d041-08de797c4976
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7416014|38070700021;
-x-microsoft-antispam-message-info: +1jTEe+FIRuXCluCmqknj0PTx7O6JGR4GEaKnaQUNDv4XMjb+L2hGGGQLUphVhDI+Cv9uc3KkBC3+tK4pT47guNKn2ReMYFjF7Mo73MNo5KHqeTUxCKc962CGhtLG8AVm4CFhaT/l54+0BeK/8AnnX/XKna+uu/blU+0plQkfVRVnAYXBGHlV3g+BfE11SoPwdy7AmyJcFFXkgKyA9GpKAmFsiBw20Jl+JbqE/1D0h7fvt146U4jljOnZM78Go+FDUonk8D2kD4r1MLGHtVHJB/Uyx8I7f79lmVEJ7tMpkt4WWYCxfgGyUOqruuSR/VmaRkH8BYciiCbeFbtBGFlcOGjkETLB6GH159WFddNBvA4JNwZtNqQtu8SqmB5l2+7nG7DBxlTv83GqP/ZRg9BtclQF4sBSssJKDOg9AkFS7c1fB5qfUTx7Puj+CsUMIex7TO2qLZDUdXuBS2DeK0N6mA0fZqdrOs7hodx6K/ft0522qlnJe0K+oSL/vACw0tN+COBP+RaZ3+6AgNnhEX5UvzpDWXgod37GADYwNCTH0kM8bddlv54EdoDWdBfCJsgb0eu7NH1LE8pOhECES1+jvBkp1Yedvh2mX8M7sAGb9oBlg6DB8ivnWfIlVlYK0sa4or1TNz3tDglssz5o+5Ca8E9DkMbuOPgQFE1t1GXAbfC0cjRn6L6uAZ5U+b4pUuDFZ5HdQad+ED7iKOcL47bkSYW8QdnztXF1TuU5UZxiemiDp4RgqUfTLluI85PEMqunx/Fr5uD47uZoj+IvZiW1EoecDNJZF7UXXsJoV4wvt0=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR11MB6083.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(7416014)(38070700021);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?MWlYVE0xdnVuZjlvVVRENXUyak9VYk95V1g1eDhSOGNSdmUwK3k3VlRPMU5o?=
- =?utf-8?B?cEQvWU9mMGRodFRSZm05cFhQQm9lVUlFN2w2V0xTcWViNCtrU2xUSEYxM2U0?=
- =?utf-8?B?NGFWaVlUOEs4R2kyMElFVkV4dnVqbWF3dTdzdjJ4M0x3a0daS25ndU85Z0Jz?=
- =?utf-8?B?M00ycG1FTEV2YTJVbmkzbVFUVjF4TXlmbnQwZmlXTlhaQWgyL2puM3hhbTlV?=
- =?utf-8?B?ZjNKcWlDWDhUR1UrbnBhdmRYOHBIV0IyZFpLR2VNeUNtMW1LQk9qODZFNmVx?=
- =?utf-8?B?MnI5ODh0dVRpdUcxdlFId0pyVGx6YmsvWWU0WXFYTWR0TWN0d2QxRG1IZDV4?=
- =?utf-8?B?QjV4blk4RlNJTFJDQWR4SUVPTjZ2WEtadDBmY3FIdDFPeFFsNFZlOVUyVXJs?=
- =?utf-8?B?bWU5M3ZEVElGMnBTb0s0ZzFia0E1dHZ6SXhybTlHOU9VeThBd3VaWE9DaHJ4?=
- =?utf-8?B?Q2hLM3FoZFg1NEpLTnNHYk1iK2tJYVNCQko2ZHY3dXUyamZpdDljWHRCbmt0?=
- =?utf-8?B?NisxeDI2OTBXU2RkNmcvU3lZTDVMV0Urd0RTRHRqTXorQ2hTRWlIdnB1Y1pP?=
- =?utf-8?B?bnlQSUpTWHo4ZWJoWnBPaG44ZjBvR0p5N2EzUDFkSndrSEJicVNxZzVLK0kr?=
- =?utf-8?B?WTNJVXhXNUpoQkp6ZTkzeWZJakdYY3Jld0ZyTnB0NS8yN0Z6OHVFcUNyVnVX?=
- =?utf-8?B?T0R0LzIyUjNzbGhvQis4RndDWldaZjRkOE15bjhWVDhlZFJ1R0pQVXRySk9o?=
- =?utf-8?B?S0xqUWVRc3QyZTlNUU5zU21jZk5UQU1iL2JMWms0Nmh0UFBGdDZjUWhCaXVR?=
- =?utf-8?B?RlViT3haampIbWlqYTNqQWI2ckxUSmRpNkVVbFFGdHgydmZPMlQ4QXAzVVda?=
- =?utf-8?B?bEw0TVJuYVVuZDJ6VlpLVTBNNWZVQzJTWFZuaUlLYitGMmd6R3NZLzU3aFR1?=
- =?utf-8?B?cE9OQzhaamYvTHZLT2M3azJaMGVzdHQyNXZ2clBtQTBqK0JYY0NqVjU4VlpB?=
- =?utf-8?B?bTljYkEyS3cxVndSajV4Q3c2dFQvZjVZSEVaWDgxTXVwM1pMWUc5UGNKQUdr?=
- =?utf-8?B?dTQwSlI4MDh4eDQvUHVsOEhpMzg4bXRYTGF3b2c2TUhwTkNQN0tkd2t6WE1o?=
- =?utf-8?B?cVJzMEEwaDVVaHRkaHVxZTVkdmNFblhzaThiYkdramREenYvUGJoczFFRFY4?=
- =?utf-8?B?d0x3SHlTa2s3SkVTSlQzSjMya0JoOGY1WnBkazRFZnJwMHhSRXk0Z1dOSk9t?=
- =?utf-8?B?bE5WbVFRY1pwVStkNVRySE1PUVhNUXBzZ2doNVIxNVhEL25HaVVVbkRnbExC?=
- =?utf-8?B?QlRuK2k1Y1dJMW5JdjZ0MmN1TlhCRnJFeTVGa29NdUt1bHQ3YWtlSjdLUytI?=
- =?utf-8?B?QzYxSkZuVHNreG9NUDY2K1ZvMU02TEJ4U3g0YUhYRXUxQ3ZIMDU1aUtKcGQ5?=
- =?utf-8?B?eG9FRHlQUEd2a1YvUW1iUlE4OHBKRkMvR0Q4eDVESHZmb0lWLzJkN1RERlVa?=
- =?utf-8?B?NHh5cEtERE5hanZxL1FmZXNtWjdqbUM2UTErWmFtOWZFR2tsOTBHc3lQRi9Q?=
- =?utf-8?B?VkJzQm5TdlhseE1mclhXQ1J5aXRyV0tjakJIVDRRaG9xaTdDaWViQVBnVmR2?=
- =?utf-8?B?SHpzRi9RT0wwclRSMlRzQlBtYU0vOVVzWnZkdTlNaG45Z0h6VGFXMzhUUWx6?=
- =?utf-8?B?SGdWRnBrN29yR2N2eUlCSWlQN1JUdzFXZHFBam5JTk5xNnpYVFF4ZnZVbkJl?=
- =?utf-8?B?Y3NSaE9jeFluL2YzMVhuYUl1cm5xK2VCMExLOG1OYVBOQ3E1V2xRdDAveUxt?=
- =?utf-8?B?cjN1RVBHbThWc3ZQeE5yU3p6QmVnK1ZncGNtR0g0YjNMeE1wTmhtUThaQ2hC?=
- =?utf-8?B?Q2JXaHhUQnUrUm5wbzRaS3lDcERkVFl5cDBLME9GeGZCTVhlbFhVVGdQVThG?=
- =?utf-8?B?aDhCQmJGMndHTUV1cjYycE8ydEJDbzk1OHkwTnVacHNHN3lNeG54OUk2ZXIr?=
- =?utf-8?B?UHhRSXVYTkFkRGtQTDlaMWRQU25mYkpNZnExSTROS0N3U3ZsUTlpMnJxZm1U?=
- =?utf-8?B?emtaS1p6LzQrNk1mUTFpY05UQWZ4NndLeFUyNHd6cVo0bmNJanl0d04weDVF?=
- =?utf-8?B?WUZYM0FBQXhSaUt5ZlU2S0prd1BoQXBndld2TkhkZmVLbjNwTDNVaU5LamVp?=
- =?utf-8?B?b21Fczg3cUNTL3dLcXhiZHVWOGdWdGNsZnpGb0VvMXEyUWJKQlk4bE5lYkFt?=
- =?utf-8?B?NldSeXhxQ3hJVEhnK0FKbnVDRnJGejBoa1dJTVdXTXlNMVk2Q0RLelcvSGpa?=
- =?utf-8?Q?UF4J48n6Gxsvx1FlkQ?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+X-IronPort-AV: E=Sophos;i="6.21,323,1763452800"; 
+   d="scan'208";a="218120382"
+Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2026 16:19:44 -0800
+From: Reinette Chatre <reinette.chatre@intel.com>
+To: shuah@kernel.org,
+	Dave.Martin@arm.com,
+	james.morse@arm.com,
+	tony.luck@intel.com,
+	babu.moger@amd.com,
+	ilpo.jarvinen@linux.intel.com
+Cc: fenghuay@nvidia.com,
+	peternewman@google.com,
+	zide.chen@intel.com,
+	dapeng1.mi@linux.intel.com,
+	ben.horgan@arm.com,
+	yu.c.chen@intel.com,
+	reinette.chatre@intel.com,
+	linux-kselftest@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev
+Subject: [PATCH v2 0/9] selftests/resctrl: Fixes and improvements focused on Intel platforms
+Date: Tue,  3 Mar 2026 16:19:29 -0800
+Message-ID: <cover.1772582958.git.reinette.chatre@intel.com>
+X-Mailer: git-send-email 2.50.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR11MB6083.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b01298bd-b98a-41ee-d041-08de797c4976
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Mar 2026 23:26:24.8097
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: ylLlNRJyF4qlqFfx2+3DvSzlibtdwgN5SjV4HVCjMqY67O/0zM98f5AX3zTLq+5jdwM5KIokk0vEWjTu6xmKyw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR11MB6880
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 
-PiBJIGFtIHNlZWluZyB0aHJlZSBkaWZmZXJlbnQgdmFsdWVzIGJlaW5nIGNvbnNpZGVyZWQ6DQo+
-IC0gVGhlIG51bWJlciBvZiByZXNvdXJjZXMgc3VwcG9ydGVkIGJ5IHJlc2N0cmwgZnMuDQo+IC0g
-VGhlIG51bWJlciBvZiByZXNvdXJjZXMgc3VwcG9ydGVkIGJ5IGFyY2hpdGVjdHVyZS4NCj4gLSBU
-aGUgbWF4aW11bSByZXNvdXJjZSBpZCBzdXBwb3J0ZWQgYnkgYXJjaGl0ZWN0dXJlLg0KPiAgQXQg
-dGhpcyB0aW1lIFJEVF9OVU1fUkVTT1VSQ0VTIGlzIHVzZWQgZm9yIGFsbCB0aHJlZSBvbiB4ODYg
-YnV0IHRoZXNlIHRocmVlDQo+IG51bWJlcnMgY2FuIGJlIGRpZmZlcmVudC4NCg0KQWdyZWVkLg0K
-DQo+IExldHRpbmcgcmR0X251bV9yZXNvdXJjZXMgYmUgdGhlIG1heGltdW0gcmVzb3VyY2UgSUQg
-c3VwcG9ydGVkIGJ5IHRoZSBhcmNoaXRlY3R1cmUNCj4gd2lsbCBub3QgYXZvaWQgdGhhdCByZXNj
-dHJsX2FyY2hfZ2V0X3Jlc291cmNlKCkgYmUgY2FsbGVkIGZvciBhIHJlc291cmNlIHRoYXQgaXMN
-Cj4gbm90IHN1cHBvcnRlZCBieSB0aGUgYXJjaGl0ZWN0dXJlIG5vciBkb2VzIGl0IGF2b2lkIHJl
-c2N0cmwgZnMgY2FsbGluZw0KPiByZXNjdHJsX2FyY2hfZ2V0X3Jlc291cmNlKCkgZm9yIHJlc291
-cmNlIElEcyBsYXJnZXIgdGhhbiB0aGUgbWF4aW11bSBzZXQgYnkNCj4gdGhlIGFyY2hpdGVjdHVy
-ZS4NCg0KSSBoYWRuJ3QgY29uc2lkZXJlZCB0aGUgb3RoZXIgY2FsbHMgdG8gcmVzY3RybF9hcmNo
-X2dldF9yZXNvdXJjZSgpDQoNCkRyb3AgbXkgaWRlYSBhbmQgc3RpY2sgd2l0aCB5b3VyIHBhdGNo
-IDUuDQoNCi1Ub255DQo=
+Changes since v1:
+- The new perf interface that resctrl selftests can utilize has been accepted and
+  merged into v7.0-rc2. This series can thus now be considered for inclusion.
+  For reference,
+  commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+  The resctrl selftest changes making use of the new perf interface are backward
+  compatible. The selftests do not require a v7.0-rc2 kernel to run but the
+  tests can only pass on recent Intel platforms running v7.0-rc2 or later.
+- Combine the two outstanding resctrl selftest submissions into one series
+  for easier tracking:
+  https://lore.kernel.org/lkml/084e82b5c29d75f16f24af8768d50d39ba0118a5.1769101788.git.reinette.chatre@intel.com/
+  https://lore.kernel.org/lkml/cover.1770406608.git.reinette.chatre@intel.com/
+- Fix typo in changelog of "selftests/resctrl: Improve accuracy of cache
+  occupancy test": "the data my be in L2" -> "the data my be in L2"
+- Add Zide Chen's RB tags.
+
+Cover letter updated to be accurate wrt perf changes:
+
+The resctrl selftests fail on recent Intel platforms. Intermittent failures
+in the CAT test and permanent failures of MBM and MBA tests on new platforms
+like Sierra Forest and Granite Rapids.
+
+The MBM and MBA resctrl selftests both generate memory traffic and compare the
+memory bandwidth measurements between the iMC PMUs and MBM to determine pass or
+fail. Both these tests are failing on recent platforms like Sierra Forest and
+Granite Rapids that have two events that need to be read and combined
+for a total memory bandwidth count instead of the single event available on
+earlier platforms.
+
+resctrl selftests prefer to obtain event details via sysfs instead of adding
+model specific details on which events to read. Enhancements to perf to expose
+the new event details are available since:
+ commit 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
+This series demonstrates use of the new sysfs interface to perf to
+obtain to obtain accurate iMC read memory bandwidth measurements.
+
+An additional issue with all the tests is that these selftests are part
+performance tests and determine pass/fail on performance heuristics selected
+after running the tests on a variety of platforms. When new platforms
+arrive the previous heuristics may cause the tests to fail. These failures are
+not because of an issue with the resctrl subsystem the tests intend to test
+but because of the architectural changes in the new platforms.
+
+Adapt the resctrl tests to not be as sensitive to architectural changes
+while adjusting the remaining heuristics to ensure tests pass on a variety
+of platforms. More details in individual patches.
+
+Tested by running 100 iterations of all tests on Emerald Rapids, Granite
+Rapids, Sapphire Rapids, Ice Lake, Sierra Forest, and Broadwell.
+
+Reinette Chatre (9):
+  selftests/resctrl: Improve accuracy of cache occupancy test
+  selftests/resctrl: Do not store iMC counter value in counter config
+    structure
+  selftests/resctrl: Prepare for parsing multiple events per iMC
+  selftests/resctrl: Support multiple events associated with iMC
+  selftests/resctrl: Increase size of buffer used in MBM and MBA tests
+  selftests/resctrl: Raise threshold at which MBM and PMU values are
+    compared
+  selftests/resctrl: Remove requirement on cache miss rate
+  selftests/resctrl: Simplify perf usage in CAT test
+  selftests/resctrl: Reduce L2 impact on CAT test
+
+ tools/testing/selftests/resctrl/cache.c       |  17 +--
+ tools/testing/selftests/resctrl/cat_test.c    |  43 ++----
+ tools/testing/selftests/resctrl/cmt_test.c    |  35 ++++-
+ tools/testing/selftests/resctrl/fill_buf.c    |   4 +-
+ tools/testing/selftests/resctrl/mba_test.c    |   6 +-
+ tools/testing/selftests/resctrl/mbm_test.c    |   6 +-
+ tools/testing/selftests/resctrl/resctrl.h     |  17 +--
+ tools/testing/selftests/resctrl/resctrl_val.c | 131 +++++++++++++-----
+ 8 files changed, 162 insertions(+), 97 deletions(-)
+
+
+base-commit: 11439c4635edd669ae435eec308f4ab8a0804808
+-- 
+2.50.1
+
