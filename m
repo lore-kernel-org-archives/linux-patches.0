@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6973C6A53;
-	Thu,  5 Mar 2026 15:37:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D7B3CA4B9;
+	Thu,  5 Mar 2026 15:37:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725033; cv=none; b=nKCeB205b6K2SreasACwz8NAJwAVZ9awkBNXty6LM/mBZblQqibKNmiHB5XF4Kk8sXprJLznjFi9qgL0BDoCjUyexRSv+I1JsMXCor4df949TRWY3p8jx+gRj8FSRPUmy6KdGQ8U14IXR72af4UTKvSucJ0WhBal+NZLp9WwJng=
+	t=1772725034; cv=none; b=qL8mcFIz/99lNMr5aWkCDLkOBAKy+pEhljQiHbVYFqJx5xZHNxjCRW2L3Pcb8Y3tQd1jNDkIIQH2Efv8GSs+08Bs3R0WsnjCnz4sQw3yzaj+2nd93ggHrJEyKatFAkRBkNAyK9wXfFtiVaFiP3sNsJMRQ8HGjrjTE+wOZfo48gs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725033; c=relaxed/simple;
-	bh=jkmKY9PNpEA8XYmeUaB2srzOcNVtTnu3eYd725GFAW8=;
+	s=arc-20240116; t=1772725034; c=relaxed/simple;
+	bh=iQ0yLgTGAJZgiDZIOQexcimPC6Gs/WY2/5Nfp5GgG2E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YRIC3CMnmqO3NSxwsEtg2Q7mJzqaWeANVTYy49sDMpgMAGUvveGRcAkHf0SvMjEWXgpN+atPkGwJBmL8UzweHDqMAGVY7dnus/HMM/yxENjJClrZ5hYg3fn7+7+RNUGd65bL2LjNfs0zTNEPsA3ftQ9VLhpkjX/Vg3oYFTEtihE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dYIZhM6g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=grmjem5kqyp08Q52NKWs5QKyfQqmW0V7HxCTdqPLFJrJsJGNF9Fb3OGa8GRC3h7Ae/hlNByyZspUaCAKskMHAUB0xS9kMXNqeirLxSnR5OnH+4gqnZjCKxggsTTu8oL7dvTDqV/wbw/UCQr/DWhb1Nhv88Jp5rF5iSZWETkx5hA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BPCjtOsh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dYIZhM6g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE1BC116C6;
-	Thu,  5 Mar 2026 15:37:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BPCjtOsh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73271C19423;
+	Thu,  5 Mar 2026 15:37:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725033;
-	bh=jkmKY9PNpEA8XYmeUaB2srzOcNVtTnu3eYd725GFAW8=;
+	s=k20201202; t=1772725034;
+	bh=iQ0yLgTGAJZgiDZIOQexcimPC6Gs/WY2/5Nfp5GgG2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYIZhM6gqZCYrg7aA7NzYtEiRsGDm1aK/alxaoETOxqcMNGXgMfm4say2ZQlC/D+z
-	 BFm5y+EoNYaumb5EzF47v6844ySx71vmlk0LgOlZxARsqFVSyB0JGUrjPd2W3BBwNh
-	 8dAnLBVL89qfRE2xp6MWX0zWYLLZOLCs50+AJOc7xfsC/PWavWrm8rbYIikeH6iUBR
-	 terrPEzV0x6y93VzQb3PsNAiLQuIwB0iwgiwjNE9ayQky9/JJxFppMzG3MB7KdcQ+u
-	 TmWzC8ECxWqXsu3h5hYy0tGVhIgT6+WZjTUs+Zgi417O28nAwVctZ3VsoIU/m9uEMc
-	 T761vZlo+QL4Q==
+	b=BPCjtOshOzcviEsHmW6Gu1mbDrDMgdtNPs9RFAqW5oK8sz3LbcmU7HABW9KLmaqwu
+	 guFaJ5gy1t4jLPQu9r3BTrSO794eI24oQLtOtCsGr//NiN4OClS9u1ScB2TLpLQRoY
+	 iLH1A/OIzWD9FG12jPMtUsTDjKeGz1G0Ru+3M749xZs7doZ5cfrgkHi4QQbmVSN4ak
+	 Y1OjfLyyIaM9Wanq5iiprHLbOFF1JW3gU/Ahw0WiZB1oCP01VKVPIEgtSKcBWe75Sd
+	 KQ4PF1DFVNTuLZx/Mzd76duN7rYAbWfCmaF8D/2hg+8tVOXsFDgi3d2F2gxoy/F51O
+	 opUEesr7l0UsA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
+Cc: Tomas Henzl <thenzl@redhat.com>,
+	David Jeffery <djeffery@redhat.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] ALSA: usb-audio: Check max frame size for implicit feedback mode, too
-Date: Thu,  5 Mar 2026 10:36:48 -0500
-Message-ID: <20260305153704.106918-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] scsi: ses: Fix devices attaching to different hosts
+Date: Thu,  5 Mar 2026 10:36:49 -0500
+Message-ID: <20260305153704.106918-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -53,128 +54,143 @@ X-stable-base: Linux 6.19.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit 7cb2a5422f5bbdf1cf32eae0eda41000485b9346 ]
+[ Upstream commit 70ca8caa96ce473647054f5c7b9dab5423902402 ]
 
-When the packet sizes are taken from the capture stream in the
-implicit feedback mode, the sizes might be larger than the upper
-boundary defined by the descriptor.  As already done for other
-transfer modes, we have to cap the sizes accordingly at sending,
-otherwise this would lead to an error in USB core at submission of
-URBs.
+On a multipath SAS system some devices don't end up with correct symlinks
+from the SCSI device to its enclosure. Some devices even have enclosure
+links pointing to enclosures attached to different SCSI hosts.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260225085233.316306-3-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+ses_match_to_enclosure() calls enclosure_for_each_device() which iterates
+over all enclosures on the system, not just enclosures attached to the
+current SCSI host.
+
+Replace the iteration with a direct call to ses_enclosure_find_by_addr().
+
+Reviewed-by: David Jeffery <djeffery@redhat.com>
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://patch.msgid.link/20260210191850.36784-1-thenzl@redhat.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me write the analysis.
-
 ## Analysis
 
-### What the commit fixes
+### Problem Description
+On multipath SAS systems, `ses_match_to_enclosure()` calls
+`enclosure_for_each_device(ses_enclosure_find_by_addr, &efd)` at line
+687, which iterates over **all** enclosures registered system-wide via
+`container_list`. This means a SCSI device can be incorrectly matched to
+an enclosure on a completely different SCSI host, resulting in wrong
+sysfs symlinks from devices to enclosures.
 
-This is a one-line fix that caps the packet size returned from the
-implicit feedback path to `ep->maxframesize`. When USB audio uses
-implicit feedback mode, packet sizes are derived from the **actual
-captured URB lengths** from a companion capture endpoint, rather than
-being pre-calculated. These actual lengths can exceed the maximum frame
-size defined by the USB descriptor/bus constraints.
+### The Fix
+The fix replaces the global iteration with a direct call:
+`ses_enclosure_find_by_addr(edev, &efd)`, which searches only the
+specific `edev` enclosure device already passed into
+`ses_match_to_enclosure()`. The function signature also changes from
+`void *data` to `struct efd *efd` for type safety (since it's no longer
+used as a callback for `enclosure_for_each_device`).
 
-Without this cap, oversized packets get submitted to the USB core, which
-rejects them with errors, causing audio failures or crashes.
+### Stable Kernel Criteria Assessment
 
-### Bug mechanism
+1. **Obviously correct and tested**: Yes. The `edev` is already the
+   correct enclosure for the current host — using the global iterator
+   was simply wrong. Reviewed-by David Jeffery (Red Hat), Signed-off-by
+   Martin K. Petersen (SCSI maintainer).
 
-In `snd_usb_endpoint_next_packet_size()`, when `ctx->packet_size[idx]`
-is non-zero (implicit feedback path), the raw value from the capture
-stream was returned without any bounds check against `maxframesize`. The
-other two code paths already have this protection:
-- `slave_next_packet_size()` caps via `min(phase >> 16,
-  ep->maxframesize)` at line 174
-- `next_packet_size()` uses pre-calculated `packsize[]` values, which
-  are now capped by the companion commit `7fe8dec3f628`
+2. **Fixes a real bug**: Yes. Incorrect device-to-enclosure associations
+   cause wrong symlinks, which breaks storage management tools that rely
+   on enclosure topology on multipath SAS systems (enterprise storage
+   environments).
 
-This was a gap in the implicit feedback path specifically.
+3. **Important issue**: Yes. Enterprise SAS multipath setups are common
+   in production servers. Incorrect enclosure associations can lead to
+   operators targeting wrong devices during maintenance.
 
-### Real-world impact
+4. **Small and contained**: Yes. Single file change
+   (`drivers/scsi/ses.c`), ~10 meaningful lines changed. The core fix is
+   replacing one function call.
 
-The linked bugzilla (221076) documents a real user hitting this with a
-DIYINHK USB Audio 2.0 device at high sample rates (352.8kHz/384kHz with
-6 channels at 32-bit). The device firmware reports an incorrect max
-packet size that USB core corrects downward, but the ALSA driver's
-implicit feedback path didn't respect this corrected limit.
+5. **No new features**: Correct. Pure bug fix.
 
-### Stable criteria assessment
+6. **Self-contained**: Yes. No dependencies on other patches.
+   `ses_enclosure_find_by_addr` is only called from this one site, and
+   it's a static function within ses.c.
 
-1. **Obviously correct**: Adding `min(packet, ep->maxframesize)` mirrors
-   exactly what the other code paths already do. It's a one-line, self-
-   evident fix.
-2. **Fixes a real bug**: URB submission errors with real hardware
-   (bugzilla 221076).
-3. **Small and contained**: Single line addition in one file.
-4. **No new features**: Pure bug fix.
-5. **Low risk**: The cap was already applied in all other paths; this
-   just closes a gap for the implicit feedback path.
+### Risk Assessment
+**Very low risk.** The fix narrows the search scope from all enclosures
+to just the relevant one. The matching logic within
+`ses_enclosure_find_by_addr` is completely unchanged. The only
+behavioral difference is that devices will no longer be incorrectly
+associated with enclosures on different hosts.
 
-### Dependency check
-
-This commit depends on the companion commit `7fe8dec3f628` ("ALSA: usb-
-audio: Cap the packet size pre-calculations") which fixes the same class
-of bug for the pre-calculated path. Both should be backported together
-as they address the same bugzilla issue, but this commit is
-**independently valuable** — the implicit feedback path fix stands on
-its own since `maxframesize` has been available since long before.
-
-The `Fixes:` tag on the companion commit points to `f0bd62b64016`
-("ALSA: usb-audio: Improve frames size computation") from 2020, meaning
-the underlying code is present in all active stable trees.
+### Bug Age
+The buggy code was introduced in commit `c38c007af04b92` ("[SCSI] ses:
+Use vpd information from scsi_device") by Hannes Reinecke in v3.15-rc1
+(2014). This bug affects **all** current stable trees.
 
 ### Verification
 
-- Read `sound/usb/endpoint.c` lines 157-233: confirmed
-  `slave_next_packet_size()` caps at line 174 with `min(phase >> 16,
-  ep->maxframesize)`, `next_packet_size()` uses `ep->packsize[]` (now
-  capped by companion commit), but the `ctx->packet_size[idx]` path at
-  line 222-226 had no cap before this fix.
-- Confirmed `maxframesize` is set in `snd_usb_endpoint_set_params()` at
-  line ~1400 from `maxpacksize / cur_frame_bytes`.
-- Confirmed companion commit `7fe8dec3f628` exists and caps
-  `packsize[0]` and `packsize[1]` — it has an explicit `Fixes:` tag
-  pointing to `f0bd62b64016` (2020), confirming the buggy code exists in
-  stable trees.
-- Confirmed the bugzilla link 221076 is referenced in the commit
-  message, documenting a real user-reported issue.
-- The implicit feedback packet sizes come from actual URB lengths (set
-  in `retire_inbound_urb` path), which can exceed descriptor limits —
-  verified by reading the packet_size assignment code.
+- **git blame** confirmed line 687
+  (`enclosure_for_each_device(ses_enclosure_find_by_addr, &efd)`) was
+  introduced in commit `c38c007af04b92` (v3.15-rc1)
+- **git describe --contains c38c007af04b92** confirmed version:
+  `v3.15-rc1~136^2~4`
+- **Read of `drivers/misc/enclosure.c:85-101`** confirmed
+  `enclosure_for_each_device()` iterates over ALL entries in
+  `container_list` (global list of all enclosures)
+- **Grep for `ses_enclosure_find_by_addr`** confirmed it is only
+  referenced at two locations in ses.c: its definition (line 531) and
+  the single call site (line 687) — no other callers exist
+- **Grep for `enclosure_for_each_device`** confirmed the SES driver at
+  line 687 is the ONLY caller outside of enclosure.c itself — so this
+  change has no impact on other subsystems
+- **Read of `ses_match_to_enclosure()`** (lines 669-689) confirmed
+  `edev` is already passed as a parameter but was ignored in favor of
+  global iteration
+- **lore.kernel.org search** found the patch was reviewed by Martin K.
+  Petersen and included in multiple stable releases (6.1.165, 6.6.128,
+  6.12.75, 6.18.16, 6.19.6), indicating broad acceptance
 
-This is a textbook stable backport candidate: a one-line fix for a real
-user-reported bug, closing a gap where bounds checking was missing for
-one specific code path while already present in all others.
+### Conclusion
+This is a clear, surgical fix for a real bug affecting enterprise
+multipath SAS systems. The bug has existed since v3.15 (2014). The fix
+is small, self-contained, obviously correct, low-risk, and has been
+reviewed by the SCSI maintainer.
 
 **YES**
 
- sound/usb/endpoint.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/ses.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 1eaf52d1ae9c7..46eff040a1511 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -221,6 +221,7 @@ int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
+diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
+index 2c61624cb4b03..50e744e891295 100644
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -529,9 +529,8 @@ struct efd {
+ };
  
- 	packet = ctx->packet_size[idx];
- 	if (packet) {
-+		packet = min(packet, ep->maxframesize);
- 		if (avail && packet >= avail)
- 			return -EAGAIN;
- 		return packet;
+ static int ses_enclosure_find_by_addr(struct enclosure_device *edev,
+-				      void *data)
++				      struct efd *efd)
+ {
+-	struct efd *efd = data;
+ 	int i;
+ 	struct ses_component *scomp;
+ 
+@@ -684,7 +683,7 @@ static void ses_match_to_enclosure(struct enclosure_device *edev,
+ 	if (efd.addr) {
+ 		efd.dev = &sdev->sdev_gendev;
+ 
+-		enclosure_for_each_device(ses_enclosure_find_by_addr, &efd);
++		ses_enclosure_find_by_addr(edev, &efd);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
