@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75EB3CF68C;
-	Thu,  5 Mar 2026 15:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A9C3D301F;
+	Thu,  5 Mar 2026 15:37:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725044; cv=none; b=Ka4IeSGFn67QnB4Z9k75aBkDrWcTSG9rVPb0IpSjZN+xIYZ/eVT4V8Q/x1+63zcIMuW/5gRjpP6Ag2v0PhQvrAUWIwjDfVddXgYyauTyI19dQdwRYn31rQQPWzGpw8cwslEry77qYkj1aqOdodI90UI8yrK3YJgA8xVI6PCdeT8=
+	t=1772725046; cv=none; b=TucXrO38eKTT7Ia7OvyzCUmikNKmWjTx9iHzrfJ64mLO+NtIoRD5iX2hdG1jw5eQr8e1qa07YqhUZ4UuK2WMu0/8xHLxe75PzKGO0cbr7RRHVCibLC1Df2HlI8SVkZhjrXOrrgZmgKL282JVgsYfS9mBFCg+HItku7Pla0Net5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725044; c=relaxed/simple;
-	bh=XFt9mQ0GoAaRGLyHFbiJBRtbs41U6XC+bGWSWZaeqBI=;
+	s=arc-20240116; t=1772725046; c=relaxed/simple;
+	bh=/CYbRmfwK6yy8597nxESiS+SQQd03M0Jma5BsuBrwCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i6JkaMSZr3Qcp4avDikyAjXmv0FA2HI7WSLjFTMHCPS4ToYmSZbT2su+0dZbdpRW95DrdEBJ4u5iu3MfKWIb6OmXjokYlhE8SBR8Vlk13jSa9Vk7kqE1f7DxaDI+IeJwQHKbU/jOxbKpoqlf9qtgzYel4N+ltvdyTSt4h10Eha4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tAX0d2xs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=pZGBT5bNQu8wv/qeAO+mGU5T79I+NLYfOIwgoG4B69z66ldQrzgMLrxx1uQb6LdbAvyU88FqYBTPpYbRDf0kOBTTH/vqu+Fr9CYOHODN4/u5Y/TL+XNbdBipG/RySTy8GN826vVI5/jYpbiwuZWfUYc4eFsPTIhfOSl7Wwaelvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pIFV8LRf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tAX0d2xs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2894C116C6;
-	Thu,  5 Mar 2026 15:37:23 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pIFV8LRf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0094FC19423;
+	Thu,  5 Mar 2026 15:37:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725044;
-	bh=XFt9mQ0GoAaRGLyHFbiJBRtbs41U6XC+bGWSWZaeqBI=;
+	s=k20201202; t=1772725045;
+	bh=/CYbRmfwK6yy8597nxESiS+SQQd03M0Jma5BsuBrwCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAX0d2xsd+dWP58XDaYd+b2pAg7W6azVXtBh07m+h4ow/F7Ro44PigDc+XZTv3Eow
-	 NIy6wmsvn8I9LxA6wJdNlj7Osxpuirdg+jgPYnIVM3pTzeWDUp5y+wJaW0m7pxKdaA
-	 APSd2TWDoPkaM4dOEjhXQ36qFuDJ2osGU2jUjpQUxHziZMEosnLHZYZeoadKQZl04q
-	 F+ssm3LKPRQ0eNLIcVE+PRWoE1a/QsoRaBlhn2NS/qxKh7Qz6Szgc5HW5BgOmXJ87h
-	 6VEMe9AFTrs1sN4DVllqzTpCpcskoJ8EXm4cTDW4dBTMCT6bx0/J3Yk+RoqUJHubps
-	 QFYCX17MdQe/Q==
+	b=pIFV8LRfgliQjDrUYQe2EZZyA+jiNd7kq8ggc0B1oJY/eq6+RDtgbSX58XtswojLL
+	 N+xz5sWpR411ry+sOkksSNdgvT4gOPJGUtetSQoivlt/F5nUKBwXKWfSUFbo+d0Uxs
+	 67OTjhqBzcI5+tLGUee7DWxlfnsC8YJig6fht8aVV5imu4qu7VqNU9sFuDiMIrAwse
+	 lwk3Rq7tVyiNQH1E1a+CY0be/jXQIJwQ0cXaE1FAjVEJ/SZ6Spx/ggnZNIKj15jeFk
+	 fMbccJVHv8pfklslccoczWgaMFPq9FbXhl80isgvQZrOCfpZWjXpmTcjeNLUs3qJeg
+	 7eJbQkb64BzPA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Edward Adam Davis <eadavis@qq.com>,
-	syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	viro@zeniv.linux.org.uk,
-	linux-fsdevel@vger.kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] fs: init flags_valid before calling vfs_fileattr_get
-Date: Thu,  5 Mar 2026 10:36:56 -0500
-Message-ID: <20260305153704.106918-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] scsi: ufs: core: Fix possible NULL pointer dereference in ufshcd_add_command_trace()
+Date: Thu,  5 Mar 2026 10:36:57 -0500
+Message-ID: <20260305153704.106918-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -51,119 +51,156 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit cb184dd19154fc486fa3d9e02afe70a97e54e055 ]
+[ Upstream commit 30df81f2228d65bddf492db3929d9fcaffd38fc5 ]
 
-syzbot reported a uninit-value bug in [1].
+The kernel log indicates a crash in ufshcd_add_command_trace, due to a NULL
+pointer dereference when accessing hwq->id.  This can happen if
+ufshcd_mcq_req_to_hwq() returns NULL.
 
-Similar to the "*get" context where the kernel's internal file_kattr
-structure is initialized before calling vfs_fileattr_get(), we should
-use the same mechanism when using fa.
+This patch adds a NULL check for hwq before accessing its id field to
+prevent a kernel crash.
 
-[1]
-BUG: KMSAN: uninit-value in fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
- fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
- vfs_fileattr_get fs/file_attr.c:94 [inline]
- __do_sys_file_getattr fs/file_attr.c:416 [inline]
+Kernel log excerpt:
+[<ffffffd5d192dc4c>] notify_die+0x4c/0x8c
+[<ffffffd5d1814e58>] __die+0x60/0xb0
+[<ffffffd5d1814d64>] die+0x4c/0xe0
+[<ffffffd5d181575c>] die_kernel_fault+0x74/0x88
+[<ffffffd5d1864db4>] __do_kernel_fault+0x314/0x318
+[<ffffffd5d2a3cdf8>] do_page_fault+0xa4/0x5f8
+[<ffffffd5d2a3cd34>] do_translation_fault+0x34/0x54
+[<ffffffd5d1864524>] do_mem_abort+0x50/0xa8
+[<ffffffd5d2a297dc>] el1_abort+0x3c/0x64
+[<ffffffd5d2a29718>] el1h_64_sync_handler+0x44/0xcc
+[<ffffffd5d181133c>] el1h_64_sync+0x80/0x88
+[<ffffffd5d255c1dc>] ufshcd_add_command_trace+0x23c/0x320
+[<ffffffd5d255bad8>] ufshcd_compl_one_cqe+0xa4/0x404
+[<ffffffd5d2572968>] ufshcd_mcq_poll_cqe_lock+0xac/0x104
+[<ffffffd5d11c7460>] ufs_mtk_mcq_intr+0x54/0x74 [ufs_mediatek_mod]
+[<ffffffd5d19ab92c>] __handle_irq_event_percpu+0xc8/0x348
+[<ffffffd5d19abca8>] handle_irq_event+0x3c/0xa8
+[<ffffffd5d19b1f0c>] handle_fasteoi_irq+0xf8/0x294
+[<ffffffd5d19aa778>] generic_handle_domain_irq+0x54/0x80
+[<ffffffd5d18102bc>] gic_handle_irq+0x1d4/0x330
+[<ffffffd5d1838210>] call_on_irq_stack+0x44/0x68
+[<ffffffd5d183af30>] do_interrupt_handler+0x78/0xd8
+[<ffffffd5d2a29c00>] el1_interrupt+0x48/0xa8
+[<ffffffd5d2a29ba8>] el1h_64_irq_handler+0x14/0x24
+[<ffffffd5d18113c4>] el1h_64_irq+0x80/0x88
+[<ffffffd5d2527fb4>] arch_local_irq_enable+0x4/0x1c
+[<ffffffd5d25282e4>] cpuidle_enter+0x34/0x54
+[<ffffffd5d195a678>] do_idle+0x1dc/0x2f8
+[<ffffffd5d195a7c4>] cpu_startup_entry+0x30/0x3c
+[<ffffffd5d18155c4>] secondary_start_kernel+0x134/0x1ac
+[<ffffffd5d18640bc>] __secondary_switched+0xc4/0xcc
 
-Local variable fa.i created at:
- __do_sys_file_getattr fs/file_attr.c:380 [inline]
- __se_sys_file_getattr+0x8c/0xbd0 fs/file_attr.c:372
-
-Reported-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7c31755f2cea07838b0c
-Tested-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_B6C4583771D76766D71362A368696EC3B605@qq.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223065657.2432447-1-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-This confirms the bug: `fuse_fileattr_get()` reads `fa->flags_valid`
-(line 517), but in the `file_getattr` syscall, `fa` was declared
-uninitialized. The `flags_valid` field could contain any stack garbage,
-leading to the KMSAN report. The fix initializes it to `{ .flags_valid =
-true }`, matching the pattern used by `ioctl_getflags()` at line 313.
-
 ## Analysis
 
-**What the commit fixes:** An uninitialized memory read (KMSAN uninit-
-value) in the `file_getattr` syscall path. The `struct file_kattr fa`
-variable is declared on the stack without initialization, then passed to
-`vfs_fileattr_get()` which calls filesystem-specific `fileattr_get()`
-implementations. The FUSE implementation (`fuse_fileattr_get`) reads
-`fa->flags_valid` before writing to it, triggering use of uninitialized
-memory.
+### What the commit fixes
 
-**Bug severity:** This is a real bug reportable by KMSAN. The
-uninitialized `flags_valid` field determines which code path is taken in
-`fuse_fileattr_get()` (line 517). If `flags_valid` happens to be false
-(zero), the fuse driver takes the wrong code path (xattr-based instead
-of ioctl-based), potentially returning incorrect or garbage data to
-userspace.
+This is a **NULL pointer dereference crash** in
+`ufshcd_add_command_trace()`. When MCQ (Multi-Circular Queue) mode is
+enabled, the function calls `ufshcd_mcq_req_to_hwq()` which can return
+NULL when `req->mq_hctx` is NULL (i.e., the request has already been
+freed). The code then unconditionally dereferences `hwq->id`, causing a
+kernel crash.
 
-**Fix quality:** The fix is a one-line change - initializing the struct
-with `{ .flags_valid = true }`. This exactly matches the existing
-pattern at line 313 (`ioctl_getflags`), making it obviously correct. The
-`/* hint only */` comment also matches.
+The commit message includes a **real crash log** from production
+hardware (MediaTek platform), confirming this is not theoretical — it
+happens in the field.
 
-**Scope:** Only the 6.19 stable tree is affected. The `file_getattr`
-syscall was introduced in commit `be7efb2d20d67` which first appeared in
-v6.17-rc1. The code was moved to `fs/file_attr.c` as part of that
-series. Older stable trees (6.12.y, 6.6.y, 5.15.y, etc.) don't have this
-syscall and are unaffected.
+### Stable kernel criteria assessment
 
-**Risk:** Extremely low. The change only adds initialization of a single
-struct field, matching an existing pattern in the same file.
+1. **Obviously correct**: Yes — adds a simple NULL check before
+   dereference. Multiple other call sites in the same codebase already
+   perform this exact check (e.g., `ufshcd_mcq_abort()`,
+   `ufshcd_complete_requests()`). Reviewed by Bart Van Assche, a
+   prominent SCSI/UFS reviewer.
 
-**Stable criteria check:**
-- Obviously correct: Yes, matches existing pattern
-- Fixes a real bug: Yes, KMSAN-detected uninit read, syzbot-reported
-- Small and contained: Yes, one-line change
-- No new features: Correct
-- Tested: Yes, syzbot Tested-by tag
+2. **Fixes a real bug**: Yes — kernel crash (NULL pointer dereference)
+   with a real crash trace from production.
 
-## Verification
+3. **Important issue**: Yes — kernel panic/crash in an IRQ handler path
+   (`ufs_mtk_mcq_intr` → `ufshcd_mcq_poll_cqe_lock` →
+   `ufshcd_compl_one_cqe` → `ufshcd_add_command_trace`). This crashes
+   the entire system during normal UFS I/O completion.
 
-- Read `fs/file_attr.c:380` - confirmed `struct file_kattr fa;` is
-  uninitialized in `file_getattr` syscall
-- Read `fs/file_attr.c:313` - confirmed `ioctl_getflags` uses `{
-  .flags_valid = true }` (the pattern the fix replicates)
-- Read `fs/file_attr.c:82-94` - confirmed `vfs_fileattr_get()` passes
-  `fa` directly to filesystem's `fileattr_get` callback without
-  initializing it
-- Read `fs/fuse/ioctl.c:517` - confirmed `fuse_fileattr_get` reads
-  `fa->flags_valid` before writing, triggering the KMSAN report
-- `git tag --contains be7efb2d20d67` showed the syscall was introduced
-  in v6.17-rc1 (not v6.19-rc1 as might be assumed)
-- `git show v6.19.6:fs/file_attr.c` confirmed the fix is NOT yet in
-  6.19.6 stable
-- `git log v6.12.75 -- fs/file_attr.c` returned empty, confirming older
-  stable trees don't have this file/code
+4. **Small and contained**: Yes — the change is 3 lines (adds `if (hwq)`
+   check around `hwq_id = hwq->id`). Single file, single function.
+
+5. **No new features**: Correct — purely defensive NULL check.
+
+### Risk assessment
+
+- **Risk**: Extremely low. The worst case if `hwq` is NULL is that
+  `hwq_id` retains its initialized value (0), which is used only for
+  tracing. No functional impact.
+- **Benefit**: Prevents kernel crashes on systems using UFS MCQ mode
+  (common on modern mobile SoCs, particularly MediaTek).
+
+### Dependencies
+
+The buggy code was introduced in commit `4a52338bf288c` (March 2023,
+"scsi: ufs: core: Add trace event for MCQ") which is present in kernels
+v6.4+. This fix applies cleanly to any kernel that has MCQ tracing
+support.
+
+### Verification
+
+- **Agent investigation confirmed** `ufshcd_mcq_req_to_hwq()` is defined
+  in `drivers/ufs/core/ufs-mcq.c` and explicitly returns NULL when
+  `req->mq_hctx` is NULL.
+- **Agent investigation confirmed** the buggy line was introduced in
+  commit `4a52338bf288c` (v6.4 merge window, March 2023) via `git
+  blame`.
+- **Agent investigation confirmed** at least 5 other call sites of
+  `ufshcd_mcq_req_to_hwq()` correctly check for NULL before
+  dereferencing, proving this was an oversight.
+- The crash trace in the commit message shows a real crash in IRQ
+  context on a MediaTek UFS platform — this is a production issue.
+- The fix is reviewed by Bart Van Assche (`Reviewed-by:`) and merged by
+  Martin K. Petersen (SCSI maintainer).
+
+### Conclusion
+
+This is a textbook stable backport candidate: a small, surgical fix for
+a real kernel crash, with zero risk of regression, reviewed by the
+subsystem experts. The crash occurs in IRQ context during normal UFS I/O
+completion on MCQ-capable hardware (common in modern mobile platforms).
 
 **YES**
 
- fs/file_attr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/file_attr.c b/fs/file_attr.c
-index 13cdb31a3e947..4889cf59b2562 100644
---- a/fs/file_attr.c
-+++ b/fs/file_attr.c
-@@ -377,7 +377,7 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
- 	struct filename *name __free(putname) = NULL;
- 	unsigned int lookup_flags = 0;
- 	struct file_attr fattr;
--	struct file_kattr fa;
-+	struct file_kattr fa = { .flags_valid = true }; /* hint only */
- 	int error;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index c71a449850573..27d53a044dbad 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -515,8 +515,8 @@ static void ufshcd_add_command_trace(struct ufs_hba *hba, struct scsi_cmnd *cmd,
  
- 	BUILD_BUG_ON(sizeof(struct file_attr) < FILE_ATTR_SIZE_VER0);
+ 	if (hba->mcq_enabled) {
+ 		struct ufs_hw_queue *hwq = ufshcd_mcq_req_to_hwq(hba, rq);
+-
+-		hwq_id = hwq->id;
++		if (hwq)
++			hwq_id = hwq->id;
+ 	} else {
+ 		doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
+ 	}
 -- 
 2.51.0
 
