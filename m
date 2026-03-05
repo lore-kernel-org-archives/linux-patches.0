@@ -1,43 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D193CB2CE;
-	Thu,  5 Mar 2026 15:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3843CD8D2;
+	Thu,  5 Mar 2026 15:37:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725038; cv=none; b=kvUW5lEOCQtBU3hj3qOl1Frbi/hM4tqbgf7L0zdf0Rk5AzDr7ggD6hl8VjeOwYWRlnzEKt77VY3PfwPIEk0P+rEvVLEurzRQkYCRW4SYKYz/HfwqNGGANqIbHjfMe8s9VKKEW8lOehGwmJkyOWJlUtnEGmWcXstuR8mNhPKrmcg=
+	t=1772725040; cv=none; b=LnWQpXdO7Gm+Qf42ctTZdPGhY6d1ahCdQVH+czWKIFWlahZUseeEc7hVpzcwwmk+ekV18zY4xmJCbdBqbHj6F6H+EXzRAKQGP7JP0hoRz4AzLqW6+7gYZcr/exfodFpThOf1K3onH6AfGD89Gr4p2Q3szM0F/mhw1Pc7FcwfFcs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725038; c=relaxed/simple;
-	bh=AEpiXHIozBC5iJNZM1xkw2kFkbEtLfq6j5XzwTW9EgI=;
+	s=arc-20240116; t=1772725040; c=relaxed/simple;
+	bh=Yhl0gWZMiDd1Tqs4mW2XcYXwszy4vPsjwXrYC/z2oHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d0KXG/a8KYSgew24bgZXdsJbR5j4NczS9b27gmA02kcNWoH4EPL1+fGZInbTAorm8pHF++nJUdMqBImous5ez/4djTbE/qpYP+3g0nkv3AmvbuVXrznzhf+Ld5UwXpXEuH6hiOK5rzgHeiZAF8XfigtWqdtUekd2O23LRkx84sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ntxF9A5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=oo0s1fn+OeuNg5wqtFz7ESotbS4gBkyWGyVSEGT5OxbI/U7KGYb/UWNLxLZYW9gdU1pFFhc5brGHXbaFeegge7mIf5TpIS5xk5vWGS5Gfk4/tbXUDW+93x7H8FyLuMpOcjVV9nWpfgsgFOFq44uwJt0EgjWHgrloYJDOXYP19Qg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bhfd7vYD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ntxF9A5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD987C2BC87;
-	Thu,  5 Mar 2026 15:37:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bhfd7vYD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA5AC2BC9E;
+	Thu,  5 Mar 2026 15:37:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725038;
-	bh=AEpiXHIozBC5iJNZM1xkw2kFkbEtLfq6j5XzwTW9EgI=;
+	s=k20201202; t=1772725040;
+	bh=Yhl0gWZMiDd1Tqs4mW2XcYXwszy4vPsjwXrYC/z2oHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntxF9A5iCutO+LdGM5yGTZFy9pI/XEEsvLpU3gRYGS9psoC0s25/7fPzaoQPo8Qzv
-	 31ArgMdYN49nz6OrHHLBeGG3GkWAHwkxeV3YHr0v2AHyumydbuTmE/eGCKh8vyBQVc
-	 RmFe9Bkq5pDfWWW89uiqbeDwVYe4SleyGZClZluWG/7/rOHi7Uu8qyuevbq2TsBRP5
-	 TV3JQOFFiBXUZ/NRRO+pH0QhjZZux3PnkJ13lll0LcFeO9FgKUUcliFSzxxf5qcWzU
-	 ktXSSmTlZKCXHHcV/BDMb8jiOhUewdCMlMJdihM/0PCK9C6z9x0pZ88btvAe2B43yj
-	 GbpFdV6yM5yZQ==
+	b=Bhfd7vYDbZj+VJmQhKmtyFyGcODJGK0wyrht/H5hO7JcFBdZQANLPiyJ2opxoTfZM
+	 Ce2eAurzJsHVFQ9mim5tpUtk3yrtXltnsdokK6sgkRptIQKl1zMP0cugsWkJhbDJq6
+	 JeNCnZ4UsF9w3Gzkv3jpUH8pjDPtpJ3sPFrglV3IRvFcTGQqKRM61EvS0B1JC9ebrW
+	 ua9y0es3BCrly8cBpSIj/IRY74rkCG1eyX0YT2syXQIFvQ1NyJL4XvVoFURgxzCqo2
+	 oLpD+zA5EkYLBcLY7a9ddJCXNU/Von5DR8LYCxlsH38u8FkPApIgDQUAfOEEjreCEk
+	 3aR5NC6duRyaw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Piotr Mazek <pmazek@outlook.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Jan Kiszka <jan.kiszka@siemens.com>,
+	Florian Bezdeka <florian.bezdeka@siemens.com>,
+	Michael Kelley <mhklinux@outlook.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	kys@microsoft.com,
+	haiyangz@microsoft.com,
+	wei.liu@kernel.org,
+	decui@microsoft.com,
+	longli@microsoft.com,
+	James.Bottomley@HansenPartnership.com,
+	linux-hyperv@vger.kernel.org,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ACPI: PM: Save NVS memory on Lenovo G70-35
-Date: Thu,  5 Mar 2026 10:36:52 -0500
-Message-ID: <20260305153704.106918-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
+Date: Thu,  5 Mar 2026 10:36:53 -0500
+Message-ID: <20260305153704.106918-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -53,111 +61,198 @@ X-stable-base: Linux 6.19.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piotr Mazek <pmazek@outlook.com>
+From: Jan Kiszka <jan.kiszka@siemens.com>
 
-[ Upstream commit 023cd6d90f8aa2ef7b72d84be84a18e61ecebd64 ]
+[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
 
-[821d6f0359b0614792ab8e2fb93b503e25a65079] prevented machines
-produced later than 2012 from saving NVS region to accelerate S3.
+This resolves the follow splat and lock-up when running with PREEMPT_RT
+enabled on Hyper-V:
 
-Despite being made after 2012, Lenovo G70-35 still needs NVS memory
-saving during S3. A quirk is introduced for this platform.
+[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
+[  415.140822] INFO: lockdep is turned off.
+[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
+[  415.140846] Preemption disabled at:
+[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
+[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
+[  415.140857] Call Trace:
+[  415.140861]  <TASK>
+[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
+[  415.140863]  dump_stack_lvl+0x91/0xb0
+[  415.140870]  __schedule_bug+0x9c/0xc0
+[  415.140875]  __schedule+0xdf6/0x1300
+[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
+[  415.140879]  ? rcu_is_watching+0x12/0x60
+[  415.140883]  schedule_rtlock+0x21/0x40
+[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
+[  415.140891]  rt_spin_lock+0x89/0x1e0
+[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
+[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
+[  415.140900]  ? rcu_is_watching+0x12/0x60
+[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
+[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
+[  415.140908]  ? __rq_qos_issue+0x28/0x40
+[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
+[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
+[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
+[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
+[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
+[  415.140935]  __blk_flush_plug+0xf4/0x150
+[  415.140940]  __submit_bio+0x2b2/0x5c0
+[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
+[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
+[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
+[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
+[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
+[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
+[  415.141060]  generic_perform_write+0x14e/0x2c0
+[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
+[  415.141083]  vfs_write+0x2ca/0x570
+[  415.141087]  ksys_write+0x76/0xf0
+[  415.141089]  do_syscall_64+0x99/0x1490
+[  415.141093]  ? rcu_is_watching+0x12/0x60
+[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
+[  415.141097]  ? rcu_is_watching+0x12/0x60
+[  415.141098]  ? lock_release+0x1f0/0x2a0
+[  415.141100]  ? rcu_is_watching+0x12/0x60
+[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
+[  415.141103]  ? rcu_is_watching+0x12/0x60
+[  415.141104]  ? __schedule+0xb34/0x1300
+[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
+[  415.141109]  ? do_nanosleep+0x8b/0x160
+[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
+[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
+[  415.141116]  ? xfd_validate_state+0x26/0x90
+[  415.141118]  ? rcu_is_watching+0x12/0x60
+[  415.141120]  ? do_syscall_64+0x1e0/0x1490
+[  415.141121]  ? do_syscall_64+0x1e0/0x1490
+[  415.141123]  ? rcu_is_watching+0x12/0x60
+[  415.141124]  ? do_syscall_64+0x1e0/0x1490
+[  415.141125]  ? do_syscall_64+0x1e0/0x1490
+[  415.141127]  ? irqentry_exit+0x140/0x7e0
+[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Signed-off-by: Piotr Mazek <pmazek@outlook.com>
-[ rjw: Subject adjustment ]
-Link: https://patch.msgid.link/GV2PPF3CD5B63CC2442EE3F76F8443EAD90D499A@GV2PPF3CD5B63CC.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
+using is converted to an rt-mutex under PREEMPT_RT.
+
+Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
+Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
+Reviewed-by: Michael Kelley <mhklinux@outlook.com>
+Tested-by: Michael Kelley <mhklinux@outlook.com>
+Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Classification
+Now I have enough context to analyze this commit thoroughly.
 
-This is a **hardware quirk** — one of the explicitly listed exception
-categories that are appropriate for stable backporting. The pattern is
-identical to the existing Lenovo G50-45 and G40-45 quirks already in the
-table.
+## Analysis
 
-### Technical details
+### 1. Problem Description
+The commit fixes a **"BUG: scheduling while atomic"** crash and
+**lockup** on Hyper-V VMs running with `PREEMPT_RT` enabled. The stack
+trace in the commit message clearly shows the issue:
 
-- Commit `821d6f0359b0` (2014) made machines with BIOS year >= 2012 skip
-  NVS memory saving to speed up S3 suspend.
-- Some Lenovo laptops (G50-45, G40-45, and now G70-35) need the NVS save
-  despite being post-2012.
-- Without this quirk, suspend/resume (S3) is broken on the Lenovo
-  G70-35.
+- `storvsc_queuecommand()` calls `get_cpu()` which disables preemption
+- It then calls `storvsc_do_io()` → `vmbus_sendpacket_mpb_desc()` →
+  `hv_ringbuffer_write()`
+- `hv_ringbuffer_write()` takes a spinlock that, under PREEMPT_RT, is
+  converted to an rt-mutex
+- rt-mutexes can sleep/schedule, but preemption is disabled →
+  **scheduling while atomic BUG**
 
-### Risk assessment
+### 2. The Fix
+The fix replaces:
+```c
+ret = storvsc_do_io(dev, cmd_request, get_cpu());
+put_cpu();
+```
+with:
+```c
+migrate_disable();
+ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
+migrate_enable();
+```
 
-- **Scope**: Adds exactly 8 lines to a DMI quirk table — the most
-  mechanical kind of change possible.
-- **Affected systems**: Only the Lenovo G70-35 (DMI match on vendor
-  "LENOVO" + product "80Q5"). Zero impact on any other machine.
-- **Risk of regression**: Essentially zero. The DMI match is highly
-  specific.
-- **Benefit**: Fixes S3 suspend/resume on this laptop — a real user-
-  facing bug that makes the machine unusable for suspend.
+The purpose of `get_cpu()` here was to get a stable CPU number to use as
+a channel index in `storvsc_do_io()`. The actual requirement is just to
+prevent migration (so the CPU number stays valid), not to disable
+preemption entirely. `migrate_disable()` achieves this while allowing
+scheduling under PREEMPT_RT.
 
-### Stable criteria check
+### 3. Correctness
+- `migrate_disable()` prevents the task from being migrated to another
+  CPU, so `smp_processor_id()` remains valid throughout the call
+- On non-PREEMPT_RT kernels, this is functionally equivalent
+  (migrate_disable maps to preempt_disable)
+- On PREEMPT_RT, it allows the rt-mutex in `hv_ringbuffer_write()` to
+  sleep as needed
 
-1. **Obviously correct and tested**: Yes — follows exact same pattern as
-   existing quirks, and presumably tested by the reporter on the
-   hardware.
-2. **Fixes a real bug**: Yes — broken S3 suspend/resume on this laptop.
-3. **Important issue**: Yes — suspend/resume not working is a
-   significant issue for laptop users.
-4. **Small and contained**: Yes — 8 lines added to a DMI table, no logic
-   changes.
-5. **No new features**: Correct — this restores expected behavior on
-   specific hardware.
-6. **Dependencies**: None — the DMI table and `init_nvs_save_s3`
-   callback have existed since 2014. This will apply cleanly to any
-   stable tree.
+### 4. Scope and Risk
+- **3 lines changed** - extremely small and surgical
+- Only affects `storvsc_queuecommand()` in the Hyper-V storage driver
+- Well-understood transformation pattern
+  (`get_cpu()`→`migrate_disable()`+`smp_processor_id()`) used
+  extensively across the kernel for PREEMPT_RT fixes
+- Has been **Tested-by** two people and **Reviewed-by** the Hyper-V
+  subsystem expert (Michael Kelley)
+
+### 5. User Impact
+- **Hyper-V VMs with PREEMPT_RT**: This is a hard crash/lockup during
+  normal I/O operations (ext4 writes), making the system completely
+  unusable
+- PREEMPT_RT is increasingly used in enterprise and embedded
+  deployments, including on Hyper-V/Azure
+- Without this fix, PREEMPT_RT kernels on Hyper-V are effectively broken
+  for any storage I/O
+
+### 6. Stable Criteria Assessment
+- **Obviously correct**: Yes - standard PREEMPT_RT fix pattern
+- **Fixes a real bug**: Yes - kernel BUG + lockup
+- **Important issue**: Yes - system lockup during normal I/O
+- **Small and contained**: Yes - 3-line change in one file
+- **No new features**: Correct - pure bug fix
+- **Tested**: Yes - two Tested-by tags
 
 ### Verification
-
-- Verified commit `821d6f0359b0` exists and introduced the post-2012 NVS
-  nosave optimization (confirmed via `git log` and `git show`).
-- Verified the existing quirk table in `drivers/acpi/sleep.c` already
-  has identical entries for Lenovo G50-45 ("80E3") and G40-45 ("80E1")
-  at lines 373-388.
-- Verified `init_nvs_save_s3` callback and `acpi_sleep_dmi_check()`
-  (line 412-418) show the 2012 cutoff logic — confirming the quirk
-  mechanism.
-- Verified the change is purely additive: 8 lines added to the DMI
-  table, no existing code modified.
-- The `acpisleep_dmi_table` and `init_nvs_save_s3` have been present
-  since 2014, so all active stable trees contain the prerequisite code.
-
-This is a textbook hardware quirk addition — small, safe, DMI-matched to
-a single platform, fixing a real suspend/resume issue, with zero risk to
-other systems.
+- Read `storvsc_drv.c:1858` confirming the old code uses
+  `get_cpu()`/`put_cpu()` (matches the diff)
+- Read `storvsc_do_io()` at line 1453: confirms `q_num` is used as a CPU
+  index into `stor_chns[]` array and passed to
+  `cpumask_of_node(cpu_to_node(q_num))` - only needs migration
+  stability, not preemption disabled
+- Confirmed the call chain: `storvsc_do_io()` →
+  `vmbus_sendpacket_mpb_desc()` (line 1547) → `hv_ringbuffer_write()`
+  which takes a spinlock (as shown in the stack trace)
+- The stack trace shows `rt_spin_lock` → `rtlock_slowlock_locked` →
+  `schedule_rtlock` confirming the spinlock-to-rt-mutex conversion is
+  the trigger
+- `git log` confirmed this is in a well-maintained driver with recent
+  activity
 
 **YES**
 
- drivers/acpi/sleep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/storvsc_drv.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/sleep.c b/drivers/acpi/sleep.c
-index 66ec81e306d47..132a9df984713 100644
---- a/drivers/acpi/sleep.c
-+++ b/drivers/acpi/sleep.c
-@@ -386,6 +386,14 @@ static const struct dmi_system_id acpisleep_dmi_table[] __initconst = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "80E1"),
- 		},
- 	},
-+	{
-+	.callback = init_nvs_save_s3,
-+	.ident = "Lenovo G70-35",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "80Q5"),
-+		},
-+	},
- 	/*
- 	 * ThinkPad X1 Tablet(2016) cannot do suspend-to-idle using
- 	 * the Low Power S0 Idle firmware interface (see
+diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
+index b43d876747b76..68c837146b9ea 100644
+--- a/drivers/scsi/storvsc_drv.c
++++ b/drivers/scsi/storvsc_drv.c
+@@ -1855,8 +1855,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
+ 	cmd_request->payload_sz = payload_sz;
+ 
+ 	/* Invokes the vsc to start an IO */
+-	ret = storvsc_do_io(dev, cmd_request, get_cpu());
+-	put_cpu();
++	migrate_disable();
++	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
++	migrate_enable();
+ 
+ 	if (ret)
+ 		scsi_dma_unmap(scmnd);
 -- 
 2.51.0
 
