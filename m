@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E253C6A57;
-	Thu,  5 Mar 2026 15:37:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B3D3CA491;
+	Thu,  5 Mar 2026 15:37:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725030; cv=none; b=j9y0m6CsQzIGyjU9JTXXOovBD49MKNJthV/3pD17lEaodjSh2kGXzAjBiarnwxQoGXwFlYPro6n3ovHU/RJ9CYemViS9qDwGa1a8cV0VbkH2RavsaXyhYN6FVXe7i/vx2LhArSIEvIbhywrqCOZAqhonfzgQKVM5/jcauJ4KSF0=
+	t=1772725031; cv=none; b=FJIX39XXuDBuX+WIbWn6w6wjT274im7RE67tamaomSW/mV5EnkOSa0isyLY3TP8Fk4LzAiAWeIxwJtKgngvtXn6DGl/qchh4i8eaHFpBxSFAUPOxcRS9MvKOP9GUtOsWstnrsrzCEUmap2o7t3h3GA/BzvmSWHogABZDeWCMUN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725030; c=relaxed/simple;
-	bh=6tujxYpRlhxev6CqOHJ+H3QHJmBdmYEOacOOWDxfjrE=;
+	s=arc-20240116; t=1772725031; c=relaxed/simple;
+	bh=irmxYN0RdXbC8z9wmgJ+nIquOhFEeCWig0CoW1oDPck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wqv69P/E3bgdkMEIOx/3fI0kaoWtVQ7N2nxkUkvBuzp2WmYaqokA6QG86I5bcXn+JZOff/MUqAeQOqe6ZyC9DEM2EmYVlMpFegIvUHbMtjh48lbSCkif2xDza273S32eYc5eyeyzcoh6Uyijm3Zm4zlovT0uDkNwIF14UxH0pyc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nXquMt/o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=tLAcED2zYpx6b9TpLdPK9Wcv5OrWIq9F4+bf/R1Ir0ylAQrcYLpdkmFQH1ZGrsnCuG0xhzxiioYMgJ4JKH9RVXq5WP/vVF7HVrwLY9t4UbNqUJSahHNCX5T2ugQf5+VIvuk851kaRZtHdu7JcMssAenN8VuZoV1JPqo++HSuXX4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oqO1cP2Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nXquMt/o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391BFC19423;
-	Thu,  5 Mar 2026 15:37:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oqO1cP2Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38FDC116C6;
+	Thu,  5 Mar 2026 15:37:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725030;
-	bh=6tujxYpRlhxev6CqOHJ+H3QHJmBdmYEOacOOWDxfjrE=;
+	s=k20201202; t=1772725031;
+	bh=irmxYN0RdXbC8z9wmgJ+nIquOhFEeCWig0CoW1oDPck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXquMt/oLERUwzeQ9JN2sXweNmfxtj9AAk2HljBlMGJHuHYFfSTECv18cqj/BENwY
-	 WlJcAwVzkITu0NQOSFYV4yZOsFu3kRs0c5CcvE4jZY3kuCYnUTUUM7JBmQoWy9KBeu
-	 i2bi6CLNo/5NhUGKFoDueubPe/INcD1ZhThGN1g1vxXcp2HKA/8PKUwvmzIOPstq/y
-	 Uwk5LlvuUoolHy0vPu95Jm1rilRUi2FpCQe6eN9XsgfTYVLkNHHbN22ikkUl7c/uVX
-	 dVMnM0b8vOhXZiB4pdvRi6bF+KhT6pDUgtmMQ+3mY+jKiY00pPo3RTP5o/vEJSXjMV
-	 qLkoGWErlx6xQ==
+	b=oqO1cP2ZOJTHkU27taBRi8toj/uylMGVqwGQ9+1XymHDLedOD0nw3Tgn3yoaQYhCn
+	 N67P0iHFm6y3AkbcK4GoDGazBPB36fm4kBV77bhukyi0fjpt8FAyqJlKinfm/64/S6
+	 bL7oP4fjKGBjTKQ3r9nrGNd+HfK6QKHquHaJbtIuajuRRYnirIFKxaiTYtpHFtc773
+	 qmAlTRjJUU9QB9FxVSvkx+jBiLotKAZv5I3wRywvi7anB8QbyEuS/jL+wPqlA8rbcH
+	 PhQ7PY4nXq3rPgmCnoRKO3GQDUcKs3v/2vPZDxJQZKCy4BsxUGFKBXC3AeGk407IVH
+	 lzYKAXBRS3lvw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: sguttula <suresh.guttula@amd.com>,
-	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Ramanathan Choodamani <quic_rchoodam@quicinc.com>,
+	Aishwarya R <aishwarya.r@oss.qualcomm.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	christian.koenig@amd.com,
-	airlied@gmail.com,
-	simona@ffwll.ch,
-	amd-gfx@lists.freedesktop.org,
-	dri-devel@lists.freedesktop.org,
+	johannes@sipsolutions.net,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdgpu/vcn5: Add SMU dpm interface type
-Date: Thu,  5 Mar 2026 10:36:46 -0500
-Message-ID: <20260305153704.106918-3-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] wifi: mac80211: set default WMM parameters on all links
+Date: Thu,  5 Mar 2026 10:36:47 -0500
+Message-ID: <20260305153704.106918-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -54,20 +51,28 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: sguttula <suresh.guttula@amd.com>
+From: Ramanathan Choodamani <quic_rchoodam@quicinc.com>
 
-[ Upstream commit a5fe1a54513196e4bc8f9170006057dc31e7155e ]
+[ Upstream commit 2259d14499d16b115ef8d5d2ddc867e2be7cb5b5 ]
 
-This will set AMDGPU_VCN_SMU_DPM_INTERFACE_* smu_type
-based on soc type and fixing ring timeout issue seen
-for DPM enabled case.
+Currently, mac80211 only initializes default WMM parameters
+on the deflink during do_open(). For MLO cases, this
+leaves the additional links without proper WMM defaults
+if hostapd does not supply per-link WMM parameters, leading
+to inconsistent QoS behavior across links.
 
-Signed-off-by: sguttula <suresh.guttula@amd.com>
-Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f0f23c315b38c55e8ce9484cf59b65811f350630)
+Set default WMM parameters for each link during
+ieee80211_vif_update_links(), because this ensures all
+individual links in an MLD have valid WMM settings during
+bring-up and behave consistently across different BSS.
+
+Signed-off-by: Ramanathan Choodamani <quic_rchoodam@quicinc.com>
+Signed-off-by: Aishwarya R <aishwarya.r@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260205094216.3093542-1-aishwarya.r@oss.qualcomm.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -75,98 +80,105 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### What the commit does
-This adds 3 lines to `vcn_v5_0_0_sw_init()` that set the SMU DPM
-(Dynamic Power Management) interface type in the VCN firmware shared
-memory structure. It sets `AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG` in
-`present_flag_0` and tells the firmware whether the platform is an APU
-or DGPU.
+### What the commit fixes
 
-### Bug being fixed
-The commit message explicitly states it's "fixing ring timeout issue
-seen for DPM enabled case." Ring timeouts on GPU hardware mean the GPU's
-command ring becomes unresponsive, which causes GPU hangs and failed
-video encoding/decoding operations. This is a serious user-visible
-issue.
+In WiFi 7 Multi-Link Operation (MLO), mac80211 creates multiple links
+per interface. During `do_open()` (iface.c:1519), default WMM (QoS)
+parameters are only set on `sdata->deflink`. When additional links are
+created via `ieee80211_vif_update_links()`, they never receive WMM
+defaults. If hostapd doesn't explicitly configure per-link WMM
+parameters, these secondary links operate with uninitialized/zeroed QoS
+settings, causing inconsistent behavior across links.
 
-### Pattern analysis
-This is clearly a missing initialization that was already present in VCN
-v4.0 (`vcn_v4_0.c:157-159`) and VCN v4.0.5 (`vcn_v4_0_5.c:201-203`) but
-was omitted when VCN v5.0.0 was written. The code added is **identical**
-to the VCN v4.0 pattern:
-```c
-fw_shared->present_flag_0 |=
-cpu_to_le32(AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG);
-fw_shared->smu_dpm_interface.smu_interface_type = (adev->flags &
-AMD_IS_APU) ?
-    AMDGPU_VCN_SMU_DPM_INTERFACE_APU :
-AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU;
-```
+### The fix
 
-### Stable kernel criteria
-1. **Obviously correct**: YES - exact copy of well-established pattern
-   from VCN v4.0
-2. **Fixes a real bug**: YES - ring timeouts causing GPU hangs
-3. **Important**: YES - ring timeouts prevent proper GPU video
-   functionality
-4. **Small and contained**: YES - 3 lines, single file, single function
-5. **No new features**: Correct - enables existing DPM functionality to
-   work properly
-6. **Risk**: Very low - the `smu_dpm_interface` field already exists in
-   the `amdgpu_vcn5_fw_shared` structure; the constants are already
-   defined; this just populates fields that were left uninitialized
+Two lines added to `ieee80211_vif_update_links()` in
+`net/mac80211/link.c`:
+1. A `bool non_sta` variable (mirrors the pattern at iface.c:1520)
+2. A call to `ieee80211_set_wmm_default(&link->data, true, non_sta)` in
+   the loop that initializes new links (line 340)
 
-### Affected versions
-VCN v5.0.0 was added in commit `b6d1a06320519` which is present since
-v6.10. Stable trees 6.12.y, 6.11.y, and 6.10.y would benefit from this
-fix.
+This is an exact mirror of what `do_open()` does for the deflink,
+ensuring all newly allocated links get the same WMM defaults.
+
+### Stable kernel criteria assessment
+
+- **Fixes a real bug**: Yes — secondary MLO links have uninitialized WMM
+  params leading to broken QoS behavior
+- **Obviously correct**: Yes — mirrors existing call pattern from
+  `do_open()`, same function, same parameter semantics
+- **Small and contained**: Yes — 2 lines in a single file
+- **No new features**: Correct — just initializing existing structures
+  that were missed
+- **Risk**: Very low — `ieee80211_set_wmm_default()` is called from many
+  places already (iface.c, ibss.c, mlme.c) and is well-tested
+
+### Scope and impact
+
+MLO is increasingly used in WiFi 7 deployments. Without this fix, AP
+operators using MLO who rely on mac80211 defaults (instead of explicit
+hostapd WMM config per link) get broken QoS on secondary links. This
+affects throughput prioritization for video, voice, and background
+traffic on those links.
+
+### Dependencies
+
+The fix requires MLO infrastructure which was introduced around v6.1
+(2022). The `ieee80211_vif_update_links()` function exists in
+net/mac80211/link.c which was created in September 2022. Any stable tree
+with MLO support needs this fix. The patch is self-contained with no
+other dependencies.
 
 ### Verification
-- Verified vcn_v5_0_0.c current code at line 173-175 shows
-  `present_flag_0` being set but **no** `smu_dpm_interface`
-  initialization (confirmed the bug exists)
-- Verified vcn_v4_0.c lines 157-159 contain the identical DPM interface
-  initialization pattern
-- Verified `AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG`,
-  `AMDGPU_VCN_SMU_DPM_INTERFACE_APU`,
-  `AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU` are defined in `amdgpu_vcn.h`
-- Verified `smu_dpm_interface` field exists in `amdgpu_vcn5_fw_shared`
-  structure definition
-- Verified VCN v5.0.0 was first added in commit b6d1a06320519, present
-  since v6.10
-- Could not directly verify the upstream cherry-pick source commit
-  f0f23c315b38 (not reachable from current branch), but the "(cherry
-  picked from commit ...)" tag confirms it was already deemed important
-  within the amdgpu tree
+
+- Confirmed via grep that `ieee80211_set_wmm_default()` is called from
+  10+ locations across mac80211 (iface.c, ibss.c, mlme.c) — the function
+  is mature and well-tested
+- Confirmed iface.c:1519 only calls `ieee80211_set_wmm_default` on
+  `&sdata->deflink`, verifying the bug claim
+- Read `ieee80211_vif_update_links()` in link.c and confirmed the new
+  call is placed in the correct loop (`for_each_set_bit(link_id, &add,
+  ...)`) right after `ieee80211_link_init()` and
+  `ieee80211_link_setup()` — same initialization phase
+- Confirmed the `non_sta` variable uses the identical expression
+  `sdata->vif.type != NL80211_IFTYPE_STATION` from iface.c:1520
+- The commit is authored by Qualcomm engineers and merged by Johannes
+  Berg (mac80211 maintainer), indicating proper review
+- Could NOT verify exact stable tree versions containing MLO
+  infrastructure (unverified, but MLO was introduced ~v6.1)
 
 ### Conclusion
-This is a small, surgical fix for a real hardware issue (ring timeouts)
-on VCN 5.0 AMD GPUs. The fix follows an identical pattern already used
-in VCN v4.0 and v4.0.5 drivers, making it obviously correct. The risk is
-minimal - it simply populates firmware shared memory fields that were
-being left uninitialized. Users with VCN 5.0 hardware experiencing DPM-
-related ring timeouts would directly benefit.
+
+This is a clear, surgical bug fix for missing initialization of WMM
+parameters on MLO secondary links. It's 2 lines, mirrors existing well-
+tested patterns, was reviewed by the mac80211 maintainer, and fixes real
+QoS issues for MLO deployments. Low risk, clear benefit.
 
 **YES**
 
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/mac80211/link.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-index 0202df5db1e12..6109124f852e5 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-@@ -174,6 +174,10 @@ static int vcn_v5_0_0_sw_init(struct amdgpu_ip_block *ip_block)
- 		fw_shared->present_flag_0 = cpu_to_le32(AMDGPU_FW_SHARED_FLAG_0_UNIFIED_QUEUE);
- 		fw_shared->sq.is_enabled = 1;
+diff --git a/net/mac80211/link.c b/net/mac80211/link.c
+index 1e05845872afc..b659497680b51 100644
+--- a/net/mac80211/link.c
++++ b/net/mac80211/link.c
+@@ -281,6 +281,7 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
+ 	struct ieee80211_bss_conf *old[IEEE80211_MLD_MAX_NUM_LINKS];
+ 	struct ieee80211_link_data *old_data[IEEE80211_MLD_MAX_NUM_LINKS];
+ 	bool use_deflink = old_links == 0; /* set for error case */
++	bool non_sta = sdata->vif.type != NL80211_IFTYPE_STATION;
  
-+		fw_shared->present_flag_0 |= cpu_to_le32(AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG);
-+		fw_shared->smu_dpm_interface.smu_interface_type = (adev->flags & AMD_IS_APU) ?
-+			AMDGPU_VCN_SMU_DPM_INTERFACE_APU : AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU;
-+
- 		if (amdgpu_vcnfw_log)
- 			amdgpu_vcn_fwlog_init(&adev->vcn.inst[i]);
+ 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
  
+@@ -337,6 +338,7 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
+ 		link = links[link_id];
+ 		ieee80211_link_init(sdata, link_id, &link->data, &link->conf);
+ 		ieee80211_link_setup(&link->data);
++		ieee80211_set_wmm_default(&link->data, true, non_sta);
+ 	}
+ 
+ 	if (new_links == 0)
 -- 
 2.51.0
 
