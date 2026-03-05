@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38A9C3D301F;
-	Thu,  5 Mar 2026 15:37:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7938F3D3CEC;
+	Thu,  5 Mar 2026 15:37:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725046; cv=none; b=TucXrO38eKTT7Ia7OvyzCUmikNKmWjTx9iHzrfJ64mLO+NtIoRD5iX2hdG1jw5eQr8e1qa07YqhUZ4UuK2WMu0/8xHLxe75PzKGO0cbr7RRHVCibLC1Df2HlI8SVkZhjrXOrrgZmgKL282JVgsYfS9mBFCg+HItku7Pla0Net5E=
+	t=1772725047; cv=none; b=VEmwX32JJUZx6AJw4aEJ/vjIXArUh8Qdd6MuK9oIY+OigsJ8YPAGfIZlbKFO77cSTQXQiilU1j99CiRU9m+igIeEiuduQn9ZQ4S0DVAXGphUtBW4MKc9y5z9mYkb3vGiFkoYJOyqNLh/KVXTkZPKOFZcKBYYOChTTbN6uukNyFo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725046; c=relaxed/simple;
-	bh=/CYbRmfwK6yy8597nxESiS+SQQd03M0Jma5BsuBrwCs=;
+	s=arc-20240116; t=1772725047; c=relaxed/simple;
+	bh=gtdfbBijqUhBdwEAgJ/XmjyU1cog7CX3srrrURFT14Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pZGBT5bNQu8wv/qeAO+mGU5T79I+NLYfOIwgoG4B69z66ldQrzgMLrxx1uQb6LdbAvyU88FqYBTPpYbRDf0kOBTTH/vqu+Fr9CYOHODN4/u5Y/TL+XNbdBipG/RySTy8GN826vVI5/jYpbiwuZWfUYc4eFsPTIhfOSl7Wwaelvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pIFV8LRf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=QYsa2D0zC4ukgsxk5XfGRwtN9Kjgvz+vw0zUBjStGW2ktXEYX+7FfLV2t9Rju5jPQYn0VwkQP44382DbiEvvVxjCXWfa6NoWtywtxvPzf8q3psXDatbz0xPVaan46+6tQvw6ykcwUK3xF5PwWtLTOpnHQOcHagZjD3T7dF07b+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=d78NbGRr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pIFV8LRf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0094FC19423;
-	Thu,  5 Mar 2026 15:37:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="d78NbGRr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FF4EC116C6;
+	Thu,  5 Mar 2026 15:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725045;
-	bh=/CYbRmfwK6yy8597nxESiS+SQQd03M0Jma5BsuBrwCs=;
+	s=k20201202; t=1772725047;
+	bh=gtdfbBijqUhBdwEAgJ/XmjyU1cog7CX3srrrURFT14Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pIFV8LRfgliQjDrUYQe2EZZyA+jiNd7kq8ggc0B1oJY/eq6+RDtgbSX58XtswojLL
-	 N+xz5sWpR411ry+sOkksSNdgvT4gOPJGUtetSQoivlt/F5nUKBwXKWfSUFbo+d0Uxs
-	 67OTjhqBzcI5+tLGUee7DWxlfnsC8YJig6fht8aVV5imu4qu7VqNU9sFuDiMIrAwse
-	 lwk3Rq7tVyiNQH1E1a+CY0be/jXQIJwQ0cXaE1FAjVEJ/SZ6Spx/ggnZNIKj15jeFk
-	 fMbccJVHv8pfklslccoczWgaMFPq9FbXhl80isgvQZrOCfpZWjXpmTcjeNLUs3qJeg
-	 7eJbQkb64BzPA==
+	b=d78NbGRrzdjaSnAICg9jLYPM56dlz9m0ThBwDgq8Nlm40mzdwlwgFibOzwhDsORA7
+	 wL5btz4j0XS3GGkYWmBRtxXt5vPnpAu6UpTksGcWj2fOh/9sWTi+sTqnajWNmd0Le2
+	 azCTQaDPCrYm8x+Qbg4dHfxi5yh1t6iLPdAQjUlK9gQs8RgECM8xg6vVi3nk2juJy7
+	 Fdd1HL3rvXSWlXyqkfXfL5j0ViCqCsh7ms8yCEnNnB9hyUErut+bnc3sdMDbj1OHur
+	 YCHipcIjBeRIx3Y5kJj6ydPpINPqi58jvqz6uL5Nh85q+ZehEt9J0R3N9h7n4S4lMo
+	 /xnkUmX4JeJKA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Haocheng Yu <yuhaocheng035@gmail.com>,
+	kernel test robot <lkp@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org,
+	mingo@redhat.com,
+	acme@kernel.org,
+	namhyung@kernel.org,
+	linux-perf-users@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] scsi: ufs: core: Fix possible NULL pointer dereference in ufshcd_add_command_trace()
-Date: Thu,  5 Mar 2026 10:36:57 -0500
-Message-ID: <20260305153704.106918-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] perf/core: Fix refcount bug and potential UAF in perf_mmap
+Date: Thu,  5 Mar 2026 10:36:58 -0500
+Message-ID: <20260305153704.106918-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -54,153 +56,216 @@ X-stable-base: Linux 6.19.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Haocheng Yu <yuhaocheng035@gmail.com>
 
-[ Upstream commit 30df81f2228d65bddf492db3929d9fcaffd38fc5 ]
+[ Upstream commit 77de62ad3de3967818c3dbe656b7336ebee461d2 ]
 
-The kernel log indicates a crash in ufshcd_add_command_trace, due to a NULL
-pointer dereference when accessing hwq->id.  This can happen if
-ufshcd_mcq_req_to_hwq() returns NULL.
+Syzkaller reported a refcount_t: addition on 0; use-after-free warning
+in perf_mmap.
 
-This patch adds a NULL check for hwq before accessing its id field to
-prevent a kernel crash.
+The issue is caused by a race condition between a failing mmap() setup
+and a concurrent mmap() on a dependent event (e.g., using output
+redirection).
 
-Kernel log excerpt:
-[<ffffffd5d192dc4c>] notify_die+0x4c/0x8c
-[<ffffffd5d1814e58>] __die+0x60/0xb0
-[<ffffffd5d1814d64>] die+0x4c/0xe0
-[<ffffffd5d181575c>] die_kernel_fault+0x74/0x88
-[<ffffffd5d1864db4>] __do_kernel_fault+0x314/0x318
-[<ffffffd5d2a3cdf8>] do_page_fault+0xa4/0x5f8
-[<ffffffd5d2a3cd34>] do_translation_fault+0x34/0x54
-[<ffffffd5d1864524>] do_mem_abort+0x50/0xa8
-[<ffffffd5d2a297dc>] el1_abort+0x3c/0x64
-[<ffffffd5d2a29718>] el1h_64_sync_handler+0x44/0xcc
-[<ffffffd5d181133c>] el1h_64_sync+0x80/0x88
-[<ffffffd5d255c1dc>] ufshcd_add_command_trace+0x23c/0x320
-[<ffffffd5d255bad8>] ufshcd_compl_one_cqe+0xa4/0x404
-[<ffffffd5d2572968>] ufshcd_mcq_poll_cqe_lock+0xac/0x104
-[<ffffffd5d11c7460>] ufs_mtk_mcq_intr+0x54/0x74 [ufs_mediatek_mod]
-[<ffffffd5d19ab92c>] __handle_irq_event_percpu+0xc8/0x348
-[<ffffffd5d19abca8>] handle_irq_event+0x3c/0xa8
-[<ffffffd5d19b1f0c>] handle_fasteoi_irq+0xf8/0x294
-[<ffffffd5d19aa778>] generic_handle_domain_irq+0x54/0x80
-[<ffffffd5d18102bc>] gic_handle_irq+0x1d4/0x330
-[<ffffffd5d1838210>] call_on_irq_stack+0x44/0x68
-[<ffffffd5d183af30>] do_interrupt_handler+0x78/0xd8
-[<ffffffd5d2a29c00>] el1_interrupt+0x48/0xa8
-[<ffffffd5d2a29ba8>] el1h_64_irq_handler+0x14/0x24
-[<ffffffd5d18113c4>] el1h_64_irq+0x80/0x88
-[<ffffffd5d2527fb4>] arch_local_irq_enable+0x4/0x1c
-[<ffffffd5d25282e4>] cpuidle_enter+0x34/0x54
-[<ffffffd5d195a678>] do_idle+0x1dc/0x2f8
-[<ffffffd5d195a7c4>] cpu_startup_entry+0x30/0x3c
-[<ffffffd5d18155c4>] secondary_start_kernel+0x134/0x1ac
-[<ffffffd5d18640bc>] __secondary_switched+0xc4/0xcc
+In perf_mmap(), the ring_buffer (rb) is allocated and assigned to
+event->rb with the mmap_mutex held. The mutex is then released to
+perform map_range().
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223065657.2432447-1-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+If map_range() fails, perf_mmap_close() is called to clean up.
+However, since the mutex was dropped, another thread attaching to
+this event (via inherited events or output redirection) can acquire
+the mutex, observe the valid event->rb pointer, and attempt to
+increment its reference count. If the cleanup path has already
+dropped the reference count to zero, this results in a
+use-after-free or refcount saturation warning.
+
+Fix this by extending the scope of mmap_mutex to cover the
+map_range() call. This ensures that the ring buffer initialization
+and mapping (or cleanup on failure) happens atomically effectively,
+preventing other threads from accessing a half-initialized or
+dying ring buffer.
+
+Closes: https://lore.kernel.org/oe-kbuild-all/202602020208.m7KIjdzW-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Haocheng Yu <yuhaocheng035@gmail.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260202162057.7237-1-yuhaocheng035@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+This confirms the race scenario. `perf_event_set_output()` acquires
+`output_event->mmap_mutex` and then calls `ring_buffer_get()` which
+increments the refcount. If the mmap_mutex was released after
+`perf_mmap_rb()` set `event->rb` but before cleanup on `map_range()`
+failure, another thread can observe `event->rb` and attempt to get the
+ring buffer.
+
 ## Analysis
 
-### What the commit fixes
+### 1. COMMIT MESSAGE ANALYSIS
+The commit clearly describes a **race condition** leading to a **use-
+after-free** and **refcount saturation warning** in `perf_mmap()`. It
+was:
+- **Reported by**: kernel test robot (syzkaller-like automated testing)
+- **Signed-off by**: Peter Zijlstra (Intel), the perf subsystem
+  maintainer
+- **Link to report**: Provided via `Closes:` tag
 
-This is a **NULL pointer dereference crash** in
-`ufshcd_add_command_trace()`. When MCQ (Multi-Circular Queue) mode is
-enabled, the function calls `ufshcd_mcq_req_to_hwq()` which can return
-NULL when `req->mq_hctx` is NULL (i.e., the request has already been
-freed). The code then unconditionally dereferences `hwq->id`, causing a
-kernel crash.
+### 2. CODE CHANGE ANALYSIS
+The fix is **purely a scope change** - it extends the existing
+`scoped_guard(mutex, &event->mmap_mutex)` to cover the `map_range()`
+call and associated cleanup. Specifically:
 
-The commit message includes a **real crash log** from production
-hardware (MediaTek platform), confirming this is not theoretical — it
-happens in the field.
+**Before**: The mutex was released at line 7191 (closing brace of
+`scoped_guard`), then `vm_flags_set()`, `mapped()` callback, and
+`map_range()` all ran without the mutex. If `map_range()` failed and
+`perf_mmap_close()` was called, a concurrent thread could race in
+between.
 
-### Stable kernel criteria assessment
+**After**: All of `vm_flags_set()`, `mapped()`, `map_range()`, and
+`perf_mmap_close()` (on failure) run inside the `scoped_guard`, closing
+the race window.
 
-1. **Obviously correct**: Yes — adds a simple NULL check before
-   dereference. Multiple other call sites in the same codebase already
-   perform this exact check (e.g., `ufshcd_mcq_abort()`,
-   `ufshcd_complete_requests()`). Reviewed by Bart Van Assche, a
-   prominent SCSI/UFS reviewer.
+The race scenario:
+1. Thread A: acquires `mmap_mutex`, allocates rb, assigns `event->rb`,
+   releases mutex
+2. Thread B: acquires `mmap_mutex`, sees valid `event->rb`, calls
+   `ring_buffer_get()` (refcount increment)
+3. Thread A: `map_range()` fails, calls `perf_mmap_close()` which drops
+   refcount to 0
+4. Thread B: now holds a reference to a freed ring buffer → UAF
 
-2. **Fixes a real bug**: Yes — kernel crash (NULL pointer dereference)
-   with a real crash trace from production.
+### 3. CLASSIFICATION
+- **Bug type**: Race condition → use-after-free / refcount corruption
+- **Severity**: HIGH - UAF is a security-class bug (exploitable from
+  userspace via perf syscall)
+- **Subsystem**: perf/core - widely used, security-sensitive subsystem
 
-3. **Important issue**: Yes — kernel panic/crash in an IRQ handler path
-   (`ufs_mtk_mcq_intr` → `ufshcd_mcq_poll_cqe_lock` →
-   `ufshcd_compl_one_cqe` → `ufshcd_add_command_trace`). This crashes
-   the entire system during normal UFS I/O completion.
+### 4. SCOPE AND RISK
+- **Size**: 1 file, 38 lines changed (19 insertions, 19 deletions) -
+  essentially indentation changes moving code into the existing
+  scoped_guard block
+- **Risk**: LOW - the fix simply holds a mutex for longer, covering
+  operations that logically should have been protected. The only risk is
+  holding the mutex across `map_range()`, but `map_range()` doesn't take
+  any conflicting locks.
+- **Regression potential**: Minimal - holding a mutex slightly longer
+  might theoretically increase contention, but `perf_mmap()` is not a
+  hot path (called during mmap setup, not during data collection)
 
-4. **Small and contained**: Yes — the change is 3 lines (adds `if (hwq)`
-   check around `hwq_id = hwq->id`). Single file, single function.
+### 5. USER IMPACT
+- perf is used by virtually all Linux deployments for profiling
+- The race can be triggered from userspace with concurrent mmap
+  operations
+- Found by automated fuzzing (kernel test robot), meaning it's reachable
 
-5. **No new features**: Correct — purely defensive NULL check.
+### 6. DEPENDENCIES
+- **Requires**: `scoped_guard` for mmap_mutex (commit d23a6dbc0a717, in
+  v6.18+) - **present in 6.19.y**
+- **Requires**: `map_range()` and `perf_mmap_close()` on failure path
+  (commit f74b9f4ba63ff, in v6.17+) - **present in 6.19.y**
+- For older stable trees (6.17.y, 6.12.y, etc.), this would need
+  adaptation since the `scoped_guard` pattern and `map_range()` function
+  may not exist. The underlying race exists but the fix would need to be
+  written differently.
 
-### Risk assessment
-
-- **Risk**: Extremely low. The worst case if `hwq` is NULL is that
-  `hwq_id` retains its initialized value (0), which is used only for
-  tracing. No functional impact.
-- **Benefit**: Prevents kernel crashes on systems using UFS MCQ mode
-  (common on modern mobile SoCs, particularly MediaTek).
-
-### Dependencies
-
-The buggy code was introduced in commit `4a52338bf288c` (March 2023,
-"scsi: ufs: core: Add trace event for MCQ") which is present in kernels
-v6.4+. This fix applies cleanly to any kernel that has MCQ tracing
-support.
+### 7. STABILITY
+- Signed-off by Peter Zijlstra, the perf maintainer
+- Already merged into mainline (v7.0 merge window)
+- Clean, minimal change with clear logic
 
 ### Verification
 
-- **Agent investigation confirmed** `ufshcd_mcq_req_to_hwq()` is defined
-  in `drivers/ufs/core/ufs-mcq.c` and explicitly returns NULL when
-  `req->mq_hctx` is NULL.
-- **Agent investigation confirmed** the buggy line was introduced in
-  commit `4a52338bf288c` (v6.4 merge window, March 2023) via `git
-  blame`.
-- **Agent investigation confirmed** at least 5 other call sites of
-  `ufshcd_mcq_req_to_hwq()` correctly check for NULL before
-  dereferencing, proving this was an oversight.
-- The crash trace in the commit message shows a real crash in IRQ
-  context on a MediaTek UFS platform — this is a production issue.
-- The fix is reviewed by Bart Van Assche (`Reviewed-by:`) and merged by
-  Martin K. Petersen (SCSI maintainer).
+- **git log showed** commit 77de62ad3de39 exists and is authored by
+  Haocheng Yu, signed by Peter Zijlstra (Intel) - **verified**
+- **git merge-base** confirmed the commit is NOT yet in the 6.19.y
+  stable tree (HEAD = v6.19.6) - **verified**
+- **git merge-base** confirmed prerequisite d23a6dbc0a717 (scoped_guard)
+  IS in 6.19.y - **verified**
+- **git merge-base** confirmed prerequisite f74b9f4ba63ff (map_range
+  fail handling) IS in 6.19.y - **verified**
+- **Read of current perf_mmap()** (lines 7145-7215) confirmed the race
+  window: scoped_guard closes at line 7191, then map_range() at line
+  7210 is unprotected - **verified**
+- **Read of perf_event_set_output()** (lines 13320-13389) confirmed
+  concurrent path: acquires mmap_mutex, calls ring_buffer_get() on
+  output_event's rb - **verified as concurrent accessor**
+- **git show --stat** confirmed 1 file changed, 19 insertions/19
+  deletions - **verified minimal scope**
+- **git tag --contains** confirmed scoped_guard was first in v6.18,
+  map_range fix first in v6.17 - older stable trees would need different
+  backport approach - **verified**
 
 ### Conclusion
 
-This is a textbook stable backport candidate: a small, surgical fix for
-a real kernel crash, with zero risk of regression, reviewed by the
-subsystem experts. The crash occurs in IRQ context during normal UFS I/O
-completion on MCQ-capable hardware (common in modern mobile platforms).
+This is a textbook stable backport candidate:
+- Fixes a **use-after-free** race condition (security-class bug)
+- Found by automated testing (reproducible)
+- Signed off by the subsystem maintainer
+- Minimal, surgical fix (scope extension of existing mutex)
+- Low regression risk
+- Applies cleanly to 6.19.y (prerequisites present)
+- Core subsystem (perf) with broad user impact
 
 **YES**
 
- drivers/ufs/core/ufshcd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/core.c | 38 +++++++++++++++++++-------------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index c71a449850573..27d53a044dbad 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -515,8 +515,8 @@ static void ufshcd_add_command_trace(struct ufs_hba *hba, struct scsi_cmnd *cmd,
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 69c56cad88a89..c0bb657e28e31 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -7188,28 +7188,28 @@ static int perf_mmap(struct file *file, struct vm_area_struct *vma)
+ 			ret = perf_mmap_aux(vma, event, nr_pages);
+ 		if (ret)
+ 			return ret;
+-	}
  
- 	if (hba->mcq_enabled) {
- 		struct ufs_hw_queue *hwq = ufshcd_mcq_req_to_hwq(hba, rq);
--
--		hwq_id = hwq->id;
-+		if (hwq)
-+			hwq_id = hwq->id;
- 	} else {
- 		doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
- 	}
+-	/*
+-	 * Since pinned accounting is per vm we cannot allow fork() to copy our
+-	 * vma.
+-	 */
+-	vm_flags_set(vma, VM_DONTCOPY | VM_DONTEXPAND | VM_DONTDUMP);
+-	vma->vm_ops = &perf_mmap_vmops;
++		/*
++		 * Since pinned accounting is per vm we cannot allow fork() to copy our
++		 * vma.
++		 */
++		vm_flags_set(vma, VM_DONTCOPY | VM_DONTEXPAND | VM_DONTDUMP);
++		vma->vm_ops = &perf_mmap_vmops;
+ 
+-	mapped = get_mapped(event, event_mapped);
+-	if (mapped)
+-		mapped(event, vma->vm_mm);
++		mapped = get_mapped(event, event_mapped);
++		if (mapped)
++			mapped(event, vma->vm_mm);
+ 
+-	/*
+-	 * Try to map it into the page table. On fail, invoke
+-	 * perf_mmap_close() to undo the above, as the callsite expects
+-	 * full cleanup in this case and therefore does not invoke
+-	 * vmops::close().
+-	 */
+-	ret = map_range(event->rb, vma);
+-	if (ret)
+-		perf_mmap_close(vma);
++		/*
++		 * Try to map it into the page table. On fail, invoke
++		 * perf_mmap_close() to undo the above, as the callsite expects
++		 * full cleanup in this case and therefore does not invoke
++		 * vmops::close().
++		 */
++		ret = map_range(event->rb, vma);
++		if (ret)
++			perf_mmap_close(vma);
++	}
+ 
+ 	return ret;
+ }
 -- 
 2.51.0
 
