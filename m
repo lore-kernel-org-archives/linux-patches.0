@@ -1,94 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93861C68F
-	for <patches@lists.linux.dev>; Thu,  5 Mar 2026 18:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBD0830EF92;
+	Thu,  5 Mar 2026 22:08:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772737182; cv=none; b=hH/DR1UvAmd9Kp5vo4Cd69tDL8xjvaLnWlxKBzzaevtwTaIeBCECghXaNX9XVAX4/KmtVfy3F7BAJ4j2y9WXViZzltPI/nT6FEqBm5fhHAMpR5EAeiNpLsua4YjLIBqFNrQPgcj2MpnSSlVdH/imrCVmn6XoxXOEJtN99kRnfKA=
+	t=1772748487; cv=none; b=V1/WJR4SOpeaPP8mrOK5RJ5RNYhXFANBaVD2H5e9Z5LVCI2Fqivhyy64WZfNGT5c0gSiDQ8B0WkIFZLQ56FbbnKW+Lt6vZPFtP41ASoKk04MapE/zj1Ec3ic2Hmp3M+bDmjlsnQOZmaAPQlL8sfdRWlmXNR0IjrmHVsyXvJU5PI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772737182; c=relaxed/simple;
-	bh=BvAolbTAOeeCHBi8DJFVw81rI59azfr8TqaBD2qV4vQ=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=b9F4SEiQnEct30fMQo27pPIGsJi4tm5H7J+s8dWEPbfaKjTn7CM4pmQjWmp0lLvEl94+CLOgD1bGWzmzDo7bQb3RIJKomzqSoHPIS7PAYP3V3LN7auTYMcDK4mtdhpDlIGjqZY71L+e9mNYQnoY/GI3Is8lSpt241qgexbxHZG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=codethink.co.uk header.i=@codethink.co.uk header.b=Ve2KMQzL; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772748487; c=relaxed/simple;
+	bh=StWo5LLhBff0BVoy0QIwwf+JJPKW3baLEVbZtt/X2fM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Pj7ARCVbifpcbbnXMjxR+EA8M++oMcMd+1NhJ+jsIYdO7IFql7K1c/tg/Rgx1dbrdACEK6Ahgjjh7h5CCaQVS/tCLncoBNogplXC5Y5YcMdjs6t/Xm2k2tchtNSPV4H2xqmZ2fHd6xkA/j5q1QcYlxGsC5VPSgN8q1RVhO7lG+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jvVPV65r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=codethink.co.uk header.i=@codethink.co.uk header.b="Ve2KMQzL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED297C116C6
-	for <patches@lists.linux.dev>; Thu,  5 Mar 2026 18:59:40 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (2048-bit key) header.d=codethink.co.uk header.i=@codethink.co.uk header.b="Ve2KMQzL"
-Resent-From: Mark Brown <broonie@kernel.org>
-Resent-Date: Thu, 5 Mar 2026 18:59:38 +0000
-Resent-Message-ID: <aanSmnxd5Sk9j3LX@sirena.org.uk>
-Resent-To: patches@lists.linux.dev
-Received: from tor.source.kernel.org (tor.source.kernel.org [172.105.4.254])
-	by 172-238-120-221.ip.linodeusercontent.com (Postfix) with ESMTPS id 4F9492025C
-	for <broonie@sirena.co.uk>; Thu, 05 Mar 2026 18:46:42 +0000 (UTC)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by tor.source.kernel.org (Postfix) with ESMTP id 39D30600AE
-	for <broonie@sirena.co.uk>; Thu,  5 Mar 2026 18:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id 00064C116C6; Thu,  5 Mar 2026 18:46:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 25DF1C19422
-	for <broonie@kernel.org>; Thu,  5 Mar 2026 18:46:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org 25DF1C19422
-Authentication-Results: smtp.kernel.org; dmarc=fail (p=reject dis=none) header.from=codethink.co.uk
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=codethink.com
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:In-Reply-To:
-	References; bh=kgNmsKBmhUkX1t3WvtaENtNK/Lx0t9YyuiRYKr/Ea9Q=; b=Ve2KMQzLf0uHc8
-	KkpzjWyJ3Ryj+4AzNfYN2CI8OeVz7YfYxJMdx1pb1m83dffyZBfYuymD0pIt/RMVF8WQApk3k+1ks
-	G3kwKDNGFOzpoYoqm3hzxCheH0f4tfZd97+7uFrNBct2WiIVkG108sU8PvlIj/o7e2YMIUE3MltBy
-	buBchP6pt7jVNzmh2tGBtYLtc2SMrYcp3sp+kRR8R4uUYm4y22/eXSGld+cnElIsuHiCJtQ9dCxTL
-	Vd8Wm5O2Ktt0OtGj3sLBBipe97xaJ+5MXyv2YmZoFkftZs++ls/6FUDpFk+g541hnvuGb4aRr8KGd
-	0ZZOnmjjKJNnvtZJc+2Q==;
-Received: from [167.98.27.226] (helo=rainbowdash)
-	by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
-	id 1vyDiO-002Z6U-PJ; Thu, 05 Mar 2026 18:46:28 +0000
-Received: from ben by rainbowdash with local (Exim 4.99.1)
-	(envelope-from <ben@rainbowdash>)
-	id 1vyDiO-0000000AvER-2Ga8;
-	Thu, 05 Mar 2026 18:46:28 +0000
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: lgirdwood@gmail.com,
-	broonie@kernel.org,
-	linux-kernel@vger.kernel.org
-Cc: Ben Dooks <ben.dooks@codethink.co.uk>
-Subject: [PATCH] regulator: max20411: show failure on register
-Date: Thu,  5 Mar 2026 18:46:23 +0000
-Message-Id: <20260305184623.2603269-1-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jvVPV65r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8E0C116C6;
+	Thu,  5 Mar 2026 22:08:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1772748487;
+	bh=StWo5LLhBff0BVoy0QIwwf+JJPKW3baLEVbZtt/X2fM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jvVPV65rwhU8NKn2mUvyRpGS6UVhrupbvf75lgy2kCgmRXJSLYkoKCiiG22g+KDxu
+	 kI7y8gWBaTjShEBIPC/8K1RUAiDJBiVolDaLowSzNRBiuwQ3VOb0kZWkjzt4IdZRDT
+	 AETHOPzryiUr3hf0Ibl+Ink6gKaRg+vuEutsMe9SzEhM8gLFq8cvwznjJAWyCLQQur
+	 7BkOclbckQnOvdfrQsq8BeAuUdPRb8zPD+Xqibo7BU5K17HC8ypR/vmM8CcdrXKi0C
+	 3ZXmA1dNWsLUJSmhNFTuz5AyHcODQ3mCsmxlRGCqKXdYEWyONs6BKSoFyvoEPyqWS4
+	 +krmnZInLUj9A==
+Date: Thu, 5 Mar 2026 15:08:01 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	gregkh@linuxfoundation.org, patches@lists.linux.dev,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@nabladev.com,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 5.15 000/410] 5.15.202-rc2 review
+Message-ID: <20260305220801.GA3148061@ax162>
+References: <20260302160955.2522727-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Sender: srv_ts003@codethink.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260302160955.2522727-1-sashal@kernel.org>
 
-It is easy to use %pe to print a error-pointer so add this
-to the dev_err() if the devm_regulator_register() fails.
+Hi Sasha,
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
- drivers/regulator/max20411-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Mon, Mar 02, 2026 at 11:09:55AM -0500, Sasha Levin wrote:
+> Jamie Iles (1):
+>   i3c: remove i2c board info from i2c_dev_desc
 
-diff --git a/drivers/regulator/max20411-regulator.c b/drivers/regulator/max20411-regulator.c
-index 02d7009ea0e61..6c0ebb970e902 100644
---- a/drivers/regulator/max20411-regulator.c
-+++ b/drivers/regulator/max20411-regulator.c
-@@ -133,7 +133,7 @@ static int max20411_probe(struct i2c_client *client)
- 
- 	max20411->rdev = devm_regulator_register(max20411->dev, &max20411->desc, &cfg);
- 	if (IS_ERR(max20411->rdev))
--		dev_err(max20411->dev, "Failed to register regulator\n");
-+		dev_err(max20411->dev, "Failed to register regulator: %pe\n", max20411->rdev);
- 
- 	return PTR_ERR_OR_ZERO(max20411->rdev);
- }
--- 
-2.37.2.352.g3c44437643
+You missed commit 6cbf8b38dfe3 ("i3c: fix uninitialized variable use in
+i2c setup") as a fix for this one, as rightfully pointed out by clang:
 
+  https://lore.kernel.org/177198114226.2577.15577566399399369654@d14e337afe00/
+
+  $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 mrproper allmodconfig drivers/i3c/master.o
+  drivers/i3c/master.c:2203:3: error: variable 'i2cdev' is uninitialized when used here [-Werror,-Wuninitialized]
+   2203 |                 i2cdev->dev = i2c_new_client_device(adap, &i2cboardinfo->base);
+        |                 ^~~~~~
+
+I guess that report was missed because it was not actually addressed to
+anyone?
+
+FWIW, this patch appeared in a previous 5.15-rc release but Ben
+rightfully pointed out it really was not necessary and Greg said he
+would fix it up by hand:
+
+  https://lore.kernel.org/2026011724-florist-brook-5f1f@gregkh/
+
+Guess that never happened?
+
+Cheers,
+Nathan
