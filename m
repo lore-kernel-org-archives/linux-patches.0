@@ -1,48 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 702BB3CA486;
-	Thu,  5 Mar 2026 15:37:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BF073CA48F;
+	Thu,  5 Mar 2026 15:37:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725036; cv=none; b=tHysndD2RmMv57XGJdsxlDdK9Rt5HnTJG+Z7yU+/KqpfhOc0VvbwHgFtal9E+iSLYFKZNncTo5OGG9zdJu6VAg+WVrHO7s3qqpQg8ze1QwzvU3Gk3BeOLqayR1etrCXidpWP0IhTmirzzgVAu3xRa0uXC5JZ+lxyPXjtLLFS8mE=
+	t=1772725037; cv=none; b=X8idQfWzrXzDyx9uw4uborLcIN5bM/tCrY6nwGRTKLAeRSzS1juM1R/LUYR1zamiAX6JvjKymjARYNXYxCEzoJpoN15KjXCvz4JSafdiqSIWaKa2YxkSbjjOp1BKRVq25Q3MIOI8Cu0LczTIXqH8q+C5v02+R0nzeJwaeh3lUik=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725036; c=relaxed/simple;
-	bh=BqbKEO0ra3UtYdhYFSHXRy4hyOD4ATuuxuw62fu7vx0=;
+	s=arc-20240116; t=1772725037; c=relaxed/simple;
+	bh=FHmnBZ6LO5fcizUa6QpAAItmvNQ2Huv8oWPcHLLbW3s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ti2axHrFDxRjdzmvnICheQMBXsFr15zQBk+m1IIBMGuJhzu4PMZJn2b4B1xo4BkUXAqEMM39ttbYeuCV+uTBug5/QCvEez3su+FJsvwLiM30m3Bx9xvPdWbOhllDHFNmEgAKsdAep5B00KBNJv1wFcxBeBVFMHMhO3/dGFRaQOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MpSev9bz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+4gQhheOxxmZcoERRMLIG2GZPPl5JlLBTCylgW/dD1oZZra8BxeZkokWd8VNg0xB7DPW8ZqTmI2P7mpqRiT5xhOLPVf+NG7PIlqiWBN+jgld6XC4i1I4tOQACUy6uas+opHY9766dKyreXluu3aZ1r4gw+wN/i0WWCBFSrHX/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cq1Y/z8d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MpSev9bz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA5CC19423;
-	Thu,  5 Mar 2026 15:37:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cq1Y/z8d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E8D8C2BCAF;
+	Thu,  5 Mar 2026 15:37:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725036;
-	bh=BqbKEO0ra3UtYdhYFSHXRy4hyOD4ATuuxuw62fu7vx0=;
+	s=k20201202; t=1772725037;
+	bh=FHmnBZ6LO5fcizUa6QpAAItmvNQ2Huv8oWPcHLLbW3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpSev9bzTkUD1ZC9Es6nFzm6hfX++RZqxbT6sMpNnmyXzJfP0j/v3IimUs62QbrBa
-	 H14FFsn+rba1VFZ6goSmKUBYEqdEEh34VbO4R4Iep++qXYpwO5Mp0Ob8kJ1bxD+5zD
-	 fNtX03qXvRghH2vYjS3wONmKUS3wEK5AbeoW2Wq6I6hvfV3PNcWpOS3F511Mwdyv6v
-	 DEb38mvQ357O14bx+tVUUQZP/gqpMi56HYGZU5dA4zs4h+TacAZ/6p4xEfpeHmNgTs
-	 Kno5VD2zTmk5lfPk1OZXEllIrEqR8SW/jMYJSQx8D8DrjC5mPZsxQP00lDZNIjWFwp
-	 vPkmm1s4n0ucw==
+	b=cq1Y/z8dgpIBm1Z5+OtEr3x+VjzNtwoLRQmR+503OlegKXEvDjstTELy5f39nWQhM
+	 bivF021Cy9o6jC87+sCEl8a8v00WZgMLDztzcMwCPXscj7l8fyJh8809lgeCd5e5mu
+	 NP2CGGTzNA6MZsbO6hefEw67Wtceav0I/P7Etwon88/B82DqzDcVB4dAalS8WjgH77
+	 uYV9mEZV5+We9kXzUabJuEjc5xLYJmZnoX0OHs3/5r9YwiQTfZda9k80f4iVvelTrv
+	 M3kLOuigguaOXmcpruf/JED0/WLL9ciS1yKzgZdwAgIVcDOGOzoio4R0rIRzg6KpMl
+	 xVBVW6yI5/R0Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	david.rhodes@cirrus.com,
-	rf@opensource.cirrus.com,
-	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] ASoC: cs42l43: Report insert for exotic peripherals
-Date: Thu,  5 Mar 2026 10:36:50 -0500
-Message-ID: <20260305153704.106918-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] ALSA: usb-audio: Avoid implicit feedback mode on DIYINHK USB Audio 2.0
+Date: Thu,  5 Mar 2026 10:36:51 -0500
+Message-ID: <20260305153704.106918-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -55,20 +50,29 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Charles Keepax <ckeepax@opensource.cirrus.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 6510e1324bcdc8caf21f6d17efe27604c48f0d64 ]
+[ Upstream commit c5bf24c8aba1ff711226ee0f039ff01a5754692b ]
 
-For some exotic peripherals the type detect can return a reserved value
-of 0x4. This will currently return an error and not report anything to
-user-space, update this to report the insert normally.
+Although DIYINHK USB Audio 2.0 (ID 20b1:2009) shows the implicit
+feedback source for the capture stream, this would cause several
+problems for the playback.  Namely, the device can get wMaxPackSize
+1024 for 24/32 bit format with 6 channels, and when a high sample rate
+like 352.8kHz or 384kHz is played, the packet size overflows the max
+limit.  Also, the device has another two playback altsets, and those
+aren't properly handled with the implicit feedback.
 
-Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260223093616.3800350-1-ckeepax@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Since the device has been working well even before introducing the
+implicit feedback, we can assume that it works fine in the async mode.
+This patch adds the explicit skip of the implicit fb detection to make
+the playback running in the async mode.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-4-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,85 +80,97 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### What the commit does
+### Problem Description
+This commit adds a USB audio device quirk for the DIYINHK USB Audio 2.0
+device (VID 0x20b1, PID 0x2009) to skip implicit feedback mode. The
+bugzilla report (#221076) documents a **kernel crash/oops** when playing
+6-channel audio at high sample rates (352.8kHz/384kHz). The root cause
+is that implicit feedback mode leads to packet sizes exceeding the
+device's wMaxPacketSize of 1024 bytes, causing buffer overruns, URB
+submission failures, and ultimately kernel panics.
 
-This is a one-line fix to the CS42L43 audio codec's jack type detection.
-The hardware's type detect register can return a reserved value of `0x4`
-for "exotic peripherals." Before this fix, value `0x4` falls through to
-the `default: return -EINVAL` case in the switch statement.
+### Stable Kernel Criteria Assessment
 
-### What happens when -EINVAL is returned
+1. **Fixes a real bug**: YES - kernel crash/hard hang with specific
+   hardware at high sample rates. The bugzilla report documents kernel
+   oops with page faults in memset during URB preparation.
 
-The caller `cs42l43_tip_sense_work()` checks `if (report < 0)` and on
-error:
-1. Logs `"Jack detect failed: %d\n"`
-2. Jumps to `error:` label
-3. **No jack insert event is reported to userspace**
+2. **Obviously correct and tested**: YES - it's a 2-line quirk flag
+   addition by the ALSA maintainer (Takashi Iwai). The fix was confirmed
+   working per the bugzilla discussion.
 
-This means users with these "exotic peripherals" get no audio jack
-detection at all — the device appears to not be plugged in.
+3. **Small and contained**: YES - adds exactly 2 lines to the quirk
+   flags table. Zero risk to any other device.
 
-### Bug classification
+4. **No new features**: Correct - this is a hardware workaround, not a
+   feature.
 
-This is a **hardware quirk/workaround** — the hardware returns a
-reserved value for certain real peripherals. The fix treats type `0x4`
-the same as CTIA/OMTP (running load detection with headset=true), which
-allows the system to properly detect and report the insert.
+5. **Category**: This falls squarely into the **hardware quirk**
+   exception category, which is explicitly listed as always appropriate
+   for stable backporting.
 
-### Stable criteria assessment
+### Risk Assessment
 
-1. **Fixes a real bug**: Yes — exotic peripherals are completely non-
-   functional without this fix (no insert reported to userspace)
-2. **Obviously correct**: Yes — the fix adds one case label to treat
-   `0x4` like other headset types. The author (Charles Keepax) is the
-   subsystem maintainer at Cirrus Logic.
-3. **Small and contained**: Yes — one line added to a switch statement
-   in a single file
-4. **No new features**: Correct — this just makes existing hardware work
-   properly
-5. **Risk**: Extremely low — it only affects the `0x4` type value which
-   previously returned an error anyway
+- **Risk**: Essentially zero. The change only affects one specific USB
+  device (0x20b1:0x2009). The `QUIRK_FLAG_SKIP_IMPLICIT_FB` flag is
+  well-established (since 2022) and simply bypasses implicit feedback
+  detection. The `QUIRK_FLAG_DSD_RAW` flag enables DSD format support,
+  also well-established (since 2021).
+- **Benefit**: Prevents kernel crashes/hangs for users of this specific
+  USB audio device at high sample rates.
 
-This falls squarely into the **hardware quirks/workarounds** exception
-category. The CS42L43 driver has been in the kernel since v6.6
-(introduced August 2023, merged for 6.6-rc1), so it exists in recent
-stable trees.
+### Dependencies
+
+The prerequisite infrastructure (`QUIRK_FLAG_SKIP_IMPLICIT_FB`
+introduced in commit `0f1f7a6661394` from April 2022, and
+`QUIRK_FLAG_DSD_RAW` from `68e851ee4cfd2` in July 2021) should be
+present in all currently maintained stable trees (6.1+, 6.6+, etc.). The
+patch is a simple table entry addition that should apply cleanly.
 
 ### Verification
 
-- Explored `cs42l43_tip_sense_work()` at line ~766: confirmed that
-  negative return from `cs42l43_run_type_detect()` goes to `error:`
-  label without reporting jack state to userspace
-- Confirmed the file was introduced in commit `fc918cbe874ee` (August 4,
-  2023) — present since v6.6
-- Confirmed the author Charles Keepax is the original driver author and
-  Cirrus Logic engineer
-- The commit was reviewed and merged by Mark Brown (ASoC maintainer)
-- Multiple prior commits show ongoing type detection refinement for this
-  codec (dc96528b176fa, e77a4081d7e32, etc.)
-- The change is a single `case 0x4:` fallthrough to the existing
-  CTIA/OMTP handler — no new code paths introduced
+- **Bugzilla link**
+  (https://bugzilla.kernel.org/show_bug.cgi?id=221076): Confirmed real
+  user-reported crash with kernel oops, page fault, and hard hangs at
+  high sample rates on DIYINHK D2 device.
+- **QUIRK_FLAG_SKIP_IMPLICIT_FB** defined in `sound/usb/usbaudio.h` and
+  used in `sound/usb/implicit.c:390-391` to return early from implicit
+  feedback setup - verified via agent exploration.
+- **QUIRK_FLAG_DSD_RAW** defined in `sound/usb/usbaudio.h` and used in
+  `sound/usb/quirks.c:2078-2079` - verified via agent exploration.
+- **Both flags have existed since 2021-2022** (commits `68e851ee4cfd2`
+  and `0f1f7a6661394`) - verified via git log, confirming they exist in
+  stable trees.
+- **Author is Takashi Iwai**, the ALSA subsystem maintainer - verified
+  from commit authorship.
+- **The change is a 2-line addition** to an existing quirk flags table
+  with no logic changes - verified from the diff.
 
-The fix is small, surgical, low-risk, and makes real hardware work for
-users. It clearly meets stable kernel criteria.
+### Conclusion
+
+This is a textbook stable backport candidate: a small, zero-risk
+hardware quirk that fixes a real kernel crash reported by users,
+authored by the subsystem maintainer, with well-established
+infrastructure already present in stable trees.
 
 **YES**
 
- sound/soc/codecs/cs42l43-jack.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
-index b83bc4de1301d..3e04e6897b142 100644
---- a/sound/soc/codecs/cs42l43-jack.c
-+++ b/sound/soc/codecs/cs42l43-jack.c
-@@ -699,6 +699,7 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
- 	switch (type & CS42L43_HSDET_TYPE_STS_MASK) {
- 	case 0x0: // CTIA
- 	case 0x1: // OMTP
-+	case 0x4:
- 		return cs42l43_run_load_detect(priv, true);
- 	case 0x2: // 3-pole
- 		return cs42l43_run_load_detect(priv, false);
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 86c329632e396..57c036ee9ba96 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2363,6 +2363,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
+ 	DEVICE_FLG(0x2040, 0x7281, /* Hauppauge HVR-950Q-MXL */
+ 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
++	DEVICE_FLG(0x20b1, 0x2009, /* XMOS Ltd DIYINHK USB Audio 2.0 */
++		   QUIRK_FLAG_SKIP_IMPLICIT_FB | QUIRK_FLAG_DSD_RAW),
+ 	DEVICE_FLG(0x2040, 0x8200, /* Hauppauge Woodbury */
+ 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
+ 	DEVICE_FLG(0x21b4, 0x0081, /* AudioQuest DragonFly */
 -- 
 2.51.0
 
