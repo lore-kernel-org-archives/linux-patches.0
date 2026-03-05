@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526EB3CD8C7;
-	Thu,  5 Mar 2026 15:37:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D75EB3CF68C;
+	Thu,  5 Mar 2026 15:37:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725043; cv=none; b=LZVijQ9xZIDzvmfAv8omxj+5L8Jf2/JxWGHJjWUD0sYICsb35PS9qD9be/TuzwgIuihWEjhIus0cWEVPH2H9vYe6FMoQudrapZ9VUQF4i6VMMccoOmZ2TjQax6R90Q6Po6xVlfCPOUs0eaNeYbAWlzZCzCUv10i+ILVYn7nrD1c=
+	t=1772725044; cv=none; b=Ka4IeSGFn67QnB4Z9k75aBkDrWcTSG9rVPb0IpSjZN+xIYZ/eVT4V8Q/x1+63zcIMuW/5gRjpP6Ag2v0PhQvrAUWIwjDfVddXgYyauTyI19dQdwRYn31rQQPWzGpw8cwslEry77qYkj1aqOdodI90UI8yrK3YJgA8xVI6PCdeT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725043; c=relaxed/simple;
-	bh=DOvJRtrm8csSKn5upxPEpeea11SDLR82Bgy8HUnvITg=;
+	s=arc-20240116; t=1772725044; c=relaxed/simple;
+	bh=XFt9mQ0GoAaRGLyHFbiJBRtbs41U6XC+bGWSWZaeqBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kPPF+AGwOvWYnhnqrLIQ1LHEsC/2kr+8syunOy1nMIPsUlOOTHyigydBOhTYQJRsmz+w0Mhp9ZYPiuZyVIPMhlR3wmwcRnNBU00mb2dpIvgu49z7ISHa2PtZ8QIescJXnfs85wP8LKS2RrrLqdyXhLLHrXkKiAuiQh2Ep1pMlBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qs/dxjN0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i6JkaMSZr3Qcp4avDikyAjXmv0FA2HI7WSLjFTMHCPS4ToYmSZbT2su+0dZbdpRW95DrdEBJ4u5iu3MfKWIb6OmXjokYlhE8SBR8Vlk13jSa9Vk7kqE1f7DxaDI+IeJwQHKbU/jOxbKpoqlf9qtgzYel4N+ltvdyTSt4h10Eha4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tAX0d2xs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qs/dxjN0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63C47C2BC9E;
-	Thu,  5 Mar 2026 15:37:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tAX0d2xs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2894C116C6;
+	Thu,  5 Mar 2026 15:37:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725043;
-	bh=DOvJRtrm8csSKn5upxPEpeea11SDLR82Bgy8HUnvITg=;
+	s=k20201202; t=1772725044;
+	bh=XFt9mQ0GoAaRGLyHFbiJBRtbs41U6XC+bGWSWZaeqBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs/dxjN0+k+UUq2oIj0vx4r57oNs23EncOa5FSe3ASKIhVXXKjL24+cn19l5bhMSf
-	 Ol5Y7HBL30l6g+vQTncUZkApMYgdiX2af2S2mpSeyO4UTcOoZ0UGwBLDU1Lib4iYlc
-	 zyVH4YjUfLBuib+mZ9eAHR8/8cndQHgw6sLLGx3h3WvxD0qYJOeVY6RBg3XiIqFXCc
-	 rGRi6EOrZ3ZdYC0uYvA2JvWlhLTcPXYevnqEdchrfhh7esjLp08v+kmYE8svkvGCwt
-	 LSkTWsEHb35EMnr2wEYLP6Q70bj4HCS8ePItXcsEBtcP5DvtgYVQtNxb0XvgHz2a6O
-	 kgamFtSma77zA==
+	b=tAX0d2xsd+dWP58XDaYd+b2pAg7W6azVXtBh07m+h4ow/F7Ro44PigDc+XZTv3Eow
+	 NIy6wmsvn8I9LxA6wJdNlj7Osxpuirdg+jgPYnIVM3pTzeWDUp5y+wJaW0m7pxKdaA
+	 APSd2TWDoPkaM4dOEjhXQ36qFuDJ2osGU2jUjpQUxHziZMEosnLHZYZeoadKQZl04q
+	 F+ssm3LKPRQ0eNLIcVE+PRWoE1a/QsoRaBlhn2NS/qxKh7Qz6Szgc5HW5BgOmXJ87h
+	 6VEMe9AFTrs1sN4DVllqzTpCpcskoJ8EXm4cTDW4dBTMCT6bx0/J3Yk+RoqUJHubps
+	 QFYCX17MdQe/Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sofia Schneider <sofia@schn.dev>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Edward Adam Davis <eadavis@qq.com>,
+	syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	rafael@kernel.org,
-	linux-acpi@vger.kernel.org,
+	viro@zeniv.linux.org.uk,
+	linux-fsdevel@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ACPI: OSI: Add DMI quirk for Acer Aspire One D255
-Date: Thu,  5 Mar 2026 10:36:55 -0500
-Message-ID: <20260305153704.106918-12-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] fs: init flags_valid before calling vfs_fileattr_get
+Date: Thu,  5 Mar 2026 10:36:56 -0500
+Message-ID: <20260305153704.106918-13-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
 References: <20260305153704.106918-1-sashal@kernel.org>
@@ -50,117 +51,119 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sofia Schneider <sofia@schn.dev>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 5ede90206273ff156a778254f0f972a55e973c89 ]
+[ Upstream commit cb184dd19154fc486fa3d9e02afe70a97e54e055 ]
 
-The screen backlight turns off during boot (specifically during udev device
-initialization) when returning true for _OSI("Windows 2009").
+syzbot reported a uninit-value bug in [1].
 
-Analyzing the device's DSDT reveals that the firmware takes a different
-code path when Windows 7 is reported, which leads to the backlight shutoff.
-Add a DMI quirk to invoke dmi_disable_osi_win7 for this model.
+Similar to the "*get" context where the kernel's internal file_kattr
+structure is initialized before calling vfs_fileattr_get(), we should
+use the same mechanism when using fa.
 
-Signed-off-by: Sofia Schneider <sofia@schn.dev>
-Link: https://patch.msgid.link/20260223025240.518509-1-sofia@schn.dev
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[1]
+BUG: KMSAN: uninit-value in fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
+ fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
+ vfs_fileattr_get fs/file_attr.c:94 [inline]
+ __do_sys_file_getattr fs/file_attr.c:416 [inline]
+
+Local variable fa.i created at:
+ __do_sys_file_getattr fs/file_attr.c:380 [inline]
+ __se_sys_file_getattr+0x8c/0xbd0 fs/file_attr.c:372
+
+Reported-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7c31755f2cea07838b0c
+Tested-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_B6C4583771D76766D71362A368696EC3B605@qq.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The `dmi_disable_osi_win7` callback already exists and is used by other
-quirks (ASUS K50IJ at line 368). This commit simply adds another entry
-to the same table using the same callback.
+This confirms the bug: `fuse_fileattr_get()` reads `fa->flags_valid`
+(line 517), but in the `file_getattr` syscall, `fa` was declared
+uninitialized. The `flags_valid` field could contain any stack garbage,
+leading to the KMSAN report. The fix initializes it to `{ .flags_valid =
+true }`, matching the pattern used by `ioctl_getflags()` at line 313.
 
-### Stable Kernel Criteria Assessment
+## Analysis
 
-1. **Obviously correct and tested**: Yes. It's a straightforward DMI
-   table entry addition following the exact same pattern as dozens of
-   existing entries in the same table. The author analyzed the DSDT to
-   confirm the firmware behavior. The ACPI maintainer (Rafael Wysocki)
-   accepted and signed off.
+**What the commit fixes:** An uninitialized memory read (KMSAN uninit-
+value) in the `file_getattr` syscall path. The `struct file_kattr fa`
+variable is declared on the stack without initialization, then passed to
+`vfs_fileattr_get()` which calls filesystem-specific `fileattr_get()`
+implementations. The FUSE implementation (`fuse_fileattr_get`) reads
+`fa->flags_valid` before writing to it, triggering use of uninitialized
+memory.
 
-2. **Fixes a real bug**: Yes. The screen backlight turns off during boot
-   on this specific laptop model — a clear user-visible
-   regression/hardware issue. Users cannot see their screen.
+**Bug severity:** This is a real bug reportable by KMSAN. The
+uninitialized `flags_valid` field determines which code path is taken in
+`fuse_fileattr_get()` (line 517). If `flags_valid` happens to be false
+(zero), the fuse driver takes the wrong code path (xattr-based instead
+of ioctl-based), potentially returning incorrect or garbage data to
+userspace.
 
-3. **Important issue**: Yes. A blank screen during boot is a significant
-   usability problem — the laptop is effectively unusable without a
-   workaround.
+**Fix quality:** The fix is a one-line change - initializing the struct
+with `{ .flags_valid = true }`. This exactly matches the existing
+pattern at line 313 (`ioctl_getflags`), making it obviously correct. The
+`/* hint only */` comment also matches.
 
-4. **Small and contained**: Yes. The change adds exactly 13 lines (a
-   comment and a DMI table entry) to a single file. Zero logic changes.
-   Zero risk to other hardware.
+**Scope:** Only the 6.19 stable tree is affected. The `file_getattr`
+syscall was introduced in commit `be7efb2d20d67` which first appeared in
+v6.17-rc1. The code was moved to `fs/file_attr.c` as part of that
+series. Older stable trees (6.12.y, 6.6.y, 5.15.y, etc.) don't have this
+syscall and are unaffected.
 
-5. **No new features**: Correct. This uses the existing
-   `dmi_disable_osi_win7` mechanism. No new APIs, no new code paths.
+**Risk:** Extremely low. The change only adds initialization of a single
+struct field, matching an existing pattern in the same file.
 
-6. **Applies cleanly**: The change is a simple table entry insertion.
-   Even if surrounding entries differ slightly between stable versions,
-   this can be trivially applied at any point in the table.
+**Stable criteria check:**
+- Obviously correct: Yes, matches existing pattern
+- Fixes a real bug: Yes, KMSAN-detected uninit read, syzbot-reported
+- Small and contained: Yes, one-line change
+- No new features: Correct
+- Tested: Yes, syzbot Tested-by tag
 
-### Risk Assessment
+## Verification
 
-- **Risk**: Essentially zero. The DMI match is specific to vendor "Acer"
-  + product "AOD255". It cannot affect any other hardware.
-- **Benefit**: Screen backlight works correctly on Acer Aspire One D255
-  during boot.
-- **Blast radius**: One specific laptop model only.
-
-### Verification
-
-- Verified `dmi_disable_osi_win7` callback exists at line 279 of
-  `drivers/acpi/osi.c` and is already used by another quirk entry (ASUS
-  K50IJ at line 368).
-- Verified the diff adds only a DMI table entry following the identical
-  pattern of existing entries in the same `acpi_osi_dmi_table[]` array.
-- Verified the commit was accepted by Rafael Wysocki, the ACPI subsystem
-  maintainer.
-- The change touches exactly one file (`drivers/acpi/osi.c`) with a
-  trivial table addition.
-- The `acpi_osi_dmi_table` and `dmi_disable_osi_win7` have existed in
-  the kernel for many years, so this applies to all active stable trees.
-
-### Conclusion
-
-This is a textbook hardware quirk addition — the exact type of commit
-that stable trees exist to carry. It fixes a real, user-visible bug
-(blank screen) on specific hardware, uses existing infrastructure, has
-zero risk to other systems, and is trivially small.
+- Read `fs/file_attr.c:380` - confirmed `struct file_kattr fa;` is
+  uninitialized in `file_getattr` syscall
+- Read `fs/file_attr.c:313` - confirmed `ioctl_getflags` uses `{
+  .flags_valid = true }` (the pattern the fix replicates)
+- Read `fs/file_attr.c:82-94` - confirmed `vfs_fileattr_get()` passes
+  `fa` directly to filesystem's `fileattr_get` callback without
+  initializing it
+- Read `fs/fuse/ioctl.c:517` - confirmed `fuse_fileattr_get` reads
+  `fa->flags_valid` before writing, triggering the KMSAN report
+- `git tag --contains be7efb2d20d67` showed the syscall was introduced
+  in v6.17-rc1 (not v6.19-rc1 as might be assumed)
+- `git show v6.19.6:fs/file_attr.c` confirmed the fix is NOT yet in
+  6.19.6 stable
+- `git log v6.12.75 -- fs/file_attr.c` returned empty, confirming older
+  stable trees don't have this file/code
 
 **YES**
 
- drivers/acpi/osi.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ fs/file_attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/osi.c b/drivers/acpi/osi.c
-index f2c943b934be0..9470f1830ff50 100644
---- a/drivers/acpi/osi.c
-+++ b/drivers/acpi/osi.c
-@@ -389,6 +389,19 @@ static const struct dmi_system_id acpi_osi_dmi_table[] __initconst = {
- 		},
- 	},
+diff --git a/fs/file_attr.c b/fs/file_attr.c
+index 13cdb31a3e947..4889cf59b2562 100644
+--- a/fs/file_attr.c
++++ b/fs/file_attr.c
+@@ -377,7 +377,7 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
+ 	struct filename *name __free(putname) = NULL;
+ 	unsigned int lookup_flags = 0;
+ 	struct file_attr fattr;
+-	struct file_kattr fa;
++	struct file_kattr fa = { .flags_valid = true }; /* hint only */
+ 	int error;
  
-+	/*
-+	 * The screen backlight turns off during udev device creation
-+	 * when returning true for _OSI("Windows 2009")
-+	 */
-+	{
-+	.callback = dmi_disable_osi_win7,
-+	.ident = "Acer Aspire One D255",
-+	.matches = {
-+		     DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
-+		     DMI_MATCH(DMI_PRODUCT_NAME, "AOD255"),
-+		},
-+	},
-+
- 	/*
- 	 * The wireless hotkey does not work on those machines when
- 	 * returning true for _OSI("Windows 2012")
+ 	BUILD_BUG_ON(sizeof(struct file_attr) < FILE_ATTR_SIZE_VER0);
 -- 
 2.51.0
 
