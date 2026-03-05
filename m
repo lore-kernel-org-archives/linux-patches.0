@@ -1,44 +1,52 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AE1039A7F7;
-	Thu,  5 Mar 2026 15:37:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23D673CA48E;
+	Thu,  5 Mar 2026 15:37:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772725027; cv=none; b=lv5Bx9G10yswLCMtFEbipSVtlLrF70+umk+23zh53k+Y4DpHQs0P05yDUlyGeWg9BEE7h0OuPp1FEgqWHToyYLnwWPNiw9ZRX1ogG/jJ+j6dz4tSGX0aYcrEVqo4NETHb0zO/pC4OgTeO3YCN4chanEvx8zGliMdIAiVp0LJetw=
+	t=1772725029; cv=none; b=EcgGtThBxsA0BLEQeXFOr3L2JPYBKFX9B88RPLLaVau+2sg47xfqyPHFu3nBeGWY2Fce/6puCnCkYmMbv8g88G2SctKwBvwfqdp+4F+cmyRw1XcWiEGgreVO3sQKacPFGQrrCZGyjpgS4v1whNBRQirFJMmaeI7FN4x94Wm9DoE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772725027; c=relaxed/simple;
-	bh=+nzeOiKNaQXmRUtyeHkCzpRH4sloOKMj+grbCcB6miI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=THqKpTZixfwOdmY3p6illqqVdvZYSwP9p3GX1dksR+w87kcW8eR7cJexK2Q6xT5nl9weJzdZCXx06JltDX5WdWbqJCn1QXCo4YO45XvXrsqkbWlajIzmRZ6BdICU0l4O1ls7v8FGOTvuBXPWrbdKscpqYp51D48zMtO+TLMsuZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UHrCsgai; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1772725029; c=relaxed/simple;
+	bh=iZDpdETZLDllpjy56lm2Peyx2QqMSzdTyXtzyd7RcwA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=L2IR340qd4gFAW1JJ+BiIXhE+BhEnMCdVs+pSIpamrjSX3MaM73L/kf79AQ4zeh8kwRU0HlQL15shC7fdBbWn1yjF9aNusUH887c23EncS2IqRdtQVseFZFNLdor+zWlWpJsWKC+GcY2S7RDUY6n8MPIla2cLsHwfJ0ueEAc8Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nUdh/fnm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UHrCsgai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A01AC116C6;
-	Thu,  5 Mar 2026 15:37:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nUdh/fnm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B1BC2BC87;
+	Thu,  5 Mar 2026 15:37:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1772725027;
-	bh=+nzeOiKNaQXmRUtyeHkCzpRH4sloOKMj+grbCcB6miI=;
-	h=From:To:Cc:Subject:Date:From;
-	b=UHrCsgai809zYr+wGuS6MK4xYgKCiSvDtAleIDK9Zrpo9H06Is5yrIGQ02BoZlna3
-	 53JA/fUZYXHFcggmm8SFRBQGSNx4JV90WlA1QIPQawxG+0pZ4Gcw4zeGiGuXBz7d1x
-	 v8khR65TiuWOtMewrFzx+r2NpL8IFf84I7owMrX7T30jTB2fTpDpkcDCIVuruNFvt0
-	 0VP4nF89/Ko6cLYWCFDh60rloTQ+EZt33QXpimPHUWvCaeRs3AAGWh5YBHoShI+nOs
-	 drCSSBYXyfCZwsqrXLvEaATk3YnEeynR+DhM7Jlw0lxCIJqRWrx04vhU7VGocsrxj8
-	 FXDJg0gP3ORyg==
+	s=k20201202; t=1772725028;
+	bh=iZDpdETZLDllpjy56lm2Peyx2QqMSzdTyXtzyd7RcwA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=nUdh/fnmUK46OVzdJCFuh8ewa5omP87apEIJ1WJY0IZH3a9DtrGDz1mvjNd4/P4TA
+	 qHanBq+5xTao4nX9ie3r8J0fp3SDaM9+HAzhpYuHd1VUP+iOSyhNPfUpAM/lJuztS8
+	 CUkqN6RiqmBcdJM2AT+B3vHAGj9ojamrrQnhGRJv5hETvtTEQWfEb3wUc080hKYbs2
+	 3hr5ZP314HdZkO+1tA8twb1QL4vBjUv2995gKnVpoBP9VSSRh65P4VVFsK49cMP8Lp
+	 fkFPbZBNAzB5IgHTuzpXOTQQ0onMD9WGyPd7HIfhDrzQaIGQglaj1BP4k0yu1juRAx
+	 QGmMdnl7OIUhA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Won Jung <wone.jung@samsung.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+Cc: Al Viro <viro@zeniv.linux.org.uk>,
+	Waiman Long <longman@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	James.Bottomley@HansenPartnership.com,
-	linux-scsi@vger.kernel.org,
+	david@kernel.org,
+	kees@kernel.org,
+	mingo@redhat.com,
+	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	linux-mm@kvack.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] scsi: ufs: core: Reset urgent_bkops_lvl to allow runtime PM power mode
-Date: Thu,  5 Mar 2026 10:36:44 -0500
-Message-ID: <20260305153704.106918-1-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] unshare: fix unshare_fs() handling
+Date: Thu,  5 Mar 2026 10:36:45 -0500
+Message-ID: <20260305153704.106918-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260305153704.106918-1-sashal@kernel.org>
+References: <20260305153704.106918-1-sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -51,180 +59,178 @@ X-stable-base: Linux 6.19.6
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Won Jung <wone.jung@samsung.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 5b313760059c9df7d60aba7832279bcb81b4aec0 ]
+[ Upstream commit 6c4b2243cb6c0755159bd567130d5e12e7b10d9f ]
 
-Ensures that UFS Runtime PM can achieve power saving after System PM
-suspend by resetting hba->urgent_bkops_lvl. Also modify the
-ufshcd_bkops_exception_event_handler to avoid setting urgent_bkops_lvl when
-status is 0, which helps maintain optimal power management.
+There's an unpleasant corner case in unshare(2), when we have a
+CLONE_NEWNS in flags and current->fs hadn't been shared at all; in that
+case copy_mnt_ns() gets passed current->fs instead of a private copy,
+which causes interesting warts in proof of correctness]
 
-On UFS devices supporting UFSHCD_CAP_AUTO_BKOPS_SUSPEND, a BKOPS exception
-event can lead to a situation where UFS Runtime PM can't enter low-power
-mode states even after the BKOPS exception has been resolved.
+> I guess if private means fs->users == 1, the condition could still be true.
 
-BKOPS exception with bkops status 0 occurs, the driver logs:
+Unfortunately, it's worse than just a convoluted proof of correctness.
+Consider the case when we have CLONE_NEWCGROUP in addition to CLONE_NEWNS
+(and current->fs->users == 1).
 
- "ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 0"
+We pass current->fs to copy_mnt_ns(), all right.  Suppose it succeeds and
+flips current->fs->{pwd,root} to corresponding locations in the new namespace.
+Now we proceed to copy_cgroup_ns(), which fails (e.g. with -ENOMEM).
+We call put_mnt_ns() on the namespace created by copy_mnt_ns(), it's
+destroyed and its mount tree is dissolved, but...  current->fs->root and
+current->fs->pwd are both left pointing to now detached mounts.
 
-When a BKOPS exception occurs, ufshcd_bkops_exception_event_handler() reads
-the BKOPS status and sets hba->urgent_bkops_lvl to BKOPS_STATUS_NO_OP(0).
-This allows the device to perform Runtime PM without changing the UFS power
-mode.  (__ufshcd_wl_suspend(hba, UFS_RUNTIME_PM))
+They are pinning those, so it's not a UAF, but it leaves the calling
+process with unshare(2) failing with -ENOMEM _and_ leaving it with
+pwd and root on detached isolated mounts.  The last part is clearly a bug.
 
-During system PM suspend, ufshcd_disable_auto_bkops() is called, disabling
-auto bkops. After UFS System PM Resume, when runtime PM attempts to suspend
-again, ufshcd_urgent_bkops() is invoked. Since hba->urgent_bkops_lvl
-remains at BKOPS_STATUS_NO_OP(0), ufshcd_enable_auto_bkops() is triggered.
+There is other fun related to that mess (races with pivot_root(), including
+the one between pivot_root() and fork(), of all things), but this one
+is easy to isolate and fix - treat CLONE_NEWNS as "allocate a new
+fs_struct even if it hadn't been shared in the first place".  Sure, we could
+go for something like "if both CLONE_NEWNS *and* one of the things that might
+end up failing after copy_mnt_ns() call in create_new_namespaces() are set,
+force allocation of new fs_struct", but let's keep it simple - the cost
+of copy_fs_struct() is trivial.
 
-However, in ufshcd_bkops_ctrl(), the driver compares the current BKOPS
-status with hba->urgent_bkops_lvl, and only enables auto bkops if
-curr_status >= hba->urgent_bkops_lvl.  Since both values are 0, the
-condition is met
+Another benefit is that copy_mnt_ns() with CLONE_NEWNS *always* gets
+a freshly allocated fs_struct, yet to be attached to anything.  That
+seriously simplifies the analysis...
 
-As a result, __ufshcd_wl_suspend(hba, UFS_RUNTIME_PM) skips power mode
-transitions and remains in an active state, preventing power saving even
-though no urgent BKOPS condition exists.
+FWIW, that bug had been there since the introduction of unshare(2) ;-/
 
-Signed-off-by: Won Jung <wone.jung@samsung.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/1891546521.01770806581968.JavaMail.epsvc@epcpadp2new
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://patch.msgid.link/20260207082524.GE3183987@ZenIV
+Tested-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The bug exists in v5.15 and v6.1 — both LTS kernels. The vulnerable code
-pattern (`if (curr_status < BKOPS_STATUS_PERF_IMPACT)` setting
-`urgent_bkops_lvl = curr_status` where curr_status could be 0) has been
-present since the exception handler was first written.
+Now I have a thorough understanding of the bug and the fix. Let me
+compile the analysis.
 
 ## Analysis
 
-### What the commit fixes
+### What the Commit Fixes
 
-This commit fixes a power management regression on UFS storage devices
-that support `UFSHCD_CAP_AUTO_BKOPS_SUSPEND`. The bug scenario:
+This is a real bug in `unshare(2)` that has existed since its
+introduction in 2006. The bug is in `unshare_fs()` at
+`kernel/fork.c:3085`:
 
-1. A device raises a spurious urgent BKOPS exception with status 0
-   (`BKOPS_STATUS_NO_OP`)
-2. `ufshcd_bkops_exception_event_handler()` sets `hba->urgent_bkops_lvl
-   = 0`
-3. During system suspend, `ufshcd_disable_auto_bkops()` resets
-   `is_urgent_bkops_lvl_checked = false` but does NOT reset
-   `urgent_bkops_lvl`
-4. After resume, Runtime PM tries to suspend via `__ufshcd_wl_suspend()`
-   → `ufshcd_bkops_ctrl()`
-5. In `ufshcd_bkops_ctrl()`, `curr_status(0) >= urgent_bkops_lvl(0)`
-   evaluates true, so auto BKOPS gets enabled
-6. With auto BKOPS enabled, the runtime suspend path skips power mode
-   transition, keeping the device in active state permanently
+When `unshare(CLONE_NEWNS | CLONE_NEWCGROUP)` is called with `fs->users
+== 1`:
+1. `unshare_fs()` skips allocating a new `fs_struct` (early return at
+   line 3085)
+2. `ksys_unshare()` passes `current->fs` directly to
+   `create_new_namespaces()`
+3. `copy_mnt_ns()` succeeds and **mutates** `current->fs->pwd` and
+   `current->fs->root` to point into the new namespace
+4. `copy_cgroup_ns()` fails (e.g., `-ENOMEM`)
+5. Error unwind calls `put_mnt_ns()`, destroying the new namespace and
+   dissolving its mount tree
+6. **Result**: The process's `pwd` and `root` are left pointing to
+   detached mounts
 
-This causes **persistent excessive power consumption** on
-mobile/embedded devices — a serious user-visible issue.
+The process is left in a broken state — `unshare()` returns an error but
+has silently corrupted the caller's filesystem context.
 
-### Two-part fix
+### The Fix
 
-1. **`ufshcd_disable_auto_bkops()`**: Resets `urgent_bkops_lvl` to
-   `BKOPS_STATUS_PERF_IMPACT` (the default/safe value) when auto BKOPS
-   is disabled during system suspend. This mirrors what
-   `ufshcd_force_reset_auto_bkops()` already does at line 5987.
+A single-line change adding `!(unshare_flags & CLONE_NEWNS) &&` to the
+early-return condition. This forces allocation of a fresh `fs_struct`
+whenever `CLONE_NEWNS` is set, ensuring `copy_mnt_ns()` never mutates
+the live `current->fs`.
 
-2. **`ufshcd_bkops_exception_event_handler()`**: Adds `curr_status >
-   BKOPS_STATUS_NO_OP` check to prevent setting `urgent_bkops_lvl` to 0
-   when a device raises a spurious exception with status 0.
+### Stable Kernel Criteria Assessment
 
-### Stable kernel criteria assessment
+1. **Obviously correct and tested**: Yes — authored by Al Viro (VFS
+   maintainer), signed off by Christian Brauner (VFS maintainer), tested
+   by Waiman Long (Red Hat). The logic is straightforward.
 
-- **Fixes a real bug**: Yes — prevents UFS Runtime PM from entering low-
-  power modes, causing power drain
-- **Obviously correct**: Yes — both changes are small, logical, and
-  align with existing patterns (the reset matches
-  `ufshcd_force_reset_auto_bkops`, and the status 0 filter is clearly
-  the right semantic)
-- **Small and contained**: Yes — 2 lines changed in a single file, no
-  API/ABI changes
-- **No new features**: Correct — purely a bug fix
-- **Reviewed**: Yes — `Reviewed-by: Peter Wang` (MediaTek UFS
-  maintainer)
-- **Tested**: From Samsung, who manufactured the UFS device exhibiting
-  this bug
-- **Historical precedent**: Commit `be32acff43800` fixed the same class
-  of bug in 2020 and was stable material (had `Fixes:` tag)
-- **Wide applicability**: Affects all stable trees from v5.15+ (the
-  vulnerable code exists in all of them)
-- **Low risk**: The changes are minimal and defensive — they only affect
-  an edge case (status 0 exception) and reset to the safe default value
+2. **Fixes a real bug**: Yes — a process can end up with pwd/root on
+   detached mounts after a failed `unshare()`. This is a correctness bug
+   that can break container runtimes and namespace tools.
 
-### Risk assessment
+3. **Important issue**: Yes — namespace operations are critical for
+   containers (Docker, Kubernetes, LXC). A failed `unshare()` silently
+   corrupting process state is serious.
+
+4. **Small and contained**: Yes — a one-line change in a single file.
+
+5. **No new features**: Correct — this only fixes error handling
+   behavior.
+
+6. **Applies cleanly**: The code at line 3085 (`if (fs->users == 1)`)
+   has been unchanged since Al Viro's 2009 commit `498052bba55e`, so it
+   should exist identically in all stable trees.
+
+### Risk Assessment
 
 **Risk: Very Low**
-- The fix adds a safe default reset and tightens a condition to exclude
-  an invalid state
-- The `BKOPS_STATUS_PERF_IMPACT` reset value is the same value used in
-  initialization and in `ufshcd_force_reset_auto_bkops()`
-- No functional change for the normal case where status > 0
-- May need minor context adjustment for older stable trees (trace
-  function signature change) but the actual fix applies cleanly
+- The change only affects the `CLONE_NEWNS` path in `unshare()`
+- The "cost" is an extra `copy_fs_struct()` allocation when
+  `CLONE_NEWNS` is used with `fs->users == 1` — trivial overhead
+- No behavioral change for the success path (the new fs_struct replaces
+  the old one anyway)
+- Only the failure path is meaningfully affected (preventing corruption)
+
+### User Impact
+
+**Impact: Medium-High**
+- Affects any process calling `unshare(CLONE_NEWNS | <other_ns_flag>)`
+  where a later namespace copy fails
+- Container runtimes commonly use these flag combinations
+- The bug has existed since Linux 2.6.16 (introduction of `unshare(2)`)
+- Waiman Long's testing confirmed `copy_mnt_ns()` with `current->fs` was
+  called 13 times during normal boot
 
 ### Verification
 
-- **Verified** `ufshcd_disable_auto_bkops()` current code at line 5933:
-  does NOT reset `urgent_bkops_lvl` (confirmed via Read tool)
-- **Verified** `ufshcd_bkops_exception_event_handler()` at line 6065:
-  uses `if (curr_status < BKOPS_STATUS_PERF_IMPACT)` which accepts
-  status 0 (confirmed via Read tool)
-- **Verified** `ufshcd_bkops_ctrl()` at line 6030: `curr_status >=
-  status` where status comes from `hba->urgent_bkops_lvl` — so status 0
-  causes `0 >= 0` = true, enabling auto BKOPS (confirmed via Read tool)
-- **Verified** `ufshcd_force_reset_auto_bkops()` at line 5987: already
-  resets `urgent_bkops_lvl = BKOPS_STATUS_PERF_IMPACT`, confirming this
-  is the expected default (confirmed via Read tool)
-- **Verified** prior fix `be32acff43800` (2020): addressed same class of
-  bug where `urgent_bkops_lvl` got set to 0 via `ufshcd_bkops_ctrl`, had
-  `Fixes:` tag (confirmed via git show)
-- **Verified** prerequisite `0a5167e21126c` (refactor removing
-  `ufshcd_urgent_bkops()`): landed in v6.12. The fix itself does NOT
-  depend on this refactor — the two functions being changed exist in all
-  stable trees (confirmed by checking v6.11, v6.1, v5.15 code via git
-  show)
-- **Verified** `__ufshcd_wl_suspend()` calls
-  `ufshcd_disable_auto_bkops()` during system PM (not runtime PM) at
-  line 10059, confirming the suspend path described in the commit
-  message (confirmed via Grep)
-- **Verified** bug affects stable trees v5.15.y and v6.1.y by checking
-  the exception handler code is identical (confirmed via git show)
-- **Verified** BKOPS_STATUS_NO_OP = 0x0 and BKOPS_STATUS_PERF_IMPACT =
-  0x2 in include/ufs/ufs.h (confirmed via agent research)
+- **Read `kernel/fork.c:3077-3093`**: Confirmed the `unshare_fs()`
+  function and the buggy `if (fs->users == 1)` early return at line 3085
+- **Read `kernel/nsproxy.c:87-161`**: Confirmed
+  `create_new_namespaces()` calls `copy_mnt_ns()` first (line 98), then
+  `copy_cgroup_ns()` (line 123), with error unwind calling
+  `put_mnt_ns()` (line 157) — confirming the failure scenario
+- **Read `kernel/fork.c:3149-3150`**: Confirmed `CLONE_NEWNS` implies
+  `CLONE_FS` (`unshare_flags |= CLONE_FS`), so `unshare_fs()` will
+  always enter the main body when `CLONE_NEWNS` is set
+- **git blame**: Confirmed the buggy line dates back to commit
+  `498052bba55e` (Al Viro, 2009), itself a refactor of the original
+  `unshare(2)` code from 2006
+- **Mailing list (patch.msgid.link)**: Al Viro posted this as
+  `[PATCH][RFC] bug in unshare(2) failure recovery`. Waiman Long tested
+  and confirmed the fix eliminates the problematic code path. No
+  objections raised.
+- **git log --grep**: Found the fix as commit `6c4b2243cb6c0`
+
+This is a clear, well-understood bug fix by the VFS maintainer with
+testing confirmation from Red Hat. The fix is minimal (one line),
+surgical, low-risk, and addresses a real correctness bug in a core
+syscall that has existed for 20 years. It meets all stable kernel
+criteria.
 
 **YES**
 
- drivers/ufs/core/ufshcd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/fork.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 09f0d77d57f02..c71a449850573 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5959,6 +5959,7 @@ static int ufshcd_disable_auto_bkops(struct ufs_hba *hba)
+diff --git a/kernel/fork.c b/kernel/fork.c
+index b1f3915d5f8ec..68ccbaea7398a 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -3082,7 +3082,7 @@ static int unshare_fs(unsigned long unshare_flags, struct fs_struct **new_fsp)
+ 		return 0;
  
- 	hba->auto_bkops_enabled = false;
- 	trace_ufshcd_auto_bkops_state(hba, "Disabled");
-+	hba->urgent_bkops_lvl = BKOPS_STATUS_PERF_IMPACT;
- 	hba->is_urgent_bkops_lvl_checked = false;
- out:
- 	return err;
-@@ -6062,7 +6063,7 @@ static void ufshcd_bkops_exception_event_handler(struct ufs_hba *hba)
- 	 * impacted or critical. Handle these device by determining their urgent
- 	 * bkops status at runtime.
- 	 */
--	if (curr_status < BKOPS_STATUS_PERF_IMPACT) {
-+	if ((curr_status > BKOPS_STATUS_NO_OP) && (curr_status < BKOPS_STATUS_PERF_IMPACT)) {
- 		dev_err(hba->dev, "%s: device raised urgent BKOPS exception for bkops status %d\n",
- 				__func__, curr_status);
- 		/* update the current status as the urgent bkops level */
+ 	/* don't need lock here; in the worst case we'll do useless copy */
+-	if (fs->users == 1)
++	if (!(unshare_flags & CLONE_NEWNS) && fs->users == 1)
+ 		return 0;
+ 
+ 	*new_fsp = copy_fs_struct(fs);
 -- 
 2.51.0
 
