@@ -1,139 +1,292 @@
-Received: from DM1PR04CU001.outbound.protection.outlook.com (mail-centralusazon11010020.outbound.protection.outlook.com [52.101.61.20])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6DB2F290E
-	for <patches@lists.linux.dev>; Fri,  6 Mar 2026 00:47:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.61.20
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772758077; cv=fail; b=ne17iCgafJN9SHBuscpgtpfl2HbZbkg7Es6a7dJmNJrD53BX2FtjTIeUDeaiY0RgSxd8xA+tJfdkjHCjy4nctpr1xZWvCg1A+d+c8td8slUhfWheS+h7jvXy2nTiz5gIXdY6VKLVl7orgS2jOFZjpcHdT4JiOsih7KN1fElxk3E=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772758077; c=relaxed/simple;
-	bh=Hos4O5R6hfgULu+FDvoVhQvIOtGtOyWPSxTvoj3ynds=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:Content-Type:
-	 Content-Disposition:In-Reply-To:MIME-Version; b=hJWNZmbV9sjwwiIwk1eIfil1YS4h1/inlJmsgdXsFRQ/cfyq1BteShsJ4aFgLZRKIO2xh0bILOTSy/GKJb3/iZa+LUdZKEyp2vqmIqoVwbYGNzB3L+rj+2hVQq9GtLG3n+n/3Fn02NeF9w+rGFuWprxqchB4OkYRDKNVBZJAJZk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=rWNx/CrJ; arc=fail smtp.client-ip=52.101.61.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E6C34A3D2
+	for <patches@lists.linux.dev>; Fri,  6 Mar 2026 09:47:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1772790455; cv=none; b=fXkGth2VaDr8rwB9lwpAK70VmjabCpO7pXc3c4RHNsojAVuIAhb8MmUbiS92IiQ1NP1BPbJ+HpX7o0PuhetkgfstFq9kfQJ3y9o5H4CCdrgYxdEFdVUK7L8JiWunP+KrRn51YANC5bsCN7w99OXU/Vq6EkDMmtF3LDUV2l3ABF0=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1772790455; c=relaxed/simple;
+	bh=rDLUCvrka8Fq5woiwauplUppQ/Xsp2anjGUokU5vFHM=;
+	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=GcALDT54jYRQfmUFPRqfKlxLFiWXfPsMu4fIGgOdIuX3e6mJIsqddAsxXGR3gzLa3khtWpIvtLyuaO8fZKEdhsEms5K6hDGN+w1dY27HJJqkOUOsegKGi/ywNREuMqHEa5B5Bbq+QZuhc60Fx2CDBeuuc8ZQA3KpE0GgF4Rj/is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TtGUev/j; arc=none smtp.client-ip=192.198.163.10
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="rWNx/CrJ"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=S2cPt9RJu664TY5sUU6hAH1TNRQmCSTvOTeZHorqoR7uz4FCMzVyHaP9GN1QKgRhD2WteCnOk9AFwrAEm7Z3nDLOWeTuk+0FNJmeZskM0FPhgvHcSc93ZfTelTKTRLo6btgH1C5SuNpcqfqWIh06HR0V/cwX0rwgQ2NPhpZUKUumvEbltYx2sk4QVZ6tHQeCMhQ/CUJY0yY7nXyUsan1VEuEYc5VBwi/+irr8Civ9o5r6EmoMakwhzWCnV10qUakvESyDBkyVLqY/ItbLWrMozU6LA4rWwIol/zmwoMg9uQtD+TQXZH5qRy9BNfDSoD/wCBTlj4jMcM+kE2wK6gXcQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hzsiMzh/vrJj3YAydrijB927OGCcXerMgLdNXcR84IQ=;
- b=uNXn3gSke/5m27oRjtCWXnMIvj4+Z6FHoMiH3kejVIMB7da54yp2DWXMgpedzSU8zYPOJT9jem8g0NounwRO4qQbEc+GEjvq9AGW8H9HBt0uP9s1HvkIwkcavwEJUUJ6VbLllUJa9JZ2xQNne0ICF+H+UUUlatNz/gLatIi68SNrPsMNonmKe2xw6FRK6SLZW/pVo2phrhaE2TzbDFbaEZ/yfVPkcV0YFeLAYdMSNMknuKs5a2BvbRkpdN9Krl/f+g+j8L2mhnPzSBpxbGTfKTzDVrpKbPA+7boH52iImuGtUipHqPuhVfX5/EHTPRkaUjdC889FVN+a3X/RBr+3JA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hzsiMzh/vrJj3YAydrijB927OGCcXerMgLdNXcR84IQ=;
- b=rWNx/CrJj3Hak0XG1AoqpXEtMSRcSFW7MZoYU1zcIHt+AuLMHEccxZsp6jcPazqFY2mnkXTvTKeRQjNUJkV/VeuMKQiJNKJK0+eMhRfYPPkFspBB8TXnUwqpJ5J9jBDAC+ttj3MLG53uts1j3D0EQ5VeNnyq9VQRCaZaDjZy9P5cNN9QhLSGUFffXZyP4almgPx2kesYAAjEbHZM2NPGAWn7Sv563GvaWVwLT8UZ6WtoUtx1KBwfH4ICFYbERdaJbxeKGrBtvRxc47jXsSFvvFLZS9moWgseiydqLlf77/7UO7jiDwhcLsev7Dp2sQZPgyx6+dif0Junwn9Tm6fPhg==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
- by IA1PR12MB6531.namprd12.prod.outlook.com (2603:10b6:208:3a4::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.5; Fri, 6 Mar
- 2026 00:47:53 +0000
-Received: from LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
- ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Fri, 6 Mar 2026
- 00:47:51 +0000
-Date: Thu, 5 Mar 2026 20:47:49 -0400
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: Kalesh AP <kalesh-anakkur.purayil@broadcom.com>,
-	Leon Romanovsky <leon@kernel.org>, linux-rdma@vger.kernel.org,
-	Selvin Xavier <selvin.xavier@broadcom.com>,
-	Sriharsha Basavapatna <sriharsha.basavapatna@broadcom.com>
-Cc: patches@lists.linux.dev
-Subject: Re: [PATCH v3 00/13] Provide udata helpers and use them in bnxt_re
-Message-ID: <20260306004749.GB2137346@nvidia.com>
-References: <0-v3-bd56dd443069+49-bnxt_re_uapi_jgg@nvidia.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0-v3-bd56dd443069+49-bnxt_re_uapi_jgg@nvidia.com>
-X-ClientProxiedBy: BL1PR13CA0391.namprd13.prod.outlook.com
- (2603:10b6:208:2c2::6) To LV8PR12MB9620.namprd12.prod.outlook.com
- (2603:10b6:408:2a1::19)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TtGUev/j"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1772790454; x=1804326454;
+  h=from:date:to:cc:subject:in-reply-to:message-id:
+   references:mime-version;
+  bh=rDLUCvrka8Fq5woiwauplUppQ/Xsp2anjGUokU5vFHM=;
+  b=TtGUev/jkRgFWjtQu3jdQrVihtqJwoKMUk/nxA3ruBQQT8qe2PoRUZHz
+   SbM+mpFIR4KGgXu+bpHQsLo4DPZnkCkKdLbdc1RWJfP04xULYKKwKRHhb
+   bF89JJx9ts56bzhtlDnxfe1TwrVbulkn68HVcUF7k/XL1xcxu7QP2JRIe
+   PkkebqDgjd11OENR2IRIS5kO+8AqqutLJGaIEuHe9SU6Nt0QwWnr8w0gW
+   qv58tu9IMPlNdh14y4QABzHiwLRvaWrNpZdroMe17b51gujD5mfeKUEpZ
+   xzeAfH2VxA8nE3ovQwu+E8vIDcp1ph0QAZFbeo+B0NXHK09XgDrHy/thT
+   w==;
+X-CSE-ConnectionGUID: OQ1DU4PoRI2Aqodg016GlQ==
+X-CSE-MsgGUID: 1HNp33ugSeyGHBlFUcx6RA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11720"; a="85243661"
+X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; 
+   d="scan'208";a="85243661"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 01:47:34 -0800
+X-CSE-ConnectionGUID: SO521QKNRSiLNqXZg77hMg==
+X-CSE-MsgGUID: EoQCNVRkRHawRQJCy1gnfQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; 
+   d="scan'208";a="215668798"
+Received: from fpallare-mobl4.ger.corp.intel.com (HELO localhost) ([10.245.244.235])
+  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 01:47:26 -0800
+From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Date: Fri, 6 Mar 2026 11:47:22 +0200 (EET)
+To: Reinette Chatre <reinette.chatre@intel.com>
+cc: shuah@kernel.org, Dave.Martin@arm.com, james.morse@arm.com, 
+    tony.luck@intel.com, babu.moger@amd.com, fenghuay@nvidia.com, 
+    peternewman@google.com, zide.chen@intel.com, dapeng1.mi@linux.intel.com, 
+    ben.horgan@arm.com, yu.c.chen@intel.com, linux-kselftest@vger.kernel.org, 
+    LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev
+Subject: Re: [PATCH v2 1/9] selftests/resctrl: Improve accuracy of cache
+ occupancy test
+In-Reply-To: <a43f404b9fdcf01d8c8cd825c17f39f95083c813.1772582958.git.reinette.chatre@intel.com>
+Message-ID: <db270056-a2b5-e5f0-1ed4-e652d67e90fe@linux.intel.com>
+References: <cover.1772582958.git.reinette.chatre@intel.com> <a43f404b9fdcf01d8c8cd825c17f39f95083c813.1772582958.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|IA1PR12MB6531:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50343c5f-942b-48c2-6973-08de7b19fe63
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info:
-	hvRAtN4QqtotS07OaWwiilXNJQLNqqG+B8rTQxC21YQbDojeJ9mV/5d4F/AcHETnRUhPKZtufgrb4BWylDwbjlt2h8oxHwtAr42Cfh4+XW70mbsot8V/NDRRP51yApE8J41SEfXq5zzHr24GpdX3ExRpZZcQ9+wyXCB2qDR0cezuDACBcL00bZOQ7UFdk01w/nj0+aQn8VNq01pH5Ytwn7bgXbm1AexIBaF8QM8Eogo44IWzrHXMyXosd1e5y2T8VlO3ke/i1i9K8mlMvrRFcjAwgmM53O2mMa9B9EoKuQ36HU80MBcdiv5lBlaDDQAzvzq6aNWFMfWYk3E1RPf1ye+wwaVlpSepLfhzNuMCVYWHpxPE0FcIq/LtLNifSDPHRadWzmKC3zDAudkeYUfQZ5fXBvk2m3Cge4HUOOGc8hsEIZN5VjsnRUXxdS5Mp7WbJqAVoecP+u/UrRvQy1KjsAT4UcKeeNTY9KaGWP1GBRXuT3KtLQESkzgLSSK3Q+BBgi04QXWNIHBPFnHNToxuCx2d6+xFTHXmqoqDXTY01uDtDHAs8l6pIFLnpqOvKsp+B1/awgBlcAJ1y8tf1HJq5Fvq7TWxgLI4orwsycOXlJtL34WJn6Q2isT8vs5pf2jR5sEfFNOZzuWwfELBmduLiQkbjgZP9jgm1swjkqMSFBADInRCda7kK+WCDcqhGpwezw1pT4VYkkbPGf4nPEnyuZ+FIHAPJjzuwVUvT55JnAc=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?qJVmfaxO8ZyS1KiYg8gvm+4D2buB15RG+IY+hvFRvjyu8xlF6xt1XCwBG8v7?=
- =?us-ascii?Q?TPKYUNAeGc0YNO/rW3BxWXhye17KQMSvs4GIGZBeFbvMM5L9A0uVgnEAgZPe?=
- =?us-ascii?Q?EejV88E4tWwlN8gJZ4Nn6SE05gXsEKEF70y8bUXLv6JyUeh9Rjs9VSsNxv3i?=
- =?us-ascii?Q?tFSDK0LhjZF+FtJuK7Z6OEXSIEikmWbdCqLymtpRJLj2zhXhmcucXFp8+mG9?=
- =?us-ascii?Q?2c3AakN19MY4EDGyZVVmzI+p2soK3TGxbV2y9+v1YxNdBU2NWfBoVolpLdns?=
- =?us-ascii?Q?8LcALFjHnYmS1XFHQxNRb+Qt4xnjcLia22w33SG0LnpIZs8e8A4SfZ1wGZuH?=
- =?us-ascii?Q?IBNHsoDZmZQVqNMzKGXHVyOfvvp/9/QajYhe/jRsM7lyLyZZuANATYIfAX7K?=
- =?us-ascii?Q?HbmWJHlGMSFiqR0ojHlHVcQQ2RG2tMf0lm+WEdQQRvrjJOD5YN71/t2UH+LZ?=
- =?us-ascii?Q?9W/a7KwnmX0gkhmGN4RPWOBck1goTWx5TaDDsC81Xu2D7yT57vuSATBE8rez?=
- =?us-ascii?Q?A8bHTek5EI46Ch6ER1ENrJpSQD5rYCGrLiJ0vwv47gc3iQ3bOOMMGTyjJ4kL?=
- =?us-ascii?Q?H7VbpiGN43lhfazfmcXdgbWwEBtJoDKHcEzdq3QhDYNH200I20rYBIUTMir/?=
- =?us-ascii?Q?EMC67+a0iFvCDVGDA7/vH9/APojb2wCevD97emgOknd7WkWg6YdbXTSimCU0?=
- =?us-ascii?Q?GUxr8RsFQf8rKRLc2cecoKGZuv+UT6x20iTMvSthPjLcEsc6V1slih4syL+i?=
- =?us-ascii?Q?4qjN7N5xGxK1EsLN0k1j9kkA0+zaV6O2XwvX4PfKYY2CI+fU0Q0VmME1wrda?=
- =?us-ascii?Q?w68+TC6HqdQmFEo/f57cNwwfgJZwHXJG9vt81CXh/i66ChX/VPhnpcgl93Pg?=
- =?us-ascii?Q?GOqBKo6Y6TIhgbXWFrT/KY0y8BsInIOKabjVkzkdlAO52bwxo5XSnI0tPcy8?=
- =?us-ascii?Q?1vucaqv2K3NPlx6FbL1e3xj0694qqUXaKK6FwrhIpYNLItXc6XBjSGou8U4W?=
- =?us-ascii?Q?A7VybB8G3jolQJ1adnuOjPoJD0QCdXLv2wHlrPCxCbgdKvKx4YsNHnJbQ4R0?=
- =?us-ascii?Q?AVjZrE0z5CbERkGQDBiR72UdJbwy/J+SX8hSP60Lz50ZRzuvNa8cD0xmhYnp?=
- =?us-ascii?Q?WsQIVDgeVLeX2NY/OzJsjTo5mz4c8+8Cm+lPapdxWO/9WCN6uuDXRcOVyq9z?=
- =?us-ascii?Q?Uj6bpAnc3jRSGuf8qOGgk0TXs6q4Y2wakdI+n2AZ6nNRPuH1QRck65W9E1bu?=
- =?us-ascii?Q?3bm5j4AFJcpBXaYkJZQ0sBB6C610h1Rv3QHyspTHZK371Awp0j6k7DPUPznv?=
- =?us-ascii?Q?/Z7pMl9hxKl4aag5rgGvnXbZ8Dgqkm1fxCnXJfml7yqMu3q1ecLqKiy2VMdB?=
- =?us-ascii?Q?HK6eL9hQvqg68mTTZ28w3pVyHxZvZLna016JtC9uxq2EZvqH2OCgZDsrKbnr?=
- =?us-ascii?Q?oar8meNMAWEIP4+iLTO8/ruFS7GpbOy6c+JeJE3z6xRDPPsmgnr5V6xKMnyd?=
- =?us-ascii?Q?M4+vNFtKx5llXr71y2i0/HXNn7D6nwbS8oiGx19IOdXqQgM3hhBXLLu9bvnp?=
- =?us-ascii?Q?V9SRHGI8hdD8BCtyXYHPeWkHwsE0l2jVz+OsxS9Szda97E/nbWGwNUuPGWsy?=
- =?us-ascii?Q?AtRV89L/lhpnDLxbT0bE3g3vZ4IcmPWLttrdJx2XFSyNLd9uhHQXwb18BGFD?=
- =?us-ascii?Q?Fwe/qoMkJDWxnO/1JoGvalmcwZSC6aOX2iglZ6y/os+lD9NU/oZSWl98oAvs?=
- =?us-ascii?Q?JO+dF7q+Zw=3D=3D?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50343c5f-942b-48c2-6973-08de7b19fe63
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Mar 2026 00:47:51.3549
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: p7B5H8UIJZ3E02YrSZ10YKnKH0YgFmqhmY7FU96e6FXv5axbjUTbOxHW9FCOIChw
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6531
+Content-Type: text/plain; charset=US-ASCII
 
-On Tue, Mar 03, 2026 at 03:49:57PM -0400, Jason Gunthorpe wrote:
-> Jason Gunthorpe (13):
->   RDMA: Use copy_struct_from_user() instead of open coding
->   RDMA/core: Add rdma_udata_to_dev()
->   RDMA: Add ib_copy_validate_udata_in()
->   RDMA: Add ib_copy_validate_udata_in_cm()
->   RDMA: Add ib_respond_udata()
->   RDMA: Add ib_is_udata_in_empty()
->   RDMA: Provide documentation about the uABI compatibility rules
->   RDMA/bnxt_re: Add compatibility checks to the uapi path
->   RDMA/bnxt_re: Add compatibility checks to the uapi path for no data
->   RDMA/bnxt_re: Add missing comp_mask validation
->   RDMA/bnxt_re: Use ib_respond_udata()
->   RDMA/bnxt_re: Use ib_respond_empty_udata()
->   RDMA: Add IB_UVERBS_CORE_SUPPORT_ROBUST_UDATA
+On Tue, 3 Mar 2026, Reinette Chatre wrote:
 
-Applied to for-next
+> Dave Martin reported inconsistent CMT test failures. In one experiment
+> the first run of the CMT test failed because of too large (24%) difference
+> between measured and achievable cache occupancy while the second run passed
+> with an acceptable 4% difference.
+> 
+> The CMT test is susceptible to interference from the rest of the system.
+> This can be demonstrated with a utility like stress-ng by running the CMT
+> test while introducing cache misses using:
+> 
+>    stress-ng --matrix-3d 0 --matrix-3d-zyx
+> 
+> Below shows an example of the CMT test failing because of a significant
+> difference between measured and achievable cache occupancy when run with
+> interference:
+>     # Starting CMT test ...
+>     # Mounting resctrl to "/sys/fs/resctrl"
+>     # Cache size :56623104
+>     # Writing benchmark parameters to resctrl FS
+>     # Benchmark PID: 3275
+>     # Checking for pass/fail
+>     # Fail: Check cache miss rate within 15%
+>     # Percent diff=97
+>     # Number of bits: 5
+>     # Average LLC val: 501350
+>     # Cache span (bytes): 23592960
+>     not ok 1 CMT: test
+> 
+> The CMT test creates a new control group that is also capable of monitoring
+> and assigns the workload to it. The workload allocates a buffer that by
+> default fills a portion of the L3 and keeps reading from the buffer,
+> measuring the L3 occupancy at intervals. The test passes if the workload's
+> L3 occupancy is within 15% of the buffer size.
+> 
+> By not adjusting any capacity bitmasks the workload shares the cache with
+> the rest of the system. Any other task that may be running could evict
+> the workload's data from the cache causing it to have low cache occupancy.
+> 
+> Reduce interference from the rest of the system by ensuring that the
+> workload's control group uses the capacity bitmask found in the user
+> parameters for L3 and that the rest of the system can only allocate into
+> the inverse of the workload's L3 cache portion. Other tasks can thus no
+> longer evict the workload's data from L3.
+> 
+> Take the L2 cache into account to further improve test accuracy.
+> By default the buffer size is the same as the L3 portion that the workload
+> can allocate into. This buffer size does not take into account that some
+> of the workload's data may land in L2/L1. Address this in two ways:
+>  - Reduce the amount of L2 cache the workload can allocate into to the
 
-Jason
+"into to the" sounds wrong.
+
+>    minimum on systems that support L2 cache allocation.
+>  - Increase the buffer size to accommodate data that may be allocated into
+>    the L2 cache. Use a buffer size double the L3 portion to keep using the
+>    L3 portion size as goal for L3 occupancy while taking into account that
+>    some of the data may be in L2.
+
+To me the this control over L2 looks logically pretty separate from the 
+inverse of L3 portion control so it would seem like logically belong to a 
+separate change.
+
+> With the above adjustments the CMT test is more consistent. Repeating the
+> CMT test while generating interference with stress-ng on a sample
+> system after applying the fixes show significant improvement in test
+> accuracy:
+> 
+>     # Starting CMT test ...
+>     # Mounting resctrl to "/sys/fs/resctrl"
+>     # Cache size :56623104
+>     # Writing benchmark parameters to resctrl FS
+>     # Write schema "L3:0=fe0" to resctrl FS
+>     # Write schema "L3:0=1f" to resctrl FS
+>     # Benchmark PID: 3223
+>     # Checking for pass/fail
+>     # Pass: Check cache miss rate within 15%
+>     # Percent diff=3
+>     # Number of bits: 5
+>     # Average LLC val: 22811443
+>     # Cache span (bytes): 23592960
+>     ok 1 CMT: test
+> 
+> Reported-by: Dave Martin <Dave.Martin@arm.com>
+> Closes: https://lore.kernel.org/lkml/aO+7MeSMV29VdbQs@e133380.arm.com/
+> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+> ---
+> Changes since v1:
+> - Fix typo in changelog: "data my be in L2" -> "data may be in L2".
+> ---
+>  tools/testing/selftests/resctrl/cmt_test.c    | 35 ++++++++++++++++---
+>  tools/testing/selftests/resctrl/mba_test.c    |  4 ++-
+>  tools/testing/selftests/resctrl/mbm_test.c    |  4 ++-
+>  tools/testing/selftests/resctrl/resctrl.h     |  4 ++-
+>  tools/testing/selftests/resctrl/resctrl_val.c |  2 +-
+>  5 files changed, 41 insertions(+), 8 deletions(-)
+> 
+> diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
+> index d09e693dc739..44e9938dfafd 100644
+> --- a/tools/testing/selftests/resctrl/cmt_test.c
+> +++ b/tools/testing/selftests/resctrl/cmt_test.c
+> @@ -19,12 +19,39 @@
+>  #define CON_MON_LCC_OCCUP_PATH		\
+>  	"%s/%s/mon_data/mon_L3_%02d/llc_occupancy"
+>  
+> -static int cmt_init(const struct resctrl_val_param *param, int domain_id)
+> +/*
+> + * Initialize capacity bitmasks (CBMs) for control group being tested,
+> + * default resource group to prevent its tasks from interfering with test,
+> + * and L2 resource of control group to minimize allocations into L2 if
+> + * possible to better predict L3 occupancy.
+> + */
+> +static int cmt_init(const struct resctrl_test *test,
+> +		    const struct user_params *uparams,
+> +		    const struct resctrl_val_param *param, int domain_id)
+>  {
+> +	unsigned long long_mask;
+> +	char schemata[64];
+> +	int ret;
+> +
+>  	sprintf(llc_occup_path, CON_MON_LCC_OCCUP_PATH, RESCTRL_PATH,
+>  		param->ctrlgrp, domain_id);
+>  
+> -	return 0;
+> +	ret = get_full_cbm(test->resource, &long_mask);
+> +	if (ret)
+> +		return ret;
+> +
+> +	snprintf(schemata, sizeof(schemata), "%lx", ~param->mask & long_mask);
+
+I don't know why this is variable is called "long_mask", the type seems 
+pretty unrelated to its use. Perhaps change it to e.g. full_mask?
+
+Seems otherwise fine AFAICT.
+
+-- 
+ i.
+
+
+> +	ret = write_schemata("", schemata, uparams->cpu, test->resource);
+> +	if (ret)
+> +		return ret;
+> +
+> +	snprintf(schemata, sizeof(schemata), "%lx", param->mask);
+> +	ret = write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
+> +
+> +	if (!ret && !strcmp(test->resource, "L3") && resctrl_resource_exists("L2"))
+> +		ret = write_schemata(param->ctrlgrp, "0x1", uparams->cpu, "L2");
+> +
+> +	return ret;
+>  }
+>  
+>  static int cmt_setup(const struct resctrl_test *test,
+> @@ -153,11 +180,11 @@ static int cmt_run_test(const struct resctrl_test *test, const struct user_param
+>  	span = cache_portion_size(cache_total_size, param.mask, long_mask);
+>  
+>  	if (uparams->fill_buf) {
+> -		fill_buf.buf_size = span;
+> +		fill_buf.buf_size = span * 2;
+>  		fill_buf.memflush = uparams->fill_buf->memflush;
+>  		param.fill_buf = &fill_buf;
+>  	} else if (!uparams->benchmark_cmd[0]) {
+> -		fill_buf.buf_size = span;
+> +		fill_buf.buf_size = span * 2;
+>  		fill_buf.memflush = true;
+>  		param.fill_buf = &fill_buf;
+>  	}
+> diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+> index c7e9adc0368f..cd4c715b7ffd 100644
+> --- a/tools/testing/selftests/resctrl/mba_test.c
+> +++ b/tools/testing/selftests/resctrl/mba_test.c
+> @@ -17,7 +17,9 @@
+>  #define ALLOCATION_MIN		10
+>  #define ALLOCATION_STEP		10
+>  
+> -static int mba_init(const struct resctrl_val_param *param, int domain_id)
+> +static int mba_init(const struct resctrl_test *test,
+> +		    const struct user_params *uparams,
+> +		    const struct resctrl_val_param *param, int domain_id)
+>  {
+>  	int ret;
+>  
+> diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
+> index 84d8bc250539..58201f844740 100644
+> --- a/tools/testing/selftests/resctrl/mbm_test.c
+> +++ b/tools/testing/selftests/resctrl/mbm_test.c
+> @@ -83,7 +83,9 @@ static int check_results(size_t span)
+>  	return ret;
+>  }
+>  
+> -static int mbm_init(const struct resctrl_val_param *param, int domain_id)
+> +static int mbm_init(const struct resctrl_test *test,
+> +		    const struct user_params *uparams,
+> +		    const struct resctrl_val_param *param, int domain_id)
+>  {
+>  	int ret;
+>  
+> diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+> index afe635b6e48d..c72045c74ac4 100644
+> --- a/tools/testing/selftests/resctrl/resctrl.h
+> +++ b/tools/testing/selftests/resctrl/resctrl.h
+> @@ -135,7 +135,9 @@ struct resctrl_val_param {
+>  	char			filename[64];
+>  	unsigned long		mask;
+>  	int			num_of_runs;
+> -	int			(*init)(const struct resctrl_val_param *param,
+> +	int			(*init)(const struct resctrl_test *test,
+> +					const struct user_params *uparams,
+> +					const struct resctrl_val_param *param,
+>  					int domain_id);
+>  	int			(*setup)(const struct resctrl_test *test,
+>  					 const struct user_params *uparams,
+> diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+> index 7c08e936572d..a5a8badb83d4 100644
+> --- a/tools/testing/selftests/resctrl/resctrl_val.c
+> +++ b/tools/testing/selftests/resctrl/resctrl_val.c
+> @@ -569,7 +569,7 @@ int resctrl_val(const struct resctrl_test *test,
+>  		goto reset_affinity;
+>  
+>  	if (param->init) {
+> -		ret = param->init(param, domain_id);
+> +		ret = param->init(test, uparams, param, domain_id);
+>  		if (ret)
+>  			goto reset_affinity;
+>  	}
+> 
