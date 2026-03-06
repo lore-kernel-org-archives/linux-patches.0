@@ -1,61 +1,60 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.16])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A3733B6D1
-	for <patches@lists.linux.dev>; Fri,  6 Mar 2026 10:19:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.16
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331CD21C160
+	for <patches@lists.linux.dev>; Fri,  6 Mar 2026 10:35:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1772792346; cv=none; b=HnL7uBKyk6CUQmuUmZ03Bnh4Zh48Ur5IADpcKsKu+drHTW88lBhYftRaaPMCU3K1lxJutYlKd58vj3XELR7ygvY3S0HI+IULBGaBkNaofw9eC9Dr2BoNkIb3fFSMJXMUKzKJbVkfYwoWQzFfWPnlgyhAaK5r3rBcwE8E36W6GMg=
+	t=1772793316; cv=none; b=gEcLrbPdwswU4ncIiKT146OtXILlQC07xbo3mGTswV+TqVITEa7v5+ZZLPqKQaaSH3yXt+5lqEvO4sNMzYhmsE8Lv6ZVLIbMFPpP9RiGm39RwLFriOMapSc2DejRYFHV7rzdwqvo5ehYojb1W0mLb5f59GZv0Zn7PBM//1FG8Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1772792346; c=relaxed/simple;
-	bh=XFe6wciYCgNoELPjTXDDirLpfaqSjHbe29PzaMoMb6w=;
+	s=arc-20240116; t=1772793316; c=relaxed/simple;
+	bh=56j/Dz5yR3NWbJ1+SqrCNPWOzDvXvg3ezeHAGS115bQ=;
 	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=cQK4in24EvUBKgnNTyutvVvVutmhVVxUIGzWI8SfNoS8ozv7X0trUyGTSV2n/r0E878MbCtjQLRnSLuacGcUsXuwX7vEYGSmuS/bwHNHxPTAmbM7uY+57gZ7c2++VQmzHNWSR370xQXkfRFOfH1Fq4s/bUS53si2jLlA18yswPQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=GirehXt3; arc=none smtp.client-ip=198.175.65.16
+	 MIME-Version:Content-Type; b=ZmfNrtDkNvKSVCriS49QKR/LweBILAxvZeE4UNHs0FVt98kkRBjfGzkHhXXnhNVholEfS5o5tHjpbN8lQMyks94NV/KrIBhD+/uMxhwcEduV40jTtLqHeuHW2jjvapoDnPVoaN0wxNFQyEKERp4N/vXHJ6NgzNSEDT0DF0QsFNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ipdj6Jle; arc=none smtp.client-ip=198.175.65.12
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="GirehXt3"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ipdj6Jle"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1772792345; x=1804328345;
+  t=1772793316; x=1804329316;
   h=from:date:to:cc:subject:in-reply-to:message-id:
    references:mime-version;
-  bh=XFe6wciYCgNoELPjTXDDirLpfaqSjHbe29PzaMoMb6w=;
-  b=GirehXt3ZiKEIfY6pSCZ+zrsbqrh7EXz+qT7BEX1u4wHvVDB6neopdW6
-   tkqYLwnTf9tUtdBNPy4DbV3Aopqj4fWlPvi2G2ScABw+CSuqgOrrPKd9G
-   oZiL51I9uNhz5n8mFk8qzCmSwY3jtLes1oCFddwSFsg800zZaBLzLivwc
-   uzfGXSySYddyPn2KirttrbzIqGqlDK0fR046aBZWhRWO5qOVWrd138nKF
-   JIKKsyS0bxNKidKDeGoZFqAbeR+zc0wkrGf3NIstTobngPjYV9seTo1xU
-   pV4x7JX14N3UIOZbVeqiU07oV8xAjGdTFg9tosawOps6W8BD2iDZrXPEP
-   g==;
-X-CSE-ConnectionGUID: 33I5nOqBRj2n4fjb9iJe2w==
-X-CSE-MsgGUID: BNVEwkMgRUijp0Jhfx9GuQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11720"; a="74086641"
+  bh=56j/Dz5yR3NWbJ1+SqrCNPWOzDvXvg3ezeHAGS115bQ=;
+  b=ipdj6JleeaHhgAKHgolOAe0rGIVqpU/CGbAyJO+fHZ6z+ActPTR775pi
+   hj4d9wUxzR8lxwc964hQMLpRM0aUbKJxm8IO7vfSR/UUKYww046XSb81l
+   kcCDtTc7zC7F2UESXKNRoVVhyk3EkHaIH0pbhAIcVRJ9NEA5ikKoSeE42
+   NF2yO2+PCl6kl1nFDffsqcTVepvcQSE6cRs5KtLLegaSLbSoyko8GHr5u
+   sDycr+xR8MNaCiGQwi7xEnqzIoeBN9jB8KthWzO21eD8f1He614v3o3/G
+   tSLB8faDfs8Xa4OyO8rwggSLAWC4i02+Ca3dRTSAN0kUIBZqSDT94kjbU
+   Q==;
+X-CSE-ConnectionGUID: whYd2tYHQPiv3bis53mKbQ==
+X-CSE-MsgGUID: 9+fgCrf7QlqonraStZwQJQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11720"; a="85374142"
 X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; 
-   d="scan'208";a="74086641"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
-  by orvoesa108.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 02:19:05 -0800
-X-CSE-ConnectionGUID: I4zkZ78vQpq2o4D6+V27Ew==
-X-CSE-MsgGUID: eBJ5kQ7/TJqMsz8T/gnZ5w==
+   d="scan'208";a="85374142"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 02:35:15 -0800
+X-CSE-ConnectionGUID: VtaWfGO0ToaBZZR6oC1Njg==
+X-CSE-MsgGUID: n+hLaWLIT6usj1bZkx9Vtg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.23,104,1770624000"; 
-   d="scan'208";a="219104320"
+   d="scan'208";a="218924625"
 Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.235])
-  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 02:18:59 -0800
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Mar 2026 02:35:09 -0800
 From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Fri, 6 Mar 2026 12:18:55 +0200 (EET)
+Date: Fri, 6 Mar 2026 12:35:04 +0200 (EET)
 To: Reinette Chatre <reinette.chatre@intel.com>
 cc: shuah@kernel.org, Dave.Martin@arm.com, james.morse@arm.com, 
     tony.luck@intel.com, babu.moger@amd.com, fenghuay@nvidia.com, 
     peternewman@google.com, zide.chen@intel.com, dapeng1.mi@linux.intel.com, 
     ben.horgan@arm.com, yu.c.chen@intel.com, linux-kselftest@vger.kernel.org, 
     LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev
-Subject: Re: [PATCH v2 4/9] selftests/resctrl: Support multiple events
- associated with iMC
-In-Reply-To: <ac8d183679c70f5ff5b3aabb4e19df7bf98d3380.1772582958.git.reinette.chatre@intel.com>
-Message-ID: <a0536a31-a8da-2232-67ca-91c60eb714c2@linux.intel.com>
-References: <cover.1772582958.git.reinette.chatre@intel.com> <ac8d183679c70f5ff5b3aabb4e19df7bf98d3380.1772582958.git.reinette.chatre@intel.com>
+Subject: Re: [PATCH v2 9/9] selftests/resctrl: Reduce L2 impact on CAT test
+In-Reply-To: <74657e85c607b1494c898353087fa40e80a8af01.1772582958.git.reinette.chatre@intel.com>
+Message-ID: <a36e9760-f59d-5bfe-640f-7ec8679336d4@linux.intel.com>
+References: <cover.1772582958.git.reinette.chatre@intel.com> <74657e85c607b1494c898353087fa40e80a8af01.1772582958.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -66,211 +65,47 @@ Content-Type: text/plain; charset=US-ASCII
 
 On Tue, 3 Mar 2026, Reinette Chatre wrote:
 
-> The resctrl selftests discover needed parameters to perf_event_open() via
-> sysfs. The PMU associated with every memory controller (iMC) is discovered
-> via the /sys/bus/event_source/devices/uncore_imc_N/type file while
-> the read memory bandwidth event type and umask is discovered via
-> /sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read.
+> The L3 CAT test loads a buffer into cache that is proportional to the L3
+> size allocated for the workload and measures cache misses when accessing
+> the buffer as a test of L3 occupancy. When loading the buffer it can be
+> assumed that a portion of the buffer will be loaded into the L2 cache and
+> depending on cache design may not be present in L3. It is thus possible
+> for data to not be in L3 but also not trigger an L3 cache miss when
+> accessed.
 > 
-> Newer systems may have multiple events that expose read memory bandwidth.
-> For example,
->  /sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read_sch0
->  /sys/bus/event_source/devices/uncore_imc_N/events/cas_count_read_sch1
-> 
-> Support parsing of iMC PMU properties when the PMU may have multiple events
-> to measure read memory bandwidth. The PMU only needs to be discovered once.
-> Split the parsing of event details from actual PMU discovery in order to
-> loop over all events associated with the PMU. Match all events with the
-> cas_count_read prefix instead of requiring there to be one file with that
-> name.
-> 
-> Make the parsing code more robust. With strings passed around to create
-> needed paths, use snprintf() instead of sprintf() to ensure there is
-> always enough space to create the path. Ensure there is enough room in
-> imc_counters_config[] before attempting to add an entry.
+> Reduce impact of L2 on the L3 CAT test by, if L2 allocation is supported,
+> minimizing the portion of L2 that the workload can allocate into. This
+> encourages most of buffer to be loaded into L3 and support better
+> comparison between buffer size, cache portion, and cache misses when
+> accessing the buffer.
 > 
 > Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> Reviewed-by: Zide Chen <zide.chen@intel.com>
 > ---
-> Changes since v1:
-> - Add Zide Chen's RB tag.
-> ---
->  tools/testing/selftests/resctrl/resctrl_val.c | 112 ++++++++++++++----
->  1 file changed, 90 insertions(+), 22 deletions(-)
+>  tools/testing/selftests/resctrl/cat_test.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
-> index 25c8101631e0..7aae0cc5aee9 100644
-> --- a/tools/testing/selftests/resctrl/resctrl_val.c
-> +++ b/tools/testing/selftests/resctrl/resctrl_val.c
-> @@ -11,10 +11,10 @@
->  #include "resctrl.h"
+> diff --git a/tools/testing/selftests/resctrl/cat_test.c b/tools/testing/selftests/resctrl/cat_test.c
+> index 6aac03147d41..26062684a9f4 100644
+> --- a/tools/testing/selftests/resctrl/cat_test.c
+> +++ b/tools/testing/selftests/resctrl/cat_test.c
+> @@ -157,6 +157,12 @@ static int cat_test(const struct resctrl_test *test,
+>  	if (ret)
+>  		goto reset_affinity;
 >  
->  #define UNCORE_IMC		"uncore_imc"
-> -#define READ_FILE_NAME		"events/cas_count_read"
-> +#define READ_FILE_NAME		"cas_count_read"
->  #define DYN_PMU_PATH		"/sys/bus/event_source/devices"
->  #define SCALE			0.00006103515625
-> -#define MAX_IMCS		20
-> +#define MAX_IMCS		40
->  #define MAX_TOKENS		5
->  
->  #define CON_MBM_LOCAL_BYTES_PATH		\
-> @@ -109,21 +109,102 @@ static int open_perf_read_event(int i, int cpu_no)
->  	return 0;
->  }
->  
-> +static int parse_imc_read_bw_events(char *imc_dir, unsigned int type,
-> +				    unsigned int *count)
-> +{
-> +	char imc_events[1024], imc_counter_cfg[1024], cas_count_cfg[1024];
-
-The first two are paths, right? PATH_MAX should be used instead of the 
-literals.
-
-> +	unsigned int org_count = *count;
-
-orig_count is less ambiguous name.
-
-> +	struct dirent *ep;
-> +	int path_len;
-> +	int ret = -1;
-> +	FILE *fp;
-> +	DIR *dp;
-> +
-> +	path_len = snprintf(imc_events, sizeof(imc_events), "%sevents", imc_dir);
-> +	if (path_len >= sizeof(imc_events)) {
-> +		ksft_print_msg("Unable to create path to %sevents\n", imc_dir);
-> +		return -1;
+> +	if (!strcmp(test->resource, "L3") && resctrl_resource_exists("L2")) {
+> +		ret = write_schemata(param->ctrlgrp, "0x1", uparams->cpu, "L2");
+> +		if (ret)
+> +			goto reset_affinity;
 > +	}
-> +	dp = opendir(imc_events);
-> +	if (dp) {
-> +		while ((ep = readdir(dp))) {
-> +			/*
-> +			 * Parse all event files with READ_FILE_NAME
-> +			 * prefix that contain the event number and umask.
-> +			 * Skip files containing "." that contain unused
-> +			 * properties of event.
-> +			 */
-> +			if (!strstr(ep->d_name, READ_FILE_NAME) ||
-> +			    strchr(ep->d_name, '.'))
-> +				continue;
+
+This looks similar to what you did in the CMT test. Maybe add a common 
+function for minimizing L2 cache size so it doesn't have to duplicated to 
+all L3 related tests.
+
 > +
-> +			path_len = snprintf(imc_counter_cfg, sizeof(imc_counter_cfg),
-> +					    "%s/%s", imc_events, ep->d_name);
-> +			if (path_len >= sizeof(imc_counter_cfg)) {
-> +				ksft_print_msg("Unable to create path to %s/%s\n",
-> +					       imc_events, ep->d_name);
-> +				goto out_close;
-> +			}
-> +			fp = fopen(imc_counter_cfg, "r");
-> +			if (!fp) {
-> +				ksft_perror("Failed to open iMC config file");
-> +				goto out_close;
-> +			}
-> +			if (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
-> +				ksft_perror("Could not get iMC cas count read");
-> +				fclose(fp);
-> +				goto out_close;
-> +			}
-> +			fclose(fp);
-
-I'd prefer:
-
-	xx = fscanf(...);
-	fclose(fp);
-	if (xx) {
-		...
-
-...But it is up to you ("ret" cannot be used as xx as is).
-
-> +			if (*count >= MAX_IMCS) {
-> +				ksft_print_msg("Maximum iMC count exceeded\n");
-> +				goto out_close;
-> +			}
-> +
-> +			imc_counters_config[*count].type = type;
-> +			get_read_event_and_umask(cas_count_cfg, *count);
-> +			/* Do not fail after incrementing *count. */
-> +			*count += 1;
-> +		}
-> +		if (*count == org_count) {
-> +			ksft_print_msg("Unable to find events in %s\n", imc_events);
-> +			goto out_close;
-> +		}
-> +	} else {
-> +		ksft_perror("Unable to open PMU events directory");
-> +		goto out;
-
-Reverse the logic (handle error first), it reduces the indentation level 
-of the loop.
-
-> +	}
-> +	ret = 0;
-> +out_close:
-> +	closedir(dp);
-> +out:
-> +	return ret;
-> +}
-> +
->  /* Get type and config of an iMC counter's read event. */
->  static int read_from_imc_dir(char *imc_dir, unsigned int *count)
->  {
-> -	char cas_count_cfg[1024], imc_counter_cfg[1024], imc_counter_type[1024];
-> +	char imc_counter_type[1024];
-> +	unsigned int type;
-> +	int path_len;
->  	FILE *fp;
-> +	int ret;
->  
->  	/* Get type of iMC counter */
-> -	sprintf(imc_counter_type, "%s%s", imc_dir, "type");
-> +	path_len = snprintf(imc_counter_type, sizeof(imc_counter_type),
-> +			    "%s%s", imc_dir, "type");
-> +	if (path_len >= sizeof(imc_counter_type)) {
-> +		ksft_print_msg("Unable to create path to %s%s\n",
-> +			       imc_dir, "type");
-> +		return -1;
-> +	}
->  	fp = fopen(imc_counter_type, "r");
->  	if (!fp) {
->  		ksft_perror("Failed to open iMC counter type file");
->  
->  		return -1;
->  	}
-> -	if (fscanf(fp, "%u", &imc_counters_config[*count].type) <= 0) {
-> +	if (fscanf(fp, "%u", &type) <= 0) {
->  		ksft_perror("Could not get iMC type");
->  		fclose(fp);
->  
-> @@ -131,24 +212,11 @@ static int read_from_imc_dir(char *imc_dir, unsigned int *count)
->  	}
->  	fclose(fp);
->  
-> -	/* Get read config */
-> -	sprintf(imc_counter_cfg, "%s%s", imc_dir, READ_FILE_NAME);
-> -	fp = fopen(imc_counter_cfg, "r");
-> -	if (!fp) {
-> -		ksft_perror("Failed to open iMC config file");
-> -
-> -		return -1;
-> -	}
-> -	if (fscanf(fp, "%1023s", cas_count_cfg) <= 0) {
-> -		ksft_perror("Could not get iMC cas count read");
-> -		fclose(fp);
-> -
-> -		return -1;
-> +	ret = parse_imc_read_bw_events(imc_dir, type, count);
-> +	if (ret) {
-> +		ksft_print_msg("Unable to parse bandwidth event and umask\n");
-> +		return ret;
->  	}
-> -	fclose(fp);
-> -
-> -	get_read_event_and_umask(cas_count_cfg, *count);
-> -	*count += 1;
->  
->  	return 0;
->  }
+>  	perf_event_attr_initialize(&pea, PERF_COUNT_HW_CACHE_MISSES);
+>  	pe_fd = perf_open(&pea, bm_pid, uparams->cpu);
+>  	if (pe_fd < 0) {
 > 
 
 -- 
