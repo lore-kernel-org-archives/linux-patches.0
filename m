@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EDD38A712;
-	Tue, 10 Mar 2026 11:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC74738A720;
+	Tue, 10 Mar 2026 11:28:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142116; cv=none; b=Cfi8N/J8zkQa498DrWG+fWQO4QXLDlKnFuNrpvjLv1iCZMjsfluhRISspFXmodGwqdZ6gE4OpEugI+7K2HSB0BDqOPYEqpFfZp1hzoW/OEBzZRfSPEzfsYVr0yEnZgfKEDG0vnfLtoCNd23Yi05VdQRqG/X0IwcyI384Iz4NFAs=
+	t=1773142117; cv=none; b=VPH2TbZyIz01J53wjFFgu6OdYntvL9w1HEm1+9EuNMDyxUPlNuLz6jR75MEzbkvd5e/HhBnng+BfMn+huLnznGsIias2eDrEsoAMmcp93FWFYt3NuJNhI+oOl2Qly1KifmrF8Kga+iMxPqHC/9G/Qptpi8vJ34nbqsOUftdz+90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142116; c=relaxed/simple;
-	bh=XqceXG1jBO/Glu/GWF8N0srAbVTh3ESW50L1th2EcIc=;
+	s=arc-20240116; t=1773142117; c=relaxed/simple;
+	bh=lTwYv3JoZRHFrHcLL+wUT0Y/QFQTAxP6bPUzf2EKA+g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MgbW0JeYZ008Y+0svxIrhvebmJGwhH5lxe54nwBXu9k5DKHXqHMFWaaeBqLv1GRCBMREpHlvzoPrjb7LFP99ZxayQSJvEzYGRE99ygXT3cJMrxPCM90srNnuKwk2/hZlDLZESVGMNYVt2No8q0ZY9ojt2PI/WhBrn7rehjow6cM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESy0Wh4p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bEnAEyWdCMgr7gsqHPTa2F6cWWa0csqgNkZev7PltbAD2EqCUr0CAl+OKKaWRz85MYUTx1UKJ8eY7q47a9n9eYZbNLJBZJC2Lxz3qJtpMEs1tbdESOr7qypDp4i1B0SCwT+QF4KWbtO3m0CnK5UvsnHWHF+Qe5JlqzjN8PPIdv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qrToYc/i; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESy0Wh4p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F1AC2BC86;
-	Tue, 10 Mar 2026 11:28:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qrToYc/i"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98518C19423;
+	Tue, 10 Mar 2026 11:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142116;
-	bh=XqceXG1jBO/Glu/GWF8N0srAbVTh3ESW50L1th2EcIc=;
+	s=k20201202; t=1773142117;
+	bh=lTwYv3JoZRHFrHcLL+wUT0Y/QFQTAxP6bPUzf2EKA+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESy0Wh4pgCo7O+V9Au8ZKzTxN236PkA5EfZVGcfzOXIHsWkwuwkNjb1p2SI+LQCfe
-	 VUmWt07LBHIF5syPKB0K6PBmhagflMI16uzLty7x6wGSuP9evTZvSVwlfzqKCuUd2Q
-	 mEUsRSuL+N9vhjwOkEdz36BMpRVxR4xv0DRkCtAiLKy3f9NvRMdDHv4wTY7MkEt/OP
-	 goojcWPbwKCtlrIVwoTALrhQbRNkq7u7hO18H8LG6gzRJrpVeo8D66H7SxgCcilJ25
-	 AI7NFhrgK3ZBJp7+LnPmha615jQw2xr+VGzH+comTEcieJ29SaCcGjSao4kAtF5hcq
-	 3EUeER1e5HwtA==
+	b=qrToYc/iuGh1tGjtGPaIVc+3WxRpovwd+2D6qcUkA2/9TTH81ItMgwXRIbTT3rDdh
+	 k7OS7rIvoQLJWASsvr428NQ8BwwEwBhehXSQoQc9gsBqfAwWIET7f0RYN82ij+rPuI
+	 rd2MsbmFjO/21I4GVlMf3zUwH+xB+AXeVFL1OI8vqeNr63lqne3xjBlYyEeLvph3zG
+	 s+UI9EwzWBIhAmg/2otSoOdLe2mpq3mLBYcN5qw5rDnrUEzVSorqOw4o2ymzKUxRTV
+	 K8Y08qBg1/M4f6poTjDAmnAZnkc9+NcTVyXjrA6KwfGdWDYCMza0jNZHgH6YgYPnlE
+	 9MwN8AYgfuCTw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Natalie Vock <natalie.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 204/314] drm/amd/display: Use GFP_ATOMIC in dc_create_stream_for_sink
-Date: Tue, 10 Mar 2026 07:17:43 -0400
-Message-ID: <63390c864fae59e9ff49328fb75cd8800d53410f.1773141555.git.sashal@kernel.org>
+Cc: Ming Lei <ming.lei@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 205/314] nvme: fix admin queue leak on controller reset
+Date: Tue, 10 Mar 2026 07:17:44 -0400
+Message-ID: <5e1177e707ef17169274e8b46e268bfb6c24cfd5.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,40 +49,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Natalie Vock <natalie.vock@gmx.de>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit 28dfe4317541e57fe52f9a290394cd29c348228b upstream.
+[ Upstream commit b84bb7bd913d8ca2f976ee6faf4a174f91c02b8d ]
 
-This can be called while preemption is disabled, for example by
-dcn32_internal_validate_bw which is called with the FPU active.
+When nvme_alloc_admin_tag_set() is called during a controller reset,
+a previous admin queue may still exist. Release it properly before
+allocating a new one to avoid orphaning the old queue.
 
-Fixes "BUG: scheduling while atomic" messages I encounter on my Navi31
-machine.
+This fixes a regression introduced by commit 03b3bcd319b3 ("nvme: fix
+admin request_queue lifetime").
 
-Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b42dae2ebc5c84a68de63ec4ffdfec49362d53f1)
-Cc: stable@vger.kernel.org
-[ Context ]
+Cc: Keith Busch <kbusch@kernel.org>
+Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime").
+Reported-and-tested-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/linux-block/CAHj4cs9wv3SdPo+N01Fw2SHBYDs9tj2M_e1-GdQOkRy=DsBB1w@mail.gmail.com/
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-index 0a46e834357a1..0886bef32a5de 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-@@ -169,7 +169,7 @@ struct dc_stream_state *dc_create_stream_for_sink(
- 	if (sink == NULL)
- 		return NULL;
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index f1f719351f3f2..2ba7244fdaf1c 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4865,6 +4865,13 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
+ 	if (ret)
+ 		return ret;
  
--	stream = kzalloc(sizeof(struct dc_stream_state), GFP_KERNEL);
-+	stream = kzalloc(sizeof(struct dc_stream_state), GFP_ATOMIC);
- 	if (stream == NULL)
- 		goto alloc_fail;
- 
++	/*
++	 * If a previous admin queue exists (e.g., from before a reset),
++	 * put it now before allocating a new one to avoid orphaning it.
++	 */
++	if (ctrl->admin_q)
++		blk_put_queue(ctrl->admin_q);
++
+ 	ctrl->admin_q = blk_mq_alloc_queue(set, &lim, NULL);
+ 	if (IS_ERR(ctrl->admin_q)) {
+ 		ret = PTR_ERR(ctrl->admin_q);
 -- 
 2.51.0
 
