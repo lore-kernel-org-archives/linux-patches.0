@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACE7389108;
-	Tue, 10 Mar 2026 11:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6893876A6;
+	Tue, 10 Mar 2026 11:14:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141254; cv=none; b=ZI8GSghzB8Cmgka3oYIUy10g0UBWdqpQlNn874+9Ch3sBIxYbotK5AIOT529dP9ULzAYNkY8/P+URedvdKXtIlW1BCalYs2HAM2i8ZULGcsngUILepmL/tdqz7TKJ82WvwIpw0H3soQRK2vCdxdR9Cm6PRq0/n6sQyW14DInMps=
+	t=1773141255; cv=none; b=r6MqvsVkIcU9wvkk8FX1N60Xh9W3EITsAmkv/ZBj0C2eNqvXtjJfouSwRaMY5En2RnkQWl76HIq+CncDP2Bz5GLBhFxzYBPANfa9lzwZa/mei4yBI4UB3OmFsaEjlzk+QQJUa78eGhf5WoePfCU/DADHl8znMnkJRjjdriMAWhs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141254; c=relaxed/simple;
-	bh=15AX7ik4RWZl6tkEPWb/etPGqdHiZbLqMJdDI7m/DnY=;
+	s=arc-20240116; t=1773141255; c=relaxed/simple;
+	bh=yiqSskYdBYclBEI0+luJvgBw/KexLwU0vERVhIzheas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L3iE6WIvakJXL1/eLY7uzYTOOMjA4YkUKBzrx2e1z69/DNRSb8I4QadAAxnwJ0YRRAL88inAvG/Qsax6pF3eqIkpZi+FCqpae99lJ/k6XdSY9CT2KzhRPgfgU/IQbIF7HnTpr7LgKJ4T8cSvEjQvPCr2/b43254duU0XZILtB6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=A31/J8bc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aSGPLX7gDiTtl9EcatLnuv5MnBTDupanH2P9TdyG5TQsRhhPr3ceOS+Im8ZhqTlfBCWzjcIUqyApwOF+D0XNogyZpPK1DJkkMPYn87CULvKPwaA2E8YJJw0MN1J1ltQczs50K3g9tUvkxHGRjrIkC5XHDUrT4n7G86blMsyvJQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EAs6ugB1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="A31/J8bc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9AEC19423;
-	Tue, 10 Mar 2026 11:14:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EAs6ugB1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C04C2BC9E;
+	Tue, 10 Mar 2026 11:14:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141254;
-	bh=15AX7ik4RWZl6tkEPWb/etPGqdHiZbLqMJdDI7m/DnY=;
+	s=k20201202; t=1773141255;
+	bh=yiqSskYdBYclBEI0+luJvgBw/KexLwU0vERVhIzheas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A31/J8bc/5NyzyULm4Bc0oAgO2jo/RI8j3gbvBwMQ9NKIVgGhAb8vf+nbdaQDbBKk
-	 nJK6peyDPCHxXJn/1wdJWx9RwqSYUQgGPHKH35BvS7OhtRHXev46V5Zm2RRItJ72zZ
-	 gsTMx97AOtI9bB82yidgsF0hFAYz+PNp4Av4zeOw+jwuVO4yCrEzs6ibrwHH2AX4Ff
-	 rFmxleL5i//v/7yKdE6yUTDPQbJHrhc+65AFJPqG/whPR2e1mtND0eR9uJhqjuPiH6
-	 qSpGHz2/XQXm2NYqJzWNNQvkqYBkxjIum4IwUXfLHzu30d3GtegwtVByOpTSu9ZXuq
-	 lXFFUdHpCx3Mg==
+	b=EAs6ugB16hKv8sh/zjpOXL7FDj407XJzCH5BEEQQkeiqEATTuxkkgcRkpNdDwepPL
+	 9/J6GbitNXukLlDztHgqBItqwaCVkeS0wIEttSPtsY/cKE2qVCYLmXtoKOX1Q4X7RA
+	 7Uwc8JMsxpCCaVWtEzywjZftn2jcclKzNtEHNnwaTLrrqRIUYzelKcQThSKQIpE4Vq
+	 qXPOWY5e/Jy2lKPnaG3zu1W0ZSOnTStLALUqXjTvP94i7K5Lb1KTQa0/gdV4TdBvVC
+	 LgYNkyFYb/0VqfFknv7mVOQ9xNT3EakJgyg3CtTgvaKi9uCVIlG6nSK8AFOmdqhzQ/
+	 UUVwkZPv4l6Qg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+Cc: Yung Chih Su <yuuchihsu@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 256/311] ipv6: fix NULL pointer deref in ip6_rt_get_dev_rcu()
-Date: Tue, 10 Mar 2026 07:05:03 -0400
-Message-ID: <5f3aae357d526a2e796b7902886daddee50cc6c7.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 257/311] net: ipv4: fix ARM64 alignment fault in multipath hash seed
+Date: Tue, 10 Mar 2026 07:05:04 -0400
+Message-ID: <c81feff8eb3ad7c0a852b146b2af5867d8148f27.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,52 +49,93 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Yung Chih Su <yuuchihsu@gmail.com>
 
-[ Upstream commit 2ffb4f5c2ccb2fa1c049dd11899aee7967deef5a ]
+[ Upstream commit 4ee7fa6cf78ff26d783d39e2949d14c4c1cd5e7f ]
 
-l3mdev_master_dev_rcu() can return NULL when the slave device is being
-un-slaved from a VRF. All other callers deal with this, but we lost
-the fallback to loopback in ip6_rt_pcpu_alloc() -> ip6_rt_get_dev_rcu()
-with commit 4832c30d5458 ("net: ipv6: put host and anycast routes on
-device with address").
+`struct sysctl_fib_multipath_hash_seed` contains two u32 fields
+(user_seed and mp_seed), making it an 8-byte structure with a 4-byte
+alignment requirement.
 
-  KASAN: null-ptr-deref in range [0x0000000000000108-0x000000000000010f]
-  RIP: 0010:ip6_rt_pcpu_alloc (net/ipv6/route.c:1418)
-  Call Trace:
-   ip6_pol_route (net/ipv6/route.c:2318)
-   fib6_rule_lookup (net/ipv6/fib6_rules.c:115)
-   ip6_route_output_flags (net/ipv6/route.c:2607)
-   vrf_process_v6_outbound (drivers/net/vrf.c:437)
+In `fib_multipath_hash_from_keys()`, the code evaluates the entire
+struct atomically via `READ_ONCE()`:
 
-I was tempted to rework the un-slaving code to clear the flag first
-and insert synchronize_rcu() before we remove the upper. But looks like
-the explicit fallback to loopback_dev is an established pattern.
-And I guess avoiding the synchronize_rcu() is nice, too.
+    mp_seed = READ_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed).mp_seed;
 
-Fixes: 4832c30d5458 ("net: ipv6: put host and anycast routes on device with address")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260301194548.927324-1-kuba@kernel.org
+While this silently works on GCC by falling back to unaligned regular
+loads which the ARM64 kernel tolerates, it causes a fatal kernel panic
+when compiled with Clang and LTO enabled.
+
+Commit e35123d83ee3 ("arm64: lto: Strengthen READ_ONCE() to acquire
+when CONFIG_LTO=y") strengthens `READ_ONCE()` to use Load-Acquire
+instructions (`ldar` / `ldapr`) to prevent compiler reordering bugs
+under Clang LTO. Since the macro evaluates the full 8-byte struct,
+Clang emits a 64-bit `ldar` instruction. ARM64 architecture strictly
+requires `ldar` to be naturally aligned, thus executing it on a 4-byte
+aligned address triggers a strict Alignment Fault (FSC = 0x21).
+
+Fix the read side by moving the `READ_ONCE()` directly to the `u32`
+member, which emits a safe 32-bit `ldar Wn`.
+
+Furthermore, Eric Dumazet pointed out that `WRITE_ONCE()` on the entire
+struct in `proc_fib_multipath_hash_set_seed()` is also flawed. Analysis
+shows that Clang splits this 8-byte write into two separate 32-bit
+`str` instructions. While this avoids an alignment fault, it destroys
+atomicity and exposes a tear-write vulnerability. Fix this by
+explicitly splitting the write into two 32-bit `WRITE_ONCE()`
+operations.
+
+Finally, add the missing `READ_ONCE()` when reading `user_seed` in
+`proc_fib_multipath_hash_seed()` to ensure proper pairing and
+concurrency safety.
+
+Fixes: 4ee2a8cace3f ("net: ipv4: Add a sysctl to set multipath hash seed")
+Signed-off-by: Yung Chih Su <yuuchihsu@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260302060247.7066-1-yuuchihsu@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/ip_fib.h       | 2 +-
+ net/ipv4/sysctl_net_ipv4.c | 5 +++--
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index cd229974b7974..e7d90a28948a4 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1063,7 +1063,8 @@ static struct net_device *ip6_rt_get_dev_rcu(const struct fib6_result *res)
- 		 */
- 		if (netif_is_l3_slave(dev) &&
- 		    !rt6_need_strict(&res->f6i->fib6_dst.addr))
--			dev = l3mdev_master_dev_rcu(dev);
-+			dev = l3mdev_master_dev_rcu(dev) ? :
-+			      dev_net(dev)->loopback_dev;
- 		else if (!netif_is_l3_master(dev))
- 			dev = dev_net(dev)->loopback_dev;
- 		/* last case is netif_is_l3_master(dev) is true in which
+diff --git a/include/net/ip_fib.h b/include/net/ip_fib.h
+index b4495c38e0a01..318593743b6e1 100644
+--- a/include/net/ip_fib.h
++++ b/include/net/ip_fib.h
+@@ -559,7 +559,7 @@ static inline u32 fib_multipath_hash_from_keys(const struct net *net,
+ 	siphash_aligned_key_t hash_key;
+ 	u32 mp_seed;
+ 
+-	mp_seed = READ_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed).mp_seed;
++	mp_seed = READ_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed.mp_seed);
+ 	fib_multipath_hash_construct_key(&hash_key, mp_seed);
+ 
+ 	return flow_hash_from_keys_seed(keys, &hash_key);
+diff --git a/net/ipv4/sysctl_net_ipv4.c b/net/ipv4/sysctl_net_ipv4.c
+index a1a50a5c80dc1..a96875e32050a 100644
+--- a/net/ipv4/sysctl_net_ipv4.c
++++ b/net/ipv4/sysctl_net_ipv4.c
+@@ -486,7 +486,8 @@ static void proc_fib_multipath_hash_set_seed(struct net *net, u32 user_seed)
+ 			    proc_fib_multipath_hash_rand_seed),
+ 	};
+ 
+-	WRITE_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed, new);
++	WRITE_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed.user_seed, new.user_seed);
++	WRITE_ONCE(net->ipv4.sysctl_fib_multipath_hash_seed.mp_seed, new.mp_seed);
+ }
+ 
+ static int proc_fib_multipath_hash_seed(const struct ctl_table *table, int write,
+@@ -500,7 +501,7 @@ static int proc_fib_multipath_hash_seed(const struct ctl_table *table, int write
+ 	int ret;
+ 
+ 	mphs = &net->ipv4.sysctl_fib_multipath_hash_seed;
+-	user_seed = mphs->user_seed;
++	user_seed = READ_ONCE(mphs->user_seed);
+ 
+ 	tmp = *table;
+ 	tmp.data = &user_seed;
 -- 
 2.51.0
 
