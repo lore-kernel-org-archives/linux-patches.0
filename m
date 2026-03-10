@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A3B3876B2;
-	Tue, 10 Mar 2026 11:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90543876B2;
+	Tue, 10 Mar 2026 11:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141945; cv=none; b=OVEj//xJBZTLsvEtWtyMf3bJAVylpsReBHKgqES15n5144xVrn0J59j0zfuxIibzUJnYhwpCkjQsBuThHCjQG/VbHzVC3B1eRA9gUERrl+hRVkn4Vf6HTFZzMju4yE4RworlqaSDrWuaV5mfNq1l41dUk2FzhyTMyYYEh7vuXDE=
+	t=1773141946; cv=none; b=Ce93TlWQ1p4N+sPORdrKrO2MSbq28mLCAWbPxScoZ8Prx7ctmTCO3LhSQfm2PRZcMey3Q6baMId83zI5ufYThyFiqbO6P66CM+aoYzfo74NIzudWFkM82TkCt4MJO5DEYXh5xlRX9ayqAhA2eITDdQkawzrpWzEcUcgEs2MEfSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141945; c=relaxed/simple;
-	bh=8HWh9BGiqokh9vFXQVw8+FGl/isBw4OJXhqELlwYTRc=;
+	s=arc-20240116; t=1773141946; c=relaxed/simple;
+	bh=6WbEgjxy+taTGyadoogMTXZ2rfcLDOIp8XkKFssWoAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X76caSrYUB5mqhS4rvykspAO6RK3JIx2GT2pAzDfVRPBajauye4KS19deQGkoGFzvNTijxcbbhBfDF1Amu01Jf6Q6nR5e2bWgHzlwP2kmcjSsG2W+hmML5dNi5YdtnTshxaAY4IvW4qcT27/tgE+t1VtvUGeK/p2SYzI9KKmg1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MyXdH/+V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=djIIS3ewjxNl0dMIAE4ziduQ9ZnobTfKcI/9g+5TqFXQA2Z3MbkiG6vFAzduCP9otuVdL4YCQIuYCaAcqKS/RQ5W3nLRMl1KVEybHU6d8uDcVMtUA+Ia8PQK38kyMl3aac8losznVWfU7D4JnVN+lSqVv9brnI+7YTHSBaRkUIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avD6dunY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MyXdH/+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A2EC2BC86;
-	Tue, 10 Mar 2026 11:25:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avD6dunY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A736C19423;
+	Tue, 10 Mar 2026 11:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141945;
-	bh=8HWh9BGiqokh9vFXQVw8+FGl/isBw4OJXhqELlwYTRc=;
+	s=k20201202; t=1773141946;
+	bh=6WbEgjxy+taTGyadoogMTXZ2rfcLDOIp8XkKFssWoAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyXdH/+VQVFLe2hd2kEsr7vS/1w9aqSoPDO0bUDIVXXdX1l6LCT4mvWwCaLanusfe
-	 qd38LumUVD15FTb3gxBeTNGoUXYvKhmsf/cmNSXhe5wH4P6kvWdyTVPwqA92as62lv
-	 zhIFzDatRDaVk5OZ9sKekvzD9g5M6NGkFeLHs7mDa8oUex8kXLe32U2o3q3isEHW9F
-	 RDem0A4VaTwn1CZcJipZlmIHDbTUnytlHcuXDINqvdV/Wk2cKFZD0eoaUp2mzh4wLZ
-	 n40qD73jAvzOnRDqQwu8r7xcYCWL/QwEoBfwvpxJlfx3WS7O12JSp6SNSfFkaXcrJc
-	 nAp8WQ9mEMXRA==
+	b=avD6dunYJdiKDQxltWHFVDaPik2141+EoauIOz2rjem2jqVRuOb4O3pL6SreMT5Rz
+	 J24fDUFnUfew9K1sl4L4w0c7Q0TGTo7FiKBb1bVmOA95gObiMjst2hih/bJcMjSz5A
+	 lFuEQiU+6EGFifPisKiY1dyrdsrsoB7U0sUp/kVXkH5LTTK7kmD8sWJ5750UeHOII5
+	 bylX0D3/uFV+P6d0waonmThYIVg2BIwnB3SogBrnTIqGnXaGVuTYfG+6KaWdAiz7oZ
+	 yrQCOVae2LTn8oaL3bhY8KS3UhZpnOJ8ZTm/xDeZW8/VKfOmkhJ3l0mUNEJpXJcR0v
+	 47Qiw6FkTP5gg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+Cc: Tianci Cao <ziye@zju.edu.cn>,
+	Shenghao Yuan <shenghaoyuan0928@163.com>,
+	Yazhou Tang <tangyazhou518@outlook.com>,
+	Eduard Zingerman <eddyz87@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 069/314] bpf: Fix race in devmap on PREEMPT_RT
-Date: Tue, 10 Mar 2026 07:15:28 -0400
-Message-ID: <df26ea7c2bba53718e41f18e72265c7ff9009095.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 070/314] bpf: Add bitwise tracking for BPF_END
+Date: Tue, 10 Mar 2026 07:15:29 -0400
+Message-ID: <76147efff3431be8db53e03bd763b2f641d34e4a.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,171 +51,239 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Tianci Cao <ziye@zju.edu.cn>
 
-[ Upstream commit 1872e75375c40add4a35990de3be77b5741c252c ]
+[ Upstream commit 9d21199842247ab05c675fb9b6c6ca393a5c0024 ]
 
-On PREEMPT_RT kernels, the per-CPU xdp_dev_bulk_queue (bq) can be
-accessed concurrently by multiple preemptible tasks on the same CPU.
+This patch implements bitwise tracking (tnum analysis) for BPF_END
+(byte swap) operation.
 
-The original code assumes bq_enqueue() and __dev_flush() run atomically
-with respect to each other on the same CPU, relying on
-local_bh_disable() to prevent preemption. However, on PREEMPT_RT,
-local_bh_disable() only calls migrate_disable() (when
-PREEMPT_RT_NEEDS_BH_LOCK is not set) and does not disable
-preemption, which allows CFS scheduling to preempt a task during
-bq_xmit_all(), enabling another task on the same CPU to enter
-bq_enqueue() and operate on the same per-CPU bq concurrently.
+Currently, the BPF verifier does not track value for BPF_END operation,
+treating the result as completely unknown. This limits the verifier's
+ability to prove safety of programs that perform endianness conversions,
+which are common in networking code.
 
-This leads to several races:
+For example, the following code pattern for port number validation:
 
-1. Double-free / use-after-free on bq->q[]: bq_xmit_all() snapshots
-   cnt = bq->count, then iterates bq->q[0..cnt-1] to transmit frames.
-   If preempted after the snapshot, a second task can call bq_enqueue()
-   -> bq_xmit_all() on the same bq, transmitting (and freeing) the
-   same frames. When the first task resumes, it operates on stale
-   pointers in bq->q[], causing use-after-free.
+int test(struct pt_regs *ctx) {
+    __u64 x = bpf_get_prandom_u32();
+    x &= 0x3f00;           // Range: [0, 0x3f00], var_off: (0x0; 0x3f00)
+    x = bswap16(x);        // Should swap to range [0, 0x3f], var_off: (0x0; 0x3f)
+    if (x > 0x3f) goto trap;
+    return 0;
+trap:
+    return *(u64 *)NULL;   // Should be unreachable
+}
 
-2. bq->count and bq->q[] corruption: concurrent bq_enqueue() modifying
-   bq->count and bq->q[] while bq_xmit_all() is reading them.
+Currently generates verifier output:
 
-3. dev_rx/xdp_prog teardown race: __dev_flush() clears bq->dev_rx and
-   bq->xdp_prog after bq_xmit_all(). If preempted between
-   bq_xmit_all() return and bq->dev_rx = NULL, a preempting
-   bq_enqueue() sees dev_rx still set (non-NULL), skips adding bq to
-   the flush_list, and enqueues a frame. When __dev_flush() resumes,
-   it clears dev_rx and removes bq from the flush_list, orphaning the
-   newly enqueued frame.
+1: (54) w0 &= 16128                   ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=16128,var_off=(0x0; 0x3f00))
+2: (d7) r0 = bswap16 r0               ; R0=scalar()
+3: (25) if r0 > 0x3f goto pc+2        ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=63,var_off=(0x0; 0x3f))
 
-4. __list_del_clearprev() on flush_node: similar to the cpumap race,
-   both tasks can call __list_del_clearprev() on the same flush_node,
-   the second dereferences the prev pointer already set to NULL.
+Without this patch, even though the verifier knows `x` has certain bits
+set, after bswap16, it loses all tracking information and treats port
+as having a completely unknown value [0, 65535].
 
-The race between task A (__dev_flush -> bq_xmit_all) and task B
-(bq_enqueue -> bq_xmit_all) on the same CPU:
+According to the BPF instruction set[1], there are 3 kinds of BPF_END:
 
-  Task A (xdp_do_flush)          Task B (ndo_xdp_xmit redirect)
-  ----------------------         --------------------------------
-  __dev_flush(flush_list)
-    bq_xmit_all(bq)
-      cnt = bq->count  /* e.g. 16 */
-      /* start iterating bq->q[] */
-    <-- CFS preempts Task A -->
-                                   bq_enqueue(dev, xdpf)
-                                     bq->count == DEV_MAP_BULK_SIZE
-                                     bq_xmit_all(bq, 0)
-                                       cnt = bq->count  /* same 16! */
-                                       ndo_xdp_xmit(bq->q[])
-                                       /* frames freed by driver */
-                                       bq->count = 0
-    <-- Task A resumes -->
-      ndo_xdp_xmit(bq->q[])
-      /* use-after-free: frames already freed! */
+1. `bswap(16|32|64)`: opcode=0xd7 (BPF_END | BPF_ALU64 | BPF_TO_LE)
+   - do unconditional swap
+2. `le(16|32|64)`: opcode=0xd4 (BPF_END | BPF_ALU | BPF_TO_LE)
+   - on big-endian: do swap
+   - on little-endian: truncation (16/32-bit) or no-op (64-bit)
+3. `be(16|32|64)`: opcode=0xdc (BPF_END | BPF_ALU | BPF_TO_BE)
+   - on little-endian: do swap
+   - on big-endian: truncation (16/32-bit) or no-op (64-bit)
 
-Fix this by adding a local_lock_t to xdp_dev_bulk_queue and acquiring
-it in bq_enqueue() and __dev_flush(). These paths already run under
-local_bh_disable(), so use local_lock_nested_bh() which on non-RT is
-a pure annotation with no overhead, and on PREEMPT_RT provides a
-per-CPU sleeping lock that serializes access to the bq.
+Since BPF_END operations are inherently bit-wise permutations, tnum
+(bitwise tracking) offers the most efficient and precise mechanism
+for value analysis. By implementing `tnum_bswap16`, `tnum_bswap32`,
+and `tnum_bswap64`, we can derive exact `var_off` values concisely,
+directly reflecting the bit-level changes.
 
-Fixes: 3253cb49cbad ("softirq: Allow to drop the softirq-BKL lock on PREEMPT_RT")
-Reported-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://lore.kernel.org/r/20260225121459.183121-3-jiayuan.chen@linux.dev
+Here is the overview of changes:
+
+1. In `tnum_bswap(16|32|64)` (kernel/bpf/tnum.c):
+
+Call `swab(16|32|64)` function on the value and mask of `var_off`, and
+do truncation for 16/32-bit cases.
+
+2. In `adjust_scalar_min_max_vals` (kernel/bpf/verifier.c):
+
+Call helper function `scalar_byte_swap`.
+- Only do byte swap when
+  * alu64 (unconditional swap) OR
+  * switching between big-endian and little-endian machines.
+- If need do byte swap:
+  * Firstly call `tnum_bswap(16|32|64)` to update `var_off`.
+  * Then reset the bound since byte swap scrambles the range.
+- For 16/32-bit cases, truncate dst register to match the swapped size.
+
+This enables better verification of networking code that frequently uses
+byte swaps for protocol processing, reducing false positive rejections.
+
+[1] https://www.kernel.org/doc/Documentation/bpf/standardization/instruction-set.rst
+
+Co-developed-by: Shenghao Yuan <shenghaoyuan0928@163.com>
+Signed-off-by: Shenghao Yuan <shenghaoyuan0928@163.com>
+Co-developed-by: Yazhou Tang <tangyazhou518@outlook.com>
+Signed-off-by: Yazhou Tang <tangyazhou518@outlook.com>
+Signed-off-by: Tianci Cao <ziye@zju.edu.cn>
+Acked-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20260204111503.77871-2-ziye@zju.edu.cn
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Stable-dep-of: efc11a667878 ("bpf: Improve bounds when tnum has a single possible value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/devmap.c | 25 +++++++++++++++++++++----
- 1 file changed, 21 insertions(+), 4 deletions(-)
+ include/linux/tnum.h  |  5 ++++
+ kernel/bpf/tnum.c     | 16 ++++++++++++
+ kernel/bpf/verifier.c | 60 ++++++++++++++++++++++++++++++++++++++++---
+ 3 files changed, 78 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/devmap.c b/kernel/bpf/devmap.c
-index 2984e938f94dc..3d619d01088e3 100644
---- a/kernel/bpf/devmap.c
-+++ b/kernel/bpf/devmap.c
-@@ -45,6 +45,7 @@
-  * types of devmap; only the lookup and insertion is different.
-  */
- #include <linux/bpf.h>
-+#include <linux/local_lock.h>
- #include <net/xdp.h>
- #include <linux/filter.h>
- #include <trace/events/xdp.h>
-@@ -60,6 +61,7 @@ struct xdp_dev_bulk_queue {
- 	struct net_device *dev_rx;
- 	struct bpf_prog *xdp_prog;
- 	unsigned int count;
-+	local_lock_t bq_lock;
- };
+diff --git a/include/linux/tnum.h b/include/linux/tnum.h
+index c52b862dad45b..fa4654ffb6217 100644
+--- a/include/linux/tnum.h
++++ b/include/linux/tnum.h
+@@ -63,6 +63,11 @@ struct tnum tnum_union(struct tnum t1, struct tnum t2);
+ /* Return @a with all but the lowest @size bytes cleared */
+ struct tnum tnum_cast(struct tnum a, u8 size);
  
- struct bpf_dtab_netdev {
-@@ -381,6 +383,8 @@ static void bq_xmit_all(struct xdp_dev_bulk_queue *bq, u32 flags)
- 	int to_send = cnt;
- 	int i;
- 
-+	lockdep_assert_held(&bq->bq_lock);
++/* Swap the bytes of a tnum */
++struct tnum tnum_bswap16(struct tnum a);
++struct tnum tnum_bswap32(struct tnum a);
++struct tnum tnum_bswap64(struct tnum a);
 +
- 	if (unlikely(!cnt))
- 		return;
- 
-@@ -425,10 +429,12 @@ void __dev_flush(struct list_head *flush_list)
- 	struct xdp_dev_bulk_queue *bq, *tmp;
- 
- 	list_for_each_entry_safe(bq, tmp, flush_list, flush_node) {
-+		local_lock_nested_bh(&bq->dev->xdp_bulkq->bq_lock);
- 		bq_xmit_all(bq, XDP_XMIT_FLUSH);
- 		bq->dev_rx = NULL;
- 		bq->xdp_prog = NULL;
- 		__list_del_clearprev(&bq->flush_node);
-+		local_unlock_nested_bh(&bq->dev->xdp_bulkq->bq_lock);
- 	}
- }
- 
-@@ -451,12 +457,16 @@ static void *__dev_map_lookup_elem(struct bpf_map *map, u32 key)
- 
- /* Runs in NAPI, i.e., softirq under local_bh_disable(). Thus, safe percpu
-  * variable access, and map elements stick around. See comment above
-- * xdp_do_flush() in filter.c.
-+ * xdp_do_flush() in filter.c. PREEMPT_RT relies on local_lock_nested_bh()
-+ * to serialise access to the per-CPU bq.
-  */
- static void bq_enqueue(struct net_device *dev, struct xdp_frame *xdpf,
- 		       struct net_device *dev_rx, struct bpf_prog *xdp_prog)
+ /* Returns true if @a is a known constant */
+ static inline bool tnum_is_const(struct tnum a)
  {
--	struct xdp_dev_bulk_queue *bq = this_cpu_ptr(dev->xdp_bulkq);
-+	struct xdp_dev_bulk_queue *bq;
-+
-+	local_lock_nested_bh(&dev->xdp_bulkq->bq_lock);
-+	bq = this_cpu_ptr(dev->xdp_bulkq);
+diff --git a/kernel/bpf/tnum.c b/kernel/bpf/tnum.c
+index f8e70e9c3998d..26fbfbb017001 100644
+--- a/kernel/bpf/tnum.c
++++ b/kernel/bpf/tnum.c
+@@ -8,6 +8,7 @@
+  */
+ #include <linux/kernel.h>
+ #include <linux/tnum.h>
++#include <linux/swab.h>
  
- 	if (unlikely(bq->count == DEV_MAP_BULK_SIZE))
- 		bq_xmit_all(bq, 0);
-@@ -477,6 +487,8 @@ static void bq_enqueue(struct net_device *dev, struct xdp_frame *xdpf,
- 	}
- 
- 	bq->q[bq->count++] = xdpf;
+ #define TNUM(_v, _m)	(struct tnum){.value = _v, .mask = _m}
+ /* A completely unknown value */
+@@ -253,3 +254,18 @@ struct tnum tnum_const_subreg(struct tnum a, u32 value)
+ {
+ 	return tnum_with_subreg(a, tnum_const(value));
+ }
 +
-+	local_unlock_nested_bh(&dev->xdp_bulkq->bq_lock);
++struct tnum tnum_bswap16(struct tnum a)
++{
++	return TNUM(swab16(a.value & 0xFFFF), swab16(a.mask & 0xFFFF));
++}
++
++struct tnum tnum_bswap32(struct tnum a)
++{
++	return TNUM(swab32(a.value & 0xFFFFFFFF), swab32(a.mask & 0xFFFFFFFF));
++}
++
++struct tnum tnum_bswap64(struct tnum a)
++{
++	return TNUM(swab64(a.value), swab64(a.mask));
++}
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index dcbf21f61d2e6..449997aa77a06 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -15377,6 +15377,48 @@ static void scalar_min_max_arsh(struct bpf_reg_state *dst_reg,
+ 	__update_reg_bounds(dst_reg);
  }
  
- static inline int __xdp_enqueue(struct net_device *dev, struct xdp_frame *xdpf,
-@@ -1127,8 +1139,13 @@ static int dev_map_notification(struct notifier_block *notifier,
- 		if (!netdev->xdp_bulkq)
- 			return NOTIFY_BAD;
- 
--		for_each_possible_cpu(cpu)
--			per_cpu_ptr(netdev->xdp_bulkq, cpu)->dev = netdev;
-+		for_each_possible_cpu(cpu) {
-+			struct xdp_dev_bulk_queue *bq;
++static void scalar_byte_swap(struct bpf_reg_state *dst_reg, struct bpf_insn *insn)
++{
++	/*
++	 * Byte swap operation - update var_off using tnum_bswap.
++	 * Three cases:
++	 * 1. bswap(16|32|64): opcode=0xd7 (BPF_END | BPF_ALU64 | BPF_TO_LE)
++	 *    unconditional swap
++	 * 2. to_le(16|32|64): opcode=0xd4 (BPF_END | BPF_ALU | BPF_TO_LE)
++	 *    swap on big-endian, truncation or no-op on little-endian
++	 * 3. to_be(16|32|64): opcode=0xdc (BPF_END | BPF_ALU | BPF_TO_BE)
++	 *    swap on little-endian, truncation or no-op on big-endian
++	 */
 +
-+			bq = per_cpu_ptr(netdev->xdp_bulkq, cpu);
-+			bq->dev = netdev;
-+			local_lock_init(&bq->bq_lock);
-+		}
++	bool alu64 = BPF_CLASS(insn->code) == BPF_ALU64;
++	bool to_le = BPF_SRC(insn->code) == BPF_TO_LE;
++	bool is_big_endian;
++#ifdef CONFIG_CPU_BIG_ENDIAN
++	is_big_endian = true;
++#else
++	is_big_endian = false;
++#endif
++	/* Apply bswap if alu64 or switch between big-endian and little-endian machines */
++	bool need_bswap = alu64 || (to_le == is_big_endian);
++
++	if (need_bswap) {
++		if (insn->imm == 16)
++			dst_reg->var_off = tnum_bswap16(dst_reg->var_off);
++		else if (insn->imm == 32)
++			dst_reg->var_off = tnum_bswap32(dst_reg->var_off);
++		else if (insn->imm == 64)
++			dst_reg->var_off = tnum_bswap64(dst_reg->var_off);
++		/*
++		 * Byteswap scrambles the range, so we must reset bounds.
++		 * Bounds will be re-derived from the new tnum later.
++		 */
++		__mark_reg_unbounded(dst_reg);
++	}
++	/* For bswap16/32, truncate dst register to match the swapped size */
++	if (insn->imm == 16 || insn->imm == 32)
++		coerce_reg_to_size(dst_reg, insn->imm / 8);
++}
++
+ static bool is_safe_to_compute_dst_reg_range(struct bpf_insn *insn,
+ 					     const struct bpf_reg_state *src_reg)
+ {
+@@ -15403,6 +15445,7 @@ static bool is_safe_to_compute_dst_reg_range(struct bpf_insn *insn,
+ 	case BPF_XOR:
+ 	case BPF_OR:
+ 	case BPF_MUL:
++	case BPF_END:
+ 		return true;
+ 
+ 	/* Shift operators range is only computable if shift dimension operand
+@@ -15551,12 +15594,23 @@ static int adjust_scalar_min_max_vals(struct bpf_verifier_env *env,
+ 		else
+ 			scalar_min_max_arsh(dst_reg, &src_reg);
  		break;
- 	case NETDEV_UNREGISTER:
- 		/* This rcu_read_lock/unlock pair is needed because
++	case BPF_END:
++		scalar_byte_swap(dst_reg, insn);
++		break;
+ 	default:
+ 		break;
+ 	}
+ 
+-	/* ALU32 ops are zero extended into 64bit register */
+-	if (alu32)
++	/*
++	 * ALU32 ops are zero extended into 64bit register.
++	 *
++	 * BPF_END is already handled inside the helper (truncation),
++	 * so skip zext here to avoid unexpected zero extension.
++	 * e.g., le64: opcode=(BPF_END|BPF_ALU|BPF_TO_LE), imm=0x40
++	 * This is a 64bit byte swap operation with alu32==true,
++	 * but we should not zero extend the result.
++	 */
++	if (alu32 && opcode != BPF_END)
+ 		zext_32_to_64(dst_reg);
+ 	reg_bounds_sync(dst_reg);
+ 	return 0;
+@@ -15736,7 +15790,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
+ 		}
+ 
+ 		/* check dest operand */
+-		if (opcode == BPF_NEG &&
++		if ((opcode == BPF_NEG || opcode == BPF_END) &&
+ 		    regs[insn->dst_reg].type == SCALAR_VALUE) {
+ 			err = check_reg_arg(env, insn->dst_reg, DST_OP_NO_MARK);
+ 			err = err ?: adjust_scalar_min_max_vals(env, insn,
 -- 
 2.51.0
 
