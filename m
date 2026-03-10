@@ -1,46 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BDB441021;
-	Tue, 10 Mar 2026 09:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10724779A9;
+	Tue, 10 Mar 2026 09:02:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133360; cv=none; b=WAzqr0uzeF1Efd5M1Pvm/KE0YC+s+PqE0RKUKkHlt6lS0kIp9n5yKonQZMl0nUIXlFLQGDH/+0KCP70UaVB7cBx/8HJI3FRnZQDpioBifjbwfk2x0sxclRu/iPpOwFVWgsgtY1j3ZEoQTLSAqclo2EArODQwjg/7qaVvdm0vZfs=
+	t=1773133361; cv=none; b=bYzoHLI6fDdDNrl4LmwyMqyUfjyEn59ujpd925ZQPSQxteEC5BIvf1ftMAMe1T0+ebQ0Ww4fBrHeTYWiaG54V4WUD1ub/xXOSUX56V6ERi+Ye2rw1u0wgw0FIOQ0hm+VDzHtBmhslerjglZ2w2LAm1NqY+v/ftFvgAqe6LeINSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133360; c=relaxed/simple;
-	bh=fw9kOo8vM9mKBGJG56Xvnt9LPfBT+5AFD83nBuUKDrw=;
+	s=arc-20240116; t=1773133361; c=relaxed/simple;
+	bh=IzRLsqOSMJ8oiH+0nYYt6+k0f1VePCr+DzvMUpqK7m4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FH3crycVIUoTWj/5OMi/fpNAsadZLTI64g9J0J7mPUJIPY1A3plas4X7pqZkw0OiLlmn1PehLMnUfR20biHjyPTaV7HKwy0HQxanMIoWRlAigwOKp69MRisLlTMde+EV1DwFx9eDxZzqaVaWDTYi6PK8KrriHt7LMAM7s4Dc/Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=t+XryIQh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j5QIet/o81MroLgjUgBUnULgixhIYwE7P8oZHyPA7cFHzG4tjHw1d6ezAw7Msymb3qaSk/JeeSw7u+N6cv4mAXBXvwkNadmxoB3yv2Zo3DfI6qNJfhMtCAwKEut/kMM3Xa5bK3RU0X0V8MyTxYUknEeAVGzUkIYn2mbE1IP41tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lnzksy/A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="t+XryIQh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B2FC19423;
-	Tue, 10 Mar 2026 09:02:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lnzksy/A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CC0C2BC9E;
+	Tue, 10 Mar 2026 09:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133360;
-	bh=fw9kOo8vM9mKBGJG56Xvnt9LPfBT+5AFD83nBuUKDrw=;
+	s=k20201202; t=1773133361;
+	bh=IzRLsqOSMJ8oiH+0nYYt6+k0f1VePCr+DzvMUpqK7m4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t+XryIQhAMFNExLfRRSO1vkqOr9K7ZxwigjQ3x0c5w5YCjJysJxB22j1BCNW48Pj1
-	 c4z6EuJ2WAQzU5PiBV2XBjCKc0tPbGriAI0+zMk/UwNQSvqaSHOezXmkX77j1YRCLj
-	 fihBOOKqGUWTXZCh5VPgWHrfqb80zj1HXh1aZmG4R2jE/lpJ1KLef3UgqhcsifOQQv
-	 oxyfMbP1X/jiyjzAfoTEk1pcSFo+fGb2NlW0aKd7mBCWgL0EDuv2X+H0bJGjl3dJ/Z
-	 OXFfdyZUp/jwjkuUkG2IvEJMrdeUXMYtjXvf9ZdYMfFsIxgbB+3WrSKW/nMxrY6err
-	 66REj7djtZgxA==
+	b=lnzksy/AQXPa6O2fZVT5hSVuKzA9iWe9GPk+MQhRT7slHLThpc5p+g/qhXC18RVCu
+	 b+qOT8d+ES34n2e9ET3Yp3plCOltLe0Os/+oOLfs0SLUTvv3bhryZJamLI7c066spd
+	 vdSZ7kQDa3RkfdG1q8galaQ9IPqIt+gmxZY5fHv1KoXLTx9YrpNpriuQygse2GGcVN
+	 yru6RBWMNq84A8b6IplH7EqsYqnA/2OELqqoSLLkOsKpai87xoYlVfJQEYPSF+1EgM
+	 HIR6NvyUxsGnCewvrgk0+M5U4eM+QhAnsQ12oIWNPTz3uIyEI0rFmogMjmmr7oDdBU
+	 RiHijo2wECoJw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Lixu <lixu.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Daniel Hodges <hodgesd@meta.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	sagi@grimberg.me,
+	linux-nvme@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] HID: intel-ish-hid: ipc: Add Nova Lake-H/S PCI device IDs
-Date: Tue, 10 Mar 2026 05:01:37 -0400
-Message-ID: <20260310090145.2709021-37-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] nvme-fabrics: use kfree_sensitive() for DHCHAP secrets
+Date: Tue, 10 Mar 2026 05:01:38 -0400
+Message-ID: <20260310090145.2709021-38-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -55,157 +53,116 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Lixu <lixu.zhang@intel.com>
+From: Daniel Hodges <hodgesd@meta.com>
 
-[ Upstream commit 22f8bcec5aeb05104b3eaa950cb5a345e95f0aa8 ]
+[ Upstream commit 0a1fc2f301529ac75aec0ce80d5ab9d9e4dc4b16 ]
 
-Add device IDs of Nova Lake-H and Nova Lake-S into ishtp support list.
+The DHCHAP secrets (dhchap_secret and dhchap_ctrl_secret) contain
+authentication key material for NVMe-oF. Use kfree_sensitive() instead
+of kfree() in nvmf_free_options() to ensure secrets are zeroed before
+the memory is freed, preventing recovery from freed pages.
 
-Signed-off-by: Zhang Lixu <lixu.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Daniel Hodges <hodgesd@meta.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: HID: intel-ish-hid: ipc: Add Nova Lake-H/S PCI device IDs
+## Analysis
 
 ### What the commit does
+This is a two-line change replacing `kfree()` with `kfree_sensitive()`
+for two fields (`dhchap_secret` and `dhchap_ctrl_secret`) in
+`nvmf_free_options()`. `kfree_sensitive()` zeroes memory before freeing
+it, preventing authentication key material from being recoverable from
+freed kernel pages.
 
-This commit adds PCI device IDs for two new Intel platforms (Nova Lake-H
-and Nova Lake-S) to the existing `intel-ish-hid` driver. The changes
-are:
+### Bug classification: Security hardening
+This is a security hygiene fix for sensitive cryptographic material. The
+DHCHAP (Diffie-Hellman Hash-based Authentication Challenge Handshake
+Protocol) secrets are authentication keys for NVMe-over-Fabrics
+connections. Without zeroing, these keys could potentially be recovered
+from freed memory by an attacker with kernel memory read access (e.g.,
+via `/dev/mem`, `/proc/kcore`, crash dump, cold boot attacks, or another
+kernel vulnerability).
 
-1. Two new `#define` entries for PCI device IDs (`0xD354` for NVL_H,
-   `0x6E78` for NVL_S) in `hw-ish.h`
-2. Two new enum values, firmware generation string macros, driver data
-   entries, and PCI ID table entries in `pci-ish.c`
+### Consistency with existing codebase
+The NVMe subsystem already uses `kfree_sensitive()` extensively for
+similar authentication material:
+- `drivers/nvme/host/auth.c`: Uses it for `host_key`, `ctrl_key`,
+  `sess_key`, `tls_psk`, etc.
+- `drivers/nvme/common/auth.c`: Uses it for `key`, `hashed_key`, `psk`,
+  etc.
+- `drivers/nvme/target/auth.c`: Uses it for `dh_key`, `tls_psk`, etc.
 
-### Classification: New Device IDs to Existing Driver
+The two fields changed here (`dhchap_secret` and `dhchap_ctrl_secret`)
+were an oversight - they contain the same type of sensitive
+authentication material but were using plain `kfree()`.
 
-This falls squarely into the **"NEW DEVICE IDs"** exception category,
-which is explicitly listed as appropriate for stable backports:
+### Stable criteria assessment
+- **Obviously correct**: Yes - `kfree_sensitive()` is a drop-in
+  replacement for `kfree()` with added zeroing. No behavioral change.
+- **Fixes a real bug**: Yes - leaking cryptographic key material in
+  freed memory is a security issue.
+- **Small and contained**: Yes - exactly 2 lines changed.
+- **No new features**: Correct - no new APIs or behavior.
+- **Risk**: Extremely low - `kfree_sensitive()` just adds `memset(0)`
+  before `kfree()`.
 
-> Adding PCI IDs, USB IDs, ACPI IDs, etc. to existing drivers. These are
-trivial additions that enable hardware support. The driver must already
-exist in stable; only the ID is new.
-
-The `intel-ish-hid` driver has been in the kernel for many years, with a
-long list of existing Intel platform IDs (CHV, BXT, APL, SPT, CNL, GLK,
-ICL, CML, CMP, EHL, TGL, ADL, RPL, MTL, ARL, LNL, PTL, WCL).
-
-### Stable Criteria Assessment
-
-- **Obviously correct**: Yes - follows the exact same pattern as all
-  prior device ID additions (PTL, WCL, LNL, etc.)
-- **Fixes a real bug**: Enables hardware that would otherwise be non-
-  functional on Nova Lake platforms
-- **Small and contained**: Yes - only touches two files, adds ~12 lines
-  following an established pattern
-- **No new features/APIs**: Correct - just enables existing driver on
-  new hardware
-- **Risk**: Extremely low - the new IDs only match new hardware;
-  existing hardware is completely unaffected
-
-### Review Quality
-
-- **Reviewed-by**: Andy Shevchenko (Intel, prolific kernel reviewer)
-- **Acked-by**: Srinivas Pandruvada (Intel ISH subsystem maintainer)
-- **Signed-off-by**: Jiri Kosina (HID maintainer)
-
-This has full maintainer sign-off chain.
-
-### Risk Assessment
-
-The risk is essentially zero. The new PCI device IDs (`0xD354`,
-`0x6E78`) will only match on Nova Lake hardware. No existing systems are
-affected. The code pattern is identical to the most recent additions
-(WCL, PTL) which themselves followed the same pattern.
+### Remaining inconsistencies
+Note that there are still other places using plain `kfree()` for dhchap
+secrets (fabrics.c lines 1034/1048 for option parsing, sysfs.c,
+target/configfs.c, target/auth.c) - but this commit fixes the main
+cleanup path and is self-contained.
 
 ### Verification
-
-- Verified the diff adds only PCI device ID definitions, enum values,
-  firmware generation strings, driver data entries, and PCI table
-  entries - no behavioral changes to existing code
-- Verified the pattern matches prior additions (e.g., WCL added in the
-  same manner with `ISHTP_DRIVER_DATA_WCL`, `ISH_FW_GEN_WCL`, etc.)
-- Verified the driver (`intel-ish-hid`) has existed in the kernel for
-  many years with 20+ existing platform IDs
-- Verified no code logic changes - purely data additions
-- The commit has proper review chain (Reviewed-by, Acked-by from
-  subsystem maintainer, Signed-off-by from HID maintainer)
+- Read `fabrics.c:1282-1296` to confirm the current code already has
+  `kfree_sensitive()` (the commit has already been applied to this
+  tree).
+- Verified `dhchap_secret` and `dhchap_ctrl_secret` are defined as `char
+  *` in `fabrics.h:130-131` and documented as "DH-HMAC-CHAP secret" /
+  "DH-HMAC-CHAP controller secret".
+- Confirmed via grep that `kfree_sensitive()` is used extensively for
+  similar authentication keys throughout `drivers/nvme/host/auth.c` and
+  `drivers/nvme/common/auth.c` (18+ instances).
+- Confirmed via grep that other dhchap_secret free paths still use plain
+  `kfree()` (sysfs.c, fabrics.c option parsing, target side) - this
+  commit is incomplete coverage but still valuable.
+- Reviewed-by: Christoph Hellwig (well-known kernel developer and NVMe
+  maintainer) provides strong confidence.
+- The DHCHAP feature was introduced in commit `f50fff73d620` ("nvme:
+  implement In-Band authentication") which was in v6.0 cycle, so this is
+  relevant to stable trees 6.1+.
 
 ### Conclusion
-
-This is a textbook device ID addition to an existing, well-established
-driver. It enables Intel ISH (sensor hub) functionality on Nova Lake-H
-and Nova Lake-S platforms. Without this, users with Nova Lake hardware
-would have non-functional sensor hubs. The change is trivially safe,
-well-reviewed, and follows an established pattern.
+This is a minimal, zero-risk security fix for sensitive cryptographic
+material. It follows established patterns in the same subsystem, is
+reviewed by a senior maintainer, and meets all stable criteria. The
+security benefit (preventing key material leakage) clearly outweighs the
+negligible risk.
 
 **YES**
 
- drivers/hid/intel-ish-hid/ipc/hw-ish.h  |  2 ++
- drivers/hid/intel-ish-hid/ipc/pci-ish.c | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+ drivers/nvme/host/fabrics.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ipc/hw-ish.h b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-index fa5d68c363134..27389971b96cc 100644
---- a/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-+++ b/drivers/hid/intel-ish-hid/ipc/hw-ish.h
-@@ -39,6 +39,8 @@
- #define PCI_DEVICE_ID_INTEL_ISH_PTL_H		0xE345
- #define PCI_DEVICE_ID_INTEL_ISH_PTL_P		0xE445
- #define PCI_DEVICE_ID_INTEL_ISH_WCL		0x4D45
-+#define PCI_DEVICE_ID_INTEL_ISH_NVL_H		0xD354
-+#define PCI_DEVICE_ID_INTEL_ISH_NVL_S		0x6E78
- 
- #define	REVISION_ID_CHT_A0	0x6
- #define	REVISION_ID_CHT_Ax_SI	0x0
-diff --git a/drivers/hid/intel-ish-hid/ipc/pci-ish.c b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-index 1612e8cb23f0c..ed3405c05e73c 100644
---- a/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-+++ b/drivers/hid/intel-ish-hid/ipc/pci-ish.c
-@@ -28,11 +28,15 @@ enum ishtp_driver_data_index {
- 	ISHTP_DRIVER_DATA_LNL_M,
- 	ISHTP_DRIVER_DATA_PTL,
- 	ISHTP_DRIVER_DATA_WCL,
-+	ISHTP_DRIVER_DATA_NVL_H,
-+	ISHTP_DRIVER_DATA_NVL_S,
- };
- 
- #define ISH_FW_GEN_LNL_M "lnlm"
- #define ISH_FW_GEN_PTL "ptl"
- #define ISH_FW_GEN_WCL "wcl"
-+#define ISH_FW_GEN_NVL_H "nvlh"
-+#define ISH_FW_GEN_NVL_S "nvls"
- 
- #define ISH_FIRMWARE_PATH(gen) "intel/ish/ish_" gen ".bin"
- #define ISH_FIRMWARE_PATH_ALL "intel/ish/ish_*.bin"
-@@ -47,6 +51,12 @@ static struct ishtp_driver_data ishtp_driver_data[] = {
- 	[ISHTP_DRIVER_DATA_WCL] = {
- 		.fw_generation = ISH_FW_GEN_WCL,
- 	},
-+	[ISHTP_DRIVER_DATA_NVL_H] = {
-+		.fw_generation = ISH_FW_GEN_NVL_H,
-+	},
-+	[ISHTP_DRIVER_DATA_NVL_S] = {
-+		.fw_generation = ISH_FW_GEN_NVL_S,
-+	},
- };
- 
- static const struct pci_device_id ish_pci_tbl[] = {
-@@ -76,6 +86,8 @@ static const struct pci_device_id ish_pci_tbl[] = {
- 	{PCI_DEVICE_DATA(INTEL, ISH_PTL_H, ISHTP_DRIVER_DATA_PTL)},
- 	{PCI_DEVICE_DATA(INTEL, ISH_PTL_P, ISHTP_DRIVER_DATA_PTL)},
- 	{PCI_DEVICE_DATA(INTEL, ISH_WCL, ISHTP_DRIVER_DATA_WCL)},
-+	{PCI_DEVICE_DATA(INTEL, ISH_NVL_H, ISHTP_DRIVER_DATA_NVL_H)},
-+	{PCI_DEVICE_DATA(INTEL, ISH_NVL_S, ISHTP_DRIVER_DATA_NVL_S)},
- 	{}
- };
- MODULE_DEVICE_TABLE(pci, ish_pci_tbl);
+diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
+index 55a8afd2efd50..d37cb140d8323 100644
+--- a/drivers/nvme/host/fabrics.c
++++ b/drivers/nvme/host/fabrics.c
+@@ -1290,8 +1290,8 @@ void nvmf_free_options(struct nvmf_ctrl_options *opts)
+ 	kfree(opts->subsysnqn);
+ 	kfree(opts->host_traddr);
+ 	kfree(opts->host_iface);
+-	kfree(opts->dhchap_secret);
+-	kfree(opts->dhchap_ctrl_secret);
++	kfree_sensitive(opts->dhchap_secret);
++	kfree_sensitive(opts->dhchap_ctrl_secret);
+ 	kfree(opts);
+ }
+ EXPORT_SYMBOL_GPL(nvmf_free_options);
 -- 
 2.51.0
 
