@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24B3387361;
-	Tue, 10 Mar 2026 11:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1DE387361;
+	Tue, 10 Mar 2026 11:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141935; cv=none; b=MS5CO2dRsbz8cRJoXoIN3ngtFOG9a8H0RBKXo1FYu4KKFYEpik80aU2ayCGmhpHehiyUXV+kvz4JGRyOmC2ncH5WTJq0eZGi3hW/CgmZXvRTXlNffVrZap0668aXXOl7+fFxF8W6RDETCbglUEZL1P/v+gCAIDidbsXHa86mT5c=
+	t=1773141936; cv=none; b=RAewhnC1hA7mT/g03TBN9CJyMB7TunKbsM2fE7snGFyzktsvPXXhwNl3ueu1xOHyfuIHOd7ThU/ACKpBULW2211IOUm2gmb6kJ21yyFNNI2VQ9a9bxP5kygjAF1Lgyus7Wg/mIFzQ49rufEXbX+uGXhlwV+C6dSuyIzVeXbpxg8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141935; c=relaxed/simple;
-	bh=+lPo3gXD9wtOuArQzIoqKv3EMunh4kBhmD3duLxeMQk=;
+	s=arc-20240116; t=1773141936; c=relaxed/simple;
+	bh=/xCk9wZoKz4PDUZYFlsBWww20E1X06K9mUbR6l1Aqgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n7zGbo6tkwXEhxmp+hFX1wHMOMC0+3xcba2qxzKI5wYe78BYSVvEpI9aE0X7+8HEhmmXq/ThH2sNys6sAp/saKFn+V45d2J3/z4lKJpccV5lZ1giku0IuCiB/8FL4ZzwHxcmR/X5ifFekpCKtM+W2f/6L4BzGHIwfW/DIup2SnU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hW6uaKBO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=elFVzTL3lcl0CXQtVKmA7tjW9PNEOXquqNYnCFFJtMZAsQbTzgIZLN6GB2ei+spawt7yuSd2lj8Duh+r+HXcXPYN0hL5esHhRFojWsgE46COXjA6wBsOjw6HynUDX3geyt7pi55qg+agtTQqt8i3dqYSHw+ThqUT+vuCi/7NLms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGh4+++6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hW6uaKBO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0928C2BC86;
-	Tue, 10 Mar 2026 11:25:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGh4+++6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91E0C19423;
+	Tue, 10 Mar 2026 11:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141935;
-	bh=+lPo3gXD9wtOuArQzIoqKv3EMunh4kBhmD3duLxeMQk=;
+	s=k20201202; t=1773141936;
+	bh=/xCk9wZoKz4PDUZYFlsBWww20E1X06K9mUbR6l1Aqgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hW6uaKBOENexTrYJoHKU4DxLQrOwwk3QzxnvCukXaI3TDJ3cWUgcGX9cAoIp3t4Oe
-	 8FGDUSbYPQ+n4s3oPLgDi9HHf/yOjuc/UZO8JxYQ/bPZyo7cvuS8L5/HcFWmyP78Vt
-	 0bxj1WYBaynAzbAl3BsTJVFR/roO9bDkDWTm5pXfsECSUJc0L7+cY61xcSwNapFqfP
-	 14D3iUOMUlDFBfAGi8MihIMsR4I2ts60pePdH3AZF6vF3sSzsP3CsKqczgcv+c9TXY
-	 SwnF4uUTvyLTj3V7f7jnJ3uaD7RsgUaHliZjEcCmljw4BL0R4uD8jP40cIwXAS5qdf
-	 Rxsue/d1D7XOw==
+	b=RGh4+++6JFTRUuHnSjswCn9tZ2fKlXODlJ9D72tDutl9E0j0UI+28sHSPcKybxOhx
+	 XOGjR5SxUrCjsoSj9OBzn6s1hruYn7XWvw8sj3HLw7zTBFqkXijioUpEs48tarSv6W
+	 RMPuEt0+6QckMI/PXO7FFApftv3Cu+dZrUmBHHfhY1EYtLnXakqFFagL5S+KksyH4x
+	 WaJCWnzQ3KLBVvuhj8dpRNxyml5AyukLh7uRZ18i/MCQICDr+TmsdIXL4vGeEzm2tp
+	 h+DxsFOwerufCTcxxEG2eDssNk6uP2XdM6s8PjAguUJfw0dOBZo091dwp30YoVqn6U
+	 Gk12IGoOohbgA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Harmstone <mark@harmstone.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/314] btrfs: fix compat mask in error messages in btrfs_check_features()
-Date: Tue, 10 Mar 2026 07:15:18 -0400
-Message-ID: <7152bba0d77b18fdbf678f70b21eb54a27033542.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 060/314] ALSA: usb: qcom: Correct parameter comment for uaudio_transfer_buffer_setup()
+Date: Tue, 10 Mar 2026 07:15:19 -0400
+Message-ID: <d52cc094a0aa7350fa42252ec27c16dbab8233c6.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,57 +47,35 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 587bb33b10bda645a1028c1737ad3992b3d7cf61 ]
+[ Upstream commit 1d6452a0ce78cd3f4e48943b5ba21d273a658298 ]
 
-Commit d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency
-checks") introduced a regression when it comes to handling unsupported
-incompat or compat_ro flags. Beforehand we only printed the flags that
-we didn't recognize, afterwards we printed them all, which is less
-useful. Fix the error handling so it behaves like it used to.
+At fixing the memory leak of xfer buffer, we forgot to update the
+corresponding comment, too.  This resulted in a kernel-doc warning
+with W=1.  Let's correct it.
 
-Fixes: d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 5c7ef5001292 ("ALSA: qc_audio_offload: avoid leaking xfer_buf allocation")
+Link: https://patch.msgid.link/20260226154414.1081568-4-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/usb/qcom/qc_audio_offload.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 3fd5d6a27d4c0..9c3a944cbc24a 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3160,7 +3160,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP) {
- 		btrfs_err(fs_info,
- 		"cannot mount because of unknown incompat features (0x%llx)",
--		    incompat);
-+		    incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP);
- 		return -EINVAL;
- 	}
- 
-@@ -3192,7 +3192,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (compat_ro_unsupp && is_rw_mount) {
- 		btrfs_err(fs_info,
- 	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
--		       compat_ro);
-+		       compat_ro_unsupp);
- 		return -EINVAL;
- 	}
- 
-@@ -3205,7 +3205,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	    !btrfs_test_opt(fs_info, NOLOGREPLAY)) {
- 		btrfs_err(fs_info,
- "cannot replay dirty log with unsupported compat_ro features (0x%llx), try rescue=nologreplay",
--			  compat_ro);
-+			  compat_ro_unsupp);
- 		return -EINVAL;
- 	}
- 
+diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
+index cfb30a195364a..297490f0f5874 100644
+--- a/sound/usb/qcom/qc_audio_offload.c
++++ b/sound/usb/qcom/qc_audio_offload.c
+@@ -1007,7 +1007,7 @@ static int enable_audio_stream(struct snd_usb_substream *subs,
+ /**
+  * uaudio_transfer_buffer_setup() - fetch and populate xfer buffer params
+  * @subs: usb substream
+- * @xfer_buf: xfer buf to be allocated
++ * @xfer_buf_cpu: xfer buf to be allocated
+  * @xfer_buf_len: size of allocation
+  * @mem_info: QMI response info
+  *
 -- 
 2.51.0
 
