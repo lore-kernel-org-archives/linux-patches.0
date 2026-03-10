@@ -1,44 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D634611EB;
-	Tue, 10 Mar 2026 09:02:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0DAB4657E2;
+	Tue, 10 Mar 2026 09:02:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133346; cv=none; b=YwkkF37FOh0UjcUdfev9dRnwslyVBfmRNG2wBAyLBqtzNRJwL9EPWuo1GEXzj8Dp6M1k51n4h0HxPyqp9sAl33dabAih9LmBEjFymiX/pwCaRSh8KVkKcwwPwDSGbSvBNEa25NfCuQ7UEyPzm7TGThGeKBxObG4jXQ/7hOguMFQ=
+	t=1773133347; cv=none; b=sCPN6eCo3aKTZEutKMXn1j3qXTBv0WKF9E5CrmDgPI6imMlVNsmQIJS2S+wpa8Dov47CkEzrXOPBGl0ucLjGUk+7p2WkmICLVcMP8UWL+c6875UwGTHANNrt3C3+5POsrXOWk3JWhtaIfagBxzYSEqgv4PXoR1li9g8rnhi7wW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133346; c=relaxed/simple;
-	bh=kJ9yAoKqQR0qPa9X6EJY1Faa7AXdnaoQnpLA7rvbQS8=;
+	s=arc-20240116; t=1773133347; c=relaxed/simple;
+	bh=0MgA2icHUBbmT/KIBx7rZLbF7ERnRCvPbEcb/ZFRZwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIPv+YNyVNo0andMqFwO9Y5CCzw8ujb/ltMzFw0eyslPu0aHuH4Li4NEdlG+7uEo2SPYIL1CCi4iL0LEo4Aw3gQKYR0QibukJW+BSn6bUD5Ch/gCB8RmIlz6kpbKK7R1z41UKfFxQQFb2hUHQOPr19r3zpQYNdOYLc5I+F+m4Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I/M9COnx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZLWd3kfqgkseNPODhLVodHjQypAS7xA3Vp2e0m3nU3qADZSjSxqZup5svmdMHkNmpAA/u5A+yQWynox+o7OewcND/1/R1FARYrhadq6b3BP7my/Bo0JPPvtXDJcUEIXIyNoCkU61Q7QYL7oMOVlI+WiM3OFNvaY2tW29FwBOOWg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bAKdLaZP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I/M9COnx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AE2C2BC9E;
-	Tue, 10 Mar 2026 09:02:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bAKdLaZP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F5FEC2BC87;
+	Tue, 10 Mar 2026 09:02:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133346;
-	bh=kJ9yAoKqQR0qPa9X6EJY1Faa7AXdnaoQnpLA7rvbQS8=;
+	s=k20201202; t=1773133347;
+	bh=0MgA2icHUBbmT/KIBx7rZLbF7ERnRCvPbEcb/ZFRZwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I/M9COnxW8j/hvE6m+KXdZuTWcVPG+jCZflpXB1hi/NhR+0ONcihynp6cazUmfzJV
-	 K8WZLXAvqCKj8YmT5+6bVcs0OQTZPe/0ZP6PnbRCWLSoUj7pBIVtSs8D/ynUQVTohB
-	 NbhBjBpCQxWCsADCdV93UmvRLGik0fGSb5nE7Pn147uivBSbW9dgKL8ibJ0FYkQW6k
-	 fsvuwU2tTthXmlTw7dUD8adaXlH36YnBt0Wosaou1kPFQQE88YQyN42AxHlnzINeUN
-	 AVbgDx4hDR5+osDoaOYHpGIYwvllJAghl4DmiLmBhM+CXOmNPbsrl2cjweD/3VOO4c
-	 B3Mv1si3lzFug==
+	b=bAKdLaZP8B+K7/YxPvtxIOoNvRcfUog7I8MVBURmmuLn2uHumQzrCWm/ArMyP2T3S
+	 3dsGb034atUKQzaKFlUwamNus6f7BUSnp2pD9xtXD4XNV0HjhknoegJ+xQM6tgV7oI
+	 t7CCMfO3fUqYTLeeBUdbAGjILHqKGXkeR3zsOFJwiNcIy5l6JLPsnFc57fGZcoNdMy
+	 cWI7KHoXtm+SCs8AABp1j2w2DvawEG4gRpu25DIQcvmBysPgIk+WFKnoxLTrkFh7nj
+	 qmzk/CCh2hdaFDr4Z3oqod3PT7a8610bI7oh93+11Lwd08rDuB9p3fx2z3mM7qFulE
+	 i3YKwo9uLOmtQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Krishna Chomal <krishna.chomal108@gmail.com>,
+	Noah Provenzano <noahpro@gmail.com>,
+	Juan Martin Morales <juanm4morales@gmail.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-input@vger.kernel.org,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] HID: apple: Add EPOMAKER TH87 to the non-apple keyboards list
-Date: Tue, 10 Mar 2026 05:01:27 -0400
-Message-ID: <20260310090145.2709021-27-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] platform/x86: hp-wmi: Add Omen 16-wf0xxx fan and thermal support
+Date: Tue, 10 Mar 2026 05:01:28 -0400
+Message-ID: <20260310090145.2709021-28-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -48,116 +49,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Krishna Chomal <krishna.chomal108@gmail.com>
 
-[ Upstream commit 7c698de0dc5daa1e1a5fd1f0c6aa1b6bb2f5d867 ]
+[ Upstream commit 13fa3aaf02edaad9b41fc61d7f6326d2b6a4bf80 ]
 
-EPOMAKER TH87 has the very same ID as Apple Aluminum keyboard
-(05ac:024f) although it doesn't work as expected in compatible way.
+The HP Omen 16-wf0xxx (board ID: 8BAB) has the same WMI interface as
+other Victus S boards, but requires quirks for correctly switching
+thermal profile (similar to HP Omen 16-wf1xxx, board ID: 8C78).
 
-Put three entries to the non-apple keyboards list to exclude this
-device: one for BT ("TH87"), one for USB ("HFD Epomaker TH87") and one
-for dongle ("2.4G Wireless Receiver").
+Add the DMI board name to victus_s_thermal_profile_boards[] table and
+map it to omen_v1_thermal_params.
 
-Link: https://bugzilla.suse.com/show_bug.cgi?id=1258455
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Testing on HP Omen 16-wf0xxx confirmed that platform profile is
+registered successfully and fan RPMs are readable and controllable.
+
+Suggested-by: Noah Provenzano <noahpro@gmail.com>
+Tested-by: Juan Martin Morales <juanm4morales@gmail.com>
+Reported-by: Juan Martin Morales <juanm4morales@gmail.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=220639
+Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
+Link: https://patch.msgid.link/20260216072003.90151-1-krishna.chomal108@gmail.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The patch just adds three string entries to the array. The only concern
-is whether the exact context (previous entries) exists in stable trees,
-but since this is just appending to an array, even if some intermediate
-entries are missing, the patch can be trivially adjusted.
+## Analysis
 
-### Problem Being Fixed
+### Commit Summary
+This commit adds a single DMI board name entry ("8BAB" for HP Omen
+16-wf0xxx) to the `victus_s_thermal_profile_boards[]` table in the HP
+WMI driver, mapping it to existing `omen_v1_thermal_params`. This
+enables fan RPM reading/control and thermal profile switching on this
+specific laptop model.
 
-The EPOMAKER TH87 keyboard uses the same USB vendor/product ID as Apple
-Aluminum keyboards (05ac:024f). Without this fix, the hid-apple driver
-applies Apple-specific key translation logic to this non-Apple keyboard,
-causing it to not work as expected. The bug is tracked in SUSE's
-bugzilla (bsc#1258455), confirming it affects real users.
+### Classification: Hardware Quirk / Device ID Addition
 
-### Stable Kernel Rules Assessment
+This falls squarely into the **"QUIRKS and WORKAROUNDS"** and **"NEW
+DEVICE IDs"** exception categories for stable:
 
-1. **Obviously correct and tested**: Yes - trivial addition of string
-   entries to a quirk list. Same pattern used for 10+ other keyboards.
-   Comes from SUSE maintainer (Takashi Iwai).
-2. **Fixes a real bug**: Yes - keyboard doesn't work correctly without
-   this fix.
-3. **Important issue**: Yes - keyboard malfunction for affected users
-   (wrong key mappings).
-4. **Small and contained**: Yes - adds 3 lines to a static array, zero
-   logic changes.
-5. **No new features/APIs**: Correct - uses existing infrastructure.
-6. **Applies cleanly**: Should apply with trivial context adjustment if
-   intermediate entries are missing.
+- **Change scope**: Adding 4 lines — a single new DMI match entry to an
+  existing quirk table
+- **Pattern**: Identical to how other board IDs (8BBE, 8BCD, 8BD4, 8BD5,
+  8C78) are already registered in the same table
+- **Risk**: Zero risk to other hardware — the DMI_MATCH on "8BAB" only
+  affects that specific board
+- **No new code paths**: Uses existing `omen_v1_thermal_params` (same as
+  the 8BCD and 8C78 entries already in the table)
+
+### User Impact
+- Without this entry, the HP Omen 16-wf0xxx laptop lacks proper thermal
+  profile management and fan control via the platform profile interface
+- Real users reported this issue (bugzilla #220639)
+- Tested on actual hardware by the reporter
+
+### Stable Criteria Assessment
+- **Obviously correct**: Yes — trivial table entry addition following
+  exact pattern of existing entries
+- **Fixes a real issue**: Yes — enables hardware support for a specific
+  laptop (hardware quirk)
+- **Small and contained**: Yes — 4 lines, single file, single table
+- **No new features/APIs**: Correct — just extends existing mechanism to
+  new hardware
+- **Tested**: Yes — `Tested-by` tag from the reporter confirms it works
+- **Reviewed**: Yes — by subsystem maintainer Ilpo Järvinen
 
 ### Risk Assessment
-
-**Risk: Extremely low.** The change only adds entries to a name-matching
-list. The matching uses `strncmp` prefix matching. The entries are
-specific enough ("TH87", "HFD Epomaker TH87", "2.4G Wireless Receiver")
-to only match intended devices. One concern: "2.4G Wireless Receiver" is
-a somewhat generic name and could match other devices' dongles, but the
-effect of matching (setting `APPLE_IS_NON_APPLE` flag which changes
-fnmode default) is benign for actual non-Apple keyboards.
+- **Risk**: Essentially zero. The DMI match is board-specific and cannot
+  affect any other system.
+- **Benefit**: Enables thermal/fan control for HP Omen 16-wf0xxx users
+  on stable kernels.
+- **Dependencies**: None — `omen_v1_thermal_params` and the
+  `victus_s_thermal_profile_boards[]` table infrastructure already exist
+  in any kernel version that has the other entries.
 
 ### Verification
+- Verified the diff is a trivial 4-line addition to an existing DMI
+  match table — confirmed by reading the patch
+- Verified it reuses existing `omen_v1_thermal_params` (same as 8BCD and
+  8C78 entries in the same table) — confirmed in the diff context
+- Verified the commit has Tested-by, Reported-by, and Reviewed-by tags —
+  confirmed in commit message
+- Verified bugzilla link exists (bug #220639) — present in commit
+  message
+- Verified this matches the "device ID / hardware quirk" exception
+  pattern — it's structurally identical to adding a PCI/USB device ID to
+  a driver's ID table
 
-- **Verified** `non_apple_keyboards` infrastructure was introduced in
-  commit `a0a05054583fe` (v6.0-rc1), present in all current stable trees
-  (6.1.y+).
-- **Verified** the commit adds only 3 string entries to the static
-  `non_apple_keyboards[]` array at line 368-370.
-- **Verified** `apple_is_non_apple_keyboard()` uses `strncmp` prefix
-  matching at line 380.
-- **Verified** the effect of matching is setting `APPLE_IS_NON_APPLE`
-  quirk bit at line 770, which changes function key behavior default.
-- **Verified** the bug is tracked at
-  `https://bugzilla.suse.com/show_bug.cgi?id=1258455` (referenced in
-  Link: tag).
-- **Verified** this follows the exact same pattern as 7+ previous non-
-  apple keyboard additions (GANSS, Hailuck, Jamesdonkey, A3R, hfd.cn,
-  WKB603, SONiX AK870 PRO, SONiX KN85).
-- **Verified** author is Takashi Iwai (tiwai@suse.de), a senior SUSE
-  kernel maintainer.
-
-### Conclusion
-
-This is a textbook hardware quirk addition. It adds device
-identification entries to an existing mechanism, fixing a real-world
-keyboard malfunction reported by users (with bugzilla link). The change
-is trivial (3 lines of string data), zero risk to existing
-functionality, and follows an established pattern used by many other
-entries. It clearly meets all stable kernel criteria.
+This is a textbook example of a hardware quirk addition that is
+appropriate for stable trees: trivially small, zero risk, tested on real
+hardware, and enables functionality for real users.
 
 **YES**
 
- drivers/hid/hid-apple.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/hp/hp-wmi.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
-index 233e367cce1d1..2f9a2e07c4263 100644
---- a/drivers/hid/hid-apple.c
-+++ b/drivers/hid/hid-apple.c
-@@ -365,6 +365,9 @@ static const struct apple_non_apple_keyboard non_apple_keyboards[] = {
- 	{ "A3R" },
- 	{ "hfd.cn" },
- 	{ "WKB603" },
-+	{ "TH87" },			/* EPOMAKER TH87 BT mode */
-+	{ "HFD Epomaker TH87" },	/* EPOMAKER TH87 USB mode */
-+	{ "2.4G Wireless Receiver" },	/* EPOMAKER TH87 dongle */
- };
+diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
+index 24d065ddfc6ae..9fcc18635e4e7 100644
+--- a/drivers/platform/x86/hp/hp-wmi.c
++++ b/drivers/platform/x86/hp/hp-wmi.c
+@@ -160,6 +160,10 @@ static const char * const victus_thermal_profile_boards[] = {
  
- static bool apple_is_non_apple_keyboard(struct hid_device *hdev)
+ /* DMI Board names of Victus 16-r and Victus 16-s laptops */
+ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst = {
++	{
++		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BAB") },
++		.driver_data = (void *)&omen_v1_thermal_params,
++	},
+ 	{
+ 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BBE") },
+ 		.driver_data = (void *)&victus_s_thermal_params,
 -- 
 2.51.0
 
