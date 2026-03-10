@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE8E38734E;
-	Tue, 10 Mar 2026 11:26:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575F73803EA;
+	Tue, 10 Mar 2026 11:26:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141966; cv=none; b=aQkxCbFONkAXazPjl6UAPtHmW+KeSYUAUwkCpJZKuTQAeXLCCfsaXrSwTT1i/1mwEs3HgKgzy97fBKxEn7aidoHr2T31u9XsU3pkF2VBCx0iRn0tYFS8gXLEBYAM+42zTUx0Puws4YvPyh+LMVF1AjAlRp4cSwhj74Rj3D32864=
+	t=1773141967; cv=none; b=aJEz5KH/uqdeLeNmYl5keZcxvCexq3x8m3xw5vysNsABec6vbsFEeafXuQdKCWrxg/oegpyC7P1ko4I6NR9NYcOednqEC3AG4NYc6HmaycNTR6jxD8YcrIdddaC20tiK1huVg+NiSo5KsDWTifAKfBb0xiqdx5E9UlshBWc5OFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141966; c=relaxed/simple;
-	bh=lJQdq2iaaHSa9q7Xv/z4g9O2ReS/644I+1V3+c23Fuc=;
+	s=arc-20240116; t=1773141967; c=relaxed/simple;
+	bh=jTSiQC9oqbGfXKaSWS6H02vRGlzbFECj8Q/rj0mZThc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Epp8luBvSrZKKgFExGRGkwMYy/IKNSO1jiuCtBRQ77GVo5hACWf3t9ze1J9ZLzcF+7IzeddU6ivtJXRyX4tNp99TVZGccA4vy2w0fD+mwlCzfBfpV8sJoRDx44qOZZ5HDAouO71KaVKO6ph/kGDDrTGxugZlJ+SAEy7Y4/Y+k+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksEKXETW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJQzCsGXZqcvrA41W1paB41cYImFsmUhqmsGNpMDukNThemYrbKzdlw1+kK5y21hkYCa5FLzdyUBJp9AHxL/jEMLJthsOOqkE/mRqgy+ghJunwt9pZzBw9RTCLG+hY7rySy5VemP1i1fl7pKJuQT8DTIQlSut0MAjl+tnJGKEAo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8rd/wjt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksEKXETW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B624EC2BC9E;
-	Tue, 10 Mar 2026 11:26:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8rd/wjt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949F8C2BC86;
+	Tue, 10 Mar 2026 11:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141966;
-	bh=lJQdq2iaaHSa9q7Xv/z4g9O2ReS/644I+1V3+c23Fuc=;
+	s=k20201202; t=1773141967;
+	bh=jTSiQC9oqbGfXKaSWS6H02vRGlzbFECj8Q/rj0mZThc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ksEKXETWawqwOk1KDlc01l/yWt3vBgCprK2PaqfG3G+kMaPf5IxMUEfQ2JmeWm8Ca
-	 vRrz5xP0CZrGEkRlbPHIpR8asq0JgP9FgByVGLaAGxgRvRQuH0FKSnrZ61qgX6jPdp
-	 HPijMqwXv0pn+XB5QtwfRT3DsSCU2uweB4kbLg+5qnrh6QFKhBuBaVEkPpJtpMe+e8
-	 09uJlQAj23rQAHhqeNx1ksm03oCjb/MLuVrOEAk6f4jPFtFyFi4N8C3PwJdVN0FKTj
-	 kTLlJE88GoEXRF1vTfo+XWoNCXREZozdPPOKY1tQRhVlx1kAt1/qDkdZkb7doPbUG7
-	 13AxB58qj7EOQ==
+	b=H8rd/wjty3U7qb4aEpaRIWNqPUlemXrbqVDp5M97HSm1lQAPa7mzFGs/02A02JhCU
+	 YRoqjP2b4Abyd8HGQ4WU67/t7JxQRu6ecz3bYwBrUHmN1kv8/m5uk9UDEmvKO/Diq+
+	 rAwPxTDeNaQyPi9+xh5hDm1dPgCb3LOsFhjCGC1B3NWKjf3NdYHHfiF1IcHAHQvsDZ
+	 6WZkVJ4cEMp220LTKJHX8XdfFExk5+XmRjwiFMHE4pr4SzObuisB14jKCXCvNn0Mkn
+	 aJMtLavenodSBOCf1CfsflbBHgWxDY0o4YmrNUZ0r7Zs54Z50gdCwtfFHuOiN6pzux
+	 annt3wo+NpZCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Quentin Schulz <quentin.schulz@cherry.de>,
-	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 090/314] accel/rocket: fix unwinding in error path in rocket_probe
-Date: Tue, 10 Mar 2026 07:15:49 -0400
-Message-ID: <3b85074261b83f3ff385860950e6925bac2a7201.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 091/314] media: tegra-video: Fix memory leak in __tegra_channel_try_format()
+Date: Tue, 10 Mar 2026 07:15:50 -0400
+Message-ID: <4b9f633e072523b4419c6a69372abb5bfb412d8e.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,68 +48,75 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Quentin Schulz <quentin.schulz@cherry.de>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit 34f4495a7f72895776b81969639f527c99eb12b9 ]
+[ Upstream commit 43e5302d22334f1183dec3e0d5d8007eefe2817c ]
 
-When rocket_core_init() fails (as could be the case with EPROBE_DEFER),
-we need to properly unwind by decrementing the counter we just
-incremented and if this is the first core we failed to probe, remove the
-rocket DRM device with rocket_device_fini() as well. This matches the
-logic in rocket_remove(). Failing to properly unwind results in
-out-of-bounds accesses.
+The state object allocated by __v4l2_subdev_state_alloc() must be freed
+with __v4l2_subdev_state_free() when it is no longer needed.
 
-Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+In __tegra_channel_try_format(), two error paths return directly after
+v4l2_subdev_call() fails, without freeing the allocated 'sd_state'
+object. This violates the requirement and causes a memory leak.
+
+Fix this by introducing a cleanup label and using goto statements in the
+error paths to ensure that __v4l2_subdev_state_free() is always called
+before the function returns.
+
+Fixes: 56f64b82356b7 ("media: tegra-video: Use zero crop settings if subdev has no get_selection")
+Fixes: 1ebaeb09830f3 ("media: tegra-video: Add support for external sensor capture")
 Cc: stable@vger.kernel.org
-Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
-Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Link: https://patch.msgid.link/20251215-rocket-error-path-v1-2-eec3bf29dc3b@cherry.de
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/rocket/rocket_drv.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/staging/media/tegra-video/vi.c | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/accel/rocket/rocket_drv.c b/drivers/accel/rocket/rocket_drv.c
-index 5c0b63f0a8f00..f6ef4c7aeef11 100644
---- a/drivers/accel/rocket/rocket_drv.c
-+++ b/drivers/accel/rocket/rocket_drv.c
-@@ -13,6 +13,7 @@
- #include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
+diff --git a/drivers/staging/media/tegra-video/vi.c b/drivers/staging/media/tegra-video/vi.c
+index c9276ff76157f..14b327afe045e 100644
+--- a/drivers/staging/media/tegra-video/vi.c
++++ b/drivers/staging/media/tegra-video/vi.c
+@@ -438,7 +438,7 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
+ 		.target = V4L2_SEL_TGT_CROP_BOUNDS,
+ 	};
+ 	struct v4l2_rect *try_crop;
+-	int ret;
++	int ret = 0;
  
-+#include "rocket_device.h"
- #include "rocket_drv.h"
- #include "rocket_gem.h"
- #include "rocket_job.h"
-@@ -158,6 +159,8 @@ static const struct drm_driver rocket_drm_driver = {
+ 	subdev = tegra_channel_get_remote_source_subdev(chan);
+ 	if (!subdev)
+@@ -482,8 +482,10 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
+ 		} else {
+ 			ret = v4l2_subdev_call(subdev, pad, get_selection,
+ 					       NULL, &sdsel);
+-			if (ret)
+-				return -EINVAL;
++			if (ret) {
++				ret = -EINVAL;
++				goto out_free;
++			}
  
- static int rocket_probe(struct platform_device *pdev)
- {
-+	int ret;
-+
- 	if (rdev == NULL) {
- 		/* First core probing, initialize DRM device. */
- 		rdev = rocket_device_init(drm_dev, &rocket_drm_driver);
-@@ -177,7 +180,17 @@ static int rocket_probe(struct platform_device *pdev)
+ 			try_crop->width = sdsel.r.width;
+ 			try_crop->height = sdsel.r.height;
+@@ -495,14 +497,15 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
  
- 	rdev->num_cores++;
+ 	ret = v4l2_subdev_call(subdev, pad, set_fmt, sd_state, &fmt);
+ 	if (ret < 0)
+-		return ret;
++		goto out_free;
  
--	return rocket_core_init(&rdev->cores[core]);
-+	ret = rocket_core_init(&rdev->cores[core]);
-+	if (ret) {
-+		rdev->num_cores--;
-+
-+		if (rdev->num_cores == 0) {
-+			rocket_device_fini(rdev);
-+			rdev = NULL;
-+		}
-+	}
-+
+ 	v4l2_fill_pix_format(pix, &fmt.format);
+ 	chan->vi->ops->vi_fmt_align(pix, fmtinfo->bpp);
+ 
++out_free:
+ 	__v4l2_subdev_state_free(sd_state);
+ 
+-	return 0;
 +	return ret;
  }
  
- static void rocket_remove(struct platform_device *pdev)
+ static int tegra_channel_try_format(struct file *file, void *fh,
 -- 
 2.51.0
 
