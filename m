@@ -1,47 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D0243CEEA;
-	Tue, 10 Mar 2026 09:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7528F43CEC8;
+	Tue, 10 Mar 2026 09:01:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133316; cv=none; b=m6I3HM+iEPD27LJpV+LmabHldoe7P2BBnLqVG+R3pxtvJ5S1ORewaOtl2akRGAf0Rc58WbY6Z0Yg8g0ZeFOEyADblte7/ENE+kI3cGkHrZs0ybjxCgzMr+M0l54lb5rUGs+JpZbS0Nn3jFRoWG724QRyeJyCYDY6CMfrtQUp2NU=
+	t=1773133317; cv=none; b=lHyEaMyoQoQ5QTl/R7m5Mdd6RFTlJWQ0wwvLP6qf/oyOMVIZpPQvz3o3miXSeT0OuKdivd6cDr37O0SZor+aHrUYJI3watBEd435SSLftq5wdL8Ig8sCskQNyDg/jB4DEm45ahuTmh/84VSAz6wbT/J7PpKWEn1b57Wb91y86Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133316; c=relaxed/simple;
-	bh=0y7pePMiKjtG4s8II6vL3wSpGu+6QoNp5FvL6Tug0e4=;
+	s=arc-20240116; t=1773133317; c=relaxed/simple;
+	bh=TagrK2ymQW/ToppFCJJ+zxaJARFRAg3xO34jxzDmcUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JIdJsEkN4DEaU2yIKQB39GG5p0MjHrUwe+BnS2VN5Hbl78m+K747mJOR27pr7XixEx5VRo2dFsdcsLdq0u2b5ze0Wtf+hwYKGTxplnkv199YKqvDZ/7vj0R/xi4vp5axZZCOSD8WJWbmtdw0/48IHtf2MYE3Hopya8Q09I6uOHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avAMOXuI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=j+RWWD5PuQaCZI2SUCX2oVLBudYoDimDdTuOgP6oda0r6jOkJMmS9LqDT5CV98eYZsZtj54aa/OcE2Bol4ulzLifbHq4P8NgK9rMMPRGWePukp4JpUbQx3g/SQnXNKmV9ROKo53YLhVNsIuVoag4aaHSt9OQL7oWxwK33Z91H2Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=da5CtbWG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avAMOXuI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A688C2BC87;
-	Tue, 10 Mar 2026 09:01:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="da5CtbWG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29278C2BC86;
+	Tue, 10 Mar 2026 09:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133315;
-	bh=0y7pePMiKjtG4s8II6vL3wSpGu+6QoNp5FvL6Tug0e4=;
+	s=k20201202; t=1773133317;
+	bh=TagrK2ymQW/ToppFCJJ+zxaJARFRAg3xO34jxzDmcUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avAMOXuIbG+7TL5yqKGhjcwOKEYlPFjR1xFZpJm2EZvYeHRbwRYxLi7NzSorXe0gm
-	 fpLEnsF3bQxFK5SlMGzk+nxOqqSJGwp4K1NRwbEX5YI+dm+iG+h8H0PY2Ez6Au6GgF
-	 fbKm9BGZDnborJHytsCVTiW9EJvdexwCclhBWc4j9dJejQlBC3DbhxkVJAoa3cJ+Z9
-	 byIrKfCQnPEseqJ5h0t4NeuJikkLoHkokZgPB7oKBBHVC9/LM9yZZhXnC2oA1xmlah
-	 c14crjSWnGN+hloquEmYDeHe/u3AqghzXsBa8NQ594caV6LQHRabMYIjPc3qCRjDmE
-	 P/reofocQH/UA==
+	b=da5CtbWGFaZtaNonmxiDOFbb3NkC5/Epga+R4GXv5uPwwI+ZGPOIIBcZQfR7VkliN
+	 35KNFbhqgWeFJ1mxkTqrAWiewtTHQ5Ti2UeUVpCCg7Hj77xcDx07yJVbflwk9Vs3OY
+	 QreDMPY/JUpz4jfwLCXBGcsIvdKgzXu7YO7xU9t0l+mAijtQ8ZNcE+fNxvQr0eaJXK
+	 jmTwTvL8QsirCohumNYIouxI3Yueg/QdJe2D3Ltu0HvcgJatgEKvLmIcuXtAoAa4IX
+	 2bWk0+MjbvNTVYLDzCAoCaGNfLBnnRMBZdrIOSrEJYsBI4YM66p1Reno2P2YA2A1Er
+	 8nVlNtcSKJAuw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mark Brown <broonie@kernel.org>,
+Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	shengjiu.wang@gmail.com,
-	Xiubo.Lee@gmail.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
-	linuxppc-dev@lists.ozlabs.org,
+	linux-kbuild@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_set_reg()
-Date: Tue, 10 Mar 2026 05:01:06 -0400
-Message-ID: <20260310090145.2709021-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] kbuild: install-extmod-build: Package resolve_btfids if necessary
+Date: Tue, 10 Mar 2026 05:01:07 -0400
+Message-ID: <20260310090145.2709021-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -51,124 +47,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 
-[ Upstream commit 31ddc62c1cd92e51b9db61d7954b85ae2ec224da ]
+[ Upstream commit 459cb3c054c2352bb321648744b620259a716b60 ]
 
-ALSA controls should return 1 if the value in the control changed but the
-control put operation fsl_easrc_set_reg() only returns 0 or a negative
-error code, causing ALSA to not generate any change events. Add a suitable
-check by using regmap_update_bits_check() with the underlying regmap, this
-is more clearly and simply correct than trying to verify that one of the
-generic ops is exactly equivalent to this one.
+When CONFIG_DEBUG_INFO_BTF_MODULES is enabled and vmlinux is available,
+Makefile.modfinal and gen-btf.sh will try to use resolve_btfids on the
+module .ko. install-extmod-build currently does not package
+resolve_btfids, so that step fails.
 
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-2-39d4c766918b@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Package resolve_btfids if it may be used.
+
+Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260226-kbuild-resolve_btfids-v1-1-2bf38b93dfe7@linutronix.de
+[nathan: Small commit message tweaks]
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The driver has been present since 2020 (v5.8 timeframe), so it exists in
-all current stable trees.
+Now I have a clear picture. Let me verify the `RESOLVE_BTFIDS` variable
+definition and confirm it would fail when building external modules
+without this tool packaged.
+
+The issue is clear: When `CONFIG_DEBUG_INFO_BTF_MODULES` is enabled,
+`Makefile.modfinal` at line 47 calls `$(RESOLVE_BTFIDS)` (defined as
+`$(objtree)/tools/bpf/resolve_btfids/resolve_btfids` in the main
+Makefile). If someone builds an external module using the installed
+headers/build files (packaged by `install-extmod-build`), and the
+`resolve_btfids` binary wasn't packaged, the build will fail at that
+step.
 
 ## Analysis
 
-**What the commit fixes:**
-The `fsl_easrc_set_reg()` function is an ALSA control `.put` callback.
-Per ALSA API contract, `.put` callbacks must return 1 if the value
-changed, 0 if unchanged, or negative on error. The original code always
-returned 0 on success (via `snd_soc_component_write()`), never returning
-1, which means ALSA never generated change notification events to
-userspace when the control value was updated.
+### What the commit does
+This commit adds packaging of the `resolve_btfids` binary when
+`CONFIG_DEBUG_INFO_BTF_MODULES` is enabled in the `install-extmod-build`
+script. This script creates the minimal build environment needed for
+building external (out-of-tree) kernel modules.
 
-**The fix:**
-Replaces `snd_soc_component_write()` with `regmap_update_bits_check()`
-which provides a `changed` boolean output. The function now returns
-`changed` (0 or 1) on success, correctly implementing the ALSA control
-API.
+### The bug
+When `CONFIG_DEBUG_INFO_BTF_MODULES` is enabled and `vmlinux` is
+available, `Makefile.modfinal` (line 47) invokes `$(RESOLVE_BTFIDS)` on
+module `.ko` files. The `install-extmod-build` script packages
+everything needed to build external modules, but it was missing
+`resolve_btfids`. This causes external module builds to **fail** with a
+missing binary error.
 
-**Stable criteria assessment:**
-1. **Obviously correct and tested**: Yes - authored and signed off by
-   Mark Brown (ASoC maintainer). The pattern is well-established across
-   many similar fixes in ASoC (I found 15+ similar "Fix event
-   generation" commits).
-2. **Fixes a real bug**: Yes - missing change events means userspace
-   applications (e.g., PulseAudio, PipeWire, ALSA mixer tools) won't be
-   notified of control changes, causing incorrect UI state or behavior.
-3. **Small and contained**: Yes - changes only a few lines in a single
-   function, in a single file.
-4. **No new features**: Correct - this is purely a bug fix restoring
-   proper API semantics.
-5. **Risk**: Very low - the `regmap_update_bits_check()` API has been
-   available for a long time, and the change is a well-understood
-   pattern used across many ASoC drivers.
+### Is this a real bug fix?
+**Yes** — this is a build fix. Without this change, users who install
+kernel headers packages (deb-pkg, rpm-pkg) with
+`CONFIG_DEBUG_INFO_BTF_MODULES=y` cannot build external modules.
+External module building is a core use case for distributions (DKMS,
+NVIDIA drivers, VirtualBox, ZFS, etc.).
 
-**Scope**: The change is surgical - it replaces
-`snd_soc_component_write()` with `regmap_update_bits_check()` and
-adjusts the return value logic. The semantic behavior is the same
-(writing the register value) but now it also detects whether the value
-actually changed.
+### Scope and risk
+- **3 lines added** — extremely small and contained
+- Follows the exact same pattern as the existing `CONFIG_OBJTOOL`
+  conditional packaging (lines 31-33)
+- No behavioral change to anything else
+- Only affects the packaging script, not runtime kernel behavior
+- Risk of regression is essentially zero
 
-**Verification:**
-- Read the current file at lines 93-110: confirmed the fix is applied
-  and is as described in the diff.
-- `git log` on the file: the driver was introduced in commit
-  955ac624058f9 (2020-04-16), present in all current LTS trees (5.15+,
-  6.1+, 6.6+).
-- Searched for similar "Fix event generation" commits in ASoC: found 15+
-  similar commits following the exact same pattern, indicating this is a
-  well-established class of bug fix that has been widely backported
-  before.
-- The commit is authored by Mark Brown, the ASoC subsystem maintainer,
-  lending high confidence in correctness.
-- The `regmap_update_bits_check()` API has been available since at least
-  v3.x, so no dependency issues for stable trees.
-- Could not verify if the companion commit 8f8d0defdb1a3 (fixing
-  `fsl_easrc_iec958_put_bits()`) would also need backporting - it's a
-  separate but related fix for the same class of bug in the same file.
+### Stable tree applicability
+- The `install-extmod-build` script exists since v6.6
+- The `CONFIG_DEBUG_INFO_BTF_MODULES` and `resolve_btfids` usage in
+  `Makefile.modfinal` also exists in older stable trees
+- The fix would apply cleanly or with minor adaptation to 6.6.y and
+  newer stable trees
+- This matches the "build fix" exception category — it prevents
+  compilation/build failures
 
-**YES** - This is a small, surgical bug fix by the ASoC maintainer that
-corrects incorrect ALSA control API behavior (missing change events).
-The pattern is well-established across many ASoC drivers, carries
-minimal risk, and the driver has existed in stable trees since 2020.
+### Concern
+The exact form of the script has evolved over time (e.g., v6.6 has
+slightly different structure), so backporting to older stable trees may
+need minor adjustments, but the logic is the same.
+
+### Verification
+- Read `scripts/package/install-extmod-build` — confirmed the fix adds
+  `resolve_btfids` packaging with same pattern as `objtool`
+- Read `scripts/Makefile.modfinal` lines 41-63 — confirmed that
+  `$(RESOLVE_BTFIDS)` is called when `CONFIG_DEBUG_INFO_BTF_MODULES` is
+  enabled and `vmlinux` exists
+- Checked `Makefile` line 536 — confirmed `RESOLVE_BTFIDS` points to
+  `$(objtree)/tools/bpf/resolve_btfids/resolve_btfids`
+- `git tag --contains` on the earliest form of `install-extmod-build` —
+  confirmed file exists since v6.6
+- Checked `v6.6:scripts/package/install-extmod-build` — confirmed the
+  script existed with similar structure but without `resolve_btfids`
+  packaging
+- The commit message clearly states the problem: "install-extmod-build
+  currently does not package resolve_btfids, so that step fails"
+- Reviewed-by: Nicolas Schier (kbuild expert) confirms the fix is
+  correct
+
+This is a clear build fix: small, obvious, low-risk, fixes a real
+failure that affects users building external modules with BTF-enabled
+kernels. It fits squarely within the stable kernel "build fix" category.
 
 **YES**
 
- sound/soc/fsl/fsl_easrc.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ scripts/package/install-extmod-build | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
-index e64a0d97afd0c..733374121196e 100644
---- a/sound/soc/fsl/fsl_easrc.c
-+++ b/sound/soc/fsl/fsl_easrc.c
-@@ -93,14 +93,17 @@ static int fsl_easrc_set_reg(struct snd_kcontrol *kcontrol,
- 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
- 	struct soc_mreg_control *mc =
- 		(struct soc_mreg_control *)kcontrol->private_value;
-+	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
- 	unsigned int regval = ucontrol->value.integer.value[0];
-+	bool changed;
- 	int ret;
+diff --git a/scripts/package/install-extmod-build b/scripts/package/install-extmod-build
+index 2576cf7902dbb..f12e1ffe409eb 100755
+--- a/scripts/package/install-extmod-build
++++ b/scripts/package/install-extmod-build
+@@ -32,6 +32,10 @@ mkdir -p "${destdir}"
+ 		echo tools/objtool/objtool
+ 	fi
  
--	ret = snd_soc_component_write(component, mc->regbase, regval);
--	if (ret < 0)
-+	ret = regmap_update_bits_check(easrc->regmap, mc->regbase,
-+				       GENMASK(31, 0), regval, &changed);
-+	if (ret != 0)
- 		return ret;
- 
--	return 0;
-+	return changed;
- }
- 
- #define SOC_SINGLE_REG_RW(xname, xreg) \
++	if is_enabled CONFIG_DEBUG_INFO_BTF_MODULES; then
++		echo tools/bpf/resolve_btfids/resolve_btfids
++	fi
++
+ 	echo Module.symvers
+ 	echo "arch/${SRCARCH}/include/generated"
+ 	echo include/config/auto.conf
 -- 
 2.51.0
 
