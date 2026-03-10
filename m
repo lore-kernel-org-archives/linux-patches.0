@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AED43876CE;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F346D386C02;
 	Tue, 10 Mar 2026 11:20:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141651; cv=none; b=Dm6siY6rRAOu0CD/AUQ9T/kvdWgv1AKgir+JN2NR5LeltASRtOcJZ2CsjTQza/tpSa6gKoEfES66H0vG8yuqHgNrdsdZgAuD0BFBp5c4Ub5V1xWX97WMTOwBnbp9p8dv9Gh73vnscJKXE5FZ1f8BJgOX2gm6XxXPqmu9cl7QO9c=
+	t=1773141652; cv=none; b=jEJtXC7vuGKV7npJGFyfllIc19NugXXGQTnwGdbVbBOj5aA6siUgF5n9Cuav4NS58PoJiYnb1VxMIh/CXPCY1Rkk+aPpVpPKRgm0GC3Xo2t2sY4aBWbYagh1NicMBCNKCSqbNjezjSXrgQRdgrOymthfiDguwb7IEWrzpndhoCk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141651; c=relaxed/simple;
-	bh=FLQmd+mziEQPdWQi2bE3T48919em2eCIvinh3Qfo09w=;
+	s=arc-20240116; t=1773141652; c=relaxed/simple;
+	bh=hSXmDXOxZSO4uB+552l3a2EMF7p1QBhotCMYu3HQsu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B9lT4kOXRfuINipTCCX90nHj9HjoHYXcNZE9rWucBCoetL4qV4YWk8mcq3ob86yVSSK96n/VjSxWGnvzG5Th9cnLTvVVdLHLd+S9zbxOdxXyUNDWSTk1noHKSbRQVSuUMtE7qHRexx7ZRfJlUMFTfZyjfFctuHafSN+7oOY+BNM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fQWz2MkV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IqcFTep3Kwohv6yQi+EuIV3gLmnDnuZtjwZiMeigtjcC02g+9MAwBm7oAy0jZuQIcWvGDOMgHwUEDccT3joj3PpA2bHxZlzgjrEyGmMjtaJkDysApPOYlBcmK3lqtlrW2hmLk9BPl8qPTL+7YuFuYbvyT7iRYyA4DECVD3q7KSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gWbDUc/R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fQWz2MkV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64B44C2BC86;
-	Tue, 10 Mar 2026 11:20:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gWbDUc/R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43845C19423;
+	Tue, 10 Mar 2026 11:20:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773141651;
-	bh=FLQmd+mziEQPdWQi2bE3T48919em2eCIvinh3Qfo09w=;
+	bh=hSXmDXOxZSO4uB+552l3a2EMF7p1QBhotCMYu3HQsu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQWz2MkVqVdAC37U07N7bxTgx0QeeognZpiu4oG4jMIJN4oqSTeXwNP4HM9Tm2j0U
-	 +pb7TFU/tD3wN6R4Lx+7KikaOb9zeyyVPPISAJkHS8/PPHq8QBpAndZJg3MRrco3Vd
-	 JUMDh3ejJAdVbXt1Ysyz+8+oQ8/mGSYbXZY6Vlrid7aBpOGkmwkT1K10ZUZAdMPxoG
-	 a5tmRs70MjNuno7m2oEuDY7vsmDz2qdI2MOm325lJYwdlMjxUb/OehveH2bPdg1JDH
-	 89mCcLCzSKEkUn9IEzSWsxoL7QPjRswspto0n3vBfiEkCz9cOdBwTWO/v6yxQGVRkR
-	 XxMXrZrvpD6cA==
+	b=gWbDUc/RcLJSUFCD5pH0Katlpp5LacJ12ngRTseWtXwuGMqJG85Pna+BQ+JCP3c+q
+	 5594JSn/u6l4bp8+5p7tstOps+MAfZAluvGzU7t8JjCzeiyvG393zBXzJAZ/syoE1v
+	 +iuSK+0NaY9cL3JdAhWuKqJX+2+DIEa/OGgESpdf6qt3KLEJWyKgYd0MwCrfqN4HaQ
+	 bXLQiNWTmv9uzLP5n2pdXGkoROWNUzvzAH9ABj09CgJOsepoE1Am/NHNY7zACIAYNK
+	 amU+1bVA6ZirqlzXXnofNOjtYYUdE9QO0jhHzBJU3QaQmxzJcbejJt/mTPWxqCFcLo
+	 Tpg8XuYyXUt8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	Rustam Kovhaev <rkovhaev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 017/314] x86/fred: Correct speculative safety in fred_extint()
-Date: Tue, 10 Mar 2026 07:14:36 -0400
-Message-ID: <dacf3023d1615394487b3c8159dbb1576d3a2ace.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 018/314] x86/cfi: Fix CFI rewrite for odd alignments
+Date: Tue, 10 Mar 2026 07:14:37 -0400
+Message-ID: <a38966b9db3a25c582122d174a733c61a9a710e4.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,55 +48,195 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit aa280a08e7d8fae58557acc345b36b3dc329d595 ]
+[ Upstream commit 24c8147abb39618d74fcc36e325765e8fe7bdd7a ]
 
-array_index_nospec() is no use if the result gets spilled to the stack, as
-it makes the believed safe-under-speculation value subject to memory
-predictions.
+Rustam reported his clang builds did not boot properly; turns out his
+.config has: CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y set.
 
-For all practical purposes, this means array_index_nospec() must be used in
-the expression that accesses the array.
+Fix up the FineIBT code to deal with this unusual alignment.
 
-As the code currently stands, it's the wrong side of irqentry_enter(), and
-'index' is put into %ebp across the function call.
-
-Remove the index variable and reposition array_index_nospec(), so it's
-calculated immediately before the array access.
-
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
+Fixes: 931ab63664f0 ("x86/ibt: Implement FineIBT")
+Reported-by: Rustam Kovhaev <rkovhaev@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260106131504.679932-1-andrew.cooper3@citrix.com
+Tested-by: Rustam Kovhaev <rkovhaev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_fred.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/cfi.h     | 12 ++++++++----
+ arch/x86/include/asm/linkage.h |  4 ++--
+ arch/x86/kernel/alternative.c  | 29 ++++++++++++++++++++++-------
+ arch/x86/net/bpf_jit_comp.c    | 13 ++-----------
+ 4 files changed, 34 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/entry/entry_fred.c b/arch/x86/entry/entry_fred.c
-index f004a4dc74c2d..563e439b743f2 100644
---- a/arch/x86/entry/entry_fred.c
-+++ b/arch/x86/entry/entry_fred.c
-@@ -159,8 +159,6 @@ void __init fred_complete_exception_setup(void)
- static noinstr void fred_extint(struct pt_regs *regs)
+diff --git a/arch/x86/include/asm/cfi.h b/arch/x86/include/asm/cfi.h
+index c40b9ebc1fb40..ab3fbbd947ed9 100644
+--- a/arch/x86/include/asm/cfi.h
++++ b/arch/x86/include/asm/cfi.h
+@@ -111,6 +111,12 @@ extern bhi_thunk __bhi_args_end[];
+ 
+ struct pt_regs;
+ 
++#ifdef CONFIG_CALL_PADDING
++#define CFI_OFFSET (CONFIG_FUNCTION_PADDING_CFI+5)
++#else
++#define CFI_OFFSET 5
++#endif
++
+ #ifdef CONFIG_CFI
+ enum bug_trap_type handle_cfi_failure(struct pt_regs *regs);
+ #define __bpfcall
+@@ -119,11 +125,9 @@ static inline int cfi_get_offset(void)
  {
- 	unsigned int vector = regs->fred_ss.vector;
--	unsigned int index = array_index_nospec(vector - FIRST_SYSTEM_VECTOR,
--						NR_SYSTEM_VECTORS);
+ 	switch (cfi_mode) {
+ 	case CFI_FINEIBT:
+-		return 16;
++		return /* fineibt_prefix_size */ 16;
+ 	case CFI_KCFI:
+-		if (IS_ENABLED(CONFIG_CALL_PADDING))
+-			return 16;
+-		return 5;
++		return CFI_OFFSET;
+ 	default:
+ 		return 0;
+ 	}
+diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+index 9d38ae744a2e4..a7294656ad908 100644
+--- a/arch/x86/include/asm/linkage.h
++++ b/arch/x86/include/asm/linkage.h
+@@ -68,7 +68,7 @@
+  * Depending on -fpatchable-function-entry=N,N usage (CONFIG_CALL_PADDING) the
+  * CFI symbol layout changes.
+  *
+- * Without CALL_THUNKS:
++ * Without CALL_PADDING:
+  *
+  * 	.align	FUNCTION_ALIGNMENT
+  * __cfi_##name:
+@@ -77,7 +77,7 @@
+  * 	.long	__kcfi_typeid_##name
+  * name:
+  *
+- * With CALL_THUNKS:
++ * With CALL_PADDING:
+  *
+  * 	.align FUNCTION_ALIGNMENT
+  * __cfi_##name:
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index 8ee5ff547357a..bd16e9f40d51a 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -1168,7 +1168,7 @@ void __init_or_module noinline apply_seal_endbr(s32 *start, s32 *end)
  
- 	if (WARN_ON_ONCE(vector < FIRST_EXTERNAL_VECTOR))
+ 		poison_endbr(addr);
+ 		if (IS_ENABLED(CONFIG_FINEIBT))
+-			poison_cfi(addr - 16);
++			poison_cfi(addr - CFI_OFFSET);
+ 	}
+ }
+ 
+@@ -1375,6 +1375,8 @@ extern u8 fineibt_preamble_end[];
+ #define fineibt_preamble_ud   0x13
+ #define fineibt_preamble_hash 5
+ 
++#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
++
+ /*
+  * <fineibt_caller_start>:
+  *  0:   b8 78 56 34 12          mov    $0x12345678, %eax
+@@ -1620,7 +1622,7 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
+ 		 * have determined there are no indirect calls to it and we
+ 		 * don't need no CFI either.
+ 		 */
+-		if (!is_endbr(addr + 16))
++		if (!is_endbr(addr + CFI_OFFSET))
+ 			continue;
+ 
+ 		hash = decode_preamble_hash(addr, &arity);
+@@ -1628,6 +1630,15 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
+ 			 addr, addr, 5, addr))
+ 			return -EINVAL;
+ 
++		/*
++		 * FineIBT relies on being at func-16, so if the preamble is
++		 * actually larger than that, place it the tail end.
++		 *
++		 * NOTE: this is possible with things like DEBUG_CALL_THUNKS
++		 * and DEBUG_FORCE_FUNCTION_ALIGN_64B.
++		 */
++		addr += CFI_OFFSET - fineibt_prefix_size;
++
+ 		text_poke_early(addr, fineibt_preamble_start, fineibt_preamble_size);
+ 		WARN_ON(*(u32 *)(addr + fineibt_preamble_hash) != 0x12345678);
+ 		text_poke_early(addr + fineibt_preamble_hash, &hash, 4);
+@@ -1650,10 +1661,10 @@ static void cfi_rewrite_endbr(s32 *start, s32 *end)
+ 	for (s = start; s < end; s++) {
+ 		void *addr = (void *)s + *s;
+ 
+-		if (!exact_endbr(addr + 16))
++		if (!exact_endbr(addr + CFI_OFFSET))
+ 			continue;
+ 
+-		poison_endbr(addr + 16);
++		poison_endbr(addr + CFI_OFFSET);
+ 	}
+ }
+ 
+@@ -1758,7 +1769,8 @@ static void __apply_fineibt(s32 *start_retpoline, s32 *end_retpoline,
+ 	if (FINEIBT_WARN(fineibt_preamble_size, 20)			||
+ 	    FINEIBT_WARN(fineibt_preamble_bhi + fineibt_bhi1_size, 20)	||
+ 	    FINEIBT_WARN(fineibt_caller_size, 14)			||
+-	    FINEIBT_WARN(fineibt_paranoid_size, 20))
++	    FINEIBT_WARN(fineibt_paranoid_size, 20)			||
++	    WARN_ON_ONCE(CFI_OFFSET < fineibt_prefix_size))
  		return;
-@@ -169,7 +167,8 @@ static noinstr void fred_extint(struct pt_regs *regs)
- 		irqentry_state_t state = irqentry_enter(regs);
  
- 		instrumentation_begin();
--		sysvec_table[index](regs);
-+		sysvec_table[array_index_nospec(vector - FIRST_SYSTEM_VECTOR,
-+						NR_SYSTEM_VECTORS)](regs);
- 		instrumentation_end();
- 		irqentry_exit(regs, state);
- 	} else {
+ 	if (cfi_mode == CFI_AUTO) {
+@@ -1871,6 +1883,11 @@ static void poison_cfi(void *addr)
+ 	 */
+ 	switch (cfi_mode) {
+ 	case CFI_FINEIBT:
++		/*
++		 * FineIBT preamble is at func-16.
++		 */
++		addr += CFI_OFFSET - fineibt_prefix_size;
++
+ 		/*
+ 		 * FineIBT prefix should start with an ENDBR.
+ 		 */
+@@ -1909,8 +1926,6 @@ static void poison_cfi(void *addr)
+ 	}
+ }
+ 
+-#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
+-
+ /*
+  * When regs->ip points to a 0xD6 byte in the FineIBT preamble,
+  * return true and fill out target and type.
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index de5083cb1d374..788671a32d8ee 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -438,17 +438,8 @@ static void emit_kcfi(u8 **pprog, u32 hash)
+ 
+ 	EMIT1_off32(0xb8, hash);			/* movl $hash, %eax	*/
+ #ifdef CONFIG_CALL_PADDING
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
++	for (int i = 0; i < CONFIG_FUNCTION_PADDING_CFI; i++)
++		EMIT1(0x90);
+ #endif
+ 	EMIT_ENDBR();
+ 
 -- 
 2.51.0
 
