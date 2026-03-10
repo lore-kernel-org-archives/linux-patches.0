@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1900344DB69;
-	Tue, 10 Mar 2026 09:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90C6144E043;
+	Tue, 10 Mar 2026 09:02:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133339; cv=none; b=NUeT7aiJAvnkErUotFDN4UT8MR/EHIjudxZe9AWp+dHjgjLmX4JwMXRGO05x4rKyyvXZRl2m9Fc9RKYQbirzNOqAKBNWPacfxlkPh2aPxI8bHABzEUhd/OCFB3XTaY9AoKKPZVu7kGSmCKqTWNAbPY9wI4cxp9r4Gzbe3GfYEQY=
+	t=1773133340; cv=none; b=u1gRKxSY5SXaImLstAT85BcbHyN5UXs9sHHpTotP/QwcQ78tub+6RQ5NJhUsplD5BkqYxwSUF4abl15qlm24WWyKkKjjoIf9ZQla2VbRdHHiiq1XQ7NJHQrP8dbf8WoTWW8zcMr/QHfUZqS/buaSXWR7JzLR66zlM3kWSlrH02k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133339; c=relaxed/simple;
-	bh=uB6pQPX2I+UNDNo4G/LNGulLPdRkxY5v9RFHFRDAvxc=;
+	s=arc-20240116; t=1773133340; c=relaxed/simple;
+	bh=SPq3wEgem/fxiZTAe2wnnxRgPBt+p/dW6wj5UfOmv3c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FyY8wrVJ3yZMlP6wy7hxodsfBKlGhQXcFQF9y8n6cuAxuTfbx9u2EOs7PyTSjbuZdcrEpya8+MI98qci6iJDRv5Uq/7+x3+TVe4/GnLCxjWLx24pHFlENFGO4aG0yGL3fRn8khF8lUqZDnY2BWbIsT6Ab92wfQsb4m28y6gR6Uw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XxA+bCvc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=afbPknPwYxpgeFfc/dAH4a0Y+E2+9PMR86lorazMlHPQzZiQGnsyAbuI9bWywoWgWlnnieW3yzMcwFNhIoysOpjb880ZIJB0Bc7/NY03FWVCo83MfDDY5wfcyj/cJoiyHiohBIfGAAQ5zUE1NTj9xLR1nzpvMQXr9y1ilgePkBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=feSgcyxG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XxA+bCvc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB64C2BC86;
-	Tue, 10 Mar 2026 09:02:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="feSgcyxG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599F5C2BC86;
+	Tue, 10 Mar 2026 09:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133339;
-	bh=uB6pQPX2I+UNDNo4G/LNGulLPdRkxY5v9RFHFRDAvxc=;
+	s=k20201202; t=1773133340;
+	bh=SPq3wEgem/fxiZTAe2wnnxRgPBt+p/dW6wj5UfOmv3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxA+bCvcai3gX7vqE9J2y6zWnZw1LTlhEdx4C9IFOYnTVLxyc4Vg/lqTfdiCMOttZ
-	 laWQ7AuV9oWq3uenaCxvvT6BccOEo3e76yidbiwGpLm8L77+ovrk9pWLGzK8Hb9p5Z
-	 EAO5dqMknySa/gpNOhBKaq61N8YAiDI4heldvC+O9EtlwDPYw3+qhxcwLszCImJdZg
-	 L7s/zozHjHVFd83dfkNs4qhWYd+n81/t/vxX6ZwLEChsuN2a+cucxEqzLDt4rTh8C+
-	 W5jgQR2dP+eaOfW5IzXi12GEs4v87KJe76jQaQStGhRsZttas16DoxX4N+sTxrZuuV
-	 prXCTsf7XfO6A==
+	b=feSgcyxGXOo3sH2k0vytR3tFz5aJoRsM/OtkjDgagm32bRCFJtxD0CCTpnq2sFrmY
+	 olOvG7hHXPbIDPUQ3dVl8XkmCR1JoHGZ4IFR91pbGZO9tUV8QgP8uFLD01BhqgCpwr
+	 oNRP2w7AXRlxytwBwC0jZ6VLL1SdSaIbjOZZKQvdvTBFusoWLGzL0jPJB/RK1Q977W
+	 agMHJqslZ3dBoV+SFuZyS+WwvsIx1yIRPvthaR6ECVMpUlCzPmdJlojHDPeKjGBPWl
+	 dLzDmW7g9dbDPIi0uXMJ4jRsXtje6Jy3LTFRtu5z/rT3HfctUiNxBYIHD1GIQbCFq3
+	 Yh57KDcwedvpg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Yajat Kumar <yajatapps3@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
+	jikos@kernel.org,
 	linux-input@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] platform/x86: touchscreen_dmi: Add quirk for y-inverted Goodix touchscreen on SUPI S10
-Date: Tue, 10 Mar 2026 05:01:22 -0400
-Message-ID: <20260310090145.2709021-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] HID: apple: avoid memory leak in apple_report_fixup()
+Date: Tue, 10 Mar 2026 05:01:23 -0400
+Message-ID: <20260310090145.2709021-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -55,133 +53,122 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <johannes.goede@oss.qualcomm.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 7d87ed70fc95482c12edf9493c249b6413be485e ]
+[ Upstream commit 239c15116d80f67d32f00acc34575f1a6b699613 ]
 
-The touchscreen on the SUPI S10 tablet reports inverted Y coordinates,
-causing touch input to be mirrored vertically relative to the display.
+The apple_report_fixup() function was returning a
+newly kmemdup()-allocated buffer, but never freeing it.
 
-Add a quirk to set the "touchscreen-inverted-y" boolean device-property
-on the touchscreen device, so that the goodix_ts driver will fixup
-the coordinates.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it *is* permitted to return a sub-portion of the input
+rdesc, whose lifetime is managed by the caller.
 
-Reported-by: Yajat Kumar <yajatapps3@gmail.com>
-Closes: https://lore.kernel.org/linux-input/20251230221639.582406-1-yajatapps3@gmail.com/
-Tested-by: Yajat Kumar <yajatapps3@gmail.com>
-Signed-off-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260217132346.34535-1-johannes.goede@oss.qualcomm.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+This is very revealing. The caller's flow is:
+
+1. `buf = kmemdup(start, size, ...)` — makes a copy of rdesc
+2. `start = device->driver->report_fixup(device, buf, &size)` — calls
+   the fixup, passing `buf`
+3. `start = kmemdup(start, size, ...)` — copies whatever `report_fixup`
+   returned
+4. `kfree(buf)` — frees the original buf
+
+**The old buggy code**: `apple_report_fixup` did `rdesc = kmemdup(rdesc
++ 1, ...)` which allocated a NEW buffer and returned it. The caller then
+does `kmemdup(start, size)` (copies it again) and `kfree(buf)` (frees
+the ORIGINAL `buf`). But the intermediate buffer allocated by
+`apple_report_fixup` is never freed — leaked.
+
+**The fix**: Instead of `kmemdup(rdesc + 1, ...)`, just do `rdesc =
+rdesc + 1`. This returns a pointer into the caller's `buf`, which the
+caller will properly copy and then free.
+
+This is safe because:
+- The caller already makes a copy of whatever is returned
+  (`kmemdup(start, size)`)
+- The caller then frees `buf`
+- Since `rdesc + 1` points into `buf`, it's valid until `kfree(buf)`
+  which happens AFTER the copy
+
 ## Analysis
 
-### What the commit does
-This adds a DMI-based touchscreen quirk for the SUPI S10 tablet. The
-tablet's Goodix touchscreen (GDIX1001) reports inverted Y coordinates,
-causing touch input to be vertically mirrored. The fix adds:
+**What problem the commit solves**: Every time `apple_report_fixup()` is
+called for a Magic Keyboard with the `APPLE_RDESC_BATTERY` quirk, a
+`kmemdup()` allocation leaks memory. This happens at device probe time,
+so each time a Magic Keyboard is connected (or the driver is reloaded),
+memory is leaked.
 
-1. A new property entry array `gdix1001_y_inverted_props[]` with
-   `touchscreen-inverted-y`
-2. A corresponding `ts_dmi_data` struct pointing to ACPI name "GDIX1001"
-3. A DMI table entry matching vendor "SUPI", product "S10"
+**Meets stable kernel rules**:
+1. **Obviously correct and tested** — Yes, the fix simply changes
+   `kmemdup(rdesc + 1, ...)` to `rdesc + 1`. The caller already copies
+   the returned buffer, so the intermediate allocation was unnecessary.
+2. **Fixes a real bug** — Yes, a real memory leak.
+3. **Important issue** — Memory leak that occurs on every device probe
+   for affected Apple Magic Keyboards. While not a crash, it's a
+   persistent resource leak.
+4. **Small and contained** — Yes, a 3-line change (removes kmemdup +
+   error check, replaces with pointer arithmetic).
+5. **No new features** — Correct, pure bug fix.
 
-### Stable kernel criteria assessment
+**Risk vs benefit**: Very low risk. The change simplifies the code by
+removing an allocation. The caller's code in `hid-core.c` explicitly
+handles this case (comment says "report_fixup() returns a sub-portion of
+the input rdesc"). Benefit is fixing a real memory leak affecting Apple
+keyboard users.
 
-**Fixes a real bug:** Yes. Without this quirk, touch input is vertically
-mirrored on this tablet, making it essentially unusable for touch
-interaction.
+**Affected versions**: The buggy code was introduced in commit
+`6e143293e17a7` which first appeared in v5.17-rc1. All stable trees from
+5.17+ are affected (6.1.y, 6.6.y, 6.12.y, etc.).
 
-**Hardware quirk exception:** This is a textbook DMI-based hardware
-quirk — exactly the type explicitly listed as appropriate for stable
-backporting. The `touchscreen_dmi.c` file exists solely for these
-entries; it has hundreds of similar quirks already.
+**Dependencies**: None. The fix is self-contained and applies cleanly.
 
-**Small and contained:** Yes. ~18 lines added to a single file,
-following the exact same pattern as every other entry in the file.
+## Verification
 
-**Risk of regression:** Extremely low. The DMI matching
-(`DMI_SYS_VENDOR: "SUPI"`, `DMI_PRODUCT_NAME: "S10"`) ensures this code
-only activates on the specific affected tablet. No other hardware is
-impacted.
-
-**Tested and reviewed:** Yes. Has both `Tested-by: Yajat Kumar` (the
-reporter/user) and `Reviewed-by: Ilpo Järvinen` (Intel maintainer). The
-commit author Hans de Goede is the well-known x86 platform maintainer
-who handles most touchscreen quirks.
-
-**No new features:** Correct. This uses existing infrastructure
-(`ts_dmi_data`, `property_entry`, `dmi_system_id` matching) to fix a
-specific device.
-
-**Dependencies:** None. The `touchscreen_dmi.c` framework and the Goodix
-driver's handling of `touchscreen-inverted-y` have been present for many
-kernel versions.
-
-### Verification
-- The commit follows the identical pattern used by all other entries in
-  `touchscreen_dmi.c` — no novel code patterns
-- The `gdix1001_y_inverted_props` is a subset of the existing
-  `gdix1001_upside_down_props` (which sets both inverted-x and
-  inverted-y), confirming this is a well-established mechanism
-- Reporter and tester are the same person (Yajat Kumar), confirming the
-  fix resolves the reported issue
-- The author (Hans de Goede) is the primary maintainer for x86
-  touchscreen quirks
-- The `Closes:` link to lore.kernel.org confirms a real user report from
-  December 2025
-
-### Risk vs benefit
-- **Benefit:** Makes touchscreen usable on SUPI S10 tablets — critical
-  for those users
-- **Risk:** Near zero — DMI-scoped to one specific device model, uses
-  existing well-tested infrastructure
+- `git show 6e143293e17a7` confirmed this is the commit that introduced
+  the buggy `kmemdup` call in `apple_report_fixup()`, first appearing in
+  v5.17-rc1
+- Read `hid-core.c:1285-1304` confirmed the caller does NOT take
+  ownership of the returned pointer — it copies it with `kmemdup(start,
+  size)` and then frees `buf`, meaning any separate allocation by
+  `report_fixup` is leaked
+- The caller's comment at line 1298-1301 explicitly states
+  "report_fixup() returns a static read-only memory... we have no idea
+  if that memory needs to be cleaned up" — confirming the caller cannot
+  and does not free the report_fixup return value
+- Read the fixed code at `hid-apple.c:691-692` confirming `rdesc = rdesc
+  + 1` correctly returns a sub-portion of the input buffer, which the
+  caller handles properly
+- The fix removes 3 lines and adds 1 line — minimal change with clear
+  semantics
 
 **YES**
 
- drivers/platform/x86/touchscreen_dmi.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/hid/hid-apple.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index bdc19cd8d3edf..d83c387821ea1 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -410,6 +410,16 @@ static const struct ts_dmi_data gdix1002_upside_down_data = {
- 	.properties	= gdix1001_upside_down_props,
- };
+diff --git a/drivers/hid/hid-apple.c b/drivers/hid/hid-apple.c
+index 2f9a2e07c4263..9dcb252c5d6c7 100644
+--- a/drivers/hid/hid-apple.c
++++ b/drivers/hid/hid-apple.c
+@@ -689,9 +689,7 @@ static const __u8 *apple_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		hid_info(hdev,
+ 			 "fixing up Magic Keyboard battery report descriptor\n");
+ 		*rsize = *rsize - 1;
+-		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
+-		if (!rdesc)
+-			return NULL;
++		rdesc = rdesc + 1;
  
-+static const struct property_entry gdix1001_y_inverted_props[] = {
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data gdix1001_y_inverted_data = {
-+	.acpi_name	= "GDIX1001",
-+	.properties	= gdix1001_y_inverted_props,
-+};
-+
- static const struct property_entry gp_electronic_t701_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-size-x", 960),
- 	PROPERTY_ENTRY_U32("touchscreen-size-y", 640),
-@@ -1658,6 +1668,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_SKU, "PN20170413488"),
- 		},
- 	},
-+	{
-+		/* SUPI S10 */
-+		.driver_data = (void *)&gdix1001_y_inverted_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "SUPI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "S10"),
-+		},
-+	},
- 	{
- 		/* Techbite Arc 11.6 */
- 		.driver_data = (void *)&techbite_arc_11_6_data,
+ 		rdesc[0] = 0x05;
+ 		rdesc[1] = 0x01;
 -- 
 2.51.0
 
