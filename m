@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D3D248F73;
-	Tue, 10 Mar 2026 11:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F105C2BF3E2;
+	Tue, 10 Mar 2026 11:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141052; cv=none; b=lGtLVMB8HoIzCigAIH87xrSPneFa3qzih2usiAYzgZLQ3fD0Hx68AqdoVovcxYPY7yfIwmOijDZBKuJ4q5BC8xzJQtV4VOA34CnA80vjD1McgbBqSe35RD4IPZOuaqHUIpHXJGaTHGKli8Z2LG3dnx1AgUl30N/nVfG+jnvDYqc=
+	t=1773141054; cv=none; b=h/ZhGzpXKwkzUBxgc19ltfMVUtBiq50guQEfoE0KtQoR0oi5MmfnlUUs9A346sgRWAKBtOS+d8qGlg6REa6HB34L5eHeJ+JffpWl/pV/hmYFsIGsAF+NfG5mVXW2PN2xcOzZhKElkwjjbaMg3Jpw4hQKuJVHg55sd52D6JPGzCg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141052; c=relaxed/simple;
-	bh=IyWDwr0YumqQypt5Xl2HqYQaca+Tw0R6OD7rBO0PYqU=;
+	s=arc-20240116; t=1773141054; c=relaxed/simple;
+	bh=JHUiY4KsA5sPURgwpwBKusMkyLuggSr91w/S75qy/+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KdPpAjX3/BUVHIr2UiGGxnRe0wvRaMvdrJ2ZDzKYkc7aX9NWD50BA74SJ613F3EKABrGwFxtmYPmQHFOMro6ORTEoPglFcJ2uFzXLeizJ0brYU2vl0dnRn9sLa1jbBMfdfBxzTbBaXWd1lSVGdI3lB1J4v0I3GQIL91Cn62SKBI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dNC1VVRZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NbVEt6vmlpRHezw3auOWHjYesXDPm8d1HhzByNIgfx9CXOPEZi2yITdJs5x94Ny+k2dhNKHuUDTXjfbTFDANPyOi0lOxSTS66umah1k4uh3y33m373+mbp8WSrMwDb35sZh6fiq/4M2sCcQUJWykSESIfwf2AzHX85x+ZS1akAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uhh+uXjc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dNC1VVRZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09A02C2BCAF;
-	Tue, 10 Mar 2026 11:10:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uhh+uXjc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1D2C19423;
+	Tue, 10 Mar 2026 11:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141052;
-	bh=IyWDwr0YumqQypt5Xl2HqYQaca+Tw0R6OD7rBO0PYqU=;
+	s=k20201202; t=1773141053;
+	bh=JHUiY4KsA5sPURgwpwBKusMkyLuggSr91w/S75qy/+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNC1VVRZwXJOd1Vrguelz9HAd6kwd08Tx5ksxNUodqFrsQVMRWSUHjVF6wKhzmlHW
-	 SPAlcD3HhasmZsKkkaTYZj7jQjwJkxN2b0ZnJHsOkCLD++569ealVxXUTS/BnfdyRe
-	 mwGeLWhVB0xr0rBw80Sw6hS530TpKs2aK/fe9haG2REZ2jBrRx4FLV1wqnu8goe+7g
-	 V7KHdCR6LUXvRfMVFYpJYQBrMcXbesDVlKx87xWsdA2r7BYb+kO+2V4MwJ8LClZARH
-	 FdYuB0QOaW1xT7YZ7vG1bzXrHkSWResKRHAkRYmaF3Y9occ+XbmAAUdIcmi7wIm1Ti
-	 YUfB1hZsSD6gw==
+	b=uhh+uXjcsivFaj/BjTJEM5mCVGLvyWzC0QcDd89jGzhCvi5jZHACkDP5ju0ECtA3g
+	 uF2BPhwi8FHqsBXzbp6cxYNzsOmY16A2TvAk/tLd24AjBURRI0+pn9bb1nwdea6LKE
+	 US9Pc/NBSewDcnMmn9AC3Qe04c5Vccgn7x/tp/hDCPE2vDFzGNK11/E/mC9kYNGKcL
+	 Nx7pkMo9o9XOsR+qvXSbcfwBtMsWiuW/LkRcTIiKD9Jn1vN/TkTg5pNf8T02HDn9y9
+	 nWkwMqrqdl8BS+DjBTru81zEfKjDmK2Of/nofTTAOBkGvnH9jgFU4f1u+mthbSHn3n
+	 9MhBaVr3Gwalg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Ioana Ciornei <ioana.ciornei@nxp.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Herve Codina <herve.codina@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 051/311] regulator: bq257xx: Fix device node reference leak in bq257xx_reg_dt_parse_gpio()
-Date: Tue, 10 Mar 2026 07:01:38 -0400
-Message-ID: <2aa3e50c33afed715a765f1f58cc645a5ebd4dd9.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 052/311] irqchip/ls-extirq: Fix devm_of_iomap() error check
+Date: Tue, 10 Mar 2026 07:01:39 -0400
+Message-ID: <205e16af4f473421092399f7698943a3670942bf.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,40 +50,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Ioana Ciornei <ioana.ciornei@nxp.com>
 
-[ Upstream commit 4baaddaa44af01cd4ce239493060738fd0881835 ]
+[ Upstream commit fe5669e363b129cde285bfb4d45abb72d1d77cfc ]
 
-In bq257xx_reg_dt_parse_gpio(), if fails to get subchild, it returns
-without calling of_node_put(child), causing the device node reference
-leak.
+The devm_of_iomap() function returns an ERR_PTR() encoded error code on
+failure. Replace the incorrect check against NULL with IS_ERR().
 
-Fixes: 981dd162b635 ("regulator: bq257xx: Add bq257xx boost regulator driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260224-bq257-v1-1-8ebbc731c1c3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 05cd654829dd ("irqchip/ls-extirq: Convert to a platform driver to make it work again")
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Ioana Ciornei <ioana.ciornei@nxp.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://patch.msgid.link/20260224113610.1129022-3-ioana.ciornei@nxp.com
+Closes: https://lore.kernel.org/all/aYXvfbfT6w0TMsXS@stanley.mountain/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bq257xx-regulator.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/irqchip/irq-ls-extirq.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/bq257xx-regulator.c b/drivers/regulator/bq257xx-regulator.c
-index fc1ccede44688..dab8f1ab44503 100644
---- a/drivers/regulator/bq257xx-regulator.c
-+++ b/drivers/regulator/bq257xx-regulator.c
-@@ -115,11 +115,10 @@ static void bq257xx_reg_dt_parse_gpio(struct platform_device *pdev)
- 		return;
+diff --git a/drivers/irqchip/irq-ls-extirq.c b/drivers/irqchip/irq-ls-extirq.c
+index 96f9c20621cf5..d724fe8439801 100644
+--- a/drivers/irqchip/irq-ls-extirq.c
++++ b/drivers/irqchip/irq-ls-extirq.c
+@@ -190,8 +190,10 @@ static int ls_extirq_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, -ENOMEM, "Failed to allocate memory\n");
  
- 	subchild = of_get_child_by_name(child, pdata->desc.of_match);
-+	of_node_put(child);
- 	if (!subchild)
- 		return;
+ 	priv->intpcr = devm_of_iomap(dev, node, 0, NULL);
+-	if (!priv->intpcr)
+-		return dev_err_probe(dev, -ENOMEM, "Cannot ioremap OF node %pOF\n", node);
++	if (IS_ERR(priv->intpcr)) {
++		return dev_err_probe(dev, PTR_ERR(priv->intpcr),
++				     "Cannot ioremap OF node %pOF\n", node);
++	}
  
--	of_node_put(child);
--
- 	pdata->otg_en_gpio = devm_fwnode_gpiod_get_index(&pdev->dev,
- 							 of_fwnode_handle(subchild),
- 							 "enable", 0,
+ 	ret = ls_extirq_parse_map(priv, node);
+ 	if (ret)
 -- 
 2.51.0
 
