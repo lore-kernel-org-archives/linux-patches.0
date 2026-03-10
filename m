@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ED273C3BF4;
-	Tue, 10 Mar 2026 11:29:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643003C3BF4;
+	Tue, 10 Mar 2026 11:29:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142142; cv=none; b=j0HMFSKnOHZjwEi1mhtTYgaDAwkaAPBcWiWzJ0Y54E8t83r6PUK9V68gLG6LvBTpLB5qFn1z/XQKmdCq2bsCmpaQvSgdOPcDs95l4a8KdBjJPVObENN0bgaME1Srs6cStY8+9YiwMJ6rPuXuY0rw4Tv/GZ2mD7LqYBzbDlfkFIw=
+	t=1773142143; cv=none; b=kreBQ5Q/DaqJGK8u/6+E4OdN+NPB2EMxWO4v8PzbtEyEle7GkQ4/mbp7FqcNMTcAiIBe7f991i1PWwyAAqujepRD3oGUVJieoaaP9/KL+dzrJdIlZs19lS/6wxcZ8CfUW4+Tupws29YOxX3wx3cLD6ZTPzEJ4QDnVIb7dV8Iu0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142142; c=relaxed/simple;
-	bh=xOzQ79KIStV3wTIjF7DaQjVGiM/WFAXn6+lfOREvynE=;
+	s=arc-20240116; t=1773142143; c=relaxed/simple;
+	bh=cxAewC055H3O7ACOUYWwBa/nhT59Ghil3EsYepae4MI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rbaXjdQ8++QH+tXi/D89t4SJPz+aYJV+50GLBBPMKoWHkRf1HryrMaB9Xz6RbcxYdyPHBsBWUwRg2+dJMK7/lFIKZbzs8eOtjbU+EAkPRxSg5ngxH49wNzwP7s+L3bcaFj0dLkj02B1uOfU8xqb9JOcWZpdu0LU0lGhAlRCq+so=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IApt9yRp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NJs0DKWbBBBDHmpUAcrU37C9MEJ3jdVzAEPRqmHuXQFpp56KdCLx3rEpkoFOi5JINMw9u/Xles27jOJbKerDnH6NTi/49aUJzx5Yz8FrQzouoOWPmsy6iskw14bYNwDy93MfJO1znskz6O99aMS/D2h3dpzUZM1ji7Lr4+HrHYc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oq71tQ7e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IApt9yRp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5965BC2BC9E;
-	Tue, 10 Mar 2026 11:29:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oq71tQ7e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657AFC2BC9E;
+	Tue, 10 Mar 2026 11:29:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142142;
-	bh=xOzQ79KIStV3wTIjF7DaQjVGiM/WFAXn6+lfOREvynE=;
+	s=k20201202; t=1773142143;
+	bh=cxAewC055H3O7ACOUYWwBa/nhT59Ghil3EsYepae4MI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IApt9yRpx0eqPiIpYowAtR/h5dnwoJ+zvc+F+docA/UX2ENiILkJtn2lmnhEqwVlh
-	 ysdIU6GWwoqV7D3sHs3xyXVrT3+Iv1I8TaDDbpgyG+mMRYQD6VrBBQW/hjjKFjSBAZ
-	 3lrTkFGFtjNOn6mMfI16cnCagJ4XNxBq7NR0702gdBnmj+RK3+eNt8UsWqfxWJj19p
-	 pusxiuN3gsxlzuR02Ob9lLetpu0+DAKl/AAO1d0CYhw0p3rSKoySSURXmqgzvrx7S5
-	 tvMagW0q6DZT/z0UDUIW6pUPiDDKt3Q0snIyvyyqDGlKgjYsb0Bj2jpqfo4enc5lv8
-	 IerS+4whE47pw==
+	b=oq71tQ7eSFffDE/YZu2NMhOEes1YgoPZBcMUNewnYnE13lBBf1btdvUwVLnDq44d9
+	 DpG7VRqAjagS5P600N6Fp9T78al6ULyVAki3ZlU0zpDLZsf/3fvkmeeSJCqAfkiJ19
+	 LEaOC2Pg02+rK+GseTgDUnvpmXddWR41D8YhCruYWNDFAHLXAuMOs4/Neu9vs9e2sD
+	 u577VOVByuasQNLHqXgs97CAFeRORIBh8KB3hLccf8ghBtNCEgE4bys7jRWCzACdQh
+	 8g5WNar8a3I+3T1KhRke+ZupCQSi+iBSafGmThUTCd+zShd7TyV0v7ZWCgiJQp0mY7
+	 deEp/tjwqbcgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Keith Busch <kbusch@kernel.org>,
-	Nilay Shroff <nilay@linux.ibm.com>,
-	John Garry <john.g.garry@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 229/314] nvme-multipath: fix leak on try_module_get failure
-Date: Tue, 10 Mar 2026 07:18:08 -0400
-Message-ID: <0c0f738512816aface34efded56ae8d87c5f7edb.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 230/314] inet: annotate data-races around isk->inet_num
+Date: Tue, 10 Mar 2026 07:18:09 -0400
+Message-ID: <50ca973f44337cd87ab8863fc91bed80ba9ecb4d.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,46 +49,134 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0f5197ea9a73a4c406c75e6d8af3a13f7f96ae89 ]
+[ Upstream commit 29252397bcc1e0a1f85e5c3bee59c325f5c26341 ]
 
-We need to fall back to the synchronous removal if we can't get a
-reference on the module needed for the deferred removal.
+UDP/TCP lookups are using RCU, thus isk->inet_num accesses
+should use READ_ONCE() and WRITE_ONCE() where needed.
 
-Fixes: 62188639ec16 ("nvme-multipath: introduce delayed removal of the multipath head node")
-Reviewed-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: John Garry <john.g.garry@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: 3ab5aee7fe84 ("net: Convert TCP & DCCP hash tables to use RCU / hlist_nulls")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260225203545.1512417-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/multipath.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ include/net/inet6_hashtables.h | 2 +-
+ include/net/inet_hashtables.h  | 2 +-
+ include/net/ip.h               | 2 +-
+ net/ipv4/inet_hashtables.c     | 8 ++++----
+ net/ipv4/tcp_diag.c            | 2 +-
+ net/ipv6/inet6_hashtables.c    | 3 ++-
+ 6 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/nvme/host/multipath.c b/drivers/nvme/host/multipath.c
-index e35eccacee8c8..81ccdd91f7790 100644
---- a/drivers/nvme/host/multipath.c
-+++ b/drivers/nvme/host/multipath.c
-@@ -1310,13 +1310,11 @@ void nvme_mpath_remove_disk(struct nvme_ns_head *head)
- 	if (!list_empty(&head->list))
- 		goto out;
+diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
+index 282e29237d936..c16de5b7963fd 100644
+--- a/include/net/inet6_hashtables.h
++++ b/include/net/inet6_hashtables.h
+@@ -175,7 +175,7 @@ static inline bool inet6_match(const struct net *net, const struct sock *sk,
+ {
+ 	if (!net_eq(sock_net(sk), net) ||
+ 	    sk->sk_family != AF_INET6 ||
+-	    sk->sk_portpair != ports ||
++	    READ_ONCE(sk->sk_portpair) != ports ||
+ 	    !ipv6_addr_equal(&sk->sk_v6_daddr, saddr) ||
+ 	    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr, daddr))
+ 		return false;
+diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
+index ac05a52d9e138..5a979dcab5383 100644
+--- a/include/net/inet_hashtables.h
++++ b/include/net/inet_hashtables.h
+@@ -345,7 +345,7 @@ static inline bool inet_match(const struct net *net, const struct sock *sk,
+ 			      int dif, int sdif)
+ {
+ 	if (!net_eq(sock_net(sk), net) ||
+-	    sk->sk_portpair != ports ||
++	    READ_ONCE(sk->sk_portpair) != ports ||
+ 	    sk->sk_addrpair != cookie)
+ 	        return false;
  
--	if (head->delayed_removal_secs) {
--		/*
--		 * Ensure that no one could remove this module while the head
--		 * remove work is pending.
--		 */
--		if (!try_module_get(THIS_MODULE))
--			goto out;
-+	/*
-+	 * Ensure that no one could remove this module while the head
-+	 * remove work is pending.
-+	 */
-+	if (head->delayed_removal_secs && try_module_get(THIS_MODULE)) {
- 		mod_delayed_work(nvme_wq, &head->remove_work,
- 				head->delayed_removal_secs * HZ);
- 	} else {
+diff --git a/include/net/ip.h b/include/net/ip.h
+index 380afb691c419..1ce79e62a76fb 100644
+--- a/include/net/ip.h
++++ b/include/net/ip.h
+@@ -101,7 +101,7 @@ static inline void ipcm_init_sk(struct ipcm_cookie *ipcm,
+ 
+ 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
+ 	ipcm->addr = inet->inet_saddr;
+-	ipcm->protocol = inet->inet_num;
++	ipcm->protocol = READ_ONCE(inet->inet_num);
+ }
+ 
+ #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index b7024e3d9ac3d..a57e33ff92d77 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -200,7 +200,7 @@ static bool inet_bind2_bucket_addr_match(const struct inet_bind2_bucket *tb2,
+ void inet_bind_hash(struct sock *sk, struct inet_bind_bucket *tb,
+ 		    struct inet_bind2_bucket *tb2, unsigned short port)
+ {
+-	inet_sk(sk)->inet_num = port;
++	WRITE_ONCE(inet_sk(sk)->inet_num, port);
+ 	inet_csk(sk)->icsk_bind_hash = tb;
+ 	inet_csk(sk)->icsk_bind2_hash = tb2;
+ 	sk_add_bind_node(sk, &tb2->owners);
+@@ -224,7 +224,7 @@ static void __inet_put_port(struct sock *sk)
+ 	spin_lock(&head->lock);
+ 	tb = inet_csk(sk)->icsk_bind_hash;
+ 	inet_csk(sk)->icsk_bind_hash = NULL;
+-	inet_sk(sk)->inet_num = 0;
++	WRITE_ONCE(inet_sk(sk)->inet_num, 0);
+ 	sk->sk_userlocks &= ~SOCK_CONNECT_BIND;
+ 
+ 	spin_lock(&head2->lock);
+@@ -352,7 +352,7 @@ static inline int compute_score(struct sock *sk, const struct net *net,
+ {
+ 	int score = -1;
+ 
+-	if (net_eq(sock_net(sk), net) && sk->sk_num == hnum &&
++	if (net_eq(sock_net(sk), net) && READ_ONCE(sk->sk_num) == hnum &&
+ 			!ipv6_only_sock(sk)) {
+ 		if (sk->sk_rcv_saddr != daddr)
+ 			return -1;
+@@ -1202,7 +1202,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
+ 
+ 		sk->sk_hash = 0;
+ 		inet_sk(sk)->inet_sport = 0;
+-		inet_sk(sk)->inet_num = 0;
++		WRITE_ONCE(inet_sk(sk)->inet_num, 0);
+ 
+ 		if (tw)
+ 			inet_twsk_bind_unhash(tw, hinfo);
+diff --git a/net/ipv4/tcp_diag.c b/net/ipv4/tcp_diag.c
+index d83efd91f461c..7935702e394b2 100644
+--- a/net/ipv4/tcp_diag.c
++++ b/net/ipv4/tcp_diag.c
+@@ -509,7 +509,7 @@ static void tcp_diag_dump(struct sk_buff *skb, struct netlink_callback *cb,
+ 			if (r->sdiag_family != AF_UNSPEC &&
+ 			    sk->sk_family != r->sdiag_family)
+ 				goto next_normal;
+-			if (r->id.idiag_sport != htons(sk->sk_num) &&
++			if (r->id.idiag_sport != htons(READ_ONCE(sk->sk_num)) &&
+ 			    r->id.idiag_sport)
+ 				goto next_normal;
+ 			if (r->id.idiag_dport != sk->sk_dport &&
+diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
+index 5e1da088d8e11..182d38e6d6d8d 100644
+--- a/net/ipv6/inet6_hashtables.c
++++ b/net/ipv6/inet6_hashtables.c
+@@ -95,7 +95,8 @@ static inline int compute_score(struct sock *sk, const struct net *net,
+ {
+ 	int score = -1;
+ 
+-	if (net_eq(sock_net(sk), net) && inet_sk(sk)->inet_num == hnum &&
++	if (net_eq(sock_net(sk), net) &&
++	    READ_ONCE(inet_sk(sk)->inet_num) == hnum &&
+ 	    sk->sk_family == PF_INET6) {
+ 		if (!ipv6_addr_equal(&sk->sk_v6_rcv_saddr, daddr))
+ 			return -1;
 -- 
 2.51.0
 
