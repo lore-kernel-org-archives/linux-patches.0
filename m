@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C9A2BF3E2;
-	Tue, 10 Mar 2026 11:11:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD512BF3E2;
+	Tue, 10 Mar 2026 11:11:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141096; cv=none; b=Jsse97WuFy8Cuwhd6Vk6MfiIBN8RFTMsd5KDiFBr3ER4dcBlOFjSGyjkS6pyrDHPIZJEk3KBDJLtKFsVeNzLsWslBlMzANcRvVuw0Veo38BC0LmAKg1ynIrzVYG4M1/L8OxJACvJwaQgupKWJahAKoY5POJqvAP+GXW8geEMdQw=
+	t=1773141097; cv=none; b=k8MRUlLxQZc1eqm6mYq9rHQYzuDS37pBxsj6jH9MfxV7cGvBgw825T8cLeysWID+c5rkmN8QRpiQ3IzN6ol/DlVmU8zFLQha3e6VcjFOMkbIvnq8DOc5d2Zn+u1ziN5NAljYP1iUVIFtsxW5TvEY1uCDFin1geBeF7Mo7iRp+R4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141096; c=relaxed/simple;
-	bh=SFjRd4elT7G9raIHeBY7bncbL/XUAXtc8D65yTLJP04=;
+	s=arc-20240116; t=1773141097; c=relaxed/simple;
+	bh=lJQdq2iaaHSa9q7Xv/z4g9O2ReS/644I+1V3+c23Fuc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NB+j5B+qph03sg77Zgs1PS1ZOexSioTfeuZqe/8fcZlmLrpcrPhGzkXbNhrMtDIRI89jhYexiQZ562b2hlyhe83eroHsZmDOoB7gyBaCS5onFGZvzzWvSoJ+edm2MI19dX1X2zhzVwMlB7zqCrD3OSUZWbtw4r2hPhGpWzV7JoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I70CJxgx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n6PGl7qxMdaaToOSVUxsc9uJT48FoZFXyMW70kHpsJylZP5s2Go7aC9lf63ukvIT/p9dFx3NoL2kYS+p14vukljQcRmkL+Bu7nu09n4avIDxQ7BdnuDMwbiy6GfysqgZw7OvFsI5F0DU9sdZMxSaz1obPA8MWLtF51QFn7ORcCM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BuaytctF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I70CJxgx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09351C19423;
-	Tue, 10 Mar 2026 11:11:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BuaytctF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D514EC2BC9E;
+	Tue, 10 Mar 2026 11:11:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141096;
-	bh=SFjRd4elT7G9raIHeBY7bncbL/XUAXtc8D65yTLJP04=;
+	s=k20201202; t=1773141097;
+	bh=lJQdq2iaaHSa9q7Xv/z4g9O2ReS/644I+1V3+c23Fuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I70CJxgxs/M4XHejP3mZuyN4KTGCIfPRYsDLFxwbbjPDm0AbVUyGYB4pFNYmJWQHr
-	 Aw/IY5fKZdFpJsVOzQMTSjVzuxcAgP303fYsLv4FPMaSwrLjIq09Wa6acdRz1Vky0i
-	 w3wnmMCkH8ayWy0pMj0meZkKuPFtYoMJ82voaRLf/JtmN4zIdO8MgOSdycdln3pd19
-	 e2ZPV9ByliuBdt716gWU+ND6x9d2KJ1joOQamoGJ1zE4H7KdyJDkCW1rN0qP5oTdzC
-	 Bxa25uin0LLbBjRhk267a+FPFvwF6ZM6CNH6aUGojavT13E8oEkcoiS7PoKdLT9lOo
-	 aLJDlbq5HNcTQ==
+	b=BuaytctF03CfdEeg78YqlMwqSptEnzrFTblkM0D9ROlPPycpWWoyDsvSHeGoxDvor
+	 glCqRxAkFtpEcU49CwLmJjdAsbXmvmzgqdUsh2nw3RUXrCySaeYesducBNFpwOOzj5
+	 6U/OAFg1eszCknJePSIs3DLaChlmrRQuJ0C1sHO7HpsjqSqup9tQhPChSRv+FQY0I7
+	 9IEDWt3VhE6wRB/y8ToEmRLcvvcxJZ4THP5yLNM7fRGIU8gBwVsrlZwxepKRYUdOro
+	 WJTsfX9IOJQ2jbvwdpNmEjYJ+O15uaZ0WaJeEi7wltqlMO3oX2FHX0BpDwMFsHuSQi
+	 rgk5MxKOqPVRA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Quentin Schulz <quentin.schulz@cherry.de>,
 	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 097/311] accel/rocket: fix unwinding in error path in rocket_core_init
-Date: Tue, 10 Mar 2026 07:02:24 -0400
-Message-ID: <2b05c06b4f95a9bd05cafb9bd1f480c603ffe8ba.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 098/311] accel/rocket: fix unwinding in error path in rocket_probe
+Date: Tue, 10 Mar 2026 07:02:25 -0400
+Message-ID: <ebf2f86537ec70c933674ef4123979834188cd49.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,57 +50,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit f509a081f6a289f7c66856333b3becce7a33c97e ]
+[ Upstream commit 34f4495a7f72895776b81969639f527c99eb12b9 ]
 
-When rocket_job_init() is called, iommu_group_get() has already been
-called, therefore we should call iommu_group_put() and make the
-iommu_group pointer NULL. This aligns with what's done in
-rocket_core_fini().
-
-If pm_runtime_resume_and_get() somehow fails, not only should
-rocket_job_fini() be called but we should also unwind everything done
-before that, that is, disable PM, put the iommu_group, NULLify it and
-then call rocket_job_fini(). This is exactly what's done in
-rocket_core_fini() so let's call that function instead of duplicating
-the code.
+When rocket_core_init() fails (as could be the case with EPROBE_DEFER),
+we need to properly unwind by decrementing the counter we just
+incremented and if this is the first core we failed to probe, remove the
+rocket DRM device with rocket_device_fini() as well. This matches the
+logic in rocket_remove(). Failing to properly unwind results in
+out-of-bounds accesses.
 
 Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
 Cc: stable@vger.kernel.org
 Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
 Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
 Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
-Link: https://patch.msgid.link/20251215-rocket-error-path-v1-1-eec3bf29dc3b@cherry.de
+Link: https://patch.msgid.link/20251215-rocket-error-path-v1-2-eec3bf29dc3b@cherry.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/rocket/rocket_core.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/accel/rocket/rocket_drv.c | 15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/rocket/rocket_core.c b/drivers/accel/rocket/rocket_core.c
-index abe7719c1db46..b3b2fa9ba645a 100644
---- a/drivers/accel/rocket/rocket_core.c
-+++ b/drivers/accel/rocket/rocket_core.c
-@@ -59,8 +59,11 @@ int rocket_core_init(struct rocket_core *core)
- 	core->iommu_group = iommu_group_get(dev);
+diff --git a/drivers/accel/rocket/rocket_drv.c b/drivers/accel/rocket/rocket_drv.c
+index 5c0b63f0a8f00..f6ef4c7aeef11 100644
+--- a/drivers/accel/rocket/rocket_drv.c
++++ b/drivers/accel/rocket/rocket_drv.c
+@@ -13,6 +13,7 @@
+ #include <linux/platform_device.h>
+ #include <linux/pm_runtime.h>
  
- 	err = rocket_job_init(core);
--	if (err)
-+	if (err) {
-+		iommu_group_put(core->iommu_group);
-+		core->iommu_group = NULL;
- 		return err;
++#include "rocket_device.h"
+ #include "rocket_drv.h"
+ #include "rocket_gem.h"
+ #include "rocket_job.h"
+@@ -158,6 +159,8 @@ static const struct drm_driver rocket_drm_driver = {
+ 
+ static int rocket_probe(struct platform_device *pdev)
+ {
++	int ret;
++
+ 	if (rdev == NULL) {
+ 		/* First core probing, initialize DRM device. */
+ 		rdev = rocket_device_init(drm_dev, &rocket_drm_driver);
+@@ -177,7 +180,17 @@ static int rocket_probe(struct platform_device *pdev)
+ 
+ 	rdev->num_cores++;
+ 
+-	return rocket_core_init(&rdev->cores[core]);
++	ret = rocket_core_init(&rdev->cores[core]);
++	if (ret) {
++		rdev->num_cores--;
++
++		if (rdev->num_cores == 0) {
++			rocket_device_fini(rdev);
++			rdev = NULL;
++		}
 +	}
++
++	return ret;
+ }
  
- 	pm_runtime_use_autosuspend(dev);
- 
-@@ -76,7 +79,7 @@ int rocket_core_init(struct rocket_core *core)
- 
- 	err = pm_runtime_resume_and_get(dev);
- 	if (err) {
--		rocket_job_fini(core);
-+		rocket_core_fini(core);
- 		return err;
- 	}
- 
+ static void rocket_remove(struct platform_device *pdev)
 -- 
 2.51.0
 
