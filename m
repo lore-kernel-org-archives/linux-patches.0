@@ -1,83 +1,41 @@
-Received: from buffalo.tulip.relay.mailchannels.net (buffalo.tulip.relay.mailchannels.net [23.83.218.24])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD9C399371
-	for <patches@lists.linux.dev>; Tue, 10 Mar 2026 13:01:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.24
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773147664; cv=pass; b=AXiUX6sxZyTxbVVTc+Cw8P8qEJnV6I68iOi6cBlHMAKjiyIT0Wab+LJfJaIdaFXw6F9ZW7e7KN5Fb/oOJDkaOfyNYoRNbxG09f1b6de9u0pkGekPE2I30UjBxnTtPd/SC6wVQ76mtg6RYc8D3UQkVDWHewSuPOuhPeqbAhTWvGo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773147664; c=relaxed/simple;
-	bh=pNzZKas2ZtzHmNNSQQSGpyTKI26YoaTc5IACXsi2rt4=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71D1276058
+	for <patches@lists.linux.dev>; Tue, 10 Mar 2026 14:16:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.21
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773152177; cv=none; b=PRnP8/XdHOQi1G1UDjnlwZXkKu3x5ehaQnOUT+mp7efEdNeD9/hTUc2eY25ShbirXnOxN1tHhTDue5JOqUzPS2nfm1Q0HoHX0gdDc17nbJ1O3TbO4FMxmytN5/SmhJGtEzjeUXqsA/1y5LwimbqBKqmobfm2DoDaf8II1J7Gpgs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773152177; c=relaxed/simple;
+	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=gPoX9i324swaF331+Ly6tqg4gyLT1Owz152oi+1VrlaVNDD5e3X+X1moEg/Xe7k/ROrWrtuOGvjIpNtyuu7OaF9QbOzbVYydvdmSvSRsfZlfVxZBEUN46+X7tyOdphOWCRopwNVCbOkLp6p1je8jSJdN9jiIb9ppCyaqaIYIi4c=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net; spf=pass smtp.mailfrom=landley.net; dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b=fdfaOaJr; arc=pass smtp.client-ip=23.83.218.24
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=landley.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=landley.net
+	 In-Reply-To:Content-Type; b=pawUaHExuSgIzN2+WhITNKs60Fj/pMHadkOyMc3QTWTpUuGuURfguZMcQ+B9RWpyl4YT2bV+sBwc6ir148d/6m5ePJEKnZzX2xRgNg2utQXbU2z/tGAczhtg3x+hwPVrUQQmMgX+6/KkY6t8u4qCY5vChaaNlbP2N/2QuzOeP/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b=fvxiiBrn; arc=none smtp.client-ip=212.227.17.21
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=landley.net header.i=@landley.net header.b="fdfaOaJr"
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 9A17A9227B8;
-	Tue, 10 Mar 2026 12:51:50 +0000 (UTC)
-Received: from pdx1-sub0-mail-a222.dreamhost.com (100-107-106-54.trex-nlb.outbound.svc.cluster.local [100.107.106.54])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id CB51992112E;
-	Tue, 10 Mar 2026 12:51:49 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
-	t=1773147110;
-	b=hFQA6o2B8SK+clQ6CAcG1qC4T0SUuEzNQhfB1UlPD4c81M3jOw5NyvKa0xRAAcPqhNVa1y
-	OaDfb3wd7JZjHGbnSDYpz1fQr0wzonraOfRBzgdlgOwLFLCiyA+TBR1Jfw6oIlLX5I7ijs
-	ln7NdTTiDBYUYw+F77oeXpaxsJimF6aEbgMn9GenjLC0W7WGnpSMH7rSiX/UrhNm85KJ0D
-	qNXtnEAOkyoQlx53FrFCGOQSm5wSKeRQrCNM/M0vgdhK83ReJ73JMEl0Ls6Lnvy2qeegwc
-	3TsU7/oDhztdxW4zzmY3hrEu9KtuPg+3YW/XAhc2IwNwmOdDECzq9zZjuCwXbA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1773147110;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=X/IhzbasK0cIjsjppiT2+8RzOyLJ0u+k3bxUMCZYXS0=;
-	b=08A6/Tcmwuc5FUFIyqebdLkvcAFOBHlwCezdfc9kYzMHQCLkEgLZDyFEUnwbCsealxVZr6
-	QOByHza47Fa0SAeX+VzcB+SXoOsnoL5UrREpS/egFLUCYmYAd3mwUJFhj/WZClH3MMheLE
-	OSnseDjmvkqfeqt2s9Ceiq8/R4PRwGEtE8VFjtwTb6zyB3MBKuRT9tvfTkEt1I2E8Ax0qN
-	Va2CZBieW1KIkPY6W6tbnpXC4aWN4L+O7nzkHY8c8YqxPy/UqWIDvOR8+4CuRTi9D72Z+r
-	LPALgKAD5qOb/3dIgZXDRDUJwdi8Njh6xBDtPvmgvEAgXXgBMtocCQszf0uGoQ==
-ARC-Authentication-Results: i=1;
-	rspamd-6f5c445b59-k98sl;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=rob@landley.net
-X-Sender-Id: dreamhost|x-authsender|rob@landley.net
-X-MC-Relay: Neutral
-X-MailChannels-SenderId: dreamhost|x-authsender|rob@landley.net
-X-MailChannels-Auth-Id: dreamhost
-X-Irritate-Madly: 6e3306b557cccc9e_1773147110416_1850464333
-X-MC-Loop-Signature: 1773147110415:1444249190
-X-MC-Ingress-Time: 1773147110414
-Received: from pdx1-sub0-mail-a222.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.107.106.54 (trex/7.1.3);
-	Tue, 10 Mar 2026 12:51:50 +0000
-Received: from [192.168.88.6] (unknown [209.81.127.98])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	(Authenticated sender: rob@landley.net)
-	by pdx1-sub0-mail-a222.dreamhost.com (Postfix) with ESMTPSA id 4fVYfp6R24zT7;
-	Tue, 10 Mar 2026 05:51:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=landley.net;
-	s=dreamhost; t=1773147109;
-	bh=X/IhzbasK0cIjsjppiT2+8RzOyLJ0u+k3bxUMCZYXS0=;
-	h=Date:Subject:To:Cc:From:Content-Type:Content-Transfer-Encoding;
-	b=fdfaOaJrQBNBCd3gR49zIUWuViPoJDCRi1AwbxvMK3LY+021jbsmzYWZL5MtOgK64
-	 3kezyJqpQTobolgVHTCw0i6WhlMpOL8hF90dWbNzyy+Tx+5xcmUuVnKhRm916rZOrh
-	 IglSjyYYw6ttQepI3rfVQl2hWlBhQmDKcJs0YCVF3td/iJ0h/mfGvAseDNxnlyWFef
-	 7OXwJL9fnJ2a2/BxMQTFYCosb/6jpwV5QGn4FiCaY16Kwm3ELHeuQPjyaYK/QBgAnu
-	 YBVafTpAFV/ORIK5s2UGbO4f0Uoar7Do5di9e29sCsFh9q7zIxIbPQfMvNfO9rfmDJ
-	 jSXkF/xmWg20w==
-Message-ID: <54f06055-c5ca-4b8f-9aed-065755e7c1b2@landley.net>
-Date: Tue, 10 Mar 2026 07:51:45 -0500
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=rwarsow@gmx.de header.b="fvxiiBrn"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1773152158; x=1773756958; i=rwarsow@gmx.de;
+	bh=1R+q0brxT5FCSRMOO/LqKS2K1GLvRDjYnI692aiflvw=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=fvxiiBrnyQWB46t+U9Cv5u0i2poE4HMG0ZFJ/NgUwhM8CNCcznORz7Gu9sht7WCN
+	 cjvfZTsG5mHdRPmAsIgH17PNs+8BMBEZVfLQGAiLp6KMhJjI1BAzwvcNEgDMx4/2r
+	 b6p7Q0dzCc7qs/BD1DcmjmVNKZyrSYqGN1R7IQS2gVHhFQo5qRfM08W3EUkPEKl6U
+	 ZPMLX/Eo2OiW+v4hJVvW+Ntk+zq56ijIN5E/W3pW2DZDUY6hl+chYMuWeMYjbN20L
+	 K7SLxbGh79SzfxF3pbgsUkctmjj3aDt2BoCSM9KJKS8GbyWbvDvlYxq/sUy6rXGJj
+	 j2jt3/EPwiL8RmVLgg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from client.hidden.invalid by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MJmKX-1wK7Bn0m2D-00IiBq; Tue, 10
+ Mar 2026 15:15:58 +0100
+Message-ID: <1fb2fb7a-e223-45ce-89e7-6f36839a0c79@gmx.de>
+Date: Tue, 10 Mar 2026 15:15:56 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -85,36 +43,104 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] init: ensure that /dev/console and /dev/null are
- (nearly) always available in initramfs
-To: Askar Safin <safinaskar@gmail.com>
-Cc: brauner@kernel.org, ddiss@suse.de, initramfs@vger.kernel.org,
- jack@suse.cz, linux-fsdevel@vger.kernel.org, linux-kbuild@vger.kernel.org,
- linux-kernel@vger.kernel.org, nathan@kernel.org, nsc@kernel.org,
- patches@lists.linux.dev, rdunlap@infradead.org, viro@zeniv.linux.org.uk
-References: <bd45c86c-e1ea-4995-bb00-df83cc873105@landley.net>
- <20260307032258.2857157-1-safinaskar@gmail.com>
-Content-Language: en-US
-From: Rob Landley <rob@landley.net>
-In-Reply-To: <20260307032258.2857157-1-safinaskar@gmail.com>
+Subject: Re: [PATCH 6.19 000/311] 6.19.7-rc1 review
+To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
+ stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <cover.1773140654.git.sashal@kernel.org>
+From: Ronald Warsow <rwarsow@gmx.de>
+Content-Language: de-DE, en-US
+In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:DLgGP1zTQ+fy6M65WQn8rBL1FUkh8DG0+K/txVgWXM9ryB0awoy
+ SKBQkWHdWgmAoj+8DVJkf1XDFq1uGi8eZ/3r5h+jWHxGSuLwvcA1/a4vNvU6n5ahx2ygwLR
+ +h0Wpf/sl+yjsylCfTnyzLItegi1GZR1dpAWo1Ff0Dpig3hu3KK/t4qRhM9QUKTfPDavXVJ
+ VGd4F+5KQsh0D7K4/sOPw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:OfJzgxGlXig=;e4cTz1HBhUiCaevIsx5wehrHrMJ
+ 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
 
-On 3/6/26 21:22, Askar Safin wrote:
-> Rob, I kindly ask you to test this solution to your problems:
-> 
-> https://lore.kernel.org/all/CAPnZJGDDonspVK1WxDac2omkLJVX=_1Tybn4ne+sf3KyaAuofA@mail.gmail.com/
+Hi
 
-Your earlier suggestion that at some point they fixed the kernel build 
-so I can go "/path/to/dir /path/to/file.txt" (which didn't _used_ to 
-work, I tested it way back when) would presumably solve my problem 
-without kernel patches.
+no regressions here on x86_64 (Intel 11th Gen. CPU)
 
-I just haven't been programming much since Gavin "spyware" Newsom passed 
-his stupid "age verification in the OS" bill 
-(https://mstdn.jp/@landley/116194386057190345) where every cloud 
-instance needs to report an "age" to Palantir, implying I'll have to 
-take mkroot down before Jan 1st to avoid $7k/download fines, and I'm 
-looking at maybe getting a job in healthcare or something.
+Thanks
 
-Rob
+Tested-by: Ronald Warsow <rwarsow@gmx.de>
