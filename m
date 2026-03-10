@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBB3876A2;
-	Tue, 10 Mar 2026 11:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C34944B69C;
+	Tue, 10 Mar 2026 11:30:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142206; cv=none; b=G7/a+tRwx035rnx9go8tpUfeogZnRHukfqgVsul8C1IntEsGAlame5LVlgLWBSJcyKFhrMOpfFt+0t74NSRcI6UZi2NTNDAl2+gsSMhMesUe7IaM32ujpZ0w2zEzHWrX0u9MtSOTc/6iFXp2DEva05ibORET4uJZN5eq6ME2Qbg=
+	t=1773142207; cv=none; b=Eufwss3rG9u5/KVogsi3hco5POyjQnF25eLroB5z8R4HHbcnv9IilJxWQKXLsSEkplvAO59KGFpJFtumCSd4OPEDcnlO5FG1VgvIm8CJt2LS7Aiy7E7bpEm5omtZQMDFT7xCpUh8r6IRfyd0HGW3pekuzgSg7CYehbk+6RkCbJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142206; c=relaxed/simple;
-	bh=PyHBsKxCRlb0JiEFWu6oWrcrAFEPp7dh08rLNCkTNbk=;
+	s=arc-20240116; t=1773142207; c=relaxed/simple;
+	bh=sw5uOHKyg6O3p1VPYkNOLqNJ6yX0Y+EfmfHWwddlBCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=goSdQh63A8eTw5bd5/mkydPedvuJkho9Ll+oCmwmcXDTM6P2YBU8NunJrphQKhCWMNq7zBzUj4BNPuVMRkvmnnt37WrAaIhT7laGUJVgYgufNrL5csKm+jyeWJedVeVA2DXtB20jofrRSvFvmy7+xT5aCj0Y9D+WGq8q5JUz8PM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EB/ooQ3T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPOyD5M3+PIvmqsW0xSIuBH0BnhpqGI/rT8G0nvXtRpWOPzJyzbZj+YFk6uLjzOmYxULlJPPuFx4Q+GxGdXm2ocpYSSUnJX5lbYQNnSsI0e9bPSkOKV8G+FpY6o2UPyn4mBlX3ss3ok/3cxwQvRrYvrysV99GrJV6u0pH4XcDMY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lBPFzVuS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EB/ooQ3T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9CBBC2BCAF;
-	Tue, 10 Mar 2026 11:30:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lBPFzVuS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD534C2BCAF;
+	Tue, 10 Mar 2026 11:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142206;
-	bh=PyHBsKxCRlb0JiEFWu6oWrcrAFEPp7dh08rLNCkTNbk=;
+	s=k20201202; t=1773142207;
+	bh=sw5uOHKyg6O3p1VPYkNOLqNJ6yX0Y+EfmfHWwddlBCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EB/ooQ3T0e2LBMZpW3JHG94j8L43Il5UcRLMZzzG9niZZZffaf/rO4eevu6V/TMS8
-	 6mgP/qQR5xkFBpnbnCqMuXd+4yYVYm/QKjPqc76X3qrT3FP/Ih9szpYB6ivaHOBg8/
-	 ebF5sgSbsxFi2qzAhBkJWVn5UT/Fay9B9Qy+8qkldTJAhy4TaoLPza48utkdzDDKMG
-	 G6MhzR2dQQPkHUxrZG1DozwnxcU+eZQCLvE+wgUm8zCTjzaqwSROzduxQPCr3VLH99
-	 wC40ymDN0tIUcMo5HF5wcdWl2QnLhXE3N78Lwp64FLevINi3pqd7m22EaZgDZDlvAD
-	 2db233ZxGMWwA==
+	b=lBPFzVuSjV1DC++AgwjKo/NzJbLBnC7AyZmTpuWyxDByTjVCrX1jjHHhRxs5Eh75d
+	 IcM9REfjiSkNVqOBIrj+L+rya3B7Uo4xvZBscHE1XElbLKopJhJxA2xDnJvPvdSm/u
+	 gqeBmijUs/whgskKtZklQ+Ry99QCp+uA5F6aC9P8QqDFELHDOHzsmqMMZ78ekPTTlp
+	 RyjY7feVw38t7M2mVOabA0tCYjdby528Wa8ypsM26u5Esa0/ej1ja7MLH9gHAl+Dzu
+	 jwTlpjG5jQA+ydZ5QyEibT3jEmCfq8P5dGSKZtS8U5oUHARSNlNRuFtZOnugGv3iJV
+	 ibLyEidw4dSpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Florian Westphal <fw@strlen.de>,
-	Yiming Qian <yimingqian591@gmail.com>,
+Cc: Lorenzo Bianconi <lorenzo@kernel.org>,
+	Paolo Valerio <pvalerio@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 296/314] netfilter: nft_set_pipapo: split gc into unlink and reclaim phase
-Date: Tue, 10 Mar 2026 07:19:15 -0400
-Message-ID: <91e5c954601401bd1f4db38b8887488d2be6fa7f.1773141556.git.sashal@kernel.org>
+Subject: [PATCH 6.18 297/314] net: ethernet: mtk_eth_soc: Reset prog ptr to old_prog in case of error in mtk_xdp_setup()
+Date: Tue, 10 Mar 2026 07:19:16 -0400
+Message-ID: <4af6a4e2e639cd4909e78d61c373a52f21087176.1773141556.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,214 +49,52 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 9df95785d3d8302f7c066050117b04cd3c2048c2 ]
+[ Upstream commit 0abc73c8a40fd64ac1739c90bb4f42c418d27a5e ]
 
-Yiming Qian reports Use-after-free in the pipapo set type:
-  Under a large number of expired elements, commit-time GC can run for a very
-  long time in a non-preemptible context, triggering soft lockup warnings and
-  RCU stall reports (local denial of service).
+Reset eBPF program pointer to old_prog and do not decrease its ref-count
+if mtk_open routine in mtk_xdp_setup() fails.
 
-We must split GC in an unlink and a reclaim phase.
-
-We cannot queue elements for freeing until pointers have been swapped.
-Expired elements are still exposed to both the packet path and userspace
-dumpers via the live copy of the data structure.
-
-call_rcu() does not protect us: dump operations or element lookups starting
-after call_rcu has fired can still observe the free'd element, unless the
-commit phase has made enough progress to swap the clone and live pointers
-before any new reader has picked up the old version.
-
-This a similar approach as done recently for the rbtree backend in commit
-35f83a75529a ("netfilter: nft_set_rbtree: don't gc elements on insert").
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 7c26c20da5d42 ("net: ethernet: mtk_eth_soc: add basic XDP support")
+Suggested-by: Paolo Valerio <pvalerio@redhat.com>
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Link: https://patch.msgid.link/20260303-mtk-xdp-prog-ptr-fix-v2-1-97b6dbbe240f@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h |  5 +++
- net/netfilter/nf_tables_api.c     |  5 ---
- net/netfilter/nft_set_pipapo.c    | 51 ++++++++++++++++++++++++++-----
- net/netfilter/nft_set_pipapo.h    |  2 ++
- 4 files changed, 50 insertions(+), 13 deletions(-)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 077d3121cc9f1..c18cffafc9696 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -1860,6 +1860,11 @@ struct nft_trans_gc {
- 	struct rcu_head		rcu;
- };
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index e68997a29191b..8d3e15bc867d2 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3749,12 +3749,21 @@ static int mtk_xdp_setup(struct net_device *dev, struct bpf_prog *prog,
+ 		mtk_stop(dev);
  
-+static inline int nft_trans_gc_space(const struct nft_trans_gc *trans)
-+{
-+	return NFT_TRANS_GC_BATCHCOUNT - trans->count;
-+}
+ 	old_prog = rcu_replace_pointer(eth->prog, prog, lockdep_rtnl_is_held());
 +
- static inline void nft_ctx_update(struct nft_ctx *ctx,
- 				  const struct nft_trans *trans)
- {
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 7bb5719c214b0..598a9fe03fb0b 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -10646,11 +10646,6 @@ static void nft_trans_gc_queue_work(struct nft_trans_gc *trans)
- 	schedule_work(&trans_gc_work);
- }
- 
--static int nft_trans_gc_space(struct nft_trans_gc *trans)
--{
--	return NFT_TRANS_GC_BATCHCOUNT - trans->count;
--}
--
- struct nft_trans_gc *nft_trans_gc_queue_async(struct nft_trans_gc *gc,
- 					      unsigned int gc_seq, gfp_t gfp)
- {
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index cd0d2d4ae36bf..d9b74d588c768 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1681,11 +1681,11 @@ static void nft_pipapo_gc_deactivate(struct net *net, struct nft_set *set,
- }
- 
- /**
-- * pipapo_gc() - Drop expired entries from set, destroy start and end elements
-+ * pipapo_gc_scan() - Drop expired entries from set and link them to gc list
-  * @set:	nftables API set representation
-  * @m:		Matching data
-  */
--static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
-+static void pipapo_gc_scan(struct nft_set *set, struct nft_pipapo_match *m)
- {
- 	struct nft_pipapo *priv = nft_set_priv(set);
- 	struct net *net = read_pnet(&set->net);
-@@ -1698,6 +1698,8 @@ static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
- 	if (!gc)
- 		return;
- 
-+	list_add(&gc->list, &priv->gc_head);
++	if (netif_running(dev) && need_update) {
++		int err;
 +
- 	while ((rules_f0 = pipapo_rules_same_key(m->f, first_rule))) {
- 		union nft_pipapo_map_bucket rulemap[NFT_PIPAPO_MAX_FIELDS];
- 		const struct nft_pipapo_field *f;
-@@ -1725,9 +1727,13 @@ static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
- 		 * NFT_SET_ELEM_DEAD_BIT.
- 		 */
- 		if (__nft_set_elem_expired(&e->ext, tstamp)) {
--			gc = nft_trans_gc_queue_sync(gc, GFP_KERNEL);
--			if (!gc)
--				return;
-+			if (!nft_trans_gc_space(gc)) {
-+				gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
-+				if (!gc)
-+					return;
++		err = mtk_open(dev);
++		if (err) {
++			rcu_assign_pointer(eth->prog, old_prog);
 +
-+				list_add(&gc->list, &priv->gc_head);
-+			}
- 
- 			nft_pipapo_gc_deactivate(net, set, e);
- 			pipapo_drop(m, rulemap);
-@@ -1741,10 +1747,30 @@ static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
- 		}
- 	}
- 
--	gc = nft_trans_gc_catchall_sync(gc);
-+	priv->last_gc = jiffies;
-+}
-+
-+/**
-+ * pipapo_gc_queue() - Free expired elements
-+ * @set:	nftables API set representation
-+ */
-+static void pipapo_gc_queue(struct nft_set *set)
-+{
-+	struct nft_pipapo *priv = nft_set_priv(set);
-+	struct nft_trans_gc *gc, *next;
-+
-+	/* always do a catchall cycle: */
-+	gc = nft_trans_gc_alloc(set, 0, GFP_KERNEL);
- 	if (gc) {
-+		gc = nft_trans_gc_catchall_sync(gc);
-+		if (gc)
-+			nft_trans_gc_queue_sync_done(gc);
++			return err;
++		}
 +	}
 +
-+	/* always purge queued gc elements. */
-+	list_for_each_entry_safe(gc, next, &priv->gc_head, list) {
-+		list_del(&gc->list);
- 		nft_trans_gc_queue_sync_done(gc);
--		priv->last_gc = jiffies;
- 	}
- }
+ 	if (old_prog)
+ 		bpf_prog_put(old_prog);
  
-@@ -1798,6 +1824,10 @@ static void pipapo_reclaim_match(struct rcu_head *rcu)
-  *
-  * We also need to create a new working copy for subsequent insertions and
-  * deletions.
-+ *
-+ * After the live copy has been replaced by the clone, we can safely queue
-+ * expired elements that have been collected by pipapo_gc_scan() for
-+ * memory reclaim.
-  */
- static void nft_pipapo_commit(struct nft_set *set)
- {
-@@ -1808,7 +1838,7 @@ static void nft_pipapo_commit(struct nft_set *set)
- 		return;
- 
- 	if (time_after_eq(jiffies, priv->last_gc + nft_set_gc_interval(set)))
--		pipapo_gc(set, priv->clone);
-+		pipapo_gc_scan(set, priv->clone);
- 
- 	old = rcu_replace_pointer(priv->match, priv->clone,
- 				  nft_pipapo_transaction_mutex_held(set));
-@@ -1816,6 +1846,8 @@ static void nft_pipapo_commit(struct nft_set *set)
- 
- 	if (old)
- 		call_rcu(&old->rcu, pipapo_reclaim_match);
-+
-+	pipapo_gc_queue(set);
- }
- 
- static void nft_pipapo_abort(const struct nft_set *set)
-@@ -2280,6 +2312,7 @@ static int nft_pipapo_init(const struct nft_set *set,
- 		f->mt = NULL;
- 	}
- 
-+	INIT_LIST_HEAD(&priv->gc_head);
- 	rcu_assign_pointer(priv->match, m);
- 
+-	if (netif_running(dev) && need_update)
+-		return mtk_open(dev);
+-
  	return 0;
-@@ -2329,6 +2362,8 @@ static void nft_pipapo_destroy(const struct nft_ctx *ctx,
- 	struct nft_pipapo *priv = nft_set_priv(set);
- 	struct nft_pipapo_match *m;
+ }
  
-+	WARN_ON_ONCE(!list_empty(&priv->gc_head));
-+
- 	m = rcu_dereference_protected(priv->match, true);
- 
- 	if (priv->clone) {
-diff --git a/net/netfilter/nft_set_pipapo.h b/net/netfilter/nft_set_pipapo.h
-index eaab422aa56ab..9aee9a9eaeb75 100644
---- a/net/netfilter/nft_set_pipapo.h
-+++ b/net/netfilter/nft_set_pipapo.h
-@@ -156,12 +156,14 @@ struct nft_pipapo_match {
-  * @clone:	Copy where pending insertions and deletions are kept
-  * @width:	Total bytes to be matched for one packet, including padding
-  * @last_gc:	Timestamp of last garbage collection run, jiffies
-+ * @gc_head:	list of nft_trans_gc to queue up for mem reclaim
-  */
- struct nft_pipapo {
- 	struct nft_pipapo_match __rcu *match;
- 	struct nft_pipapo_match *clone;
- 	int width;
- 	unsigned long last_gc;
-+	struct list_head gc_head;
- };
- 
- struct nft_pipapo_elem;
 -- 
 2.51.0
 
