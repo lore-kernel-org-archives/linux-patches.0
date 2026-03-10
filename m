@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6CB3876A3;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC19538759A;
 	Tue, 10 Mar 2026 11:25:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141916; cv=none; b=JNGx3XZadIgUVmfE8MtllTSwaPW64Zo1/fbCMaGVBSas0wUlJ7Y9VMeqeZiRJQFpH+V7YNhnRPJiuxPv5SfOcQ2/x5YuzmzcGCaBkKEVBP7EdnI/X/Z8FCzG1CFDBzEjuZRRsiuOLklRktzB33OPYnV0/9XLGboVsA1IVSOKlnU=
+	t=1773141916; cv=none; b=aXlmEeArhoOp88FsErnGO7AHItX2BuOTT/KR7zVmDu5Hq4DZ2bCrj3atOrdaxFsZ4wuKlziWA9+LI5o9ewekuX7WbZHsJYNbbNIapNP7L5VlOD8I5M5HwLM/R6mstOjSW6kAUX0/x5djblfC99RjjZxl7t3UvyFMIKcL7v0Fs2o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141916; c=relaxed/simple;
-	bh=wnnTIpP2xgT8QfksgPWFF4X5cTl+pBsaGxrye/5acyc=;
+	bh=bOeFJNsdHbF8fvLvjsUwo0tBKOUO+JEoCLyN5h9ZEv8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=sVegOGjfBHLilqDEOVuzf3CIBK0v3zH3PDXSUQArc6IYAqK0Z5myLHI4K0svejyF8CAHwRUmX77ySqKMwfFaIWG+EQbHWUw0UJ4Le/u5HXu4k7H+RnglsTrSGWs768qxyK6Q/iwyiBc0y7S8NMl374UAJy1m+IweE+Jq70LAQX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rwq689C9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uLU7ENn8jfgDP0bTusj5LPYVoPK76Mnp2A9vAeEs3PiGR7mFCjxrTQlNyCqdv6wj3Mt2E452hjwmRs90TIh0Bs2S22n9/PTZlwZjgqkz0HltjSHyUVOcE/25Xk+UpmaxBEV8ESf6KyQftBbk+YQmqwgfg0PwI/qAsOPH3Mwviuk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=POQxDmld; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rwq689C9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C66C19423;
-	Tue, 10 Mar 2026 11:25:15 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="POQxDmld"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4759CC2BC86;
+	Tue, 10 Mar 2026 11:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773141916;
-	bh=wnnTIpP2xgT8QfksgPWFF4X5cTl+pBsaGxrye/5acyc=;
+	bh=bOeFJNsdHbF8fvLvjsUwo0tBKOUO+JEoCLyN5h9ZEv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rwq689C91/eyyWMY6C4hnV8ofelDp4EOST5muhjeHrf9wlqX6F2kUEJ8ygzTX40i3
-	 5UtwK7x99EPL13c0F8a/aIJtoJWCB0UL0O3z6LDMAWo+HNNlkAC6S0IzocY6xmF8ph
-	 lWogWa6I8PmajQ5pjLQMuo5pIOdbVysDT9oOvdTBH9doUfcgafG2MFZjDWy5MStiTc
-	 TFBfhnbJO8BdC8VG8dSJWCrYBHedXF4mx+tlgoDNVoX0ACGjpC/Q163NKD0BrKpNsw
-	 9WadDBXPoRLR5kYRt3/qBlpL5o1mr738oeHMoiedcpOkYiginI1x/uD4iTJZrV3c+F
-	 EAlHgiMPp6muA==
+	b=POQxDmldTqJ8IViZRN2RxSKmR9ebxYiUW/fCTq2UJnov0PUwBub18PK9oqUb6wJy9
+	 GUNs2Y6hXtP9J3WpACDn+BZZHg1rXQCNv9nfXMU6jbIzML8LlFMHP50DK9l8HPoYdJ
+	 ANv/RK0UvW3axY4RTP/rF3KnDOWhdodX4iqwYnZxgcnq2v8cZK3D3Fq344/SSM/T4v
+	 9Z6USAfQyUsJvFmZJYFvs8WwaTbFlIT+rFPcB8CPKrQCMahFv5L6dC1wdb/6DwV86l
+	 +6xbApvVgtkfHPubsQsDo1qryyeG+RAi2bm5qUEx59Wzse6bMs+7OUS79KsAntPKne
+	 lv5r5rCmZ6Z/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Cavitt <jonathan.cavitt@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+Cc: Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/314] drm/client: Do not destroy NULL modes
-Date: Tue, 10 Mar 2026 07:14:58 -0400
-Message-ID: <c3c672bef2f48c609b5fac7002697bc115210b79.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 040/314] ALSA: usb-audio: Cap the packet size pre-calculations
+Date: Tue, 10 Mar 2026 07:14:59 -0400
+Message-ID: <8908beca8b2e6a75ad1bcfc46d59777e6ae4e626.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -44,44 +43,48 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cavitt <jonathan.cavitt@intel.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit c601fd5414315fc515f746b499110e46272e7243 ]
+[ Upstream commit 7fe8dec3f628e9779f1631576f8e693370050348 ]
 
-'modes' in drm_client_modeset_probe may fail to kcalloc.  If this
-occurs, we jump to 'out', calling modes_destroy on it, which
-dereferences it.  This may result in a NULL pointer dereference in the
-error case.  Prevent that.
+We calculate the possible packet sizes beforehand for adaptive and
+synchronous endpoints, but we didn't take care of the max frame size
+for those pre-calculated values.  When a device or a bus limits the
+packet size, a high sample rate or a high number of channels may lead
+to the packet sizes that are larger than the given limit, which
+results in an error from the USB core at submitting URBs.
 
-Fixes: 3039cc0c0653 ("drm/client: Make copies of modes")
-Signed-off-by: Jonathan Cavitt <jonathan.cavitt@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patch.msgid.link/20260224221227.69126-2-jonathan.cavitt@intel.com
+As a simple workaround, just add the sanity checks of pre-calculated
+packet sizes to have the upper boundary of ep->maxframesize.
+
+Fixes: f0bd62b64016 ("ALSA: usb-audio: Improve frames size computation")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_client_modeset.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/usb/endpoint.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_client_modeset.c b/drivers/gpu/drm/drm_client_modeset.c
-index 9c2c3b0c8c470..eaf71c9ecf136 100644
---- a/drivers/gpu/drm/drm_client_modeset.c
-+++ b/drivers/gpu/drm/drm_client_modeset.c
-@@ -930,7 +930,8 @@ int drm_client_modeset_probe(struct drm_client_dev *client, unsigned int width,
- 	mutex_unlock(&client->modeset_mutex);
- out:
- 	kfree(crtcs);
--	modes_destroy(dev, modes, connector_count);
-+	if (modes)
-+		modes_destroy(dev, modes, connector_count);
- 	kfree(modes);
- 	kfree(offsets);
- 	kfree(enabled);
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 3ac1fbec6327e..173edce027d7b 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1374,6 +1374,9 @@ int snd_usb_endpoint_set_params(struct snd_usb_audio *chip,
+ 		return -EINVAL;
+ 	}
+ 
++	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
++	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
++
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
+ 	ep->freqshift = INT_MIN;
 -- 
 2.51.0
 
