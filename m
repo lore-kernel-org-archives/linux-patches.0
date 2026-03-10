@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E6E3876D0;
-	Tue, 10 Mar 2026 11:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2EC37B413;
+	Tue, 10 Mar 2026 11:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141995; cv=none; b=pN8jliXQo+cEpcSs8dj3qa+j4DGlBcxIsstCm5mhWP53z+cHOkWvFlOWN12XHn5KZbWR42m3DBtq/Kj3ereuUmZO2L+vHJzwKJ5rj7MvtAE2kSVFDmCTG6BP1HjuxHPmW8e/0ADadb17I09hU9ILEPpflm3y+FKOhuln/y665gk=
+	t=1773141996; cv=none; b=eUg4X9RXE1ZGHp+fEq23QUNPtnspOMluUlUv70EneGEcR3Vwe8D61FagFQRJR+BBd7dJPKT7Uu2jbikkXixSEdN7REsJFRFbw0Ig1dX+1dVLhdPgSjBS3DuI5TGDn2McGPPL2VkZqGrD0W17SHw5/Rcdq7JUlJskJ9uH1e67mbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141995; c=relaxed/simple;
-	bh=ifczh7gdKAo6Bpbo+SoIpqLV3hnyn0NF6tQI3gRcWWU=;
+	s=arc-20240116; t=1773141996; c=relaxed/simple;
+	bh=qoKGMMA8c2XybmlNisuifTOpQXuhT19rXE7/Qukienc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dKsVp6YWK2wh1BP00AI4al/6/iypzi9PR96npn+d3Rv9Af9/53QpppipD5eoFdksUrgkqVaVr3IyMIncaco/Lg46ABk836CjNS6v5Imddbc8wTovyan4OY3txktPeMj1ra3U25JVu1k3hWwarUSgS5GfTk6sofDBYF3+x5k5bLk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iiKRMqNt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMEXlcSljEO2E+naAFeu6eUyz/xR+AtK7b+vJ25j78I0Rxy+hBeFmlBRBpMbxuzVl2jIhK8ImDAOkTmCz4fwQxdrtCyGPs2okW0fWiK6xDrv7wYUfc8QCa/2o5FiWIU1BqT8NJ3ckdOU7yzU9RYaU3lHUoL2PL7YykzABpJWNpE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9TSi9RI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iiKRMqNt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E37C19423;
-	Tue, 10 Mar 2026 11:26:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9TSi9RI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E19FC19423;
+	Tue, 10 Mar 2026 11:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141995;
-	bh=ifczh7gdKAo6Bpbo+SoIpqLV3hnyn0NF6tQI3gRcWWU=;
+	s=k20201202; t=1773141996;
+	bh=qoKGMMA8c2XybmlNisuifTOpQXuhT19rXE7/Qukienc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iiKRMqNtV7cruNO3xR7nxrKu6ScF13rsMlXnUj4SkJOFa8HM4Z4LyfoU7W8oSq5EJ
-	 yVoOtYKrUBLNPbvMMB8TveYjf8bTpPg1azv/wFRNlZeqK33p/l4JVPj66NClrY+1Fc
-	 wpPD7egxk9muAbxj1rTSCanhTqtX7j6vSku5GTj+vvCiTC/eWayTt1Lk33Qa0aVXT4
-	 jo1O4U+LcZtlFK17fQZN+hsERuomJdrljGJnUhPk3JvnXPUaw+T/krC2VGxCWYXjTq
-	 fkhdGRApn0acv+R+CWAr3aqH3fVFdpwI4kXHRwP8r6QHn9+HOmNRHb39lTHplbJWbB
-	 lvSn6i70121mg==
+	b=i9TSi9RIdiBHG0xc8d3hIBg8utpOgdvskWSytHAtlcbOQfQGHSaB8I+bGSppgm7ZR
+	 pkAjbGTgLLdZ+z3NfT4TiNxOlQoie58r5JviXiyiudTg/GuoLUToOf0Co7NQZj+o+n
+	 uw1i8MBhGkZ7uF2XYpFcJGvCrktofOcqmJUvb/kzNNFLKNenaUmMa3LFkrjlnPJsUb
+	 KQLID3kN5unsBi6QALzBAqgjw3Xz4ZiSX/2jfGlv9ooreMWLZ5xpp+61j2GbPTSV2M
+	 Rm5qyOJamIvvXu5Bjoq/VPlYloQXHePnuPAaYLU9VpH9qsnSW/4dedpTjn+1hRkW6U
+	 Mq23dEtUDWMUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mario Limonciello <mario.limonciello@amd.com>,
-	Cal Peake <cp@absolutedigital.net>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Gui-Dong Han <hanguidong02@gmail.com>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 120/314] drm/amd: Fix hang on amdgpu unload by using pci_dev_is_disconnected()
-Date: Tue, 10 Mar 2026 07:16:19 -0400
-Message-ID: <bacbba1cc27941ae425297d9cd6a05f915a37d9c.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 121/314] hwmon: (max16065) Use READ/WRITE_ONCE to avoid compiler optimization induced race
+Date: Tue, 10 Mar 2026 07:16:20 -0400
+Message-ID: <11f26b331ca8107a51d3862d2cb71a4d5c182e7d.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,65 +49,103 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit f7afda7fcd169a9168695247d07ad94cf7b9798f ]
+[ Upstream commit 007be4327e443d79c9dd9e56dc16c36f6395d208 ]
 
-The commit 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise
-disconnect") introduced early KFD cleanup when drm_dev_is_unplugged()
-returns true. However, this causes hangs during normal module unload
-(rmmod amdgpu).
+Simply copying shared data to a local variable cannot prevent data
+races. The compiler is allowed to optimize away the local copy and
+re-read the shared memory, causing a Time-of-Check Time-of-Use (TOCTOU)
+issue if the data changes between the check and the usage.
 
-The issue occurs because drm_dev_unplug() is called in amdgpu_pci_remove()
-for all removal scenarios, not just surprise disconnects. This was done
-intentionally in commit 39934d3ed572 ("Revert "drm/amdgpu: TA unload
-messages are not actually sent to psp when amdgpu is uninstalled"") to
-fix IGT PCI software unplug test failures. As a result,
-drm_dev_is_unplugged() returns true even during normal module unload,
-triggering the early KFD cleanup inappropriately.
+To enforce the use of the local variable, use READ_ONCE() when reading
+the shared data and WRITE_ONCE() when updating it. Apply these macros to
+the three identified locations (curr_sense, adc, and fault) where local
+variables are used for error validation, ensuring the value remains
+consistent.
 
-The correct check should distinguish between:
-- Actual surprise disconnect (eGPU unplugged): pci_dev_is_disconnected()
-  returns true
-- Normal module unload (rmmod): pci_dev_is_disconnected() returns false
-
-Replace drm_dev_is_unplugged() with pci_dev_is_disconnected() to ensure
-the early cleanup only happens during true hardware disconnect events.
-
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Closes: https://lore.kernel.org/all/6fe17868327207e8b850cf9f88b7dc58b2021f73.camel@decadent.org.uk/
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+Fixes: b8d5acdcf525 ("hwmon: (max16065) Use local variable to avoid TOCTOU")
 Cc: stable@vger.kernel.org
-Reported-by: Cal Peake <cp@absolutedigital.net>
-Closes: https://lore.kernel.org/all/b0c22deb-c0fa-3343-33cf-fd9a77d7db99@absolutedigital.net/
-Fixes: 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise disconnect")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20260203121443.5482-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hwmon/max16065.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index fb096bf551ef2..dbcd55611a37d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4991,7 +4991,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
- 	 * before ip_fini_early to prevent kfd locking refcount issues by calling
- 	 * amdgpu_amdkfd_suspend()
- 	 */
--	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+	if (pci_dev_is_disconnected(adev->pdev))
- 		amdgpu_amdkfd_device_fini_sw(adev);
+diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
+index 4c9e7892a73c1..43fbb9b26b102 100644
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -151,27 +151,27 @@ static struct max16065_data *max16065_update_device(struct device *dev)
+ 		int i;
  
- 	amdgpu_device_ip_fini_early(adev);
-@@ -5003,7 +5003,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
+ 		for (i = 0; i < data->num_adc; i++)
+-			data->adc[i]
+-			  = max16065_read_adc(client, MAX16065_ADC(i));
++			WRITE_ONCE(data->adc[i],
++				   max16065_read_adc(client, MAX16065_ADC(i)));
  
- 	amdgpu_gart_dummy_page_fini(adev);
+ 		if (data->have_current) {
+-			data->adc[MAX16065_NUM_ADC]
+-			  = max16065_read_adc(client, MAX16065_CSP_ADC);
+-			data->curr_sense
+-			  = i2c_smbus_read_byte_data(client,
+-						     MAX16065_CURR_SENSE);
++			WRITE_ONCE(data->adc[MAX16065_NUM_ADC],
++				   max16065_read_adc(client, MAX16065_CSP_ADC));
++			WRITE_ONCE(data->curr_sense,
++				   i2c_smbus_read_byte_data(client, MAX16065_CURR_SENSE));
+ 		}
  
--	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+	if (pci_dev_is_disconnected(adev->pdev))
- 		amdgpu_device_unmap_mmio(adev);
+ 		for (i = 0; i < 2; i++)
+-			data->fault[i]
+-			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
++			WRITE_ONCE(data->fault[i],
++				   i2c_smbus_read_byte_data(client, MAX16065_FAULT(i)));
  
- }
+ 		/*
+ 		 * MAX16067 and MAX16068 have separate undervoltage and
+ 		 * overvoltage alarm bits. Squash them together.
+ 		 */
+ 		if (data->chip == max16067 || data->chip == max16068)
+-			data->fault[0] |= data->fault[1];
++			WRITE_ONCE(data->fault[0],
++				   data->fault[0] | data->fault[1]);
+ 
+ 		data->last_updated = jiffies;
+ 		data->valid = true;
+@@ -185,7 +185,7 @@ static ssize_t max16065_alarm_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute_2 *attr2 = to_sensor_dev_attr_2(da);
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int val = data->fault[attr2->nr];
++	int val = READ_ONCE(data->fault[attr2->nr]);
+ 
+ 	if (val < 0)
+ 		return val;
+@@ -203,7 +203,7 @@ static ssize_t max16065_input_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int adc = data->adc[attr->index];
++	int adc = READ_ONCE(data->adc[attr->index]);
+ 
+ 	if (unlikely(adc < 0))
+ 		return adc;
+@@ -216,7 +216,7 @@ static ssize_t max16065_current_show(struct device *dev,
+ 				     struct device_attribute *da, char *buf)
+ {
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int curr_sense = data->curr_sense;
++	int curr_sense = READ_ONCE(data->curr_sense);
+ 
+ 	if (unlikely(curr_sense < 0))
+ 		return curr_sense;
 -- 
 2.51.0
 
