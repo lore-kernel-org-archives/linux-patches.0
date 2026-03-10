@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E859313E32;
-	Tue, 10 Mar 2026 11:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3100E387587;
+	Tue, 10 Mar 2026 11:27:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142023; cv=none; b=S8m1FbiVyKZAtvNbJqK1O6MkdEkxarvQ3GNDBdytezSVL3UtQJdD2VGD5W4I9mVjkJc5U5Tj/7qFDVjkIMdPmIUgQU0bxj/mV4RafmcSoXemrggeF/EWrIi4+y1RN9u+Xy0ocLpj9eKXFs2UXjFDUt9T9m7Os+7qCjrqil598h8=
+	t=1773142024; cv=none; b=BNClVPbip7ENxLB4bS+PLaHtpiu6Cob4cB9a3/81aRvTKUFFTjjkHro29hdI9L9jVc5SAE+qZapFlrl27D70Cai9ayHxlA4w7pgr7dWryOd2gKjCYgX5UjKTFJ3s2c/olsRGh+D93Bu7pk9UG96mB5lNk/Nhnw0Z2XkayEMM0S8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142023; c=relaxed/simple;
-	bh=xQwV+8hi3Rh0La4r51NxbSy1JK8ZpmnNMrSj2x93ens=;
+	s=arc-20240116; t=1773142024; c=relaxed/simple;
+	bh=wI7Pnsmf0DB8qEydEVm5GZN+LfASciMIswxpG4HQewY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fx3L+YEWSz+2byUWDEA23HCjPCaUEk68gtLmxBQNfdIiV1CrneOJg8yi8hiyV1BR5kA0o/MpoFSLzbi0gzcMGgHACI+xSwPWbLpwsdfZw1/uLOFrpAXCld9vGuv9lIY8D4mwPnS2724HECVz6w4bKWQ2LqOhXVigPcR/CF/el8Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Q5G/By3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=j74J9Je4u3Va6Pbv3NqogVivYJVBavLYUtIhL/oRGRItmZjLn5348e1wcWknloVgDY/JlbkyqiQcZ3DWahlxGAu2w38UE+sV2E4xqfyHCBFGyeN/A7OulQys9ZiA4+seNyPg8Wtgo5UEM3EaBnNlL6LvYOwdgDgZwm9OTRGYPcc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Fbci+iHQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Q5G/By3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147C0C19423;
-	Tue, 10 Mar 2026 11:27:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Fbci+iHQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35441C19423;
+	Tue, 10 Mar 2026 11:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142022;
-	bh=xQwV+8hi3Rh0La4r51NxbSy1JK8ZpmnNMrSj2x93ens=;
+	s=k20201202; t=1773142024;
+	bh=wI7Pnsmf0DB8qEydEVm5GZN+LfASciMIswxpG4HQewY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5G/By3oALJviRnfKogpUshWFe4p6cXkGB4y86t81VuscYP9bSyGvxAu4B+cf1CWH
-	 JZNgqYWQqW9tuYci/0WR4bFfkx0tezikwIjkiDYgE0e7USKQhF3Btln8SNRv/qrOk0
-	 G0M97cffXohf3RwswcndwHUIkc4bfJ7Sw3T3Caa8pL3k1LGxq64qdTj6FK0AAr4Jr2
-	 xy4Qmkv6r+AlJBz0icJY0HuutuFLhT4e1jjCm7A8/XN9bRs/H3QcqJm0jDpLCHXDzy
-	 Hp3PvpxVrjWmr6IaXqMhtn+HqxXyKjKzzu4JufAUANWnQ4JsXBbJlqPBNdMLi4SpwW
-	 SJ+fe5WCyqo6w==
+	b=Fbci+iHQ1pGYKIdidHsZK1l9NddQ0mqWAF6jWiGWZe7mRTPCdVIahebpmMN2lgsqe
+	 LWQVVm0ICKUqPiZnWAeM5zERT6VJjKD+7641YL9a/4lVl2/BO9IiG913jRiXU1bcys
+	 pZ+dFz3Gie7qhV2bAzFyIAfVf7Tu8vEjQjjnPJyc7dfrQUTnEfFK0aUO3hpjPfoWmO
+	 He2Gpdp6uasVfgWXBzKzb2qVD2APpE6RFfHIrJMILeEXoh/90R5d1AGW7t1TLCQ+4g
+	 ayfxJ2D20GKGtu+krJrDlGs0qHP2KvCoYwcD67TdSA9CYehZHm58M6QX8G2gZcC9ah
+	 suWWy/WZHVBWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kim Phillips <kim.phillips@amd.com>,
+Cc: Tom Lendacky <thomas.lendacky@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Nikunj A Dadhania <nikunj@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	stable@kernel.org,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Changyuan Lyu <changyuanl@google.com>,
+	Kevin Hui <kevinhui@meta.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 149/314] x86/sev: Allow IBPB-on-Entry feature for SNP guests
-Date: Tue, 10 Mar 2026 07:16:48 -0400
-Message-ID: <cd691aae623ffdef39fd0378490935706b1ca57c.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 150/314] x86/boot/sev: Move SEV decompressor variables into the .data section
+Date: Tue, 10 Mar 2026 07:16:49 -0400
+Message-ID: <a8bae1461cf144161ad9a684dd8e3bc28c26ed89.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,79 +51,87 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-commit 9073428bb204d921ae15326bb7d4558d9d269aab upstream.
+commit 4ca191cec17a997d0e3b2cd312f3a884288acc27 upstream.
 
-The SEV-SNP IBPB-on-Entry feature does not require a guest-side
-implementation. It was added in Zen5 h/w, after the first SNP Zen
-implementation, and thus was not accounted for when the initial set of SNP
-features were added to the kernel.
+As part of the work to remove the dependency on calling into the decompressor
+code (startup_64()) for a UEFI boot, a call to rmpadjust() was removed from
+sev_enable() in favor of checking the value of the snp_vmpl variable.
 
-In its abundant precaution, commit
+When booting through a non-UEFI path and calling startup_64(), the call to
+sev_enable() is performed before the BSS section is zeroed. With the removal
+of the rmpadjust() call and the corresponding check of the return code, the
+snp_vmpl variable is checked.
 
-  8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
+Since the kernel is running at VMPL0, the snp_vmpl variable will not have been
+set and should be the default value of 0.  However, since the call occurs
+before the BSS is zeroed, the snp_vmpl variable may not actually be zero,
+which will cause the guest boot to fail.
 
-included SEV_STATUS' IBPB-on-Entry bit as a reserved bit, thereby masking
-guests from using the feature.
+Since the decompressor relocates itself, the BSS would need to be cleared both
+before and after the relocation, but this would, in effect, cause all of the
+changes to BSS variables before relocation to be lost after relocation.
 
-Allow guests to make use of IBPB-on-Entry when supported by the hypervisor, as
-the bit is now architecturally defined and safe to expose.
+Instead, move the snp_vmpl variable into the .data section so that it is
+initialized and the value made safe during relocation. As a pre-caution
+against future changes, move other SEV-related decompressor variables into the
+.data section, too.
 
-Fixes: 8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Fixes: 68a501d7fd82 ("x86/boot: Drop redundant RMPADJUST in SEV SVSM presence check")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20260203222405.4065706-2-kim.phillips@amd.com
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Reviewed-by: Changyuan Lyu <changyuanl@google.com>
+Tested-by: Kevin Hui <kevinhui@meta.com>
+Tested-by: Changyuan Lyu <changyuanl@google.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/5648b7de5b0a5d0dfef3785f9582b718678c6448.1770217260.git.thomas.lendacky@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/sev.c   | 1 +
- arch/x86/coco/sev/core.c         | 1 +
- arch/x86/include/asm/msr-index.h | 5 ++++-
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ arch/x86/boot/compressed/sev.c     | 8 ++++----
+ arch/x86/boot/startup/sev-shared.c | 2 +-
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
-index 6e5c32a53d034..0d20bc178629e 100644
+index 0d20bc178629e..b688303666052 100644
 --- a/arch/x86/boot/compressed/sev.c
 +++ b/arch/x86/boot/compressed/sev.c
-@@ -187,6 +187,7 @@ bool sev_es_check_ghcb_fault(unsigned long address)
- 				 MSR_AMD64_SNP_RESERVED_BIT13 |		\
- 				 MSR_AMD64_SNP_RESERVED_BIT15 |		\
- 				 MSR_AMD64_SNP_SECURE_AVIC |		\
-+				 MSR_AMD64_SNP_RESERVED_BITS19_22 |	\
- 				 MSR_AMD64_SNP_RESERVED_MASK)
+@@ -27,17 +27,17 @@
+ #include "sev.h"
  
- #ifdef CONFIG_AMD_SECURE_AVIC
-diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
-index c8ddb9febe3d9..d20e9cc065a87 100644
---- a/arch/x86/coco/sev/core.c
-+++ b/arch/x86/coco/sev/core.c
-@@ -122,6 +122,7 @@ static const char * const sev_status_feat_names[] = {
- 	[MSR_AMD64_SNP_VMSA_REG_PROT_BIT]	= "VMSARegProt",
- 	[MSR_AMD64_SNP_SMT_PROT_BIT]		= "SMTProt",
- 	[MSR_AMD64_SNP_SECURE_AVIC_BIT]		= "SecureAVIC",
-+	[MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT]	= "IBPBOnEntry",
- };
+ static struct ghcb boot_ghcb_page __aligned(PAGE_SIZE);
+-struct ghcb *boot_ghcb;
++struct ghcb *boot_ghcb __section(".data");
  
- /*
-diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
-index 9e1720d73244f..d9e03c6d1d5c1 100644
---- a/arch/x86/include/asm/msr-index.h
-+++ b/arch/x86/include/asm/msr-index.h
-@@ -711,7 +711,10 @@
- #define MSR_AMD64_SNP_SMT_PROT		BIT_ULL(MSR_AMD64_SNP_SMT_PROT_BIT)
- #define MSR_AMD64_SNP_SECURE_AVIC_BIT	18
- #define MSR_AMD64_SNP_SECURE_AVIC	BIT_ULL(MSR_AMD64_SNP_SECURE_AVIC_BIT)
--#define MSR_AMD64_SNP_RESV_BIT		19
-+#define MSR_AMD64_SNP_RESERVED_BITS19_22 GENMASK_ULL(22, 19)
-+#define MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT	23
-+#define MSR_AMD64_SNP_IBPB_ON_ENTRY	BIT_ULL(MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT)
-+#define MSR_AMD64_SNP_RESV_BIT		24
- #define MSR_AMD64_SNP_RESERVED_MASK	GENMASK_ULL(63, MSR_AMD64_SNP_RESV_BIT)
- #define MSR_AMD64_SAVIC_CONTROL		0xc0010138
- #define MSR_AMD64_SAVIC_EN_BIT		0
+ #undef __init
+ #define __init
+ 
+ #define __BOOT_COMPRESSED
+ 
+-u8 snp_vmpl;
+-u16 ghcb_version;
++u8 snp_vmpl __section(".data");
++u16 ghcb_version __section(".data");
+ 
+-u64 boot_svsm_caa_pa;
++u64 boot_svsm_caa_pa __section(".data");
+ 
+ /* Include code for early handlers */
+ #include "../../boot/startup/sev-shared.c"
+diff --git a/arch/x86/boot/startup/sev-shared.c b/arch/x86/boot/startup/sev-shared.c
+index 4e22ffd735168..e52e886ad313d 100644
+--- a/arch/x86/boot/startup/sev-shared.c
++++ b/arch/x86/boot/startup/sev-shared.c
+@@ -31,7 +31,7 @@ static u32 cpuid_std_range_max __ro_after_init;
+ static u32 cpuid_hyp_range_max __ro_after_init;
+ static u32 cpuid_ext_range_max __ro_after_init;
+ 
+-bool sev_snp_needs_sfw;
++bool sev_snp_needs_sfw __section(".data");
+ 
+ void __noreturn
+ sev_es_terminate(unsigned int set, unsigned int reason)
 -- 
 2.51.0
 
