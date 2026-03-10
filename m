@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D502D24B7;
-	Tue, 10 Mar 2026 11:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE242D24B7;
+	Tue, 10 Mar 2026 11:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141092; cv=none; b=Or+Pl7jxHLY1jQsgPY0KE2o9nvQV7j+jRcdJjx7J5ar+nHmEvX3+W3GGhz1vIVOJEjyc296B1JbQoXgrmyhqp4rHZluTmVcsJwoFUBFjT7NHgrqCahXEu/WXdN+koVU8nur4CpuyPPO+wguhJFHpOUc6xIHjqGCuDe0wnCE+H7o=
+	t=1773141093; cv=none; b=mAfnGtEqlGP2ljsbr+dz63J1LGweeLmsXuI5d4C5Mf6k7ESVqmd+ph2vmG0j7U68ZqPsEJCBSfMqSWk7KORPD9B7yUP9kb23kMRAsiLSQVyLrox3ZBuypl5B4JC/ThAvMxFI8/FKcXQYHp0Ij43nDAsxqksqCqbr1Djn2BARnmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141092; c=relaxed/simple;
-	bh=Uf8vSVQSoe5VrFMyG3Pq9sb/s1IBU0K8JjmtJDd+9SU=;
+	s=arc-20240116; t=1773141093; c=relaxed/simple;
+	bh=zrofDdAf/ffu9FZESZlvcsRid+lWMQBNvFGw19p05aw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pxr2/InsPCRle0NbJWkEvIjSPguPnrfnWIknw1LArnuetOnizInIOZLy4qVzDRPMZDFt3UF6HW8QIwk6axY/PpI7XYTUivQKLUiv7OPwZeNPrEgaciJOHdqFd1Ume6pctDSPaVDL0iEqWxZfyASld5U41QOL8sMvXqdfAz/ktlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kZAt+Rwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RQ5gW8Bji0Ddc1pENvSTOqBFTAvBeCKEWCW92WTMjFsJWW/WMJEeRu+AKxHuWOfKxaQ3StNkrkj76jOtomBKLyBzeWjmru/JdHDWnmp65c9BuTvp3HGihLdwe7KCWkvdagQa2b13WzMZ7Vi/HUojzdCerEjmd1ZJFihEKdhqTbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QjqBaXB3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kZAt+Rwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5590DC2BC86;
-	Tue, 10 Mar 2026 11:11:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QjqBaXB3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79379C19423;
+	Tue, 10 Mar 2026 11:11:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141092;
-	bh=Uf8vSVQSoe5VrFMyG3Pq9sb/s1IBU0K8JjmtJDd+9SU=;
+	s=k20201202; t=1773141093;
+	bh=zrofDdAf/ffu9FZESZlvcsRid+lWMQBNvFGw19p05aw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZAt+RwbU2/+JRn+sOUL98eILuwv3/Ca6a7KL6xIOGUsx8UBQZeyjDS87/sVH6yss
-	 LqySOyJwfqJ8b0CmA8/xqM2PsmqFMlVyJRm9WV18rWLyPj0F+5M8HA4rywJNmf9YdZ
-	 wYOgmyLeQwfUP2zZQr4LhK3tfUzoDWTTz3xVYudg9pSCVIEcmsaKjihIidklCkLVoA
-	 THSNTda1oYYxx8rUU2wIQXqFJAQ0Q3ZLkE5xyYHI9+HLeX995Az/gONau72bua8tHO
-	 hHmCxuQJ0zVM+nj3PxJI2kv4NSEEWb5poSHxjrFquvYAG2iC2vxsBGjHgL/bMaSH7G
-	 1pfgkMkmi+Nkw==
+	b=QjqBaXB3ac85iCjlY/UANpnsvyrJR8zmDZvyNXj9U74oSeNEvO03RxSKdz41V0gin
+	 xuRZPksAvdCgfgL5Lph2TFaDjZrFNixP4OOzysfOlz1B5e+4X+nUYIe0Yz46NlxrkM
+	 EeS59YURy5DUsThdbBs3SDsZ1/Z9G/c/WSV5A0QT1MD3CNWamdwa974sLj/RfJMFMH
+	 PvjDV6LSJsag2YTGFw4FbJKDcqNekMLLpERGa5QcCL4JwyerszNv25eh2QHuRH+SBm
+	 ugt0OfIEvqF69JBeOYB2iLcxQFCtawOusehaNFR0MuECMi54w/w2eL/w2rnsfyHbDf
+	 UnQSfucyPjP2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paul Chaignon <paul.chaignon@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Marco Schirrmeister <mschirrmeister@gmail.com>,
-	Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: David Laight <david.laight.linux@gmail.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 092/311] bpf: Improve bounds when tnum has a single possible value
-Date: Tue, 10 Mar 2026 07:02:19 -0400
-Message-ID: <ca2ddfdc8dd91be3916b74846cef9b97e4e84e51.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 093/311] uaccess: Fix scoped_user_read_access() for 'pointer to const'
+Date: Tue, 10 Mar 2026 07:02:20 -0400
+Message-ID: <ee8977e1e9f4182743069aec255f0cd1363792ff.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -51,146 +49,108 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: David Laight <david.laight.linux@gmail.com>
 
-[ Upstream commit efc11a667878a1d655ff034a93a539debbfedb12 ]
+[ Upstream commit af4e9ef3d78420feb8fe58cd9a1ab80c501b3c08 ]
 
-We're hitting an invariant violation in Cilium that sometimes leads to
-BPF programs being rejected and Cilium failing to start [1]. The
-following extract from verifier logs shows what's happening:
+If a 'const struct foo __user *ptr' is used for the address passed to
+scoped_user_read_access() then you get a warning/error
 
-  from 201 to 236: R1=0 R6=ctx() R7=1 R9=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100)) R10=fp0
-  236: R1=0 R6=ctx() R7=1 R9=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100)) R10=fp0
-  ; if (magic == MARK_MAGIC_HOST || magic == MARK_MAGIC_OVERLAY || magic == MARK_MAGIC_ENCRYPT) @ bpf_host.c:1337
-  236: (16) if w9 == 0xe00 goto pc+45   ; R9=scalar(smin=umin=smin32=umin32=3585,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100))
-  237: (16) if w9 == 0xf00 goto pc+1
-  verifier bug: REG INVARIANTS VIOLATION (false_reg1): range bounds violation u64=[0xe01, 0xe00] s64=[0xe01, 0xe00] u32=[0xe01, 0xe00] s32=[0xe01, 0xe00] var_off=(0xe00, 0x0)
+  uaccess.h:691:1: error: initialization discards 'const' qualifier from pointer target type [-Werror=discarded-qualifiers]
 
-We reach instruction 236 with two possible values for R9, 0xe00 and
-0xf00. This is perfectly reflected in the tnum, but of course the ranges
-are less accurate and cover [0xe00; 0xf00]. Taking the fallthrough path
-at instruction 236 allows the verifier to reduce the range to
-[0xe01; 0xf00]. The tnum is however not updated.
+for the
 
-With these ranges, at instruction 237, the verifier is not able to
-deduce that R9 is always equal to 0xf00. Hence the fallthrough pass is
-explored first, the verifier refines the bounds using the assumption
-that R9 != 0xf00, and ends up with an invariant violation.
+  void __user *_tmpptr = __scoped_user_access_begin(mode, uptr, size, elbl)
 
-This pattern of impossible branch + bounds refinement is common to all
-invariant violations seen so far. The long-term solution is likely to
-rely on the refinement + invariant violation check to detect dead
-branches, as started by Eduard. To fix the current issue, we need
-something with less refactoring that we can backport.
+assignment.
 
-This patch uses the tnum_step helper introduced in the previous patch to
-detect the above situation. In particular, three cases are now detected
-in the bounds refinement:
+Fix by using 'auto' for both _tmpptr and the redeclaration of uptr.
+Replace the CLASS() with explicit __cleanup() functions on uptr.
 
-1. The u64 range and the tnum only overlap in umin.
-   u64:  ---[xxxxxx]-----
-   tnum: --xx----------x-
-
-2. The u64 range and the tnum only overlap in the maximum value
-   represented by the tnum, called tmax.
-   u64:  ---[xxxxxx]-----
-   tnum: xx-----x--------
-
-3. The u64 range and the tnum only overlap in between umin (excluded)
-   and umax.
-   u64:  ---[xxxxxx]-----
-   tnum: xx----x-------x-
-
-To detect these three cases, we call tnum_step(tnum, umin), which
-returns the smallest member of the tnum greater than umin, called
-tnum_next here. We're in case (1) if umin is part of the tnum and
-tnum_next is greater than umax. We're in case (2) if umin is not part of
-the tnum and tnum_next is equal to tmax. Finally, we're in case (3) if
-umin is not part of the tnum, tnum_next is inferior or equal to umax,
-and calling tnum_step a second time gives us a value past umax.
-
-This change implements these three cases. With it, the above bytecode
-looks as follows:
-
-  0: (85) call bpf_get_prandom_u32#7    ; R0=scalar()
-  1: (47) r0 |= 3584                    ; R0=scalar(smin=0x8000000000000e00,umin=umin32=3584,smin32=0x80000e00,var_off=(0xe00; 0xfffffffffffff1ff))
-  2: (57) r0 &= 3840                    ; R0=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100))
-  3: (15) if r0 == 0xe00 goto pc+2      ; R0=3840
-  4: (15) if r0 == 0xf00 goto pc+1
-  4: R0=3840
-  6: (95) exit
-
-In addition to the new selftests, this change was also verified with
-Agni [3]. For the record, the raw SMT is available at [4]. The property
-it verifies is that: If a concrete value x is contained in all input
-abstract values, after __update_reg_bounds, it will continue to be
-contained in all output abstract values.
-
-Link: https://github.com/cilium/cilium/issues/44216 [1]
-Link: https://pchaigno.github.io/test-verifier-complexity.html [2]
-Link: https://github.com/bpfverif/agni [3]
-Link: https://pastebin.com/raw/naCfaqNx [4]
-Fixes: 0df1a55afa83 ("bpf: Warn on internal verifier errors")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Tested-by: Marco Schirrmeister <mschirrmeister@gmail.com>
-Co-developed-by: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
-Signed-off-by: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/ef254c4f68be19bd393d450188946821c588565d.1772225741.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: e497310b4ffb ("uaccess: Provide scoped user access regions")
+Signed-off-by: David Laight <david.laight.linux@gmail.com>
+Reviewed-and-tested-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ include/linux/uaccess.h | 54 +++++++++++++++--------------------------
+ 1 file changed, 20 insertions(+), 34 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 0f871db07aadf..c3b58f5d062b0 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2358,6 +2358,9 @@ static void __update_reg32_bounds(struct bpf_reg_state *reg)
+diff --git a/include/linux/uaccess.h b/include/linux/uaccess.h
+index 1f3804245c066..809e4f7dfdbd4 100644
+--- a/include/linux/uaccess.h
++++ b/include/linux/uaccess.h
+@@ -647,36 +647,22 @@ static inline void user_access_restore(unsigned long flags) { }
+ /* Define RW variant so the below _mode macro expansion works */
+ #define masked_user_rw_access_begin(u)	masked_user_access_begin(u)
+ #define user_rw_access_begin(u, s)	user_access_begin(u, s)
+-#define user_rw_access_end()		user_access_end()
  
- static void __update_reg64_bounds(struct bpf_reg_state *reg)
- {
-+	u64 tnum_next, tmax;
-+	bool umin_in_tnum;
-+
- 	/* min signed is max(sign bit) | min(other bits) */
- 	reg->smin_value = max_t(s64, reg->smin_value,
- 				reg->var_off.value | (reg->var_off.mask & S64_MIN));
-@@ -2367,6 +2370,33 @@ static void __update_reg64_bounds(struct bpf_reg_state *reg)
- 	reg->umin_value = max(reg->umin_value, reg->var_off.value);
- 	reg->umax_value = min(reg->umax_value,
- 			      reg->var_off.value | reg->var_off.mask);
-+
-+	/* Check if u64 and tnum overlap in a single value */
-+	tnum_next = tnum_step(reg->var_off, reg->umin_value);
-+	umin_in_tnum = (reg->umin_value & ~reg->var_off.mask) == reg->var_off.value;
-+	tmax = reg->var_off.value | reg->var_off.mask;
-+	if (umin_in_tnum && tnum_next > reg->umax_value) {
-+		/* The u64 range and the tnum only overlap in umin.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: --xx----------x-
-+		 */
-+		___mark_reg_known(reg, reg->umin_value);
-+	} else if (!umin_in_tnum && tnum_next == tmax) {
-+		/* The u64 range and the tnum only overlap in the maximum value
-+		 * represented by the tnum, called tmax.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: xx-----x--------
-+		 */
-+		___mark_reg_known(reg, tmax);
-+	} else if (!umin_in_tnum && tnum_next <= reg->umax_value &&
-+		   tnum_step(reg->var_off, tnum_next) > reg->umax_value) {
-+		/* The u64 range and the tnum only overlap in between umin
-+		 * (excluded) and umax.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: xx----x-------x-
-+		 */
-+		___mark_reg_known(reg, tnum_next);
-+	}
- }
+ /* Scoped user access */
+-#define USER_ACCESS_GUARD(_mode)				\
+-static __always_inline void __user *				\
+-class_user_##_mode##_begin(void __user *ptr)			\
+-{								\
+-	return ptr;						\
+-}								\
+-								\
+-static __always_inline void					\
+-class_user_##_mode##_end(void __user *ptr)			\
+-{								\
+-	user_##_mode##_access_end();				\
+-}								\
+-								\
+-DEFINE_CLASS(user_ ##_mode## _access, void __user *,		\
+-	     class_user_##_mode##_end(_T),			\
+-	     class_user_##_mode##_begin(ptr), void __user *ptr)	\
+-								\
+-static __always_inline class_user_##_mode##_access_t		\
+-class_user_##_mode##_access_ptr(void __user *scope)		\
+-{								\
+-	return scope;						\
+-}
  
- static void __update_reg_bounds(struct bpf_reg_state *reg)
+-USER_ACCESS_GUARD(read)
+-USER_ACCESS_GUARD(write)
+-USER_ACCESS_GUARD(rw)
+-#undef USER_ACCESS_GUARD
++/* Cleanup wrapper functions */
++static __always_inline void __scoped_user_read_access_end(const void *p)
++{
++	user_read_access_end();
++};
++static __always_inline void __scoped_user_write_access_end(const void *p)
++{
++	user_write_access_end();
++};
++static __always_inline void __scoped_user_rw_access_end(const void *p)
++{
++	user_access_end();
++};
+ 
+ /**
+  * __scoped_user_access_begin - Start a scoped user access
+@@ -750,13 +736,13 @@ USER_ACCESS_GUARD(rw)
+  *
+  * Don't use directly. Use scoped_masked_user_$MODE_access() instead.
+  */
+-#define __scoped_user_access(mode, uptr, size, elbl)					\
+-for (bool done = false; !done; done = true)						\
+-	for (void __user *_tmpptr = __scoped_user_access_begin(mode, uptr, size, elbl); \
+-	     !done; done = true)							\
+-		for (CLASS(user_##mode##_access, scope)(_tmpptr); !done; done = true)	\
+-			/* Force modified pointer usage within the scope */		\
+-			for (const typeof(uptr) uptr = _tmpptr; !done; done = true)
++#define __scoped_user_access(mode, uptr, size, elbl)				\
++for (bool done = false; !done; done = true)					\
++	for (auto _tmpptr = __scoped_user_access_begin(mode, uptr, size, elbl);	\
++	     !done; done = true)						\
++		/* Force modified pointer usage within the scope */		\
++		for (const auto uptr  __cleanup(__scoped_user_##mode##_access_end) = \
++		     _tmpptr; !done; done = true)
+ 
+ /**
+  * scoped_user_read_access_size - Start a scoped user read access with given size
 -- 
 2.51.0
 
