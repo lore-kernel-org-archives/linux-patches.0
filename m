@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9D3389DE8;
-	Tue, 10 Mar 2026 11:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23C0389E1D;
+	Tue, 10 Mar 2026 11:29:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142170; cv=none; b=ixmU6ncRh86RnyAmbv+kt862zSWA1BmVCsbBNvJdbq+kLcQE923ImTg0laHsduC+IWNnTSsjo02rXmixjxibKKe4GsCeOa3xIOQwC+rF+UfWcTQ6LLDCi4ScqnH1x5jeXayJiyw2fbufzDMq/q/KfFD3D4zxutb3Pq3jfmmuvJY=
+	t=1773142171; cv=none; b=BXVThqkKXAJe/m2vjch3SREEfyEYSWhpozIVTMiJwALoTgHvBgR+bfwTIpg67fQzj33e5DOLjIbcDDJhpAq7OTHs6f+qCABWegxFHCRo+WR7JDIsqH13gIJWTei2xzLShMlHbEoxhiE/OkEGei2YazXQnVHd10RHXUtepBiMqf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142170; c=relaxed/simple;
-	bh=xXjCCA3FdQ9RoF366iZKkj/s+p6BWouloAyVZgF0yws=;
+	s=arc-20240116; t=1773142171; c=relaxed/simple;
+	bh=rDfHZWmUhtNsK0g9YqzTNjFjqCxSBRv85lWWLCuHv5U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ngVV6E1hIndrd84X55bcmfLMuYn3nN9T1itFC6zZR4ROgo9RDhKQeiM4aUrZGD9cOaMuoOxUJKbr1oK90B96xTycHGeFiHfAGaE5cOaKPeFWIf+WSVMrIfpkiuY4W+cI/Rth7QmyyR1nGOAHe9AnjoTy4BUj5E98JmTR+UeqKjg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/whardb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TgZB7ATYX6H67+cnB74AlK4GkqZl/p64uGDLSWLfF0JfFNBKLT6Ju8Qm2wCiH9Sh7YvTbB6Dt+W+wR39YWPiCQTi/Y/QQWGPxyL0kcHmS253Ewf9oGmr9BfAitLFn4dFEa18eissKOIqBZFrfBrDY1m+lqI0cGh+ytI7PNa6qzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hm571/Vl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/whardb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FD4C2BC9E;
-	Tue, 10 Mar 2026 11:29:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hm571/Vl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF590C2BC86;
+	Tue, 10 Mar 2026 11:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142170;
-	bh=xXjCCA3FdQ9RoF366iZKkj/s+p6BWouloAyVZgF0yws=;
+	s=k20201202; t=1773142171;
+	bh=rDfHZWmUhtNsK0g9YqzTNjFjqCxSBRv85lWWLCuHv5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/whardb66uIwmfc3DTrTVvWOmGTm5sFmy7KZiR4tubIT6L5y0dOgrWKD37mAGXrE
-	 4WUkWkn6rSh3Rv1JQ5YCWErl0E3dUNTZvccvyuEstiKTrjr0VwoBgL1Byu2qH7ZthI
-	 MHEIU8mbP2w4o7OoZUIsc+4OLW4ljlMixibNN+qMtLkAgEJF/NOt67UbWyvyItkbj6
-	 /OwNH8nxb4seTW6KUAUTpgnhH9AX8maxUPHwfyy4A1NxEM7R9pzJtiHRDUx5O3Yicp
-	 A/5ftZv2vvY01yQPQmNUcOb/lkURh8MkS7b8O64v2PcGyXpUiav0NEJ4j+OkBzT+h6
-	 tUimav5SUKOAg==
+	b=hm571/VlOmKSYoU7wPiXNt9lxOuQtdSkwk9yU0wKO5QbshLtDGZsbxOBG3ZnHJs62
+	 sWDZxteGuzrOHyvdRSGTXFPNpAELLBc0MCCqRaVbgp4B1idfn9comJdlyXV7qef51I
+	 3PJg7sVbuemay5Kk8gV/XOChOS2Dcge/JFB+5a01MecMzLLmmgoznL3xPJjdaDqglj
+	 DrjdBVTB2iCS7INoc45a6XSntV8a3oej+qUnRimP6WjsD0CeS/ePyAt0b/Bmiy4yKb
+	 wV23WdxgUjw+OUgyQxqJr7Gz25cw39YAFAM5ldomN+oCLBXmtJ1+GwGS6NB21MVtbG
+	 fiFD201PU/ukA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Allison Henderson <achender@kernel.org>,
-	syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: David Thomson <dt@linux-mail.net>,
+	Jan Beulich <jbeulich@suse.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 259/314] net/rds: Fix circular locking dependency in rds_tcp_tune
-Date: Tue, 10 Mar 2026 07:18:38 -0400
-Message-ID: <a09e5210129af175fd7548d993c13a1e62c27070.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 260/314] xen/acpi-processor: fix _CST detection using undersized evaluation buffer
+Date: Tue, 10 Mar 2026 07:18:39 -0400
+Message-ID: <57282f5bb47cef00c17a9d098561eef6f8c201cb.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,82 +49,62 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Allison Henderson <achender@kernel.org>
+From: David Thomson <dt@linux-mail.net>
 
-[ Upstream commit 6a877ececd6daa002a9a0002cd0fbca6592a9244 ]
+[ Upstream commit 8b57227d59a86fc06d4f09de08f98133680f2cae ]
 
-syzbot reported a circular locking dependency in rds_tcp_tune() where
-sk_net_refcnt_upgrade() is called while holding the socket lock:
+read_acpi_id() attempts to evaluate _CST using a stack buffer of
+sizeof(union acpi_object) (48 bytes), but _CST returns a nested Package
+of sub-Packages (one per C-state, each containing a register descriptor,
+type, latency, and power) requiring hundreds of bytes. The evaluation
+always fails with AE_BUFFER_OVERFLOW.
 
-======================================================
-WARNING: possible circular locking dependency detected
-======================================================
-kworker/u10:8/15040 is trying to acquire lock:
-ffffffff8e9aaf80 (fs_reclaim){+.+.}-{0:0},
-at: __kmalloc_cache_noprof+0x4b/0x6f0
+On modern systems using FFH/MWAIT entry (where pblk is zero), this
+causes the function to return before setting the acpi_id_cst_present
+bit. In check_acpi_ids(), flags.power is then zero for all Phase 2 CPUs
+(physical CPUs beyond dom0's vCPU count), so push_cxx_to_hypervisor() is
+never called for them.
 
-but task is already holding lock:
-ffff88805a3c1ce0 (k-sk_lock-AF_INET6){+.+.}-{0:0},
-at: rds_tcp_tune+0xd7/0x930
+On a system with dom0_max_vcpus=2 and 8 physical CPUs, only PCPUs 0-1
+receive C-state data. PCPUs 2-7 are stuck in C0/C1 idle, unable to
+enter C2/C3. This costs measurable wall power (4W observed on an Intel
+Core Ultra 7 265K with Xen 4.20).
 
-The issue occurs because sk_net_refcnt_upgrade() performs memory
-allocation (via get_net_track() -> ref_tracker_alloc()) while the
-socket lock is held, creating a circular dependency with fs_reclaim.
+The function never uses the _CST return value -- it only needs to know
+whether _CST exists. Replace the broken acpi_evaluate_object() call with
+acpi_has_method(), which correctly detects _CST presence using
+acpi_get_handle() without any buffer allocation. This brings C-state
+detection to parity with the P-state path, which already works correctly
+for Phase 2 CPUs.
 
-Fix this by moving sk_net_refcnt_upgrade() outside the socket lock
-critical section. This is safe because the fields modified by the
-sk_net_refcnt_upgrade() call (sk_net_refcnt, ns_tracker) are not
-accessed by any concurrent code path at this point.
-
-v2:
-  - Corrected fixes tag
-  - check patch line wrap nits
-  - ai commentary nits
-
-Reported-by: syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=2e2cf5331207053b8106
-Fixes: 3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
-Signed-off-by: Allison Henderson <achender@kernel.org>
-Link: https://patch.msgid.link/20260227202336.167757-1-achender@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 59a568029181 ("xen/acpi-processor: C and P-state driver that uploads said data to hypervisor.")
+Signed-off-by: David Thomson <dt@linux-mail.net>
+Reviewed-by: Jan Beulich <jbeulich@suse.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Message-ID: <20260224093707.19679-1-dt@linux-mail.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rds/tcp.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/xen/xen-acpi-processor.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/net/rds/tcp.c b/net/rds/tcp.c
-index 3cc2f303bf786..b66dfcc3efaa0 100644
---- a/net/rds/tcp.c
-+++ b/net/rds/tcp.c
-@@ -495,18 +495,24 @@ bool rds_tcp_tune(struct socket *sock)
- 	struct rds_tcp_net *rtn;
- 
- 	tcp_sock_set_nodelay(sock->sk);
--	lock_sock(sk);
- 	/* TCP timer functions might access net namespace even after
- 	 * a process which created this net namespace terminated.
- 	 */
- 	if (!sk->sk_net_refcnt) {
--		if (!maybe_get_net(net)) {
--			release_sock(sk);
-+		if (!maybe_get_net(net))
- 			return false;
--		}
-+		/*
-+		 * sk_net_refcnt_upgrade() must be called before lock_sock()
-+		 * because it does a GFP_KERNEL allocation, which can trigger
-+		 * fs_reclaim and create a circular lock dependency with the
-+		 * socket lock.  The fields it modifies (sk_net_refcnt,
-+		 * ns_tracker) are not accessed by any concurrent code path
-+		 * at this point.
-+		 */
- 		sk_net_refcnt_upgrade(sk);
- 		put_net(net);
+diff --git a/drivers/xen/xen-acpi-processor.c b/drivers/xen/xen-acpi-processor.c
+index 2967039398463..520756159d3d3 100644
+--- a/drivers/xen/xen-acpi-processor.c
++++ b/drivers/xen/xen-acpi-processor.c
+@@ -379,11 +379,8 @@ read_acpi_id(acpi_handle handle, u32 lvl, void *context, void **rv)
+ 			 acpi_psd[acpi_id].domain);
  	}
-+	lock_sock(sk);
- 	rtn = net_generic(net, rds_tcp_netid);
- 	if (rtn->sndbuf_size > 0) {
- 		sk->sk_sndbuf = rtn->sndbuf_size;
+ 
+-	status = acpi_evaluate_object(handle, "_CST", NULL, &buffer);
+-	if (ACPI_FAILURE(status)) {
+-		if (!pblk)
+-			return AE_OK;
+-	}
++	if (!pblk && !acpi_has_method(handle, "_CST"))
++		return AE_OK;
+ 	/* .. and it has a C-state */
+ 	__set_bit(acpi_id, acpi_id_cst_present);
+ 
 -- 
 2.51.0
 
