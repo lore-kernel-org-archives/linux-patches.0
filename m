@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB7193876D3;
-	Tue, 10 Mar 2026 11:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E103A3876B7;
+	Tue, 10 Mar 2026 11:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141948; cv=none; b=qaE0vNuCYeoPakc8zhZrdZGqiShqG86uxKUVJ4VPkW+R00qg+PmY7hK1/48aL4eePcfSRRN3pGARDSV9H08NaL2mEx3dPDzTnA6K7pQHynA3tTcyr18IB9uQeol6gWrS7m/dUTF0CrElvEwNHsgDe0HMRbvPRIZU1KwiySCmUAM=
+	t=1773141950; cv=none; b=DOmV+2uhqjg2E8kKxcR0/CqYCFOqWdQUj5WDb+vbbRttYbffSv9kX0cJpuNj9KvOpMxpcUmB26rV9G3SxZ9nrmRfRb+RL1fW2/oNBURmsA/NXZv793maTva5tVoQPB3y+kJc7lqh0F0QwqplkRFOZ5sXvwg4aqc6pbYOQ6Xg3TA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141948; c=relaxed/simple;
-	bh=6TaNmaBga9bzs9klqSe8ihl1LzLGBdtrxJdWFnvYwRQ=;
+	s=arc-20240116; t=1773141950; c=relaxed/simple;
+	bh=4715I5deQmnHopRF7s6B0caS8ebwSL1yxYqc01O9tSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=W5KWzbQaOvBigoMeJKOtr6vbaViyAeb3O8iTQ9BakxQerwbaeipUUrupRw1TXnYuPUrnXUG3SA8KIHb8Hgz5V6PS4xU8ZhRflIn8hlim47ByVtTrll7W/V67HZ/C9q60Geghc29+lQWX2c5wE3/rJ0GR59sF/B95vfLOJHjblLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fOGBPf/L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AoGN9PEEXBhQCHev4KzBoeCfEQx7oL5FtNOYw16ekVMRUp3fEdhYDkO3xDJ9ZeWMNsVkIYTyH/07LP1h+Q4EhtuKrqJIL7AhOuPlkmK7c2egm0TV8pNJGHcLw+s8l5PBFd0rDNtJ9WTCsh+h5G6B4ZnD7wMZJ0E7La+Ak56fX4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gCJ25Vcx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fOGBPf/L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC41EC2BC86;
-	Tue, 10 Mar 2026 11:25:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gCJ25Vcx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03CFC19423;
+	Tue, 10 Mar 2026 11:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141948;
-	bh=6TaNmaBga9bzs9klqSe8ihl1LzLGBdtrxJdWFnvYwRQ=;
+	s=k20201202; t=1773141949;
+	bh=4715I5deQmnHopRF7s6B0caS8ebwSL1yxYqc01O9tSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOGBPf/L1xOegiJ+tOlytxkNvKVt/gprHizvfkrFh3BWMVxVLEfoHq2y+pzulNgIL
-	 CpZaOvl975Z/IyesBDoLFm/W2mSyeywOpuCVHYHqA5HVrQVzgTFgJqJM4zzA0cB/iS
-	 yCTPYxfG2sQycKMRjdHN3y+upD/J9gZmSBPiliS8QzCmJpjlYyGQPvqMXligIXrzQD
-	 TiHSBssmu5qwLywym6jsR/oQtFgUpLlMKlqQLN642MnjL+cYu/7Q+hLMRoONl3MZIm
-	 FJh5aNUQ+/HmkpXjAXfgswFPhBgg/M0ufLbBTdXTIbQJyxcqVddrYEPuM+GtozPIjU
-	 9O3UIUrbcITvA==
+	b=gCJ25VcxKoKyLnf/R2n82GnsyZ1BVjgXh0syqjOy1PJKurklsUpcuH7bmBuqirGJA
+	 wk8TKbE7cGCjqAeDhJYHIxgHmvmzHQ4OIlYm+9kxDrRiF51D3Q2ijmSH/Lsf5OdYwz
+	 PTDJ7iUHAPLW88XVChYE94fhHw57ko0Ur9xke4v1ut9vSOTzsTHvsF+wKZILjncW/y
+	 zMNeJNsKjOzXqHZM5ShosKKhVOsfkpkmTqy+I369Qe0CNRbBkgJ2yqPbg/21uDbVN2
+	 nvqROAcc8fd3q5a/Ple89x4/k5Xc0Ji0ARmUkx/Rssq9PNFjJOkeHE3Vb42TxxEVZS
+	 f+m1EAQOPzExA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paul Chaignon <paul.chaignon@gmail.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Marco Schirrmeister <mschirrmeister@gmail.com>,
-	Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+Cc: Yazen Ghannam <yazen.ghannam@amd.com>,
+	Michal Pecio <michal.pecio@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 072/314] bpf: Improve bounds when tnum has a single possible value
-Date: Tue, 10 Mar 2026 07:15:31 -0400
-Message-ID: <eccd1f88c1c3482df6fbfcf40119b2a1b56ac22d.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 073/314] x86/acpi/boot: Correct acpi_is_processor_usable() check again
+Date: Tue, 10 Mar 2026 07:15:32 -0400
+Message-ID: <abba4ed43450a2008ccabf4ef0ae29fe4ea0a647.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,146 +51,131 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-[ Upstream commit efc11a667878a1d655ff034a93a539debbfedb12 ]
+[ Upstream commit adbf61cc47cb72b102682e690ad323e1eda652c2 ]
 
-We're hitting an invariant violation in Cilium that sometimes leads to
-BPF programs being rejected and Cilium failing to start [1]. The
-following extract from verifier logs shows what's happening:
+ACPI v6.3 defined a new "Online Capable" MADT LAPIC flag. This bit is
+used in conjunction with the "Enabled" MADT LAPIC flag to determine if
+a CPU can be enabled/hotplugged by the OS after boot.
 
-  from 201 to 236: R1=0 R6=ctx() R7=1 R9=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100)) R10=fp0
-  236: R1=0 R6=ctx() R7=1 R9=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100)) R10=fp0
-  ; if (magic == MARK_MAGIC_HOST || magic == MARK_MAGIC_OVERLAY || magic == MARK_MAGIC_ENCRYPT) @ bpf_host.c:1337
-  236: (16) if w9 == 0xe00 goto pc+45   ; R9=scalar(smin=umin=smin32=umin32=3585,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100))
-  237: (16) if w9 == 0xf00 goto pc+1
-  verifier bug: REG INVARIANTS VIOLATION (false_reg1): range bounds violation u64=[0xe01, 0xe00] s64=[0xe01, 0xe00] u32=[0xe01, 0xe00] s32=[0xe01, 0xe00] var_off=(0xe00, 0x0)
+Before the new bit was defined, the "Enabled" bit was explicitly
+described like this (ACPI v6.0 wording provided):
 
-We reach instruction 236 with two possible values for R9, 0xe00 and
-0xf00. This is perfectly reflected in the tnum, but of course the ranges
-are less accurate and cover [0xe00; 0xf00]. Taking the fallthrough path
-at instruction 236 allows the verifier to reduce the range to
-[0xe01; 0xf00]. The tnum is however not updated.
+  "If zero, this processor is unusable, and the operating system
+  support will not attempt to use it"
 
-With these ranges, at instruction 237, the verifier is not able to
-deduce that R9 is always equal to 0xf00. Hence the fallthrough pass is
-explored first, the verifier refines the bounds using the assumption
-that R9 != 0xf00, and ends up with an invariant violation.
+This means that CPU hotplug (based on MADT) is not possible. Many BIOS
+implementations follow this guidance. They may include LAPIC entries in
+MADT for unavailable CPUs, but since these entries are marked with
+"Enabled=0" it is expected that the OS will completely ignore these
+entries.
 
-This pattern of impossible branch + bounds refinement is common to all
-invariant violations seen so far. The long-term solution is likely to
-rely on the refinement + invariant violation check to detect dead
-branches, as started by Eduard. To fix the current issue, we need
-something with less refactoring that we can backport.
+However, QEMU will do the same (include entries with "Enabled=0") for
+the purpose of allowing CPU hotplug within the guest.
 
-This patch uses the tnum_step helper introduced in the previous patch to
-detect the above situation. In particular, three cases are now detected
-in the bounds refinement:
+Comment from QEMU function pc_madt_cpu_entry():
 
-1. The u64 range and the tnum only overlap in umin.
-   u64:  ---[xxxxxx]-----
-   tnum: --xx----------x-
+  /* ACPI spec says that LAPIC entry for non present
+   * CPU may be omitted from MADT or it must be marked
+   * as disabled. However omitting non present CPU from
+   * MADT breaks hotplug on linux. So possible CPUs
+   * should be put in MADT but kept disabled.
+   */
 
-2. The u64 range and the tnum only overlap in the maximum value
-   represented by the tnum, called tmax.
-   u64:  ---[xxxxxx]-----
-   tnum: xx-----x--------
+Recent Linux topology changes broke the QEMU use case. A following fix
+for the QEMU use case broke bare metal topology enumeration.
 
-3. The u64 range and the tnum only overlap in between umin (excluded)
-   and umax.
-   u64:  ---[xxxxxx]-----
-   tnum: xx----x-------x-
+Rework the Linux MADT LAPIC flags check to allow the QEMU use case only
+for guests and to maintain the ACPI spec behavior for bare metal.
 
-To detect these three cases, we call tnum_step(tnum, umin), which
-returns the smallest member of the tnum greater than umin, called
-tnum_next here. We're in case (1) if umin is part of the tnum and
-tnum_next is greater than umax. We're in case (2) if umin is not part of
-the tnum and tnum_next is equal to tmax. Finally, we're in case (3) if
-umin is not part of the tnum, tnum_next is inferior or equal to umax,
-and calling tnum_step a second time gives us a value past umax.
+Remove an unnecessary check added to fix a bare metal case introduced by
+the QEMU "fix".
 
-This change implements these three cases. With it, the above bytecode
-looks as follows:
+  [ bp: Change logic as Michal suggested. ]
+  [ mingo: Removed misapplied -stable tag. ]
 
-  0: (85) call bpf_get_prandom_u32#7    ; R0=scalar()
-  1: (47) r0 |= 3584                    ; R0=scalar(smin=0x8000000000000e00,umin=umin32=3584,smin32=0x80000e00,var_off=(0xe00; 0xfffffffffffff1ff))
-  2: (57) r0 &= 3840                    ; R0=scalar(smin=umin=smin32=umin32=3584,smax=umax=smax32=umax32=3840,var_off=(0xe00; 0x100))
-  3: (15) if r0 == 0xe00 goto pc+2      ; R0=3840
-  4: (15) if r0 == 0xf00 goto pc+1
-  4: R0=3840
-  6: (95) exit
-
-In addition to the new selftests, this change was also verified with
-Agni [3]. For the record, the raw SMT is available at [4]. The property
-it verifies is that: If a concrete value x is contained in all input
-abstract values, after __update_reg_bounds, it will continue to be
-contained in all output abstract values.
-
-Link: https://github.com/cilium/cilium/issues/44216 [1]
-Link: https://pchaigno.github.io/test-verifier-complexity.html [2]
-Link: https://github.com/bpfverif/agni [3]
-Link: https://pastebin.com/raw/naCfaqNx [4]
-Fixes: 0df1a55afa83 ("bpf: Warn on internal verifier errors")
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Tested-by: Marco Schirrmeister <mschirrmeister@gmail.com>
-Co-developed-by: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
-Signed-off-by: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/ef254c4f68be19bd393d450188946821c588565d.1772225741.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: fed8d8773b8e ("x86/acpi/boot: Correct acpi_is_processor_usable() check")
+Fixes: f0551af02130 ("x86/topology: Ignore non-present APIC IDs in a present package")
+Closes: https://lore.kernel.org/r/20251024204658.3da9bf3f.michal.pecio@gmail.com
+Reported-by: Michal Pecio <michal.pecio@gmail.com>
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Tested-by: Michal Pecio <michal.pecio@gmail.com>
+Tested-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
+Link: https://lore.kernel.org/20251111145357.4031846-1-yazen.ghannam@amd.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ arch/x86/kernel/acpi/boot.c    | 12 ++++++++----
+ arch/x86/kernel/cpu/topology.c | 15 ---------------
+ 2 files changed, 8 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 449997aa77a06..e37ff28e3cd9d 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2347,6 +2347,9 @@ static void __update_reg32_bounds(struct bpf_reg_state *reg)
+diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
+index 9fa321a95eb33..d6138b2b633a3 100644
+--- a/arch/x86/kernel/acpi/boot.c
++++ b/arch/x86/kernel/acpi/boot.c
+@@ -35,6 +35,7 @@
+ #include <asm/smp.h>
+ #include <asm/i8259.h>
+ #include <asm/setup.h>
++#include <asm/hypervisor.h>
  
- static void __update_reg64_bounds(struct bpf_reg_state *reg)
- {
-+	u64 tnum_next, tmax;
-+	bool umin_in_tnum;
-+
- 	/* min signed is max(sign bit) | min(other bits) */
- 	reg->smin_value = max_t(s64, reg->smin_value,
- 				reg->var_off.value | (reg->var_off.mask & S64_MIN));
-@@ -2356,6 +2359,33 @@ static void __update_reg64_bounds(struct bpf_reg_state *reg)
- 	reg->umin_value = max(reg->umin_value, reg->var_off.value);
- 	reg->umax_value = min(reg->umax_value,
- 			      reg->var_off.value | reg->var_off.mask);
-+
-+	/* Check if u64 and tnum overlap in a single value */
-+	tnum_next = tnum_step(reg->var_off, reg->umin_value);
-+	umin_in_tnum = (reg->umin_value & ~reg->var_off.mask) == reg->var_off.value;
-+	tmax = reg->var_off.value | reg->var_off.mask;
-+	if (umin_in_tnum && tnum_next > reg->umax_value) {
-+		/* The u64 range and the tnum only overlap in umin.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: --xx----------x-
-+		 */
-+		___mark_reg_known(reg, reg->umin_value);
-+	} else if (!umin_in_tnum && tnum_next == tmax) {
-+		/* The u64 range and the tnum only overlap in the maximum value
-+		 * represented by the tnum, called tmax.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: xx-----x--------
-+		 */
-+		___mark_reg_known(reg, tmax);
-+	} else if (!umin_in_tnum && tnum_next <= reg->umax_value &&
-+		   tnum_step(reg->var_off, tnum_next) > reg->umax_value) {
-+		/* The u64 range and the tnum only overlap in between umin
-+		 * (excluded) and umax.
-+		 * u64:  ---[xxxxxx]-----
-+		 * tnum: xx----x-------x-
-+		 */
-+		___mark_reg_known(reg, tnum_next);
-+	}
+ #include "sleep.h" /* To include x86_acpi_suspend_lowlevel */
+ static int __initdata acpi_force = 0;
+@@ -164,11 +165,14 @@ static bool __init acpi_is_processor_usable(u32 lapic_flags)
+ 	if (lapic_flags & ACPI_MADT_ENABLED)
+ 		return true;
+ 
+-	if (!acpi_support_online_capable ||
+-	    (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
+-		return true;
++	if (acpi_support_online_capable)
++		return lapic_flags & ACPI_MADT_ONLINE_CAPABLE;
+ 
+-	return false;
++	/*
++	 * QEMU expects legacy "Enabled=0" LAPIC entries to be counted as usable
++	 * in order to support CPU hotplug in guests.
++	 */
++	return !hypervisor_is_type(X86_HYPER_NATIVE);
  }
  
- static void __update_reg_bounds(struct bpf_reg_state *reg)
+ static int __init
+diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
+index 6073a16628f9e..425404e7b7b42 100644
+--- a/arch/x86/kernel/cpu/topology.c
++++ b/arch/x86/kernel/cpu/topology.c
+@@ -27,7 +27,6 @@
+ #include <xen/xen.h>
+ 
+ #include <asm/apic.h>
+-#include <asm/hypervisor.h>
+ #include <asm/io_apic.h>
+ #include <asm/mpspec.h>
+ #include <asm/msr.h>
+@@ -240,20 +239,6 @@ static __init void topo_register_apic(u32 apic_id, u32 acpi_id, bool present)
+ 		cpuid_to_apicid[cpu] = apic_id;
+ 		topo_set_cpuids(cpu, apic_id, acpi_id);
+ 	} else {
+-		u32 pkgid = topo_apicid(apic_id, TOPO_PKG_DOMAIN);
+-
+-		/*
+-		 * Check for present APICs in the same package when running
+-		 * on bare metal. Allow the bogosity in a guest.
+-		 */
+-		if (hypervisor_is_type(X86_HYPER_NATIVE) &&
+-		    topo_unit_count(pkgid, TOPO_PKG_DOMAIN, phys_cpu_present_map)) {
+-			pr_info_once("Ignoring hot-pluggable APIC ID %x in present package.\n",
+-				     apic_id);
+-			topo_info.nr_rejected_cpus++;
+-			return;
+-		}
+-
+ 		topo_info.nr_disabled_cpus++;
+ 	}
+ 
 -- 
 2.51.0
 
