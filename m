@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A3F3806B8;
-	Tue, 10 Mar 2026 11:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9483876B0;
+	Tue, 10 Mar 2026 11:20:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141647; cv=none; b=omTbUojm4GICoszlkvITt+h35qmZkcIsHfHKEtKr+tPnJTMBLaXCQrjBbrjy15wWtviz2pCXGJPFEKzNESdxyK5+botSbk2n3sR3ZSBZOOvIDCH+yYXaYQEKIzfvSUcRWyk7lRTDqmRryEOQWePYVKCufKM1DgzfORiBdWue4rs=
+	t=1773141648; cv=none; b=JSrpv+25jN1WPluT+1UGuvTchDtlI6UqTwxs/7LwtRtgAleV7FjiY968MC97/gvuRRdXn7zMUYs9tBlo59dkixDh5Y2zicB3qG6IZw08Jh9NSTi2QprERAoQ0O0Irk3DIWv+4cGZFPi//l/LvSlWa6/QGyXiKIAyZAz3NCAgl1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141647; c=relaxed/simple;
-	bh=3e7TQKccLFwilDSKd9WJX2HmRo4WAn+2kEV1gm2wQxk=;
+	s=arc-20240116; t=1773141648; c=relaxed/simple;
+	bh=7ZWzIH+LIj1JuCim8sVnBObiH+7uSBtrDoGIGC3GBts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=plAV8Q5w13i21UTyzljiXZsqrtztVAMfAsqUdDaCiyvCaC2CVMTLulywoxhWgDX8OH3ul6Bnf0+tQN8ovkydnofDVujd0+EVTl18ku5b28+thilG7rlPUr/c66N1rPPJEaw9bt7fk3w6H0tmgRAxpPCyDXypxfSRb90mMyOjGaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dJOYdS6W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n2Pc0RH7KRbtQfEauSmHpxclPjdRUQEQ/0pnzPG6Ro8IbI0xzOtV1yYwjccgljvmG+mH2B8ef2EqBv2KGgqR8nEuMEWmFXd5WRVVY2zabeAJqFdHQajN0iMxTdHx6v4jwNN9h7BcGFwTlg3X66jpK3mU7sFQuI3y7jJaJGTT6OE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hENj7EkN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dJOYdS6W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E668AC2BC86;
-	Tue, 10 Mar 2026 11:20:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hENj7EkN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C73D9C2BC86;
+	Tue, 10 Mar 2026 11:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141647;
-	bh=3e7TQKccLFwilDSKd9WJX2HmRo4WAn+2kEV1gm2wQxk=;
+	s=k20201202; t=1773141648;
+	bh=7ZWzIH+LIj1JuCim8sVnBObiH+7uSBtrDoGIGC3GBts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dJOYdS6Wn6mrZqBlt1bh4JfbtnMSlJPmQaef+7Cff50Jdt/ckRNg1SE/sIxViP1+M
-	 +3JyTSt35jMLUhjuSLoWp3de37qB0cxmrpyYvuEOrWzw7N3HtDK5UUYXwNEVll49kW
-	 7cJcQEP8qAFLi4pbiKw+BtnYUrNFqGszik5uGLW4zNuTwavQGoMOIzKr3wIR7tZ5OO
-	 W8nHw6OTttG5c2A3KO+ugoPh55peYSplvnaTUsqClEAFsOb0231uDTo/yE8l6+88++
-	 xnwPNOlyJmXyiR9LlwFKJj+73eNM05QhL+KzJzvblCychAd7T7qJMChIk20IAFlcKT
-	 5aQn9ZYuhJO0g==
+	b=hENj7EkNsjLqUX6WvT71yDvj5gpw3zyF/j9an3bq7hGl09kElS8iLZ0tad4nYE0sF
+	 vYo6lZf9jqYo74isgzmHaTXbOjP0aAqlM1CppZTuEQmyBsx97i8H0TsroR9JywWk8r
+	 +wDf0noQRKF/QSCVJ0Hb+V/UEyCeq5qkGV3LJJqvSYsqV/tXWHYj87oCJHw0KtAgrv
+	 7fie4Igw++t5vPOEY9RwLz2Wnnkc7vrnVPTocXWrCqNkopwtyQSje+fdIMncC1HQx8
+	 jFhLN2SrFqUfPj/RyIKll/g/9zq6bTn8CXwjDTGdMXNNo1YdrHc359bI97dCERGx0T
+	 AX04h+OWi4spQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chen Ni <nichen@iscas.ac.cn>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+Cc: "Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 013/314] drm/imx: parallel-display: check return value of devm_drm_bridge_add() in imx_pd_probe()
-Date: Tue, 10 Mar 2026 07:14:32 -0400
-Message-ID: <0d61471ace630b804374d43f14cddccd00f2dc2b.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 014/314] ALSA: scarlett2: Fix DSP filter control array handling
+Date: Tue, 10 Mar 2026 07:14:33 -0400
+Message-ID: <f074b49cc97d13c828cda482e65f38510acc93bf.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,42 +48,81 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: "Geoffrey D. Bennett" <g@b4.vu>
 
-[ Upstream commit c5f8658f97ec392eeaf355d4e9775ae1f23ca1d3 ]
+[ Upstream commit 1d241483368f2fd87fbaba64d6aec6bad3a1e12e ]
 
-Return the value of devm_drm_bridge_add() in order to propagate the
-error properly, if it fails due to resource allocation failure or bridge
-registration failure.
+scarlett2_add_dsp_ctls() was incorrectly storing the precomp and PEQ
+filter coefficient control pointers into the precomp_flt_switch_ctls
+and peq_flt_switch_ctls arrays instead of the intended targets
+precomp_flt_ctls and peq_flt_ctls. Pass NULL instead, as the filter
+coefficient control pointers are not used, and remove the unused
+precomp_flt_ctls and peq_flt_ctls arrays from struct scarlett2_data.
 
-This ensures that the probe function fails safely rather than proceeding
-with a potentially incomplete bridge setup.
+Additionally, scarlett2_update_filter_values() was reading
+dsp_input_count * peq_flt_count values for
+SCARLETT2_CONFIG_PEQ_FLT_SWITCH, but the peq_flt_switch array is
+indexed only by dsp_input_count (one switch per DSP input, not per
+filter). Fix the read count.
 
-Fixes: bf7e97910b9f ("drm/imx: parallel-display: add the bridge before attaching it")
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260204090629.2209542-1-nichen@iscas.ac.cn
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: b64678eb4e70 ("ALSA: scarlett2: Add DSP controls")
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://patch.msgid.link/86497b71db060677d97c38a6ce5f89bb3b25361b.1771581197.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/imx/ipuv3/parallel-display.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/usb/mixer_scarlett2.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-index 7fc6af7033078..d5f2ee41c03fe 100644
---- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-+++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
-@@ -256,7 +256,9 @@ static int imx_pd_probe(struct platform_device *pdev)
+diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
+index bef8c9e544dd3..380beb7ed4cf8 100644
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1328,8 +1328,6 @@ struct scarlett2_data {
+ 	struct snd_kcontrol *mux_ctls[SCARLETT2_MUX_MAX];
+ 	struct snd_kcontrol *mix_ctls[SCARLETT2_MIX_MAX];
+ 	struct snd_kcontrol *compressor_ctls[SCARLETT2_COMPRESSOR_CTLS_MAX];
+-	struct snd_kcontrol *precomp_flt_ctls[SCARLETT2_PRECOMP_FLT_CTLS_MAX];
+-	struct snd_kcontrol *peq_flt_ctls[SCARLETT2_PEQ_FLT_CTLS_MAX];
+ 	struct snd_kcontrol *precomp_flt_switch_ctls[SCARLETT2_DSP_SWITCH_MAX];
+ 	struct snd_kcontrol *peq_flt_switch_ctls[SCARLETT2_DSP_SWITCH_MAX];
+ 	struct snd_kcontrol *direct_monitor_ctl;
+@@ -3447,7 +3445,6 @@ static int scarlett2_update_autogain(struct usb_mixer_interface *mixer)
+ 			private->autogain_status[i] =
+ 				private->num_autogain_status_texts - 1;
  
- 	platform_set_drvdata(pdev, imxpd);
+-
+ 	for (i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
+ 		if (scarlett2_has_config_item(private,
+ 					      scarlett2_ag_target_configs[i])) {
+@@ -5372,8 +5369,7 @@ static int scarlett2_update_filter_values(struct usb_mixer_interface *mixer)
  
--	devm_drm_bridge_add(dev, &imxpd->bridge);
-+	ret = devm_drm_bridge_add(dev, &imxpd->bridge);
-+	if (ret)
-+		return ret;
+ 	err = scarlett2_usb_get_config(
+ 		mixer, SCARLETT2_CONFIG_PEQ_FLT_SWITCH,
+-		info->dsp_input_count * info->peq_flt_count,
+-		private->peq_flt_switch);
++		info->dsp_input_count, private->peq_flt_switch);
+ 	if (err < 0)
+ 		return err;
  
- 	return component_add(dev, &imx_pd_ops);
- }
+@@ -6546,7 +6542,7 @@ static int scarlett2_add_dsp_ctls(struct usb_mixer_interface *mixer, int i)
+ 		err = scarlett2_add_new_ctl(
+ 			mixer, &scarlett2_precomp_flt_ctl,
+ 			i * info->precomp_flt_count + j,
+-			1, s, &private->precomp_flt_switch_ctls[j]);
++			1, s, NULL);
+ 		if (err < 0)
+ 			return err;
+ 	}
+@@ -6556,7 +6552,7 @@ static int scarlett2_add_dsp_ctls(struct usb_mixer_interface *mixer, int i)
+ 		err = scarlett2_add_new_ctl(
+ 			mixer, &scarlett2_peq_flt_ctl,
+ 			i * info->peq_flt_count + j,
+-			1, s, &private->peq_flt_switch_ctls[j]);
++			1, s, NULL);
+ 		if (err < 0)
+ 			return err;
+ 	}
 -- 
 2.51.0
 
