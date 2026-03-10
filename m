@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868C044CAF3;
-	Tue, 10 Mar 2026 09:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF1444CF56;
+	Tue, 10 Mar 2026 09:02:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133333; cv=none; b=S1qLaxo9Lp0+NYbVxoCPUqI8b64fNIRk/kN8V4SRn6fiOavLMvzXrpp8nrzCmAzZl5AiLbruP1/6MNbYSjG+77xz1TyLTwukeneUgQqMmHwrqjmiPnf9nPVCcl8oWA058oHIltUNGV+rYzwcMpKLR87u06H1Mc90tEZUP/cW0yA=
+	t=1773133335; cv=none; b=Gh4g/WcGeRdIUr3Li6RDmV0W/t5TtuUJUSpKUKntfIOibl8hAfo3NZHR2vsHhuLrJ2q7uovv1CJCDTEjPiIziJmh7FLLjNGCb1zpzRqliCyburdRcfcm8mYoO49LJeSp086jTeYvxSDi+omXIVR1sH2wf9SBU+81AH7kcWlZyRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133333; c=relaxed/simple;
-	bh=evhKPyU7Sb5O7u9HZt6apms9Tl1WZKdf1tbga43qqzw=;
+	s=arc-20240116; t=1773133335; c=relaxed/simple;
+	bh=1htoEh3NDCqqv9KOFybHKUKc4qxnVoAnCxDH0gfr1wo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u8ro1k4TArOQ2s53CbNon0WO0OrxQ5SKhT9equvBmJUIqSComY0kbg+A1EDXi1xTsa1bigcm002pYDgwhgsPJMq2HoaGFTDoJ9ht+9yp532dTHdqtGQ1iaW477n30ybXclaSKP/RqokyWg24zFgEdEcdVf9ndsH/2QQrUzXVuNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rV6MmcyS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rQ0qfr27cQ+Z/V+h0sq0bpY8+pKF0V20SYGee6faFhyDPaaI7DteYL4muZKQ8f7yr/G62yqiu2mgU0NDbM6MfPZX1O7baoX1WqjDU1z5goyfn9MGzFfp6HQp5makO9pbO8iFRUxb+DS2HHsAwF25HKXPC7Cj/6Kg6eEUn+JROXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=r4JnNPOo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rV6MmcyS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5E9C2BC87;
-	Tue, 10 Mar 2026 09:02:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="r4JnNPOo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5EBC19423;
+	Tue, 10 Mar 2026 09:02:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133333;
-	bh=evhKPyU7Sb5O7u9HZt6apms9Tl1WZKdf1tbga43qqzw=;
+	s=k20201202; t=1773133334;
+	bh=1htoEh3NDCqqv9KOFybHKUKc4qxnVoAnCxDH0gfr1wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rV6MmcySTlugw6/Jt8UMLLY6nB0Xq7s0ZvUVsnrX4oyEsPOwenJasQnpvzrbA/Hjl
-	 3QCQeG/7IBxnEqQUIEq/pmO2TDOVXnGRNutzQrGG4WYunyqXMeJhZqUCy+97YtFx4i
-	 BtEeSEzTQgcWsCcVVhftvNGdD437aellmaZlBVriiEQ5yrjgnpWY1AB59HQtyAriJL
-	 F9Tk/3K2cevcKEG7q11bnlnJ9FoGK9Uh9VwIxns4xU2j/ANd/OMUARDGTBsuH04//6
-	 Kylc4112nrTK7tpalNlmcAi9VBUMaa7mFF0Ei1KyBb5Nb7qSXsiT2jnBEbuN9kXngb
-	 pcpGbjzo/aAlQ==
+	b=r4JnNPOogqVLFIJQUnxGNniiLBaT1AZ9TnQD7RkwW0m0WfZLeiwrMRBdf6kPLY4OK
+	 WNU5LrsN1NPA7j1ZSOuhlanOIleAB6TcSGxtoYLkjzL+XtoGnSmNFtcZZnYhgK2a4V
+	 axOEGvwkeUD7qfHwRR4JoIVJ/QlKiwHOxHgNeAcvu7ShtffIGkzQ9lKBPevPK89km2
+	 pJ3k6wKmR4ePtD8tCP9ROBP+MQGwu32XwzW2yQ41XKZyKbM0HZrfpX0CmDmHb1+4AN
+	 IQ78fi2ShmszH/nQ6GceCnPVCjzEvqmmUZe2cU0VsCeaklvTVgwX12KCUVgcBxilYL
+	 sAdJEeHIQEK2A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+Cc: Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	linux-input@vger.kernel.org,
+	sathya.prakash@broadcom.com,
+	kashyap.desai@broadcom.com,
+	sumit.saxena@broadcom.com,
+	sreekanth.reddy@broadcom.com,
+	James.Bottomley@HansenPartnership.com,
+	mpi3mr-linuxdrv.pdl@broadcom.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] HID: asus: avoid memory leak in asus_report_fixup()
-Date: Tue, 10 Mar 2026 05:01:18 -0400
-Message-ID: <20260310090145.2709021-18-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] scsi: mpi3mr: Clear reset history on ready and recheck state after timeout
+Date: Tue, 10 Mar 2026 05:01:19 -0400
+Message-ID: <20260310090145.2709021-19-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -47,156 +52,154 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Günther Noack <gnoack@google.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
+[ Upstream commit dbd53975ed4132d161b6a97ebe785a262380182d ]
 
-The asus_report_fixup() function was returning a newly allocated
-kmemdup()-allocated buffer, but never freeing it.  Switch to
-devm_kzalloc() to ensure the memory is managed and freed automatically
-when the device is removed.
+The driver retains reset history even after the IOC has successfully
+reached the READY state. That leaves stale reset information active during
+normal operation and can mislead recovery and diagnostics.  In addition, if
+the IOC becomes READY just as the ready timeout loop exits, the driver
+still follows the failure path and may retry or report failure incorrectly.
 
-The caller of report_fixup() does not take ownership of the returned
-pointer, but it is permitted to return a pointer whose lifetime is at
-least that of the input buffer.
+Clear reset history once READY is confirmed so driver state matches actual
+IOC status. After the timeout loop, recheck the IOC state and treat READY
+as success instead of failing.
 
-Also fix a harmless out-of-bounds read by copying only the original
-descriptor size.
-
-Assisted-by: Gemini-CLI:Google Gemini 3
-Signed-off-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://patch.msgid.link/20260225082622.82588-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have a clear picture of the changes. Let me finalize my analysis.
+
 ## Analysis
 
-### Problem Description
+### What the commit does
 
-The `asus_report_fixup()` function in `drivers/hid/hid-asus.c` had a
-memory leak in the `QUIRK_T100CHI | QUIRK_T90CHI` path. The buggy code
-used `kmemdup()` to allocate a new report descriptor buffer, but this
-buffer was never freed by anyone:
+This commit makes two small changes to `mpi3mr_bring_ioc_ready()` in the
+mpi3mr SCSI driver:
 
-**The leak mechanism (verified by reading hid-core.c:1285-1307):**
-1. Caller allocates `buf` via `kmemdup()` (line 1291)
-2. Caller passes `buf` to `report_fixup()` (line 1296)
-3. The old `report_fixup()` returned a *new* `kmemdup()`'d pointer,
-   discarding `buf`
-4. Caller does `start = kmemdup(start, size, ...)` — making *yet another
-   copy* (line 1303)
-5. Caller does `kfree(buf)` — frees the original, but NOT the
-   intermediate kmemdup from report_fixup()
-6. The intermediate buffer is **leaked**
+1. **Clears reset history on READY** (line 1533): When the IOC
+   transitions to READY state inside the polling loop, it now calls
+   `mpi3mr_clear_reset_history()` before returning success. Without
+   this, stale reset history bits remain set, which can confuse
+   subsequent recovery logic that checks
+   `MPI3_SYSIF_IOC_STATUS_RESET_HISTORY`.
 
-### Fix Analysis
+2. **Rechecks state after timeout** (lines 1553-1560): After the
+   `do...while` timeout loop exits, the code does one final check to see
+   if the IOC became READY right at the boundary. Previously, if the IOC
+   transitioned to READY during the last `msleep(100)` (after the
+   elapsed time already exceeded the timeout), the driver would fall
+   through to `out_failed` and potentially retry unnecessarily or report
+   failure.
 
-The fix is small (11 insertions, 4 deletions) and does three things:
+### Bug assessment
 
-1. **Switches from `kmemdup()` to `devm_kzalloc()`**: Ties the
-   allocation to the HID device lifetime, so it's automatically freed on
-   device removal. This eliminates the leak.
+**Race at timeout boundary (bug #2):** This is a real timing bug. The
+loop checks `elapsed_time_sec < mrioc->ready_timeout` *after*
+`msleep(100)`. If the IOC becomes READY during that last sleep,
+`elapsed_time_sec` has already exceeded the timeout, so the loop exits.
+Without the post-loop recheck, the driver goes to `out_failed`, which
+triggers up to 2 retries (unnecessary soft resets) or reports
+initialization failure. This can cause:
+- Unnecessary controller resets during probe/resume
+- Spurious initialization failures if retries are exhausted
+- I/O failures during reset recovery (since `mpi3mr_reinit_ioc` fails)
 
-2. **Fixes error handling**: Old code returned `NULL` on allocation
-   failure, which the caller doesn't handle well. New code returns the
-   original `rdesc`, matching the pattern already used by
-   `QUIRK_G752_KEYBOARD` in the same function.
+**Stale reset history (bug #1):** If reset history is not cleared when
+the IOC reaches READY, subsequent iterations of the loop in future calls
+to this function will see `MPI3_SYSIF_IOC_STATUS_RESET_HISTORY` set and
+jump to `out_failed` (line 1537-1540), causing spurious failure.
 
-3. **Fixes out-of-bounds read**: Old code did `kmemdup(rdesc, *rsize,
-   ...)` where `*rsize` was already set to `rsize_orig + 1` (one byte
-   larger than the actual descriptor). New code does `memcpy(new_rdesc,
-   rdesc, rsize_orig)`, copying only the valid data.
+### Stable kernel criteria
 
-### Stable Criteria Assessment
+- **Fixes a real bug:** Yes - timing race causes false initialization
+  failures; stale state causes spurious failures in subsequent
+  operations.
+- **Obviously correct:** Yes - `mpi3mr_clear_reset_history()` is already
+  called elsewhere in the same function (at line 1510 after soft reset).
+  The post-timeout recheck follows the same pattern as the in-loop
+  check.
+- **Small and contained:** Yes - 10 lines added, single file, single
+  function.
+- **No new features:** Correct - pure bug fix.
+- **Risk:** Very low. The added code only adds a success path where
+  there was none (post-timeout READY check) and clears a status bit that
+  should be cleared (reset history). No existing success/failure paths
+  are altered.
 
-- **Fixes a real bug**: Yes — memory leak on every T100CHI/T90CHI
-  keyboard report descriptor parse
-- **Obviously correct**: Yes — follows the identical pattern used by
-  QUIRK_G752_KEYBOARD in the same function (verified in the diff
-  context)
-- **Small and contained**: Yes — 15 lines changed in a single file
-- **No new features**: Correct — pure bug fix
-- **Bug has existed since 2017**: Commit 73c75d3958579 introduced
-  T100CHI support with the buggy `kmemdup()` pattern, present in all
-  stable trees
+### Impact
 
-### Risk Assessment
-
-**Very low risk.** The fix:
-- Follows an existing pattern already proven in the same function
-  (QUIRK_G752_KEYBOARD)
-- Only affects ASUS T100CHI and T90CHI hardware
-- The devm_kzalloc lifetime (device lifetime) is correct since the
-  caller copies the returned data immediately
-- No dependencies on other commits
+This function is called on three critical paths: PCI probe, controller
+reset recovery, and system resume. A false failure here means the SCSI
+controller doesn't initialize, which means loss of access to all
+attached storage devices. This affects real users with Broadcom MPI3
+(SAS/NVMe) storage controllers.
 
 ### Verification
 
-- **Verified caller behavior**: Read `hid-core.c:1285-1307` — confirmed
-  the caller does `kmemdup()` of the returned pointer then `kfree(buf)`,
-  meaning any new allocation from `report_fixup()` is leaked
-- **Verified the existing devm_kzalloc pattern**: The
-  QUIRK_G752_KEYBOARD block in the same function already uses
-  `devm_kzalloc` with the same allocation + `return rdesc` on failure
-  pattern
-- **Verified bug age**: `git log --oneline` showed commit
-  `73c75d3958579` (2017-08-04) introduced the T100CHI support with
-  `kmemdup()`, confirmed present in stable trees via `git tag
-  --contains`
-- **Verified commit SHA**: `git show 5dc6c17c16935` confirmed the commit
-  matches the diff under review, with upstream commit `2bad24c17742f`
-- **Verified the OOB read**: Old code set `*rsize = rsize_orig + 1`
-  BEFORE `kmemdup(rdesc, *rsize, ...)`, reading one byte past the
-  original descriptor — confirmed by the diff context showing the order
-  of operations
-
-This is a clear, small, low-risk fix for a real memory leak (and minor
-OOB read) in a HID driver, following an established pattern already in
-the same function. It meets all stable kernel criteria.
+- Confirmed `mpi3mr_clear_reset_history` is a trivial inline that clears
+  the RESET_HISTORY bit in IOC status register (lines 1256-1263).
+- Confirmed the function is called from probe (`mpi3mr_init_ioc`), reset
+  (`mpi3mr_reinit_ioc`), and resume paths.
+- Confirmed that `mpi3mr_clear_reset_history` is already used elsewhere
+  in the same function, so the pattern is established.
+- Confirmed the timeout race: the `do...while` loop exits when
+  `elapsed_time_sec >= ready_timeout`, but the IOC could have become
+  READY during the final `msleep(100)`, which is not checked without
+  this patch.
+- Confirmed that falling through to `out_failed` triggers retries (up to
+  2) or returns failure (line 1564-1577).
+- The commit is authored by Broadcom (the hardware vendor), accepted by
+  the SCSI maintainer Martin Petersen, indicating domain expertise.
+- Could NOT verify specific user reports of this race triggering in the
+  field (commit message implies it was found via code
+  review/diagnostics), but the race window is real and the consequences
+  are severe.
 
 **YES**
 
- drivers/hid/hid-asus.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
-index 472bca54642b9..8487332bf43b0 100644
---- a/drivers/hid/hid-asus.c
-+++ b/drivers/hid/hid-asus.c
-@@ -1306,14 +1306,21 @@ static const __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		if (*rsize == rsize_orig &&
- 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
--			*rsize = rsize_orig + 1;
--			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
--			if (!rdesc)
--				return NULL;
-+			__u8 *new_rdesc;
-+
-+			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
-+						 GFP_KERNEL);
-+			if (!new_rdesc)
-+				return rdesc;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 8c4bb7169a87c..6d36575997871 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -1530,6 +1530,7 @@ static int mpi3mr_bring_ioc_ready(struct mpi3mr_ioc *mrioc)
+ 			ioc_info(mrioc,
+ 			    "successfully transitioned to %s state\n",
+ 			    mpi3mr_iocstate_name(ioc_state));
++			mpi3mr_clear_reset_history(mrioc);
+ 			return 0;
+ 		}
+ 		ioc_status = readl(&mrioc->sysif_regs->ioc_status);
+@@ -1549,6 +1550,15 @@ static int mpi3mr_bring_ioc_ready(struct mpi3mr_ioc *mrioc)
+ 		elapsed_time_sec = jiffies_to_msecs(jiffies - start_time)/1000;
+ 	} while (elapsed_time_sec < mrioc->ready_timeout);
  
- 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
- 				drvdata->quirks & QUIRK_T100CHI ?
- 				"T100CHI" : "T90CHI");
++	ioc_state = mpi3mr_get_iocstate(mrioc);
++	if (ioc_state == MRIOC_STATE_READY) {
++		ioc_info(mrioc,
++		    "successfully transitioned to %s state after %llu seconds\n",
++		    mpi3mr_iocstate_name(ioc_state), elapsed_time_sec);
++		mpi3mr_clear_reset_history(mrioc);
++		return 0;
++	}
 +
-+			memcpy(new_rdesc, rdesc, rsize_orig);
-+			*rsize = rsize_orig + 1;
-+			rdesc = new_rdesc;
-+
- 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
- 			rdesc[offs] = 0x19;
- 			rdesc[offs + 1] = 0x00;
+ out_failed:
+ 	elapsed_time_sec = jiffies_to_msecs(jiffies - start_time)/1000;
+ 	if ((retry < 2) && (elapsed_time_sec < (mrioc->ready_timeout - 60))) {
 -- 
 2.51.0
 
