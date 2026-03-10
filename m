@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8D437B413;
-	Tue, 10 Mar 2026 11:25:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99741387562;
+	Tue, 10 Mar 2026 11:25:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141918; cv=none; b=k2d8fRriAxfi7Vqtg/13c73EPl0pF4jvmFn+zj6O3OWews9u7NGmDiyxcog7gf6rDyxIhY1sQRGF0YiLeAoev6M1GgeMzFkVDVxfGkQz8idpTDrnh021Ma5QI1rwifavoHtlDTq18tZfwg+q/arS5maQbABIBE40jg+cXRZX2Tw=
+	t=1773141919; cv=none; b=IqtOrReOcGsenAhGYF5lNl0snksLtCv+wmFPVNjGT1MTl0DwEVw4TMNunIMGmJRWcAM/yC0oWoWAYxWsCcLCZZVtRifzUMiXpNXjU1EsBicqI3/eXthlPH/IBt5kP08gFs4ZAYGciouPVtj7hXf0upLNhfkJG1d0LD0lSwTmnHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141918; c=relaxed/simple;
-	bh=0deO4SoHbw4VPNECkueHMbGi4skY6KoTMMvbykUh4UU=;
+	s=arc-20240116; t=1773141919; c=relaxed/simple;
+	bh=qCNJRKXXQggtoi7YssmvZRQtjJRflcDm/m4BG/ZrLsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZpC1KTXoHAXH8XLuquHWN4JTrmjQ5s4IdYZeoOkx05hVX8uR/UjjmMYj0HU7Y0WpPFQYl03rvyliixPG43VB0Escgt2rBL5DZyDMKq3O+N6bD59pGOu70ld9VmRZcPoXrJbIAkYk0mYyozHJZSavD5hl98mepOiOiHP7BdZv4hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L8APZ71X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cYikIPieiRq5DY0ctXkxG7RTLHCVk0Sn9L8eX+2VHd2AoEKihxu7LK2mzYFPrSiFyGx0WX05PgIkt6HdvQfvWluj8FV0FDZi141jRKD8F1REpc59KvfBbdr5QGL3Ot3vyya9dh2dwxdwcTDUKcNJFgjl+PxXr7p8p8fH5P0w5E0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EhFeiijd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L8APZ71X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA94DC19423;
-	Tue, 10 Mar 2026 11:25:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EhFeiijd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7BCBC2BC86;
+	Tue, 10 Mar 2026 11:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141918;
-	bh=0deO4SoHbw4VPNECkueHMbGi4skY6KoTMMvbykUh4UU=;
+	s=k20201202; t=1773141919;
+	bh=qCNJRKXXQggtoi7YssmvZRQtjJRflcDm/m4BG/ZrLsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L8APZ71XoByLUyL4DUxswFHtc560/MlO/TXF4LgRhy51WRDOF/XVPsmPWTB34goQo
-	 Xc0tLSiBdqcpq509CKlk//b6boyOXF2QWhWDUF8GHu5ZKji0xldfsw7lJ1LIPi3hlb
-	 LT55Arpen5IOntOAl7nx+BLxVl9celov4b5RBM2xSWjdl4mp7PVXGyKF8Cj7b/JKCN
-	 ypsgRwl6oCoVBqmSeoo6XYOxQYcJukKVNktP+TVzEGBi8qS2OKQJXLMn7zSGq0uedX
-	 6N7/YDRCHbJCjJ06j698/Sy++C2uBORQonlZgdcDBLe05tOqCMMghnLEC1AS5Ob6cP
-	 UlAqAnWJ+s1Cg==
+	b=EhFeiijdKpoLU1X3Oyhobt00est0L9xfdThA/AmsWyt/MvFnswt2cYs5oxPiukbfn
+	 YYd5sWhh17AUFpyjaVufuFwzE/PF9kFO/cWxxfQvXwsjbbMsQB5544TR48OBPvfrtx
+	 yPGreZBXZl1JG2slpwpiuHWpn1wUnPCXOEAHnMbtcTahrrKQ+UpIFRJfikhAF8jo6o
+	 GKV+o33yp4HEFsMFg/HX35y1Eavzl5PHCPYF47Rx6LalBrT9tCvVL9UYLR2T7jtZOv
+	 WjaLrzr6dVS/iDyFEOLxu30muq6g9htZhOP6Dxvlp2L2z6rgNVm8L6ryWIO0HCJdzz
+	 8kCeDr3kU36AQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Simond Hu <cmdhh1767@gmail.com>,
+Cc: Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/314] perf: Fix __perf_event_overflow() vs perf_remove_from_context() race
-Date: Tue, 10 Mar 2026 07:15:01 -0400
-Message-ID: <977a53abf375d3352da7d70166d7340e5b298f41.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 043/314] s390/idle: Fix cpu idle exit cpu time accounting
+Date: Tue, 10 Mar 2026 07:15:02 -0400
+Message-ID: <fda00504fa8dd80f9409ccee1da6acf8fd95b631.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,115 +49,148 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit c9bc1753b3cc41d0e01fbca7f035258b5f4db0ae ]
+[ Upstream commit 0d785e2c324c90662baa4fe07a0d02233ff92824 ]
 
-Make sure that __perf_event_overflow() runs with IRQs disabled for all
-possible callchains. Specifically the software events can end up running
-it with only preemption disabled.
+With the conversion to generic entry [1] cpu idle exit cpu time accounting
+was converted from assembly to C. This introduced an reversed order of cpu
+time accounting.
 
-This opens up a race vs perf_event_exit_event() and friends that will go
-and free various things the overflow path expects to be present, like
-the BPF program.
+On cpu idle exit the current accounting happens with the following call
+chain:
 
-Fixes: 592903cdcbf6 ("perf_counter: add an event_list")
-Reported-by: Simond Hu <cmdhh1767@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Simond Hu <cmdhh1767@gmail.com>
-Link: https://patch.msgid.link/20260224122909.GV1395416@noisy.programming.kicks-ass.net
+-> do_io_irq()/do_ext_irq()
+ -> irq_enter_rcu()
+  -> account_hardirq_enter()
+   -> vtime_account_irq()
+    -> vtime_account_kernel()
+
+vtime_account_kernel() accounts the passed cpu time since last_update_timer
+as system time, and updates last_update_timer to the current cpu timer
+value.
+
+However the subsequent call of
+
+ -> account_idle_time_irq()
+
+will incorrectly subtract passed cpu time from timer_idle_enter to the
+updated last_update_timer value from system_timer. Then last_update_timer
+is updated to a sys_enter_timer, which means that last_update_timer goes
+back in time.
+
+Subsequently account_hardirq_exit() will account too much cpu time as
+hardirq time. The sum of all accounted cpu times is still correct, however
+some cpu time which was previously accounted as system time is now
+accounted as hardirq time, plus there is the oddity that last_update_timer
+goes back in time.
+
+Restore previous behavior by extracting cpu time accounting code from
+account_idle_time_irq() into a new update_timer_idle() function and call it
+before irq_enter_rcu().
+
+Fixes: 56e62a737028 ("s390: convert to generic entry") [1]
+Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 42 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/idle.h |  1 +
+ arch/s390/kernel/idle.c      | 13 +++++++++----
+ arch/s390/kernel/irq.c       | 10 ++++++++--
+ 3 files changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 0255795191cc8..b7e73ac3e512f 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10427,6 +10427,13 @@ int perf_event_overflow(struct perf_event *event,
- 			struct perf_sample_data *data,
- 			struct pt_regs *regs)
+diff --git a/arch/s390/include/asm/idle.h b/arch/s390/include/asm/idle.h
+index 09f763b9eb40a..133059d9a949c 100644
+--- a/arch/s390/include/asm/idle.h
++++ b/arch/s390/include/asm/idle.h
+@@ -23,5 +23,6 @@ extern struct device_attribute dev_attr_idle_count;
+ extern struct device_attribute dev_attr_idle_time_us;
+ 
+ void psw_idle(struct s390_idle_data *data, unsigned long psw_mask);
++void update_timer_idle(void);
+ 
+ #endif /* _S390_IDLE_H */
+diff --git a/arch/s390/kernel/idle.c b/arch/s390/kernel/idle.c
+index 39cb8d0ae3480..0f9e53f0a0686 100644
+--- a/arch/s390/kernel/idle.c
++++ b/arch/s390/kernel/idle.c
+@@ -21,11 +21,10 @@
+ 
+ static DEFINE_PER_CPU(struct s390_idle_data, s390_idle);
+ 
+-void account_idle_time_irq(void)
++void update_timer_idle(void)
  {
-+	/*
-+	 * Entry point from hardware PMI, interrupts should be disabled here.
-+	 * This serializes us against perf_event_remove_from_context() in
-+	 * things like perf_event_release_kernel().
-+	 */
-+	lockdep_assert_irqs_disabled();
-+
- 	return __perf_event_overflow(event, 1, data, regs);
- }
+ 	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
+ 	struct lowcore *lc = get_lowcore();
+-	unsigned long idle_time;
+ 	u64 cycles_new[8];
+ 	int i;
  
-@@ -10503,6 +10510,19 @@ static void perf_swevent_event(struct perf_event *event, u64 nr,
- {
- 	struct hw_perf_event *hwc = &event->hw;
- 
-+	/*
-+	 * This is:
-+	 *   - software		preempt
-+	 *   - tracepoint	preempt
-+	 *   -   tp_target_task	irq (ctx->lock)
-+	 *   - uprobes		preempt/irq
-+	 *   - kprobes		preempt/irq
-+	 *   - hw_breakpoint	irq
-+	 *
-+	 * Any of these are sufficient to hold off RCU and thus ensure @event
-+	 * exists.
-+	 */
-+	lockdep_assert_preemption_disabled();
- 	local64_add(nr, &event->count);
- 
- 	if (!regs)
-@@ -10511,6 +10531,16 @@ static void perf_swevent_event(struct perf_event *event, u64 nr,
- 	if (!is_sampling_event(event))
- 		return;
- 
-+	/*
-+	 * Serialize against event_function_call() IPIs like normal overflow
-+	 * event handling. Specifically, must not allow
-+	 * perf_event_release_kernel() -> perf_remove_from_context() to make
-+	 * progress and 'release' the event from under us.
-+	 */
-+	guard(irqsave)();
-+	if (event->state != PERF_EVENT_STATE_ACTIVE)
-+		return;
-+
- 	if ((event->attr.sample_type & PERF_SAMPLE_PERIOD) && !event->attr.freq) {
- 		data->period = nr;
- 		return perf_swevent_overflow(event, 1, data, regs);
-@@ -11009,6 +11039,11 @@ void perf_tp_event(u16 event_type, u64 count, void *record, int entry_size,
- 	struct perf_sample_data data;
- 	struct perf_event *event;
- 
-+	/*
-+	 * Per being a tracepoint, this runs with preemption disabled.
-+	 */
-+	lockdep_assert_preemption_disabled();
-+
- 	struct perf_raw_record raw = {
- 		.frag = {
- 			.size = entry_size,
-@@ -11341,6 +11376,11 @@ void perf_bp_event(struct perf_event *bp, void *data)
- 	struct perf_sample_data sample;
- 	struct pt_regs *regs = data;
- 
-+	/*
-+	 * Exception context, will have interrupts disabled.
-+	 */
-+	lockdep_assert_irqs_disabled();
-+
- 	perf_sample_data_init(&sample, bp->attr.bp_addr, 0);
- 
- 	if (!bp->hw.state && !perf_exclude_event(bp, regs))
-@@ -11805,7 +11845,7 @@ static enum hrtimer_restart perf_swevent_hrtimer(struct hrtimer *hrtimer)
- 
- 	if (regs && !perf_exclude_event(event, regs)) {
- 		if (!(event->attr.exclude_idle && is_idle_task(current)))
--			if (__perf_event_overflow(event, 1, &data, regs))
-+			if (perf_event_overflow(event, &data, regs))
- 				ret = HRTIMER_NORESTART;
+@@ -35,13 +34,19 @@ void account_idle_time_irq(void)
+ 			this_cpu_add(mt_cycles[i], cycles_new[i] - idle->mt_cycles_enter[i]);
  	}
+ 
+-	idle_time = lc->int_clock - idle->clock_idle_enter;
+-
+ 	lc->steal_timer += idle->clock_idle_enter - lc->last_update_clock;
+ 	lc->last_update_clock = lc->int_clock;
+ 
+ 	lc->system_timer += lc->last_update_timer - idle->timer_idle_enter;
+ 	lc->last_update_timer = lc->sys_enter_timer;
++}
++
++void account_idle_time_irq(void)
++{
++	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
++	unsigned long idle_time;
++
++	idle_time = get_lowcore()->int_clock - idle->clock_idle_enter;
+ 
+ 	/* Account time spent with enabled wait psw loaded as idle time. */
+ 	WRITE_ONCE(idle->idle_time, READ_ONCE(idle->idle_time) + idle_time);
+diff --git a/arch/s390/kernel/irq.c b/arch/s390/kernel/irq.c
+index bdf9c7cb5685b..080e9285b3379 100644
+--- a/arch/s390/kernel/irq.c
++++ b/arch/s390/kernel/irq.c
+@@ -146,6 +146,10 @@ void noinstr do_io_irq(struct pt_regs *regs)
+ 	struct pt_regs *old_regs = set_irq_regs(regs);
+ 	bool from_idle;
+ 
++	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
++	if (from_idle)
++		update_timer_idle();
++
+ 	irq_enter_rcu();
+ 
+ 	if (user_mode(regs)) {
+@@ -154,7 +158,6 @@ void noinstr do_io_irq(struct pt_regs *regs)
+ 			current->thread.last_break = regs->last_break;
+ 	}
+ 
+-	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
+ 	if (from_idle)
+ 		account_idle_time_irq();
+ 
+@@ -182,6 +185,10 @@ void noinstr do_ext_irq(struct pt_regs *regs)
+ 	struct pt_regs *old_regs = set_irq_regs(regs);
+ 	bool from_idle;
+ 
++	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
++	if (from_idle)
++		update_timer_idle();
++
+ 	irq_enter_rcu();
+ 
+ 	if (user_mode(regs)) {
+@@ -194,7 +201,6 @@ void noinstr do_ext_irq(struct pt_regs *regs)
+ 	regs->int_parm = get_lowcore()->ext_params;
+ 	regs->int_parm_long = get_lowcore()->ext_params2;
+ 
+-	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
+ 	if (from_idle)
+ 		account_idle_time_irq();
  
 -- 
 2.51.0
