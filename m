@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50E238737C;
-	Tue, 10 Mar 2026 11:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A130C3859DF;
+	Tue, 10 Mar 2026 11:13:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141209; cv=none; b=OqvdIDDuY+firr4fBY6F1LPdJjl52zxhCiH1WW1gGoqsBLi9GHMTF78fku1lae1uAWdzzVeJBXUDAjP5Zp87RvIV1IMsk3eJXQnKfIMjLghQxfaFZsxlsrvvB6uyOZmbtB+kZGJJEmFHwAING4dZTCjhO/WT3TyWjBvLF2HX5Mc=
+	t=1773141210; cv=none; b=XhXZ09XXkzmY3TQHN8+O/Dg7Zl5GEh21dB/a1PDOcYZKCldSrwqSxlrL6wx0E+nP4f3EUSXs8Fr7tWi1Hew8uGdYvE4IBDb127+8IRbmxI6c/oqxJR+UCvTtbtm+X8i4oNvZCaH2cng2R0hoXfSUMxV+bTHx7YE6SDeitRBlJx0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141209; c=relaxed/simple;
-	bh=y6n96sPJDZ2I8gUj/9scgkBbfc9iO/oVRW/ZW7INqUA=;
+	s=arc-20240116; t=1773141210; c=relaxed/simple;
+	bh=rydZbUZuIz2TCpzRAlZCzhwj0onXIsxgAqeuENW7aXA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DpESXgzgT9YpsBHWI7wRnCY/axHSUnC10OqsPk8+QNCSvRWUQJtk9W8wL3K9VRVRgUNApuZjzWGXUKYJBeaBzyuhJyUfcCwHtYq6O2+58vsB0MdCe/0fzrlSM0wsO/ZnmJbTuuQfPmkgJqKT55bLcuM5MRRK4FURA3M9fd/DjdU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EAyt1QYE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XpNeDw6BqwgPiAydEwfC5Oo4Zep1XMldWl2pOX/PWXhY+/hCynKio3+3w76tAXD1cWwpNYcrpU40f3JZwqpi8yNEtxAWhW4WdPF/nDK2eVOPCE+DYyDet/wO2YnJI7OuShK2N9p6jPlz7o4e5ftGBxqBXB3FFazDhvuHGcfmNo4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f/qSs0Aa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EAyt1QYE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7E27C2BC86;
-	Tue, 10 Mar 2026 11:13:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f/qSs0Aa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91BEC19423;
+	Tue, 10 Mar 2026 11:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141209;
-	bh=y6n96sPJDZ2I8gUj/9scgkBbfc9iO/oVRW/ZW7INqUA=;
+	s=k20201202; t=1773141210;
+	bh=rydZbUZuIz2TCpzRAlZCzhwj0onXIsxgAqeuENW7aXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EAyt1QYEuzYmhTNK/ULuVRoGBHMcW8mv7j58rKpEMYgOsySZ8AoAhzU+1X01Z6rl8
-	 wu3XzEt10xBZ9FFeT+gY6Ikn/mRZzHJMeZan3MmucX4Tmr5PcVt1CY8UIW9l15SYtB
-	 KtdyInpqF8cPbHocQo3SIqznZSyZdi/zAkkmHW41Jkl6iP4589DoxniDhqz4g/rjgm
-	 VUm9gJoHueMe3w7pGQB+6KEEjH8M6qZgL946Ds6vp+XiFnAHjCiae10i5214oneQa5
-	 5diEvu4oiZgaIFNDHqmqC/5hGj7UvRx6oXqR12MRCwiDOYgf58MebcEuig3hDM2C7w
-	 9v7D40ORHVj+g==
+	b=f/qSs0Aaa/H1Q3487C+TDGlwkCrc8UTHL871Bo3G1EU5sXXRtxfUp2DqIrKlUhjqx
+	 QtALZQPFAxcvhibmvFaFaC4IAvslNj4PrmKSpyPLnxBXapE73e8bF/4K2Ey7UtWs5h
+	 IkhN9cW6a3KZgjRfLOZA0sOq3MDhrFVDjNCozhzvwohYnT25MuRXFjb0cKjvvlgxzG
+	 vFC86/vpb5q3S/CV4dQoaY46/vDJBvR55HYj2L64ArEpyiafou/R2czI77chLZ6Fjy
+	 SVWU17BTbq8UtzXZapnjld8YfRAS1Yp1g9CIMhujioGMNWJmFM6PezfG+vcKlerMXH
+	 QFukoF6O63j6Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+Cc: "Nikhil P. Rao" <nikhil.rao@amd.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 210/311] tcp: give up on stronger sk_rcvbuf checks (for now)
-Date: Tue, 10 Mar 2026 07:04:17 -0400
-Message-ID: <c9c6ffc3a954eb305ad8f82b28ee546c7d55e778.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 211/311] xsk: Fix fragment node deletion to prevent buffer leak
+Date: Tue, 10 Mar 2026 07:04:18 -0400
+Message-ID: <9a133c67c946144140e924d2480642210a379ecb.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,77 +49,80 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: "Nikhil P. Rao" <nikhil.rao@amd.com>
 
-[ Upstream commit 026dfef287c07f37d4d4eef7a0b5a4bfdb29b32d ]
+[ Upstream commit 60abb0ac11dccd6b98fd9182bc5f85b621688861 ]
 
-We hit another corner case which leads to TcpExtTCPRcvQDrop
+After commit b692bf9a7543 ("xsk: Get rid of xdp_buff_xsk::xskb_list_node"),
+the list_node field is reused for both the xskb pool list and the buffer
+free list, this causes a buffer leak as described below.
 
-Connections which send RPCs in the 20-80kB range over loopback
-experience spurious drops. The exact conditions for most of
-the drops I investigated are that:
- - socket exchanged >1MB of data so its not completely fresh
- - rcvbuf is around 128kB (default, hasn't grown)
- - there is ~60kB of data in rcvq
- - skb > 64kB arrives
+xp_free() checks if a buffer is already on the free list using
+list_empty(&xskb->list_node). When list_del() is used to remove a node
+from the xskb pool list, it doesn't reinitialize the node pointers.
+This means list_empty() will return false even after the node has been
+removed, causing xp_free() to incorrectly skip adding the buffer to the
+free list.
 
-The sum of skb->len (!) of both of the skbs (the one already
-in rcvq and the arriving one) is larger than rwnd.
-My suspicion is that this happens because __tcp_select_window()
-rounds the rwnd up to (1 << wscale) if less than half of
-the rwnd has been consumed.
+Fix this by using list_del_init() instead of list_del() in all fragment
+handling paths, this ensures the list node is reinitialized after removal,
+allowing the list_empty() to work correctly.
 
-Eric suggests that given the number of Fixes we already have
-pointing to 1d2fbaad7cd8 it's probably time to give up on it,
-until a bigger revamp of rmem management.
-
-Also while we could risk tweaking the rwnd math, there are other
-drops on workloads I investigated, after the commit in question,
-not explained by this phenomenon.
-
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/20260225122355.585fd57b@kernel.org
-Fixes: 1d2fbaad7cd8 ("tcp: stronger sk_rcvbuf checks")
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260227003359.2391017-1-kuba@kernel.org
+Fixes: b692bf9a7543 ("xsk: Get rid of xdp_buff_xsk::xskb_list_node")
+Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
+Link: https://patch.msgid.link/20260225000456.107806-2-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_input.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ include/net/xdp_sock_drv.h | 6 +++---
+ net/xdp/xsk.c              | 2 +-
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
-index adec44313772b..1c9db9a246f71 100644
---- a/net/ipv4/tcp_input.c
-+++ b/net/ipv4/tcp_input.c
-@@ -5116,25 +5116,11 @@ static void tcp_ofo_queue(struct sock *sk)
- static bool tcp_prune_ofo_queue(struct sock *sk, const struct sk_buff *in_skb);
- static int tcp_prune_queue(struct sock *sk, const struct sk_buff *in_skb);
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 242e34f771cca..aefc368449d59 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -122,7 +122,7 @@ static inline void xsk_buff_free(struct xdp_buff *xdp)
+ 		goto out;
  
--/* Check if this incoming skb can be added to socket receive queues
-- * while satisfying sk->sk_rcvbuf limit.
-- *
-- * In theory we should use skb->truesize, but this can cause problems
-- * when applications use too small SO_RCVBUF values.
-- * When LRO / hw gro is used, the socket might have a high tp->scaling_ratio,
-- * allowing RWIN to be close to available space.
-- * Whenever the receive queue gets full, we can receive a small packet
-- * filling RWIN, but with a high skb->truesize, because most NIC use 4K page
-- * plus sk_buff metadata even when receiving less than 1500 bytes of payload.
-- *
-- * Note that we use skb->len to decide to accept or drop this packet,
-- * but sk->sk_rmem_alloc is the sum of all skb->truesize.
-- */
- static bool tcp_can_ingest(const struct sock *sk, const struct sk_buff *skb)
+ 	list_for_each_entry_safe(pos, tmp, xskb_list, list_node) {
+-		list_del(&pos->list_node);
++		list_del_init(&pos->list_node);
+ 		xp_free(pos);
+ 	}
+ 
+@@ -157,7 +157,7 @@ static inline struct xdp_buff *xsk_buff_get_frag(const struct xdp_buff *first)
+ 	frag = list_first_entry_or_null(&xskb->pool->xskb_list,
+ 					struct xdp_buff_xsk, list_node);
+ 	if (frag) {
+-		list_del(&frag->list_node);
++		list_del_init(&frag->list_node);
+ 		ret = &frag->xdp;
+ 	}
+ 
+@@ -168,7 +168,7 @@ static inline void xsk_buff_del_frag(struct xdp_buff *xdp)
  {
- 	unsigned int rmem = atomic_read(&sk->sk_rmem_alloc);
+ 	struct xdp_buff_xsk *xskb = container_of(xdp, struct xdp_buff_xsk, xdp);
  
--	return rmem + skb->len <= sk->sk_rcvbuf;
-+	return rmem <= sk->sk_rcvbuf;
+-	list_del(&xskb->list_node);
++	list_del_init(&xskb->list_node);
  }
  
- static int tcp_try_rmem_schedule(struct sock *sk, const struct sk_buff *skb,
+ static inline struct xdp_buff *xsk_buff_get_head(struct xdp_buff *first)
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index f093c3453f64c..f2ec4f78bbb6a 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -186,7 +186,7 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 		err = __xsk_rcv_zc(xs, pos, len, contd);
+ 		if (err)
+ 			goto err;
+-		list_del(&pos->list_node);
++		list_del_init(&pos->list_node);
+ 	}
+ 
+ 	return 0;
 -- 
 2.51.0
 
