@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85B1E3803CD;
-	Tue, 10 Mar 2026 11:26:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9B33803CD;
+	Tue, 10 Mar 2026 11:26:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141987; cv=none; b=Mg9Z3J7AztJFCLwZ6Rzw8Kx4r1WQqZl9f4s5+8KaHCzgHwBV3LYysu/7ifVsOJQlMicoaehXqNnJ14myt55MDfg89C1tILlc3NfuX025HTT4WU0WRv5pl1zHqzPl1IWH4kD/VFLkqVjmMnxnq8T4Dr6XG4+gvpXUePSYzJUO9ZU=
+	t=1773141988; cv=none; b=A+ZNCxx4Tye0gRmb4pKxX5emJqPsTWj3eGEbm2XkReB0KWaTmBR9iwO+ywoTCUaiSk3+9XUkSaM5c0zqISoZKx8UVKu85ubhVEEJMPe6Q+wiQdWfAvnu6NSf3fsN918EihHUTKTapl7I8K7pfyCxqg2gOnR/H9CpE4TXzFGpm6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141987; c=relaxed/simple;
-	bh=n+YSX5CP2sWAu9KaVI9SbDj4GmPT5ls6uNhMwPPC7AM=;
+	s=arc-20240116; t=1773141988; c=relaxed/simple;
+	bh=dryaEcLw/M1QChWqjYgYO9+NHY3343QOqy7LfyE5MRA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVzmOtgr2+kcwwQItnnVJjrcPOZKP9FkOJ9b3Bm9V1paB7j1evRx+LcY/9Mi6m5h5IAD5OoZPNBeeLAgcFHr6XJKYuGRsRsc1WwjNAR+o9qXTh1XV55ZhAYu8eXTa8MX4ZBFewv9wQEXuF0P6b5cb1EAJL/8ettVkwF4wKtC/bA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=O4ndnqQ1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Asr9KDXp0+IfwndMkGOpwBkpoK54coFLKfvHAlMc+1/Dbc0mktLVIhv8aq76Nwn/2cpUeN2axmn4/IzKU9wcBCnmGwY4tsILkvdHQEgrpea96KyMMry77xlgvCea03/dJlwP2Eo2GvH8Tub1IExiittdXIRLxgPcd/E9tktWU7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k5X67jL1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="O4ndnqQ1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8471C19423;
-	Tue, 10 Mar 2026 11:26:26 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k5X67jL1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA78DC2BC9E;
+	Tue, 10 Mar 2026 11:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141987;
-	bh=n+YSX5CP2sWAu9KaVI9SbDj4GmPT5ls6uNhMwPPC7AM=;
+	s=k20201202; t=1773141988;
+	bh=dryaEcLw/M1QChWqjYgYO9+NHY3343QOqy7LfyE5MRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O4ndnqQ1LXKxrpQ1+/GUHvpqh4bbBgVbo2vFRAVOQMuck2vGd0iVE8CAIjOcMSNnk
-	 sc1sVDODOy1scMJjly9We1JxYnL2L72rTyoqLO8fGwvagSwI+N9b26sHkERaua8hsV
-	 DF3nG/w2WGJdftKPsPX7HVTFal5jSEqDz5J66IU9g6JVNdw/f2ONfmKOVZ6BGkBTqQ
-	 9IXdssarMY2a9l8Y4LRAcIgyqDyzkDzbpuMrnCCiiJd/mYvQHfo+2e18DPyqVf6Kpe
-	 vLOVDcVhildxIySVzCSq79MWFUq07JoatI8ZLyQwh1uwzAKuVg3tnKX3r3IELXC0C0
-	 QFglIyeVWlSyQ==
+	b=k5X67jL1Zmq2ik+zfWnzU+XbSU8zOkswOJP9sq17AqAf2cFsqnrp/v2qLImSfqW5T
+	 5OGum6cGH31+bktcudnwEhUu6/2uepcx56RzJSr/kOdYIcLHf5D/6JYe9P2lf/Tnr6
+	 g1I7nzr3yYWDC7IUGIjMZ+TN2+wV9q9BjYo+LQrJK6cqgSlBJVTXad7l5xPiqzOshO
+	 MKTupbLfIZS3qYC/zG8WrTPKqsri1eiTSoUT6LVt/+3ZZcmPktv8asDfFUEEQQNriS
+	 p/0mAGSHZOBYVyopb48OYT4NzWaJso9F+mN0tfrtkTiAki+MLbFS3CZr1bPcZGfB+/
+	 4bKwNycP0wLDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Qiang Yu <qiang.yu@oss.qualcomm.com>,
+	Wenbin Yao <wenbin.yao@oss.qualcomm.com>,
 	Manivannan Sadhasivam <mani@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 112/314] PCI: Add preceding capability position support in PCI_FIND_NEXT_*_CAP macros
-Date: Tue, 10 Mar 2026 07:16:11 -0400
-Message-ID: <22acd0f48afd9436cafbaaad28c1978e79239bb2.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 113/314] PCI: dwc: Add new APIs to remove standard and extended Capability
+Date: Tue, 10 Mar 2026 07:16:12 -0400
+Message-ID: <3ba687a17042ed064d841b7dbc2ce80173678ee9.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,231 +51,107 @@ Content-Transfer-Encoding: 8bit
 
 From: Qiang Yu <qiang.yu@oss.qualcomm.com>
 
-[ Upstream commit a2582e05e39adf9ab82a02561cd6f70738540ae0 ]
+[ Upstream commit 0183562f1e824c0ca6c918309a0978e9a269af3e ]
 
-Add support for finding the preceding capability position in PCI
-capability list by extending the capability finding macros with an
-additional parameter. This functionality is essential for modifying PCI
-capability list, as it provides the necessary information to update the
-"next" pointer of the predecessor capability when removing entries.
+On some platforms, certain PCIe Capabilities may be present in hardware
+but are not fully implemented as defined in PCIe spec. These incomplete
+capabilities should be hidden from the PCI framework to prevent unexpected
+behavior.
 
-Modify two macros to accept a new 'prev_ptr' parameter:
-- PCI_FIND_NEXT_CAP - Now accepts 'prev_ptr' parameter for standard
-  capabilities
-- PCI_FIND_NEXT_EXT_CAP - Now accepts 'prev_ptr' parameter for extended
-  capabilities
+Introduce two APIs to remove a specific PCIe Capability and Extended
+Capability by updating the previous capability's next offset field to skip
+over the unwanted capability. These APIs allow RC drivers to easily hide
+unsupported or partially implemented capabilities from software.
 
-When a capability is found, these macros:
-- Store the position of the preceding capability in *prev_ptr
-  (if prev_ptr != NULL)
-- Maintain all existing functionality when prev_ptr is NULL
-
-Update current callers to accommodate this API change by passing NULL to
-'prev_ptr' argument if they do not care about the preceding capability
-position.
-
-No functional changes to driver behavior result from this commit as it
-maintains the existing capability finding functionality while adding the
-infrastructure for future capability removal operations.
-
+Co-developed-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
+Signed-off-by: Wenbin Yao <wenbin.yao@oss.qualcomm.com>
 Signed-off-by: Qiang Yu <qiang.yu@oss.qualcomm.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/20251109-remove_cap-v1-1-2208f46f4dc2@oss.qualcomm.com
+Link: https://patch.msgid.link/20251109-remove_cap-v1-2-2208f46f4dc2@oss.qualcomm.com
 Stable-dep-of: 43d67ec26b32 ("PCI: dwc: ep: Fix resizable BAR support for multi-PF configurations")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pcie-cadence.c |  4 ++--
- .../pci/controller/dwc/pcie-designware-ep.c   |  2 +-
- drivers/pci/controller/dwc/pcie-designware.c  |  6 ++---
- drivers/pci/pci.c                             |  8 +++----
- drivers/pci/pci.h                             | 23 +++++++++++++++----
- 5 files changed, 29 insertions(+), 14 deletions(-)
+ drivers/pci/controller/dwc/pcie-designware.c | 53 ++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-designware.h |  2 +
+ 2 files changed, 55 insertions(+)
 
-diff --git a/drivers/pci/controller/cadence/pcie-cadence.c b/drivers/pci/controller/cadence/pcie-cadence.c
-index bd683d0fecb22..d614452861f77 100644
---- a/drivers/pci/controller/cadence/pcie-cadence.c
-+++ b/drivers/pci/controller/cadence/pcie-cadence.c
-@@ -13,13 +13,13 @@
- u8 cdns_pcie_find_capability(struct cdns_pcie *pcie, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(cdns_pcie_read_cfg, PCI_CAPABILITY_LIST,
--				 cap, pcie);
-+				 cap, NULL, pcie);
- }
- EXPORT_SYMBOL_GPL(cdns_pcie_find_capability);
- 
- u16 cdns_pcie_find_ext_capability(struct cdns_pcie *pcie, u8 cap)
- {
--	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, pcie);
-+	return PCI_FIND_NEXT_EXT_CAP(cdns_pcie_read_cfg, 0, cap, NULL, pcie);
- }
- EXPORT_SYMBOL_GPL(cdns_pcie_find_ext_capability);
- 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index 6d3beec92b54e..7f10d764f52b0 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -72,7 +72,7 @@ EXPORT_SYMBOL_GPL(dw_pcie_ep_reset_bar);
- static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(dw_pcie_ep_read_cfg, PCI_CAPABILITY_LIST,
--				 cap, ep, func_no);
-+				 cap, NULL, ep, func_no);
- }
- 
- /**
 diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index 75fc8b767fccf..5d7a7e6f5724e 100644
+index 5d7a7e6f5724e..345365ea97c74 100644
 --- a/drivers/pci/controller/dwc/pcie-designware.c
 +++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -226,13 +226,13 @@ void dw_pcie_version_detect(struct dw_pcie *pci)
- u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap)
- {
- 	return PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
--				 pci);
-+				 NULL, pci);
- }
- EXPORT_SYMBOL_GPL(dw_pcie_find_capability);
- 
- u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
- {
--	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, pci);
-+	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, NULL, pci);
+@@ -236,6 +236,59 @@ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap)
  }
  EXPORT_SYMBOL_GPL(dw_pcie_find_ext_capability);
  
-@@ -246,7 +246,7 @@ static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
- 		return 0;
- 
- 	while ((vsec = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, vsec,
--					     PCI_EXT_CAP_ID_VNDR, pci))) {
-+					     PCI_EXT_CAP_ID_VNDR, NULL, pci))) {
- 		header = dw_pcie_readl_dbi(pci, vsec + PCI_VNDR_HEADER);
- 		if (PCI_VNDR_HEADER_ID(header) == vsec_id)
- 			return vsec;
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index d4e70570d09f2..e128696d5b761 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -426,7 +426,7 @@ static int pci_dev_str_match(struct pci_dev *dev, const char *p,
- static u8 __pci_find_next_cap(struct pci_bus *bus, unsigned int devfn,
- 			      u8 pos, int cap)
++void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap)
++{
++	u8 cap_pos, pre_pos, next_pos;
++	u16 reg;
++
++	cap_pos = PCI_FIND_NEXT_CAP(dw_pcie_read_cfg, PCI_CAPABILITY_LIST, cap,
++				 &pre_pos, pci);
++	if (!cap_pos)
++		return;
++
++	reg = dw_pcie_readw_dbi(pci, cap_pos);
++	next_pos = (reg & 0xff00) >> 8;
++
++	dw_pcie_dbi_ro_wr_en(pci);
++	if (pre_pos == PCI_CAPABILITY_LIST)
++		dw_pcie_writeb_dbi(pci, PCI_CAPABILITY_LIST, next_pos);
++	else
++		dw_pcie_writeb_dbi(pci, pre_pos + 1, next_pos);
++	dw_pcie_dbi_ro_wr_dis(pci);
++}
++EXPORT_SYMBOL_GPL(dw_pcie_remove_capability);
++
++void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap)
++{
++	int cap_pos, next_pos, pre_pos;
++	u32 pre_header, header;
++
++	cap_pos = PCI_FIND_NEXT_EXT_CAP(dw_pcie_read_cfg, 0, cap, &pre_pos, pci);
++	if (!cap_pos)
++		return;
++
++	header = dw_pcie_readl_dbi(pci, cap_pos);
++	/*
++	 * If the first cap at offset PCI_CFG_SPACE_SIZE is removed,
++	 * only set it's capid to zero as it cannot be skipped.
++	 */
++	if (cap_pos == PCI_CFG_SPACE_SIZE) {
++		dw_pcie_dbi_ro_wr_en(pci);
++		dw_pcie_writel_dbi(pci, cap_pos, header & 0xffff0000);
++		dw_pcie_dbi_ro_wr_dis(pci);
++		return;
++	}
++
++	pre_header = dw_pcie_readl_dbi(pci, pre_pos);
++	next_pos = PCI_EXT_CAP_NEXT(header);
++
++	dw_pcie_dbi_ro_wr_en(pci);
++	dw_pcie_writel_dbi(pci, pre_pos,
++			  (pre_header & 0xfffff) | (next_pos << 20));
++	dw_pcie_dbi_ro_wr_dis(pci);
++}
++EXPORT_SYMBOL_GPL(dw_pcie_remove_ext_capability);
++
+ static u16 __dw_pcie_find_vsec_capability(struct dw_pcie *pci, u16 vendor_id,
+ 					  u16 vsec_id)
  {
--	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, bus, devfn);
-+	return PCI_FIND_NEXT_CAP(pci_bus_read_config, pos, cap, NULL, bus, devfn);
- }
+diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+index 6c04ac0196794..a59ea4078cca8 100644
+--- a/drivers/pci/controller/dwc/pcie-designware.h
++++ b/drivers/pci/controller/dwc/pcie-designware.h
+@@ -557,6 +557,8 @@ void dw_pcie_version_detect(struct dw_pcie *pci);
  
- u8 pci_find_next_capability(struct pci_dev *dev, u8 pos, int cap)
-@@ -531,7 +531,7 @@ u16 pci_find_next_ext_capability(struct pci_dev *dev, u16 start, int cap)
- 		return 0;
+ u8 dw_pcie_find_capability(struct dw_pcie *pci, u8 cap);
+ u16 dw_pcie_find_ext_capability(struct dw_pcie *pci, u8 cap);
++void dw_pcie_remove_capability(struct dw_pcie *pci, u8 cap);
++void dw_pcie_remove_ext_capability(struct dw_pcie *pci, u8 cap);
+ u16 dw_pcie_find_rasdes_capability(struct dw_pcie *pci);
+ u16 dw_pcie_find_ptm_capability(struct dw_pcie *pci);
  
- 	return PCI_FIND_NEXT_EXT_CAP(pci_bus_read_config, start, cap,
--				     dev->bus, dev->devfn);
-+				     NULL, dev->bus, dev->devfn);
- }
- EXPORT_SYMBOL_GPL(pci_find_next_ext_capability);
- 
-@@ -600,7 +600,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
- 		mask = HT_5BIT_CAP_MASK;
- 
- 	pos = PCI_FIND_NEXT_CAP(pci_bus_read_config, pos,
--				PCI_CAP_ID_HT, dev->bus, dev->devfn);
-+				PCI_CAP_ID_HT, NULL, dev->bus, dev->devfn);
- 	while (pos) {
- 		rc = pci_read_config_byte(dev, pos + 3, &cap);
- 		if (rc != PCIBIOS_SUCCESSFUL)
-@@ -611,7 +611,7 @@ static u8 __pci_find_next_ht_cap(struct pci_dev *dev, u8 pos, int ht_cap)
- 
- 		pos = PCI_FIND_NEXT_CAP(pci_bus_read_config,
- 					pos + PCI_CAP_LIST_NEXT,
--					PCI_CAP_ID_HT, dev->bus,
-+					PCI_CAP_ID_HT, NULL, dev->bus,
- 					dev->devfn);
- 	}
- 
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index 36cf1ffb2023c..5510c103be2d3 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -106,17 +106,21 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
-  * @read_cfg: Function pointer for reading PCI config space
-  * @start: Starting position to begin search
-  * @cap: Capability ID to find
-+ * @prev_ptr: Pointer to store position of preceding capability (optional)
-  * @args: Arguments to pass to read_cfg function
-  *
-- * Search the capability list in PCI config space to find @cap.
-+ * Search the capability list in PCI config space to find @cap. If
-+ * found, update *prev_ptr with the position of the preceding capability
-+ * (if prev_ptr != NULL)
-  * Implements TTL (time-to-live) protection against infinite loops.
-  *
-  * Return: Position of the capability if found, 0 otherwise.
-  */
--#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, args...)		\
-+#define PCI_FIND_NEXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
- ({									\
- 	int __ttl = PCI_FIND_CAP_TTL;					\
--	u8 __id, __found_pos = 0;					\
-+	u8 __id,  __found_pos = 0;					\
-+	u8 __prev_pos = (start);					\
- 	u8 __pos = (start);						\
- 	u16 __ent;							\
- 									\
-@@ -135,9 +139,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
- 									\
- 		if (__id == (cap)) {					\
- 			__found_pos = __pos;				\
-+			if (prev_ptr != NULL)				\
-+				*(u8 *)prev_ptr = __prev_pos;		\
- 			break;						\
- 		}							\
- 									\
-+		__prev_pos = __pos;					\
- 		__pos = FIELD_GET(PCI_CAP_LIST_NEXT_MASK, __ent);	\
- 	}								\
- 	__found_pos;							\
-@@ -149,21 +156,26 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
-  * @read_cfg: Function pointer for reading PCI config space
-  * @start: Starting position to begin search (0 for initial search)
-  * @cap: Extended capability ID to find
-+ * @prev_ptr: Pointer to store position of preceding capability (optional)
-  * @args: Arguments to pass to read_cfg function
-  *
-  * Search the extended capability list in PCI config space to find @cap.
-+ * If found, update *prev_ptr with the position of the preceding capability
-+ * (if prev_ptr != NULL)
-  * Implements TTL protection against infinite loops using a calculated
-  * maximum search count.
-  *
-  * Return: Position of the capability if found, 0 otherwise.
-  */
--#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, args...)		\
-+#define PCI_FIND_NEXT_EXT_CAP(read_cfg, start, cap, prev_ptr, args...)	\
- ({									\
- 	u16 __pos = (start) ?: PCI_CFG_SPACE_SIZE;			\
- 	u16 __found_pos = 0;						\
-+	u16 __prev_pos;							\
- 	int __ttl, __ret;						\
- 	u32 __header;							\
- 									\
-+	__prev_pos = __pos;						\
- 	__ttl = (PCI_CFG_SPACE_EXP_SIZE - PCI_CFG_SPACE_SIZE) / 8;	\
- 	while (__ttl-- > 0 && __pos >= PCI_CFG_SPACE_SIZE) {		\
- 		__ret = read_cfg##_dword(args, __pos, &__header);	\
-@@ -175,9 +187,12 @@ bool pcie_cap_has_rtctl(const struct pci_dev *dev);
- 									\
- 		if (PCI_EXT_CAP_ID(__header) == (cap) && __pos != start) {\
- 			__found_pos = __pos;				\
-+			if (prev_ptr != NULL)				\
-+				*(u16 *)prev_ptr = __prev_pos;		\
- 			break;						\
- 		}							\
- 									\
-+		__prev_pos = __pos;					\
- 		__pos = PCI_EXT_CAP_NEXT(__header);			\
- 	}								\
- 	__found_pos;							\
 -- 
 2.51.0
 
