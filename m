@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126B338A727;
-	Tue, 10 Mar 2026 11:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FB7738A734;
+	Tue, 10 Mar 2026 11:27:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142026; cv=none; b=dvZcoG0egPkMd0ZGxfvQMNjVrTx0aGf+ErH99rBSy6oEFVDR0c98uJ9kEyuYzxUbFtD5L7it3B0tly2O83lyD6RvCW9yWs0c2kLsazQNzueo10dpvOqMpNkKloV/IBxzrY5DIefk6LkI0EqFeVnRliI3xqApPGs8cnAu1b6tvDs=
+	t=1773142027; cv=none; b=jzbpYEGEL6VGWi9798M/T2z2LZ3ppRQqi4c/aYnOdHWyUM9/ahmGaPg4sM6B519dePWNXXv0fMLK4KbfWaV3w9ylBx98hY9+dRcEewoScMs2LdfbIN++7Doig1ZDVhqK+tW5j/ECcOsHlda3wKkQeFXcL+jJHbwBQzAVRMz2isY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142026; c=relaxed/simple;
-	bh=BobZ5EwQlXB/cTcUXuakRxS6/d38h/OVvjGufjxo/Xc=;
+	s=arc-20240116; t=1773142027; c=relaxed/simple;
+	bh=/PB/aL1LmfoCOZCbQN5F93cmNiinRup6YYizZMNnOHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=co5Dr0rsniRNOdwGAmOUxw/xgO+/qQ6EnMrU71vDjC7nh1AFomRY214iT+pAdUUpPs4JLmNqCKlG+jIDJmsrrIShyp/eWOLIGBcM9QJwG+82+eKPvP7wLKUzOl7mPsPOMM+TjGrFw69axRUfJMFQJzu0R6/4SGB2f8nl0/eWCVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQ/JVb9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=IFajd5TXb/WImP+PZCcVb4l/Sanjr3wctY1K0YEGhAvlxm7gxF+qNLCJXWpis5sQz9nc3x52mtdOMwTqIwegF6LUvAs/X/cIXolhVHiUVD7KDKnzNHmVhHDXlo9g4kNpJpqCh9CmE9PAdm6wA4ltLgbwGr48oiNh9566UYeaLZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HUoesiYw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQ/JVb9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40AFDC2BC9E;
-	Tue, 10 Mar 2026 11:27:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HUoesiYw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A655C19423;
+	Tue, 10 Mar 2026 11:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142026;
-	bh=BobZ5EwQlXB/cTcUXuakRxS6/d38h/OVvjGufjxo/Xc=;
+	s=k20201202; t=1773142027;
+	bh=/PB/aL1LmfoCOZCbQN5F93cmNiinRup6YYizZMNnOHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQ/JVb9UHj+cp4+Ju5hqN4C4WTkXQ63O30Khe2NPCuxkMz3mLeAGinYuc/oTQJwNr
-	 V83Yplu5wRk5IrBXyf561dVW8r8AJo4tn6/QUKZJegaqFGTBpSEbP1i46Cs96+7aJh
-	 HtsjYHRGxUYJKms7PfXJPzsvmpN4O8uvpeGhNEN/t5mf/PjRzXHqVLN2C93HgnrLqV
-	 TkqAPbJ5Mc0r1hP4+aKzy1LdMOU3BGofby51P1xorU1+uFp8XUDc4ZjPynQpPrx3Im
-	 hOojb6i8sALIN7oRTYZ7rPZg9HN3biCt+V//XHunPIAXW5GZaf2fLRxkQWL5jDZ20r
-	 UnHEnLBXXeQAg==
+	b=HUoesiYwVeYum8srTbxDouzJvK5gVL2VtnxMI1+w3FbNuQFLA29GnwQN6XmVUyvQ1
+	 HFJqxuOHj0HBam37vPwWanHVRuQctRsq7seCKqGmN3bqIeEpTMXES3ZH85OTpFKSlc
+	 G6QVy9N4t1KGIJ03C06O8/MUsOkubRxYyWiBxQTG8m63m170YNb5qT6ihk/tazjIF0
+	 5MDE3pS6PRem5U260Hvk1tNcuBU1mwH+Gd5bGWrgkjSECoxsrIrkSwkk9ty47BBU6T
+	 EB+XUfbGZWPRMr/8jwR0BP/NVwJ1Xw6zKufAeKBSUW31imlNmsud32Lc14AsDr5Cpw
+	 nmvumw0eYiKgw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Kurt Borja <kuurtb@gmail.com>,
 	Olexa Bilaniuk <obilaniu@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 152/314] platform/x86: alienware-wmi-wmax: Add G-Mode support to m18 laptops
-Date: Tue, 10 Mar 2026 07:16:51 -0400
-Message-ID: <b699259f6671f0b8e323d7ddf4f30d4270114bba.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 153/314] platform/x86: dell-wmi: Add audio/mic mute key codes
+Date: Tue, 10 Mar 2026 07:16:52 -0400
+Message-ID: <8800ee77285ea131049251d7d1fead5b81aa07ae.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -52,35 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Kurt Borja <kuurtb@gmail.com>
 
-commit bd5914caeb4b2de233992c31babccda88041b035 upstream.
+commit 26a7601471f62b95d56a81c3a8ccb551b5a6630f upstream.
 
-Alienware m18 laptops support G-Mode. Therefore, match them with
-G-Series quirks.
+Add audio/mic mute key codes found in Alienware m18 r1 AMD.
 
 Cc: stable@vger.kernel.org
 Tested-by: Olexa Bilaniuk <obilaniu@gmail.com>
+Suggested-by: Olexa Bilaniuk <obilaniu@gmail.com>
 Signed-off-by: Kurt Borja <kuurtb@gmail.com>
-Link: https://patch.msgid.link/20260129-m18-gmode-v1-1-48be521487b9@gmail.com
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://patch.msgid.link/20260207-mute-keys-v2-1-c55e5471c9c1@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/alienware-wmi-wmax.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-wmi-base.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/x86/dell/alienware-wmi-wmax.c b/drivers/platform/x86/dell/alienware-wmi-wmax.c
-index 01af6dde9057f..fdae40689f178 100644
---- a/drivers/platform/x86/dell/alienware-wmi-wmax.c
-+++ b/drivers/platform/x86/dell/alienware-wmi-wmax.c
-@@ -175,7 +175,7 @@ static const struct dmi_system_id awcc_dmi_table[] __initconst = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m18"),
- 		},
--		.driver_data = &generic_quirks,
-+		.driver_data = &g_series_quirks,
- 	},
- 	{
- 		.ident = "Alienware x15",
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index 28076929d6af5..907f1da01c8db 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -80,6 +80,12 @@ static const struct dmi_system_id dell_wmi_smbios_list[] __initconst = {
+ static const struct key_entry dell_wmi_keymap_type_0000[] = {
+ 	{ KE_IGNORE, 0x003a, { KEY_CAPSLOCK } },
+ 
++	/* Audio mute toggle */
++	{ KE_KEY,    0x0109, { KEY_MUTE } },
++
++	/* Mic mute toggle */
++	{ KE_KEY,    0x0150, { KEY_MICMUTE } },
++
+ 	/* Meta key lock */
+ 	{ KE_IGNORE, 0xe000, { KEY_RIGHTMETA } },
+ 
 -- 
 2.51.0
 
