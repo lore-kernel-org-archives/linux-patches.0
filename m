@@ -1,47 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D471A43C07F;
-	Tue, 10 Mar 2026 09:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E0243CECE;
+	Tue, 10 Mar 2026 09:01:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133312; cv=none; b=NyuyZBOG/jzmUU05a1J83hKaC5Fisdtx5j682QFof+U6aWtAeaD3HSVRT/Ia1/5vOCXvDVf1pJ2epKUQyXvru+yHFYrErfTGYBxI6m8UGBK8u0aHzmbdLauNU2UeJe+NDs+N8kBO5Bg2MBXi6cbbpN47o9ZZRPTWMUgK33TaAoY=
+	t=1773133315; cv=none; b=mBBBxSrQ85GQSM2ITR6zvN99TYqrMhX14sXqGzk0XRMCtODkxulb+82jOAyZ53fJUr62uNjQxeTjK7YgtovvHcaB96P+9Mf06NBTAfJXR9WLoWAyLt3LhXM3X4rnRo2ZMyMWuFHq7oIPpmIPBmCBkVhC7yn5TQIa3/tiz/X2lls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133312; c=relaxed/simple;
-	bh=QSp+cJDd/+CmLLNITxn5D3V0lWZorncu4EOGJu0orBw=;
+	s=arc-20240116; t=1773133315; c=relaxed/simple;
+	bh=qADLJsEOtlwHVdyvIQ5k0hd5TQcGaz9PzQzZoF6moBo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icyClByiFIJRkiT9kpi9ZbpVb/1mI1ZSiE3i+oND/UZW/5c8CMowz/x4VOoJgxzow8IVtw7JOZg8BEvGT93zgI52U0YG0AHsLwPyjLxFSUbxzoa8KEEmhGyy6lt8t+O+pnKPp/rWtVGz/jncSrltpJTv013AFdAyzivjgVYS2lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=q8GbFKiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Akk81rvrthoGKCQSWeY8KcPktXCzwGNk0tB9h/YdAkr79xWx7AlCjiSwsXBh77sZPw5N0BqSyRWu375v8p84Ebe2oS3mFnF2GqLauz6k1vxtg2f4vqsr7VjCqeJG8v6Uz6T66krUufvB4PBB759DyPb6YR95pykyUJGin+PMoFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ciOetug8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="q8GbFKiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B24C2BC87;
-	Tue, 10 Mar 2026 09:01:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ciOetug8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1401CC2BC86;
+	Tue, 10 Mar 2026 09:01:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133312;
-	bh=QSp+cJDd/+CmLLNITxn5D3V0lWZorncu4EOGJu0orBw=;
+	s=k20201202; t=1773133314;
+	bh=qADLJsEOtlwHVdyvIQ5k0hd5TQcGaz9PzQzZoF6moBo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8GbFKiYn9/t6jWZk2MPzJGzLldG4K9H1MensnbxdmadFJgwt1HgafdC8UNmPhkjK
-	 P8kODJizA5q+/hcYpyoxo0j1NHmp8oZ0+86riQ0v6jumqWS7KEqEH9OH1udzmR07Ce
-	 WiZNbMxSxbx20JkC+qD8kZ0+/PQU4xcZ7RD6k0n3DbqENwv82XIJjggc6GaCrLrKco
-	 3skSfQ/xVKMCeCA4Qbj5w+6fT3miw6lqA/9gJrr1taD3SQQ4mDNEiGwFLpj3K3Bc5i
-	 ZjEqGYqeOqJ/NulZE9lnU9ndil4fOjYMY1EmMtQPEszZu4STO8uOeawvjpgkgfvKy/
-	 zaXTEa982yI5A==
+	b=ciOetug8b1De1UuRxheXHQVr4CoJcD+RtuBqwaAt2O5tw8gbXhDWG4rBQfKyJbOlO
+	 lLtQUaVSQKQkSdOklgTpSDr1KNatMNt+ZcMLCjR3aG5WxrpGasOo9TJx6strVyAw4w
+	 2CIgOzfbIHvLrX5q7ak3Ox2a5/Jd+obcHqSbS/EqYAVhmQLmH4V0EFGoHjw2o1/MXa
+	 zraZOFyI9ta3YPoq108aUDqBe3RV6kG0pviaqXUMQV7e9LpChIeVk6LpDdkcfTWtmF
+	 t8veOpNwoMbm0dyvUq8jDRH/Mh6JXHMuzaoObXFQCpbSS99hFSHftD0lm57XrxEyy0
+	 8WxkAqbYX8FCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: wangdicheng <wangdicheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	lgirdwood@gmail.com,
-	david.rhodes@cirrus.com,
+	bo.liu@senarytech.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
-	patches@opensource.cirrus.com,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ASoC: cs35l56: Only patch ASP registers if the DAI is part of a DAIlink
-Date: Tue, 10 Mar 2026 05:01:04 -0400
-Message-ID: <20260310090145.2709021-4-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: hda/senary: Ensure EAPD is enabled during init
+Date: Tue, 10 Mar 2026 05:01:05 -0400
+Message-ID: <20260310090145.2709021-5-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -56,201 +54,136 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: wangdicheng <wangdicheng@kylinos.cn>
 
-[ Upstream commit 9351cf3fd92dc1349bb75f2f7f7324607dcf596f ]
+[ Upstream commit 7ae0d8f1abbbba6f98cac735145e1206927c67d9 ]
 
-Move the ASP register patches to a separate struct and apply this from the
-ASP DAI probe() function so that the registers are only patched if the DAI
-is part of a DAI link.
+The driver sets spec->gen.own_eapd_ctl to take manual control of the
+EAPD (External Amplifier). However, senary_init does not turn on the
+EAPD, while senary_shutdown turns it off.
 
-Some systems use the ASP as a special-purpose interconnect and on these
-systems the ASP registers are configured by a third party (the firmware,
-the BIOS, or another device using the amp's secondary host control
-interface).
+Since the generic driver skips EAPD handling when own_eapd_ctl is set,
+the EAPD remains off after initialization (e.g., after resume), leaving
+the codec in a non-functional state.
 
-If the machine driver does not hook up the ASP DAI then the ASP registers
-must be omitted from the patch to prevent overwriting the third party
-configuration.
+Explicitly call senary_auto_turn_eapd in senary_init to ensure the EAPD
+is enabled and the codec is functional.
 
-If the machine driver includes the ASP DAI in a DAI link, this implies that
-the machine driver and higher components (such as alsa-ucm) are taking
-ownership of the ASP. In this case the ASP registers are patched to known
-defaults and the machine driver should configure the ASP.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Link: https://patch.msgid.link/20260226110137.1664562-1-rf@opensource.cirrus.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
+Link: https://patch.msgid.link/20260303081516.583438-1-wangdich9700@163.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I notice the HDA path still calls `cs35l56_set_patch()` but NOT
-`cs35l56_set_asp_patch()`. This makes sense - the HDA path uses HDA for
-audio, not ASP. The ASP on HDA systems would be used as a special-
-purpose interconnect and should NOT have its registers overwritten.
+So 6.12.y is an active LTS. The driver exists there (since v6.11) but in
+its old form. A backport would need adaptation.
 
 ## Analysis
 
-### What the commit does
+**What the commit fixes:**
 
-This commit splits the ASP (Audio Serial Port) register initialization
-out of the general `cs35l56_set_patch()` function into a separate
-`cs35l56_set_asp_patch()` function. The ASP patch is now only applied
-from the DAI `.probe()` callback, meaning it only runs when the ASP DAI
-is actually included in a machine driver's DAI link.
+This commit fixes a real functional bug in the Senarytech HDA audio
+codec driver. The problem:
 
-### The bug being fixed
+1. The driver sets `spec->gen.own_eapd_ctl = 1` during probe, telling
+   the generic HDA framework "I'll manage EAPD myself, don't touch it"
+2. `senary_shutdown()`/`senary_suspend()` turns EAPD **off** (to avoid
+   spurious noises during reboot/suspend)
+3. `senary_init()` (called during resume and initial setup) **never
+   turns EAPD back on**
+4. Since the generic framework skips EAPD because `own_eapd_ctl` is set,
+   EAPD remains off
+5. Result: **codec is non-functional after resume** - no audio output
 
-On systems where the CS35L56 amplifier's ASP is used as a special-
-purpose interconnect (configured by firmware, BIOS, or a secondary host
-control interface), the kernel driver was unconditionally overwriting
-the ASP registers with hard-coded defaults during initialization. This
-would break the ASP configuration set by those third parties, causing
-**audio malfunction on those systems**.
+This is an asymmetry bug that has existed since the driver was first
+introduced in v6.11. The Conexant driver (which senarytech is based on)
+correctly handles this by calling `cx_auto_turn_eapd()` in its init
+function; the senarytech driver forgot to include this.
 
-This is a real-world functional bug - audio would break or behave
-incorrectly on affected systems. The commit message explicitly describes
-the problem: "the ASP registers must be omitted from the patch to
-prevent overwriting the third party configuration."
+**The fix:**
+- Adds `senary_auto_turn_eapd(codec, spec->num_eapds, spec->eapds,
+  true)` to `senary_init()`
+- Adds a `dynamic_eapd` field (currently never set to true) to match the
+  Conexant driver's pattern, where dynamic EAPD control via the vmaster
+  hook makes the unconditional enable unnecessary
+- The actual fix is 3 lines of effective code change
 
-### Stable kernel criteria assessment
+**Stable criteria assessment:**
+- **Fixes a real bug:** Yes - audio completely broken after resume
+- **Obviously correct:** Yes - mirrors the exact pattern from Conexant
+  driver; simple symmetry fix
+- **Small and contained:** Yes - 3 functional lines in one file
+- **No new features:** The `dynamic_eapd` field addition is structural
+  preparation matching Conexant, but it's never set to true, so it's
+  inert
+- **User impact:** HIGH - any user with Senarytech SN6186 codec loses
+  audio after suspend/resume
 
-1. **Fixes a real bug**: Yes - ASP register overwrite causes audio
-   malfunction on systems where ASP is configured by firmware/BIOS.
-2. **Obviously correct**: Yes - the logic is clean and clear: only patch
-   ASP registers when the ASP DAI is actively used by the machine
-   driver.
-3. **Small and contained**: The change is moderate in size (~40 lines
-   across 3 files) but very contained - it only splits an existing array
-   and adds a new calling path.
-4. **No new features**: The commit does not add new functionality. It
-   makes existing functionality conditional to prevent a bug.
-5. **Risk**: Low - the change is well-scoped and only affects one codec
-   driver. The worst case if something goes wrong is audio issues on
-   cs35l56 devices.
+**Dependency concerns:**
+- The driver was rewritten in commit 3cea413834503 (v6.17) - function
+  names changed from `senary_auto_init` to `senary_init`
+- For stable trees 6.12.y through 6.16.y, the patch needs adaptation to
+  the old function names
+- For stable trees older than 6.11, the driver doesn't exist (N/A)
+- The fix itself is conceptually simple and can be adapted
 
-### Concerns
+**Risk assessment:** Very low. This is a trivially correct fix that
+mirrors an established pattern from the parent Conexant driver. The code
+path is init-only and simply enables the external amplifier that
+shutdown already knows how to disable.
 
-1. **Code exists in stable trees**: The driver was introduced in v6.4,
-   so it exists in stable trees 6.6.y and later.
-2. **Dependencies**: This commit appears to be self-contained - it only
-   restructures existing code and adds a standard DAI `.probe` callback.
-3. **New exported symbol**: `cs35l56_set_asp_patch` is a new export, but
-   it's only called from the same driver (cs35l56.c), and exporting from
-   shared modules is the established pattern for this driver.
-4. **Backport complexity**: The patch should apply relatively cleanly to
-   recent stable trees (6.6.y, 6.12.y) though minor conflicts may occur
-   if the register list has changed across versions.
-
-### Verdict
-
-This fixes a real audio regression/bug on systems where the ASP is
-managed by firmware/BIOS rather than by the Linux machine driver. The
-fix is well-contained, obviously correct, low risk, and self-contained.
-The driver exists in stable trees from v6.4 onward. It meets stable
-kernel criteria as a bug fix for real-world hardware.
-
-### Verification
-
-- `git log --diff-filter=A` confirmed cs35l56-shared.c was introduced in
-  commit e496112529006 ("ASoC: cs35l56: Add driver for Cirrus Logic
-  CS35L56")
-- `git tag --contains` confirmed the driver was first included in v6.4
-- `grep` confirmed `cs35l56_set_patch` is called from both the ASoC path
-  (cs35l56.c:1726) and HDA path (cs35l56_hda.c:1186)
-- `grep` confirmed `cs35l56_set_asp_patch` is only called from the new
-  DAI probe in cs35l56.c:353
-- Read of cs35l56_hda.c confirmed the HDA path does NOT call
-  `cs35l56_set_asp_patch`, consistent with HDA systems not using ASP via
-  the Linux driver
-- Read of the current cs35l56-shared.c confirmed the patch was properly
-  split - ASP registers in `cs35l56_asp_patch[]`, non-ASP registers in
-  `cs35l56_patch[]`
-- The commit is very recent (Feb 2026) and not yet in a release tag
-  (unverified whether it's had extensive testing in mainline, but it has
-  been reviewed by Mark Brown, the ASoC maintainer)
+**Verification:**
+- `git show eb882afcfa839` confirmed the original driver (v6.11) had the
+  same bug - `senary_auto_init()` never called EAPD enable while
+  `senary_auto_shutdown()` disabled it
+- `git tag --contains eb882afcfa839` confirmed the driver was first
+  included in v6.11
+- `git tag --contains 3cea413834503` confirmed the rewrite happened in
+  v6.17
+- Examined Conexant driver (`sound/hda/codecs/conexant.c`) lines 189-193
+  and confirmed it has the identical `if (!spec->dynamic_eapd)
+  cx_auto_turn_eapd(...)` pattern in its init function
+- Confirmed `dynamic_eapd` is never set to true in senarytech.c (only
+  declared and checked), so the guard is always entered
+- Read the full senarytech.c and confirmed `own_eapd_ctl = 1` at line
+  182 prevents the generic framework from managing EAPD
+- Confirmed `senary_suspend()` calls `senary_shutdown()` which disables
+  EAPD, creating the asymmetry
+- `git tag --contains 6014e9021b28e` confirmed the file was moved to its
+  current location in v6.17
 
 **YES**
 
- include/sound/cs35l56.h           |  1 +
- sound/soc/codecs/cs35l56-shared.c | 16 +++++++++++++++-
- sound/soc/codecs/cs35l56.c        |  8 ++++++++
- 3 files changed, 24 insertions(+), 1 deletion(-)
+ sound/hda/codecs/senarytech.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/sound/cs35l56.h b/include/sound/cs35l56.h
-index 5928af539c468..d0ae1ae2ae2a0 100644
---- a/include/sound/cs35l56.h
-+++ b/include/sound/cs35l56.h
-@@ -374,6 +374,7 @@ extern const char * const cs35l56_cal_set_status_text[3];
- extern const char * const cs35l56_tx_input_texts[CS35L56_NUM_INPUT_SRC];
- extern const unsigned int cs35l56_tx_input_values[CS35L56_NUM_INPUT_SRC];
+diff --git a/sound/hda/codecs/senarytech.c b/sound/hda/codecs/senarytech.c
+index 63cda57cf7868..f4732a8d7955d 100644
+--- a/sound/hda/codecs/senarytech.c
++++ b/sound/hda/codecs/senarytech.c
+@@ -28,6 +28,7 @@ struct senary_spec {
+ 	/* extra EAPD pins */
+ 	unsigned int num_eapds;
+ 	hda_nid_t eapds[4];
++	bool dynamic_eapd;
+ 	hda_nid_t mute_led_eapd;
  
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_set_patch(struct cs35l56_base *cs35l56_base);
- int cs35l56_mbox_send(struct cs35l56_base *cs35l56_base, unsigned int command);
- int cs35l56_firmware_shutdown(struct cs35l56_base *cs35l56_base);
-diff --git a/sound/soc/codecs/cs35l56-shared.c b/sound/soc/codecs/cs35l56-shared.c
-index 60100c8f8c952..0ec6a96e80858 100644
---- a/sound/soc/codecs/cs35l56-shared.c
-+++ b/sound/soc/codecs/cs35l56-shared.c
-@@ -23,7 +23,7 @@
+ 	unsigned int parse_flags; /* flag for snd_hda_parse_pin_defcfg() */
+@@ -134,8 +135,12 @@ static void senary_init_gpio_led(struct hda_codec *codec)
  
- #include "cs35l56.h"
- 
--static const struct reg_sequence cs35l56_patch[] = {
-+static const struct reg_sequence cs35l56_asp_patch[] = {
- 	/*
- 	 * Firmware can change these to non-defaults to satisfy SDCA.
- 	 * Ensure that they are at known defaults.
-@@ -40,6 +40,20 @@ static const struct reg_sequence cs35l56_patch[] = {
- 	{ CS35L56_ASP1TX2_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX3_INPUT,		0x00000000 },
- 	{ CS35L56_ASP1TX4_INPUT,		0x00000000 },
-+};
-+
-+int cs35l56_set_asp_patch(struct cs35l56_base *cs35l56_base)
-+{
-+	return regmap_register_patch(cs35l56_base->regmap, cs35l56_asp_patch,
-+				     ARRAY_SIZE(cs35l56_asp_patch));
-+}
-+EXPORT_SYMBOL_NS_GPL(cs35l56_set_asp_patch, "SND_SOC_CS35L56_SHARED");
-+
-+static const struct reg_sequence cs35l56_patch[] = {
-+	/*
-+	 * Firmware can change these to non-defaults to satisfy SDCA.
-+	 * Ensure that they are at known defaults.
-+	 */
- 	{ CS35L56_SWIRE_DP3_CH1_INPUT,		0x00000018 },
- 	{ CS35L56_SWIRE_DP3_CH2_INPUT,		0x00000019 },
- 	{ CS35L56_SWIRE_DP3_CH3_INPUT,		0x00000029 },
-diff --git a/sound/soc/codecs/cs35l56.c b/sound/soc/codecs/cs35l56.c
-index 55b4d0d55712a..1c1924c6f4070 100644
---- a/sound/soc/codecs/cs35l56.c
-+++ b/sound/soc/codecs/cs35l56.c
-@@ -346,6 +346,13 @@ static int cs35l56_dsp_event(struct snd_soc_dapm_widget *w,
- 	return wm_adsp_event(w, kcontrol, event);
- }
- 
-+static int cs35l56_asp_dai_probe(struct snd_soc_dai *codec_dai)
-+{
-+	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-+
-+	return cs35l56_set_asp_patch(&cs35l56->base);
-+}
-+
- static int cs35l56_asp_dai_set_fmt(struct snd_soc_dai *codec_dai, unsigned int fmt)
+ static int senary_init(struct hda_codec *codec)
  {
- 	struct cs35l56_private *cs35l56 = snd_soc_component_get_drvdata(codec_dai->component);
-@@ -550,6 +557,7 @@ static int cs35l56_asp_dai_set_sysclk(struct snd_soc_dai *dai,
- }
++	struct senary_spec *spec = codec->spec;
++
+ 	snd_hda_gen_init(codec);
+ 	senary_init_gpio_led(codec);
++	if (!spec->dynamic_eapd)
++		senary_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, true);
+ 	snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_INIT);
  
- static const struct snd_soc_dai_ops cs35l56_ops = {
-+	.probe = cs35l56_asp_dai_probe,
- 	.set_fmt = cs35l56_asp_dai_set_fmt,
- 	.set_tdm_slot = cs35l56_asp_dai_set_tdm_slot,
- 	.hw_params = cs35l56_asp_dai_hw_params,
+ 	return 0;
 -- 
 2.51.0
 
