@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C061C38E107;
-	Tue, 10 Mar 2026 11:28:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34A83803CD;
+	Tue, 10 Mar 2026 11:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142122; cv=none; b=lQb3MVURcwJhngkSypyp9VUvfsFJKnBB9UCc7kALCSPLABDaNUESxqHeH5z6FI+QODICjsAMMuN6BV46nv7gdWZOuEY46dD2OP+z6wBfpTSmLjFKuR4hJsFkNapEqnLU7WHGj7cFdjGvRxE5g3Ld9NDO1CqzZ9PwP6D743mhEgM=
+	t=1773142124; cv=none; b=iW8QcTSvOz9zIz/TRKg2LryHRuB8mO3PVupC6uD3TriMRk6wWL8KeVl7hH/6vYqYl4uMhKHvQlOr+tg9hgH/efuLjGapNLN7rKtDfQIHGw6UEyYosFIEdovpJXN+ck76qQ9W5dRHepMb6CPaS9o/eeDderK2kCol939/+Mjw3Ls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142122; c=relaxed/simple;
-	bh=bSRrA3o7dfOb3EBvuUmFh2auWEWtrZPMkDjyJq7Lv1U=;
+	s=arc-20240116; t=1773142124; c=relaxed/simple;
+	bh=MyzS/2zTiVyH9c9PXpwu97i2vPpRZVKak8wrrWH96rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iUoqF13vylwSznV3bUmJVIvztDm43d5l1wnreozlYKVtTtUla6E2aRRsGZYNKblzHITQrRtSZnWzZTThZtiO6mN7r5UPGe+7Fa3yYRJgHT5UYaahVVFzDxGsxUpjaMa2rYV/P87XdJUSn/Ptw8XsQTumW6Cc1VTj0+GNBVScmwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tasHj9/v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TwUYvYw8rq4BJGr/PTpb33I43TEB6abiA8iedkBhCugtKKv12Swf4zRkvuBNdyvJu/gPY12Ov9N9GBvtYVoohsZHBc2XThfMnmpAtzZL00EfpAr06jIG19zgolNcWWVGaklhajoIseIa9BamSrc/LRMKspQFcw6LY6XhiA9mRy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apih8iR5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tasHj9/v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3EC5C2BCB0;
-	Tue, 10 Mar 2026 11:28:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apih8iR5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E520CC2BC9E;
+	Tue, 10 Mar 2026 11:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142122;
-	bh=bSRrA3o7dfOb3EBvuUmFh2auWEWtrZPMkDjyJq7Lv1U=;
+	s=k20201202; t=1773142123;
+	bh=MyzS/2zTiVyH9c9PXpwu97i2vPpRZVKak8wrrWH96rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tasHj9/vauv4VdY8ApfE2na9eyQ9iypQl2Pv6ifq2NRxSX9JFXYoP8/UCI3dRc+C7
-	 FbicqXNr4Pg+iqCJd9wczCvWxeekPAXvsujJUprtHrIqBd1rugRy4gTZAELVLxBoKH
-	 succ5GHtYDATtjBqzjwpwUu/qDwS6IjSiIp16vnPyZGUuVWXywB0Vp9TUjTtf5nfCw
-	 RLErZ26n56x6YoFDBeyPVdQ8tj4GBejKowmssDLav4Mffs0mhb/kzrf2iTkdFaD17l
-	 47FDtgtvvFiIGkK6E4LJmct570q7vgy86KCBVYX4BVVwwxAVbnICEZ3GxC2fg9buCa
-	 8nywi+1zrU7uA==
+	b=apih8iR5dD1vPeRfzwnR3bXRL8jqapgIAozuJide32UNVbjhsaiXIczVQv1rrI/gL
+	 yDhiZ6JK+seINnacr58PaRgMkcHhQx0nogNsJvwM345cuta6y/972eGB4HV39M1qLx
+	 NUlFr6bE3lx2V47p+42YxrrQuH4puyYHNiw84Ylxu78T3sdOxAg7aqfAHoaebG0pKe
+	 SJx1CocyYJeQOESrCFlFpZXhfmfwpEjY7MM1oCZnUFM3vpVntBwntLh2AhAHd8zguH
+	 qAHgfMi2OASCcxXFonBT9pc2SqOfE6GqJ9RffvfDnLP0crl1ZVLkwWueFShZZDKlER
+	 Fx+wzphfiAYhw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jonathan Teh <jonathan.teh@outlook.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Petr Pavlu <petr.pavlu@suse.com>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Aaron Tomlin <atomlin@atomlin.com>,
+	Song Liu <song@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/314] platform/x86: thinkpad_acpi: Fix errors reading battery thresholds
-Date: Tue, 10 Mar 2026 07:17:50 -0400
-Message-ID: <fa3dfbf6ef2fcf250a8269047140657b864c8f44.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 212/314] module: Remove duplicate freeing of lockdep classes
+Date: Tue, 10 Mar 2026 07:17:51 -0400
+Message-ID: <032a420535316c9dfa1e4b268e287d3ff2ac14db.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -45,61 +48,56 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Teh <jonathan.teh@outlook.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 53e977b1d50c46f2c4ec3865cd13a822f58ad3cd ]
+[ Upstream commit a7b4bc094fbaa7dc7b7b91ae33549bbd7eefaac1 ]
 
-Check whether the battery supports the relevant charge threshold before
-reading the value to silence these errors:
+In the error path of load_module(), under the free_module label, the
+code calls lockdep_free_key_range() to release lock classes associated
+with the MOD_DATA, MOD_RODATA and MOD_RO_AFTER_INIT module regions, and
+subsequently invokes module_deallocate().
 
-thinkpad_acpi: acpi_evalf(BCTG, dd, ...) failed: AE_NOT_FOUND
-ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCTG: evaluate failed
-thinkpad_acpi: acpi_evalf(BCSG, dd, ...) failed: AE_NOT_FOUND
-ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCSG: evaluate failed
+Since commit ac3b43283923 ("module: replace module_layout with
+module_memory"), the module_deallocate() function calls free_mod_mem(),
+which releases the lock classes as well and considers all module
+regions.
 
-when reading the charge thresholds via sysfs on platforms that do not
-support them such as the ThinkPad T400.
+Attempting to free these classes twice is unnecessary. Remove the
+redundant code in load_module().
 
-Fixes: 2801b9683f74 ("thinkpad_acpi: Add support for battery thresholds")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202619
-Signed-off-by: Jonathan Teh <jonathan.teh@outlook.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/MI0P293MB01967B206E1CA6F337EBFB12926CA@MI0P293MB0196.ITAP293.PROD.OUTLOOK.COM
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: ac3b43283923 ("module: replace module_layout with module_memory")
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
+Acked-by: Song Liu <song@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/lenovo/thinkpad_acpi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/module/main.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/platform/x86/lenovo/thinkpad_acpi.c b/drivers/platform/x86/lenovo/thinkpad_acpi.c
-index cc19fe520ea96..075543cd0e77e 100644
---- a/drivers/platform/x86/lenovo/thinkpad_acpi.c
-+++ b/drivers/platform/x86/lenovo/thinkpad_acpi.c
-@@ -9525,14 +9525,16 @@ static int tpacpi_battery_get(int what, int battery, int *ret)
- {
- 	switch (what) {
- 	case THRESHOLD_START:
--		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery))
-+		if (!battery_info.batteries[battery].start_support ||
-+		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery)))
- 			return -ENODEV;
- 
- 		/* The value is in the low 8 bits of the response */
- 		*ret = *ret & 0xFF;
- 		return 0;
- 	case THRESHOLD_STOP:
--		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery))
-+		if (!battery_info.batteries[battery].stop_support ||
-+		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery)))
- 			return -ENODEV;
- 		/* Value is in lower 8 bits */
- 		*ret = *ret & 0xFF;
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index c66b261849362..a2c798d06e3f5 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -3544,12 +3544,6 @@ static int load_module(struct load_info *info, const char __user *uargs,
+ 	mutex_unlock(&module_mutex);
+  free_module:
+ 	mod_stat_bump_invalid(info, flags);
+-	/* Free lock-classes; relies on the preceding sync_rcu() */
+-	for_class_mod_mem_type(type, core_data) {
+-		lockdep_free_key_range(mod->mem[type].base,
+-				       mod->mem[type].size);
+-	}
+-
+ 	module_memory_restore_rox(mod);
+ 	module_deallocate(mod, info);
+  free_copy:
 -- 
 2.51.0
 
