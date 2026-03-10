@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E31387582;
-	Tue, 10 Mar 2026 11:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 519383876CE;
+	Tue, 10 Mar 2026 11:20:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141653; cv=none; b=am44XhjLaHNkuVlQvqPZacflJ8fc+2SGMEPUGyhWOFaXgedouA3z9eWVkRzRCjIM0B9s4wgj9jGJ8bTWhqXwpXIB2a8QFPcuykqS/BktahITjbBz3g+DvkNh18whLBISOAnFluLV6LdKUOKpDpKKeMAZgfEOgEXCBf7LDKVkPgc=
+	t=1773141654; cv=none; b=UH9UKWuRo8Qzf4Dk9ev8vDGS/MM+h4XkRtbjeOwXRsq8ymz6/hbCrGVmYoGYRWP4TK7Xc1LgQlYZvVgsbHMKDBhRIMLPTA9mg2nKcJ86/rz2ZzmytL5w49hJze+0YaijxyOWBSB71jJxaEMXXfd8cmohIAqGWGKfbbTz7p21xxQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141653; c=relaxed/simple;
-	bh=5xB/vP9+h4+n5vE5MMO51IuDhDrHS1PzzdR7LI2a8Ag=;
+	s=arc-20240116; t=1773141654; c=relaxed/simple;
+	bh=1PDJLzPvQh4MTELw1O0ls5Gy9t3/lTuozUgcp1RQft0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fW5VGMCfPSrcJ/DvA+0dWG8Q4CRffyOm906xjzKrCYGI9E9SiodbF5qUbOThO+fq1qylpHJMvusYwoVaSOkPGyYBwODK6k1jWjHv+rXhDgUNMz+0NLCf4SUZy6pZKzvpcvTsZRmHZp+MFiEo7Gb21CUO63KiHAKOA+qy2SlcMZ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oHTlgiWu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ToUiWCuSpPVbCxn7b9NUfJ3GRJ81ZnlZRIWu3x14lkg4TmF/2doAGeLGprNFRLkdYZuXVN1nHkHNjNw2bd9J2QPrKA3YfGEo9zDySxdSMlSLtI1nEXDRcsOZ08WljA0e89/CeIUO9J/FaKMczlsSS9MseFaN3CA0Ar2D56NJWMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=E8Q22Qrz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oHTlgiWu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C76C2BC86;
-	Tue, 10 Mar 2026 11:20:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="E8Q22Qrz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA64C2BC86;
+	Tue, 10 Mar 2026 11:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141653;
-	bh=5xB/vP9+h4+n5vE5MMO51IuDhDrHS1PzzdR7LI2a8Ag=;
+	s=k20201202; t=1773141654;
+	bh=1PDJLzPvQh4MTELw1O0ls5Gy9t3/lTuozUgcp1RQft0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHTlgiWuZaL4/QJ0S58gHkXIxbS8x3XVDdybJsmSSJjJgzgCw1YWch3GXD/rf7e2o
-	 Ql0q7BcvXiQi9USO9JqiTUI5AXHAbSHG5u7z4cIahd9bwDqE4YpYMlrt/HadRvPXbs
-	 bekiRvfET5yXl0v8/r/mOcuYkjJ7olW5Z+1h9NTMDlqfMXd9XoIokWoiEE6CfjOsDV
-	 iTYk079HZCv+mo2o9xBK7TbdzKAA/dXGDtxIlI+n/0eeiKcFJsn28EA6GFpScct9GW
-	 QyxBu2J3qNniOcKVn5SDfvyXMiqIzr1PSa8gDiym6SPH3RUWUYRPgwFRgqJRLI0XZ6
-	 sXIHWjZoo7WwQ==
+	b=E8Q22QrzTzijNro9ZDZJCp+fgUURVNKXU2iBNIHMsc5CRnMOiN4Lbz6v7APsdGtw3
+	 CpfNmUYUIFYNX43B4Eyg8RiP3l8ifuSjRlZAZo4i5IcJZGh8jXz7lKL+a52qvN5Maz
+	 0X+Mqbs1yO2cutaPqHcU13+nXRovFVo7oWmd+yR3SwOMN2eY1TjA158OO29j8ANe8t
+	 El+6SRSf/S09lwANli3JjMushB32KCfloiVU3fGpUuPsRTSH41cnG/7/6jnWeHFqVN
+	 kYNSQH+xu2y/npXNuauaZhEtUFW4SoFZeJ+FPq3DUEQMpVSU/k0bIuGAKVfTtBY0YC
+	 aicMd7rv1GXmg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/314] sched/fair: Rename cfs_rq::avg_vruntime to ::sum_w_vruntime, and helper functions
-Date: Tue, 10 Mar 2026 07:14:39 -0400
-Message-ID: <9584c5b391152604d87fd1c149b82a4d0fc49467.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 021/314] sched/fair: Introduce and use the vruntime_cmp() and vruntime_op() wrappers for wrapped-signed aritmetics
+Date: Tue, 10 Mar 2026 07:14:40 -0400
+Message-ID: <6d6950c6f54a1a9056d88f1fcffce1c39229f11f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,156 +49,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Ingo Molnar <mingo@kernel.org>
 
-[ Upstream commit dcbc9d3f0e594223275a18f7016001889ad35eff ]
+[ Upstream commit 5758e48eefaf111d7764d8f1c8b666140fe5fa27 ]
 
-The ::avg_vruntime field is a  misnomer: it says it's an
-'average vruntime', but in reality it's the momentary sum
-of the weighted vruntimes of all queued tasks, which is
-at least a division away from being an average.
+We have to be careful with vruntime comparisons and subtraction,
+due to the possibility of wrapping, so we have macros like:
 
-This is clear from comments about the math of fair scheduling:
+   #define vruntime_gt(field, lse, rse) ({ (s64)((lse)->field - (rse)->field) > 0; })
 
-    * \Sum (v_i - v0) * w_i := cfs_rq->avg_vruntime
+Which is used like this:
 
-This confusion is increased by the cfs_avg_vruntime() function,
-which does perform the division and returns a true average.
+		if (vruntime_gt(min_vruntime, se, rse))
+			se->min_vruntime = rse->min_vruntime;
 
-The sum of all weighted vruntimes should be named thusly,
-so rename the field to ::sum_w_vruntime. (As arguably
-::sum_weighted_vruntime would be a bit of a mouthful.)
+Replace this with an easier to read pattern that uses the regular
+arithmetics operators:
 
-Understanding the scheduler is hard enough already, without
-extra layers of obfuscated naming. ;-)
+		if (vruntime_cmp(se->min_vruntime, ">", rse->min_vruntime))
+			se->min_vruntime = rse->min_vruntime;
 
-Also rename related helper functions:
+Also replace vruntime subtractions with vruntime_op():
 
-  sum_vruntime_add()    => sum_w_vruntime_add()
-  sum_vruntime_sub()    => sum_w_vruntime_sub()
-  sum_vruntime_update() => sum_w_vruntime_update()
+	-       delta = (s64)(sea->vruntime - seb->vruntime) +
+	-               (s64)(cfs_rqb->zero_vruntime_fi - cfs_rqa->zero_vruntime_fi);
+	+       delta = vruntime_op(sea->vruntime, "-", seb->vruntime) +
+	+               vruntime_op(cfs_rqb->zero_vruntime_fi, "-", cfs_rqa->zero_vruntime_fi);
 
-With the notable exception of cfs_avg_vruntime(), which
-was named accurately.
+In the vruntime_cmp() and vruntime_op() macros use Use __builtin_strcmp(),
+because of __HAVE_ARCH_STRCMP might turn off the compiler optimizations
+we rely on here to catch usage bugs.
+
+No change in functionality.
 
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Link: https://patch.msgid.link/20251201064647.1851919-7-mingo@kernel.org
 Stable-dep-of: b3d99f43c72b ("sched/fair: Fix zero_vruntime tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c  | 26 +++++++++++++-------------
- kernel/sched/sched.h |  2 +-
- 2 files changed, 14 insertions(+), 14 deletions(-)
+ kernel/sched/fair.c | 66 ++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 51 insertions(+), 15 deletions(-)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index e68e894b57559..a5f698ed15032 100644
+index a5f698ed15032..f669c84c7c0e9 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -607,7 +607,7 @@ static inline s64 entity_key(struct cfs_rq *cfs_rq, struct sched_entity *se)
-  * Which we track using:
-  *
-  *                    v0 := cfs_rq->zero_vruntime
-- * \Sum (v_i - v0) * w_i := cfs_rq->avg_vruntime
-+ * \Sum (v_i - v0) * w_i := cfs_rq->sum_w_vruntime
-  *              \Sum w_i := cfs_rq->sum_weight
-  *
-  * Since zero_vruntime closely tracks the per-task service, these
-@@ -619,32 +619,32 @@ static inline s64 entity_key(struct cfs_rq *cfs_rq, struct sched_entity *se)
-  * As measured, the max (key * weight) value was ~44 bits for a kernel build.
+@@ -524,10 +524,48 @@ void account_cfs_rq_runtime(struct cfs_rq *cfs_rq, u64 delta_exec);
+  * Scheduling class tree data structure manipulation methods:
   */
- static void
--avg_vruntime_add(struct cfs_rq *cfs_rq, struct sched_entity *se)
-+sum_w_vruntime_add(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 
++extern void __BUILD_BUG_vruntime_cmp(void);
++
++/* Use __builtin_strcmp() because of __HAVE_ARCH_STRCMP: */
++
++#define vruntime_cmp(A, CMP_STR, B) ({				\
++	int __res = 0;						\
++								\
++	if (!__builtin_strcmp(CMP_STR, "<")) {			\
++		__res = ((s64)((A)-(B)) < 0);			\
++	} else if (!__builtin_strcmp(CMP_STR, "<=")) {		\
++		__res = ((s64)((A)-(B)) <= 0);			\
++	} else if (!__builtin_strcmp(CMP_STR, ">")) {		\
++		__res = ((s64)((A)-(B)) > 0);			\
++	} else if (!__builtin_strcmp(CMP_STR, ">=")) {		\
++		__res = ((s64)((A)-(B)) >= 0);			\
++	} else {						\
++		/* Unknown operator throws linker error: */	\
++		__BUILD_BUG_vruntime_cmp();			\
++	}							\
++								\
++	__res;							\
++})
++
++extern void __BUILD_BUG_vruntime_op(void);
++
++#define vruntime_op(A, OP_STR, B) ({				\
++	s64 __res = 0;						\
++								\
++	if (!__builtin_strcmp(OP_STR, "-")) {			\
++		__res = (s64)((A)-(B));				\
++	} else {						\
++		/* Unknown operator throws linker error: */	\
++		__BUILD_BUG_vruntime_op();			\
++	}							\
++								\
++	__res;						\
++})
++
++
+ static inline __maybe_unused u64 max_vruntime(u64 max_vruntime, u64 vruntime)
  {
- 	unsigned long weight = scale_load_down(se->load.weight);
- 	s64 key = entity_key(cfs_rq, se);
+-	s64 delta = (s64)(vruntime - max_vruntime);
+-	if (delta > 0)
++	if (vruntime_cmp(vruntime, ">", max_vruntime))
+ 		max_vruntime = vruntime;
  
--	cfs_rq->avg_vruntime += key * weight;
-+	cfs_rq->sum_w_vruntime += key * weight;
- 	cfs_rq->sum_weight += weight;
- }
+ 	return max_vruntime;
+@@ -535,8 +573,7 @@ static inline __maybe_unused u64 max_vruntime(u64 max_vruntime, u64 vruntime)
  
- static void
--avg_vruntime_sub(struct cfs_rq *cfs_rq, struct sched_entity *se)
-+sum_w_vruntime_sub(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ static inline __maybe_unused u64 min_vruntime(u64 min_vruntime, u64 vruntime)
  {
- 	unsigned long weight = scale_load_down(se->load.weight);
- 	s64 key = entity_key(cfs_rq, se);
+-	s64 delta = (s64)(vruntime - min_vruntime);
+-	if (delta < 0)
++	if (vruntime_cmp(vruntime, "<", min_vruntime))
+ 		min_vruntime = vruntime;
  
--	cfs_rq->avg_vruntime -= key * weight;
-+	cfs_rq->sum_w_vruntime -= key * weight;
- 	cfs_rq->sum_weight -= weight;
- }
- 
- static inline
--void avg_vruntime_update(struct cfs_rq *cfs_rq, s64 delta)
-+void sum_w_vruntime_update(struct cfs_rq *cfs_rq, s64 delta)
- {
- 	/*
--	 * v' = v + d ==> avg_vruntime' = avg_runtime - d*sum_weight
-+	 * v' = v + d ==> sum_w_vruntime' = sum_runtime - d*sum_weight
+ 	return min_vruntime;
+@@ -549,12 +586,12 @@ static inline bool entity_before(const struct sched_entity *a,
+ 	 * Tiebreak on vruntime seems unnecessary since it can
+ 	 * hardly happen.
  	 */
--	cfs_rq->avg_vruntime -= cfs_rq->sum_weight * delta;
-+	cfs_rq->sum_w_vruntime -= cfs_rq->sum_weight * delta;
+-	return (s64)(a->deadline - b->deadline) < 0;
++	return vruntime_cmp(a->deadline, "<", b->deadline);
  }
  
- /*
-@@ -654,7 +654,7 @@ void avg_vruntime_update(struct cfs_rq *cfs_rq, s64 delta)
- u64 avg_vruntime(struct cfs_rq *cfs_rq)
+ static inline s64 entity_key(struct cfs_rq *cfs_rq, struct sched_entity *se)
  {
- 	struct sched_entity *curr = cfs_rq->curr;
--	s64 avg = cfs_rq->avg_vruntime;
-+	s64 avg = cfs_rq->sum_w_vruntime;
- 	long load = cfs_rq->sum_weight;
+-	return (s64)(se->vruntime - cfs_rq->zero_vruntime);
++	return vruntime_op(se->vruntime, "-", cfs_rq->zero_vruntime);
+ }
  
- 	if (curr && curr->on_rq) {
-@@ -722,7 +722,7 @@ static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
- static int vruntime_eligible(struct cfs_rq *cfs_rq, u64 vruntime)
+ #define __node_2_se(node) \
+@@ -732,7 +769,7 @@ static int vruntime_eligible(struct cfs_rq *cfs_rq, u64 vruntime)
+ 		load += weight;
+ 	}
+ 
+-	return avg >= (s64)(vruntime - cfs_rq->zero_vruntime) * load;
++	return avg >= vruntime_op(vruntime, "-", cfs_rq->zero_vruntime) * load;
+ }
+ 
+ int entity_eligible(struct cfs_rq *cfs_rq, struct sched_entity *se)
+@@ -743,7 +780,7 @@ int entity_eligible(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ static void update_zero_vruntime(struct cfs_rq *cfs_rq)
  {
- 	struct sched_entity *curr = cfs_rq->curr;
--	s64 avg = cfs_rq->avg_vruntime;
-+	s64 avg = cfs_rq->sum_w_vruntime;
- 	long load = cfs_rq->sum_weight;
- 
- 	if (curr && curr->on_rq) {
-@@ -745,7 +745,7 @@ static void update_zero_vruntime(struct cfs_rq *cfs_rq)
  	u64 vruntime = avg_vruntime(cfs_rq);
- 	s64 delta = (s64)(vruntime - cfs_rq->zero_vruntime);
+-	s64 delta = (s64)(vruntime - cfs_rq->zero_vruntime);
++	s64 delta = vruntime_op(vruntime, "-", cfs_rq->zero_vruntime);
  
--	avg_vruntime_update(cfs_rq, delta);
-+	sum_w_vruntime_update(cfs_rq, delta);
+ 	sum_w_vruntime_update(cfs_rq, delta);
  
- 	cfs_rq->zero_vruntime = vruntime;
+@@ -770,13 +807,12 @@ static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
+ 	return entity_before(__node_2_se(a), __node_2_se(b));
  }
-@@ -819,7 +819,7 @@ RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
+ 
+-#define vruntime_gt(field, lse, rse) ({ (s64)((lse)->field - (rse)->field) > 0; })
+-
+ static inline void __min_vruntime_update(struct sched_entity *se, struct rb_node *node)
+ {
+ 	if (node) {
+ 		struct sched_entity *rse = __node_2_se(node);
+-		if (vruntime_gt(min_vruntime, se, rse))
++
++		if (vruntime_cmp(se->min_vruntime, ">", rse->min_vruntime))
+ 			se->min_vruntime = rse->min_vruntime;
+ 	}
+ }
+@@ -887,7 +923,7 @@ static inline void update_protect_slice(struct cfs_rq *cfs_rq, struct sched_enti
+ 
+ static inline bool protect_slice(struct sched_entity *se)
+ {
+-	return ((s64)(se->vprot - se->vruntime) > 0);
++	return vruntime_cmp(se->vruntime, "<", se->vprot);
+ }
+ 
+ static inline void cancel_protect_slice(struct sched_entity *se)
+@@ -1014,7 +1050,7 @@ static void clear_buddies(struct cfs_rq *cfs_rq, struct sched_entity *se);
   */
- static void __enqueue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ static bool update_deadline(struct cfs_rq *cfs_rq, struct sched_entity *se)
  {
--	avg_vruntime_add(cfs_rq, se);
-+	sum_w_vruntime_add(cfs_rq, se);
- 	update_zero_vruntime(cfs_rq);
- 	se->min_vruntime = se->vruntime;
- 	se->min_slice = se->slice;
-@@ -831,7 +831,7 @@ static void __dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
- {
- 	rb_erase_augmented_cached(&se->run_node, &cfs_rq->tasks_timeline,
- 				  &min_vruntime_cb);
--	avg_vruntime_sub(cfs_rq, se);
-+	sum_w_vruntime_sub(cfs_rq, se);
- 	update_zero_vruntime(cfs_rq);
+-	if ((s64)(se->vruntime - se->deadline) < 0)
++	if (vruntime_cmp(se->vruntime, "<", se->deadline))
+ 		return false;
+ 
+ 	/*
+@@ -13238,8 +13274,8 @@ bool cfs_prio_less(const struct task_struct *a, const struct task_struct *b,
+ 	 * zero_vruntime_fi, which would have been updated in prior calls
+ 	 * to se_fi_update().
+ 	 */
+-	delta = (s64)(sea->vruntime - seb->vruntime) +
+-		(s64)(cfs_rqb->zero_vruntime_fi - cfs_rqa->zero_vruntime_fi);
++	delta = vruntime_op(sea->vruntime, "-", seb->vruntime) +
++		vruntime_op(cfs_rqb->zero_vruntime_fi, "-", cfs_rqa->zero_vruntime_fi);
+ 
+ 	return delta > 0;
  }
- 
-diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
-index 20b2b7746c3c7..ed37ab9209e59 100644
---- a/kernel/sched/sched.h
-+++ b/kernel/sched/sched.h
-@@ -680,7 +680,7 @@ struct cfs_rq {
- 	unsigned int		h_nr_runnable;     /* SCHED_{NORMAL,BATCH,IDLE} */
- 	unsigned int		h_nr_idle; /* SCHED_IDLE */
- 
--	s64			avg_vruntime;
-+	s64			sum_w_vruntime;
- 	u64			sum_weight;
- 
- 	u64			zero_vruntime;
 -- 
 2.51.0
 
