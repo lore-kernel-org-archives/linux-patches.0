@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75CD338A712;
-	Tue, 10 Mar 2026 11:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56DC038A712;
+	Tue, 10 Mar 2026 11:27:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142033; cv=none; b=D0qQI+ziN9KoYSYXHenYeq3DPsah3wzL+L7bu2NiOVqJarEaBWxiVy9KgBCZd1SA0HID8XSqf7HOe7KIEilaxJyfrkAAw/8IzYhF2UJk94DGgJds8grqsWm91UDW1C2smDPoFQ1MQArEIX3XRC1zl+srhImBNQe4DDQcwd23D/M=
+	t=1773142034; cv=none; b=VbKWqIBcheAl2a4rbPY3aRmeRmfTCViHjIq1EfGTDu3R+Sm9oYpwzCajHckzTsgH9hNMPQAPYALTyOShLecMZIszsoFqnxTH/WbrjurzV9oSNGaZrCb9UPp7H+0sODDM6Vx1+Sy/Eu+sjHV1NSmb0c5K54fIlI+97XQFUTSHVwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142033; c=relaxed/simple;
-	bh=/18lp1/ktXGi595Asi6XrzuAJmGWcNaiTcK26oYENqg=;
+	s=arc-20240116; t=1773142034; c=relaxed/simple;
+	bh=eHnBqpLJDFFhmHK0niNCl4OLHx/UEX5JpwHy285dZis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+fDPNCRAPpnz8VeHRfLABs3GM0aXRnuoufycziIYshYZpqkpeYM/MmnCjkqgMp5aurDTofLo+C6PGIqROC2frjqWMQ2OTFpfDthQ+nSeGhLSVoPhOT5jqVXist8QiBqr6S2whoixEHEq87k32cJje9pb9eAyWwFbEuebO0Fc74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ohgi+L2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ABh47/ftHHaZZbcRr9qGkqTxQAGO2tVl+LnX081kXUJA9qaBwxNDJIXqTbsOWvTgtjuH7GpiWx7rTg0mzkbZYTvw4z/lD5ligjMvktlejgdXijY5WRrThwl1zMliOiuo6eR9jjkWLJ/2CN//0tgRQpIy34yYpJsPch9OQ30bYmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cphxRaZm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ohgi+L2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B96AEC19423;
-	Tue, 10 Mar 2026 11:27:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cphxRaZm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C423C2BC86;
+	Tue, 10 Mar 2026 11:27:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142033;
-	bh=/18lp1/ktXGi595Asi6XrzuAJmGWcNaiTcK26oYENqg=;
+	s=k20201202; t=1773142034;
+	bh=eHnBqpLJDFFhmHK0niNCl4OLHx/UEX5JpwHy285dZis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohgi+L2PIKV7LDxTHBS4DtcrefH1ODRKOqRcZE+f/+xhdf19m1PXHPM7Q9b7+RmiB
-	 K5z0hNk8uvf/NugXPGpvX6/uKP7JrBnB6gMz8+wotSn+ZRdRK5XAy9ggTgaNr6dr/u
-	 uB77Ma+Hp87V6k/16InicCICsEGbHOC9dd6W95dWzAgU3Q3tDv1min0oVFYGv5cLT1
-	 FJYlP4Sy/WN3J5wmymko7WhhJgrw44YqI+q12YOYHKs9LOdKFJ1a5Kqf6Qr6++xh/W
-	 ZcsWQzzO3ZU88p4Ep8KavHQyQT62jT98yPONlWX7yA4oLXecmLy5/TGRomvcY+GNSZ
-	 oM9kIedUPX4gA==
+	b=cphxRaZm/WqDJDnqQozuB6q+53E7d+e+S+aqSvJd/jxheibg/jkWW1CWMQG2IHsRq
+	 U0EzsZNA2SSZXkmnvT/6TzUu1FGoDL7/xxTWh3Az2qv/3fqgBlNWK7SVKKzD7amni/
+	 ghIVM966Ztxe6K0o6CzwZmzHfIqysXxJLoRgDG+SCqYGKYVjUuvbEdHulLVrRimzSl
+	 xBcHq7MF6IEeIVycUOP39RovlBNizidl6oPcRFvzmQGT+9OPDo20o+RSgpfQjSYlD4
+	 VbrT1jQ1Eg4zH6NcBGw1K8uSiruCzL1aDUThdBbn29LtbIknW6Cdw6KqmuTOoC62y4
+	 3zPfwq98hrwGg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Juhyung Park <qkrwngud825@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Johannes Berg <johannes.berg@intel.com>,
+	syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 160/314] ALSA: hda/realtek: add quirk for Samsung Galaxy Book Flex (NT950QCT-A38A)
-Date: Tue, 10 Mar 2026 07:16:59 -0400
-Message-ID: <ec095f85983f0a548889ceee1eb4fcb21fb347c5.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 161/314] wifi: radiotap: reject radiotap with unknown bits
+Date: Tue, 10 Mar 2026 07:17:00 -0400
+Message-ID: <63314f8f1874c6131a5327e3101e6d3f29bd1561.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,34 +48,54 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Juhyung Park <qkrwngud825@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 9fb16a5c5ff93058851099a2b80a899b0c53fe3f upstream.
+commit c854758abe0b8d86f9c43dc060ff56a0ee5b31e0 upstream.
 
-Similar to other Samsung laptops, NT950QCT also requires the
-ALC298_FIXUP_SAMSUNG_AMP quirk applied.
+The radiotap parser is currently only used with the radiotap
+namespace (not with vendor namespaces), but if the undefined
+field 18 is used, the alignment/size is unknown as well. In
+this case, iterator->_next_ns_data isn't initialized (it's
+only set for skipping vendor namespaces), and syzbot points
+out that we later compare against this uninitialized value.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Juhyung Park <qkrwngud825@gmail.com>
-Link: https://patch.msgid.link/20260222122609.281191-2-qkrwngud825@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fix this by moving the rejection of unknown radiotap fields
+down to after the in-namespace lookup, so it will really use
+iterator->_next_ns_data only for vendor namespaces, even in
+case undefined fields are present.
+
+Cc: stable@vger.kernel.org
+Fixes: 33e5a2f776e3 ("wireless: update radiotap parser")
+Reported-by: syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/69944a91.a70a0220.2c38d7.00fc.GAE@google.com
+Link: https://patch.msgid.link/20260217120526.162647-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/radiotap.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index a094d60194b53..f40e00a578d99 100644
---- a/sound/hda/codecs/realtek/alc269.c
-+++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7150,6 +7150,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc188, "Samsung Galaxy Book Flex (NT950QCT-A38A)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Book Flex (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
+diff --git a/net/wireless/radiotap.c b/net/wireless/radiotap.c
+index 326faea38ca38..c85eaa583a466 100644
+--- a/net/wireless/radiotap.c
++++ b/net/wireless/radiotap.c
+@@ -239,14 +239,14 @@ int ieee80211_radiotap_iterator_next(
+ 		default:
+ 			if (!iterator->current_namespace ||
+ 			    iterator->_arg_index >= iterator->current_namespace->n_bits) {
+-				if (iterator->current_namespace == &radiotap_ns)
+-					return -ENOENT;
+ 				align = 0;
+ 			} else {
+ 				align = iterator->current_namespace->align_size[iterator->_arg_index].align;
+ 				size = iterator->current_namespace->align_size[iterator->_arg_index].size;
+ 			}
+ 			if (!align) {
++				if (iterator->current_namespace == &radiotap_ns)
++					return -ENOENT;
+ 				/* skip all subsequent data */
+ 				iterator->_arg = iterator->_next_ns_data;
+ 				/* give up on this namespace */
 -- 
 2.51.0
 
