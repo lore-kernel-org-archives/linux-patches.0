@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E25022BF3E2;
-	Tue, 10 Mar 2026 11:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C9A2BF3E2;
+	Tue, 10 Mar 2026 11:11:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141096; cv=none; b=f2Hq3Lzc/nX4gl9gmy1Fl7VjPOG2mlJWMSgt1XyOPQIKmdp+ZukGA5aMyEApTil1bXpdnk6DOIKbpRoi2v2A+m5Z7BXNBo7kKdrjPjDsJnk3lugNMDjkJNvW6RQSBg/o38DTA1FUIevD/5hnS3jUVVKvJf1URby6sLuwr4cfCBk=
+	t=1773141096; cv=none; b=Jsse97WuFy8Cuwhd6Vk6MfiIBN8RFTMsd5KDiFBr3ER4dcBlOFjSGyjkS6pyrDHPIZJEk3KBDJLtKFsVeNzLsWslBlMzANcRvVuw0Veo38BC0LmAKg1ynIrzVYG4M1/L8OxJACvJwaQgupKWJahAKoY5POJqvAP+GXW8geEMdQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141096; c=relaxed/simple;
-	bh=helY1HN4vk6YpSArAymXNjECHEbkL/Ln6PBKR8Lz15E=;
+	bh=SFjRd4elT7G9raIHeBY7bncbL/XUAXtc8D65yTLJP04=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EPkb6C8iu/QSuQXKOAxQKKUF+uWU7Tfamg/4cIU27Ef4Sjy2K9p50mBLhzY/zVmHT+SiSGfV+2pd21o0KsSXyuGgBMY/6hTtsFqAd55Q6LXgjKRvGGY0hoJ6OJ5yjPHByczZA6Ky5HB5Abh52qAsqMShhHugCgC89QwI3oowwJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pU8jLCP9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NB+j5B+qph03sg77Zgs1PS1ZOexSioTfeuZqe/8fcZlmLrpcrPhGzkXbNhrMtDIRI89jhYexiQZ562b2hlyhe83eroHsZmDOoB7gyBaCS5onFGZvzzWvSoJ+edm2MI19dX1X2zhzVwMlB7zqCrD3OSUZWbtw4r2hPhGpWzV7JoM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I70CJxgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pU8jLCP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C181C2BC86;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I70CJxgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09351C19423;
 	Tue, 10 Mar 2026 11:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141095;
-	bh=helY1HN4vk6YpSArAymXNjECHEbkL/Ln6PBKR8Lz15E=;
+	s=k20201202; t=1773141096;
+	bh=SFjRd4elT7G9raIHeBY7bncbL/XUAXtc8D65yTLJP04=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pU8jLCP9bKFQzGRt4ya12tOKVWwFtCR89mEDzcwaujOq3OPc6yTy0y3N3K/UTifCB
-	 Jy4CfztcndZIL7dehE8o4/OlYQ6/cFIejBzyaP3sNufk0hEN3zHJogQjk5B1N+6Y6P
-	 el5eU4lGSD7XRw1LdBO8+c8chNgpvJa8YzP/bHWdgFG9rdbNxIV4si9Z1hdJWbDpes
-	 7dJSOSGQ1shmuAJ6sGg7B/FDswM/B6Sx2tKK/FMkSXuFwnX+ZrK/10I4T/PROitC3M
-	 i7++oqkVlpSmS4XfO4XF3RlmJjw3ZvAp9XlZDWsuf8gEy0a0cCePmXIgQRbSqkA4TS
-	 XyFgYFNvY9k+g==
+	b=I70CJxgxs/M4XHejP3mZuyN4KTGCIfPRYsDLFxwbbjPDm0AbVUyGYB4pFNYmJWQHr
+	 Aw/IY5fKZdFpJsVOzQMTSjVzuxcAgP303fYsLv4FPMaSwrLjIq09Wa6acdRz1Vky0i
+	 w3wnmMCkH8ayWy0pMj0meZkKuPFtYoMJ82voaRLf/JtmN4zIdO8MgOSdycdln3pd19
+	 e2ZPV9ByliuBdt716gWU+ND6x9d2KJ1joOQamoGJ1zE4H7KdyJDkCW1rN0qP5oTdzC
+	 Bxa25uin0LLbBjRhk267a+FPFvwF6ZM6CNH6aUGojavT13E8oEkcoiS7PoKdLT9lOo
+	 aLJDlbq5HNcTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Kuen-Han Tsai <khtsai@google.com>,
-	stable@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Quentin Schulz <quentin.schulz@cherry.de>,
+	Tomeu Vizoso <tomeu@tomeuvizoso.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 096/311] usb: gadget: f_ncm: align net_device lifecycle with bind/unbind
-Date: Tue, 10 Mar 2026 07:02:23 -0400
-Message-ID: <033da5fbff6ea0f0270a1c816a989f11f708f79c.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 097/311] accel/rocket: fix unwinding in error path in rocket_core_init
+Date: Tue, 10 Mar 2026 07:02:24 -0400
+Message-ID: <2b05c06b4f95a9bd05cafb9bd1f480c603ffe8ba.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,371 +48,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Quentin Schulz <quentin.schulz@cherry.de>
 
-[ Upstream commit 56a512a9b4107079f68701e7d55da8507eb963d9 ]
+[ Upstream commit f509a081f6a289f7c66856333b3becce7a33c97e ]
 
-Currently, the net_device is allocated in ncm_alloc_inst() and freed in
-ncm_free_inst(). This ties the network interface's lifetime to the
-configuration instance rather than the USB connection (bind/unbind).
+When rocket_job_init() is called, iommu_group_get() has already been
+called, therefore we should call iommu_group_put() and make the
+iommu_group pointer NULL. This aligns with what's done in
+rocket_core_fini().
 
-This decoupling causes issues when the USB gadget is disconnected where
-the underlying gadget device is removed. The net_device can outlive its
-parent, leading to dangling sysfs links and NULL pointer dereferences
-when accessing the freed gadget device.
+If pm_runtime_resume_and_get() somehow fails, not only should
+rocket_job_fini() be called but we should also unwind everything done
+before that, that is, disable PM, put the iommu_group, NULLify it and
+then call rocket_job_fini(). This is exactly what's done in
+rocket_core_fini() so let's call that function instead of duplicating
+the code.
 
-Problem 1: NULL pointer dereference on disconnect
- Unable to handle kernel NULL pointer dereference at virtual address
- 0000000000000000
- Call trace:
-   __pi_strlen+0x14/0x150
-   rtnl_fill_ifinfo+0x6b4/0x708
-   rtmsg_ifinfo_build_skb+0xd8/0x13c
-   rtmsg_ifinfo+0x50/0xa0
-   __dev_notify_flags+0x4c/0x1f0
-   dev_change_flags+0x54/0x70
-   do_setlink+0x390/0xebc
-   rtnl_newlink+0x7d0/0xac8
-   rtnetlink_rcv_msg+0x27c/0x410
-   netlink_rcv_skb+0x134/0x150
-   rtnetlink_rcv+0x18/0x28
-   netlink_unicast+0x254/0x3f0
-   netlink_sendmsg+0x2e0/0x3d4
-
-Problem 2: Dangling sysfs symlinks
- console:/ # ls -l /sys/class/net/ncm0
- lrwxrwxrwx ... /sys/class/net/ncm0 ->
- /sys/devices/platform/.../gadget.0/net/ncm0
- console:/ # ls -l /sys/devices/platform/.../gadget.0/net/ncm0
- ls: .../gadget.0/net/ncm0: No such file or directory
-
-Move the net_device allocation to ncm_bind() and deallocation to
-ncm_unbind(). This ensures the network interface exists only when the
-gadget function is actually bound to a configuration.
-
-To support pre-bind configuration (e.g., setting interface name or MAC
-address via configfs), cache user-provided options in f_ncm_opts
-using the gether_opts structure. Apply these cached settings to the
-net_device upon creation in ncm_bind().
-
-Preserve the use-after-free fix from commit 6334b8e4553c ("usb: gadget:
-f_ncm: Fix UAF ncm object at re-bind after usb ep transport error").
-Check opts->net in ncm_set_alt() and ncm_disable() to ensure
-gether_disconnect() runs only if a connection was established.
-
-Fixes: 40d133d7f542 ("usb: gadget: f_ncm: convert to new function interface with backward compatibility")
-Cc: stable@kernel.org
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20251230-ncm-refactor-v1-3-793e347bc7a7@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0810d5ad88a1 ("accel/rocket: Add job submission IOCTL")
+Cc: stable@vger.kernel.org
+Signed-off-by: Quentin Schulz <quentin.schulz@cherry.de>
+Reviewed-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Signed-off-by: Tomeu Vizoso <tomeu@tomeuvizoso.net>
+Link: https://patch.msgid.link/20251215-rocket-error-path-v1-1-eec3bf29dc3b@cherry.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_ncm.c | 128 ++++++++++++++--------------
- drivers/usb/gadget/function/u_ncm.h |   4 +-
- 2 files changed, 66 insertions(+), 66 deletions(-)
+ drivers/accel/rocket/rocket_core.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_ncm.c b/drivers/usb/gadget/function/f_ncm.c
-index 0e38330271d5a..e23adc132f886 100644
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -83,6 +83,11 @@ static inline struct f_ncm *func_to_ncm(struct usb_function *f)
- 	return container_of(f, struct f_ncm, port.func);
- }
+diff --git a/drivers/accel/rocket/rocket_core.c b/drivers/accel/rocket/rocket_core.c
+index abe7719c1db46..b3b2fa9ba645a 100644
+--- a/drivers/accel/rocket/rocket_core.c
++++ b/drivers/accel/rocket/rocket_core.c
+@@ -59,8 +59,11 @@ int rocket_core_init(struct rocket_core *core)
+ 	core->iommu_group = iommu_group_get(dev);
  
-+static inline struct f_ncm_opts *func_to_ncm_opts(struct usb_function *f)
-+{
-+	return container_of(f->fi, struct f_ncm_opts, func_inst);
-+}
-+
- /*-------------------------------------------------------------------------*/
+ 	err = rocket_job_init(core);
+-	if (err)
++	if (err) {
++		iommu_group_put(core->iommu_group);
++		core->iommu_group = NULL;
+ 		return err;
++	}
  
- /*
-@@ -859,6 +864,7 @@ static int ncm_setup(struct usb_function *f, const struct usb_ctrlrequest *ctrl)
- static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
-+	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
+ 	pm_runtime_use_autosuspend(dev);
  
- 	/* Control interface has only altsetting 0 */
-@@ -881,12 +887,13 @@ static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- 		if (alt > 1)
- 			goto fail;
+@@ -76,7 +79,7 @@ int rocket_core_init(struct rocket_core *core)
  
--		if (ncm->netdev) {
--			DBG(cdev, "reset ncm\n");
--			ncm->netdev = NULL;
--			gether_disconnect(&ncm->port);
--			ncm_reset_values(ncm);
--		}
-+		scoped_guard(mutex, &opts->lock)
-+			if (opts->net) {
-+				DBG(cdev, "reset ncm\n");
-+				opts->net = NULL;
-+				gether_disconnect(&ncm->port);
-+				ncm_reset_values(ncm);
-+			}
- 
- 		/*
- 		 * CDC Network only sends data in non-default altsettings.
-@@ -919,7 +926,8 @@ static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- 			net = gether_connect(&ncm->port);
- 			if (IS_ERR(net))
- 				return PTR_ERR(net);
--			ncm->netdev = net;
-+			scoped_guard(mutex, &opts->lock)
-+				opts->net = net;
- 		}
- 
- 		spin_lock(&ncm->lock);
-@@ -1366,14 +1374,16 @@ static int ncm_unwrap_ntb(struct gether *port,
- static void ncm_disable(struct usb_function *f)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
-+	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
- 
- 	DBG(cdev, "ncm deactivated\n");
- 
--	if (ncm->netdev) {
--		ncm->netdev = NULL;
--		gether_disconnect(&ncm->port);
--	}
-+	scoped_guard(mutex, &opts->lock)
-+		if (opts->net) {
-+			opts->net = NULL;
-+			gether_disconnect(&ncm->port);
-+		}
- 
- 	if (ncm->notify->enabled) {
- 		usb_ep_disable(ncm->notify);
-@@ -1433,39 +1443,44 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- {
- 	struct usb_composite_dev *cdev = c->cdev;
- 	struct f_ncm		*ncm = func_to_ncm(f);
-+	struct f_ncm_opts	*ncm_opts = func_to_ncm_opts(f);
- 	struct usb_string	*us;
- 	int			status = 0;
- 	struct usb_ep		*ep;
--	struct f_ncm_opts	*ncm_opts;
- 
- 	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
-+	struct net_device		*netdev __free(free_gether_netdev) = NULL;
- 	struct usb_request		*request __free(free_usb_request) = NULL;
- 
- 	if (!can_support_ecm(cdev->gadget))
- 		return -EINVAL;
- 
--	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
--
- 	if (cdev->use_os_string) {
- 		os_desc_table = kzalloc(sizeof(*os_desc_table), GFP_KERNEL);
- 		if (!os_desc_table)
- 			return -ENOMEM;
+ 	err = pm_runtime_resume_and_get(dev);
+ 	if (err) {
+-		rocket_job_fini(core);
++		rocket_core_fini(core);
+ 		return err;
  	}
  
--	mutex_lock(&ncm_opts->lock);
--	gether_set_gadget(ncm_opts->net, cdev->gadget);
--	if (!ncm_opts->bound) {
--		ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
--		status = gether_register_netdev(ncm_opts->net);
-+	netdev = gether_setup_default();
-+	if (IS_ERR(netdev))
-+		return -ENOMEM;
-+
-+	scoped_guard(mutex, &ncm_opts->lock) {
-+		gether_apply_opts(netdev, &ncm_opts->net_opts);
-+		netdev->mtu = ncm_opts->max_segment_size - ETH_HLEN;
- 	}
--	mutex_unlock(&ncm_opts->lock);
- 
-+	gether_set_gadget(netdev, cdev->gadget);
-+	status = gether_register_netdev(netdev);
- 	if (status)
- 		return status;
- 
--	ncm_opts->bound = true;
--
--	ncm_string_defs[1].s = ncm->ethaddr;
-+	/* export host's Ethernet address in CDC format */
-+	status = gether_get_host_addr_cdc(netdev, ncm->ethaddr,
-+					  sizeof(ncm->ethaddr));
-+	if (status < 12)
-+		return -EINVAL;
-+	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
- 
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
-@@ -1563,6 +1578,8 @@ static int ncm_bind(struct usb_configuration *c, struct usb_function *f)
- 		f->os_desc_n = 1;
- 	}
- 	ncm->notify_req = no_free_ptr(request);
-+	ncm->netdev = no_free_ptr(netdev);
-+	ncm->port.ioport = netdev_priv(ncm->netdev);
- 
- 	DBG(cdev, "CDC Network: IN/%s OUT/%s NOTIFY/%s\n",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
-@@ -1577,19 +1594,19 @@ static inline struct f_ncm_opts *to_f_ncm_opts(struct config_item *item)
- }
- 
- /* f_ncm_item_ops */
--USB_ETHERNET_CONFIGFS_ITEM(ncm);
-+USB_ETHER_OPTS_ITEM(ncm);
- 
- /* f_ncm_opts_dev_addr */
--USB_ETHERNET_CONFIGFS_ITEM_ATTR_DEV_ADDR(ncm);
-+USB_ETHER_OPTS_ATTR_DEV_ADDR(ncm);
- 
- /* f_ncm_opts_host_addr */
--USB_ETHERNET_CONFIGFS_ITEM_ATTR_HOST_ADDR(ncm);
-+USB_ETHER_OPTS_ATTR_HOST_ADDR(ncm);
- 
- /* f_ncm_opts_qmult */
--USB_ETHERNET_CONFIGFS_ITEM_ATTR_QMULT(ncm);
-+USB_ETHER_OPTS_ATTR_QMULT(ncm);
- 
- /* f_ncm_opts_ifname */
--USB_ETHERNET_CONFIGFS_ITEM_ATTR_IFNAME(ncm);
-+USB_ETHER_OPTS_ATTR_IFNAME(ncm);
- 
- static ssize_t ncm_opts_max_segment_size_show(struct config_item *item,
- 					      char *page)
-@@ -1655,34 +1672,27 @@ static void ncm_free_inst(struct usb_function_instance *f)
- 	struct f_ncm_opts *opts;
- 
- 	opts = container_of(f, struct f_ncm_opts, func_inst);
--	if (opts->bound)
--		gether_cleanup(netdev_priv(opts->net));
--	else
--		free_netdev(opts->net);
- 	kfree(opts->ncm_interf_group);
- 	kfree(opts);
- }
- 
- static struct usb_function_instance *ncm_alloc_inst(void)
- {
--	struct f_ncm_opts *opts;
-+	struct usb_function_instance *ret;
- 	struct usb_os_desc *descs[1];
- 	char *names[1];
- 	struct config_group *ncm_interf_group;
- 
--	opts = kzalloc(sizeof(*opts), GFP_KERNEL);
-+	struct f_ncm_opts *opts __free(kfree) = kzalloc(sizeof(*opts), GFP_KERNEL);
- 	if (!opts)
- 		return ERR_PTR(-ENOMEM);
-+
-+	opts->net = NULL;
- 	opts->ncm_os_desc.ext_compat_id = opts->ncm_ext_compat_id;
-+	gether_setup_opts_default(&opts->net_opts, "usb");
- 
- 	mutex_init(&opts->lock);
- 	opts->func_inst.free_func_inst = ncm_free_inst;
--	opts->net = gether_setup_default();
--	if (IS_ERR(opts->net)) {
--		struct net_device *net = opts->net;
--		kfree(opts);
--		return ERR_CAST(net);
--	}
- 	opts->max_segment_size = ETH_FRAME_LEN;
- 	INIT_LIST_HEAD(&opts->ncm_os_desc.ext_prop);
- 
-@@ -1693,26 +1703,22 @@ static struct usb_function_instance *ncm_alloc_inst(void)
- 	ncm_interf_group =
- 		usb_os_desc_prepare_interf_dir(&opts->func_inst.group, 1, descs,
- 					       names, THIS_MODULE);
--	if (IS_ERR(ncm_interf_group)) {
--		ncm_free_inst(&opts->func_inst);
-+	if (IS_ERR(ncm_interf_group))
- 		return ERR_CAST(ncm_interf_group);
--	}
- 	opts->ncm_interf_group = ncm_interf_group;
- 
--	return &opts->func_inst;
-+	ret = &opts->func_inst;
-+	retain_and_null_ptr(opts);
-+	return ret;
- }
- 
- static void ncm_free(struct usb_function *f)
- {
--	struct f_ncm *ncm;
--	struct f_ncm_opts *opts;
-+	struct f_ncm_opts *opts = func_to_ncm_opts(f);
- 
--	ncm = func_to_ncm(f);
--	opts = container_of(f->fi, struct f_ncm_opts, func_inst);
--	kfree(ncm);
--	mutex_lock(&opts->lock);
--	opts->refcnt--;
--	mutex_unlock(&opts->lock);
-+	scoped_guard(mutex, &opts->lock)
-+		opts->refcnt--;
-+	kfree(func_to_ncm(f));
- }
- 
- static void ncm_unbind(struct usb_configuration *c, struct usb_function *f)
-@@ -1736,13 +1742,15 @@ static void ncm_unbind(struct usb_configuration *c, struct usb_function *f)
- 
- 	kfree(ncm->notify_req->buf);
- 	usb_ep_free_request(ncm->notify, ncm->notify_req);
-+
-+	ncm->port.ioport = NULL;
-+	gether_cleanup(netdev_priv(ncm->netdev));
- }
- 
- static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- {
- 	struct f_ncm		*ncm;
- 	struct f_ncm_opts	*opts;
--	int status;
- 
- 	/* allocate and initialize one new instance */
- 	ncm = kzalloc(sizeof(*ncm), GFP_KERNEL);
-@@ -1750,22 +1758,12 @@ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- 		return ERR_PTR(-ENOMEM);
- 
- 	opts = container_of(fi, struct f_ncm_opts, func_inst);
--	mutex_lock(&opts->lock);
--	opts->refcnt++;
- 
--	/* export host's Ethernet address in CDC format */
--	status = gether_get_host_addr_cdc(opts->net, ncm->ethaddr,
--				      sizeof(ncm->ethaddr));
--	if (status < 12) { /* strlen("01234567890a") */
--		kfree(ncm);
--		mutex_unlock(&opts->lock);
--		return ERR_PTR(-EINVAL);
--	}
-+	scoped_guard(mutex, &opts->lock)
-+		opts->refcnt++;
- 
- 	spin_lock_init(&ncm->lock);
- 	ncm_reset_values(ncm);
--	ncm->port.ioport = netdev_priv(opts->net);
--	mutex_unlock(&opts->lock);
- 	ncm->port.is_fixed = true;
- 	ncm->port.supports_multi_frame = true;
- 
-diff --git a/drivers/usb/gadget/function/u_ncm.h b/drivers/usb/gadget/function/u_ncm.h
-index 49ec095cdb4b6..d99330fe31e88 100644
---- a/drivers/usb/gadget/function/u_ncm.h
-+++ b/drivers/usb/gadget/function/u_ncm.h
-@@ -15,11 +15,13 @@
- 
- #include <linux/usb/composite.h>
- 
-+#include "u_ether.h"
-+
- struct f_ncm_opts {
- 	struct usb_function_instance	func_inst;
- 	struct net_device		*net;
--	bool				bound;
- 
-+	struct gether_opts		net_opts;
- 	struct config_group		*ncm_interf_group;
- 	struct usb_os_desc		ncm_os_desc;
- 	char				ncm_ext_compat_id[16];
 -- 
 2.51.0
 
