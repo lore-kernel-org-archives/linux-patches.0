@@ -1,125 +1,150 @@
-Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EA7381AF8
-	for <patches@lists.linux.dev>; Tue, 10 Mar 2026 11:09:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140999; cv=pass; b=ElzJ6XNcOAAE6csZy3hFDX/LlDT1FlgsLuStpdMXOHzhiK0R4+FDJ+XTeitzFm92yfzpl8iwYg94gGJpHZFfU/sXmEgb7ioA9CtO9CoID2HIikqc/d+1Kbaiu2q4fOOADNa1KWLzCqBxaNhtNshrOtU0Z69u9egmktzY3foj1pY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140999; c=relaxed/simple;
-	bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gH23DsKR2HAMNjj6ymVpXhug9/woyMGhtOkiITVKJK3rYYZU54n8RqqV1Vza/UfYp981LOjB70YA+LSmU9q7D3V4kPUl8CIXYdC2UAwaOpdvr2meKFe/lEQ8tN6w7ZnybqMKR7Wi1KMVdubQ1gB/e4NGMMrznZs8OtFyJ//8uaw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bBbQrH0Z; arc=pass smtp.client-ip=74.125.82.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C26248F73;
+	Tue, 10 Mar 2026 11:10:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773141047; cv=none; b=roABWc3lwWuw6h4ANZaenQgkZ4SID5ZGejgZhrN0/S1vfzna7xNXltmjvnQtdCw7MHJPLIoVMbBx/zI4ptFhaGPRX8mbB7aLgh79dcp/5oXQw2y9xhT0Avh86EdueIjtagV9nemrz7PC8lyzD6EYH67MnaSTAmDhmfkTmfDxzhM=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773141047; c=relaxed/simple;
+	bh=n2WKvHJec7FWj/kKO2jY/OlrsFSuFiHtbt96GV6LzWQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=Dp5hE9jQ2pisdJpCKb8HpgvY80xdhnz/5HSVmPXGipKPPDzrUPFwmtu74WFqzgv14quvLPgxziT/9Ug3BPA3IiGQ1N3xJMXWIuYCinSgcJeIoGE0z+O+/Sqb8p3UeoQttLEVszkWpG/FA9VbEG9MDc6Vd0PPJ9qMtWs1MhvRp1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ksyA4gTt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bBbQrH0Z"
-Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2be851b8ef1so3948eec.3
-        for <patches@lists.linux.dev>; Tue, 10 Mar 2026 04:09:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773140997; cv=none;
-        d=google.com; s=arc-20240605;
-        b=GMW62nFdTmrFDkaNuo5OeZNqbKS3BQRA2W0sBL4cEC1/VMZp/giKDImt63jz8/N/Hn
-         jqCN7EMGoxNEtY/GRM21Q8t+iMtdX2mBnEsaafkIltcEGc5mmu/B33XDhIWgX4uIKEsb
-         jI6PNLIeC+ceetguefEaPbfH9OSBg5w8SKJrDLyqWZ1b/q0OyIk/diD8Bx9VNY4rVWG2
-         RSJz0D1DWi5AqIdZ4FogbMLffdld/wx9FdvWK1VtFNOSShXXdBi5Q59SG5OmMcoRR1P7
-         DV0fFZr0X+T+jXzIffAOSrP1TDKt8aEnSJ5IR2SoqdmxhtQMbfngw5LYxFAHjO9ZPlAO
-         6DMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
-        fh=BKNhPh3qJODy6wxWSChvalXWC1dNDJwTa25IOvxAttQ=;
-        b=eIvry50tR9C9EweCNZV3Uaw9FW7d8rsTlRCNO/gJDvZcWfEAibaxAsCWr28MQduIby
-         AzZWEMUJSbljmLl1WlDIBrrzqtQL3bUt1WU7vkB3Q/0Nb9DqT2zcTvMCowccsASSpGM8
-         KJ9nIJ+oaU+lzIdEwQqzm8hrDb1GlHIBRKJyb4ZXRmHrSY4blg3ropyYg2DV8gUcoSoB
-         OTzNFOikjQXo6d8K59maRR6s4eX/Ixh615ySrjFr2PHMUuegVJ8vkaz4lbvQr3Erq6Dg
-         zo+ownopO6jPVCX72pyIQ791dg1gJjZPOSOnb1WwNWN4n91qz3xNnEM2Dbp+i7bnbzt/
-         3ysQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773140997; x=1773745797; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
-        b=bBbQrH0ZprIJWw95ptHHYmqc4II+00ur2XZGoZThfUW3epB7P+E2cl5i0yK0Mk9MMA
-         JojH6reTWkQlIniOY3iPDL/4NNqwd5n2+YpA2K6qK0y7CfGeHdx1snyvIlScguxYGOJn
-         VyYXcuWwEvWDrd0I4a32zXL7uxgzsf9y2+GPL9cJjMbYjzCxzIOUjn3zcnMMNqfwcklh
-         RtE8MJToE5WxCujNBLr/Qxp7XWpDF4brk63J/kF7hXiWJnyMkDjWCYE88ldgoTYvkGgI
-         IXPaf6YHPqnzTDNrTm/D5X1XN6nnQUd8fEkT3hApA5gGABDySgbvvBltdkocu2HpIsZP
-         0Aig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773140997; x=1773745797;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
-        b=MoC7MAtoQDZni1fQLLfXBy/kii0E2DouhIRY4rJbbvWzpuJlCqIGp19vkqiuroR7vc
-         o7j4sfoY93kvnTuYqjuaAmlMPzG+c3E256PcOHcBHTzquo/KWCYI5EwHyLI0lxtMvFtN
-         2mNF5Xbj1FBqWlzvOC+J8GxgvvONbKHG2mHl5jZ3RzPh2PmsvbROQm2rQkK/lHzj4CTL
-         7pDblrNqE/bDJZyJjOQxAMZ0isukVfil4qPy4Vz/JI0jp9XGxzuxGSjDij6zWFFdz5pL
-         px5q8I+KAHchRJ44iWXELTSmSc6b6vk2Fh3dkkZLCX7/skDEAq+4Yu6dd5qXekP8HL6x
-         Kutg==
-X-Forwarded-Encrypted: i=1; AJvYcCUXU0Yrw9SLE6XfWVKjxAv2VVZPCuHZGHk8LBJxFkHuF87TpE/bKg9GePKJtidIqCZ9K9Gk73Xy@lists.linux.dev
-X-Gm-Message-State: AOJu0YxWEObVgG43Xz0SLiWnhfbSo4l0CVefh6P0xWrkvv/IvUntSbKO
-	lAmJL7btmq0oFp10sdfbz+ZSZhQAi+5PMWdUBnjkij4uH+G8JVTXf6W862c3hyrjgBUph22J2eD
-	UUSh06U016x//oUunJ5nBXMOqZGnV1Vo=
-X-Gm-Gg: ATEYQzwdVMThG7T0Frr5NkI4mknKSd5srRdxmUFizLXm78J8vHEvQkHfZFmKAQzjMAp
-	RmHzvwMxFK1CmB4+Li4v+8b+hjN2TH0Lw6DDNy1ZjYu1h8EF/JcaFnpnKi5cqxf0fX56d+TFzLa
-	rh4EZGjiZWNLjNujpunpZcgLnXaqbMUDrLjwmKA/3CGNEk2jfrsCg4+D37flFoqTBIJLyUaX017
-	UQJHRhT4zMwMwpGzUeY2IouSxq5kqabY0I3X98MD8Wl7Gp1rKIsfadrQBrQ6Ly/+VO5OOQTBVMP
-	IMhdYMvSzjdkWr++lqptobp9jCFRu4QNyOnGWdeQQ81mc7A21wncA4MVDS+k65TcOcrVNwOQPp5
-	EYsDMRR6ZOeDFX6x9sPmhrc0=
-X-Received: by 2002:a05:7300:cd90:b0:2be:1544:5c34 with SMTP id
- 5a478bee46e88-2be4e09a273mr2605685eec.8.1773140996803; Tue, 10 Mar 2026
- 04:09:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ksyA4gTt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BE65C19423;
+	Tue, 10 Mar 2026 11:10:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773141047;
+	bh=n2WKvHJec7FWj/kKO2jY/OlrsFSuFiHtbt96GV6LzWQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ksyA4gTtZ58NGruX/9/HHE5/4AMuYXnYgUvg0xPFcE1i6tWSY2a5kYiqCM2ypXs33
+	 4loIf+sfZiCtqGxnmhq3VkbBZgYkvV386hJSIPc/qBvPQmKFTGeMnXxycCftaqIm/Z
+	 /PqxdzVClockw7mQpTnu+aYwkb5Gcpg6ij6w6qK/q1/768Vo8jwtB9sopg4zwn+/d1
+	 qxgCF7Ypd9I6Pyw78ISglDQwHnfyodotNcnSvBRidTEGWQF3XweZLOXE14SSxRpzr2
+	 jB9dL18xvDatPAn2wdVMnDKf3D6JpqeG8sBoFFJQjELUAYWjyR9CSU2vKNlX2uCL48
+	 QhF+a6udXO1+w==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 046/311] cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko
+Date: Tue, 10 Mar 2026 07:01:33 -0400
+Message-ID: <0634c576944d6780712afbbf00f655512d497d32.1773140655.git.sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
+References: <cover.1773140654.git.sashal@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241119185747.862544-1-ojeda@kernel.org> <202512092319.ECBB8613@keescook>
-In-Reply-To: <202512092319.ECBB8613@keescook>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 10 Mar 2026 12:09:43 +0100
-X-Gm-Features: AaiRm52yrnYpKu_LCuEGwaXBkN9qVVDwx_oBsyi0FYUy2OUcPt08sBsrY2wvdKg
-Message-ID: <CANiq72n=hgH4bqJjp8MsMHAaxaAo75GSBcHGTvFT3NTSaVPGWg@mail.gmail.com>
-Subject: Re: [RFC PATCH] rust: allow Clang-native `RANDSTRUCT` configs
-To: Kees Cook <kees@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Nathan Chancellor <nathan@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Aaron Ballman <aaron@aaronballman.com>, 
-	Bill Wendling <isanbard@gmail.com>, Cole Nixon <nixontcole@gmail.com>, 
-	Connor Kuehl <cipkuehl@gmail.com>, Fangrui Song <i@maskray.me>, James Foster <jafosterja@gmail.com>, 
-	Jeff Takahashi <jeffrey.takahashi@gmail.com>, Jordan Cantrell <jordan.cantrell@mail.com>, 
-	Matthew Maurer <mmaurer@google.com>, Nikk Forbus <nicholas.forbus@gmail.com>, 
-	Qing Zhao <qing.zhao@oracle.com>, Sami Tolvanen <samitolvanen@google.com>, 
-	Tim Pugh <nwtpugh@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 
-On Wed, Dec 10, 2025 at 8:21=E2=80=AFAM Kees Cook <kees@kernel.org> wrote:
->
-> I played with this again, and yes it appears to be working. I think,
-> however, I would like to make the anon struct universal. What do you
-> think of this?
+From: Dave Jiang <dave.jiang@intel.com>
 
-Revisiting this... If that is acceptable, even easier for the Rust side, ye=
-ah.
+[ Upstream commit e7e222ad73d93fe54d6e6e3a15253a0ecf081a1b ]
 
-Perhaps as a patch on top instead of doing both at once? (even if it
-means cleaning up)
+Moving the symbol devm_cxl_add_nvdimm_bridge() to
+drivers/cxl/cxl_pmem.c, so that cxl_pmem can export a symbol that gives
+cxl_acpi a depedency on cxl_pmem kernel module. This is a prepatory patch
+to resolve the issue of a race for nvdimm_bus object that is created
+during cxl_acpi_probe().
 
-Thanks!
+No functional changes besides moving code.
 
-Cheers,
-Miguel
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Acked-by: Ira Weiny <ira.weiny@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com?>
+Link: https://patch.msgid.link/20260205001633.1813643-2-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 96a1fd0d84b1 ("cxl: Fix race of nvdimm_bus object when creating nvdimm objects")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/cxl/core/pmem.c | 13 +++----------
+ drivers/cxl/cxl.h       |  2 ++
+ drivers/cxl/pmem.c      | 14 ++++++++++++++
+ 3 files changed, 19 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
+index 8853415c106a9..e1325936183a6 100644
+--- a/drivers/cxl/core/pmem.c
++++ b/drivers/cxl/core/pmem.c
+@@ -115,15 +115,8 @@ static void unregister_nvb(void *_cxl_nvb)
+ 	device_unregister(&cxl_nvb->dev);
+ }
+ 
+-/**
+- * devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
+- * @host: platform firmware root device
+- * @port: CXL port at the root of a CXL topology
+- *
+- * Return: bridge device that can host cxl_nvdimm objects
+- */
+-struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+-						     struct cxl_port *port)
++struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
++						       struct cxl_port *port)
+ {
+ 	struct cxl_nvdimm_bridge *cxl_nvb;
+ 	struct device *dev;
+@@ -155,7 +148,7 @@ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+ 	put_device(dev);
+ 	return ERR_PTR(rc);
+ }
+-EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
++EXPORT_SYMBOL_FOR_MODULES(__devm_cxl_add_nvdimm_bridge, "cxl_pmem");
+ 
+ static void cxl_nvdimm_release(struct device *dev)
+ {
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index ba17fa86d249e..2854e47fd9869 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -893,6 +893,8 @@ void cxl_driver_unregister(struct cxl_driver *cxl_drv);
+ struct cxl_nvdimm_bridge *to_cxl_nvdimm_bridge(struct device *dev);
+ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+ 						     struct cxl_port *port);
++struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
++						       struct cxl_port *port);
+ struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev);
+ bool is_cxl_nvdimm(struct device *dev);
+ int devm_cxl_add_nvdimm(struct cxl_port *parent_port, struct cxl_memdev *cxlmd);
+diff --git a/drivers/cxl/pmem.c b/drivers/cxl/pmem.c
+index e197883690efc..714beaf1704be 100644
+--- a/drivers/cxl/pmem.c
++++ b/drivers/cxl/pmem.c
+@@ -13,6 +13,20 @@
+ 
+ static __read_mostly DECLARE_BITMAP(exclusive_cmds, CXL_MEM_COMMAND_ID_MAX);
+ 
++/**
++ * __devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
++ * @host: platform firmware root device
++ * @port: CXL port at the root of a CXL topology
++ *
++ * Return: bridge device that can host cxl_nvdimm objects
++ */
++struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
++						     struct cxl_port *port)
++{
++	return __devm_cxl_add_nvdimm_bridge(host, port);
++}
++EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
++
+ static void clear_exclusive(void *mds)
+ {
+ 	clear_exclusive_cxl_commands(mds, exclusive_cmds);
+-- 
+2.51.0
+
