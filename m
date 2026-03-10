@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F682D24B7;
-	Tue, 10 Mar 2026 11:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E702D24B7;
+	Tue, 10 Mar 2026 11:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141115; cv=none; b=Oha5DIFM475OqTrg2gIKiVE0l0/sUgkSaAwLJEhmM9gdMwEHnl3jQv4f6cxbuaEsYRp1KsMXPweGEFV6JWES5yAFMhUxNPrXZAmdzNmD17OOXLZNRYRXMJ8cescAEdb+uc/ZQoBw0sAOkZfFvSzAug4QVP99MymDrgP/hMDUj0c=
+	t=1773141116; cv=none; b=sHZSNz8NOdlpZeNualc1i3DvFTyuwgGs95hH70QQUa//AgNxVYgRolsGfDAwCsNv3Gh23aE4CfJxuc4tLXIcy/4NvML+luw4OXqM5/9KSMxZYO5H9TT98TPQHHMNLO2k0nPUO8d/+cDkmVYOv/d4omOeaImvGbaYRLfE34RSkqE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141115; c=relaxed/simple;
-	bh=2pPWkafpi+YBDiCbZW/4MEOkpfB+X4nUw2i7lZU/KqA=;
+	s=arc-20240116; t=1773141116; c=relaxed/simple;
+	bh=4UBRM1lSEZbrwQqGoY8O1MTTDKhrzqM8QsmFpF6JYsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H1onHLb1xsqWHZsYqwQej/Azv3wXgHJAMjojxaHS2lI4gOisyEWcYsrm/6hDvp1LEphD54n8kbQmolR4Uu3KerSgtKL4nTVwp6cXqS3a02yIwUD+9XR5nLAGLDxA4VH+EpmLhUShhaZHqso/tmeEL4Aix9j2RdgTAmutsfC6lTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QPLz0pcr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGpFQpdgU9TU+5UAAg97NqDJc/7nRWJp+/B+ctLbM2uWqUXJ49JeCL8OVrtosLN+l5+48kCxfrL51TXkuDU1FVrsouszawDcVMxP2lcVtXoKDARGq0EJKsQH4PGZ9ek3pJbQEVdVFLa2R4hiwUDuQtUBbR4JADHc8yCahgmk1fM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3i2TNR0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QPLz0pcr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56E7C2BC86;
-	Tue, 10 Mar 2026 11:11:54 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3i2TNR0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE33C2BC9E;
+	Tue, 10 Mar 2026 11:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141115;
-	bh=2pPWkafpi+YBDiCbZW/4MEOkpfB+X4nUw2i7lZU/KqA=;
+	s=k20201202; t=1773141116;
+	bh=4UBRM1lSEZbrwQqGoY8O1MTTDKhrzqM8QsmFpF6JYsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QPLz0pcr/zyDF3KqxFsaQbot4O0IWYGbwHBZbc6/1GjrOtAr+Tbs8F3guYDlEb5Bv
-	 0E7JTu8XNHOUvvViyq7w+iq+5CyTz84fWsz2tnmVbbVn8Xf3bSWXeOzcWwjw3JwtI1
-	 BnYsKPYKQmWY3LPpY/+v9FjaW4Z6Z0F6INRRCTFDkwLtMq8C2tef7MiNRh3flFcklP
-	 Gbq6bLga/qD4EoYUiP++EH1gMUfnQRLdTZOWH2reMzvSBZBtIO7Wm94li4wJhW8rFI
-	 pi+IoAsuM/6I4I+WGUj/iIckmGm9H22l+JYTJziocrZl0es4tUqklzAyHUAtku1vKu
-	 g93g5BzBPUU6Q==
+	b=Y3i2TNR0RzClEAboxMOf7mZDXjGSQ3l0lFDA3dyqgevyBjePS02OKOyNLp5lP2+9Z
+	 pPFueYU5oBWva6yWQludzsM0xwLyVXifELl3PKmKvaxo+DMpQ85NWTS6cLZZLA/ZK+
+	 3EL2MolyPnYdFrPZ3r3GJPkiAkrKN8TJzuf6nKc1L70IBLQWXP8XWzAnqLW4XFbAye
+	 t/x7RJH5ws6ari35fI1eiVhE6X02Crxp3aF+xOxDRo/2caDF0Z5wQait3XYjy6qFap
+	 iOcnX49iuCBRoScuOdLGJ5QrmsjGVM5fQK4wNK73Pvhufv9KVcatG2jFRD/kfOEHVG
+	 uLbCOtiaGPwsw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zide Chen <zide.chen@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+Cc: Jan Stancek <jstancek@redhat.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	stable@kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 117/311] perf/x86/intel/uncore: Add per-scheduler IMC CAS count events
-Date: Tue, 10 Mar 2026 07:02:44 -0400
-Message-ID: <3c609e10b02360974f3057e444313316e7e65619.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 118/311] x86/boot: Handle relative CONFIG_EFI_SBAT_FILE file paths
+Date: Tue, 10 Mar 2026 07:02:45 -0400
+Message-ID: <3280ad3c2c7e3522e706751e903fc1feadc11181.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,84 +50,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zide Chen <zide.chen@intel.com>
+From: Jan Stancek <jstancek@redhat.com>
 
-commit 6a8a48644c4b804123e59dbfc5d6cd29a0194046 upstream.
+commit 3d1973a0c76a78a4728cff13648a188ed486cf44 upstream.
 
-IMC on SPR and EMR does not support sub-channels.  In contrast, CPUs
-that use gnr_uncores[] (e.g. Granite Rapids and Sierra Forest)
-implement two command schedulers (SCH0/SCH1) per memory channel,
-providing logically independent command and data paths.
+CONFIG_EFI_SBAT_FILE can be a relative path. When compiling using a different
+output directory (O=) the build currently fails because it can't find the
+filename set in CONFIG_EFI_SBAT_FILE:
 
-Do not reuse the spr_uncore_imc[] configuration for these CPUs.
-Instead, introduce a dedicated gnr_uncore_imc[] with per-scheduler
-events, so userspace can monitor SCH0 and SCH1 independently.
+  arch/x86/boot/compressed/sbat.S: Assembler messages:
+  arch/x86/boot/compressed/sbat.S:6: Error: file not found: kernel.sbat
 
-On these CPUs, replace cas_count_{read,write} with
-cas_count_{read,write}_sch{0,1}.  This may break existing userspace
-that relies on cas_count_{read,write}, prompting it to switch to the
-per-scheduler events, as the legacy event reports only partial
-traffic (SCH0).
+Add $(srctree) as include dir for sbat.o.
 
-Fixes: 632c4bf6d007 ("perf/x86/intel/uncore: Support Granite Rapids")
-Fixes: cb4a6ccf3583 ("perf/x86/intel/uncore: Support Sierra Forest and Grand Ridge")
-Reported-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260210005225.20311-1-zide.chen@intel.com
+  [ bp: Massage commit message. ]
+
+Fixes: 61b57d35396a ("x86/efi: Implement support for embedding SBAT data for x86")
+Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
+Cc: <stable@kernel.org>
+Link: https://patch.msgid.link/f4eda155b0cef91d4d316b4e92f5771cb0aa7187.1772047658.git.jstancek@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ arch/x86/boot/compressed/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index e1f370b8d065f..a338ee01bb242 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -6610,6 +6610,32 @@ static struct intel_uncore_type gnr_uncore_ubox = {
- 	.attr_update		= uncore_alias_groups,
- };
+diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
+index 68f9d7a1683b5..b8b2b7bea1d31 100644
+--- a/arch/x86/boot/compressed/Makefile
++++ b/arch/x86/boot/compressed/Makefile
+@@ -113,6 +113,7 @@ vmlinux-objs-$(CONFIG_EFI_SBAT) += $(obj)/sbat.o
  
-+static struct uncore_event_desc gnr_uncore_imc_events[] = {
-+	INTEL_UNCORE_EVENT_DESC(clockticks,      "event=0x01,umask=0x00"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0,  "event=0x05,umask=0xcf"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1,  "event=0x06,umask=0xcf"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0, "event=0x05,umask=0xf0"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1, "event=0x06,umask=0xf0"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.unit, "MiB"),
-+	{ /* end: all zeroes */ },
-+};
-+
-+static struct intel_uncore_type gnr_uncore_imc = {
-+	SPR_UNCORE_MMIO_COMMON_FORMAT(),
-+	.name			= "imc",
-+	.fixed_ctr_bits		= 48,
-+	.fixed_ctr		= SNR_IMC_MMIO_PMON_FIXED_CTR,
-+	.fixed_ctl		= SNR_IMC_MMIO_PMON_FIXED_CTL,
-+	.event_descs		= gnr_uncore_imc_events,
-+};
-+
- static struct intel_uncore_type gnr_uncore_pciex8 = {
- 	SPR_UNCORE_PCI_COMMON_FORMAT(),
- 	.name			= "pciex8",
-@@ -6657,7 +6683,7 @@ static struct intel_uncore_type *gnr_uncores[UNCORE_GNR_NUM_UNCORE_TYPES] = {
- 	NULL,
- 	&spr_uncore_pcu,
- 	&gnr_uncore_ubox,
--	&spr_uncore_imc,
-+	&gnr_uncore_imc,
- 	NULL,
- 	&gnr_uncore_upi,
- 	NULL,
+ ifdef CONFIG_EFI_SBAT
+ $(obj)/sbat.o: $(CONFIG_EFI_SBAT_FILE)
++AFLAGS_sbat.o += -I $(srctree)
+ endif
+ 
+ $(obj)/vmlinux: $(vmlinux-objs-y) $(vmlinux-libs-y) FORCE
 -- 
 2.51.0
 
