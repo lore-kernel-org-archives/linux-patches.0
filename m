@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EED2BF3E2;
-	Tue, 10 Mar 2026 11:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 080CA2BF3E2;
+	Tue, 10 Mar 2026 11:12:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141131; cv=none; b=Xx0mYQwR2sde3dMAOypTb40tKB8KWqn5ZOXtVAYhhnHKEwZOIrF6IqReqOWibZDgsoz76dT5Yy96DeYK/NYNasbUiVhK2ezhF4fSQC1ho29U3lKXY9NVza+AL0vqIlOe6YfCoHPdimEeZlVRiMDlQIsRNN7q5fqDPB96k0lyHkU=
+	t=1773141132; cv=none; b=XezImqatqP3Rj7BCczTx9ekG1bPGiaSAtBkxBRBXPREcDYd9RWL6i0wjsI3nKmr1LPw7xFB7D8C5ELBDyjmWtEiOTPhGkPUnivMh9XzKKQfCncxzH67NxPfY6KLmSq1/ZjBFEC/gukXbzOVI6SFPrpQOtAMFlD2NTfsBzmB/QGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141131; c=relaxed/simple;
-	bh=PcJL2F/IenoF7la5Z2Aw5+RKWG41EfNib5MbxkaYdlY=;
+	s=arc-20240116; t=1773141132; c=relaxed/simple;
+	bh=KCUYXTApTA7L6rm/Sny1M9fxAOwNzEMg+RRXJEfhf+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KlLOMlrVqoLU7SlDrzUhb9y4NIKgPUaCyZ9JYLQqt9RRRmq7p35c+Hmxu37zjILGBs2pSIKlNu7HKcnh0CwgtN5HBwjanmzTRCBB2GfGxbPYyc1O/v5q84ptJDrQ11vTMZ/EZmcurTA5QdxWBu7FGJtVtltfN3yjd2qdWgRFkD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n44a5vfc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUrt+b9jDt4wk9r959fbCilXgyh4vfp0Yi5rU59rmcNzYKRnsik+YtPabzL8rDtfaiWqjzHuQl0gQ4AioWScfoLsKCnYpB/DSDbGaL3055qrgl0X6sy5LOyuBDR6YdpJ+3eSn0Gck0w3NjNJiC1DzkPzgZYqsoQSi2WQ57yKrNg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UaiEGqxX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n44a5vfc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C222C2BC9E;
-	Tue, 10 Mar 2026 11:12:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UaiEGqxX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B532C2BC86;
+	Tue, 10 Mar 2026 11:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773141131;
-	bh=PcJL2F/IenoF7la5Z2Aw5+RKWG41EfNib5MbxkaYdlY=;
+	bh=KCUYXTApTA7L6rm/Sny1M9fxAOwNzEMg+RRXJEfhf+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n44a5vfcLGnrreyfIQ69+lxk/xs9HtzdR//NhGXmhhf9ZD0WlBFabp4BuxOHN7yl7
-	 v+H/HemvlFvSpKLVNMWYd0ISX6KSupQTtyKq7kRUBgvzSnTC4K6BGqMwa5HWj7VHFS
-	 qcBO4IJUOgBOj4AgQnRqLJ9KGeILpWVGqBqOZ3wBUdK1Q3ACGOU15LHOuQiQqJUF0E
-	 x+TQmVcBastFLYyIdu2MSthDsNGEWhZAiJehoM9k2eny98dqC6RPiFTE+Y68rK/HRC
-	 gLbH+PiMFgHKSWJoomt/vB6NYJZJ7GehyGgm3Pc3dNe30FxBNPKCWiaadDvqQm97lf
-	 6mXI0aPxq6TNA==
+	b=UaiEGqxXfhqxKEU62stoAh2T0oQNQGav4qHfWdev0upKQRqyisuJJMOOIzofDx2CV
+	 p97iJNohHJrFtHVboV/4DE55uYuTeePR6nRgB145uSxpdE/rTXi44btYKHgaymGOTW
+	 i7uscGYwonTyEYucxuP5zFKn4t2wtzju2hXYoeOgTXXCpbs/UT/IalSUVLFrrocet/
+	 t4e/RvQIczWvCOWYVJFGO/uBsYn2PZJMFEGl01WdpUN62u9FxXmKKJdd1CDJNfwcpO
+	 z8X7AmV3SZ0jRbFk619cm56qV0A/OLA1mvjVvFXWYr/OrlVa3kv33NRUkBkRsIpNNm
+	 UEadSGSY4Ghxw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniil Dulov <d.dulov@aladdin.ru>,
+Cc: Ariel Silver <arielsilver77@gmail.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 134/311] wifi: cfg80211: cancel rfkill_block work in wiphy_unregister()
-Date: Tue, 10 Mar 2026 07:03:01 -0400
-Message-ID: <ea691ab7cc10ac65adfede41ae5285fd297353c1.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 135/311] wifi: mac80211: bounds-check link_id in ieee80211_ml_reconfiguration
+Date: Tue, 10 Mar 2026 07:03:02 -0400
+Message-ID: <57fd1ec6e166e2b106d4dc62924cb3cec694b025.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,60 +48,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Ariel Silver <arielsilver77@gmail.com>
 
-commit 767d23ade706d5fa51c36168e92a9c5533c351a1 upstream.
+commit 162d331d833dc73a3e905a24c44dd33732af1fc5 upstream.
 
-There is a use-after-free error in cfg80211_shutdown_all_interfaces found
-by syzkaller:
+link_id is taken from the ML Reconfiguration element (control & 0x000f),
+so it can be 0..15. link_removal_timeout[] has IEEE80211_MLD_MAX_NUM_LINKS
+(15) elements, so index 15 is out-of-bounds. Skip subelements with
+link_id >= IEEE80211_MLD_MAX_NUM_LINKS to avoid a stack out-of-bounds
+write.
 
-BUG: KASAN: use-after-free in cfg80211_shutdown_all_interfaces+0x213/0x220
-Read of size 8 at addr ffff888112a78d98 by task kworker/0:5/5326
-CPU: 0 UID: 0 PID: 5326 Comm: kworker/0:5 Not tainted 6.19.0-rc2 #2 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Workqueue: events cfg80211_rfkill_block_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x116/0x1f0
- print_report+0xcd/0x630
- kasan_report+0xe0/0x110
- cfg80211_shutdown_all_interfaces+0x213/0x220
- cfg80211_rfkill_block_work+0x1e/0x30
- process_one_work+0x9cf/0x1b70
- worker_thread+0x6c8/0xf10
- kthread+0x3c5/0x780
- ret_from_fork+0x56d/0x700
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-The problem arises due to the rfkill_block work is not cancelled when wiphy
-is being unregistered. In order to fix the issue cancel the corresponding
-work in wiphy_unregister().
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 1f87f7d3a3b4 ("cfg80211: add rfkill support")
+Fixes: 8eb8dd2ffbbb ("wifi: mac80211: Support link removal using Reconfiguration ML element")
+Reported-by: Ariel Silver <arielsilver77@gmail.com>
+Signed-off-by: Ariel Silver <arielsilver77@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Link: https://patch.msgid.link/20260211082024.1967588-1-d.dulov@aladdin.ru
+Link: https://patch.msgid.link/20260220101129.1202657-1-Ariel.Silver@cybereason.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mac80211/mlme.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/wireless/core.c b/net/wireless/core.c
-index 16ccf6fb28b21..381e329e02a4c 100644
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1210,6 +1210,7 @@ void wiphy_unregister(struct wiphy *wiphy)
- 	/* this has nothing to do now but make sure it's gone */
- 	cancel_work_sync(&rdev->wiphy_work);
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 73f57b9e0ebf7..63346ee15069a 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6975,6 +6975,9 @@ static void ieee80211_ml_reconfiguration(struct ieee80211_sub_if_data *sdata,
+ 		control = le16_to_cpu(prof->control);
+ 		link_id = control & IEEE80211_MLE_STA_RECONF_CONTROL_LINK_ID;
  
-+	cancel_work_sync(&rdev->rfkill_block);
- 	cancel_work_sync(&rdev->conn_work);
- 	flush_work(&rdev->event_work);
- 	cancel_delayed_work_sync(&rdev->dfs_update_channels_wk);
++		if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
++			continue;
++
+ 		removed_links |= BIT(link_id);
+ 
+ 		/* the MAC address should not be included, but handle it */
 -- 
 2.51.0
 
