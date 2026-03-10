@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF0D387598;
-	Tue, 10 Mar 2026 11:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC53B410D01;
+	Tue, 10 Mar 2026 11:30:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142203; cv=none; b=H4zmNiJUqhHXt+iCioPUEscTQMdd3ZOXyApr4MAjUdgCYb+k/qJKSaGvRuymn4g0J0G93i2IkuxNHEDMYrNCuSLcx786MnjlK82ixdCToZEsQTeXddB0vZQ+9fXMQ5AZz3E8WH3aQTktN1x9lCK300iq3nb0gg9TaYeFKG8Frgc=
+	t=1773142204; cv=none; b=F6AzQdC7uBDPSP4RmidS2gKXSeS+mVaOyOFxUTzUN8mky1w2AMsiZkenwjPaurC4ksm3BMo1g2kAP8XW0K9e4nfuF6/kEMw27UalOy2PR7uSD+ecmABeS/Q5XTEFY9/54CmKUvqntaFIJDtCWRHalZl8NcaPfWrJkIls1VDpNbM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142203; c=relaxed/simple;
-	bh=oq8PFPcqbfTauwDtsVOS+VtLHX6P3U6CzjTVWfSVk/0=;
+	s=arc-20240116; t=1773142204; c=relaxed/simple;
+	bh=XAxweD3ipsJZ6oeeg9y3LZWdP88GrCKvmMSbpys/Z1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qtM7IEZ9dcoga8MAQrZz1JydRs1mQo1+8UA/d8+iAOLeZbZSfx6A/v3m0scK/vy3T8ThRFZ2Xn5iu8UElx7i3l99lEmmgGq8PlT23PvFiUnKo/7n29afht+f/sUg6UhQPxCzmmVoY1Ie0nHsHpbPfSAn1JVawWTTIDBLZB9fhYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NwBI1BCX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=seJJ1tHK10dYq9754n4EQzJJFOjDPRNaoAoYLXu2hHLW/YcMuKHMa4UO5EUeJd2bun+sp+qN7StNjVEtF7M4Ua7T8xQ2X/WhPwhOArlXxUAGU7FfC+vPacByzMa2AsUBKwxWDIEgUU0ic7b1DMxiQCl/O1v8Ut/cHPzB//Y/Qtc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBcA+V2p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NwBI1BCX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1186CC2BC86;
-	Tue, 10 Mar 2026 11:30:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBcA+V2p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083CBC2BC86;
+	Tue, 10 Mar 2026 11:30:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142203;
-	bh=oq8PFPcqbfTauwDtsVOS+VtLHX6P3U6CzjTVWfSVk/0=;
+	s=k20201202; t=1773142204;
+	bh=XAxweD3ipsJZ6oeeg9y3LZWdP88GrCKvmMSbpys/Z1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwBI1BCXDPWPWElpY74RdXqWq9NkXxcKPfX+VfRCW5jKMAv/izrYqOV1QSDV5K93a
-	 09uNXNkM2Nm5FNtLCrU736Om08kQZyP2AwvZ4hFl/FAciGEOvSDHZEhwOjH2SgBANl
-	 CsZRnwzh9FD33291c+BJizpl3FyfzEJLcab7s4gQC8nUoYWX3wTw3tqqEAOa3X+CJt
-	 FkbVzpk4lVnFajFM9rQDPtwPoWtLgkCFr2MRxTgxfmyLD4VVPLB9/726cF98scYbDX
-	 xajsEenyjIh7g53J5PgFUvLHuIgKge9rNkHDJVvgmLoZ1aSaMX94ARohxjT4HlXEO2
-	 wX2h3MzbUkuzQ==
+	b=tBcA+V2pjHAz6YBxDTyg+5w0+r2H/QcMS0Diz54a3v6WeTpKpxpSOQlKNDTnTuSI3
+	 MY+5O/ZAieF5kCXjtyB0oEMZVZDNbaOk+HS6nJo0B3v5Tyzk8v1eWFLnS/e1woSX52
+	 uEZA2moSZh82lb4wkX/9ZzMwJeaS3TIxgSDWwI92SOcY/3rqdwD8zIA+Ws2S1ZAn0F
+	 Q4lMJkDAD8o+I1CawOIlxm4r2n6i6dlapwo12xx8/IAqKDgVN+7o5aou/02xqVBA0I
+	 zJG9Ukfaw2GwnnZ/osKWP1IR63eu2ooO0aq59oG36BjLVGxQgkpGZDzB59XT95W7M2
+	 zII41p9IYCcRg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Bert Karwatzki <spasswolf@web.de>,
-	Paolo Abeni <pabeni@redhat.com>,
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
+	Inseo An <y0un9sa@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 293/314] net: Provide a PREEMPT_RT specific check for netdev_queue::_xmit_lock
-Date: Tue, 10 Mar 2026 07:19:12 -0400
-Message-ID: <832190e3233960c72b10da2d1e696fe008c17271.1773141556.git.sashal@kernel.org>
+Subject: [PATCH 6.18 294/314] netfilter: nf_tables: unconditionally bump set->nelems before insertion
+Date: Tue, 10 Mar 2026 07:19:13 -0400
+Message-ID: <4015cbb43e84338c798dd9b8812197ce2247de4a.1773141556.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,149 +49,103 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b824c3e16c1904bf80df489e293d1e3cbf98896d ]
+[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
 
-After acquiring netdev_queue::_xmit_lock the number of the CPU owning
-the lock is recorded in netdev_queue::xmit_lock_owner. This works as
-long as the BH context is not preemptible.
+In case that the set is full, a new element gets published then removed
+without waiting for the RCU grace period, while RCU reader can be
+walking over it already.
 
-On PREEMPT_RT the softirq context is preemptible and without the
-softirq-lock it is possible to have multiple user in __dev_queue_xmit()
-submitting a skb on the same CPU. This is fine in general but this means
-also that the current CPU is recorded as netdev_queue::xmit_lock_owner.
-This in turn leads to the recursion alert and the skb is dropped.
+To address this issue, add the element transaction even if set is full,
+but toggle the set_full flag to report -ENFILE so the abort path safely
+unwinds the set to its previous state.
 
-Instead checking the for CPU number, that owns the lock, PREEMPT_RT can
-check if the lockowner matches the current task.
+As for element updates, decrement set->nelems to restore it.
 
-Add netif_tx_owned() which returns true if the current context owns the
-lock by comparing the provided CPU number with the recorded number. This
-resembles the current check by negating the condition (the current check
-returns true if the lock is not owned).
-On PREEMPT_RT use rt_mutex_owner() to return the lock owner and compare
-the current task against it.
-Use the new helper in __dev_queue_xmit() and netif_local_xmit_active()
-which provides a similar check.
-Update comments regarding pairing READ_ONCE().
+A simpler fix is to call synchronize_rcu() in the error path.
+However, with a large batch adding elements to already maxed-out set,
+this could cause noticeable slowdown of such batches.
 
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Closes: https://lore.kernel.org/all/20260216134333.412332-1-spasswolf@web.de
-Fixes: 3253cb49cbad4 ("softirq: Allow to drop the softirq-BKL lock on PREEMPT_RT")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Reported-by: Bert Karwatzki <spasswolf@web.de>
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Link: https://patch.msgid.link/20260302162631.uGUyIqDT@linutronix.de
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
+Reported-by: Inseo An <y0un9sa@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 27 ++++++++++++++++++++++-----
- net/core/dev.c            |  5 +----
- net/core/netpoll.c        |  2 +-
- 3 files changed, 24 insertions(+), 10 deletions(-)
+ net/netfilter/nf_tables_api.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 3d9f21274dc32..8bb7b0e2c5438 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -4684,7 +4684,7 @@ static inline u32 netif_msg_init(int debug_value, int default_msg_enable_bits)
- static inline void __netif_tx_lock(struct netdev_queue *txq, int cpu)
- {
- 	spin_lock(&txq->_xmit_lock);
--	/* Pairs with READ_ONCE() in __dev_queue_xmit() */
-+	/* Pairs with READ_ONCE() in netif_tx_owned() */
- 	WRITE_ONCE(txq->xmit_lock_owner, cpu);
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 89039bbf7d638..b5e1b26a5302b 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7288,6 +7288,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	struct nft_data_desc desc;
+ 	enum nft_registers dreg;
+ 	struct nft_trans *trans;
++	bool set_full = false;
+ 	u64 expiration;
+ 	u64 timeout;
+ 	int err, i;
+@@ -7574,10 +7575,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (err < 0)
+ 		goto err_elem_free;
  
-@@ -4702,7 +4702,7 @@ static inline void __netif_tx_release(struct netdev_queue *txq)
- static inline void __netif_tx_lock_bh(struct netdev_queue *txq)
- {
- 	spin_lock_bh(&txq->_xmit_lock);
--	/* Pairs with READ_ONCE() in __dev_queue_xmit() */
-+	/* Pairs with READ_ONCE() in netif_tx_owned() */
- 	WRITE_ONCE(txq->xmit_lock_owner, smp_processor_id());
- }
- 
-@@ -4711,7 +4711,7 @@ static inline bool __netif_tx_trylock(struct netdev_queue *txq)
- 	bool ok = spin_trylock(&txq->_xmit_lock);
- 
- 	if (likely(ok)) {
--		/* Pairs with READ_ONCE() in __dev_queue_xmit() */
-+		/* Pairs with READ_ONCE() in netif_tx_owned() */
- 		WRITE_ONCE(txq->xmit_lock_owner, smp_processor_id());
- 	}
- 	return ok;
-@@ -4719,14 +4719,14 @@ static inline bool __netif_tx_trylock(struct netdev_queue *txq)
- 
- static inline void __netif_tx_unlock(struct netdev_queue *txq)
- {
--	/* Pairs with READ_ONCE() in __dev_queue_xmit() */
-+	/* Pairs with READ_ONCE() in netif_tx_owned() */
- 	WRITE_ONCE(txq->xmit_lock_owner, -1);
- 	spin_unlock(&txq->_xmit_lock);
- }
- 
- static inline void __netif_tx_unlock_bh(struct netdev_queue *txq)
- {
--	/* Pairs with READ_ONCE() in __dev_queue_xmit() */
-+	/* Pairs with READ_ONCE() in netif_tx_owned() */
- 	WRITE_ONCE(txq->xmit_lock_owner, -1);
- 	spin_unlock_bh(&txq->_xmit_lock);
- }
-@@ -4819,6 +4819,23 @@ static inline void netif_tx_disable(struct net_device *dev)
- 	local_bh_enable();
- }
- 
-+#ifndef CONFIG_PREEMPT_RT
-+static inline bool netif_tx_owned(struct netdev_queue *txq, unsigned int cpu)
-+{
-+	/* Other cpus might concurrently change txq->xmit_lock_owner
-+	 * to -1 or to their cpu id, but not to our id.
-+	 */
-+	return READ_ONCE(txq->xmit_lock_owner) == cpu;
-+}
++	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
++		unsigned int max = nft_set_maxsize(set), nelems;
 +
-+#else
-+static inline bool netif_tx_owned(struct netdev_queue *txq, unsigned int cpu)
-+{
-+	return rt_mutex_owner(&txq->_xmit_lock.lock) == current;
-+}
++		nelems = atomic_inc_return(&set->nelems);
++		if (nelems > max)
++			set_full = true;
++	}
 +
-+#endif
-+
- static inline void netif_addr_lock(struct net_device *dev)
- {
- 	unsigned char nest_level = 0;
-diff --git a/net/core/dev.c b/net/core/dev.c
-index f937b8ba08222..c8e49eef45198 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -4758,10 +4758,7 @@ int __dev_queue_xmit(struct sk_buff *skb, struct net_device *sb_dev)
- 	if (dev->flags & IFF_UP) {
- 		int cpu = smp_processor_id(); /* ok because BHs are off */
- 
--		/* Other cpus might concurrently change txq->xmit_lock_owner
--		 * to -1 or to their cpu id, but not to our id.
--		 */
--		if (READ_ONCE(txq->xmit_lock_owner) != cpu) {
-+		if (!netif_tx_owned(txq, cpu)) {
- 			bool is_list = false;
- 
- 			if (dev_xmit_recursion())
-diff --git a/net/core/netpoll.c b/net/core/netpoll.c
-index 09f72f10813cc..5af14f14a3623 100644
---- a/net/core/netpoll.c
-+++ b/net/core/netpoll.c
-@@ -132,7 +132,7 @@ static int netif_local_xmit_active(struct net_device *dev)
- 	for (i = 0; i < dev->num_tx_queues; i++) {
- 		struct netdev_queue *txq = netdev_get_tx_queue(dev, i);
- 
--		if (READ_ONCE(txq->xmit_lock_owner) == smp_processor_id())
-+		if (netif_tx_owned(txq, smp_processor_id()))
- 			return 1;
+ 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
+ 	if (trans == NULL) {
+ 		err = -ENOMEM;
+-		goto err_elem_free;
++		goto err_set_size;
  	}
  
+ 	ext->genmask = nft_genmask_cur(ctx->net);
+@@ -7629,7 +7638,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 
+ 						ue->priv = elem_priv;
+ 						nft_trans_commit_list_add_elem(ctx->net, trans);
+-						goto err_elem_free;
++						goto err_set_size;
+ 					}
+ 				}
+ 			}
+@@ -7647,23 +7656,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		goto err_element_clash;
+ 	}
+ 
+-	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
+-		unsigned int max = nft_set_maxsize(set);
+-
+-		if (!atomic_add_unless(&set->nelems, 1, max)) {
+-			err = -ENFILE;
+-			goto err_set_full;
+-		}
+-	}
+-
+ 	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
+ 	nft_trans_commit_list_add_elem(ctx->net, trans);
+-	return 0;
+ 
+-err_set_full:
+-	nft_setelem_remove(ctx->net, set, elem.priv);
++	return set_full ? -ENFILE : 0;
++
+ err_element_clash:
+ 	kfree(trans);
++err_set_size:
++	if (!(flags & NFT_SET_ELEM_CATCHALL))
++		atomic_dec(&set->nelems);
+ err_elem_free:
+ 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
+ err_parse_data:
 -- 
 2.51.0
 
