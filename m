@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99815387361;
-	Tue, 10 Mar 2026 11:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B6B63803EA;
+	Tue, 10 Mar 2026 11:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142109; cv=none; b=FVDq5Xqqj03dJWsPAm9ph1QbgiXq+vFi7H1QgnPmJJhWMN9DAWGFZBXXIucppKku8tUlMYX6Vtcyirn7h9jSsVJq3ExRUC3tx6kB269jyFUuqitR5OJJR2UBEe/se6RXruEOkeAlmkSSWvpaWiV3T5TLQnMcHb22INGmhuJO+jw=
+	t=1773142110; cv=none; b=FUBQZ/5o+GpwAcncAONBm5Mugh3fKm7eC/fnqDBSPIIc/SjCajXQ//xek8Fnsdz6B3VAzwS7xvwodyIm0qoqN27Dx7VblPyPS2QciezwoE+fdF0vldiXmlLs7Ik15jlYtvxXlaa+ehKQpv++3avE86klzeHv1r9KWmY8px2RmkA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142109; c=relaxed/simple;
-	bh=xpKebzFkEXFj6F5LfQOlqkxe526qBrWmkzODh5Y4PcU=;
+	s=arc-20240116; t=1773142110; c=relaxed/simple;
+	bh=NUYZOn2Q0n26eTBEFKMEkD+ThcG1k5SdrAojUY2QwzA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iD44Fys83xS+8Td4cDPO0jU0ShIEFAAiCZxtIoD2f1TT3YYaNhKSbLCZyAKokHeXmnEwjNUTMbJw2jbPMJonS1n74JY2uFnWRCBLv+OJOkbAy0O4SC0bX2JQqhcjl8jfO7e+qBzEUwH8bHiNeHDnQ77Mks5BzipDqkLT+UkOjU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ouJpDUUz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VHkazunbJT7VBr4hRTAwhYDWzVT92EaeVO9PmZg9AXwnB8bHiHx5oNWZ+5Zo0hKy38vQbk88t/XrhdHRIETCQjKq3J2mg1wwiWalnVb8FSqXg5o1ZHYbJIGRH36uya6lx8QW/3+OBVTUkx6r7NeKXZKeKspP1Gry+0mzN6Moh0k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iK5NyBZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ouJpDUUz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC849C2BC9E;
-	Tue, 10 Mar 2026 11:28:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iK5NyBZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB680C2BCAF;
+	Tue, 10 Mar 2026 11:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142109;
-	bh=xpKebzFkEXFj6F5LfQOlqkxe526qBrWmkzODh5Y4PcU=;
+	s=k20201202; t=1773142110;
+	bh=NUYZOn2Q0n26eTBEFKMEkD+ThcG1k5SdrAojUY2QwzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ouJpDUUzyI6oh1rHdaklxInfh3+NWtJ6m43GhkxWLTn3NhSMD7srbe4eM8Hfl9txJ
-	 uikq59KO3W21cW+rS20ma2lgaLTrzQvwZ7G7dokD1crl8GtpQAND2WQB/S6AmV5tqe
-	 hzEVuAsnt3ejAxT2UyhYzD+AsxP6ai/3MVxJ1fDupHHjKlYRfN1/+OE0L/kCFT8LVy
-	 YE3gEPDF5prk/HqDgS5pVCip/iop1F/fLTVbj8oFp5Br55FuprDtVEFncaeNXsWJV5
-	 hjEQR/T/UWnJXEdXw9w0eO3LqJksbSVxi+V56jB08VbjVfIWTuoekpCMNGjppySfVh
-	 6YKUK28lsNc1w==
+	b=iK5NyBZ8WcIwuql7xp4OQLeRTE+6Zu9Hy2/GZJL2KrLPnh5apwd9g9sNm+AMhfNil
+	 ZYlB7ZeSccp1736u+Q4y0ADLmEoX9L56N5pewKvRvyQ3W9l6XLlNhfVhS6qZ+zgkFb
+	 kyVhjAjbQX3G0YT5t5lo6IgIBAummNKHf+BbyCphIj9FrMhCZhPHKeA4l2rGoyBrlk
+	 JUKRlK4096WKk66hh4VkMQS26+O+5yRm/PfhiZpyZnX1hB/Iul+8Yyu8L40ZYASMor
+	 hlSNeq3Jpy8vp9WhMR5o/nV26kU6rraOyyRIjvPTfvOQAqBzv0mFnRpexcd3Z5rUHD
+	 2WnppG0r9lJOA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -33,9 +33,9 @@ Cc: Alexander Stein <alexander.stein@ew.tq-group.com>,
 	Mark Brown <broonie@kernel.org>,
 	Fabio Estevam <festevam@gmail.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 197/314] ASoC: fsl_xcvr: use dev_err_probe() replacing dev_err() + return
-Date: Tue, 10 Mar 2026 07:17:36 -0400
-Message-ID: <7d152c435b54f308c82638eaf6167c726c0fce24.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 198/314] ASoC: fsl_xcvr: provide regmap names
+Date: Tue, 10 Mar 2026 07:17:37 -0400
+Message-ID: <e1d191055e450a230e53d8fd1fb69e607cf926dc.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,165 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 8ae28d04593a5fdddb16d3edcdabb8d1e4330d0b upstream.
+commit 08fd332eeb88515af4f1892d91f6ef4ea7558b71 upstream.
 
-Use dev_err_probe() to simplify the code. This also silences -517 errors.
+This driver uses multiple regmaps, which will causes name conflicts
+in debugfs like:
+  debugfs: '30cc0000.xcvr' already exists in 'regmap'
+Fix this by adding a name for the non-core regmap configurations.
 
 Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://patch.msgid.link/20251125101334.1596381-1-alexander.stein@ew.tq-group.com
+Link: https://patch.msgid.link/20251216084931.553328-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Fabio Estevam <festevam@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/fsl/fsl_xcvr.c | 86 ++++++++++++++++------------------------
- 1 file changed, 34 insertions(+), 52 deletions(-)
+ sound/soc/fsl/fsl_xcvr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/soc/fsl/fsl_xcvr.c b/sound/soc/fsl/fsl_xcvr.c
-index 58db4906a01d5..06434b2c9a0fb 100644
+index 06434b2c9a0fb..a268fb81a2f86 100644
 --- a/sound/soc/fsl/fsl_xcvr.c
 +++ b/sound/soc/fsl/fsl_xcvr.c
-@@ -1548,28 +1548,24 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 	xcvr->soc_data = of_device_get_match_data(&pdev->dev);
+@@ -1323,6 +1323,7 @@ static const struct reg_default fsl_xcvr_phy_reg_defaults[] = {
+ };
  
- 	xcvr->ipg_clk = devm_clk_get(dev, "ipg");
--	if (IS_ERR(xcvr->ipg_clk)) {
--		dev_err(dev, "failed to get ipg clock\n");
--		return PTR_ERR(xcvr->ipg_clk);
--	}
-+	if (IS_ERR(xcvr->ipg_clk))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->ipg_clk),
-+				     "failed to get ipg clock\n");
+ static const struct regmap_config fsl_xcvr_regmap_phy_cfg = {
++	.name = "phy",
+ 	.reg_bits = 8,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+@@ -1335,6 +1336,7 @@ static const struct regmap_config fsl_xcvr_regmap_phy_cfg = {
+ };
  
- 	xcvr->phy_clk = devm_clk_get(dev, "phy");
--	if (IS_ERR(xcvr->phy_clk)) {
--		dev_err(dev, "failed to get phy clock\n");
--		return PTR_ERR(xcvr->phy_clk);
--	}
-+	if (IS_ERR(xcvr->phy_clk))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->phy_clk),
-+				     "failed to get phy clock\n");
+ static const struct regmap_config fsl_xcvr_regmap_pllv0_cfg = {
++	.name = "pllv0",
+ 	.reg_bits = 8,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
+@@ -1345,6 +1347,7 @@ static const struct regmap_config fsl_xcvr_regmap_pllv0_cfg = {
+ };
  
- 	xcvr->spba_clk = devm_clk_get(dev, "spba");
--	if (IS_ERR(xcvr->spba_clk)) {
--		dev_err(dev, "failed to get spba clock\n");
--		return PTR_ERR(xcvr->spba_clk);
--	}
-+	if (IS_ERR(xcvr->spba_clk))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->spba_clk),
-+				     "failed to get spba clock\n");
- 
- 	xcvr->pll_ipg_clk = devm_clk_get(dev, "pll_ipg");
--	if (IS_ERR(xcvr->pll_ipg_clk)) {
--		dev_err(dev, "failed to get pll_ipg clock\n");
--		return PTR_ERR(xcvr->pll_ipg_clk);
--	}
-+	if (IS_ERR(xcvr->pll_ipg_clk))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->pll_ipg_clk),
-+				     "failed to get pll_ipg clock\n");
- 
- 	fsl_asoc_get_pll_clocks(dev, &xcvr->pll8k_clk,
- 				&xcvr->pll11k_clk);
-@@ -1593,51 +1589,42 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 
- 	xcvr->regmap = devm_regmap_init_mmio_clk(dev, NULL, regs,
- 						 &fsl_xcvr_regmap_cfg);
--	if (IS_ERR(xcvr->regmap)) {
--		dev_err(dev, "failed to init XCVR regmap: %ld\n",
--			PTR_ERR(xcvr->regmap));
--		return PTR_ERR(xcvr->regmap);
--	}
-+	if (IS_ERR(xcvr->regmap))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->regmap), "failed to init XCVR regmap\n");
- 
- 	if (xcvr->soc_data->use_phy) {
- 		xcvr->regmap_phy = devm_regmap_init(dev, NULL, xcvr,
- 						    &fsl_xcvr_regmap_phy_cfg);
--		if (IS_ERR(xcvr->regmap_phy)) {
--			dev_err(dev, "failed to init XCVR PHY regmap: %ld\n",
--				PTR_ERR(xcvr->regmap_phy));
--			return PTR_ERR(xcvr->regmap_phy);
--		}
-+		if (IS_ERR(xcvr->regmap_phy))
-+			return dev_err_probe(dev, PTR_ERR(xcvr->regmap_phy),
-+					     "failed to init XCVR PHY regmap\n");
- 
- 		switch (xcvr->soc_data->pll_ver) {
- 		case PLL_MX8MP:
- 			xcvr->regmap_pll = devm_regmap_init(dev, NULL, xcvr,
- 							    &fsl_xcvr_regmap_pllv0_cfg);
--			if (IS_ERR(xcvr->regmap_pll)) {
--				dev_err(dev, "failed to init XCVR PLL regmap: %ld\n",
--					PTR_ERR(xcvr->regmap_pll));
--				return PTR_ERR(xcvr->regmap_pll);
--			}
-+			if (IS_ERR(xcvr->regmap_pll))
-+				return dev_err_probe(dev, PTR_ERR(xcvr->regmap_pll),
-+						     "failed to init XCVR PLL regmap\n");
- 			break;
- 		case PLL_MX95:
- 			xcvr->regmap_pll = devm_regmap_init(dev, NULL, xcvr,
- 							    &fsl_xcvr_regmap_pllv1_cfg);
--			if (IS_ERR(xcvr->regmap_pll)) {
--				dev_err(dev, "failed to init XCVR PLL regmap: %ld\n",
--					PTR_ERR(xcvr->regmap_pll));
--				return PTR_ERR(xcvr->regmap_pll);
--			}
-+			if (IS_ERR(xcvr->regmap_pll))
-+				return dev_err_probe(dev, PTR_ERR(xcvr->regmap_pll),
-+						     "failed to init XCVR PLL regmap\n");
- 			break;
- 		default:
--			dev_err(dev, "Error for PLL version %d\n", xcvr->soc_data->pll_ver);
--			return -EINVAL;
-+			return dev_err_probe(dev, -EINVAL,
-+					     "Error for PLL version %d\n",
-+					     xcvr->soc_data->pll_ver);
- 		}
- 	}
- 
- 	xcvr->reset = devm_reset_control_get_optional_exclusive(dev, NULL);
--	if (IS_ERR(xcvr->reset)) {
--		dev_err(dev, "failed to get XCVR reset control\n");
--		return PTR_ERR(xcvr->reset);
--	}
-+	if (IS_ERR(xcvr->reset))
-+		return dev_err_probe(dev, PTR_ERR(xcvr->reset),
-+				     "failed to get XCVR reset control\n");
- 
- 	/* get IRQs */
- 	irq = platform_get_irq(pdev, 0);
-@@ -1645,17 +1632,13 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 		return irq;
- 
- 	ret = devm_request_irq(dev, irq, irq0_isr, 0, pdev->name, xcvr);
--	if (ret) {
--		dev_err(dev, "failed to claim IRQ0: %i\n", ret);
--		return ret;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to claim IRQ0\n");
- 
- 	rx_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "rxfifo");
- 	tx_res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "txfifo");
--	if (!rx_res || !tx_res) {
--		dev_err(dev, "could not find rxfifo or txfifo resource\n");
--		return -EINVAL;
--	}
-+	if (!rx_res || !tx_res)
-+		return dev_err_probe(dev, -EINVAL, "could not find rxfifo or txfifo resource\n");
- 	xcvr->dma_prms_rx.chan_name = "rx";
- 	xcvr->dma_prms_tx.chan_name = "tx";
- 	xcvr->dma_prms_rx.addr = rx_res->start;
-@@ -1678,8 +1661,7 @@ static int fsl_xcvr_probe(struct platform_device *pdev)
- 	ret = devm_snd_dmaengine_pcm_register(dev, NULL, 0);
- 	if (ret) {
- 		pm_runtime_disable(dev);
--		dev_err(dev, "failed to pcm register\n");
--		return ret;
-+		return dev_err_probe(dev, ret, "failed to pcm register\n");
- 	}
- 
- 	ret = devm_snd_soc_register_component(dev, &fsl_xcvr_comp,
+ static const struct regmap_config fsl_xcvr_regmap_pllv1_cfg = {
++	.name = "pllv1",
+ 	.reg_bits = 8,
+ 	.reg_stride = 4,
+ 	.val_bits = 32,
 -- 
 2.51.0
 
