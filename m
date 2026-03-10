@@ -1,43 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90543876B2;
-	Tue, 10 Mar 2026 11:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D6F3876B2;
+	Tue, 10 Mar 2026 11:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141946; cv=none; b=Ce93TlWQ1p4N+sPORdrKrO2MSbq28mLCAWbPxScoZ8Prx7ctmTCO3LhSQfm2PRZcMey3Q6baMId83zI5ufYThyFiqbO6P66CM+aoYzfo74NIzudWFkM82TkCt4MJO5DEYXh5xlRX9ayqAhA2eITDdQkawzrpWzEcUcgEs2MEfSE=
+	t=1773141947; cv=none; b=l2u5/4arYx06vC4A75HasJgHUn1XzHWqoCDbA5UwlI+fr/CgemxaAdowPY2F30zkHTAPx50I6qPMcoiHgDg6L0rJdWQRMcq0EXFMVtV7ca9NScwnGbJOfvfML3zHeRFezVIz6VRcgHKC8uQdn6Av2lASKLUhlQ2KWUQjlG1lHpM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141946; c=relaxed/simple;
-	bh=6WbEgjxy+taTGyadoogMTXZ2rfcLDOIp8XkKFssWoAI=;
+	s=arc-20240116; t=1773141947; c=relaxed/simple;
+	bh=4fQa3MyMNsrUlswbchyqbzx+kRuD4/kEzhp6FVgWf1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=djIIS3ewjxNl0dMIAE4ziduQ9ZnobTfKcI/9g+5TqFXQA2Z3MbkiG6vFAzduCP9otuVdL4YCQIuYCaAcqKS/RQ5W3nLRMl1KVEybHU6d8uDcVMtUA+Ia8PQK38kyMl3aac8losznVWfU7D4JnVN+lSqVv9brnI+7YTHSBaRkUIY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avD6dunY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fi0XB1z0uQxUxcEUTChzynphKl+9MdlGNTrYAu4SW0qrNhzJBl1OkcnObVw4LPUQIccac+Fvra0sQ2DPU9tZ2FP49NSsYY0/+oAq5pVwPO7ifbNwjgxSsAhJ/pvRN/MCTVspFE0BCjIoCNfoO/Nd/8tY8apVrejc5269MolAexY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=a+8l4Mdq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avD6dunY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A736C19423;
-	Tue, 10 Mar 2026 11:25:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="a+8l4Mdq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADB2DC2BC86;
+	Tue, 10 Mar 2026 11:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141946;
-	bh=6WbEgjxy+taTGyadoogMTXZ2rfcLDOIp8XkKFssWoAI=;
+	s=k20201202; t=1773141947;
+	bh=4fQa3MyMNsrUlswbchyqbzx+kRuD4/kEzhp6FVgWf1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=avD6dunYJdiKDQxltWHFVDaPik2141+EoauIOz2rjem2jqVRuOb4O3pL6SreMT5Rz
-	 J24fDUFnUfew9K1sl4L4w0c7Q0TGTo7FiKBb1bVmOA95gObiMjst2hih/bJcMjSz5A
-	 lFuEQiU+6EGFifPisKiY1dyrdsrsoB7U0sUp/kVXkH5LTTK7kmD8sWJ5750UeHOII5
-	 bylX0D3/uFV+P6d0waonmThYIVg2BIwnB3SogBrnTIqGnXaGVuTYfG+6KaWdAiz7oZ
-	 yrQCOVae2LTn8oaL3bhY8KS3UhZpnOJ8ZTm/xDeZW8/VKfOmkhJ3l0mUNEJpXJcR0v
-	 47Qiw6FkTP5gg==
+	b=a+8l4MdqhOJycfjQmBDvIgwpMLlrdO0QBgfX4DBDnsrdmpSj7R7rnKNUJx88Ot2AN
+	 8owZGqxzhnxwnjLOtf26PkLeXeIcKx+whMgDIev4L/bwjzAceHXnOMVoiyJQ9DVtQj
+	 jRR8pM82r0bTv9dq0fvs5cliQONqlydO9RGvzvwQBel0Emchco1oXeuGaWu4y+uVVQ
+	 pTgKBQS0XBUQ2KEdKyHJd5EBcLB2qBnWSTTaFAjfCoEBkoRi6tNCUcQcn3ue1GPgao
+	 tLlCSbVBcp6EPeXDVd4Jp0ygHnfbKcrloWFw9s1Bo6u4k+d7GsVcCK2H64YbpgKiAb
+	 qGtX6J3w0HYAg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tianci Cao <ziye@zju.edu.cn>,
-	Shenghao Yuan <shenghaoyuan0928@163.com>,
-	Yazhou Tang <tangyazhou518@outlook.com>,
-	Eduard Zingerman <eddyz87@gmail.com>,
+Cc: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>,
+	Srinivas Narayana <srinivas.narayana@rutgers.edu>,
+	Santosh Nagarakatte <santosh.nagarakatte@rutgers.edu>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 070/314] bpf: Add bitwise tracking for BPF_END
-Date: Tue, 10 Mar 2026 07:15:29 -0400
-Message-ID: <76147efff3431be8db53e03bd763b2f641d34e4a.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 071/314] bpf: Introduce tnum_step to step through tnum's members
+Date: Tue, 10 Mar 2026 07:15:30 -0400
+Message-ID: <24f2cf70a2b570b6256af55fd82aef6fea7ee4f8.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,239 +50,243 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tianci Cao <ziye@zju.edu.cn>
+From: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
 
-[ Upstream commit 9d21199842247ab05c675fb9b6c6ca393a5c0024 ]
+[ Upstream commit 76e954155b45294c502e3d3a9e15757c858ca55e ]
 
-This patch implements bitwise tracking (tnum analysis) for BPF_END
-(byte swap) operation.
+This commit introduces tnum_step(), a function that, when given t, and a
+number z returns the smallest member of t larger than z. The number z
+must be greater or equal to the smallest member of t and less than the
+largest member of t.
 
-Currently, the BPF verifier does not track value for BPF_END operation,
-treating the result as completely unknown. This limits the verifier's
-ability to prove safety of programs that perform endianness conversions,
-which are common in networking code.
+The first step is to compute j, a number that keeps all of t's known
+bits, and matches all unknown bits to z's bits. Since j is a member of
+the t, it is already a candidate for result. However, we want our result
+to be (minimally) greater than z.
 
-For example, the following code pattern for port number validation:
+There are only two possible cases:
 
-int test(struct pt_regs *ctx) {
-    __u64 x = bpf_get_prandom_u32();
-    x &= 0x3f00;           // Range: [0, 0x3f00], var_off: (0x0; 0x3f00)
-    x = bswap16(x);        // Should swap to range [0, 0x3f], var_off: (0x0; 0x3f)
-    if (x > 0x3f) goto trap;
-    return 0;
-trap:
-    return *(u64 *)NULL;   // Should be unreachable
-}
+(1) Case j <= z. In this case, we want to increase the value of j and
+make it > z.
+(2) Case j > z. In this case, we want to decrease the value of j while
+keeping it > z.
 
-Currently generates verifier output:
+(Case 1) j <= z
 
-1: (54) w0 &= 16128                   ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=16128,var_off=(0x0; 0x3f00))
-2: (d7) r0 = bswap16 r0               ; R0=scalar()
-3: (25) if r0 > 0x3f goto pc+2        ; R0=scalar(smin=smin32=0,smax=umax=smax32=umax32=63,var_off=(0x0; 0x3f))
+t = xx11x0x0
+z = 10111101 (189)
+j = 10111000 (184)
+         ^
+         k
 
-Without this patch, even though the verifier knows `x` has certain bits
-set, after bswap16, it loses all tracking information and treats port
-as having a completely unknown value [0, 65535].
+(Case 1.1) Let's first consider the case where j < z. We will address j
+== z later.
 
-According to the BPF instruction set[1], there are 3 kinds of BPF_END:
+Since z > j, there had to be a bit position that was 1 in z and a 0 in
+j, beyond which all positions of higher significance are equal in j and
+z. Further, this position could not have been unknown in a, because the
+unknown positions of a match z. This position had to be a 1 in z and
+known 0 in t.
 
-1. `bswap(16|32|64)`: opcode=0xd7 (BPF_END | BPF_ALU64 | BPF_TO_LE)
-   - do unconditional swap
-2. `le(16|32|64)`: opcode=0xd4 (BPF_END | BPF_ALU | BPF_TO_LE)
-   - on big-endian: do swap
-   - on little-endian: truncation (16/32-bit) or no-op (64-bit)
-3. `be(16|32|64)`: opcode=0xdc (BPF_END | BPF_ALU | BPF_TO_BE)
-   - on little-endian: do swap
-   - on big-endian: truncation (16/32-bit) or no-op (64-bit)
+Let k be position of the most significant 1-to-0 flip. In our example, k
+= 3 (starting the count at 1 at the least significant bit).  Setting (to
+1) the unknown bits of t in positions of significance smaller than
+k will not produce a result > z. Hence, we must set/unset the unknown
+bits at positions of significance higher than k. Specifically, we look
+for the next larger combination of 1s and 0s to place in those
+positions, relative to the combination that exists in z. We can achieve
+this by concatenating bits at unknown positions of t into an integer,
+adding 1, and writing the bits of that result back into the
+corresponding bit positions previously extracted from z.
 
-Since BPF_END operations are inherently bit-wise permutations, tnum
-(bitwise tracking) offers the most efficient and precise mechanism
-for value analysis. By implementing `tnum_bswap16`, `tnum_bswap32`,
-and `tnum_bswap64`, we can derive exact `var_off` values concisely,
-directly reflecting the bit-level changes.
+>From our example, considering only positions of significance greater
+than k:
 
-Here is the overview of changes:
+t =  xx..x
+z =  10..1
+    +    1
+     -----
+     11..0
 
-1. In `tnum_bswap(16|32|64)` (kernel/bpf/tnum.c):
+This is the exact combination 1s and 0s we need at the unknown bits of t
+in positions of significance greater than k. Further, our result must
+only increase the value minimally above z. Hence, unknown bits in
+positions of significance smaller than k should remain 0. We finally
+have,
 
-Call `swab(16|32|64)` function on the value and mask of `var_off`, and
-do truncation for 16/32-bit cases.
+result = 11110000 (240)
 
-2. In `adjust_scalar_min_max_vals` (kernel/bpf/verifier.c):
+(Case 1.2) Now consider the case when j = z, for example
 
-Call helper function `scalar_byte_swap`.
-- Only do byte swap when
-  * alu64 (unconditional swap) OR
-  * switching between big-endian and little-endian machines.
-- If need do byte swap:
-  * Firstly call `tnum_bswap(16|32|64)` to update `var_off`.
-  * Then reset the bound since byte swap scrambles the range.
-- For 16/32-bit cases, truncate dst register to match the swapped size.
+t = 1x1x0xxx
+z = 10110100 (180)
+j = 10110100 (180)
 
-This enables better verification of networking code that frequently uses
-byte swaps for protocol processing, reducing false positive rejections.
+Matching the unknown bits of the t to the bits of z yielded exactly z.
+To produce a number greater than z, we must set/unset the unknown bits
+in t, and *all* the unknown bits of t candidates for being set/unset. We
+can do this similar to Case 1.1, by adding 1 to the bits extracted from
+the masked bit positions of z. Essentially, this case is equivalent to
+Case 1.1, with k = 0.
 
-[1] https://www.kernel.org/doc/Documentation/bpf/standardization/instruction-set.rst
+t =  1x1x0xxx
+z =  .0.1.100
+    +       1
+    ---------
+     .0.1.101
 
-Co-developed-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Signed-off-by: Shenghao Yuan <shenghaoyuan0928@163.com>
-Co-developed-by: Yazhou Tang <tangyazhou518@outlook.com>
-Signed-off-by: Yazhou Tang <tangyazhou518@outlook.com>
-Signed-off-by: Tianci Cao <ziye@zju.edu.cn>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20260204111503.77871-2-ziye@zju.edu.cn
+This is the exact combination of bits needed in the unknown positions of
+t. After recalling the known positions of t, we get
+
+result = 10110101 (181)
+
+(Case 2) j > z
+
+t = x00010x1
+z = 10000010 (130)
+j = 10001011 (139)
+	^
+	k
+
+Since j > z, there had to be a bit position which was 0 in z, and a 1 in
+j, beyond which all positions of higher significance are equal in j and
+z. This position had to be a 0 in z and known 1 in t. Let k be the
+position of the most significant 0-to-1 flip. In our example, k = 4.
+
+Because of the 0-to-1 flip at position k, a member of t can become
+greater than z if the bits in positions greater than k are themselves >=
+to z. To make that member *minimally* greater than z, the bits in
+positions greater than k must be exactly = z. Hence, we simply match all
+of t's unknown bits in positions more significant than k to z's bits. In
+positions less significant than k, we set all t's unknown bits to 0
+to retain minimality.
+
+In our example, in positions of greater significance than k (=4),
+t=x000. These positions are matched with z (1000) to produce 1000. In
+positions of lower significance than k, t=10x1. All unknown bits are set
+to 0 to produce 1001. The final result is:
+
+result = 10001001 (137)
+
+This concludes the computation for a result > z that is a member of t.
+
+The procedure for tnum_step() in this commit implements the idea
+described above. As a proof of correctness, we verified the algorithm
+against a logical specification of tnum_step. The specification asserts
+the following about the inputs t, z and output res that:
+
+1. res is a member of t, and
+2. res is strictly greater than z, and
+3. there does not exist another value res2 such that
+	3a. res2 is also a member of t, and
+	3b. res2 is greater than z
+	3c. res2 is smaller than res
+
+We checked the implementation against this logical specification using
+an SMT solver. The verification formula in SMTLIB format is available
+at [1]. The verification returned an "unsat": indicating that no input
+assignment exists for which the implementation and the specification
+produce different outputs.
+
+In addition, we also automatically generated the logical encoding of the
+C implementation using Agni [2] and verified it against the same
+specification. This verification also returned an "unsat", confirming
+that the implementation is equivalent to the specification. The formula
+for this check is also available at [3].
+
+Link: https://pastebin.com/raw/2eRWbiit [1]
+Link: https://github.com/bpfverif/agni [2]
+Link: https://pastebin.com/raw/EztVbBJ2 [3]
+Co-developed-by: Srinivas Narayana <srinivas.narayana@rutgers.edu>
+Signed-off-by: Srinivas Narayana <srinivas.narayana@rutgers.edu>
+Co-developed-by: Santosh Nagarakatte <santosh.nagarakatte@rutgers.edu>
+Signed-off-by: Santosh Nagarakatte <santosh.nagarakatte@rutgers.edu>
+Signed-off-by: Harishankar Vishwanathan <harishankar.vishwanathan@gmail.com>
+Link: https://lore.kernel.org/r/93fdf71910411c0f19e282ba6d03b4c65f9c5d73.1772225741.git.paul.chaignon@gmail.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Stable-dep-of: efc11a667878 ("bpf: Improve bounds when tnum has a single possible value")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/tnum.h  |  5 ++++
- kernel/bpf/tnum.c     | 16 ++++++++++++
- kernel/bpf/verifier.c | 60 ++++++++++++++++++++++++++++++++++++++++---
- 3 files changed, 78 insertions(+), 3 deletions(-)
+ include/linux/tnum.h |  3 +++
+ kernel/bpf/tnum.c    | 56 ++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 59 insertions(+)
 
 diff --git a/include/linux/tnum.h b/include/linux/tnum.h
-index c52b862dad45b..fa4654ffb6217 100644
+index fa4654ffb6217..ca2cfec8de08a 100644
 --- a/include/linux/tnum.h
 +++ b/include/linux/tnum.h
-@@ -63,6 +63,11 @@ struct tnum tnum_union(struct tnum t1, struct tnum t2);
- /* Return @a with all but the lowest @size bytes cleared */
- struct tnum tnum_cast(struct tnum a, u8 size);
+@@ -131,4 +131,7 @@ static inline bool tnum_subreg_is_const(struct tnum a)
+ 	return !(tnum_subreg(a)).mask;
+ }
  
-+/* Swap the bytes of a tnum */
-+struct tnum tnum_bswap16(struct tnum a);
-+struct tnum tnum_bswap32(struct tnum a);
-+struct tnum tnum_bswap64(struct tnum a);
++/* Returns the smallest member of t larger than z */
++u64 tnum_step(struct tnum t, u64 z);
 +
- /* Returns true if @a is a known constant */
- static inline bool tnum_is_const(struct tnum a)
- {
+ #endif /* _LINUX_TNUM_H */
 diff --git a/kernel/bpf/tnum.c b/kernel/bpf/tnum.c
-index f8e70e9c3998d..26fbfbb017001 100644
+index 26fbfbb017001..4abc359b3db01 100644
 --- a/kernel/bpf/tnum.c
 +++ b/kernel/bpf/tnum.c
-@@ -8,6 +8,7 @@
-  */
- #include <linux/kernel.h>
- #include <linux/tnum.h>
-+#include <linux/swab.h>
- 
- #define TNUM(_v, _m)	(struct tnum){.value = _v, .mask = _m}
- /* A completely unknown value */
-@@ -253,3 +254,18 @@ struct tnum tnum_const_subreg(struct tnum a, u32 value)
+@@ -269,3 +269,59 @@ struct tnum tnum_bswap64(struct tnum a)
  {
- 	return tnum_with_subreg(a, tnum_const(value));
+ 	return TNUM(swab64(a.value), swab64(a.mask));
  }
 +
-+struct tnum tnum_bswap16(struct tnum a)
++/* Given tnum t, and a number z such that tmin <= z < tmax, where tmin
++ * is the smallest member of the t (= t.value) and tmax is the largest
++ * member of t (= t.value | t.mask), returns the smallest member of t
++ * larger than z.
++ *
++ * For example,
++ * t      = x11100x0
++ * z      = 11110001 (241)
++ * result = 11110010 (242)
++ *
++ * Note: if this function is called with z >= tmax, it just returns
++ * early with tmax; if this function is called with z < tmin, the
++ * algorithm already returns tmin.
++ */
++u64 tnum_step(struct tnum t, u64 z)
 +{
-+	return TNUM(swab16(a.value & 0xFFFF), swab16(a.mask & 0xFFFF));
-+}
++	u64 tmax, j, p, q, r, s, v, u, w, res;
++	u8 k;
 +
-+struct tnum tnum_bswap32(struct tnum a)
-+{
-+	return TNUM(swab32(a.value & 0xFFFFFFFF), swab32(a.mask & 0xFFFFFFFF));
-+}
++	tmax = t.value | t.mask;
 +
-+struct tnum tnum_bswap64(struct tnum a)
-+{
-+	return TNUM(swab64(a.value), swab64(a.mask));
-+}
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index dcbf21f61d2e6..449997aa77a06 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -15377,6 +15377,48 @@ static void scalar_min_max_arsh(struct bpf_reg_state *dst_reg,
- 	__update_reg_bounds(dst_reg);
- }
- 
-+static void scalar_byte_swap(struct bpf_reg_state *dst_reg, struct bpf_insn *insn)
-+{
-+	/*
-+	 * Byte swap operation - update var_off using tnum_bswap.
-+	 * Three cases:
-+	 * 1. bswap(16|32|64): opcode=0xd7 (BPF_END | BPF_ALU64 | BPF_TO_LE)
-+	 *    unconditional swap
-+	 * 2. to_le(16|32|64): opcode=0xd4 (BPF_END | BPF_ALU | BPF_TO_LE)
-+	 *    swap on big-endian, truncation or no-op on little-endian
-+	 * 3. to_be(16|32|64): opcode=0xdc (BPF_END | BPF_ALU | BPF_TO_BE)
-+	 *    swap on little-endian, truncation or no-op on big-endian
-+	 */
++	/* if z >= largest member of t, return largest member of t */
++	if (z >= tmax)
++		return tmax;
 +
-+	bool alu64 = BPF_CLASS(insn->code) == BPF_ALU64;
-+	bool to_le = BPF_SRC(insn->code) == BPF_TO_LE;
-+	bool is_big_endian;
-+#ifdef CONFIG_CPU_BIG_ENDIAN
-+	is_big_endian = true;
-+#else
-+	is_big_endian = false;
-+#endif
-+	/* Apply bswap if alu64 or switch between big-endian and little-endian machines */
-+	bool need_bswap = alu64 || (to_le == is_big_endian);
++	/* if z < smallest member of t, return smallest member of t */
++	if (z < t.value)
++		return t.value;
 +
-+	if (need_bswap) {
-+		if (insn->imm == 16)
-+			dst_reg->var_off = tnum_bswap16(dst_reg->var_off);
-+		else if (insn->imm == 32)
-+			dst_reg->var_off = tnum_bswap32(dst_reg->var_off);
-+		else if (insn->imm == 64)
-+			dst_reg->var_off = tnum_bswap64(dst_reg->var_off);
-+		/*
-+		 * Byteswap scrambles the range, so we must reset bounds.
-+		 * Bounds will be re-derived from the new tnum later.
-+		 */
-+		__mark_reg_unbounded(dst_reg);
++	/* keep t's known bits, and match all unknown bits to z */
++	j = t.value | (z & t.mask);
++
++	if (j > z) {
++		p = ~z & t.value & ~t.mask;
++		k = fls64(p); /* k is the most-significant 0-to-1 flip */
++		q = U64_MAX << k;
++		r = q & z; /* positions > k matched to z */
++		s = ~q & t.value; /* positions <= k matched to t.value */
++		v = r | s;
++		res = v;
++	} else {
++		p = z & ~t.value & ~t.mask;
++		k = fls64(p); /* k is the most-significant 1-to-0 flip */
++		q = U64_MAX << k;
++		r = q & t.mask & z; /* unknown positions > k, matched to z */
++		s = q & ~t.mask; /* known positions > k, set to 1 */
++		v = r | s;
++		/* add 1 to unknown positions > k to make value greater than z */
++		u = v + (1ULL << k);
++		/* extract bits in unknown positions > k from u, rest from t.value */
++		w = (u & t.mask) | t.value;
++		res = w;
 +	}
-+	/* For bswap16/32, truncate dst register to match the swapped size */
-+	if (insn->imm == 16 || insn->imm == 32)
-+		coerce_reg_to_size(dst_reg, insn->imm / 8);
++	return res;
 +}
-+
- static bool is_safe_to_compute_dst_reg_range(struct bpf_insn *insn,
- 					     const struct bpf_reg_state *src_reg)
- {
-@@ -15403,6 +15445,7 @@ static bool is_safe_to_compute_dst_reg_range(struct bpf_insn *insn,
- 	case BPF_XOR:
- 	case BPF_OR:
- 	case BPF_MUL:
-+	case BPF_END:
- 		return true;
- 
- 	/* Shift operators range is only computable if shift dimension operand
-@@ -15551,12 +15594,23 @@ static int adjust_scalar_min_max_vals(struct bpf_verifier_env *env,
- 		else
- 			scalar_min_max_arsh(dst_reg, &src_reg);
- 		break;
-+	case BPF_END:
-+		scalar_byte_swap(dst_reg, insn);
-+		break;
- 	default:
- 		break;
- 	}
- 
--	/* ALU32 ops are zero extended into 64bit register */
--	if (alu32)
-+	/*
-+	 * ALU32 ops are zero extended into 64bit register.
-+	 *
-+	 * BPF_END is already handled inside the helper (truncation),
-+	 * so skip zext here to avoid unexpected zero extension.
-+	 * e.g., le64: opcode=(BPF_END|BPF_ALU|BPF_TO_LE), imm=0x40
-+	 * This is a 64bit byte swap operation with alu32==true,
-+	 * but we should not zero extend the result.
-+	 */
-+	if (alu32 && opcode != BPF_END)
- 		zext_32_to_64(dst_reg);
- 	reg_bounds_sync(dst_reg);
- 	return 0;
-@@ -15736,7 +15790,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 		}
- 
- 		/* check dest operand */
--		if (opcode == BPF_NEG &&
-+		if ((opcode == BPF_NEG || opcode == BPF_END) &&
- 		    regs[insn->dst_reg].type == SCALAR_VALUE) {
- 			err = check_reg_arg(env, insn->dst_reg, DST_OP_NO_MARK);
- 			err = err ?: adjust_scalar_min_max_vals(env, insn,
 -- 
 2.51.0
 
