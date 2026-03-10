@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F60737F007;
-	Tue, 10 Mar 2026 11:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56844387368;
+	Tue, 10 Mar 2026 11:20:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141637; cv=none; b=F6adUxNQevCV80o1ue/tPa2kDDBVtCnQI/PC9V4h7BY4XKr5frmCiVuM0XlRIuJwoYmCcgDDg8jkNaSsPqSgMOy11B8dqzhaODSwOUMz8pzrB1uhfIT4UdiVOFki6nVyTPFdIMnYFWbVZG9ehiK3fgOKW6EoRqdynXN3x3Rq0+o=
+	t=1773141638; cv=none; b=iAex6wlJpqXmIxF8xNktMxz2XqhrFsvOarBzMhFOCPifbsq6WMM4v3+Iv39nyzjWxmC3I7nW5J3+oXx19OMx6FtZOw/FjRZjMfSLCfZ7gwBsnf6JRcr0kHmal5C7UuV+isZm0lyT5xY0ZM2DpPRdQFPRU6b4329Bud8e4U8LwHc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141637; c=relaxed/simple;
-	bh=36VkCf1QQuJZWzdgeoq6GL+tcgS0EPmoXav0euEbhtA=;
+	s=arc-20240116; t=1773141638; c=relaxed/simple;
+	bh=7Ub6PDtqOw1QpeiF7sT+qTep445WVEzaBOPEIg7qrUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hFhCJGBxAJpjRd4hcPSevgNLcvvgoL+Yo5bR0HjcNCRyam3mAQY/AiIBtRs47kI3rZ65wJo2K8eIJGDJ9dOuvsAaSDEAmq5an5YRpXH8gSq5UCp45ukDC0rVI+BNtNMtfaZ+eNehxZBtNN5iB6YECVEM/uUvJRpJZHGHL83+oJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GKjNVEb/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5H6PIxmABNhVCy04fzNs7j9zSSWMTfQc9LaDadDqqJfkCi418WM3pGWYaWVNVt+84uOk29NXUIfNxpUVVc/7tzFpj3rFjDGAIzfxDVzJEhBocjtnRAjBqP0QoqSNbUy2Nk/pE0KCz6M7UiQS/kjyEV/D1/81V3NtRrcTxCSwvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JSNy6Dqt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GKjNVEb/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D0D3C2BC9E;
-	Tue, 10 Mar 2026 11:20:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JSNy6Dqt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83F57C2BCAF;
+	Tue, 10 Mar 2026 11:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141637;
-	bh=36VkCf1QQuJZWzdgeoq6GL+tcgS0EPmoXav0euEbhtA=;
+	s=k20201202; t=1773141638;
+	bh=7Ub6PDtqOw1QpeiF7sT+qTep445WVEzaBOPEIg7qrUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKjNVEb/gEWKraQJ6hY4xuN4ZS5TIHSyxnPlCj6egYkI7P60khr8/4rH5dXmEghWw
-	 /+AfCIOSqXm67/H7cySjWOyfU8hL5Q2fI6V2e8eKHLYqhW+Uxs84Ph0fYWktT8ctQA
-	 PYUuIvK6PKK/wCGbVr43p5AX/hT57vvkE/tgsKCoiGOEqyZ8Mt3Mz+KxdiXDcJJI8U
-	 OX23HmF9ufip9fYzZM7tkpswo8N5lFSGYmaak86n9o9Twt7eZObZcA0O2WxTu2Bhg5
-	 L2R8B+DXGj5ySgJbGm44OJ3RVwjGA880QJmETK9D3hsVfW0ITSjrs7q/z2q9QlHcBq
-	 OHg8FoHvU2E2w==
+	b=JSNy6Dqt0YoRxlDHczvDg86lWraMaqg0F3NqqOAWbKkgpVnFllcnVk/zdGs+dmxAR
+	 FkAQswM6kLw9i4RVN/ddqkm7Jzz/mNz8hdnZWG7EElYrWiqSwCNy478GwXBoE2UmTJ
+	 JjILLwI3WP3euUkmNGtAwTbnt2sl4nnAr1U7mBN+zJmysXouRY9vTkLRBZKd0lFPwX
+	 zilojZZWIAniygxXDqTzcTWp6T7ZTLydZo0Fa/EoB/BRH2OL93fCmopclDPgTvUSEM
+	 xbyz6ey4eQesINSiZsKoCXgIfRuk2BzFFKyAczN1Dx4WxujApkqlTdsacINm7esyQo
+	 DYsNoykUHRyrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brad Spengler <brad.spengler@opensrcsec.com>,
+Cc: Ian Forbes <ian.forbes@broadcom.com>,
+	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
 	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 002/314] drm/vmwgfx: Fix invalid kref_put callback in vmw_bo_dirty_release
-Date: Tue, 10 Mar 2026 07:14:21 -0400
-Message-ID: <066afb100e3c46b7a04fe72f03ec4b741f5cb820.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 003/314] drm/vmwgfx: Return the correct value in vmw_translate_ptr functions
+Date: Tue, 10 Mar 2026 07:14:22 -0400
+Message-ID: <b1f1a3ee604f14fa171d1e573b807e9388538829.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,59 +49,53 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Brad Spengler <brad.spengler@opensrcsec.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit 211ecfaaef186ee5230a77d054cdec7fbfc6724a ]
+[ Upstream commit 5023ca80f9589295cb60735016e39fc5cc714243 ]
 
-The kref_put() call uses (void *)kvfree as the release callback, which
-is incorrect. kref_put() expects a function with signature
-void (*release)(struct kref *), but kvfree has signature
-void (*)(const void *). Calling through an incompatible function pointer
-is undefined behavior.
+Before the referenced fixes these functions used a lookup function that
+returned a pointer. This was changed to another lookup function that
+returned an error code with the pointer becoming an out parameter.
 
-The code only worked by accident because ref_count is the first member
-of vmw_bo_dirty, making the kref pointer equal to the struct pointer.
+The error path when the lookup failed was not changed to reflect this
+change and the code continued to return the PTR_ERR of the now
+uninitialized pointer. This could cause the vmw_translate_ptr functions
+to return success when they actually failed causing further uninitialized
+and OOB accesses.
 
-Fix this by adding a proper release callback that uses container_of()
-to retrieve the containing structure before freeing.
-
-Fixes: c1962742ffff ("drm/vmwgfx: Use kref in vmw_bo_dirty")
-Signed-off-by: Brad Spengler <brad.spengler@opensrcsec.com>
+Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
+Fixes: a309c7194e8a ("drm/vmwgfx: Remove rcu locks from user resources")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
 Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260107171236.3573118-1-zack.rusin@broadcom.com
+Link: https://patch.msgid.link/20260113175357.129285-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-index fd4e76486f2d1..45561bc1c9eff 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-@@ -260,6 +260,13 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
- 	return ret;
- }
- 
-+static void vmw_bo_dirty_free(struct kref *kref)
-+{
-+	struct vmw_bo_dirty *dirty = container_of(kref, struct vmw_bo_dirty, ref_count);
-+
-+	kvfree(dirty);
-+}
-+
- /**
-  * vmw_bo_dirty_release - Release a dirty-tracking user from a buffer object
-  * @vbo: The buffer object
-@@ -274,7 +281,7 @@ void vmw_bo_dirty_release(struct vmw_bo *vbo)
- {
- 	struct vmw_bo_dirty *dirty = vbo->dirty;
- 
--	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
-+	if (dirty && kref_put(&dirty->ref_count, vmw_bo_dirty_free))
- 		vbo->dirty = NULL;
- }
- 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index 3057f8baa7d25..e1f18020170ab 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1143,7 +1143,7 @@ static int vmw_translate_mob_ptr(struct vmw_private *dev_priv,
+ 	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
+ 	if (ret != 0) {
+ 		drm_dbg(&dev_priv->drm, "Could not find or use MOB buffer.\n");
+-		return PTR_ERR(vmw_bo);
++		return ret;
+ 	}
+ 	vmw_bo_placement_set(vmw_bo, VMW_BO_DOMAIN_MOB, VMW_BO_DOMAIN_MOB);
+ 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo);
+@@ -1199,7 +1199,7 @@ static int vmw_translate_guest_ptr(struct vmw_private *dev_priv,
+ 	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
+ 	if (ret != 0) {
+ 		drm_dbg(&dev_priv->drm, "Could not find or use GMR region.\n");
+-		return PTR_ERR(vmw_bo);
++		return ret;
+ 	}
+ 	vmw_bo_placement_set(vmw_bo, VMW_BO_DOMAIN_GMR | VMW_BO_DOMAIN_VRAM,
+ 			     VMW_BO_DOMAIN_GMR | VMW_BO_DOMAIN_VRAM);
 -- 
 2.51.0
 
