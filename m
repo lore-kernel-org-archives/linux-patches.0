@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB652FFDF7;
-	Tue, 10 Mar 2026 11:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B042FFDF7;
+	Tue, 10 Mar 2026 11:29:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142155; cv=none; b=VQgWeFuXmPUR6hctBZC1q36+g7JP2YCufNhq1v6+djdKfC3OkUWmcCh2PYnFBw9JIAan4yB++eIJPP1Wdn3hQiXz6Oc82uJdBrZZVKSTM+xl4V7UXSyQIT/gsPtuuqOi11Hy0s9RhI0SirDg9Tk/BjZPahADcPRkWLNTjDbe6P0=
+	t=1773142156; cv=none; b=NdaG5wvvLUK82WolNukv3bZ9ojMPIVRRWWPr/alQN9NrZvfpqnTNl1ykcE+4b3o3XBr+D6X8Pk6VaZ07+11xyFGu7cBs6ZMaiEINdYOveKCMe0VnIgcmxXl0uQ6UeQWOXsP9VpBEQUSZXXjHcwpq++g5Jpp1al3Yw3ZX9AZG4/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142155; c=relaxed/simple;
-	bh=vFCkomxdJaZSXeq6qagrIaS9wVggtX/V8K/7PT3j1Y4=;
+	s=arc-20240116; t=1773142156; c=relaxed/simple;
+	bh=yprFvWYeTD7Zavgg8BQigbDslxxmKEQXskHVDorM7SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iUfnWtZKplvkUhl/kkrq5osWxC+QZU8KWMxSDHl5hSp9dfM0RQwUFQ2bhN6qOJNzWbiJxtcHnfYW8NlFMtiHtC8ha/czxgD32YGDSggIci+u0nfQWDYnfk/2Z9sLBRRdVTo32+d1sEThKen1DJ6flpk5xqvkGYUII3w/DS8/P9U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QXFsZFlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIYBtnjNDsiNfooR+94f3nhxiPAuz+f7rMpXwToxYI5iBCFqpzmI6I69jEnzVGcl6TL5neY327ehpHv7V5b44Z3l+8yxupISGpZqcwInViDxvJzm26HO05p30+GixvuIrYnisC+lfOYIJLuYhFHSenCsTAONBiMPOl43dWbIRkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BAdevaG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QXFsZFlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C8C2BC86;
-	Tue, 10 Mar 2026 11:29:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BAdevaG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2A64C19423;
+	Tue, 10 Mar 2026 11:29:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142155;
-	bh=vFCkomxdJaZSXeq6qagrIaS9wVggtX/V8K/7PT3j1Y4=;
+	s=k20201202; t=1773142156;
+	bh=yprFvWYeTD7Zavgg8BQigbDslxxmKEQXskHVDorM7SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QXFsZFlLg2HqhXYU2gMPaZrUaAIXKjSgXKGUlkj0ZhhgPQWxm3gQhBUhvbB9aSGlf
-	 OzxxZITC8ZpWYVErSyRjzk7glOoPKXAiCnH2mhui5LSU6/odEoNsKJ62rdKXHyS2GE
-	 4x2JF+zFVr424v1gmlkP8tp9/BnpzaIt8gZhdtNyqgwuf3DkdswY6ahkqt8NlZCwsz
-	 OBE+fJW1SoKYOSooh7DE2qwtNOYz5O6l6OhIMrgFXFmBAIREfUQIb4wEcEgB8Q9Otf
-	 Kw3PhWykGSvnYYft5ISrXdyLmhqf1VGYGr3B5GO5lE85uHMhhmg44QXTXCfsCIVvV+
-	 fCCPdo/gmcqng==
+	b=BAdevaG3bMtHxfeKrjWyfz10M4oEJz8ubbzMraM+Li6JICyNv6yGdzL3HLeh7vP8C
+	 4n/FSPB2c+oIYQJlDKxFz3yNwQXKqKb97KXdCWuhd0u49A4IbOuERN+4AK6oM1QgAz
+	 Pb434hdqIK8ob0tlm/BVwtp3CwyI3eEhocDGxS18/GwCQIcrWRMjGLXzslX8y9imbz
+	 DP9sGja7KEYKdX5JYhvmt034S9QR19/QveDzVJUyJ6YNlqr3OgKl1je6SCLv0Apr1m
+	 YlITGInvCays41KUvuA614VmvX1Mi6t4AJwaK1uN9hLphhVM9HVWAYayw1z28e6ANn
+	 A7QNv/mGA6bDw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Matthew Brost <matthew.brost@intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Carlos Santa <carlos.santa@intel.com>,
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>,
+	Nitin Gote <nitin.r.gote@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 243/314] drm/xe: Do not preempt fence signaling CS instructions
-Date: Tue, 10 Mar 2026 07:18:22 -0400
-Message-ID: <d02a803174d3a027f7f82b5d8fbc9304f3b90d7c.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 244/314] drm/xe/configfs: Free ctx_restore_mid_bb in release
+Date: Tue, 10 Mar 2026 07:18:23 -0400
+Message-ID: <190a1b017c9a72dd84784b07e2a7304a33c554d7.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,66 +50,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Brost <matthew.brost@intel.com>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit cdc8a1e11f4d5b480ec750e28010c357185b95a6 ]
+[ Upstream commit e377182f0266f46f02d01838e6bde67b9dac0d66 ]
 
-If a batch buffer is complete, it makes little sense to preempt the
-fence signaling instructions in the ring, as the largest portion of the
-work (the batch buffer) is already done and fence signaling consists of
-only a few instructions. If these instructions are preempted, the GuC
-would need to perform a context switch just to signal the fence, which
-is costly and delays fence signaling. Avoid this scenario by disabling
-preemption immediately after the BB start instruction and re-enabling it
-after executing the fence signaling instructions.
+ctx_restore_mid_bb memory is allocated in wa_bb_store(), but
+xe_config_device_release() only frees ctx_restore_post_bb.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Carlos Santa <carlos.santa@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Link: https://patch.msgid.link/20260115004546.58060-1-matthew.brost@intel.com
-(cherry picked from commit 2bcbf2dcde0c839a73af664a3c77d4e77d58a3eb)
+Free ctx_restore_mid_bb[0].cs as well to avoid leaking the allocation
+when the configfs device is removed.
+
+Fixes: b30d5de3d40c ("drm/xe/configfs: Add mid context restore bb")
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
+Link: https://patch.msgid.link/20260225013448.3547687-2-shuicheng.lin@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit a235e7d0098337c3f2d1e8f3610c719a589e115f)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_ring_ops.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/xe/xe_configfs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
-index d71837773d6c6..e0082b55e2162 100644
---- a/drivers/gpu/drm/xe/xe_ring_ops.c
-+++ b/drivers/gpu/drm/xe/xe_ring_ops.c
-@@ -265,6 +265,9 @@ static void __emit_job_gen12_simple(struct xe_sched_job *job, struct xe_lrc *lrc
+diff --git a/drivers/gpu/drm/xe/xe_configfs.c b/drivers/gpu/drm/xe/xe_configfs.c
+index 6688b2954d20b..08f379cb5321f 100644
+--- a/drivers/gpu/drm/xe/xe_configfs.c
++++ b/drivers/gpu/drm/xe/xe_configfs.c
+@@ -688,6 +688,7 @@ static void xe_config_device_release(struct config_item *item)
  
- 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
+ 	mutex_destroy(&dev->lock);
  
-+	/* Don't preempt fence signaling */
-+	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
-+
- 	if (job->user_fence.used) {
- 		i = emit_flush_dw(dw, i);
- 		i = emit_store_imm_ppgtt_posted(job->user_fence.addr,
-@@ -328,6 +331,9 @@ static void __emit_job_gen12_video(struct xe_sched_job *job, struct xe_lrc *lrc,
- 
- 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
- 
-+	/* Don't preempt fence signaling */
-+	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
-+
- 	if (job->user_fence.used) {
- 		i = emit_flush_dw(dw, i);
- 		i = emit_store_imm_ppgtt_posted(job->user_fence.addr,
-@@ -377,6 +383,9 @@ static void __emit_job_gen12_render_compute(struct xe_sched_job *job,
- 
- 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
- 
-+	/* Don't preempt fence signaling */
-+	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
-+
- 	i = emit_render_cache_flush(job, dw, i);
- 
- 	if (job->user_fence.used)
++	kfree(dev->config.ctx_restore_mid_bb[0].cs);
+ 	kfree(dev->config.ctx_restore_post_bb[0].cs);
+ 	kfree(dev);
+ }
 -- 
 2.51.0
 
