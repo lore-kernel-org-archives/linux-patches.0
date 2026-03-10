@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C9D3803CD;
-	Tue, 10 Mar 2026 11:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC7437B413;
+	Tue, 10 Mar 2026 11:26:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141990; cv=none; b=cClOEz3Kpmy985jbOwEiJ6vXE3fdPK9LmidQAqyZEgTnk7JbRQ7UsFUeokTvi+yhDa1oMT77VbnVvEp28nHHJevPnlfnBMhpZPDB4bF86CHvnl8JIwVj1oh1eFwz5pHBi5sVqzgwkNA3P0pxLS7hQ7SrPzI8C96d0a79MLHoHaA=
+	t=1773141991; cv=none; b=bAy6aHnK6U+vl9UGoiVf4/+YxiZssMtmNvnanY0CIDvv8C4wWOT8MmC0G2X4mek+zxhc77hryHDYPL8p/T+O6oDXZkMt2QeV0/rRrLVGMbbyeZ2dY64i7f1k6arrQOh0n+WxaX5Ga7GnWRR1MaMjRbw6Ald/ZfX/4Nxykps1jWA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141990; c=relaxed/simple;
-	bh=PF/dx7yDKsTJsDSCnKUStTnl2doT3FBZiDyvveJ4sHc=;
+	s=arc-20240116; t=1773141991; c=relaxed/simple;
+	bh=bni+8bzuqB2dYJWNDlZO/tYKJTEjmdsy8mZJ/AxV4tQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ALn2dRp0DYjx+3HPOpkp+AGNfOjZ4yRte4NIMRd1t9rEenbjbJ3ohcONaKEd3kgLdJedpbGMIdadrL01OLztX+2JaKTRNK2a6xzC/kKQL7DW3ovAxZ3dD7K/70eqB70nINJ12QjQe1BSNALJQ9Rol+4Us++2RkdmU+tHlQiRK3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uor+L1L8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmnGjb1BOAdaUbZJYoc2ZH3zx3gAbVyLNZJb5lLoJHXNCgFj2KMhGHq3Bv9bf7s7mOb1/1x0rkVp1fgEWX95Q4qrNGKbF9SxbUANSDX5LLV5tPhnqrnJTZS4Jfx8tQrKLmHtoapfaQmQinqkwl3UEbzXltWXkirnZn7ii1YpogE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MlciGfdO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uor+L1L8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C5D3C2BCB2;
-	Tue, 10 Mar 2026 11:26:29 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MlciGfdO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB3C7C19423;
+	Tue, 10 Mar 2026 11:26:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141990;
-	bh=PF/dx7yDKsTJsDSCnKUStTnl2doT3FBZiDyvveJ4sHc=;
+	s=k20201202; t=1773141991;
+	bh=bni+8bzuqB2dYJWNDlZO/tYKJTEjmdsy8mZJ/AxV4tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uor+L1L8jnBbpicF1h/fhiGg1NmNUefIH+xrx9wi0OPaL39MabO7248H8jcxEyrxy
-	 1DxjQYDBg/Vuu5dYeZStpAmKMmjgmtl4kh5v3STUb1dVc5Nig5/3izCVSGMNg3NgwF
-	 /znzADWCHfHCAVRh2CqPt237Su5FSpDT4jDf+8YlQROCOxakfUia7xjfUOhYeQIzqU
-	 gev9NPAhmmelJ+LipFjQ3QswTGX0mCuUERM7JlPqnlcb98V1HH/Ngk0yeUy62iBh0Y
-	 01d1lJqNJpYtUX/oEEnoeRy/rhcBNv1SOIhZ2+VwnvN9UiFLwIg+/Wmw0XANu4OXBI
-	 yeteZu3Ozo3uA==
+	b=MlciGfdOX3yWatRyokKHSNCf92Bnit9hLouTar9lCmgq11vAhmB7OrPHTcfbi8Fd/
+	 g2buQNHthcrR5V/FNmQ1pqC3g5V83pLOnrPC//cMm2N0HNj8cJQxwq88bDz/YWB7Ww
+	 DrHw16siSolOwDXG7UBizoeIB8AqSv5684DhuEwnB46u5/uZ2COClvTzHYhVeuCKiW
+	 i2A0b5lOogOgt0lsShUedCOHTxRPU1n9OqYSplwfejkxybXTCBC0Y0K3c4Ocr24M4R
+	 NDqHUJXIgC1+eZOZb+7pp1wJgOnv0tGhsHgwuRc/9j4YaSCvxy8hqOtnnH3Rx5s6MR
+	 aelBqWqLgThZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Aksh Garg <a-garg7@ti.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Niklas Cassel <cassel@kernel.org>,
+Cc: Khushit Shah <khushit.shah@nutanix.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 115/314] PCI: dwc: ep: Fix resizable BAR support for multi-PF configurations
-Date: Tue, 10 Mar 2026 07:16:14 -0400
-Message-ID: <0d3912c7aa765d2e55725a31448e88cef683f906.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 116/314] KVM: x86: Add x2APIC "features" to control EOI broadcast suppression
+Date: Tue, 10 Mar 2026 07:16:15 -0400
+Message-ID: <768b97ef18878ebe7bbcaf3aca82912dde1c7962.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,170 +49,358 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Aksh Garg <a-garg7@ti.com>
+From: Khushit Shah <khushit.shah@nutanix.com>
 
-[ Upstream commit 43d67ec26b329f8aea34ba9dff23d69b84a8e564 ]
+[ Upstream commit 6517dfbcc918f970a928d9dc17586904bac06893 ]
 
-The resizable BAR support added by the commit 3a3d4cabe681 ("PCI: dwc: ep:
-Allow EPF drivers to configure the size of Resizable BARs") incorrectly
-configures the resizable BARs only for the first Physical Function (PF0)
-in EP mode.
+Add two flags for KVM_CAP_X2APIC_API to allow userspace to control support
+for Suppress EOI Broadcasts when using a split IRQCHIP (I/O APIC emulated
+by userspace), which KVM completely mishandles. When x2APIC support was
+first added, KVM incorrectly advertised and "enabled" Suppress EOI
+Broadcast, without fully supporting the I/O APIC side of the equation,
+i.e. without adding directed EOI to KVM's in-kernel I/O APIC.
 
-The resizable BAR configuration functions use generic dw_pcie_*_dbi()
-operations instead of physical function specific dw_pcie_ep_*_dbi()
-operations. This causes resizable BAR configuration to always target
-PF0 regardless of the requested function number.
+That flaw was carried over to split IRQCHIP support, i.e. KVM advertised
+support for Suppress EOI Broadcasts irrespective of whether or not the
+userspace I/O APIC implementation supported directed EOIs. Even worse,
+KVM didn't actually suppress EOI broadcasts, i.e. userspace VMMs without
+support for directed EOI came to rely on the "spurious" broadcasts.
 
-Additionally, dw_pcie_ep_init_non_sticky_registers() only initializes
-resizable BAR registers for PF0, leaving other PFs unconfigured during
-the execution of this function.
+KVM "fixed" the in-kernel I/O APIC implementation by completely disabling
+support for Suppress EOI Broadcasts in commit 0bcc3fb95b97 ("KVM: lapic:
+stop advertising DIRECTED_EOI when in-kernel IOAPIC is in use"), but
+didn't do anything to remedy userspace I/O APIC implementations.
 
-Fix this by using physical function specific configuration space access
-operations throughout the resizable BAR code path and initializing
-registers for all the physical functions that support resizable BARs.
+KVM's bogus handling of Suppress EOI Broadcast is problematic when the
+guest relies on interrupts being masked in the I/O APIC until well after
+the initial local APIC EOI. E.g. Windows with Credential Guard enabled
+handles interrupts in the following order:
+  1. Interrupt for L2 arrives.
+  2. L1 APIC EOIs the interrupt.
+  3. L1 resumes L2 and injects the interrupt.
+  4. L2 EOIs after servicing.
+  5. L1 performs the I/O APIC EOI.
 
-Fixes: 3a3d4cabe681 ("PCI: dwc: ep: Allow EPF drivers to configure the size of Resizable BARs")
-Signed-off-by: Aksh Garg <a-garg7@ti.com>
-[mani: added stable tag]
-Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Niklas Cassel <cassel@kernel.org>
+Because KVM EOIs the I/O APIC at step #2, the guest can get an interrupt
+storm, e.g. if the IRQ line is still asserted and userspace reacts to the
+EOI by re-injecting the IRQ, because the guest doesn't de-assert the line
+until step #4, and doesn't expect the interrupt to be re-enabled until
+step #5.
+
+Unfortunately, simply "fixing" the bug isn't an option, as KVM has no way
+of knowing if the userspace I/O APIC supports directed EOIs, i.e.
+suppressing EOI broadcasts would result in interrupts being stuck masked
+in the userspace I/O APIC due to step #5 being ignored by userspace. And
+fully disabling support for Suppress EOI Broadcast is also undesirable, as
+picking up the fix would require a guest reboot, *and* more importantly
+would change the virtual CPU model exposed to the guest without any buy-in
+from userspace.
+
+Add KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST and
+KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST flags to allow userspace to
+explicitly enable or disable support for Suppress EOI Broadcasts. This
+gives userspace control over the virtual CPU model exposed to the guest,
+as KVM should never have enabled support for Suppress EOI Broadcast without
+userspace opt-in. Not setting either flag will result in legacy quirky
+behavior for backward compatibility.
+
+Disallow fully enabling SUPPRESS_EOI_BROADCAST when using an in-kernel
+I/O APIC, as KVM's history/support is just as tragic.  E.g. it's not clear
+that commit c806a6ad35bf ("KVM: x86: call irq notifiers with directed EOI")
+was entirely correct, i.e. it may have simply papered over the lack of
+Directed EOI emulation in the I/O APIC.
+
+Note, Suppress EOI Broadcasts is defined only in Intel's SDM, not in AMD's
+APM. But the bit is writable on some AMD CPUs, e.g. Turin, and KVM's ABI
+is to support Directed EOI (KVM's name) irrespective of guest CPU vendor.
+
+Fixes: 7543a635aa09 ("KVM: x86: Add KVM exit for IOAPIC EOIs")
+Closes: https://lore.kernel.org/kvm/7D497EF1-607D-4D37-98E7-DAF95F099342@nutanix.com
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260130115516.515082-2-a-garg7@ti.com
+Suggested-by: David Woodhouse <dwmw2@infradead.org>
+Signed-off-by: Khushit Shah <khushit.shah@nutanix.com>
+Link: https://patch.msgid.link/20260123125657.3384063-1-khushit.shah@nutanix.com
+[sean: clean up minor formatting goofs and fix a comment typo]
+Co-developed-by: Sean Christopherson <seanjc@google.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pci/controller/dwc/pcie-designware-ep.c   | 48 ++++++++++++-------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ Documentation/virt/kvm/api.rst  | 28 +++++++++++-
+ arch/x86/include/asm/kvm_host.h |  7 +++
+ arch/x86/include/uapi/asm/kvm.h |  6 ++-
+ arch/x86/kvm/ioapic.c           |  2 +-
+ arch/x86/kvm/lapic.c            | 76 +++++++++++++++++++++++++++++----
+ arch/x86/kvm/lapic.h            |  2 +
+ arch/x86/kvm/x86.c              | 21 ++++++++-
+ 7 files changed, 127 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware-ep.c b/drivers/pci/controller/dwc/pcie-designware-ep.c
-index b6cee9eaa1165..e2e18beb2951d 100644
---- a/drivers/pci/controller/dwc/pcie-designware-ep.c
-+++ b/drivers/pci/controller/dwc/pcie-designware-ep.c
-@@ -75,6 +75,13 @@ static u8 dw_pcie_ep_find_capability(struct dw_pcie_ep *ep, u8 func_no, u8 cap)
- 				 cap, NULL, ep, func_no);
+diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
+index 57061fa29e6a0..ae8b02eb776a5 100644
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -7800,8 +7800,10 @@ Will return -EBUSY if a VCPU has already been created.
+ 
+ Valid feature flags in args[0] are::
+ 
+-  #define KVM_X2APIC_API_USE_32BIT_IDS            (1ULL << 0)
+-  #define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK  (1ULL << 1)
++  #define KVM_X2APIC_API_USE_32BIT_IDS                          (1ULL << 0)
++  #define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK                (1ULL << 1)
++  #define KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST              (1ULL << 2)
++  #define KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST             (1ULL << 3)
+ 
+ Enabling KVM_X2APIC_API_USE_32BIT_IDS changes the behavior of
+ KVM_SET_GSI_ROUTING, KVM_SIGNAL_MSI, KVM_SET_LAPIC, and KVM_GET_LAPIC,
+@@ -7814,6 +7816,28 @@ as a broadcast even in x2APIC mode in order to support physical x2APIC
+ without interrupt remapping.  This is undesirable in logical mode,
+ where 0xff represents CPUs 0-7 in cluster 0.
+ 
++Setting KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST instructs KVM to enable
++Suppress EOI Broadcasts.  KVM will advertise support for Suppress EOI
++Broadcast to the guest and suppress LAPIC EOI broadcasts when the guest
++sets the Suppress EOI Broadcast bit in the SPIV register.  This flag is
++supported only when using a split IRQCHIP.
++
++Setting KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST disables support for
++Suppress EOI Broadcasts entirely, i.e. instructs KVM to NOT advertise
++support to the guest.
++
++Modern VMMs should either enable KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST
++or KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST.  If not, legacy quirky
++behavior will be used by KVM: in split IRQCHIP mode, KVM will advertise
++support for Suppress EOI Broadcasts but not actually suppress EOI
++broadcasts; for in-kernel IRQCHIP mode, KVM will not advertise support for
++Suppress EOI Broadcasts.
++
++Setting both KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST and
++KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST will fail with an EINVAL error,
++as will setting KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST without a split
++IRCHIP.
++
+ 7.8 KVM_CAP_S390_USER_INSTR0
+ ----------------------------
+ 
+diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+index b74ae7183f3ae..0f2f9f1552a4f 100644
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -1229,6 +1229,12 @@ enum kvm_irqchip_mode {
+ 	KVM_IRQCHIP_SPLIT,        /* created with KVM_CAP_SPLIT_IRQCHIP */
+ };
+ 
++enum kvm_suppress_eoi_broadcast_mode {
++	KVM_SUPPRESS_EOI_BROADCAST_QUIRKED, /* Legacy behavior */
++	KVM_SUPPRESS_EOI_BROADCAST_ENABLED, /* Enable Suppress EOI broadcast */
++	KVM_SUPPRESS_EOI_BROADCAST_DISABLED /* Disable Suppress EOI broadcast */
++};
++
+ struct kvm_x86_msr_filter {
+ 	u8 count;
+ 	bool default_allow:1;
+@@ -1480,6 +1486,7 @@ struct kvm_arch {
+ 
+ 	bool x2apic_format;
+ 	bool x2apic_broadcast_quirk_disabled;
++	enum kvm_suppress_eoi_broadcast_mode suppress_eoi_broadcast_mode;
+ 
+ 	bool has_mapped_host_mmio;
+ 	bool guest_can_read_msr_platform_info;
+diff --git a/arch/x86/include/uapi/asm/kvm.h b/arch/x86/include/uapi/asm/kvm.h
+index d420c9c066d48..1584926cd1f4f 100644
+--- a/arch/x86/include/uapi/asm/kvm.h
++++ b/arch/x86/include/uapi/asm/kvm.h
+@@ -913,8 +913,10 @@ struct kvm_sev_snp_launch_finish {
+ 	__u64 pad1[4];
+ };
+ 
+-#define KVM_X2APIC_API_USE_32BIT_IDS            (1ULL << 0)
+-#define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK  (1ULL << 1)
++#define KVM_X2APIC_API_USE_32BIT_IDS			_BITULL(0)
++#define KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK		_BITULL(1)
++#define KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST	_BITULL(2)
++#define KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST	_BITULL(3)
+ 
+ struct kvm_hyperv_eventfd {
+ 	__u32 conn_id;
+diff --git a/arch/x86/kvm/ioapic.c b/arch/x86/kvm/ioapic.c
+index 2c2783296aedb..a26fa4222f292 100644
+--- a/arch/x86/kvm/ioapic.c
++++ b/arch/x86/kvm/ioapic.c
+@@ -561,7 +561,7 @@ static void kvm_ioapic_update_eoi_one(struct kvm_vcpu *vcpu,
+ 	spin_lock(&ioapic->lock);
+ 
+ 	if (trigger_mode != IOAPIC_LEVEL_TRIG ||
+-	    kvm_lapic_get_reg(apic, APIC_SPIV) & APIC_SPIV_DIRECTED_EOI)
++	    kvm_lapic_suppress_eoi_broadcast(apic))
+ 		return;
+ 
+ 	ASSERT(ent->fields.trig_mode == IOAPIC_LEVEL_TRIG);
+diff --git a/arch/x86/kvm/lapic.c b/arch/x86/kvm/lapic.c
+index 8b6ec3304100f..a9845a1a9cd5d 100644
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -105,6 +105,63 @@ bool kvm_apic_pending_eoi(struct kvm_vcpu *vcpu, int vector)
+ 		apic_test_vector(vector, apic->regs + APIC_IRR);
  }
  
-+static u16 dw_pcie_ep_find_ext_capability(struct dw_pcie_ep *ep,
-+					  u8 func_no, u8 cap)
++static bool kvm_lapic_advertise_suppress_eoi_broadcast(struct kvm *kvm)
 +{
-+	return PCI_FIND_NEXT_EXT_CAP(dw_pcie_ep_read_cfg, 0,
-+				     cap, NULL, ep, func_no);
++	switch (kvm->arch.suppress_eoi_broadcast_mode) {
++	case KVM_SUPPRESS_EOI_BROADCAST_ENABLED:
++		return true;
++	case KVM_SUPPRESS_EOI_BROADCAST_DISABLED:
++		return false;
++	case KVM_SUPPRESS_EOI_BROADCAST_QUIRKED:
++		/*
++		 * The default in-kernel I/O APIC emulates the 82093AA and does not
++		 * implement an EOI register. Some guests (e.g. Windows with the
++		 * Hyper-V role enabled) disable LAPIC EOI broadcast without
++		 * checking the I/O APIC version, which can cause level-triggered
++		 * interrupts to never be EOI'd.
++		 *
++		 * To avoid this, KVM doesn't advertise Suppress EOI Broadcast
++		 * support when using the default in-kernel I/O APIC.
++		 *
++		 * Historically, in split IRQCHIP mode, KVM always advertised
++		 * Suppress EOI Broadcast support but did not actually suppress
++		 * EOIs, resulting in quirky behavior.
++		 */
++		return !ioapic_in_kernel(kvm);
++	default:
++		WARN_ON_ONCE(1);
++		return false;
++	}
 +}
 +
- static int dw_pcie_ep_write_header(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 				   struct pci_epf_header *hdr)
- {
-@@ -178,22 +185,22 @@ static void dw_pcie_ep_clear_bar(struct pci_epc *epc, u8 func_no, u8 vfunc_no,
- 	ep->bar_to_atu[bar] = 0;
- }
- 
--static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie *pci,
-+static unsigned int dw_pcie_ep_get_rebar_offset(struct dw_pcie_ep *ep, u8 func_no,
- 						enum pci_barno bar)
- {
- 	u32 reg, bar_index;
- 	unsigned int offset, nbars;
- 	int i;
- 
--	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
-+	offset = dw_pcie_ep_find_ext_capability(ep, func_no, PCI_EXT_CAP_ID_REBAR);
- 	if (!offset)
- 		return offset;
- 
--	reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-+	reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
- 	nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, reg);
- 
- 	for (i = 0; i < nbars; i++, offset += PCI_REBAR_CTRL) {
--		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-+		reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
- 		bar_index = FIELD_GET(PCI_REBAR_CTRL_BAR_IDX, reg);
- 		if (bar_index == bar)
- 			return offset;
-@@ -214,7 +221,7 @@ static int dw_pcie_ep_set_bar_resizable(struct dw_pcie_ep *ep, u8 func_no,
- 	u32 rebar_cap, rebar_ctrl;
- 	int ret;
- 
--	rebar_offset = dw_pcie_ep_get_rebar_offset(pci, bar);
-+	rebar_offset = dw_pcie_ep_get_rebar_offset(ep, func_no, bar);
- 	if (!rebar_offset)
- 		return -EINVAL;
- 
-@@ -244,16 +251,16 @@ static int dw_pcie_ep_set_bar_resizable(struct dw_pcie_ep *ep, u8 func_no,
- 	 * 1 MB to 128 TB. Bits 31:16 in PCI_REBAR_CTRL define "supported sizes"
- 	 * bits for sizes 256 TB to 8 EB. Disallow sizes 256 TB to 8 EB.
- 	 */
--	rebar_ctrl = dw_pcie_readl_dbi(pci, rebar_offset + PCI_REBAR_CTRL);
-+	rebar_ctrl = dw_pcie_ep_readl_dbi(ep, func_no, rebar_offset + PCI_REBAR_CTRL);
- 	rebar_ctrl &= ~GENMASK(31, 16);
--	dw_pcie_writel_dbi(pci, rebar_offset + PCI_REBAR_CTRL, rebar_ctrl);
-+	dw_pcie_ep_writel_dbi(ep, func_no, rebar_offset + PCI_REBAR_CTRL, rebar_ctrl);
- 
- 	/*
- 	 * The "selected size" (bits 13:8) in PCI_REBAR_CTRL are automatically
- 	 * updated when writing PCI_REBAR_CAP, see "Figure 3-26 Resizable BAR
- 	 * Example for 32-bit Memory BAR0" in DWC EP databook 5.96a.
- 	 */
--	dw_pcie_writel_dbi(pci, rebar_offset + PCI_REBAR_CAP, rebar_cap);
-+	dw_pcie_ep_writel_dbi(ep, func_no, rebar_offset + PCI_REBAR_CAP, rebar_cap);
- 
- 	dw_pcie_dbi_ro_wr_dis(pci);
- 
-@@ -799,20 +806,17 @@ void dw_pcie_ep_deinit(struct dw_pcie_ep *ep)
- }
- EXPORT_SYMBOL_GPL(dw_pcie_ep_deinit);
- 
--static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
-+static void dw_pcie_ep_init_rebar_registers(struct dw_pcie_ep *ep, u8 func_no)
- {
--	struct dw_pcie_ep *ep = &pci->ep;
- 	unsigned int offset;
- 	unsigned int nbars;
- 	enum pci_barno bar;
- 	u32 reg, i, val;
- 
--	offset = dw_pcie_find_ext_capability(pci, PCI_EXT_CAP_ID_REBAR);
--
--	dw_pcie_dbi_ro_wr_en(pci);
-+	offset = dw_pcie_ep_find_ext_capability(ep, func_no, PCI_EXT_CAP_ID_REBAR);
- 
- 	if (offset) {
--		reg = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-+		reg = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
- 		nbars = FIELD_GET(PCI_REBAR_CTRL_NBAR_MASK, reg);
- 
- 		/*
-@@ -833,16 +837,28 @@ static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
- 			 * the controller when RESBAR_CAP_REG is written, which
- 			 * is why RESBAR_CAP_REG is written here.
- 			 */
--			val = dw_pcie_readl_dbi(pci, offset + PCI_REBAR_CTRL);
-+			val = dw_pcie_ep_readl_dbi(ep, func_no, offset + PCI_REBAR_CTRL);
- 			bar = FIELD_GET(PCI_REBAR_CTRL_BAR_IDX, val);
- 			if (ep->epf_bar[bar])
- 				pci_epc_bar_size_to_rebar_cap(ep->epf_bar[bar]->size, &val);
- 			else
- 				val = BIT(4);
- 
--			dw_pcie_writel_dbi(pci, offset + PCI_REBAR_CAP, val);
-+			dw_pcie_ep_writel_dbi(ep, func_no, offset + PCI_REBAR_CAP, val);
- 		}
- 	}
++bool kvm_lapic_suppress_eoi_broadcast(struct kvm_lapic *apic)
++{
++	struct kvm *kvm = apic->vcpu->kvm;
++
++	if (!(kvm_lapic_get_reg(apic, APIC_SPIV) & APIC_SPIV_DIRECTED_EOI))
++		return false;
++
++	switch (kvm->arch.suppress_eoi_broadcast_mode) {
++	case KVM_SUPPRESS_EOI_BROADCAST_ENABLED:
++		return true;
++	case KVM_SUPPRESS_EOI_BROADCAST_DISABLED:
++		return false;
++	case KVM_SUPPRESS_EOI_BROADCAST_QUIRKED:
++		/*
++		 * Historically, in split IRQCHIP mode, KVM ignored the suppress
++		 * EOI broadcast bit set by the guest and broadcasts EOIs to the
++		 * userspace I/O APIC. For In-kernel I/O APIC, the support itself
++		 * is not advertised, can only be enabled via KVM_SET_APIC_STATE,
++		 * and KVM's I/O APIC doesn't emulate Directed EOIs; but if the
++		 * feature is enabled, it is respected (with odd behavior).
++		 */
++		return ioapic_in_kernel(kvm);
++	default:
++		WARN_ON_ONCE(1);
++		return false;
++	}
 +}
 +
-+static void dw_pcie_ep_init_non_sticky_registers(struct dw_pcie *pci)
-+{
-+	struct dw_pcie_ep *ep = &pci->ep;
-+	u8 funcs = ep->epc->max_functions;
-+	u8 func_no;
-+
-+	dw_pcie_dbi_ro_wr_en(pci);
-+
-+	for (func_no = 0; func_no < funcs; func_no++)
-+		dw_pcie_ep_init_rebar_registers(ep, func_no);
+ __read_mostly DEFINE_STATIC_KEY_FALSE(kvm_has_noapic_vcpu);
+ EXPORT_SYMBOL_FOR_KVM_INTERNAL(kvm_has_noapic_vcpu);
  
- 	dw_pcie_setup(pci);
- 	dw_pcie_dbi_ro_wr_dis(pci);
+@@ -554,15 +611,9 @@ void kvm_apic_set_version(struct kvm_vcpu *vcpu)
+ 
+ 	v = APIC_VERSION | ((apic->nr_lvt_entries - 1) << 16);
+ 
+-	/*
+-	 * KVM emulates 82093AA datasheet (with in-kernel IOAPIC implementation)
+-	 * which doesn't have EOI register; Some buggy OSes (e.g. Windows with
+-	 * Hyper-V role) disable EOI broadcast in lapic not checking for IOAPIC
+-	 * version first and level-triggered interrupts never get EOIed in
+-	 * IOAPIC.
+-	 */
++
+ 	if (guest_cpu_cap_has(vcpu, X86_FEATURE_X2APIC) &&
+-	    !ioapic_in_kernel(vcpu->kvm))
++	    kvm_lapic_advertise_suppress_eoi_broadcast(vcpu->kvm))
+ 		v |= APIC_LVR_DIRECTED_EOI;
+ 	kvm_lapic_set_reg(apic, APIC_LVR, v);
+ }
+@@ -1517,6 +1568,15 @@ static void kvm_ioapic_send_eoi(struct kvm_lapic *apic, int vector)
+ 
+ 	/* Request a KVM exit to inform the userspace IOAPIC. */
+ 	if (irqchip_split(apic->vcpu->kvm)) {
++		/*
++		 * Don't exit to userspace if the guest has enabled Directed
++		 * EOI, a.k.a. Suppress EOI Broadcasts, in which case the local
++		 * APIC doesn't broadcast EOIs (the guest must EOI the target
++		 * I/O APIC(s) directly).
++		 */
++		if (kvm_lapic_suppress_eoi_broadcast(apic))
++			return;
++
+ 		apic->vcpu->arch.pending_ioapic_eoi = vector;
+ 		kvm_make_request(KVM_REQ_IOAPIC_EOI_EXIT, apic->vcpu);
+ 		return;
+diff --git a/arch/x86/kvm/lapic.h b/arch/x86/kvm/lapic.h
+index 282b9b7da98cd..e5f5a222eced0 100644
+--- a/arch/x86/kvm/lapic.h
++++ b/arch/x86/kvm/lapic.h
+@@ -231,6 +231,8 @@ static inline int kvm_lapic_latched_init(struct kvm_vcpu *vcpu)
+ 
+ bool kvm_apic_pending_eoi(struct kvm_vcpu *vcpu, int vector);
+ 
++bool kvm_lapic_suppress_eoi_broadcast(struct kvm_lapic *apic);
++
+ void kvm_wait_lapic_expire(struct kvm_vcpu *vcpu);
+ 
+ void kvm_bitmap_or_dest_vcpus(struct kvm *kvm, struct kvm_lapic_irq *irq,
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 2ab445c0126b3..d15bd078a2d98 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -121,8 +121,10 @@ static u64 __read_mostly efer_reserved_bits = ~((u64)EFER_SCE);
+ 
+ #define KVM_CAP_PMU_VALID_MASK KVM_PMU_CAP_DISABLE
+ 
+-#define KVM_X2APIC_API_VALID_FLAGS (KVM_X2APIC_API_USE_32BIT_IDS | \
+-                                    KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK)
++#define KVM_X2APIC_API_VALID_FLAGS (KVM_X2APIC_API_USE_32BIT_IDS		| \
++				    KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK	| \
++				    KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST	| \
++				    KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST)
+ 
+ static void update_cr8_intercept(struct kvm_vcpu *vcpu);
+ static void process_nmi(struct kvm_vcpu *vcpu);
+@@ -4966,6 +4968,8 @@ int kvm_vm_ioctl_check_extension(struct kvm *kvm, long ext)
+ 		break;
+ 	case KVM_CAP_X2APIC_API:
+ 		r = KVM_X2APIC_API_VALID_FLAGS;
++		if (kvm && !irqchip_split(kvm))
++			r &= ~KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST;
+ 		break;
+ 	case KVM_CAP_NESTED_STATE:
+ 		r = kvm_x86_ops.nested_ops->get_state ?
+@@ -6783,11 +6787,24 @@ int kvm_vm_ioctl_enable_cap(struct kvm *kvm,
+ 		if (cap->args[0] & ~KVM_X2APIC_API_VALID_FLAGS)
+ 			break;
+ 
++		if ((cap->args[0] & KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST) &&
++		    (cap->args[0] & KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST))
++			break;
++
++		if ((cap->args[0] & KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST) &&
++		    !irqchip_split(kvm))
++			break;
++
+ 		if (cap->args[0] & KVM_X2APIC_API_USE_32BIT_IDS)
+ 			kvm->arch.x2apic_format = true;
+ 		if (cap->args[0] & KVM_X2APIC_API_DISABLE_BROADCAST_QUIRK)
+ 			kvm->arch.x2apic_broadcast_quirk_disabled = true;
+ 
++		if (cap->args[0] & KVM_X2APIC_ENABLE_SUPPRESS_EOI_BROADCAST)
++			kvm->arch.suppress_eoi_broadcast_mode = KVM_SUPPRESS_EOI_BROADCAST_ENABLED;
++		if (cap->args[0] & KVM_X2APIC_DISABLE_SUPPRESS_EOI_BROADCAST)
++			kvm->arch.suppress_eoi_broadcast_mode = KVM_SUPPRESS_EOI_BROADCAST_DISABLED;
++
+ 		r = 0;
+ 		break;
+ 	case KVM_CAP_X86_DISABLE_EXITS:
 -- 
 2.51.0
 
