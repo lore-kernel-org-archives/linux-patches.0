@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867CF3876CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F9038A288;
 	Tue, 10 Mar 2026 11:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141240; cv=none; b=eNMCT+czdDm0Es9S3Kr6F9MUaOHFsuTx0dqbTZHTnYq5GO/rkzMR5msL4h43CMN2clJCVIF1qspWvKZigAFP5d0cPNw4lv7v1nJwKssdv7zrWG1VNoXYAVUPdmSnWBVNDyHxALLtVQsnxN58mlEyHhsCp3S+w0U3vcrGKxxeQEI=
+	t=1773141241; cv=none; b=tlQF9LhvOiE2zIePBQuAFiUTxyLyP+sXBb+BJy3Ks4wx2cVy3x1Qz/ExA5D+TKUF206DgwzSoX7XwbsHRjUebBv9V+gUmjdWvfC73rGLiNnvkgHHFk9X0RdiDBt/OMLe/sBRiUssLL3+SUTYyiVKwR704VeWxI92uGc2/GpY9/A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141240; c=relaxed/simple;
-	bh=NTP097G4gOropTkbcSR7bAOtWhSH/7uKWpZQLQPr9f4=;
+	s=arc-20240116; t=1773141241; c=relaxed/simple;
+	bh=yl/mS+Btm4T+WdHZ6NNbrrjQq0DxR4Dy9L67pfdeTs4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h0bCAaSxX/MIu36CSeG/wFKhwCDr+TnzUHyzIhtvzI6HWs0cTTrdtb9FiUVRt+oxAEoVXlH1lRShKduhNZeqHfKqxC09mOVP+2IvoKSAOIwlLFINjbiJhECJavJ/OpToiTNf3z/H60kY5FGBrAcLM5kf3qYR2AbahO2AF3UgG4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=D+sPP43A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+6mSKPH3ii2+Y1hHzwSwVYCC8R83eoSjhh5sz5pH0iNQUtZOO/NuFbR7e5LX/hoIDwI3dWBkBecgMthmDQZc4m3zpVD7S2IZNCx5MdvOdZnbt2HnSPpUUm0o5eGxqchLeFXmHRG9FT+fvPG4KQJH78kAvQnsBizEPHVucoGjbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RbiWo0O9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="D+sPP43A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50F0BC2BC9E;
-	Tue, 10 Mar 2026 11:13:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RbiWo0O9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE20C2BCB0;
+	Tue, 10 Mar 2026 11:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141239;
-	bh=NTP097G4gOropTkbcSR7bAOtWhSH/7uKWpZQLQPr9f4=;
+	s=k20201202; t=1773141240;
+	bh=yl/mS+Btm4T+WdHZ6NNbrrjQq0DxR4Dy9L67pfdeTs4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+sPP43A4fhq9IlHRPJQwsUcypvwqUtHIshpsvZ0KDqhStAMxxS4bvyWFZOE3GpaV
-	 v+qsDSz02mLr/3+7Bao9OckI75nDIhV67dc23EnR8pxZmlOpaeuVSrZC/1VzM1jdYU
-	 rjIBW6zjlrKzuyjfe/lb1BdaRUD1F1cu+qwvsVOO0K9tVqkL41wXzf2RqtU3I0+Gfm
-	 ewOzH/E6YtFG2tHUkIzEEDIZoqN0hHQUbRiV05a9eK0I/mVqxQyWkPky5VJfnjX4/E
-	 zZYeFGXhlGST6jQAgJdiQZQhVWOm4q548Jxok1Hag0Dtt4t+2tqnVHjt8LXUhrnQ8j
-	 7xjBN5rTR07Qw==
+	b=RbiWo0O93nblbC61XDSM5YfoaBczz5zgfnNn/7+7N98hjLyIkNFTsCr6KnQzOv26M
+	 CmZK90pbVJn2hHLW5k1IokuAKyOmXgqnvBeqpfHA+hN2LVCGzwFxROzQK07DoTQ/Fj
+	 tZxcB2etyTiUUf8gG6XwaNUwWd3z0XuQTmWDWza+1nN0Lyz/GntKUyz8kyw7JpLPxW
+	 fv8eIDtSHewYFMcbYb/yiW6AtqMwro8zAIOOO+5//7yCapCmX5qN2i5aPiYKXAx4DM
+	 p3kGJj5OxjaDy8njG+O2lHqwGgw8MfkM6u4CmHwBcgV2Ow9Ukr3OKouf60nAlVyI6Q
+	 BTDibCXoHF83Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lorenzo Bianconi <lorenzo@kernel.org>,
-	Johannes Berg <johannes.berg@intel.com>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 242/311] wifi: mt76: Fix possible oob access in mt76_connac2_mac_write_txwi_80211()
-Date: Tue, 10 Mar 2026 07:04:49 -0400
-Message-ID: <c74cc8fd3689ce119d1d2292b43bfefc7b2992f8.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 243/311] indirect_call_wrapper: do not reevaluate function pointer
+Date: Tue, 10 Mar 2026 07:04:50 -0400
+Message-ID: <824bc58ff8c10c6c184c3f34a2c7b3d7c0e58904.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,37 +49,137 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 4e10a730d1b511ff49723371ed6d694dd1b2c785 ]
+[ Upstream commit 710f5c76580306cdb9ec51fac8fcf6a8faff7821 ]
 
-Check frame length before accessing the mgmt fields in
-mt76_connac2_mac_write_txwi_80211 in order to avoid a possible oob
-access.
+We have an increasing number of READ_ONCE(xxx->function)
+combined with INDIRECT_CALL_[1234]() helpers.
 
-Fixes: 577dbc6c656d ("mt76: mt7915: enable offloading of sequence number assignment")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260226-mt76-addba-req-oob-access-v1-3-b0f6d1ad4850@kernel.org
-[fix check to also cover mgmt->u.action.u.addba_req.capab,
-correct Fixes tag]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Unfortunately this forces INDIRECT_CALL_[1234]() to read
+xxx->function many times, which is not what we wanted.
+
+Fix these macros so that xxx->function value is not reloaded.
+
+$ scripts/bloat-o-meter -t vmlinux.0 vmlinux
+add/remove: 0/0 grow/shrink: 1/65 up/down: 122/-1084 (-962)
+Function                                     old     new   delta
+ip_push_pending_frames                        59     181    +122
+ip6_finish_output                            687     681      -6
+__udp_enqueue_schedule_skb                  1078    1072      -6
+ioam6_output                                2319    2312      -7
+xfrm4_rcv_encap_finish2                       64      56      -8
+xfrm4_output                                 297     289      -8
+vrf_ip_local_out                             278     270      -8
+vrf_ip6_local_out                            278     270      -8
+seg6_input_finish                             64      56      -8
+rpl_output                                   700     692      -8
+ipmr_forward_finish                          124     116      -8
+ip_forward_finish                            143     135      -8
+ip6mr_forward2_finish                        100      92      -8
+ip6_forward_finish                            73      65      -8
+input_action_end_bpf                        1091    1083      -8
+dst_input                                     52      44      -8
+__xfrm6_output                               801     793      -8
+__xfrm4_output                                83      75      -8
+bpf_input                                    500     491      -9
+__tcp_check_space                            530     521      -9
+input_action_end_dt6                         291     280     -11
+vti6_tnl_xmit                               1634    1622     -12
+bpf_xmit                                    1203    1191     -12
+rpl_input                                    497     483     -14
+rawv6_send_hdrinc                           1355    1341     -14
+ndisc_send_skb                              1030    1016     -14
+ipv6_srh_rcv                                1377    1363     -14
+ip_send_unicast_reply                       1253    1239     -14
+ip_rcv_finish                                226     212     -14
+ip6_rcv_finish                               300     286     -14
+input_action_end_x_core                      205     191     -14
+input_action_end_x                           355     341     -14
+input_action_end_t                           205     191     -14
+input_action_end_dx6_finish                  127     113     -14
+input_action_end_dx4_finish                  373     359     -14
+input_action_end_dt4                         426     412     -14
+input_action_end_core                        186     172     -14
+input_action_end_b6_encap                    292     278     -14
+input_action_end_b6                          198     184     -14
+igmp6_send                                  1332    1318     -14
+ip_sublist_rcv                               864     848     -16
+ip6_sublist_rcv                             1091    1075     -16
+ipv6_rpl_srh_rcv                            1937    1920     -17
+xfrm_policy_queue_process                   1246    1228     -18
+seg6_output_core                             903     885     -18
+mld_sendpack                                 856     836     -20
+NF_HOOK                                      756     736     -20
+vti_tunnel_xmit                             1447    1426     -21
+input_action_end_dx6                         664     642     -22
+input_action_end                            1502    1480     -22
+sock_sendmsg_nosec                           134     111     -23
+ip6mr_forward2                               388     364     -24
+sock_recvmsg_nosec                           134     109     -25
+seg6_input_core                              836     810     -26
+ip_send_skb                                  172     146     -26
+ip_local_out                                 140     114     -26
+ip6_local_out                                140     114     -26
+__sock_sendmsg                               162     136     -26
+__ip_queue_xmit                             1196    1170     -26
+__ip_finish_output                           405     379     -26
+ipmr_queue_fwd_xmit                          373     346     -27
+sock_recvmsg                                 173     145     -28
+ip6_xmit                                    1635    1607     -28
+xfrm_output_resume                          1418    1389     -29
+ip_build_and_send_pkt                        625     591     -34
+dst_output                                   504     432     -72
+Total: Before=25217686, After=25216724, chg -0.00%
+
+Fixes: 283c16a2dfd3 ("indirect call wrappers: helpers to speed-up indirect calls of builtin")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260227172603.1700433-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/indirect_call_wrapper.h | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-index 3304b5971be09..b41ca1410da92 100644
---- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mac.c
-@@ -413,6 +413,7 @@ mt76_connac2_mac_write_txwi_80211(struct mt76_dev *dev, __le32 *txwi,
- 	u32 val;
+diff --git a/include/linux/indirect_call_wrapper.h b/include/linux/indirect_call_wrapper.h
+index 35227d47cfc98..dc272b514a01b 100644
+--- a/include/linux/indirect_call_wrapper.h
++++ b/include/linux/indirect_call_wrapper.h
+@@ -16,22 +16,26 @@
+  */
+ #define INDIRECT_CALL_1(f, f1, ...)					\
+ 	({								\
+-		likely(f == f1) ? f1(__VA_ARGS__) : f(__VA_ARGS__);	\
++		typeof(f) __f1 = (f);					\
++		likely(__f1 == f1) ? f1(__VA_ARGS__) : __f1(__VA_ARGS__);	\
+ 	})
+ #define INDIRECT_CALL_2(f, f2, f1, ...)					\
+ 	({								\
+-		likely(f == f2) ? f2(__VA_ARGS__) :			\
+-				  INDIRECT_CALL_1(f, f1, __VA_ARGS__);	\
++		typeof(f) __f2 = (f);					\
++		likely(__f2 == f2) ? f2(__VA_ARGS__) :			\
++				  INDIRECT_CALL_1(__f2, f1, __VA_ARGS__);	\
+ 	})
+ #define INDIRECT_CALL_3(f, f3, f2, f1, ...)					\
+ 	({									\
+-		likely(f == f3) ? f3(__VA_ARGS__) :				\
+-				  INDIRECT_CALL_2(f, f2, f1, __VA_ARGS__);	\
++		typeof(f) __f3 = (f);						\
++		likely(__f3 == f3) ? f3(__VA_ARGS__) :				\
++				  INDIRECT_CALL_2(__f3, f2, f1, __VA_ARGS__);	\
+ 	})
+ #define INDIRECT_CALL_4(f, f4, f3, f2, f1, ...)					\
+ 	({									\
+-		likely(f == f4) ? f4(__VA_ARGS__) :				\
+-				  INDIRECT_CALL_3(f, f3, f2, f1, __VA_ARGS__);	\
++		typeof(f) __f4 = (f);						\
++		likely(__f4 == f4) ? f4(__VA_ARGS__) :				\
++				  INDIRECT_CALL_3(__f4, f3, f2, f1, __VA_ARGS__);	\
+ 	})
  
- 	if (ieee80211_is_action(fc) &&
-+	    skb->len >= IEEE80211_MIN_ACTION_SIZE + 1 + 1 + 2 &&
- 	    mgmt->u.action.category == WLAN_CATEGORY_BACK &&
- 	    mgmt->u.action.u.addba_req.action_code == WLAN_ACTION_ADDBA_REQ) {
- 		u16 capab = le16_to_cpu(mgmt->u.action.u.addba_req.capab);
+ #define INDIRECT_CALLABLE_DECLARE(f)	f
 -- 
 2.51.0
 
