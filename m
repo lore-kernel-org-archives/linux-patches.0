@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EBF3EFD36;
-	Tue, 10 Mar 2026 11:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597B43803CD;
+	Tue, 10 Mar 2026 11:29:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142194; cv=none; b=aKMnZVEFIcI/kXYGKOYy4TYx84yl8Z6/bqRqwPfV4ywhxSXGuQ4Yj0g1O+17ZdiWhw98FvCt6TEKrC2PN7x5NYjBjfAcjjM7iKcMo04Jv7k2onLGwT1U2t2vAEME9+RWF/kLs9i0Tq7d5vItugKfB0DYRT9zUoUmlhIY7OyzvuE=
+	t=1773142195; cv=none; b=eamu3HYY9wnrXczhUm9Qp7bnZlm7k/ogHGgxH8ao4JD++QzsOsWp3AncWjfwDdjuX9b6u/jNnkaAGHXOXIzmYD4JqIN3Zu0gAxofrGhoRsgjjmNzDTuMylEehbIrRrgS9tFDpHv5cXkoRC6Qs2s+/Q98sYt9TJnUyieHWwRwieE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142194; c=relaxed/simple;
-	bh=K7GvCREAcw9Q/DJXPKrxnddq3lTC2FqKlKZB66fI5NA=;
+	s=arc-20240116; t=1773142195; c=relaxed/simple;
+	bh=pScjQtZGnL4N4URp9eQ6R1L1dFyMN50g0++HvtUueQY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ENj8ICeU/M4z1Ygmg66REqBoAKhhd82OEjMY9WSnl3K2jblrZEdNeMsGCZrf1QfbFXkLUn3Qarugvl7A9bmCn76r+J5OpYG182W1/KXW0TV3KAGtBglWHLPYpRJwlEjCFlsKF1/3H76/lALNe1+0UWKWcqZV5om5e3Tzaj/Hc8w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XJgubWtj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gKm1wG9N0OF/J1PW2tTVGtjyOXtqu2x+6ubcWKNMs7BDlfddkGEhCE9CZrY8/FFoZNetDim7TRZej6dpxxQWZh510G7Aro0UiO5TygBeaisKZYuZAPbDI0fqxJ++Z86pXC3zNYjg63gD5FB5yqUDgqlQraviviGl0pnL4jmMTYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BVFK27dY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XJgubWtj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4FEC19423;
-	Tue, 10 Mar 2026 11:29:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BVFK27dY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99A92C2BC86;
+	Tue, 10 Mar 2026 11:29:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142194;
-	bh=K7GvCREAcw9Q/DJXPKrxnddq3lTC2FqKlKZB66fI5NA=;
+	s=k20201202; t=1773142195;
+	bh=pScjQtZGnL4N4URp9eQ6R1L1dFyMN50g0++HvtUueQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XJgubWtjvPI4LkTZNLqID3VsKee9OrMijxr2gjLFRQ21TiiSkCmb0axsnp0YjDH+Y
-	 IsZtvBQK1e5IseNt97jWZpUH0FfwtMUQ4lMeg8bhgGqs+mMi8h8mlyCvR0f336WYWN
-	 A2mvzu45Lm68yvMa4T+QjPAOaG/nLjB+0hB1ptP71573EUxopuGK1+N+Q2koes5xml
-	 TG7SRp2aca92nIyewE1GBYUMPbMDsAcP92N8ZnCKF96m279RYgr5oJt7wjch1Kcy0q
-	 dQIJm/CIpKBHxqjgywtHq8LcN5rKf71pUhYeeZ+UKydC5R6pNE+f3m7onjXXfSLY4u
-	 13HaMDHedPKWA==
+	b=BVFK27dY6qeknQmKgjjKTiiu9ByyXIKEq5fUOX1ceANAnrb/ySjoZ1fxZsTO2BmBu
+	 HvmzYeOAk8TmjPtnmb57Dn3wD/HgVrv5peQUGttKeD40n1oUuNG07c7vp7MHmvc0SD
+	 8aK7rLkcP3JKn0p7A/82uXrFfhRR2u4wWH8c1ilZvCbONYTicdFSnbBV8rMTA6S12A
+	 9EzrXdta0tCplCKv/yxQ1FdcTRz9DFCAI0Vojcx2JAJwayuwQGPuzQb7+u9uOnn3ef
+	 2DUGKfbFIYM3b6AWIhnFPNau31cEgfh96WMAAnmqbqdo2SG7E52+7rWyJVgK044n6K
+	 BHc09c3BXgqqQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bobby Eshleman <bobbyeshleman@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Jakub Kicinski <kuba@kernel.org>,
+	Joe Damato <joe@dama.to>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 283/314] net: devmem: use READ_ONCE/WRITE_ONCE on binding->dev
-Date: Tue, 10 Mar 2026 07:19:02 -0400
-Message-ID: <80f49bf45de15791a2407d3594304ff07e100ba7.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 284/314] nfc: nci: free skb on nci_transceive early error paths
+Date: Tue, 10 Mar 2026 07:19:03 -0400
+Message-ID: <c37b1a42324bab3432783d60551453c25556673e.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,73 +48,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bobby Eshleman <bobbyeshleman@meta.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 40bf00ec2ee271df5ba67593991760adf8b5d0ed ]
+[ Upstream commit 7bd4b0c4779f978a6528c9b7937d2ca18e936e2c ]
 
-binding->dev is protected on the write-side in
-mp_dmabuf_devmem_uninstall() against concurrent writes, but due to the
-concurrent bare reads in net_devmem_get_binding() and
-validate_xmit_unreadable_skb() it should be wrapped in a
-READ_ONCE/WRITE_ONCE pair to make sure no compiler optimizations play
-with the underlying register in unforeseen ways.
+nci_transceive() takes ownership of the skb passed by the caller,
+but the -EPROTO, -EINVAL, and -EBUSY error paths return without
+freeing it.
 
-Doesn't present a critical bug because the known compiler optimizations
-don't result in bad behavior. There is no tearing on u64, and load
-omissions/invented loads would only break if additional binding->dev
-references were inlined together (they aren't right now).
+Due to issues clearing NCI_DATA_EXCHANGE fixed by subsequent changes
+the nci/nci_dev selftest hits the error path occasionally in NIPA,
+and kmemleak detects leaks:
 
-This just more strictly follows the linux memory model (i.e.,
-"Lock-Protected Writes With Lockless Reads" in
-tools/memory-model/Documentation/access-marking.txt).
+unreferenced object 0xff11000015ce6a40 (size 640):
+  comm "nci_dev", pid 3954, jiffies 4295441246
+  hex dump (first 32 bytes):
+    6b 6b 6b 6b 00 a4 00 0c 02 e1 03 6b 6b 6b 6b 6b  kkkk.......kkkkk
+    6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+  backtrace (crc 7c40cc2a):
+    kmem_cache_alloc_node_noprof+0x492/0x630
+    __alloc_skb+0x11e/0x5f0
+    alloc_skb_with_frags+0xc6/0x8f0
+    sock_alloc_send_pskb+0x326/0x3f0
+    nfc_alloc_send_skb+0x94/0x1d0
+    rawsock_sendmsg+0x162/0x4c0
+    do_syscall_64+0x117/0xfc0
 
-Fixes: bd61848900bf ("net: devmem: Implement TX path")
-Signed-off-by: Bobby Eshleman <bobbyeshleman@meta.com>
-Link: https://patch.msgid.link/20260302-devmem-membar-fix-v2-1-5b33c9cbc28b@meta.com
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260303162346.2071888-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/dev.c    | 2 +-
- net/core/devmem.c | 6 ++++--
- 2 files changed, 5 insertions(+), 3 deletions(-)
+ net/nfc/nci/core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index 9b57a5b63919c..f937b8ba08222 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -3975,7 +3975,7 @@ static struct sk_buff *validate_xmit_unreadable_skb(struct sk_buff *skb,
- 	if (shinfo->nr_frags > 0) {
- 		niov = netmem_to_net_iov(skb_frag_netmem(&shinfo->frags[0]));
- 		if (net_is_devmem_iov(niov) &&
--		    net_devmem_iov_binding(niov)->dev != dev)
-+		    READ_ONCE(net_devmem_iov_binding(niov)->dev) != dev)
- 			goto out_free;
+diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
+index 46681bdaeabff..f6dc0a94b8d54 100644
+--- a/net/nfc/nci/core.c
++++ b/net/nfc/nci/core.c
+@@ -1035,18 +1035,23 @@ static int nci_transceive(struct nfc_dev *nfc_dev, struct nfc_target *target,
+ 	struct nci_conn_info *conn_info;
+ 
+ 	conn_info = ndev->rf_conn_info;
+-	if (!conn_info)
++	if (!conn_info) {
++		kfree_skb(skb);
+ 		return -EPROTO;
++	}
+ 
+ 	pr_debug("target_idx %d, len %d\n", target->idx, skb->len);
+ 
+ 	if (!ndev->target_active_prot) {
+ 		pr_err("unable to exchange data, no active target\n");
++		kfree_skb(skb);
+ 		return -EINVAL;
  	}
  
-diff --git a/net/core/devmem.c b/net/core/devmem.c
-index 1d04754bc756d..448f6582ac1ae 100644
---- a/net/core/devmem.c
-+++ b/net/core/devmem.c
-@@ -387,7 +387,8 @@ struct net_devmem_dmabuf_binding *net_devmem_get_binding(struct sock *sk,
- 	 * net_device.
- 	 */
- 	dst_dev = dst_dev_rcu(dst);
--	if (unlikely(!dst_dev) || unlikely(dst_dev != binding->dev)) {
-+	if (unlikely(!dst_dev) ||
-+	    unlikely(dst_dev != READ_ONCE(binding->dev))) {
- 		err = -ENODEV;
- 		goto out_unlock;
- 	}
-@@ -504,7 +505,8 @@ static void mp_dmabuf_devmem_uninstall(void *mp_priv,
- 			xa_erase(&binding->bound_rxqs, xa_idx);
- 			if (xa_empty(&binding->bound_rxqs)) {
- 				mutex_lock(&binding->lock);
--				binding->dev = NULL;
-+				ASSERT_EXCLUSIVE_WRITER(binding->dev);
-+				WRITE_ONCE(binding->dev, NULL);
- 				mutex_unlock(&binding->lock);
- 			}
- 			break;
+-	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags))
++	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
++		kfree_skb(skb);
+ 		return -EBUSY;
++	}
+ 
+ 	/* store cb and context to be used on receiving data */
+ 	conn_info->data_exchange_cb = cb;
 -- 
 2.51.0
 
