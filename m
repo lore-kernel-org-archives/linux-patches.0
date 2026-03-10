@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633CE4779A3;
-	Tue, 10 Mar 2026 09:02:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24FC441036;
+	Tue, 10 Mar 2026 09:02:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133363; cv=none; b=U4Ly5Xqn34sAg6SVs3iOoC6435NLly3vMDnCX2ze9Gua1WoG5sNge5VD9mLu/2g9RjJFftnGzNWd+ghVAfTrYrMLA1UQ6qoWDJWczsSbrsT0FBx+nL7NOhBWbM+Q8rCofmXZO8uD/vYrM862nFTO2LLX3JGZw/PeMneHqoSkJtg=
+	t=1773133364; cv=none; b=ZP3UBCgeLIkhWuwSqHsLWJlttM+wTxVlAxf4QHjIZbPCGbFLWHt4MFNmym7437TiqgsuoPs3PVggvdG8+RmPLSf7vZMK2uzBSV7mRrgNG8iTCHwWh78t1+k0uncKfsATO0dV9GF+QSk2jsPDevCljZfSWwkTETs1X/674xd9ZP8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133363; c=relaxed/simple;
-	bh=gaTNqiFYKF2nQTOrGVWHvVkyMdmKXIWK06YEnqVPe+o=;
+	s=arc-20240116; t=1773133364; c=relaxed/simple;
+	bh=8jrTezgh7FiIbJtZeAaXohKB2BnJG/T2ftDVCgB+k1Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FAPAvlqeYWzOSKVBTMiPMI1gZr5NIYO3J0M5xXI8Q3B3kW0t5Q8H0WqnnMPiBcdUqLdoRsmXRjiQWQeqtdAa/W7vGbYpr6AMTnKf5k3hh2/bQluJfZXEnLPSLDzUvUgyZtr5chL2qTPFMJJ3I7Mw54s3RHVjkdDCtnxW5ibKBQc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCoelCow; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=am7eF7OlzyeMONboQi4l0HSOrHMCJODqd33jHpQmv0/KP0FymVRoQPxubw80uL2kuyaykg7LZID4ABdH8jS467MKrxqIl2hv2M82mhac1m9y20yq7f1lr9LPeXFCJlS/Jvo+KClNnRRli4eWZ9c1y7CANkpcDwMtCoqSAO0FmvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=uLFXJBZV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCoelCow"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B12C19423;
-	Tue, 10 Mar 2026 09:02:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="uLFXJBZV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA94FC2BC86;
+	Tue, 10 Mar 2026 09:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133363;
-	bh=gaTNqiFYKF2nQTOrGVWHvVkyMdmKXIWK06YEnqVPe+o=;
+	s=k20201202; t=1773133364;
+	bh=8jrTezgh7FiIbJtZeAaXohKB2BnJG/T2ftDVCgB+k1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCoelCowOescjTZb+ha9AXWx+dsip+hx7+uNb1+zj2N0iXCT+gIjJ7Fe11yuxH95I
-	 G6XWg4dkVG1R3xwR+l8Rc09XUpBpiTTvxlUZeVbwgc/cJm9ky+ulUA+qafa/OQIz8a
-	 sJK4CA7uPY7rBNd0EM/w3y/1NwQSFP7MHHhjbhNk1O+zAigqvhOOeV9tlBelSX89Ph
-	 jIIfVsUmHxCpHDg30P6lCbw0Vo826WLc1b1ZwS0eHjip4OOqn9/078xy2oGniiHUhe
-	 jFBGq7YOcqATU7dBL8GYo961kN55KZMibZD/3VOcHIjrXinHyGWQBJ5J2d2Hi3Q4/j
-	 Y8dF85xSep1wA==
+	b=uLFXJBZVaJKPMfxrnrdlyKdJaqM79C0oqzNHj28LOpvjyEscZdl8TkMXLqvIfBfEg
+	 ncsD0PwuU6Z3swxz2wCszk1S1wT1Sf6eWqVyWpJieb0JZiWmtFJeYg14u3Yv19VKJg
+	 h4sHbCGz2B7Lu2ET5R7UYnZlcfuRIVRXdmInE2F7pr6iaDGjZQE5RmdyRbslcAXU1h
+	 i2WZ5DsSAqsOSyROlhLgEzFY3pTxhaEIAr3Qxf8SZ1bfVcSBTugOdv3/UA8NLFHr6J
+	 X7OVpKgvGa/RMSxZMx8kj81vCjXNwKLe1L2QSw33oO+a1gEMPPkRMxQoNIia64RSfB
+	 foGZzQfr6nfFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ihor Solodrai <ihor.solodrai@linux.dev>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
+Cc: =?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	mcgrof@kernel.org,
-	da.gomez@kernel.org,
-	linux-modules@vger.kernel.org,
+	jikos@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] module: Fix kernel panic when a symbol st_shndx is out of bounds
-Date: Tue, 10 Mar 2026 05:01:39 -0400
-Message-ID: <20260310090145.2709021-39-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] HID: magicmouse: avoid memory leak in magicmouse_report_fixup()
+Date: Tue, 10 Mar 2026 05:01:40 -0400
+Message-ID: <20260310090145.2709021-40-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -50,60 +47,26 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Ihor Solodrai <ihor.solodrai@linux.dev>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit f9d69d5e7bde2295eb7488a56f094ac8f5383b92 ]
+[ Upstream commit 91e8c6e601bdc1ccdf886479b6513c01c7e51c2c ]
 
-The module loader doesn't check for bounds of the ELF section index in
-simplify_symbols():
+The magicmouse_report_fixup() function was returning a
+newly kmemdup()-allocated buffer, but never freeing it.
 
-       for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
-		const char *name = info->strtab + sym[i].st_name;
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it *is* permitted to return a sub-portion of the input
+rdesc, whose lifetime is managed by the caller.
 
-		switch (sym[i].st_shndx) {
-		case SHN_COMMON:
-
-		[...]
-
-		default:
-			/* Divert to percpu allocation if a percpu var. */
-			if (sym[i].st_shndx == info->index.pcpu)
-				secbase = (unsigned long)mod_percpu(mod);
-			else
-  /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
-			sym[i].st_value += secbase;
-			break;
-		}
-	}
-
-A symbol with an out-of-bounds st_shndx value, for example 0xffff
-(known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
-
-  BUG: unable to handle page fault for address: ...
-  RIP: 0010:simplify_symbols+0x2b2/0x480
-  ...
-  Kernel panic - not syncing: Fatal exception
-
-This can happen when module ELF is legitimately using SHN_XINDEX or
-when it is corrupted.
-
-Add a bounds check in simplify_symbols() to validate that st_shndx is
-within the valid range before using it.
-
-This issue was discovered due to a bug in llvm-objcopy, see relevant
-discussion for details [1].
-
-[1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
-
-Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -113,118 +76,95 @@ Now I have all the information needed for a thorough analysis.
 
 ## Analysis
 
-### 1. Commit Message Analysis
-The commit message is clear and detailed: it fixes a **kernel panic**
-(page fault) in `simplify_symbols()` when a symbol's `st_shndx` (ELF
-section header index) is out of bounds. The commit includes a concrete
-crash trace (`BUG: unable to handle page fault`, `Kernel panic - not
-syncing: Fatal exception`). The bug was discovered via a real-world
-trigger (llvm-objcopy bug) with a linked mailing list discussion.
+### What the commit fixes
 
-### 2. Code Change Analysis
-The fix adds a **6-line bounds check** before the out-of-bounds array
-access at line 1582:
-```c
-if (sym[i].st_shndx >= info->hdr->e_shnum) {
-    pr_err(...);
-    ret = -ENOEXEC;
-    break;
-}
-```
+The `magicmouse_report_fixup()` function was introduced in commit
+`0b91b4e4dae63` (v5.16 era, 2021) and uses `kmemdup(rdesc + 1, *rsize,
+GFP_KERNEL)` to create a new buffer. The caller in `hid_open_report()`
+(hid-core.c) does **not** free the returned pointer — it immediately
+`kmemdup()`s the result again and frees its own copy. So the buffer
+allocated by magicmouse was leaked every time the device was
+initialized.
 
-Without this check, `info->sechdrs[sym[i].st_shndx]` can access memory
-far beyond the allocated `sechdrs` array, causing a page fault and
-kernel panic. Values like `SHN_XINDEX` (0xffff) or any corrupted value
->= `e_shnum` trigger this.
+The fix replaces `kmemdup(rdesc + 1, ...)` with simply `rdesc + 1`,
+returning a sub-portion of the input buffer. This is explicitly
+permitted by the `report_fixup()` contract as documented in
+`include/linux/hid.h` (lines 839-843), and is safe because
+`hid_open_report()` immediately copies the returned data.
 
-### 3. Bug Severity
-- **Impact**: Kernel panic (crash) - the most severe possible outcome
-- **Trigger**: Loading a module with an out-of-bounds `st_shndx` value,
-  which can happen legitimately (SHN_XINDEX) or via corrupted/malicious
-  ELF
-- **Security angle**: This is an out-of-bounds read that could
-  potentially be exploited for information disclosure or denial of
-  service by anyone who can load kernel modules
+### Stable kernel criteria assessment
 
-### 4. Code History
-The vulnerable code has existed since Linux 2.6.12 (2005), with the
-specific `sechdrs` access pattern dating to Rusty Russell's 2010
-refactoring. The bug is present in **every stable kernel tree**.
+1. **Fixes a real bug**: Yes — memory leak on every device probe for
+   Apple Magic Mouse 2 and Magic Trackpad 2 connected via USB.
+2. **Obviously correct**: Yes — the HID core immediately `kmemdup()`s
+   the return value, so returning a pointer into the caller's buffer is
+   safe. The documentation explicitly says "a sub-portion of it" is
+   valid.
+3. **Small and contained**: Yes — removes 3 lines (kmemdup + NULL
+   check), changes one line. Single file, single function.
+4. **No new features**: Correct — pure bug fix.
+5. **Low risk**: Very low — the change is simpler than the original
+   code. Removes an allocation that was never needed.
 
-### 5. Fix Quality
-- **Small and surgical**: 6 lines added, no lines removed, single file
-  changed
-- **Obviously correct**: Simple bounds check comparing `st_shndx`
-  against `e_shnum`
-- **Pattern consistent**: The `apply_relocations()` function right below
-  (line 1597) already does equivalent validation with `infosec >=
-  info->hdr->e_shnum`
-- **Reviewed**: Has `Reviewed-by` from Daniel Gomez (Samsung) and Petr
-  Pavlu (SUSE)
-- **No side effects**: Returns `-ENOEXEC` on invalid module, which is
-  the correct error
+### User impact
 
-### 6. Backport Risk
-- **Minimal**: The fix is a pure addition of a bounds check before
-  existing code
-- **No dependencies**: Standalone fix, no prerequisites
-- **Clean backport**: The surrounding code is stable and unchanged for
-  many years; this should apply cleanly to all stable trees
+This affects all users of Apple Magic Mouse 2 and Magic Trackpad 2 over
+USB. Each time the device is probed (e.g., plugged in, resumed), ~82
+bytes are leaked. While not catastrophic per-event, it's a real resource
+leak that accumulates.
 
-### 7. Stable Kernel Rules Compliance
-- Obviously correct and tested: Yes (reviewed by two engineers, clear
-  logic)
-- Fixes a real bug: Yes (kernel panic)
-- Important issue: Yes (crash/panic, potential security issue)
-- Small and contained: Yes (6 lines, 1 file)
-- No new features: Correct (pure safety check)
+### Risk assessment
+
+Minimal risk. The fix makes the code simpler and removes a dynamic
+allocation. The HID core's defensive `kmemdup()` of the returned pointer
+ensures the approach is safe.
+
+### Dependency check
+
+The buggy `kmemdup()` was introduced in commit `0b91b4e4dae63` ("HID:
+magicmouse: Report battery level over USB"), which was in v5.16. This
+code exists in all current stable trees (6.1.y, 6.6.y, 6.12.y). The fix
+is self-contained with no dependencies on other commits.
 
 ### Verification
 
-- **git blame** confirmed the vulnerable line (`secbase =
-  info->sechdrs[sym[i].st_shndx].sh_addr`) has existed since commit
-  `49668688dd5a5f` by Rusty Russell (2010), with the overall pattern
-  from `1da177e4c3f41` (2005)
-- **Read of main.c:1570-1589** confirmed the fix is correctly placed
-  before the array access in the `default` case
-- **Read of main.c:1591-1598** confirmed `apply_relocations()` already
-  validates section indices with the same pattern (`infosec >=
-  info->hdr->e_shnum`)
-- **git log** confirmed this fix commit is `6186212750892` merged
-  2025-12-30
-- **Explored** `is_core_symbol()` in kallsyms.c which has an equivalent
-  `st_shndx >= shnum` check, confirming the pattern is well-established
-- **git log** on stable tree versions confirmed the vulnerable code path
-  exists in all current stable trees
+- **git show 0b91b4e4dae63** confirmed the kmemdup was introduced in the
+  original "Report battery level over USB" commit (2021, v5.16 era)
+- **hid-core.c hid_open_report()** verified: the caller kmemdup's the
+  return value immediately and frees its own buffer — it does NOT take
+  ownership of the returned pointer (lines 1285-1307)
+- **include/linux/hid.h documentation** (lines 839-843) confirmed:
+  returning "a sub-portion of it" is explicitly documented as valid
+- **git log --oneline -- drivers/hid/hid-magicmouse.c** confirmed the
+  commit under review (`c0993f362e2ef`) is the fix, with no other
+  dependencies
+- **Commit 225c43c0e9164** (the next commit after) only changes the size
+  check from `== 83` to `>= 83` and does not affect the fix's
+  applicability
 
-This is a textbook stable backport candidate: a small, surgical fix for
-a kernel panic caused by a missing bounds check on an array access, in
-code that has been vulnerable for 20 years, with clear real-world
-triggers (llvm-objcopy bug) and proper review.
+This is a clear, small, self-contained memory leak fix in a widely-used
+driver. It meets all stable kernel criteria with minimal risk.
 
 **YES**
 
- kernel/module/main.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/hid/hid-magicmouse.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index 710ee30b3beab..5bf456fad63e1 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -1568,6 +1568,13 @@ static int simplify_symbols(struct module *mod, const struct load_info *info)
- 			break;
+diff --git a/drivers/hid/hid-magicmouse.c b/drivers/hid/hid-magicmouse.c
+index f4cf29c2e8330..9eadf3252d0dc 100644
+--- a/drivers/hid/hid-magicmouse.c
++++ b/drivers/hid/hid-magicmouse.c
+@@ -994,9 +994,7 @@ static const __u8 *magicmouse_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		hid_info(hdev,
+ 			 "fixing up magicmouse battery report descriptor\n");
+ 		*rsize = *rsize - 1;
+-		rdesc = kmemdup(rdesc + 1, *rsize, GFP_KERNEL);
+-		if (!rdesc)
+-			return NULL;
++		rdesc = rdesc + 1;
  
- 		default:
-+			if (sym[i].st_shndx >= info->hdr->e_shnum) {
-+				pr_err("%s: Symbol %s has an invalid section index %u (max %u)\n",
-+				       mod->name, name, sym[i].st_shndx, info->hdr->e_shnum - 1);
-+				ret = -ENOEXEC;
-+				break;
-+			}
-+
- 			/* Divert to percpu allocation if a percpu var. */
- 			if (sym[i].st_shndx == info->index.pcpu)
- 				secbase = (unsigned long)mod_percpu(mod);
+ 		rdesc[0] = 0x05;
+ 		rdesc[1] = 0x01;
 -- 
 2.51.0
 
