@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8818C352C4F;
-	Tue, 10 Mar 2026 11:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4EFC387598;
+	Tue, 10 Mar 2026 11:13:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141212; cv=none; b=u+K8YUOKCcvZrjcmu3mwEql0yXQ2LNkHQfNzqZgN13QMnbXeCrTeNvoswnpCmqfA1z/afHx3ZpGGgXeXeTX4k0siWBsRr6dRuOoolZgNHU0e6ENFC6z77P9pZeX44ZTOna4iHoiwKZVMEHbUImJNAovor+RitXGbeM1KvoLSAcw=
+	t=1773141213; cv=none; b=n8PLBUUpQHFdDZs22WxwOjkrNl5JRLu0zddzNNQ8qhmhWWSpGz2KEzUmsiOzH6Rp1O4Mdd3OPkrYh/qtyko3PK/bpYSD/idafPinblEf4bZqFLDsUx2N0ILVOM1/qImHgmke+YqcHfnCqrem/idZgQnD5BL48ufLbbV8NibZDTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141212; c=relaxed/simple;
-	bh=bMFQ9Wn3/4vkCtCXjtRmkn5wXiD5GPTTJSQtGrDfthM=;
+	s=arc-20240116; t=1773141213; c=relaxed/simple;
+	bh=GLcZAwVq1HhxEbPElbLqNMb/kFqyXsCVM3R6Z2T+W/g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwZLBCgv3Wi+GwZ9DBo4YdnZO1s7GGgkynuU6Tb6Xj0cFObkRoeyfU+CrVCDt24N2V/AuaPuS7Lv1K19ivIgF/6fh/qRO7SWq3aRRp+daOsPfJx3YrF6JdzsNxWzxyBdndrULhS9lpOqj1GgOoUTG5hvAx98kVb+Zh99HUebKrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dXX+CUMO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=G3GZSVY8M+YYuEFqrfYEaS9ZSIJA2Ff4RrPXwJbRBI8Dqe3eaXTJLpCCMlqu/f4AYW1+beqSUYt2r6FSSOVBgv6ZEWDVh4570Vt1y8V7OgYliPmXZrzGrUpFymy7QxRc+ahtwo9YQsn4FWyAV/+pqWXciOvHVWIKNcvBov5nW0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p6x0nUV0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dXX+CUMO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3122C19423;
-	Tue, 10 Mar 2026 11:13:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p6x0nUV0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE51C2BCAF;
+	Tue, 10 Mar 2026 11:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141212;
-	bh=bMFQ9Wn3/4vkCtCXjtRmkn5wXiD5GPTTJSQtGrDfthM=;
+	s=k20201202; t=1773141213;
+	bh=GLcZAwVq1HhxEbPElbLqNMb/kFqyXsCVM3R6Z2T+W/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dXX+CUMOg3WdyvHU+TQiNo/+anSFfnwoViHLlHXtl8guPHpOyBPzkCvdHBT+dNaq4
-	 hdIu+SZeRG+CzliFin349frUJCLNzULkXXLOx2t4OB3Jp/EjuIQrYyw7bfm/1VWdiB
-	 +rB+WZPxQSPXcUKHoV+8xt5WxGPlNDoeastsTUdNhE4FV4mviIczL4Vjx3taZz81cw
-	 LHDjicKtS6zXfz19qb/n2HMg3dYbUXhaGa8JN8xESCYjh/HoFBPODGDWqKuoqodKvB
-	 RVJiIs29cSO0Fp50C27P+oSwp05fMW+ePBppA3LauPiIOdqiXMGAm09M0JzNTiA2yn
-	 tHRI4UNAvidaA==
+	b=p6x0nUV0W7t33366ypiTuT9iS7yIDqRevTYRQz2BuxZa3rKgGQjG939TjLbQI29bl
+	 oJZaQYyIWFtvojUzyGUv/2ozS0KQPI54gfqNZ4SV/YOF1CuKKmZhnDjxvl0mOXmrxf
+	 Ex8djHx0U0s3D+eBH5QUnkRege//Y3s7FqrIyXmXuyGvHhPtHLdnqipNULql9awc5/
+	 aXviB6yBtRI2CcDEA02QKDBWjvi76dYotq0zpPiw5IQs3gUm6AB2d39FGxO04XJCTI
+	 zsuSbpKYKqLISMI8mMkuixl5wkk2lQohve3Q7Jxfr6Qt3RF48XgCRFcdY0+9MRPzh+
+	 WFYmaYGt3wCXg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Guenter Roeck <linux@roeck-us.net>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Ioana Ciornei <ioana.ciornei@nxp.com>,
+Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
+	syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 213/311] dpaa2-switch: Fix interrupt storm after receiving bad if_id in IRQ handler
-Date: Tue, 10 Mar 2026 07:04:20 -0400
-Message-ID: <06731c250d9b7b186d1e3052c9944b224e13604e.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 214/311] atm: lec: fix null-ptr-deref in lec_arp_clear_vccs
+Date: Tue, 10 Mar 2026 07:04:21 -0400
+Message-ID: <2b9488d06eb0bc62bcd93d5c3fc1a11f48622a31.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -46,56 +47,106 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 74badb9c20b1a9c02a95c735c6d3cd6121679c93 ]
+[ Upstream commit 101bacb303e89dc2e0640ae6a5e0fb97c4eb45bb ]
 
-Commit 31a7a0bbeb00 ("dpaa2-switch: add bounds check for if_id in IRQ
-handler") introduces a range check for if_id to avoid an out-of-bounds
-access. If an out-of-bounds if_id is detected, the interrupt status is
-not cleared. This may result in an interrupt storm.
+syzkaller reported a null-ptr-deref in lec_arp_clear_vccs().
+This issue can be easily reproduced using the syzkaller reproducer.
 
-Clear the interrupt status after detecting an out-of-bounds if_id to avoid
-the problem.
+In the ATM LANE (LAN Emulation) module, the same atm_vcc can be shared by
+multiple lec_arp_table entries (e.g., via entry->vcc or entry->recv_vcc).
+When the underlying VCC is closed, lec_vcc_close() iterates over all
+ARP entries and calls lec_arp_clear_vccs() for each matched entry.
 
-Found by an experimental AI code review agent at Google.
+For example, when lec_vcc_close() iterates through the hlists in
+priv->lec_arp_empty_ones or other ARP tables:
 
-Fixes: 31a7a0bbeb00 ("dpaa2-switch: add bounds check for if_id in IRQ handler")
-Cc: Junrui Luo <moonafterrain@outlook.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Ioana Ciornei <ioana.ciornei@nxp.com>
-Link: https://patch.msgid.link/20260227055812.1777915-1-linux@roeck-us.net
+1. In the first iteration, for the first matched ARP entry sharing the VCC,
+lec_arp_clear_vccs() frees the associated vpriv (which is vcc->user_back)
+and sets vcc->user_back to NULL.
+2. In the second iteration, for the next matched ARP entry sharing the same
+VCC, lec_arp_clear_vccs() is called again. It obtains a NULL vpriv from
+vcc->user_back (via LEC_VCC_PRIV(vcc)) and then attempts to dereference it
+via `vcc->pop = vpriv->old_pop`, leading to a null-ptr-deref crash.
+
+Fix this by adding a null check for vpriv before dereferencing
+it. If vpriv is already NULL, it means the VCC has been cleared
+by a previous call, so we can safely skip the cleanup and just
+clear the entry's vcc/recv_vcc pointers.
+
+The entire cleanup block (including vcc_release_async()) is placed inside
+the vpriv guard because a NULL vpriv indicates the VCC has already been
+fully released by a prior iteration — repeating the teardown would
+redundantly set flags and trigger callbacks on an already-closing socket.
+
+The Fixes tag points to the initial commit because the entry->vcc path has
+been vulnerable since the original code. The entry->recv_vcc path was later
+added by commit 8d9f73c0ad2f ("atm: fix a memory leak of vcc->user_back")
+with the same pattern, and both paths are fixed here.
+
+Reported-by: syzbot+72e3ea390c305de0e259@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68c95a83.050a0220.3c6139.0e5c.GAE@google.com/T/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Dan Carpenter <dan.carpenter@linaro.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260225123250.189289-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/atm/lec.c | 26 +++++++++++++++-----------
+ 1 file changed, 15 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-index 78e21b46a5ba8..e212a014c8d41 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-switch.c
-@@ -1533,7 +1533,7 @@ static irqreturn_t dpaa2_switch_irq0_handler_thread(int irq_num, void *arg)
- 	if_id = (status & 0xFFFF0000) >> 16;
- 	if (if_id >= ethsw->sw_attr.num_ifs) {
- 		dev_err(dev, "Invalid if_id %d in IRQ status\n", if_id);
--		goto out;
-+		goto out_clear;
- 	}
- 	port_priv = ethsw->ports[if_id];
+diff --git a/net/atm/lec.c b/net/atm/lec.c
+index afb8d3eb21850..c39dc5d367979 100644
+--- a/net/atm/lec.c
++++ b/net/atm/lec.c
+@@ -1260,24 +1260,28 @@ static void lec_arp_clear_vccs(struct lec_arp_table *entry)
+ 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
+ 		struct net_device *dev = (struct net_device *)vcc->proto_data;
  
-@@ -1553,6 +1553,7 @@ static irqreturn_t dpaa2_switch_irq0_handler_thread(int irq_num, void *arg)
- 			dpaa2_switch_port_connect_mac(port_priv);
+-		vcc->pop = vpriv->old_pop;
+-		if (vpriv->xoff)
+-			netif_wake_queue(dev);
+-		kfree(vpriv);
+-		vcc->user_back = NULL;
+-		vcc->push = entry->old_push;
+-		vcc_release_async(vcc, -EPIPE);
++		if (vpriv) {
++			vcc->pop = vpriv->old_pop;
++			if (vpriv->xoff)
++				netif_wake_queue(dev);
++			kfree(vpriv);
++			vcc->user_back = NULL;
++			vcc->push = entry->old_push;
++			vcc_release_async(vcc, -EPIPE);
++		}
+ 		entry->vcc = NULL;
  	}
+ 	if (entry->recv_vcc) {
+ 		struct atm_vcc *vcc = entry->recv_vcc;
+ 		struct lec_vcc_priv *vpriv = LEC_VCC_PRIV(vcc);
  
-+out_clear:
- 	err = dpsw_clear_irq_status(ethsw->mc_io, 0, ethsw->dpsw_handle,
- 				    DPSW_IRQ_INDEX_IF, status);
- 	if (err)
+-		kfree(vpriv);
+-		vcc->user_back = NULL;
++		if (vpriv) {
++			kfree(vpriv);
++			vcc->user_back = NULL;
+ 
+-		entry->recv_vcc->push = entry->old_recv_push;
+-		vcc_release_async(entry->recv_vcc, -EPIPE);
++			entry->recv_vcc->push = entry->old_recv_push;
++			vcc_release_async(entry->recv_vcc, -EPIPE);
++		}
+ 		entry->recv_vcc = NULL;
+ 	}
+ }
 -- 
 2.51.0
 
