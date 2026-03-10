@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC91043D4E8;
-	Tue, 10 Mar 2026 09:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA4443E9D8;
+	Tue, 10 Mar 2026 09:02:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133322; cv=none; b=MS3XsUYL/ZhCJe3GZBUzb2cGWkE/lmiI+F4dzuLKIXRT8qBAcZHQynto76EGPiS4IoA5x0Q3wghBIAECLOvpdNefb2v5PdFdi1/v/mzfzKpGcXuXTmi7WtuNyLWFXCD1nORSozltd+BUpHVGGrJfYowLLbxOQKWBwfE8yg0cobs=
+	t=1773133324; cv=none; b=VmawsGWxap/wYYBQyGn8mcymLMdXz1acukKBsOTpoStWI0Oubo2PCEqtKFoEy5f00JEgaE/4HccvWFq/y+qJbuJb+BDK77nOihKXSq6WQgLRuED2j5gFQl8PhZ1+3LlE8NI8b9iSjhCCDBpZez2virS20ZQlOYxnnsauKLaHMjw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133322; c=relaxed/simple;
-	bh=9n3Ed1n/AWWKRgLqLE4D/kORWCQxeaPkXp35pEa7oE0=;
+	s=arc-20240116; t=1773133324; c=relaxed/simple;
+	bh=jvcR/0hMrsZWfAV8BjBAREiSkfnnyOlh0e97KIXxWXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TUlMKI1xkjnkrHFxwCnB5wZjDv6APnVFrB/GYXXwAzP4+gTBltc/IAcxWov2hWvyE99z+RQctItyiqWFHY3h5PvSm00QqEgMomxcsUAaCJiLidW7K636ywP5N1Jp/kt6aBM0uuA7pNaVVw53XP7THp/VyRiYF/4ZrF3PfL7AgMA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JC8dM5gB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=DifMzHZrrhWHfEZnqHRrr0iFRinWjwUP43lbZXybDAeU0Buugj5YkkUcPrf3NFrJ2IkIcxQowvRpcM+8h/1xcjncp/OFzSfe82bW0c63KUdDfaODJAyuMDTPXY9Knnf9ejetcV4AG7pzaU6/dxzubKLK/XuQAgkta97UaSqxf40=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imMtp+OM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JC8dM5gB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D0AC2BC86;
-	Tue, 10 Mar 2026 09:02:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imMtp+OM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1D4DC2BC87;
+	Tue, 10 Mar 2026 09:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133322;
-	bh=9n3Ed1n/AWWKRgLqLE4D/kORWCQxeaPkXp35pEa7oE0=;
+	s=k20201202; t=1773133323;
+	bh=jvcR/0hMrsZWfAV8BjBAREiSkfnnyOlh0e97KIXxWXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JC8dM5gBrONOFBIECx49u66DWtuuokkArQXqOvTIowppRKJs70Hr1PPwfuv4gPVxd
-	 NaB/oM3NiNcfNzG5/BZ6cFbR/3W56Mikw+LkD63Nx/qU7cTdZ9FmeAX1e5xNmCPL8P
-	 zdywGLDycwUVSEZANrS/VobdBTxzXOqakUsrxtGRvz6vvdM0YgRwC7o0AoAYffNoPX
-	 Y8puQym3G4REKOJGXhmg3BYrRmB13eMQrPNQAHKJctPRx9bgacZ7ZkuvAE/Z7gvxRL
-	 xncQlsnV61GHjcV5dEeE0HJ7njMiaFQ3ya3b+26Zol8YN/07VqigrEZN+dVt/LzXgO
-	 4WYkZ9pHVpiKQ==
+	b=imMtp+OMjeUUdgqgQ3blAb76MpT0sWBs7KoPsBgmLIhS+uu2YOUHMYrp/UzlbmxQO
+	 7akolXFjzDVa6vzIMOoMGIoFz7361EauyJ7VLMU2IlC3gT7V0pxXRsQFM8Fnpll9uX
+	 RjD1RA1khyr1+ZpJLGJdXoYevUDVZStE3h7PapJBLeaam0sk4zRDmL+3dDe9VDsFK0
+	 7rUJrQ6qR+LXBRb7ZstVkJwwqo5FOWjxoNhQTxpikkTJijXW+WcjYrZxQ/wte3RIfv
+	 lt6YvNM4d1LTPZTpJIl7D/EqRwcf6qaLrh1Agnp17jJj+AotJohB5wwccoWktBTG3h
+	 Muw4OhVsazBtw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vladimir Yakovlev <vovchkir@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Denis Benato <denis.benato@linux.dev>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-spi@vger.kernel.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] spi: spi-dw-dma: fix print error log when wait finish transaction
-Date: Tue, 10 Mar 2026 05:01:11 -0400
-Message-ID: <20260310090145.2709021-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] HID: asus: add xg mobile 2023 external hardware support
+Date: Tue, 10 Mar 2026 05:01:12 -0400
+Message-ID: <20260310090145.2709021-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -49,100 +51,116 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Yakovlev <vovchkir@gmail.com>
+From: Denis Benato <denis.benato@linux.dev>
 
-[ Upstream commit 3b46d61890632c8f8b117147b6923bff4b42ccb7 ]
+[ Upstream commit 377f8e788945d45b012ed9cfc35ca56c02e86cd8 ]
 
-If an error occurs, the device may not have a current message. In this
-case, the system will crash.
+XG mobile stations have the 0x5a endpoint and has to be initialized:
+add them to hid-asus.
 
-In this case, it's better to use dev from the struct ctlr (struct spi_controller*).
-
-Signed-off-by: Vladimir Yakovlev <vovchkir@gmail.com>
-Link: https://patch.msgid.link/20260302222017.992228-2-vovchkir@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Denis Benato <denis.benato@linux.dev>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The analysis is clear. When `dw_spi_dma_wait` times out, `cur_msg` could
-potentially be NULL or in an inconsistent state. Dereferencing
-`dws->ctlr->cur_msg->spi->dev` through a chain of 3 pointer dereferences
-when `cur_msg` could be NULL causes a NULL pointer dereference crash.
-
-The fix simply uses `dws->ctlr->dev` instead, which is always valid
-since it's the controller's own device - guaranteed to exist as long as
-the controller exists.
-
 ## Analysis
 
-### What the commit fixes
-This commit fixes a potential NULL pointer dereference crash in the SPI
-DW DMA driver. When a DMA transaction times out in `dw_spi_dma_wait()`,
-the error logging path accesses `dws->ctlr->cur_msg->spi->dev`. If
-`cur_msg` is NULL (which can happen on error paths, as the SPI core sets
-it to NULL in various places), this causes a kernel crash. The fix uses
-`dws->ctlr->dev` instead, which is always valid.
+### What the commit does
+This commit adds a new USB device ID (`USB_DEVICE_ID_ASUSTEK_XGM_2023 =
+0x1a9a`) for the ASUS XG Mobile 2023 docking station to the hid-asus
+driver. The change consists of:
+1. Defining the device ID constant in `hid-ids.h` (1 line)
+2. Adding the device to the `asus_devices[]` table in `hid-asus.c` (3
+   lines, no quirk flags)
 
-### Meets stable kernel rules
-1. **Obviously correct**: The fix is a single-line change replacing an
-   unsafe pointer chain with a safe, always-valid device reference. The
-   controller device (`ctlr->dev`) is always valid as long as the
-   controller is registered.
-2. **Fixes a real bug**: NULL pointer dereference leading to a kernel
-   crash.
-3. **Important issue**: Kernel crash/oops in a commonly used SPI driver.
-4. **Small and contained**: One line change in one file.
-5. **No new features**: Pure bug fix.
+### Classification: New Device ID Addition
+This is a textbook **new device ID addition to an existing driver**. The
+hid-asus driver already exists in all stable kernel trees. Only the USB
+device ID entry is new.
+
+The commit message states: "XG mobile stations have the 0x5a endpoint
+and has to be initialized: add them to hid-asus." This means the
+device's HID interface (with report ID 0x5a = `FEATURE_KBD_REPORT_ID`)
+needs the hid-asus driver to bind to it, rather than the generic HID
+driver, for the device to function properly.
+
+### Device entry details
+The entry has **no quirk flags** set. This means minimal special
+handling — the device simply needs to be claimed by hid-asus (rather
+than generic HID) for proper initialization and event handling. The hid-
+asus driver provides baseline handling that differs from the generic HID
+driver, including filtering of `FEATURE_KBD_LED_REPORT_ID` events in the
+raw_event handler.
 
 ### Risk assessment
-- **Risk**: Extremely low. The fix simply changes which `struct device
-  *` is used for `dev_err()` logging. The worst case is the error
-  message shows a slightly different device name in the log.
-- **Benefit**: Prevents a kernel crash when a DMA transfer times out.
+- **Scope**: 4 lines changed across 2 files
+- **Risk**: Extremely low — this only affects devices with USB VID/PID
+  `0x0b05:0x1a9a`. No existing device behavior is modified.
+- **Self-contained**: Yes — no dependencies on other commits. The change
+  only requires the existing hid-asus driver infrastructure.
 
-### Dependency check
-The fix uses `ctlr` which was renamed from `host` in commit
-`b926b15547d29` (Oct 2025). For older stable trees (pre-6.12 or so), the
-field was named `master` or `host`, so the backport would need trivial
-adaptation (changing `ctlr` to `host` or `master` depending on the
-tree). The buggy code has been present since commit `bdbdf0f06337d`
-(v5.8, May 2020), so all supported stable trees would benefit.
+### Stable kernel criteria
+- **Obviously correct**: Yes — adding a device ID to an existing table
+  with established patterns
+- **Fixes real issue**: Enables hardware support for users with XG
+  Mobile 2023 docking stations
+- **Small and contained**: 4 lines total
+- **No new features/APIs**: Just a device ID, no new quirk mechanisms or
+  user-visible interfaces
+- **Exception category**: New Device IDs — explicitly listed as
+  appropriate for stable
 
 ### Verification
-- `git log -p --follow -S 'cur_msg->spi->dev'` confirmed the buggy
-  pattern was introduced in commit `bdbdf0f06337d` (v5.8 era, 2020)
-- `git tag --contains bdbdf0f06337d` confirmed it's in stable branches
-  p-5.10, p-5.15, p-6.1
-- `git show b926b15547d29` confirmed the `host` -> `ctlr` rename touched
-  this exact line, creating a dependency for clean backport to newer
-  stable trees
-- Read of `spi.c` confirmed `cur_msg` is set to NULL in multiple places
-  (lines 1910, 2198, 4480), validating the crash scenario
-- The fix only changes the `struct device *` argument to `dev_err()`,
-  which has zero functional impact beyond logging
+- Read `asus_probe()` at hid-asus.c:1127-1248 to confirm behavior with
+  zero quirk flags — device goes through standard HID parse/start path
+  and gets named "Asus Keyboard"
+- Confirmed `USB_DEVICE_ID_ASUSTEK_XGM_2023` is only defined and used in
+  these two files (self-contained)
+- Confirmed the device table entry follows the exact same pattern as
+  other entries in `asus_devices[]` (e.g., `USB_DEVICE_ID_ASUS_AK1D` and
+  `USB_DEVICE_ID_ASUS_MD_5110` also have no quirk flags)
+- Confirmed `FEATURE_KBD_REPORT_ID` is defined as `0x5a` at line 51,
+  matching the commit message about the 0x5a endpoint
+- No quirk flag dependencies — the entry is independent of any other
+  code changes
 
 **YES**
 
- drivers/spi/spi-dw-dma.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-asus.c | 3 +++
+ drivers/hid/hid-ids.h  | 1 +
+ 2 files changed, 4 insertions(+)
 
-diff --git a/drivers/spi/spi-dw-dma.c b/drivers/spi/spi-dw-dma.c
-index 65adec7c7524b..fe726b9b1780d 100644
---- a/drivers/spi/spi-dw-dma.c
-+++ b/drivers/spi/spi-dw-dma.c
-@@ -271,7 +271,7 @@ static int dw_spi_dma_wait(struct dw_spi *dws, unsigned int len, u32 speed)
- 					 msecs_to_jiffies(ms));
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 8487332bf43b0..b1ad4e9f20c85 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1404,6 +1404,9 @@ static const struct hid_device_id asus_devices[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X),
+ 	  QUIRK_USE_KBD_BACKLIGHT | QUIRK_ROG_NKEY_KEYBOARD | QUIRK_ROG_ALLY_XPAD },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
++	    USB_DEVICE_ID_ASUSTEK_XGM_2023),
++	},
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_ASUSTEK,
+ 	    USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD),
+ 	  QUIRK_ROG_CLAYMORE_II_KEYBOARD },
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 85ab1ac511096..7fd67745ee010 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -229,6 +229,7 @@
+ #define USB_DEVICE_ID_ASUSTEK_ROG_NKEY_ALLY_X		0x1b4c
+ #define USB_DEVICE_ID_ASUSTEK_ROG_CLAYMORE_II_KEYBOARD	0x196b
+ #define USB_DEVICE_ID_ASUSTEK_FX503VD_KEYBOARD	0x1869
++#define USB_DEVICE_ID_ASUSTEK_XGM_2023	0x1a9a
  
- 	if (ms == 0) {
--		dev_err(&dws->ctlr->cur_msg->spi->dev,
-+		dev_err(&dws->ctlr->dev,
- 			"DMA transaction timed out\n");
- 		return -ETIMEDOUT;
- 	}
+ #define USB_VENDOR_ID_ATEN		0x0557
+ #define USB_DEVICE_ID_ATEN_UC100KM	0x2004
 -- 
 2.51.0
 
