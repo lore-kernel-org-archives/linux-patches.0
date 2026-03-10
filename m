@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5823135AC23;
-	Tue, 10 Mar 2026 11:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EFEE35AC23;
+	Tue, 10 Mar 2026 11:12:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141140; cv=none; b=LHvZdv7x0xlCIg46SKxlu6SjGmEqspZzRgf/IZU6YZsaTw7ZhuAV9oS/91HPmEOnRhLnWrNYLUfyL9s307RZtTBQyJXPu8seSmgSca2JddOFl3QV7vkinwEevVrb9bMnjBpydmKh34Y9KwA8K/0q5crweyFT0JU/MFwahvJASLE=
+	t=1773141141; cv=none; b=roiPGhCAbKbLXMptnJa9X2juTK2UCL92QJoXd7gNZdJ5Ks6+HRzISAoEkhMlrmsOZqXpg0gelxerYq5O0UP8nvY8T9FOwC4GB8sG0ovr42aAZ9Jkyl4i3EzNQqmdbBT+HWpQ+qfmKyJo8SJbm+hjV2ZEacpZdqOR+28LZyQlf84=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141140; c=relaxed/simple;
-	bh=s38zKs7aIdTeeI34cq8xnsqCV0OfzElDTsh+qo586wA=;
+	s=arc-20240116; t=1773141141; c=relaxed/simple;
+	bh=dYw5QjrOvOKEJkdDX3oPRXXcATZjcbCrJLQ2YslFBMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L7zTbgVxoABLkt0ixSdYPH36q/owl8NVZ/LcfNUDkYNB9uDFTfZHbrekCLHV3WEvD6Cz6bX1cWpLYWyfoMCibRmsWZ8GxfOIx0caL09Q8RrcGRUxstHp31nRSE11dUg4D3YRBZiZoAV9dg2hTs8vIGtUP93WhcNz/fGILteJmWc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZULZ9wtL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XiChR9rGn+Z9VRVlJRCqqwu3LQt5kJyjDlRv1HYlM+LMZMMGkLWjMNc2ryBemGO/lOyeIPCufFR/IKvaNo5FK1yY88xEQKfPBLqdpgiOxKtP54VPxyC+KivFxyjOsrIAa4hpqWuZjNRlSICNoxXU81fcePIetNRF+HwfGZrwrUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vDhCYQAF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZULZ9wtL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFB6C2BC86;
-	Tue, 10 Mar 2026 11:12:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vDhCYQAF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C0D5C19423;
+	Tue, 10 Mar 2026 11:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141140;
-	bh=s38zKs7aIdTeeI34cq8xnsqCV0OfzElDTsh+qo586wA=;
+	s=k20201202; t=1773141141;
+	bh=dYw5QjrOvOKEJkdDX3oPRXXcATZjcbCrJLQ2YslFBMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZULZ9wtLytoft8O7mRiGLwv8B1RVM7f/pZOzFWSd7t7n8KUnbdmV74ToiliK4uuck
-	 psMwLltGlvCi+EjsX5cAI/KbGcfcTL8EifgiZdYMfESBhyTNZjjggaAuzWD+HraMtF
-	 pzRiE9AaYbZmKIjOGP6qGOlfajEoDUf6GIKv6c7dh8BOl2PBIzd9/GKYufAd7XFCs8
-	 8TPDa4DdVVWsMKuM9IWOUfD808L8uqcxgr4mM0r5bEGQehQwAp1M5GPo2L9K7ZfUG0
-	 sSg2NG4eg5PqqtJl5HqpxjZ7O+arqBKm8Qgt5Cl1xRmUikikLPq6nQSRSrWZsk0NO9
-	 HBGatCYw/8S1w==
+	b=vDhCYQAFcRZfkIAOYzYksYwr+1oIHiN4bc7GUXzID3gVYYyXFeNLsYXErAXE2eC2H
+	 p60cWOpPkc+JexqC6mCvYaVOuHaksMM13/C4XrSHtbTZDwOx4Bt57U3KvKSLUdUcWS
+	 Djt60wh3r8bNdP3RQ5YVtEFDczE1cq0ouG4MDYh+SZIc0msMJJxYCXDxkuSstrON3A
+	 48Z1qhUZi4BrsIuOrWYMTh/9qnOTea4ykp1kwyB+DwRqj5esSXRCpSifYcHe9pY2aq
+	 IgVp61720cQsbKnCUaMSj5EdK7rKfGfg6BEK22h0YtTQPC7O1YxtP3BPwEsBbGFRFV
+	 d79HEOCbhjDFA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+Cc: Catalin Marinas <catalin.marinas@arm.com>,
+	Emanuele Rocca <emanuele.rocca@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 144/311] cpufreq: intel_pstate: Fix crash during turbo disable
-Date: Tue, 10 Mar 2026 07:03:11 -0400
-Message-ID: <242867afb662651b0c9f19acfafe57948eaf724c.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 145/311] arm64: gcs: Do not set PTE_SHARED on GCS mappings if FEAT_LPA2 is enabled
+Date: Tue, 10 Mar 2026 07:03:12 -0400
+Message-ID: <51e49cb2a8a46d658289736d2892d57fc3261030.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,84 +51,141 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 6b050482ec40569429d963ac52afa878691b04c9 upstream.
+commit 8a85b3131225a8c8143ba2ae29c0eef8c1f9117f upstream.
 
-When the system is booted with kernel command line argument "nosmt" or
-"maxcpus" to limit the number of CPUs, disabling turbo via:
+When FEAT_LPA2 is enabled, bits 8-9 of the PTE replace the
+shareability attribute with bits 50-51 of the output address. The
+_PAGE_GCS{,_RO} definitions include the PTE_SHARED bits as 0b11 (this
+matches the other _PAGE_* definitions) but using this macro directly
+leads to the following panic when enabling GCS on a system/model with
+LPA2:
 
- echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo
+  Unable to handle kernel paging request at virtual address fffff1ffc32d8008
+  Mem abort info:
+    ESR = 0x0000000096000004
+    EC = 0x25: DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+    FSC = 0x04: level 0 translation fault
+  Data abort info:
+    ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+    CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+    GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+  swapper pgtable: 4k pages, 52-bit VAs, pgdp=0000000060f4d000
+  [fffff1ffc32d8008] pgd=100000006184b003, p4d=0000000000000000
+  Internal error: Oops: 0000000096000004 [#1]  SMP
+  CPU: 0 UID: 0 PID: 513 Comm: gcs_write_fault Tainted: G   M                7.0.0-rc1 #1 PREEMPT
+  Tainted: [M]=MACHINE_CHECK
+  Hardware name: QEMU QEMU Virtual Machine, BIOS 2025.02-8+deb13u1 11/08/2025
+  pstate: 03402005 (nzcv daif +PAN -UAO +TCO +DIT -SSBS BTYPE=--)
+  pc : zap_huge_pmd+0x168/0x468
+  lr : zap_huge_pmd+0x2c/0x468
+  sp : ffff800080beb660
+  x29: ffff800080beb660 x28: fff00000c2058180 x27: ffff800080beb898
+  x26: fff00000c2058180 x25: ffff800080beb820 x24: 00c800010b600f41
+  x23: ffffc1ffc30af1a8 x22: fff00000c2058180 x21: 0000ffff8dc00000
+  x20: fff00000c2bc6370 x19: ffff800080beb898 x18: ffff800080bebb60
+  x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000007
+  x14: 000000000000000a x13: 0000aaaacbbbffff x12: 0000000000000000
+  x11: 0000ffff8ddfffff x10: 00000000000001fe x9 : 0000ffff8ddfffff
+  x8 : 0000ffff8de00000 x7 : 0000ffff8da00000 x6 : fff00000c2bc6370
+  x5 : 0000ffff8da00000 x4 : 000000010b600000 x3 : ffffc1ffc0000000
+  x2 : fff00000c2058180 x1 : fffff1ffc32d8000 x0 : 000000c00010b600
+  Call trace:
+   zap_huge_pmd+0x168/0x468 (P)
+   unmap_page_range+0xd70/0x1560
+   unmap_single_vma+0x48/0x80
+   unmap_vmas+0x90/0x180
+   unmap_region+0x88/0xe4
+   vms_complete_munmap_vmas+0xf8/0x1e0
+   do_vmi_align_munmap+0x158/0x180
+   do_vmi_munmap+0xac/0x160
+   __vm_munmap+0xb0/0x138
+   vm_munmap+0x14/0x20
+   gcs_free+0x70/0x80
+   mm_release+0x1c/0xc8
+   exit_mm_release+0x28/0x38
+   do_exit+0x190/0x8ec
+   do_group_exit+0x34/0x90
+   get_signal+0x794/0x858
+   arch_do_signal_or_restart+0x11c/0x3e0
+   exit_to_user_mode_loop+0x10c/0x17c
+   el0_da+0x8c/0x9c
+   el0t_64_sync_handler+0xd0/0xf0
+   el0t_64_sync+0x198/0x19c
+  Code: aa1603e2 d34cfc00 cb813001 8b011861 (f9400420)
 
-results in a crash:
+Similarly to how the kernel handles protection_map[], use a
+gcs_page_prot variable to store the protection bits and clear PTE_SHARED
+if LPA2 is enabled.
 
- PF: supervisor read access in kernel mode
- PF: error_code(0x0000) - not-present page
- PGD 0 P4D 0
- Oops: Oops: 0000 [#1] SMP PTI
- ...
- RIP: 0010:store_no_turbo+0x100/0x1f0
- ...
+Also remove the unused PAGE_GCS{,_RO} macros.
 
-This occurs because for_each_possible_cpu() returns CPUs even if they
-are not online. For those CPUs, all_cpu_data[] will be NULL. Since
-commit 973207ae3d7c ("cpufreq: intel_pstate: Rearrange max frequency
-updates handling code"), all_cpu_data[] is dereferenced even for CPUs
-which are not online, causing the NULL pointer dereference.
-
-To fix that, pass CPU number to intel_pstate_update_max_freq() and use
-all_cpu_data[] for those CPUs for which there is a valid cpufreq policy.
-
-Fixes: 973207ae3d7c ("cpufreq: intel_pstate: Rearrange max frequency updates handling code")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221068
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
-Link: https://patch.msgid.link/20260225001752.890164-1-srinivas.pandruvada@linux.intel.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 6497b66ba694 ("arm64/mm: Map pages for guarded control stack")
+Reported-by: Emanuele Rocca <emanuele.rocca@arm.com>
+Cc: stable@vger.kernel.org
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/intel_pstate.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/include/asm/pgtable-prot.h | 3 ---
+ arch/arm64/mm/mmap.c                  | 8 ++++++--
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
-index 1625ec2d0d06a..ec8308629432b 100644
---- a/drivers/cpufreq/intel_pstate.c
-+++ b/drivers/cpufreq/intel_pstate.c
-@@ -1476,13 +1476,13 @@ static void __intel_pstate_update_max_freq(struct cpufreq_policy *policy,
- 	refresh_frequency_limits(policy);
+diff --git a/arch/arm64/include/asm/pgtable-prot.h b/arch/arm64/include/asm/pgtable-prot.h
+index 161e8660edddc..ea6f5458ae2e1 100644
+--- a/arch/arm64/include/asm/pgtable-prot.h
++++ b/arch/arm64/include/asm/pgtable-prot.h
+@@ -164,9 +164,6 @@ static inline bool __pure lpa2_is_enabled(void)
+ #define _PAGE_GCS	(_PAGE_DEFAULT | PTE_NG | PTE_UXN | PTE_WRITE | PTE_USER)
+ #define _PAGE_GCS_RO	(_PAGE_DEFAULT | PTE_NG | PTE_UXN | PTE_USER)
+ 
+-#define PAGE_GCS	__pgprot(_PAGE_GCS)
+-#define PAGE_GCS_RO	__pgprot(_PAGE_GCS_RO)
+-
+ #define PIE_E0	( \
+ 	PIRx_ELx_PERM_PREP(pte_pi_index(_PAGE_GCS),           PIE_GCS)  | \
+ 	PIRx_ELx_PERM_PREP(pte_pi_index(_PAGE_GCS_RO),        PIE_R)   | \
+diff --git a/arch/arm64/mm/mmap.c b/arch/arm64/mm/mmap.c
+index 08ee177432c2f..75f343009b4b1 100644
+--- a/arch/arm64/mm/mmap.c
++++ b/arch/arm64/mm/mmap.c
+@@ -34,6 +34,8 @@ static pgprot_t protection_map[16] __ro_after_init = {
+ 	[VM_SHARED | VM_EXEC | VM_WRITE | VM_READ]	= PAGE_SHARED_EXEC
+ };
+ 
++static ptdesc_t gcs_page_prot __ro_after_init = _PAGE_GCS_RO;
++
+ /*
+  * You really shouldn't be using read() or write() on /dev/mem.  This might go
+  * away in the future.
+@@ -73,9 +75,11 @@ static int __init adjust_protection_map(void)
+ 		protection_map[VM_EXEC | VM_SHARED] = PAGE_EXECONLY;
+ 	}
+ 
+-	if (lpa2_is_enabled())
++	if (lpa2_is_enabled()) {
+ 		for (int i = 0; i < ARRAY_SIZE(protection_map); i++)
+ 			pgprot_val(protection_map[i]) &= ~PTE_SHARED;
++		gcs_page_prot &= ~PTE_SHARED;
++	}
+ 
+ 	return 0;
  }
+@@ -87,7 +91,7 @@ pgprot_t vm_get_page_prot(vm_flags_t vm_flags)
  
--static bool intel_pstate_update_max_freq(struct cpudata *cpudata)
-+static bool intel_pstate_update_max_freq(int cpu)
- {
--	struct cpufreq_policy *policy __free(put_cpufreq_policy) = cpufreq_cpu_get(cpudata->cpu);
-+	struct cpufreq_policy *policy __free(put_cpufreq_policy) = cpufreq_cpu_get(cpu);
- 	if (!policy)
- 		return false;
- 
--	__intel_pstate_update_max_freq(policy, cpudata);
-+	__intel_pstate_update_max_freq(policy, all_cpu_data[cpu]);
- 
- 	return true;
- }
-@@ -1501,7 +1501,7 @@ static void intel_pstate_update_limits_for_all(void)
- 	int cpu;
- 
- 	for_each_possible_cpu(cpu)
--		intel_pstate_update_max_freq(all_cpu_data[cpu]);
-+		intel_pstate_update_max_freq(cpu);
- 
- 	mutex_lock(&hybrid_capacity_lock);
- 
-@@ -1908,7 +1908,7 @@ static void intel_pstate_notify_work(struct work_struct *work)
- 	struct cpudata *cpudata =
- 		container_of(to_delayed_work(work), struct cpudata, hwp_notify_work);
- 
--	if (intel_pstate_update_max_freq(cpudata)) {
-+	if (intel_pstate_update_max_freq(cpudata->cpu)) {
- 		/*
- 		 * The driver will not be unregistered while this function is
- 		 * running, so update the capacity without acquiring the driver
+ 	/* Short circuit GCS to avoid bloating the table. */
+ 	if (system_supports_gcs() && (vm_flags & VM_SHADOW_STACK)) {
+-		prot = _PAGE_GCS_RO;
++		prot = gcs_page_prot;
+ 	} else {
+ 		prot = pgprot_val(protection_map[vm_flags &
+ 				   (VM_READ|VM_WRITE|VM_EXEC|VM_SHARED)]);
 -- 
 2.51.0
 
