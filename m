@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0973038758A;
-	Tue, 10 Mar 2026 11:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B532138758A;
+	Tue, 10 Mar 2026 11:13:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141232; cv=none; b=XC4XoloNt/fwgKLGpOErUPwjFc5CIyaHOVHrhtFgn3OLQ9izbXw5mSsjRqLjvbbv2VR8yIGDM129aIVXpAfyGZMl+W7l+MEjsi32I1dSWTq2eWcTgb+IbZ2Dgph/OePruJyjiHx5dJYg5TXz8JXYUhlyZrLDCi5TxD0Eh+LxPtk=
+	t=1773141232; cv=none; b=tQSzCNDhoDSau/SfGeQSQXGbRVGNJWtqpl7mRovfqx0ODsK43nCc5h/xh83Q233a10P1U386zcy3rhefOn9PnKC3+Mu4N+BylFzRDTu9r0ihzbK1hlo5+etjQ94ufDbNnXFOdCLNcPA93hv5eqGG1QgiF009VtTH/HgtG0uSpo0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141232; c=relaxed/simple;
-	bh=X7wfGJe2aBJra2FnK03EeNQFlzogazhoP0nUrY0XFk8=;
+	bh=P/U7vbyeANPrCQteO2eH99cvpU8x03/Um4hgS9Uqxd0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aghl+O+d47sCao8faHJ3ZK1yxf1lEq/WMGB1RG+EEMFYmRM/y+rLrTheFVu3RuT0Jwf+I81zO2UVY/8WcQEnXlM2Yezpq/cMK2VcCtSHcJCqkmxMFPhuAG3kgiIdOVxcm+2Ij4I7WYfmrAE8fl+j6OLV1dCEHBtlXKI1KKCbxvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=l7fbAZdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C8nSFwRpukH0hhr0ZlEGzwtMNA1t3Yb4shrcaWknGOgkcqbrTw9lUmJOVTCShvg9DeC/zrj2OQLLxvIsemPFXPEwBK4/Zys9r0/0O3igE8TG3hhSHgTacnGogSCJJ45lxd4RXHTs/LiDieX8oNA8KIb5vmaGARdR7BG37PjmhXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NFs2GZgf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="l7fbAZdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED311C2BC9E;
-	Tue, 10 Mar 2026 11:13:50 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NFs2GZgf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA089C19423;
+	Tue, 10 Mar 2026 11:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141231;
-	bh=X7wfGJe2aBJra2FnK03EeNQFlzogazhoP0nUrY0XFk8=;
+	s=k20201202; t=1773141232;
+	bh=P/U7vbyeANPrCQteO2eH99cvpU8x03/Um4hgS9Uqxd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l7fbAZdMOGfbPPZ57lYo3qsoXZ/MS7Kv+rlE6lKg2MsHTG61YS4q7GSDyri9T3vSK
-	 XzeKKSwlls0hKCx27yQDpDA5TcetutHev+54u+z0dmgvIg/Q43/PFvLSOkXR2tVw8R
-	 W6bg4696jVoXBRI+gu/KDxO484NBCbeYBiS5ZQe/pvhrMaJ3bgv2HdS0YAQ4bqi/a+
-	 v+AcEdWYUJitLqj8ZtrNxeJ8LPuzSBCyT4b4yMxWjRSsqzmBjNO9VvP52O1bdvfLT1
-	 mM6M4bCQo6Afa++ZdpjOvcGEMJ7OwJlaXp+VNmGUeJHQ8oeLiojT2cDBtSDTZ/Ojc7
-	 ZqO33Pj7JFZmg==
+	b=NFs2GZgfoiChgHF0soHHktwdL7wUJr6fqUcrgq5V6jlAcPsc/8HMJhh5l6GnCc4BA
+	 afYSBlfUov0fnElD/mvKWATaCuC/Sru0Wk8UstXzVkik1VxTySBKKSinuA1iGqTK4N
+	 c4t+rDDf098cYhascQgXv2C5GsKhnLt9SE02DRUbiW61UYy86np3hUsk6vFW8lOavm
+	 cKdBWyzFBvyugimFfpAZfk2+Yj4gBgmhQvEOkT431oBc+uyk8U3jBeTQrQd+oFmt3r
+	 6e0nevKorqZSeIK5Ko3R1WQcIl2BmdtGMKpDxYlyfqmNjJhtTI1T0qdKdO3JQZA+u7
+	 kpqFPXzRHxDpw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jiayuan Chen <jiayuan.chen@shopee.com>,
-	syzbot+5a287bcdc08104bc3132@syzkaller.appspotmail.com,
+Cc: Vimlesh Kumar <vimleshk@marvell.com>,
+	Sathesh Edara <sedara@marvell.com>,
+	Shinas Rasheed <srasheed@marvell.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 233/311] bpf/bonding: reject vlan+srcmac xmit_hash_policy change when XDP is loaded
-Date: Tue, 10 Mar 2026 07:04:40 -0400
-Message-ID: <45e9934871923c8fa5cffb3bb2005a22aa6735d9.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 234/311] octeon_ep: Relocate counter updates before NAPI
+Date: Tue, 10 Mar 2026 07:04:41 -0400
+Message-ID: <a92cee81884093cc2274c08598bcaa3a7aa93efb.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,117 +50,79 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Vimlesh Kumar <vimleshk@marvell.com>
 
-[ Upstream commit 479d589b40b836442bbdadc3fdb37f001bb67f26 ]
+[ Upstream commit 18c04a808c436d629d5812ce883e3822a5f5a47f ]
 
-bond_option_mode_set() already rejects mode changes that would make a
-loaded XDP program incompatible via bond_xdp_check().  However,
-bond_option_xmit_hash_policy_set() has no such guard.
+Relocate IQ/OQ IN/OUT_CNTS updates to occur before NAPI completion,
+and replace napi_complete with napi_complete_done.
 
-For 802.3ad and balance-xor modes, bond_xdp_check() returns false when
-xmit_hash_policy is vlan+srcmac, because the 802.1q payload is usually
-absent due to hardware offload.  This means a user can:
+Moving the IQ/OQ counter updates before napi_complete_done ensures
+1. Counter registers are updated before re-enabling interrupts.
+2. Prevents a race where new packets arrive but counters aren't properly
+   synchronized.
+napi_complete_done (vs napi_complete) allows for better
+interrupt coalescing.
 
-1. Attach a native XDP program to a bond in 802.3ad/balance-xor mode
-   with a compatible xmit_hash_policy (e.g. layer2+3).
-2. Change xmit_hash_policy to vlan+srcmac while XDP remains loaded.
-
-This leaves bond->xdp_prog set but bond_xdp_check() now returning false
-for the same device.  When the bond is later destroyed, dev_xdp_uninstall()
-calls bond_xdp_set(dev, NULL, NULL) to remove the program, which hits
-the bond_xdp_check() guard and returns -EOPNOTSUPP, triggering:
-
-WARN_ON(dev_xdp_install(dev, mode, bpf_op, NULL, 0, NULL))
-
-Fix this by rejecting xmit_hash_policy changes to vlan+srcmac when an
-XDP program is loaded on a bond in 802.3ad or balance-xor mode.
-
-commit 39a0876d595b ("net, bonding: Disallow vlan+srcmac with XDP")
-introduced bond_xdp_check() which returns false for 802.3ad/balance-xor
-modes when xmit_hash_policy is vlan+srcmac.  The check was wired into
-bond_xdp_set() to reject XDP attachment with an incompatible policy, but
-the symmetric path -- preventing xmit_hash_policy from being changed to an
-incompatible value after XDP is already loaded -- was left unguarded in
-bond_option_xmit_hash_policy_set().
-
-Note:
-commit 094ee6017ea0 ("bonding: check xdp prog when set bond mode")
-later added a similar guard to bond_option_mode_set(), but
-bond_option_xmit_hash_policy_set() remained unprotected.
-
-Reported-by: syzbot+5a287bcdc08104bc3132@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/6995aff6.050a0220.2eeac1.014e.GAE@google.com/T/
-Fixes: 39a0876d595b ("net, bonding: Disallow vlan+srcmac with XDP")
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260226080306.98766-2-jiayuan.chen@linux.dev
+Fixes: 37d79d0596062 ("octeon_ep: add Tx/Rx processing and interrupt support")
+Signed-off-by: Sathesh Edara <sedara@marvell.com>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
+Link: https://patch.msgid.link/20260227091402.1773833-2-vimleshk@marvell.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c    | 9 +++++++--
- drivers/net/bonding/bond_options.c | 2 ++
- include/net/bonding.h              | 1 +
- 3 files changed, 10 insertions(+), 2 deletions(-)
+ .../ethernet/marvell/octeon_ep/octep_main.c   | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 4c58d1dafcacb..739e6eea6b529 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -324,7 +324,7 @@ static bool bond_sk_check(struct bonding *bond)
- 	}
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index 57db7ea2f5be9..7f8ed8f0ade49 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -555,12 +555,12 @@ static void octep_clean_irqs(struct octep_device *oct)
  }
  
--bool bond_xdp_check(struct bonding *bond, int mode)
-+bool __bond_xdp_check(int mode, int xmit_policy)
+ /**
+- * octep_enable_ioq_irq() - Enable MSI-x interrupt of a Tx/Rx queue.
++ * octep_update_pkt() - Update IQ/OQ IN/OUT_CNT registers.
+  *
+  * @iq: Octeon Tx queue data structure.
+  * @oq: Octeon Rx queue data structure.
+  */
+-static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
++static void octep_update_pkt(struct octep_iq *iq, struct octep_oq *oq)
  {
- 	switch (mode) {
- 	case BOND_MODE_ROUNDROBIN:
-@@ -335,7 +335,7 @@ bool bond_xdp_check(struct bonding *bond, int mode)
- 		/* vlan+srcmac is not supported with XDP as in most cases the 802.1q
- 		 * payload is not in the packet due to hardware offload.
- 		 */
--		if (bond->params.xmit_policy != BOND_XMIT_POLICY_VLAN_SRCMAC)
-+		if (xmit_policy != BOND_XMIT_POLICY_VLAN_SRCMAC)
- 			return true;
- 		fallthrough;
- 	default:
-@@ -343,6 +343,11 @@ bool bond_xdp_check(struct bonding *bond, int mode)
- 	}
- }
+ 	u32 pkts_pend = oq->pkts_pending;
  
-+bool bond_xdp_check(struct bonding *bond, int mode)
-+{
-+	return __bond_xdp_check(mode, bond->params.xmit_policy);
+@@ -576,7 +576,17 @@ static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
+ 	}
+ 
+ 	/* Flush the previous wrties before writing to RESEND bit */
+-	wmb();
++	smp_wmb();
 +}
 +
- /*---------------------------------- VLAN -----------------------------------*/
++/**
++ * octep_enable_ioq_irq() - Enable MSI-x interrupt of a Tx/Rx queue.
++ *
++ * @iq: Octeon Tx queue data structure.
++ * @oq: Octeon Rx queue data structure.
++ */
++static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
++{
+ 	writeq(1UL << OCTEP_OQ_INTR_RESEND_BIT, oq->pkts_sent_reg);
+ 	writeq(1UL << OCTEP_IQ_INTR_RESEND_BIT, iq->inst_cnt_reg);
+ }
+@@ -602,7 +612,8 @@ static int octep_napi_poll(struct napi_struct *napi, int budget)
+ 	if (tx_pending || rx_done >= budget)
+ 		return budget;
  
- /* In the following 2 functions, bond_vlan_rx_add_vid and bond_vlan_rx_kill_vid,
-diff --git a/drivers/net/bonding/bond_options.c b/drivers/net/bonding/bond_options.c
-index f1c6e9d8f6167..adc216df43459 100644
---- a/drivers/net/bonding/bond_options.c
-+++ b/drivers/net/bonding/bond_options.c
-@@ -1574,6 +1574,8 @@ static int bond_option_fail_over_mac_set(struct bonding *bond,
- static int bond_option_xmit_hash_policy_set(struct bonding *bond,
- 					    const struct bond_opt_value *newval)
- {
-+	if (bond->xdp_prog && !__bond_xdp_check(BOND_MODE(bond), newval->value))
-+		return -EOPNOTSUPP;
- 	netdev_dbg(bond->dev, "Setting xmit hash policy to %s (%llu)\n",
- 		   newval->string, newval->value);
- 	bond->params.xmit_policy = newval->value;
-diff --git a/include/net/bonding.h b/include/net/bonding.h
-index 4620784035570..99c1bdadcd11a 100644
---- a/include/net/bonding.h
-+++ b/include/net/bonding.h
-@@ -698,6 +698,7 @@ void bond_debug_register(struct bonding *bond);
- void bond_debug_unregister(struct bonding *bond);
- void bond_debug_reregister(struct bonding *bond);
- const char *bond_mode_name(int mode);
-+bool __bond_xdp_check(int mode, int xmit_policy);
- bool bond_xdp_check(struct bonding *bond, int mode);
- void bond_setup(struct net_device *bond_dev);
- unsigned int bond_get_num_tx_queues(void);
+-	napi_complete(napi);
++	octep_update_pkt(ioq_vector->iq, ioq_vector->oq);
++	napi_complete_done(napi, rx_done);
+ 	octep_enable_ioq_irq(ioq_vector->iq, ioq_vector->oq);
+ 	return rx_done;
+ }
 -- 
 2.51.0
 
