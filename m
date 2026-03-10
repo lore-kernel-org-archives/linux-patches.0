@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203432BF3E2;
-	Tue, 10 Mar 2026 11:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 159D12BF3E2;
+	Tue, 10 Mar 2026 11:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141166; cv=none; b=nKWen7u+sz22rl6TZlkcTYmJkHVmMF+CN4AjuVglINv7Id7mUtwGsbsY9knRQSLTamYoJxoCb8c1hrK4W/LMh5OUFUxcYj7HwgP09GRqQH5GWGMvIlzmPtW7L4W70rR/cdFO3kP5/TBtmNhgmFlS5BLnbpCPEmEvQ6Xtza/5ElQ=
+	t=1773141167; cv=none; b=kJoSINZvoPyXhFhRHd8A4cK+AN/Z4tx7U0xMKdXn0e11ZwBVjmDR8fUd0cGWzpcyOuVl/1bL/XoRUsHwPqRSC1jA4l0QI/xcrTIWLq0u34uQQDtL3SADPsvCo3fIqHHhJGeePqr7VwC1GiCrwxy8Uy4JiT8EYyVU4zbTSQ6BI2U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141166; c=relaxed/simple;
-	bh=n/j+VXbsXidyGNmueGfQU0/1o9/FIOt65tHbXNV5r0c=;
+	s=arc-20240116; t=1773141167; c=relaxed/simple;
+	bh=EnVUXXfh2SFNYfCWzl616ycrwrSGOdvuk5GvgqINENg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oNn8nB4ZTJL3/RlG/eTR44vxjxJR5j8gsy+51BzOhgiqw0Ro/k7AeeNZf8eI5dYTcNnASdZyze4JhXpzTK/S5Y+fxSMM8Ax2yIQB2Rup7uigjJ1hWdJ6FlGiKVyKlLNLOZOAD+IJPf09LTUcbzitEhLNXVD0gtNw3g+GxJ2TuEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=iWFyN6nC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Hh9FUXwNvv7HMYHic2LJli6N1HUrgkuTIUT3hb8XnhHmoC2HNgIcpTKtZtueTb9vhDgY4qW/sKsYJqq1tDMo5WNuFWdEAFxjSN/53kpp9g6Ftzlm6IC2/ubnKLPQ1ODBR8vVuKjjXPjxtz9S6prmCZJd0la1xU9jnIm+EZBMkog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JI4ojYeH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="iWFyN6nC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191AAC2BC86;
-	Tue, 10 Mar 2026 11:12:45 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JI4ojYeH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B96C19423;
+	Tue, 10 Mar 2026 11:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141166;
-	bh=n/j+VXbsXidyGNmueGfQU0/1o9/FIOt65tHbXNV5r0c=;
+	s=k20201202; t=1773141167;
+	bh=EnVUXXfh2SFNYfCWzl616ycrwrSGOdvuk5GvgqINENg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWFyN6nCNLNpQRkL7bC/xTcKb5HKxSs0GGIUuQ5OszHUQz2ohZU5ojtJWqq6/KklB
-	 +0VOlP7Y+lppYO92dddaZ22o9/FLmyf5OQ4UVeCqAR16CYI/fTzcAg3/mVrD06s4e0
-	 fsTfHSwIIYq5T4Zd4gIrxd/XnUQ/bcvLFvTX3Aau4e5r8wLaqLQOim56odsy4ba64+
-	 Y6f31D+FTEkkbhuIoW78wl1IUNMLSdyvyT9hUDbFaXR4O9P9rkg5tNUDq2u+MjsbBD
-	 A8QUTjzlxvili3eY5XC0UiNiek42nFjB4uEek1a/vOnR2Riz6NQ7Vg6ESrKeGn7LVJ
-	 GKIScIzSu4mVQ==
+	b=JI4ojYeHD6UOJnAsgY2B8VfK0V04JgGRITi+ZP7qEG6eBgRTqVWo+12NoXp9X6NIB
+	 AA5lyYfGrZzPxsghO5Md39CTiBEm0dLZiHqrxlFJL/aqjBjWjEroucK9CaqNRp7Uxn
+	 twQjuRmH0ReBl5NZ8/UAWkMyfOnXLejoARX+9AC1zCiUERlIdoe8jhcurvecJ6B0v0
+	 CeedhnkjAdJyC1/v1Cr+2MzaN//OfeLAa7pdWSts8Mlylp7vG72VZ1zQH8BDlTurUS
+	 4yBfIvUCRn2Dsk9hXhjw0ho8pIlIpfa4z4lWlnKjUYIiPmiNuCOOAbO2Zj+8K3aIDT
+	 dHvLvRh8cvN1g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	Michal Suchanek <msuchanek@suse.de>,
-	Rainer Fiebig <jrf@mailbox.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Nicolas Schier <nsc@kernel.org>,
+Cc: Boris Faure <boris@fau.re>,
+	Mark Brown <broonie@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 168/311] kbuild: Leave objtool binary around with 'make clean'
-Date: Tue, 10 Mar 2026 07:03:35 -0400
-Message-ID: <b0892a1b8f6e150feca89fdb9f06c61f18c27a01.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 169/311] ASoC: sdca: Fix missing regmap dependencies in Kconfig
+Date: Tue, 10 Mar 2026 07:03:36 -0400
+Message-ID: <ddbc3e6833c67f34a0a3352959ef2ad216f93963.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -52,108 +49,62 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Boris Faure <boris@fau.re>
 
-commit fdb12c8a24a453bdd6759979b6ef1e04ebd4beb4 upstream.
+commit bbb758a6943e19c483ab752cf8220140b46cf22c upstream.
 
-The difference between 'make clean' and 'make mrproper' is documented in
-'make help' as:
+The SDCA modules failed to build with modpost errors:
 
-  clean     - Remove most generated files but keep the config and
-              enough build support to build external modules
-  mrproper  - Remove all generated files + config + various backup files
+  ERROR: modpost: "__devm_regmap_init_sdw" [sound/soc/sdca/snd-soc-sdca-class.ko] undefined!
+  ERROR: modpost: "__devm_regmap_init_sdw_mbq" [sound/soc/sdca/snd-soc-sdca-class-function.ko] undefined!
 
-After commit 68b4fe32d737 ("kbuild: Add objtool to top-level clean
-target"), running 'make clean' then attempting to build an external
-module with the resulting build directory fails with
+The issue occurs because:
+- sdca_class.c calls devm_regmap_init_sdw() which requires REGMAP_SOUNDWIRE
+- sdca_class_function.c calls devm_regmap_init_sdw_mbq_cfg() which requires REGMAP_SOUNDWIRE_MBQ
 
-  $ make ARCH=x86_64 O=build clean
+However, the Kconfig didn't select these dependencies, causing the symbols
+to be unavailable when the SDCA modules are built.
 
-  $ make -C build M=... MO=...
-  ...
-  /bin/sh: line 1: .../build/tools/objtool/objtool: No such file or directory
+Fix this by adding:
+- select REGMAP_SOUNDWIRE to SND_SOC_SDCA_CLASS
+- select REGMAP_SOUNDWIRE_MBQ to SND_SOC_SDCA_CLASS_FUNCTION
 
-as 'make clean' removes the objtool binary.
+This ensures the required regmap drivers are enabled when building SDCA support.
 
-Split the objtool clean target into mrproper and clean like Kbuild does
-and remove all generated artifacts with 'make clean' except for the
-objtool binary, which is removed with 'make mrproper'. To avoid a small
-race when running the objtool clean target through both objtool_mrproper
-and objtool_clean when running 'make mrproper', modify objtool's clean
-up find command to avoid using find's '-delete' command by piping the
-files into 'xargs rm -f' like the rest of Kbuild does.
+Configuration after fix:
+  CONFIG_SND_SOC_SDCA_CLASS=m
+  CONFIG_SND_SOC_SDCA_CLASS_FUNCTION=m
+  CONFIG_REGMAP_SOUNDWIRE=m
+  CONFIG_REGMAP_SOUNDWIRE_MBQ=m
 
-Cc: stable@vger.kernel.org
-Fixes: 68b4fe32d737 ("kbuild: Add objtool to top-level clean target")
-Reported-by: Michal Suchanek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/20260225112633.6123-1-msuchanek@suse.de/
-Reported-by: Rainer Fiebig <jrf@mailbox.org>
-Closes: https://lore.kernel.org/62d12399-76e5-3d40-126a-7490b4795b17@mailbox.org/
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Boris Faure <boris@fau.re>
+Link: https://patch.msgid.link/20260129141419.13843-1-boris@fau.re
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Randy Dunlap <rdunlap@infradead.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile               | 8 ++++----
- tools/objtool/Makefile | 8 +++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ sound/soc/sdca/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 67f26d8b29343..faab511ef38c0 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1474,13 +1474,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
- 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
- endif
+diff --git a/sound/soc/sdca/Kconfig b/sound/soc/sdca/Kconfig
+index fabb69a3450d3..87ab2895096c1 100644
+--- a/sound/soc/sdca/Kconfig
++++ b/sound/soc/sdca/Kconfig
+@@ -46,12 +46,14 @@ config SND_SOC_SDCA_CLASS
+ 	select SND_SOC_SDCA_FDL
+ 	select SND_SOC_SDCA_HID
+ 	select SND_SOC_SDCA_IRQ
++	select REGMAP_SOUNDWIRE
+ 	help
+ 	  This option enables support for the SDCA Class driver which should
+ 	  support any class compliant SDCA part.
  
--PHONY += objtool_clean
-+PHONY += objtool_clean objtool_mrproper
- 
- objtool_O = $(abspath $(objtree))/tools/objtool
- 
--objtool_clean:
-+objtool_clean objtool_mrproper:
- ifneq ($(wildcard $(objtool_O)),)
--	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
-+	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) $(patsubst objtool_%,%,$@)
- endif
- 
- tools/: FORCE
-@@ -1657,7 +1657,7 @@ PHONY += $(mrproper-dirs) mrproper
- $(mrproper-dirs):
- 	$(Q)$(MAKE) $(clean)=$(patsubst _mrproper_%,%,$@)
- 
--mrproper: clean $(mrproper-dirs)
-+mrproper: clean objtool_mrproper $(mrproper-dirs)
- 	$(call cmd,rmfiles)
- 	@find . $(RCS_FIND_IGNORE) \
- 		\( -name '*.rmeta' \) \
-diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
-index 6964175abdfdf..76bcd4e85de34 100644
---- a/tools/objtool/Makefile
-+++ b/tools/objtool/Makefile
-@@ -142,13 +142,15 @@ $(LIBSUBCMD)-clean:
- 	$(Q)$(RM) -r -- $(LIBSUBCMD_OUTPUT)
- 
- clean: $(LIBSUBCMD)-clean
--	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
--	$(Q)find $(OUTPUT) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
-+	$(Q)find $(OUTPUT) \( -name '*.o' -o -name '\.*.cmd' -o -name '\.*.d' \) -type f -print | xargs $(RM)
- 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/cpu-feature-names.c $(OUTPUT)fixdep
- 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/inat-tables.c $(OUTPUT)fixdep
- 	$(Q)$(RM) -- $(OUTPUT)FEATURE-DUMP.objtool
- 	$(Q)$(RM) -r -- $(OUTPUT)feature
- 
-+mrproper: clean
-+	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
-+
- FORCE:
- 
--.PHONY: clean FORCE
-+.PHONY: clean mrproper FORCE
+ config SND_SOC_SDCA_CLASS_FUNCTION
+ 	tristate
++	select REGMAP_SOUNDWIRE_MBQ
+ 	help
+ 	  This option enables support for the SDCA Class Function drivers,
+ 	  these implement the individual functions of the SDCA Class driver.
 -- 
 2.51.0
 
