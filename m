@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AB5238423F;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F253D36EA89;
 	Tue, 10 Mar 2026 11:11:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141071; cv=none; b=BBpjYezKvHlWKvz0mFR9QF6EOl8475Xf+aCRtwdjQGdIS2V969ABJlNRZT1NWBF2GNGUu2LCtx0CjCPqjZsUc8CmgEjTRMkMlMTRoWe83ITKBa6iAYjc6YYqQjtdIpU+iEfluiYYRpb1PVJE7cpwMRf8Gh/qPVc30jhGcYkYdhM=
+	t=1773141072; cv=none; b=hI1+zzhjmdPQreLdPjjR8QCRbGu7uoHopSIm/8JAv1d/SJ2NVay2tU6mXPuYh4iQaVKSO8pKZTh4NBpNoVfEwQDuFlNAjXJIkWQclNFkM5EV9Cq5FrmI58S1iTphJe9MuAVptz9R/qwfFLaPUoIAV8Eu89Ye20vqeZs20d4YEJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141071; c=relaxed/simple;
-	bh=PAjhTulSp+4tQ8o81yYQl4Z1FI0qI1eEO5x0HltSE3Q=;
+	s=arc-20240116; t=1773141072; c=relaxed/simple;
+	bh=Usr0u/7RVGGEjsFzuaOJyyaRuuQjRlQ7RipFGwNUxiw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gl7b7x7rZZEUWhj1Oruum32tDEzEvtl7d5xOzVeLiE+CbH4d2ntrpuAtB/5/d3KkpZBFCe9TBZ/tzTO7znMJdFZz1bTTzAtINdcYn4xEG25ThbcaoOPxuOhQYjdRPIH3YzPHZhIPtve2IVgnvAoPevb5PPOjVsLTFre7pmz9cIo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=VnMgA5go; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=puc/ol/lWeO/pEZIeEstvgZHN1ifB5KrgueVnxKpd1MsCk/FhwgJJBWDdS+iKfLDBaBFNd9yfvXC9z1GEdStlMuHI39+L4vUZE238zvNG0qeMT3uWgPqX8+IC4GPm27tV+CVMu3vyHWu78Ej55qemYytM1AcfGyfykO8i0FaZYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hJmsNs0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="VnMgA5go"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43469C19423;
-	Tue, 10 Mar 2026 11:11:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hJmsNs0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318BFC2BCAF;
+	Tue, 10 Mar 2026 11:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141070;
-	bh=PAjhTulSp+4tQ8o81yYQl4Z1FI0qI1eEO5x0HltSE3Q=;
+	s=k20201202; t=1773141071;
+	bh=Usr0u/7RVGGEjsFzuaOJyyaRuuQjRlQ7RipFGwNUxiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VnMgA5goicP+F9U7KrRks2YUZInU06C6Ul4f6IVpUY9I+vxM+CNwx8eO7uZOq+6po
-	 jTL5rSrq2uXQI8SstiLhUmDW+g8jHckGw10sO7v+QtkZi8HewMaIJaCXN7FiU43qtk
-	 6YsS4IXUePkaL5ezihSxcG/kH5WdLw22MNcDNBU0KSOKSwC0C/K3LZbBu+eUnAR33C
-	 VsdBkr8+H+++I38ytxEgzB+zJGWWoS7kmwGwiiZ2w/uBfc72MRUb04I4vVSO2WGzN5
-	 IzQeIIwc0OdKV15E4QMmcscg3cG1iD8c3cJ893Wfb+BtoKEwXjB+EVldSm8u3e3z92
-	 /IVO3c97Y5m6w==
+	b=hJmsNs0/3fsTQVgo+Ecsdo3M5PbyIYCkKA9Cs9k77dnWcmoO0uih92x8uAHl7Wsrk
+	 xYaI1HYFanV1+l7BwvGuGXWgqdjw4rsfsitBUcOjtDPd0ybNKGZJ0kS8c4sajNFK35
+	 dKuCFrVyBuNUqyHFDuMwEW2Mr/nBfjBY4MNaXAkQ3cCyHbtnUI3l2KkfBTBSSxBk23
+	 z1QxZs3qVxP3I6SAsV+GCoqflJl/rcvPmVy8G7kiUQolHYO6T8s7mWGJ+aAjdNRs4d
+	 C/+HLl33mrU7o1UPMySH4OTofJL+UZ/PbrMfBpN20JpiF7n8wOAxyVnJrUjS5OaZTm
+	 zbhpUswi1R+Dw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lijo Lazar <lijo.lazar@amd.com>,
-	Ce Sun <cesun102@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+Cc: Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 070/311] drm/amdgpu: Fix error handling in slot reset
-Date: Tue, 10 Mar 2026 07:01:57 -0400
-Message-ID: <8777a2c225f4f5b11a80470a4bca13ae08bb7790.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 071/311] ALSA: hda: cs35l56: Fix signedness error in cs35l56_hda_posture_put()
+Date: Tue, 10 Mar 2026 07:01:58 -0400
+Message-ID: <91585cf1a084e7a6c18156ea4b5e93990e767c2d.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,70 +48,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit b57c4ec98c17789136a4db948aec6daadceb5024 ]
+[ Upstream commit 003ce8c9b2ca28fbb4860651e76fb1c9a91f2ea1 ]
 
-If the device has not recovered after slot reset is called, it goes to
-out label for error handling. There it could make decision based on
-uninitialized hive pointer and could result in accessing an uninitialized
-list.
+In cs35l56_hda_posture_put() assign ucontrol->value.integer.value[0] to
+a long instead of an unsigned long. ucontrol->value.integer.value[0] is
+a long.
 
-Initialize the list and hive properly so that it handles the error
-situation and also releases the reset domain lock which is acquired
-during error_detected callback.
+This fixes the sparse warning:
 
-Fixes: 732c6cefc1ec ("drm/amdgpu: Replace tmp_adev with hive in amdgpu_pci_slot_reset")
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Ce Sun <cesun102@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit bb71362182e59caa227e4192da5a612b09349696)
+sound/hda/codecs/side-codecs/cs35l56_hda.c:256:20: warning: unsigned value
+that used to be signed checked against zero?
+sound/hda/codecs/side-codecs/cs35l56_hda.c:252:29: signed value source
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 73cfbfa9caea8 ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Link: https://patch.msgid.link/20260226111728.1700431-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ sound/hda/codecs/side-codecs/cs35l56_hda.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 09f9d82e572da..ad5a3235a75f1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -7203,6 +7203,15 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
- 	dev_info(adev->dev, "PCI error: slot reset callback!!\n");
+diff --git a/sound/hda/codecs/side-codecs/cs35l56_hda.c b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+index f7ba92e119578..32d734bf2fdf8 100644
+--- a/sound/hda/codecs/side-codecs/cs35l56_hda.c
++++ b/sound/hda/codecs/side-codecs/cs35l56_hda.c
+@@ -249,7 +249,7 @@ static int cs35l56_hda_posture_put(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+-	unsigned long pos = ucontrol->value.integer.value[0];
++	long pos = ucontrol->value.integer.value[0];
+ 	bool changed;
+ 	int ret;
  
- 	memset(&reset_context, 0, sizeof(reset_context));
-+	INIT_LIST_HEAD(&device_list);
-+	hive = amdgpu_get_xgmi_hive(adev);
-+	if (hive) {
-+		mutex_lock(&hive->hive_lock);
-+		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head)
-+			list_add_tail(&tmp_adev->reset_list, &device_list);
-+	} else {
-+		list_add_tail(&adev->reset_list, &device_list);
-+	}
- 
- 	if (adev->pcie_reset_ctx.swus)
- 		link_dev = adev->pcie_reset_ctx.swus;
-@@ -7243,19 +7252,13 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
- 	reset_context.reset_req_dev = adev;
- 	set_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
- 	set_bit(AMDGPU_SKIP_COREDUMP, &reset_context.flags);
--	INIT_LIST_HEAD(&device_list);
- 
--	hive = amdgpu_get_xgmi_hive(adev);
- 	if (hive) {
--		mutex_lock(&hive->hive_lock);
- 		reset_context.hive = hive;
--		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head) {
-+		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head)
- 			tmp_adev->pcie_reset_ctx.in_link_reset = true;
--			list_add_tail(&tmp_adev->reset_list, &device_list);
--		}
- 	} else {
- 		set_bit(AMDGPU_SKIP_HW_RESET, &reset_context.flags);
--		list_add_tail(&adev->reset_list, &device_list);
- 	}
- 
- 	r = amdgpu_device_asic_reset(adev, &device_list, &reset_context);
 -- 
 2.51.0
 
