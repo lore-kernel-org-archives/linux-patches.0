@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7682F352C4F;
-	Tue, 10 Mar 2026 11:12:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5823135AC23;
+	Tue, 10 Mar 2026 11:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141139; cv=none; b=eL59hW+3w8mUIqPxzGyq+7T9IS3X2UusYn6CHZnbKu9LBiUtB/+SoHKI4rFu9SCobxUn+AcmCo/EttpV+biVzzcD6L+ITRX0stNvtPF+ULQN51CLlCofpElVvQomhNf1t/3y9XT3QAOM28DNcCKwI916FTTRV2dL5gO5WxsFR18=
+	t=1773141140; cv=none; b=LHvZdv7x0xlCIg46SKxlu6SjGmEqspZzRgf/IZU6YZsaTw7ZhuAV9oS/91HPmEOnRhLnWrNYLUfyL9s307RZtTBQyJXPu8seSmgSca2JddOFl3QV7vkinwEevVrb9bMnjBpydmKh34Y9KwA8K/0q5crweyFT0JU/MFwahvJASLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141139; c=relaxed/simple;
-	bh=dLRfHKCDBSBZ7py2cuo16+q2aXkSmPQKrk3JWRU5pvI=;
+	s=arc-20240116; t=1773141140; c=relaxed/simple;
+	bh=s38zKs7aIdTeeI34cq8xnsqCV0OfzElDTsh+qo586wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbnRBNlngizqlgYJGUHIfwsOTHDWRC4erR0gQ3cAFdrji+Zf1Ld2Ep5rHkDizu6qU8GJ2seEa1sPD/Yvo/aSpFXRvEScvIM7/2IfuvqkbOApDF3Z70OyejBgmy+iu6vrzCvvOASmGeG9MQNhlLDULLLtW+jt8xSLbV2KLHNK6pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UAeKD9+K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=L7zTbgVxoABLkt0ixSdYPH36q/owl8NVZ/LcfNUDkYNB9uDFTfZHbrekCLHV3WEvD6Cz6bX1cWpLYWyfoMCibRmsWZ8GxfOIx0caL09Q8RrcGRUxstHp31nRSE11dUg4D3YRBZiZoAV9dg2hTs8vIGtUP93WhcNz/fGILteJmWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZULZ9wtL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UAeKD9+K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAE01C2BC86;
-	Tue, 10 Mar 2026 11:12:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZULZ9wtL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EFB6C2BC86;
+	Tue, 10 Mar 2026 11:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141139;
-	bh=dLRfHKCDBSBZ7py2cuo16+q2aXkSmPQKrk3JWRU5pvI=;
+	s=k20201202; t=1773141140;
+	bh=s38zKs7aIdTeeI34cq8xnsqCV0OfzElDTsh+qo586wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAeKD9+KWFhsJyn0QnsyUe5HXvyTgfEQa7sZKVJmVsP9pXGLByfi4LG3IRALWHjad
-	 P/wJhtbn9ceWvwAOrdnZxmiQVB7UMxQEx1vQeArqZVKsKY8dT6vL2xlI9SvUINlVnu
-	 sx1UCJ4TxW0Lvl9LS/INo1tgfeqcRtGGYWgdOI6FRBGZvndn9rDUBeiVh7zEsXZ1Ys
-	 ftfUF4G0WeQlx2HUYcTZwB/xlbHPmPbdeJ0Bkbj90ze3t5nUfKdBoYK1pLDMKPBM1A
-	 H9WN2nD/uj4PArG3m+QMvtdI6XZ1+HSwqPSvCpurTykmreaPgu+DphjkNhJEZSIVzM
-	 xN1/QJqeUzJrA==
+	b=ZULZ9wtLytoft8O7mRiGLwv8B1RVM7f/pZOzFWSd7t7n8KUnbdmV74ToiliK4uuck
+	 psMwLltGlvCi+EjsX5cAI/KbGcfcTL8EifgiZdYMfESBhyTNZjjggaAuzWD+HraMtF
+	 pzRiE9AaYbZmKIjOGP6qGOlfajEoDUf6GIKv6c7dh8BOl2PBIzd9/GKYufAd7XFCs8
+	 8TPDa4DdVVWsMKuM9IWOUfD808L8uqcxgr4mM0r5bEGQehQwAp1M5GPo2L9K7ZfUG0
+	 sSg2NG4eg5PqqtJl5HqpxjZ7O+arqBKm8Qgt5Cl1xRmUikikLPq6nQSRSrWZsk0NO9
+	 HBGatCYw/8S1w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Biggers <ebiggers@kernel.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+Cc: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 143/311] ksmbd: Compare MACs in constant time
-Date: Tue, 10 Mar 2026 07:03:10 -0400
-Message-ID: <1a349ff37a37c8da920e7aed0ee771a6b26e460e.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 144/311] cpufreq: intel_pstate: Fix crash during turbo disable
+Date: Tue, 10 Mar 2026 07:03:11 -0400
+Message-ID: <242867afb662651b0c9f19acfafe57948eaf724c.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,89 +48,84 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit c5794709bc9105935dbedef8b9cf9c06f2b559fa upstream.
+commit 6b050482ec40569429d963ac52afa878691b04c9 upstream.
 
-To prevent timing attacks, MAC comparisons need to be constant-time.
-Replace the memcmp() with the correct function, crypto_memneq().
+When the system is booted with kernel command line argument "nosmt" or
+"maxcpus" to limit the number of CPUs, disabling turbo via:
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+ echo 1 > /sys/devices/system/cpu/intel_pstate/no_turbo
+
+results in a crash:
+
+ PF: supervisor read access in kernel mode
+ PF: error_code(0x0000) - not-present page
+ PGD 0 P4D 0
+ Oops: Oops: 0000 [#1] SMP PTI
+ ...
+ RIP: 0010:store_no_turbo+0x100/0x1f0
+ ...
+
+This occurs because for_each_possible_cpu() returns CPUs even if they
+are not online. For those CPUs, all_cpu_data[] will be NULL. Since
+commit 973207ae3d7c ("cpufreq: intel_pstate: Rearrange max frequency
+updates handling code"), all_cpu_data[] is dereferenced even for CPUs
+which are not online, causing the NULL pointer dereference.
+
+To fix that, pass CPU number to intel_pstate_update_max_freq() and use
+all_cpu_data[] for those CPUs for which there is a valid cpufreq policy.
+
+Fixes: 973207ae3d7c ("cpufreq: intel_pstate: Rearrange max frequency updates handling code")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221068
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 6.16+ <stable@vger.kernel.org> # 6.16+
+Link: https://patch.msgid.link/20260225001752.890164-1-srinivas.pandruvada@linux.intel.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/Kconfig   | 1 +
- fs/smb/server/auth.c    | 4 +++-
- fs/smb/server/smb2pdu.c | 5 +++--
- 3 files changed, 7 insertions(+), 3 deletions(-)
+ drivers/cpufreq/intel_pstate.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/Kconfig b/fs/smb/server/Kconfig
-index 2775162c535c6..12594879cb640 100644
---- a/fs/smb/server/Kconfig
-+++ b/fs/smb/server/Kconfig
-@@ -13,6 +13,7 @@ config SMB_SERVER
- 	select CRYPTO_LIB_MD5
- 	select CRYPTO_LIB_SHA256
- 	select CRYPTO_LIB_SHA512
-+	select CRYPTO_LIB_UTILS
- 	select CRYPTO_CMAC
- 	select CRYPTO_AEAD2
- 	select CRYPTO_CCM
-diff --git a/fs/smb/server/auth.c b/fs/smb/server/auth.c
-index 09af55b71153e..a69e8694605aa 100644
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -15,6 +15,7 @@
- #include <crypto/aead.h>
- #include <crypto/md5.h>
- #include <crypto/sha2.h>
-+#include <crypto/utils.h>
- #include <linux/random.h>
- #include <linux/scatterlist.h>
- 
-@@ -165,7 +166,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn *conn, struct ksmbd_session *sess,
- 			     ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE,
- 			     sess->sess_key);
- 
--	if (memcmp(ntlmv2->ntlmv2_hash, ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE) != 0)
-+	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
-+			  CIFS_HMAC_MD5_HASH_SIZE))
- 		return -EINVAL;
- 	return 0;
+diff --git a/drivers/cpufreq/intel_pstate.c b/drivers/cpufreq/intel_pstate.c
+index 1625ec2d0d06a..ec8308629432b 100644
+--- a/drivers/cpufreq/intel_pstate.c
++++ b/drivers/cpufreq/intel_pstate.c
+@@ -1476,13 +1476,13 @@ static void __intel_pstate_update_max_freq(struct cpufreq_policy *policy,
+ 	refresh_frequency_limits(policy);
  }
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 1022d794bd232..b682e8160504a 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4,6 +4,7 @@
-  *   Copyright (C) 2018 Samsung Electronics Co., Ltd.
-  */
  
-+#include <crypto/utils.h>
- #include <linux/inetdevice.h>
- #include <net/addrconf.h>
- #include <linux/syscalls.h>
-@@ -8879,7 +8880,7 @@ int smb2_check_sign_req(struct ksmbd_work *work)
- 	ksmbd_sign_smb2_pdu(work->conn, work->sess->sess_key, iov, 1,
- 			    signature);
+-static bool intel_pstate_update_max_freq(struct cpudata *cpudata)
++static bool intel_pstate_update_max_freq(int cpu)
+ {
+-	struct cpufreq_policy *policy __free(put_cpufreq_policy) = cpufreq_cpu_get(cpudata->cpu);
++	struct cpufreq_policy *policy __free(put_cpufreq_policy) = cpufreq_cpu_get(cpu);
+ 	if (!policy)
+ 		return false;
  
--	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
- 		pr_err("bad smb2 signature\n");
- 		return 0;
- 	}
-@@ -8967,7 +8968,7 @@ int smb3_check_sign_req(struct ksmbd_work *work)
- 	if (ksmbd_sign_smb3_pdu(conn, signing_key, iov, 1, signature))
- 		return 0;
+-	__intel_pstate_update_max_freq(policy, cpudata);
++	__intel_pstate_update_max_freq(policy, all_cpu_data[cpu]);
  
--	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
- 		pr_err("bad smb2 signature\n");
- 		return 0;
- 	}
+ 	return true;
+ }
+@@ -1501,7 +1501,7 @@ static void intel_pstate_update_limits_for_all(void)
+ 	int cpu;
+ 
+ 	for_each_possible_cpu(cpu)
+-		intel_pstate_update_max_freq(all_cpu_data[cpu]);
++		intel_pstate_update_max_freq(cpu);
+ 
+ 	mutex_lock(&hybrid_capacity_lock);
+ 
+@@ -1908,7 +1908,7 @@ static void intel_pstate_notify_work(struct work_struct *work)
+ 	struct cpudata *cpudata =
+ 		container_of(to_delayed_work(work), struct cpudata, hwp_notify_work);
+ 
+-	if (intel_pstate_update_max_freq(cpudata)) {
++	if (intel_pstate_update_max_freq(cpudata->cpu)) {
+ 		/*
+ 		 * The driver will not be unregistered while this function is
+ 		 * running, so update the capacity without acquiring the driver
 -- 
 2.51.0
 
