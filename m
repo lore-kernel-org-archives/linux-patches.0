@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32AD33859EF;
-	Tue, 10 Mar 2026 11:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06632384245;
+	Tue, 10 Mar 2026 11:06:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140793; cv=none; b=pPW/70sFIym2/xwTJuovKxDgHAfatE+q+QaoBept57ZI3BDXIbOz00FRJLE4UKyt4jOQ8O7nFAtxx94jiA5zeFV4UVFJbln+qkX8qzdMsd+HnuLDgNrJGWOzLsrQfdleUXDtBFhIWNT9mj5eBuN/z/YQKhSyD8rTnVrXi2yfr8w=
+	t=1773140794; cv=none; b=qeVni+HL0K2sKphQy5ETP2kRDcoN1gTm6GDKAuSutHBb4KiDtTdQ2LY4G7Dd7ksc4Q+rv7/deLAdKWBy6THzIPEGhz0Up9GAq2qXv/zNzcUs4ErA312YUz3azvnaRW3fpOBZeBm66Qrs6YRcZe50EETzC06MNZe4ve+w82DGCQw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140793; c=relaxed/simple;
-	bh=CF/liMupwQSJpQfN3YrSSKe+EtgS5ZRGgxkxYk37J90=;
+	s=arc-20240116; t=1773140794; c=relaxed/simple;
+	bh=7xl/NL26zB65QZOtw+G+IXmvi7TT4IynItrWuxyPUnM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r9P8I+S1bebTstnrKjVvKuENwZNeQGqa/Dak8iKZli831gRasEcQGzfHJ+1VgSCAeSeLQPrICyA7ZjLwJC05l36PQa9u0Lvw5a5ETdhla/usMyqgLusMMqXfBdtF7cqsycilVv5Eq12xmiPFvL/eIFHL4m9T1I6j8LjeZhKpBT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ANIz9WLH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WirIfdMuprWtmmYsD98Jxg94Wk5xkEYHAk3arISZp/vca8lb+HNj4UbUeRrWNsOo0oIBRKfPYvJpQLKJVPyCcwkg1W9llyI8OII6etbA17zL5X4mVhoMEA9MeDu5gbteom2cgUU4MaC7P29fZkfZiD73FVOg6D0ksdV/uYRPtf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LvhVzL/e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ANIz9WLH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5486AC19423;
-	Tue, 10 Mar 2026 11:06:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LvhVzL/e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55960C19423;
+	Tue, 10 Mar 2026 11:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773140793;
-	bh=CF/liMupwQSJpQfN3YrSSKe+EtgS5ZRGgxkxYk37J90=;
+	bh=7xl/NL26zB65QZOtw+G+IXmvi7TT4IynItrWuxyPUnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANIz9WLHpC8uGymBoUPjCMOSZ7fyIvsCUqjvsIZh5HszqaeM5AbU2YzfgT/eMSkJC
-	 g1hULsHZSxg32OFk+pglDWNApnn508BaTxhi3LOFJJBIfTztRKWbEzFXD3jzTRNJ+4
-	 D7scyeh1xE7e7uE8hp4IMpxl1e5Ptp/Qfbw/hUExiEGmEAUA8mb13b9e/Z5H+BWFDu
-	 bUU4mkRscMzO5WT56BI2d4wjinSP0KAdbtYit7gI9RKRPmqyTfeFxVVxwij3kJGxoD
-	 PGFVAOhKmMrQHNOJb8UcbhjvcnGaB87QzxJ3URJU0mllRuaPn+3xOdGNx0okYfyqeW
-	 E6zJxm6muL6uQ==
+	b=LvhVzL/eyMDPdf3rjymkr9b+BPy3pViWHwhlCbZLvBBU0Ix3X8HyKpiKW7OWqTi6c
+	 VSiTgzmoK173IFP7VLZTWXldSxzZNfB4DkYhRnK1bwwxH6qwCm5mMbQSwwIXD/QWwL
+	 Fe91Q1hWDTnQRi02wqaVKUL+cwGkKy4RIIimF8+5rtrqxMRK8WMMjIVPsJeb8zSQ3f
+	 xjj4bc9wemz3gBaiRJAPTthunE2VyNd+tdB50/bjWAOTfQQa3P2inCnH1DfFjJPCNK
+	 2ZF+EFkFXb/RfWEd6ojuYTdk2L8njSkm1xwue2O0oNOk9jOEkQgzZ459V4FjXJdKNW
+	 sdQprZMf1hkqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 029/311] sched/fair: Fix lag clamp
-Date: Tue, 10 Mar 2026 07:01:16 -0400
-Message-ID: <127aaf40b63de3e7f24eeff9231f9936072dc249.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 030/311] rseq: Clarify rseq registration rseq_size bound check comment
+Date: Tue, 10 Mar 2026 07:01:17 -0400
+Message-ID: <868b22c2a4f89cc7f4081c2dadfe22e37e464a88.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,133 +48,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit 6e3c0a4e1ad1e0455b7880fad02b3ee179f56c09 ]
+[ Upstream commit 26d43a90be81fc90e26688a51d3ec83188602731 ]
 
-Vincent reported that he was seeing undue lag clamping in a mixed
-slice workload. Implement the max_slice tracking as per the todo
-comment.
+The rseq registration validates that the rseq_size argument is greater
+or equal to 32 (the original rseq size), but the comment associated with
+this check does not clearly state this.
 
-Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
-Reported-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Clarify the comment to that effect.
+
+Fixes: ee3e3ac05c26 ("rseq: Introduce extensible rseq ABI")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
-Link: https://patch.msgid.link/20250422101628.GA33555@noisy.programming.kicks-ass.net
+Link: https://patch.msgid.link/20260220200642.1317826-2-mathieu.desnoyers@efficios.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h |  1 +
- kernel/sched/fair.c   | 39 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 36 insertions(+), 4 deletions(-)
+ kernel/rseq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index 5f00b5ed0f3b7..eb1c4c347a5cf 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -574,6 +574,7 @@ struct sched_entity {
- 	u64				deadline;
- 	u64				min_vruntime;
- 	u64				min_slice;
-+	u64				max_slice;
- 
- 	struct list_head		group_node;
- 	unsigned char			on_rq;
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c8a6dac54e220..a8e766eaca1f9 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -748,6 +748,8 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
- 	return cfs_rq->zero_vruntime;
- }
- 
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq);
-+
- /*
-  * lag_i = S - s_i = w_i * (V - v_i)
-  *
-@@ -761,17 +763,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
-  * EEVDF gives the following limit for a steady state system:
-  *
-  *   -r_max < lag < max(r_max, q)
-- *
-- * XXX could add max_slice to the augmented data to track this.
-  */
- static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
- {
-+	u64 max_slice = cfs_rq_max_slice(cfs_rq) + TICK_NSEC;
- 	s64 vlag, limit;
- 
- 	WARN_ON_ONCE(!se->on_rq);
- 
- 	vlag = avg_vruntime(cfs_rq) - se->vruntime;
--	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
-+	limit = calc_delta_fair(max_slice, se);
- 
- 	se->vlag = clamp(vlag, -limit, limit);
- }
-@@ -829,6 +830,21 @@ static inline u64 cfs_rq_min_slice(struct cfs_rq *cfs_rq)
- 	return min_slice;
- }
- 
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq)
-+{
-+	struct sched_entity *root = __pick_root_entity(cfs_rq);
-+	struct sched_entity *curr = cfs_rq->curr;
-+	u64 max_slice = 0ULL;
-+
-+	if (curr && curr->on_rq)
-+		max_slice = curr->slice;
-+
-+	if (root)
-+		max_slice = max(max_slice, root->max_slice);
-+
-+	return max_slice;
-+}
-+
- static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
- {
- 	return entity_before(__node_2_se(a), __node_2_se(b));
-@@ -853,6 +869,15 @@ static inline void __min_slice_update(struct sched_entity *se, struct rb_node *n
- 	}
- }
- 
-+static inline void __max_slice_update(struct sched_entity *se, struct rb_node *node)
-+{
-+	if (node) {
-+		struct sched_entity *rse = __node_2_se(node);
-+		if (rse->max_slice > se->max_slice)
-+			se->max_slice = rse->max_slice;
-+	}
-+}
-+
- /*
-  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
-  */
-@@ -860,6 +885,7 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- {
- 	u64 old_min_vruntime = se->min_vruntime;
- 	u64 old_min_slice = se->min_slice;
-+	u64 old_max_slice = se->max_slice;
- 	struct rb_node *node = &se->run_node;
- 
- 	se->min_vruntime = se->vruntime;
-@@ -870,8 +896,13 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- 	__min_slice_update(se, node->rb_right);
- 	__min_slice_update(se, node->rb_left);
- 
-+	se->max_slice = se->slice;
-+	__max_slice_update(se, node->rb_right);
-+	__max_slice_update(se, node->rb_left);
-+
- 	return se->min_vruntime == old_min_vruntime &&
--	       se->min_slice == old_min_slice;
-+	       se->min_slice == old_min_slice &&
-+	       se->max_slice == old_max_slice;
- }
- 
- RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
+diff --git a/kernel/rseq.c b/kernel/rseq.c
+index 395d8b002350a..6cb5b7e51555d 100644
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -428,8 +428,9 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len, int, flags, u32
+ 	 * auxiliary vector AT_RSEQ_ALIGN. If rseq_len is the original rseq
+ 	 * size, the required alignment is the original struct rseq alignment.
+ 	 *
+-	 * In order to be valid, rseq_len is either the original rseq size, or
+-	 * large enough to contain all supported fields, as communicated to
++	 * The rseq_len is required to be greater or equal to the original rseq
++	 * size. In order to be valid, rseq_len is either the original rseq size,
++	 * or large enough to contain all supported fields, as communicated to
+ 	 * user-space through the ELF auxiliary vector AT_RSEQ_FEATURE_SIZE.
+ 	 */
+ 	if (rseq_len < ORIG_RSEQ_SIZE ||
 -- 
 2.51.0
 
