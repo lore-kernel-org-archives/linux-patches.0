@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34A83803CD;
-	Tue, 10 Mar 2026 11:28:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D52953803CD;
+	Tue, 10 Mar 2026 11:28:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142124; cv=none; b=iW8QcTSvOz9zIz/TRKg2LryHRuB8mO3PVupC6uD3TriMRk6wWL8KeVl7hH/6vYqYl4uMhKHvQlOr+tg9hgH/efuLjGapNLN7rKtDfQIHGw6UEyYosFIEdovpJXN+ck76qQ9W5dRHepMb6CPaS9o/eeDderK2kCol939/+Mjw3Ls=
+	t=1773142124; cv=none; b=q9Z29hQv1bcnAdn8WrxRYyUsus+II8EgjUvU2tqGBFmRZiJqc7ohq1d5N44I9GgJ6cj+BR+wokyT590UB2SVQ33ac58LBCAHu5UR63xwkOO8qogzRv2mAxL6WYuWD76D6OZS7sqqAyIr1KAXumZdbeewFSQ1137+EFch3H0ZVWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773142124; c=relaxed/simple;
-	bh=MyzS/2zTiVyH9c9PXpwu97i2vPpRZVKak8wrrWH96rc=;
+	bh=86cuy5bsOsXmi7He/wJYNm2GpTCDTH3NKeX6iSgsT5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TwUYvYw8rq4BJGr/PTpb33I43TEB6abiA8iedkBhCugtKKv12Swf4zRkvuBNdyvJu/gPY12Ov9N9GBvtYVoohsZHBc2XThfMnmpAtzZL00EfpAr06jIG19zgolNcWWVGaklhajoIseIa9BamSrc/LRMKspQFcw6LY6XhiA9mRy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=apih8iR5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X9oJmyR4+kOBls39pUk06cj45i64bSfGgw1ecA0a0MqjvlMNbvt0rZkJRjScm6ZqFBS6XAeU1DC//57oE+CLNczR5eB5fEn4GsXMS0kpcsFpVdgoWrdwUULCNwXzUccSD3ToVvDGbFVk1h2vWgnPXLhoIjARRVpQfVU+e68X8is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jy/KkJ9l; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="apih8iR5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E520CC2BC9E;
-	Tue, 10 Mar 2026 11:28:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jy/KkJ9l"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26874C2BC86;
+	Tue, 10 Mar 2026 11:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142123;
-	bh=MyzS/2zTiVyH9c9PXpwu97i2vPpRZVKak8wrrWH96rc=;
+	s=k20201202; t=1773142124;
+	bh=86cuy5bsOsXmi7He/wJYNm2GpTCDTH3NKeX6iSgsT5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apih8iR5dD1vPeRfzwnR3bXRL8jqapgIAozuJide32UNVbjhsaiXIczVQv1rrI/gL
-	 yDhiZ6JK+seINnacr58PaRgMkcHhQx0nogNsJvwM345cuta6y/972eGB4HV39M1qLx
-	 NUlFr6bE3lx2V47p+42YxrrQuH4puyYHNiw84Ylxu78T3sdOxAg7aqfAHoaebG0pKe
-	 SJx1CocyYJeQOESrCFlFpZXhfmfwpEjY7MM1oCZnUFM3vpVntBwntLh2AhAHd8zguH
-	 qAHgfMi2OASCcxXFonBT9pc2SqOfE6GqJ9RffvfDnLP0crl1ZVLkwWueFShZZDKlER
-	 Fx+wzphfiAYhw==
+	b=jy/KkJ9lRdW8fEJFN3tUzyp0daqtukqEbpIpjISRDzCsIbtE/7DV8WL37SCvJCLcS
+	 fBB2QB4j8B2JpjRQBs32ogF5WqZKNp4gcyw+mcnT6vsP2mgd3ctSIeOR5vM3qGXiEf
+	 9/rKnkNAovikrBXVckSCgTo0d7knPLx/QFHkoPEo8UULXflkxGffN1QdA8NjvsJqAB
+	 /5E1vTshDdt3YwO3ct3iwaXE8QZ1qUBqS76zBOfFloh3bCLRaltE1BZURTmIjBKc1W
+	 /0vRkXLdTuWWKK8PYLdO9lHlrBnCmaFeRJEKhFNw/GVqLvmG4tnh+ZhfVq7JkXzkp5
+	 vFp1EUdyYNSTQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Petr Pavlu <petr.pavlu@suse.com>,
-	Daniel Gomez <da.gomez@samsung.com>,
-	Aaron Tomlin <atomlin@atomlin.com>,
-	Song Liu <song@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
+Cc: Ian Ray <ian.ray@gehealthcare.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 212/314] module: Remove duplicate freeing of lockdep classes
-Date: Tue, 10 Mar 2026 07:17:51 -0400
-Message-ID: <032a420535316c9dfa1e4b268e287d3ff2ac14db.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 213/314] HID: multitouch: new class MT_CLS_EGALAX_P80H84
+Date: Tue, 10 Mar 2026 07:17:52 -0400
+Message-ID: <79b0dec3b975b5dfde4df6e76701ac1bdfc793a0.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -52,52 +48,54 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-[ Upstream commit a7b4bc094fbaa7dc7b7b91ae33549bbd7eefaac1 ]
+[ Upstream commit a2e70a89fa58133521b2deae4427d35776bda935 ]
 
-In the error path of load_module(), under the free_module label, the
-code calls lockdep_free_key_range() to release lock classes associated
-with the MOD_DATA, MOD_RODATA and MOD_RO_AFTER_INIT module regions, and
-subsequently invokes module_deallocate().
-
-Since commit ac3b43283923 ("module: replace module_layout with
-module_memory"), the module_deallocate() function calls free_mod_mem(),
-which releases the lock classes as well and considers all module
-regions.
-
-Attempting to free these classes twice is unnecessary. Remove the
-redundant code in load_module().
-
-Fixes: ac3b43283923 ("module: replace module_layout with module_memory")
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
-Reviewed-by: Aaron Tomlin <atomlin@atomlin.com>
-Acked-by: Song Liu <song@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Fixes: f9e82295eec1 ("HID: multitouch: add eGalaxTouch P80H84 support")
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/module/main.c | 6 ------
- 1 file changed, 6 deletions(-)
+ drivers/hid/hid-multitouch.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/module/main.c b/kernel/module/main.c
-index c66b261849362..a2c798d06e3f5 100644
---- a/kernel/module/main.c
-+++ b/kernel/module/main.c
-@@ -3544,12 +3544,6 @@ static int load_module(struct load_info *info, const char __user *uargs,
- 	mutex_unlock(&module_mutex);
-  free_module:
- 	mod_stat_bump_invalid(info, flags);
--	/* Free lock-classes; relies on the preceding sync_rcu() */
--	for_class_mod_mem_type(type, core_data) {
--		lockdep_free_key_range(mod->mem[type].base,
--				       mod->mem[type].size);
--	}
--
- 	module_memory_restore_rox(mod);
- 	module_deallocate(mod, info);
-  free_copy:
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 1f8accb7ff435..af19e089b0122 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -233,6 +233,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
+ #define MT_CLS_SMART_TECH			0x0113
+ #define MT_CLS_APPLE_TOUCHBAR			0x0114
+ #define MT_CLS_YOGABOOK9I			0x0115
++#define MT_CLS_EGALAX_P80H84			0x0116
+ #define MT_CLS_SIS				0x0457
+ 
+ #define MT_DEFAULT_MAXCONTACT	10
+@@ -447,6 +448,11 @@ static const struct mt_class mt_classes[] = {
+ 			MT_QUIRK_YOGABOOK9I,
+ 		.export_all_inputs = true
+ 	},
++	{ .name = MT_CLS_EGALAX_P80H84,
++		.quirks = MT_QUIRK_ALWAYS_VALID |
++			MT_QUIRK_IGNORE_DUPLICATES |
++			MT_QUIRK_CONTACT_CNT_ACCURATE,
++	},
+ 	{ }
+ };
+ 
+@@ -2223,8 +2229,9 @@ static const struct hid_device_id mt_devices[] = {
+ 	{ .driver_data = MT_CLS_EGALAX_SERIAL,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
+ 			USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C000) },
+-	{ .driver_data = MT_CLS_EGALAX,
+-		MT_USB_DEVICE(USB_VENDOR_ID_DWAV,
++	{ .driver_data = MT_CLS_EGALAX_P80H84,
++		HID_DEVICE(HID_BUS_ANY, HID_GROUP_MULTITOUCH_WIN_8,
++			USB_VENDOR_ID_DWAV,
+ 			USB_DEVICE_ID_DWAV_EGALAX_MULTITOUCH_C002) },
+ 
+ 	/* Elan devices */
 -- 
 2.51.0
 
