@@ -1,43 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA43346AEFA;
-	Tue, 10 Mar 2026 09:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E5543E9C5;
+	Tue, 10 Mar 2026 09:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133352; cv=none; b=H+FpX+Nc066q27V2jiWRZ6xkiFWI3Dxv7DQz0H7J1m1569nr4tYgih+juNtiwUy7SRQfcV37kmkgoFAF4tSBBhbLDxC/tn9wc37y97n7IkEWZbs1VgFodwjx+NgVTIQBgXIV/wgAihCnBji/bJlTAoav7O6WCy8ipgUC2hRKr8c=
+	t=1773133354; cv=none; b=GRLrd6FmDpALb/MK3ut1XyVRBAxMZvTCuwqChBaKSwzgIf+U/CqC2nd2fG60JV7JjQ+Pf8aWeF+x59EK3TJuJtigrprn2jqwBCPguTBSM3uLFRHPM7gWW/XCHVOWsaIKteUFoS2ve1UVmMzhOcLfBhwcDyevxcDl6kLxSgQAGBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133352; c=relaxed/simple;
-	bh=TgJ28ZB9y41IT6jdJ16OAYYVcd9wSY24fXvEnxIyItE=;
+	s=arc-20240116; t=1773133354; c=relaxed/simple;
+	bh=dyZoKH8XDotOwtrxv1ftKGKj6+/9NDQwSTPynUEi6wA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=A8LphLgbMMFt5wMw9yEfd5i79fzRIzUQbOVemCcS7ecG6lWqz+oyfZZT1ScBET7WrlabXguVptxFGy8L1awiQ71td6DYsPX3ZwEa1eHvAHSaaSFnV91TQddeUgVDrn/Y5Zypot7RaJ115iSwILLDor6xJtlAcYb8xLhxV1c4rJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RVTdaBgQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=X9quCxnuZPEP8j8fmkzk7OX1mwXdhyK/yM4a8GGnDqn51D1upJt+kdf03ZXQRIkEZ7LDymoYYjX5e+9sD1q8zvnAQ4bzI60jaMhtqHfrJmUm0uG/uNrkdL4ZjY9WBAXKAAW1IFG7LwcxGACkecLQZlJhp7ZHe/tiV1Yhukfi6Qo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z7Wl+Wt+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RVTdaBgQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55AEC19423;
-	Tue, 10 Mar 2026 09:02:31 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z7Wl+Wt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21AE0C19423;
+	Tue, 10 Mar 2026 09:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133352;
-	bh=TgJ28ZB9y41IT6jdJ16OAYYVcd9wSY24fXvEnxIyItE=;
+	s=k20201202; t=1773133354;
+	bh=dyZoKH8XDotOwtrxv1ftKGKj6+/9NDQwSTPynUEi6wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVTdaBgQc/r39czwNxV94gwflU8T7MyKY7ymiGa/VlZV+WlzipzzUI5TgtmHV4bqi
-	 rXd0YemtQZbUfcO4PyXlnHRMvnf15xsPNX5rl9AnbcC/ni/Go0PgNvjPP8dYp9R/b9
-	 2+SGwy0eYFJqUUelKLjyL7hhJsAuOSb5MikMniTmFEMEwLz2TUqCsVVIrHsp9kF9xs
-	 RTxXajHoznyNfb3cyAxdYvhMiBX535K4pBR4dYPbXUA1okzNREckCtUTDQHkF60B5X
-	 uStuPHbr/+UPQP86dZ+C1aFxt4adqB4VJWbPySGU9HGxagFHZcTnwTwI/uPIvjCAoD
-	 3VaDFgXUkmglQ==
+	b=Z7Wl+Wt+VvjrSQxXCnMiOg9eFoexHeAJCd9CBue3j/Xm20VQ7OrVrOgLExrUWVt4+
+	 Bxgd4XoH49SGxgcLJA4R28P/ymZl0WJfW+i9ZQCJ94gpF1r5/IF+I0luzFJEYigUph
+	 EFrWeE0I1JHQyMC+3hsIa72BS6kwe4YNgqKeNxxHkI3X7uV9O5Fa/V0K6itA1Sjy7U
+	 n8pW2QZPW/ksl0nGUAQbxiuVOBpY375Uf93DtNZ9ER1nWfXBgTqOZbSmefu/IZYPaa
+	 NL+whxGsACY76k5ni9twbvqhtDLOqdcmhnbDTb17t/gWMm/5sS98d9vgTg0OsW4BTZ
+	 Dy7E5ek3BS47g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anton Plotnikov <plotnikovanton@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Valentin Spreckels <valentin@spreckels.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	andrew+netdev@lunn.ch,
+	davem@davemloft.net,
+	edumazet@google.com,
+	pabeni@redhat.com,
+	gregkh@linuxfoundation.org,
+	linux-usb@vger.kernel.org,
+	netdev@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] platform/x86: hp-wmi: add Omen 14-fb1xxx (board 8E41) support
-Date: Tue, 10 Mar 2026 05:01:32 -0400
-Message-ID: <20260310090145.2709021-32-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] net: usb: r8152: add TRENDnet TUC-ET2G
+Date: Tue, 10 Mar 2026 05:01:33 -0400
+Message-ID: <20260310090145.2709021-33-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -47,27 +52,22 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Plotnikov <plotnikovanton@gmail.com>
+From: Valentin Spreckels <valentin@spreckels.dev>
 
-[ Upstream commit 729ffcffa73069cb066fd54a2bc7b09e5f782d48 ]
+[ Upstream commit 15fba71533bcdfaa8eeba69a5a5a2927afdf664a ]
 
-Reverse engineering of the HP Omen Windows utility shows that for performance
-mode it uses the same codes listed in hp_thermal_profile_omen_v1. Therefore it
-seems sufficient to add the board model name to omen_thermal_profile_boards.
+The TRENDnet TUC-ET2G is a RTL8156 based usb ethernet adapter. Add its
+vendor and product IDs.
 
-Tested on Omen 14-fb1xxx: CPU power in performance profile reaches the Windows
-limit (65W), instead of 45W in automatic BIOS mode. Max fan speed was reached
-as well.
-
-Link: https://patch.msgid.link/20260203164832.40514-1-plotnikovanton@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Valentin Spreckels <valentin@spreckels.dev>
+Link: https://patch.msgid.link/20260226195409.7891-2-valentin@spreckels.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -76,82 +76,81 @@ LLM Generated explanations, may be completely bogus:
 ## Analysis
 
 ### What the commit does
-This is a one-line addition of a board ID string `"8E41"` to the
-`omen_thermal_profile_boards[]` array in the HP WMI driver. This enables
-thermal profile support (performance mode, fan control) for the HP Omen
-14-fb1xxx laptop using existing v1 thermal profile code paths.
 
-### Classification: Device ID Addition
-This falls squarely into the **"NEW DEVICE IDs"** exception category for
-stable backports. The driver and all thermal profile infrastructure
-already exist — this simply adds a board identifier so the existing code
-recognizes this specific hardware model.
+This commit adds USB vendor and product IDs for the TRENDnet TUC-ET2G
+USB ethernet adapter (vendor ID `0x20f4`, product ID `0xe02b`) to the
+existing `r8152` driver. The device uses the RTL8156 chipset, which is
+already fully supported by the driver.
 
-### Risk Assessment
-- **Scope**: Single string added to a `const char *` array — cannot get
-  simpler
-- **Blast radius**: Only affects systems with DMI board name "8E41" (HP
-  Omen 14-fb1xxx)
-- **Regression potential**: Essentially zero — if the board ID doesn't
-  match, nothing changes for any other system
-- **Testing**: Explicitly tested by the author on the target hardware,
-  confirmed working (65W CPU power, max fan speed)
+### Changes
 
-### User Impact
-Without this entry, HP Omen 14-fb1xxx users get stuck at 45W CPU power
-in automatic BIOS mode instead of the full 65W performance profile. This
-means the hardware doesn't function at its intended capability under
-Linux.
+1. **`include/linux/usb/r8152.h`**: Adds `#define VENDOR_ID_TRENDNET
+   0x20f4`
+2. **`drivers/net/usb/r8152.c`**: Adds `{ USB_DEVICE(VENDOR_ID_TRENDNET,
+   0xe02b) }` to the device table
 
-### Review Status
-- Reviewed-by and signed-off by Ilpo Järvinen (Intel), who is the
-  platform/x86 maintainer
-- The approach was validated through reverse engineering the Windows
-  Omen Command Center utility
+### Stable kernel criteria
 
-### Stable Criteria Check
-- **Obviously correct**: Yes — adding a string to an existing board list
-- **Fixes a real issue**: Yes — enables hardware to function properly
-- **Small and contained**: Yes — one line, one file
-- **No new features**: Correct — uses existing thermal profile v1
-  infrastructure
-- **No new APIs**: Correct
+- **New device ID to existing driver**: This is a textbook example of
+  the "NEW DEVICE IDs" exception explicitly listed in stable kernel
+  rules. The r8152 driver already exists in all stable trees, and the
+  RTL8156 chipset is already supported.
+- **Obviously correct**: Two lines — a vendor ID define and a device
+  table entry.
+- **No risk of regression**: Adding a USB device ID cannot break
+  existing functionality. It only enables matching for a new device.
+- **Small and contained**: 2 lines of actual change across 2 files.
+- **Fixes a real problem**: Without this, users with TRENDnet TUC-ET2G
+  adapters cannot use them with the r8152 driver (the device won't be
+  claimed).
+
+### Risk assessment
+
+**Zero risk.** This is the most minimal possible change — adding
+identifiers so the kernel recognizes a device. No code paths are
+changed, no logic is modified.
 
 ### Verification
-- Read the diff directly: confirmed it's a single string `"8E41"` added
-  to the `omen_thermal_profile_boards` array at line 149 of
-  `drivers/platform/x86/hp/hp-wmi.c`
-- The commit message explicitly states testing results on the target
-  hardware
-- The array is used to match DMI board names to enable existing omen
-  thermal profile code paths — no new code paths are introduced
-- Reviewed-by tag from subsystem maintainer Ilpo Järvinen confirms
-  correctness
 
-### Conclusion
-This is a textbook device ID addition — the simplest and lowest-risk
-category of stable backport. It enables proper hardware functionality
-for a specific laptop model using entirely existing driver
-infrastructure. The risk is negligible, the benefit is real for affected
-users, and it has maintainer review.
+- Confirmed `VENDOR_ID_TRENDNET` is a new define not previously in the
+  header by examining the diff context showing the existing vendor IDs.
+- The RTL8156 chipset support already exists in the r8152 driver (the
+  driver handles RTL8152/8153/8156 variants).
+- The change pattern matches dozens of similar device ID additions that
+  are routinely backported to stable (e.g., other vendor IDs already in
+  the table: Lenovo, Linksys, NVIDIA, TP-Link, D-Link, Dell, ASUS).
+- No dependencies on other commits — this is fully self-contained.
 
 **YES**
 
- drivers/platform/x86/hp/hp-wmi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/r8152.c   | 1 +
+ include/linux/usb/r8152.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index bc550da031fa1..ec87fd96686cf 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -133,6 +133,7 @@ static const char * const omen_thermal_profile_boards[] = {
- 	"8900", "8901", "8902", "8912", "8917", "8918", "8949", "894A", "89EB",
- 	"8A15", "8A42",
- 	"8BAD",
-+	"8E41",
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 6b107cf5f37bd..9eda892beb1f8 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -10062,6 +10062,7 @@ static const struct usb_device_id rtl8152_table[] = {
+ 	{ USB_DEVICE(VENDOR_ID_DLINK,   0xb301) },
+ 	{ USB_DEVICE(VENDOR_ID_DELL,    0xb097) },
+ 	{ USB_DEVICE(VENDOR_ID_ASUS,    0x1976) },
++	{ USB_DEVICE(VENDOR_ID_TRENDNET, 0xe02b) },
+ 	{}
  };
  
- /* DMI Board names of Omen laptops that are specifically set to be thermal
+diff --git a/include/linux/usb/r8152.h b/include/linux/usb/r8152.h
+index 2ca60828f28bb..1502b2a355f98 100644
+--- a/include/linux/usb/r8152.h
++++ b/include/linux/usb/r8152.h
+@@ -32,6 +32,7 @@
+ #define VENDOR_ID_DLINK			0x2001
+ #define VENDOR_ID_DELL			0x413c
+ #define VENDOR_ID_ASUS			0x0b05
++#define VENDOR_ID_TRENDNET		0x20f4
+ 
+ #if IS_REACHABLE(CONFIG_USB_RTL8152)
+ extern u8 rtl8152_get_version(struct usb_interface *intf);
 -- 
 2.51.0
 
