@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE96387363;
-	Tue, 10 Mar 2026 11:06:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2817386454;
+	Tue, 10 Mar 2026 11:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140800; cv=none; b=X/CcWIdJjpFjaUzV1mZrr3gEfr64ld8HIzSrJdgTLD48zvZtgGGfgmBcvjbpiyW8q/FXDObRAQUnYwnvfmp5nPGByRQ7Vpzx0s38dAaaJ4PdPgGQ2Ufkq8ApMh2nJ5SqDvkB6BhFrL/+jdZficPVBIvMSd9GOBvnCvV0ZuZ95xo=
+	t=1773140801; cv=none; b=jdXD5GBLzwiImCMxZ5z1m8/D27H8GxuRiQf4S081M2iXhmwmrASBxrpsu1emKRavLZUNpo1sbA2QpiXN9l9n5ZBoz0JsRtKZVO/WZ89IOlZiBaAUov2d2IpO5uH4hf6XRo6nBLA1R8jlLErY3USOeiwJI81BjuJ9159rf5JmTv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140800; c=relaxed/simple;
-	bh=M9XVX5zSpDoN9UTpquCCh+/ChqHXFIsUe0/zh7tESck=;
+	s=arc-20240116; t=1773140801; c=relaxed/simple;
+	bh=bhxoSojcSM7YXcD3Ol3IJ+Qy1YgCrzWixgyDTu+VSN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rhYCE6W+KyrvmDpXUrt1BeYEXAmWjrDwEM/7LBgzmHqRewpedkmJ2pANg8Diplw9dCp1nzSjzLTK2ViY+phKdDliDo0+guvbeiHaKBhMi0RCVAslFaB1A1Z+anqLIP0EsO9KFPBgcRkkzyWbfx68BfJgkRfksuUZsYugvEqyezk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=U/tiRr2l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hadz/61oB5L1G9GTeM0yrBz+rtJbYAhgDYqKUzYIq0NzYMe58vD8OvlRb8M7Kh+FLeSxQ6uAG6sym7Jhepah5+1Yddxpl6br1Ti0wpqlsNzN6ZptSXjTEVJ0/ofYqiwU+jNLVAN8WG/3AEc35Wz5ZIQI8KHSOpwvz4fc+hG+7VM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K6xtjPT0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="U/tiRr2l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C910C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K6xtjPT0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E7AC19423;
 	Tue, 10 Mar 2026 11:06:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140800;
-	bh=M9XVX5zSpDoN9UTpquCCh+/ChqHXFIsUe0/zh7tESck=;
+	s=k20201202; t=1773140801;
+	bh=bhxoSojcSM7YXcD3Ol3IJ+Qy1YgCrzWixgyDTu+VSN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/tiRr2l0prKJPy72dw9fHGpLh6Q8iwzIhKASSLo/i/ZVDqMzR1emKtrsYhZJ8F1M
-	 OwO0H3oL+elZrPTOhFFkhMdQ4EG2XQ0CKZpIvfo80BXbRyanOPSsLvGeLCbdd3eKYo
-	 YBggjHNcRtNqWEFQGBB5vm5LY0D7Uivw1rNMixn/xKpileEaygDruKEamLhgw1Ktu/
-	 ZGyYP8caw0MfzQJM6iaRDYTZ9yMs9XB5igJMp0FY4w1tnrDdnPet+bIAGvegToLYBU
-	 EaAwr5nxuzhzD4iTBWrLrbePIphUwBWOWF3LSxrmK9usIY1wzH0o6yuf7LWzbNAYXu
-	 g8rqh6+2b9lnA==
+	b=K6xtjPT0m7p0N3kX1Zem4QWIsdCshnHe9zhsgyhygV22oAIgV7lZ7LJ++AlyiCSbl
+	 wbs6SN/7GC5Kdjmrtj0SqHNxvFaV1Jxwe/siVgP3n/ArRwva1Cj25VqNTSOfaUFYP0
+	 Mqhi2D9WcFfTou3OhzElYxtwRaAG1XruVbkayhz7bL9xnYNZ60CD6iSfxC08J81R23
+	 9+oxG1XjbbfR61RtZSCPwiIj5NJ4HZ5IlyAADbpfCXyjujpGXR6I86DjrhGnNEIJg5
+	 8R0Hpg3Z1xAATam/lguJdszt8gzVJ1+9T2YMHR5cq71oxUdD8oByHEToXc3qcS50Od
+	 e82rbSpFOW0mA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Lizhi Hou <lizhi.hou@amd.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 038/311] accel/amdxdna: Fix command hang on suspended hardware context
-Date: Tue, 10 Mar 2026 07:01:25 -0400
-Message-ID: <a2ed7ae25c182327f08095c1256082da8ee8b515.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 039/311] accel/amdxdna: Fix out-of-bounds memset in command slot handling
+Date: Tue, 10 Mar 2026 07:01:26 -0400
+Message-ID: <426a56037508d51dc3d8c7d5ce607028ceeb6a57.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,75 +50,89 @@ Content-Transfer-Encoding: 8bit
 
 From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 07efce5a6611af6714ea3ef65694e0c8dd7e44f5 ]
+[ Upstream commit 1110a949675ebd56b3f0286e664ea543f745801c ]
 
-When a hardware context is suspended, the job scheduler is stopped. If a
-command is submitted while the context is suspended, the job is queued in
-the scheduler but aie2_sched_job_run() is never invoked to restart the
-hardware context. As a result, the command hangs.
+The remaining space in a command slot may be smaller than the size of
+the command header. Clearing the command header with memset() before
+verifying the available slot space can result in an out-of-bounds write
+and memory corruption.
 
-Fix this by modifying the hardware context suspend routine to keep the job
-scheduler running so that queued jobs can trigger context restart properly.
+Fix this by moving the memset() call after the size validation.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
+Fixes: 3d32eb7a5ecf ("accel/amdxdna: Fix cu_idx being cleared by memset() during command setup")
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260211205341.722982-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260217185415.1781908-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/accel/amdxdna/aie2_message.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 1dcf6e862656d..01a02f4c3a98d 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -53,6 +53,7 @@ static void aie2_hwctx_stop(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwct
- {
- 	drm_sched_stop(&hwctx->priv->sched, bad_job);
- 	aie2_destroy_context(xdna->dev_handle, hwctx);
-+	drm_sched_start(&hwctx->priv->sched, 0);
- }
+diff --git a/drivers/accel/amdxdna/aie2_message.c b/drivers/accel/amdxdna/aie2_message.c
+index d69d3afcfb748..a758c11a05a9c 100644
+--- a/drivers/accel/amdxdna/aie2_message.c
++++ b/drivers/accel/amdxdna/aie2_message.c
+@@ -656,11 +656,11 @@ aie2_cmdlist_fill_npu_cf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *siz
+ 	u32 cmd_len;
+ 	void *cmd;
  
- static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hwctx)
-@@ -80,7 +81,6 @@ static int aie2_hwctx_restart(struct amdxdna_dev *xdna, struct amdxdna_hwctx *hw
- 	}
+-	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	cmd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
+ 	if (*size < sizeof(*npu_slot) + cmd_len)
+ 		return -EINVAL;
  
- out:
--	drm_sched_start(&hwctx->priv->sched, 0);
- 	XDNA_DBG(xdna, "%s restarted, ret %d", hwctx->name, ret);
- 	return ret;
- }
-@@ -297,19 +297,23 @@ aie2_sched_job_run(struct drm_sched_job *sched_job)
- 	struct dma_fence *fence;
- 	int ret;
++	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	npu_slot->cu_idx = amdxdna_cmd_get_cu_idx(cmd_bo);
+ 	if (npu_slot->cu_idx == INVALID_CU_IDX)
+ 		return -EINVAL;
+@@ -681,7 +681,6 @@ aie2_cmdlist_fill_npu_dpu(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
+ 	u32 cmd_len;
+ 	u32 arg_sz;
  
--	if (!hwctx->priv->mbox_chann)
-+	ret = amdxdna_pm_resume_get(hwctx->client->xdna);
-+	if (ret)
-+		return NULL;
-+
-+	if (!hwctx->priv->mbox_chann) {
-+		amdxdna_pm_suspend_put(hwctx->client->xdna);
- 		return NULL;
-+	}
+-	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	sn = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
+ 	arg_sz = cmd_len - sizeof(*sn);
+ 	if (cmd_len < sizeof(*sn) || arg_sz > MAX_NPU_ARGS_SIZE)
+@@ -690,6 +689,7 @@ aie2_cmdlist_fill_npu_dpu(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
+ 	if (*size < sizeof(*npu_slot) + arg_sz)
+ 		return -EINVAL;
  
--	if (!mmget_not_zero(job->mm))
-+	if (!mmget_not_zero(job->mm)) {
-+		amdxdna_pm_suspend_put(hwctx->client->xdna);
- 		return ERR_PTR(-ESRCH);
-+	}
++	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	npu_slot->cu_idx = amdxdna_cmd_get_cu_idx(cmd_bo);
+ 	if (npu_slot->cu_idx == INVALID_CU_IDX)
+ 		return -EINVAL;
+@@ -713,7 +713,6 @@ aie2_cmdlist_fill_npu_preempt(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t
+ 	u32 cmd_len;
+ 	u32 arg_sz;
  
- 	kref_get(&job->refcnt);
- 	fence = dma_fence_get(job->fence);
+-	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	pd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
+ 	arg_sz = cmd_len - sizeof(*pd);
+ 	if (cmd_len < sizeof(*pd) || arg_sz > MAX_NPU_ARGS_SIZE)
+@@ -722,6 +721,7 @@ aie2_cmdlist_fill_npu_preempt(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t
+ 	if (*size < sizeof(*npu_slot) + arg_sz)
+ 		return -EINVAL;
  
--	ret = amdxdna_pm_resume_get(hwctx->client->xdna);
--	if (ret)
--		goto out;
--
- 	if (job->drv_cmd) {
- 		switch (job->drv_cmd->opcode) {
- 		case SYNC_DEBUG_BO:
++	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	npu_slot->cu_idx = amdxdna_cmd_get_cu_idx(cmd_bo);
+ 	if (npu_slot->cu_idx == INVALID_CU_IDX)
+ 		return -EINVAL;
+@@ -749,7 +749,6 @@ aie2_cmdlist_fill_npu_elf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
+ 	u32 cmd_len;
+ 	u32 arg_sz;
+ 
+-	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	pd = amdxdna_cmd_get_payload(cmd_bo, &cmd_len);
+ 	arg_sz = cmd_len - sizeof(*pd);
+ 	if (cmd_len < sizeof(*pd) || arg_sz > MAX_NPU_ARGS_SIZE)
+@@ -758,6 +757,7 @@ aie2_cmdlist_fill_npu_elf(struct amdxdna_gem_obj *cmd_bo, void *slot, size_t *si
+ 	if (*size < sizeof(*npu_slot) + arg_sz)
+ 		return -EINVAL;
+ 
++	memset(npu_slot, 0, sizeof(*npu_slot));
+ 	npu_slot->type = EXEC_NPU_TYPE_ELF;
+ 	npu_slot->inst_buf_addr = pd->inst_buf;
+ 	npu_slot->save_buf_addr = pd->save_buf;
 -- 
 2.51.0
 
