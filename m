@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 643003C3BF4;
-	Tue, 10 Mar 2026 11:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281353C3BF4;
+	Tue, 10 Mar 2026 11:29:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142143; cv=none; b=kreBQ5Q/DaqJGK8u/6+E4OdN+NPB2EMxWO4v8PzbtEyEle7GkQ4/mbp7FqcNMTcAiIBe7f991i1PWwyAAqujepRD3oGUVJieoaaP9/KL+dzrJdIlZs19lS/6wxcZ8CfUW4+Tupws29YOxX3wx3cLD6ZTPzEJ4QDnVIb7dV8Iu0U=
+	t=1773142144; cv=none; b=hZj9bmL+mcjwdSvHDkFuDfQmVYLmDBPnB9Zy+JrkikfXsYFbO0AQmQqTe3abtJY4BFDHu6xXoRtKa5/o4baAposVG9M7HT4RMQytD1Y3f3J6TsILvCHELyPz55oReFBNre0jBtxTnMYdWyRCpEijrzLfp3nIPqajd7tZDpruOMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142143; c=relaxed/simple;
-	bh=cxAewC055H3O7ACOUYWwBa/nhT59Ghil3EsYepae4MI=;
+	s=arc-20240116; t=1773142144; c=relaxed/simple;
+	bh=7/bWT+WEq/ipyRNCCV3fhMbko2RgcXgf5H6COyFwKU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJs0DKWbBBBDHmpUAcrU37C9MEJ3jdVzAEPRqmHuXQFpp56KdCLx3rEpkoFOi5JINMw9u/Xles27jOJbKerDnH6NTi/49aUJzx5Yz8FrQzouoOWPmsy6iskw14bYNwDy93MfJO1znskz6O99aMS/D2h3dpzUZM1ji7Lr4+HrHYc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=oq71tQ7e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ALYVbqfsLnaa1D7FRY/GIhRfwc0hve+G8NxxWU81wNWcBR+lrW3MOGxlORcsb8msBy/K/G3UHRAKdXWCRpWDCTcu2A4MudZT3qwLQpalJoVTY+8biICVEgOODKKfPBWdE8rGqIxyPSDkTzb8p3D5a6O9PGI9AdNeenMRWwOKAJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KU6bdVBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="oq71tQ7e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 657AFC2BC9E;
-	Tue, 10 Mar 2026 11:29:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KU6bdVBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6E0C2BC86;
+	Tue, 10 Mar 2026 11:29:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142143;
-	bh=cxAewC055H3O7ACOUYWwBa/nhT59Ghil3EsYepae4MI=;
+	s=k20201202; t=1773142144;
+	bh=7/bWT+WEq/ipyRNCCV3fhMbko2RgcXgf5H6COyFwKU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oq71tQ7eSFffDE/YZu2NMhOEes1YgoPZBcMUNewnYnE13lBBf1btdvUwVLnDq44d9
-	 DpG7VRqAjagS5P600N6Fp9T78al6ULyVAki3ZlU0zpDLZsf/3fvkmeeSJCqAfkiJ19
-	 LEaOC2Pg02+rK+GseTgDUnvpmXddWR41D8YhCruYWNDFAHLXAuMOs4/Neu9vs9e2sD
-	 u577VOVByuasQNLHqXgs97CAFeRORIBh8KB3hLccf8ghBtNCEgE4bys7jRWCzACdQh
-	 8g5WNar8a3I+3T1KhRke+ZupCQSi+iBSafGmThUTCd+zShd7TyV0v7ZWCgiJQp0mY7
-	 deEp/tjwqbcgw==
+	b=KU6bdVBAyy60hvtlaR6o2Fn5YqaSsINfbJd0+KjbRN6SwdHpwJcL/ByGCI0tRZdqx
+	 ZPQSlkN9X1GkjRTYGx8g1lz0u1TnAT95URO8kkSGTy4+Kh6sZ7pcurOL2oGaKHrLMC
+	 szslEFJ3JheSTe2xCDuzsUQP9iFpDr2LEZeJX1bqaDks8+05l/oMZCxxwTWRdqbacD
+	 xP8FnUyLxcLRRtfqHazy1pxJUcnlgnia/unFRxEuLdZfzHrfXzxgH8qqLCRWiTL/Av
+	 5tvg8Kbg+Yv1oGc5/d15RB8KLAJIRniO+rAtNNoU9qdMSFRAb2BJAmo7f1T/ux5xBN
+	 YJx09JQWDzQXg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+Cc: Kuniyuki Iwashima <kuniyu@google.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 230/314] inet: annotate data-races around isk->inet_num
-Date: Tue, 10 Mar 2026 07:18:09 -0400
-Message-ID: <50ca973f44337cd87ab8863fc91bed80ba9ecb4d.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 231/314] udp: Unhash auto-bound connected sk from 4-tuple hash table when disconnected.
+Date: Tue, 10 Mar 2026 07:18:10 -0400
+Message-ID: <09ed0c44007f14c5e5a69b292de421551a708233.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,134 +49,86 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 29252397bcc1e0a1f85e5c3bee59c325f5c26341 ]
+[ Upstream commit 6996a2d2d0a64808c19c98002aeb5d9d1b2df6a4 ]
 
-UDP/TCP lookups are using RCU, thus isk->inet_num accesses
-should use READ_ONCE() and WRITE_ONCE() where needed.
+Let's say we bind() an UDP socket to the wildcard address with a
+non-zero port, connect() it to an address, and disconnect it from
+the address.
 
-Fixes: 3ab5aee7fe84 ("net: Convert TCP & DCCP hash tables to use RCU / hlist_nulls")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260225203545.1512417-1-edumazet@google.com
+bind() sets SOCK_BINDPORT_LOCK on sk->sk_userlocks (but not
+SOCK_BINDADDR_LOCK), and connect() calls udp_lib_hash4() to put
+the socket into the 4-tuple hash table.
+
+Then, __udp_disconnect() calls sk->sk_prot->rehash(sk).
+
+It computes a new hash based on the wildcard address and moves
+the socket to a new slot in the 4-tuple hash table, leaving a
+garbage in the chain that no packet hits.
+
+Let's remove such a socket from 4-tuple hash table when disconnected.
+
+Note that udp_sk(sk)->udp_portaddr_hash needs to be udpated after
+udp_hash4_dec(hslot2) in udp_unhash4().
+
+Fixes: 78c91ae2c6de ("ipv4/udp: Add 4-tuple hash for connected socket")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260227035547.3321327-1-kuniyu@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet6_hashtables.h | 2 +-
- include/net/inet_hashtables.h  | 2 +-
- include/net/ip.h               | 2 +-
- net/ipv4/inet_hashtables.c     | 8 ++++----
- net/ipv4/tcp_diag.c            | 2 +-
- net/ipv6/inet6_hashtables.c    | 3 ++-
- 6 files changed, 10 insertions(+), 9 deletions(-)
+ net/ipv4/udp.c | 25 +++++++++++++++----------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
-diff --git a/include/net/inet6_hashtables.h b/include/net/inet6_hashtables.h
-index 282e29237d936..c16de5b7963fd 100644
---- a/include/net/inet6_hashtables.h
-+++ b/include/net/inet6_hashtables.h
-@@ -175,7 +175,7 @@ static inline bool inet6_match(const struct net *net, const struct sock *sk,
- {
- 	if (!net_eq(sock_net(sk), net) ||
- 	    sk->sk_family != AF_INET6 ||
--	    sk->sk_portpair != ports ||
-+	    READ_ONCE(sk->sk_portpair) != ports ||
- 	    !ipv6_addr_equal(&sk->sk_v6_daddr, saddr) ||
- 	    !ipv6_addr_equal(&sk->sk_v6_rcv_saddr, daddr))
- 		return false;
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index ac05a52d9e138..5a979dcab5383 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -345,7 +345,7 @@ static inline bool inet_match(const struct net *net, const struct sock *sk,
- 			      int dif, int sdif)
- {
- 	if (!net_eq(sock_net(sk), net) ||
--	    sk->sk_portpair != ports ||
-+	    READ_ONCE(sk->sk_portpair) != ports ||
- 	    sk->sk_addrpair != cookie)
- 	        return false;
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index 777199fa9502f..024cb4f5978c1 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -2266,7 +2266,6 @@ void udp_lib_rehash(struct sock *sk, u16 newhash, u16 newhash4)
+ 				     udp_sk(sk)->udp_port_hash);
+ 		hslot2 = udp_hashslot2(udptable, udp_sk(sk)->udp_portaddr_hash);
+ 		nhslot2 = udp_hashslot2(udptable, newhash);
+-		udp_sk(sk)->udp_portaddr_hash = newhash;
  
-diff --git a/include/net/ip.h b/include/net/ip.h
-index 380afb691c419..1ce79e62a76fb 100644
---- a/include/net/ip.h
-+++ b/include/net/ip.h
-@@ -101,7 +101,7 @@ static inline void ipcm_init_sk(struct ipcm_cookie *ipcm,
+ 		if (hslot2 != nhslot2 ||
+ 		    rcu_access_pointer(sk->sk_reuseport_cb)) {
+@@ -2300,19 +2299,25 @@ void udp_lib_rehash(struct sock *sk, u16 newhash, u16 newhash4)
+ 		if (udp_hashed4(sk)) {
+ 			spin_lock_bh(&hslot->lock);
  
- 	ipcm->oif = READ_ONCE(inet->sk.sk_bound_dev_if);
- 	ipcm->addr = inet->inet_saddr;
--	ipcm->protocol = inet->inet_num;
-+	ipcm->protocol = READ_ONCE(inet->inet_num);
+-			udp_rehash4(udptable, sk, newhash4);
+-			if (hslot2 != nhslot2) {
+-				spin_lock(&hslot2->lock);
+-				udp_hash4_dec(hslot2);
+-				spin_unlock(&hslot2->lock);
+-
+-				spin_lock(&nhslot2->lock);
+-				udp_hash4_inc(nhslot2);
+-				spin_unlock(&nhslot2->lock);
++			if (inet_rcv_saddr_any(sk)) {
++				udp_unhash4(udptable, sk);
++			} else {
++				udp_rehash4(udptable, sk, newhash4);
++				if (hslot2 != nhslot2) {
++					spin_lock(&hslot2->lock);
++					udp_hash4_dec(hslot2);
++					spin_unlock(&hslot2->lock);
++
++					spin_lock(&nhslot2->lock);
++					udp_hash4_inc(nhslot2);
++					spin_unlock(&nhslot2->lock);
++				}
+ 			}
+ 
+ 			spin_unlock_bh(&hslot->lock);
+ 		}
++
++		udp_sk(sk)->udp_portaddr_hash = newhash;
+ 	}
  }
- 
- #define IPCB(skb) ((struct inet_skb_parm*)((skb)->cb))
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index b7024e3d9ac3d..a57e33ff92d77 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -200,7 +200,7 @@ static bool inet_bind2_bucket_addr_match(const struct inet_bind2_bucket *tb2,
- void inet_bind_hash(struct sock *sk, struct inet_bind_bucket *tb,
- 		    struct inet_bind2_bucket *tb2, unsigned short port)
- {
--	inet_sk(sk)->inet_num = port;
-+	WRITE_ONCE(inet_sk(sk)->inet_num, port);
- 	inet_csk(sk)->icsk_bind_hash = tb;
- 	inet_csk(sk)->icsk_bind2_hash = tb2;
- 	sk_add_bind_node(sk, &tb2->owners);
-@@ -224,7 +224,7 @@ static void __inet_put_port(struct sock *sk)
- 	spin_lock(&head->lock);
- 	tb = inet_csk(sk)->icsk_bind_hash;
- 	inet_csk(sk)->icsk_bind_hash = NULL;
--	inet_sk(sk)->inet_num = 0;
-+	WRITE_ONCE(inet_sk(sk)->inet_num, 0);
- 	sk->sk_userlocks &= ~SOCK_CONNECT_BIND;
- 
- 	spin_lock(&head2->lock);
-@@ -352,7 +352,7 @@ static inline int compute_score(struct sock *sk, const struct net *net,
- {
- 	int score = -1;
- 
--	if (net_eq(sock_net(sk), net) && sk->sk_num == hnum &&
-+	if (net_eq(sock_net(sk), net) && READ_ONCE(sk->sk_num) == hnum &&
- 			!ipv6_only_sock(sk)) {
- 		if (sk->sk_rcv_saddr != daddr)
- 			return -1;
-@@ -1202,7 +1202,7 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
- 
- 		sk->sk_hash = 0;
- 		inet_sk(sk)->inet_sport = 0;
--		inet_sk(sk)->inet_num = 0;
-+		WRITE_ONCE(inet_sk(sk)->inet_num, 0);
- 
- 		if (tw)
- 			inet_twsk_bind_unhash(tw, hinfo);
-diff --git a/net/ipv4/tcp_diag.c b/net/ipv4/tcp_diag.c
-index d83efd91f461c..7935702e394b2 100644
---- a/net/ipv4/tcp_diag.c
-+++ b/net/ipv4/tcp_diag.c
-@@ -509,7 +509,7 @@ static void tcp_diag_dump(struct sk_buff *skb, struct netlink_callback *cb,
- 			if (r->sdiag_family != AF_UNSPEC &&
- 			    sk->sk_family != r->sdiag_family)
- 				goto next_normal;
--			if (r->id.idiag_sport != htons(sk->sk_num) &&
-+			if (r->id.idiag_sport != htons(READ_ONCE(sk->sk_num)) &&
- 			    r->id.idiag_sport)
- 				goto next_normal;
- 			if (r->id.idiag_dport != sk->sk_dport &&
-diff --git a/net/ipv6/inet6_hashtables.c b/net/ipv6/inet6_hashtables.c
-index 5e1da088d8e11..182d38e6d6d8d 100644
---- a/net/ipv6/inet6_hashtables.c
-+++ b/net/ipv6/inet6_hashtables.c
-@@ -95,7 +95,8 @@ static inline int compute_score(struct sock *sk, const struct net *net,
- {
- 	int score = -1;
- 
--	if (net_eq(sock_net(sk), net) && inet_sk(sk)->inet_num == hnum &&
-+	if (net_eq(sock_net(sk), net) &&
-+	    READ_ONCE(inet_sk(sk)->inet_num) == hnum &&
- 	    sk->sk_family == PF_INET6) {
- 		if (!ipv6_addr_equal(&sk->sk_v6_rcv_saddr, daddr))
- 			return -1;
+ EXPORT_IPV6_MOD(udp_lib_rehash);
 -- 
 2.51.0
 
