@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229D33859CE;
-	Tue, 10 Mar 2026 11:21:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4863859CE;
+	Tue, 10 Mar 2026 11:21:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141663; cv=none; b=ohU/58qVAHk8sorYMBfWKDzyTu9F3wvNyUpaC9V4Ykgs1AnqylW3vhZqNPdY8ESX+M10dHS5zWW2BWQRhfDVL6VujnPRYBTd3xGaXkDllLzCCldIoRkNusUeqyMzxYSuUZPoAdwK/QuxRaXU5B+r/uFdwJyJeN4OeBIZfcFGnkU=
+	t=1773141664; cv=none; b=VHuFdi6EY+Vw4EB09bUQ8hOSw15UeWJAsCIVz5zgKdr0NP98YzEKaYJcF3UeAgiiTdPkOKru5UQPJgtsj2r3RXcFn9Qz5i+tnNLilX4XFMn77wvkStB1szHX7ZPGoptZLISlafDhbcUvweB4D7Lm0qs4ecWwVTJStwahY836QEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141663; c=relaxed/simple;
-	bh=Lq34gKS0CEe5kroUw8u6Jnz0iOVKaelNfEAOG7QtBS0=;
+	s=arc-20240116; t=1773141664; c=relaxed/simple;
+	bh=k/SHmpIhRM7oahuZDpF5Apfpc/cIJCxs5xx5L9wPH+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XG0v1s3cesZr9oSPGhFF1aW3683fowwcE3KKw6EVS2TjtQr4N4f+gt51QSAVCUwrkMrXeKq9EPnrsJ+B7Ro5Iqk2uIy8+taSmPnhJmFpkmD2XvgZicuOtysHxJYjVopM6/g4E+iRLs8unL2a+8TgS8Gla2kDRvUPEH91c+vB9c0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rrPsSu9f; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cU5LvBCVDJ0IFBiw+cdiqXXkqVKpbCoVjWk8/pPEWM1dM8PSeQk01GLPqa+Z/bvyNYM0i+0NQxl1F20i5JjHEqz6RvLNjwDOo1myR/v5rsRBUDNo9L1XgjYO2Vb86QImEovVr3o3e2XDLjOIZ+cj/DLi8qxDExYi3EvXLxfGqhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BiK9lymH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rrPsSu9f"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBBC19423;
-	Tue, 10 Mar 2026 11:21:02 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BiK9lymH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46C96C19423;
+	Tue, 10 Mar 2026 11:21:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141663;
-	bh=Lq34gKS0CEe5kroUw8u6Jnz0iOVKaelNfEAOG7QtBS0=;
+	s=k20201202; t=1773141664;
+	bh=k/SHmpIhRM7oahuZDpF5Apfpc/cIJCxs5xx5L9wPH+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rrPsSu9fNByg2OboxO3D6bw2jHpgKffyt50U8qNgSyUqF2XcNix4GBpSBDJkgYoQH
-	 DG2koqghF4TtIs4T4XViwNOD7doptqq0VidOWpCjruYq9y7d5fc8yHtBqf7fcGpv7k
-	 RZJAyQh+m+eTi1Tjz+r2rLmn3+FOgE6nP6MdPz2lmDRIy/3fWkX05C8A4yXiGC0QbD
-	 krqe7/Ioys2G0p71W+hMbYbPVZv+C0Cunj4RYTPPm6+EGVmOYuxcByzWrSzaKLghqY
-	 kYtROmWaQqcbW+yw8CDMSZXgPjpa1VymDpZyYKaMrF1C7sm1wXQx+8AIhixU6DdYKs
-	 aBiGPQXOravzQ==
+	b=BiK9lymH+IiEzgtn6LSZuV5btk6JBltNSrbOUZeHucp45JxV8xhCAJiyIzYml0HSk
+	 59IWKpOrHFhZSyoP469Q5zCDnpYLFQni1WaZiPeVwk+yf9RcrSxEe55ApdB4WbiETe
+	 xhiyDzs/yzDzMZbZ0S6A13GhuhF/qwB2FhAiOh7fYTrqp4RSlSKjMLGFhS5Jur/59U
+	 ef6pSC14tKe++HD687BYXFAHZKCibQO77TPDkXXOsMm4tJ+1eqS9eD7wyWwjDFkwY1
+	 ex4GRFFBDistTUInA1HRx+C3hH87jgyd8r6Qbs6IxesG08D6JmcJ1KRrm2ZDZYzYb2
+	 pUbk6AIbrcqWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lizhi Hou <lizhi.hou@amd.com>,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+Cc: Matt Roper <matthew.d.roper@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
+	Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 030/314] accel/amdxdna: Validate command buffer payload count
-Date: Tue, 10 Mar 2026 07:14:49 -0400
-Message-ID: <133df64fe3ea424277aa9a179bb25a00bf6e2b58.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 031/314] drm/xe/wa: Steer RMW of MCR registers while building default LRC
+Date: Tue, 10 Mar 2026 07:14:50 -0400
+Message-ID: <8fa36c8e136b52c7d0fbf9883386e096e09486a2.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,39 +50,180 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Matt Roper <matthew.d.roper@intel.com>
 
-[ Upstream commit 901ec3470994006bc8dd02399e16b675566c3416 ]
+[ Upstream commit 43d37df67f7770d8d261fdcb64ecc8c314e91303 ]
 
-The count field in the command header is used to determine the valid
-payload size. Verify that the valid payload does not exceed the remaining
-buffer space.
+When generating the default LRC, if a register is not masked, we apply
+any save-restore programming necessary via a read-modify-write sequence
+that will ensure we only update the relevant bits/fields without
+clobbering the rest of the register.  However some of the registers that
+need to be updated might be MCR registers which require steering to a
+non-terminated instance to ensure we can read back a valid, non-zero
+value. The steering of reads originating from a command streamer is
+controlled by register CS_MMIO_GROUP_INSTANCE_SELECT.  Emit additional
+MI_LRI commands to update the steering before any RMW of an MCR register
+to ensure the reads are performed properly.
 
-Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260219211946.1920485-1-lizhi.hou@amd.com
+Note that needing to perform a RMW of an MCR register while building the
+default LRC is pretty rare.  Most of the MCR registers that are part of
+an engine's LRCs are also masked registers, so no MCR is necessary.
+
+Fixes: f2f90989ccff ("drm/xe: Avoid reading RMW registers in emit_wa_job")
+Cc: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Reviewed-by: Balasubramani Vivekanandan <balasubramani.vivekanandan@intel.com>
+Link: https://patch.msgid.link/20260206223058.387014-2-matthew.d.roper@intel.com
+Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
+(cherry picked from commit 6c2e331c915ba9e774aa847921262805feb00863)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ctx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/regs/xe_engine_regs.h |  6 +++
+ drivers/gpu/drm/xe/xe_gt.c               | 66 +++++++++++++++++++-----
+ 2 files changed, 60 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index 856fb25086f12..cfee89681ff3c 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -104,7 +104,10 @@ void *amdxdna_cmd_get_payload(struct amdxdna_gem_obj *abo, u32 *size)
+diff --git a/drivers/gpu/drm/xe/regs/xe_engine_regs.h b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+index f4c3e1187a00a..27fba92301c4e 100644
+--- a/drivers/gpu/drm/xe/regs/xe_engine_regs.h
++++ b/drivers/gpu/drm/xe/regs/xe_engine_regs.h
+@@ -96,6 +96,12 @@
+ #define   ENABLE_SEMAPHORE_POLL_BIT		REG_BIT(13)
  
- 	if (size) {
- 		count = FIELD_GET(AMDXDNA_CMD_COUNT, cmd->header);
--		if (unlikely(count <= num_masks)) {
-+		if (unlikely(count <= num_masks ||
-+			     count * sizeof(u32) +
-+			     offsetof(struct amdxdna_cmd, data[0]) >
-+			     abo->mem.size)) {
- 			*size = 0;
- 			return NULL;
+ #define RING_CMD_CCTL(base)			XE_REG((base) + 0xc4, XE_REG_OPTION_MASKED)
++
++#define CS_MMIO_GROUP_INSTANCE_SELECT(base)	XE_REG((base) + 0xcc)
++#define   SELECTIVE_READ_ADDRESSING		REG_BIT(30)
++#define   SELECTIVE_READ_GROUP			REG_GENMASK(29, 23)
++#define   SELECTIVE_READ_INSTANCE		REG_GENMASK(22, 16)
++
+ /*
+  * CMD_CCTL read/write fields take a MOCS value and _not_ a table index.
+  * The lsb of each can be considered a separate enabling bit for encryption.
+diff --git a/drivers/gpu/drm/xe/xe_gt.c b/drivers/gpu/drm/xe/xe_gt.c
+index 61bed3b04dedd..1099335298471 100644
+--- a/drivers/gpu/drm/xe/xe_gt.c
++++ b/drivers/gpu/drm/xe/xe_gt.c
+@@ -187,11 +187,15 @@ static int emit_nop_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ 	return ret;
+ }
+ 
++/* Dwords required to emit a RMW of a register */
++#define EMIT_RMW_DW 20
++
+ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ {
+-	struct xe_reg_sr *sr = &q->hwe->reg_lrc;
++	struct xe_hw_engine *hwe = q->hwe;
++	struct xe_reg_sr *sr = &hwe->reg_lrc;
+ 	struct xe_reg_sr_entry *entry;
+-	int count_rmw = 0, count = 0, ret;
++	int count_rmw = 0, count_rmw_mcr = 0, count = 0, ret;
+ 	unsigned long idx;
+ 	struct xe_bb *bb;
+ 	size_t bb_len = 0;
+@@ -201,6 +205,8 @@ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ 	xa_for_each(&sr->xa, idx, entry) {
+ 		if (entry->reg.masked || entry->clr_bits == ~0)
+ 			++count;
++		else if (entry->reg.mcr)
++			++count_rmw_mcr;
+ 		else
+ 			++count_rmw;
+ 	}
+@@ -208,17 +214,35 @@ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ 	if (count)
+ 		bb_len += count * 2 + 1;
+ 
+-	if (count_rmw)
+-		bb_len += count_rmw * 20 + 7;
++	/*
++	 * RMW of MCR registers is the same as a normal RMW, except an
++	 * additional LRI (3 dwords) is required per register to steer the read
++	 * to a nom-terminated instance.
++	 *
++	 * We could probably shorten the batch slightly by eliding the
++	 * steering for consecutive MCR registers that have the same
++	 * group/instance target, but it's not worth the extra complexity to do
++	 * so.
++	 */
++	bb_len += count_rmw * EMIT_RMW_DW;
++	bb_len += count_rmw_mcr * (EMIT_RMW_DW + 3);
++
++	/*
++	 * After doing all RMW, we need 7 trailing dwords to clean up,
++	 * plus an additional 3 dwords to reset steering if any of the
++	 * registers were MCR.
++	 */
++	if (count_rmw || count_rmw_mcr)
++		bb_len += 7 + (count_rmw_mcr ? 3 : 0);
+ 
+-	if (q->hwe->class == XE_ENGINE_CLASS_RENDER)
++	if (hwe->class == XE_ENGINE_CLASS_RENDER)
+ 		/*
+ 		 * Big enough to emit all of the context's 3DSTATE via
+ 		 * xe_lrc_emit_hwe_state_instructions()
+ 		 */
+-		bb_len += xe_gt_lrc_size(gt, q->hwe->class) / sizeof(u32);
++		bb_len += xe_gt_lrc_size(gt, hwe->class) / sizeof(u32);
+ 
+-	xe_gt_dbg(gt, "LRC %s WA job: %zu dwords\n", q->hwe->name, bb_len);
++	xe_gt_dbg(gt, "LRC %s WA job: %zu dwords\n", hwe->name, bb_len);
+ 
+ 	bb = xe_bb_new(gt, bb_len, false);
+ 	if (IS_ERR(bb))
+@@ -253,13 +277,23 @@ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
  		}
+ 	}
+ 
+-	if (count_rmw) {
+-		/* Emit MI_MATH for each RMW reg: 20dw per reg + 7 trailing dw */
+-
++	if (count_rmw || count_rmw_mcr) {
+ 		xa_for_each(&sr->xa, idx, entry) {
+ 			if (entry->reg.masked || entry->clr_bits == ~0)
+ 				continue;
+ 
++			if (entry->reg.mcr) {
++				struct xe_reg_mcr reg = { .__reg.raw = entry->reg.raw };
++				u8 group, instance;
++
++				xe_gt_mcr_get_nonterminated_steering(gt, reg, &group, &instance);
++				*cs++ = MI_LOAD_REGISTER_IMM | MI_LRI_NUM_REGS(1);
++				*cs++ = CS_MMIO_GROUP_INSTANCE_SELECT(hwe->mmio_base).addr;
++				*cs++ = SELECTIVE_READ_ADDRESSING |
++					REG_FIELD_PREP(SELECTIVE_READ_GROUP, group) |
++					REG_FIELD_PREP(SELECTIVE_READ_INSTANCE, instance);
++			}
++
+ 			*cs++ = MI_LOAD_REGISTER_REG | MI_LRR_DST_CS_MMIO;
+ 			*cs++ = entry->reg.addr;
+ 			*cs++ = CS_GPR_REG(0, 0).addr;
+@@ -285,8 +319,9 @@ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ 			*cs++ = CS_GPR_REG(0, 0).addr;
+ 			*cs++ = entry->reg.addr;
+ 
+-			xe_gt_dbg(gt, "REG[%#x] = ~%#x|%#x\n",
+-				  entry->reg.addr, entry->clr_bits, entry->set_bits);
++			xe_gt_dbg(gt, "REG[%#x] = ~%#x|%#x%s\n",
++				  entry->reg.addr, entry->clr_bits, entry->set_bits,
++				  entry->reg.mcr ? " (MCR)" : "");
+ 		}
+ 
+ 		/* reset used GPR */
+@@ -298,6 +333,13 @@ static int emit_wa_job(struct xe_gt *gt, struct xe_exec_queue *q)
+ 		*cs++ = 0;
+ 		*cs++ = CS_GPR_REG(0, 2).addr;
+ 		*cs++ = 0;
++
++		/* reset steering */
++		if (count_rmw_mcr) {
++			*cs++ = MI_LOAD_REGISTER_IMM | MI_LRI_NUM_REGS(1);
++			*cs++ = CS_MMIO_GROUP_INSTANCE_SELECT(q->hwe->mmio_base).addr;
++			*cs++ = 0;
++		}
+ 	}
+ 
+ 	cs = xe_lrc_emit_hwe_state_instructions(q, cs);
 -- 
 2.51.0
 
