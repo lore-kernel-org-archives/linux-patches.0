@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6A73803CD;
-	Tue, 10 Mar 2026 11:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F4D3803CD;
+	Tue, 10 Mar 2026 11:25:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141913; cv=none; b=EBV8SeksttIL3d7kfeeyJJWZwrPBp3QcaPqjmIpZfGDd8jLbLFJjkOefS0Nx/r7rjHsXx8hU4Z9FiCnkuEoxAW5eKrz1ugf/CilABRhJJaFKwCv59GosjtPeMF/tCVJFXcRs70I9WO3eyMAYEgDA4iZrSnwvEFY7m+K11hJg468=
+	t=1773141914; cv=none; b=WYEejuLCyf9NMw4rLE9heNDsCn4VfNqUuA0Z8RAuQkJg34wKM9gxQDlerEjAKulDU1RWf1RtyXQ5AIzx49szaM4XehepHoHdB4q0ppeING1D6ys3aYDTLESu7hJqMF+g97D/NAXbBtfW4/6fVUG9m1NVD9lvFR8GSVsk02gzq68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141913; c=relaxed/simple;
-	bh=IyWDwr0YumqQypt5Xl2HqYQaca+Tw0R6OD7rBO0PYqU=;
+	s=arc-20240116; t=1773141914; c=relaxed/simple;
+	bh=QwZMJuJVca9euDyBXZw8CCfM11is7wWSMVn9lAYcYyw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S+Ydw2a47ZD+hjJ5kZt7VGh7W5uL0ktg0POxGtP97AxRQctLWtORfx7xcPUQTAu/mwAUxbxT2dX62/AqAbYlZPyXJSbTdJnWjjauwVAzpAXvcY3f8oLL6G3JJkHn6ViuuV2VteKrlB4AfE2y/Zse+Coe8WIp9PYCaN0OOjJSGoI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=h3QwKTwo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iBG0d7tB87OcFJ17pn8mDH52z2B/JAdqCSNPF15bhf8zHXjZ0FPndtrAEG1kW7TnENqTfNDBTJZ6YR4bedPYsYaLyd/8KLbVJblv3qlnU+a1iUIc8QZ02pJR72Be9IBNsfNbQcLwAAHfjeoLbDz/U0PV9kX41sY5PjYkeBIVIp4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fVVJTFwN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="h3QwKTwo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99380C2BC86;
-	Tue, 10 Mar 2026 11:25:12 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fVVJTFwN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DD82C2BCAF;
+	Tue, 10 Mar 2026 11:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141913;
-	bh=IyWDwr0YumqQypt5Xl2HqYQaca+Tw0R6OD7rBO0PYqU=;
+	s=k20201202; t=1773141914;
+	bh=QwZMJuJVca9euDyBXZw8CCfM11is7wWSMVn9lAYcYyw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h3QwKTwo4fy51YipCqlUNJiO7wKpZQC0YLcRHTKxxB+tYs8YzkQpiYubM+qxd0ct7
-	 jJttgCHU6D/6FO2kik3O2W1VMXHpg5O/TmjHdteUGiV45+jmJa1uRt3j2k/QXl+6GZ
-	 r0hOAg40sQnj88YPSU6wxehCpK/S/J9SOOyKg7pM8OF4BWKCh8CelWIKJghwlnEXbb
-	 pLSyu91Dw5wuuIW1K/i+ziN/54mscMau38SNXSqtLrktAFDoazTw95B0uwzcAX0wt8
-	 507aUO+txvVmHB9oBXfpSUMLqII8L/blReYwak3nWMNYS3R4EQT6QKA9/RsP3mRUMI
-	 raUc8LXhYJ61w==
+	b=fVVJTFwNNFqIjM7OfJ2lDCTYMYtLrmwXzh0cRJ3O9s7MFWNd3z6NfWyHd8Y8n6LGk
+	 goKTNzaOa/JFyGV7bFWTvK8Wvd45TtjhDSdzQ8F1kw4HVPI2Bx54jXTKEdrayN5qt+
+	 d4INIwL0j34g0OTHTB1eaa9dMBiqhJ425aCDZmlz8weiEiDvCq/g5Ct00DLHdUS93U
+	 sUdvljaL74/2PIenMpFGwH0whUlkJjvrQorgJPuR0uBNcP1hvQrj/pJOCBypFkZCcD
+	 vLzKgDSPg53q9sXakUtMP2OYrPaPGgA70+synj5DaSxG/Izzne+rCRm4XKMm06pGF+
+	 +lhF0Ann+vJsQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 036/314] regulator: bq257xx: Fix device node reference leak in bq257xx_reg_dt_parse_gpio()
-Date: Tue, 10 Mar 2026 07:14:55 -0400
-Message-ID: <e332c527a2579850c439dd58eba70899872190e4.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 037/314] zloop: advertise a volatile write cache
+Date: Tue, 10 Mar 2026 07:14:56 -0400
+Message-ID: <d7b0038db88da94fe3786ffaba0119db1c888e6f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,40 +49,74 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 4baaddaa44af01cd4ce239493060738fd0881835 ]
+[ Upstream commit 6acf7860dcc79ed045cc9e6a79c8a8bb6959dba7 ]
 
-In bq257xx_reg_dt_parse_gpio(), if fails to get subchild, it returns
-without calling of_node_put(child), causing the device node reference
-leak.
+Zloop is file system backed and thus needs to sync the underlying file
+system to persist data.  Set BLK_FEAT_WRITE_CACHE so that the block
+layer actually send flush commands, and fix the flush implementation
+as sync_filesystem requires s_umount to be held and the code currently
+misses that.
 
-Fixes: 981dd162b635 ("regulator: bq257xx: Add bq257xx boost regulator driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260224-bq257-v1-1-8ebbc731c1c3@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/bq257xx-regulator.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/block/zloop.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/regulator/bq257xx-regulator.c b/drivers/regulator/bq257xx-regulator.c
-index fc1ccede44688..dab8f1ab44503 100644
---- a/drivers/regulator/bq257xx-regulator.c
-+++ b/drivers/regulator/bq257xx-regulator.c
-@@ -115,11 +115,10 @@ static void bq257xx_reg_dt_parse_gpio(struct platform_device *pdev)
- 		return;
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index 39a425db670c8..2419677524453 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -499,6 +499,21 @@ static void zloop_rw(struct zloop_cmd *cmd)
+ 	zloop_put_cmd(cmd);
+ }
  
- 	subchild = of_get_child_by_name(child, pdata->desc.of_match);
-+	of_node_put(child);
- 	if (!subchild)
++/*
++ * Sync the entire FS containing the zone files instead of walking all files.
++ */
++static int zloop_flush(struct zloop_device *zlo)
++{
++	struct super_block *sb = file_inode(zlo->data_dir)->i_sb;
++	int ret;
++
++	down_read(&sb->s_umount);
++	ret = sync_filesystem(sb);
++	up_read(&sb->s_umount);
++
++	return ret;
++}
++
+ static void zloop_handle_cmd(struct zloop_cmd *cmd)
+ {
+ 	struct request *rq = blk_mq_rq_from_pdu(cmd);
+@@ -515,11 +530,7 @@ static void zloop_handle_cmd(struct zloop_cmd *cmd)
+ 		zloop_rw(cmd);
  		return;
- 
--	of_node_put(child);
--
- 	pdata->otg_en_gpio = devm_fwnode_gpiod_get_index(&pdev->dev,
- 							 of_fwnode_handle(subchild),
- 							 "enable", 0,
+ 	case REQ_OP_FLUSH:
+-		/*
+-		 * Sync the entire FS containing the zone files instead of
+-		 * walking all files
+-		 */
+-		cmd->ret = sync_filesystem(file_inode(zlo->data_dir)->i_sb);
++		cmd->ret = zloop_flush(zlo);
+ 		break;
+ 	case REQ_OP_ZONE_RESET:
+ 		cmd->ret = zloop_reset_zone(zlo, rq_zone_no(rq));
+@@ -892,7 +903,8 @@ static int zloop_ctl_add(struct zloop_options *opts)
+ 		.max_hw_sectors		= SZ_1M >> SECTOR_SHIFT,
+ 		.max_hw_zone_append_sectors = SZ_1M >> SECTOR_SHIFT,
+ 		.chunk_sectors		= opts->zone_size,
+-		.features		= BLK_FEAT_ZONED,
++		.features		= BLK_FEAT_ZONED | BLK_FEAT_WRITE_CACHE,
++
+ 	};
+ 	unsigned int nr_zones, i, j;
+ 	struct zloop_device *zlo;
 -- 
 2.51.0
 
