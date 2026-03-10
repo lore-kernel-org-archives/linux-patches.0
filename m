@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E71D5421A19;
-	Tue, 10 Mar 2026 11:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47855421F0E;
+	Tue, 10 Mar 2026 11:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142174; cv=none; b=fLBhCK5O890iv1FjiP7VQy249zV9mc/Dz2YJFEEXc0oGwHQmi3uEnJQ4mFJHuez66TumIaLm6aAczphhPildTapa5Pg/947WMkoPiF8JjVlavrYKbQzigLXr06rpC94BQfL3mEoG2L06yy8FSpWEBuUYE/mC/ZmYC6n0g7Vq8MU=
+	t=1773142175; cv=none; b=CxWel5979kC6eOf3pCuvVkOZIvmDFc/nvG7spCGZzfoE7938/J9m3xEhQUvDid0hldqfENZcdmQA95gLMAyJYZerd3QWzR90/Ktw/U9i9eeoKQYxhCzwaUOMyQ+53a59vmUxLG2HEOcT9xnkgF4bfRPptSQHq0Slq0Xp7oDSXEw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142174; c=relaxed/simple;
-	bh=amrbikU7IN6hJui9TMZQlIjt1R5+iXG3LRSOilXiYBg=;
+	s=arc-20240116; t=1773142175; c=relaxed/simple;
+	bh=N7Wyh5ramUXGxgblyxj6McCO9h990p/XpTpfY9fEEbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WORQ1X7S1ZlZLv45Dz4Rx+RDS5i8pFqPzlBUokLgSKkXb1NEBrdwv6sfdd9hz6hKVncH7VGDlaJIePr3M4rQaQv6kX4ai6AR+6LMnjKkG8fZEwrVxXFEkK8WHq1Ra6/ih/DV3uUxjHELuS/zlcxd2AuBnfvca0KDpjwpZBOd+3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dcAfWLOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NSS5PUJ3/spYjLcFQAus5M3ulCB3VLGD/22jtDIO4zQrp06TgoiWBFI7ouMUkoQgJl4Ms1aqZKbDDP9M0vGgwNUOfm6w6xBN69SmCIL/BFLBLCfJ+SFe0DcDzRJuy8E2g4sVLvhfX7Wc/3yVgqenBPuEXpni/5Odnz8T0tuy/dU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LG6582Ho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dcAfWLOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDBC5C2BC9E;
-	Tue, 10 Mar 2026 11:29:32 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LG6582Ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18B05C2BCAF;
+	Tue, 10 Mar 2026 11:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142173;
-	bh=amrbikU7IN6hJui9TMZQlIjt1R5+iXG3LRSOilXiYBg=;
+	s=k20201202; t=1773142175;
+	bh=N7Wyh5ramUXGxgblyxj6McCO9h990p/XpTpfY9fEEbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcAfWLOr6zG4suwo3viY0b/ua+fyBSB8mCfa8GdFOgtvI4/hWjG1XxNw0vrQb2QkD
-	 0MXMSM+fwYCkxnP4sbLmUuH61FeOAm9MOuhzMMOw2WuI/VtQWgZb+vZkhNPM2otaaR
-	 qAf6s8cMywCk6fOyJEyydweaMqiLi3R3OEMhqixmktbpU0ZQ/y2A/20nTrwwgioXxQ
-	 e416OX85ATgaHRAk/TekGu4KRkqzGgDog6V2TD923ZADcSXO6Zm6sJj5Dy0LgYgtKo
-	 UFEJ51z37E9DQsxE/xeyo48+cp8sGzQhz67W3rLVfA6wpxoiWgPPmfVrmqffDPmP4M
-	 2AA+y6WMyF6sg==
+	b=LG6582HoksGu4muVYX/ZP9rcpaal6tsWV08jo5hphmLwVSzMVI/jmcVMNXbQDgux3
+	 AEGawvXuxW1crHF0mnEorxPD2twf3evqY+rX3Lna2blx7QZ9QqWIurp/O3aXf7eid0
+	 24gNZ5ufv4qyyQEuVOMeoENn+6T9BuWrRQH/9Sd1jMoWBdK9hBU87Bl+qGp0Iuy9Zp
+	 YpruWTEtcF68XD7agv0Mshp6CAKTx/PAl3wy5ScYw4DaM2ctZG3dGKNcS8Zv5GLKnN
+	 alyem0N6rfjT7h3Lvw4B/q9X8tL8YyW6I44Ds47AfgmoiHrqb/6VnAV0IGa8SQdmnD
+	 eJ1fYpb5tdmSg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+Cc: Kohei Enju <kohei@enjuk.jp>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
 	Simon Horman <horms@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 262/314] libie: don't unroll if fwlog isn't supported
-Date: Tue, 10 Mar 2026 07:18:41 -0400
-Message-ID: <271fe4ee3ace52042bde6b804d0e633ee2387b90.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 263/314] iavf: fix netdev->max_mtu to respect actual hardware limit
+Date: Tue, 10 Mar 2026 07:18:42 -0400
+Message-ID: <6469b12943208edf008b38254f35f495b17a484b.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,72 +51,70 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit 636cc3bd12f499c74eaf5dc9a7d5b832f1bb24ed ]
+[ Upstream commit b84852170153671bb0fa6737a6e48370addd8e1a ]
 
-The libie_fwlog_deinit() function can be called during driver unload
-even when firmware logging was never properly initialized. This led to call
-trace:
+iavf sets LIBIE_MAX_MTU as netdev->max_mtu, ignoring vf_res->max_mtu
+from PF [1]. This allows setting an MTU beyond the actual hardware
+limit, causing TX queue timeouts [2].
 
-[  148.576156] Oops: Oops: 0000 [#1] SMP NOPTI
-[  148.576167] CPU: 80 UID: 0 PID: 12843 Comm: rmmod Kdump: loaded Not tainted 6.17.0-rc7next-queue-3oct-01915-g06d79d51cf51 #1 PREEMPT(full)
-[  148.576177] Hardware name: HPE ProLiant DL385 Gen10 Plus/ProLiant DL385 Gen10 Plus, BIOS A42 07/18/2020
-[  148.576182] RIP: 0010:__dev_printk+0x16/0x70
-[  148.576196] Code: 1f 44 00 00 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 0f 1f 44 00 00 41 55 41 54 49 89 d4 55 48 89 fd 53 48 85 f6 74 3c <4c> 8b 6e 50 48 89 f3 4d 85 ed 75 03 4c 8b 2e 48 89 df e8 f3 27 98
-[  148.576204] RSP: 0018:ffffd2fd7ea17a48 EFLAGS: 00010202
-[  148.576211] RAX: ffffd2fd7ea17aa0 RBX: ffff8eb288ae2000 RCX: 0000000000000000
-[  148.576217] RDX: ffffd2fd7ea17a70 RSI: 00000000000000c8 RDI: ffffffffb68d3d88
-[  148.576222] RBP: ffffffffb68d3d88 R08: 0000000000000000 R09: 0000000000000000
-[  148.576227] R10: 00000000000000c8 R11: ffff8eb2b1a49400 R12: ffffd2fd7ea17a70
-[  148.576231] R13: ffff8eb3141fb000 R14: ffffffffc1215b48 R15: ffffffffc1215bd8
-[  148.576236] FS:  00007f5666ba6740(0000) GS:ffff8eb2472b9000(0000) knlGS:0000000000000000
-[  148.576242] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  148.576247] CR2: 0000000000000118 CR3: 000000011ad17000 CR4: 0000000000350ef0
-[  148.576252] Call Trace:
-[  148.576258]  <TASK>
-[  148.576269]  _dev_warn+0x7c/0x96
-[  148.576290]  libie_fwlog_deinit+0x112/0x117 [libie_fwlog]
-[  148.576303]  ixgbe_remove+0x63/0x290 [ixgbe]
-[  148.576342]  pci_device_remove+0x42/0xb0
-[  148.576354]  device_release_driver_internal+0x19c/0x200
-[  148.576365]  driver_detach+0x48/0x90
-[  148.576372]  bus_remove_driver+0x6d/0xf0
-[  148.576383]  pci_unregister_driver+0x2e/0xb0
-[  148.576393]  ixgbe_exit_module+0x1c/0xd50 [ixgbe]
-[  148.576430]  __do_sys_delete_module.isra.0+0x1bc/0x2e0
-[  148.576446]  do_syscall_64+0x7f/0x980
+Set correct netdev->max_mtu using vf_res->max_mtu from the PF.
 
-It can be reproduced by trying to unload ixgbe driver in recovery mode.
+Note that currently PF drivers such as ice/i40e set the frame size in
+vf_res->max_mtu, not MTU. Convert vf_res->max_mtu to MTU before setting
+netdev->max_mtu.
 
-Fix that by checking if fwlog is supported before doing unroll.
+[1]
+ # ip -j -d link show $DEV | jq '.[0].max_mtu'
+ 16356
 
-Fixes: 641585bc978e ("ixgbe: fwlog support for e610")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+[2]
+ iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 1: transmit queue 0 timed out 5692 ms
+ iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
+ iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 6: transmit queue 3 timed out 5312 ms
+ iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
+ ...
+
+Fixes: 5fa4caff59f2 ("iavf: switch to Page Pool")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/libie/fwlog.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/libie/fwlog.c b/drivers/net/ethernet/intel/libie/fwlog.c
-index f39cc11cb7c56..5d890d9d3c4d5 100644
---- a/drivers/net/ethernet/intel/libie/fwlog.c
-+++ b/drivers/net/ethernet/intel/libie/fwlog.c
-@@ -1051,6 +1051,10 @@ void libie_fwlog_deinit(struct libie_fwlog *fwlog)
- {
- 	int status;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 4b0fc8f354bc9..53a0366fbf998 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -2797,7 +2797,22 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 	netdev->watchdog_timeo = 5 * HZ;
  
-+	/* if FW logging isn't supported it means no configuration was done */
-+	if (!libie_fwlog_supported(fwlog))
-+		return;
+ 	netdev->min_mtu = ETH_MIN_MTU;
+-	netdev->max_mtu = LIBIE_MAX_MTU;
 +
- 	/* make sure FW logging is disabled to not put the FW in a weird state
- 	 * for the next driver load
- 	 */
++	/* PF/VF API: vf_res->max_mtu is max frame size (not MTU).
++	 * Convert to MTU.
++	 */
++	if (!adapter->vf_res->max_mtu) {
++		netdev->max_mtu = LIBIE_MAX_MTU;
++	} else if (adapter->vf_res->max_mtu < LIBETH_RX_LL_LEN + ETH_MIN_MTU ||
++		   adapter->vf_res->max_mtu >
++			   LIBETH_RX_LL_LEN + LIBIE_MAX_MTU) {
++		netdev_warn_once(adapter->netdev,
++				 "invalid max frame size %d from PF, using default MTU %d",
++				 adapter->vf_res->max_mtu, LIBIE_MAX_MTU);
++		netdev->max_mtu = LIBIE_MAX_MTU;
++	} else {
++		netdev->max_mtu = adapter->vf_res->max_mtu - LIBETH_RX_LL_LEN;
++	}
+ 
+ 	if (!is_valid_ether_addr(adapter->hw.mac.addr)) {
+ 		dev_info(&pdev->dev, "Invalid MAC address %pM, using random\n",
 -- 
 2.51.0
 
