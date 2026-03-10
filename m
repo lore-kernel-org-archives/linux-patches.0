@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC53B410D01;
-	Tue, 10 Mar 2026 11:30:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C585736EA86;
+	Tue, 10 Mar 2026 11:30:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142204; cv=none; b=F6AzQdC7uBDPSP4RmidS2gKXSeS+mVaOyOFxUTzUN8mky1w2AMsiZkenwjPaurC4ksm3BMo1g2kAP8XW0K9e4nfuF6/kEMw27UalOy2PR7uSD+ecmABeS/Q5XTEFY9/54CmKUvqntaFIJDtCWRHalZl8NcaPfWrJkIls1VDpNbM=
+	t=1773142205; cv=none; b=cqat/t0imLS34ylUNXvGUVjIFag/kIojhilP2+pqQRcl3xHguP5pLHtY5pmr496KEzuRAfAtOGEyQ+EGKkIig7tyA7Wh0L0kDayu+1NAz9Mp2j+5zjGKyhB6VfJxTK+hbM/G0Lvowr1X0xqlxjv1k28Dh+Ke1Cbs/qjqwX08Lck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142204; c=relaxed/simple;
-	bh=XAxweD3ipsJZ6oeeg9y3LZWdP88GrCKvmMSbpys/Z1E=;
+	s=arc-20240116; t=1773142205; c=relaxed/simple;
+	bh=d6DZEBVqXt4Ao1Pw029by5zCtr47cF4/H9HB7wMQSds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=seJJ1tHK10dYq9754n4EQzJJFOjDPRNaoAoYLXu2hHLW/YcMuKHMa4UO5EUeJd2bun+sp+qN7StNjVEtF7M4Ua7T8xQ2X/WhPwhOArlXxUAGU7FfC+vPacByzMa2AsUBKwxWDIEgUU0ic7b1DMxiQCl/O1v8Ut/cHPzB//Y/Qtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tBcA+V2p; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uPVhXYijeJ+AgxFbtnZnwYjr8zOqiQzLjaIP7taLnuF793S4kFtXl9Zy6tnM8rCXBquZEvR8s05S6de0yonKeL9qNaKjueOADC8SoQgH0pEpqIQQI1TxiuIs3DysqtJz64dr5c8LSUb9RJ3IM4El2MijtEUOEWVP54ZKFvaFT8U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RQExuS8W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tBcA+V2p"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 083CBC2BC86;
-	Tue, 10 Mar 2026 11:30:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RQExuS8W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F37B7C2BC9E;
+	Tue, 10 Mar 2026 11:30:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142204;
-	bh=XAxweD3ipsJZ6oeeg9y3LZWdP88GrCKvmMSbpys/Z1E=;
+	s=k20201202; t=1773142205;
+	bh=d6DZEBVqXt4Ao1Pw029by5zCtr47cF4/H9HB7wMQSds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tBcA+V2pjHAz6YBxDTyg+5w0+r2H/QcMS0Diz54a3v6WeTpKpxpSOQlKNDTnTuSI3
-	 MY+5O/ZAieF5kCXjtyB0oEMZVZDNbaOk+HS6nJo0B3v5Tyzk8v1eWFLnS/e1woSX52
-	 uEZA2moSZh82lb4wkX/9ZzMwJeaS3TIxgSDWwI92SOcY/3rqdwD8zIA+Ws2S1ZAn0F
-	 Q4lMJkDAD8o+I1CawOIlxm4r2n6i6dlapwo12xx8/IAqKDgVN+7o5aou/02xqVBA0I
-	 zJG9Ukfaw2GwnnZ/osKWP1IR63eu2ooO0aq59oG36BjLVGxQgkpGZDzB59XT95W7M2
-	 zII41p9IYCcRg==
+	b=RQExuS8WAfuptBWQ6KkWOt3fjGjZBtw2pLgXOhMEU+mPKEN9WNKb/Mxoea5io6etw
+	 MrfcrW8MFKFkm4MgTR/Xy5lkQyl57j7YczMTBCAyoD9lr/C9Fxx9/hKymegNoui7bl
+	 O6uy3AVAy26Io+gGkSe0JrWxDzP4tRZO+ztNyi2chuH15ImLbWjWzKefK4rxw6tVbF
+	 YiRkuAaLHrN2j+IqmMyAH0dH3fntOoR7MOD3cuK546HVOUrixq8sZlIm+l2pSgFZAZ
+	 29Nuy/tZnbbLeKHhi2btnLboLPbTOkUfodrA3+p2uDXE91b00LuezFoamQ5XBdo1yL
+	 fVQo41EjT1QMQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
-	Inseo An <y0un9sa@gmail.com>,
+	syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 294/314] netfilter: nf_tables: unconditionally bump set->nelems before insertion
-Date: Tue, 10 Mar 2026 07:19:13 -0400
-Message-ID: <4015cbb43e84338c798dd9b8812197ce2247de4a.1773141556.git.sashal@kernel.org>
+Subject: [PATCH 6.18 295/314] netfilter: nf_tables: clone set on flush only
+Date: Tue, 10 Mar 2026 07:19:14 -0400
+Message-ID: <caeac0f13e2bddc80166133bb3d795dc06f5d8a5.1773141556.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -51,101 +51,174 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit def602e498a4f951da95c95b1b8ce8ae68aa733a ]
+[ Upstream commit fb7fb4016300ac622c964069e286dc83166a5d52 ]
 
-In case that the set is full, a new element gets published then removed
-without waiting for the RCU grace period, while RCU reader can be
-walking over it already.
+Syzbot with fault injection triggered a failing memory allocation with
+GFP_KERNEL which results in a WARN splat:
 
-To address this issue, add the element transaction even if set is full,
-but toggle the set_full flag to report -ENFILE so the abort path safely
-unwinds the set to its previous state.
+iter.err
+WARNING: net/netfilter/nf_tables_api.c:845 at nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845, CPU#0: syz.0.17/5992
+Modules linked in:
+CPU: 0 UID: 0 PID: 5992 Comm: syz.0.17 Not tainted syzkaller #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 02/12/2026
+RIP: 0010:nft_map_deactivate+0x34e/0x3c0 net/netfilter/nf_tables_api.c:845
+Code: 8b 05 86 5a 4e 09 48 3b 84 24 a0 00 00 00 75 62 48 8d 65 d8 5b 41 5c 41 5d 41 5e 41 5f 5d c3 cc cc cc cc cc e8 63 6d fa f7 90 <0f> 0b 90 43
++80 7c 35 00 00 0f 85 23 fe ff ff e9 26 fe ff ff 89 d9
+RSP: 0018:ffffc900045af780 EFLAGS: 00010293
+RAX: ffffffff89ca45bd RBX: 00000000fffffff4 RCX: ffff888028111e40
+RDX: 0000000000000000 RSI: 00000000fffffff4 RDI: 0000000000000000
+RBP: ffffc900045af870 R08: 0000000000400dc0 R09: 00000000ffffffff
+R10: dffffc0000000000 R11: fffffbfff1d141db R12: ffffc900045af7e0
+R13: 1ffff920008b5f24 R14: dffffc0000000000 R15: ffffc900045af920
+FS:  000055557a6a5500(0000) GS:ffff888125496000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fb5ea271fc0 CR3: 000000003269e000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __nft_release_table+0xceb/0x11f0 net/netfilter/nf_tables_api.c:12115
+ nft_rcv_nl_event+0xc25/0xdb0 net/netfilter/nf_tables_api.c:12187
+ notifier_call_chain+0x19d/0x3a0 kernel/notifier.c:85
+ blocking_notifier_call_chain+0x6a/0x90 kernel/notifier.c:380
+ netlink_release+0x123b/0x1ad0 net/netlink/af_netlink.c:761
+ __sock_release net/socket.c:662 [inline]
+ sock_close+0xc3/0x240 net/socket.c:1455
 
-As for element updates, decrement set->nelems to restore it.
+Restrict set clone to the flush set command in the preparation phase.
+Add NFT_ITER_UPDATE_CLONE and use it for this purpose, update the rbtree
+and pipapo backends to only clone the set when this iteration type is
+used.
 
-A simpler fix is to call synchronize_rcu() in the error path.
-However, with a large batch adding elements to already maxed-out set,
-this could cause noticeable slowdown of such batches.
+As for the existing NFT_ITER_UPDATE type, update the pipapo backend to
+use the existing set clone if available, otherwise use the existing set
+representation. After this update, there is no need to clone a set that
+is being deleted, this includes bound anonymous set.
 
-Fixes: 35d0ac9070ef ("netfilter: nf_tables: fix set->nelems counting with no NLM_F_EXCL")
-Reported-by: Inseo An <y0un9sa@gmail.com>
+An alternative approach to NFT_ITER_UPDATE_CLONE is to add a .clone
+interface and call it from the flush set path.
+
+Reported-by: syzbot+4924a0edc148e8b4b342@syzkaller.appspotmail.com
+Fixes: 3f1d886cc7c3 ("netfilter: nft_set_pipapo: move cloning of match info to insert/removal path")
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 30 ++++++++++++++++--------------
- 1 file changed, 16 insertions(+), 14 deletions(-)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     | 10 +++++++++-
+ net/netfilter/nft_set_hash.c      |  1 +
+ net/netfilter/nft_set_pipapo.c    | 11 +++++++++--
+ net/netfilter/nft_set_rbtree.c    |  8 +++++---
+ 5 files changed, 26 insertions(+), 6 deletions(-)
 
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index f1b67b40dd4de..077d3121cc9f1 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -317,11 +317,13 @@ static inline void *nft_elem_priv_cast(const struct nft_elem_priv *priv)
+  * @NFT_ITER_UNSPEC: unspecified, to catch errors
+  * @NFT_ITER_READ: read-only iteration over set elements
+  * @NFT_ITER_UPDATE: iteration under mutex to update set element state
++ * @NFT_ITER_UPDATE_CLONE: clone set before iteration under mutex to update element
+  */
+ enum nft_iter_type {
+ 	NFT_ITER_UNSPEC,
+ 	NFT_ITER_READ,
+ 	NFT_ITER_UPDATE,
++	NFT_ITER_UPDATE_CLONE,
+ };
+ 
+ struct nft_set;
 diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 89039bbf7d638..b5e1b26a5302b 100644
+index b5e1b26a5302b..7bb5719c214b0 100644
 --- a/net/netfilter/nf_tables_api.c
 +++ b/net/netfilter/nf_tables_api.c
-@@ -7288,6 +7288,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	struct nft_data_desc desc;
- 	enum nft_registers dreg;
- 	struct nft_trans *trans;
-+	bool set_full = false;
- 	u64 expiration;
- 	u64 timeout;
- 	int err, i;
-@@ -7574,10 +7575,18 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 	if (err < 0)
- 		goto err_elem_free;
- 
-+	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
-+		unsigned int max = nft_set_maxsize(set), nelems;
-+
-+		nelems = atomic_inc_return(&set->nelems);
-+		if (nelems > max)
-+			set_full = true;
-+	}
-+
- 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_NEWSETELEM, set);
- 	if (trans == NULL) {
- 		err = -ENOMEM;
--		goto err_elem_free;
-+		goto err_set_size;
+@@ -832,6 +832,11 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
  	}
+ }
  
- 	ext->genmask = nft_genmask_cur(ctx->net);
-@@ -7629,7 +7638,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
++/* Use NFT_ITER_UPDATE iterator even if this may be called from the preparation
++ * phase, the set clone might already exist from a previous command, or it might
++ * be a set that is going away and does not require a clone. The netns and
++ * netlink release paths also need to work on the live set.
++ */
+ static void nft_map_deactivate(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	struct nft_set_iter iter = {
+@@ -8010,9 +8015,12 @@ static int nft_set_catchall_flush(const struct nft_ctx *ctx,
  
- 						ue->priv = elem_priv;
- 						nft_trans_commit_list_add_elem(ctx->net, trans);
--						goto err_elem_free;
-+						goto err_set_size;
- 					}
- 				}
- 			}
-@@ -7647,23 +7656,16 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
- 		goto err_element_clash;
- 	}
+ static int nft_set_flush(struct nft_ctx *ctx, struct nft_set *set, u8 genmask)
+ {
++	/* The set backend might need to clone the set, do it now from the
++	 * preparation phase, use NFT_ITER_UPDATE_CLONE iterator type.
++	 */
+ 	struct nft_set_iter iter = {
+ 		.genmask	= genmask,
+-		.type		= NFT_ITER_UPDATE,
++		.type		= NFT_ITER_UPDATE_CLONE,
+ 		.fn		= nft_setelem_flush,
+ 	};
  
--	if (!(flags & NFT_SET_ELEM_CATCHALL)) {
--		unsigned int max = nft_set_maxsize(set);
+diff --git a/net/netfilter/nft_set_hash.c b/net/netfilter/nft_set_hash.c
+index 739b992bde591..b0e571c8e3f38 100644
+--- a/net/netfilter/nft_set_hash.c
++++ b/net/netfilter/nft_set_hash.c
+@@ -374,6 +374,7 @@ static void nft_rhash_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ {
+ 	switch (iter->type) {
+ 	case NFT_ITER_UPDATE:
++	case NFT_ITER_UPDATE_CLONE:
+ 		/* only relevant for netlink dumps which use READ type */
+ 		WARN_ON_ONCE(iter->skip != 0);
+ 
+diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
+index 18e1903b1d3d0..cd0d2d4ae36bf 100644
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -2145,13 +2145,20 @@ static void nft_pipapo_walk(const struct nft_ctx *ctx, struct nft_set *set,
+ 	const struct nft_pipapo_match *m;
+ 
+ 	switch (iter->type) {
+-	case NFT_ITER_UPDATE:
++	case NFT_ITER_UPDATE_CLONE:
+ 		m = pipapo_maybe_clone(set);
+ 		if (!m) {
+ 			iter->err = -ENOMEM;
+ 			return;
+ 		}
 -
--		if (!atomic_add_unless(&set->nelems, 1, max)) {
--			err = -ENFILE;
--			goto err_set_full;
--		}
--	}
--
- 	nft_trans_container_elem(trans)->elems[0].priv = elem.priv;
- 	nft_trans_commit_list_add_elem(ctx->net, trans);
--	return 0;
++		nft_pipapo_do_walk(ctx, set, m, iter);
++		break;
++	case NFT_ITER_UPDATE:
++		if (priv->clone)
++			m = priv->clone;
++		else
++			m = rcu_dereference_protected(priv->match,
++						      nft_pipapo_transaction_mutex_held(set));
+ 		nft_pipapo_do_walk(ctx, set, m, iter);
+ 		break;
+ 	case NFT_ITER_READ:
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index a4fb5b517d9de..5d91b7d08d33a 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -810,13 +810,15 @@ static void nft_rbtree_walk(const struct nft_ctx *ctx,
+ 	struct nft_rbtree *priv = nft_set_priv(set);
  
--err_set_full:
--	nft_setelem_remove(ctx->net, set, elem.priv);
-+	return set_full ? -ENFILE : 0;
+ 	switch (iter->type) {
+-	case NFT_ITER_UPDATE:
+-		lockdep_assert_held(&nft_pernet(ctx->net)->commit_mutex);
+-
++	case NFT_ITER_UPDATE_CLONE:
+ 		if (nft_array_may_resize(set) < 0) {
+ 			iter->err = -ENOMEM;
+ 			break;
+ 		}
++		fallthrough;
++	case NFT_ITER_UPDATE:
++		lockdep_assert_held(&nft_pernet(ctx->net)->commit_mutex);
 +
- err_element_clash:
- 	kfree(trans);
-+err_set_size:
-+	if (!(flags & NFT_SET_ELEM_CATCHALL))
-+		atomic_dec(&set->nelems);
- err_elem_free:
- 	nf_tables_set_elem_destroy(ctx, set, elem.priv);
- err_parse_data:
+ 		nft_rbtree_do_walk(ctx, set, iter);
+ 		break;
+ 	case NFT_ITER_READ:
 -- 
 2.51.0
 
