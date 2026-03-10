@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EA0E389471;
-	Tue, 10 Mar 2026 11:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFD8387368;
+	Tue, 10 Mar 2026 11:26:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142000; cv=none; b=YYK4Rd6EvwWE154El2alx62fSCJrhJ04im6WG63aUEqvHRpg8Ck4JvDBubFnO+mqzYSiZ4oG1C1xPfPmx2bCbBvbtZsLJbS+/KvwtJW6mW5xyMlA3fJx5Jegnin2wFYCSjaBHaDWWP4nJ7L7tKLLlBjqm9l+11oaPrZKDvbDvTY=
+	t=1773142001; cv=none; b=ppe2oIRe6r8Y+mD7lu80pRBdUknCinyKFx9KcfWwKXPmjpF7A7iFM9eDTskhS8Q8laGSgvohC1gpEbG0ahPFq8KKGUxI4JrCKejIH9hUfeTDKL/ZBcl2P8CP38tyUAokVwcnDeX2ggXY1FiCUIVjzSeEIE5zmAL0KYmI5Ew79Xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142000; c=relaxed/simple;
-	bh=JuDxmJUgq2+uPQiB2+BL+9a4iPlkMPBRu8zA64fCl0k=;
+	s=arc-20240116; t=1773142001; c=relaxed/simple;
+	bh=ymJxRDQbWwoytOrQpg0jtX1abNUf+YMZ53aXbADlIbo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cseqFuqtm6cx3mF869TyH/VlnmA3UmhOmE5ruZ2RSt53aeONiy5S/p9AZXmZ85tcRTjdbnqTL2F1o1XUuJ9uytaqg3wfMVUeliMDebWRLcrmwm+IX/4f9iC73w3jYsUJAysFYbglCn00VcGVRsy99+6Kh2U1d4JLJbsc/E3bGIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=m/Qy8lp2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hK1HeI0RyzMfOcXz0F+paGlquQ2VBYdnmeIYyUcGuHzvkS5f8SLZ3aclyb1opMq9msB2s6ypanKscjuj3Ir50zoV8KywhzS0EvQvq3B6I1sDtKyPxVMA7HYmsuHMQQPA1fWhGi6eJaFYkvTyp1tHWm5nUtlm1g5qoXF8YZxN1C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BTep+XLC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="m/Qy8lp2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D06F9C2BCB3;
-	Tue, 10 Mar 2026 11:26:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BTep+XLC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B350CC2BC86;
+	Tue, 10 Mar 2026 11:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142000;
-	bh=JuDxmJUgq2+uPQiB2+BL+9a4iPlkMPBRu8zA64fCl0k=;
+	s=k20201202; t=1773142001;
+	bh=ymJxRDQbWwoytOrQpg0jtX1abNUf+YMZ53aXbADlIbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m/Qy8lp2qPJMF3G7p5wX6LSNJq9yU6lZXZE8x5Sl03ONA8Sl+yYo/t+EKsd7wYsEd
-	 oMQcTXEl30DSfYqaafBJNNSHwMLnzjBXhiRPiCJo2bAGQgmM5xZPjOBzop2egxTCEX
-	 oxZJhnTlwznSujqFfffuaATm7lhjXlYXls1QWstKuZYEobvzNSJM282A5p4ura4Ub7
-	 zqNx6rDdgXHxw7McBhqsKeefBGHIOKXX+5X+0V04ne1WWqFoNRg+OgRrt7dU95mDAa
-	 xeGgq5k9E1rZr+wt+MBWPv8dOsCdS/g2nin+WpmuQheUEc5JbHw8d7RupH/Md9im+C
-	 CplorOBwK0quA==
+	b=BTep+XLCvGmYCh/ENAHCw8t6UOp2MUrFQvMTAqw7FhDGN/ppd0GHJw51AZmYJY8WN
+	 2IyonC440Qe4n5kSHFvMTH8fkvJHEa2/0+9D2lt8RXggJEckqHFGr5d8b8NfVIY+f4
+	 UsGuAKErCdYHtoqRFMtrryR7suSFvZhDCZ1VgJZr5q/0BI7P6EbxliwXoD70mWFCMF
+	 BMfrhgb/jw3zEF/bAoZMZlnfbFzp+8M83cwiQAhFhM8TcN0WrDPuTQ5sAmNmmsI5Xb
+	 kGsd3cbKyRezsQylScOjlYOvSgdhqnUf+bxbbT7X8IjhJBp3bdNwJ0Pgp4ZBHsjEtP
+	 lp7AcLECP+xLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+Cc: Imre Deak <imre.deak@intel.com>,
+	Vinod Govindapillai <vinod.govindapillai@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 126/314] LoongArch: Remove some extern variables in source files
-Date: Tue, 10 Mar 2026 07:16:25 -0400
-Message-ID: <b8042dbe30c4ec464d269af9ceb00201680b3788.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 127/314] drm/i915/dp: Fail state computation for invalid DSC source input BPP values
+Date: Tue, 10 Mar 2026 07:16:26 -0400
+Message-ID: <c291d6acc338791cb89e2d3e9f85738ab2dd8229.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,65 +48,75 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 0e6f596d6ac635e80bb265d587b2287ef8fa1cd6 ]
+[ Upstream commit 338465490cf7bd4a700ecd33e4855fee4622fa5f ]
 
-There are declarations of the variable "eentry", "pcpu_handlers[]" and
-"exception_handlers[]" in asm/setup.h, the source files already include
-this header file directly or indirectly, so no need to declare them in
-the source files, just remove the code.
+There is no reason to accept an invalid minimum/maximum DSC source input
+BPP value (i.e a minimum DSC input BPP value above the maximum pipe BPP
+or a maximum DSC input BPP value below the minimum pipe BPP value), fail
+the state computation in these cases.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20251215192357.172201-17-imre.deak@intel.com
+Stable-dep-of: fe26ae6ac8b8 ("drm/i915/dp: Fix pipe BPP clamping due to HDR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/unwind_orc.c      | 2 --
- arch/loongarch/kernel/unwind_prologue.c | 4 ----
- arch/loongarch/mm/tlb.c                 | 1 -
- 3 files changed, 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 28 ++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
-diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
-index ad7e63f495045..85c2fcb76930c 100644
---- a/arch/loongarch/kernel/unwind_orc.c
-+++ b/arch/loongarch/kernel/unwind_orc.c
-@@ -358,8 +358,6 @@ static bool is_entry_func(unsigned long addr)
+diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
+index 2eab591a8ef56..057b366c5ae29 100644
+--- a/drivers/gpu/drm/i915/display/intel_dp.c
++++ b/drivers/gpu/drm/i915/display/intel_dp.c
+@@ -2523,16 +2523,30 @@ intel_dp_compute_config_link_bpp_limits(struct intel_dp *intel_dp,
+ 	return true;
+ }
  
- static inline unsigned long bt_address(unsigned long ra)
+-static void
+-intel_dp_dsc_compute_pipe_bpp_limits(struct intel_dp *intel_dp,
++static bool
++intel_dp_dsc_compute_pipe_bpp_limits(struct intel_connector *connector,
+ 				     struct link_config_limits *limits)
  {
--	extern unsigned long eentry;
--
- #if defined(CONFIG_NUMA) && !defined(CONFIG_PREEMPT_RT)
- 	int cpu;
- 	int vec_sz = sizeof(exception_handlers);
-diff --git a/arch/loongarch/kernel/unwind_prologue.c b/arch/loongarch/kernel/unwind_prologue.c
-index ee1c29686ab05..da07acad7973a 100644
---- a/arch/loongarch/kernel/unwind_prologue.c
-+++ b/arch/loongarch/kernel/unwind_prologue.c
-@@ -23,10 +23,6 @@ extern const int unwind_hint_lasx;
- extern const int unwind_hint_lbt;
- extern const int unwind_hint_ri;
- extern const int unwind_hint_watch;
--extern unsigned long eentry;
--#ifdef CONFIG_NUMA
--extern unsigned long pcpu_handlers[NR_CPUS];
--#endif
+-	struct intel_display *display = to_intel_display(intel_dp);
++	struct intel_display *display = to_intel_display(connector);
++	const struct link_config_limits orig_limits = *limits;
+ 	int dsc_min_bpc = intel_dp_dsc_min_src_input_bpc();
+ 	int dsc_max_bpc = intel_dp_dsc_max_src_input_bpc(display);
  
- static inline bool scan_handlers(unsigned long entry_offset)
- {
-diff --git a/arch/loongarch/mm/tlb.c b/arch/loongarch/mm/tlb.c
-index f46c15d6e7eae..24add95ecb65e 100644
---- a/arch/loongarch/mm/tlb.c
-+++ b/arch/loongarch/mm/tlb.c
-@@ -260,7 +260,6 @@ static void output_pgtable_bits_defines(void)
- #ifdef CONFIG_NUMA
- unsigned long pcpu_handlers[NR_CPUS];
- #endif
--extern long exception_handlers[VECSIZE * 128 / sizeof(long)];
+-	limits->pipe.max_bpp = clamp(limits->pipe.max_bpp, dsc_min_bpc * 3, dsc_max_bpc * 3);
+-	limits->pipe.min_bpp = clamp(limits->pipe.min_bpp, dsc_min_bpc * 3, dsc_max_bpc * 3);
++	limits->pipe.min_bpp = max(limits->pipe.min_bpp, dsc_min_bpc * 3);
++	limits->pipe.max_bpp = min(limits->pipe.max_bpp, dsc_max_bpc * 3);
++
++	if (limits->pipe.min_bpp <= 0 ||
++	    limits->pipe.min_bpp > limits->pipe.max_bpp) {
++		drm_dbg_kms(display->drm,
++			    "[CONNECTOR:%d:%s] Invalid DSC src/sink input BPP (src:%d-%d pipe:%d-%d)\n",
++			    connector->base.base.id, connector->base.name,
++			    dsc_min_bpc * 3, dsc_max_bpc * 3,
++			    orig_limits.pipe.min_bpp, orig_limits.pipe.max_bpp);
++
++		return false;
++	}
++
++	return true;
+ }
  
- static void setup_tlb_handler(int cpu)
- {
+ bool
+@@ -2572,8 +2586,8 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
+ 							respect_downstream_limits);
+ 	}
+ 
+-	if (dsc)
+-		intel_dp_dsc_compute_pipe_bpp_limits(intel_dp, limits);
++	if (dsc && !intel_dp_dsc_compute_pipe_bpp_limits(connector, limits))
++		return false;
+ 
+ 	if (is_mst || intel_dp->use_max_params) {
+ 		/*
 -- 
 2.51.0
 
