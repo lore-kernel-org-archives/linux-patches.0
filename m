@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1C7D3A4525;
-	Tue, 10 Mar 2026 11:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C91387562;
+	Tue, 10 Mar 2026 11:27:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142068; cv=none; b=eySThNQx9NFL1hYnaQLBWMF/Ez66kiPZuZmu0FRB16bD/qqvnEBwyNNlEJhElEQrC2FIya8Yb8+Ia8vCGER9fEGLWUU0SNCRgqVUoqCFnJiRG5zMLXID5TdSQrk4HLXnQPbY+oT9ljg8u0vgW1JFK6+MmdRUVCoJev34k1Q4sIk=
+	t=1773142068; cv=none; b=uNCjBgYFLifpEAFJL8esn4j28j2sep2juRgjxQJKUrtajEXxOPLtle9d8vFXMA6mlNNSs+xdBVM0736WtZXWesR7onh2KLShqk6gI9TdDYt3ome7xAfpOJ7wwnfUZIqXmXYDARyUzhqcsFxuMaavOIIyRJRbWkGeDWgDAqbSiK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773142068; c=relaxed/simple;
-	bh=smNOMKHx9QJnHq+agcIfmK/dt9+thLE8DRfaAJjfb6E=;
+	bh=pCAL88wtkMu1Wv+DZxO6rq0OuO9TxZAWSleJ5KhTXmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=inzLjXnPhcr8iGMC3kvlBFKBWdkMb3Epu6LPoo+I7LFQJBxz414lp7ZzspDQxCEXQ0+wqsTRSCtJEfMAyorY6osCnYK+SHc9QVwifw8VNWTBNPvTZxaexzPs8OBKk4M0gOOc6aGC+aYbgkYgcD9HBbsR/RRTLArFzt0cVw7ehuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zf+x3zQc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Al+i0LcmLDA/duPBUz/+mVPujbaIoGiAYhU3hyS5PdrzEjopaczVL/gyR5ZXbKCI/XVceKaqxecCXgErzCofsaJ7NCu2IX13NT/kAUWm3wJTyRjx34P9D/+vPt6YNc6n4SBNIqVFyw91iJURM66wnQ6BCSFX2VjyaNbHl7SD6M8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pF23rvV3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zf+x3zQc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CB16C2BCAF;
-	Tue, 10 Mar 2026 11:27:46 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pF23rvV3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02365C2BC9E;
+	Tue, 10 Mar 2026 11:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142067;
-	bh=smNOMKHx9QJnHq+agcIfmK/dt9+thLE8DRfaAJjfb6E=;
+	s=k20201202; t=1773142068;
+	bh=pCAL88wtkMu1Wv+DZxO6rq0OuO9TxZAWSleJ5KhTXmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zf+x3zQcyUO32h4daoNGtuH48PL3CoqspnXzZohrejGY6zuGk2/VP2S15mJOlRGLz
-	 4b4g7OYoiVATTQ9rE1VmFT55QxQdbG53KDHIbzFdHbcjziqH5BcdB0rOCaECwCnI1G
-	 EEQKmDjsAXcibiDP2vOtWdEL6cFOkRCmt7HwtDWJBB9H8fUEW1ydzJk2Rq6XOGbXAy
-	 gAaNpU80dDsLEFJvc9r8MDD+JIlTomVCBf48YeVR801HjC1nB52gKCjI2SDisZvp/j
-	 J8iie/w+j4N35X1UVo2l1H2pZPU2KmmO0v7+ITMysnwrLQM16GU5bO1F0fjcOA6dDH
-	 qWzH/VPGciSqQ==
+	b=pF23rvV3GYvzL9f8DTsSwBrZ+jKiGuiaDlFur/Ntgl/tkvJUT5snItHenw4oc2l6B
+	 TWqd1jzIVBOnQxIXvC9gR0/nTG7LvwYlzIsh0qNDpCR1TiTvaatdtj7Y4AyPhku35v
+	 EDl/a8f2M2rwNxnf7aSKn6xdTemOT34KNNmQRSSF7ZoOyQY6efwTtfCot+5V4gaP2C
+	 b62HdtJ9HZ/9oJMpxmfdWWLcoViaa8V+GVkuDdqHmFJ9uMBJz14FoFx59Xryjl3fk4
+	 eOPEKtp2N0Q0fNa3q1kL7EtJZJzR43V0qyK0R/tNl9pEycU4twBYCl2K31B81I08h0
+	 ztkF+lXfUgYRQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Mat Martineau <martineau@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Nathan Chancellor <nathan@kernel.org>,
+	Ed W <lists@wildgooses.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 193/314] selftests: mptcp: join: check removing signal+subflow endp
-Date: Tue, 10 Mar 2026 07:17:32 -0400
-Message-ID: <085f958c196e0412bf4ff27b727a0ba39dddeffe.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 194/314] kbuild: Split .modinfo out from ELF_DETAILS
+Date: Tue, 10 Mar 2026 07:17:33 -0400
+Message-ID: <0b6464d03bfd02da81f991412c48618ae7ba0a88.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,60 +48,405 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 1777f349ff41b62dfe27454b69c27b0bc99ffca5 upstream.
+commit 8678591b47469fe16357234efef9b260317b8be4 upstream.
 
-This validates the previous commit: endpoints with both the signal and
-subflow flags should always be marked as used even if it was not
-possible to create new subflows due to the MPTCP PM limits.
+Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in
+vmlinux.unstripped") added .modinfo to ELF_DETAILS while removing it
+from COMMON_DISCARDS, as it was needed in vmlinux.unstripped and
+ELF_DETAILS was present in all architecture specific vmlinux linker
+scripts. While this shuffle is fine for vmlinux, ELF_DETAILS and
+COMMON_DISCARDS may be used by other linker scripts, such as the s390
+and x86 compressed boot images, which may not expect to have a .modinfo
+section. In certain circumstances, this could result in a bootloader
+failing to load the compressed kernel [1].
 
-For this test, an extra endpoint is created with both the signal and the
-subflow flags, and limits are set not to create extra subflows. In this
-case, an ADD_ADDR is sent, but no subflows are created. Still, the local
-endpoint is marked as used, and no warning is fired when removing the
-endpoint, after having sent a RM_ADDR.
+Commit ddc6cbef3ef1 ("s390/boot/vmlinux.lds.S: Ensure bzImage ends with
+SecureBoot trailer") recently addressed this for the s390 bzImage but
+the same bug remains for arm, parisc, and x86. The presence of .modinfo
+in the x86 bzImage was the root cause of the issue worked around with
+commit d50f21091358 ("kbuild: align modinfo section for Secureboot
+Authenticode EDK2 compat"). misc.c in arch/x86/boot/compressed includes
+lib/decompress_unzstd.c, which in turn includes lib/xxhash.c and its
+MODULE_LICENSE / MODULE_DESCRIPTION macros due to the STATIC definition.
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+Split .modinfo out from ELF_DETAILS into its own macro and handle it in
+all vmlinux linker scripts. Discard .modinfo in the places where it was
+previously being discarded from being in COMMON_DISCARDS, as it has
+never been necessary in those uses.
 
-Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-5-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
+Reported-by: Ed W <lists@wildgooses.com>
+Closes: https://lore.kernel.org/587f25e0-a80e-46a5-9f01-87cb40cfa377@wildgooses.com/ [1]
+Tested-by: Ed W <lists@wildgooses.com> # x86_64
+Link: https://patch.msgid.link/20260225-separate-modinfo-from-elf-details-v1-1-387ced6baf4b@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ arch/alpha/kernel/vmlinux.lds.S           | 1 +
+ arch/arc/kernel/vmlinux.lds.S             | 1 +
+ arch/arm/boot/compressed/vmlinux.lds.S    | 1 +
+ arch/arm/kernel/vmlinux-xip.lds.S         | 1 +
+ arch/arm/kernel/vmlinux.lds.S             | 1 +
+ arch/arm64/kernel/vmlinux.lds.S           | 1 +
+ arch/csky/kernel/vmlinux.lds.S            | 1 +
+ arch/hexagon/kernel/vmlinux.lds.S         | 1 +
+ arch/loongarch/kernel/vmlinux.lds.S       | 1 +
+ arch/m68k/kernel/vmlinux-nommu.lds        | 1 +
+ arch/m68k/kernel/vmlinux-std.lds          | 1 +
+ arch/m68k/kernel/vmlinux-sun3.lds         | 1 +
+ arch/mips/kernel/vmlinux.lds.S            | 1 +
+ arch/nios2/kernel/vmlinux.lds.S           | 1 +
+ arch/openrisc/kernel/vmlinux.lds.S        | 1 +
+ arch/parisc/boot/compressed/vmlinux.lds.S | 1 +
+ arch/parisc/kernel/vmlinux.lds.S          | 1 +
+ arch/powerpc/kernel/vmlinux.lds.S         | 1 +
+ arch/riscv/kernel/vmlinux.lds.S           | 1 +
+ arch/s390/kernel/vmlinux.lds.S            | 1 +
+ arch/sh/kernel/vmlinux.lds.S              | 1 +
+ arch/sparc/kernel/vmlinux.lds.S           | 1 +
+ arch/um/kernel/dyn.lds.S                  | 1 +
+ arch/um/kernel/uml.lds.S                  | 1 +
+ arch/x86/boot/compressed/vmlinux.lds.S    | 2 +-
+ arch/x86/kernel/vmlinux.lds.S             | 1 +
+ include/asm-generic/vmlinux.lds.h         | 4 +++-
+ 27 files changed, 29 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/mptcp_join.sh b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-index f29a10f2b31b2..8990cd99f4e32 100755
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2613,6 +2613,19 @@ remove_tests()
- 		chk_rst_nr 0 0
- 	fi
+diff --git a/arch/alpha/kernel/vmlinux.lds.S b/arch/alpha/kernel/vmlinux.lds.S
+index 2efa7dfc798a9..2d136c63db161 100644
+--- a/arch/alpha/kernel/vmlinux.lds.S
++++ b/arch/alpha/kernel/vmlinux.lds.S
+@@ -71,6 +71,7 @@ SECTIONS
  
-+	# signal+subflow with limits, remove
-+	if reset "remove signal+subflow with limits"; then
-+		pm_nl_set_limits $ns1 0 0
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,subflow
-+		pm_nl_set_limits $ns2 0 0
-+		addr_nr_ns1=-1 speed=slow \
-+			run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 0 0 0
-+		chk_add_nr 1 1
-+		chk_rm_nr 1 0 invert
-+		chk_rst_nr 0 0
-+	fi
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/arc/kernel/vmlinux.lds.S b/arch/arc/kernel/vmlinux.lds.S
+index 61a1b2b96e1d8..6af63084ff285 100644
+--- a/arch/arc/kernel/vmlinux.lds.S
++++ b/arch/arc/kernel/vmlinux.lds.S
+@@ -123,6 +123,7 @@ SECTIONS
+ 	_end = . ;
+ 
+ 	STABS_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 	DISCARDS
+ 
+diff --git a/arch/arm/boot/compressed/vmlinux.lds.S b/arch/arm/boot/compressed/vmlinux.lds.S
+index d411abd4310ea..2d916647df03c 100644
+--- a/arch/arm/boot/compressed/vmlinux.lds.S
++++ b/arch/arm/boot/compressed/vmlinux.lds.S
+@@ -21,6 +21,7 @@ SECTIONS
+     COMMON_DISCARDS
+     *(.ARM.exidx*)
+     *(.ARM.extab*)
++    *(.modinfo)
+     *(.note.*)
+     *(.rel.*)
+     *(.printk_index)
+diff --git a/arch/arm/kernel/vmlinux-xip.lds.S b/arch/arm/kernel/vmlinux-xip.lds.S
+index f2e8d4fac0687..5afb725998ec0 100644
+--- a/arch/arm/kernel/vmlinux-xip.lds.S
++++ b/arch/arm/kernel/vmlinux-xip.lds.S
+@@ -154,6 +154,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ARM_DETAILS
+ 
+ 	ARM_ASSERTS
+diff --git a/arch/arm/kernel/vmlinux.lds.S b/arch/arm/kernel/vmlinux.lds.S
+index d592a203f9c6b..c07843c3c53d3 100644
+--- a/arch/arm/kernel/vmlinux.lds.S
++++ b/arch/arm/kernel/vmlinux.lds.S
+@@ -153,6 +153,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ARM_DETAILS
+ 
+ 	ARM_ASSERTS
+diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
+index ad6133b89e7a4..2964aad0362e4 100644
+--- a/arch/arm64/kernel/vmlinux.lds.S
++++ b/arch/arm64/kernel/vmlinux.lds.S
+@@ -349,6 +349,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	HEAD_SYMBOLS
+diff --git a/arch/csky/kernel/vmlinux.lds.S b/arch/csky/kernel/vmlinux.lds.S
+index d718961786d24..81943981b3af4 100644
+--- a/arch/csky/kernel/vmlinux.lds.S
++++ b/arch/csky/kernel/vmlinux.lds.S
+@@ -109,6 +109,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/hexagon/kernel/vmlinux.lds.S b/arch/hexagon/kernel/vmlinux.lds.S
+index 1150b77fa281c..aae22283b5e00 100644
+--- a/arch/hexagon/kernel/vmlinux.lds.S
++++ b/arch/hexagon/kernel/vmlinux.lds.S
+@@ -62,6 +62,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 	.hexagon.attributes 0 : { *(.hexagon.attributes) }
+ 
+diff --git a/arch/loongarch/kernel/vmlinux.lds.S b/arch/loongarch/kernel/vmlinux.lds.S
+index 08ea921cdec16..d0e1377a041d6 100644
+--- a/arch/loongarch/kernel/vmlinux.lds.S
++++ b/arch/loongarch/kernel/vmlinux.lds.S
+@@ -147,6 +147,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ #ifdef CONFIG_EFI_STUB
+diff --git a/arch/m68k/kernel/vmlinux-nommu.lds b/arch/m68k/kernel/vmlinux-nommu.lds
+index 2624fc18c131f..45d7f4b0177b4 100644
+--- a/arch/m68k/kernel/vmlinux-nommu.lds
++++ b/arch/m68k/kernel/vmlinux-nommu.lds
+@@ -85,6 +85,7 @@ SECTIONS {
+ 	_end = .;
+ 
+ 	STABS_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	/* Sections to be discarded */
+diff --git a/arch/m68k/kernel/vmlinux-std.lds b/arch/m68k/kernel/vmlinux-std.lds
+index 1ccdd04ae4624..7326586afe15f 100644
+--- a/arch/m68k/kernel/vmlinux-std.lds
++++ b/arch/m68k/kernel/vmlinux-std.lds
+@@ -58,6 +58,7 @@ SECTIONS
+   _end = . ;
+ 
+   STABS_DEBUG
++  MODINFO
+   ELF_DETAILS
+ 
+   /* Sections to be discarded */
+diff --git a/arch/m68k/kernel/vmlinux-sun3.lds b/arch/m68k/kernel/vmlinux-sun3.lds
+index f13ddcc2af5c2..1b19fef201fba 100644
+--- a/arch/m68k/kernel/vmlinux-sun3.lds
++++ b/arch/m68k/kernel/vmlinux-sun3.lds
+@@ -51,6 +51,7 @@ __init_begin = .;
+   _end = . ;
+ 
+   STABS_DEBUG
++  MODINFO
+   ELF_DETAILS
+ 
+   /* Sections to be discarded */
+diff --git a/arch/mips/kernel/vmlinux.lds.S b/arch/mips/kernel/vmlinux.lds.S
+index 2b708fac8d2c1..579b2cc1995ae 100644
+--- a/arch/mips/kernel/vmlinux.lds.S
++++ b/arch/mips/kernel/vmlinux.lds.S
+@@ -217,6 +217,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	/* These must appear regardless of  .  */
+diff --git a/arch/nios2/kernel/vmlinux.lds.S b/arch/nios2/kernel/vmlinux.lds.S
+index 37b9580550646..206f92445bfad 100644
+--- a/arch/nios2/kernel/vmlinux.lds.S
++++ b/arch/nios2/kernel/vmlinux.lds.S
+@@ -57,6 +57,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/openrisc/kernel/vmlinux.lds.S b/arch/openrisc/kernel/vmlinux.lds.S
+index 049bff45f6126..9b29c3211774c 100644
+--- a/arch/openrisc/kernel/vmlinux.lds.S
++++ b/arch/openrisc/kernel/vmlinux.lds.S
+@@ -101,6 +101,7 @@ SECTIONS
+ 	/* Throw in the debugging sections */
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+         /* Sections to be discarded -- must be last */
+diff --git a/arch/parisc/boot/compressed/vmlinux.lds.S b/arch/parisc/boot/compressed/vmlinux.lds.S
+index ab7b439908578..87d24cc824b66 100644
+--- a/arch/parisc/boot/compressed/vmlinux.lds.S
++++ b/arch/parisc/boot/compressed/vmlinux.lds.S
+@@ -90,6 +90,7 @@ SECTIONS
+ 	/* Sections to be discarded */
+ 	DISCARDS
+ 	/DISCARD/ : {
++		*(.modinfo)
+ #ifdef CONFIG_64BIT
+ 		/* temporary hack until binutils is fixed to not emit these
+ 		 * for static binaries
+diff --git a/arch/parisc/kernel/vmlinux.lds.S b/arch/parisc/kernel/vmlinux.lds.S
+index b445e47903cfd..0ca93d6d72354 100644
+--- a/arch/parisc/kernel/vmlinux.lds.S
++++ b/arch/parisc/kernel/vmlinux.lds.S
+@@ -165,6 +165,7 @@ SECTIONS
+ 	_end = . ;
+ 
+ 	STABS_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 	.note 0 : { *(.note) }
+ 
+diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
+index de6ee7d35cff0..5589af3e40844 100644
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -398,6 +398,7 @@ SECTIONS
+ 	_end = . ;
+ 
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
+index 61bd5ba6680a7..997f9eb3b22b1 100644
+--- a/arch/riscv/kernel/vmlinux.lds.S
++++ b/arch/riscv/kernel/vmlinux.lds.S
+@@ -170,6 +170,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 	.riscv.attributes 0 : { *(.riscv.attributes) }
+ 
+diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
+index d74d4c52ccd05..9289e9e535c70 100644
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -212,6 +212,7 @@ SECTIONS
+ 	/* Debugging sections.	*/
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	/*
+diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.S
+index 008c30289eaa6..169c63fb3c1dc 100644
+--- a/arch/sh/kernel/vmlinux.lds.S
++++ b/arch/sh/kernel/vmlinux.lds.S
+@@ -89,6 +89,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/sparc/kernel/vmlinux.lds.S b/arch/sparc/kernel/vmlinux.lds.S
+index f1b86eb303404..7ea510d9b42f2 100644
+--- a/arch/sparc/kernel/vmlinux.lds.S
++++ b/arch/sparc/kernel/vmlinux.lds.S
+@@ -191,6 +191,7 @@ SECTIONS
+ 
+ 	STABS_DEBUG
+ 	DWARF_DEBUG
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/arch/um/kernel/dyn.lds.S b/arch/um/kernel/dyn.lds.S
+index a36b7918a011a..ad3cefeff2acb 100644
+--- a/arch/um/kernel/dyn.lds.S
++++ b/arch/um/kernel/dyn.lds.S
+@@ -172,6 +172,7 @@ SECTIONS
+ 
+   STABS_DEBUG
+   DWARF_DEBUG
++  MODINFO
+   ELF_DETAILS
+ 
+   DISCARDS
+diff --git a/arch/um/kernel/uml.lds.S b/arch/um/kernel/uml.lds.S
+index a409d4b66114f..30aa24348d60c 100644
+--- a/arch/um/kernel/uml.lds.S
++++ b/arch/um/kernel/uml.lds.S
+@@ -113,6 +113,7 @@ SECTIONS
+ 
+   STABS_DEBUG
+   DWARF_DEBUG
++  MODINFO
+   ELF_DETAILS
+ 
+   DISCARDS
+diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
+index 587ce3e7c5048..e0b152715d9c6 100644
+--- a/arch/x86/boot/compressed/vmlinux.lds.S
++++ b/arch/x86/boot/compressed/vmlinux.lds.S
+@@ -88,7 +88,7 @@ SECTIONS
+ 	/DISCARD/ : {
+ 		*(.dynamic) *(.dynsym) *(.dynstr) *(.dynbss)
+ 		*(.hash) *(.gnu.hash)
+-		*(.note.*)
++		*(.note.*) *(.modinfo)
+ 	}
+ 
+ 	.got.plt (INFO) : {
+diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
+index d7af4a64c211b..4ed82b1fe173b 100644
+--- a/arch/x86/kernel/vmlinux.lds.S
++++ b/arch/x86/kernel/vmlinux.lds.S
+@@ -424,6 +424,7 @@ SECTIONS
+ 	.llvm_bb_addr_map : { *(.llvm_bb_addr_map) }
+ #endif
+ 
++	MODINFO
+ 	ELF_DETAILS
+ 
+ 	DISCARDS
+diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
+index e04d56a5332e6..6640e06ef2f13 100644
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -832,12 +832,14 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+ 
+ /* Required sections not related to debugging. */
+ #define ELF_DETAILS							\
+-		.modinfo : { *(.modinfo) . = ALIGN(8); }		\
+ 		.comment 0 : { *(.comment) }				\
+ 		.symtab 0 : { *(.symtab) }				\
+ 		.strtab 0 : { *(.strtab) }				\
+ 		.shstrtab 0 : { *(.shstrtab) }
+ 
++#define MODINFO								\
++		.modinfo : { *(.modinfo) . = ALIGN(8); }
 +
- 	# addresses remove
- 	if reset "remove addresses"; then
- 		pm_nl_set_limits $ns1 3 3
+ #ifdef CONFIG_GENERIC_BUG
+ #define BUG_TABLE							\
+ 	. = ALIGN(8);							\
 -- 
 2.51.0
 
