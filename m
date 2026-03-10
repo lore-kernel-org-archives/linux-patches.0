@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81DB382F05;
-	Tue, 10 Mar 2026 11:06:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7286F383C92;
+	Tue, 10 Mar 2026 11:06:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140771; cv=none; b=dYUCDxLD/we/rs9W7KDgyKsGkbdDUWfwZeHLNiXofO66OdEDlIpNBGvONMpSCkspbPBRodDV3F9eJsJ3ndM6YH/xTbqhVqJImaes6fEXLiRjDJr0MvFmXCRMPsrzQiYwRSkS/lVE7hd0FfuJGCePu3hA5rNNvicH/0WZUPOd+Cw=
+	t=1773140772; cv=none; b=BK7RkvklVcdh39llIIy4XFf3CWljBBTCbccKgvXjyyTo0onR2hctirl0gyftivWgpMHR12UCWr3g0YCLWgJhkXu1noM1Ui4OeVm+7oFyGlG5L886pUn02QlFCQFSapgwmOY5ujR96zlB+CUWA5JNe77gwG+ytDfMS3VQB2j+GRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140771; c=relaxed/simple;
-	bh=P1o2kDtCh/g+aIOhR6KueaD0n+odKUtSKOf2kdvoXJ0=;
+	s=arc-20240116; t=1773140772; c=relaxed/simple;
+	bh=zFumHkeSM8QYCpSP35/AqKDPMjs7xJ4F/GL+7MF/eUE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=onLdE+p36ZEORoHd0oYeQcqbmSPa2lG1W20U331fwKm0yf1Lpfhbg6e51t/LfqkVVjq/deQr3bzs99HiqpAFyq3ZInJQS7FBqZM9TXNYlJMaQ9WXf4ktS5HTK/M2MmjyX4uS4HlFo/ISPQcLQnpCb981HjHwTJp/S+mNrU0PaGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=kqfUOeml; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tMYQPA0+xHKv7ePI9AbQ1SwrgSa9UqroS08KwmDXHkaM37TtT3CCd7wFiV4G8Lg1H7fZK4lrULb5cOXns6ZIEB/VhfeXe+rFfeXveVaaxM1l+f9iiYhq6nwGh6J2+a2IJaTu1jtpdw9Z8/ywgx5npU0OKhtFJKmaZibn1evD0BM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HZF3vwuq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="kqfUOeml"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA188C19423;
-	Tue, 10 Mar 2026 11:06:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HZF3vwuq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB070C2BC9E;
+	Tue, 10 Mar 2026 11:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140771;
-	bh=P1o2kDtCh/g+aIOhR6KueaD0n+odKUtSKOf2kdvoXJ0=;
+	s=k20201202; t=1773140772;
+	bh=zFumHkeSM8QYCpSP35/AqKDPMjs7xJ4F/GL+7MF/eUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqfUOemlB5uBJzkg8PecLsuxWw7y4TURAg6Yt1dCG2fJJPqSINlMmwkahhGuYeAx5
-	 pX2jtwlHm47KOyxtH0zjkRQ28lwDwvHJ40mcaCyf6lnmXW+INGtvbErQ5ozEfuKPnB
-	 3ROtVd4ZUvzT6Zs/dXfgJIL7AfqaPPlgB7DQgWaMFyjzK067EcqK0+mz7jsg22GgbL
-	 DnsMZjIX2QXikAT2ROH9vjxq1IfBzE9zEr+R3mx65tZumrkG+mihqfKZHEK9TKHl+A
-	 vkCtKsAa1i8RTOK2G8CMgLn990Zv0JW3zO39FECytfAdMqKHg+h1y+kkDVGXhqo6eh
-	 WuDhCWj2XPIeg==
+	b=HZF3vwuqfa6VVTA1R++H4ggM9sYa3Ruis5/oonkw5Dv1LCN82nGnHG/DMd/B3plOJ
+	 8KcZenE7H+/p4zG1/blHk++IFHhUZipBIh4RweT/C5ZihHBnjiAgdxviQiYqe/948M
+	 MdDrlJgTdIyyKF14hinTvdCZcKnSwxZaOSPiGALgwuMPzAJ73MFQi4fjnDhTMWCc0H
+	 3cYXF1tDCFaLxTrZQLqgL9YFdCCfe7ZFWm2cAKQSCZ+2H662qMQ4Uzil2yCjKweOr6
+	 qfU2cbY32rQk7x2GsTlhL/MQ9Ulr9QY9I1wIcSMgrViOIdZtvbNViHzSSZQppQMlw6
+	 fuqX7mZo1LkFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thomas Gleixner <tglx@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
+Cc: Felix Gu <ustc.gu@gmail.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 004/311] debugobject: Make it work with deferred page initialization - again
-Date: Tue, 10 Mar 2026 07:00:51 -0400
-Message-ID: <99cbf0965aba5cc7fba214e3a972b5c846b986bc.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 005/311] drm/logicvc: Fix device node reference leak in logicvc_drm_config_parse()
+Date: Tue, 10 Mar 2026 07:00:52 -0400
+Message-ID: <da5260f78a8a438ff318e822a8c83f9070fb9912.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,89 +49,50 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@kernel.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit fd3634312a04f336dcbfb481060219f0cd320738 ]
+[ Upstream commit fef0e649f8b42bdffe4a916dd46e1b1e9ad2f207 ]
 
-debugobjects uses __GFP_HIGH for allocations as it might be invoked
-within locked regions. That worked perfectly fine until v6.18. It still
-works correctly when deferred page initialization is disabled and works
-by chance when no page allocation is required before deferred page
-initialization has completed.
+The logicvc_drm_config_parse() function calls of_get_child_by_name() to
+find the "layers" node but fails to release the reference, leading to a
+device node reference leak.
 
-Since v6.18 allocations w/o a reclaim flag cause new_slab() to end up in
-alloc_frozen_pages_nolock_noprof(), which returns early when deferred
-page initialization has not yet completed. As the deferred page
-initialization takes quite a while the debugobject pool is depleted and
-debugobjects are disabled.
+Fix this by using the __free(device_node) cleanup attribute to automatic
+release the reference when the variable goes out of scope.
 
-This can be worked around when PREEMPT_COUNT is enabled as that allows
-debugobjects to add __GFP_KSWAPD_RECLAIM to the GFP flags when the context
-is preemtible. When PREEMPT_COUNT is disabled the context is unknown and
-the reclaim bit can't be set because the caller might hold locks which
-might deadlock in the allocator.
-
-In preemptible context the reclaim bit is harmless and not a performance
-issue as that's usually invoked from slow path initialization context.
-
-That makes debugobjects depend on PREEMPT_COUNT || !DEFERRED_STRUCT_PAGE_INIT.
-
-Fixes: af92793e52c3 ("slab: Introduce kmalloc_nolock() and kfree_nolock().")
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Tested-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Alexei Starovoitov <ast@kernel.org>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Link: https://patch.msgid.link/87pl6gznti.ffs@tglx
+Fixes: efeeaefe9be5 ("drm: Add support for the LogiCVC display controller")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
+Link: https://patch.msgid.link/20260130-logicvc_drm-v1-1-04366463750c@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/Kconfig.debug  |  1 +
- lib/debugobjects.c | 19 ++++++++++++++++++-
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/logicvc/logicvc_drm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/lib/Kconfig.debug b/lib/Kconfig.debug
-index 4bae3b389a9c5..52c7a3a89f088 100644
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -723,6 +723,7 @@ source "mm/Kconfig.debug"
+diff --git a/drivers/gpu/drm/logicvc/logicvc_drm.c b/drivers/gpu/drm/logicvc/logicvc_drm.c
+index 204b0fee55d0b..bbebf4fc7f51a 100644
+--- a/drivers/gpu/drm/logicvc/logicvc_drm.c
++++ b/drivers/gpu/drm/logicvc/logicvc_drm.c
+@@ -92,7 +92,6 @@ static int logicvc_drm_config_parse(struct logicvc_drm *logicvc)
+ 	struct device *dev = drm_dev->dev;
+ 	struct device_node *of_node = dev->of_node;
+ 	struct logicvc_drm_config *config = &logicvc->config;
+-	struct device_node *layers_node;
+ 	int ret;
  
- config DEBUG_OBJECTS
- 	bool "Debug object operations"
-+	depends on PREEMPT_COUNT || !DEFERRED_STRUCT_PAGE_INIT
- 	depends on DEBUG_KERNEL
- 	help
- 	  If you say Y here, additional code will be inserted into the
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 89a1d6745dc2c..12f50de85b621 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -398,9 +398,26 @@ static void fill_pool(void)
+ 	logicvc_of_property_parse_bool(of_node, LOGICVC_OF_PROPERTY_DITHERING,
+@@ -128,7 +127,8 @@ static int logicvc_drm_config_parse(struct logicvc_drm *logicvc)
+ 	if (ret)
+ 		return ret;
  
- 	atomic_inc(&cpus_allocating);
- 	while (pool_should_refill(&pool_global)) {
-+		gfp_t gfp = __GFP_HIGH | __GFP_NOWARN;
- 		HLIST_HEAD(head);
- 
--		if (!kmem_alloc_batch(&head, obj_cache, __GFP_HIGH | __GFP_NOWARN))
-+		/*
-+		 * Allow reclaim only in preemptible context and during
-+		 * early boot. If not preemptible, the caller might hold
-+		 * locks causing a deadlock in the allocator.
-+		 *
-+		 * If the reclaim flag is not set during early boot then
-+		 * allocations, which happen before deferred page
-+		 * initialization has completed, will fail.
-+		 *
-+		 * In preemptible context the flag is harmless and not a
-+		 * performance issue as that's usually invoked from slow
-+		 * path initialization context.
-+		 */
-+		if (preemptible() || system_state < SYSTEM_SCHEDULING)
-+			gfp |= __GFP_KSWAPD_RECLAIM;
-+
-+		if (!kmem_alloc_batch(&head, obj_cache, gfp))
- 			break;
- 
- 		guard(raw_spinlock_irqsave)(&pool_lock);
+-	layers_node = of_get_child_by_name(of_node, "layers");
++	struct device_node *layers_node __free(device_node) =
++		of_get_child_by_name(of_node, "layers");
+ 	if (!layers_node) {
+ 		drm_err(drm_dev, "Missing non-optional layers node\n");
+ 		return -EINVAL;
 -- 
 2.51.0
 
