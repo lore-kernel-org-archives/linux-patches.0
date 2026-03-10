@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8DA3876D7;
-	Tue, 10 Mar 2026 11:27:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFCD389477;
+	Tue, 10 Mar 2026 11:27:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142056; cv=none; b=uHcsuUegyvGupbKQvHsiyYAvD+0hOxAvKk8R5zvUo0xLTh7kkqM6O2/xt6/XuOruVvAB22DJbFDyAE7hYER7enryMLDP2wdGMKOKeARNPy9f9pqJGJ0/Uxd7oh5Qd6erVu0Bzb8ubjnWTCkkBsov1oXXH+WkGT14+fxPClPcrsI=
+	t=1773142057; cv=none; b=NQYEMyFyk4pwPA/REVEqzZx8U2HOtlH7boRXyAFq1z1nsMTl7TpvnxQnpwPyjUUGRPJRk2woYK67ueq57oozLWV65xNprRzbEtfbDLOw5fEi7cbgnYwk6IjdQllR5eL1vi+ZhNDmdRJufZO4TMVuCGEJ+E+MOLr+bwS1eueVWr4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142056; c=relaxed/simple;
-	bh=8BSsYPD4bcZiXHoW+0BHCdCwVqKMq+iS1gaXh6R8JmI=;
+	s=arc-20240116; t=1773142057; c=relaxed/simple;
+	bh=YwzR0tBFPChcpE9MEmClF792CDrgf4EQQ0tTx+KywkE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ks1JHbRfJskCwL/iNoDNZulTJaSWqcrJnAlZvl/XsmR5HjdQN8rYbo/H0ClgFFw0U0B0ZIkP5j4JNZMFk60pWXrhJ+wA2f+x8cMObnSTRkhgPzHjkPLeXs1jC27pkZIa9w9P5yQfpMnkNbwhwK72lmwEoiA3aR4CF7jPokZr/L4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f7IQVxXw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VMFTcX5IgQlMOaleke2ct8lxg2bfr9uZAhKDVSUNTQVqhiG7+zCVrflNAHsWDmutJxl7u8g89KEL7LDzPELzpWEXD6rDYr+Re6nVtEAmPbcw5c7cjWbOEGfPLzrlvFu/ugeRzeZgYPvRD22/qkT0ScSZ+7KR8gnoIS2sPKqU5jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nASli6K7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f7IQVxXw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78DF5C19423;
-	Tue, 10 Mar 2026 11:27:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nASli6K7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85ACEC2BC86;
+	Tue, 10 Mar 2026 11:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142056;
-	bh=8BSsYPD4bcZiXHoW+0BHCdCwVqKMq+iS1gaXh6R8JmI=;
+	s=k20201202; t=1773142057;
+	bh=YwzR0tBFPChcpE9MEmClF792CDrgf4EQQ0tTx+KywkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f7IQVxXw6OZLavFLF2LxtHdxBNJZj/AUtmhGW0UiL5snhjf7R5aT0tdHwxtYfSkXM
-	 Vk3UC7s0oVAg9cBw+UCUZDqARucEXywJDHA7kwE6eUjSNj+ZeCKQhGjqLsD6+xpssK
-	 C75J6y7Ud3kHZR2xLTz8yWBZGXsx35AiNO5OsAcdz1Fzv2S5Yx0RRVHsBLZu5vXweY
-	 cSmI9vGRjCq8ieb1QfR0uSnWg0t0LVCJCT8Dhh8QcOYWWMsyF0OGefeZ1QsXkrgSH0
-	 XgozlQ9VWITIrA8XRJoBOM3OT81hL6YgGpoc53NmRt1/w8YAPckWpcNA/E5A+ifpic
-	 XUVRxu2vRMkeQ==
+	b=nASli6K7z4xP/YvwMZeJ1t6AqImWlvWG4SeKllqthWDTTM/RMjFXWvi9ZEgtndA3B
+	 Z9cs7d7FHTbvaAwiwUA1GcBpWuGENyIoeixx5kaHaxNx+roZDxSYEia01k+ZWJxcV7
+	 JJuWPskWGGc5EM7YmbE3qa6PahhPDQq5IpDtNeOyLqtJtRkAlTCGJBBoBId1MCVPFr
+	 bmZlj67lbp2oCh7UuXLnSSVOzIA3ok9OWKuAloPpvOCsJGGrDEYFb2V4YaUe8oZHi6
+	 g1rvfw/3NzhyyU6SPjMy0Q8E1bLzQLZ1BNXYdldpzdoL+RtjYVKZgXD7WL2ELpWlh6
+	 S6SxS9AkChXeA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
+Cc: Ethan Tidmore <ethantidmore06@gmail.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	"Nirjhar Roy (IBM)" <nirjhar.roy.lists@gmail.com>,
 	Carlos Maiolino <cem@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 182/314] xfs: fix xfs_group release bug in xfs_dax_notify_dev_failure
-Date: Tue, 10 Mar 2026 07:17:21 -0400
-Message-ID: <e64c19c076b94e71b3ac7c14e5ccadbb8c80505c.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 183/314] xfs: Fix error pointer dereference
+Date: Tue, 10 Mar 2026 07:17:22 -0400
+Message-ID: <2a9e2a7555ae4426381fd25df409f222ea99689b.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,49 +50,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Ethan Tidmore <ethantidmore06@gmail.com>
 
-commit eb8550fb75a875657dc29e3925a40244ec6b6bd6 upstream.
+commit cddfa648f1ab99e30e91455be19cd5ade26338c2 upstream.
 
-Chris Mason reports that his AI tools noticed that we were using
-xfs_perag_put and xfs_group_put to release the group reference returned
-by xfs_group_next_range.  However, the iterator function returns an
-object with an active refcount, which means that we must use the correct
-function to release the active refcount, which is _rele.
+The function try_lookup_noperm() can return an error pointer and is not
+checked for one.
 
-Cc: <stable@vger.kernel.org> # v6.0
-Fixes: 6f643c57d57c56 ("xfs: implement ->notify_failure() for XFS")
-Signed-off-by: "Darrick J. Wong" <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Add checks for error pointer in xrep_adoption_check_dcache() and
+xrep_adoption_zap_dcache().
+
+Detected by Smatch:
+fs/xfs/scrub/orphanage.c:449 xrep_adoption_check_dcache() error:
+'d_child' dereferencing possible ERR_PTR()
+
+fs/xfs/scrub/orphanage.c:485 xrep_adoption_zap_dcache() error:
+'d_child' dereferencing possible ERR_PTR()
+
+Fixes: 73597e3e42b4 ("xfs: ensure dentry consistency when the orphanage adopts a file")
+Cc: stable@vger.kernel.org # v6.16
+Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Nirjhar Roy (IBM) <nirjhar.roy.lists@gmail.com>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_notify_failure.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/xfs/scrub/orphanage.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/xfs/xfs_notify_failure.c b/fs/xfs/xfs_notify_failure.c
-index b176728899420..0700a723f38e7 100644
---- a/fs/xfs/xfs_notify_failure.c
-+++ b/fs/xfs/xfs_notify_failure.c
-@@ -293,7 +293,7 @@ xfs_dax_notify_dev_failure(
+diff --git a/fs/xfs/scrub/orphanage.c b/fs/xfs/scrub/orphanage.c
+index 9c12cb8442311..3c4f3b542c20f 100644
+--- a/fs/xfs/scrub/orphanage.c
++++ b/fs/xfs/scrub/orphanage.c
+@@ -445,6 +445,11 @@ xrep_adoption_check_dcache(
+ 		return 0;
  
- 			error = xfs_alloc_read_agf(pag, tp, 0, &agf_bp);
- 			if (error) {
--				xfs_perag_put(pag);
-+				xfs_perag_rele(pag);
- 				break;
- 			}
+ 	d_child = try_lookup_noperm(&qname, d_orphanage);
++	if (IS_ERR(d_child)) {
++		dput(d_orphanage);
++		return PTR_ERR(d_child);
++	}
++
+ 	if (d_child) {
+ 		trace_xrep_adoption_check_child(sc->mp, d_child);
  
-@@ -329,7 +329,7 @@ xfs_dax_notify_dev_failure(
- 		if (rtg)
- 			xfs_rtgroup_unlock(rtg, XFS_RTGLOCK_RMAP);
- 		if (error) {
--			xfs_group_put(xg);
-+			xfs_group_rele(xg);
- 			break;
- 		}
- 	}
+@@ -482,7 +487,7 @@ xrep_adoption_zap_dcache(
+ 		return;
+ 
+ 	d_child = try_lookup_noperm(&qname, d_orphanage);
+-	while (d_child != NULL) {
++	while (!IS_ERR_OR_NULL(d_child)) {
+ 		trace_xrep_adoption_invalidate_child(sc->mp, d_child);
+ 
+ 		ASSERT(d_is_negative(d_child));
 -- 
 2.51.0
 
