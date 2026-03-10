@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B807D389116;
-	Tue, 10 Mar 2026 11:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4DB638945A;
+	Tue, 10 Mar 2026 11:14:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141244; cv=none; b=MDwMraQnGMTLw40c7uiTrCWgApmeFKEXwrntEo5rHILTon94Fq1WfQ67fXgd4FvOwUedXDXotlgE7lvuQzdrJF+2D2PH+rGn+wf+ESeRo7JNONq2Nbnhf5PXL7/Q4w2lZsnuVKXHdu7nKCRqovaUJgeLXue/KvKY6jgGbScvpz4=
+	t=1773141245; cv=none; b=elNhv0UMF3x3TpTn1Nb1BiRdgpnlpFHbG/kQmcCRh0Iw9drdtO4xQI0DUan2lDil9ZZPKpMI7Rz/qQi0+nwXpzDonr4bb89SAoEkHBQgsQuH7yhyulhVCRD9bPyBCdOiEnQQD1ZHpvaqI9JbLh3KRwnan5Kf/Mml4iv5lat8KPQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141244; c=relaxed/simple;
-	bh=qOuyokyHXQ3dYd8oIacCWeNuFw9iZo7CAmd+529TBt8=;
+	s=arc-20240116; t=1773141245; c=relaxed/simple;
+	bh=5CKApni3cl86weyg9wQxOARo/ADknymlIEd3jQX2XyA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=odRLrs4z9MxeQLABNpyZ3ndZr9deYCOftrgsdT/SJVJ8bsnylexbaDJO9eeLuWqhIhBu+0vhtjvssw5/6QF4a4XDWIzuzDEmWJJX6R0bPTPMgemFVU9cezlYmbHOcqIs5opDKeVjKgKCpzf6YK0ur9TcCfoVl2EBV6//q6Bir/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ev3ArdvO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eA8Zmi5mDmshCB1fOR1V3rKZpDVgd2I1K0UmlK9g1U9DNwQBqKVDyTSXHcewAjXUk/z0OJ0aKr4p8s6j6R62ngKeOUb/kwFrO44N2yQdmGrZHrt/yED+74MBDEUoR20QWQWiAVGie0HP4VLNr9WG8gnMHpLLKCMKP+X1aG2smxo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jHlNxMrN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ev3ArdvO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D84DEC2BC86;
-	Tue, 10 Mar 2026 11:14:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jHlNxMrN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCB46C2BC9E;
+	Tue, 10 Mar 2026 11:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141244;
-	bh=qOuyokyHXQ3dYd8oIacCWeNuFw9iZo7CAmd+529TBt8=;
+	s=k20201202; t=1773141245;
+	bh=5CKApni3cl86weyg9wQxOARo/ADknymlIEd3jQX2XyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ev3ArdvOEqErihOHiDiQnWlFQ9NAbcZxne5lEv/GHur6M3Nj25AeaWPAlx7pNroc5
-	 cl2l8oE/0Rs+VGajvbHRbJ6bw0gH8GKx+WLVw59/wXdj7UI9P3+W211VcPKuriSLcM
-	 gN0kEe+Zr5SaszRC6JsHYC3/0gBzJ1qLVRujygyvR360dPUnE1PJChkNp1KmN+tpa1
-	 19eTXwyYU+N9eorOlU1S0YCFf1H2vEUZB9WXndNlZd+KQTbYk77KAPrZVdvuHhceKO
-	 ANzdXdFxBbYAQk6KpAnurgd5Jp2qcyWKy4/vfCf71U/Q3ariibMGzW2pjzT+I+BvYe
-	 Y8oSe5KAg6ckA==
+	b=jHlNxMrNlNHvt+udGyxtvy6+2z1kBe8XdeDd/Moct3wKjQDy+6/NNKCJiwhcPqiz4
+	 CGah82z3nD/wsIbLeuqce1+o61UxQx3QEWmL9V2T/EGubEWgMLMP/RNXgI0njF07UY
+	 6R/K6h4ahMIOJK9aYf1Ncag4o9y9tcP3qd+C3pFETygBlnkFb/NB0B0if30RIjXrbM
+	 wqB+GJCYrFep6yD+7ShYfXqszZK/rwQk4bAKq47y6qE5Gk5JXg0VhOqs/MTRg+bMOv
+	 3IB0akpbi4ev7LGKdMI52LtgKtvgBenM0jMVI7Nc0hDOyZXjTmhOkkZDeHy+ihJOUk
+	 X7CeykjSd9Z5w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Larysa Zaremba <larysa.zaremba@intel.com>,
+Cc: Zilin Guan <zilin@seu.edu.cn>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 247/311] ice: fix adding AQ LLDP filter for VF
-Date: Tue, 10 Mar 2026 07:04:54 -0400
-Message-ID: <4b44c18a2a8b495665c70069be3f457257a9f465.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 248/311] ice: Fix memory leak in ice_set_ringparam()
+Date: Tue, 10 Mar 2026 07:04:55 -0400
+Message-ID: <704d7806a766e3ff0b9c7a9c1a2f8225248230b6.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,47 +51,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Larysa Zaremba <larysa.zaremba@intel.com>
+From: Zilin Guan <zilin@seu.edu.cn>
 
-[ Upstream commit eef33aa44935d001747ca97703c08dd6f9031162 ]
+[ Upstream commit fe868b499d16f55bbeea89992edb98043c9de416 ]
 
-The referenced commit came from a misunderstanding of the FW LLDP filter
-AQ (Admin Queue) command due to the error in the internal documentation.
-Contrary to the assumptions in the original commit, VFs can be added and
-deleted from this filter without any problems. Introduced dev_info message
-proved to be useful, so reverting the whole commit does not make sense.
+In ice_set_ringparam, tx_rings and xdp_rings are allocated before
+rx_rings. If the allocation of rx_rings fails, the code jumps to
+the done label leaking both tx_rings and xdp_rings. Furthermore, if
+the setup of an individual Rx ring fails during the loop, the code jumps
+to the free_tx label which releases tx_rings but leaks xdp_rings.
 
-Without this fix, trusted VFs do not receive LLDP traffic, if there is an
-AQ LLDP filter on PF. When trusted VF attempts to add an LLDP multicast
-MAC address, the following message can be seen in dmesg on host:
+Fix this by introducing a free_xdp label and updating the error paths to
+ensure both xdp_rings and tx_rings are properly freed if rx_rings
+allocation or setup fails.
 
-ice 0000:33:00.0: Failed to add Rx LLDP rule on VSI 20 error: -95
+Compile tested only. Issue found using a prototype static analysis tool
+and code review.
 
-Revert checking VSI type when adding LLDP filter through AQ.
-
-Fixes: 4d5a1c4e6d49 ("ice: do not add LLDP-specific filter if not necessary")
+Fixes: fcea6f3da546 ("ice: Add stats and ethtool support")
+Fixes: efc2214b6047 ("ice: Add support for XDP")
+Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_ethtool.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
-index 785bf5cc1b25e..a400bf4f239aa 100644
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -6429,7 +6429,7 @@ int ice_lldp_fltr_add_remove(struct ice_hw *hw, struct ice_vsi *vsi, bool add)
- 	struct ice_aqc_lldp_filter_ctrl *cmd;
- 	struct libie_aq_desc desc;
+diff --git a/drivers/net/ethernet/intel/ice/ice_ethtool.c b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+index e9f2618950c80..5377550a2b6e1 100644
+--- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
++++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
+@@ -3322,7 +3322,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	rx_rings = kcalloc(vsi->num_rxq, sizeof(*rx_rings), GFP_KERNEL);
+ 	if (!rx_rings) {
+ 		err = -ENOMEM;
+-		goto done;
++		goto free_xdp;
+ 	}
  
--	if (vsi->type != ICE_VSI_PF || !ice_fw_supports_lldp_fltr_ctrl(hw))
-+	if (!ice_fw_supports_lldp_fltr_ctrl(hw))
- 		return -EOPNOTSUPP;
+ 	ice_for_each_rxq(vsi, i) {
+@@ -3349,7 +3349,7 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 			}
+ 			kfree(rx_rings);
+ 			err = -ENOMEM;
+-			goto free_tx;
++			goto free_xdp;
+ 		}
+ 	}
  
- 	cmd = libie_aq_raw(&desc);
+@@ -3402,6 +3402,13 @@ ice_set_ringparam(struct net_device *netdev, struct ethtool_ringparam *ring,
+ 	}
+ 	goto done;
+ 
++free_xdp:
++	if (xdp_rings) {
++		ice_for_each_xdp_txq(vsi, i)
++			ice_free_tx_ring(&xdp_rings[i]);
++		kfree(xdp_rings);
++	}
++
+ free_tx:
+ 	/* error cleanup if the Rx allocations failed after getting Tx */
+ 	if (tx_rings) {
 -- 
 2.51.0
 
