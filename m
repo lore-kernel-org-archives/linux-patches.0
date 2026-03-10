@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80BD437B413;
-	Tue, 10 Mar 2026 11:29:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD70C387361;
+	Tue, 10 Mar 2026 11:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142165; cv=none; b=XtpFvWm3Nt65F5AdoW2kzgrO4ptJEQKzeZIZMpP/uy/H6/NiXJ6oPkyEbmdUYZ9Yen4fGREeJzyiy3wGYiZt2TCj/D4B0cGc+30f0B4uyiZ3vyhwxpBhbQlNWnG4XzYlNg2Z4//EMU9yix3/ziUnJefEwPL5vsuH2pZkKAHJ7b0=
+	t=1773142166; cv=none; b=TFL8rq2WD8E0HCgoNHSuzAQlA8symznWYh9lSy9aWF2gKNaY65WzBDMWWwJ6qPt31UV60o5OQ+gt2p+NOAeuFGtCXbQrk0aBAYpnvsjAiCQFEPbly3qHGptdG1RzLhWEmzHD+15huJ4V9OQK0sH4jtVvnQhLB55TmYjl1Mtek2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142165; c=relaxed/simple;
-	bh=L1F2gdsOdFlLRbaoWUQAWM+wjHuuHX1wOdOXUHDMEIQ=;
+	s=arc-20240116; t=1773142166; c=relaxed/simple;
+	bh=qjCL+pnCC78LZDhpQQeFZ2zlj4Znc/yMk5M7bDVubTI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GD1HNZiXH1y4MpopAokYWnZdPOu9FqYasp4mCOtMsOfNaiYCgu088g+S9sBnyg6tSJJkHkfwa6gxCHA7KEyJ/4ZrF/SeiP4a3bhYYcjtsIxg79Yjiw+E0wwHKFMp+/hRX2rB/FAhVr7aGVWEQyPNBbAFsmFbDpSrRgbFicXQbs4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=PtdGmfdV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXAm6UqzFfHu/ZGojLaJG0UceACgcbbxz0G4mP9zG5q6se96wJg2haAmMG2tWcGvI6a+0sgfvFfILaebkDXaaPCSJbKc9Hn+IQz+ZnMLAaSPIte/tkMhHROw12Td3fsnANdGhUzGfrFxeBwypNYUsYTNPHdQbYkiugzQLcmtUV8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=I0lJrgwF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="PtdGmfdV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE10C2BCAF;
-	Tue, 10 Mar 2026 11:29:24 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="I0lJrgwF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7E35C19423;
+	Tue, 10 Mar 2026 11:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142165;
-	bh=L1F2gdsOdFlLRbaoWUQAWM+wjHuuHX1wOdOXUHDMEIQ=;
+	s=k20201202; t=1773142166;
+	bh=qjCL+pnCC78LZDhpQQeFZ2zlj4Znc/yMk5M7bDVubTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PtdGmfdVOOfh7URWqNFjSMfRmX98qoLsWhlD/BLx9PYBGxpmbDIRxZq6FcbxJgImC
-	 5I5CwlTjDm8JJ53sCjfU1yh6hi7emyUKeG9kBjF965Hgt/3t5dTl+Fp0+8QefGWa1d
-	 3ZbWvC9xKhBNJNjVG5oKeG1bCIV49ZHIv72En3VqNWme4mH3yoJpRvkRKaxpF2j/as
-	 ZmDnonDNzuOKn3of6S3YvnzujjaDxhyuWDw0YRsDI/IE/7jKt+thGgUyHLsLFlJoen
-	 WfcYczY1DsoyWFQ2G0BEw8u4TM0+Fa/R7no4oZzE24KL3SxD+dzaKe43xZmLUaqAHA
-	 O5xoVOZL9NA7w==
+	b=I0lJrgwFd1rzOruCiq5+9GydnuUkq6aHalrHq3uzNN0tuoSmLsGkWiMpGO1ADDmLj
+	 mmL9uwjDhAsuEaXtbjO0gAFL0ddjUTYuTr9dJND7RoYAq70Jk/HTOm4NAtcd8M9l2Q
+	 /SxaTk1KkLvQbx/VAJEkCvD6TylZ95ozilKfrcXT2bDJSCHAVMD52Q4NKMJLgePovf
+	 /xhQFkk7uzrzcjgaowA1QUC9hJos4bBMUUVva91RTZE1fFvj0GmIvtQBa0yOTm5bvD
+	 7QtCuL8sZXF+/7hT/v+rsaRilZtjYH6nFju7xW+PFw7nh/xTPj2eADWKAcjJ/5ALSn
+	 yd2E3sCPVTDYA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Bart Van Assche <bvanassche@acm.org>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 253/314] wifi: cw1200: Fix locking in error paths
-Date: Tue, 10 Mar 2026 07:18:32 -0400
-Message-ID: <c278552ac7b5017982a09be30401a5554fd700df.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 254/314] wifi: wlcore: Fix a locking bug
+Date: Tue, 10 Mar 2026 07:18:33 -0400
+Message-ID: <a9c719301ba38aaafaea796ff7a3ed0725829d41.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,41 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit d98c24617a831e92e7224a07dcaed2dd0b02af96 ]
+[ Upstream commit 72c6df8f284b3a49812ce2ac136727ace70acc7c ]
 
-cw1200_wow_suspend() must only return with priv->conf_mutex locked if it
-returns zero. This mutex must be unlocked if an error is returned. Add
-mutex_unlock() calls to the error paths from which that call is missing.
-This has been detected by the Clang thread-safety analyzer.
+Make sure that wl->mutex is locked before it is unlocked. This has been
+detected by the Clang thread-safety analyzer.
 
-Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Fixes: 45aa7f071b06 ("wlcore: Use generic runtime pm calls for wowlan elp configuration")
 Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223220102.2158611-25-bart.vanassche@linux.dev
+Link: https://patch.msgid.link/20260223220102.2158611-26-bart.vanassche@linux.dev
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/st/cw1200/pm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ti/wlcore/main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/st/cw1200/pm.c b/drivers/net/wireless/st/cw1200/pm.c
-index 2002e3f9fe45b..b656afe65db07 100644
---- a/drivers/net/wireless/st/cw1200/pm.c
-+++ b/drivers/net/wireless/st/cw1200/pm.c
-@@ -264,12 +264,14 @@ int cw1200_wow_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
- 		wiphy_err(priv->hw->wiphy,
- 			  "PM request failed: %d. WoW is disabled.\n", ret);
- 		cw1200_wow_resume(hw);
-+		mutex_unlock(&priv->conf_mutex);
- 		return -EBUSY;
- 	}
+diff --git a/drivers/net/wireless/ti/wlcore/main.c b/drivers/net/wireless/ti/wlcore/main.c
+index 6116a8522d960..bdb06584d7e45 100644
+--- a/drivers/net/wireless/ti/wlcore/main.c
++++ b/drivers/net/wireless/ti/wlcore/main.c
+@@ -1880,6 +1880,8 @@ static int __maybe_unused wl1271_op_resume(struct ieee80211_hw *hw)
+ 		     wl->wow_enabled);
+ 	WARN_ON(!wl->wow_enabled);
  
- 	/* Force resume if event is coming from the device. */
- 	if (atomic_read(&priv->bh_rx)) {
- 		cw1200_wow_resume(hw);
-+		mutex_unlock(&priv->conf_mutex);
- 		return -EAGAIN;
- 	}
++	mutex_lock(&wl->mutex);
++
+ 	ret = pm_runtime_force_resume(wl->dev);
+ 	if (ret < 0) {
+ 		wl1271_error("ELP wakeup failure!");
+@@ -1896,8 +1898,6 @@ static int __maybe_unused wl1271_op_resume(struct ieee80211_hw *hw)
+ 		run_irq_work = true;
+ 	spin_unlock_irqrestore(&wl->wl_lock, flags);
  
+-	mutex_lock(&wl->mutex);
+-
+ 	/* test the recovery flag before calling any SDIO functions */
+ 	pending_recovery = test_bit(WL1271_FLAG_RECOVERY_IN_PROGRESS,
+ 				    &wl->flags);
 -- 
 2.51.0
 
