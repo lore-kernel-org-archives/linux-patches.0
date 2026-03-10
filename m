@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED98D387574;
-	Tue, 10 Mar 2026 11:13:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01EE387583;
+	Tue, 10 Mar 2026 11:13:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141223; cv=none; b=ScWKQ709Ddx6NOuLSnB39/1MwS1CfTRIklt+FLjZ+AwWS4UA2IoUOMlawNWq5BSgM0WJAEmn/rnMEPGNLPz2hxwMnfkYGh4rpviaGUN5g+ivRdscqLJ6M25xgFU2gm5IM/I/pgs0PNHbFXJAS/vAu6uWE/L7RjYqsIj0iGxg70s=
+	t=1773141223; cv=none; b=Ayq2jEtiHmcVuxsONKmWFZV96vtymumiUDanU6bdqt29IGk6TL4/9IYh1SJ6J2IpOsY3UfFzFjZRTvL06D5U5rspLLnhhqz03WwYETZ64nfR2/RM2i2JaUyGKulrY+IX5sxOlPVspMSl2O4/M9d7HNAQ4xqDzu4SFkP6ADaXqz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141223; c=relaxed/simple;
-	bh=0uaDaDwrnVM8kvc4E/n2ecf1jsvPMV7qNqRELQhuLAk=;
+	bh=vyHdMcG9VyGrk5evzWM8H2tnqtTS/qoE5WYMnzt799Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PdNCsQKt09EpsjZCpweZKzIa/Npz7nGqg+Svt1ChxMOq2BcB/+UiLLjBLTMCnZGwSdDLlawXOzGXt2DU2ovvRo2NO9cz8o671hF4oL6GZyAPfK0phO4GBJtBeAz9AfuPjeWROPAZV6UB6wPLovJqeBk48p7LzpIA5tASvK/4RMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lA1yOsR/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgDzrCV4RPgp1ZehtgqN+CbWXltdE96uwwJtXYVoejBTCV3iQRP7KAh8LyQq4TBaL01B35b/v4fg4rqifYOYxgoonrqKfeWFH50J8jvwmmwC+FLGTZFksHS264y2X9torGptUnV3MDjgXuK+KxT14K5kXOh78SuOurFbgoa09k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQ4jPZLg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lA1yOsR/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FE2C2BCB4;
-	Tue, 10 Mar 2026 11:13:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQ4jPZLg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC5C2BCB2;
+	Tue, 10 Mar 2026 11:13:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141222;
-	bh=0uaDaDwrnVM8kvc4E/n2ecf1jsvPMV7qNqRELQhuLAk=;
+	s=k20201202; t=1773141223;
+	bh=vyHdMcG9VyGrk5evzWM8H2tnqtTS/qoE5WYMnzt799Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lA1yOsR/fqGYMZH8nAEDvOgc8UqqjnIn+5CozRDo0D9ZsR8mJAdwenN1BOaMe+4JF
-	 vR3ghYI+ofpTwjit4e4YacE6jBRH5lJNadSVYFtgLGrOBxGrRLfUwFYzT16iFQcrb6
-	 KT+HdXY6NwZdznwiYHcpRlFPZcADTiX/7zIT/yhKtF+NH0jOdcyuwlurKrJvXtEgKt
-	 RDj5f3ag1d/whGVDxGx8da7Qq18gyjHbHsPZ//ppnRAAAkEt8d0r2ZIN3nC1Ei0P+A
-	 XaGFcadTMrXgpwzkD+V2d0CsQAcw5CjERZVBTi1AtUbjyIrOdp5gVWs4peApwGFcz4
-	 1npmo5vHegq+g==
+	b=EQ4jPZLgyOvX4UC2vjE2WJselobnBhyBpw4jInuVGQ0BPYmCK68KWZrsv0aCB0Lo8
+	 ONV1TMQi9qSjh9/ek87egm/0qJkhbvbQmlf/NwlQVsrzAEQ76qZcniR+KUPfrv5uCr
+	 /aqjLZxMrH79b2VTqoFQa3BWmrCrq8XLpnIM9yp3zBQVF/itXd/SvXy5cHGFy0BTsK
+	 eoawQCP0VFCt5siLFgcgYGV9pr6QMPd50gY30bL/lwmgY6Gado6zXyBvPC3hfZw4s7
+	 yDtwF6eX+rhIENt6ZWe4tMoeCtTOuUFzbK2498A/6HZHmm+tWpCxlqHkXr5qKRKUgn
+	 fLyMgXhPV+0MQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>,
-	Nitin Gote <nitin.r.gote@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
+Cc: Tomasz Lis <tomasz.lis@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Michal Wajdeczko <michal.wajdeczko@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 224/311] drm/xe/configfs: Free ctx_restore_mid_bb in release
-Date: Tue, 10 Mar 2026 07:04:31 -0400
-Message-ID: <7f0ba7c980fee4dc691f5872cf54a09d3745b767.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 225/311] drm/xe/queue: Call fini on exec queue creation fail
+Date: Tue, 10 Mar 2026 07:04:32 -0400
+Message-ID: <a17371b1cb31109a780b2a6754e7b28967fe4e45.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,40 +50,97 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Tomasz Lis <tomasz.lis@intel.com>
 
-[ Upstream commit e377182f0266f46f02d01838e6bde67b9dac0d66 ]
+[ Upstream commit 99f9b5343cae80eb0dfe050baf6c86d722b3ba2e ]
 
-ctx_restore_mid_bb memory is allocated in wa_bb_store(), but
-xe_config_device_release() only frees ctx_restore_post_bb.
+Every call to queue init should have a corresponding fini call.
+Skipping this would mean skipping removal of the queue from GuC list
+(which is part of guc_id allocation). A damaged queue stored in
+exec_queue_lookup list would lead to invalid memory reference,
+sooner or later.
 
-Free ctx_restore_mid_bb[0].cs as well to avoid leaking the allocation
-when the configfs device is removed.
+Call fini to free guc_id. This must be done before any internal
+LRCs are freed.
 
-Fixes: b30d5de3d40c ("drm/xe/configfs: Add mid context restore bb")
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Nitin Gote <nitin.r.gote@intel.com>
-Link: https://patch.msgid.link/20260225013448.3547687-2-shuicheng.lin@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit a235e7d0098337c3f2d1e8f3610c719a589e115f)
+Since the finalization with this extra call became very similar to
+__xe_exec_queue_fini(), reuse that. To make this reuse possible,
+alter xe_lrc_put() so it can survive NULL parameters, like other
+similar functions.
+
+v2: Reuse _xe_exec_queue_fini(). Make xe_lrc_put() aware of NULLs.
+
+Fixes: 3c1fa4aa60b1 ("drm/xe: Move queue init before LRC creation")
+Signed-off-by: Tomasz Lis <tomasz.lis@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com> (v1)
+Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
+Link: https://patch.msgid.link/20260226212701.2937065-2-tomasz.lis@intel.com
+(cherry picked from commit 393e5fea6f7d7054abc2c3d97a4cfe8306cd6079)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_configfs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_exec_queue.c | 23 +++++++++++------------
+ drivers/gpu/drm/xe/xe_lrc.h        |  3 ++-
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_configfs.c b/drivers/gpu/drm/xe/xe_configfs.c
-index 82edd04660055..4afdfd69899aa 100644
---- a/drivers/gpu/drm/xe/xe_configfs.c
-+++ b/drivers/gpu/drm/xe/xe_configfs.c
-@@ -830,6 +830,7 @@ static void xe_config_device_release(struct config_item *item)
- 
- 	mutex_destroy(&dev->lock);
- 
-+	kfree(dev->config.ctx_restore_mid_bb[0].cs);
- 	kfree(dev->config.ctx_restore_post_bb[0].cs);
- 	kfree(dev);
+diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
+index 779d7e7e2d2ec..1e774fa1fa190 100644
+--- a/drivers/gpu/drm/xe/xe_exec_queue.c
++++ b/drivers/gpu/drm/xe/xe_exec_queue.c
+@@ -185,6 +185,16 @@ static struct xe_exec_queue *__xe_exec_queue_alloc(struct xe_device *xe,
+ 	return q;
  }
+ 
++static void __xe_exec_queue_fini(struct xe_exec_queue *q)
++{
++	int i;
++
++	q->ops->fini(q);
++
++	for (i = 0; i < q->width; ++i)
++		xe_lrc_put(q->lrc[i]);
++}
++
+ static int __xe_exec_queue_init(struct xe_exec_queue *q, u32 exec_queue_flags)
+ {
+ 	int i, err;
+@@ -239,21 +249,10 @@ static int __xe_exec_queue_init(struct xe_exec_queue *q, u32 exec_queue_flags)
+ 	return 0;
+ 
+ err_lrc:
+-	for (i = i - 1; i >= 0; --i)
+-		xe_lrc_put(q->lrc[i]);
++	__xe_exec_queue_fini(q);
+ 	return err;
+ }
+ 
+-static void __xe_exec_queue_fini(struct xe_exec_queue *q)
+-{
+-	int i;
+-
+-	q->ops->fini(q);
+-
+-	for (i = 0; i < q->width; ++i)
+-		xe_lrc_put(q->lrc[i]);
+-}
+-
+ struct xe_exec_queue *xe_exec_queue_create(struct xe_device *xe, struct xe_vm *vm,
+ 					   u32 logical_mask, u16 width,
+ 					   struct xe_hw_engine *hwe, u32 flags,
+diff --git a/drivers/gpu/drm/xe/xe_lrc.h b/drivers/gpu/drm/xe/xe_lrc.h
+index 2fb628da5c433..96ae31df3359f 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.h
++++ b/drivers/gpu/drm/xe/xe_lrc.h
+@@ -73,7 +73,8 @@ static inline struct xe_lrc *xe_lrc_get(struct xe_lrc *lrc)
+  */
+ static inline void xe_lrc_put(struct xe_lrc *lrc)
+ {
+-	kref_put(&lrc->refcount, xe_lrc_destroy);
++	if (lrc)
++		kref_put(&lrc->refcount, xe_lrc_destroy);
+ }
+ 
+ /**
 -- 
 2.51.0
 
