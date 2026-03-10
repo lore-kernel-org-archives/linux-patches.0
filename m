@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B70E387368;
-	Tue, 10 Mar 2026 11:25:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F3A313E32;
+	Tue, 10 Mar 2026 11:25:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141920; cv=none; b=K4dfzBeD2qfmSKb2kGeTJr22XnM0oMeJQ+Bej0aPgS0Gya+oayYsR8K5kWy1bELuOeTIH6F5bntbUSP1XDL+jZ+/YHF0eT+gLRKIQAc54mC7u8+z1XkOi+hxdGzfBxBtDdTZGogFSiQOIoAAolZCY/l7jwlgluOdet/edkyXzOc=
+	t=1773141921; cv=none; b=h8fqL26Y/2MNrZDSHgByGthYp2FB2AEE85wb8BwurxAjuDx8mKKn42U3HKYNKGqB+CkjISir9RFm0FoRe2TcXzMh5kymUpF6HE1IoftxY5dLDq3zF+y0WQEncwHUR0rsvJncPrSRnwwZKPwyyMoYLtebFK2zKdVOcMM+mS9rsiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141920; c=relaxed/simple;
-	bh=EOT4YfhniW5i6lt6OGUrYUNuJ7+PtjrNe/NkflHT940=;
+	s=arc-20240116; t=1773141921; c=relaxed/simple;
+	bh=27KOIU/jQ9lS+AdlBlr4XMo6W1PJ+9NCG6Me3sgjczg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VG5Iazoma/UfErsnoZF5wSfZq8HqmPfKhqLSNTC+VVKqCAnteZiN/IdAMar4Re643BpYweqmPKjWLR0qKMf2K74fSSC7z4nZGYsiBFPsuVyypGuYXD3itQodDbaMl9SXNKhMOQ/QISV7X3oxvrMi9nsCBXqs2PajT7+WmZBE/do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RmaELXun; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Psox0JSGblOeLkKwWTHApJXYWcRyFz1BxbadHAMmw8f616S9VbZag+3nBsvxbbQ4NkimOvRpzBrOGfJnL1vrle/yIh4wFIS/KewhUfTGJJZxwOQ1UKnmSffSHHalNYO+LxmC4HG1NZHMf8xaBKQ0uRcuNW8g25f7Ndx0VMuZmWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AE3zSv5v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RmaELXun"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C116C2BCAF;
-	Tue, 10 Mar 2026 11:25:19 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AE3zSv5v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920D3C19423;
+	Tue, 10 Mar 2026 11:25:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141920;
-	bh=EOT4YfhniW5i6lt6OGUrYUNuJ7+PtjrNe/NkflHT940=;
+	s=k20201202; t=1773141921;
+	bh=27KOIU/jQ9lS+AdlBlr4XMo6W1PJ+9NCG6Me3sgjczg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmaELXunoiei7kJff4wNQwA2qPXRE/C2JfRKo2R1mdULfmlNDRZnOvXA2FsUOW3Tq
-	 OXul9X1xRiCGl5IWdHbf7SIilqVoZyok3qTYiPeHkM7sVvScbrLQjoAfN3BVx8Pdg9
-	 jHeeOYW7uJUwjP7d9SiwwlR6zkunn1zqO5jDEnzcRMzI6mXHmZbaNIsKOOiIxrMamv
-	 qDwcKW70XWtnbfOZ0cZj6vNuYATCXbb/UzeTuMUHi5Y/VGV4c/4tquCVM1Z8t45vDD
-	 NfWYSv1pMkhlFiJve+oyOTKGfnjKQgnFakVFRMxV7haEmC6fHWeVaD101+g95BS4wA
-	 NCtjagjqkQLLw==
+	b=AE3zSv5vbEhy5wWx3n0Xu47P26bUrJ9iAksYcn6eJwDmAQcUqs35frAQCqRmPb1dv
+	 BLCCvpg6wA0SwtuqKYOpm3Bl5L7MWsFNFtStNM0o3rVaq9PNZbKX22wDSNMiF+k550
+	 4kRc9cV/rbOF5aSUnEuYVm6IhmD1T/t5sC1RgDDHjDwvoJldgYisy7I6EuajXzgNi7
+	 uRkYmibl+DzDmrHCcD9aLYff+rbRyD8T7pvfTVuIPoVYPgBPoOv+EKoagXkvpJnD6q
+	 7AZUZ+TJfdBi3wyCOqwNau25kHTY2ONNsMvgMrmcPr3CwtvzsaD03l1Zov5wAhptDo
+	 S5pUJ5cFHS6dA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>,
+Cc: Will Deacon <will@kernel.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Jinjiang Tu <tujinjiang@huawei.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 044/314] s390/vtime: Fix virtual timer forwarding
-Date: Tue, 10 Mar 2026 07:15:03 -0400
-Message-ID: <0ba66cf34d3689c33836b07dbe80c567f7eedaee.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 045/314] arm64: io: Rename ioremap_prot() to __ioremap_prot()
+Date: Tue, 10 Mar 2026 07:15:04 -0400
+Message-ID: <e294c8b16e0e7245cd12ee70a88fc2c11f52d22f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,74 +50,105 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Will Deacon <will@kernel.org>
 
-[ Upstream commit dbc0fb35679ed5d0adecf7d02137ac2c77244b3b ]
+[ Upstream commit f6bf47ab32e0863df50f5501d207dcdddb7fc507 ]
 
-Since delayed accounting of system time [1] the virtual timer is
-forwarded by do_account_vtime() but also vtime_account_kernel(),
-vtime_account_softirq(), and vtime_account_hardirq(). This leads
-to double accounting of system, guest, softirq, and hardirq time.
+Rename our ioremap_prot() implementation to __ioremap_prot() and convert
+all arch-internal callers over to the new function.
 
-Remove accounting from the vtime_account*() family to restore old behavior.
+ioremap_prot() remains as a #define to __ioremap_prot() for
+generic_access_phys() and will be subsequently extended to handle user
+permissions in 'prot'.
 
-There is only one user of the vtimer interface, which might explain
-why nobody noticed this so far.
-
-Fixes: b7394a5f4ce9 ("sched/cputime, s390: Implement delayed accounting of system time") [1]
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Cc: Zeng Heng <zengheng4@huawei.com>
+Cc: Jinjiang Tu <tujinjiang@huawei.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
+Signed-off-by: Will Deacon <will@kernel.org>
+Stable-dep-of: 8f098037139b ("arm64: io: Extract user memory type in ioremap_prot()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vtime.c | 18 ++----------------
- 1 file changed, 2 insertions(+), 16 deletions(-)
+ arch/arm64/include/asm/io.h | 11 ++++++-----
+ arch/arm64/kernel/acpi.c    |  2 +-
+ arch/arm64/mm/ioremap.c     |  6 +++---
+ 3 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/arch/s390/kernel/vtime.c b/arch/s390/kernel/vtime.c
-index 234a0ba305108..122d30b104401 100644
---- a/arch/s390/kernel/vtime.c
-+++ b/arch/s390/kernel/vtime.c
-@@ -225,10 +225,6 @@ static u64 vtime_delta(void)
- 	return timer - lc->last_update_timer;
- }
+diff --git a/arch/arm64/include/asm/io.h b/arch/arm64/include/asm/io.h
+index 83e03abbb2ca9..cd2fddfe814ac 100644
+--- a/arch/arm64/include/asm/io.h
++++ b/arch/arm64/include/asm/io.h
+@@ -264,19 +264,20 @@ __iowrite64_copy(void __iomem *to, const void *from, size_t count)
+ typedef int (*ioremap_prot_hook_t)(phys_addr_t phys_addr, size_t size,
+ 				   pgprot_t *prot);
+ int arm64_ioremap_prot_hook_register(const ioremap_prot_hook_t hook);
++void __iomem *__ioremap_prot(phys_addr_t phys, size_t size, pgprot_t prot);
  
--/*
-- * Update process times based on virtual cpu times stored by entry.S
-- * to the lowcore fields user_timer, system_timer & steal_clock.
-- */
- void vtime_account_kernel(struct task_struct *tsk)
- {
- 	struct lowcore *lc = get_lowcore();
-@@ -238,27 +234,17 @@ void vtime_account_kernel(struct task_struct *tsk)
- 		lc->guest_timer += delta;
- 	else
- 		lc->system_timer += delta;
--
--	virt_timer_forward(delta);
- }
- EXPORT_SYMBOL_GPL(vtime_account_kernel);
+-#define ioremap_prot ioremap_prot
++#define ioremap_prot __ioremap_prot
  
- void vtime_account_softirq(struct task_struct *tsk)
- {
--	u64 delta = vtime_delta();
--
--	get_lowcore()->softirq_timer += delta;
--
--	virt_timer_forward(delta);
-+	get_lowcore()->softirq_timer += vtime_delta();
- }
+ #define _PAGE_IOREMAP PROT_DEVICE_nGnRE
  
- void vtime_account_hardirq(struct task_struct *tsk)
- {
--	u64 delta = vtime_delta();
--
--	get_lowcore()->hardirq_timer += delta;
--
--	virt_timer_forward(delta);
-+	get_lowcore()->hardirq_timer += vtime_delta();
+ #define ioremap_wc(addr, size)	\
+-	ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
++	__ioremap_prot((addr), (size), __pgprot(PROT_NORMAL_NC))
+ #define ioremap_np(addr, size)	\
+-	ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRnE))
++	__ioremap_prot((addr), (size), __pgprot(PROT_DEVICE_nGnRnE))
+ 
+ 
+ #define ioremap_encrypted(addr, size)	\
+-	ioremap_prot((addr), (size), PAGE_KERNEL)
++	__ioremap_prot((addr), (size), PAGE_KERNEL)
+ 
+ /*
+  * io{read,write}{16,32,64}be() macros
+@@ -297,7 +298,7 @@ static inline void __iomem *ioremap_cache(phys_addr_t addr, size_t size)
+ 	if (pfn_is_map_memory(__phys_to_pfn(addr)))
+ 		return (void __iomem *)__phys_to_virt(addr);
+ 
+-	return ioremap_prot(addr, size, __pgprot(PROT_NORMAL));
++	return __ioremap_prot(addr, size, __pgprot(PROT_NORMAL));
  }
  
  /*
+diff --git a/arch/arm64/kernel/acpi.c b/arch/arm64/kernel/acpi.c
+index f1cb2447afc9c..b285e174f4f51 100644
+--- a/arch/arm64/kernel/acpi.c
++++ b/arch/arm64/kernel/acpi.c
+@@ -377,7 +377,7 @@ void __iomem *acpi_os_ioremap(acpi_physical_address phys, acpi_size size)
+ 				prot = __acpi_get_writethrough_mem_attribute();
+ 		}
+ 	}
+-	return ioremap_prot(phys, size, prot);
++	return __ioremap_prot(phys, size, prot);
+ }
+ 
+ /*
+diff --git a/arch/arm64/mm/ioremap.c b/arch/arm64/mm/ioremap.c
+index 10e246f112710..1e4794a2af7d6 100644
+--- a/arch/arm64/mm/ioremap.c
++++ b/arch/arm64/mm/ioremap.c
+@@ -14,8 +14,8 @@ int arm64_ioremap_prot_hook_register(ioremap_prot_hook_t hook)
+ 	return 0;
+ }
+ 
+-void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
+-			   pgprot_t pgprot)
++void __iomem *__ioremap_prot(phys_addr_t phys_addr, size_t size,
++			     pgprot_t pgprot)
+ {
+ 	unsigned long last_addr = phys_addr + size - 1;
+ 
+@@ -38,7 +38,7 @@ void __iomem *ioremap_prot(phys_addr_t phys_addr, size_t size,
+ 
+ 	return generic_ioremap_prot(phys_addr, size, pgprot);
+ }
+-EXPORT_SYMBOL(ioremap_prot);
++EXPORT_SYMBOL(__ioremap_prot);
+ 
+ /*
+  * Must be called after early_fixmap_init
 -- 
 2.51.0
 
