@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBCB386C01;
-	Tue, 10 Mar 2026 11:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70D7138757F;
+	Tue, 10 Mar 2026 11:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141214; cv=none; b=jHFJr4vHQszbE7bci4s9HGWLkM5lxwuI54cSGkk1kE0+ozH/BKQ3rllQgDZlkZ+CxDgXVSjG+tt7R1GIUQywsvCW2TJYktWzIr0N9OtyOoco8ok38QdkAk7TRAATe0owhjNIFTlqVsVo8kpN2UR7WckxjpGEhOcwfnKcx+qo5h8=
+	t=1773141215; cv=none; b=RWLALUJFpE1I4VfIgGgb5wTFYYm7vxeI5b8H2Fr6MPeJP+kfxvC3Vq6c0XJLnwHYD52CEwED5fL8TxBHL42DfVs9hADuXffqnD/+XguezR9A3c4kiM6TvqVR4Cie656mjnGaDE7yiuVkoXyAtNA0fw4yvaJ0HrF5E7KbGr1HgiY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141214; c=relaxed/simple;
-	bh=jC+sQ91oMc+A6PdKNDUp8fSyfbN3/ROxwUBIPmF6QDE=;
+	s=arc-20240116; t=1773141215; c=relaxed/simple;
+	bh=0c+Od6ZZdnC+YU4zMpRFDnSrcbwI57Z0cAbZXkl6P+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JQ2DKDdGJjkT8WQRyWRn0IfhmKMcKL31oeOWcFX777ifPBbJEvBul7QbPT3zgIp/D7F9h4x/Pk/RiOY0qbwLYRnrf/HJb4yfBouAMBMAddpC3aH4lvLzN/TgucXppYIHIfr3c9Zmw6XAd8fuh/QOwrC/tJslkEXRl+ZeuRCp3Y0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XvgFzjgf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rI2PoKe5i++PFJQuP/8Rblbcfb7lNcoNK3x2jwHscfxZRTwSSNKq/Jfa2b1T/mNh6X07QVZ+/mVIZ8YPYVSEMep2Q7XndbSPusFncA7RpZKXnqW9TAfZbgZ8i1+Id4bXqMO8MROGmSdy/UrfgLl8J0BfNgd9Zs/s0nvzqTO5wb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=k4VZbuOW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XvgFzjgf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA327C19423;
-	Tue, 10 Mar 2026 11:13:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="k4VZbuOW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FAFC2BCAF;
+	Tue, 10 Mar 2026 11:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141214;
-	bh=jC+sQ91oMc+A6PdKNDUp8fSyfbN3/ROxwUBIPmF6QDE=;
+	s=k20201202; t=1773141215;
+	bh=0c+Od6ZZdnC+YU4zMpRFDnSrcbwI57Z0cAbZXkl6P+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XvgFzjgfKOUxzx8mYdWQZUzcZkkhncVll5J3JF6CNMkDcZAJXzDZrWHPwG0dR+jAr
-	 B449VhNa+l0oVOSflYtd+ix2J/d3TWoLPAoG6qOFiZLNGyO2XY3ojJ8B6UNB8iq3H1
-	 b2+LeQ+0Ww6n9TeA2AHsVkbHplBD7onZWtGZner4J0v3LLJadTl3U5lvVrn3uQ/bTk
-	 /Nr3nNSRgXjmzUsGiS/ML22c0uQYqFTf4+7di2G3+EOulGXvPgsEAG5g2IUK2ysspk
-	 N/fvXkn6I4AkCuEPppawQ1P0FPQn4jmcRMtfy3uWaDTPCGYhkQN0LiHSX6eRe/IDbx
-	 cfHRdmrGew7RA==
+	b=k4VZbuOWRw5U/pAtnWjaOPwn7MLaxAIjLE3unId2L38rNsAn/lg6RZ1v9UcfSZ3My
+	 YS3Ovep+v7Ak1P5fsvhkozBABVFo0B4VHIMf4ee7Sm8Tf5et0SLQpCXecPpI5I1tts
+	 z9acU5r18Vrz+22BbzVwSZwcsL/VdPkGhYLHWWMa6EU74MPZM4NJ62nyi40op5zZDT
+	 1SvkD4z/+tgF9mO/1t73A8SUEz4I9/Oh+tdB16buTP2eLAqY54SL33Vn/u+LhqhYZB
+	 hDi/yLrirs4Rcq6ygW8AUHTotlTLEnFxwZwPNTJFdPii8QXJHxv1R3hsiq8eugN6f9
+	 wpQjTaM03zjLQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: MD Danish Anwar <danishanwar@ti.com>,
+Cc: Raju Rangoju <Raju.Rangoju@amd.com>,
+	Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 215/311] net: ti: icssg-prueth: Fix ping failure after offload mode setup when link speed is not 1G
-Date: Tue, 10 Mar 2026 07:04:22 -0400
-Message-ID: <99863750ba2b2e9d6c6d45edb15af39181dd2fc5.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 216/311] amd-xgbe: fix MAC_TCR_SS register width for 2.5G and 10M speeds
+Date: Tue, 10 Mar 2026 07:04:23 -0400
+Message-ID: <fcf56bae66ec576b7adc3f957457a41213df3345.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,58 +49,48 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: MD Danish Anwar <danishanwar@ti.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 147792c395db870756a0dc87ce656c75ae7ab7e8 ]
+[ Upstream commit 9439a661c2e80485406ce2c90b107ca17858382d ]
 
-When both eth interfaces with links up are added to a bridge or hsr
-interface, ping fails if the link speed is not 1Gbps (e.g., 100Mbps).
+Extend the MAC_TCR_SS (Speed Select) register field width from 2 bits
+to 3 bits to properly support all speed settings.
 
-The issue is seen because when switching to offload (bridge/hsr) mode,
-prueth_emac_restart() restarts the firmware and clears DRAM with
-memset_io(), setting all memory to 0. This includes PORT_LINK_SPEED_OFFSET
-which firmware reads for link speed. The value 0 corresponds to
-FW_LINK_SPEED_1G (0x00), so for 1Gbps links the default value is correct
-and ping works. For 100Mbps links, the firmware needs FW_LINK_SPEED_100M
-(0x01) but gets 0 instead, causing ping to fail. The function
-emac_adjust_link() is called to reconfigure, but it detects no state change
-(emac->link is still 1, speed/duplex match PHY) so new_state remains false
-and icssg_config_set_speed() is never called to correct the firmware speed
-value.
+The MAC_TCR register's SS field encoding requires 3 bits to represent
+all supported speeds:
+  - 0x00: 10Gbps (XGMII)
+  - 0x02: 2.5Gbps (GMII) / 100Mbps
+  - 0x03: 1Gbps / 10Mbps
+  - 0x06: 2.5Gbps (XGMII) - P100a only
 
-The fix resets emac->link to 0 before calling emac_adjust_link() in
-prueth_emac_common_start(). This forces new_state=true, ensuring
-icssg_config_set_speed() is called to write the correct speed value to
-firmware memory.
+With only 2 bits, values 0x04-0x07 cannot be represented, which breaks
+2.5G XGMII mode on newer platforms and causes incorrect speed select
+values to be programmed.
 
-Fixes: 06feac15406f ("net: ti: icssg-prueth: Fix emac link speed handling")
-Signed-off-by: MD Danish Anwar <danishanwar@ti.com>
-Link: https://patch.msgid.link/20260226102356.2141871-1-danishanwar@ti.com
+Fixes: 07445f3c7ca1 ("amd-xgbe: Add support for 10 Mbps speed")
+Co-developed-by: Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>
+Signed-off-by: Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260226170753.250312-1-Raju.Rangoju@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_prueth.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-common.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_prueth.c b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-index f65041662173c..2c6e161225f6a 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_prueth.c
-@@ -273,6 +273,14 @@ static int prueth_emac_common_start(struct prueth *prueth)
- 		if (ret)
- 			goto disable_class;
- 
-+		/* Reset link state to force reconfiguration in
-+		 * emac_adjust_link(). Without this, if the link was already up
-+		 * before restart, emac_adjust_link() won't detect any state
-+		 * change and will skip critical configuration like writing
-+		 * speed to firmware.
-+		 */
-+		emac->link = 0;
-+
- 		mutex_lock(&emac->ndev->phydev->lock);
- 		emac_adjust_link(emac->ndev);
- 		mutex_unlock(&emac->ndev->phydev->lock);
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-common.h b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
+index 62b01de93db49..826c5caa70d71 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-common.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
+@@ -431,7 +431,7 @@
+ #define MAC_SSIR_SSINC_INDEX		16
+ #define MAC_SSIR_SSINC_WIDTH		8
+ #define MAC_TCR_SS_INDEX		29
+-#define MAC_TCR_SS_WIDTH		2
++#define MAC_TCR_SS_WIDTH		3
+ #define MAC_TCR_TE_INDEX		0
+ #define MAC_TCR_TE_WIDTH		1
+ #define MAC_TCR_VNE_INDEX		24
 -- 
 2.51.0
 
