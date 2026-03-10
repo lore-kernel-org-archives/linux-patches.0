@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4932F2BF3E2;
-	Tue, 10 Mar 2026 11:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EED2BF3E2;
+	Tue, 10 Mar 2026 11:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141130; cv=none; b=FRvqgh/QcP3uQzP5u9TTJYoVNUzx50WhflFdVJ0l3DPDMYToAqikq5AgokBd/B0zFIDf7MYnBUTry4KVbrqJWaMP08XGtENBVBBa9Jgs7eXjvsi499RmuVMlWJhOzpgZK3ytTRzpPg+DPBhhLWN2qYjgAUKPmJs9VyPHHePY1VQ=
+	t=1773141131; cv=none; b=Xx0mYQwR2sde3dMAOypTb40tKB8KWqn5ZOXtVAYhhnHKEwZOIrF6IqReqOWibZDgsoz76dT5Yy96DeYK/NYNasbUiVhK2ezhF4fSQC1ho29U3lKXY9NVza+AL0vqIlOe6YfCoHPdimEeZlVRiMDlQIsRNN7q5fqDPB96k0lyHkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141130; c=relaxed/simple;
-	bh=L0wYUwMq94zzuJI06sf2BKD7vh/GWRG3SbMI2hYJ2t0=;
+	s=arc-20240116; t=1773141131; c=relaxed/simple;
+	bh=PcJL2F/IenoF7la5Z2Aw5+RKWG41EfNib5MbxkaYdlY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CxGW2Ld4NSnd2aZyHG9ZEOkpdpP+1biBJmYw13UONm4X2mqoN5O7WVN+Cl7fP4hXIjod4IeIBVNx7ITrUhVkTuto+rlODDlTZPyVceSjDmkuSgvk469G+kKxDLy6XPmAQrkYz44zY3RnPsZymdeyxYkzkpvHX55Dsjy2QftE0vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3LWKKFj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlLOMlrVqoLU7SlDrzUhb9y4NIKgPUaCyZ9JYLQqt9RRRmq7p35c+Hmxu37zjILGBs2pSIKlNu7HKcnh0CwgtN5HBwjanmzTRCBB2GfGxbPYyc1O/v5q84ptJDrQ11vTMZ/EZmcurTA5QdxWBu7FGJtVtltfN3yjd2qdWgRFkD4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=n44a5vfc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3LWKKFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93ECBC19423;
-	Tue, 10 Mar 2026 11:12:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="n44a5vfc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C222C2BC9E;
+	Tue, 10 Mar 2026 11:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141130;
-	bh=L0wYUwMq94zzuJI06sf2BKD7vh/GWRG3SbMI2hYJ2t0=;
+	s=k20201202; t=1773141131;
+	bh=PcJL2F/IenoF7la5Z2Aw5+RKWG41EfNib5MbxkaYdlY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3LWKKFjbHM6IR0Jr1val8JEyLogrW312xkCA74BoGEpdUMVYXc+hAa6sl/LBUsPM
-	 05MiANEN7jQXKASPtIquExmbpO9PiJddC21M8p9/o73ULwPLLzxWM2PNua/J51cuId
-	 qAMCCrSPG+4yF0V4nZ0yyXlArrsi6W2hgvzeQ6mnvChYgxIqAPJmk+nt1h2mXquqKh
-	 WT3evzn2IWZb6QbULr+1XysFA9ehIMppDQB8MEUTC1U56TXHf0fuTrmG//KD9jkgDR
-	 o+zt6vp5YCK5wOVQk9eNzyJhi0XQvU6gDW2S5RiCGogz8hYQBtGMjUtZ2myFD+3j0l
-	 /ax5/VgDVhMHQ==
+	b=n44a5vfcLGnrreyfIQ69+lxk/xs9HtzdR//NhGXmhhf9ZD0WlBFabp4BuxOHN7yl7
+	 v+H/HemvlFvSpKLVNMWYd0ISX6KSupQTtyKq7kRUBgvzSnTC4K6BGqMwa5HWj7VHFS
+	 qcBO4IJUOgBOj4AgQnRqLJ9KGeILpWVGqBqOZ3wBUdK1Q3ACGOU15LHOuQiQqJUF0E
+	 x+TQmVcBastFLYyIdu2MSthDsNGEWhZAiJehoM9k2eny98dqC6RPiFTE+Y68rK/HRC
+	 gLbH+PiMFgHKSWJoomt/vB6NYJZJ7GehyGgm3Pc3dNe30FxBNPKCWiaadDvqQm97lf
+	 6mXI0aPxq6TNA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Hodges <git@danielhodges.dev>,
+Cc: Daniil Dulov <d.dulov@aladdin.ru>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 133/311] wifi: libertas: fix use-after-free in lbs_free_adapter()
-Date: Tue, 10 Mar 2026 07:03:00 -0400
-Message-ID: <26bbf4bb176d1382f46029699efdabe00bf3cb30.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 134/311] wifi: cfg80211: cancel rfkill_block work in wiphy_unregister()
+Date: Tue, 10 Mar 2026 07:03:01 -0400
+Message-ID: <ea691ab7cc10ac65adfede41ae5285fd297353c1.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,57 +48,60 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-commit 03cc8f90d0537fcd4985c3319b4fafbf2e3fb1f0 upstream.
+commit 767d23ade706d5fa51c36168e92a9c5533c351a1 upstream.
 
-The lbs_free_adapter() function uses timer_delete() (non-synchronous)
-for both command_timer and tx_lockup_timer before the structure is
-freed. This is incorrect because timer_delete() does not wait for
-any running timer callback to complete.
+There is a use-after-free error in cfg80211_shutdown_all_interfaces found
+by syzkaller:
 
-If a timer callback is executing when lbs_free_adapter() is called,
-the callback will access freed memory since lbs_cfg_free() frees the
-containing structure immediately after lbs_free_adapter() returns.
+BUG: KASAN: use-after-free in cfg80211_shutdown_all_interfaces+0x213/0x220
+Read of size 8 at addr ffff888112a78d98 by task kworker/0:5/5326
+CPU: 0 UID: 0 PID: 5326 Comm: kworker/0:5 Not tainted 6.19.0-rc2 #2 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: events cfg80211_rfkill_block_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x116/0x1f0
+ print_report+0xcd/0x630
+ kasan_report+0xe0/0x110
+ cfg80211_shutdown_all_interfaces+0x213/0x220
+ cfg80211_rfkill_block_work+0x1e/0x30
+ process_one_work+0x9cf/0x1b70
+ worker_thread+0x6c8/0xf10
+ kthread+0x3c5/0x780
+ ret_from_fork+0x56d/0x700
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Both timer callbacks (lbs_cmd_timeout_handler and lbs_tx_lockup_handler)
-access priv->driver_lock, priv->cur_cmd, priv->dev, and other fields,
-which would all be use-after-free violations.
+The problem arises due to the rfkill_block work is not cancelled when wiphy
+is being unregistered. In order to fix the issue cancel the corresponding
+work in wiphy_unregister().
 
-Use timer_delete_sync() instead to ensure any running timer callback
-has completed before returning.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-This bug was introduced in commit 8f641d93c38a ("libertas: detect TX
-lockups and reset hardware") where del_timer() was used instead of
-del_timer_sync() in the cleanup path. The command_timer has had the
-same issue since the driver was first written.
-
-Fixes: 8f641d93c38a ("libertas: detect TX lockups and reset hardware")
-Fixes: 954ee164f4f4 ("[PATCH] libertas: reorganize and simplify init sequence")
+Fixes: 1f87f7d3a3b4 ("cfg80211: add rfkill support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-Link: https://patch.msgid.link/20260206195356.15647-1-git@danielhodges.dev
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://patch.msgid.link/20260211082024.1967588-1-d.dulov@aladdin.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas/main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/wireless/marvell/libertas/main.c b/drivers/net/wireless/marvell/libertas/main.c
-index d44e02c6fe385..dd97f1b61f4d1 100644
---- a/drivers/net/wireless/marvell/libertas/main.c
-+++ b/drivers/net/wireless/marvell/libertas/main.c
-@@ -799,8 +799,8 @@ static void lbs_free_adapter(struct lbs_private *priv)
- {
- 	lbs_free_cmd_buffer(priv);
- 	kfifo_free(&priv->event_fifo);
--	timer_delete(&priv->command_timer);
--	timer_delete(&priv->tx_lockup_timer);
-+	timer_delete_sync(&priv->command_timer);
-+	timer_delete_sync(&priv->tx_lockup_timer);
- }
+diff --git a/net/wireless/core.c b/net/wireless/core.c
+index 16ccf6fb28b21..381e329e02a4c 100644
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1210,6 +1210,7 @@ void wiphy_unregister(struct wiphy *wiphy)
+ 	/* this has nothing to do now but make sure it's gone */
+ 	cancel_work_sync(&rdev->wiphy_work);
  
- static const struct net_device_ops lbs_netdev_ops = {
++	cancel_work_sync(&rdev->rfkill_block);
+ 	cancel_work_sync(&rdev->conn_work);
+ 	flush_work(&rdev->event_work);
+ 	cancel_delayed_work_sync(&rdev->dfs_update_channels_wk);
 -- 
 2.51.0
 
