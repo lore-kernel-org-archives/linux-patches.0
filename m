@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBB992D24B7;
-	Tue, 10 Mar 2026 11:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C372D24B7;
+	Tue, 10 Mar 2026 11:11:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141118; cv=none; b=iIoeddyl5v8En27pUUesrbZfRveIXaOmf07Nu2jF9czkkrRGfkQVfs/kcoGJj0DtqhaJQfvqGZgjjpiyJuT7PxQxGU2GHGgqBB8qZ3WUq6IGrm2XTUTyAg8yZds5YV1DdlIGUSFVXOEF8oZvPBP09oY8dAtlKUcnA3PwNBieB1g=
+	t=1773141119; cv=none; b=VtqGbo30LX5ebWBBbt5CMuIwOWPmS1Ko5I3Q8yZ5f51OJR/7OaAWiiPBVCO3YEmsOZuLS9yBopDo/zABTXmxtozvAFWRzEkSU00iIUU6ml6zbxSfGjxiwIXqSYNAnb+yF2wxRddIPMt9DCAZczmNCnWOk1u8kz5pOmYdvSuMAaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141118; c=relaxed/simple;
-	bh=Kibr1oJzbv76dXRlqhDBv8/K3VTdDqA/zUFGpzIEjr8=;
+	s=arc-20240116; t=1773141119; c=relaxed/simple;
+	bh=MO+DTedvHfeYd+fOzqnm2kL95nJK7R6tAgaybookIcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sf/3jl0OMliDjG37jh/51n5y19u6f4bEBQ9+It9g33edirbk1W96ZVeQs4ZZhyiMbxU+qwP+epWx0qs97aFr4QIj0qAFmBftka0qBK5Zk2N2xOSmvFfLVQ9pIcLB62SXMpPvBinUIbfHr1CWlRya0HTaF/p2HwalGXh5W/1C8WM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F3nVEcdi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bFdPC6Nt2VOCTYaf8IXQWq+fe1DJrpR0Gni1srNY/JntLRMKAk/6tLD6FhpyRm42SJ+I6NopenYmyqh7GjCg9g2WWmbzBv236Y/j6BzjkpehdDjrrvuODo6Su0EEOmUao65t7IDThHqH4p1DbBM95lps4fm20qY9BqMs0zifHRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=o0qoew/d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F3nVEcdi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1369C2BC9E;
-	Tue, 10 Mar 2026 11:11:57 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="o0qoew/d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3146C19423;
+	Tue, 10 Mar 2026 11:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141118;
-	bh=Kibr1oJzbv76dXRlqhDBv8/K3VTdDqA/zUFGpzIEjr8=;
+	s=k20201202; t=1773141119;
+	bh=MO+DTedvHfeYd+fOzqnm2kL95nJK7R6tAgaybookIcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F3nVEcdiPf3AumIO0zTKUVKYMj/YL7ExqEdIdz1kcy8J47QXvp1NzBSPBWRZYN97C
-	 P+CRibOW4eIWZ7m1oeM3RINlTRs84pzl1aXqH6YLaQmJUvfaV/yQxnhNUFPZaykh0o
-	 ppWzijmGv9eRJArAbjIlPoMe7N/r9F3WFRPEaKMKDyrPiBJkoavTU9lG4kvxpdG7W7
-	 3V7f+kDKnQTiioMt4sDgYbwH9i6a7Nw4ritKKDBcJmu9HxGIKPMo7JPkcqqlhfEzhx
-	 CicNARztzYjUJp2Yfz0Ah0BNZFRMkF4699rV54mxkPE/cts5//oGxRa8wp2+qgMeNz
-	 AtJ+alN95i9tQ==
+	b=o0qoew/dVJaS5uQIUwMDOhO61oAoLWeRGnZpwAQQIVpsJyGJ+WFClnJoTjdzlhZIf
+	 fWV6SM//3arCve7gpp0eOhiagD7Xi6Rw+13+wT89tT4MJcNXSY8tEHjK+UywElGO4S
+	 AWGGCftkXO/85PtRbiU1gLzGtlLRCYdSKO0XPIVmXjkrpVI4JwdbJ/bOh9HJJJTzzc
+	 0kTYSQ42tYzMqtP8PFQEbmXzYXMWmm4MbRAw6LL/E6sx51s5AempZoHFy6dbo5a51N
+	 w6Xtt9qjytUI6NV9B9pZSozwC/hOA8WlQVPRVfgGIMOIB06mUw8gMxB+TF0Tg0t1Nl
+	 d4WZD0XU2ZTVg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tom Lendacky <thomas.lendacky@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Changyuan Lyu <changyuanl@google.com>,
-	Kevin Hui <kevinhui@meta.com>,
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 120/311] x86/boot/sev: Move SEV decompressor variables into the .data section
-Date: Tue, 10 Mar 2026 07:02:47 -0400
-Message-ID: <c1db5dfb3c17d01d247c4da7f571b84e465cfc69.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 121/311] platform/x86: dell-wmi-sysman: Don't hex dump plaintext password data
+Date: Tue, 10 Mar 2026 07:02:48 -0400
+Message-ID: <93985644b62145421efaf828916a9427a256c67b.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -47,91 +44,42 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 4ca191cec17a997d0e3b2cd312f3a884288acc27 upstream.
+commit d1a196e0a6dcddd03748468a0e9e3100790fc85c upstream.
 
-As part of the work to remove the dependency on calling into the decompressor
-code (startup_64()) for a UEFI boot, a call to rmpadjust() was removed from
-sev_enable() in favor of checking the value of the snp_vmpl variable.
+set_new_password() hex dumps the entire buffer, which contains plaintext
+password data, including current and new passwords. Remove the hex dump
+to avoid leaking credentials.
 
-When booting through a non-UEFI path and calling startup_64(), the call to
-sev_enable() is performed before the BSS section is zeroed. With the removal
-of the rmpadjust() call and the corresponding check of the return code, the
-snp_vmpl variable is checked.
-
-Since the kernel is running at VMPL0, the snp_vmpl variable will not have been
-set and should be the default value of 0.  However, since the call occurs
-before the BSS is zeroed, the snp_vmpl variable may not actually be zero,
-which will cause the guest boot to fail.
-
-Since the decompressor relocates itself, the BSS would need to be cleared both
-before and after the relocation, but this would, in effect, cause all of the
-changes to BSS variables before relocation to be lost after relocation.
-
-Instead, move the snp_vmpl variable into the .data section so that it is
-initialized and the value made safe during relocation. As a pre-caution
-against future changes, move other SEV-related decompressor variables into the
-.data section, too.
-
-Fixes: 68a501d7fd82 ("x86/boot: Drop redundant RMPADJUST in SEV SVSM presence check")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Reviewed-by: Changyuan Lyu <changyuanl@google.com>
-Tested-by: Kevin Hui <kevinhui@meta.com>
-Tested-by: Changyuan Lyu <changyuanl@google.com>
+Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/5648b7de5b0a5d0dfef3785f9582b718678c6448.1770217260.git.thomas.lendacky@amd.com
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Link: https://patch.msgid.link/20260303113050.58127-2-thorsten.blum@linux.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/sev.c     | 8 ++++----
- arch/x86/boot/startup/sev-shared.c | 2 +-
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ .../platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c   | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
-index 2b639703b8dd4..e468476e9e4a0 100644
---- a/arch/x86/boot/compressed/sev.c
-+++ b/arch/x86/boot/compressed/sev.c
-@@ -28,17 +28,17 @@
- #include "sev.h"
+diff --git a/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c b/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c
+index 86ec962aace9b..e586f7957946b 100644
+--- a/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c
++++ b/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c
+@@ -93,7 +93,6 @@ int set_new_password(const char *password_type, const char *new)
+ 	if (ret < 0)
+ 		goto out;
  
- static struct ghcb boot_ghcb_page __aligned(PAGE_SIZE);
--struct ghcb *boot_ghcb;
-+struct ghcb *boot_ghcb __section(".data");
- 
- #undef __init
- #define __init
- 
- #define __BOOT_COMPRESSED
- 
--u8 snp_vmpl;
--u16 ghcb_version;
-+u8 snp_vmpl __section(".data");
-+u16 ghcb_version __section(".data");
- 
--u64 boot_svsm_caa_pa;
-+u64 boot_svsm_caa_pa __section(".data");
- 
- /* Include code for early handlers */
- #include "../../boot/startup/sev-shared.c"
-diff --git a/arch/x86/boot/startup/sev-shared.c b/arch/x86/boot/startup/sev-shared.c
-index a0fa8bb2b9458..d9ac3a929d335 100644
---- a/arch/x86/boot/startup/sev-shared.c
-+++ b/arch/x86/boot/startup/sev-shared.c
-@@ -31,7 +31,7 @@ static u32 cpuid_std_range_max __ro_after_init;
- static u32 cpuid_hyp_range_max __ro_after_init;
- static u32 cpuid_ext_range_max __ro_after_init;
- 
--bool sev_snp_needs_sfw;
-+bool sev_snp_needs_sfw __section(".data");
- 
- void __noreturn
- sev_es_terminate(unsigned int set, unsigned int reason)
+-	print_hex_dump_bytes("set new password data: ", DUMP_PREFIX_NONE, buffer, buffer_size);
+ 	ret = call_password_interface(wmi_priv.password_attr_wdev, buffer, buffer_size);
+ 	/* on success copy the new password to current password */
+ 	if (!ret)
 -- 
 2.51.0
 
