@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337693859DC;
-	Tue, 10 Mar 2026 11:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB0A346E7A;
+	Tue, 10 Mar 2026 11:06:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140799; cv=none; b=ps3NR1x6YOHkQTci1hp3zCmSu2Z0ekQovWQtiGYaeMiEUNp7MTMVxNi5ZiUhQ24qz/tGrhIff8rascM5TSTvxMcab0ZGlDfx/vlTuODCdW/CG9NXOCjVr1+p7QW5vZlhGHXI4vDKvm/PzyQrpImbYiNcPBGFCIybF4ThS9gpzOU=
+	t=1773140800; cv=none; b=GkN5+8D/c3a+p4wds6Kijty+fcjv8Y2vv+pkg8SllHya9d5yxEakMeu0s1/Zf9K2nDKBMaurcBzgxGYQQVJSBSG+1pzYHEJFgEYh40lWy0Y08JqEvf3DhQsrGGqp4P551fR6uD4OvqoIip0zEjJQSOWBJRTXmcJfn2BHtohZpSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140799; c=relaxed/simple;
-	bh=a9QWAAALZY7x3Udjj6t3TmtW++LrTK12M+j5Agm7YH0=;
+	s=arc-20240116; t=1773140800; c=relaxed/simple;
+	bh=/cCS9y9HRhdSKdJiAmw2BPTfl0mSf2Fmwc0xanRtO2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IPfn40KjiiV9cwuq/I9lZp8nJHqzVanYXze8v29RE4/kdw1AIADzstkDppioeJS7ZLD7KDcSvyDTnm2kbByqCfo+tYbmTuOhiOjgKwayrSEh/JBBjweBeqQuMpqm75uCw3aqBOq9DtxBUukf46ZpBat79KTN7omR17LsCDNo488=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lGRnDVbh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gwLbj9bgo5EXLFrvZcGnfM9dtn+hkEnykwWZjyFH7TIqT1tcYrBQhSEUnkGTQr71IhffRbJ7z+ocSoJVDgAENa6Nog5lIY514Wx6OAiI6yoi9DKRsCMHsXs6mGzLFGKSD/pjzv+mtXby2cRLli19Ejq0GTeguxJkXqBtDi3bTcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=clCSv9GK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lGRnDVbh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8021BC19423;
-	Tue, 10 Mar 2026 11:06:38 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="clCSv9GK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58710C2BC86;
+	Tue, 10 Mar 2026 11:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773140799;
-	bh=a9QWAAALZY7x3Udjj6t3TmtW++LrTK12M+j5Agm7YH0=;
+	bh=/cCS9y9HRhdSKdJiAmw2BPTfl0mSf2Fmwc0xanRtO2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGRnDVbhVYNXxQHRGOS3HV4S6BhnXYbtMdVJub7w91MIh8qyFZpn7VAqKoef0N07W
-	 TzVtg98Y4WEmT+Vukc0tM0zXKCoiNFSGntrtRzNtph1JI05Jy4pNyQnPPwvevf/jVd
-	 O74bvb4B8m2rhIOUtDgmgaUSqwsdrJOa6e2e19RKjQ5VskbYu9sWRU9lk2Sau7eLX7
-	 3KnFmAtPO6gWqpqOTDdoiIgYOopibT34dO9n/fnOrk1Ptl0DNjMvqXWv/f8F2acyws
-	 Bi0jpMOi3k0N8/rTybJpKGzkulbnPOOK73qEB1VJcMDQsB6bAMMnVJ8Zq6/fVHIPNA
-	 qYFRx3obzdz6w==
+	b=clCSv9GK9d4U4y1fT2O40BLPQVMSyNXqOWOo2JjcjaAsPkRHUDnRKNdjVMCAgmOij
+	 VQ4CUrY2rloXvYEGwRmoJqSfDsLXAMz01NKcs4VbhrSHUu2TF1caNfjF8cUhIjVZPv
+	 yIMOJ+SHCwp9wzTPVLoB0EeSit+h/7/F9D5crXBS0dueo/MAR8OlZAKEDyfN4DRP9o
+	 T2PZxYFADjIW4KlwiULc9kE8BvhQ0aTCaElRDPBLSHOws7l3FVS+Ag93/4TeeChEL6
+	 lpJNE5Ewh3hsoueU/RSQwcCmoyIa2QaUHv+wqYWnkB9pjtRua/xfFVIH1I8LKB8HqM
+	 xHlk77FTRdaoQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Lizhi Hou <lizhi.hou@amd.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 036/311] accel/amdxdna: Fix dead lock for suspend and resume
-Date: Tue, 10 Mar 2026 07:01:23 -0400
-Message-ID: <0a8539724b3887ee9c8195b49336ad49287862e3.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 037/311] accel/amdxdna: Fix suspend failure after enabling turbo mode
+Date: Tue, 10 Mar 2026 07:01:24 -0400
+Message-ID: <436d3e5362de44889e975a0873b2845f66610260.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,214 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 1aa82181a3c285c7351523d587f7981ae4c015c8 ]
+[ Upstream commit fdb65acfe655f844ae1e88696b9656d3ef5bb8fb ]
 
-When an application issues a query IOCTL while auto suspend is running,
-a deadlock can occur. The query path holds dev_lock and then calls
-pm_runtime_resume_and_get(), which waits for the ongoing suspend to
-complete. Meanwhile, the suspend callback attempts to acquire dev_lock
-and blocks, resulting in a deadlock.
+Enabling turbo mode disables hardware clock gating. Suspend requires
+hardware clock gating to be re-enabled, otherwise suspend will fail.
+Fix this by calling aie2_runtime_cfg() from aie2_hw_stop() to
+re-enable clock gating during suspend. Also ensure that firmware is
+initialized in aie2_hw_start() before modifying clock-gating
+settings during resume.
 
-Fix this by releasing dev_lock before calling pm_runtime_resume_and_get()
-and reacquiring it after the call completes. Also acquire dev_lock in the
-resume callback to keep the locking consistent.
-
-Fixes: 063db451832b ("accel/amdxdna: Enhance runtime power management")
+Fixes: f4d7b8a6bc8c ("accel/amdxdna: Enhance power management settings")
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260211204644.722758-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260211204716.722788-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c    |  4 ++--
- drivers/accel/amdxdna/aie2_pci.c    |  7 +++----
- drivers/accel/amdxdna/aie2_pm.c     |  2 +-
- drivers/accel/amdxdna/amdxdna_ctx.c | 19 +++++++------------
- drivers/accel/amdxdna/amdxdna_pm.c  |  2 ++
- drivers/accel/amdxdna/amdxdna_pm.h  | 11 +++++++++++
- 6 files changed, 26 insertions(+), 19 deletions(-)
+ drivers/accel/amdxdna/aie2_pci.c | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index a3bb37543f73d..1dcf6e862656d 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -629,7 +629,7 @@ int aie2_hwctx_init(struct amdxdna_hwctx *hwctx)
- 		goto free_entity;
- 	}
- 
--	ret = amdxdna_pm_resume_get(xdna);
-+	ret = amdxdna_pm_resume_get_locked(xdna);
- 	if (ret)
- 		goto free_col_list;
- 
-@@ -760,7 +760,7 @@ static int aie2_hwctx_cu_config(struct amdxdna_hwctx *hwctx, void *buf, u32 size
- 	if (!hwctx->cus)
- 		return -ENOMEM;
- 
--	ret = amdxdna_pm_resume_get(xdna);
-+	ret = amdxdna_pm_resume_get_locked(xdna);
- 	if (ret)
- 		goto free_cus;
- 
 diff --git a/drivers/accel/amdxdna/aie2_pci.c b/drivers/accel/amdxdna/aie2_pci.c
-index ec1c3ad57d490..20568d0f9a639 100644
+index 20568d0f9a639..3356c9ed079a8 100644
 --- a/drivers/accel/amdxdna/aie2_pci.c
 +++ b/drivers/accel/amdxdna/aie2_pci.c
-@@ -469,7 +469,6 @@ static int aie2_hw_suspend(struct amdxdna_dev *xdna)
- {
- 	struct amdxdna_client *client;
- 
--	guard(mutex)(&xdna->dev_lock);
- 	list_for_each_entry(client, &xdna->client_list, node)
- 		aie2_hwctx_suspend(client);
- 
-@@ -969,7 +968,7 @@ static int aie2_get_info(struct amdxdna_client *client, struct amdxdna_drm_get_i
- 	if (!drm_dev_enter(&xdna->ddev, &idx))
- 		return -ENODEV;
- 
--	ret = amdxdna_pm_resume_get(xdna);
-+	ret = amdxdna_pm_resume_get_locked(xdna);
- 	if (ret)
- 		goto dev_exit;
- 
-@@ -1062,7 +1061,7 @@ static int aie2_get_array(struct amdxdna_client *client,
- 	if (!drm_dev_enter(&xdna->ddev, &idx))
- 		return -ENODEV;
- 
--	ret = amdxdna_pm_resume_get(xdna);
-+	ret = amdxdna_pm_resume_get_locked(xdna);
- 	if (ret)
- 		goto dev_exit;
- 
-@@ -1152,7 +1151,7 @@ static int aie2_set_state(struct amdxdna_client *client,
- 	if (!drm_dev_enter(&xdna->ddev, &idx))
- 		return -ENODEV;
- 
--	ret = amdxdna_pm_resume_get(xdna);
-+	ret = amdxdna_pm_resume_get_locked(xdna);
- 	if (ret)
- 		goto dev_exit;
- 
-diff --git a/drivers/accel/amdxdna/aie2_pm.c b/drivers/accel/amdxdna/aie2_pm.c
-index 579b8be13b180..29bd4403a94d4 100644
---- a/drivers/accel/amdxdna/aie2_pm.c
-+++ b/drivers/accel/amdxdna/aie2_pm.c
-@@ -31,7 +31,7 @@ int aie2_pm_set_dpm(struct amdxdna_dev_hdl *ndev, u32 dpm_level)
- {
- 	int ret;
- 
--	ret = amdxdna_pm_resume_get(ndev->xdna);
-+	ret = amdxdna_pm_resume_get_locked(ndev->xdna);
- 	if (ret)
- 		return ret;
- 
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index d17aef89a0add..db3aa26fb55f0 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -266,9 +266,9 @@ int amdxdna_drm_config_hwctx_ioctl(struct drm_device *dev, void *data, struct dr
- 	struct amdxdna_drm_config_hwctx *args = data;
- 	struct amdxdna_dev *xdna = to_xdna_dev(dev);
- 	struct amdxdna_hwctx *hwctx;
--	int ret, idx;
- 	u32 buf_size;
- 	void *buf;
-+	int ret;
- 	u64 val;
- 
- 	if (XDNA_MBZ_DBG(xdna, &args->pad, sizeof(args->pad)))
-@@ -310,20 +310,17 @@ int amdxdna_drm_config_hwctx_ioctl(struct drm_device *dev, void *data, struct dr
- 		return -EINVAL;
+@@ -341,6 +341,7 @@ static void aie2_hw_stop(struct amdxdna_dev *xdna)
+ 		return;
  	}
  
--	mutex_lock(&xdna->dev_lock);
--	idx = srcu_read_lock(&client->hwctx_srcu);
-+	guard(mutex)(&xdna->dev_lock);
- 	hwctx = xa_load(&client->hwctx_xa, args->handle);
- 	if (!hwctx) {
- 		XDNA_DBG(xdna, "PID %d failed to get hwctx %d", client->pid, args->handle);
- 		ret = -EINVAL;
--		goto unlock_srcu;
-+		goto free_buf;
++	aie2_runtime_cfg(ndev, AIE2_RT_CFG_CLK_GATING, NULL);
+ 	aie2_mgmt_fw_fini(ndev);
+ 	xdna_mailbox_stop_channel(ndev->mgmt_chann);
+ 	xdna_mailbox_destroy_channel(ndev->mgmt_chann);
+@@ -424,15 +425,15 @@ static int aie2_hw_start(struct amdxdna_dev *xdna)
+ 		goto stop_psp;
  	}
  
- 	ret = xdna->dev_info->ops->hwctx_config(hwctx, args->param_type, val, buf, buf_size);
- 
--unlock_srcu:
--	srcu_read_unlock(&client->hwctx_srcu, idx);
--	mutex_unlock(&xdna->dev_lock);
-+free_buf:
- 	kfree(buf);
- 	return ret;
- }
-@@ -334,7 +331,7 @@ int amdxdna_hwctx_sync_debug_bo(struct amdxdna_client *client, u32 debug_bo_hdl)
- 	struct amdxdna_hwctx *hwctx;
- 	struct amdxdna_gem_obj *abo;
- 	struct drm_gem_object *gobj;
--	int ret, idx;
-+	int ret;
- 
- 	if (!xdna->dev_info->ops->hwctx_sync_debug_bo)
- 		return -EOPNOTSUPP;
-@@ -345,17 +342,15 @@ int amdxdna_hwctx_sync_debug_bo(struct amdxdna_client *client, u32 debug_bo_hdl)
- 
- 	abo = to_xdna_obj(gobj);
- 	guard(mutex)(&xdna->dev_lock);
--	idx = srcu_read_lock(&client->hwctx_srcu);
- 	hwctx = xa_load(&client->hwctx_xa, abo->assigned_hwctx);
- 	if (!hwctx) {
- 		ret = -EINVAL;
--		goto unlock_srcu;
-+		goto put_obj;
+-	ret = aie2_pm_init(ndev);
++	ret = aie2_mgmt_fw_init(ndev);
+ 	if (ret) {
+-		XDNA_ERR(xdna, "failed to init pm, ret %d", ret);
++		XDNA_ERR(xdna, "initial mgmt firmware failed, ret %d", ret);
+ 		goto destroy_mgmt_chann;
  	}
  
- 	ret = xdna->dev_info->ops->hwctx_sync_debug_bo(hwctx, debug_bo_hdl);
+-	ret = aie2_mgmt_fw_init(ndev);
++	ret = aie2_pm_init(ndev);
+ 	if (ret) {
+-		XDNA_ERR(xdna, "initial mgmt firmware failed, ret %d", ret);
++		XDNA_ERR(xdna, "failed to init pm, ret %d", ret);
+ 		goto destroy_mgmt_chann;
+ 	}
  
--unlock_srcu:
--	srcu_read_unlock(&client->hwctx_srcu, idx);
-+put_obj:
- 	drm_gem_object_put(gobj);
- 	return ret;
- }
-diff --git a/drivers/accel/amdxdna/amdxdna_pm.c b/drivers/accel/amdxdna/amdxdna_pm.c
-index d024d480521c4..b1fafddd7ad59 100644
---- a/drivers/accel/amdxdna/amdxdna_pm.c
-+++ b/drivers/accel/amdxdna/amdxdna_pm.c
-@@ -16,6 +16,7 @@ int amdxdna_pm_suspend(struct device *dev)
- 	struct amdxdna_dev *xdna = to_xdna_dev(dev_get_drvdata(dev));
- 	int ret = -EOPNOTSUPP;
- 
-+	guard(mutex)(&xdna->dev_lock);
- 	if (xdna->dev_info->ops->suspend)
- 		ret = xdna->dev_info->ops->suspend(xdna);
- 
-@@ -28,6 +29,7 @@ int amdxdna_pm_resume(struct device *dev)
- 	struct amdxdna_dev *xdna = to_xdna_dev(dev_get_drvdata(dev));
- 	int ret = -EOPNOTSUPP;
- 
-+	guard(mutex)(&xdna->dev_lock);
- 	if (xdna->dev_info->ops->resume)
- 		ret = xdna->dev_info->ops->resume(xdna);
- 
-diff --git a/drivers/accel/amdxdna/amdxdna_pm.h b/drivers/accel/amdxdna/amdxdna_pm.h
-index 77b2d6e455700..3d26b973e0e36 100644
---- a/drivers/accel/amdxdna/amdxdna_pm.h
-+++ b/drivers/accel/amdxdna/amdxdna_pm.h
-@@ -15,4 +15,15 @@ void amdxdna_pm_suspend_put(struct amdxdna_dev *xdna);
- void amdxdna_pm_init(struct amdxdna_dev *xdna);
- void amdxdna_pm_fini(struct amdxdna_dev *xdna);
- 
-+static inline int amdxdna_pm_resume_get_locked(struct amdxdna_dev *xdna)
-+{
-+	int ret;
-+
-+	mutex_unlock(&xdna->dev_lock);
-+	ret = amdxdna_pm_resume_get(xdna);
-+	mutex_lock(&xdna->dev_lock);
-+
-+	return ret;
-+}
-+
- #endif /* _AMDXDNA_PM_H_ */
 -- 
 2.51.0
 
