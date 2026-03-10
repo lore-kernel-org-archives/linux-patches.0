@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589ED36EA89;
-	Tue, 10 Mar 2026 11:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E1E36EA89;
+	Tue, 10 Mar 2026 11:14:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141288; cv=none; b=uhIgLWe8riqgYUXaD8y6TTGvn0ysMq3cUlwPk2zruCVESoCXFgJ8xSYXqJKujHL6uo5wEeAXg3QanlVkV8M/QY4Bgp8l079a72BQj5ypUwkxaQo7yA4c/01iATr3RQ5dSe/4754dhBpz7rKwGyoNGGsMY6oJRY9lhGDrhpS000M=
+	t=1773141289; cv=none; b=N6k8qf9oSM2YMJIjjPaMYOG2PKHuW+OW+vh++Vj1OpskdfY01wE9xeEQNzwIerVaRhRacUev4XBU8bYMhDkcgu51yNZT36XWMzH/8ilAbGPOlkq8WGRV/uGhAaDZFIsli60Ip+NM5VkHscUZZqO4qQk5mOFahqNUVdpHmS4L93M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141288; c=relaxed/simple;
-	bh=EuWk9Q9mi2I8pDPH6wpMyAHTdblLXqUOSfkBFLF/0hs=;
+	s=arc-20240116; t=1773141289; c=relaxed/simple;
+	bh=aLEMm0Rq/81Dh6zMm+iMZGW8k/RC/DiIor1jU73C0Hc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F003LJHgSHbKl1UVhF5C8ZKjNr9iLY3VFj8qgHqhSmSRys7+RBYrP/cCJjpMe0F2ZL8CZCEcD/mpSi4Oob76W/BDcTgYmgl39hFN8+UG9hzkSSFSZSRm9E4V0tOuR23Q6iWqNjj+aohk8Ddzeqe2HZCO/e3tVlCYvqRCdHwgXIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qXZfIIaj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u2dUVYpCEEiUX6HUyUcFCjMzK0NlLDkIqtRrHmDU7LlhiEhIkDHOZ8uKxgzVl4iyYuWMzV9ZpvWTnwJGCr/k+JP+ljx4bKUwt9SrAV4G87vVXXzbV7Yhn4ixAapTP9qcAXjKO01mGG8eLDHu8L1NnhyueMyuwI+auESPH4abrMs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cnSxxg1O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qXZfIIaj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FF43C2BC86;
-	Tue, 10 Mar 2026 11:14:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cnSxxg1O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8130FC2BC9E;
+	Tue, 10 Mar 2026 11:14:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141288;
-	bh=EuWk9Q9mi2I8pDPH6wpMyAHTdblLXqUOSfkBFLF/0hs=;
+	s=k20201202; t=1773141289;
+	bh=aLEMm0Rq/81Dh6zMm+iMZGW8k/RC/DiIor1jU73C0Hc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qXZfIIajxtKMn9bUf2YYrX18S45iy8oLjHU9ttCp4yh1SvTRJghOfvKaYONNtOV/L
-	 YaomCG2YMrMt/SAuTEOL8Z8y/YXdHGfByPW1p9dXekC+DFVUZGq2C3lam9E6QmF/pM
-	 aFZQM2/XKitnfttYsUFTPVLc5+K9DzUlSzqmlZP9uWtqi1uon+uHpX+6lO1lC1lRcD
-	 SumWu9U7ZCXypMvTaaf/VPlt7xyQWSBqwa/VMFpQH0EB/haG3DagViJmJzEdlrF9dx
-	 joCeNuef35FfqehTg5ty/cALWskEPTStLcTBCCT2mdLDj3AdDNHeYOKku/yu0NhPc4
-	 9Gr7Gtu4Wfeag==
+	b=cnSxxg1O962EN8CTZ2rH8s6O+t73xDJE/u9rFCL3/rHolEYM49OzT09N120GxU51U
+	 Gf2W8BhKW9mHLIUgKCjBHMZPKj2lRZyE6pYsbYbSGsHhIhz00BbMmPnTsLNBxnS1H3
+	 rWJP5PKV37ty/FsVszIDtsQkfnjRivoTxaK1AW0iL0/j5JPGEKUErI3UbkDGGoQdOa
+	 BxnP7xaxLyRwA70+8vpmyLIJ6F0YXwCpTzT+GwTqOu5jop8KDPbIlvB9CtcvmnlZH0
+	 mcrVMncfolaI6pMy4rIK8khzlD9Vwgh1n/O6A91eOUJRoFKETM/4PeKlrVxDPzRwIe
+	 /k9w/LwPTHhgg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sun Jian <sun.jian.kdev@gmail.com>,
+Cc: Fernando Fernandez Mancera <fmancera@suse.de>,
+	Guruprasad C P <gurucp2005@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 292/311] selftests/harness: order TEST_F and XFAIL_ADD constructors
-Date: Tue, 10 Mar 2026 07:05:39 -0400
-Message-ID: <c3781058423033fc405b757e41c38055121a1e8c.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 293/311] net: bridge: fix nd_tbl NULL dereference when IPv6 is disabled
+Date: Tue, 10 Mar 2026 07:05:40 -0400
+Message-ID: <c16bfbced2f0a538011acd25f2547b6d73eed3ef.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,63 +51,80 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sun Jian <sun.jian.kdev@gmail.com>
+From: Fernando Fernandez Mancera <fmancera@suse.de>
 
-[ Upstream commit 6be2681514261324c8ee8a1c6f76cefdf700220f ]
+[ Upstream commit e5e890630533bdc15b26a34bb8e7ef539bdf1322 ]
 
-TEST_F() allocates and registers its struct __test_metadata via mmap()
-inside its constructor, and only then assigns the
-_##fixture_##test##_object pointer.
+When booting with the 'ipv6.disable=1' parameter, the nd_tbl is never
+initialized because inet6_init() exits before ndisc_init() is called
+which initializes it. Then, if neigh_suppress is enabled and an ICMPv6
+Neighbor Discovery packet reaches the bridge, br_do_suppress_nd() will
+dereference ipv6_stub->nd_tbl which is NULL, passing it to
+neigh_lookup(). This causes a kernel NULL pointer dereference.
 
-XFAIL_ADD() runs in a constructor too and reads
-_##fixture_##test##_object to initialize xfail->test. If XFAIL_ADD runs
-first, xfail->test can be NULL and the expected failure will be reported
-as FAIL.
+ BUG: kernel NULL pointer dereference, address: 0000000000000268
+ Oops: 0000 [#1] PREEMPT SMP NOPTI
+ [...]
+ RIP: 0010:neigh_lookup+0x16/0xe0
+ [...]
+ Call Trace:
+  <IRQ>
+  ? neigh_lookup+0x16/0xe0
+  br_do_suppress_nd+0x160/0x290 [bridge]
+  br_handle_frame_finish+0x500/0x620 [bridge]
+  br_handle_frame+0x353/0x440 [bridge]
+  __netif_receive_skb_core.constprop.0+0x298/0x1110
+  __netif_receive_skb_one_core+0x3d/0xa0
+  process_backlog+0xa0/0x140
+  __napi_poll+0x2c/0x170
+  net_rx_action+0x2c4/0x3a0
+  handle_softirqs+0xd0/0x270
+  do_softirq+0x3f/0x60
 
-Use constructor priorities to ensure TEST_F registration runs before
-XFAIL_ADD, without adding extra state or runtime lookups.
+Fix this by replacing IS_ENABLED(IPV6) call with ipv6_mod_enabled() in
+the callers. This is in essence disabling NS/NA suppression when IPv6 is
+disabled.
 
-Fixes: 2709473c9386 ("selftests: kselftest_harness: support using xfail")
-Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
-Link: https://patch.msgid.link/20260225111451.347923-1-sun.jian.kdev@gmail.com
+Fixes: ed842faeb2bd ("bridge: suppress nd pkts on BR_NEIGH_SUPPRESS ports")
+Reported-by: Guruprasad C P <gurucp2005@gmail.com>
+Closes: https://lore.kernel.org/netdev/CAHXs0ORzd62QOG-Fttqa2Cx_A_VFp=utE2H2VTX5nqfgs7LDxQ@mail.gmail.com/
+Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Acked-by: Nikolay Aleksandrov <razor@blackwall.org>
+Link: https://patch.msgid.link/20260304120357.9778-1-fmancera@suse.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_harness.h | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/bridge/br_device.c | 2 +-
+ net/bridge/br_input.c  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
-index 16a119a4656c7..4afaef01c22e9 100644
---- a/tools/testing/selftests/kselftest_harness.h
-+++ b/tools/testing/selftests/kselftest_harness.h
-@@ -76,6 +76,9 @@ static inline void __kselftest_memset_safe(void *s, int c, size_t n)
- 		memset(s, c, n);
- }
- 
-+#define KSELFTEST_PRIO_TEST_F  20000
-+#define KSELFTEST_PRIO_XFAIL   20001
-+
- #define TEST_TIMEOUT_DEFAULT 30
- 
- /* Utilities exposed to the test definitions */
-@@ -465,7 +468,7 @@ static inline void __kselftest_memset_safe(void *s, int c, size_t n)
- 			fixture_name##_teardown(_metadata, self, variant); \
- 	} \
- 	static struct __test_metadata *_##fixture_name##_##test_name##_object; \
--	static void __attribute__((constructor)) \
-+	static void __attribute__((constructor(KSELFTEST_PRIO_TEST_F))) \
- 			_register_##fixture_name##_##test_name(void) \
- 	{ \
- 		struct __test_metadata *object = mmap(NULL, sizeof(*object), \
-@@ -880,7 +883,7 @@ struct __test_xfail {
- 		.fixture = &_##fixture_name##_fixture_object, \
- 		.variant = &_##fixture_name##_##variant_name##_object, \
- 	}; \
--	static void __attribute__((constructor)) \
-+	static void __attribute__((constructor(KSELFTEST_PRIO_XFAIL))) \
- 		_register_##fixture_name##_##variant_name##_##test_name##_xfail(void) \
- 	{ \
- 		_##fixture_name##_##variant_name##_##test_name##_xfail.test = \
+diff --git a/net/bridge/br_device.c b/net/bridge/br_device.c
+index a818fdc22da9a..525d4eccd194a 100644
+--- a/net/bridge/br_device.c
++++ b/net/bridge/br_device.c
+@@ -74,7 +74,7 @@ netdev_tx_t br_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	     eth_hdr(skb)->h_proto == htons(ETH_P_RARP)) &&
+ 	    br_opt_get(br, BROPT_NEIGH_SUPPRESS_ENABLED)) {
+ 		br_do_proxy_suppress_arp(skb, br, vid, NULL);
+-	} else if (IS_ENABLED(CONFIG_IPV6) &&
++	} else if (ipv6_mod_enabled() &&
+ 		   skb->protocol == htons(ETH_P_IPV6) &&
+ 		   br_opt_get(br, BROPT_NEIGH_SUPPRESS_ENABLED) &&
+ 		   pskb_may_pull(skb, sizeof(struct ipv6hdr) +
+diff --git a/net/bridge/br_input.c b/net/bridge/br_input.c
+index 1405f1061a549..2cbae0f9ae1f0 100644
+--- a/net/bridge/br_input.c
++++ b/net/bridge/br_input.c
+@@ -170,7 +170,7 @@ int br_handle_frame_finish(struct net *net, struct sock *sk, struct sk_buff *skb
+ 	    (skb->protocol == htons(ETH_P_ARP) ||
+ 	     skb->protocol == htons(ETH_P_RARP))) {
+ 		br_do_proxy_suppress_arp(skb, br, vid, p);
+-	} else if (IS_ENABLED(CONFIG_IPV6) &&
++	} else if (ipv6_mod_enabled() &&
+ 		   skb->protocol == htons(ETH_P_IPV6) &&
+ 		   br_opt_get(br, BROPT_NEIGH_SUPPRESS_ENABLED) &&
+ 		   pskb_may_pull(skb, sizeof(struct ipv6hdr) +
 -- 
 2.51.0
 
