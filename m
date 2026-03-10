@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10724779A9;
-	Tue, 10 Mar 2026 09:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633CE4779A3;
+	Tue, 10 Mar 2026 09:02:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133361; cv=none; b=bYzoHLI6fDdDNrl4LmwyMqyUfjyEn59ujpd925ZQPSQxteEC5BIvf1ftMAMe1T0+ebQ0Ww4fBrHeTYWiaG54V4WUD1ub/xXOSUX56V6ERi+Ye2rw1u0wgw0FIOQ0hm+VDzHtBmhslerjglZ2w2LAm1NqY+v/ftFvgAqe6LeINSM=
+	t=1773133363; cv=none; b=U4Ly5Xqn34sAg6SVs3iOoC6435NLly3vMDnCX2ze9Gua1WoG5sNge5VD9mLu/2g9RjJFftnGzNWd+ghVAfTrYrMLA1UQ6qoWDJWczsSbrsT0FBx+nL7NOhBWbM+Q8rCofmXZO8uD/vYrM862nFTO2LLX3JGZw/PeMneHqoSkJtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133361; c=relaxed/simple;
-	bh=IzRLsqOSMJ8oiH+0nYYt6+k0f1VePCr+DzvMUpqK7m4=;
+	s=arc-20240116; t=1773133363; c=relaxed/simple;
+	bh=gaTNqiFYKF2nQTOrGVWHvVkyMdmKXIWK06YEnqVPe+o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j5QIet/o81MroLgjUgBUnULgixhIYwE7P8oZHyPA7cFHzG4tjHw1d6ezAw7Msymb3qaSk/JeeSw7u+N6cv4mAXBXvwkNadmxoB3yv2Zo3DfI6qNJfhMtCAwKEut/kMM3Xa5bK3RU0X0V8MyTxYUknEeAVGzUkIYn2mbE1IP41tg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=lnzksy/A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FAPAvlqeYWzOSKVBTMiPMI1gZr5NIYO3J0M5xXI8Q3B3kW0t5Q8H0WqnnMPiBcdUqLdoRsmXRjiQWQeqtdAa/W7vGbYpr6AMTnKf5k3hh2/bQluJfZXEnLPSLDzUvUgyZtr5chL2qTPFMJJ3I7Mw54s3RHVjkdDCtnxW5ibKBQc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RCoelCow; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="lnzksy/A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1CC0C2BC9E;
-	Tue, 10 Mar 2026 09:02:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RCoelCow"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26B12C19423;
+	Tue, 10 Mar 2026 09:02:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133361;
-	bh=IzRLsqOSMJ8oiH+0nYYt6+k0f1VePCr+DzvMUpqK7m4=;
+	s=k20201202; t=1773133363;
+	bh=gaTNqiFYKF2nQTOrGVWHvVkyMdmKXIWK06YEnqVPe+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lnzksy/AQXPa6O2fZVT5hSVuKzA9iWe9GPk+MQhRT7slHLThpc5p+g/qhXC18RVCu
-	 b+qOT8d+ES34n2e9ET3Yp3plCOltLe0Os/+oOLfs0SLUTvv3bhryZJamLI7c066spd
-	 vdSZ7kQDa3RkfdG1q8galaQ9IPqIt+gmxZY5fHv1KoXLTx9YrpNpriuQygse2GGcVN
-	 yru6RBWMNq84A8b6IplH7EqsYqnA/2OELqqoSLLkOsKpai87xoYlVfJQEYPSF+1EgM
-	 HIR6NvyUxsGnCewvrgk0+M5U4eM+QhAnsQ12oIWNPTz3uIyEI0rFmogMjmmr7oDdBU
-	 RiHijo2wECoJw==
+	b=RCoelCowOescjTZb+ha9AXWx+dsip+hx7+uNb1+zj2N0iXCT+gIjJ7Fe11yuxH95I
+	 G6XWg4dkVG1R3xwR+l8Rc09XUpBpiTTvxlUZeVbwgc/cJm9ky+ulUA+qafa/OQIz8a
+	 sJK4CA7uPY7rBNd0EM/w3y/1NwQSFP7MHHhjbhNk1O+zAigqvhOOeV9tlBelSX89Ph
+	 jIIfVsUmHxCpHDg30P6lCbw0Vo826WLc1b1ZwS0eHjip4OOqn9/078xy2oGniiHUhe
+	 jFBGq7YOcqATU7dBL8GYo961kN55KZMibZD/3VOcHIjrXinHyGWQBJ5J2d2Hi3Q4/j
+	 Y8dF85xSep1wA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Daniel Hodges <hodgesd@meta.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
+Cc: Ihor Solodrai <ihor.solodrai@linux.dev>,
+	Daniel Gomez <da.gomez@samsung.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
 	Sasha Levin <sashal@kernel.org>,
-	sagi@grimberg.me,
-	linux-nvme@lists.infradead.org,
+	mcgrof@kernel.org,
+	da.gomez@kernel.org,
+	linux-modules@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] nvme-fabrics: use kfree_sensitive() for DHCHAP secrets
-Date: Tue, 10 Mar 2026 05:01:38 -0400
-Message-ID: <20260310090145.2709021-38-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] module: Fix kernel panic when a symbol st_shndx is out of bounds
+Date: Tue, 10 Mar 2026 05:01:39 -0400
+Message-ID: <20260310090145.2709021-39-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -53,116 +55,176 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Hodges <hodgesd@meta.com>
+From: Ihor Solodrai <ihor.solodrai@linux.dev>
 
-[ Upstream commit 0a1fc2f301529ac75aec0ce80d5ab9d9e4dc4b16 ]
+[ Upstream commit f9d69d5e7bde2295eb7488a56f094ac8f5383b92 ]
 
-The DHCHAP secrets (dhchap_secret and dhchap_ctrl_secret) contain
-authentication key material for NVMe-oF. Use kfree_sensitive() instead
-of kfree() in nvmf_free_options() to ensure secrets are zeroed before
-the memory is freed, preventing recovery from freed pages.
+The module loader doesn't check for bounds of the ELF section index in
+simplify_symbols():
 
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Daniel Hodges <hodgesd@meta.com>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+       for (i = 1; i < symsec->sh_size / sizeof(Elf_Sym); i++) {
+		const char *name = info->strtab + sym[i].st_name;
+
+		switch (sym[i].st_shndx) {
+		case SHN_COMMON:
+
+		[...]
+
+		default:
+			/* Divert to percpu allocation if a percpu var. */
+			if (sym[i].st_shndx == info->index.pcpu)
+				secbase = (unsigned long)mod_percpu(mod);
+			else
+  /** HERE --> **/		secbase = info->sechdrs[sym[i].st_shndx].sh_addr;
+			sym[i].st_value += secbase;
+			break;
+		}
+	}
+
+A symbol with an out-of-bounds st_shndx value, for example 0xffff
+(known as SHN_XINDEX or SHN_HIRESERVE), may cause a kernel panic:
+
+  BUG: unable to handle page fault for address: ...
+  RIP: 0010:simplify_symbols+0x2b2/0x480
+  ...
+  Kernel panic - not syncing: Fatal exception
+
+This can happen when module ELF is legitimately using SHN_XINDEX or
+when it is corrupted.
+
+Add a bounds check in simplify_symbols() to validate that st_shndx is
+within the valid range before using it.
+
+This issue was discovered due to a bug in llvm-objcopy, see relevant
+discussion for details [1].
+
+[1] https://lore.kernel.org/linux-modules/20251224005752.201911-1-ihor.solodrai@linux.dev/
+
+Signed-off-by: Ihor Solodrai <ihor.solodrai@linux.dev>
+Reviewed-by: Daniel Gomez <da.gomez@samsung.com>
+Reviewed-by: Petr Pavlu <petr.pavlu@suse.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Now I have all the information needed for a thorough analysis.
+
 ## Analysis
 
-### What the commit does
-This is a two-line change replacing `kfree()` with `kfree_sensitive()`
-for two fields (`dhchap_secret` and `dhchap_ctrl_secret`) in
-`nvmf_free_options()`. `kfree_sensitive()` zeroes memory before freeing
-it, preventing authentication key material from being recoverable from
-freed kernel pages.
+### 1. Commit Message Analysis
+The commit message is clear and detailed: it fixes a **kernel panic**
+(page fault) in `simplify_symbols()` when a symbol's `st_shndx` (ELF
+section header index) is out of bounds. The commit includes a concrete
+crash trace (`BUG: unable to handle page fault`, `Kernel panic - not
+syncing: Fatal exception`). The bug was discovered via a real-world
+trigger (llvm-objcopy bug) with a linked mailing list discussion.
 
-### Bug classification: Security hardening
-This is a security hygiene fix for sensitive cryptographic material. The
-DHCHAP (Diffie-Hellman Hash-based Authentication Challenge Handshake
-Protocol) secrets are authentication keys for NVMe-over-Fabrics
-connections. Without zeroing, these keys could potentially be recovered
-from freed memory by an attacker with kernel memory read access (e.g.,
-via `/dev/mem`, `/proc/kcore`, crash dump, cold boot attacks, or another
-kernel vulnerability).
+### 2. Code Change Analysis
+The fix adds a **6-line bounds check** before the out-of-bounds array
+access at line 1582:
+```c
+if (sym[i].st_shndx >= info->hdr->e_shnum) {
+    pr_err(...);
+    ret = -ENOEXEC;
+    break;
+}
+```
 
-### Consistency with existing codebase
-The NVMe subsystem already uses `kfree_sensitive()` extensively for
-similar authentication material:
-- `drivers/nvme/host/auth.c`: Uses it for `host_key`, `ctrl_key`,
-  `sess_key`, `tls_psk`, etc.
-- `drivers/nvme/common/auth.c`: Uses it for `key`, `hashed_key`, `psk`,
-  etc.
-- `drivers/nvme/target/auth.c`: Uses it for `dh_key`, `tls_psk`, etc.
+Without this check, `info->sechdrs[sym[i].st_shndx]` can access memory
+far beyond the allocated `sechdrs` array, causing a page fault and
+kernel panic. Values like `SHN_XINDEX` (0xffff) or any corrupted value
+>= `e_shnum` trigger this.
 
-The two fields changed here (`dhchap_secret` and `dhchap_ctrl_secret`)
-were an oversight - they contain the same type of sensitive
-authentication material but were using plain `kfree()`.
+### 3. Bug Severity
+- **Impact**: Kernel panic (crash) - the most severe possible outcome
+- **Trigger**: Loading a module with an out-of-bounds `st_shndx` value,
+  which can happen legitimately (SHN_XINDEX) or via corrupted/malicious
+  ELF
+- **Security angle**: This is an out-of-bounds read that could
+  potentially be exploited for information disclosure or denial of
+  service by anyone who can load kernel modules
 
-### Stable criteria assessment
-- **Obviously correct**: Yes - `kfree_sensitive()` is a drop-in
-  replacement for `kfree()` with added zeroing. No behavioral change.
-- **Fixes a real bug**: Yes - leaking cryptographic key material in
-  freed memory is a security issue.
-- **Small and contained**: Yes - exactly 2 lines changed.
-- **No new features**: Correct - no new APIs or behavior.
-- **Risk**: Extremely low - `kfree_sensitive()` just adds `memset(0)`
-  before `kfree()`.
+### 4. Code History
+The vulnerable code has existed since Linux 2.6.12 (2005), with the
+specific `sechdrs` access pattern dating to Rusty Russell's 2010
+refactoring. The bug is present in **every stable kernel tree**.
 
-### Remaining inconsistencies
-Note that there are still other places using plain `kfree()` for dhchap
-secrets (fabrics.c lines 1034/1048 for option parsing, sysfs.c,
-target/configfs.c, target/auth.c) - but this commit fixes the main
-cleanup path and is self-contained.
+### 5. Fix Quality
+- **Small and surgical**: 6 lines added, no lines removed, single file
+  changed
+- **Obviously correct**: Simple bounds check comparing `st_shndx`
+  against `e_shnum`
+- **Pattern consistent**: The `apply_relocations()` function right below
+  (line 1597) already does equivalent validation with `infosec >=
+  info->hdr->e_shnum`
+- **Reviewed**: Has `Reviewed-by` from Daniel Gomez (Samsung) and Petr
+  Pavlu (SUSE)
+- **No side effects**: Returns `-ENOEXEC` on invalid module, which is
+  the correct error
+
+### 6. Backport Risk
+- **Minimal**: The fix is a pure addition of a bounds check before
+  existing code
+- **No dependencies**: Standalone fix, no prerequisites
+- **Clean backport**: The surrounding code is stable and unchanged for
+  many years; this should apply cleanly to all stable trees
+
+### 7. Stable Kernel Rules Compliance
+- Obviously correct and tested: Yes (reviewed by two engineers, clear
+  logic)
+- Fixes a real bug: Yes (kernel panic)
+- Important issue: Yes (crash/panic, potential security issue)
+- Small and contained: Yes (6 lines, 1 file)
+- No new features: Correct (pure safety check)
 
 ### Verification
-- Read `fabrics.c:1282-1296` to confirm the current code already has
-  `kfree_sensitive()` (the commit has already been applied to this
-  tree).
-- Verified `dhchap_secret` and `dhchap_ctrl_secret` are defined as `char
-  *` in `fabrics.h:130-131` and documented as "DH-HMAC-CHAP secret" /
-  "DH-HMAC-CHAP controller secret".
-- Confirmed via grep that `kfree_sensitive()` is used extensively for
-  similar authentication keys throughout `drivers/nvme/host/auth.c` and
-  `drivers/nvme/common/auth.c` (18+ instances).
-- Confirmed via grep that other dhchap_secret free paths still use plain
-  `kfree()` (sysfs.c, fabrics.c option parsing, target side) - this
-  commit is incomplete coverage but still valuable.
-- Reviewed-by: Christoph Hellwig (well-known kernel developer and NVMe
-  maintainer) provides strong confidence.
-- The DHCHAP feature was introduced in commit `f50fff73d620` ("nvme:
-  implement In-Band authentication") which was in v6.0 cycle, so this is
-  relevant to stable trees 6.1+.
 
-### Conclusion
-This is a minimal, zero-risk security fix for sensitive cryptographic
-material. It follows established patterns in the same subsystem, is
-reviewed by a senior maintainer, and meets all stable criteria. The
-security benefit (preventing key material leakage) clearly outweighs the
-negligible risk.
+- **git blame** confirmed the vulnerable line (`secbase =
+  info->sechdrs[sym[i].st_shndx].sh_addr`) has existed since commit
+  `49668688dd5a5f` by Rusty Russell (2010), with the overall pattern
+  from `1da177e4c3f41` (2005)
+- **Read of main.c:1570-1589** confirmed the fix is correctly placed
+  before the array access in the `default` case
+- **Read of main.c:1591-1598** confirmed `apply_relocations()` already
+  validates section indices with the same pattern (`infosec >=
+  info->hdr->e_shnum`)
+- **git log** confirmed this fix commit is `6186212750892` merged
+  2025-12-30
+- **Explored** `is_core_symbol()` in kallsyms.c which has an equivalent
+  `st_shndx >= shnum` check, confirming the pattern is well-established
+- **git log** on stable tree versions confirmed the vulnerable code path
+  exists in all current stable trees
+
+This is a textbook stable backport candidate: a small, surgical fix for
+a kernel panic caused by a missing bounds check on an array access, in
+code that has been vulnerable for 20 years, with clear real-world
+triggers (llvm-objcopy bug) and proper review.
 
 **YES**
 
- drivers/nvme/host/fabrics.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/module/main.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/nvme/host/fabrics.c b/drivers/nvme/host/fabrics.c
-index 55a8afd2efd50..d37cb140d8323 100644
---- a/drivers/nvme/host/fabrics.c
-+++ b/drivers/nvme/host/fabrics.c
-@@ -1290,8 +1290,8 @@ void nvmf_free_options(struct nvmf_ctrl_options *opts)
- 	kfree(opts->subsysnqn);
- 	kfree(opts->host_traddr);
- 	kfree(opts->host_iface);
--	kfree(opts->dhchap_secret);
--	kfree(opts->dhchap_ctrl_secret);
-+	kfree_sensitive(opts->dhchap_secret);
-+	kfree_sensitive(opts->dhchap_ctrl_secret);
- 	kfree(opts);
- }
- EXPORT_SYMBOL_GPL(nvmf_free_options);
+diff --git a/kernel/module/main.c b/kernel/module/main.c
+index 710ee30b3beab..5bf456fad63e1 100644
+--- a/kernel/module/main.c
++++ b/kernel/module/main.c
+@@ -1568,6 +1568,13 @@ static int simplify_symbols(struct module *mod, const struct load_info *info)
+ 			break;
+ 
+ 		default:
++			if (sym[i].st_shndx >= info->hdr->e_shnum) {
++				pr_err("%s: Symbol %s has an invalid section index %u (max %u)\n",
++				       mod->name, name, sym[i].st_shndx, info->hdr->e_shnum - 1);
++				ret = -ENOEXEC;
++				break;
++			}
++
+ 			/* Divert to percpu allocation if a percpu var. */
+ 			if (sym[i].st_shndx == info->index.pcpu)
+ 				secbase = (unsigned long)mod_percpu(mod);
 -- 
 2.51.0
 
