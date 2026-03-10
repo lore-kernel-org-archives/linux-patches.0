@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C80A53876A1;
-	Tue, 10 Mar 2026 11:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74E63876AA;
+	Tue, 10 Mar 2026 11:27:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142046; cv=none; b=k27A8edYTd0oZedYfbimweMqVzF5tF9Ku5mK8UlHyfn8YEyIWgYc+tOHhSmY3H19I/W7xryQh79QGjMPlfWzJVX0zusxXwiMET4bbHLrUnumvyDJcRZcm96+CgG5laoiAdQkLnoQLn9MokOHCCtYtCHIzagQCY/6oC7EsnK5fCg=
+	t=1773142047; cv=none; b=MPKNCOVuw4KJVzDdXImqwIuKVwuNNpTNNFR88ZBV4jV+SX66ojrg4cG2xjjZ7Xd6g0tttmwkuOndEIzBxMGtkiuuheMcqZsqlGZy0e5wlD0UbOCKv53kWTsKnLsRFMXjK0d2wCWsCrs0VT5frMj3m1Oe1o3Mx9nM0Ry9IbPAYb8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142046; c=relaxed/simple;
-	bh=FLkGKO8aDb3EqKkjIFd/y+DLSExaDa2u1G9DguzCF4g=;
+	s=arc-20240116; t=1773142047; c=relaxed/simple;
+	bh=fDgnW6r6B7bRurQ2MCY/KXY4U/hFwSHaPBQoXej6cN0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HO1kAoR7KtKgAIZnpotODn79QMxuQWS0Yn+0cO4yJB0C1NqTC3KnHMaGXfDMOZiVyiQ/qpa4J+Ap9UMv4e8jcIZjNrwUXyioR6vkHLpjZEyMzo2Vz+wOrKqlRHzK2RxZGAzW9dfL2oIhex9IgMRosLzc0E/uJbo7OmOxt2s8eUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R3NGsdBp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s0TDgnmsPzd9yhjP5M4yD6XJh527WxuXtxologcrZ/EtrWTkzzZLstpxzdnRiOsg/O2SGJFyk//V02LrWXeubQZnvuRsytARanTVlidBIG4sTcDv6bmW8mbqiu1HKYMR3Q8RVbcmNpO36sENGjva/+4/CLH3hIBih2kqTxRm4xI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F7JarLdT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R3NGsdBp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C85D9C19423;
-	Tue, 10 Mar 2026 11:27:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F7JarLdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2159C2BC86;
+	Tue, 10 Mar 2026 11:27:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142046;
-	bh=FLkGKO8aDb3EqKkjIFd/y+DLSExaDa2u1G9DguzCF4g=;
+	s=k20201202; t=1773142047;
+	bh=fDgnW6r6B7bRurQ2MCY/KXY4U/hFwSHaPBQoXej6cN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R3NGsdBpFuknC9oTVCmqIPFBhq7DuOKWLTs7Ihwr+dr83oR0yU/EyRuwwov1O1953
-	 y9zx28ZpeDkbZxTpdxqcasY4zjGpj4EbprTkrojS43hg0NpiukaQ8q0UItsVWQ+HEM
-	 DXNIkCnCZTMIZyXX8qzN40GlaNGLp55AZBdIH+DA3TisrIyEaSpk5pNnjE32deKxrd
-	 rDVXcKMgmMpjqRe+e3iyVpbOCedzD+brSMDJgrBOETdVO8A2QG8fiOqvl4tddYAj6j
-	 UiugJz3zXi9Px1cQtd2kARs1lk9MB+azBay2YiRT7NPznngUyLbJkkT++66sDB7Zl3
-	 C9UDtuc9BpGHg==
+	b=F7JarLdT+dXn1jll2rr39bDnsY91Yv8T/t+Did1FHtvNUuXl2l6yWUlN46G8KJF0C
+	 nYFK5OfZWrtjTyAwNqDRTt3pLwYTUpxmZIb/8M6KN3ZzIkybSyFpMC7Yd8hgYysDvs
+	 pyv7BRUWeUoBZCrhtMAIv3R//CBz0Q0a9Jj4qrINgC4bPfKORvE0fHi8N4WpQiQh1D
+	 Uh+AoC1KfzrUqzFrJkN0Z7/Qf2a/jF5obbEgxrbtr9ZTRTBhgejm84fRL3pg8QwP+V
+	 Gz9n34cz/LRiX/H1A4hkb+rFTxbVnhc2bgp42yFj4TUXeLTJOlbYgs1UafmETshMHx
+	 QyweqgXaN6DYg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Davide Caratti <dcaratti@redhat.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: Kuniyuki Iwashima <kuniyu@google.com>,
+	syzbot+dd3b43aa0204089217ee@syzkaller.appspotmail.com,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 174/314] net/sched: ets: fix divide by zero in the offload path
-Date: Tue, 10 Mar 2026 07:17:13 -0400
-Message-ID: <259159676df21914ef8120be33e708f66e692647.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 175/314] nfsd: Fix cred ref leak in nfsd_nl_threads_set_doit().
+Date: Tue, 10 Mar 2026 07:17:14 -0400
+Message-ID: <d150c26dcb15223b10a1412a5862afc38e2c48c5.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,118 +50,76 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit e35626f610f3d2b7953ccddf6a77453da22b3a9e upstream.
+commit 1cb968a2013ffa8112d52ebe605009ea1c6a582c upstream.
 
-Offloading ETS requires computing each class' WRR weight: this is done by
-averaging over the sums of quanta as 'q_sum' and 'q_psum'. Using unsigned
-int, the same integer size as the individual DRR quanta, can overflow and
-even cause division by zero, like it happened in the following splat:
+syzbot reported memory leak of struct cred. [0]
 
- Oops: divide error: 0000 [#1] SMP PTI
- CPU: 13 UID: 0 PID: 487 Comm: tc Tainted: G            E       6.19.0-virtme #45 PREEMPT(full)
- Tainted: [E]=UNSIGNED_MODULE
- Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
- RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
- Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
- RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
- RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
- RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
- R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
- R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
- FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  ets_qdisc_change+0x870/0xf40 [sch_ets]
-  qdisc_create+0x12b/0x540
-  tc_modify_qdisc+0x6d7/0xbd0
-  rtnetlink_rcv_msg+0x168/0x6b0
-  netlink_rcv_skb+0x5c/0x110
-  netlink_unicast+0x1d6/0x2b0
-  netlink_sendmsg+0x22e/0x470
-  ____sys_sendmsg+0x38a/0x3c0
-  ___sys_sendmsg+0x99/0xe0
-  __sys_sendmsg+0x8a/0xf0
-  do_syscall_64+0x111/0xf80
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7f440b81c77e
- Code: 4d 89 d8 e8 d4 bc 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
- RSP: 002b:00007fff951e4c10 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 0000000000481820 RCX: 00007f440b81c77e
- RDX: 0000000000000000 RSI: 00007fff951e4cd0 RDI: 0000000000000003
- RBP: 00007fff951e4c20 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff951f4fa8
- R13: 00000000699ddede R14: 00007f440bb01000 R15: 0000000000486980
-  </TASK>
- Modules linked in: sch_ets(E) netdevsim(E)
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
- Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
- RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
- RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
- RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
- R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
- R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
- FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
- Kernel panic - not syncing: Fatal exception
- Kernel Offset: 0x30000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
- ---[ end Kernel panic - not syncing: Fatal exception ]---
+nfsd_nl_threads_set_doit() passes get_current_cred() to
+nfsd_svc(), but put_cred() is not called after that.
 
-Fix this using 64-bit integers for 'q_sum' and 'q_psum'.
+The cred is finally passed down to _svc_xprt_create(),
+which calls get_cred() with the cred for struct svc_xprt.
 
+The ownership of the refcount by get_current_cred() is not
+transferred to anywhere and is just leaked.
+
+nfsd_svc() is also called from write_threads(), but it does
+not bump file->f_cred there.
+
+nfsd_nl_threads_set_doit() is called from sendmsg() and
+current->cred does not go away.
+
+Let's use current_cred() in nfsd_nl_threads_set_doit().
+
+[0]:
+BUG: memory leak
+unreferenced object 0xffff888108b89480 (size 184):
+  comm "syz-executor", pid 5994, jiffies 4294943386
+  hex dump (first 32 bytes):
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace (crc 369454a7):
+    kmemleak_alloc_recursive include/linux/kmemleak.h:44 [inline]
+    slab_post_alloc_hook mm/slub.c:4958 [inline]
+    slab_alloc_node mm/slub.c:5263 [inline]
+    kmem_cache_alloc_noprof+0x412/0x580 mm/slub.c:5270
+    prepare_creds+0x22/0x600 kernel/cred.c:185
+    copy_creds+0x44/0x290 kernel/cred.c:286
+    copy_process+0x7a7/0x2870 kernel/fork.c:2086
+    kernel_clone+0xac/0x6e0 kernel/fork.c:2651
+    __do_sys_clone+0x7f/0xb0 kernel/fork.c:2792
+    do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+    do_syscall_64+0xa4/0xf80 arch/x86/entry/syscall_64.c:94
+    entry_SYSCALL_64_after_hwframe+0x77/0x7f
+
+Fixes: 924f4fb003ba ("NFSD: convert write_threads to netlink command")
 Cc: stable@vger.kernel.org
-Fixes: d35eb52bd2ac ("net: sch_ets: Make the ETS qdisc offloadable")
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/28504887df314588c7255e9911769c36f751edee.1771964872.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+dd3b43aa0204089217ee@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69744674.a00a0220.33ccc7.0000.GAE@google.com/
+Tested-by: syzbot+dd3b43aa0204089217ee@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_ets.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/nfsctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_ets.c b/net/sched/sch_ets.c
-index 306e046276d46..a4b07b661b775 100644
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -115,12 +115,12 @@ static void ets_offload_change(struct Qdisc *sch)
- 	struct ets_sched *q = qdisc_priv(sch);
- 	struct tc_ets_qopt_offload qopt;
- 	unsigned int w_psum_prev = 0;
--	unsigned int q_psum = 0;
--	unsigned int q_sum = 0;
- 	unsigned int quantum;
- 	unsigned int w_psum;
- 	unsigned int weight;
- 	unsigned int i;
-+	u64 q_psum = 0;
-+	u64 q_sum = 0;
+diff --git a/fs/nfsd/nfsctl.c b/fs/nfsd/nfsctl.c
+index 8cbfb9dc3abb7..5b00b7a863b94 100644
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -1642,7 +1642,7 @@ int nfsd_nl_threads_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 			scope = nla_data(attr);
+ 	}
  
- 	if (!tc_can_offload(dev) || !dev->netdev_ops->ndo_setup_tc)
- 		return;
-@@ -138,8 +138,12 @@ static void ets_offload_change(struct Qdisc *sch)
- 
- 	for (i = 0; i < q->nbands; i++) {
- 		quantum = q->classes[i].quantum;
--		q_psum += quantum;
--		w_psum = quantum ? q_psum * 100 / q_sum : 0;
-+		if (quantum) {
-+			q_psum += quantum;
-+			w_psum = div64_u64(q_psum * 100, q_sum);
-+		} else {
-+			w_psum = 0;
-+		}
- 		weight = w_psum - w_psum_prev;
- 		w_psum_prev = w_psum;
- 
+-	ret = nfsd_svc(nrpools, nthreads, net, get_current_cred(), scope);
++	ret = nfsd_svc(nrpools, nthreads, net, current_cred(), scope);
+ 	if (ret > 0)
+ 		ret = 0;
+ out_unlock:
 -- 
 2.51.0
 
