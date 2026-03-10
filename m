@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7528F43CEC8;
-	Tue, 10 Mar 2026 09:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71EF43DA23;
+	Tue, 10 Mar 2026 09:01:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133317; cv=none; b=lHyEaMyoQoQ5QTl/R7m5Mdd6RFTlJWQ0wwvLP6qf/oyOMVIZpPQvz3o3miXSeT0OuKdivd6cDr37O0SZor+aHrUYJI3watBEd435SSLftq5wdL8Ig8sCskQNyDg/jB4DEm45ahuTmh/84VSAz6wbT/J7PpKWEn1b57Wb91y86Zo=
+	t=1773133318; cv=none; b=T29jsmW0riaU1o/dtX+siFZ+YGEovk/pBwXGsOfE7C9SA0ATuIq7q5wxFTJ41IpUtutH/CEgViAEcpOs/aitOPsP65n2AXydmMHbbObzh+Po9aM7gOq9M7du0Z+lz7UjORXGoF/16emyEgDE8mhEMK27T1pAcMyEcCdbmvcFJA0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133317; c=relaxed/simple;
-	bh=TagrK2ymQW/ToppFCJJ+zxaJARFRAg3xO34jxzDmcUk=;
+	s=arc-20240116; t=1773133318; c=relaxed/simple;
+	bh=COcWvrJGOCmTBGybONxgRxL/UPPPPzAx7FrDI1oNTMo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=j+RWWD5PuQaCZI2SUCX2oVLBudYoDimDdTuOgP6oda0r6jOkJMmS9LqDT5CV98eYZsZtj54aa/OcE2Bol4ulzLifbHq4P8NgK9rMMPRGWePukp4JpUbQx3g/SQnXNKmV9ROKo53YLhVNsIuVoag4aaHSt9OQL7oWxwK33Z91H2Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=da5CtbWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gr53jDVOL3g9w4SZhyb3q1lqAUf2mh0+AdwnW3iW1z40Be6UDKrK5wGcDQaEIrQZiwshwPYSRUyoXA4R8ZjDPTeKsnGtXsemyGg1S+CDBg1+XCB0qnROdvj3qsrR3dwM+5ptFMkMuuV5Rg15W8WiSjLvS1z6ssyDkO26zrKRfkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XWdbdgBB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="da5CtbWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29278C2BC86;
-	Tue, 10 Mar 2026 09:01:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XWdbdgBB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9122BC2BCB5;
+	Tue, 10 Mar 2026 09:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133317;
-	bh=TagrK2ymQW/ToppFCJJ+zxaJARFRAg3xO34jxzDmcUk=;
+	s=k20201202; t=1773133318;
+	bh=COcWvrJGOCmTBGybONxgRxL/UPPPPzAx7FrDI1oNTMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=da5CtbWGFaZtaNonmxiDOFbb3NkC5/Epga+R4GXv5uPwwI+ZGPOIIBcZQfR7VkliN
-	 35KNFbhqgWeFJ1mxkTqrAWiewtTHQ5Ti2UeUVpCCg7Hj77xcDx07yJVbflwk9Vs3OY
-	 QreDMPY/JUpz4jfwLCXBGcsIvdKgzXu7YO7xU9t0l+mAijtQ8ZNcE+fNxvQr0eaJXK
-	 jmTwTvL8QsirCohumNYIouxI3Yueg/QdJe2D3Ltu0HvcgJatgEKvLmIcuXtAoAa4IX
-	 2bWk0+MjbvNTVYLDzCAoCaGNfLBnnRMBZdrIOSrEJYsBI4YM66p1Reno2P2YA2A1Er
-	 8nVlNtcSKJAuw==
+	b=XWdbdgBB0elkh5wHp9dpNL3YKGT0sprQql1jC1WHhnr1jbcAlMTvHXtO1d/3wGV/z
+	 Z0SvFlIhVWtEv5XMWijVcoAU9kkHUnblf2rrDu1daj91OPt0ymIeSFoF/z71UmRjNd
+	 x+MWH8yt/5lbtpYDEeh9YR4Hjz85WNu9lM9m2qV+ZgWxtt6y+gOEgGHIqHbksx6YNj
+	 FU6Ry1XWKcvhmZXA3iUXPEIRADdr8LAym9LwkFYYlY+cdX3T0u8GtSjNTHnPrnX0zR
+	 sl71JRbp8HWGKc5hezVjUl4Z6A9p7JtEDrlx9is2XQZVk55KKHUaSDp31N344MyJ8l
+	 S1q6CbOKx60jw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
+Cc: Florian Fuchs <fuchsfl@gmail.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-kbuild@vger.kernel.org,
+	James.Bottomley@HansenPartnership.com,
+	linux-scsi@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] kbuild: install-extmod-build: Package resolve_btfids if necessary
-Date: Tue, 10 Mar 2026 05:01:07 -0400
-Message-ID: <20260310090145.2709021-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] scsi: devinfo: Add BLIST_SKIP_IO_HINTS for Iomega ZIP
+Date: Tue, 10 Mar 2026 05:01:08 -0400
+Message-ID: <20260310090145.2709021-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -47,132 +47,111 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+From: Florian Fuchs <fuchsfl@gmail.com>
 
-[ Upstream commit 459cb3c054c2352bb321648744b620259a716b60 ]
+[ Upstream commit 80bf3b28d32b431f84f244a8469488eb6d96afbb ]
 
-When CONFIG_DEBUG_INFO_BTF_MODULES is enabled and vmlinux is available,
-Makefile.modfinal and gen-btf.sh will try to use resolve_btfids on the
-module .ko. install-extmod-build currently does not package
-resolve_btfids, so that step fails.
+The Iomega ZIP 100 (Z100P2) can't process IO Advice Hints Grouping mode
+page query. It immediately switches to the status phase 0xb8 after
+receiving the subpage code 0x05 of MODE_SENSE_10 command, which fails
+imm_out() and turns into DID_ERROR of this command, which leads to unusable
+device. This was tested with an Iomega ZIP 100 (Z100P2) connected with a
+StarTech PEX1P2 AX99100 PCIe parallel port card.
 
-Package resolve_btfids if it may be used.
+Prior to this fix, Test Unit Ready fails and the drive can't be used:
+        IMM: returned SCSI status b8
+        sd 7:0:6:0: [sdh] Test Unit Ready failed: Result: hostbyte=0x01 driverbyte=DRIVER_OK
 
-Signed-off-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260226-kbuild-resolve_btfids-v1-1-2bf38b93dfe7@linutronix.de
-[nathan: Small commit message tweaks]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Florian Fuchs <fuchsfl@gmail.com>
+Link: https://patch.msgid.link/20260227181823.892932-1-fuchsfl@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a clear picture. Let me verify the `RESOLVE_BTFIDS` variable
-definition and confirm it would fail when building external modules
-without this tool packaged.
+The IO Advice Hints feature (the source of the bug) was only introduced
+in v6.10, and `BLIST_SKIP_IO_HINTS` was also only in v6.10+. The older
+stable trees (6.6.y, 6.1.y, 5.15.y) don't have this code path, so they
+wouldn't need this fix.
 
-The issue is clear: When `CONFIG_DEBUG_INFO_BTF_MODULES` is enabled,
-`Makefile.modfinal` at line 47 calls `$(RESOLVE_BTFIDS)` (defined as
-`$(objtree)/tools/bpf/resolve_btfids/resolve_btfids` in the main
-Makefile). If someone builds an external module using the installed
-headers/build files (packaged by `install-extmod-build`), and the
-`resolve_btfids` binary wasn't packaged, the build will fail at that
-step.
+For stable trees that DO have this code (6.10.y, 6.11.y, 6.12.y, etc.),
+this is a straightforward one-line quirk addition.
 
-## Analysis
+### Analysis Summary
 
-### What the commit does
-This commit adds packaging of the `resolve_btfids` binary when
-`CONFIG_DEBUG_INFO_BTF_MODULES` is enabled in the `install-extmod-build`
-script. This script creates the minimal build environment needed for
-building external (out-of-tree) kernel modules.
+**What the commit fixes:** The Iomega ZIP 100 drive becomes completely
+unusable because the IO Advice Hints mode page query causes the device
+to error out. The commit message includes specific error output showing
+the device fails "Test Unit Ready" with a SCSI status of 0xb8.
 
-### The bug
-When `CONFIG_DEBUG_INFO_BTF_MODULES` is enabled and `vmlinux` is
-available, `Makefile.modfinal` (line 47) invokes `$(RESOLVE_BTFIDS)` on
-module `.ko` files. The `install-extmod-build` script packages
-everything needed to build external modules, but it was missing
-`resolve_btfids`. This causes external module builds to **fail** with a
-missing binary error.
+**Type of change:** Hardware quirk addition — adding one flag
+(`BLIST_SKIP_IO_HINTS`) to an existing device entry in the SCSI device
+info table. This is a textbook example of a device-specific workaround.
 
-### Is this a real bug fix?
-**Yes** — this is a build fix. Without this change, users who install
-kernel headers packages (deb-pkg, rpm-pkg) with
-`CONFIG_DEBUG_INFO_BTF_MODULES=y` cannot build external modules.
-External module building is a core use case for distributions (DKMS,
-NVIDIA drivers, VirtualBox, ZFS, etc.).
+**Scope and risk:**
+- One-line change: adds `| BLIST_SKIP_IO_HINTS` to an existing entry
+- Zero risk to other devices — only affects IOMEGA ZIP drives
+- The `BLIST_SKIP_IO_HINTS` flag is already well-established and used by
+  USB storage devices
+- The existing IOMEGA ZIP entry already existed; only the flag set is
+  expanded
 
-### Scope and risk
-- **3 lines added** — extremely small and contained
-- Follows the exact same pattern as the existing `CONFIG_OBJTOOL`
-  conditional packaging (lines 31-33)
-- No behavioral change to anything else
-- Only affects the packaging script, not runtime kernel behavior
-- Risk of regression is essentially zero
+**User impact:** Without this fix, the Iomega ZIP 100 drive is
+completely unusable on kernels v6.10+. The device was tested and
+confirmed to work with the fix.
 
-### Stable tree applicability
-- The `install-extmod-build` script exists since v6.6
-- The `CONFIG_DEBUG_INFO_BTF_MODULES` and `resolve_btfids` usage in
-  `Makefile.modfinal` also exists in older stable trees
-- The fix would apply cleanly or with minor adaptation to 6.6.y and
-  newer stable trees
-- This matches the "build fix" exception category — it prevents
-  compilation/build failures
+**Dependencies:** Requires `BLIST_SKIP_IO_HINTS` flag definition (commit
+`633aeefafc9c2`, present since v6.10). This is already in all stable
+trees that have the IO hints feature.
 
-### Concern
-The exact form of the script has evolved over time (e.g., v6.6 has
-slightly different structure), so backporting to older stable trees may
-need minor adjustments, but the logic is the same.
+**Stable criteria met:**
+1. Obviously correct — adds a quirk flag to skip a mode page query the
+   device can't handle
+2. Fixes a real bug — device is completely unusable without it
+3. Small and contained — single flag addition to one line
+4. No new features — uses existing quirk infrastructure
 
 ### Verification
-- Read `scripts/package/install-extmod-build` — confirmed the fix adds
-  `resolve_btfids` packaging with same pattern as `objtool`
-- Read `scripts/Makefile.modfinal` lines 41-63 — confirmed that
-  `$(RESOLVE_BTFIDS)` is called when `CONFIG_DEBUG_INFO_BTF_MODULES` is
-  enabled and `vmlinux` exists
-- Checked `Makefile` line 536 — confirmed `RESOLVE_BTFIDS` points to
-  `$(objtree)/tools/bpf/resolve_btfids/resolve_btfids`
-- `git tag --contains` on the earliest form of `install-extmod-build` —
-  confirmed file exists since v6.6
-- Checked `v6.6:scripts/package/install-extmod-build` — confirmed the
-  script existed with similar structure but without `resolve_btfids`
-  packaging
-- The commit message clearly states the problem: "install-extmod-build
-  currently does not package resolve_btfids, so that step fails"
-- Reviewed-by: Nicolas Schier (kbuild expert) confirms the fix is
-  correct
 
-This is a clear build fix: small, obvious, low-risk, fixes a real
-failure that affects users building external modules with BTF-enabled
-kernels. It fits squarely within the stable kernel "build fix" category.
+- Verified `BLIST_SKIP_IO_HINTS` was introduced in commit
+  `633aeefafc9c2` (v6.10) via `git log` and `git tag --contains`
+- Verified the Fixes: target `4f53138fffc2` (IO hints feature) was
+  introduced in v6.10 via `git tag --contains`
+- Verified older stable trees (6.6.y, 6.1.y, 5.15.y) do NOT contain
+  either the IO hints feature or the BLIST_SKIP_IO_HINTS flag — so they
+  are unaffected
+- Verified via grep that `BLIST_SKIP_IO_HINTS` is already used in USB
+  storage drivers (`uas.c`, `scsiglue.c`) and checked in `sd.c:3275`
+- Verified the change is a single flag addition to an existing device
+  entry in `scsi_devinfo.c`
+- The IOMEGA ZIP entry already existed in the table (just missing the
+  new flag)
 
 **YES**
 
- scripts/package/install-extmod-build | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/scsi/scsi_devinfo.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/scripts/package/install-extmod-build b/scripts/package/install-extmod-build
-index 2576cf7902dbb..f12e1ffe409eb 100755
---- a/scripts/package/install-extmod-build
-+++ b/scripts/package/install-extmod-build
-@@ -32,6 +32,10 @@ mkdir -p "${destdir}"
- 		echo tools/objtool/objtool
- 	fi
- 
-+	if is_enabled CONFIG_DEBUG_INFO_BTF_MODULES; then
-+		echo tools/bpf/resolve_btfids/resolve_btfids
-+	fi
-+
- 	echo Module.symvers
- 	echo "arch/${SRCARCH}/include/generated"
- 	echo include/config/auto.conf
+diff --git a/drivers/scsi/scsi_devinfo.c b/drivers/scsi/scsi_devinfo.c
+index 78346b2b69c91..c51146882a1fa 100644
+--- a/drivers/scsi/scsi_devinfo.c
++++ b/drivers/scsi/scsi_devinfo.c
+@@ -190,7 +190,7 @@ static struct {
+ 	{"IBM", "2076", NULL, BLIST_NO_VPD_SIZE},
+ 	{"IBM", "2105", NULL, BLIST_RETRY_HWERROR},
+ 	{"iomega", "jaz 1GB", "J.86", BLIST_NOTQ | BLIST_NOLUN},
+-	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN},
++	{"IOMEGA", "ZIP", NULL, BLIST_NOTQ | BLIST_NOLUN | BLIST_SKIP_IO_HINTS},
+ 	{"IOMEGA", "Io20S         *F", NULL, BLIST_KEY},
+ 	{"INSITE", "Floptical   F*8I", NULL, BLIST_KEY},
+ 	{"INSITE", "I325VM", NULL, BLIST_KEY},
 -- 
 2.51.0
 
