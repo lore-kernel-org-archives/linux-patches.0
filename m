@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F68938A711;
-	Tue, 10 Mar 2026 11:28:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EDD38A712;
+	Tue, 10 Mar 2026 11:28:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142115; cv=none; b=UeB4eiestsJk6ImnydQTGCKibEWGY8FnZQkPAZYQrqrzFYChIqUszlhus7qW81FAJiLXvHYnxezk9P0WwOGoZE2c8HSxLRkyZ1YGitHp+GsNDd3CxX1mreayqjRLIKz+tH8xhZB3OPVy4IbcZYIXQomk0u9dLDbyrvsYlkbzquk=
+	t=1773142116; cv=none; b=Cfi8N/J8zkQa498DrWG+fWQO4QXLDlKnFuNrpvjLv1iCZMjsfluhRISspFXmodGwqdZ6gE4OpEugI+7K2HSB0BDqOPYEqpFfZp1hzoW/OEBzZRfSPEzfsYVr0yEnZgfKEDG0vnfLtoCNd23Yi05VdQRqG/X0IwcyI384Iz4NFAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142115; c=relaxed/simple;
-	bh=WYArNvPx2WMJLM95iVc3EBtZMhibHNC8WwXO86cpRXU=;
+	s=arc-20240116; t=1773142116; c=relaxed/simple;
+	bh=XqceXG1jBO/Glu/GWF8N0srAbVTh3ESW50L1th2EcIc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oSyJwNj7U5qK9TEq7kaxIwAmoEaLn9YQv/Cssg0LnBYoy7zCeBzYa0QGVLaQEbB8zxe/Gxw0QtpvBYoyWQmWC7AFp8LpiePUK7/yC92xl6kSupslres6DmZBCj+d4KLK7NGZfUC8uKesc1sad6vmC8auIlTboqzFrEvaGUeUOlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P5Q/NB2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MgbW0JeYZ008Y+0svxIrhvebmJGwhH5lxe54nwBXu9k5DKHXqHMFWaaeBqLv1GRCBMREpHlvzoPrjb7LFP99ZxayQSJvEzYGRE99ygXT3cJMrxPCM90srNnuKwk2/hZlDLZESVGMNYVt2No8q0ZY9ojt2PI/WhBrn7rehjow6cM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ESy0Wh4p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P5Q/NB2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0154C19423;
-	Tue, 10 Mar 2026 11:28:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ESy0Wh4p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F1AC2BC86;
+	Tue, 10 Mar 2026 11:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142115;
-	bh=WYArNvPx2WMJLM95iVc3EBtZMhibHNC8WwXO86cpRXU=;
+	s=k20201202; t=1773142116;
+	bh=XqceXG1jBO/Glu/GWF8N0srAbVTh3ESW50L1th2EcIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5Q/NB2GjxQAFMQTBvk6Z8nQ4jNwyz908ADar/pTpEbMrCYh2ZcMt5Bo08/kIKLAa
-	 19Dv9CIfv+yIh0wd2/AnunnEVk7Zh55gcoXeEVM1tIYVyleGObcoDoZF7iUBFKLZpm
-	 h495Jzrh3K9JhzO/YT/14gjhKWT3Ownckbni9f8hCAQd1rR+TntFkwInXve5IF+MO0
-	 6cXWIynRU6HzvPZE9AhKAwv5tJHGzl+RpSgr1oo205Fv4kHpzkWC/ilAJEnRv/2He2
-	 Mj75GO4+TPsJHP//3r32y6fsNZSk3CQwySIuosdWhEINM/IXUcrMq+6/eLrQTTVIGK
-	 lnxYnf1if02yw==
+	b=ESy0Wh4pgCo7O+V9Au8ZKzTxN236PkA5EfZVGcfzOXIHsWkwuwkNjb1p2SI+LQCfe
+	 VUmWt07LBHIF5syPKB0K6PBmhagflMI16uzLty7x6wGSuP9evTZvSVwlfzqKCuUd2Q
+	 mEUsRSuL+N9vhjwOkEdz36BMpRVxR4xv0DRkCtAiLKy3f9NvRMdDHv4wTY7MkEt/OP
+	 goojcWPbwKCtlrIVwoTALrhQbRNkq7u7hO18H8LG6gzRJrpVeo8D66H7SxgCcilJ25
+	 AI7NFhrgK3ZBJp7+LnPmha615jQw2xr+VGzH+comTEcieJ29SaCcGjSao4kAtF5hcq
+	 3EUeER1e5HwtA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mariusz Skamra <mariusz.skamra@codecoup.pl>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+Cc: Natalie Vock <natalie.vock@gmx.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 203/314] Bluetooth: Fix CIS host feature condition
-Date: Tue, 10 Mar 2026 07:17:42 -0400
-Message-ID: <077cb75db9b2d47d15bdbf06428ecc6e30039999.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 204/314] drm/amd/display: Use GFP_ATOMIC in dc_create_stream_for_sink
+Date: Tue, 10 Mar 2026 07:17:43 -0400
+Message-ID: <63390c864fae59e9ff49328fb75cd8800d53410f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,45 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mariusz Skamra <mariusz.skamra@codecoup.pl>
+From: Natalie Vock <natalie.vock@gmx.de>
 
-commit 7cff9a40c6b0f72ccefdaf0ffe03cfac30348f51 upstream.
+commit 28dfe4317541e57fe52f9a290394cd29c348228b upstream.
 
-This fixes the condition for sending the LE Set Host Feature command.
-The command is sent to indicate host support for Connected Isochronous
-Streams in this case. It has been observed that the system could not
-initialize BIS-only capable controllers because the controllers do not
-support the command.
+This can be called while preemption is disabled, for example by
+dcn32_internal_validate_bw which is called with the FPU active.
 
-As per Core v6.2 | Vol 4, Part E, Table 3.1 the command shall be
-supported if CIS Central or CIS Peripheral is supported; otherwise,
-the command is optional.
+Fixes "BUG: scheduling while atomic" messages I encounter on my Navi31
+machine.
 
-Fixes: 709788b154ca ("Bluetooth: hci_core: Fix using {cis,bis}_capable for current settings")
+Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b42dae2ebc5c84a68de63ec4ffdfec49362d53f1)
 Cc: stable@vger.kernel.org
-Signed-off-by: Mariusz Skamra <mariusz.skamra@codecoup.pl>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ iso_capable() => cis_capable() ]
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 2 +-
+ drivers/gpu/drm/amd/display/dc/core/dc_stream.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index cc1d340a32c62..9f01837250a5e 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4546,7 +4546,7 @@ static int hci_le_set_host_feature_sync(struct hci_dev *hdev)
- {
- 	struct hci_cp_le_set_host_feature cp;
+diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+index 0a46e834357a1..0886bef32a5de 100644
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
+@@ -169,7 +169,7 @@ struct dc_stream_state *dc_create_stream_for_sink(
+ 	if (sink == NULL)
+ 		return NULL;
  
--	if (!iso_capable(hdev))
-+	if (!cis_capable(hdev))
- 		return 0;
+-	stream = kzalloc(sizeof(struct dc_stream_state), GFP_KERNEL);
++	stream = kzalloc(sizeof(struct dc_stream_state), GFP_ATOMIC);
+ 	if (stream == NULL)
+ 		goto alloc_fail;
  
- 	memset(&cp, 0, sizeof(cp));
 -- 
 2.51.0
 
