@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2EC37B413;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E2037B413;
 	Tue, 10 Mar 2026 11:26:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141996; cv=none; b=eUg4X9RXE1ZGHp+fEq23QUNPtnspOMluUlUv70EneGEcR3Vwe8D61FagFQRJR+BBd7dJPKT7Uu2jbikkXixSEdN7REsJFRFbw0Ig1dX+1dVLhdPgSjBS3DuI5TGDn2McGPPL2VkZqGrD0W17SHw5/Rcdq7JUlJskJ9uH1e67mbU=
+	t=1773141997; cv=none; b=rX/Vdr8RXVl8r/rMhkDYSEZc1K41UNld2BEi5IQxjewuVOKbRI3cVO7n7yGP2ps9LPFuDyj3mAEJe/pNX12gt26YlpJX309I8fT/P+GyWP1pOezdFIyuMH4b/yLeHY+TmLen5y7xnNYJEGY/WbcMsX8Fw47ihcfumacVFeooaOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141996; c=relaxed/simple;
-	bh=qoKGMMA8c2XybmlNisuifTOpQXuhT19rXE7/Qukienc=;
+	s=arc-20240116; t=1773141997; c=relaxed/simple;
+	bh=t5bGKMsPUkW4P/TIqj1CVJDaYWOZ4RTaXh6FPZzQkpQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NMEXlcSljEO2E+naAFeu6eUyz/xR+AtK7b+vJ25j78I0Rxy+hBeFmlBRBpMbxuzVl2jIhK8ImDAOkTmCz4fwQxdrtCyGPs2okW0fWiK6xDrv7wYUfc8QCa/2o5FiWIU1BqT8NJ3ckdOU7yzU9RYaU3lHUoL2PL7YykzABpJWNpE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i9TSi9RI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hsrNLeqie4L5WJNA+jrXwhYW+ctYntxHK29S7dyiJVsqcrneBRhzYfTRSb2ccGhjzH1NVpqNaRwNaH2FukRuHue+QJt6x+qLKq7WFnBfnI5bgGInY9nL8/EQRYdISxxC6IvTKUMxmeI5J5gK+P3HC2XTPalBzB75yBsiRTeBDis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1wKtY8S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i9TSi9RI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E19FC19423;
-	Tue, 10 Mar 2026 11:26:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1wKtY8S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44793C2BCAF;
+	Tue, 10 Mar 2026 11:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
 	s=k20201202; t=1773141996;
-	bh=qoKGMMA8c2XybmlNisuifTOpQXuhT19rXE7/Qukienc=;
+	bh=t5bGKMsPUkW4P/TIqj1CVJDaYWOZ4RTaXh6FPZzQkpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i9TSi9RIdiBHG0xc8d3hIBg8utpOgdvskWSytHAtlcbOQfQGHSaB8I+bGSppgm7ZR
-	 pkAjbGTgLLdZ+z3NfT4TiNxOlQoie58r5JviXiyiudTg/GuoLUToOf0Co7NQZj+o+n
-	 uw1i8MBhGkZ7uF2XYpFcJGvCrktofOcqmJUvb/kzNNFLKNenaUmMa3LFkrjlnPJsUb
-	 KQLID3kN5unsBi6QALzBAqgjw3Xz4ZiSX/2jfGlv9ooreMWLZ5xpp+61j2GbPTSV2M
-	 Rm5qyOJamIvvXu5Bjoq/VPlYloQXHePnuPAaYLU9VpH9qsnSW/4dedpTjn+1hRkW6U
-	 Mq23dEtUDWMUg==
+	b=N1wKtY8S39sWSi7AExcW6FLm5oLlgb5AgRUnUgZisHH2I4f6FKCLq5uw3M8ITLWTE
+	 SQi85HwZ6ylaeBSfx5Qh9RBDO2xjj6Qb2a4+j5KxTYHRKLjUH+om85+lkT5hgCtKtj
+	 beALsHeZqIUsAl/G6QBa7P78kda36qtQAXzP/oaccGaEMpGTtPiG/SrozrNGObr5Zr
+	 iKlP7enVBt53+0SCcbqbeSYItE9XR63rJnwIfGltZxDxsFy63p5KSGs75n7VzeIRwH
+	 Ykkms2KscraiuFlENGq0GCj29C1NHEgiKLvl40jP+Z1hPUmjb2jkhFsyFo1UpUWkZF
+	 4+EVt8ii8igig==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Gui-Dong Han <hanguidong02@gmail.com>,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Guenter Roeck <linux@roeck-us.net>,
+Cc: Vlastimil Babka <vbabka@suse.cz>,
+	Harry Yoo <harry.yoo@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/314] hwmon: (max16065) Use READ/WRITE_ONCE to avoid compiler optimization induced race
-Date: Tue, 10 Mar 2026 07:16:20 -0400
-Message-ID: <11f26b331ca8107a51d3862d2cb71a4d5c182e7d.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 122/314] slub: remove CONFIG_SLUB_TINY specific code paths
+Date: Tue, 10 Mar 2026 07:16:21 -0400
+Message-ID: <9e9367ae21f43b3c6f7b484a4a8617c0c863e794.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,103 +48,335 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-[ Upstream commit 007be4327e443d79c9dd9e56dc16c36f6395d208 ]
+[ Upstream commit 31e0886fd57d426d18a239dd55e176032c9c1cb0 ]
 
-Simply copying shared data to a local variable cannot prevent data
-races. The compiler is allowed to optimize away the local copy and
-re-read the shared memory, causing a Time-of-Check Time-of-Use (TOCTOU)
-issue if the data changes between the check and the usage.
+CONFIG_SLUB_TINY minimizes the SLUB's memory overhead in multiple ways,
+mainly by avoiding percpu caching of slabs and objects. It also reduces
+code size by replacing some code paths with simplified ones through
+ifdefs, but the benefits of that are smaller and would complicate the
+upcoming changes.
 
-To enforce the use of the local variable, use READ_ONCE() when reading
-the shared data and WRITE_ONCE() when updating it. Apply these macros to
-the three identified locations (curr_sense, adc, and fault) where local
-variables are used for error validation, ensuring the value remains
-consistent.
+Thus remove these code paths and associated ifdefs and simplify the code
+base.
 
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/6fe17868327207e8b850cf9f88b7dc58b2021f73.camel@decadent.org.uk/
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Fixes: b8d5acdcf525 ("hwmon: (max16065) Use local variable to avoid TOCTOU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20260203121443.5482-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20251105-sheaves-cleanups-v1-4-b8218e1ac7ef@suse.cz
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Stable-dep-of: a1e244a9f177 ("mm/slab: use prandom if !allow_spin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ mm/slab.h |   2 -
+ mm/slub.c | 107 ++----------------------------------------------------
+ 2 files changed, 4 insertions(+), 105 deletions(-)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index 4c9e7892a73c1..43fbb9b26b102 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -151,27 +151,27 @@ static struct max16065_data *max16065_update_device(struct device *dev)
- 		int i;
+diff --git a/mm/slab.h b/mm/slab.h
+index bf9d8940b8f21..36893299fa67c 100644
+--- a/mm/slab.h
++++ b/mm/slab.h
+@@ -236,10 +236,8 @@ struct kmem_cache_order_objects {
+  * Slab cache management.
+  */
+ struct kmem_cache {
+-#ifndef CONFIG_SLUB_TINY
+ 	struct kmem_cache_cpu __percpu *cpu_slab;
+ 	struct lock_class_key lock_key;
+-#endif
+ 	struct slub_percpu_sheaves __percpu *cpu_sheaves;
+ 	/* Used for retrieving partial slabs, etc. */
+ 	slab_flags_t flags;
+diff --git a/mm/slub.c b/mm/slub.c
+index 4e2a3f7656099..4db84fbc71bab 100644
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -410,7 +410,6 @@ enum stat_item {
+ 	NR_SLUB_STAT_ITEMS
+ };
  
- 		for (i = 0; i < data->num_adc; i++)
--			data->adc[i]
--			  = max16065_read_adc(client, MAX16065_ADC(i));
-+			WRITE_ONCE(data->adc[i],
-+				   max16065_read_adc(client, MAX16065_ADC(i)));
+-#ifndef CONFIG_SLUB_TINY
+ /*
+  * When changing the layout, make sure freelist and tid are still compatible
+  * with this_cpu_cmpxchg_double() alignment requirements.
+@@ -432,7 +431,6 @@ struct kmem_cache_cpu {
+ 	unsigned int stat[NR_SLUB_STAT_ITEMS];
+ #endif
+ };
+-#endif /* CONFIG_SLUB_TINY */
  
- 		if (data->have_current) {
--			data->adc[MAX16065_NUM_ADC]
--			  = max16065_read_adc(client, MAX16065_CSP_ADC);
--			data->curr_sense
--			  = i2c_smbus_read_byte_data(client,
--						     MAX16065_CURR_SENSE);
-+			WRITE_ONCE(data->adc[MAX16065_NUM_ADC],
-+				   max16065_read_adc(client, MAX16065_CSP_ADC));
-+			WRITE_ONCE(data->curr_sense,
-+				   i2c_smbus_read_byte_data(client, MAX16065_CURR_SENSE));
- 		}
- 
- 		for (i = 0; i < 2; i++)
--			data->fault[i]
--			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
-+			WRITE_ONCE(data->fault[i],
-+				   i2c_smbus_read_byte_data(client, MAX16065_FAULT(i)));
- 
- 		/*
- 		 * MAX16067 and MAX16068 have separate undervoltage and
- 		 * overvoltage alarm bits. Squash them together.
- 		 */
- 		if (data->chip == max16067 || data->chip == max16068)
--			data->fault[0] |= data->fault[1];
-+			WRITE_ONCE(data->fault[0],
-+				   data->fault[0] | data->fault[1]);
- 
- 		data->last_updated = jiffies;
- 		data->valid = true;
-@@ -185,7 +185,7 @@ static ssize_t max16065_alarm_show(struct device *dev,
+ static inline void stat(const struct kmem_cache *s, enum stat_item si)
  {
- 	struct sensor_device_attribute_2 *attr2 = to_sensor_dev_attr_2(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int val = data->fault[attr2->nr];
-+	int val = READ_ONCE(data->fault[attr2->nr]);
+@@ -594,12 +592,10 @@ static inline void *get_freepointer(struct kmem_cache *s, void *object)
+ 	return freelist_ptr_decode(s, p, ptr_addr);
+ }
  
- 	if (val < 0)
- 		return val;
-@@ -203,7 +203,7 @@ static ssize_t max16065_input_show(struct device *dev,
+-#ifndef CONFIG_SLUB_TINY
+ static void prefetch_freepointer(const struct kmem_cache *s, void *object)
  {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int adc = data->adc[attr->index];
-+	int adc = READ_ONCE(data->adc[attr->index]);
+ 	prefetchw(object + s->offset);
+ }
+-#endif
  
- 	if (unlikely(adc < 0))
- 		return adc;
-@@ -216,7 +216,7 @@ static ssize_t max16065_current_show(struct device *dev,
- 				     struct device_attribute *da, char *buf)
+ /*
+  * When running under KMSAN, get_freepointer_safe() may return an uninitialized
+@@ -711,10 +707,12 @@ static inline unsigned int slub_get_cpu_partial(struct kmem_cache *s)
+ 	return s->cpu_partial_slabs;
+ }
+ #else
++#ifdef SLAB_SUPPORTS_SYSFS
+ static inline void
+ slub_set_cpu_partial(struct kmem_cache *s, unsigned int nr_objects)
  {
- 	struct max16065_data *data = max16065_update_device(dev);
--	int curr_sense = data->curr_sense;
-+	int curr_sense = READ_ONCE(data->curr_sense);
+ }
++#endif
  
- 	if (unlikely(curr_sense < 0))
- 		return curr_sense;
+ static inline unsigned int slub_get_cpu_partial(struct kmem_cache *s)
+ {
+@@ -2023,13 +2021,11 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
+ 							int objects) {}
+ static inline void dec_slabs_node(struct kmem_cache *s, int node,
+ 							int objects) {}
+-#ifndef CONFIG_SLUB_TINY
+ static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
+ 			       void **freelist, void *nextfree)
+ {
+ 	return false;
+ }
+-#endif
+ #endif /* CONFIG_SLUB_DEBUG */
+ 
+ #ifdef CONFIG_SLAB_OBJ_EXT
+@@ -3673,8 +3669,6 @@ static struct slab *get_partial(struct kmem_cache *s, int node,
+ 	return get_any_partial(s, pc);
+ }
+ 
+-#ifndef CONFIG_SLUB_TINY
+-
+ #ifdef CONFIG_PREEMPTION
+ /*
+  * Calculate the next globally unique transaction for disambiguation
+@@ -4074,12 +4068,6 @@ static bool has_cpu_slab(int cpu, struct kmem_cache *s)
+ 	return c->slab || slub_percpu_partial(c);
+ }
+ 
+-#else /* CONFIG_SLUB_TINY */
+-static inline void __flush_cpu_slab(struct kmem_cache *s, int cpu) { }
+-static inline bool has_cpu_slab(int cpu, struct kmem_cache *s) { return false; }
+-static inline void flush_this_cpu_slab(struct kmem_cache *s) { }
+-#endif /* CONFIG_SLUB_TINY */
+-
+ static bool has_pcs_used(int cpu, struct kmem_cache *s)
+ {
+ 	struct slub_percpu_sheaves *pcs;
+@@ -4425,7 +4413,6 @@ static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags)
+ 	return true;
+ }
+ 
+-#ifndef CONFIG_SLUB_TINY
+ static inline bool
+ __update_cpu_freelist_fast(struct kmem_cache *s,
+ 			   void *freelist_old, void *freelist_new,
+@@ -4689,7 +4676,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+ 	pc.orig_size = orig_size;
+ 	slab = get_partial(s, node, &pc);
+ 	if (slab) {
+-		if (kmem_cache_debug(s)) {
++		if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
+ 			freelist = pc.object;
+ 			/*
+ 			 * For debug caches here we had to go through
+@@ -4727,7 +4714,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
+ 
+ 	stat(s, ALLOC_SLAB);
+ 
+-	if (kmem_cache_debug(s)) {
++	if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
+ 		freelist = alloc_single_from_new_slab(s, slab, orig_size, gfpflags);
+ 
+ 		if (unlikely(!freelist)) {
+@@ -4939,32 +4926,6 @@ static __always_inline void *__slab_alloc_node(struct kmem_cache *s,
+ 
+ 	return object;
+ }
+-#else /* CONFIG_SLUB_TINY */
+-static void *__slab_alloc_node(struct kmem_cache *s,
+-		gfp_t gfpflags, int node, unsigned long addr, size_t orig_size)
+-{
+-	struct partial_context pc;
+-	struct slab *slab;
+-	void *object;
+-
+-	pc.flags = gfpflags;
+-	pc.orig_size = orig_size;
+-	slab = get_partial(s, node, &pc);
+-
+-	if (slab)
+-		return pc.object;
+-
+-	slab = new_slab(s, gfpflags, node);
+-	if (unlikely(!slab)) {
+-		slab_out_of_memory(s, gfpflags, node);
+-		return NULL;
+-	}
+-
+-	object = alloc_single_from_new_slab(s, slab, orig_size, gfpflags);
+-
+-	return object;
+-}
+-#endif /* CONFIG_SLUB_TINY */
+ 
+ /*
+  * If the object has been wiped upon free, make sure it's fully initialized by
+@@ -5787,9 +5748,7 @@ void *kmalloc_nolock_noprof(size_t size, gfp_t gfp_flags, int node)
+ 	 * it did local_lock_irqsave(&s->cpu_slab->lock, flags).
+ 	 * In this case fast path with __update_cpu_freelist_fast() is not safe.
+ 	 */
+-#ifndef CONFIG_SLUB_TINY
+ 	if (!in_nmi() || !local_lock_is_locked(&s->cpu_slab->lock))
+-#endif
+ 		ret = __slab_alloc_node(s, alloc_gfp, node, _RET_IP_, size);
+ 
+ 	if (PTR_ERR(ret) == -EBUSY) {
+@@ -6571,14 +6530,10 @@ static void free_deferred_objects(struct irq_work *work)
+ 	llist_for_each_safe(pos, t, llnode) {
+ 		struct slab *slab = container_of(pos, struct slab, llnode);
+ 
+-#ifdef CONFIG_SLUB_TINY
+-		free_slab(slab->slab_cache, slab);
+-#else
+ 		if (slab->frozen)
+ 			deactivate_slab(slab->slab_cache, slab, slab->flush_freelist);
+ 		else
+ 			free_slab(slab->slab_cache, slab);
+-#endif
+ 	}
+ }
+ 
+@@ -6616,7 +6571,6 @@ void defer_free_barrier(void)
+ 		irq_work_sync(&per_cpu_ptr(&defer_free_objects, cpu)->work);
+ }
+ 
+-#ifndef CONFIG_SLUB_TINY
+ /*
+  * Fastpath with forced inlining to produce a kfree and kmem_cache_free that
+  * can perform fastpath freeing without additional function calls.
+@@ -6709,14 +6663,6 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
+ 	}
+ 	stat_add(s, FREE_FASTPATH, cnt);
+ }
+-#else /* CONFIG_SLUB_TINY */
+-static void do_slab_free(struct kmem_cache *s,
+-				struct slab *slab, void *head, void *tail,
+-				int cnt, unsigned long addr)
+-{
+-	__slab_free(s, slab, head, tail, cnt, addr);
+-}
+-#endif /* CONFIG_SLUB_TINY */
+ 
+ static __fastpath_inline
+ void slab_free(struct kmem_cache *s, struct slab *slab, void *object,
+@@ -6997,11 +6943,7 @@ void kfree_nolock(const void *object)
+ 	 * since kasan quarantine takes locks and not supported from NMI.
+ 	 */
+ 	kasan_slab_free(s, x, false, false, /* skip quarantine */true);
+-#ifndef CONFIG_SLUB_TINY
+ 	do_slab_free(s, slab, x, x, 0, _RET_IP_);
+-#else
+-	defer_free(s, x);
+-#endif
+ }
+ EXPORT_SYMBOL_GPL(kfree_nolock);
+ 
+@@ -7451,7 +7393,6 @@ void kmem_cache_free_bulk(struct kmem_cache *s, size_t size, void **p)
+ }
+ EXPORT_SYMBOL(kmem_cache_free_bulk);
+ 
+-#ifndef CONFIG_SLUB_TINY
+ static inline
+ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+ 			    void **p)
+@@ -7522,35 +7463,6 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
+ 	return 0;
+ 
+ }
+-#else /* CONFIG_SLUB_TINY */
+-static int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
+-				   size_t size, void **p)
+-{
+-	int i;
+-
+-	for (i = 0; i < size; i++) {
+-		void *object = kfence_alloc(s, s->object_size, flags);
+-
+-		if (unlikely(object)) {
+-			p[i] = object;
+-			continue;
+-		}
+-
+-		p[i] = __slab_alloc_node(s, flags, NUMA_NO_NODE,
+-					 _RET_IP_, s->object_size);
+-		if (unlikely(!p[i]))
+-			goto error;
+-
+-		maybe_wipe_obj_freeptr(s, p[i]);
+-	}
+-
+-	return i;
+-
+-error:
+-	__kmem_cache_free_bulk(s, i, p);
+-	return 0;
+-}
+-#endif /* CONFIG_SLUB_TINY */
+ 
+ /* Note that interrupts must be enabled when calling this function. */
+ int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
+@@ -7741,7 +7653,6 @@ init_kmem_cache_node(struct kmem_cache_node *n, struct node_barn *barn)
+ 		barn_init(barn);
+ }
+ 
+-#ifndef CONFIG_SLUB_TINY
+ static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+ {
+ 	BUILD_BUG_ON(PERCPU_DYNAMIC_EARLY_SIZE <
+@@ -7762,12 +7673,6 @@ static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+ 
+ 	return 1;
+ }
+-#else
+-static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
+-{
+-	return 1;
+-}
+-#endif /* CONFIG_SLUB_TINY */
+ 
+ static int init_percpu_sheaves(struct kmem_cache *s)
+ {
+@@ -7857,13 +7762,11 @@ void __kmem_cache_release(struct kmem_cache *s)
+ 	cache_random_seq_destroy(s);
+ 	if (s->cpu_sheaves)
+ 		pcs_destroy(s);
+-#ifndef CONFIG_SLUB_TINY
+ #ifdef CONFIG_PREEMPT_RT
+ 	if (s->cpu_slab)
+ 		lockdep_unregister_key(&s->lock_key);
+ #endif
+ 	free_percpu(s->cpu_slab);
+-#endif
+ 	free_kmem_cache_nodes(s);
+ }
+ 
+@@ -8606,10 +8509,8 @@ void __init kmem_cache_init(void)
+ 
+ void __init kmem_cache_init_late(void)
+ {
+-#ifndef CONFIG_SLUB_TINY
+ 	flushwq = alloc_workqueue("slub_flushwq", WQ_MEM_RECLAIM, 0);
+ 	WARN_ON(!flushwq);
+-#endif
+ }
+ 
+ struct kmem_cache *
 -- 
 2.51.0
 
