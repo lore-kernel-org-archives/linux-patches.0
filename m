@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A602E38A710;
-	Tue, 10 Mar 2026 11:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2DD387361;
+	Tue, 10 Mar 2026 11:26:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142004; cv=none; b=jJf8XalaA9rMD9WNgwDFE5CQ/ewe1xHfuUdh//sqXYd29KSW59uWBZhFeQRSwUGf2rAOkghfaLC4hHH1JHeAhnfd6r19Ydk/IemAwtC6baEJ//N62T2edD4LnNoifI97Ow0KAA6umKbHXGqRBTXUPD7o8ofl8WJlAjdc66eZGy8=
+	t=1773142005; cv=none; b=p5A2sB6KYc8MCQTUnObIubYo8FubQQonPrOkVoi+zPfQFQAyMgkBiS01zWtT3Ng2maJx8K6QGLF3HuwjiR9OC2BILCRCd77NGkJ9D/19/Tz4rvWTBKXxI5I64iimX37O+Wxxjj+zWWPa42Mq9WLvmy2HqEAd8jX2Xbvg/yITPZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142004; c=relaxed/simple;
-	bh=G5UVq+1QseGD+La/+F61V1kJGVC+6+aia55c/QpvpSY=;
+	s=arc-20240116; t=1773142005; c=relaxed/simple;
+	bh=94kREnGIarE3KrddOWIco9VSQcY6P4Zmcy7zvyRH+LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXArvCyL6RLOqEOPTTxszWgXV8g42nwBs/FbsIFVGy1maF4OsbBhQfasb1M5xgq1Ib6bubXTftndZF38QVD6IDcSSq0FJPOwyMdKl08pLZRObGBapSwa9nteGuSXgRfIUEn8Ii6bzW1ryqCFy9aUXYTG7CGmWjh0EVluVuXqHlc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RkTrlTHU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FoTGsIAAAbOt9GF3C0ZxAAlAj3q/uzpPm0dBLMBYqqA+6EIrlXErgc+NsMpatY9y3IE6xrDb5jquYERGm1ENjcuv2U+tpOexKpGPNTOumycSP5gjPcmtRZ7/2doj6trOg1C92ifUyTsuhu7EQeDcSVRB70tJT0VIJuMzLcmtl0o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NsZcBQCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RkTrlTHU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BDEDC2BC86;
-	Tue, 10 Mar 2026 11:26:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NsZcBQCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EEEAC19423;
+	Tue, 10 Mar 2026 11:26:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142004;
-	bh=G5UVq+1QseGD+La/+F61V1kJGVC+6+aia55c/QpvpSY=;
+	s=k20201202; t=1773142005;
+	bh=94kREnGIarE3KrddOWIco9VSQcY6P4Zmcy7zvyRH+LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkTrlTHUXJca0yrpt5gNYUeXAg+OwWZi5uhZLb8Wg05b/3mnBqXpyCJmc5cgRfc0U
-	 cTC54uQd5H47KY4UfmSfyE+lC5wZHF8lCG1D9GHfwT9DxjFCMSPmFQyV8Bi/TodCTD
-	 KeoTEzQ9NdJcGt3nj3MWHWr0k1lWtE06rJGfEm2eWVp4QtVlYnaihUlVSDJJ9zFid0
-	 z4wQlPPV1rW13Qi5LmH2zeATp6gYPslaaPFsIZF196qNDJFvZcKt29thCAOLF+vv7D
-	 X4HQfyQfdQxbB8MfFxkD0aakG3iNVVxzoLcPdWDbMNtadzEDWills2Hh4bI/y1hQyB
-	 YkaGbdArqNFwg==
+	b=NsZcBQCZyYf1KVTkYXonlC4V2U77r597ho/S2yCTpg0JtnNSfXgoE1X53ii9I+1sL
+	 oI44ZoSdTfKdl3hoCm4fL+OyJPjWYu04yh/thqCvqeAJSfo4zHzyBUzD2Xm6tgxepj
+	 HTP8836Ii836q/2sZD9ukb1ft9XFuSPqCWmBbF3T+iNhfIQ9Ex0Y1tNKmDPpMhLa3b
+	 ojdsjr0ErWVTlnnl3onxXcLFbZ3j9JE81+HqU+mtYCusHpu9I4PZMiDhs35coXmxzB
+	 AHQ0hZijfDX8BOzxruK0XHJj+UgR3oHInW4I83Ck5a6pEMxqsMr+oPNFwBajfGzLlc
+	 AhmB4QhDSk0gQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jann Horn <jannh@google.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Christian Brauner <brauner@kernel.org>,
+Cc: Christian Brauner <brauner@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 130/314] eventpoll: Fix integer overflow in ep_loop_check_proc()
-Date: Tue, 10 Mar 2026 07:16:29 -0400
-Message-ID: <db785e40145858f5eab8b3bec496737454408cde.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 131/314] namespace: fix proc mount iteration
+Date: Tue, 10 Mar 2026 07:16:30 -0400
+Message-ID: <99b33236e808f4d18152f0369acb80ef0b973687.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,52 +47,72 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit fdcfce93073d990ed4b71752e31ad1c1d6e9d58b upstream.
+commit 4a403d7aa9074f527f064ef0806aaab38d14b07c upstream.
 
-If a recursive call to ep_loop_check_proc() hits the `result = INT_MAX`,
-an integer overflow will occur in the calling ep_loop_check_proc() at
-`result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1)`,
-breaking the recursion depth check.
+The m->index isn't updated when m->show() overflows and retains its
+value before the current mount causing a restart to start at the same
+value. If that happens in short order to due a quickly expanding mount
+table this would cause the same mount to be shown again and again.
 
-Fix it by using a different placeholder value that can't lead to an
-overflow.
+Ensure that *pos always equals the mount id of the mount that was
+returned by start/next. On restart after overflow mnt_find_id_at(*pos)
+finds the exact mount. This should avoid duplicates, avoid skips and
+should handle concurrent modification just fine.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260223-epoll-int-overflow-v1-1-452f35132224@google.com
+Cc: <stable@vger.kernel.org>
+Fixed: 2eea9ce4310d8 ("mounts: keep list of mounts in an rbtree")
+Link: https://patch.msgid.link/20260129-geleckt-treuhand-4bb940acacd9@brauner
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventpoll.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/namespace.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/fs/eventpoll.c b/fs/eventpoll.c
-index ee7c4b683ec3d..bcc7dcbefc419 100644
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -2061,7 +2061,8 @@ static int ep_poll(struct eventpoll *ep, struct epoll_event __user *events,
-  * @ep: the &struct eventpoll to be currently checked.
-  * @depth: Current depth of the path being checked.
-  *
-- * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
-+ * Return: depth of the subtree, or a value bigger than EP_MAX_NESTS if we found
-+ * a loop or went too deep.
-  */
- static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+diff --git a/fs/namespace.c b/fs/namespace.c
+index b312905c2be5b..8531b8deee416 100644
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1531,23 +1531,33 @@ static struct mount *mnt_find_id_at_reverse(struct mnt_namespace *ns, u64 mnt_id
+ static void *m_start(struct seq_file *m, loff_t *pos)
  {
-@@ -2080,7 +2081,7 @@ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
- 			struct eventpoll *ep_tovisit;
- 			ep_tovisit = epi->ffd.file->private_data;
- 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
--				result = INT_MAX;
-+				result = EP_MAX_NESTS+1;
- 			else
- 				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
- 			if (result > EP_MAX_NESTS)
+ 	struct proc_mounts *p = m->private;
++	struct mount *mnt;
+ 
+ 	down_read(&namespace_sem);
+ 
+-	return mnt_find_id_at(p->ns, *pos);
++	mnt = mnt_find_id_at(p->ns, *pos);
++	if (mnt)
++		*pos = mnt->mnt_id_unique;
++	return mnt;
+ }
+ 
+ static void *m_next(struct seq_file *m, void *v, loff_t *pos)
+ {
+-	struct mount *next = NULL, *mnt = v;
++	struct mount *mnt = v;
+ 	struct rb_node *node = rb_next(&mnt->mnt_node);
+ 
+-	++*pos;
+ 	if (node) {
+-		next = node_to_mount(node);
++		struct mount *next = node_to_mount(node);
+ 		*pos = next->mnt_id_unique;
++		return next;
+ 	}
+-	return next;
++
++	/*
++	 * No more mounts. Set pos past current mount's ID so that if
++	 * iteration restarts, mnt_find_id_at() returns NULL.
++	 */
++	*pos = mnt->mnt_id_unique + 1;
++	return NULL;
+ }
+ 
+ static void m_stop(struct seq_file *m, void *v)
 -- 
 2.51.0
 
