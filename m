@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934992BF3E2;
-	Tue, 10 Mar 2026 11:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8479A36EA89;
+	Tue, 10 Mar 2026 11:12:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141137; cv=none; b=Jvttff6TC5NdZBCG85RPxI51wYp++gys+KRDQGQiS3QkzRdwad4zxu2Z2f+SSIYe41MGpaX3v0Z7TWUSPr8KAUut7zaXx1VTTa82n+OesaY6rxvDkXc+zdHMthfp21CDvpNY71c+PlxKAkD83yRV214oa1Twg6bK7iZNSShNdfU=
+	t=1773141138; cv=none; b=TpLs7LCa9c1awZPaGkKJvVK78JvzrlYTtbNK5kX61FReaaeE8/LIGoJfA+2eAHyU3VFe/HWpsl51qtxzI/JFmghy5nz4oWX7MXFo039HfBUHWuwCf+qCubJfP+E2Ojh6oUR0+A2SGftHurCnwKYRaEpGBDz0GK++C3dWcqMvWt4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141137; c=relaxed/simple;
-	bh=r9Fr4QjByy98PYYiJBS8P/h7hs87TY0NdD2OJX890y8=;
+	s=arc-20240116; t=1773141138; c=relaxed/simple;
+	bh=Pn5BGJbcgfzC6g35oA/yN9XarwmBoWfno7+j+YQGA/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R2z6nTcTIAKza8VtMiYbPuNbZBzrSVsoZPx0xvKLoVJUA/3hP17uO3fJkbUS3SoUoEF08NDyDLdV82QLZyZ/8VBDwFqqT1sphFxwlexE6ZJlsNuFR1gbnECC2+nYo5QR1TwFdr7mt8b+1aZxMRy5kXKPD+i6lRCh37K22xrwenk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gERccbeL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBvxiJFq4tHFidR1UZ7QiYZT4XvlI+ndCg0Y2jSMWe2HmOukea6/LhTwV1Se1Th6J2WEmOMON7UAZqL96wopDlCB2i3irIRwLVuCZm2BqwymOHOn8yFGy9W1Ut0ecVMvnJer7hq0edyK0+B40+JtgRg12ZN39QgjcJJPB3RrO1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K1FVBgoB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gERccbeL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDF65C2BC86;
-	Tue, 10 Mar 2026 11:12:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K1FVBgoB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B980AC19423;
+	Tue, 10 Mar 2026 11:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141137;
-	bh=r9Fr4QjByy98PYYiJBS8P/h7hs87TY0NdD2OJX890y8=;
+	s=k20201202; t=1773141138;
+	bh=Pn5BGJbcgfzC6g35oA/yN9XarwmBoWfno7+j+YQGA/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gERccbeLJ61K2qgAfCjkTnBSgIB2r850kHOtkRKHJe6NMJAhFLsFYnLMSr2kP7PA0
-	 Cc42VJlk0IIVZAicZ7ttFKvgrawmGJYzzdv3n7lp2rsttgnYkpMZ2Xw84flc1+d1DL
-	 UKkJJOUGwO8OSAQcUpcPqg/avCYoBNJQkjGNBuKA4RmajhUb2oUQ/cZA9yxRm8xJFI
-	 zH5YcKasSXmEWAh2rWBbGpxaifhgkUMuEGuVq14OHIxNm7btEZbVgitV9ZJpKiIdO6
-	 2CrHaDIIYNQ2MppM94h/T3n4EuIPhDQjXmciarh5LMgipn3KBPFZ4TvnfIxX1woYLm
-	 txqbkv0fiGf8g==
+	b=K1FVBgoBbZLJNlAz38pbzYW12Wz89W3uvC9M6JKyRpUujg52rX+f0iAaqX8q16uUU
+	 HaX4Y0J6PZALc9FNLnod50sidozdzfAOSnKqq72t5AtHeUiA8kZWckb5JFJTX9HKVf
+	 U6qB89GHi4vkx5Fj+nvbr8/gKvcMXLfPTkSlVj5wnxdG/EVlqb851pr4whjbfOWWPI
+	 a48nSd8Etlw/gFld9MWrvzgZAc81GNj8V2i694bd+jYRGQekGsb2flDbGjostuQANX
+	 73/gXhWdDfSH7stivcL0mQ13Ofu35fkk4HB52VQX1oHyrvm6Y4ywUD/JLUiq4J9jsd
+	 SafKzvkXO9trg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Jason Gunthorpe <jgg@nvidia.com>,
+	Abhijit Gangurde <abhijit.gangurde@amd.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 141/311] RDMA/irdma: Fix kernel stack leak in irdma_create_user_ah()
-Date: Tue, 10 Mar 2026 07:03:08 -0400
-Message-ID: <ba9507a4daca9e83678d1dcd98eab50af5dcc39d.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 142/311] RDMA/ionic: Fix kernel stack leak in ionic_create_cq()
+Date: Tue, 10 Mar 2026 07:03:09 -0400
+Message-ID: <ae8d9e091cf7c4e48d49162f3c8d290b418712bb.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,39 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Gunthorpe <jgg@nvidia.com>
 
-commit 74586c6da9ea222a61c98394f2fc0a604748438c upstream.
+commit faa72102b178c7ae6c6afea23879e7c84fc59b4e upstream.
 
-struct irdma_create_ah_resp {  // 8 bytes, no padding
-    __u32 ah_id;               // offset 0 - SET (uresp.ah_id = ah->sc_ah.ah_info.ah_idx)
-    __u8  rsvd[4];             // offset 4 - NEVER SET <- LEAK
+struct ionic_cq_resp resp {
+    __u32 cqid[2];         // offset 0 - PARTIALLY SET (see below)
+    __u8  udma_mask;       // offset 8 - SET (resp.udma_mask = vcq->udma_mask)
+    __u8  rsvd[7];         // offset 9 - NEVER SET <- LEAK
 };
 
-rsvd[4]: 4 bytes of stack memory leaked unconditionally. Only ah_id is assigned before ib_respond_udata().
+rsvd[7]: 7 bytes of stack memory leaked unconditionally.
 
-The reserved members of the structure were not zeroed.
+cqid[2]: The loop at line 1256 iterates over udma_idx but skips indices
+where !(vcq->udma_mask & BIT(udma_idx)). The array has 2 entries but
+udma_count could be 1, meaning cqid[1] might never be written via
+ionic_create_cq_common(). If udma_mask only has bit 0 set, cqid[1] (4
+bytes) is also leaked. So potentially 11 bytes leaked.
 
 Cc: stable@vger.kernel.org
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Fixes: e8521822c733 ("RDMA/ionic: Register device ops for control path")
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://patch.msgid.link/3-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com
+Link: https://patch.msgid.link/4-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com
+Acked-by: Abhijit Gangurde <abhijit.gangurde@amd.com>
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 2 +-
+ drivers/infiniband/hw/ionic/ionic_controlpath.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index 6d9af41a2884a..68fb81b7bd221 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -5209,7 +5209,7 @@ static int irdma_create_user_ah(struct ib_ah *ibah,
- #define IRDMA_CREATE_AH_MIN_RESP_LEN offsetofend(struct irdma_create_ah_resp, rsvd)
- 	struct irdma_ah *ah = container_of(ibah, struct irdma_ah, ibah);
- 	struct irdma_device *iwdev = to_iwdev(ibah->pd->device);
--	struct irdma_create_ah_resp uresp;
-+	struct irdma_create_ah_resp uresp = {};
- 	struct irdma_ah *parent_ah;
- 	int err;
+diff --git a/drivers/infiniband/hw/ionic/ionic_controlpath.c b/drivers/infiniband/hw/ionic/ionic_controlpath.c
+index ea12d9b8e125f..83573721af2c0 100644
+--- a/drivers/infiniband/hw/ionic/ionic_controlpath.c
++++ b/drivers/infiniband/hw/ionic/ionic_controlpath.c
+@@ -1218,7 +1218,7 @@ int ionic_create_cq(struct ib_cq *ibcq, const struct ib_cq_init_attr *attr,
+ 		rdma_udata_to_drv_context(udata, struct ionic_ctx, ibctx);
+ 	struct ionic_vcq *vcq = to_ionic_vcq(ibcq);
+ 	struct ionic_tbl_buf buf = {};
+-	struct ionic_cq_resp resp;
++	struct ionic_cq_resp resp = {};
+ 	struct ionic_cq_req req;
+ 	int udma_idx = 0, rc;
  
 -- 
 2.51.0
