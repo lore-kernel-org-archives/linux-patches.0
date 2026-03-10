@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862C43859E3;
-	Tue, 10 Mar 2026 11:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C9F1386454;
+	Tue, 10 Mar 2026 11:11:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141060; cv=none; b=sJgIFQp+oVcy8N0xvWoL3KVmiE14H5MCsIcYskDy7q6fFUmdjpeB0FZKXBLwKq+mi3Vl741S/B5ZVs8pJr6q5lzp50r74gC+5CUn7bAwVnBG4vPiNHQgoCjChrSLt9LsH3xQ7Kn2NNxbWuhOLV03oTpYwBoPIFYCg9PVQwDOrHI=
+	t=1773141061; cv=none; b=WG9ForFekLnQ7vBgdfVWZPYucz3fTWqG/veot2n0rPBFZ5k3HhvINXC34pg69PRToeO5vatUSKfiy4mvXnqmYc8tXpTJBm0pzGqCvz5n0r2q7a6tDlq2bBDZ7EQ7G88tNlsCgllRsKH+jicVWHUHe/0ha2WhFjk0KHKuv2BC3FE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141060; c=relaxed/simple;
-	bh=qCNJRKXXQggtoi7YssmvZRQtjJRflcDm/m4BG/ZrLsE=;
+	s=arc-20240116; t=1773141061; c=relaxed/simple;
+	bh=EOT4YfhniW5i6lt6OGUrYUNuJ7+PtjrNe/NkflHT940=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s4RBYoBca3+oQ5k3Hdf9TGyvvp+kNoQI3FZfyQ4Cemw2GoVW0VzTqPmjELPC4CTFB5XECpHuPh9g4IurK+lEsdixfVmY9ncZUwcEsfOsGIR8jbGj/Qp5phLhquVF1uw8PjpwMHYkLTuqcBjG/3XMQ5E5yIdt5Ec/8IzG3tJDJDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dn0km8J9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cugi7fKQpwcbm6atwNoq4qkyuXlJVze88jp8JwGpmxGGDuvCjLXS2B7aKLXNJWi/CEx5k3NggT4s/iD33aEaYJY3YW7GQG/OfyRzftVnAZHjdT0n7mCbAqXjSgq7+kujrpol8ih8OaNjSoSR1qWG4X55sQ/za3826kGatn9Oigs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XgIwRfG9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dn0km8J9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B550FC2BC86;
-	Tue, 10 Mar 2026 11:10:59 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XgIwRfG9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92A9C2BC9E;
+	Tue, 10 Mar 2026 11:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141060;
-	bh=qCNJRKXXQggtoi7YssmvZRQtjJRflcDm/m4BG/ZrLsE=;
+	s=k20201202; t=1773141061;
+	bh=EOT4YfhniW5i6lt6OGUrYUNuJ7+PtjrNe/NkflHT940=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dn0km8J9oFLjHLHRE5gPhKX/8Fja3i9WNYrElZxVWiYIENKEEf+X2jm8god05dlPG
-	 Ooxg9VS4sn7mXakbAFWmVbRS99MUxgSmfrtj/X8O2rDFavoz1MGr6MCKPhzwsP+sDa
-	 uFYN6pttAAFAfg8/6B7APFRlCKWr0Oyibc5OA/48/Fb/rDDQOV1lvw+RGNz+Hee3uz
-	 YWjQO/ubaLjzHW2uIAvvUeAbKBIt4+31UQjspsCopvb5AqFjPK89tuzMty+0Fbq8Nh
-	 TmOG0QiqvirJzOmVPoQmYDNTUGuv2ecNYoZd0SJ19LBbg2M7fJu5BKYSri5ATtqwxs
-	 NxN3xA7Es26eg==
+	b=XgIwRfG90yOAezrJTSVu2rNM1boXI/diKhRRgn+j5GQ6FefhO0L4Hf50VXA4FIQLm
+	 2cgo5hL/FEu+GciqsoKQoefGlU1TQXJQ+s1dPmKJyMNnG+X/lCPo0sZDtzASReA1t5
+	 TXxkDAZjkRWJOy4xgOQA49Ebz3vhuiwrP9onhG9L6SpWqL5hH37PQn3o7vz1kiEu+h
+	 79ig4C0KIjS0jq6XME65HdUTePRaRu8exJFRA1cSlArPCCFg+ZVN+rqYHiwqBF26wm
+	 d9HibHtZfD8/fHgugo5ws/ILEfFPi1oCef/ltI+vpT1QEkIRUICQ+FCc3wgTJ8YSPd
+	 h5zlbRTwBNi8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -33,9 +33,9 @@ Cc: Heiko Carstens <hca@linux.ibm.com>,
 	Sven Schnelle <svens@linux.ibm.com>,
 	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 060/311] s390/idle: Fix cpu idle exit cpu time accounting
-Date: Tue, 10 Mar 2026 07:01:47 -0400
-Message-ID: <0d8a3ecc8fa2766418c76e1d7a450c543b3fe5e9.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 061/311] s390/vtime: Fix virtual timer forwarding
+Date: Tue, 10 Mar 2026 07:01:48 -0400
+Message-ID: <2558380cbc1b8b31cee2f9f3fbe613436e75dd0e.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -51,147 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 0d785e2c324c90662baa4fe07a0d02233ff92824 ]
+[ Upstream commit dbc0fb35679ed5d0adecf7d02137ac2c77244b3b ]
 
-With the conversion to generic entry [1] cpu idle exit cpu time accounting
-was converted from assembly to C. This introduced an reversed order of cpu
-time accounting.
+Since delayed accounting of system time [1] the virtual timer is
+forwarded by do_account_vtime() but also vtime_account_kernel(),
+vtime_account_softirq(), and vtime_account_hardirq(). This leads
+to double accounting of system, guest, softirq, and hardirq time.
 
-On cpu idle exit the current accounting happens with the following call
-chain:
+Remove accounting from the vtime_account*() family to restore old behavior.
 
--> do_io_irq()/do_ext_irq()
- -> irq_enter_rcu()
-  -> account_hardirq_enter()
-   -> vtime_account_irq()
-    -> vtime_account_kernel()
+There is only one user of the vtimer interface, which might explain
+why nobody noticed this so far.
 
-vtime_account_kernel() accounts the passed cpu time since last_update_timer
-as system time, and updates last_update_timer to the current cpu timer
-value.
-
-However the subsequent call of
-
- -> account_idle_time_irq()
-
-will incorrectly subtract passed cpu time from timer_idle_enter to the
-updated last_update_timer value from system_timer. Then last_update_timer
-is updated to a sys_enter_timer, which means that last_update_timer goes
-back in time.
-
-Subsequently account_hardirq_exit() will account too much cpu time as
-hardirq time. The sum of all accounted cpu times is still correct, however
-some cpu time which was previously accounted as system time is now
-accounted as hardirq time, plus there is the oddity that last_update_timer
-goes back in time.
-
-Restore previous behavior by extracting cpu time accounting code from
-account_idle_time_irq() into a new update_timer_idle() function and call it
-before irq_enter_rcu().
-
-Fixes: 56e62a737028 ("s390: convert to generic entry") [1]
+Fixes: b7394a5f4ce9 ("sched/cputime, s390: Implement delayed accounting of system time") [1]
 Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
 Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/idle.h |  1 +
- arch/s390/kernel/idle.c      | 13 +++++++++----
- arch/s390/kernel/irq.c       | 10 ++++++++--
- 3 files changed, 18 insertions(+), 6 deletions(-)
+ arch/s390/kernel/vtime.c | 18 ++----------------
+ 1 file changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/arch/s390/include/asm/idle.h b/arch/s390/include/asm/idle.h
-index 09f763b9eb40a..133059d9a949c 100644
---- a/arch/s390/include/asm/idle.h
-+++ b/arch/s390/include/asm/idle.h
-@@ -23,5 +23,6 @@ extern struct device_attribute dev_attr_idle_count;
- extern struct device_attribute dev_attr_idle_time_us;
+diff --git a/arch/s390/kernel/vtime.c b/arch/s390/kernel/vtime.c
+index 234a0ba305108..122d30b104401 100644
+--- a/arch/s390/kernel/vtime.c
++++ b/arch/s390/kernel/vtime.c
+@@ -225,10 +225,6 @@ static u64 vtime_delta(void)
+ 	return timer - lc->last_update_timer;
+ }
  
- void psw_idle(struct s390_idle_data *data, unsigned long psw_mask);
-+void update_timer_idle(void);
- 
- #endif /* _S390_IDLE_H */
-diff --git a/arch/s390/kernel/idle.c b/arch/s390/kernel/idle.c
-index 39cb8d0ae3480..0f9e53f0a0686 100644
---- a/arch/s390/kernel/idle.c
-+++ b/arch/s390/kernel/idle.c
-@@ -21,11 +21,10 @@
- 
- static DEFINE_PER_CPU(struct s390_idle_data, s390_idle);
- 
--void account_idle_time_irq(void)
-+void update_timer_idle(void)
+-/*
+- * Update process times based on virtual cpu times stored by entry.S
+- * to the lowcore fields user_timer, system_timer & steal_clock.
+- */
+ void vtime_account_kernel(struct task_struct *tsk)
  {
- 	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
  	struct lowcore *lc = get_lowcore();
--	unsigned long idle_time;
- 	u64 cycles_new[8];
- 	int i;
- 
-@@ -35,13 +34,19 @@ void account_idle_time_irq(void)
- 			this_cpu_add(mt_cycles[i], cycles_new[i] - idle->mt_cycles_enter[i]);
- 	}
- 
--	idle_time = lc->int_clock - idle->clock_idle_enter;
+@@ -238,27 +234,17 @@ void vtime_account_kernel(struct task_struct *tsk)
+ 		lc->guest_timer += delta;
+ 	else
+ 		lc->system_timer += delta;
 -
- 	lc->steal_timer += idle->clock_idle_enter - lc->last_update_clock;
- 	lc->last_update_clock = lc->int_clock;
+-	virt_timer_forward(delta);
+ }
+ EXPORT_SYMBOL_GPL(vtime_account_kernel);
  
- 	lc->system_timer += lc->last_update_timer - idle->timer_idle_enter;
- 	lc->last_update_timer = lc->sys_enter_timer;
-+}
-+
-+void account_idle_time_irq(void)
-+{
-+	struct s390_idle_data *idle = this_cpu_ptr(&s390_idle);
-+	unsigned long idle_time;
-+
-+	idle_time = get_lowcore()->int_clock - idle->clock_idle_enter;
+ void vtime_account_softirq(struct task_struct *tsk)
+ {
+-	u64 delta = vtime_delta();
+-
+-	get_lowcore()->softirq_timer += delta;
+-
+-	virt_timer_forward(delta);
++	get_lowcore()->softirq_timer += vtime_delta();
+ }
  
- 	/* Account time spent with enabled wait psw loaded as idle time. */
- 	WRITE_ONCE(idle->idle_time, READ_ONCE(idle->idle_time) + idle_time);
-diff --git a/arch/s390/kernel/irq.c b/arch/s390/kernel/irq.c
-index bdf9c7cb5685b..080e9285b3379 100644
---- a/arch/s390/kernel/irq.c
-+++ b/arch/s390/kernel/irq.c
-@@ -146,6 +146,10 @@ void noinstr do_io_irq(struct pt_regs *regs)
- 	struct pt_regs *old_regs = set_irq_regs(regs);
- 	bool from_idle;
+ void vtime_account_hardirq(struct task_struct *tsk)
+ {
+-	u64 delta = vtime_delta();
+-
+-	get_lowcore()->hardirq_timer += delta;
+-
+-	virt_timer_forward(delta);
++	get_lowcore()->hardirq_timer += vtime_delta();
+ }
  
-+	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
-+	if (from_idle)
-+		update_timer_idle();
-+
- 	irq_enter_rcu();
- 
- 	if (user_mode(regs)) {
-@@ -154,7 +158,6 @@ void noinstr do_io_irq(struct pt_regs *regs)
- 			current->thread.last_break = regs->last_break;
- 	}
- 
--	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
- 	if (from_idle)
- 		account_idle_time_irq();
- 
-@@ -182,6 +185,10 @@ void noinstr do_ext_irq(struct pt_regs *regs)
- 	struct pt_regs *old_regs = set_irq_regs(regs);
- 	bool from_idle;
- 
-+	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
-+	if (from_idle)
-+		update_timer_idle();
-+
- 	irq_enter_rcu();
- 
- 	if (user_mode(regs)) {
-@@ -194,7 +201,6 @@ void noinstr do_ext_irq(struct pt_regs *regs)
- 	regs->int_parm = get_lowcore()->ext_params;
- 	regs->int_parm_long = get_lowcore()->ext_params2;
- 
--	from_idle = test_and_clear_cpu_flag(CIF_ENABLED_WAIT);
- 	if (from_idle)
- 		account_idle_time_irq();
- 
+ /*
 -- 
 2.51.0
 
