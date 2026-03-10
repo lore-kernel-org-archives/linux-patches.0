@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0092538A718;
-	Tue, 10 Mar 2026 11:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C0A3876D3;
+	Tue, 10 Mar 2026 11:14:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141278; cv=none; b=awpidu+WrYLt8+HhK28/7UM8P4kcqdHw0z8ELEKMgB5yoh34gDPRACR+eNRJwpek3mhprKtfUBP4X7ow8ShY0/W5sKN+ReVXsL6oErn7bIA6i4CMmfuFYNklPmfMDrxQ5kLxv/eMv44UpOLiuSJysr4OMP4Fc/GBO/RozSNQlAM=
+	t=1773141278; cv=none; b=CrEtluFUlu0HBaOb8reVBm+UdKr/81UxrJ/n50Cu8jCiGhtZxCyFaLLigYW1CSj4G1wSyqf2phcqhVqF67kCspxtqD61He5Ojd/vB3TEMwAAsnONrNmNAKL6C+If7nrtrH9sKoklU6f4VIfFrQ6roCNHCUSf8hUL13Nt9qcxdI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141278; c=relaxed/simple;
-	bh=58Gor0ktNtkTotZ9aPBf5ta6XTsbeRT78T4FL/GLp9k=;
+	bh=UPafp0oEjAi1jlcXkw0jKJdycqip9koVBMvbF34E0Sg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ukkbei4EDwS2KcwKQFI4vzTOxZjVFvIFBeEl/GL5tkjAeWmGlVPNu5CbL0kXctJ1rLst+Ezrj/HFsS+I0TgP5qYk/kZSLk4iEIgGWV+IR5o4Res1m5RNP6R6Skd07I5/Z/orvJX1R+GPzI81C29F418B98dKUqtWmIJJDZovRJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AbsA3Jvq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=n+m6UyOCLegz5A25ztwVQQh+xxOG7LYAExDCyhq3V1KVvb8H5OqAZvtDKiQ8TjyT1tTj7DzfD4pgToB8Pjt5OdQMKFXx2pm1DT4Nemznigf22vI9zJYYOyL3NZHWGSfzO/8HEhsAPlFqWtn+FJj0wpMAH5NiyPnBU16yzfSOmac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Edl8QJvv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AbsA3Jvq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03493C2BC86;
-	Tue, 10 Mar 2026 11:14:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Edl8QJvv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D786FC19423;
+	Tue, 10 Mar 2026 11:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141277;
-	bh=58Gor0ktNtkTotZ9aPBf5ta6XTsbeRT78T4FL/GLp9k=;
+	s=k20201202; t=1773141278;
+	bh=UPafp0oEjAi1jlcXkw0jKJdycqip9koVBMvbF34E0Sg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbsA3JvqiZDSkzq01R6xNweMMj71jKl1nJ2o8r0hXhlc6ruEnlJryRv74u0K2B0pN
-	 I4w/wYHA1LUwmqXkZ2G9iSpSwnjYtAADa2ji4UbZZaPxrTy46y9iUezVPY8uxnhZHO
-	 MB+SRLkAoJzzO129Vfc3u0M3Pk8yQemFRZrj3SxT5qTsnMapl8c9r2mYM17CUa4/oN
-	 0RwBm+eo75mfuNCAMNUYPXL96HzGy6a4eMb9ytvR9/flzhe9XvE2DXpURWDIeAHvBQ
-	 ufD05CJGx1hQOdXQ+dDhNiY2bVq8IAkQ7O/gb0hC+yPN9eW8tGNDZnjqMD1PeAIGDG
-	 z4La9tvukGB8A==
+	b=Edl8QJvv7rzzzNg9D8t1/CtayNYgy4pSOJosWnDdUSA6BZJCIy7Wc3iqTmy9yXtpw
+	 6TqLhghcFaKhscWOoyr8uUIeUM57p8fJf/2d9jHVAYnRxV8/bvGrmx/VAXAzEGyo+D
+	 o8TNA3blgqPLXFl1vsYF00P6wM4rEdPWNGAMwMBhD5SiUhpGCu1itnRHGNpre2nTMe
+	 lXBpP1ovwx7IOBpTxlMohQkN78RYMdk5ylCEw+V/MhH0TQtCdDlRWq4jCdEB/GwVgx
+	 9WFJ6IkbLKkmiK9lVPKeI8+6yaTGyV0e5AEnAG7CfppoNnD42nC8XKlJXB6CxTQhpq
+	 Q+i2DzI9aEbnw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Jakub Kicinski <kuba@kernel.org>,
 	Joe Damato <joe@dama.to>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 280/311] nfc: nci: clear NCI_DATA_EXCHANGE before calling completion callback
-Date: Tue, 10 Mar 2026 07:05:27 -0400
-Message-ID: <80f72393c86f2db9a3bd717b0d714ff030656b2c.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 281/311] nfc: rawsock: cancel tx_work before socket teardown
+Date: Tue, 10 Mar 2026 07:05:28 -0400
+Message-ID: <a72f8f5626bdb5cfb76ff524bdcc1efad6b8db08.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,71 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0efdc02f4f6d52f8ca5d5889560f325a836ce0a8 ]
+[ Upstream commit d793458c45df2aed498d7f74145eab7ee22d25aa ]
 
-Move clear_bit(NCI_DATA_EXCHANGE) before invoking the data exchange
-callback in nci_data_exchange_complete().
+In rawsock_release(), cancel any pending tx_work and purge the write
+queue before orphaning the socket.  rawsock_tx_work runs on the system
+workqueue and calls nfc_data_exchange which dereferences the NCI
+device.  Without synchronization, tx_work can race with socket and
+device teardown when a process is killed (e.g. by SIGKILL), leading
+to use-after-free or leaked references.
 
-The callback (e.g. rawsock_data_exchange_complete) may immediately
-schedule another data exchange via schedule_work(tx_work).  On a
-multi-CPU system, tx_work can run and reach nci_transceive() before
-the current nci_data_exchange_complete() clears the flag, causing
-test_and_set_bit(NCI_DATA_EXCHANGE) to return -EBUSY and the new
-transfer to fail.
+Set SEND_SHUTDOWN first so that if tx_work is already running it will
+see the flag and skip transmitting, then use cancel_work_sync to wait
+for any in-progress execution to finish, and finally purge any
+remaining queued skbs.
 
-This causes intermittent flakes in nci/nci_dev in NIPA:
-
-  # #  RUN           NCI.NCI1_0.t4t_tag_read ...
-  # # t4t_tag_read: Test terminated by timeout
-  # #          FAIL  NCI.NCI1_0.t4t_tag_read
-  # not ok 3 NCI.NCI1_0.t4t_tag_read
-
-Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
+Fixes: 23b7869c0fd0 ("NFC: add the NFC socket raw protocol")
 Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-5-kuba@kernel.org
+Link: https://patch.msgid.link/20260303162346.2071888-6-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/data.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ net/nfc/rawsock.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
-index 78f4131af3cf3..5f98c73db5afd 100644
---- a/net/nfc/nci/data.c
-+++ b/net/nfc/nci/data.c
-@@ -33,7 +33,8 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
- 	conn_info = nci_get_conn_info_by_conn_id(ndev, conn_id);
- 	if (!conn_info) {
- 		kfree_skb(skb);
--		goto exit;
-+		clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
-+		return;
- 	}
+diff --git a/net/nfc/rawsock.c b/net/nfc/rawsock.c
+index b049022399aea..f7d7a599fade7 100644
+--- a/net/nfc/rawsock.c
++++ b/net/nfc/rawsock.c
+@@ -67,6 +67,17 @@ static int rawsock_release(struct socket *sock)
+ 	if (sock->type == SOCK_RAW)
+ 		nfc_sock_unlink(&raw_sk_list, sk);
  
- 	cb = conn_info->data_exchange_cb;
-@@ -45,6 +46,12 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
- 	timer_delete_sync(&ndev->data_timer);
- 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
- 
-+	/* Mark the exchange as done before calling the callback.
-+	 * The callback (e.g. rawsock_data_exchange_complete) may
-+	 * want to immediately queue another data exchange.
-+	 */
-+	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
++	if (sk->sk_state == TCP_ESTABLISHED) {
++		/* Prevent rawsock_tx_work from starting new transmits and
++		 * wait for any in-progress work to finish.  This must happen
++		 * before the socket is orphaned to avoid a race where
++		 * rawsock_tx_work runs after the NCI device has been freed.
++		 */
++		sk->sk_shutdown |= SEND_SHUTDOWN;
++		cancel_work_sync(&nfc_rawsock(sk)->tx_work);
++		rawsock_write_queue_purge(sk);
++	}
 +
- 	if (cb) {
- 		/* forward skb to nfc core */
- 		cb(cb_context, skb, err);
-@@ -54,9 +61,6 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
- 		/* no waiting callback, free skb */
- 		kfree_skb(skb);
- 	}
--
--exit:
--	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
- }
+ 	sock_orphan(sk);
+ 	sock_put(sk);
  
- /* ----------------- NCI TX Data ----------------- */
 -- 
 2.51.0
 
