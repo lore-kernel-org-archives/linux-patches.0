@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DF62D978B;
-	Tue, 10 Mar 2026 11:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703B0248F73;
+	Tue, 10 Mar 2026 11:10:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141054; cv=none; b=kU/TEWk/KuGsBCWBke5znJep8r4KoBi4kW3eGWgUiAfF6urRhq4ivRxGs42ITaA66MWPwrboLbMYiK9xg4zDH6dXlYTtGmHOS82aVzqCgy/h8oCLzI/VHkDraMcdR46xgPMd+vQ75iMR12CPSNBPc64d8mz9yy85/faEsl1AfG0=
+	t=1773141055; cv=none; b=bTEKA4MY6LPNUeRzfazN1TCQ22FJO/ozbxOy/t97mgQBPmfUEDkEjJCqFg/MogQQsLDSfg58PSdC+v6+DcDamElraLJxljWwEudHhp5xqn4Om49nIptVewW788PRMpcIsX4jbm3CFJOq/k03x6AnRZjssZ7aIwA2SpqEB6z9wMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141054; c=relaxed/simple;
-	bh=yZ4LolPGDrGt2PS/75qDDPXFJHtVNQRXtgi+I43FtNc=;
+	s=arc-20240116; t=1773141055; c=relaxed/simple;
+	bh=HINZ7R48m4n4EyAUXOfZi8b8dpo/Z9OD4yPw0jw7GRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIBP+CCHYJu9tKzLSFfi9uTz1zCciH6v6ikQkuJkX9CEOs1wj13ED7xuIXoPxqE3rXtG2F9kfHGWXil5TKkCVRPcmc+1r4jll0vUsi+RgwSt6gbHmPKBuKh7C5biwh90F59if1cwkCiv8MFAP1+dKgWYu9J5q903T2Rr5uST3Rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GJ0f4Dto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HJi4or+seDAxGlvUkeKT4ohNY/1S/i5UD12abQKyu/jq8LOq33dSnGzuUk6DeC6paL4A1HI/TKHoe9PasbdQu+dg0wCLkmCPLslAqUVR/h+8Xomjdmcp+GVWCdCzlv1KQ2d+m1cy0t2erunJ/acWl304QdLHPxMscYohj1kQq4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qRhtINf+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GJ0f4Dto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E65FDC2BCAF;
-	Tue, 10 Mar 2026 11:10:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qRhtINf+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7916C19423;
+	Tue, 10 Mar 2026 11:10:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141054;
-	bh=yZ4LolPGDrGt2PS/75qDDPXFJHtVNQRXtgi+I43FtNc=;
+	s=k20201202; t=1773141055;
+	bh=HINZ7R48m4n4EyAUXOfZi8b8dpo/Z9OD4yPw0jw7GRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJ0f4DtoTl7EeivTBwu0VLTFErARX5Yxg9EBf8e+85DpodOxCcGS+qELFxb7+/za5
-	 u2nxUv5vKMuiDIASbr8gmhejwHokPUiPF9VO/No6uVPZElO0SDx/zGQv0LuoUXv7xY
-	 64usdvjpSKmeyZS6LkgmaKzzi/XnTfjWBHyJgr86JwR8MnsCDDvmeaD7zJSzu0EsA4
-	 OeaT9egVt7ihvfDgFNtQq8i9jkqK6QNWlD/zkPeUAWbrDnICSYw9VwpNv34giWB+wP
-	 6w+iH8t+5n+8FXnwWS38e+ea1cKhD7MNdyrp31hw/9oT/jUMcbm9s9DgJSQca3dd4g
-	 +HUzoJiUSRpsg==
+	b=qRhtINf+la1uCShyBXFst2EMJDK/2RLCUkPOarfxc5ikAbBecwITl+55+hILLnLkT
+	 tTFImSDyjcztVLrV8eTt8C6mk904i/z5CiScrRfbuiHFdDhPR25ej/jTVD6T2mthdw
+	 iLRMSOhbT3oQ5ipaAiKrREHsuxeD/IBQYA0GM6cZ2FgKb/WhD0SFan3f99nVpUhTIo
+	 UINu4cgE0ipFrwemLgBp/QWdm/Zb4QI+xLSgjoylskr2BmxpYioSEFhPFKY3sSQQNL
+	 xWPGTNkR8+vuNl4pnitDfYIFmj+BJo4sU1P1UWhmMEPe6tHdotXKvNuuDMGEWLTYOL
+	 LCGNiJzAM7OXQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jens Axboe <axboe@kernel.dk>,
+Cc: Christoph Hellwig <hch@lst.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 053/311] io_uring/cmd_net: use READ_ONCE() for ->addr3 read
-Date: Tue, 10 Mar 2026 07:01:40 -0400
-Message-ID: <098869323522cb30fd476082953c8a50921f588d.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 054/311] zloop: advertise a volatile write cache
+Date: Tue, 10 Mar 2026 07:01:41 -0400
+Message-ID: <7b0ca419929be66886f9fea0b71b57c87b87a105.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -47,35 +49,74 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a46435537a844d0f7b4b620baf962cad136422de ]
+[ Upstream commit 6acf7860dcc79ed045cc9e6a79c8a8bb6959dba7 ]
 
-Any SQE read should use READ_ONCE(), to ensure the result is read once
-and only once. Doesn't really matter for this case, but it's better to
-keep these 100% consistent and always use READ_ONCE() for the prep side
-of SQE handling.
+Zloop is file system backed and thus needs to sync the underlying file
+system to persist data.  Set BLK_FEAT_WRITE_CACHE so that the block
+layer actually send flush commands, and fix the flush implementation
+as sync_filesystem requires s_umount to be held and the code currently
+misses that.
 
-Fixes: 5d24321e4c15 ("io_uring: Introduce getsockname io_uring cmd")
+Fixes: eb0570c7df23 ("block: new zoned loop block device driver")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/cmd_net.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/zloop.c | 24 ++++++++++++++++++------
+ 1 file changed, 18 insertions(+), 6 deletions(-)
 
-diff --git a/io_uring/cmd_net.c b/io_uring/cmd_net.c
-index 3db34e2d22ee5..17d499f68fe6d 100644
---- a/io_uring/cmd_net.c
-+++ b/io_uring/cmd_net.c
-@@ -145,7 +145,7 @@ static int io_uring_cmd_getsockname(struct socket *sock,
- 		return -EINVAL;
+diff --git a/drivers/block/zloop.c b/drivers/block/zloop.c
+index 8e334f5025fc0..ae9bf2a85c21c 100644
+--- a/drivers/block/zloop.c
++++ b/drivers/block/zloop.c
+@@ -542,6 +542,21 @@ static void zloop_rw(struct zloop_cmd *cmd)
+ 	zloop_put_cmd(cmd);
+ }
  
- 	uaddr = u64_to_user_ptr(READ_ONCE(sqe->addr));
--	ulen = u64_to_user_ptr(sqe->addr3);
-+	ulen = u64_to_user_ptr(READ_ONCE(sqe->addr3));
- 	peer = READ_ONCE(sqe->optlen);
- 	if (peer > 1)
- 		return -EINVAL;
++/*
++ * Sync the entire FS containing the zone files instead of walking all files.
++ */
++static int zloop_flush(struct zloop_device *zlo)
++{
++	struct super_block *sb = file_inode(zlo->data_dir)->i_sb;
++	int ret;
++
++	down_read(&sb->s_umount);
++	ret = sync_filesystem(sb);
++	up_read(&sb->s_umount);
++
++	return ret;
++}
++
+ static void zloop_handle_cmd(struct zloop_cmd *cmd)
+ {
+ 	struct request *rq = blk_mq_rq_from_pdu(cmd);
+@@ -562,11 +577,7 @@ static void zloop_handle_cmd(struct zloop_cmd *cmd)
+ 		zloop_rw(cmd);
+ 		return;
+ 	case REQ_OP_FLUSH:
+-		/*
+-		 * Sync the entire FS containing the zone files instead of
+-		 * walking all files
+-		 */
+-		cmd->ret = sync_filesystem(file_inode(zlo->data_dir)->i_sb);
++		cmd->ret = zloop_flush(zlo);
+ 		break;
+ 	case REQ_OP_ZONE_RESET:
+ 		cmd->ret = zloop_reset_zone(zlo, rq_zone_no(rq));
+@@ -981,7 +992,8 @@ static int zloop_ctl_add(struct zloop_options *opts)
+ 	struct queue_limits lim = {
+ 		.max_hw_sectors		= SZ_1M >> SECTOR_SHIFT,
+ 		.chunk_sectors		= opts->zone_size,
+-		.features		= BLK_FEAT_ZONED,
++		.features		= BLK_FEAT_ZONED | BLK_FEAT_WRITE_CACHE,
++
+ 	};
+ 	unsigned int nr_zones, i, j;
+ 	struct zloop_device *zlo;
 -- 
 2.51.0
 
