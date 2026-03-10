@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CBC3803CD;
-	Tue, 10 Mar 2026 11:26:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 296463803CD;
+	Tue, 10 Mar 2026 11:26:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141968; cv=none; b=cNQTTYdWQ3UDiGllMdE7IAAVz3ndYOQoCJ7OlQWp4YE8dK9kwjFI99S31CaMqP7Ly8zORHv0FE2HjcUPSzGGVXZrj8wLvSs9BVQgu/G5umwAsn4SBJjv0eXc6wo/+Ht0QXGtPZssrYs8OVGjrsA5agE1W4BL6z5swX//3Rt60jo=
+	t=1773141969; cv=none; b=R/I+OkiZH9ZeOe/u/9dwXbwzZ27uwIEL/J7tAWRPWRVgLP48yjMdS7YGz2RRY0vMN2Gg5/OfnYDpZiSXzBfgZXLkj18HvOW9uOAb3OaPGvXvJTKxMigkNofCSv9nI2UpRoxUZM42qy2aJFRuLCWxqemBnhjyBvMrP4TOXxhIVIU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141968; c=relaxed/simple;
-	bh=zwtFhZSOzF4Pd8RJ8fcX2SXxKDLmzq0A7Thh6bMYxBA=;
+	s=arc-20240116; t=1773141969; c=relaxed/simple;
+	bh=XaZYmPXj8HL1xMTAd2KDjT4nMHvNk3lcqK6w4LvHTFI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=omAJDE4uhHvuP4jvpLz2yaGJMoZyMo0c49Nb3d88te8IAkLvTP4PZRrH5Ksw95NOufr9hP1ccjswUOqjiFG0CxTSKIwBrgizdLwgGiZaxLSODX2sibWMVC3SleGnsT17Mt+IMktKkF8a9AkNAGaY2WrVUK5MEmGs+HGDow2fGG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqxo6UMj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DOZ7l/oGgz6YYx7HCO9jV8ERaHfSlZmBz1nnjpbVBmV2n89vAen4cajrf+bE1Yx3GQ7e5U00v3e+rowskA8Shlz/Q+6gVjsjkJuDPuHu2mOYSjRBsK4xrJ4tPn701x6y/F3C3WRxPOFcEquNorx0S/sZ8cerXxRthN64/95VD2c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GNlqy8/5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqxo6UMj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7736BC2BCB0;
-	Tue, 10 Mar 2026 11:26:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GNlqy8/5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EE82C2BC9E;
+	Tue, 10 Mar 2026 11:26:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141968;
-	bh=zwtFhZSOzF4Pd8RJ8fcX2SXxKDLmzq0A7Thh6bMYxBA=;
+	s=k20201202; t=1773141969;
+	bh=XaZYmPXj8HL1xMTAd2KDjT4nMHvNk3lcqK6w4LvHTFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqxo6UMjZJmMOVfJbCLqn8cAmKdUSWzSQUdr1k14PeQSQP6WrFkQr6sJo8wiuU4wX
-	 m5nUJATzQL3bX8bacAAP0L9kjfhtb5FCsApYsthkPGq9Dm6fmgDoHONosHwPr7Dp6U
-	 AF0OuzssVUmR9VuuH8vo2pYtaUh+IhOiGaxweiawFInsBmwxS1EGqsRj5YeJj5NIKX
-	 WfYIlHUsWOCe4n01EHo1Qf0Tg3E/FpaVgAETLMu2eZYNkymOP0ejiq+DNE5qF0TeSB
-	 oyMz44pDu9eW6ZRAq9Vi6T8wtSWjCiaTpBQx1MDfDSXZtlqCLtjDXpdoqVu96FMFE1
-	 f9ByuegWUqGYQ==
+	b=GNlqy8/5A+j5B6bxv2WU8Q+rfuD8cJO6b44thLnJ7w1/+Tia67SrKs3aXEZXHqyii
+	 m522rTB0K4CIT3kfy40GqHipZXmQ7LBwLIDAilkLPDV0mFmLuh3azICSzsKUv9qmpp
+	 2jYGttNz0fu4ZjKv9dGgN1tv3DyleV59er3NePlb02lezRxQ3JwyOsX8GyiZGE6f4b
+	 9OxD/vrhUocbbhgESkll3yq4HCfC9eNlRHs6R24vcnjGVv6WTVgxFEXuukyV/hU6z2
+	 MGOiOsRZvsVNAL4kI6Hs8RcKGEWL/u6XtTv6QmXXuRDOiWoenI59jDrmtnntkUxiit
+	 ZO95VAJLavlZA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Sean Christopherson <seanjc@google.com>,
-	Alessandro Ratti <alessandro@0x65c.net>,
-	syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com,
+Cc: Johan Hovold <johan@kernel.org>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 092/314] KVM: x86: Ignore -EBUSY when checking nested events from vcpu_block()
-Date: Tue, 10 Mar 2026 07:15:51 -0400
-Message-ID: <90e5986f5e84d659a83679cff08d3a8ea4420890.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 093/314] drm/tegra: dsi: fix device leak on probe
+Date: Tue, 10 Mar 2026 07:15:52 -0400
+Message-ID: <91453c91d4e9e86b775b25523450aae41b69cc8e.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,56 +48,46 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit ead63640d4e72e6f6d464f4e31f7fecb79af8869 ]
+[ Upstream commit bfef062695570842cf96358f2f46f4c6642c6689 ]
 
-Ignore -EBUSY when checking nested events after exiting a blocking state
-while L2 is active, as exiting to userspace will generate a spurious
-userspace exit, usually with KVM_EXIT_UNKNOWN, and likely lead to the VM's
-demise.  Continuing with the wakeup isn't perfect either, as *something*
-has gone sideways if a vCPU is awakened in L2 with an injected event (or
-worse, a nested run pending), but continuing on gives the VM a decent
-chance of surviving without any major side effects.
+Make sure to drop the reference taken when looking up the companion
+(ganged) device and its driver data during probe().
 
-As explained in the Fixes commits, it _should_ be impossible for a vCPU to
-be put into a blocking state with an already-injected event (exception,
-IRQ, or NMI).  Unfortunately, userspace can stuff MP_STATE and/or injected
-events, and thus put the vCPU into what should be an impossible state.
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
 
-Don't bother trying to preserve the WARN, e.g. with an anti-syzkaller
-Kconfig, as WARNs can (hopefully) be added in paths where _KVM_ would be
-violating x86 architecture, e.g. by WARNing if KVM attempts to inject an
-exception or interrupt while the vCPU isn't running.
-
-Cc: Alessandro Ratti <alessandro@0x65c.net>
-Cc: stable@vger.kernel.org
-Fixes: 26844fee6ade ("KVM: x86: never write to memory from kvm_vcpu_check_block()")
-Fixes: 45405155d876 ("KVM: x86: WARN if a vCPU gets a valid wakeup that KVM can't yet inject")
-Link: https://syzkaller.appspot.com/text?tag=ReproC&x=10d4261a580000
-Reported-by: syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/671bc7a7.050a0220.455e8.022a.GAE@google.com
-Link: https://patch.msgid.link/20260109030657.994759-1-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: e94236cde4d5 ("drm/tegra: dsi: Add ganged mode support")
+Fixes: 221e3638feb8 ("drm/tegra: Fix reference leak in tegra_dsi_ganged_probe")
+Cc: stable@vger.kernel.org	# 3.19: 221e3638feb8
+Cc: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Link: https://patch.msgid.link/20251121164201.13188-1-johan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/x86.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/tegra/dsi.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-index aeb7f902b3c7f..2ab445c0126b3 100644
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -11598,8 +11598,7 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
- 	if (is_guest_mode(vcpu)) {
- 		int r = kvm_check_nested_events(vcpu);
+diff --git a/drivers/gpu/drm/tegra/dsi.c b/drivers/gpu/drm/tegra/dsi.c
+index ddfb2858acbf1..5aa78b902adac 100644
+--- a/drivers/gpu/drm/tegra/dsi.c
++++ b/drivers/gpu/drm/tegra/dsi.c
+@@ -1540,11 +1540,9 @@ static int tegra_dsi_ganged_probe(struct tegra_dsi *dsi)
+ 			return -EPROBE_DEFER;
  
--		WARN_ON_ONCE(r == -EBUSY);
--		if (r < 0)
-+		if (r < 0 && r != -EBUSY)
- 			return 0;
+ 		dsi->slave = platform_get_drvdata(gangster);
+-
+-		if (!dsi->slave) {
+-			put_device(&gangster->dev);
++		put_device(&gangster->dev);
++		if (!dsi->slave)
+ 			return -EPROBE_DEFER;
+-		}
+ 
+ 		dsi->slave->master = dsi;
  	}
- 
 -- 
 2.51.0
 
