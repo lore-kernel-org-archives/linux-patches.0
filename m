@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 575F73803EA;
-	Tue, 10 Mar 2026 11:26:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48CBC3803CD;
+	Tue, 10 Mar 2026 11:26:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141967; cv=none; b=aJEz5KH/uqdeLeNmYl5keZcxvCexq3x8m3xw5vysNsABec6vbsFEeafXuQdKCWrxg/oegpyC7P1ko4I6NR9NYcOednqEC3AG4NYc6HmaycNTR6jxD8YcrIdddaC20tiK1huVg+NiSo5KsDWTifAKfBb0xiqdx5E9UlshBWc5OFE=
+	t=1773141968; cv=none; b=cNQTTYdWQ3UDiGllMdE7IAAVz3ndYOQoCJ7OlQWp4YE8dK9kwjFI99S31CaMqP7Ly8zORHv0FE2HjcUPSzGGVXZrj8wLvSs9BVQgu/G5umwAsn4SBJjv0eXc6wo/+Ht0QXGtPZssrYs8OVGjrsA5agE1W4BL6z5swX//3Rt60jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141967; c=relaxed/simple;
-	bh=jTSiQC9oqbGfXKaSWS6H02vRGlzbFECj8Q/rj0mZThc=;
+	s=arc-20240116; t=1773141968; c=relaxed/simple;
+	bh=zwtFhZSOzF4Pd8RJ8fcX2SXxKDLmzq0A7Thh6bMYxBA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EJQzCsGXZqcvrA41W1paB41cYImFsmUhqmsGNpMDukNThemYrbKzdlw1+kK5y21hkYCa5FLzdyUBJp9AHxL/jEMLJthsOOqkE/mRqgy+ghJunwt9pZzBw9RTCLG+hY7rySy5VemP1i1fl7pKJuQT8DTIQlSut0MAjl+tnJGKEAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=H8rd/wjt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=omAJDE4uhHvuP4jvpLz2yaGJMoZyMo0c49Nb3d88te8IAkLvTP4PZRrH5Ksw95NOufr9hP1ccjswUOqjiFG0CxTSKIwBrgizdLwgGiZaxLSODX2sibWMVC3SleGnsT17Mt+IMktKkF8a9AkNAGaY2WrVUK5MEmGs+HGDow2fGG8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=gqxo6UMj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="H8rd/wjt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 949F8C2BC86;
-	Tue, 10 Mar 2026 11:26:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="gqxo6UMj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7736BC2BCB0;
+	Tue, 10 Mar 2026 11:26:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141967;
-	bh=jTSiQC9oqbGfXKaSWS6H02vRGlzbFECj8Q/rj0mZThc=;
+	s=k20201202; t=1773141968;
+	bh=zwtFhZSOzF4Pd8RJ8fcX2SXxKDLmzq0A7Thh6bMYxBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H8rd/wjty3U7qb4aEpaRIWNqPUlemXrbqVDp5M97HSm1lQAPa7mzFGs/02A02JhCU
-	 YRoqjP2b4Abyd8HGQ4WU67/t7JxQRu6ecz3bYwBrUHmN1kv8/m5uk9UDEmvKO/Diq+
-	 rAwPxTDeNaQyPi9+xh5hDm1dPgCb3LOsFhjCGC1B3NWKjf3NdYHHfiF1IcHAHQvsDZ
-	 6WZkVJ4cEMp220LTKJHX8XdfFExk5+XmRjwiFMHE4pr4SzObuisB14jKCXCvNn0Mkn
-	 aJMtLavenodSBOCf1CfsflbBHgWxDY0o4YmrNUZ0r7Zs54Z50gdCwtfFHuOiN6pzux
-	 annt3wo+NpZCQ==
+	b=gqxo6UMjZJmMOVfJbCLqn8cAmKdUSWzSQUdr1k14PeQSQP6WrFkQr6sJo8wiuU4wX
+	 m5nUJATzQL3bX8bacAAP0L9kjfhtb5FCsApYsthkPGq9Dm6fmgDoHONosHwPr7Dp6U
+	 AF0OuzssVUmR9VuuH8vo2pYtaUh+IhOiGaxweiawFInsBmwxS1EGqsRj5YeJj5NIKX
+	 WfYIlHUsWOCe4n01EHo1Qf0Tg3E/FpaVgAETLMu2eZYNkymOP0ejiq+DNE5qF0TeSB
+	 oyMz44pDu9eW6ZRAq9Vi6T8wtSWjCiaTpBQx1MDfDSXZtlqCLtjDXpdoqVu96FMFE1
+	 f9ByuegWUqGYQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zilin Guan <zilin@seu.edu.cn>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Sean Christopherson <seanjc@google.com>,
+	Alessandro Ratti <alessandro@0x65c.net>,
+	syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 091/314] media: tegra-video: Fix memory leak in __tegra_channel_try_format()
-Date: Tue, 10 Mar 2026 07:15:50 -0400
-Message-ID: <4b9f633e072523b4419c6a69372abb5bfb412d8e.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 092/314] KVM: x86: Ignore -EBUSY when checking nested events from vcpu_block()
+Date: Tue, 10 Mar 2026 07:15:51 -0400
+Message-ID: <90e5986f5e84d659a83679cff08d3a8ea4420890.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,75 +49,56 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 43e5302d22334f1183dec3e0d5d8007eefe2817c ]
+[ Upstream commit ead63640d4e72e6f6d464f4e31f7fecb79af8869 ]
 
-The state object allocated by __v4l2_subdev_state_alloc() must be freed
-with __v4l2_subdev_state_free() when it is no longer needed.
+Ignore -EBUSY when checking nested events after exiting a blocking state
+while L2 is active, as exiting to userspace will generate a spurious
+userspace exit, usually with KVM_EXIT_UNKNOWN, and likely lead to the VM's
+demise.  Continuing with the wakeup isn't perfect either, as *something*
+has gone sideways if a vCPU is awakened in L2 with an injected event (or
+worse, a nested run pending), but continuing on gives the VM a decent
+chance of surviving without any major side effects.
 
-In __tegra_channel_try_format(), two error paths return directly after
-v4l2_subdev_call() fails, without freeing the allocated 'sd_state'
-object. This violates the requirement and causes a memory leak.
+As explained in the Fixes commits, it _should_ be impossible for a vCPU to
+be put into a blocking state with an already-injected event (exception,
+IRQ, or NMI).  Unfortunately, userspace can stuff MP_STATE and/or injected
+events, and thus put the vCPU into what should be an impossible state.
 
-Fix this by introducing a cleanup label and using goto statements in the
-error paths to ensure that __v4l2_subdev_state_free() is always called
-before the function returns.
+Don't bother trying to preserve the WARN, e.g. with an anti-syzkaller
+Kconfig, as WARNs can (hopefully) be added in paths where _KVM_ would be
+violating x86 architecture, e.g. by WARNing if KVM attempts to inject an
+exception or interrupt while the vCPU isn't running.
 
-Fixes: 56f64b82356b7 ("media: tegra-video: Use zero crop settings if subdev has no get_selection")
-Fixes: 1ebaeb09830f3 ("media: tegra-video: Add support for external sensor capture")
+Cc: Alessandro Ratti <alessandro@0x65c.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 26844fee6ade ("KVM: x86: never write to memory from kvm_vcpu_check_block()")
+Fixes: 45405155d876 ("KVM: x86: WARN if a vCPU gets a valid wakeup that KVM can't yet inject")
+Link: https://syzkaller.appspot.com/text?tag=ReproC&x=10d4261a580000
+Reported-by: syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/671bc7a7.050a0220.455e8.022a.GAE@google.com
+Link: https://patch.msgid.link/20260109030657.994759-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/tegra-video/vi.c | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ arch/x86/kvm/x86.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/staging/media/tegra-video/vi.c b/drivers/staging/media/tegra-video/vi.c
-index c9276ff76157f..14b327afe045e 100644
---- a/drivers/staging/media/tegra-video/vi.c
-+++ b/drivers/staging/media/tegra-video/vi.c
-@@ -438,7 +438,7 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
- 		.target = V4L2_SEL_TGT_CROP_BOUNDS,
- 	};
- 	struct v4l2_rect *try_crop;
--	int ret;
-+	int ret = 0;
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index aeb7f902b3c7f..2ab445c0126b3 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11598,8 +11598,7 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
+ 	if (is_guest_mode(vcpu)) {
+ 		int r = kvm_check_nested_events(vcpu);
  
- 	subdev = tegra_channel_get_remote_source_subdev(chan);
- 	if (!subdev)
-@@ -482,8 +482,10 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
- 		} else {
- 			ret = v4l2_subdev_call(subdev, pad, get_selection,
- 					       NULL, &sdsel);
--			if (ret)
--				return -EINVAL;
-+			if (ret) {
-+				ret = -EINVAL;
-+				goto out_free;
-+			}
+-		WARN_ON_ONCE(r == -EBUSY);
+-		if (r < 0)
++		if (r < 0 && r != -EBUSY)
+ 			return 0;
+ 	}
  
- 			try_crop->width = sdsel.r.width;
- 			try_crop->height = sdsel.r.height;
-@@ -495,14 +497,15 @@ static int __tegra_channel_try_format(struct tegra_vi_channel *chan,
- 
- 	ret = v4l2_subdev_call(subdev, pad, set_fmt, sd_state, &fmt);
- 	if (ret < 0)
--		return ret;
-+		goto out_free;
- 
- 	v4l2_fill_pix_format(pix, &fmt.format);
- 	chan->vi->ops->vi_fmt_align(pix, fmtinfo->bpp);
- 
-+out_free:
- 	__v4l2_subdev_state_free(sd_state);
- 
--	return 0;
-+	return ret;
- }
- 
- static int tegra_channel_try_format(struct file *file, void *fh,
 -- 
 2.51.0
 
