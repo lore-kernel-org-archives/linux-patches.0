@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D1A386C02;
-	Tue, 10 Mar 2026 11:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 229D33859CE;
+	Tue, 10 Mar 2026 11:21:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141662; cv=none; b=IFPS34H58BxM1xTb7i3B62Tv3UbpnbL8UVyGpbM+0PIwH4xM8eKy4jSu9VAux6stitclKzIIms2pK7J4cc+684cUr5bgp5un2ABCGtLHoccZqpIIsg86JMC9VXky0JdoJ1/w89coiSjtmxUHyf4+/EExwYhQCh8Y1eIhg/F7+8c=
+	t=1773141663; cv=none; b=ohU/58qVAHk8sorYMBfWKDzyTu9F3wvNyUpaC9V4Ykgs1AnqylW3vhZqNPdY8ESX+M10dHS5zWW2BWQRhfDVL6VujnPRYBTd3xGaXkDllLzCCldIoRkNusUeqyMzxYSuUZPoAdwK/QuxRaXU5B+r/uFdwJyJeN4OeBIZfcFGnkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141662; c=relaxed/simple;
-	bh=C+eWog7JoMIEXV5o4imtsRWCvpVE3z/HqZkN7rheiCo=;
+	s=arc-20240116; t=1773141663; c=relaxed/simple;
+	bh=Lq34gKS0CEe5kroUw8u6Jnz0iOVKaelNfEAOG7QtBS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u0wuJ8YCHEMT/QnyXxi0HjjebRlmAt3F6SxVEaI0RWRkYLNM4okvsX7wZmutlX86Xv8h6zpHDmHIn/81Xh1EPB9YPbLLDDYq1L0mewf6dir+XEIVUiWHYkgKWKL0ery3fIh9WT+5uGRQ1MsOAumzMTFwxUCrcC1lPLvLi4gGfoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UTzE9cov; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XG0v1s3cesZr9oSPGhFF1aW3683fowwcE3KKw6EVS2TjtQr4N4f+gt51QSAVCUwrkMrXeKq9EPnrsJ+B7Ro5Iqk2uIy8+taSmPnhJmFpkmD2XvgZicuOtysHxJYjVopM6/g4E+iRLs8unL2a+8TgS8Gla2kDRvUPEH91c+vB9c0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rrPsSu9f; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UTzE9cov"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85107C2BC9E;
-	Tue, 10 Mar 2026 11:21:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rrPsSu9f"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66CBBC19423;
+	Tue, 10 Mar 2026 11:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141662;
-	bh=C+eWog7JoMIEXV5o4imtsRWCvpVE3z/HqZkN7rheiCo=;
+	s=k20201202; t=1773141663;
+	bh=Lq34gKS0CEe5kroUw8u6Jnz0iOVKaelNfEAOG7QtBS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTzE9covShyotfRXRA+kvCkRFaxsH4IqUjw9tKTP5YWfxshKosyhE+LHPJRYSaT30
-	 /adH+m+1ULOX4VlVmAhbGcBpeLpgub9wfNiZ3dRwVo30bpPkmmfcafQN+lvzMverSk
-	 tuqjkuXaYRrgw5dq+jW7feVgDQdKPJNWWMhcUaSZ7M6IpyrWF/ncRpuPg84gQJVgIb
-	 /21cJez7SLvmTielt2W/L1N/RyhuTYAqr4QmMj1s+6TtMfRnR4nSi0I18X6QhtdGtr
-	 0MEigU5NSO4ywX7oY/BAUPaaZ8CAXJfYB3KIFrECSrAfG4I+xwQzOaq6c0YRtjU6sR
-	 Dm3QYRuuJqpCg==
+	b=rrPsSu9fNByg2OboxO3D6bw2jHpgKffyt50U8qNgSyUqF2XcNix4GBpSBDJkgYoQH
+	 DG2koqghF4TtIs4T4XViwNOD7doptqq0VidOWpCjruYq9y7d5fc8yHtBqf7fcGpv7k
+	 RZJAyQh+m+eTi1Tjz+r2rLmn3+FOgE6nP6MdPz2lmDRIy/3fWkX05C8A4yXiGC0QbD
+	 krqe7/Ioys2G0p71W+hMbYbPVZv+C0Cunj4RYTPPm6+EGVmOYuxcByzWrSzaKLghqY
+	 kYtROmWaQqcbW+yw8CDMSZXgPjpa1VymDpZyYKaMrF1C7sm1wXQx+8AIhixU6DdYKs
+	 aBiGPQXOravzQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Lizhi Hou <lizhi.hou@amd.com>,
 	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/314] accel/amdxdna: Prevent ubuf size overflow
-Date: Tue, 10 Mar 2026 07:14:48 -0400
-Message-ID: <e6adbc28f1d395eaf9713f40d46c2197bce26bc7.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 030/314] accel/amdxdna: Validate command buffer payload count
+Date: Tue, 10 Mar 2026 07:14:49 -0400
+Message-ID: <133df64fe3ea424277aa9a179bb25a00bf6e2b58.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,47 +50,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 03808abb1d868aed7478a11a82e5bb4b3f1ca6d6 ]
+[ Upstream commit 901ec3470994006bc8dd02399e16b675566c3416 ]
 
-The ubuf size calculation may overflow, resulting in an undersized
-allocation and possible memory corruption.
+The count field in the command header is used to determine the valid
+payload size. Verify that the valid payload does not exceed the remaining
+buffer space.
 
-Use check_add_overflow() helpers to validate the size calculation before
-allocation.
-
-Fixes: bd72d4acda10 ("accel/amdxdna: Support user space allocated buffer")
+Fixes: aac243092b70 ("accel/amdxdna: Add command execution")
 Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
 Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260217192815.1784689-1-lizhi.hou@amd.com
+Link: https://patch.msgid.link/20260219211946.1920485-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/amdxdna/amdxdna_ubuf.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_ctx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/amdxdna/amdxdna_ubuf.c b/drivers/accel/amdxdna/amdxdna_ubuf.c
-index 9e3b3b055caa8..62a478f6b45fb 100644
---- a/drivers/accel/amdxdna/amdxdna_ubuf.c
-+++ b/drivers/accel/amdxdna/amdxdna_ubuf.c
-@@ -7,6 +7,7 @@
- #include <drm/drm_device.h>
- #include <drm/drm_print.h>
- #include <linux/dma-buf.h>
-+#include <linux/overflow.h>
- #include <linux/pagemap.h>
- #include <linux/vmalloc.h>
+diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
+index 856fb25086f12..cfee89681ff3c 100644
+--- a/drivers/accel/amdxdna/amdxdna_ctx.c
++++ b/drivers/accel/amdxdna/amdxdna_ctx.c
+@@ -104,7 +104,10 @@ void *amdxdna_cmd_get_payload(struct amdxdna_gem_obj *abo, u32 *size)
  
-@@ -176,7 +177,10 @@ struct dma_buf *amdxdna_get_ubuf(struct drm_device *dev,
- 			goto free_ent;
+ 	if (size) {
+ 		count = FIELD_GET(AMDXDNA_CMD_COUNT, cmd->header);
+-		if (unlikely(count <= num_masks)) {
++		if (unlikely(count <= num_masks ||
++			     count * sizeof(u32) +
++			     offsetof(struct amdxdna_cmd, data[0]) >
++			     abo->mem.size)) {
+ 			*size = 0;
+ 			return NULL;
  		}
- 
--		exp_info.size += va_ent[i].len;
-+		if (check_add_overflow(exp_info.size, va_ent[i].len, &exp_info.size)) {
-+			ret = -EINVAL;
-+			goto free_ent;
-+		}
- 	}
- 
- 	ubuf->nr_pages = exp_info.size >> PAGE_SHIFT;
 -- 
 2.51.0
 
