@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E665387362;
-	Tue, 10 Mar 2026 11:14:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBA7389DEC;
+	Tue, 10 Mar 2026 11:14:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141293; cv=none; b=MkcwXFuMPt57/xt6Z+783pajt14Cu1F79B048nOh+zL2VekN1aVMcI0b0p+wRUaU9saVrvjvQNV4fLuqZsygiG3P9dn1Ibq1byo2Tcb4WCPaeyAcOsb7cxR0vSaWek/eOUNak/r4rIRcIXKaj8zCIKpXc+uM3pKZyGD47VoUPsM=
+	t=1773141294; cv=none; b=djaQ/vAToMSKHuDg0/OyKobpsoc+yQ1r5E8oTTr/ksr5tRbL67SAAKPLiBRPmvd9CrLaPZjpNwTyitCudED+ap58hHR3oRYWDREqj+Uwy9IzqGSejeW+FfzljwERLA4h4Zaydutd+s9Y80pKVslJEiKaMruoGRXtDeMG++jADxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141293; c=relaxed/simple;
-	bh=v9hWWMA8CXsJIY+g8KeSYE4twmJI6BQ2yRWT84uXZ9c=;
+	s=arc-20240116; t=1773141294; c=relaxed/simple;
+	bh=b77evelmrioGAea7LJxU/VVceNUhyBhSI9PkT/YkNFY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSjrrJrEteKilK5Lsi6ucqnOAX+Hgk3Evqslxt60tYFWVTIMmyMdv7TrmuooOzMbPWk585Wu/Dcvi2aDJ23RMHPnc3WYt5e49Ke2fHxv0JqpUamGbMzD37cYGojcnsAAABubwiLmPtRUbW6gamOtL6G0IYGuQtG1fzaUo5Cvsq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gpz40Vg5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l01NqocioYqzLPTdFZ8AdgZzcFGq5ygTwFwh9DHvJH9eUpztcfgG0RuCrC5XH1IDqSSfRNtS3vS3Fc8EmW7pDNLwghWZmLcMaqTl5Es5yKm0ZAjboFJb8VTQTi2hdG8D0MiSIo3B+67uQOsCmeA5Lm6pqG/DxfROvzIM/9tTmtE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GLxt0D0w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gpz40Vg5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 910BCC2BCB0;
-	Tue, 10 Mar 2026 11:14:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GLxt0D0w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8352DC2BCAF;
+	Tue, 10 Mar 2026 11:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141293;
-	bh=v9hWWMA8CXsJIY+g8KeSYE4twmJI6BQ2yRWT84uXZ9c=;
+	s=k20201202; t=1773141294;
+	bh=b77evelmrioGAea7LJxU/VVceNUhyBhSI9PkT/YkNFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gpz40Vg5uqalFY2rza4eyMWF+sCcFJ8bYOq8M1BmVTz4oct8mqqkeGWYn+5dSs6zC
-	 dayxd/3b1WpnuBGrEZECFzQP+SRRpMCce3v4lorlaTrkl6baRSDYzchQHxXOetDRNd
-	 4+oP3zQdlj2euLRaFBRJHWBFbqcCmXUUR5JGy37MXH+p3hlEfuKVAllriS43tP/jCS
-	 dMNR+sboAFUEUCkQZ3L8WnoZi4dBK3EP4W7uO87hQgctRB1SumVwDb3TiTmrN/wsoC
-	 yvoJy5h/vjsz1NYIGKhggIw1cho5QdVXhZ/+2QHpsJlqWPRb2Xyh9RxqHvf4fUVn6c
-	 iq/fsVUDXpKOw==
+	b=GLxt0D0wCpmGwGYrnZFbDrIwlIjYWHYotb9GcTaj8nEfXv0jls5aAiAJ1aCnpfIrA
+	 T64nDUw4zHhXtSuYL9XUij5N4kjh/2P92taWmt1rt/Xvv6DxyjALmqPCRqACXHDzy/
+	 swiHMc0bOd7Sa9VzvBkRe/YvBhsqYTtsoKxZKuw3RymsyPZbFBZJcpGncdIFUXtfW6
+	 tTrT/3IAqu37EspYXAydoIOa9XNFPOFJsEHi9TJqCoVyCvwb9O+s1mjnWjz6lImrsz
+	 3C6xP6wH7AWJdPOd8SDcYvJL1oa3ZX9SCC0+EYqLl098dL6YvkO2feEwMG861fn49e
+	 7JqJvTrqebSbg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 297/311] xdp: use modulo operation to calculate XDP frag tailroom
-Date: Tue, 10 Mar 2026 07:05:44 -0400
-Message-ID: <47293be2485f025cc9a03f9bb5c7fe7495b8e6b9.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 298/311] xsk: introduce helper to determine rxq->frag_size
+Date: Tue, 10 Mar 2026 07:05:45 -0400
+Message-ID: <abc997be2cf54492d535869cde7a9edd5726531b.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -51,61 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 88b6b7f7b216108a09887b074395fa7b751880b1 ]
+[ Upstream commit 16394d80539937d348dd3b9ea32415c54e67a81b ]
 
-The current formula for calculating XDP tailroom in mbuf packets works only
-if each frag has its own page (if rxq->frag_size is PAGE_SIZE), this
-defeats the purpose of the parameter overall and without any indication
-leads to negative calculated tailroom on at least half of frags, if shared
-pages are used.
+rxq->frag_size is basically a step between consecutive strictly aligned
+frames. In ZC mode, chunk size fits exactly, but if chunks are unaligned,
+there is no safe way to determine accessible space to grow tailroom.
 
-There are not many drivers that set rxq->frag_size. Among them:
-* i40e and enetc always split page uniformly between frags, use shared
-  pages
-* ice uses page_pool frags via libeth, those are power-of-2 and uniformly
-  distributed across page
-* idpf has variable frag_size with XDP on, so current API is not applicable
-* mlx5, mtk and mvneta use PAGE_SIZE or 0 as frag_size for page_pool
+Report frag_size to be zero, if chunks are unaligned, chunk_size otherwise.
 
-As for AF_XDP ZC, only ice, i40e and idpf declare frag_size for it. Modulo
-operation yields good results for aligned chunks, they are all power-of-2,
-between 2K and PAGE_SIZE. Formula without modulo fails when chunk_size is
-2K. Buffers in unaligned mode are not distributed uniformly, so modulo
-operation would not work.
-
-To accommodate unaligned buffers, we could define frag_size as
-data + tailroom, and hence do not subtract offset when calculating
-tailroom, but this would necessitate more changes in the drivers.
-
-Define rxq->frag_size as an even portion of a page that fully belongs to a
-single frag. When calculating tailroom, locate the data start within such
-portion by performing a modulo operation on page offset.
-
-Fixes: bf25146a5595 ("bpf: add frags support to the bpf_xdp_adjust_tail() API")
-Acked-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/20260305111253.2317394-2-larysa.zaremba@intel.com
+Link: https://patch.msgid.link/20260305111253.2317394-3-larysa.zaremba@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/net/xdp_sock_drv.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 51318cb40f778..f82996e63dd72 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4156,7 +4156,8 @@ static int bpf_xdp_frags_increase_tail(struct xdp_buff *xdp, int offset)
- 	if (!rxq->frag_size || rxq->frag_size > xdp->frame_sz)
- 		return -EOPNOTSUPP;
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index aefc368449d59..6b9ebae2dc952 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -51,6 +51,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+ 	return xsk_pool_get_chunk_size(pool) - xsk_pool_get_headroom(pool);
+ }
  
--	tailroom = rxq->frag_size - skb_frag_size(frag) - skb_frag_off(frag);
-+	tailroom = rxq->frag_size - skb_frag_size(frag) -
-+		   skb_frag_off(frag) % rxq->frag_size;
- 	if (unlikely(offset > tailroom))
- 		return -EINVAL;
++static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
++{
++	return pool->unaligned ? 0 : xsk_pool_get_chunk_size(pool);
++}
++
+ static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
+ 					 struct xdp_rxq_info *rxq)
+ {
+@@ -337,6 +342,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+ 	return 0;
+ }
  
++static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
++{
++	return 0;
++}
++
+ static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
+ 					 struct xdp_rxq_info *rxq)
+ {
 -- 
 2.51.0
 
