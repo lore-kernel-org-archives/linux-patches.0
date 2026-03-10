@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B5A6387361;
-	Tue, 10 Mar 2026 11:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564C7387590;
+	Tue, 10 Mar 2026 11:25:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141953; cv=none; b=a28oul4cGuVtBn4dtaczDUwkdvsMzfvjJCaouMCKa0uTOx5P+ETYy7glPpnQEPHEopvEiPJnr1nNDk+O+ieTqSpfTEzNVWoBBVDgRsiBjUuQYCXT+Kdrbl/45ubmrVoWA16wl8q2aqYf5TpEKF12+mbKXO42S77kuPQIEo4hiXI=
+	t=1773141954; cv=none; b=sATk4i7Aq5dCvc7yahnug72PHmOBEvXuPVMbpmZWQe5c/MSGZ4zhtMWkdmv5sslldu4oT6Z9IiSq7kpY9EZ06d3oFHRjGN6GK2EY8H9yAb/Y+tNFPbMDy1rLA8zejQN7e1r4JQwXNrDMNzvZ9a3uIXjFWOX1hOnMoKtjzSgvwyA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141953; c=relaxed/simple;
-	bh=+hBmvuL5LI/atyWUlyTwboFN3+GrT4wnMxHJ4YjXFow=;
+	s=arc-20240116; t=1773141954; c=relaxed/simple;
+	bh=Pq9I8JLR/LSH3J30TC7caAscvG+nis5dOoTTQro2kZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PeKZfb7tEeHOahH7R4IdJGhwgcPKMpONsw1OagaNyIx+51Q/GfcZ72ApeyRPE/3Nq/8ZE4F13kWS1XqQWUUy3mqaYxjwdHiOaZUEpMfeGx1Yj/Soz1iv3T3pxV0J2IzdlB3wcOg0piHtf7p/JelluoTBq71Fee3NTN9k465Lo6Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=dRQ4bcFx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AAPiB4/wO68mN4gjk367Y3A/4FeYUtjGg8KrW58NDMwyMWP/vJUn4OxAlKYLNJ25d+cSM/qwmyM4icQSoWUiXgOiBqeR7jsnLosJNe9OXMvun0nbjwYCMmWCzmuJK7ROFVq7SYaK9bjs6m0LCqjkToe3/Tb+YOrUWzRyPsutNgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uv9p30JX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="dRQ4bcFx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27195C2BC86;
-	Tue, 10 Mar 2026 11:25:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uv9p30JX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3088BC2BC86;
+	Tue, 10 Mar 2026 11:25:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141952;
-	bh=+hBmvuL5LI/atyWUlyTwboFN3+GrT4wnMxHJ4YjXFow=;
+	s=k20201202; t=1773141954;
+	bh=Pq9I8JLR/LSH3J30TC7caAscvG+nis5dOoTTQro2kZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRQ4bcFxZZTf5FnNAj157sab5FhhimVd91obk6xty6Rb+L0EEAcrFAxQSA/6tlTzf
-	 RFofMZn+fW0P3X5GyYT+Q5oc6sQRqAYq32Ws2xv5tbrjIkrOsPPtZ3jIn2TA8vlvH5
-	 aLT8A6qDqX1NkGaclpjvXY/VayfnMUV0XVbm+O6jHowYwd5S1ZWSfL9hb9iULwIZli
-	 8GU7meratz8WBG/x/FibZSzYQHOUBqnYWRNhuYRzVG8ViaonvIsudeSSTEh9mknx8p
-	 M0SOxzIybihiEYEVnyzGf6pCihEui+gZ5fZI465K2OdoVroe7ZngREAGg9qzuEeNO+
-	 VlmMAt3NbeG0Q==
+	b=Uv9p30JXiYU/RST3lBbTa0CgC51I9MgevnQYSbl7yTiebGnMjvGDkNSLbKzI5A7SW
+	 kmFcK/NQp3ghUM/lEDhvcEPGayyoOmT6jcjT4Xykp8/m+STFDRsAB9BIKCQjcwz+0D
+	 +CDvrGvNx5bEF9PIUn4PbyOl9gRc8KQj4CHc/9phohD8h1NbwFCiB/t75gV/4g2frh
+	 9udfo8P7v9QZzB5Th85VKXpNqWI0vrTuAP9zb5tT8mUWDQ86Zr0E2qkmj1sQsR1SLP
+	 dZ+Tg9CFFQrfJHHdgDNvzLQ/JA7NaLR7M3iWnePS2YgGt6mI14kh3GXpOP5WKByt36
+	 zNlbGbI5eBcFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Anand Moon <linux.amoon@gmail.com>,
+Cc: Siddharth Vadapalli <s-vadapalli@ti.com>,
+	kernel test robot <lkp@intel.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Manivannan Sadhasivam <mani@kernel.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 076/314] PCI: j721e: Use devm_clk_get_optional_enabled() to get and enable the clock
-Date: Tue, 10 Mar 2026 07:15:35 -0400
-Message-ID: <e5f5a81abb6366e5dfe3aa7c285c284f78feeb63.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 077/314] PCI: j721e: Add config guards for Cadence Host and Endpoint library APIs
+Date: Tue, 10 Mar 2026 07:15:36 -0400
+Message-ID: <0b2739bf291e9c583314137bee3e53954f054dc4.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,83 +50,129 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Anand Moon <linux.amoon@gmail.com>
+From: Siddharth Vadapalli <s-vadapalli@ti.com>
 
-[ Upstream commit 6fad11c61d0dbf87601ab9e2e37cba7a9a427f7b ]
+[ Upstream commit 4b361b1e92be255ff923453fe8db74086cc7cf66 ]
 
-Use devm_clk_get_optional_enabled() helper instead of calling
-devm_clk_get_optional() and then clk_prepare_enable().
+Commit under Fixes enabled loadable module support for the driver under
+the assumption that it shall be the sole user of the Cadence Host and
+Endpoint library APIs. This assumption guarantees that we won't end up
+in a case where the driver is built-in and the library support is built
+as a loadable module.
 
-Assign the result of devm_clk_get_optional_enabled() directly to
-pcie->refclk to avoid using a local 'clk' variable.
+With the introduction of [1], this assumption is no longer valid. The
+SG2042 driver could be built as a loadable module, implying that the
+Cadence Host library is also selected as a loadable module. However, the
+pci-j721e.c driver could be built-in as indicated by CONFIG_PCI_J721E=y
+due to which the Cadence Endpoint library is built-in. Despite the
+library drivers being built as specified by their respective consumers,
+since the 'pci-j721e.c' driver has references to the Cadence Host
+library APIs as well, we run into a build error as reported at [0].
 
-Signed-off-by: Anand Moon <linux.amoon@gmail.com>
+Fix this by adding config guards as a temporary workaround. The proper
+fix is to split the 'pci-j721e.c' driver into independent Host and
+Endpoint drivers as aligned at [2].
+
+[0]: https://lore.kernel.org/r/202511111705.MZ7ls8Hm-lkp@intel.com/
+[1]: commit 1c72774df028 ("PCI: sg2042: Add Sophgo SG2042 PCIe driver")
+[2]: https://lore.kernel.org/r/37f6f8ce-12b2-44ee-a94c-f21b29c98821@app.fastmail.com/
+
+Fixes: a2790bf81f0f ("PCI: j721e: Add support to build as a loadable module")
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202511111705.MZ7ls8Hm-lkp@intel.com/
+Suggested-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Link: https://patch.msgid.link/20251028154229.6774-2-linux.amoon@gmail.com
-Stable-dep-of: 4b361b1e92be ("PCI: j721e: Add config guards for Cadence Host and Endpoint library APIs")
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251117113246.1460644-1-s-vadapalli@ti.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/cadence/pci-j721e.c | 20 +++++---------------
- 1 file changed, 5 insertions(+), 15 deletions(-)
+ drivers/pci/controller/cadence/pci-j721e.c | 41 +++++++++++++---------
+ 1 file changed, 25 insertions(+), 16 deletions(-)
 
 diff --git a/drivers/pci/controller/cadence/pci-j721e.c b/drivers/pci/controller/cadence/pci-j721e.c
-index 5bc5ab20aa6d9..a88b2e52fd782 100644
+index a88b2e52fd782..0413d163cfea0 100644
 --- a/drivers/pci/controller/cadence/pci-j721e.c
 +++ b/drivers/pci/controller/cadence/pci-j721e.c
-@@ -479,7 +479,6 @@ static int j721e_pcie_probe(struct platform_device *pdev)
- 	struct cdns_pcie_ep *ep = NULL;
- 	struct gpio_desc *gpiod;
- 	void __iomem *base;
--	struct clk *clk;
- 	u32 num_lanes;
- 	u32 mode;
- 	int ret;
-@@ -603,19 +602,13 @@ static int j721e_pcie_probe(struct platform_device *pdev)
- 			goto err_get_sync;
+@@ -621,9 +621,11 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+ 			gpiod_set_value_cansleep(gpiod, 1);
  		}
  
--		clk = devm_clk_get_optional(dev, "pcie_refclk");
--		if (IS_ERR(clk)) {
--			ret = dev_err_probe(dev, PTR_ERR(clk), "failed to get pcie_refclk\n");
-+		pcie->refclk = devm_clk_get_optional_enabled(dev, "pcie_refclk");
-+		if (IS_ERR(pcie->refclk)) {
-+			ret = dev_err_probe(dev, PTR_ERR(pcie->refclk),
-+					    "failed to enable pcie_refclk\n");
- 			goto err_pcie_setup;
- 		}
- 
--		ret = clk_prepare_enable(clk);
--		if (ret) {
--			dev_err_probe(dev, ret, "failed to enable pcie_refclk\n");
+-		ret = cdns_pcie_host_setup(rc);
+-		if (ret < 0)
 -			goto err_pcie_setup;
--		}
--		pcie->refclk = clk;
--
- 		/*
- 		 * Section 2.2 of the PCI Express Card Electromechanical
- 		 * Specification (Revision 5.1) mandates that the deassertion
-@@ -629,10 +622,8 @@ static int j721e_pcie_probe(struct platform_device *pdev)
- 		}
- 
- 		ret = cdns_pcie_host_setup(rc);
--		if (ret < 0) {
--			clk_disable_unprepare(pcie->refclk);
-+		if (ret < 0)
- 			goto err_pcie_setup;
--		}
++		if (IS_ENABLED(CONFIG_PCI_J721E_HOST)) {
++			ret = cdns_pcie_host_setup(rc);
++			if (ret < 0)
++				goto err_pcie_setup;
++		}
  
  		break;
  	case PCI_MODE_EP:
-@@ -679,7 +670,6 @@ static void j721e_pcie_remove(struct platform_device *pdev)
+@@ -633,9 +635,11 @@ static int j721e_pcie_probe(struct platform_device *pdev)
+ 			goto err_get_sync;
+ 		}
  
- 	gpiod_set_value_cansleep(pcie->reset_gpio, 0);
+-		ret = cdns_pcie_ep_setup(ep);
+-		if (ret < 0)
+-			goto err_pcie_setup;
++		if (IS_ENABLED(CONFIG_PCI_J721E_EP)) {
++			ret = cdns_pcie_ep_setup(ep);
++			if (ret < 0)
++				goto err_pcie_setup;
++		}
  
--	clk_disable_unprepare(pcie->refclk);
- 	cdns_pcie_disable_phy(cdns_pcie);
- 	j721e_pcie_disable_link_irq(pcie);
- 	pm_runtime_put(dev);
+ 		break;
+ 	}
+@@ -660,10 +664,11 @@ static void j721e_pcie_remove(struct platform_device *pdev)
+ 	struct cdns_pcie_ep *ep;
+ 	struct cdns_pcie_rc *rc;
+ 
+-	if (pcie->mode == PCI_MODE_RC) {
++	if (IS_ENABLED(CONFIG_PCI_J721E_HOST) &&
++	    pcie->mode == PCI_MODE_RC) {
+ 		rc = container_of(cdns_pcie, struct cdns_pcie_rc, pcie);
+ 		cdns_pcie_host_disable(rc);
+-	} else {
++	} else if (IS_ENABLED(CONFIG_PCI_J721E_EP)) {
+ 		ep = container_of(cdns_pcie, struct cdns_pcie_ep, pcie);
+ 		cdns_pcie_ep_disable(ep);
+ 	}
+@@ -729,10 +734,12 @@ static int j721e_pcie_resume_noirq(struct device *dev)
+ 			gpiod_set_value_cansleep(pcie->reset_gpio, 1);
+ 		}
+ 
+-		ret = cdns_pcie_host_link_setup(rc);
+-		if (ret < 0) {
+-			clk_disable_unprepare(pcie->refclk);
+-			return ret;
++		if (IS_ENABLED(CONFIG_PCI_J721E_HOST)) {
++			ret = cdns_pcie_host_link_setup(rc);
++			if (ret < 0) {
++				clk_disable_unprepare(pcie->refclk);
++				return ret;
++			}
+ 		}
+ 
+ 		/*
+@@ -742,10 +749,12 @@ static int j721e_pcie_resume_noirq(struct device *dev)
+ 		for (enum cdns_pcie_rp_bar bar = RP_BAR0; bar <= RP_NO_BAR; bar++)
+ 			rc->avail_ib_bar[bar] = true;
+ 
+-		ret = cdns_pcie_host_init(rc);
+-		if (ret) {
+-			clk_disable_unprepare(pcie->refclk);
+-			return ret;
++		if (IS_ENABLED(CONFIG_PCI_J721E_HOST)) {
++			ret = cdns_pcie_host_init(rc);
++			if (ret) {
++				clk_disable_unprepare(pcie->refclk);
++				return ret;
++			}
+ 		}
+ 	}
+ 
 -- 
 2.51.0
 
