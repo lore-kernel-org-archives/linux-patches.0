@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1612FFDF7;
-	Tue, 10 Mar 2026 11:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BB652FFDF7;
+	Tue, 10 Mar 2026 11:29:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142154; cv=none; b=Th3IK4yXhXqxFkVdJJ0IreYSL9DxselNtguuZBVu7PuVrS7JnlrsCz3muRwgqhjQVe5VhAopEvfJsqeYxcReq5d+d/kat4vZqFuXwjPDCl1YWlNIHEazdl8fQr2+dHI3LeY3bfBWUxpyXW4yKe5P7kXHcwKHbvBiqwmOFbOAPrQ=
+	t=1773142155; cv=none; b=VQgWeFuXmPUR6hctBZC1q36+g7JP2YCufNhq1v6+djdKfC3OkUWmcCh2PYnFBw9JIAan4yB++eIJPP1Wdn3hQiXz6Oc82uJdBrZZVKSTM+xl4V7UXSyQIT/gsPtuuqOi11Hy0s9RhI0SirDg9Tk/BjZPahADcPRkWLNTjDbe6P0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142154; c=relaxed/simple;
-	bh=zOgiKWF+4/k5ddCa77UtIEthe9Cn46C6XEXxI5Zvqgc=;
+	s=arc-20240116; t=1773142155; c=relaxed/simple;
+	bh=vFCkomxdJaZSXeq6qagrIaS9wVggtX/V8K/7PT3j1Y4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R00BX7iZ+PQTT63DX6i8Nf8qhcsDeDwHStfq7DWyGcIh1MJbIVTgpg0YtWpjZXVH0KQM3GoIBJYvbLOHmAcFD5eOZcfefVRDfIflAw7RmDzBMEA3cYHYqx5VqNpkS0uVbAFJikDALucbhMtHpErOHxd4XLHgO0uDSvzqdZW5La0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=C28wl0uG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iUfnWtZKplvkUhl/kkrq5osWxC+QZU8KWMxSDHl5hSp9dfM0RQwUFQ2bhN6qOJNzWbiJxtcHnfYW8NlFMtiHtC8ha/czxgD32YGDSggIci+u0nfQWDYnfk/2Z9sLBRRdVTo32+d1sEThKen1DJ6flpk5xqvkGYUII3w/DS8/P9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QXFsZFlL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="C28wl0uG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B63F5C2BC86;
-	Tue, 10 Mar 2026 11:29:13 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QXFsZFlL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 980C8C2BC86;
+	Tue, 10 Mar 2026 11:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142154;
-	bh=zOgiKWF+4/k5ddCa77UtIEthe9Cn46C6XEXxI5Zvqgc=;
+	s=k20201202; t=1773142155;
+	bh=vFCkomxdJaZSXeq6qagrIaS9wVggtX/V8K/7PT3j1Y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C28wl0uGuJMbLc7woqdqzJDzu6bOahlP7wjxN6unziX+BCzNG3VnLRuVkSpWKEmnW
-	 ElOJ/YbJDYT+wNx6CVgZAl+rIStuHb4YUD8AQs9bOchY4nNCOkhOwhi8vGcYaifq99
-	 AAGivfcpAPW7fxAUbDZVFTJPzLk+y5RMRGc1uddgQJSG2A8FWrPo3L3S/5uNvlpt55
-	 nwo4kZwEMiwYvQq95190xLE7TkVUHCX0PvJ6+I4OzN1h7NwgCc3UH5bwhvDm5XU16Q
-	 dArGM+rOxw1y2d+SWtlCZoxkMHuW8fWtm5pjy5hs7dCw//GjyqISe2/hECOD0oDWwj
-	 d4Ih7WlVVy1oQ==
+	b=QXFsZFlLg2HqhXYU2gMPaZrUaAIXKjSgXKGUlkj0ZhhgPQWxm3gQhBUhvbB9aSGlf
+	 OzxxZITC8ZpWYVErSyRjzk7glOoPKXAiCnH2mhui5LSU6/odEoNsKJ62rdKXHyS2GE
+	 4x2JF+zFVr424v1gmlkP8tp9/BnpzaIt8gZhdtNyqgwuf3DkdswY6ahkqt8NlZCwsz
+	 OBE+fJW1SoKYOSooh7DE2qwtNOYz5O6l6OhIMrgFXFmBAIREfUQIb4wEcEgB8Q9Otf
+	 Kw3PhWykGSvnYYft5ISrXdyLmhqf1VGYGr3B5GO5lE85uHMhhmg44QXTXCfsCIVvV+
+	 fCCPdo/gmcqng==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Julian Orth <ju.orth@gmail.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+Cc: Matthew Brost <matthew.brost@intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Carlos Santa <carlos.santa@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 242/314] drm/syncobj: Fix handle <-> fd ioctls with dirty stack
-Date: Tue, 10 Mar 2026 07:18:21 -0400
-Message-ID: <23368b61ee32d89e5166c48db47ac7f11d650e31.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 243/314] drm/xe: Do not preempt fence signaling CS instructions
+Date: Tue, 10 Mar 2026 07:18:22 -0400
+Message-ID: <d02a803174d3a027f7f82b5d8fbc9304f3b90d7c.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -44,81 +46,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Julian Orth <ju.orth@gmail.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-[ Upstream commit 2e3649e237237258a08d75afef96648dd2b379f7 ]
+[ Upstream commit cdc8a1e11f4d5b480ec750e28010c357185b95a6 ]
 
-Consider the following application:
+If a batch buffer is complete, it makes little sense to preempt the
+fence signaling instructions in the ring, as the largest portion of the
+work (the batch buffer) is already done and fence signaling consists of
+only a few instructions. If these instructions are preempted, the GuC
+would need to perform a context switch just to signal the fence, which
+is costly and delays fence signaling. Avoid this scenario by disabling
+preemption immediately after the BB start instruction and re-enabling it
+after executing the fence signaling instructions.
 
-    #include <fcntl.h>
-    #include <string.h>
-    #include <drm/drm.h>
-    #include <sys/ioctl.h>
-
-    int main(void) {
-        int fd = open("/dev/dri/renderD128", O_RDWR);
-        struct drm_syncobj_create arg1;
-        ioctl(fd, DRM_IOCTL_SYNCOBJ_CREATE, &arg1);
-        struct drm_syncobj_handle arg2;
-        memset(&arg2, 1, sizeof(arg2)); // simulate dirty stack
-        arg2.handle = arg1.handle;
-        arg2.flags = 0;
-        arg2.fd = 0;
-        arg2.pad = 0;
-        // arg2.point = 0; // userspace is required to set point to 0
-        ioctl(fd, DRM_IOCTL_SYNCOBJ_HANDLE_TO_FD, &arg2);
-    }
-
-The last ioctl returns EINVAL because args->point is not 0. However,
-userspace developed against older kernel versions is not aware of the
-new point field and might therefore not initialize it.
-
-The correct check would be
-
-    if (args->flags & DRM_SYNCOBJ_FD_TO_HANDLE_FLAGS_TIMELINE)
-        return -EINVAL;
-
-However, there might already be userspace that relies on this not
-returning an error as long as point == 0. Therefore use the more lenient
-check.
-
-Fixes: c2d3a7300695 ("drm/syncobj: Extend EXPORT_SYNC_FILE for timeline syncobjs")
-Signed-off-by: Julian Orth <ju.orth@gmail.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Link: https://lore.kernel.org/r/20260301-point-v1-1-21fc5fd98614@gmail.com
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Carlos Santa <carlos.santa@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Link: https://patch.msgid.link/20260115004546.58060-1-matthew.brost@intel.com
+(cherry picked from commit 2bcbf2dcde0c839a73af664a3c77d4e77d58a3eb)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_syncobj.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_ring_ops.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_syncobj.c b/drivers/gpu/drm/drm_syncobj.c
-index e1b0fa4000cdd..7eb2cdbc574a0 100644
---- a/drivers/gpu/drm/drm_syncobj.c
-+++ b/drivers/gpu/drm/drm_syncobj.c
-@@ -900,7 +900,7 @@ drm_syncobj_handle_to_fd_ioctl(struct drm_device *dev, void *data,
- 		return drm_syncobj_export_sync_file(file_private, args->handle,
- 						    point, &args->fd);
+diff --git a/drivers/gpu/drm/xe/xe_ring_ops.c b/drivers/gpu/drm/xe/xe_ring_ops.c
+index d71837773d6c6..e0082b55e2162 100644
+--- a/drivers/gpu/drm/xe/xe_ring_ops.c
++++ b/drivers/gpu/drm/xe/xe_ring_ops.c
+@@ -265,6 +265,9 @@ static void __emit_job_gen12_simple(struct xe_sched_job *job, struct xe_lrc *lrc
  
--	if (args->point)
-+	if (point)
- 		return -EINVAL;
+ 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
  
- 	return drm_syncobj_handle_to_fd(file_private, args->handle,
-@@ -934,7 +934,7 @@ drm_syncobj_fd_to_handle_ioctl(struct drm_device *dev, void *data,
- 							  args->handle,
- 							  point);
++	/* Don't preempt fence signaling */
++	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
++
+ 	if (job->user_fence.used) {
+ 		i = emit_flush_dw(dw, i);
+ 		i = emit_store_imm_ppgtt_posted(job->user_fence.addr,
+@@ -328,6 +331,9 @@ static void __emit_job_gen12_video(struct xe_sched_job *job, struct xe_lrc *lrc,
  
--	if (args->point)
-+	if (point)
- 		return -EINVAL;
+ 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
  
- 	return drm_syncobj_fd_to_handle(file_private, args->fd,
++	/* Don't preempt fence signaling */
++	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
++
+ 	if (job->user_fence.used) {
+ 		i = emit_flush_dw(dw, i);
+ 		i = emit_store_imm_ppgtt_posted(job->user_fence.addr,
+@@ -377,6 +383,9 @@ static void __emit_job_gen12_render_compute(struct xe_sched_job *job,
+ 
+ 	i = emit_bb_start(batch_addr, ppgtt_flag, dw, i);
+ 
++	/* Don't preempt fence signaling */
++	dw[i++] = MI_ARB_ON_OFF | MI_ARB_DISABLE;
++
+ 	i = emit_render_cache_flush(job, dw, i);
+ 
+ 	if (job->user_fence.used)
 -- 
 2.51.0
 
