@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 061D1389471;
-	Tue, 10 Mar 2026 11:28:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DAA38B7A0;
+	Tue, 10 Mar 2026 11:28:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142131; cv=none; b=i8YA5zZDZK89DGwhyS+bMj6oUN323ms+0fsjtiEbvF15Y4fUg6Ei0db68v+KJ1TD7wp4amyTZuzcGy7NCi6Iw6mlC83C4gVn7dvd7TSxD3CojyrpUl/Vavj7P8BgyBVrOR1c5J8ApHUzY6SzT/d59pKmSeAzecHdBdTDyDzQjnA=
+	t=1773142132; cv=none; b=RjE/Jge3gFRaHf0CBGsNHeIlgKYxq4Kjf9oV6HVwoPURApqUIbB+sH1MbtUiP01QguxVAvQ47LSZ3JccfnKMBxN50RmOSOXGB+b8FIBkPGHo9izPovqCJEr462F8I8KUVF3n0+oCAmC0IX+zWE6lYwhlnu9yy9l41Rw1pOeaAVQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142131; c=relaxed/simple;
-	bh=6cVlYM+xom/ldvAZv/JBjKwJK9GzTSPcAb/IlysbBPE=;
+	s=arc-20240116; t=1773142132; c=relaxed/simple;
+	bh=iA+bb7YCy2vJWAMJVjkWjekAw+Evvtm2/Scw9QkUAVk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o88u2UAXOMmRkrLKJUilWtHub7QMxZx3DohEFciNpClqwUHElvso5Jyky1Gt5OBbY8OkVhoqptPhj3wS49Fvwtq4mQOcDtFEMTko0izxxEQuIOqUu9es5Z2lca0EBb71aVw4JJl3HkY4KRyuR4wPZVNiEQ0bnYW51rdfkxfyz/M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f5JtDtmy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cqSsBw0+HCLbzg8OGLhWQgXs7WtT0WI57fvBjIVHxO+m0bJO/f3zgfnDymSseiJoIwgP14ehGUJQloW5HqraLcQVw+7mH2Qf38o+MfKPlXx7ANw/sBWwySi7lepyIvBFzD51jj+OzwU4EK4Uz2wdec30dFaCbaplrt4Gu/Ytq2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=XeoF5qfR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f5JtDtmy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1AE9C2BC9E;
-	Tue, 10 Mar 2026 11:28:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="XeoF5qfR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A10EC2BC9E;
+	Tue, 10 Mar 2026 11:28:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142130;
-	bh=6cVlYM+xom/ldvAZv/JBjKwJK9GzTSPcAb/IlysbBPE=;
+	s=k20201202; t=1773142132;
+	bh=iA+bb7YCy2vJWAMJVjkWjekAw+Evvtm2/Scw9QkUAVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f5JtDtmy3JC08uLcgq0GzPTYuMLoQz9Kra+cZfdQJJbzDSSKrABD1UO+F6uBL+QTw
-	 kayZF6AktPWC0LSzC8K0RZuDzoDCwNB6cKbCPKPDyZ2mH7l7ae080FoQsW2nLZgGKg
-	 pzA3BwP/dY4QdJAtNZsyxd1cVSD+LBeAUEAamsBlfvOFvcyRmA0RC3S4NxmjDS1vc7
-	 zs+RQ5OmTgDSYvDUa5wZ1w4xeaxZGvT+qHGSdaprsAD8WSQ66MCb3vuhlaodg7auy+
-	 HXnvtvKrCQZ64m8rX+CXVQpHIIonpijeJQa1wX5tU3WzJfR/0HXTudh+F2hHZe1o+F
-	 Grgwafw7MiPJQ==
+	b=XeoF5qfRakhjoF0MSL8yduJWQF2lMqbP+3FkAtBr/09v7xnLeTldLGYyYJb30+ytZ
+	 zoMpWYD7zG07VbgwckQEPyuvTaMHT3EgfrWXxXbgZnyKdyvozVD3CZaMTu6+2BxE+1
+	 brdBF2dkrbWa6MJKpZGFlsbBqwGDQ7TPVqq5svN01546oxTiF9so+pkl/bNFrCc1yZ
+	 5/8g3mqE8mGaCDFvwbYJgkzekFDy7wKuPOKTkdgEkn/2V21YgPR0pGXptEPyYNeBjg
+	 pxgQMkfIkYjWvGy9kt3OHZH5oYnEtBVUb299BE4JhRWc4SxvDTPYyOtIsveBjZHPw1
+	 BTkLdwXBFzqFg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Brian Vazquez <brianvv@google.com>,
-	Brett Creeley <brett.creeley@amd.com>,
+Cc: Sreedevi Joshi <sreedevi.joshi@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Simon Horman <horms@kernel.org>,
 	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Eric Dumazet <edumazet@google.com>,
-	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 219/314] idpf: change IRQ naming to match netdev and ethtool queue numbering
-Date: Tue, 10 Mar 2026 07:17:58 -0400
-Message-ID: <1f30b65db9cdec0cc6ac9478b49d452d1c00e69f.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 220/314] idpf: Fix flow rule delete failure due to invalid validation
+Date: Tue, 10 Mar 2026 07:17:59 -0400
+Message-ID: <572dbc6e73a26c3ff6eeef4233552db48e70adf6.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -53,89 +51,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Brian Vazquez <brianvv@google.com>
+From: Sreedevi Joshi <sreedevi.joshi@intel.com>
 
-[ Upstream commit 1500a8662d2d41d6bb03e034de45ddfe6d7d362d ]
+[ Upstream commit 2c31557336a8e4d209ed8d4513cef2c0f15e7ef4 ]
 
-The code uses the vidx for the IRQ name but that doesn't match ethtool
-reporting nor netdev naming, this makes it hard to tune the device and
-associate queues with IRQs. Sequentially requesting irqs starting from
-'0' makes the output consistent.
+When deleting a flow rule using "ethtool -N <dev> delete <location>",
+idpf_sideband_action_ena() incorrectly validates fsp->ring_cookie even
+though ethtool doesn't populate this field for delete operations. The
+uninitialized ring_cookie may randomly match RX_CLS_FLOW_DISC or
+RX_CLS_FLOW_WAKE, causing validation to fail and preventing legitimate
+rule deletions. Remove the unnecessary sideband action enable check and
+ring_cookie validation during delete operations since action validation
+is not required when removing existing rules.
 
-This commit changes the interrupt numbering but preserves the name
-format, maintaining ABI compatibility. Existing tools relying on the old
-numbering are already non-functional, as they lack a useful correlation
-to the interrupts.
-
-Before:
-
-ethtool -L eth1 tx 1 combined 3
-
-grep . /proc/irq/*/*idpf*/../smp_affinity_list
-/proc/irq/67/idpf-Mailbox-0/../smp_affinity_list:0-55,112-167
-/proc/irq/68/idpf-eth1-TxRx-1/../smp_affinity_list:0
-/proc/irq/70/idpf-eth1-TxRx-3/../smp_affinity_list:1
-/proc/irq/71/idpf-eth1-TxRx-4/../smp_affinity_list:2
-/proc/irq/72/idpf-eth1-Tx-5/../smp_affinity_list:3
-
-ethtool -S eth1 | grep -v ': 0'
-NIC statistics:
-     tx_q-0_pkts: 1002
-     tx_q-1_pkts: 2679
-     tx_q-2_pkts: 1113
-     tx_q-3_pkts: 1192 <----- tx_q-3 vs idpf-eth1-Tx-5
-     rx_q-0_pkts: 1143
-     rx_q-1_pkts: 3172
-     rx_q-2_pkts: 1074
-
-After:
-
-ethtool -L eth1 tx 1 combined 3
-
-grep . /proc/irq/*/*idpf*/../smp_affinity_list
-
-/proc/irq/67/idpf-Mailbox-0/../smp_affinity_list:0-55,112-167
-/proc/irq/68/idpf-eth1-TxRx-0/../smp_affinity_list:0
-/proc/irq/70/idpf-eth1-TxRx-1/../smp_affinity_list:1
-/proc/irq/71/idpf-eth1-TxRx-2/../smp_affinity_list:2
-/proc/irq/72/idpf-eth1-Tx-3/../smp_affinity_list:3
-
-ethtool -S eth1 | grep -v ': 0'
-NIC statistics:
-     tx_q-0_pkts: 118
-     tx_q-1_pkts: 134
-     tx_q-2_pkts: 228
-     tx_q-3_pkts: 138 <--- tx_q-3 matches idpf-eth1-Tx-3
-     rx_q-0_pkts: 111
-     rx_q-1_pkts: 366
-     rx_q-2_pkts: 120
-
-Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
-Signed-off-by: Brian Vazquez <brianvv@google.com>
-Reviewed-by: Brett Creeley <brett.creeley@amd.com>
+Fixes: ada3e24b84a0 ("idpf: add flow steering support")
+Signed-off-by: Sreedevi Joshi <sreedevi.joshi@intel.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
 Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/idpf/idpf_ethtool.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index 83cc9504e7e1a..c859665b2dc89 100644
---- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-+++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -4038,7 +4038,7 @@ static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
- 			continue;
+diff --git a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+index 3e191cf528b69..6c0a9296eccc8 100644
+--- a/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
++++ b/drivers/net/ethernet/intel/idpf/idpf_ethtool.c
+@@ -291,9 +291,6 @@ static int idpf_del_flow_steer(struct net_device *netdev,
+ 	vport_config = vport->adapter->vport_config[np->vport_idx];
+ 	user_config = &vport_config->user_config;
  
- 		name = kasprintf(GFP_KERNEL, "%s-%s-%s-%d", drv_name, if_name,
--				 vec_name, vidx);
-+				 vec_name, vector);
- 
- 		err = request_irq(irq_num, idpf_vport_intr_clean_queues, 0,
- 				  name, q_vector);
+-	if (!idpf_sideband_action_ena(vport, fsp))
+-		return -EOPNOTSUPP;
+-
+ 	rule = kzalloc(struct_size(rule, rule_info, 1), GFP_KERNEL);
+ 	if (!rule)
+ 		return -ENOMEM;
 -- 
 2.51.0
 
