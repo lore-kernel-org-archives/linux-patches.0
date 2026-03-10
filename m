@@ -1,41 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B929B2BF3E2;
-	Tue, 10 Mar 2026 11:13:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D84536EA89;
+	Tue, 10 Mar 2026 11:13:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141190; cv=none; b=rZPPBF0zSczom0gQHwwXrsOsTzzEwPlkwYZOg+Ffi32OVB0Yotws1XIIufXXlZxhRLv8jG+R+9XQnoezaG3h2Ji0pa/xnTSVSVg8mUclaPGCp316HqOBiRPZ86NKkapp68YhyjlwvgrHq6Ua8f3MO9yidjJx+7xWtkehj7tbc5k=
+	t=1773141192; cv=none; b=blYdmFuwGiRgNL8BRdBulaEV1WVbBnTozocmSUbfSqgxwCQyVfGcaY3vXBqONv11+iFwbwS4KOLOryaKcQqIGxpMGKdFtyTjAdq94W9an/sitYPLu5fTWwJwiPyScTZvdvMthwDzgYZDQiNSCy4UDG7ty0jsZ9hGpspZxXNoUmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141190; c=relaxed/simple;
-	bh=mlQ7wq4cT2Sy37F+WntUNQO4KaMSxv1m+wkku500wfg=;
+	s=arc-20240116; t=1773141192; c=relaxed/simple;
+	bh=YRqP8H0xxAxN3QCBRsb7WufeTldbbzCibZ1GAVGFHXw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BdGnq2GjFz4ILYu5Yg2FZeDtIeTNQkmLcGPGinuranKKapn04By/McY78NZREg62KABNydrj3R1jtrDbYTHfK0VJVguWf6izt0kXAtJkcP/OweNGr96bPFg2v41txZQec2dhsWaxXU9J0Acb4l4+F4MZR5hCTL+xU/QPMoUO4XM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QT6qFjL3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JT9uHZRTc6pQgYF4t7Y8enYYnYg8mWN7Eap7A65j0dg2HfbZY67NjAJx1ZrfDjMpIxuizyC/2GHjwv2mzk0dibFznr64DiNyXEqOI2P1sLLevtKonukFU/3HboNBw3OOM2Lnd6aAInLV6heQDROOHx+yata16wZGJkEB+dsehHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RoO3s2oM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QT6qFjL3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED4F8C2BC86;
-	Tue, 10 Mar 2026 11:13:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RoO3s2oM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00FEC19423;
+	Tue, 10 Mar 2026 11:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141190;
-	bh=mlQ7wq4cT2Sy37F+WntUNQO4KaMSxv1m+wkku500wfg=;
+	s=k20201202; t=1773141191;
+	bh=YRqP8H0xxAxN3QCBRsb7WufeTldbbzCibZ1GAVGFHXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QT6qFjL3wi09ZPVGi/3xibfWEvQR24dtiGJGbCVUjE0gN914RFXQ7yJVjjp+8swgw
-	 GjnVlbGaJvY3y1nqdq/cWgO8H5gHXgoeNM6EEiNe+RPGrapdjwMkHTSiVbv//Ndg4M
-	 4AsyA49sVCxItmyDkB2Ytx0aFn1zgL8b0ClsgGFAbzjYTsOSLxWzCswXNVi8uA564p
-	 zEpSXI+HecZZkI6s3D7eNeP0DIP00U/8ULCgzjlk2kQZpx3oiX8HmzgE1z1Q60RUtf
-	 AJuIs231x3SbK4AJrCp2eZ0E1UQPYZh7HFChhokZEqwYbPNpO06aP5hG1hie/P9EmH
-	 9xyDNeIq3Sugw==
+	b=RoO3s2oMjl65NVtX9+V+dRyqmjtfrJXFE3yGT69MqyjKd9AqxoacOz6/5+75t6Tlg
+	 8vFUUZCwFpkLzZhiqrRPQ99pfYgwhkxz9cSxz+QEo/sb871/a7X4S6UHprz18pKTM/
+	 mCKkO2UnUYlQVydsAzTau1xS1ja8lgHGM85tl+BLpbLF4ZrFektXsqfonaqCpkGrzB
+	 AMpHPnBILrNZzFR39hUVRcS/rhHgkvnQH+tTBaN8slGI163GC+OpsedWWbMsWM4ynO
+	 tcRL4u4S0Y3s8gaZ4aia3QFIFzcJhTeBci0cCjWkkBnB05TdCaOsYDPlYjQZbS8/Oj
+	 zMOyoCF/bMKKA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Li Li <boolli@google.com>,
+Cc: Brian Vazquez <brianvv@google.com>,
+	Brett Creeley <brett.creeley@amd.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Samuel Salin <Samuel.salin@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 192/311] idpf: increment completion queue next_to_clean in sw marker wait routine
-Date: Tue, 10 Mar 2026 07:03:59 -0400
-Message-ID: <6ea1332dd3e3f17800b9257a661f08a37c85445a.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 193/311] idpf: change IRQ naming to match netdev and ethtool queue numbering
+Date: Tue, 10 Mar 2026 07:04:00 -0400
+Message-ID: <ec01af907ec08deee85eccbe1998056cbc3b0fbc.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,63 +53,89 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Li Li <boolli@google.com>
+From: Brian Vazquez <brianvv@google.com>
 
-[ Upstream commit 712896ac4bce38a965a1c175f6e7804ed0381334 ]
+[ Upstream commit 1500a8662d2d41d6bb03e034de45ddfe6d7d362d ]
 
-Currently, in idpf_wait_for_sw_marker_completion(), when an
-IDPF_TXD_COMPLT_SW_MARKER packet is found, the routine breaks out of
-the for loop and does not increment the next_to_clean counter. This
-causes the subsequent NAPI polls to run into the same
-IDPF_TXD_COMPLT_SW_MARKER packet again and print out the following:
+The code uses the vidx for the IRQ name but that doesn't match ethtool
+reporting nor netdev naming, this makes it hard to tune the device and
+associate queues with IRQs. Sequentially requesting irqs starting from
+'0' makes the output consistent.
 
-    [   23.261341] idpf 0000:05:00.0 eth1: Unknown TX completion type: 5
+This commit changes the interrupt numbering but preserves the name
+format, maintaining ABI compatibility. Existing tools relying on the old
+numbering are already non-functional, as they lack a useful correlation
+to the interrupts.
 
-Instead, we should increment next_to_clean regardless when an
-IDPF_TXD_COMPLT_SW_MARKER packet is found.
+Before:
 
-Tested: with the patch applied, we do not see the errors above from NAPI
-polls anymore.
+ethtool -L eth1 tx 1 combined 3
 
-Fixes: 9d39447051a0 ("idpf: remove SW marker handling from NAPI")
-Signed-off-by: Li Li <boolli@google.com>
+grep . /proc/irq/*/*idpf*/../smp_affinity_list
+/proc/irq/67/idpf-Mailbox-0/../smp_affinity_list:0-55,112-167
+/proc/irq/68/idpf-eth1-TxRx-1/../smp_affinity_list:0
+/proc/irq/70/idpf-eth1-TxRx-3/../smp_affinity_list:1
+/proc/irq/71/idpf-eth1-TxRx-4/../smp_affinity_list:2
+/proc/irq/72/idpf-eth1-Tx-5/../smp_affinity_list:3
+
+ethtool -S eth1 | grep -v ': 0'
+NIC statistics:
+     tx_q-0_pkts: 1002
+     tx_q-1_pkts: 2679
+     tx_q-2_pkts: 1113
+     tx_q-3_pkts: 1192 <----- tx_q-3 vs idpf-eth1-Tx-5
+     rx_q-0_pkts: 1143
+     rx_q-1_pkts: 3172
+     rx_q-2_pkts: 1074
+
+After:
+
+ethtool -L eth1 tx 1 combined 3
+
+grep . /proc/irq/*/*idpf*/../smp_affinity_list
+
+/proc/irq/67/idpf-Mailbox-0/../smp_affinity_list:0-55,112-167
+/proc/irq/68/idpf-eth1-TxRx-0/../smp_affinity_list:0
+/proc/irq/70/idpf-eth1-TxRx-1/../smp_affinity_list:1
+/proc/irq/71/idpf-eth1-TxRx-2/../smp_affinity_list:2
+/proc/irq/72/idpf-eth1-Tx-3/../smp_affinity_list:3
+
+ethtool -S eth1 | grep -v ': 0'
+NIC statistics:
+     tx_q-0_pkts: 118
+     tx_q-1_pkts: 134
+     tx_q-2_pkts: 228
+     tx_q-3_pkts: 138 <--- tx_q-3 matches idpf-eth1-Tx-3
+     rx_q-0_pkts: 111
+     rx_q-1_pkts: 366
+     rx_q-2_pkts: 120
+
+Fixes: d4d558718266 ("idpf: initialize interrupts and enable vport")
+Signed-off-by: Brian Vazquez <brianvv@google.com>
+Reviewed-by: Brett Creeley <brett.creeley@amd.com>
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Tested-by: Samuel Salin <Samuel.salin@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/idpf/idpf_txrx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/intel/idpf/idpf_txrx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/net/ethernet/intel/idpf/idpf_txrx.c b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-index f58f616d87fc4..c558bb9c4dcbb 100644
+index c558bb9c4dcbb..d365564831b0b 100644
 --- a/drivers/net/ethernet/intel/idpf/idpf_txrx.c
 +++ b/drivers/net/ethernet/intel/idpf/idpf_txrx.c
-@@ -2326,7 +2326,7 @@ void idpf_wait_for_sw_marker_completion(const struct idpf_tx_queue *txq)
+@@ -4038,7 +4038,7 @@ static int idpf_vport_intr_req_irq(struct idpf_vport *vport)
+ 			continue;
  
- 	do {
- 		struct idpf_splitq_4b_tx_compl_desc *tx_desc;
--		struct idpf_tx_queue *target;
-+		struct idpf_tx_queue *target = NULL;
- 		u32 ctype_gen, id;
+ 		name = kasprintf(GFP_KERNEL, "%s-%s-%s-%d", drv_name, if_name,
+-				 vec_name, vidx);
++				 vec_name, vector);
  
- 		tx_desc = flow ? &complq->comp[ntc].common :
-@@ -2346,14 +2346,14 @@ void idpf_wait_for_sw_marker_completion(const struct idpf_tx_queue *txq)
- 		target = complq->txq_grp->txqs[id];
- 
- 		idpf_queue_clear(SW_MARKER, target);
--		if (target == txq)
--			break;
- 
- next:
- 		if (unlikely(++ntc == complq->desc_count)) {
- 			ntc = 0;
- 			gen_flag = !gen_flag;
- 		}
-+		if (target == txq)
-+			break;
- 	} while (time_before(jiffies, timeout));
- 
- 	idpf_queue_assign(GEN_CHK, complq, gen_flag);
+ 		err = request_irq(irq_num, idpf_vport_intr_clean_queues, 0,
+ 				  name, q_vector);
 -- 
 2.51.0
 
