@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B30313E3B;
-	Tue, 10 Mar 2026 11:15:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC79A313E3B;
+	Tue, 10 Mar 2026 11:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141302; cv=none; b=XTcNOFvprIXIaR9zAIsgIe9/80bZAvXecxZrR0ukONewlTaUNrhJNp4QzXa8kKCuyUI4YNQm9G/+52rOUTDgUNhuc+4G3YixCHkU33IRyxnCczIbTNow3Ytl6Nxe/Vq3eHvCcg6rdhCxSYhHEeRjYBSlzgdfPoOXPGDJBrWC6hs=
+	t=1773141302; cv=none; b=lLQqsOE5KY137QiuJYBjfhN46/JNYCjUnJ+eiGiO7QdZmWASw75Ny/bZQ69h+kk+/l6sIDTVvI3gqIdovqfp/rwG9iLH1ewptEWMLQxgTI20kJTZ+5YkyZEv0B7pG57LcFM3rOMFd8abZgpzRIpjH5wATpxZjK4kcQff3EWe01Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141302; c=relaxed/simple;
-	bh=9NVMAFvwT3+RjsGo6n7bcBiu9bXtOTxh87GR7Y+PjBA=;
+	bh=Jgj6WcJHSk+ogAnQ8GF87BlSHqpkJHVxuq4jfvRDZFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nBP8VYngb1tdtFpaqnv0j3HbnBtocyM+5lQ8zXkDy5pEDLNr+OHEYspsSFxP55TpJrYaubelur6PhQ61OWEdc/Fh5efCoVCHz5mPBEWjaljk6FXBU4BwNGmree9jUi/C93l39spOujnjshLculKuYMCCogjQ6tZg47uf4z+nzJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FZAfaJAy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tZydkD+BH2T+Ea5Gu+o9RoN/XcVpzC204MJOsw6cDgm1PZ3KnD27D3EiiXX8c+VaxcZBVeY96eyEgnKa/DoGumEA+Ku+FJdsu556ZmGNYlbWrVyJ9OUZKoS7FxfuCiuR/vI03OLs4QvZxUn+/qM/Xp1We1U+jWLjuccBrjDZu/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cfrOY970; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FZAfaJAy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EE69C2BC9E;
-	Tue, 10 Mar 2026 11:15:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cfrOY970"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 170D2C19423;
+	Tue, 10 Mar 2026 11:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141301;
-	bh=9NVMAFvwT3+RjsGo6n7bcBiu9bXtOTxh87GR7Y+PjBA=;
+	s=k20201202; t=1773141302;
+	bh=Jgj6WcJHSk+ogAnQ8GF87BlSHqpkJHVxuq4jfvRDZFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FZAfaJAylLC4wPM2D3FFj+NanJM9IXY3pgTONAO//3ODau0GCLGHSsPElyCwhjUzM
-	 cCsjW5yuk+qjYN9YzEWZQZVRN45oEoMKsopVFj/MtA74WQ9NAEluwfyTkaskZHGPGR
-	 2FOiHZNTzovht7Qg1bNX7mCCEdwEgzcNk3fbA9ovsGry2ImnRbUNAUrMdGxnswu7ZT
-	 FIU5u284N+nMi6eWzC/PHNQlSVnXWBn+Ip1YNQ9RWd4o6j8El3oOJcqZ7wkaEvBvOt
-	 jEuwksTDoZV7xl+6f3UP1xNVRfoQUnKjRTOXvbHAoo0OhyyKSJsjGNIOwEvTwlzpvl
-	 SjfWEgdpl37nA==
+	b=cfrOY9702KeHyhUOVzxLHw5UoN0XHGayLQsIoTp1LH7JMMXkYLIffQU+N9jjzM58U
+	 hBOKX8hZEeT894FIsrI1HkqKE6k/0d0oTD0njV9s7QVF0SxWVyGxKUTkytQrViMqhu
+	 BAcQd7clbLL3ER/5mJm3sPJX7MGPwB8+3KelHsdrmeVhN+puaHrb229Gay69uhp8sw
+	 gOTNd6+2Ok8nzg2SQ1skbVNya0PW1KtkSyx4CGJWLW0tOPuPjt3KTqdFRVIVU33N2W
+	 6AiUsEj6V0QZO+24iwXoz0LgclkP4Y/Iw1GCkg+7yue2LA+ecO1t2ftM7frnCmpzoi
+	 GpwenSk84/KqA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Rob Herring (Arm)" <robh@kernel.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
+Cc: Guenter Roeck <linux@roeck-us.net>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 306/311] accel: ethosu: Fix NPU_OP_ELEMENTWISE validation with scalar
-Date: Tue, 10 Mar 2026 07:05:53 -0400
-Message-ID: <228bb0c3243938f5bdd2e9551a6cd317dd85fa3f.1773140656.git.sashal@kernel.org>
+Subject: [PATCH 6.19 307/311] ata: libata-eh: Fix detection of deferred qc timeouts
+Date: Tue, 10 Mar 2026 07:05:54 -0400
+Message-ID: <bc9fda9f079448f6970a3fc8ce63c8456924618f.1773140656.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,40 +49,51 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Rob Herring (Arm)" <robh@kernel.org>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 838ae99f9a77a5724ee6d4e7b7b1eb079147f888 ]
+[ Upstream commit ee0e6e69a772d601e152e5368a1da25d656122a8 ]
 
-The NPU_OP_ELEMENTWISE instruction uses a scalar value for IFM2 if the
-IFM2_BROADCAST "scalar" mode is set. It is a bit (7) on the u65 and
-part of a field (bits 3:0) on the u85. The driver was hardcoded to the
-u85.
+If the ata_qc_for_each_raw() loop finishes without finding a matching SCSI
+command for any QC, the variable qc will hold a pointer to the last element
+examined, which has the tag i == ATA_MAX_QUEUE - 1. This qc can match the
+port deferred QC (ap->deferred_qc).
 
-Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
-Reviewed-and-Tested-by: Anders Roxell <anders.roxell@linaro.org>
-Link: https://patch.msgid.link/20260218-ethos-fixes-v1-2-be3fa3ea9a30@kernel.org
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+If that happens, the condition qc == ap->deferred_qc evaluates to true
+despite the loop not breaking with a match on the SCSI command for this QC.
+In that case, the error handler mistakenly intercepts a command that has
+not been issued yet and that has not timed out, and thus erroneously
+returning a timeout error.
+
+Fix the problem by checking for i < ATA_MAX_QUEUE in addition to
+qc == ap->deferred_qc.
+
+The problem was found by an experimental code review agent based on
+gemini-3.1-pro while reviewing backports into v6.18.y.
+
+Assisted-by: Gemini:gemini-3.1-pro
+Fixes: eddb98ad9364 ("ata: libata-eh: correctly handle deferred qc timeouts")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+[cassel: modified commit log as suggested by Damien]
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ethosu/ethosu_gem.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/ata/libata-eh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/accel/ethosu/ethosu_gem.c b/drivers/accel/ethosu/ethosu_gem.c
-index 7b073116314ba..4e84481a29d2f 100644
---- a/drivers/accel/ethosu/ethosu_gem.c
-+++ b/drivers/accel/ethosu/ethosu_gem.c
-@@ -417,7 +417,10 @@ static int ethosu_gem_cmdstream_copy_and_validate(struct drm_device *ddev,
- 				return ret;
- 			break;
- 		case NPU_OP_ELEMENTWISE:
--			use_ifm2 = !((st.ifm2.broadcast == 8) || (param == 5) ||
-+			use_scale = ethosu_is_u65(edev) ?
-+				    (st.ifm2.broadcast & 0x80) :
-+				    (st.ifm2.broadcast == 8);
-+			use_ifm2 = !(use_scale || (param == 5) ||
- 				(param == 6) || (param == 7) || (param == 0x24));
- 			use_ifm = st.ifm.broadcast != 8;
- 			ret = calc_sizes_elemwise(ddev, info, cmd, &st, use_ifm, use_ifm2);
+diff --git a/drivers/ata/libata-eh.c b/drivers/ata/libata-eh.c
+index 563432400f727..23be85418b3b1 100644
+--- a/drivers/ata/libata-eh.c
++++ b/drivers/ata/libata-eh.c
+@@ -647,7 +647,7 @@ void ata_scsi_cmd_error_handler(struct Scsi_Host *host, struct ata_port *ap,
+ 				break;
+ 		}
+ 
+-		if (qc == ap->deferred_qc) {
++		if (i < ATA_MAX_QUEUE && qc == ap->deferred_qc) {
+ 			/*
+ 			 * This is a deferred command that timed out while
+ 			 * waiting for the command queue to drain. Since the qc
 -- 
 2.51.0
 
