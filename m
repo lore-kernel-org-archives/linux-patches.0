@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A56F3876D3;
-	Tue, 10 Mar 2026 11:14:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E725389454;
+	Tue, 10 Mar 2026 11:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141280; cv=none; b=aECJ7MCSEruL62T98FZbpzh1xD9YRhy4595dv8yh5f8PYJ0gBzf36FNiTm7wTiBCnImqt2BsLO916n2wUZ8/O1JRfFpIVzVZtiVUAKwFL9uYqBNTWBFM/JUCuZrkI0RX595JHqtJuxtGQpFzPv0WBnTnldGvQ0M6GxeKLN+hKaI=
+	t=1773141281; cv=none; b=h49/ZCWf9WPziV7yw8gcu2mFIkOqr97aXgq7cnh+8VVPshiP0iieu6x8YSqlhkWs3B1ZqRta5cz1t3O1RyclooOYsyC+nRZ4xQxd23Jb9my1zDIJAeOCJ21nyi619zGlBrgF7fkqrZPpHVM6yPNovxn/eoshy1HC0PZhfuRZNu8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141280; c=relaxed/simple;
-	bh=2t1RTEcbXjqdDtKnfkXqzDe00CBL6dp0BU8qb1v/6dw=;
+	s=arc-20240116; t=1773141281; c=relaxed/simple;
+	bh=gsncuWgQ1dyt7iOnGJw9ODTsijHZwte6pXbuQ3dofZ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l8pYLrjhYLD1Ks+9NfRiYGPId6QD3aGZ6107cS54g5V38F06aAwlc+D0ZrtP4CJeAhXSOGW6fzn6A1L4KF6sNwjuWdODTHgX9dfRwq47C2mGKVtcEy11t6YEIVoSafXIxXUZiXbET/ucb5Hz2fXUslPRniPQUADenp87/9yVPZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NkLxNVhQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CCOW78Tbx4hAfJvNSwJsZIpIFFJXT7NjL/knGN8dlz9+o9c7JDI2zFBz8VKZAfvOxnWRFqT+khzm14Ja6TSEgfTvBWFzjHxnaj8nlFQwgYEJJzVzBlEA9Ki2Q29MjGqjWmHc5QTTrr/Ct9UguoSbnIiQQ1LwlmKtaIDl6VAxJm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=F2Y1gUE+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NkLxNVhQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7EDC19423;
-	Tue, 10 Mar 2026 11:14:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="F2Y1gUE+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E3DC2BC9E;
+	Tue, 10 Mar 2026 11:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141280;
-	bh=2t1RTEcbXjqdDtKnfkXqzDe00CBL6dp0BU8qb1v/6dw=;
+	s=k20201202; t=1773141281;
+	bh=gsncuWgQ1dyt7iOnGJw9ODTsijHZwte6pXbuQ3dofZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkLxNVhQyb6eXVldMo72SiHQ8kj9Hqw3+db841WzTk0QD+WSRicS+8pZ6ZPIHpy/c
-	 +EBuwvManVDTdh1AJYSwLyzdJouMDtsTuzrS6AeNGINBdcIVRJl38CBiPwl/pMM9Nt
-	 3Uq8/REtrozVcicYFBEpoO+PK9xYbcPH5/db3cfeSEON4r7KyCOrmlud6WVArfO65M
-	 6Xbjile0jD7Q75tRpjojLVnN22qLgMQxJMLvXDef4CsdzYy+PqduYp+aj8A0PUAl5R
-	 r7ieYUkCb7AYB9Jlar2K6ve7M5RXpeuPF4XCbnhOmH3bhrOyAM/mySRjw2ldrkSM6h
-	 0xYcTVTnCNfdA==
+	b=F2Y1gUE+slhcu8qK1TDd6bowD7Maj7dPGqZfJdA+hsIYO0pdC2HZBnpXS8Y8YZZ1M
+	 MoP4B+aMy37H8b0OqngkTgE8zbqjlk2hNA1dsWJMRlXyWnr04gL7mdHMoOuSSOxvAn
+	 t7N8wAzQgFQCrctffJkUJ44MS2XzHtWU8MP/PhvEQdTzHU4rkl0AUBtIDlnR4dBFrv
+	 PjY02o5Cv0Pxqg3FZVpiNJCCAG/XbMRAkmPA/k7Op1rzvFNRZoPwL3fNiwGHLd0sDn
+	 MJJGFU3xHgqDHByljfYVHnUExBq/KD6E30WBHhp+Vf8oJHfNw2QmkGBAgoboCMsx8e
+	 4v3OOSmsXolHw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 283/311] net: stmmac: Improve double VLAN handling
-Date: Tue, 10 Mar 2026 07:05:30 -0400
-Message-ID: <52fef791fff6f3ad659ac92e962046133ed8a067.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 284/311] net: stmmac: Fix VLAN HW state restore
+Date: Tue, 10 Mar 2026 07:05:31 -0400
+Message-ID: <e560b703032599331d53ee43361f00651e8c458f.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,150 +50,123 @@ Content-Transfer-Encoding: 8bit
 
 From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit e38200e361cbe331806dc454c76c11c7cd95e1b9 ]
+[ Upstream commit bd7ad51253a76fb35886d01cfe9a37f0e4ed6709 ]
 
-The double VLAN bits (EDVLP, ESVL, DOVLTC) are handled inconsistently
-between the two vlan_update_hash() implementations:
+When the network interface is opened or resumed, a DMA reset is performed,
+which resets all hardware state, including VLAN state. Currently, only
+the resume path is restoring the VLAN state via
+stmmac_restore_hw_vlan_rx_fltr(), but that is incomplete: the VLAN hash
+table and the VLAN_TAG control bits are not restored.
 
-- dwxgmac2_update_vlan_hash() explicitly clears the double VLAN bits when
-is_double is false, meaning that adding a 802.1Q VLAN will disable
-double VLAN mode:
+Therefore, add stmmac_vlan_restore(), which restores the full VLAN
+state by updating both the HW filter entries and the hash table, and
+call it from both the open and resume paths.
 
-  $ ip link add link eth0 name eth0.200 type vlan id 200 protocol 802.1ad
-  $ ip link add link eth0 name eth0.100 type vlan id 100
-  # Double VLAN bits no longer set
+The VLAN restore is moved outside of phylink_rx_clk_stop_block/unblock
+in the resume path because receive clock stop is already disabled when
+stmmac supports VLAN.
 
-- vlan_update_hash() sets these bits and only clears them when the last
-VLAN has been removed, so double VLAN mode remains enabled even after all
-802.1AD VLANs are removed.
+Also, remove the hash readback code in vlan_restore_hw_rx_fltr() that
+attempts to restore VTHM by reading VLAN_HASH_TABLE, as it always reads
+zero after DMA reset, making it dead code.
 
-Address both issues by tracking the number of active 802.1AD VLANs in
-priv->num_double_vlans. Pass this count to stmmac_vlan_update() so both
-implementations correctly set the double VLAN bits when any 802.1AD
-VLAN is active, and clear them only when none remain.
-
-Also update vlan_update_hash() to explicitly clear the double VLAN bits
-when is_double is false, matching the dwxgmac2 behavior.
-
+Fixes: 3cd1cfcba26e ("net: stmmac: Implement VLAN Hash Filtering in XGMAC")
+Fixes: ed64639bc1e0 ("net: stmmac: Add support for VLAN Rx filtering")
 Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260303145828.7845-3-ovidiu.panait.rb@renesas.com
+Link: https://patch.msgid.link/20260303145828.7845-4-ovidiu.panait.rb@renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: bd7ad51253a7 ("net: stmmac: Fix VLAN HW state restore")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h     |  1 +
- .../net/ethernet/stmicro/stmmac/stmmac_main.c    | 16 ++++++++++++----
- .../net/ethernet/stmicro/stmmac/stmmac_vlan.c    |  8 ++++++++
- 3 files changed, 21 insertions(+), 4 deletions(-)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c | 24 +++++++++++++++++--
+ .../net/ethernet/stmicro/stmmac/stmmac_vlan.c | 10 --------
+ 2 files changed, 22 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index aafd8c39be63c..78a18384e5d00 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -322,6 +322,7 @@ struct stmmac_priv {
- 	void __iomem *ptpaddr;
- 	void __iomem *estaddr;
- 	unsigned long active_vlans[BITS_TO_LONGS(VLAN_N_VID)];
-+	unsigned int num_double_vlans;
- 	int sfty_irq;
- 	int sfty_ce_irq;
- 	int sfty_ue_irq;
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index f8e4d436f2967..952ddc08a6653 100644
+index 952ddc08a6653..4ffe151774037 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6727,6 +6727,7 @@ static int stmmac_vlan_update(struct stmmac_priv *priv, bool is_double)
- static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid)
- {
- 	struct stmmac_priv *priv = netdev_priv(ndev);
-+	unsigned int num_double_vlans;
- 	bool is_double = false;
- 	int ret;
+@@ -140,6 +140,7 @@ static void stmmac_tx_timer_arm(struct stmmac_priv *priv, u32 queue);
+ static void stmmac_flush_tx_descriptors(struct stmmac_priv *priv, int queue);
+ static void stmmac_set_dma_operation_mode(struct stmmac_priv *priv, u32 txmode,
+ 					  u32 rxmode, u32 chan);
++static int stmmac_vlan_restore(struct stmmac_priv *priv);
  
-@@ -6738,7 +6739,8 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
- 		is_double = true;
+ #ifdef CONFIG_DEBUG_FS
+ static const struct net_device_ops stmmac_netdev_ops;
+@@ -4064,6 +4065,8 @@ static int __stmmac_open(struct net_device *dev,
  
- 	set_bit(vid, priv->active_vlans);
--	ret = stmmac_vlan_update(priv, is_double);
-+	num_double_vlans = priv->num_double_vlans + is_double;
-+	ret = stmmac_vlan_update(priv, num_double_vlans);
- 	if (ret) {
- 		clear_bit(vid, priv->active_vlans);
- 		goto err_pm_put;
-@@ -6748,11 +6750,13 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
- 		ret = stmmac_add_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
- 		if (ret) {
- 			clear_bit(vid, priv->active_vlans);
--			stmmac_vlan_update(priv, is_double);
-+			stmmac_vlan_update(priv, priv->num_double_vlans);
- 			goto err_pm_put;
- 		}
- 	}
+ 	phylink_start(priv->phylink);
  
-+	priv->num_double_vlans = num_double_vlans;
++	stmmac_vlan_restore(priv);
 +
- err_pm_put:
- 	pm_runtime_put(priv->device);
+ 	ret = stmmac_request_irq(dev);
+ 	if (ret)
+ 		goto irq_error;
+@@ -6805,6 +6808,23 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
+ 	return ret;
+ }
  
-@@ -6765,6 +6769,7 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
- static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vid)
- {
- 	struct stmmac_priv *priv = netdev_priv(ndev);
-+	unsigned int num_double_vlans;
- 	bool is_double = false;
- 	int ret;
- 
-@@ -6776,7 +6781,8 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
- 		is_double = true;
- 
- 	clear_bit(vid, priv->active_vlans);
--	ret = stmmac_vlan_update(priv, is_double);
-+	num_double_vlans = priv->num_double_vlans - is_double;
-+	ret = stmmac_vlan_update(priv, num_double_vlans);
- 	if (ret) {
- 		set_bit(vid, priv->active_vlans);
- 		goto del_vlan_error;
-@@ -6786,11 +6792,13 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
- 		ret = stmmac_del_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
- 		if (ret) {
- 			set_bit(vid, priv->active_vlans);
--			stmmac_vlan_update(priv, is_double);
-+			stmmac_vlan_update(priv, priv->num_double_vlans);
- 			goto del_vlan_error;
- 		}
- 	}
- 
-+	priv->num_double_vlans = num_double_vlans;
++static int stmmac_vlan_restore(struct stmmac_priv *priv)
++{
++	int ret;
 +
- del_vlan_error:
- 	pm_runtime_put(priv->device);
++	if (!(priv->dev->features & NETIF_F_VLAN_FEATURES))
++		return 0;
++
++	if (priv->hw->num_vlan)
++		stmmac_restore_hw_vlan_rx_fltr(priv, priv->dev, priv->hw);
++
++	ret = stmmac_vlan_update(priv, priv->num_double_vlans);
++	if (ret)
++		netdev_err(priv->dev, "Failed to restore VLANs\n");
++
++	return ret;
++}
++
+ static int stmmac_bpf(struct net_device *dev, struct netdev_bpf *bpf)
+ {
+ 	struct stmmac_priv *priv = netdev_priv(dev);
+@@ -8197,10 +8217,10 @@ int stmmac_resume(struct device *dev)
+ 	stmmac_init_coalesce(priv);
+ 	phylink_rx_clk_stop_block(priv->phylink);
+ 	stmmac_set_rx_mode(ndev);
+-
+-	stmmac_restore_hw_vlan_rx_fltr(priv, ndev, priv->hw);
+ 	phylink_rx_clk_stop_unblock(priv->phylink);
+ 
++	stmmac_vlan_restore(priv);
++
+ 	stmmac_enable_all_queues(priv);
+ 	stmmac_enable_all_dma_irq(priv);
  
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-index b18404dd5a8be..de1a70e1c86ef 100644
+index de1a70e1c86ef..fcc34867405ed 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_vlan.c
-@@ -183,6 +183,10 @@ static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
- 			value |= VLAN_EDVLP;
- 			value |= VLAN_ESVL;
- 			value |= VLAN_DOVLTC;
-+		} else {
-+			value &= ~VLAN_EDVLP;
-+			value &= ~VLAN_ESVL;
-+			value &= ~VLAN_DOVLTC;
- 		}
+@@ -139,9 +139,6 @@ static int vlan_del_hw_rx_fltr(struct net_device *dev,
+ static void vlan_restore_hw_rx_fltr(struct net_device *dev,
+ 				    struct mac_device_info *hw)
+ {
+-	void __iomem *ioaddr = hw->pcsr;
+-	u32 value;
+-	u32 hash;
+ 	u32 val;
+ 	int i;
  
- 		writel(value, ioaddr + VLAN_TAG);
-@@ -193,6 +197,10 @@ static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
- 			value |= VLAN_EDVLP;
- 			value |= VLAN_ESVL;
- 			value |= VLAN_DOVLTC;
-+		} else {
-+			value &= ~VLAN_EDVLP;
-+			value &= ~VLAN_ESVL;
-+			value &= ~VLAN_DOVLTC;
+@@ -158,13 +155,6 @@ static void vlan_restore_hw_rx_fltr(struct net_device *dev,
+ 			vlan_write_filter(dev, hw, i, val);
  		}
+ 	}
+-
+-	hash = readl(ioaddr + VLAN_HASH_TABLE);
+-	if (hash & VLAN_VLHT) {
+-		value = readl(ioaddr + VLAN_TAG);
+-		value |= VLAN_VTHM;
+-		writel(value, ioaddr + VLAN_TAG);
+-	}
+ }
  
- 		writel(value | perfect_match, ioaddr + VLAN_TAG);
+ static void vlan_update_hash(struct mac_device_info *hw, u32 hash,
 -- 
 2.51.0
 
