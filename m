@@ -1,45 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E0243CECE;
-	Tue, 10 Mar 2026 09:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D0243CEEA;
+	Tue, 10 Mar 2026 09:01:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133315; cv=none; b=mBBBxSrQ85GQSM2ITR6zvN99TYqrMhX14sXqGzk0XRMCtODkxulb+82jOAyZ53fJUr62uNjQxeTjK7YgtovvHcaB96P+9Mf06NBTAfJXR9WLoWAyLt3LhXM3X4rnRo2ZMyMWuFHq7oIPpmIPBmCBkVhC7yn5TQIa3/tiz/X2lls=
+	t=1773133316; cv=none; b=m6I3HM+iEPD27LJpV+LmabHldoe7P2BBnLqVG+R3pxtvJ5S1ORewaOtl2akRGAf0Rc58WbY6Z0Yg8g0ZeFOEyADblte7/ENE+kI3cGkHrZs0ybjxCgzMr+M0l54lb5rUGs+JpZbS0Nn3jFRoWG724QRyeJyCYDY6CMfrtQUp2NU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133315; c=relaxed/simple;
-	bh=qADLJsEOtlwHVdyvIQ5k0hd5TQcGaz9PzQzZoF6moBo=;
+	s=arc-20240116; t=1773133316; c=relaxed/simple;
+	bh=0y7pePMiKjtG4s8II6vL3wSpGu+6QoNp5FvL6Tug0e4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Akk81rvrthoGKCQSWeY8KcPktXCzwGNk0tB9h/YdAkr79xWx7AlCjiSwsXBh77sZPw5N0BqSyRWu375v8p84Ebe2oS3mFnF2GqLauz6k1vxtg2f4vqsr7VjCqeJG8v6Uz6T66krUufvB4PBB759DyPb6YR95pykyUJGin+PMoFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ciOetug8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JIdJsEkN4DEaU2yIKQB39GG5p0MjHrUwe+BnS2VN5Hbl78m+K747mJOR27pr7XixEx5VRo2dFsdcsLdq0u2b5ze0Wtf+hwYKGTxplnkv199YKqvDZ/7vj0R/xi4vp5axZZCOSD8WJWbmtdw0/48IHtf2MYE3Hopya8Q09I6uOHU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=avAMOXuI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ciOetug8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1401CC2BC86;
-	Tue, 10 Mar 2026 09:01:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="avAMOXuI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A688C2BC87;
+	Tue, 10 Mar 2026 09:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133314;
-	bh=qADLJsEOtlwHVdyvIQ5k0hd5TQcGaz9PzQzZoF6moBo=;
+	s=k20201202; t=1773133315;
+	bh=0y7pePMiKjtG4s8II6vL3wSpGu+6QoNp5FvL6Tug0e4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ciOetug8b1De1UuRxheXHQVr4CoJcD+RtuBqwaAt2O5tw8gbXhDWG4rBQfKyJbOlO
-	 lLtQUaVSQKQkSdOklgTpSDr1KNatMNt+ZcMLCjR3aG5WxrpGasOo9TJx6strVyAw4w
-	 2CIgOzfbIHvLrX5q7ak3Ox2a5/Jd+obcHqSbS/EqYAVhmQLmH4V0EFGoHjw2o1/MXa
-	 zraZOFyI9ta3YPoq108aUDqBe3RV6kG0pviaqXUMQV7e9LpChIeVk6LpDdkcfTWtmF
-	 t8veOpNwoMbm0dyvUq8jDRH/Mh6JXHMuzaoObXFQCpbSS99hFSHftD0lm57XrxEyy0
-	 8WxkAqbYX8FCQ==
+	b=avAMOXuIbG+7TL5yqKGhjcwOKEYlPFjR1xFZpJm2EZvYeHRbwRYxLi7NzSorXe0gm
+	 fpLEnsF3bQxFK5SlMGzk+nxOqqSJGwp4K1NRwbEX5YI+dm+iG+h8H0PY2Ez6Au6GgF
+	 fbKm9BGZDnborJHytsCVTiW9EJvdexwCclhBWc4j9dJejQlBC3DbhxkVJAoa3cJ+Z9
+	 byIrKfCQnPEseqJ5h0t4NeuJikkLoHkokZgPB7oKBBHVC9/LM9yZZhXnC2oA1xmlah
+	 c14crjSWnGN+hloquEmYDeHe/u3AqghzXsBa8NQ594caV6LQHRabMYIjPc3qCRjDmE
+	 P/reofocQH/UA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	bo.liu@senarytech.com,
+	shengjiu.wang@gmail.com,
+	Xiubo.Lee@gmail.com,
+	lgirdwood@gmail.com,
 	perex@perex.cz,
 	tiwai@suse.com,
 	linux-sound@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: hda/senary: Ensure EAPD is enabled during init
-Date: Tue, 10 Mar 2026 05:01:05 -0400
-Message-ID: <20260310090145.2709021-5-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] ASoC: fsl_easrc: Fix event generation in fsl_easrc_iec958_set_reg()
+Date: Tue, 10 Mar 2026 05:01:06 -0400
+Message-ID: <20260310090145.2709021-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -54,136 +56,119 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 7ae0d8f1abbbba6f98cac735145e1206927c67d9 ]
+[ Upstream commit 31ddc62c1cd92e51b9db61d7954b85ae2ec224da ]
 
-The driver sets spec->gen.own_eapd_ctl to take manual control of the
-EAPD (External Amplifier). However, senary_init does not turn on the
-EAPD, while senary_shutdown turns it off.
+ALSA controls should return 1 if the value in the control changed but the
+control put operation fsl_easrc_set_reg() only returns 0 or a negative
+error code, causing ALSA to not generate any change events. Add a suitable
+check by using regmap_update_bits_check() with the underlying regmap, this
+is more clearly and simply correct than trying to verify that one of the
+generic ops is exactly equivalent to this one.
 
-Since the generic driver skips EAPD handling when own_eapd_ctl is set,
-the EAPD remains off after initialization (e.g., after resume), leaving
-the codec in a non-functional state.
-
-Explicitly call senary_auto_turn_eapd in senary_init to ensure the EAPD
-is enabled and the codec is functional.
-
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Link: https://patch.msgid.link/20260303081516.583438-1-wangdich9700@163.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://patch.msgid.link/20260205-asoc-fsl-easrc-fix-events-v1-2-39d4c766918b@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-So 6.12.y is an active LTS. The driver exists there (since v6.11) but in
-its old form. A backport would need adaptation.
+The driver has been present since 2020 (v5.8 timeframe), so it exists in
+all current stable trees.
 
 ## Analysis
 
 **What the commit fixes:**
-
-This commit fixes a real functional bug in the Senarytech HDA audio
-codec driver. The problem:
-
-1. The driver sets `spec->gen.own_eapd_ctl = 1` during probe, telling
-   the generic HDA framework "I'll manage EAPD myself, don't touch it"
-2. `senary_shutdown()`/`senary_suspend()` turns EAPD **off** (to avoid
-   spurious noises during reboot/suspend)
-3. `senary_init()` (called during resume and initial setup) **never
-   turns EAPD back on**
-4. Since the generic framework skips EAPD because `own_eapd_ctl` is set,
-   EAPD remains off
-5. Result: **codec is non-functional after resume** - no audio output
-
-This is an asymmetry bug that has existed since the driver was first
-introduced in v6.11. The Conexant driver (which senarytech is based on)
-correctly handles this by calling `cx_auto_turn_eapd()` in its init
-function; the senarytech driver forgot to include this.
+The `fsl_easrc_set_reg()` function is an ALSA control `.put` callback.
+Per ALSA API contract, `.put` callbacks must return 1 if the value
+changed, 0 if unchanged, or negative on error. The original code always
+returned 0 on success (via `snd_soc_component_write()`), never returning
+1, which means ALSA never generated change notification events to
+userspace when the control value was updated.
 
 **The fix:**
-- Adds `senary_auto_turn_eapd(codec, spec->num_eapds, spec->eapds,
-  true)` to `senary_init()`
-- Adds a `dynamic_eapd` field (currently never set to true) to match the
-  Conexant driver's pattern, where dynamic EAPD control via the vmaster
-  hook makes the unconditional enable unnecessary
-- The actual fix is 3 lines of effective code change
+Replaces `snd_soc_component_write()` with `regmap_update_bits_check()`
+which provides a `changed` boolean output. The function now returns
+`changed` (0 or 1) on success, correctly implementing the ALSA control
+API.
 
 **Stable criteria assessment:**
-- **Fixes a real bug:** Yes - audio completely broken after resume
-- **Obviously correct:** Yes - mirrors the exact pattern from Conexant
-  driver; simple symmetry fix
-- **Small and contained:** Yes - 3 functional lines in one file
-- **No new features:** The `dynamic_eapd` field addition is structural
-  preparation matching Conexant, but it's never set to true, so it's
-  inert
-- **User impact:** HIGH - any user with Senarytech SN6186 codec loses
-  audio after suspend/resume
+1. **Obviously correct and tested**: Yes - authored and signed off by
+   Mark Brown (ASoC maintainer). The pattern is well-established across
+   many similar fixes in ASoC (I found 15+ similar "Fix event
+   generation" commits).
+2. **Fixes a real bug**: Yes - missing change events means userspace
+   applications (e.g., PulseAudio, PipeWire, ALSA mixer tools) won't be
+   notified of control changes, causing incorrect UI state or behavior.
+3. **Small and contained**: Yes - changes only a few lines in a single
+   function, in a single file.
+4. **No new features**: Correct - this is purely a bug fix restoring
+   proper API semantics.
+5. **Risk**: Very low - the `regmap_update_bits_check()` API has been
+   available for a long time, and the change is a well-understood
+   pattern used across many ASoC drivers.
 
-**Dependency concerns:**
-- The driver was rewritten in commit 3cea413834503 (v6.17) - function
-  names changed from `senary_auto_init` to `senary_init`
-- For stable trees 6.12.y through 6.16.y, the patch needs adaptation to
-  the old function names
-- For stable trees older than 6.11, the driver doesn't exist (N/A)
-- The fix itself is conceptually simple and can be adapted
-
-**Risk assessment:** Very low. This is a trivially correct fix that
-mirrors an established pattern from the parent Conexant driver. The code
-path is init-only and simply enables the external amplifier that
-shutdown already knows how to disable.
+**Scope**: The change is surgical - it replaces
+`snd_soc_component_write()` with `regmap_update_bits_check()` and
+adjusts the return value logic. The semantic behavior is the same
+(writing the register value) but now it also detects whether the value
+actually changed.
 
 **Verification:**
-- `git show eb882afcfa839` confirmed the original driver (v6.11) had the
-  same bug - `senary_auto_init()` never called EAPD enable while
-  `senary_auto_shutdown()` disabled it
-- `git tag --contains eb882afcfa839` confirmed the driver was first
-  included in v6.11
-- `git tag --contains 3cea413834503` confirmed the rewrite happened in
-  v6.17
-- Examined Conexant driver (`sound/hda/codecs/conexant.c`) lines 189-193
-  and confirmed it has the identical `if (!spec->dynamic_eapd)
-  cx_auto_turn_eapd(...)` pattern in its init function
-- Confirmed `dynamic_eapd` is never set to true in senarytech.c (only
-  declared and checked), so the guard is always entered
-- Read the full senarytech.c and confirmed `own_eapd_ctl = 1` at line
-  182 prevents the generic framework from managing EAPD
-- Confirmed `senary_suspend()` calls `senary_shutdown()` which disables
-  EAPD, creating the asymmetry
-- `git tag --contains 6014e9021b28e` confirmed the file was moved to its
-  current location in v6.17
+- Read the current file at lines 93-110: confirmed the fix is applied
+  and is as described in the diff.
+- `git log` on the file: the driver was introduced in commit
+  955ac624058f9 (2020-04-16), present in all current LTS trees (5.15+,
+  6.1+, 6.6+).
+- Searched for similar "Fix event generation" commits in ASoC: found 15+
+  similar commits following the exact same pattern, indicating this is a
+  well-established class of bug fix that has been widely backported
+  before.
+- The commit is authored by Mark Brown, the ASoC subsystem maintainer,
+  lending high confidence in correctness.
+- The `regmap_update_bits_check()` API has been available since at least
+  v3.x, so no dependency issues for stable trees.
+- Could not verify if the companion commit 8f8d0defdb1a3 (fixing
+  `fsl_easrc_iec958_put_bits()`) would also need backporting - it's a
+  separate but related fix for the same class of bug in the same file.
+
+**YES** - This is a small, surgical bug fix by the ASoC maintainer that
+corrects incorrect ALSA control API behavior (missing change events).
+The pattern is well-established across many ASoC drivers, carries
+minimal risk, and the driver has existed in stable trees since 2020.
 
 **YES**
 
- sound/hda/codecs/senarytech.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/fsl/fsl_easrc.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/hda/codecs/senarytech.c b/sound/hda/codecs/senarytech.c
-index 63cda57cf7868..f4732a8d7955d 100644
---- a/sound/hda/codecs/senarytech.c
-+++ b/sound/hda/codecs/senarytech.c
-@@ -28,6 +28,7 @@ struct senary_spec {
- 	/* extra EAPD pins */
- 	unsigned int num_eapds;
- 	hda_nid_t eapds[4];
-+	bool dynamic_eapd;
- 	hda_nid_t mute_led_eapd;
+diff --git a/sound/soc/fsl/fsl_easrc.c b/sound/soc/fsl/fsl_easrc.c
+index e64a0d97afd0c..733374121196e 100644
+--- a/sound/soc/fsl/fsl_easrc.c
++++ b/sound/soc/fsl/fsl_easrc.c
+@@ -93,14 +93,17 @@ static int fsl_easrc_set_reg(struct snd_kcontrol *kcontrol,
+ 	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
+ 	struct soc_mreg_control *mc =
+ 		(struct soc_mreg_control *)kcontrol->private_value;
++	struct fsl_asrc *easrc = snd_soc_component_get_drvdata(component);
+ 	unsigned int regval = ucontrol->value.integer.value[0];
++	bool changed;
+ 	int ret;
  
- 	unsigned int parse_flags; /* flag for snd_hda_parse_pin_defcfg() */
-@@ -134,8 +135,12 @@ static void senary_init_gpio_led(struct hda_codec *codec)
+-	ret = snd_soc_component_write(component, mc->regbase, regval);
+-	if (ret < 0)
++	ret = regmap_update_bits_check(easrc->regmap, mc->regbase,
++				       GENMASK(31, 0), regval, &changed);
++	if (ret != 0)
+ 		return ret;
  
- static int senary_init(struct hda_codec *codec)
- {
-+	struct senary_spec *spec = codec->spec;
-+
- 	snd_hda_gen_init(codec);
- 	senary_init_gpio_led(codec);
-+	if (!spec->dynamic_eapd)
-+		senary_auto_turn_eapd(codec, spec->num_eapds, spec->eapds, true);
- 	snd_hda_apply_fixup(codec, HDA_FIXUP_ACT_INIT);
+-	return 0;
++	return changed;
+ }
  
- 	return 0;
+ #define SOC_SINGLE_REG_RW(xname, xreg) \
 -- 
 2.51.0
 
