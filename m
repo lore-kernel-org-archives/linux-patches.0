@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A44A5388364;
-	Tue, 10 Mar 2026 11:26:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AC21389462;
+	Tue, 10 Mar 2026 11:26:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141972; cv=none; b=Yv8SM1U80My+m9sjledzprfW+3gJhsz9lqBKF+UwSVEYFQA4ArnDnQ6sBw/5wOpJgjIcy/GOEhAl0BGtDHl+oJtT8Q0AnCdakQd95tOtOOFb5LPYLM3pZ+TdsqSmBB8AJDDT5Fuvg0wwGxAoaH2gGzzntI5uTQIwvcIEyrN44oE=
+	t=1773141973; cv=none; b=HOmsCzgrRpu8YehMTFXk6148ku+C3kNFM69jTwYk5S3RaDcfa/cVTt0MFKBNugjynU47+QLKBsVH6JkWiVrK5giwUFWeEAJ4EMKkNrduc12CGao9mKM8kJQ8gMJblZo6VgySK84xzrhUT0hmFH63QcYO652fz77VluozFmzCXeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141972; c=relaxed/simple;
-	bh=N1keDK2B16HDwjI3CPafDcY8P2v1OPn7mGpx6v28ZRI=;
+	s=arc-20240116; t=1773141973; c=relaxed/simple;
+	bh=9mwgI9UEYVX7zu8edUTD4oGS89ZvugjCqWEkoc6B7PY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fV+LNSvmBAY3s1dc6tkhGahhzDlIpAWlUukPDGHJp9TBjRzTHabYHk2TRrmnsfXgadXmjwef223wbLsDNuqlcED2ZVaYCoLpaz5r2YWwa0rmrJwZvepVHFQl5G1oZdmp3lf2Ir9qZk5DxJ0+7JXdG8CTj1gIM8qfgvo/UjFujOo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=X2iFgiYq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhBSZGBD0A5DHyhKS9VuS4rt7hDtQA9m0GSFXzczGwd9bQlpi0b2gxufwE+KrOMqNH0AkVrOVv1fRMIqOASQOcS9i1ebO0qqkAJebt1ad8C1SyciAVmBodAdP4VgQE21nSMWyx2tfWSpi8KU+R/4hV8CZ/WedWAKg9csRuOnfm8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lvb7pnMk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="X2iFgiYq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBA05C2BCAF;
-	Tue, 10 Mar 2026 11:26:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lvb7pnMk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9CCBC2BC86;
+	Tue, 10 Mar 2026 11:26:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141972;
-	bh=N1keDK2B16HDwjI3CPafDcY8P2v1OPn7mGpx6v28ZRI=;
+	s=k20201202; t=1773141973;
+	bh=9mwgI9UEYVX7zu8edUTD4oGS89ZvugjCqWEkoc6B7PY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2iFgiYqXvDOhacwZr4NYn4LGUmGuV8GUkcBxH9YLSZcR/oDTTibVToVX0cLbElMK
-	 UQMEINQ2elrwfkioA9lm7yOQVGboJBuefCXEsV1leSmV+gq2Qh3UTOkHeQzUsw/VTG
-	 vVDc5d3STJwL/GRIMIKJ4ZmD4bn+OajHc/YdiCPjxtn5cL2nIHgmJlRxirzF1KA2i3
-	 /6N5sL1dy0GVGQFqVkTivacXMZnfHaB/wXvfDeJtLcZjgInn2BPjPmBzWz41kPPa3C
-	 d+Va8q1SyN5saU4sjosL8vWbHJ3CO1kK2aw33/mjYyIIHCa95gq9pn/xXcrtvDeICB
-	 /7VfAxd+U//cg==
+	b=Lvb7pnMkRUzuEqacNeiKKmXDgeTX8B3qiezfs8x2u+7jBf61mPIkWjCuOkt3LBfa3
+	 MN/ssCOVhr03QBFnqvBNWj7Ob+QRebwoo85wv0hCO5A1G50k2Wdgfzzt2N7+A8VUxF
+	 wyjcnjyNRTTlaEOFpXmu+7jHek2GzVo9W5BZUe1oqnpZ+UNWCVJyVy5A70YoxiDnQg
+	 0Y2BktpyIyfL4q9+JI3qageAl9mOzZZU0QHXY49jxhrPNt7wt9iM65xKRfv7JicEhb
+	 wGyC6LbverC8pnKqT4fmfJADiL/z7Hl2bsyOaW1p8kt+KZ/3xkTkK62wG7McUYe4xL
+	 BWdgPAW7tnt3g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Jens Remus <jremus@linux.ibm.com>,
+Cc: Oleg Nesterov <oleg@redhat.com>,
+	Paulo Andrade <pandrade@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 097/314] unwind_user/x86: Teach FP unwind about start of function
-Date: Tue, 10 Mar 2026 07:15:56 -0400
-Message-ID: <30e84d1986eaee7b48635cbaa3030555af19c1a2.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 098/314] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
+Date: Tue, 10 Mar 2026 07:15:57 -0400
+Message-ID: <2e727b9803832730867dab9531b551f701fb5a3f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,270 +49,133 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit ae25884ad749e7f6e0c3565513bdc8aa2554a425 ]
+[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
 
-When userspace is interrupted at the start of a function, before we
-get a chance to complete the frame, unwind will miss one caller.
+This script
 
-X86 has a uprobe specific fixup for this, add bits to the generic
-unwinder to support this.
+	#!/usr/bin/bash
 
-Suggested-by: Jens Remus <jremus@linux.ibm.com>
+	echo 0 > /proc/sys/kernel/randomize_va_space
+
+	echo 'void main(void) {}' > TEST.c
+
+	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
+	gcc -m32 -fcf-protection=branch TEST.c -o test
+
+	bpftrace -e 'uprobe:./test:main {}' -c ./test
+
+"hangs", the probed ./test task enters an endless loop.
+
+The problem is that with randomize_va_space == 0
+get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
+just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
+by the stack vma.
+
+arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
+in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
+vm_unmapped_area() happily returns the high address > TASK_SIZE and then
+get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
+check.
+
+handle_swbp() doesn't report this failure (probably it should) and silently
+restarts the probed insn. Endless loop.
+
+I think that the right fix should change the x86 get_unmapped_area() paths
+to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
+CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
+because ->orig_ax = -1.
+
+But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
+the probed task is 32-bit to make in_ia32_syscall() true.
+
+Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
+Reported-by: Paulo Andrade <pandrade@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20251024145156.GM4068168@noisy.programming.kicks-ass.net
-Stable-dep-of: d55c571e4333 ("x86/uprobes: Fix XOL allocation failure for 32-bit tasks")
+Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/core.c             | 40 ------------------------------
- arch/x86/include/asm/unwind_user.h | 12 +++++++++
- arch/x86/include/asm/uprobes.h     |  9 +++++++
- arch/x86/kernel/uprobes.c          | 32 ++++++++++++++++++++++++
- include/linux/unwind_user_types.h  |  1 +
- kernel/unwind/user.c               | 39 ++++++++++++++++++++++-------
- 6 files changed, 84 insertions(+), 49 deletions(-)
+ arch/x86/kernel/uprobes.c | 24 ++++++++++++++++++++++++
+ include/linux/uprobes.h   |  1 +
+ kernel/events/uprobes.c   | 10 +++++++---
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/events/core.c b/arch/x86/events/core.c
-index 56df4855f38e9..64e2bf2d4a615 100644
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -2846,46 +2846,6 @@ static unsigned long get_segment_base(unsigned int segment)
- 	return get_desc_base(desc);
- }
- 
--#ifdef CONFIG_UPROBES
--/*
-- * Heuristic-based check if uprobe is installed at the function entry.
-- *
-- * Under assumption of user code being compiled with frame pointers,
-- * `push %rbp/%ebp` is a good indicator that we indeed are.
-- *
-- * Similarly, `endbr64` (assuming 64-bit mode) is also a common pattern.
-- * If we get this wrong, captured stack trace might have one extra bogus
-- * entry, but the rest of stack trace will still be meaningful.
-- */
--static bool is_uprobe_at_func_entry(struct pt_regs *regs)
--{
--	struct arch_uprobe *auprobe;
--
--	if (!current->utask)
--		return false;
--
--	auprobe = current->utask->auprobe;
--	if (!auprobe)
--		return false;
--
--	/* push %rbp/%ebp */
--	if (auprobe->insn[0] == 0x55)
--		return true;
--
--	/* endbr64 (64-bit only) */
--	if (user_64bit_mode(regs) && is_endbr((u32 *)auprobe->insn))
--		return true;
--
--	return false;
--}
--
--#else
--static bool is_uprobe_at_func_entry(struct pt_regs *regs)
--{
--	return false;
--}
--#endif /* CONFIG_UPROBES */
--
- #ifdef CONFIG_IA32_EMULATION
- 
- #include <linux/compat.h>
-diff --git a/arch/x86/include/asm/unwind_user.h b/arch/x86/include/asm/unwind_user.h
-index b166e102d4445..c4f1ff8874d67 100644
---- a/arch/x86/include/asm/unwind_user.h
-+++ b/arch/x86/include/asm/unwind_user.h
-@@ -3,6 +3,7 @@
- #define _ASM_X86_UNWIND_USER_H
- 
- #include <asm/ptrace.h>
-+#include <asm/uprobes.h>
- 
- #define ARCH_INIT_USER_FP_FRAME(ws)			\
- 	.cfa_off	=  2*(ws),			\
-@@ -10,6 +11,12 @@
- 	.fp_off		= -2*(ws),			\
- 	.use_fp		= true,
- 
-+#define ARCH_INIT_USER_FP_ENTRY_FRAME(ws)		\
-+	.cfa_off	=  1*(ws),			\
-+	.ra_off		= -1*(ws),			\
-+	.fp_off		= 0,				\
-+	.use_fp		= false,
-+
- static inline int unwind_user_word_size(struct pt_regs *regs)
- {
- 	/* We can't unwind VM86 stacks */
-@@ -22,4 +29,9 @@ static inline int unwind_user_word_size(struct pt_regs *regs)
- 	return sizeof(long);
- }
- 
-+static inline bool unwind_user_at_function_start(struct pt_regs *regs)
-+{
-+	return is_uprobe_at_func_entry(regs);
-+}
-+
- #endif /* _ASM_X86_UNWIND_USER_H */
-diff --git a/arch/x86/include/asm/uprobes.h b/arch/x86/include/asm/uprobes.h
-index 1ee2e5115955c..362210c799987 100644
---- a/arch/x86/include/asm/uprobes.h
-+++ b/arch/x86/include/asm/uprobes.h
-@@ -62,4 +62,13 @@ struct arch_uprobe_task {
- 	unsigned int			saved_tf;
- };
- 
-+#ifdef CONFIG_UPROBES
-+extern bool is_uprobe_at_func_entry(struct pt_regs *regs);
-+#else
-+static bool is_uprobe_at_func_entry(struct pt_regs *regs)
-+{
-+	return false;
-+}
-+#endif /* CONFIG_UPROBES */
-+
- #endif	/* _ASM_UPROBES_H */
 diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
-index 845aeaf36b8d2..7ef0535fcd547 100644
+index 7ef0535fcd547..46aed82243964 100644
 --- a/arch/x86/kernel/uprobes.c
 +++ b/arch/x86/kernel/uprobes.c
-@@ -1819,3 +1819,35 @@ bool arch_uretprobe_is_alive(struct return_instance *ret, enum rp_check ctx,
- 	else
- 		return regs->sp <= ret->stack;
+@@ -1851,3 +1851,27 @@ bool is_uprobe_at_func_entry(struct pt_regs *regs)
+ 
+ 	return false;
  }
 +
-+/*
-+ * Heuristic-based check if uprobe is installed at the function entry.
-+ *
-+ * Under assumption of user code being compiled with frame pointers,
-+ * `push %rbp/%ebp` is a good indicator that we indeed are.
-+ *
-+ * Similarly, `endbr64` (assuming 64-bit mode) is also a common pattern.
-+ * If we get this wrong, captured stack trace might have one extra bogus
-+ * entry, but the rest of stack trace will still be meaningful.
-+ */
-+bool is_uprobe_at_func_entry(struct pt_regs *regs)
++#ifdef CONFIG_IA32_EMULATION
++unsigned long arch_uprobe_get_xol_area(void)
 +{
-+	struct arch_uprobe *auprobe;
++	struct thread_info *ti = current_thread_info();
++	unsigned long vaddr;
 +
-+	if (!current->utask)
-+		return false;
++	/*
++	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
++	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
++	 * vm_unmapped_area_info.high_limit.
++	 *
++	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
++	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
++	 * (falsely) returns true because ->orig_ax == -1.
++	 */
++	if (test_thread_flag(TIF_ADDR32))
++		ti->status |= TS_COMPAT;
++	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++	ti->status &= ~TS_COMPAT;
 +
-+	auprobe = current->utask->auprobe;
-+	if (!auprobe)
-+		return false;
-+
-+	/* push %rbp/%ebp */
-+	if (auprobe->insn[0] == 0x55)
-+		return true;
-+
-+	/* endbr64 (64-bit only) */
-+	if (user_64bit_mode(regs) && is_endbr((u32 *)auprobe->insn))
-+		return true;
-+
-+	return false;
++	return vaddr;
 +}
-diff --git a/include/linux/unwind_user_types.h b/include/linux/unwind_user_types.h
-index 938f7e6233327..412729a269bcc 100644
---- a/include/linux/unwind_user_types.h
-+++ b/include/linux/unwind_user_types.h
-@@ -39,6 +39,7 @@ struct unwind_user_state {
- 	unsigned int				ws;
- 	enum unwind_user_type			current_type;
- 	unsigned int				available_types;
-+	bool					topmost;
- 	bool					done;
++#endif
+diff --git a/include/linux/uprobes.h b/include/linux/uprobes.h
+index ee3d36eda45dd..f548fea2adec8 100644
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -242,6 +242,7 @@ extern void arch_uprobe_clear_state(struct mm_struct *mm);
+ extern void arch_uprobe_init_state(struct mm_struct *mm);
+ extern void handle_syscall_uprobe(struct pt_regs *regs, unsigned long bp_vaddr);
+ extern void arch_uprobe_optimize(struct arch_uprobe *auprobe, unsigned long vaddr);
++extern unsigned long arch_uprobe_get_xol_area(void);
+ #else /* !CONFIG_UPROBES */
+ struct uprobes_state {
+ };
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index 4f42e7af575f5..725c5772429dc 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1694,6 +1694,12 @@ static const struct vm_special_mapping xol_mapping = {
+ 	.mremap = xol_mremap,
  };
  
-diff --git a/kernel/unwind/user.c b/kernel/unwind/user.c
-index 642871527a132..39e2707894447 100644
---- a/kernel/unwind/user.c
-+++ b/kernel/unwind/user.c
-@@ -26,14 +26,12 @@ get_user_word(unsigned long *word, unsigned long base, int off, unsigned int ws)
- 	return get_user(*word, addr);
- }
- 
--static int unwind_user_next_fp(struct unwind_user_state *state)
-+static int unwind_user_next_common(struct unwind_user_state *state,
-+				   const struct unwind_user_frame *frame)
- {
--	const struct unwind_user_frame frame = {
--		ARCH_INIT_USER_FP_FRAME(state->ws)
--	};
- 	unsigned long cfa, fp, ra;
- 
--	if (frame.use_fp) {
-+	if (frame->use_fp) {
- 		if (state->fp < state->sp)
- 			return -EINVAL;
- 		cfa = state->fp;
-@@ -42,7 +40,7 @@ static int unwind_user_next_fp(struct unwind_user_state *state)
- 	}
- 
- 	/* Get the Canonical Frame Address (CFA) */
--	cfa += frame.cfa_off;
-+	cfa += frame->cfa_off;
- 
- 	/* stack going in wrong direction? */
- 	if (cfa <= state->sp)
-@@ -53,19 +51,41 @@ static int unwind_user_next_fp(struct unwind_user_state *state)
- 		return -EINVAL;
- 
- 	/* Find the Return Address (RA) */
--	if (get_user_word(&ra, cfa, frame.ra_off, state->ws))
-+	if (get_user_word(&ra, cfa, frame->ra_off, state->ws))
- 		return -EINVAL;
- 
--	if (frame.fp_off && get_user_word(&fp, cfa, frame.fp_off, state->ws))
-+	if (frame->fp_off && get_user_word(&fp, cfa, frame->fp_off, state->ws))
- 		return -EINVAL;
- 
- 	state->ip = ra;
- 	state->sp = cfa;
--	if (frame.fp_off)
-+	if (frame->fp_off)
- 		state->fp = fp;
-+	state->topmost = false;
- 	return 0;
- }
- 
-+static int unwind_user_next_fp(struct unwind_user_state *state)
++unsigned long __weak arch_uprobe_get_xol_area(void)
 +{
-+#ifdef CONFIG_HAVE_UNWIND_USER_FP
-+	struct pt_regs *regs = task_pt_regs(current);
-+
-+	if (state->topmost && unwind_user_at_function_start(regs)) {
-+		const struct unwind_user_frame fp_entry_frame = {
-+			ARCH_INIT_USER_FP_ENTRY_FRAME(state->ws)
-+		};
-+		return unwind_user_next_common(state, &fp_entry_frame);
-+	}
-+
-+	const struct unwind_user_frame fp_frame = {
-+		ARCH_INIT_USER_FP_FRAME(state->ws)
-+	};
-+	return unwind_user_next_common(state, &fp_frame);
-+#else
-+	return -EINVAL;
-+#endif
++	/* Try to map as high as possible, this is only a hint. */
++	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
 +}
 +
- static int unwind_user_next(struct unwind_user_state *state)
+ /* Slot allocation for XOL */
+ static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
  {
- 	unsigned long iter_mask = state->available_types;
-@@ -118,6 +138,7 @@ static int unwind_user_start(struct unwind_user_state *state)
- 		state->done = true;
- 		return -EINVAL;
+@@ -1709,9 +1715,7 @@ static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
  	}
-+	state->topmost = true;
  
- 	return 0;
- }
+ 	if (!area->vaddr) {
+-		/* Try to map as high as possible, this is only a hint. */
+-		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
+-						PAGE_SIZE, 0, 0);
++		area->vaddr = arch_uprobe_get_xol_area();
+ 		if (IS_ERR_VALUE(area->vaddr)) {
+ 			ret = area->vaddr;
+ 			goto fail;
 -- 
 2.51.0
 
