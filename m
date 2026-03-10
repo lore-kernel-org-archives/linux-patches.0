@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D996B383C64;
-	Tue, 10 Mar 2026 11:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FE53806B8;
+	Tue, 10 Mar 2026 11:06:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140786; cv=none; b=KZ3YPZmokxv6I0VJ63wqVfU96cyqf4btl6RFFZ7k9b1ny+uxJCiigOpKcDKhw6AnKcfC3vpe+eI8JJMrO7oR76Ly8iO0XsX/PB/tFrwdIwrm6Kb0EbrI48YoNPBE2Crs82CVsx2SEcSQ6RhC+IOGHDUOI6kxilFBSUjdBpvCHE4=
+	t=1773140787; cv=none; b=qlR45gTIL/tIjq/1E0nTqPhmUqjDUifmyJyOLq8eaEKJYhmy7oHSFXnChbx1q2eRoMxGCHv+mN12K7ZybuwUuv5paK5RD0jNcp1qT0qy/ah9wXJJis4Kc4o6zg05WOoXlmAey47Bx+ZM8gPsYtTIr2dOSCdfVWgWt64QITNQoW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140786; c=relaxed/simple;
-	bh=DPbDxWEBbQ+O2l4wHsl7Q7P7Q0YhhitlleGbJKNwUS4=;
+	s=arc-20240116; t=1773140787; c=relaxed/simple;
+	bh=leyVqM9zwqijO7gFz1zE7toCQm9JxJte0zszt59PmaA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tAeXfpEH+Zorx6bgaEHq7dwAawqMKhfDUyKWbH4ScwbkY612apvdv9q3aEWF9LLv56KxqaHhzm5h9uVsp9BJOCg1FNsDaI+3lohchEXDBTmPh5a7cAzyZO7kQpN96r3LMYy/FvaSTwkbYQnmedhH+wMT8AnXoY7T7wQBV03wpAg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YBFlUlXP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qd2kj2X/Bvt4T6o6oVAjwONM+SkCBalKOiP2x8SxasuYWzJgIwF7ZcUf1TX3URmO3cnaUQry860I+Z4wXWguqJaSqcTOt0BaBbtNTnuipdudhpeDsfbqJ8RSs4vwvLsCgh7zU0YMy7mqa7Cj/RLS8RMSsO0P1SjWxzXILKz0znA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AG/NCjPk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YBFlUlXP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E64C2BCAF;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AG/NCjPk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086AEC19423;
 	Tue, 10 Mar 2026 11:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140786;
-	bh=DPbDxWEBbQ+O2l4wHsl7Q7P7Q0YhhitlleGbJKNwUS4=;
+	s=k20201202; t=1773140787;
+	bh=leyVqM9zwqijO7gFz1zE7toCQm9JxJte0zszt59PmaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YBFlUlXPuw8Usx3uBrt1vtAjLgA7tM6OoJB00FiPcqpzuc9lZYM0Kt6HqMzH3KyQR
-	 Y776XXa/EfY+fykO+yy1iSW+aKlRmE3pVTOeswG6OtqJCkRIU+xAGKRhzizX1avXSJ
-	 j759NyiMeYq3GxeeEJzf2/6fgqtVCzgA0Jf4sD2KAz0skMvyM/bBUmzuXCCyMObXEE
-	 TOUeuXypOWGp+zn9dlGrxXv+R/BvpoNVeZ/L+G4RTkXIYOJ7kJRpl4x+8+dUy5NFeV
-	 bswNZzNrvOs7e/9f4btwMYs3JsISxSXYwVre+98Seh1qTFdH12TooOkLwn3bjOfB6H
-	 j/RJsGKJcis7A==
+	b=AG/NCjPkmET3uC51qZCHfzN7loR8/mA8k3teE7m0X3bebt3RumeDAnq1y2AKccbTV
+	 yraHS7MZtfRNMtcRzKKLP0HKTW3LCXETCdw1O7WPtc/iI//H7XopdPEHcJsf+jW0dv
+	 8UB9QRyw5S5M8nXGtqaJtmK7B8N+DuDTsOI8wCWmYNUxS4Rn6BYCrQ9bsBEsedqwRr
+	 Nvh87UeCFCqwgCJfmdAaQWz8BjVqP+G+uUlnXzheS2+nrN/5KnGfTeoB9CA4wLFU7Y
+	 C+5hAmQZQ1lQvp2Pe5gY2FaphebWMtPty9Lnoee6WcxzQ2fMT827qCIbcT2ynlFgBR
+	 s0bVuR/GAunDg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
-	Rustam Kovhaev <rkovhaev@gmail.com>,
+Cc: Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 022/311] x86/cfi: Fix CFI rewrite for odd alignments
-Date: Tue, 10 Mar 2026 07:01:09 -0400
-Message-ID: <c80cb7231ebf297eaf076a292bb2cf653b00530b.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 023/311] sched/fair: Rename cfs_rq::avg_load to cfs_rq::sum_weight
+Date: Tue, 10 Mar 2026 07:01:10 -0400
+Message-ID: <92fa4f20d0d7d67f251b0f11dd5f4625c157e71d.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,195 +47,131 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Ingo Molnar <mingo@kernel.org>
 
-[ Upstream commit 24c8147abb39618d74fcc36e325765e8fe7bdd7a ]
+[ Upstream commit 4ff674fa986c27ec8a0542479258c92d361a2566 ]
 
-Rustam reported his clang builds did not boot properly; turns out his
-.config has: CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y set.
+The ::avg_load field is a long-standing misnomer: it says it's an
+'average load', but in reality it's the momentary sum of the load
+of all currently runnable tasks. We'd have to also perform a
+division by nr_running (or use time-decay) to arrive at any sort
+of average value.
 
-Fix up the FineIBT code to deal with this unusual alignment.
+This is clear from comments about the math of fair scheduling:
 
-Fixes: 931ab63664f0 ("x86/ibt: Implement FineIBT")
-Reported-by: Rustam Kovhaev <rkovhaev@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Rustam Kovhaev <rkovhaev@gmail.com>
+    *              \Sum w_i := cfs_rq->avg_load
+
+The sum of all weights is ... the sum of all weights, not
+the average of all weights.
+
+To make it doubly confusing, there's also an ::avg_load
+in the load-balancing struct sg_lb_stats, which *is* a
+true average.
+
+The second part of the field's name is a minor misnomer
+as well: it says 'load', and it is indeed a load_weight
+structure as it shares code with the load-balancer - but
+it's only in an SMP load-balancing context where
+load = weight, in the fair scheduling context the primary
+purpose is the weighting of different nice levels.
+
+So rename the field to ::sum_weight instead, which makes
+the terminology of the EEVDF math match up with our
+implementation of it:
+
+    *              \Sum w_i := cfs_rq->sum_weight
+
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://patch.msgid.link/20251201064647.1851919-6-mingo@kernel.org
+Stable-dep-of: b3d99f43c72b ("sched/fair: Fix zero_vruntime tracking")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/cfi.h     | 12 ++++++++----
- arch/x86/include/asm/linkage.h |  4 ++--
- arch/x86/kernel/alternative.c  | 29 ++++++++++++++++++++++-------
- arch/x86/net/bpf_jit_comp.c    | 13 ++-----------
- 4 files changed, 34 insertions(+), 24 deletions(-)
+ kernel/sched/fair.c  | 16 ++++++++--------
+ kernel/sched/sched.h |  2 +-
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/arch/x86/include/asm/cfi.h b/arch/x86/include/asm/cfi.h
-index c40b9ebc1fb40..ab3fbbd947ed9 100644
---- a/arch/x86/include/asm/cfi.h
-+++ b/arch/x86/include/asm/cfi.h
-@@ -111,6 +111,12 @@ extern bhi_thunk __bhi_args_end[];
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 3eaeceda71b00..afb774c2f7bf7 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -608,7 +608,7 @@ static inline s64 entity_key(struct cfs_rq *cfs_rq, struct sched_entity *se)
+  *
+  *                    v0 := cfs_rq->zero_vruntime
+  * \Sum (v_i - v0) * w_i := cfs_rq->avg_vruntime
+- *              \Sum w_i := cfs_rq->avg_load
++ *              \Sum w_i := cfs_rq->sum_weight
+  *
+  * Since zero_vruntime closely tracks the per-task service, these
+  * deltas: (v_i - v), will be in the order of the maximal (virtual) lag
+@@ -625,7 +625,7 @@ avg_vruntime_add(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 	s64 key = entity_key(cfs_rq, se);
  
- struct pt_regs;
+ 	cfs_rq->avg_vruntime += key * weight;
+-	cfs_rq->avg_load += weight;
++	cfs_rq->sum_weight += weight;
+ }
  
-+#ifdef CONFIG_CALL_PADDING
-+#define CFI_OFFSET (CONFIG_FUNCTION_PADDING_CFI+5)
-+#else
-+#define CFI_OFFSET 5
-+#endif
-+
- #ifdef CONFIG_CFI
- enum bug_trap_type handle_cfi_failure(struct pt_regs *regs);
- #define __bpfcall
-@@ -119,11 +125,9 @@ static inline int cfi_get_offset(void)
+ static void
+@@ -635,16 +635,16 @@ avg_vruntime_sub(struct cfs_rq *cfs_rq, struct sched_entity *se)
+ 	s64 key = entity_key(cfs_rq, se);
+ 
+ 	cfs_rq->avg_vruntime -= key * weight;
+-	cfs_rq->avg_load -= weight;
++	cfs_rq->sum_weight -= weight;
+ }
+ 
+ static inline
+ void avg_vruntime_update(struct cfs_rq *cfs_rq, s64 delta)
  {
- 	switch (cfi_mode) {
- 	case CFI_FINEIBT:
--		return 16;
-+		return /* fineibt_prefix_size */ 16;
- 	case CFI_KCFI:
--		if (IS_ENABLED(CONFIG_CALL_PADDING))
--			return 16;
--		return 5;
-+		return CFI_OFFSET;
- 	default:
- 		return 0;
- 	}
-diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
-index 9d38ae744a2e4..a7294656ad908 100644
---- a/arch/x86/include/asm/linkage.h
-+++ b/arch/x86/include/asm/linkage.h
-@@ -68,7 +68,7 @@
-  * Depending on -fpatchable-function-entry=N,N usage (CONFIG_CALL_PADDING) the
-  * CFI symbol layout changes.
-  *
-- * Without CALL_THUNKS:
-+ * Without CALL_PADDING:
-  *
-  * 	.align	FUNCTION_ALIGNMENT
-  * __cfi_##name:
-@@ -77,7 +77,7 @@
-  * 	.long	__kcfi_typeid_##name
-  * name:
-  *
-- * With CALL_THUNKS:
-+ * With CALL_PADDING:
-  *
-  * 	.align FUNCTION_ALIGNMENT
-  * __cfi_##name:
-diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
-index 28518371d8bf3..a3f81cde2bb59 100644
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -1147,7 +1147,7 @@ void __init_or_module noinline apply_seal_endbr(s32 *start, s32 *end)
- 
- 		poison_endbr(addr);
- 		if (IS_ENABLED(CONFIG_FINEIBT))
--			poison_cfi(addr - 16);
-+			poison_cfi(addr - CFI_OFFSET);
- 	}
- }
- 
-@@ -1354,6 +1354,8 @@ extern u8 fineibt_preamble_end[];
- #define fineibt_preamble_ud   0x13
- #define fineibt_preamble_hash 5
- 
-+#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
-+
- /*
-  * <fineibt_caller_start>:
-  *  0:   b8 78 56 34 12          mov    $0x12345678, %eax
-@@ -1599,7 +1601,7 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
- 		 * have determined there are no indirect calls to it and we
- 		 * don't need no CFI either.
- 		 */
--		if (!is_endbr(addr + 16))
-+		if (!is_endbr(addr + CFI_OFFSET))
- 			continue;
- 
- 		hash = decode_preamble_hash(addr, &arity);
-@@ -1607,6 +1609,15 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
- 			 addr, addr, 5, addr))
- 			return -EINVAL;
- 
-+		/*
-+		 * FineIBT relies on being at func-16, so if the preamble is
-+		 * actually larger than that, place it the tail end.
-+		 *
-+		 * NOTE: this is possible with things like DEBUG_CALL_THUNKS
-+		 * and DEBUG_FORCE_FUNCTION_ALIGN_64B.
-+		 */
-+		addr += CFI_OFFSET - fineibt_prefix_size;
-+
- 		text_poke_early(addr, fineibt_preamble_start, fineibt_preamble_size);
- 		WARN_ON(*(u32 *)(addr + fineibt_preamble_hash) != 0x12345678);
- 		text_poke_early(addr + fineibt_preamble_hash, &hash, 4);
-@@ -1629,10 +1640,10 @@ static void cfi_rewrite_endbr(s32 *start, s32 *end)
- 	for (s = start; s < end; s++) {
- 		void *addr = (void *)s + *s;
- 
--		if (!exact_endbr(addr + 16))
-+		if (!exact_endbr(addr + CFI_OFFSET))
- 			continue;
- 
--		poison_endbr(addr + 16);
-+		poison_endbr(addr + CFI_OFFSET);
- 	}
- }
- 
-@@ -1737,7 +1748,8 @@ static void __apply_fineibt(s32 *start_retpoline, s32 *end_retpoline,
- 	if (FINEIBT_WARN(fineibt_preamble_size, 20)			||
- 	    FINEIBT_WARN(fineibt_preamble_bhi + fineibt_bhi1_size, 20)	||
- 	    FINEIBT_WARN(fineibt_caller_size, 14)			||
--	    FINEIBT_WARN(fineibt_paranoid_size, 20))
-+	    FINEIBT_WARN(fineibt_paranoid_size, 20)			||
-+	    WARN_ON_ONCE(CFI_OFFSET < fineibt_prefix_size))
- 		return;
- 
- 	if (cfi_mode == CFI_AUTO) {
-@@ -1850,6 +1862,11 @@ static void poison_cfi(void *addr)
+ 	/*
+-	 * v' = v + d ==> avg_vruntime' = avg_runtime - d*avg_load
++	 * v' = v + d ==> avg_vruntime' = avg_runtime - d*sum_weight
  	 */
- 	switch (cfi_mode) {
- 	case CFI_FINEIBT:
-+		/*
-+		 * FineIBT preamble is at func-16.
-+		 */
-+		addr += CFI_OFFSET - fineibt_prefix_size;
-+
- 		/*
- 		 * FineIBT prefix should start with an ENDBR.
- 		 */
-@@ -1888,8 +1905,6 @@ static void poison_cfi(void *addr)
- 	}
+-	cfs_rq->avg_vruntime -= cfs_rq->avg_load * delta;
++	cfs_rq->avg_vruntime -= cfs_rq->sum_weight * delta;
  }
  
--#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
--
  /*
-  * When regs->ip points to a 0xD6 byte in the FineIBT preamble,
-  * return true and fill out target and type.
-diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
-index b0bac2a66eff3..ea76949ddda5e 100644
---- a/arch/x86/net/bpf_jit_comp.c
-+++ b/arch/x86/net/bpf_jit_comp.c
-@@ -438,17 +438,8 @@ static void emit_kcfi(u8 **pprog, u32 hash)
+@@ -655,7 +655,7 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+ {
+ 	struct sched_entity *curr = cfs_rq->curr;
+ 	s64 avg = cfs_rq->avg_vruntime;
+-	long load = cfs_rq->avg_load;
++	long load = cfs_rq->sum_weight;
  
- 	EMIT1_off32(0xb8, hash);			/* movl $hash, %eax	*/
- #ifdef CONFIG_CALL_PADDING
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
--	EMIT1(0x90);
-+	for (int i = 0; i < CONFIG_FUNCTION_PADDING_CFI; i++)
-+		EMIT1(0x90);
- #endif
- 	EMIT_ENDBR();
+ 	if (curr && curr->on_rq) {
+ 		unsigned long weight = scale_load_down(curr->load.weight);
+@@ -723,7 +723,7 @@ static int vruntime_eligible(struct cfs_rq *cfs_rq, u64 vruntime)
+ {
+ 	struct sched_entity *curr = cfs_rq->curr;
+ 	s64 avg = cfs_rq->avg_vruntime;
+-	long load = cfs_rq->avg_load;
++	long load = cfs_rq->sum_weight;
  
+ 	if (curr && curr->on_rq) {
+ 		unsigned long weight = scale_load_down(curr->load.weight);
+@@ -5175,7 +5175,7 @@ place_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
+ 		 *
+ 		 *   vl_i = (W + w_i)*vl'_i / W
+ 		 */
+-		load = cfs_rq->avg_load;
++		load = cfs_rq->sum_weight;
+ 		if (curr && curr->on_rq)
+ 			load += scale_load_down(curr->load.weight);
+ 
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 1b4283e9edc3b..f4e9a21cf0936 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -679,7 +679,7 @@ struct cfs_rq {
+ 	unsigned int		h_nr_idle; /* SCHED_IDLE */
+ 
+ 	s64			avg_vruntime;
+-	u64			avg_load;
++	u64			sum_weight;
+ 
+ 	u64			zero_vruntime;
+ #ifdef CONFIG_SCHED_CORE
 -- 
 2.51.0
 
