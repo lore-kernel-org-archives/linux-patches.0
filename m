@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917E62D978B;
-	Tue, 10 Mar 2026 11:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC4E2BF3E2;
+	Tue, 10 Mar 2026 11:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141113; cv=none; b=YwrUBm8C0QdtgoITIhsWJbH6oB+rqil3WiSrkedpVAYyyZdMjL+D7VxXGAlWVpXSqHvxqMcleYXtsegxa42BUAzxacTy5MBMs/ismzfLQ7IkbqOCHp41z7Zzr5cIS0YAJw1OcbtXIP6xouezgJS3RFImIwZlPB4EN2sclwywooM=
+	t=1773141114; cv=none; b=hJ4qAKNT3pLbXnq5kupOCVZpsPmePo0lcdnwg39q3Q7pJ4IrA26uv8GxFtYpvSjikJLWAGDvjLB343h3fDG3U71Ikxp39NB3BL4VPAQcllta3wqLwwDd6ciCCVFL6VqBj1E0wK8rCfQtwnTSds7Yw0Sv38TTJwKtgkAPqDtu+mk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141113; c=relaxed/simple;
-	bh=ltwMG3MNSlwYvM86nE7Mk63Sacz2WKOW5u0H94qkZqw=;
+	s=arc-20240116; t=1773141114; c=relaxed/simple;
+	bh=Hj8UFPt+QkMEcqeVsWfzaPpL1KCr/kdZP/dHQvZSdM8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlvM7kY2NYAbIjBxUghoYwK/f35cIvWP3b+qVR23l6g+3ceQBEtFGOFS0jw8keDuACSeDe/260w08FUY1hqah+IqWhu1jytRyLhFLKPRi4/fchkvqRkEIq/Kdm09MBv5goz3jnTc0J/qm8Fo45hjMBpa849mpr22fWXCqrHUbEk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=P2X8doBY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rT8gPIHJpHxaDjHqLhSUKEbcvI6Ghk9RBv+RSA4lc2LkaBJAOWNfeeV4PVKJHjU12RW1+PAzg1bKhEv+R8B+IylYnLIMsWohc+n2koVbrCQ+9TPtAdz8pGltdGmDrhfTVwhoAnrEBMC8ucEZcThSFXA83wvQ9dAFQHUwAzF+fiQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Gpmov4xj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="P2X8doBY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF44EC19423;
-	Tue, 10 Mar 2026 11:11:52 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Gpmov4xj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7396C2BC9E;
+	Tue, 10 Mar 2026 11:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141113;
-	bh=ltwMG3MNSlwYvM86nE7Mk63Sacz2WKOW5u0H94qkZqw=;
+	s=k20201202; t=1773141114;
+	bh=Hj8UFPt+QkMEcqeVsWfzaPpL1KCr/kdZP/dHQvZSdM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P2X8doBY6GTNSdtSUPCRly9uj5mefIUcJe4oV/e2ebrjpT78qDj3LQ4nOeHqfz+Zs
-	 mKGoIhRGgdu4FEogXlG0TXXL9+rjWPfxspL/OTwcFQx9tniPvqoh3fMV8sJy4rLK4p
-	 uIdATgynAPM/+rgKiYGG0A9PFzSRAefUKVNJIPERfpNwG9up+wxEtzhGeA9kVI1P/s
-	 B4Z09aX2A+xfKoI2RM3zxg/vM37tjhGsTmrmpD9TGxEq4zyIgwXPUw9vplNiYpk6i8
-	 cnCswpI2+GuC9fbVJuSK/mFaCHFtOXNPiliUIa7xKeJERRkEM1jPLbBJx72DljFhiF
-	 fQayV1VbBbyJQ==
+	b=Gpmov4xjfJ/QHy6VIsK73xffLrpU0mYlYKz9Ny6WR2mcA/ToYQEUYSI7jlfRqR1D3
+	 egjKlVY5iWypp5HX5W/LBR3eZlOZmq/6Jtlf0SfnWzr4RUvrcZ/AaIdFhvk6QDmBuQ
+	 0Tv3BCk906pTqUGv2UEYdzSFWPIhVnRD9/VOHQxAMm5GhkJXDB3j1UmscWYVvThbRG
+	 huucqWAgbqxM1BJ/OL9s1lZ+Tqx6ow1WVBcMrDOmBeCXfjEaj78naxg3mAGi8XboBx
+	 ta+z/fwAMYnNt3alhdLb/JmdE6Ic31xxYdqqp5wAy5OdtwgzVIieiQOXfoxc/RukWC
+	 7bc1ZrWuAIE8w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Werner Sembach <wse@tuxedocomputers.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 115/311] HID: multitouch: Keep latency normal on deactivate for reactivation gesture
-Date: Tue, 10 Mar 2026 07:02:42 -0400
-Message-ID: <49a31e96b633cfd90cf4390beae418e60644f3e1.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 116/311] x86/efi: defer freeing of boot services memory
+Date: Tue, 10 Mar 2026 07:02:43 -0400
+Message-ID: <653f326532c087b2ba51ac86145a615f4ca73801.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,110 +49,195 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
 
-commit ec3070f01fa30f2c5547d645dbb76174304bf0e4 upstream.
+commit a4b0bf6a40f3c107c67a24fbc614510ef5719980 upstream.
 
-Uniwill devices have a built in gesture in the touchpad to de- and
-reactivate it by double taping the upper left corner. This gesture stops
-working when latency is set to high, so this patch keeps the latency on
-normal.
+efi_free_boot_services() frees memory occupied by EFI_BOOT_SERVICES_CODE
+and EFI_BOOT_SERVICES_DATA using memblock_free_late().
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-[jkosina@suse.com: change bit from 24 to 25]
-[jkosina@suse.com: update shortlog]
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+There are two issue with that: memblock_free_late() should be used for
+memory allocated with memblock_alloc() while the memory reserved with
+memblock_reserve() should be freed with free_reserved_area().
+
+More acutely, with CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
+efi_free_boot_services() is called before deferred initialization of the
+memory map is complete.
+
+Benjamin Herrenschmidt reports that this causes a leak of ~140MB of
+RAM on EC2 t3a.nano instances which only have 512MB or RAM.
+
+If the freed memory resides in the areas that memory map for them is
+still uninitialized, they won't be actually freed because
+memblock_free_late() calls memblock_free_pages() and the latter skips
+uninitialized pages.
+
+Using free_reserved_area() at this point is also problematic because
+__free_page() accesses the buddy of the freed page and that again might
+end up in uninitialized part of the memory map.
+
+Delaying the entire efi_free_boot_services() could be problematic
+because in addition to freeing boot services memory it updates
+efi.memmap without any synchronization and that's undesirable late in
+boot when there is concurrency.
+
+More robust approach is to only defer freeing of the EFI boot services
+memory.
+
+Split efi_free_boot_services() in two. First efi_unmap_boot_services()
+collects ranges that should be freed into an array then
+efi_free_boot_services() later frees them after deferred init is complete.
+
+Link: https://lore.kernel.org/all/ec2aaef14783869b3be6e3c253b2dcbf67dbc12a.camel@kernel.crashing.org
+Fixes: 916f676f8dc0 ("x86, efi: Retain boot service code until after switching to virtual mode")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c | 32 +++++++++++++++++++++++++++++---
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/efi.h          |  2 +-
+ arch/x86/platform/efi/efi.c         |  2 +-
+ arch/x86/platform/efi/quirks.c      | 55 +++++++++++++++++++++++++++--
+ drivers/firmware/efi/mokvar-table.c |  2 +-
+ 4 files changed, 55 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index 7daa8f6d81870..dde15d131a73e 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -77,6 +77,7 @@ MODULE_LICENSE("GPL");
- #define MT_QUIRK_ORIENTATION_INVERT	BIT(22)
- #define MT_QUIRK_APPLE_TOUCHBAR		BIT(23)
- #define MT_QUIRK_YOGABOOK9I		BIT(24)
-+#define MT_QUIRK_KEEP_LATENCY_ON_CLOSE	BIT(25)
+diff --git a/arch/x86/include/asm/efi.h b/arch/x86/include/asm/efi.h
+index f227a70ac91f0..51b4cdbea061a 100644
+--- a/arch/x86/include/asm/efi.h
++++ b/arch/x86/include/asm/efi.h
+@@ -138,7 +138,7 @@ extern void __init efi_apply_memmap_quirks(void);
+ extern int __init efi_reuse_config(u64 tables, int nr_tables);
+ extern void efi_delete_dummy_variable(void);
+ extern void efi_crash_gracefully_on_page_fault(unsigned long phys_addr);
+-extern void efi_free_boot_services(void);
++extern void efi_unmap_boot_services(void);
  
- #define MT_INPUTMODE_TOUCHSCREEN	0x02
- #define MT_INPUTMODE_TOUCHPAD		0x03
-@@ -214,6 +215,7 @@ static void mt_post_parse(struct mt_device *td, struct mt_application *app);
- #define MT_CLS_WIN_8_DISABLE_WAKEUP		0x0016
- #define MT_CLS_WIN_8_NO_STICKY_FINGERS		0x0017
- #define MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU	0x0018
-+#define MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE	0x0019
+ void arch_efi_call_virt_setup(void);
+ void arch_efi_call_virt_teardown(void);
+diff --git a/arch/x86/platform/efi/efi.c b/arch/x86/platform/efi/efi.c
+index 463b784499a8f..791c52c8393f4 100644
+--- a/arch/x86/platform/efi/efi.c
++++ b/arch/x86/platform/efi/efi.c
+@@ -837,7 +837,7 @@ static void __init __efi_enter_virtual_mode(void)
+ 	}
  
- /* vendor specific classes */
- #define MT_CLS_3M				0x0101
-@@ -334,6 +336,15 @@ static const struct mt_class mt_classes[] = {
- 			MT_QUIRK_CONTACT_CNT_ACCURATE |
- 			MT_QUIRK_WIN8_PTP_BUTTONS,
- 		.export_all_inputs = true },
-+	{ .name = MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE,
-+		.quirks = MT_QUIRK_ALWAYS_VALID |
-+			MT_QUIRK_IGNORE_DUPLICATES |
-+			MT_QUIRK_HOVERING |
-+			MT_QUIRK_CONTACT_CNT_ACCURATE |
-+			MT_QUIRK_STICKY_FINGERS |
-+			MT_QUIRK_WIN8_PTP_BUTTONS |
-+			MT_QUIRK_KEEP_LATENCY_ON_CLOSE,
-+		.export_all_inputs = true },
+ 	efi_check_for_embedded_firmwares();
+-	efi_free_boot_services();
++	efi_unmap_boot_services();
  
- 	/*
- 	 * vendor specific classes
-@@ -849,7 +860,8 @@ static int mt_touch_input_mapping(struct hid_device *hdev, struct hid_input *hi,
- 			if ((cls->name == MT_CLS_WIN_8 ||
- 			     cls->name == MT_CLS_WIN_8_FORCE_MULTI_INPUT ||
- 			     cls->name == MT_CLS_WIN_8_FORCE_MULTI_INPUT_NSMU ||
--			     cls->name == MT_CLS_WIN_8_DISABLE_WAKEUP) &&
-+			     cls->name == MT_CLS_WIN_8_DISABLE_WAKEUP ||
-+			     cls->name == MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE) &&
- 				(field->application == HID_DG_TOUCHPAD ||
- 				 field->application == HID_DG_TOUCHSCREEN))
- 				app->quirks |= MT_QUIRK_CONFIDENCE;
-@@ -1762,7 +1774,8 @@ static int mt_input_configured(struct hid_device *hdev, struct hid_input *hi)
- 	int ret;
+ 	if (!efi_is_mixed())
+ 		efi_native_runtime_setup();
+diff --git a/arch/x86/platform/efi/quirks.c b/arch/x86/platform/efi/quirks.c
+index 553f330198f2f..35caa5746115d 100644
+--- a/arch/x86/platform/efi/quirks.c
++++ b/arch/x86/platform/efi/quirks.c
+@@ -341,7 +341,7 @@ void __init efi_reserve_boot_services(void)
  
- 	if (td->is_haptic_touchpad && (td->mtclass.name == MT_CLS_WIN_8 ||
--	    td->mtclass.name == MT_CLS_WIN_8_FORCE_MULTI_INPUT)) {
-+	    td->mtclass.name == MT_CLS_WIN_8_FORCE_MULTI_INPUT ||
-+	    td->mtclass.name == MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE)) {
- 		if (hid_haptic_input_configured(hdev, td->haptic, hi) == 0)
- 			td->is_haptic_touchpad = false;
- 	} else {
-@@ -2075,7 +2088,12 @@ static void mt_on_hid_hw_open(struct hid_device *hdev)
- 
- static void mt_on_hid_hw_close(struct hid_device *hdev)
- {
--	mt_set_modes(hdev, HID_LATENCY_HIGH, TOUCHPAD_REPORT_NONE);
-+	struct mt_device *td = hid_get_drvdata(hdev);
-+
-+	if (td->mtclass.quirks & MT_QUIRK_KEEP_LATENCY_ON_CLOSE)
-+		mt_set_modes(hdev, HID_LATENCY_NORMAL, TOUCHPAD_REPORT_NONE);
-+	else
-+		mt_set_modes(hdev, HID_LATENCY_HIGH, TOUCHPAD_REPORT_NONE);
+ 		/*
+ 		 * Because the following memblock_reserve() is paired
+-		 * with memblock_free_late() for this region in
++		 * with free_reserved_area() for this region in
+ 		 * efi_free_boot_services(), we must be extremely
+ 		 * careful not to reserve, and subsequently free,
+ 		 * critical regions of memory (like the kernel image) or
+@@ -404,17 +404,33 @@ static void __init efi_unmap_pages(efi_memory_desc_t *md)
+ 		pr_err("Failed to unmap VA mapping for 0x%llx\n", va);
  }
  
- /*
-@@ -2461,6 +2479,14 @@ static const struct hid_device_id mt_devices[] = {
- 		MT_USB_DEVICE(USB_VENDOR_ID_UNITEC,
- 			USB_DEVICE_ID_UNITEC_USB_TOUCH_0A19) },
- 
-+	/* Uniwill touchpads */
-+	{ .driver_data = MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE,
-+		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_PIXART, 0x0255) },
-+	{ .driver_data = MT_CLS_WIN_8_KEEP_LATENCY_ON_CLOSE,
-+		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_PIXART, 0x0274) },
+-void __init efi_free_boot_services(void)
++struct efi_freeable_range {
++	u64 start;
++	u64 end;
++};
 +
- 	/* VTL panels */
- 	{ .driver_data = MT_CLS_VTL,
- 		MT_USB_DEVICE(USB_VENDOR_ID_VTL,
++static struct efi_freeable_range *ranges_to_free;
++
++void __init efi_unmap_boot_services(void)
+ {
+ 	struct efi_memory_map_data data = { 0 };
+ 	efi_memory_desc_t *md;
+ 	int num_entries = 0;
++	int idx = 0;
++	size_t sz;
+ 	void *new, *new_md;
+ 
+ 	/* Keep all regions for /sys/kernel/debug/efi */
+ 	if (efi_enabled(EFI_DBG))
+ 		return;
+ 
++	sz = sizeof(*ranges_to_free) * efi.memmap.nr_map + 1;
++	ranges_to_free = kzalloc(sz, GFP_KERNEL);
++	if (!ranges_to_free) {
++		pr_err("Failed to allocate storage for freeable EFI regions\n");
++		return;
++	}
++
+ 	for_each_efi_memory_desc(md) {
+ 		unsigned long long start = md->phys_addr;
+ 		unsigned long long size = md->num_pages << EFI_PAGE_SHIFT;
+@@ -471,7 +487,15 @@ void __init efi_free_boot_services(void)
+ 			start = SZ_1M;
+ 		}
+ 
+-		memblock_free_late(start, size);
++		/*
++		 * With CONFIG_DEFERRED_STRUCT_PAGE_INIT parts of the memory
++		 * map are still not initialized and we can't reliably free
++		 * memory here.
++		 * Queue the ranges to free at a later point.
++		 */
++		ranges_to_free[idx].start = start;
++		ranges_to_free[idx].end = start + size;
++		idx++;
+ 	}
+ 
+ 	if (!num_entries)
+@@ -512,6 +536,31 @@ void __init efi_free_boot_services(void)
+ 	}
+ }
+ 
++static int __init efi_free_boot_services(void)
++{
++	struct efi_freeable_range *range = ranges_to_free;
++	unsigned long freed = 0;
++
++	if (!ranges_to_free)
++		return 0;
++
++	while (range->start) {
++		void *start = phys_to_virt(range->start);
++		void *end = phys_to_virt(range->end);
++
++		free_reserved_area(start, end, -1, NULL);
++		freed += (end - start);
++		range++;
++	}
++	kfree(ranges_to_free);
++
++	if (freed)
++		pr_info("Freeing EFI boot services memory: %ldK\n", freed / SZ_1K);
++
++	return 0;
++}
++arch_initcall(efi_free_boot_services);
++
+ /*
+  * A number of config table entries get remapped to virtual addresses
+  * after entering EFI virtual mode. However, the kexec kernel requires
+diff --git a/drivers/firmware/efi/mokvar-table.c b/drivers/firmware/efi/mokvar-table.c
+index aedbbd627706a..741674a0a70c5 100644
+--- a/drivers/firmware/efi/mokvar-table.c
++++ b/drivers/firmware/efi/mokvar-table.c
+@@ -85,7 +85,7 @@ static struct kobject *mokvar_kobj;
+  * as an alternative to ordinary EFI variables, due to platform-dependent
+  * limitations. The memory occupied by this table is marked as reserved.
+  *
+- * This routine must be called before efi_free_boot_services() in order
++ * This routine must be called before efi_unmap_boot_services() in order
+  * to guarantee that it can mark the table as reserved.
+  *
+  * Implicit inputs:
 -- 
 2.51.0
 
