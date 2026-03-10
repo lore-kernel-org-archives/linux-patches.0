@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5E538423F;
-	Tue, 10 Mar 2026 11:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2C138236A;
+	Tue, 10 Mar 2026 11:06:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140783; cv=none; b=k6eP5WOsjSJGpUOT+Ro61ivI44lEpP9oUKBrb3r8KHLZCwvCVErtm97YXcMycrwbcPUHCAyl/9W2v0uDGZkHfSIOgQXdgO9+oGwPJErsG1KBNtX4Y+HBAETNQkGiEdS9AwYPQlYw6uNCEfHZqQ38FOdx6YEMOO6I0lHCvKK3uoU=
+	t=1773140784; cv=none; b=XEW7gKu0CtlL5lYOrwaPy0IPFtxD+Utvwqr/grc0q1e8yvHqqweQ7OAvGNA0GaoEIKpg7lBqTiotTdWs7EVgzj2/gbeo3yXeMBwqpcVyEx+EbfO9cexw0Kond8xhnKgFmBHokJfnNobO6kIRHLHBMRWjVWKgwptXOKChJvQ9bLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140783; c=relaxed/simple;
-	bh=2k5y1HAa1PaMWQgjg+U4667qe592Sfxw/kWHRDbZ2mc=;
+	s=arc-20240116; t=1773140784; c=relaxed/simple;
+	bh=6KOiPjRFFCRZdxhhDzaqou5WehbZgj5o0Jxp5hlDCno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fj/BMm8waB7316Vre0Yi/WW7aGbi84l7nizeuv+HzDZMBM5opQ934S+C9Ij69Tr3l1sdXqkdfDZptM2P4OZdAZij8pm4bi3v04Q19llsGcAGO484HTHh59sYZULAInYb/ITQ2HvDSx7666G0b5EFS8c3qjbe7hyXG6CrcwsOy8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NWKpuXyl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UrSFINZlQpOof1c8DzU1hx31MqWeD8/Hjb47fcKgKciwiHczlm8kDjdl3hdR4fkVvBU1lgorWOvGTlboU7+zgd8JWFs6lTup/NfBXfItoLadqZsDmnSD6SArIIDIiZS3ApR1KIje7x6JH60GaOScGK9sulHZchQtpl+6AkG+5jM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Zfae0ye5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NWKpuXyl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF48FC2BC86;
-	Tue, 10 Mar 2026 11:06:22 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Zfae0ye5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B78C0C19423;
+	Tue, 10 Mar 2026 11:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140783;
-	bh=2k5y1HAa1PaMWQgjg+U4667qe592Sfxw/kWHRDbZ2mc=;
+	s=k20201202; t=1773140784;
+	bh=6KOiPjRFFCRZdxhhDzaqou5WehbZgj5o0Jxp5hlDCno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NWKpuXylAcXYpFo5mj3gptOhMBI4Cp5Q+VYojvFQzHX+4737+/SwRZZ9qWmBRrt2Z
-	 ljqMYr4iwpe9Fx0zybjrRMsWg0keMrhosyEOmeKt9vKD2lLH/wTdtxPXUobbiLGS9o
-	 m75UCv0QQf2Os4nq5ikglSzt5E9ThhH706eBW8BazZmKghT2BHmzxN3QBJOq6u2M6j
-	 OY1FOCj0qZsEDzLUj4qMqKa30cZuW+Q2DOnH7hKTQwdYT1lBWPNlXkAEobC7qa901T
-	 OwL5AKa1PCS9LiVVyd+kVzcJuZCd7kDd3Xu//24gYB+nwqUVLv0E3g++PjD0eCdtA+
-	 72JeN/xfj4DIg==
+	b=Zfae0ye5RDRBN2bGTjAMajbXTwmELbzQgt4k1ZI+xNqVexs3g+8bdu9MMqoOJWSNW
+	 DdLoozohapIyqvuxUKMFg1SIgTCM3P8r8568XSVVIdYIC9MdZ8OuTZxpWB9kJrpnjY
+	 eQmumfVfCdMGlLpDX7FF8ecMvUM2LbCmprurXYo6MIyLmZl3SZT1O7G7PPaKw2BFGz
+	 UgQhO5yu9y/blwRiKqS0BYe3anaXrxCV3/q3N1Zqp5tH/yhAWRU0I54XCgpDHJ8x2W
+	 CfflMh51V63fni/is0D+yBnPbPgJ6LuUUE3WHFEzNuCbrscFfd1vyX18uvwlwBkJNf
+	 xiRwKPTyQ19vA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Daniel J Blueman <daniel@quora.org>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 018/311] ALSA: usb-audio: Add QUIRK_FLAG_SKIP_IFACE_SETUP
-Date: Tue, 10 Mar 2026 07:01:05 -0400
-Message-ID: <e3e8b63400252d85386ec54ee0b60b77f883b25a.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 019/311] gpio: shared: fix memory leaks
+Date: Tue, 10 Mar 2026 07:01:06 -0400
+Message-ID: <8fd8fdca730aed5c31fa8467839eee94407aed7b.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,95 +48,89 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Geoffrey D. Bennett" <g@b4.vu>
+From: Daniel J Blueman <daniel@quora.org>
 
-[ Upstream commit 38c322068a26a01d7ff64da92179e68cdde9860b ]
+[ Upstream commit 32e0a7ad9c841f46549ccac0f1cca347a40d8685 ]
 
-Add a quirk flag to skip the usb_set_interface(),
-snd_usb_init_pitch(), and snd_usb_init_sample_rate() calls in
-__snd_usb_parse_audio_interface(). These are redundant with
-snd_usb_endpoint_prepare() at stream-open time.
+On a Snapdragon X1 Elite laptop (Lenovo Yoga Slim 7x), kmemleak reports
+three sets of:
 
-Enable the quirk for Focusrite devices, as init_sample_rate(rate_max)
-sets 192kHz during probing, which disables the internal mixer and Air
-and Safe modes.
+unreferenced object 0xffff00080187f400 (size 1024):
+  comm "swapper/0", pid 1, jiffies 4294667327
+  hex dump (first 32 bytes):
+    58 bd 70 01 08 00 ff ff 58 bd 70 01 08 00 ff ff  X.p.....X.p.....
+    00 00 00 00 00 00 00 00 01 00 00 00 00 00 00 00  ................
+  backtrace (crc 1665d1f8):
+    kmemleak_alloc+0xf4/0x12c
+    __kmalloc_cache_noprof+0x370/0x49c
+    gpio_shared_make_ref+0x70/0x16c
+    gpio_shared_of_traverse+0x4e8/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_init+0x34/0x1c4
+    do_one_initcall+0x50/0x280
+    kernel_init_freeable+0x290/0x33c
+    kernel_init+0x28/0x14c
+    ret_from_fork+0x10/0x20
 
-Fixes: 16f1f838442d ("Revert "ALSA: usb-audio: Drop superfluous interface setup at parsing"")
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/65a7909b15f9feb76c2a6f4f8814c240ddc50737.1771594828.git.g@b4.vu
+unreferenced object 0xffff00080170c140 (size 8):
+  comm "swapper/0", pid 1, jiffies 4294667327
+  hex dump (first 8 bytes):
+    72 65 73 65 74 00 00 00                          reset...
+  backtrace (crc fc24536):
+    kmemleak_alloc+0xf4/0x12c
+    __kmalloc_node_track_caller_noprof+0x3c4/0x584
+    kstrdup+0x4c/0xcc
+    gpio_shared_make_ref+0x8c/0x16c
+    gpio_shared_of_traverse+0x4e8/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_of_traverse+0x200/0x5f4
+    gpio_shared_init+0x34/0x1c4
+    do_one_initcall+0x50/0x280
+    kernel_init_freeable+0x290/0x33c
+    kernel_init+0x28/0x14c
+    ret_from_fork+0x10/0x20
+
+Fix this by decrementing the reference count of each list entry rather than
+only the first.
+
+Fix verified on the same laptop.
+
+Fixes: a060b8c511abb gpiolib: implement low-level, shared GPIO support
+Signed-off-by: Daniel J Blueman <daniel@quora.org>
+Link: https://patch.msgid.link/20260220093452.101655-1-daniel@quora.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c   | 3 ++-
- sound/usb/stream.c   | 3 +++
- sound/usb/usbaudio.h | 6 ++++++
- 3 files changed, 11 insertions(+), 1 deletion(-)
+ drivers/gpio/gpiolib-shared.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 9cc5165510182..a89ea2233180a 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2422,7 +2422,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	VENDOR_FLG(0x07fd, /* MOTU */
- 		   QUIRK_FLAG_VALIDATE_RATES),
- 	VENDOR_FLG(0x1235, /* Focusrite Novation */
--		   0),
-+		   QUIRK_FLAG_SKIP_IFACE_SETUP),
- 	VENDOR_FLG(0x1511, /* AURALiC */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x152a, /* Thesycon devices */
-@@ -2504,6 +2504,7 @@ static const char *const snd_usb_audio_quirk_flag_names[] = {
- 	QUIRK_STRING_ENTRY(MIC_RES_384),
- 	QUIRK_STRING_ENTRY(MIXER_PLAYBACK_MIN_MUTE),
- 	QUIRK_STRING_ENTRY(MIXER_CAPTURE_MIN_MUTE),
-+	QUIRK_STRING_ENTRY(SKIP_IFACE_SETUP),
- 	NULL
- };
+diff --git a/drivers/gpio/gpiolib-shared.c b/drivers/gpio/gpiolib-shared.c
+index 9e65442034393..e16f467b72e7a 100644
+--- a/drivers/gpio/gpiolib-shared.c
++++ b/drivers/gpio/gpiolib-shared.c
+@@ -753,14 +753,14 @@ static bool gpio_shared_entry_is_really_shared(struct gpio_shared_entry *entry)
+ static void gpio_shared_free_exclusive(void)
+ {
+ 	struct gpio_shared_entry *entry, *epos;
++	struct gpio_shared_ref *ref, *rpos;
  
-diff --git a/sound/usb/stream.c b/sound/usb/stream.c
-index ec7d756d78d17..421e94b233e17 100644
---- a/sound/usb/stream.c
-+++ b/sound/usb/stream.c
-@@ -1259,6 +1259,9 @@ static int __snd_usb_parse_audio_interface(struct snd_usb_audio *chip,
- 			set_iface_first = true;
+ 	list_for_each_entry_safe(entry, epos, &gpio_shared_list, list) {
+ 		if (gpio_shared_entry_is_really_shared(entry))
+ 			continue;
  
- 		/* try to set the interface... */
-+		if (chip->quirk_flags & QUIRK_FLAG_SKIP_IFACE_SETUP)
-+			continue;
-+
- 		usb_set_interface(chip->dev, iface_no, 0);
- 		if (set_iface_first)
- 			usb_set_interface(chip->dev, iface_no, altno);
-diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
-index 79978cae9799c..085530cf62d92 100644
---- a/sound/usb/usbaudio.h
-+++ b/sound/usb/usbaudio.h
-@@ -224,6 +224,10 @@ extern bool snd_usb_skip_validation;
-  *  playback value represents muted state instead of minimum audible volume
-  * QUIRK_FLAG_MIXER_CAPTURE_MIN_MUTE
-  *  Similar to QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE, but for capture streams
-+ * QUIRK_FLAG_SKIP_IFACE_SETUP
-+ *  Skip the probe-time interface setup (usb_set_interface,
-+ *  init_pitch, init_sample_rate); redundant with
-+ *  snd_usb_endpoint_prepare() at stream-open time
-  */
- 
- enum {
-@@ -253,6 +257,7 @@ enum {
- 	QUIRK_TYPE_MIC_RES_384			= 23,
- 	QUIRK_TYPE_MIXER_PLAYBACK_MIN_MUTE	= 24,
- 	QUIRK_TYPE_MIXER_CAPTURE_MIN_MUTE	= 25,
-+	QUIRK_TYPE_SKIP_IFACE_SETUP		= 26,
- /* Please also edit snd_usb_audio_quirk_flag_names */
- };
- 
-@@ -284,5 +289,6 @@ enum {
- #define QUIRK_FLAG_MIC_RES_384			QUIRK_FLAG(MIC_RES_384)
- #define QUIRK_FLAG_MIXER_PLAYBACK_MIN_MUTE	QUIRK_FLAG(MIXER_PLAYBACK_MIN_MUTE)
- #define QUIRK_FLAG_MIXER_CAPTURE_MIN_MUTE	QUIRK_FLAG(MIXER_CAPTURE_MIN_MUTE)
-+#define QUIRK_FLAG_SKIP_IFACE_SETUP		QUIRK_FLAG(SKIP_IFACE_SETUP)
- 
- #endif /* __USBAUDIO_H */
+-		gpio_shared_drop_ref(list_first_entry(&entry->refs,
+-						      struct gpio_shared_ref,
+-						      list));
++		list_for_each_entry_safe(ref, rpos, &entry->refs, list)
++			gpio_shared_drop_ref(ref);
+ 		gpio_shared_drop_entry(entry);
+ 	}
+ }
 -- 
 2.51.0
 
