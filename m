@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449FC383C64;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D996B383C64;
 	Tue, 10 Mar 2026 11:06:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140786; cv=none; b=thZKaHZdn5jAlgV+YibgTpWh7hUMLEkQjoWVIH2MmUHvhtHfTFAYyWlmbdKxAsEykVVetXpaaZDAYiSaTo/RK/wOk2QboUHTn+F0IQ244tR24HDT5TMxkBQE0xdmLYZ0uHn2gj3A8wUdz4c28sVMUOTf+pxXpI5oreTa5UEG9ko=
+	t=1773140786; cv=none; b=KZ3YPZmokxv6I0VJ63wqVfU96cyqf4btl6RFFZ7k9b1ny+uxJCiigOpKcDKhw6AnKcfC3vpe+eI8JJMrO7oR76Ly8iO0XsX/PB/tFrwdIwrm6Kb0EbrI48YoNPBE2Crs82CVsx2SEcSQ6RhC+IOGHDUOI6kxilFBSUjdBpvCHE4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773140786; c=relaxed/simple;
-	bh=HdqsFMjEn2aQ7xgCkn55ymMU1crDeX44i16zTFvMkV8=;
+	bh=DPbDxWEBbQ+O2l4wHsl7Q7P7Q0YhhitlleGbJKNwUS4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ukjKtkNkTtEr1BPZlobO3ntMYjMmsTc/fmv3ZpkqKxN2rvnlwCr8YGEGhfm2mBL9bCiz72xA0CT9Hkz5bT7jTqktCrHmB5FwY+Cb36TtbsNtwH1Mr6VpW5Qdc/jWDzPUFcqEis3ZGe+a4jYuMzGFPlgrvmULWreQ9f7yxNLUnXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=heMe/Qz/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tAeXfpEH+Zorx6bgaEHq7dwAawqMKhfDUyKWbH4ScwbkY612apvdv9q3aEWF9LLv56KxqaHhzm5h9uVsp9BJOCg1FNsDaI+3lohchEXDBTmPh5a7cAzyZO7kQpN96r3LMYy/FvaSTwkbYQnmedhH+wMT8AnXoY7T7wQBV03wpAg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YBFlUlXP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="heMe/Qz/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBB5C19423;
-	Tue, 10 Mar 2026 11:06:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YBFlUlXP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E64C2BCAF;
+	Tue, 10 Mar 2026 11:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140785;
-	bh=HdqsFMjEn2aQ7xgCkn55ymMU1crDeX44i16zTFvMkV8=;
+	s=k20201202; t=1773140786;
+	bh=DPbDxWEBbQ+O2l4wHsl7Q7P7Q0YhhitlleGbJKNwUS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heMe/Qz/gCMKSxrGm2+QclDohDAjY1S2dddzlsDv99GC+Tche4uxveHL9Tt+kAoRW
-	 wpn/UeuCMTiuFkSC2OWJaxIgh/+JORCEFlOneM0WnlmjHf5rgNxG3J06Aw0X8quJDk
-	 3bE2HdoVj0Y9nchVCeEcg+SxwrZOHAA3LBB9eLF2rec5uSyPXW90diRm34vNTxPcc2
-	 iyOmtjyybZx+s5mopeq6wvXuJQvPWLRajwzPqtOAS88kwif+xGuVM3TzxTffPl/1Oi
-	 Ix89K58QDa1RdcBJduQ9heft2pzk8TO4WbIHg7Dpgkcb7YMibDXUnc0frCu1N7aYOz
-	 uu7sxwfnYE1VA==
+	b=YBFlUlXPuw8Usx3uBrt1vtAjLgA7tM6OoJB00FiPcqpzuc9lZYM0Kt6HqMzH3KyQR
+	 Y776XXa/EfY+fykO+yy1iSW+aKlRmE3pVTOeswG6OtqJCkRIU+xAGKRhzizX1avXSJ
+	 j759NyiMeYq3GxeeEJzf2/6fgqtVCzgA0Jf4sD2KAz0skMvyM/bBUmzuXCCyMObXEE
+	 TOUeuXypOWGp+zn9dlGrxXv+R/BvpoNVeZ/L+G4RTkXIYOJ7kJRpl4x+8+dUy5NFeV
+	 bswNZzNrvOs7e/9f4btwMYs3JsISxSXYwVre+98Seh1qTFdH12TooOkLwn3bjOfB6H
+	 j/RJsGKJcis7A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Hou Wenlong <houwenlong.hwl@antgroup.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Peter Zijlstra <peterz@infradead.org>,
+	Rustam Kovhaev <rkovhaev@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 021/311] x86/bug: Handle __WARN_printf() trap in early_fixup_exception()
-Date: Tue, 10 Mar 2026 07:01:08 -0400
-Message-ID: <89c6a1d3f88bd41bf6bac4d4dbbd388954382c78.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 022/311] x86/cfi: Fix CFI rewrite for odd alignments
+Date: Tue, 10 Mar 2026 07:01:09 -0400
+Message-ID: <c80cb7231ebf297eaf076a292bb2cf653b00530b.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,77 +48,195 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Hou Wenlong <houwenlong.hwl@antgroup.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit a0cb371b521dde44f32cfe954b6ef6f82b407393 ]
+[ Upstream commit 24c8147abb39618d74fcc36e325765e8fe7bdd7a ]
 
-The commit 5b472b6e5bd9 ("x86_64/bug: Implement __WARN_printf()")
-implemented __WARN_printf(), which changed the mechanism to use UD1
-instead of UD2. However, it only handles the trap in the runtime IDT
-handler, while the early booting IDT handler lacks this handling. As a
-result, the usage of WARN() before the runtime IDT setup can lead to
-kernel crashes. Since KMSAN is enabled after the runtime IDT setup, it
-is safe to use handle_bug() directly in early_fixup_exception() to
-address this issue.
+Rustam reported his clang builds did not boot properly; turns out his
+.config has: CONFIG_DEBUG_FORCE_FUNCTION_ALIGN_64B=y set.
 
-Fixes: 5b472b6e5bd9 ("x86_64/bug: Implement __WARN_printf()")
-Signed-off-by: Hou Wenlong <houwenlong.hwl@antgroup.com>
+Fix up the FineIBT code to deal with this unusual alignment.
+
+Fixes: 931ab63664f0 ("x86/ibt: Implement FineIBT")
+Reported-by: Rustam Kovhaev <rkovhaev@gmail.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/c4fb3645f60d3a78629d9870e8fcc8535281c24f.1768016713.git.houwenlong.hwl@antgroup.com
+Tested-by: Rustam Kovhaev <rkovhaev@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/traps.h | 2 ++
- arch/x86/kernel/traps.c      | 2 +-
- arch/x86/mm/extable.c        | 7 ++-----
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ arch/x86/include/asm/cfi.h     | 12 ++++++++----
+ arch/x86/include/asm/linkage.h |  4 ++--
+ arch/x86/kernel/alternative.c  | 29 ++++++++++++++++++++++-------
+ arch/x86/net/bpf_jit_comp.c    | 13 ++-----------
+ 4 files changed, 34 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/include/asm/traps.h b/arch/x86/include/asm/traps.h
-index 869b880618018..3f24cc472ce9b 100644
---- a/arch/x86/include/asm/traps.h
-+++ b/arch/x86/include/asm/traps.h
-@@ -25,6 +25,8 @@ extern int ibt_selftest_noendbr(void);
- void handle_invalid_op(struct pt_regs *regs);
- #endif
+diff --git a/arch/x86/include/asm/cfi.h b/arch/x86/include/asm/cfi.h
+index c40b9ebc1fb40..ab3fbbd947ed9 100644
+--- a/arch/x86/include/asm/cfi.h
++++ b/arch/x86/include/asm/cfi.h
+@@ -111,6 +111,12 @@ extern bhi_thunk __bhi_args_end[];
  
-+noinstr bool handle_bug(struct pt_regs *regs);
+ struct pt_regs;
+ 
++#ifdef CONFIG_CALL_PADDING
++#define CFI_OFFSET (CONFIG_FUNCTION_PADDING_CFI+5)
++#else
++#define CFI_OFFSET 5
++#endif
 +
- static inline int get_si_code(unsigned long condition)
+ #ifdef CONFIG_CFI
+ enum bug_trap_type handle_cfi_failure(struct pt_regs *regs);
+ #define __bpfcall
+@@ -119,11 +125,9 @@ static inline int cfi_get_offset(void)
  {
- 	if (condition & DR_STEP)
-diff --git a/arch/x86/kernel/traps.c b/arch/x86/kernel/traps.c
-index bcf1dedc1d008..aca1eca5daffa 100644
---- a/arch/x86/kernel/traps.c
-+++ b/arch/x86/kernel/traps.c
-@@ -397,7 +397,7 @@ static inline void handle_invalid_op(struct pt_regs *regs)
- 		      ILL_ILLOPN, error_get_trap_addr(regs));
+ 	switch (cfi_mode) {
+ 	case CFI_FINEIBT:
+-		return 16;
++		return /* fineibt_prefix_size */ 16;
+ 	case CFI_KCFI:
+-		if (IS_ENABLED(CONFIG_CALL_PADDING))
+-			return 16;
+-		return 5;
++		return CFI_OFFSET;
+ 	default:
+ 		return 0;
+ 	}
+diff --git a/arch/x86/include/asm/linkage.h b/arch/x86/include/asm/linkage.h
+index 9d38ae744a2e4..a7294656ad908 100644
+--- a/arch/x86/include/asm/linkage.h
++++ b/arch/x86/include/asm/linkage.h
+@@ -68,7 +68,7 @@
+  * Depending on -fpatchable-function-entry=N,N usage (CONFIG_CALL_PADDING) the
+  * CFI symbol layout changes.
+  *
+- * Without CALL_THUNKS:
++ * Without CALL_PADDING:
+  *
+  * 	.align	FUNCTION_ALIGNMENT
+  * __cfi_##name:
+@@ -77,7 +77,7 @@
+  * 	.long	__kcfi_typeid_##name
+  * name:
+  *
+- * With CALL_THUNKS:
++ * With CALL_PADDING:
+  *
+  * 	.align FUNCTION_ALIGNMENT
+  * __cfi_##name:
+diff --git a/arch/x86/kernel/alternative.c b/arch/x86/kernel/alternative.c
+index 28518371d8bf3..a3f81cde2bb59 100644
+--- a/arch/x86/kernel/alternative.c
++++ b/arch/x86/kernel/alternative.c
+@@ -1147,7 +1147,7 @@ void __init_or_module noinline apply_seal_endbr(s32 *start, s32 *end)
+ 
+ 		poison_endbr(addr);
+ 		if (IS_ENABLED(CONFIG_FINEIBT))
+-			poison_cfi(addr - 16);
++			poison_cfi(addr - CFI_OFFSET);
+ 	}
  }
  
--static noinstr bool handle_bug(struct pt_regs *regs)
-+noinstr bool handle_bug(struct pt_regs *regs)
- {
- 	unsigned long addr = regs->ip;
- 	bool handled = false;
-diff --git a/arch/x86/mm/extable.c b/arch/x86/mm/extable.c
-index 2fdc1f1f5adb9..6b9ff1c6cafa2 100644
---- a/arch/x86/mm/extable.c
-+++ b/arch/x86/mm/extable.c
-@@ -411,14 +411,11 @@ void __init early_fixup_exception(struct pt_regs *regs, int trapnr)
+@@ -1354,6 +1354,8 @@ extern u8 fineibt_preamble_end[];
+ #define fineibt_preamble_ud   0x13
+ #define fineibt_preamble_hash 5
+ 
++#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
++
+ /*
+  * <fineibt_caller_start>:
+  *  0:   b8 78 56 34 12          mov    $0x12345678, %eax
+@@ -1599,7 +1601,7 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
+ 		 * have determined there are no indirect calls to it and we
+ 		 * don't need no CFI either.
+ 		 */
+-		if (!is_endbr(addr + 16))
++		if (!is_endbr(addr + CFI_OFFSET))
+ 			continue;
+ 
+ 		hash = decode_preamble_hash(addr, &arity);
+@@ -1607,6 +1609,15 @@ static int cfi_rewrite_preamble(s32 *start, s32 *end)
+ 			 addr, addr, 5, addr))
+ 			return -EINVAL;
+ 
++		/*
++		 * FineIBT relies on being at func-16, so if the preamble is
++		 * actually larger than that, place it the tail end.
++		 *
++		 * NOTE: this is possible with things like DEBUG_CALL_THUNKS
++		 * and DEBUG_FORCE_FUNCTION_ALIGN_64B.
++		 */
++		addr += CFI_OFFSET - fineibt_prefix_size;
++
+ 		text_poke_early(addr, fineibt_preamble_start, fineibt_preamble_size);
+ 		WARN_ON(*(u32 *)(addr + fineibt_preamble_hash) != 0x12345678);
+ 		text_poke_early(addr + fineibt_preamble_hash, &hash, 4);
+@@ -1629,10 +1640,10 @@ static void cfi_rewrite_endbr(s32 *start, s32 *end)
+ 	for (s = start; s < end; s++) {
+ 		void *addr = (void *)s + *s;
+ 
+-		if (!exact_endbr(addr + 16))
++		if (!exact_endbr(addr + CFI_OFFSET))
+ 			continue;
+ 
+-		poison_endbr(addr + 16);
++		poison_endbr(addr + CFI_OFFSET);
+ 	}
+ }
+ 
+@@ -1737,7 +1748,8 @@ static void __apply_fineibt(s32 *start_retpoline, s32 *end_retpoline,
+ 	if (FINEIBT_WARN(fineibt_preamble_size, 20)			||
+ 	    FINEIBT_WARN(fineibt_preamble_bhi + fineibt_bhi1_size, 20)	||
+ 	    FINEIBT_WARN(fineibt_caller_size, 14)			||
+-	    FINEIBT_WARN(fineibt_paranoid_size, 20))
++	    FINEIBT_WARN(fineibt_paranoid_size, 20)			||
++	    WARN_ON_ONCE(CFI_OFFSET < fineibt_prefix_size))
  		return;
  
- 	if (trapnr == X86_TRAP_UD) {
--		if (report_bug(regs->ip, regs) == BUG_TRAP_TYPE_WARN) {
--			/* Skip the ud2. */
--			regs->ip += LEN_UD2;
-+		if (handle_bug(regs))
- 			return;
--		}
- 
+ 	if (cfi_mode == CFI_AUTO) {
+@@ -1850,6 +1862,11 @@ static void poison_cfi(void *addr)
+ 	 */
+ 	switch (cfi_mode) {
+ 	case CFI_FINEIBT:
++		/*
++		 * FineIBT preamble is at func-16.
++		 */
++		addr += CFI_OFFSET - fineibt_prefix_size;
++
  		/*
--		 * If this was a BUG and report_bug returns or if this
-+		 * If this was a BUG and handle_bug returns or if this
- 		 * was just a normal #UD, we want to continue onward and
- 		 * crash.
+ 		 * FineIBT prefix should start with an ENDBR.
  		 */
+@@ -1888,8 +1905,6 @@ static void poison_cfi(void *addr)
+ 	}
+ }
+ 
+-#define fineibt_prefix_size (fineibt_preamble_size - ENDBR_INSN_SIZE)
+-
+ /*
+  * When regs->ip points to a 0xD6 byte in the FineIBT preamble,
+  * return true and fill out target and type.
+diff --git a/arch/x86/net/bpf_jit_comp.c b/arch/x86/net/bpf_jit_comp.c
+index b0bac2a66eff3..ea76949ddda5e 100644
+--- a/arch/x86/net/bpf_jit_comp.c
++++ b/arch/x86/net/bpf_jit_comp.c
+@@ -438,17 +438,8 @@ static void emit_kcfi(u8 **pprog, u32 hash)
+ 
+ 	EMIT1_off32(0xb8, hash);			/* movl $hash, %eax	*/
+ #ifdef CONFIG_CALL_PADDING
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
+-	EMIT1(0x90);
++	for (int i = 0; i < CONFIG_FUNCTION_PADDING_CFI; i++)
++		EMIT1(0x90);
+ #endif
+ 	EMIT_ENDBR();
+ 
 -- 
 2.51.0
 
