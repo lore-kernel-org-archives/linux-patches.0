@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A3838758D;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3AB3806B8;
 	Tue, 10 Mar 2026 11:20:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141644; cv=none; b=M2JPZR+KpYNFOeNuP3dEEyf6Wi/0gb16uq/sbQE8FpbseKZ2Y5U8KPQj5BSPetRjvjaKhnzHFfI55O7LoikpDsR60g4ukIWE/c9VPFzEZcLQi5qZiBbig/9XAiwj60RrN2TCgFm/I+V7VSZeI2qU+2eeIEpkWSUyAM9ZroaUJG8=
+	t=1773141645; cv=none; b=q+pv3b4NGOCLfQBVs6/BmX6RYnLSqO9t33h1ON7l3NSS/XwGIl9fXr5EfIre9UoNe2NUdK4j03hfyhfd0nb1KLWZRRCTv9nsgayWdlL2jC8hBX42crA7l1zRTwuuWMpWcL5eSjtIVczWu2BhXPuDIMaqe9UNRuqo5SO7JO7fmHk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141644; c=relaxed/simple;
-	bh=5QurvBrlKao6PNW3VYI23cPsVbqWtnCOZOWq4i9pH7Y=;
+	s=arc-20240116; t=1773141645; c=relaxed/simple;
+	bh=BE74fN+FOZjaIuv2qKIDv1miYH6l402vrszMo7RQBwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kSGJtNFEWqcpPlzf0SJ5MP/7VYj8Le0o9R+6rC/ljpYMm7A0MrwYLve0thNRKgITQvH1KPU9lPfGhx4l1VsclnWH1L4m/5POHp3W07lHLqCoOxb2IydANBkSVMAjrtsEmnRXhjmgHTe/N8Scz4nxS2IprRL2JHG0MT5gsol5lL4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/hjRFLy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZjUCDyshg2MvIMj0GUBzLRTWFjHJ72P5zU502yQIeGuQSbJ+qV2a0B4m9R8Ze1hc8LfKv+MPI90XD5MR0ya/yilCdIynC6sZKVtZPdiYEuJrfn3dxUDCoklEnOAGJ6dk7h3l6b1Wa2/AeylFZKJyzkvyB00JD8AbtxEOB9mdcWw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jZkXesl1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/hjRFLy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42978C2BC9E;
-	Tue, 10 Mar 2026 11:20:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jZkXesl1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D55C2BC86;
+	Tue, 10 Mar 2026 11:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141643;
-	bh=5QurvBrlKao6PNW3VYI23cPsVbqWtnCOZOWq4i9pH7Y=;
+	s=k20201202; t=1773141644;
+	bh=BE74fN+FOZjaIuv2qKIDv1miYH6l402vrszMo7RQBwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/hjRFLyUL7BxTBPE2SSycYPKeqx/SkLSwSNhYbvWd2rynfctcxUQQGCplGLM7vTY
-	 CmqYLQtT6Xuq992pEfJvWsQ4YTjn/xuBoyQI4x/wAW9SLe99W3NUOr8Kb1C36CUEXZ
-	 aFyQCBEG4mANI9FyiHKLQomvV0sl4q28rUjlPN7sx8jVmB87RrnJPLVGWTh0q+6Lo3
-	 UiznWVTgVl9eknOmRJUUGC2Cgq5KBRHI5l/9C2V0PexHcajd7RsBnqMVmKzchMEjzf
-	 U5jVAVNaMm4gY3FIGtN//FcOGKb1tyZeyQpU4U8HPjSp+/kwLAsxEDs1FNKprRmSQV
-	 8RtXU5jUGcF+w==
+	b=jZkXesl1ja1FDX1eAlXkpbssTPBsf6zupNdA1weA/B1s9TbbWQ1vN1WICiuTqY8Vq
+	 Y13BhTgd13lumTj0g4Y6nu9/nBrwurXPmm8rS4oMxSp4rx+JvPTZ/OPdhN4C7JJTYb
+	 5dwvq7MdpbZjQt6JpqKRbhSuJjRpuWcDakYRdOWBgTCHzX5pDjVrmmAe5FYgo+YrOk
+	 zLElCrnIKd3RomZId42KBrbbAFGbinRlMS/knV0M0KjO0Y1uWoRUBWuzWpnlnWPkOI
+	 eGEleAn8MApbwsdk29fpz7HoogOwrA/8nynWsgNl5hNY8CbNjROSI308kVA/ucVVBJ
+	 xBPlOTQD29vTg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ethan Tidmore <ethantidmore06@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+Cc: Nam Cao <namcao@linutronix.de>,
+	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 009/314] drm/tiny: sharp-memory: fix pointer error dereference
-Date: Tue, 10 Mar 2026 07:14:28 -0400
-Message-ID: <7d149f4b38b654130f7bf88d54118b390e84da28.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 010/314] irqchip/sifive-plic: Fix frozen interrupt due to affinity setting
+Date: Tue, 10 Mar 2026 07:14:29 -0400
+Message-ID: <c000bf2f372f224d9d181945838ec4a15537c6bb.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,42 +48,65 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Nam Cao <namcao@linutronix.de>
 
-[ Upstream commit 46120745bb4e7e1f09959624716b4c5d6e2c2e9e ]
+[ Upstream commit 1072020685f4b81f6efad3b412cdae0bd62bb043 ]
 
-The function devm_drm_dev_alloc() returns a pointer error upon failure
-not NULL. Change null check to pointer error check.
+PLIC ignores interrupt completion message for disabled interrupt, explained
+by the specification:
 
-Detected by Smatch:
-drivers/gpu/drm/tiny/sharp-memory.c:549 sharp_memory_probe() error:
-'smd' dereferencing possible ERR_PTR()
+    The PLIC signals it has completed executing an interrupt handler by
+    writing the interrupt ID it received from the claim to the
+    claim/complete register. The PLIC does not check whether the completion
+    ID is the same as the last claim ID for that target. If the completion
+    ID does not match an interrupt source that is currently enabled for
+    the target, the completion is silently ignored.
 
-Fixes: b8f9f21716fec ("drm/tiny: Add driver for Sharp Memory LCD")
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patch.msgid.link/20260216040438.43702-1-ethantidmore06@gmail.com
+This caused problems in the past, because an interrupt can be disabled
+while still being handled and plic_irq_eoi() had no effect. That was fixed
+by checking if the interrupt is disabled, and if so enable it, before
+sending the completion message. That check is done with irqd_irq_disabled().
+
+However, that is not sufficient because the enable bit for the handling
+hart can be zero despite irqd_irq_disabled(d) being false. This can happen
+when affinity setting is changed while a hart is still handling the
+interrupt.
+
+This problem is easily reproducible by dumping a large file to uart (which
+generates lots of interrupts) and at the same time keep changing the uart
+interrupt's affinity setting. The uart port becomes frozen almost
+instantaneously.
+
+Fix this by checking PLIC's enable bit instead of irqd_irq_disabled().
+
+Fixes: cc9f04f9a84f ("irqchip/sifive-plic: Implement irq_set_affinity() for SMP host")
+Signed-off-by: Nam Cao <namcao@linutronix.de>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260212114125.3148067-1-namcao@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tiny/sharp-memory.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-sifive-plic.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/tiny/sharp-memory.c b/drivers/gpu/drm/tiny/sharp-memory.c
-index 64272cd0f6e22..cbf69460ebf32 100644
---- a/drivers/gpu/drm/tiny/sharp-memory.c
-+++ b/drivers/gpu/drm/tiny/sharp-memory.c
-@@ -541,8 +541,8 @@ static int sharp_memory_probe(struct spi_device *spi)
+diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
+index cbd7697bc1481..0799c15c745d4 100644
+--- a/drivers/irqchip/irq-sifive-plic.c
++++ b/drivers/irqchip/irq-sifive-plic.c
+@@ -154,8 +154,13 @@ static void plic_irq_disable(struct irq_data *d)
+ static void plic_irq_eoi(struct irq_data *d)
+ {
+ 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
++	u32 __iomem *reg;
++	bool enabled;
++
++	reg = handler->enable_base + (d->hwirq / 32) * sizeof(u32);
++	enabled = readl(reg) & BIT(d->hwirq % 32);
  
- 	smd = devm_drm_dev_alloc(dev, &sharp_memory_drm_driver,
- 				 struct sharp_memory_device, drm);
--	if (!smd)
--		return -ENOMEM;
-+	if (IS_ERR(smd))
-+		return PTR_ERR(smd);
- 
- 	spi_set_drvdata(spi, smd);
- 
+-	if (unlikely(irqd_irq_disabled(d))) {
++	if (unlikely(!enabled)) {
+ 		plic_toggle(handler, d->hwirq, 1);
+ 		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
+ 		plic_toggle(handler, d->hwirq, 0);
 -- 
 2.51.0
 
