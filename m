@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10045387562;
-	Tue, 10 Mar 2026 11:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456E73876D7;
+	Tue, 10 Mar 2026 11:25:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141927; cv=none; b=OF+EQSBmU+y0KhvFYDrXR0DDpjvfPg1EYPsRyFlU4IGvB+hiKVFCPD7kizzG0GrrinsGXAhG3mhbBY80MRc7VwXtBpzuMz+wCGi2bLSgsGF0ts1aa0Yv+/LXs8Yr7Z30r09Pf/yEIZ2O2540JeiMZ7WrzJbRvFZG5rwWVJe7pNo=
+	t=1773141928; cv=none; b=Y7uvpHXKa49MaBSYrPIho9YbT69DljbQ69CMo4ldEbNZgosOqyR7tXnxN7zxfkL9OU95pG6nxZDGMW7oQTGRAeR0Uf9I8xhtnM9+WLK0uegP7yMtMjWjL4C9qGqkHtmDgK+wL35M6vQ1MVawvjbkyi2ofopF/fT3CvizISef6YI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141927; c=relaxed/simple;
-	bh=I5V1k+7+xXznETCby5tKTSNKF4fYyqfm+aTc5/j+EEA=;
+	s=arc-20240116; t=1773141928; c=relaxed/simple;
+	bh=GjewYC9lpT0OlmPSZcS5T6Qh1Rafl8dBrJDlmmacaHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IriGzmvvWz4Tz+xNt6euEuoLvJ9BiTTYJMgm1rRHd3mxT1tKcleHcYgrc0SEBfQobMLGPi7qADhWt3W9+RvAUdHEF6Ar/8ZiC263rbEGQMErueZ1YotOV3jRgC9F1EGP+ozkQEDCQw/lVQtj3a+UI4s4HCVcDrnblEpw4khTayo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=fZlBmWkS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A3AYMUj6c1b9QiVhzUqAyk07soWmfRPtyT1IKAvihSDWnp+Ok9L/IMOsUDsq1ojB1LuAkBJlpZ4ywzLCNQLu2VOy/4GkBK6DHoNHNJDbEB8J2coiRlvL07L2r+/fH4DF6ArvKutFexOkVBTqL7QnPKGs64/rn4tK+xwVHQEumEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NtRM0+pS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="fZlBmWkS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F40C2BC86;
-	Tue, 10 Mar 2026 11:25:25 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NtRM0+pS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36116C19423;
+	Tue, 10 Mar 2026 11:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141926;
-	bh=I5V1k+7+xXznETCby5tKTSNKF4fYyqfm+aTc5/j+EEA=;
+	s=k20201202; t=1773141927;
+	bh=GjewYC9lpT0OlmPSZcS5T6Qh1Rafl8dBrJDlmmacaHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZlBmWkSzImSTL/8HR7qjU30c7zRV+yYOCyJLCVWS+fEUCg8/lts7f611sLNeqHvA
-	 oFl6Vz7kuZtKDhOkMsetqXDPhejXVz9mdgJ8/ax7xcCGa8TnktnLy9jo0wh5tjyrU2
-	 sf7gcWTi6huXbEcJHU/tZ3V9lES5IWazN+a7JnxzL/2kXTMewnrUROo753PIqZUqWH
-	 GZ6HCmdK6WuRwftDfQdKyrIHFnPKs3GIYRehmhP6uxlFpzhWMCgjUBULj0m+IHQ5LR
-	 AvuNxcgK4rxd0MWPg0l7CCnlRtmmzHex7ODnvmsj3mGecmSB3vC+XDVvTuy8ztoEjP
-	 jCK+1vKEFbxAA==
+	b=NtRM0+pSgIMFtcwzPfdBs0B1m2o7LvNAi4QEsXF/iDtPbEKnc16CgVG3Crt/yq0k0
+	 D0CMFfeuFG47Aa5U4aYU2GNg6gCL4dBS1O7w62zNka8FBp6/LIzT7ueYO0CwRVqRqd
+	 6Np1hwIO8UUYWT4B2QkscSip73/XIGRiKBZeGGZ0oOK/1BoUXgi8XwrH1QYLq4VYag
+	 nyjRiQQEKSQPmeOfKzFGIGLcrtjIq5VZQ3jmg3Cl5f7Py9RxqTYLQ9KNZjbPu5AMvQ
+	 UpVRcUC56Zd2lGiNpIoeTR2lnnfZKIXvuAimhODRQjNBwzgANECR9E5fiGOuP74vW+
+	 kVEYs9lPBh5oA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Bart Van Assche <bvanassche@acm.org>,
+Cc: Lijo Lazar <lijo.lazar@amd.com>,
+	Ce Sun <cesun102@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	YiPeng Chai <YiPeng.Chai@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	amd-gfx@lists.freedesktop.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 050/314] drm/amdgpu: Fix locking bugs in error paths
-Date: Tue, 10 Mar 2026 07:15:09 -0400
-Message-ID: <214ec1a25f783a510ee9d39c4fb7c1af76a96094.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 051/314] drm/amdgpu: Fix error handling in slot reset
+Date: Tue, 10 Mar 2026 07:15:10 -0400
+Message-ID: <738d1861461d66114606eb4aa667c5a6b54a7dce.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,82 +45,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Lijo Lazar <lijo.lazar@amd.com>
 
-[ Upstream commit 480ad5f6ead4a47b969aab6618573cd6822bb6a4 ]
+[ Upstream commit b57c4ec98c17789136a4db948aec6daadceb5024 ]
 
-Do not unlock psp->ras_context.mutex if it has not been locked. This has
-been detected by the Clang thread-safety analyzer.
+If the device has not recovered after slot reset is called, it goes to
+out label for error handling. There it could make decision based on
+uninitialized hive pointer and could result in accessing an uninitialized
+list.
 
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: YiPeng Chai <YiPeng.Chai@amd.com>
-Cc: Hawking Zhang <Hawking.Zhang@amd.com>
-Cc: amd-gfx@lists.freedesktop.org
-Fixes: b3fb79cda568 ("drm/amdgpu: add mutex to protect ras shared memory")
-Acked-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Initialize the list and hive properly so that it handles the error
+situation and also releases the reset domain lock which is acquired
+during error_detected callback.
+
+Fixes: 732c6cefc1ec ("drm/amdgpu: Replace tmp_adev with hive in amdgpu_pci_slot_reset")
+Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Ce Sun <cesun102@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 6fa01b4335978051d2cd80841728fd63cc597970)
+(cherry picked from commit bb71362182e59caa227e4192da5a612b09349696)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-index 6e8aad91bcd30..0d3c18f04ac36 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_psp_ta.c
-@@ -332,13 +332,13 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
- 	if (!context || !context->initialized) {
- 		dev_err(adev->dev, "TA is not initialized\n");
- 		ret = -EINVAL;
--		goto err_free_shared_buf;
-+		goto free_shared_buf;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index b28ebb44c695d..fb096bf551ef2 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -7062,6 +7062,15 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
+ 	dev_info(adev->dev, "PCI error: slot reset callback!!\n");
+ 
+ 	memset(&reset_context, 0, sizeof(reset_context));
++	INIT_LIST_HEAD(&device_list);
++	hive = amdgpu_get_xgmi_hive(adev);
++	if (hive) {
++		mutex_lock(&hive->hive_lock);
++		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head)
++			list_add_tail(&tmp_adev->reset_list, &device_list);
++	} else {
++		list_add_tail(&adev->reset_list, &device_list);
++	}
+ 
+ 	if (adev->pcie_reset_ctx.swus)
+ 		link_dev = adev->pcie_reset_ctx.swus;
+@@ -7102,19 +7111,13 @@ pci_ers_result_t amdgpu_pci_slot_reset(struct pci_dev *pdev)
+ 	reset_context.reset_req_dev = adev;
+ 	set_bit(AMDGPU_NEED_FULL_RESET, &reset_context.flags);
+ 	set_bit(AMDGPU_SKIP_COREDUMP, &reset_context.flags);
+-	INIT_LIST_HEAD(&device_list);
+ 
+-	hive = amdgpu_get_xgmi_hive(adev);
+ 	if (hive) {
+-		mutex_lock(&hive->hive_lock);
+ 		reset_context.hive = hive;
+-		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head) {
++		list_for_each_entry(tmp_adev, &hive->device_list, gmc.xgmi.head)
+ 			tmp_adev->pcie_reset_ctx.in_link_reset = true;
+-			list_add_tail(&tmp_adev->reset_list, &device_list);
+-		}
+ 	} else {
+ 		set_bit(AMDGPU_SKIP_HW_RESET, &reset_context.flags);
+-		list_add_tail(&adev->reset_list, &device_list);
  	}
  
- 	if (!psp->ta_funcs || !psp->ta_funcs->fn_ta_invoke) {
- 		dev_err(adev->dev, "Unsupported function to invoke TA\n");
- 		ret = -EOPNOTSUPP;
--		goto err_free_shared_buf;
-+		goto free_shared_buf;
- 	}
- 
- 	context->session_id = ta_id;
-@@ -346,7 +346,7 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
- 	mutex_lock(&psp->ras_context.mutex);
- 	ret = prep_ta_mem_context(&context->mem_context, shared_buf, shared_buf_len);
- 	if (ret)
--		goto err_free_shared_buf;
-+		goto unlock;
- 
- 	ret = psp_fn_ta_invoke(psp, cmd_id);
- 	if (ret || context->resp_status) {
-@@ -354,15 +354,17 @@ static ssize_t ta_if_invoke_debugfs_write(struct file *fp, const char *buf, size
- 			ret, context->resp_status);
- 		if (!ret) {
- 			ret = -EINVAL;
--			goto err_free_shared_buf;
-+			goto unlock;
- 		}
- 	}
- 
- 	if (copy_to_user((char *)&buf[copy_pos], context->mem_context.shared_buf, shared_buf_len))
- 		ret = -EFAULT;
- 
--err_free_shared_buf:
-+unlock:
- 	mutex_unlock(&psp->ras_context.mutex);
-+
-+free_shared_buf:
- 	kfree(shared_buf);
- 
- 	return ret;
+ 	r = amdgpu_device_asic_reset(adev, &device_list, &reset_context);
 -- 
 2.51.0
 
