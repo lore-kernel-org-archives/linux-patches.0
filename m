@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E15387562;
-	Tue, 10 Mar 2026 11:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA9A7313E32;
+	Tue, 10 Mar 2026 11:25:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141910; cv=none; b=ElTof6W3iiGsrEwFMlNfkLqc0cX+AZ8t/I3MtYqOUdBwyb3cx+ndktgvHtt8w/kYYw+ilJbfPEqK+lOcgVvLzVlzzUinzpVSmyW3em+hT3DKeg1xuC2N3g6AhtIQbRQ1iBwu5j17T3DZY1HFkDvE4IcPuhrTmRZJd+ORuRVzrDc=
+	t=1773141911; cv=none; b=CVmq9TjHzStpSFVqieoHnEPbT3uTHG8E4JwBsf6SWGxd+tCWKnBM3X3cD5COWfEWfaHwJ9JtNPp4+nI3SXwNJhZms1lBMMBbnqBKNeWuuX9eT/9cXvT5+TVzRalwicWcVAGIntXNlblSWEel1VNcy3spjk8cu8UjvJiBcmoc00w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141910; c=relaxed/simple;
-	bh=Od99ggh6f+36bLixdSqp8+rPZwCVPfc6Abl9bGT092U=;
+	s=arc-20240116; t=1773141911; c=relaxed/simple;
+	bh=CpJqKjHgZHZS12Fz02e0KMdRc6ATkyYJNsSJ/KkxKmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MpZrnltEbhtABQVFReLdLkiCKiBCWHDftqYvDvJU4nyij56SEYd2FaIp0/cl3V0kyFqXkqQRzutEfPGSX4+A5Fs58jAkLfCRluzWPWFCFGWaKVy0uniFx7zFGHFW0zFNUUKUVnPgXY3qPcDfh7+cA5529BWjjFitfDTMtkRJWn0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHNm40RZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Af05dKypUEyuNQMDOyG98wMiBVkYBrFJAzbN/LGq2I95ldrSyLjXgrdSJw3Imnlw0EId8bC2UdF5iiqiCKYdsdrx03NFSaByQyV6zmBfn4OOGHDe/wEI5FXp0vYT8h5spIKDXadCfzpsvLtfZO+MDPCHSdyT4EE0uZtSeTvbZjo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/mjpFN+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHNm40RZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24952C19423;
-	Tue, 10 Mar 2026 11:25:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/mjpFN+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2A76C2BC86;
+	Tue, 10 Mar 2026 11:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141909;
-	bh=Od99ggh6f+36bLixdSqp8+rPZwCVPfc6Abl9bGT092U=;
+	s=k20201202; t=1773141911;
+	bh=CpJqKjHgZHZS12Fz02e0KMdRc6ATkyYJNsSJ/KkxKmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHNm40RZkX31mj4QprGUfbIwgM98Wu22XaYPbLt2dJcfPinhxJiLa8ruUjOPNEvzJ
-	 /BO9OEhfrbqduyv728Fi9GvjYNoc9fd+ZulGfhiiJwv8N93lV35tyQrY8/xHHv+JCp
-	 qEzPDW9fHufnr/EyJI5xOo6ZDw5eosyZv9V/Bu+nhe+NLM7H3HkKjvUR88uwp6BGSN
-	 htHcDCdk4HggPEhrlqYYmhKuHlRVpaAaYLbl2X7aKIfcR025Lrv2x92yJZBgDB+TT/
-	 w6MmGVmzUou7Qnr9WaEvQMfDq95Q3T6WIuD3+uyUVVzaDqm96FgKPGLBT6ZUpMxovi
-	 WentgWuPBRzKQ==
+	b=i/mjpFN++2NuqJHCawMpgKWSDI0X7WvvvwdENXknlcOMQfX9NPbToJEhEGZdBQe1n
+	 aDuCP8JLGbT+LsWnDviocXNf+ayWUbAQyjkLYeP4KW9WATJOubqCioWYk8IPuoaBzI
+	 Nx03bx69ujgmlM0NqxBTF5ZIQVRKqW7fIdDVegMyqi69PgTDvndarPGi/AXVC5HV3b
+	 HUS9FMeUj/7gJXSJCZSSNVK6mF8n2AjwyeEbodVZ2oKhTXYIbJCRaB++ysE4HGNE2a
+	 7IDZAktjWZueluBPcL44ymtvLaE5mlgtzA5huqNPLqRTxy2zQO68pJTIAhjTNlZpja
+	 J6jyRuxHrXmWA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Dave Jiang <dave.jiang@intel.com>,
 	Dan Williams <dan.j.williams@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>,
 	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 033/314] cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko
-Date: Tue, 10 Mar 2026 07:14:52 -0400
-Message-ID: <8cce5a3eed02199f48fd80e4a17867f8e26a4eab.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 034/314] cxl: Fix race of nvdimm_bus object when creating nvdimm objects
+Date: Tue, 10 Mar 2026 07:14:53 -0400
+Message-ID: <04b6fda8f4d3c647664be3a6f79ef20f4a3af234.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -52,99 +51,180 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit e7e222ad73d93fe54d6e6e3a15253a0ecf081a1b ]
+[ Upstream commit 96a1fd0d84b17360840f344826897fa71049870e ]
 
-Moving the symbol devm_cxl_add_nvdimm_bridge() to
-drivers/cxl/cxl_pmem.c, so that cxl_pmem can export a symbol that gives
-cxl_acpi a depedency on cxl_pmem kernel module. This is a prepatory patch
-to resolve the issue of a race for nvdimm_bus object that is created
-during cxl_acpi_probe().
+Found issue during running of cxl-translate.sh unit test. Adding a 3s
+sleep right before the test seems to make the issue reproduce fairly
+consistently. The cxl_translate module has dependency on cxl_acpi and
+causes orphaned nvdimm objects to reprobe after cxl_acpi is removed.
+The nvdimm_bus object is registered by the cxl_nvb object when
+cxl_acpi_probe() is called. With the nvdimm_bus object missing,
+__nd_device_register() will trigger NULL pointer dereference when
+accessing the dev->parent that points to &nvdimm_bus->dev.
 
-No functional changes besides moving code.
+[  192.884510] BUG: kernel NULL pointer dereference, address: 000000000000006c
+[  192.895383] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20250812-19.fc42 08/12/2025
+[  192.897721] Workqueue: cxl_port cxl_bus_rescan_queue [cxl_core]
+[  192.899459] RIP: 0010:kobject_get+0xc/0x90
+[  192.924871] Call Trace:
+[  192.925959]  <TASK>
+[  192.926976]  ? pm_runtime_init+0xb9/0xe0
+[  192.929712]  __nd_device_register.part.0+0x4d/0xc0 [libnvdimm]
+[  192.933314]  __nvdimm_create+0x206/0x290 [libnvdimm]
+[  192.936662]  cxl_nvdimm_probe+0x119/0x1d0 [cxl_pmem]
+[  192.940245]  cxl_bus_probe+0x1a/0x60 [cxl_core]
+[  192.943349]  really_probe+0xde/0x380
+
+This patch also relies on the previous change where
+devm_cxl_add_nvdimm_bridge() is called from drivers/cxl/pmem.c instead
+of drivers/cxl/core.c to ensure the dependency of cxl_acpi on cxl_pmem.
+
+1. Set probe_type of cxl_nvb to PROBE_FORCE_SYNCHRONOUS to ensure the
+   driver is probed synchronously when add_device() is called.
+2. Add a check in __devm_cxl_add_nvdimm_bridge() to ensure that the
+   cxl_nvb driver is attached during cxl_acpi_probe().
+3. Take the cxl_root uport_dev lock and the cxl_nvb->dev lock in
+   devm_cxl_add_nvdimm() before checking nvdimm_bus is valid.
+4. Set cxl_nvdimm flag to CXL_NVD_F_INVALIDATED so cxl_nvdimm_probe()
+   will exit with -EBUSY.
+
+The removal of cxl_nvdimm devices should prevent any orphaned devices
+from probing once the nvdimm_bus is gone.
+
+[ dj: Fixed 0-day reported kdoc issue. ]
+[ dj: Fix cxl_nvb reference leak on error. Gregory (kreview-0811365) ]
 
 Suggested-by: Dan Williams <dan.j.williams@intel.com>
-Acked-by: Ira Weiny <ira.weiny@intel.com>
+Fixes: 8fdcb1704f61 ("cxl/pmem: Add initial infrastructure for pmem support")
 Tested-by: Alison Schofield <alison.schofield@intel.com>
 Reviewed-by: Alison Schofield <alison.schofield@intel.com?>
-Link: https://patch.msgid.link/20260205001633.1813643-2-dave.jiang@intel.com
+Link: https://patch.msgid.link/20260205001633.1813643-3-dave.jiang@intel.com
 Signed-off-by: Dave Jiang <dave.jiang@intel.com>
-Stable-dep-of: 96a1fd0d84b1 ("cxl: Fix race of nvdimm_bus object when creating nvdimm objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cxl/core/pmem.c | 13 +++----------
- drivers/cxl/cxl.h       |  2 ++
- drivers/cxl/pmem.c      | 14 ++++++++++++++
- 3 files changed, 19 insertions(+), 10 deletions(-)
+ drivers/cxl/core/pmem.c | 29 +++++++++++++++++++++++++++++
+ drivers/cxl/cxl.h       |  5 +++++
+ drivers/cxl/pmem.c      | 10 ++++++++--
+ 3 files changed, 42 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
-index 8853415c106a9..e1325936183a6 100644
+index e1325936183a6..e3a8b8d813333 100644
 --- a/drivers/cxl/core/pmem.c
 +++ b/drivers/cxl/core/pmem.c
-@@ -115,15 +115,8 @@ static void unregister_nvb(void *_cxl_nvb)
+@@ -115,6 +115,15 @@ static void unregister_nvb(void *_cxl_nvb)
  	device_unregister(&cxl_nvb->dev);
  }
  
--/**
-- * devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
-- * @host: platform firmware root device
-- * @port: CXL port at the root of a CXL topology
-- *
-- * Return: bridge device that can host cxl_nvdimm objects
-- */
--struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
--						     struct cxl_port *port)
-+struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
-+						       struct cxl_port *port)
++static bool cxl_nvdimm_bridge_failed_attach(struct cxl_nvdimm_bridge *cxl_nvb)
++{
++	struct device *dev = &cxl_nvb->dev;
++
++	guard(device)(dev);
++	/* If the device has no driver, then it failed to attach. */
++	return dev->driver == NULL;
++}
++
+ struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
+ 						       struct cxl_port *port)
  {
- 	struct cxl_nvdimm_bridge *cxl_nvb;
- 	struct device *dev;
-@@ -155,7 +148,7 @@ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
- 	put_device(dev);
- 	return ERR_PTR(rc);
- }
--EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
-+EXPORT_SYMBOL_FOR_MODULES(__devm_cxl_add_nvdimm_bridge, "cxl_pmem");
+@@ -138,6 +147,11 @@ struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
+ 	if (rc)
+ 		goto err;
  
- static void cxl_nvdimm_release(struct device *dev)
- {
++	if (cxl_nvdimm_bridge_failed_attach(cxl_nvb)) {
++		unregister_nvb(cxl_nvb);
++		return ERR_PTR(-ENODEV);
++	}
++
+ 	rc = devm_add_action_or_reset(host, unregister_nvb, cxl_nvb);
+ 	if (rc)
+ 		return ERR_PTR(rc);
+@@ -247,6 +261,21 @@ int devm_cxl_add_nvdimm(struct cxl_port *parent_port,
+ 	if (!cxl_nvb)
+ 		return -ENODEV;
+ 
++	/*
++	 * Take the uport_dev lock to guard against race of nvdimm_bus object.
++	 * cxl_acpi_probe() registers the nvdimm_bus and is done under the
++	 * root port uport_dev lock.
++	 *
++	 * Take the cxl_nvb device lock to ensure that cxl_nvb driver is in a
++	 * consistent state. And the driver registers nvdimm_bus.
++	 */
++	guard(device)(cxl_nvb->port->uport_dev);
++	guard(device)(&cxl_nvb->dev);
++	if (!cxl_nvb->nvdimm_bus) {
++		rc = -ENODEV;
++		goto err_alloc;
++	}
++
+ 	cxl_nvd = cxl_nvdimm_alloc(cxl_nvb, cxlmd);
+ 	if (IS_ERR(cxl_nvd)) {
+ 		rc = PTR_ERR(cxl_nvd);
 diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
-index 231ddccf89773..443296da74db1 100644
+index 443296da74db1..3a794278cc7fe 100644
 --- a/drivers/cxl/cxl.h
 +++ b/drivers/cxl/cxl.h
-@@ -866,6 +866,8 @@ void cxl_driver_unregister(struct cxl_driver *cxl_drv);
- struct cxl_nvdimm_bridge *to_cxl_nvdimm_bridge(struct device *dev);
- struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
- 						     struct cxl_port *port);
-+struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
-+						       struct cxl_port *port);
- struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev);
- bool is_cxl_nvdimm(struct device *dev);
- int devm_cxl_add_nvdimm(struct cxl_port *parent_port, struct cxl_memdev *cxlmd);
+@@ -555,11 +555,16 @@ struct cxl_nvdimm_bridge {
+ 
+ #define CXL_DEV_ID_LEN 19
+ 
++enum {
++	CXL_NVD_F_INVALIDATED = 0,
++};
++
+ struct cxl_nvdimm {
+ 	struct device dev;
+ 	struct cxl_memdev *cxlmd;
+ 	u8 dev_id[CXL_DEV_ID_LEN]; /* for nvdimm, string of 'serial' */
+ 	u64 dirty_shutdowns;
++	unsigned long flags;
+ };
+ 
+ struct cxl_pmem_region_mapping {
 diff --git a/drivers/cxl/pmem.c b/drivers/cxl/pmem.c
-index e197883690efc..714beaf1704be 100644
+index 714beaf1704be..c00b84b960761 100644
 --- a/drivers/cxl/pmem.c
 +++ b/drivers/cxl/pmem.c
-@@ -13,6 +13,20 @@
- 
+@@ -14,7 +14,7 @@
  static __read_mostly DECLARE_BITMAP(exclusive_cmds, CXL_MEM_COMMAND_ID_MAX);
  
-+/**
-+ * __devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
-+ * @host: platform firmware root device
-+ * @port: CXL port at the root of a CXL topology
-+ *
-+ * Return: bridge device that can host cxl_nvdimm objects
-+ */
-+struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
-+						     struct cxl_port *port)
-+{
-+	return __devm_cxl_add_nvdimm_bridge(host, port);
-+}
-+EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
+ /**
+- * __devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
++ * devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
+  * @host: platform firmware root device
+  * @port: CXL port at the root of a CXL topology
+  *
+@@ -143,6 +143,9 @@ static int cxl_nvdimm_probe(struct device *dev)
+ 	struct nvdimm *nvdimm;
+ 	int rc;
+ 
++	if (test_bit(CXL_NVD_F_INVALIDATED, &cxl_nvd->flags))
++		return -EBUSY;
 +
- static void clear_exclusive(void *mds)
- {
- 	clear_exclusive_cxl_commands(mds, exclusive_cmds);
+ 	set_exclusive_cxl_commands(mds, exclusive_cmds);
+ 	rc = devm_add_action_or_reset(dev, clear_exclusive, mds);
+ 	if (rc)
+@@ -323,8 +326,10 @@ static int detach_nvdimm(struct device *dev, void *data)
+ 	scoped_guard(device, dev) {
+ 		if (dev->driver) {
+ 			cxl_nvd = to_cxl_nvdimm(dev);
+-			if (cxl_nvd->cxlmd && cxl_nvd->cxlmd->cxl_nvb == data)
++			if (cxl_nvd->cxlmd && cxl_nvd->cxlmd->cxl_nvb == data) {
+ 				release = true;
++				set_bit(CXL_NVD_F_INVALIDATED, &cxl_nvd->flags);
++			}
+ 		}
+ 	}
+ 	if (release)
+@@ -367,6 +372,7 @@ static struct cxl_driver cxl_nvdimm_bridge_driver = {
+ 	.probe = cxl_nvdimm_bridge_probe,
+ 	.id = CXL_DEVICE_NVDIMM_BRIDGE,
+ 	.drv = {
++		.probe_type = PROBE_FORCE_SYNCHRONOUS,
+ 		.suppress_bind_attrs = true,
+ 	},
+ };
 -- 
 2.51.0
 
