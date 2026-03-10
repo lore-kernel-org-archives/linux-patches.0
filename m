@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 330D62BF3E2;
-	Tue, 10 Mar 2026 11:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 230D82BF3E2;
+	Tue, 10 Mar 2026 11:11:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141100; cv=none; b=gMYd2VbLzYK/QuFc1LUkmb+JqRkutsF7ySACdzuHxW2Qsdr8bncD436yW9rnOCorT6idamlrwe1iETxdPVAv5IxWM9R8WGBcdFaLSi86pWe++LVcWkvoYLf+j1u+zPjS08f+wOHctVMdfhfD1z5F7zzTY2aFWjGHn8bPAg8CEVA=
+	t=1773141101; cv=none; b=Exe9XHpGM85vUoiVTt8fsiNARuUZess+5ZN77J+4r6cZjRL8GSYemVOGTRhcVEYcxwxhA7JU2lhYaL7V+abEM+e6n1hyT+2ZypTXrfOR6G6CsIqq24OKCzTGbeFHgNdcljLfczTVt5ORlS9BQReGUY9o1+fl9OhNRjpxj2G7hSY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141100; c=relaxed/simple;
-	bh=Rm51h3w3hvHcKNm6ZudIyWNXGOz9Ke5cULf42DWchCg=;
+	s=arc-20240116; t=1773141101; c=relaxed/simple;
+	bh=GaTadElwZ6hXtr0r9Yks9f8iem+UMkSd8+02Z1rS110=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SZngTEDAH7M8QLBYIriL/Zdjhnql8bTxe4lnACRAq/uETSXXmWdPhA06bkOyWas6RJJa32DGV2VPAb0THCh93LweaKxNRRT+dtjgMNtx19OSIj1TrIg1m5MTNMgDJEQ3WxbSqUlVr/CvyCalQhPnocvx8msvvx4PtbruNO/dJKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=vRrGvwAz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WWZm6XH9hsi13LpbepLcFZpZHt9v1qhlrWrbE+PqSUCHYTz2trREEBW7Yg6bq2vuiGv7Pm7VT/TAu/UQYGboh/uelVyhsCF73kgk3hs4ar/VlgAi4sA/rvCnQAYl8e++xaHHdNRbP+31DBTKvVuBabQXTShdOSdPaLrdeuUsMP0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lonfsc+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="vRrGvwAz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934ABC2BC86;
-	Tue, 10 Mar 2026 11:11:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lonfsc+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57736C2BCAF;
+	Tue, 10 Mar 2026 11:11:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141100;
-	bh=Rm51h3w3hvHcKNm6ZudIyWNXGOz9Ke5cULf42DWchCg=;
+	s=k20201202; t=1773141101;
+	bh=GaTadElwZ6hXtr0r9Yks9f8iem+UMkSd8+02Z1rS110=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vRrGvwAzDChXpjRFOihLd2QIWgMHJWSltiPv0BjPj84+5ltiozSLmTzXSNBPbopOm
-	 PPsTW6BaJ75Jbl7PkiOaAeJTu8sq1zh7GjEsqPFFjxcUMWERjDha1QoAer4Htl5uZJ
-	 Wu8o7chBVmAhS/4cQvgaaQlB742FyPd/6b2UTvJAOHfr+S4o3/LZLaVmDBpQPqdubi
-	 OAbGSpAFvZMB9FW3H8rtzov7isRiTBv7DqLCLkat9RsNPdGv6bnkgbtO1Wp59hLXBv
-	 VSnLdzPcG+FrbWxiw3jwSUafH1CIYJDagiDjt63TAv7/2fV8ouzLDqablwrxy6thg0
-	 oK+L6NRuaWACw==
+	b=Lonfsc+oRGfXBxgPcmgY6pk3t0vQ4hBwizvvwJuYlD2FPILEX0+T9/jKi6v4JsXud
+	 tHZueHcgb7y4jTvq6V+aQuuIMAGUCopBX9cWpCToUg4n6wGuWtk7h0bap3DAUdSO3H
+	 l2BWFKqPYPwYFb2pCsZXzfkyoku+spWPGk/czD1ACdjVp0n4SjXP7259bWa/q+zsR7
+	 lKDyLQo/z25JG4XV2iABaOvzSKBtns1CxkvaCzfMy31tYhKn63w9yHi0zUygtoCDZS
+	 3p6NX2ww9/CVoarAOaJ8Xhf/awWbZ71uLuFsfH7ybqL+8RJqdeItmLIhif9Fg4rJTX
+	 TTv9/oYl51FZg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Christian Brauner <brauner@kernel.org>,
+Cc: Jens Axboe <axboe@kernel.dk>,
+	syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 101/311] namespace: fix proc mount iteration
-Date: Tue, 10 Mar 2026 07:02:28 -0400
-Message-ID: <d3250992892d0ebcce581a408deacc98ac8501a3.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 102/311] media: dvb-core: fix wrong reinitialization of ringbuffer on reopen
+Date: Tue, 10 Mar 2026 07:02:29 -0400
+Message-ID: <e9126debff40c1b8b4e856f324be6b6a34da0ab4.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -47,72 +49,55 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Christian Brauner <brauner@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 4a403d7aa9074f527f064ef0806aaab38d14b07c upstream.
+commit bfbc0b5b32a8f28ce284add619bf226716a59bc0 upstream.
 
-The m->index isn't updated when m->show() overflows and retains its
-value before the current mount causing a restart to start at the same
-value. If that happens in short order to due a quickly expanding mount
-table this would cause the same mount to be shown again and again.
+dvb_dvr_open() calls dvb_ringbuffer_init() when a new reader opens the
+DVR device.  dvb_ringbuffer_init() calls init_waitqueue_head(), which
+reinitializes the waitqueue list head to empty.
 
-Ensure that *pos always equals the mount id of the mount that was
-returned by start/next. On restart after overflow mnt_find_id_at(*pos)
-finds the exact mount. This should avoid duplicates, avoid skips and
-should handle concurrent modification just fine.
+Since dmxdev->dvr_buffer.queue is a shared waitqueue (all opens of the
+same DVR device share it), this orphans any existing waitqueue entries
+from io_uring poll or epoll, leaving them with stale prev/next pointers
+while the list head is reset to {self, self}.
 
-Cc: <stable@vger.kernel.org>
-Fixed: 2eea9ce4310d8 ("mounts: keep list of mounts in an rbtree")
-Link: https://patch.msgid.link/20260129-geleckt-treuhand-4bb940acacd9@brauner
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+The waitqueue and spinlock in dvr_buffer are already properly
+initialized once in dvb_dmxdev_init().  The open path only needs to
+reset the buffer data pointer, size, and read/write positions.
+
+Replace the dvb_ringbuffer_init() call in dvb_dvr_open() with direct
+assignment of data/size and a call to dvb_ringbuffer_reset(), which
+properly resets pread, pwrite, and error with correct memory ordering
+without touching the waitqueue or spinlock.
+
+Cc: stable@vger.kernel.org
+Fixes: 34731df288a5f ("V4L/DVB (3501): Dmxdev: use dvb_ringbuffer")
+Reported-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
+Tested-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/698a26d3.050a0220.3b3015.007d.GAE@google.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/namespace.c | 20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/media/dvb-core/dmxdev.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/namespace.c b/fs/namespace.c
-index ecf0e72ce6cfd..9e5e3f1db02f9 100644
---- a/fs/namespace.c
-+++ b/fs/namespace.c
-@@ -1537,23 +1537,33 @@ static struct mount *mnt_find_id_at_reverse(struct mnt_namespace *ns, u64 mnt_id
- static void *m_start(struct seq_file *m, loff_t *pos)
- {
- 	struct proc_mounts *p = m->private;
-+	struct mount *mnt;
- 
- 	down_read(&namespace_sem);
- 
--	return mnt_find_id_at(p->ns, *pos);
-+	mnt = mnt_find_id_at(p->ns, *pos);
-+	if (mnt)
-+		*pos = mnt->mnt_id_unique;
-+	return mnt;
- }
- 
- static void *m_next(struct seq_file *m, void *v, loff_t *pos)
- {
--	struct mount *next = NULL, *mnt = v;
-+	struct mount *mnt = v;
- 	struct rb_node *node = rb_next(&mnt->mnt_node);
- 
--	++*pos;
- 	if (node) {
--		next = node_to_mount(node);
-+		struct mount *next = node_to_mount(node);
- 		*pos = next->mnt_id_unique;
-+		return next;
- 	}
--	return next;
-+
-+	/*
-+	 * No more mounts. Set pos past current mount's ID so that if
-+	 * iteration restarts, mnt_find_id_at() returns NULL.
-+	 */
-+	*pos = mnt->mnt_id_unique + 1;
-+	return NULL;
- }
- 
- static void m_stop(struct seq_file *m, void *v)
+diff --git a/drivers/media/dvb-core/dmxdev.c b/drivers/media/dvb-core/dmxdev.c
+index 17184b3674904..9aaae55ce7b4e 100644
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -168,7 +168,9 @@ static int dvb_dvr_open(struct inode *inode, struct file *file)
+ 			mutex_unlock(&dmxdev->mutex);
+ 			return -ENOMEM;
+ 		}
+-		dvb_ringbuffer_init(&dmxdev->dvr_buffer, mem, DVR_BUFFER_SIZE);
++		dmxdev->dvr_buffer.data = mem;
++		dmxdev->dvr_buffer.size = DVR_BUFFER_SIZE;
++		dvb_ringbuffer_reset(&dmxdev->dvr_buffer);
+ 		if (dmxdev->may_do_mmap)
+ 			dvb_vb2_init(&dmxdev->dvr_vb2_ctx, "dvr",
+ 				     file->f_flags & O_NONBLOCK);
 -- 
 2.51.0
 
