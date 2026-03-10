@@ -1,182 +1,125 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dy1-f172.google.com (mail-dy1-f172.google.com [74.125.82.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C4B38553F;
-	Tue, 10 Mar 2026 11:06:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140807; cv=none; b=uIdCY6V139SN6IKAzPDPAeucq98fuihl2yWG15Qts1xgFwrXIq6FCZOjPndNeGZfPfZt/F0Sk4tcLrLYXDfziavFvuQdCD5lqs0X4nbk+MTyTlTBkkr4IIkd0AcleBHruZQy/s7eVixkN0OgyXdGT6L7iBBRa/VsEX0mHvIsa84=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140807; c=relaxed/simple;
-	bh=hgdfRU7sgtgjdf/4Za+A1lw1c6EKqEC/A23iJVnzUVE=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QEjNUGE3NCS8DjMbSEKEFFDexHuGGzDKkx/GYcZR++cQCTOVsP6ixc+VwTogsfosdYdSgeslngNBc/N27CdLnXYJSrOdfF2pObJwIKxwl1GU3R9KrWFlMsiEfQ5mYYL+EqGUsIIbX+Eu5N/EA/Hr+5jw5aFiNyQMNjG7v0dZZLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mMsT3rwP; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4EA7381AF8
+	for <patches@lists.linux.dev>; Tue, 10 Mar 2026 11:09:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.172
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773140999; cv=pass; b=ElzJ6XNcOAAE6csZy3hFDX/LlDT1FlgsLuStpdMXOHzhiK0R4+FDJ+XTeitzFm92yfzpl8iwYg94gGJpHZFfU/sXmEgb7ioA9CtO9CoID2HIikqc/d+1Kbaiu2q4fOOADNa1KWLzCqBxaNhtNshrOtU0Z69u9egmktzY3foj1pY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773140999; c=relaxed/simple;
+	bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gH23DsKR2HAMNjj6ymVpXhug9/woyMGhtOkiITVKJK3rYYZU54n8RqqV1Vza/UfYp981LOjB70YA+LSmU9q7D3V4kPUl8CIXYdC2UAwaOpdvr2meKFe/lEQ8tN6w7ZnybqMKR7Wi1KMVdubQ1gB/e4NGMMrznZs8OtFyJ//8uaw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bBbQrH0Z; arc=pass smtp.client-ip=74.125.82.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mMsT3rwP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48998C2BC9E;
-	Tue, 10 Mar 2026 11:06:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140807;
-	bh=hgdfRU7sgtgjdf/4Za+A1lw1c6EKqEC/A23iJVnzUVE=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMsT3rwPMzB1lh6A0TmBNm4FZNKgTZxGhCR3GQEIB0PKd/3jabqzDVs5jXbB6iQB6
-	 5YZdhPtpecHkwLa7rbo1DsKJ5hVvqEVVXrqz2+4ffrOCtQQo3dqTXF1IJerRz2aR+M
-	 6XZAPn7eyV7RnuU60MOg/J7AOP5zvWUcdZqMn8l8hXxnV+gDZzWzDYbf9+D6byYCEv
-	 U3w9TfJXDfK0pgTZlnZhgcb4GYP29lxIILnn3ehbOPdMVq0H/SAYsvzvej7qSlej7v
-	 1+Jjpk7FMyHDbNwlQhpynfzuJPhtV9E+Yfczpd5hQUZrE2ZCtfXwRLUDSzgkORwAmx
-	 RzW/2owGPmKEg==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Danilo Krummrich <dakr@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Abel Vesa <abelvesa@kernel.org>,
-	Daniel Baluta <daniel.baluta@nxp.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 045/311] clk: scu/imx8qxp: do not register driver in probe()
-Date: Tue, 10 Mar 2026 07:01:32 -0400
-Message-ID: <6d9a4a86fb92453081835162e5e05a3fefb0e2cc.1773140655.git.sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
-References: <cover.1773140654.git.sashal@kernel.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bBbQrH0Z"
+Received: by mail-dy1-f172.google.com with SMTP id 5a478bee46e88-2be851b8ef1so3948eec.3
+        for <patches@lists.linux.dev>; Tue, 10 Mar 2026 04:09:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773140997; cv=none;
+        d=google.com; s=arc-20240605;
+        b=GMW62nFdTmrFDkaNuo5OeZNqbKS3BQRA2W0sBL4cEC1/VMZp/giKDImt63jz8/N/Hn
+         jqCN7EMGoxNEtY/GRM21Q8t+iMtdX2mBnEsaafkIltcEGc5mmu/B33XDhIWgX4uIKEsb
+         jI6PNLIeC+ceetguefEaPbfH9OSBg5w8SKJrDLyqWZ1b/q0OyIk/diD8Bx9VNY4rVWG2
+         RSJz0D1DWi5AqIdZ4FogbMLffdld/wx9FdvWK1VtFNOSShXXdBi5Q59SG5OmMcoRR1P7
+         DV0fFZr0X+T+jXzIffAOSrP1TDKt8aEnSJ5IR2SoqdmxhtQMbfngw5LYxFAHjO9ZPlAO
+         6DMA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
+        fh=BKNhPh3qJODy6wxWSChvalXWC1dNDJwTa25IOvxAttQ=;
+        b=eIvry50tR9C9EweCNZV3Uaw9FW7d8rsTlRCNO/gJDvZcWfEAibaxAsCWr28MQduIby
+         AzZWEMUJSbljmLl1WlDIBrrzqtQL3bUt1WU7vkB3Q/0Nb9DqT2zcTvMCowccsASSpGM8
+         KJ9nIJ+oaU+lzIdEwQqzm8hrDb1GlHIBRKJyb4ZXRmHrSY4blg3ropyYg2DV8gUcoSoB
+         OTzNFOikjQXo6d8K59maRR6s4eX/Ixh615ySrjFr2PHMUuegVJ8vkaz4lbvQr3Erq6Dg
+         zo+ownopO6jPVCX72pyIQ791dg1gJjZPOSOnb1WwNWN4n91qz3xNnEM2Dbp+i7bnbzt/
+         3ysQ==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773140997; x=1773745797; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
+        b=bBbQrH0ZprIJWw95ptHHYmqc4II+00ur2XZGoZThfUW3epB7P+E2cl5i0yK0Mk9MMA
+         JojH6reTWkQlIniOY3iPDL/4NNqwd5n2+YpA2K6qK0y7CfGeHdx1snyvIlScguxYGOJn
+         VyYXcuWwEvWDrd0I4a32zXL7uxgzsf9y2+GPL9cJjMbYjzCxzIOUjn3zcnMMNqfwcklh
+         RtE8MJToE5WxCujNBLr/Qxp7XWpDF4brk63J/kF7hXiWJnyMkDjWCYE88ldgoTYvkGgI
+         IXPaf6YHPqnzTDNrTm/D5X1XN6nnQUd8fEkT3hApA5gGABDySgbvvBltdkocu2HpIsZP
+         0Aig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1773140997; x=1773745797;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=Aem47PhvPdP/iyuqplBe3P+A+LjmiDgpbIH/qJLSI+A=;
+        b=MoC7MAtoQDZni1fQLLfXBy/kii0E2DouhIRY4rJbbvWzpuJlCqIGp19vkqiuroR7vc
+         o7j4sfoY93kvnTuYqjuaAmlMPzG+c3E256PcOHcBHTzquo/KWCYI5EwHyLI0lxtMvFtN
+         2mNF5Xbj1FBqWlzvOC+J8GxgvvONbKHG2mHl5jZ3RzPh2PmsvbROQm2rQkK/lHzj4CTL
+         7pDblrNqE/bDJZyJjOQxAMZ0isukVfil4qPy4Vz/JI0jp9XGxzuxGSjDij6zWFFdz5pL
+         px5q8I+KAHchRJ44iWXELTSmSc6b6vk2Fh3dkkZLCX7/skDEAq+4Yu6dd5qXekP8HL6x
+         Kutg==
+X-Forwarded-Encrypted: i=1; AJvYcCUXU0Yrw9SLE6XfWVKjxAv2VVZPCuHZGHk8LBJxFkHuF87TpE/bKg9GePKJtidIqCZ9K9Gk73Xy@lists.linux.dev
+X-Gm-Message-State: AOJu0YxWEObVgG43Xz0SLiWnhfbSo4l0CVefh6P0xWrkvv/IvUntSbKO
+	lAmJL7btmq0oFp10sdfbz+ZSZhQAi+5PMWdUBnjkij4uH+G8JVTXf6W862c3hyrjgBUph22J2eD
+	UUSh06U016x//oUunJ5nBXMOqZGnV1Vo=
+X-Gm-Gg: ATEYQzwdVMThG7T0Frr5NkI4mknKSd5srRdxmUFizLXm78J8vHEvQkHfZFmKAQzjMAp
+	RmHzvwMxFK1CmB4+Li4v+8b+hjN2TH0Lw6DDNy1ZjYu1h8EF/JcaFnpnKi5cqxf0fX56d+TFzLa
+	rh4EZGjiZWNLjNujpunpZcgLnXaqbMUDrLjwmKA/3CGNEk2jfrsCg4+D37flFoqTBIJLyUaX017
+	UQJHRhT4zMwMwpGzUeY2IouSxq5kqabY0I3X98MD8Wl7Gp1rKIsfadrQBrQ6Ly/+VO5OOQTBVMP
+	IMhdYMvSzjdkWr++lqptobp9jCFRu4QNyOnGWdeQQ81mc7A21wncA4MVDS+k65TcOcrVNwOQPp5
+	EYsDMRR6ZOeDFX6x9sPmhrc0=
+X-Received: by 2002:a05:7300:cd90:b0:2be:1544:5c34 with SMTP id
+ 5a478bee46e88-2be4e09a273mr2605685eec.8.1773140996803; Tue, 10 Mar 2026
+ 04:09:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+References: <20241119185747.862544-1-ojeda@kernel.org> <202512092319.ECBB8613@keescook>
+In-Reply-To: <202512092319.ECBB8613@keescook>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Tue, 10 Mar 2026 12:09:43 +0100
+X-Gm-Features: AaiRm52yrnYpKu_LCuEGwaXBkN9qVVDwx_oBsyi0FYUy2OUcPt08sBsrY2wvdKg
+Message-ID: <CANiq72n=hgH4bqJjp8MsMHAaxaAo75GSBcHGTvFT3NTSaVPGWg@mail.gmail.com>
+Subject: Re: [RFC PATCH] rust: allow Clang-native `RANDSTRUCT` configs
+To: Kees Cook <kees@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Nathan Chancellor <nathan@kernel.org>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
+	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
+	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
+	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Aaron Ballman <aaron@aaronballman.com>, 
+	Bill Wendling <isanbard@gmail.com>, Cole Nixon <nixontcole@gmail.com>, 
+	Connor Kuehl <cipkuehl@gmail.com>, Fangrui Song <i@maskray.me>, James Foster <jafosterja@gmail.com>, 
+	Jeff Takahashi <jeffrey.takahashi@gmail.com>, Jordan Cantrell <jordan.cantrell@mail.com>, 
+	Matthew Maurer <mmaurer@google.com>, Nikk Forbus <nicholas.forbus@gmail.com>, 
+	Qing Zhao <qing.zhao@oracle.com>, Sami Tolvanen <samitolvanen@google.com>, 
+	Tim Pugh <nwtpugh@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Danilo Krummrich <dakr@kernel.org>
+On Wed, Dec 10, 2025 at 8:21=E2=80=AFAM Kees Cook <kees@kernel.org> wrote:
+>
+> I played with this again, and yes it appears to be working. I think,
+> however, I would like to make the anon struct universal. What do you
+> think of this?
 
-[ Upstream commit 78437ab3b769f80526416570f60173c89858dd84 ]
+Revisiting this... If that is acceptable, even easier for the Rust side, ye=
+ah.
 
-imx_clk_scu_init() registers the imx_clk_scu_driver while commonly being
-called from IMX driver's probe() callbacks.
+Perhaps as a patch on top instead of doing both at once? (even if it
+means cleaning up)
 
-However, it neither makes sense to register drivers from probe()
-callbacks of other drivers, nor does the driver core allow registering
-drivers with a device lock already being held.
+Thanks!
 
-The latter was revealed by commit dc23806a7c47 ("driver core: enforce
-device_lock for driver_match_device()") leading to a deadlock condition
-described in [1].
-
-Besides that, nothing seems to unregister the imx_clk_scu_driver once
-the corresponding driver module is unloaded, which leaves the
-driver-core with a dangling pointer.
-
-Also, if there are multiple matching devices for the imx8qxp_clk_driver,
-imx8qxp_clk_probe() calls imx_clk_scu_init() multiple times.  However,
-any subsequent call after the first one will fail, since the driver-core
-does not allow to register the same struct platform_driver multiple
-times.
-
-Hence, register the imx_clk_scu_driver from module_init() and unregister
-it in module_exit().
-
-Note that we first register the imx8qxp_clk_driver and then call
-imx_clk_scu_module_init() to avoid having to call
-imx_clk_scu_module_exit() in the unwind path of imx8qxp_clk_init().
-
-Fixes: dc23806a7c47 ("driver core: enforce device_lock for driver_match_device()")
-Fixes: 220175cd3979 ("clk: imx: scu: fix build break when compiled as modules")
-Reported-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Closes: https://lore.kernel.org/lkml/13955113.uLZWGnKmhe@steina-w/
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com> # TQMa8x/MBa8x
-Link: https://lore.kernel.org/lkml/DFU7CEPUSG9A.1KKGVW4HIPMSH@kernel.org/ [1]
-Acked-by: Abel Vesa <abelvesa@kernel.org>
-Reviewed-by: Daniel Baluta <daniel.baluta@nxp.com>
-Link: https://patch.msgid.link/20260212235842.85934-1-dakr@kernel.org
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/clk/imx/clk-imx8qxp.c | 24 +++++++++++++++++++++++-
- drivers/clk/imx/clk-scu.c     | 12 +++++++++++-
- drivers/clk/imx/clk-scu.h     |  2 ++
- 3 files changed, 36 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/clk/imx/clk-imx8qxp.c b/drivers/clk/imx/clk-imx8qxp.c
-index 3ae162625bb1a..c781425a005ef 100644
---- a/drivers/clk/imx/clk-imx8qxp.c
-+++ b/drivers/clk/imx/clk-imx8qxp.c
-@@ -346,7 +346,29 @@ static struct platform_driver imx8qxp_clk_driver = {
- 	},
- 	.probe = imx8qxp_clk_probe,
- };
--module_platform_driver(imx8qxp_clk_driver);
-+
-+static int __init imx8qxp_clk_init(void)
-+{
-+	int ret;
-+
-+	ret = platform_driver_register(&imx8qxp_clk_driver);
-+	if (ret)
-+		return ret;
-+
-+	ret = imx_clk_scu_module_init();
-+	if (ret)
-+		platform_driver_unregister(&imx8qxp_clk_driver);
-+
-+	return ret;
-+}
-+module_init(imx8qxp_clk_init);
-+
-+static void __exit imx8qxp_clk_exit(void)
-+{
-+	imx_clk_scu_module_exit();
-+	platform_driver_unregister(&imx8qxp_clk_driver);
-+}
-+module_exit(imx8qxp_clk_exit);
- 
- MODULE_AUTHOR("Aisheng Dong <aisheng.dong@nxp.com>");
- MODULE_DESCRIPTION("NXP i.MX8QXP clock driver");
-diff --git a/drivers/clk/imx/clk-scu.c b/drivers/clk/imx/clk-scu.c
-index 34c9dc1fb20e5..c90d21e05f916 100644
---- a/drivers/clk/imx/clk-scu.c
-+++ b/drivers/clk/imx/clk-scu.c
-@@ -191,6 +191,16 @@ static bool imx_scu_clk_is_valid(u32 rsrc_id)
- 	return p != NULL;
- }
- 
-+int __init imx_clk_scu_module_init(void)
-+{
-+	return platform_driver_register(&imx_clk_scu_driver);
-+}
-+
-+void __exit imx_clk_scu_module_exit(void)
-+{
-+	return platform_driver_unregister(&imx_clk_scu_driver);
-+}
-+
- int imx_clk_scu_init(struct device_node *np,
- 		     const struct imx_clk_scu_rsrc_table *data)
- {
-@@ -215,7 +225,7 @@ int imx_clk_scu_init(struct device_node *np,
- 		rsrc_table = data;
- 	}
- 
--	return platform_driver_register(&imx_clk_scu_driver);
-+	return 0;
- }
- 
- /*
-diff --git a/drivers/clk/imx/clk-scu.h b/drivers/clk/imx/clk-scu.h
-index af7b697f51cae..ca82f2cce8974 100644
---- a/drivers/clk/imx/clk-scu.h
-+++ b/drivers/clk/imx/clk-scu.h
-@@ -25,6 +25,8 @@ extern const struct imx_clk_scu_rsrc_table imx_clk_scu_rsrc_imx8dxl;
- extern const struct imx_clk_scu_rsrc_table imx_clk_scu_rsrc_imx8qxp;
- extern const struct imx_clk_scu_rsrc_table imx_clk_scu_rsrc_imx8qm;
- 
-+int __init imx_clk_scu_module_init(void);
-+void __exit imx_clk_scu_module_exit(void);
- int imx_clk_scu_init(struct device_node *np,
- 		     const struct imx_clk_scu_rsrc_table *data);
- struct clk_hw *imx_scu_of_clk_src_get(struct of_phandle_args *clkspec,
--- 
-2.51.0
-
+Cheers,
+Miguel
