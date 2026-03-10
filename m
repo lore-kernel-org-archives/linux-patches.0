@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9139389DEF;
-	Tue, 10 Mar 2026 11:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9D3389DE8;
+	Tue, 10 Mar 2026 11:29:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142169; cv=none; b=KZbMqYmYqjyd+kl+FTfTySUkWuR8CsQBvkpQRiOWmKL6kSKpwUwsgV0614c88NelSSBWbdoyr/l6w+An4QypKyvxSCXfpoH1dVnzZSp/sdOtvW4B7mOiRRvBxQ+7BQVQCUb40+lhCNh4eVMyb85yVUT9psdCJdXLoRKNQcqKO9g=
+	t=1773142170; cv=none; b=ixmU6ncRh86RnyAmbv+kt862zSWA1BmVCsbBNvJdbq+kLcQE923ImTg0laHsduC+IWNnTSsjo02rXmixjxibKKe4GsCeOa3xIOQwC+rF+UfWcTQ6LLDCi4ScqnH1x5jeXayJiyw2fbufzDMq/q/KfFD3D4zxutb3Pq3jfmmuvJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142169; c=relaxed/simple;
-	bh=yl/mS+Btm4T+WdHZ6NNbrrjQq0DxR4Dy9L67pfdeTs4=;
+	s=arc-20240116; t=1773142170; c=relaxed/simple;
+	bh=xXjCCA3FdQ9RoF366iZKkj/s+p6BWouloAyVZgF0yws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dL3uf1fBf1m4ZsbX3rL2boFTrKWCiRHzmujFKTtHsLS0uz3Y5/JzWvxCwO/stGumW6VTDeQ6HA6ddW9eFGGLJ9yB3d99xLEPuSWUhHI6AFNX0izJbr4hf6PW4vPdWFS2RGdBhs1WMp4czw3wUATU+7KaB9Vly6CzC57BiP4FBGk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=sLeMZGfE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ngVV6E1hIndrd84X55bcmfLMuYn3nN9T1itFC6zZR4ROgo9RDhKQeiM4aUrZGD9cOaMuoOxUJKbr1oK90B96xTycHGeFiHfAGaE5cOaKPeFWIf+WSVMrIfpkiuY4W+cI/Rth7QmyyR1nGOAHe9AnjoTy4BUj5E98JmTR+UeqKjg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=R/whardb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="sLeMZGfE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1961AC2BC86;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="R/whardb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08FD4C2BC9E;
 	Tue, 10 Mar 2026 11:29:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142169;
-	bh=yl/mS+Btm4T+WdHZ6NNbrrjQq0DxR4Dy9L67pfdeTs4=;
+	s=k20201202; t=1773142170;
+	bh=xXjCCA3FdQ9RoF366iZKkj/s+p6BWouloAyVZgF0yws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sLeMZGfEhmLYh5fzB9HfISjA/wq+6aXJ6nKiINCIP2zGqx35x3KgVnNJCgk7Hkl0S
-	 1FZ+PtUgyLT3v1MlzKe75iLhIRYn/5BhnDF1M+/H/91aLOFUKkW6qUI9JMoSMUVa1N
-	 C36LuEqYb22QghDanmZkQUi6B3dQ8nzW/7VsCe1eFVe+PTVCZQR4v1RU6cyZfB+WVa
-	 hZ6H5LJc9sAyclizriHw7y6yJ5qnuCQdrUvRQjAS0rP3IYIK52VVubW9QvbKlA+W6g
-	 bZAneQQVjQtm7I/E5K0+UALTQmSj1+r/1KvXT1P+nZPIA+N4D9mXjXia0kgbGYXvCN
-	 0JYwXWy5uMmpQ==
+	b=R/whardb66uIwmfc3DTrTVvWOmGTm5sFmy7KZiR4tubIT6L5y0dOgrWKD37mAGXrE
+	 4WUkWkn6rSh3Rv1JQ5YCWErl0E3dUNTZvccvyuEstiKTrjr0VwoBgL1Byu2qH7ZthI
+	 MHEIU8mbP2w4o7OoZUIsc+4OLW4ljlMixibNN+qMtLkAgEJF/NOt67UbWyvyItkbj6
+	 /OwNH8nxb4seTW6KUAUTpgnhH9AX8maxUPHwfyy4A1NxEM7R9pzJtiHRDUx5O3Yicp
+	 A/5ftZv2vvY01yQPQmNUcOb/lkURh8MkS7b8O64v2PcGyXpUiav0NEJ4j+OkBzT+h6
+	 tUimav5SUKOAg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Eric Dumazet <edumazet@google.com>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+Cc: Allison Henderson <achender@kernel.org>,
+	syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 258/314] indirect_call_wrapper: do not reevaluate function pointer
-Date: Tue, 10 Mar 2026 07:18:37 -0400
-Message-ID: <d6fe87cf2003cf694c9cc204eb3d02a79713681b.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 259/314] net/rds: Fix circular locking dependency in rds_tcp_tune
+Date: Tue, 10 Mar 2026 07:18:38 -0400
+Message-ID: <a09e5210129af175fd7548d993c13a1e62c27070.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,137 +49,82 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Allison Henderson <achender@kernel.org>
 
-[ Upstream commit 710f5c76580306cdb9ec51fac8fcf6a8faff7821 ]
+[ Upstream commit 6a877ececd6daa002a9a0002cd0fbca6592a9244 ]
 
-We have an increasing number of READ_ONCE(xxx->function)
-combined with INDIRECT_CALL_[1234]() helpers.
+syzbot reported a circular locking dependency in rds_tcp_tune() where
+sk_net_refcnt_upgrade() is called while holding the socket lock:
 
-Unfortunately this forces INDIRECT_CALL_[1234]() to read
-xxx->function many times, which is not what we wanted.
+======================================================
+WARNING: possible circular locking dependency detected
+======================================================
+kworker/u10:8/15040 is trying to acquire lock:
+ffffffff8e9aaf80 (fs_reclaim){+.+.}-{0:0},
+at: __kmalloc_cache_noprof+0x4b/0x6f0
 
-Fix these macros so that xxx->function value is not reloaded.
+but task is already holding lock:
+ffff88805a3c1ce0 (k-sk_lock-AF_INET6){+.+.}-{0:0},
+at: rds_tcp_tune+0xd7/0x930
 
-$ scripts/bloat-o-meter -t vmlinux.0 vmlinux
-add/remove: 0/0 grow/shrink: 1/65 up/down: 122/-1084 (-962)
-Function                                     old     new   delta
-ip_push_pending_frames                        59     181    +122
-ip6_finish_output                            687     681      -6
-__udp_enqueue_schedule_skb                  1078    1072      -6
-ioam6_output                                2319    2312      -7
-xfrm4_rcv_encap_finish2                       64      56      -8
-xfrm4_output                                 297     289      -8
-vrf_ip_local_out                             278     270      -8
-vrf_ip6_local_out                            278     270      -8
-seg6_input_finish                             64      56      -8
-rpl_output                                   700     692      -8
-ipmr_forward_finish                          124     116      -8
-ip_forward_finish                            143     135      -8
-ip6mr_forward2_finish                        100      92      -8
-ip6_forward_finish                            73      65      -8
-input_action_end_bpf                        1091    1083      -8
-dst_input                                     52      44      -8
-__xfrm6_output                               801     793      -8
-__xfrm4_output                                83      75      -8
-bpf_input                                    500     491      -9
-__tcp_check_space                            530     521      -9
-input_action_end_dt6                         291     280     -11
-vti6_tnl_xmit                               1634    1622     -12
-bpf_xmit                                    1203    1191     -12
-rpl_input                                    497     483     -14
-rawv6_send_hdrinc                           1355    1341     -14
-ndisc_send_skb                              1030    1016     -14
-ipv6_srh_rcv                                1377    1363     -14
-ip_send_unicast_reply                       1253    1239     -14
-ip_rcv_finish                                226     212     -14
-ip6_rcv_finish                               300     286     -14
-input_action_end_x_core                      205     191     -14
-input_action_end_x                           355     341     -14
-input_action_end_t                           205     191     -14
-input_action_end_dx6_finish                  127     113     -14
-input_action_end_dx4_finish                  373     359     -14
-input_action_end_dt4                         426     412     -14
-input_action_end_core                        186     172     -14
-input_action_end_b6_encap                    292     278     -14
-input_action_end_b6                          198     184     -14
-igmp6_send                                  1332    1318     -14
-ip_sublist_rcv                               864     848     -16
-ip6_sublist_rcv                             1091    1075     -16
-ipv6_rpl_srh_rcv                            1937    1920     -17
-xfrm_policy_queue_process                   1246    1228     -18
-seg6_output_core                             903     885     -18
-mld_sendpack                                 856     836     -20
-NF_HOOK                                      756     736     -20
-vti_tunnel_xmit                             1447    1426     -21
-input_action_end_dx6                         664     642     -22
-input_action_end                            1502    1480     -22
-sock_sendmsg_nosec                           134     111     -23
-ip6mr_forward2                               388     364     -24
-sock_recvmsg_nosec                           134     109     -25
-seg6_input_core                              836     810     -26
-ip_send_skb                                  172     146     -26
-ip_local_out                                 140     114     -26
-ip6_local_out                                140     114     -26
-__sock_sendmsg                               162     136     -26
-__ip_queue_xmit                             1196    1170     -26
-__ip_finish_output                           405     379     -26
-ipmr_queue_fwd_xmit                          373     346     -27
-sock_recvmsg                                 173     145     -28
-ip6_xmit                                    1635    1607     -28
-xfrm_output_resume                          1418    1389     -29
-ip_build_and_send_pkt                        625     591     -34
-dst_output                                   504     432     -72
-Total: Before=25217686, After=25216724, chg -0.00%
+The issue occurs because sk_net_refcnt_upgrade() performs memory
+allocation (via get_net_track() -> ref_tracker_alloc()) while the
+socket lock is held, creating a circular dependency with fs_reclaim.
 
-Fixes: 283c16a2dfd3 ("indirect call wrappers: helpers to speed-up indirect calls of builtin")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/20260227172603.1700433-1-edumazet@google.com
+Fix this by moving sk_net_refcnt_upgrade() outside the socket lock
+critical section. This is safe because the fields modified by the
+sk_net_refcnt_upgrade() call (sk_net_refcnt, ns_tracker) are not
+accessed by any concurrent code path at this point.
+
+v2:
+  - Corrected fixes tag
+  - check patch line wrap nits
+  - ai commentary nits
+
+Reported-by: syzbot+2e2cf5331207053b8106@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=2e2cf5331207053b8106
+Fixes: 3a58f13a881e ("net: rds: acquire refcount on TCP sockets")
+Signed-off-by: Allison Henderson <achender@kernel.org>
+Link: https://patch.msgid.link/20260227202336.167757-1-achender@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/indirect_call_wrapper.h | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ net/rds/tcp.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/indirect_call_wrapper.h b/include/linux/indirect_call_wrapper.h
-index 35227d47cfc98..dc272b514a01b 100644
---- a/include/linux/indirect_call_wrapper.h
-+++ b/include/linux/indirect_call_wrapper.h
-@@ -16,22 +16,26 @@
-  */
- #define INDIRECT_CALL_1(f, f1, ...)					\
- 	({								\
--		likely(f == f1) ? f1(__VA_ARGS__) : f(__VA_ARGS__);	\
-+		typeof(f) __f1 = (f);					\
-+		likely(__f1 == f1) ? f1(__VA_ARGS__) : __f1(__VA_ARGS__);	\
- 	})
- #define INDIRECT_CALL_2(f, f2, f1, ...)					\
- 	({								\
--		likely(f == f2) ? f2(__VA_ARGS__) :			\
--				  INDIRECT_CALL_1(f, f1, __VA_ARGS__);	\
-+		typeof(f) __f2 = (f);					\
-+		likely(__f2 == f2) ? f2(__VA_ARGS__) :			\
-+				  INDIRECT_CALL_1(__f2, f1, __VA_ARGS__);	\
- 	})
- #define INDIRECT_CALL_3(f, f3, f2, f1, ...)					\
- 	({									\
--		likely(f == f3) ? f3(__VA_ARGS__) :				\
--				  INDIRECT_CALL_2(f, f2, f1, __VA_ARGS__);	\
-+		typeof(f) __f3 = (f);						\
-+		likely(__f3 == f3) ? f3(__VA_ARGS__) :				\
-+				  INDIRECT_CALL_2(__f3, f2, f1, __VA_ARGS__);	\
- 	})
- #define INDIRECT_CALL_4(f, f4, f3, f2, f1, ...)					\
- 	({									\
--		likely(f == f4) ? f4(__VA_ARGS__) :				\
--				  INDIRECT_CALL_3(f, f3, f2, f1, __VA_ARGS__);	\
-+		typeof(f) __f4 = (f);						\
-+		likely(__f4 == f4) ? f4(__VA_ARGS__) :				\
-+				  INDIRECT_CALL_3(__f4, f3, f2, f1, __VA_ARGS__);	\
- 	})
+diff --git a/net/rds/tcp.c b/net/rds/tcp.c
+index 3cc2f303bf786..b66dfcc3efaa0 100644
+--- a/net/rds/tcp.c
++++ b/net/rds/tcp.c
+@@ -495,18 +495,24 @@ bool rds_tcp_tune(struct socket *sock)
+ 	struct rds_tcp_net *rtn;
  
- #define INDIRECT_CALLABLE_DECLARE(f)	f
+ 	tcp_sock_set_nodelay(sock->sk);
+-	lock_sock(sk);
+ 	/* TCP timer functions might access net namespace even after
+ 	 * a process which created this net namespace terminated.
+ 	 */
+ 	if (!sk->sk_net_refcnt) {
+-		if (!maybe_get_net(net)) {
+-			release_sock(sk);
++		if (!maybe_get_net(net))
+ 			return false;
+-		}
++		/*
++		 * sk_net_refcnt_upgrade() must be called before lock_sock()
++		 * because it does a GFP_KERNEL allocation, which can trigger
++		 * fs_reclaim and create a circular lock dependency with the
++		 * socket lock.  The fields it modifies (sk_net_refcnt,
++		 * ns_tracker) are not accessed by any concurrent code path
++		 * at this point.
++		 */
+ 		sk_net_refcnt_upgrade(sk);
+ 		put_net(net);
+ 	}
++	lock_sock(sk);
+ 	rtn = net_generic(net, rds_tcp_netid);
+ 	if (rtn->sndbuf_size > 0) {
+ 		sk->sk_sndbuf = rtn->sndbuf_size;
 -- 
 2.51.0
 
