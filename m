@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A9F0387583;
-	Tue, 10 Mar 2026 11:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8952F387583;
+	Tue, 10 Mar 2026 11:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141656; cv=none; b=FI+uglp2Yi+26dJknVBx+FDa+Zc4MfWoGaavD3SKSXeothbDdGfm5bVJi68c/uEFqnNfbCNCKa02kjlTAvtQFqum6gmbkr4INb1rH+M1am9cz+LeNvanmkuFj3Zfl2TkLqnYO0bchAk4tmIuiW1A+ivfLL/XdaV+lQC7p8Hb+Wc=
+	t=1773141657; cv=none; b=TkgOltLan8I4Jjm/p72+rYvnZAPFWNWp9/jDwouh4eH8Dv1vBTxPUZlhSojZE61h8VF+jesFTRdgg/P4TiIbZ17yskjZtBdmkCaU2HXvIzkQkNSSFnu7AVPBi5grJU8JFrAzOLXCdvWHclKu1xuAxuXK9k2KacT9q+ppf3/qg9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141656; c=relaxed/simple;
-	bh=1bPWodLI+X4zhz61tgI8MPtO7ZrgwsDjHx5QYJTAMB8=;
+	s=arc-20240116; t=1773141657; c=relaxed/simple;
+	bh=0QD55OI1flOZ9fILNOdIUG7CAOe93hFyScjtpO1kgg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u8vgVTpSDEsLs+5iPTg+zeyGHS7NtchVZWcTUmyrEBRUftqlY1l/RUoeAiXrdPB5iyU1jy3j/EH8JrxlXsE1SGR8QlN8yQlJr4MAKWGlD2vYScAJGz0Kr2noQblxI/87CrEmWnydTAr8XBn+XBbh5bnAWeGwavVrZDBc8D4arHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AxV7mR+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oRpaeGsBTQwjh7SheUqizRcy4zhHfrpcXncFO4rnsyG9Zh4VfPJyjw/tHVwW0d+BtFBaXSBgsiNqg2hWrQm/dR5Q8Tn0FMWyElVCwE6u5N7om/05l2ex6jDNSN2zFy52G/X5CFE2hSsr9sIzj08WIUyxqPqPBXrKxohw/NZw9IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NJZ/l2UZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AxV7mR+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BE64C19423;
-	Tue, 10 Mar 2026 11:20:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NJZ/l2UZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781D8C2BCB0;
+	Tue, 10 Mar 2026 11:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141656;
-	bh=1bPWodLI+X4zhz61tgI8MPtO7ZrgwsDjHx5QYJTAMB8=;
+	s=k20201202; t=1773141657;
+	bh=0QD55OI1flOZ9fILNOdIUG7CAOe93hFyScjtpO1kgg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AxV7mR+qR0f9KvtwWyXg0J21sh/fEB7nfncdLV3Rr44EuLkpqhkLRT7zlZbv1Hs7W
-	 T0Q5U6KS2VI9CRS4CzxCFtabWUyB2Z6WyvB/z9bGl3f8PeVFB3DJZM9hg6gDJZtAiZ
-	 qv5hkfzqNPVeNyJYt00IqYRJrfIkK8tiT9Nsc+tV1veDsvygnKvJfsG96E4ndImB3b
-	 H7AOg5cARnWypMEhzA0gVk4Oy7XiNpJZ04gjK6HxcIdg5ByahAbXMxXZLbP6EMjbLU
-	 1mBR/DfLDsxsZTnUbi/+XIr4OVidL4rmOPdwH7wR4dcDXYIy7zixrXu1YcTvKUEasF
-	 0PAwhB/vC8oKQ==
+	b=NJZ/l2UZMi3OYwEdHj93SlXRF/Heo2FP4S+TCDnlTYv6ky7UPL9q+O4sexAoo0plV
+	 5EQYWQmOcbTFZsLtMU5zkU7E6RNnI5DXnjFwHaWuhVmyyKoopVh70D2gw6cSjMvHKl
+	 7XVaWpampQ0FKtfIIbxPcH7T9CA/2PUKVP5Nq5tq4jDiZycGWEIIy35EoCeKsCD0tv
+	 7HUXHcuwtP1VzJUb7fFXWAOf9Z10wLqFtdjOJwb8QsTl8cpsefuJxOjUEix4BCTbGK
+	 tCj0lrLKbWrpz5VoeTIJtI1+kzoV667znNHwwKigHk3HYf1EYP96jL/TfE++AZDG/I
+	 C+NvBbk5sXWfg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Zijlstra <peterz@infradead.org>,
+Cc: Wang Tao <wangtao554@huawei.com>,
+	Zhang Qiao <zhangqiao22@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 023/314] sched/fair: Only set slice protection at pick time
-Date: Tue, 10 Mar 2026 07:14:42 -0400
-Message-ID: <c9850d894cc206828ccbb9126e106f92439dbb34.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 024/314] sched/eevdf: Update se->vprot in reweight_entity()
+Date: Tue, 10 Mar 2026 07:14:43 -0400
+Message-ID: <2a8045e80d3425ba67de28ebb8f9dd49b28a9779.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,72 +52,79 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Wang Tao <wangtao554@huawei.com>
 
-[ Upstream commit bcd74b2ffdd0a2233adbf26b65c62fc69a809c8e ]
+[ Upstream commit ff38424030f98976150e42ca35f4b00e6ab8fa23 ]
 
-We should not (re)set slice protection in the sched_change pattern
-which calls put_prev_task() / set_next_task().
+In the EEVDF framework with Run-to-Parity protection, `se->vprot` is an
+independent variable defining the virtual protection timestamp.
+
+When `reweight_entity()` is called (e.g., via nice/renice), it performs
+the following actions to preserve Lag consistency:
+ 1. Scales `se->vlag` based on the new weight.
+ 2. Calls `place_entity()`, which recalculates `se->vruntime` based on
+    the new weight and scaled lag.
+
+However, the current implementation fails to update `se->vprot`, leading
+to mismatches between the task's actual runtime and its expected duration.
 
 Fixes: 63304558ba5d ("sched/eevdf: Curb wakeup-preemption")
+Suggested-by: Zhang Qiao <zhangqiao22@huawei.com>
+Signed-off-by: Wang Tao <wangtao554@huawei.com>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
 Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
-Link: https://patch.msgid.link/20260219080624.561421378%40infradead.org
+Link: https://patch.msgid.link/20260120123113.3518950-1-wangtao554@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ kernel/sched/fair.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c3735197c6e7c..1644ad90acdca 100644
+index 1644ad90acdca..8587218ee9073 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -5477,7 +5477,7 @@ dequeue_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, int flags)
- }
- 
- static void
--set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
-+set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se, bool first)
+@@ -3805,6 +3805,8 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
+ 			    unsigned long weight)
  {
- 	clear_buddies(cfs_rq, se);
+ 	bool curr = cfs_rq->curr == se;
++	bool rel_vprot = false;
++	u64 vprot;
  
-@@ -5492,7 +5492,8 @@ set_next_entity(struct cfs_rq *cfs_rq, struct sched_entity *se)
- 		__dequeue_entity(cfs_rq, se);
- 		update_load_avg(cfs_rq, se, UPDATE_TG);
+ 	if (se->on_rq) {
+ 		/* commit outstanding execution time */
+@@ -3812,6 +3814,11 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
+ 		update_entity_lag(cfs_rq, se);
+ 		se->deadline -= se->vruntime;
+ 		se->rel_deadline = 1;
++		if (curr && protect_slice(se)) {
++			vprot = se->vprot - se->vruntime;
++			rel_vprot = true;
++		}
++
+ 		cfs_rq->nr_queued--;
+ 		if (!curr)
+ 			__dequeue_entity(cfs_rq, se);
+@@ -3827,6 +3834,9 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
+ 	if (se->rel_deadline)
+ 		se->deadline = div_s64(se->deadline * se->load.weight, weight);
  
--		set_protect_slice(cfs_rq, se);
-+		if (first)
-+			set_protect_slice(cfs_rq, se);
- 	}
++	if (rel_vprot)
++		vprot = div_s64(vprot * se->load.weight, weight);
++
+ 	update_load_set(&se->load, weight);
  
- 	update_stats_curr_start(cfs_rq, se);
-@@ -8932,13 +8933,13 @@ pick_next_task_fair(struct rq *rq, struct task_struct *prev, struct rq_flags *rf
- 				pse = parent_entity(pse);
- 			}
- 			if (se_depth >= pse_depth) {
--				set_next_entity(cfs_rq_of(se), se);
-+				set_next_entity(cfs_rq_of(se), se, true);
- 				se = parent_entity(se);
- 			}
- 		}
- 
- 		put_prev_entity(cfs_rq, pse);
--		set_next_entity(cfs_rq, se);
-+		set_next_entity(cfs_rq, se, true);
- 
- 		__set_next_task_fair(rq, p, true);
- 	}
-@@ -13530,7 +13531,7 @@ static void set_next_task_fair(struct rq *rq, struct task_struct *p, bool first)
- 	for_each_sched_entity(se) {
- 		struct cfs_rq *cfs_rq = cfs_rq_of(se);
- 
--		set_next_entity(cfs_rq, se);
-+		set_next_entity(cfs_rq, se, first);
- 		/* ensure bandwidth has been allocated on our new cfs_rq */
- 		account_cfs_rq_runtime(cfs_rq, 0);
- 	}
+ 	do {
+@@ -3838,6 +3848,8 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
+ 	enqueue_load_avg(cfs_rq, se);
+ 	if (se->on_rq) {
+ 		place_entity(cfs_rq, se, 0);
++		if (rel_vprot)
++			se->vprot = se->vruntime + vprot;
+ 		update_load_add(&cfs_rq->load, se->load.weight);
+ 		if (!curr)
+ 			__enqueue_entity(cfs_rq, se);
 -- 
 2.51.0
 
