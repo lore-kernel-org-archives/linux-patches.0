@@ -1,44 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473E93859DC;
-	Tue, 10 Mar 2026 11:12:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D70236EA89;
+	Tue, 10 Mar 2026 11:12:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141155; cv=none; b=cOzFl/uGYUeOhSWfxWfJKlaV21RxdA53Orx0dsYWOrlCxcffl7fAM9V0F7x5GEP9/FpEnxq2m9PLoDSxkO3EbaINaIu0gY8vn2mCvHzKu2zhdzxnOgu03wdz8g65H8/FbGx2SeG2xXleTkwG7L0p2XRUq5+P3Ct/s/DMF3uvQtQ=
+	t=1773141156; cv=none; b=XlwbPJfLda5H8bpkvejc54X05LWOa59WeRulIISUolflgpNbB8fzjrgWKryr59A9w3MRwZ7guBHTrS6oGHJ+NrZ4llo1D1VRuKRY47YsZFFDdp4/LHfm2yUyJc7h9Rsr48XnGlq1WZmCYEmDzSg3AWFplmR45VwIJX1rrlXlV1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141155; c=relaxed/simple;
-	bh=k9W6l0IO5+1g8UaFFlcyhg622dwPV0kbq6xTsDUaZUc=;
+	s=arc-20240116; t=1773141156; c=relaxed/simple;
+	bh=DOLgvmvfT15pdlGT0sGmmk+6NYhFev5as4TzeMT+aAg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dRu77RFeLuVUn9Q9JrP1uA5AGVEv7/YeIOBskkMj/LpgQa25Y/DfVA3pMQwmqgQ2ybtxXikP6buWXp+USyLp60Qst5ra282OwtIlEyQeGFIrlZMKZk70uhBi1WGrrbCTMUZ0v2W1zI3BRfMYuif0cCaLjBeu/n5zvnqEOBYD0sA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JiO0ZweZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Warc/MuSaJw1gGgZhHHeGBADaUitwp6g4EtsBLFiyVg3rkk2GhbHXLhB8Dg/fN7ZOjVjRnNjcYRpNh4qTs7lkED6o32BTT+9NupF5+db92scmr0flISUoanDn3AsJB/MSzUbf6Epb5L4M14XwXLhd4R9Mm0kLAa/7s/3+W+fd50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DIOFMN3h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JiO0ZweZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3898FC2BCAF;
-	Tue, 10 Mar 2026 11:12:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DIOFMN3h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EF79C19423;
+	Tue, 10 Mar 2026 11:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141155;
-	bh=k9W6l0IO5+1g8UaFFlcyhg622dwPV0kbq6xTsDUaZUc=;
+	s=k20201202; t=1773141156;
+	bh=DOLgvmvfT15pdlGT0sGmmk+6NYhFev5as4TzeMT+aAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JiO0ZweZkPCLYOPyffZZtA5/Bt/pU2fN6RAfneu92pkU7uB2JujHjnd21VXklPEvl
-	 N9lwlkc+4pIFIkH3IqV7cO8zkAv7moz8GNrRq20Q8L+XPC1ORaGwN4p+petzAxsVm6
-	 2tcAdcK1amHMsLO8E5c6QjHz5jvmkgJgGZueZU+DNCB1oLcuHUUsJUjaW2f5h3Pc+H
-	 fi9vHoWiVTJd7QcqgbVB8WiI7ssv1fZOlxDUMM7IjWV2QSCWvMcpBGIv0vXLF5R22s
-	 9CatOgUWheUTsNJfH/JLmLoQ0V1zOegSmW5tM48yBNnevoA79JM41YIP1WshFP+AEG
-	 LN3KtMUGUTT2g==
+	b=DIOFMN3hzG79pf5K0L9wzEcjMY7X9oU+iMoVWLb8rXcC6fPZ5LrOcIiQWiKIhBIOm
+	 yRIk+4vrZXG28BmT2LZmhlpNHONOM+jrvSSIpR25oaXEtY/1xPnevCal7FkESPMj/X
+	 ie09pa6MU4HP7n3Dguz0vcwfiBlHH6EI+ABHv6Y7wW+gQgVB98VrmEfZGW5buPd6HH
+	 brFF+Y9Xacl5JMZx0U6kkdr5mFeXlvtyn2f0xKgY7TDAEi7mKlC1JRf/l42mcHvbeU
+	 1XYQwcAlCZGA2neA5Ti/8NkAaWF2w9iNo419cNuRi32XKh1TNihRHVDG3q1q5MWgKu
+	 f+FShx+hg/mUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Paulo Alcantara <pc@manguebit.org>,
-	Xiaoli Feng <xifeng@redhat.com>,
-	Enzo Matsumiya <ematsumiya@suse.de>,
-	David Howells <dhowells@redhat.com>,
-	linux-cifs@vger.kernel.org,
+Cc: Thorsten Blum <thorsten.blum@linux.dev>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	Steve French <stfrench@microsoft.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 157/311] smb: client: fix broken multichannel with krb5+signing
-Date: Tue, 10 Mar 2026 07:03:24 -0400
-Message-ID: <13f9718e1cf21056cbd78752897fc9df85f83501.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 158/311] smb: client: Don't log plaintext credentials in cifs_set_cifscreds
+Date: Tue, 10 Mar 2026 07:03:25 -0400
+Message-ID: <44b8a13f8c505c8328c53d3b089be4e3c0ea3de0.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -52,79 +49,36 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit d9d1e319b39ea685ede59319002d567c159d23c3 upstream.
+commit 2f37dc436d4e61ff7ae0b0353cf91b8c10396e4d upstream.
 
-When mounting a share with 'multichannel,max_channels=n,sec=krb5i',
-the client was duplicating signing key for all secondary channels,
-thus making the server fail all commands sent from secondary channels
-due to bad signatures.
+When debug logging is enabled, cifs_set_cifscreds() logs the key
+payload and exposes the plaintext username and password. Remove the
+debug log to avoid exposing credentials.
 
-Every channel has its own signing key, so when establishing a new
-channel with krb5 auth, make sure to use the new session key as the
-derived key to generate channel's signing key in SMB2_auth_kerberos().
-
-Repro:
-
-$ mount.cifs //srv/share /mnt -o multichannel,max_channels=4,sec=krb5i
-$ sleep 5
-$ umount /mnt
-$ dmesg
-  ...
-  CIFS: VFS: sign fail cmd 0x5 message id 0x2
-  CIFS: VFS: \\srv SMB signature verification returned error = -13
-  CIFS: VFS: sign fail cmd 0x5 message id 0x2
-  CIFS: VFS: \\srv SMB signature verification returned error = -13
-  CIFS: VFS: sign fail cmd 0x4 message id 0x2
-  CIFS: VFS: \\srv SMB signature verification returned error = -13
-
-Reported-by: Xiaoli Feng <xifeng@redhat.com>
-Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Cc: David Howells <dhowells@redhat.com>
-Cc: linux-cifs@vger.kernel.org
+Fixes: 8a8798a5ff90 ("cifs: fetch credentials out of keyring for non-krb5 auth multiuser mounts")
 Cc: stable@vger.kernel.org
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ fs/smb/client/connect.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index 758d6f4256726..b16d7b42a73c4 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -1715,19 +1715,17 @@ SMB2_auth_kerberos(struct SMB2_sess_data *sess_data)
- 	is_binding = (ses->ses_status == SES_GOOD);
- 	spin_unlock(&ses->ses_lock);
- 
--	/* keep session key if binding */
--	if (!is_binding) {
--		kfree_sensitive(ses->auth_key.response);
--		ses->auth_key.response = kmemdup(msg->data, msg->sesskey_len,
--						 GFP_KERNEL);
--		if (!ses->auth_key.response) {
--			cifs_dbg(VFS, "Kerberos can't allocate (%u bytes) memory\n",
--				 msg->sesskey_len);
--			rc = -ENOMEM;
--			goto out_put_spnego_key;
--		}
--		ses->auth_key.len = msg->sesskey_len;
-+	kfree_sensitive(ses->auth_key.response);
-+	ses->auth_key.response = kmemdup(msg->data,
-+					 msg->sesskey_len,
-+					 GFP_KERNEL);
-+	if (!ses->auth_key.response) {
-+		cifs_dbg(VFS, "%s: can't allocate (%u bytes) memory\n",
-+			 __func__, msg->sesskey_len);
-+		rc = -ENOMEM;
-+		goto out_put_spnego_key;
- 	}
-+	ses->auth_key.len = msg->sesskey_len;
- 
- 	sess_data->iov[1].iov_base = msg->data + msg->sesskey_len;
- 	sess_data->iov[1].iov_len = msg->secblob_len;
+diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
+index 60c76375f0f50..9d082f8bfa4ae 100644
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -2233,7 +2233,6 @@ cifs_set_cifscreds(struct smb3_fs_context *ctx, struct cifs_ses *ses)
+ 	/* find first : in payload */
+ 	payload = upayload->data;
+ 	delim = strnchr(payload, upayload->datalen, ':');
+-	cifs_dbg(FYI, "payload=%s\n", payload);
+ 	if (!delim) {
+ 		cifs_dbg(FYI, "Unable to find ':' in payload (datalen=%d)\n",
+ 			 upayload->datalen);
 -- 
 2.51.0
 
