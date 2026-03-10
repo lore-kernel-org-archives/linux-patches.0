@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878963876DE;
-	Tue, 10 Mar 2026 11:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87E5937B413;
+	Tue, 10 Mar 2026 11:26:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142002; cv=none; b=GhGFhfuKut53+8TPh236x/SjjsNXlGyfOqwmmUizmEb/8Y53uAKHdoVjxcaFVeBvjtp+h0yKKLBYpoMKPoh0tiWR81Ps9jaA9o1dZUUCx/j4h3heUKl3vd7y+IrDVHoTThxyDF5UKRrcuCcNj/JldImpH6p2jUsqrbmhdz1e6ts=
+	t=1773142003; cv=none; b=t74Ljr3G0Oq7cC6z15/UFrAqsHH/mIkY6dLNY6z6YHdPpdfQXnASFLaqspNb+JeD5VCbpcKNlAASoCplVIDRSobX6k4SlvvkQylb3l7tyF2Vi8AhloaO52UjSHV/HHYIG4GrHC5VmyJED1rZWpbSt4PJqJJSbeSpvHgx01iKyTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142002; c=relaxed/simple;
-	bh=ivNy4ZHqLNJ68lCaEuCKnGgl1gQpPJxFeQIBz6WdcKM=;
+	s=arc-20240116; t=1773142003; c=relaxed/simple;
+	bh=Ez11OVOkHbz5VC+1582CGU9v60g9JtJcp2H6KwN942A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHSDq3Dw+2zJESddJtcoTXv0K4LDMnsWMFMhZNk88xVUXPVd/J8C5vgTgUSKY41PRMopPnje8QvscKOa42jL3tn0w+aW8lqr27/C4q2+Ldwdcn3Bhua//G0eN1z/XNBa7KhTaLzZ9XBf2WUIoi4MjEPITGnrVqbAbUgVgDN0swc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZNDudKab; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rpKIee/qKkZANDrwFhBhG+Z6FS3pJbDw4rk6Id83fLNibsuwzqVp7DzlDBTukWUACQHDebMyuf92y15jrB7vYaS4cgxkkqqE7l2qYUYuNLW5yfkFfC81W7ldWJGIE9snURkgQm9QeCpvQPG3j89hj99c2zXa7sPrVtLs3TgVyuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LklFchHR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZNDudKab"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953FCC19423;
-	Tue, 10 Mar 2026 11:26:41 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LklFchHR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A546AC2BCAF;
+	Tue, 10 Mar 2026 11:26:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142002;
-	bh=ivNy4ZHqLNJ68lCaEuCKnGgl1gQpPJxFeQIBz6WdcKM=;
+	s=k20201202; t=1773142003;
+	bh=Ez11OVOkHbz5VC+1582CGU9v60g9JtJcp2H6KwN942A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZNDudKabOGpxVNUP7va+Q2KpX2XhiZc2e48b2Yj2HLHqmr6sQcRgKi5lHWNw3OnDw
-	 974cRy+ZDCXCoUT8XgCzJs4K7kk97uiK3BVwU4whC1X/YTSEseRzAVcvKg/HFpz+Tl
-	 Fp4yKyPF5CNqAnHccOM7NlqzQdOCbdR6jaGQQc/C1kk5LxBSInOaPU6S1FwnPzl6Dd
-	 CzGvyEQGoVpbxuHszlbMW3QEtIhAjk3s2J8PS/VzsbSFFKnDh0nG0j85DFeQKHBw+b
-	 UT43XZVdJt0HuGWkJW9iEVXchkpGQqUghtE5x8DodutoYYVI7rdUEe57+4+wIP+9M5
-	 xULRqE6RFbOdw==
+	b=LklFchHRATdDGLIEPFAK7ngTm8ToPbXqmiq0ovtid7kZsfuTC9f+BI84ecGv0QeDQ
+	 +hW/7UmnIsR3riXL7Bjpz3AROGiRlKQU7athRx7CQzraJ5oibqG6ZKAeNz/j1tQ0qc
+	 QbCcdFBKrjsc2d+6qm/hWQK0gceVYgFge0DnFshcg3dNzyGAsxBVHKDPokepaQZkCJ
+	 +tsmq32xxY0CS6pPq8hbXmdWdHe5EXM7V/pfS3c4Tq2MEeJbmmD8VEl4UnwHGCGGyF
+	 GYOF7FR7qjd4+I6a6Sq82th30/9ZNvZ4aABQzQ9+LzFUH3QXJm2zdtmrN1C5eS51FF
+	 sG0ncaZxl0zlA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Imre Deak <imre.deak@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+Cc: Ethan Nelson-Moore <enelsonmoore@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 128/314] drm/i915/dp: Fix pipe BPP clamping due to HDR
-Date: Tue, 10 Mar 2026 07:16:27 -0400
-Message-ID: <e83347f9dfa75c10f012ab18d7ab51bcf9cf0776.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 129/314] net: arcnet: com20020-pci: fix support for 2.5Mbit cards
+Date: Tue, 10 Mar 2026 07:16:28 -0400
+Message-ID: <f5f0999605bd2af9153fde2deb2772cee0f78920.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,101 +49,79 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Imre Deak <imre.deak@intel.com>
+From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
 
-[ Upstream commit fe26ae6ac8b88fcdac5036b557c129a17fe520d2 ]
+[ Upstream commit c7d9be66b71af490446127c6ffcb66d6bb71b8b9 ]
 
-The pipe BPP value shouldn't be set outside of the source's / sink's
-valid pipe BPP range, ensure this when increasing the minimum pipe BPP
-value to 30 due to HDR.
+Commit 8c14f9c70327 ("ARCNET: add com20020 PCI IDs with metadata")
+converted the com20020-pci driver to use a card info structure instead
+of a single flag mask in driver_data. However, it failed to take into
+account that in the original code, driver_data of 0 indicates a card
+with no special flags, not a card that should not have any card info
+structure. This introduced a null pointer dereference when cards with
+no flags were probed.
 
-While at it debug print if the HDR mode was requested for a connector by
-setting the corresponding HDR connector property. This indicates
-if the requested HDR mode could not be enabled, since the selected
-pipe BPP is below 30, due to a sink capability or link BW limit.
+Commit bd6f1fd5d33d ("net: arcnet: com20020: Fix null-ptr-deref in
+com20020pci_probe()") then papered over this issue by rejecting cards
+with no driver_data instead of resolving the problem at its source.
 
-v2:
-- Also handle the case where the sink could support the target 30 BPP
-  only in DSC mode due to a BW limit, but the sink doesn't support DSC
-  or 30 BPP as a DSC input BPP. (Chaitanya)
-- Debug print the connector's HDR mode in the link config dump, to
-  indicate if a BPP >= 30 required by HDR couldn't be reached. (Ankit)
-- Add Closes: trailer. (Ankit)
-- Don't print the 30 BPP-outside of valid BPP range debug message if
-  the min BPP is already > 30 (and so a target BPP >= 30 required
-  for HDR is ensured).
+Fix the original issue by introducing a new card info structure for
+2.5Mbit cards that does not set any flags and using it if no
+driver_data is present.
 
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7052
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15503
-Fixes: ba49a4643cf53 ("drm/i915/dp: Set min_bpp limit to 30 in HDR mode")
-Cc: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Cc: <stable@vger.kernel.org> # v6.18+
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com> # v1
-Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20260209133817.395823-1-imre.deak@intel.com
-(cherry picked from commit 08b7ef16b6a03e8c966e286ee1ac608a6ffb3d4a)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Fixes: 8c14f9c70327 ("ARCNET: add com20020 PCI IDs with metadata")
+Fixes: bd6f1fd5d33d ("net: arcnet: com20020: Fix null-ptr-deref in com20020pci_probe()")
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+Link: https://patch.msgid.link/20260213045510.32368-1-enelsonmoore@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 20 +++++++++++++++++---
- 1 file changed, 17 insertions(+), 3 deletions(-)
+ drivers/net/arcnet/com20020-pci.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 057b366c5ae29..be3d54729a440 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -2557,6 +2557,7 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
- 			       bool dsc,
- 			       struct link_config_limits *limits)
- {
-+	struct intel_display *display = to_intel_display(intel_dp);
- 	bool is_mst = intel_crtc_has_type(crtc_state, INTEL_OUTPUT_DP_MST);
- 	struct intel_connector *connector =
- 		to_intel_connector(conn_state->connector);
-@@ -2569,8 +2570,7 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
- 	limits->min_lane_count = intel_dp_min_lane_count(intel_dp);
- 	limits->max_lane_count = intel_dp_max_lane_count(intel_dp);
+diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
+index 0472bcdff1307..b5729d6c0b47c 100644
+--- a/drivers/net/arcnet/com20020-pci.c
++++ b/drivers/net/arcnet/com20020-pci.c
+@@ -115,6 +115,8 @@ static const struct attribute_group com20020_state_group = {
+ 	.attrs = com20020_state_attrs,
+ };
  
--	limits->pipe.min_bpp = intel_dp_in_hdr_mode(conn_state) ? 30 :
--				intel_dp_min_bpp(crtc_state->output_format);
-+	limits->pipe.min_bpp = intel_dp_min_bpp(crtc_state->output_format);
- 	if (is_mst) {
- 		/*
- 		 * FIXME: If all the streams can't fit into the link with their
-@@ -2586,6 +2586,19 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
- 							respect_downstream_limits);
- 	}
- 
-+	if (!dsc && intel_dp_in_hdr_mode(conn_state)) {
-+		if (intel_dp_supports_dsc(intel_dp, connector, crtc_state) &&
-+		    limits->pipe.max_bpp >= 30)
-+			limits->pipe.min_bpp = max(limits->pipe.min_bpp, 30);
-+		else
-+			drm_dbg_kms(display->drm,
-+				    "[CONNECTOR:%d:%s] Can't force 30 bpp for HDR (pipe bpp: %d-%d DSC-support: %s)\n",
-+				    connector->base.base.id, connector->base.name,
-+				    limits->pipe.min_bpp, limits->pipe.max_bpp,
-+				    str_yes_no(intel_dp_supports_dsc(intel_dp, connector,
-+								     crtc_state)));
-+	}
++static struct com20020_pci_card_info card_info_2p5mbit;
 +
- 	if (dsc && !intel_dp_dsc_compute_pipe_bpp_limits(connector, limits))
- 		return false;
+ static void com20020pci_remove(struct pci_dev *pdev);
  
-@@ -2716,10 +2729,11 @@ intel_dp_compute_link_config(struct intel_encoder *encoder,
- 	}
+ static int com20020pci_probe(struct pci_dev *pdev,
+@@ -140,7 +142,7 @@ static int com20020pci_probe(struct pci_dev *pdev,
  
- 	drm_dbg_kms(display->drm,
--		    "DP lane count %d clock %d bpp input %d compressed " FXP_Q4_FMT " link rate required %d available %d\n",
-+		    "DP lane count %d clock %d bpp input %d compressed " FXP_Q4_FMT " HDR %s link rate required %d available %d\n",
- 		    pipe_config->lane_count, pipe_config->port_clock,
- 		    pipe_config->pipe_bpp,
- 		    FXP_Q4_ARGS(pipe_config->dsc.compressed_bpp_x16),
-+		    str_yes_no(intel_dp_in_hdr_mode(conn_state)),
- 		    intel_dp_config_required_rate(pipe_config),
- 		    intel_dp_max_link_data_rate(intel_dp,
- 						pipe_config->port_clock,
+ 	ci = (struct com20020_pci_card_info *)id->driver_data;
+ 	if (!ci)
+-		return -EINVAL;
++		ci = &card_info_2p5mbit;
+ 
+ 	priv->ci = ci;
+ 	mm = &ci->misc_map;
+@@ -347,6 +349,18 @@ static struct com20020_pci_card_info card_info_5mbit = {
+ 	.flags = ARC_IS_5MBIT,
+ };
+ 
++static struct com20020_pci_card_info card_info_2p5mbit = {
++	.name = "ARC-PCI",
++	.devcount = 1,
++	.chan_map_tbl = {
++		{
++			.bar = 2,
++			.offset = 0x00,
++			.size = 0x08,
++		},
++	},
++};
++
+ static struct com20020_pci_card_info card_info_sohard = {
+ 	.name = "SOHARD SH ARC-PCI",
+ 	.devcount = 1,
 -- 
 2.51.0
 
