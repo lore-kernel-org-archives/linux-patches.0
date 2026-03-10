@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68D7387583;
-	Tue, 10 Mar 2026 11:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E222635AC23;
+	Tue, 10 Mar 2026 11:13:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141224; cv=none; b=tkUDRIyjwaKgdXiTv//kEmfdM4Pl7PZoCboC+41YBB9S+3J4UAKKuXQLuU5gda9d4qS+mlCbV3Q+4yHQcJsgJxZHjDvno5Or3w+FluNeuG+3CeuKxCm+oiov6o8Q3Z6Sd8O5aDmfiZmyDV69eDC/iy2tuqZz62iRN90SsXserjU=
+	t=1773141226; cv=none; b=YkLYAqCg0lTIwDNVLdY++i/spsLzEXMrz07W0CtPPHgBXSMUaNwCEoE6v0IyPTPRnXrDy9BWUm5tzKCP2/OuyiM1wduSxzvvsy3juQqWz7WsPO5tSOTfqMCHySOC+jsfsVxJm+xFXjqU+VVS/LLUrilo2kTnogUJve3gQHffTu0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141224; c=relaxed/simple;
-	bh=rrBysnKI8jwz62NKZrccHKWIfRS611sdxnWvsRCiyKU=;
+	s=arc-20240116; t=1773141226; c=relaxed/simple;
+	bh=Y8F56Ka1JYGadKYoCDo0MeLTl6GZsmGR1vANpS3OD+Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gBSlRnEh4J+VQwlWQTPfBwvRVkJLO/6NoNjsBL2rfXIN84c+mqjcbPFHCjZtod4Pj12g8KCuqo7DryNWndocpRZzNDrwiyTPUaw4klMi9H2b+I0a3OZQQ6hXeUfUXbJQ2F2NOo2MVZGqfUrBHun3VcLxcH+0lYzZUSs9gs2StkI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDaJO7K9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a1+IoTn6q4FHoiPR0gUkOIvovjfIDXU3zIF6yxxZ330GAML0yyMu5ZoAu7pwPUI3UHDhbG1UY8UeMJXooHD4WL/fENsU5rFwQ3OdbwE5JqMhPjttsdyv5xEwDuMITOZmZH2rx1VcHhghbF9F35hYooMH+FbWjHH1ByizKJfIUcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V/AReN8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDaJO7K9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4165C19423;
-	Tue, 10 Mar 2026 11:13:43 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V/AReN8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C17C2BCAF;
+	Tue, 10 Mar 2026 11:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141224;
-	bh=rrBysnKI8jwz62NKZrccHKWIfRS611sdxnWvsRCiyKU=;
+	s=k20201202; t=1773141225;
+	bh=Y8F56Ka1JYGadKYoCDo0MeLTl6GZsmGR1vANpS3OD+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDaJO7K9/Iic/kKTUKUC50q1492gJg5IriPd4aiaqHJthPP/kb9ZQd5gTLEBAJMnx
-	 tXYeb4fzLR/kIXyvPDls6uJjuNBVnCqofEdpXpbGwyjragHOC4M1BDg/PNOL6eXUSL
-	 iFzO38DT6BDqXjV/2aBXRIKiGhWzDiLYT+HPgx84RKPKILYubePPVNOv9hxw26lgOe
-	 D7J9TL729fjP/dpDy5ui9trGNMIe8O68TO7OjvC0EHGpY/9/ww90Yk82Y2clucTg+G
-	 rQIl41VI8k9QTjzlGoxzniJ6CEIZryqRJI9+KUlPZqvguyjj0jDRf5075zC1lPwayp
-	 s1KEt22oUtzYg==
+	b=V/AReN8RIBSQDT0gZeqnJeGMVSeJoL+6e0I5MuVhY4FKp9zsRcBx3mJyzklz+g8E8
+	 xzr/Otb8TiHwnIszw7RCGrSt/ILxtD0D/sqPIqUxJs340lqWMKrluaR+8SeKVq25Ev
+	 +ac3VYntkQveVP2RzkGcfAbsjIF6VUQa9fKGnVJwCIVcaXKiSySOY7GhlYJKSj1ebc
+	 d4Za+qQ7Ap29A3ndWfX6bDPr6WncJJKecKjswFo1FrCvjCwfbdKz2xRDBKLpL/kBP+
+	 odtRkw7p94hN3XfwDArcOTAwRk+QpE7QPHaTgJ6Hdkn1YTo9HVXJ6USf4jq1gWcnV5
+	 mt70D3cD7V9HQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Chaitanya Kulkarni <kch@nvidia.com>,
-	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Alexandre Courbot <acourbot@nvidia.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 226/311] blktrace: fix __this_cpu_read/write in preemptible context
-Date: Tue, 10 Mar 2026 07:04:33 -0400
-Message-ID: <17ab3a74788a5d1201736721fd3669de56253062.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 227/311] rust: kunit: fix warning when !CONFIG_PRINTK
+Date: Tue, 10 Mar 2026 07:04:34 -0400
+Message-ID: <d96cabc5abc93f828275ecda9ae4e330dcbab062.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,130 +50,66 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kulkarni <kch@nvidia.com>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit da46b5dfef48658d03347cda21532bcdbb521e67 ]
+[ Upstream commit 7dd34dfc8dfa92a7244242098110388367996ac3 ]
 
-tracing_record_cmdline() internally uses __this_cpu_read() and
-__this_cpu_write() on the per-CPU variable trace_cmdline_save, and
-trace_save_cmdline() explicitly asserts preemption is disabled via
-lockdep_assert_preemption_disabled(). These operations are only safe
-when preemption is off, as they were designed to be called from the
-scheduler context (probe_wakeup_sched_switch() / probe_wakeup()).
+If `CONFIG_PRINTK` is not set, then the following warnings are issued
+during build:
 
-__blk_add_trace() was calling tracing_record_cmdline(current) early in
-the blk_tracer path, before ring buffer reservation, from process
-context where preemption is fully enabled. This triggers the following
-using blktests/blktrace/002:
+  warning: unused variable: `args`
+    --> ../rust/kernel/kunit.rs:16:12
+    |
+  16 | pub fn err(args: fmt::Arguments<'_>) {
+    |            ^^^^ help: if this is intentional, prefix it with an underscore: `_args`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
 
-blktrace/002 (blktrace ftrace corruption with sysfs trace)   [failed]
-    runtime  0.367s  ...  0.437s
-    something found in dmesg:
-    [   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
-    [   81.239580] null_blk: disk nullb1 created
-    [   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
-    [   81.362842] caller is tracing_record_cmdline+0x10/0x40
-    [   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
-    [   81.362877] Tainted: [N]=TEST
-    [   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-    [   81.362881] Call Trace:
-    [   81.362884]  <TASK>
-    [   81.362886]  dump_stack_lvl+0x8d/0xb0
-    ...
-    (See '/mnt/sda/blktests/results/nodev/blktrace/002.dmesg' for the entire message)
+  warning: unused variable: `args`
+    --> ../rust/kernel/kunit.rs:32:13
+    |
+  32 | pub fn info(args: fmt::Arguments<'_>) {
+    |             ^^^^ help: if this is intentional, prefix it with an underscore: `_args`
 
-[   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
-[   81.239580] null_blk: disk nullb1 created
-[   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
-[   81.362842] caller is tracing_record_cmdline+0x10/0x40
-[   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
-[   81.362877] Tainted: [N]=TEST
-[   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
-[   81.362881] Call Trace:
-[   81.362884]  <TASK>
-[   81.362886]  dump_stack_lvl+0x8d/0xb0
-[   81.362895]  check_preemption_disabled+0xce/0xe0
-[   81.362902]  tracing_record_cmdline+0x10/0x40
-[   81.362923]  __blk_add_trace+0x307/0x5d0
-[   81.362934]  ? lock_acquire+0xe0/0x300
-[   81.362940]  ? iov_iter_extract_pages+0x101/0xa30
-[   81.362959]  blk_add_trace_bio+0x106/0x1e0
-[   81.362968]  submit_bio_noacct_nocheck+0x24b/0x3a0
-[   81.362979]  ? lockdep_init_map_type+0x58/0x260
-[   81.362988]  submit_bio_wait+0x56/0x90
-[   81.363009]  __blkdev_direct_IO_simple+0x16c/0x250
-[   81.363026]  ? __pfx_submit_bio_wait_endio+0x10/0x10
-[   81.363038]  ? rcu_read_lock_any_held+0x73/0xa0
-[   81.363051]  blkdev_read_iter+0xc1/0x140
-[   81.363059]  vfs_read+0x20b/0x330
-[   81.363083]  ksys_read+0x67/0xe0
-[   81.363090]  do_syscall_64+0xbf/0xf00
-[   81.363102]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   81.363106] RIP: 0033:0x7f281906029d
-[   81.363111] Code: 31 c0 e9 c6 fe ff ff 50 48 8d 3d 66 63 0a 00 e8 59 ff 01 00 66 0f 1f 84 00 00 00 00 00 80 3d 41 33 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 48 83 ec
-[   81.363113] RSP: 002b:00007ffca127dd48 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
-[   81.363120] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f281906029d
-[   81.363122] RDX: 0000000000001000 RSI: 0000559f8bfae000 RDI: 0000000000000000
-[   81.363123] RBP: 0000000000001000 R08: 0000002863a10a81 R09: 00007f281915f000
-[   81.363124] R10: 00007f2818f77b60 R11: 0000000000000246 R12: 0000559f8bfae000
-[   81.363126] R13: 0000000000000000 R14: 0000000000000000 R15: 000000000000000a
-[   81.363142]  </TASK>
+Fix this by adding a no-op assignment using `args` when `CONFIG_PRINTK`
+is not set.
 
-The same BUG fires from blk_add_trace_plug(), blk_add_trace_unplug(),
-and blk_add_trace_rq() paths as well.
-
-The purpose of tracing_record_cmdline() is to cache the task->comm for
-a given PID so that the trace can later resolve it. It is only
-meaningful when a trace event is actually being recorded. Ring buffer
-reservation via ring_buffer_lock_reserve() disables preemption, and
-preemption remains disabled until the event is committed :-
-
-__blk_add_trace()
-       	__trace_buffer_lock_reserve()
-       		__trace_buffer_lock_reserve()
-       			ring_buffer_lock_reserve()
-       				preempt_disable_notrace();  <---
-
-With this fix blktests for blktrace pass:
-
-  blktests (master) # ./check blktrace
-  blktrace/001 (blktrace zone management command tracing)      [passed]
-      runtime  3.650s  ...  3.647s
-  blktrace/002 (blktrace ftrace corruption with sysfs trace)   [passed]
-      runtime  0.411s  ...  0.384s
-
-Fixes: 7ffbd48d5cab ("tracing: Cache comms only after an event occurred")
-Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
-Suggested-by: Steven Rostedt <rostedt@goodmis.org>
-Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: a66d733da801 ("rust: support running Rust documentation tests as KUnit ones")
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/blktrace.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ rust/kernel/kunit.rs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
-index c4db5c2e71037..0548e64b08f23 100644
---- a/kernel/trace/blktrace.c
-+++ b/kernel/trace/blktrace.c
-@@ -383,8 +383,6 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
- 	cpu = raw_smp_processor_id();
- 
- 	if (blk_tracer) {
--		tracing_record_cmdline(current);
--
- 		buffer = blk_tr->array_buffer.buffer;
- 		trace_ctx = tracing_gen_ctx_flags(0);
- 		switch (bt->version) {
-@@ -419,6 +417,7 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
- 		if (!event)
- 			return;
- 
-+		tracing_record_cmdline(current);
- 		switch (bt->version) {
- 		case 1:
- 			record_blktrace_event(ring_buffer_event_data(event),
+diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
+index 79436509dd73d..8907b6f89ece5 100644
+--- a/rust/kernel/kunit.rs
++++ b/rust/kernel/kunit.rs
+@@ -17,6 +17,10 @@
+ /// Public but hidden since it should only be used from KUnit generated code.
+ #[doc(hidden)]
+ pub fn err(args: fmt::Arguments<'_>) {
++    // `args` is unused if `CONFIG_PRINTK` is not set - this avoids a build-time warning.
++    #[cfg(not(CONFIG_PRINTK))]
++    let _ = args;
++
+     // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
+     // are passing.
+     #[cfg(CONFIG_PRINTK)]
+@@ -33,6 +37,10 @@ pub fn err(args: fmt::Arguments<'_>) {
+ /// Public but hidden since it should only be used from KUnit generated code.
+ #[doc(hidden)]
+ pub fn info(args: fmt::Arguments<'_>) {
++    // `args` is unused if `CONFIG_PRINTK` is not set - this avoids a build-time warning.
++    #[cfg(not(CONFIG_PRINTK))]
++    let _ = args;
++
+     // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
+     // are passing.
+     #[cfg(CONFIG_PRINTK)]
 -- 
 2.51.0
 
