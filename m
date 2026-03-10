@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9E23313537;
-	Tue, 10 Mar 2026 11:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCEB3313537;
+	Tue, 10 Mar 2026 11:12:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141126; cv=none; b=DJ33gToxehaIWnlZ1otoWZ27NMi8tJ33ku9a03z0S7LyVuXAZK5u4ewIE5X69HnKGlIi5Ielwy5PN9Fk2tNeFAiwUMRwfBe4D5SLkqCc0bJsKONNDDLrOmRmIKl5tJo+mDMo93z5Nq/FnW53CE3ykvJR3OVyPiK01D+Z5V9EEHQ=
+	t=1773141126; cv=none; b=EvrwAEOZDzJH+X6CrxMKGEKSqz3mRa4AlM8dieh4HKhIce3qexaLHILr1adfA3foXi+vWO3VNJ8u0VxeHkEyBLkTUuNdTw3erlPWoEY5Ezr4zErHKY8R0d1wDk9Uc2C7g0guO7S1KsAQDkp4d3w5pmRwg2IjLaSZHLuiGQGmb3E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141126; c=relaxed/simple;
-	bh=PQXfIqEl2LN46kWtD699Ib7xtS22W4RVRuBU1FzHzv8=;
+	bh=KixotNO3tHVkaXGTVgQuLs30oQt8kkicgdz0I8IhN1s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZKUGi4h4KHCXmEesdrgm7M6R3qjAUSSBdGbLsXAWR5IdaXnUhOnRM98AdGWMDaAc1hVjW9g2S8pEKK0Ancod4xiA2Fs+2+qjWYngTh8zVxpka3TzTDOSHm+pi/yVes7RMvAvVy/zcHz0Rehnyfbdw4YekoiM7UM0f1wzk+nYsE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HbgNCGCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gr5t6WYgok+AsGGRN9F4Qp5gLRsvwje5Ebv7DWyCQ+V0GFNvc1TGWbHht6e1eMBMEQotT098JW7cDRgqaoWTRubTdUaWBzSVSHfrGmVmksUdcHQv1p6e1JWY3kdNyIVxmOgbHwgtpNO/WIw38BfODrkyQUq211MNLmcCG4ztfR4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qID0KKNv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HbgNCGCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42601C19423;
-	Tue, 10 Mar 2026 11:12:05 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qID0KKNv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D5C9C19423;
+	Tue, 10 Mar 2026 11:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141125;
-	bh=PQXfIqEl2LN46kWtD699Ib7xtS22W4RVRuBU1FzHzv8=;
+	s=k20201202; t=1773141126;
+	bh=KixotNO3tHVkaXGTVgQuLs30oQt8kkicgdz0I8IhN1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbgNCGCcxxMOohW5ia+LRnCIqK4J3i/B5Ja1ddBPfutCA7NZHZGfgH3jsmkzFxUfH
-	 0qUW5AHzdl7a4cPq7wTPEtyvkRgg5h1FBqreNhSrxQKkJMlKjuwjOA2RdG0ocxSu1f
-	 1+3Gkh0rf+Hw0sz94jqeep+XTEyV8ai4jTpvUrx49I1zwWPV97GVZjiUrO9cTm8BVn
-	 j2lTm6ImmTgw5QM3Hi1o6jnns9Czig6YiG0M81uTH6Np5SJMMZT3Ergindvd+40kwT
-	 Jt06QvyIEuWHJgNpyQGQMH3EMQr/Io3paK5eZW/X+Ztsm0ut3CMnpCya64AgClR2AY
-	 0W9QrfBL7vt4w==
+	b=qID0KKNvsxtvyE4fROrLXv6O9kVyFexC7+KAI3zF9hR6pjJSXib54BC3fdhV0wggM
+	 yzEP95+aJuWEmQo3hN/XbrrxV/Gja5KlaYyeHiS21YygdqqJZlxU6zGg5OknIcesxn
+	 5iErAydMOZm64NnVcCS5tCGnMCRrjHsELT6X8TmL5T8e+OV+KNV5IE7iiCalf1cot5
+	 dmMlIWEf+YZQqeH4uASPIHsOCwPJzvubmYSZO6QZ7DlESyVxLxLfzMGONJyvfVGmkb
+	 XEhJHL3VkVfzLODizoCL3aJ1VOLyeP0Vcw2xBIqgqNs/W+eW0ypjTToG/DJAB5GGKI
+	 kF6UrIJFrp7bQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Juhyung Park <qkrwngud825@gmail.com>,
+Cc: Panagiotis Foliadis <pfoliadis@posteo.net>,
+	Charalampos Mitrodimas <charmitro@posteo.net>,
 	Takashi Iwai <tiwai@suse.de>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 128/311] ALSA: hda/realtek: fix model name typo for Samsung Galaxy Book Flex (NT950QCG-X716)
-Date: Tue, 10 Mar 2026 07:02:55 -0400
-Message-ID: <f9ebdbe0c98470a6acfb77d5fe9ded02a4c1532f.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 129/311] ALSA: hda/realtek: Add quirk for Acer Aspire V3-572G
+Date: Tue, 10 Mar 2026 07:02:56 -0400
+Message-ID: <8f799721adc762ba67ed400b57a4093d09b8172c.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,37 +49,41 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Juhyung Park <qkrwngud825@gmail.com>
+From: Panagiotis Foliadis <pfoliadis@posteo.net>
 
-commit 43a44fb7f2fa163926b23149805e989ba2395db1 upstream.
+commit cbddd303416456db5ceeedaf9e262096f079e861 upstream.
 
-There's no product named "Samsung Galaxy Flex Book".
-Use the correct "Samsung Galaxy Book Flex" name.
+The Acer Aspire V3-572G has a combo jack (ALC283) but the BIOS
+sets pin 0x19 to 0x411111f0 (not connected), so the headset mic
+is not detected.
 
-Link: https://www.samsung.com/sec/support/model/NT950QCG-X716
-Link: https://www.samsung.com/us/computing/galaxy-books/galaxy-book-flex/galaxy-book-flex-15-6-qled-512gb-storage-s-pen-included-np950qcg-k01us
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Juhyung Park <qkrwngud825@gmail.com>
-Link: https://patch.msgid.link/20260222122609.281191-1-qkrwngud825@gmail.com
+Add a quirk to override pin 0x19 as a headset mic and enable
+headset mode.
+
+Cc: stable@vger.kernel.org
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221075
+Suggested-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Signed-off-by: Panagiotis Foliadis <pfoliadis@posteo.net>
+Reviewed-by: Charalampos Mitrodimas <charmitro@posteo.net>
+Link: https://patch.msgid.link/20260221-fix-detect-mic-v1-1-b6e427b5275d@posteo.net
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/hda/codecs/realtek/alc269.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
-index beff91f122c61..df5c64b7d1f9e 100644
+index df5c64b7d1f9e..f77f160504adc 100644
 --- a/sound/hda/codecs/realtek/alc269.c
 +++ b/sound/hda/codecs/realtek/alc269.c
-@@ -7312,7 +7312,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x144d, 0xc109, "Samsung Ativ book 9 (NP900X3G)", ALC269_FIXUP_INV_DMIC),
- 	SND_PCI_QUIRK(0x144d, 0xc169, "Samsung Notebook 9 Pen (NP930SBE-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc176, "Samsung Notebook 9 Pro (NP930MBE-K04US)", ALC298_FIXUP_SAMSUNG_AMP),
--	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Flex Book (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
-+	SND_PCI_QUIRK(0x144d, 0xc189, "Samsung Galaxy Book Flex (NT950QCG-X716)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc18a, "Samsung Galaxy Book Ion (NP930XCJ-K01US)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a3, "Samsung Galaxy Book Pro (NP935XDB-KC1SE)", ALC298_FIXUP_SAMSUNG_AMP),
- 	SND_PCI_QUIRK(0x144d, 0xc1a4, "Samsung Galaxy Book Pro 360 (NT935QBD)", ALC298_FIXUP_SAMSUNG_AMP),
+@@ -6591,6 +6591,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x079b, "Acer Aspire V5-573G", ALC282_FIXUP_ASPIRE_V5_PINS),
+ 	SND_PCI_QUIRK(0x1025, 0x080d, "Acer Aspire V5-122P", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x0840, "Acer Aspire E1", ALC269VB_FIXUP_ASPIRE_E1_COEF),
++	SND_PCI_QUIRK(0x1025, 0x0943, "Acer Aspire V3-572G", ALC269_FIXUP_ASPIRE_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1025, 0x100c, "Acer Aspire E5-574G", ALC255_FIXUP_ACER_LIMIT_INT_MIC_BOOST),
+ 	SND_PCI_QUIRK(0x1025, 0x101c, "Acer Veriton N2510G", ALC269_FIXUP_LIFEBOOK),
+ 	SND_PCI_QUIRK(0x1025, 0x102b, "Acer Aspire C24-860", ALC286_FIXUP_ACER_AIO_MIC_NO_PRESENCE),
 -- 
 2.51.0
 
