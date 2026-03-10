@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92E702D24B7;
-	Tue, 10 Mar 2026 11:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B98313537;
+	Tue, 10 Mar 2026 11:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141116; cv=none; b=sHZSNz8NOdlpZeNualc1i3DvFTyuwgGs95hH70QQUa//AgNxVYgRolsGfDAwCsNv3Gh23aE4CfJxuc4tLXIcy/4NvML+luw4OXqM5/9KSMxZYO5H9TT98TPQHHMNLO2k0nPUO8d/+cDkmVYOv/d4omOeaImvGbaYRLfE34RSkqE=
+	t=1773141117; cv=none; b=HP/div4kv0UFu5wIzVwT5uv8WL2opi54xcXrKl8qOE2zW1118I0vEUlgi1bhAMa36g3vSQ9l499KhQOJEqKYmKSwXO67/Alf3Ey02SOeVn9I6ZT1rOlnjr4hVNckxuGcIZkJrDgP788ig9Kx/0NetIHJ90lWMxlnCicZGNshe0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141116; c=relaxed/simple;
-	bh=4UBRM1lSEZbrwQqGoY8O1MTTDKhrzqM8QsmFpF6JYsQ=;
+	s=arc-20240116; t=1773141117; c=relaxed/simple;
+	bh=M70tN5lGAVXjcyoW2HB1Y0IA6I+dQOB7mCl4fQ9yDDY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MGpFQpdgU9TU+5UAAg97NqDJc/7nRWJp+/B+ctLbM2uWqUXJ49JeCL8OVrtosLN+l5+48kCxfrL51TXkuDU1FVrsouszawDcVMxP2lcVtXoKDARGq0EJKsQH4PGZ9ek3pJbQEVdVFLa2R4hiwUDuQtUBbR4JADHc8yCahgmk1fM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Y3i2TNR0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gYdnYFNlTnC9YVvcM8vg2Ug3jGHR/ZyGcYGBvi0CbkqzW0C8jWLanEJFWrhitPYB2hh9CdgmYZ90Wkzz8Vu7ohPrx/k6ctZlkSgwoYPE3h4C2er9JpGH2a5hL89XXTNzocsSDrfn+l23TXnSAssjw0qxA4m44Kx2nECnERoLNSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=p74dD8jz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Y3i2TNR0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACE33C2BC9E;
-	Tue, 10 Mar 2026 11:11:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="p74dD8jz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B933BC19423;
+	Tue, 10 Mar 2026 11:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141116;
-	bh=4UBRM1lSEZbrwQqGoY8O1MTTDKhrzqM8QsmFpF6JYsQ=;
+	s=k20201202; t=1773141117;
+	bh=M70tN5lGAVXjcyoW2HB1Y0IA6I+dQOB7mCl4fQ9yDDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y3i2TNR0RzClEAboxMOf7mZDXjGSQ3l0lFDA3dyqgevyBjePS02OKOyNLp5lP2+9Z
-	 pPFueYU5oBWva6yWQludzsM0xwLyVXifELl3PKmKvaxo+DMpQ85NWTS6cLZZLA/ZK+
-	 3EL2MolyPnYdFrPZ3r3GJPkiAkrKN8TJzuf6nKc1L70IBLQWXP8XWzAnqLW4XFbAye
-	 t/x7RJH5ws6ari35fI1eiVhE6X02Crxp3aF+xOxDRo/2caDF0Z5wQait3XYjy6qFap
-	 iOcnX49iuCBRoScuOdLGJ5QrmsjGVM5fQK4wNK73Pvhufv9KVcatG2jFRD/kfOEHVG
-	 uLbCOtiaGPwsw==
+	b=p74dD8jzGWU2XcEOrh2Vb6Bc1PD20S+bVlSsxf3U/iDrmRTG1Kc1TXdn5bf6ULPrQ
+	 526Y0bBTWgSmomRTNAurhIvR0J7usTvWq3ASg4vjXa7xIyOsgf8llQzA/V8i5eo2Us
+	 6cIDnofyReBZTHi7Hh8XlSDf/atlEHRXicAVokfh2xRhHcYjtalO/mP8GLd9zWslTw
+	 IpDan2xGn5aqz/JFP8karaCh4wylJw1xWc+YVgrz1BY56oU22nz3v9xiK2x6QTe/+z
+	 8fmRn7RaR+DZd4G/OKNGSbrVG/rNK/0l1LAWBNVfKud4uzhKT0EyYeTZB/+vRH9UZA
+	 2Dl6G55WmhmjA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jan Stancek <jstancek@redhat.com>,
+Cc: Kim Phillips <kim.phillips@amd.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Vitaly Kuznetsov <vkuznets@redhat.com>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
 	stable@kernel.org,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 118/311] x86/boot: Handle relative CONFIG_EFI_SBAT_FILE file paths
-Date: Tue, 10 Mar 2026 07:02:45 -0400
-Message-ID: <3280ad3c2c7e3522e706751e903fc1feadc11181.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 119/311] x86/sev: Allow IBPB-on-Entry feature for SNP guests
+Date: Tue, 10 Mar 2026 07:02:46 -0400
+Message-ID: <ccaad12e2d4d992a14669e607561880771a4cc90.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,44 +51,79 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jan Stancek <jstancek@redhat.com>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit 3d1973a0c76a78a4728cff13648a188ed486cf44 upstream.
+commit 9073428bb204d921ae15326bb7d4558d9d269aab upstream.
 
-CONFIG_EFI_SBAT_FILE can be a relative path. When compiling using a different
-output directory (O=) the build currently fails because it can't find the
-filename set in CONFIG_EFI_SBAT_FILE:
+The SEV-SNP IBPB-on-Entry feature does not require a guest-side
+implementation. It was added in Zen5 h/w, after the first SNP Zen
+implementation, and thus was not accounted for when the initial set of SNP
+features were added to the kernel.
 
-  arch/x86/boot/compressed/sbat.S: Assembler messages:
-  arch/x86/boot/compressed/sbat.S:6: Error: file not found: kernel.sbat
+In its abundant precaution, commit
 
-Add $(srctree) as include dir for sbat.o.
+  8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
 
-  [ bp: Massage commit message. ]
+included SEV_STATUS' IBPB-on-Entry bit as a reserved bit, thereby masking
+guests from using the feature.
 
-Fixes: 61b57d35396a ("x86/efi: Implement support for embedding SBAT data for x86")
-Signed-off-by: Jan Stancek <jstancek@redhat.com>
+Allow guests to make use of IBPB-on-Entry when supported by the hypervisor, as
+the bit is now architecturally defined and safe to expose.
+
+Fixes: 8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Vitaly Kuznetsov <vkuznets@redhat.com>
-Cc: <stable@kernel.org>
-Link: https://patch.msgid.link/f4eda155b0cef91d4d316b4e92f5771cb0aa7187.1772047658.git.jstancek@redhat.com
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20260203222405.4065706-2-kim.phillips@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/compressed/Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/boot/compressed/sev.c   | 1 +
+ arch/x86/coco/sev/core.c         | 1 +
+ arch/x86/include/asm/msr-index.h | 5 ++++-
+ 3 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/boot/compressed/Makefile b/arch/x86/boot/compressed/Makefile
-index 68f9d7a1683b5..b8b2b7bea1d31 100644
---- a/arch/x86/boot/compressed/Makefile
-+++ b/arch/x86/boot/compressed/Makefile
-@@ -113,6 +113,7 @@ vmlinux-objs-$(CONFIG_EFI_SBAT) += $(obj)/sbat.o
+diff --git a/arch/x86/boot/compressed/sev.c b/arch/x86/boot/compressed/sev.c
+index c8c1464b3a56e..2b639703b8dd4 100644
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -188,6 +188,7 @@ bool sev_es_check_ghcb_fault(unsigned long address)
+ 				 MSR_AMD64_SNP_RESERVED_BIT13 |		\
+ 				 MSR_AMD64_SNP_RESERVED_BIT15 |		\
+ 				 MSR_AMD64_SNP_SECURE_AVIC |		\
++				 MSR_AMD64_SNP_RESERVED_BITS19_22 |	\
+ 				 MSR_AMD64_SNP_RESERVED_MASK)
  
- ifdef CONFIG_EFI_SBAT
- $(obj)/sbat.o: $(CONFIG_EFI_SBAT_FILE)
-+AFLAGS_sbat.o += -I $(srctree)
- endif
+ #ifdef CONFIG_AMD_SECURE_AVIC
+diff --git a/arch/x86/coco/sev/core.c b/arch/x86/coco/sev/core.c
+index c8ddb9febe3d9..d20e9cc065a87 100644
+--- a/arch/x86/coco/sev/core.c
++++ b/arch/x86/coco/sev/core.c
+@@ -122,6 +122,7 @@ static const char * const sev_status_feat_names[] = {
+ 	[MSR_AMD64_SNP_VMSA_REG_PROT_BIT]	= "VMSARegProt",
+ 	[MSR_AMD64_SNP_SMT_PROT_BIT]		= "SMTProt",
+ 	[MSR_AMD64_SNP_SECURE_AVIC_BIT]		= "SecureAVIC",
++	[MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT]	= "IBPBOnEntry",
+ };
  
- $(obj)/vmlinux: $(vmlinux-objs-y) $(vmlinux-libs-y) FORCE
+ /*
+diff --git a/arch/x86/include/asm/msr-index.h b/arch/x86/include/asm/msr-index.h
+index 3d0a0950d20a1..d1b11b4c40d28 100644
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -735,7 +735,10 @@
+ #define MSR_AMD64_SNP_SMT_PROT		BIT_ULL(MSR_AMD64_SNP_SMT_PROT_BIT)
+ #define MSR_AMD64_SNP_SECURE_AVIC_BIT	18
+ #define MSR_AMD64_SNP_SECURE_AVIC	BIT_ULL(MSR_AMD64_SNP_SECURE_AVIC_BIT)
+-#define MSR_AMD64_SNP_RESV_BIT		19
++#define MSR_AMD64_SNP_RESERVED_BITS19_22 GENMASK_ULL(22, 19)
++#define MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT	23
++#define MSR_AMD64_SNP_IBPB_ON_ENTRY	BIT_ULL(MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT)
++#define MSR_AMD64_SNP_RESV_BIT		24
+ #define MSR_AMD64_SNP_RESERVED_MASK	GENMASK_ULL(63, MSR_AMD64_SNP_RESV_BIT)
+ #define MSR_AMD64_SAVIC_CONTROL		0xc0010138
+ #define MSR_AMD64_SAVIC_EN_BIT		0
 -- 
 2.51.0
 
