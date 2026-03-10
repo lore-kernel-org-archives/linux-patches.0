@@ -1,41 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3E93803CD;
-	Tue, 10 Mar 2026 11:27:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D110387562;
+	Tue, 10 Mar 2026 11:27:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142060; cv=none; b=HCO7MPjhc6vCxb2im4EEbaNeEJfc1ccfzNXUvqPWNPqhqG0UOVF2gCxVuJZ6sbXzU8oNXsF8QWJK84VrXEn2bVRJaITug2Wki+eDqD3WIYIjGIAbPCjEsuZJ/XFCawkAb83UgOMTVTafq1H1TXXqXT0CI1RMcWxGFpWtZRHxctE=
+	t=1773142062; cv=none; b=EJVOQTNL2dV23rZrUiSwWG2TafGjtntTjSUKMaWMgcVNL1O0hbkfCvV2Qg3v+xa8Qg5H2ArtWybMLY8UxzzKzV4bnYxuMENWrVhCjkL0CRgH41vrX63fRd7AgUt609Ii9fE3ac+Q09fVXgZ3TZWEC5w76awUaQ9J6BWC+O7N+1Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142060; c=relaxed/simple;
-	bh=jrOwvkvZwoTTJ62Col/5P9PZTDwZxTKZQQOS/JmhWmY=;
+	s=arc-20240116; t=1773142062; c=relaxed/simple;
+	bh=A1hCgKFnypW4LK2yCvcoAw4KxK75MGEbbJkD/m4TcoM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y3hU3L+Qgn+UmkycvBAwFAK+JS/u4yCx3INpJzr3yhVxmduy5VrzhUWCUogSldAJC32zPahYSXrsTZwSaw1+2KZoRambaduLwdAYAZ6cQBwe2TirM/nkbsGt9pCdE4bCm622M6wZoJLztlE1NwhNUYm7Lg9Zdlrie0hb3f/V3R0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ojBiBYyn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oBasGEJAWDgE+lqlaxNx7yH1Z9cghzp2uPA/03Z7vV2LEpjYtIzdUnpKcAPBiA2BJTCESm4kfGuaRn2c0RkVvi73+tSUAZgvqn33Trz/P1GKshgM/BHx9KjAdnd2EvnR1088UoJJnEO5YDpBLnhg+1Ldh9ZZEeZFjRgAwPCF13s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZvRZBDZ+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ojBiBYyn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA871C2BC9E;
-	Tue, 10 Mar 2026 11:27:39 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZvRZBDZ+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1545C19423;
+	Tue, 10 Mar 2026 11:27:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142060;
-	bh=jrOwvkvZwoTTJ62Col/5P9PZTDwZxTKZQQOS/JmhWmY=;
+	s=k20201202; t=1773142061;
+	bh=A1hCgKFnypW4LK2yCvcoAw4KxK75MGEbbJkD/m4TcoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ojBiBYynWwjjweMvTRNtRjbp4PQF9EUkDISVWt3Kq2prGgN280MEddMrQS18OpQaN
-	 e4ewEHuJUWIw5oZo0ED2+NSGwWkZrc+68aHRLk2NhniyExvqt9qj+6gOkaUw4FOU54
-	 8KAK+5WL+Fi4+qd35D49iLuK8S7QN/ojDeGHeli7oVkRE7SIluT+Hp6ZIYIDLjV8cu
-	 sucfXxrsuGzGamPVY4g2J3y98GjTg9zX4YBmRn3nUak1zWcVBpdf51dN7O0sZEItav
-	 EX223VW/rhlNHF+vBJHu7CYEbVxhi9BnXgn+IGJHt4rI++AoqzXJ0OSm7y3rZ0pNpg
-	 GMT22Vnr+mMgQ==
+	b=ZvRZBDZ+cf6vCtF2hIvL+hV3TJsZ2wseHS+3yLODDKuODmAClulAK6AxBg1gKHhtV
+	 acaouohG489gLNxrcHsZJrEC4z7uMJSeLwL2buIhn4BMhvhSws3/s+f9Fm83Cny4dR
+	 MFDLX1NJ4v89FR2XIxfFjl+Yb+QJEXYFzeqf2zRrfKv38e7XzKOyGHzDgEindQIWqO
+	 6U3OLzjqbjtZfix0wfpBFPcu+MaHq+zhQaHUQrECdb5Fl/5tMCS9qBFQS6Tp49x4BS
+	 DySpCGlANiOKmFB2kwIqxA9yGBJKXT7J1SdSV5yH4VtPum6OkHDyzrMf5Obm5Rv1E/
+	 zgdfgTyO6Nm6g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Thorsten Blum <thorsten.blum@linux.dev>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+Cc: Paulo Alcantara <pc@manguebit.org>,
+	Thiago Becker <tbecker@redhat.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 186/314] smb: client: Don't log plaintext credentials in cifs_set_cifscreds
-Date: Tue, 10 Mar 2026 07:17:25 -0400
-Message-ID: <f6327cc4a71fe2b6cd9e06af9e318254b0161d6e.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 187/314] smb: client: fix oops due to uninitialised var in smb2_unlink()
+Date: Tue, 10 Mar 2026 07:17:26 -0400
+Message-ID: <64138396a360d21337687e5ed4267c66825e8585.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,36 +51,59 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 2f37dc436d4e61ff7ae0b0353cf91b8c10396e4d upstream.
+commit 048efe129a297256d3c2088cf8d79515ff5ec864 upstream.
 
-When debug logging is enabled, cifs_set_cifscreds() logs the key
-payload and exposes the plaintext username and password. Remove the
-debug log to avoid exposing credentials.
+If SMB2_open_init() or SMB2_close_init() fails (e.g. reconnect), the
+iovs set @rqst will be left uninitialised, hence calling
+SMB2_open_free(), SMB2_close_free() or smb2_set_related() on them will
+oops.
 
-Fixes: 8a8798a5ff90 ("cifs: fetch credentials out of keyring for non-krb5 auth multiuser mounts")
+Fix this by initialising @close_iov and @open_iov before setting them
+in @rqst.
+
+Reported-by: Thiago Becker <tbecker@redhat.com>
+Fixes: 1cf9f2a6a544 ("smb: client: handle unlink(2) of files open by different clients")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/connect.c | 1 -
- 1 file changed, 1 deletion(-)
+ fs/smb/client/smb2inode.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/connect.c b/fs/smb/client/connect.c
-index d96d23a8f4903..dd7f48f530979 100644
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2235,7 +2235,6 @@ cifs_set_cifscreds(struct smb3_fs_context *ctx, struct cifs_ses *ses)
- 	/* find first : in payload */
- 	payload = upayload->data;
- 	delim = strnchr(payload, upayload->datalen, ':');
--	cifs_dbg(FYI, "payload=%s\n", payload);
- 	if (!delim) {
- 		cifs_dbg(FYI, "Unable to find ':' in payload (datalen=%d)\n",
- 			 upayload->datalen);
+diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
+index 69cb81fa0d3ab..5c25f25aa2efb 100644
+--- a/fs/smb/client/smb2inode.c
++++ b/fs/smb/client/smb2inode.c
+@@ -1205,6 +1205,7 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
+ 	memset(resp_buftype, 0, sizeof(resp_buftype));
+ 	memset(rsp_iov, 0, sizeof(rsp_iov));
+ 
++	memset(open_iov, 0, sizeof(open_iov));
+ 	rqst[0].rq_iov = open_iov;
+ 	rqst[0].rq_nvec = ARRAY_SIZE(open_iov);
+ 
+@@ -1229,14 +1230,15 @@ smb2_unlink(const unsigned int xid, struct cifs_tcon *tcon, const char *name,
+ 	creq = rqst[0].rq_iov[0].iov_base;
+ 	creq->ShareAccess = FILE_SHARE_DELETE_LE;
+ 
++	memset(&close_iov, 0, sizeof(close_iov));
+ 	rqst[1].rq_iov = &close_iov;
+ 	rqst[1].rq_nvec = 1;
+ 
+ 	rc = SMB2_close_init(tcon, server, &rqst[1],
+ 			     COMPOUND_FID, COMPOUND_FID, false);
+-	smb2_set_related(&rqst[1]);
+ 	if (rc)
+ 		goto err_free;
++	smb2_set_related(&rqst[1]);
+ 
+ 	if (retries) {
+ 		for (int i = 0; i < ARRAY_SIZE(rqst);  i++)
 -- 
 2.51.0
 
