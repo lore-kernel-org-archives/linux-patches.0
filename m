@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C1DE387361;
-	Tue, 10 Mar 2026 11:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A94387361;
+	Tue, 10 Mar 2026 11:25:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141936; cv=none; b=RAewhnC1hA7mT/g03TBN9CJyMB7TunKbsM2fE7snGFyzktsvPXXhwNl3ueu1xOHyfuIHOd7ThU/ACKpBULW2211IOUm2gmb6kJ21yyFNNI2VQ9a9bxP5kygjAF1Lgyus7Wg/mIFzQ49rufEXbX+uGXhlwV+C6dSuyIzVeXbpxg8=
+	t=1773141937; cv=none; b=M33/rSxlRO0Nboig5HisUqPEet+POmmxIFr/2IgKUGh1xcT8rBPoxAJsQoFOOvpxlrT7ots1/RPdAs89ZRYsLsfFM7pYJ0yVIF7onZm/XQE202w3ELMGImAcwHOGQ70Pck0afxe6DUxh1BmwJFmgIVg1Eb/RbNkOqEhpvTP4yN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141936; c=relaxed/simple;
-	bh=/xCk9wZoKz4PDUZYFlsBWww20E1X06K9mUbR6l1Aqgo=;
+	s=arc-20240116; t=1773141937; c=relaxed/simple;
+	bh=ibFK0H6tkI3FNdOrqJy9FiRaU14NuWz5Iae4Q86LMCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=elFVzTL3lcl0CXQtVKmA7tjW9PNEOXquqNYnCFFJtMZAsQbTzgIZLN6GB2ei+spawt7yuSd2lj8Duh+r+HXcXPYN0hL5esHhRFojWsgE46COXjA6wBsOjw6HynUDX3geyt7pi55qg+agtTQqt8i3dqYSHw+ThqUT+vuCi/7NLms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RGh4+++6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Uohl1q7IVCWnXF7puTCbINySG0Ca3V0gImo27VmALpkLdZahQRk33LTzFUp9z00fnvSRg6EinzZK411oWiS4Q7UbbMlB9gHE4VdQx7ipKSu8Mk1EKFhe73odKFYXPCV18YaMVPDu6BMLW5e6SGeDp6oT80XPoUCDuOyWTuSsYfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=g8b+0Z6g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RGh4+++6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91E0C19423;
-	Tue, 10 Mar 2026 11:25:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="g8b+0Z6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F48C2BC9E;
+	Tue, 10 Mar 2026 11:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141936;
-	bh=/xCk9wZoKz4PDUZYFlsBWww20E1X06K9mUbR6l1Aqgo=;
+	s=k20201202; t=1773141937;
+	bh=ibFK0H6tkI3FNdOrqJy9FiRaU14NuWz5Iae4Q86LMCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RGh4+++6JFTRUuHnSjswCn9tZ2fKlXODlJ9D72tDutl9E0j0UI+28sHSPcKybxOhx
-	 XOGjR5SxUrCjsoSj9OBzn6s1hruYn7XWvw8sj3HLw7zTBFqkXijioUpEs48tarSv6W
-	 RMPuEt0+6QckMI/PXO7FFApftv3Cu+dZrUmBHHfhY1EYtLnXakqFFagL5S+KksyH4x
-	 WaJCWnzQ3KLBVvuhj8dpRNxyml5AyukLh7uRZ18i/MCQICDr+TmsdIXL4vGeEzm2tp
-	 h+DxsFOwerufCTcxxEG2eDssNk6uP2XdM6s8PjAguUJfw0dOBZo091dwp30YoVqn6U
-	 Gk12IGoOohbgA==
+	b=g8b+0Z6gLoYKv5ndjYgINu/4MhTxtFhSHC4cwnGDUwWIM6tfLBtF0NJBJMV8sReob
+	 d/mHRLl4Vfh/omOl6MsloKDWS6UglO457Uk+AeQCAD/uPWOnxnLYqQtqm3Evsor1CU
+	 pRFeyTIkNoc2vd0GqkPpAdqQt9fA8SkoiHGWECYAThn9GixzxrUMWeg7/Q2wI5ImAB
+	 41O/ki/2TXtUYhOXMUGSR6flYMs6pk7QEdLZd4T1Ups9j8+L3pjqDhWSqD4HBgN1qY
+	 +KL/M3+FVwEp9B/E56GodumuOo7gcwIeRbrE+22zaz8wfW9HgJ6XFZvqTbxpr6JQKn
+	 shnsWBt4MmGvA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Takashi Iwai <tiwai@suse.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/314] ALSA: usb: qcom: Correct parameter comment for uaudio_transfer_buffer_setup()
-Date: Tue, 10 Mar 2026 07:15:19 -0400
-Message-ID: <d52cc094a0aa7350fa42252ec27c16dbab8233c6.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 061/314] ASoC: SDCA: Fix comments for sdca_irq_request()
+Date: Tue, 10 Mar 2026 07:15:20 -0400
+Message-ID: <9cfd1c62771975d4bca2d42c1a7e45dfb77a1b8a.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,33 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 1d6452a0ce78cd3f4e48943b5ba21d273a658298 ]
+[ Upstream commit 71c1978ab6d2c6d48c31311855f1a85377c152ae ]
 
-At fixing the memory leak of xfer buffer, we forgot to update the
-corresponding comment, too.  This resulted in a kernel-doc warning
-with W=1.  Let's correct it.
+The kernel-doc comments for sdca_irq_request() contained some typos
+that lead to build warnings with W=1.  Let's correct them.
 
-Fixes: 5c7ef5001292 ("ALSA: qc_audio_offload: avoid leaking xfer_buf allocation")
-Link: https://patch.msgid.link/20260226154414.1081568-4-tiwai@suse.de
+Fixes: b126394d9ec6 ("ASoC: SDCA: Generic interrupt support")
+Acked-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260226154753.1083320-1-tiwai@suse.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/qcom/qc_audio_offload.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/sdca/sdca_interrupts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/usb/qcom/qc_audio_offload.c b/sound/usb/qcom/qc_audio_offload.c
-index cfb30a195364a..297490f0f5874 100644
---- a/sound/usb/qcom/qc_audio_offload.c
-+++ b/sound/usb/qcom/qc_audio_offload.c
-@@ -1007,7 +1007,7 @@ static int enable_audio_stream(struct snd_usb_substream *subs,
+diff --git a/sound/soc/sdca/sdca_interrupts.c b/sound/soc/sdca/sdca_interrupts.c
+index 79bf3042f57d4..f83413587da5a 100644
+--- a/sound/soc/sdca/sdca_interrupts.c
++++ b/sound/soc/sdca/sdca_interrupts.c
+@@ -246,9 +246,9 @@ static int sdca_irq_request_locked(struct device *dev,
+ }
+ 
  /**
-  * uaudio_transfer_buffer_setup() - fetch and populate xfer buffer params
-  * @subs: usb substream
-- * @xfer_buf: xfer buf to be allocated
-+ * @xfer_buf_cpu: xfer buf to be allocated
-  * @xfer_buf_len: size of allocation
-  * @mem_info: QMI response info
-  *
+- * sdca_request_irq - request an individual SDCA interrupt
++ * sdca_irq_request - request an individual SDCA interrupt
+  * @dev: Pointer to the struct device against which things should be allocated.
+- * @interrupt_info: Pointer to the interrupt information structure.
++ * @info: Pointer to the interrupt information structure.
+  * @sdca_irq: SDCA interrupt position.
+  * @name: Name to be given to the IRQ.
+  * @handler: A callback thread function to be called for the IRQ.
 -- 
 2.51.0
 
