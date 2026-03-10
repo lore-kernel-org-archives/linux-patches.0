@@ -1,45 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3FD44BC9A;
-	Tue, 10 Mar 2026 09:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 868C044CAF3;
+	Tue, 10 Mar 2026 09:02:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133332; cv=none; b=XoJ7Om8q2xLUP+jxEeDS4awVNvVEeAIc1DxyDZgPUZ0nSj7K7Ha2/2EBi1K7wlBKbf7qgUUcRcTNcwnGzGdWXx7hdmbvu5Pl/pYYz2JSoa9QRcmFvfAaDS/MKjGi0HwvWTLtph+taUCreMf18LZRWbGAEqk/CPTM69E9iiK8zls=
+	t=1773133333; cv=none; b=S1qLaxo9Lp0+NYbVxoCPUqI8b64fNIRk/kN8V4SRn6fiOavLMvzXrpp8nrzCmAzZl5AiLbruP1/6MNbYSjG+77xz1TyLTwukeneUgQqMmHwrqjmiPnf9nPVCcl8oWA058oHIltUNGV+rYzwcMpKLR87u06H1Mc90tEZUP/cW0yA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133332; c=relaxed/simple;
-	bh=uhnDnD5YsuKlqmWINLzsD9zKQLO/mP4iC+uOFUQP+LU=;
+	s=arc-20240116; t=1773133333; c=relaxed/simple;
+	bh=evhKPyU7Sb5O7u9HZt6apms9Tl1WZKdf1tbga43qqzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=YN3uAW0vMXZpkyVxNtWLNaMh0xCjnGvKpMAm5r4OAg6JiaAGRGuGDGQ0CnRbX6QVgi4lYkNZP3G8dPqN46vwcFbO9/89vTusIgTqK+HgD3/5IODnQ3cg3nUwL7tb+6HdxaL/+zPKFNJc7DGPQflcUCnI39n9rw4ZMCxNke1gaZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nErRSjng; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u8ro1k4TArOQ2s53CbNon0WO0OrxQ5SKhT9equvBmJUIqSComY0kbg+A1EDXi1xTsa1bigcm002pYDgwhgsPJMq2HoaGFTDoJ9ht+9yp532dTHdqtGQ1iaW477n30ybXclaSKP/RqokyWg24zFgEdEcdVf9ndsH/2QQrUzXVuNE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rV6MmcyS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nErRSjng"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0AEC19423;
-	Tue, 10 Mar 2026 09:02:10 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rV6MmcyS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C5E9C2BC87;
+	Tue, 10 Mar 2026 09:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133332;
-	bh=uhnDnD5YsuKlqmWINLzsD9zKQLO/mP4iC+uOFUQP+LU=;
+	s=k20201202; t=1773133333;
+	bh=evhKPyU7Sb5O7u9HZt6apms9Tl1WZKdf1tbga43qqzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nErRSjngIgvwJwC2G3VDbuoa42aln00JnAEwV7DJuKudLaRhtT+VM/8Nhtr7p2DbW
-	 NRBNhTyNGx+KyeeLyqqN8UczNnq1pEM3IP7PbU4yu3UVQ1V4JqrcNHOaNPQmIDm9oZ
-	 v2pxVyy9ylIfL/pAzR10qYSLrSNEyUaq0spTzpDcpF2LQYyxs/mpdEaAqna7wSRGRs
-	 AFnWpzNAK88TbYnW1cih1l9XkgIFg3QE840YC2DFNJki0dwrzpfuVfY9SoybtR+K9X
-	 L2VwJmLFZDpI7ewV3m59lUMwcKsNyBAr+LhuPXi4Kez3CXegBWmCqoWsJkC6Zh3QdS
-	 TrkFWV0bbUH2g==
+	b=rV6MmcySTlugw6/Jt8UMLLY6nB0Xq7s0ZvUVsnrX4oyEsPOwenJasQnpvzrbA/Hjl
+	 3QCQeG/7IBxnEqQUIEq/pmO2TDOVXnGRNutzQrGG4WYunyqXMeJhZqUCy+97YtFx4i
+	 BtEeSEzTQgcWsCcVVhftvNGdD437aellmaZlBVriiEQ5yrjgnpWY1AB59HQtyAriJL
+	 F9Tk/3K2cevcKEG7q11bnlnJ9FoGK9Uh9VwIxns4xU2j/ANd/OMUARDGTBsuH04//6
+	 Kylc4112nrTK7tpalNlmcAi9VBUMaa7mFF0Ei1KyBb5Nb7qSXsiT2jnBEbuN9kXngb
+	 pcpGbjzo/aAlQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Peter Metz <peter.metz@unarin.com>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: =?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
+	Benjamin Tissoires <bentiss@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alexhung@gmail.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	jikos@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.15] platform/x86: intel-hid: Add Dell 14 Plus 2-in-1 to dmi_vgbs_allow_list
-Date: Tue, 10 Mar 2026 05:01:17 -0400
-Message-ID: <20260310090145.2709021-17-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] HID: asus: avoid memory leak in asus_report_fixup()
+Date: Tue, 10 Mar 2026 05:01:18 -0400
+Message-ID: <20260310090145.2709021-18-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -55,23 +53,25 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Peter Metz <peter.metz@unarin.com>
+From: Günther Noack <gnoack@google.com>
 
-[ Upstream commit 6b3fa0615cd8432148581de62a52f83847af3d70 ]
+[ Upstream commit 2bad24c17742fc88973d6aea526ce1353f5334a3 ]
 
-The Dell 14 Plus 2-in-1 (model DB04250) requires the VGBS allow list
-entry to correctly enable the tablet mode switch. Without this, the
-chassis state is not reported, and the hinge rotation only emits
-unknown scancodes.
+The asus_report_fixup() function was returning a newly allocated
+kmemdup()-allocated buffer, but never freeing it.  Switch to
+devm_kzalloc() to ensure the memory is managed and freed automatically
+when the device is removed.
 
-Verified on Dell 14 Plus 2-in-1 DB04250.
+The caller of report_fixup() does not take ownership of the returned
+pointer, but it is permitted to return a pointer whose lifetime is at
+least that of the input buffer.
 
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221090
-Signed-off-by: Peter Metz <peter.metz@unarin.com>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260213044627.203638-1-peter.metz@unarin.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Also fix a harmless out-of-bounds read by copying only the original
+descriptor size.
+
+Assisted-by: Gemini-CLI:Google Gemini 3
+Signed-off-by: Günther Noack <gnoack@google.com>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -79,104 +79,124 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### What the commit does
+### Problem Description
 
-This commit adds a single DMI entry for the "Dell 14 Plus 2-in-1
-DB04250" to the `dmi_vgbs_allow_list` in
-`drivers/platform/x86/intel/hid.c`. This allow list controls which
-devices can use the VGBS (Virtual GPIO Button Status) ACPI method to
-report chassis/tablet mode state.
+The `asus_report_fixup()` function in `drivers/hid/hid-asus.c` had a
+memory leak in the `QUIRK_T100CHI | QUIRK_T90CHI` path. The buggy code
+used `kmemdup()` to allocate a new report descriptor buffer, but this
+buffer was never freed by anyone:
 
-### Problem it solves
+**The leak mechanism (verified by reading hid-core.c:1285-1307):**
+1. Caller allocates `buf` via `kmemdup()` (line 1291)
+2. Caller passes `buf` to `report_fixup()` (line 1296)
+3. The old `report_fixup()` returned a *new* `kmemdup()`'d pointer,
+   discarding `buf`
+4. Caller does `start = kmemdup(start, size, ...)` — making *yet another
+   copy* (line 1303)
+5. Caller does `kfree(buf)` — frees the original, but NOT the
+   intermediate kmemdup from report_fixup()
+6. The intermediate buffer is **leaked**
 
-Without this entry, the Dell 14 Plus 2-in-1 cannot correctly report
-tablet mode switch state. The hinge rotation only emits unknown
-scancodes, meaning the device doesn't properly switch between laptop and
-tablet modes. This is a real usability issue for owners of this specific
-2-in-1 device.
+### Fix Analysis
 
-### Classification: Hardware Quirk / Device Allow List Entry
+The fix is small (11 insertions, 4 deletions) and does three things:
 
-This falls squarely into the **"QUIRKS and WORKAROUNDS"** exception
-category for stable backports:
-- It adds a device-specific DMI match to an existing allow list
-- It fixes a real hardware issue (tablet mode not working)
-- The pattern is identical to existing entries in the same list
-  (multiple Dell, HP entries already present)
+1. **Switches from `kmemdup()` to `devm_kzalloc()`**: Ties the
+   allocation to the HID device lifetime, so it's automatically freed on
+   device removal. This eliminates the leak.
 
-### Code change analysis
+2. **Fixes error handling**: Old code returned `NULL` on allocation
+   failure, which the caller doesn't handle well. New code returns the
+   original `rdesc`, matching the pattern already used by
+   `QUIRK_G752_KEYBOARD` in the same function.
 
-The diff is trivial — 6 lines added to insert a new `dmi_system_id`
-struct into the `dmi_vgbs_allow_list` array, matching `DMI_SYS_VENDOR =
-"Dell Inc."` and `DMI_PRODUCT_NAME = "Dell 14 Plus 2-in-1 DB04250"`. The
-change follows the exact same pattern as the surrounding entries.
+3. **Fixes out-of-bounds read**: Old code did `kmemdup(rdesc, *rsize,
+   ...)` where `*rsize` was already set to `rsize_orig + 1` (one byte
+   larger than the actual descriptor). New code does `memcpy(new_rdesc,
+   rdesc, rsize_orig)`, copying only the valid data.
 
-### Risk assessment
+### Stable Criteria Assessment
 
-- **Risk: Extremely low.** The DMI match is specific to one device
-  model. It cannot affect any other hardware.
-- **Scope: Minimal.** 6 lines of declarative data, no logic changes.
-- **Testing: Verified.** The commit message states "Verified on Dell 14
-  Plus 2-in-1 DB04250."
-- **Review: Thorough.** Reviewed by both Hans de Goede (platform/x86
-  maintainer) and Ilpo Järvinen (Intel platform maintainer).
+- **Fixes a real bug**: Yes — memory leak on every T100CHI/T90CHI
+  keyboard report descriptor parse
+- **Obviously correct**: Yes — follows the identical pattern used by
+  QUIRK_G752_KEYBOARD in the same function (verified in the diff
+  context)
+- **Small and contained**: Yes — 15 lines changed in a single file
+- **No new features**: Correct — pure bug fix
+- **Bug has existed since 2017**: Commit 73c75d3958579 introduced
+  T100CHI support with the buggy `kmemdup()` pattern, present in all
+  stable trees
 
-### Stable criteria check
+### Risk Assessment
 
-1. **Obviously correct and tested**: Yes — verified on the hardware,
-   reviewed by two maintainers
-2. **Fixes a real bug**: Yes — tablet mode doesn't work without it
-   (bugzilla #221090)
-3. **Important issue**: Yes — core functionality of a 2-in-1 device is
-   broken
-4. **Small and contained**: Yes — 6 lines, single file, data-only change
-5. **No new features**: Correct — enables existing functionality on
-   specific hardware
-6. **Applies cleanly**: Should apply cleanly as long as the surrounding
-   entries exist
+**Very low risk.** The fix:
+- Follows an existing pattern already proven in the same function
+  (QUIRK_G752_KEYBOARD)
+- Only affects ASUS T100CHI and T90CHI hardware
+- The devm_kzalloc lifetime (device lifetime) is correct since the
+  caller copies the returned data immediately
+- No dependencies on other commits
 
 ### Verification
 
-- Verified the diff is a pure data addition to an existing DMI allow
-  list array — no logic changes
-- Confirmed the pattern matches existing entries in the same list (Dell
-  Pro Rugged 10/12 Tablet entries directly above)
-- The commit references bugzilla.kernel.org bug #221090, confirming a
-  user-reported issue
-- Reviewed-by tags from Hans de Goede and Ilpo Järvinen confirm
-  maintainer approval
-- The `dmi_vgbs_allow_list` structure is used in the existing
-  `intel_hid_probe()` path — this is well-established code
+- **Verified caller behavior**: Read `hid-core.c:1285-1307` — confirmed
+  the caller does `kmemdup()` of the returned pointer then `kfree(buf)`,
+  meaning any new allocation from `report_fixup()` is leaked
+- **Verified the existing devm_kzalloc pattern**: The
+  QUIRK_G752_KEYBOARD block in the same function already uses
+  `devm_kzalloc` with the same allocation + `return rdesc` on failure
+  pattern
+- **Verified bug age**: `git log --oneline` showed commit
+  `73c75d3958579` (2017-08-04) introduced the T100CHI support with
+  `kmemdup()`, confirmed present in stable trees via `git tag
+  --contains`
+- **Verified commit SHA**: `git show 5dc6c17c16935` confirmed the commit
+  matches the diff under review, with upstream commit `2bad24c17742f`
+- **Verified the OOB read**: Old code set `*rsize = rsize_orig + 1`
+  BEFORE `kmemdup(rdesc, *rsize, ...)`, reading one byte past the
+  original descriptor — confirmed by the diff context showing the order
+  of operations
 
-### Conclusion
-
-This is a textbook stable backport candidate: a tiny, zero-risk hardware
-quirk addition that fixes real functionality for a specific device
-model, with user bug report, hardware verification, and maintainer
-review.
+This is a clear, small, low-risk fix for a real memory leak (and minor
+OOB read) in a HID driver, following an established pattern already in
+the same function. It meets all stable kernel criteria.
 
 **YES**
 
- drivers/platform/x86/intel/hid.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/hid/hid-asus.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 560cc063198e1..5b475a09645a3 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -189,6 +189,12 @@ static const struct dmi_system_id dmi_vgbs_allow_list[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro Rugged 12 Tablet RA02260"),
- 		},
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Dell 14 Plus 2-in-1 DB04250"),
-+		},
-+	},
- 	{ }
- };
+diff --git a/drivers/hid/hid-asus.c b/drivers/hid/hid-asus.c
+index 472bca54642b9..8487332bf43b0 100644
+--- a/drivers/hid/hid-asus.c
++++ b/drivers/hid/hid-asus.c
+@@ -1306,14 +1306,21 @@ static const __u8 *asus_report_fixup(struct hid_device *hdev, __u8 *rdesc,
+ 		 */
+ 		if (*rsize == rsize_orig &&
+ 			rdesc[offs] == 0x09 && rdesc[offs + 1] == 0x76) {
+-			*rsize = rsize_orig + 1;
+-			rdesc = kmemdup(rdesc, *rsize, GFP_KERNEL);
+-			if (!rdesc)
+-				return NULL;
++			__u8 *new_rdesc;
++
++			new_rdesc = devm_kzalloc(&hdev->dev, rsize_orig + 1,
++						 GFP_KERNEL);
++			if (!new_rdesc)
++				return rdesc;
  
+ 			hid_info(hdev, "Fixing up %s keyb report descriptor\n",
+ 				drvdata->quirks & QUIRK_T100CHI ?
+ 				"T100CHI" : "T90CHI");
++
++			memcpy(new_rdesc, rdesc, rsize_orig);
++			*rsize = rsize_orig + 1;
++			rdesc = new_rdesc;
++
+ 			memmove(rdesc + offs + 4, rdesc + offs + 2, 12);
+ 			rdesc[offs] = 0x19;
+ 			rdesc[offs + 1] = 0x00;
 -- 
 2.51.0
 
