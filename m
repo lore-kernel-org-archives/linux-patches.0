@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F52382F29;
-	Tue, 10 Mar 2026 11:06:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 721C1382391;
+	Tue, 10 Mar 2026 11:06:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140779; cv=none; b=EBU31WDkq1/JNZPRStxls/+WCFRmxP76gx2bgmsSUlyAFvxG0WGjrj9nlb0MyI+2l+z2zhuPn3mduSjT2AbjhxmE4H0cgAPv4MIhlHuwtcqsVrvU2ORdtBv3p2yi9MeqhEqbtgoXfGH+CetB9Jl24h6hstRlytxQtZJNaV8tFfY=
+	t=1773140780; cv=none; b=HxgZPm6SIoXbRBYWzhbMLnwbmXvNGEAjg3yWmo9DIjSK4VELvUfJuanUANelPVAirIP3An0M6W63KvZH3Ski/JxSWLdJhBE4uKo2iUVNaFoIJ9Hr/TiAhh7OBGbgT6q+caaVC0Nh9nq/fmbWLZ6+kbP69gWiw3Is6P+OmT28YCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140779; c=relaxed/simple;
-	bh=bh9ZdilRHo6+PBviIBRixa3lKe90KmQ4wen3sNLdz5Q=;
+	s=arc-20240116; t=1773140780; c=relaxed/simple;
+	bh=BkACEwMeZADwQnE3z1a6tUC6KkG+r5fL5LAL/78NAHQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MAnzK6ZqFsiu/+9KtUB+qSUu8LzYAFhUjk0d+p6GwRH8XZwjRtrQkS12Iz2R+DUQjpqzaVgu3JlhSOEoEJUC3fcWuEiOCTuxtjUe76PlBlPEOlbqtE3unlEt5t2o9eHbqM063I/nQRftkeT3V1kEZFPQKAMXCLogcRCDGm1e9YU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qpZAQGft; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JtbD92tQfu6+aB2n4Xx41wMy7+oCLSJI7hmO5XwMEQohuZ2op+ohd9OcUM/TW7X/IHMDyumYNugoUpeo8zNJj3UNmGZzwGUPuZML9wJdEcSodplygkHYAuQiHKRssQ7ADcKDdLY+CL0MeFvT5ZnxYy1PpdGhTqD7xQkFL568roo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GclVuJf6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qpZAQGft"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1A43C2BC9E;
-	Tue, 10 Mar 2026 11:06:18 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GclVuJf6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76071C2BC86;
+	Tue, 10 Mar 2026 11:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140779;
-	bh=bh9ZdilRHo6+PBviIBRixa3lKe90KmQ4wen3sNLdz5Q=;
+	s=k20201202; t=1773140780;
+	bh=BkACEwMeZADwQnE3z1a6tUC6KkG+r5fL5LAL/78NAHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpZAQGftSHAgKbPJRqtYxabcJqfW4zpr7+b6NE16N0Z/Ar1nSaAkPssuul6ISbyKb
-	 51QLZuf30AZVbJaJKq4+/4URBRZ8oMUteZ5RxPr4RcupD+VGoINyp3eDFDRYAuMx1h
-	 TF+7DvMl6AaW6Sxp1hzQKQ1oJ841+sQq/nWIUsncet5QRGS0H9sTYxjWKfxBniNd5L
-	 wLSg9wF0yPmbtrrO9vIu8cswxNOeFj+NOWBiCkypxfhpVJO/jcvVAV5AZfmaANbnRT
-	 tEnSE1k1AlDDiApjYQXNhCli7i8D/gfkLt/4wxsFTBf5z1sm81oofQ+Wndlfohef1h
-	 AyqKgiVtjR02Q==
+	b=GclVuJf612e0vgAPN4CAL4dR2Lq6lrIXFDb7GUHf+5gvybxHms4ibaz6KFmQYA7D5
+	 dE/VPhnK3pin4juIbrp7bU72r5lcHOO+tlIUtlWARuwJepYGd6fJjvrdwZWCDagig0
+	 fIg9nno+8fhH8ZJZqUWaEzkths+gxf+PdVk8z0vAruxrvDv72oClJ5a5oshKR8w3/R
+	 fK+YLNyCqHzHzlsAw6XeOoiT1dljPHNJi6lorO/p41RyZdQ1OxwdQuWWwPA2zFS0f4
+	 L379F96R3hSO2EzZaEhnr217ByXYfCzqvwmcraokBt3hk1Mm2631KrVjxPMB0Qj3wt
+	 LTJMMECiE3Y8g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Dan Carpenter <dan.carpenter@linaro.org>,
-	"Rob Herring (Arm)" <robh@kernel.org>,
+Cc: Chen Ni <nichen@iscas.ac.cn>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 013/311] accel: ethosu: Fix shift overflow in cmd_to_addr()
-Date: Tue, 10 Mar 2026 07:01:00 -0400
-Message-ID: <da66160de93d4533994a9400d390a5541f68be1e.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 014/311] drm/imx: parallel-display: check return value of devm_drm_bridge_add() in imx_pd_probe()
+Date: Tue, 10 Mar 2026 07:01:01 -0400
+Message-ID: <918d85a06d49439559c1c3531e2330a4bbf5a589.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,36 +48,42 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@linaro.org>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 7be41fb00e2c2a823f271a8318b453ca11812f1e ]
+[ Upstream commit c5f8658f97ec392eeaf355d4e9775ae1f23ca1d3 ]
 
-The "((cmd[0] & 0xff0000) << 16)" shift is zero.  This was intended
-to be (((u64)cmd[0] & 0xff0000) << 16).  Move the cast to the correct
-location.
+Return the value of devm_drm_bridge_add() in order to propagate the
+error properly, if it fails due to resource allocation failure or bridge
+registration failure.
 
-Fixes: 5a5e9c0228e6 ("accel: Add Arm Ethos-U NPU driver")
-Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/aQGmY64tWcwOGFP4@stanley.mountain
-Signed-off-by: Rob Herring (Arm) <robh@kernel.org>
+This ensures that the probe function fails safely rather than proceeding
+with a potentially incomplete bridge setup.
+
+Fixes: bf7e97910b9f ("drm/imx: parallel-display: add the bridge before attaching it")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Link: https://patch.msgid.link/20260204090629.2209542-1-nichen@iscas.ac.cn
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/accel/ethosu/ethosu_gem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/imx/ipuv3/parallel-display.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/accel/ethosu/ethosu_gem.c b/drivers/accel/ethosu/ethosu_gem.c
-index 473b5f5d75144..7b073116314ba 100644
---- a/drivers/accel/ethosu/ethosu_gem.c
-+++ b/drivers/accel/ethosu/ethosu_gem.c
-@@ -154,7 +154,7 @@ static void cmd_state_init(struct cmd_state *st)
+diff --git a/drivers/gpu/drm/imx/ipuv3/parallel-display.c b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+index 6fbf505d2801d..590120a33fa07 100644
+--- a/drivers/gpu/drm/imx/ipuv3/parallel-display.c
++++ b/drivers/gpu/drm/imx/ipuv3/parallel-display.c
+@@ -256,7 +256,9 @@ static int imx_pd_probe(struct platform_device *pdev)
  
- static u64 cmd_to_addr(u32 *cmd)
- {
--	return ((u64)((cmd[0] & 0xff0000) << 16)) | cmd[1];
-+	return (((u64)cmd[0] & 0xff0000) << 16) | cmd[1];
+ 	platform_set_drvdata(pdev, imxpd);
+ 
+-	devm_drm_bridge_add(dev, &imxpd->bridge);
++	ret = devm_drm_bridge_add(dev, &imxpd->bridge);
++	if (ret)
++		return ret;
+ 
+ 	return component_add(dev, &imx_pd_ops);
  }
- 
- static u64 dma_length(struct ethosu_validated_cmdstream_info *info,
 -- 
 2.51.0
 
