@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EFD8387368;
-	Tue, 10 Mar 2026 11:26:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 878963876DE;
+	Tue, 10 Mar 2026 11:26:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142001; cv=none; b=ppe2oIRe6r8Y+mD7lu80pRBdUknCinyKFx9KcfWwKXPmjpF7A7iFM9eDTskhS8Q8laGSgvohC1gpEbG0ahPFq8KKGUxI4JrCKejIH9hUfeTDKL/ZBcl2P8CP38tyUAokVwcnDeX2ggXY1FiCUIVjzSeEIE5zmAL0KYmI5Ew79Xo=
+	t=1773142002; cv=none; b=GhGFhfuKut53+8TPh236x/SjjsNXlGyfOqwmmUizmEb/8Y53uAKHdoVjxcaFVeBvjtp+h0yKKLBYpoMKPoh0tiWR81Ps9jaA9o1dZUUCx/j4h3heUKl3vd7y+IrDVHoTThxyDF5UKRrcuCcNj/JldImpH6p2jUsqrbmhdz1e6ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142001; c=relaxed/simple;
-	bh=ymJxRDQbWwoytOrQpg0jtX1abNUf+YMZ53aXbADlIbo=;
+	s=arc-20240116; t=1773142002; c=relaxed/simple;
+	bh=ivNy4ZHqLNJ68lCaEuCKnGgl1gQpPJxFeQIBz6WdcKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hK1HeI0RyzMfOcXz0F+paGlquQ2VBYdnmeIYyUcGuHzvkS5f8SLZ3aclyb1opMq9msB2s6ypanKscjuj3Ir50zoV8KywhzS0EvQvq3B6I1sDtKyPxVMA7HYmsuHMQQPA1fWhGi6eJaFYkvTyp1tHWm5nUtlm1g5qoXF8YZxN1C8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BTep+XLC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHSDq3Dw+2zJESddJtcoTXv0K4LDMnsWMFMhZNk88xVUXPVd/J8C5vgTgUSKY41PRMopPnje8QvscKOa42jL3tn0w+aW8lqr27/C4q2+Ldwdcn3Bhua//G0eN1z/XNBa7KhTaLzZ9XBf2WUIoi4MjEPITGnrVqbAbUgVgDN0swc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZNDudKab; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BTep+XLC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B350CC2BC86;
-	Tue, 10 Mar 2026 11:26:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZNDudKab"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 953FCC19423;
+	Tue, 10 Mar 2026 11:26:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142001;
-	bh=ymJxRDQbWwoytOrQpg0jtX1abNUf+YMZ53aXbADlIbo=;
+	s=k20201202; t=1773142002;
+	bh=ivNy4ZHqLNJ68lCaEuCKnGgl1gQpPJxFeQIBz6WdcKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BTep+XLCvGmYCh/ENAHCw8t6UOp2MUrFQvMTAqw7FhDGN/ppd0GHJw51AZmYJY8WN
-	 2IyonC440Qe4n5kSHFvMTH8fkvJHEa2/0+9D2lt8RXggJEckqHFGr5d8b8NfVIY+f4
-	 UsGuAKErCdYHtoqRFMtrryR7suSFvZhDCZ1VgJZr5q/0BI7P6EbxliwXoD70mWFCMF
-	 BMfrhgb/jw3zEF/bAoZMZlnfbFzp+8M83cwiQAhFhM8TcN0WrDPuTQ5sAmNmmsI5Xb
-	 kGsd3cbKyRezsQylScOjlYOvSgdhqnUf+bxbbT7X8IjhJBp3bdNwJ0Pgp4ZBHsjEtP
-	 lp7AcLECP+xLQ==
+	b=ZNDudKabOGpxVNUP7va+Q2KpX2XhiZc2e48b2Yj2HLHqmr6sQcRgKi5lHWNw3OnDw
+	 974cRy+ZDCXCoUT8XgCzJs4K7kk97uiK3BVwU4whC1X/YTSEseRzAVcvKg/HFpz+Tl
+	 Fp4yKyPF5CNqAnHccOM7NlqzQdOCbdR6jaGQQc/C1kk5LxBSInOaPU6S1FwnPzl6Dd
+	 CzGvyEQGoVpbxuHszlbMW3QEtIhAjk3s2J8PS/VzsbSFFKnDh0nG0j85DFeQKHBw+b
+	 UT43XZVdJt0HuGWkJW9iEVXchkpGQqUghtE5x8DodutoYYVI7rdUEe57+4+wIP+9M5
+	 xULRqE6RFbOdw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Imre Deak <imre.deak@intel.com>,
-	Vinod Govindapillai <vinod.govindapillai@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/314] drm/i915/dp: Fail state computation for invalid DSC source input BPP values
-Date: Tue, 10 Mar 2026 07:16:26 -0400
-Message-ID: <c291d6acc338791cb89e2d3e9f85738ab2dd8229.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 128/314] drm/i915/dp: Fix pipe BPP clamping due to HDR
+Date: Tue, 10 Mar 2026 07:16:27 -0400
+Message-ID: <e83347f9dfa75c10f012ab18d7ab51bcf9cf0776.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,73 +52,99 @@ Content-Transfer-Encoding: 8bit
 
 From: Imre Deak <imre.deak@intel.com>
 
-[ Upstream commit 338465490cf7bd4a700ecd33e4855fee4622fa5f ]
+[ Upstream commit fe26ae6ac8b88fcdac5036b557c129a17fe520d2 ]
 
-There is no reason to accept an invalid minimum/maximum DSC source input
-BPP value (i.e a minimum DSC input BPP value above the maximum pipe BPP
-or a maximum DSC input BPP value below the minimum pipe BPP value), fail
-the state computation in these cases.
+The pipe BPP value shouldn't be set outside of the source's / sink's
+valid pipe BPP range, ensure this when increasing the minimum pipe BPP
+value to 30 due to HDR.
 
-Reviewed-by: Vinod Govindapillai <vinod.govindapillai@intel.com>
+While at it debug print if the HDR mode was requested for a connector by
+setting the corresponding HDR connector property. This indicates
+if the requested HDR mode could not be enabled, since the selected
+pipe BPP is below 30, due to a sink capability or link BW limit.
+
+v2:
+- Also handle the case where the sink could support the target 30 BPP
+  only in DSC mode due to a BW limit, but the sink doesn't support DSC
+  or 30 BPP as a DSC input BPP. (Chaitanya)
+- Debug print the connector's HDR mode in the link config dump, to
+  indicate if a BPP >= 30 required by HDR couldn't be reached. (Ankit)
+- Add Closes: trailer. (Ankit)
+- Don't print the 30 BPP-outside of valid BPP range debug message if
+  the min BPP is already > 30 (and so a target BPP >= 30 required
+  for HDR is ensured).
+
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7052
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/15503
+Fixes: ba49a4643cf53 ("drm/i915/dp: Set min_bpp limit to 30 in HDR mode")
+Cc: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Cc: <stable@vger.kernel.org> # v6.18+
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com> # v1
+Reviewed-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 Signed-off-by: Imre Deak <imre.deak@intel.com>
-Link: https://patch.msgid.link/20251215192357.172201-17-imre.deak@intel.com
-Stable-dep-of: fe26ae6ac8b8 ("drm/i915/dp: Fix pipe BPP clamping due to HDR")
+Link: https://patch.msgid.link/20260209133817.395823-1-imre.deak@intel.com
+(cherry picked from commit 08b7ef16b6a03e8c966e286ee1ac608a6ffb3d4a)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 28 ++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/display/intel_dp.c | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 2eab591a8ef56..057b366c5ae29 100644
+index 057b366c5ae29..be3d54729a440 100644
 --- a/drivers/gpu/drm/i915/display/intel_dp.c
 +++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -2523,16 +2523,30 @@ intel_dp_compute_config_link_bpp_limits(struct intel_dp *intel_dp,
- 	return true;
- }
- 
--static void
--intel_dp_dsc_compute_pipe_bpp_limits(struct intel_dp *intel_dp,
-+static bool
-+intel_dp_dsc_compute_pipe_bpp_limits(struct intel_connector *connector,
- 				     struct link_config_limits *limits)
+@@ -2557,6 +2557,7 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
+ 			       bool dsc,
+ 			       struct link_config_limits *limits)
  {
--	struct intel_display *display = to_intel_display(intel_dp);
-+	struct intel_display *display = to_intel_display(connector);
-+	const struct link_config_limits orig_limits = *limits;
- 	int dsc_min_bpc = intel_dp_dsc_min_src_input_bpc();
- 	int dsc_max_bpc = intel_dp_dsc_max_src_input_bpc(display);
++	struct intel_display *display = to_intel_display(intel_dp);
+ 	bool is_mst = intel_crtc_has_type(crtc_state, INTEL_OUTPUT_DP_MST);
+ 	struct intel_connector *connector =
+ 		to_intel_connector(conn_state->connector);
+@@ -2569,8 +2570,7 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
+ 	limits->min_lane_count = intel_dp_min_lane_count(intel_dp);
+ 	limits->max_lane_count = intel_dp_max_lane_count(intel_dp);
  
--	limits->pipe.max_bpp = clamp(limits->pipe.max_bpp, dsc_min_bpc * 3, dsc_max_bpc * 3);
--	limits->pipe.min_bpp = clamp(limits->pipe.min_bpp, dsc_min_bpc * 3, dsc_max_bpc * 3);
-+	limits->pipe.min_bpp = max(limits->pipe.min_bpp, dsc_min_bpc * 3);
-+	limits->pipe.max_bpp = min(limits->pipe.max_bpp, dsc_max_bpc * 3);
-+
-+	if (limits->pipe.min_bpp <= 0 ||
-+	    limits->pipe.min_bpp > limits->pipe.max_bpp) {
-+		drm_dbg_kms(display->drm,
-+			    "[CONNECTOR:%d:%s] Invalid DSC src/sink input BPP (src:%d-%d pipe:%d-%d)\n",
-+			    connector->base.base.id, connector->base.name,
-+			    dsc_min_bpc * 3, dsc_max_bpc * 3,
-+			    orig_limits.pipe.min_bpp, orig_limits.pipe.max_bpp);
-+
-+		return false;
-+	}
-+
-+	return true;
- }
- 
- bool
-@@ -2572,8 +2586,8 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
+-	limits->pipe.min_bpp = intel_dp_in_hdr_mode(conn_state) ? 30 :
+-				intel_dp_min_bpp(crtc_state->output_format);
++	limits->pipe.min_bpp = intel_dp_min_bpp(crtc_state->output_format);
+ 	if (is_mst) {
+ 		/*
+ 		 * FIXME: If all the streams can't fit into the link with their
+@@ -2586,6 +2586,19 @@ intel_dp_compute_config_limits(struct intel_dp *intel_dp,
  							respect_downstream_limits);
  	}
  
--	if (dsc)
--		intel_dp_dsc_compute_pipe_bpp_limits(intel_dp, limits);
-+	if (dsc && !intel_dp_dsc_compute_pipe_bpp_limits(connector, limits))
-+		return false;
++	if (!dsc && intel_dp_in_hdr_mode(conn_state)) {
++		if (intel_dp_supports_dsc(intel_dp, connector, crtc_state) &&
++		    limits->pipe.max_bpp >= 30)
++			limits->pipe.min_bpp = max(limits->pipe.min_bpp, 30);
++		else
++			drm_dbg_kms(display->drm,
++				    "[CONNECTOR:%d:%s] Can't force 30 bpp for HDR (pipe bpp: %d-%d DSC-support: %s)\n",
++				    connector->base.base.id, connector->base.name,
++				    limits->pipe.min_bpp, limits->pipe.max_bpp,
++				    str_yes_no(intel_dp_supports_dsc(intel_dp, connector,
++								     crtc_state)));
++	}
++
+ 	if (dsc && !intel_dp_dsc_compute_pipe_bpp_limits(connector, limits))
+ 		return false;
  
- 	if (is_mst || intel_dp->use_max_params) {
- 		/*
+@@ -2716,10 +2729,11 @@ intel_dp_compute_link_config(struct intel_encoder *encoder,
+ 	}
+ 
+ 	drm_dbg_kms(display->drm,
+-		    "DP lane count %d clock %d bpp input %d compressed " FXP_Q4_FMT " link rate required %d available %d\n",
++		    "DP lane count %d clock %d bpp input %d compressed " FXP_Q4_FMT " HDR %s link rate required %d available %d\n",
+ 		    pipe_config->lane_count, pipe_config->port_clock,
+ 		    pipe_config->pipe_bpp,
+ 		    FXP_Q4_ARGS(pipe_config->dsc.compressed_bpp_x16),
++		    str_yes_no(intel_dp_in_hdr_mode(conn_state)),
+ 		    intel_dp_config_required_rate(pipe_config),
+ 		    intel_dp_max_link_data_rate(intel_dp,
+ 						pipe_config->port_clock,
 -- 
 2.51.0
 
