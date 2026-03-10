@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94A2338757F;
-	Tue, 10 Mar 2026 11:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B9EA386454;
+	Tue, 10 Mar 2026 11:13:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141216; cv=none; b=TPidIdvdDADl5cV0WCAwYfw4Ih387ovOi0Aji/FRyRSRyV7V3XJNqhPAmAu0KVu4U8lCBxJCqy1o/3we1qPsMwL3KjZrfz0/otFs6ktUIfrFtHs+MYXI01Urf1raIpBEp0epPo7LPHAn37Ok6hS0OBhQ7UXU2aX7Mjibc79gQYc=
+	t=1773141217; cv=none; b=hZ1j/hQmSSUMzVEo4PafruJqmT6fzMhpk2Do3uAZkCb/W5wgYeCChM8L2bkaxWAWnppzBPlsGyT8HeK6o47KEBPdEhYhkZqQSsRcTH7lxeXUz0UMNI3lm/oruDlgTsF/JSlFJLKZGHhwtbs8gMTqW8vRU4gCVc0JhrCaApPdG0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141216; c=relaxed/simple;
-	bh=1VCYbGHtsILIB2nc5UBIWz5Lom2wBaxiTN75Oy0JpLg=;
+	s=arc-20240116; t=1773141217; c=relaxed/simple;
+	bh=uLVIJ0JRVxC+IfDIZEWFPB+RAixw+Is4Oef7aTBQpmk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fjTwLVbJ2DdR6SylAuwmA7xjXZqaZVoMBzm2FfYJaQcViF/u0m6EKkwuGQ31odwa4pexvgfumYI+BG39NkPw1Rjio/KM+lPBYTAOmZ8bewL7Kwa8UnsCUlKVuPUCb4uYtZwSs+3mVB7oYDV0zj2C7vJeHlrLYQKoPiPz4b8rU7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HNJN0+qQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AD6IvGf3Juin/tXXNtvaj5M1XATgr7S9GKLFffodlHhu4rssehTR4IzK+uKBNkZm0vOqU9uLx/sm36EaFVj0kdXmB/VtO3hFBgYMQKsuXbw4xWaFell9KDSvtD1wUlakXO62zqEOeOpZZP0/Qlnq+fethAF2bG6HbFJ4RPKna3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ITQK74mV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HNJN0+qQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 973E6C2BC86;
-	Tue, 10 Mar 2026 11:13:35 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ITQK74mV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729A5C2BC9E;
+	Tue, 10 Mar 2026 11:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141216;
-	bh=1VCYbGHtsILIB2nc5UBIWz5Lom2wBaxiTN75Oy0JpLg=;
+	s=k20201202; t=1773141217;
+	bh=uLVIJ0JRVxC+IfDIZEWFPB+RAixw+Is4Oef7aTBQpmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNJN0+qQTTTjM/vLzFCdPIPtiIqyGk37p5rbweQEGDDeMYcZO4QLSBxGiusWOo/8Q
-	 2iRbME2e7yQJmDRtMv+1SpmeClAScEGNXdiuNJbaq/vj++ot2LovfO6oj7OsLKEB8m
-	 DkpDhZ/78D+kpIhPWs86dFkjIIwlHfONIKXfylxQunPVVmxPIcYiQk1/UQQzFNyOZY
-	 TwHozZZJvjsSoqXw+re0FUcJzM85yvRlyGKIdi+BySDHzcLqoD2ZAYdJpQY1PvcWTe
-	 3kESnwmzW8BiaYhaxTKAL2BG3VoW4N+wzigcs8ykAJGZGgds8qnFfYaFVaQ384OoMu
-	 CMg8lRLhTe1dA==
+	b=ITQK74mVLF6xL/sRtMFp+Gcgx7yAmsTXnOjf2n/9SSfaivuFjYL6s98k/OUXaOhU0
+	 GuB74Z1SsKIZW60MEQsfSFLVY+d2Dicr4RGzZRkvmT2+D67lWisfM1mPgXrG3LMFwN
+	 tvWal65aw/hyKXknroYqvjPG5EcrlDllGssPXOH4cy+985UVGndnII8m7ps2L2cD86
+	 eIapau5TaZjqWOS38cedsalp7f402j/HoADSK+k3re+7JGdanOueKmD9/O9KsNcbCx
+	 1xeq7gbAIMFybRWNpH6O+i4upEnc6odkR8dK9gTwgD7Y5wmJKD1+6P2lzXlEYEvQe/
+	 vWU/Z4d5ebvCA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Oliver Hartkopp <socketcan@hartkopp.net>,
+	syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 217/311] regulator: mt6363: Fix incorrect and redundant IRQ disposal in probe
-Date: Tue, 10 Mar 2026 07:04:24 -0400
-Message-ID: <ea5e85f13c0bc08952587a1732f5200a234a707e.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 218/311] can: bcm: fix locking for bcm_op runtime updates
+Date: Tue, 10 Mar 2026 07:04:25 -0400
+Message-ID: <45cf0074111bdb37164d6cb641f6120861f1a88e.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,46 +49,44 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 23942b71f07cc99e39d9216a5b370df494759d8c ]
+[ Upstream commit c35636e91e392e1540949bbc67932167cb48bc3a ]
 
-In mt6363_regulator_probe(), devm_add_action_or_reset() is used to
-automatically dispose of the IRQ mapping if the probe fails or the
-device is removed.
+Commit c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+added a locking for some variables that can be modified at runtime when
+updating the sending bcm_op with a new TX_SETUP command in bcm_tx_setup().
 
-The manual call to irq_dispose_mapping() in the error path was redundant
-as the reset action already triggers mt6363_irq_remove(). Furthermore,
-the manual call incorrectly passed the hardware IRQ number (info->hwirq)
-instead of the virtual IRQ mapping (info->virq).
+Usually the RX_SETUP only handles and filters incoming traffic with one
+exception: When the RX_RTR_FRAME flag is set a predefined CAN frame is
+sent when a specific RTR frame is received. Therefore the rx bcm_op uses
+bcm_can_tx() which uses the bcm_tx_lock that was only initialized in
+bcm_tx_setup(). Add the missing spin_lock_init() when allocating the
+bcm_op in bcm_rx_setup() to handle the RTR case properly.
 
-Remove the redundant and incorrect manual disposal.
-
-Fixes: 3c36965df808 ("regulator: Add support for MediaTek MT6363 SPMI PMIC Regulators")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260223-mt6363-v1-1-c99a2e8ac621@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+Reported-by: syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-can/699466e4.a70a0220.2c38d7.00ff.GAE@google.com/
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260218-bcm_spin_lock_init-v1-1-592634c8a5b5@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/mt6363-regulator.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/can/bcm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/regulator/mt6363-regulator.c b/drivers/regulator/mt6363-regulator.c
-index 03af5fa536007..0aebcbda0a196 100644
---- a/drivers/regulator/mt6363-regulator.c
-+++ b/drivers/regulator/mt6363-regulator.c
-@@ -899,10 +899,8 @@ static int mt6363_regulator_probe(struct platform_device *pdev)
- 					     "Failed to map IRQ%d\n", info->hwirq);
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index 7eba8ae01a5b1..ba65e6e8a923a 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1170,6 +1170,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		if (!op)
+ 			return -ENOMEM;
  
- 		ret = devm_add_action_or_reset(dev, mt6363_irq_remove, &info->virq);
--		if (ret) {
--			irq_dispose_mapping(info->hwirq);
-+		if (ret)
- 			return ret;
--		}
- 
- 		config.driver_data = info;
- 		INIT_DELAYED_WORK(&info->oc_work, mt6363_oc_irq_enable_work);
++		spin_lock_init(&op->bcm_tx_lock);
+ 		op->can_id = msg_head->can_id;
+ 		op->nframes = msg_head->nframes;
+ 		op->cfsiz = CFSIZ(msg_head->flags);
 -- 
 2.51.0
 
