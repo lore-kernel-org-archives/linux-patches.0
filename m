@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C23C0389E1D;
-	Tue, 10 Mar 2026 11:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C705C387361;
+	Tue, 10 Mar 2026 11:29:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142171; cv=none; b=BXVThqkKXAJe/m2vjch3SREEfyEYSWhpozIVTMiJwALoTgHvBgR+bfwTIpg67fQzj33e5DOLjIbcDDJhpAq7OTHs6f+qCABWegxFHCRo+WR7JDIsqH13gIJWTei2xzLShMlHbEoxhiE/OkEGei2YazXQnVHd10RHXUtepBiMqf0=
+	t=1773142172; cv=none; b=LR1G9pmCtlcxaw5p/fSc1PF4q4JIMetAoc/7/1d9ho/+yLrvj88LHU49UauyChzscHiSU+dkFn5EP9k2pH6iVMHB0SSF+qkYAQT54pgLk44cnHNb8gxybgI/AwGnLEXGjtePBmPJ50SMB6GMNjjNINI/F6m8GB8ip4CayVah/i8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142171; c=relaxed/simple;
-	bh=rDfHZWmUhtNsK0g9YqzTNjFjqCxSBRv85lWWLCuHv5U=;
+	s=arc-20240116; t=1773142172; c=relaxed/simple;
+	bh=RjjYiFVFRpwfCGN73jvea6TUnr85kR/rVutQxAOwxPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TgZB7ATYX6H67+cnB74AlK4GkqZl/p64uGDLSWLfF0JfFNBKLT6Ju8Qm2wCiH9Sh7YvTbB6Dt+W+wR39YWPiCQTi/Y/QQWGPxyL0kcHmS253Ewf9oGmr9BfAitLFn4dFEa18eissKOIqBZFrfBrDY1m+lqI0cGh+ytI7PNa6qzY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hm571/Vl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gTtJMYr6NwtJ9zPG/OLSkszUtEJlzDTmmqRgPAggDczP0xkQ9CwvD/LLyHLG/BW/Pk/GJsbI5i7xt7xzJLqjEROECx/Ah4fkLbtNSpSHoniAdXffc6Nl9DzpNfxF8/2babAZRrdLjWylVahLF2XRqLeEI4eA1BHw7vbLZ9bsCPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rf6i4fJg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hm571/Vl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF590C2BC86;
-	Tue, 10 Mar 2026 11:29:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rf6i4fJg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C08C2BC86;
+	Tue, 10 Mar 2026 11:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142171;
-	bh=rDfHZWmUhtNsK0g9YqzTNjFjqCxSBRv85lWWLCuHv5U=;
+	s=k20201202; t=1773142172;
+	bh=RjjYiFVFRpwfCGN73jvea6TUnr85kR/rVutQxAOwxPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hm571/VlOmKSYoU7wPiXNt9lxOuQtdSkwk9yU0wKO5QbshLtDGZsbxOBG3ZnHJs62
-	 sWDZxteGuzrOHyvdRSGTXFPNpAELLBc0MCCqRaVbgp4B1idfn9comJdlyXV7qef51I
-	 3PJg7sVbuemay5Kk8gV/XOChOS2Dcge/JFB+5a01MecMzLLmmgoznL3xPJjdaDqglj
-	 DrjdBVTB2iCS7INoc45a6XSntV8a3oej+qUnRimP6WjsD0CeS/ePyAt0b/Bmiy4yKb
-	 wV23WdxgUjw+OUgyQxqJr7Gz25cw39YAFAM5ldomN+oCLBXmtJ1+GwGS6NB21MVtbG
-	 fiFD201PU/ukA==
+	b=rf6i4fJgsxinPLSGzVS7JV8aFeYkeay9GNVLx9eQqldaLs4I/4JrCRs4SJg0UwxAY
+	 kEcAI7SJfDctAGS8p8KlTF/E3Dva+VN6l6eEnyCrR1he/myuL+sdEg8roW+cnXA+rr
+	 l1H3PsNsfeoNbrKur35vjpci8jf7I3oUxMuE2VGhH1T2dgL3RN1lPfzQdenmlN+1fD
+	 N6h7jR0UF14F39F9/ZNMNRECAUA2zg5nGOBAAHC8rcOSZAAlX4PQKyQfgwQScz1ZOA
+	 ze295KLn4Me5CXyKGYO3I8m0I+Xlmu8vIs4P6IjXup4IpQsVuB359dfA8mNJnrLYUM
+	 EZsPB2kyGHW1A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Thomson <dt@linux-mail.net>,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
+Cc: Larysa Zaremba <larysa.zaremba@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 260/314] xen/acpi-processor: fix _CST detection using undersized evaluation buffer
-Date: Tue, 10 Mar 2026 07:18:39 -0400
-Message-ID: <57282f5bb47cef00c17a9d098561eef6f8c201cb.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 261/314] ice: fix adding AQ LLDP filter for VF
+Date: Tue, 10 Mar 2026 07:18:40 -0400
+Message-ID: <30d1cf08ea61583d1d925510e8b8bcc560b5f876.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,62 +50,47 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: David Thomson <dt@linux-mail.net>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 8b57227d59a86fc06d4f09de08f98133680f2cae ]
+[ Upstream commit eef33aa44935d001747ca97703c08dd6f9031162 ]
 
-read_acpi_id() attempts to evaluate _CST using a stack buffer of
-sizeof(union acpi_object) (48 bytes), but _CST returns a nested Package
-of sub-Packages (one per C-state, each containing a register descriptor,
-type, latency, and power) requiring hundreds of bytes. The evaluation
-always fails with AE_BUFFER_OVERFLOW.
+The referenced commit came from a misunderstanding of the FW LLDP filter
+AQ (Admin Queue) command due to the error in the internal documentation.
+Contrary to the assumptions in the original commit, VFs can be added and
+deleted from this filter without any problems. Introduced dev_info message
+proved to be useful, so reverting the whole commit does not make sense.
 
-On modern systems using FFH/MWAIT entry (where pblk is zero), this
-causes the function to return before setting the acpi_id_cst_present
-bit. In check_acpi_ids(), flags.power is then zero for all Phase 2 CPUs
-(physical CPUs beyond dom0's vCPU count), so push_cxx_to_hypervisor() is
-never called for them.
+Without this fix, trusted VFs do not receive LLDP traffic, if there is an
+AQ LLDP filter on PF. When trusted VF attempts to add an LLDP multicast
+MAC address, the following message can be seen in dmesg on host:
 
-On a system with dom0_max_vcpus=2 and 8 physical CPUs, only PCPUs 0-1
-receive C-state data. PCPUs 2-7 are stuck in C0/C1 idle, unable to
-enter C2/C3. This costs measurable wall power (4W observed on an Intel
-Core Ultra 7 265K with Xen 4.20).
+ice 0000:33:00.0: Failed to add Rx LLDP rule on VSI 20 error: -95
 
-The function never uses the _CST return value -- it only needs to know
-whether _CST exists. Replace the broken acpi_evaluate_object() call with
-acpi_has_method(), which correctly detects _CST presence using
-acpi_get_handle() without any buffer allocation. This brings C-state
-detection to parity with the P-state path, which already works correctly
-for Phase 2 CPUs.
+Revert checking VSI type when adding LLDP filter through AQ.
 
-Fixes: 59a568029181 ("xen/acpi-processor: C and P-state driver that uploads said data to hypervisor.")
-Signed-off-by: David Thomson <dt@linux-mail.net>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260224093707.19679-1-dt@linux-mail.net>
+Fixes: 4d5a1c4e6d49 ("ice: do not add LLDP-specific filter if not necessary")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xen-acpi-processor.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xen-acpi-processor.c b/drivers/xen/xen-acpi-processor.c
-index 2967039398463..520756159d3d3 100644
---- a/drivers/xen/xen-acpi-processor.c
-+++ b/drivers/xen/xen-acpi-processor.c
-@@ -379,11 +379,8 @@ read_acpi_id(acpi_handle handle, u32 lvl, void *context, void **rv)
- 			 acpi_psd[acpi_id].domain);
- 	}
+diff --git a/drivers/net/ethernet/intel/ice/ice_common.c b/drivers/net/ethernet/intel/ice/ice_common.c
+index eb148c8d9e083..95160c8dc1bba 100644
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -6428,7 +6428,7 @@ int ice_lldp_fltr_add_remove(struct ice_hw *hw, struct ice_vsi *vsi, bool add)
+ 	struct ice_aqc_lldp_filter_ctrl *cmd;
+ 	struct libie_aq_desc desc;
  
--	status = acpi_evaluate_object(handle, "_CST", NULL, &buffer);
--	if (ACPI_FAILURE(status)) {
--		if (!pblk)
--			return AE_OK;
--	}
-+	if (!pblk && !acpi_has_method(handle, "_CST"))
-+		return AE_OK;
- 	/* .. and it has a C-state */
- 	__set_bit(acpi_id, acpi_id_cst_present);
+-	if (vsi->type != ICE_VSI_PF || !ice_fw_supports_lldp_fltr_ctrl(hw))
++	if (!ice_fw_supports_lldp_fltr_ctrl(hw))
+ 		return -EOPNOTSUPP;
  
+ 	cmd = libie_aq_raw(&desc);
 -- 
 2.51.0
 
