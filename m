@@ -1,45 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4871743CEF0;
-	Tue, 10 Mar 2026 09:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D98C43DA23;
+	Tue, 10 Mar 2026 09:02:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133320; cv=none; b=DAOi+K3nFygHrCpIqDigJQ9d8vJRwCgz/wemp2Wy1q4wlD7MnMmPikRFo8gIIJbB2arQvzAA2FN/ulrUrbTupbiWgR7FwxEeoBeHIlzoHF6THD+WyeywmhtgEYJ1U7SlnPp/MQoqnUucL4W+M3InFPQfzP8XLaB+NICEX666xlQ=
+	t=1773133321; cv=none; b=KGmVgpl6/Avxq3SsAHt/RsDOqrNiQGn+SYH84mTwjPNMnKCO+SaFyBJDOdmqh8tL+qEc2ZnjRR2Us/s0MkFBN31PdCJ+eJuNjRb4bFr7Z5boRsLma/9/YCJsf3+eayJLFVXLe9jhbcmq1YqXSATD2OF1ohJNRBmGo6y3Gh//lgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133320; c=relaxed/simple;
-	bh=ZYzDc+vI/hMkWC6CX1qm1YhK+pw7uB7KPtXG2eIbW0g=;
+	s=arc-20240116; t=1773133321; c=relaxed/simple;
+	bh=hIiKjgB64+bYm08DmkXcfVhwblnyoTwHXHdIw19+yGw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=kqlQ4VJv5J8VTO5dZkXgV1B5A2C86PWguVdHJST+wc9o8KLmtiJkdieXh/NWUvAh3EtQFpwFjUJBH4ZWPxyNvOE5N3831/NuFbFSlj0J8ZdCxZVDn2ysEOU4yDlkYzPstJJFLYDkB/PEMwiR/2EiQ4cfKBcw4x9BkyqDeSWb0lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DHReEEsd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=s4YdFziKYKS2QxRtyQLqXCnw3NrPm/4t6Sgqer1q+LFkrakT0qrvEJkZH5geqIzYwrO4H/5ljc4No+ZWsC3vL5smglu7KMYniEyYyTU64721ckLN3KW2kZ+X6aKpdkGcr46zW5u4P1UsIHn1tjYY+QQozu5BdwGqoAF0I+V2+Tg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BceI+gHw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DHReEEsd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5133C2BC87;
-	Tue, 10 Mar 2026 09:01:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BceI+gHw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48912C2BCAF;
+	Tue, 10 Mar 2026 09:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133319;
-	bh=ZYzDc+vI/hMkWC6CX1qm1YhK+pw7uB7KPtXG2eIbW0g=;
+	s=k20201202; t=1773133321;
+	bh=hIiKjgB64+bYm08DmkXcfVhwblnyoTwHXHdIw19+yGw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHReEEsdXqrkbsZ5oUAG+tr+Y9qoSEL67c1z9+EbFovv+wFXqt77asim+Ev1BxiFR
-	 ePyiX3YV+wOsQ0RBGysQv1J+O6pzhCeJsuOTLwN7xXNv6St+/mmCosLz1oKeBcTteW
-	 UU/5PmaE3y7KEiMEipvGygcAeQVH1Yt8xKB1qQD0hktEptKAJcTjxb+JQOWNrh3cV0
-	 0n6MnQRc+8wwKJK9NC7u6QIr1P8up6yQwroag777aWZS3NgSZ/yDB/6n/RuOgh2/RT
-	 pR5VgK5Js1Y33aY17utipHrc4HZSO6LE5Wybf8PnbmtLLCeM888JI+bv0HGOsRqIop
-	 ZeVJyH2IlAYnQ==
+	b=BceI+gHwUVuG6aypgwH/CVIKlMI66ETymTPCufomDvpyc7ZNBQfBrj2r1WxyrRmRB
+	 zxeqWzFV/NqS/cFCLXwfeH9iQcW0xRuEvd0B/Vyonsap6Y9lLG5gJHfQf/jcY6K0hJ
+	 BtpkP8B1ffif5OAhET6hr5P5MuVumGIV/WrAoKGhP4UgiftfDkWbDB6waRUFSZDiXk
+	 oCvELLVuo9lg/oPDr1w/lIwUA6gU1GrvBy5YrMNExgWMmVxi1y3sWQhps+xQlkbNlL
+	 pxZS/wZC3qLvHc1+wiW2ir/SEXcXlvXoeGWmlDsyJtuqFdRFXuRp4Hh+5nQDqIBl4t
+	 oEU8z7UOFfUZQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nilay Shroff <nilay@linux.ibm.com>,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Ming Lei <ming.lei@redhat.com>,
-	Yu Kuai <yukuai@fnnas.com>,
-	Jens Axboe <axboe@kernel.dk>,
+Cc: Antheas Kapenekakis <lkml@antheas.dev>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-block@vger.kernel.org,
+	derekjohn.clark@gmail.com,
+	samsagax@gmail.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] block: break pcpu_alloc_mutex dependency on freeze_lock
-Date: Tue, 10 Mar 2026 05:01:09 -0400
-Message-ID: <20260310090145.2709021-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] platform/x86: oxpec: Add support for OneXPlayer X1z
+Date: Tue, 10 Mar 2026 05:01:10 -0400
+Message-ID: <20260310090145.2709021-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -49,242 +49,123 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nilay Shroff <nilay@linux.ibm.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit 539d1b47e935e8384977dd7e5cec370c08b7a644 ]
+[ Upstream commit 4049c46edb5d44c0de045f6f504371705dd603dd ]
 
-While nr_hw_update allocates tagset tags it acquires ->pcpu_alloc_mutex
-after ->freeze_lock is acquired or queue is frozen. This potentially
-creates a circular dependency involving ->fs_reclaim if reclaim is
-triggered simultaneously in a code path which first acquires ->pcpu_
-alloc_mutex. As the queue is already frozen while nr_hw_queue update
-allocates tagsets, the reclaim can't forward progress and thus it could
-cause a potential deadlock as reported in lockdep splat[1].
+X1z is a variant of OneXPlayer X1 A with 8840U. It seems that only one
+user has this one. Add a quirk for it to the oxpec driver.
 
-Fix this by pre-allocating tagset tags before we freeze queue during
-nr_hw_queue update. Later the allocated tagset tags could be safely
-installed and used after queue is frozen.
-
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Closes: https://lore.kernel.org/all/CAHj4cs8F=OV9s3La2kEQ34YndgfZP-B5PHS4Z8_b9euKG6J4mw@mail.gmail.com/ [1]
-Signed-off-by: Nilay Shroff <nilay@linux.ibm.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
-Tested-by: Yi Zhang <yi.zhang@redhat.com>
-Reviewed-by: Yu Kuai <yukuai@fnnas.com>
-[axboe: fix brace style issue]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Link: https://patch.msgid.link/20260223183004.2696892-3-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me write the analysis.
-
 ## Analysis
 
-### What the commit fixes
+### What the commit does
+This commit adds a single DMI match entry for the "OneXPlayer X1z"
+handheld gaming device to the `oxpec` driver's DMI table. The X1z is
+described as a variant of the existing X1 A with an 8840U CPU. It reuses
+the existing `oxp_x1` driver_data, identical to the already-supported X1
+A and X1 i variants.
 
-This commit fixes a **potential deadlock** in the block layer's
-`__blk_mq_update_nr_hw_queues()` path. The deadlock involves a circular
-lock dependency between:
+### Classification: Hardware Quirk / Device ID Addition
 
-1. **`freeze_lock`** (held when the queue is frozen)
-2. **`pcpu_alloc_mutex`** (acquired internally by `alloc_percpu_gfp()`
-   during tag allocation via `sbitmap_init_node()`)
-3. **`fs_reclaim`** - if memory reclaim is triggered while
-   `pcpu_alloc_mutex` is held, and the queue is frozen, forward progress
-   is blocked
+This is a textbook **device ID addition** to an existing driver — one of
+the explicitly allowed exception categories for stable backports. The
+change:
 
-The fix pre-allocates tagset tags **before** freezing the queue, then
-installs them after freeze. This breaks the circular dependency.
+- Adds 7 lines: a new `dmi_system_id` struct entry in the `dmi_table[]`
+  array
+- Uses entirely existing infrastructure (`oxp_x1` enum value already
+  defined)
+- Matches the exact same pattern as every other entry in the table
+- Zero new code paths, functions, or logic introduced
 
-### Bug severity and evidence
+### Risk Assessment
 
-- **Lockdep splat**: Reported with a concrete lockdep trace by Yi Zhang
-  (Red Hat)
-- **Tested-by**: The reporter confirmed the fix works
-- **Multiple reviews**: Ming Lei, Yu Kuai, and Jens Axboe (block layer
-  maintainer) all reviewed/signed off
-- **Block layer core path**: `blk_mq_update_nr_hw_queues()` is called by
-  many storage drivers (NVMe, SCSI, etc.) during hardware queue
-  reconfiguration
-- **Deadlock type**: Not a mere theoretical concern - lockdep actually
-  fired, indicating the lock ordering violation is real
+**Risk: Extremely low**
+- The DMI match is specific to one exact board name ("ONEXPLAYER X1z"
+  from vendor "ONE-NETBOOK")
+- It can only affect users with that exact hardware
+- It reuses the same driver_data as sibling variants (X1 A, X1 i)
+- No behavioral changes for any other hardware
 
-### Dependency analysis - CRITICAL ISSUE
+### Benefit Assessment
 
-The commit's diff is entangled with a **long chain of prerequisite
-commits** that heavily restructured `__blk_mq_update_nr_hw_queues()`:
+**Benefit: Enables hardware support**
+- Without this entry, the oxpec driver won't bind on the X1z, meaning
+  the user cannot control fan speed or other EC-managed features on
+  their device
+- The commit message notes "only one user has this one" — low population
+  but a real user with a real need
 
-| Commit | Description | First in |
-|--------|-------------|----------|
-| `596dce110b7d` | simplify elevator reattachment | v6.16-rc1 |
-| `2d8951aee844` | unfreeze queue if realloc fails | v6.16-rc1 |
-| `5989bfe6ac6b` | restore two stage elevator switch | v6.17-rc1 |
-| `04225d13aef1` | fix deadlock (sched_tags outside freeze) | v6.17-rc1
-|
-| `2d82f3bd8910` | fix lockdep warning | v6.17-rc3 |
-
-The function in **v6.12** (latest stable tree) looks completely
-different:
-- v6.12: freezes queues first, then calls
-  `blk_mq_realloc_tag_set_tags()` inside the frozen state
-- v7.0 (this commit): has batch sched allocation, restructured elevator
-  switching, new flow
-
-The **underlying bug** (allocating tags with `GFP_KERNEL` while queues
-are frozen → `pcpu_alloc_mutex` inside freeze) **exists in all stable
-kernels**. In v6.12, `blk_mq_realloc_tag_set_tags()` is called at line
-4818, well inside the freeze started at line 4803.
-
-However, this exact patch **will not apply** to any current stable tree
-without significant rework due to the restructured function flow (the
-`blk_mq_alloc_sched_ctx_batch`, `blk_mq_alloc_sched_res_batch`, and the
-new elevator switching pattern all don't exist in stable).
-
-### Scope and risk
-
-- **Files changed**: 1 (block/blk-mq.c)
-- **Lines changed**: +30/-15 (net diff), but significant structural
-  refactoring of two functions
-- **Risk**: Moderate - the core logic is sound and well-reviewed, but a
-  backport would require crafting a simpler version for the older code
+### Stable Criteria Check
+1. **Obviously correct and tested**: Yes — trivial DMI table addition,
+   reviewed by maintainer (Ilpo Järvinen)
+2. **Fixes a real bug**: Enables missing hardware support (device not
+   recognized by existing driver)
+3. **Small and contained**: 7 lines, single file, single table entry
+4. **No new features or APIs**: Reuses existing `oxp_x1` path entirely
+5. **No new code paths**: Just a match table entry
 
 ### Verification
 
-- `git show 539d1b47e935` confirmed the upstream commit exists and
-  matches
-- `git describe --contains 539d1b47e935` → v7.0-rc3 (very recent)
-- `git show v6.12:block/blk-mq.c` verified the v6.12 function structure
-  differs significantly (freeze before realloc at line 4803-4818)
-- `git describe --contains` for prerequisites confirmed they are all
-  v6.16+ or v6.17+ (not in any stable tree)
-- `git show v6.12:block/blk-mq.c | sed -n '4474,4510p'` confirmed the
-  old `blk_mq_realloc_tag_set_tags` function matches the "before"
-  version in the diff
-- The lore.kernel.org link in the commit references a real lockdep splat
-  report
-- Traced the allocation chain: `blk_mq_alloc_map_and_rqs` →
-  `sbitmap_queue_init_node` → `alloc_percpu_gfp` → `pcpu_alloc_mutex`
-  (verified via agent analysis of sbitmap.c)
-- Could NOT verify whether a simplified backport has been prepared
-  separately (unverified)
+- Verified the diff adds only a DMI table entry with no logic changes
+- Verified `oxp_x1` driver_data is already used by X1 A and X1 i entries
+  visible in the same diff context
+- Verified the commit is reviewed by the subsystem maintainer (Ilpo
+  Järvinen, Intel)
+- The driver file `drivers/platform/x86/oxpec.c` is an existing upstream
+  driver; the change only adds a device match
 
-### Decision rationale
+### Concerns
 
-This is a real deadlock fix in core block layer infrastructure, reported
-with concrete lockdep evidence, well-reviewed, and tested. The bug
-affects all stable kernels. Despite the dependency chain making the
-exact diff incompatible with current stable trees, the fix warrants
-backporting - either via this commit with its prerequisite chain, or via
-a simplified targeted backport. The deadlock involves the per-cpu
-allocator mutex and queue freeze lock, which can cause system hangs
-during NVMe/SCSI hardware reconfiguration events that are common in
-production.
+- The oxpec driver may be relatively new — if it was added after the
+  stable branch point for older LTS trees, the backport wouldn't apply
+  there. But for any stable tree that already contains the oxpec driver
+  with `oxp_x1` support, this is a clean, trivial addition.
+- No dependencies on other patches needed.
+
+This is a minimal, zero-risk hardware quirk addition that enables an
+existing driver to recognize a new device variant. It is the classic
+example of what the stable kernel exception rules were designed to
+accommodate.
 
 **YES**
 
- block/blk-mq.c | 45 ++++++++++++++++++++++++++++++---------------
- 1 file changed, 30 insertions(+), 15 deletions(-)
+ drivers/platform/x86/oxpec.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/block/blk-mq.c b/block/blk-mq.c
-index 968699277c3d5..3b58dd5876114 100644
---- a/block/blk-mq.c
-+++ b/block/blk-mq.c
-@@ -4778,38 +4778,45 @@ static void blk_mq_update_queue_map(struct blk_mq_tag_set *set)
- 	}
- }
- 
--static int blk_mq_realloc_tag_set_tags(struct blk_mq_tag_set *set,
--				       int new_nr_hw_queues)
-+static struct blk_mq_tags **blk_mq_prealloc_tag_set_tags(
-+				struct blk_mq_tag_set *set,
-+				int new_nr_hw_queues)
- {
- 	struct blk_mq_tags **new_tags;
- 	int i;
- 
- 	if (set->nr_hw_queues >= new_nr_hw_queues)
--		goto done;
-+		return NULL;
- 
- 	new_tags = kcalloc_node(new_nr_hw_queues, sizeof(struct blk_mq_tags *),
- 				GFP_KERNEL, set->numa_node);
- 	if (!new_tags)
--		return -ENOMEM;
-+		return ERR_PTR(-ENOMEM);
- 
- 	if (set->tags)
- 		memcpy(new_tags, set->tags, set->nr_hw_queues *
- 		       sizeof(*set->tags));
--	kfree(set->tags);
--	set->tags = new_tags;
- 
- 	for (i = set->nr_hw_queues; i < new_nr_hw_queues; i++) {
--		if (!__blk_mq_alloc_map_and_rqs(set, i)) {
--			while (--i >= set->nr_hw_queues)
--				__blk_mq_free_map_and_rqs(set, i);
--			return -ENOMEM;
-+		if (blk_mq_is_shared_tags(set->flags)) {
-+			new_tags[i] = set->shared_tags;
-+		} else {
-+			new_tags[i] = blk_mq_alloc_map_and_rqs(set, i,
-+					set->queue_depth);
-+			if (!new_tags[i])
-+				goto out_unwind;
- 		}
- 		cond_resched();
- 	}
- 
--done:
--	set->nr_hw_queues = new_nr_hw_queues;
--	return 0;
-+	return new_tags;
-+out_unwind:
-+	while (--i >= set->nr_hw_queues) {
-+		if (!blk_mq_is_shared_tags(set->flags))
-+			blk_mq_free_map_and_rqs(set, new_tags[i], i);
-+	}
-+	kfree(new_tags);
-+	return ERR_PTR(-ENOMEM);
- }
- 
- /*
-@@ -5093,6 +5100,7 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 	unsigned int memflags;
- 	int i;
- 	struct xarray elv_tbl;
-+	struct blk_mq_tags **new_tags;
- 	bool queues_frozen = false;
- 
- 	lockdep_assert_held(&set->tag_list_lock);
-@@ -5127,11 +5135,18 @@ static void __blk_mq_update_nr_hw_queues(struct blk_mq_tag_set *set,
- 		if (blk_mq_elv_switch_none(q, &elv_tbl))
- 			goto switch_back;
- 
-+	new_tags = blk_mq_prealloc_tag_set_tags(set, nr_hw_queues);
-+	if (IS_ERR(new_tags))
-+		goto switch_back;
-+
- 	list_for_each_entry(q, &set->tag_list, tag_set_list)
- 		blk_mq_freeze_queue_nomemsave(q);
- 	queues_frozen = true;
--	if (blk_mq_realloc_tag_set_tags(set, nr_hw_queues) < 0)
--		goto switch_back;
-+	if (new_tags) {
-+		kfree(set->tags);
-+		set->tags = new_tags;
-+	}
-+	set->nr_hw_queues = nr_hw_queues;
- 
- fallback:
- 	blk_mq_update_queue_map(set);
+diff --git a/drivers/platform/x86/oxpec.c b/drivers/platform/x86/oxpec.c
+index 59d6f9d9a9052..623d9a452c469 100644
+--- a/drivers/platform/x86/oxpec.c
++++ b/drivers/platform/x86/oxpec.c
+@@ -219,6 +219,13 @@ static const struct dmi_system_id dmi_table[] = {
+ 		},
+ 		.driver_data = (void *)oxp_mini_amd_pro,
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
++			DMI_EXACT_MATCH(DMI_BOARD_NAME, "ONEXPLAYER X1z"),
++		},
++		.driver_data = (void *)oxp_x1,
++	},
+ 	{
+ 		.matches = {
+ 			DMI_MATCH(DMI_BOARD_VENDOR, "ONE-NETBOOK"),
 -- 
 2.51.0
 
