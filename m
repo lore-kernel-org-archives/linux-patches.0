@@ -1,45 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B260C4508F2;
-	Tue, 10 Mar 2026 09:02:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34DA4534A2;
+	Tue, 10 Mar 2026 09:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133341; cv=none; b=hfxx4p7oogXBNFDL5sPHOKjyGumNAiEgeCqIZB4cldsVbXJrX9zZeNFoQcT9dJ2y1pz8JrN4SEZIf0mHBZCNqKO8ApdNLVRWhu1+TPq1fYIY608EK7vQzrOhM91KpsekZd2XsfeTODLDj1DKdPwd0h7o7e3+4yFRO6SECs7zgDo=
+	t=1773133343; cv=none; b=ZSIadmyru+A9CpnwfGuoF0ObO6/NTG9Tma4pEowlsHXnXIsdVaH28l36plIRa+aXZYY01+ptpQy7PbAG5X0AVFLiyYL29CCagePKTZ0Wo+gmRj3z41ZYx3BRR2dyNHAGTb5RxCC9wOQfGQrkitFAwKBvgjczTwXFyKZ2FybqnhY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133341; c=relaxed/simple;
-	bh=oTCcKoiBg4Ndl4dFHqHelPZE7Fdxyv/0WoL9zpscZ78=;
+	s=arc-20240116; t=1773133343; c=relaxed/simple;
+	bh=0X3TJTI4Em9E0FN9ZgAJt3kvFeYp/2AMj6SxzZdNyqU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PihLoPU7Y7Qr0MngTIUIzO1IUunC0htpYSOfFJruJffxRMgMROtgA031yyr8Q63SqSKf5wapxLNIeklWFDtzXQDuu8eMl4TArXNtz+b9IsSl/pLYKv5aAZaSxpiCnuml2m25Y6anAy400QQgj85lO6NKtfixt/Lcz2sKulUVacg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=W8P//Xyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fUHy+H1UfnlSPTpuOIZ3484h2HB/YK4ZSln77MM2GX2kbiGelmy15TJ2Xt9WnTjI9mGdI//jP+3k+GFs6o6vnylYd0MAg7JEc8DC4HfrJ7e4L3cO9UftFGeO2RBu02XCmrPXFlq3hmTk9ZcbQZHZ6aNuqZvGDWZmZW0sa4gfgzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HCJwjgOC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="W8P//Xyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F85C2BC9E;
-	Tue, 10 Mar 2026 09:02:20 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HCJwjgOC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3BB2C2BC86;
+	Tue, 10 Mar 2026 09:02:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133341;
-	bh=oTCcKoiBg4Ndl4dFHqHelPZE7Fdxyv/0WoL9zpscZ78=;
+	s=k20201202; t=1773133343;
+	bh=0X3TJTI4Em9E0FN9ZgAJt3kvFeYp/2AMj6SxzZdNyqU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W8P//Xyvp1IQk7GVRhDLfxjC/otAxwJJOB8efJ6W9eZL0kf2o/Hupgp/cy6lo8zAv
-	 5NE0FgWVbiFJZzJ4yMvP7st/cBtM50nk5bSK07iG3e2euVHoEwBEEO3zi/WnmKUPKD
-	 K9Tv9NGrAiFC//58rNfmBZozOIoF8PodEUz/2OjB5WtGPOfPPXkFK6tGBaCQQHFuiU
-	 uZpU/ixVXzQkrhJ0bKEODQtuPvMizeZWpTB+lwFOkswdlsHefJCFgX+ftlsEMEakwh
-	 ccNhlR4KkSCUKiRU3KCMgljUmfEMBZeGq9Le2smi4+jAcPBMZcNTN1oqe7rzrL7IRp
-	 hS1Pwlw5azf4g==
+	b=HCJwjgOCzvpl7dFzqViTfQbfVltDICuTDWVTR686Mo1ovhgr0jOjxxqZ+TRD/146R
+	 4LZMquPNL3YdalCHdDH+EOsfSIfxJhPHU5VCwvHL63FTDcRb+nICjDObNmnsOlNNfq
+	 ToLjVHSfAin1gHT9fyHhQa5Wf/8LNIiCn5A+MyufLyddfPM3IiiXvs7JnOivd74i86
+	 1BxNqi/c0Ub9CYEoKNf3x6ZDX7evTZWNUulazVuJZ40gD2VkAUIXQwRpiU8+W4C3BB
+	 oeC1bBLRkKX4hyFpt5vF+kTl0g3sH5WOS1syHAcrAgtCMNVWvBogpg2O8zbQ1q1PXR
+	 RyDtrxAGPwxcg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Leif Skunberg <diamondback@cohunt.app>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Oliver Freyermuth <o.freyermuth@googlemail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	alexhung@gmail.com,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	cezary.rojewski@intel.com,
+	liam.r.girdwood@linux.intel.com,
+	peter.ujfalusi@linux.intel.com,
+	yung-chuan.liao@linux.intel.com,
+	ranjani.sridharan@linux.intel.com,
+	kai.vehmanen@linux.intel.com,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] platform/x86: intel-hid: Enable 5-button array on ThinkPad X1 Fold 16 Gen 1
-Date: Tue, 10 Mar 2026 05:01:24 -0400
-Message-ID: <20260310090145.2709021-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] ASoC: Intel: sof_sdw: Add quirk for Alienware Area 51 (2025) 0CCD SKU
+Date: Tue, 10 Mar 2026 05:01:25 -0400
+Message-ID: <20260310090145.2709021-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -49,29 +54,24 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leif Skunberg <diamondback@cohunt.app>
+From: Oliver Freyermuth <o.freyermuth@googlemail.com>
 
-[ Upstream commit b38d478dad79e61e8a65931021bdfd7a71741212 ]
+[ Upstream commit 70eddf6a0a3fc6d3ab6f77251676da97cc7f12ae ]
 
-The Lenovo ThinkPad X1 Fold 16 Gen 1 has physical volume up/down
-buttons that are handled through the intel-hid 5-button array
-interface. The firmware does not advertise 5-button array support via
-HEBC, so the driver relies on a DMI allowlist to enable it.
+This adds the necessary quirk for the Alienware 18 Area 51 (2025).
+Complements commit 1b03391d073d ("ASoC: Intel: sof_sdw: Add quirk
+for Alienware Area 51 (2025) 0CCC SKU").
 
-Add the ThinkPad X1 Fold 16 Gen 1 to the button_array_table so the
-volume buttons work out of the box.
-
-Signed-off-by: Leif Skunberg <diamondback@cohunt.app>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260210085625.34380-1-diamondback@cohunt.app
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
+Tested-by: Oliver Freyermuth <o.freyermuth@googlemail.com>
+Link: https://patch.msgid.link/20260224190224.30630-1-o.freyermuth@googlemail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -80,98 +80,90 @@ LLM Generated explanations, may be completely bogus:
 ## Analysis
 
 ### What the commit does
+This adds a single DMI quirk entry for the Alienware Area 51 (2025) with
+SKU "0CCD" to the SOF SoundWire quirk table. It enables
+`SOC_SDW_CODEC_SPKR` for this specific hardware, which is needed for the
+speaker codec to function. The commit explicitly references a companion
+commit (1b03391d073d) that added the same quirk for the "0CCC" SKU of
+the same laptop model.
 
-This commit adds a single DMI table entry for the Lenovo ThinkPad X1
-Fold 16 Gen 1 to the `button_array_table` in
-`drivers/platform/x86/intel/hid.c`. This enables the intel-hid 5-button
-array interface for physical volume up/down buttons on this specific
-laptop, whose firmware does not advertise 5-button array support via the
-HEBC ACPI method.
+### Classification: Hardware Quirk Addition
+This falls squarely into the **"QUIRKS and WORKAROUNDS"** exception
+category for stable backports:
+- It's a trivial addition of a DMI match entry to an existing quirk
+  table
+- The driver and quirk infrastructure already exist in stable
+- Without this quirk, audio speakers won't work on this specific laptop
+  SKU
+- The change is 8 lines of a new table entry, identical in structure to
+  dozens of existing entries
 
-### Classification: Hardware Quirk/Workaround
+### Code change analysis
+The diff adds one new `dmi_system_id` struct to the
+`sof_sdw_quirk_table[]` array, matching:
+- Vendor: "Alienware"
+- Product SKU: "0CCD" (exact match)
+- Quirk: `SOC_SDW_CODEC_SPKR`
 
-This is a textbook DMI allowlist addition — one of the explicitly
-allowed exception categories for stable backporting. The pattern is
-identical to the existing entries for HP Spectre x2, ThinkPad X1 Tablet
-Gen 1/2, Microsoft Surface Go 3/4, etc.
-
-### Stable kernel criteria assessment
-
-- **Obviously correct and tested**: Yes. The 7-line addition follows the
-  exact same `DMI_MATCH(DMI_SYS_VENDOR, "LENOVO")` +
-  `DMI_MATCH(DMI_PRODUCT_FAMILY, ...)` pattern used by the two existing
-  Lenovo entries directly above it.
-- **Fixes a real bug**: Yes. Volume buttons are non-functional without
-  this entry because firmware doesn't advertise the capability.
-- **Small and contained**: Yes. 7 lines added to a single DMI table in
-  one file. No logic changes whatsoever.
-- **No new features**: Correct. This enables an existing driver
-  interface on specific hardware — an allowed exception.
-- **No dependencies**: The `button_array_table` and its usage have been
-  in the driver for years. No prerequisite commits needed.
+This is identical in structure to the immediately preceding entry for
+SKU "0CCC" and many other Dell/Alienware entries in the same table.
 
 ### Risk assessment
+- **Risk: Extremely low** — The entry only matches one specific DMI SKU,
+  so it cannot affect any other hardware
+- **Scope: Minimal** — 8 lines added to a data table, no logic changes
+- **Tested: Yes** — The commit has a Tested-by tag from the
+  author/reporter
+- **Benefit: High for affected users** — Without this, speakers don't
+  work on this laptop
 
-**Extremely low risk.** DMI matching is device-specific — this entry
-only activates on systems where `DMI_SYS_VENDOR == "LENOVO"` AND
-`DMI_PRODUCT_FAMILY == "ThinkPad X1 Fold 16 Gen 1"`. It cannot affect
-any other hardware. The worst-case scenario on a misidentified system
-would be the 5-button array being enabled unnecessarily, which is
-benign.
-
-### Review quality
-
-The patch has two `Reviewed-by` tags from Hans de Goede (former
-platform/x86 co-maintainer) and Ilpo Järvinen (current platform/x86
-maintainer who also committed it). This is strong endorsement.
+### Stable criteria
+- Obviously correct: Yes (copy of adjacent entry with different SKU)
+- Fixes real bug: Yes (no audio output from speakers on this hardware)
+- Small and contained: Yes (8-line table entry addition)
+- No new features: Correct (enables existing driver functionality on new
+  hardware)
 
 ### Verification
+- The diff shows the new entry is structurally identical to the adjacent
+  0CCC SKU entry, confirming it's a straightforward quirk addition
+- The commit message references companion commit 1b03391d073d for the
+  0CCC SKU, establishing precedent
+- The Tested-by tag from the submitter confirms the fix works on real
+  hardware
+- The change only touches the `sof_sdw_quirk_table[]` DMI table in
+  `sound/soc/intel/boards/sof_sdw.c`, no logic changes
+- The `SOC_SDW_CODEC_SPKR` quirk value is already used by many other
+  entries in the same table, so it's well-established functionality
 
-- Verified the diff adds only a DMI table entry with no logic changes —
-  confirmed by reading the patch.
-- Verified the new entry follows the identical pattern of existing
-  entries (DMI_SYS_VENDOR + DMI_PRODUCT_FAMILY matching) — confirmed
-  from the surrounding context in the diff.
-- Verified this is a DMI allowlist (not a blocklist) used to enable
-  5-button array support — confirmed from the commit message and table
-  name `button_array_table`.
-- Verified reviewers Hans de Goede and Ilpo Järvinen are established
-  platform/x86 maintainers — this is well-known in the kernel community.
-- The file `drivers/platform/x86/intel/hid.c` and the
-  `button_array_table` have existed in the kernel for years, so this
-  applies to all active stable trees.
-
-### Conclusion
-
-This is a minimal, zero-risk hardware quirk addition that makes volume
-buttons work on a specific Lenovo laptop. It meets all stable kernel
-criteria and falls into the explicitly allowed "hardware
-quirks/workarounds" category. Two maintainer reviews provide confidence
-in correctness.
+This is a textbook stable backport candidate — a hardware quirk that
+makes speakers work on a specific laptop with zero risk to any other
+system.
 
 **YES**
 
- drivers/platform/x86/intel/hid.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/intel/boards/sof_sdw.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
-index 5b475a09645a3..f2b309f6e458a 100644
---- a/drivers/platform/x86/intel/hid.c
-+++ b/drivers/platform/x86/intel/hid.c
-@@ -135,6 +135,13 @@ static const struct dmi_system_id button_array_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Tablet Gen 2"),
+diff --git a/sound/soc/intel/boards/sof_sdw.c b/sound/soc/intel/boards/sof_sdw.c
+index 50b838be24e95..0186c281296ec 100644
+--- a/sound/soc/intel/boards/sof_sdw.c
++++ b/sound/soc/intel/boards/sof_sdw.c
+@@ -763,6 +763,14 @@ static const struct dmi_system_id sof_sdw_quirk_table[] = {
  		},
+ 		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
  	},
 +	{
-+		.ident = "Lenovo ThinkPad X1 Fold 16 Gen 1",
++		.callback = sof_sdw_quirk_cb,
 +		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_FAMILY, "ThinkPad X1 Fold 16 Gen 1"),
++			DMI_MATCH(DMI_SYS_VENDOR, "Alienware"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_SKU, "0CCD")
 +		},
++		.driver_data = (void *)(SOC_SDW_CODEC_SPKR),
 +	},
+ 	/* Pantherlake devices*/
  	{
- 		.ident = "Microsoft Surface Go 3",
- 		.matches = {
+ 		.callback = sof_sdw_quirk_cb,
 -- 
 2.51.0
 
