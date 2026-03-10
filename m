@@ -1,42 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62BC335AC23;
-	Tue, 10 Mar 2026 11:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52439381AF8;
+	Tue, 10 Mar 2026 11:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141158; cv=none; b=fzCf1OUJO7I1/cXyMwBExXH8zAIFgFB8/+/vZMoESmftmx5YO0Bv15mbcI5iMEFpWQbgKYTNdZ3Mpmw6KpnQ/FT1jbafqv6hDPPeaZwPbFXUCdHywOEEMjUHl+Cfqu02Ia2qnZd9cGBW23BgChQYovTbnoQXNxXRL9PPIySdex8=
+	t=1773141159; cv=none; b=eQv5S4mRlJVcHMYZhDAsFCAV1rEBV5xp4mIRohj8bYObpMs83xxMzsjUT/Y1MGK8ZsDAeabRNDi+PiSSjAhKku9d8I5Hbw+XTAPNJOF0uaZVXtaevV3NPBi1OogtzoHRnbRTbDP1j2wOPTmmK+mTbg4JZItAQw+gw4+sAL216XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141158; c=relaxed/simple;
-	bh=OWvTx4/PvWc5ogPJNi8o7sspVkozdK9vb5Mq0QlwdgQ=;
+	s=arc-20240116; t=1773141159; c=relaxed/simple;
+	bh=nk8TAKk5/BoHlxv/PUrEhk8hUKEgzQjKNs7gtU5shjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IlNge2V7tgZTKpiVlFFt5y3Fk5Kp2+W0K31YlXpWoND2ctfuYao3ZxVYpdIWhIR0b9YX8LPrsqHpyROzeMPQs9at2ucfLrcyQjCAIZS/7kuYfWYoNrwc9l25TAmUBZsNb9uBXyEkMbZUfFSQqdavC3KFOkpGOnzHxFF9Qvbykk8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jBdDoBjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k80yIWUgpaa+6iS3zWz8Eqk2qUwi9hLuKKDM1nHKZjDcfF/Fd1OnY/d0qhh5sVqzL9a9r653PsFdZmiLV37utzXlRTOZ55cBbVdxUVEAxliRCUCkFgRSOWY8sb2Yq+iy4ottpSwBQckXzSgt34hCum243DLYrxePBr15GrxodnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ikftFKTF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jBdDoBjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F355C19423;
-	Tue, 10 Mar 2026 11:12:37 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ikftFKTF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A1EC2BC86;
+	Tue, 10 Mar 2026 11:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141158;
-	bh=OWvTx4/PvWc5ogPJNi8o7sspVkozdK9vb5Mq0QlwdgQ=;
+	s=k20201202; t=1773141159;
+	bh=nk8TAKk5/BoHlxv/PUrEhk8hUKEgzQjKNs7gtU5shjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jBdDoBjgL/meLkA4Gd2sC7VBf2xaabaWT6GzCWWaq1GT4ImJKEiIuGKjNt+11bDCf
-	 3iF7UVbky4lD7SdLZ7oDsDcVEKo25/zI1AYs5iQZVHNsp7GsSULQ5yFopu+vDpn1in
-	 5l5oT9bvTncdRKC/mTrYz1WQPM4wckpsnWlkDrzxf2yqm66xjlfnjn/7sDlAGGu/lR
-	 dw7xEm668zaEEVBxHUXk0r4RE3AzVOhJoPFEFiuFNZgkbXU0rtVxLvKKlA70CYCXPD
-	 Oz4cXO/B4jzl3lDsRzmSGAjXp7wn55PWzPX3oK/K35ijg4NCh3Sqnoc/HJyFeLYbUi
-	 +WzkHN8FFrRdQ==
+	b=ikftFKTFpUf9kopJryqXBruGI1obMHLimfa6dzXcX7eqIOaUAaI2dizV8VJS1xS1d
+	 NuIr5UbGs8tEsTNHWIiOuJGf9R2k4lMpx+qsZa3uSPMoUWuYwS+i80uIUdp9FO/9nw
+	 KXa/T5+l9Ih/uetubHNXIeCrVwyC8hqLkDtd69hJqVe2xMYPnsZjqrO66rBtyEkS89
+	 GtbWrm1PvzXwiS0M2ryMy/R2Bl0MjXHZ3Sk4Ab2BYpi9fAnYYqqV/tfwFnnRXFo70R
+	 /v6siSZRn4IRvC1qpspO+3ewHnNckInEKupzcTFcfVQI90BX/Vya5RgtNy3HJoL0mr
+	 Eu02YSIWIHbBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Junxiao Bi <junxiao.bi@oracle.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Bart Van Assche <bvanassche@acm.org>,
+Cc: Alexey Charkov <alchark@flipper.net>,
+	Bean Huo <beanhuo@micron.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 160/311] scsi: core: Fix refcount leak for tagset_refcnt
-Date: Tue, 10 Mar 2026 07:03:27 -0400
-Message-ID: <b0d2686e0ee2db403abdcbccbadf6b0804ee12b9.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 161/311] scsi: ufs: core: Fix RPMB region size detection for UFS 2.2
+Date: Tue, 10 Mar 2026 07:03:28 -0400
+Message-ID: <9edf1af8edfad6aa706eb34a505535f1a3c1fe23.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,51 +49,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Junxiao Bi <junxiao.bi@oracle.com>
+From: Alexey Charkov <alchark@flipper.net>
 
-commit 1ac22c8eae81366101597d48360718dff9b9d980 upstream.
+commit 2e6b5cd6a4b37a95b78cf8c39a979b58c915c8ed upstream.
 
-This leak will cause a hang when tearing down the SCSI host. For example,
-iscsid hangs with the following call trace:
+Older UFS spec devices (2.2 and earlier) do not expose per-region RPMB
+sizes, as only one RPMB region is supported. In such cases, the size of the
+single RPMB region can be deduced from the Logical Block Count and Logical
+Block Size fields in the RPMB Unit Descriptor.
 
-[130120.652718] scsi_alloc_sdev: Allocation failure during SCSI scanning, some SCSI devices might not be configured
+Add a fallback mechanism to calculate the RPMB region size from these
+fields if the device implements an older spec, so that the RPMB driver can
+work with such devices - otherwise it silently skips the whole RPMB.
 
-PID: 2528     TASK: ffff9d0408974e00  CPU: 3    COMMAND: "iscsid"
- #0 [ffffb5b9c134b9e0] __schedule at ffffffff860657d4
- #1 [ffffb5b9c134ba28] schedule at ffffffff86065c6f
- #2 [ffffb5b9c134ba40] schedule_timeout at ffffffff86069fb0
- #3 [ffffb5b9c134bab0] __wait_for_common at ffffffff8606674f
- #4 [ffffb5b9c134bb10] scsi_remove_host at ffffffff85bfe84b
- #5 [ffffb5b9c134bb30] iscsi_sw_tcp_session_destroy at ffffffffc03031c4 [iscsi_tcp]
- #6 [ffffb5b9c134bb48] iscsi_if_recv_msg at ffffffffc0292692 [scsi_transport_iscsi]
- #7 [ffffb5b9c134bb98] iscsi_if_rx at ffffffffc02929c2 [scsi_transport_iscsi]
- #8 [ffffb5b9c134bbf0] netlink_unicast at ffffffff85e551d6
- #9 [ffffb5b9c134bc38] netlink_sendmsg at ffffffff85e554ef
+        Section 14.1.4.6 (RPMB Unit Descriptor)
 
-Fixes: 8fe4ce5836e9 ("scsi: core: Fix a use-after-free")
+Link: https://www.jedec.org/system/files/docs/JESD220C-2_2.pdf
 Cc: stable@vger.kernel.org
-Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223232728.93350-1-junxiao.bi@oracle.com
+Fixes: b06b8c421485 ("scsi: ufs: core: Add OP-TEE based RPMB driver for UFS devices")
+Reviewed-by: Bean Huo <beanhuo@micron.com>
+Signed-off-by: Alexey Charkov <alchark@flipper.net>
+Link: https://patch.msgid.link/20260209-ufs-rpmb-v3-1-b1804e71bd38@flipper.net
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_scan.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/ufs/core/ufshcd.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 7acbfcfc2172e..c64ef71633d82 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -361,6 +361,7 @@ static struct scsi_device *scsi_alloc_sdev(struct scsi_target *starget,
- 	 * since we use this queue depth most of times.
- 	 */
- 	if (scsi_realloc_sdev_budget_map(sdev, depth)) {
-+		kref_put(&sdev->host->tagset_refcnt, scsi_mq_free_tags);
- 		put_device(&starget->dev);
- 		kfree(sdev);
- 		goto out;
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d6e4e99a571f1..80fafad339c75 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -23,6 +23,7 @@
+ #include <linux/pm_opp.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/sched/clock.h>
++#include <linux/sizes.h>
+ #include <linux/iopoll.h>
+ #include <scsi/scsi_cmnd.h>
+ #include <scsi/scsi_dbg.h>
+@@ -5237,6 +5238,25 @@ static void ufshcd_lu_init(struct ufs_hba *hba, struct scsi_device *sdev)
+ 		hba->dev_info.rpmb_region_size[1] = desc_buf[RPMB_UNIT_DESC_PARAM_REGION1_SIZE];
+ 		hba->dev_info.rpmb_region_size[2] = desc_buf[RPMB_UNIT_DESC_PARAM_REGION2_SIZE];
+ 		hba->dev_info.rpmb_region_size[3] = desc_buf[RPMB_UNIT_DESC_PARAM_REGION3_SIZE];
++
++		if (hba->dev_info.wspecversion <= 0x0220) {
++			/*
++			 * These older spec chips have only one RPMB region,
++			 * sized between 128 kB minimum and 16 MB maximum.
++			 * No per region size fields are provided (respective
++			 * REGIONX_SIZE fields always contain zeros), so get
++			 * it from the logical block count and size fields for
++			 * compatibility
++			 *
++			 * (See JESD220C-2_2 Section 14.1.4.6
++			 * RPMB Unit Descriptor,* offset 13h, 4 bytes)
++			 */
++			hba->dev_info.rpmb_region_size[0] =
++				(get_unaligned_be64(desc_buf
++					+ RPMB_UNIT_DESC_PARAM_LOGICAL_BLK_COUNT)
++				<< desc_buf[RPMB_UNIT_DESC_PARAM_LOGICAL_BLK_SIZE])
++				/ SZ_128K;
++		}
+ 	}
+ 
+ 
 -- 
 2.51.0
 
