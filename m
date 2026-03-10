@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E39E53859E3;
-	Tue, 10 Mar 2026 11:06:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04743384245;
+	Tue, 10 Mar 2026 11:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773140795; cv=none; b=akBiy2Kz8jvLX7z2FdKkHrZZpvLNCdzTBmfYTKcUFiz2ZmrKP7oecoioEvAvzRrWpkPaNge77FpASxuCPVxn4LplI9Jdh59QMVRd75PANIe7zOdQtsOBcEidMLHQXOvB6nWg9px+vL0MV6bzgAZ12usQ1YhZdFJk3Pm37D4jzis=
+	t=1773140796; cv=none; b=AdTpr2iFzNFF7uSEoKDn4oRwpM7uLH51vRM+mZfGGhqYcfeJu2yM5Jky9g8Z+UDrZxsOIRaSleF8xE0UIGKL4c0YBuXQnDR95bmQQ2s+FCe3hptT9iswqzWXDLUEhAqFqG77QLZtEVUxyPTPZOyjoymMR2fAABw42waOeUM3zlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773140795; c=relaxed/simple;
-	bh=r2FaaUp8UmHONNCh5eelz9969088M6Ty1TG2PFWd9t8=;
+	s=arc-20240116; t=1773140796; c=relaxed/simple;
+	bh=+I80rRBulzhNXibLcg680DDZALu3yvks/YQSnmsQdVs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r6KZyFSmWv+9X8zCmB8TEZYvhK+if9jzhr4lOPl45O0k6u0vTijHr1l7rNCslmm2ws/mzc3lJDbTxBnde7EkYd7UJ2Z4vN7GwlDntSNfhTAGz+VpHNc7om6MPhxAxNSuBeMYIEWT0/pkkSUfinuaeEbpa5TvlanrzfCeJ4lfyKU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZhNaHd7C; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQ8ZUkNFqW5q+bbvY3oA9DR3fJO7yiBiewP9/EVtEiz+voW+z12cY0M9nbbDIbn5koMfP1xBwjtSNOqlxE/Ne1h+EcDPIgoFX+6GSQXLVbjWWXearQ/AtjaQwh0DwaPvo8TC45cJXVqZaRe9tEth4UrspU2jENpTBGkV9NHqiPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHVGjsv6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZhNaHd7C"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B2C7C2BC9E;
-	Tue, 10 Mar 2026 11:06:34 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHVGjsv6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174B5C19423;
+	Tue, 10 Mar 2026 11:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773140794;
-	bh=r2FaaUp8UmHONNCh5eelz9969088M6Ty1TG2PFWd9t8=;
+	s=k20201202; t=1773140795;
+	bh=+I80rRBulzhNXibLcg680DDZALu3yvks/YQSnmsQdVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhNaHd7ClgrD7EYKideVmm0m2OugCGh5VS2cv0qHzQRM5mtJv1+ZYIHzdMBOAzakE
-	 s9cDrsVH1LFI83zlPz5f9MUgIceJt6Ce3btOVxWXEoYjIK1pJ9cTqls4yNtEVI8VAr
-	 4MU2fHWmq5dYppvpnQNd60i7T6DA0ubGuoHP2dQFZZd7how0272RiwRMFtZ4MUqSG2
-	 K7x89vXTtC/dptl3MU+JHpObX2kDpyEfm8SXq6CnqCd0y0MF+0LcwfnXr01TUKi0YP
-	 A/ZO09hCl5BBK24h9lwNCcoyd/SzHysbsPNjHjX5AJ7WNnpf2C4juAHnu2+ebELxiL
-	 ogeIpJZX/sloA==
+	b=SHVGjsv6X67i0bOWuYFV9OyR3wxhRY3cSVEgXWtj9CzLjHEJUkaWoxWgOSa8UZMfo
+	 RwA6g40dwIA5i7P86B0xjnYoOoyHtTXzPVWoHAcpv7kgzj7KJ+DoBYl7zhPE2eJAzc
+	 dLaHyJj4ydb8AuUMXy4gILTuwpM/2fIpPIabiqti6GVz7kf7YkZ9VFfJkTTsNnronf
+	 gC1dW75ay1B/nzVGBpvlBdEo7Jnn1aHsmkjx96pnI0HC9uO6xKfBa9RUV4q3e0yG4d
+	 E1CHmJq73+sUjbIV/OMZvthYSXwx3mUW1pGU0xtB8xuCHp8scqBD+rT/+e3gFNi+5I
+	 RstCDHqPpl8mA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Namhyung Kim <namhyung@kernel.org>,
-	"Lai, Yi" <yi1.lai@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Lizhi Hou <lizhi.hou@amd.com>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 031/311] perf/core: Fix invalid wait context in ctx_sched_in()
-Date: Tue, 10 Mar 2026 07:01:18 -0400
-Message-ID: <3487c39bc665c0318c26923de1dad6f78eb80755.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 032/311] accel/amdxdna: Remove buffer size check when creating command BO
+Date: Tue, 10 Mar 2026 07:01:19 -0400
+Message-ID: <44d727e0e643fdf3cc8bd3eed416d80765240711.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -49,56 +48,107 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Lizhi Hou <lizhi.hou@amd.com>
 
-[ Upstream commit 486ff5ad49bc50315bcaf6d45f04a33ef0a45ced ]
+[ Upstream commit 08fe1b5166fdc81b010d7bf39cd6440620e7931e ]
 
-Lockdep found a bug in the event scheduling when a pinned event was
-failed and wakes up the threads in the ring buffer like below.
+Large command buffers may be used, and they do not always need to be
+mapped or accessed by the driver. Performing a size check at command BO
+creation time unnecessarily rejects valid use cases.
 
-It seems it should not grab a wait-queue lock under perf-context lock.
-Let's do it with irq_work.
+Remove the buffer size check from command BO creation, and defer vmap
+and size validation to the paths where the driver actually needs to map
+and access the command buffer.
 
-  [   39.913691] =============================
-  [   39.914157] [ BUG: Invalid wait context ]
-  [   39.914623] 6.15.0-next-20250530-next-2025053 #1 Not tainted
-  [   39.915271] -----------------------------
-  [   39.915731] repro/837 is trying to lock:
-  [   39.916191] ffff88801acfabd8 (&event->waitq){....}-{3:3}, at: __wake_up+0x26/0x60
-  [   39.917182] other info that might help us debug this:
-  [   39.917761] context-{5:5}
-  [   39.918079] 4 locks held by repro/837:
-  [   39.918530]  #0: ffffffff8725cd00 (rcu_read_lock){....}-{1:3}, at: __perf_event_task_sched_in+0xd1/0xbc0
-  [   39.919612]  #1: ffff88806ca3c6f8 (&cpuctx_lock){....}-{2:2}, at: __perf_event_task_sched_in+0x1a7/0xbc0
-  [   39.920748]  #2: ffff88800d91fc18 (&ctx->lock){....}-{2:2}, at: __perf_event_task_sched_in+0x1f9/0xbc0
-  [   39.921819]  #3: ffffffff8725cd00 (rcu_read_lock){....}-{1:3}, at: perf_event_wakeup+0x6c/0x470
-
-Fixes: f4b07fd62d4d ("perf/core: Use POLLHUP for a pinned event in error")
-Closes: https://lore.kernel.org/lkml/aD2w50VDvGIH95Pf@ly-workstation
-Reported-by: "Lai, Yi" <yi1.lai@linux.intel.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: "Lai, Yi" <yi1.lai@linux.intel.com>
-Link: https://patch.msgid.link/20250603045105.1731451-1-namhyung@kernel.org
+Fixes: ac49797c1815 ("accel/amdxdna: Add GEM buffer object management")
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
+Link: https://patch.msgid.link/20260206060237.4050492-1-lizhi.hou@amd.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/accel/amdxdna/amdxdna_gem.c | 38 ++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index c0bb657e28e31..4311c33c3381c 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -4017,7 +4017,8 @@ static int merge_sched_in(struct perf_event *event, void *data)
- 			if (*perf_event_fasync(event))
- 				event->pending_kill = POLL_ERR;
+diff --git a/drivers/accel/amdxdna/amdxdna_gem.c b/drivers/accel/amdxdna/amdxdna_gem.c
+index dfa916eeb2d9c..56341b7668b10 100644
+--- a/drivers/accel/amdxdna/amdxdna_gem.c
++++ b/drivers/accel/amdxdna/amdxdna_gem.c
+@@ -21,8 +21,6 @@
+ #include "amdxdna_pci_drv.h"
+ #include "amdxdna_ubuf.h"
  
--			perf_event_wakeup(event);
-+			event->pending_wakeup = 1;
-+			irq_work_queue(&event->pending_irq);
- 		} else {
- 			struct perf_cpu_pmu_context *cpc = this_cpc(event->pmu_ctx->pmu);
+-#define XDNA_MAX_CMD_BO_SIZE	SZ_32K
+-
+ MODULE_IMPORT_NS("DMA_BUF");
  
+ static int
+@@ -746,12 +744,6 @@ amdxdna_drm_create_cmd_bo(struct drm_device *dev,
+ {
+ 	struct amdxdna_dev *xdna = to_xdna_dev(dev);
+ 	struct amdxdna_gem_obj *abo;
+-	int ret;
+-
+-	if (args->size > XDNA_MAX_CMD_BO_SIZE) {
+-		XDNA_ERR(xdna, "Command bo size 0x%llx too large", args->size);
+-		return ERR_PTR(-EINVAL);
+-	}
+ 
+ 	if (args->size < sizeof(struct amdxdna_cmd)) {
+ 		XDNA_DBG(xdna, "Command BO size 0x%llx too small", args->size);
+@@ -765,17 +757,7 @@ amdxdna_drm_create_cmd_bo(struct drm_device *dev,
+ 	abo->type = AMDXDNA_BO_CMD;
+ 	abo->client = filp->driver_priv;
+ 
+-	ret = amdxdna_gem_obj_vmap(abo, &abo->mem.kva);
+-	if (ret) {
+-		XDNA_ERR(xdna, "Vmap cmd bo failed, ret %d", ret);
+-		goto release_obj;
+-	}
+-
+ 	return abo;
+-
+-release_obj:
+-	drm_gem_object_put(to_gobj(abo));
+-	return ERR_PTR(ret);
+ }
+ 
+ int amdxdna_drm_create_bo_ioctl(struct drm_device *dev, void *data, struct drm_file *filp)
+@@ -872,6 +854,7 @@ struct amdxdna_gem_obj *amdxdna_gem_get_obj(struct amdxdna_client *client,
+ 	struct amdxdna_dev *xdna = client->xdna;
+ 	struct amdxdna_gem_obj *abo;
+ 	struct drm_gem_object *gobj;
++	int ret;
+ 
+ 	gobj = drm_gem_object_lookup(client->filp, bo_hdl);
+ 	if (!gobj) {
+@@ -880,9 +863,26 @@ struct amdxdna_gem_obj *amdxdna_gem_get_obj(struct amdxdna_client *client,
+ 	}
+ 
+ 	abo = to_xdna_obj(gobj);
+-	if (bo_type == AMDXDNA_BO_INVALID || abo->type == bo_type)
++	if (bo_type != AMDXDNA_BO_INVALID && abo->type != bo_type)
++		goto put_obj;
++
++	if (bo_type != AMDXDNA_BO_CMD || abo->mem.kva)
+ 		return abo;
+ 
++	if (abo->mem.size > SZ_32K) {
++		XDNA_ERR(xdna, "Cmd bo is too big %ld", abo->mem.size);
++		goto put_obj;
++	}
++
++	ret = amdxdna_gem_obj_vmap(abo, &abo->mem.kva);
++	if (ret) {
++		XDNA_ERR(xdna, "Vmap cmd bo failed, ret %d", ret);
++		goto put_obj;
++	}
++
++	return abo;
++
++put_obj:
+ 	drm_gem_object_put(gobj);
+ 	return NULL;
+ }
 -- 
 2.51.0
 
