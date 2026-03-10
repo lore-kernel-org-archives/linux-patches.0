@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAAB36D512;
-	Tue, 10 Mar 2026 11:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC9F36D512;
+	Tue, 10 Mar 2026 11:15:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141299; cv=none; b=S+kn3XXwXoikVXO/t6Vws44j8ChYi3yMrB4z8mltcIGErm2tD4JzIJKqf2CAedMUSVmHMc6fHu8RFeQvcAb9hRMB6VJ2Qy/MwoF1niYnTNqTbpVkaoki5kPW5ITEgnVHEioxKgCASiXFZl8d5ifj97+AEanGadY3xbPGS3Ec8yw=
+	t=1773141300; cv=none; b=Z9oTK6pP2LjHfc0P8zeTyXnoVikEvj+ojPAD2SUjKlF7FLcDux/QZOxZblrQeRZqgU9CRKORhSntEIofwck7i2BgtChYnhZpQLfls0K3fMTPIZgnU8/+chvh3yD5DoNh0pKrP0dxrH7sRz+uVvxV6ZcawlgBeV4c9TawJu9x+b0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141299; c=relaxed/simple;
-	bh=Sp0LZwnCkUtv7V/KT4tQft0rFMgwsQHFuaScuzbIVss=;
+	s=arc-20240116; t=1773141300; c=relaxed/simple;
+	bh=o2RVmQcHMcHMKrqi4DhCkSrnjEh1GFl+KuZY0rOChy0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1uAyayueKRFUIV9FsC31bW6n6U8bEY4ZPiwetO96LeRwqv2t3qKvvw8jZsm1Zi11vMdq/uSac5oyAotEMNUBctOQxszcf3S2VrRiu2tRDIwwLxS+tj8p5jIcL4gwcofr0DdRbhFLv+VIKP4XNZXzdn90hGm3dFoHfnMjOOKhyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i54uQ1mI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=JWJCrad+BWIpYGnHR73rPbpUnHfYDoBCIYGrmssHZLLmLtj1fpL/uZJND36fBtYO86vP9dYkf4Iu4x+HLbGRUmbjnq9XCwE/D1TFogYuf16OIMlbjNSkHzNz7LjwE625/2bVi2yeqmxramL9fpDU20POAuEJ6JayGuAT64116nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L3TdMi9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i54uQ1mI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5DEC2BCAF;
-	Tue, 10 Mar 2026 11:14:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L3TdMi9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 337F3C2BC9E;
+	Tue, 10 Mar 2026 11:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141298;
-	bh=Sp0LZwnCkUtv7V/KT4tQft0rFMgwsQHFuaScuzbIVss=;
+	s=k20201202; t=1773141300;
+	bh=o2RVmQcHMcHMKrqi4DhCkSrnjEh1GFl+KuZY0rOChy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i54uQ1mISOFVBSRNt/ljoGPWzetIU8KNcpRg6MsO8yXoRNjFaqXYz2gkGLm2GXk2C
-	 sSRqGQZfkJTILYMoK90y5e12m7Kd6pO4VguHd3d5ce/dvMJ2kCcACf6gZ3gMeWZ73M
-	 1tLgcc9Vga5up1lU8gPtWgnWld6CV2VwhSZl28rlHQQ3n4uhnKrLbkG/Pt/pv3fcBO
-	 pafm0eJqCYMl8bbCcJ8Wu349pBxztkyOJA4uNdMNUlxXWD19VxyyvlQDxsQUHJRarK
-	 5bkZPWqmIKBfa6CkLB1ZMAPsNtE/tAubipUfzQFLoQXBgNe1dUuogNNR3uDZULXnOo
-	 t75s27OeNJOTA==
+	b=L3TdMi9UbdRUpZ5pLHEhEmflEoxvuiuZnNRSXl0cLStDDawzxbRRfS9QXjHDfja3S
+	 XZWM0Dg5MHM+StJhUJaU6mZKT0LzCqH9DVi7Ay+cK8L1yuLpGk9bkCJfQMzjqvBKTe
+	 KCqj9v7qIKQ3+GeKllj0dW4+8UxJKoss+dByl6VWSfyePtLcJACFTsJs4JWb5VUHGd
+	 jaw5hfKsbuVPPip/RrrUP/uPaVkdg3uYRaD5l0GdGH48D+IiEoIqx7ZevnOfwDgJxm
+	 h3RKusLnz1r1Gc3zuBA8cA20NkNzMKlhCZ5mSN/rErMiyA3gAzrtlDy0yGw410qYoq
+	 86L5lOSNFvvJg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
 Cc: Larysa Zaremba <larysa.zaremba@intel.com>,
 	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 303/311] net: enetc: use truesize as XDP RxQ info frag_size
-Date: Tue, 10 Mar 2026 07:05:50 -0400
-Message-ID: <2f80ed220c883e47c4675b764287f38f84369578.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 304/311] xdp: produce a warning when calculated tailroom is negative
+Date: Tue, 10 Mar 2026 07:05:51 -0400
+Message-ID: <872af5aab323f983799dee6e984fefef9ed1587d.1773140656.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -46,44 +47,133 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
 From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit f8e18abf183dbd636a8725532c7f5aa58957de84 ]
+[ Upstream commit 8821e857759be9db3cde337ad328b71fe5c8a55f ]
 
-The only user of frag_size field in XDP RxQ info is
-bpf_xdp_frags_increase_tail(). It clearly expects truesize instead of DMA
-write size. Different assumptions in enetc driver configuration lead to
-negative tailroom.
+Many ethernet drivers report xdp Rx queue frag size as being the same as
+DMA write size. However, the only user of this field, namely
+bpf_xdp_frags_increase_tail(), clearly expects a truesize.
 
-Set frag_size to the same value as frame_sz.
+Such difference leads to unspecific memory corruption issues under certain
+circumstances, e.g. in ixgbevf maximum DMA write size is 3 KB, so when
+running xskxceiver's XDP_ADJUST_TAIL_GROW_MULTI_BUFF, 6K packet fully uses
+all DMA-writable space in 2 buffers. This would be fine, if only
+rxq->frag_size was properly set to 4K, but value of 3K results in a
+negative tailroom, because there is a non-zero page offset.
 
-Fixes: 2768b2e2f7d2 ("net: enetc: register XDP RX queues with frag_size")
+We are supposed to return -EINVAL and be done with it in such case, but due
+to tailroom being stored as an unsigned int, it is reported to be somewhere
+near UINT_MAX, resulting in a tail being grown, even if the requested
+offset is too much (it is around 2K in the abovementioned test). This later
+leads to all kinds of unspecific calltraces.
+
+[ 7340.337579] xskxceiver[1440]: segfault at 1da718 ip 00007f4161aeac9d sp 00007f41615a6a00 error 6
+[ 7340.338040] xskxceiver[1441]: segfault at 7f410000000b ip 00000000004042b5 sp 00007f415bffecf0 error 4
+[ 7340.338179]  in libc.so.6[61c9d,7f4161aaf000+160000]
+[ 7340.339230]  in xskxceiver[42b5,400000+69000]
+[ 7340.340300]  likely on CPU 6 (core 0, socket 6)
+[ 7340.340302] Code: ff ff 01 e9 f4 fe ff ff 0f 1f 44 00 00 4c 39 f0 74 73 31 c0 ba 01 00 00 00 f0 0f b1 17 0f 85 ba 00 00 00 49 8b 87 88 00 00 00 <4c> 89 70 08 eb cc 0f 1f 44 00 00 48 8d bd f0 fe ff ff 89 85 ec fe
+[ 7340.340888]  likely on CPU 3 (core 0, socket 3)
+[ 7340.345088] Code: 00 00 00 ba 00 00 00 00 be 00 00 00 00 89 c7 e8 31 ca ff ff 89 45 ec 8b 45 ec 85 c0 78 07 b8 00 00 00 00 eb 46 e8 0b c8 ff ff <8b> 00 83 f8 69 74 24 e8 ff c7 ff ff 8b 00 83 f8 0b 74 18 e8 f3 c7
+[ 7340.404334] Oops: general protection fault, probably for non-canonical address 0x6d255010bdffc: 0000 [#1] SMP NOPTI
+[ 7340.405972] CPU: 7 UID: 0 PID: 1439 Comm: xskxceiver Not tainted 6.19.0-rc1+ #21 PREEMPT(lazy)
+[ 7340.408006] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.17.0-5.fc42 04/01/2014
+[ 7340.409716] RIP: 0010:lookup_swap_cgroup_id+0x44/0x80
+[ 7340.410455] Code: 83 f8 1c 73 39 48 ba ff ff ff ff ff ff ff 03 48 8b 04 c5 20 55 fa bd 48 21 d1 48 89 ca 83 e1 01 48 d1 ea c1 e1 04 48 8d 04 90 <8b> 00 48 83 c4 10 d3 e8 c3 cc cc cc cc 31 c0 e9 98 b7 dd 00 48 89
+[ 7340.412787] RSP: 0018:ffffcc5c04f7f6d0 EFLAGS: 00010202
+[ 7340.413494] RAX: 0006d255010bdffc RBX: ffff891f477895a8 RCX: 0000000000000010
+[ 7340.414431] RDX: 0001c17e3fffffff RSI: 00fa070000000000 RDI: 000382fc7fffffff
+[ 7340.415354] RBP: 00fa070000000000 R08: ffffcc5c04f7f8f8 R09: ffffcc5c04f7f7d0
+[ 7340.416283] R10: ffff891f4c1a7000 R11: ffffcc5c04f7f9c8 R12: ffffcc5c04f7f7d0
+[ 7340.417218] R13: 03ffffffffffffff R14: 00fa06fffffffe00 R15: ffff891f47789500
+[ 7340.418229] FS:  0000000000000000(0000) GS:ffff891ffdfaa000(0000) knlGS:0000000000000000
+[ 7340.419489] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[ 7340.420286] CR2: 00007f415bfffd58 CR3: 0000000103f03002 CR4: 0000000000772ef0
+[ 7340.421237] PKRU: 55555554
+[ 7340.421623] Call Trace:
+[ 7340.421987]  <TASK>
+[ 7340.422309]  ? softleaf_from_pte+0x77/0xa0
+[ 7340.422855]  swap_pte_batch+0xa7/0x290
+[ 7340.423363]  zap_nonpresent_ptes.constprop.0.isra.0+0xd1/0x270
+[ 7340.424102]  zap_pte_range+0x281/0x580
+[ 7340.424607]  zap_pmd_range.isra.0+0xc9/0x240
+[ 7340.425177]  unmap_page_range+0x24d/0x420
+[ 7340.425714]  unmap_vmas+0xa1/0x180
+[ 7340.426185]  exit_mmap+0xe1/0x3b0
+[ 7340.426644]  __mmput+0x41/0x150
+[ 7340.427098]  exit_mm+0xb1/0x110
+[ 7340.427539]  do_exit+0x1b2/0x460
+[ 7340.427992]  do_group_exit+0x2d/0xc0
+[ 7340.428477]  get_signal+0x79d/0x7e0
+[ 7340.428957]  arch_do_signal_or_restart+0x34/0x100
+[ 7340.429571]  exit_to_user_mode_loop+0x8e/0x4c0
+[ 7340.430159]  do_syscall_64+0x188/0x6b0
+[ 7340.430672]  ? __do_sys_clone3+0xd9/0x120
+[ 7340.431212]  ? switch_fpu_return+0x4e/0xd0
+[ 7340.431761]  ? arch_exit_to_user_mode_prepare.isra.0+0xa1/0xc0
+[ 7340.432498]  ? do_syscall_64+0xbb/0x6b0
+[ 7340.433015]  ? __handle_mm_fault+0x445/0x690
+[ 7340.433582]  ? count_memcg_events+0xd6/0x210
+[ 7340.434151]  ? handle_mm_fault+0x212/0x340
+[ 7340.434697]  ? do_user_addr_fault+0x2b4/0x7b0
+[ 7340.435271]  ? clear_bhb_loop+0x30/0x80
+[ 7340.435788]  ? clear_bhb_loop+0x30/0x80
+[ 7340.436299]  ? clear_bhb_loop+0x30/0x80
+[ 7340.436812]  ? clear_bhb_loop+0x30/0x80
+[ 7340.437323]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[ 7340.437973] RIP: 0033:0x7f4161b14169
+[ 7340.438468] Code: Unable to access opcode bytes at 0x7f4161b1413f.
+[ 7340.439242] RSP: 002b:00007ffc6ebfa770 EFLAGS: 00000246 ORIG_RAX: 00000000000000ca
+[ 7340.440173] RAX: fffffffffffffe00 RBX: 00000000000005a1 RCX: 00007f4161b14169
+[ 7340.441061] RDX: 00000000000005a1 RSI: 0000000000000109 RDI: 00007f415bfff990
+[ 7340.441943] RBP: 00007ffc6ebfa7a0 R08: 0000000000000000 R09: 00000000ffffffff
+[ 7340.442824] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+[ 7340.443707] R13: 0000000000000000 R14: 00007f415bfff990 R15: 00007f415bfff6c0
+[ 7340.444586]  </TASK>
+[ 7340.444922] Modules linked in: rfkill intel_rapl_msr intel_rapl_common intel_uncore_frequency_common skx_edac_common nfit libnvdimm kvm_intel vfat fat kvm snd_pcm irqbypass rapl iTCO_wdt snd_timer intel_pmc_bxt iTCO_vendor_support snd ixgbevf virtio_net soundcore i2c_i801 pcspkr libeth_xdp net_failover i2c_smbus lpc_ich failover libeth virtio_balloon joydev 9p fuse loop zram lz4hc_compress lz4_compress 9pnet_virtio 9pnet netfs ghash_clmulni_intel serio_raw qemu_fw_cfg
+[ 7340.449650] ---[ end trace 0000000000000000 ]---
+
+The issue can be fixed in all in-tree drivers, but we cannot just trust OOT
+drivers to not do this. Therefore, make tailroom a signed int and produce a
+warning when it is negative to prevent such mistakes in the future.
+
+Fixes: bf25146a5595 ("bpf: add frags support to the bpf_xdp_adjust_tail() API")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/20260305111253.2317394-9-larysa.zaremba@intel.com
+Link: https://patch.msgid.link/20260305111253.2317394-10-larysa.zaremba@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/filter.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index e380a4f398556..9fdd448e602f1 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -3468,7 +3468,7 @@ static int enetc_int_vector_init(struct enetc_ndev_priv *priv, int i,
- 	priv->rx_ring[i] = bdr;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index f82996e63dd72..8bbf24c15413e 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4151,13 +4151,14 @@ static int bpf_xdp_frags_increase_tail(struct xdp_buff *xdp, int offset)
+ 	struct skb_shared_info *sinfo = xdp_get_shared_info_from_buff(xdp);
+ 	skb_frag_t *frag = &sinfo->frags[sinfo->nr_frags - 1];
+ 	struct xdp_rxq_info *rxq = xdp->rxq;
+-	unsigned int tailroom;
++	int tailroom;
  
- 	err = __xdp_rxq_info_reg(&bdr->xdp.rxq, priv->ndev, i, 0,
--				 ENETC_RXB_DMA_SIZE_XDP);
-+				 ENETC_RXB_TRUESIZE);
- 	if (err)
- 		goto free_vector;
+ 	if (!rxq->frag_size || rxq->frag_size > xdp->frame_sz)
+ 		return -EOPNOTSUPP;
+ 
+ 	tailroom = rxq->frag_size - skb_frag_size(frag) -
+ 		   skb_frag_off(frag) % rxq->frag_size;
++	WARN_ON_ONCE(tailroom < 0);
+ 	if (unlikely(offset > tailroom))
+ 		return -EINVAL;
  
 -- 
 2.51.0
