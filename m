@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA030389471;
-	Tue, 10 Mar 2026 11:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B722138945D;
+	Tue, 10 Mar 2026 11:29:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142197; cv=none; b=fuB3Sd+U+E6uT6KrbteN4o3HCtMaj45TFnOpDIvubTZ8FtTUWmAaXlXEoxFGdyryPAUrgKP7tL3XPhFzaWssmLWPuKR3vBGHM81mtzfJ4y3HZf37QBlqWI8nmLGs2V9sqdrpJ1nCm5P8Dk9uJj0CmDu0f86OrWgIiycZO+6X0GA=
+	t=1773142198; cv=none; b=ZgomOp30ZJCZSGzY6zpudzgitPb6+hI2zSlw5A2aOFHyJDX7lyjJzTlPC+HMtfny1lEcoTlZMIrp1ViyhJrdxps3Tr4xwnsV7z+pGyMp83ODqwoWXmVTbX/X2GMr386PFHzzdzOTEHimfnDxoOl6qfwyE4lpuBmLDbPqRjb9+D0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142197; c=relaxed/simple;
-	bh=802tYCyjyg3mKdidUgIwYl/oDyQe51/41iAhd6Er7IE=;
+	s=arc-20240116; t=1773142198; c=relaxed/simple;
+	bh=InmajOgTM5YoLk5tdJRzfVtSZZOkNHe3zmSY4glK8W4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CUonb2Hgk6aQiQq62kP+CMIXqPHgfmw0s2AdB0C/I1Pkmj6nEK0ASZXY+lf+7QIu7my+15zvB1CgAtbEzetk08yx3z7haaaDC6R7Kxa23FjROELiruQr7/sHJu116ip2AUWmHuC1j3SdpEV4hY0zHtizixQhYpjeL92dtKqIQQQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N+r9sJlC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rFslg5uPsQS7EKGbwOOKEPN3/9SeY8m1yLYGdobhv1Et85nErZTQyTflJVPgXOqtPGUEQXCAyKDX5c36tHDJtxxTB2y3foA+USegTfL9qvWEzRcuF8ZRSIoXJ2+1TIKW0fNNbJVDhMmW82BGy2QmiJ/DnwPFq1uBY+gWW9UfBzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GNM0q/5g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N+r9sJlC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE04C19423;
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GNM0q/5g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0DFC2BC86;
 	Tue, 10 Mar 2026 11:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142197;
-	bh=802tYCyjyg3mKdidUgIwYl/oDyQe51/41iAhd6Er7IE=;
+	s=k20201202; t=1773142198;
+	bh=InmajOgTM5YoLk5tdJRzfVtSZZOkNHe3zmSY4glK8W4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+r9sJlCNIkGZXtbDUxj8YLP/dYUTTnuqOsW5Akud7+udkQGTYApI5prwxAi3YyLB
-	 fpf/nf8Spm/uSmrrTCoxLxH9FHxtMxIUKBhzz0fXVHMqZy0Eru/S9q7SZfUpvbbfl/
-	 cCWRsNDayYlNzGMXOSBddFNYlSkOGmAszyPWuc9r5NmZOT6bk5E6f/+EiAirtQs3Rd
-	 xneplwjHwOxNxVOpCfeTxyNkoJFSn3LtwRSiv+QDcpjTFMQocHMk/V1I/Oe6gjWGMn
-	 AqC7DL/JB4s45lcUBJ7s0baIBHk/9k5zJKNPnTdWU0iFCtW+gharli8wPqDSsmWkeM
-	 0WjnkXqLgncPg==
+	b=GNM0q/5gzMbn4Ri/EL7iR5jt9ZAjtYPHvJz1yQJj5AcGoSgAS1WmjNdUiaEoSTpnT
+	 T6pIn4WK24lrc38tIm0WFWJZXvZlaj0vq13wEaMYvbb0rps56GT63nw82o+o77aAl9
+	 GSDcaUi1udwAhxFLG9j/Z5GyQR5kZX9lg6K5Wkl7IzKmXu0iQsxsrWZdse7E8t2rX2
+	 hIk8wz3+BnDq++iax4R/XEirx95fkD9KJlIaJ4LncCyEhKENf3/4D/CSbsNku805Lt
+	 wlAvSUiyc6np3Uz8Qiud+g++kjRwnIGro+cgfqr7czQ+DWY96VU/WuD1B1Wq7gZnr1
+	 ST6V20e58r3+A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jakub Kicinski <kuba@kernel.org>,
-	Joe Damato <joe@dama.to>,
+Cc: Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 287/314] nfc: rawsock: cancel tx_work before socket teardown
-Date: Tue, 10 Mar 2026 07:19:06 -0400
-Message-ID: <3c7cd0f3d91e7fe7bd69a9b860a5c153bf324230.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 288/314] net: stmmac: Fix error handling in VLAN add and delete paths
+Date: Tue, 10 Mar 2026 07:19:07 -0400
+Message-ID: <d82af85a04499e33b70ff682c95876833e7762e1.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,52 +48,75 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit d793458c45df2aed498d7f74145eab7ee22d25aa ]
+[ Upstream commit 35dfedce442c4060cfe5b98368bc9643fb995716 ]
 
-In rawsock_release(), cancel any pending tx_work and purge the write
-queue before orphaning the socket.  rawsock_tx_work runs on the system
-workqueue and calls nfc_data_exchange which dereferences the NCI
-device.  Without synchronization, tx_work can race with socket and
-device teardown when a process is killed (e.g. by SIGKILL), leading
-to use-after-free or leaked references.
+stmmac_vlan_rx_add_vid() updates active_vlans and the VLAN hash
+register before writing the HW filter entry. If the filter write
+fails, it leaves a stale VID in active_vlans and the hash register.
 
-Set SEND_SHUTDOWN first so that if tx_work is already running it will
-see the flag and skip transmitting, then use cancel_work_sync to wait
-for any in-progress execution to finish, and finally purge any
-remaining queued skbs.
+stmmac_vlan_rx_kill_vid() has the reverse problem: it clears
+active_vlans before removing the HW filter. On failure, the VID is
+gone from active_vlans but still present in the HW filter table.
 
-Fixes: 23b7869c0fd0 ("NFC: add the NFC socket raw protocol")
-Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-6-kuba@kernel.org
+To fix this, reorder the operations to update the hash table first,
+then attempt the HW filter operation. If the HW filter fails, roll
+back both the active_vlans bitmap and the hash table by calling
+stmmac_vlan_update() again.
+
+Fixes: ed64639bc1e0 ("net: stmmac: Add support for VLAN Rx filtering")
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Link: https://patch.msgid.link/20260303145828.7845-2-ovidiu.panait.rb@renesas.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/rawsock.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++----
+ 1 file changed, 14 insertions(+), 4 deletions(-)
 
-diff --git a/net/nfc/rawsock.c b/net/nfc/rawsock.c
-index 5125392bb68eb..028b4daafaf83 100644
---- a/net/nfc/rawsock.c
-+++ b/net/nfc/rawsock.c
-@@ -67,6 +67,17 @@ static int rawsock_release(struct socket *sock)
- 	if (sock->type == SOCK_RAW)
- 		nfc_sock_unlink(&raw_sk_list, sk);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 754b36e733eb5..85f436dff4629 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -6603,9 +6603,13 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
  
-+	if (sk->sk_state == TCP_ESTABLISHED) {
-+		/* Prevent rawsock_tx_work from starting new transmits and
-+		 * wait for any in-progress work to finish.  This must happen
-+		 * before the socket is orphaned to avoid a race where
-+		 * rawsock_tx_work runs after the NCI device has been freed.
-+		 */
-+		sk->sk_shutdown |= SEND_SHUTDOWN;
-+		cancel_work_sync(&nfc_rawsock(sk)->tx_work);
-+		rawsock_write_queue_purge(sk);
-+	}
+ 	if (priv->hw->num_vlan) {
+ 		ret = stmmac_add_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
+-		if (ret)
++		if (ret) {
++			clear_bit(vid, priv->active_vlans);
++			stmmac_vlan_update(priv, is_double);
+ 			goto err_pm_put;
++		}
+ 	}
 +
- 	sock_orphan(sk);
- 	sock_put(sk);
+ err_pm_put:
+ 	pm_runtime_put(priv->device);
+ 
+@@ -6629,15 +6633,21 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
+ 		is_double = true;
+ 
+ 	clear_bit(vid, priv->active_vlans);
++	ret = stmmac_vlan_update(priv, is_double);
++	if (ret) {
++		set_bit(vid, priv->active_vlans);
++		goto del_vlan_error;
++	}
+ 
+ 	if (priv->hw->num_vlan) {
+ 		ret = stmmac_del_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
+-		if (ret)
++		if (ret) {
++			set_bit(vid, priv->active_vlans);
++			stmmac_vlan_update(priv, is_double);
+ 			goto del_vlan_error;
++		}
+ 	}
+ 
+-	ret = stmmac_vlan_update(priv, is_double);
+-
+ del_vlan_error:
+ 	pm_runtime_put(priv->device);
  
 -- 
 2.51.0
