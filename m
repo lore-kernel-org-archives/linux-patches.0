@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C91387562;
-	Tue, 10 Mar 2026 11:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7F238A73B;
+	Tue, 10 Mar 2026 11:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142068; cv=none; b=uNCjBgYFLifpEAFJL8esn4j28j2sep2juRgjxQJKUrtajEXxOPLtle9d8vFXMA6mlNNSs+xdBVM0736WtZXWesR7onh2KLShqk6gI9TdDYt3ome7xAfpOJ7wwnfUZIqXmXYDARyUzhqcsFxuMaavOIIyRJRbWkGeDWgDAqbSiK4=
+	t=1773142069; cv=none; b=AsKsM7x2s1d1eC1D+gHuRdk218Tg0kloAVnMzgK1J++kpuHolAZZXIrD1WwxLb5nepdgKxYdQNFddKFf4AkAp5M7QamDq1lEK+Ek+XHBaTuBloS2s45hfjHEjGqHZ8CKLnWHytSUgxKfGS5E+mK04w+NQOOg5FwnZ9IiraavT0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142068; c=relaxed/simple;
-	bh=pCAL88wtkMu1Wv+DZxO6rq0OuO9TxZAWSleJ5KhTXmg=;
+	s=arc-20240116; t=1773142069; c=relaxed/simple;
+	bh=x2Axq/3908O+8x+ncLAiQR7DiOYEnpGzrmIlo4rUxAI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Al+i0LcmLDA/duPBUz/+mVPujbaIoGiAYhU3hyS5PdrzEjopaczVL/gyR5ZXbKCI/XVceKaqxecCXgErzCofsaJ7NCu2IX13NT/kAUWm3wJTyRjx34P9D/+vPt6YNc6n4SBNIqVFyw91iJURM66wnQ6BCSFX2VjyaNbHl7SD6M8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pF23rvV3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tIpu1saCIAJ/MbsK0L6snuec5qedKJGZVEXCrWkGjs/ZpIfyTEXk2S0F4W6QOgC/TuYTlDA+LjXMc4go78XOSWrqABeB05i8vZEzpkqFzHIenkhpNyYZzLTkumuCmuIWiMkpqZpMst003dmrVVpoMrms72Z+ysx8EypcAcMvhbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=OE8B8zVm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pF23rvV3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02365C2BC9E;
-	Tue, 10 Mar 2026 11:27:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="OE8B8zVm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8733C2BC86;
+	Tue, 10 Mar 2026 11:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142068;
-	bh=pCAL88wtkMu1Wv+DZxO6rq0OuO9TxZAWSleJ5KhTXmg=;
+	s=k20201202; t=1773142069;
+	bh=x2Axq/3908O+8x+ncLAiQR7DiOYEnpGzrmIlo4rUxAI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pF23rvV3GYvzL9f8DTsSwBrZ+jKiGuiaDlFur/Ntgl/tkvJUT5snItHenw4oc2l6B
-	 TWqd1jzIVBOnQxIXvC9gR0/nTG7LvwYlzIsh0qNDpCR1TiTvaatdtj7Y4AyPhku35v
-	 EDl/a8f2M2rwNxnf7aSKn6xdTemOT34KNNmQRSSF7ZoOyQY6efwTtfCot+5V4gaP2C
-	 b62HdtJ9HZ/9oJMpxmfdWWLcoViaa8V+GVkuDdqHmFJ9uMBJz14FoFx59Xryjl3fk4
-	 eOPEKtp2N0Q0fNa3q1kL7EtJZJzR43V0qyK0R/tNl9pEycU4twBYCl2K31B81I08h0
-	 ztkF+lXfUgYRQ==
+	b=OE8B8zVm+h2IkJj/tN/Ui52Ho7XSybnHRONEFpxdWgTomFBKhZiVZjq6rCJpA5ElD
+	 HTOPD9u/gH8yGG/8a8mZE7/3Jci7HbjLmZ+dMRkB19FtnC9Ip3JiUwohtGnfyF4ITR
+	 gfw2LY53+PxCd4sP7n5NFbbFeVnRZwwbw7V97qgp84MegixBodZccUtYfV1kFl3cXc
+	 tDJvcQjgHqOoHuxzugBEjAIcnpMUtuzvVOkAZeYu50LKET3X2m/4Qpg5c9BdJMO+55
+	 QS13DmiEvvQjCz1qqCmeTfLvX6RzxiUDXdz21NfnF3CBq6F8UM7aahl/+xm3O5omdn
+	 S1j796ku2tqWw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Nathan Chancellor <nathan@kernel.org>,
-	Ed W <lists@wildgooses.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 194/314] kbuild: Split .modinfo out from ELF_DETAILS
-Date: Tue, 10 Mar 2026 07:17:33 -0400
-Message-ID: <0b6464d03bfd02da81f991412c48618ae7ba0a88.1773141555.git.sashal@kernel.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.18 195/314] Revert "netfilter: nft_set_rbtree: validate open interval overlap"
+Date: Tue, 10 Mar 2026 07:17:34 -0400
+Message-ID: <507e002b1c7ae7f1a9a3da924837f11eecc081e1.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,405 +48,268 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 8678591b47469fe16357234efef9b260317b8be4 upstream.
+This reverts commit 12b1681793e9b7552495290785a3570c539f409d which is
+commit 648946966a08e4cb1a71619e3d1b12bd7642de7b upstream.
 
-Commit 3e86e4d74c04 ("kbuild: keep .modinfo section in
-vmlinux.unstripped") added .modinfo to ELF_DETAILS while removing it
-from COMMON_DISCARDS, as it was needed in vmlinux.unstripped and
-ELF_DETAILS was present in all architecture specific vmlinux linker
-scripts. While this shuffle is fine for vmlinux, ELF_DETAILS and
-COMMON_DISCARDS may be used by other linker scripts, such as the s390
-and x86 compressed boot images, which may not expect to have a .modinfo
-section. In certain circumstances, this could result in a bootloader
-failing to load the compressed kernel [1].
+It is causing netfilter issues, so revert it for now.
 
-Commit ddc6cbef3ef1 ("s390/boot/vmlinux.lds.S: Ensure bzImage ends with
-SecureBoot trailer") recently addressed this for the s390 bzImage but
-the same bug remains for arm, parisc, and x86. The presence of .modinfo
-in the x86 bzImage was the root cause of the issue worked around with
-commit d50f21091358 ("kbuild: align modinfo section for Secureboot
-Authenticode EDK2 compat"). misc.c in arch/x86/boot/compressed includes
-lib/decompress_unzstd.c, which in turn includes lib/xxhash.c and its
-MODULE_LICENSE / MODULE_DESCRIPTION macros due to the STATIC definition.
-
-Split .modinfo out from ELF_DETAILS into its own macro and handle it in
-all vmlinux linker scripts. Discard .modinfo in the places where it was
-previously being discarded from being in COMMON_DISCARDS, as it has
-never been necessary in those uses.
-
-Cc: stable@vger.kernel.org
-Fixes: 3e86e4d74c04 ("kbuild: keep .modinfo section in vmlinux.unstripped")
-Reported-by: Ed W <lists@wildgooses.com>
-Closes: https://lore.kernel.org/587f25e0-a80e-46a5-9f01-87cb40cfa377@wildgooses.com/ [1]
-Tested-by: Ed W <lists@wildgooses.com> # x86_64
-Link: https://patch.msgid.link/20260225-separate-modinfo-from-elf-details-v1-1-387ced6baf4b@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/aaeEd8UqYQ33Af7_@chamomile
+Cc: Pablo Neira Ayuso <pablo@netfilter.org>
+Cc: Florian Westphal <fw@strlen.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/alpha/kernel/vmlinux.lds.S           | 1 +
- arch/arc/kernel/vmlinux.lds.S             | 1 +
- arch/arm/boot/compressed/vmlinux.lds.S    | 1 +
- arch/arm/kernel/vmlinux-xip.lds.S         | 1 +
- arch/arm/kernel/vmlinux.lds.S             | 1 +
- arch/arm64/kernel/vmlinux.lds.S           | 1 +
- arch/csky/kernel/vmlinux.lds.S            | 1 +
- arch/hexagon/kernel/vmlinux.lds.S         | 1 +
- arch/loongarch/kernel/vmlinux.lds.S       | 1 +
- arch/m68k/kernel/vmlinux-nommu.lds        | 1 +
- arch/m68k/kernel/vmlinux-std.lds          | 1 +
- arch/m68k/kernel/vmlinux-sun3.lds         | 1 +
- arch/mips/kernel/vmlinux.lds.S            | 1 +
- arch/nios2/kernel/vmlinux.lds.S           | 1 +
- arch/openrisc/kernel/vmlinux.lds.S        | 1 +
- arch/parisc/boot/compressed/vmlinux.lds.S | 1 +
- arch/parisc/kernel/vmlinux.lds.S          | 1 +
- arch/powerpc/kernel/vmlinux.lds.S         | 1 +
- arch/riscv/kernel/vmlinux.lds.S           | 1 +
- arch/s390/kernel/vmlinux.lds.S            | 1 +
- arch/sh/kernel/vmlinux.lds.S              | 1 +
- arch/sparc/kernel/vmlinux.lds.S           | 1 +
- arch/um/kernel/dyn.lds.S                  | 1 +
- arch/um/kernel/uml.lds.S                  | 1 +
- arch/x86/boot/compressed/vmlinux.lds.S    | 2 +-
- arch/x86/kernel/vmlinux.lds.S             | 1 +
- include/asm-generic/vmlinux.lds.h         | 4 +++-
- 27 files changed, 29 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |  4 --
+ net/netfilter/nf_tables_api.c     | 21 ++-------
+ net/netfilter/nft_set_rbtree.c    | 71 +++++--------------------------
+ 3 files changed, 14 insertions(+), 82 deletions(-)
 
-diff --git a/arch/alpha/kernel/vmlinux.lds.S b/arch/alpha/kernel/vmlinux.lds.S
-index 2efa7dfc798a9..2d136c63db161 100644
---- a/arch/alpha/kernel/vmlinux.lds.S
-+++ b/arch/alpha/kernel/vmlinux.lds.S
-@@ -71,6 +71,7 @@ SECTIONS
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 05f57ba622447..f1b67b40dd4de 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -278,8 +278,6 @@ struct nft_userdata {
+ 	unsigned char		data[];
+ };
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
+-#define NFT_SET_ELEM_INTERNAL_LAST	0x1
+-
+ /* placeholder structure for opaque set element backend representation. */
+ struct nft_elem_priv { };
  
- 	DISCARDS
-diff --git a/arch/arc/kernel/vmlinux.lds.S b/arch/arc/kernel/vmlinux.lds.S
-index 61a1b2b96e1d8..6af63084ff285 100644
---- a/arch/arc/kernel/vmlinux.lds.S
-+++ b/arch/arc/kernel/vmlinux.lds.S
-@@ -123,6 +123,7 @@ SECTIONS
- 	_end = . ;
+@@ -289,7 +287,6 @@ struct nft_elem_priv { };
+  *	@key: element key
+  *	@key_end: closing element key
+  *	@data: element data
+- * 	@flags: flags
+  *	@priv: element private data and extensions
+  */
+ struct nft_set_elem {
+@@ -305,7 +302,6 @@ struct nft_set_elem {
+ 		u32		buf[NFT_DATA_VALUE_MAXLEN / sizeof(u32)];
+ 		struct nft_data val;
+ 	} data;
+-	u32			flags;
+ 	struct nft_elem_priv	*priv;
+ };
  
- 	STABS_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 	DISCARDS
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index d4babc4d3bff3..89039bbf7d638 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -7272,8 +7272,7 @@ static u32 nft_set_maxsize(const struct nft_set *set)
+ }
  
-diff --git a/arch/arm/boot/compressed/vmlinux.lds.S b/arch/arm/boot/compressed/vmlinux.lds.S
-index d411abd4310ea..2d916647df03c 100644
---- a/arch/arm/boot/compressed/vmlinux.lds.S
-+++ b/arch/arm/boot/compressed/vmlinux.lds.S
-@@ -21,6 +21,7 @@ SECTIONS
-     COMMON_DISCARDS
-     *(.ARM.exidx*)
-     *(.ARM.extab*)
-+    *(.modinfo)
-     *(.note.*)
-     *(.rel.*)
-     *(.printk_index)
-diff --git a/arch/arm/kernel/vmlinux-xip.lds.S b/arch/arm/kernel/vmlinux-xip.lds.S
-index f2e8d4fac0687..5afb725998ec0 100644
---- a/arch/arm/kernel/vmlinux-xip.lds.S
-+++ b/arch/arm/kernel/vmlinux-xip.lds.S
-@@ -154,6 +154,7 @@ SECTIONS
+ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+-			    const struct nlattr *attr, u32 nlmsg_flags,
+-			    bool last)
++			    const struct nlattr *attr, u32 nlmsg_flags)
+ {
+ 	struct nft_expr *expr_array[NFT_SET_EXPR_MAX] = {};
+ 	struct nlattr *nla[NFTA_SET_ELEM_MAX + 1];
+@@ -7559,11 +7558,6 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (flags)
+ 		*nft_set_ext_flags(ext) = flags;
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ARM_DETAILS
+-	if (last)
+-		elem.flags = NFT_SET_ELEM_INTERNAL_LAST;
+-	else
+-		elem.flags = 0;
+-
+ 	if (obj)
+ 		*nft_set_ext_obj(ext) = obj;
  
- 	ARM_ASSERTS
-diff --git a/arch/arm/kernel/vmlinux.lds.S b/arch/arm/kernel/vmlinux.lds.S
-index d592a203f9c6b..c07843c3c53d3 100644
---- a/arch/arm/kernel/vmlinux.lds.S
-+++ b/arch/arm/kernel/vmlinux.lds.S
-@@ -153,6 +153,7 @@ SECTIONS
+@@ -7727,8 +7721,7 @@ static int nf_tables_newsetelem(struct sk_buff *skb,
+ 	nft_ctx_init(&ctx, net, skb, info->nlh, family, table, NULL, nla);
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ARM_DETAILS
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+-		err = nft_add_set_elem(&ctx, set, attr, info->nlh->nlmsg_flags,
+-				       nla_is_last(attr, rem));
++		err = nft_add_set_elem(&ctx, set, attr, info->nlh->nlmsg_flags);
+ 		if (err < 0) {
+ 			NL_SET_BAD_ATTR(extack, attr);
+ 			return err;
+@@ -7852,7 +7845,7 @@ static void nft_trans_elems_destroy_abort(const struct nft_ctx *ctx,
+ }
  
- 	ARM_ASSERTS
-diff --git a/arch/arm64/kernel/vmlinux.lds.S b/arch/arm64/kernel/vmlinux.lds.S
-index ad6133b89e7a4..2964aad0362e4 100644
---- a/arch/arm64/kernel/vmlinux.lds.S
-+++ b/arch/arm64/kernel/vmlinux.lds.S
-@@ -349,6 +349,7 @@ SECTIONS
+ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
+-			   const struct nlattr *attr, bool last)
++			   const struct nlattr *attr)
+ {
+ 	struct nlattr *nla[NFTA_SET_ELEM_MAX + 1];
+ 	struct nft_set_ext_tmpl tmpl;
+@@ -7920,11 +7913,6 @@ static int nft_del_setelem(struct nft_ctx *ctx, struct nft_set *set,
+ 	if (flags)
+ 		*nft_set_ext_flags(ext) = flags;
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
+-	if (last)
+-		elem.flags = NFT_SET_ELEM_INTERNAL_LAST;
+-	else
+-		elem.flags = 0;
+-
+ 	trans = nft_trans_elem_alloc(ctx, NFT_MSG_DELSETELEM, set);
+ 	if (trans == NULL)
+ 		goto fail_trans;
+@@ -8072,8 +8060,7 @@ static int nf_tables_delsetelem(struct sk_buff *skb,
+ 		return nft_set_flush(&ctx, set, genmask);
  
- 	HEAD_SYMBOLS
-diff --git a/arch/csky/kernel/vmlinux.lds.S b/arch/csky/kernel/vmlinux.lds.S
-index d718961786d24..81943981b3af4 100644
---- a/arch/csky/kernel/vmlinux.lds.S
-+++ b/arch/csky/kernel/vmlinux.lds.S
-@@ -109,6 +109,7 @@ SECTIONS
+ 	nla_for_each_nested(attr, nla[NFTA_SET_ELEM_LIST_ELEMENTS], rem) {
+-		err = nft_del_setelem(&ctx, set, attr,
+-				      nla_is_last(attr, rem));
++		err = nft_del_setelem(&ctx, set, attr);
+ 		if (err == -ENOENT &&
+ 		    NFNL_MSG_TYPE(info->nlh->nlmsg_type) == NFT_MSG_DESTROYSETELEM)
+ 			continue;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 644d4b9167057..a4fb5b517d9de 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -304,19 +304,10 @@ static void nft_rbtree_set_start_cookie(struct nft_rbtree *priv,
+ 	priv->start_rbe_cookie = (unsigned long)rbe;
+ }
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
+-static void nft_rbtree_set_start_cookie_open(struct nft_rbtree *priv,
+-					     const struct nft_rbtree_elem *rbe,
+-					     unsigned long open_interval)
+-{
+-	priv->start_rbe_cookie = (unsigned long)rbe | open_interval;
+-}
+-
+-#define NFT_RBTREE_OPEN_INTERVAL	1UL
+-
+ static bool nft_rbtree_cmp_start_cookie(struct nft_rbtree *priv,
+ 					const struct nft_rbtree_elem *rbe)
+ {
+-	return (priv->start_rbe_cookie & ~NFT_RBTREE_OPEN_INTERVAL) == (unsigned long)rbe;
++	return priv->start_rbe_cookie == (unsigned long)rbe;
+ }
  
- 	DISCARDS
-diff --git a/arch/hexagon/kernel/vmlinux.lds.S b/arch/hexagon/kernel/vmlinux.lds.S
-index 1150b77fa281c..aae22283b5e00 100644
---- a/arch/hexagon/kernel/vmlinux.lds.S
-+++ b/arch/hexagon/kernel/vmlinux.lds.S
-@@ -62,6 +62,7 @@ SECTIONS
+ static bool nft_rbtree_insert_same_interval(const struct net *net,
+@@ -346,14 +337,13 @@ static bool nft_rbtree_insert_same_interval(const struct net *net,
  
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 	.hexagon.attributes 0 : { *(.hexagon.attributes) }
+ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 			       struct nft_rbtree_elem *new,
+-			       struct nft_elem_priv **elem_priv, u64 tstamp, bool last)
++			       struct nft_elem_priv **elem_priv, u64 tstamp)
+ {
+ 	struct nft_rbtree_elem *rbe, *rbe_le = NULL, *rbe_ge = NULL, *rbe_prev;
+ 	struct rb_node *node, *next, *parent, **p, *first = NULL;
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u8 cur_genmask = nft_genmask_cur(net);
+ 	u8 genmask = nft_genmask_next(net);
+-	unsigned long open_interval = 0;
+ 	int d;
  
-diff --git a/arch/loongarch/kernel/vmlinux.lds.S b/arch/loongarch/kernel/vmlinux.lds.S
-index 08ea921cdec16..d0e1377a041d6 100644
---- a/arch/loongarch/kernel/vmlinux.lds.S
-+++ b/arch/loongarch/kernel/vmlinux.lds.S
-@@ -147,6 +147,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- #ifdef CONFIG_EFI_STUB
-diff --git a/arch/m68k/kernel/vmlinux-nommu.lds b/arch/m68k/kernel/vmlinux-nommu.lds
-index 2624fc18c131f..45d7f4b0177b4 100644
---- a/arch/m68k/kernel/vmlinux-nommu.lds
-+++ b/arch/m68k/kernel/vmlinux-nommu.lds
-@@ -85,6 +85,7 @@ SECTIONS {
- 	_end = .;
- 
- 	STABS_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	/* Sections to be discarded */
-diff --git a/arch/m68k/kernel/vmlinux-std.lds b/arch/m68k/kernel/vmlinux-std.lds
-index 1ccdd04ae4624..7326586afe15f 100644
---- a/arch/m68k/kernel/vmlinux-std.lds
-+++ b/arch/m68k/kernel/vmlinux-std.lds
-@@ -58,6 +58,7 @@ SECTIONS
-   _end = . ;
- 
-   STABS_DEBUG
-+  MODINFO
-   ELF_DETAILS
- 
-   /* Sections to be discarded */
-diff --git a/arch/m68k/kernel/vmlinux-sun3.lds b/arch/m68k/kernel/vmlinux-sun3.lds
-index f13ddcc2af5c2..1b19fef201fba 100644
---- a/arch/m68k/kernel/vmlinux-sun3.lds
-+++ b/arch/m68k/kernel/vmlinux-sun3.lds
-@@ -51,6 +51,7 @@ __init_begin = .;
-   _end = . ;
- 
-   STABS_DEBUG
-+  MODINFO
-   ELF_DETAILS
- 
-   /* Sections to be discarded */
-diff --git a/arch/mips/kernel/vmlinux.lds.S b/arch/mips/kernel/vmlinux.lds.S
-index 2b708fac8d2c1..579b2cc1995ae 100644
---- a/arch/mips/kernel/vmlinux.lds.S
-+++ b/arch/mips/kernel/vmlinux.lds.S
-@@ -217,6 +217,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	/* These must appear regardless of  .  */
-diff --git a/arch/nios2/kernel/vmlinux.lds.S b/arch/nios2/kernel/vmlinux.lds.S
-index 37b9580550646..206f92445bfad 100644
---- a/arch/nios2/kernel/vmlinux.lds.S
-+++ b/arch/nios2/kernel/vmlinux.lds.S
-@@ -57,6 +57,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	DISCARDS
-diff --git a/arch/openrisc/kernel/vmlinux.lds.S b/arch/openrisc/kernel/vmlinux.lds.S
-index 049bff45f6126..9b29c3211774c 100644
---- a/arch/openrisc/kernel/vmlinux.lds.S
-+++ b/arch/openrisc/kernel/vmlinux.lds.S
-@@ -101,6 +101,7 @@ SECTIONS
- 	/* Throw in the debugging sections */
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
-         /* Sections to be discarded -- must be last */
-diff --git a/arch/parisc/boot/compressed/vmlinux.lds.S b/arch/parisc/boot/compressed/vmlinux.lds.S
-index ab7b439908578..87d24cc824b66 100644
---- a/arch/parisc/boot/compressed/vmlinux.lds.S
-+++ b/arch/parisc/boot/compressed/vmlinux.lds.S
-@@ -90,6 +90,7 @@ SECTIONS
- 	/* Sections to be discarded */
- 	DISCARDS
- 	/DISCARD/ : {
-+		*(.modinfo)
- #ifdef CONFIG_64BIT
- 		/* temporary hack until binutils is fixed to not emit these
- 		 * for static binaries
-diff --git a/arch/parisc/kernel/vmlinux.lds.S b/arch/parisc/kernel/vmlinux.lds.S
-index b445e47903cfd..0ca93d6d72354 100644
---- a/arch/parisc/kernel/vmlinux.lds.S
-+++ b/arch/parisc/kernel/vmlinux.lds.S
-@@ -165,6 +165,7 @@ SECTIONS
- 	_end = . ;
- 
- 	STABS_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 	.note 0 : { *(.note) }
- 
-diff --git a/arch/powerpc/kernel/vmlinux.lds.S b/arch/powerpc/kernel/vmlinux.lds.S
-index de6ee7d35cff0..5589af3e40844 100644
---- a/arch/powerpc/kernel/vmlinux.lds.S
-+++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -398,6 +398,7 @@ SECTIONS
- 	_end = . ;
- 
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	DISCARDS
-diff --git a/arch/riscv/kernel/vmlinux.lds.S b/arch/riscv/kernel/vmlinux.lds.S
-index 61bd5ba6680a7..997f9eb3b22b1 100644
---- a/arch/riscv/kernel/vmlinux.lds.S
-+++ b/arch/riscv/kernel/vmlinux.lds.S
-@@ -170,6 +170,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 	.riscv.attributes 0 : { *(.riscv.attributes) }
- 
-diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index d74d4c52ccd05..9289e9e535c70 100644
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -212,6 +212,7 @@ SECTIONS
- 	/* Debugging sections.	*/
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	/*
-diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.S
-index 008c30289eaa6..169c63fb3c1dc 100644
---- a/arch/sh/kernel/vmlinux.lds.S
-+++ b/arch/sh/kernel/vmlinux.lds.S
-@@ -89,6 +89,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	DISCARDS
-diff --git a/arch/sparc/kernel/vmlinux.lds.S b/arch/sparc/kernel/vmlinux.lds.S
-index f1b86eb303404..7ea510d9b42f2 100644
---- a/arch/sparc/kernel/vmlinux.lds.S
-+++ b/arch/sparc/kernel/vmlinux.lds.S
-@@ -191,6 +191,7 @@ SECTIONS
- 
- 	STABS_DEBUG
- 	DWARF_DEBUG
-+	MODINFO
- 	ELF_DETAILS
- 
- 	DISCARDS
-diff --git a/arch/um/kernel/dyn.lds.S b/arch/um/kernel/dyn.lds.S
-index a36b7918a011a..ad3cefeff2acb 100644
---- a/arch/um/kernel/dyn.lds.S
-+++ b/arch/um/kernel/dyn.lds.S
-@@ -172,6 +172,7 @@ SECTIONS
- 
-   STABS_DEBUG
-   DWARF_DEBUG
-+  MODINFO
-   ELF_DETAILS
- 
-   DISCARDS
-diff --git a/arch/um/kernel/uml.lds.S b/arch/um/kernel/uml.lds.S
-index a409d4b66114f..30aa24348d60c 100644
---- a/arch/um/kernel/uml.lds.S
-+++ b/arch/um/kernel/uml.lds.S
-@@ -113,6 +113,7 @@ SECTIONS
- 
-   STABS_DEBUG
-   DWARF_DEBUG
-+  MODINFO
-   ELF_DETAILS
- 
-   DISCARDS
-diff --git a/arch/x86/boot/compressed/vmlinux.lds.S b/arch/x86/boot/compressed/vmlinux.lds.S
-index 587ce3e7c5048..e0b152715d9c6 100644
---- a/arch/x86/boot/compressed/vmlinux.lds.S
-+++ b/arch/x86/boot/compressed/vmlinux.lds.S
-@@ -88,7 +88,7 @@ SECTIONS
- 	/DISCARD/ : {
- 		*(.dynamic) *(.dynsym) *(.dynstr) *(.dynbss)
- 		*(.hash) *(.gnu.hash)
--		*(.note.*)
-+		*(.note.*) *(.modinfo)
+ 	/* Descend the tree to search for an existing element greater than the
+@@ -459,18 +449,10 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		}
  	}
  
- 	.got.plt (INFO) : {
-diff --git a/arch/x86/kernel/vmlinux.lds.S b/arch/x86/kernel/vmlinux.lds.S
-index d7af4a64c211b..4ed82b1fe173b 100644
---- a/arch/x86/kernel/vmlinux.lds.S
-+++ b/arch/x86/kernel/vmlinux.lds.S
-@@ -424,6 +424,7 @@ SECTIONS
- 	.llvm_bb_addr_map : { *(.llvm_bb_addr_map) }
- #endif
+-	if (nft_rbtree_interval_null(set, new)) {
++	if (nft_rbtree_interval_null(set, new))
++		priv->start_rbe_cookie = 0;
++	else if (nft_rbtree_interval_start(new) && priv->start_rbe_cookie)
+ 		priv->start_rbe_cookie = 0;
+-	} else if (nft_rbtree_interval_start(new) && priv->start_rbe_cookie) {
+-		if (nft_set_is_anonymous(set)) {
+-			priv->start_rbe_cookie = 0;
+-		} else if (priv->start_rbe_cookie & NFT_RBTREE_OPEN_INTERVAL) {
+-			/* Previous element is an open interval that partially
+-			 * overlaps with an existing non-open interval.
+-			 */
+-			return -ENOTEMPTY;
+-		}
+-	}
  
-+	MODINFO
- 	ELF_DETAILS
+ 	/* - new start element matching existing start element: full overlap
+ 	 *   reported as -EEXIST, cleared by caller if NLM_F_EXCL is not given.
+@@ -478,27 +460,7 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	if (rbe_ge && !nft_rbtree_cmp(set, new, rbe_ge) &&
+ 	    nft_rbtree_interval_start(rbe_ge) == nft_rbtree_interval_start(new)) {
+ 		*elem_priv = &rbe_ge->priv;
+-
+-		/* - Corner case: new start element of open interval (which
+-		 *   comes as last element in the batch) overlaps the start of
+-		 *   an existing interval with an end element: partial overlap.
+-		 */
+-		node = rb_first(&priv->root);
+-		rbe = __nft_rbtree_next_active(node, genmask);
+-		if (rbe && nft_rbtree_interval_end(rbe)) {
+-			rbe = nft_rbtree_next_active(rbe, genmask);
+-			if (rbe &&
+-			    nft_rbtree_interval_start(rbe) &&
+-			    !nft_rbtree_cmp(set, new, rbe)) {
+-				if (last)
+-					return -ENOTEMPTY;
+-
+-				/* Maybe open interval? */
+-				open_interval = NFT_RBTREE_OPEN_INTERVAL;
+-			}
+-		}
+-		nft_rbtree_set_start_cookie_open(priv, rbe_ge, open_interval);
+-
++		nft_rbtree_set_start_cookie(priv, rbe_ge);
+ 		return -EEXIST;
+ 	}
  
- 	DISCARDS
-diff --git a/include/asm-generic/vmlinux.lds.h b/include/asm-generic/vmlinux.lds.h
-index e04d56a5332e6..6640e06ef2f13 100644
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -832,12 +832,14 @@ defined(CONFIG_AUTOFDO_CLANG) || defined(CONFIG_PROPELLER_CLANG)
+@@ -553,12 +515,6 @@ static int __nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 	    nft_rbtree_interval_end(rbe_ge) && nft_rbtree_interval_end(new))
+ 		return -ENOTEMPTY;
  
- /* Required sections not related to debugging. */
- #define ELF_DETAILS							\
--		.modinfo : { *(.modinfo) . = ALIGN(8); }		\
- 		.comment 0 : { *(.comment) }				\
- 		.symtab 0 : { *(.symtab) }				\
- 		.strtab 0 : { *(.strtab) }				\
- 		.shstrtab 0 : { *(.shstrtab) }
+-	/* - start element overlaps an open interval but end element is new:
+-	 *   partial overlap, reported as -ENOEMPTY.
+-	 */
+-	if (!rbe_ge && priv->start_rbe_cookie && nft_rbtree_interval_end(new))
+-		return -ENOTEMPTY;
+-
+ 	/* Accepted element: pick insertion point depending on key value */
+ 	parent = NULL;
+ 	p = &priv->root.rb_node;
+@@ -668,7 +624,6 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 			     struct nft_elem_priv **elem_priv)
+ {
+ 	struct nft_rbtree_elem *rbe = nft_elem_priv_cast(elem->priv);
+-	bool last = !!(elem->flags & NFT_SET_ELEM_INTERNAL_LAST);
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	u64 tstamp = nft_net_tstamp(net);
+ 	int err;
+@@ -685,12 +640,8 @@ static int nft_rbtree_insert(const struct net *net, const struct nft_set *set,
+ 		cond_resched();
  
-+#define MODINFO								\
-+		.modinfo : { *(.modinfo) . = ALIGN(8); }
-+
- #ifdef CONFIG_GENERIC_BUG
- #define BUG_TABLE							\
- 	. = ALIGN(8);							\
+ 		write_lock_bh(&priv->lock);
+-		err = __nft_rbtree_insert(net, set, rbe, elem_priv, tstamp, last);
++		err = __nft_rbtree_insert(net, set, rbe, elem_priv, tstamp);
+ 		write_unlock_bh(&priv->lock);
+-
+-		if (nft_rbtree_interval_end(rbe))
+-			priv->start_rbe_cookie = 0;
+-
+ 	} while (err == -EAGAIN);
+ 
+ 	return err;
+@@ -778,7 +729,6 @@ nft_rbtree_deactivate(const struct net *net, const struct nft_set *set,
+ 		      const struct nft_set_elem *elem)
+ {
+ 	struct nft_rbtree_elem *rbe, *this = nft_elem_priv_cast(elem->priv);
+-	bool last = !!(elem->flags & NFT_SET_ELEM_INTERNAL_LAST);
+ 	struct nft_rbtree *priv = nft_set_priv(set);
+ 	const struct rb_node *parent = priv->root.rb_node;
+ 	u8 genmask = nft_genmask_next(net);
+@@ -819,10 +769,9 @@ nft_rbtree_deactivate(const struct net *net, const struct nft_set *set,
+ 				continue;
+ 			}
+ 
+-			if (nft_rbtree_interval_start(rbe)) {
+-				if (!last)
+-					nft_rbtree_set_start_cookie(priv, rbe);
+-			} else if (!nft_rbtree_deactivate_same_interval(net, priv, rbe))
++			if (nft_rbtree_interval_start(rbe))
++				nft_rbtree_set_start_cookie(priv, rbe);
++			else if (!nft_rbtree_deactivate_same_interval(net, priv, rbe))
+ 				return NULL;
+ 
+ 			nft_rbtree_flush(net, set, &rbe->priv);
 -- 
 2.51.0
 
