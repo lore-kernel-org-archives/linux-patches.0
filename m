@@ -1,46 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE6243E4B8;
-	Tue, 10 Mar 2026 09:02:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3FD44BC9A;
+	Tue, 10 Mar 2026 09:02:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133330; cv=none; b=phS/WjAHjxovPnnUlPZkYbTVgm31VSt5Zd5C1Z05bwDw1iJQOmQkGUKLrA363M1oqoLgY0Z3nUSZeohZSStVW6V4LlrNGPWNpjVW/hXn1xRvd1GNqkmmavAlQDSGW5Ifk7O1sGP2X5VwEB6CG2u/yQGDh7MrXQFWaroiv+/6hok=
+	t=1773133332; cv=none; b=XoJ7Om8q2xLUP+jxEeDS4awVNvVEeAIc1DxyDZgPUZ0nSj7K7Ha2/2EBi1K7wlBKbf7qgUUcRcTNcwnGzGdWXx7hdmbvu5Pl/pYYz2JSoa9QRcmFvfAaDS/MKjGi0HwvWTLtph+taUCreMf18LZRWbGAEqk/CPTM69E9iiK8zls=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133330; c=relaxed/simple;
-	bh=V870Fjn81zA8yB5HaZNIHH8mBMjWxvboo4YRoIuwroY=;
+	s=arc-20240116; t=1773133332; c=relaxed/simple;
+	bh=uhnDnD5YsuKlqmWINLzsD9zKQLO/mP4iC+uOFUQP+LU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XuhbLLHJ+xTkvrZUPZoVHxmy7ffMgQB7ir7tMfvZYXT1aNrmEyqtWFRUGRtu3Gvzde0u0MPfF0gHYDr5r/+Ffqzymyj9cA2ocbv5jfgsUw+B9V70QQu2i9S4EyL0C0yIIJkOYqe+CjNnlSLg9dV7r4gmmhw4V0boECRVbsPriiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qz3ZRYwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=YN3uAW0vMXZpkyVxNtWLNaMh0xCjnGvKpMAm5r4OAg6JiaAGRGuGDGQ0CnRbX6QVgi4lYkNZP3G8dPqN46vwcFbO9/89vTusIgTqK+HgD3/5IODnQ3cg3nUwL7tb+6HdxaL/+zPKFNJc7DGPQflcUCnI39n9rw4ZMCxNke1gaZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nErRSjng; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qz3ZRYwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708DAC2BC9E;
-	Tue, 10 Mar 2026 09:02:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nErRSjng"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA0AEC19423;
+	Tue, 10 Mar 2026 09:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133330;
-	bh=V870Fjn81zA8yB5HaZNIHH8mBMjWxvboo4YRoIuwroY=;
+	s=k20201202; t=1773133332;
+	bh=uhnDnD5YsuKlqmWINLzsD9zKQLO/mP4iC+uOFUQP+LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qz3ZRYwtY6kWZfMAXnwhKa0d8dkX2q9XMXXW9qsSy6kYUVUg9SZAVsoYCmx03Nmo/
-	 cfnXQCbeTJPx+QjJzI4rB+v6yWAByQhTCF8NxmvPRAwtoKoupjgZ+Hp7Asi4mKc3FD
-	 3hARRzsBi2D7zWzfYFT1oXVerZKLn0iF1UVM0ngwQ4q5Ex8hUo42D2BvpHPynL+Zt5
-	 WJMU1oVfIgGkaudUDj5vyaHYoMCnmNuV6HjvMFkPxicbiJHtrMvgZiR1yaIfvIDTAz
-	 U2579wGn0YDB7yO0f//qLPOOo9V1HpdcfH2bIzGAiR1u15ZzdrlnadvECIoITLqDvE
-	 FpPowiDece8bg==
+	b=nErRSjngIgvwJwC2G3VDbuoa42aln00JnAEwV7DJuKudLaRhtT+VM/8Nhtr7p2DbW
+	 NRBNhTyNGx+KyeeLyqqN8UczNnq1pEM3IP7PbU4yu3UVQ1V4JqrcNHOaNPQmIDm9oZ
+	 v2pxVyy9ylIfL/pAzR10qYSLrSNEyUaq0spTzpDcpF2LQYyxs/mpdEaAqna7wSRGRs
+	 AFnWpzNAK88TbYnW1cih1l9XkgIFg3QE840YC2DFNJki0dwrzpfuVfY9SoybtR+K9X
+	 L2VwJmLFZDpI7ewV3m59lUMwcKsNyBAr+LhuPXi4Kez3CXegBWmCqoWsJkC6Zh3QdS
+	 TrkFWV0bbUH2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Romain Sioen <romain.sioen@microchip.com>,
-	Jiri Kosina <jkosina@suse.com>,
+Cc: Peter Metz <peter.metz@unarin.com>,
+	Hans de Goede <johannes.goede@oss.qualcomm.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	gupt21@gmail.com,
-	jikos@kernel.org,
-	bentiss@kernel.org,
-	linux-i2c@vger.kernel.org,
-	linux-input@vger.kernel.org,
+	alexhung@gmail.com,
+	hansg@kernel.org,
+	platform-driver-x86@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] HID: mcp2221: cancel last I2C command on read error
-Date: Tue, 10 Mar 2026 05:01:16 -0400
-Message-ID: <20260310090145.2709021-16-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.15] platform/x86: intel-hid: Add Dell 14 Plus 2-in-1 to dmi_vgbs_allow_list
+Date: Tue, 10 Mar 2026 05:01:17 -0400
+Message-ID: <20260310090145.2709021-17-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -50,118 +49,134 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Romain Sioen <romain.sioen@microchip.com>
+From: Peter Metz <peter.metz@unarin.com>
 
-[ Upstream commit e31b556c0ba21f20c298aa61181b96541140b7b9 ]
+[ Upstream commit 6b3fa0615cd8432148581de62a52f83847af3d70 ]
 
-When an I2C SMBus read operation fails, the MCP2221 internal state machine
-may not reset correctly, causing subsequent transactions to fail.
+The Dell 14 Plus 2-in-1 (model DB04250) requires the VGBS allow list
+entry to correctly enable the tablet mode switch. Without this, the
+chassis state is not reported, and the hinge rotation only emits
+unknown scancodes.
 
-By adding a short delay and explicitly cancelling the last command,
-we ensure the device is ready for the next operation.
+Verified on Dell 14 Plus 2-in-1 DB04250.
 
-Fix an issue where i2cdetect was not able to detect all devices correctly
-on the bus.
-
-Signed-off-by: Romain Sioen <romain.sioen@microchip.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.com>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221090
+Signed-off-by: Peter Metz <peter.metz@unarin.com>
+Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
+Link: https://patch.msgid.link/20260213044627.203638-1-peter.metz@unarin.com
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have a complete picture. Let me summarize the analysis.
-
 ## Analysis
 
-### What the commit fixes
+### What the commit does
 
-The MCP2221 is a USB-to-I2C/UART bridge chip. When an I2C SMBus read
-operation exhausts its 5 retries (meaning the device didn't become
-ready), the function `mcp_i2c_smbus_read` previously returned the error
-immediately without cleaning up the device's internal state machine.
-This left the I2C bus in a stuck state, causing subsequent I2C
-transactions to fail.
+This commit adds a single DMI entry for the "Dell 14 Plus 2-in-1
+DB04250" to the `dmi_vgbs_allow_list` in
+`drivers/platform/x86/intel/hid.c`. This allow list controls which
+devices can use the VGBS (Virtual GPIO Button Status) ACPI method to
+report chassis/tablet mode state.
 
-The fix adds two lines before the error return:
-1. `usleep_range(980, 1000)` - a small delay needed by the device
-2. `mcp_cancel_last_cmd(mcp)` - sends a cancel command to reset the
-   device state and free the I2C bus
+### Problem it solves
 
-### Is this a real bug fix?
+Without this entry, the Dell 14 Plus 2-in-1 cannot correctly report
+tablet mode switch state. The hinge rotation only emits unknown
+scancodes, meaning the device doesn't properly switch between laptop and
+tablet modes. This is a real usability issue for owners of this specific
+2-in-1 device.
 
-Yes. The commit message explicitly states this fixes a real-world issue:
-`i2cdetect` was unable to detect all devices on the bus. This is a
-functional bug where failed reads leave the MCP2221 in a bad state,
-breaking subsequent operations.
+### Classification: Hardware Quirk / Device Allow List Entry
 
-### Pattern consistency
+This falls squarely into the **"QUIRKS and WORKAROUNDS"** exception
+category for stable backports:
+- It adds a device-specific DMI match to an existing allow list
+- It fixes a real hardware issue (tablet mode not working)
+- The pattern is identical to existing entries in the same list
+  (multiple Dell, HP entries already present)
 
-The fix follows the **exact same pattern** already used in two other
-places in the same driver:
-1. `mcp_chk_last_cmd_status_free_bus()` (line 225-226):
-   `usleep_range(980, 1000)` + `mcp_cancel_last_cmd(mcp)` on error
-2. `mcp_set_i2c_speed()` (line 244-245): same pattern on error
+### Code change analysis
 
-This is simply adding the same established error recovery to a path that
-was missing it.
+The diff is trivial — 6 lines added to insert a new `dmi_system_id`
+struct into the `dmi_vgbs_allow_list` array, matching `DMI_SYS_VENDOR =
+"Dell Inc."` and `DMI_PRODUCT_NAME = "Dell 14 Plus 2-in-1 DB04250"`. The
+change follows the exact same pattern as the surrounding entries.
 
-### Scope and risk
+### Risk assessment
 
-- **2 lines added** - extremely small and surgical
-- **No behavioral change** on the success path
-- Only affects the error path after all 5 retries are exhausted
-- Uses well-established functions already present in the driver
-- Low risk of regression - the alternative (not cancelling) is already
-  broken
+- **Risk: Extremely low.** The DMI match is specific to one device
+  model. It cannot affect any other hardware.
+- **Scope: Minimal.** 6 lines of declarative data, no logic changes.
+- **Testing: Verified.** The commit message states "Verified on Dell 14
+  Plus 2-in-1 DB04250."
+- **Review: Thorough.** Reviewed by both Hans de Goede (platform/x86
+  maintainer) and Ilpo Järvinen (Intel platform maintainer).
 
-### Stable criteria assessment
+### Stable criteria check
 
-- **Obviously correct**: Follows the same pattern used elsewhere in the
-  driver for the same purpose
-- **Fixes a real bug**: I2C bus gets stuck, preventing device detection
-- **Small and contained**: 2 lines added, single file, single error path
-- **No new features**: Just error recovery
+1. **Obviously correct and tested**: Yes — verified on the hardware,
+   reviewed by two maintainers
+2. **Fixes a real bug**: Yes — tablet mode doesn't work without it
+   (bugzilla #221090)
+3. **Important issue**: Yes — core functionality of a 2-in-1 device is
+   broken
+4. **Small and contained**: Yes — 6 lines, single file, data-only change
+5. **No new features**: Correct — enables existing functionality on
+   specific hardware
+6. **Applies cleanly**: Should apply cleanly as long as the surrounding
+   entries exist
 
 ### Verification
 
-- git log confirmed this is commit b4664742e46dc, merged recently
-- Read the full `mcp_cancel_last_cmd()` function at line 204-211: sends
-  `MCP2221_I2C_CANCEL` to reset device state
-- Read `mcp_chk_last_cmd_status_free_bus()` at line 216-230: confirms
-  the same `usleep + cancel` pattern is established
-- Read `mcp_set_i2c_speed()` at line 232-249: confirms the same pattern
-  in a third location
-- The fix is self-contained with no dependencies on other commits
-- The `mcp_cancel_last_cmd` function has existed since at least v6.1
-  (introduced with the read refactoring), so it's available in stable
-  trees
-- Author is from Microchip (the chip vendor), adding credibility to the
-  fix
+- Verified the diff is a pure data addition to an existing DMI allow
+  list array — no logic changes
+- Confirmed the pattern matches existing entries in the same list (Dell
+  Pro Rugged 10/12 Tablet entries directly above)
+- The commit references bugzilla.kernel.org bug #221090, confirming a
+  user-reported issue
+- Reviewed-by tags from Hans de Goede and Ilpo Järvinen confirm
+  maintainer approval
+- The `dmi_vgbs_allow_list` structure is used in the existing
+  `intel_hid_probe()` path — this is well-established code
+
+### Conclusion
+
+This is a textbook stable backport candidate: a tiny, zero-risk hardware
+quirk addition that fixes real functionality for a specific device
+model, with user bug report, hardware verification, and maintainer
+review.
 
 **YES**
 
- drivers/hid/hid-mcp2221.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/intel/hid.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/hid/hid-mcp2221.c b/drivers/hid/hid-mcp2221.c
-index 33603b019f975..ef3b5c77c38e3 100644
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -353,6 +353,8 @@ static int mcp_i2c_smbus_read(struct mcp2221 *mcp,
- 				usleep_range(90, 100);
- 				retries++;
- 			} else {
-+				usleep_range(980, 1000);
-+				mcp_cancel_last_cmd(mcp);
- 				return ret;
- 			}
- 		} else {
+diff --git a/drivers/platform/x86/intel/hid.c b/drivers/platform/x86/intel/hid.c
+index 560cc063198e1..5b475a09645a3 100644
+--- a/drivers/platform/x86/intel/hid.c
++++ b/drivers/platform/x86/intel/hid.c
+@@ -189,6 +189,12 @@ static const struct dmi_system_id dmi_vgbs_allow_list[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Dell Pro Rugged 12 Tablet RA02260"),
+ 		},
+ 	},
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Dell 14 Plus 2-in-1 DB04250"),
++		},
++	},
+ 	{ }
+ };
+ 
 -- 
 2.51.0
 
