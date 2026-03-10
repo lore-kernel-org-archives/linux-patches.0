@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B11CE3876D5;
-	Tue, 10 Mar 2026 11:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71BC33876A3;
+	Tue, 10 Mar 2026 11:25:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141957; cv=none; b=p66y1qWP5qOyJo7NJ3GtkD2ERXfDFDJWv7vH55Xak8HdzopgBQsnnebOe411nZ0eHShplK6i1QHtzEKwcvMBBxrSPrQ0PdxDoA9JL5uTFopPjoNZC2OWeIxglKgh93VZoTVU9dyREg38dyvbRanld3EBxmhcBsrzMvhuO1otzFM=
+	t=1773141958; cv=none; b=a+/7ceMMS/MoxJibyruOgKI5pe32nSA7w4pxCnXiEaLVebhRdGqN18acz9sL23Fc/Nwmtkj0MbYkBzszSnj+J07kUNUB/A6wxd1j3gc/+nwXiQUCzKJZGlTiJ5HVWPMWRlIqC/QoIf0eCzwr+OeE5UajSrwKrGx0rS4HPtt0q7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141957; c=relaxed/simple;
-	bh=qVnfQ0rLd4QwRu3lbuwMu68yLwtoDiqgsYktTUx0d8E=;
+	s=arc-20240116; t=1773141958; c=relaxed/simple;
+	bh=WQEAKcHObtWo0nxTcsAvTDzSZ9HqzqxJ0xJvuGEvpAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c9+7k0S+8RPgm6M1noT825CWnnusopjzuQtmgKYL6q4P+ybj/aY/QzrnOBC/d89vu0BpNcc8ZwFZ4vA996vvq+BdJ4OTPocKYUUfE6jKZJvwap39QK+ZFVyykCewl23hhcTLbGyVLW8S65/+q1LYNqoPheNT47I2WVnkgmGfJ6I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=i/TIEZhz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l515QsHAue8EfrnE6WSYNj7X8l9g0DZRrkaA6zd6uMdqBeP/79RdzR0299+AdSm2H06ebPfODE62scWxzRsd2pxRwrV2AsfdonELmbnOs1DgxeQif+ti0ib8uR3wZJO+3Wk0xPoxKuMEi7LOlTwZPGXS20Mf+Zps1MZMA+VJN6w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nM8FuxKb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="i/TIEZhz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1388C2BC86;
-	Tue, 10 Mar 2026 11:25:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nM8FuxKb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A389AC19423;
+	Tue, 10 Mar 2026 11:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141957;
-	bh=qVnfQ0rLd4QwRu3lbuwMu68yLwtoDiqgsYktTUx0d8E=;
+	s=k20201202; t=1773141958;
+	bh=WQEAKcHObtWo0nxTcsAvTDzSZ9HqzqxJ0xJvuGEvpAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i/TIEZhz8t8n+I3tRnuVMSjA4x5kRPg3KDrn/FiIf5G3mGYdaBDzJrMO3IV6NgFtr
-	 Q1ZHpppfAl0M1QoUXIHRPq2PqlwSlXl/IlPVU3bnTcYyJkXt9ICxq7VaSbwKNbCOHH
-	 pS8S+zA2zLk5fgnKySPP1RbHx/YmK/0Wb4zAEidnHJlSKDqRB7Or1Z2poPcQpeSxJV
-	 QCXNWC91XDMDdUw3zWGhlsuSOn+ElDOD5p9r1RTExSn+FKW58/oQlclw1nTPVypycD
-	 hkYDkMpeHgp8dxpXWRqjt466ihueSAxGcyEI4iKZgTFh0yE7FxbhqvrcaPB2uSFWNj
-	 PaZdPy1EmhWjw==
+	b=nM8FuxKbfQ8PbkjzRG/CIt4kP+cpBfuhTsdTBgUpV37HXLwmzYn5JCpq89g53i3oE
+	 MjtstjgNAh7CT1bMnFf93erl3tqbZ9ZTOODKEbZUgDcLFgCXWxBqonUJrYU0VtbP+0
+	 ERDkFT4BjKbzyVYo/3xhTf8nuYap0RWnDoqZ2PmyMzRfR0t09kDp6/hmGLesRY2InG
+	 khLhz68fLDJu75+4Nj5EPHwNf2mIe5NEziQmsEy96w1nK0IicbPNdB1MDglI5YhoKD
+	 QIAUYjeiiGmOdktuA8fsn+hd7nvkRtkbgmpdpLgkI9GRO3O1r12DdSyRXuNDrUjWyU
+	 IZg3bkCct26/w==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shawn Lin <shawn.lin@rock-chips.com>,
+Cc: Niklas Cassel <cassel@kernel.org>,
 	Manivannan Sadhasivam <mani@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 081/314] PCI: dw-rockchip: Change get_ltssm() to provide L1 Substates info
-Date: Tue, 10 Mar 2026 07:15:40 -0400
-Message-ID: <ed323c253f34de5021adab863529d61a616b55a2.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 082/314] Revert "PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ"
+Date: Tue, 10 Mar 2026 07:15:41 -0400
+Message-ID: <98ec7acd062c576010c47ea530d90c6f40a7fbe0.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,108 +49,160 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit f994bb8f1c94726e0124356ccd31c3c23a8a69f4 ]
+[ Upstream commit 180c3cfe36786d261a55da52a161f9e279b19a6f ]
 
-Rename rockchip_pcie_get_ltssm() to rockchip_pcie_get_ltssm_reg() and add
-rockchip_pcie_get_ltssm() to get_ltssm() callback in order to show the
-proper L1 Substates. The PCIE_CLIENT_LTSSM_STATUS[5:0] register returns
-the same LTSSM layout as enum dw_pcie_ltssm. So the driver just need to
-convey L1 PM Substates by returning the proper value defined in
-pcie-designware.h.
+This reverts commit 0e0b45ab5d770a748487ba0ae8f77d1fb0f0de3e.
 
-  cat /sys/kernel/debug/dwc_pcie_a40000000.pcie/ltssm_status
-  L1_2 (0x142)
+While this fake hotplugging was a nice idea, it has shown that this feature
+does not handle PCIe switches correctly:
+pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
 
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+During the initial scan, PCI core doesn't see the switch and since the Root
+Port is not hot plug capable, the secondary bus number gets assigned as the
+subordinate bus number. This means, the PCI core assumes that only one bus
+will appear behind the Root Port since the Root Port is not hot plug
+capable.
+
+This works perfectly fine for PCIe endpoints connected to the Root Port,
+since they don't extend the bus. However, if a PCIe switch is connected,
+then there is a problem when the downstream busses starts showing up and
+the PCI core doesn't extend the subordinate bus number and bridge resources
+after initial scan during boot.
+
+The long term plan is to migrate this driver to the upcoming pwrctrl APIs
+that are supposed to handle this problem elegantly.
+
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://patch.msgid.link/1765503205-22184-2-git-send-email-shawn.lin@rock-chips.com
-Stable-dep-of: 180c3cfe3678 ("Revert "PCI: dw-rockchip: Enumerate endpoints based on dll_link_up IRQ"")
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251222064207.3246632-10-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-dw-rockchip.c | 29 ++++++++++++++++---
- 1 file changed, 25 insertions(+), 4 deletions(-)
+ drivers/pci/controller/dwc/pcie-dw-rockchip.c | 59 +------------------
+ 1 file changed, 3 insertions(+), 56 deletions(-)
 
 diff --git a/drivers/pci/controller/dwc/pcie-dw-rockchip.c b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-index 85999fc316c9f..0a5d1cfb88437 100644
+index 0a5d1cfb88437..b5442ee2920e5 100644
 --- a/drivers/pci/controller/dwc/pcie-dw-rockchip.c
 +++ b/drivers/pci/controller/dwc/pcie-dw-rockchip.c
-@@ -68,6 +68,11 @@
- #define  PCIE_CLKREQ_NOT_READY		FIELD_PREP_WM16(BIT(0), 0)
- #define  PCIE_CLKREQ_PULL_DOWN		FIELD_PREP_WM16(GENMASK(13, 12), 1)
- 
-+/* RASDES TBA information */
-+#define PCIE_CLIENT_CDM_RASDES_TBA_INFO_CMN	0x154
-+#define  PCIE_CLIENT_CDM_RASDES_TBA_L1_1	BIT(4)
-+#define  PCIE_CLIENT_CDM_RASDES_TBA_L1_2	BIT(5)
-+
- /* Hot Reset Control Register */
- #define PCIE_CLIENT_HOT_RESET_CTRL	0x180
- #define  PCIE_LTSSM_APP_DLY2_EN		BIT(1)
-@@ -184,11 +189,26 @@ static int rockchip_pcie_init_irq_domain(struct rockchip_pcie *rockchip)
- 	return 0;
- }
- 
--static u32 rockchip_pcie_get_ltssm(struct rockchip_pcie *rockchip)
-+static u32 rockchip_pcie_get_ltssm_reg(struct rockchip_pcie *rockchip)
- {
- 	return rockchip_pcie_readl_apb(rockchip, PCIE_CLIENT_LTSSM_STATUS);
- }
- 
-+static enum dw_pcie_ltssm rockchip_pcie_get_ltssm(struct dw_pcie *pci)
-+{
-+	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
-+	u32 val = rockchip_pcie_readl_apb(rockchip,
-+			PCIE_CLIENT_CDM_RASDES_TBA_INFO_CMN);
-+
-+	if (val & PCIE_CLIENT_CDM_RASDES_TBA_L1_1)
-+		return DW_PCIE_LTSSM_L1_1;
-+
-+	if (val & PCIE_CLIENT_CDM_RASDES_TBA_L1_2)
-+		return DW_PCIE_LTSSM_L1_2;
-+
-+	return rockchip_pcie_get_ltssm_reg(rockchip) & PCIE_LTSSM_STATUS_MASK;
-+}
-+
- static void rockchip_pcie_enable_ltssm(struct rockchip_pcie *rockchip)
- {
- 	rockchip_pcie_writel_apb(rockchip, PCIE_CLIENT_ENABLE_LTSSM,
-@@ -204,7 +224,7 @@ static void rockchip_pcie_disable_ltssm(struct rockchip_pcie *rockchip)
- static bool rockchip_pcie_link_up(struct dw_pcie *pci)
- {
- 	struct rockchip_pcie *rockchip = to_rockchip_pcie(pci);
--	u32 val = rockchip_pcie_get_ltssm(rockchip);
-+	u32 val = rockchip_pcie_get_ltssm_reg(rockchip);
- 
- 	return FIELD_GET(PCIE_LINKUP_MASK, val) == PCIE_LINKUP;
- }
-@@ -494,6 +514,7 @@ static const struct dw_pcie_ops dw_pcie_ops = {
- 	.link_up = rockchip_pcie_link_up,
- 	.start_link = rockchip_pcie_start_link,
- 	.stop_link = rockchip_pcie_stop_link,
-+	.get_ltssm = rockchip_pcie_get_ltssm,
+@@ -517,34 +517,6 @@ static const struct dw_pcie_ops dw_pcie_ops = {
+ 	.get_ltssm = rockchip_pcie_get_ltssm,
  };
  
- static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
-@@ -508,7 +529,7 @@ static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
- 	rockchip_pcie_writel_apb(rockchip, reg, PCIE_CLIENT_INTR_STATUS_MISC);
+-static irqreturn_t rockchip_pcie_rc_sys_irq_thread(int irq, void *arg)
+-{
+-	struct rockchip_pcie *rockchip = arg;
+-	struct dw_pcie *pci = &rockchip->pci;
+-	struct dw_pcie_rp *pp = &pci->pp;
+-	struct device *dev = pci->dev;
+-	u32 reg;
+-
+-	reg = rockchip_pcie_readl_apb(rockchip, PCIE_CLIENT_INTR_STATUS_MISC);
+-	rockchip_pcie_writel_apb(rockchip, reg, PCIE_CLIENT_INTR_STATUS_MISC);
+-
+-	dev_dbg(dev, "PCIE_CLIENT_INTR_STATUS_MISC: %#x\n", reg);
+-	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm_reg(rockchip));
+-
+-	if (reg & PCIE_RDLH_LINK_UP_CHGED) {
+-		if (rockchip_pcie_link_up(pci)) {
+-			msleep(PCIE_RESET_CONFIG_WAIT_MS);
+-			dev_dbg(dev, "Received Link up event. Starting enumeration!\n");
+-			/* Rescan the bus to enumerate endpoint devices */
+-			pci_lock_rescan_remove();
+-			pci_rescan_bus(pp->bridge->bus);
+-			pci_unlock_rescan_remove();
+-		}
+-	}
+-
+-	return IRQ_HANDLED;
+-}
+-
+ static irqreturn_t rockchip_pcie_ep_sys_irq_thread(int irq, void *arg)
+ {
+ 	struct rockchip_pcie *rockchip = arg;
+@@ -577,29 +549,14 @@ static irqreturn_t rockchip_pcie_ep_sys_irq_thread(int irq, void *arg)
+ 	return IRQ_HANDLED;
+ }
  
- 	dev_dbg(dev, "PCIE_CLIENT_INTR_STATUS_MISC: %#x\n", reg);
--	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm(rockchip));
-+	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm_reg(rockchip));
+-static int rockchip_pcie_configure_rc(struct platform_device *pdev,
+-				      struct rockchip_pcie *rockchip)
++static int rockchip_pcie_configure_rc(struct rockchip_pcie *rockchip)
+ {
+-	struct device *dev = &pdev->dev;
+ 	struct dw_pcie_rp *pp;
+-	int irq, ret;
+ 	u32 val;
  
- 	if (reg & PCIE_RDLH_LINK_UP_CHGED) {
- 		if (rockchip_pcie_link_up(pci)) {
-@@ -535,7 +556,7 @@ static irqreturn_t rockchip_pcie_ep_sys_irq_thread(int irq, void *arg)
- 	rockchip_pcie_writel_apb(rockchip, reg, PCIE_CLIENT_INTR_STATUS_MISC);
+ 	if (!IS_ENABLED(CONFIG_PCIE_ROCKCHIP_DW_HOST))
+ 		return -ENODEV;
  
- 	dev_dbg(dev, "PCIE_CLIENT_INTR_STATUS_MISC: %#x\n", reg);
--	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm(rockchip));
-+	dev_dbg(dev, "LTSSM_STATUS: %#x\n", rockchip_pcie_get_ltssm_reg(rockchip));
+-	irq = platform_get_irq_byname(pdev, "sys");
+-	if (irq < 0)
+-		return irq;
+-
+-	ret = devm_request_threaded_irq(dev, irq, NULL,
+-					rockchip_pcie_rc_sys_irq_thread,
+-					IRQF_ONESHOT, "pcie-sys-rc", rockchip);
+-	if (ret) {
+-		dev_err(dev, "failed to request PCIe sys IRQ\n");
+-		return ret;
+-	}
+-
+ 	/* LTSSM enable control mode */
+ 	val = FIELD_PREP_WM16(PCIE_LTSSM_ENABLE_ENHANCE, 1);
+ 	rockchip_pcie_writel_apb(rockchip, val, PCIE_CLIENT_HOT_RESET_CTRL);
+@@ -611,17 +568,7 @@ static int rockchip_pcie_configure_rc(struct platform_device *pdev,
+ 	pp = &rockchip->pci.pp;
+ 	pp->ops = &rockchip_pcie_host_ops;
  
- 	if (reg & PCIE_LINK_REQ_RST_NOT_INT) {
- 		dev_dbg(dev, "hot reset or link-down reset\n");
+-	ret = dw_pcie_host_init(pp);
+-	if (ret) {
+-		dev_err(dev, "failed to initialize host\n");
+-		return ret;
+-	}
+-
+-	/* unmask DLL up/down indicator */
+-	val = FIELD_PREP_WM16(PCIE_RDLH_LINK_UP_CHGED, 0);
+-	rockchip_pcie_writel_apb(rockchip, val, PCIE_CLIENT_INTR_MASK_MISC);
+-
+-	return ret;
++	return dw_pcie_host_init(pp);
+ }
+ 
+ static int rockchip_pcie_configure_ep(struct platform_device *pdev,
+@@ -747,7 +694,7 @@ static int rockchip_pcie_probe(struct platform_device *pdev)
+ 
+ 	switch (data->mode) {
+ 	case DW_PCIE_RC_TYPE:
+-		ret = rockchip_pcie_configure_rc(pdev, rockchip);
++		ret = rockchip_pcie_configure_rc(rockchip);
+ 		if (ret)
+ 			goto deinit_clk;
+ 		break;
 -- 
 2.51.0
 
