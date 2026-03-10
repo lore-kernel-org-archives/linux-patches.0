@@ -1,42 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01EE387583;
-	Tue, 10 Mar 2026 11:13:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D68D7387583;
+	Tue, 10 Mar 2026 11:13:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141223; cv=none; b=Ayq2jEtiHmcVuxsONKmWFZV96vtymumiUDanU6bdqt29IGk6TL4/9IYh1SJ6J2IpOsY3UfFzFjZRTvL06D5U5rspLLnhhqz03WwYETZ64nfR2/RM2i2JaUyGKulrY+IX5sxOlPVspMSl2O4/M9d7HNAQ4xqDzu4SFkP6ADaXqz4=
+	t=1773141224; cv=none; b=tkUDRIyjwaKgdXiTv//kEmfdM4Pl7PZoCboC+41YBB9S+3J4UAKKuXQLuU5gda9d4qS+mlCbV3Q+4yHQcJsgJxZHjDvno5Or3w+FluNeuG+3CeuKxCm+oiov6o8Q3Z6Sd8O5aDmfiZmyDV69eDC/iy2tuqZz62iRN90SsXserjU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141223; c=relaxed/simple;
-	bh=vyHdMcG9VyGrk5evzWM8H2tnqtTS/qoE5WYMnzt799Y=;
+	s=arc-20240116; t=1773141224; c=relaxed/simple;
+	bh=rrBysnKI8jwz62NKZrccHKWIfRS611sdxnWvsRCiyKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgDzrCV4RPgp1ZehtgqN+CbWXltdE96uwwJtXYVoejBTCV3iQRP7KAh8LyQq4TBaL01B35b/v4fg4rqifYOYxgoonrqKfeWFH50J8jvwmmwC+FLGTZFksHS264y2X9torGptUnV3MDjgXuK+KxT14K5kXOh78SuOurFbgoa09k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EQ4jPZLg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gBSlRnEh4J+VQwlWQTPfBwvRVkJLO/6NoNjsBL2rfXIN84c+mqjcbPFHCjZtod4Pj12g8KCuqo7DryNWndocpRZzNDrwiyTPUaw4klMi9H2b+I0a3OZQQ6hXeUfUXbJQ2F2NOo2MVZGqfUrBHun3VcLxcH+0lYzZUSs9gs2StkI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mDaJO7K9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EQ4jPZLg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDC5C2BCB2;
-	Tue, 10 Mar 2026 11:13:42 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mDaJO7K9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4165C19423;
+	Tue, 10 Mar 2026 11:13:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141223;
-	bh=vyHdMcG9VyGrk5evzWM8H2tnqtTS/qoE5WYMnzt799Y=;
+	s=k20201202; t=1773141224;
+	bh=rrBysnKI8jwz62NKZrccHKWIfRS611sdxnWvsRCiyKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQ4jPZLgyOvX4UC2vjE2WJselobnBhyBpw4jInuVGQ0BPYmCK68KWZrsv0aCB0Lo8
-	 ONV1TMQi9qSjh9/ek87egm/0qJkhbvbQmlf/NwlQVsrzAEQ76qZcniR+KUPfrv5uCr
-	 /aqjLZxMrH79b2VTqoFQa3BWmrCrq8XLpnIM9yp3zBQVF/itXd/SvXy5cHGFy0BTsK
-	 eoawQCP0VFCt5siLFgcgYGV9pr6QMPd50gY30bL/lwmgY6Gado6zXyBvPC3hfZw4s7
-	 yDtwF6eX+rhIENt6ZWe4tMoeCtTOuUFzbK2498A/6HZHmm+tWpCxlqHkXr5qKRKUgn
-	 fLyMgXhPV+0MQ==
+	b=mDaJO7K9/Iic/kKTUKUC50q1492gJg5IriPd4aiaqHJthPP/kb9ZQd5gTLEBAJMnx
+	 tXYeb4fzLR/kIXyvPDls6uJjuNBVnCqofEdpXpbGwyjragHOC4M1BDg/PNOL6eXUSL
+	 iFzO38DT6BDqXjV/2aBXRIKiGhWzDiLYT+HPgx84RKPKILYubePPVNOv9hxw26lgOe
+	 D7J9TL729fjP/dpDy5ui9trGNMIe8O68TO7OjvC0EHGpY/9/ww90Yk82Y2clucTg+G
+	 rQIl41VI8k9QTjzlGoxzniJ6CEIZryqRJI9+KUlPZqvguyjj0jDRf5075zC1lPwayp
+	 s1KEt22oUtzYg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Tomasz Lis <tomasz.lis@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Michal Wajdeczko <michal.wajdeczko@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+Cc: Chaitanya Kulkarni <kch@nvidia.com>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 225/311] drm/xe/queue: Call fini on exec queue creation fail
-Date: Tue, 10 Mar 2026 07:04:32 -0400
-Message-ID: <a17371b1cb31109a780b2a6754e7b28967fe4e45.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 226/311] blktrace: fix __this_cpu_read/write in preemptible context
+Date: Tue, 10 Mar 2026 07:04:33 -0400
+Message-ID: <17ab3a74788a5d1201736721fd3669de56253062.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,97 +50,130 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Tomasz Lis <tomasz.lis@intel.com>
+From: Chaitanya Kulkarni <kch@nvidia.com>
 
-[ Upstream commit 99f9b5343cae80eb0dfe050baf6c86d722b3ba2e ]
+[ Upstream commit da46b5dfef48658d03347cda21532bcdbb521e67 ]
 
-Every call to queue init should have a corresponding fini call.
-Skipping this would mean skipping removal of the queue from GuC list
-(which is part of guc_id allocation). A damaged queue stored in
-exec_queue_lookup list would lead to invalid memory reference,
-sooner or later.
+tracing_record_cmdline() internally uses __this_cpu_read() and
+__this_cpu_write() on the per-CPU variable trace_cmdline_save, and
+trace_save_cmdline() explicitly asserts preemption is disabled via
+lockdep_assert_preemption_disabled(). These operations are only safe
+when preemption is off, as they were designed to be called from the
+scheduler context (probe_wakeup_sched_switch() / probe_wakeup()).
 
-Call fini to free guc_id. This must be done before any internal
-LRCs are freed.
+__blk_add_trace() was calling tracing_record_cmdline(current) early in
+the blk_tracer path, before ring buffer reservation, from process
+context where preemption is fully enabled. This triggers the following
+using blktests/blktrace/002:
 
-Since the finalization with this extra call became very similar to
-__xe_exec_queue_fini(), reuse that. To make this reuse possible,
-alter xe_lrc_put() so it can survive NULL parameters, like other
-similar functions.
+blktrace/002 (blktrace ftrace corruption with sysfs trace)   [failed]
+    runtime  0.367s  ...  0.437s
+    something found in dmesg:
+    [   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+    [   81.239580] null_blk: disk nullb1 created
+    [   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+    [   81.362842] caller is tracing_record_cmdline+0x10/0x40
+    [   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+    [   81.362877] Tainted: [N]=TEST
+    [   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+    [   81.362881] Call Trace:
+    [   81.362884]  <TASK>
+    [   81.362886]  dump_stack_lvl+0x8d/0xb0
+    ...
+    (See '/mnt/sda/blktests/results/nodev/blktrace/002.dmesg' for the entire message)
 
-v2: Reuse _xe_exec_queue_fini(). Make xe_lrc_put() aware of NULLs.
+[   81.211018] run blktests blktrace/002 at 2026-02-25 22:24:33
+[   81.239580] null_blk: disk nullb1 created
+[   81.357294] BUG: using __this_cpu_read() in preemptible [00000000] code: dd/2516
+[   81.362842] caller is tracing_record_cmdline+0x10/0x40
+[   81.362872] CPU: 16 UID: 0 PID: 2516 Comm: dd Tainted: G                 N  7.0.0-rc1lblk+ #84 PREEMPT(full)
+[   81.362877] Tainted: [N]=TEST
+[   81.362878] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.17.0-0-gb52ca86e094d-prebuilt.qemu.org 04/01/2014
+[   81.362881] Call Trace:
+[   81.362884]  <TASK>
+[   81.362886]  dump_stack_lvl+0x8d/0xb0
+[   81.362895]  check_preemption_disabled+0xce/0xe0
+[   81.362902]  tracing_record_cmdline+0x10/0x40
+[   81.362923]  __blk_add_trace+0x307/0x5d0
+[   81.362934]  ? lock_acquire+0xe0/0x300
+[   81.362940]  ? iov_iter_extract_pages+0x101/0xa30
+[   81.362959]  blk_add_trace_bio+0x106/0x1e0
+[   81.362968]  submit_bio_noacct_nocheck+0x24b/0x3a0
+[   81.362979]  ? lockdep_init_map_type+0x58/0x260
+[   81.362988]  submit_bio_wait+0x56/0x90
+[   81.363009]  __blkdev_direct_IO_simple+0x16c/0x250
+[   81.363026]  ? __pfx_submit_bio_wait_endio+0x10/0x10
+[   81.363038]  ? rcu_read_lock_any_held+0x73/0xa0
+[   81.363051]  blkdev_read_iter+0xc1/0x140
+[   81.363059]  vfs_read+0x20b/0x330
+[   81.363083]  ksys_read+0x67/0xe0
+[   81.363090]  do_syscall_64+0xbf/0xf00
+[   81.363102]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   81.363106] RIP: 0033:0x7f281906029d
+[   81.363111] Code: 31 c0 e9 c6 fe ff ff 50 48 8d 3d 66 63 0a 00 e8 59 ff 01 00 66 0f 1f 84 00 00 00 00 00 80 3d 41 33 0e 00 00 74 17 31 c0 0f 05 <48> 3d 00 f0 ff ff 77 5b c3 66 2e 0f 1f 84 00 00 00 00 00 48 83 ec
+[   81.363113] RSP: 002b:00007ffca127dd48 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[   81.363120] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f281906029d
+[   81.363122] RDX: 0000000000001000 RSI: 0000559f8bfae000 RDI: 0000000000000000
+[   81.363123] RBP: 0000000000001000 R08: 0000002863a10a81 R09: 00007f281915f000
+[   81.363124] R10: 00007f2818f77b60 R11: 0000000000000246 R12: 0000559f8bfae000
+[   81.363126] R13: 0000000000000000 R14: 0000000000000000 R15: 000000000000000a
+[   81.363142]  </TASK>
 
-Fixes: 3c1fa4aa60b1 ("drm/xe: Move queue init before LRC creation")
-Signed-off-by: Tomasz Lis <tomasz.lis@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com> (v1)
-Signed-off-by: Michal Wajdeczko <michal.wajdeczko@intel.com>
-Link: https://patch.msgid.link/20260226212701.2937065-2-tomasz.lis@intel.com
-(cherry picked from commit 393e5fea6f7d7054abc2c3d97a4cfe8306cd6079)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+The same BUG fires from blk_add_trace_plug(), blk_add_trace_unplug(),
+and blk_add_trace_rq() paths as well.
+
+The purpose of tracing_record_cmdline() is to cache the task->comm for
+a given PID so that the trace can later resolve it. It is only
+meaningful when a trace event is actually being recorded. Ring buffer
+reservation via ring_buffer_lock_reserve() disables preemption, and
+preemption remains disabled until the event is committed :-
+
+__blk_add_trace()
+       	__trace_buffer_lock_reserve()
+       		__trace_buffer_lock_reserve()
+       			ring_buffer_lock_reserve()
+       				preempt_disable_notrace();  <---
+
+With this fix blktests for blktrace pass:
+
+  blktests (master) # ./check blktrace
+  blktrace/001 (blktrace zone management command tracing)      [passed]
+      runtime  3.650s  ...  3.647s
+  blktrace/002 (blktrace ftrace corruption with sysfs trace)   [passed]
+      runtime  0.411s  ...  0.384s
+
+Fixes: 7ffbd48d5cab ("tracing: Cache comms only after an event occurred")
+Reported-by: Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Suggested-by: Steven Rostedt <rostedt@goodmis.org>
+Signed-off-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_exec_queue.c | 23 +++++++++++------------
- drivers/gpu/drm/xe/xe_lrc.h        |  3 ++-
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ kernel/trace/blktrace.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_exec_queue.c b/drivers/gpu/drm/xe/xe_exec_queue.c
-index 779d7e7e2d2ec..1e774fa1fa190 100644
---- a/drivers/gpu/drm/xe/xe_exec_queue.c
-+++ b/drivers/gpu/drm/xe/xe_exec_queue.c
-@@ -185,6 +185,16 @@ static struct xe_exec_queue *__xe_exec_queue_alloc(struct xe_device *xe,
- 	return q;
- }
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index c4db5c2e71037..0548e64b08f23 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -383,8 +383,6 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 	cpu = raw_smp_processor_id();
  
-+static void __xe_exec_queue_fini(struct xe_exec_queue *q)
-+{
-+	int i;
-+
-+	q->ops->fini(q);
-+
-+	for (i = 0; i < q->width; ++i)
-+		xe_lrc_put(q->lrc[i]);
-+}
-+
- static int __xe_exec_queue_init(struct xe_exec_queue *q, u32 exec_queue_flags)
- {
- 	int i, err;
-@@ -239,21 +249,10 @@ static int __xe_exec_queue_init(struct xe_exec_queue *q, u32 exec_queue_flags)
- 	return 0;
- 
- err_lrc:
--	for (i = i - 1; i >= 0; --i)
--		xe_lrc_put(q->lrc[i]);
-+	__xe_exec_queue_fini(q);
- 	return err;
- }
- 
--static void __xe_exec_queue_fini(struct xe_exec_queue *q)
--{
--	int i;
+ 	if (blk_tracer) {
+-		tracing_record_cmdline(current);
 -
--	q->ops->fini(q);
--
--	for (i = 0; i < q->width; ++i)
--		xe_lrc_put(q->lrc[i]);
--}
--
- struct xe_exec_queue *xe_exec_queue_create(struct xe_device *xe, struct xe_vm *vm,
- 					   u32 logical_mask, u16 width,
- 					   struct xe_hw_engine *hwe, u32 flags,
-diff --git a/drivers/gpu/drm/xe/xe_lrc.h b/drivers/gpu/drm/xe/xe_lrc.h
-index 2fb628da5c433..96ae31df3359f 100644
---- a/drivers/gpu/drm/xe/xe_lrc.h
-+++ b/drivers/gpu/drm/xe/xe_lrc.h
-@@ -73,7 +73,8 @@ static inline struct xe_lrc *xe_lrc_get(struct xe_lrc *lrc)
-  */
- static inline void xe_lrc_put(struct xe_lrc *lrc)
- {
--	kref_put(&lrc->refcount, xe_lrc_destroy);
-+	if (lrc)
-+		kref_put(&lrc->refcount, xe_lrc_destroy);
- }
+ 		buffer = blk_tr->array_buffer.buffer;
+ 		trace_ctx = tracing_gen_ctx_flags(0);
+ 		switch (bt->version) {
+@@ -419,6 +417,7 @@ static void __blk_add_trace(struct blk_trace *bt, sector_t sector, int bytes,
+ 		if (!event)
+ 			return;
  
- /**
++		tracing_record_cmdline(current);
+ 		switch (bt->version) {
+ 		case 1:
+ 			record_blktrace_event(ring_buffer_event_data(event),
 -- 
 2.51.0
 
