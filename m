@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC99E386454;
-	Tue, 10 Mar 2026 11:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8654F386454;
+	Tue, 10 Mar 2026 11:12:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141172; cv=none; b=WwVE58b6YzhPi/DKyRHU+N1PTeAtwM/nsbIuDzYetK3S9U12GcNTj8cMPjncThw8cK7mw5k7vfSLFwHgMRJY7JXOcEFMdOToI8lw4QQC4wrXCCpUi4O4hbmGtvFJ8SFMmBAVQu36iyQ1sfjSnPs8YZBHaYjVKCj1xIsiAK5sdUc=
+	t=1773141173; cv=none; b=BzwyLHXiGphRwFBBkRr/mq+VNpoMAgkm6DelrRuv8EE/yfautQQI/i1TWSLgdiRQexN5rH6aX0C9Bke8uLNxt9D8zonWubWz998DSlGq797kH1pnKLzW9u7igpcB9wLcCplCsbKZVpzqT2ElvnxooddvviFOn7smHVFk4WHF1yY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141172; c=relaxed/simple;
-	bh=ZijnZwtCQR666sjH9IADWxAai2owMT2vgRdSuxyVNtk=;
+	s=arc-20240116; t=1773141173; c=relaxed/simple;
+	bh=LHvUSIqIBXo444mrdQoAdP3dAvh15W6Gef/dvrjILLQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JJfl7HetohTQhbe/MiuOgZ5hDWUQ65HNkHVvToqSI805JbKCcGAQIgh857M8BLfNFiWGuUu1Q5Vywpj6g+J+G3WfYreQPlDli5hV8ZgwZAytpzkyP/Ev1iWGv5DH1Hqsz+qHSUB2L6FoODTaPuaXvYCFxJ0nOnxB5REQjUX/FLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=L429adZZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NAEtOJIwPGEIFU3EEJEthKcIxl4rcTVnwAYKgKLJXSETzu4e/NTM4CvL2mM16Z2L0LT1MCTy33K9u41K0oi3QdVB5sPI7MToN/Jku2OhI+8+eOuUUAMhR6OGIg9TBoI9/D+Y8MrZ10/oiQcVc5vYcyXjZnU1D2YYjigxTxnAzLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=nhtoLZFL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="L429adZZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDE9FC19423;
-	Tue, 10 Mar 2026 11:12:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="nhtoLZFL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2204C2BC86;
+	Tue, 10 Mar 2026 11:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141172;
-	bh=ZijnZwtCQR666sjH9IADWxAai2owMT2vgRdSuxyVNtk=;
+	s=k20201202; t=1773141173;
+	bh=LHvUSIqIBXo444mrdQoAdP3dAvh15W6Gef/dvrjILLQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L429adZZ+oOk8mhYF4/0EAirUnd0AbsJoz11xgB24bH2HNgAhJTdVLiJRet91Njpw
-	 sm7bAAEQqcngcWQzB8/vCe4i2z4bLrJX2Qhk2jPn2YsiKZ7kdgI7v+WsivOPDyFbKj
-	 zO8cs+QlABChCpFoEwVo0j005gWS9jYFKJ4R2Okk+Eh8Uo+tLFDi2qiky+PPKY7s2b
-	 e2w4+pT/WosfjbjkWWrkRYP2ry/K8DwRMRvuXxFiOFcu6JVDTJ2PcpIR9Cc15BShIw
-	 VUm7tSVzQsCepEfIC6AVumNotQ8nukPSJza5AS1lE/cD/pOTVTMiqxIfDpQkwiuITR
-	 XqYmqTprjrgSw==
+	b=nhtoLZFLycSdiPOLWXq4Rp9hx7M0DAFaHbiwBRnxHFVCgTTAnbz/ghUPkwcEBtcgn
+	 7FG4pL3uXQEA2Nh0h+H9ADg3AZTiQXD6Tejf4wR/BtF3f5F5acWTNiOv19kVYawTVx
+	 pOLDt6VzL0Pu/+1gFqt4hvgy3M/z1QxGCrzpHuoFAez75RL+GHV8Z+waRqxLpvdjZM
+	 ZzA3P1c75CORoZmIeqpaWH4/EhgAZWmgk89GlvmrI/cXDPeHQl0lZdxiJhTJ7h7QPU
+	 jZLhRdOVuTrTqkaxeh7kKo14LgqGKJrwvmQvGMfWbZosjLLiMkeg2/vY6Oe9ILnSj3
+	 sKvJBLSbmw+hw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Mariusz Skamra <mariusz.skamra@codecoup.pl>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
+Cc: Corey Minyard <corey@minyard.net>,
+	Breno Leitao <leitao@debian.org>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 173/311] Bluetooth: Fix CIS host feature condition
-Date: Tue, 10 Mar 2026 07:03:40 -0400
-Message-ID: <f2f4e46a237206a3e23a3b07f4cf7163476f7cbd.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 174/311] ipmi: Fix use-after-free and list corruption on sender error
+Date: Tue, 10 Mar 2026 07:03:41 -0400
+Message-ID: <ab11913612fcb09a1bf52e26d0f0b90d7fa37f22.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -50,45 +48,73 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Mariusz Skamra <mariusz.skamra@codecoup.pl>
+From: Corey Minyard <corey@minyard.net>
 
-commit 7cff9a40c6b0f72ccefdaf0ffe03cfac30348f51 upstream.
+commit 594c11d0e1d445f580898a2b8c850f2e3f099368 upstream.
 
-This fixes the condition for sending the LE Set Host Feature command.
-The command is sent to indicate host support for Connected Isochronous
-Streams in this case. It has been observed that the system could not
-initialize BIS-only capable controllers because the controllers do not
-support the command.
+The analysis from Breno:
 
-As per Core v6.2 | Vol 4, Part E, Table 3.1 the command shall be
-supported if CIS Central or CIS Peripheral is supported; otherwise,
-the command is optional.
+When the SMI sender returns an error, smi_work() delivers an error
+response but then jumps back to restart without cleaning up properly:
 
-Fixes: 709788b154ca ("Bluetooth: hci_core: Fix using {cis,bis}_capable for current settings")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mariusz Skamra <mariusz.skamra@codecoup.pl>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-[ iso_capable() => cis_capable() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+1. intf->curr_msg is not cleared, so no new message is pulled
+2. newmsg still points to the message, causing sender() to be called
+   again with the same message
+3. If sender() fails again, deliver_err_response() is called with
+   the same recv_msg that was already queued for delivery
+
+This causes list_add corruption ("list_add double add") because the
+recv_msg is added to the user_msgs list twice. Subsequently, the
+corrupted list leads to use-after-free when the memory is freed and
+reused, and eventually a NULL pointer dereference when accessing
+recv_msg->done.
+
+The buggy sequence:
+
+  sender() fails
+    -> deliver_err_response(recv_msg)  // recv_msg queued for delivery
+    -> goto restart                    // curr_msg not cleared!
+  sender() fails again (same message!)
+    -> deliver_err_response(recv_msg)  // tries to queue same recv_msg
+    -> LIST CORRUPTION
+
+Fix this by freeing the message and setting it to NULL on a send error.
+Also, always free the newmsg on a send error, otherwise it will leak.
+
+Reported-by: Breno Leitao <leitao@debian.org>
+Closes: https://lore.kernel.org/lkml/20260127-ipmi-v1-0-ba5cc90f516f@debian.org/
+Fixes: 9cf93a8fa9513 ("ipmi: Allow an SMI sender to return an error")
+Cc: stable@vger.kernel.org # 4.18
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 334eb4376a266..80b601e344ae3 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -4564,7 +4564,7 @@ static int hci_le_set_host_feature_sync(struct hci_dev *hdev)
- {
- 	struct hci_cp_le_set_host_feature cp;
- 
--	if (!iso_capable(hdev))
-+	if (!cis_capable(hdev))
- 		return 0;
- 
- 	memset(&cp, 0, sizeof(cp));
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 3f48fc6ab596d..a590a67294e24 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -4852,8 +4852,15 @@ static void smi_work(struct work_struct *t)
+ 			if (newmsg->recv_msg)
+ 				deliver_err_response(intf,
+ 						     newmsg->recv_msg, cc);
+-			else
+-				ipmi_free_smi_msg(newmsg);
++			if (!run_to_completion)
++				spin_lock_irqsave(&intf->xmit_msgs_lock,
++						  flags);
++			intf->curr_msg = NULL;
++			if (!run_to_completion)
++				spin_unlock_irqrestore(&intf->xmit_msgs_lock,
++						       flags);
++			ipmi_free_smi_msg(newmsg);
++			newmsg = NULL;
+ 			goto restart;
+ 		}
+ 	}
 -- 
 2.51.0
 
