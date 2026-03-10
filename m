@@ -1,46 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D39544103C;
-	Tue, 10 Mar 2026 09:02:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535F2449EA9;
+	Tue, 10 Mar 2026 09:02:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773133325; cv=none; b=OWpLJmwc1l5yBfjhiZFJT1rmClWkiOQ7Uk2SeUAs7HsFbhV9/y3XoTshm94kT0UFa+QYSgcXaEAFaDPsjUYIqK3rvy/woI6209yYSG/E4Yiz6f2LfHy+Sc5WEYXp7j4F9sjMvhzwT9M0ayyFx2YZDU8vj6U9vcuswfYaXy+0tXk=
+	t=1773133327; cv=none; b=L6RwkqGvvrOfcehzR10dkOaJJwspv/YZ3CbgXRRKHasYuETB0Z8cm7YZt9+PEpnMCmtQPE06JaNZjO+R6ULC2VgXYPyLPOWTzQ8viCRVGkUhR8foVQ/CBAM1ryOuE9tmm8SKCkitjM/PRZQ1j/imBCsBVuxx9IX+qkczd6h2up0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773133325; c=relaxed/simple;
-	bh=19Gx4tdBnUxpmwRSAVsv3/VSZBu/Y9k0M5OKJaD6cg4=;
+	s=arc-20240116; t=1773133327; c=relaxed/simple;
+	bh=r8WAD2F7D8WIgSmF8G5L9L+20YDFC2s8SrvwDgEwo+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RmKTh8iO9BA1MJzrQhrtAUE9mzhdlhZu6ikdARU0gARMaMU7NSyGFi9xDbFp0gCXhnXMgLYBujOhh/TaCvPqv0yMjily5DO/UWt8wHJ+uLScQACHSOPiv+2Ahbapfh9A3/gPTDYW3Xh73CX1B0W51O86Z0sMC/7uPXxbxeF72OI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=K02iwP/D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=NzuU41gxEowda0kJvLuBhCVEtDK6etFojodekBkUN/V5iSz/ywskJ5QVNu1O6jZ9KFUiz5nvgKZ0PnOWkW6kyiDfsFyhiNmV7J9EeL8GGJoK3Vi05N+EtF6uH0C6eJOTgru9ED6NfdRY67NaEn0FWmSAr5wWc38lMQHmSstXlag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RnOwznEQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="K02iwP/D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42398C2BCB3;
-	Tue, 10 Mar 2026 09:02:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RnOwznEQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5DFAC4AF0B;
+	Tue, 10 Mar 2026 09:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773133325;
-	bh=19Gx4tdBnUxpmwRSAVsv3/VSZBu/Y9k0M5OKJaD6cg4=;
+	s=k20201202; t=1773133327;
+	bh=r8WAD2F7D8WIgSmF8G5L9L+20YDFC2s8SrvwDgEwo+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K02iwP/Dv+WtibUAmb+9CUGsjJcvg22wJWRwOAwztoBCMxT8TKkI5R8ZwBJyeYa1D
-	 UjkjW9X/n7ys2hq4R0ZAiQOD8mU8SKFBntmrHAF4Dfz/pBR0Xvqma2iuhTgvuusQ30
-	 AUI1S/P9iK2mcw6cihm1aTUm7fg4bzT69xxqX2KBazmbzMa9b4KQF5tMOiMoI/zWDi
-	 Mpr7lzMqq4vqSDuhKI9f/TwE8lSWhmo8+bkTz7XVmA1j00RJ38AWoZlfz3gT+lA93m
-	 TJ9SG0cBiHVMKKy+mIq+hIg/MlFYWPqb4FReC85uHF08zbsuWejw+P3vSqity2LQuT
-	 VM1Rj1jGwqTlQ==
+	b=RnOwznEQfNQFyozDBofhx/73Eb08XXRWmjZ7P7waNRnB2uenwdcthIDpkgSbit7l0
+	 H8OLTIrJD6IsAjkQUdL6URmqF3bazleT0cLRMxIAKURXTccMY1mA9g538NYd+Z+hzU
+	 8ZBxj+Qay/g/U9XCT0+BKSDFpAk1szcABD2t43X0ygWsiKbP+KUvvuWCtRX8rTXwNm
+	 DtUd0GCPlNlXIhUl6L4+CGD74YS2ne26jiPWrLIfW0yrNarQg4dt0S7gsk0W1eVlo4
+	 GIdHg2KLG6pii6RUg2MmYvU+vGQk5r4hiw4+jH+y2PmyT/lQU2XALcQnCh7pwh/k+r
+	 50AM2i+urpxKw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Shuming Fan <shumingf@realtek.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Maarten Lankhorst <dev@lankhorst.se>,
+	kernel test robot <lkp@intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	oder_chiou@realtek.com,
-	lgirdwood@gmail.com,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	christian.koenig@amd.com,
+	ray.huang@amd.com,
+	maarten.lankhorst@linux.intel.com,
+	mripard@kernel.org,
+	tzimmermann@suse.de,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ASoC: rt1321: fix DMIC ch2/3 mask issue
-Date: Tue, 10 Mar 2026 05:01:13 -0400
-Message-ID: <20260310090145.2709021-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/ttm/tests: Fix build failure on PREEMPT_RT
+Date: Tue, 10 Mar 2026 05:01:14 -0400
+Message-ID: <20260310090145.2709021-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310090145.2709021-1-sashal@kernel.org>
 References: <20260310090145.2709021-1-sashal@kernel.org>
@@ -50,20 +54,24 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.6
 Content-Transfer-Encoding: 8bit
 
-From: Shuming Fan <shumingf@realtek.com>
+From: Maarten Lankhorst <dev@lankhorst.se>
 
-[ Upstream commit 986841dcad257615a6e3f89231bb38e1f3506b77 ]
+[ Upstream commit a58d487fb1a52579d3c37544ea371da78ed70c45 ]
 
-This patch fixed the DMIC ch2/3 mask missing problem.
+Fix a compile error in the kunit tests when CONFIG_PREEMPT_RT is
+enabled, and the normal mutex is converted into a rtmutex.
 
-Signed-off-by: Shuming Fan <shumingf@realtek.com>
-Link: https://patch.msgid.link/20260225091210.3648905-1-shumingf@realtek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202602261547.3bM6yVAS-lkp@intel.com/
+Reviewed-by: Jouni Högander <jouni.hogander@intel.com>
+Link: https://patch.msgid.link/20260304085616.1216961-1-dev@lankhorst.se
+Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -71,85 +79,90 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### What the commit fixes
-The RT1321 codec's DMIC (Digital Microphone) channel mask was hardcoded
-to `BIT(0) | BIT(1)`, which only enables channels 0 and 1. When more
-than 2 channels are requested (e.g., channels 2/3), those channels would
-be silently ignored because the mask didn't include them.
+**What the commit does:** Fixes a build failure in
+`ttm_bo_reserve_interrupted()` kunit test when `CONFIG_PREEMPT_RT` is
+enabled. On PREEMPT_RT, `struct mutex` becomes `struct rt_mutex`, so
+direct `mutex_lock(&bo->base.resv->lock.base)` calls fail to compile.
+The fix replaces the raw mutex calls with the proper
+`dma_resv_lock()`/`dma_resv_unlock()` API, which correctly abstracts the
+underlying lock type.
 
-The fix dynamically calculates the channel mask using
-`GENMASK(num_channels - 1, 0)` based on the actual number of channels
-from the audio parameters, so all requested channels are properly
-enabled.
+**Type of fix:** Build fix — prevents compilation failure under a valid
+kernel configuration (PREEMPT_RT).
 
-### Stable kernel criteria assessment
-- **Fixes a real bug**: Yes - DMIC channels 2/3 are non-functional on
-  RT1321 hardware
-- **Obviously correct**: Yes - using `params_channels()` with
-  `GENMASK()` is the standard pattern (already used elsewhere in this
-  driver for RT1320_DEV_ID)
-- **Small and contained**: Yes - 3 lines changed in 1 file, only affects
-  the RT1321 code path
-- **No new features**: Correct - this purely fixes broken channel
-  masking
-- **Author**: Shuming Fan from Realtek (the codec vendor),
-  reviewed/merged by Mark Brown (ASoC maintainer)
+**Scope:** Extremely small — 2 lines changed in a test file. Changes
+`mutex_lock` → `dma_resv_lock` and `mutex_unlock` → `dma_resv_unlock`.
+The `dma_resv_*` API has been available for many kernel versions and is
+the proper way to lock reservation objects.
 
-### Risk assessment
-Very low risk. The change is isolated to the `RT1321_DEV_ID` case in
-`rt1320_sdw_hw_params()`. It cannot affect RT1320 or any other device
-path. The fix pattern (dynamic channel mask from params) is standard
-practice.
+**Affected versions:** The test file was introduced in v6.9-rc1 (commit
+995279d280d1e). A similar fix for a *different function*
+(`ttm_bo_reserve_deadlock`) was done in v6.11-rc1 (commit
+f85376c890ef4), but it missed this second instance in
+`ttm_bo_reserve_interrupted`. The buggy code exists in v6.12 and v6.13
+stable trees. The file doesn't exist in v6.1 or v6.6 (pre-v6.9).
 
-### Applicability to stable trees
-RT1321 support was added in commit `7bf9e646af9a0` which first appeared
-in v6.18. This fix is only relevant to stable trees that include that
-commit (6.18.y and newer).
+**Risk assessment:** Extremely low risk. This is a 2-line change in test
+code only, using well-established APIs. It cannot cause runtime
+regressions in production code. The `dma_resv_lock(obj, NULL)` call is
+semantically equivalent to locking the underlying ww_mutex without a
+context, which is what the original `mutex_lock` was doing.
 
-### Verification
-- `git log --oneline -20 -- sound/soc/codecs/rt1320-sdw.c` confirmed the
-  file history and that RT1321 support was added in 7bf9e646af9a0
-- `git tag --contains 7bf9e646af9a0` confirmed RT1321 support first
-  appeared in v6.18
-- `git show e52b9ff96a5eb --stat` confirmed the fix is 3 insertions, 2
-  deletions in a single file
-- Read the diff: verified the old code hardcoded `BIT(0) | BIT(1)` and
-  the new code uses `GENMASK(num_channels - 1, 0)`
-- The RT1320_DEV_ID case already had a different (working) channel mask
-  approach, confirming this was an RT1321-specific oversight
+**Stable criteria assessment:**
+- Obviously correct and tested: Yes — uses standard API, reviewed by
+  Jouni Högander, reported by kernel test robot
+- Fixes a real bug: Yes — build failure with PREEMPT_RT
+- Important issue: Build fixes are explicitly listed as stable-worthy in
+  the rules
+- Small and contained: Yes — 2 lines in one test file
+- No new features: Correct
 
-This is a small, obvious bug fix from the hardware vendor that fixes
-non-functional DMIC channels on RT1321 hardware. It meets all stable
-kernel criteria.
+**Verification:**
+- `git log --diff-filter=A` confirmed the test file was introduced in
+  commit 995279d280d1e (v6.9-rc1)
+- `git show v6.12:...ttm_bo_test.c` confirmed the buggy
+  `mutex_lock(&bo->base.resv->lock.base)` exists at line 225 in v6.12
+- `git show v6.13:...ttm_bo_test.c` confirmed the same buggy code exists
+  in v6.13
+- `git show v6.6/v6.1:...ttm_bo_test.c` confirmed the file does NOT
+  exist in these older stable trees
+- `git show v6.12:include/linux/dma-resv.h` confirmed
+  `dma_resv_lock`/`dma_resv_unlock` API exists in v6.12
+- Previous related fix f85376c890ef4 confirmed this is the same class of
+  PREEMPT_RT build issue but in a different function
+  (`ttm_bo_reserve_deadlock` vs `ttm_bo_reserve_interrupted`)
+- The commit has `Reported-by: kernel test robot` and `Reviewed-by:
+  Jouni Högander`, confirming it was properly tested and reviewed
+
+This is a straightforward build fix — small, correct, zero runtime risk,
+and applies to existing stable trees (v6.12, v6.13). Build fixes are
+explicitly allowed in stable.
 
 **YES**
 
- sound/soc/codecs/rt1320-sdw.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/ttm/tests/ttm_bo_test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt1320-sdw.c b/sound/soc/codecs/rt1320-sdw.c
-index e6142645b9038..4d09dd06f2d83 100644
---- a/sound/soc/codecs/rt1320-sdw.c
-+++ b/sound/soc/codecs/rt1320-sdw.c
-@@ -1455,7 +1455,7 @@ static int rt1320_sdw_hw_params(struct snd_pcm_substream *substream,
- 	struct sdw_port_config port_config;
- 	struct sdw_port_config dmic_port_config[2];
- 	struct sdw_stream_runtime *sdw_stream;
--	int retval;
-+	int retval, num_channels;
- 	unsigned int sampling_rate;
+diff --git a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+index d468f83220720..f3103307b5df9 100644
+--- a/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
++++ b/drivers/gpu/drm/ttm/tests/ttm_bo_test.c
+@@ -222,13 +222,13 @@ static void ttm_bo_reserve_interrupted(struct kunit *test)
+ 		KUNIT_FAIL(test, "Couldn't create ttm bo reserve task\n");
  
- 	dev_dbg(dai->dev, "%s %s", __func__, dai->name);
-@@ -1487,7 +1487,8 @@ static int rt1320_sdw_hw_params(struct snd_pcm_substream *substream,
- 				dmic_port_config[1].num = 10;
- 				break;
- 			case RT1321_DEV_ID:
--				dmic_port_config[0].ch_mask = BIT(0) | BIT(1);
-+				num_channels = params_channels(params);
-+				dmic_port_config[0].ch_mask = GENMASK(num_channels - 1, 0);
- 				dmic_port_config[0].num = 8;
- 				break;
- 			default:
+ 	/* Take a lock so the threaded reserve has to wait */
+-	mutex_lock(&bo->base.resv->lock.base);
++	dma_resv_lock(bo->base.resv, NULL);
+ 
+ 	wake_up_process(task);
+ 	msleep(20);
+ 	err = kthread_stop(task);
+ 
+-	mutex_unlock(&bo->base.resv->lock.base);
++	dma_resv_unlock(bo->base.resv);
+ 
+ 	KUNIT_ASSERT_EQ(test, err, -ERESTARTSYS);
+ }
 -- 
 2.51.0
 
