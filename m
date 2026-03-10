@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E2037B413;
-	Tue, 10 Mar 2026 11:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E4537B413;
+	Tue, 10 Mar 2026 11:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141997; cv=none; b=rX/Vdr8RXVl8r/rMhkDYSEZc1K41UNld2BEi5IQxjewuVOKbRI3cVO7n7yGP2ps9LPFuDyj3mAEJe/pNX12gt26YlpJX309I8fT/P+GyWP1pOezdFIyuMH4b/yLeHY+TmLen5y7xnNYJEGY/WbcMsX8Fw47ihcfumacVFeooaOU=
+	t=1773141997; cv=none; b=fbnwhqwf9O+gE7CCSp2mdFlJWoVOgLJcRlYqZMezIzdxyNz9WIdPI38lraU+cVbB2UYVapcHS5jJqPV0Os/jp1X1aFwXnHBbGPSfGRm7DOe7+vGHCAFwgl+iw5vrU3fAAxwr5U1Zh5xgAgDelc2e7tlJCs/DlvUe4rZr9uEiW+0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141997; c=relaxed/simple;
-	bh=t5bGKMsPUkW4P/TIqj1CVJDaYWOZ4RTaXh6FPZzQkpQ=;
+	bh=FFaBfsCj0uG8mjFuTYvuC17NJf1KpmFZiehPU48ot2M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hsrNLeqie4L5WJNA+jrXwhYW+ctYntxHK29S7dyiJVsqcrneBRhzYfTRSb2ccGhjzH1NVpqNaRwNaH2FukRuHue+QJt6x+qLKq7WFnBfnI5bgGInY9nL8/EQRYdISxxC6IvTKUMxmeI5J5gK+P3HC2XTPalBzB75yBsiRTeBDis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=N1wKtY8S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UFU057UJvD/2rYUz6ku5pWuLZEGvslBRLiS7FZltHiENBX5j4VwS7w64cGAiVUsQzbJRGowNwpC9oQghDVvLJwujnzLDjXNw2NCemrUQCiE0ynoVMI1piIjd9dTyDaDcju7vcPKwrA2pn1RsMqt6naFgzJjPgOuIjuxjvB54zgI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Udsc3/Ph; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="N1wKtY8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44793C2BCAF;
-	Tue, 10 Mar 2026 11:26:36 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Udsc3/Ph"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22EBBC19423;
+	Tue, 10 Mar 2026 11:26:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141996;
-	bh=t5bGKMsPUkW4P/TIqj1CVJDaYWOZ4RTaXh6FPZzQkpQ=;
+	s=k20201202; t=1773141997;
+	bh=FFaBfsCj0uG8mjFuTYvuC17NJf1KpmFZiehPU48ot2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1wKtY8S39sWSi7AExcW6FLm5oLlgb5AgRUnUgZisHH2I4f6FKCLq5uw3M8ITLWTE
-	 SQi85HwZ6ylaeBSfx5Qh9RBDO2xjj6Qb2a4+j5KxTYHRKLjUH+om85+lkT5hgCtKtj
-	 beALsHeZqIUsAl/G6QBa7P78kda36qtQAXzP/oaccGaEMpGTtPiG/SrozrNGObr5Zr
-	 iKlP7enVBt53+0SCcbqbeSYItE9XR63rJnwIfGltZxDxsFy63p5KSGs75n7VzeIRwH
-	 Ykkms2KscraiuFlENGq0GCj29C1NHEgiKLvl40jP+Z1hPUmjb2jkhFsyFo1UpUWkZF
-	 4+EVt8ii8igig==
+	b=Udsc3/Phyftbd54NEQ4AZuQfgd2lXPOB3zYdr4314eGgaHUSc8wEy46raYHOtVbfw
+	 NQHEKD75Kbvi0PJ1nSD7TbJKjtDIbyT5q3o8yfFNmsuDunqjtQNLXlJeIlhW4fYtpY
+	 vzhreBbXLOOeDf17Qw8J4tio3a4VeEvCpXY0mfWD38c4/REr+uoQGiGpG1orKamHtW
+	 t1+pKOpWuFU0uARkwSOiZZc1e3q2ZxtwD9KnV0nvgBKQXbbx42GoeuahlSphjhAyJ9
+	 NoBANdoqOhbfLGx6MmDNpngbWiF8scGCJBVRjhpSjB9LUpDaJLCchdcj/entpBftd2
+	 xalEOM+3dIjPg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vlastimil Babka <vbabka@suse.cz>,
-	Harry Yoo <harry.yoo@oracle.com>,
+Cc: Harry Yoo <harry.yoo@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 122/314] slub: remove CONFIG_SLUB_TINY specific code paths
-Date: Tue, 10 Mar 2026 07:16:21 -0400
-Message-ID: <9e9367ae21f43b3c6f7b484a4a8617c0c863e794.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 123/314] mm/slab: use prandom if !allow_spin
+Date: Tue, 10 Mar 2026 07:16:22 -0400
+Message-ID: <ff030b24a4403929cc618978440abb970a3b4958.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,332 +48,143 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vlastimil Babka <vbabka@suse.cz>
+From: Harry Yoo <harry.yoo@oracle.com>
 
-[ Upstream commit 31e0886fd57d426d18a239dd55e176032c9c1cb0 ]
+[ Upstream commit a1e244a9f177894969c6cd5ebbc6d72c19fc4a7a ]
 
-CONFIG_SLUB_TINY minimizes the SLUB's memory overhead in multiple ways,
-mainly by avoiding percpu caching of slabs and objects. It also reduces
-code size by replacing some code paths with simplified ones through
-ifdefs, but the benefits of that are smaller and would complicate the
-upcoming changes.
+When CONFIG_SLAB_FREELIST_RANDOM is enabled and get_random_u32()
+is called in an NMI context, lockdep complains because it acquires
+a local_lock:
 
-Thus remove these code paths and associated ifdefs and simplify the code
-base.
+  ================================
+  WARNING: inconsistent lock state
+  6.19.0-rc5-slab-for-next+ #325 Tainted: G                 N
+  --------------------------------
+  inconsistent {INITIAL USE} -> {IN-NMI} usage.
+  kunit_try_catch/8312 [HC2[2]:SC0[0]:HE0:SE1] takes:
+  ffff88a02ec49cc0 (batched_entropy_u32.lock){-.-.}-{3:3}, at: get_random_u32+0x7f/0x2e0
+  {INITIAL USE} state was registered at:
+    lock_acquire+0xd9/0x2f0
+    get_random_u32+0x93/0x2e0
+    __get_random_u32_below+0x17/0x70
+    cache_random_seq_create+0x121/0x1c0
+    init_cache_random_seq+0x5d/0x110
+    do_kmem_cache_create+0x1e0/0xa30
+    __kmem_cache_create_args+0x4ec/0x830
+    create_kmalloc_caches+0xe6/0x130
+    kmem_cache_init+0x1b1/0x660
+    mm_core_init+0x1d8/0x4b0
+    start_kernel+0x620/0xcd0
+    x86_64_start_reservations+0x18/0x30
+    x86_64_start_kernel+0xf3/0x140
+    common_startup_64+0x13e/0x148
+  irq event stamp: 76
+  hardirqs last  enabled at (75): [<ffffffff8298b77a>] exc_nmi+0x11a/0x240
+  hardirqs last disabled at (76): [<ffffffff8298b991>] sysvec_irq_work+0x11/0x110
+  softirqs last  enabled at (0): [<ffffffff813b2dda>] copy_process+0xc7a/0x2350
+  softirqs last disabled at (0): [<0000000000000000>] 0x0
 
-Link: https://patch.msgid.link/20251105-sheaves-cleanups-v1-4-b8218e1ac7ef@suse.cz
-Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+  other info that might help us debug this:
+   Possible unsafe locking scenario:
+
+         CPU0
+         ----
+    lock(batched_entropy_u32.lock);
+    <Interrupt>
+      lock(batched_entropy_u32.lock);
+
+   *** DEADLOCK ***
+
+Fix this by using pseudo-random number generator if !allow_spin.
+This means kmalloc_nolock() users won't get truly random numbers,
+but there is not much we can do about it.
+
+Note that an NMI handler might interrupt prandom_u32_state() and
+change the random state, but that's safe.
+
+Link: https://lore.kernel.org/all/0c33bdee-6de8-4d9f-92ca-4f72c1b6fb9f@suse.cz
+Fixes: af92793e52c3 ("slab: Introduce kmalloc_nolock() and kfree_nolock().")
+Cc: stable@vger.kernel.org
+Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
+Link: https://patch.msgid.link/20260210081900.329447-3-harry.yoo@oracle.com
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Stable-dep-of: a1e244a9f177 ("mm/slab: use prandom if !allow_spin")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/slab.h |   2 -
- mm/slub.c | 107 ++----------------------------------------------------
- 2 files changed, 4 insertions(+), 105 deletions(-)
+ mm/slub.c | 28 ++++++++++++++++++++++++----
+ 1 file changed, 24 insertions(+), 4 deletions(-)
 
-diff --git a/mm/slab.h b/mm/slab.h
-index bf9d8940b8f21..36893299fa67c 100644
---- a/mm/slab.h
-+++ b/mm/slab.h
-@@ -236,10 +236,8 @@ struct kmem_cache_order_objects {
-  * Slab cache management.
-  */
- struct kmem_cache {
--#ifndef CONFIG_SLUB_TINY
- 	struct kmem_cache_cpu __percpu *cpu_slab;
- 	struct lock_class_key lock_key;
--#endif
- 	struct slub_percpu_sheaves __percpu *cpu_sheaves;
- 	/* Used for retrieving partial slabs, etc. */
- 	slab_flags_t flags;
 diff --git a/mm/slub.c b/mm/slub.c
-index 4e2a3f7656099..4db84fbc71bab 100644
+index 4db84fbc71bab..870b8e00a938b 100644
 --- a/mm/slub.c
 +++ b/mm/slub.c
-@@ -410,7 +410,6 @@ enum stat_item {
- 	NR_SLUB_STAT_ITEMS
- };
- 
--#ifndef CONFIG_SLUB_TINY
- /*
-  * When changing the layout, make sure freelist and tid are still compatible
-  * with this_cpu_cmpxchg_double() alignment requirements.
-@@ -432,7 +431,6 @@ struct kmem_cache_cpu {
- 	unsigned int stat[NR_SLUB_STAT_ITEMS];
- #endif
- };
--#endif /* CONFIG_SLUB_TINY */
- 
- static inline void stat(const struct kmem_cache *s, enum stat_item si)
- {
-@@ -594,12 +592,10 @@ static inline void *get_freepointer(struct kmem_cache *s, void *object)
- 	return freelist_ptr_decode(s, p, ptr_addr);
+@@ -41,6 +41,7 @@
+ #include <linux/prefetch.h>
+ #include <linux/memcontrol.h>
+ #include <linux/random.h>
++#include <linux/prandom.h>
+ #include <kunit/test.h>
+ #include <kunit/test-bug.h>
+ #include <linux/sort.h>
+@@ -3176,8 +3177,11 @@ static void *next_freelist_entry(struct kmem_cache *s,
+ 	return (char *)start + idx;
  }
  
--#ifndef CONFIG_SLUB_TINY
- static void prefetch_freepointer(const struct kmem_cache *s, void *object)
++static DEFINE_PER_CPU(struct rnd_state, slab_rnd_state);
++
+ /* Shuffle the single linked freelist based on a random pre-computed sequence */
+-static bool shuffle_freelist(struct kmem_cache *s, struct slab *slab)
++static bool shuffle_freelist(struct kmem_cache *s, struct slab *slab,
++			     bool allow_spin)
  {
- 	prefetchw(object + s->offset);
- }
--#endif
+ 	void *start;
+ 	void *cur;
+@@ -3188,7 +3192,19 @@ static bool shuffle_freelist(struct kmem_cache *s, struct slab *slab)
+ 		return false;
  
- /*
-  * When running under KMSAN, get_freepointer_safe() may return an uninitialized
-@@ -711,10 +707,12 @@ static inline unsigned int slub_get_cpu_partial(struct kmem_cache *s)
- 	return s->cpu_partial_slabs;
- }
- #else
-+#ifdef SLAB_SUPPORTS_SYSFS
- static inline void
- slub_set_cpu_partial(struct kmem_cache *s, unsigned int nr_objects)
- {
- }
-+#endif
+ 	freelist_count = oo_objects(s->oo);
+-	pos = get_random_u32_below(freelist_count);
++	if (allow_spin) {
++		pos = get_random_u32_below(freelist_count);
++	} else {
++		struct rnd_state *state;
++
++		/*
++		 * An interrupt or NMI handler might interrupt and change
++		 * the state in the middle, but that's safe.
++		 */
++		state = &get_cpu_var(slab_rnd_state);
++		pos = prandom_u32_state(state) % freelist_count;
++		put_cpu_var(slab_rnd_state);
++	}
  
- static inline unsigned int slub_get_cpu_partial(struct kmem_cache *s)
- {
-@@ -2023,13 +2021,11 @@ static inline void inc_slabs_node(struct kmem_cache *s, int node,
- 							int objects) {}
- static inline void dec_slabs_node(struct kmem_cache *s, int node,
- 							int objects) {}
--#ifndef CONFIG_SLUB_TINY
- static bool freelist_corrupted(struct kmem_cache *s, struct slab *slab,
- 			       void **freelist, void *nextfree)
+ 	page_limit = slab->objects * s->size;
+ 	start = fixup_red_left(s, slab_address(slab));
+@@ -3215,7 +3231,8 @@ static inline int init_cache_random_seq(struct kmem_cache *s)
+ 	return 0;
+ }
+ static inline void init_freelist_randomization(void) { }
+-static inline bool shuffle_freelist(struct kmem_cache *s, struct slab *slab)
++static inline bool shuffle_freelist(struct kmem_cache *s, struct slab *slab,
++				    bool allow_spin)
  {
  	return false;
  }
--#endif
- #endif /* CONFIG_SLUB_DEBUG */
+@@ -3300,7 +3317,7 @@ static struct slab *allocate_slab(struct kmem_cache *s, gfp_t flags, int node)
  
- #ifdef CONFIG_SLAB_OBJ_EXT
-@@ -3673,8 +3669,6 @@ static struct slab *get_partial(struct kmem_cache *s, int node,
- 	return get_any_partial(s, pc);
- }
+ 	setup_slab_debug(s, slab, start);
  
--#ifndef CONFIG_SLUB_TINY
--
- #ifdef CONFIG_PREEMPTION
- /*
-  * Calculate the next globally unique transaction for disambiguation
-@@ -4074,12 +4068,6 @@ static bool has_cpu_slab(int cpu, struct kmem_cache *s)
- 	return c->slab || slub_percpu_partial(c);
- }
+-	shuffle = shuffle_freelist(s, slab);
++	shuffle = shuffle_freelist(s, slab, allow_spin);
  
--#else /* CONFIG_SLUB_TINY */
--static inline void __flush_cpu_slab(struct kmem_cache *s, int cpu) { }
--static inline bool has_cpu_slab(int cpu, struct kmem_cache *s) { return false; }
--static inline void flush_this_cpu_slab(struct kmem_cache *s) { }
--#endif /* CONFIG_SLUB_TINY */
--
- static bool has_pcs_used(int cpu, struct kmem_cache *s)
+ 	if (!shuffle) {
+ 		start = fixup_red_left(s, start);
+@@ -8511,6 +8528,9 @@ void __init kmem_cache_init_late(void)
  {
- 	struct slub_percpu_sheaves *pcs;
-@@ -4425,7 +4413,6 @@ static inline bool pfmemalloc_match(struct slab *slab, gfp_t gfpflags)
- 	return true;
- }
- 
--#ifndef CONFIG_SLUB_TINY
- static inline bool
- __update_cpu_freelist_fast(struct kmem_cache *s,
- 			   void *freelist_old, void *freelist_new,
-@@ -4689,7 +4676,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 	pc.orig_size = orig_size;
- 	slab = get_partial(s, node, &pc);
- 	if (slab) {
--		if (kmem_cache_debug(s)) {
-+		if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
- 			freelist = pc.object;
- 			/*
- 			 * For debug caches here we had to go through
-@@ -4727,7 +4714,7 @@ static void *___slab_alloc(struct kmem_cache *s, gfp_t gfpflags, int node,
- 
- 	stat(s, ALLOC_SLAB);
- 
--	if (kmem_cache_debug(s)) {
-+	if (IS_ENABLED(CONFIG_SLUB_TINY) || kmem_cache_debug(s)) {
- 		freelist = alloc_single_from_new_slab(s, slab, orig_size, gfpflags);
- 
- 		if (unlikely(!freelist)) {
-@@ -4939,32 +4926,6 @@ static __always_inline void *__slab_alloc_node(struct kmem_cache *s,
- 
- 	return object;
- }
--#else /* CONFIG_SLUB_TINY */
--static void *__slab_alloc_node(struct kmem_cache *s,
--		gfp_t gfpflags, int node, unsigned long addr, size_t orig_size)
--{
--	struct partial_context pc;
--	struct slab *slab;
--	void *object;
--
--	pc.flags = gfpflags;
--	pc.orig_size = orig_size;
--	slab = get_partial(s, node, &pc);
--
--	if (slab)
--		return pc.object;
--
--	slab = new_slab(s, gfpflags, node);
--	if (unlikely(!slab)) {
--		slab_out_of_memory(s, gfpflags, node);
--		return NULL;
--	}
--
--	object = alloc_single_from_new_slab(s, slab, orig_size, gfpflags);
--
--	return object;
--}
--#endif /* CONFIG_SLUB_TINY */
- 
- /*
-  * If the object has been wiped upon free, make sure it's fully initialized by
-@@ -5787,9 +5748,7 @@ void *kmalloc_nolock_noprof(size_t size, gfp_t gfp_flags, int node)
- 	 * it did local_lock_irqsave(&s->cpu_slab->lock, flags).
- 	 * In this case fast path with __update_cpu_freelist_fast() is not safe.
- 	 */
--#ifndef CONFIG_SLUB_TINY
- 	if (!in_nmi() || !local_lock_is_locked(&s->cpu_slab->lock))
--#endif
- 		ret = __slab_alloc_node(s, alloc_gfp, node, _RET_IP_, size);
- 
- 	if (PTR_ERR(ret) == -EBUSY) {
-@@ -6571,14 +6530,10 @@ static void free_deferred_objects(struct irq_work *work)
- 	llist_for_each_safe(pos, t, llnode) {
- 		struct slab *slab = container_of(pos, struct slab, llnode);
- 
--#ifdef CONFIG_SLUB_TINY
--		free_slab(slab->slab_cache, slab);
--#else
- 		if (slab->frozen)
- 			deactivate_slab(slab->slab_cache, slab, slab->flush_freelist);
- 		else
- 			free_slab(slab->slab_cache, slab);
--#endif
- 	}
- }
- 
-@@ -6616,7 +6571,6 @@ void defer_free_barrier(void)
- 		irq_work_sync(&per_cpu_ptr(&defer_free_objects, cpu)->work);
- }
- 
--#ifndef CONFIG_SLUB_TINY
- /*
-  * Fastpath with forced inlining to produce a kfree and kmem_cache_free that
-  * can perform fastpath freeing without additional function calls.
-@@ -6709,14 +6663,6 @@ static __always_inline void do_slab_free(struct kmem_cache *s,
- 	}
- 	stat_add(s, FREE_FASTPATH, cnt);
- }
--#else /* CONFIG_SLUB_TINY */
--static void do_slab_free(struct kmem_cache *s,
--				struct slab *slab, void *head, void *tail,
--				int cnt, unsigned long addr)
--{
--	__slab_free(s, slab, head, tail, cnt, addr);
--}
--#endif /* CONFIG_SLUB_TINY */
- 
- static __fastpath_inline
- void slab_free(struct kmem_cache *s, struct slab *slab, void *object,
-@@ -6997,11 +6943,7 @@ void kfree_nolock(const void *object)
- 	 * since kasan quarantine takes locks and not supported from NMI.
- 	 */
- 	kasan_slab_free(s, x, false, false, /* skip quarantine */true);
--#ifndef CONFIG_SLUB_TINY
- 	do_slab_free(s, slab, x, x, 0, _RET_IP_);
--#else
--	defer_free(s, x);
--#endif
- }
- EXPORT_SYMBOL_GPL(kfree_nolock);
- 
-@@ -7451,7 +7393,6 @@ void kmem_cache_free_bulk(struct kmem_cache *s, size_t size, void **p)
- }
- EXPORT_SYMBOL(kmem_cache_free_bulk);
- 
--#ifndef CONFIG_SLUB_TINY
- static inline
- int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
- 			    void **p)
-@@ -7522,35 +7463,6 @@ int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags, size_t size,
- 	return 0;
- 
- }
--#else /* CONFIG_SLUB_TINY */
--static int __kmem_cache_alloc_bulk(struct kmem_cache *s, gfp_t flags,
--				   size_t size, void **p)
--{
--	int i;
--
--	for (i = 0; i < size; i++) {
--		void *object = kfence_alloc(s, s->object_size, flags);
--
--		if (unlikely(object)) {
--			p[i] = object;
--			continue;
--		}
--
--		p[i] = __slab_alloc_node(s, flags, NUMA_NO_NODE,
--					 _RET_IP_, s->object_size);
--		if (unlikely(!p[i]))
--			goto error;
--
--		maybe_wipe_obj_freeptr(s, p[i]);
--	}
--
--	return i;
--
--error:
--	__kmem_cache_free_bulk(s, i, p);
--	return 0;
--}
--#endif /* CONFIG_SLUB_TINY */
- 
- /* Note that interrupts must be enabled when calling this function. */
- int kmem_cache_alloc_bulk_noprof(struct kmem_cache *s, gfp_t flags, size_t size,
-@@ -7741,7 +7653,6 @@ init_kmem_cache_node(struct kmem_cache_node *n, struct node_barn *barn)
- 		barn_init(barn);
- }
- 
--#ifndef CONFIG_SLUB_TINY
- static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
- {
- 	BUILD_BUG_ON(PERCPU_DYNAMIC_EARLY_SIZE <
-@@ -7762,12 +7673,6 @@ static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
- 
- 	return 1;
- }
--#else
--static inline int alloc_kmem_cache_cpus(struct kmem_cache *s)
--{
--	return 1;
--}
--#endif /* CONFIG_SLUB_TINY */
- 
- static int init_percpu_sheaves(struct kmem_cache *s)
- {
-@@ -7857,13 +7762,11 @@ void __kmem_cache_release(struct kmem_cache *s)
- 	cache_random_seq_destroy(s);
- 	if (s->cpu_sheaves)
- 		pcs_destroy(s);
--#ifndef CONFIG_SLUB_TINY
- #ifdef CONFIG_PREEMPT_RT
- 	if (s->cpu_slab)
- 		lockdep_unregister_key(&s->lock_key);
- #endif
- 	free_percpu(s->cpu_slab);
--#endif
- 	free_kmem_cache_nodes(s);
- }
- 
-@@ -8606,10 +8509,8 @@ void __init kmem_cache_init(void)
- 
- void __init kmem_cache_init_late(void)
- {
--#ifndef CONFIG_SLUB_TINY
  	flushwq = alloc_workqueue("slub_flushwq", WQ_MEM_RECLAIM, 0);
  	WARN_ON(!flushwq);
--#endif
++#ifdef CONFIG_SLAB_FREELIST_RANDOM
++	prandom_init_once(&slab_rnd_state);
++#endif
  }
  
  struct kmem_cache *
