@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE6C38735B;
-	Tue, 10 Mar 2026 11:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC04838735B;
+	Tue, 10 Mar 2026 11:14:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141271; cv=none; b=Rh/ojFYaWzCp9hOvCN0BsGtPALZYcRvH5iXNOGeYfUe1bjyknMK3SCRECrd+UGYIDTcjHETkH+Mtnu+JOof3BCpnZLCFnYh4yZGagZGcocZgDunbqOdz4skQKIswNL/Ia13R3h1BKehxZcZalrp8oivoi+Bqq2bo7Lv1GUmdZqI=
+	t=1773141272; cv=none; b=QELNiAH3kSCYOHy8eupUTrgc28J7uGrw0ki4yCwpO0mGmEahqeuy/QD8eG4CDfbBW/2Xyb/ikM+COVb4gafedutYbqdjRgoAuGmFepHQa5JpSL34yhf5h3fjl3sxMvfELO8e71W8BlL5W1AIjGbg3a417d4o0VyNLSbRb38g2Vg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141271; c=relaxed/simple;
-	bh=gE3N8uL+PC3g6ct0fDJsJH+Z6tlr7Hy10cr8yANXkrU=;
+	s=arc-20240116; t=1773141272; c=relaxed/simple;
+	bh=uqhm17sMMI1LX/aF375pRPbVIHyvOe34QkQLhMrB+v0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dsyfXPJRL6hqTjdqhIBtwxlDSigKDp+f1d9IiEJtWhzvDEDnIVraQTSyqgXT+hgWaBFd0PnSWLEifLwNWCFdjcXPOWD9e12aXimt1HS9ihYF4kDGJBj2YFJCLyTaKaEau9RFzS4rwjOyH7ifyhcSnYTjoS0VBEPCnrZPAXZJbhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZVNE6e+I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Am3FLCUYhJhwliBe1/Awz0CsOS+8zhwh+husTDuaC7eNYwRmLAkwbYHdmICjdks6NHCJT2B+CSUpU/HTnBmqhTt/wejw7oLibuZJBuq21i8frzRXaTyJLL7xB79l4O/xGDabLeA+jQzeA9SsIGwthLG665CItfZj4QX5OQvia/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tu/qW/87; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZVNE6e+I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920A1C19423;
-	Tue, 10 Mar 2026 11:14:30 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tu/qW/87"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FBFC2BC86;
+	Tue, 10 Mar 2026 11:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141271;
-	bh=gE3N8uL+PC3g6ct0fDJsJH+Z6tlr7Hy10cr8yANXkrU=;
+	s=k20201202; t=1773141272;
+	bh=uqhm17sMMI1LX/aF375pRPbVIHyvOe34QkQLhMrB+v0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZVNE6e+ILau/o4cVDuHxbxY/2TQSb2hwg+Bp4NeBNSg6SlJGfEuEcCrD9MohSUbsB
-	 n1UqqNehiaVoIvPVf58lNmO43cQ2CYjI/xoOVRZ32Nz0uNnSSXQHwW8E1iHpgZqzN6
-	 1yRAdFGYQLKP+YMbDZdhAhZ9gPyX2gpSe9ICdhb8K7IS6kOv+ArsQXcaaMc58bu+eq
-	 W9W+0wJQBKUCVFeBHFEVL3v9+W8xZSaluy2wkYp3du32Q1zkT/jvCqEiEr9zTnpEC1
-	 7Gcl97B07fVYgdkg3Jr2/K++G7cKDE3IZnJci6srUKjD9lGmmst7LJUKsIR28oYJHR
-	 QvMZzeRm6OA1Q==
+	b=tu/qW/87poKszFGvp0uIo9V5UTn37E6htLRX2SHM6DVUS+ilhV1kqwZF2ITBSyiDc
+	 cnsOQUEeNfDSLQ6aYkvlk8x/QGbXkD+SqfRlM5F5L4fK6YTKYZ0R3XAV36j94YnQ7A
+	 KDKlvsqaJF5JbgnI+F3qK9+goVsYZ2YxAAr4aICD9f2uRtD+2geyEYQm5b4qDlwDuX
+	 8Rzw6LWElEc/Zzdipx0PP7nzKTs+5fIIBWQP5P5lg4sQW48HBunEAvuRjqD1nqJnid
+	 mqLUaAZY94ibPSP8heffjKA0PhimihNAyjS8eQXrt0y7LNYTGg1/byCpVh18wln1Hn
+	 R9KFTeKNBQ0TA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Koichiro Den <den@valinux.co.jp>,
+Cc: Eric Dumazet <edumazet@google.com>,
+	Zhouyan Deng <dengzhouyan_nwpu@163.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Florian Westphal <fw@strlen.de>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 273/311] net: sched: avoid qdisc_reset_all_tx_gt() vs dequeue race for lockless qdiscs
-Date: Tue, 10 Mar 2026 07:05:20 -0400
-Message-ID: <66a5430015dad3d0f73f261de298866608b0edf2.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 274/311] tcp: secure_seq: add back ports to TS offset
+Date: Tue, 10 Mar 2026 07:05:21 -0400
+Message-ID: <4154c7201f029346a05a2a3168b2a8af4d8bb149.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -48,110 +51,462 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Koichiro Den <den@valinux.co.jp>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 7f083faf59d14c04e01ec05a7507f036c965acf8 ]
+[ Upstream commit 165573e41f2f66ef98940cf65f838b2cb575d9d1 ]
 
-When shrinking the number of real tx queues,
-netif_set_real_num_tx_queues() calls qdisc_reset_all_tx_gt() to flush
-qdiscs for queues which will no longer be used.
+This reverts 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
 
-qdisc_reset_all_tx_gt() currently serializes qdisc_reset() with
-qdisc_lock(). However, for lockless qdiscs, the dequeue path is
-serialized by qdisc_run_begin/end() using qdisc->seqlock instead, so
-qdisc_reset() can run concurrently with __qdisc_run() and free skbs
-while they are still being dequeued, leading to UAF.
+tcp_tw_recycle went away in 2017.
 
-This can easily be reproduced on e.g. virtio-net by imposing heavy
-traffic while frequently changing the number of queue pairs:
+Zhouyan Deng reported off-path TCP source port leakage via
+SYN cookie side-channel that can be fixed in multiple ways.
 
-  iperf3 -ub0 -c $peer -t 0 &
-  while :; do
-    ethtool -L eth0 combined 1
-    ethtool -L eth0 combined 2
-  done
+One of them is to bring back TCP ports in TS offset randomization.
 
-With KASAN enabled, this leads to reports like:
+As a bonus, we perform a single siphash() computation
+to provide both an ISN and a TS offset.
 
-  BUG: KASAN: slab-use-after-free in __qdisc_run+0x133f/0x1760
-  ...
-  Call Trace:
-   <TASK>
-   ...
-   __qdisc_run+0x133f/0x1760
-   __dev_queue_xmit+0x248f/0x3550
-   ip_finish_output2+0xa42/0x2110
-   ip_output+0x1a7/0x410
-   ip_send_skb+0x2e6/0x480
-   udp_send_skb+0xb0a/0x1590
-   udp_sendmsg+0x13c9/0x1fc0
-   ...
-   </TASK>
-
-  Allocated by task 1270 on cpu 5 at 44.558414s:
-   ...
-   alloc_skb_with_frags+0x84/0x7c0
-   sock_alloc_send_pskb+0x69a/0x830
-   __ip_append_data+0x1b86/0x48c0
-   ip_make_skb+0x1e8/0x2b0
-   udp_sendmsg+0x13a6/0x1fc0
-   ...
-
-  Freed by task 1306 on cpu 3 at 44.558445s:
-   ...
-   kmem_cache_free+0x117/0x5e0
-   pfifo_fast_reset+0x14d/0x580
-   qdisc_reset+0x9e/0x5f0
-   netif_set_real_num_tx_queues+0x303/0x840
-   virtnet_set_channels+0x1bf/0x260 [virtio_net]
-   ethnl_set_channels+0x684/0xae0
-   ethnl_default_set_doit+0x31a/0x890
-   ...
-
-Serialize qdisc_reset_all_tx_gt() against the lockless dequeue path by
-taking qdisc->seqlock for TCQ_F_NOLOCK qdiscs, matching the
-serialization model already used by dev_reset_queue().
-
-Additionally clear QDISC_STATE_NON_EMPTY after reset so the qdisc state
-reflects an empty queue, avoiding needless re-scheduling.
-
-Fixes: 6b3ba9146fe6 ("net: sched: allow qdiscs to handle locking")
-Signed-off-by: Koichiro Den <den@valinux.co.jp>
-Link: https://patch.msgid.link/20260228145307.3955532-1-den@valinux.co.jp
+Fixes: 28ee1b746f49 ("secure_seq: downgrade to per-host timestamp offsets")
+Reported-by: Zhouyan Deng <dengzhouyan_nwpu@163.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Florian Westphal <fw@strlen.de>
+Link: https://patch.msgid.link/20260302205527.1982836-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ include/net/secure_seq.h | 45 ++++++++++++++++++----
+ include/net/tcp.h        |  6 ++-
+ net/core/secure_seq.c    | 80 +++++++++++++++-------------------------
+ net/ipv4/syncookies.c    | 11 ++++--
+ net/ipv4/tcp_input.c     |  8 +++-
+ net/ipv4/tcp_ipv4.c      | 37 +++++++++----------
+ net/ipv6/syncookies.c    | 11 ++++--
+ net/ipv6/tcp_ipv6.c      | 37 +++++++++----------
+ 8 files changed, 127 insertions(+), 108 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index c3a7268b567e0..d5d55cb21686d 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -778,13 +778,23 @@ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
- static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
- {
- 	struct Qdisc *qdisc;
-+	bool nolock;
+diff --git a/include/net/secure_seq.h b/include/net/secure_seq.h
+index cddebafb9f779..6f996229167b3 100644
+--- a/include/net/secure_seq.h
++++ b/include/net/secure_seq.h
+@@ -5,16 +5,47 @@
+ #include <linux/types.h>
  
- 	for (; i < dev->num_tx_queues; i++) {
- 		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc);
- 		if (qdisc) {
-+			nolock = qdisc->flags & TCQ_F_NOLOCK;
+ struct net;
++extern struct net init_net;
 +
-+			if (nolock)
-+				spin_lock_bh(&qdisc->seqlock);
- 			spin_lock_bh(qdisc_lock(qdisc));
- 			qdisc_reset(qdisc);
- 			spin_unlock_bh(qdisc_lock(qdisc));
-+			if (nolock) {
-+				clear_bit(__QDISC_STATE_MISSED, &qdisc->state);
-+				clear_bit(__QDISC_STATE_DRAINING, &qdisc->state);
-+				spin_unlock_bh(&qdisc->seqlock);
-+			}
++union tcp_seq_and_ts_off {
++	struct {
++		u32 seq;
++		u32 ts_off;
++	};
++	u64 hash64;
++};
+ 
+ u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport);
+ u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
+ 			       __be16 dport);
+-u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
+-		   __be16 sport, __be16 dport);
+-u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr);
+-u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
+-		     __be16 sport, __be16 dport);
+-u32 secure_tcpv6_ts_off(const struct net *net,
+-			const __be32 *saddr, const __be32 *daddr);
++union tcp_seq_and_ts_off
++secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
++			  __be16 sport, __be16 dport);
++
++static inline u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
++				 __be16 sport, __be16 dport)
++{
++	union tcp_seq_and_ts_off ts;
++
++	ts = secure_tcp_seq_and_ts_off(&init_net, saddr, daddr,
++				       sport, dport);
++
++	return ts.seq;
++}
++
++union tcp_seq_and_ts_off
++secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
++			    const __be32 *daddr,
++			    __be16 sport, __be16 dport);
++
++static inline u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
++				   __be16 sport, __be16 dport)
++{
++	union tcp_seq_and_ts_off ts;
++
++	ts = secure_tcpv6_seq_and_ts_off(&init_net, saddr, daddr,
++					 sport, dport);
+ 
++	return ts.seq;
++}
+ #endif /* _NET_SECURE_SEQ */
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 279ddb923e656..e15e1d0e6f4e2 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -43,6 +43,7 @@
+ #include <net/dst.h>
+ #include <net/mptcp.h>
+ #include <net/xfrm.h>
++#include <net/secure_seq.h>
+ 
+ #include <linux/seq_file.h>
+ #include <linux/memcontrol.h>
+@@ -2437,8 +2438,9 @@ struct tcp_request_sock_ops {
+ 				       struct flowi *fl,
+ 				       struct request_sock *req,
+ 				       u32 tw_isn);
+-	u32 (*init_seq)(const struct sk_buff *skb);
+-	u32 (*init_ts_off)(const struct net *net, const struct sk_buff *skb);
++	union tcp_seq_and_ts_off (*init_seq_and_ts_off)(
++					const struct net *net,
++					const struct sk_buff *skb);
+ 	int (*send_synack)(const struct sock *sk, struct dst_entry *dst,
+ 			   struct flowi *fl, struct request_sock *req,
+ 			   struct tcp_fastopen_cookie *foc,
+diff --git a/net/core/secure_seq.c b/net/core/secure_seq.c
+index 9a39656804513..6a6f2cda5aaef 100644
+--- a/net/core/secure_seq.c
++++ b/net/core/secure_seq.c
+@@ -20,7 +20,6 @@
+ #include <net/tcp.h>
+ 
+ static siphash_aligned_key_t net_secret;
+-static siphash_aligned_key_t ts_secret;
+ 
+ #define EPHEMERAL_PORT_SHUFFLE_PERIOD (10 * HZ)
+ 
+@@ -28,11 +27,6 @@ static __always_inline void net_secret_init(void)
+ {
+ 	net_get_random_once(&net_secret, sizeof(net_secret));
+ }
+-
+-static __always_inline void ts_secret_init(void)
+-{
+-	net_get_random_once(&ts_secret, sizeof(ts_secret));
+-}
+ #endif
+ 
+ #ifdef CONFIG_INET
+@@ -53,28 +47,9 @@ static u32 seq_scale(u32 seq)
+ #endif
+ 
+ #if IS_ENABLED(CONFIG_IPV6)
+-u32 secure_tcpv6_ts_off(const struct net *net,
+-			const __be32 *saddr, const __be32 *daddr)
+-{
+-	const struct {
+-		struct in6_addr saddr;
+-		struct in6_addr daddr;
+-	} __aligned(SIPHASH_ALIGNMENT) combined = {
+-		.saddr = *(struct in6_addr *)saddr,
+-		.daddr = *(struct in6_addr *)daddr,
+-	};
+-
+-	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
+-		return 0;
+-
+-	ts_secret_init();
+-	return siphash(&combined, offsetofend(typeof(combined), daddr),
+-		       &ts_secret);
+-}
+-EXPORT_IPV6_MOD(secure_tcpv6_ts_off);
+-
+-u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
+-		     __be16 sport, __be16 dport)
++union tcp_seq_and_ts_off
++secure_tcpv6_seq_and_ts_off(const struct net *net, const __be32 *saddr,
++			    const __be32 *daddr, __be16 sport, __be16 dport)
+ {
+ 	const struct {
+ 		struct in6_addr saddr;
+@@ -87,14 +62,20 @@ u32 secure_tcpv6_seq(const __be32 *saddr, const __be32 *daddr,
+ 		.sport = sport,
+ 		.dport = dport
+ 	};
+-	u32 hash;
++	union tcp_seq_and_ts_off st;
+ 
+ 	net_secret_init();
+-	hash = siphash(&combined, offsetofend(typeof(combined), dport),
+-		       &net_secret);
+-	return seq_scale(hash);
++
++	st.hash64 = siphash(&combined, offsetofend(typeof(combined), dport),
++			    &net_secret);
++
++	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
++		st.ts_off = 0;
++
++	st.seq = seq_scale(st.seq);
++	return st;
+ }
+-EXPORT_SYMBOL(secure_tcpv6_seq);
++EXPORT_SYMBOL(secure_tcpv6_seq_and_ts_off);
+ 
+ u64 secure_ipv6_port_ephemeral(const __be32 *saddr, const __be32 *daddr,
+ 			       __be16 dport)
+@@ -118,33 +99,30 @@ EXPORT_SYMBOL(secure_ipv6_port_ephemeral);
+ #endif
+ 
+ #ifdef CONFIG_INET
+-u32 secure_tcp_ts_off(const struct net *net, __be32 saddr, __be32 daddr)
+-{
+-	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
+-		return 0;
+-
+-	ts_secret_init();
+-	return siphash_2u32((__force u32)saddr, (__force u32)daddr,
+-			    &ts_secret);
+-}
+-
+ /* secure_tcp_seq_and_tsoff(a, b, 0, d) == secure_ipv4_port_ephemeral(a, b, d),
+  * but fortunately, `sport' cannot be 0 in any circumstances. If this changes,
+  * it would be easy enough to have the former function use siphash_4u32, passing
+  * the arguments as separate u32.
+  */
+-u32 secure_tcp_seq(__be32 saddr, __be32 daddr,
+-		   __be16 sport, __be16 dport)
++union tcp_seq_and_ts_off
++secure_tcp_seq_and_ts_off(const struct net *net, __be32 saddr, __be32 daddr,
++			  __be16 sport, __be16 dport)
+ {
+-	u32 hash;
++	u32 ports = (__force u32)sport << 16 | (__force u32)dport;
++	union tcp_seq_and_ts_off st;
+ 
+ 	net_secret_init();
+-	hash = siphash_3u32((__force u32)saddr, (__force u32)daddr,
+-			    (__force u32)sport << 16 | (__force u32)dport,
+-			    &net_secret);
+-	return seq_scale(hash);
++
++	st.hash64 = siphash_3u32((__force u32)saddr, (__force u32)daddr,
++				 ports, &net_secret);
++
++	if (READ_ONCE(net->ipv4.sysctl_tcp_timestamps) != 1)
++		st.ts_off = 0;
++
++	st.seq = seq_scale(st.seq);
++	return st;
+ }
+-EXPORT_SYMBOL_GPL(secure_tcp_seq);
++EXPORT_SYMBOL_GPL(secure_tcp_seq_and_ts_off);
+ 
+ u64 secure_ipv4_port_ephemeral(__be32 saddr, __be32 daddr, __be16 dport)
+ {
+diff --git a/net/ipv4/syncookies.c b/net/ipv4/syncookies.c
+index 061751aabc8e1..fc3affd9c8014 100644
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -378,9 +378,14 @@ static struct request_sock *cookie_tcp_check(struct net *net, struct sock *sk,
+ 	tcp_parse_options(net, skb, &tcp_opt, 0, NULL);
+ 
+ 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
+-		tsoff = secure_tcp_ts_off(net,
+-					  ip_hdr(skb)->daddr,
+-					  ip_hdr(skb)->saddr);
++		union tcp_seq_and_ts_off st;
++
++		st = secure_tcp_seq_and_ts_off(net,
++					       ip_hdr(skb)->daddr,
++					       ip_hdr(skb)->saddr,
++					       tcp_hdr(skb)->dest,
++					       tcp_hdr(skb)->source);
++		tsoff = st.ts_off;
+ 		tcp_opt.rcv_tsecr -= tsoff;
+ 	}
+ 
+diff --git a/net/ipv4/tcp_input.c b/net/ipv4/tcp_input.c
+index 1c9db9a246f71..3e95b36fa2736 100644
+--- a/net/ipv4/tcp_input.c
++++ b/net/ipv4/tcp_input.c
+@@ -7411,6 +7411,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 	const struct tcp_sock *tp = tcp_sk(sk);
+ 	struct net *net = sock_net(sk);
+ 	struct sock *fastopen_sk = NULL;
++	union tcp_seq_and_ts_off st;
+ 	struct request_sock *req;
+ 	bool want_cookie = false;
+ 	struct dst_entry *dst;
+@@ -7480,9 +7481,12 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 	if (!dst)
+ 		goto drop_and_free;
+ 
++	if (tmp_opt.tstamp_ok || (!want_cookie && !isn))
++		st = af_ops->init_seq_and_ts_off(net, skb);
++
+ 	if (tmp_opt.tstamp_ok) {
+ 		tcp_rsk(req)->req_usec_ts = dst_tcp_usec_ts(dst);
+-		tcp_rsk(req)->ts_off = af_ops->init_ts_off(net, skb);
++		tcp_rsk(req)->ts_off = st.ts_off;
+ 	}
+ 	if (!want_cookie && !isn) {
+ 		int max_syn_backlog = READ_ONCE(net->ipv4.sysctl_max_syn_backlog);
+@@ -7504,7 +7508,7 @@ int tcp_conn_request(struct request_sock_ops *rsk_ops,
+ 			goto drop_and_release;
  		}
+ 
+-		isn = af_ops->init_seq(skb);
++		isn = st.seq;
+ 	}
+ 
+ 	tcp_ecn_create_request(req, skb, sk, dst);
+diff --git a/net/ipv4/tcp_ipv4.c b/net/ipv4/tcp_ipv4.c
+index e4e7bc8782ab6..d27965294aef3 100644
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -104,17 +104,14 @@ static DEFINE_PER_CPU(struct sock_bh_locked, ipv4_tcp_sk) = {
+ 
+ static DEFINE_MUTEX(tcp_exit_batch_mutex);
+ 
+-static u32 tcp_v4_init_seq(const struct sk_buff *skb)
++static union tcp_seq_and_ts_off
++tcp_v4_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
+ {
+-	return secure_tcp_seq(ip_hdr(skb)->daddr,
+-			      ip_hdr(skb)->saddr,
+-			      tcp_hdr(skb)->dest,
+-			      tcp_hdr(skb)->source);
+-}
+-
+-static u32 tcp_v4_init_ts_off(const struct net *net, const struct sk_buff *skb)
+-{
+-	return secure_tcp_ts_off(net, ip_hdr(skb)->daddr, ip_hdr(skb)->saddr);
++	return secure_tcp_seq_and_ts_off(net,
++					 ip_hdr(skb)->daddr,
++					 ip_hdr(skb)->saddr,
++					 tcp_hdr(skb)->dest,
++					 tcp_hdr(skb)->source);
+ }
+ 
+ int tcp_twsk_unique(struct sock *sk, struct sock *sktw, void *twp)
+@@ -326,15 +323,16 @@ int tcp_v4_connect(struct sock *sk, struct sockaddr_unsized *uaddr, int addr_len
+ 	rt = NULL;
+ 
+ 	if (likely(!tp->repair)) {
++		union tcp_seq_and_ts_off st;
++
++		st = secure_tcp_seq_and_ts_off(net,
++					       inet->inet_saddr,
++					       inet->inet_daddr,
++					       inet->inet_sport,
++					       usin->sin_port);
+ 		if (!tp->write_seq)
+-			WRITE_ONCE(tp->write_seq,
+-				   secure_tcp_seq(inet->inet_saddr,
+-						  inet->inet_daddr,
+-						  inet->inet_sport,
+-						  usin->sin_port));
+-		WRITE_ONCE(tp->tsoffset,
+-			   secure_tcp_ts_off(net, inet->inet_saddr,
+-					     inet->inet_daddr));
++			WRITE_ONCE(tp->write_seq, st.seq);
++		WRITE_ONCE(tp->tsoffset, st.ts_off);
+ 	}
+ 
+ 	atomic_set(&inet->inet_id, get_random_u16());
+@@ -1677,8 +1675,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv4_ops = {
+ 	.cookie_init_seq =	cookie_v4_init_sequence,
+ #endif
+ 	.route_req	=	tcp_v4_route_req,
+-	.init_seq	=	tcp_v4_init_seq,
+-	.init_ts_off	=	tcp_v4_init_ts_off,
++	.init_seq_and_ts_off	=	tcp_v4_init_seq_and_ts_off,
+ 	.send_synack	=	tcp_v4_send_synack,
+ };
+ 
+diff --git a/net/ipv6/syncookies.c b/net/ipv6/syncookies.c
+index 7e007f013ec82..4f6f0d751d6c5 100644
+--- a/net/ipv6/syncookies.c
++++ b/net/ipv6/syncookies.c
+@@ -151,9 +151,14 @@ static struct request_sock *cookie_tcp_check(struct net *net, struct sock *sk,
+ 	tcp_parse_options(net, skb, &tcp_opt, 0, NULL);
+ 
+ 	if (tcp_opt.saw_tstamp && tcp_opt.rcv_tsecr) {
+-		tsoff = secure_tcpv6_ts_off(net,
+-					    ipv6_hdr(skb)->daddr.s6_addr32,
+-					    ipv6_hdr(skb)->saddr.s6_addr32);
++		union tcp_seq_and_ts_off st;
++
++		st = secure_tcpv6_seq_and_ts_off(net,
++						 ipv6_hdr(skb)->daddr.s6_addr32,
++						 ipv6_hdr(skb)->saddr.s6_addr32,
++						 tcp_hdr(skb)->dest,
++						 tcp_hdr(skb)->source);
++		tsoff = st.ts_off;
+ 		tcp_opt.rcv_tsecr -= tsoff;
+ 	}
+ 
+diff --git a/net/ipv6/tcp_ipv6.c b/net/ipv6/tcp_ipv6.c
+index 9df81f85ec982..ca68ce16bcbe8 100644
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -104,18 +104,14 @@ static void inet6_sk_rx_dst_set(struct sock *sk, const struct sk_buff *skb)
  	}
  }
+ 
+-static u32 tcp_v6_init_seq(const struct sk_buff *skb)
++static union tcp_seq_and_ts_off
++tcp_v6_init_seq_and_ts_off(const struct net *net, const struct sk_buff *skb)
+ {
+-	return secure_tcpv6_seq(ipv6_hdr(skb)->daddr.s6_addr32,
+-				ipv6_hdr(skb)->saddr.s6_addr32,
+-				tcp_hdr(skb)->dest,
+-				tcp_hdr(skb)->source);
+-}
+-
+-static u32 tcp_v6_init_ts_off(const struct net *net, const struct sk_buff *skb)
+-{
+-	return secure_tcpv6_ts_off(net, ipv6_hdr(skb)->daddr.s6_addr32,
+-				   ipv6_hdr(skb)->saddr.s6_addr32);
++	return secure_tcpv6_seq_and_ts_off(net,
++					   ipv6_hdr(skb)->daddr.s6_addr32,
++					   ipv6_hdr(skb)->saddr.s6_addr32,
++					   tcp_hdr(skb)->dest,
++					   tcp_hdr(skb)->source);
+ }
+ 
+ static int tcp_v6_pre_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+@@ -318,14 +314,16 @@ static int tcp_v6_connect(struct sock *sk, struct sockaddr_unsized *uaddr,
+ 	sk_set_txhash(sk);
+ 
+ 	if (likely(!tp->repair)) {
++		union tcp_seq_and_ts_off st;
++
++		st = secure_tcpv6_seq_and_ts_off(net,
++						 np->saddr.s6_addr32,
++						 sk->sk_v6_daddr.s6_addr32,
++						 inet->inet_sport,
++						 inet->inet_dport);
+ 		if (!tp->write_seq)
+-			WRITE_ONCE(tp->write_seq,
+-				   secure_tcpv6_seq(np->saddr.s6_addr32,
+-						    sk->sk_v6_daddr.s6_addr32,
+-						    inet->inet_sport,
+-						    inet->inet_dport));
+-		tp->tsoffset = secure_tcpv6_ts_off(net, np->saddr.s6_addr32,
+-						   sk->sk_v6_daddr.s6_addr32);
++			WRITE_ONCE(tp->write_seq, st.seq);
++		tp->tsoffset = st.ts_off;
+ 	}
+ 
+ 	if (tcp_fastopen_defer_connect(sk, &err))
+@@ -814,8 +812,7 @@ const struct tcp_request_sock_ops tcp_request_sock_ipv6_ops = {
+ 	.cookie_init_seq =	cookie_v6_init_sequence,
+ #endif
+ 	.route_req	=	tcp_v6_route_req,
+-	.init_seq	=	tcp_v6_init_seq,
+-	.init_ts_off	=	tcp_v6_init_ts_off,
++	.init_seq_and_ts_off	= tcp_v6_init_seq_and_ts_off,
+ 	.send_synack	=	tcp_v6_send_synack,
+ };
+ 
 -- 
 2.51.0
 
