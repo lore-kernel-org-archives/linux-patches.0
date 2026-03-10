@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5FA37B413;
-	Tue, 10 Mar 2026 11:27:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E6837B413;
+	Tue, 10 Mar 2026 11:27:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142037; cv=none; b=HC8GmLWjQ7mL6QYzeUMgtB2e9nWVBI6n9wXpuAX+8irQUO7EIpMu/5iC1ZJHGiff12iahBDrmMJu3neYqd9wGr+KQlcs3uEkKg25fwLhywDfGhOAce2lsrxfZoUmZVE7YPTpq9LmeZoplIRjbwqPd8hKUvDBVZUOJ3OBta+q+NI=
+	t=1773142037; cv=none; b=WubvYIeNIr6w+FS0ysxmgvxaCucGSQinlZ4ww0Wh2f6Ms/Hh6Mdnvq+XvadJrY88/MUCookdMvIAgTZ2cVvGi+nNtxDMQN3RiDLwVRV4+sTk0WLWF01QvYkjlANIrE8DSIDGnDJxHpkvmZNQ9ly6Srv78M5XTTAseMw4DXYIosQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773142037; c=relaxed/simple;
-	bh=g8dHd3fyyZpieAjjMobegQsRS5t4k8wMKou28ttvBu4=;
+	bh=cTjds15nTPmdR+CqQziOmaFTRnjasPymdKdXydfxL1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iqVdTBsJCmFgHW/C0Mqh2iN1NUmii+U53Doyk0kzBjxE0Fek/zR8t6bWbFnih33S1GnXBH/8poLdtXWFbR+5oZq5OzPUPUwq+S+mpgawcHByffwmKA1XDMEzYJljZbr7SWEt+6Xcaj7i5otOQIknBR+hxUo2HVIFtFea8MB3zvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=MCP6vHqk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FTawg+eibKPwjXYUEBn4EhpY3d5APGLgTYE9b1Hm60lNQi3VTIZ+zbnHf9TRXufwk5+DC56WzV01M2XMRghvt0eyVjHT2kBJN99vRj+CGMMk0/9nXG+B0M+rGalTuQtX7aez2KrI1+I8p/mHkC9uoU53erjA4QkzSS5gwoaW2gQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Togi4HRJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="MCP6vHqk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F061C19423;
-	Tue, 10 Mar 2026 11:27:16 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Togi4HRJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E219C19423;
+	Tue, 10 Mar 2026 11:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142036;
-	bh=g8dHd3fyyZpieAjjMobegQsRS5t4k8wMKou28ttvBu4=;
+	s=k20201202; t=1773142037;
+	bh=cTjds15nTPmdR+CqQziOmaFTRnjasPymdKdXydfxL1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCP6vHqkbbX/ZPSTe20hS0/snphF9/6y7ufFgGwkE52d4Fsn4/RoI0S5yqwiu64xY
-	 FZioOeKRUrH9U9zNOxaHT9+r5QiQeaxWE9ejVnUbMIBczxbcqNPtUXbvqOSuD62jQR
-	 B4skYxYphHDXGO0pY1uiA23WZkb3RvNuivoD6Dma7p6JkuLCyvbPAnFMlTvdyAqk7x
-	 ge0iJh6CgK2KxGQ98y8vuZ4vFWfmKJmWTZFF2GvUWGGyxFrpGYknpVDGX7S7pgFsPs
-	 H6ru5oAgY8QpdYeO5WKHMx4UZySHlmTsAojYYGBsU3MLbpwaistGCkWWjD11ebveJU
-	 Uhmk5zta8kRgA==
+	b=Togi4HRJolyNlgP1UEXi3UjTmOpaBfvrrYHvM95/Hf2ZautZ87NDX/877q+o1YZO+
+	 RQbHsKjke0OMewn+fXG7XWWwjh8qaBA4F9+JUQt+xKDjvEcIrnewzPaLeTOm+HiZxu
+	 oaumDcEa1Mk2DS/pDO5/LeUPEOiyWBGeKpRfvBGh7xWWvb3UTZNJJTFdy04JTCWwzO
+	 bUH3df9W+TAuAEeZbaJFfXz18B1JqLn41Lty647E5uJsRijCq+1QD20hZCO6lrqWzG
+	 YpakClTI1cp9dzzvqYUYDFOWE6InEdxImkN+KIHKfTE2UzQtdYzmKQ1C6fWsZTPhv2
+	 8k7rvgjWzjFQg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ariel Silver <arielsilver77@gmail.com>,
+Cc: Vahagn Vardanian <vahagn@redrays.io>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 164/314] wifi: mac80211: bounds-check link_id in ieee80211_ml_reconfiguration
-Date: Tue, 10 Mar 2026 07:17:03 -0400
-Message-ID: <8a532385600191d6ce1d136852a6c11390704a12.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 165/314] wifi: mac80211: fix NULL pointer dereference in mesh_rx_csa_frame()
+Date: Tue, 10 Mar 2026 07:17:04 -0400
+Message-ID: <ad609b4555270463658e86d30f959277d628d2cc.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,41 +48,66 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ariel Silver <arielsilver77@gmail.com>
+From: Vahagn Vardanian <vahagn@redrays.io>
 
-commit 162d331d833dc73a3e905a24c44dd33732af1fc5 upstream.
+commit 017c1792525064a723971f0216e6ef86a8c7af11 upstream.
 
-link_id is taken from the ML Reconfiguration element (control & 0x000f),
-so it can be 0..15. link_removal_timeout[] has IEEE80211_MLD_MAX_NUM_LINKS
-(15) elements, so index 15 is out-of-bounds. Skip subelements with
-link_id >= IEEE80211_MLD_MAX_NUM_LINKS to avoid a stack out-of-bounds
-write.
+In mesh_rx_csa_frame(), elems->mesh_chansw_params_ie is dereferenced
+at lines 1638 and 1642 without a prior NULL check:
 
-Fixes: 8eb8dd2ffbbb ("wifi: mac80211: Support link removal using Reconfiguration ML element")
-Reported-by: Ariel Silver <arielsilver77@gmail.com>
-Signed-off-by: Ariel Silver <arielsilver77@gmail.com>
+    ifmsh->chsw_ttl = elems->mesh_chansw_params_ie->mesh_ttl;
+    ...
+    pre_value = le16_to_cpu(elems->mesh_chansw_params_ie->mesh_pre_value);
+
+The mesh_matches_local() check above only validates the Mesh ID,
+Mesh Configuration, and Supported Rates IEs.  It does not verify the
+presence of the Mesh Channel Switch Parameters IE (element ID 118).
+When a received CSA action frame omits that IE, ieee802_11_parse_elems()
+leaves elems->mesh_chansw_params_ie as NULL, and the unconditional
+dereference causes a kernel NULL pointer dereference.
+
+A remote mesh peer with an established peer link (PLINK_ESTAB) can
+trigger this by sending a crafted SPECTRUM_MGMT/CHL_SWITCH action frame
+that includes a matching Mesh ID and Mesh Configuration IE but omits the
+Mesh Channel Switch Parameters IE.  No authentication beyond the default
+open mesh peering is required.
+
+Crash confirmed on kernel 6.17.0-5-generic via mac80211_hwsim:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  RIP: 0010:ieee80211_mesh_rx_queued_mgmt+0x143/0x2a0 [mac80211]
+  CR2: 0000000000000000
+
+Fix by adding a NULL check for mesh_chansw_params_ie after
+mesh_matches_local() returns, consistent with how other optional IEs
+are guarded throughout the mesh code.
+
+The bug has been present since v3.13 (released 2014-01-19).
+
+Fixes: 8f2535b92d68 ("mac80211: process the CSA frame for mesh accordingly")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260220101129.1202657-1-Ariel.Silver@cybereason.com
+Signed-off-by: Vahagn Vardanian <vahagn@redrays.io>
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/mlme.c | 3 +++
+ net/mac80211/mesh.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index 8ba199cd38c0f..f119149bcc1c1 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -6977,6 +6977,9 @@ static void ieee80211_ml_reconfiguration(struct ieee80211_sub_if_data *sdata,
- 		control = le16_to_cpu(prof->control);
- 		link_id = control & IEEE80211_MLE_STA_RECONF_CONTROL_LINK_ID;
+diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
+index f37068a533f4e..e235ab7a5651c 100644
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -1629,6 +1629,9 @@ static void mesh_rx_csa_frame(struct ieee80211_sub_if_data *sdata,
+ 	if (!mesh_matches_local(sdata, elems))
+ 		goto free;
  
-+		if (link_id >= IEEE80211_MLD_MAX_NUM_LINKS)
-+			continue;
++	if (!elems->mesh_chansw_params_ie)
++		goto free;
 +
- 		removed_links |= BIT(link_id);
- 
- 		/* the MAC address should not be included, but handle it */
+ 	ifmsh->chsw_ttl = elems->mesh_chansw_params_ie->mesh_ttl;
+ 	if (!--ifmsh->chsw_ttl)
+ 		fwd_csa = false;
 -- 
 2.51.0
 
