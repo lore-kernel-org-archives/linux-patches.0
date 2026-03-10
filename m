@@ -1,44 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8952F387583;
-	Tue, 10 Mar 2026 11:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D580386C02;
+	Tue, 10 Mar 2026 11:20:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141657; cv=none; b=TkgOltLan8I4Jjm/p72+rYvnZAPFWNWp9/jDwouh4eH8Dv1vBTxPUZlhSojZE61h8VF+jesFTRdgg/P4TiIbZ17yskjZtBdmkCaU2HXvIzkQkNSSFnu7AVPBi5grJU8JFrAzOLXCdvWHclKu1xuAxuXK9k2KacT9q+ppf3/qg9E=
+	t=1773141658; cv=none; b=dZmzGgj/z/v9nyJYVh8dOENLl06YSoo76jC16sVelbkQxN+9YhRit0hZ6xFp4whERS8RXCbsEDHHvBs4NdSSf9SsK3ZeSeyzhpxBEKkHYv0V77hL6qNy4UTpCTuSAMQETTGGkoimWRiuy59tPUGSjfOB//BYQ3ubIlj4WItECAw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141657; c=relaxed/simple;
-	bh=0QD55OI1flOZ9fILNOdIUG7CAOe93hFyScjtpO1kgg0=;
+	s=arc-20240116; t=1773141658; c=relaxed/simple;
+	bh=zJbbNLhrG2SLwPOb/m71gyLEXQslXA8Z+ijTAazrd/4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oRpaeGsBTQwjh7SheUqizRcy4zhHfrpcXncFO4rnsyG9Zh4VfPJyjw/tHVwW0d+BtFBaXSBgsiNqg2hWrQm/dR5Q8Tn0FMWyElVCwE6u5N7om/05l2ex6jDNSN2zFy52G/X5CFE2hSsr9sIzj08WIUyxqPqPBXrKxohw/NZw9IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=NJZ/l2UZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TqCCJtm/GbJx83ghwK1VbTgavXEE0085sAK7MmkexaSzO6srxR618yOVMK8RYr3vI+3yDBftd/5GFL1B4DXCir7cU/qGhY2w+ZXIx11VslsaST5foGhhIe0ItMFV1cs2PN7IcVCyR439zwhrjnN76GDrRhkJlKE95OdjJd5hrbg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=imC+jJi0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="NJZ/l2UZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781D8C2BCB0;
-	Tue, 10 Mar 2026 11:20:56 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="imC+jJi0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B09C3C2BCAF;
+	Tue, 10 Mar 2026 11:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141657;
-	bh=0QD55OI1flOZ9fILNOdIUG7CAOe93hFyScjtpO1kgg0=;
+	s=k20201202; t=1773141658;
+	bh=zJbbNLhrG2SLwPOb/m71gyLEXQslXA8Z+ijTAazrd/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJZ/l2UZMi3OYwEdHj93SlXRF/Heo2FP4S+TCDnlTYv6ky7UPL9q+O4sexAoo0plV
-	 5EQYWQmOcbTFZsLtMU5zkU7E6RNnI5DXnjFwHaWuhVmyyKoopVh70D2gw6cSjMvHKl
-	 7XVaWpampQ0FKtfIIbxPcH7T9CA/2PUKVP5Nq5tq4jDiZycGWEIIy35EoCeKsCD0tv
-	 7HUXHcuwtP1VzJUb7fFXWAOf9Z10wLqFtdjOJwb8QsTl8cpsefuJxOjUEix4BCTbGK
-	 tCj0lrLKbWrpz5VoeTIJtI1+kzoV667znNHwwKigHk3HYf1EYP96jL/TfE++AZDG/I
-	 C+NvBbk5sXWfg==
+	b=imC+jJi0VVAjYQQv2ASPTQlFq5M17JgKZ227jQqy9AH1ItXz83Z45M5Tld6nbYzBi
+	 sBheCU2RyUCD+zoORtTqrvRpSoYz9Ren3NwqUhJhgKQK4yS2XuPwhlh0NlqgbE+nfO
+	 hCwC5lRP3pQ6VYKL1vRUm7B+CQSZuJuykjLKSCmTS6fwUBwWaEV9UV+NH5jtyJd491
+	 NPubqjKGYS/l5987t05KNZhwIvnQB5EPsmBKrGF6aUHFIlpDEu2+icA70SJOEjV/SD
+	 l+T4/kAFAELOkt9g+/yNtwrrBRA7J/mZ9k+xg4aEfwgIN19jvOZsPJesCfWWEUqkH+
+	 BvICcuYHQsS3Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wang Tao <wangtao554@huawei.com>,
-	Zhang Qiao <zhangqiao22@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+Cc: Peter Zijlstra <peterz@infradead.org>,
 	Vincent Guittot <vincent.guittot@linaro.org>,
 	K Prateek Nayak <kprateek.nayak@amd.com>,
 	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 024/314] sched/eevdf: Update se->vprot in reweight_entity()
-Date: Tue, 10 Mar 2026 07:14:43 -0400
-Message-ID: <2a8045e80d3425ba67de28ebb8f9dd49b28a9779.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 025/314] sched/fair: Fix lag clamp
+Date: Tue, 10 Mar 2026 07:14:44 -0400
+Message-ID: <5c138c996029f207c25fdf19db8cd2c0520a917f.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -52,79 +50,133 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Wang Tao <wangtao554@huawei.com>
+From: Peter Zijlstra <peterz@infradead.org>
 
-[ Upstream commit ff38424030f98976150e42ca35f4b00e6ab8fa23 ]
+[ Upstream commit 6e3c0a4e1ad1e0455b7880fad02b3ee179f56c09 ]
 
-In the EEVDF framework with Run-to-Parity protection, `se->vprot` is an
-independent variable defining the virtual protection timestamp.
+Vincent reported that he was seeing undue lag clamping in a mixed
+slice workload. Implement the max_slice tracking as per the todo
+comment.
 
-When `reweight_entity()` is called (e.g., via nice/renice), it performs
-the following actions to preserve Lag consistency:
- 1. Scales `se->vlag` based on the new weight.
- 2. Calls `place_entity()`, which recalculates `se->vruntime` based on
-    the new weight and scaled lag.
-
-However, the current implementation fails to update `se->vprot`, leading
-to mismatches between the task's actual runtime and its expected duration.
-
-Fixes: 63304558ba5d ("sched/eevdf: Curb wakeup-preemption")
-Suggested-by: Zhang Qiao <zhangqiao22@huawei.com>
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
+Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
+Reported-off-by: Vincent Guittot <vincent.guittot@linaro.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
+Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
 Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
 Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
-Link: https://patch.msgid.link/20260120123113.3518950-1-wangtao554@huawei.com
+Link: https://patch.msgid.link/20250422101628.GA33555@noisy.programming.kicks-ass.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ include/linux/sched.h |  1 +
+ kernel/sched/fair.c   | 39 +++++++++++++++++++++++++++++++++++----
+ 2 files changed, 36 insertions(+), 4 deletions(-)
 
+diff --git a/include/linux/sched.h b/include/linux/sched.h
+index 6ad294330c0b6..3e2005e9e2f0b 100644
+--- a/include/linux/sched.h
++++ b/include/linux/sched.h
+@@ -574,6 +574,7 @@ struct sched_entity {
+ 	u64				deadline;
+ 	u64				min_vruntime;
+ 	u64				min_slice;
++	u64				max_slice;
+ 
+ 	struct list_head		group_node;
+ 	unsigned char			on_rq;
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 1644ad90acdca..8587218ee9073 100644
+index 8587218ee9073..292141f4aaa54 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -3805,6 +3805,8 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 			    unsigned long weight)
+@@ -748,6 +748,8 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+ 	return cfs_rq->zero_vruntime;
+ }
+ 
++static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq);
++
+ /*
+  * lag_i = S - s_i = w_i * (V - v_i)
+  *
+@@ -761,17 +763,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
+  * EEVDF gives the following limit for a steady state system:
+  *
+  *   -r_max < lag < max(r_max, q)
+- *
+- * XXX could add max_slice to the augmented data to track this.
+  */
+ static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
  {
- 	bool curr = cfs_rq->curr == se;
-+	bool rel_vprot = false;
-+	u64 vprot;
++	u64 max_slice = cfs_rq_max_slice(cfs_rq) + TICK_NSEC;
+ 	s64 vlag, limit;
  
- 	if (se->on_rq) {
- 		/* commit outstanding execution time */
-@@ -3812,6 +3814,11 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 		update_entity_lag(cfs_rq, se);
- 		se->deadline -= se->vruntime;
- 		se->rel_deadline = 1;
-+		if (curr && protect_slice(se)) {
-+			vprot = se->vprot - se->vruntime;
-+			rel_vprot = true;
-+		}
+ 	WARN_ON_ONCE(!se->on_rq);
+ 
+ 	vlag = avg_vruntime(cfs_rq) - se->vruntime;
+-	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
++	limit = calc_delta_fair(max_slice, se);
+ 
+ 	se->vlag = clamp(vlag, -limit, limit);
+ }
+@@ -829,6 +830,21 @@ static inline u64 cfs_rq_min_slice(struct cfs_rq *cfs_rq)
+ 	return min_slice;
+ }
+ 
++static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq)
++{
++	struct sched_entity *root = __pick_root_entity(cfs_rq);
++	struct sched_entity *curr = cfs_rq->curr;
++	u64 max_slice = 0ULL;
 +
- 		cfs_rq->nr_queued--;
- 		if (!curr)
- 			__dequeue_entity(cfs_rq, se);
-@@ -3827,6 +3834,9 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 	if (se->rel_deadline)
- 		se->deadline = div_s64(se->deadline * se->load.weight, weight);
- 
-+	if (rel_vprot)
-+		vprot = div_s64(vprot * se->load.weight, weight);
++	if (curr && curr->on_rq)
++		max_slice = curr->slice;
 +
- 	update_load_set(&se->load, weight);
++	if (root)
++		max_slice = max(max_slice, root->max_slice);
++
++	return max_slice;
++}
++
+ static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
+ {
+ 	return entity_before(__node_2_se(a), __node_2_se(b));
+@@ -853,6 +869,15 @@ static inline void __min_slice_update(struct sched_entity *se, struct rb_node *n
+ 	}
+ }
  
- 	do {
-@@ -3838,6 +3848,8 @@ static void reweight_entity(struct cfs_rq *cfs_rq, struct sched_entity *se,
- 	enqueue_load_avg(cfs_rq, se);
- 	if (se->on_rq) {
- 		place_entity(cfs_rq, se, 0);
-+		if (rel_vprot)
-+			se->vprot = se->vruntime + vprot;
- 		update_load_add(&cfs_rq->load, se->load.weight);
- 		if (!curr)
- 			__enqueue_entity(cfs_rq, se);
++static inline void __max_slice_update(struct sched_entity *se, struct rb_node *node)
++{
++	if (node) {
++		struct sched_entity *rse = __node_2_se(node);
++		if (rse->max_slice > se->max_slice)
++			se->max_slice = rse->max_slice;
++	}
++}
++
+ /*
+  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
+  */
+@@ -860,6 +885,7 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
+ {
+ 	u64 old_min_vruntime = se->min_vruntime;
+ 	u64 old_min_slice = se->min_slice;
++	u64 old_max_slice = se->max_slice;
+ 	struct rb_node *node = &se->run_node;
+ 
+ 	se->min_vruntime = se->vruntime;
+@@ -870,8 +896,13 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
+ 	__min_slice_update(se, node->rb_right);
+ 	__min_slice_update(se, node->rb_left);
+ 
++	se->max_slice = se->slice;
++	__max_slice_update(se, node->rb_right);
++	__max_slice_update(se, node->rb_left);
++
+ 	return se->min_vruntime == old_min_vruntime &&
+-	       se->min_slice == old_min_slice;
++	       se->min_slice == old_min_slice &&
++	       se->max_slice == old_max_slice;
+ }
+ 
+ RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
 -- 
 2.51.0
 
