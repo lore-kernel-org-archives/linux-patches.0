@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 147B635AC23;
-	Tue, 10 Mar 2026 11:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473E93859DC;
+	Tue, 10 Mar 2026 11:12:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141154; cv=none; b=e/C8y7eTuy9Il6S+YNunaSd+PGHhTHG60ReJD9y218eJV6x0Lope4FhA8q6IOoENweJ3DJwmj/csVbWk9Up6QFurF7DflO+HkMawGUD1yRs0oea64Fg3eSEIT8Hg5FvYaMEGiqCYe55Gk9n5shVBVLe10VI93Cbbm9sxyhL/Cfo=
+	t=1773141155; cv=none; b=cOzFl/uGYUeOhSWfxWfJKlaV21RxdA53Orx0dsYWOrlCxcffl7fAM9V0F7x5GEP9/FpEnxq2m9PLoDSxkO3EbaINaIu0gY8vn2mCvHzKu2zhdzxnOgu03wdz8g65H8/FbGx2SeG2xXleTkwG7L0p2XRUq5+P3Ct/s/DMF3uvQtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141154; c=relaxed/simple;
-	bh=GwgNXECudpB/tlaQNh5JdhkYey9cmB7CsD5obxOpLUo=;
+	s=arc-20240116; t=1773141155; c=relaxed/simple;
+	bh=k9W6l0IO5+1g8UaFFlcyhg622dwPV0kbq6xTsDUaZUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OxM+qmbj2AP/r4c/RGZCBkF2RwlgbjDM1A6C18PYbx9mS573J0xCEl5f3bK0xN4o99rSvAafsTewJQyI4KMK18m6tDSad3FvwS80kN0w3xAy5tncVtNqc1d40/GmcFRxrC1MrXh/1IvqC3ooov4d7p6Evoa/bdQaAxxzxmDGzL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SLT05Jg2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dRu77RFeLuVUn9Q9JrP1uA5AGVEv7/YeIOBskkMj/LpgQa25Y/DfVA3pMQwmqgQ2ybtxXikP6buWXp+USyLp60Qst5ra282OwtIlEyQeGFIrlZMKZk70uhBi1WGrrbCTMUZ0v2W1zI3BRfMYuif0cCaLjBeu/n5zvnqEOBYD0sA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=JiO0ZweZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SLT05Jg2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20660C19423;
-	Tue, 10 Mar 2026 11:12:33 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="JiO0ZweZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3898FC2BCAF;
+	Tue, 10 Mar 2026 11:12:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141154;
-	bh=GwgNXECudpB/tlaQNh5JdhkYey9cmB7CsD5obxOpLUo=;
+	s=k20201202; t=1773141155;
+	bh=k9W6l0IO5+1g8UaFFlcyhg622dwPV0kbq6xTsDUaZUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLT05Jg2ZdcLP8dBGYmGqyYh/WDGIWO03oDjIp7HZZpgVpw5mhMy8D3tYhuk/++e0
-	 +0TMSA9ro5cdaJUVN89KQPHcMc5llTWJnxKLeQr41w8KZW4HMDcXRtdZ5z1Rwpw1OP
-	 3bdEB+QNRH8bK/KvD0UwXuFQzrI3PoMsvJO6QXuq3mdZC4D8bF2jhxEmQTwqm698bE
-	 q6OO5OUeb/GXQuboG3wxJiryq9xcFco6+j4STwFXBCeK4bJIMVrtSwjBSXbGIF3JYd
-	 uCgOO8EXQleKZcRp4ziE6Hvc+qNS8pDgkXPuO0KlvXApiQCYUQC5v0NPO71S8q62ty
-	 8Hv/adaV+kYcg==
+	b=JiO0ZweZkPCLYOPyffZZtA5/Bt/pU2fN6RAfneu92pkU7uB2JujHjnd21VXklPEvl
+	 N9lwlkc+4pIFIkH3IqV7cO8zkAv7moz8GNrRq20Q8L+XPC1ORaGwN4p+petzAxsVm6
+	 2tcAdcK1amHMsLO8E5c6QjHz5jvmkgJgGZueZU+DNCB1oLcuHUUsJUjaW2f5h3Pc+H
+	 fi9vHoWiVTJd7QcqgbVB8WiI7ssv1fZOlxDUMM7IjWV2QSCWvMcpBGIv0vXLF5R22s
+	 9CatOgUWheUTsNJfH/JLmLoQ0V1zOegSmW5tM48yBNnevoA79JM41YIP1WshFP+AEG
+	 LN3KtMUGUTT2g==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Henrique Carvalho <henrique.carvalho@suse.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Meetakshi Setiya <msetiya@microsoft.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
+Cc: Paulo Alcantara <pc@manguebit.org>,
+	Xiaoli Feng <xifeng@redhat.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
 	Steve French <stfrench@microsoft.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.19 156/311] smb: client: fix cifs_pick_channel when channels are equally loaded
-Date: Tue, 10 Mar 2026 07:03:23 -0400
-Message-ID: <53a84a5425a87dbb2ce6bed7bb1b117683c0784b.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 157/311] smb: client: fix broken multichannel with krb5+signing
+Date: Tue, 10 Mar 2026 07:03:24 -0400
+Message-ID: <13f9718e1cf21056cbd78752897fc9df85f83501.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -51,74 +52,79 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Henrique Carvalho <henrique.carvalho@suse.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 663c28469d3274d6456f206a6671c91493d85ff1 upstream.
+commit d9d1e319b39ea685ede59319002d567c159d23c3 upstream.
 
-cifs_pick_channel uses (start % chan_count) when channels are equally
-loaded, but that can return a channel that failed the eligibility
-checks.
+When mounting a share with 'multichannel,max_channels=n,sec=krb5i',
+the client was duplicating signing key for all secondary channels,
+thus making the server fail all commands sent from secondary channels
+due to bad signatures.
 
-Drop the fallback and return the scan-selected channel instead. If none
-is eligible, keep the existing behavior of using the primary channel.
+Every channel has its own signing key, so when establishing a new
+channel with krb5 auth, make sure to use the new session key as the
+derived key to generate channel's signing key in SMB2_auth_kerberos().
 
-Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Acked-by: Meetakshi Setiya <msetiya@microsoft.com>
-Reviewed-by: Shyam Prasad N <sprasad@microsoft.com>
+Repro:
+
+$ mount.cifs //srv/share /mnt -o multichannel,max_channels=4,sec=krb5i
+$ sleep 5
+$ umount /mnt
+$ dmesg
+  ...
+  CIFS: VFS: sign fail cmd 0x5 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+  CIFS: VFS: sign fail cmd 0x5 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+  CIFS: VFS: sign fail cmd 0x4 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+
+Reported-by: Xiaoli Feng <xifeng@redhat.com>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/transport.c | 21 ++++++++++-----------
- 1 file changed, 10 insertions(+), 11 deletions(-)
+ fs/smb/client/smb2pdu.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/fs/smb/client/transport.c b/fs/smb/client/transport.c
-index 3b34c3f4da2df..67aee82e98860 100644
---- a/fs/smb/client/transport.c
-+++ b/fs/smb/client/transport.c
-@@ -808,16 +808,21 @@ cifs_cancelled_callback(struct TCP_Server_Info *server, struct mid_q_entry *mid)
- }
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index 758d6f4256726..b16d7b42a73c4 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1715,19 +1715,17 @@ SMB2_auth_kerberos(struct SMB2_sess_data *sess_data)
+ 	is_binding = (ses->ses_status == SES_GOOD);
+ 	spin_unlock(&ses->ses_lock);
  
- /*
-- * Return a channel (master if none) of @ses that can be used to send
-- * regular requests.
-+ * cifs_pick_channel - pick an eligible channel for network operations
-  *
-- * If we are currently binding a new channel (negprot/sess.setup),
-- * return the new incomplete channel.
-+ * @ses: session reference
-+ *
-+ * Select an eligible channel (not terminating and not marked as needing
-+ * reconnect), preferring the least loaded one. If no eligible channel is
-+ * found, fall back to the primary channel (index 0).
-+ *
-+ * Return: TCP_Server_Info pointer for the chosen channel, or NULL if @ses is
-+ * NULL.
-  */
- struct TCP_Server_Info *cifs_pick_channel(struct cifs_ses *ses)
- {
- 	uint index = 0;
--	unsigned int min_in_flight = UINT_MAX, max_in_flight = 0;
-+	unsigned int min_in_flight = UINT_MAX;
- 	struct TCP_Server_Info *server = NULL;
- 	int i, start, cur;
- 
-@@ -847,14 +852,8 @@ struct TCP_Server_Info *cifs_pick_channel(struct cifs_ses *ses)
- 			min_in_flight = server->in_flight;
- 			index = cur;
- 		}
--		if (server->in_flight > max_in_flight)
--			max_in_flight = server->in_flight;
+-	/* keep session key if binding */
+-	if (!is_binding) {
+-		kfree_sensitive(ses->auth_key.response);
+-		ses->auth_key.response = kmemdup(msg->data, msg->sesskey_len,
+-						 GFP_KERNEL);
+-		if (!ses->auth_key.response) {
+-			cifs_dbg(VFS, "Kerberos can't allocate (%u bytes) memory\n",
+-				 msg->sesskey_len);
+-			rc = -ENOMEM;
+-			goto out_put_spnego_key;
+-		}
+-		ses->auth_key.len = msg->sesskey_len;
++	kfree_sensitive(ses->auth_key.response);
++	ses->auth_key.response = kmemdup(msg->data,
++					 msg->sesskey_len,
++					 GFP_KERNEL);
++	if (!ses->auth_key.response) {
++		cifs_dbg(VFS, "%s: can't allocate (%u bytes) memory\n",
++			 __func__, msg->sesskey_len);
++		rc = -ENOMEM;
++		goto out_put_spnego_key;
  	}
++	ses->auth_key.len = msg->sesskey_len;
  
--	/* if all channels are equally loaded, fall back to round-robin */
--	if (min_in_flight == max_in_flight)
--		index = (uint)start % ses->chan_count;
--
- 	server = ses->chans[index].server;
- 	spin_unlock(&ses->chan_lock);
- 
+ 	sess_data->iov[1].iov_base = msg->data + msg->sesskey_len;
+ 	sess_data->iov[1].iov_len = msg->secblob_len;
 -- 
 2.51.0
 
