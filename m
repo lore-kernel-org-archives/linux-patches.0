@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0D4338946E;
-	Tue, 10 Mar 2026 11:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD607387368;
+	Tue, 10 Mar 2026 11:26:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141962; cv=none; b=QoQIBMWOX+UHfwhd8wtgXJozCcxk5c6aeGkM+bIe+yTSEBwI+HWMdSs32KjnO4ShRo3mgwFUIQgNGhwhzLfudE7NC7BRg16B09AfhUMmovkTvo/WJYoSCn3Lajg9cdTaCe/pSzcZDWHjDQScwSsrSNyAStHxNg3uOe05BLBZb/I=
+	t=1773141962; cv=none; b=tcmOSYTCEtN60yFuxWIgc+ihecpPSJdNimQpxjyb5q0dRADQW6maudX5+H2OjUFY01Nyqg9U0wc6tSoN6e5x820NbDSDqnaxet57+hzH/5ZogagbwC8dLw+/YJC4M1mcNyRbvJASwnDwUIzF2BdXKcDwCdFT4nAiMYCog4rNVwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1773141962; c=relaxed/simple;
-	bh=bd8bc9gMqTUwQPI6x8JZb1sQ2d1JRis0Vs4PbwnwEOI=;
+	bh=/k3DMrWnJCQSHXQ5XvLh4mwwy33Ym1jAVKhSeNYypTw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XK/kVwJm2xaRiGO84MeD3UU02blGcxu0wkGDl0DHYjUBMlk1Z5VHkLoIllcm3SwBxTL9TPBp38xhlV/P9w46I5/VtOR55Cv7BnIc8IDs6Dph86eEPvkP1mdPynruhSrg2j9Hx4uT2ZxiKCXRrwtv+47/q06oTR+8s4WGLW9JQAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bR2U4oaA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F19zptF5KWEjrP9MidY5xJnIfoDRZHIE5jQZ85kzkYkN2ww91T72hog5gGofLuHm0xr44se2h0t4zWffeiSP1bxM4ufi90LvrpWqQgU87mTCuviAfzqmynMPNUGLYdLCcR/+SbBIoOtMm/WCaEJARn8FNpj/JiR0jgcdtqKT2So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=aF4vAdQq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bR2U4oaA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14FC9C19423;
-	Tue, 10 Mar 2026 11:26:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="aF4vAdQq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21621C19423;
+	Tue, 10 Mar 2026 11:26:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141961;
-	bh=bd8bc9gMqTUwQPI6x8JZb1sQ2d1JRis0Vs4PbwnwEOI=;
+	s=k20201202; t=1773141962;
+	bh=/k3DMrWnJCQSHXQ5XvLh4mwwy33Ym1jAVKhSeNYypTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bR2U4oaAAyHPF6bYjky8/EU298ke8SvNCH7Xc3wAWuChGXi9Qxne90Vh60EMSSkdp
-	 BTf2gGmett83mwLAa5N5DF1DoW8GT4L/lODcddoQuG0B+QaxoD+yyv9z9d5L/9TOAo
-	 G1RNNtgj6YmjF0NORs+a8dPpveXZJnVcGNpUAyrktI6qkGf/lm2OUNaIMRT9WipnZ4
-	 fHGVNzWiDqfhiMXNCDB6YcW5GfACeSukuNZTe8FRgG5yUTWH36/Urym7qYlxsE2MkV
-	 mDEI7sH4cmlgPHbRG6+EIZ1DqPN1m4IxRCgpPCMu73TuVGOjOAeObhY5azAQCp4Cb5
-	 sLU6Llaml0i2g==
+	b=aF4vAdQqVWSlhm4vZ9MmaoOLMGW3VILxd3UBh6bEmXBmHr4vee6EBlPSzVsxXcMdC
+	 24IthQwjos7fG888+Bk7Ph//rqHwzWE2L5+E4r9FVzrAgghYJ0NrDD8SzSY2ujfTkC
+	 YQaCdPx2hRAwvo9Dxs6Bu89ri//2GXZD0Q4DLGQEuDT8At0BvsIL/WZ5neaf35l6jb
+	 zw8LZF2B0GN648epYSeA0JChqxxfGk2oixSwMZG6JlDKrPHBZ7SN70v72KtkqsZX87
+	 logeJDa8WqzqRSUwj6uehjJmHqFb9mVhVHhwtpqo6CAE0k3bmBaRQORrbeMgTO6WWn
+	 mgieHNyykgtsQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Ming Qian <ming.qian@oss.nxp.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+Cc: Kuen-Han Tsai <khtsai@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 085/314] media: verisilicon: Avoid G2 bus error while decoding H.264 and HEVC
-Date: Tue, 10 Mar 2026 07:15:44 -0400
-Message-ID: <3b92b74f68817accc3efa8756ab3ee6bd91cefc6.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 086/314] usb: gadget: u_ether: add gether_opts for config caching
+Date: Tue, 10 Mar 2026 07:15:45 -0400
+Message-ID: <36e2490f0bab4c43a6fb591444c514420e4fa574.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -50,171 +48,333 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@oss.nxp.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit e0203ddf9af7c8e170e1e99ce83b4dc07f0cd765 ]
+[ Upstream commit e065c6a7e46c2ee9c677fdbf50035323d2de1215 ]
 
-For the i.MX8MQ platform, there is a hardware limitation: the g1 VPU and
-g2 VPU cannot decode simultaneously; otherwise, it will cause below bus
-error and produce corrupted pictures, even potentially lead to system hang.
+Currently, the net_device is allocated when the function instance is
+created (e.g., in ncm_alloc_inst()). While this allows userspace to
+configure the device early, it decouples the net_device lifecycle from
+the actual USB connection state (bind/unbind). The goal is to defer
+net_device creation to the bind callback to properly align the lifecycle
+with its parent gadget device.
 
-[  110.527986] hantro-vpu 38310000.video-codec: frame decode timed out.
-[  110.583517] hantro-vpu 38310000.video-codec: bus error detected.
+However, deferring net_device allocation would prevent userspace from
+configuring parameters (like interface name or MAC address) before the
+net_device exists.
 
-Therefore, it is necessary to ensure that g1 and g2 operate alternately.
-This allows for successful multi-instance decoding of H.264 and HEVC.
+Introduce a new structure, struct gether_opts, associated with the
+usb_function_instance, to cache settings independently of the
+net_device. These settings include the interface name pattern, MAC
+addresses (device and host), queue multiplier, and address assignment
+type.
 
-To achieve this, g1 and g2 share the same v4l2_m2m_dev, and then the
-v4l2_m2m_dev can handle the scheduling.
+New helper functions are added:
+- gether_setup_opts_default(): Initializes struct gether_opts with
+  defaults, including random MAC addresses.
+- gether_apply_opts(): Applies the cached options from a struct
+  gether_opts to a valid net_device.
 
-Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Co-developed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+To expose these options to userspace, new configfs macros
+(USB_ETHER_OPTS_ITEM and USB_ETHER_OPTS_ATTR_*) are defined in
+u_ether_configfs.h. These attributes are part of the function
+instance's configfs group.
+
+This refactoring is a preparatory step. It allows the subsequent patch
+to safely move the net_device allocation from the instance creation
+phase to the bind phase without losing the ability to pre-configure
+the interface via configfs.
+
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20251230-ncm-refactor-v1-1-793e347bc7a7@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 56a512a9b410 ("usb: gadget: f_ncm: align net_device lifecycle with bind/unbind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/verisilicon/hantro.h   |  2 +
- .../media/platform/verisilicon/hantro_drv.c   | 42 +++++++++++++++++--
- .../media/platform/verisilicon/imx8m_vpu_hw.c |  8 ++++
- 3 files changed, 49 insertions(+), 3 deletions(-)
+ drivers/usb/gadget/function/u_ether.c         |  30 +++
+ drivers/usb/gadget/function/u_ether.h         |  28 +++
+ .../usb/gadget/function/u_ether_configfs.h    | 176 ++++++++++++++++++
+ 3 files changed, 234 insertions(+)
 
-diff --git a/drivers/media/platform/verisilicon/hantro.h b/drivers/media/platform/verisilicon/hantro.h
-index e0fdc4535b2d7..0353de154a1ec 100644
---- a/drivers/media/platform/verisilicon/hantro.h
-+++ b/drivers/media/platform/verisilicon/hantro.h
-@@ -77,6 +77,7 @@ struct hantro_irq {
-  * @double_buffer:		core needs double buffering
-  * @legacy_regs:		core uses legacy register set
-  * @late_postproc:		postproc must be set up at the end of the job
-+ * @shared_devices:		an array of device ids that cannot run concurrently
-  */
- struct hantro_variant {
- 	unsigned int enc_offset;
-@@ -101,6 +102,7 @@ struct hantro_variant {
- 	unsigned int double_buffer : 1;
- 	unsigned int legacy_regs : 1;
- 	unsigned int late_postproc : 1;
-+	const struct of_device_id *shared_devices;
- };
- 
- /**
-diff --git a/drivers/media/platform/verisilicon/hantro_drv.c b/drivers/media/platform/verisilicon/hantro_drv.c
-index e0c11fe8b55ca..418cfe3a14146 100644
---- a/drivers/media/platform/verisilicon/hantro_drv.c
-+++ b/drivers/media/platform/verisilicon/hantro_drv.c
-@@ -13,6 +13,7 @@
- #include <linux/clk.h>
- #include <linux/module.h>
- #include <linux/of.h>
-+#include <linux/of_platform.h>
- #include <linux/platform_device.h>
- #include <linux/pm.h>
- #include <linux/pm_runtime.h>
-@@ -1035,6 +1036,41 @@ static int hantro_disable_multicore(struct hantro_dev *vpu)
- 	return 0;
+diff --git a/drivers/usb/gadget/function/u_ether.c b/drivers/usb/gadget/function/u_ether.c
+index f58590bf5e02f..745ed2c212e3a 100644
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1039,6 +1039,36 @@ int gether_set_ifname(struct net_device *net, const char *name, int len)
  }
+ EXPORT_SYMBOL_GPL(gether_set_ifname);
  
-+static struct v4l2_m2m_dev *hantro_get_v4l2_m2m_dev(struct hantro_dev *vpu)
++void gether_setup_opts_default(struct gether_opts *opts, const char *name)
 +{
-+	struct device_node *node;
-+	struct hantro_dev *shared_vpu;
++	opts->qmult = QMULT_DEFAULT;
++	snprintf(opts->name, sizeof(opts->name), "%s%%d", name);
++	eth_random_addr(opts->dev_mac);
++	opts->addr_assign_type = NET_ADDR_RANDOM;
++	eth_random_addr(opts->host_mac);
++}
++EXPORT_SYMBOL_GPL(gether_setup_opts_default);
 +
-+	if (!vpu->variant || !vpu->variant->shared_devices)
-+		goto init_new_m2m_dev;
++void gether_apply_opts(struct net_device *net, struct gether_opts *opts)
++{
++	struct eth_dev *dev = netdev_priv(net);
 +
-+	for_each_matching_node(node, vpu->variant->shared_devices) {
-+		struct platform_device *pdev;
-+		struct v4l2_m2m_dev *m2m_dev;
++	dev->qmult = opts->qmult;
 +
-+		pdev = of_find_device_by_node(node);
-+		if (!pdev)
-+			continue;
-+
-+		shared_vpu = platform_get_drvdata(pdev);
-+		if (IS_ERR_OR_NULL(shared_vpu) || shared_vpu == vpu) {
-+			platform_device_put(pdev);
-+			continue;
-+		}
-+
-+		v4l2_m2m_get(shared_vpu->m2m_dev);
-+		m2m_dev = shared_vpu->m2m_dev;
-+		platform_device_put(pdev);
-+
-+		of_node_put(node);
-+
-+		return m2m_dev;
++	if (opts->ifname_set) {
++		strscpy(net->name, opts->name, sizeof(net->name));
++		dev->ifname_set = true;
 +	}
 +
-+init_new_m2m_dev:
-+	return v4l2_m2m_init(&vpu_m2m_ops);
-+}
++	memcpy(dev->host_mac, opts->host_mac, sizeof(dev->host_mac));
 +
- static int hantro_probe(struct platform_device *pdev)
++	if (opts->addr_assign_type == NET_ADDR_SET) {
++		memcpy(dev->dev_mac, opts->dev_mac, sizeof(dev->dev_mac));
++		net->addr_assign_type = opts->addr_assign_type;
++	}
++}
++EXPORT_SYMBOL_GPL(gether_apply_opts);
++
+ void gether_suspend(struct gether *link)
  {
- 	const struct of_device_id *match;
-@@ -1186,7 +1222,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	}
- 	platform_set_drvdata(pdev, vpu);
+ 	struct eth_dev *dev = link->ioport;
+diff --git a/drivers/usb/gadget/function/u_ether.h b/drivers/usb/gadget/function/u_ether.h
+index 34be220cef77c..63a0240df4d74 100644
+--- a/drivers/usb/gadget/function/u_ether.h
++++ b/drivers/usb/gadget/function/u_ether.h
+@@ -38,6 +38,31 @@
  
--	vpu->m2m_dev = v4l2_m2m_init(&vpu_m2m_ops);
-+	vpu->m2m_dev = hantro_get_v4l2_m2m_dev(vpu);
- 	if (IS_ERR(vpu->m2m_dev)) {
- 		v4l2_err(&vpu->v4l2_dev, "Failed to init mem2mem device\n");
- 		ret = PTR_ERR(vpu->m2m_dev);
-@@ -1225,7 +1261,7 @@ static int hantro_probe(struct platform_device *pdev)
- 	hantro_remove_enc_func(vpu);
- err_m2m_rel:
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- err_v4l2_unreg:
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- err_clk_unprepare:
-@@ -1248,7 +1284,7 @@ static void hantro_remove(struct platform_device *pdev)
- 	hantro_remove_dec_func(vpu);
- 	hantro_remove_enc_func(vpu);
- 	media_device_cleanup(&vpu->mdev);
--	v4l2_m2m_release(vpu->m2m_dev);
-+	v4l2_m2m_put(vpu->m2m_dev);
- 	v4l2_device_unregister(&vpu->v4l2_dev);
- 	clk_bulk_unprepare(vpu->variant->num_clocks, vpu->clocks);
- 	reset_control_assert(vpu->resets);
-diff --git a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-index 5be0e2e76882f..6f8e43b7f1575 100644
---- a/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-+++ b/drivers/media/platform/verisilicon/imx8m_vpu_hw.c
-@@ -343,6 +343,12 @@ const struct hantro_variant imx8mq_vpu_variant = {
- 	.num_regs = ARRAY_SIZE(imx8mq_reg_names)
- };
+ struct eth_dev;
  
-+static const struct of_device_id imx8mq_vpu_shared_resources[] __initconst = {
-+	{ .compatible = "nxp,imx8mq-vpu-g1", },
-+	{ .compatible = "nxp,imx8mq-vpu-g2", },
-+	{ /* sentinel */ }
++/**
++ * struct gether_opts - Options for Ethernet gadget function instances
++ * @name: Pattern for the network interface name (e.g., "usb%d").
++ *        Used to generate the net device name.
++ * @qmult: Queue length multiplier for high/super speed.
++ * @host_mac: The MAC address to be used by the host side.
++ * @dev_mac: The MAC address to be used by the device side.
++ * @ifname_set: True if the interface name pattern has been set by userspace.
++ * @addr_assign_type: The method used for assigning the device MAC address
++ *                    (e.g., NET_ADDR_RANDOM, NET_ADDR_SET).
++ *
++ * This structure caches network-related settings provided through configfs
++ * before the net_device is fully instantiated. This allows for early
++ * configuration while deferring net_device allocation until the function
++ * is bound.
++ */
++struct gether_opts {
++	char			name[IFNAMSIZ];
++	unsigned int		qmult;
++	u8			host_mac[ETH_ALEN];
++	u8			dev_mac[ETH_ALEN];
++	bool			ifname_set;
++	unsigned char		addr_assign_type;
 +};
 +
- const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.dec_fmts = imx8m_vpu_dec_fmts,
- 	.num_dec_fmts = ARRAY_SIZE(imx8m_vpu_dec_fmts),
-@@ -356,6 +362,7 @@ const struct hantro_variant imx8mq_vpu_g1_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_irqs),
- 	.clk_names = imx8mq_g1_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g1_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
+ /*
+  * This represents the USB side of an "ethernet" link, managed by a USB
+  * function which provides control and (maybe) framing.  Two functions
+@@ -259,6 +284,9 @@ int gether_set_ifname(struct net_device *net, const char *name, int len);
  
- const struct hantro_variant imx8mq_vpu_g2_variant = {
-@@ -371,6 +378,7 @@ const struct hantro_variant imx8mq_vpu_g2_variant = {
- 	.num_irqs = ARRAY_SIZE(imx8mq_g2_irqs),
- 	.clk_names = imx8mq_g2_clk_names,
- 	.num_clocks = ARRAY_SIZE(imx8mq_g2_clk_names),
-+	.shared_devices = imx8mq_vpu_shared_resources,
- };
+ void gether_cleanup(struct eth_dev *dev);
  
- const struct hantro_variant imx8mm_vpu_g1_variant = {
++void gether_setup_opts_default(struct gether_opts *opts, const char *name);
++void gether_apply_opts(struct net_device *net, struct gether_opts *opts);
++
+ void gether_suspend(struct gether *link);
+ void gether_resume(struct gether *link);
+ 
+diff --git a/drivers/usb/gadget/function/u_ether_configfs.h b/drivers/usb/gadget/function/u_ether_configfs.h
+index f558c3139ebe5..a3696797e074a 100644
+--- a/drivers/usb/gadget/function/u_ether_configfs.h
++++ b/drivers/usb/gadget/function/u_ether_configfs.h
+@@ -13,6 +13,12 @@
+ #ifndef __U_ETHER_CONFIGFS_H
+ #define __U_ETHER_CONFIGFS_H
+ 
++#include <linux/cleanup.h>
++#include <linux/if_ether.h>
++#include <linux/mutex.h>
++#include <linux/netdevice.h>
++#include <linux/rtnetlink.h>
++
+ #define USB_ETHERNET_CONFIGFS_ITEM(_f_)					\
+ 	static void _f_##_attr_release(struct config_item *item)	\
+ 	{								\
+@@ -197,4 +203,174 @@ out:									\
+ 									\
+ 	CONFIGFS_ATTR(_f_##_opts_, _n_)
+ 
++#define USB_ETHER_OPTS_ITEM(_f_)						\
++	static void _f_##_attr_release(struct config_item *item)		\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++										\
++		usb_put_function_instance(&opts->func_inst);			\
++	}									\
++										\
++	static struct configfs_item_operations _f_##_item_ops = {		\
++		.release	= _f_##_attr_release,				\
++	}
++
++#define USB_ETHER_OPTS_ATTR_DEV_ADDR(_f_)					\
++	static ssize_t _f_##_opts_dev_addr_show(struct config_item *item,	\
++						char *page)			\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++										\
++		guard(mutex)(&opts->lock);					\
++		return sysfs_emit(page, "%pM\n", opts->net_opts.dev_mac);	\
++	}									\
++										\
++	static ssize_t _f_##_opts_dev_addr_store(struct config_item *item,	\
++						 const char *page, size_t len)	\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++		u8 new_addr[ETH_ALEN];						\
++		const char *p = page;						\
++										\
++		guard(mutex)(&opts->lock);					\
++		if (opts->refcnt)						\
++			return -EBUSY;						\
++										\
++		for (int i = 0; i < ETH_ALEN; i++) {				\
++			unsigned char num;					\
++			if ((*p == '.') || (*p == ':'))				\
++				p++;						\
++			num = hex_to_bin(*p++) << 4;				\
++			num |= hex_to_bin(*p++);				\
++			new_addr[i] = num;					\
++		}								\
++		if (!is_valid_ether_addr(new_addr))				\
++			return -EINVAL;						\
++		memcpy(opts->net_opts.dev_mac, new_addr, ETH_ALEN);		\
++		opts->net_opts.addr_assign_type = NET_ADDR_SET;			\
++		return len;							\
++	}									\
++										\
++	CONFIGFS_ATTR(_f_##_opts_, dev_addr)
++
++#define USB_ETHER_OPTS_ATTR_HOST_ADDR(_f_)					\
++	static ssize_t _f_##_opts_host_addr_show(struct config_item *item,	\
++						 char *page)			\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++										\
++		guard(mutex)(&opts->lock);					\
++		return sysfs_emit(page, "%pM\n", opts->net_opts.host_mac);	\
++	}									\
++										\
++	static ssize_t _f_##_opts_host_addr_store(struct config_item *item,	\
++						  const char *page, size_t len)	\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++		u8 new_addr[ETH_ALEN];						\
++		const char *p = page;						\
++										\
++		guard(mutex)(&opts->lock);					\
++		if (opts->refcnt)						\
++			return -EBUSY;						\
++										\
++		for (int i = 0; i < ETH_ALEN; i++) {				\
++			unsigned char num;					\
++			if ((*p == '.') || (*p == ':'))				\
++				p++;						\
++			num = hex_to_bin(*p++) << 4;				\
++			num |= hex_to_bin(*p++);				\
++			new_addr[i] = num;					\
++		}								\
++		if (!is_valid_ether_addr(new_addr))				\
++			return -EINVAL;						\
++		memcpy(opts->net_opts.host_mac, new_addr, ETH_ALEN);		\
++		return len;							\
++	}									\
++										\
++	CONFIGFS_ATTR(_f_##_opts_, host_addr)
++
++#define USB_ETHER_OPTS_ATTR_QMULT(_f_)						\
++	static ssize_t _f_##_opts_qmult_show(struct config_item *item,		\
++					     char *page)			\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++										\
++		guard(mutex)(&opts->lock);					\
++		return sysfs_emit(page, "%u\n", opts->net_opts.qmult);		\
++	}									\
++										\
++	static ssize_t _f_##_opts_qmult_store(struct config_item *item,		\
++					      const char *page, size_t len)	\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++		u32 val;							\
++		int ret;							\
++										\
++		guard(mutex)(&opts->lock);					\
++		if (opts->refcnt)						\
++			return -EBUSY;						\
++										\
++		ret = kstrtou32(page, 0, &val);					\
++		if (ret)							\
++			return ret;						\
++										\
++		opts->net_opts.qmult = val;					\
++		return len;							\
++	}									\
++										\
++	CONFIGFS_ATTR(_f_##_opts_, qmult)
++
++#define USB_ETHER_OPTS_ATTR_IFNAME(_f_)						\
++	static ssize_t _f_##_opts_ifname_show(struct config_item *item,		\
++					      char *page)			\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++		const char *name;						\
++										\
++		guard(mutex)(&opts->lock);					\
++		rtnl_lock();							\
++		if (opts->net_opts.ifname_set)					\
++			name = opts->net_opts.name;				\
++		else if (opts->net)						\
++			name = netdev_name(opts->net);				\
++		else								\
++			name = "(inactive net_device)";				\
++		rtnl_unlock();							\
++		return sysfs_emit(page, "%s\n", name);				\
++	}									\
++										\
++	static ssize_t _f_##_opts_ifname_store(struct config_item *item,	\
++					       const char *page, size_t len)	\
++	{									\
++		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
++		char tmp[IFNAMSIZ];						\
++		const char *p;							\
++		size_t c_len = len;						\
++										\
++		if (c_len > 0 && page[c_len - 1] == '\n')			\
++			c_len--;						\
++										\
++		if (c_len >= sizeof(tmp))					\
++			return -E2BIG;						\
++										\
++		strscpy(tmp, page, c_len + 1);					\
++		if (!dev_valid_name(tmp))					\
++			return -EINVAL;						\
++										\
++		/* Require exactly one %d */					\
++		p = strchr(tmp, '%');						\
++		if (!p || p[1] != 'd' || strchr(p + 2, '%'))			\
++			return -EINVAL;						\
++										\
++		guard(mutex)(&opts->lock);					\
++		if (opts->refcnt)						\
++			return -EBUSY;						\
++		strscpy(opts->net_opts.name, tmp, sizeof(opts->net_opts.name));	\
++		opts->net_opts.ifname_set = true;				\
++		return len;							\
++	}									\
++										\
++	CONFIGFS_ATTR(_f_##_opts_, ifname)
++
+ #endif /* __U_ETHER_CONFIGFS_H */
 -- 
 2.51.0
 
