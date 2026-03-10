@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDA6138759A;
-	Tue, 10 Mar 2026 11:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E60F38E100;
+	Tue, 10 Mar 2026 11:27:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773142019; cv=none; b=tPkbGN4g9h7HsdoBRNqNqHOXxBXJYDOc0lRJTDFYze2vsaw3c3bYDDXJb0U1UhN3aVSAMDYWrnDNbucLSUS2b8nh8cA1gO6fDN99dHAreOfzeJn2oqJj53LcVJJr4RWbapNuQ5fypJIGE3SsZ5jKyB6CkElVpji44avK/0k1uWE=
+	t=1773142021; cv=none; b=bMjqKR4u5L+jzkA2wI8y7SM30uxXZN1NpKaeM3s9SJ1tMEoBuWg42+3pc61+IJTHmjZ7pSnuHH6Sq+t7Nsy6s6hmdrQlGXkNo6hHEfeYr66+ZRBu0Vr4Kr3iVZTQtuPtMLOYwJogzI0Y7NerJ5iva5SODszR/wIkK6fmTf1JTxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773142019; c=relaxed/simple;
-	bh=Hj8UFPt+QkMEcqeVsWfzaPpL1KCr/kdZP/dHQvZSdM8=;
+	s=arc-20240116; t=1773142021; c=relaxed/simple;
+	bh=2pPWkafpi+YBDiCbZW/4MEOkpfB+X4nUw2i7lZU/KqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cpWoIivINbMVQYqXtoeMj8jQZ9sDpEIr5H/LiHbE4QuZ5vTWrD30RSHAGZfS0sRvfgm+N5JVqGUNVXn59+ZHSXwH12v+5DAz0RA1pX8qgukCOApDVU+tXPf04pe/5fHDpUdCUr2Mp6TCKbxB5JHXyFp04IDFfWwHrDUToyYpXw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ufNqWB/B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mv7xx30oyqZf40mPeNXE7PEnPl8XErnlIpyr4ZDkfbW6YOJoS8FavJkkbWxIz0ImO9E+doD7BIgXD8r5F/sOwZ/Mw3KfZ4rHPW/u+9+Rdoh92riPcf0WAuTMSHPh7JCktgvtZUKrITj4C0hlodyN3JqbpiT4302mHSaUs+dLov0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=szJrWlMC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ufNqWB/B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B30EC19423;
-	Tue, 10 Mar 2026 11:26:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="szJrWlMC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0271DC2BCB0;
+	Tue, 10 Mar 2026 11:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773142019;
-	bh=Hj8UFPt+QkMEcqeVsWfzaPpL1KCr/kdZP/dHQvZSdM8=;
+	s=k20201202; t=1773142020;
+	bh=2pPWkafpi+YBDiCbZW/4MEOkpfB+X4nUw2i7lZU/KqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ufNqWB/BXhMi2EiwD0pX3dmg+GZsKwKKuD0krGodbuQq3y/+A74IiSBLIxzvd8HwG
-	 LLmAYFLkR3LZ3F/+zzE+lgkRCvJ3V1NK1s8R8OiXCQPXKiVwGGtAXVeRmei96VoG0o
-	 J0Fdlg90phs2tWUfmzRBmaK9aOFjSxzq9O1yp268qbQkt+JH5/W0FZuJN/snN3sIc9
-	 cN3+0Se6AjzzWLwUYbv9u7GkBED8P2pyQgUcGoSsPyPDWsikdDA/dVa/SHMn8iMnIY
-	 uEGBaM9oh5ak8rFeLVwIvbk3Dd7QEF2GIK2ZG2ZKZwU3VXBUisWQRMNxDHkhuTXsSM
-	 LUaoOryP5VRag==
+	b=szJrWlMCwzFhOCjwEYD/UrEWt6xjOXqrJMA6yBI2+YWSaH5yHiNVmxYVWdv1ENdew
+	 Xf+k/8QHILgqVn/eHtlgYJWeKoTv2u6Ojr+o+ZhfNZN3fbuSBesF4yf+whSnWwj4Gb
+	 UZlZsHmdL3slfmAoN7yA9fkZhC3T51aSlzPpdjFFs9t5Ap1UZ+Cu08A49nuNgKOmMI
+	 fDKTViVMxiubZa2gR2v1MVdweoyw1QNFF4jvYPoNQIR0grhp8j2HiiHVVZIUwHUsKX
+	 fsshAQODEW05Q0YUBb3a6Nh1jhSSaTjzLiMOkd6J4Ui+Cm6pY3+34ulEy8P6n7Dx8X
+	 OFIydxP5Sn+mA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: "Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
+Cc: Zide Chen <zide.chen@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
 	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: [PATCH 6.18 146/314] x86/efi: defer freeing of boot services memory
-Date: Tue, 10 Mar 2026 07:16:45 -0400
-Message-ID: <7eb870a0e5131c095a9c33f6fdffc61d57568fe8.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 147/314] perf/x86/intel/uncore: Add per-scheduler IMC CAS count events
+Date: Tue, 10 Mar 2026 07:16:46 -0400
+Message-ID: <e5beb58d2e865c7cba61c22e131f5fd013bc6851.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -49,195 +50,84 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: "Mike Rapoport (Microsoft)" <rppt@kernel.org>
+From: Zide Chen <zide.chen@intel.com>
 
-commit a4b0bf6a40f3c107c67a24fbc614510ef5719980 upstream.
+commit 6a8a48644c4b804123e59dbfc5d6cd29a0194046 upstream.
 
-efi_free_boot_services() frees memory occupied by EFI_BOOT_SERVICES_CODE
-and EFI_BOOT_SERVICES_DATA using memblock_free_late().
+IMC on SPR and EMR does not support sub-channels.  In contrast, CPUs
+that use gnr_uncores[] (e.g. Granite Rapids and Sierra Forest)
+implement two command schedulers (SCH0/SCH1) per memory channel,
+providing logically independent command and data paths.
 
-There are two issue with that: memblock_free_late() should be used for
-memory allocated with memblock_alloc() while the memory reserved with
-memblock_reserve() should be freed with free_reserved_area().
+Do not reuse the spr_uncore_imc[] configuration for these CPUs.
+Instead, introduce a dedicated gnr_uncore_imc[] with per-scheduler
+events, so userspace can monitor SCH0 and SCH1 independently.
 
-More acutely, with CONFIG_DEFERRED_STRUCT_PAGE_INIT=y
-efi_free_boot_services() is called before deferred initialization of the
-memory map is complete.
+On these CPUs, replace cas_count_{read,write} with
+cas_count_{read,write}_sch{0,1}.  This may break existing userspace
+that relies on cas_count_{read,write}, prompting it to switch to the
+per-scheduler events, as the legacy event reports only partial
+traffic (SCH0).
 
-Benjamin Herrenschmidt reports that this causes a leak of ~140MB of
-RAM on EC2 t3a.nano instances which only have 512MB or RAM.
-
-If the freed memory resides in the areas that memory map for them is
-still uninitialized, they won't be actually freed because
-memblock_free_late() calls memblock_free_pages() and the latter skips
-uninitialized pages.
-
-Using free_reserved_area() at this point is also problematic because
-__free_page() accesses the buddy of the freed page and that again might
-end up in uninitialized part of the memory map.
-
-Delaying the entire efi_free_boot_services() could be problematic
-because in addition to freeing boot services memory it updates
-efi.memmap without any synchronization and that's undesirable late in
-boot when there is concurrency.
-
-More robust approach is to only defer freeing of the EFI boot services
-memory.
-
-Split efi_free_boot_services() in two. First efi_unmap_boot_services()
-collects ranges that should be freed into an array then
-efi_free_boot_services() later frees them after deferred init is complete.
-
-Link: https://lore.kernel.org/all/ec2aaef14783869b3be6e3c253b2dcbf67dbc12a.camel@kernel.crashing.org
-Fixes: 916f676f8dc0 ("x86, efi: Retain boot service code until after switching to virtual mode")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Reviewed-by: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 632c4bf6d007 ("perf/x86/intel/uncore: Support Granite Rapids")
+Fixes: cb4a6ccf3583 ("perf/x86/intel/uncore: Support Sierra Forest and Grand Ridge")
+Reported-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260210005225.20311-1-zide.chen@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/efi.h          |  2 +-
- arch/x86/platform/efi/efi.c         |  2 +-
- arch/x86/platform/efi/quirks.c      | 55 +++++++++++++++++++++++++++--
- drivers/firmware/efi/mokvar-table.c |  2 +-
- 4 files changed, 55 insertions(+), 6 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c | 28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/include/asm/efi.h b/arch/x86/include/asm/efi.h
-index f227a70ac91f0..51b4cdbea061a 100644
---- a/arch/x86/include/asm/efi.h
-+++ b/arch/x86/include/asm/efi.h
-@@ -138,7 +138,7 @@ extern void __init efi_apply_memmap_quirks(void);
- extern int __init efi_reuse_config(u64 tables, int nr_tables);
- extern void efi_delete_dummy_variable(void);
- extern void efi_crash_gracefully_on_page_fault(unsigned long phys_addr);
--extern void efi_free_boot_services(void);
-+extern void efi_unmap_boot_services(void);
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index e1f370b8d065f..a338ee01bb242 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -6610,6 +6610,32 @@ static struct intel_uncore_type gnr_uncore_ubox = {
+ 	.attr_update		= uncore_alias_groups,
+ };
  
- void arch_efi_call_virt_setup(void);
- void arch_efi_call_virt_teardown(void);
-diff --git a/arch/x86/platform/efi/efi.c b/arch/x86/platform/efi/efi.c
-index 463b784499a8f..791c52c8393f4 100644
---- a/arch/x86/platform/efi/efi.c
-+++ b/arch/x86/platform/efi/efi.c
-@@ -837,7 +837,7 @@ static void __init __efi_enter_virtual_mode(void)
- 	}
- 
- 	efi_check_for_embedded_firmwares();
--	efi_free_boot_services();
-+	efi_unmap_boot_services();
- 
- 	if (!efi_is_mixed())
- 		efi_native_runtime_setup();
-diff --git a/arch/x86/platform/efi/quirks.c b/arch/x86/platform/efi/quirks.c
-index 553f330198f2f..35caa5746115d 100644
---- a/arch/x86/platform/efi/quirks.c
-+++ b/arch/x86/platform/efi/quirks.c
-@@ -341,7 +341,7 @@ void __init efi_reserve_boot_services(void)
- 
- 		/*
- 		 * Because the following memblock_reserve() is paired
--		 * with memblock_free_late() for this region in
-+		 * with free_reserved_area() for this region in
- 		 * efi_free_boot_services(), we must be extremely
- 		 * careful not to reserve, and subsequently free,
- 		 * critical regions of memory (like the kernel image) or
-@@ -404,17 +404,33 @@ static void __init efi_unmap_pages(efi_memory_desc_t *md)
- 		pr_err("Failed to unmap VA mapping for 0x%llx\n", va);
- }
- 
--void __init efi_free_boot_services(void)
-+struct efi_freeable_range {
-+	u64 start;
-+	u64 end;
++static struct uncore_event_desc gnr_uncore_imc_events[] = {
++	INTEL_UNCORE_EVENT_DESC(clockticks,      "event=0x01,umask=0x00"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0,  "event=0x05,umask=0xcf"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1,  "event=0x06,umask=0xcf"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0, "event=0x05,umask=0xf0"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1, "event=0x06,umask=0xf0"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.unit, "MiB"),
++	{ /* end: all zeroes */ },
 +};
 +
-+static struct efi_freeable_range *ranges_to_free;
++static struct intel_uncore_type gnr_uncore_imc = {
++	SPR_UNCORE_MMIO_COMMON_FORMAT(),
++	.name			= "imc",
++	.fixed_ctr_bits		= 48,
++	.fixed_ctr		= SNR_IMC_MMIO_PMON_FIXED_CTR,
++	.fixed_ctl		= SNR_IMC_MMIO_PMON_FIXED_CTL,
++	.event_descs		= gnr_uncore_imc_events,
++};
 +
-+void __init efi_unmap_boot_services(void)
- {
- 	struct efi_memory_map_data data = { 0 };
- 	efi_memory_desc_t *md;
- 	int num_entries = 0;
-+	int idx = 0;
-+	size_t sz;
- 	void *new, *new_md;
- 
- 	/* Keep all regions for /sys/kernel/debug/efi */
- 	if (efi_enabled(EFI_DBG))
- 		return;
- 
-+	sz = sizeof(*ranges_to_free) * efi.memmap.nr_map + 1;
-+	ranges_to_free = kzalloc(sz, GFP_KERNEL);
-+	if (!ranges_to_free) {
-+		pr_err("Failed to allocate storage for freeable EFI regions\n");
-+		return;
-+	}
-+
- 	for_each_efi_memory_desc(md) {
- 		unsigned long long start = md->phys_addr;
- 		unsigned long long size = md->num_pages << EFI_PAGE_SHIFT;
-@@ -471,7 +487,15 @@ void __init efi_free_boot_services(void)
- 			start = SZ_1M;
- 		}
- 
--		memblock_free_late(start, size);
-+		/*
-+		 * With CONFIG_DEFERRED_STRUCT_PAGE_INIT parts of the memory
-+		 * map are still not initialized and we can't reliably free
-+		 * memory here.
-+		 * Queue the ranges to free at a later point.
-+		 */
-+		ranges_to_free[idx].start = start;
-+		ranges_to_free[idx].end = start + size;
-+		idx++;
- 	}
- 
- 	if (!num_entries)
-@@ -512,6 +536,31 @@ void __init efi_free_boot_services(void)
- 	}
- }
- 
-+static int __init efi_free_boot_services(void)
-+{
-+	struct efi_freeable_range *range = ranges_to_free;
-+	unsigned long freed = 0;
-+
-+	if (!ranges_to_free)
-+		return 0;
-+
-+	while (range->start) {
-+		void *start = phys_to_virt(range->start);
-+		void *end = phys_to_virt(range->end);
-+
-+		free_reserved_area(start, end, -1, NULL);
-+		freed += (end - start);
-+		range++;
-+	}
-+	kfree(ranges_to_free);
-+
-+	if (freed)
-+		pr_info("Freeing EFI boot services memory: %ldK\n", freed / SZ_1K);
-+
-+	return 0;
-+}
-+arch_initcall(efi_free_boot_services);
-+
- /*
-  * A number of config table entries get remapped to virtual addresses
-  * after entering EFI virtual mode. However, the kexec kernel requires
-diff --git a/drivers/firmware/efi/mokvar-table.c b/drivers/firmware/efi/mokvar-table.c
-index aedbbd627706a..741674a0a70c5 100644
---- a/drivers/firmware/efi/mokvar-table.c
-+++ b/drivers/firmware/efi/mokvar-table.c
-@@ -85,7 +85,7 @@ static struct kobject *mokvar_kobj;
-  * as an alternative to ordinary EFI variables, due to platform-dependent
-  * limitations. The memory occupied by this table is marked as reserved.
-  *
-- * This routine must be called before efi_free_boot_services() in order
-+ * This routine must be called before efi_unmap_boot_services() in order
-  * to guarantee that it can mark the table as reserved.
-  *
-  * Implicit inputs:
+ static struct intel_uncore_type gnr_uncore_pciex8 = {
+ 	SPR_UNCORE_PCI_COMMON_FORMAT(),
+ 	.name			= "pciex8",
+@@ -6657,7 +6683,7 @@ static struct intel_uncore_type *gnr_uncores[UNCORE_GNR_NUM_UNCORE_TYPES] = {
+ 	NULL,
+ 	&spr_uncore_pcu,
+ 	&gnr_uncore_ubox,
+-	&spr_uncore_imc,
++	&gnr_uncore_imc,
+ 	NULL,
+ 	&gnr_uncore_upi,
+ 	NULL,
 -- 
 2.51.0
 
