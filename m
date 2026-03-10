@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0923E3859CE;
-	Tue, 10 Mar 2026 11:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E15387562;
+	Tue, 10 Mar 2026 11:25:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141665; cv=none; b=rWT/dmX0y7i/4E+PdsGDVmcdK1Za+FQSM+4v6qD5gavRUhbPOVmkYphKEW6hV+JRO5Ns1OcZ6uyv2LSiRAORa3OSIt8ZM4J0Sm6UY9ogwZ4QfK8fWpLX5NHfo64wPvC4yxv8Q5fWycvdJA+pv4fn8ViCdZi+0BjT+BxNvhcpZCE=
+	t=1773141910; cv=none; b=ElTof6W3iiGsrEwFMlNfkLqc0cX+AZ8t/I3MtYqOUdBwyb3cx+ndktgvHtt8w/kYYw+ilJbfPEqK+lOcgVvLzVlzzUinzpVSmyW3em+hT3DKeg1xuC2N3g6AhtIQbRQ1iBwu5j17T3DZY1HFkDvE4IcPuhrTmRZJd+ORuRVzrDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141665; c=relaxed/simple;
-	bh=2tFn0JzQPfKqoe/l/HZKSpLLjySyyx84dcg/8DX3qTo=;
+	s=arc-20240116; t=1773141910; c=relaxed/simple;
+	bh=Od99ggh6f+36bLixdSqp8+rPZwCVPfc6Abl9bGT092U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=f2c6FSX5HPpiMftVcQa0/s48rrgfny+quW3iNC6FEIN777VD/bgRHMRozociWo9K+q6znsi7H1y1gaS+or5IQ6kYv3hSowwayG9bXRscUDmsxxi2jX4wYOaV0IRzKsOevHTZ3au2x/eq7iyQh3Xm6rsTpjcuTI4SCIBPC0bvcVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=io+YwoRO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MpZrnltEbhtABQVFReLdLkiCKiBCWHDftqYvDvJU4nyij56SEYd2FaIp0/cl3V0kyFqXkqQRzutEfPGSX4+A5Fs58jAkLfCRluzWPWFCFGWaKVy0uniFx7zFGHFW0zFNUUKUVnPgXY3qPcDfh7+cA5529BWjjFitfDTMtkRJWn0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QHNm40RZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="io+YwoRO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51789C19423;
-	Tue, 10 Mar 2026 11:21:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QHNm40RZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24952C19423;
+	Tue, 10 Mar 2026 11:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141664;
-	bh=2tFn0JzQPfKqoe/l/HZKSpLLjySyyx84dcg/8DX3qTo=;
+	s=k20201202; t=1773141909;
+	bh=Od99ggh6f+36bLixdSqp8+rPZwCVPfc6Abl9bGT092U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=io+YwoROztXAG0lqVjnrq3qH0+yTvT9+7WstD1qdwz9fWGoVAwQWqLsn5At6vrKBD
-	 SWBZxp3uuZeUAK30GVaKzb+HlQY4j7Ca0qHsfVOXtpX6IS1BLcLYKIRGLRB1MdV7/H
-	 laSAAC3ZfZwEE0mR+99BzLXEue3c+r+gzBLdCGReBwOzg4PVIFugGjdfNvWGMs8XjK
-	 nK6Q1TtBhBe8KW6hCY24odDk3CdKadQ4u43qCTVoxZe9Nt0KvbShnlme15JX/fmMHA
-	 wR5/CRO/mTdnkRsnx7kSHhF9yv9AQG/0bypTFgGxQXXhV9di/WuLA5RMQVDxtDCXuN
-	 glNVTQMyg8wIw==
+	b=QHNm40RZkX31mj4QprGUfbIwgM98Wu22XaYPbLt2dJcfPinhxJiLa8ruUjOPNEvzJ
+	 /BO9OEhfrbqduyv728Fi9GvjYNoc9fd+ZulGfhiiJwv8N93lV35tyQrY8/xHHv+JCp
+	 qEzPDW9fHufnr/EyJI5xOo6ZDw5eosyZv9V/Bu+nhe+NLM7H3HkKjvUR88uwp6BGSN
+	 htHcDCdk4HggPEhrlqYYmhKuHlRVpaAaYLbl2X7aKIfcR025Lrv2x92yJZBgDB+TT/
+	 w6MmGVmzUou7Qnr9WaEvQMfDq95Q3T6WIuD3+uyUVVzaDqm96FgKPGLBT6ZUpMxovi
+	 WentgWuPBRzKQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Waiman Long <longman@redhat.com>,
-	Tejun Heo <tj@kernel.org>,
+Cc: Dave Jiang <dave.jiang@intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Alison Schofield <alison.schofield@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 032/314] cgroup/cpuset: Fix incorrect use of cpuset_update_tasks_cpumask() in update_cpumasks_hier()
-Date: Tue, 10 Mar 2026 07:14:51 -0400
-Message-ID: <ccae447388b9268fb9e78e4804de096d3e1c8238.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 033/314] cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko
+Date: Tue, 10 Mar 2026 07:14:52 -0400
+Message-ID: <8cce5a3eed02199f48fd80e4a17867f8e26a4eab.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,45 +50,101 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Dave Jiang <dave.jiang@intel.com>
 
-[ Upstream commit 68230aac8b9aad243626fbaf3ca170012c17fec5 ]
+[ Upstream commit e7e222ad73d93fe54d6e6e3a15253a0ecf081a1b ]
 
-Commit e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2")
-incorrectly changed the 2nd parameter of cpuset_update_tasks_cpumask()
-from tmp->new_cpus to cp->effective_cpus. This second parameter is just
-a temporary cpumask for internal use. The cpuset_update_tasks_cpumask()
-function was originally called update_tasks_cpumask() before commit
-381b53c3b549 ("cgroup/cpuset: rename functions shared between v1
-and v2").
+Moving the symbol devm_cxl_add_nvdimm_bridge() to
+drivers/cxl/cxl_pmem.c, so that cxl_pmem can export a symbol that gives
+cxl_acpi a depedency on cxl_pmem kernel module. This is a prepatory patch
+to resolve the issue of a race for nvdimm_bus object that is created
+during cxl_acpi_probe().
 
-This mistake can incorrectly change the effective_cpus of the
-cpuset when it is the top_cpuset or in arm64 architecture where
-task_cpu_possible_mask() may differ from cpu_possible_mask.  So far
-top_cpuset hasn't been passed to update_cpumasks_hier() yet, but arm64
-arch can still be impacted. Fix it by reverting the incorrect change.
+No functional changes besides moving code.
 
-Fixes: e2ffe502ba45 ("cgroup/cpuset: Add cpuset.cpus.exclusive for v2")
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Suggested-by: Dan Williams <dan.j.williams@intel.com>
+Acked-by: Ira Weiny <ira.weiny@intel.com>
+Tested-by: Alison Schofield <alison.schofield@intel.com>
+Reviewed-by: Alison Schofield <alison.schofield@intel.com?>
+Link: https://patch.msgid.link/20260205001633.1813643-2-dave.jiang@intel.com
+Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+Stable-dep-of: 96a1fd0d84b1 ("cxl: Fix race of nvdimm_bus object when creating nvdimm objects")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cgroup/cpuset.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cxl/core/pmem.c | 13 +++----------
+ drivers/cxl/cxl.h       |  2 ++
+ drivers/cxl/pmem.c      | 14 ++++++++++++++
+ 3 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/kernel/cgroup/cpuset.c b/kernel/cgroup/cpuset.c
-index abaa54037918a..08b0c264bd268 100644
---- a/kernel/cgroup/cpuset.c
-+++ b/kernel/cgroup/cpuset.c
-@@ -2301,7 +2301,7 @@ static void update_cpumasks_hier(struct cpuset *cs, struct tmpmasks *tmp,
- 		WARN_ON(!is_in_v2_mode() &&
- 			!cpumask_equal(cp->cpus_allowed, cp->effective_cpus));
+diff --git a/drivers/cxl/core/pmem.c b/drivers/cxl/core/pmem.c
+index 8853415c106a9..e1325936183a6 100644
+--- a/drivers/cxl/core/pmem.c
++++ b/drivers/cxl/core/pmem.c
+@@ -115,15 +115,8 @@ static void unregister_nvb(void *_cxl_nvb)
+ 	device_unregister(&cxl_nvb->dev);
+ }
  
--		cpuset_update_tasks_cpumask(cp, cp->effective_cpus);
-+		cpuset_update_tasks_cpumask(cp, tmp->new_cpus);
+-/**
+- * devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
+- * @host: platform firmware root device
+- * @port: CXL port at the root of a CXL topology
+- *
+- * Return: bridge device that can host cxl_nvdimm objects
+- */
+-struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+-						     struct cxl_port *port)
++struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
++						       struct cxl_port *port)
+ {
+ 	struct cxl_nvdimm_bridge *cxl_nvb;
+ 	struct device *dev;
+@@ -155,7 +148,7 @@ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+ 	put_device(dev);
+ 	return ERR_PTR(rc);
+ }
+-EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
++EXPORT_SYMBOL_FOR_MODULES(__devm_cxl_add_nvdimm_bridge, "cxl_pmem");
  
- 		/*
- 		 * On default hierarchy, inherit the CS_SCHED_LOAD_BALANCE
+ static void cxl_nvdimm_release(struct device *dev)
+ {
+diff --git a/drivers/cxl/cxl.h b/drivers/cxl/cxl.h
+index 231ddccf89773..443296da74db1 100644
+--- a/drivers/cxl/cxl.h
++++ b/drivers/cxl/cxl.h
+@@ -866,6 +866,8 @@ void cxl_driver_unregister(struct cxl_driver *cxl_drv);
+ struct cxl_nvdimm_bridge *to_cxl_nvdimm_bridge(struct device *dev);
+ struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
+ 						     struct cxl_port *port);
++struct cxl_nvdimm_bridge *__devm_cxl_add_nvdimm_bridge(struct device *host,
++						       struct cxl_port *port);
+ struct cxl_nvdimm *to_cxl_nvdimm(struct device *dev);
+ bool is_cxl_nvdimm(struct device *dev);
+ int devm_cxl_add_nvdimm(struct cxl_port *parent_port, struct cxl_memdev *cxlmd);
+diff --git a/drivers/cxl/pmem.c b/drivers/cxl/pmem.c
+index e197883690efc..714beaf1704be 100644
+--- a/drivers/cxl/pmem.c
++++ b/drivers/cxl/pmem.c
+@@ -13,6 +13,20 @@
+ 
+ static __read_mostly DECLARE_BITMAP(exclusive_cmds, CXL_MEM_COMMAND_ID_MAX);
+ 
++/**
++ * __devm_cxl_add_nvdimm_bridge() - add the root of a LIBNVDIMM topology
++ * @host: platform firmware root device
++ * @port: CXL port at the root of a CXL topology
++ *
++ * Return: bridge device that can host cxl_nvdimm objects
++ */
++struct cxl_nvdimm_bridge *devm_cxl_add_nvdimm_bridge(struct device *host,
++						     struct cxl_port *port)
++{
++	return __devm_cxl_add_nvdimm_bridge(host, port);
++}
++EXPORT_SYMBOL_NS_GPL(devm_cxl_add_nvdimm_bridge, "CXL");
++
+ static void clear_exclusive(void *mds)
+ {
+ 	clear_exclusive_cxl_commands(mds, exclusive_cmds);
 -- 
 2.51.0
 
