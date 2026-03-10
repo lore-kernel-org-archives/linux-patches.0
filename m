@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72721389108;
-	Tue, 10 Mar 2026 11:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64BA6389DE0;
+	Tue, 10 Mar 2026 11:14:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141250; cv=none; b=YCOvs7tA5qKT/gdlHG88RarBmjEbea8RPz8cRuB0if1kFX6+gYdw35adlN+C1nQmjZEk2XG0xVj4jOhFoFlIy+iw4eXWP9mz+ut06HVPu+GzsWf0CHSOOCPEyIdAJ/S3tdfy6FebolslhndtfphsINP2JDiWXZdz7rQOU/oifNo=
+	t=1773141251; cv=none; b=GoxG6tlOHI6oRvAuCof/e0at1vewKZjBR1r1OvDkuTnLSgoYtqy4cGIrEB7jxfWXriy24B0eiFsxwxANCMkbPeKAhtJyeOcLtSottdcSi231QZixqy4i8NTUstzbbbNYgHofOl6lONeaHgRmRxeGSA9dLJh8w0Vzu9xom6fmUMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141250; c=relaxed/simple;
-	bh=LGpY6E/Jg8hEm+jNgLd5q5OcUzYMXnhvxsoniDfkmJI=;
+	s=arc-20240116; t=1773141251; c=relaxed/simple;
+	bh=MWxevizfa4UTSCHs74z/dL/BGlQaQiAyB7wt3o1ZKjM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BSPSQqhCmP9x49rhos/4ZEdEIDIpSBWte0LVhy/BETDlc0Jtg2h0BeSG9M2F0GFidbW7/tfuC2ko4xZyZzrVhyc7mI99Islb3OkkdFV/U+QENy3no8F5ajVemP2l0wAF6f1zhAQ5tHLs2P2pMK8bwEZu/5BU9dcwyvGbFjQyuiM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Mfu3+9nZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dgJ1z8PCh3Vy/+hjLewia0867Ksoi2BXb/xUgZS0Amarn5qIIz2aclNUwQKxz+30ycmuOtfNVvP99k9vGcAIGDWEj2Tt4dC4Ojp68ro/1870QF1+zVcejI0HtYP8GQ3pBvI8IU1hO+7nEXFv90MbZDnpayt95kmEsQUfOe6AHoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HlJwTt8V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Mfu3+9nZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 578F5C19423;
-	Tue, 10 Mar 2026 11:14:09 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HlJwTt8V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98535C2BC86;
+	Tue, 10 Mar 2026 11:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141250;
-	bh=LGpY6E/Jg8hEm+jNgLd5q5OcUzYMXnhvxsoniDfkmJI=;
+	s=k20201202; t=1773141251;
+	bh=MWxevizfa4UTSCHs74z/dL/BGlQaQiAyB7wt3o1ZKjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mfu3+9nZIzWw7Ee9K9RhDaxAiyy0nHqS1LCspl5rCAPrM22/drdSnUOZ/w6jGagtN
-	 cx7y0AV4aD35x4IHTbVuvEU/VHGsI5/UHVk9r1DgX4VHpbxvPtzLXty+S+Cmex4A4W
-	 wIyYI4IS0GrFYvAhZn8fvZs96taWRxwqTWgnIbAiH964exk9F6Z8Aa+ITCas6er20t
-	 rsPfZ8SfXFferKXFEjZLNHAkRigWXH4mDPTBU9WjXY2YQ2dt+Hi0eMDub09TlmTSYK
-	 Zbydv+ISwrjAAuVSo7VSYDrIJnIPcvQ9pG3vzlsvTXwiy6CecAZzwXwXtijQ9a86cb
-	 X3eQw7uN7WsfA==
+	b=HlJwTt8VoMpp0Y7uL4gdV5pNfHWaz5oGgkYvovV3O7mbWOGWDuSESHtUT5R24xk2F
+	 qKQT34q+muORqDHeggP80NUPamAfgYBQhydXkM/z4UPXMG9fXSvfK93HU8wFt5/OG5
+	 uohuZGA9yv8j4sPnqyQvNsZDFJy4MOzF9N95wc22x8uby3pNkaYIFdgniMOq6w/Vyi
+	 LIXUxZI+EuKE2RiVzo8tpBsgAXmPl3GUe7Ud6Rvx6eXl8VenxbGeKnHS396bPT99qp
+	 5s1ZnRE9veFsf9mN8BFT0LlKkwfKJEvxoIuk5i2PDXwDxlgRBuf3052v8XFAnj3XlE
+	 PhOlU/VEGFVUA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Vivek Behera <vivek.behera@siemens.com>,
-	Jacob Keller <jacob.keller@intel.com>,
-	Aleksandr loktinov <aleksandr.loktionov@intel.com>,
-	Piotr Kwapulinski <piotr.kwapulinski@intel.com>,
-	Song Yoong Siang <yoong.siang.song@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+Cc: Lang Xu <xulang@uniontech.com>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 252/311] igc: Fix trigger of incorrect irq in igc_xsk_wakeup function
-Date: Tue, 10 Mar 2026 07:04:59 -0400
-Message-ID: <c3ab57c54c2405116e4eeb98de1d3cdb7f7246ee.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 253/311] bpf: Fix a UAF issue in bpf_trampoline_link_cgroup_shim
+Date: Tue, 10 Mar 2026 07:05:00 -0400
+Message-ID: <d55b0654bddaa32f4df466e9e569bf924a6fd63e.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -53,116 +49,71 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: Vivek Behera <vivek.behera@siemens.com>
+From: Lang Xu <xulang@uniontech.com>
 
-[ Upstream commit 554a1c34c11a057d01819ce9bb04653a8ffc8071 ]
+[ Upstream commit 56145d237385ca0e7ca9ff7b226aaf2eb8ef368b ]
 
-This patch addresses the issue where the igc_xsk_wakeup function
-was triggering an incorrect IRQ for tx-0 when the i226 is configured
-with only 2 combined queues or in an environment with 2 active CPU cores.
-This prevented XDP Zero-copy send functionality in such split IRQ
-configurations.
+The root cause of this bug is that when 'bpf_link_put' reduces the
+refcount of 'shim_link->link.link' to zero, the resource is considered
+released but may still be referenced via 'tr->progs_hlist' in
+'cgroup_shim_find'. The actual cleanup of 'tr->progs_hlist' in
+'bpf_shim_tramp_link_release' is deferred. During this window, another
+process can cause a use-after-free via 'bpf_trampoline_link_cgroup_shim'.
 
-The fix implements the correct logic for extracting q_vectors saved
-during rx and tx ring allocation and utilizes flags provided by the
-ndo_xsk_wakeup API to trigger the appropriate IRQ.
+Based on Martin KaFai Lau's suggestions, I have created a simple patch.
 
-Fixes: fc9df2a0b520 ("igc: Enable RX via AF_XDP zero-copy")
-Fixes: 15fd021bc427 ("igc: Add Tx hardware timestamp request for AF_XDP zero-copy packet")
-Signed-off-by: Vivek Behera <vivek.behera@siemens.com>
-Reviewed-by: Jacob Keller <jacob.keller@intel.com>
-Reviewed-by: Aleksandr loktinov <aleksandr.loktionov@intel.com>
-Reviewed-by: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
-Reviewed-by: Song Yoong Siang <yoong.siang.song@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+To fix this:
+   Add an atomic non-zero check in 'bpf_trampoline_link_cgroup_shim'.
+   Only increment the refcount if it is not already zero.
+
+Testing:
+   I verified the fix by adding a delay in
+   'bpf_shim_tramp_link_release' to make the bug easier to trigger:
+
+static void bpf_shim_tramp_link_release(struct bpf_link *link)
+{
+	/* ... */
+	if (!shim_link->trampoline)
+		return;
+
++	msleep(100);
+	WARN_ON_ONCE(bpf_trampoline_unlink_prog(&shim_link->link,
+		shim_link->trampoline, NULL));
+	bpf_trampoline_put(shim_link->trampoline);
+}
+
+Before the patch, running a PoC easily reproduced the crash(almost 100%)
+with a call trace similar to KaiyanM's report.
+After the patch, the bug no longer occurs even after millions of
+iterations.
+
+Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/3c4ebb0b.46ff8.19abab8abe2.Coremail.kaiyanm@hust.edu.cn/
+Signed-off-by: Lang Xu <xulang@uniontech.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/279EEE1BA1DDB49D+20260303095217.34436-1-xulang@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 34 ++++++++++++++++-------
- drivers/net/ethernet/intel/igc/igc_ptp.c  |  3 +-
- 2 files changed, 26 insertions(+), 11 deletions(-)
+ kernel/bpf/trampoline.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 89a321a344d26..4439eeb378c1f 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6908,28 +6908,29 @@ static int igc_xdp_xmit(struct net_device *dev, int num_frames,
- 	return nxmit;
- }
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index b9a358d7a78f1..47c70eb451f3a 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -796,10 +796,8 @@ int bpf_trampoline_link_cgroup_shim(struct bpf_prog *prog,
+ 	mutex_lock(&tr->mutex);
  
--static void igc_trigger_rxtxq_interrupt(struct igc_adapter *adapter,
--					struct igc_q_vector *q_vector)
-+static u32 igc_sw_irq_prep(struct igc_q_vector *q_vector)
- {
--	struct igc_hw *hw = &adapter->hw;
- 	u32 eics = 0;
- 
--	eics |= q_vector->eims_value;
--	wr32(IGC_EICS, eics);
-+	if (!napi_if_scheduled_mark_missed(&q_vector->napi))
-+		eics = q_vector->eims_value;
-+
-+	return eics;
- }
- 
- int igc_xsk_wakeup(struct net_device *dev, u32 queue_id, u32 flags)
- {
- 	struct igc_adapter *adapter = netdev_priv(dev);
--	struct igc_q_vector *q_vector;
-+	struct igc_hw *hw = &adapter->hw;
- 	struct igc_ring *ring;
-+	u32 eics = 0;
- 
- 	if (test_bit(__IGC_DOWN, &adapter->state))
- 		return -ENETDOWN;
- 
- 	if (!igc_xdp_is_enabled(adapter))
- 		return -ENXIO;
+ 	shim_link = cgroup_shim_find(tr, bpf_func);
+-	if (shim_link) {
++	if (shim_link && !IS_ERR(bpf_link_inc_not_zero(&shim_link->link.link))) {
+ 		/* Reusing existing shim attached by the other program. */
+-		bpf_link_inc(&shim_link->link.link);
 -
-+	/* Check if queue_id is valid. Tx and Rx queue numbers are always same */
- 	if (queue_id >= adapter->num_rx_queues)
- 		return -EINVAL;
- 
-@@ -6938,9 +6939,22 @@ int igc_xsk_wakeup(struct net_device *dev, u32 queue_id, u32 flags)
- 	if (!ring->xsk_pool)
- 		return -ENXIO;
- 
--	q_vector = adapter->q_vector[queue_id];
--	if (!napi_if_scheduled_mark_missed(&q_vector->napi))
--		igc_trigger_rxtxq_interrupt(adapter, q_vector);
-+	if (flags & XDP_WAKEUP_RX)
-+		eics |= igc_sw_irq_prep(ring->q_vector);
-+
-+	if (flags & XDP_WAKEUP_TX) {
-+		/* If IGC_FLAG_QUEUE_PAIRS is active, the q_vector
-+		 * and NAPI is shared between RX and TX.
-+		 * If NAPI is already running it would be marked as missed
-+		 * from the RX path, making this TX call a NOP
-+		 */
-+		ring = adapter->tx_ring[queue_id];
-+		eics |= igc_sw_irq_prep(ring->q_vector);
-+	}
-+
-+	if (eics)
-+		/* Cause software interrupt */
-+		wr32(IGC_EICS, eics);
- 
- 	return 0;
- }
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 7aae83c108fd7..44ee193867661 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -550,7 +550,8 @@ static void igc_ptp_free_tx_buffer(struct igc_adapter *adapter,
- 		tstamp->buffer_type = 0;
- 
- 		/* Trigger txrx interrupt for transmit completion */
--		igc_xsk_wakeup(adapter->netdev, tstamp->xsk_queue_index, 0);
-+		igc_xsk_wakeup(adapter->netdev, tstamp->xsk_queue_index,
-+			       XDP_WAKEUP_TX);
- 
- 		return;
- 	}
+ 		mutex_unlock(&tr->mutex);
+ 		bpf_trampoline_put(tr); /* bpf_trampoline_get above */
+ 		return 0;
 -- 
 2.51.0
 
