@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5137C388364;
-	Tue, 10 Mar 2026 11:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A7389116;
+	Tue, 10 Mar 2026 11:25:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141941; cv=none; b=MkV47XQIbT/Ut1w1hKvfwUgEoH7akfWh9lKdQXoYVEVtOylrq35B86KXCMcs0r5Drl4R0gIfTxqSnz6h/m8cEscyeS0qSBy4fjYWpovd87O9gb7BsID6efTVk5iYMrT4q6xmF+zYo7QqxcLP294ke3N7mRXDQSbhq78ye6SD0BE=
+	t=1773141942; cv=none; b=TazN3nPNK9GtP/fMAUHknzYnGxlHNNS0P6A0t7sp/D5uO/N3qt3maN5Sgf7XOEXxyg7ag1yPdY5wzysIT0wDN3iOQuWOrY6hkS8OYpIR1MSk9ZjEtaptHj+21g2joUummC/gfXujtDyts9EPyLpCFo08v58lHxB7Lj7BnBSTU9Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141941; c=relaxed/simple;
-	bh=KSIyL8tW1ftYIq3gAWH1W4ZN7SNZfecpnULDP/7ajq4=;
+	s=arc-20240116; t=1773141942; c=relaxed/simple;
+	bh=TOB66ADbYOW0D6QGNyfHFRUs/DkcqeEQ0i71djPOefo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qMdmSr5Ku0NfECyVFCeXw8WaR62FnlUQtVcTZwxKStg2SKVyCSIFgEPK2Nx27mrx112q53tu0lSYIJNLn3pT/tCmGy0N7xCGKzei0RDBbSYJMy5kv3oQ28zQcWtIVzas+bIeaQ1Y7TWl4SO+TFQ5CsWZmA2jjZ+C8FCJeo9oswc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=f2qN7NjP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DcwAj/DStalaiRabAcPiv5Tf4eU4qL9Q21ZiQulXo/HTvbOd9rrNIUa37jMQYlcL4ujJnRvIf7Vur8M/J4jg4qCNAa94xZZo69oFiXWoVF7lMoVCFOC9z+3Q3Q+jhnFc/LlINUBF7NtPKEhGNsSynGUwRZgGSFWMagWN4VqQ17k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FM1bpjch; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="f2qN7NjP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947D7C2BCAF;
-	Tue, 10 Mar 2026 11:25:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FM1bpjch"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 754E6C19423;
+	Tue, 10 Mar 2026 11:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141941;
-	bh=KSIyL8tW1ftYIq3gAWH1W4ZN7SNZfecpnULDP/7ajq4=;
+	s=k20201202; t=1773141942;
+	bh=TOB66ADbYOW0D6QGNyfHFRUs/DkcqeEQ0i71djPOefo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f2qN7NjPxgcF8r9Sn5bU6I/9867ylbIOZFxmJcoOoyWmUyfB5YxhYYkUXxV+I4+xi
-	 oQmEKsv0JGhbmqPWygB7elX9lZyyxiTHNnKLG5pjQYbwQKVaI8rV2i/5s1uVOQsd/1
-	 h4qxcPKOy3pwb2bZwvs1yY5KEONyueo7UjIOmlcISNwsgcjA9lF0U3ZKR3HSXguluz
-	 RRcx9shYQuON5aTJYMZOX6E84qKKjHL0uEuP0oSGD4c8XNZeTenu/zlQfHfffAZ1Yj
-	 sAKKwJr773niQ7YflonD+Ea/qdbGiG5pFrSG0rwIFe5HciPVEXrX0vvO9ajSVRqjeK
-	 PI6xLytD9COdQ==
+	b=FM1bpjchyrGL6pYMrheYYFuoM/OCl/mbMhExTY/Q+W+1NK2lsYavs2pV99BoTZcY1
+	 HGamGHwDGOs+v4Nk8iIlSBQqV3o3b3X3GJObYLgDpoP3C00z2kxUBVAIMuL/8Vaagk
+	 meqGvBSRg7vgKv3jo19r7fEUJnc9QrsX+qzU+zEPxmmugiwHoS5UKyR1FxKV6Q4pkL
+	 0bJqoFeNg+J6ItQbRt4Czu+UXfPhXeuaiGTPMk1aVLi1c8WPq2gWs09e8/hkrc3anr
+	 97Ks9fwgh8quEHLpvCaUDEP6tWs2qBH4MuJ0jEgymacKftsHlhSwmynVt+rmZExPNz
+	 oevCaR6xG63Kg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: David Carlier <devnexen@gmail.com>,
-	Tejun Heo <tj@kernel.org>,
+Cc: Alain Volmat <alain.volmat@foss.st.com>,
+	Antonio Quartulli <antonio@mandelbit.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 065/314] sched_ext: Fix SCX_EFLAG_INITIALIZED being a no-op flag
-Date: Tue, 10 Mar 2026 07:15:24 -0400
-Message-ID: <77df6e7427c7838d93eefb258856b00b3d5a713d.1773141555.git.sashal@kernel.org>
+Subject: [PATCH 6.18 066/314] spi: stm32: fix missing pointer assignment in case of dma chaining
+Date: Tue, 10 Mar 2026 07:15:25 -0400
+Message-ID: <989b22bbe9b32527a6799d787a5cd10024971a74.1773141555.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773141554.git.sashal@kernel.org>
 References: <cover.1773141554.git.sashal@kernel.org>
@@ -48,42 +49,40 @@ X-stable: review
 X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 
-From: David Carlier <devnexen@gmail.com>
+From: Alain Volmat <alain.volmat@foss.st.com>
 
-[ Upstream commit 749989b2d90ddc7dd253ad3b11a77cf882721acf ]
+[ Upstream commit e96493229a6399e902062213c6381162464cdd50 ]
 
-SCX_EFLAG_INITIALIZED is the sole member of enum scx_exit_flags with no
-explicit value, so the compiler assigns it 0. This makes the bitwise OR
-in scx_ops_init() a no-op:
+Commit c4f2c05ab029 ("spi: stm32: fix pointer-to-pointer variables usage")
+introduced a regression since dma descriptors generated as part of the
+stm32_spi_prepare_rx_dma_mdma_chaining function are not well propagated
+to the caller function, leading to mdma-dma chaining being no more
+functional.
 
-    sch->exit_info->flags |= SCX_EFLAG_INITIALIZED; /* |= 0 */
-
-As a result, BPF schedulers cannot distinguish whether ops.init()
-completed successfully by inspecting exit_info->flags.
-
-Assign the value 1LLU << 0 so the flag is actually set.
-
-Fixes: f3aec2adce8d ("sched_ext: Add SCX_EFLAG_INITIALIZED to indicate successful ops.init()")
-Signed-off-by: David Carlier <devnexen@gmail.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: c4f2c05ab029 ("spi: stm32: fix pointer-to-pointer variables usage")
+Signed-off-by: Alain Volmat <alain.volmat@foss.st.com>
+Acked-by: Antonio Quartulli <antonio@mandelbit.com>
+Link: https://patch.msgid.link/20260224-spi-stm32-chaining-fix-v1-1-5da7a4851b66@foss.st.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/ext_internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spi-stm32.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/sched/ext_internal.h b/kernel/sched/ext_internal.h
-index 601cfae8cc765..8039a750490f8 100644
---- a/kernel/sched/ext_internal.h
-+++ b/kernel/sched/ext_internal.h
-@@ -69,7 +69,7 @@ enum scx_exit_flags {
- 	 * info communication. The following flag indicates whether ops.init()
- 	 * finished successfully.
- 	 */
--	SCX_EFLAG_INITIALIZED,
-+	SCX_EFLAG_INITIALIZED   = 1LLU << 0,
- };
+diff --git a/drivers/spi/spi-stm32.c b/drivers/spi/spi-stm32.c
+index 80986bd251d29..7a6ee93be9bd4 100644
+--- a/drivers/spi/spi-stm32.c
++++ b/drivers/spi/spi-stm32.c
+@@ -1570,6 +1570,9 @@ static int stm32_spi_prepare_rx_dma_mdma_chaining(struct stm32_spi *spi,
+ 		return -EINVAL;
+ 	}
  
- /*
++	*rx_mdma_desc = _mdma_desc;
++	*rx_dma_desc = _dma_desc;
++
+ 	return 0;
+ }
+ 
 -- 
 2.51.0
 
