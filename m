@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F754389DE0;
-	Tue, 10 Mar 2026 11:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DE1E389DE0;
+	Tue, 10 Mar 2026 11:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773141252; cv=none; b=j33nvFQ8T4xpsEBz1wf9sEPCUbBmVzEmOwMMnM+rfBJH2zZoFEpxnMb6v1YlNh4dPO8h4QPorCJRCWj1Up/0Q+mn6IobsMa06Z2eHvBIRsRsSLh+XdOtEc0e30dSL58B/FMyp8pW9b+Zi+1dEM5I8w6W2xWpQyuPmFTA07jPFNc=
+	t=1773141253; cv=none; b=uzuHDarItzJsxDQOcXReIbjFkB1+OFDvA9dOM3qi9+eYfAmnOiJc1TYy6YgGjO6DywG4QUVdNclyY1fSp+FXejJDN/LejOqfVLWdUDT2yFgBe945TXePeY8sVMc90OyEvWUXDRYK/DNJyy1uS+1daEFT2IpMTyFr2qh8wHmGT8w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773141252; c=relaxed/simple;
-	bh=rf3X9jCdA7sib6XAw5gyOEf0hNiBogXdzcXrJ0YaP3Q=;
+	s=arc-20240116; t=1773141253; c=relaxed/simple;
+	bh=u6Pu1BL2VHHw9LI2/RKEZMC4x74UGtflQwtD4Uf6MtE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pQfHScahBpTwMQtHW8TlM/awij6NZm+nBqzpbrMU5NYUbuWnZ3eaa505xJa4ZdMm1/A2vZUnNquFzGcfQDENR+MDzwb6lOGigUkMNp9gly8GiK73modZLZHhgOCXXIEzRjCy1g4hiElPxkvxsikxqc9IEocYqoIQdjtuBuwjsnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Vw6bVL5v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dkYAyu+GHGOj+0hkC4kevSA1hsG5cNPM432YSap6ldMzuunHLs2f+znF/8xseq+QqCyNlojKA5RdKZCL9GKULA0xjrPK0Hryfty8pktDW/8XXcuRtcgccxCqbsa7ygQn5zhIomXVw/1q1waWvN3x/Z0QD0/S88IrrN/fPmkDN/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B7NfvqSG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Vw6bVL5v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8847DC2BCAF;
-	Tue, 10 Mar 2026 11:14:11 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B7NfvqSG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BEA3C2BC9E;
+	Tue, 10 Mar 2026 11:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773141252;
-	bh=rf3X9jCdA7sib6XAw5gyOEf0hNiBogXdzcXrJ0YaP3Q=;
+	s=k20201202; t=1773141253;
+	bh=u6Pu1BL2VHHw9LI2/RKEZMC4x74UGtflQwtD4Uf6MtE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vw6bVL5vStk5Qg3hdz/r3xFIkPwt9wayRoNE8hxh1eAXyIz8zKQWStXwrfGQWb5kj
-	 Ed0ubeNTV2AqNzmef0UjJ5vHY+KIMaXsfZUjutl38ZoM0fbqsJUaaNZwIKRNQNUNA+
-	 mGcf6VZ3yKwkdxKSu551whW3+SzFWbcxM4bS/b20vTgsX7zDPV9K1n1+Htj0tJDedO
-	 ajzamdnraZtr2Kf76w7soInEKpOQvU/0gxMaz/U8JcxE3s4YKWTUt8FrwFzlHwXJcO
-	 x53P2d9NYF3ix2IHWMRwYB1I0V5EVs+1NsvPwGsNP8dLT9k6qdInedr8HnhQewO4nH
-	 SPlXP9GRlHFUg==
+	b=B7NfvqSG3rGflz+avioWulNVDetTWqIgfIgaDXk+ZZG36Q/8hG8JTSfuCTfltKv/u
+	 qE/cguKrxCsZANHQljXmwXj0E2p+tivUXZHiqFrd2ZJv4o8A0neOQMQ/caMGbRfy4F
+	 iqWtTM9txrU5kdUwFkrxiRbfoO4TLh1E6TnEpiGKytZwn4wJMWSUvfpJJ906Hq8G2a
+	 pTFT/KSHTL+sFfQX1lG/oobwkWi7/GX7zgkTVcwjYrQmL+RSlPFDqfnINfeOM8WHrv
+	 xbKFvjGH2BzR/SbUs2Ubu7YeTJfEzALY0vvUmK7eCq+QKf12dg655gtA5Ahf08Uv+9
+	 9qMBbqpPwgbyw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
@@ -33,9 +33,9 @@ Cc: ZhangGuoDong <zhangguodong@kylinos.cn>,
 	ChenXiaoSong <chenxiaosong@kylinos.cn>,
 	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 254/311] smb/client: fix buffer size for smb311_posix_qinfo in smb2_compound_op()
-Date: Tue, 10 Mar 2026 07:05:01 -0400
-Message-ID: <e6ba86e1b4bea533cc4f2b6c39f62d0fedcd7362.1773140655.git.sashal@kernel.org>
+Subject: [PATCH 6.19 255/311] smb/client: fix buffer size for smb311_posix_qinfo in SMB311_posix_query_info()
+Date: Tue, 10 Mar 2026 07:05:02 -0400
+Message-ID: <dde8b9f523aba7bf6540a0db0eaffafa4668e3b0.1773140655.git.sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
 References: <cover.1773140654.git.sashal@kernel.org>
@@ -51,43 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 From: ZhangGuoDong <zhangguodong@kylinos.cn>
 
-[ Upstream commit 12c43a062acb0ac137fc2a4a106d4d084b8c5416 ]
+[ Upstream commit 9621b996e4db1dbc2b3dc5d5910b7d6179397320 ]
+
+SMB311_posix_query_info() is currently unused, but it may still be used in
+some stable versions, so these changes are submitted as a separate patch.
 
 Use `sizeof(struct smb311_posix_qinfo)` instead of sizeof its pointer,
 so the allocated buffer matches the actual struct size.
 
-Fixes: 6a5f6592a0b6 ("SMB311: Add support for query info using posix extensions (level 100)")
+Fixes: b1bc1874b885 ("smb311: Add support for SMB311 query info (non-compounded)")
 Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
 Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2inode.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/smb2pdu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2inode.c b/fs/smb/client/smb2inode.c
-index 6b0420a5b52a7..5ebcc68560a06 100644
---- a/fs/smb/client/smb2inode.c
-+++ b/fs/smb/client/smb2inode.c
-@@ -325,7 +325,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 							  cfile->fid.volatile_fid,
- 							  SMB_FIND_FILE_POSIX_INFO,
- 							  SMB2_O_INFO_FILE, 0,
--							  sizeof(struct smb311_posix_qinfo *) +
-+							  sizeof(struct smb311_posix_qinfo) +
- 							  (PATH_MAX * 2) +
- 							  (sizeof(struct smb_sid) * 2), 0, NULL);
- 			} else {
-@@ -335,7 +335,7 @@ static int smb2_compound_op(const unsigned int xid, struct cifs_tcon *tcon,
- 							  COMPOUND_FID,
- 							  SMB_FIND_FILE_POSIX_INFO,
- 							  SMB2_O_INFO_FILE, 0,
--							  sizeof(struct smb311_posix_qinfo *) +
-+							  sizeof(struct smb311_posix_qinfo) +
- 							  (PATH_MAX * 2) +
- 							  (sizeof(struct smb_sid) * 2), 0, NULL);
- 			}
+diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
+index b16d7b42a73c4..bf4a13acc8b86 100644
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -3981,7 +3981,7 @@ SMB311_posix_query_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 			u64 persistent_fid, u64 volatile_fid,
+ 			struct smb311_posix_qinfo *data, u32 *plen)
+ {
+-	size_t output_len = sizeof(struct smb311_posix_qinfo *) +
++	size_t output_len = sizeof(struct smb311_posix_qinfo) +
+ 			(sizeof(struct smb_sid) * 2) + (PATH_MAX * 2);
+ 	*plen = 0;
+ 
 -- 
 2.51.0
 
