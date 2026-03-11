@@ -1,112 +1,100 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745831A6807
-	for <patches@lists.linux.dev>; Wed, 11 Mar 2026 01:15:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E0002C21E8;
+	Wed, 11 Mar 2026 01:15:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773191730; cv=none; b=ggUCkjr/odosjk/THgo06at8yYm24FdHxfqTQobxdlPLJsCuXBuxNW1DWiCGPfAVydS7QK+apALyWERpOAqyKixxnJZQCuuMfNNEuq4K6Yx8KeT3SLINBRCHwmWqArAgVzSmDmlex4M1V7fnfXjGyYiRAvSJqIIvz4JQ1p83+lg=
+	t=1773191731; cv=none; b=NdFxFyAyQYQsxRPvAEOZg0NhWm3CcPpNSNiCs9KpCMSqqpkstZkd4yR+b4xaJuunukgTXCwlmue3MdsFtiLOHyIvwCkiUB2FGNWpBkqMSW5d7D9PIsU1WCtk+PFfo3+HgaoZK1xVFA0DbMXo+/mN+3nKKVXMaNvkoSxYl8s/AZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773191730; c=relaxed/simple;
-	bh=e5WdPqbigc0gFpaeKgAYvqcpgYmUc6LxRC8JbxuQJaE=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=JH31sMu23aYDTilLwt6uAvUp4OhYE88HuhDzUYzU1r4jH83+TNXcOSqwifqUDjnCjam2aDp07ZYBxsG5DLEgYnWS50HVjjsViO2MimcYbzPuU0QvpG8udzl5czB7CZY23WKx5osi5+hqNGrAOEzKK0a/lZWVcZDoLbXv14hBQvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=RpRUsE4P; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	s=arc-20240116; t=1773191731; c=relaxed/simple;
+	bh=a8O5kAogHFeLlXUeLQn+xbnMj9Mfl6rgjPu4obYW4Cg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=HBY5ETLx6jAa+X3Vuu/BwSdWTKOdXpwzIBxvjVwKSlaa2p1vdwUeu0Hx5++694xWAigA07SGx697QOge8IO+1L7xc5t8ENc9YM3uMTcU7prVCaHZZ6xnSR7tRVg49vWlwXpb6afBJBpR39GS2rUN2ra75t27KLDYYcfKFykLMKI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pd9/arf3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="RpRUsE4P"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-439b6d9c981so297498f8f.1
-        for <patches@lists.linux.dev>; Tue, 10 Mar 2026 18:15:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20230601; t=1773191728; x=1773796528; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xXhD2GoMczx/1OfEQmMSJ076ACkSGZw8MD7r/tb1zlo=;
-        b=RpRUsE4PKM+8VOIUn+QwNZj0H6NvxCsbjuiADY98GsxBdSEl4j/z16vmCDXZtuZLCo
-         EEY6nU0/uon8j2O/8HOQImOQLuLFYa+kkivu4en4Ahb4IpPm1M3vkyh8ALTzBRFxuDK7
-         JbEQWgN5GYa3kwffukxMPfCrnKETUTBpXM3rXdrPJV8Siv9ckNy02UUBKpMThezOLf7o
-         w5FUOlS5rnEGmXIr949IiTwG7xPR8GAA6doc0gDMIufcrMov7w8u/Yj0/pwKzwni+t87
-         D5t05FM8J7FepTe3zPTbR4vZsMn6zoD8mOgFMn1D7lmw32LGKHyFhN4fDR9jiuA0cxzG
-         grZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773191728; x=1773796528;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xXhD2GoMczx/1OfEQmMSJ076ACkSGZw8MD7r/tb1zlo=;
-        b=UQ6Zh5UE9sQEJ7WvoKQG6ULrsRTsGWvTmILi3i2uUSGRq9yO1V9BZzkO0RR2/hSiv+
-         t5DjLhBKeFaQdTuxX7EeXNnw7ocMab+QorBEOodob+riaR0NO7jsECJuSMqIi/3Z264X
-         0JFnJrQ584wpzHAPVQi6zTNv/sejfAzlMGGZiFE+SsfdvgS9+gR198pX/CXg+20Im85i
-         KTMLbzGeSe8GhZPJBTp6tKWgqHT4NpNVYYQr/m8pOziGfGaGW66AUwAaBGPEMiJvZcwH
-         BE/29S0xE+IMC6pPmo36nXX3lG4NQZciubmbE9KCYBZalT+RRkajkSBme16OvSqwvAe4
-         SNWQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUrmv6/VEokvMWGfM0weyGwzeQUmb+lv8pb39LpP9xBzPyNmjOTt9/XyuE1w2Q9US/solsIAGg7@lists.linux.dev
-X-Gm-Message-State: AOJu0YzqUeTh05doE0fc4y4k4drvLemlGEISh/Zgx4ecsXQwixQm421G
-	p45wWtmCMGPjgfYcOiwYIwYyGXG66t+Mjx27t71pjGiBhaUuVBLT0pA=
-X-Gm-Gg: ATEYQzzmneFxCxyWrBAlvaSy8wfzxSBift/oOISkW7hb4Hcs89SLiKxZ2Uuayw4VEKy
-	lp7vyorpJRoFCHYo6LOBJIe5HKTg9Ag2Jqv/4cVgTVvTGgNkr1+od5QhO+8d+wS7ZJeVZ0mBOa6
-	UGZLR48FV0sHu+Ymenfw+IDdLI11pKJMl8FFBMVKYo1VWSOB7wNBASEgcVIZ3CWMw+AJQwph8qO
-	keq9tMTDezLM39FahXl/G+qd43vOp7WfW79acoKreGfrX66nyctcBC6GOr9gNQUs+nagL7QV7jn
-	9aJbOKsrsAQ+SgSChy6e9eNn82yxBrYsnEwD1BpHPoa6dfC/Q5F+mQkL0ikDN9Mw3gVnFfFpkC/
-	g9hSnGpJazb0S5HK3IRF3cAsom7fOVvZk5hNWbZ8zaYfAmscO2er1U1AHfCbOiCIMvdbLB3SKA1
-	25urh9hNyAXLy2EQGtgvhJO0slvlsWHW2i3kRhuPE+EMykHm6GM+tdMNx6nHfXn3AZQLVROAfep
-	Ls=
-X-Received: by 2002:a05:6000:1446:b0:439:b775:fca2 with SMTP id ffacd0b85a97d-439f8c0643emr1267352f8f.24.1773191727593;
-        Tue, 10 Mar 2026 18:15:27 -0700 (PDT)
-Received: from [192.168.1.3] (p5b057cc4.dip0.t-ipconnect.de. [91.5.124.196])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-439f81acc22sm2091105f8f.16.2026.03.10.18.15.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 10 Mar 2026 18:15:27 -0700 (PDT)
-Message-ID: <45265f4c-99fc-497b-8ec6-e0c45d413b13@googlemail.com>
-Date: Wed, 11 Mar 2026 02:15:26 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pd9/arf3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99AABC2BC87;
+	Wed, 11 Mar 2026 01:15:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773191730;
+	bh=a8O5kAogHFeLlXUeLQn+xbnMj9Mfl6rgjPu4obYW4Cg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Pd9/arf3xCTnkWP/72myu2UxYA3SDFiHpoE5eX9deajMP8XGY8PhiYg/IGmnnuXsf
+	 /WpJcNI8JPRuzKZGh6BBzQiize0m5PHcAXwVtCoVj3uDkDlfruJrCTAHBnoHShOFn4
+	 3dB+uarG72uEK6K/neSk8mfme0+eHcONhN69OJ0P1CjTRGefCzb36OtOotW/20dNhN
+	 HmaZ/qQFj61PkN0X7z+y6ToruDqjLpu0Sw1SIXu3/KVxslDcbCWo6mSU84uR/Sh7mJ
+	 33auLjCFOC2w+JHuSfKUVDYeoK5Knt+OcU42Qfe3bHEgoEa2YAm/2EwYOm9ETnwS1u
+	 oYqpIiJhtASMQ==
+Date: Tue, 10 Mar 2026 21:15:29 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Sebastian Krzyszkowiak <sebastian.krzyszkowiak@puri.sm>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org,
+	Ming Qian <ming.qian@oss.nxp.com>, Frank Li <Frank.Li@nxp.com>,
+	Nicolas Dufresne <nicolas.dufresne@collabora.com>,
+	Hans Verkuil <hverkuil+cisco@kernel.org>
+Subject: Re: [PATCH 6.18 085/314] media: verisilicon: Avoid G2 bus error
+ while decoding H.264 and HEVC
+Message-ID: <abDCMeP7QGNNHCLB@laps>
+References: <cover.1773141554.git.sashal@kernel.org>
+ <3b92b74f68817accc3efa8756ab3ee6bd91cefc6.1773141555.git.sashal@kernel.org>
+ <6892707.LvFx2qVVIh@pliszka>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.19 000/311] 6.19.7-rc1 review
-To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org,
- stable@vger.kernel.org
-Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <cover.1773140654.git.sashal@kernel.org>
-Content-Language: de-DE
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <cover.1773140654.git.sashal@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <6892707.LvFx2qVVIh@pliszka>
 
-Am 10.03.2026 um 12:05 schrieb Sasha Levin:
-> 
-> This is the start of the stable review cycle for the 6.19.7 release.
-> There are 311 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Wed, Mar 11, 2026 at 01:36:46AM +0100, Sebastian Krzyszkowiak wrote:
+>On wtorek, 10 marca 2026 12:15:44 czas środkowoeuropejski standardowy Sasha
+>Levin wrote:
+>> From: Ming Qian <ming.qian@oss.nxp.com>
+>>
+>> [ Upstream commit e0203ddf9af7c8e170e1e99ce83b4dc07f0cd765 ]
+>>
+>> For the i.MX8MQ platform, there is a hardware limitation: the g1 VPU and
+>> g2 VPU cannot decode simultaneously; otherwise, it will cause below bus
+>> error and produce corrupted pictures, even potentially lead to system hang.
+>>
+>> [  110.527986] hantro-vpu 38310000.video-codec: frame decode timed out.
+>> [  110.583517] hantro-vpu 38310000.video-codec: bus error detected.
+>>
+>> Therefore, it is necessary to ensure that g1 and g2 operate alternately.
+>> This allows for successful multi-instance decoding of H.264 and HEVC.
+>>
+>> To achieve this, g1 and g2 share the same v4l2_m2m_dev, and then the
+>> v4l2_m2m_dev can handle the scheduling.
+>>
+>> Fixes: cb5dd5a0fa518 ("media: hantro: Introduce G2/HEVC decoder")
+>> Cc: stable@vger.kernel.org
+>> Signed-off-by: Ming Qian <ming.qian@oss.nxp.com>
+>> Reviewed-by: Frank Li <Frank.Li@nxp.com>
+>> Co-developed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+>> Signed-off-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
+>> Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>  drivers/media/platform/verisilicon/hantro.h   |  2 +
+>>  .../media/platform/verisilicon/hantro_drv.c   | 42 +++++++++++++++++--
+>>  .../media/platform/verisilicon/imx8m_vpu_hw.c |  8 ++++
+>>  3 files changed, 49 insertions(+), 3 deletions(-)
+>>
+>
+>This one introduces a regression that's being fixed in https://lore.kernel.org/
+>lkml/20260306031059.801-1-ming.qian@oss.nxp.com/T/, so they should probably be
+>applied together once the fix lands.
 
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
+I can drop it from 6.18<=, but note that it was already released as part of
+6.19.
 
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
-
-
-Beste Grüße,
-Peter Schneider
+We can revisit a revert or cherry picking the fix for 6.19 after the current
+release cycle.
 
 -- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
-
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+Thanks,
+Sasha
