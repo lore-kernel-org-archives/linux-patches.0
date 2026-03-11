@@ -1,53 +1,67 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99B342D595D
-	for <patches@lists.linux.dev>; Wed, 11 Mar 2026 16:38:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108533E2743
+	for <patches@lists.linux.dev>; Wed, 11 Mar 2026 16:47:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773247109; cv=none; b=ekgJqXezlO7fp1cGGI+Bmc9WTG5mACedU7TUS4N3Kes+SjecjczZNfhPfc5Ia6jsPfOBF6fUPcxwIhc+439cAJ7KlXhbwlIOsvVWeGvkUQhRx1h4lzlifLhFjmhC19FMXQAePFxU/0SIsgLzASR/Xe4Z3n+mJfoMfvmaym6Jk8k=
+	t=1773247640; cv=none; b=HjOXAtTDuVJnD+A9drzT/hxv8fsF1ZvtvSdOaTVcs1GiDVJWgbgHhHPrn6F/pDHquIlWwO29srdsXnfYoD3U7M3SJBpFF1f3TSwe5zN0K1LnmFSn4GQKrHJRdwxl/EOi+DvxNcXjtpqj/JpmibMffe8+87gZuIQ++M7e2IZXHI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773247109; c=relaxed/simple;
-	bh=erd3XUkNg/l2tnBukzU73q6Hx5Ytzh+t5GSHeqzKnMg=;
+	s=arc-20240116; t=1773247640; c=relaxed/simple;
+	bh=07KoFmIiZuLE0r78+cnohMeu/H1TK9ZRpKNMrm4Ua8g=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=FMMKsgKOOK1apXdRwfGYzRwkoc0hl/TQZ42Fqwe3r/RaWv5n28VQmNq0Ubty6XGoxYtxEWMxXHf4OJTq6TbdHXqz2NWZzm+TFXjgk5WcIcTkG6a12hS92z6IkGNEH+fmh7DYhsqnESTrAnRSbacX9ZArbK+P27AAq2jOuBmJ7/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kzalloc.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kzalloc.com
+	 In-Reply-To:Content-Type; b=OIOKZtShOZwnINIln+QlFE4Y5A8jLp8kWbVA+22mqvbc3IQ1UXayURWSlK+LCHL1Y/fZRDJomqhdoW0+Mp+hM6Q4zZLPJ69Pac01BM62lB35wxJCVHslvxky1+gr8mI8Z8F3m2hlLWo7ysuPaph3HtJWz6sOi3PtDc1iFYEAzeI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UTqJhyHm; arc=none smtp.client-ip=209.85.167.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-2ae4e8dfaf8so123575ad.0
-        for <patches@lists.linux.dev>; Wed, 11 Mar 2026 09:38:26 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UTqJhyHm"
+Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-464bc03efd8so64968b6e.2
+        for <patches@lists.linux.dev>; Wed, 11 Mar 2026 09:47:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1773247638; x=1773852438; darn=lists.linux.dev;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=yioi7HyRyHO1HEe3ML/SgM5AjwSP20V3T57RuvHWGvc=;
+        b=UTqJhyHmBFS4r35lZo9nbHpZ+a6OoKia6ttv37cYeHl6TnezfsGeco+MdfUZUBJw7h
+         2BznxQtjkglw+Hn9nY1G4kHbH6zrPLbdlphap/R48TQulWXQBFgr/3z2Bxk4fQkRkXme
+         qPPg9Q8nTis5HcoBu1vxsooyzMB+9hFjGBvy8gM8M5N8SmRLcRQY7/O5uM51P1JwGWT2
+         Ni1ad23I/8gHEYdaObS5UCVEZNA7+HhjyOd436NZhumuGZZpF/aoo6FIYgj/EnaHshiL
+         +rhfH0/sCssDzsviPmIRhtnEVx23A5J5SBjZhoxLfXNkQ4dbrctrYI5tb86CUXLKra1y
+         4NYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1773247106; x=1773851906;
-        h=content-transfer-encoding:in-reply-to:organization:from
-         :content-language:references:cc:to:subject:user-agent:mime-version
-         :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=P08WFOTXPeZbjNHq2MDEWVEHtsVyIG/JuJeitfuWRP0=;
-        b=qH/pBn+e3jcdhx3d0jcHnkaZDSzKY3JbHyVKujGEdE8nZx8+QpXKnvFKiVFQXi/RoX
-         2EzSmkT8BzVdbnayb59nMpoB98506Sx84BfxYsO9qIfkNxqmbwhDZ9Zj5sMhmf04uqdp
-         CU5BO/5BbZpJH8D3HBKHTgjtsvkKflgEgKS4bSVq8z9QzQphrbvX6GlI1ROx+5z878Wv
-         a7dWkWYESyusqdG7Cvq+evfjn+9eUXxsiLE2ZvvKWGzw4wSydJU2H97PQNQ4vupl+Df1
-         LGAxJrb2Q5N4zSWXsGqiUKMAMCgREkzVlBYgzMa1XeJ1QPX5qVTv56xAQtjgsK/LfWBx
-         DvEg==
-X-Forwarded-Encrypted: i=1; AJvYcCWJB4V/X49plmVifWaQhJuAPVWxJvrWdlhfYDv/2nw6k0S4RqcKNqhieBFb6C3AE4o8wE9o/fDL@lists.linux.dev
-X-Gm-Message-State: AOJu0YxqshkC8irA6j032688NYgelgPL0Ge3yHIJllhEipzx0StUFkDe
-	L9opJLEBtacqyd/ity+62OIPzAG9aBQg/3TUrnnQgznh4CzgTAIVm6Cx
-X-Gm-Gg: ATEYQzyP37hdWfl3WLJJX3eHREWNI6Yt5ZxgcIxA3Ez38/Ihdp8wB/Q8VYjTOu210u6
-	oEUwopJ33o4i3ado8cOeHhXt9vtKYWTk/Tcunun4erPPBKNZEp4k59DjP+tWlYpeAptLGydaieQ
-	kemP8JR66jaQkEzSL1XxgfTdRASIzuQ7AiaTIN8Xs+mvuotrW8MUW5CpV9K38X1Hn8m4cgWpbI3
-	KS4Q+1S4+hVAgeKPDyA/7dezdbdLdNmoIz6VWnnsfrJfWLVfeo/uO5gK1SL9j53dipC4u1WtUfl
-	gbhE9Cc2ALhffY0tL4+ohGtP+kEAAGYXewq7/5n2sCJWkVIEx9KDynUZC3dORG2+HTwndH14QOU
-	FapEi8dZkv5CxtoB/JkQgIwus7OTaR501g3nS2IeHektGI+Rjhu1I87PZiCRHmYMYA9SorLhLuo
-	7bd95DEwJzwz2wDklNazeAiQnfkX5YMCHjI17S3tMv8x2Yz+Av702x9kPoIhN0W6ukazeLLMLnp
-	xVDwVck/x79kxscTp9CBPDiDxf6rE9h
-X-Received: by 2002:a17:902:e88d:b0:2ae:5745:f0ef with SMTP id d9443c01a7336-2aeae7a37fdmr23488625ad.2.1773247105821;
-        Wed, 11 Mar 2026 09:38:25 -0700 (PDT)
-Received: from [172.30.1.49] ([119.206.52.3])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2aeae246abcsm28390525ad.26.2026.03.11.09.38.20
+        d=1e100.net; s=20230601; t=1773247638; x=1773852438;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yioi7HyRyHO1HEe3ML/SgM5AjwSP20V3T57RuvHWGvc=;
+        b=igvEVgXctD1jnfC0LJNGjLTNzeEn3NzpR/kXdkDMZAPfflIKk9HRWTVSczDRogLn/F
+         p6cxeJBWKq9SbO2raZ6xrI5QpBXsGq/zMmcd103oybbXYf4pV8x8hE5FOWIq+m40MUY0
+         onqRP8UBe3Ys9cQskT6pTfcx64lgpfiQz9M8lFJbSaIKrAUia4z5kdOVCAjXxqopVDbk
+         tmLFyw9l8P8fzfjLZLzNDGvw5YRSPnIsj6nfv/4hDWMoh7gHtgecqFyvp3yl9PpmFwDT
+         VijIlA7DuQHY9Yn79GRSch4HkiK9Lft8LcxrCWMEDglZ52C10m7eeG+h/L0c15RlHiMO
+         cf3A==
+X-Forwarded-Encrypted: i=1; AJvYcCU38AHdM5J/ASB4XyrMY1xXR8ujj7HtlJgSdq205mLjsk2RtD+p1wwnNHA61NK6SicX3euqmlrv@lists.linux.dev
+X-Gm-Message-State: AOJu0YyJq7LgmgTzTeH+6vvTlWfzWUGOCyYb/ovtJ6Kd9mWAcNmBCtOH
+	veXXiPKT3jPXTde5mXnEk9EhwHLhsrlv1Y7dzoqDyDiFklALW8I886nx
+X-Gm-Gg: ATEYQzw3UjcIpgtT41zE5yyzyqKZw6en09AQDynTkC+tlVoF4y9hru7s9kdktUnM6tx
+	7/ryYZftEnPl++Vumb4/eNiLD7Dmkas1Fc1ChEOldtQE+OkoC3GAn/K33lZOtezkXbmTf6cME2J
+	9aePKlvFl2SUl1ev8KoPJnaF+wArrtE6VlJNbRpwJm3Fpy/czEVc7EKkTbsTOW+vUIITQXRKNlo
+	fXfPf/ko6N4iuD5LPbjq/Zk3qTfRkF/kV2AGZ7llHnVXNEuAX5bdUYJZx7I8Ni83FB5QzZM4yjp
+	STfrHOJFJQavCpDJENDhHBPJ8TzcdQn6mtIvEh5Rf44nG+rECXA8DNY0WFTVNk3BR06BjU1qfxm
+	6M9AM9ViclgeEAZDmwj6Mvy0GbrtMOUUYC6G4c3/w/5mlnfdeBExeJZioMCGXY2n+8zRJBOZ1pz
+	o/ZXwc46/J4EiDNtwTKuDtAV6ty78GB8OU6Xm5aA7BPzGNoOpCCtup7c5QcgNKoo6bG6Dkt79Pb
+	Lj0sAb3O9JogcHL0AquTg==
+X-Received: by 2002:a05:6808:d50:b0:450:89ee:922c with SMTP id 5614622812f47-4673349d5dfmr1873647b6e.27.1773247638017;
+        Wed, 11 Mar 2026 09:47:18 -0700 (PDT)
+Received: from [192.168.1.228] (76-214-69-104.lightspeed.irvnca.sbcglobal.net. [76.214.69.104])
+        by smtp.gmail.com with ESMTPSA id 5614622812f47-46734343f69sm1500624b6e.19.2026.03.11.09.47.15
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Mar 2026 09:38:25 -0700 (PDT)
-Message-ID: <02e5b102-d8e2-4fbf-8818-55863e425c96@kzalloc.com>
-Date: Thu, 12 Mar 2026 01:38:19 +0900
+        Wed, 11 Mar 2026 09:47:17 -0700 (PDT)
+Message-ID: <97a13d4f-e1ee-42f5-ab90-d6dc589ecefc@gmail.com>
+Date: Wed, 11 Mar 2026 09:47:16 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,272 +69,59 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v18 20/42] dept: apply timeout consideration to dma fence
- wait
-To: Byungchul Park <byungchul@sk.com>, Nathan Chancellor <nathan@kernel.org>
-Cc: kernel_team@skhynix.com, torvalds@linux-foundation.org,
- gregkh@linuxfoundation.org, kernel-team@lge.com, linux-mm@kvack.org,
- minchan@kernel.org, harry.yoo@oracle.com, gwan-gyeong.mun@intel.com,
- max.byungchul.park@gmail.com, Peter Zijlstra <peterz@infradead.org>,
- Ingo Molnar <mingo@redhat.com>, Will Deacon <will@kernel.org>,
- boqun.feng@gmail.com, Waiman Long <longman@redhat.com>,
- yunseong.kim@ericsson.com, yeoreum.yun@arm.com,
- Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
- Maxime Ripard <mripard@kernel.org>, Matthew Brost <matthew.brost@intel.com>,
- Thomas Zimmermann <tzimmermann@suse.de>, David Airlie <airlied@gmail.com>,
- Simona Vetter <simona@ffwll.ch>,
- =?UTF-8?Q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
- Rodrigo Vivi <rodrigo.vivi@intel.com>,
- Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
- Bill Wendling <morbo@google.com>, Justin Stitt <justinstitt@google.com>,
- Stuart Summers <stuart.summers@intel.com>, Nirmoy Das
- <nirmoy.das@intel.com>, intel-xe@lists.freedesktop.org,
- dri-devel@lists.freedesktop.org, llvm@lists.linux.dev,
- patches@lists.linux.dev, linux-kernel@vger.kernel.org
-References: <20251205071855.72743-1-byungchul@sk.com>
- <20251205071855.72743-21-byungchul@sk.com>
+Subject: Re: [PATCH 6.19 000/311] 6.19.7-rc1 review
+To: Sasha Levin <sashal@kernel.org>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+ gregkh@linuxfoundation.org, patches@lists.linux.dev,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+ hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+ sr@sladewatkins.com
+References: <cover.1773140654.git.sashal@kernel.org>
+ <75302bf4-3f06-4e9a-8d05-1706d60f44c6@gmail.com> <abDACatouF12XBX5@laps>
 Content-Language: en-US
-From: Yunseong Kim <ysk@kzalloc.com>
-Organization: kzalloc
-In-Reply-To: <20251205071855.72743-21-byungchul@sk.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <abDACatouF12XBX5@laps>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Hi all,
 
-I have been investigating repeated Clang build failures of the form:
 
-  "cannot jump from this indirect goto statement to one of its possible targets"
-  "note: jump enters a statement expression"
-
-triggered by the interaction between drm_exec's indirect goto
-(goto *__drm_exec_retry_ptr) and diagnostic macros such as _THIS_IP_,
-LOCKDEP, and DEPT.
-
-Link: https://lore.kernel.org/all/?q=b%3A%22error%3A+cannot+jump+from+this+indirect+goto+statement+to+one+of+its+possible+targets%22
-
-Notably, failures on DEPT are currently observed on arm64 builds.
-On arm64, _THIS_IP_ uses the common implementation based on a GNU C
-statement expression with an address-taken label, relying on compiler
-optimization rather than an architecture-specific definition. This makes
-arm64 particularly sensitive to Clang's treatment of address-taken labels
-and indirect goto targets.
-
-This is also not limited to a single driver. I have observed the same
-failure pattern in multiple DRM drivers when DEPT instrumentation is in
-the call path (e.g. dma_fence_wait() -> sdt_might_sleep_start_timeout()
--> _THIS_IP_), including msm and others.
-
-$ clang --version
-clang version 23.0.0git (https://github.com/llvm/llvm-project.git
-1ff1e5f10a5c765b4cf1344c4964604dcd09fef3)
-
-drivers/gpu/drm/msm/msm_gem_vma.c:919:3: error: cannot jump from this
-indirect goto statement to one of its possible targets
-  919 |                 drm_exec_retry_on_contention(&exec);
-      |                 ^
-./include/drm/drm_exec.h:123:4: note: expanded from macro
-'drm_exec_retry_on_contention'
-  123 |                         goto *__drm_exec_retry_ptr;             \
-      |                         ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: possible target of
-indirect goto statement
-  909 |                 dma_fence_wait(vm->last_fence, false);
-      |                 ^
-./include/linux/dma-fence.h:677:2: note: expanded from macro 'dma_fence_wait'
-  677 |         sdt_might_sleep_start_timeout(NULL,
-MAX_SCHEDULE_TIMEOUT);      \
-      |         ^
-./include/linux/dept_sdt.h:46:31: note: expanded from macro
-'sdt_might_sleep_start_timeout'
-   46 |                 unsigned long __this_ip__ = _THIS_IP_;
-         \
-      |                                             ^
-./include/linux/instruction_pointer.h:10:41: note: expanded from macro
-'_THIS_IP_'
-   10 | #define _THIS_IP_  ({ __label__ __here; __here: (unsigned
-long)&&__here; })
-      |                                         ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: jump enters a statement
-expression
-./include/linux/dma-fence.h:677:2: note: expanded from macro 'dma_fence_wait'
-  677 |         sdt_might_sleep_start_timeout(NULL,
-MAX_SCHEDULE_TIMEOUT);      \
-      |         ^
-./include/linux/dept_sdt.h:46:31: note: expanded from macro
-'sdt_might_sleep_start_timeout'
-   46 |                 unsigned long __this_ip__ = _THIS_IP_;
-         \
-      |                                             ^
-./include/linux/instruction_pointer.h:10:20: note: expanded from macro
-'_THIS_IP_'
-   10 | #define _THIS_IP_  ({ __label__ __here; __here: (unsigned
-long)&&__here; })
-      |                    ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: jump enters a statement
-expression
-./include/linux/dma-fence.h:673:38: note: expanded from macro 'dma_fence_wait'
-  673 | #define dma_fence_wait(f, intr)
-         \
-      |
-         ^
-drivers/gpu/drm/msm/msm_gem_vma.c:933:5: error: cannot jump from this
-indirect goto statement to one of its possible targets
-  933 |                                 drm_exec_retry_on_contention(&exec);
-      |                                 ^
-./include/drm/drm_exec.h:123:4: note: expanded from macro
-'drm_exec_retry_on_contention'
-  123 |                         goto *__drm_exec_retry_ptr;             \
-      |                         ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: possible target of
-indirect goto statement
-  909 |                 dma_fence_wait(vm->last_fence, false);
-      |                 ^
-./include/linux/dma-fence.h:677:2: note: expanded from macro 'dma_fence_wait'
-  677 |         sdt_might_sleep_start_timeout(NULL,
-MAX_SCHEDULE_TIMEOUT);      \
-      |         ^
-./include/linux/dept_sdt.h:46:31: note: expanded from macro
-'sdt_might_sleep_start_timeout'
-   46 |                 unsigned long __this_ip__ = _THIS_IP_;
-         \
-      |                                             ^
-./include/linux/instruction_pointer.h:10:41: note: expanded from macro
-'_THIS_IP_'
-   10 | #define _THIS_IP_  ({ __label__ __here; __here: (unsigned
-long)&&__here; })
-      |                                         ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: jump enters a statement
-expression
-./include/linux/dma-fence.h:677:2: note: expanded from macro 'dma_fence_wait'
-  677 |         sdt_might_sleep_start_timeout(NULL,
-MAX_SCHEDULE_TIMEOUT);      \
-      |         ^
-./include/linux/dept_sdt.h:46:31: note: expanded from macro
-'sdt_might_sleep_start_timeout'
-   46 |                 unsigned long __this_ip__ = _THIS_IP_;
-         \
-      |                                             ^
-./include/linux/instruction_pointer.h:10:20: note: expanded from macro
-'_THIS_IP_'
-   10 | #define _THIS_IP_  ({ __label__ __here; __here: (unsigned
-long)&&__here; })
-      |                    ^
-drivers/gpu/drm/msm/msm_gem_vma.c:909:3: note: jump enters a statement
-expression
-./include/linux/dma-fence.h:673:38: note: expanded from macro 'dma_fence_wait'
-  673 | #define dma_fence_wait(f, intr)
-         \
-      |
-         ^
-
-I was able to find the pattern of the kernel source code that uses this pattern:
-
-  $ git grep -n 'goto \*' | grep ';' | grep -v "\*/" | \
-    grep -Ev "(\*[[:space:]]+goto|_goto.*\*\);)"
-  drivers/gpu/drm/xe/xe_validation.h:149:			goto *__drm_exec_retry_ptr;			\
-  drivers/misc/lkdtm/cfi.c:129:			goto *labels[1];
-  drivers/misc/lkdtm/cfi.c:131:			goto *labels[2];
-  drivers/misc/lkdtm/cfi.c:133:			goto *labels[3];
-  drivers/misc/lkdtm/cfi.c:135:			goto *labels[4];
-  include/drm/drm_exec.h:123:			goto *__drm_exec_retry_ptr;		\
-  kernel/bpf/core.c:1776:	goto *jumptable[insn->code];
-  scripts/gcc-plugins/gcc-common.h:368:	return as_a<ggoto *>(stmt);
-  scripts/gcc-plugins/gcc-common.h:373:	return as_a<const ggoto *>(stmt);
-  tools/testing/selftests/bpf/progs/bpf_gotox.c:219:	goto *jt[ctx->x & 0xff];
-  tools/testing/selftests/bpf/progs/bpf_gotox.c:261:		goto *jt1[a];
-  tools/testing/selftests/bpf/progs/bpf_gotox.c:263:		goto *jt2[b];
-  tools/testing/selftests/bpf/progs/bpf_gotox.c:284:		goto *jt[a];
-  tools/testing/selftests/bpf/progs/bpf_gotox.c:287:		goto *jt[a + b];
-
-I understand that Clang's behavior here is intentional and conservative:
-any address-taken label in the same function is treated as a potential
-indirect goto target, and jumping into a statement expression is diagnosed
-to avoid semantic issues. This aligns with:
-
-  - [Clang] Diagnose jumps into statement expressions (D154696)
-    https://reviews.llvm.org/D154696
-
-At the same time, the kernel is not using _THIS_IP_ for control flow.
-The label address is used purely for diagnostics (lockdep/DEPT attribution).
-However, as discussed in:
-
-  - LLVM Issue #138272: Add builtin/intrinsic to get current instruction pointer
-    https://github.com/llvm/llvm-project/issues/138272
-
-using blockaddress (&&label) purely to obtain an instruction pointer is
-problematic in LLVM's model, since blockaddress has defined behavior only
-when used with indirectbr or for null comparisons.
-
-Similar issues have also been observed in other contexts where indirect
-goto interacts with address-taken labels, e.g.:
-
-  - LLVM Issue #28019: Wrong 'cannot jump from this indirect goto statement'
-    https://github.com/llvm/llvm-project/issues/28019
-
-Given this, I think there is three possible directions:
-
-1) Continue per-callsite structural workarounds
-   Keep separating indirect goto usage from any code that expands _THIS_IP_
-   (e.g. moving PROVE_LOCKING / DEPT paths into helper functions). This avoids
-   the diagnostic but requires ongoing refactoring and does not scale well as
-   similar patterns reappear across drivers.
-
-2) Introduce a compiler-supported alternative to _THIS_IP_
-   As discussed in LLVM Issue #138272, a dedicated builtin or intrinsic to
-   obtain a best-effort instruction pointer for diagnostics would allow the
-   kernel to avoid address-taken labels entirely and eliminate this class of
-   conflicts.
-
-3) DRM/drm_exec-scoped refactoring as a pragmatic middle ground
-   Since drm_exec is the common convergence point where indirect goto and
-   DEPT/LOCKDEP instrumentation can meet in the same function across multiple
-   DRM drivers, we could refactor the drm_exec usage patterns (or provide a
-   recommended wrapper pattern) to structurally separate the retry/indirect-goto
-   region from instrumentation that expands _THIS_IP_. This would avoid
-   kernel-wide churn while addressing the recurring failures in DRM drivers.
-
-I am not proposing to weaken Clang's diagnostics. Rather, I would like
-feedback on whether option (3) is considered an acceptable short- to
-medium-term approach, and whether option (2) is the preferred long-term
-direction from the compiler side.
-
-Any guidance from the LOCKDEP and kernel LLVM maintainers on the preferred
-path forward would be greatly appreciated.
-
-On 12/5/25 4:18 PM, Byungchul Park wrote:
-> Now that CONFIG_DEPT_AGGRESSIVE_TIMEOUT_WAIT was introduced, apply the
-> consideration to dma fence wait.
+On 3/10/2026 6:06 PM, Sasha Levin wrote:
+> On Tue, Mar 10, 2026 at 12:09:32PM -0700, Florian Fainelli wrote:
+>> On 3/10/26 04:05, Sasha Levin wrote:
+>>>
+>>> This is the start of the stable review cycle for the 6.19.7 release.
+>>> There are 311 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Thu Mar 12 11:04:16 AM UTC 2026.
+>>> Anything received after that time might be too late.
+>>>
+>>> The whole patch series can be found in one patch at:
+>>>         https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux- 
+>>> stable-rc.git/rawdiff/?id=linux-6.19.y&id2=v6.19.6
+>>> or in the git tree and branch at:
+>>>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux- 
+>>> stable-rc.git linux-6.19.y
+>>> and the diffstat can be found below.
+>>>
+>>> Thanks,
+>>> Sasha
+>>>
+>>> -------------
+>> perf fails to build the pmu-events for all of the freescale SoCs, I am 
+>> not sure yet whether this is a build environment issue or a genuine 
+>> perf build system failure:
 > 
-> Signed-off-by: Byungchul Park <byungchul@sk.com>
-> ---
->  drivers/dma-buf/dma-fence.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+> Could you try building with a revert of b56111d7a464 ("perf jevents: Handle
+> deleted JSONS in out of source builds") please?
 > 
-> diff --git a/drivers/dma-buf/dma-fence.c b/drivers/dma-buf/dma-fence.c
-> index b313bb59dc9c..f2cc7068af65 100644
-> --- a/drivers/dma-buf/dma-fence.c
-> +++ b/drivers/dma-buf/dma-fence.c
-> @@ -799,7 +799,7 @@ dma_fence_default_wait(struct dma_fence *fence, bool intr, signed long timeout)
->  	cb.task = current;
->  	list_add(&cb.base.node, &fence->cb_list);
->  
-> -	sdt_might_sleep_start(NULL);
-> +	sdt_might_sleep_start_timeout(NULL, timeout);
->  	while (!test_bit(DMA_FENCE_FLAG_SIGNALED_BIT, &fence->flags) && ret > 0) {
->  		if (intr)
->  			__set_current_state(TASK_INTERRUPTIBLE);
-> @@ -903,7 +903,7 @@ dma_fence_wait_any_timeout(struct dma_fence **fences, uint32_t count,
->  		}
->  	}
->  
-> -	sdt_might_sleep_start(NULL);
-> +	sdt_might_sleep_start_timeout(NULL, timeout);
->  	while (ret > 0) {
->  		if (intr)
->  			set_current_state(TASK_INTERRUPTIBLE);
 
-
-Best regards,
-Yuseong
+Yes that does resolve it, thanks!
+-- 
+Florian
 
