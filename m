@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FA793B6C02;
-	Thu, 12 Mar 2026 20:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2103E3EF67C;
+	Thu, 12 Mar 2026 20:28:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347297; cv=none; b=MKYnzMEoUra5RYOoH4AV1wTyYxJ7DaOwk9LHIBR5cN+SOsKRkYZnxmUN+OPVZHVv53itudMrLQGxb8O9v/X196PRtS+J4PdL5eI4Y9uWWkxcgaywNu2HhMUiRCumTSkCNztBMU8pKXATh7fMWyjbBqe/UFhRdKSvW5ZzO7RKrPk=
+	t=1773347301; cv=none; b=cIdkwcZlbxbkOmhidpdb9bDML8boYyM3jgtwk8OG2SA5q2pyOhWKgSbaDomxNBhsLJjPmdRBVbxsN+5k8ctEhIDf8B9WkLEukKLioYSFo3inPvQpyU+m39WDGo+zLbFPlY8n7gHnrzcJShAY4VRYGZRQJEz4WyT/TY87vLqeEmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347297; c=relaxed/simple;
-	bh=608NjzKQ5ySF4dZhGUnUEQizpRs5UTEDOHuErrI15/g=;
+	s=arc-20240116; t=1773347301; c=relaxed/simple;
+	bh=/71fowhlVYws0kLIQsANoCOpwIIK+Zu8FDhX8ho2DXk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YCwyflM0xJmUcZSKbklSbWghRdWqco1sFdO7a4vHKVy+nTn1upZ0ftCeNMJwiqlIF+UkmdZ8ArV2OGJepYgbNV/P2BdZKivM3MdnXGF/ZBPKS/ZsGsjttto1DNggi60/s106EvEvd5i/uXe8M5j16KEEW8vUg0129YstfdZOETw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jRqDnzKD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYlt7PCdNMX0O/Pbi7/Nw2d/ZkoS3mSl1OjAXAOjt05V30D0B8pMfv3bznHDdJ++dkrhMxyqvx1efcZWXQbtoPdp8DLk2L++GCwK8xyZUzTpotCjG+vrKkhOb0HkUeJkGnpM1u5qs8eKSf8JQCRAiUd4QE78CUTNqa8Tyes3GGI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQKXzXeu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jRqDnzKD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B73E6C4CEF7;
-	Thu, 12 Mar 2026 20:28:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQKXzXeu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A7FC19425;
+	Thu, 12 Mar 2026 20:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347297;
-	bh=608NjzKQ5ySF4dZhGUnUEQizpRs5UTEDOHuErrI15/g=;
+	s=korg; t=1773347301;
+	bh=/71fowhlVYws0kLIQsANoCOpwIIK+Zu8FDhX8ho2DXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jRqDnzKD6dDEOlG1+u4ZNSUkXbKfudKAOtJYvhvLdgtD6KNbAtXRV6K/ouDCpoVTg
-	 SpxuyZMQvrpymNJLzFMJpe51548wThFuIsNfaC48BZQEemag+dLkd8RpyZ9bSW3Zb3
-	 RJaa4ABC+P66ffNaicPnoH5FsbQuyY+2RLzXhUrg=
+	b=fQKXzXeurB+Z5eRT5VcN88LZy0BJQWHLKxgM50GtksVATqXwhlFRxkCcPVANFbo0Z
+	 6D8NvreOuXYvby2YxPflcwcrFrSNuC/RffjPYqjdd4rQMj8ZON/T6Q7kakPm6EfhnP
+	 K/gomxDutk9I1s1DNhr8HqjPucR+cyeBw1HMR/Dk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cengiz Can <cengiz.can@canonical.com>,
 	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 254/265] apparmor: fix side-effect bug in match_char() macro usage
-Date: Thu, 12 Mar 2026 21:10:41 +0100
-Message-ID: <20260312201027.518157626@linuxfoundation.org>
+Subject: [PATCH 6.12 255/265] apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
+Date: Thu, 12 Mar 2026 21:10:42 +0100
+Message-ID: <20260312201027.556110234@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -56,61 +56,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 
-commit 8756b68edae37ff546c02091989a4ceab3f20abd upstream.
+commit d352873bbefa7eb39995239d0b44ccdf8aaa79a4 upstream.
 
-The match_char() macro evaluates its character parameter multiple
-times when traversing differential encoding chains. When invoked
-with *str++, the string pointer advances on each iteration of the
-inner do-while loop, causing the DFA to check different characters
-at each iteration and therefore skip input characters.
-This results in out-of-bounds reads when the pointer advances past
-the input buffer boundary.
+The verify_dfa() function only checks DEFAULT_TABLE bounds when the state
+is not differentially encoded.
 
-[   94.984676] ==================================================================
-[   94.985301] BUG: KASAN: slab-out-of-bounds in aa_dfa_match+0x5ae/0x760
-[   94.985655] Read of size 1 at addr ffff888100342000 by task file/976
+When the verification loop traverses the differential encoding chain,
+it reads k = DEFAULT_TABLE[j] and uses k as an array index without
+validation. A malformed DFA with DEFAULT_TABLE[j] >= state_count,
+therefore, causes both out-of-bounds reads and writes.
 
-[   94.986319] CPU: 7 UID: 1000 PID: 976 Comm: file Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
-[   94.986322] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   94.986329] Call Trace:
-[   94.986341]  <TASK>
-[   94.986347]  dump_stack_lvl+0x5e/0x80
-[   94.986374]  print_report+0xc8/0x270
-[   94.986384]  ? aa_dfa_match+0x5ae/0x760
-[   94.986388]  kasan_report+0x118/0x150
-[   94.986401]  ? aa_dfa_match+0x5ae/0x760
-[   94.986405]  aa_dfa_match+0x5ae/0x760
-[   94.986408]  __aa_path_perm+0x131/0x400
-[   94.986418]  aa_path_perm+0x219/0x2f0
-[   94.986424]  apparmor_file_open+0x345/0x570
-[   94.986431]  security_file_open+0x5c/0x140
-[   94.986442]  do_dentry_open+0x2f6/0x1120
-[   94.986450]  vfs_open+0x38/0x2b0
-[   94.986453]  ? may_open+0x1e2/0x2b0
-[   94.986466]  path_openat+0x231b/0x2b30
-[   94.986469]  ? __x64_sys_openat+0xf8/0x130
-[   94.986477]  do_file_open+0x19d/0x360
-[   94.986487]  do_sys_openat2+0x98/0x100
-[   94.986491]  __x64_sys_openat+0xf8/0x130
-[   94.986499]  do_syscall_64+0x8e/0x660
-[   94.986515]  ? count_memcg_events+0x15f/0x3c0
-[   94.986526]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986540]  ? handle_mm_fault+0x1639/0x1ef0
-[   94.986551]  ? vma_start_read+0xf0/0x320
-[   94.986558]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986561]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986563]  ? fpregs_assert_state_consistent+0x50/0xe0
-[   94.986572]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986574]  ? arch_exit_to_user_mode_prepare+0x9/0xb0
-[   94.986587]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   94.986588]  ? irqentry_exit+0x3c/0x590
-[   94.986595]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   94.986597] RIP: 0033:0x7fda4a79c3ea
+[   57.179855] ==================================================================
+[   57.180549] BUG: KASAN: slab-out-of-bounds in verify_dfa+0x59a/0x660
+[   57.180904] Read of size 4 at addr ffff888100eadec4 by task su/993
 
-Fix by extracting the character value before invoking match_char,
-ensuring single evaluation per outer loop.
+[   57.181554] CPU: 1 UID: 0 PID: 993 Comm: su Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
+[   57.181558] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   57.181563] Call Trace:
+[   57.181572]  <TASK>
+[   57.181577]  dump_stack_lvl+0x5e/0x80
+[   57.181596]  print_report+0xc8/0x270
+[   57.181605]  ? verify_dfa+0x59a/0x660
+[   57.181608]  kasan_report+0x118/0x150
+[   57.181620]  ? verify_dfa+0x59a/0x660
+[   57.181623]  verify_dfa+0x59a/0x660
+[   57.181627]  aa_dfa_unpack+0x1610/0x1740
+[   57.181629]  ? __kmalloc_cache_noprof+0x1d0/0x470
+[   57.181640]  unpack_pdb+0x86d/0x46b0
+[   57.181647]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   57.181653]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   57.181656]  ? aa_unpack_nameX+0x1a8/0x300
+[   57.181659]  aa_unpack+0x20b0/0x4c30
+[   57.181662]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   57.181664]  ? stack_depot_save_flags+0x33/0x700
+[   57.181681]  ? kasan_save_track+0x4f/0x80
+[   57.181683]  ? kasan_save_track+0x3e/0x80
+[   57.181686]  ? __kasan_kmalloc+0x93/0xb0
+[   57.181688]  ? __kvmalloc_node_noprof+0x44a/0x780
+[   57.181693]  ? aa_simple_write_to_buffer+0x54/0x130
+[   57.181697]  ? policy_update+0x154/0x330
+[   57.181704]  aa_replace_profiles+0x15a/0x1dd0
+[   57.181707]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   57.181710]  ? __kvmalloc_node_noprof+0x44a/0x780
+[   57.181712]  ? aa_loaddata_alloc+0x77/0x140
+[   57.181715]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   57.181717]  ? _copy_from_user+0x2a/0x70
+[   57.181730]  policy_update+0x17a/0x330
+[   57.181733]  profile_replace+0x153/0x1a0
+[   57.181735]  ? rw_verify_area+0x93/0x2d0
+[   57.181740]  vfs_write+0x235/0xab0
+[   57.181745]  ksys_write+0xb0/0x170
+[   57.181748]  do_syscall_64+0x8e/0x660
+[   57.181762]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   57.181765] RIP: 0033:0x7f6192792eb2
 
-Fixes: 074c1cd798cb ("apparmor: dfa move character match into a macro")
+Remove the MATCH_FLAG_DIFF_ENCODE condition to validate all DEFAULT_TABLE
+entries unconditionally.
+
+Fixes: 031dcc8f4e84 ("apparmor: dfa add support for state differential encoding")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
 Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
@@ -119,58 +122,23 @@ Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/match.c |   30 ++++++++++++++++++++----------
- 1 file changed, 20 insertions(+), 10 deletions(-)
+ security/apparmor/match.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 --- a/security/apparmor/match.c
 +++ b/security/apparmor/match.c
-@@ -408,13 +408,18 @@ aa_state_t aa_dfa_match_len(struct aa_df
- 	if (dfa->tables[YYTD_ID_EC]) {
- 		/* Equivalence class table defined */
- 		u8 *equiv = EQUIV_TABLE(dfa);
--		for (; len; len--)
--			match_char(state, def, base, next, check,
--				   equiv[(u8) *str++]);
-+		for (; len; len--) {
-+			u8 c = equiv[(u8) *str];
-+
-+			match_char(state, def, base, next, check, c);
-+			str++;
+@@ -160,9 +160,10 @@ static int verify_dfa(struct aa_dfa *dfa
+ 	if (state_count == 0)
+ 		goto out;
+ 	for (i = 0; i < state_count; i++) {
+-		if (!(BASE_TABLE(dfa)[i] & MATCH_FLAG_DIFF_ENCODE) &&
+-		    (DEFAULT_TABLE(dfa)[i] >= state_count))
++		if (DEFAULT_TABLE(dfa)[i] >= state_count) {
++			pr_err("AppArmor DFA default state out of bounds");
+ 			goto out;
 +		}
- 	} else {
- 		/* default is direct to next state */
--		for (; len; len--)
--			match_char(state, def, base, next, check, (u8) *str++);
-+		for (; len; len--) {
-+			match_char(state, def, base, next, check, (u8) *str);
-+			str++;
-+		}
- 	}
- 
- 	return state;
-@@ -448,13 +453,18 @@ aa_state_t aa_dfa_match(struct aa_dfa *d
- 		/* Equivalence class table defined */
- 		u8 *equiv = EQUIV_TABLE(dfa);
- 		/* default is direct to next state */
--		while (*str)
--			match_char(state, def, base, next, check,
--				   equiv[(u8) *str++]);
-+		while (*str) {
-+			u8 c = equiv[(u8) *str];
-+
-+			match_char(state, def, base, next, check, c);
-+			str++;
-+		}
- 	} else {
- 		/* default is direct to next state */
--		while (*str)
--			match_char(state, def, base, next, check, (u8) *str++);
-+		while (*str) {
-+			match_char(state, def, base, next, check, (u8) *str);
-+			str++;
-+		}
- 	}
- 
- 	return state;
+ 		if (BASE_TABLE(dfa)[i] & MATCH_FLAGS_INVALID) {
+ 			pr_err("AppArmor DFA state with invalid match flags");
+ 			goto out;
 
 
