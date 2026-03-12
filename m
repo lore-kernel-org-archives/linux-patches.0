@@ -1,131 +1,130 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EFD26F288;
-	Thu, 12 Mar 2026 20:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6426F288;
+	Thu, 12 Mar 2026 20:26:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347217; cv=none; b=BiPee1zFF59MvhaVLNreODGkVVk02IzOJ/J7IqRSeoqkwFRht5yMF1oDxzxry8yNAwncvX+yC8U5k4wTmqRQJMPTikuDxUO63Wgynx2Xt2vpLdjuqEPnyXdNb3hXINdxV+WK8e/zf0dc2sjgsmk8OGftDy5qzMGBPz1oxiOZFbU=
+	t=1773347218; cv=none; b=p3oWnnAMUNHhMTiqegD2bnLIB7o+ip/SxjVQuRx+B5C/vvPfh57AyvYoUIG+SVNOLCpkqUBigcAV04JV8UHrqpo5KY865tO40AbtTZFkzuGzfoiS0mUp37ejfvuMBRkHfcgUhAYtyCHRcVa3LQwVxfkDqenfZr+6C3Q6Bp/YYhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347217; c=relaxed/simple;
-	bh=EXbdlvcAEISRCTIj/fRp7LcdZGk6RNLgJWmXSu4/v+U=;
-	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lg3AKBWUPbM0smSnXuNewKa2WFf9GNKWzU+gEHG4uB+mWXN1HcaKVj42oxQi3Oi8XO72iGczeNO4r5SBWkDI3h8H+4c/67jlxNfMDHAt3rdx8FpKALY+4ZO5xgR2GOHT+RITOL0csKsQJ4h+We05Vu/VwLLez8V5nc1MYZUu0IU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPPOO+Gl; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773347218; c=relaxed/simple;
+	bh=xo8kDoBM/TEMmt+3aEgoc8CUjRtf0gNtJNlcgIjm3XI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=UI/6sS0jH8Mj/LyMt0gDoFzfykJjau6x9JsDcLfDJMcsiJIYg5geoPr9FngSmk9mFGOgrs5hKNPY1eN1SGh7Scy3Ql/vtjepj63W3sJ56X5G/iR/HROlEbZzwamTn7tPLRNXX5dfE83EOI39wjJd73qUZ9F+L7dI9eX7B5tzYJo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7QNnS/M; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPPOO+Gl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FAAC4CEF7;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7QNnS/M"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16FC2BC86;
 	Thu, 12 Mar 2026 20:26:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773347217;
-	bh=EXbdlvcAEISRCTIj/fRp7LcdZGk6RNLgJWmXSu4/v+U=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=YPPOO+Gl7JEobJqZojaZw/xyWvAOKIVlq/AMlB4DbeN/evH35Tho6EpDnLGo66ajR
-	 OWhfF6Swhaq38cM/YRShqZb7pYq0ozRELIU0CLoETJRSgDSGL8FmGNVvwrd063VfWB
-	 jo3EJWoMMlkRJKLK1vOGXTY4o84EkMH9JqhCH6QmvvFwvVYS3xF/6k3wMkYeGkapuJ
-	 Ab4LYRx3+r352mvS7juwf7nFwEhQBDcXM7TS9g3Hke+wn8wM8kLOqoLVCnTEBsuCuZ
-	 ozNkx1CPFlLNjP4ySW1PHVmoHAO3QcMWK0JZY7mvjgAQDldXRohSziKSsHdgPgkhH5
-	 s45Ya9/HYmjXg==
-Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
-	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.98.2)
-	(envelope-from <maz@kernel.org>)
-	id 1w0mcR-00000001Q1l-1Hrl;
-	Thu, 12 Mar 2026 20:26:55 +0000
-Date: Thu, 12 Mar 2026 20:26:54 +0000
-Message-ID: <87tsukdca9.wl-maz@kernel.org>
-From: Marc Zyngier <maz@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org,
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1773347218;
+	bh=xo8kDoBM/TEMmt+3aEgoc8CUjRtf0gNtJNlcgIjm3XI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=i7QNnS/MmsDZ3YSjG5BrGxG+uS+uJsiQyY2YE8y/zVgRnj73/49PMJ2IF7ypY/Pqh
+	 5dbM3fK/1J5/4k07wiiJ6G5yw+gLmOfmgmN2+LTWh/iRTd9ayBejVDDJXnbjhxlY9s
+	 EZdEQVJh6mytPJ3lIXGC1TYWoiuufnODm+Y3nVWI=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
+	Wake Liu <wakel@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.12 004/265] KVM: arm64: Advertise support for FEAT_SCTLR2
-In-Reply-To: <20260312201018.304349696@linuxfoundation.org>
+Subject: [PATCH 6.12 236/265] kselftest/harness: Use helper to avoid zero-size memset warning
+Date: Thu, 12 Mar 2026 21:10:23 +0100
+Message-ID: <20260312201026.857947669@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
-	<20260312201018.304349696@linuxfoundation.org>
-User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
- FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
- (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
-Content-Type: text/plain; charset=US-ASCII
-X-SA-Exim-Connect-IP: 185.219.108.64
-X-SA-Exim-Rcpt-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, patches@lists.linux.dev, oliver.upton@linux.dev, sashal@kernel.org
-X-SA-Exim-Mail-From: maz@kernel.org
-X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 
-On Thu, 12 Mar 2026 20:06:31 +0000,
-Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> 
-> 6.12-stable review patch.  If anyone has any objections, please let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-I already objected to this nonsense [1]. This is actively creating a
-security hole. Please drop this patch.
+------------------
 
-If you can't drop this single patch and resolve the trivial conflict,
-please drop *all* KVM/arm64 patches.
+From: Wake Liu <wakel@google.com>
 
-Thanks,
+[ Upstream commit 19b8a76cd99bde6d299e60490f3e62b8d3df3997 ]
 
-	M.
+When building kselftests with a toolchain that enables source
+fortification (e.g., Android's build environment, which uses
+-D_FORTIFY_SOURCE=3), a build failure occurs in tests that use an
+empty FIXTURE().
 
-[1] https://lore.kernel.org/r/87zf4jd1xs.wl-maz@kernel.org
+The root cause is that an empty fixture struct results in
+`sizeof(self_private)` evaluating to 0. The compiler's fortification
+checks then detect the `memset()` call with a compile-time constant size
+of 0, issuing a `-Wuser-defined-warnings` which is promoted to an error
+by `-Werror`.
 
->
-> ------------------
-> 
-> From: Oliver Upton <oliver.upton@linux.dev>
-> 
-> [ Upstream commit 075c2dc7367e7e80d83adae8db597e48ceb7ba94 ]
-> 
-> Everything is in place to handle the additional state for SCTLR2_ELx,
-> which is all that FEAT_SCTLR2 implies.
-> 
-> Reviewed-by: Marc Zyngier <maz@kernel.org>
-> Link: https://lore.kernel.org/r/20250708172532.1699409-22-oliver.upton@linux.dev
-> Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
-> Stable-dep-of: f66857bafd4f ("KVM: arm64: Hide S1POE from guests when not supported by the host")
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  arch/arm64/kvm/sys_regs.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
-> 
-> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
-> index 5c09c788aaa61..784603a355487 100644
-> --- a/arch/arm64/kvm/sys_regs.c
-> +++ b/arch/arm64/kvm/sys_regs.c
-> @@ -1559,8 +1559,10 @@ static u64 __kvm_read_sanitised_id_reg(const struct kvm_vcpu *vcpu,
->  		val &= ~ID_AA64MMFR2_EL1_CCIDX_MASK;
->  		break;
->  	case SYS_ID_AA64MMFR3_EL1:
-> -		val &= ID_AA64MMFR3_EL1_TCRX | ID_AA64MMFR3_EL1_S1POE |
-> -			ID_AA64MMFR3_EL1_S1PIE;
-> +		val &= ID_AA64MMFR3_EL1_TCRX |
-> +		       ID_AA64MMFR3_EL1_SCTLRX |
-> +		       ID_AA64MMFR3_EL1_S1POE |
-> +		       ID_AA64MMFR3_EL1_S1PIE;
->  		break;
->  	case SYS_ID_MMFR4_EL1:
->  		val &= ~ARM64_FEATURE_MASK(ID_MMFR4_EL1_CCIDX);
-> @@ -2521,6 +2523,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
->  					ID_AA64MMFR2_EL1_NV |
->  					ID_AA64MMFR2_EL1_CCIDX)),
->  	ID_WRITABLE(ID_AA64MMFR3_EL1, (ID_AA64MMFR3_EL1_TCRX	|
-> +				       ID_AA64MMFR3_EL1_SCTLRX	|
->  				       ID_AA64MMFR3_EL1_S1PIE   |
->  				       ID_AA64MMFR3_EL1_S1POE)),
->  	ID_SANITISED(ID_AA64MMFR4_EL1),
-> -- 
-> 2.51.0
-> 
-> 
-> 
-> 
+An initial attempt to guard the call with `if (sizeof(self_private) > 0)`
+was insufficient. The compiler's static analysis is aggressive enough
+to flag the `memset(..., 0)` pattern before evaluating the conditional,
+thus still triggering the error.
 
+To resolve this robustly, this change introduces a `static inline`
+helper function, `__kselftest_memset_safe()`. This function wraps the
+size check and the `memset()` call. By replacing the direct `memset()`
+in the `__TEST_F_IMPL` macro with a call to this helper, we create an
+abstraction boundary. This prevents the compiler's static analyzer from
+"seeing" the problematic pattern at the macro expansion site, resolving
+the build failure.
+
+Build Context:
+Compiler: Android (14488419, +pgo, +bolt, +lto, +mlgo, based on r584948) clang version 22.0.0 (https://android.googlesource.com/toolchain/llvm-project 2d65e4108033380e6fe8e08b1f1826cd2bfb0c99)
+Relevant Options: -O2 -Wall -Werror -D_FORTIFY_SOURCE=3 -target i686-linux-android10000
+
+Test: m kselftest_futex_futex_requeue_pi
+
+Removed Gerrit Change-Id
+Shuah Khan <skhan@linuxfoundation.org>
+
+Link: https://lore.kernel.org/r/20251224084120.249417-1-wakel@google.com
+Signed-off-by: Wake Liu <wakel@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: 6be268151426 ("selftests/harness: order TEST_F and XFAIL_ADD constructors")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ tools/testing/selftests/kselftest_harness.h | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
+index 666c9fde76da9..d67ec4d762db3 100644
+--- a/tools/testing/selftests/kselftest_harness.h
++++ b/tools/testing/selftests/kselftest_harness.h
+@@ -69,6 +69,12 @@
+ 
+ #include "kselftest.h"
+ 
++static inline void __kselftest_memset_safe(void *s, int c, size_t n)
++{
++	if (n > 0)
++		memset(s, c, n);
++}
++
+ #define TEST_TIMEOUT_DEFAULT 30
+ 
+ /* Utilities exposed to the test definitions */
+@@ -418,7 +424,7 @@
+ 				self = mmap(NULL, sizeof(*self), PROT_READ | PROT_WRITE, \
+ 					MAP_SHARED | MAP_ANONYMOUS, -1, 0); \
+ 			} else { \
+-				memset(&self_private, 0, sizeof(self_private)); \
++				__kselftest_memset_safe(&self_private, 0, sizeof(self_private)); \
+ 				self = &self_private; \
+ 			} \
+ 		} \
 -- 
-Jazz isn't dead. It just smells funny.
+2.51.0
+
+
+
