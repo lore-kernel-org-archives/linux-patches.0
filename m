@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD7AA2737EE;
-	Thu, 12 Mar 2026 20:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B861F9F70;
+	Thu, 12 Mar 2026 20:16:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346605; cv=none; b=NnkDik+OzjOamXpf2ynKn/UgT9Ph8VOG3oTtYqKtbKipenmfKVmvs2EpH9MgOXay6UBbor0FQb80j3V0Rnh1GKF0df50WcqBRtYIhGL5x6ezSCn1OLwDie6C7nw6nW6sOKTOmajqBQktnGwj5YPPKOJacx3sOD2EC6GpGVGNCC4=
+	t=1773346610; cv=none; b=Sow79F4y9QuCNQ8JzBdzSmyNXmxmq+KzfEjh0iY5vgJdzBq9oaEv4GgLZBziNh5zZ3ii4pFO0LhxwH11CwFw/Kw7WB8LqFUUduL0WCKzbC9pEqluHnzkI9JcoCde+xvcFPUOf1GZB+PCLOdAZ4I6BC24poG0hg9x48yKnmrdH5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346605; c=relaxed/simple;
-	bh=opBRfym2WUGYZpaVVrVMlFpmcB3BCbekD3MTUE5tfhU=;
+	s=arc-20240116; t=1773346610; c=relaxed/simple;
+	bh=AX3pyyaF4D43LSmWH0z7apXNNIXW+yw9+QEY/2CFLI4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ej78TRfrHvTBzxk6unJJ/9I/Sg9pd3yFt8DKzK2m06n4r0I431NI913YMO78e/9tGeK7u3iBKZBLTMV9Bs6i91Deu6W3y0sXJMPILLkmZQ6cHmZiSQ24ceDqgPCdk11wGLL5vVErS2jaD6kBx2wYZUfx19+HEfMtojTHRmZ1uZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=msRlIu8w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H92s1jwGaeYy8lmMqIG6uiKHAvh5G0rIkSovttf71FXhtjCDIdCFBkIPBWcwS9LTqOwHb4A5oVdKVc1S2l54GfeszWyeGI3gzRdA6Xr8ks4oZARdDJX5JhsNz4jDeYbZ1y24NMwZc9S3KccfnMIUz1wayICUYRSd9UUJHtwIskY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpvFkJQm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="msRlIu8w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 362AFC4CEF7;
-	Thu, 12 Mar 2026 20:16:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpvFkJQm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFADFC4CEF7;
+	Thu, 12 Mar 2026 20:16:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346605;
-	bh=opBRfym2WUGYZpaVVrVMlFpmcB3BCbekD3MTUE5tfhU=;
+	s=korg; t=1773346610;
+	bh=AX3pyyaF4D43LSmWH0z7apXNNIXW+yw9+QEY/2CFLI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msRlIu8w0hXsuNNhageJPx+M4rH6q4YuOTw8TWHIyYVgx928e/AEuW8oubR/9eeiR
-	 Vyrss505vgV9aeMKPXiqr67cefFzMOb3VR8NAPj6B+u2StLzvC1s0MX5ahboLHIs8F
-	 h8njfEwtdDiJhVYO0vGAxZquHP28KpCMAbUKVzxM=
+	b=zpvFkJQmjPa1qF7hl2wZS+RwgXuD+Oq2DlHSghO2YE66Ah0puD6opgiWU/5LG/aGM
+	 6SGiT3K8mrwlgMBt4Yz936jSs5IFb/s0raBtqtKQ5cfOCH8rey6h72gJL2RrY7GMd9
+	 hOq2Vnjg2qjzAiVOi2FVmofGhKSNy5BWIcHty8LM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Pedro Falcato <pfalcato@suse.de>,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>,
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 080/265] ext4: always allocate blocks only from groups inode can use
-Date: Thu, 12 Mar 2026 21:07:47 +0100
-Message-ID: <20260312201021.109766556@linuxfoundation.org>
+Subject: [PATCH 6.12 081/265] workqueue: Add system_percpu_wq and system_dfl_wq
+Date: Thu, 12 Mar 2026 21:07:48 +0100
+Message-ID: <20260312201021.146310007@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -55,106 +51,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kara <jack@suse.cz>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 4865c768b563deff1b6a6384e74a62f143427b42 ]
+[ Upstream commit 128ea9f6ccfb6960293ae4212f4f97165e42222d ]
 
-For filesystems with more than 2^32 blocks inodes using indirect block
-based format cannot use blocks beyond the 32-bit limit.
-ext4_mb_scan_groups_linear() takes care to not select these unsupported
-groups for such inodes however other functions selecting groups for
-allocation don't. So far this is harmless because the other selection
-functions are used only with mb_optimize_scan and this is currently
-disabled for inodes with indirect blocks however in the following patch
-we want to enable mb_optimize_scan regardless of inode format.
+Currently, if a user enqueue a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
 
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Acked-by: Pedro Falcato <pfalcato@suse.de>
-Cc: stable@kernel.org
-Link: https://patch.msgid.link/20260114182836.14120-3-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+This lack of consistentcy cannot be addressed without refactoring the API.
+
+system_wq is a per-CPU worqueue, yet nothing in its name tells about that
+CPU affinity constraint, which is very often not required by users. Make it
+clear by adding a system_percpu_wq.
+
+system_unbound_wq should be the default workqueue so as not to enforce
+locality constraints for random work whenever it's not required.
+
+Adding system_dfl_wq to encourage its use when unbound work should be used.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 870c2e7cd881 ("Input: synaptics_i2c - guard polling restart in resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ include/linux/workqueue.h |  8 +++++---
+ kernel/workqueue.c        | 13 +++++++++----
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
-diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 1e180c55ebd4f..aa1627db56c5a 100644
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -892,6 +892,21 @@ mb_update_avg_fragment_size(struct super_block *sb, struct ext4_group_info *grp)
+diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
+index 59c2695e12e76..23642bb1a103c 100644
+--- a/include/linux/workqueue.h
++++ b/include/linux/workqueue.h
+@@ -427,7 +427,7 @@ enum wq_consts {
+ /*
+  * System-wide workqueues which are always present.
+  *
+- * system_wq is the one used by schedule[_delayed]_work[_on]().
++ * system_percpu_wq is the one used by schedule[_delayed]_work[_on]().
+  * Multi-CPU multi-threaded.  There are users which expect relatively
+  * short queue flush time.  Don't queue works which can run for too
+  * long.
+@@ -438,7 +438,7 @@ enum wq_consts {
+  * system_long_wq is similar to system_wq but may host long running
+  * works.  Queue flushing might take relatively long.
+  *
+- * system_unbound_wq is unbound workqueue.  Workers are not bound to
++ * system_dfl_wq is unbound workqueue.  Workers are not bound to
+  * any specific CPU, not concurrency managed, and all queued works are
+  * executed immediately as long as max_active limit is not reached and
+  * resources are available.
+@@ -455,10 +455,12 @@ enum wq_consts {
+  * system_bh[_highpri]_wq are convenience interface to softirq. BH work items
+  * are executed in the queueing CPU's BH context in the queueing order.
+  */
+-extern struct workqueue_struct *system_wq;
++extern struct workqueue_struct *system_wq; /* use system_percpu_wq, this will be removed */
++extern struct workqueue_struct *system_percpu_wq;
+ extern struct workqueue_struct *system_highpri_wq;
+ extern struct workqueue_struct *system_long_wq;
+ extern struct workqueue_struct *system_unbound_wq;
++extern struct workqueue_struct *system_dfl_wq;
+ extern struct workqueue_struct *system_freezable_wq;
+ extern struct workqueue_struct *system_power_efficient_wq;
+ extern struct workqueue_struct *system_freezable_power_efficient_wq;
+diff --git a/kernel/workqueue.c b/kernel/workqueue.c
+index 9f7f7244bdc8e..3840d7ce9cda0 100644
+--- a/kernel/workqueue.c
++++ b/kernel/workqueue.c
+@@ -508,12 +508,16 @@ static struct kthread_worker *pwq_release_worker __ro_after_init;
+ 
+ struct workqueue_struct *system_wq __ro_after_init;
+ EXPORT_SYMBOL(system_wq);
++struct workqueue_struct *system_percpu_wq __ro_after_init;
++EXPORT_SYMBOL(system_percpu_wq);
+ struct workqueue_struct *system_highpri_wq __ro_after_init;
+ EXPORT_SYMBOL_GPL(system_highpri_wq);
+ struct workqueue_struct *system_long_wq __ro_after_init;
+ EXPORT_SYMBOL_GPL(system_long_wq);
+ struct workqueue_struct *system_unbound_wq __ro_after_init;
+ EXPORT_SYMBOL_GPL(system_unbound_wq);
++struct workqueue_struct *system_dfl_wq __ro_after_init;
++EXPORT_SYMBOL_GPL(system_dfl_wq);
+ struct workqueue_struct *system_freezable_wq __ro_after_init;
+ EXPORT_SYMBOL_GPL(system_freezable_wq);
+ struct workqueue_struct *system_power_efficient_wq __ro_after_init;
+@@ -7848,10 +7852,11 @@ void __init workqueue_init_early(void)
  	}
- }
  
-+static ext4_group_t ext4_get_allocation_groups_count(
-+				struct ext4_allocation_context *ac)
-+{
-+	ext4_group_t ngroups = ext4_get_groups_count(ac->ac_sb);
-+
-+	/* non-extent files are limited to low blocks/groups */
-+	if (!(ext4_test_inode_flag(ac->ac_inode, EXT4_INODE_EXTENTS)))
-+		ngroups = EXT4_SB(ac->ac_sb)->s_blockfile_groups;
-+
-+	/* Pairs with smp_wmb() in ext4_update_super() */
-+	smp_rmb();
-+
-+	return ngroups;
-+}
-+
- static int ext4_mb_scan_groups_xa_range(struct ext4_allocation_context *ac,
- 					struct xarray *xa,
- 					ext4_group_t start, ext4_group_t end)
-@@ -899,7 +914,7 @@ static int ext4_mb_scan_groups_xa_range(struct ext4_allocation_context *ac,
- 	struct super_block *sb = ac->ac_sb;
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 	enum criteria cr = ac->ac_criteria;
--	ext4_group_t ngroups = ext4_get_groups_count(sb);
-+	ext4_group_t ngroups = ext4_get_allocation_groups_count(ac);
- 	unsigned long group = start;
- 	struct ext4_group_info *grp;
- 
-@@ -951,7 +966,7 @@ static int ext4_mb_scan_groups_p2_aligned(struct ext4_allocation_context *ac,
- 	ext4_group_t start, end;
- 
- 	start = group;
--	end = ext4_get_groups_count(ac->ac_sb);
-+	end = ext4_get_allocation_groups_count(ac);
- wrap_around:
- 	for (i = ac->ac_2order; i < MB_NUM_ORDERS(ac->ac_sb); i++) {
- 		ret = ext4_mb_scan_groups_largest_free_order_range(ac, i,
-@@ -1001,7 +1016,7 @@ static int ext4_mb_scan_groups_goal_fast(struct ext4_allocation_context *ac,
- 	ext4_group_t start, end;
- 
- 	start = group;
--	end = ext4_get_groups_count(ac->ac_sb);
-+	end = ext4_get_allocation_groups_count(ac);
- wrap_around:
- 	i = mb_avg_fragment_size_order(ac->ac_sb, ac->ac_g_ex.fe_len);
- 	for (; i < MB_NUM_ORDERS(ac->ac_sb); i++) {
-@@ -1083,7 +1098,7 @@ static int ext4_mb_scan_groups_best_avail(struct ext4_allocation_context *ac,
- 		min_order = fls(ac->ac_o_ex.fe_len);
- 
- 	start = group;
--	end = ext4_get_groups_count(ac->ac_sb);
-+	end = ext4_get_allocation_groups_count(ac);
- wrap_around:
- 	for (i = order; i >= min_order; i--) {
- 		int frag_order;
-@@ -1180,11 +1195,7 @@ static int ext4_mb_scan_groups(struct ext4_allocation_context *ac)
- 	int ret = 0;
- 	ext4_group_t start;
- 	struct ext4_sb_info *sbi = EXT4_SB(ac->ac_sb);
--	ext4_group_t ngroups = ext4_get_groups_count(ac->ac_sb);
--
--	/* non-extent files are limited to low blocks/groups */
--	if (!(ext4_test_inode_flag(ac->ac_inode, EXT4_INODE_EXTENTS)))
--		ngroups = sbi->s_blockfile_groups;
-+	ext4_group_t ngroups = ext4_get_allocation_groups_count(ac);
- 
- 	/* searching for the right group start from the goal value specified */
- 	start = ac->ac_g_ex.fe_group;
+ 	system_wq = alloc_workqueue("events", 0, 0);
++	system_percpu_wq = alloc_workqueue("events", 0, 0);
+ 	system_highpri_wq = alloc_workqueue("events_highpri", WQ_HIGHPRI, 0);
+ 	system_long_wq = alloc_workqueue("events_long", 0, 0);
+-	system_unbound_wq = alloc_workqueue("events_unbound", WQ_UNBOUND,
+-					    WQ_MAX_ACTIVE);
++	system_unbound_wq = alloc_workqueue("events_unbound", WQ_UNBOUND, WQ_MAX_ACTIVE);
++	system_dfl_wq = alloc_workqueue("events_unbound", WQ_UNBOUND, WQ_MAX_ACTIVE);
+ 	system_freezable_wq = alloc_workqueue("events_freezable",
+ 					      WQ_FREEZABLE, 0);
+ 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
+@@ -7862,8 +7867,8 @@ void __init workqueue_init_early(void)
+ 	system_bh_wq = alloc_workqueue("events_bh", WQ_BH, 0);
+ 	system_bh_highpri_wq = alloc_workqueue("events_bh_highpri",
+ 					       WQ_BH | WQ_HIGHPRI, 0);
+-	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
+-	       !system_unbound_wq || !system_freezable_wq ||
++	BUG_ON(!system_wq || !system_percpu_wq|| !system_highpri_wq || !system_long_wq ||
++	       !system_unbound_wq || !system_freezable_wq || !system_dfl_wq ||
+ 	       !system_power_efficient_wq ||
+ 	       !system_freezable_power_efficient_wq ||
+ 	       !system_bh_wq || !system_bh_highpri_wq);
 -- 
 2.51.0
 
