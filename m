@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567A03FFAB5;
-	Thu, 12 Mar 2026 20:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61416396582;
+	Thu, 12 Mar 2026 20:13:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346396; cv=none; b=K3Bqfihdl7gmgkonPzGsbJqAfPauwYPWqfD+ESsX8ZIkOoyE657SOqON2Gu3+e1QlmqRJl1NNkLnvWihyviuTZs90jWB1eG8V226bKNFO1bI+AmRsuMCl/1Dyay2rQ7SAsWqaUFICw6ejXgWRFA9hpbH/tDLfn6321fF+5JH1IM=
+	t=1773346400; cv=none; b=POndXUcEbXNdoVXpglKC2JgZAbrazOZYEbX+FYjGj7gQmd0I/ccAP/hSRZxyRx1Uy2dOMabvKZW48Zaqut8VADYAXw7JODnB5ON48nvOlYFHiqMac4TruhoQVcFLefcYqoTryl7T3ltB+Rz+BBmqvVHIIq7WJZzi93b6VdNGDLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346396; c=relaxed/simple;
-	bh=92oQ9cLl8LvAhNbQ3AsiMKdtX0sC6xEHhh7JEqGEnKM=;
+	s=arc-20240116; t=1773346400; c=relaxed/simple;
+	bh=Otqw/NAz1iis7hXF7Ub30O0S0L5ZlHjJDG/TOnIHifg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fd2Jw2rA0h8B2jRDTV2RgVHqvVxDq3cY213GVPpFFkt5HtTMThB9STX2TnNXwteKahKWc9DZRvou+NLC25R7EH2VAj4ZxCMheH5w1p9vSURqQW/u9pd/AyCNs54LMgZdXX3ldJgMKnq5b9RXFrd8Eiv95dJQR20R1p702xfZkaQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmWVHHiq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wx7ylvfiQMPHgTtuY1+KUCRrWkZSlj9SudZjuqN0Hq6sX12AeMWn7iIRDD0wRe7bRhZOeQUsYRtq30sEnSQlWJDu7zSFKrP4rmI+ZV14gMoOcS9rcFM+2nrabanjTc7+Bw1V8mReg2cHCr1kOYhkh+CJ6QLCuKYXcW9eeFBPVO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ivawfSbE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmWVHHiq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37B8C4CEF7;
-	Thu, 12 Mar 2026 20:13:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ivawfSbE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6C4C4CEF7;
+	Thu, 12 Mar 2026 20:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346396;
-	bh=92oQ9cLl8LvAhNbQ3AsiMKdtX0sC6xEHhh7JEqGEnKM=;
+	s=korg; t=1773346400;
+	bh=Otqw/NAz1iis7hXF7Ub30O0S0L5ZlHjJDG/TOnIHifg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dmWVHHiqHDKPE1HqqrDHjHxpTiDoKnRckl3ZgwrEOIOUpUqPaxjl+6Oq6yGIQjCwV
-	 UCkA77f9gulDVcSkp/qiGDtcIkU2KbXjgH6Ba2iy9LRwFDz9RnfWunr5CxeA8LZkBU
-	 5AImez3xlnEP9XE766hReES+3dFV3mvlakREq8QM=
+	b=ivawfSbEDo+FmQqBb7Av7bby8Y5ImyF5UmsKgnHoe2lwvxG33LOa1BuzXooRhtO5i
+	 KMXEsDyl+5eXPhHgFNiwhpsXridvf53TkVgA85RziRrskJQescGESCH+m32RTaW7wp
+	 0z4vXAK//rm8g6bCcczJyor4h/ppzIReg6TJZ7BY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chris Mason <clm@fb.com>,
+	Qu Wenruo <wqu@suse.com>,
+	Mark Harmstone <mark@harmstone.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 032/265] ALSA: hda: cs35l56: Fix signedness error in cs35l56_hda_posture_put()
-Date: Thu, 12 Mar 2026 21:06:59 +0100
-Message-ID: <20260312201019.349179619@linuxfoundation.org>
+Subject: [PATCH 6.12 033/265] btrfs: fix incorrect key offset in error message in check_dev_extent_item()
+Date: Thu, 12 Mar 2026 21:07:00 +0100
+Message-ID: <20260312201019.385366339@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,42 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Mark Harmstone <mark@harmstone.com>
 
-[ Upstream commit 003ce8c9b2ca28fbb4860651e76fb1c9a91f2ea1 ]
+[ Upstream commit 511dc8912ae3e929c1a182f5e6b2326516fd42a0 ]
 
-In cs35l56_hda_posture_put() assign ucontrol->value.integer.value[0] to
-a long instead of an unsigned long. ucontrol->value.integer.value[0] is
-a long.
+Fix the error message in check_dev_extent_item(), when an overlapping
+stripe is encountered. For dev extents, objectid is the disk number and
+offset the physical address, so prev_key->objectid should actually be
+prev_key->offset.
 
-This fixes the sparse warning:
+(I can't take any credit for this one - this was discovered by Chris and
+his friend Claude.)
 
-sound/hda/codecs/side-codecs/cs35l56_hda.c:256:20: warning: unsigned value
-that used to be signed checked against zero?
-sound/hda/codecs/side-codecs/cs35l56_hda.c:252:29: signed value source
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 73cfbfa9caea8 ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
-Link: https://patch.msgid.link/20260226111728.1700431-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reported-by: Chris Mason <clm@fb.com>
+Fixes: 008e2512dc56 ("btrfs: tree-checker: add dev extent item checks")
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Mark Harmstone <mark@harmstone.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 2 +-
+ fs/btrfs/tree-checker.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 52d2ddf248323..2a936f43fad2d 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -250,7 +250,7 @@ static int cs35l56_hda_posture_put(struct snd_kcontrol *kcontrol,
- 				   struct snd_ctl_elem_value *ucontrol)
- {
- 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
--	unsigned long pos = ucontrol->value.integer.value[0];
-+	long pos = ucontrol->value.integer.value[0];
- 	bool changed;
- 	int ret;
- 
+diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
+index 3bb7a376bd3fc..894136eb443ee 100644
+--- a/fs/btrfs/tree-checker.c
++++ b/fs/btrfs/tree-checker.c
+@@ -1882,7 +1882,7 @@ static int check_dev_extent_item(const struct extent_buffer *leaf,
+ 		if (unlikely(prev_key->offset + prev_len > key->offset)) {
+ 			generic_err(leaf, slot,
+ 		"dev extent overlap, prev offset %llu len %llu current offset %llu",
+-				    prev_key->objectid, prev_len, key->offset);
++				    prev_key->offset, prev_len, key->offset);
+ 			return -EUCLEAN;
+ 		}
+ 	}
 -- 
 2.51.0
 
