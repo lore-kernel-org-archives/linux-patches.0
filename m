@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4372402427;
-	Thu, 12 Mar 2026 20:13:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048173F1655;
+	Thu, 12 Mar 2026 20:13:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346432; cv=none; b=U1qNftsZweCsIWoThoS67Q1wPwgQw41peWVAhw5oeoQX5fzO9gOwaWTUPFNo7vp1r6ldID3M4n/oqUyVazQYvSxdCcJVRZe20EtxPNdVUJL64VzMwAh4aZ7Lm0XsMueApZ9TP6bSsNlzRnbF5JDHmx4+tcUN6cKY4U4ZOFMT6hU=
+	t=1773346437; cv=none; b=svc+RH1D3k/3Ho86IKcHB3XteFV7Gat3g2TjpAI9/CIGZvgasyCH/xLnf0BqGcYAEP9wgoZDpzEDkpcKYx6dr5ufzt9erX1+0fU+wrHrdeZa+keqff7JvFSkcvu0T8uNhpOzAXCZMs8E0h1MbmU7EVAFtgj0sreyyasptrHp1XI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346432; c=relaxed/simple;
-	bh=hblLlWonxvaS6hKp5S7vcD9XkFlTGHZt064OwX/0GtY=;
+	s=arc-20240116; t=1773346437; c=relaxed/simple;
+	bh=dg5Qoi3vprZdV+4fJ9o+QX7OlEWXU9g1qW7014JlWmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bf/C3KYUu+Ou+r8JIrHNJGFGDvwrg6EvhPdXW41HA8m4Eo0J5kKX8E74WGaeo0NxV+GOskTLERLRvIUAfcxTE2mR/oSUor+2cu+4/OWXEg5Mj9cbKHbmnLldE/5HPSNXybTjsDzkmqayjsGNCBxFlT4G4qZhZbX13kFU0wcmzZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cff1vgiy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KzoGTnn5G20RKW2Oeho4aLEoCuQ/iLkNwHjS+0wgBkrttQaoF7G5GsQow5Le6h6mgs/eIsYgg676I6OGRiNpQI6iPLiXSQzV+hAt3Ueq0Q99uIchP5qCXzfw8djZOr/MMWHbS/1JR9bWqRUS02PeDRQEHdXnx5nh6Z/iE5eJSYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6LE3Ytn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cff1vgiy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FC0C4CEF7;
-	Thu, 12 Mar 2026 20:13:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6LE3Ytn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EE1C4CEF7;
+	Thu, 12 Mar 2026 20:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346432;
-	bh=hblLlWonxvaS6hKp5S7vcD9XkFlTGHZt064OwX/0GtY=;
+	s=korg; t=1773346436;
+	bh=dg5Qoi3vprZdV+4fJ9o+QX7OlEWXU9g1qW7014JlWmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cff1vgiyj2En7YrBD4gBM/klXvyP5M4rZ7jJArwzkvay6d6lte4sAciW7rciBoWsH
-	 WFAgdB2cQIFJpZTI1otHAaH02rlPJLqjhSlJAFdU7XGamhjlWOS+8lm9iO1x+I+Bgd
-	 g2II+0SfLZOU2YsDXYT9t5M5v83AlnPRW3xakrxg=
+	b=O6LE3Ytnoe3I64FJHaFS5JWyBupVFOLVNpxUX6NO1ThSjaASfO36z7I4itFhs6V6I
+	 tuiXMGGEOgxdl2VueGpUuf5BfEr3JIx/ECB/is04OUi1ZMBdKPUvKVJ4dDfwqZfMUm
+	 LCsnblhAHz8a3wgUs1VXiFQpSC1ph6WfhGXp0ATI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Pecio <michal.pecio@gmail.com>,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	Ricardo Neri <ricardo.neri-calderon@linux.intel.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 041/265] x86/acpi/boot: Correct acpi_is_processor_usable() check again
-Date: Thu, 12 Mar 2026 21:07:08 +0100
-Message-ID: <20260312201019.680351643@linuxfoundation.org>
+Subject: [PATCH 6.12 015/265] rseq: Clarify rseq registration rseq_size bound check comment
+Date: Thu, 12 Mar 2026 21:06:42 +0100
+Message-ID: <20260312201018.724862116@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,131 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit adbf61cc47cb72b102682e690ad323e1eda652c2 ]
+[ Upstream commit 26d43a90be81fc90e26688a51d3ec83188602731 ]
 
-ACPI v6.3 defined a new "Online Capable" MADT LAPIC flag. This bit is
-used in conjunction with the "Enabled" MADT LAPIC flag to determine if
-a CPU can be enabled/hotplugged by the OS after boot.
+The rseq registration validates that the rseq_size argument is greater
+or equal to 32 (the original rseq size), but the comment associated with
+this check does not clearly state this.
 
-Before the new bit was defined, the "Enabled" bit was explicitly
-described like this (ACPI v6.0 wording provided):
+Clarify the comment to that effect.
 
-  "If zero, this processor is unusable, and the operating system
-  support will not attempt to use it"
-
-This means that CPU hotplug (based on MADT) is not possible. Many BIOS
-implementations follow this guidance. They may include LAPIC entries in
-MADT for unavailable CPUs, but since these entries are marked with
-"Enabled=0" it is expected that the OS will completely ignore these
-entries.
-
-However, QEMU will do the same (include entries with "Enabled=0") for
-the purpose of allowing CPU hotplug within the guest.
-
-Comment from QEMU function pc_madt_cpu_entry():
-
-  /* ACPI spec says that LAPIC entry for non present
-   * CPU may be omitted from MADT or it must be marked
-   * as disabled. However omitting non present CPU from
-   * MADT breaks hotplug on linux. So possible CPUs
-   * should be put in MADT but kept disabled.
-   */
-
-Recent Linux topology changes broke the QEMU use case. A following fix
-for the QEMU use case broke bare metal topology enumeration.
-
-Rework the Linux MADT LAPIC flags check to allow the QEMU use case only
-for guests and to maintain the ACPI spec behavior for bare metal.
-
-Remove an unnecessary check added to fix a bare metal case introduced by
-the QEMU "fix".
-
-  [ bp: Change logic as Michal suggested. ]
-  [ mingo: Removed misapplied -stable tag. ]
-
-Fixes: fed8d8773b8e ("x86/acpi/boot: Correct acpi_is_processor_usable() check")
-Fixes: f0551af02130 ("x86/topology: Ignore non-present APIC IDs in a present package")
-Closes: https://lore.kernel.org/r/20251024204658.3da9bf3f.michal.pecio@gmail.com
-Reported-by: Michal Pecio <michal.pecio@gmail.com>
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Michal Pecio <michal.pecio@gmail.com>
-Tested-by: Ricardo Neri <ricardo.neri-calderon@linux.intel.com>
-Link: https://lore.kernel.org/20251111145357.4031846-1-yazen.ghannam@amd.com
-Cc: stable@vger.kernel.org
+Fixes: ee3e3ac05c26 ("rseq: Introduce extensible rseq ABI")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260220200642.1317826-2-mathieu.desnoyers@efficios.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/acpi/boot.c    | 12 ++++++++----
- arch/x86/kernel/cpu/topology.c | 15 ---------------
- 2 files changed, 8 insertions(+), 19 deletions(-)
+ kernel/rseq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/kernel/acpi/boot.c b/arch/x86/kernel/acpi/boot.c
-index 63adda8a143f9..a1acff7782dbb 100644
---- a/arch/x86/kernel/acpi/boot.c
-+++ b/arch/x86/kernel/acpi/boot.c
-@@ -35,6 +35,7 @@
- #include <asm/smp.h>
- #include <asm/i8259.h>
- #include <asm/setup.h>
-+#include <asm/hypervisor.h>
- 
- #include "sleep.h" /* To include x86_acpi_suspend_lowlevel */
- static int __initdata acpi_force = 0;
-@@ -164,11 +165,14 @@ static bool __init acpi_is_processor_usable(u32 lapic_flags)
- 	if (lapic_flags & ACPI_MADT_ENABLED)
- 		return true;
- 
--	if (!acpi_support_online_capable ||
--	    (lapic_flags & ACPI_MADT_ONLINE_CAPABLE))
--		return true;
-+	if (acpi_support_online_capable)
-+		return lapic_flags & ACPI_MADT_ONLINE_CAPABLE;
- 
--	return false;
-+	/*
-+	 * QEMU expects legacy "Enabled=0" LAPIC entries to be counted as usable
-+	 * in order to support CPU hotplug in guests.
-+	 */
-+	return !hypervisor_is_type(X86_HYPER_NATIVE);
- }
- 
- static int __init
-diff --git a/arch/x86/kernel/cpu/topology.c b/arch/x86/kernel/cpu/topology.c
-index b2e313ea17bf6..03d3e1f1a407c 100644
---- a/arch/x86/kernel/cpu/topology.c
-+++ b/arch/x86/kernel/cpu/topology.c
-@@ -27,7 +27,6 @@
- #include <xen/xen.h>
- 
- #include <asm/apic.h>
--#include <asm/hypervisor.h>
- #include <asm/io_apic.h>
- #include <asm/mpspec.h>
- #include <asm/smp.h>
-@@ -239,20 +238,6 @@ static __init void topo_register_apic(u32 apic_id, u32 acpi_id, bool present)
- 		cpuid_to_apicid[cpu] = apic_id;
- 		topo_set_cpuids(cpu, apic_id, acpi_id);
- 	} else {
--		u32 pkgid = topo_apicid(apic_id, TOPO_PKG_DOMAIN);
--
--		/*
--		 * Check for present APICs in the same package when running
--		 * on bare metal. Allow the bogosity in a guest.
--		 */
--		if (hypervisor_is_type(X86_HYPER_NATIVE) &&
--		    topo_unit_count(pkgid, TOPO_PKG_DOMAIN, phys_cpu_present_map)) {
--			pr_info_once("Ignoring hot-pluggable APIC ID %x in present package.\n",
--				     apic_id);
--			topo_info.nr_rejected_cpus++;
--			return;
--		}
--
- 		topo_info.nr_disabled_cpus++;
- 	}
- 
+diff --git a/kernel/rseq.c b/kernel/rseq.c
+index 810005f927d7c..e6ee81dd1e457 100644
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -432,8 +432,9 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len,
+ 	 * auxiliary vector AT_RSEQ_ALIGN. If rseq_len is the original rseq
+ 	 * size, the required alignment is the original struct rseq alignment.
+ 	 *
+-	 * In order to be valid, rseq_len is either the original rseq size, or
+-	 * large enough to contain all supported fields, as communicated to
++	 * The rseq_len is required to be greater or equal to the original rseq
++	 * size. In order to be valid, rseq_len is either the original rseq size,
++	 * or large enough to contain all supported fields, as communicated to
+ 	 * user-space through the ELF auxiliary vector AT_RSEQ_FEATURE_SIZE.
+ 	 */
+ 	if (rseq_len < ORIG_RSEQ_SIZE ||
 -- 
 2.51.0
 
