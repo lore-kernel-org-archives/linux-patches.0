@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04D126F288;
-	Thu, 12 Mar 2026 20:25:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333A63242AC;
+	Thu, 12 Mar 2026 20:25:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347132; cv=none; b=L5Z4hYRZ/TPeyJmSvzlxvW1OQMpG9u+pZxtteLiGzo/kTHPgGMLSGo+N8y4Vh/56bLUJYyFgJTFTVmauN092Rfuu2eu1RMUWTsBBBEfFXujpKrGjrap9RNdwHRAkOUyQ8+qtGQ17xp8vbQ5zkc1exrnhlq9TllxyG8UYyhD4izI=
+	t=1773347136; cv=none; b=kUn4sqDtDTSZ+7d7BVWGOmVPji+ZaW12aiwGL1LyDLR2XjN6Dn8cLqtkSIq7ygOQXRCdedpK6x6eEYFzFeRuKKIhTEiMc9cEfc978UQ7hMW39cua77ncinFSUSRrx1LHc9LRWEEeHkkbCK1HLs9M/R+ub7pabXcRLt3ko/QspX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347132; c=relaxed/simple;
-	bh=CJshAughWSxTImQACA3SiU7Hrsj+t8ZrU+JZgveIZAg=;
+	s=arc-20240116; t=1773347136; c=relaxed/simple;
+	bh=nl33/dHYDevDcYOSPxVBC+1oUmxhKs/A+b9owaa9OBw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mxMEneMBtLeAApPuiNW3ZsbZz/YiK2cFk8ZORK6InTZGFD63IOvnBCPu9j+sCZJY5wK8eYz8xVO98aM/yn5IjVDVoXyXpyB5YZyIfwh+23TuN9Vvmf24SwNKuHU3YQwtLa57NGvUS/TLygbB5HSBDHUqPlodWcvdqGTrRoPjB34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aYpt8kvw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=smbcww57nPhp1UQPDEbfuemXJSOc88Y7pis0+B8x1HiiuPjRC2wrzUGn2yCVIkqLOltikY3hYP+b7PqTpz4aGlraBj2eattfUnlN8B4tle72+46B0PToOJe8Fdreay9oX5V3ah2LTdAfN6PIJgpX3/dN3F4B3+/O5If/CYE2N54=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p9ClBWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aYpt8kvw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48DB1C4CEF7;
-	Thu, 12 Mar 2026 20:25:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p9ClBWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734E4C4CEF7;
+	Thu, 12 Mar 2026 20:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347132;
-	bh=CJshAughWSxTImQACA3SiU7Hrsj+t8ZrU+JZgveIZAg=;
+	s=korg; t=1773347135;
+	bh=nl33/dHYDevDcYOSPxVBC+1oUmxhKs/A+b9owaa9OBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYpt8kvwYeXpS9FXCIg2V6w0Z/bnCEvkZ3janlt1tli9q2w0i60DXnjgsdhmW1ciq
-	 qllbwVIYfHilMn3lfw3dU3qjFMNw5UYZteDk/xdx8S++aDLzkVkQs0zr3Bh6y0Ah2B
-	 G/8EwJh836M7jFU7k/FHH1nj8H9Gd5hHNx5K8kQA=
+	b=1p9ClBWSr9wBohV5M/p16D1QLe7vaAwoRCNLFFr1HEAduq+9c9+8T4b4ar9ScLaVQ
+	 xwK/LxJBRK8/vohSnQZzDDGCtD9fuDysp5I+gkkThOt7Y4j7ZeOmj/8bDurkAkgyF+
+	 LFlKM8ectM1UITdxqSTtBuhnCJRPCX3YzjxVdEbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Thomson <dt@linux-mail.net>,
-	Jan Beulich <jbeulich@suse.com>,
-	Juergen Gross <jgross@suse.com>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Alexander Lobakin <aleksander.lobakin@intel.com>,
+	Simon Horman <horms@kernel.org>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 212/265] xen/acpi-processor: fix _CST detection using undersized evaluation buffer
-Date: Thu, 12 Mar 2026 21:09:59 +0100
-Message-ID: <20260312201025.977736968@linuxfoundation.org>
+Subject: [PATCH 6.12 213/265] iavf: fix netdev->max_mtu to respect actual hardware limit
+Date: Thu, 12 Mar 2026 21:10:00 +0100
+Message-ID: <20260312201026.013987760@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,62 +54,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Thomson <dt@linux-mail.net>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit 8b57227d59a86fc06d4f09de08f98133680f2cae ]
+[ Upstream commit b84852170153671bb0fa6737a6e48370addd8e1a ]
 
-read_acpi_id() attempts to evaluate _CST using a stack buffer of
-sizeof(union acpi_object) (48 bytes), but _CST returns a nested Package
-of sub-Packages (one per C-state, each containing a register descriptor,
-type, latency, and power) requiring hundreds of bytes. The evaluation
-always fails with AE_BUFFER_OVERFLOW.
+iavf sets LIBIE_MAX_MTU as netdev->max_mtu, ignoring vf_res->max_mtu
+from PF [1]. This allows setting an MTU beyond the actual hardware
+limit, causing TX queue timeouts [2].
 
-On modern systems using FFH/MWAIT entry (where pblk is zero), this
-causes the function to return before setting the acpi_id_cst_present
-bit. In check_acpi_ids(), flags.power is then zero for all Phase 2 CPUs
-(physical CPUs beyond dom0's vCPU count), so push_cxx_to_hypervisor() is
-never called for them.
+Set correct netdev->max_mtu using vf_res->max_mtu from the PF.
 
-On a system with dom0_max_vcpus=2 and 8 physical CPUs, only PCPUs 0-1
-receive C-state data. PCPUs 2-7 are stuck in C0/C1 idle, unable to
-enter C2/C3. This costs measurable wall power (4W observed on an Intel
-Core Ultra 7 265K with Xen 4.20).
+Note that currently PF drivers such as ice/i40e set the frame size in
+vf_res->max_mtu, not MTU. Convert vf_res->max_mtu to MTU before setting
+netdev->max_mtu.
 
-The function never uses the _CST return value -- it only needs to know
-whether _CST exists. Replace the broken acpi_evaluate_object() call with
-acpi_has_method(), which correctly detects _CST presence using
-acpi_get_handle() without any buffer allocation. This brings C-state
-detection to parity with the P-state path, which already works correctly
-for Phase 2 CPUs.
+[1]
+ # ip -j -d link show $DEV | jq '.[0].max_mtu'
+ 16356
 
-Fixes: 59a568029181 ("xen/acpi-processor: C and P-state driver that uploads said data to hypervisor.")
-Signed-off-by: David Thomson <dt@linux-mail.net>
-Reviewed-by: Jan Beulich <jbeulich@suse.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Message-ID: <20260224093707.19679-1-dt@linux-mail.net>
+[2]
+ iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 1: transmit queue 0 timed out 5692 ms
+ iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
+ iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 6: transmit queue 3 timed out 5312 ms
+ iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
+ ...
+
+Fixes: 5fa4caff59f2 ("iavf: switch to Page Pool")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/xen-acpi-processor.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/xen/xen-acpi-processor.c b/drivers/xen/xen-acpi-processor.c
-index 2967039398463..520756159d3d3 100644
---- a/drivers/xen/xen-acpi-processor.c
-+++ b/drivers/xen/xen-acpi-processor.c
-@@ -379,11 +379,8 @@ read_acpi_id(acpi_handle handle, u32 lvl, void *context, void **rv)
- 			 acpi_psd[acpi_id].domain);
- 	}
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 422af897d9330..dcd4f172ddc8a 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -2630,7 +2630,22 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
+ 	netdev->watchdog_timeo = 5 * HZ;
  
--	status = acpi_evaluate_object(handle, "_CST", NULL, &buffer);
--	if (ACPI_FAILURE(status)) {
--		if (!pblk)
--			return AE_OK;
--	}
-+	if (!pblk && !acpi_has_method(handle, "_CST"))
-+		return AE_OK;
- 	/* .. and it has a C-state */
- 	__set_bit(acpi_id, acpi_id_cst_present);
+ 	netdev->min_mtu = ETH_MIN_MTU;
+-	netdev->max_mtu = LIBIE_MAX_MTU;
++
++	/* PF/VF API: vf_res->max_mtu is max frame size (not MTU).
++	 * Convert to MTU.
++	 */
++	if (!adapter->vf_res->max_mtu) {
++		netdev->max_mtu = LIBIE_MAX_MTU;
++	} else if (adapter->vf_res->max_mtu < LIBETH_RX_LL_LEN + ETH_MIN_MTU ||
++		   adapter->vf_res->max_mtu >
++			   LIBETH_RX_LL_LEN + LIBIE_MAX_MTU) {
++		netdev_warn_once(adapter->netdev,
++				 "invalid max frame size %d from PF, using default MTU %d",
++				 adapter->vf_res->max_mtu, LIBIE_MAX_MTU);
++		netdev->max_mtu = LIBIE_MAX_MTU;
++	} else {
++		netdev->max_mtu = adapter->vf_res->max_mtu - LIBETH_RX_LL_LEN;
++	}
  
+ 	if (!is_valid_ether_addr(adapter->hw.mac.addr)) {
+ 		dev_info(&pdev->dev, "Invalid MAC address %pM, using random\n",
 -- 
 2.51.0
 
