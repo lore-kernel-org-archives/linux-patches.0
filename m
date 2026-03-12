@@ -1,155 +1,234 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3C0A2C17A0;
-	Thu, 12 Mar 2026 20:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4D82C17A0;
+	Thu, 12 Mar 2026 20:04:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773345838; cv=none; b=oisN3/RB27V6jRaV6UyobajxjeQmHhfV1v4/F6/uOHkF2zoru7g1PxmGN/VUEInXtK73fSTZZsuB+XBN4cAWgVAmI66cpjMbRwzSf1K1/Mr/yZVrTrnsShpmPKkiMQe7Rsc8GnBQRX0RWRmqY2pSEbMAo2QblhD92bxRZ1NgNXs=
+	t=1773345848; cv=none; b=tZsImd+ov3jkKZYdoqhpTky5GMPIjLaG0EXp0qLJJhc6p5au59jgBPlKJxCdG3A0kSsycRjyNDwD6I9tu64CfSFS9DwQFx1IX3rIyzN6G09z0AR2MREIHCUW8cPAAS/lRlQs8N5BdJQNxuGdQPTxyBmIlQCVGDzc9YMKlj+U7Hk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773345838; c=relaxed/simple;
-	bh=lHArvf/QNYmlF3oRsumsoF4CA6hMj6i3/UZ73tKe+ls=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=kNZngbmTJZ3rlYoOkx/07Pv7z9NF/nNbt6+dSkr4yT2XFXYAtwmnuoaDG7Zexnmdu9X7Q7Eyip2r+qJJNr1PCR60fY/c8TxPu0fLFIyty+oRXjsUiPKiIJrzldAD2WuGmoI527KRRjeRbw6rnjnTfY1j2bmY/NbVXL/u1InBp4w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q+oeMXc2; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773345848; c=relaxed/simple;
+	bh=HXWVuKchCOj74HRFcP5cE5SAyeMBPWCl6wOzIidMBXc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=n4R030s5n4cLp50PoC1EQu0lM8XRXybgt/PZ6d7FTQNqEVG5fD8EMpAvRXqRLJh91FRoVz1koeHtGFyWYT6KZK3MGWt7BDZSLVMmpwtuoZEU6seQKlJy/IbwkUrzCqykpQAGYM05zQiKlRB/L0ztBtfnRHqXBxWFN+xjKKnBOQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J92Nx5YR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q+oeMXc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAC0C4CEF7;
-	Thu, 12 Mar 2026 20:03:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J92Nx5YR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19188C4CEF7;
+	Thu, 12 Mar 2026 20:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773345837;
-	bh=lHArvf/QNYmlF3oRsumsoF4CA6hMj6i3/UZ73tKe+ls=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Q+oeMXc2UETCbytnfbOfo1LTZvp7uXapnEbNRrLix0JjS1kHI+KYZz7eWL+t2XuuD
-	 qhL2Q5M4GamYq+N94v6KyrupTq5ajfCH3PdOu8tDP0hwbiADaUvINo97jvuww3bArB
-	 Gv0PVjqax8PezWShskHsWAQdbSvSUczONDUk7Frc=
+	s=korg; t=1773345847;
+	bh=HXWVuKchCOj74HRFcP5cE5SAyeMBPWCl6wOzIidMBXc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=J92Nx5YRW1/QiPt2KOJeVaRfDYKawYMZF3JsNW/QS1/kFabnd/UkwnJbyRPXSL7uO
+	 IFSg5yaM1XABghxEf5ncrdBNEmxLplBxc2sv1VZsR7ZnpDJPrIKkdzqwPqa9ncluxG
+	 kzPA2i1nt3dijTGqn5D9TzJdHhOQvBmGLysNdDqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.19 00/13] 6.19.8-rc1 review
-Date: Thu, 12 Mar 2026 21:03:32 +0100
-Message-ID: <20260312200321.671986598@linuxfoundation.org>
+	Qualys Security Advisory <qsa@qualys.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.19 10/13] apparmor: fix unprivileged local user can do privileged policy management
+Date: Thu, 12 Mar 2026 21:03:42 +0100
+Message-ID: <20260312200322.050323410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260312200321.671986598@linuxfoundation.org>
+References: <20260312200321.671986598@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.8-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.19.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.19.8-rc1
-X-KernelTest-Deadline: 2026-03-14T20:03+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.19.8 release.
-There are 13 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.19-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Fri, 13 Mar 2026 20:03:10 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.19.8-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.19.y
-and the diffstat can be found below.
+From: John Johansen <john.johansen@canonical.com>
 
-thanks,
+commit 6601e13e82841879406bf9f369032656f441a425 upstream.
 
-greg k-h
+An unprivileged local user can load, replace, and remove profiles by
+opening the apparmorfs interfaces, via a confused deputy attack, by
+passing the opened fd to a privileged process, and getting the
+privileged process to write to the interface.
 
--------------
-Pseudo-Shortlog of commits:
+This does require a privileged target that can be manipulated to do
+the write for the unprivileged process, but once such access is
+achieved full policy management is possible and all the possible
+implications that implies: removing confinement, DoS of system or
+target applications by denying all execution, by-passing the
+unprivileged user namespace restriction, to exploiting kernel bugs for
+a local privilege escalation.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.19.8-rc1
+The policy management interface can not have its permissions simply
+changed from 0666 to 0600 because non-root processes need to be able
+to load policy to different policy namespaces.
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix race between freeing data and fs accessing it
+Instead ensure the task writing the interface has privileges that
+are a subset of the task that opened the interface. This is already
+done via policy for confined processes, but unconfined can delegate
+access to the opened fd, by-passing the usual policy check.
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix race on rawdata dereference
+Fixes: b7fd2c0340eac ("apparmor: add per policy ns .load, .replace, .remove interface files")
+Reported-by: Qualys Security Advisory <qsa@qualys.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ security/apparmor/apparmorfs.c     |   16 +++++++++-------
+ security/apparmor/include/policy.h |    2 +-
+ security/apparmor/policy.c         |   34 +++++++++++++++++++++++++++++++++-
+ 3 files changed, 43 insertions(+), 9 deletions(-)
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix differential encoding verification
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix unprivileged local user can do privileged policy management
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: Fix double free of ns_name in aa_replace_profiles()
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix side-effect bug in match_char() macro usage
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix: limit the number of levels of policy namespaces
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: replace recursive profile removal with iterative approach
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix memory leak in verify_header
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: validate DFA start states are in bounds in unpack_pdb
-
-Victor Nogueira <victor@mojatatu.com>
-    net/sched: Only allow act_ct to bind to clsact/ingress qdiscs and shared blocks
-
-Paul Moses <p@1g4.org>
-    net/sched: act_gate: snapshot parameters with RCU on replace
-
-
--------------
-
-Diffstat:
-
- Makefile                                  |   4 +-
- include/net/act_api.h                     |   1 +
- include/net/tc_act/tc_gate.h              |  33 +++-
- net/sched/act_ct.c                        |   6 +
- net/sched/act_gate.c                      | 267 +++++++++++++++++++++---------
- net/sched/cls_api.c                       |   7 +
- security/apparmor/apparmorfs.c            | 225 +++++++++++++++----------
- security/apparmor/include/label.h         |  16 +-
- security/apparmor/include/lib.h           |  12 ++
- security/apparmor/include/match.h         |   1 +
- security/apparmor/include/policy.h        |  10 +-
- security/apparmor/include/policy_ns.h     |   2 +
- security/apparmor/include/policy_unpack.h |  83 ++++++----
- security/apparmor/label.c                 |  12 +-
- security/apparmor/match.c                 |  58 +++++--
- security/apparmor/policy.c                |  77 +++++++--
- security/apparmor/policy_ns.c             |   2 +
- security/apparmor/policy_unpack.c         |  65 +++++---
- 18 files changed, 604 insertions(+), 277 deletions(-)
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -417,7 +417,8 @@ static struct aa_loaddata *aa_simple_wri
+ }
+ 
+ static ssize_t policy_update(u32 mask, const char __user *buf, size_t size,
+-			     loff_t *pos, struct aa_ns *ns)
++			     loff_t *pos, struct aa_ns *ns,
++			     const struct cred *ocred)
+ {
+ 	struct aa_loaddata *data;
+ 	struct aa_label *label;
+@@ -428,7 +429,7 @@ static ssize_t policy_update(u32 mask, c
+ 	/* high level check about policy management - fine grained in
+ 	 * below after unpack
+ 	 */
+-	error = aa_may_manage_policy(current_cred(), label, ns, mask);
++	error = aa_may_manage_policy(current_cred(), label, ns, ocred, mask);
+ 	if (error)
+ 		goto end_section;
+ 
+@@ -449,7 +450,8 @@ static ssize_t profile_load(struct file
+ 			    loff_t *pos)
+ {
+ 	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
+-	int error = policy_update(AA_MAY_LOAD_POLICY, buf, size, pos, ns);
++	int error = policy_update(AA_MAY_LOAD_POLICY, buf, size, pos, ns,
++				  f->f_cred);
+ 
+ 	aa_put_ns(ns);
+ 
+@@ -467,7 +469,7 @@ static ssize_t profile_replace(struct fi
+ {
+ 	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
+ 	int error = policy_update(AA_MAY_LOAD_POLICY | AA_MAY_REPLACE_POLICY,
+-				  buf, size, pos, ns);
++				  buf, size, pos, ns, f->f_cred);
+ 	aa_put_ns(ns);
+ 
+ 	return error;
+@@ -492,7 +494,7 @@ static ssize_t profile_remove(struct fil
+ 	 * below after unpack
+ 	 */
+ 	error = aa_may_manage_policy(current_cred(), label, ns,
+-				     AA_MAY_REMOVE_POLICY);
++				     f->f_cred, AA_MAY_REMOVE_POLICY);
+ 	if (error)
+ 		goto out;
+ 
+@@ -1826,7 +1828,7 @@ static struct dentry *ns_mkdir_op(struct
+ 	int error;
+ 
+ 	label = begin_current_label_crit_section();
+-	error = aa_may_manage_policy(current_cred(), label, NULL,
++	error = aa_may_manage_policy(current_cred(), label, NULL, NULL,
+ 				     AA_MAY_LOAD_POLICY);
+ 	end_current_label_crit_section(label);
+ 	if (error)
+@@ -1876,7 +1878,7 @@ static int ns_rmdir_op(struct inode *dir
+ 	int error;
+ 
+ 	label = begin_current_label_crit_section();
+-	error = aa_may_manage_policy(current_cred(), label, NULL,
++	error = aa_may_manage_policy(current_cred(), label, NULL, NULL,
+ 				     AA_MAY_LOAD_POLICY);
+ 	end_current_label_crit_section(label);
+ 	if (error)
+--- a/security/apparmor/include/policy.h
++++ b/security/apparmor/include/policy.h
+@@ -419,7 +419,7 @@ bool aa_policy_admin_capable(const struc
+ 			     struct aa_label *label, struct aa_ns *ns);
+ int aa_may_manage_policy(const struct cred *subj_cred,
+ 			 struct aa_label *label, struct aa_ns *ns,
+-			 u32 mask);
++			 const struct cred *ocred, u32 mask);
+ bool aa_current_policy_view_capable(struct aa_ns *ns);
+ bool aa_current_policy_admin_capable(struct aa_ns *ns);
+ 
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -925,17 +925,44 @@ bool aa_current_policy_admin_capable(str
+ 	return res;
+ }
+ 
++static bool is_subset_of_obj_privilege(const struct cred *cred,
++				       struct aa_label *label,
++				       const struct cred *ocred)
++{
++	if (cred == ocred)
++		return true;
++
++	if (!aa_label_is_subset(label, cred_label(ocred)))
++		return false;
++	/* don't allow crossing userns for now */
++	if (cred->user_ns != ocred->user_ns)
++		return false;
++	if (!cap_issubset(cred->cap_inheritable, ocred->cap_inheritable))
++		return false;
++	if (!cap_issubset(cred->cap_permitted, ocred->cap_permitted))
++		return false;
++	if (!cap_issubset(cred->cap_effective, ocred->cap_effective))
++		return false;
++	if (!cap_issubset(cred->cap_bset, ocred->cap_bset))
++		return false;
++	if (!cap_issubset(cred->cap_ambient, ocred->cap_ambient))
++		return false;
++	return true;
++}
++
++
+ /**
+  * aa_may_manage_policy - can the current task manage policy
+  * @subj_cred: subjects cred
+  * @label: label to check if it can manage policy
+  * @ns: namespace being managed by @label (may be NULL if @label's ns)
++ * @ocred: object cred if request is coming from an open object
+  * @mask: contains the policy manipulation operation being done
+  *
+  * Returns: 0 if the task is allowed to manipulate policy else error
+  */
+ int aa_may_manage_policy(const struct cred *subj_cred, struct aa_label *label,
+-			 struct aa_ns *ns, u32 mask)
++			 struct aa_ns *ns, const struct cred *ocred, u32 mask)
+ {
+ 	const char *op;
+ 
+@@ -951,6 +978,11 @@ int aa_may_manage_policy(const struct cr
+ 		return audit_policy(label, op, NULL, NULL, "policy_locked",
+ 				    -EACCES);
+ 
++	if (ocred && !is_subset_of_obj_privilege(subj_cred, label, ocred))
++		return audit_policy(label, op, NULL, NULL,
++				    "not privileged for target profile",
++				    -EACCES);
++
+ 	if (!aa_policy_admin_capable(subj_cred, label, ns))
+ 		return audit_policy(label, op, NULL, NULL, "not policy admin",
+ 				    -EACCES);
 
 
