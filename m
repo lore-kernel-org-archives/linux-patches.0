@@ -1,38 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7DC1F9F70;
-	Thu, 12 Mar 2026 20:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB871F9F70;
+	Thu, 12 Mar 2026 20:17:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346650; cv=none; b=VdlAPr9YCLIAOQ5lD1yRk4REDTdkV75ozO0HIOa5fwzGp275XisqCm5YANpG5cnd11eb1l7LASrdLSXAiwa2q7bxj5ghph56uPE/FiWOCXuZSdFvx4SdtOxa8hNetM3fPhr5bUYhXzw96/yj/2GTgZUizC1MkILGIWspbkoTGn4=
+	t=1773346655; cv=none; b=t0ad9uZh9/XCOw7YfbyQg2Gp0aZKJm55SpsDmlSaI3sbyEu+HBFi0Z2EoKiqt/PsdH8xCwlPeBd5rlEI2/VZmKkZZeUitSfrgUlUYhK6pzJ9QPKyNXQ9ruIQpmHO3nZutSsD36UZ9SbJa9/aUwY//x3584rqiFDdJE598ORhJxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346650; c=relaxed/simple;
-	bh=dZ2+J8K9+S1GoSswDVte8a4T4p0sH76CcBZWgvKv/B0=;
+	s=arc-20240116; t=1773346655; c=relaxed/simple;
+	bh=831aHmP6TQ940U43avw1sp+fND8j8YgLDepCvh0pVLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DFCch0w4rGJZcJjF6h20Az66B4D3cEx0lqQxDd8Jh1CcTg7TY8duhQyOjbyeMz63jMnuEZe91Z7MXGOGvBaClt+0AxC3wnXkF46SJcxeQpaHDrGuh8Vu5NaqL8d4VhDHnRgpCVN5sW5jBOjryN+UacnefNygxFC4WPVU5T03D1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tAtrefky; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N6wnYy42cso3CbdAli2PcEGTqMGs12RgALRCUqIzGOPAciV0WTUtAo8aj0doS7LWYXukOVakydIxil17faViDKbo2Bk4OzFxZws2+3CKj0Bkc6tf2sbgSSi0N/dkNGsmkhSzn/fJpXYjGyY6N5MOAetUPmbgPXLM6Mndobh6DyI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsilSX3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tAtrefky"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42082C4CEF7;
-	Thu, 12 Mar 2026 20:17:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsilSX3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A8AC4CEF7;
+	Thu, 12 Mar 2026 20:17:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346650;
-	bh=dZ2+J8K9+S1GoSswDVte8a4T4p0sH76CcBZWgvKv/B0=;
+	s=korg; t=1773346655;
+	bh=831aHmP6TQ940U43avw1sp+fND8j8YgLDepCvh0pVLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAtrefky7Y8Sg3vnwKeYOw1xR0QiHI+mEUmJT70/UJbr28D0DGDSpgUd8v/4PZs2p
-	 BJTHPTdKh9wpbdMKoNsMH7XrXi/IPj1QAnVCR5BfR/AlVooF0X7OEw2crK9gzEPE/P
-	 OTDYNHpYgp8Ctmc2/okVLDpLBBMIZje+Pz8+o9dQ=
+	b=GsilSX3wl9F7fVR1IdNUPwk6AsVekqfl4053CbZsf0VJ3MX/JcERI1fYwVp4VSH2P
+	 s1qNFR6AMtDSElDDpwQXDkvCQEe5CxN/QGb8HfX7I29kriySTs/9RiA0H3dAeQzIRi
+	 1EgoTnb5AlxMOBt3L7MNMfeG8JzNPaY+UNlKN3N4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minseong Kim <ii4gsp@gmail.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Tushar Sugandhi <tusharsu@linux.microsoft.com>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Baoquan He <bhe@redhat.com>,
+	Vivek Goyal <vgoyal@redhat.com>,
+	Dave Young <dyoung@redhat.com>,
+	Steven Chen <chenste@linux.microsoft.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 083/265] Input: synaptics_i2c - guard polling restart in resume
-Date: Thu, 12 Mar 2026 21:07:50 +0100
-Message-ID: <20260312201021.218257971@linuxfoundation.org>
+Subject: [PATCH 6.12 092/265] ima: kexec: define functions to copy IMA log at soft boot
+Date: Thu, 12 Mar 2026 21:07:59 +0100
+Message-ID: <20260312201021.549837900@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,48 +57,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Minseong Kim <ii4gsp@gmail.com>
+From: Steven Chen <chenste@linux.microsoft.com>
 
-[ Upstream commit 870c2e7cd881d7a10abb91f2b38135622d9f9f65 ]
+[ Upstream commit f18e502db673c75f762d47101dafcf58f30e2733 ]
 
-synaptics_i2c_resume() restarts delayed work unconditionally, even when
-the input device is not opened. Guard the polling restart by taking the
-input device mutex and checking input_device_enabled() before re-queuing
-the delayed work.
+The IMA log is currently copied to the new kernel during kexec 'load'
+using ima_dump_measurement_list(). However, the log copied at kexec
+'load' may result in loss of IMA measurements that only occurred after
+kexec "load'. Setup the needed infrastructure to move the IMA log copy
+from kexec 'load' to 'execute'.
 
-Fixes: eef3e4cab72ea ("Input: add driver for Synaptics I2C touchpad")
-Signed-off-by: Minseong Kim <ii4gsp@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260121063738.799967-1-ii4gsp@gmail.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Define a new IMA hook ima_update_kexec_buffer() as a stub function.
+It will be used to call ima_dump_measurement_list() during kexec 'execute'.
+
+Implement ima_kexec_post_load() function to be invoked after the new
+Kernel image has been loaded for kexec. ima_kexec_post_load() maps the
+IMA buffer to a segment in the newly loaded Kernel.  It also registers
+the reboot notifier_block to trigger ima_update_kexec_buffer() at
+kexec 'execute'.
+
+Set the priority of register_reboot_notifier to INT_MIN to ensure that the
+IMA log copy operation will happen at the end of the operation chain, so
+that all the IMA measurement records extended into the TPM are copied
+
+Co-developed-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
+Signed-off-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Vivek Goyal <vgoyal@redhat.com>
+Cc: Dave Young <dyoung@redhat.com>
+Signed-off-by: Steven Chen <chenste@linux.microsoft.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Acked-by: Baoquan He <bhe@redhat.com>
+Tested-by: Stefan Berger <stefanb@linux.ibm.com> # ppc64/kvm
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Stable-dep-of: 10d1c75ed438 ("ima: verify the previous kernel's IMA buffer lies in addressable RAM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics_i2c.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/linux/ima.h                |  3 ++
+ security/integrity/ima/ima_kexec.c | 47 ++++++++++++++++++++++++++++++
+ 2 files changed, 50 insertions(+)
 
-diff --git a/drivers/input/mouse/synaptics_i2c.c b/drivers/input/mouse/synaptics_i2c.c
-index c8ddfff2605ff..29da66af36d74 100644
---- a/drivers/input/mouse/synaptics_i2c.c
-+++ b/drivers/input/mouse/synaptics_i2c.c
-@@ -615,13 +615,16 @@ static int synaptics_i2c_resume(struct device *dev)
- 	int ret;
- 	struct i2c_client *client = to_i2c_client(dev);
- 	struct synaptics_i2c *touch = i2c_get_clientdata(client);
-+	struct input_dev *input = touch->input;
+diff --git a/include/linux/ima.h b/include/linux/ima.h
+index 0bae61a15b60b..8e29cb4e6a01d 100644
+--- a/include/linux/ima.h
++++ b/include/linux/ima.h
+@@ -32,6 +32,9 @@ static inline void ima_appraise_parse_cmdline(void) {}
  
- 	ret = synaptics_i2c_reset_config(client);
- 	if (ret)
- 		return ret;
+ #ifdef CONFIG_IMA_KEXEC
+ extern void ima_add_kexec_buffer(struct kimage *image);
++extern void ima_kexec_post_load(struct kimage *image);
++#else
++static inline void ima_kexec_post_load(struct kimage *image) {}
+ #endif
  
--	mod_delayed_work(system_dfl_wq, &touch->dwork,
--				msecs_to_jiffies(NO_DATA_SLEEP_MSECS));
-+	guard(mutex)(&input->mutex);
-+	if (input_device_enabled(input))
-+		mod_delayed_work(system_dfl_wq, &touch->dwork,
-+				 msecs_to_jiffies(NO_DATA_SLEEP_MSECS));
+ #else
+diff --git a/security/integrity/ima/ima_kexec.c b/security/integrity/ima/ima_kexec.c
+index b12ac3619b8fd..a22eeac9320aa 100644
+--- a/security/integrity/ima/ima_kexec.c
++++ b/security/integrity/ima/ima_kexec.c
+@@ -12,10 +12,14 @@
+ #include <linux/kexec.h>
+ #include <linux/of.h>
+ #include <linux/ima.h>
++#include <linux/reboot.h>
++#include <asm/page.h>
+ #include "ima.h"
  
- 	return 0;
+ #ifdef CONFIG_IMA_KEXEC
++static bool ima_kexec_update_registered;
+ static struct seq_file ima_kexec_file;
++static void *ima_kexec_buffer;
+ 
+ static void ima_free_kexec_file_buf(struct seq_file *sf)
+ {
+@@ -159,6 +163,49 @@ void ima_add_kexec_buffer(struct kimage *image)
+ 	kexec_dprintk("kexec measurement buffer for the loaded kernel at 0x%lx.\n",
+ 		      kbuf.mem);
  }
++
++/*
++ * Called during kexec execute so that IMA can update the measurement list.
++ */
++static int ima_update_kexec_buffer(struct notifier_block *self,
++				   unsigned long action, void *data)
++{
++	return NOTIFY_OK;
++}
++
++static struct notifier_block update_buffer_nb = {
++	.notifier_call = ima_update_kexec_buffer,
++	.priority = INT_MIN
++};
++
++/*
++ * Create a mapping for the source pages that contain the IMA buffer
++ * so we can update it later.
++ */
++void ima_kexec_post_load(struct kimage *image)
++{
++	if (ima_kexec_buffer) {
++		kimage_unmap_segment(ima_kexec_buffer);
++		ima_kexec_buffer = NULL;
++	}
++
++	if (!image->ima_buffer_addr)
++		return;
++
++	ima_kexec_buffer = kimage_map_segment(image,
++					      image->ima_buffer_addr,
++					      image->ima_buffer_size);
++	if (!ima_kexec_buffer) {
++		pr_err("Could not map measurements buffer.\n");
++		return;
++	}
++
++	if (!ima_kexec_update_registered) {
++		register_reboot_notifier(&update_buffer_nb);
++		ima_kexec_update_registered = true;
++	}
++}
++
+ #endif /* IMA_KEXEC */
+ 
+ /*
 -- 
 2.51.0
 
