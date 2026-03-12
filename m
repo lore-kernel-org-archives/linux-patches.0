@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BB1C396582;
-	Thu, 12 Mar 2026 20:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567A03FFAB5;
+	Thu, 12 Mar 2026 20:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346392; cv=none; b=R3mv+MiWtXejMBqpOB/2rGxoVAssXKT/lWtsxBJdL3AABWk6axuRkVKowgJIYWxKWn8QOymDf7iz0Ahy9thNdx3VCJLS4PVUGr4px7f1Z4VpOzirBQltgnrwAFbANXKCKFJ90+m7JzVs6PGiMkxwey9OR2UeVx7U4dNofEOnvc8=
+	t=1773346396; cv=none; b=K3Bqfihdl7gmgkonPzGsbJqAfPauwYPWqfD+ESsX8ZIkOoyE657SOqON2Gu3+e1QlmqRJl1NNkLnvWihyviuTZs90jWB1eG8V226bKNFO1bI+AmRsuMCl/1Dyay2rQ7SAsWqaUFICw6ejXgWRFA9hpbH/tDLfn6321fF+5JH1IM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346392; c=relaxed/simple;
-	bh=JfX5ViT/E0csCibTlVhk1xajQ8nq48c62sRc3Rw9vgM=;
+	s=arc-20240116; t=1773346396; c=relaxed/simple;
+	bh=92oQ9cLl8LvAhNbQ3AsiMKdtX0sC6xEHhh7JEqGEnKM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SNrOjbXBYhbEkvHHYuStR7C1xf8KwK6rG/iEf5GZp0n6pQK7Q+7q2wjsPZOceViPIIRbBckceZCH74hlO3bktC819CUv38zbpmu/MUdaaZOuvf2uXMZahY3eJic5RA0OVgkQtgS52gfxo8fyj3m0ZziGzHUxQfkXD4x6CK8d26I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wmd3oBwF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fd2Jw2rA0h8B2jRDTV2RgVHqvVxDq3cY213GVPpFFkt5HtTMThB9STX2TnNXwteKahKWc9DZRvou+NLC25R7EH2VAj4ZxCMheH5w1p9vSURqQW/u9pd/AyCNs54LMgZdXX3ldJgMKnq5b9RXFrd8Eiv95dJQR20R1p702xfZkaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dmWVHHiq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wmd3oBwF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A37BC4CEF7;
-	Thu, 12 Mar 2026 20:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dmWVHHiq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A37B8C4CEF7;
+	Thu, 12 Mar 2026 20:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346392;
-	bh=JfX5ViT/E0csCibTlVhk1xajQ8nq48c62sRc3Rw9vgM=;
+	s=korg; t=1773346396;
+	bh=92oQ9cLl8LvAhNbQ3AsiMKdtX0sC6xEHhh7JEqGEnKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmd3oBwFoHfkI6qEPrr9SWhPbDexE/FNSFoDQhQ+vqEQHZyL+93XjwwqmRJtbt/is
-	 q64+mwN4uVzgullxjjPyzZCOecZzajRU6ORmka4FYZQ3rtCR22THUJOroKOndRxYWu
-	 OHg2J+29wqJciT3jW07fS4KVwXU2OM0LAOCveBpo=
+	b=dmWVHHiqHDKPE1HqqrDHjHxpTiDoKnRckl3ZgwrEOIOUpUqPaxjl+6Oq6yGIQjCwV
+	 UCkA77f9gulDVcSkp/qiGDtcIkU2KbXjgH6Ba2iy9LRwFDz9RnfWunr5CxeA8LZkBU
+	 5AImez3xlnEP9XE766hReES+3dFV3mvlakREq8QM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	K Prateek Nayak <kprateek.nayak@amd.com>,
-	Shubhang Kaushik <shubhang@os.amperecomputing.com>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/265] sched/fair: Fix lag clamp
-Date: Thu, 12 Mar 2026 21:06:41 +0100
-Message-ID: <20260312201018.688522524@linuxfoundation.org>
+Subject: [PATCH 6.12 032/265] ALSA: hda: cs35l56: Fix signedness error in cs35l56_hda_posture_put()
+Date: Thu, 12 Mar 2026 21:06:59 +0100
+Message-ID: <20260312201019.349179619@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -53,133 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Richard Fitzgerald <rf@opensource.cirrus.com>
 
-[ Upstream commit 6e3c0a4e1ad1e0455b7880fad02b3ee179f56c09 ]
+[ Upstream commit 003ce8c9b2ca28fbb4860651e76fb1c9a91f2ea1 ]
 
-Vincent reported that he was seeing undue lag clamping in a mixed
-slice workload. Implement the max_slice tracking as per the todo
-comment.
+In cs35l56_hda_posture_put() assign ucontrol->value.integer.value[0] to
+a long instead of an unsigned long. ucontrol->value.integer.value[0] is
+a long.
 
-Fixes: 147f3efaa241 ("sched/fair: Implement an EEVDF-like scheduling policy")
-Reported-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Vincent Guittot <vincent.guittot@linaro.org>
-Tested-by: K Prateek Nayak <kprateek.nayak@amd.com>
-Tested-by: Shubhang Kaushik <shubhang@os.amperecomputing.com>
-Link: https://patch.msgid.link/20250422101628.GA33555@noisy.programming.kicks-ass.net
+This fixes the sparse warning:
+
+sound/hda/codecs/side-codecs/cs35l56_hda.c:256:20: warning: unsigned value
+that used to be signed checked against zero?
+sound/hda/codecs/side-codecs/cs35l56_hda.c:252:29: signed value source
+
+Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
+Fixes: 73cfbfa9caea8 ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
+Link: https://patch.msgid.link/20260226111728.1700431-1-rf@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sched.h |  1 +
- kernel/sched/fair.c   | 39 +++++++++++++++++++++++++++++++++++----
- 2 files changed, 36 insertions(+), 4 deletions(-)
+ sound/pci/hda/cs35l56_hda.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/sched.h b/include/linux/sched.h
-index af143d3af85fa..9b722cf6ceb45 100644
---- a/include/linux/sched.h
-+++ b/include/linux/sched.h
-@@ -545,6 +545,7 @@ struct sched_entity {
- 	u64				deadline;
- 	u64				min_vruntime;
- 	u64				min_slice;
-+	u64				max_slice;
- 
- 	struct list_head		group_node;
- 	unsigned char			on_rq;
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index bdb17a3b83f3d..4ffa0fdb61aa3 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -673,6 +673,8 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
- 	return cfs_rq->zero_vruntime + avg;
- }
- 
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq);
-+
- /*
-  * lag_i = S - s_i = w_i * (V - v_i)
-  *
-@@ -686,17 +688,16 @@ u64 avg_vruntime(struct cfs_rq *cfs_rq)
-  * EEVDF gives the following limit for a steady state system:
-  *
-  *   -r_max < lag < max(r_max, q)
-- *
-- * XXX could add max_slice to the augmented data to track this.
-  */
- static void update_entity_lag(struct cfs_rq *cfs_rq, struct sched_entity *se)
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index 52d2ddf248323..2a936f43fad2d 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -250,7 +250,7 @@ static int cs35l56_hda_posture_put(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
  {
-+	u64 max_slice = cfs_rq_max_slice(cfs_rq) + TICK_NSEC;
- 	s64 vlag, limit;
+ 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+-	unsigned long pos = ucontrol->value.integer.value[0];
++	long pos = ucontrol->value.integer.value[0];
+ 	bool changed;
+ 	int ret;
  
- 	SCHED_WARN_ON(!se->on_rq);
- 
- 	vlag = avg_vruntime(cfs_rq) - se->vruntime;
--	limit = calc_delta_fair(max_t(u64, 2*se->slice, TICK_NSEC), se);
-+	limit = calc_delta_fair(max_slice, se);
- 
- 	se->vlag = clamp(vlag, -limit, limit);
- }
-@@ -764,6 +765,21 @@ static inline u64 cfs_rq_min_slice(struct cfs_rq *cfs_rq)
- 	return min_slice;
- }
- 
-+static inline u64 cfs_rq_max_slice(struct cfs_rq *cfs_rq)
-+{
-+	struct sched_entity *root = __pick_root_entity(cfs_rq);
-+	struct sched_entity *curr = cfs_rq->curr;
-+	u64 max_slice = 0ULL;
-+
-+	if (curr && curr->on_rq)
-+		max_slice = curr->slice;
-+
-+	if (root)
-+		max_slice = max(max_slice, root->max_slice);
-+
-+	return max_slice;
-+}
-+
- static inline bool __entity_less(struct rb_node *a, const struct rb_node *b)
- {
- 	return entity_before(__node_2_se(a), __node_2_se(b));
-@@ -789,6 +805,15 @@ static inline void __min_slice_update(struct sched_entity *se, struct rb_node *n
- 	}
- }
- 
-+static inline void __max_slice_update(struct sched_entity *se, struct rb_node *node)
-+{
-+	if (node) {
-+		struct sched_entity *rse = __node_2_se(node);
-+		if (rse->max_slice > se->max_slice)
-+			se->max_slice = rse->max_slice;
-+	}
-+}
-+
- /*
-  * se->min_vruntime = min(se->vruntime, {left,right}->min_vruntime)
-  */
-@@ -796,6 +821,7 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- {
- 	u64 old_min_vruntime = se->min_vruntime;
- 	u64 old_min_slice = se->min_slice;
-+	u64 old_max_slice = se->max_slice;
- 	struct rb_node *node = &se->run_node;
- 
- 	se->min_vruntime = se->vruntime;
-@@ -806,8 +832,13 @@ static inline bool min_vruntime_update(struct sched_entity *se, bool exit)
- 	__min_slice_update(se, node->rb_right);
- 	__min_slice_update(se, node->rb_left);
- 
-+	se->max_slice = se->slice;
-+	__max_slice_update(se, node->rb_right);
-+	__max_slice_update(se, node->rb_left);
-+
- 	return se->min_vruntime == old_min_vruntime &&
--	       se->min_slice == old_min_slice;
-+	       se->min_slice == old_min_slice &&
-+	       se->max_slice == old_max_slice;
- }
- 
- RB_DECLARE_CALLBACKS(static, min_vruntime_cb, struct sched_entity,
 -- 
 2.51.0
 
