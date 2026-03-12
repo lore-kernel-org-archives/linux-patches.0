@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B7F2BCF7F;
-	Thu, 12 Mar 2026 20:18:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DC0A2C08D0;
+	Thu, 12 Mar 2026 20:18:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346683; cv=none; b=okeIykKddSwglTJjtCy75io8Uwu3KUpFA8tEZsvrf8WNGLcoi0OuvnhTTiTqL6qb03Fxl9GbCBxVO4O9L6Wa6UGCRGWy+oUeueS+aREcopMW2Nu/nIAZFrtve/8e+BkeGbeDoRRkniY7UcwfJNoL6za/yPwvC3AWdekDr52oC8k=
+	t=1773346687; cv=none; b=r7OVpiSVJOGODUpti54C5E6b9j2n4mHq5n0yfKPMd6JMHS0jwGINYP/8K/dRYRM6f37SxT/J4DUaLOy43UyKbiYCc8RG9zEVkhBGBXlCVKNhhER54yR898/TEMlBRTNGzK6bZ9qml4WCXQV6NySh08nXlW964ph4HTLOtd63Xbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346683; c=relaxed/simple;
-	bh=sm9uR1mFDZZM3zzm6TFJXzIKpi5XXwvjqsSBYwWdJxY=;
+	s=arc-20240116; t=1773346687; c=relaxed/simple;
+	bh=iDouvmFeBY5Y2VetQ7syTvB24OI2R6ljQjRNfIVm0+w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XmEMLJFRGg0cv/P3/72FCOlPUToeG11PJMVZhJ9Z5iSJmoTujkojwiwEOyfUYz3uSFp7FyBFF24eMrrd0hnKpvrYmC4zaXkpXFV72kJZ1AxhyxhFHybfnTFYSmPrdllaFkQQLKoSaCBedg4gRLOlg9L9PEkpcUZg8qQvxWD4pcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtyFrDXx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lU9yIuhUZD1MhQZ4TpAIp5H1NLqvhJyATzB4J+1M92uidMoQna1Osg0x8lHSKg9kfVcL0Br/qvoRniHI9ImSFbVKgk1Putylo24R/bKQI3aD2SqpKioHD7aTAez6i6ee1hwEAPjLasSFEsJc9MNH9LONQvnckDR0sYbzFk2xnyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YsofNMj7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtyFrDXx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CBEC2BC86;
-	Thu, 12 Mar 2026 20:18:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YsofNMj7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E80C4CEF7;
+	Thu, 12 Mar 2026 20:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346682;
-	bh=sm9uR1mFDZZM3zzm6TFJXzIKpi5XXwvjqsSBYwWdJxY=;
+	s=korg; t=1773346686;
+	bh=iDouvmFeBY5Y2VetQ7syTvB24OI2R6ljQjRNfIVm0+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtyFrDXxKSCNZnW2O1NrEV78qV/niGNWqfzuOI9/ZSMJrhYs7aWJUhVTv2aM0N6k9
-	 JXoT5VE/iP5ePfXRvraKv26FbDynJocIvfSpzXJCysIbv+2nU/zWkOu9BvhAtk+rhn
-	 +LF9FeradYhi7HsmoI7fUmVTA1d2h9mqLW+e6OUY=
+	b=YsofNMj7xe6exhZMPQ/n+Hy1bYWanrsanE1HTtmDl9iuXr8m3WPaxMTnkxKxG4ldV
+	 cWhBaqK+vMpgTDBQD/fybGnhG6HGhXgq8YnHU1GS+zdAzT61wVsATzLs7iD5TlYXHf
+	 /yUZJ3iDyN5m7El4BIDXEXyTVW307bTbGhvIrmAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Oleg Nesterov <oleg@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 099/265] uprobes: Fix incorrect lockdep condition in filter_chain()
-Date: Thu, 12 Mar 2026 21:08:06 +0100
-Message-ID: <20260312201021.806462935@linuxfoundation.org>
+Subject: [PATCH 6.12 100/265] btrfs: drop unused parameter fs_info from do_reclaim_sweep()
+Date: Thu, 12 Mar 2026 21:08:07 +0100
+Message-ID: <20260312201021.842041787@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,52 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit a56a38fd9196fc89401e498d70b7aa9c9679fa6e ]
+[ Upstream commit 343a63594bb6a49d094860705817aad6663b1f8f ]
 
-The list_for_each_entry_rcu() in filter_chain() uses
-rcu_read_lock_trace_held() as the lockdep condition, but the function
-holds consumer_rwsem, not the RCU trace lock.
+The parameter is unused and we can get it from space info if needed.
 
-This gives me the following output when running with some locking debug
-option enabled:
-
-  kernel/events/uprobes.c:1141 RCU-list traversed in non-reader section!!
-    filter_chain
-    register_for_each_vma
-    uprobe_unregister_nosync
-    __probe_event_disable
-
-Remove the incorrect lockdep condition since the rwsem provides
-sufficient protection for the list traversal.
-
-Fixes: cc01bd044e6a ("uprobes: travers uprobe's consumer list locklessly under SRCU protection")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Oleg Nesterov <oleg@redhat.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260128-uprobe_rcu-v2-1-994ea6d32730@debian.org
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 19eff93dc738 ("btrfs: fix periodic reclaim condition")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/uprobes.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/space-info.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index 0eb9befe49a3c..e3c8d9900ca7f 100644
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -949,7 +949,7 @@ static bool filter_chain(struct uprobe *uprobe, struct mm_struct *mm)
- 	bool ret = false;
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index cae4ec21bab47..0470e041aba16 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -2031,8 +2031,7 @@ static bool is_reclaim_urgent(struct btrfs_space_info *space_info)
+ 	return unalloc < data_chunk_size;
+ }
  
- 	down_read(&uprobe->consumer_rwsem);
--	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
-+	list_for_each_entry(uc, &uprobe->consumers, cons_node) {
- 		ret = consumer_filter(uc, mm);
- 		if (ret)
- 			break;
+-static void do_reclaim_sweep(const struct btrfs_fs_info *fs_info,
+-			     struct btrfs_space_info *space_info, int raid)
++static void do_reclaim_sweep(struct btrfs_space_info *space_info, int raid)
+ {
+ 	struct btrfs_block_group *bg;
+ 	int thresh_pct;
+@@ -2128,6 +2127,6 @@ void btrfs_reclaim_sweep(const struct btrfs_fs_info *fs_info)
+ 		if (!btrfs_should_periodic_reclaim(space_info))
+ 			continue;
+ 		for (raid = 0; raid < BTRFS_NR_RAID_TYPES; raid++)
+-			do_reclaim_sweep(fs_info, space_info, raid);
++			do_reclaim_sweep(space_info, raid);
+ 	}
+ }
 -- 
 2.51.0
 
