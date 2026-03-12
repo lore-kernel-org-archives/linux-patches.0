@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB17344DB5;
-	Thu, 12 Mar 2026 20:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBDD3491D6;
+	Thu, 12 Mar 2026 20:22:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346917; cv=none; b=heq8uyFDez7Icc/idUgYkkc40v9cSrV+QRtgeAsUa/lbXnF4G8fc+GX9wjrNlcfY0FJRCwQy8lFHWLvKypUlrDOFjD00S5Gm+LHAw9ppiP51QIOYJmSo7r1zvY8PDu53foIc6Vw9euH72SQ/eFpCBqeuvP2Qb4ZOSyMmQenROw0=
+	t=1773346922; cv=none; b=u+Bx+q5gaQ/oYDROO2nwq//zOJIN3X6+SjIvjzsPrpix7XhxNhl08Twf4rgoQlZrocOYBZzmuiOcxOpiI4Vk+02BS9af7IjXQXYBrDS3NeYxE6aGTAQdRmwBwS1lkdI/IoK5L4ydxTTuylDdnxSioc4hyAD/CRNWElVWSRLickM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346917; c=relaxed/simple;
-	bh=7SV4JSuu9jzNKi3Q8EyaknaOFPzGw5L1M1EzQPx4Hs0=;
+	s=arc-20240116; t=1773346922; c=relaxed/simple;
+	bh=u3IwKFE6qnIsRiCGu24gqvQKiqAz4iXpKrAc0YgEUdM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PSg/nDj6gVm3THvbH90KhwZUCyOCz1nC70wywipuwq6WaJCvjDXTmb+GPRTyBqY3pSuA9BBCX4THtzrWwt9/qZ6iriRp3ltXks9E3VpVKxT+aTSq4PSmOJXj3Y9c4gsFQbLZwZgkk1O1o/j6+1rqbYuB/xDpN3M7rvD0yalY8j0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uj12xiQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8y8IeCVkZr+CVs+2mn6SP0jcvxHWyyy1M1+QEMtdzZd42ULt7N0tigW2Yjb/dGA8CGXZeoQyuS9lQR23S1jGAIW7E27o+1RHHktZ+SJmDMoR2VooNeQX+0bIWW0nbn748yZbEOxYdegdfxwcdZyVgfb3SuVPkUEMGmuLf2dwRU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyZ7EXyL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uj12xiQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482F1C4CEF7;
-	Thu, 12 Mar 2026 20:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyZ7EXyL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E673C4CEF7;
+	Thu, 12 Mar 2026 20:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346917;
-	bh=7SV4JSuu9jzNKi3Q8EyaknaOFPzGw5L1M1EzQPx4Hs0=;
+	s=korg; t=1773346922;
+	bh=u3IwKFE6qnIsRiCGu24gqvQKiqAz4iXpKrAc0YgEUdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1uj12xiQ9Nlk8wQBzSQJH6OJIjwvGvnj5fLWyvxg+wbE8PEUC2cRYpVYzdKekf+R2
-	 V1s/f5lBLy5h98g04t/BMZV4UrQ1m9RoMMNU/FFBDDym7m2FkH1YnPMRO2ROPSKBIb
-	 RxCRfhh6xyN5ihDO3oiXzibve+AOuqW4dZTWxw7g=
+	b=qyZ7EXyLWOHeVXrmw6K0ghDBvu8Aem39GiV2FdxOlMLk9KKnWPPiRWv73xJO+8z60
+	 m9zPDjlW/GOr4tHFtDKpe8kLtZm3og5gs05Olyfpb3tyrB/TXy13zc35ApA1FccAiz
+	 D9FIZVYcaHCNON9XzjqVsEpoutCX4RpKVM0DdJCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Igor Stepansky <igor.stepansky@orca.security>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 117/265] ksmbd: add chann_lock to protect ksmbd_chann_list xarray
-Date: Thu, 12 Mar 2026 21:08:24 +0100
-Message-ID: <20260312201022.466770875@linuxfoundation.org>
+	syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com,
+	Prithvi Tambewagh <activprithvi@gmail.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 153/265] scsi: target: Fix recursive locking in __configfs_open_file()
+Date: Thu, 12 Mar 2026 21:09:00 +0100
+Message-ID: <20260312201023.790745504@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,119 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Prithvi Tambewagh <activprithvi@gmail.com>
 
-[ Upstream commit 4f3a06cc57976cafa8c6f716646be6c79a99e485 ]
+commit 14d4ac19d1895397532eec407433c5d74d9da53b upstream.
 
-ksmbd_chann_list xarray lacks synchronization, allowing use-after-free in
-multi-channel sessions (between lookup_chann_list() and ksmbd_chann_del).
+In flush_write_buffer, &p->frag_sem is acquired and then the loaded store
+function is called, which, here, is target_core_item_dbroot_store().  This
+function called filp_open(), following which these functions were called
+(in reverse order), according to the call trace:
 
-Adds rw_semaphore chann_lock to struct ksmbd_session and protects
-all xa_load/xa_store/xa_erase accesses.
+  down_read
+  __configfs_open_file
+  do_dentry_open
+  vfs_open
+  do_open
+  path_openat
+  do_filp_open
+  file_open_name
+  filp_open
+  target_core_item_dbroot_store
+  flush_write_buffer
+  configfs_write_iter
 
+target_core_item_dbroot_store() tries to validate the new file path by
+trying to open the file path provided to it; however, in this case, the bug
+report shows:
+
+db_root: not a directory: /sys/kernel/config/target/dbroot
+
+indicating that the same configfs file was tried to be opened, on which it
+is currently working on. Thus, it is trying to acquire frag_sem semaphore
+of the same file of which it already holds the semaphore obtained in
+flush_write_buffer(), leading to acquiring the semaphore in a nested manner
+and a possibility of recursive locking.
+
+Fix this by modifying target_core_item_dbroot_store() to use kern_path()
+instead of filp_open() to avoid opening the file using filesystem-specific
+function __configfs_open_file(), and further modifying it to make this fix
+compatible.
+
+Reported-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f6e8174215573a84b797
+Tested-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Reported-by: Igor Stepansky <igor.stepansky@orca.security>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://patch.msgid.link/20260216062002.61937-1-activprithvi@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/mgmt/user_session.c |  5 +++++
- fs/smb/server/mgmt/user_session.h |  1 +
- fs/smb/server/smb2pdu.c           | 12 +++++++++++-
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ drivers/target/target_core_configfs.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
-diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
-index 66198ed26aeca..352cf9e47ebeb 100644
---- a/fs/smb/server/mgmt/user_session.c
-+++ b/fs/smb/server/mgmt/user_session.c
-@@ -32,12 +32,14 @@ static void free_channel_list(struct ksmbd_session *sess)
- 	struct channel *chann;
- 	unsigned long index;
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -108,8 +108,8 @@ static ssize_t target_core_item_dbroot_s
+ 					const char *page, size_t count)
+ {
+ 	ssize_t read_bytes;
+-	struct file *fp;
+ 	ssize_t r = -EINVAL;
++	struct path path = {};
  
-+	down_write(&sess->chann_lock);
- 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
- 		xa_erase(&sess->ksmbd_chann_list, index);
- 		kfree(chann);
+ 	mutex_lock(&target_devices_lock);
+ 	if (target_devices) {
+@@ -131,17 +131,14 @@ static ssize_t target_core_item_dbroot_s
+ 		db_root_stage[read_bytes - 1] = '\0';
+ 
+ 	/* validate new db root before accepting it */
+-	fp = filp_open(db_root_stage, O_RDONLY, 0);
+-	if (IS_ERR(fp)) {
++	r = kern_path(db_root_stage, LOOKUP_FOLLOW | LOOKUP_DIRECTORY, &path);
++	if (r) {
+ 		pr_err("db_root: cannot open: %s\n", db_root_stage);
++		if (r == -ENOTDIR)
++			pr_err("db_root: not a directory: %s\n", db_root_stage);
+ 		goto unlock;
  	}
+-	if (!S_ISDIR(file_inode(fp)->i_mode)) {
+-		filp_close(fp, NULL);
+-		pr_err("db_root: not a directory: %s\n", db_root_stage);
+-		goto unlock;
+-	}
+-	filp_close(fp, NULL);
++	path_put(&path);
  
- 	xa_destroy(&sess->ksmbd_chann_list);
-+	up_write(&sess->chann_lock);
- }
- 
- static void __session_rpc_close(struct ksmbd_session *sess,
-@@ -220,7 +222,9 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
- {
- 	struct channel *chann;
- 
-+	down_write(&sess->chann_lock);
- 	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
-+	up_write(&sess->chann_lock);
- 	if (!chann)
- 		return -ENOENT;
- 
-@@ -454,6 +458,7 @@ static struct ksmbd_session *__session_create(int protocol)
- 	rwlock_init(&sess->tree_conns_lock);
- 	atomic_set(&sess->refcnt, 2);
- 	init_rwsem(&sess->rpc_lock);
-+	init_rwsem(&sess->chann_lock);
- 
- 	ret = __init_smb2_session(sess);
- 	if (ret)
-diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
-index c5749d6ec7151..cba7f688f6b57 100644
---- a/fs/smb/server/mgmt/user_session.h
-+++ b/fs/smb/server/mgmt/user_session.h
-@@ -49,6 +49,7 @@ struct ksmbd_session {
- 	char				sess_key[CIFS_KEY_SIZE];
- 
- 	struct hlist_node		hlist;
-+	struct rw_semaphore		chann_lock;
- 	struct xarray			ksmbd_chann_list;
- 	struct xarray			tree_conns;
- 	struct ida			tree_conn_ida;
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 8fa6ab9dfd077..0d7ba57c1ca64 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -78,7 +78,13 @@ static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
- 
- struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
- {
--	return xa_load(&sess->ksmbd_chann_list, (long)conn);
-+	struct channel *chann;
-+
-+	down_read(&sess->chann_lock);
-+	chann = xa_load(&sess->ksmbd_chann_list, (long)conn);
-+	up_read(&sess->chann_lock);
-+
-+	return chann;
- }
- 
- /**
-@@ -1560,8 +1566,10 @@ static int ntlm_authenticate(struct ksmbd_work *work,
- 				return -ENOMEM;
- 
- 			chann->conn = conn;
-+			down_write(&sess->chann_lock);
- 			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
- 					KSMBD_DEFAULT_GFP);
-+			up_write(&sess->chann_lock);
- 			if (xa_is_err(old)) {
- 				kfree(chann);
- 				return xa_err(old);
-@@ -1658,8 +1666,10 @@ static int krb5_authenticate(struct ksmbd_work *work,
- 				return -ENOMEM;
- 
- 			chann->conn = conn;
-+			down_write(&sess->chann_lock);
- 			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
- 					chann, KSMBD_DEFAULT_GFP);
-+			up_write(&sess->chann_lock);
- 			if (xa_is_err(old)) {
- 				kfree(chann);
- 				return xa_err(old);
--- 
-2.51.0
-
+ 	strncpy(db_root, db_root_stage, read_bytes);
+ 	pr_debug("Target_Core_ConfigFS: db_root set to %s\n", db_root);
 
 
