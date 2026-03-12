@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E522B26F288;
-	Thu, 12 Mar 2026 20:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23A41F9F70;
+	Thu, 12 Mar 2026 20:17:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346643; cv=none; b=MyrwLq408Ch9Qt5AuI0EXYVbvPDLE//UzOGb0mCRIci3r8x9+Z58YTkFMsbJL1p2ArvhgtbUGD+jv7IwUkjBIzS4DJaoUh19w2SuDh1FbswF7XcubjrAbde4TQlPoVXfanwcJfA+7hM/FxPj/DjaPiCMP8zu9mh01y0ccv9ehqQ=
+	t=1773346647; cv=none; b=G+CnyQFuvobkIx1NTU2O1ZDFcatMWT0dJsnTITYInMcr0cSKWQChVw8k81kp03MIL5cCWs+mE1aVUdCjeIVCeHODP73UJsxN/8pu6MOwkWnMWKTJgAMoS0baLir6L+nuOETYhnjiFbXPKDaDLSnI40tbM3hvBzONKEzzG2aDE+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346643; c=relaxed/simple;
-	bh=pQUHExJIZc4MbFkPMZLVCg4p/wUGdBelrzlJwOLO0EY=;
+	s=arc-20240116; t=1773346647; c=relaxed/simple;
+	bh=FPsntWZEgwpNU8YTZYqUFROCJxHOhp+Kx9zB2MxTYEw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/LyVzjZS3mpMOdaCgCoVg0uQoKD1ArMOR946yH6NGfucWz2F4/QXw2/S0pbREZT1BxYEgx89AUeba2NASrufE4BoIIktL9IzKsRc5FZA4FbfbcxPcR9eYkHl4DCVBQj3NIWDQrxepTMyYZlyMpBJ3HcoQzCzsh/aKmqc2UJ9RQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=okR3TwoZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=avSg7aJ2vzanuELBInDK4fhl/nCvYyYbF4UtyRodFoV482hGOz9+36rwZ/bnCciva2kYSTUbpJbRivB1GSHVszg5bqjOjOGFpZarw436CqyKHWBWmu7UKu677qVgtf/Cj5U75XK17qtinyJHSpAw5d5FBXxfmbR0POaiMNdygYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xR3pdLU0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="okR3TwoZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F5B8C4CEF7;
-	Thu, 12 Mar 2026 20:17:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xR3pdLU0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 641A5C4CEF7;
+	Thu, 12 Mar 2026 20:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346642;
-	bh=pQUHExJIZc4MbFkPMZLVCg4p/wUGdBelrzlJwOLO0EY=;
+	s=korg; t=1773346646;
+	bh=FPsntWZEgwpNU8YTZYqUFROCJxHOhp+Kx9zB2MxTYEw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okR3TwoZ4HyzFqxPlUERGe0WG6fjrwcJT/XIIt7dvviucyU3z0fifwoOQq3mfP0p1
-	 xpEiP89js+xX5yk4UpkTEBld8yom/HPQ5BgX8Nw2gkEBfL3EU0LYoUIbdGuL1aBvSm
-	 m4rel9uDHnID26a4FhURzkspIhZ53xSDfLJwYygQ=
+	b=xR3pdLU0k16UphEUSqxFMYX3fXUevlXw5Yz4q0MvsyOsUjAKZgFovGI4bktm3vbDV
+	 Qm3ZmNMTXshdGp5Sw9a47WVXLf3r/DlT0Z5JR2AWbrWw2RVe4yv0agUfCnLK3rtQaY
+	 LWF0bRE+sMeKE9vCImFYnsmHLfg7rTMs+2LgHNl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <dlemoal@kernel.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
 	Niklas Cassel <cassel@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 056/265] ata: libata-scsi: Refactor ata_scsiop_read_cap()
-Date: Thu, 12 Mar 2026 21:07:23 +0100
-Message-ID: <20260312201020.235071663@linuxfoundation.org>
+Subject: [PATCH 6.12 047/265] Revert "PCI: qcom: Dont wait for link if we can detect Link Up"
+Date: Thu, 12 Mar 2026 21:07:14 +0100
+Message-ID: <20260312201019.902601808@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,147 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Niklas Cassel <cassel@kernel.org>
 
-[ Upstream commit 44bdde151a6f5b34993c570a8f6508e2e00b56e1 ]
+[ Upstream commit e9ce5b3804436301ab343bc14203a4c14b336d1b ]
 
-Move the check for the scsi command service action being
-SAI_READ_CAPACITY_16 from ata_scsi_simulate() into ata_scsiop_read_cap()
-to simplify ata_scsi_simulate() for processing capacity reading commands
-(READ_CAPACITY and SERVICE_ACTION_IN_16).
+This reverts commit 36971d6c5a9a134c15760ae9fd13c6d5f9a36abb.
 
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://lore.kernel.org/r/20241022024537.251905-3-dlemoal@kernel.org
+While this fake hotplugging was a nice idea, it has shown that this feature
+does not handle PCIe switches correctly:
+pci_bus 0004:43: busn_res: can not insert [bus 43-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:43: busn_res: [bus 43-41] end is updated to 43
+pci_bus 0004:43: busn_res: can not insert [bus 43] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:00.0: devices behind bridge are unusable because [bus 43] cannot be assigned for them
+pci_bus 0004:44: busn_res: can not insert [bus 44-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:44: busn_res: [bus 44-41] end is updated to 44
+pci_bus 0004:44: busn_res: can not insert [bus 44] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:02.0: devices behind bridge are unusable because [bus 44] cannot be assigned for them
+pci_bus 0004:45: busn_res: can not insert [bus 45-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:45: busn_res: [bus 45-41] end is updated to 45
+pci_bus 0004:45: busn_res: can not insert [bus 45] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:06.0: devices behind bridge are unusable because [bus 45] cannot be assigned for them
+pci_bus 0004:46: busn_res: can not insert [bus 46-41] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci_bus 0004:46: busn_res: [bus 46-41] end is updated to 46
+pci_bus 0004:46: busn_res: can not insert [bus 46] under [bus 42-41] (conflicts with (null) [bus 42-41])
+pci 0004:42:0e.0: devices behind bridge are unusable because [bus 46] cannot be assigned for them
+pci_bus 0004:42: busn_res: [bus 42-41] end is updated to 46
+pci_bus 0004:42: busn_res: can not insert [bus 42-46] under [bus 41] (conflicts with (null) [bus 41])
+pci 0004:41:00.0: devices behind bridge are unusable because [bus 42-46] cannot be assigned for them
+pcieport 0004:40:00.0: bridge has subordinate 41 but max busn 46
+
+During the initial scan, PCI core doesn't see the switch and since the Root
+Port is not hot plug capable, the secondary bus number gets assigned as the
+subordinate bus number. This means, the PCI core assumes that only one bus
+will appear behind the Root Port since the Root Port is not hot plug
+capable.
+
+This works perfectly fine for PCIe endpoints connected to the Root Port,
+since they don't extend the bus. However, if a PCIe switch is connected,
+then there is a problem when the downstream busses starts showing up and
+the PCI core doesn't extend the subordinate bus number and bridge resources
+after initial scan during boot.
+
+The long term plan is to migrate this driver to the upcoming pwrctrl APIs
+that are supposed to handle this problem elegantly.
+
+Suggested-by: Manivannan Sadhasivam <mani@kernel.org>
 Signed-off-by: Niklas Cassel <cassel@kernel.org>
-Stable-dep-of: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
+Signed-off-by: Manivannan Sadhasivam <mani@kernel.org>
+Tested-by: Shawn Lin <shawn.lin@rock-chips.com>
+Acked-by: Shawn Lin <shawn.lin@rock-chips.com>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20251222064207.3246632-11-cassel@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-scsi.c | 87 +++++++++++++++++++++------------------
- 1 file changed, 46 insertions(+), 41 deletions(-)
+ drivers/pci/controller/dwc/pcie-qcom.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
-index 17fb055e48748..e5857229f0b7a 100644
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -2613,6 +2613,7 @@ static unsigned int ata_scsiop_mode_sense(struct ata_scsi_args *args, u8 *rbuf)
- static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
- {
- 	struct ata_device *dev = args->dev;
-+	u8 *scsicmd = args->cmd->cmnd;
- 	u64 last_lba = dev->n_sectors - 1; /* LBA of the last block */
- 	u32 sector_size; /* physical sector size in bytes */
- 	u8 log2_per_phys;
-@@ -2622,7 +2623,7 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
- 	log2_per_phys = ata_id_log2_per_physical_sector(dev->id);
- 	lowest_aligned = ata_id_logical_sector_offset(dev->id, log2_per_phys);
+diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+index 0205c18d95a01..5d27cd149f512 100644
+--- a/drivers/pci/controller/dwc/pcie-qcom.c
++++ b/drivers/pci/controller/dwc/pcie-qcom.c
+@@ -1696,10 +1696,6 @@ static int qcom_pcie_probe(struct platform_device *pdev)
  
--	if (args->cmd->cmnd[0] == READ_CAPACITY) {
-+	if (scsicmd[0] == READ_CAPACITY) {
- 		if (last_lba >= 0xffffffffULL)
- 			last_lba = 0xffffffff;
+ 	platform_set_drvdata(pdev, pcie);
  
-@@ -2637,42 +2638,52 @@ static unsigned int ata_scsiop_read_cap(struct ata_scsi_args *args, u8 *rbuf)
- 		rbuf[5] = sector_size >> (8 * 2);
- 		rbuf[6] = sector_size >> (8 * 1);
- 		rbuf[7] = sector_size;
--	} else {
--		/* sector count, 64-bit */
--		rbuf[0] = last_lba >> (8 * 7);
--		rbuf[1] = last_lba >> (8 * 6);
--		rbuf[2] = last_lba >> (8 * 5);
--		rbuf[3] = last_lba >> (8 * 4);
--		rbuf[4] = last_lba >> (8 * 3);
--		rbuf[5] = last_lba >> (8 * 2);
--		rbuf[6] = last_lba >> (8 * 1);
--		rbuf[7] = last_lba;
- 
--		/* sector size */
--		rbuf[ 8] = sector_size >> (8 * 3);
--		rbuf[ 9] = sector_size >> (8 * 2);
--		rbuf[10] = sector_size >> (8 * 1);
--		rbuf[11] = sector_size;
+-	irq = platform_get_irq_byname_optional(pdev, "global");
+-	if (irq > 0)
+-		pp->use_linkup_irq = true;
 -
--		rbuf[12] = 0;
--		rbuf[13] = log2_per_phys;
--		rbuf[14] = (lowest_aligned >> 8) & 0x3f;
--		rbuf[15] = lowest_aligned;
--
--		if (ata_id_has_trim(args->id) &&
--		    !(dev->quirks & ATA_QUIRK_NOTRIM)) {
--			rbuf[14] |= 0x80; /* LBPME */
--
--			if (ata_id_has_zero_after_trim(args->id) &&
--			    dev->quirks & ATA_QUIRK_ZERO_AFTER_TRIM) {
--				ata_dev_info(dev, "Enabling discard_zeroes_data\n");
--				rbuf[14] |= 0x40; /* LBPRZ */
--			}
-+		return 0;
-+	}
-+
-+	/*
-+	 * READ CAPACITY 16 command is defined as a service action
-+	 * (SERVICE_ACTION_IN_16 command).
-+	 */
-+	if (scsicmd[0] != SERVICE_ACTION_IN_16 ||
-+	    (scsicmd[1] & 0x1f) != SAI_READ_CAPACITY_16) {
-+		ata_scsi_set_invalid_field(dev, args->cmd, 1, 0xff);
-+		return 1;
-+	}
-+
-+	/* sector count, 64-bit */
-+	rbuf[0] = last_lba >> (8 * 7);
-+	rbuf[1] = last_lba >> (8 * 6);
-+	rbuf[2] = last_lba >> (8 * 5);
-+	rbuf[3] = last_lba >> (8 * 4);
-+	rbuf[4] = last_lba >> (8 * 3);
-+	rbuf[5] = last_lba >> (8 * 2);
-+	rbuf[6] = last_lba >> (8 * 1);
-+	rbuf[7] = last_lba;
-+
-+	/* sector size */
-+	rbuf[ 8] = sector_size >> (8 * 3);
-+	rbuf[ 9] = sector_size >> (8 * 2);
-+	rbuf[10] = sector_size >> (8 * 1);
-+	rbuf[11] = sector_size;
-+
-+	if (ata_id_zoned_cap(args->id) || args->dev->class == ATA_DEV_ZAC)
-+		rbuf[12] = (1 << 4); /* RC_BASIS */
-+	rbuf[13] = log2_per_phys;
-+	rbuf[14] = (lowest_aligned >> 8) & 0x3f;
-+	rbuf[15] = lowest_aligned;
-+
-+	if (ata_id_has_trim(args->id) && !(dev->quirks & ATA_QUIRK_NOTRIM)) {
-+		rbuf[14] |= 0x80; /* LBPME */
-+
-+		if (ata_id_has_zero_after_trim(args->id) &&
-+		    dev->quirks & ATA_QUIRK_ZERO_AFTER_TRIM) {
-+			ata_dev_info(dev, "Enabling discard_zeroes_data\n");
-+			rbuf[14] |= 0x40; /* LBPRZ */
- 		}
--		if (ata_id_zoned_cap(args->id) ||
--		    args->dev->class == ATA_DEV_ZAC)
--			rbuf[12] = (1 << 4); /* RC_BASIS */
+ 	ret = dw_pcie_host_init(pp);
+ 	if (ret) {
+ 		dev_err(dev, "cannot initialize host\n");
+@@ -1713,6 +1709,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+ 		goto err_host_deinit;
  	}
-+
- 	return 0;
- }
  
-@@ -4374,14 +4385,8 @@ void ata_scsi_simulate(struct ata_device *dev, struct scsi_cmnd *cmd)
- 		break;
- 
- 	case READ_CAPACITY:
--		ata_scsi_rbuf_fill(&args, ata_scsiop_read_cap);
--		break;
--
- 	case SERVICE_ACTION_IN_16:
--		if ((scsicmd[1] & 0x1f) == SAI_READ_CAPACITY_16)
--			ata_scsi_rbuf_fill(&args, ata_scsiop_read_cap);
--		else
--			ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
-+		ata_scsi_rbuf_fill(&args, ata_scsiop_read_cap);
- 		break;
- 
- 	case REPORT_LUNS:
++	irq = platform_get_irq_byname_optional(pdev, "global");
+ 	if (irq > 0) {
+ 		ret = devm_request_threaded_irq(&pdev->dev, irq, NULL,
+ 						qcom_pcie_global_irq_thread,
 -- 
 2.51.0
 
