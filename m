@@ -1,155 +1,112 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1CAF401A1D;
-	Thu, 12 Mar 2026 20:05:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FDB3AEF29;
+	Thu, 12 Mar 2026 20:11:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773345949; cv=none; b=E29cEvpOWuAjrsqN92FjgG+p/WUwyXFOHgsSwdkWZMOZVcxrpoTSXEjBpmDmInhNBY7dsMTCGnZZA5fVJgdUnlgSRgK5c4nXuR2r2YQaD05yvvHkK6MRUxsNWvBfpZb9bPGXpJS/Pkvsu9fcYCowon13OrVVsILM4g4Z+sZ4ODg=
+	t=1773346296; cv=none; b=IAERgGvPaoUdEhbZ+SLDfEo7ygHrjXclAP63Nq1XNkAhysGmwUHnjsY7Q8ZnaHl6RcrwQZ2ytMHGCEJydiLgwcnqpGIi3Ftyz6CvJyzw84pdmwF3mCVB2emvWTeb3w0Rb9e9I5N44/o2uSxBDGYLnmYuGhnFObSG9RTl71FvbSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773345949; c=relaxed/simple;
-	bh=X22XtbVUDKREpta8NUzRFFFOyqKchc2KDiOczoBIWTY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=auJzNlMrbzuuXk+5y3dzmxNIrfoIAPR1YX8ej7YDGhlv/gDoDXlaIQNWkzKsKWnBJy6EJeEodm8BVgFohHvYW97lhseqCGwOSt9+FZdY5pU5HlRP7vzVv1aqIgPwDMhmGbufDbK8joiNF9bnKTXniKSLRbydDKPemlgfd6YWUwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvH+OY2a; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773346296; c=relaxed/simple;
+	bh=g/E4AxlAIFmCbDHDPr0asc74yXi3BaUFmRjiNPlfcQM=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=s1s6e4xXW2PrYP2txQKwZQ4spdfH7cAfnC2PNpZPXZFp1OWNlvSpXdrZMCfugUEFgFi8o/8pha5cV/a6aPXkfZykg1CpPb6UwZ/5ruU+gyOZCUlFtgoCJ+L6BeSATkT4JorNOObZAZduUmVw3WX7EylxKfrGlv54Zeb9i0XOPmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NHX/CCx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvH+OY2a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5A2C4CEF7;
-	Thu, 12 Mar 2026 20:05:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NHX/CCx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE22C4CEF7;
+	Thu, 12 Mar 2026 20:11:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773345949;
-	bh=X22XtbVUDKREpta8NUzRFFFOyqKchc2KDiOczoBIWTY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=zvH+OY2a1HUbDxDvZMhhE/NoL1M3vnIXi/PpKUg0gVlxX0SeYF1kxAWrW5OJ4U/zv
-	 /mJyXexfbjQ5J4eFWfJapCYIxS9Xsm3SXHJhMuMRSP0Hdf1d2R5uQDgD0kCVl20i0n
-	 Cz2Ri/acq529WNZg6MW3wyPcJ/b40XSH66AZ2QGE=
+	s=korg; t=1773346295;
+	bh=g/E4AxlAIFmCbDHDPr0asc74yXi3BaUFmRjiNPlfcQM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=0NHX/CCxBO0L4RdK1pH5UHF2n4/O3GH5Gfo2zu8gKn51OEbFhkIDm0M50syK95zCQ
+	 87ep/VbXdl6HinAFfgopcUW+1BN7b6kod8Ma54lFd2IcxZxJN+CQYCtzxwU0ostaPk
+	 5MQW5rxJlUap42IXfORUKH655G6d/4MiW59+NxrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@nabladev.com,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	rwarsow@gmx.de,
-	conor@kernel.org,
-	hargar@microsoft.com,
-	broonie@kernel.org,
-	achill@achill.org,
-	sr@sladewatkins.com
-Subject: [PATCH 6.18 00/13] 6.18.18-rc1 review
-Date: Thu, 12 Mar 2026 21:03:41 +0100
-Message-ID: <20260312200326.246396673@linuxfoundation.org>
+	Brad Spengler <brad.spengler@opensrcsec.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 001/265] drm/vmwgfx: Fix invalid kref_put callback in vmw_bo_dirty_release
+Date: Thu, 12 Mar 2026 21:06:28 +0100
+Message-ID: <20260312201018.188395027@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
+References: <20260312201018.128816016@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.18-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.18.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.18.18-rc1
-X-KernelTest-Deadline: 2026-03-14T20:03+00:00
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.18.18 release.
-There are 13 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+6.12-stable review patch.  If anyone has any objections, please let me know.
 
-Responses should be made by Fri, 13 Mar 2026 20:03:15 +0000.
-Anything received after that time might be too late.
+------------------
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.18.18-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.18.y
-and the diffstat can be found below.
+From: Brad Spengler <brad.spengler@opensrcsec.com>
 
-thanks,
+[ Upstream commit 211ecfaaef186ee5230a77d054cdec7fbfc6724a ]
 
-greg k-h
+The kref_put() call uses (void *)kvfree as the release callback, which
+is incorrect. kref_put() expects a function with signature
+void (*release)(struct kref *), but kvfree has signature
+void (*)(const void *). Calling through an incompatible function pointer
+is undefined behavior.
 
--------------
-Pseudo-Shortlog of commits:
+The code only worked by accident because ref_count is the first member
+of vmw_bo_dirty, making the kref pointer equal to the struct pointer.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.18.18-rc1
+Fix this by adding a proper release callback that uses container_of()
+to retrieve the containing structure before freeing.
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix race between freeing data and fs accessing it
+Fixes: c1962742ffff ("drm/vmwgfx: Use kref in vmw_bo_dirty")
+Signed-off-by: Brad Spengler <brad.spengler@opensrcsec.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Cc: Ian Forbes <ian.forbes@broadcom.com>
+Link: https://patch.msgid.link/20260107171236.3573118-1-zack.rusin@broadcom.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix race on rawdata dereference
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
+index de2498749e276..5bb710824d72f 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
+@@ -274,6 +274,13 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
+ 	return ret;
+ }
+ 
++static void vmw_bo_dirty_free(struct kref *kref)
++{
++	struct vmw_bo_dirty *dirty = container_of(kref, struct vmw_bo_dirty, ref_count);
++
++	kvfree(dirty);
++}
++
+ /**
+  * vmw_bo_dirty_release - Release a dirty-tracking user from a buffer object
+  * @vbo: The buffer object
+@@ -288,7 +295,7 @@ void vmw_bo_dirty_release(struct vmw_bo *vbo)
+ {
+ 	struct vmw_bo_dirty *dirty = vbo->dirty;
+ 
+-	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
++	if (dirty && kref_put(&dirty->ref_count, vmw_bo_dirty_free))
+ 		vbo->dirty = NULL;
+ }
+ 
+-- 
+2.51.0
 
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix differential encoding verification
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix unprivileged local user can do privileged policy management
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: Fix double free of ns_name in aa_replace_profiles()
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix side-effect bug in match_char() macro usage
-
-John Johansen <john.johansen@canonical.com>
-    apparmor: fix: limit the number of levels of policy namespaces
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: replace recursive profile removal with iterative approach
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: fix memory leak in verify_header
-
-Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-    apparmor: validate DFA start states are in bounds in unpack_pdb
-
-Victor Nogueira <victor@mojatatu.com>
-    net/sched: Only allow act_ct to bind to clsact/ingress qdiscs and shared blocks
-
-Paul Moses <p@1g4.org>
-    net/sched: act_gate: snapshot parameters with RCU on replace
-
-
--------------
-
-Diffstat:
-
- Makefile                                  |   4 +-
- include/net/act_api.h                     |   1 +
- include/net/tc_act/tc_gate.h              |  33 +++-
- net/sched/act_ct.c                        |   6 +
- net/sched/act_gate.c                      | 267 +++++++++++++++++++++---------
- net/sched/cls_api.c                       |   7 +
- security/apparmor/apparmorfs.c            | 225 +++++++++++++++----------
- security/apparmor/include/label.h         |  16 +-
- security/apparmor/include/lib.h           |  12 ++
- security/apparmor/include/match.h         |   1 +
- security/apparmor/include/policy.h        |  10 +-
- security/apparmor/include/policy_ns.h     |   2 +
- security/apparmor/include/policy_unpack.h |  83 ++++++----
- security/apparmor/label.c                 |  12 +-
- security/apparmor/match.c                 |  58 +++++--
- security/apparmor/policy.c                |  77 +++++++--
- security/apparmor/policy_ns.c             |   2 +
- security/apparmor/policy_unpack.c         |  65 +++++---
- 18 files changed, 604 insertions(+), 277 deletions(-)
 
 
