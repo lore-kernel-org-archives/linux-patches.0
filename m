@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98D2B145FE0;
-	Thu, 12 Mar 2026 20:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEA98145FE0;
+	Thu, 12 Mar 2026 20:15:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346538; cv=none; b=plCq+VxPNWdhH2kldgobY+jvcRgirs6fbHGc3Nf/ljm/U4WhxNQSAGE77zE1jdGmUQKSM8iWBxcnrHwazbF3azgeyWC+enWETt0rZ679ZiDolXbgNMsO3q/s/SVb5tnw9qs94LIjsHi2qfjUPfExcHFKNAnKu0O8EzYnRUxoVgw=
+	t=1773346542; cv=none; b=HS8GiVAe2LyRIiq7tDskR8WtjbWv5Y8IaXXH1OmVzNTiNq8eupCgYvDcAd60l/+KeVS3qts9S58YfpkhfzCaLz5tmrWpANuhko5bh8XFFoENNannzOO1fKwiuSp+n1DY9/EKwsD1lnfA/ysZCsA0CftoGf6re+CmoeKWvL89cs8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346538; c=relaxed/simple;
-	bh=uluP+eu1t80c4kCHSEEqO2KKYD2OYkpczCGY/oQp3+4=;
+	s=arc-20240116; t=1773346542; c=relaxed/simple;
+	bh=8o2IhA60ftNazpNV+sIXdDCXFntXrITHl0oYMkfzx0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MHRrII11raKNadQijxx7pNneG7m+ahn1a8M+KICw3JNXKlPBCyj1owoJf6ukwuUw7dE/NaIcXQNNTYdq+MCzDDxrOr2MqOvVaYKbvHyYRT314HncGfhK6wwx9OEagh1KU8QXW1g5YkpcOjak0SybfHs/75zIcOZvykDvENvS5VM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xbldtW5H; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t5FzNN1jWdorPPuBMwdYM5CtplpFEeQ/uivOqZPcjGIAvt/OPsSmKXIpLKuY5u2wIKQzj3ZFxbukrU682KAi1Xgt56+yV+ZHq5Bi9Wu0gsVaFsuzBwxpVB3Z4b06IZ9ZubWAt5IV7Eg6Fdn/k+ABgN08CRkWdwNW6j8fpZHIFxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pquanAF5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xbldtW5H"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5A19C4CEF7;
-	Thu, 12 Mar 2026 20:15:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pquanAF5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7BBC4CEF7;
+	Thu, 12 Mar 2026 20:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346538;
-	bh=uluP+eu1t80c4kCHSEEqO2KKYD2OYkpczCGY/oQp3+4=;
+	s=korg; t=1773346542;
+	bh=8o2IhA60ftNazpNV+sIXdDCXFntXrITHl0oYMkfzx0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbldtW5HrC4+cufUMk4hboKIDDrN0Q7jwTBwO2fRTn1xDSIiePY0aDGIteShMLRUM
-	 MuozJ+0mPLpmv3NGhTLFR5AFRAYapt4iNDmvj8RhweGTJ7zw0J67Q//qpR9zvg+ClG
-	 1g9GgARMwXX0Id/LTJNt8VRmXjZlZ0v5j/Px9SXg=
+	b=pquanAF51ejsBcWl6AV7FqXGH+AmC/qEdx2p+aTBzx1v7eRIYFBPqJJ806pCXkBxo
+	 5G+Y2+LGs09/HfsX/zyd7vuWX/1E/vRrHu373TTmAdWAkDPcto5ZEEv7SaPlUHwfL8
+	 brsyHjwhwJVDmLTqI/oP2EnM1m4AG3JQnHFzpNjs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/265] mailbox: sort headers alphabetically
-Date: Thu, 12 Mar 2026 21:07:34 +0100
-Message-ID: <20260312201020.633861570@linuxfoundation.org>
+Subject: [PATCH 6.12 068/265] mailbox: remove unused header files
+Date: Thu, 12 Mar 2026 21:07:35 +0100
+Message-ID: <20260312201020.670294259@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -53,84 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Tudor Ambarus <tudor.ambarus@linaro.org>
 
-[ Upstream commit db824c1119fc16556a84cb7a771ca6553b3c3a45 ]
+[ Upstream commit 4de14ec76b5e67d824896f774b3a23d86a2ebc87 ]
 
-Sorting headers alphabetically helps locating duplicates,
-and makes it easier to figure out where to insert new headers.
+There's nothing used from these header files, remove their inclusion.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Stable-dep-of: fcd7f96c7836 ("mailbox: Prevent out-of-bounds access in fw_mbox_index_xlate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c          | 14 +++++++-------
- include/linux/mailbox_client.h     |  2 +-
- include/linux/mailbox_controller.h |  6 +++---
- 3 files changed, 11 insertions(+), 11 deletions(-)
+ drivers/mailbox/mailbox.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 87de408fb068c..c7134ece6d5dd 100644
+index c7134ece6d5dd..693975a87e19e 100644
 --- a/drivers/mailbox/mailbox.c
 +++ b/drivers/mailbox/mailbox.c
-@@ -6,18 +6,18 @@
+@@ -6,17 +6,14 @@
   * Author: Jassi Brar <jassisinghbrar@gmail.com>
   */
  
--#include <linux/interrupt.h>
--#include <linux/spinlock.h>
--#include <linux/mutex.h>
-+#include <linux/bitops.h>
- #include <linux/delay.h>
--#include <linux/slab.h>
--#include <linux/err.h>
--#include <linux/module.h>
- #include <linux/device.h>
 -#include <linux/bitops.h>
-+#include <linux/err.h>
-+#include <linux/interrupt.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+-#include <linux/interrupt.h>
  #include <linux/mailbox_client.h>
  #include <linux/mailbox_controller.h>
-+#include <linux/module.h>
-+#include <linux/mutex.h>
+ #include <linux/module.h>
+ #include <linux/mutex.h>
  #include <linux/of.h>
-+#include <linux/slab.h>
-+#include <linux/spinlock.h>
+-#include <linux/slab.h>
+ #include <linux/spinlock.h>
  
  #include "mailbox.h"
- 
-diff --git a/include/linux/mailbox_client.h b/include/linux/mailbox_client.h
-index 734694912ef74..c6eea9afb943d 100644
---- a/include/linux/mailbox_client.h
-+++ b/include/linux/mailbox_client.h
-@@ -7,8 +7,8 @@
- #ifndef __MAILBOX_CLIENT_H
- #define __MAILBOX_CLIENT_H
- 
--#include <linux/of.h>
- #include <linux/device.h>
-+#include <linux/of.h>
- 
- struct mbox_chan;
- 
-diff --git a/include/linux/mailbox_controller.h b/include/linux/mailbox_controller.h
-index 6fee33cb52f58..5fb0b65f45a2c 100644
---- a/include/linux/mailbox_controller.h
-+++ b/include/linux/mailbox_controller.h
-@@ -3,11 +3,11 @@
- #ifndef __MAILBOX_CONTROLLER_H
- #define __MAILBOX_CONTROLLER_H
- 
-+#include <linux/completion.h>
-+#include <linux/device.h>
-+#include <linux/hrtimer.h>
- #include <linux/of.h>
- #include <linux/types.h>
--#include <linux/hrtimer.h>
--#include <linux/device.h>
--#include <linux/completion.h>
- 
- struct mbox_chan;
- 
 -- 
 2.51.0
 
