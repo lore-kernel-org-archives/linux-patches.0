@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F185E1F4181;
-	Thu, 12 Mar 2026 20:15:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABCC1FE451;
+	Thu, 12 Mar 2026 20:15:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346552; cv=none; b=XPsVEtSCSpboEmPp4t5BWvxoMiki3y55NlY01Fe83MHmVz+Sz/XnFWtrS7SEzRTeKvJtwCbLPuuG9+/ekz6DjmVCSKVRtZbDxbAS/jESyfRW/kBxLMr6P3oJxg3in4PP4WI4M+xD27NJPLzIyuPN1lVYr1wNDSHPAMXO04HL2KY=
+	t=1773346556; cv=none; b=eYDZvvPeTmNJdcfApS6gV9c6awKcNFb7m2xtkIp+NfqS3EmRRQglxtF/SYZoJxGzY5tY/6eB/qASmwqfS0wsQsQCFmRJmcEg6FQJnrPS0gzrVeidiLSUhnh0Vcc2qv4gYtclhqrxmWXK/H2HvfbNJsSmgnFAXmT2TExJBl8elL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346552; c=relaxed/simple;
-	bh=QUCUlg1RkMi08nkftcglRENb9XBfqhACxMPskaJ6Ucc=;
+	s=arc-20240116; t=1773346556; c=relaxed/simple;
+	bh=XlmTbaloZPBGJjZSIWYbqPHurro3lHiZWf7/GTdHi4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m7kyyB83BQUFgTBGYlH/G2p5PwG8lnpeZA4xp1sYWVEWkbMItTm5uZfhkaJZNW6KjmO8CtSWZlQHqI+tMGt4CzkmcxZztOLauC/yt8DNMgCn0hnu7XsN/Y8law45QZnsvB6xzV6HHXSH4e6FNKBtBTARhtjiNdX6clzrlu3+tfo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjGDdfc6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ak1zkET25L3OCI14+8wU+omE9egrRnIq2KoXRlfP3J1KbZalba2RUDAPP6/714YyiRLoo5k3hrW6PN3O3XRIhF0FN1l6zawD9W2fqXETZKTSzXOIBMPq62FxcT016i6NdRyR9xSk+orlrby5Uk+0rMmioKi6LQgNIP5RbZO77hg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjVAz2kM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjGDdfc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F7EC4CEF7;
-	Thu, 12 Mar 2026 20:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjVAz2kM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC056C4CEF7;
+	Thu, 12 Mar 2026 20:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346551;
-	bh=QUCUlg1RkMi08nkftcglRENb9XBfqhACxMPskaJ6Ucc=;
+	s=korg; t=1773346556;
+	bh=XlmTbaloZPBGJjZSIWYbqPHurro3lHiZWf7/GTdHi4o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjGDdfc6ODHX2i/NnXf5UcfX9zuJIJ3K0lA9hkmcZW4q6fUtJQ+uBzDwk/QoRjYNX
-	 QJFusei4grWRQAHIQEf//IxLjb2GL+UAzO3CLh6kA5oEKysJYM1xj+buN9+JkI60vC
-	 NXlZuZ83AQWLCCrV1eYmAcXAbHxxx8iQGdDjpqv4=
+	b=mjVAz2kMnyDpy95sc7LUjv09HOuk/e3uO1cnADBTZESoV06ffhn71Jo5cjXFXsGQO
+	 N4nHcWIvsPX8nEzzD3jZ7NVriCiO1xVoS2WA5iSxhI/PxjvhXipWdrqm6cDraNPfM5
+	 rUX9whCDTBPGibdkAeRl0JsxsspNUQXjxDBa2PRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peng Fan <peng.fan@nxp.com>,
 	Jassi Brar <jassisinghbrar@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/265] mailbox: Use dev_err when there is error
-Date: Thu, 12 Mar 2026 21:07:36 +0100
-Message-ID: <20260312201020.706642804@linuxfoundation.org>
+Subject: [PATCH 6.12 070/265] mailbox: Use guard/scoped_guard for con_mutex
+Date: Thu, 12 Mar 2026 21:07:37 +0100
+Message-ID: <20260312201020.742632950@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -53,39 +53,125 @@ Content-Transfer-Encoding: 8bit
 
 From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 8da4988b6e645f3eaa590ea16f433583364fd09c ]
+[ Upstream commit 16da9a653c5bf5d97fb296420899fe9735aa9c3c ]
 
-Use dev_err to show the error log instead of using dev_dbg.
+Use guard and scoped_guard for con_mutex to simplify code.
 
 Signed-off-by: Peng Fan <peng.fan@nxp.com>
 Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
 Stable-dep-of: fcd7f96c7836 ("mailbox: Prevent out-of-bounds access in fw_mbox_index_xlate()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/mailbox.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/mailbox/mailbox.c | 61 +++++++++++++++++----------------------
+ 1 file changed, 26 insertions(+), 35 deletions(-)
 
 diff --git a/drivers/mailbox/mailbox.c b/drivers/mailbox/mailbox.c
-index 693975a87e19e..4c27de9514e55 100644
+index 4c27de9514e55..7dcbca48d1a0f 100644
 --- a/drivers/mailbox/mailbox.c
 +++ b/drivers/mailbox/mailbox.c
-@@ -322,7 +322,7 @@ static int __mbox_bind_client(struct mbox_chan *chan, struct mbox_client *cl)
- 	int ret;
+@@ -6,6 +6,7 @@
+  * Author: Jassi Brar <jassisinghbrar@gmail.com>
+  */
  
- 	if (chan->cl || !try_module_get(chan->mbox->dev->driver->owner)) {
--		dev_dbg(dev, "%s: mailbox not free\n", __func__);
-+		dev_err(dev, "%s: mailbox not free\n", __func__);
- 		return -EBUSY;
- 	}
++#include <linux/cleanup.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+@@ -370,13 +371,9 @@ static int __mbox_bind_client(struct mbox_chan *chan, struct mbox_client *cl)
+  */
+ int mbox_bind_client(struct mbox_chan *chan, struct mbox_client *cl)
+ {
+-	int ret;
+-
+-	mutex_lock(&con_mutex);
+-	ret = __mbox_bind_client(chan, cl);
+-	mutex_unlock(&con_mutex);
++	guard(mutex)(&con_mutex);
  
-@@ -413,7 +413,7 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
- 	ret = of_parse_phandle_with_args(dev->of_node, "mboxes", "#mbox-cells",
- 					 index, &spec);
- 	if (ret) {
--		dev_dbg(dev, "%s: can't parse \"mboxes\" property\n", __func__);
-+		dev_err(dev, "%s: can't parse \"mboxes\" property\n", __func__);
+-	return ret;
++	return __mbox_bind_client(chan, cl);
+ }
+ EXPORT_SYMBOL_GPL(mbox_bind_client);
+ 
+@@ -417,28 +414,25 @@ struct mbox_chan *mbox_request_channel(struct mbox_client *cl, int index)
  		return ERR_PTR(ret);
  	}
+ 
+-	mutex_lock(&con_mutex);
++	scoped_guard(mutex, &con_mutex) {
++		chan = ERR_PTR(-EPROBE_DEFER);
++		list_for_each_entry(mbox, &mbox_cons, node)
++			if (mbox->dev->of_node == spec.np) {
++				chan = mbox->of_xlate(mbox, &spec);
++				if (!IS_ERR(chan))
++					break;
++			}
+ 
+-	chan = ERR_PTR(-EPROBE_DEFER);
+-	list_for_each_entry(mbox, &mbox_cons, node)
+-		if (mbox->dev->of_node == spec.np) {
+-			chan = mbox->of_xlate(mbox, &spec);
+-			if (!IS_ERR(chan))
+-				break;
+-		}
++		of_node_put(spec.np);
+ 
+-	of_node_put(spec.np);
++		if (IS_ERR(chan))
++			return chan;
+ 
+-	if (IS_ERR(chan)) {
+-		mutex_unlock(&con_mutex);
+-		return chan;
++		ret = __mbox_bind_client(chan, cl);
++		if (ret)
++			chan = ERR_PTR(ret);
+ 	}
+ 
+-	ret = __mbox_bind_client(chan, cl);
+-	if (ret)
+-		chan = ERR_PTR(ret);
+-
+-	mutex_unlock(&con_mutex);
+ 	return chan;
+ }
+ EXPORT_SYMBOL_GPL(mbox_request_channel);
+@@ -549,9 +543,8 @@ int mbox_controller_register(struct mbox_controller *mbox)
+ 	if (!mbox->of_xlate)
+ 		mbox->of_xlate = of_mbox_index_xlate;
+ 
+-	mutex_lock(&con_mutex);
+-	list_add_tail(&mbox->node, &mbox_cons);
+-	mutex_unlock(&con_mutex);
++	scoped_guard(mutex, &con_mutex)
++		list_add_tail(&mbox->node, &mbox_cons);
+ 
+ 	return 0;
+ }
+@@ -568,17 +561,15 @@ void mbox_controller_unregister(struct mbox_controller *mbox)
+ 	if (!mbox)
+ 		return;
+ 
+-	mutex_lock(&con_mutex);
+-
+-	list_del(&mbox->node);
++	scoped_guard(mutex, &con_mutex) {
++		list_del(&mbox->node);
+ 
+-	for (i = 0; i < mbox->num_chans; i++)
+-		mbox_free_channel(&mbox->chans[i]);
++		for (i = 0; i < mbox->num_chans; i++)
++			mbox_free_channel(&mbox->chans[i]);
+ 
+-	if (mbox->txdone_poll)
+-		hrtimer_cancel(&mbox->poll_hrt);
+-
+-	mutex_unlock(&con_mutex);
++		if (mbox->txdone_poll)
++			hrtimer_cancel(&mbox->poll_hrt);
++	}
+ }
+ EXPORT_SYMBOL_GPL(mbox_controller_unregister);
  
 -- 
 2.51.0
