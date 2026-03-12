@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AF52E62C4;
-	Thu, 12 Mar 2026 20:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305E8296BCF;
+	Thu, 12 Mar 2026 20:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346745; cv=none; b=SYWbECLNJNTv/+3BaQmNktjoxiZb6NyOCOYZ7rxdUmpU9M5sY6BCDjGBbkm4QHFpTu+VKkED/vZWILhsAWPNDtcCQ6F63hKU0DK7DLmBkxNG/AfrPo7WGOZZXNuc0WR/Huk85lUh/ZHBK32SQUTOMycXGkErcZuM+7BF1AsE7UY=
+	t=1773346750; cv=none; b=fmdgKtuxDzpjnCJkFimn/6tQ7R0ZXgtVzrTVDYP7vDGsh2kmXFYL17i1hAzU47YwELhw68azcG4Y8CKTvRPypKihb7HsZdfilmgSPYRtIfDc9HHU9UcIUqsd8jZMCWzM0TgwCBCtSElGufYzqGPPQYza0/ZB+TeIBpaluMqyYys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346745; c=relaxed/simple;
-	bh=8wGqvp+Vl9ESl7IkC94c5wCfeSEKGGiRniAUgDAJStM=;
+	s=arc-20240116; t=1773346750; c=relaxed/simple;
+	bh=9BKmaPkcvpsjYNk3twfiSDJ7CfNM9FVceuWwPcDtbg0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DxRRYo49FVaXDKqboaFlpgzaDnnz/qMzAZEx7M+yd9gyVY25ojn6yft52TzOIk2mgFlc1t+1vxCgGDW2fD9QeK4PKR60tlPOpWajkUjYgNeLRlxG/SirojG4KRpZc94NcTFfCwA7oKDUoSYqw0GesFqS8sEy5qlUmvD883kLXUw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YNgP4I8q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0twCkjtiVd+FnD80AZW9dDCsd7L1JABSpOj6/HU9qSczJiPJPu76iZKQYsyOr9jzXStCh2txnJBcCh80zz+uMN/bauL505GGvpz+LESuYMlMYrnDSGOYg9N3oXG82AMSKf8U3XpcYga4JBuWwAQEJeUPZZ5p3IgHpw7CKbM6dI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyeiTedB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YNgP4I8q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECB6C4CEF7;
-	Thu, 12 Mar 2026 20:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyeiTedB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73A4AC4CEF7;
+	Thu, 12 Mar 2026 20:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346745;
-	bh=8wGqvp+Vl9ESl7IkC94c5wCfeSEKGGiRniAUgDAJStM=;
+	s=korg; t=1773346750;
+	bh=9BKmaPkcvpsjYNk3twfiSDJ7CfNM9FVceuWwPcDtbg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YNgP4I8qeP0ZRB8C3cWDI8d+BjEwtgiqz1B7CmVZYGvjYXcAU4hLc7oWTbBYsRM4N
-	 oC50EGKE74Yp1TpZFjAMSBN/1YdJHRLORMcWnoZe/dhcKIJTyJ6PqEKmwLs/Zum06A
-	 v7lrxnKQ291PmIBC6EiqwEv9ODeEF6oV1wOt+oME=
+	b=UyeiTedB5c0g4tQf2sSREKjit3rYTZvA6VlKfYrXg1BFaV0CZoUslyBYTrCMoNn2w
+	 awcvRn8vSZsz5kw3EF5OevtEMYOdru+NpQCaLJIAthlfOC62ppCmglXuYPNoENh9Qf
+	 FAwf8tukIuGorqZrf1RtovNcsmmhE9ZvixuDyUwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Thomas Richard (TI)" <thomas.richard@bootlin.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Cal Peake <cp@absolutedigital.net>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 112/265] usb: cdns3: fix role switching during resume
-Date: Thu, 12 Mar 2026 21:08:19 +0100
-Message-ID: <20260312201022.284264450@linuxfoundation.org>
+Subject: [PATCH 6.12 113/265] drm/amd: Fix hang on amdgpu unload by using pci_dev_is_disconnected()
+Date: Thu, 12 Mar 2026 21:08:20 +0100
+Message-ID: <20260312201022.320156415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,91 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard (TI) <thomas.richard@bootlin.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit 87e4b043b98a1d269be0b812f383881abee0ca45 ]
+[ Upstream commit f7afda7fcd169a9168695247d07ad94cf7b9798f ]
 
-If the role change while we are suspended, the cdns3 driver switches to the
-new mode during resume. However, switching to host mode in this context
-causes a NULL pointer dereference.
+The commit 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise
+disconnect") introduced early KFD cleanup when drm_dev_is_unplugged()
+returns true. However, this causes hangs during normal module unload
+(rmmod amdgpu).
 
-The host role's start() operation registers a xhci-hcd device, but its
-probe is deferred while we are in the resume path. The host role's resume()
-operation assumes the xhci-hcd device is already probed, which is not the
-case, leading to the dereference. Since the start() operation of the new
-role is already called, the resume operation can be skipped.
+The issue occurs because drm_dev_unplug() is called in amdgpu_pci_remove()
+for all removal scenarios, not just surprise disconnects. This was done
+intentionally in commit 39934d3ed572 ("Revert "drm/amdgpu: TA unload
+messages are not actually sent to psp when amdgpu is uninstalled"") to
+fix IGT PCI software unplug test failures. As a result,
+drm_dev_is_unplugged() returns true even during normal module unload,
+triggering the early KFD cleanup inappropriately.
 
-So skip the resume operation for the new role if a role switch occurs
-during resume. Once the resume sequence is complete, the xhci-hcd device
-can be probed in case of host mode.
+The correct check should distinguish between:
+- Actual surprise disconnect (eGPU unplugged): pci_dev_is_disconnected()
+  returns true
+- Normal module unload (rmmod): pci_dev_is_disconnected() returns false
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000208
-Mem abort info:
-...
-Data abort info:
-...
-[0000000000000208] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1]  SMP
-Modules linked in:
-CPU: 0 UID: 0 PID: 146 Comm: sh Not tainted
-6.19.0-rc7-00013-g6e64f4aabfae-dirty #135 PREEMPT
-Hardware name: Texas Instruments J7200 EVM (DT)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : usb_hcd_is_primary_hcd+0x0/0x1c
-lr : cdns_host_resume+0x24/0x5c
-...
-Call trace:
- usb_hcd_is_primary_hcd+0x0/0x1c (P)
- cdns_resume+0x6c/0xbc
- cdns3_controller_resume.isra.0+0xe8/0x17c
- cdns3_plat_resume+0x18/0x24
- platform_pm_resume+0x2c/0x68
- dpm_run_callback+0x90/0x248
- device_resume+0x100/0x24c
- dpm_resume+0x190/0x2ec
- dpm_resume_end+0x18/0x34
- suspend_devices_and_enter+0x2b0/0xa44
- pm_suspend+0x16c/0x5fc
- state_store+0x80/0xec
- kobj_attr_store+0x18/0x2c
- sysfs_kf_write+0x7c/0x94
- kernfs_fop_write_iter+0x130/0x1dc
- vfs_write+0x240/0x370
- ksys_write+0x70/0x108
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x10c
- el0_svc_common.constprop.0+0x40/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x34/0x108
- el0t_64_sync_handler+0xa0/0xe4
- el0t_64_sync+0x198/0x19c
-Code: 52800003 f9407ca5 d63f00a0 17ffffe4 (f9410401)
----[ end trace 0000000000000000 ]---
+Replace drm_dev_is_unplugged() with pci_dev_is_disconnected() to ensure
+the early cleanup only happens during true hardware disconnect events.
 
-Cc: stable <stable@kernel.org>
-Fixes: 2cf2581cd229 ("usb: cdns3: add power lost support for system resume")
-Signed-off-by: Thomas Richard (TI) <thomas.richard@bootlin.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260130-usb-cdns3-fix-role-switching-during-resume-v1-1-44c456852b52@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Reported-by: Cal Peake <cp@absolutedigital.net>
+Closes: https://lore.kernel.org/all/b0c22deb-c0fa-3343-33cf-fd9a77d7db99@absolutedigital.net/
+Fixes: 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise disconnect")
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/cdns3/core.c b/drivers/usb/cdns3/core.c
-index 1243a5cea91b5..f0e32227c0b79 100644
---- a/drivers/usb/cdns3/core.c
-+++ b/drivers/usb/cdns3/core.c
-@@ -551,7 +551,7 @@ int cdns_resume(struct cdns *cdns)
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index cab75f5c9f2fd..361184355e232 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -4648,7 +4648,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
+ 	 * before ip_fini_early to prevent kfd locking refcount issues by calling
+ 	 * amdgpu_amdkfd_suspend()
+ 	 */
+-	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++	if (pci_dev_is_disconnected(adev->pdev))
+ 		amdgpu_amdkfd_device_fini_sw(adev);
  
--	if (cdns->roles[cdns->role]->resume)
-+	if (!role_changed && cdns->roles[cdns->role]->resume)
- 		cdns->roles[cdns->role]->resume(cdns, power_lost);
+ 	amdgpu_device_ip_fini_early(adev);
+@@ -4660,7 +4660,7 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
  
- 	return 0;
+ 	amdgpu_gart_dummy_page_fini(adev);
+ 
+-	if (drm_dev_is_unplugged(adev_to_drm(adev)))
++	if (pci_dev_is_disconnected(adev->pdev))
+ 		amdgpu_device_unmap_mmio(adev);
+ 
+ }
 -- 
 2.51.0
 
