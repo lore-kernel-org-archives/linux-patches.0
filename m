@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3C2D0606;
-	Thu, 12 Mar 2026 20:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38052D0606;
+	Thu, 12 Mar 2026 20:23:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347025; cv=none; b=T/zLEQTqBhTTMAMuW8IkjjT4aBrgmi7R5If/F5cmy/El3sG+spp7V3YXyopiT9XKfB8388g3iFPvbLT5e6d6ZWsw23ovGpP2cYiCvUPqJyvGIQE2KiaRP/6teE6WkpORKC9MwiFPDL9JJ+Yfg+mwLlWwDUMqKfAbAgJhgoKvHiE=
+	t=1773347029; cv=none; b=JoMis6OxtToIoVZ4Xh5tQVxk44Op6fsqXa5X5qcwaDCnyO/sQSTJ2rC0gRDEz9ggL53mQSDYkK10Xt08Hm9Z8CyJfk47BDUlM3VahwV0O5QyoGGhQgK29aZiBDM7IEZ2vQGH9GjFyGv0KLQ0Qzo8j/R1ztdH29rofIo/j8Av2FA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347025; c=relaxed/simple;
-	bh=5Kcw/gofLM6QfMZIQFF4V93Chf64DqAtif4tigPkCxQ=;
+	s=arc-20240116; t=1773347029; c=relaxed/simple;
+	bh=GCnp4httLn6ilE1wPKXPDNM3WT7v7nKpVFXdao0YVq4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GT9kNp5zle+W9HGIyNcVwiFbsUPPcBwsJXqlZ3AXyn89I4z9PC1geTDx7FQsojuuecxyHGElj4cU1mFEzXJMsJHHHy4Al3PLdKa9BfvuxqsHCoFtGnGaXqtfWMVHRoCK9WRQThmESkFRpVg29dzunbiBoclCbPqDqtSBA5xA7Zo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvlIomEu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D3Y/GISkE2di9uowd1Iv8NaDTPabGTsTz99uDiXQg+4sBGipgmd4vdDbD35mRSS/RuF3vWZQ9QCDPIkhNhlHBjAhjo/r0tKbMVKBRQrNCxtXHMh4Q+/1TPSXMzSVEZG+Tjnc9TIzuCdAk9vUccg454GAKjXbc6uw0XuSots7FJY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0k9z0Bg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvlIomEu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311FDC4CEF7;
-	Thu, 12 Mar 2026 20:23:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0k9z0Bg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AAE0C4CEF7;
+	Thu, 12 Mar 2026 20:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347025;
-	bh=5Kcw/gofLM6QfMZIQFF4V93Chf64DqAtif4tigPkCxQ=;
+	s=korg; t=1773347029;
+	bh=GCnp4httLn6ilE1wPKXPDNM3WT7v7nKpVFXdao0YVq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvlIomEuUI1g8P3EC4FT3NqsA1JVcR6hfPiJLiVvASvrp08CyaWDVoKDQ62Rc4Td9
-	 n6Ee/5sDiZvB5Relt5jkaH+0BNbQTSZpaTVOhz6+o7TWGyLGqaxyi/2SoMxr1i/xmq
-	 tIz0X/yTPzHH0n0u3e0ehEsS+ud92LbHMqNqfPRc=
+	b=l0k9z0Bg2jPNfbwPFeKSix9TcF+X7oEbuUFOGe1FtKRTvAPJ+OsKX+XCUR0OfMMvk
+	 khqs/bx692LA3tID+R3T2utRy4Lh6Gp1xqmnyxLCoP08IOntugnLiTmsQkzNZsx96e
+	 OCJoLfc0O3f37gfqBneaqCBl7P0Ha3XgN8xU/ztc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Francesco Lavra <flavra@baylibre.com>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 182/265] e1000e: clear DPG_EN after reset to avoid autonomous power-gating
-Date: Thu, 12 Mar 2026 21:09:29 +0100
-Message-ID: <20260312201024.886937743@linuxfoundation.org>
+Subject: [PATCH 6.12 183/265] drm/solomon: Fix page start when updating rectangle in page addressing mode
+Date: Thu, 12 Mar 2026 21:09:30 +0100
+Message-ID: <20260312201024.922658232@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,60 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Francesco Lavra <flavra@baylibre.com>
 
-[ Upstream commit 0942fc6d324eb9c6b16187b2aa994c0823557f06 ]
+[ Upstream commit 36d9579fed6c9429aa172f77bd28c58696ce8e2b ]
 
-Panther Lake systems introduced an autonomous power gating feature for
-the integrated Gigabit Ethernet in shutdown state (S5) state. As part of
-it, the reset value of DPG_EN bit was changed to 1. Clear this bit after
-performing hardware reset to avoid errors such as Tx/Rx hangs, or packet
-loss/corruption.
+In page addressing mode, the pixel values of a dirty rectangle must be sent
+to the display controller one page at a time. The range of pages
+corresponding to a given rectangle is being incorrectly calculated as if
+the Y value of the top left coordinate of the rectangle was 0. This can
+result in rectangle updates being displayed on wrong parts of the screen.
 
-Fixes: 0c9183ce61bc ("e1000e: Add support for the next LOM generation")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fix the above issue by consolidating the start page calculation in a single
+place at the beginning of the update_rect function, and using the
+calculated value for all addressing modes.
+
+Fixes: b0daaa5cfaa5 ("drm/ssd130x: Support page addressing mode")
+Signed-off-by: Francesco Lavra <flavra@baylibre.com>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patch.msgid.link/20260210180932.736502-1-flavra@baylibre.com
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/defines.h | 1 +
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/gpu/drm/solomon/ssd130x.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
-index ba331899d1861..d4a1041e456dc 100644
---- a/drivers/net/ethernet/intel/e1000e/defines.h
-+++ b/drivers/net/ethernet/intel/e1000e/defines.h
-@@ -33,6 +33,7 @@
+diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
+index e0fc12d514d76..cd8347396082a 100644
+--- a/drivers/gpu/drm/solomon/ssd130x.c
++++ b/drivers/gpu/drm/solomon/ssd130x.c
+@@ -736,6 +736,7 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
+ 	unsigned int height = drm_rect_height(rect);
+ 	unsigned int line_length = DIV_ROUND_UP(width, 8);
+ 	unsigned int page_height = SSD130X_PAGE_HEIGHT;
++	u8 page_start = ssd130x->page_offset + y / page_height;
+ 	unsigned int pages = DIV_ROUND_UP(height, page_height);
+ 	struct drm_device *drm = &ssd130x->drm;
+ 	u32 array_idx = 0;
+@@ -773,14 +774,11 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
+ 	 */
  
- /* Extended Device Control */
- #define E1000_CTRL_EXT_LPCD  0x00000004     /* LCD Power Cycle Done */
-+#define E1000_CTRL_EXT_DPG_EN	0x00000008 /* Dynamic Power Gating Enable */
- #define E1000_CTRL_EXT_SDP3_DATA 0x00000080 /* Value of SW Definable Pin 3 */
- #define E1000_CTRL_EXT_FORCE_SMBUS 0x00000800 /* Force SMBus mode */
- #define E1000_CTRL_EXT_EE_RST    0x00002000 /* Reinitialize from EEPROM */
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index df4e7d781cb1c..f9328caefe44b 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -4925,6 +4925,15 @@ static s32 e1000_reset_hw_ich8lan(struct e1000_hw *hw)
- 	reg |= E1000_KABGTXD_BGSQLBIAS;
- 	ew32(KABGTXD, reg);
+ 	if (!ssd130x->page_address_mode) {
+-		u8 page_start;
+-
+ 		/* Set address range for horizontal addressing mode */
+ 		ret = ssd130x_set_col_range(ssd130x, ssd130x->col_offset + x, width);
+ 		if (ret < 0)
+ 			return ret;
  
-+	/* The hardware reset value of the DPG_EN bit is 1.
-+	 * Clear DPG_EN to prevent unexpected autonomous power gating.
-+	 */
-+	if (hw->mac.type >= e1000_pch_ptp) {
-+		reg = er32(CTRL_EXT);
-+		reg &= ~E1000_CTRL_EXT_DPG_EN;
-+		ew32(CTRL_EXT, reg);
-+	}
-+
- 	return 0;
- }
- 
+-		page_start = ssd130x->page_offset + y / page_height;
+ 		ret = ssd130x_set_page_range(ssd130x, page_start, pages);
+ 		if (ret < 0)
+ 			return ret;
+@@ -812,7 +810,7 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
+ 		 */
+ 		if (ssd130x->page_address_mode) {
+ 			ret = ssd130x_set_page_pos(ssd130x,
+-						   ssd130x->page_offset + i,
++						   page_start + i,
+ 						   ssd130x->col_offset + x);
+ 			if (ret < 0)
+ 				return ret;
 -- 
 2.51.0
 
