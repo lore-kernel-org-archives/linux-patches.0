@@ -1,105 +1,131 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E691E26F288;
-	Thu, 12 Mar 2026 20:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EFD26F288;
+	Thu, 12 Mar 2026 20:26:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347215; cv=none; b=fYkYLn/YkHOHp2hFE6q/Hja0ZgZfwr/hoAmJGXISBv6ElvJjC5gx1oeFs14aWEfaDS57m5FYxE+n+652MehZPcsBMYLKL19h8d3AZ6eB8C26qCAh+WmN4Z58ogFJ7TqSvLck9UIeoRPYmd5z7ClqiAAjapbVYAGMDaA1wc/IO18=
+	t=1773347217; cv=none; b=BiPee1zFF59MvhaVLNreODGkVVk02IzOJ/J7IqRSeoqkwFRht5yMF1oDxzxry8yNAwncvX+yC8U5k4wTmqRQJMPTikuDxUO63Wgynx2Xt2vpLdjuqEPnyXdNb3hXINdxV+WK8e/zf0dc2sjgsmk8OGftDy5qzMGBPz1oxiOZFbU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347215; c=relaxed/simple;
-	bh=UYT8wIw8pHLsFRtG2apIb8OLEIswMFmbLk8hQv2tBGI=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SxLkeuciCxrMhHFGouXI0uTgIBOCnZx0PF//zto7K8GbDwZzR2HU6+dsoUGGEgqrZ4OvLSTVDYnmOn6ZHGdqPmLUbYQWBlQvisa3MYLZ3ksiMPUOu0OXHJ53c7RnmuS6YW4xhbB4W0XYw0A48eBnqUD5gvO52xX043pVENoGXsI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2LwKywYu; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773347217; c=relaxed/simple;
+	bh=EXbdlvcAEISRCTIj/fRp7LcdZGk6RNLgJWmXSu4/v+U=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Lg3AKBWUPbM0smSnXuNewKa2WFf9GNKWzU+gEHG4uB+mWXN1HcaKVj42oxQi3Oi8XO72iGczeNO4r5SBWkDI3h8H+4c/67jlxNfMDHAt3rdx8FpKALY+4ZO5xgR2GOHT+RITOL0csKsQJ4h+We05Vu/VwLLez8V5nc1MYZUu0IU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YPPOO+Gl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2LwKywYu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 481CDC2BC86;
-	Thu, 12 Mar 2026 20:26:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347214;
-	bh=UYT8wIw8pHLsFRtG2apIb8OLEIswMFmbLk8hQv2tBGI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2LwKywYurI5JAVQxBxz00fchaJPVUxpsbWl26t36uTFcz/SSNyPkSUTGFEf07i29K
-	 la4i8vy5foyObw+P7SBL0VjaAk0SOIhwqmeJQ7UEG7eq2sDNqK9X8FSlw8YJpNxkrY
-	 Ndm4C36HaiYy8rDQBBModgYSJbpriO+oB6vKjIPA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YPPOO+Gl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98FAAC4CEF7;
+	Thu, 12 Mar 2026 20:26:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773347217;
+	bh=EXbdlvcAEISRCTIj/fRp7LcdZGk6RNLgJWmXSu4/v+U=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=YPPOO+Gl7JEobJqZojaZw/xyWvAOKIVlq/AMlB4DbeN/evH35Tho6EpDnLGo66ajR
+	 OWhfF6Swhaq38cM/YRShqZb7pYq0ozRELIU0CLoETJRSgDSGL8FmGNVvwrd063VfWB
+	 jo3EJWoMMlkRJKLK1vOGXTY4o84EkMH9JqhCH6QmvvFwvVYS3xF/6k3wMkYeGkapuJ
+	 Ab4LYRx3+r352mvS7juwf7nFwEhQBDcXM7TS9g3Hke+wn8wM8kLOqoLVCnTEBsuCuZ
+	 ozNkx1CPFlLNjP4ySW1PHVmoHAO3QcMWK0JZY7mvjgAQDldXRohSziKSsHdgPgkhH5
+	 s45Ya9/HYmjXg==
+Received: from sofa.misterjones.org ([185.219.108.64] helo=lobster-girl.misterjones.org)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.98.2)
+	(envelope-from <maz@kernel.org>)
+	id 1w0mcR-00000001Q1l-1Hrl;
+	Thu, 12 Mar 2026 20:26:55 +0000
+Date: Thu, 12 Mar 2026 20:26:54 +0000
+Message-ID: <87tsukdca9.wl-maz@kernel.org>
+From: Marc Zyngier <maz@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Paolo Valerio <pvalerio@redhat.com>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Oliver Upton <oliver.upton@linux.dev>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 235/265] net: ethernet: mtk_eth_soc: Reset prog ptr to old_prog in case of error in mtk_xdp_setup()
-Date: Thu, 12 Mar 2026 21:10:22 +0100
-Message-ID: <20260312201026.820512173@linuxfoundation.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
+Subject: Re: [PATCH 6.12 004/265] KVM: arm64: Advertise support for FEAT_SCTLR2
+In-Reply-To: <20260312201018.304349696@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	<20260312201018.304349696@linuxfoundation.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/30.1
+ (aarch64-unknown-linux-gnu) MULE/6.0 (HANACHIRUSATO)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, patches@lists.linux.dev, oliver.upton@linux.dev, sashal@kernel.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-6.12-stable review patch.  If anyone has any objections, please let me know.
+On Thu, 12 Mar 2026 20:06:31 +0000,
+Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> 
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
 
-------------------
+I already objected to this nonsense [1]. This is actively creating a
+security hole. Please drop this patch.
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+If you can't drop this single patch and resolve the trivial conflict,
+please drop *all* KVM/arm64 patches.
 
-[ Upstream commit 0abc73c8a40fd64ac1739c90bb4f42c418d27a5e ]
+Thanks,
 
-Reset eBPF program pointer to old_prog and do not decrease its ref-count
-if mtk_open routine in mtk_xdp_setup() fails.
+	M.
 
-Fixes: 7c26c20da5d42 ("net: ethernet: mtk_eth_soc: add basic XDP support")
-Suggested-by: Paolo Valerio <pvalerio@redhat.com>
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Link: https://patch.msgid.link/20260303-mtk-xdp-prog-ptr-fix-v2-1-97b6dbbe240f@kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+[1] https://lore.kernel.org/r/87zf4jd1xs.wl-maz@kernel.org
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 64d86068b51eb..45d4bac984a52 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3566,12 +3566,21 @@ static int mtk_xdp_setup(struct net_device *dev, struct bpf_prog *prog,
- 		mtk_stop(dev);
- 
- 	old_prog = rcu_replace_pointer(eth->prog, prog, lockdep_rtnl_is_held());
-+
-+	if (netif_running(dev) && need_update) {
-+		int err;
-+
-+		err = mtk_open(dev);
-+		if (err) {
-+			rcu_assign_pointer(eth->prog, old_prog);
-+
-+			return err;
-+		}
-+	}
-+
- 	if (old_prog)
- 		bpf_prog_put(old_prog);
- 
--	if (netif_running(dev) && need_update)
--		return mtk_open(dev);
--
- 	return 0;
- }
- 
+>
+> ------------------
+> 
+> From: Oliver Upton <oliver.upton@linux.dev>
+> 
+> [ Upstream commit 075c2dc7367e7e80d83adae8db597e48ceb7ba94 ]
+> 
+> Everything is in place to handle the additional state for SCTLR2_ELx,
+> which is all that FEAT_SCTLR2 implies.
+> 
+> Reviewed-by: Marc Zyngier <maz@kernel.org>
+> Link: https://lore.kernel.org/r/20250708172532.1699409-22-oliver.upton@linux.dev
+> Signed-off-by: Oliver Upton <oliver.upton@linux.dev>
+> Stable-dep-of: f66857bafd4f ("KVM: arm64: Hide S1POE from guests when not supported by the host")
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  arch/arm64/kvm/sys_regs.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/kvm/sys_regs.c b/arch/arm64/kvm/sys_regs.c
+> index 5c09c788aaa61..784603a355487 100644
+> --- a/arch/arm64/kvm/sys_regs.c
+> +++ b/arch/arm64/kvm/sys_regs.c
+> @@ -1559,8 +1559,10 @@ static u64 __kvm_read_sanitised_id_reg(const struct kvm_vcpu *vcpu,
+>  		val &= ~ID_AA64MMFR2_EL1_CCIDX_MASK;
+>  		break;
+>  	case SYS_ID_AA64MMFR3_EL1:
+> -		val &= ID_AA64MMFR3_EL1_TCRX | ID_AA64MMFR3_EL1_S1POE |
+> -			ID_AA64MMFR3_EL1_S1PIE;
+> +		val &= ID_AA64MMFR3_EL1_TCRX |
+> +		       ID_AA64MMFR3_EL1_SCTLRX |
+> +		       ID_AA64MMFR3_EL1_S1POE |
+> +		       ID_AA64MMFR3_EL1_S1PIE;
+>  		break;
+>  	case SYS_ID_MMFR4_EL1:
+>  		val &= ~ARM64_FEATURE_MASK(ID_MMFR4_EL1_CCIDX);
+> @@ -2521,6 +2523,7 @@ static const struct sys_reg_desc sys_reg_descs[] = {
+>  					ID_AA64MMFR2_EL1_NV |
+>  					ID_AA64MMFR2_EL1_CCIDX)),
+>  	ID_WRITABLE(ID_AA64MMFR3_EL1, (ID_AA64MMFR3_EL1_TCRX	|
+> +				       ID_AA64MMFR3_EL1_SCTLRX	|
+>  				       ID_AA64MMFR3_EL1_S1PIE   |
+>  				       ID_AA64MMFR3_EL1_S1POE)),
+>  	ID_SANITISED(ID_AA64MMFR4_EL1),
+> -- 
+> 2.51.0
+> 
+> 
+> 
+> 
+
 -- 
-2.51.0
-
-
-
+Jazz isn't dead. It just smells funny.
