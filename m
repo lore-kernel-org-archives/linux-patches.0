@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56F1344DB5;
-	Thu, 12 Mar 2026 20:21:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94ADE344DB5;
+	Thu, 12 Mar 2026 20:21:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346869; cv=none; b=QTtRS5RsWhWSTFbL1U3wQwop7JoVCx0Ej/nXBA4fEUEm6bW9RGcQ6BgONmtZpPrCF19M0R2yvxbcYSNx1VKGz1ZkNxXPfKROQ8q6RrDj9hPiws7hDePD9HflRTqa5Zn/D06AtKKvSSh8lFmHWM8OsYiKIrf8w0u2dfjHyLqS9dI=
+	t=1773346873; cv=none; b=KSNbOFhL67YxQMyxN9VZBu8nnPUVwDMLtJjSRPWsvOFVvBn9PfsGVDO7Ubpqe8y2zTIgJCWjDBPOEEd4kdrbkfrbGYV89p4Q94vgXDjtGg3YS5U6nhs9ttPEeJGHlike0xfpXvXrSdLvHKxHzgpvhDBrx9wH4dFnmGJvg90n/9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346869; c=relaxed/simple;
-	bh=B5vuYVB214vlIyuXA9+X42BH+pKvrvY3UNMfNE6N9wY=;
+	s=arc-20240116; t=1773346873; c=relaxed/simple;
+	bh=NYAF01Rw0Dtyip0mgkKqCLHSMsGhGKsYOq8mqI9hHco=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p3A4rjPToiI00jB6MFN3MTe4q5c5GuGu/noQi4Y05t0Y2QqtspfCrWoPY0pvJTMrCMazcJMWVygSzyd+FTl96kptiUZeyslp+Iwm9pXbziBle9ZC7V0Wk3TAnqAPX7clAM6fux3uKRDMhlzaHj8WBpJDdy1P2ZQhDAs6P3CwkNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AdgHk7oF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYh1mmXKIvkgKVwOCEgWieEjzQ7VDfmn9UFhR9LoMq9F9bJ25qE81XxLcJGwLswvBFnsqXPzEKK3tAmV6WXWTJI/i0cvJVhMVeInBq070hJH0mH4zsWfMMBE7/VfwVOYbGVJUCZhW9BCsxGj/gej4YH4Slg8UY8SnYek71Rg4n4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IbMe9buB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AdgHk7oF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04457C4CEF7;
-	Thu, 12 Mar 2026 20:21:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IbMe9buB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03913C4CEF7;
+	Thu, 12 Mar 2026 20:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346869;
-	bh=B5vuYVB214vlIyuXA9+X42BH+pKvrvY3UNMfNE6N9wY=;
+	s=korg; t=1773346873;
+	bh=NYAF01Rw0Dtyip0mgkKqCLHSMsGhGKsYOq8mqI9hHco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AdgHk7oFIjkT0J5GkNrA4mCb5/KFhcV2ppxhfSX6+x8gQ3GATw/+3a+hgMGSUXDXZ
-	 t/cxsiQkDFYTBX+CBza1SbJHItQUR4PI0Fq9E3ceL++eeN0V8tbJMjz7cJ8+hWu+rf
-	 o/ZdIq96qhMXAtBf8/crOb9tkvOE+izyc74btkPs=
+	b=IbMe9buBegO1cBr6iCeEjPsXMa0PSnQdUEO6ddzruEfeEM6KxXDfE2PkB4RGXPW3I
+	 UvMgM05AWqfYPc2A6rJAeVuBCL16K8AsgkCHj/n+bZoi4NsLQ9SDWenBWkY9R+ex/z
+	 yavYZEehEqd7JAFccLeJF08hwlYljMME/qvMFhTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 120/265] LoongArch: Handle percpu handler address for ORC unwinder
-Date: Thu, 12 Mar 2026 21:08:27 +0100
-Message-ID: <20260312201022.576760383@linuxfoundation.org>
+	Vahagn Vardanian <vahagn@redrays.io>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 147/265] wifi: mac80211: fix NULL pointer dereference in mesh_rx_csa_frame()
+Date: Thu, 12 Mar 2026 21:08:54 +0100
+Message-ID: <20260312201023.569980750@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,90 +50,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Vahagn Vardanian <vahagn@redrays.io>
 
-[ Upstream commit 055c7e75190e0be43037bd663a3f6aced194416e ]
+commit 017c1792525064a723971f0216e6ef86a8c7af11 upstream.
 
-After commit 4cd641a79e69 ("LoongArch: Remove unnecessary checks for ORC
-unwinder"), the system can not boot normally under some configs (such as
-enable KASAN), there are many error messages "cannot find unwind pc".
+In mesh_rx_csa_frame(), elems->mesh_chansw_params_ie is dereferenced
+at lines 1638 and 1642 without a prior NULL check:
 
-The kernel boots normally with the defconfig, so no problem found out at
-the first time. Here is one way to reproduce:
+    ifmsh->chsw_ttl = elems->mesh_chansw_params_ie->mesh_ttl;
+    ...
+    pre_value = le16_to_cpu(elems->mesh_chansw_params_ie->mesh_pre_value);
 
-  cd linux
-  make mrproper defconfig -j"$(nproc)"
-  scripts/config -e KASAN
-  make olddefconfig all -j"$(nproc)"
-  sudo make modules_install
-  sudo make install
-  sudo reboot
+The mesh_matches_local() check above only validates the Mesh ID,
+Mesh Configuration, and Supported Rates IEs.  It does not verify the
+presence of the Mesh Channel Switch Parameters IE (element ID 118).
+When a received CSA action frame omits that IE, ieee802_11_parse_elems()
+leaves elems->mesh_chansw_params_ie as NULL, and the unconditional
+dereference causes a kernel NULL pointer dereference.
 
-The address that can not unwind is not a valid kernel address which is
-between "pcpu_handlers[cpu]" and "pcpu_handlers[cpu] + vec_sz" due to
-the code of eentry was copied to the new area of pcpu_handlers[cpu] in
-setup_tlb_handler(), handle this special case to get the valid address
-to unwind normally.
+A remote mesh peer with an established peer link (PLINK_ESTAB) can
+trigger this by sending a crafted SPECTRUM_MGMT/CHL_SWITCH action frame
+that includes a matching Mesh ID and Mesh Configuration IE but omits the
+Mesh Channel Switch Parameters IE.  No authentication beyond the default
+open mesh peering is required.
 
+Crash confirmed on kernel 6.17.0-5-generic via mac80211_hwsim:
+
+  BUG: kernel NULL pointer dereference, address: 0000000000000000
+  Oops: Oops: 0000 [#1] SMP NOPTI
+  RIP: 0010:ieee80211_mesh_rx_queued_mgmt+0x143/0x2a0 [mac80211]
+  CR2: 0000000000000000
+
+Fix by adding a NULL check for mesh_chansw_params_ie after
+mesh_matches_local() returns, consistent with how other optional IEs
+are guarded throughout the mesh code.
+
+The bug has been present since v3.13 (released 2014-01-19).
+
+Fixes: 8f2535b92d68 ("mac80211: process the CSA frame for mesh accordingly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Vahagn Vardanian <vahagn@redrays.io>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/setup.h |  3 +++
- arch/loongarch/kernel/unwind_orc.c | 16 ++++++++++++++++
- 2 files changed, 19 insertions(+)
+ net/mac80211/mesh.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/loongarch/include/asm/setup.h b/arch/loongarch/include/asm/setup.h
-index 3c2fb16b11b64..f81375e5e89c0 100644
---- a/arch/loongarch/include/asm/setup.h
-+++ b/arch/loongarch/include/asm/setup.h
-@@ -7,6 +7,7 @@
- #define _LOONGARCH_SETUP_H
+--- a/net/mac80211/mesh.c
++++ b/net/mac80211/mesh.c
+@@ -1631,6 +1631,9 @@ static void mesh_rx_csa_frame(struct iee
+ 	if (!mesh_matches_local(sdata, elems))
+ 		goto free;
  
- #include <linux/types.h>
-+#include <linux/threads.h>
- #include <asm/sections.h>
- #include <uapi/asm/setup.h>
- 
-@@ -14,6 +15,8 @@
- 
- extern unsigned long eentry;
- extern unsigned long tlbrentry;
-+extern unsigned long pcpu_handlers[NR_CPUS];
-+extern long exception_handlers[VECSIZE * 128 / sizeof(long)];
- extern char init_command_line[COMMAND_LINE_SIZE];
- extern void tlb_init(int cpu);
- extern void cpu_cache_init(void);
-diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
-index 4924d1ecc4579..9512fa4fff0f9 100644
---- a/arch/loongarch/kernel/unwind_orc.c
-+++ b/arch/loongarch/kernel/unwind_orc.c
-@@ -359,6 +359,22 @@ static inline unsigned long bt_address(unsigned long ra)
- {
- 	extern unsigned long eentry;
- 
-+#if defined(CONFIG_NUMA) && !defined(CONFIG_PREEMPT_RT)
-+	int cpu;
-+	int vec_sz = sizeof(exception_handlers);
++	if (!elems->mesh_chansw_params_ie)
++		goto free;
 +
-+	for_each_possible_cpu(cpu) {
-+		if (!pcpu_handlers[cpu])
-+			continue;
-+
-+		if (ra >= pcpu_handlers[cpu] &&
-+		    ra < pcpu_handlers[cpu] + vec_sz) {
-+			ra = ra + eentry - pcpu_handlers[cpu];
-+			break;
-+		}
-+	}
-+#endif
-+
- 	if (ra >= eentry && ra < eentry +  EXCCODE_INT_END * VECSIZE) {
- 		unsigned long func;
- 		unsigned long type = (ra - eentry) / VECSIZE;
--- 
-2.51.0
-
+ 	ifmsh->chsw_ttl = elems->mesh_chansw_params_ie->mesh_ttl;
+ 	if (!--ifmsh->chsw_ttl)
+ 		fwd_csa = false;
 
 
