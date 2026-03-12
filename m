@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23457310620;
-	Thu, 12 Mar 2026 20:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0E03491D6;
+	Thu, 12 Mar 2026 20:21:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346894; cv=none; b=DQPZP4Qv9wHpit4VpaFe9HLX/E1SjQwcylNVRoVMbIAtpei/y16lk+liDzgCUsDe9T1/Id/xy49fap6+lzwW99WZTmqDybQfW4zTOt/oa6EkZQa5MNttpT+6hJp/3DMPgq/nLQDAFLvIcqR1yqog0PtITSgPiWCmEeVOVpWgGBk=
+	t=1773346898; cv=none; b=c6CfKpQfmd1M7pPbCTNrLDQ0Dd6lc3nykxY3SGZCJtARICnTVpkTLf0GBc7gn9RQ6O4HpHB/ZyuTnQ1mk8zCny1pRaoa6JnFeNaAtS5q7t1ZbDOteIKWG32PXil5yDaEi8CwfcT7D0IgLUtTFhOC+FAV9DSFrRQSKPQxBaOX4/s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346894; c=relaxed/simple;
-	bh=9KILnywb1EL2d7Jrj/xMeCPcL90bmglkqAXjfxXiFMw=;
+	s=arc-20240116; t=1773346898; c=relaxed/simple;
+	bh=jH4XqulkH4AYwg3BvuARYy6zLdOFZaODMKfCneDHaQE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mdyx4AomiODQTub2tKTl8pb9tVGfxxFTzrVLOa335ACxvIb30j3wqV7jhfpVUCzZTbOFZuOnDM3EqMkokBarxHkE2xjNBWPE5QrAbV45pqb6SsmHh5pidfY2t/5lb3BDdm/DrmK7/T3aBqBLGxQpVq6ebGq/1yl0Kj9ZLjL4+4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YndbJjFe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mm1GSW2ZI8Dk4zzOXFZaQ6Mxk65jqheNHaDBdPRNkZDAfHIilPVH7GVFNEOo1q5oWaPTyXLIrB8gObw97nWmEwHqwIVeNYx7XagWfsfz/g0UYnzh2xJu0Db7mNlLbc3iU9srKDdvjA+7xhLeXy/eWWyIM9N1bI6KGwy5x2b/6UI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fJqlLaMz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YndbJjFe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93AB6C4CEF7;
-	Thu, 12 Mar 2026 20:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fJqlLaMz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539E1C4CEF7;
+	Thu, 12 Mar 2026 20:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346894;
-	bh=9KILnywb1EL2d7Jrj/xMeCPcL90bmglkqAXjfxXiFMw=;
+	s=korg; t=1773346898;
+	bh=jH4XqulkH4AYwg3BvuARYy6zLdOFZaODMKfCneDHaQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YndbJjFeFhBnLTg5ivz3SZ+4R/nkGA+1vhYn8dW0U8MTPTG6q5JF2jVkU3fCDLKHZ
-	 JoZt21990bt5e053sYnuMkYoQ0w38iZbrWmMnXM/w/PsS8FlZqPkakFWYPi7gdRr3X
-	 QR+SkqWdBOBL/0e736h+vjvEBN+h+BOm2bYsDglw=
+	b=fJqlLaMzglwLiOi7yThSvczpx5jmsw4vB1XjxonyScMwkmJckVw0UcvuDsSzQuPUO
+	 fJtCWOw6PIUPlBOt+W8q2hPJ77DKIj/9mTfyIR828FYNbYqdE39EU7utu+mSQT++bT
+	 376ocAZCxw7w2Swe7fHgMR34z4NZBe97JT3m2eOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
+	Eric Naim <dnaim@cachyos.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 121/265] LoongArch: Remove some extern variables in source files
-Date: Thu, 12 Mar 2026 21:08:28 +0100
-Message-ID: <20260312201022.615317119@linuxfoundation.org>
+Subject: [PATCH 6.12 122/265] ALSA: hda/realtek: Add quirk for Gigabyte G5 KF5 (2023)
+Date: Thu, 12 Mar 2026 21:08:29 +0100
+Message-ID: <20260312201022.651552912@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,65 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Eric Naim <dnaim@cachyos.org>
 
-[ Upstream commit 0e6f596d6ac635e80bb265d587b2287ef8fa1cd6 ]
+[ Upstream commit 405d59fdd2038a65790eaad8c1013d37a2af6561 ]
 
-There are declarations of the variable "eentry", "pcpu_handlers[]" and
-"exception_handlers[]" in asm/setup.h, the source files already include
-this header file directly or indirectly, so no need to declare them in
-the source files, just remove the code.
+Fixes microphone detection when a headset is connected to the audio jack
+using the ALC256.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Eric Naim <dnaim@cachyos.org>
+Link: https://patch.msgid.link/20260210093403.21514-1-dnaim@cachyos.org
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/loongarch/kernel/unwind_orc.c      | 2 --
- arch/loongarch/kernel/unwind_prologue.c | 4 ----
- arch/loongarch/mm/tlb.c                 | 1 -
- 3 files changed, 7 deletions(-)
+ sound/pci/hda/patch_realtek.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
-index 9512fa4fff0f9..e8b95f1bc5786 100644
---- a/arch/loongarch/kernel/unwind_orc.c
-+++ b/arch/loongarch/kernel/unwind_orc.c
-@@ -357,8 +357,6 @@ static bool is_entry_func(unsigned long addr)
- 
- static inline unsigned long bt_address(unsigned long ra)
- {
--	extern unsigned long eentry;
--
- #if defined(CONFIG_NUMA) && !defined(CONFIG_PREEMPT_RT)
- 	int cpu;
- 	int vec_sz = sizeof(exception_handlers);
-diff --git a/arch/loongarch/kernel/unwind_prologue.c b/arch/loongarch/kernel/unwind_prologue.c
-index c9ee6892d81c7..d4c42dc67134c 100644
---- a/arch/loongarch/kernel/unwind_prologue.c
-+++ b/arch/loongarch/kernel/unwind_prologue.c
-@@ -22,10 +22,6 @@ extern const int unwind_hint_lasx;
- extern const int unwind_hint_lbt;
- extern const int unwind_hint_ri;
- extern const int unwind_hint_watch;
--extern unsigned long eentry;
--#ifdef CONFIG_NUMA
--extern unsigned long pcpu_handlers[NR_CPUS];
--#endif
- 
- static inline bool scan_handlers(unsigned long entry_offset)
- {
-diff --git a/arch/loongarch/mm/tlb.c b/arch/loongarch/mm/tlb.c
-index f46c15d6e7eae..24add95ecb65e 100644
---- a/arch/loongarch/mm/tlb.c
-+++ b/arch/loongarch/mm/tlb.c
-@@ -260,7 +260,6 @@ static void output_pgtable_bits_defines(void)
- #ifdef CONFIG_NUMA
- unsigned long pcpu_handlers[NR_CPUS];
- #endif
--extern long exception_handlers[VECSIZE * 128 / sizeof(long)];
- 
- static void setup_tlb_handler(int cpu)
- {
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index 85178a0303a57..e321428225f9b 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11296,6 +11296,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x144d, 0xc886, "Samsung Galaxy Book3 Pro (NP964XFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
+ 	SND_PCI_QUIRK(0x144d, 0xc1ca, "Samsung Galaxy Book3 Pro 360 (NP960QFG)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
+ 	SND_PCI_QUIRK(0x144d, 0xc1cc, "Samsung Galaxy Book3 Ultra (NT960XFH)", ALC298_FIXUP_SAMSUNG_AMP_V2_4_AMPS),
++	SND_PCI_QUIRK(0x1458, 0x900e, "Gigabyte G5 KF5 (2023)", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1458, 0xfa53, "Gigabyte BXBT-2807", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb120, "MSI Cubi MS-B120", ALC283_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1462, 0xb171, "Cubi N 8GL (MS-B171)", ALC283_FIXUP_HEADSET_MIC),
 -- 
 2.51.0
 
