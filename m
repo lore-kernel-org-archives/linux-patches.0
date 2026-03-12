@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41040344DB5;
-	Thu, 12 Mar 2026 20:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBA8735DA6A;
+	Thu, 12 Mar 2026 20:21:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346882; cv=none; b=h4sksH+zKh8WdY2SA7PDecanaXAjZvNNkXINMNHTh905Pp564mZzP/P6TAKDLcIQUzqvzSFZ88euHWFMNdxCsi7EW47zAzNPnImvB6UVingOwcG893BFUCIeA9ReYHes4SkvjHJjJ9mwhZMfY9dTReqGSgVCcYnlmEFwjjZVYrI=
+	t=1773346885; cv=none; b=ZQoWdIFsh1K0zfhwDXNkFh/n1vJ9bN6s2/ie/NWV+WgucNPISEjykKcPkmj/XPb/lQ/IWJ5Qnz89jUTZU1yf5Cv6tMxHqH2vY6XowU1f+350s0CwiQoA9bobgzJ3ZqSnzopWfyC6QyGME0GfKeU4qiFW2RsvW9wPUe+dZKq3tHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346882; c=relaxed/simple;
-	bh=0f4jcX1kcmne5MOuojbe3T1X2cPr+6UyC8Q3MA28HUE=;
+	s=arc-20240116; t=1773346885; c=relaxed/simple;
+	bh=m9z0WYeJq/U79whRT9AajiQKZP3KCZwdT0Kgsz9ZVEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OWKRb6GxWLoFc4VhyBeArSbIpjbs8ORRfuqT4CIXmWNN8PIDhwsUEQaT9Z3m9Fb3Du1FD3P5jX/fICJ9nX3loUNRD1wRx9W7FtiSp0TnFvY3rIZmtLZZ/AyHlWv47aOO5SDM+viJgBmJiJ3aRXHjrCJ7JAAeClv9OExOQwYDNfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Frcanx5b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OWhBxMGK6B9wu0em0JelDYhqPjgIpSTg4sDqwkiBcsFbixu2UkVqn9gFUA/UymFAvSuILuVxRtlC0219KwFT1jFiqyPJbQa160Z0q5MxnaUEGE3LfRs+B7EbLf1DHAfhD25q8JsS74nJtqqeArWCLDKpu/COVoX9O+YWIvdsi/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y0OY0sRh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Frcanx5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E41BCC4CEF7;
-	Thu, 12 Mar 2026 20:21:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y0OY0sRh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62864C4CEF7;
+	Thu, 12 Mar 2026 20:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346882;
-	bh=0f4jcX1kcmne5MOuojbe3T1X2cPr+6UyC8Q3MA28HUE=;
+	s=korg; t=1773346885;
+	bh=m9z0WYeJq/U79whRT9AajiQKZP3KCZwdT0Kgsz9ZVEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Frcanx5bZnF2XSNqBxtvfQP47nnpFzLrH7M64M37o8JqpXwHp3AB3kJBfpgd6jJHA
-	 BpBHT3VhE3tE8fYB1bVhzsvf0Pywc1cSvPbia1ZOUl1mvSdix4OBG4eufY5lBeiOx2
-	 +m6bMSnD+RCZIKbhrFHty/QgOQDchW9Zo0pnaWMU=
+	b=Y0OY0sRhIROsQJXLLmcMvUtjZQqT3O/gK4Wks1xdIb/BeRhUvX78TzHTlctzM6+US
+	 EJQNGcNSDRnAy0Q72DhnmVMKcrhwIp9zriZd+x16tumHGkVDnl4IGIA4Fb1Krrccd6
+	 t3ipaTys0N3uoN6cIBMT+MAkO+NzvOVXBiqTvhFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>
-Subject: [PATCH 6.12 149/265] RDMA/irdma: Fix kernel stack leak in irdma_create_user_ah()
-Date: Thu, 12 Mar 2026 21:08:56 +0100
-Message-ID: <20260312201023.642397293@linuxfoundation.org>
+	Davide Caratti <dcaratti@redhat.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 150/265] net/sched: ets: fix divide by zero in the offload path
+Date: Thu, 12 Mar 2026 21:08:57 +0100
+Message-ID: <20260312201023.678611331@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -50,39 +52,115 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Davide Caratti <dcaratti@redhat.com>
 
-commit 74586c6da9ea222a61c98394f2fc0a604748438c upstream.
+commit e35626f610f3d2b7953ccddf6a77453da22b3a9e upstream.
 
-struct irdma_create_ah_resp {  // 8 bytes, no padding
-    __u32 ah_id;               // offset 0 - SET (uresp.ah_id = ah->sc_ah.ah_info.ah_idx)
-    __u8  rsvd[4];             // offset 4 - NEVER SET <- LEAK
-};
+Offloading ETS requires computing each class' WRR weight: this is done by
+averaging over the sums of quanta as 'q_sum' and 'q_psum'. Using unsigned
+int, the same integer size as the individual DRR quanta, can overflow and
+even cause division by zero, like it happened in the following splat:
 
-rsvd[4]: 4 bytes of stack memory leaked unconditionally. Only ah_id is assigned before ib_respond_udata().
+ Oops: divide error: 0000 [#1] SMP PTI
+ CPU: 13 UID: 0 PID: 487 Comm: tc Tainted: G            E       6.19.0-virtme #45 PREEMPT(full)
+ Tainted: [E]=UNSIGNED_MODULE
+ Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+ RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
+ Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
+ RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
+ RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
+ RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
+ R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
+ R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
+ FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
+ Call Trace:
+  <TASK>
+  ets_qdisc_change+0x870/0xf40 [sch_ets]
+  qdisc_create+0x12b/0x540
+  tc_modify_qdisc+0x6d7/0xbd0
+  rtnetlink_rcv_msg+0x168/0x6b0
+  netlink_rcv_skb+0x5c/0x110
+  netlink_unicast+0x1d6/0x2b0
+  netlink_sendmsg+0x22e/0x470
+  ____sys_sendmsg+0x38a/0x3c0
+  ___sys_sendmsg+0x99/0xe0
+  __sys_sendmsg+0x8a/0xf0
+  do_syscall_64+0x111/0xf80
+  entry_SYSCALL_64_after_hwframe+0x77/0x7f
+ RIP: 0033:0x7f440b81c77e
+ Code: 4d 89 d8 e8 d4 bc 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
+ RSP: 002b:00007fff951e4c10 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
+ RAX: ffffffffffffffda RBX: 0000000000481820 RCX: 00007f440b81c77e
+ RDX: 0000000000000000 RSI: 00007fff951e4cd0 RDI: 0000000000000003
+ RBP: 00007fff951e4c20 R08: 0000000000000000 R09: 0000000000000000
+ R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff951f4fa8
+ R13: 00000000699ddede R14: 00007f440bb01000 R15: 0000000000486980
+  </TASK>
+ Modules linked in: sch_ets(E) netdevsim(E)
+ ---[ end trace 0000000000000000 ]---
+ RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
+ Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
+ RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
+ RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
+ RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
+ R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
+ R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
+ FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
+ Kernel panic - not syncing: Fatal exception
+ Kernel Offset: 0x30000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
+ ---[ end Kernel panic - not syncing: Fatal exception ]---
 
-The reserved members of the structure were not zeroed.
+Fix this using 64-bit integers for 'q_sum' and 'q_psum'.
 
 Cc: stable@vger.kernel.org
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://patch.msgid.link/3-v1-83e918d69e73+a9-rdma_udata_rc_jgg@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d35eb52bd2ac ("net: sch_ets: Make the ETS qdisc offloadable")
+Signed-off-by: Davide Caratti <dcaratti@redhat.com>
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://patch.msgid.link/28504887df314588c7255e9911769c36f751edee.1771964872.git.dcaratti@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/sched/sch_ets.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -4589,7 +4589,7 @@ static int irdma_create_user_ah(struct i
- #define IRDMA_CREATE_AH_MIN_RESP_LEN offsetofend(struct irdma_create_ah_resp, rsvd)
- 	struct irdma_ah *ah = container_of(ibah, struct irdma_ah, ibah);
- 	struct irdma_device *iwdev = to_iwdev(ibah->pd->device);
--	struct irdma_create_ah_resp uresp;
-+	struct irdma_create_ah_resp uresp = {};
- 	struct irdma_ah *parent_ah;
- 	int err;
+--- a/net/sched/sch_ets.c
++++ b/net/sched/sch_ets.c
+@@ -115,12 +115,12 @@ static void ets_offload_change(struct Qd
+ 	struct ets_sched *q = qdisc_priv(sch);
+ 	struct tc_ets_qopt_offload qopt;
+ 	unsigned int w_psum_prev = 0;
+-	unsigned int q_psum = 0;
+-	unsigned int q_sum = 0;
+ 	unsigned int quantum;
+ 	unsigned int w_psum;
+ 	unsigned int weight;
+ 	unsigned int i;
++	u64 q_psum = 0;
++	u64 q_sum = 0;
+ 
+ 	if (!tc_can_offload(dev) || !dev->netdev_ops->ndo_setup_tc)
+ 		return;
+@@ -138,8 +138,12 @@ static void ets_offload_change(struct Qd
+ 
+ 	for (i = 0; i < q->nbands; i++) {
+ 		quantum = q->classes[i].quantum;
+-		q_psum += quantum;
+-		w_psum = quantum ? q_psum * 100 / q_sum : 0;
++		if (quantum) {
++			q_psum += quantum;
++			w_psum = div64_u64(q_psum * 100, q_sum);
++		} else {
++			w_psum = 0;
++		}
+ 		weight = w_psum - w_psum_prev;
+ 		w_psum_prev = w_psum;
  
 
 
