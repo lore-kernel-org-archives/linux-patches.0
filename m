@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 333A63242AC;
-	Thu, 12 Mar 2026 20:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C7CD2D2491;
+	Thu, 12 Mar 2026 20:25:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347136; cv=none; b=kUn4sqDtDTSZ+7d7BVWGOmVPji+ZaW12aiwGL1LyDLR2XjN6Dn8cLqtkSIq7ygOQXRCdedpK6x6eEYFzFeRuKKIhTEiMc9cEfc978UQ7hMW39cua77ncinFSUSRrx1LHc9LRWEEeHkkbCK1HLs9M/R+ub7pabXcRLt3ko/QspX0=
+	t=1773347139; cv=none; b=dywyPEeHz9fGEoYlskReGfPNSZTaPRg9qz+uBWk757QDPQN6soVfN6pjSvTcWlfKqkNYzvJQOaQ/ctkJFfLuxzftLCIW35Ke0ysHdzMsPfzRYNUHjdf2S3bnkFjcmS2k7NKylc/Cxr25Icpp7YX6T8Py/4D3e9EVwYOVmd2RdFE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347136; c=relaxed/simple;
-	bh=nl33/dHYDevDcYOSPxVBC+1oUmxhKs/A+b9owaa9OBw=;
+	s=arc-20240116; t=1773347139; c=relaxed/simple;
+	bh=r7stgMsONLjSiy2lCIhbGcfiGjfJ9FC18WlfD2tQzCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=smbcww57nPhp1UQPDEbfuemXJSOc88Y7pis0+B8x1HiiuPjRC2wrzUGn2yCVIkqLOltikY3hYP+b7PqTpz4aGlraBj2eattfUnlN8B4tle72+46B0PToOJe8Fdreay9oX5V3ah2LTdAfN6PIJgpX3/dN3F4B3+/O5If/CYE2N54=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1p9ClBWS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZUEC/rbUdjoGGOPAWUwZa1xWgN5LN1jjmrJrFATCeAcD4OnZ9zfrYLRauHIUsPrZ+ehU9xm+QKpep1d5+qusjhlxvNcWAyMaAJXdjky8oqpdervIINMuvxlTq3gaxEywsfay+caBy11n3DwUM2EK1x8SAYDBKzAd/OF117p84iQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r1GPgvDg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1p9ClBWS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734E4C4CEF7;
-	Thu, 12 Mar 2026 20:25:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r1GPgvDg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68B6C4CEF7;
+	Thu, 12 Mar 2026 20:25:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347135;
-	bh=nl33/dHYDevDcYOSPxVBC+1oUmxhKs/A+b9owaa9OBw=;
+	s=korg; t=1773347139;
+	bh=r7stgMsONLjSiy2lCIhbGcfiGjfJ9FC18WlfD2tQzCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1p9ClBWSr9wBohV5M/p16D1QLe7vaAwoRCNLFFr1HEAduq+9c9+8T4b4ar9ScLaVQ
-	 xwK/LxJBRK8/vohSnQZzDDGCtD9fuDysp5I+gkkThOt7Y4j7ZeOmj/8bDurkAkgyF+
-	 LFlKM8ectM1UITdxqSTtBuhnCJRPCX3YzjxVdEbE=
+	b=r1GPgvDgxJUhDy9zNlTyQiM9EaGum8fY7tmT60pbEs/NVeHhQczx40cm3M7S98e5Q
+	 ZjJfhl+gas5tZQtNo0NnA1/259aKWx5xivlDWGXmMbgkBqZHkNC/AYRurMvk9ggipO
+	 5USIaCpROWjVlNqLeVOYPFwtIGnXI6NjIhk8tJ04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kohei Enju <kohei@enjuk.jp>,
-	Alexander Lobakin <aleksander.lobakin@intel.com>,
-	Simon Horman <horms@kernel.org>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Kaiyan Mei <M202472210@hust.edu.cn>,
+	Lang Xu <xulang@uniontech.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 213/265] iavf: fix netdev->max_mtu to respect actual hardware limit
-Date: Thu, 12 Mar 2026 21:10:00 +0100
-Message-ID: <20260312201026.013987760@linuxfoundation.org>
+Subject: [PATCH 6.12 214/265] bpf: Fix a UAF issue in bpf_trampoline_link_cgroup_shim
+Date: Thu, 12 Mar 2026 21:10:01 +0100
+Message-ID: <20260312201026.049583995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,70 +52,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kohei Enju <kohei@enjuk.jp>
+From: Lang Xu <xulang@uniontech.com>
 
-[ Upstream commit b84852170153671bb0fa6737a6e48370addd8e1a ]
+[ Upstream commit 56145d237385ca0e7ca9ff7b226aaf2eb8ef368b ]
 
-iavf sets LIBIE_MAX_MTU as netdev->max_mtu, ignoring vf_res->max_mtu
-from PF [1]. This allows setting an MTU beyond the actual hardware
-limit, causing TX queue timeouts [2].
+The root cause of this bug is that when 'bpf_link_put' reduces the
+refcount of 'shim_link->link.link' to zero, the resource is considered
+released but may still be referenced via 'tr->progs_hlist' in
+'cgroup_shim_find'. The actual cleanup of 'tr->progs_hlist' in
+'bpf_shim_tramp_link_release' is deferred. During this window, another
+process can cause a use-after-free via 'bpf_trampoline_link_cgroup_shim'.
 
-Set correct netdev->max_mtu using vf_res->max_mtu from the PF.
+Based on Martin KaFai Lau's suggestions, I have created a simple patch.
 
-Note that currently PF drivers such as ice/i40e set the frame size in
-vf_res->max_mtu, not MTU. Convert vf_res->max_mtu to MTU before setting
-netdev->max_mtu.
+To fix this:
+   Add an atomic non-zero check in 'bpf_trampoline_link_cgroup_shim'.
+   Only increment the refcount if it is not already zero.
 
-[1]
- # ip -j -d link show $DEV | jq '.[0].max_mtu'
- 16356
+Testing:
+   I verified the fix by adding a delay in
+   'bpf_shim_tramp_link_release' to make the bug easier to trigger:
 
-[2]
- iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 1: transmit queue 0 timed out 5692 ms
- iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
- iavf 0000:00:05.0 enp0s5: NETDEV WATCHDOG: CPU: 6: transmit queue 3 timed out 5312 ms
- iavf 0000:00:05.0 enp0s5: NIC Link is Up Speed is 10 Gbps Full Duplex
- ...
+static void bpf_shim_tramp_link_release(struct bpf_link *link)
+{
+	/* ... */
+	if (!shim_link->trampoline)
+		return;
 
-Fixes: 5fa4caff59f2 ("iavf: switch to Page Pool")
-Signed-off-by: Kohei Enju <kohei@enjuk.jp>
-Reviewed-by: Alexander Lobakin <aleksander.lobakin@intel.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
++	msleep(100);
+	WARN_ON_ONCE(bpf_trampoline_unlink_prog(&shim_link->link,
+		shim_link->trampoline, NULL));
+	bpf_trampoline_put(shim_link->trampoline);
+}
+
+Before the patch, running a PoC easily reproduced the crash(almost 100%)
+with a call trace similar to KaiyanM's report.
+After the patch, the bug no longer occurs even after millions of
+iterations.
+
+Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
+Reported-by: Kaiyan Mei <M202472210@hust.edu.cn>
+Closes: https://lore.kernel.org/bpf/3c4ebb0b.46ff8.19abab8abe2.Coremail.kaiyanm@hust.edu.cn/
+Signed-off-by: Lang Xu <xulang@uniontech.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/279EEE1BA1DDB49D+20260303095217.34436-1-xulang@uniontech.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf_main.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ kernel/bpf/trampoline.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 422af897d9330..dcd4f172ddc8a 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -2630,7 +2630,22 @@ static void iavf_init_config_adapter(struct iavf_adapter *adapter)
- 	netdev->watchdog_timeo = 5 * HZ;
+diff --git a/kernel/bpf/trampoline.c b/kernel/bpf/trampoline.c
+index dbe7754b4f4e1..894cd6f205f5f 100644
+--- a/kernel/bpf/trampoline.c
++++ b/kernel/bpf/trampoline.c
+@@ -749,10 +749,8 @@ int bpf_trampoline_link_cgroup_shim(struct bpf_prog *prog,
+ 	mutex_lock(&tr->mutex);
  
- 	netdev->min_mtu = ETH_MIN_MTU;
--	netdev->max_mtu = LIBIE_MAX_MTU;
-+
-+	/* PF/VF API: vf_res->max_mtu is max frame size (not MTU).
-+	 * Convert to MTU.
-+	 */
-+	if (!adapter->vf_res->max_mtu) {
-+		netdev->max_mtu = LIBIE_MAX_MTU;
-+	} else if (adapter->vf_res->max_mtu < LIBETH_RX_LL_LEN + ETH_MIN_MTU ||
-+		   adapter->vf_res->max_mtu >
-+			   LIBETH_RX_LL_LEN + LIBIE_MAX_MTU) {
-+		netdev_warn_once(adapter->netdev,
-+				 "invalid max frame size %d from PF, using default MTU %d",
-+				 adapter->vf_res->max_mtu, LIBIE_MAX_MTU);
-+		netdev->max_mtu = LIBIE_MAX_MTU;
-+	} else {
-+		netdev->max_mtu = adapter->vf_res->max_mtu - LIBETH_RX_LL_LEN;
-+	}
- 
- 	if (!is_valid_ether_addr(adapter->hw.mac.addr)) {
- 		dev_info(&pdev->dev, "Invalid MAC address %pM, using random\n",
+ 	shim_link = cgroup_shim_find(tr, bpf_func);
+-	if (shim_link) {
++	if (shim_link && !IS_ERR(bpf_link_inc_not_zero(&shim_link->link.link))) {
+ 		/* Reusing existing shim attached by the other program. */
+-		bpf_link_inc(&shim_link->link.link);
+-
+ 		mutex_unlock(&tr->mutex);
+ 		bpf_trampoline_put(tr); /* bpf_trampoline_get above */
+ 		return 0;
 -- 
 2.51.0
 
