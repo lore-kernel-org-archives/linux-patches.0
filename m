@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D744F3FF8AD;
-	Thu, 12 Mar 2026 20:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40AD93FFAB5;
+	Thu, 12 Mar 2026 20:12:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346334; cv=none; b=GrRktwtOB5UgdpVvO+2wlVjACnu4nTlq7rbwOj09ljOuahwfoLF0ais4bDHXffJ/8Ni77xmtY3zJ9eT7wbemQjMn/2jtfEFcATsIOb3GMaw/NujSh0Co/KxJTgHih59DTMjyDeTdxkIjeeczB3YQU5DozdrZwOh0FnHJFPS0Zfg=
+	t=1773346339; cv=none; b=gC98rkoryAndtPRWHc3LDOkoN49waZX9v5h5vffepSU5A3EB64a1oLfDK5x9jISkW2MpfeXSEQgVolK4KLe/yRbTZmjPRETeBIhstO+490zFe7QtFXW0PcA6dpJ+bQCqBZa0NkzuOejZEHTLoq8Adfpz90OQRe9MCnCrAfO4Sw8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346334; c=relaxed/simple;
-	bh=7Fxl7dA6uT7V2BSVPi9y90JwdzzF9W+s0Mzz5pHRUPA=;
+	s=arc-20240116; t=1773346339; c=relaxed/simple;
+	bh=NMrVFo42qYmNyGDKuav3KD0LbN5YDndae2OssNj/qPM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QVK+QFminOmSFHHTQngTteRJVJLhAs+ak1AvpfOgdYLDA+nvLvpvwSepfzqn90Zb0f/HDNJEYriKyxS28p+jMPTm3xmzctUixCsHeUIFhDffGjJTL5s1lJpqaH+Dw+BxZkIy6ysVVOcCbAOFUBNxou/+Fv1CnWccMcujCN3SERw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k4u0sKdR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iXgKfLXCui0IJ2YQYAcCvKRYrPYqk0UZQoYCpJ59w83k6moYLntxGl7+qtJK5lw0aZH6oU7vaqdBlqeOYrxO/Y8Zf+s/Cu1gLLcyEPe9tkDaCGxjx63AgR9MfZyvJwlJcA2tATzkoy+m5f2qqF+HwkixGP5Sh63fsjLP1D1+6qE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Y9ejzRm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k4u0sKdR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3B5C4CEF7;
-	Thu, 12 Mar 2026 20:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Y9ejzRm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51FD2C4CEF7;
+	Thu, 12 Mar 2026 20:12:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346334;
-	bh=7Fxl7dA6uT7V2BSVPi9y90JwdzzF9W+s0Mzz5pHRUPA=;
+	s=korg; t=1773346338;
+	bh=NMrVFo42qYmNyGDKuav3KD0LbN5YDndae2OssNj/qPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4u0sKdRETXsWeAcuW8f1AJ5romjpDXhxr5kXNLe86+KRtFVofYe0ZYR3kXT0k7Az
-	 WWUnLZeVTh6YHtF1q+gQ+3FdVmSM4Q3coEe4omDYTcV0tjwi4tI4lWxgDl5UO2859l
-	 SL9xwiSqwr5owb7CNK2IdzaFeO0BwF6OcTfNg9yA=
+	b=0Y9ejzRm/Dpa9+kU2igBTpZfPVWj5zFW8SRVYVX1t2De8yiVO7rv7c7tQ/lr/hd4F
+	 YIh40s5HZA4JBYe9eslW8WpIwnKLrA1ea2zh8HsBl4URu7f5uIFDP9JA5oLNOh+YMk
+	 yIBbkNK3/emuueT3Uik7M+W1OJZAG1ttTK3+F54o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Salomon Dushimirimana <salomondush@google.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 008/265] scsi: pm8001: Fix use-after-free in pm8001_queue_command()
-Date: Thu, 12 Mar 2026 21:06:35 +0100
-Message-ID: <20260312201018.454970353@linuxfoundation.org>
+Subject: [PATCH 6.12 009/265] ALSA: scarlett2: Fix redeclaration of loop variable
+Date: Thu, 12 Mar 2026 21:06:36 +0100
+Message-ID: <20260312201018.491424140@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,51 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Salomon Dushimirimana <salomondush@google.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 38353c26db28efd984f51d426eac2396d299cca7 ]
+[ Upstream commit 5e7b782259fd396c7802948f5901bb2d769ddff8 ]
 
-Commit e29c47fe8946 ("scsi: pm8001: Simplify pm8001_task_exec()") refactors
-pm8001_queue_command(), however it introduces a potential cause of a double
-free scenario when it changes the function to return -ENODEV in case of phy
-down/device gone state.
+Was using both "for (i = 0, ..." and "for (int i = 0, ..." in
+scarlett2_update_autogain(). Remove "int" to fix.
 
-In this path, pm8001_queue_command() updates task status and calls
-task_done to indicate to upper layer that the task has been handled.
-However, this also frees the underlying SAS task. A -ENODEV is then
-returned to the caller. When libsas sas_ata_qc_issue() receives this error
-value, it assumes the task wasn't handled/queued by LLDD and proceeds to
-clean up and free the task again, resulting in a double free.
-
-Since pm8001_queue_command() handles the SAS task in this case, it should
-return 0 to the caller indicating that the task has been handled.
-
-Fixes: e29c47fe8946 ("scsi: pm8001: Simplify pm8001_task_exec()")
-Signed-off-by: Salomon Dushimirimana <salomondush@google.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Link: https://patch.msgid.link/20260213192806.439432-1-salomondush@google.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/ecb0a8931c1883abd6c0e335c63961653bef85f0.1727971672.git.g@b4.vu
+Stable-dep-of: 1d241483368f ("ALSA: scarlett2: Fix DSP filter control array handling")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/pm8001/pm8001_sas.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/usb/mixer_scarlett2.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/pm8001/pm8001_sas.c b/drivers/scsi/pm8001/pm8001_sas.c
-index 4daab8b6d6752..0f911228cb2f1 100644
---- a/drivers/scsi/pm8001/pm8001_sas.c
-+++ b/drivers/scsi/pm8001/pm8001_sas.c
-@@ -476,8 +476,9 @@ int pm8001_queue_command(struct sas_task *task, gfp_t gfp_flags)
- 		} else {
- 			task->task_done(task);
- 		}
--		rc = -ENODEV;
--		goto err_out;
-+		spin_unlock_irqrestore(&pm8001_ha->lock, flags);
-+		pm8001_dbg(pm8001_ha, IO, "pm8001_task_exec device gone\n");
-+		return 0;
- 	}
+diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
+index f6292c4b8d214..8c7755fc1519f 100644
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -3416,7 +3416,7 @@ static int scarlett2_update_autogain(struct usb_mixer_interface *mixer)
+ 				private->num_autogain_status_texts - 1;
  
- 	ccb = pm8001_ccb_alloc(pm8001_ha, pm8001_dev, task);
+ 
+-	for (int i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
++	for (i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
+ 		if (scarlett2_has_config_item(private,
+ 					      scarlett2_ag_target_configs[i])) {
+ 			err = scarlett2_usb_get_config(
+@@ -3427,7 +3427,7 @@ static int scarlett2_update_autogain(struct usb_mixer_interface *mixer)
+ 		}
+ 
+ 	/* convert from negative dBFS as used by the device */
+-	for (int i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
++	for (i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
+ 		private->ag_targets[i] = -ag_target_values[i];
+ 
+ 	return 0;
 -- 
 2.51.0
 
