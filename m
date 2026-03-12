@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63604346FB3;
-	Thu, 12 Mar 2026 20:12:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8958396582;
+	Thu, 12 Mar 2026 20:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346325; cv=none; b=Vkf9XS9Ovz7LjhzD7sCWDUHIYKTb6Pu3SwLYVs7qoHYkJE9cMN2XEDDyFBjpX/cZU86JaKbJknqwVXY3IoPmAIcJfHBQEUUAz/+vwH6e+NYgrdIYJf2uwgzkfkFeToIwS87FIWPSYO/8ogXiIAwXQSax9NyN5ycfBwMkjEjD/GE=
+	t=1773346329; cv=none; b=heV6xcS/3vcNAWPWDEw0XMxCossTG26+gXpOiJ2qr0rRTmBl5eYFuIrzxF6fM8mzfWfxA5P2pPyVweiqNQ7IauFf1dZFWMUExWw/o4Pv3mBMCeciMY3rbUievmy5BDMhLXv7JKZ/3VI2xPIDaPDn/N/g28C5H++AI48QnMZtK/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346325; c=relaxed/simple;
-	bh=giAwuHt2XrOCJKT2/gvha3UH64D2LNHP+YauDRTNRZ8=;
+	s=arc-20240116; t=1773346329; c=relaxed/simple;
+	bh=JL2y0H8kcH5GVjI3arkb/wTHMl0qiGKQmEoXEYEg5ck=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jiVA5pgG+Zdp53kNg9RKuKgpvcFdAQH0VgkRmdu980Hz26kuvJvD+1Er7Dj43TZ2YbfjcX7G5jFoPA6ijxOLQ8xK8xGksWgyz0lktZtQuw6k4pdJEithiho4kVYe59VgWVt6REh9/7XM5CSoleBT9Hq2dN5WQys7YoqqtYn/+Vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bcmE3o5i; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DCUqCZ5hJoT5fvJo0rYjHHdJ1GHiJaSFc8/fJIREqadlvmu84rEkwxDcWmB4vjVI6+H+sYsZ0ioeHf3tPLmtGJCMlJvnWxmAf4iC8TYewDo4di96lT8mVRWtLwWG/qHWsJMqcSLPQPYBbXq9POFINdkKy6iyzZJ9vwFtSMU/HNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l0/6WSby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bcmE3o5i"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 954A5C4CEF7;
-	Thu, 12 Mar 2026 20:12:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l0/6WSby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E82F9C4CEF7;
+	Thu, 12 Mar 2026 20:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346325;
-	bh=giAwuHt2XrOCJKT2/gvha3UH64D2LNHP+YauDRTNRZ8=;
+	s=korg; t=1773346329;
+	bh=JL2y0H8kcH5GVjI3arkb/wTHMl0qiGKQmEoXEYEg5ck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bcmE3o5isa078KBQF4464wS8NOL8/Z/US8WXgmh19IzpyhFj5hgCSzGdd6IzaJuhG
-	 QNWSU77aX6uqlm14Y5aaJtyxoRi4suM8S+CoN0DXgvRJlf4SRHo8xW371YjLmkiH8j
-	 6voB9egMOyCi0TbMesBk3qGV3b54C++5DJWUeBFw=
+	b=l0/6WSbyI63/3mIneKhwW4ow88D41E0Lc0NzGwnnMgPDGDBfcQjME2+1Zt1AfVVFb
+	 YKiOrQ1kpWhXfKWher+2jAxFeJNZV0wZsgMIoCSSh5BAQ8AgVKmFB4WYwr5GYZTNxT
+	 PnkbtCot1h/2OCiywM/OylQHu9hpzVSBIEBkAK3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nam Cao <namcao@linutronix.de>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Mathias Krause <minipli@grsecurity.net>,
+	Justin Tee <justin.tee@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 006/265] irqchip/sifive-plic: Fix frozen interrupt due to affinity setting
-Date: Thu, 12 Mar 2026 21:06:33 +0100
-Message-ID: <20260312201018.379671091@linuxfoundation.org>
+Subject: [PATCH 6.12 007/265] scsi: lpfc: Properly set WC for DPP mapping
+Date: Thu, 12 Mar 2026 21:06:34 +0100
+Message-ID: <20260312201018.417595450@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,65 +52,125 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nam Cao <namcao@linutronix.de>
+From: Mathias Krause <minipli@grsecurity.net>
 
-[ Upstream commit 1072020685f4b81f6efad3b412cdae0bd62bb043 ]
+[ Upstream commit bffda93a51b40afd67c11bf558dc5aae83ca0943 ]
 
-PLIC ignores interrupt completion message for disabled interrupt, explained
-by the specification:
+Using set_memory_wc() to enable write-combining for the DPP portion of
+the MMIO mapping is wrong as set_memory_*() is meant to operate on RAM
+only, not MMIO mappings. In fact, as used currently triggers a BUG_ON()
+with enabled CONFIG_DEBUG_VIRTUAL.
 
-    The PLIC signals it has completed executing an interrupt handler by
-    writing the interrupt ID it received from the claim to the
-    claim/complete register. The PLIC does not check whether the completion
-    ID is the same as the last claim ID for that target. If the completion
-    ID does not match an interrupt source that is currently enabled for
-    the target, the completion is silently ignored.
+Simply map the DPP region separately and in addition to the already
+existing mappings, avoiding any possible negative side effects for
+these.
 
-This caused problems in the past, because an interrupt can be disabled
-while still being handled and plic_irq_eoi() had no effect. That was fixed
-by checking if the interrupt is disabled, and if so enable it, before
-sending the completion message. That check is done with irqd_irq_disabled().
-
-However, that is not sufficient because the enable bit for the handling
-hart can be zero despite irqd_irq_disabled(d) being false. This can happen
-when affinity setting is changed while a hart is still handling the
-interrupt.
-
-This problem is easily reproducible by dumping a large file to uart (which
-generates lots of interrupts) and at the same time keep changing the uart
-interrupt's affinity setting. The uart port becomes frozen almost
-instantaneously.
-
-Fix this by checking PLIC's enable bit instead of irqd_irq_disabled().
-
-Fixes: cc9f04f9a84f ("irqchip/sifive-plic: Implement irq_set_affinity() for SMP host")
-Signed-off-by: Nam Cao <namcao@linutronix.de>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260212114125.3148067-1-namcao@linutronix.de
+Fixes: 1351e69fc6db ("scsi: lpfc: Add push-to-adapter support to sli4")
+Signed-off-by: Mathias Krause <minipli@grsecurity.net>
+Signed-off-by: Justin Tee <justin.tee@broadcom.com>
+Reviewed-by: Mathias Krause <minipli@grsecurity.net>
+Link: https://patch.msgid.link/20260212192327.141104-1-justintee8345@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-sifive-plic.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/scsi/lpfc/lpfc_init.c |  2 ++
+ drivers/scsi/lpfc/lpfc_sli.c  | 36 +++++++++++++++++++++++++++++------
+ drivers/scsi/lpfc/lpfc_sli4.h |  3 +++
+ 3 files changed, 35 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/irqchip/irq-sifive-plic.c b/drivers/irqchip/irq-sifive-plic.c
-index c0cf4fed13e09..b58b3cd807d40 100644
---- a/drivers/irqchip/irq-sifive-plic.c
-+++ b/drivers/irqchip/irq-sifive-plic.c
-@@ -154,8 +154,13 @@ static void plic_irq_disable(struct irq_data *d)
- static void plic_irq_eoi(struct irq_data *d)
- {
- 	struct plic_handler *handler = this_cpu_ptr(&plic_handlers);
-+	u32 __iomem *reg;
-+	bool enabled;
-+
-+	reg = handler->enable_base + (d->hwirq / 32) * sizeof(u32);
-+	enabled = readl(reg) & BIT(d->hwirq % 32);
+diff --git a/drivers/scsi/lpfc/lpfc_init.c b/drivers/scsi/lpfc/lpfc_init.c
+index 08e6b8ed601c4..5b9830a28c8db 100644
+--- a/drivers/scsi/lpfc/lpfc_init.c
++++ b/drivers/scsi/lpfc/lpfc_init.c
+@@ -12044,6 +12044,8 @@ lpfc_sli4_pci_mem_unset(struct lpfc_hba *phba)
+ 		iounmap(phba->sli4_hba.conf_regs_memmap_p);
+ 		if (phba->sli4_hba.dpp_regs_memmap_p)
+ 			iounmap(phba->sli4_hba.dpp_regs_memmap_p);
++		if (phba->sli4_hba.dpp_regs_memmap_wc_p)
++			iounmap(phba->sli4_hba.dpp_regs_memmap_wc_p);
+ 		break;
+ 	case LPFC_SLI_INTF_IF_TYPE_1:
+ 		break;
+diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
+index 2a1f2b2017159..7dba06fa82d85 100644
+--- a/drivers/scsi/lpfc/lpfc_sli.c
++++ b/drivers/scsi/lpfc/lpfc_sli.c
+@@ -15916,6 +15916,32 @@ lpfc_dual_chute_pci_bar_map(struct lpfc_hba *phba, uint16_t pci_barset)
+ 	return NULL;
+ }
  
--	if (unlikely(irqd_irq_disabled(d))) {
-+	if (unlikely(!enabled)) {
- 		plic_toggle(handler, d->hwirq, 1);
- 		writel(d->hwirq, handler->hart_base + CONTEXT_CLAIM);
- 		plic_toggle(handler, d->hwirq, 0);
++static __maybe_unused void __iomem *
++lpfc_dpp_wc_map(struct lpfc_hba *phba, uint8_t dpp_barset)
++{
++
++	/* DPP region is supposed to cover 64-bit BAR2 */
++	if (dpp_barset != WQ_PCI_BAR_4_AND_5) {
++		lpfc_log_msg(phba, KERN_WARNING, LOG_INIT,
++			     "3273 dpp_barset x%x != WQ_PCI_BAR_4_AND_5\n",
++			     dpp_barset);
++		return NULL;
++	}
++
++	if (!phba->sli4_hba.dpp_regs_memmap_wc_p) {
++		void __iomem *dpp_map;
++
++		dpp_map = ioremap_wc(phba->pci_bar2_map,
++				     pci_resource_len(phba->pcidev,
++						      PCI_64BIT_BAR4));
++
++		if (dpp_map)
++			phba->sli4_hba.dpp_regs_memmap_wc_p = dpp_map;
++	}
++
++	return phba->sli4_hba.dpp_regs_memmap_wc_p;
++}
++
+ /**
+  * lpfc_modify_hba_eq_delay - Modify Delay Multiplier on EQs
+  * @phba: HBA structure that EQs are on.
+@@ -16879,9 +16905,6 @@ lpfc_wq_create(struct lpfc_hba *phba, struct lpfc_queue *wq,
+ 	uint8_t dpp_barset;
+ 	uint32_t dpp_offset;
+ 	uint8_t wq_create_version;
+-#ifdef CONFIG_X86
+-	unsigned long pg_addr;
+-#endif
+ 
+ 	/* sanity check on queue memory */
+ 	if (!wq || !cq)
+@@ -17067,14 +17090,15 @@ lpfc_wq_create(struct lpfc_hba *phba, struct lpfc_queue *wq,
+ 
+ #ifdef CONFIG_X86
+ 			/* Enable combined writes for DPP aperture */
+-			pg_addr = (unsigned long)(wq->dpp_regaddr) & PAGE_MASK;
+-			rc = set_memory_wc(pg_addr, 1);
+-			if (rc) {
++			bar_memmap_p = lpfc_dpp_wc_map(phba, dpp_barset);
++			if (!bar_memmap_p) {
+ 				lpfc_printf_log(phba, KERN_ERR, LOG_INIT,
+ 					"3272 Cannot setup Combined "
+ 					"Write on WQ[%d] - disable DPP\n",
+ 					wq->queue_id);
+ 				phba->cfg_enable_dpp = 0;
++			} else {
++				wq->dpp_regaddr = bar_memmap_p + dpp_offset;
+ 			}
+ #else
+ 			phba->cfg_enable_dpp = 0;
+diff --git a/drivers/scsi/lpfc/lpfc_sli4.h b/drivers/scsi/lpfc/lpfc_sli4.h
+index c1e9ec0243bac..9caada8cbe58f 100644
+--- a/drivers/scsi/lpfc/lpfc_sli4.h
++++ b/drivers/scsi/lpfc/lpfc_sli4.h
+@@ -783,6 +783,9 @@ struct lpfc_sli4_hba {
+ 	void __iomem *dpp_regs_memmap_p;  /* Kernel memory mapped address for
+ 					   * dpp registers
+ 					   */
++	void __iomem *dpp_regs_memmap_wc_p;/* Kernel memory mapped address for
++					    * dpp registers with write combining
++					    */
+ 	union {
+ 		struct {
+ 			/* IF Type 0, BAR 0 PCI cfg space reg mem map */
 -- 
 2.51.0
 
