@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D182F1FED;
-	Thu, 12 Mar 2026 20:29:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB5373BE0;
+	Thu, 12 Mar 2026 20:29:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347343; cv=none; b=Ojjn5dkhlnMXQQ7nr8OTRVqKUBmnV7MquvjURJFF9EYIo/vI9xiFpX5RhzCh/E0f35hDktqqHpWgMUNyzstg3unoxgl4DHhLcEY8a0E2sYOee19AZ/SO35/6FjN63DJ/3lGOeD1gxChGFHaniPuxUvG7XFVBVLQhZi/Vr1GJJEk=
+	t=1773347349; cv=none; b=Jbbmm8Z5PLbrCYafhqkmrjm2ugkEWq6qBN/pUax7vv4ZLb+Ab50457f/9+vJe1tXHLwDbNV8eZaAA2LfmhP6vaHRv/o+dWy+5rrqntsI5q2xZtupNJcwjZxLYm58Mi2QRMqH3akV4zwWmil57eeYjNN4ZJ5u6XMIJDDIrYosqB4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347343; c=relaxed/simple;
-	bh=7yLPQoP8TSRUqppx8n/1TmBJZ6cE10TzgzxBzcDwBb8=;
+	s=arc-20240116; t=1773347349; c=relaxed/simple;
+	bh=ISfROsuQtI8Uj58cPZ4FYfAExg7dob9ShqhtTq0dmBI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d0P7K8YbKKN/fptrViy2ZxufQlndGAQhshtZPIs4a5S/NCMMtn1DMluOOdU1CY2qv5xj+JnyKPIqma7MVgenxKZ8eOsuth7eKjowXt7XgngtwAHMNw54XfW+0LryLFIX5mFVEVcj4Zb9qLBQBUrgwCuvGHgAyvVsbCchfMaH/MI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y8iFDqA0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iU/fDYWClMDb+YLWRR+vLXaGsnFbwoXE/FOYUGT97lvNZ57f0CbFZVaaNB6tQwa4zy1czcx6b3qsAHv3EMczpIo5lF8d0SRQkCJmGfz1/xJ8qH1btURReQac2R+SWfh1ldSrMMOpiIjzhmsR0C8PNLs7yFeimJtIYa70xHq/u/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gxqsgfWS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y8iFDqA0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FBDC4CEF7;
-	Thu, 12 Mar 2026 20:29:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gxqsgfWS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CCCC4CEF7;
+	Thu, 12 Mar 2026 20:29:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347343;
-	bh=7yLPQoP8TSRUqppx8n/1TmBJZ6cE10TzgzxBzcDwBb8=;
+	s=korg; t=1773347349;
+	bh=ISfROsuQtI8Uj58cPZ4FYfAExg7dob9ShqhtTq0dmBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8iFDqA0gTnFEFqqSCNLl8XDVqpihcewDA6hudnOpzqMZyzXEJdHM8IjhSC2HBy0E
-	 p79GvGGkFvQ60LeEaJnXnkI27V38e+euERYJycQBOa7AUxigjGk38KMCpXz8+S94MA
-	 HtVoYCWDLu1tT+tHe4/ZBr/r/62b7arrlTYjVa+s=
+	b=gxqsgfWSXaBBr27Oq6ZyE6ht2Kvm20d1ZxAuo/UEPqRPtDiFR/EeUUtAEANCQ95hU
+	 VUUUscgHZXh7QRMWZ5DURkrj78RkaZpaMSYG1NQA/ZoCNdVtZzjtW4iXEqRd5ul3YC
+	 ytBGmsrkoMgziGxCropwPsNJ42jQPW/vVTtWIMeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	=?UTF-8?q?Maxime=20B=C3=A9lair?= <maxime.belair@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 260/265] apparmor: fix race between freeing data and fs accessing it
-Date: Thu, 12 Mar 2026 21:10:47 +0100
-Message-ID: <20260312201027.741584503@linuxfoundation.org>
+	syzbot+1713b1aa266195b916c2@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.12 261/265] ext4: fix potential null deref in ext4_mb_init()
+Date: Thu, 12 Mar 2026 21:10:48 +0100
+Message-ID: <20260312201027.778152784@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -47,708 +48,87 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 8e135b8aee5a06c52a4347a5a6d51223c6f36ba3 upstream.
+commit 3c3fac6bc0a9c00dbe65d8dc0d3a282afe4d3188 upstream.
 
-AppArmor was putting the reference to i_private data on its end after
-removing the original entry from the file system. However the inode
-can aand does live beyond that point and it is possible that some of
-the fs call back functions will be invoked after the reference has
-been put, which results in a race between freeing the data and
-accessing it through the fs.
+In ext4_mb_init(), ext4_mb_avg_fragment_size_destroy() may be called
+when sbi->s_mb_avg_fragment_size remains uninitialized (e.g., if groupinfo
+slab cache allocation fails). Since ext4_mb_avg_fragment_size_destroy()
+lacks null pointer checking, this leads to a null pointer dereference.
 
-While the rawdata/loaddata is the most likely candidate to fail the
-race, as it has the fewest references. If properly crafted it might be
-possible to trigger a race for the other types stored in i_private.
+==================================================================
+EXT4-fs: no memory for groupinfo slab cache
+BUG: kernel NULL pointer dereference, address: 0000000000000000
+PGD 0 P4D 0
+Oops: Oops: 0002 [#1] SMP PTI
+CPU:2 UID: 0 PID: 87 Comm:mount Not tainted 6.17.0-rc2 #1134 PREEMPT(none)
+RIP: 0010:_raw_spin_lock_irqsave+0x1b/0x40
+Call Trace:
+ <TASK>
+ xa_destroy+0x61/0x130
+ ext4_mb_init+0x483/0x540
+ __ext4_fill_super+0x116d/0x17b0
+ ext4_fill_super+0xd3/0x280
+ get_tree_bdev_flags+0x132/0x1d0
+ vfs_get_tree+0x29/0xd0
+ do_new_mount+0x197/0x300
+ __x64_sys_mount+0x116/0x150
+ do_syscall_64+0x50/0x1c0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
+==================================================================
 
-Fix this by moving the put of i_private referenced data to the correct
-place which is during inode eviction.
+Therefore, add necessary null check to ext4_mb_avg_fragment_size_destroy()
+to prevent this issue. The same fix is also applied to
+ext4_mb_largest_free_orders_destroy().
 
-Fixes: c961ee5f21b20 ("apparmor: convert from securityfs to apparmorfs for policy ns files")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Maxime Bélair <maxime.belair@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Reported-by: syzbot+1713b1aa266195b916c2@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=1713b1aa266195b916c2
+Cc: stable@kernel.org
+Fixes: f7eaacbb4e54 ("ext4: convert free groups order lists to xarrays")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/apparmorfs.c            |  194 +++++++++++++++++-------------
- security/apparmor/include/label.h         |   16 +-
- security/apparmor/include/lib.h           |   12 +
- security/apparmor/include/policy.h        |    8 -
- security/apparmor/include/policy_unpack.h |    6 
- security/apparmor/label.c                 |   12 +
- security/apparmor/policy_unpack.c         |    6 
- 7 files changed, 153 insertions(+), 101 deletions(-)
+ fs/ext4/mballoc.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -32,6 +32,7 @@
- #include "include/crypto.h"
- #include "include/ipc.h"
- #include "include/label.h"
-+#include "include/lib.h"
- #include "include/policy.h"
- #include "include/policy_ns.h"
- #include "include/resource.h"
-@@ -62,6 +63,7 @@
-  * securityfs and apparmorfs filesystems.
-  */
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3678,16 +3678,26 @@ static void ext4_discard_work(struct wor
  
-+#define IREF_POISON 101
- 
- /*
-  * support fns
-@@ -153,6 +155,71 @@ static int aafs_show_path(struct seq_fil
- 	return 0;
- }
- 
-+static struct aa_ns *get_ns_common_ref(struct aa_common_ref *ref)
-+{
-+	if (ref) {
-+		struct aa_label *reflabel = container_of(ref, struct aa_label,
-+							 count);
-+		return aa_get_ns(labels_ns(reflabel));
-+	}
-+
-+	return NULL;
-+}
-+
-+static struct aa_proxy *get_proxy_common_ref(struct aa_common_ref *ref)
-+{
-+	if (ref)
-+		return aa_get_proxy(container_of(ref, struct aa_proxy, count));
-+
-+	return NULL;
-+}
-+
-+static struct aa_loaddata *get_loaddata_common_ref(struct aa_common_ref *ref)
-+{
-+	if (ref)
-+		return aa_get_i_loaddata(container_of(ref, struct aa_loaddata,
-+						      count));
-+	return NULL;
-+}
-+
-+static void aa_put_common_ref(struct aa_common_ref *ref)
-+{
-+	if (!ref)
+ static inline void ext4_mb_avg_fragment_size_destroy(struct ext4_sb_info *sbi)
+ {
++	if (!sbi->s_mb_avg_fragment_size)
 +		return;
 +
-+	switch (ref->reftype) {
-+	case REF_RAWDATA:
-+		aa_put_i_loaddata(container_of(ref, struct aa_loaddata,
-+					       count));
-+		break;
-+	case REF_PROXY:
-+		aa_put_proxy(container_of(ref, struct aa_proxy,
-+					  count));
-+		break;
-+	case REF_NS:
-+		/* ns count is held on its unconfined label */
-+		aa_put_ns(labels_ns(container_of(ref, struct aa_label, count)));
-+		break;
-+	default:
-+		AA_BUG(true, "unknown refcount type");
-+		break;
-+	}
-+}
+ 	for (int i = 0; i < MB_NUM_ORDERS(sbi->s_sb); i++)
+ 		xa_destroy(&sbi->s_mb_avg_fragment_size[i]);
 +
-+static void aa_get_common_ref(struct aa_common_ref *ref)
-+{
-+	kref_get(&ref->count);
-+}
+ 	kfree(sbi->s_mb_avg_fragment_size);
++	sbi->s_mb_avg_fragment_size = NULL;
+ }
+ 
+ static inline void ext4_mb_largest_free_orders_destroy(struct ext4_sb_info *sbi)
+ {
++	if (!sbi->s_mb_largest_free_orders)
++		return;
 +
-+static void aafs_evict(struct inode *inode)
-+{
-+	struct aa_common_ref *ref = inode->i_private;
+ 	for (int i = 0; i < MB_NUM_ORDERS(sbi->s_sb); i++)
+ 		xa_destroy(&sbi->s_mb_largest_free_orders[i]);
 +
-+	clear_inode(inode);
-+	aa_put_common_ref(ref);
-+	inode->i_private = (void *) IREF_POISON;
-+}
-+
- static void aafs_free_inode(struct inode *inode)
- {
- 	if (S_ISLNK(inode->i_mode))
-@@ -162,6 +229,7 @@ static void aafs_free_inode(struct inode
- 
- static const struct super_operations aafs_super_ops = {
- 	.statfs = simple_statfs,
-+	.evict_inode = aafs_evict,
- 	.free_inode = aafs_free_inode,
- 	.show_path = aafs_show_path,
- };
-@@ -262,7 +330,8 @@ static int __aafs_setup_d_inode(struct i
-  * aafs_remove(). Will return ERR_PTR on failure.
-  */
- static struct dentry *aafs_create(const char *name, umode_t mode,
--				  struct dentry *parent, void *data, void *link,
-+				  struct dentry *parent,
-+				  struct aa_common_ref *data, void *link,
- 				  const struct file_operations *fops,
- 				  const struct inode_operations *iops)
- {
-@@ -299,6 +368,9 @@ static struct dentry *aafs_create(const
- 		goto fail_dentry;
- 	inode_unlock(dir);
- 
-+	if (data)
-+		aa_get_common_ref(data);
-+
- 	return dentry;
- 
- fail_dentry:
-@@ -323,7 +395,8 @@ fail_lock:
-  * see aafs_create
-  */
- static struct dentry *aafs_create_file(const char *name, umode_t mode,
--				       struct dentry *parent, void *data,
-+				       struct dentry *parent,
-+				       struct aa_common_ref *data,
- 				       const struct file_operations *fops)
- {
- 	return aafs_create(name, mode, parent, data, NULL, fops, NULL);
-@@ -448,7 +521,7 @@ end_section:
- static ssize_t profile_load(struct file *f, const char __user *buf, size_t size,
- 			    loff_t *pos)
- {
--	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
-+	struct aa_ns *ns = get_ns_common_ref(f->f_inode->i_private);
- 	int error = policy_update(AA_MAY_LOAD_POLICY, buf, size, pos, ns,
- 				  f->f_cred);
- 
-@@ -466,7 +539,7 @@ static const struct file_operations aa_f
- static ssize_t profile_replace(struct file *f, const char __user *buf,
- 			       size_t size, loff_t *pos)
- {
--	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
-+	struct aa_ns *ns = get_ns_common_ref(f->f_inode->i_private);
- 	int error = policy_update(AA_MAY_LOAD_POLICY | AA_MAY_REPLACE_POLICY,
- 				  buf, size, pos, ns, f->f_cred);
- 	aa_put_ns(ns);
-@@ -486,7 +559,7 @@ static ssize_t profile_remove(struct fil
- 	struct aa_loaddata *data;
- 	struct aa_label *label;
- 	ssize_t error;
--	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
-+	struct aa_ns *ns = get_ns_common_ref(f->f_inode->i_private);
- 
- 	label = begin_current_label_crit_section();
- 	/* high level check about policy management - fine grained in
-@@ -576,7 +649,7 @@ static int ns_revision_open(struct inode
- 	if (!rev)
- 		return -ENOMEM;
- 
--	rev->ns = aa_get_ns(inode->i_private);
-+	rev->ns = get_ns_common_ref(inode->i_private);
- 	if (!rev->ns)
- 		rev->ns = aa_get_current_ns();
- 	file->private_data = rev;
-@@ -1054,7 +1127,7 @@ static const struct file_operations seq_
- static int seq_profile_open(struct inode *inode, struct file *file,
- 			    int (*show)(struct seq_file *, void *))
- {
--	struct aa_proxy *proxy = aa_get_proxy(inode->i_private);
-+	struct aa_proxy *proxy = get_proxy_common_ref(inode->i_private);
- 	int error = single_open(file, show, proxy);
- 
- 	if (error) {
-@@ -1246,7 +1319,7 @@ static const struct file_operations seq_
- static int seq_rawdata_open(struct inode *inode, struct file *file,
- 			    int (*show)(struct seq_file *, void *))
- {
--	struct aa_loaddata *data = aa_get_i_loaddata(inode->i_private);
-+	struct aa_loaddata *data = get_loaddata_common_ref(inode->i_private);
- 	int error;
- 
- 	if (!data)
-@@ -1379,7 +1452,7 @@ static int rawdata_open(struct inode *in
- 	if (!aa_current_policy_view_capable(NULL))
- 		return -EACCES;
- 
--	loaddata = aa_get_i_loaddata(inode->i_private);
-+	loaddata = get_loaddata_common_ref(inode->i_private);
- 	if (!loaddata)
- 		return -ENOENT;
- 
-@@ -1424,7 +1497,6 @@ static void remove_rawdata_dents(struct
- 		if (!IS_ERR_OR_NULL(rawdata->dents[i])) {
- 			aafs_remove(rawdata->dents[i]);
- 			rawdata->dents[i] = NULL;
--			aa_put_i_loaddata(rawdata);
- 		}
- 	}
- }
-@@ -1463,45 +1535,41 @@ int __aa_fs_create_rawdata(struct aa_ns
- 	if (IS_ERR(dir))
- 		/* ->name freed when rawdata freed */
- 		return PTR_ERR(dir);
--	aa_get_i_loaddata(rawdata);
- 	rawdata->dents[AAFS_LOADDATA_DIR] = dir;
- 
--	dent = aafs_create_file("abi", S_IFREG | 0444, dir, rawdata,
-+	dent = aafs_create_file("abi", S_IFREG | 0444, dir, &rawdata->count,
- 				      &seq_rawdata_abi_fops);
- 	if (IS_ERR(dent))
- 		goto fail;
--	aa_get_i_loaddata(rawdata);
- 	rawdata->dents[AAFS_LOADDATA_ABI] = dent;
- 
--	dent = aafs_create_file("revision", S_IFREG | 0444, dir, rawdata,
--				      &seq_rawdata_revision_fops);
-+	dent = aafs_create_file("revision", S_IFREG | 0444, dir,
-+				&rawdata->count,
-+				&seq_rawdata_revision_fops);
- 	if (IS_ERR(dent))
- 		goto fail;
--	aa_get_i_loaddata(rawdata);
- 	rawdata->dents[AAFS_LOADDATA_REVISION] = dent;
- 
- 	if (aa_g_hash_policy) {
- 		dent = aafs_create_file("sha256", S_IFREG | 0444, dir,
--					      rawdata, &seq_rawdata_hash_fops);
-+					&rawdata->count,
-+					&seq_rawdata_hash_fops);
- 		if (IS_ERR(dent))
- 			goto fail;
--		aa_get_i_loaddata(rawdata);
- 		rawdata->dents[AAFS_LOADDATA_HASH] = dent;
- 	}
- 
- 	dent = aafs_create_file("compressed_size", S_IFREG | 0444, dir,
--				rawdata,
-+				&rawdata->count,
- 				&seq_rawdata_compressed_size_fops);
- 	if (IS_ERR(dent))
- 		goto fail;
--	aa_get_i_loaddata(rawdata);
- 	rawdata->dents[AAFS_LOADDATA_COMPRESSED_SIZE] = dent;
- 
--	dent = aafs_create_file("raw_data", S_IFREG | 0444,
--				      dir, rawdata, &rawdata_fops);
-+	dent = aafs_create_file("raw_data", S_IFREG | 0444, dir,
-+				&rawdata->count, &rawdata_fops);
- 	if (IS_ERR(dent))
- 		goto fail;
--	aa_get_i_loaddata(rawdata);
- 	rawdata->dents[AAFS_LOADDATA_DATA] = dent;
- 	d_inode(dent)->i_size = rawdata->size;
- 
-@@ -1512,7 +1580,6 @@ int __aa_fs_create_rawdata(struct aa_ns
- 
- fail:
- 	remove_rawdata_dents(rawdata);
--	aa_put_i_loaddata(rawdata);
- 	return PTR_ERR(dent);
- }
- #endif /* CONFIG_SECURITY_APPARMOR_EXPORT_BINARY */
-@@ -1536,13 +1603,10 @@ void __aafs_profile_rmdir(struct aa_prof
- 		__aafs_profile_rmdir(child);
- 
- 	for (i = AAFS_PROF_SIZEOF - 1; i >= 0; --i) {
--		struct aa_proxy *proxy;
- 		if (!profile->dents[i])
- 			continue;
- 
--		proxy = d_inode(profile->dents[i])->i_private;
- 		aafs_remove(profile->dents[i]);
--		aa_put_proxy(proxy);
- 		profile->dents[i] = NULL;
- 	}
- }
-@@ -1576,14 +1640,7 @@ static struct dentry *create_profile_fil
- 					  struct aa_profile *profile,
- 					  const struct file_operations *fops)
- {
--	struct aa_proxy *proxy = aa_get_proxy(profile->label.proxy);
--	struct dentry *dent;
--
--	dent = aafs_create_file(name, S_IFREG | 0444, dir, proxy, fops);
--	if (IS_ERR(dent))
--		aa_put_proxy(proxy);
--
--	return dent;
-+	return aafs_create_file(name, S_IFREG | 0444, dir, &profile->label.proxy->count, fops);
+ 	kfree(sbi->s_mb_largest_free_orders);
++	sbi->s_mb_largest_free_orders = NULL;
  }
  
- #ifdef CONFIG_SECURITY_APPARMOR_EXPORT_BINARY
-@@ -1629,7 +1686,8 @@ static const char *rawdata_get_link_base
- 					 struct delayed_call *done,
- 					 const char *name)
- {
--	struct aa_proxy *proxy = inode->i_private;
-+	struct aa_common_ref *ref = inode->i_private;
-+	struct aa_proxy *proxy = container_of(ref, struct aa_proxy, count);
- 	struct aa_label *label;
- 	struct aa_profile *profile;
- 	char *target;
-@@ -1771,27 +1829,24 @@ int __aafs_profile_mkdir(struct aa_profi
- 	if (profile->rawdata) {
- 		if (aa_g_hash_policy) {
- 			dent = aafs_create("raw_sha256", S_IFLNK | 0444, dir,
--					   profile->label.proxy, NULL, NULL,
--					   &rawdata_link_sha256_iops);
-+					   &profile->label.proxy->count, NULL,
-+					   NULL, &rawdata_link_sha256_iops);
- 			if (IS_ERR(dent))
- 				goto fail;
--			aa_get_proxy(profile->label.proxy);
- 			profile->dents[AAFS_PROF_RAW_HASH] = dent;
- 		}
- 		dent = aafs_create("raw_abi", S_IFLNK | 0444, dir,
--				   profile->label.proxy, NULL, NULL,
-+				   &profile->label.proxy->count, NULL, NULL,
- 				   &rawdata_link_abi_iops);
- 		if (IS_ERR(dent))
- 			goto fail;
--		aa_get_proxy(profile->label.proxy);
- 		profile->dents[AAFS_PROF_RAW_ABI] = dent;
- 
- 		dent = aafs_create("raw_data", S_IFLNK | 0444, dir,
--				   profile->label.proxy, NULL, NULL,
-+				   &profile->label.proxy->count, NULL, NULL,
- 				   &rawdata_link_data_iops);
- 		if (IS_ERR(dent))
- 			goto fail;
--		aa_get_proxy(profile->label.proxy);
- 		profile->dents[AAFS_PROF_RAW_DATA] = dent;
- 	}
- #endif /*CONFIG_SECURITY_APPARMOR_EXPORT_BINARY */
-@@ -1828,7 +1883,7 @@ static int ns_mkdir_op(struct mnt_idmap
- 	if (error)
- 		return error;
- 
--	parent = aa_get_ns(dir->i_private);
-+	parent = get_ns_common_ref(dir->i_private);
- 	AA_BUG(d_inode(ns_subns_dir(parent)) != dir);
- 
- 	/* we have to unlock and then relock to get locking order right
-@@ -1878,7 +1933,7 @@ static int ns_rmdir_op(struct inode *dir
- 	if (error)
- 		return error;
- 
--	parent = aa_get_ns(dir->i_private);
-+	parent = get_ns_common_ref(dir->i_private);
- 	/* rmdir calls the generic securityfs functions to remove files
- 	 * from the apparmor dir. It is up to the apparmor ns locking
- 	 * to avoid races.
-@@ -1948,27 +2003,6 @@ void __aafs_ns_rmdir(struct aa_ns *ns)
- 
- 	__aa_fs_list_remove_rawdata(ns);
- 
--	if (ns_subns_dir(ns)) {
--		sub = d_inode(ns_subns_dir(ns))->i_private;
--		aa_put_ns(sub);
--	}
--	if (ns_subload(ns)) {
--		sub = d_inode(ns_subload(ns))->i_private;
--		aa_put_ns(sub);
--	}
--	if (ns_subreplace(ns)) {
--		sub = d_inode(ns_subreplace(ns))->i_private;
--		aa_put_ns(sub);
--	}
--	if (ns_subremove(ns)) {
--		sub = d_inode(ns_subremove(ns))->i_private;
--		aa_put_ns(sub);
--	}
--	if (ns_subrevision(ns)) {
--		sub = d_inode(ns_subrevision(ns))->i_private;
--		aa_put_ns(sub);
--	}
--
- 	for (i = AAFS_NS_SIZEOF - 1; i >= 0; --i) {
- 		aafs_remove(ns->dents[i]);
- 		ns->dents[i] = NULL;
-@@ -1993,40 +2027,40 @@ static int __aafs_ns_mkdir_entries(struc
- 		return PTR_ERR(dent);
- 	ns_subdata_dir(ns) = dent;
- 
--	dent = aafs_create_file("revision", 0444, dir, ns,
-+	dent = aafs_create_file("revision", 0444, dir,
-+				&ns->unconfined->label.count,
- 				&aa_fs_ns_revision_fops);
- 	if (IS_ERR(dent))
- 		return PTR_ERR(dent);
--	aa_get_ns(ns);
- 	ns_subrevision(ns) = dent;
- 
--	dent = aafs_create_file(".load", 0640, dir, ns,
--				      &aa_fs_profile_load);
-+	dent = aafs_create_file(".load", 0640, dir,
-+				&ns->unconfined->label.count,
-+				&aa_fs_profile_load);
- 	if (IS_ERR(dent))
- 		return PTR_ERR(dent);
--	aa_get_ns(ns);
- 	ns_subload(ns) = dent;
- 
--	dent = aafs_create_file(".replace", 0640, dir, ns,
--				      &aa_fs_profile_replace);
-+	dent = aafs_create_file(".replace", 0640, dir,
-+				&ns->unconfined->label.count,
-+				&aa_fs_profile_replace);
- 	if (IS_ERR(dent))
- 		return PTR_ERR(dent);
--	aa_get_ns(ns);
- 	ns_subreplace(ns) = dent;
- 
--	dent = aafs_create_file(".remove", 0640, dir, ns,
--				      &aa_fs_profile_remove);
-+	dent = aafs_create_file(".remove", 0640, dir,
-+				&ns->unconfined->label.count,
-+				&aa_fs_profile_remove);
- 	if (IS_ERR(dent))
- 		return PTR_ERR(dent);
--	aa_get_ns(ns);
- 	ns_subremove(ns) = dent;
- 
- 	  /* use create_dentry so we can supply private data */
--	dent = aafs_create("namespaces", S_IFDIR | 0755, dir, ns, NULL, NULL,
--			   &ns_dir_inode_operations);
-+	dent = aafs_create("namespaces", S_IFDIR | 0755, dir,
-+			   &ns->unconfined->label.count,
-+			   NULL, NULL, &ns_dir_inode_operations);
- 	if (IS_ERR(dent))
- 		return PTR_ERR(dent);
--	aa_get_ns(ns);
- 	ns_subns_dir(ns) = dent;
- 
- 	return 0;
---- a/security/apparmor/include/label.h
-+++ b/security/apparmor/include/label.h
-@@ -101,7 +101,7 @@ enum label_flags {
- 
- struct aa_label;
- struct aa_proxy {
--	struct kref count;
-+	struct aa_common_ref count;
- 	struct aa_label __rcu *label;
- };
- 
-@@ -121,7 +121,7 @@ struct label_it {
-  * @ent: set of profiles for label, actual size determined by @size
-  */
- struct aa_label {
--	struct kref count;
-+	struct aa_common_ref count;
- 	struct rb_node node;
- 	struct rcu_head rcu;
- 	struct aa_proxy *proxy;
-@@ -373,7 +373,7 @@ int aa_label_match(struct aa_profile *pr
-  */
- static inline struct aa_label *__aa_get_label(struct aa_label *l)
- {
--	if (l && kref_get_unless_zero(&l->count))
-+	if (l && kref_get_unless_zero(&l->count.count))
- 		return l;
- 
- 	return NULL;
-@@ -382,7 +382,7 @@ static inline struct aa_label *__aa_get_
- static inline struct aa_label *aa_get_label(struct aa_label *l)
- {
- 	if (l)
--		kref_get(&(l->count));
-+		kref_get(&(l->count.count));
- 
- 	return l;
- }
-@@ -402,7 +402,7 @@ static inline struct aa_label *aa_get_la
- 	rcu_read_lock();
- 	do {
- 		c = rcu_dereference(*l);
--	} while (c && !kref_get_unless_zero(&c->count));
-+	} while (c && !kref_get_unless_zero(&c->count.count));
- 	rcu_read_unlock();
- 
- 	return c;
-@@ -442,7 +442,7 @@ static inline struct aa_label *aa_get_ne
- static inline void aa_put_label(struct aa_label *l)
- {
- 	if (l)
--		kref_put(&l->count, aa_label_kref);
-+		kref_put(&l->count.count, aa_label_kref);
- }
- 
- 
-@@ -452,7 +452,7 @@ void aa_proxy_kref(struct kref *kref);
- static inline struct aa_proxy *aa_get_proxy(struct aa_proxy *proxy)
- {
- 	if (proxy)
--		kref_get(&(proxy->count));
-+		kref_get(&(proxy->count.count));
- 
- 	return proxy;
- }
-@@ -460,7 +460,7 @@ static inline struct aa_proxy *aa_get_pr
- static inline void aa_put_proxy(struct aa_proxy *proxy)
- {
- 	if (proxy)
--		kref_put(&proxy->count, aa_proxy_kref);
-+		kref_put(&proxy->count.count, aa_proxy_kref);
- }
- 
- void __aa_proxy_redirect(struct aa_label *orig, struct aa_label *new);
---- a/security/apparmor/include/lib.h
-+++ b/security/apparmor/include/lib.h
-@@ -71,6 +71,18 @@ void aa_info_message(const char *str);
- /* Security blob offsets */
- extern struct lsm_blob_sizes apparmor_blob_sizes;
- 
-+enum reftype {
-+	REF_NS,
-+	REF_PROXY,
-+	REF_RAWDATA,
-+};
-+
-+/* common reference count used by data the shows up in aafs */
-+struct aa_common_ref {
-+	struct kref count;
-+	enum reftype reftype;
-+};
-+
- /**
-  * aa_strneq - compare null terminated @str to a non null terminated substring
-  * @str: a null terminated string
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -329,7 +329,7 @@ static inline aa_state_t ANY_RULE_MEDIAT
- static inline struct aa_profile *aa_get_profile(struct aa_profile *p)
- {
- 	if (p)
--		kref_get(&(p->label.count));
-+		kref_get(&(p->label.count.count));
- 
- 	return p;
- }
-@@ -343,7 +343,7 @@ static inline struct aa_profile *aa_get_
-  */
- static inline struct aa_profile *aa_get_profile_not0(struct aa_profile *p)
- {
--	if (p && kref_get_unless_zero(&p->label.count))
-+	if (p && kref_get_unless_zero(&p->label.count.count))
- 		return p;
- 
- 	return NULL;
-@@ -363,7 +363,7 @@ static inline struct aa_profile *aa_get_
- 	rcu_read_lock();
- 	do {
- 		c = rcu_dereference(*p);
--	} while (c && !kref_get_unless_zero(&c->label.count));
-+	} while (c && !kref_get_unless_zero(&c->label.count.count));
- 	rcu_read_unlock();
- 
- 	return c;
-@@ -376,7 +376,7 @@ static inline struct aa_profile *aa_get_
- static inline void aa_put_profile(struct aa_profile *p)
- {
- 	if (p)
--		kref_put(&p->label.count, aa_label_kref);
-+		kref_put(&p->label.count.count, aa_label_kref);
- }
- 
- static inline int AUDIT_MODE(struct aa_profile *profile)
---- a/security/apparmor/include/policy_unpack.h
-+++ b/security/apparmor/include/policy_unpack.h
-@@ -108,7 +108,7 @@ struct aa_ext {
-  * fs entries and drops the associated @count ref.
-  */
- struct aa_loaddata {
--	struct kref count;
-+	struct aa_common_ref count;
- 	struct kref pcount;
- 	struct list_head list;
- 	struct work_struct work;
-@@ -143,7 +143,7 @@ aa_get_i_loaddata(struct aa_loaddata *da
- {
- 
- 	if (data)
--		kref_get(&(data->count));
-+		kref_get(&(data->count.count));
- 	return data;
- }
- 
-@@ -171,7 +171,7 @@ struct aa_loaddata *aa_loaddata_alloc(si
- static inline void aa_put_i_loaddata(struct aa_loaddata *data)
- {
- 	if (data)
--		kref_put(&data->count, aa_loaddata_kref);
-+		kref_put(&data->count.count, aa_loaddata_kref);
- }
- 
- static inline void aa_put_profile_loaddata(struct aa_loaddata *data)
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -52,7 +52,8 @@ static void free_proxy(struct aa_proxy *
- 
- void aa_proxy_kref(struct kref *kref)
- {
--	struct aa_proxy *proxy = container_of(kref, struct aa_proxy, count);
-+	struct aa_proxy *proxy = container_of(kref, struct aa_proxy,
-+					      count.count);
- 
- 	free_proxy(proxy);
- }
-@@ -63,7 +64,8 @@ struct aa_proxy *aa_alloc_proxy(struct a
- 
- 	new = kzalloc(sizeof(struct aa_proxy), gfp);
- 	if (new) {
--		kref_init(&new->count);
-+		kref_init(&new->count.count);
-+		new->count.reftype = REF_PROXY;
- 		rcu_assign_pointer(new->label, aa_get_label(label));
- 	}
- 	return new;
-@@ -371,7 +373,8 @@ static void label_free_rcu(struct rcu_he
- 
- void aa_label_kref(struct kref *kref)
- {
--	struct aa_label *label = container_of(kref, struct aa_label, count);
-+	struct aa_label *label = container_of(kref, struct aa_label,
-+					      count.count);
- 	struct aa_ns *ns = labels_ns(label);
- 
- 	if (!ns) {
-@@ -408,7 +411,8 @@ bool aa_label_init(struct aa_label *labe
- 
- 	label->size = size;			/* doesn't include null */
- 	label->vec[size] = NULL;		/* null terminate */
--	kref_init(&label->count);
-+	kref_init(&label->count.count);
-+	label->count.reftype = REF_NS;		/* for aafs purposes */
- 	RB_CLEAR_NODE(&label->node);
- 
- 	return true;
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -118,7 +118,8 @@ static void do_loaddata_free(struct aa_l
- 
- void aa_loaddata_kref(struct kref *kref)
- {
--	struct aa_loaddata *d = container_of(kref, struct aa_loaddata, count);
-+	struct aa_loaddata *d = container_of(kref, struct aa_loaddata,
-+					     count.count);
- 
- 	do_loaddata_free(d);
- }
-@@ -165,7 +166,8 @@ struct aa_loaddata *aa_loaddata_alloc(si
- 		kfree(d);
- 		return ERR_PTR(-ENOMEM);
- 	}
--	kref_init(&d->count);
-+	kref_init(&d->count.count);
-+	d->count.reftype = REF_RAWDATA;
- 	kref_init(&d->pcount);
- 	INIT_LIST_HEAD(&d->list);
- 
+ int ext4_mb_init(struct super_block *sb)
 
 
