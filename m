@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B36E1F9F70;
-	Thu, 12 Mar 2026 20:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1B7F2BCF7F;
+	Thu, 12 Mar 2026 20:18:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346679; cv=none; b=WpMo4B1HXnAylRPnTI1/TBmTphArD2Cw1ItnD/UOQgNNlfUdh3D88A8WwxGyUfpieF/BPy79hp6UNRPz9t7LEFlkp75942fqM2wY3f1J8jcuU6Yzx5Yb7pmogfUXVkv6ioEW+nSt7+qGFh+DJy4CK/b7CEJf25zsSna2rYQowq4=
+	t=1773346683; cv=none; b=okeIykKddSwglTJjtCy75io8Uwu3KUpFA8tEZsvrf8WNGLcoi0OuvnhTTiTqL6qb03Fxl9GbCBxVO4O9L6Wa6UGCRGWy+oUeueS+aREcopMW2Nu/nIAZFrtve/8e+BkeGbeDoRRkniY7UcwfJNoL6za/yPwvC3AWdekDr52oC8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346679; c=relaxed/simple;
-	bh=q9p0Ljga6AawmIKm5iWyV6Llh0d7keljaBHJAOfesgI=;
+	s=arc-20240116; t=1773346683; c=relaxed/simple;
+	bh=sm9uR1mFDZZM3zzm6TFJXzIKpi5XXwvjqsSBYwWdJxY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hr4ukugtG5G5qc+i/WWXAWkyqE4eszmgUQP7+JbEupjj2r4wFods7u0OgT5T7JnCKrXcjiyqd5nf9Irvw26hh8IMBorLU1PD/BOVuyWEHwL5aijozNdiVNqGW/Bi8g9L0Bi0wGSML6oFe53alHDIQTIfkHqdMn0fUZImaeh3SlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgDVK2dH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XmEMLJFRGg0cv/P3/72FCOlPUToeG11PJMVZhJ9Z5iSJmoTujkojwiwEOyfUYz3uSFp7FyBFF24eMrrd0hnKpvrYmC4zaXkpXFV72kJZ1AxhyxhFHybfnTFYSmPrdllaFkQQLKoSaCBedg4gRLOlg9L9PEkpcUZg8qQvxWD4pcA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WtyFrDXx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgDVK2dH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48B4C4CEF7;
-	Thu, 12 Mar 2026 20:17:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WtyFrDXx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63CBEC2BC86;
+	Thu, 12 Mar 2026 20:18:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346679;
-	bh=q9p0Ljga6AawmIKm5iWyV6Llh0d7keljaBHJAOfesgI=;
+	s=korg; t=1773346682;
+	bh=sm9uR1mFDZZM3zzm6TFJXzIKpi5XXwvjqsSBYwWdJxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PgDVK2dHkOgSVh3KjcJwJs6wizcECuGlvoX6qKo6+N7V5e3tfuY9K8WHG/jm3z0Dd
-	 EU8SF7vzgf6kTUIbwRKauLVEwDJ78fE1CwbN6gfpkzgRxLPcw1vuAtpEFWN4UmyGMl
-	 4I8OPH+2bCBaXcCMTvDSHrpr0udsS4TBUHYWt69I=
+	b=WtyFrDXxKSCNZnW2O1NrEV78qV/niGNWqfzuOI9/ZSMJrhYs7aWJUhVTv2aM0N6k9
+	 JXoT5VE/iP5ePfXRvraKv26FbDynJocIvfSpzXJCysIbv+2nU/zWkOu9BvhAtk+rhn
+	 +LF9FeradYhi7HsmoI7fUmVTA1d2h9mqLW+e6OUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Breno Leitao <leitao@debian.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Oleg Nesterov <oleg@redhat.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 098/265] uprobes: switch to RCU Tasks Trace flavor for better performance
-Date: Thu, 12 Mar 2026 21:08:05 +0100
-Message-ID: <20260312201021.770054870@linuxfoundation.org>
+Subject: [PATCH 6.12 099/265] uprobes: Fix incorrect lockdep condition in filter_chain()
+Date: Thu, 12 Mar 2026 21:08:06 +0100
+Message-ID: <20260312201021.806462935@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -46,231 +48,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Breno Leitao <leitao@debian.org>
 
-[ Upstream commit 87195a1ee332add27bd51448c6b54aad551a28f5 ]
+[ Upstream commit a56a38fd9196fc89401e498d70b7aa9c9679fa6e ]
 
-This patch switches uprobes SRCU usage to RCU Tasks Trace flavor, which
-is optimized for more lightweight and quick readers (at the expense of
-slower writers, which for uprobes is a fine tradeof) and has better
-performance and scalability with number of CPUs.
+The list_for_each_entry_rcu() in filter_chain() uses
+rcu_read_lock_trace_held() as the lockdep condition, but the function
+holds consumer_rwsem, not the RCU trace lock.
 
-Similarly to baseline vs SRCU, we've benchmarked SRCU-based
-implementation vs RCU Tasks Trace implementation.
+This gives me the following output when running with some locking debug
+option enabled:
 
-SRCU
-====
-uprobe-nop      ( 1 cpus):    3.276 ± 0.005M/s  (  3.276M/s/cpu)
-uprobe-nop      ( 2 cpus):    4.125 ± 0.002M/s  (  2.063M/s/cpu)
-uprobe-nop      ( 4 cpus):    7.713 ± 0.002M/s  (  1.928M/s/cpu)
-uprobe-nop      ( 8 cpus):    8.097 ± 0.006M/s  (  1.012M/s/cpu)
-uprobe-nop      (16 cpus):    6.501 ± 0.056M/s  (  0.406M/s/cpu)
-uprobe-nop      (32 cpus):    4.398 ± 0.084M/s  (  0.137M/s/cpu)
-uprobe-nop      (64 cpus):    6.452 ± 0.000M/s  (  0.101M/s/cpu)
+  kernel/events/uprobes.c:1141 RCU-list traversed in non-reader section!!
+    filter_chain
+    register_for_each_vma
+    uprobe_unregister_nosync
+    __probe_event_disable
 
-uretprobe-nop   ( 1 cpus):    2.055 ± 0.001M/s  (  2.055M/s/cpu)
-uretprobe-nop   ( 2 cpus):    2.677 ± 0.000M/s  (  1.339M/s/cpu)
-uretprobe-nop   ( 4 cpus):    4.561 ± 0.003M/s  (  1.140M/s/cpu)
-uretprobe-nop   ( 8 cpus):    5.291 ± 0.002M/s  (  0.661M/s/cpu)
-uretprobe-nop   (16 cpus):    5.065 ± 0.019M/s  (  0.317M/s/cpu)
-uretprobe-nop   (32 cpus):    3.622 ± 0.003M/s  (  0.113M/s/cpu)
-uretprobe-nop   (64 cpus):    3.723 ± 0.002M/s  (  0.058M/s/cpu)
+Remove the incorrect lockdep condition since the rwsem provides
+sufficient protection for the list traversal.
 
-RCU Tasks Trace
-===============
-uprobe-nop      ( 1 cpus):    3.396 ± 0.002M/s  (  3.396M/s/cpu)
-uprobe-nop      ( 2 cpus):    4.271 ± 0.006M/s  (  2.135M/s/cpu)
-uprobe-nop      ( 4 cpus):    8.499 ± 0.015M/s  (  2.125M/s/cpu)
-uprobe-nop      ( 8 cpus):   10.355 ± 0.028M/s  (  1.294M/s/cpu)
-uprobe-nop      (16 cpus):    7.615 ± 0.099M/s  (  0.476M/s/cpu)
-uprobe-nop      (32 cpus):    4.430 ± 0.007M/s  (  0.138M/s/cpu)
-uprobe-nop      (64 cpus):    6.887 ± 0.020M/s  (  0.108M/s/cpu)
-
-uretprobe-nop   ( 1 cpus):    2.174 ± 0.001M/s  (  2.174M/s/cpu)
-uretprobe-nop   ( 2 cpus):    2.853 ± 0.001M/s  (  1.426M/s/cpu)
-uretprobe-nop   ( 4 cpus):    4.913 ± 0.002M/s  (  1.228M/s/cpu)
-uretprobe-nop   ( 8 cpus):    5.883 ± 0.002M/s  (  0.735M/s/cpu)
-uretprobe-nop   (16 cpus):    5.147 ± 0.001M/s  (  0.322M/s/cpu)
-uretprobe-nop   (32 cpus):    3.738 ± 0.008M/s  (  0.117M/s/cpu)
-uretprobe-nop   (64 cpus):    4.397 ± 0.002M/s  (  0.069M/s/cpu)
-
-Peak throughput for uprobes increases from 8 mln/s to 10.3 mln/s
-(+28%!), and for uretprobes from 5.3 mln/s to 5.8 mln/s (+11%), as we
-have more work to do on uretprobes side.
-
-Even single-thread (no contention) performance is slightly better: 3.276
-mln/s to 3.396 mln/s (+3.5%) for uprobes, and 2.055 mln/s to 2.174 mln/s
-(+5.8%) for uretprobes.
-
-We also select TASKS_TRACE_RCU for UPROBES in Kconfig due to the new
-dependency.
-
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Fixes: cc01bd044e6a ("uprobes: travers uprobe's consumer list locklessly under SRCU protection")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lkml.kernel.org/r/20240910174312.3646590-1-andrii@kernel.org
-Stable-dep-of: a56a38fd9196 ("uprobes: Fix incorrect lockdep condition in filter_chain()")
+Acked-by: Oleg Nesterov <oleg@redhat.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260128-uprobe_rcu-v2-1-994ea6d32730@debian.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/Kconfig            |  1 +
- kernel/events/uprobes.c | 38 ++++++++++++++++----------------------
- 2 files changed, 17 insertions(+), 22 deletions(-)
+ kernel/events/uprobes.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/Kconfig b/arch/Kconfig
-index 593452b43dd49..1812e4e4d7147 100644
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -135,6 +135,7 @@ config KPROBES_ON_FTRACE
- config UPROBES
- 	def_bool n
- 	depends on ARCH_SUPPORTS_UPROBES
-+	select TASKS_TRACE_RCU
- 	help
- 	  Uprobes is the user-space counterpart to kprobes: they
- 	  enable instrumentation applications (such as 'perf probe')
 diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
-index e30c4dd345f40..0eb9befe49a3c 100644
+index 0eb9befe49a3c..e3c8d9900ca7f 100644
 --- a/kernel/events/uprobes.c
 +++ b/kernel/events/uprobes.c
-@@ -26,6 +26,7 @@
- #include <linux/task_work.h>
- #include <linux/shmem_fs.h>
- #include <linux/khugepaged.h>
-+#include <linux/rcupdate_trace.h>
- 
- #include <linux/uprobes.h>
- 
-@@ -42,8 +43,6 @@ static struct rb_root uprobes_tree = RB_ROOT;
- static DEFINE_RWLOCK(uprobes_treelock);	/* serialize rbtree access */
- static seqcount_rwlock_t uprobes_seqcount = SEQCNT_RWLOCK_ZERO(uprobes_seqcount, &uprobes_treelock);
- 
--DEFINE_STATIC_SRCU(uprobes_srcu);
--
- #define UPROBES_HASH_SZ	13
- /* serialize uprobe->pending_list */
- static struct mutex uprobes_mmap_mutex[UPROBES_HASH_SZ];
-@@ -667,7 +666,7 @@ static void put_uprobe(struct uprobe *uprobe)
- 	delayed_uprobe_remove(uprobe, NULL);
- 	mutex_unlock(&delayed_uprobe_lock);
- 
--	call_srcu(&uprobes_srcu, &uprobe->rcu, uprobe_free_rcu);
-+	call_rcu_tasks_trace(&uprobe->rcu, uprobe_free_rcu);
- }
- 
- static __always_inline
-@@ -722,7 +721,7 @@ static struct uprobe *find_uprobe_rcu(struct inode *inode, loff_t offset)
- 	struct rb_node *node;
- 	unsigned int seq;
- 
--	lockdep_assert(srcu_read_lock_held(&uprobes_srcu));
-+	lockdep_assert(rcu_read_lock_trace_held());
- 
- 	do {
- 		seq = read_seqcount_begin(&uprobes_seqcount);
-@@ -950,8 +949,7 @@ static bool filter_chain(struct uprobe *uprobe, struct mm_struct *mm)
+@@ -949,7 +949,7 @@ static bool filter_chain(struct uprobe *uprobe, struct mm_struct *mm)
  	bool ret = false;
  
  	down_read(&uprobe->consumer_rwsem);
--	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
--				 srcu_read_lock_held(&uprobes_srcu)) {
-+	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
+-	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
++	list_for_each_entry(uc, &uprobe->consumers, cons_node) {
  		ret = consumer_filter(uc, mm);
  		if (ret)
  			break;
-@@ -1172,7 +1170,7 @@ void uprobe_unregister_sync(void)
- 	 * unlucky enough caller can free consumer's memory and cause
- 	 * handler_chain() or handle_uretprobe_chain() to do an use-after-free.
- 	 */
--	synchronize_srcu(&uprobes_srcu);
-+	synchronize_rcu_tasks_trace();
- }
- EXPORT_SYMBOL_GPL(uprobe_unregister_sync);
- 
-@@ -1256,19 +1254,18 @@ EXPORT_SYMBOL_GPL(uprobe_register);
- int uprobe_apply(struct uprobe *uprobe, struct uprobe_consumer *uc, bool add)
- {
- 	struct uprobe_consumer *con;
--	int ret = -ENOENT, srcu_idx;
-+	int ret = -ENOENT;
- 
- 	down_write(&uprobe->register_rwsem);
- 
--	srcu_idx = srcu_read_lock(&uprobes_srcu);
--	list_for_each_entry_srcu(con, &uprobe->consumers, cons_node,
--				 srcu_read_lock_held(&uprobes_srcu)) {
-+	rcu_read_lock_trace();
-+	list_for_each_entry_rcu(con, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
- 		if (con == uc) {
- 			ret = register_for_each_vma(uprobe, add ? uc : NULL);
- 			break;
- 		}
- 	}
--	srcu_read_unlock(&uprobes_srcu, srcu_idx);
-+	rcu_read_unlock_trace();
- 
- 	up_write(&uprobe->register_rwsem);
- 
-@@ -2150,8 +2147,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
- 
- 	current->utask->auprobe = &uprobe->arch;
- 
--	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
--				 srcu_read_lock_held(&uprobes_srcu)) {
-+	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
- 		int rc = 0;
- 
- 		if (uc->handler) {
-@@ -2189,15 +2185,13 @@ handle_uretprobe_chain(struct return_instance *ri, struct pt_regs *regs)
- {
- 	struct uprobe *uprobe = ri->uprobe;
- 	struct uprobe_consumer *uc;
--	int srcu_idx;
- 
--	srcu_idx = srcu_read_lock(&uprobes_srcu);
--	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
--				 srcu_read_lock_held(&uprobes_srcu)) {
-+	rcu_read_lock_trace();
-+	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
- 		if (uc->ret_handler)
- 			uc->ret_handler(uc, ri->func, regs);
- 	}
--	srcu_read_unlock(&uprobes_srcu, srcu_idx);
-+	rcu_read_unlock_trace();
- }
- 
- static struct return_instance *find_next_ret_chain(struct return_instance *ri)
-@@ -2282,13 +2276,13 @@ static void handle_swbp(struct pt_regs *regs)
- {
- 	struct uprobe *uprobe;
- 	unsigned long bp_vaddr;
--	int is_swbp, srcu_idx;
-+	int is_swbp;
- 
- 	bp_vaddr = uprobe_get_swbp_addr(regs);
- 	if (bp_vaddr == uprobe_get_trampoline_vaddr())
- 		return uprobe_handle_trampoline(regs);
- 
--	srcu_idx = srcu_read_lock(&uprobes_srcu);
-+	rcu_read_lock_trace();
- 
- 	uprobe = find_active_uprobe_rcu(bp_vaddr, &is_swbp);
- 	if (!uprobe) {
-@@ -2353,7 +2347,7 @@ static void handle_swbp(struct pt_regs *regs)
- 
- out:
- 	/* arch_uprobe_skip_sstep() succeeded, or restart if can't singlestep */
--	srcu_read_unlock(&uprobes_srcu, srcu_idx);
-+	rcu_read_unlock_trace();
- }
- 
- /*
 -- 
 2.51.0
 
