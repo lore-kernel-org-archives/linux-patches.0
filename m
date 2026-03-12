@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F4402427;
-	Thu, 12 Mar 2026 20:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2BD8401A28;
+	Thu, 12 Mar 2026 20:14:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346492; cv=none; b=uONUqw/TbS5o2diNOfJo84E7d5wEeei8+M58ptCMa38mir1usib0i4POOgZPwb6eObWazBG+1tN0LqPwhFifIzGkSQHA1D5GhTBgUfoiR8JL1HbP1jPDCtDlFoeK0F+peP3O1NQIgM4qqvf3r1Ia8BBeZIGSuWbJ3hlndFUq8VE=
+	t=1773346496; cv=none; b=NNikekbtJjhC5a9OYEatnDkXMHDC0GVklXovWiF+aGUdEtId2N+Wht8URySgY7X60yD/BU6QxhGiHFKts98aZ28swA4MUgdGoYgHFzBHLHNcp4HXD2RAyux/AfAWCY2B3L77Rz4gQartnXnW0d7a3qjzYdNZj8SI0uGKqh2bQaM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346492; c=relaxed/simple;
-	bh=1P8MHm4KlDsVRrKQL60+pEkkQW7T3nsA+Bc4KJQ5Dfo=;
+	s=arc-20240116; t=1773346496; c=relaxed/simple;
+	bh=d/K72toNHr5A2NAa1t+UbRdqn49etuHObZiIr8Sr+cU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=N8GVVCLhwfZD1NhSkNqFmMa4/6Y2G0rwupUMFT9bIMm7dSYqyYd0gzaazwrPfHIKrNXmPVaGexkn9hPGYPqcmUnV5ymupSAKWffhA+kw/ZM+g2vPArCTBqmlU8HgO0/6ytlsZtfIUiQ3jmFuRLuJhUZx+3BIyG4A267/t5CGI2U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy7ouIig; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WtJ39jojsjrtVhYGYfLN+cn6yQNp3vPB2sdVVTm0EDwK20CVpzQx3Bm7V6i/sVLpB31FjJm1/zUT509wLSFTCWQTRXhputTAVtfuUugF9eicdPDrSWvtxeOFIxHZdKWOcp6U/1dcrbW2hyBJKgnx7XjelkpojGRi8WECaxW9Jzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W58hZFdC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy7ouIig"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DD3C4CEF7;
-	Thu, 12 Mar 2026 20:14:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W58hZFdC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17827C4CEF7;
+	Thu, 12 Mar 2026 20:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346491;
-	bh=1P8MHm4KlDsVRrKQL60+pEkkQW7T3nsA+Bc4KJQ5Dfo=;
+	s=korg; t=1773346495;
+	bh=d/K72toNHr5A2NAa1t+UbRdqn49etuHObZiIr8Sr+cU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qy7ouIigZZPEPn9zHCzreAiwtTM9mtJf54M7gRZhkLpNFOlWy8ADpNQjsrYww+Clf
-	 WhUu6eCkC/mkf7q29gRXh760iee3cD0xgOBPiMsx0lI0JM1r9cDXTg/bcCijYR2udh
-	 ztB1YC/EAiz2eY2WOiIB2VTKQBfozMAY77/pxQE0=
+	b=W58hZFdCcKuMgrYZyyyfCy1oEUnWB0apmWu99basLhJXx7gxYajB+GGquFKVEo4gb
+	 oFxLkGNYlW6Xy04Tdcz8wwpyaE5W215zNyEd3Rpmh8xZaFACPeBjSrR9mKXao4bX+e
+	 TckU7z5ID44VJAIVE/6hlKph/XtTT3NFUz0ZcmCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 048/265] resource: Add resource set range and size helpers
-Date: Thu, 12 Mar 2026 21:07:15 +0100
-Message-ID: <20260312201019.938329966@linuxfoundation.org>
+Subject: [PATCH 6.12 057/265] ata: libata-scsi: Refactor ata_scsiop_maint_in()
+Date: Thu, 12 Mar 2026 21:07:24 +0100
+Message-ID: <20260312201020.271407867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -46,86 +45,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 9fb6fef0fb49124291837af1da5028f79d53f98e ]
+[ Upstream commit 4ab7bb97634351914a18f3c4533992c99eb6edb6 ]
 
-Setting the end address for a resource with a given size lacks a helper and
-is therefore coded manually unlike the getter side which has a helper for
-resource size calculation. Also, almost all callsites that calculate the
-end address for a resource also set the start address right before it like
-this:
+Move the check for MI_REPORT_SUPPORTED_OPERATION_CODES from
+ata_scsi_simulate() into ata_scsiop_maint_in() to simplify
+ata_scsi_simulate() code.
 
-  res->start = start_addr;
-  res->end = res->start + size - 1;
+Furthermore, since an rbuff fill actor function returning a non-zero
+value causes no data to be returned for the command, directly return
+an error (return 1) for invalid command formt after setting the invalid
+field in cdb error.
 
-Add resource_set_range(res, start_addr, size) that sets the start address
-and calculates the end address to simplify this often repeated fragment.
-
-Also add resource_set_size() for the cases where setting the start address
-of the resource is not necessary but mention in its kerneldoc that
-resource_set_range() is preferred when setting both addresses.
-
-Link: https://lore.kernel.org/r/20240614100606.15830-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 11721c45a826 ("PCI: Use resource_set_range() that correctly sets ->end")
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Link: https://lore.kernel.org/r/20241022024537.251905-4-dlemoal@kernel.org
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Stable-dep-of: 0ea84089dbf6 ("ata: libata-scsi: avoid Non-NCQ command starvation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ioport.h | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/ata/libata-scsi.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/ioport.h b/include/linux/ioport.h
-index 6e9fb667a1c5a..5385349f0b8a6 100644
---- a/include/linux/ioport.h
-+++ b/include/linux/ioport.h
-@@ -249,6 +249,38 @@ struct resource *lookup_resource(struct resource *root, resource_size_t start);
- int adjust_resource(struct resource *res, resource_size_t start,
- 		    resource_size_t size);
- resource_size_t resource_alignment(struct resource *res);
+diff --git a/drivers/ata/libata-scsi.c b/drivers/ata/libata-scsi.c
+index e5857229f0b7a..c214f0832714c 100644
+--- a/drivers/ata/libata-scsi.c
++++ b/drivers/ata/libata-scsi.c
+@@ -3425,12 +3425,16 @@ static unsigned int ata_scsiop_maint_in(struct ata_scsi_args *args, u8 *rbuf)
+ 	struct ata_device *dev = args->dev;
+ 	u8 *cdb = args->cmd->cmnd;
+ 	u8 supported = 0, cdlp = 0, rwcdlp = 0;
+-	unsigned int err = 0;
 +
-+/**
-+ * resource_set_size - Calculate resource end address from size and start
-+ * @res: Resource descriptor
-+ * @size: Size of the resource
-+ *
-+ * Calculate the end address for @res based on @size.
-+ *
-+ * Note: The start address of @res must be set when calling this function.
-+ * Prefer resource_set_range() if setting both the start address and @size.
-+ */
-+static inline void resource_set_size(struct resource *res, resource_size_t size)
-+{
-+	res->end = res->start + size - 1;
-+}
++	if ((cdb[1] & 0x1f) != MI_REPORT_SUPPORTED_OPERATION_CODES) {
++		ata_scsi_set_invalid_field(dev, args->cmd, 1, 0xff);
++		return 1;
++	}
+ 
+ 	if (cdb[2] != 1 && cdb[2] != 3) {
+ 		ata_dev_warn(dev, "invalid command format %d\n", cdb[2]);
+-		err = 2;
+-		goto out;
++		ata_scsi_set_invalid_field(dev, args->cmd, 1, 0xff);
++		return 1;
+ 	}
+ 
+ 	switch (cdb[3]) {
+@@ -3498,11 +3502,12 @@ static unsigned int ata_scsiop_maint_in(struct ata_scsi_args *args, u8 *rbuf)
+ 	default:
+ 		break;
+ 	}
+-out:
 +
-+/**
-+ * resource_set_range - Set resource start and end addresses
-+ * @res: Resource descriptor
-+ * @start: Start address for the resource
-+ * @size: Size of the resource
-+ *
-+ * Set @res start address and calculate the end address based on @size.
-+ */
-+static inline void resource_set_range(struct resource *res,
-+				      resource_size_t start,
-+				      resource_size_t size)
-+{
-+	res->start = start;
-+	resource_set_size(res, size);
-+}
+ 	/* One command format */
+ 	rbuf[0] = rwcdlp;
+ 	rbuf[1] = cdlp | supported;
+-	return err;
 +
- static inline resource_size_t resource_size(const struct resource *res)
- {
- 	return res->end - res->start + 1;
++	return 0;
+ }
+ 
+ /**
+@@ -4418,10 +4423,7 @@ void ata_scsi_simulate(struct ata_device *dev, struct scsi_cmnd *cmd)
+ 		break;
+ 
+ 	case MAINTENANCE_IN:
+-		if ((scsicmd[1] & 0x1f) == MI_REPORT_SUPPORTED_OPERATION_CODES)
+-			ata_scsi_rbuf_fill(&args, ata_scsiop_maint_in);
+-		else
+-			ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
++		ata_scsi_rbuf_fill(&args, ata_scsiop_maint_in);
+ 		break;
+ 
+ 	/* all other commands */
 -- 
 2.51.0
 
