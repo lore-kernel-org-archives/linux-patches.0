@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBEF26F288;
-	Thu, 12 Mar 2026 20:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60421E7660;
+	Thu, 12 Mar 2026 20:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346614; cv=none; b=q1Fb1gEhGeOYst8SsIPHVEDcN9nGGUZNFH/03jNA8tRIfZ5+b9IGQiy4hCiQIhvS1MImWMPqEuqS3SzEaRTgP2vHNlcsjuHP2nXJOnRya8+YvcQ03DKuJ/RMwRsBD8wivBFw7/dGtN+KHLDjHZz+gPTC+f5WcAxvFTb2GAvIEew=
+	t=1773346618; cv=none; b=TArOFfRgsvbVM2YhhrOZJ1/pLXiUIM+sac1J2wOWt8bNftwiq8GglkP7aGNdRNr+E9oD59OjyjYglpj4jRxfWUVvJO/PKpnfTX+g4bvM73Rao9Xeg/TUTH9umVqck4v6yaqiwBEcrFy9jtHm91JrR8z9I2b24JuXiHzIOWh4DE0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346614; c=relaxed/simple;
-	bh=1G3FmwlZ+BjPEheHVoShfOuRjrzyWXpwnrMTKLONtU8=;
+	s=arc-20240116; t=1773346618; c=relaxed/simple;
+	bh=P3V94OlwnrZFkOPzPWtNPbRM8BOnO25icPJtwNCrt8A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+N1VfRQhyLEwFcmyJEwlz1FTxeZdSV4zrevLeN3547XQS7oz/DFyWIc30QyRLBUOvraeHYmRq03KCNcprXY+UUyoQz0oMy9WJ9V3tV81XizhKGqBkEaCuaIJVF4oSkKtTwLpcqWCT1k0UWqgUdoYr/DPaaDQUowdaXckE3WzhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK7JZj1j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGddvTP1CS1skQFIa2Xlo3bh0D36KIiM+oG7tRVzmhAM5NnWOQv/IlIZmLrRDNwo7DjRSobKsf5JCGnsxCv17NAW+N9Yis0VFV1MTqjwWitmN1FKopeCXHuoaTYTyCiWZ0V8ZKL7+wU0BjV5yJ5cKiIA6yS928gAYbb1b08HpZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cV1l76Vj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK7JZj1j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B38FC4CEF7;
-	Thu, 12 Mar 2026 20:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cV1l76Vj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4C5C4CEF7;
+	Thu, 12 Mar 2026 20:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346614;
-	bh=1G3FmwlZ+BjPEheHVoShfOuRjrzyWXpwnrMTKLONtU8=;
+	s=korg; t=1773346618;
+	bh=P3V94OlwnrZFkOPzPWtNPbRM8BOnO25icPJtwNCrt8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VK7JZj1j3c+68g4MJx7jPmdifACgMGPnpCzUeCa7paZANJSOqWzyJV7438+JY+pHH
-	 oyToen8JxKTpFrxqngaUMNi1XbSB0xNRXjVbvl+OG67gVaLflHcRzQdKmpBlkyAfFx
-	 7nRilmJqcFAyPqp8zjhWHTa3Y07TSSjERUzo8Ugo=
+	b=cV1l76VjI/3DO0kqr05xjWIHUfsV9k6jMNgOLvUZiq8ULkjQ+nkdnZlgj+1uviYB7
+	 quEIQJkPtJbm7RA+eynCplA22gQnQ3opT0cG1b6FenUv8YRGVmaVRRSFCtitUxPMkt
+	 xnzjoARfsSl1vgrghYE/jiEDYI9PNlnDR8AdZGoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 051/265] media: dw9714: move power sequences to dedicated functions
-Date: Thu, 12 Mar 2026 21:07:18 +0100
-Message-ID: <20260312201020.050682589@linuxfoundation.org>
+Subject: [PATCH 6.12 052/265] media: dw9714: add support for powerdown pin
+Date: Thu, 12 Mar 2026 21:07:19 +0100
+Message-ID: <20260312201020.087233944@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,10 +54,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthias Fend <matthias.fend@emfend.at>
 
-[ Upstream commit 1eefe42e9de503e422a9c925eebdbd215ee28966 ]
+[ Upstream commit 03dca1842421b068d6a65b8ae16e2191882c7753 ]
 
-Move the power-up and power-down sequences to their own functions. This is
-a preparation for the upcoming powerdown pin support.
+Add support for the powerdown pin (xSD), which can be used to put the VCM
+driver into power down mode. This is useful, for example, if the VCM
+driver's power supply cannot be controlled. The use of the powerdown pin is
+optional.
 
 Signed-off-by: Matthias Fend <matthias.fend@emfend.at>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
@@ -65,105 +67,76 @@ Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
 Stable-dep-of: 401aec35ac7b ("media: dw9714: Fix powerup sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/dw9714.c | 44 +++++++++++++++++++++++++-------------
- 1 file changed, 29 insertions(+), 15 deletions(-)
+ drivers/media/i2c/Kconfig  |  2 +-
+ drivers/media/i2c/dw9714.c | 14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/media/i2c/Kconfig b/drivers/media/i2c/Kconfig
+index 5cb596f38de33..4703071352541 100644
+--- a/drivers/media/i2c/Kconfig
++++ b/drivers/media/i2c/Kconfig
+@@ -748,7 +748,7 @@ config VIDEO_AK7375
+ 
+ config VIDEO_DW9714
+ 	tristate "DW9714 lens voice coil support"
+-	depends on I2C && VIDEO_DEV
++	depends on GPIOLIB && I2C && VIDEO_DEV
+ 	select MEDIA_CONTROLLER
+ 	select VIDEO_V4L2_SUBDEV_API
+ 	select V4L2_ASYNC
 diff --git a/drivers/media/i2c/dw9714.c b/drivers/media/i2c/dw9714.c
-index 2ddd7daa79e28..37572cd0c104b 100644
+index 37572cd0c104b..e69dd3e14b844 100644
 --- a/drivers/media/i2c/dw9714.c
 +++ b/drivers/media/i2c/dw9714.c
-@@ -137,6 +137,24 @@ static int dw9714_init_controls(struct dw9714_device *dev_vcm)
- 	return hdl->error;
+@@ -2,6 +2,7 @@
+ // Copyright (c) 2015--2017 Intel Corporation.
+ 
+ #include <linux/delay.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/i2c.h>
+ #include <linux/module.h>
+ #include <linux/pm_runtime.h>
+@@ -38,6 +39,7 @@ struct dw9714_device {
+ 	struct v4l2_subdev sd;
+ 	u16 current_val;
+ 	struct regulator *vcc;
++	struct gpio_desc *powerdown_gpio;
+ };
+ 
+ static inline struct dw9714_device *to_dw9714_vcm(struct v4l2_ctrl *ctrl)
+@@ -145,6 +147,8 @@ static int dw9714_power_up(struct dw9714_device *dw9714_dev)
+ 	if (ret)
+ 		return ret;
+ 
++	gpiod_set_value_cansleep(dw9714_dev->powerdown_gpio, 0);
++
+ 	usleep_range(1000, 2000);
+ 
+ 	return 0;
+@@ -152,6 +156,8 @@ static int dw9714_power_up(struct dw9714_device *dw9714_dev)
+ 
+ static int dw9714_power_down(struct dw9714_device *dw9714_dev)
+ {
++	gpiod_set_value_cansleep(dw9714_dev->powerdown_gpio, 1);
++
+ 	return regulator_disable(dw9714_dev->vcc);
  }
  
-+static int dw9714_power_up(struct dw9714_device *dw9714_dev)
-+{
-+	int ret;
-+
-+	ret = regulator_enable(dw9714_dev->vcc);
-+	if (ret)
-+		return ret;
-+
-+	usleep_range(1000, 2000);
-+
-+	return 0;
-+}
-+
-+static int dw9714_power_down(struct dw9714_device *dw9714_dev)
-+{
-+	return regulator_disable(dw9714_dev->vcc);
-+}
-+
- static int dw9714_probe(struct i2c_client *client)
- {
- 	struct dw9714_device *dw9714_dev;
-@@ -151,13 +169,10 @@ static int dw9714_probe(struct i2c_client *client)
+@@ -169,6 +175,14 @@ static int dw9714_probe(struct i2c_client *client)
  	if (IS_ERR(dw9714_dev->vcc))
  		return PTR_ERR(dw9714_dev->vcc);
  
--	rval = regulator_enable(dw9714_dev->vcc);
--	if (rval < 0) {
--		dev_err(&client->dev, "failed to enable vcc: %d\n", rval);
--		return rval;
--	}
--
--	usleep_range(1000, 2000);
-+	rval = dw9714_power_up(dw9714_dev);
-+	if (rval)
-+		return dev_err_probe(&client->dev, rval,
-+				     "failed to power up: %d\n", rval);
- 
- 	v4l2_i2c_subdev_init(&dw9714_dev->sd, client, &dw9714_ops);
- 	dw9714_dev->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE |
-@@ -185,7 +200,7 @@ static int dw9714_probe(struct i2c_client *client)
- 	return 0;
- 
- err_cleanup:
--	regulator_disable(dw9714_dev->vcc);
-+	dw9714_power_down(dw9714_dev);
- 	v4l2_ctrl_handler_free(&dw9714_dev->ctrls_vcm);
- 	media_entity_cleanup(&dw9714_dev->sd.entity);
- 
-@@ -200,10 +215,10 @@ static void dw9714_remove(struct i2c_client *client)
- 
- 	pm_runtime_disable(&client->dev);
- 	if (!pm_runtime_status_suspended(&client->dev)) {
--		ret = regulator_disable(dw9714_dev->vcc);
-+		ret = dw9714_power_down(dw9714_dev);
- 		if (ret) {
- 			dev_err(&client->dev,
--				"Failed to disable vcc: %d\n", ret);
-+				"Failed to power down: %d\n", ret);
- 		}
- 	}
- 	pm_runtime_set_suspended(&client->dev);
-@@ -234,9 +249,9 @@ static int __maybe_unused dw9714_vcm_suspend(struct device *dev)
- 		usleep_range(DW9714_CTRL_DELAY_US, DW9714_CTRL_DELAY_US + 10);
- 	}
- 
--	ret = regulator_disable(dw9714_dev->vcc);
-+	ret = dw9714_power_down(dw9714_dev);
- 	if (ret)
--		dev_err(dev, "Failed to disable vcc: %d\n", ret);
-+		dev_err(dev, "Failed to power down: %d\n", ret);
- 
- 	return ret;
- }
-@@ -257,12 +272,11 @@ static int  __maybe_unused dw9714_vcm_resume(struct device *dev)
- 	if (pm_runtime_suspended(&client->dev))
- 		return 0;
- 
--	ret = regulator_enable(dw9714_dev->vcc);
-+	ret = dw9714_power_up(dw9714_dev);
- 	if (ret) {
--		dev_err(dev, "Failed to enable vcc: %d\n", ret);
-+		dev_err(dev, "Failed to power up: %d\n", ret);
- 		return ret;
- 	}
--	usleep_range(1000, 2000);
- 
- 	for (val = dw9714_dev->current_val % DW9714_CTRL_STEPS;
- 	     val < dw9714_dev->current_val + DW9714_CTRL_STEPS - 1;
++	dw9714_dev->powerdown_gpio = devm_gpiod_get_optional(&client->dev,
++							     "powerdown",
++							     GPIOD_OUT_HIGH);
++	if (IS_ERR(dw9714_dev->powerdown_gpio))
++		return dev_err_probe(&client->dev,
++				     PTR_ERR(dw9714_dev->powerdown_gpio),
++				     "could not get powerdown gpio\n");
++
+ 	rval = dw9714_power_up(dw9714_dev);
+ 	if (rval)
+ 		return dev_err_probe(&client->dev, rval,
 -- 
 2.51.0
 
