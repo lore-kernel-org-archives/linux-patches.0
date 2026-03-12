@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00DF346FCF;
-	Thu, 12 Mar 2026 20:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8181359A8B;
+	Thu, 12 Mar 2026 20:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346859; cv=none; b=BuQqoSLZBITbcpsv6TqZ/uisjZW+L7YTCKZajw0I9KWt/+6yYajtOXDOXw/b/jpBIxGwsMb5FTW4NZ0meEQ4aA/HYnIqRk8YDJIE34tXappcjJllrd1XH6+ktJVbvy0UvUemPNvy6Rm9j8OS7v4VOsnt7ejGlMTiqdZrQNZ9iUU=
+	t=1773346862; cv=none; b=Lq3J+hCE0XNKkI0fzl4K4dHFR2Q9ca6RaK4LWfnbNsze+V5jNDSFx2rGCmYSztVhdoXslyCp2XDHQtidQFSjo8WZHPCKSTkYcHogqemvPbhNVCUsFZztZRDuZyGQtD5KivSS0H43Kn83HcFsotIGJrkN09VtHPMJGddsj0u1uLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346859; c=relaxed/simple;
-	bh=M+RYzmLY48fn+t7Y6saNmaqeKQXTrZ1EMhRNSUlZcjA=;
+	s=arc-20240116; t=1773346862; c=relaxed/simple;
+	bh=gFsC4RkJcngsn0f5FX+aMJLZ34pSsmkmmlTg5iwb74E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=As6vmZQkJLTbqQ+Xn1/aWABRXgoipK5rcJO7Y67iD1L6RtKrJGBISO/hVfgmkQZp+Svo7gQZDEbszSq5WLl4/NU3N05Zgpet2PKpl2c39SDLkYTPJcOjHrRuehzj2mmoWboIsPPGEzgFEGLoUQ3Hp+Ef5nfuK9auTO42Kt1l4EE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U71S7jvE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t1LSArgm3dBYOcnTKjIY4l0jKPyiL74gHVWvuJEv1a/BJvC1JCTmjty2DbM6wnkTYmSPDh9Vgf7ha9oG9Ggnl/XoMKqaPIBVU5PfOKmsxJYIUIqFhR5E1C/oLb6m0js65IywuLZLvHKsesCs+tnl8eaQLZakqJDbDEwyWfn2ukM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=facLKurP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U71S7jvE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F42FC4CEF7;
-	Thu, 12 Mar 2026 20:20:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="facLKurP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0935C4CEF7;
+	Thu, 12 Mar 2026 20:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346859;
-	bh=M+RYzmLY48fn+t7Y6saNmaqeKQXTrZ1EMhRNSUlZcjA=;
+	s=korg; t=1773346862;
+	bh=gFsC4RkJcngsn0f5FX+aMJLZ34pSsmkmmlTg5iwb74E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U71S7jvEAcCSYAwsNrvljNX/gRxyj52Jr7/YJneY5NxLR3kiG/YqLturpmwVt2clQ
-	 X9KQLEPr/qnr+O++jM/wbX6M/H6bOnWCs7MbMuRmIIWXZM8O2P/fJr1Wq8aLlbp9Gv
-	 6QRTPy1NqJyZ3rH2+zMm9yBTPFHNFTOTrCGOXn3o=
+	b=facLKurPhoj9fNOw9WIWDiFoerZK3SXfYl5JIyA9Q4x9oF+XA6a5Yk4SPerFtFrZM
+	 k6slsyMB8nVh+8sHVjWD18fllNenNNQBaEM7YWwP+CdUVBVNzw8gXX7zjIhPDAAsQj
+	 3KiQO9l7DFZb12j6Sqte4QkTqD/8OnYerwudSQes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com,
+	Daniil Dulov <d.dulov@aladdin.ru>,
 	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.12 144/265] wifi: radiotap: reject radiotap with unknown bits
-Date: Thu, 12 Mar 2026 21:08:51 +0100
-Message-ID: <20260312201023.458924889@linuxfoundation.org>
+Subject: [PATCH 6.12 145/265] wifi: cfg80211: cancel rfkill_block work in wiphy_unregister()
+Date: Thu, 12 Mar 2026 21:08:52 +0100
+Message-ID: <20260312201023.497268992@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -50,51 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Daniil Dulov <d.dulov@aladdin.ru>
 
-commit c854758abe0b8d86f9c43dc060ff56a0ee5b31e0 upstream.
+commit 767d23ade706d5fa51c36168e92a9c5533c351a1 upstream.
 
-The radiotap parser is currently only used with the radiotap
-namespace (not with vendor namespaces), but if the undefined
-field 18 is used, the alignment/size is unknown as well. In
-this case, iterator->_next_ns_data isn't initialized (it's
-only set for skipping vendor namespaces), and syzbot points
-out that we later compare against this uninitialized value.
+There is a use-after-free error in cfg80211_shutdown_all_interfaces found
+by syzkaller:
 
-Fix this by moving the rejection of unknown radiotap fields
-down to after the in-namespace lookup, so it will really use
-iterator->_next_ns_data only for vendor namespaces, even in
-case undefined fields are present.
+BUG: KASAN: use-after-free in cfg80211_shutdown_all_interfaces+0x213/0x220
+Read of size 8 at addr ffff888112a78d98 by task kworker/0:5/5326
+CPU: 0 UID: 0 PID: 5326 Comm: kworker/0:5 Not tainted 6.19.0-rc2 #2 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: events cfg80211_rfkill_block_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x116/0x1f0
+ print_report+0xcd/0x630
+ kasan_report+0xe0/0x110
+ cfg80211_shutdown_all_interfaces+0x213/0x220
+ cfg80211_rfkill_block_work+0x1e/0x30
+ process_one_work+0x9cf/0x1b70
+ worker_thread+0x6c8/0xf10
+ kthread+0x3c5/0x780
+ ret_from_fork+0x56d/0x700
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
+The problem arises due to the rfkill_block work is not cancelled when wiphy
+is being unregistered. In order to fix the issue cancel the corresponding
+work in wiphy_unregister().
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 1f87f7d3a3b4 ("cfg80211: add rfkill support")
 Cc: stable@vger.kernel.org
-Fixes: 33e5a2f776e3 ("wireless: update radiotap parser")
-Reported-by: syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/69944a91.a70a0220.2c38d7.00fc.GAE@google.com
-Link: https://patch.msgid.link/20260217120526.162647-2-johannes@sipsolutions.net
+Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
+Link: https://patch.msgid.link/20260211082024.1967588-1-d.dulov@aladdin.ru
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/radiotap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/wireless/radiotap.c
-+++ b/net/wireless/radiotap.c
-@@ -239,14 +239,14 @@ int ieee80211_radiotap_iterator_next(
- 		default:
- 			if (!iterator->current_namespace ||
- 			    iterator->_arg_index >= iterator->current_namespace->n_bits) {
--				if (iterator->current_namespace == &radiotap_ns)
--					return -ENOENT;
- 				align = 0;
- 			} else {
- 				align = iterator->current_namespace->align_size[iterator->_arg_index].align;
- 				size = iterator->current_namespace->align_size[iterator->_arg_index].size;
- 			}
- 			if (!align) {
-+				if (iterator->current_namespace == &radiotap_ns)
-+					return -ENOENT;
- 				/* skip all subsequent data */
- 				iterator->_arg = iterator->_next_ns_data;
- 				/* give up on this namespace */
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -1174,6 +1174,7 @@ void wiphy_unregister(struct wiphy *wiph
+ 	/* this has nothing to do now but make sure it's gone */
+ 	cancel_work_sync(&rdev->wiphy_work);
+ 
++	cancel_work_sync(&rdev->rfkill_block);
+ 	cancel_work_sync(&rdev->conn_work);
+ 	flush_work(&rdev->event_work);
+ 	cancel_delayed_work_sync(&rdev->dfs_update_channels_wk);
 
 
