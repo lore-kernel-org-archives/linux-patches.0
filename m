@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B861F9F70;
-	Thu, 12 Mar 2026 20:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBEF26F288;
+	Thu, 12 Mar 2026 20:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346610; cv=none; b=Sow79F4y9QuCNQ8JzBdzSmyNXmxmq+KzfEjh0iY5vgJdzBq9oaEv4GgLZBziNh5zZ3ii4pFO0LhxwH11CwFw/Kw7WB8LqFUUduL0WCKzbC9pEqluHnzkI9JcoCde+xvcFPUOf1GZB+PCLOdAZ4I6BC24poG0hg9x48yKnmrdH5k=
+	t=1773346614; cv=none; b=q1Fb1gEhGeOYst8SsIPHVEDcN9nGGUZNFH/03jNA8tRIfZ5+b9IGQiy4hCiQIhvS1MImWMPqEuqS3SzEaRTgP2vHNlcsjuHP2nXJOnRya8+YvcQ03DKuJ/RMwRsBD8wivBFw7/dGtN+KHLDjHZz+gPTC+f5WcAxvFTb2GAvIEew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346610; c=relaxed/simple;
-	bh=AX3pyyaF4D43LSmWH0z7apXNNIXW+yw9+QEY/2CFLI4=;
+	s=arc-20240116; t=1773346614; c=relaxed/simple;
+	bh=1G3FmwlZ+BjPEheHVoShfOuRjrzyWXpwnrMTKLONtU8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H92s1jwGaeYy8lmMqIG6uiKHAvh5G0rIkSovttf71FXhtjCDIdCFBkIPBWcwS9LTqOwHb4A5oVdKVc1S2l54GfeszWyeGI3gzRdA6Xr8ks4oZARdDJX5JhsNz4jDeYbZ1y24NMwZc9S3KccfnMIUz1wayICUYRSd9UUJHtwIskY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zpvFkJQm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+N1VfRQhyLEwFcmyJEwlz1FTxeZdSV4zrevLeN3547XQS7oz/DFyWIc30QyRLBUOvraeHYmRq03KCNcprXY+UUyoQz0oMy9WJ9V3tV81XizhKGqBkEaCuaIJVF4oSkKtTwLpcqWCT1k0UWqgUdoYr/DPaaDQUowdaXckE3WzhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VK7JZj1j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zpvFkJQm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFADFC4CEF7;
-	Thu, 12 Mar 2026 20:16:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VK7JZj1j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B38FC4CEF7;
+	Thu, 12 Mar 2026 20:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346610;
-	bh=AX3pyyaF4D43LSmWH0z7apXNNIXW+yw9+QEY/2CFLI4=;
+	s=korg; t=1773346614;
+	bh=1G3FmwlZ+BjPEheHVoShfOuRjrzyWXpwnrMTKLONtU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zpvFkJQmjPa1qF7hl2wZS+RwgXuD+Oq2DlHSghO2YE66Ah0puD6opgiWU/5LG/aGM
-	 6SGiT3K8mrwlgMBt4Yz936jSs5IFb/s0raBtqtKQ5cfOCH8rey6h72gJL2RrY7GMd9
-	 hOq2Vnjg2qjzAiVOi2FVmofGhKSNy5BWIcHty8LM=
+	b=VK7JZj1j3c+68g4MJx7jPmdifACgMGPnpCzUeCa7paZANJSOqWzyJV7438+JY+pHH
+	 oyToen8JxKTpFrxqngaUMNi1XbSB0xNRXjVbvl+OG67gVaLflHcRzQdKmpBlkyAfFx
+	 7nRilmJqcFAyPqp8zjhWHTa3Y07TSSjERUzo8Ugo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Marco Crivellari <marco.crivellari@suse.com>,
+	Matthias Fend <matthias.fend@emfend.at>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Hans Verkuil <hverkuil@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 081/265] workqueue: Add system_percpu_wq and system_dfl_wq
-Date: Thu, 12 Mar 2026 21:07:48 +0100
-Message-ID: <20260312201021.146310007@linuxfoundation.org>
+Subject: [PATCH 6.12 051/265] media: dw9714: move power sequences to dedicated functions
+Date: Thu, 12 Mar 2026 21:07:18 +0100
+Message-ID: <20260312201020.050682589@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,119 +52,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marco Crivellari <marco.crivellari@suse.com>
+From: Matthias Fend <matthias.fend@emfend.at>
 
-[ Upstream commit 128ea9f6ccfb6960293ae4212f4f97165e42222d ]
+[ Upstream commit 1eefe42e9de503e422a9c925eebdbd215ee28966 ]
 
-Currently, if a user enqueue a work item using schedule_delayed_work() the
-used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
-WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
-schedule_work() that is using system_wq and queue_work(), that makes use
-again of WORK_CPU_UNBOUND.
+Move the power-up and power-down sequences to their own functions. This is
+a preparation for the upcoming powerdown pin support.
 
-This lack of consistentcy cannot be addressed without refactoring the API.
-
-system_wq is a per-CPU worqueue, yet nothing in its name tells about that
-CPU affinity constraint, which is very often not required by users. Make it
-clear by adding a system_percpu_wq.
-
-system_unbound_wq should be the default workqueue so as not to enforce
-locality constraints for random work whenever it's not required.
-
-Adding system_dfl_wq to encourage its use when unbound work should be used.
-
-Suggested-by: Tejun Heo <tj@kernel.org>
-Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Stable-dep-of: 870c2e7cd881 ("Input: synaptics_i2c - guard polling restart in resume")
+Signed-off-by: Matthias Fend <matthias.fend@emfend.at>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Hans Verkuil <hverkuil@xs4all.nl>
+Stable-dep-of: 401aec35ac7b ("media: dw9714: Fix powerup sequence")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/workqueue.h |  8 +++++---
- kernel/workqueue.c        | 13 +++++++++----
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ drivers/media/i2c/dw9714.c | 44 +++++++++++++++++++++++++-------------
+ 1 file changed, 29 insertions(+), 15 deletions(-)
 
-diff --git a/include/linux/workqueue.h b/include/linux/workqueue.h
-index 59c2695e12e76..23642bb1a103c 100644
---- a/include/linux/workqueue.h
-+++ b/include/linux/workqueue.h
-@@ -427,7 +427,7 @@ enum wq_consts {
- /*
-  * System-wide workqueues which are always present.
-  *
-- * system_wq is the one used by schedule[_delayed]_work[_on]().
-+ * system_percpu_wq is the one used by schedule[_delayed]_work[_on]().
-  * Multi-CPU multi-threaded.  There are users which expect relatively
-  * short queue flush time.  Don't queue works which can run for too
-  * long.
-@@ -438,7 +438,7 @@ enum wq_consts {
-  * system_long_wq is similar to system_wq but may host long running
-  * works.  Queue flushing might take relatively long.
-  *
-- * system_unbound_wq is unbound workqueue.  Workers are not bound to
-+ * system_dfl_wq is unbound workqueue.  Workers are not bound to
-  * any specific CPU, not concurrency managed, and all queued works are
-  * executed immediately as long as max_active limit is not reached and
-  * resources are available.
-@@ -455,10 +455,12 @@ enum wq_consts {
-  * system_bh[_highpri]_wq are convenience interface to softirq. BH work items
-  * are executed in the queueing CPU's BH context in the queueing order.
-  */
--extern struct workqueue_struct *system_wq;
-+extern struct workqueue_struct *system_wq; /* use system_percpu_wq, this will be removed */
-+extern struct workqueue_struct *system_percpu_wq;
- extern struct workqueue_struct *system_highpri_wq;
- extern struct workqueue_struct *system_long_wq;
- extern struct workqueue_struct *system_unbound_wq;
-+extern struct workqueue_struct *system_dfl_wq;
- extern struct workqueue_struct *system_freezable_wq;
- extern struct workqueue_struct *system_power_efficient_wq;
- extern struct workqueue_struct *system_freezable_power_efficient_wq;
-diff --git a/kernel/workqueue.c b/kernel/workqueue.c
-index 9f7f7244bdc8e..3840d7ce9cda0 100644
---- a/kernel/workqueue.c
-+++ b/kernel/workqueue.c
-@@ -508,12 +508,16 @@ static struct kthread_worker *pwq_release_worker __ro_after_init;
+diff --git a/drivers/media/i2c/dw9714.c b/drivers/media/i2c/dw9714.c
+index 2ddd7daa79e28..37572cd0c104b 100644
+--- a/drivers/media/i2c/dw9714.c
++++ b/drivers/media/i2c/dw9714.c
+@@ -137,6 +137,24 @@ static int dw9714_init_controls(struct dw9714_device *dev_vcm)
+ 	return hdl->error;
+ }
  
- struct workqueue_struct *system_wq __ro_after_init;
- EXPORT_SYMBOL(system_wq);
-+struct workqueue_struct *system_percpu_wq __ro_after_init;
-+EXPORT_SYMBOL(system_percpu_wq);
- struct workqueue_struct *system_highpri_wq __ro_after_init;
- EXPORT_SYMBOL_GPL(system_highpri_wq);
- struct workqueue_struct *system_long_wq __ro_after_init;
- EXPORT_SYMBOL_GPL(system_long_wq);
- struct workqueue_struct *system_unbound_wq __ro_after_init;
- EXPORT_SYMBOL_GPL(system_unbound_wq);
-+struct workqueue_struct *system_dfl_wq __ro_after_init;
-+EXPORT_SYMBOL_GPL(system_dfl_wq);
- struct workqueue_struct *system_freezable_wq __ro_after_init;
- EXPORT_SYMBOL_GPL(system_freezable_wq);
- struct workqueue_struct *system_power_efficient_wq __ro_after_init;
-@@ -7848,10 +7852,11 @@ void __init workqueue_init_early(void)
++static int dw9714_power_up(struct dw9714_device *dw9714_dev)
++{
++	int ret;
++
++	ret = regulator_enable(dw9714_dev->vcc);
++	if (ret)
++		return ret;
++
++	usleep_range(1000, 2000);
++
++	return 0;
++}
++
++static int dw9714_power_down(struct dw9714_device *dw9714_dev)
++{
++	return regulator_disable(dw9714_dev->vcc);
++}
++
+ static int dw9714_probe(struct i2c_client *client)
+ {
+ 	struct dw9714_device *dw9714_dev;
+@@ -151,13 +169,10 @@ static int dw9714_probe(struct i2c_client *client)
+ 	if (IS_ERR(dw9714_dev->vcc))
+ 		return PTR_ERR(dw9714_dev->vcc);
+ 
+-	rval = regulator_enable(dw9714_dev->vcc);
+-	if (rval < 0) {
+-		dev_err(&client->dev, "failed to enable vcc: %d\n", rval);
+-		return rval;
+-	}
+-
+-	usleep_range(1000, 2000);
++	rval = dw9714_power_up(dw9714_dev);
++	if (rval)
++		return dev_err_probe(&client->dev, rval,
++				     "failed to power up: %d\n", rval);
+ 
+ 	v4l2_i2c_subdev_init(&dw9714_dev->sd, client, &dw9714_ops);
+ 	dw9714_dev->sd.flags |= V4L2_SUBDEV_FL_HAS_DEVNODE |
+@@ -185,7 +200,7 @@ static int dw9714_probe(struct i2c_client *client)
+ 	return 0;
+ 
+ err_cleanup:
+-	regulator_disable(dw9714_dev->vcc);
++	dw9714_power_down(dw9714_dev);
+ 	v4l2_ctrl_handler_free(&dw9714_dev->ctrls_vcm);
+ 	media_entity_cleanup(&dw9714_dev->sd.entity);
+ 
+@@ -200,10 +215,10 @@ static void dw9714_remove(struct i2c_client *client)
+ 
+ 	pm_runtime_disable(&client->dev);
+ 	if (!pm_runtime_status_suspended(&client->dev)) {
+-		ret = regulator_disable(dw9714_dev->vcc);
++		ret = dw9714_power_down(dw9714_dev);
+ 		if (ret) {
+ 			dev_err(&client->dev,
+-				"Failed to disable vcc: %d\n", ret);
++				"Failed to power down: %d\n", ret);
+ 		}
+ 	}
+ 	pm_runtime_set_suspended(&client->dev);
+@@ -234,9 +249,9 @@ static int __maybe_unused dw9714_vcm_suspend(struct device *dev)
+ 		usleep_range(DW9714_CTRL_DELAY_US, DW9714_CTRL_DELAY_US + 10);
  	}
  
- 	system_wq = alloc_workqueue("events", 0, 0);
-+	system_percpu_wq = alloc_workqueue("events", 0, 0);
- 	system_highpri_wq = alloc_workqueue("events_highpri", WQ_HIGHPRI, 0);
- 	system_long_wq = alloc_workqueue("events_long", 0, 0);
--	system_unbound_wq = alloc_workqueue("events_unbound", WQ_UNBOUND,
--					    WQ_MAX_ACTIVE);
-+	system_unbound_wq = alloc_workqueue("events_unbound", WQ_UNBOUND, WQ_MAX_ACTIVE);
-+	system_dfl_wq = alloc_workqueue("events_unbound", WQ_UNBOUND, WQ_MAX_ACTIVE);
- 	system_freezable_wq = alloc_workqueue("events_freezable",
- 					      WQ_FREEZABLE, 0);
- 	system_power_efficient_wq = alloc_workqueue("events_power_efficient",
-@@ -7862,8 +7867,8 @@ void __init workqueue_init_early(void)
- 	system_bh_wq = alloc_workqueue("events_bh", WQ_BH, 0);
- 	system_bh_highpri_wq = alloc_workqueue("events_bh_highpri",
- 					       WQ_BH | WQ_HIGHPRI, 0);
--	BUG_ON(!system_wq || !system_highpri_wq || !system_long_wq ||
--	       !system_unbound_wq || !system_freezable_wq ||
-+	BUG_ON(!system_wq || !system_percpu_wq|| !system_highpri_wq || !system_long_wq ||
-+	       !system_unbound_wq || !system_freezable_wq || !system_dfl_wq ||
- 	       !system_power_efficient_wq ||
- 	       !system_freezable_power_efficient_wq ||
- 	       !system_bh_wq || !system_bh_highpri_wq);
+-	ret = regulator_disable(dw9714_dev->vcc);
++	ret = dw9714_power_down(dw9714_dev);
+ 	if (ret)
+-		dev_err(dev, "Failed to disable vcc: %d\n", ret);
++		dev_err(dev, "Failed to power down: %d\n", ret);
+ 
+ 	return ret;
+ }
+@@ -257,12 +272,11 @@ static int  __maybe_unused dw9714_vcm_resume(struct device *dev)
+ 	if (pm_runtime_suspended(&client->dev))
+ 		return 0;
+ 
+-	ret = regulator_enable(dw9714_dev->vcc);
++	ret = dw9714_power_up(dw9714_dev);
+ 	if (ret) {
+-		dev_err(dev, "Failed to enable vcc: %d\n", ret);
++		dev_err(dev, "Failed to power up: %d\n", ret);
+ 		return ret;
+ 	}
+-	usleep_range(1000, 2000);
+ 
+ 	for (val = dw9714_dev->current_val % DW9714_CTRL_STEPS;
+ 	     val < dw9714_dev->current_val + DW9714_CTRL_STEPS - 1;
 -- 
 2.51.0
 
