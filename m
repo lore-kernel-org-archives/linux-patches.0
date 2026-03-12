@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0B43909AE;
-	Thu, 12 Mar 2026 20:14:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56F4402427;
+	Thu, 12 Mar 2026 20:14:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346488; cv=none; b=tVgJJyEZ/9iC7Yb3CZeAcpFhO8Dz7aA+vRVrbIxeV7Q1LofVXzj0b0z+J6KYSa2o1nMwxrGxCLucnp9hrGv96KhS8je/Tbyi1BhTBuoyFxVdQPWTCW2nN2g7q9tfWoHV6tKOH56Sak75QQiTKg+jFthET2pGZUUI2ZiERi//lRg=
+	t=1773346492; cv=none; b=uONUqw/TbS5o2diNOfJo84E7d5wEeei8+M58ptCMa38mir1usib0i4POOgZPwb6eObWazBG+1tN0LqPwhFifIzGkSQHA1D5GhTBgUfoiR8JL1HbP1jPDCtDlFoeK0F+peP3O1NQIgM4qqvf3r1Ia8BBeZIGSuWbJ3hlndFUq8VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346488; c=relaxed/simple;
-	bh=JJMFpdeTMJe/eHsKFSFWJH4gxZYmVgZTdbjmlivxsao=;
+	s=arc-20240116; t=1773346492; c=relaxed/simple;
+	bh=1P8MHm4KlDsVRrKQL60+pEkkQW7T3nsA+Bc4KJQ5Dfo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L9/8x8JAUQ2z9MKLhjEjbyFSJ2wxzH3734Z0+GvgcWcRzQXyBRdwyeyYwrdAfaOvpgV3LR9+vNCKgXNY+xllN+RGY1WxyT97MC1RQjQdYGf1oulmgFioLxwQZhRmrtA1IVKD1eQyWNfzVPe2unXgsoFLPgz+ERFwjbnZuJKI+b4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJZaVZi2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N8GVVCLhwfZD1NhSkNqFmMa4/6Y2G0rwupUMFT9bIMm7dSYqyYd0gzaazwrPfHIKrNXmPVaGexkn9hPGYPqcmUnV5ymupSAKWffhA+kw/ZM+g2vPArCTBqmlU8HgO0/6ytlsZtfIUiQ3jmFuRLuJhUZx+3BIyG4A267/t5CGI2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qy7ouIig; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJZaVZi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C0C2C4CEF7;
-	Thu, 12 Mar 2026 20:14:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qy7ouIig"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43DD3C4CEF7;
+	Thu, 12 Mar 2026 20:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346487;
-	bh=JJMFpdeTMJe/eHsKFSFWJH4gxZYmVgZTdbjmlivxsao=;
+	s=korg; t=1773346491;
+	bh=1P8MHm4KlDsVRrKQL60+pEkkQW7T3nsA+Bc4KJQ5Dfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJZaVZi2c13oz+gtXkGkMMV6jspFfRIHxpSQG2SnIWeyvrBLxELxcto1GJ4e3rX02
-	 Qgwj493wvDsVv34UQFGucO6HAk3MwdM/rFd3KMpidX6zkL/UO/Od3XNwYAz9omemMS
-	 qmdRHr4OZvB5d8X1f0hLQbOjjF0o64lXRAc5dJYY=
+	b=qy7ouIigZZPEPn9zHCzreAiwtTM9mtJf54M7gRZhkLpNFOlWy8ADpNQjsrYww+Clf
+	 WhUu6eCkC/mkf7q29gRXh760iee3cD0xgOBPiMsx0lI0JM1r9cDXTg/bcCijYR2udh
+	 ztB1YC/EAiz2eY2WOiIB2VTKQBfozMAY77/pxQE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 012/265] x86/fred: Correct speculative safety in fred_extint()
-Date: Thu, 12 Mar 2026 21:06:39 +0100
-Message-ID: <20260312201018.610631591@linuxfoundation.org>
+Subject: [PATCH 6.12 048/265] resource: Add resource set range and size helpers
+Date: Thu, 12 Mar 2026 21:07:15 +0100
+Message-ID: <20260312201019.938329966@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -45,61 +46,86 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-[ Upstream commit aa280a08e7d8fae58557acc345b36b3dc329d595 ]
+[ Upstream commit 9fb6fef0fb49124291837af1da5028f79d53f98e ]
 
-array_index_nospec() is no use if the result gets spilled to the stack, as
-it makes the believed safe-under-speculation value subject to memory
-predictions.
+Setting the end address for a resource with a given size lacks a helper and
+is therefore coded manually unlike the getter side which has a helper for
+resource size calculation. Also, almost all callsites that calculate the
+end address for a resource also set the start address right before it like
+this:
 
-For all practical purposes, this means array_index_nospec() must be used in
-the expression that accesses the array.
+  res->start = start_addr;
+  res->end = res->start + size - 1;
 
-As the code currently stands, it's the wrong side of irqentry_enter(), and
-'index' is put into %ebp across the function call.
+Add resource_set_range(res, start_addr, size) that sets the start address
+and calculates the end address to simplify this often repeated fragment.
 
-Remove the index variable and reposition array_index_nospec(), so it's
-calculated immediately before the array access.
+Also add resource_set_size() for the cases where setting the start address
+of the resource is not necessary but mention in its kerneldoc that
+resource_set_range() is preferred when setting both addresses.
 
-Fixes: 14619d912b65 ("x86/fred: FRED entry/exit and dispatch code")
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260106131504.679932-1-andrew.cooper3@citrix.com
+Link: https://lore.kernel.org/r/20240614100606.15830-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 11721c45a826 ("PCI: Use resource_set_range() that correctly sets ->end")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/entry/entry_fred.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/linux/ioport.h | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/arch/x86/entry/entry_fred.c b/arch/x86/entry/entry_fred.c
-index f004a4dc74c2d..563e439b743f2 100644
---- a/arch/x86/entry/entry_fred.c
-+++ b/arch/x86/entry/entry_fred.c
-@@ -159,8 +159,6 @@ void __init fred_complete_exception_setup(void)
- static noinstr void fred_extint(struct pt_regs *regs)
+diff --git a/include/linux/ioport.h b/include/linux/ioport.h
+index 6e9fb667a1c5a..5385349f0b8a6 100644
+--- a/include/linux/ioport.h
++++ b/include/linux/ioport.h
+@@ -249,6 +249,38 @@ struct resource *lookup_resource(struct resource *root, resource_size_t start);
+ int adjust_resource(struct resource *res, resource_size_t start,
+ 		    resource_size_t size);
+ resource_size_t resource_alignment(struct resource *res);
++
++/**
++ * resource_set_size - Calculate resource end address from size and start
++ * @res: Resource descriptor
++ * @size: Size of the resource
++ *
++ * Calculate the end address for @res based on @size.
++ *
++ * Note: The start address of @res must be set when calling this function.
++ * Prefer resource_set_range() if setting both the start address and @size.
++ */
++static inline void resource_set_size(struct resource *res, resource_size_t size)
++{
++	res->end = res->start + size - 1;
++}
++
++/**
++ * resource_set_range - Set resource start and end addresses
++ * @res: Resource descriptor
++ * @start: Start address for the resource
++ * @size: Size of the resource
++ *
++ * Set @res start address and calculate the end address based on @size.
++ */
++static inline void resource_set_range(struct resource *res,
++				      resource_size_t start,
++				      resource_size_t size)
++{
++	res->start = start;
++	resource_set_size(res, size);
++}
++
+ static inline resource_size_t resource_size(const struct resource *res)
  {
- 	unsigned int vector = regs->fred_ss.vector;
--	unsigned int index = array_index_nospec(vector - FIRST_SYSTEM_VECTOR,
--						NR_SYSTEM_VECTORS);
- 
- 	if (WARN_ON_ONCE(vector < FIRST_EXTERNAL_VECTOR))
- 		return;
-@@ -169,7 +167,8 @@ static noinstr void fred_extint(struct pt_regs *regs)
- 		irqentry_state_t state = irqentry_enter(regs);
- 
- 		instrumentation_begin();
--		sysvec_table[index](regs);
-+		sysvec_table[array_index_nospec(vector - FIRST_SYSTEM_VECTOR,
-+						NR_SYSTEM_VECTORS)](regs);
- 		instrumentation_end();
- 		irqentry_exit(regs, state);
- 	} else {
+ 	return res->end - res->start + 1;
 -- 
 2.51.0
 
