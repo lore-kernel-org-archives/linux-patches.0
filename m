@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FDB3AEF29;
-	Thu, 12 Mar 2026 20:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE94F38C423;
+	Thu, 12 Mar 2026 20:11:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346296; cv=none; b=IAERgGvPaoUdEhbZ+SLDfEo7ygHrjXclAP63Nq1XNkAhysGmwUHnjsY7Q8ZnaHl6RcrwQZ2ytMHGCEJydiLgwcnqpGIi3Ftyz6CvJyzw84pdmwF3mCVB2emvWTeb3w0Rb9e9I5N44/o2uSxBDGYLnmYuGhnFObSG9RTl71FvbSc=
+	t=1773346299; cv=none; b=aT+fPnKGl+uAlA345wpEDDtDUboyf40QkV/UtZY50DN0/EpHKLZF+3lIFynUkUmQZ6hBfBzaE25muF5tdarI7f6/WoWfeuA03Nsppf0GRqn8ZrrRG8oP7FZVhU+kfe4XTy6tHdaKwG/0g9KGDI+S0oQRLkZ3Aqjg6e4cvidL6i0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346296; c=relaxed/simple;
-	bh=g/E4AxlAIFmCbDHDPr0asc74yXi3BaUFmRjiNPlfcQM=;
+	s=arc-20240116; t=1773346299; c=relaxed/simple;
+	bh=p2YAkrPK2fPUUnoy25r6w1kTJ6rVdXYJZcxzONirGbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1s6e4xXW2PrYP2txQKwZQ4spdfH7cAfnC2PNpZPXZFp1OWNlvSpXdrZMCfugUEFgFi8o/8pha5cV/a6aPXkfZykg1CpPb6UwZ/5ruU+gyOZCUlFtgoCJ+L6BeSATkT4JorNOObZAZduUmVw3WX7EylxKfrGlv54Zeb9i0XOPmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NHX/CCx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HqnRaDIEqu4fUKDv3vbnbIKBqcqb9+SVku9aGRZEMjwfbfabTUBqUR9W39SLN5yNaZprcFgVsFWZXmp5pERacN+wZdoAJr/PhM16ax7tSIXuwm2l/tGipAIhLlXVPMkkkHWl+mNO2F1RnewlxQOnKY+05frge83Y6W+j9CYwdJc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T/BfSlT1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NHX/CCx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE22C4CEF7;
-	Thu, 12 Mar 2026 20:11:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T/BfSlT1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09502C4CEF7;
+	Thu, 12 Mar 2026 20:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346295;
-	bh=g/E4AxlAIFmCbDHDPr0asc74yXi3BaUFmRjiNPlfcQM=;
+	s=korg; t=1773346299;
+	bh=p2YAkrPK2fPUUnoy25r6w1kTJ6rVdXYJZcxzONirGbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NHX/CCxBO0L4RdK1pH5UHF2n4/O3GH5Gfo2zu8gKn51OEbFhkIDm0M50syK95zCQ
-	 87ep/VbXdl6HinAFfgopcUW+1BN7b6kod8Ma54lFd2IcxZxJN+CQYCtzxwU0ostaPk
-	 5MQW5rxJlUap42IXfORUKH655G6d/4MiW59+NxrQ=
+	b=T/BfSlT1UJ8R1/Hhi+mVzuJXUAnlPbgSsEN+4W9lRXDF3M/gOmU4AcQLUi9QG5Qac
+	 TK39QuV3x7EB2YqFj0bhcmwZuKShikcDmMAC9yzogS/t5VK9+zn3AgXA7ytWDHzxWO
+	 6zUwj0pxsuSfeUopJ5qyHY+NVOc7o5amO67dwJtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brad Spengler <brad.spengler@opensrcsec.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
+	"Geoffrey D. Bennett" <g@b4.vu>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 001/265] drm/vmwgfx: Fix invalid kref_put callback in vmw_bo_dirty_release
-Date: Thu, 12 Mar 2026 21:06:28 +0100
-Message-ID: <20260312201018.188395027@linuxfoundation.org>
+Subject: [PATCH 6.12 010/265] ALSA: scarlett2: Fix DSP filter control array handling
+Date: Thu, 12 Mar 2026 21:06:37 +0100
+Message-ID: <20260312201018.528732750@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,59 +51,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brad Spengler <brad.spengler@opensrcsec.com>
+From: Geoffrey D. Bennett <g@b4.vu>
 
-[ Upstream commit 211ecfaaef186ee5230a77d054cdec7fbfc6724a ]
+[ Upstream commit 1d241483368f2fd87fbaba64d6aec6bad3a1e12e ]
 
-The kref_put() call uses (void *)kvfree as the release callback, which
-is incorrect. kref_put() expects a function with signature
-void (*release)(struct kref *), but kvfree has signature
-void (*)(const void *). Calling through an incompatible function pointer
-is undefined behavior.
+scarlett2_add_dsp_ctls() was incorrectly storing the precomp and PEQ
+filter coefficient control pointers into the precomp_flt_switch_ctls
+and peq_flt_switch_ctls arrays instead of the intended targets
+precomp_flt_ctls and peq_flt_ctls. Pass NULL instead, as the filter
+coefficient control pointers are not used, and remove the unused
+precomp_flt_ctls and peq_flt_ctls arrays from struct scarlett2_data.
 
-The code only worked by accident because ref_count is the first member
-of vmw_bo_dirty, making the kref pointer equal to the struct pointer.
+Additionally, scarlett2_update_filter_values() was reading
+dsp_input_count * peq_flt_count values for
+SCARLETT2_CONFIG_PEQ_FLT_SWITCH, but the peq_flt_switch array is
+indexed only by dsp_input_count (one switch per DSP input, not per
+filter). Fix the read count.
 
-Fix this by adding a proper release callback that uses container_of()
-to retrieve the containing structure before freeing.
-
-Fixes: c1962742ffff ("drm/vmwgfx: Use kref in vmw_bo_dirty")
-Signed-off-by: Brad Spengler <brad.spengler@opensrcsec.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Cc: Ian Forbes <ian.forbes@broadcom.com>
-Link: https://patch.msgid.link/20260107171236.3573118-1-zack.rusin@broadcom.com
+Fixes: b64678eb4e70 ("ALSA: scarlett2: Add DSP controls")
+Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Link: https://patch.msgid.link/86497b71db060677d97c38a6ce5f89bb3b25361b.1771581197.git.g@b4.vu
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ sound/usb/mixer_scarlett2.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-index de2498749e276..5bb710824d72f 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_page_dirty.c
-@@ -274,6 +274,13 @@ int vmw_bo_dirty_add(struct vmw_bo *vbo)
- 	return ret;
- }
+diff --git a/sound/usb/mixer_scarlett2.c b/sound/usb/mixer_scarlett2.c
+index 8c7755fc1519f..1242840104173 100644
+--- a/sound/usb/mixer_scarlett2.c
++++ b/sound/usb/mixer_scarlett2.c
+@@ -1294,8 +1294,6 @@ struct scarlett2_data {
+ 	struct snd_kcontrol *mux_ctls[SCARLETT2_MUX_MAX];
+ 	struct snd_kcontrol *mix_ctls[SCARLETT2_MIX_MAX];
+ 	struct snd_kcontrol *compressor_ctls[SCARLETT2_COMPRESSOR_CTLS_MAX];
+-	struct snd_kcontrol *precomp_flt_ctls[SCARLETT2_PRECOMP_FLT_CTLS_MAX];
+-	struct snd_kcontrol *peq_flt_ctls[SCARLETT2_PEQ_FLT_CTLS_MAX];
+ 	struct snd_kcontrol *precomp_flt_switch_ctls[SCARLETT2_DSP_SWITCH_MAX];
+ 	struct snd_kcontrol *peq_flt_switch_ctls[SCARLETT2_DSP_SWITCH_MAX];
+ 	struct snd_kcontrol *direct_monitor_ctl;
+@@ -3415,7 +3413,6 @@ static int scarlett2_update_autogain(struct usb_mixer_interface *mixer)
+ 			private->autogain_status[i] =
+ 				private->num_autogain_status_texts - 1;
  
-+static void vmw_bo_dirty_free(struct kref *kref)
-+{
-+	struct vmw_bo_dirty *dirty = container_of(kref, struct vmw_bo_dirty, ref_count);
-+
-+	kvfree(dirty);
-+}
-+
- /**
-  * vmw_bo_dirty_release - Release a dirty-tracking user from a buffer object
-  * @vbo: The buffer object
-@@ -288,7 +295,7 @@ void vmw_bo_dirty_release(struct vmw_bo *vbo)
- {
- 	struct vmw_bo_dirty *dirty = vbo->dirty;
+-
+ 	for (i = 0; i < SCARLETT2_AG_TARGET_COUNT; i++)
+ 		if (scarlett2_has_config_item(private,
+ 					      scarlett2_ag_target_configs[i])) {
+@@ -5595,8 +5592,7 @@ static int scarlett2_update_filter_values(struct usb_mixer_interface *mixer)
  
--	if (dirty && kref_put(&dirty->ref_count, (void *)kvfree))
-+	if (dirty && kref_put(&dirty->ref_count, vmw_bo_dirty_free))
- 		vbo->dirty = NULL;
- }
+ 	err = scarlett2_usb_get_config(
+ 		mixer, SCARLETT2_CONFIG_PEQ_FLT_SWITCH,
+-		info->dsp_input_count * info->peq_flt_count,
+-		private->peq_flt_switch);
++		info->dsp_input_count, private->peq_flt_switch);
+ 	if (err < 0)
+ 		return err;
  
+@@ -6794,7 +6790,7 @@ static int scarlett2_add_dsp_ctls(struct usb_mixer_interface *mixer, int i)
+ 		err = scarlett2_add_new_ctl(
+ 			mixer, &scarlett2_precomp_flt_ctl,
+ 			i * info->precomp_flt_count + j,
+-			1, s, &private->precomp_flt_switch_ctls[j]);
++			1, s, NULL);
+ 		if (err < 0)
+ 			return err;
+ 	}
+@@ -6804,7 +6800,7 @@ static int scarlett2_add_dsp_ctls(struct usb_mixer_interface *mixer, int i)
+ 		err = scarlett2_add_new_ctl(
+ 			mixer, &scarlett2_peq_flt_ctl,
+ 			i * info->peq_flt_count + j,
+-			1, s, &private->peq_flt_switch_ctls[j]);
++			1, s, NULL);
+ 		if (err < 0)
+ 			return err;
+ 	}
 -- 
 2.51.0
 
