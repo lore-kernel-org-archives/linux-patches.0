@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8D9A344DB5;
-	Thu, 12 Mar 2026 20:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB17344DB5;
+	Thu, 12 Mar 2026 20:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346913; cv=none; b=uEq3bTJhswuBaSs3cnM03v0eSCySqFL3gmsbMoy7yJGkuow6o7PjiQnOGsIAzwob208JVibdjhahbiH0P7qYCiRw8v28WdPaX5lOmIT8U7/Cf6YwmpvCybtsJxosdMdlwx7asDjYqLCc/1j3/45gmilVx3z7XfeiGYOF/I+899Q=
+	t=1773346917; cv=none; b=heq8uyFDez7Icc/idUgYkkc40v9cSrV+QRtgeAsUa/lbXnF4G8fc+GX9wjrNlcfY0FJRCwQy8lFHWLvKypUlrDOFjD00S5Gm+LHAw9ppiP51QIOYJmSo7r1zvY8PDu53foIc6Vw9euH72SQ/eFpCBqeuvP2Qb4ZOSyMmQenROw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346913; c=relaxed/simple;
-	bh=Ai/t0Bv/oNdPYeTBnbqy4VGSiCGlAZWcvnWf/CeYrNc=;
+	s=arc-20240116; t=1773346917; c=relaxed/simple;
+	bh=7SV4JSuu9jzNKi3Q8EyaknaOFPzGw5L1M1EzQPx4Hs0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u3p0t6WiywAj5lcrSB8EQNgmmo8h9uG+/X06RE9xYEKRJBNc7QVpj8Hz+Yy78CsX7a1ma2fY/gq1ShVce19aJIcA+Gr/zqnbQLFbhSL8YKzU46ADjRn2yKfumDRA1/KhyyBjIFeLk1oLv89u5C/gTEMxr1Nb65niH2Ljyy+Wa1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skgwVr32; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PSg/nDj6gVm3THvbH90KhwZUCyOCz1nC70wywipuwq6WaJCvjDXTmb+GPRTyBqY3pSuA9BBCX4THtzrWwt9/qZ6iriRp3ltXks9E3VpVKxT+aTSq4PSmOJXj3Y9c4gsFQbLZwZgkk1O1o/j6+1rqbYuB/xDpN3M7rvD0yalY8j0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uj12xiQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skgwVr32"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17406C4CEF7;
-	Thu, 12 Mar 2026 20:21:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uj12xiQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 482F1C4CEF7;
+	Thu, 12 Mar 2026 20:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346913;
-	bh=Ai/t0Bv/oNdPYeTBnbqy4VGSiCGlAZWcvnWf/CeYrNc=;
+	s=korg; t=1773346917;
+	bh=7SV4JSuu9jzNKi3Q8EyaknaOFPzGw5L1M1EzQPx4Hs0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skgwVr32rV6NbPkB0NNjruzMqPW/+yY7oH3yfnuGHo15Vv0pgIftM7fSwhTGxabLr
-	 fadXlVf+Qn2la/AUXE7EsraE9oQwRTYbOear/aOdxJIySrqE4Nv3gmwDxquVmd/7ie
-	 YASEzUGXqaOAskU3xAqZpS5U84jn69g4sfircXik=
+	b=1uj12xiQ9Nlk8wQBzSQJH6OJIjwvGvnj5fLWyvxg+wbE8PEUC2cRYpVYzdKekf+R2
+	 V1s/f5lBLy5h98g04t/BMZV4UrQ1m9RoMMNU/FFBDDym7m2FkH1YnPMRO2ROPSKBIb
+	 RxCRfhh6xyN5ihDO3oiXzibve+AOuqW4dZTWxw7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.12 126/265] eventpoll: Fix integer overflow in ep_loop_check_proc()
-Date: Thu, 12 Mar 2026 21:08:33 +0100
-Message-ID: <20260312201022.801155269@linuxfoundation.org>
+	Igor Stepansky <igor.stepansky@orca.security>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 117/265] ksmbd: add chann_lock to protect ksmbd_chann_list xarray
+Date: Thu, 12 Mar 2026 21:08:24 +0100
+Message-ID: <20260312201022.466770875@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,49 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jann Horn <jannh@google.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit fdcfce93073d990ed4b71752e31ad1c1d6e9d58b upstream.
+[ Upstream commit 4f3a06cc57976cafa8c6f716646be6c79a99e485 ]
 
-If a recursive call to ep_loop_check_proc() hits the `result = INT_MAX`,
-an integer overflow will occur in the calling ep_loop_check_proc() at
-`result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1)`,
-breaking the recursion depth check.
+ksmbd_chann_list xarray lacks synchronization, allowing use-after-free in
+multi-channel sessions (between lookup_chann_list() and ksmbd_chann_del).
 
-Fix it by using a different placeholder value that can't lead to an
-overflow.
+Adds rw_semaphore chann_lock to struct ksmbd_session and protects
+all xa_load/xa_store/xa_erase accesses.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://patch.msgid.link/20260223-epoll-int-overflow-v1-1-452f35132224@google.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Igor Stepansky <igor.stepansky@orca.security>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventpoll.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/smb/server/mgmt/user_session.c |  5 +++++
+ fs/smb/server/mgmt/user_session.h |  1 +
+ fs/smb/server/smb2pdu.c           | 12 +++++++++++-
+ 3 files changed, 17 insertions(+), 1 deletion(-)
 
---- a/fs/eventpoll.c
-+++ b/fs/eventpoll.c
-@@ -2012,7 +2012,8 @@ static int ep_poll(struct eventpoll *ep,
-  * @ep: the &struct eventpoll to be currently checked.
-  * @depth: Current depth of the path being checked.
-  *
-- * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
-+ * Return: depth of the subtree, or a value bigger than EP_MAX_NESTS if we found
-+ * a loop or went too deep.
-  */
- static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+diff --git a/fs/smb/server/mgmt/user_session.c b/fs/smb/server/mgmt/user_session.c
+index 66198ed26aeca..352cf9e47ebeb 100644
+--- a/fs/smb/server/mgmt/user_session.c
++++ b/fs/smb/server/mgmt/user_session.c
+@@ -32,12 +32,14 @@ static void free_channel_list(struct ksmbd_session *sess)
+ 	struct channel *chann;
+ 	unsigned long index;
+ 
++	down_write(&sess->chann_lock);
+ 	xa_for_each(&sess->ksmbd_chann_list, index, chann) {
+ 		xa_erase(&sess->ksmbd_chann_list, index);
+ 		kfree(chann);
+ 	}
+ 
+ 	xa_destroy(&sess->ksmbd_chann_list);
++	up_write(&sess->chann_lock);
+ }
+ 
+ static void __session_rpc_close(struct ksmbd_session *sess,
+@@ -220,7 +222,9 @@ static int ksmbd_chann_del(struct ksmbd_conn *conn, struct ksmbd_session *sess)
  {
-@@ -2031,7 +2032,7 @@ static int ep_loop_check_proc(struct eve
- 			struct eventpoll *ep_tovisit;
- 			ep_tovisit = epi->ffd.file->private_data;
- 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
--				result = INT_MAX;
-+				result = EP_MAX_NESTS+1;
- 			else
- 				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
- 			if (result > EP_MAX_NESTS)
+ 	struct channel *chann;
+ 
++	down_write(&sess->chann_lock);
+ 	chann = xa_erase(&sess->ksmbd_chann_list, (long)conn);
++	up_write(&sess->chann_lock);
+ 	if (!chann)
+ 		return -ENOENT;
+ 
+@@ -454,6 +458,7 @@ static struct ksmbd_session *__session_create(int protocol)
+ 	rwlock_init(&sess->tree_conns_lock);
+ 	atomic_set(&sess->refcnt, 2);
+ 	init_rwsem(&sess->rpc_lock);
++	init_rwsem(&sess->chann_lock);
+ 
+ 	ret = __init_smb2_session(sess);
+ 	if (ret)
+diff --git a/fs/smb/server/mgmt/user_session.h b/fs/smb/server/mgmt/user_session.h
+index c5749d6ec7151..cba7f688f6b57 100644
+--- a/fs/smb/server/mgmt/user_session.h
++++ b/fs/smb/server/mgmt/user_session.h
+@@ -49,6 +49,7 @@ struct ksmbd_session {
+ 	char				sess_key[CIFS_KEY_SIZE];
+ 
+ 	struct hlist_node		hlist;
++	struct rw_semaphore		chann_lock;
+ 	struct xarray			ksmbd_chann_list;
+ 	struct xarray			tree_conns;
+ 	struct ida			tree_conn_ida;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 8fa6ab9dfd077..0d7ba57c1ca64 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -78,7 +78,13 @@ static inline bool check_session_id(struct ksmbd_conn *conn, u64 id)
+ 
+ struct channel *lookup_chann_list(struct ksmbd_session *sess, struct ksmbd_conn *conn)
+ {
+-	return xa_load(&sess->ksmbd_chann_list, (long)conn);
++	struct channel *chann;
++
++	down_read(&sess->chann_lock);
++	chann = xa_load(&sess->ksmbd_chann_list, (long)conn);
++	up_read(&sess->chann_lock);
++
++	return chann;
+ }
+ 
+ /**
+@@ -1560,8 +1566,10 @@ static int ntlm_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			old = xa_store(&sess->ksmbd_chann_list, (long)conn, chann,
+ 					KSMBD_DEFAULT_GFP);
++			up_write(&sess->chann_lock);
+ 			if (xa_is_err(old)) {
+ 				kfree(chann);
+ 				return xa_err(old);
+@@ -1658,8 +1666,10 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
+ 
+ 			chann->conn = conn;
++			down_write(&sess->chann_lock);
+ 			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
+ 					chann, KSMBD_DEFAULT_GFP);
++			up_write(&sess->chann_lock);
+ 			if (xa_is_err(old)) {
+ 				kfree(chann);
+ 				return xa_err(old);
+-- 
+2.51.0
+
 
 
