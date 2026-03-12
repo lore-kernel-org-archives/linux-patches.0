@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ADA82D2491;
-	Thu, 12 Mar 2026 20:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCB4935A3BA;
+	Thu, 12 Mar 2026 20:23:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347033; cv=none; b=WCkG+PBVqkfOqtVcX4zFktJAqyr2QSY0XZwBwXsSW/LMShZ9YGB0+Ts49DgwXH7NU5pHU4LQwSQBOQTmZXOekrElOUrthvZU6XBccEnGt1Z9ewjA9KPt+okS9XE/vy/xKct2TBEWeejFd4DEfgDKcQiF86SQxlYYuMvwMeWxXRc=
+	t=1773347037; cv=none; b=rtoNUOasNZcNDGEGYEGj6a9kLx1umI1m36sH+JPLNNHbxjANYsC2v11lPt5iCu/E1wcO2jI2OZUNUxCRiqBtcYMDbOpJYgXEGLKH4+0wH9q1akediMA+YEoYKtKxTeyhbrlQNSM00LkimNJ8J7axhypYEIrr9Q2rtjvLUz9XSS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347033; c=relaxed/simple;
-	bh=uo967bhW8WbH9wrE5EyPFjFdotJ9DnZV8w7paEt3RcU=;
+	s=arc-20240116; t=1773347037; c=relaxed/simple;
+	bh=MrBi4Ak6sYD5JJgIqC2st/WWIF/IOYnQDEj20ZAxnrU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PVorW6M/tVYaE0UhYABv6mQD5EddHp0NBWQMXVOHkCAuZTW4+xe2UF+lRzvIm4zLfZdwbPk+86LKimlEO/ROd2iAtfb1z6SZrZXqwMIliDtF3E4zWYx3wUFHCDMVSuZdwCs2nnQiD/PZ+nr3D+hWp57ImX3nxV2chg5qVqzd67M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlRyO4lQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I5UqYMIARnPqzBapii+GhGv44nvjQE5oCDkN/uDWnuTg1Jxua7drnsZovM1QPPLDwsZovuizPWXcqAyD3yVpKxu5/9MREKtIB7SxpyHgUomMt8abK3oqRcEarT+exXSLpmOBWS/TH8JWPlLpQv2mmYqjMfI13Vg4MgfdjlrkL5I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dgf4qWeP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlRyO4lQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7CA8C4CEF7;
-	Thu, 12 Mar 2026 20:23:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dgf4qWeP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE36C4CEF7;
+	Thu, 12 Mar 2026 20:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347033;
-	bh=uo967bhW8WbH9wrE5EyPFjFdotJ9DnZV8w7paEt3RcU=;
+	s=korg; t=1773347037;
+	bh=MrBi4Ak6sYD5JJgIqC2st/WWIF/IOYnQDEj20ZAxnrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlRyO4lQ4qyG+M3ZcfoXVrRl1+dM0ABX0Vof07fuQsVkz854K+me9DORVUZGwihuK
-	 PoLCdvQ/NzXj01J8KCto6iOkpPPsMex4ScJHVvsf0Lm33m48jSfNrzY+x5Oe2fngYc
-	 P4U6JhK7ZGGhPcWBwdslNhgaYqDpTqOmO+rFHg1g=
+	b=dgf4qWePc9EOg7Fu885m0HrnRb6G1U7YwlRJMtX0uXuufwuYUnHsRtDBp8wfreuQz
+	 ZdYHq4be/Vg+5fH6Fb4/UyQPDJFyTGg9BCOk6Wzng77YXMvHpAB1BzXQn6Etc3cfF4
+	 5tV1bx2mPb3+VDw+ma7rUJQY7Xys0uaV0wg25vaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chintan Vankar <c-vankar@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Magnus Karlsson <magnus.karlsson@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 184/265] net: ethernet: ti: am65-cpsw-nuss/cpsw-ale: Fix multicast entry handling in ALE table
-Date: Thu, 12 Mar 2026 21:09:31 +0100
-Message-ID: <20260312201024.958741329@linuxfoundation.org>
+Subject: [PATCH 6.12 185/265] xsk: Get rid of xdp_buff_xsk::xskb_list_node
+Date: Thu, 12 Mar 2026 21:09:32 +0100
+Message-ID: <20260312201024.995150222@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,67 +52,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chintan Vankar <c-vankar@ti.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit be11a537224d72b906db6b98510619770298c8a4 ]
+[ Upstream commit b692bf9a7543af7ad11a59d182a3757578f0ba53 ]
 
-In the current implementation, flushing multicast entries in MAC mode
-incorrectly deletes entries for all ports instead of only the target port,
-disrupting multicast traffic on other ports. The cause is adding multicast
-entries by setting only host port bit, and not setting the MAC port bits.
+Let's bring xdp_buff_xsk back to occupying 2 cachelines by removing
+xskb_list_node - for the purpose of gathering the xskb frags
+free_list_node can be used, head of the list (xsk_buff_pool::xskb_list)
+stays as-is, just reuse the node ptr.
 
-Fix this by setting the MAC port's bit in the port mask while adding the
-multicast entry. Also fix the flush logic to preserve the host port bit
-during removal of MAC port and free ALE entries when mask contains only
-host port.
+It is safe to do as a single xdp_buff_xsk can never reside in two
+pool's lists simultaneously.
 
-Fixes: 5c50a856d550 ("drivers: net: ethernet: cpsw: add multicast address to ALE table")
-Signed-off-by: Chintan Vankar <c-vankar@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260224181359.2055322-1-c-vankar@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Magnus Karlsson <magnus.karlsson@intel.com>
+Link: https://lore.kernel.org/bpf/20241007122458.282590-2-maciej.fijalkowski@intel.com
+Stable-dep-of: f7387d6579d6 ("xsk: Fix zero-copy AF_XDP fragment drop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 2 +-
- drivers/net/ethernet/ti/cpsw_ale.c       | 9 ++++-----
- 2 files changed, 5 insertions(+), 6 deletions(-)
+ include/net/xdp_sock_drv.h  | 14 +++++++-------
+ include/net/xsk_buff_pool.h |  1 -
+ net/xdp/xsk.c               |  4 ++--
+ net/xdp/xsk_buff_pool.c     |  1 -
+ 4 files changed, 9 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 6b5cff087686e..68049bb2bd989 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -290,7 +290,7 @@ static void am65_cpsw_nuss_ndo_slave_set_rx_mode(struct net_device *ndev)
- 	cpsw_ale_set_allmulti(common->ale,
- 			      ndev->flags & IFF_ALLMULTI, port->port_id);
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 0a5dca2b2b3f6..360bc1244c6af 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -126,8 +126,8 @@ static inline void xsk_buff_free(struct xdp_buff *xdp)
+ 	if (likely(!xdp_buff_has_frags(xdp)))
+ 		goto out;
  
--	port_mask = ALE_PORT_HOST;
-+	port_mask = BIT(port->port_id) | ALE_PORT_HOST;
- 	/* Clear all mcast from ALE */
- 	cpsw_ale_flush_multicast(common->ale, port_mask, -1);
+-	list_for_each_entry_safe(pos, tmp, xskb_list, xskb_list_node) {
+-		list_del(&pos->xskb_list_node);
++	list_for_each_entry_safe(pos, tmp, xskb_list, free_list_node) {
++		list_del(&pos->free_list_node);
+ 		xp_free(pos);
+ 	}
  
-diff --git a/drivers/net/ethernet/ti/cpsw_ale.c b/drivers/net/ethernet/ti/cpsw_ale.c
-index dc5e247ca5d1a..a6bb09545c608 100644
---- a/drivers/net/ethernet/ti/cpsw_ale.c
-+++ b/drivers/net/ethernet/ti/cpsw_ale.c
-@@ -443,14 +443,13 @@ static void cpsw_ale_flush_mcast(struct cpsw_ale *ale, u32 *ale_entry,
- 				      ale->port_mask_bits);
- 	if ((mask & port_mask) == 0)
- 		return; /* ports dont intersect, not interested */
--	mask &= ~port_mask;
-+	mask &= (~port_mask | ALE_PORT_HOST);
+@@ -140,7 +140,7 @@ static inline void xsk_buff_add_frag(struct xdp_buff *xdp)
+ {
+ 	struct xdp_buff_xsk *frag = container_of(xdp, struct xdp_buff_xsk, xdp);
  
--	/* free if only remaining port is host port */
--	if (mask)
-+	if (mask == 0x0 || mask == ALE_PORT_HOST)
-+		cpsw_ale_set_entry_type(ale_entry, ALE_TYPE_FREE);
-+	else
- 		cpsw_ale_set_port_mask(ale_entry, mask,
- 				       ale->port_mask_bits);
--	else
--		cpsw_ale_set_entry_type(ale_entry, ALE_TYPE_FREE);
+-	list_add_tail(&frag->xskb_list_node, &frag->pool->xskb_list);
++	list_add_tail(&frag->free_list_node, &frag->pool->xskb_list);
  }
  
- int cpsw_ale_flush_multicast(struct cpsw_ale *ale, int port_mask, int vid)
+ static inline struct xdp_buff *xsk_buff_get_frag(struct xdp_buff *first)
+@@ -150,9 +150,9 @@ static inline struct xdp_buff *xsk_buff_get_frag(struct xdp_buff *first)
+ 	struct xdp_buff_xsk *frag;
+ 
+ 	frag = list_first_entry_or_null(&xskb->pool->xskb_list,
+-					struct xdp_buff_xsk, xskb_list_node);
++					struct xdp_buff_xsk, free_list_node);
+ 	if (frag) {
+-		list_del(&frag->xskb_list_node);
++		list_del(&frag->free_list_node);
+ 		ret = &frag->xdp;
+ 	}
+ 
+@@ -163,7 +163,7 @@ static inline void xsk_buff_del_tail(struct xdp_buff *tail)
+ {
+ 	struct xdp_buff_xsk *xskb = container_of(tail, struct xdp_buff_xsk, xdp);
+ 
+-	list_del(&xskb->xskb_list_node);
++	list_del(&xskb->free_list_node);
+ }
+ 
+ static inline struct xdp_buff *xsk_buff_get_tail(struct xdp_buff *first)
+@@ -172,7 +172,7 @@ static inline struct xdp_buff *xsk_buff_get_tail(struct xdp_buff *first)
+ 	struct xdp_buff_xsk *frag;
+ 
+ 	frag = list_last_entry(&xskb->pool->xskb_list, struct xdp_buff_xsk,
+-			       xskb_list_node);
++			       free_list_node);
+ 	return &frag->xdp;
+ }
+ 
+diff --git a/include/net/xsk_buff_pool.h b/include/net/xsk_buff_pool.h
+index 823fd5c7a3b18..ff3ad172fffc1 100644
+--- a/include/net/xsk_buff_pool.h
++++ b/include/net/xsk_buff_pool.h
+@@ -30,7 +30,6 @@ struct xdp_buff_xsk {
+ 	struct xsk_buff_pool *pool;
+ 	u64 orig_addr;
+ 	struct list_head free_list_node;
+-	struct list_head xskb_list_node;
+ };
+ 
+ #define XSK_CHECK_PRIV_TYPE(t) BUILD_BUG_ON(sizeof(t) > offsetofend(struct xdp_buff_xsk, cb))
+diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
+index f031b07baa57a..c039db447d2e7 100644
+--- a/net/xdp/xsk.c
++++ b/net/xdp/xsk.c
+@@ -171,14 +171,14 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 		return 0;
+ 
+ 	xskb_list = &xskb->pool->xskb_list;
+-	list_for_each_entry_safe(pos, tmp, xskb_list, xskb_list_node) {
++	list_for_each_entry_safe(pos, tmp, xskb_list, free_list_node) {
+ 		if (list_is_singular(xskb_list))
+ 			contd = 0;
+ 		len = pos->xdp.data_end - pos->xdp.data;
+ 		err = __xsk_rcv_zc(xs, pos, len, contd);
+ 		if (err)
+ 			goto err;
+-		list_del(&pos->xskb_list_node);
++		list_del(&pos->free_list_node);
+ 	}
+ 
+ 	return 0;
+diff --git a/net/xdp/xsk_buff_pool.c b/net/xdp/xsk_buff_pool.c
+index b69dbd8615fc4..d1a9f4e9b685a 100644
+--- a/net/xdp/xsk_buff_pool.c
++++ b/net/xdp/xsk_buff_pool.c
+@@ -103,7 +103,6 @@ struct xsk_buff_pool *xp_create_and_assign_umem(struct xdp_sock *xs,
+ 		xskb->pool = pool;
+ 		xskb->xdp.frame_sz = umem->chunk_size - umem->headroom;
+ 		INIT_LIST_HEAD(&xskb->free_list_node);
+-		INIT_LIST_HEAD(&xskb->xskb_list_node);
+ 		if (pool->unaligned)
+ 			pool->free_heads[i] = xskb;
+ 		else
 -- 
 2.51.0
 
