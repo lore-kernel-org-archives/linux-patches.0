@@ -1,56 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B8E1F9F70;
-	Thu, 12 Mar 2026 20:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD8B1F9F70;
+	Thu, 12 Mar 2026 20:17:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346663; cv=none; b=U8HuK8DKGf2B4UeHqqXsbE9OMOThDJ9bJmpdoH2/3lGh7fyirKujir4AgIVBHCsQkd4ITjlZ2M0X/nSCsSXySdVNPVSf+ewa034naaJaC7rgFUlxIYbbiPjYJSu90ye9GkT1byLFCmTcmTJpjwCJN6MpBh3oifvh86NFk6tad98=
+	t=1773346667; cv=none; b=c5kT8fjhopB9kzCFS/g9s4sfIBsiL/BDtSj3OTK7tXRJqeCSLw29OkeZtTpYwey8lHoDKokelI1q4iEduuClVfFkFAnr7mtb9LDagdU/5FbzZRp27KKuFA4dFjejI7UcjbH2vNCnTSIyqnTmmxj05+IcCdWkv/J0jnUpCiGMbK8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346663; c=relaxed/simple;
-	bh=rxAU8n/1P+Us4y+2eXWRmfjipLSsrTWYJiapbF1z1bM=;
+	s=arc-20240116; t=1773346667; c=relaxed/simple;
+	bh=GeU7oAVMc5LIRzaHT8PDJWCavul8yqiimnWelDQzbWc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmqmSugd5sY5lJgvo7Vc7V6Rr/PqfYzxLyijZPiH9LNADXgb4mznW/Kq9+rANLUnRG89XlvhCUP9YdKzHnl/zJikhhcqF0h3Jbn21Q/sjzmdufzgc8JprDHMh675d9FhEMHFQtdeylP0bf02jQ9MihSy0MwxrYeCX7ggwwyUMu0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGi3qggF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qHcy2XlyDQCF9RGNqIPaFj7QHPpJ2vdk0qsqBVW+5HCRXdPS4ALHRguMqME5/eB37deObjEJv6SSTg7Ipkq8D9xic4DWbDZpUMUBk6H79Wd16ISABBs09czYyT3kfhYLGHAsqWHuxBiTo4FhYns7JMxWcS/DiNXLT1ee4Wqbw7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HbspHXLp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGi3qggF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41BFC4CEF7;
-	Thu, 12 Mar 2026 20:17:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HbspHXLp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E7AC4CEF7;
+	Thu, 12 Mar 2026 20:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346663;
-	bh=rxAU8n/1P+Us4y+2eXWRmfjipLSsrTWYJiapbF1z1bM=;
+	s=korg; t=1773346667;
+	bh=GeU7oAVMc5LIRzaHT8PDJWCavul8yqiimnWelDQzbWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGi3qggFuanvRzLLtCplmhIAfVTXuYBCoyWseIDOXeYEMjG57soipL67wJfPr4RO4
-	 +kZ2oU6xSzKjZrpZRHUD089eAlof9vbkGem24K2ugBcZh4Fk8L3kgBV7vV4yC5R0Y+
-	 PIAN9GH51rbcKpEHsI7RDUQy9LAmy5FN+S17U93o=
+	b=HbspHXLp7bGeeiat5llkjT0KKUmXZeTnHr5HneCd9CKfU9jvVGrYIVZyJD6WU75yA
+	 1SBbdequ97ZYzohKebFD/mNS87ehs/1cfZFfJn0RKRdts3L3aUk3doFHGEcG/7EYiG
+	 i8ETcdhN/eCJxKKrhfvH7Lc9dtzZLv31A3oaqCzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Alexander Graf <graf@amazon.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Baoquan He <bhe@redhat.com>,
-	Borislav Betkov <bp@alien8.de>,
-	guoweikang <guoweikang.kernel@gmail.com>,
-	Henry Willard <henry.willard@oracle.com>,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Bohac <jbohac@suse.cz>,
-	Joel Granados <joel.granados@kernel.org>,
-	Jonathan McDowell <noodles@fb.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Paul Webb <paul.x.webb@oracle.com>,
-	Sohil Mehta <sohil.mehta@intel.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Thomas Gleinxer <tglx@linutronix.de>,
-	Yifei Liu <yifei.l.liu@oracle.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jeongjun Park <aha310510@gmail.com>,
+	Inki Dae <inki.dae@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 094/265] of/kexec: refactor ima_get_kexec_buffer() to use ima_validate_range()
-Date: Thu, 12 Mar 2026 21:08:01 +0100
-Message-ID: <20260312201021.624536881@linuxfoundation.org>
+Subject: [PATCH 6.12 095/265] drm/exynos: vidi: fix to avoid directly dereferencing user pointer
+Date: Thu, 12 Mar 2026 21:08:02 +0100
+Message-ID: <20260312201021.660593507@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -69,73 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Jeongjun Park <aha310510@gmail.com>
 
-[ Upstream commit 4d02233235ed0450de9c10fcdcf3484e3c9401ce ]
+[ Upstream commit d4c98c077c7fb2dfdece7d605e694b5ea2665085 ]
 
-Refactor the OF/DT ima_get_kexec_buffer() to use a generic helper to
-validate the address range.  No functional change intended.
+In vidi_connection_ioctl(), vidi->edid(user pointer) is directly
+dereferenced in the kernel.
 
-Link: https://lkml.kernel.org/r/20251231061609.907170-3-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Cc: Alexander Graf <graf@amazon.com>
-Cc: Ard Biesheuvel <ardb@kernel.org>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Borislav Betkov <bp@alien8.de>
-Cc: guoweikang <guoweikang.kernel@gmail.com>
-Cc: Henry Willard <henry.willard@oracle.com>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Bohac <jbohac@suse.cz>
-Cc: Joel Granados <joel.granados@kernel.org>
-Cc: Jonathan McDowell <noodles@fb.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Paul Webb <paul.x.webb@oracle.com>
-Cc: Sohil Mehta <sohil.mehta@intel.com>
-Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
-Cc: Thomas Gleinxer <tglx@linutronix.de>
-Cc: Yifei Liu <yifei.l.liu@oracle.com>
+This allows arbitrary kernel memory access from the user space, so instead
+of directly accessing the user pointer in the kernel, we should modify it
+to copy edid to kernel memory using copy_from_user() and use it.
+
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Signed-off-by: Inki Dae <inki.dae@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/of/kexec.c | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/exynos/exynos_drm_vidi.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/of/kexec.c b/drivers/of/kexec.c
-index 5b924597a4deb..81f272b154760 100644
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -128,7 +128,6 @@ int __init ima_get_kexec_buffer(void **addr, size_t *size)
- {
- 	int ret, len;
- 	unsigned long tmp_addr;
--	unsigned long start_pfn, end_pfn;
- 	size_t tmp_size;
- 	const void *prop;
+diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+index 6de0cced6c9d2..007fd8dad3559 100644
+--- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
++++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
+@@ -246,13 +246,27 @@ int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
  
-@@ -144,17 +143,9 @@ int __init ima_get_kexec_buffer(void **addr, size_t *size)
- 	if (!tmp_size)
- 		return -ENOENT;
+ 	if (vidi->connection) {
+ 		const struct drm_edid *drm_edid;
+-		const struct edid *raw_edid;
++		const void __user *edid_userptr = u64_to_user_ptr(vidi->edid);
++		void *edid_buf;
++		struct edid hdr;
+ 		size_t size;
  
--	/*
--	 * Calculate the PFNs for the buffer and ensure
--	 * they are with in addressable memory.
--	 */
--	start_pfn = PHYS_PFN(tmp_addr);
--	end_pfn = PHYS_PFN(tmp_addr + tmp_size - 1);
--	if (!page_is_ram(start_pfn) || !page_is_ram(end_pfn)) {
--		pr_warn("IMA buffer at 0x%lx, size = 0x%zx beyond memory\n",
--			tmp_addr, tmp_size);
--		return -EINVAL;
--	}
-+	ret = ima_validate_range(tmp_addr, tmp_size);
-+	if (ret)
-+		return ret;
+-		raw_edid = (const struct edid *)(unsigned long)vidi->edid;
+-		size = (raw_edid->extensions + 1) * EDID_LENGTH;
++		if (copy_from_user(&hdr, edid_userptr, sizeof(hdr)))
++			return -EFAULT;
  
- 	*addr = __va(tmp_addr);
- 	*size = tmp_size;
+-		drm_edid = drm_edid_alloc(raw_edid, size);
++		size = (hdr.extensions + 1) * EDID_LENGTH;
++
++		edid_buf = kmalloc(size, GFP_KERNEL);
++		if (!edid_buf)
++			return -ENOMEM;
++
++		if (copy_from_user(edid_buf, edid_userptr, size)) {
++			kfree(edid_buf);
++			return -EFAULT;
++		}
++
++		drm_edid = drm_edid_alloc(edid_buf, size);
++		kfree(edid_buf);
+ 		if (!drm_edid)
+ 			return -ENOMEM;
+ 
 -- 
 2.51.0
 
