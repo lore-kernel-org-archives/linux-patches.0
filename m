@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2103E3EF67C;
-	Thu, 12 Mar 2026 20:28:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BCC40242C;
+	Thu, 12 Mar 2026 20:28:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347301; cv=none; b=cIdkwcZlbxbkOmhidpdb9bDML8boYyM3jgtwk8OG2SA5q2pyOhWKgSbaDomxNBhsLJjPmdRBVbxsN+5k8ctEhIDf8B9WkLEukKLioYSFo3inPvQpyU+m39WDGo+zLbFPlY8n7gHnrzcJShAY4VRYGZRQJEz4WyT/TY87vLqeEmQ=
+	t=1773347304; cv=none; b=Vk3bDddIqTW29V/AGgi1p8A+zChmhemylPbhOxpZq4naiPJXIZhtCmxTmfpZjtIe3xZNZOBcWQtYVfpV9D9Fvn8Aiw1Eg0olb/nwPX/FOrb3kiDhMogkdZcgDi2JiF76h5nXaC4xYUlQv8jbYVIj0M/4noyukRwcwXrMggvNJAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347301; c=relaxed/simple;
-	bh=/71fowhlVYws0kLIQsANoCOpwIIK+Zu8FDhX8ho2DXk=;
+	s=arc-20240116; t=1773347304; c=relaxed/simple;
+	bh=eW27+RcIatsXHo0TFrvbgnGavLLtI2K2RbRZPMR4/RM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BYlt7PCdNMX0O/Pbi7/Nw2d/ZkoS3mSl1OjAXAOjt05V30D0B8pMfv3bznHDdJ++dkrhMxyqvx1efcZWXQbtoPdp8DLk2L++GCwK8xyZUzTpotCjG+vrKkhOb0HkUeJkGnpM1u5qs8eKSf8JQCRAiUd4QE78CUTNqa8Tyes3GGI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQKXzXeu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l4uw6ZNGM9hSEO1o5jhqozR3Z8Z3/BMfzdZxPiDvg5zK398pevMwWuk1979kSh2FYUM+cCBbLljhReSPa5QQG+OaUrVeagL3vkTmDsfN14DzkUrTICpA28LALeVHAevfWGFkAejjGppZqTrhLTfrinycDjyd9oL8f5ruvTBfIFY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vcyh1XGV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQKXzXeu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87A7FC19425;
-	Thu, 12 Mar 2026 20:28:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vcyh1XGV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40300C2BCB0;
+	Thu, 12 Mar 2026 20:28:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347301;
-	bh=/71fowhlVYws0kLIQsANoCOpwIIK+Zu8FDhX8ho2DXk=;
+	s=korg; t=1773347304;
+	bh=eW27+RcIatsXHo0TFrvbgnGavLLtI2K2RbRZPMR4/RM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQKXzXeurB+Z5eRT5VcN88LZy0BJQWHLKxgM50GtksVATqXwhlFRxkCcPVANFbo0Z
-	 6D8NvreOuXYvby2YxPflcwcrFrSNuC/RffjPYqjdd4rQMj8ZON/T6Q7kakPm6EfhnP
-	 K/gomxDutk9I1s1DNhr8HqjPucR+cyeBw1HMR/Dk=
+	b=Vcyh1XGVFlu5qUWv1AaA2uTTrS0gHf8p04RfH7qIX5eW3R9AGqRBtrnotUy18Txdf
+	 LULVzjyHLath1khnpopTdA/rYgv5ifK4WtlPOix9km0r/myL1r7CFzoUV3cnPeVlgr
+	 nMH+t+ZzpDf/bKgNsdzTOJfoVImhXyeO3Z+TfHco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 255/265] apparmor: fix missing bounds check on DEFAULT table in verify_dfa()
-Date: Thu, 12 Mar 2026 21:10:42 +0100
-Message-ID: <20260312201027.556110234@linuxfoundation.org>
+	Olivier Sobrie <olivier@sobrie.be>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 226/265] hwmon: (max6639) fix inverted polarity
+Date: Thu, 12 Mar 2026 21:10:13 +0100
+Message-ID: <20260312201026.490893844@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,91 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: Olivier Sobrie <olivier@sobrie.be>
 
-commit d352873bbefa7eb39995239d0b44ccdf8aaa79a4 upstream.
+[ Upstream commit 170a4b21f49b3dcff3115b4c90758f0a0d77375a ]
 
-The verify_dfa() function only checks DEFAULT_TABLE bounds when the state
-is not differentially encoded.
+According to MAX6639 documentation:
 
-When the verification loop traverses the differential encoding chain,
-it reads k = DEFAULT_TABLE[j] and uses k as an array index without
-validation. A malformed DFA with DEFAULT_TABLE[j] >= state_count,
-therefore, causes both out-of-bounds reads and writes.
+  D1: PWM Output Polarity. PWM output is low at
+  100% duty cycle when this bit is set to zero. PWM
+  output is high at 100% duty cycle when this bit is set
+  to 1.
 
-[   57.179855] ==================================================================
-[   57.180549] BUG: KASAN: slab-out-of-bounds in verify_dfa+0x59a/0x660
-[   57.180904] Read of size 4 at addr ffff888100eadec4 by task su/993
+Up to commit 0f33272b60ed ("hwmon: (max6639) : Update hwmon init using
+info structure"), the polarity was set to high (0x2) when no platform
+data was set. After the patch, the polarity register wasn't set anymore
+if no platform data was specified. Nowadays, since commit 7506ebcd662b
+("hwmon: (max6639) : Configure based on DT property"), it is always set
+to low which doesn't match with the comment above and change the
+behavior compared to versions prior 0f33272b60ed.
 
-[   57.181554] CPU: 1 UID: 0 PID: 993 Comm: su Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
-[   57.181558] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[   57.181563] Call Trace:
-[   57.181572]  <TASK>
-[   57.181577]  dump_stack_lvl+0x5e/0x80
-[   57.181596]  print_report+0xc8/0x270
-[   57.181605]  ? verify_dfa+0x59a/0x660
-[   57.181608]  kasan_report+0x118/0x150
-[   57.181620]  ? verify_dfa+0x59a/0x660
-[   57.181623]  verify_dfa+0x59a/0x660
-[   57.181627]  aa_dfa_unpack+0x1610/0x1740
-[   57.181629]  ? __kmalloc_cache_noprof+0x1d0/0x470
-[   57.181640]  unpack_pdb+0x86d/0x46b0
-[   57.181647]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181653]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181656]  ? aa_unpack_nameX+0x1a8/0x300
-[   57.181659]  aa_unpack+0x20b0/0x4c30
-[   57.181662]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181664]  ? stack_depot_save_flags+0x33/0x700
-[   57.181681]  ? kasan_save_track+0x4f/0x80
-[   57.181683]  ? kasan_save_track+0x3e/0x80
-[   57.181686]  ? __kasan_kmalloc+0x93/0xb0
-[   57.181688]  ? __kvmalloc_node_noprof+0x44a/0x780
-[   57.181693]  ? aa_simple_write_to_buffer+0x54/0x130
-[   57.181697]  ? policy_update+0x154/0x330
-[   57.181704]  aa_replace_profiles+0x15a/0x1dd0
-[   57.181707]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181710]  ? __kvmalloc_node_noprof+0x44a/0x780
-[   57.181712]  ? aa_loaddata_alloc+0x77/0x140
-[   57.181715]  ? srso_alias_return_thunk+0x5/0xfbef5
-[   57.181717]  ? _copy_from_user+0x2a/0x70
-[   57.181730]  policy_update+0x17a/0x330
-[   57.181733]  profile_replace+0x153/0x1a0
-[   57.181735]  ? rw_verify_area+0x93/0x2d0
-[   57.181740]  vfs_write+0x235/0xab0
-[   57.181745]  ksys_write+0xb0/0x170
-[   57.181748]  do_syscall_64+0x8e/0x660
-[   57.181762]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-[   57.181765] RIP: 0033:0x7f6192792eb2
-
-Remove the MATCH_FLAG_DIFF_ENCODE condition to validate all DEFAULT_TABLE
-entries unconditionally.
-
-Fixes: 031dcc8f4e84 ("apparmor: dfa add support for state differential encoding")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f33272b60ed ("hwmon: (max6639) : Update hwmon init using info structure")
+Signed-off-by: Olivier Sobrie <olivier@sobrie.be>
+Link: https://lore.kernel.org/r/20260304212039.570274-1-olivier@sobrie.be
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/match.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hwmon/max6639.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/apparmor/match.c
-+++ b/security/apparmor/match.c
-@@ -160,9 +160,10 @@ static int verify_dfa(struct aa_dfa *dfa
- 	if (state_count == 0)
- 		goto out;
- 	for (i = 0; i < state_count; i++) {
--		if (!(BASE_TABLE(dfa)[i] & MATCH_FLAG_DIFF_ENCODE) &&
--		    (DEFAULT_TABLE(dfa)[i] >= state_count))
-+		if (DEFAULT_TABLE(dfa)[i] >= state_count) {
-+			pr_err("AppArmor DFA default state out of bounds");
- 			goto out;
-+		}
- 		if (BASE_TABLE(dfa)[i] & MATCH_FLAGS_INVALID) {
- 			pr_err("AppArmor DFA state with invalid match flags");
- 			goto out;
+diff --git a/drivers/hwmon/max6639.c b/drivers/hwmon/max6639.c
+index 32b4d54b20766..0b0a9f4c2307f 100644
+--- a/drivers/hwmon/max6639.c
++++ b/drivers/hwmon/max6639.c
+@@ -615,7 +615,7 @@ static int max6639_init_client(struct i2c_client *client,
+ 			return err;
+ 
+ 		/* Fans PWM polarity high by default */
+-		err = regmap_write(data->regmap, MAX6639_REG_FAN_CONFIG2a(i), 0x00);
++		err = regmap_write(data->regmap, MAX6639_REG_FAN_CONFIG2a(i), 0x02);
+ 		if (err)
+ 			return err;
+ 
+-- 
+2.51.0
+
 
 
