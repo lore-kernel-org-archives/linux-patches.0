@@ -1,115 +1,58 @@
-Received: from pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com (pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com [52.13.214.179])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A163B1BD
-	for <patches@lists.linux.dev>; Thu, 12 Mar 2026 13:22:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=52.13.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEAFD3FB078;
+	Thu, 12 Mar 2026 16:49:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773321763; cv=none; b=FKwA5GQwNRnP5trFTIH/oAvDI4WbqfMikcmTGro4MabJXwmUtZxRuV+T9DXT7NCA4KROfsFMDyYkkcEL1zby4N/TNO1eaAw+82B/K3xB6UGeD1RWQ5FVsOsTnh2zcReWHDaAFtyB3HSxvczS+7NP4zjjf7608OelrGEq2dQRUPE=
+	t=1773334161; cv=none; b=bITon8NomABz0sHLfRqNqRMLcmDT5DT/wCT+84XpPd5SFjz8FNoIXL9QtXaLgSkbtxlaWDzQq7VaoktsgKBbCnu5nRMV5Jw8VqddaUv5jFTt0OfyNB42KfqPwwtaaT9gwR4y8y0NTe5E84RG26cBUjLY3xPoxXal9i2UoDlnTTQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773321763; c=relaxed/simple;
-	bh=wgoNF3FgzQSFKh1lASStofgWUiDg+uwX4hGjVpznImc=;
-	h=Date:From:To:CC:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=o/8sdYQ72eRjrRhGZGIZIwdMBkhLgV88K8QR0z20kIHLrFURhNrZPNnqwfq2akOsadcMgAnRWAbEcNv7gmcXMFsxnQT8LyoJhRBVx2T81VxLcB+4HjsI7n8GbBwncI+5YCt+CBQURGImwuunzMllb/aRw98u0IbqqaTp6nD3QDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com; spf=pass smtp.mailfrom=amazon.com; dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b=OzKjA9cL; arc=none smtp.client-ip=52.13.214.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=amazon.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=amazon.com
+	s=arc-20240116; t=1773334161; c=relaxed/simple;
+	bh=CKjsMtBY0Bir9Asltf6sE4JGRZVkGB1mbJpvZHhLBik=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eRs23IxrQ1V7Fozpsq/TGze5OetgDND4aAjObq6YYZa+M1MewRC3FGiaY6G0lr41rqq8m4SD8/vEgtgoM7UT1FTdvrU0KAyPD/qqEpPpDz8G0fCsRALpfCfeMEcvN9j0XMBzfX4JN2WPVubx75pp1FaSv6RbPUQsB0oFp9K1f5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=GE2xnE2v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=amazon.com header.i=@amazon.com header.b="OzKjA9cL"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazoncorp2;
-  t=1773321761; x=1804857761;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=rs5gwRcVJZNkX0BWP9+fIBemaJcQfrjY0HQhwZ1xtI4=;
-  b=OzKjA9cLA2sXZ8rCrp5sKwlXCyJ+1WvIx4Vtq4r8QVPSVfFBKg8GX0wt
-   2n+qV0HmluZtEsJ42LOVrXf7RIjs7uOp3Kt/rjWvFkLXMgPVPF+8HpFy7
-   JGQLtxvEKSMz1x3EvdJ4sh5SS5yG/rnhd56EPPirKwHN2MWa9ijNEYuQw
-   cQFHNoaScF55PL99uiqYcfw+5utNg33JJ/1j2yrTgZ4u3o8SotCAm2w7T
-   VHXnA/sL9hc4LOPUHc5QvD6ZKanzj1v2210tiR6fu4zm46o/3r2Vy9tBc
-   4pKyvAlmVRHhKtEs6OzsOaAJ/Tikn/nGVpighuF2PnOebHo6uRyZ1qaQK
-   g==;
-X-CSE-ConnectionGUID: 2Tz6uGxVRiq3XcGY22TRfA==
-X-CSE-MsgGUID: Lq0jKYbqR+2kCJONlCZkIw==
-X-IronPort-AV: E=Sophos;i="6.23,116,1770595200"; 
-   d="scan'208";a="14885162"
-Received: from ip-10-5-9-48.us-west-2.compute.internal (HELO smtpout.naws.us-west-2.prod.farcaster.email.amazon.dev) ([10.5.9.48])
-  by internal-pdx-out-005.esa.us-west-2.outbound.mail-perimeter.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Mar 2026 13:22:37 +0000
-Received: from EX19MTAUWB001.ant.amazon.com [205.251.233.51:17478]
- by smtpin.naws.us-west-2.prod.farcaster.email.amazon.dev [10.0.6.153:2525] with esmtp (Farcaster)
- id d07cbfda-1c55-4ebc-8202-4d178c25255f; Thu, 12 Mar 2026 13:22:37 +0000 (UTC)
-X-Farcaster-Flow-ID: d07cbfda-1c55-4ebc-8202-4d178c25255f
-Received: from EX19D001UWA001.ant.amazon.com (10.13.138.214) by
- EX19MTAUWB001.ant.amazon.com (10.250.64.248) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37;
- Thu, 12 Mar 2026 13:22:36 +0000
-Received: from dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com
- (10.253.103.172) by EX19D001UWA001.ant.amazon.com (10.13.138.214) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA) id 15.2.2562.37; Thu, 12 Mar 2026
- 13:22:32 +0000
-Date: Thu, 12 Mar 2026 13:22:24 +0000
-From: Michael Margolin <mrgolin@amazon.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: Gal Pressman <gal.pressman@linux.dev>, Abhijit Gangurde
-	<abhijit.gangurde@amd.com>, Allen Hubbe <allen.hubbe@amd.com>, "Broadcom
- internal kernel review list" <bcm-kernel-feedback-list@broadcom.com>,
-	"Bernard Metzler" <bernard.metzler@linux.dev>, Bryan Tan
-	<bryan-bt.tan@broadcom.com>, Cheng Xu <chengyou@linux.alibaba.com>, Junxian
- Huang <huangjunxian6@hisilicon.com>, Kai Shen <kaishen@linux.alibaba.com>,
-	Konstantin Taranov <kotaranov@microsoft.com>, Krzysztof Czurylo
-	<krzysztof.czurylo@intel.com>, Leon Romanovsky <leon@kernel.org>,
-	<linux-hyperv@vger.kernel.org>, <linux-rdma@vger.kernel.org>, Long Li
-	<longli@microsoft.com>, Michal Kalderon <mkalderon@marvell.com>, "Nelson
- Escobar" <neescoba@cisco.com>, Satish Kharat <satishkh@cisco.com>, "Selvin
- Xavier" <selvin.xavier@broadcom.com>, Yossi Leybovich <sleybo@amazon.com>,
-	Chengchang Tang <tangchengchang@huawei.com>, Tatyana Nikolova
-	<tatyana.e.nikolova@intel.com>, Vishnu Dasa <vishnu.dasa@broadcom.com>,
-	Yishai Hadas <yishaih@nvidia.com>, Zhu Yanjun <zyjzyj2000@gmail.com>,
-	<patches@lists.linux.dev>
-Subject: Re: [PATCH 10/16] RDMA/efa: Use ib_copy_validate_udata_in_cm()
-Message-ID: <20260312132224.GA3624@dev-dsk-mrgolin-1c-b2091117.eu-west-1.amazon.com>
-References: <10-v1-2b86f54cda42+7d-rdma_udata_req_jgg@nvidia.com>
- <cf3bbf89-0bb1-4c58-b78f-37afdb2ff99c@linux.dev>
- <20260312112020.GE1448102@nvidia.com>
- <20260312120858.GH1448102@nvidia.com>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="GE2xnE2v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04C1CC4CEF7;
+	Thu, 12 Mar 2026 16:49:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773334161;
+	bh=CKjsMtBY0Bir9Asltf6sE4JGRZVkGB1mbJpvZHhLBik=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=GE2xnE2vDgMFa+mX0SH5Y5jcTy9ctXVil1fgizeAU12FPbmSuI+pbd/5//d7RXzb8
+	 a19hcU9yCBn9gj37FQCQkdBfYDUWTYrfHeIHO66+PDRdH/ox6f0p8Aag8pqwE6Qt9p
+	 1yGF1Vr7kK7xY1VaJVnVke2u/RM/tcGPKmvkdlUSiI9+FHXxNveGxKIdOgwrzetopM
+	 5t9znwqV49D6+TxeY7zqVe51CUOTN8vB+AwF+42KQj7ZGx5tJG6AUBtRfdCMdATKzO
+	 btZXdDfF7PlS5hlw/ExbwKdJ6d6J55HjoL/FmupS8F7ZmzK88pn+1gWo09vXN5zFcO
+	 Hky/jioUHi+nA==
+Date: Thu, 12 Mar 2026 12:49:19 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Eric Hagberg <ehagberg@janestreet.com>
+Cc: patches@lists.linux.dev, stable@vger.kernel.org, peterz@infradead.org,
+	kprateek.nayak@amd.com, shubhang@os.amperecomputing.com
+Subject: Re: [PATCH 6.18 022/314] sched/fair: Fix zero_vruntime tracking
+Message-ID: <abLuj_pax8huB_BR@laps>
+References: <05467440d95c78161254bab895be5692e4f0a3f3.1773141555.git.sashal@kernel.org>
+ <20260311161400.1003322-1-ehagberg@janestreet.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20260312120858.GH1448102@nvidia.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-ClientProxiedBy: EX19D044UWB001.ant.amazon.com (10.13.139.171) To
- EX19D001UWA001.ant.amazon.com (10.13.138.214)
+In-Reply-To: <20260311161400.1003322-1-ehagberg@janestreet.com>
 
-On Thu, Mar 12, 2026 at 09:08:58AM -0300, Jason Gunthorpe wrote:
-> On Thu, Mar 12, 2026 at 08:20:20AM -0300, Jason Gunthorpe wrote:
-> > On Thu, Mar 12, 2026 at 01:03:59PM +0200, Gal Pressman wrote:
-> > > On 12/03/2026 2:24, Jason Gunthorpe wrote:
-> > > > Add the missed check for unsupported comp_mask bits.
-> > > 
-> > > Is it really missed? IIRC, it's intended.
-> > > 
-> > > See the comment above your hunk, and efa_user_comp_handshake()?
-> > 
-> > No, that is an illegal way to use a field called comp_mask.
-> > 
-> > If the driver wants that it needs a new field "suggested feature flags
-> > to enable"
-> > 
-> > comp_mask is strictly to say that new fields are present and must be
-> > processed by the kernel, and nothing else.
-> 
-> We could also rename the struct field away from comp_mask ? It is
-> easier to add a comp_mask later..
-> 
-> Jason
+On Wed, Mar 11, 2026 at 12:14:00PM -0400, Eric Hagberg wrote:
+>Shouldn't this also be applied to the 6.12 stable kernel as well, since it has the patch
+>mentioned in the Fixes: line?
+>
+>The broken tracking mentioned in the test case is seen in 6.12 kernels as well.
 
-Agree that this field should be renamed as we shouldn't fail when
-unsupported value is requested. I'll send a patch.
+Could you send a tested backport please?
 
-Michael
+-- 
+Thanks,
+Sasha
