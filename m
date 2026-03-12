@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37DD4287268;
-	Thu, 12 Mar 2026 20:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68E526F288;
+	Thu, 12 Mar 2026 20:17:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346623; cv=none; b=O0Q80YIVzE2D4IJpmm7bhNWETvGLECBiuaRXioPnIiYm14v4DJ4z3WI1+8wV8e6SS1Mck1w+t8sx2H1XIUqUrM6bnrHj02vg+AawAU6k9zdC4mDwwp9Nq/rz8RzwQjyLvZBca9ecqXxDcZNqBkj9qrTRr6IYYC7pZKC5TL5cRLM=
+	t=1773346629; cv=none; b=LGOU2Q+2bozNtItRnnvcqUSFfibDC87vKtQh0Am8vmUKAmoXUQnzXphQoYwpWhfzxu9m3cpDu+zdpaZF7h5JFU/gMF4/q/7MJH13fkFMjrrY+eSadSMo2IpBP+0zmBtcEKJSv0yUS+sjBXrN9Bo7g0eYTjHiF+HWCJ/I+6k0bUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346623; c=relaxed/simple;
-	bh=/PJj0/QfjU8hUxhDK/+dQQZSkxPiiyobGwOfJtkOvM0=;
+	s=arc-20240116; t=1773346629; c=relaxed/simple;
+	bh=B460u3FW2gszZwUYXoJP/+AoTHH2CFQr4/97kZIPZZc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CZUH5iPiNYeulxFXF7QjQM/mSka9AJfQZhYtNgXGQSKWy4m38ZKR6v8G76gbBY4ylRJkbQ/WLGWndcKB9BfmkZsz/yyRv3TvBSD9Vp9Yv0ih5JnliQErHPkn1aEQgTpenDf0+7kpwLpECMZfw/w3clltqCvQOqGK0sAQQ+0piWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxFE9Tjg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EMgodgEekG0zhAUJLO0lHOPRWQiQ+62SWFXV99WSvGfEG01y1rR8L1pHs0Bj0v6rIoJv4Tqw6oejnTUAzGzrEUNd6b//C15F1yCUoTW5B4c386d7H6Wu+J3CVE4bytmYXLIn4EiIeKsvLEDsTVGIzK7SJ9QJX5iFOGd7DQ0SD9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i6+UWl4a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxFE9Tjg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D715C4CEF7;
-	Thu, 12 Mar 2026 20:17:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i6+UWl4a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71958C4CEF7;
+	Thu, 12 Mar 2026 20:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346622;
-	bh=/PJj0/QfjU8hUxhDK/+dQQZSkxPiiyobGwOfJtkOvM0=;
+	s=korg; t=1773346629;
+	bh=B460u3FW2gszZwUYXoJP/+AoTHH2CFQr4/97kZIPZZc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PxFE9Tjg+8Ez5FO1mGqvRfCXE+iWRFUMqVTXpvs4CpOcr1TObG95VyzzV+dCvAzFN
-	 atCNpFR1Z4/Iygu4Ps8/swiV3P77dGHFUibhs7AeLNGqPnF1GsMrhL5eyoEwzwJXPi
-	 7rDzuz542VfMmrUEVsFs1fvQTkfFmdtZlTc6WB6E=
+	b=i6+UWl4amx6OqG82MmRghI21YkH2I+/awyn//9kh24w+zbA0l1dsbmHLLgCyaOOyB
+	 Oe1kOw5b4jsXE7ZlKNu1r7bu6G7M3alJYERL06D/E3scb9c2JOsBJ8Jp+z+ZIggQ2L
+	 0Je2UGGfdRLYPC5/Aa5x36RazF5MJuKkxkxyW1jE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans de Goede <johannes.goede@oss.qualcomm.com>,
-	Neil Sun <neil.sun@lcfuturecenter.com>,
-	Naomi Huang <naomi.huang@lcfuturecenter.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Hans Verkuil <hverkuil+cisco@kernel.org>,
+	Alessandro Ratti <alessandro@0x65c.net>,
+	syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 053/265] media: dw9714: Fix powerup sequence
-Date: Thu, 12 Mar 2026 21:07:20 +0100
-Message-ID: <20260312201020.123062192@linuxfoundation.org>
+Subject: [PATCH 6.12 054/265] KVM: x86: Ignore -EBUSY when checking nested events from vcpu_block()
+Date: Thu, 12 Mar 2026 21:07:21 +0100
+Message-ID: <20260312201020.161040398@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -55,54 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 401aec35ac7bd04b4018a519257b945abb88e26c ]
+[ Upstream commit ead63640d4e72e6f6d464f4e31f7fecb79af8869 ]
 
-We have experienced seen multiple I2C errors while doing stress test on
-the module:
+Ignore -EBUSY when checking nested events after exiting a blocking state
+while L2 is active, as exiting to userspace will generate a spurious
+userspace exit, usually with KVM_EXIT_UNKNOWN, and likely lead to the VM's
+demise.  Continuing with the wakeup isn't perfect either, as *something*
+has gone sideways if a vCPU is awakened in L2 with an injected event (or
+worse, a nested run pending), but continuing on gives the VM a decent
+chance of surviving without any major side effects.
 
-dw9714 i2c-PRP0001:01: dw9714_vcm_resume I2C failure: -5
-dw9714 i2c-PRP0001:01: I2C write fail
+As explained in the Fixes commits, it _should_ be impossible for a vCPU to
+be put into a blocking state with an already-injected event (exception,
+IRQ, or NMI).  Unfortunately, userspace can stuff MP_STATE and/or injected
+events, and thus put the vCPU into what should be an impossible state.
 
-Inspecting the powerup sequence we found that it does not match the
-documentation at:
-https://blog.arducam.com/downloads/DW9714A-DONGWOON(Autofocus_motor_manual).pdf
+Don't bother trying to preserve the WARN, e.g. with an anti-syzkaller
+Kconfig, as WARNs can (hopefully) be added in paths where _KVM_ would be
+violating x86 architecture, e.g. by WARNing if KVM attempts to inject an
+exception or interrupt while the vCPU isn't running.
 
-"""
-(2) DW9714A requires waiting time of 12ms after power on. During this
-waiting time, the offset calibration of internal amplifier is
-operating for minimization of output offset current .
-"""
-
-This patch increases the powerup delay to follow the documentation.
-
-Fixes: 9d00ccabfbb5 ("media: i2c: dw9714: Fix occasional probe errors")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Hans de Goede <johannes.goede@oss.qualcomm.com>
-Tested-by: Neil Sun <neil.sun@lcfuturecenter.com>
-Reported-by: Naomi Huang <naomi.huang@lcfuturecenter.com>
+Cc: Alessandro Ratti <alessandro@0x65c.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Signed-off-by: Hans Verkuil <hverkuil+cisco@kernel.org>
+Fixes: 26844fee6ade ("KVM: x86: never write to memory from kvm_vcpu_check_block()")
+Fixes: 45405155d876 ("KVM: x86: WARN if a vCPU gets a valid wakeup that KVM can't yet inject")
+Link: https://syzkaller.appspot.com/text?tag=ReproC&x=10d4261a580000
+Reported-by: syzbot+1522459a74d26b0ac33a@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/671bc7a7.050a0220.455e8.022a.GAE@google.com
+Link: https://patch.msgid.link/20260109030657.994759-1-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/dw9714.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/media/i2c/dw9714.c b/drivers/media/i2c/dw9714.c
-index e69dd3e14b844..8fee13e9b3a0b 100644
---- a/drivers/media/i2c/dw9714.c
-+++ b/drivers/media/i2c/dw9714.c
-@@ -149,7 +149,7 @@ static int dw9714_power_up(struct dw9714_device *dw9714_dev)
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 8f673aaa0490f..0d9035993ed36 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -11285,8 +11285,7 @@ static inline int vcpu_block(struct kvm_vcpu *vcpu)
+ 	if (is_guest_mode(vcpu)) {
+ 		int r = kvm_check_nested_events(vcpu);
  
- 	gpiod_set_value_cansleep(dw9714_dev->powerdown_gpio, 0);
+-		WARN_ON_ONCE(r == -EBUSY);
+-		if (r < 0)
++		if (r < 0 && r != -EBUSY)
+ 			return 0;
+ 	}
  
--	usleep_range(1000, 2000);
-+	usleep_range(12000, 14000);
- 
- 	return 0;
- }
 -- 
 2.51.0
 
