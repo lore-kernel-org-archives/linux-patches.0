@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FE292BCF7F;
-	Thu, 12 Mar 2026 20:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA041F9F70;
+	Thu, 12 Mar 2026 20:18:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346691; cv=none; b=P5jfCy2G69wNCsbEXvjp7MRTrhYmu2t4KORtKvadzpaKMMjUZCznGIButBPTYRC/+id+q6OPTAfi92arHivBMJiaNqDInnJ5iV5+qXqJumaIt7D4VZ0kx0WzWc9GSgPGIIlKwV1/NMYxymIDqO+1NWMvVkD5WPfjTmxYdeFTsOM=
+	t=1773346695; cv=none; b=OJakBh0+zJuUKyziX17MIlKJcoKxxIMVk/o/pvndV590PPCI+E6Tn87pJLXQNAeK2Xif/H693G1YVr6YyiMzFmFhrSEhPXagMQO71sN+SQpRssT5PB7jYylCQvsQQQx2X3SZKw6pE9Ll0EzORoOkOLCvhvOJSzri2F9T4xAh0CY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346691; c=relaxed/simple;
-	bh=YNGbJfa87dTEZzRpGEjfRo5P5eNtVZDWrra3l2yu5v8=;
+	s=arc-20240116; t=1773346695; c=relaxed/simple;
+	bh=sepHpV/1aTI13tM2P6Vxwf3ulyxrhznEOaZeVRx9E/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eftUr+0dlVf160FtVXp3Gs++5nLIg1i2ygwIiYSbrldR/TK7BU3cpNRZMP1I9xKO6ZiQNVxTp/BFcQ6lbr5P5ZdyXFUtzE87UjWrq4HuS8nWyZQY5oAjSaEctbuPjfCv61zOuIEBkDn8upSve1CIJ6Ij/rsi8nNKB8yhzJeWgVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PyebXbFr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T/G44NpCXFxpTrd8jcT7/Ocm6XbS6hVm4oEyG2MuaxQ33dC51BbbDmo6tdAK6bcC/lp/gE2YJ9MbjMN6fhQO2AvAgLTHCzsTU85B0SsfifXB2uvjdVdihbob9ei4wTTYCcInrBZRJkGVzUF+eIgKobMiFn8sdYu0TVmC1QfKLtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E1Q2LxBn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PyebXbFr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EF11C4CEF7;
-	Thu, 12 Mar 2026 20:18:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E1Q2LxBn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFBD4C4CEF7;
+	Thu, 12 Mar 2026 20:18:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346691;
-	bh=YNGbJfa87dTEZzRpGEjfRo5P5eNtVZDWrra3l2yu5v8=;
+	s=korg; t=1773346695;
+	bh=sepHpV/1aTI13tM2P6Vxwf3ulyxrhznEOaZeVRx9E/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PyebXbFrN4UfCWlzYytOGrJ/s8lXgkHWKwZLrakvdUosdZ3jb0Q5hAVx3jhq8pge4
-	 QkFjKFAk7vPEcLpJ/zQ/Dya2IM2Gkf9Z0J1GZ24T3WvkvR7ZcZkSWWMfdq/PNmwbh3
-	 P54oVJY7Lg1QCQRbSw/7FyV8p17I4xdy0MZK+1I8=
+	b=E1Q2LxBnn9nQfz6Yw5MF1AgBRRSPTq14CdDkhXIO6XQsqgotl/gGUPsQm3dtmmBge
+	 jo4lnMRRctHWPnyPte+dXEhBdMMP8GfarVKjuDhjhAv+OzJl7UE5Z47JunYpBadPJd
+	 MF7W6nXFEabiUYLhc1UzilXSJFdv0TlPPNFoFk4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Jinhui Guo <guojinhui.liam@bytedance.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 101/265] btrfs: get used bytes while holding lock at btrfs_reclaim_bgs_work()
-Date: Thu, 12 Mar 2026 21:08:08 +0100
-Message-ID: <20260312201021.877425350@linuxfoundation.org>
+Subject: [PATCH 6.12 084/265] iommu/vt-d: Skip dev-iotlb flush for inaccessible PCIe device without scalable mode
+Date: Thu, 12 Mar 2026 21:07:51 +0100
+Message-ID: <20260312201021.253967071@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -45,93 +46,143 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Jinhui Guo <guojinhui.liam@bytedance.com>
 
-[ Upstream commit ba5d06440cae63edc4f49465baf78f1f43e55c77 ]
+[ Upstream commit 42662d19839f34735b718129ea200e3734b07e50 ]
 
-At btrfs_reclaim_bgs_work(), we are grabbing twice the used bytes counter
-of the block group while not holding the block group's spinlock. This can
-result in races, reported by KCSAN and similar tools, since a concurrent
-task can be updating that counter while at btrfs_update_block_group().
+PCIe endpoints with ATS enabled and passed through to userspace
+(e.g., QEMU, DPDK) can hard-lock the host when their link drops,
+either by surprise removal or by a link fault.
 
-So avoid these races by grabbing the counter in a critical section
-delimited by the block group's spinlock after setting the block group to
-RO mode. This also avoids using two different values of the counter in
-case it changes in between each read. This silences KCSAN and is required
-for the next patch in the series too.
+Commit 4fc82cd907ac ("iommu/vt-d: Don't issue ATS Invalidation
+request when device is disconnected") adds pci_dev_is_disconnected()
+to devtlb_invalidation_with_pasid() so ATS invalidation is skipped
+only when the device is being safely removed, but it applies only
+when Intel IOMMU scalable mode is enabled.
 
-Fixes: 243192b67649 ("btrfs: report reclaim stats in sysfs")
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 19eff93dc738 ("btrfs: fix periodic reclaim condition")
+With scalable mode disabled or unsupported, a system hard-lock
+occurs when a PCIe endpoint's link drops because the Intel IOMMU
+waits indefinitely for an ATS invalidation that cannot complete.
+
+Call Trace:
+ qi_submit_sync
+ qi_flush_dev_iotlb
+ __context_flush_dev_iotlb.part.0
+ domain_context_clear_one_cb
+ pci_for_each_dma_alias
+ device_block_translation
+ blocking_domain_attach_dev
+ iommu_deinit_device
+ __iommu_group_remove_device
+ iommu_release_device
+ iommu_bus_notifier
+ blocking_notifier_call_chain
+ bus_notify
+ device_del
+ pci_remove_bus_device
+ pci_stop_and_remove_bus_device
+ pciehp_unconfigure_device
+ pciehp_disable_slot
+ pciehp_handle_presence_or_link_change
+ pciehp_ist
+
+Commit 81e921fd3216 ("iommu/vt-d: Fix NULL domain on device release")
+adds intel_pasid_teardown_sm_context() to intel_iommu_release_device(),
+which calls qi_flush_dev_iotlb() and can also hard-lock the system
+when a PCIe endpoint's link drops.
+
+Call Trace:
+ qi_submit_sync
+ qi_flush_dev_iotlb
+ __context_flush_dev_iotlb.part.0
+ intel_context_flush_no_pasid
+ device_pasid_table_teardown
+ pci_pasid_table_teardown
+ pci_for_each_dma_alias
+ intel_pasid_teardown_sm_context
+ intel_iommu_release_device
+ iommu_deinit_device
+ __iommu_group_remove_device
+ iommu_release_device
+ iommu_bus_notifier
+ blocking_notifier_call_chain
+ bus_notify
+ device_del
+ pci_remove_bus_device
+ pci_stop_and_remove_bus_device
+ pciehp_unconfigure_device
+ pciehp_disable_slot
+ pciehp_handle_presence_or_link_change
+ pciehp_ist
+
+Sometimes the endpoint loses connection without a link-down event
+(e.g., due to a link fault); killing the process (virsh destroy)
+then hard-locks the host.
+
+Call Trace:
+ qi_submit_sync
+ qi_flush_dev_iotlb
+ __context_flush_dev_iotlb.part.0
+ domain_context_clear_one_cb
+ pci_for_each_dma_alias
+ device_block_translation
+ blocking_domain_attach_dev
+ __iommu_attach_device
+ __iommu_device_set_domain
+ __iommu_group_set_domain_internal
+ iommu_detach_group
+ vfio_iommu_type1_detach_group
+ vfio_group_detach_container
+ vfio_group_fops_release
+ __fput
+
+pci_dev_is_disconnected() only covers safe-removal paths;
+pci_device_is_present() tests accessibility by reading
+vendor/device IDs and internally calls pci_dev_is_disconnected().
+On a ConnectX-5 (8 GT/s, x2) this costs ~70 µs.
+
+Since __context_flush_dev_iotlb() is only called on
+{attach,release}_dev paths (not hot), add pci_device_is_present()
+there to skip inaccessible devices and avoid the hard-lock.
+
+Fixes: 37764b952e1b ("iommu/vt-d: Global devTLB flush when present context entry changed")
+Fixes: 81e921fd3216 ("iommu/vt-d: Fix NULL domain on device release")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jinhui Guo <guojinhui.liam@bytedance.com>
+Link: https://lore.kernel.org/r/20251211035946.2071-2-guojinhui.liam@bytedance.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/block-group.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/iommu/intel/pasid.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/fs/btrfs/block-group.c b/fs/btrfs/block-group.c
-index 79daf6fac58f3..2316be6ee41db 100644
---- a/fs/btrfs/block-group.c
-+++ b/fs/btrfs/block-group.c
-@@ -1877,7 +1877,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 	list_sort(NULL, &fs_info->reclaim_bgs, reclaim_bgs_cmp);
- 	while (!list_empty(&fs_info->reclaim_bgs)) {
- 		u64 zone_unusable;
--		u64 reclaimed;
-+		u64 used;
- 		int ret = 0;
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 90fdfa5f7d1d6..3d1d43675bf22 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -867,6 +867,14 @@ static void __context_flush_dev_iotlb(struct device_domain_info *info)
+ 	if (!info->ats_enabled)
+ 		return;
  
- 		bg = list_first_entry(&fs_info->reclaim_bgs,
-@@ -1973,19 +1973,30 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 		if (ret < 0)
- 			goto next;
- 
-+		/*
-+		 * Grab the used bytes counter while holding the block group's
-+		 * spinlock to prevent races with tasks concurrently updating it
-+		 * due to extent allocation and deallocation (running
-+		 * btrfs_update_block_group()) - we have set the block group to
-+		 * RO but that only prevents extent reservation, allocation
-+		 * happens after reservation.
-+		 */
-+		spin_lock(&bg->lock);
-+		used = bg->used;
-+		spin_unlock(&bg->lock);
++	/*
++	 * Skip dev-IOTLB flush for inaccessible PCIe devices to prevent the
++	 * Intel IOMMU from waiting indefinitely for an ATS invalidation that
++	 * cannot complete.
++	 */
++	if (!pci_device_is_present(to_pci_dev(info->dev)))
++		return;
 +
- 		btrfs_info(fs_info,
- 			"reclaiming chunk %llu with %llu%% used %llu%% unusable",
- 				bg->start,
--				div64_u64(bg->used * 100, bg->length),
-+				div64_u64(used * 100, bg->length),
- 				div64_u64(zone_unusable * 100, bg->length));
- 		trace_btrfs_reclaim_block_group(bg);
--		reclaimed = bg->used;
- 		ret = btrfs_relocate_chunk(fs_info, bg->start);
- 		if (ret) {
- 			btrfs_dec_block_group_ro(bg);
- 			btrfs_err(fs_info, "error relocating chunk %llu",
- 				  bg->start);
--			reclaimed = 0;
-+			used = 0;
- 			spin_lock(&space_info->lock);
- 			space_info->reclaim_errors++;
- 			if (READ_ONCE(space_info->periodic_reclaim))
-@@ -1994,7 +2005,7 @@ void btrfs_reclaim_bgs_work(struct work_struct *work)
- 		}
- 		spin_lock(&space_info->lock);
- 		space_info->reclaim_count++;
--		space_info->reclaim_bytes += reclaimed;
-+		space_info->reclaim_bytes += used;
- 		spin_unlock(&space_info->lock);
+ 	qi_flush_dev_iotlb(info->iommu, PCI_DEVID(info->bus, info->devfn),
+ 			   info->pfsid, info->ats_qdep, 0, MAX_AGAW_PFN_WIDTH);
  
- next:
 -- 
 2.51.0
 
