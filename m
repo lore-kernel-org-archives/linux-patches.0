@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 772C0318EE1;
-	Thu, 12 Mar 2026 20:27:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8370318EE1;
+	Thu, 12 Mar 2026 20:27:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347250; cv=none; b=PhC/W3KtdZUbo1qj/nABQ4H6BI9EnZ3wIQ/toDRNLonIx5K/yJvMZKrpTdR7DOr6WhEF+Z/ssrow8y0tBRGDi+QUspBe7x+d2N4kWZGVVjS71a+SaPWizDffZ1RvLs+Pf3g7H5thmHIsi4VtnDtCHW1+qmf+R29+fx/+IQBcKh0=
+	t=1773347254; cv=none; b=UqjFIMZO0XJiTa1+UWNcZKI/7+zan93zCFCdbQtP4u4HmZgXEgm1wQ5RZkTh7hue70IPNs1XgBALjerxbLo8cSTIKKs5PjQQN1pZwLk7ci6I1HTxhzLZE+LXPOT2O0R0MpPpxvV0wC2NgWAR1rPGJBWJkpbDStCrm75zetjYr8k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347250; c=relaxed/simple;
-	bh=YTI6yM3vxVwVO4kiJsUSKeUE6c3FEkkuzW2ZCCGbfiQ=;
+	s=arc-20240116; t=1773347254; c=relaxed/simple;
+	bh=/49PrsLi0XOAkDbWtaUH0/YYcEk/S+jZZlz5ixCcMdU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aJg4+GwNmJKEW0kHBtj3WoebN9XwH/mNhdJhj23Seu58i2ajgAyDx6Gct8mu63ioaZ3GqhPth2r48OEm5yLdE+stHAh0A9hKcgHq4cYKehNNUjpu6xVE6aqS71bUfPp5rTJwN80/ZgXGanhMJ85ykfEWmaSTb/ZAPJu8uPEOPLc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNIn6VFk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MjXOORvaHZmKG6AuAf7FhaeA97Y+pKuokjt+SHg+FEDq5bTdaaJUC4B00a0j2VivZ7gPEtORTuGepE8TZzru27xNEmLYWB67uQLWh0xGNFooENWwGiBjqTX+HHNL10BDWoohocbvu4WWsim1SasCXEQWu3n7OFBJQdebR5eFhFs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lHm1O2JV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNIn6VFk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1039C4CEF7;
-	Thu, 12 Mar 2026 20:27:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lHm1O2JV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF773C4CEF7;
+	Thu, 12 Mar 2026 20:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347250;
-	bh=YTI6yM3vxVwVO4kiJsUSKeUE6c3FEkkuzW2ZCCGbfiQ=;
+	s=korg; t=1773347254;
+	bh=/49PrsLi0XOAkDbWtaUH0/YYcEk/S+jZZlz5ixCcMdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNIn6VFkJDsKw6I1XqrWQPKafwiUdp8n8cuRx7Q8DcEEMb7BGbLMdgDVk48Mk+92e
-	 9+Wtfr1gFsZ2aucI4TPxEwf1ptpd9q9N6fdhsv09uXMtog6w5oom4bJBQxQlecytit
-	 XRsJFO9DhvffIUTZsMuCNrywOVo1CHxKbe20mu/A=
+	b=lHm1O2JVszJCREpXaIyK004UdBlr7Y1Fg4ZzRAoX1DRCh0zLFQmOBFjp190vewpjV
+	 O7Swqlpz/3Pdn8Y+8rsQLfpMoRY/Jl+nbjE1jHGBPDVQStVRGQEae2qPYfWvXQhP9C
+	 A50vHJv8gBrM3GqYuftYJkd3761OluQPSA0psdk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Larysa Zaremba <larysa.zaremba@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 243/265] xsk: introduce helper to determine rxq->frag_size
-Date: Thu, 12 Mar 2026 21:10:30 +0100
-Message-ID: <20260312201027.115340445@linuxfoundation.org>
+Subject: [PATCH 6.12 244/265] i40e: fix registering XDP RxQ info
+Date: Thu, 12 Mar 2026 21:10:31 +0100
+Message-ID: <20260312201027.151730636@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,52 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit 16394d80539937d348dd3b9ea32415c54e67a81b ]
+[ Upstream commit 8f497dc8a61429cc004720aa8e713743355d80cf ]
 
-rxq->frag_size is basically a step between consecutive strictly aligned
-frames. In ZC mode, chunk size fits exactly, but if chunks are unaligned,
-there is no safe way to determine accessible space to grow tailroom.
+Current way of handling XDP RxQ info in i40e has a problem, where frag_size
+is not updated when xsk_buff_pool is detached or when MTU is changed, this
+leads to growing tail always failing for multi-buffer packets.
 
-Report frag_size to be zero, if chunks are unaligned, chunk_size otherwise.
+Couple XDP RxQ info registering with buffer allocations and unregistering
+with cleaning the ring.
 
-Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
+Fixes: a045d2f2d03d ("i40e: set xdp_rxq_info::frag_size")
 Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://patch.msgid.link/20260305111253.2317394-3-larysa.zaremba@intel.com
+Link: https://patch.msgid.link/20260305111253.2317394-6-larysa.zaremba@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock_drv.h | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/net/ethernet/intel/i40e/i40e_main.c | 34 ++++++++++++---------
+ drivers/net/ethernet/intel/i40e/i40e_txrx.c |  5 +--
+ 2 files changed, 22 insertions(+), 17 deletions(-)
 
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index 27d0068d0b704..997e28dd38963 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -47,6 +47,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
- 	return xsk_pool_get_chunk_size(pool) - xsk_pool_get_headroom(pool);
- }
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
+index 31c83fc69cf41..981c01dce0cdf 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -3633,18 +3633,8 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 	if (ring->vsi->type != I40E_VSI_MAIN)
+ 		goto skip;
  
-+static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
-+{
-+	return pool->unaligned ? 0 : xsk_pool_get_chunk_size(pool);
-+}
-+
- static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
- 					 struct xdp_rxq_info *rxq)
- {
-@@ -296,6 +301,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+-	if (!xdp_rxq_info_is_reg(&ring->xdp_rxq)) {
+-		err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+-					 ring->queue_index,
+-					 ring->q_vector->napi.napi_id,
+-					 ring->rx_buf_len);
+-		if (err)
+-			return err;
+-	}
+-
+ 	ring->xsk_pool = i40e_xsk_pool(ring);
+ 	if (ring->xsk_pool) {
+-		xdp_rxq_info_unreg(&ring->xdp_rxq);
+ 		ring->rx_buf_len = xsk_pool_get_rx_frame_size(ring->xsk_pool);
+ 		err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
+ 					 ring->queue_index,
+@@ -3656,17 +3646,23 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 						 MEM_TYPE_XSK_BUFF_POOL,
+ 						 NULL);
+ 		if (err)
+-			return err;
++			goto unreg_xdp;
+ 		dev_info(&vsi->back->pdev->dev,
+ 			 "Registered XDP mem model MEM_TYPE_XSK_BUFF_POOL on Rx ring %d\n",
+ 			 ring->queue_index);
+ 
+ 	} else {
++		err = __xdp_rxq_info_reg(&ring->xdp_rxq, ring->netdev,
++					 ring->queue_index,
++					 ring->q_vector->napi.napi_id,
++					 ring->rx_buf_len);
++		if (err)
++			return err;
+ 		err = xdp_rxq_info_reg_mem_model(&ring->xdp_rxq,
+ 						 MEM_TYPE_PAGE_SHARED,
+ 						 NULL);
+ 		if (err)
+-			return err;
++			goto unreg_xdp;
+ 	}
+ 
+ skip:
+@@ -3704,7 +3700,8 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 		dev_info(&vsi->back->pdev->dev,
+ 			 "Failed to clear LAN Rx queue context on Rx ring %d (pf_q %d), error: %d\n",
+ 			 ring->queue_index, pf_q, err);
+-		return -ENOMEM;
++		err = -ENOMEM;
++		goto unreg_xdp;
+ 	}
+ 
+ 	/* set the context in the HMC */
+@@ -3713,7 +3710,8 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 		dev_info(&vsi->back->pdev->dev,
+ 			 "Failed to set LAN Rx queue context on Rx ring %d (pf_q %d), error: %d\n",
+ 			 ring->queue_index, pf_q, err);
+-		return -ENOMEM;
++		err = -ENOMEM;
++		goto unreg_xdp;
+ 	}
+ 
+ 	/* configure Rx buffer alignment */
+@@ -3721,7 +3719,8 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 		if (I40E_2K_TOO_SMALL_WITH_PADDING) {
+ 			dev_info(&vsi->back->pdev->dev,
+ 				 "2k Rx buffer is too small to fit standard MTU and skb_shared_info\n");
+-			return -EOPNOTSUPP;
++			err = -EOPNOTSUPP;
++			goto unreg_xdp;
+ 		}
+ 		clear_ring_build_skb_enabled(ring);
+ 	} else {
+@@ -3751,6 +3750,11 @@ static int i40e_configure_rx_ring(struct i40e_ring *ring)
+ 	}
+ 
  	return 0;
++unreg_xdp:
++	if (ring->vsi->type == I40E_VSI_MAIN)
++		xdp_rxq_info_unreg(&ring->xdp_rxq);
++
++	return err;
  }
  
-+static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
-+{
-+	return 0;
-+}
+ /**
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_txrx.c b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+index ca7517a68a2c3..bca8398a6ab4b 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_txrx.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_txrx.c
+@@ -1469,6 +1469,9 @@ void i40e_clean_rx_ring(struct i40e_ring *rx_ring)
+ 	if (!rx_ring->rx_bi)
+ 		return;
+ 
++	if (xdp_rxq_info_is_reg(&rx_ring->xdp_rxq))
++		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
 +
- static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
- 					 struct xdp_rxq_info *rxq)
+ 	if (rx_ring->xsk_pool) {
+ 		i40e_xsk_clean_rx_ring(rx_ring);
+ 		goto skip_free;
+@@ -1526,8 +1529,6 @@ void i40e_clean_rx_ring(struct i40e_ring *rx_ring)
+ void i40e_free_rx_resources(struct i40e_ring *rx_ring)
  {
+ 	i40e_clean_rx_ring(rx_ring);
+-	if (rx_ring->vsi->type == I40E_VSI_MAIN)
+-		xdp_rxq_info_unreg(&rx_ring->xdp_rxq);
+ 	rx_ring->xdp_prog = NULL;
+ 	kfree(rx_ring->rx_bi);
+ 	rx_ring->rx_bi = NULL;
 -- 
 2.51.0
 
