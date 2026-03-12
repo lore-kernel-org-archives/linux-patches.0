@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2D92BCF7F;
-	Thu, 12 Mar 2026 20:17:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B36E1F9F70;
+	Thu, 12 Mar 2026 20:17:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346675; cv=none; b=YMnPomBIvw5DdWz4pIj6k3CMtBCJCy99BrgdX1goYo+a0kEVHF9KrSTVEmkqtOE73rL3W8FFBa6AHKHSVCQMTlSswKB6p16vfhfWq/AXR9BYvxrIpP+d1vdCkU4kUvjpJ5NQBDkti3CODAg62sqJ/bI4OfX5sHPlJrIRXKKuujM=
+	t=1773346679; cv=none; b=WpMo4B1HXnAylRPnTI1/TBmTphArD2Cw1ItnD/UOQgNNlfUdh3D88A8WwxGyUfpieF/BPy79hp6UNRPz9t7LEFlkp75942fqM2wY3f1J8jcuU6Yzx5Yb7pmogfUXVkv6ioEW+nSt7+qGFh+DJy4CK/b7CEJf25zsSna2rYQowq4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346675; c=relaxed/simple;
-	bh=tnbpcL+uoXQbBPXV+OoZ9MMSSX2eRsk+P0bTFQJBkws=;
+	s=arc-20240116; t=1773346679; c=relaxed/simple;
+	bh=q9p0Ljga6AawmIKm5iWyV6Llh0d7keljaBHJAOfesgI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lonV6ThKqggHQUpMFq/VS6dMzURBWORArCaO7tN38i0GTH6QM2Re8fvQZQtMwymno59qcKx62mKbWhHK33B9/K5O22Hymm6IgVNq7y5s3fiSP2fVpoSrLpZDrydV2i5wFii0rMQoGWtB4nf4Cqu+Yzf251kVNA4a7PD+F0diU3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RyEBhn7x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hr4ukugtG5G5qc+i/WWXAWkyqE4eszmgUQP7+JbEupjj2r4wFods7u0OgT5T7JnCKrXcjiyqd5nf9Irvw26hh8IMBorLU1PD/BOVuyWEHwL5aijozNdiVNqGW/Bi8g9L0Bi0wGSML6oFe53alHDIQTIfkHqdMn0fUZImaeh3SlM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PgDVK2dH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RyEBhn7x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58D8BC4CEF7;
-	Thu, 12 Mar 2026 20:17:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PgDVK2dH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48B4C4CEF7;
+	Thu, 12 Mar 2026 20:17:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346675;
-	bh=tnbpcL+uoXQbBPXV+OoZ9MMSSX2eRsk+P0bTFQJBkws=;
+	s=korg; t=1773346679;
+	bh=q9p0Ljga6AawmIKm5iWyV6Llh0d7keljaBHJAOfesgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyEBhn7xkpGwEgWyJ5B48yf7az/eamVOQecx0dspEY68Io9l1cBv+G1RYWmr1tsXb
-	 wIt7defDYuuVXyS08eKv6OqO7ifEzhpHFNP/BXamADQrbBTvoaiNftWFo8zBriuMMz
-	 tCeFTxmc216T6D4CVkvjHSgQQnbnVK3uwdRQdUYY=
+	b=PgDVK2dHkOgSVh3KjcJwJs6wizcECuGlvoX6qKo6+N7V5e3tfuY9K8WHG/jm3z0Dd
+	 EU8SF7vzgf6kTUIbwRKauLVEwDJ78fE1CwbN6gfpkzgRxLPcw1vuAtpEFWN4UmyGMl
+	 4I8OPH+2bCBaXcCMTvDSHrpr0udsS4TBUHYWt69I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Inki Dae <inki.dae@samsung.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Oleg Nesterov <oleg@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 097/265] drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
-Date: Thu, 12 Mar 2026 21:08:04 +0100
-Message-ID: <20260312201021.733628297@linuxfoundation.org>
+Subject: [PATCH 6.12 098/265] uprobes: switch to RCU Tasks Trace flavor for better performance
+Date: Thu, 12 Mar 2026 21:08:05 +0100
+Message-ID: <20260312201021.770054870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -45,179 +46,231 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 52b330799e2d6f825ae2bb74662ec1b10eb954bb ]
+[ Upstream commit 87195a1ee332add27bd51448c6b54aad551a28f5 ]
 
-Exynos Virtual Display driver performs memory alloc/free operations
-without lock protection, which easily causes concurrency problem.
+This patch switches uprobes SRCU usage to RCU Tasks Trace flavor, which
+is optimized for more lightweight and quick readers (at the expense of
+slower writers, which for uprobes is a fine tradeof) and has better
+performance and scalability with number of CPUs.
 
-For example, use-after-free can occur in race scenario like this:
-```
-	CPU0				CPU1				CPU2
-	----				----				----
-  vidi_connection_ioctl()
-    if (vidi->connection) // true
-      drm_edid = drm_edid_alloc(); // alloc drm_edid
-      ...
-      ctx->raw_edid = drm_edid;
-      ...
-								drm_mode_getconnector()
-								  drm_helper_probe_single_connector_modes()
-								    vidi_get_modes()
-								      if (ctx->raw_edid) // true
-								        drm_edid_dup(ctx->raw_edid);
-								          if (!drm_edid) // false
-								          ...
-				vidi_connection_ioctl()
-				  if (vidi->connection) // false
-				    drm_edid_free(ctx->raw_edid); // free drm_edid
-				    ...
-								          drm_edid_alloc(drm_edid->edid)
-								            kmemdup(edid); // UAF!!
-								            ...
-```
+Similarly to baseline vs SRCU, we've benchmarked SRCU-based
+implementation vs RCU Tasks Trace implementation.
 
-To prevent these vulns, at least in vidi_context, member variables related
-to memory alloc/free should be protected with ctx->lock.
+SRCU
+====
+uprobe-nop      ( 1 cpus):    3.276 ± 0.005M/s  (  3.276M/s/cpu)
+uprobe-nop      ( 2 cpus):    4.125 ± 0.002M/s  (  2.063M/s/cpu)
+uprobe-nop      ( 4 cpus):    7.713 ± 0.002M/s  (  1.928M/s/cpu)
+uprobe-nop      ( 8 cpus):    8.097 ± 0.006M/s  (  1.012M/s/cpu)
+uprobe-nop      (16 cpus):    6.501 ± 0.056M/s  (  0.406M/s/cpu)
+uprobe-nop      (32 cpus):    4.398 ± 0.084M/s  (  0.137M/s/cpu)
+uprobe-nop      (64 cpus):    6.452 ± 0.000M/s  (  0.101M/s/cpu)
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+uretprobe-nop   ( 1 cpus):    2.055 ± 0.001M/s  (  2.055M/s/cpu)
+uretprobe-nop   ( 2 cpus):    2.677 ± 0.000M/s  (  1.339M/s/cpu)
+uretprobe-nop   ( 4 cpus):    4.561 ± 0.003M/s  (  1.140M/s/cpu)
+uretprobe-nop   ( 8 cpus):    5.291 ± 0.002M/s  (  0.661M/s/cpu)
+uretprobe-nop   (16 cpus):    5.065 ± 0.019M/s  (  0.317M/s/cpu)
+uretprobe-nop   (32 cpus):    3.622 ± 0.003M/s  (  0.113M/s/cpu)
+uretprobe-nop   (64 cpus):    3.723 ± 0.002M/s  (  0.058M/s/cpu)
+
+RCU Tasks Trace
+===============
+uprobe-nop      ( 1 cpus):    3.396 ± 0.002M/s  (  3.396M/s/cpu)
+uprobe-nop      ( 2 cpus):    4.271 ± 0.006M/s  (  2.135M/s/cpu)
+uprobe-nop      ( 4 cpus):    8.499 ± 0.015M/s  (  2.125M/s/cpu)
+uprobe-nop      ( 8 cpus):   10.355 ± 0.028M/s  (  1.294M/s/cpu)
+uprobe-nop      (16 cpus):    7.615 ± 0.099M/s  (  0.476M/s/cpu)
+uprobe-nop      (32 cpus):    4.430 ± 0.007M/s  (  0.138M/s/cpu)
+uprobe-nop      (64 cpus):    6.887 ± 0.020M/s  (  0.108M/s/cpu)
+
+uretprobe-nop   ( 1 cpus):    2.174 ± 0.001M/s  (  2.174M/s/cpu)
+uretprobe-nop   ( 2 cpus):    2.853 ± 0.001M/s  (  1.426M/s/cpu)
+uretprobe-nop   ( 4 cpus):    4.913 ± 0.002M/s  (  1.228M/s/cpu)
+uretprobe-nop   ( 8 cpus):    5.883 ± 0.002M/s  (  0.735M/s/cpu)
+uretprobe-nop   (16 cpus):    5.147 ± 0.001M/s  (  0.322M/s/cpu)
+uretprobe-nop   (32 cpus):    3.738 ± 0.008M/s  (  0.117M/s/cpu)
+uretprobe-nop   (64 cpus):    4.397 ± 0.002M/s  (  0.069M/s/cpu)
+
+Peak throughput for uprobes increases from 8 mln/s to 10.3 mln/s
+(+28%!), and for uretprobes from 5.3 mln/s to 5.8 mln/s (+11%), as we
+have more work to do on uretprobes side.
+
+Even single-thread (no contention) performance is slightly better: 3.276
+mln/s to 3.396 mln/s (+3.5%) for uprobes, and 2.055 mln/s to 2.174 mln/s
+(+5.8%) for uretprobes.
+
+We also select TASKS_TRACE_RCU for UPROBES in Kconfig due to the new
+dependency.
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lkml.kernel.org/r/20240910174312.3646590-1-andrii@kernel.org
+Stable-dep-of: a56a38fd9196 ("uprobes: Fix incorrect lockdep condition in filter_chain()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c | 38 ++++++++++++++++++++----
- 1 file changed, 32 insertions(+), 6 deletions(-)
+ arch/Kconfig            |  1 +
+ kernel/events/uprobes.c | 38 ++++++++++++++++----------------------
+ 2 files changed, 17 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_vidi.c b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-index 4c0d536cb57d4..8400330dfe3eb 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -186,29 +186,37 @@ static ssize_t vidi_store_connection(struct device *dev,
- 				const char *buf, size_t len)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
--	int ret;
-+	int ret, new_connected;
+diff --git a/arch/Kconfig b/arch/Kconfig
+index 593452b43dd49..1812e4e4d7147 100644
+--- a/arch/Kconfig
++++ b/arch/Kconfig
+@@ -135,6 +135,7 @@ config KPROBES_ON_FTRACE
+ config UPROBES
+ 	def_bool n
+ 	depends on ARCH_SUPPORTS_UPROBES
++	select TASKS_TRACE_RCU
+ 	help
+ 	  Uprobes is the user-space counterpart to kprobes: they
+ 	  enable instrumentation applications (such as 'perf probe')
+diff --git a/kernel/events/uprobes.c b/kernel/events/uprobes.c
+index e30c4dd345f40..0eb9befe49a3c 100644
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -26,6 +26,7 @@
+ #include <linux/task_work.h>
+ #include <linux/shmem_fs.h>
+ #include <linux/khugepaged.h>
++#include <linux/rcupdate_trace.h>
  
--	ret = kstrtoint(buf, 0, &ctx->connected);
-+	ret = kstrtoint(buf, 0, &new_connected);
- 	if (ret)
- 		return ret;
+ #include <linux/uprobes.h>
+ 
+@@ -42,8 +43,6 @@ static struct rb_root uprobes_tree = RB_ROOT;
+ static DEFINE_RWLOCK(uprobes_treelock);	/* serialize rbtree access */
+ static seqcount_rwlock_t uprobes_seqcount = SEQCNT_RWLOCK_ZERO(uprobes_seqcount, &uprobes_treelock);
+ 
+-DEFINE_STATIC_SRCU(uprobes_srcu);
 -
--	if (ctx->connected > 1)
-+	if (new_connected > 1)
- 		return -EINVAL;
+ #define UPROBES_HASH_SZ	13
+ /* serialize uprobe->pending_list */
+ static struct mutex uprobes_mmap_mutex[UPROBES_HASH_SZ];
+@@ -667,7 +666,7 @@ static void put_uprobe(struct uprobe *uprobe)
+ 	delayed_uprobe_remove(uprobe, NULL);
+ 	mutex_unlock(&delayed_uprobe_lock);
  
-+	mutex_lock(&ctx->lock);
-+
- 	/*
- 	 * Use fake edid data for test. If raw_edid is set then it can't be
- 	 * tested.
- 	 */
- 	if (ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(dev, "edid data is not fake data.\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
- 	}
- 
-+	ctx->connected = new_connected;
-+	mutex_unlock(&ctx->lock);
-+
- 	DRM_DEV_DEBUG_KMS(dev, "requested connection.\n");
- 
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return len;
-+fail:
-+	mutex_unlock(&ctx->lock);
-+	return ret;
+-	call_srcu(&uprobes_srcu, &uprobe->rcu, uprobe_free_rcu);
++	call_rcu_tasks_trace(&uprobe->rcu, uprobe_free_rcu);
  }
  
- static DEVICE_ATTR(connection, 0644, vidi_show_connection,
-@@ -238,11 +246,14 @@ int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
- 		return -EINVAL;
- 	}
+ static __always_inline
+@@ -722,7 +721,7 @@ static struct uprobe *find_uprobe_rcu(struct inode *inode, loff_t offset)
+ 	struct rb_node *node;
+ 	unsigned int seq;
  
-+	mutex_lock(&ctx->lock);
- 	if (ctx->connected == vidi->connection) {
-+		mutex_unlock(&ctx->lock);
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "same connection request.\n");
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&ctx->lock);
+-	lockdep_assert(srcu_read_lock_held(&uprobes_srcu));
++	lockdep_assert(rcu_read_lock_trace_held());
  
- 	if (vidi->connection) {
- 		const struct drm_edid *drm_edid;
-@@ -276,14 +287,21 @@ int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
- 					  "edid data is invalid.\n");
- 			return -EINVAL;
- 		}
-+		mutex_lock(&ctx->lock);
- 		ctx->raw_edid = drm_edid;
-+		mutex_unlock(&ctx->lock);
- 	} else {
- 		/* with connection = 0, free raw_edid */
-+		mutex_lock(&ctx->lock);
- 		drm_edid_free(ctx->raw_edid);
- 		ctx->raw_edid = NULL;
-+		mutex_unlock(&ctx->lock);
- 	}
+ 	do {
+ 		seq = read_seqcount_begin(&uprobes_seqcount);
+@@ -950,8 +949,7 @@ static bool filter_chain(struct uprobe *uprobe, struct mm_struct *mm)
+ 	bool ret = false;
  
-+	mutex_lock(&ctx->lock);
- 	ctx->connected = vidi->connection;
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return 0;
-@@ -298,7 +316,7 @@ static enum drm_connector_status vidi_detect(struct drm_connector *connector,
- 	 * connection request would come from user side
- 	 * to do hotplug through specific ioctl.
+ 	down_read(&uprobe->consumer_rwsem);
+-	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
+-				 srcu_read_lock_held(&uprobes_srcu)) {
++	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
+ 		ret = consumer_filter(uc, mm);
+ 		if (ret)
+ 			break;
+@@ -1172,7 +1170,7 @@ void uprobe_unregister_sync(void)
+ 	 * unlucky enough caller can free consumer's memory and cause
+ 	 * handler_chain() or handle_uretprobe_chain() to do an use-after-free.
  	 */
--	return ctx->connected ? connector_status_connected :
-+	return READ_ONCE(ctx->connected) ? connector_status_connected :
- 			connector_status_disconnected;
+-	synchronize_srcu(&uprobes_srcu);
++	synchronize_rcu_tasks_trace();
  }
+ EXPORT_SYMBOL_GPL(uprobe_unregister_sync);
  
-@@ -321,11 +339,15 @@ static int vidi_get_modes(struct drm_connector *connector)
- 	const struct drm_edid *drm_edid;
- 	int count;
- 
-+	mutex_lock(&ctx->lock);
-+
- 	if (ctx->raw_edid)
- 		drm_edid = drm_edid_dup(ctx->raw_edid);
- 	else
- 		drm_edid = drm_edid_alloc(fake_edid_info, sizeof(fake_edid_info));
- 
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_edid_connector_update(connector, drm_edid);
- 
- 	count = drm_edid_connector_add_modes(connector);
-@@ -470,9 +492,13 @@ static void vidi_remove(struct platform_device *pdev)
+@@ -1256,19 +1254,18 @@ EXPORT_SYMBOL_GPL(uprobe_register);
+ int uprobe_apply(struct uprobe *uprobe, struct uprobe_consumer *uc, bool add)
  {
- 	struct vidi_context *ctx = platform_get_drvdata(pdev);
+ 	struct uprobe_consumer *con;
+-	int ret = -ENOENT, srcu_idx;
++	int ret = -ENOENT;
  
-+	mutex_lock(&ctx->lock);
-+
- 	drm_edid_free(ctx->raw_edid);
- 	ctx->raw_edid = NULL;
+ 	down_write(&uprobe->register_rwsem);
  
-+	mutex_unlock(&ctx->lock);
-+
- 	component_del(&pdev->dev, &vidi_component_ops);
+-	srcu_idx = srcu_read_lock(&uprobes_srcu);
+-	list_for_each_entry_srcu(con, &uprobe->consumers, cons_node,
+-				 srcu_read_lock_held(&uprobes_srcu)) {
++	rcu_read_lock_trace();
++	list_for_each_entry_rcu(con, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
+ 		if (con == uc) {
+ 			ret = register_for_each_vma(uprobe, add ? uc : NULL);
+ 			break;
+ 		}
+ 	}
+-	srcu_read_unlock(&uprobes_srcu, srcu_idx);
++	rcu_read_unlock_trace();
+ 
+ 	up_write(&uprobe->register_rwsem);
+ 
+@@ -2150,8 +2147,7 @@ static void handler_chain(struct uprobe *uprobe, struct pt_regs *regs)
+ 
+ 	current->utask->auprobe = &uprobe->arch;
+ 
+-	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
+-				 srcu_read_lock_held(&uprobes_srcu)) {
++	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
+ 		int rc = 0;
+ 
+ 		if (uc->handler) {
+@@ -2189,15 +2185,13 @@ handle_uretprobe_chain(struct return_instance *ri, struct pt_regs *regs)
+ {
+ 	struct uprobe *uprobe = ri->uprobe;
+ 	struct uprobe_consumer *uc;
+-	int srcu_idx;
+ 
+-	srcu_idx = srcu_read_lock(&uprobes_srcu);
+-	list_for_each_entry_srcu(uc, &uprobe->consumers, cons_node,
+-				 srcu_read_lock_held(&uprobes_srcu)) {
++	rcu_read_lock_trace();
++	list_for_each_entry_rcu(uc, &uprobe->consumers, cons_node, rcu_read_lock_trace_held()) {
+ 		if (uc->ret_handler)
+ 			uc->ret_handler(uc, ri->func, regs);
+ 	}
+-	srcu_read_unlock(&uprobes_srcu, srcu_idx);
++	rcu_read_unlock_trace();
  }
  
+ static struct return_instance *find_next_ret_chain(struct return_instance *ri)
+@@ -2282,13 +2276,13 @@ static void handle_swbp(struct pt_regs *regs)
+ {
+ 	struct uprobe *uprobe;
+ 	unsigned long bp_vaddr;
+-	int is_swbp, srcu_idx;
++	int is_swbp;
+ 
+ 	bp_vaddr = uprobe_get_swbp_addr(regs);
+ 	if (bp_vaddr == uprobe_get_trampoline_vaddr())
+ 		return uprobe_handle_trampoline(regs);
+ 
+-	srcu_idx = srcu_read_lock(&uprobes_srcu);
++	rcu_read_lock_trace();
+ 
+ 	uprobe = find_active_uprobe_rcu(bp_vaddr, &is_swbp);
+ 	if (!uprobe) {
+@@ -2353,7 +2347,7 @@ static void handle_swbp(struct pt_regs *regs)
+ 
+ out:
+ 	/* arch_uprobe_skip_sstep() succeeded, or restart if can't singlestep */
+-	srcu_read_unlock(&uprobes_srcu, srcu_idx);
++	rcu_read_unlock_trace();
+ }
+ 
+ /*
 -- 
 2.51.0
 
