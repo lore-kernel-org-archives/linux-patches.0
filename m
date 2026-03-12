@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB614306B11;
-	Thu, 12 Mar 2026 20:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058532ECE9B;
+	Thu, 12 Mar 2026 20:22:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346956; cv=none; b=uhx0sG/tPPxyj6+QYp6Qx0VUNE9z8Z6V82J8XpI/kYQ/k34+l2dw1fwBWzfAjrmLK4RYzNR0gT8ayIAoNzMPCoLAiMvUfeXpp43rUDcU6s0mlFKNNezrTyQeynN54jmKbNKl/8rdyasWp/jSpKPXBVf33hpCHZOAjfI36kNRZfQ=
+	t=1773346961; cv=none; b=onazp31HVjFoDjQ2F7wf8Tx4Hr7O+ldqZSdk6+66XqhNNUxzU7VF7BgJLcSY3w3M9vaZN7XzcCzIGmWjtVpeYScWDyiq1Sad8V0CnTrpC+DdAKH+zu1aZNvn1D2ZnpV/BDQz4wiQjZ0u8MPTNw3EMiComwYn8dCxQZLdhZBrFsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346956; c=relaxed/simple;
-	bh=t6vsqWwR4qkn6vZGOpdWTQQ2J4CtxGt9RvBZqkMad6I=;
+	s=arc-20240116; t=1773346961; c=relaxed/simple;
+	bh=E7poNcm2cK9XKItqYMIbQ4zoubCC5grtC55L537696s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j57yHZF3KlM+LFjFSEZ4ye3b69xk3I7+cIBr4vV8zecTjK1epHli1eXS6R07HJQkrFbbFI+1t8eJGNsUJRORsDBSLweX1BimNnVuf/JMP1q9MEVgupASqWtfAHjcgkydjuIA6TXMrzIuOJVkYMt3BOblyl+SScjJPQ5rQdwx7fk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kw8JCGzE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tGdI+ybFx3qR+8np3IRzehPmw9VqMu6tATrvG9f9b05Q2xu2WJBkzpLwRqB4aOriC7V/Dfdd6yZ2VcZzkjlrfwZpPG4qYrjXaM1/SfvlLQyPHoYMYoM3fM6bdE0+M2CUs/AXjP4LIMF9wCGE1PK2fBGua7i+ThfI+liIqW6aVrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MPkfc+bj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kw8JCGzE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F5C4CEF7;
-	Thu, 12 Mar 2026 20:22:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MPkfc+bj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F977C4CEF7;
+	Thu, 12 Mar 2026 20:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346956;
-	bh=t6vsqWwR4qkn6vZGOpdWTQQ2J4CtxGt9RvBZqkMad6I=;
+	s=korg; t=1773346960;
+	bh=E7poNcm2cK9XKItqYMIbQ4zoubCC5grtC55L537696s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kw8JCGzEjhhYwhOsHdoHcAm8Ybw/XtH4Qpr1M/rr7U/vjH4nD2n6LR5dKqumkD8yg
-	 86il/J2KhagiIl6XI73cqCkMisDXbW68Y/6rtSedJXTRlIUliLZq37i0U90XV8NGQJ
-	 rmjxBsmmZav6V/ui91/BOyNyGTMHR57MLA0W7fHA=
+	b=MPkfc+bjiKI2ldHa81jnUtWppcdZpv16l5X1epZUBKf+EltpjPZmvwYmqjBHl4bMl
+	 kACucnr8QxMtXNkEuPCDa0VM9xt5A0lEZticFL1TmHKNB6Mtj14eIYIv7s8m50uRzA
+	 viK2FpTUZ6OOMRGsOUOzaxgmG2bjQxVlrxVndFyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 167/265] ACPI: APEI: GHES: Disable KASAN instrumentation when compile testing with clang < 18
-Date: Thu, 12 Mar 2026 21:09:14 +0100
-Message-ID: <20260312201024.309826180@linuxfoundation.org>
+	Keith Busch <kbusch@kernel.org>,
+	Ming Lei <ming.lei@redhat.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Yi Zhang <yi.zhang@redhat.com>
+Subject: [PATCH 6.12 168/265] nvme: fix admin queue leak on controller reset
+Date: Thu, 12 Mar 2026 21:09:15 +0100
+Message-ID: <20260312201024.347810651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,54 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit b584bfbd7ec417f257f651cc00a90c66e31dfbf1 ]
+[ Upstream commit b84bb7bd913d8ca2f976ee6faf4a174f91c02b8d ]
 
-After a recent innocuous change to drivers/acpi/apei/ghes.c, building
-ARCH=arm64 allmodconfig with clang-17 or older (which has both
-CONFIG_KASAN=y and CONFIG_WERROR=y) fails with:
+When nvme_alloc_admin_tag_set() is called during a controller reset,
+a previous admin queue may still exist. Release it properly before
+allocating a new one to avoid orphaning the old queue.
 
-  drivers/acpi/apei/ghes.c:902:13: error: stack frame size (2768) exceeds limit (2048) in 'ghes_do_proc' [-Werror,-Wframe-larger-than]
-    902 | static void ghes_do_proc(struct ghes *ghes,
-        |             ^
+This fixes a regression introduced by commit 03b3bcd319b3 ("nvme: fix
+admin request_queue lifetime").
 
-A KASAN pass that removes unneeded stack instrumentation, enabled by
-default in clang-18 [1], drastically improves stack usage in this case.
-
-To avoid the warning in the common allmodconfig case when it can break
-the build, disable KASAN for ghes.o when compile testing with clang-17
-and older. Disabling KASAN outright may hide legitimate runtime issues,
-so live with the warning in that case; the user can either increase the
-frame warning limit or disable -Werror, which they should probably do
-when debugging with KASAN anyways.
-
-Closes: https://github.com/ClangBuiltLinux/linux/issues/2148
-Link: https://github.com/llvm/llvm-project/commit/51fbab134560ece663517bf1e8c2a30300d08f1a [1]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Cc: All applicable <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260114-ghes-avoid-wflt-clang-older-than-18-v1-1-9c8248bfe4f4@kernel.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Fixes: 03b3bcd319b3 ("nvme: fix admin request_queue lifetime").
+Reported-and-tested-by: Yi Zhang <yi.zhang@redhat.com>
+Closes: https://lore.kernel.org/linux-block/CAHj4cs9wv3SdPo+N01Fw2SHBYDs9tj2M_e1-GdQOkRy=DsBB1w@mail.gmail.com/
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/apei/Makefile | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nvme/host/core.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/acpi/apei/Makefile b/drivers/acpi/apei/Makefile
-index 2c474e6477e12..346cdf0a0ef99 100644
---- a/drivers/acpi/apei/Makefile
-+++ b/drivers/acpi/apei/Makefile
-@@ -1,6 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_ACPI_APEI)		+= apei.o
- obj-$(CONFIG_ACPI_APEI_GHES)	+= ghes.o
-+# clang versions prior to 18 may blow out the stack with KASAN
-+ifeq ($(CONFIG_COMPILE_TEST)_$(CONFIG_CC_IS_CLANG)_$(call clang-min-version, 180000),y_y_)
-+KASAN_SANITIZE_ghes.o := n
-+endif
- obj-$(CONFIG_ACPI_APEI_EINJ)	+= einj.o
- einj-y				:= einj-core.o
- einj-$(CONFIG_ACPI_APEI_EINJ_CXL) += einj-cxl.o
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index a766290b1ee89..de4b9e9db45d4 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4609,6 +4609,13 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
+ 	if (ret)
+ 		return ret;
+ 
++	/*
++	 * If a previous admin queue exists (e.g., from before a reset),
++	 * put it now before allocating a new one to avoid orphaning it.
++	 */
++	if (ctrl->admin_q)
++		blk_put_queue(ctrl->admin_q);
++
+ 	ctrl->admin_q = blk_mq_alloc_queue(set, &lim, NULL);
+ 	if (IS_ERR(ctrl->admin_q)) {
+ 		ret = PTR_ERR(ctrl->admin_q);
 -- 
 2.51.0
 
