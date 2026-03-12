@@ -1,42 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3645B1A0712;
-	Thu, 12 Mar 2026 20:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FD4E30DD3C;
+	Thu, 12 Mar 2026 20:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346795; cv=none; b=MJrX4uK3S3xdhu4mt3jakEhnPN/UEFbm5fkLPYvpH0eLMiZJFkj9a91r9iVCIQYEJeWlh/7/d2kEYQKeXDVl44tu9JdKVFuB3ekMZv/TYkHUDR273UE79Ja4Y1Tt+K84EbGYC2ZXTePx6AqLA8zzFA7PO4SJMyZoOKKManF9VO0=
+	t=1773346799; cv=none; b=SRCEHYA4x4pOucAEXn1+pPz+fawCSyLYfpluzgbxq0PU1rLj5nt7YJU6m08hXJ/LCHv3pAT5mpvKEn6oB9NKscb5P7nYNxDjdT39Yc+1qv1mlWFdo3D3y64tQK1MPtvFZiwTnb6XAuUu42pqJ5AClTFXHrhnA6Lrb8KErx7FvIs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346795; c=relaxed/simple;
-	bh=tLWDRQSbqw6AvvAblW2crVM7S37AN6KnR3M/r2GGuo4=;
+	s=arc-20240116; t=1773346799; c=relaxed/simple;
+	bh=HG+4TMxyC74tYQAC4r974rXqAh7aYF/T34uFF0U+vxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UHy2aJadf49q8BqbScTem5fvEyvy0+Lag3Q5nyfWmQ6eyL+pEuDg152+i8V1KsAY5CXRkD70k0VkObZhp71yAAyIHx4ApfaB/z9CS4A3sfRl24eeosauv08YyjZEfCJyOUoZcscXgFFTgDgQ72jwnMIb6S+GMdC8/6LxoHORHYQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d7hDwShk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bywxaOaBjRctimvX0ffW+LTMNC+2WmKEjo+bijMGpgA+Ddux7WuY1WwuxSq084H8VMbqRwUNieTtCM/aL9wI73teRNtiT540yXxOLTMQN7RQcrrBgrk2IHBLCwK7DubgvbTKICBf3NGRY/FspRojECQ5nxfpFYEBJ4TTS9oFTdQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fnlDpk4J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d7hDwShk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 987FCC4CEF7;
-	Thu, 12 Mar 2026 20:19:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fnlDpk4J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EE3C4CEF7;
+	Thu, 12 Mar 2026 20:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346795;
-	bh=tLWDRQSbqw6AvvAblW2crVM7S37AN6KnR3M/r2GGuo4=;
+	s=korg; t=1773346799;
+	bh=HG+4TMxyC74tYQAC4r974rXqAh7aYF/T34uFF0U+vxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d7hDwShkox1Lt8XakgBC3ls7jAjbJ169Hz9UkP2eRw2XERaxaOvJ0Yy4u3/gdGiOl
-	 5jEkFSVrY1clP/oJOJHZNMnUmdzQNCyrbLXirYMXesuUe9hmlr3YHitESTxCS5Pr7w
-	 MCspLpAmbI5sTOMiDP0scNSTOncnmmJD3B4fwP8c=
+	b=fnlDpk4JyiNpwr5QoGKoGJ8P4L4O2Iaqf4GsxlYY65W1A1o9Tk343/pA7KvDg+/5w
+	 Gj3wMBQWaRLU8oV0b5TM7phCq6DA2RZTk8eV5TnmavfSo3oZdPQZl/pKFy8DYXXT3Z
+	 icMHlBB7Vdvz6/rhmyQSEBMnD96agW0klqqeWNyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Huacai Chen <chenhuacai@kernel.org>,
-	WANG Xuerui <kernel@xen0n.name>,
-	loongarch@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 118/265] LoongArch/orc: Use RCU in all users of __module_address().
-Date: Thu, 12 Mar 2026 21:08:25 +0100
-Message-ID: <20260312201022.504112831@linuxfoundation.org>
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.12 127/265] namespace: fix proc mount iteration
+Date: Thu, 12 Mar 2026 21:08:34 +0100
+Message-ID: <20260312201022.837206352@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -55,59 +49,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit f99d27d9feb755aee9350fc89f57814d7e1b4880 ]
+commit 4a403d7aa9074f527f064ef0806aaab38d14b07c upstream.
 
-__module_address() can be invoked within a RCU section, there is no
-requirement to have preemption disabled.
+The m->index isn't updated when m->show() overflows and retains its
+value before the current mount causing a restart to start at the same
+value. If that happens in short order to due a quickly expanding mount
+table this would cause the same mount to be shown again and again.
 
-Replace the preempt_disable() section around __module_address() with
-RCU.
+Ensure that *pos always equals the mount id of the mount that was
+returned by start/next. On restart after overflow mnt_find_id_at(*pos)
+finds the exact mount. This should avoid duplicates, avoid skips and
+should handle concurrent modification just fine.
 
-Cc: Huacai Chen <chenhuacai@kernel.org>
-Cc: WANG Xuerui <kernel@xen0n.name>
-Cc: loongarch@lists.linux.dev
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20250108090457.512198-19-bigeasy@linutronix.de
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
-Stable-dep-of: 055c7e75190e ("LoongArch: Handle percpu handler address for ORC unwinder")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixed: 2eea9ce4310d8 ("mounts: keep list of mounts in an rbtree")
+Link: https://patch.msgid.link/20260129-geleckt-treuhand-4bb940acacd9@brauner
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/unwind_orc.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/namespace.c |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
-diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
-index 471652c0c8653..59809c3406c03 100644
---- a/arch/loongarch/kernel/unwind_orc.c
-+++ b/arch/loongarch/kernel/unwind_orc.c
-@@ -399,7 +399,7 @@ bool unwind_next_frame(struct unwind_state *state)
- 		return false;
+--- a/fs/namespace.c
++++ b/fs/namespace.c
+@@ -1590,23 +1590,33 @@ static struct mount *mnt_find_id_at_reve
+ static void *m_start(struct seq_file *m, loff_t *pos)
+ {
+ 	struct proc_mounts *p = m->private;
++	struct mount *mnt;
  
- 	/* Don't let modules unload while we're reading their ORC data. */
--	preempt_disable();
-+	guard(rcu)();
+ 	down_read(&namespace_sem);
  
- 	if (is_entry_func(state->pc))
- 		goto end;
-@@ -514,14 +514,12 @@ bool unwind_next_frame(struct unwind_state *state)
- 	if (!__kernel_text_address(state->pc))
- 		goto err;
- 
--	preempt_enable();
- 	return true;
- 
- err:
- 	state->error = true;
- 
- end:
--	preempt_enable();
- 	state->stack_info.type = STACK_TYPE_UNKNOWN;
- 	return false;
+-	return mnt_find_id_at(p->ns, *pos);
++	mnt = mnt_find_id_at(p->ns, *pos);
++	if (mnt)
++		*pos = mnt->mnt_id_unique;
++	return mnt;
  }
--- 
-2.51.0
-
+ 
+ static void *m_next(struct seq_file *m, void *v, loff_t *pos)
+ {
+-	struct mount *next = NULL, *mnt = v;
++	struct mount *mnt = v;
+ 	struct rb_node *node = rb_next(&mnt->mnt_node);
+ 
+-	++*pos;
+ 	if (node) {
+-		next = node_to_mount(node);
++		struct mount *next = node_to_mount(node);
+ 		*pos = next->mnt_id_unique;
++		return next;
+ 	}
+-	return next;
++
++	/*
++	 * No more mounts. Set pos past current mount's ID so that if
++	 * iteration restarts, mnt_find_id_at() returns NULL.
++	 */
++	*pos = mnt->mnt_id_unique + 1;
++	return NULL;
+ }
+ 
+ static void m_stop(struct seq_file *m, void *v)
 
 
