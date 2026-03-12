@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDBD8318EE1;
-	Thu, 12 Mar 2026 20:26:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAED26F288;
+	Thu, 12 Mar 2026 20:26:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347173; cv=none; b=Xsa5kormGCPSdt2BegWM7brcKYZAaABJ1IYXadK9EaMHSIZ2E9d4PsasL9BJxSviThcJkkVP5qHY7oP/0mlTVBChkH+CaRYlzuPYXhhD12BN8Y2iVfctDyYNIVdqjXIn5Z2eFmHgykVUenGrRGhcWIAS8dn/J26/ZPp5lhIf1yI=
+	t=1773347177; cv=none; b=p8JrCKU2FBe1AKksX2QGfctM+0b9uCtLyVws1rFuCZCyIhQISnZuOQn6Z69Jlv/oPuWdbEoJRCiBXt8kngxEFKfZwBfQpB7OHUMrYM4leDrtPFLOLjJJQGEU5Nwhw96AST4CYjyaPkkZ3LxyCFjnRJtcp9eC1I2XaMNxLycrrcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347173; c=relaxed/simple;
-	bh=Hbxjy6/evVlNK/Oov39oU2nHgc2gGyZgG7rdAMizUME=;
+	s=arc-20240116; t=1773347177; c=relaxed/simple;
+	bh=Wq0Io8D9ZJ+mviQgywNciIx9Nb/Ft2zS+JHu7+xTu9M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qESE5+oUNEIBtRmOF7uXQSO2Ri0uPdqW0f07hA9PUee3rt+1c4S2loWlyJq2AI0Arx4O2EBMk4UYiA7CSKjqCgb69yMMduK/5h3EPbG4BEAb5suTh6zBve75UWyMx5tBYR9xql/hgcq3rDG5OweuBL979OJMYrQ43omIwQ5Obbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jF3nVdbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=O5ok95JRsvHjQlF3V4kDaC7KisleklzOf5M1SGuNzQRJcFvx5/QuV1R1iyYi3RdDvEsrUDbInvpbfAl7kiBBCAFewh6tLBt4H2hZ9EiRcI2+E7JEx0SWfpLueB514gGFUeBj0+XFYPXbT2xhvJLaB0iTUg0MgU2C6eG5KNt0cUI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LR5sGOk2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jF3nVdbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411D8C4CEF7;
-	Thu, 12 Mar 2026 20:26:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LR5sGOk2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB85C4CEF7;
+	Thu, 12 Mar 2026 20:26:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347173;
-	bh=Hbxjy6/evVlNK/Oov39oU2nHgc2gGyZgG7rdAMizUME=;
+	s=korg; t=1773347177;
+	bh=Wq0Io8D9ZJ+mviQgywNciIx9Nb/Ft2zS+JHu7+xTu9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jF3nVdbGDnmBn5H0ev0XqWAsOc/PDAQXHvSeSGn84a3uPRY2fRlCl2UBx6ZUE+sCE
-	 b7bT+xNlrCEV3RBiA/Xz/gTv01L8HiPzrsPtyu4R2F2oOP0VQMebnGc8vwAK7QJv2i
-	 B1eigGObaOhTNBlzpq3aLMyABBmUMKyf7OuB2WSY=
+	b=LR5sGOk25APhfGr7myLCV65+E+44/kgoEgvLbmGTOKwseuTlN6duBVTlGGqEWA9fv
+	 l15LPyyCEbK4uao9tEt11lT0M5Dx1yVGtKcAwD9ODNyPycZKI53yAGFd3gBZUSSvbT
+	 cyPGs0/yNMVOpKWYHr3fyHFKWTiG0dNaeq/DAhGw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 192/265] amd-xgbe: fix MAC_TCR_SS register width for 2.5G and 10M speeds
-Date: Thu, 12 Mar 2026 21:09:39 +0100
-Message-ID: <20260312201025.250792177@linuxfoundation.org>
+Subject: [PATCH 6.12 193/265] can: bcm: fix locking for bcm_op runtime updates
+Date: Thu, 12 Mar 2026 21:09:40 +0100
+Message-ID: <20260312201025.286473061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,48 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 9439a661c2e80485406ce2c90b107ca17858382d ]
+[ Upstream commit c35636e91e392e1540949bbc67932167cb48bc3a ]
 
-Extend the MAC_TCR_SS (Speed Select) register field width from 2 bits
-to 3 bits to properly support all speed settings.
+Commit c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+added a locking for some variables that can be modified at runtime when
+updating the sending bcm_op with a new TX_SETUP command in bcm_tx_setup().
 
-The MAC_TCR register's SS field encoding requires 3 bits to represent
-all supported speeds:
-  - 0x00: 10Gbps (XGMII)
-  - 0x02: 2.5Gbps (GMII) / 100Mbps
-  - 0x03: 1Gbps / 10Mbps
-  - 0x06: 2.5Gbps (XGMII) - P100a only
+Usually the RX_SETUP only handles and filters incoming traffic with one
+exception: When the RX_RTR_FRAME flag is set a predefined CAN frame is
+sent when a specific RTR frame is received. Therefore the rx bcm_op uses
+bcm_can_tx() which uses the bcm_tx_lock that was only initialized in
+bcm_tx_setup(). Add the missing spin_lock_init() when allocating the
+bcm_op in bcm_rx_setup() to handle the RTR case properly.
 
-With only 2 bits, values 0x04-0x07 cannot be represented, which breaks
-2.5G XGMII mode on newer platforms and causes incorrect speed select
-values to be programmed.
-
-Fixes: 07445f3c7ca1 ("amd-xgbe: Add support for 10 Mbps speed")
-Co-developed-by: Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>
-Signed-off-by: Guruvendra Punugupati <Guruvendra.Punugupati@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Link: https://patch.msgid.link/20260226170753.250312-1-Raju.Rangoju@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
+Reported-by: syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-can/699466e4.a70a0220.2c38d7.00ff.GAE@google.com/
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://patch.msgid.link/20260218-bcm_spin_lock_init-v1-1-592634c8a5b5@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-common.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/can/bcm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-common.h b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-index aa25a8a0a106f..d99d2295eab0f 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-common.h
-@@ -514,7 +514,7 @@
- #define MAC_SSIR_SSINC_INDEX		16
- #define MAC_SSIR_SSINC_WIDTH		8
- #define MAC_TCR_SS_INDEX		29
--#define MAC_TCR_SS_WIDTH		2
-+#define MAC_TCR_SS_WIDTH		3
- #define MAC_TCR_TE_INDEX		0
- #define MAC_TCR_TE_WIDTH		1
- #define MAC_TCR_VNE_INDEX		24
+diff --git a/net/can/bcm.c b/net/can/bcm.c
+index e33ff2a5b20cc..152cc29e87d7a 100644
+--- a/net/can/bcm.c
++++ b/net/can/bcm.c
+@@ -1170,6 +1170,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
+ 		if (!op)
+ 			return -ENOMEM;
+ 
++		spin_lock_init(&op->bcm_tx_lock);
+ 		op->can_id = msg_head->can_id;
+ 		op->nframes = msg_head->nframes;
+ 		op->cfsiz = CFSIZ(msg_head->flags);
 -- 
 2.51.0
 
