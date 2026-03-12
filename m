@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87AC22A4E9;
-	Thu, 12 Mar 2026 20:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FAFC346FCF;
+	Thu, 12 Mar 2026 20:20:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346832; cv=none; b=LdN0dzdI1XYZAOORySEsOlNSNzL5vnFBVisyQmGULNnvVsulkaWutcpM58G9JSDSnU/Y3/Khaw4+TCRBOisWX0lBzKex9RANOoKu9/D0eRTqlP/ogfQrp6M2jibPW8lH9zxQ/tpNL/aqi2VPPWUah92iU1sHtS+UeyNRA3AGr4U=
+	t=1773346836; cv=none; b=riuoVBKeAhUhPz4yYUk1f/nYMyG0KxLzqgBSYc446EAMcXekqzBq3ZUj3DrdajN+cY/Suq6R+Cca6OHjokMGyeNCId1KXbjZz/aKdqvaY5zEqqZeLSflVkOthnzGcAnHNzazuQYylAlap3SyuFy+aDgWnw+1JSC/IxYACciFqW8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346832; c=relaxed/simple;
-	bh=nbOuwDzAXiO7JZnAYbKjlIYUkw0rApJnRyujevonajU=;
+	s=arc-20240116; t=1773346836; c=relaxed/simple;
+	bh=ojjFTejNfmb16sakFGrEfedxwXuenvkjD2lWkSw7y+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FIHQ3clspH5kmqmnkg3T85fezMmeFtYd0snO9SiKkV9ilN+0spui7iG2nS+N8Bx0RwOFcbf2agaboXg3/jfDJ8tW3blZEjx/NFQjeMDGt86YI+51zLwNJPlhub7yha+U089Hm3b+iZ6SMeidaUemwhG+vIMV15Cd7jZiUrb1ZMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6hruwBi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUoBkI6IW8DzIVXuMVez+aD11Px9FvpZovu+PDcFOnP1Dd2qy/9JtGMRjHGig1dia312E2e8ahGdegZK01I9RZrQ+7Dk1Ka8zp2G85SXwNchIq+hBeYu+NUCLiQ72z0LZ23FMXM/cXM1663wV8xoX11cxscgvsdtCA3dnS/KZvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z1t/feQK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6hruwBi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AE9C4CEF7;
-	Thu, 12 Mar 2026 20:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z1t/feQK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F856C4CEF7;
+	Thu, 12 Mar 2026 20:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346832;
-	bh=nbOuwDzAXiO7JZnAYbKjlIYUkw0rApJnRyujevonajU=;
+	s=korg; t=1773346835;
+	bh=ojjFTejNfmb16sakFGrEfedxwXuenvkjD2lWkSw7y+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6hruwBi5NkT15ddEA3ZWSAethiX6h1jaNl+3+ifJSxLj4NdCq19AzEqpyj1prjHS
-	 6M48TjkcMVLVqZiH0WtG2wLEzcG5/qKyXD3P+YwopMEgnpnvsqNIxJ0Yr7NYaUQSzS
-	 m3BbQUFfomZ8+7JGIHbgUU0SNNUwnEhtH4cf7WoQ=
+	b=Z1t/feQKf+kXXeBnlANAekAxYNPvGQCVo5yG6UJ5wgV36kyIEEDMrDDx2jp7R0DBA
+	 2tac0s5Nvc/R/HsmjEd7BLd4qlXOAgYSJ+EKxTO+3EK9jjOzo2MUiT4BNroC5AyaMe
+	 7PqoLy/bzs2dB8IdsLNaugp78+6pVJxByQ2v3rXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 119/265] LoongArch: Remove unnecessary checks for ORC unwinder
-Date: Thu, 12 Mar 2026 21:08:26 +0100
-Message-ID: <20260312201022.541453387@linuxfoundation.org>
+	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.12 137/265] can: usb: f81604: handle short interrupt urb messages properly
+Date: Thu, 12 Mar 2026 21:08:44 +0100
+Message-ID: <20260312201023.204780348@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,103 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 4cd641a79e69270a062777f64a0dd330abb9044a ]
+commit 7299b1b39a255f6092ce4ec0b65f66e9d6a357af upstream.
 
-According to the following function definitions, __kernel_text_address()
-already checks __module_text_address(), so it should remove the check of
-__module_text_address() in bt_address() at least.
+If an interrupt urb is received that is not the correct length, properly
+detect it and don't attempt to treat the data as valid.
 
-int __kernel_text_address(unsigned long addr)
-{
-	if (kernel_text_address(addr))
-		return 1;
-	...
-	return 0;
-}
-
-int kernel_text_address(unsigned long addr)
-{
-	bool no_rcu;
-	int ret = 1;
-	...
-	if (is_module_text_address(addr))
-		goto out;
-	...
-	return ret;
-}
-
-bool is_module_text_address(unsigned long addr)
-{
-	guard(rcu)();
-	return __module_text_address(addr) != NULL;
-}
-
-Furthermore, there are two checks of __kernel_text_address(), one is in
-bt_address() and the other is after calling bt_address(), it looks like
-redundant.
-
-Handle the exception address first and then use __kernel_text_address()
-to validate the calculated address for exception or the normal address
-in bt_address(), then it can remove the check of __kernel_text_address()
-after calling bt_address().
-
-Just remove unnecessary checks, no functional changes intended.
-
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-Stable-dep-of: 055c7e75190e ("LoongArch: Handle percpu handler address for ORC unwinder")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Vincent Mailhol <mailhol@kernel.org>
+Cc: stable@kernel.org
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026022331-opal-evaluator-a928@gregkh
+Fixes: 88da17436973 ("can: usb: f81604: add Fintek F81604 support")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/unwind_orc.c | 16 +++++-----------
- 1 file changed, 5 insertions(+), 11 deletions(-)
+ drivers/net/can/usb/f81604.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
-index 59809c3406c03..4924d1ecc4579 100644
---- a/arch/loongarch/kernel/unwind_orc.c
-+++ b/arch/loongarch/kernel/unwind_orc.c
-@@ -359,12 +359,6 @@ static inline unsigned long bt_address(unsigned long ra)
- {
- 	extern unsigned long eentry;
+--- a/drivers/net/can/usb/f81604.c
++++ b/drivers/net/can/usb/f81604.c
+@@ -626,6 +626,12 @@ static void f81604_read_int_callback(str
+ 		netdev_info(netdev, "%s: Int URB aborted: %pe\n", __func__,
+ 			    ERR_PTR(urb->status));
  
--	if (__kernel_text_address(ra))
--		return ra;
--
--	if (__module_text_address(ra))
--		return ra;
--
- 	if (ra >= eentry && ra < eentry +  EXCCODE_INT_END * VECSIZE) {
- 		unsigned long func;
- 		unsigned long type = (ra - eentry) / VECSIZE;
-@@ -382,10 +376,13 @@ static inline unsigned long bt_address(unsigned long ra)
- 			break;
- 		}
- 
--		return func + offset;
-+		ra = func + offset;
- 	}
- 
--	return ra;
-+	if (__kernel_text_address(ra))
-+		return ra;
++	if (urb->actual_length < sizeof(*data)) {
++		netdev_warn(netdev, "%s: short int URB: %u < %zu\n",
++			    __func__, urb->actual_length, sizeof(*data));
++		goto resubmit_urb;
++	}
 +
-+	return 0;
- }
- 
- bool unwind_next_frame(struct unwind_state *state)
-@@ -511,9 +508,6 @@ bool unwind_next_frame(struct unwind_state *state)
- 		goto err;
- 	}
- 
--	if (!__kernel_text_address(state->pc))
--		goto err;
--
- 	return true;
- 
- err:
--- 
-2.51.0
-
+ 	switch (urb->status) {
+ 	case 0: /* success */
+ 		break;
 
 
