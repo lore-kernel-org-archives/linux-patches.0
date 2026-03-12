@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987E4344DB5;
-	Thu, 12 Mar 2026 20:20:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87AC22A4E9;
+	Thu, 12 Mar 2026 20:20:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346829; cv=none; b=eyGVDhwu3Y/Z3mpo9THoc5qztf7lNEOHGrARPUbGfr32+wWHFCpINyXBaLH7tjMxtQAAMEJgTUxdIe5ZMqV+O/jpTuPs9M092KMJfs2UA+Y8LTKA1mYxx/XNFVr+hpKdKckLY2oIHwG/FNYH1nVoyPa564j/rZXEmprwbRFlgd0=
+	t=1773346832; cv=none; b=LdN0dzdI1XYZAOORySEsOlNSNzL5vnFBVisyQmGULNnvVsulkaWutcpM58G9JSDSnU/Y3/Khaw4+TCRBOisWX0lBzKex9RANOoKu9/D0eRTqlP/ogfQrp6M2jibPW8lH9zxQ/tpNL/aqi2VPPWUah92iU1sHtS+UeyNRA3AGr4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346829; c=relaxed/simple;
-	bh=NFpG81YhNrYrCJoQPUHz1UKQ/zUGNys2p0xqbtAMgG8=;
+	s=arc-20240116; t=1773346832; c=relaxed/simple;
+	bh=nbOuwDzAXiO7JZnAYbKjlIYUkw0rApJnRyujevonajU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aGH7ve0NWiOn/nZ3h4pG38tfdplfzcsOf0pA9fjShsYkKtos8GhmNzHRNPM9PnLCxuXKfCFD9FE+518sSDVjCMHLXvsN1wRQ2/LVDSN/Jdoil0VwqXtU1dHZcmZ4DDnvkvNvNLeqE3zBYJO0IBN7CN6yDHoaIfBwNExyZ/GLDuU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lkN+VKOJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FIHQ3clspH5kmqmnkg3T85fezMmeFtYd0snO9SiKkV9ilN+0spui7iG2nS+N8Bx0RwOFcbf2agaboXg3/jfDJ8tW3blZEjx/NFQjeMDGt86YI+51zLwNJPlhub7yha+U089Hm3b+iZ6SMeidaUemwhG+vIMV15Cd7jZiUrb1ZMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6hruwBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lkN+VKOJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260CAC4CEF7;
-	Thu, 12 Mar 2026 20:20:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6hruwBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AE9C4CEF7;
+	Thu, 12 Mar 2026 20:20:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346829;
-	bh=NFpG81YhNrYrCJoQPUHz1UKQ/zUGNys2p0xqbtAMgG8=;
+	s=korg; t=1773346832;
+	bh=nbOuwDzAXiO7JZnAYbKjlIYUkw0rApJnRyujevonajU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkN+VKOJCh3G+PqxpK4PHdVWL3vpuXZq+X8/Qk0MJlhjrQLZXSbfeFNSbsAMp1wu3
-	 w55dKNFLorzacxeHBPIoSfqsaEAsBK7YtXS8fCb0yGT1AXnPT54teHUth4sTrR5S7x
-	 6INhO6T4ZHHnZQspiek8cCObyQFDiFZcLE74J9bs=
+	b=F6hruwBi5NkT15ddEA3ZWSAethiX6h1jaNl+3+ifJSxLj4NdCq19AzEqpyj1prjHS
+	 6M48TjkcMVLVqZiH0WtG2wLEzcG5/qKyXD3P+YwopMEgnpnvsqNIxJ0Yr7NYaUQSzS
+	 m3BbQUFfomZ8+7JGIHbgUU0SNNUwnEhtH4cf7WoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Mailhol <mailhol@kernel.org>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	stable@kernel.org
-Subject: [PATCH 6.12 136/265] can: usb: etas_es58x: correctly anchor the urb in the read bulk callback
-Date: Thu, 12 Mar 2026 21:08:43 +0100
-Message-ID: <20260312201023.166728340@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 119/265] LoongArch: Remove unnecessary checks for ORC unwinder
+Date: Thu, 12 Mar 2026 21:08:26 +0100
+Message-ID: <20260312201022.541453387@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,52 +51,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 5eaad4f768266f1f17e01232ffe2ef009f8129b7 upstream.
+[ Upstream commit 4cd641a79e69270a062777f64a0dd330abb9044a ]
 
-When submitting an urb, that is using the anchor pattern, it needs to be
-anchored before submitting it otherwise it could be leaked if
-usb_kill_anchored_urbs() is called.  This logic is correctly done
-elsewhere in the driver, except in the read bulk callback so do that
-here also.
+According to the following function definitions, __kernel_text_address()
+already checks __module_text_address(), so it should remove the check of
+__module_text_address() in bt_address() at least.
 
-Cc: Vincent Mailhol <mailhol@kernel.org>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: stable@kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Reviewed-by: Vincent Mailhol <mailhol@kernel.org>
-Tested-by: Vincent Mailhol <mailhol@kernel.org>
-Link: https://patch.msgid.link/2026022320-poser-stiffly-9d84@gregkh
-Fixes: 8537257874e9 ("can: etas_es58x: add core support for ETAS ES58X CAN USB interfaces")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+int __kernel_text_address(unsigned long addr)
+{
+	if (kernel_text_address(addr))
+		return 1;
+	...
+	return 0;
+}
+
+int kernel_text_address(unsigned long addr)
+{
+	bool no_rcu;
+	int ret = 1;
+	...
+	if (is_module_text_address(addr))
+		goto out;
+	...
+	return ret;
+}
+
+bool is_module_text_address(unsigned long addr)
+{
+	guard(rcu)();
+	return __module_text_address(addr) != NULL;
+}
+
+Furthermore, there are two checks of __kernel_text_address(), one is in
+bt_address() and the other is after calling bt_address(), it looks like
+redundant.
+
+Handle the exception address first and then use __kernel_text_address()
+to validate the calculated address for exception or the normal address
+in bt_address(), then it can remove the check of __kernel_text_address()
+after calling bt_address().
+
+Just remove unnecessary checks, no functional changes intended.
+
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Stable-dep-of: 055c7e75190e ("LoongArch: Handle percpu handler address for ORC unwinder")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/etas_es58x/es58x_core.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/loongarch/kernel/unwind_orc.c | 16 +++++-----------
+ 1 file changed, 5 insertions(+), 11 deletions(-)
 
---- a/drivers/net/can/usb/etas_es58x/es58x_core.c
-+++ b/drivers/net/can/usb/etas_es58x/es58x_core.c
-@@ -1461,12 +1461,18 @@ static void es58x_read_bulk_callback(str
+diff --git a/arch/loongarch/kernel/unwind_orc.c b/arch/loongarch/kernel/unwind_orc.c
+index 59809c3406c03..4924d1ecc4579 100644
+--- a/arch/loongarch/kernel/unwind_orc.c
++++ b/arch/loongarch/kernel/unwind_orc.c
+@@ -359,12 +359,6 @@ static inline unsigned long bt_address(unsigned long ra)
+ {
+ 	extern unsigned long eentry;
+ 
+-	if (__kernel_text_address(ra))
+-		return ra;
+-
+-	if (__module_text_address(ra))
+-		return ra;
+-
+ 	if (ra >= eentry && ra < eentry +  EXCCODE_INT_END * VECSIZE) {
+ 		unsigned long func;
+ 		unsigned long type = (ra - eentry) / VECSIZE;
+@@ -382,10 +376,13 @@ static inline unsigned long bt_address(unsigned long ra)
+ 			break;
+ 		}
+ 
+-		return func + offset;
++		ra = func + offset;
  	}
  
-  resubmit_urb:
-+	usb_anchor_urb(urb, &es58x_dev->rx_urbs);
- 	ret = usb_submit_urb(urb, GFP_ATOMIC);
-+	if (!ret)
-+		return;
+-	return ra;
++	if (__kernel_text_address(ra))
++		return ra;
 +
-+	usb_unanchor_urb(urb);
-+
- 	if (ret == -ENODEV) {
- 		for (i = 0; i < es58x_dev->num_can_ch; i++)
- 			if (es58x_dev->netdev[i])
- 				netif_device_detach(es58x_dev->netdev[i]);
--	} else if (ret)
-+	} else
- 		dev_err_ratelimited(dev,
- 				    "Failed resubmitting read bulk urb: %pe\n",
- 				    ERR_PTR(ret));
++	return 0;
+ }
+ 
+ bool unwind_next_frame(struct unwind_state *state)
+@@ -511,9 +508,6 @@ bool unwind_next_frame(struct unwind_state *state)
+ 		goto err;
+ 	}
+ 
+-	if (!__kernel_text_address(state->pc))
+-		goto err;
+-
+ 	return true;
+ 
+ err:
+-- 
+2.51.0
+
 
 
