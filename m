@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAD238D686;
-	Thu, 12 Mar 2026 20:28:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41B3E38734D;
+	Thu, 12 Mar 2026 20:28:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347282; cv=none; b=pSp4Yvps6eQ4XcRaKsUZDVaSM4x6xOXzGyVMI8JKMFCqWm+A5pmA/Mq3ugQEhI/Vkr2LoKQ13tW0PhdPnk/bUIgB5/OVunV/GuI2RzSUVLpqNhal2mFMLe7JbKOqalresAKxA3hdM5+gmnhV7JVWBw3tew4i+nkTYKjRcKHvj00=
+	t=1773347288; cv=none; b=qNIsJyoiT5Zx4WLOm3TgS/kVv3hCFPli2EHhtmjYG/19I59CZZO6P0I4JJ/xnPV8wDQYg3Pi7qivBZOmekGC6rCSvGdopc5/p9Bkz6O2yU8QIRrMJ6y4Tcv9H4cpvVhfMWfMfy6BlQdQjpEPsBUpjnPyTFtRBdyionKFcEF2TGk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347282; c=relaxed/simple;
-	bh=yVDJqsKeIjfpfWygphqEIJmQJIerJyz0212QdKRhm34=;
+	s=arc-20240116; t=1773347288; c=relaxed/simple;
+	bh=3KG3gz7nesUdUPRQSzARX+O4p2KlvyfC0HIcPjbEVxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GTnpydHy9sgK+nxs1eSsC03EC57MsEBDCrwHJ0+e9nUeuPTMfVbdg0XvtrLlMl6TkQmsDguy/0LuOobcT/buVXRuAvE7tCGig9/nK/ZdgYxAaWtfIn4Qmb8bhe1J7PVNncwrlaku41QLMigkSBm/ZTFFCrv44IDTRbvcIKwFxTM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=feFZUEob; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtvFFoVhuCeOpuKgHzEYDUdpudlLxsaIdxJzxzoE/nsotRN35xkzHPok+mqEi+JIOogCBD7ohJ9MdI7tM1ZxhfYmUq5mMpMMV+8aEMFcTGErgOpZz8O6hWHnv6VUtmCHjLygFY2mGQTZJ9VhHbCHT9xTvlcdCDu7in+qx215pnk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boXYSmTp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="feFZUEob"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552EFC2BC9E;
-	Thu, 12 Mar 2026 20:28:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boXYSmTp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CCB8C2BC86;
+	Thu, 12 Mar 2026 20:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347282;
-	bh=yVDJqsKeIjfpfWygphqEIJmQJIerJyz0212QdKRhm34=;
+	s=korg; t=1773347285;
+	bh=3KG3gz7nesUdUPRQSzARX+O4p2KlvyfC0HIcPjbEVxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=feFZUEobqwTIf9/H7dz5tv/3LIPvLdmKi6sf0tYu5Pod26kW+ZAsTl0r9mzrFC2e1
-	 SCsmHlbzJMruP+jRVcg/LEvHpTZ6Vx+xCPWcSYNlpa8CTZ1Siig92tO48RfOpFe3YX
-	 yAjz3RuxqKwLApoKzAN0NO59ZNg/IiSo+lYV8A+k=
+	b=boXYSmTpwh3ZupiyFP5OFMC+kZVUXS/WFjQMX2dMj8aISrvxE7zG0xSUwZv8aOvq0
+	 zLPTrcnCNesWnSmbWGKSPFtcHmL/z2llr70XmJx0KrHZmmW6wey+hdKoOuqoxODslj
+	 mgRs0nPmICN5fC3gq85ojhhnmpl6b0XOefJEWaNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.12 251/265] apparmor: fix memory leak in verify_header
-Date: Thu, 12 Mar 2026 21:10:38 +0100
-Message-ID: <20260312201027.407882167@linuxfoundation.org>
+	Naresh Solanki <naresh.solanki@9elements.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 225/265] hwmon: (max6639) : Configure based on DT property
+Date: Thu, 12 Mar 2026 21:10:12 +0100
+Message-ID: <20260312201026.453533701@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,40 +51,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+From: Naresh Solanki <naresh.solanki@9elements.com>
 
-commit e38c55d9f834e5b848bfed0f5c586aaf45acb825 upstream.
+[ Upstream commit 7506ebcd662b868780774d191a7c024c18c557a8 ]
 
-The function sets `*ns = NULL` on every call, leaking the namespace
-string allocated in previous iterations when multiple profiles are
-unpacked. This also breaks namespace consistency checking since *ns
-is always NULL when the comparison is made.
+Remove platform data & initialize with defaults
+configuration & overwrite based on DT properties.
 
-Remove the incorrect assignment.
-The caller (aa_unpack) initializes *ns to NULL once before the loop,
-which is sufficient.
-
-Fixes: dd51c8485763 ("apparmor: provide base for multiple profiles to be replaced at once")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Naresh Solanki <naresh.solanki@9elements.com>
+Message-ID: <20241007090426.811736-1-naresh.solanki@9elements.com>
+[groeck: Dropped some unnecessary empty lines]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Stable-dep-of: 170a4b21f49b ("hwmon: (max6639) fix inverted polarity")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_unpack.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/hwmon/max6639.c               | 83 +++++++++++++++++++--------
+ include/linux/platform_data/max6639.h | 15 -----
+ 2 files changed, 60 insertions(+), 38 deletions(-)
+ delete mode 100644 include/linux/platform_data/max6639.h
 
---- a/security/apparmor/policy_unpack.c
-+++ b/security/apparmor/policy_unpack.c
-@@ -1142,7 +1142,6 @@ static int verify_header(struct aa_ext *
- {
- 	int error = -EPROTONOSUPPORT;
- 	const char *name = NULL;
--	*ns = NULL;
+diff --git a/drivers/hwmon/max6639.c b/drivers/hwmon/max6639.c
+index c955b0f3a8d31..32b4d54b20766 100644
+--- a/drivers/hwmon/max6639.c
++++ b/drivers/hwmon/max6639.c
+@@ -19,7 +19,6 @@
+ #include <linux/hwmon-sysfs.h>
+ #include <linux/err.h>
+ #include <linux/mutex.h>
+-#include <linux/platform_data/max6639.h>
+ #include <linux/regmap.h>
+ #include <linux/util_macros.h>
  
- 	/* get the interface version */
- 	if (!aa_unpack_u32(e, &e->version, "version")) {
+@@ -531,14 +530,49 @@ static int rpm_range_to_reg(int range)
+ 	return 1; /* default: 4000 RPM */
+ }
+ 
++static int max6639_probe_child_from_dt(struct i2c_client *client,
++				       struct device_node *child,
++				       struct max6639_data *data)
++
++{
++	struct device *dev = &client->dev;
++	u32 i;
++	int err, val;
++
++	err = of_property_read_u32(child, "reg", &i);
++	if (err) {
++		dev_err(dev, "missing reg property of %pOFn\n", child);
++		return err;
++	}
++
++	if (i > 1) {
++		dev_err(dev, "Invalid fan index reg %d\n", i);
++		return -EINVAL;
++	}
++
++	err = of_property_read_u32(child, "pulses-per-revolution", &val);
++	if (!err) {
++		if (val < 1 || val > 5) {
++			dev_err(dev, "invalid pulses-per-revolution %d of %pOFn\n", val, child);
++			return -EINVAL;
++		}
++		data->ppr[i] = val;
++	}
++
++	err = of_property_read_u32(child, "max-rpm", &val);
++	if (!err)
++		data->rpm_range[i] = rpm_range_to_reg(val);
++
++	return 0;
++}
++
+ static int max6639_init_client(struct i2c_client *client,
+ 			       struct max6639_data *data)
+ {
+-	struct max6639_platform_data *max6639_info =
+-		dev_get_platdata(&client->dev);
+-	int i;
+-	int rpm_range = 1; /* default: 4000 RPM */
+-	int err, ppr;
++	struct device *dev = &client->dev;
++	const struct device_node *np = dev->of_node;
++	struct device_node *child;
++	int i, err;
+ 
+ 	/* Reset chip to default values, see below for GCONFIG setup */
+ 	err = regmap_write(data->regmap, MAX6639_REG_GCONFIG, MAX6639_GCONFIG_POR);
+@@ -546,21 +580,29 @@ static int max6639_init_client(struct i2c_client *client,
+ 		return err;
+ 
+ 	/* Fans pulse per revolution is 2 by default */
+-	if (max6639_info && max6639_info->ppr > 0 &&
+-			max6639_info->ppr < 5)
+-		ppr = max6639_info->ppr;
+-	else
+-		ppr = 2;
++	data->ppr[0] = 2;
++	data->ppr[1] = 2;
++
++	/* default: 4000 RPM */
++	data->rpm_range[0] = 1;
++	data->rpm_range[1] = 1;
+ 
+-	data->ppr[0] = ppr;
+-	data->ppr[1] = ppr;
++	for_each_child_of_node(np, child) {
++		if (strcmp(child->name, "fan"))
++			continue;
+ 
+-	if (max6639_info)
+-		rpm_range = rpm_range_to_reg(max6639_info->rpm_range);
+-	data->rpm_range[0] = rpm_range;
+-	data->rpm_range[1] = rpm_range;
++		err = max6639_probe_child_from_dt(client, child, data);
++		if (err) {
++			of_node_put(child);
++			return err;
++		}
++	}
+ 
+ 	for (i = 0; i < MAX6639_NUM_CHANNELS; i++) {
++		err = regmap_set_bits(data->regmap, MAX6639_REG_OUTPUT_MASK, BIT(1 - i));
++		if (err)
++			return err;
++
+ 		/* Set Fan pulse per revolution */
+ 		err = max6639_set_ppr(data, i, data->ppr[i]);
+ 		if (err)
+@@ -573,12 +615,7 @@ static int max6639_init_client(struct i2c_client *client,
+ 			return err;
+ 
+ 		/* Fans PWM polarity high by default */
+-		if (max6639_info) {
+-			if (max6639_info->pwm_polarity == 0)
+-				err = regmap_write(data->regmap, MAX6639_REG_FAN_CONFIG2a(i), 0x00);
+-			else
+-				err = regmap_write(data->regmap, MAX6639_REG_FAN_CONFIG2a(i), 0x02);
+-		}
++		err = regmap_write(data->regmap, MAX6639_REG_FAN_CONFIG2a(i), 0x00);
+ 		if (err)
+ 			return err;
+ 
+diff --git a/include/linux/platform_data/max6639.h b/include/linux/platform_data/max6639.h
+deleted file mode 100644
+index 65bfdb4fdc157..0000000000000
+--- a/include/linux/platform_data/max6639.h
++++ /dev/null
+@@ -1,15 +0,0 @@
+-/* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef _LINUX_MAX6639_H
+-#define _LINUX_MAX6639_H
+-
+-#include <linux/types.h>
+-
+-/* platform data for the MAX6639 temperature sensor and fan control */
+-
+-struct max6639_platform_data {
+-	bool pwm_polarity;	/* Polarity low (0) or high (1, default) */
+-	int ppr;		/* Pulses per rotation 1..4 (default == 2) */
+-	int rpm_range;		/* 2000, 4000 (default), 8000 or 16000 */
+-};
+-
+-#endif /* _LINUX_MAX6639_H */
+-- 
+2.51.0
+
 
 
