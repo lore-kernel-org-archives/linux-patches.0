@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2684722A4E9;
-	Thu, 12 Mar 2026 20:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00DF346FCF;
+	Thu, 12 Mar 2026 20:20:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346856; cv=none; b=G4xS3+OQd521PqqHizzZDf+n+BfJ+OjsnYyxUkAwyuCG0+831ZrhPO/UMlEZxCKfwN11bukIIxyXr70FZq0ot6fhIHFUmDCi+yTPp5Zig4cnny1MfKER3DjvYPEHviNOWzvGetm5k/ekRb46sPi7bts3BmzTCGmGqyXUYJSm0pM=
+	t=1773346859; cv=none; b=BuQqoSLZBITbcpsv6TqZ/uisjZW+L7YTCKZajw0I9KWt/+6yYajtOXDOXw/b/jpBIxGwsMb5FTW4NZ0meEQ4aA/HYnIqRk8YDJIE34tXappcjJllrd1XH6+ktJVbvy0UvUemPNvy6Rm9j8OS7v4VOsnt7ejGlMTiqdZrQNZ9iUU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346856; c=relaxed/simple;
-	bh=i63XSVI5a2C3jPzHPkXCTbwgYTXMRQdXZtI3C/Y3ayc=;
+	s=arc-20240116; t=1773346859; c=relaxed/simple;
+	bh=M+RYzmLY48fn+t7Y6saNmaqeKQXTrZ1EMhRNSUlZcjA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkv0SERKtoPMEXtfxnYt9CeRJa1obDiDQybb6FieRGd8d+5c9qh87qRA3nECU2xWJEdeZVwU9utgm5CMCEu6SMiXfW8DUrAH2luAj7JWbzEr74CTKUjpU+qeYxb1I5/0HI62PUHNMnZ4sVXyKPh+V2go0dsp+VMZaFg4fbn/iBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ik3jallZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=As6vmZQkJLTbqQ+Xn1/aWABRXgoipK5rcJO7Y67iD1L6RtKrJGBISO/hVfgmkQZp+Svo7gQZDEbszSq5WLl4/NU3N05Zgpet2PKpl2c39SDLkYTPJcOjHrRuehzj2mmoWboIsPPGEzgFEGLoUQ3Hp+Ef5nfuK9auTO42Kt1l4EE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U71S7jvE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ik3jallZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5138C4CEF7;
-	Thu, 12 Mar 2026 20:20:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U71S7jvE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F42FC4CEF7;
+	Thu, 12 Mar 2026 20:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346856;
-	bh=i63XSVI5a2C3jPzHPkXCTbwgYTXMRQdXZtI3C/Y3ayc=;
+	s=korg; t=1773346859;
+	bh=M+RYzmLY48fn+t7Y6saNmaqeKQXTrZ1EMhRNSUlZcjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ik3jallZi/gEFDlJ5Wg1CdzDVaEVgV2feIVRbge0p0BuO93eqdUcqrh4lIPEGt6W7
-	 Zu9jNa4ino0Idl+3lCBVQ8OxlZejJhiHBED8wVMAnhSIh9exOsVEf+MfzwQbGib5eo
-	 xh4hZq3ekxThsfIpcP/+wMw79UwJ8WEq6C/TbkYo=
+	b=U71S7jvEAcCSYAwsNrvljNX/gRxyj52Jr7/YJneY5NxLR3kiG/YqLturpmwVt2clQ
+	 X9KQLEPr/qnr+O++jM/wbX6M/H6bOnWCs7MbMuRmIIWXZM8O2P/fJr1Wq8aLlbp9Gv
+	 6QRTPy1NqJyZ3rH2+zMm9yBTPFHNFTOTrCGOXn3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Seo <jun.seo.93@proton.me>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 143/265] ALSA: usb-audio: Use correct version for UAC3 header validation
-Date: Thu, 12 Mar 2026 21:08:50 +0100
-Message-ID: <20260312201023.422565115@linuxfoundation.org>
+	syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.12 144/265] wifi: radiotap: reject radiotap with unknown bits
+Date: Thu, 12 Mar 2026 21:08:51 +0100
+Message-ID: <20260312201023.458924889@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -50,43 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jun Seo <jun.seo.93@proton.me>
+From: Johannes Berg <johannes.berg@intel.com>
 
-commit 54f9d645a5453d0bfece0c465d34aaf072ea99fa upstream.
+commit c854758abe0b8d86f9c43dc060ff56a0ee5b31e0 upstream.
 
-The entry of the validators table for UAC3 AC header descriptor is
-defined with the wrong protocol version UAC_VERSION_2, while it should
-have been UAC_VERSION_3.  This results in the validator never matching
-for actual UAC3 devices (protocol == UAC_VERSION_3), causing their
-header descriptors to bypass validation entirely.  A malicious USB
-device presenting a truncated UAC3 header could exploit this to cause
-out-of-bounds reads when the driver later accesses unvalidated
-descriptor fields.
+The radiotap parser is currently only used with the radiotap
+namespace (not with vendor namespaces), but if the undefined
+field 18 is used, the alignment/size is unknown as well. In
+this case, iterator->_next_ns_data isn't initialized (it's
+only set for skipping vendor namespaces), and syzbot points
+out that we later compare against this uninitialized value.
 
-The bug was introduced in the same commit as the recently fixed UAC3
-feature unit sub-type typo, and appears to be from the same copy-paste
-error when the UAC3 section was created from the UAC2 section.
+Fix this by moving the rejection of unknown radiotap fields
+down to after the in-namespace lookup, so it will really use
+iterator->_next_ns_data only for vendor namespaces, even in
+case undefined fields are present.
 
-Fixes: 57f8770620e9 ("ALSA: usb-audio: More validations of descriptor units")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jun Seo <jun.seo.93@proton.me>
-Link: https://patch.msgid.link/20260226010820.36529-1-jun.seo.93@proton.me
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: stable@vger.kernel.org
+Fixes: 33e5a2f776e3 ("wireless: update radiotap parser")
+Reported-by: syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/r/69944a91.a70a0220.2c38d7.00fc.GAE@google.com
+Link: https://patch.msgid.link/20260217120526.162647-2-johannes@sipsolutions.net
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/validate.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/wireless/radiotap.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/usb/validate.c
-+++ b/sound/usb/validate.c
-@@ -281,7 +281,7 @@ static const struct usb_desc_validator a
- 	/* UAC_VERSION_2, UAC2_SAMPLE_RATE_CONVERTER: not implemented yet */
- 
- 	/* UAC3 */
--	FIXED(UAC_VERSION_2, UAC_HEADER, struct uac3_ac_header_descriptor),
-+	FIXED(UAC_VERSION_3, UAC_HEADER, struct uac3_ac_header_descriptor),
- 	FIXED(UAC_VERSION_3, UAC_INPUT_TERMINAL,
- 	      struct uac3_input_terminal_descriptor),
- 	FIXED(UAC_VERSION_3, UAC_OUTPUT_TERMINAL,
+--- a/net/wireless/radiotap.c
++++ b/net/wireless/radiotap.c
+@@ -239,14 +239,14 @@ int ieee80211_radiotap_iterator_next(
+ 		default:
+ 			if (!iterator->current_namespace ||
+ 			    iterator->_arg_index >= iterator->current_namespace->n_bits) {
+-				if (iterator->current_namespace == &radiotap_ns)
+-					return -ENOENT;
+ 				align = 0;
+ 			} else {
+ 				align = iterator->current_namespace->align_size[iterator->_arg_index].align;
+ 				size = iterator->current_namespace->align_size[iterator->_arg_index].size;
+ 			}
+ 			if (!align) {
++				if (iterator->current_namespace == &radiotap_ns)
++					return -ENOENT;
+ 				/* skip all subsequent data */
+ 				iterator->_arg = iterator->_next_ns_data;
+ 				/* give up on this namespace */
 
 
