@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51F953346AF;
-	Thu, 12 Mar 2026 20:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7A3C2D0606;
+	Thu, 12 Mar 2026 20:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347022; cv=none; b=rt99E0Y3wd2r1eDpkWhKRhSJwMWmAwAEgNoMCYxBIB6Rh57zqXL5TA8dqi51Wv16vEApI2NqVG/NO/LdiOuPYg7oWs9Ysen66ocZlaoMRQUdehyATyNLEtNlwB/o0pIwx4WdS0QfPnxAUQGqzRGtZhkMr2ooEtBbknkxrDFFK+s=
+	t=1773347025; cv=none; b=T/zLEQTqBhTTMAMuW8IkjjT4aBrgmi7R5If/F5cmy/El3sG+spp7V3YXyopiT9XKfB8388g3iFPvbLT5e6d6ZWsw23ovGpP2cYiCvUPqJyvGIQE2KiaRP/6teE6WkpORKC9MwiFPDL9JJ+Yfg+mwLlWwDUMqKfAbAgJhgoKvHiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347022; c=relaxed/simple;
-	bh=tmDKO/Eu8oPcBd5PAIsg0Fe9/CO9yDXwP3KLijS9XU0=;
+	s=arc-20240116; t=1773347025; c=relaxed/simple;
+	bh=5Kcw/gofLM6QfMZIQFF4V93Chf64DqAtif4tigPkCxQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P7/PZt/+a0owq6+qkaX227rXMGmnfrOtvQHVfinRuLpHBWgDpXAgYKddp3Q92+jvfq6uNA8CWBB1HIHw9mB+qlshUTpmhPxEi6wa0aYKzAuiWbLQEMtXn2eaihR77mXIeXdoJXkS8lMYO3fXPXnRNfa85vTHFcQO1WSbh3s3sS4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lb/9fgqX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GT9kNp5zle+W9HGIyNcVwiFbsUPPcBwsJXqlZ3AXyn89I4z9PC1geTDx7FQsojuuecxyHGElj4cU1mFEzXJMsJHHHy4Al3PLdKa9BfvuxqsHCoFtGnGaXqtfWMVHRoCK9WRQThmESkFRpVg29dzunbiBoclCbPqDqtSBA5xA7Zo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvlIomEu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lb/9fgqX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF47C4CEF7;
-	Thu, 12 Mar 2026 20:23:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvlIomEu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311FDC4CEF7;
+	Thu, 12 Mar 2026 20:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347021;
-	bh=tmDKO/Eu8oPcBd5PAIsg0Fe9/CO9yDXwP3KLijS9XU0=;
+	s=korg; t=1773347025;
+	bh=5Kcw/gofLM6QfMZIQFF4V93Chf64DqAtif4tigPkCxQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lb/9fgqXVlu2zFQdNRZv7Io0mjQMZMYyPLuGw5MeA9YKF/SmUc26pvzpZ1oyjr819
-	 enUZvctOgU4Vz6/lc8fc67L2py4BUbh7QbVG2o+SLDFC2IlnGFgiY6PLiWLcZedmUO
-	 LyjBcOQyriGzGxQ9ToNZkUIPEwWjtMkTv2INnnxk=
+	b=mvlIomEuUI1g8P3EC4FT3NqsA1JVcR6hfPiJLiVvASvrp08CyaWDVoKDQ62Rc4Td9
+	 n6Ee/5sDiZvB5Relt5jkaH+0BNbQTSZpaTVOhz6+o7TWGyLGqaxyi/2SoMxr1i/xmq
+	 tIz0X/yTPzHH0n0u3e0ehEsS+ud92LbHMqNqfPRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lars Ellenberg <lars.ellenberg@linbit.com>,
-	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 155/265] drbd: fix "LOGIC BUG" in drbd_al_begin_io_nonblock()
-Date: Thu, 12 Mar 2026 21:09:02 +0100
-Message-ID: <20260312201023.862784709@linuxfoundation.org>
+	Vitaly Lifshits <vitaly.lifshits@intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 182/265] e1000e: clear DPG_EN after reset to avoid autonomous power-gating
+Date: Thu, 12 Mar 2026 21:09:29 +0100
+Message-ID: <20260312201024.886937743@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -45,165 +48,68 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lars Ellenberg <lars.ellenberg@linbit.com>
+From: Vitaly Lifshits <vitaly.lifshits@intel.com>
 
-commit ab140365fb62c0bdab22b2f516aff563b2559e3b upstream.
+[ Upstream commit 0942fc6d324eb9c6b16187b2aa994c0823557f06 ]
 
-Even though we check that we "should" be able to do lc_get_cumulative()
-while holding the device->al_lock spinlock, it may still fail,
-if some other code path decided to do lc_try_lock() with bad timing.
+Panther Lake systems introduced an autonomous power gating feature for
+the integrated Gigabit Ethernet in shutdown state (S5) state. As part of
+it, the reset value of DPG_EN bit was changed to 1. Clear this bit after
+performing hardware reset to avoid errors such as Tx/Rx hangs, or packet
+loss/corruption.
 
-If that happened, we logged "LOGIC BUG for enr=...",
-but still did not return an error.
-
-The rest of the code now assumed that this request has references
-for the relevant activity log extents.
-
-The implcations are that during an active resync, mutual exclusivity of
-resync versus application IO is not guaranteed. And a potential crash
-at this point may not realizs that these extents could have been target
-of in-flight IO and would need to be resynced just in case.
-
-Also, once the request completes, it will give up activity log references it
-does not even hold, which will trigger a BUG_ON(refcnt == 0) in lc_put().
-
-Fix:
-
-Do not crash the kernel for a condition that is harmless during normal
-operation: also catch "e->refcnt == 0", not only "e == NULL"
-when being noisy about "al_complete_io() called on inactive extent %u\n".
-
-And do not try to be smart and "guess" whether something will work, then
-be surprised when it does not.
-Deal with the fact that it may or may not work.  If it does not, remember a
-possible "partially in activity log" state (only possible for requests that
-cross extent boundaries), and return an error code from
-drbd_al_begin_io_nonblock().
-
-A latter call for the same request will then resume from where we left off.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Lars Ellenberg <lars.ellenberg@linbit.com>
-Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0c9183ce61bc ("e1000e: Add support for the next LOM generation")
+Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_actlog.c   |   53 ++++++++++++++++---------------------
- drivers/block/drbd/drbd_interval.h |    5 ++-
- 2 files changed, 27 insertions(+), 31 deletions(-)
+ drivers/net/ethernet/intel/e1000e/defines.h | 1 +
+ drivers/net/ethernet/intel/e1000e/ich8lan.c | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
---- a/drivers/block/drbd/drbd_actlog.c
-+++ b/drivers/block/drbd/drbd_actlog.c
-@@ -483,38 +483,20 @@ void drbd_al_begin_io(struct drbd_device
+diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
+index ba331899d1861..d4a1041e456dc 100644
+--- a/drivers/net/ethernet/intel/e1000e/defines.h
++++ b/drivers/net/ethernet/intel/e1000e/defines.h
+@@ -33,6 +33,7 @@
  
- int drbd_al_begin_io_nonblock(struct drbd_device *device, struct drbd_interval *i)
- {
--	struct lru_cache *al = device->act_log;
- 	/* for bios crossing activity log extent boundaries,
- 	 * we may need to activate two extents in one go */
- 	unsigned first = i->sector >> (AL_EXTENT_SHIFT-9);
- 	unsigned last = i->size == 0 ? first : (i->sector + (i->size >> 9) - 1) >> (AL_EXTENT_SHIFT-9);
--	unsigned nr_al_extents;
--	unsigned available_update_slots;
- 	unsigned enr;
+ /* Extended Device Control */
+ #define E1000_CTRL_EXT_LPCD  0x00000004     /* LCD Power Cycle Done */
++#define E1000_CTRL_EXT_DPG_EN	0x00000008 /* Dynamic Power Gating Enable */
+ #define E1000_CTRL_EXT_SDP3_DATA 0x00000080 /* Value of SW Definable Pin 3 */
+ #define E1000_CTRL_EXT_FORCE_SMBUS 0x00000800 /* Force SMBus mode */
+ #define E1000_CTRL_EXT_EE_RST    0x00002000 /* Reinitialize from EEPROM */
+diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+index df4e7d781cb1c..f9328caefe44b 100644
+--- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
++++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
+@@ -4925,6 +4925,15 @@ static s32 e1000_reset_hw_ich8lan(struct e1000_hw *hw)
+ 	reg |= E1000_KABGTXD_BGSQLBIAS;
+ 	ew32(KABGTXD, reg);
  
--	D_ASSERT(device, first <= last);
--
--	nr_al_extents = 1 + last - first; /* worst case: all touched extends are cold. */
--	available_update_slots = min(al->nr_elements - al->used,
--				al->max_pending_changes - al->pending_changes);
--
--	/* We want all necessary updates for a given request within the same transaction
--	 * We could first check how many updates are *actually* needed,
--	 * and use that instead of the worst-case nr_al_extents */
--	if (available_update_slots < nr_al_extents) {
--		/* Too many activity log extents are currently "hot".
--		 *
--		 * If we have accumulated pending changes already,
--		 * we made progress.
--		 *
--		 * If we cannot get even a single pending change through,
--		 * stop the fast path until we made some progress,
--		 * or requests to "cold" extents could be starved. */
--		if (!al->pending_changes)
--			__set_bit(__LC_STARVING, &device->act_log->flags);
--		return -ENOBUFS;
-+	if (i->partially_in_al_next_enr) {
-+		D_ASSERT(device, first < i->partially_in_al_next_enr);
-+		D_ASSERT(device, last >= i->partially_in_al_next_enr);
-+		first = i->partially_in_al_next_enr;
- 	}
- 
-+	D_ASSERT(device, first <= last);
++	/* The hardware reset value of the DPG_EN bit is 1.
++	 * Clear DPG_EN to prevent unexpected autonomous power gating.
++	 */
++	if (hw->mac.type >= e1000_pch_ptp) {
++		reg = er32(CTRL_EXT);
++		reg &= ~E1000_CTRL_EXT_DPG_EN;
++		ew32(CTRL_EXT, reg);
++	}
 +
- 	/* Is resync active in this area? */
- 	for (enr = first; enr <= last; enr++) {
- 		struct lc_element *tmp;
-@@ -529,14 +511,21 @@ int drbd_al_begin_io_nonblock(struct drb
- 		}
- 	}
- 
--	/* Checkout the refcounts.
--	 * Given that we checked for available elements and update slots above,
--	 * this has to be successful. */
-+	/* Try to checkout the refcounts. */
- 	for (enr = first; enr <= last; enr++) {
- 		struct lc_element *al_ext;
- 		al_ext = lc_get_cumulative(device->act_log, enr);
--		if (!al_ext)
--			drbd_info(device, "LOGIC BUG for enr=%u\n", enr);
-+
-+		if (!al_ext) {
-+			/* Did not work. We may have exhausted the possible
-+			 * changes per transaction. Or raced with someone
-+			 * "locking" it against changes.
-+			 * Remember where to continue from.
-+			 */
-+			if (enr > first)
-+				i->partially_in_al_next_enr = enr;
-+			return -ENOBUFS;
-+		}
- 	}
  	return 0;
  }
-@@ -556,7 +545,11 @@ void drbd_al_complete_io(struct drbd_dev
  
- 	for (enr = first; enr <= last; enr++) {
- 		extent = lc_find(device->act_log, enr);
--		if (!extent) {
-+		/* Yes, this masks a bug elsewhere.  However, during normal
-+		 * operation this is harmless, so no need to crash the kernel
-+		 * by the BUG_ON(refcount == 0) in lc_put().
-+		 */
-+		if (!extent || extent->refcnt == 0) {
- 			drbd_err(device, "al_complete_io() called on inactive extent %u\n", enr);
- 			continue;
- 		}
---- a/drivers/block/drbd/drbd_interval.h
-+++ b/drivers/block/drbd/drbd_interval.h
-@@ -8,12 +8,15 @@
- struct drbd_interval {
- 	struct rb_node rb;
- 	sector_t sector;		/* start sector of the interval */
--	unsigned int size;		/* size in bytes */
- 	sector_t end;			/* highest interval end in subtree */
-+	unsigned int size;		/* size in bytes */
- 	unsigned int local:1		/* local or remote request? */;
- 	unsigned int waiting:1;		/* someone is waiting for completion */
- 	unsigned int completed:1;	/* this has been completed already;
- 					 * ignore for conflict detection */
-+
-+	/* to resume a partially successful drbd_al_begin_io_nonblock(); */
-+	unsigned int partially_in_al_next_enr;
- };
- 
- static inline void drbd_clear_interval(struct drbd_interval *i)
+-- 
+2.51.0
+
 
 
