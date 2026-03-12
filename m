@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461DF33A9CF;
-	Thu, 12 Mar 2026 20:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 392823822AF;
+	Thu, 12 Mar 2026 20:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347274; cv=none; b=UAuaRO7Ti9EIk2g45VyQZ5FbcjYN1GSB1sgw7GTv7XUZMyy+3rjI9oh3Y8+97HK43/VSLmkmNX13Ga37fwa41d3xSUeErhHCfZmTlov0pOUeUqGtiXlml2ZefHbpOXPG/blXQhbrMNYbOCvMGnkxdUL0a2Fr4DOYhY1d6MIgV4I=
+	t=1773347278; cv=none; b=MEO5o0iFLs5+D6mtD5qQxqWnsTXkuXqT0L6gUEl6dJdKA0vxWiDzFpT36wKk+ADR1XLTon3bngsko8KynEswPLcvSrTX4xmFFV+70btzAAWCJLm0E5PLXyPs/64equL8kX2Sf3pFA1JsGJYHCr98rIQvvYBlaZrHQTDKeEOsQzw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347274; c=relaxed/simple;
-	bh=tfkzPsr9Uii+r9qf1narT6iFpZjLJLLXHRbQo9oAlcc=;
+	s=arc-20240116; t=1773347278; c=relaxed/simple;
+	bh=G/mqAi7DxxOT4HFOXoj4hQahPo1c2N1Uj3wNxxcZSgg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXub8K4CH614fUYFDouYlZYYufAYm3qYyLj8Zhu+hpmefm3lo6IjbUquukG42hwiraXEOXkOsNurPbkVYiZP2VKrLinLgaI/ujQQb4/FdeBrpBvhc0BDhFf66CAOQEHSgwrMJtRsZKap2Mse08dXK1mzDBW+aMcEmf2BMtd1Wv8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XLXdw14Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NKLbuOWObsr/wSVhzMmf92y6s11QHL2wJdHrH+//FZISDR1b8H2/UT0sni5JCiPbi9Yi32MVeX/yLEFUzo9IOIwW3B/0wUZCAahG1J8FUBxhY6JYX17UOiIZy7DoYYCnZ7BytZ4mAxce97V8EHqMBgsbJwXqqhrs6Y4lESWopEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GwAQfEbP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XLXdw14Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EC3DC2BCAF;
-	Thu, 12 Mar 2026 20:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GwAQfEbP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FC2C4AF0B;
+	Thu, 12 Mar 2026 20:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347274;
-	bh=tfkzPsr9Uii+r9qf1narT6iFpZjLJLLXHRbQo9oAlcc=;
+	s=korg; t=1773347277;
+	bh=G/mqAi7DxxOT4HFOXoj4hQahPo1c2N1Uj3wNxxcZSgg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XLXdw14ZV919Xc9cnOGomven/rz1ArK9QhxmHqKRDW/0z0lrULGIBEF/Z54c8bPo0
-	 Doqrt0L8/nBQ95EGqdiuqvKJx3KRFDGxk5gJ0hxcOZx3VTf6EfYg+YlR9K2OQY6maV
-	 IC+/9h/mt7xG1Y/mxARNZKm1eBAJIEeUNlADCiko=
+	b=GwAQfEbPS2bHS3jSEPv2dYVZWNV8qcGXduov+6zzRW9K4wNgQPNWurRzTr6ckbL9e
+	 JJGaAGownr6pOWpXmXl6TCVRZGuUPm4FUaySZZNF3gAx37W1i0Neal5C0eYBop3dQ9
+	 Zh2vJW/JTLhKlWszq/wCDlcklh5IShKnUJvicN6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GangMin Kim <km.kim1503@gmail.com>,
-	Victor Nogueira <victor@mojatatu.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 249/265] net/sched: Only allow act_ct to bind to clsact/ingress qdiscs and shared blocks
-Date: Thu, 12 Mar 2026 21:10:36 +0100
-Message-ID: <20260312201027.333907066@linuxfoundation.org>
+	Qualys Security Advisory <qsa@qualys.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.12 250/265] apparmor: validate DFA start states are in bounds in unpack_pdb
+Date: Thu, 12 Mar 2026 21:10:37 +0100
+Message-ID: <20260312201027.370592441@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,89 +54,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Victor Nogueira <victor@mojatatu.com>
+From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 
-commit 11cb63b0d1a0685e0831ae3c77223e002ef18189 upstream.
+commit 9063d7e2615f4a7ab321de6b520e23d370e58816 upstream.
 
-As Paolo said earlier [1]:
+Start states are read from untrusted data and used as indexes into the
+DFA state tables. The aa_dfa_next() function call in unpack_pdb() will
+access dfa->tables[YYTD_ID_BASE][start], and if the start state exceeds
+the number of states in the DFA, this results in an out-of-bound read.
 
-"Since the blamed commit below, classify can return TC_ACT_CONSUMED while
-the current skb being held by the defragmentation engine. As reported by
-GangMin Kim, if such packet is that may cause a UaF when the defrag engine
-later on tries to tuch again such packet."
+==================================================================
+ BUG: KASAN: slab-out-of-bounds in aa_dfa_next+0x2a1/0x360
+ Read of size 4 at addr ffff88811956fb90 by task su/1097
+ ...
 
-act_ct was never meant to be used in the egress path, however some users
-are attaching it to egress today [2]. Attempting to reach a middle
-ground, we noticed that, while most qdiscs are not handling
-TC_ACT_CONSUMED, clsact/ingress qdiscs are. With that in mind, we
-address the issue by only allowing act_ct to bind to clsact/ingress
-qdiscs and shared blocks. That way it's still possible to attach act_ct to
-egress (albeit only with clsact).
+Reject policies with out-of-bounds start states during unpacking
+to prevent the issue.
 
-[1] https://lore.kernel.org/netdev/674b8cbfc385c6f37fb29a1de08d8fe5c2b0fbee.1771321118.git.pabeni@redhat.com/
-[2] https://lore.kernel.org/netdev/cc6bfb4a-4a2b-42d8-b9ce-7ef6644fb22b@ovn.org/
-
-Reported-by: GangMin Kim <km.kim1503@gmail.com>
-Fixes: 3f14b377d01d ("net/sched: act_ct: fix skb leak and crash on ooo frags")
-CC: stable@vger.kernel.org
-Signed-off-by: Victor Nogueira <victor@mojatatu.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Link: https://patch.msgid.link/20260225134349.1287037-1-victor@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: ad5ff3db53c6 ("AppArmor: Add ability to load extended policy")
+Reported-by: Qualys Security Advisory <qsa@qualys.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/act_api.h |    1 +
- net/sched/act_ct.c    |    6 ++++++
- net/sched/cls_api.c   |    7 +++++++
- 3 files changed, 14 insertions(+)
+ security/apparmor/policy_unpack.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/include/net/act_api.h
-+++ b/include/net/act_api.h
-@@ -68,6 +68,7 @@ struct tc_action {
- #define TCA_ACT_FLAGS_REPLACE	(1U << (TCA_ACT_FLAGS_USER_BITS + 2))
- #define TCA_ACT_FLAGS_NO_RTNL	(1U << (TCA_ACT_FLAGS_USER_BITS + 3))
- #define TCA_ACT_FLAGS_AT_INGRESS	(1U << (TCA_ACT_FLAGS_USER_BITS + 4))
-+#define TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT	(1U << (TCA_ACT_FLAGS_USER_BITS + 5))
- 
- /* Update lastuse only if needed, to avoid dirtying a cache line.
-  * We use a temp variable to avoid fetching jiffies twice.
---- a/net/sched/act_ct.c
-+++ b/net/sched/act_ct.c
-@@ -1358,6 +1358,12 @@ static int tcf_ct_init(struct net *net,
- 		return -EINVAL;
- 	}
- 
-+	if (bind && !(flags & TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT)) {
-+		NL_SET_ERR_MSG_MOD(extack,
-+				   "Attaching ct to a non ingress/clsact qdisc is unsupported");
-+		return -EOPNOTSUPP;
-+	}
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -762,7 +762,17 @@ static int unpack_pdb(struct aa_ext *e,
+ 		if (!aa_unpack_u32(e, &pdb->start[AA_CLASS_FILE], "dfa_start")) {
+ 			/* default start state for xmatch and file dfa */
+ 			pdb->start[AA_CLASS_FILE] = DFA_START;
+-		}	/* setup class index */
++		}
 +
- 	err = nla_parse_nested(tb, TCA_CT_MAX, nla, ct_policy, extack);
- 	if (err < 0)
- 		return err;
---- a/net/sched/cls_api.c
-+++ b/net/sched/cls_api.c
-@@ -2222,6 +2222,11 @@ static bool is_qdisc_ingress(__u32 class
- 	return (TC_H_MIN(classid) == TC_H_MIN(TC_H_MIN_INGRESS));
- }
- 
-+static bool is_ingress_or_clsact(struct tcf_block *block, struct Qdisc *q)
-+{
-+	return tcf_block_shared(block) || (q && !!(q->flags & TCQ_F_INGRESS));
-+}
++		size_t state_count = pdb->dfa->tables[YYTD_ID_BASE]->td_lolen;
 +
- static int tc_new_tfilter(struct sk_buff *skb, struct nlmsghdr *n,
- 			  struct netlink_ext_ack *extack)
- {
-@@ -2415,6 +2420,8 @@ replay:
- 		flags |= TCA_ACT_FLAGS_NO_RTNL;
- 	if (is_qdisc_ingress(parent))
- 		flags |= TCA_ACT_FLAGS_AT_INGRESS;
-+	if (is_ingress_or_clsact(block, q))
-+		flags |= TCA_ACT_FLAGS_AT_INGRESS_OR_CLSACT;
- 	err = tp->ops->change(net, skb, tp, cl, t->tcm_handle, tca, &fh,
- 			      flags, extack);
- 	if (err == 0) {
++		if (pdb->start[0] >= state_count ||
++		    pdb->start[AA_CLASS_FILE] >= state_count) {
++			*info = "invalid dfa start state";
++			goto fail;
++		}
++
++		/* setup class index */
+ 		for (i = AA_CLASS_FILE + 1; i <= AA_CLASS_LAST; i++) {
+ 			pdb->start[i] = aa_dfa_next(pdb->dfa, pdb->start[0],
+ 						    i);
 
 
