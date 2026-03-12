@@ -1,44 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3381A0712;
-	Thu, 12 Mar 2026 20:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EAF1A0712;
+	Thu, 12 Mar 2026 20:19:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346787; cv=none; b=MVnm4kNZSc+C7yaqmOE1k8kRUxlwOrjmzz3NxZ3hHOMtvvpAC/Id82OcgYC2yq19bhppsDA5Yq63B70gFHJDaOHB2+n+LQ4utfVDD6/U3PN/JoLHvkn1o4gxAZNEUgZqzsRDbilW1us0ny4a3QSbuLDhJKrknrhOChnS+3jho58=
+	t=1773346791; cv=none; b=WU4FJl58+tdfrwTb4d1gdxY2LyMWevKBxQySIRpRd01L6aK/km47ZxFjYW8xHKccxe/jZ/a6YCTXO+DXFVZD03y6ZJBWgZkqnyQkh1EatiHG4TYVGp5E+Mm3IrXZzheScnbkEQLOjXRAxZJzSNEN1L2+qpaAaikN1fnI0XPnAOE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346787; c=relaxed/simple;
-	bh=Xci5gTDU/3n/9esrcpbUshRpGSQHXEjPxYDcVeu05zE=;
+	s=arc-20240116; t=1773346791; c=relaxed/simple;
+	bh=U9ErQx5Kjz589gWP1aH9WvvdDq+fcD4Knk/Aq+NhclM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BzLzRzxZumqpw9RbzjxEhQGOtnzbxxY5XbG9A6KsTlBMfxtoptbwdmv0JX0oThCPxqi8k0h+wRtx7anmgD6DTpGDQ6FBpB2PwJ6LBFgM7zgjTmxZpr5YXWnw3qgFWLe+bChVNJvy2dFrEgW0KqAkoe62/Cd4FRQK9yIk8J/HOyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fKZ7vRdM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F3rI25HtMDySKvGJGzzAt+SArUh8O2PVMI3rCxGt2v8qsDiI4VB0wmeqjUWIjGQZ5LQYi9RB5vma7Hfp1uPg+4wO+AS5pQaFptKZ04AWSDE8fY4fiLy+huvyQPjLOBOhECUQh83etAzLmlmm0z++BoTIZuGZGN7qOP79/jnEKeA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UfOrIFFM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fKZ7vRdM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD79C4CEF7;
-	Thu, 12 Mar 2026 20:19:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UfOrIFFM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D0F1C4CEF7;
+	Thu, 12 Mar 2026 20:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346787;
-	bh=Xci5gTDU/3n/9esrcpbUshRpGSQHXEjPxYDcVeu05zE=;
+	s=korg; t=1773346791;
+	bh=U9ErQx5Kjz589gWP1aH9WvvdDq+fcD4Knk/Aq+NhclM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fKZ7vRdMyjsYNppRWjbOH/xzB0MpftmDMw3KKeB9y2eqZiJQ4KsnR8ctydylYDysq
-	 RzqhAZMu/2Lc80X/mkk2xnP7Nvj2tP3DeJZCrcI2en32+gKbIiXrZ54Q374na+oXps
-	 IrjfN8WroBhPft17Q1tlKLVjJ9gCn0dXvQWFWe48=
+	b=UfOrIFFMsXmsZFXRtjJHeauFwFWSvT8kjq2CrQfgJLrnNCNQMDIzOjMVscnFgHqNI
+	 3v57Ms3gz8ty49+QUsr+Cjih682MxiLusOyDGuNzJFXgb1RMJaVRqMfQKXESkzjFTZ
+	 XLWdhS4khrSTkcrMIO0KMCWoOAv4LPfSHxfOMbW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biederman <ebiederm@xmission.com>,
-	Baoquan He <bhe@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Tushar Sugandhi <tusharsu@linux.microsoft.com>,
-	Steven Chen <chenste@linux.microsoft.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Stefan Berger <stefanb@linux.ibm.com>
-Subject: [PATCH 6.12 091/265] kexec: define functions to map and unmap segments
-Date: Thu, 12 Mar 2026 21:07:58 +0100
-Message-ID: <20260312201021.510948654@linuxfoundation.org>
+	Tejun Heo <tj@kernel.org>,
+	Marco Crivellari <marco.crivellari@suse.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 082/265] Input: synaptics_i2c - replace use of system_wq with system_dfl_wq
+Date: Thu, 12 Mar 2026 21:07:49 +0100
+Message-ID: <20260312201021.182449047@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -57,125 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Chen <chenste@linux.microsoft.com>
+From: Marco Crivellari <marco.crivellari@suse.com>
 
-[ Upstream commit 0091d9241ea24c5275be4a3e5a032862fd9de9ec ]
+[ Upstream commit b3ee88e27798f0e8dd3a81867804d693da74d57d ]
 
-Implement kimage_map_segment() to enable IMA to map the measurement log
-list to the kimage structure during the kexec 'load' stage. This function
-gathers the source pages within the specified address range, and maps them
-to a contiguous virtual address range.
+Currently if a user enqueues a work item using schedule_delayed_work() the
+used wq is "system_wq" (per-cpu wq) while queue_delayed_work() use
+WORK_CPU_UNBOUND (used when a cpu is not specified). The same applies to
+schedule_work() that is using system_wq and queue_work(), that makes use
+again of WORK_CPU_UNBOUND.
 
-This is a preparation for later usage.
+This lack of consistency cannot be addressed without refactoring the API.
 
-Implement kimage_unmap_segment() for unmapping segments using vunmap().
+This patch continues the effort to refactor worqueue APIs, which has begun
+with the change introducing new workqueues and a new alloc_workqueue flag:
 
-Cc: Eric Biederman <ebiederm@xmission.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Co-developed-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
-Signed-off-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
-Signed-off-by: Steven Chen <chenste@linux.microsoft.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com> # ppc64/kvm
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Stable-dep-of: 10d1c75ed438 ("ima: verify the previous kernel's IMA buffer lies in addressable RAM")
+commit 128ea9f6ccfb ("workqueue: Add system_percpu_wq and system_dfl_wq")
+commit 930c2ea566af ("workqueue: Add new WQ_PERCPU flag")
+
+This specific workload do not benefit from a per-cpu workqueue, so use
+the default unbound workqueue (system_dfl_wq) instead.
+
+Suggested-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Marco Crivellari <marco.crivellari@suse.com>
+Link: https://patch.msgid.link/20251106141955.218911-4-marco.crivellari@suse.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Stable-dep-of: 870c2e7cd881 ("Input: synaptics_i2c - guard polling restart in resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kexec.h |  6 +++++
- kernel/kexec_core.c   | 54 +++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 60 insertions(+)
+ drivers/input/mouse/synaptics_i2c.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/linux/kexec.h b/include/linux/kexec.h
-index f0e9f8eda7a3c..7d6b12f8b8d05 100644
---- a/include/linux/kexec.h
-+++ b/include/linux/kexec.h
-@@ -467,13 +467,19 @@ extern bool kexec_file_dbg_print;
- #define kexec_dprintk(fmt, arg...) \
-         do { if (kexec_file_dbg_print) pr_info(fmt, ##arg); } while (0)
+diff --git a/drivers/input/mouse/synaptics_i2c.c b/drivers/input/mouse/synaptics_i2c.c
+index a0d707e47d932..c8ddfff2605ff 100644
+--- a/drivers/input/mouse/synaptics_i2c.c
++++ b/drivers/input/mouse/synaptics_i2c.c
+@@ -372,7 +372,7 @@ static irqreturn_t synaptics_i2c_irq(int irq, void *dev_id)
+ {
+ 	struct synaptics_i2c *touch = dev_id;
  
-+extern void *kimage_map_segment(struct kimage *image, unsigned long addr, unsigned long size);
-+extern void kimage_unmap_segment(void *buffer);
- #else /* !CONFIG_KEXEC_CORE */
- struct pt_regs;
- struct task_struct;
-+struct kimage;
- static inline void __crash_kexec(struct pt_regs *regs) { }
- static inline void crash_kexec(struct pt_regs *regs) { }
- static inline int kexec_should_crash(struct task_struct *p) { return 0; }
- static inline int kexec_crash_loaded(void) { return 0; }
-+static inline void *kimage_map_segment(struct kimage *image, unsigned long addr, unsigned long size)
-+{ return NULL; }
-+static inline void kimage_unmap_segment(void *buffer) { }
- #define kexec_in_progress false
- #endif /* CONFIG_KEXEC_CORE */
+-	mod_delayed_work(system_wq, &touch->dwork, 0);
++	mod_delayed_work(system_dfl_wq, &touch->dwork, 0);
  
-diff --git a/kernel/kexec_core.c b/kernel/kexec_core.c
-index c0caa14880c3b..6c15cd5b9cae5 100644
---- a/kernel/kexec_core.c
-+++ b/kernel/kexec_core.c
-@@ -867,6 +867,60 @@ int kimage_load_segment(struct kimage *image,
- 	return result;
+ 	return IRQ_HANDLED;
+ }
+@@ -448,7 +448,7 @@ static void synaptics_i2c_work_handler(struct work_struct *work)
+ 	 * We poll the device once in THREAD_IRQ_SLEEP_SECS and
+ 	 * if error is detected, we try to reset and reconfigure the touchpad.
+ 	 */
+-	mod_delayed_work(system_wq, &touch->dwork, delay);
++	mod_delayed_work(system_dfl_wq, &touch->dwork, delay);
  }
  
-+void *kimage_map_segment(struct kimage *image,
-+			 unsigned long addr, unsigned long size)
-+{
-+	unsigned long src_page_addr, dest_page_addr = 0;
-+	unsigned long eaddr = addr + size;
-+	kimage_entry_t *ptr, entry;
-+	struct page **src_pages;
-+	unsigned int npages;
-+	void *vaddr = NULL;
-+	int i;
-+
-+	/*
-+	 * Collect the source pages and map them in a contiguous VA range.
-+	 */
-+	npages = PFN_UP(eaddr) - PFN_DOWN(addr);
-+	src_pages = kmalloc_array(npages, sizeof(*src_pages), GFP_KERNEL);
-+	if (!src_pages) {
-+		pr_err("Could not allocate ima pages array.\n");
-+		return NULL;
-+	}
-+
-+	i = 0;
-+	for_each_kimage_entry(image, ptr, entry) {
-+		if (entry & IND_DESTINATION) {
-+			dest_page_addr = entry & PAGE_MASK;
-+		} else if (entry & IND_SOURCE) {
-+			if (dest_page_addr >= addr && dest_page_addr < eaddr) {
-+				src_page_addr = entry & PAGE_MASK;
-+				src_pages[i++] =
-+					virt_to_page(__va(src_page_addr));
-+				if (i == npages)
-+					break;
-+				dest_page_addr += PAGE_SIZE;
-+			}
-+		}
-+	}
-+
-+	/* Sanity check. */
-+	WARN_ON(i < npages);
-+
-+	vaddr = vmap(src_pages, npages, VM_MAP, PAGE_KERNEL);
-+	kfree(src_pages);
-+
-+	if (!vaddr)
-+		pr_err("Could not map ima buffer.\n");
-+
-+	return vaddr;
-+}
-+
-+void kimage_unmap_segment(void *segment_buffer)
-+{
-+	vunmap(segment_buffer);
-+}
-+
- struct kexec_load_limit {
- 	/* Mutex protects the limit count. */
- 	struct mutex mutex;
+ static int synaptics_i2c_open(struct input_dev *input)
+@@ -461,7 +461,7 @@ static int synaptics_i2c_open(struct input_dev *input)
+ 		return ret;
+ 
+ 	if (polling_req)
+-		mod_delayed_work(system_wq, &touch->dwork,
++		mod_delayed_work(system_dfl_wq, &touch->dwork,
+ 				msecs_to_jiffies(NO_DATA_SLEEP_MSECS));
+ 
+ 	return 0;
+@@ -620,7 +620,7 @@ static int synaptics_i2c_resume(struct device *dev)
+ 	if (ret)
+ 		return ret;
+ 
+-	mod_delayed_work(system_wq, &touch->dwork,
++	mod_delayed_work(system_dfl_wq, &touch->dwork,
+ 				msecs_to_jiffies(NO_DATA_SLEEP_MSECS));
+ 
+ 	return 0;
 -- 
 2.51.0
 
