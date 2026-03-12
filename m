@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4F922F1FED;
-	Thu, 12 Mar 2026 20:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3BD73AF66F;
+	Thu, 12 Mar 2026 20:29:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347365; cv=none; b=d/BL9zFh3hNLqB3lntsPHvoMQ0Lf1BTOsX2qDPqgJ7VrnkZ7JOLyyILqWgUC/vIQ+aEfG4uG+UlIxvI6hbhhLTMqF/0/jmAghM+J5LEnwdctQByL/XLvaTGD5+rWnRvqLePzTD2E3/OGsqV7+7yWI39dLVsExNR7HMoCwPRNSQU=
+	t=1773347369; cv=none; b=a5MPRFMqRuE17ISi5dON30qYERRm7yEIX1Q6RkJtt0jJo3R8687xPQBPzYLSV02nm+JIZARkvrtqnGMZkRjsWeFn87Oow4L715kvokibwjzSKFsCmdvr8E35oOhRaVCtQdlsahgHfdt3xOYTcIx9GYI1IdXJeVQkd3RpSe53FfI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347365; c=relaxed/simple;
-	bh=DBG/SHQheft6cdInUX0G1Kwn1ZZ+LUsea/+iJilPi6Q=;
+	s=arc-20240116; t=1773347369; c=relaxed/simple;
+	bh=ED29GbfCSctyJUw2XEa9pvOEb11nQpt9wyujCuE2+tI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=G/7v11ZLaQRDhKHXcoPVujjLz+O563rHWbrWkRApFyt42CNLH1J+97bWIGfeKBeeQ/e7WylGQRIjq1kgMZz9TQsbiN43ODjJBJjUn4rv6m/+L4hqEvzchtVnj5chHkFPV9K7XnG0bYOfGGuwwZzUNeg3dyHHl0eDrMgTOZvIXQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bd7LjOXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ukwmpMJo4axSV0JeyXwcRzBO2WC0pSDsqQGoyeETSNdbNGIT2lzJHXB4u/G5RwTStlpVs9Omb3auNcOe8qCaRN77KShH8zY1DT871enOPwk4TdmyDqFDUxAgVQb5P/LWHOiRtWfrGJVOGvH2rqHGCvIogu9cMB+r59mSrO4Afuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oIPTicvR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bd7LjOXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD30BC4CEF7;
-	Thu, 12 Mar 2026 20:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oIPTicvR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83A6CC4CEF7;
+	Thu, 12 Mar 2026 20:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347364;
-	bh=DBG/SHQheft6cdInUX0G1Kwn1ZZ+LUsea/+iJilPi6Q=;
+	s=korg; t=1773347368;
+	bh=ED29GbfCSctyJUw2XEa9pvOEb11nQpt9wyujCuE2+tI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bd7LjOXpi2sNTAsqC6ec8UolrLHWq1Fw5Vv+iAemoYG9LxUE7WmXvHR2h7aXvFEc/
-	 f+2uz1JzkHq5KM5qSCOgLhgEFUpVlOsoynX8elZ/brnQ1QsPM65Du49KbqmWW8GpkM
-	 wmj9imIPZdKGryk43AK4NsGbWQOkRKzQ0hAzeTnk=
+	b=oIPTicvR3ASMFU5WWDFlCOotxj+nra3yg8IPfZXHoBTS+mmwL9a13axgEaTKqZfE6
+	 hT9MDwApNBp+CPFYAfhB1vxq4lL7No4QKr/WDx8NIV9yqgTww60B/auKcP5qJuSlad
+	 MOjK3RQYq1zeUC9SIhq1izDL81+fSm/CuTKL4gwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 265/265] ata: libata-eh: Fix detection of deferred qc timeouts
-Date: Thu, 12 Mar 2026 21:10:52 +0100
-Message-ID: <20260312201027.926794851@linuxfoundation.org>
+	Qualys Security Advisory <qsa@qualys.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
+	Cengiz Can <cengiz.can@canonical.com>,
+	John Johansen <john.johansen@canonical.com>
+Subject: [PATCH 6.12 256/265] apparmor: Fix double free of ns_name in aa_replace_profiles()
+Date: Thu, 12 Mar 2026 21:10:43 +0100
+Message-ID: <20260312201027.594218839@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,48 +53,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: John Johansen <john.johansen@canonical.com>
 
-commit ee0e6e69a772d601e152e5368a1da25d656122a8 upstream.
+commit 5df0c44e8f5f619d3beb871207aded7c78414502 upstream.
 
-If the ata_qc_for_each_raw() loop finishes without finding a matching SCSI
-command for any QC, the variable qc will hold a pointer to the last element
-examined, which has the tag i == ATA_MAX_QUEUE - 1. This qc can match the
-port deferred QC (ap->deferred_qc).
+if ns_name is NULL after
+1071         error = aa_unpack(udata, &lh, &ns_name);
 
-If that happens, the condition qc == ap->deferred_qc evaluates to true
-despite the loop not breaking with a match on the SCSI command for this QC.
-In that case, the error handler mistakenly intercepts a command that has
-not been issued yet and that has not timed out, and thus erroneously
-returning a timeout error.
+and if ent->ns_name contains an ns_name in
+1089                 } else if (ent->ns_name) {
 
-Fix the problem by checking for i < ATA_MAX_QUEUE in addition to
-qc == ap->deferred_qc.
+then ns_name is assigned the ent->ns_name
+1095                         ns_name = ent->ns_name;
 
-The problem was found by an experimental code review agent based on
-gemini-3.1-pro while reviewing backports into v6.18.y.
+however ent->ns_name is freed at
+1262                 aa_load_ent_free(ent);
 
-Assisted-by: Gemini:gemini-3.1-pro
-Fixes: eddb98ad9364 ("ata: libata-eh: correctly handle deferred qc timeouts")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-[cassel: modified commit log as suggested by Damien]
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+and then again when freeing ns_name at
+1270         kfree(ns_name);
+
+Fix this by NULLing out ent->ns_name after it is transferred to ns_name
+
+Fixes: 145a0ef21c8e9 ("apparmor: fix blob compression when ns is forced on a policy load")
+Reported-by: Qualys Security Advisory <qsa@qualys.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
+Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-eh.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/apparmor/policy.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/ata/libata-eh.c
-+++ b/drivers/ata/libata-eh.c
-@@ -649,7 +649,7 @@ void ata_scsi_cmd_error_handler(struct S
- 				break;
- 		}
- 
--		if (qc == ap->deferred_qc) {
-+		if (i < ATA_MAX_QUEUE && qc == ap->deferred_qc) {
- 			/*
- 			 * This is a deferred command that timed out while
- 			 * waiting for the command queue to drain. Since the qc
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1118,6 +1118,7 @@ ssize_t aa_replace_profiles(struct aa_ns
+ 				goto fail;
+ 			}
+ 			ns_name = ent->ns_name;
++			ent->ns_name = NULL;
+ 		} else
+ 			count++;
+ 	}
 
 
