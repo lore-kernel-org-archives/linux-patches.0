@@ -1,44 +1,56 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FB871F9F70;
-	Thu, 12 Mar 2026 20:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 746851F9F70;
+	Thu, 12 Mar 2026 20:17:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346655; cv=none; b=t0ad9uZh9/XCOw7YfbyQg2Gp0aZKJm55SpsDmlSaI3sbyEu+HBFi0Z2EoKiqt/PsdH8xCwlPeBd5rlEI2/VZmKkZZeUitSfrgUlUYhK6pzJ9QPKyNXQ9ruIQpmHO3nZutSsD36UZ9SbJa9/aUwY//x3584rqiFDdJE598ORhJxM=
+	t=1773346659; cv=none; b=LPhJW23sWdmuBCVdSJa88wRnsr0AxdLbqimOY8kamgfXCyi2A/saZG3QT8SUxHX1XfyaNWxOcY6zzjbSBQPLwyviri2ngg7u4pp398ozKok/65sTXdkma7pn9/I34G3pldYi/tyFMINkoTfmPKct/imzSZBTVMqjh4UuxT4OxrI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346655; c=relaxed/simple;
-	bh=831aHmP6TQ940U43avw1sp+fND8j8YgLDepCvh0pVLA=;
+	s=arc-20240116; t=1773346659; c=relaxed/simple;
+	bh=2369mIF/a5UtPvM7n4HLbOlmLNfcRhwQH9qGkNmKOuQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N6wnYy42cso3CbdAli2PcEGTqMGs12RgALRCUqIzGOPAciV0WTUtAo8aj0doS7LWYXukOVakydIxil17faViDKbo2Bk4OzFxZws2+3CKj0Bkc6tf2sbgSSi0N/dkNGsmkhSzn/fJpXYjGyY6N5MOAetUPmbgPXLM6Mndobh6DyI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GsilSX3w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SyltannH1RapT8G/LJIlLsgmB8PeGEyQcSr3FFZq8mZOmmhrMFwvrjd5nv/CxkUVt7KNt5400mxEBa6R9VNFRCuhKO0Ubz8FhZ3ELXqZxME7Cg6/QVe5dEjk0SiU97SiUPhZKuur2dMITS3MgLoTzns4NEgklK1gYmoJwHCy4Ws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOmsPCM9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GsilSX3w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A8AC4CEF7;
-	Thu, 12 Mar 2026 20:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOmsPCM9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B175C4CEF7;
+	Thu, 12 Mar 2026 20:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346655;
-	bh=831aHmP6TQ940U43avw1sp+fND8j8YgLDepCvh0pVLA=;
+	s=korg; t=1773346659;
+	bh=2369mIF/a5UtPvM7n4HLbOlmLNfcRhwQH9qGkNmKOuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GsilSX3wl9F7fVR1IdNUPwk6AsVekqfl4053CbZsf0VJ3MX/JcERI1fYwVp4VSH2P
-	 s1qNFR6AMtDSElDDpwQXDkvCQEe5CxN/QGb8HfX7I29kriySTs/9RiA0H3dAeQzIRi
-	 1EgoTnb5AlxMOBt3L7MNMfeG8JzNPaY+UNlKN3N4=
+	b=aOmsPCM9CQ8tMX3igvX3uwQxCgEG+TSPeyW3TRqhYjycZbAKmKid/8XrTpxW4MSaW
+	 hTJmUvj2seW80mDsIb8YY6eO81F5o4t1s0V+jNNiXTDHxJorTvK7OvHDvdj0mNWL6J
+	 ta2b5061Qkkz+9Tpjw5M0HMSbXDKf1G5e9gewkdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tushar Sugandhi <tusharsu@linux.microsoft.com>,
-	Eric Biederman <ebiederm@xmission.com>,
-	Baoquan He <bhe@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Steven Chen <chenste@linux.microsoft.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Mimi Zohar <zohar@linux.ibm.com>,
+	Alexander Graf <graf@amazon.com>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Borislav Betkov <bp@alien8.de>,
+	guoweikang <guoweikang.kernel@gmail.com>,
+	Henry Willard <henry.willard@oracle.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Bohac <jbohac@suse.cz>,
+	Joel Granados <joel.granados@kernel.org>,
+	Jonathan McDowell <noodles@fb.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Paul Webb <paul.x.webb@oracle.com>,
+	Sohil Mehta <sohil.mehta@intel.com>,
+	Sourabh Jain <sourabhjain@linux.ibm.com>,
+	Thomas Gleinxer <tglx@linutronix.de>,
+	Yifei Liu <yifei.l.liu@oracle.com>,
+	Baoquan He <bhe@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 092/265] ima: kexec: define functions to copy IMA log at soft boot
-Date: Thu, 12 Mar 2026 21:07:59 +0100
-Message-ID: <20260312201021.549837900@linuxfoundation.org>
+Subject: [PATCH 6.12 093/265] ima: verify the previous kernels IMA buffer lies in addressable RAM
+Date: Thu, 12 Mar 2026 21:08:00 +0100
+Message-ID: <20260312201021.588222141@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -57,130 +69,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Chen <chenste@linux.microsoft.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit f18e502db673c75f762d47101dafcf58f30e2733 ]
+[ Upstream commit 10d1c75ed4382a8e79874379caa2ead8952734f9 ]
 
-The IMA log is currently copied to the new kernel during kexec 'load'
-using ima_dump_measurement_list(). However, the log copied at kexec
-'load' may result in loss of IMA measurements that only occurred after
-kexec "load'. Setup the needed infrastructure to move the IMA log copy
-from kexec 'load' to 'execute'.
+Patch series "Address page fault in ima_restore_measurement_list()", v3.
 
-Define a new IMA hook ima_update_kexec_buffer() as a stub function.
-It will be used to call ima_dump_measurement_list() during kexec 'execute'.
+When the second-stage kernel is booted via kexec with a limiting command
+line such as "mem=<size>" we observe a pafe fault that happens.
 
-Implement ima_kexec_post_load() function to be invoked after the new
-Kernel image has been loaded for kexec. ima_kexec_post_load() maps the
-IMA buffer to a segment in the newly loaded Kernel.  It also registers
-the reboot notifier_block to trigger ima_update_kexec_buffer() at
-kexec 'execute'.
+    BUG: unable to handle page fault for address: ffff97793ff47000
+    RIP: ima_restore_measurement_list+0xdc/0x45a
+    #PF: error_code(0x0000)  not-present page
 
-Set the priority of register_reboot_notifier to INT_MIN to ensure that the
-IMA log copy operation will happen at the end of the operation chain, so
-that all the IMA measurement records extended into the TPM are copied
+This happens on x86_64 only, as this is already fixed in aarch64 in
+commit: cbf9c4b9617b ("of: check previous kernel's ima-kexec-buffer
+against memory bounds")
 
-Co-developed-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
-Signed-off-by: Tushar Sugandhi <tusharsu@linux.microsoft.com>
-Cc: Eric Biederman <ebiederm@xmission.com>
+This patch (of 3):
+
+When the second-stage kernel is booted with a limiting command line (e.g.
+"mem=<size>"), the IMA measurement buffer handed over from the previous
+kernel may fall outside the addressable RAM of the new kernel.  Accessing
+such a buffer can fault during early restore.
+
+Introduce a small generic helper, ima_validate_range(), which verifies
+that a physical [start, end] range for the previous-kernel IMA buffer lies
+within addressable memory:
+	- On x86, use pfn_range_is_mapped().
+	- On OF based architectures, use page_is_ram().
+
+Link: https://lkml.kernel.org/r/20251231061609.907170-1-harshit.m.mogalapalli@oracle.com
+Link: https://lkml.kernel.org/r/20251231061609.907170-2-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Cc: Alexander Graf <graf@amazon.com>
+Cc: Ard Biesheuvel <ardb@kernel.org>
+Cc: Borislav Betkov <bp@alien8.de>
+Cc: guoweikang <guoweikang.kernel@gmail.com>
+Cc: Henry Willard <henry.willard@oracle.com>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Bohac <jbohac@suse.cz>
+Cc: Joel Granados <joel.granados@kernel.org>
+Cc: Jonathan McDowell <noodles@fb.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Paul Webb <paul.x.webb@oracle.com>
+Cc: Sohil Mehta <sohil.mehta@intel.com>
+Cc: Sourabh Jain <sourabhjain@linux.ibm.com>
+Cc: Thomas Gleinxer <tglx@linutronix.de>
+Cc: Yifei Liu <yifei.l.liu@oracle.com>
 Cc: Baoquan He <bhe@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Signed-off-by: Steven Chen <chenste@linux.microsoft.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Acked-by: Baoquan He <bhe@redhat.com>
-Tested-by: Stefan Berger <stefanb@linux.ibm.com> # ppc64/kvm
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Stable-dep-of: 10d1c75ed438 ("ima: verify the previous kernel's IMA buffer lies in addressable RAM")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/ima.h                |  3 ++
- security/integrity/ima/ima_kexec.c | 47 ++++++++++++++++++++++++++++++
- 2 files changed, 50 insertions(+)
+ include/linux/ima.h                |  1 +
+ security/integrity/ima/ima_kexec.c | 35 ++++++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+)
 
 diff --git a/include/linux/ima.h b/include/linux/ima.h
-index 0bae61a15b60b..8e29cb4e6a01d 100644
+index 8e29cb4e6a01d..abf8923f8fc51 100644
 --- a/include/linux/ima.h
 +++ b/include/linux/ima.h
-@@ -32,6 +32,9 @@ static inline void ima_appraise_parse_cmdline(void) {}
- 
- #ifdef CONFIG_IMA_KEXEC
- extern void ima_add_kexec_buffer(struct kimage *image);
-+extern void ima_kexec_post_load(struct kimage *image);
-+#else
-+static inline void ima_kexec_post_load(struct kimage *image) {}
+@@ -69,6 +69,7 @@ static inline int ima_measure_critical_data(const char *event_label,
+ #ifdef CONFIG_HAVE_IMA_KEXEC
+ int __init ima_free_kexec_buffer(void);
+ int __init ima_get_kexec_buffer(void **addr, size_t *size);
++int ima_validate_range(phys_addr_t phys, size_t size);
  #endif
  
- #else
+ #ifdef CONFIG_IMA_SECURE_AND_OR_TRUSTED_BOOT
 diff --git a/security/integrity/ima/ima_kexec.c b/security/integrity/ima/ima_kexec.c
-index b12ac3619b8fd..a22eeac9320aa 100644
+index a22eeac9320aa..c9e5b1d6b0ab8 100644
 --- a/security/integrity/ima/ima_kexec.c
 +++ b/security/integrity/ima/ima_kexec.c
-@@ -12,10 +12,14 @@
+@@ -12,6 +12,8 @@
  #include <linux/kexec.h>
  #include <linux/of.h>
  #include <linux/ima.h>
-+#include <linux/reboot.h>
-+#include <asm/page.h>
++#include <linux/mm.h>
++#include <linux/overflow.h>
+ #include <linux/reboot.h>
+ #include <asm/page.h>
  #include "ima.h"
- 
- #ifdef CONFIG_IMA_KEXEC
-+static bool ima_kexec_update_registered;
- static struct seq_file ima_kexec_file;
-+static void *ima_kexec_buffer;
- 
- static void ima_free_kexec_file_buf(struct seq_file *sf)
- {
-@@ -159,6 +163,49 @@ void ima_add_kexec_buffer(struct kimage *image)
- 	kexec_dprintk("kexec measurement buffer for the loaded kernel at 0x%lx.\n",
- 		      kbuf.mem);
+@@ -238,3 +240,36 @@ void __init ima_load_kexec_buffer(void)
+ 		pr_debug("Error restoring the measurement list: %d\n", rc);
+ 	}
  }
 +
 +/*
-+ * Called during kexec execute so that IMA can update the measurement list.
++ * ima_validate_range - verify a physical buffer lies in addressable RAM
++ * @phys: physical start address of the buffer from previous kernel
++ * @size: size of the buffer
++ *
++ * On success return 0. On failure returns -EINVAL so callers can skip
++ * restoring.
 + */
-+static int ima_update_kexec_buffer(struct notifier_block *self,
-+				   unsigned long action, void *data)
++int ima_validate_range(phys_addr_t phys, size_t size)
 +{
-+	return NOTIFY_OK;
++	unsigned long start_pfn, end_pfn;
++	phys_addr_t end_phys;
++
++	if (check_add_overflow(phys, (phys_addr_t)size - 1, &end_phys))
++		return -EINVAL;
++
++	start_pfn = PHYS_PFN(phys);
++	end_pfn = PHYS_PFN(end_phys);
++
++#ifdef CONFIG_X86
++	if (!pfn_range_is_mapped(start_pfn, end_pfn))
++#else
++	if (!page_is_ram(start_pfn) || !page_is_ram(end_pfn))
++#endif
++	{
++		pr_warn("IMA: previous kernel measurement buffer %pa (size 0x%zx) lies outside available memory\n",
++			&phys, size);
++		return -EINVAL;
++	}
++
++	return 0;
 +}
-+
-+static struct notifier_block update_buffer_nb = {
-+	.notifier_call = ima_update_kexec_buffer,
-+	.priority = INT_MIN
-+};
-+
-+/*
-+ * Create a mapping for the source pages that contain the IMA buffer
-+ * so we can update it later.
-+ */
-+void ima_kexec_post_load(struct kimage *image)
-+{
-+	if (ima_kexec_buffer) {
-+		kimage_unmap_segment(ima_kexec_buffer);
-+		ima_kexec_buffer = NULL;
-+	}
-+
-+	if (!image->ima_buffer_addr)
-+		return;
-+
-+	ima_kexec_buffer = kimage_map_segment(image,
-+					      image->ima_buffer_addr,
-+					      image->ima_buffer_size);
-+	if (!ima_kexec_buffer) {
-+		pr_err("Could not map measurements buffer.\n");
-+		return;
-+	}
-+
-+	if (!ima_kexec_update_registered) {
-+		register_reboot_notifier(&update_buffer_nb);
-+		ima_kexec_update_registered = true;
-+	}
-+}
-+
- #endif /* IMA_KEXEC */
- 
- /*
 -- 
 2.51.0
 
