@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FFE2401A06;
-	Thu, 12 Mar 2026 20:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A727A402434;
+	Thu, 12 Mar 2026 20:13:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346416; cv=none; b=ZrLMNZgxugULwaLWgNGEem+F0yWsAUzEaCctk8QwVZjJPw41mnrEkpq7iTlWcozUCBaf9A/4Fl7KWsn9kQD79JaTXHGqb3ZPekoY1Jlxeqw1r0x3Ob/tSPBZIMJ/Tmf18PEDzWJStbNaCrsopXEhLbfjYANwLlTksmGkigzYMTE=
+	t=1773346420; cv=none; b=uHVlVfCxcKirfk+7cn1Cxsp7xuOghn4qoc3HXcKK5as54f9yC5F5Xl9446ps9vn35K+4amFrz5ad6IQ6Q2bPq49h8k08Tapfjo1bvR3ejK+jR8lzzRLmNLp3ebkOMzbFCL/ioK3lqaX+GOlRypu3QAMxMdGsdmqE4VnISX/gAzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346416; c=relaxed/simple;
-	bh=FW1FfyjN0FiVx2jqt4SaopeLo2ais/d06ij3o6NL8UI=;
+	s=arc-20240116; t=1773346420; c=relaxed/simple;
+	bh=/0tQTpSTObsUW+WDS0uRTmV2ydNMJlNtwv6QY5z0VZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JFsEznC/TKCMuMF/hYejy6/HpmR7gcARFGiLjpHmJYD6JTIsc8Li4lFWm8+VWhbFmXKDETzD+Wpb44yIYvgBZrp2k9VMrZzHyoCJSDGL41PxnejCKf59hHtMRLVKvEX0EKobhwh0F+hvqFhPNrgcZeP8h/Jrs4ZAvG0nsZaIX3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lGB3ewlT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jrjys1+6S3FF4iroMvkokJoMV3ts1fArXEYSIP/jJPxs/UGpbA1nJdnpUvQT2U2VF6YGJCuPyydQ0fOQgG+fVf/lhFAcEnf9ypbdGLPr9iIrDib0hIlI5SnYd+VOR6g74MG7YDuQHBeJEe6U4v0tGRg+GJPgbXD8StJHAtrkKok=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SQ8yL3zI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lGB3ewlT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E246C2BC86;
-	Thu, 12 Mar 2026 20:13:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SQ8yL3zI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B156DC19425;
+	Thu, 12 Mar 2026 20:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346416;
-	bh=FW1FfyjN0FiVx2jqt4SaopeLo2ais/d06ij3o6NL8UI=;
+	s=korg; t=1773346420;
+	bh=/0tQTpSTObsUW+WDS0uRTmV2ydNMJlNtwv6QY5z0VZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lGB3ewlTGv0gzeBxdFSYIrXJaDTxEahvssbsPa8Sei4XJF28uX2jl68a8BY7soUBW
-	 qhFiHRGIHyNfSj0/0WLcQ0cYVulPb9KhaFrc5Apcdw1XIbWwTllvEw2H9KmWLvKuTL
-	 GkhsqMUZMtihHMev0RCnplOoo8Jg9tP6zpxFI/ac=
+	b=SQ8yL3zI9iSPYmUTHpGg+t7zs1/zNX6hc7+a6VJWUSvqa44Bx6wRUnYOjVXAayjp2
+	 wCP97WPtyhHGSzWXlaA+nhPCvXtEww9+8nMPDXQylnHz3q1TMzfpeztke1rrj9731d
+	 My2MyYkk3J6Vq1Sr7hJpW8vmi8/3RQyhCipavoR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Fuad Tabba <tabba@google.com>,
+	Will Deacon <will@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 037/265] btrfs: fix compat mask in error messages in btrfs_check_features()
-Date: Thu, 12 Mar 2026 21:07:04 +0100
-Message-ID: <20260312201019.533630615@linuxfoundation.org>
+Subject: [PATCH 6.12 038/265] bpf, arm64: Force 8-byte alignment for JIT buffer to prevent atomic tearing
+Date: Thu, 12 Mar 2026 21:07:05 +0100
+Message-ID: <20260312201019.570238335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,57 +52,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Fuad Tabba <tabba@google.com>
 
-[ Upstream commit 587bb33b10bda645a1028c1737ad3992b3d7cf61 ]
+[ Upstream commit ef06fd16d48704eac868441d98d4ef083d8f3d07 ]
 
-Commit d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency
-checks") introduced a regression when it comes to handling unsupported
-incompat or compat_ro flags. Beforehand we only printed the flags that
-we didn't recognize, afterwards we printed them all, which is less
-useful. Fix the error handling so it behaves like it used to.
+struct bpf_plt contains a u64 target field. Currently, the BPF JIT
+allocator requests an alignment of 4 bytes (sizeof(u32)) for the JIT
+buffer.
 
-Fixes: d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Because the base address of the JIT buffer can be 4-byte aligned (e.g.,
+ending in 0x4 or 0xc), the relative padding logic in build_plt() fails
+to ensure that target lands on an 8-byte boundary.
+
+This leads to two issues:
+1. UBSAN reports misaligned-access warnings when dereferencing the
+   structure.
+2. More critically, target is updated concurrently via WRITE_ONCE() in
+   bpf_arch_text_poke() while the JIT'd code executes ldr. On arm64,
+   64-bit loads/stores are only guaranteed to be single-copy atomic if
+   they are 64-bit aligned. A misaligned target risks a torn read,
+   causing the JIT to jump to a corrupted address.
+
+Fix this by increasing the allocation alignment requirement to 8 bytes
+(sizeof(u64)) in bpf_jit_binary_pack_alloc(). This anchors the base of
+the JIT buffer to an 8-byte boundary, allowing the relative padding math
+in build_plt() to correctly align the target field.
+
+Fixes: b2ad54e1533e ("bpf, arm64: Implement bpf_arch_text_poke() for arm64")
+Signed-off-by: Fuad Tabba <tabba@google.com>
+Acked-by: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20260226075525.233321-1-tabba@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/net/bpf_jit_comp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 034cd7b1d0f5f..fa4d22f6f29d7 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3119,7 +3119,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP) {
- 		btrfs_err(fs_info,
- 		"cannot mount because of unknown incompat features (0x%llx)",
--		    incompat);
-+		    incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP);
- 		return -EINVAL;
- 	}
- 
-@@ -3151,7 +3151,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (compat_ro_unsupp && is_rw_mount) {
- 		btrfs_err(fs_info,
- 	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
--		       compat_ro);
-+		       compat_ro_unsupp);
- 		return -EINVAL;
- 	}
- 
-@@ -3164,7 +3164,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	    !btrfs_test_opt(fs_info, NOLOGREPLAY)) {
- 		btrfs_err(fs_info,
- "cannot replay dirty log with unsupported compat_ro features (0x%llx), try rescue=nologreplay",
--			  compat_ro);
-+			  compat_ro_unsupp);
- 		return -EINVAL;
- 	}
- 
+diff --git a/arch/arm64/net/bpf_jit_comp.c b/arch/arm64/net/bpf_jit_comp.c
+index 82b57436f2f10..9310196e0a09e 100644
+--- a/arch/arm64/net/bpf_jit_comp.c
++++ b/arch/arm64/net/bpf_jit_comp.c
+@@ -1880,7 +1880,7 @@ struct bpf_prog *bpf_int_jit_compile(struct bpf_prog *prog)
+ 	extable_offset = round_up(prog_size + PLT_TARGET_SIZE, extable_align);
+ 	image_size = extable_offset + extable_size;
+ 	ro_header = bpf_jit_binary_pack_alloc(image_size, &ro_image_ptr,
+-					      sizeof(u32), &header, &image_ptr,
++					      sizeof(u64), &header, &image_ptr,
+ 					      jit_fill_hole);
+ 	if (!ro_header) {
+ 		prog = orig_prog;
 -- 
 2.51.0
 
