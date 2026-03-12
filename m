@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FBC92BEFFD;
-	Thu, 12 Mar 2026 20:16:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531B7317142;
+	Thu, 12 Mar 2026 20:16:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346581; cv=none; b=SxBcJ5Oam/0tykXodLcxs3SBrj+YG9QpzbXCsNS8l9eh+GOLNFyopYBtF1mJbNnpCi2MjZPfufKvA9Bxt5a1t9d4Eyb/+prK7zumLfX2Q+o6t6cyJDqrtY4l4Mok1dA0BScq1Mec9FOi2Ylz/UNg7PNM04pIAXeO0SaG0B4FkiY=
+	t=1773346585; cv=none; b=uwc044ACVMABZYcWrTd5+yJypkPr7FRWQdQJRpkua0zXUHz4tpPvqYfdUMjYSkh9JIWDd61kMIkkn71CYo+pbsWA0WbYVfKVVFsTgxaeHeXF0TpesQoUPAEFnYEmqHWdgSgA+vuCv4zDHICO9cpInJs/DjfLasnlyk9LzWXChPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346581; c=relaxed/simple;
-	bh=BgxTtXKv2JgCgVObQ3I+m28BLFl8rOB9bDxdAIDAOLQ=;
+	s=arc-20240116; t=1773346585; c=relaxed/simple;
+	bh=jFqFsv2tj7vAcToUU4DBKFAuWR8eTAnOiEdHnI/Bxec=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GN29fMx1cvBGNDhF2nh826gAdTLqVRsSroEOp4Ri9zBQLfI/LV7Y0Qqjzk3On9lfUxmgIshSw79LHDIn1kBJgP24dBB8mNT9FN3+nRUBUET487/Ko1sAwiHNK/kfFMIOtBtncFaJui6LK9OvIig7rVKZup2Ao3VkkAkakcoAj5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZDR00nUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jk4EslloMKuMTqKWmtu3geoHPOjcWVL+F+HHLv9JjWzuc140aLY4FdB5yKewv0nOatc5MejZUOlcIowXdVAISYkuoxmWfWHXeGOB9Ft4bARI2tprrZ/yqAmBFqvPPt7kS/KVUvqfNw9gOM/GPq6f6NOqgXQTNgrxx75D1a1J0nY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Js6Kd1jc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZDR00nUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2171AC4CEF7;
-	Thu, 12 Mar 2026 20:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Js6Kd1jc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3224DC4CEF7;
+	Thu, 12 Mar 2026 20:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346580;
-	bh=BgxTtXKv2JgCgVObQ3I+m28BLFl8rOB9bDxdAIDAOLQ=;
+	s=korg; t=1773346584;
+	bh=jFqFsv2tj7vAcToUU4DBKFAuWR8eTAnOiEdHnI/Bxec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZDR00nUYVDyDv73a5gLX7yvzBfbRXz0/Id1750mVHu0CmLQDvswMaCVLadK6aHRBO
-	 Iw4GRMnl5XmlvnrVeoM7d0T3QIheOuJ0HR9iVuza61W3lO0AbN8b6G08IqWfDPTAgj
-	 fjF31Pofsi9T7ySdsiQftv2iHcymsrZhFld+7RR0=
+	b=Js6Kd1jc/R7DS5iaBV1pE7PFfaGQarU5JpdKrUMZSfEuROjZJj/n/fdoDnKv/EUrU
+	 ksVjOENST7+RE73cF3XRmQkxrMZTNIIqgXVD9UkKk1nqQsOXsmbKD5Jq0akPP1mDiA
+	 3QIFpaifUIaeXWaaJFWVgCp9dPN9DhVdD19mT0hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 075/265] ext4: factor out ext4_mb_might_prefetch()
-Date: Thu, 12 Mar 2026 21:07:42 +0100
-Message-ID: <20260312201020.924569922@linuxfoundation.org>
+Subject: [PATCH 6.12 076/265] ext4: factor out ext4_mb_scan_group()
+Date: Thu, 12 Mar 2026 21:07:43 +0100
+Message-ID: <20260312201020.960916047@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -54,144 +54,172 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 5abd85f667a19ef7d880ed00c201fc22de6fa707 ]
+[ Upstream commit 9c08e42db9056d423dcef5e7998c73182180ff83 ]
 
-Extract ext4_mb_might_prefetch() to make the code clearer and to
+Extract ext4_mb_scan_group() to make the code clearer and to
 prepare for the later conversion of 'choose group' to 'scan groups'.
 No functional changes.
 
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Zhang Yi <yi.zhang@huawei.com>
-Link: https://patch.msgid.link/20250714130327.1830534-14-libaokun1@huawei.com
+Link: https://patch.msgid.link/20250714130327.1830534-15-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 4865c768b563 ("ext4: always allocate blocks only from groups inode can use")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 62 +++++++++++++++++++++++++++++------------------
- fs/ext4/mballoc.h |  4 +++
- 2 files changed, 42 insertions(+), 24 deletions(-)
+ fs/ext4/mballoc.c | 93 +++++++++++++++++++++++++----------------------
+ fs/ext4/mballoc.h |  2 +
+ 2 files changed, 51 insertions(+), 44 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index a32d84e3031da..af014b43d0b3f 100644
+index af014b43d0b3f..03c0886da0571 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -2797,6 +2797,37 @@ ext4_group_t ext4_mb_prefetch(struct super_block *sb, ext4_group_t group,
- 	return group;
+@@ -2861,12 +2861,56 @@ void ext4_mb_prefetch_fini(struct super_block *sb, ext4_group_t group,
+ 	}
  }
  
-+/*
-+ * Batch reads of the block allocation bitmaps to get
-+ * multiple READs in flight; limit prefetching at inexpensive
-+ * CR, otherwise mballoc can spend a lot of time loading
-+ * imperfect groups
-+ */
-+static void ext4_mb_might_prefetch(struct ext4_allocation_context *ac,
-+				   ext4_group_t group)
++static int ext4_mb_scan_group(struct ext4_allocation_context *ac,
++			      ext4_group_t group)
 +{
-+	struct ext4_sb_info *sbi;
++	int ret;
++	struct super_block *sb = ac->ac_sb;
++	enum criteria cr = ac->ac_criteria;
 +
-+	if (ac->ac_prefetch_grp != group)
-+		return;
++	ext4_mb_might_prefetch(ac, group);
 +
-+	sbi = EXT4_SB(ac->ac_sb);
-+	if (ext4_mb_cr_expensive(ac->ac_criteria) ||
-+	    ac->ac_prefetch_ios < sbi->s_mb_prefetch_limit) {
-+		unsigned int nr = sbi->s_mb_prefetch;
++	/* prevent unnecessary buddy loading. */
++	if (cr < CR_ANY_FREE && spin_is_locked(ext4_group_lock_ptr(sb, group)))
++		return 0;
 +
-+		if (ext4_has_feature_flex_bg(ac->ac_sb)) {
-+			nr = 1 << sbi->s_log_groups_per_flex;
-+			nr -= group & (nr - 1);
-+			nr = umin(nr, sbi->s_mb_prefetch);
-+		}
-+
-+		ac->ac_prefetch_nr = nr;
-+		ac->ac_prefetch_grp = ext4_mb_prefetch(ac->ac_sb, group, nr,
-+						       &ac->ac_prefetch_ios);
++	/* This now checks without needing the buddy page */
++	ret = ext4_mb_good_group_nolock(ac, group, cr);
++	if (ret <= 0) {
++		if (!ac->ac_first_err)
++			ac->ac_first_err = ret;
++		return 0;
 +	}
++
++	ret = ext4_mb_load_buddy(sb, group, ac->ac_e4b);
++	if (ret)
++		return ret;
++
++	/* skip busy group */
++	if (cr >= CR_ANY_FREE)
++		ext4_lock_group(sb, group);
++	else if (!ext4_try_lock_group(sb, group))
++		goto out_unload;
++
++	/* We need to check again after locking the block group. */
++	if (unlikely(!ext4_mb_good_group(ac, group, cr)))
++		goto out_unlock;
++
++	__ext4_mb_scan_group(ac);
++
++out_unlock:
++	ext4_unlock_group(sb, group);
++out_unload:
++	ext4_mb_unload_buddy(ac->ac_e4b);
++	return ret;
 +}
 +
- /*
-  * Prefetching reads the block bitmap into the buffer cache; but we
-  * need to make sure that the buddy bitmap in the page cache has been
-@@ -2833,10 +2864,9 @@ void ext4_mb_prefetch_fini(struct super_block *sb, ext4_group_t group,
  static noinline_for_stack int
  ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
  {
--	ext4_group_t prefetch_grp = 0, ngroups, group, i;
-+	ext4_group_t ngroups, group, i;
+ 	ext4_group_t ngroups, group, i;
  	enum criteria new_cr, cr = CR_GOAL_LEN_FAST;
- 	int err = 0, first_err = 0;
--	unsigned int nr = 0, prefetch_ios = 0;
+-	int err = 0, first_err = 0;
++	int err = 0;
  	struct ext4_sb_info *sbi;
  	struct super_block *sb;
  	struct ext4_buddy e4b;
-@@ -2897,6 +2927,7 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
- 		cr = CR_POWER2_ALIGNED;
+@@ -2928,6 +2972,7 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
  
  	ac->ac_e4b = &e4b;
-+	ac->ac_prefetch_ios = 0;
+ 	ac->ac_prefetch_ios = 0;
++	ac->ac_first_err = 0;
  repeat:
  	for (; cr < EXT4_MB_NUM_CRS && ac->ac_status == AC_STATUS_CONTINUE; cr++) {
  		ac->ac_criteria = cr;
-@@ -2906,8 +2937,8 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
- 		 */
- 		group = ac->ac_g_ex.fe_group;
- 		ac->ac_groups_linear_remaining = sbi->s_mb_max_linear_groups;
--		prefetch_grp = group;
--		nr = 0;
-+		ac->ac_prefetch_grp = group;
-+		ac->ac_prefetch_nr = 0;
+@@ -2942,7 +2987,6 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
  
  		for (i = 0, new_cr = cr; i < ngroups; i++,
  		     ext4_mb_choose_next_group(ac, &new_cr, &group, ngroups)) {
-@@ -2919,24 +2950,7 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
+-			int ret = 0;
+ 
+ 			cond_resched();
+ 			if (new_cr != cr) {
+@@ -2950,49 +2994,10 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
  				goto repeat;
  			}
  
--			/*
--			 * Batch reads of the block allocation bitmaps
--			 * to get multiple READs in flight; limit
--			 * prefetching at inexpensive CR, otherwise mballoc
--			 * can spend a lot of time loading imperfect groups
--			 */
--			if ((prefetch_grp == group) &&
--			    (ext4_mb_cr_expensive(cr) ||
--			     prefetch_ios < sbi->s_mb_prefetch_limit)) {
--				nr = sbi->s_mb_prefetch;
--				if (ext4_has_feature_flex_bg(sb)) {
--					nr = 1 << sbi->s_log_groups_per_flex;
--					nr -= group & (nr - 1);
--					nr = min(nr, sbi->s_mb_prefetch);
--				}
--				prefetch_grp = ext4_mb_prefetch(sb, group,
--							nr, &prefetch_ios);
+-			ext4_mb_might_prefetch(ac, group);
+-
+-			/* prevent unnecessary buddy loading. */
+-			if (cr < CR_ANY_FREE &&
+-			    spin_is_locked(ext4_group_lock_ptr(sb, group)))
+-				continue;
+-
+-			/* This now checks without needing the buddy page */
+-			ret = ext4_mb_good_group_nolock(ac, group, cr);
+-			if (ret <= 0) {
+-				if (!first_err)
+-					first_err = ret;
+-				continue;
 -			}
-+			ext4_mb_might_prefetch(ac, group);
+-
+-			err = ext4_mb_load_buddy(sb, group, &e4b);
++			err = ext4_mb_scan_group(ac, group);
+ 			if (err)
+ 				goto out;
  
- 			/* prevent unnecessary buddy loading. */
- 			if (cr < CR_ANY_FREE &&
-@@ -3030,8 +3044,8 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
+-			/* skip busy group */
+-			if (cr >= CR_ANY_FREE) {
+-				ext4_lock_group(sb, group);
+-			} else if (!ext4_try_lock_group(sb, group)) {
+-				ext4_mb_unload_buddy(&e4b);
+-				continue;
+-			}
+-
+-			/*
+-			 * We need to check again after locking the
+-			 * block group
+-			 */
+-			ret = ext4_mb_good_group(ac, group, cr);
+-			if (ret == 0) {
+-				ext4_unlock_group(sb, group);
+-				ext4_mb_unload_buddy(&e4b);
+-				continue;
+-			}
+-
+-			__ext4_mb_scan_group(ac);
+-
+-			ext4_unlock_group(sb, group);
+-			ext4_mb_unload_buddy(&e4b);
+-
+ 			if (ac->ac_status != AC_STATUS_CONTINUE)
+ 				break;
+ 		}
+@@ -3037,8 +3042,8 @@ ext4_mb_regular_allocator(struct ext4_allocation_context *ac)
+ 	if (sbi->s_mb_stats && ac->ac_status == AC_STATUS_FOUND)
+ 		atomic64_inc(&sbi->s_bal_cX_hits[ac->ac_criteria]);
+ out:
+-	if (!err && ac->ac_status != AC_STATUS_FOUND && first_err)
+-		err = first_err;
++	if (!err && ac->ac_status != AC_STATUS_FOUND && ac->ac_first_err)
++		err = ac->ac_first_err;
+ 
+ 	mb_debug(sb, "Best len %d, origin len %d, ac_status %u, ac_flags 0x%x, cr %d ret %d\n",
  		 ac->ac_b_ex.fe_len, ac->ac_o_ex.fe_len, ac->ac_status,
- 		 ac->ac_flags, cr, err);
- 
--	if (nr)
--		ext4_mb_prefetch_fini(sb, prefetch_grp, nr);
-+	if (ac->ac_prefetch_nr)
-+		ext4_mb_prefetch_fini(sb, ac->ac_prefetch_grp, ac->ac_prefetch_nr);
- 
- 	return err;
- }
 diff --git a/fs/ext4/mballoc.h b/fs/ext4/mballoc.h
-index 7a60b0103e649..9f66b1d5db67a 100644
+index 9f66b1d5db67a..83886fc9521b7 100644
 --- a/fs/ext4/mballoc.h
 +++ b/fs/ext4/mballoc.h
-@@ -192,6 +192,10 @@ struct ext4_allocation_context {
- 	 */
- 	ext4_grpblk_t	ac_orig_goal_len;
+@@ -196,6 +196,8 @@ struct ext4_allocation_context {
+ 	unsigned int ac_prefetch_ios;
+ 	unsigned int ac_prefetch_nr;
  
-+	ext4_group_t ac_prefetch_grp;
-+	unsigned int ac_prefetch_ios;
-+	unsigned int ac_prefetch_nr;
++	int ac_first_err;
 +
  	__u32 ac_flags;		/* allocation hints */
  	__u32 ac_groups_linear_remaining;
