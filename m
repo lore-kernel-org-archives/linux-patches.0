@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 912532C17A0;
-	Thu, 12 Mar 2026 20:05:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DEC401A2B;
+	Thu, 12 Mar 2026 20:05:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773345924; cv=none; b=lCJu4wdQT3gUCEW2Qmluz8yjzc1S0j3xYPSdVevXwdbb2uXVet5lVgV8Ynv8MATi/PuX663h0P2/eW73uSZEfvjDRTq6o+iTZpCjp5a2uvWV3KHSc4RLMBVTq7VpRi++Kp1wDOIIh+X/b1eONUbirwn7kt6N6wR300KTx8FzxdE=
+	t=1773345928; cv=none; b=IyMYJ5aEqg6dmFMSEctDe+gucI8P1Cd2gzxoPZ3GYSk6zARxTdqVGQCdeOKSU5BXs9FpJi2bFO2AOqcIn5GVMfatR47iUVdtQQBZI7q2C6K3rTzaLMt1CiREk8w2p9Htk4zhPVOfmAFT81YSNjIeGp304rZfLNI0QdRuI8+nr+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773345924; c=relaxed/simple;
-	bh=lDN0jm9mcschecbOir74/VpX5hNwz4SIW1huc4ISwYI=;
+	s=arc-20240116; t=1773345928; c=relaxed/simple;
+	bh=jcU8SYnwHZnGQCG1W/XeIPF1V+r+onyS9393KuBPT7E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aazYSbEPaFmMREYyq4k4AIAiwZicFG875TTwM5BXtb0UOvtMRz2wUQvp5Lv+Ahsodgx5f1ew/MymfTHXc+qRTEPAlN1Ar29M+vpEgRqs5MFnslW0B4zKsVW7kcUQSNX155fmNSH2BFRepdAKAtNQmj8t4Ikn+A0ByPrJMZfBGZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BJ4ZfjL5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bcw1XsfGnevdevFBIcNMJlFCRKeVi7ihNytWNIRMZzqXjA/PtxJsdNCwY0xyF0MgLuCfkq5v/VDyPiNV/4cU3x3HgsQf2vK1in2TvDaLnfEezTLAaIRKKtwHFOaY7epcyQFSE2J2VbdzluW7PGUzqKd5CYrw5wu/w9i1qUeQOAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGWRGEHb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BJ4ZfjL5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7DE7C2BC87;
-	Thu, 12 Mar 2026 20:05:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGWRGEHb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78D34C19425;
+	Thu, 12 Mar 2026 20:05:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773345924;
-	bh=lDN0jm9mcschecbOir74/VpX5hNwz4SIW1huc4ISwYI=;
+	s=korg; t=1773345927;
+	bh=jcU8SYnwHZnGQCG1W/XeIPF1V+r+onyS9393KuBPT7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJ4ZfjL5trgFfR67S2JbO2tfuCGcWvm/BFuqE9LcFuhWmM9yWBaJirJkJBY8HI65d
-	 Qhukrz6Xlg4tGZkvotZYZ0w6rsEFwru0Y0qItCUonnSVWz7vxs+dSXyVYwsTZe6ujB
-	 KSSofmi+H+EXfWYYeGo1lVp29fwFuuTCghtluqd0=
+	b=wGWRGEHbnFEAXNmk8aPTLhkn33IUPjhzIrGOttnHAqEQOT26T/vI05BSnyi9l9E7k
+	 LOPORZ1YG+7xeI0a3FLtxxyaLJcRLL0he+MNPC68SqqxoTnfIS7F7BUMnxAJ5pyhS5
+	 4bDm0ne/HtO19oIWRW/XhVPK5xOrcomb4ZBpAph0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Cengiz Can <cengiz.can@canonical.com>,
 	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.18 03/13] apparmor: validate DFA start states are in bounds in unpack_pdb
-Date: Thu, 12 Mar 2026 21:03:44 +0100
-Message-ID: <20260312200326.373092108@linuxfoundation.org>
+Subject: [PATCH 6.18 04/13] apparmor: fix memory leak in verify_header
+Date: Thu, 12 Mar 2026 21:03:45 +0100
+Message-ID: <20260312200326.409481409@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312200326.246396673@linuxfoundation.org>
 References: <20260312200326.246396673@linuxfoundation.org>
@@ -56,22 +56,18 @@ Content-Transfer-Encoding: 8bit
 
 From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 
-commit 9063d7e2615f4a7ab321de6b520e23d370e58816 upstream.
+commit e38c55d9f834e5b848bfed0f5c586aaf45acb825 upstream.
 
-Start states are read from untrusted data and used as indexes into the
-DFA state tables. The aa_dfa_next() function call in unpack_pdb() will
-access dfa->tables[YYTD_ID_BASE][start], and if the start state exceeds
-the number of states in the DFA, this results in an out-of-bound read.
+The function sets `*ns = NULL` on every call, leaking the namespace
+string allocated in previous iterations when multiple profiles are
+unpacked. This also breaks namespace consistency checking since *ns
+is always NULL when the comparison is made.
 
-==================================================================
- BUG: KASAN: slab-out-of-bounds in aa_dfa_next+0x2a1/0x360
- Read of size 4 at addr ffff88811956fb90 by task su/1097
- ...
+Remove the incorrect assignment.
+The caller (aa_unpack) initializes *ns to NULL once before the loop,
+which is sufficient.
 
-Reject policies with out-of-bounds start states during unpacking
-to prevent the issue.
-
-Fixes: ad5ff3db53c6 ("AppArmor: Add ability to load extended policy")
+Fixes: dd51c8485763 ("apparmor: provide base for multiple profiles to be replaced at once")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
 Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
@@ -80,29 +76,18 @@ Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/policy_unpack.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ security/apparmor/policy_unpack.c |    1 -
+ 1 file changed, 1 deletion(-)
 
 --- a/security/apparmor/policy_unpack.c
 +++ b/security/apparmor/policy_unpack.c
-@@ -770,7 +770,17 @@ static int unpack_pdb(struct aa_ext *e,
- 		if (!aa_unpack_u32(e, &pdb->start[AA_CLASS_FILE], "dfa_start")) {
- 			/* default start state for xmatch and file dfa */
- 			pdb->start[AA_CLASS_FILE] = DFA_START;
--		}	/* setup class index */
-+		}
-+
-+		size_t state_count = pdb->dfa->tables[YYTD_ID_BASE]->td_lolen;
-+
-+		if (pdb->start[0] >= state_count ||
-+		    pdb->start[AA_CLASS_FILE] >= state_count) {
-+			*info = "invalid dfa start state";
-+			goto fail;
-+		}
-+
-+		/* setup class index */
- 		for (i = AA_CLASS_FILE + 1; i <= AA_CLASS_LAST; i++) {
- 			pdb->start[i] = aa_dfa_next(pdb->dfa, pdb->start[0],
- 						    i);
+@@ -1177,7 +1177,6 @@ static int verify_header(struct aa_ext *
+ {
+ 	int error = -EPROTONOSUPPORT;
+ 	const char *name = NULL;
+-	*ns = NULL;
+ 
+ 	/* get the interface version */
+ 	if (!aa_unpack_u32(e, &e->version, "version")) {
 
 
