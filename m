@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B22B31E840;
-	Thu, 12 Mar 2026 20:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2850E342CB4;
+	Thu, 12 Mar 2026 20:19:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346758; cv=none; b=OFR4wtVXcXsRhvd4q2njhcuZLOk+oAaQQJ/uck3VYzkaIZbdfrZwbK9NpGslW8jZ4fnV9tq1b49sr0jehImma1Q2J0YshGChSmmr++kaC5Z+jlPvRHtBPW9TZCPKn8UhMrIMcfXBtE/7tPGtbIr7aT9aEX25V9pJig8aP5VlTmU=
+	t=1773346763; cv=none; b=Dtkq7fNtRc8sISRBiww1CvxBhwA97judJJjDMHtlzLfoHzvAhz3qLA4FTiH8vsIIsXnHFoVN/B6OHq0ia1zClmZwz/HA9tdkqPAj4dwtlve3aFTWfS/nehHtuuKM80o06ZmUR1+R+pSB1w2T6mEU18KqUHqnxWOw4n5xBJjs2wA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346758; c=relaxed/simple;
-	bh=jN/fzGy8lWSFlW5o0wfxx3vSqSNBLnuDEm6p+Hhcskk=;
+	s=arc-20240116; t=1773346763; c=relaxed/simple;
+	bh=ajDwrKttVcyx88Bnsehu+3ucqwhrG5UdM/8NzGbiGZg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fWuH9ecRMzQXIhRP8pQDP1lKuAv/esVD9GbB3wYLfoHM/p4Z1pBFJEdgCcSMiJIhT++U01IKrfJB5dTEutqDygePE6EuaHBf07jhY8RZe1c2UWfDqw3hBNTMQYRoINEQEkCVptYvi85jjuirzbAXtbLL8Fz5vKldcc03kpqKON8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ahIxJ5Pj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e+wwR/6HtbfXR1Bsz2vchO0LJZIw0fK15gzl6lko8bc+qVNgBiTt+zniSd8+iGhTkLPKA8LnaPQTpShXqzNHry7M2esmLakVIrZKQSpHrPO0e5teyasNnghuzAzs/3ZADdOt+vEZm7HmYDdpYUgpppl6pWytqPfwrwQI6lS/tkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VFuAnxnF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ahIxJ5Pj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9701C4CEF7;
-	Thu, 12 Mar 2026 20:19:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VFuAnxnF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8DDC19425;
+	Thu, 12 Mar 2026 20:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346758;
-	bh=jN/fzGy8lWSFlW5o0wfxx3vSqSNBLnuDEm6p+Hhcskk=;
+	s=korg; t=1773346763;
+	bh=ajDwrKttVcyx88Bnsehu+3ucqwhrG5UdM/8NzGbiGZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ahIxJ5PjXgjoO1skrysxDwg3qeS1dhF6QVExVzGufSk58pyLz0/L6Sexvg6MiqQ5K
-	 giiQTXpbjenz65GBj4C4sH70X4bwuPe9X1lOz5b5WIQtObYByrX0DCgOmO68dBjqK+
-	 8d6dPuPAdSao0wHuCvmxWZV4RvovYIjrZLDgApZ0=
+	b=VFuAnxnFHvdGeI8Oan1x9yf3BjOgfjKxjuyaKYfJ7Zt8/hyNBnlmD0nZajOxJqGWx
+	 ocd1+pEmQQPIc1s1S+hQIkG99b3obU7xAfnost+f1AitianqaawtIvTXqbrJ257fGj
+	 pZ7hhEjfHxqrI3l9KpubCz6HvYP4kpaq8TYEuDwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 115/265] hwmon: (max16065) Use READ/WRITE_ONCE to avoid compiler optimization induced race
-Date: Thu, 12 Mar 2026 21:08:22 +0100
-Message-ID: <20260312201022.393958724@linuxfoundation.org>
+Subject: [PATCH 6.12 116/265] ksmbd: check return value of xa_store() in krb5_authenticate
+Date: Thu, 12 Mar 2026 21:08:23 +0100
+Message-ID: <20260312201022.430432128@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,103 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit 007be4327e443d79c9dd9e56dc16c36f6395d208 ]
+[ Upstream commit ecd9d6bf88ddd64e3dc7beb9a065fd5fa4714f72 ]
 
-Simply copying shared data to a local variable cannot prevent data
-races. The compiler is allowed to optimize away the local copy and
-re-read the shared memory, causing a Time-of-Check Time-of-Use (TOCTOU)
-issue if the data changes between the check and the usage.
+xa_store() may fail so check its return value and return error code if
+error occurred.
 
-To enforce the use of the local variable, use READ_ONCE() when reading
-the shared data and WRITE_ONCE() when updating it. Apply these macros to
-the three identified locations (curr_sense, adc, and fault) where local
-variables are used for error validation, ensuring the value remains
-consistent.
-
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/6fe17868327207e8b850cf9f88b7dc58b2021f73.camel@decadent.org.uk/
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Fixes: b8d5acdcf525 ("hwmon: (max16065) Use local variable to avoid TOCTOU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20260203121443.5482-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Stable-dep-of: 4f3a06cc5797 ("ksmbd: add chann_lock to protect ksmbd_chann_list xarray")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ fs/smb/server/smb2pdu.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index 4c9e7892a73c1..43fbb9b26b102 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -151,27 +151,27 @@ static struct max16065_data *max16065_update_device(struct device *dev)
- 		int i;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index ac8248479cba2..8fa6ab9dfd077 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1592,7 +1592,7 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 	struct ksmbd_conn *conn = work->conn;
+ 	struct ksmbd_session *sess = work->sess;
+ 	char *in_blob, *out_blob;
+-	struct channel *chann = NULL;
++	struct channel *chann = NULL, *old;
+ 	u64 prev_sess_id;
+ 	int in_len, out_len;
+ 	int retval;
+@@ -1658,7 +1658,12 @@ static int krb5_authenticate(struct ksmbd_work *work,
+ 				return -ENOMEM;
  
- 		for (i = 0; i < data->num_adc; i++)
--			data->adc[i]
--			  = max16065_read_adc(client, MAX16065_ADC(i));
-+			WRITE_ONCE(data->adc[i],
-+				   max16065_read_adc(client, MAX16065_ADC(i)));
- 
- 		if (data->have_current) {
--			data->adc[MAX16065_NUM_ADC]
--			  = max16065_read_adc(client, MAX16065_CSP_ADC);
--			data->curr_sense
--			  = i2c_smbus_read_byte_data(client,
--						     MAX16065_CURR_SENSE);
-+			WRITE_ONCE(data->adc[MAX16065_NUM_ADC],
-+				   max16065_read_adc(client, MAX16065_CSP_ADC));
-+			WRITE_ONCE(data->curr_sense,
-+				   i2c_smbus_read_byte_data(client, MAX16065_CURR_SENSE));
+ 			chann->conn = conn;
+-			xa_store(&sess->ksmbd_chann_list, (long)conn, chann, KSMBD_DEFAULT_GFP);
++			old = xa_store(&sess->ksmbd_chann_list, (long)conn,
++					chann, KSMBD_DEFAULT_GFP);
++			if (xa_is_err(old)) {
++				kfree(chann);
++				return xa_err(old);
++			}
  		}
+ 	}
  
- 		for (i = 0; i < 2; i++)
--			data->fault[i]
--			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
-+			WRITE_ONCE(data->fault[i],
-+				   i2c_smbus_read_byte_data(client, MAX16065_FAULT(i)));
- 
- 		/*
- 		 * MAX16067 and MAX16068 have separate undervoltage and
- 		 * overvoltage alarm bits. Squash them together.
- 		 */
- 		if (data->chip == max16067 || data->chip == max16068)
--			data->fault[0] |= data->fault[1];
-+			WRITE_ONCE(data->fault[0],
-+				   data->fault[0] | data->fault[1]);
- 
- 		data->last_updated = jiffies;
- 		data->valid = true;
-@@ -185,7 +185,7 @@ static ssize_t max16065_alarm_show(struct device *dev,
- {
- 	struct sensor_device_attribute_2 *attr2 = to_sensor_dev_attr_2(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int val = data->fault[attr2->nr];
-+	int val = READ_ONCE(data->fault[attr2->nr]);
- 
- 	if (val < 0)
- 		return val;
-@@ -203,7 +203,7 @@ static ssize_t max16065_input_show(struct device *dev,
- {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int adc = data->adc[attr->index];
-+	int adc = READ_ONCE(data->adc[attr->index]);
- 
- 	if (unlikely(adc < 0))
- 		return adc;
-@@ -216,7 +216,7 @@ static ssize_t max16065_current_show(struct device *dev,
- 				     struct device_attribute *da, char *buf)
- {
- 	struct max16065_data *data = max16065_update_device(dev);
--	int curr_sense = data->curr_sense;
-+	int curr_sense = READ_ONCE(data->curr_sense);
- 
- 	if (unlikely(curr_sense < 0))
- 		return curr_sense;
 -- 
 2.51.0
 
