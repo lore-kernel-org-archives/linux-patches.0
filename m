@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBDD3491D6;
-	Thu, 12 Mar 2026 20:22:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B546310620;
+	Thu, 12 Mar 2026 20:22:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773346922; cv=none; b=u+Bx+q5gaQ/oYDROO2nwq//zOJIN3X6+SjIvjzsPrpix7XhxNhl08Twf4rgoQlZrocOYBZzmuiOcxOpiI4Vk+02BS9af7IjXQXYBrDS3NeYxE6aGTAQdRmwBwS1lkdI/IoK5L4ydxTTuylDdnxSioc4hyAD/CRNWElVWSRLickM=
+	t=1773346927; cv=none; b=uKiYbMtMsuSua6X/8ou8xNSgtWOkQYU8pSOSjfeMxaDy9zbep7g3zzojnrZupl372NZETQOc4rgt64e8B4YxgpC/KwIBRx11dHKHO/3C+6RBJgLHsKgwMPwlJWDUo3iK0OY/g1arAFLRGYkSnmYtToCyVXknLuedGOxKw3XLwXk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773346922; c=relaxed/simple;
-	bh=u3IwKFE6qnIsRiCGu24gqvQKiqAz4iXpKrAc0YgEUdM=;
+	s=arc-20240116; t=1773346927; c=relaxed/simple;
+	bh=Ob+9zYHzq9BpiDd28ouCDZzWPto1fnH5MD7jx87j1rM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F8y8IeCVkZr+CVs+2mn6SP0jcvxHWyyy1M1+QEMtdzZd42ULt7N0tigW2Yjb/dGA8CGXZeoQyuS9lQR23S1jGAIW7E27o+1RHHktZ+SJmDMoR2VooNeQX+0bIWW0nbn748yZbEOxYdegdfxwcdZyVgfb3SuVPkUEMGmuLf2dwRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qyZ7EXyL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hvOioDOcwOSod+dkf2ufz+Jp6OzDtpLks7h69QukBR1Qiu4PAEq99F/YeJlPsCuLxqPSHB6Wnt7WJ3Ht64tlmKMkH3Olqd9sM5ia2YA/OwbeYRi1Uox4O2GfR6yktscho2ymPERVbWxkrp2JpeZ1PC3+NAKy6jvNT2uyXmGlfPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Spfm0d3L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qyZ7EXyL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E673C4CEF7;
-	Thu, 12 Mar 2026 20:22:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Spfm0d3L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3B2C4CEF7;
+	Thu, 12 Mar 2026 20:22:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773346922;
-	bh=u3IwKFE6qnIsRiCGu24gqvQKiqAz4iXpKrAc0YgEUdM=;
+	s=korg; t=1773346926;
+	bh=Ob+9zYHzq9BpiDd28ouCDZzWPto1fnH5MD7jx87j1rM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyZ7EXyLWOHeVXrmw6K0ghDBvu8Aem39GiV2FdxOlMLk9KKnWPPiRWv73xJO+8z60
-	 m9zPDjlW/GOr4tHFtDKpe8kLtZm3og5gs05Olyfpb3tyrB/TXy13zc35ApA1FccAiz
-	 D9FIZVYcaHCNON9XzjqVsEpoutCX4RpKVM0DdJCQ=
+	b=Spfm0d3LYId7TNzCi0rE/uyF6gClx6cs9ZRvZLcUXt/kPDM0luLH3h57D28nPW+2+
+	 oA4H+YLPCnktUPNcuaaSX2/ljaACC9mVHKJNOGbJKVL2HGq5gCu7KtK1OVE0qs0MKX
+	 wmwpmqKzZjZZXnbUxG3inUtSlAwsMo7pcInQ97GE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com,
-	Prithvi Tambewagh <activprithvi@gmail.com>,
-	Dmitry Bogdanov <d.bogdanov@yadro.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.12 153/265] scsi: target: Fix recursive locking in __configfs_open_file()
-Date: Thu, 12 Mar 2026 21:09:00 +0100
-Message-ID: <20260312201023.790745504@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 162/265] selftests: mptcp: join: check removing signal+subflow endp
+Date: Thu, 12 Mar 2026 21:09:09 +0100
+Message-ID: <20260312201024.124696392@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -52,92 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Prithvi Tambewagh <activprithvi@gmail.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-commit 14d4ac19d1895397532eec407433c5d74d9da53b upstream.
+commit 1777f349ff41b62dfe27454b69c27b0bc99ffca5 upstream.
 
-In flush_write_buffer, &p->frag_sem is acquired and then the loaded store
-function is called, which, here, is target_core_item_dbroot_store().  This
-function called filp_open(), following which these functions were called
-(in reverse order), according to the call trace:
+This validates the previous commit: endpoints with both the signal and
+subflow flags should always be marked as used even if it was not
+possible to create new subflows due to the MPTCP PM limits.
 
-  down_read
-  __configfs_open_file
-  do_dentry_open
-  vfs_open
-  do_open
-  path_openat
-  do_filp_open
-  file_open_name
-  filp_open
-  target_core_item_dbroot_store
-  flush_write_buffer
-  configfs_write_iter
+For this test, an extra endpoint is created with both the signal and the
+subflow flags, and limits are set not to create extra subflows. In this
+case, an ADD_ADDR is sent, but no subflows are created. Still, the local
+endpoint is marked as used, and no warning is fired when removing the
+endpoint, after having sent a RM_ADDR.
 
-target_core_item_dbroot_store() tries to validate the new file path by
-trying to open the file path provided to it; however, in this case, the bug
-report shows:
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
-db_root: not a directory: /sys/kernel/config/target/dbroot
-
-indicating that the same configfs file was tried to be opened, on which it
-is currently working on. Thus, it is trying to acquire frag_sem semaphore
-of the same file of which it already holds the semaphore obtained in
-flush_write_buffer(), leading to acquiring the semaphore in a nested manner
-and a possibility of recursive locking.
-
-Fix this by modifying target_core_item_dbroot_store() to use kern_path()
-instead of filp_open() to avoid opening the file using filesystem-specific
-function __configfs_open_file(), and further modifying it to make this fix
-compatible.
-
-Reported-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f6e8174215573a84b797
-Tested-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
+Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
 Cc: stable@vger.kernel.org
-Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
-Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
-Link: https://patch.msgid.link/20260216062002.61937-1-activprithvi@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-5-4b5462b6f016@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/target/target_core_configfs.c |   15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/target/target_core_configfs.c
-+++ b/drivers/target/target_core_configfs.c
-@@ -108,8 +108,8 @@ static ssize_t target_core_item_dbroot_s
- 					const char *page, size_t count)
- {
- 	ssize_t read_bytes;
--	struct file *fp;
- 	ssize_t r = -EINVAL;
-+	struct path path = {};
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2384,6 +2384,19 @@ remove_tests()
+ 		chk_rst_nr 0 0
+ 	fi
  
- 	mutex_lock(&target_devices_lock);
- 	if (target_devices) {
-@@ -131,17 +131,14 @@ static ssize_t target_core_item_dbroot_s
- 		db_root_stage[read_bytes - 1] = '\0';
- 
- 	/* validate new db root before accepting it */
--	fp = filp_open(db_root_stage, O_RDONLY, 0);
--	if (IS_ERR(fp)) {
-+	r = kern_path(db_root_stage, LOOKUP_FOLLOW | LOOKUP_DIRECTORY, &path);
-+	if (r) {
- 		pr_err("db_root: cannot open: %s\n", db_root_stage);
-+		if (r == -ENOTDIR)
-+			pr_err("db_root: not a directory: %s\n", db_root_stage);
- 		goto unlock;
- 	}
--	if (!S_ISDIR(file_inode(fp)->i_mode)) {
--		filp_close(fp, NULL);
--		pr_err("db_root: not a directory: %s\n", db_root_stage);
--		goto unlock;
--	}
--	filp_close(fp, NULL);
-+	path_put(&path);
- 
- 	strncpy(db_root, db_root_stage, read_bytes);
- 	pr_debug("Target_Core_ConfigFS: db_root set to %s\n", db_root);
++	# signal+subflow with limits, remove
++	if reset "remove signal+subflow with limits"; then
++		pm_nl_set_limits $ns1 0 0
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,subflow
++		pm_nl_set_limits $ns2 0 0
++		addr_nr_ns1=-1 speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 0 0 0
++		chk_add_nr 1 1
++		chk_rm_nr 1 0 invert
++		chk_rst_nr 0 0
++	fi
++
+ 	# addresses remove
+ 	if reset "remove addresses"; then
+ 		pm_nl_set_limits $ns1 3 3
 
 
