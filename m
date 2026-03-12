@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC6426F288;
-	Thu, 12 Mar 2026 20:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E4B26F288;
+	Thu, 12 Mar 2026 20:27:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773347218; cv=none; b=p3oWnnAMUNHhMTiqegD2bnLIB7o+ip/SxjVQuRx+B5C/vvPfh57AyvYoUIG+SVNOLCpkqUBigcAV04JV8UHrqpo5KY865tO40AbtTZFkzuGzfoiS0mUp37ejfvuMBRkHfcgUhAYtyCHRcVa3LQwVxfkDqenfZr+6C3Q6Bp/YYhI=
+	t=1773347222; cv=none; b=KdLRfut8lLkc3gKaSiWOgOAVJ76QysciNzlPQMBdJA9J9O/WzceGMJ0yL+vskuSlMBmwXUmEbUSEtrpHnTNaamlSU6M4bVF7TGncoGMMbjATPG4CNMrNCTgjT7Tcq4sDCdoeRhtFBy+lqmQ681B1SxX8DQNZ+ndwqLJ7XgqMO1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773347218; c=relaxed/simple;
-	bh=xo8kDoBM/TEMmt+3aEgoc8CUjRtf0gNtJNlcgIjm3XI=;
+	s=arc-20240116; t=1773347222; c=relaxed/simple;
+	bh=yM1YS4jwbNNj9WX3KdDhCOiZC3U8VyCz60QtWiILnU0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UI/6sS0jH8Mj/LyMt0gDoFzfykJjau6x9JsDcLfDJMcsiJIYg5geoPr9FngSmk9mFGOgrs5hKNPY1eN1SGh7Scy3Ql/vtjepj63W3sJ56X5G/iR/HROlEbZzwamTn7tPLRNXX5dfE83EOI39wjJd73qUZ9F+L7dI9eX7B5tzYJo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i7QNnS/M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmN9j+I0f0U2sjQVBiiAe5Ydi2uuAsiZ3P01zuASQZVkwqG+WlqhtIZdgrCdY4xC1d9+km8yo77G9ZENqMoQDi7CdpZbPh9ayAKfD2k2hKJCCNIHqPgpNjZg9DAkYzdWldMAr9Omn/ZFpCOJyWQuiF1U4r/qU7rj8cnVOTko6Tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gmmOpqXl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i7QNnS/M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF16FC2BC86;
-	Thu, 12 Mar 2026 20:26:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gmmOpqXl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191C2C4CEF7;
+	Thu, 12 Mar 2026 20:27:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773347218;
-	bh=xo8kDoBM/TEMmt+3aEgoc8CUjRtf0gNtJNlcgIjm3XI=;
+	s=korg; t=1773347222;
+	bh=yM1YS4jwbNNj9WX3KdDhCOiZC3U8VyCz60QtWiILnU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i7QNnS/MmsDZ3YSjG5BrGxG+uS+uJsiQyY2YE8y/zVgRnj73/49PMJ2IF7ypY/Pqh
-	 5dbM3fK/1J5/4k07wiiJ6G5yw+gLmOfmgmN2+LTWh/iRTd9ayBejVDDJXnbjhxlY9s
-	 EZdEQVJh6mytPJ3lIXGC1TYWoiuufnODm+Y3nVWI=
+	b=gmmOpqXld6crG0320cblX3K6LP2h9fZlAecapxtTF9QxvHp7AFKr5dCQx21MJbVvL
+	 WrqEARZyhkbL1W981Kq8Jh5ls3Do+wf5fI7G22bifZiKSul55jzkS9enSPQEErfwOb
+	 UlVL5NhG4+s/t8HDlGgiDYHDGQF0gLk3VPOTHqVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wake Liu <wakel@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Sun Jian <sun.jian.kdev@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 236/265] kselftest/harness: Use helper to avoid zero-size memset warning
-Date: Thu, 12 Mar 2026 21:10:23 +0100
-Message-ID: <20260312201026.857947669@linuxfoundation.org>
+Subject: [PATCH 6.12 237/265] selftests/harness: order TEST_F and XFAIL_ADD constructors
+Date: Thu, 12 Mar 2026 21:10:24 +0100
+Message-ID: <20260312201026.895011168@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
 References: <20260312201018.128816016@linuxfoundation.org>
@@ -51,78 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wake Liu <wakel@google.com>
+From: Sun Jian <sun.jian.kdev@gmail.com>
 
-[ Upstream commit 19b8a76cd99bde6d299e60490f3e62b8d3df3997 ]
+[ Upstream commit 6be2681514261324c8ee8a1c6f76cefdf700220f ]
 
-When building kselftests with a toolchain that enables source
-fortification (e.g., Android's build environment, which uses
--D_FORTIFY_SOURCE=3), a build failure occurs in tests that use an
-empty FIXTURE().
+TEST_F() allocates and registers its struct __test_metadata via mmap()
+inside its constructor, and only then assigns the
+_##fixture_##test##_object pointer.
 
-The root cause is that an empty fixture struct results in
-`sizeof(self_private)` evaluating to 0. The compiler's fortification
-checks then detect the `memset()` call with a compile-time constant size
-of 0, issuing a `-Wuser-defined-warnings` which is promoted to an error
-by `-Werror`.
+XFAIL_ADD() runs in a constructor too and reads
+_##fixture_##test##_object to initialize xfail->test. If XFAIL_ADD runs
+first, xfail->test can be NULL and the expected failure will be reported
+as FAIL.
 
-An initial attempt to guard the call with `if (sizeof(self_private) > 0)`
-was insufficient. The compiler's static analysis is aggressive enough
-to flag the `memset(..., 0)` pattern before evaluating the conditional,
-thus still triggering the error.
+Use constructor priorities to ensure TEST_F registration runs before
+XFAIL_ADD, without adding extra state or runtime lookups.
 
-To resolve this robustly, this change introduces a `static inline`
-helper function, `__kselftest_memset_safe()`. This function wraps the
-size check and the `memset()` call. By replacing the direct `memset()`
-in the `__TEST_F_IMPL` macro with a call to this helper, we create an
-abstraction boundary. This prevents the compiler's static analyzer from
-"seeing" the problematic pattern at the macro expansion site, resolving
-the build failure.
-
-Build Context:
-Compiler: Android (14488419, +pgo, +bolt, +lto, +mlgo, based on r584948) clang version 22.0.0 (https://android.googlesource.com/toolchain/llvm-project 2d65e4108033380e6fe8e08b1f1826cd2bfb0c99)
-Relevant Options: -O2 -Wall -Werror -D_FORTIFY_SOURCE=3 -target i686-linux-android10000
-
-Test: m kselftest_futex_futex_requeue_pi
-
-Removed Gerrit Change-Id
-Shuah Khan <skhan@linuxfoundation.org>
-
-Link: https://lore.kernel.org/r/20251224084120.249417-1-wakel@google.com
-Signed-off-by: Wake Liu <wakel@google.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: 6be268151426 ("selftests/harness: order TEST_F and XFAIL_ADD constructors")
+Fixes: 2709473c9386 ("selftests: kselftest_harness: support using xfail")
+Signed-off-by: Sun Jian <sun.jian.kdev@gmail.com>
+Link: https://patch.msgid.link/20260225111451.347923-1-sun.jian.kdev@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/kselftest_harness.h | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/testing/selftests/kselftest_harness.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/selftests/kselftest_harness.h b/tools/testing/selftests/kselftest_harness.h
-index 666c9fde76da9..d67ec4d762db3 100644
+index d67ec4d762db3..a4e5b8613babf 100644
 --- a/tools/testing/selftests/kselftest_harness.h
 +++ b/tools/testing/selftests/kselftest_harness.h
-@@ -69,6 +69,12 @@
+@@ -75,6 +75,9 @@ static inline void __kselftest_memset_safe(void *s, int c, size_t n)
+ 		memset(s, c, n);
+ }
  
- #include "kselftest.h"
- 
-+static inline void __kselftest_memset_safe(void *s, int c, size_t n)
-+{
-+	if (n > 0)
-+		memset(s, c, n);
-+}
++#define KSELFTEST_PRIO_TEST_F  20000
++#define KSELFTEST_PRIO_XFAIL   20001
 +
  #define TEST_TIMEOUT_DEFAULT 30
  
  /* Utilities exposed to the test definitions */
-@@ -418,7 +424,7 @@
- 				self = mmap(NULL, sizeof(*self), PROT_READ | PROT_WRITE, \
- 					MAP_SHARED | MAP_ANONYMOUS, -1, 0); \
- 			} else { \
--				memset(&self_private, 0, sizeof(self_private)); \
-+				__kselftest_memset_safe(&self_private, 0, sizeof(self_private)); \
- 				self = &self_private; \
- 			} \
- 		} \
+@@ -465,7 +468,7 @@ static inline void __kselftest_memset_safe(void *s, int c, size_t n)
+ 		__test_check_assert(_metadata); \
+ 	} \
+ 	static struct __test_metadata *_##fixture_name##_##test_name##_object; \
+-	static void __attribute__((constructor)) \
++	static void __attribute__((constructor(KSELFTEST_PRIO_TEST_F))) \
+ 			_register_##fixture_name##_##test_name(void) \
+ 	{ \
+ 		struct __test_metadata *object = mmap(NULL, sizeof(*object), \
+@@ -879,7 +882,7 @@ struct __test_xfail {
+ 		.fixture = &_##fixture_name##_fixture_object, \
+ 		.variant = &_##fixture_name##_##variant_name##_object, \
+ 	}; \
+-	static void __attribute__((constructor)) \
++	static void __attribute__((constructor(KSELFTEST_PRIO_XFAIL))) \
+ 		_register_##fixture_name##_##variant_name##_##test_name##_xfail(void) \
+ 	{ \
+ 		_##fixture_name##_##variant_name##_##test_name##_xfail.test = \
 -- 
 2.51.0
 
