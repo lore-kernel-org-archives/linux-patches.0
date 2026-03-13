@@ -1,110 +1,292 @@
-Received: from mail-dy1-f177.google.com (mail-dy1-f177.google.com [74.125.82.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (mail-southcentralusazon11012020.outbound.protection.outlook.com [40.93.195.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B7E3AA4FF
-	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 17:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.82.177
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773421356; cv=none; b=RmdSQgpwOOpUNAOZu/ig7fYFF+MxnTagf6tGDjKGy33/wJ479XzLHYeLWNd/jDz40o06NN4vkiYn8UgCDFUkbx+26ER21UpWM3eARaXQ2ZguBSx0+skatEGRxlIKOXCysShBPhm2K+IZgKE0WQf4jf8uBs2vvk0bQaxUfC7XkAU=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773421356; c=relaxed/simple;
-	bh=w5AlOwFdnlULwQcESRQdoCOJWsSJRnMvGEX4ADD7jng=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Z24AIrEXKO0QBwJHuSX4cbgrKKgtizGrStb1bpasOwBUzm14aaAFD/6Qs47Ik7UNRB3sj2zoECMh7mNxjD4Md09k3+dYcfcYRu1LOGKwRUnl6ZxX5/NVzp+zLCQBhkA7tFpEoR/YdW9yf62hvIwvY5RnodWFHDvs83O8CL2fnsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I8axHFZn; arc=none smtp.client-ip=74.125.82.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D3AE36309E
+	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 17:41:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.195.20
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773423677; cv=fail; b=Jb0WPlHsEG4kmi5K2NlMSs+KGKjiVdILuLj7bDw/HU4TyatzvxG4kYkVjZU977NcAq0rgDv8IusfMVly3aWnIu0pQk7FCCj7SzE0wLFepR27Hb4Q/uR8HwmJX2EkDcPbfaDjOhyTyHD/5hAFPklerOQqvbwcHkVDyM5BLxfLkC0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773423677; c=relaxed/simple;
+	bh=B9apHlJZpdiuXPUZA47PDBakCqLNi1vskpAY1tzlzSY=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=C+u1cA4OmgwMai/o1pM0vVu27NKs5ZGNw8FijqhiG2gWBmJj5Y0EhV4EQCZ23+8vXQR/q+ndG1+hpR/c/egdZSyBD8Wp8cZFT690tSIwX9N8TA+MCELz94RY/nA2j3CjmxlFp5rK8SNh+1APbGTa5hI3P0hRMrL/F5fcBA8LRUo=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DknBq4jC; arc=fail smtp.client-ip=40.93.195.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I8axHFZn"
-Received: by mail-dy1-f177.google.com with SMTP id 5a478bee46e88-2bea8a1c040so915857eec.0
-        for <patches@lists.linux.dev>; Fri, 13 Mar 2026 10:02:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773421353; x=1774026153; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Y9a17dPzIDqIL4X7UEpxgCYfEwk+WmJdSdSzwqIhoGE=;
-        b=I8axHFZntJNFjCCrh62IzOdHusmznW6GsUEXloV+wWWpOoudXXaDuOREwnTOdsdjMB
-         sZTmIKqvP3Gd8h4hOJ6gPTASp3NGdNjABu2t5J/XvbiEjxA5Y/Yx/sPJtt5idBp3UZv3
-         wOPY7N2QpkuLTSozLX4B9EDv/q8dVb/WJu1CH4jw9PxwT1HnEBATyHow0ou91eYau81m
-         ycQSyKwzyq9o2WBo+To670mj8ULY5sDkXooOF+v8pSnXQVre3UZC9InBebH5fG+MoBxS
-         yMLTbVU0K5r/OG1Wi4fObz22EkKx5Qf9OP1IqUm5X2z5y13PL7Z/pR/kjXNR3VqF3Ej6
-         2MNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773421353; x=1774026153;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Y9a17dPzIDqIL4X7UEpxgCYfEwk+WmJdSdSzwqIhoGE=;
-        b=jNBYPTY6hzfYVtYyB5Ld1Og2OQKaIREZik2z1MCX7waQsIxD8g8yEHTY/tHJHPEqyh
-         HEvCgCTZxP59bClvUXO7Q1nAufZgPolyOS4f+qb5j5ERqu4xnKXYd6rQxwswJ/npE9OO
-         pnm1FiFNoWLR4YdHsDzAUYozzhOjaRg6EjO7yTFJ57JVmnTWIKvXhsM0KgCVFV2hSCRh
-         9AbRBGAwJa7w7CoUSecmR4YHdYdrm5jkGqF2OhPGOgWMpzCToOlxT38WSBO3d2bbTSOw
-         /MPIaWp39kv/RM0MCbOi9Wy+D+lkrBrkJMUfRE6yb52iW/tkUKzqCCtGerhge3CChGlS
-         1trg==
-X-Gm-Message-State: AOJu0Yz2dsxj+6U/1qzXyaPejAJF05nEuGzo3Yiw/h4nwqqu1BiK5s/k
-	iMsMR4N3kvO4jdTqHTXAlGssFl/nV7Vfw1qB2N+bZ+hpkqSYCMD3g0xL
-X-Gm-Gg: ATEYQzw37YKnZa0pljZjXBr8Km4J5EmuuyoHNqf2q6piJtOTFEuty6VWd37iuJZRRDV
-	lkhEeuWZCzVLvWXEcZsiXKZljiyzWmaTbHpH7Ie5lf6fwATMr+oYFVx+DBucFK0MqS9xLLdCtHQ
-	xjKbTgKqnRxCvHsbgGrLFeV2Qa0fTRSMCU9Ox9aTnVToHwuDOyXFFktg1i5UWA/vcLzFusjGubr
-	Pask2AYcIdgTdL+66bUUDJmGQFoTcFKjwSB7RmU2mVE+M0P9vQpByzJD2rhrEHAGBkOu0PjgsjY
-	O6ix0fm8M8AIlXiZxfLqxQNFNATA7XDBim2ZsdKWh0vlnZMFODqY99LfbzKvwjSvT41+3WFJ0wB
-	mFQQeG8XjLD2wPOCHwiGaq2m3Z0EwH1CqYAdwiIeGB5yM+68IioMmkPDe8mjPM+w3LWwbMBq/6D
-	HN9j5b5neguD0u2S0XQiJU3yMrHJnv0tvP8qkvL1h5zhwpQ1NL6fvIIybXPkYU
-X-Received: by 2002:a05:7301:fa0b:b0:2ba:6aef:697a with SMTP id 5a478bee46e88-2bea54df24emr1749497eec.24.1773421353131;
-        Fri, 13 Mar 2026 10:02:33 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.gmail.com with ESMTPSA id 5a478bee46e88-2beab3a0b3fsm3463739eec.5.2026.03.13.10.02.31
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 13 Mar 2026 10:02:32 -0700 (PDT)
-Message-ID: <c8ac11d1-3e93-477a-be4c-721579382fbc@gmail.com>
-Date: Fri, 13 Mar 2026 10:02:30 -0700
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DknBq4jC"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=d63PAqVkj1OtXIZ3lGpHqHLiB96niBpjKnjX73s9HSFE1tKHKNiHZ3U19jsM3jkhuOYIFkq8Dh6NSKk38V05PeoFZ2h71Lj2tERdWnibY9s1VyU18jL4XJripM7Orz0ZjCaKvpErJ1V1Wkk7+pkphh2NVfJiI+kP8ws6M5Nz0XeQoCDmNRKS2B/FBVZs77TiPv5YZo3UuF9tbVorPMmpwbV2Uwa5ir31QrywMehGUSmeFKVeHqX74pp41rIA+ZpUSyLXo9O4/ZiCJ2I8Um1rcTjJ4wqiZOiG3oBGiRVYHVKOIrObpTJF0Z2sU9vPBHG+aot4UG8ymbQ/sdNoMIH59Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=aCzK7SAwtZVNI0sXrW0XtwGXtonbY2IGWuWTglvOgNI=;
+ b=W9T4LrxnbiUUzH/yQ7HUHn2J50fyNC4tlYQHaGDmfc6CFI9WVJG/5Yq0l58bU98drdGnucdiAxlhdi7oUivAmdsFQrbdq0dWEQ5uJkxnbNg1NwGgRBSWn3o9dZYiIxq3jOdLpJF3fnDar7FOz0dTgzDhKm/HYKB6zYjoGztEU+PeAImX6MgQlVvq2zMgEl0QGbKGBvU7Nu0Fi6q/3Iaj8K8TtjLR/ZmKzVK/PxUgr3RibgSBbGVR/I/S2D3oO9/m+x0FNr8hQOy4wwodjcaKIXTCtW7SD5vvWQ9wgHzH9lpcQtuk3qMgCfpU1enyhHbkm29um5qXjWNll3Vxv23lnA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=aCzK7SAwtZVNI0sXrW0XtwGXtonbY2IGWuWTglvOgNI=;
+ b=DknBq4jCBzvf/lXyeIvlRxj/EQadCa3w+S8BESvcYDgYlwlbJoneFs2Oc645cpBUQnb93TWXq89Rcm+O5D/8K4aBzf+Gt3yz7LQ+bCpTADwDstabE3l35MTnT1sYTvfcyXtDDQXTcB0/msMEg8MsITZ8nrtt9yvVRe2NbF7RkwpRT2YTZnH5b9myaVeQwH1jI4u5+cQ88Qi3kOGNYltSTsZCbY7HP15ZGMVTEmMGO+rOl4Z9fCgq5bVWuaH5oV6agkfzVR7ZBNGsB7c0HpLvoehglVyLgFuninH7gRp0oauigAcSUpvHunxux6dxGbrzNvqdF+nUqnKcWNtu7O3UbA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
+ by PH7PR12MB7425.namprd12.prod.outlook.com (2603:10b6:510:200::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Fri, 13 Mar
+ 2026 17:41:07 +0000
+Received: from LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
+ ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9654.022; Fri, 13 Mar 2026
+ 17:41:06 +0000
+From: Jason Gunthorpe <jgg@nvidia.com>
+To: =?utf-8?q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+	dri-devel@lists.freedesktop.org,
+	linaro-mm-sig@lists.linaro.org,
+	linux-media@vger.kernel.org,
+	Sumit Semwal <sumit.semwal@linaro.org>
+Cc: Dave Airlie <airlied@redhat.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	David Hildenbrand <david@redhat.com>,
+	Dongwon Kim <dongwon.kim@intel.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Hugh Dickins <hughd@google.com>,
+	Julian Orth <ju.orth@gmail.com>,
+	Junxiao Chang <junxiao.chang@intel.com>,
+	Gerd Hoffmann <kraxel@redhat.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	patches@lists.linux.dev,
+	Peter Xu <peterx@redhat.com>,
+	Shuah Khan <shuah@kernel.org>,
+	Vivek Kasireddy <vivek.kasireddy@intel.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>
+Subject: [PATCH] udmabuf: Do not create malformed scatterlists
+Date: Fri, 13 Mar 2026 14:41:05 -0300
+Message-ID: <0-v1-42779f29381a+4b9-udmabuf_sg_jgg@nvidia.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: IA1P220CA0005.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:208:461::13) To LV8PR12MB9620.namprd12.prod.outlook.com
+ (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.12 000/265] 6.12.77-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
- hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
- sr@sladewatkins.com
-References: <20260312201018.128816016@linuxfoundation.org>
-Content-Language: en-US, fr-FR
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20260312201018.128816016@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH7PR12MB7425:EE_
+X-MS-Office365-Filtering-Correlation-Id: e36e1d7d-0c33-4e00-5f1e-08de8127b48a
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam:
+	BCL:0;ARA:13230040|376014|7416014|366016|1800799024|56012099003|18002099003;
+X-Microsoft-Antispam-Message-Info:
+	szgdETTy3OI6RkeD6ZqnwOe4NruZ0Gmym68mzo/+B91HFCo++2RAro0gxgLaJVSpLLatsV0faV617hVyRpFAkneHNuMlmBHRoFb6qN35jNI/+19vAp/iXjSPvAH3fCMjiW9hTy5tZ+4tI/lZ0FTWLH0kV2FVb+8zYPwsi8Sepevx7mnGs2M6iQMajCrz1oOInznokLtsO7o4Xc1CKbNIY5PTEhN/kIgEeukA6r8SDp6pIyEXx2RWDdh4a9micCVub+/WU9QKHntAky251fQHUwf9HgajfSoJHBqfQ/RGBLqidrpUy4HPXdZBXV356LI5+wUYrovT6oW9IHJO8gHDJOrhwv0hcQM5BJqp9kbzNXIPfTKDcW0wUew1TXBmwUWYgqNJIZVJwKbU1+StxmbGgY7agb30vTa9lSBlHhL3lc8U4UgX93HarOt2nfzi3mWvSEWFHm/FwUzLWRnUUSROdehvn7SAe+M62j40Rx1S22ghmH+kslPqIPuyzL+R8Ez4HrUIeopxzXKeAz36kKCivQ5EmYI8ShRaPI8kHfF8HKnWyNOYD5vpo5oiZtQsQwGUzUp1XTuT5kcWaqID8G0slWnrwmdyRZvLJxVuA9M9qzcZmiLLmSG3qTGT+BbJ2wRRzR2IIFiich/yPwR+Dpdvwu+9hNuvpYH9PcVakCuPKXF1KOfDLRYRYTPCv4HZ3PfzKKU9nuXYMN9AckVT+3h9SMeXnxO91okw7KNDqjuKRno=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(366016)(1800799024)(56012099003)(18002099003);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?DiSWQsO6pMHvkO18k1BKXFdKFZaN91i31zFE11LbCGnii/zkMTFXZBLTNrLl?=
+ =?us-ascii?Q?1C/X2aBjiwF/OVtAlP/whwk23cJA4vdpW311kv8MiggexGuUv1454+svAVWW?=
+ =?us-ascii?Q?ZNXW0R8DfladE2C32bjVLaYVThtR0C8ocnoQiEKPJj3zxsipRpnhHQlRZsYM?=
+ =?us-ascii?Q?VcSxueTn0FrkHPMv3eRIHEiMzZbaoTxSvQjDq9f3Gsldh26zB3AbsEhsVenF?=
+ =?us-ascii?Q?W1aVkXZuF82Nj7yS82ZMVTbGCtgqYj98t8cEA84jAIWLcwuzNr3Ttl23WODl?=
+ =?us-ascii?Q?npB5PwHtIQbp9xNul8sTlXGh6YInR1kWiAyHehXpcTuWfb71q3jIbYtim5D8?=
+ =?us-ascii?Q?4KPLlWLf7H6FUtmKRPcFY2aujlDfJmp1UWybCQtoi/JmFo914xj+lGWIjfPn?=
+ =?us-ascii?Q?kN5Dff/PvwiY1ZRETRk6zQybUPnvu9L+ef29CVsBLQtqcBBAEGYisCwzZpDd?=
+ =?us-ascii?Q?bZ22n5KXQifjLf9g8AgDcLDoz5go81vTA/xx0QyuAsrykC/IRGwD8+mjT2Ug?=
+ =?us-ascii?Q?StDl/CkYBgtE2tsqJQJw+VUu5bFtANgkmApjdEJuJbo3rpc0vJb/32LmvUhE?=
+ =?us-ascii?Q?1umnh6UT1X/909QT+7IAFX6IDlukVu7O4BYeK5jn9iF30/qXcpWUUMKXzjqx?=
+ =?us-ascii?Q?Y5TcHp6iOLEHLNnV/GpnosIY2pZiMrour8bCY6IKa++Qu+zs2MA7p4Vs6iEM?=
+ =?us-ascii?Q?oi+dKznEjg/FK4RDWqX3ixfcJHuTK+bzbeS5ddorlHojFPrx9uk6jq4ieb69?=
+ =?us-ascii?Q?Ui+KcdhANxqlbNu6BgT8Fh1/9wAQlKsvda0Lv5hl2TnWLKSsSbEQNv8NyICC?=
+ =?us-ascii?Q?5bidW9LYjKUgWFNG13eK9l1ClnV+iVzlRCPMqjRVDRMTI55ZPtnKUz9vbo4Q?=
+ =?us-ascii?Q?d98pQE6zXJw0JW35mwVLYdK8BIIWu83Dv4HJQNDalz/HTr/wHbZZjRYUfv84?=
+ =?us-ascii?Q?HGZhbxl2LV+wfpC+GfSneP1K7nbVjJTZk+2wJ0hjnZa1uFq/T4L9ofXDOONw?=
+ =?us-ascii?Q?v8T9b4mggnSPlDX9kGjB1BPZk/ufOzdbfFs1WAczEBLprwZ3jMQodFe8vIMf?=
+ =?us-ascii?Q?1dLR3f3y8KvZGs/7+kaOBvVJ1TVQCzkiYURn+FLw5jI9DjTZayuMusvgfoRn?=
+ =?us-ascii?Q?hiPN+4X9t9+fzvXMFaYvBlptGp6ZMzv2LZMowjdA13reXVPA2nJm6VFisB6Q?=
+ =?us-ascii?Q?+8hXfTt+q1GrtwVOoqoEVvXP2uW3JDCewRDD007amppzJmEVSvfrLmbSaT6q?=
+ =?us-ascii?Q?jBoiH/dkNh4pwxVmwNgx+7UgJ7OI4vVyMPlvp3QoJPjdsTjD/pYNzyW4HH9q?=
+ =?us-ascii?Q?qzwF9OuFkMmB5M1gRTeerwlbJqyrCGX+E5oq22J2es/0a+SkxauFudQmToVW?=
+ =?us-ascii?Q?QCXaj7QKxWxUi8UmAZqBqpRxZ3mc5PZdbVLE+iBB5RuDZXM7J7/CrxVbO+O8?=
+ =?us-ascii?Q?pZhFF3ztgIA4kRDpz4oHt90Rahv6PLtbGkbfpDAluLxY+S/hfILm0ViHFW+J?=
+ =?us-ascii?Q?/ju6l6VIZ4ApxPCgT4b+yubwwdsZHpPty+gmwhB0Jkh7Vywfs/2HDzpAOGu5?=
+ =?us-ascii?Q?uRFlOQV8akkyJvA5qpj+gPvWZgDEoQ49d8KykhhukvFAZoM0//QpTLgyJTlg?=
+ =?us-ascii?Q?0hcvnar6jS03jTEoiz1oDFFOJg5j+eA1SYvA8ynoGr0wwAJtDsSonvshsql1?=
+ =?us-ascii?Q?mUiM99jcoPDUwfv4yQNm97hHJm+HzjtblRtNEPSb4j33XZuAQmilFdJEYU/Y?=
+ =?us-ascii?Q?0gcIKt3wOg=3D=3D?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e36e1d7d-0c33-4e00-5f1e-08de8127b48a
+X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2026 17:41:06.8239
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fC/Y37F7f1BylTGNoNhZU9za+vUw3gSXuVBkfRm4QxY3H6pwVPXJPzn0okgFI89Z
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7425
 
-On 3/12/26 13:06, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.12.77 release.
-> There are 265 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 13 Mar 2026 20:09:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.12.77-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.12.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Using a sg_set_folio() loop for every 4K results in a malformed scatterlist
+because sg_set_folio() has an issue with offsets > PAGE_SIZE and because
+scatterlist expects the creator to build a list which consolidates any
+physical contiguity.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+sg_alloc_table_from_pages() creates a valid scatterlist directly from a
+struct page array, so go back to that.
 
-Tested-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Remove the offsets allocation and just store an array of tail pages as it
+did before the below commit. Everything wants that anyhow.
+
+Fixes: 0c8b91ef5100 ("udmabuf: add back support for mapping hugetlb pages")
+Reported-by: Julian Orth <ju.orth@gmail.com>
+Closes: https://lore.kernel.org/all/20260308-scatterlist-v1-1-39c4566b0bba@gmail.com/
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+---
+ drivers/dma-buf/udmabuf.c | 49 +++++++++++----------------------------
+ 1 file changed, 13 insertions(+), 36 deletions(-)
+
+diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+index 94b8ecb892bb17..5d687860445137 100644
+--- a/drivers/dma-buf/udmabuf.c
++++ b/drivers/dma-buf/udmabuf.c
+@@ -26,10 +26,10 @@ MODULE_PARM_DESC(size_limit_mb, "Max size of a dmabuf, in megabytes. Default is
+ 
+ struct udmabuf {
+ 	pgoff_t pagecount;
+-	struct folio **folios;
++	struct page **pages;
+ 
+ 	/**
+-	 * Unlike folios, pinned_folios is only used for unpin.
++	 * Unlike pages, pinned_folios is only used for unpin.
+ 	 * So, nr_pinned is not the same to pagecount, the pinned_folios
+ 	 * only set each folio which already pinned when udmabuf_create.
+ 	 * Note that, since a folio may be pinned multiple times, each folio
+@@ -41,7 +41,6 @@ struct udmabuf {
+ 
+ 	struct sg_table *sg;
+ 	struct miscdevice *device;
+-	pgoff_t *offsets;
+ };
+ 
+ static vm_fault_t udmabuf_vm_fault(struct vm_fault *vmf)
+@@ -55,8 +54,7 @@ static vm_fault_t udmabuf_vm_fault(struct vm_fault *vmf)
+ 	if (pgoff >= ubuf->pagecount)
+ 		return VM_FAULT_SIGBUS;
+ 
+-	pfn = folio_pfn(ubuf->folios[pgoff]);
+-	pfn += ubuf->offsets[pgoff] >> PAGE_SHIFT;
++	pfn = page_to_pfn(ubuf->pages[pgoff]);
+ 
+ 	ret = vmf_insert_pfn(vma, vmf->address, pfn);
+ 	if (ret & VM_FAULT_ERROR)
+@@ -73,8 +71,7 @@ static vm_fault_t udmabuf_vm_fault(struct vm_fault *vmf)
+ 		if (WARN_ON(pgoff >= ubuf->pagecount))
+ 			break;
+ 
+-		pfn = folio_pfn(ubuf->folios[pgoff]);
+-		pfn += ubuf->offsets[pgoff] >> PAGE_SHIFT;
++		pfn = page_to_pfn(ubuf->pages[pgoff]);
+ 
+ 		/**
+ 		 * If the below vmf_insert_pfn() fails, we do not return an
+@@ -109,22 +106,11 @@ static int mmap_udmabuf(struct dma_buf *buf, struct vm_area_struct *vma)
+ static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
+ {
+ 	struct udmabuf *ubuf = buf->priv;
+-	struct page **pages;
+ 	void *vaddr;
+-	pgoff_t pg;
+ 
+ 	dma_resv_assert_held(buf->resv);
+ 
+-	pages = kvmalloc_objs(*pages, ubuf->pagecount);
+-	if (!pages)
+-		return -ENOMEM;
+-
+-	for (pg = 0; pg < ubuf->pagecount; pg++)
+-		pages[pg] = folio_page(ubuf->folios[pg],
+-				       ubuf->offsets[pg] >> PAGE_SHIFT);
+-
+-	vaddr = vm_map_ram(pages, ubuf->pagecount, -1);
+-	kvfree(pages);
++	vaddr = vm_map_ram(ubuf->pages, ubuf->pagecount, -1);
+ 	if (!vaddr)
+ 		return -EINVAL;
+ 
+@@ -146,22 +132,18 @@ static struct sg_table *get_sg_table(struct device *dev, struct dma_buf *buf,
+ {
+ 	struct udmabuf *ubuf = buf->priv;
+ 	struct sg_table *sg;
+-	struct scatterlist *sgl;
+-	unsigned int i = 0;
+ 	int ret;
+ 
+ 	sg = kzalloc_obj(*sg);
+ 	if (!sg)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	ret = sg_alloc_table(sg, ubuf->pagecount, GFP_KERNEL);
++	ret = sg_alloc_table_from_pages(sg, ubuf->pages, ubuf->pagecount, 0,
++					ubuf->pagecount << PAGE_SHIFT,
++					GFP_KERNEL);
+ 	if (ret < 0)
+ 		goto err_alloc;
+ 
+-	for_each_sg(sg->sgl, sgl, ubuf->pagecount, i)
+-		sg_set_folio(sgl, ubuf->folios[i], PAGE_SIZE,
+-			     ubuf->offsets[i]);
+-
+ 	ret = dma_map_sgtable(dev, sg, direction, 0);
+ 	if (ret < 0)
+ 		goto err_map;
+@@ -207,12 +189,8 @@ static void unpin_all_folios(struct udmabuf *ubuf)
+ 
+ static __always_inline int init_udmabuf(struct udmabuf *ubuf, pgoff_t pgcnt)
+ {
+-	ubuf->folios = kvmalloc_objs(*ubuf->folios, pgcnt);
+-	if (!ubuf->folios)
+-		return -ENOMEM;
+-
+-	ubuf->offsets = kvzalloc_objs(*ubuf->offsets, pgcnt);
+-	if (!ubuf->offsets)
++	ubuf->pages = kvmalloc_objs(*ubuf->pages, pgcnt);
++	if (!ubuf->pages)
+ 		return -ENOMEM;
+ 
+ 	ubuf->pinned_folios = kvmalloc_objs(*ubuf->pinned_folios, pgcnt);
+@@ -225,8 +203,7 @@ static __always_inline int init_udmabuf(struct udmabuf *ubuf, pgoff_t pgcnt)
+ static __always_inline void deinit_udmabuf(struct udmabuf *ubuf)
+ {
+ 	unpin_all_folios(ubuf);
+-	kvfree(ubuf->offsets);
+-	kvfree(ubuf->folios);
++	kvfree(ubuf->pages);
+ }
+ 
+ static void release_udmabuf(struct dma_buf *buf)
+@@ -344,8 +321,8 @@ static long udmabuf_pin_folios(struct udmabuf *ubuf, struct file *memfd,
+ 		ubuf->pinned_folios[nr_pinned++] = folios[cur_folio];
+ 
+ 		for (; subpgoff < fsize; subpgoff += PAGE_SIZE) {
+-			ubuf->folios[upgcnt] = folios[cur_folio];
+-			ubuf->offsets[upgcnt] = subpgoff;
++			ubuf->pages[upgcnt] = folio_page(folios[cur_folio],
++						subpgoff >> PAGE_SHIFT);
+ 			++upgcnt;
+ 
+ 			if (++cur_pgcnt >= pgcnt)
+
+base-commit: 1f318b96cc84d7c2ab792fcc0bfd42a7ca890681
 -- 
-Florian
+2.43.0
+
