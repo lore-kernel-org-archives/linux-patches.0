@@ -1,111 +1,129 @@
-Received: from omta040.useast.a.cloudfilter.net (omta040.useast.a.cloudfilter.net [44.202.169.39])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6677D227B94
-	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 09:37:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=44.202.169.39
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5351389453;
+	Fri, 13 Mar 2026 09:54:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773394642; cv=none; b=XB04WNzUOiWAO+nGz0X/TdV1pRJdYOG6l3P9ckceT16eNtGV3CrUCJlcwT9qeXf775xOivYP8xSZ4aebaW56Tz1OycYBkz6ZPJJYnMYtTtDSPVrwPijD/m7s9CDonHUBBqJO0VYrreat+j5mLCXqq9IUasogg9qxVWynenIjXPc=
+	t=1773395651; cv=none; b=UyK450ax2ZWTQXlPkbzlocejZWQdXiFaK/ulez321ajgInR85Q5RL7AmohzU2z8QJKy7ZMl1Kvps19bam9R0CvudNdktRnx+BWCsy4W8MEKUEzJXGAiaPhjkr/Vp50dCYDyBmAXe4Enq6cRbD/gq0siowmvc2fzRao0REnXC1og=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773394642; c=relaxed/simple;
-	bh=8XVdrRwFFMeC9dFJaqM8oPsrui61kco+m1XcAVtxLXI=;
+	s=arc-20240116; t=1773395651; c=relaxed/simple;
+	bh=Cv++OP/likUHPLoz2WRNM40nqvY9qmw0dxrjlRCGEIU=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=o+ByBYzJI+aaWQ+bNzlXHIag9O20C7dqlUo3tG+m4gMCdeoNtsTgctwlyFXkhIcMOc/8WxeWJE7N9Hjjm72JrwVhw7iRUfCyoUEKlk+cMGkmbw4Bokdjjchr+HzdCLsAO4bD3fCmTyBquVexPa69s4qezfuTAHgcwn6rAa84qm8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net; spf=pass smtp.mailfrom=w6rz.net; dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b=z9LUrJeE; arc=none smtp.client-ip=44.202.169.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=w6rz.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=w6rz.net
+	 In-Reply-To:Content-Type; b=Nv4sE4p54RzgMCREqb0+R4/ttJ0f7UjtdolNIxV8w00kOoewAF9zpD3/OnDOeaxrgQEIpDgDY8TjA+ATCEVmRq+KTznrO8Z/CjySTu9v6NiaxMIExM48gWapmtaN/r/8OUZPdtlUgdDbIahIVfVvu+LqETXFX7h5LJ72lDEmiTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mpj+Rjtv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=w6rz.net header.i=@w6rz.net header.b="z9LUrJeE"
-Received: from eig-obgw-6001b.ext.cloudfilter.net ([10.0.30.143])
-	by cmsmtp with ESMTPS
-	id 0o4bwXsiPCxrG0yxMwvBAb; Fri, 13 Mar 2026 09:37:20 +0000
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTPS
-	id 0yxKwTySocu110yxLwlMl7; Fri, 13 Mar 2026 09:37:19 +0000
-X-Authority-Analysis: v=2.4 cv=bKYWIO+Z c=1 sm=1 tr=0 ts=69b3dacf
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=7vwVE5O1G3EA:10
- a=EGTM6zHwoJqTM8vi98cA:9 a=QEXdDO2ut3YA:10 a=L5EjiQpGQaFGZdqT14z7:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:In-Reply-To:From:
-	References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=JC5kbKYzzY9hREHoxnstOrWsoE8p9+xtS+3usyPFrGg=; b=z9LUrJeEHd/Nz1y/fzNOhBcTCl
-	v+qpghkfpxBZ98zeKEuASYZmI/SvJXa7FWeJlLxIFhJahEgYEHM6MOBK4wVvRswtlwh+g15FH/Vg+
-	w9W3gXOZcaTjFEnUTuBYmnZEp3eyIq7nbytLpsM0ce/EuRysahj/sa4xgvUaFk0LKzaUDcBQYWhRh
-	8zGfa7g05hEJd2cFpxNQ1xiekyXLqObYBwi6U3+WrF4rt1izALZJDVDWFXIKzc3v9Ohc+eHCK8Tao
-	B6FiuUFpRRUL/SbxYm6eknO3I+pCBjJcFGU/8LAU+pu79GBGuaLNUEHjnHK+/ro2P8ecMPk2VkQH0
-	UaQVlMZw==;
-Received: from c-73-162-206-103.hsd1.ca.comcast.net ([73.162.206.103]:56878 helo=[10.0.1.180])
-	by box5620.bluehost.com with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
-	(Exim 4.98.2)
-	(envelope-from <re@w6rz.net>)
-	id 1w0yxK-00000000Rcz-2Kpo;
-	Fri, 13 Mar 2026 03:37:18 -0600
-Message-ID: <88e4edea-f204-4f06-b898-2995237fc823@w6rz.net>
-Date: Fri, 13 Mar 2026 02:37:16 -0700
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mpj+Rjtv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54A7C19421;
+	Fri, 13 Mar 2026 09:54:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773395651;
+	bh=Cv++OP/likUHPLoz2WRNM40nqvY9qmw0dxrjlRCGEIU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=mpj+RjtvEi5QODpdIGCil7gQ1JrWq9VwuEB8ZURg+VOxFVuBC2H0/xve7nF/9Q4bl
+	 0MJASBH95hUw3pgVqSo3Kf6HM5mBeq+m5LnnEnv/dH3nLECy/HcrB/kbUZkyXXGcXX
+	 kGXknslzslLLOutgIANln1reSRGSX6ev1qyRWauKoLTjqc2K39HPLIC53saPmG+2RS
+	 bxqLclGOAuiutCTVTACcHPdYrTrb/g3XQ6P84L9J6eWKrphX++l1JelNsXMJiBpYjK
+	 QVjhL6d7yo+s1airoowyx+hoiu7IeuuhbbZNXkp+GPY9VK2vzXXdTyg5TnLG653xxQ
+	 LUjuFg1fWD8Pw==
+Message-ID: <0fe5137d-9b80-4afe-a7d8-cb38a3118070@kernel.org>
+Date: Fri, 13 Mar 2026 10:54:07 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: freeze during boot regression Re: [PATCH 6.12 000/265]
- 6.12.77-rc1 review
-To: "Barry K. Nathan" <barryn@pobox.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH 6.12 162/265] selftests: mptcp: join: check removing
+ signal+subflow endp
+Content-Language: fr
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Mat Martineau <martineau@kernel.org>,
+ Jakub Kicinski <kuba@kernel.org>, Sasha Levin <sashal@kernel.org>,
+ MPTCP Linux <mptcp@lists.linux.dev>
 References: <20260312201018.128816016@linuxfoundation.org>
- <b4f58774-18d4-4a32-9c85-603f9e2c98fc@pobox.com>
- <ee851013-fec8-47f8-9863-392f17e54474@pobox.com>
- <2a313336-ccfc-42b7-a14d-c116733ef64a@w6rz.net>
- <1c54210a-e197-4eb9-88b5-2ed2589c7230@pobox.com>
-Content-Language: en-US
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <1c54210a-e197-4eb9-88b5-2ed2589c7230@pobox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ <20260312201024.124696392@linuxfoundation.org>
+From: Matthieu Baerts <matttbe@kernel.org>
+Autocrypt: addr=matttbe@kernel.org; keydata=
+ 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
+ lzVbFe7fduHbABmYz9cefQpO7wDE/Q==
+Organization: NGI0 Core
+In-Reply-To: <20260312201024.124696392@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.206.103
-X-Source-L: No
-X-Exim-ID: 1w0yxK-00000000Rcz-2Kpo
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-206-103.hsd1.ca.comcast.net ([10.0.1.180]) [73.162.206.103]:56878
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 18
-X-Org: HG=bhshared;ORG=bluehost;
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
-X-CMAE-Envelope: MS4xfPy6ARCsng2KjNg6lq/P6xlTWAfaWLgAyV/I6x9xvY7mwykblSmsI0GHVeoWx/UaElX7VcO56TklYqQu4i+AjJFVjx223hA17J6CAitmei2oYugcIWir
- 39+V+0ZdJA8CN+VIvKTFwA9XOkgTvzIL0nI4NXpVJYcrKG6VlEgQAmWI7Bgqwy9g9UhWfTycvW+sRg==
 
-On 3/13/26 01:05, Barry K. Nathan wrote:
-> On 3/12/26 23:10, Ron Economos wrote:
->> Probably those sched/fair patches.
->
-> Yes, after bisecting it turned out to be
-> sched-fair-fix-eevdf-entity-placement-bug-causing-sc.patch
->
-> Taking 6.12.77-rc1 and reverting both of the sched-fair patches
-> results in a working kernel that boots consistently (which I am
-> using now to send this email). 
+Hi Greg,
 
-Confirmed on RISC-V. Reverting "sched/fair: Fix lag clamp" commit b547745a2c78fd1cc1fdc6a0d1b05c884c05cec2 and "sched/fair: Fix 
-EEVDF entity placement bug causing scheduling lag" commit f9891a33ba67ce40e5a17023d2f3a5e2b7d72ffd resolves the issue.
+On 12/03/2026 21:09, Greg Kroah-Hartman wrote:
+> 6.12-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+> 
+> commit 1777f349ff41b62dfe27454b69c27b0bc99ffca5 upstream.
+> 
+> This validates the previous commit: endpoints with both the signal and
+> subflow flags should always be marked as used even if it was not
+> possible to create new subflows due to the MPTCP PM limits.
+
+FYI, this patch adds a new subtest in the MPTCP selftests to validate
+that the upstream parent commit -- 579a752464a6 ("mptcp: pm: in-kernel:
+always mark signal+subflow endp as used") -- fixes a warning. Except
+that this commit had a conflict and is currently not in v6.12. Sasha
+sent a version without the conflict (BTW, thank you for that!):
+
+  https://lore.kernel.org/20260309153846.1288656-1-sashal@kernel.org
+
+I guess that's probably fine like that because the issue exposed by this
+new test is not new, and it will be fixed by the missing patch soon I
+suppose. Probably no need to modify this RC, and the fix can wait the
+next version, but I prefer to send this message just in case people hit
+the issue.
+
+Cheers,
+Matt
+-- 
+Sponsored by the NGI0 Core fund.
 
