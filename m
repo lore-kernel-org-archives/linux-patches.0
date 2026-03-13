@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D267377022
-	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 20:32:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F4A1377026
+	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 20:32:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773433980; cv=none; b=bKve2GuWrHNxcJuzmvkAyKJiOtxu4F1BMLO2EzHPO4rhudrYt7UIedF16p9y38wn4QbbiA23ttrR3SCARXuMVTKTKaNEaPsAmvHSEkteZqX147ZW08EpGa9e/M3aLulic8qx+qzfbMr4WdTJfC4QVTQRbaevqGODcQtZ1SFAaJ4=
+	t=1773433981; cv=none; b=oG7csnWOSLsjzgpdahO4qw5gfUvzR0xjyZn5fEaCmZGqkbYLtYe9x2GVX1K2vZxFHteEYS39QLmcw93OChqqiWSG5grAeUe0eB8migVXrzawJ7+6G9i/e4kEQYpnycYDKp7/qfSpP8tS0awAOt1apEWscGyVXlZ55JdMChnMAn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773433980; c=relaxed/simple;
-	bh=8KixJVU3eUU6QMa/RZIfK9ZWO4UtHzZLFNwGdwVoYV8=;
+	s=arc-20240116; t=1773433981; c=relaxed/simple;
+	bh=qIe7VhOdoVlLCUxoNR7SC51N22nu+eMyI+A9ZvoW/0k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qcuLyfL8+mYw5x0KGwichXibBmAZqcSw8XOocqhkO1PR+OdzZQGt2qTZ54KGag2aGem3i8mQXh+kOQ/5PafWsczfXU+TqdmR/AOfUaXQgxSD6rd8Tcp/zNk5xdmVRdFwqSiuaLjZk7vhOj+r0GzTRPdgaJAMyResIlpaHViy5nY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cABjtrLb; arc=none smtp.client-ip=198.175.65.17
+	 MIME-Version; b=Fw5+UoSjB8JmwaoRP6qFn1coEi1grXaiddOYjFLnYb7yrk+4CLH4/Pit2qMwSpMTHfvWh7jvlinG6H1Hd7UzKLh3WSoMJnE1oM/NJlyEuexXGOR96enOAxF55UWCvErkpoKKRcblWLifkB1T9nPcs/fcs0mJwXBzScFn2uujWx8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eupGWp+/; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cABjtrLb"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eupGWp+/"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773433978; x=1804969978;
+  t=1773433979; x=1804969979;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=8KixJVU3eUU6QMa/RZIfK9ZWO4UtHzZLFNwGdwVoYV8=;
-  b=cABjtrLbcMmxqB0sGSMvo3Oz+v4gj8ZtGlEkWZBrIuoucRHWtMxFRd2N
-   kV6CLkkejzn8ztIkluO/yuEUIQ1tlAFk6wvvB3HxIfP4U4le17++wiIm1
-   pZKYcFycMTakfOA6lfb/BEIj076bFpnlN1DIiJTin809fHBQgesInGcNw
-   fY/d0L1D632xB6PFwjwWiP920Zan1I33gs4NqUTJJ0PRZvBAxUAPre61M
-   O8ODzfFnNxzsHmlcWakj6vN0TBLvpIuTnLRSyOCRTk762zROuJn+MYmTA
-   0FdBN7ZkFgPRKHXvCP+kvBb+iOmVHgCGiU3S+jlpzBpE04QwcfZ7x+8zO
-   Q==;
-X-CSE-ConnectionGUID: oy8bdKBLSRCmA9defwmP8Q==
-X-CSE-MsgGUID: vmjEqY25Qa677ezYdW/BMg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="74519285"
+  bh=qIe7VhOdoVlLCUxoNR7SC51N22nu+eMyI+A9ZvoW/0k=;
+  b=eupGWp+/U8/z9JWWux3sdRzhflrRfHf0YpIYPnzhXxPQbkwGlXHW1m4L
+   ieUL6dGXeeUsNGAMIzRFc5Fm7tbcHxjiJ9vwNRAkWc2D/NYSek8edVWnu
+   P832ND0aUymyQAMUNDZT96I53uvBydG1i5w6nEFipADdqFIMvkKhTCH8v
+   3SXOzD9HU8W6aComp0kVSL1Ia5Rm1h+yBGb9VL2P7q1IEvtD51G5v8405
+   pXTIa57WDr+SAUktrWnmmIXQzZ5OztgDBniDX9N/jfEbkP60ri/h9JnsH
+   qtF0KcoDDZlUZbTI+nltm3PXg+UeI30epW9DBUX+hwY30vgMp3IR3YzeA
+   g==;
+X-CSE-ConnectionGUID: qkieCFBVSuutwQR/CGwbbQ==
+X-CSE-MsgGUID: McVs2on/R3CWyocl4bFCrQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="74519293"
 X-IronPort-AV: E=Sophos;i="6.23,118,1770624000"; 
-   d="scan'208";a="74519285"
+   d="scan'208";a="74519293"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 13:32:54 -0700
-X-CSE-ConnectionGUID: DanAruqSQP+ISdUZ6bT4zA==
-X-CSE-MsgGUID: vCrr5D40QNiqUWSgeLkDPA==
+X-CSE-ConnectionGUID: JGXTisTRQK+cpIaakGYmbg==
+X-CSE-MsgGUID: huGS3OOkSLG5nTdTACocOw==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 13:32:54 -0700
@@ -59,9 +59,9 @@ Cc: fenghuay@nvidia.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v3 06/10] selftests/resctrl: Increase size of buffer used in MBM and MBA tests
-Date: Fri, 13 Mar 2026 13:32:33 -0700
-Message-ID: <32e610855f87010cd37ccc18c5eb23a1117fbb41.1773432891.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 07/10] selftests/resctrl: Raise threshold at which MBM and PMU values are compared
+Date: Fri, 13 Mar 2026 13:32:34 -0700
+Message-ID: <1bdca244a899a605c1ddd701a09d6a9d0c242856.1773432891.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1773432891.git.reinette.chatre@intel.com>
 References: <cover.1773432891.git.reinette.chatre@intel.com>
@@ -73,51 +73,82 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Errata for Sierra Forest [1] (SRF42) and Granite Rapids [2] (GNR12)
-describe the problem that MBM on Intel RDT may overcount memory bandwidth
-measurements. The resctrl tests compare memory bandwidth reported by iMC
-PMU to that reported by MBM causing the tests to fail on these systems
-depending on the settings of the platform related to the errata.
+commit 501cfdba0a40 ("selftests/resctrl: Do not compare performance
+counters and resctrl at low bandwidth") introduced a threshold under which
+memory bandwidth values from MBM and performance counters are not compared.
+This is needed because MBM and the PMUs do not have an identical view of
+memory bandwidth since PMUs can count all memory traffic while MBM does not
+count "overhead" (for example RAS) traffic that cannot be attributed to an
+RMID. As a ratio this difference in view of memory bandwidth is pronounced
+at low memory bandwidths.
 
-Since the resctrl tests need to run under various conditions it is not
-possible to ensure system settings are such that MBM will not overcount.
-It has been observed that the overcounting can be controlled via the
-buffer size used in the MBM and MBA tests that rely on comparisons
-between iMC PMU and MBM measurements.
+The 750MiB threshold was chosen arbitrarily after comparisons on different
+platforms. Exposed to more platforms after introduction this threshold has
+proven to be inadequate.
 
-Running the MBM test on affected platforms with different buffer sizes it
-can be observed that the difference between iMC PMU and MBM counts reduce
-as the buffer size increases. After increasing the buffer size to more
-than 4X the differences between iMC PMU and MBM become insignificant.
+Having accurate comparison between performance counters and MBM requires
+careful management of system load as well as control of features that
+introduce extra memory traffic, for example, patrol scrub. This is not
+appropriate for the resctrl selftests that are intended to run on a
+variety of systems with various configurations.
 
-Increase the buffer size used in MBM and MBA tests to 4X L3 size to reduce
-possibility of tests failing due to difference in counts reported by iMC
-PMU and MBM.
+Increase the memory bandwidth threshold under which no comparison is made
+between performance counters and MBM. Add additional leniency by increasing
+the percentage of difference that will be tolerated between these counts.
+
+There is no impact to the validity of the resctrl selftests results as a
+measure of resctrl subsystem health.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Chen Yu <yu.c.chen@intel.com>
-Link: https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/sierra-forest/xeon-6700-series-processor-with-e-cores-specification-update/errata-details/ # [1]
-Link: https://edc.intel.com/content/www/us/en/design/products-and-solutions/processors-and-chipsets/birch-stream/xeon-6900-6700-6500-series-processors-with-p-cores-specification-update/011US/errata-details/ # [2]
 ---
 Changes since v2:
 - Add Chen Yu's tag.
 ---
- tools/testing/selftests/resctrl/fill_buf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/resctrl/mba_test.c | 2 +-
+ tools/testing/selftests/resctrl/mbm_test.c | 2 +-
+ tools/testing/selftests/resctrl/resctrl.h  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/fill_buf.c b/tools/testing/selftests/resctrl/fill_buf.c
-index 19a01a52dc1a..b9fa7968cd6e 100644
---- a/tools/testing/selftests/resctrl/fill_buf.c
-+++ b/tools/testing/selftests/resctrl/fill_buf.c
-@@ -139,6 +139,6 @@ ssize_t get_fill_buf_size(int cpu_no, const char *cache_type)
- 	if (ret)
- 		return ret;
+diff --git a/tools/testing/selftests/resctrl/mba_test.c b/tools/testing/selftests/resctrl/mba_test.c
+index cd4c715b7ffd..39cee9898359 100644
+--- a/tools/testing/selftests/resctrl/mba_test.c
++++ b/tools/testing/selftests/resctrl/mba_test.c
+@@ -12,7 +12,7 @@
  
--	return cache_total_size * 2 > MINIMUM_SPAN ?
--			cache_total_size * 2 : MINIMUM_SPAN;
-+	return cache_total_size * 4 > MINIMUM_SPAN ?
-+			cache_total_size * 4 : MINIMUM_SPAN;
- }
+ #define RESULT_FILE_NAME	"result_mba"
+ #define NUM_OF_RUNS		5
+-#define MAX_DIFF_PERCENT	8
++#define MAX_DIFF_PERCENT	15
+ #define ALLOCATION_MAX		100
+ #define ALLOCATION_MIN		10
+ #define ALLOCATION_STEP		10
+diff --git a/tools/testing/selftests/resctrl/mbm_test.c b/tools/testing/selftests/resctrl/mbm_test.c
+index 58201f844740..6dbbc3b76003 100644
+--- a/tools/testing/selftests/resctrl/mbm_test.c
++++ b/tools/testing/selftests/resctrl/mbm_test.c
+@@ -11,7 +11,7 @@
+ #include "resctrl.h"
+ 
+ #define RESULT_FILE_NAME	"result_mbm"
+-#define MAX_DIFF_PERCENT	8
++#define MAX_DIFF_PERCENT	15
+ #define NUM_OF_RUNS		5
+ 
+ static int
+diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
+index 7f2ab28be857..3bad2d80c09b 100644
+--- a/tools/testing/selftests/resctrl/resctrl.h
++++ b/tools/testing/selftests/resctrl/resctrl.h
+@@ -55,7 +55,7 @@
+  * and MBM respectively, for instance generating "overhead" traffic which
+  * is not counted against any specific RMID.
+  */
+-#define THROTTLE_THRESHOLD	750
++#define THROTTLE_THRESHOLD	2500
+ 
+ /*
+  * fill_buf_param:	"fill_buf" benchmark parameters
 -- 
 2.50.1
 
