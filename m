@@ -1,233 +1,173 @@
-Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB5B399023
-	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 13:35:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773408959; cv=pass; b=Iv/62zfM5D4MCeT6QBzPEcm+4N9NLLarDV5xnx9qolMTrmLhqR204iO6y70A2l7p5IqKrPB6foIRcPeiOxv479BJjd1TjPh3Kj+bNKGdR/W2gwR/mqXuBkslFWFDvCPsXhmICqrP/UzqsG4MHp9psS8ELxHcbaf6EXJX6VXFekE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773408959; c=relaxed/simple;
-	bh=Vew5/pNVzaHeCl6MkP4hTQXVcpyhFe4CeyXNr9m8cEA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=h+4LOft5bpHFYms8lzJ1fRcCmj6rsqG0dGPyE6tmmISVIyxcR5IJI64ok8IR/AB12x3Qe2Z88t+yt0Dri4B0nCjiFgzLWA5jtOjsN7HZ/yPRIopSomq/HjfBExeNeoQD6LnGYXwLiNu2mmmzX6o7iyOR3HQXAz2+3MDIcPua7kI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k3UCo/zZ; arc=pass smtp.client-ip=74.125.82.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C1A25F994
+	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 13:38:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773409112; cv=none; b=mWYfJiUjEDlKPQshUXT2cN8Rmepxl9zHEmBVclxTEeRKeuGKSGQsc1qjxvaGNGJf3YMye1DFYTBT1zdO3MoMwn0DInNjOex3s/pMG3aIWpd4OEH8f6Zym2p8z3lr/udslD+qB2MOPuSIs8wVqYms7PuugH40S21i+lyuiux+Qz8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773409112; c=relaxed/simple;
+	bh=Os0JW1TzudHFksCaebelz4c2+1iPcHFn6PqI4MGgM5Q=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=iiFAMaV4oU7GshywwlODuLvz3b4PXs6reB0P5skRoqDHU1H+LldOCo2CIIhMdf1LYk91U15f5HTGolsz674fITm63b7bIBBJAzfEsUkYTPE0WdHm2HjRYd7RhBgrl4RUR+Hew2QoQ32rnr3Du2lHZZuyYxiUjTje7clTzwWUiLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L9kLYIV/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s2MvJqWG; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k3UCo/zZ"
-Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12734af2cdcso101454c88.0
-        for <patches@lists.linux.dev>; Fri, 13 Mar 2026 06:35:57 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773408957; cv=none;
-        d=google.com; s=arc-20240605;
-        b=CFSeyXV54PR5I9TAd36fvu7tNt9KRVXv96b9U+y4Tz+0TyRVWf4SJWv4q1lzngAwj9
-         nmw0Y2Bs/16d4l5qFHe8TcO5L51rpx2hgGLKcZSeHSa5nvJZlEZ26wcv1l8lmIZPIWPt
-         9SoKkRQRgRwYPNE7kpD1Kp0Kt91+sg/YcewuOveWCrqL1m0FPhuEzDNy+TiRthFGEiYQ
-         WvoHV/IWkkgd/x3ook6f8GDYUh/o3n6CthRzMNBzZXENVVXkhLKX8zu19Jqe1vxbYqSi
-         xbzcTgz3nls813ofQCJyeHimfw7y4YrrHV65/054IuM0TYtVEGt2OWUHYMaoYZQtUKzL
-         2GRg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=QhMxT5t81umetHP7OJdIfPfi7qUU4Lkh+7YuNP7wTXU=;
-        fh=Br8GPaM78hkca22JwRpEzBYNgczj3Kf8nN3WXrcVtng=;
-        b=KaPy+RRtgwsrBiANbgwmI1cmFi1QXkvi8MwHEl+vSSnLIxQeoKbcKzg8cBVNCSn5lN
-         hx6ERNbtNzbxBTZgAxErHk7EOKfpPD88Mhn0OiB60rQCr89KrHb4JYqWBWl5ONKCbwWv
-         TKW7Qs15OAANVm4BNrADjgmUUkR8cclPSLKbQykSugI7xezDKcwxLs32Ps3k/4U1M19G
-         M+Eb98O5awd5kkcl8zbrNs/Hc80eSK+3QkfIpSnVPlzhaBzjtfOqp90+Q/UHyzBfp90J
-         XYtoy1vt1iHmRo02VwvJtd9sYU4yPjTdgOD3p6WxpgaT0MeW1cLDzP5lhx08y7Ry8R2l
-         2Kgg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1773408957; x=1774013757; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QhMxT5t81umetHP7OJdIfPfi7qUU4Lkh+7YuNP7wTXU=;
-        b=k3UCo/zZKqfjdyWR/JW8dnDqkTAbrLQUfNzQxEjT8FNFsqKVKoObhXgbGsso2WbQOr
-         7bjQkylvkGbpmjNesPtISuqCJv/bf4QLACX7I8rSrg6lGhZw7Xe1HPf2ks/lnIWvGfrI
-         WeXEtEJZTIv1YDUfjnG0TCMhIT7xq8J5WqKjFicYdKxfUX3lP8AXZc4vwHR06ZjooumU
-         lcIio+mZClEKmOK69ka+uCHaZvNxxeWZeCgiTP0k0Q6FXxK17abH1JNptXoxRPTy/CVh
-         GJO3xdjaPT1UkgVt778o8X9NzBz/LCzmcomQYLKw46X4EffX1j7Cv12BvJXd80bd7v/X
-         yWsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1773408957; x=1774013757;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=QhMxT5t81umetHP7OJdIfPfi7qUU4Lkh+7YuNP7wTXU=;
-        b=su5m2xLVvIyaJ0+lG1LaQ8xOhmYJFyXTewP02XGLbardc4jY9eMMGoFZbDYWJcu96n
-         t43epzQyoYVuu5v8rC4Kdtd3INdjOaWt7AgvK1XW9vZPsNXJQpG6PVRLi3C8pC8yzEMq
-         bb+ooFTau9+FMdULQSPPIqCdx2raYLOJmOH7QbH+7LNiSxt4HnyoRclWuYNShGpuXhwj
-         ue9XNIPG4vKvJ3D8P9eiFFFAh7ve1QxahZoIa/YatMNkss8lO3ThLzjqowwZPm2u8nC1
-         ZETjucl3aTlkeI/eWQ7cAeSIitfDxnFRY2rXICAcDppju4LybHu+rw+FEJ8rJfp7KbKJ
-         qLYQ==
-X-Forwarded-Encrypted: i=1; AJvYcCU2Zv7zcIkbaRxZ2jnb4xSeaRVfU0ffV7jeh6UCIoT6v/gcMx+ouQhm2NrOiymMz8DOedbaC0nr@lists.linux.dev
-X-Gm-Message-State: AOJu0YwRa5R7qn07zunc5nUq/cKM+//pTGG+hUn2+QdGnpmXxOckucb/
-	Q23NAaw2yq7NEFZjaYIzuq1Zw6mekpRGDfEu2t/BNMSNqHpbqOmbNM52sSXHCnDXTzyV+NEwgis
-	60Y2DDzYaI2bp/JwgLRYLwvAtpKfV+EI=
-X-Gm-Gg: ATEYQzzxxa0gKxJArdMki2yIwGfK2UlKn5rlnp2CBYZujCsigvUXZQ25MUd77YueYKV
-	pQKKGI9EtzMdJYDdsrGu7R1Gt8AxrqgQKts5gpEI1WeVw3iTDqkl94GfKtD7yS4spbXqmO9o61Y
-	u9bvyVPbySMMD570AhKYxi7gY69SMLn6dXfhW7eo3FjkMqtJ18O72nnB9wVK5CRa+cZycM2sRLO
-	qyEPbkrENtFJr8gYbkMPT3wExsDy6R+v8O/+YfR3ec8Cz2nVzHJTFK+UGVLZJrj7FLsKlhHow0J
-	IafaZ/Qv+MqGX01UVTb6Y1HCD3HYQzkB6YGHKG6Yz/ijQUllHY5mjSsT6lS8iaCrpwOPGA==
-X-Received: by 2002:a05:7022:2391:b0:128:d4d5:93b9 with SMTP id
- a92af1059eb24-128f3ddb7e9mr736853c88.7.1773408956533; Fri, 13 Mar 2026
- 06:35:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L9kLYIV/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s2MvJqWG"
+Received: from phl-compute-07.internal (phl-compute-07.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 439B1140009A;
+	Fri, 13 Mar 2026 09:38:30 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Fri, 13 Mar 2026 09:38:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1773409110;
+	 x=1773495510; bh=bSYgn1HqoxMyATXnOdNvryJrUoij/9abvESvwZ1raxA=; b=
+	L9kLYIV/fH5Bak/6I03N6IqKoF3wR0htpdq6QSPvt0qFGmf2XUfAqLCNXm5c0a/j
+	HCuS7t+3scZrdLh7djOqr1/3Fok2HMJY25cdezxgzz2ricLrnskYyacmz0nlcjUT
+	x+TJqep9BeyDXpJQ1SKCCE5wEF97YIxShQjCbqSgNvHTkCokPQ0KlyA7cOv6+F3r
+	LWAzEpTAfq0tljFu9/RpZG4taJs3jpb/L+N4vFgu8dVCxMmEqacfVndOK6/9JaHu
+	wUEHEykKOAyeaTNhjfYElMUmo8T5r6SEMYOmONcQsv6FEvbMZZYQDcAq2AJxQwFF
+	0LF8gNFX6D/xZPsKEDzfzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773409110; x=
+	1773495510; bh=bSYgn1HqoxMyATXnOdNvryJrUoij/9abvESvwZ1raxA=; b=s
+	2MvJqWGKBO4uiGEi75CVuv+WusdilWK6JAbu2nAPZ8ZxLrx1Fa3WQ0+EvkxxydsL
+	N/P7hTx1rUQoRm3Qlk9OnypLwddcDDIxe2pLF3Np38AMOqZ1KGYoSdpWXCIKT18m
+	3AdOrUfK26hD15Sq95RcAiW54tZwQhjJj4N2p1Mj+4eUu2/uPJTGRoGoPYPTe1jE
+	P5E47ySt/ZqCWbR94VfN/aBbEff+2kpbZ+aNNH9JdMnhIiD4sfjtW7q4WoH665ix
+	OWR2NPH0wGL4hP94McxlAEhOrUgHRBDILGaUFIvyN8sjgHOeyvWxKBbYivxWlFKu
+	QSa8Cr9bDXau545mJh5hg==
+X-ME-Sender: <xms:VRO0aZXfmhmFsS7pg5m5AEOXd8rsPBlCjXc1KWwSpPCzF3rUXzQNdg>
+    <xme:VRO0aaDXmXptRWnXMvNFMGrVVYYB1yJyYzFxozUMN2jcW_jpSZCBoAc0XaGYRL02c
+    _QRBuSBM_QP9B7g1a-FhDI3z_sjhO7dTMSgCdz1Lr4yzBrZSjhZBpJ->
+X-ME-Received: <xmr:VRO0aa3SeMf3E7rsp7HFXHl5t6SROyVNoGoH9gF1ua5D1iIReg4LgA_5BDHVW9O1_91yO4rC8aNPcq6YYiMAqfZgN7d7FA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeelkedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+    gurhepkfffgggfuffhvfevfhgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
+    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
+    frrghtthgvrhhnpeduudekvdeiuedvuddvgeelhfeltddugfdtgffhvdekueetgedvfeej
+    teekvdeuleenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegsrghrrhihnhesphhosghogidrtghomhdpnhgspghrtghpthhtohepvddvpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehrvgesfieirhiirdhnvghtpdhrtghpthhtoh
+    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
+    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
+    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
+    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
+    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
+    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
+    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:VRO0aaR4bc8XQUBll4Ni55Viv7CMF9QWIAeyuP8h4Vs4F8H81lwjAw>
+    <xmx:VRO0aXYu5xJr6iKDKpQUwYhVV7L3pJb11Aio3kUddx1wTQboCdcGVw>
+    <xmx:VRO0aYDTvf7ok_mW689zkIWDtXYeBupBvYIyZDzcQhbf37ABl0jjGQ>
+    <xmx:VRO0aeDymWN-yrI_S18af7QiAzQRKL5JlH1IBUvTVueuW5OkqFgC7A>
+    <xmx:VhO0ad7HhYIFPvBhaJvfyXDCNDj5SBEaj8I_BjSFjuLebqAS2um01Jui>
+Feedback-ID: i6289494f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Mar 2026 09:38:26 -0400 (EDT)
+Message-ID: <71d1fa5b-e6bb-4289-bd8d-445aeddcb9d8@pobox.com>
+Date: Fri, 13 Mar 2026 06:38:25 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260312-amdgpu-fix-clang-c23-extensions-v1-1-59883120a451@kernel.org>
-In-Reply-To: <20260312-amdgpu-fix-clang-c23-extensions-v1-1-59883120a451@kernel.org>
-From: Alex Deucher <alexdeucher@gmail.com>
-Date: Fri, 13 Mar 2026 09:35:45 -0400
-X-Gm-Features: AaiRm52K3lFtnPCDTCHQ46AGp4JF3gz3oOt-LlB3C1NBMH_-HZtICTmqKkOb1PM
-Message-ID: <CADnq5_MbW=jfGJE=jJi4EXacQs37P1d9KV4a8HjNDLwicwZV7A@mail.gmail.com>
-Subject: Re: [PATCH] drm/amdgpu/discovery: Add braces to case statements in amdgpu_discovery_table_check()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Alex Deucher <alexander.deucher@amd.com>, 
-	=?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>, 
-	Likun Gao <Likun.Gao@amd.com>, Hawking Zhang <Hawking.Zhang@amd.com>, amd-gfx@lists.freedesktop.org, 
-	dri-devel@lists.freedesktop.org, llvm@lists.linux.dev, 
-	patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: freeze during boot regression Re: [PATCH 6.12 000/265]
+ 6.12.77-rc1 review
+From: "Barry K. Nathan" <barryn@pobox.com>
+To: Ron Economos <re@w6rz.net>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com,
+ Francesco Dolcini <francesco@dolcini.it>
+References: <20260312201018.128816016@linuxfoundation.org>
+ <b4f58774-18d4-4a32-9c85-603f9e2c98fc@pobox.com>
+ <ee851013-fec8-47f8-9863-392f17e54474@pobox.com>
+ <2a313336-ccfc-42b7-a14d-c116733ef64a@w6rz.net>
+ <1c54210a-e197-4eb9-88b5-2ed2589c7230@pobox.com>
+ <88e4edea-f204-4f06-b898-2995237fc823@w6rz.net>
+ <d87a1702-6906-475c-afd7-9b4b25bfd48c@pobox.com>
+Content-Language: en-US
+In-Reply-To: <d87a1702-6906-475c-afd7-9b4b25bfd48c@pobox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 12, 2026 at 5:54=E2=80=AFPM Nathan Chancellor <nathan@kernel.or=
-g> wrote:
->
-> When building with a version of clang that supports the narrower
-> '-fms-anonymous-structs' (as opposed to the wider '-fms-extensions')
-> along with the associated kernel support (such as in next-20260312 [1]),
-> there are warnings (or errors with CONFIG_WERROR=3Dy / W=3De) from the
-> switch statement added by commit 47ab777c16c7 ("drm/amdgpu/discovery:
-> use common function to check discovery table").
->
->   drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:560:3: error: label follo=
-wed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
->     560 |                 struct ip_discovery_header *ihdr =3D
->         |                 ^
->   drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:568:3: error: label follo=
-wed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
->     568 |                 struct gpu_info_header *ghdr =3D
->         |                 ^
->   drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:576:3: error: label follo=
-wed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
->     576 |                 struct harvest_info_header *hhdr =3D
->         |                 ^
->   drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:584:3: error: label follo=
-wed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
->     584 |                 struct vcn_info_header *vhdr =3D
->         |                 ^
->   drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:592:3: error: label follo=
-wed by a declaration is a C23 extension [-Werror,-Wc23-extensions]
->     592 |                 struct mall_info_header *mhdr =3D
->         |                 ^
->
-> If '-fms-extensions' were not present, this would be a hard error in
-> older clang versions.
->
-> Add braces to the case statements that declare variables to clear up the
-> warnings.
->
-> Fixes: 47ab777c16c7 ("drm/amdgpu/discovery: use common function to check =
-discovery table")
-> Link: https://git.kernel.org/next/linux-next/c/0d3fccf68d9873a3c824fb70be=
-0dbb2c4642aa90 [1]
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+On 3/13/26 03:53, Barry K. Nathan wrote:
+[snip]
+> On 3/13/26 02:37, Ron Economos wrote:
+>> On 3/13/26 01:05, Barry K. Nathan wrote:
+>>> On 3/12/26 23:10, Ron Economos wrote:
+>>>> Probably those sched/fair patches.
+>>>
+>>> Yes, after bisecting it turned out to be
+>>> sched-fair-fix-eevdf-entity-placement-bug-causing-sc.patch
+>>>
+>>> Taking 6.12.77-rc1 and reverting both of the sched-fair patches
+>>> results in a working kernel that boots consistently (which I am
+>>> using now to send this email). 
+>>
+>> Confirmed on RISC-V. Reverting "sched/fair: Fix lag clamp" commit b547745a2c78fd1cc1fdc6a0d1b05c884c05cec2 and "sched/fair: Fix EEVDF entity placement bug causing scheduling lag" commit f9891a33ba67ce40e5a17023d2f3a5e2b7d72ffd resolves the issue.
+> 
+> After looking into it a bit more, I found two upstream commits that
+> should fix this issue without reverting the two sched/fair patches
+> (either of the two commits alone should fix it if I understand
+> the bug and the code correctly):
+> 
+> 
+> commit 4423af84b29794a9bd2bd07188d8e71083e54c61
+> sched/fair: optimize the PLACE_LAG when se->vlag is zero
+> 
+> commit c70fc32f44431bb30f9025ce753ba8be25acbba3
+> sched/fair: Adhere to place_entity() constraints
+> 
+> 
+> I think c70fc32f4443 is theoretically the proper fix, while
+> 4423af84b297 is a performance optimization that just happens to also
+> fix the bug.
+> 
+> 4423af84b297 turned out to be the easier backport; the upstream patch
+> applies to 6.12.77-rc1 with an offset but no fuzz or conflicts. So I
+> tried 6.12.77-rc1 + 4423af84b297, and just as with reverting the two
+> sched/fair patches, it eliminates the boot freeze in my testing. It's
+> what I'm running now as I write and send this email.
+> 
+> Next, I think I'll try doing a backport of c70fc32f4443 (I think it
+> should be easy enough), and I'll try testing 6.12.77-rc1 +
+> c70fc32f4443 (probably both with and without 4423af84b297).
+> Maybe 4423af84b297 on its own is enough though.
 
-Applied.  Thanks!
+I originally wrote a much longer email, but I'll try to keep this concise.
 
-Alex
+I was able to backport c70fc32f4443 successfully, and the backport does
+fix the reboot freezes (with or without 4423af84b297). However,
+backporting that commit convinced me that it's too risky; I'm particularly
+worried it could make future sched/fair backports more difficult. And once
+4423af84b297 is applied, I think c70fc32f4443 ends up being a fix for a
+theoretical bug.
 
-> ---
->  drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c b/drivers/gpu/=
-drm/amd/amdgpu/amdgpu_discovery.c
-> index f9f785c5d8ac..4209945af66f 100644
-> --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-> +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-> @@ -556,7 +556,7 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->         checksum =3D le16_to_cpu(info->checksum);
->
->         switch (table_id) {
-> -       case IP_DISCOVERY:
-> +       case IP_DISCOVERY: {
->                 struct ip_discovery_header *ihdr =3D
->                         (struct ip_discovery_header *)(discovery_bin + of=
-fset);
->                 act_val =3D le32_to_cpu(ihdr->signature);
-> @@ -564,7 +564,8 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->                 table_size =3D le16_to_cpu(ihdr->size);
->                 table_name =3D "data table";
->                 break;
-> -       case GC:
-> +       }
-> +       case GC: {
->                 struct gpu_info_header *ghdr =3D
->                         (struct gpu_info_header *)(discovery_bin + offset=
-);
->                 act_val =3D le32_to_cpu(ghdr->table_id);
-> @@ -572,7 +573,8 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->                 table_size =3D le16_to_cpu(ghdr->size);
->                 table_name =3D "gc table";
->                 break;
-> -       case HARVEST_INFO:
-> +       }
-> +       case HARVEST_INFO: {
->                 struct harvest_info_header *hhdr =3D
->                         (struct harvest_info_header *)(discovery_bin + of=
-fset);
->                 act_val =3D le32_to_cpu(hhdr->signature);
-> @@ -580,7 +582,8 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->                 table_size =3D sizeof(struct harvest_table);
->                 table_name =3D "harvest table";
->                 break;
-> -       case VCN_INFO:
-> +       }
-> +       case VCN_INFO: {
->                 struct vcn_info_header *vhdr =3D
->                         (struct vcn_info_header *)(discovery_bin + offset=
-);
->                 act_val =3D le32_to_cpu(vhdr->table_id);
-> @@ -588,7 +591,8 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->                 table_size =3D le32_to_cpu(vhdr->size_bytes);
->                 table_name =3D "vcn table";
->                 break;
-> -       case MALL_INFO:
-> +       }
-> +       case MALL_INFO: {
->                 struct mall_info_header *mhdr =3D
->                         (struct mall_info_header *)(discovery_bin + offse=
-t);
->                 act_val =3D le32_to_cpu(mhdr->table_id);
-> @@ -597,6 +601,7 @@ static int amdgpu_discovery_table_check(struct amdgpu=
-_device *adev,
->                 table_name =3D "mall table";
->                 check_table =3D false;
->                 break;
-> +       }
->         default:
->                 dev_err(adev->dev, "invalid ip discovery table id %d spec=
-ified\n", table_id);
->                 check_table =3D false;
->
-> ---
-> base-commit: 7a9419ab42699fd3d4c857ef81ae097d8d8d5899
-> change-id: 20260312-amdgpu-fix-clang-c23-extensions-1fb28eee64c2
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+So, even though c70fc32f4443 is the commit that was cc'd to stable@, I
+believe 4423af84b297 is a better (safer, less risky) way to go.
+
+
+In summary, I believe the two best ways to fix this regression are:
+1. Backport 4423af84b297, or
+2. Revert the two sched/fair patches.
+-- 
+-Barry K. Nathan  <barryn@pobox.com>
+
