@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AB06303CA0
-	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 20:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 860D5373C1C
+	for <patches@lists.linux.dev>; Fri, 13 Mar 2026 20:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773433977; cv=none; b=UStimZmhebMC6rJiNVI5AGHPlBVLeLYWHJn6JMTzz+3JXZ7C+J5JtXnwRyJBxHB7FL8r8bMbr6Tdx/Py57TwQcsMz5dVpXyycs9L/fggLI4EOxyrj9oskJEh7sSfi/kFIW7zRLIJ7pK8jlv8K9T+wSZTZho3yLwax49lGAwOzBY=
+	t=1773433978; cv=none; b=QRTEQIJzTYwi/rAtvmlusqMRsT1lHX23X2m1+JyU20lmsmEZIHV9UDrd2P/3lwAr+WtYAzQOVqQiQHLzNflmhZQkCNc6qI/fHWu0zPApk5id1cYPgq6tAmOzicOAiViXRW3urQsy7JU4devYgRCIBOeNs5RA4Jd7XW97vN4/Wss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773433977; c=relaxed/simple;
-	bh=wHySwkzpJMKcOqasv7ax2q0a0lzkXceTKn3QKFWr284=;
+	s=arc-20240116; t=1773433978; c=relaxed/simple;
+	bh=5Qmoh1Ru8vMO1Nfg8X9L40uIhnik+WL6a07fapKwUMA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ip5T5wIV60Azgc7gTGOVypIYNIeS3M5VYsmxCuywEZQ4EnpTof9VnRx/2IMaWquTXDxvLIsS0Gce8oSFRKvJy+IVtlgFAR2bMcSEJV0xud2cnM6T3t7nIER9ZXlZkC9sXn+BEoTNFfXDFullJWnHP6ceoxwAtNpRBT4XDrdIwTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ah5UcoQt; arc=none smtp.client-ip=198.175.65.17
+	 MIME-Version:Content-Type; b=pUeDkwohVRSI/R+DSBFcWKpcC8FF7mCKvR1rpR8Ikc3+18awevu2p/5RLoR97kcO5pmBpURg+DrD5x36nQMLteh99slQ0KCO70CT2riyg+Ule0Wyjquu7tsYdS2Lw0IGS2XVRnlBZXMsNPKB1F+E55/GoAqHeaUuvgAhGWFLG5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=flIieYJt; arc=none smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ah5UcoQt"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="flIieYJt"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773433974; x=1804969974;
+  t=1773433976; x=1804969976;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=wHySwkzpJMKcOqasv7ax2q0a0lzkXceTKn3QKFWr284=;
-  b=ah5UcoQt11n4fUd16sY9trvjHpJLLpUwwuuriWW0fwuB8JzySHkTvHyz
-   2Gyvzr93nRt0rt8Q4itdyFmhyH116gjTJTbAHf0if9PVIhpJnb+YEmhhK
-   VRXRhvZig6V4QZNlhBX7Lm3myMhX/x8j/kT/iYtQbjTz9ySeZmBNgMEE6
-   p6oct3VmlMsYGtHtWx4U3N0KNqx0UubYreYduGC3Hj0h2vKg5HGpIqxRM
-   tB8jl8MHRaDceOOQ5osaLDWPnpWG0kRAu6KkHY25YCe1kmJcmsAoIlv63
-   kGtnPH+g7vuSWP883dMi5eMVhwEa6lv0BPg8tTv+yiJXunWNVnMMW2lF2
-   A==;
-X-CSE-ConnectionGUID: hLxbcOjoQgi0x2vs4RMArw==
-X-CSE-MsgGUID: hzL+80G6S0SuKft2nU8BdA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="74519254"
+  bh=5Qmoh1Ru8vMO1Nfg8X9L40uIhnik+WL6a07fapKwUMA=;
+  b=flIieYJtHIto4bTRU7X7Q0qwAG9/N6DBnYRa37hBfF7BNjpNdCHzhM5+
+   2Pa+4iwx1X+fPTTBJsE2Vu//iuvthv6eXIHJ0b/XjxtyAEsNDzf0BuHsY
+   zShPu2+jKWxX97XkNto/ZiC4UFkr4WOQrUGS1Ilw9LHWXO4BrJRiyhvP9
+   ZTJwZITjWaKWWMDeOcwmuZw9tg4GWPpcbnwVtvqq2lAA+NoToWZ/nKzeS
+   DwP7/rIfGXlERWWwqsp15TadXAh9AHPT86zKPuFqD07bJsbfNfueqFV/R
+   U+opb+TkmpqOV2j9DJy/QU5L6gXOxbhcgU38TURtg4CR3hZ5SsfDqL6Rf
+   Q==;
+X-CSE-ConnectionGUID: jnCo4T8aSsKWPLGrpB0ipA==
+X-CSE-MsgGUID: 5KSYWBMFShOIdouECyN0AQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="74519262"
 X-IronPort-AV: E=Sophos;i="6.23,118,1770624000"; 
-   d="scan'208";a="74519254"
+   d="scan'208";a="74519262"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 13:32:52 -0700
-X-CSE-ConnectionGUID: +SJZRA8LT1ms1Z7Vacq01A==
-X-CSE-MsgGUID: IbhoQIKSQ3yPPWGPkLbOfQ==
+X-CSE-ConnectionGUID: iCw53FMmSSu4kTdbYbFHLw==
+X-CSE-MsgGUID: q0fTUhVzQx+h2gaOhI5r4w==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 13:32:51 -0700
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Mar 2026 13:32:52 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: shuah@kernel.org,
 	Dave.Martin@arm.com,
@@ -59,9 +59,9 @@ Cc: fenghuay@nvidia.com,
 	linux-kselftest@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev
-Subject: [PATCH v3 02/10] selftests/resctrl: Reduce interference from L2 occupancy during cache occupancy test
-Date: Fri, 13 Mar 2026 13:32:29 -0700
-Message-ID: <5a23acd72af3ea0513f730d7773108586f68c430.1773432891.git.reinette.chatre@intel.com>
+Subject: [PATCH v3 03/10] selftests/resctrl: Do not store iMC counter value in counter config structure
+Date: Fri, 13 Mar 2026 13:32:30 -0700
+Message-ID: <740f2fe57503ea8baf8e4b5bcdf5680e90f76c3a.1773432891.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1773432891.git.reinette.chatre@intel.com>
 References: <cover.1773432891.git.reinette.chatre@intel.com>
@@ -71,163 +71,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-The CMT test creates a new control group that is also capable of monitoring
-and assigns the workload to it. The workload allocates a buffer that by
-default fills a portion of the L3 and keeps reading from the buffer,
-measuring the L3 occupancy at intervals. The test passes if the workload's
-L3 occupancy is within 15% of the buffer size.
+The MBM and MBA tests compare MBM memory bandwidth measurements against
+the memory bandwidth event values obtained from each memory controller's
+PMU. The memory bandwidth event settings are discovered from the memory
+controller details found in /sys/bus/event_source/devices/uncore_imc_N and
+stored in struct imc_counter_config.
 
-The CMT test does not take into account that some of the workload's data
-may land in L2/L1. Matching L3 occupancy to the size of the buffer while
-a portion of the buffer can be allocated into L2 is not accurate.
+In addition to event settings struct imc_counter_config contains
+imc_counter_config::return_value in which the associated event value is
+stored on every read.
 
-Take the L2 cache into account to improve test accuracy:
- - Reduce the workload's L2 cache allocation to the minimum on systems that
-   support L2 cache allocation. Do so with a new utility in preparation for
-   all L3 cache allocation tests needing the same capability.
- - Increase the buffer size to accommodate data that may be allocated into
-   the L2 cache. Use a buffer size double the L3 portion to keep using the
-   L3 portion size as goal for L3 occupancy while taking into account that
-   some of the data may be in L2.
+The event value is consumed and immediately recorded at regular intervals.
+The stored value is never consumed afterwards, making its storage as part
+of event configuration unnecessary.
 
-Running the CMT test on a sample system while introducing significant
-cache misses using "stress-ng --matrix-3d 0 --matrix-3d-zyx" shows
-significant improvement in L3 cache occupancy:
+Remove the return_value member from struct imc_counter_config. Instead
+just use a more aptly named "measurement" local variable for use during
+event reading.
 
-Before:
-
-    # Starting CMT test ...
-    # Mounting resctrl to "/sys/fs/resctrl"
-    # Cache size :335544320
-    # Writing benchmark parameters to resctrl FS
-    # Write schema "L3:0=fffe0" to resctrl FS
-    # Write schema "L3:0=1f" to resctrl FS
-    # Benchmark PID: 7089
-    # Checking for pass/fail
-    # Pass: Check cache miss rate within 15%
-    # Percent diff=12
-    # Number of bits: 5
-    # Average LLC val: 73269248
-    # Cache span (bytes): 83886080
-    ok 1 CMT: test
-
-After:
-    # Starting CMT test ...
-    # Mounting resctrl to "/sys/fs/resctrl"
-    # Cache size :335544320
-    # Writing benchmark parameters to resctrl FS
-    # Write schema "L3:0=fffe0" to resctrl FS
-    # Write schema "L3:0=1f" to resctrl FS
-    # Write schema "L2:1=0x1" to resctrl FS
-    # Benchmark PID: 7171
-    # Checking for pass/fail
-    # Pass: Check cache miss rate within 15%
-    # Percent diff=0
-    # Number of bits: 5
-    # Average LLC val: 83755008
-    # Cache span (bytes): 83886080
-    ok 1 CMT: test
-
-Reported-by: Dave Martin <Dave.Martin@arm.com>
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 Tested-by: Chen Yu <yu.c.chen@intel.com>
-Link: https://lore.kernel.org/lkml/aO+7MeSMV29VdbQs@e133380.arm.com/
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 ---
 Changes since v2:
-- New patch split from v1's "selftests/resctrl: Improve accuracy of cache
-  occupancy test". (Ilpo)
-- Reword changelog. (Ilpo)
-- Update data used in changelog to match code after patch split.
-- Introduce utility to reduce L2 cache allocation. (Ilpo)
+- Rename "return_value" -> "measurement". (Ilpo)
+- Add Ilpo's Rb tag.
 - Add Chen Yu's tag.
 ---
- tools/testing/selftests/resctrl/cache.c    | 13 +++++++++++++
- tools/testing/selftests/resctrl/cmt_test.c | 14 ++++++++++----
- tools/testing/selftests/resctrl/resctrl.h  |  3 +++
- 3 files changed, 26 insertions(+), 4 deletions(-)
+ tools/testing/selftests/resctrl/resctrl_val.c | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/resctrl/cache.c b/tools/testing/selftests/resctrl/cache.c
-index 1ff1104e6575..bef71b6feacc 100644
---- a/tools/testing/selftests/resctrl/cache.c
-+++ b/tools/testing/selftests/resctrl/cache.c
-@@ -173,6 +173,19 @@ int measure_llc_resctrl(const char *filename, pid_t bm_pid)
- 	return print_results_cache(filename, bm_pid, llc_occu_resc);
- }
+diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testing/selftests/resctrl/resctrl_val.c
+index a5a8badb83d4..71d6f88cc1f7 100644
+--- a/tools/testing/selftests/resctrl/resctrl_val.c
++++ b/tools/testing/selftests/resctrl/resctrl_val.c
+@@ -32,7 +32,6 @@ struct imc_counter_config {
+ 	__u64 event;
+ 	__u64 umask;
+ 	struct perf_event_attr pe;
+-	struct membw_read_format return_value;
+ 	int fd;
+ };
  
-+/*
-+ * Reduce L2 allocation to minimum when testing L3 cache allocation.
-+ */
-+int minimize_l2_occupancy(const struct resctrl_test *test,
-+			  const struct user_params *uparams,
-+			  const struct resctrl_val_param *param)
-+{
-+	if (!strcmp(test->resource, "L3") && resctrl_resource_exists("L2"))
-+		return write_schemata(param->ctrlgrp, "0x1", uparams->cpu, "L2");
-+
-+	return 0;
-+}
-+
- /*
-  * show_cache_info - Show generic cache test information
-  * @no_of_bits:		Number of bits
-diff --git a/tools/testing/selftests/resctrl/cmt_test.c b/tools/testing/selftests/resctrl/cmt_test.c
-index 7bc6cf49c1c5..ccb6fe881a94 100644
---- a/tools/testing/selftests/resctrl/cmt_test.c
-+++ b/tools/testing/selftests/resctrl/cmt_test.c
-@@ -23,7 +23,9 @@
-  * Initialize capacity bitmasks (CBMs) of:
-  * - control group being tested per test parameters,
-  * - default resource group as inverse of control group being tested to prevent
-- *   other tasks from interfering with test.
-+ *   other tasks from interfering with test,
-+ * - L2 resource of control group being tested to minimize allocations into
-+ *   L2 if possible to better predict L3 occupancy.
-  */
- static int cmt_init(const struct resctrl_test *test,
- 		    const struct user_params *uparams,
-@@ -46,7 +48,11 @@ static int cmt_init(const struct resctrl_test *test,
- 		return ret;
+@@ -312,23 +311,23 @@ static int get_read_mem_bw_imc(float *bw_imc)
+ 	 * Take overflow into consideration before calculating total bandwidth.
+ 	 */
+ 	for (imc = 0; imc < imcs; imc++) {
++		struct membw_read_format measurement;
+ 		struct imc_counter_config *r =
+ 			&imc_counters_config[imc];
  
- 	snprintf(schemata, sizeof(schemata), "%lx", param->mask);
--	return write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
-+	ret = write_schemata(param->ctrlgrp, schemata, uparams->cpu, test->resource);
-+	if (ret)
-+		return ret;
-+
-+	return minimize_l2_occupancy(test, uparams, param);
- }
+-		if (read(r->fd, &r->return_value,
+-			 sizeof(struct membw_read_format)) == -1) {
++		if (read(r->fd, &measurement, sizeof(measurement)) == -1) {
+ 			ksft_perror("Couldn't get read bandwidth through iMC");
+ 			return -1;
+ 		}
  
- static int cmt_setup(const struct resctrl_test *test,
-@@ -175,11 +181,11 @@ static int cmt_run_test(const struct resctrl_test *test, const struct user_param
- 	span = cache_portion_size(cache_total_size, param.mask, long_mask);
+-		__u64 r_time_enabled = r->return_value.time_enabled;
+-		__u64 r_time_running = r->return_value.time_running;
++		__u64 r_time_enabled = measurement.time_enabled;
++		__u64 r_time_running = measurement.time_running;
  
- 	if (uparams->fill_buf) {
--		fill_buf.buf_size = span;
-+		fill_buf.buf_size = span * 2;
- 		fill_buf.memflush = uparams->fill_buf->memflush;
- 		param.fill_buf = &fill_buf;
- 	} else if (!uparams->benchmark_cmd[0]) {
--		fill_buf.buf_size = span;
-+		fill_buf.buf_size = span * 2;
- 		fill_buf.memflush = true;
- 		param.fill_buf = &fill_buf;
+ 		if (r_time_enabled != r_time_running)
+ 			of_mul_read = (float)r_time_enabled /
+ 					(float)r_time_running;
+ 
+-		reads += r->return_value.value * of_mul_read * SCALE;
++		reads += measurement.value * of_mul_read * SCALE;
  	}
-diff --git a/tools/testing/selftests/resctrl/resctrl.h b/tools/testing/selftests/resctrl/resctrl.h
-index c72045c74ac4..7f2ab28be857 100644
---- a/tools/testing/selftests/resctrl/resctrl.h
-+++ b/tools/testing/selftests/resctrl/resctrl.h
-@@ -216,6 +216,9 @@ int perf_event_reset_enable(int pe_fd);
- int perf_event_measure(int pe_fd, struct perf_event_read *pe_read,
- 		       const char *filename, pid_t bm_pid);
- int measure_llc_resctrl(const char *filename, pid_t bm_pid);
-+int minimize_l2_occupancy(const struct resctrl_test *test,
-+			  const struct user_params *uparams,
-+			  const struct resctrl_val_param *param);
- void show_cache_info(int no_of_bits, __u64 avg_llc_val, size_t cache_span, bool lines);
  
- /*
+ 	*bw_imc = reads;
 -- 
 2.50.1
 
