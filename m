@@ -1,82 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2482C35F192;
-	Fri, 13 Mar 2026 21:20:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5704418DB26;
+	Sun, 15 Mar 2026 07:12:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773436806; cv=none; b=LN2HuaVnaBuMEd8HqIM/PqlJfcavq0hYyInpV84n4u1OHHc0IT1Fy8PILDwwyBoKDcZ9AjmV8oustAKy+8jvOQCfaN7JXwhHqrR+uUfWtgo88C90FIgdJBpEwP0vY4Gf+dSMA3DRysg5V1p0EnJm5VthvGu1VmOMRZT5vmWIEoQ=
+	t=1773558729; cv=none; b=jY8CKZ2AfL1Bx82brGFrh6ho4vy4TXTx1jKCK6bLPTajHZytptSp+1yadrLHZY0nfCod2gaENl7bPH2Qgzb5P33iPcAFBHZxMkjsvrMqU8mgq1Xvy7IXgS3wBt6/xqaiuBucMrBFOi1Bpa/vSRDHsN5dwpUzA8KTndoatkzK1WY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773436806; c=relaxed/simple;
-	bh=Qnz2PJ5ZFY9Ad7ZBNgyMEzqRaeAiEVNsmjk69km6ZQo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2hkU+bQG4YQ1etZZDAV9TbHjK74BRzGlhcEgsFVtvQfhezVV1O3+edps3tYPQM4ftJhqWAZvEkNITyKJLM81WlyFdWGOOPQRGSOpvbAvIlBpze8KSGZLPphRFEjNi84KjbK9yppuPS9YH7da0vUU/Rlkru0hGETPmbTw8Cc7H4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YivqIXA4; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773558729; c=relaxed/simple;
+	bh=GY0u/0y3A0/CpFA31WvFHoDmDexyHnDMsKmxW1rS1Qk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qagDPeAgSC7Zow2CXiA/rekEytAZqeA/1kHJrlR1YVF6aYb9kqIMM1vRiYh/oOCUneuyl74/F9RRCOoNFIZLNNp42cpvV+lj9eaCq8k+qvYdq0MlClXLZp//XDPrbivMNQ7Xh3Yyf4KgNjujmPnB+AzSiswanlJxr56E2TjIlVw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=b+ih2s83; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YivqIXA4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3709C19421;
-	Fri, 13 Mar 2026 21:20:00 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="b+ih2s83"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6ED3C4CEF7;
+	Sun, 15 Mar 2026 07:12:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773436805;
-	bh=Qnz2PJ5ZFY9Ad7ZBNgyMEzqRaeAiEVNsmjk69km6ZQo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YivqIXA4lATJybHZs2BdrxuJRyt+H2rrj3QdvlsykqWKgGQ2kfUw0aF69HzkA6ljw
-	 Vt4q6eEucHNOa0D+fWv30fWoDlcK3KYpS53yESl1+5K2wGwEQlVnxww1mG9ycDAsOH
-	 WsSFpLEJyf1iKO480jUpsjXna8Wlo7aJB+ztlE16IFMnfNS7zXGZfhQFnbcn6ygd0Q
-	 eOm5s8q5SuBVwKky8PiqpHbPHGTeEI6uDQlFOenvIf8z6Fdp4dpUXR12w/rF3Yscmm
-	 RhZK/h7ot2nKVrsol3jnDJeJ65uevdXnwf8NuE6PQFiZrIwTlMVQ2qlulj9QMOjMQ8
-	 j7T3XdRrybTiA==
-From: Miguel Ojeda <ojeda@kernel.org>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: Re: [PATCH 6.19 00/13] 6.19.8-rc1 review
-Date: Fri, 13 Mar 2026 22:19:56 +0100
-Message-ID: <20260313211956.184457-1-ojeda@kernel.org>
-In-Reply-To: <20260312200321.671986598@linuxfoundation.org>
-References: <20260312200321.671986598@linuxfoundation.org>
+	s=k20201202; t=1773558729;
+	bh=GY0u/0y3A0/CpFA31WvFHoDmDexyHnDMsKmxW1rS1Qk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=b+ih2s83vNbn1bNcXcFbPXGw7uXGmWeocItBOTNm5m7/5cT9uamOOKsm61xAGC+MB
+	 LGAF+H4dpcOZxKGkcqwqrlUkpWKgjxbO4gWzj9s2f8nZ68hEkq2ab6ZQaVEcufYmEV
+	 zq4lKz1u/tBUYyBAkm/5v94QV60DLEFVgHqJp37lz22CkqaU6BtDxeOe1yDpI+1OK1
+	 FjHpVSUe5tW3g2kxAMxNz/GEf7hhbaOaW93uQruXcPVEEU86UDjJ+DJgtEPlHmXvqO
+	 xLhHX8ZcJ6ZI/3V8B1qLyjTlOa9vfHMVUvvaU1BM5jsBNUQn5FjLHRyK3PfaC1fE18
+	 ubhM1fLIisgRg==
+Date: Sun, 15 Mar 2026 03:12:07 -0400
+From: Sasha Levin <sashal@kernel.org>
+To: Marco Mattiolo <marco.mattiolo@hotmail.it>
+Cc: linux-kernel@vger.kernel.org, stable@vger.kernel.org,
+	gregkh@linuxfoundation.org, patches@lists.linux.dev,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@nabladev.com,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.12 000/956] 6.12.75-rc2 review
+Message-ID: <abZbx38s46vBQSJT@laps>
+References: <20260302160918.2520730-1-sashal@kernel.org>
+ <DB8P189MB0854A0B206B632B12F15441FE642A@DB8P189MB0854.EURP189.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <DB8P189MB0854A0B206B632B12F15441FE642A@DB8P189MB0854.EURP189.PROD.OUTLOOK.COM>
 
-On Thu, 12 Mar 2026 21:03:32 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Sat, Mar 14, 2026 at 07:56:41AM +0100, Marco Mattiolo wrote:
+>Hi,
+>could you please double-check commit a7037c3eb013 in the 6.12 branch?
 >
-> This is the start of the stable review cycle for the 6.19.8 release.
-> There are 13 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+>AFAICT it is different from the mainline commit ad33ee060be4 it
+>should be backporting and it doesn't match its own commit's message.
+>I mean, it modifies stanza "vreg_l12a_1p8" rather than the intended
+>"vreg_l14a_1p88".
 >
-> Responses should be made by Fri, 13 Mar 2026 20:03:10 +0000.
-> Anything received after that time might be too late.
+>Issue was recognized while investigating another issue in 6.12.75 [1].
+>
+>[1] [1]https://salsa.debian.org/Mobian-team/devices/kernels/qcom-linux/-/issues/
+>43
 
-Boot-tested under QEMU for Rust x86_64, arm64 and riscv64; built-tested
-for loongarch64:
+I see what you mean. Looks like the wrong place in the code was patched on
+backport.
 
-Tested-by: Miguel Ojeda <ojeda@kernel.org>
+I'll queue up reverts for <=6.12 trees.
 
-Thanks!
-
-Cheers,
-Miguel
+-- 
+Thanks,
+Sasha
