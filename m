@@ -1,228 +1,213 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C733DA5A6
-	for <patches@lists.linux.dev>; Mon, 16 Mar 2026 18:18:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773685104; cv=fail; b=c6m6Xm8IlERIRqFvjCRtvxavJIUgaalIjkBtXKUtFXI79sSguUFEcdE2FPwmkyo399WsjTTP+j6zqgZIma2y5UhRSEMXOIv059GlhWoCBimeFiEalv5sDowWHKYXUelXt2wEf05LxvEh5Dy+o9e1MwjNQkQ0uw1N55g764o2Aog=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773685104; c=relaxed/simple;
-	bh=42Chc2YpQhaJlvDxTVpxDrCmUxE8t5PH+YmIsgdKZH4=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=XD11ZdYtuR92vAxpDg9T7NkfPFJD7N/ObXfVVxWPhce3Cr7CepJTCx9WIXjN6O0i+wbouiqVdjvCJyoM3Sz5uYKRhaVQ7dPa80TYDrsbrcM730yGkjA/7PWrTMdOnmVbf52UzXI3eUbsMEVxwcclOH2JrwyiScXMicSEV+phc/g=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Pg++PDRQ; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CB2A36828B;
+	Mon, 16 Mar 2026 21:54:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773698069; cv=none; b=WJPv+Mx1IV9mVdq9qUMvXb+Oc/akCM1f1FoSyiXPyRciFRdwSxQBNk+aiacUaViW30PFDEr/yI/OOQELR9pvk8xjaFnx3CCFBE8dbnvqwjnWfRc9qYqNjKwlxVEJ4U60BhqpwjsqvfKZx3XBTxFYjl0BBALsYSOB7bcyGkvJUrQ=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773698069; c=relaxed/simple;
+	bh=TMGfrOPqq1QMIR2jmkCprr2khCTXxYuklmyZc5fsbzY=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=PyrsT208aJgKfs6iMyS/WLim2+S7gfDJHf7jfOhI/wJcMCT3a6qSwG6z6pHbT6PXF+l1y0ytH0XpDAz1tUpwx0JmDPyjq4lAD1+J4iHAgTcDWNuWM0UfzS4VpqLfBEsv1HxUDcI+m8heuOfiQzGQ9P6kgYyGSdN+NQR9dBeQJe4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=UG1rg/w6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Pg++PDRQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773685102; x=1805221102;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=42Chc2YpQhaJlvDxTVpxDrCmUxE8t5PH+YmIsgdKZH4=;
-  b=Pg++PDRQGAtBKC23nMzrWoCsVStPQIP8A70HrSJoSbnhDV3Q9vSc9BLI
-   aWr6aBNgHikWuF217worn8abVVMvW22Zd2wUl5aUB7h8L3FSaRitSO/1n
-   rEummAMv04xEzbBNSFJAC4bAHTl9dBijchXvn1zX7WK+vu8MxdKHFvjpG
-   y0Tj3WHPNuDMrb6PTeVTXl1+ZVLUed/cnN/R03FILx9WzKgPZAvEoWtlR
-   uT7cUon5LPj8wb+/teO5DRxst0FeutSSi+W4g1aQp2cck30qRNlkNg9cP
-   M4vXWiAAYDWKj9TEMRTI7E3L5iHbQLEssbF2i01m/oa4JUssyeHe9GxCj
-   Q==;
-X-CSE-ConnectionGUID: aKTdIawXRgSMHW1mwENzfw==
-X-CSE-MsgGUID: h5ocyYXeSfqvEuqpdKlU4w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="86188928"
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
-   d="scan'208";a="86188928"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 11:18:21 -0700
-X-CSE-ConnectionGUID: UcUAcDwlQs6Mlh9NMARGAw==
-X-CSE-MsgGUID: l0lGtlA/TMuEIsqUrJspDA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
-   d="scan'208";a="226133676"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 11:18:21 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Mon, 16 Mar 2026 11:18:20 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Mon, 16 Mar 2026 11:18:20 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.7) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Mon, 16 Mar 2026 11:18:20 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=VtnMN6+X0GrufYd8sGSUljI+6E14SaGBqJsyLYDA9NpynCzVFOr98J+ibwqSZP+BWMLc2674pmcjN1iqr7UQDBtOCJki0Jq26KWDsxnTZL8F6OKhz/3ZENOtuDwknX3+895amL9XxxGC+zIBRjpC3UHyetSBWN/3wKR2gi0gCoJ84379UEAgiUF4lQarVi0whif2lSdWGOIhVAe/V/Jl2B8O/7EDMrp+RlPgSvTYI6gTsaZz36TGEuPrBi1ThCs1bTAcwvOwrbygq9vVVwtVji/qyHWOVNROpWm1Me34Eu9RKmWtamKEPn7+JSUXqwjVy+Cx2yNMkXmyrnQxZmgnPQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WKCsj9SlWxMKtv1Y3FpYJDMEVGq8D+yXwKP08AwdEFk=;
- b=mnaTXxk+v02ejuAy5Kohy2dBvY+pehR0KuH1IlelTs9OhXqxhLzm+TVJErE67qvs1fDhZwEuk6letprFlZVoL4hxoXCS/9JboPzcT8cBbeaf/ek+YSCBVAv8aEJTBBN6wbm7swCn0haH/oCQapYFnihXywBj74jN2td8FvEwBNry4cCPYqT6USAK4u6fRH28C4EHKoIbH4iVJlkdkloB0oqQI1OqjyCY4FnvnKoZmCHiJBWj+aEFVNZS3tIp0VZJ5HIjZbassr/t41yt8Bvp9szApvmZoVpNMmRmecfStQZYCiNNJm/k7WjipJs3P1zx6mkiPieJbCMcYIuMQDNWHQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from SN7PR11MB7566.namprd11.prod.outlook.com (2603:10b6:806:34d::7)
- by CH3PR11MB7251.namprd11.prod.outlook.com (2603:10b6:610:147::10) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.17; Mon, 16 Mar
- 2026 18:18:17 +0000
-Received: from SN7PR11MB7566.namprd11.prod.outlook.com
- ([fe80::eccb:f6e0:36cd:a989]) by SN7PR11MB7566.namprd11.prod.outlook.com
- ([fe80::eccb:f6e0:36cd:a989%5]) with mapi id 15.20.9723.014; Mon, 16 Mar 2026
- 18:18:17 +0000
-Message-ID: <e334f16f-2576-43af-b64d-013d7a14f291@intel.com>
-Date: Mon, 16 Mar 2026 11:18:13 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/11] x86,fs/resctrl: Improve resctrl quality and
- consistency
-To: Ben Horgan <ben.horgan@arm.com>, <tony.luck@intel.com>,
-	<james.morse@arm.com>, <Dave.Martin@arm.com>, <babu.moger@amd.com>,
-	<bp@alien8.de>, <tglx@linutronix.de>, <dave.hansen@linux.intel.com>
-CC: <x86@kernel.org>, <hpa@zytor.com>, <fustini@kernel.org>,
-	<fenghuay@nvidia.com>, <peternewman@google.com>,
-	<linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-References: <cover.1772476561.git.reinette.chatre@intel.com>
- <8be6feef-b7a5-4fd7-9bc0-9aeed7ef0fda@arm.com>
-From: Reinette Chatre <reinette.chatre@intel.com>
-Content-Language: en-US
-In-Reply-To: <8be6feef-b7a5-4fd7-9bc0-9aeed7ef0fda@arm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0050.namprd05.prod.outlook.com
- (2603:10b6:a03:33f::25) To SN7PR11MB7566.namprd11.prod.outlook.com
- (2603:10b6:806:34d::7)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="UG1rg/w6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E334C19421;
+	Mon, 16 Mar 2026 21:54:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773698069;
+	bh=TMGfrOPqq1QMIR2jmkCprr2khCTXxYuklmyZc5fsbzY=;
+	h=From:Date:Subject:To:Cc:From;
+	b=UG1rg/w6PophvgY0jPl/iMm0p1n6G1t5lGM/FGnXbWhvNl3z82NdpIRzM/A/gLS3/
+	 kN+UjWYo/kl0bob/MIMsmMXm8wfx6mvLOf5CfBC6biNAPFA01Dmu2GAG0zcQxVjpwd
+	 to1dF2Q06P7s0LTzG86pcx0j0AuHWS2VNwLM4cRiTqSTIhgKnJ/UjgBxkVs1h1+4df
+	 n8uLFRhVp2lr04mo94A5UmEgoMX6L7umbgIixTiDIrcK1p3RBst7lrauvaYrBJ6xAL
+	 o6A+tngEi7dJgnRu5sa/kHdfP+aIzXRIdMlIbOCYY63WfrZZAIGJlBJ5x0nSMushFf
+	 X1hztCNQ9UoyQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Mon, 16 Mar 2026 14:54:22 -0700
+Subject: [PATCH] drm/xe: Fix format specifier for printing pointer
+ differences
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN7PR11MB7566:EE_|CH3PR11MB7251:EE_
-X-MS-Office365-Filtering-Correlation-Id: f2d3e9f4-c0ef-4bd9-5ca5-08de83886507
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: cTubBcyp2RjMMq40M9csr6tEymqFZZmRP68ZF9fDrqLhzKFTDdT7iPAOSzUCrkFf6CZrh9kMqiMf/EdRxSH/QK6qnqPLVTH8gwyCyRBWJOioL95gISW9/FdSKid7sMVGKY0qHl4skJY17iTCVlQT8dMmksbWTumJxz69s/MZdhY1Zt/LPb1pGBOFhG9fSuUowJOzZNBHTUfYnQoMGC6K3lhd63D6/M6/vv97CuWKXQjigmuaNDEsuUF+AWmyIYaVZs610Z0kKPVXqCcJVBphPvRnWNhKFpd973V3PskOZ1FKtrU7XfcDN4x9tnMl+jn02VWQBhSdQZYpI/1V2bpKe78EgtNKeEy5J2Uo5FV3m/KxdpcaQga7RDfQSf/1xxF6i6L9ZHlbntRAytCv4HSBP2H6p3eZr2k5Ar+Z/V3wzY0MuJ2+q7EAbN36A6pAVhyvuKGa2DNXP6gjcHxWtHPp5k485I17MGqGEvgVqKYNcX+A8INK5dmJM4R2FjQ+zzJe7WNMTWAKazBGM6CvtdqxlIF6EBs1/+fmGxPytrXDDQY391tcCiasBvy1bL0H5AgPHudWfosm/Pg5QrXkBmLMo2ZIX+B9/SOninYbVDuG2vPpr/o9K3/cXLH6cedCOYHPlFGSvYhosplet/EViwQUNuAsUvHraSZq99ukYtNEeLth6+sTJUAtfdpkfXqnxBHNTDv1e36bzVoBCXRy05P0iOpZMW3XhCxryXVFQtlcDKc=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN7PR11MB7566.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(7416014)(376014)(1800799024)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TTFmdCttZ3BaUUZtbGFTbWdiK1JIVHdZc3FqUC9ncjMrQkpzOFBMRTRsRXlp?=
- =?utf-8?B?ampWV2RqU2RNcXpveE16VTBDWWRNVUZnVWozVmRYUDJuUCs5enJ0c1g1UjNJ?=
- =?utf-8?B?SEtlSWxORlhHTXlBVlIrSVlndWdXU3o3eFMzUU8zbTk1TVNOMkppV3p2bUZi?=
- =?utf-8?B?aG5EMDBCbnlvK0RwL21La2RLejZiSGRCTkRyUXNjS0xaSklYSFNndXBySEFJ?=
- =?utf-8?B?bUM4ZWYwQXBiTlkxNmRpMEg4cDhnS0xLcGlnNTdjN1hRc2d3d2htdDViU0lJ?=
- =?utf-8?B?S3pkdjdaTkRiaWs0US9FNG5wZ3IreUs1REpBR0JjcDNzTlFTZE9BSit3QTFa?=
- =?utf-8?B?YW9xMVJYaDV0OVZYbWZvcjRScW5JREFMVEZZYVI0QkEwVi9NNUhkRlhmNGls?=
- =?utf-8?B?RW9GOW5oVkxyYWVSRGZVSTNKb2hROURjZDh6UzgrYythaFozai9oR1dPalBV?=
- =?utf-8?B?dkRvZ0hhVjR1OVRUcXZ6eHhBdTFrNCtvT2JFSGtWbFUvWUhWd29BSy9EUGdu?=
- =?utf-8?B?U2NpdjVKWVV2WmNnMnZpdHpNZWZsZW41QzVBUS9OTGxrVFlqallNSSttVVp0?=
- =?utf-8?B?ME5xMDArU3BvZEdYOWcvT3pvMVh2VVpvTldOQTNxR3pmV3cySXk3Rm9vMjV5?=
- =?utf-8?B?ZEFVcERESjJBWnFhSTd0cy96VytlVWtGRlNhYmtJOTdDMzZFTUgrb3N3TzF0?=
- =?utf-8?B?OHZGSGtVYTdWN0lZMWNsTDdYOUhSMm1aRHhpUW1iQjB0WGxiSGlscGcvZlc0?=
- =?utf-8?B?clZ1bElIUllLeCtmcHBzV09BUlJwUnhXNitZV0w1dkVvOTA2R2Zjdk1oekh5?=
- =?utf-8?B?VmIvZDhoWnE5dkRNWC9xU2Q4L2hSbEpOQVV5VVFEb3hPOVo0cTQ4N3VWdFN1?=
- =?utf-8?B?K28ySjdGZDNOalMyQk00OEVEL2RXZWlicnNoNTIyZFl3Zm04dXFBbFVaNDRh?=
- =?utf-8?B?VVExNmNzRHllb0xJM2praElkbzlud2FHeS8yLzdRK21jUDJrVjlaN3c5RlVa?=
- =?utf-8?B?b1Zjbnpkam5nZ2RjZ2YyM1BmODg4M2wyL0laTnVoQ2t1N3hvWkZpNWRYd2Qr?=
- =?utf-8?B?cmFmc0lrbFZIQWcyaDYxam9Oc1owYTI4WXRCUUhPSTh3Tm5EbXNpb3VtdnpD?=
- =?utf-8?B?dWhqZGhIVm9RRWVTYnRXSEFkTGo2OVZyTmhhQVluSk5MUTJGNVBITXh5UkV6?=
- =?utf-8?B?UVVqWCt1VkFxektFdHhreXBvV29DVjJTUzUveGZEYjBVK3BYOCtPZ1I1TU1F?=
- =?utf-8?B?VWRleVlyRUEvWDUzeWdOSDB2MExQOGRJSm5DdWdGWkg2RWNyT1Q1Uk1Zb29E?=
- =?utf-8?B?S2E1eHVqVDEwRE9ycHkrRGhUd1BsdjRaRDd3dkFKWVluUXZJNHI3aFVxb2lG?=
- =?utf-8?B?TFFGYUZLTERtOHRNaVlBaHRVSFdhYlBLQldtWVY1aCt2WHJ4Z3ZvTmlaMGl1?=
- =?utf-8?B?NFVjODBlS0lRMEhPQlFNTXlUNmpONnRIMzk4SmRwNVBhQklaN3M4SklIR0Nu?=
- =?utf-8?B?ZzB2ZDJORHRxRGZ4NGxUcTVPcm1XK2g0RUJ4UGpCWVkwamlrdDJIOGFpR2Nk?=
- =?utf-8?B?bVdIZjZCTUVINmNuMCtRd3ZPRU1tVkZiZDlwYmFzQzRRVGhrTnM2UmVBKzVq?=
- =?utf-8?B?TFUyOTVSbHJaVmNTcHdXZy9sTUhqaHNueGY4L2psUzVqdjhrQStOMS9QeVZQ?=
- =?utf-8?B?MExCUTFuYytqT0pYbVBlbWhraXZvZFltZ2c5UzVEaGZoSFAvTEMvL0tLc1hs?=
- =?utf-8?B?bWpqNWx1ek5JQkVwalNPbEJNZjBvQWNQTWNiWERNdjhVOE5may9aY2RKWVdZ?=
- =?utf-8?B?WVhrWUhJeG10bjhLVWlkYlRNRjBmem1UT2xKWG5uUk96cmVaMlRtRWR2L2M5?=
- =?utf-8?B?YXI1c09scWtYMUpiOFcyWTFoR1JpTWFpQWNkU2R3Z3U2djRrdk44WGVwQWFD?=
- =?utf-8?B?UmIvUFlsbUdKYmFyZStIVnVvOVkrUmhleWtVc1kyRFlPbEgyN1VYandrMmVv?=
- =?utf-8?B?YVZSV0d2SXFmZ3RZbWpydG9icE9tUDZvL0ZzRjZkQTFYb25GTHJ0Z0xVdW4y?=
- =?utf-8?B?WWxFUG91ek4rUHd6NWxNLzhrVWJoZW8xekh2NG1aMTNNQ2VHWXZDY3A0V3ha?=
- =?utf-8?B?RFhtRkpPdGFmK29kRXEwMWNaTVY3V1ZoWElMZXJrNTFPUUVueUV0MmhmWmxE?=
- =?utf-8?B?OHdRZFZTbVl4cDJROHJvR2RoSFhURTVIN1NyeE90ay9HekVsanpBUFFyU3NZ?=
- =?utf-8?B?VGFEbWlNbS8yLzFFdTl4R05LcDNNdTRaWGl2dkVVcThxRUp2VTVUbUhyZXdB?=
- =?utf-8?B?VkwxdjdaNEMyQmhFZ283cXRzczRKSWUvS0tvemtHUVJySFN6T3VrazVpaCtr?=
- =?utf-8?Q?r6ayl2Hde11N6CN4=3D?=
-X-Exchange-RoutingPolicyChecked: Wc0nflEDrTaczYW+b/p6yJokRI+vyff9+LaheketZrshXWPPII82VTfB4mxWEdVOb2L/20Ts6p+OjYXQaAS+DwYRQ+LznpvdJUeZRSHLn+K6OCBnox+7QRfQQSVHG8fJbSLm0Cy+g9EX6osVnn7K1WmAVd+7qMsG/vhrDV58Zg/ZHGDImYphSJZ/rOIWtK6zwUr7xnNBbpghauF+zgoZcJXRBVVOEfQmXWOprBvo5XhYEs8ViQSB7vOKxfiGb9pWBYejbxvyzu4q6Y1GWq/B2K7S/bu/LElVSqO63hIgV3+UH/mGCHNmTTuWRInjpvD+BnyEngwU0DVOVRj74gzp2w==
-X-MS-Exchange-CrossTenant-Network-Message-Id: f2d3e9f4-c0ef-4bd9-5ca5-08de83886507
-X-MS-Exchange-CrossTenant-AuthSource: SN7PR11MB7566.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2026 18:18:17.1046
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: HlcLmUbys9MsmrPlgxTRjUgzypGT14WhwMzidtVokZ59ZcvXkY5b3bQDtWTsWlM+RApW3Pa5BHRtk43VpCLVso0gJsWy1z0BjvtVQJrLSFg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB7251
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260316-drm-xe-fix-32-bit-wformat-ptrdiff-v1-1-0108b10b2b6b@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAAAAAAAC/yXNywqDMBCF4VeRWXdAEyvSVyldxGRGp+CFSbyA+
+ O5N2+UHh/+cEEmFIjyKE5Q2iTJPGdWtAD+4qSeUkA2mNE1pqwaDjngQshxoDXaScOdZR5dwSRq
+ EGd2da27r1pK3kDuLUl7/Pp6vv+Pavcmnbxiu6wM+uI0YhQAAAA==
+X-Change-ID: 20260316-drm-xe-fix-32-bit-wformat-ptrdiff-a5f4f8483ec3
+To: Matthew Brost <matthew.brost@intel.com>, 
+ =?utf-8?q?Thomas_Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>, 
+ Rodrigo Vivi <rodrigo.vivi@intel.com>, 
+ Matt Roper <matthew.d.roper@intel.com>, 
+ Dnyaneshwar Bhadane <dnyaneshwar.bhadane@intel.com>
+Cc: intel-xe@lists.freedesktop.org, dri-devel@lists.freedesktop.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=6882; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=TMGfrOPqq1QMIR2jmkCprr2khCTXxYuklmyZc5fsbzY=;
+ b=owGbwMvMwCUmm602sfCA1DTG02pJDJk7aoQTet+WS1Vufzil+PzhjwxSYounzhNdkP422aS19
+ Mz7yJsTO0pZGMS4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBEWBYxMmz07I3ZK3f38IsY
+ MfMyrm+2ioyzJjluyJJ383AxCAtQ+svwP/9AWW0NW3vmuSeqk9JVy2//Ytv8UWiWcciMoPsHlhw
+ r5QEA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-Hi Ben,
+GCC and clang warn (or error with CONFIG_WERROR=y / W=e) several times
+when targeting 32-bit platforms along the lines of
 
-On 3/16/26 10:44 AM, Ben Horgan wrote:
-> On 3/2/26 18:46, Reinette Chatre wrote:
-...
-> One related issue I've just noticed is that when ABMC and mbm_assign_on_mkdir are
-> enabled the creation of MON/CTRL_MON directories may succeed but an error message
-> is written to last_cmd_status. E.g.
-> 
-> /sys/fs/resctrl# mkdir mon_groups/new5
-> /sys/fs/resctrl# cat info/last_cmd_status
-> Failed to allocate counter for mbm_total_bytes in domain 2
-> 
-> The failure is ignored, as expected, in rdt_assign_cntrs() but the last_cmd_status
-> is never cleared. I think this could be fixed by:
-> 
-> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-> index 62edb464410a..396f17ed72c6 100644
-> --- a/fs/resctrl/monitor.c
-> +++ b/fs/resctrl/monitor.c
-> @@ -1260,6 +1260,8 @@ void rdtgroup_assign_cntrs(struct rdtgroup *rdtgrp)
->         if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
->                 rdtgroup_assign_cntr_event(NULL, rdtgrp,
->                                            &mon_event_all[QOS_L3_MBM_LOCAL_EVENT_ID]);
-> +
-> +       rdt_last_cmd_clear();
->  }
-> 
-> Is this right thing to do? Let me know if you want a proper patch.
+  drivers/gpu/drm/xe/xe_lrc.c: In function 'dump_mi_command':
+  drivers/gpu/drm/xe/xe_lrc.c:1921:40: error: format '%lx' expects argument of type 'long unsigned int', but argument 3 has type 'int' [-Werror=format=]
+   1921 |                 drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_NOOP (%d dwords)\n",
+        |                                    ~~~~^
+        |                                        |
+        |                                        long unsigned int
+        |                                    %#5x
+   1922 |                            dw - num_noop - start, inst_header, num_noop);
+        |                            ~~~~~~~~~~~~~~~~~~~~~
+        |                                          |
+        |                                          int
 
-Letting group be created without any counters assigned while writing the error
-to last_cmd_status is the intended behavior. If the last_cmd_status buffer is cleared
-at this point then user space will never have the opportunity to see the message that
-contains the details.
+  drivers/gpu/drm/xe/xe_lrc.c:1922:7: error: format specifies type 'unsigned long' but the argument has type '__ptrdiff_t' (aka 'int') [-Werror,-Wformat]
+   1921 |                 drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_NOOP (%d dwords)\n",
+        |                                    ~~~~~
+        |                                    %#5tx
+   1922 |                            dw - num_noop - start, inst_header, num_noop);
+        |                            ^~~~~~~~~~~~~~~~~~~~~
 
-It did not seem appropriate to let resource group creation fail when no counters
-are available. I see that the documentation is not clear on this. What do you think
-of an update to documentation instead? Would something like below help clarify behavior?
+Use the '%tx' specifier for printing pointer differences, which clears
+up the warnings for 32-bit platforms while introducing no regressions
+for 64-bit platforms.
 
-diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
-index ba609f8d4de5..20dc58d281cf 100644
---- a/Documentation/filesystems/resctrl.rst
-+++ b/Documentation/filesystems/resctrl.rst
-@@ -478,6 +478,12 @@ with the following files:
- 	  # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_on_mkdir
- 	  0
+Fixes: 65fcf19cb36b ("drm/xe: Include running dword offset in default_lrc dumps")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/gpu/drm/xe/xe_lrc.c | 30 +++++++++++++++---------------
+ 1 file changed, 15 insertions(+), 15 deletions(-)
+
+diff --git a/drivers/gpu/drm/xe/xe_lrc.c b/drivers/gpu/drm/xe/xe_lrc.c
+index 7fb59386d1c5..31d57d8ec051 100644
+--- a/drivers/gpu/drm/xe/xe_lrc.c
++++ b/drivers/gpu/drm/xe/xe_lrc.c
+@@ -1918,17 +1918,17 @@ static int dump_mi_command(struct drm_printer *p,
+ 		while (num_noop < remaining_dw &&
+ 		       (*(++dw) & REG_GENMASK(31, 23)) == MI_NOOP)
+ 			num_noop++;
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_NOOP (%d dwords)\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_NOOP (%d dwords)\n",
+ 			   dw - num_noop - start, inst_header, num_noop);
+ 		return num_noop;
  
-+	Automatic counter assignment is done with best effort. If auto assignment
-+	is enabled but there are not enough available counters then monitor group
-+	creation could succeed while one or more events belonging to the group may
-+	not have a counter assigned. Consult last_cmd_status for details during
-+	such scenario.
-+
- "max_threshold_occupancy":
- 		Read/write file provides the largest value (in
- 		bytes) at which a previously used LLC_occupancy
+ 	case MI_TOPOLOGY_FILTER:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_TOPOLOGY_FILTER\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_TOPOLOGY_FILTER\n",
+ 			   dw - start, inst_header);
+ 		return 1;
+ 
+ 	case MI_BATCH_BUFFER_END:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_BATCH_BUFFER_END\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_BATCH_BUFFER_END\n",
+ 			   dw - start, inst_header);
+ 		/* Return 'remaining_dw' to consume the rest of the LRC */
+ 		return remaining_dw;
+@@ -1943,35 +1943,35 @@ static int dump_mi_command(struct drm_printer *p,
+ 
+ 	switch (inst_header & MI_OPCODE) {
+ 	case MI_LOAD_REGISTER_IMM:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_LOAD_REGISTER_IMM: %d regs\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_LOAD_REGISTER_IMM: %d regs\n",
+ 			   dw - start, inst_header, (numdw - 1) / 2);
+ 		for (int i = 1; i < numdw; i += 2)
+-			drm_printf(p, "LRC[%#5lx]  =  - %#6x = %#010x\n",
++			drm_printf(p, "LRC[%#5tx]  =  - %#6x = %#010x\n",
+ 				   &dw[i] - start, dw[i], dw[i + 1]);
+ 		return numdw;
+ 
+ 	case MI_LOAD_REGISTER_MEM & MI_OPCODE:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_LOAD_REGISTER_MEM: %s%s\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_LOAD_REGISTER_MEM: %s%s\n",
+ 			   dw - start, inst_header,
+ 			   dw[0] & MI_LRI_LRM_CS_MMIO ? "CS_MMIO " : "",
+ 			   dw[0] & MI_LRM_USE_GGTT ? "USE_GGTT " : "");
+ 		if (numdw == 4)
+-			drm_printf(p, "LRC[%#5lx]  =  - %#6x = %#010llx\n",
++			drm_printf(p, "LRC[%#5tx]  =  - %#6x = %#010llx\n",
+ 				   dw - start,
+ 				   dw[1], ((u64)(dw[3]) << 32 | (u64)(dw[2])));
+ 		else
+-			drm_printf(p, "LRC[%#5lx]  =  - %*ph (%s)\n",
++			drm_printf(p, "LRC[%#5tx]  =  - %*ph (%s)\n",
+ 				   dw - start, (int)sizeof(u32) * (numdw - 1),
+ 				   dw + 1, numdw < 4 ? "truncated" : "malformed");
+ 		return numdw;
+ 
+ 	case MI_FORCE_WAKEUP:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] MI_FORCE_WAKEUP\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] MI_FORCE_WAKEUP\n",
+ 			   dw - start, inst_header);
+ 		return numdw;
+ 
+ 	default:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] unknown MI opcode %#x, likely %d dwords\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] unknown MI opcode %#x, likely %d dwords\n",
+ 			   dw - start, inst_header, opcode, numdw);
+ 		return numdw;
+ 	}
+@@ -1998,12 +1998,12 @@ static int dump_gfxpipe_command(struct drm_printer *p,
+ 	switch (*dw & GFXPIPE_MATCH_MASK) {
+ #define MATCH(cmd) \
+ 	case cmd: \
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] " #cmd " (%d dwords)\n", \
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] " #cmd " (%d dwords)\n", \
+ 			   dw - start, *dw, numdw); \
+ 		return numdw
+ #define MATCH3D(cmd) \
+ 	case CMD_##cmd: \
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] " #cmd " (%d dwords)\n", \
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] " #cmd " (%d dwords)\n", \
+ 			   dw - start, *dw, numdw); \
+ 		return numdw
+ 
+@@ -2136,7 +2136,7 @@ static int dump_gfxpipe_command(struct drm_printer *p,
+ 	MATCH3D(3DSTATE_SLICE_TABLE_STATE_POINTER_2);
+ 
+ 	default:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] unknown GFXPIPE command (pipeline=%#x, opcode=%#x, subopcode=%#x), likely %d dwords\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] unknown GFXPIPE command (pipeline=%#x, opcode=%#x, subopcode=%#x), likely %d dwords\n",
+ 			   dw - start, *dw, pipeline, opcode, subopcode, numdw);
+ 		return numdw;
+ 	}
+@@ -2162,7 +2162,7 @@ static int dump_gfx_state_command(struct drm_printer *p,
+ 	MATCH(STATE_WRITE_INLINE);
+ 
+ 	default:
+-		drm_printf(p, "LRC[%#5lx]  =  [%#010x] unknown GFX_STATE command (opcode=%#x), likely %d dwords\n",
++		drm_printf(p, "LRC[%#5tx]  =  [%#010x] unknown GFX_STATE command (opcode=%#x), likely %d dwords\n",
+ 			   dw - start, *dw, opcode, numdw);
+ 		return numdw;
+ 	}
+@@ -2197,7 +2197,7 @@ void xe_lrc_dump_default(struct drm_printer *p,
+ 			num_dw = dump_gfx_state_command(p, gt, start, dw, remaining_dw);
+ 		} else {
+ 			num_dw = min(instr_dw(*dw), remaining_dw);
+-			drm_printf(p, "LRC[%#5lx]  =  [%#10x] Unknown instruction of type %#x, likely %d dwords\n",
++			drm_printf(p, "LRC[%#5tx]  =  [%#10x] Unknown instruction of type %#x, likely %d dwords\n",
+ 				   dw - start,
+ 				   *dw, REG_FIELD_GET(XE_INSTR_CMD_TYPE, *dw),
+ 				   num_dw);
 
-Reinette
+---
+base-commit: 1b12096b4bc5177d685ae098fdb90260ffd5db6b
+change-id: 20260316-drm-xe-fix-32-bit-wformat-ptrdiff-a5f4f8483ec3
 
-
+Best regards,
+--  
+Nathan Chancellor <nathan@kernel.org>
 
