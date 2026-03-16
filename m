@@ -1,75 +1,103 @@
-Received: from m.b4.vu (m.b4.vu [203.16.231.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB06837B415
-	for <patches@lists.linux.dev>; Sun, 15 Mar 2026 19:00:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=203.16.231.148
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 0EFC83CE49F
+	for <patches@lists.linux.dev>; Mon, 16 Mar 2026 17:44:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773601215; cv=none; b=faEH3oM5WJN9n18Ivq9B1EKbMf4+g11uNtCd+05D0ZAZb1AvYyUrvVbSNEM8u4i+74Iu6D4p20POj2SamZ5ExxFWFMOCeJq1POPBqHmz+lt89itPDvhSLfYQfXQMMmjP/L31+kjMc2f8D61N14Xlku/YUmmy3Nl4ReG2ivZ7kdc=
+	t=1773683066; cv=none; b=ezVvCXcBMJIKEZWGWg6aP8VGMOVBs3fREObhpxOzeM3R+FNNGGgTYNqlf4EdkQ15IW1XOfTvSkWmzCIFlUa2vXdSosgLFDI6CzVk1FfrVOz5SCxXcetudAr0ufNZderjJR1y9psPrcDdoqZ5SofC6F+ItYccU4bNYBDiDwIcyz0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773601215; c=relaxed/simple;
-	bh=OFaa1T9u+uSLmtJRAe56Fb1TCQ2XzYkq5bRxObJiXmo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=N6k1l+cLpmgNw0tqXLnapfzWJptG+QYmTS3nbd9/8Y36dyVjlp+MuQ+49GW2D81BWlE5xzQcSWqJdOC+ayISDGHlwvJHefRM5t1dxcAKemIngCsM38OZEK8Grg8moEQOd5n9KT2cPOqkKdNdjSkt9n1g4/E5sro8jIsVIX+k1m8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu; spf=pass smtp.mailfrom=b4.vu; dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b=NpiBJUXe; arc=none smtp.client-ip=203.16.231.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=b4.vu
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=b4.vu
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=b4.vu header.i=@b4.vu header.b="NpiBJUXe"
-Received: by m.b4.vu (Postfix, from userid 1000)
-	id B55BA6792310; Mon, 16 Mar 2026 05:24:31 +1030 (ACDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 m.b4.vu B55BA6792310
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=b4.vu; s=m1;
-	t=1773600871; bh=kwi2gTZOa3Ar8ndt1TXk+t9vC2qMZ3g1oYe6sQzcylU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NpiBJUXepl6VbfTtlnqgAA3TrnxNxKP/OUG6gEdnVWCN5KT8hggxQXB5wkK1piAM0
-	 AT7ZRNU3LuPTeTvTe5eH0C4va2F/2ZWNy0S1hcNPkAZQtf8fCsscDyed0rJWHybEAP
-	 SBwLFknHu2zTnU773d+dupnWUOlbLE2Sj3OlHvYCjhq0zadj24gsyD56OGLe/tD5ip
-	 N5Mz5zCroWzFmID6wco5nz/tfAZtXA+/Mp52HNsznBMMVSkIh1XXLYy7hGTKQx5BWg
-	 Xw3ADtanPoioTQLgQW4LABvyCXVgP9qzo6s0+Dt5t4eYxAs3wLO4M3Dfvmw+G+9eZc
-	 Qaw1baLldYrSw==
-Date: Mon, 16 Mar 2026 05:24:31 +1030
-From: "Geoffrey D. Bennett" <g@b4.vu>
-To: Sasha Levin <sashal@kernel.org>
-Cc: patches@lists.linux.dev, stable@vger.kernel.org,
-	Takashi Iwai <tiwai@suse.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Subject: Re: [PATCH 6.19 017/311] ALSA: usb-audio: Remove VALIDATE_RATES
- quirk for Focusrite devices
-Message-ID: <abcAZzOM0P7fKVoz@m.b4.vu>
-References: <cover.1773140654.git.sashal@kernel.org>
- <3fc64e0aaa72a20bed4ebd8951c89cfadf474e62.1773140655.git.sashal@kernel.org>
+	s=arc-20240116; t=1773683066; c=relaxed/simple;
+	bh=AoEkeqD/vB9Dy20Bqbyn1bQsTN5iJULikBCYkrMg9dM=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=QZ1tNlNcb7cPrTPKGZS22gAY1Jt7CNeyID/DY/ogzwvU9oEE/1dV9U+0OZRpPF8qEDB5LGSqp7qHlTaLA8ro651Mf3D6adO6DhURZTOY5v8ZchCKtQKTQNFWedMIT48QZdYMfsxd9mcCKvZrfQnosxzslu7l10xUht4R7FQksLU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 508721477;
+	Mon, 16 Mar 2026 10:44:18 -0700 (PDT)
+Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 6AAC33F73B;
+	Mon, 16 Mar 2026 10:44:22 -0700 (PDT)
+Message-ID: <8be6feef-b7a5-4fd7-9bc0-9aeed7ef0fda@arm.com>
+Date: Mon, 16 Mar 2026 17:44:20 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <3fc64e0aaa72a20bed4ebd8951c89cfadf474e62.1773140655.git.sashal@kernel.org>
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH 00/11] x86,fs/resctrl: Improve resctrl quality and
+ consistency
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+ tglx@linutronix.de, dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
+ peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1772476561.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <cover.1772476561.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 10, 2026 at 07:01:04AM -0400, Sasha Levin wrote:
-> From: "Geoffrey D. Bennett" <g@b4.vu>
+Hi Reinette,
+
+On 3/2/26 18:46, Reinette Chatre wrote:
+> Hi Everybody,
 > 
-> [ Upstream commit a8cc55bf81a45772cad44c83ea7bb0e98431094a ]
+> This is a collection of resctrl cleanups assembled together for convenience
+> and simpler tracking. I'd be happy to split them up if it makes review and/or
+> handling easier.
 > 
-> Remove QUIRK_FLAG_VALIDATE_RATES for Focusrite. With the previous
-> commit, focusrite_valid_sample_rate() produces correct rate tables
-> without USB probing.
-[...]
+> Summary of changes:
+> 
+> - Let resctrl pass stricter checks from various tools to provide a cleaner
+>   baseline with the goal to promote healthier contributions:
+>   - ./tools/docs/kernel-doc -Wall -v <files>
+>   - Build with W=12
+>   - ./scripts/coccicheck
+>   - Static checkers
+> 
+> - Use accurate and consistent type for all uses of resource ID.
+> 
+> - In the unlikely scenario that resctrl picked a wrong CPU to read an event
+>   from, pass the error through to user space instead of claiming to succeed
+>   and returning a (wrong) result.
+> 
+> - Since inception of last_cmd_status feature there have been mismatches
+>   between resctrl file operation failures and the contents of
+>   info/last_cmd_status. This pattern keeps propagating with each new resctrl
+>   feature. Establish a new baseline with a new pattern that ensures
+>   info/last_cmd_status contains an accurate failure description that matches
+>   the most recent resctrl file operation failure.
+> 
+One related issue I've just noticed is that when ABMC and mbm_assign_on_mkdir are
+enabled the creation of MON/CTRL_MON directories may succeed but an error message
+is written to last_cmd_status. E.g.
 
-Hi Sasha, Greg,
+/sys/fs/resctrl# mkdir mon_groups/new5
+/sys/fs/resctrl# cat info/last_cmd_status
+Failed to allocate counter for mbm_total_bytes in domain 2
 
-This commit depends on its predecessor 24d2d3c5f940 ("ALSA: usb-audio:
-Improve Focusrite sample rate filtering") which was not picked up for
-stable because it didn't have a Fixes tag.
+The failure is ignored, as expected, in rdt_assign_cntrs() but the last_cmd_status
+is never cleared. I think this could be fixed by:
 
-Without the rate filtering patch, the Focusrite Scarlett 18i8 3rd Gen
-gets all sample rates advertised on every altsetting instead of the
-correct per-altsetting subset. I've confirmed this on 6.19.7.
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 62edb464410a..396f17ed72c6 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1260,6 +1260,8 @@ void rdtgroup_assign_cntrs(struct rdtgroup *rdtgrp)
+        if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
+                rdtgroup_assign_cntr_event(NULL, rdtgrp,
+                                           &mon_event_all[QOS_L3_MBM_LOCAL_EVENT_ID]);
++
++       rdt_last_cmd_clear();
+ }
 
-Could 24d2d3c5f940 be queued for stable please?
+Is this right thing to do? Let me know if you want a proper patch.
+
 
 Thanks,
-Geoffrey.
+
+Ben
