@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF0932AAC5;
-	Tue, 17 Mar 2026 17:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2F377579;
+	Tue, 17 Mar 2026 17:24:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768269; cv=none; b=hhli/VjH90IcGpr1lgPKAhfY5G/V/OYwGNmb5iudTWXKJC6Jj96g6+8qGozRsvvHFVMmzXbMnGrXnTpaOgs3gPeu/HDd1ECv8iGx1zUdaJmTpA3syp7hf1EO4pJXiDJ8yYFk+OSRAb5Scb1syZV1EWbw4IYBdJ5DVyJiv561NRM=
+	t=1773768275; cv=none; b=YFuSMzJ1COFNwEGlaciemsn6/Fp/JuKa2YLuHqI5XjY+mj9TlYQMr4512GEd5QRSI8WD4heGAH+JLKdRShYgvK708rut6TgKZWZE9/BGHXGRttdFkxWRRVOF6nqVCcB55lB/OGsH+u1Hund+mOJnb6atIBWrBstbaL7F8NYwn7A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768269; c=relaxed/simple;
-	bh=zYBw4uOKHKNWisJoKAQLGqo8ohP0aZntGR7u20j0U2Y=;
+	s=arc-20240116; t=1773768275; c=relaxed/simple;
+	bh=3ZmH0BBfzw7+W9uNmkZ3W8VZOjDnT5pqCBPdcMwMY5c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XMUk7bYR4IOwfdDu3ngdJCy6cUVZjgW+YLJq+i0gaO5L6O69WsaeSqKCWBPyTni2jTvOcTV7IpZUxCjt1ehofHWfZKDcER3rE+PrSbsccRZ4g9HL3q7YSMdEQrJN6MBSyHxbNI+/tqeby581ioerpssBsKsYGN6NiP/fKOu63LI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGstgmjb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ikMJzJIuMKyiGERYdbztNMw7fFx+d45ztnT82AcVsd3JocZAhekjePx71hIo9e19vVN2lzcVxI/s4AWfT+fBHxOjmiEfHdVqtF66Qi+RHECRnwQMa2+O5SvpReO2OiK+le/sIa/uNiedmFAEaHp7sPmDenuCpdxoehNylOH9Vo0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxvGa7NJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGstgmjb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBCFC19424;
-	Tue, 17 Mar 2026 17:24:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxvGa7NJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC57C2BCB0;
+	Tue, 17 Mar 2026 17:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768269;
-	bh=zYBw4uOKHKNWisJoKAQLGqo8ohP0aZntGR7u20j0U2Y=;
+	s=korg; t=1773768275;
+	bh=3ZmH0BBfzw7+W9uNmkZ3W8VZOjDnT5pqCBPdcMwMY5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TGstgmjbHItDc+oJIktgVeICsIhsvr0qvrKpU5HABxr5Rpf+6JCQoxvwqfjgF3kV/
-	 I+mZrnHV5Q2DB7+qDIn/2+MJbzQsxbN3n3M0qRulqvUei7cxGs/7ZXxTA8UAzVKqMs
-	 w3ZXEDCYJLb6uXuik1h6cVBECJlsirZheC8ByBAo=
+	b=zxvGa7NJlW41gfQyMH/jnRF6wspGUh9JsqVi/FiDQ6gE7pLJQsyafrYUINSUCv3+6
+	 +LRBUXcEmBxCULWSTFkqhkIH+6Xl2K66+dTn6/OwDYl3cH88Gg5Hgl1TL4UomnWLNq
+	 KG1S65dHdpwUn2Rghnqcd5GQDvbHKDpnxrxfotgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ingo Franzki <ifranzki@linux.ibm.com>,
-	Harald Freudenberger <freude@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.18 272/333] s390/zcrypt: Enable AUTOSEL_DOM for CCA serialnr sysfs attribute
-Date: Tue, 17 Mar 2026 17:35:01 +0100
-Message-ID: <20260317163009.477783815@linuxfoundation.org>
+	Mehul Rao <mehulrao@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 246/333] net: nexthop: fix percpu use-after-free in remove_nh_grp_entry
+Date: Tue, 17 Mar 2026 17:34:35 +0100
+Message-ID: <20260317163008.489019624@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -45,74 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Harald Freudenberger <freude@linux.ibm.com>
+From: Mehul Rao <mehulrao@gmail.com>
 
-commit 598bbefa8032cc58b564a81d1ad68bd815c8dc0f upstream.
+commit b2662e7593e94ae09b1cf7ee5f09160a3612bcb2 upstream.
 
-The serialnr sysfs attribute for CCA cards when queried always
-used the default domain for sending the request down to the card.
-If for any reason exactly this default domain is disabled then
-the attribute code fails to retrieve the CCA info and the sysfs
-entry shows an empty string. Works as designed but the serial
-number is a card attribute and thus it does not matter which
-domain is used for the query. So if there are other domains on
-this card available, these could be used.
+When removing a nexthop from a group, remove_nh_grp_entry() publishes
+the new group via rcu_assign_pointer() then immediately frees the
+removed entry's percpu stats with free_percpu(). However, the
+synchronize_net() grace period in the caller remove_nexthop_from_groups()
+runs after the free. RCU readers that entered before the publish still
+see the old group and can dereference the freed stats via
+nh_grp_entry_stats_inc() -> get_cpu_ptr(nhge->stats), causing a
+use-after-free on percpu memory.
 
-So extend the code to use AUTOSEL_DOM for the domain value to
-address any online domain within the card for querying the cca
-info and thus show the serialnr as long as there is one domain
-usable regardless of the default domain setting.
+Fix by deferring the free_percpu() until after synchronize_net() in the
+caller. Removed entries are chained via nh_list onto a local deferred
+free list. After the grace period completes and all RCU readers have
+finished, the percpu stats are safely freed.
 
-Fixes: 8f291ebf3270 ("s390/zcrypt: enable card/domain autoselect on ep11 cprbs")
-Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
-Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
-Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Fixes: f4676ea74b85 ("net: nexthop: Add nexthop group entry stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260306233821.196789-1-mehulrao@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/crypto/zcrypt_ccamisc.c |   12 +++++++-----
- drivers/s390/crypto/zcrypt_cex4.c    |    3 +--
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ net/ipv4/nexthop.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/s390/crypto/zcrypt_ccamisc.c
-+++ b/drivers/s390/crypto/zcrypt_ccamisc.c
-@@ -1640,11 +1640,13 @@ int cca_get_info(u16 cardnr, u16 domain,
- 
- 	memset(ci, 0, sizeof(*ci));
- 
--	/* get first info from zcrypt device driver about this apqn */
--	rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
--	if (rc)
--		return rc;
--	ci->hwtype = devstat.hwtype;
-+	/* if specific domain given, fetch status and hw info for this apqn */
-+	if (domain != AUTOSEL_DOM) {
-+		rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
-+		if (rc)
-+			return rc;
-+		ci->hwtype = devstat.hwtype;
-+	}
- 
- 	/*
- 	 * Prep memory for rule array and var array use.
---- a/drivers/s390/crypto/zcrypt_cex4.c
-+++ b/drivers/s390/crypto/zcrypt_cex4.c
-@@ -84,8 +84,7 @@ static ssize_t cca_serialnr_show(struct
- 
- 	memset(&ci, 0, sizeof(ci));
- 
--	if (ap_domain_index >= 0)
--		cca_get_info(ac->id, ap_domain_index, &ci, 0);
-+	cca_get_info(ac->id, AUTOSEL_DOM, &ci, 0);
- 
- 	return sysfs_emit(buf, "%s\n", ci.serial);
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -2005,7 +2005,8 @@ static void nh_hthr_group_rebalance(stru
  }
+ 
+ static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
+-				struct nl_info *nlinfo)
++				struct nl_info *nlinfo,
++				struct list_head *deferred_free)
+ {
+ 	struct nh_grp_entry *nhges, *new_nhges;
+ 	struct nexthop *nhp = nhge->nh_parent;
+@@ -2065,8 +2066,8 @@ static void remove_nh_grp_entry(struct n
+ 	rcu_assign_pointer(nhp->nh_grp, newg);
+ 
+ 	list_del(&nhge->nh_list);
+-	free_percpu(nhge->stats);
+ 	nexthop_put(nhge->nh);
++	list_add(&nhge->nh_list, deferred_free);
+ 
+ 	/* Removal of a NH from a resilient group is notified through
+ 	 * bucket notifications.
+@@ -2086,6 +2087,7 @@ static void remove_nexthop_from_groups(s
+ 				       struct nl_info *nlinfo)
+ {
+ 	struct nh_grp_entry *nhge, *tmp;
++	LIST_HEAD(deferred_free);
+ 
+ 	/* If there is nothing to do, let's avoid the costly call to
+ 	 * synchronize_net()
+@@ -2094,10 +2096,16 @@ static void remove_nexthop_from_groups(s
+ 		return;
+ 
+ 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
+-		remove_nh_grp_entry(net, nhge, nlinfo);
++		remove_nh_grp_entry(net, nhge, nlinfo, &deferred_free);
+ 
+ 	/* make sure all see the newly published array before releasing rtnl */
+ 	synchronize_net();
++
++	/* Now safe to free percpu stats — all RCU readers have finished */
++	list_for_each_entry_safe(nhge, tmp, &deferred_free, nh_list) {
++		list_del(&nhge->nh_list);
++		free_percpu(nhge->stats);
++	}
+ }
+ 
+ static void remove_nexthop_group(struct nexthop *nh, struct nl_info *nlinfo)
 
 
