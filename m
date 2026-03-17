@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEED23E6DCF;
-	Tue, 17 Mar 2026 17:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937BA3E6DCF;
+	Tue, 17 Mar 2026 17:12:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767568; cv=none; b=fve4zjWsDseBOuoytx+CMZ7EEZSJ6A680VbCUxE2IoG/NDZVvBc3LiNbvuM6cYKKKQN/j/FMhXcKsTH3v7FFDa72Ei1NsRlAqhHJM//LLVsenDkqZfLiEKVTXASSzbStsspC0CRPdKUvvrHmpO8Iruqv/LOX2buzn2Cd/21Mrc4=
+	t=1773767572; cv=none; b=lzdmunpGdB2jaGNpiKaRQoUwCW0srl/QbWaa3IQSikGhIdWmWE4GBRo2UkdRhKvtNOjEAFN+VdOAA1WV6dJPL80PSpg1v14mI2hXqoDvoLuuT4Fmkm99YNzZ232yTXwL7l2qinE794PVdz1gC3mjImwQT9EgWLsYsz+P5oJ4ydw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767568; c=relaxed/simple;
-	bh=Hr4r2O/JpvSofGlmpnQjkcjUx+LWTZILwDEaCZBp0w8=;
+	s=arc-20240116; t=1773767572; c=relaxed/simple;
+	bh=WeH1oipswextXQkQYD6+nlgXctFCjeAYxTxF6Yf6bz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OiAiIB6Iv5YXUGUAQ0dtdhloUj38YdP6FcPSprEA9GHYf1oXueQVG0i/52qpR16Q+4CPvgnWmJozAaUA0krV683Cy6naUtPSqZBRb7U5h6iAZ3wIkUjx12xp/YlsQOo/emG1dV/73hofVuZotKhgts9jlTT0KnNC0yQkgtUBNEc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RANGS/Lc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=c8TtuoPXe3z2WREdNfuxfilkAnkw0tHSbEdtOCzzwD7RTQxbq7DSnD569gh9yZo5tTr4ngeNdd/WWpPkt2NXV1ARXME1AClAM66EdXQJMugG6CESat6Rrks2v+QJk6y+ELvuN9g47obwSw4qoRM+dou9xXEulXsZDlbczXz6dM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWdNkgik; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RANGS/Lc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05BAC4CEF7;
-	Tue, 17 Mar 2026 17:12:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWdNkgik"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CABAC2BCAF;
+	Tue, 17 Mar 2026 17:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767567;
-	bh=Hr4r2O/JpvSofGlmpnQjkcjUx+LWTZILwDEaCZBp0w8=;
+	s=korg; t=1773767572;
+	bh=WeH1oipswextXQkQYD6+nlgXctFCjeAYxTxF6Yf6bz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RANGS/LcHuBPQlgK03EWc490LQeG8S7+8ZyYZhL01FOY4KN2w+7ohqbgGXcf12D1M
-	 Vj88KtVKHM7f/FxlSAyhk4P7RtampZFuGSdv+trZUz8AU4ir632jO+bnNZA9A9xvoN
-	 csLUtRiWItij/sctwXTMqbu1swMM8KFmTjKra0qE=
+	b=iWdNkgikf0abLR+dakKFlAVpBdtNKq1nu4VtWW0kxDo3hIK4WSpk+l5/7X3BHbALz
+	 u4DKruqz5807Vcv2Zs7lL5oklF5S4IOroEflZxAlfUpQIBtctdtOsfyDSvfpkFteht
+	 qB/0O/yYG5At2TxK8jkzRiDBnZoZzGWJKoukYP5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
+	Jann Horn <jannh@google.com>,
 	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.18 114/333] rust_binder: fix oneway spam detection
-Date: Tue, 17 Mar 2026 17:32:23 +0100
-Message-ID: <20260317163003.595276780@linuxfoundation.org>
+	Danilo Krummrich <dakr@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>
+Subject: [PATCH 6.18 115/333] rust_binder: check ownership before using vma
+Date: Tue, 17 Mar 2026 17:32:24 +0100
+Message-ID: <20260317163003.632655919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,136 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-commit 4fc87c240b8f30e22b7ebaae29d57105589e1c0b upstream.
+commit 8ef2c15aeae07647f530d30f6daaf79eb801bcd1 upstream.
 
-The spam detection logic in TreeRange was executed before the current
-request was inserted into the tree. So the new request was not being
-factored in the spam calculation. Fix this by moving the logic after
-the new range has been inserted.
+When installing missing pages (or zapping them), Rust Binder will look
+up the vma in the mm by address, and then call vm_insert_page (or
+zap_page_range_single). However, if the vma is closed and replaced with
+a different vma at the same address, this can lead to Rust Binder
+installing pages into the wrong vma.
 
-Also, the detection logic for ArrayRange was missing altogether which
-meant large spamming transactions could get away without being detected.
-Fix this by implementing an equivalent low_oneway_space() in ArrayRange.
+By installing the page into a writable vma, it becomes possible to write
+to your own binder pages, which are normally read-only. Although you're
+not supposed to be able to write to those pages, the intent behind the
+design of Rust Binder is that even if you get that ability, it should not
+lead to anything bad. Unfortunately, due to another bug, that is not the
+case.
 
-Note that I looked into centralizing this logic in RangeAllocator but
-iterating through 'state' and 'size' got a bit too complicated (for me)
-and I abandoned this effort.
+To fix this, store a pointer in vm_private_data and check that the vma
+returned by vma_lookup() has the right vm_ops and vm_private_data before
+trying to use the vma. This should ensure that Rust Binder will refuse
+to interact with any other VMA. The plan is to introduce more vma
+abstractions to avoid this unsafe access to vm_ops and vm_private_data,
+but for now let's start with the simplest possible fix.
+
+C Binder performs the same check in a slightly different way: it
+provides a vm_ops->close that sets a boolean to true, then checks that
+boolean after calling vma_lookup(), but this is more fragile
+than the solution in this patch. (We probably still want to do both, but
+the vm_ops->close callback will be added later as part of the follow-up
+vma API changes.)
+
+It's still possible to remap the vma so that pages appear in the right
+vma, but at the wrong offset, but this is a separate issue and will be
+fixed when Rust Binder gets a vm_ops->close callback.
 
 Cc: stable <stable@kernel.org>
-Cc: Alice Ryhl <aliceryhl@google.com>
 Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260210232949.3770644-1-cmllamas@google.com
+Reported-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Link: https://patch.msgid.link/20260218-binder-vma-check-v2-1-60f9d695a990@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/range_alloc/array.rs |   35 ++++++++++++++++++++++++++--
- drivers/android/binder/range_alloc/mod.rs   |    4 +--
- drivers/android/binder/range_alloc/tree.rs  |   18 +++++++-------
- 3 files changed, 44 insertions(+), 13 deletions(-)
+ drivers/android/binder/page_range.rs |   83 ++++++++++++++++++++++++++---------
+ 1 file changed, 63 insertions(+), 20 deletions(-)
 
---- a/drivers/android/binder/range_alloc/array.rs
-+++ b/drivers/android/binder/range_alloc/array.rs
-@@ -118,7 +118,7 @@ impl<T> ArrayRangeAllocator<T> {
-         size: usize,
-         is_oneway: bool,
-         pid: Pid,
--    ) -> Result<usize> {
-+    ) -> Result<(usize, bool)> {
-         // Compute new value of free_oneway_space, which is set only on success.
-         let new_oneway_space = if is_oneway {
-             match self.free_oneway_space.checked_sub(size) {
-@@ -146,7 +146,38 @@ impl<T> ArrayRangeAllocator<T> {
-             .ok()
-             .unwrap();
+--- a/drivers/android/binder/page_range.rs
++++ b/drivers/android/binder/page_range.rs
+@@ -142,6 +142,30 @@ pub(crate) struct ShrinkablePageRange {
+     _pin: PhantomPinned,
+ }
  
--        Ok(insert_at_offset)
-+        // Start detecting spammers once we have less than 20%
-+        // of async space left (which is less than 10% of total
-+        // buffer size).
-+        //
-+        // (This will short-circuit, so `low_oneway_space` is
-+        // only called when necessary.)
-+        let oneway_spam_detected =
-+            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
++// We do not define any ops. For now, used only to check identity of vmas.
++static BINDER_VM_OPS: bindings::vm_operations_struct = pin_init::zeroed();
 +
-+        Ok((insert_at_offset, oneway_spam_detected))
++// To ensure that we do not accidentally install pages into or zap pages from the wrong vma, we
++// check its vm_ops and private data before using it.
++fn check_vma(vma: &virt::VmaRef, owner: *const ShrinkablePageRange) -> Option<&virt::VmaMixedMap> {
++    // SAFETY: Just reading the vm_ops pointer of any active vma is safe.
++    let vm_ops = unsafe { (*vma.as_ptr()).vm_ops };
++    if !ptr::eq(vm_ops, &BINDER_VM_OPS) {
++        return None;
 +    }
 +
-+    /// Find the amount and size of buffers allocated by the current caller.
-+    ///
-+    /// The idea is that once we cross the threshold, whoever is responsible
-+    /// for the low async space is likely to try to send another async transaction,
-+    /// and at some point we'll catch them in the act.  This is more efficient
-+    /// than keeping a map per pid.
-+    fn low_oneway_space(&self, calling_pid: Pid) -> bool {
-+        let mut total_alloc_size = 0;
-+        let mut num_buffers = 0;
++    // SAFETY: Reading the vm_private_data pointer of a binder-owned vma is safe.
++    let vm_private_data = unsafe { (*vma.as_ptr()).vm_private_data };
++    // The ShrinkablePageRange is only dropped when the Process is dropped, which only happens once
++    // the file's ->release handler is invoked, which means the ShrinkablePageRange outlives any
++    // VMA associated with it, so there can't be any false positives due to pointer reuse here.
++    if !ptr::eq(vm_private_data, owner.cast()) {
++        return None;
++    }
 +
-+        // Warn if this pid has more than 50 transactions, or more than 50% of
-+        // async space (which is 25% of total buffer size). Oneway spam is only
-+        // detected when the threshold is exceeded.
-+        for range in &self.ranges {
-+            if range.state.is_oneway() && range.state.pid() == calling_pid {
-+                total_alloc_size += range.size;
-+                num_buffers += 1;
-+            }
-+        }
-+        num_buffers > 50 || total_alloc_size > self.size / 4
-     }
++    vma.as_mixedmap_vma()
++}
++
+ struct Inner {
+     /// Array of pages.
+     ///
+@@ -308,6 +332,18 @@ impl ShrinkablePageRange {
+         inner.size = num_pages;
+         inner.vma_addr = vma.start();
  
-     pub(crate) fn reservation_abort(&mut self, offset: usize) -> Result<FreedRange> {
---- a/drivers/android/binder/range_alloc/mod.rs
-+++ b/drivers/android/binder/range_alloc/mod.rs
-@@ -188,11 +188,11 @@ impl<T> RangeAllocator<T> {
-                 self.reserve_new(args)
-             }
-             Impl::Array(array) => {
--                let offset =
-+                let (offset, oneway_spam_detected) =
-                     array.reserve_new(args.debug_id, args.size, args.is_oneway, args.pid)?;
-                 Ok(ReserveNew::Success(ReserveNewSuccess {
-                     offset,
--                    oneway_spam_detected: false,
-+                    oneway_spam_detected,
-                     _empty_array_alloc: args.empty_array_alloc,
-                     _new_tree_alloc: args.new_tree_alloc,
-                     _tree_alloc: args.tree_alloc,
---- a/drivers/android/binder/range_alloc/tree.rs
-+++ b/drivers/android/binder/range_alloc/tree.rs
-@@ -164,15 +164,6 @@ impl<T> TreeRangeAllocator<T> {
-             self.free_oneway_space
-         };
- 
--        // Start detecting spammers once we have less than 20%
--        // of async space left (which is less than 10% of total
--        // buffer size).
--        //
--        // (This will short-circut, so `low_oneway_space` is
--        // only called when necessary.)
--        let oneway_spam_detected =
--            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
--
-         let (found_size, found_off, tree_node, free_tree_node) = match self.find_best_match(size) {
-             None => {
-                 pr_warn!("ENOSPC from range_alloc.reserve_new - size: {}", size);
-@@ -203,6 +194,15 @@ impl<T> TreeRangeAllocator<T> {
-             self.free_tree.insert(free_tree_node);
-         }
- 
-+        // Start detecting spammers once we have less than 20%
-+        // of async space left (which is less than 10% of total
-+        // buffer size).
++        // This pointer is only used for comparison - it's not dereferenced.
 +        //
-+        // (This will short-circuit, so `low_oneway_space` is
-+        // only called when necessary.)
-+        let oneway_spam_detected =
-+            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
++        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
++        // `vm_private_data`.
++        unsafe {
++            (*vma.as_ptr()).vm_private_data = ptr::from_ref(self).cast_mut().cast::<c_void>()
++        };
 +
-         Ok((found_off, oneway_spam_detected))
++        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
++        // `vm_ops`.
++        unsafe { (*vma.as_ptr()).vm_ops = &BINDER_VM_OPS };
++
+         Ok(num_pages)
      }
  
+@@ -399,22 +435,24 @@ impl ShrinkablePageRange {
+         //
+         // Using `mmput_async` avoids this, because then the `mm` cleanup is instead queued to a
+         // workqueue.
+-        MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
+-            .mmap_read_lock()
+-            .vma_lookup(vma_addr)
+-            .ok_or(ESRCH)?
+-            .as_mixedmap_vma()
+-            .ok_or(ESRCH)?
+-            .vm_insert_page(user_page_addr, &new_page)
+-            .inspect_err(|err| {
+-                pr_warn!(
+-                    "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
+-                    user_page_addr,
+-                    vma_addr,
+-                    i,
+-                    err
+-                )
+-            })?;
++        check_vma(
++            MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
++                .mmap_read_lock()
++                .vma_lookup(vma_addr)
++                .ok_or(ESRCH)?,
++            self,
++        )
++        .ok_or(ESRCH)?
++        .vm_insert_page(user_page_addr, &new_page)
++        .inspect_err(|err| {
++            pr_warn!(
++                "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
++                user_page_addr,
++                vma_addr,
++                i,
++                err
++            )
++        })?;
+ 
+         let inner = self.lock.lock();
+ 
+@@ -667,12 +705,15 @@ unsafe extern "C" fn rust_shrink_free_pa
+     let mmap_read;
+     let mm_mutex;
+     let vma_addr;
++    let range_ptr;
+ 
+     {
+         // CAST: The `list_head` field is first in `PageInfo`.
+         let info = item as *mut PageInfo;
+         // SAFETY: The `range` field of `PageInfo` is immutable.
+-        let range = unsafe { &*((*info).range) };
++        range_ptr = unsafe { (*info).range };
++        // SAFETY: The `range` outlives its `PageInfo` values.
++        let range = unsafe { &*range_ptr };
+ 
+         mm = match range.mm.mmget_not_zero() {
+             Some(mm) => MmWithUser::into_mmput_async(mm),
+@@ -717,9 +758,11 @@ unsafe extern "C" fn rust_shrink_free_pa
+     // SAFETY: The lru lock is locked when this method is called.
+     unsafe { bindings::spin_unlock(&raw mut (*lru).lock) };
+ 
+-    if let Some(vma) = mmap_read.vma_lookup(vma_addr) {
+-        let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
+-        vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
++    if let Some(unchecked_vma) = mmap_read.vma_lookup(vma_addr) {
++        if let Some(vma) = check_vma(unchecked_vma, range_ptr) {
++            let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
++            vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
++        }
+     }
+ 
+     drop(mmap_read);
 
 
