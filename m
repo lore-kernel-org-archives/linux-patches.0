@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5E452116F6;
-	Tue, 17 Mar 2026 17:11:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D85B2FFDEA;
+	Tue, 17 Mar 2026 17:11:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767481; cv=none; b=ZeSlh5IKwz/+jXoHgl7bdujDxLiZRqSsw+emtHXmqCgqGRzWgXZr2bbl6A7hN8Gk3v/0dCvNts7poaoq1BsVtoFvh++YY9WD+MJzaX9TvLuXWf9VSQ25kPKNCRmCCpFlnzfpR84SD11D/+hKsZ+fHbwTHr/WpBVmZTyhpu2UD8s=
+	t=1773767485; cv=none; b=kEn+bGPLQ2m2hCZ63QJuEpdPg0BSPYy+lBY7czji9F5xXiW4S78mSKqxt7DHHTbWf5WXhusLDv08KjFQi196F/s3byqua/H8mEVrL1FL+XQ+KQdV6gThKSJSWGZp8CO9QHAniI0a7HRSwks3sJqRHC/7jPnZqFnNf92Rl+GNZTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767481; c=relaxed/simple;
-	bh=ZQeVsJc2/d9shfvHAmH5lXz1r3vAt1/Sor1L91VHnDo=;
+	s=arc-20240116; t=1773767485; c=relaxed/simple;
+	bh=jWqFCQxtn5lk3vGf81iQD4ZOkad1rPu1MvltSNxYfM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fmqnL0DKdRrYVz9itP6jhrJ7NJLG7g81HFzHI+SpaO+PxUFd7VlcVvIwofgECExtyazxBsQOygc2fOzcDxX1wD+3fF18g+mA0WoqEqSnwZXaomp/9qRV5/qxogULa9JWH0tcOEfaYPAjoOuDd0xPB68JkHenwMNUBiW3+TwuEW8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sZ8dixGH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kmY+U+p7gf+Knb5HhVq1XBjzVPqCY5Nd1ctBGIcw40x9zPd+lgZjHJKLv5as4zj/xEzgHjIofHSFA2nSlhFOlKstPVtNt0k5dqtTatTu9QeHkOA18vALrX4+CHwE6lvhEVOplDEK0oMJJIV/FAqhpkZ5zkVc9yB/TMiKMZ2kupQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NY+0zZ4R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sZ8dixGH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47372C4CEF7;
-	Tue, 17 Mar 2026 17:11:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NY+0zZ4R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E4B3C4CEF7;
+	Tue, 17 Mar 2026 17:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767480;
-	bh=ZQeVsJc2/d9shfvHAmH5lXz1r3vAt1/Sor1L91VHnDo=;
+	s=korg; t=1773767485;
+	bh=jWqFCQxtn5lk3vGf81iQD4ZOkad1rPu1MvltSNxYfM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZ8dixGHSb7n3AOG1Y556SzWT7c6JxcE04b2NsepZgA0amL9267W5A3sR1d20gZir
-	 veyt4sW+BivReLUJhRIkpzuLymuXszwTwQwcp4eCim8Durou5ZxlK+qjdb53I9I+Ob
-	 HTVHHQTgz+gHaAIWVhAUHZfR5ITvBH3EzPzh3zMA=
+	b=NY+0zZ4RkDSAo6cYTu9Cksbp/K85jjFGzePW6gznUBoTb+qV2DmouowPqKEZ7Pcxv
+	 mvJ+F8PR+VzaZLi/8imPdapHUAs8FWHx5+9hS7zB5jNPrdajUazm5s6IbkX69mRw4w
+	 /2R8xnc2KK5Xm4vSg8V4/aIjOJtnPftZGH93quEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	David Ahern <dsahern@kernel.org>,
-	Kuniyuki Iwashima <kuniyu@google.com>,
+	Shiraz Saleem <shirazsaleem@microsoft.com>,
+	Konstantin Taranov <kotaranov@microsoft.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 095/333] neighbour: restore protocol != 0 check in pneigh update
-Date: Tue, 17 Mar 2026 17:32:04 +0100
-Message-ID: <20260317163002.893700727@linuxfoundation.org>
+Subject: [PATCH 6.18 096/333] net/mana: Null service_wq on setup error to prevent double destroy
+Date: Tue, 17 Mar 2026 17:32:05 +0100
+Message-ID: <20260317163002.930258873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,41 +53,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Shiraz Saleem <shirazsaleem@microsoft.com>
 
-[ Upstream commit cbada1048847a348797aec63a1d8056621cbe653 ]
+[ Upstream commit 87c2302813abc55c46485711a678e3c312b00666 ]
 
-Prior to commit dc2a27e524ac ("neighbour: Update pneigh_entry in
-pneigh_create()."), a pneigh's protocol was updated only when the
-value of the NDA_PROTOCOL attribute was non-0. While moving the code,
-that check was removed. This is a small change of user-visible
-behavior, and inconsistent with the (non-proxy) neighbour behavior.
+In mana_gd_setup() error path, set gc->service_wq to NULL after
+destroy_workqueue() to match the cleanup in mana_gd_cleanup().
+This prevents a use-after-free if the workqueue pointer is checked
+after a failed setup.
 
-Fixes: dc2a27e524ac ("neighbour: Update pneigh_entry in pneigh_create().")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
-Link: https://patch.msgid.link/38c61de1bb032871a886aff9b9b52fe1cdd4cada.1772894876.git.sd@queasysnail.net
+Fixes: f975a0955276 ("net: mana: Fix double destroy_workqueue on service rescan PCI path")
+Signed-off-by: Shiraz Saleem <shirazsaleem@microsoft.com>
+Signed-off-by: Konstantin Taranov <kotaranov@microsoft.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260309172443.688392-1-kotaranov@linux.microsoft.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/microsoft/mana/gdma_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index bddfa389effa7..6dab4d1c2263d 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -821,7 +821,8 @@ int pneigh_create(struct neigh_table *tbl, struct net *net,
- update:
- 	WRITE_ONCE(n->flags, flags);
- 	n->permanent = permanent;
--	WRITE_ONCE(n->protocol, protocol);
-+	if (protocol)
-+		WRITE_ONCE(n->protocol, protocol);
- out:
- 	mutex_unlock(&tbl->phash_lock);
+diff --git a/drivers/net/ethernet/microsoft/mana/gdma_main.c b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+index e22a98a9c9856..962fdd29d6063 100644
+--- a/drivers/net/ethernet/microsoft/mana/gdma_main.c
++++ b/drivers/net/ethernet/microsoft/mana/gdma_main.c
+@@ -1854,6 +1854,7 @@ static int mana_gd_setup(struct pci_dev *pdev)
+ 	mana_gd_remove_irqs(pdev);
+ free_workqueue:
+ 	destroy_workqueue(gc->service_wq);
++	gc->service_wq = NULL;
+ 	dev_err(&pdev->dev, "%s failed (error %d)\n", __func__, err);
  	return err;
+ }
 -- 
 2.51.0
 
