@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9A352FFDEA;
-	Tue, 17 Mar 2026 17:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195EF3A4F46;
+	Tue, 17 Mar 2026 17:04:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767050; cv=none; b=KsRL/sWeombwGPNK7bbjOmk3sBiLj1hcVlfMEAwtkfPcS3ODk9m+GuuPT+/E2lNaAjJsUF2ILXhEbQuazQCR9wMr6L/4/1dITGIJAKwkMLne2CWgo6Bq0MkUAukIqHhZM2foKjq0dXyIvpqrN7I0DuWxdsgo+qVVvy/6RAacgWU=
+	t=1773767055; cv=none; b=o020uFpXgGhNAyEeK01uSiVc25mYs+QjGTihSErCgCxqj9S/3DIxTNn3MvkzCujkX2XjzzWvCMg+PKdHDLPjBxGtYq1iEuTKhNnJH0EHRyCmrpR6ACrIfCP1HmRx+thX+2URn8E0BLYuUhomLrdjPDjCBce9wkKb0SeWO2Hpp6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767050; c=relaxed/simple;
-	bh=6FZWtxum59yeIgs420F93N4GNPme0hIIG2af+ODBVGM=;
+	s=arc-20240116; t=1773767055; c=relaxed/simple;
+	bh=JQjczrzOam9F5zhQRVpqGlzZoLNTWx6uXmA2VvuXGQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z8bYkPLa3o7nxt/5EGKu0Km1BeqCAEKeJ47hU4SgE74Qxv4tNENls3I2iCdyYMS/LpGHLIc62QYgb5OM8QyOaScFJrvQ5FAPh/Ce7s1DeL9aXTzD8ZaH/nFFH+Uc2Ua0Q8Q9zh2c2QpNd0KRzmgxYynsmI9ZvVqfUMf0bopcXHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TKSAKjWV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hI3Dm8WXYD8cb7bqAlN7PZtheh7TfKM6mxOlYlA9Qme+sopLZa6zYfS9AS3V9OVGveNcyngnGNjkIQqR552miibHvf8BERVeu2Q2rk1+Q5Kg7jSvu/zTaWvUMi+jLDW6e8RIKIqGkndTbnlGw8UkQwgTWC6uibrgv/iqOBZIp6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b4W13qHW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TKSAKjWV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18512C4CEF7;
-	Tue, 17 Mar 2026 17:04:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b4W13qHW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CF74C19424;
+	Tue, 17 Mar 2026 17:04:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767050;
-	bh=6FZWtxum59yeIgs420F93N4GNPme0hIIG2af+ODBVGM=;
+	s=korg; t=1773767055;
+	bh=JQjczrzOam9F5zhQRVpqGlzZoLNTWx6uXmA2VvuXGQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKSAKjWVB6aa2jRevw0WVUDFzMFI+aAMeHaeHe7Og4xSiL27NEbahzg3ww//V8zpF
-	 7HXvQdSqabDo11JJbrihKeIWa8qMFALrAxLPf8lheKD9Qya4Bt5FfJfizwk8FU+70h
-	 C0XSesM4mLJ6jaZBFksx+v8DnVxxH+2MGrtHndcc=
+	b=b4W13qHWYRWE5A8xc1x9A9GmXj7d2r1eKy+1OQLbr68Ky1e8/bqmWq29LOcFwtZfz
+	 y6lyKFZfgT5yrcR7fnzrN+W0bRZClLhpyQbYrFSWWOEfMEiXARvDBqzkpKYGNJxs3I
+	 nXarb3OB3b4jTshFCY3moTP08h0o4dOJ+0AJ1pWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com,
-	Marc Zyngier <maz@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 375/378] KVM: arm64: Eagerly init vgic dist/redist on vgic creation
-Date: Tue, 17 Mar 2026 17:35:32 +0100
-Message-ID: <20260317163020.776734857@linuxfoundation.org>
+	Hao-Yu Yang <naup96721@gmail.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.19 376/378] io_uring: ensure ctx->rings is stable for task work flags manipulation
+Date: Tue, 17 Mar 2026 17:35:33 +0100
+Message-ID: <20260317163020.813852548@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,84 +51,137 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit ac6769c8f948dff33265c50e524aebf9aa6f1be0 ]
+Commit 96189080265e6bb5dde3a4afbaf947af493e3f82 upstream.
 
-If vgic_allocate_private_irqs_locked() fails for any odd reason,
-we exit kvm_vgic_create() early, leaving dist->rd_regions uninitialised.
+If DEFER_TASKRUN | SETUP_TASKRUN is used and task work is added while
+the ring is being resized, it's possible for the OR'ing of
+IORING_SQ_TASKRUN to happen in the small window of swapping into the
+new rings and the old rings being freed.
 
-kvm_vgic_dist_destroy() then comes along and walks into the weeds
-trying to free the RDs. Got to love this stuff.
+Prevent this by adding a 2nd ->rings pointer, ->rings_rcu, which is
+protected by RCU. The task work flags manipulation is inside RCU
+already, and if the resize ring freeing is done post an RCU synchronize,
+then there's no need to add locking to the fast path of task work
+additions.
 
-Solve it by moving all the static initialisation early, and make
-sure that if we fail halfway, we're in a reasonable shape to
-perform the rest of the teardown. While at it, reset the vgic model
-on failure, just in case...
+Note: this is only done for DEFER_TASKRUN, as that's the only setup mode
+that supports ring resizing. If this ever changes, then they too need to
+use the io_ctx_mark_taskrun() helper.
 
-Reported-by: syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com
-Tested-by: syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com
-Fixes: b3aa9283c0c50 ("KVM: arm64: vgic: Hoist SGI/PPI alloc from vgic_init() to kvm_create_vgic()")
-Link: https://lore.kernel.org/r/69a2d58c.050a0220.3a55be.003b.GAE@google.com
-Link: https://patch.msgid.link/20260228164559.936268-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/io-uring/20260309062759.482210-1-naup96721@gmail.com/
 Cc: stable@vger.kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 79cfe9e59c2a ("io_uring/register: add IORING_REGISTER_RESIZE_RINGS")
+Reported-by: Hao-Yu Yang <naup96721@gmail.com>
+Suggested-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-init.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ include/linux/io_uring_types.h |    1 +
+ io_uring/io_uring.c            |   24 ++++++++++++++++++++++--
+ io_uring/register.c            |   12 ++++++++++++
+ 3 files changed, 35 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -143,6 +143,21 @@ int kvm_vgic_create(struct kvm *kvm, u32
- 	kvm->arch.vgic.in_kernel = true;
- 	kvm->arch.vgic.vgic_model = type;
- 	kvm->arch.vgic.implementation_rev = KVM_VGIC_IMP_REV_LATEST;
-+	kvm->arch.vgic.vgic_dist_base = VGIC_ADDR_UNDEF;
+--- a/include/linux/io_uring_types.h
++++ b/include/linux/io_uring_types.h
+@@ -371,6 +371,7 @@ struct io_ring_ctx {
+ 	 * regularly bounce b/w CPUs.
+ 	 */
+ 	struct {
++		struct io_rings	__rcu	*rings_rcu;
+ 		struct llist_head	work_llist;
+ 		struct llist_head	retry_llist;
+ 		unsigned long		check_cq;
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1202,6 +1202,21 @@ void tctx_task_work(struct callback_head
+ 	WARN_ON_ONCE(ret);
+ }
+ 
++/*
++ * Sets IORING_SQ_TASKRUN in the sq_flags shared with userspace, using the
++ * RCU protected rings pointer to be safe against concurrent ring resizing.
++ */
++static void io_ctx_mark_taskrun(struct io_ring_ctx *ctx)
++{
++	lockdep_assert_in_rcu_read_lock();
 +
-+	aa64pfr0 = kvm_read_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1) & ~ID_AA64PFR0_EL1_GIC;
-+	pfr1 = kvm_read_vm_id_reg(kvm, SYS_ID_PFR1_EL1) & ~ID_PFR1_EL1_GIC;
++	if (ctx->flags & IORING_SETUP_TASKRUN_FLAG) {
++		struct io_rings *rings = rcu_dereference(ctx->rings_rcu);
 +
-+	if (type == KVM_DEV_TYPE_ARM_VGIC_V2) {
-+		kvm->arch.vgic.vgic_cpu_base = VGIC_ADDR_UNDEF;
-+	} else {
-+		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
-+		aa64pfr0 |= SYS_FIELD_PREP_ENUM(ID_AA64PFR0_EL1, GIC, IMP);
-+		pfr1 |= SYS_FIELD_PREP_ENUM(ID_PFR1_EL1, GIC, GICv3);
++		atomic_or(IORING_SQ_TASKRUN, &rings->sq_flags);
 +	}
++}
 +
-+	kvm_set_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1, aa64pfr0);
-+	kvm_set_vm_id_reg(kvm, SYS_ID_PFR1_EL1, pfr1);
+ static void io_req_local_work_add(struct io_kiocb *req, unsigned flags)
+ {
+ 	struct io_ring_ctx *ctx = req->ctx;
+@@ -1256,8 +1271,7 @@ static void io_req_local_work_add(struct
+ 	 */
  
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
- 		ret = vgic_allocate_private_irqs_locked(vcpu, type);
-@@ -157,25 +172,10 @@ int kvm_vgic_create(struct kvm *kvm, u32
- 			vgic_cpu->private_irqs = NULL;
- 		}
- 
-+		kvm->arch.vgic.vgic_model = 0;
- 		goto out_unlock;
+ 	if (!head) {
+-		if (ctx->flags & IORING_SETUP_TASKRUN_FLAG)
+-			atomic_or(IORING_SQ_TASKRUN, &ctx->rings->sq_flags);
++		io_ctx_mark_taskrun(ctx);
+ 		if (ctx->has_evfd)
+ 			io_eventfd_signal(ctx, false);
  	}
+@@ -1281,6 +1295,10 @@ static void io_req_normal_work_add(struc
+ 	if (!llist_add(&req->io_task_work.node, &tctx->task_list))
+ 		return;
  
--	kvm->arch.vgic.vgic_dist_base = VGIC_ADDR_UNDEF;
--
--	aa64pfr0 = kvm_read_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1) & ~ID_AA64PFR0_EL1_GIC;
--	pfr1 = kvm_read_vm_id_reg(kvm, SYS_ID_PFR1_EL1) & ~ID_PFR1_EL1_GIC;
--
--	if (type == KVM_DEV_TYPE_ARM_VGIC_V2) {
--		kvm->arch.vgic.vgic_cpu_base = VGIC_ADDR_UNDEF;
--	} else {
--		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
--		aa64pfr0 |= SYS_FIELD_PREP_ENUM(ID_AA64PFR0_EL1, GIC, IMP);
--		pfr1 |= SYS_FIELD_PREP_ENUM(ID_PFR1_EL1, GIC, GICv3);
--	}
--
--	kvm_set_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1, aa64pfr0);
--	kvm_set_vm_id_reg(kvm, SYS_ID_PFR1_EL1, pfr1);
--
- 	if (type == KVM_DEV_TYPE_ARM_VGIC_V3)
- 		kvm->arch.vgic.nassgicap = system_supports_direct_sgis();
++	/*
++	 * Doesn't need to use ->rings_rcu, as resizing isn't supported for
++	 * !DEFER_TASKRUN.
++	 */
+ 	if (ctx->flags & IORING_SETUP_TASKRUN_FLAG)
+ 		atomic_or(IORING_SQ_TASKRUN, &ctx->rings->sq_flags);
  
+@@ -2760,6 +2778,7 @@ static void io_rings_free(struct io_ring
+ 	io_free_region(ctx->user, &ctx->sq_region);
+ 	io_free_region(ctx->user, &ctx->ring_region);
+ 	ctx->rings = NULL;
++	RCU_INIT_POINTER(ctx->rings_rcu, NULL);
+ 	ctx->sq_sqes = NULL;
+ }
+ 
+@@ -3389,6 +3408,7 @@ static __cold int io_allocate_scq_urings
+ 	if (ret)
+ 		return ret;
+ 	ctx->rings = rings = io_region_get_ptr(&ctx->ring_region);
++	rcu_assign_pointer(ctx->rings_rcu, rings);
+ 	if (!(ctx->flags & IORING_SETUP_NO_SQARRAY))
+ 		ctx->sq_array = (u32 *)((char *)rings + rl->sq_array_offset);
+ 
+--- a/io_uring/register.c
++++ b/io_uring/register.c
+@@ -545,7 +545,15 @@ overflow:
+ 	ctx->sq_entries = p->sq_entries;
+ 	ctx->cq_entries = p->cq_entries;
+ 
++	/*
++	 * Just mark any flag we may have missed and that the application
++	 * should act on unconditionally. Worst case it'll be an extra
++	 * syscall.
++	 */
++	atomic_or(IORING_SQ_TASKRUN | IORING_SQ_NEED_WAKEUP, &n.rings->sq_flags);
+ 	ctx->rings = n.rings;
++	rcu_assign_pointer(ctx->rings_rcu, n.rings);
++
+ 	ctx->sq_sqes = n.sq_sqes;
+ 	swap_old(ctx, o, n, ring_region);
+ 	swap_old(ctx, o, n, sq_region);
+@@ -554,6 +562,10 @@ overflow:
+ out:
+ 	spin_unlock(&ctx->completion_lock);
+ 	mutex_unlock(&ctx->mmap_lock);
++
++	/* Wait for concurrent io_ctx_mark_taskrun() */
++	if (to_free == &o)
++		synchronize_rcu_expedited();
+ 	io_register_free_rings(ctx, to_free);
+ 
+ 	if (ctx->sq_data)
 
 
