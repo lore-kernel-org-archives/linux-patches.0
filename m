@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB2732FD69D;
-	Tue, 17 Mar 2026 17:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 805DE2459DC;
+	Tue, 17 Mar 2026 17:20:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768001; cv=none; b=lsehnPZ+FmHO732vbk3cT8Y/TG8wpdy/Zc+7dxDkGhJhVl/SQP8LTdjK5cQvarUAMfoJEGW/z2Wq/M6LjgUilXJqKDTLPX70oBWrdBfCgUX5yXB737NHnAEiD+UXRrrM17/J4vmoT+O5ZNZG7GVvYWfcBfka7o/ej0vDzO5Rj+c=
+	t=1773768006; cv=none; b=XbcTm4frwUoW9WpU9Xf6fYsCkCHjRZPKanazc8rm4sx3uOHu71XVlXRkn5ZXajSyqjjtCkYUMnsvElg83qmxBy9GXC88OcE3fU8Bw1tKxpiMjPdgAS3syYW7Qe+eDaV6RhSi1jEhU7vqEsZVrh0x66UeCbIwT2bplnrssgb++Uo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768001; c=relaxed/simple;
-	bh=BWSRA0MFaeyH+TzRTj6geyCFaCf28RX7EOUwK1WM59o=;
+	s=arc-20240116; t=1773768006; c=relaxed/simple;
+	bh=on5swE40lk77nrjwtErnVPt3tVQWrsjUgnqjSc4s9HY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDoVPcNJ9tAEp5zuYwqnTPG8Sh6GIHXnMnJsShgjK4VO9tX0dFLCxWM+EE6Bfe2rKFHCXb5Wro6MVrYZFgxEhvab2S82hGG4Rx5hE0HH32f0Zjh7wJypIYOykM65GlHnzwn90+DhS/QV5HcgkVUcJo2QxiBwGwPnboJ88grUtoc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMFwnZrF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bw0egnAxz6gXBx16K1J+TQyRtdhRhfik4E1w5oWRCn28zKL4TNx+SXhQXAGyP+txJgtJnCqRSD2NJzmdI8s8VfGGUw2ln8Tj+hBdHQdd98EgvQVGuMfvMPHzkl5prfUbFvnQhrpc70KTgFZGJa5lO30vv6i9C1ddzg9COdkgYF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AxAN1hAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMFwnZrF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 061F8C19424;
-	Tue, 17 Mar 2026 17:20:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AxAN1hAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEE28C19424;
+	Tue, 17 Mar 2026 17:20:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768001;
-	bh=BWSRA0MFaeyH+TzRTj6geyCFaCf28RX7EOUwK1WM59o=;
+	s=korg; t=1773768006;
+	bh=on5swE40lk77nrjwtErnVPt3tVQWrsjUgnqjSc4s9HY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMFwnZrF7CO+bgrwklTjNAmI71PB5V8b43g2oeuTkUezFhDyq5yL5s+NS7uMnWPJU
-	 TsIZqBVrlaHWv5YpCueQazW09VQhmUC126M6XzGcQvUihZeu8xs2xXbLddLt87rojT
-	 MEI6wFyQWUg9x/Ro9vpNCR8z4eLIaLVtoOcbuxxg=
+	b=AxAN1hAvOksNVO9J+Sg/cpOvicdkSlNeYVWU+vTIgO5XXu8x9cGGMUC1C6DshyA/F
+	 BeAp/AWE/vr3eGQPo1fe3kSimd0cjSi8/AY6Ye6T/nuwJTGAaEtKW53WyFubvKSuB3
+	 XyNP35NpbP8MXoVjBnRUJQTaw5lSyUGjlEkckZW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@iokpp.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Wang Shuaiwei <wangshuaiwei1@xiaomi.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Yihang Li <liyihang9@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 177/333] scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend
-Date: Tue, 17 Mar 2026 17:33:26 +0100
-Message-ID: <20260317163005.919746005@linuxfoundation.org>
+Subject: [PATCH 6.18 178/333] scsi: hisi_sas: Fix NULL pointer exception during user_scan()
+Date: Tue, 17 Mar 2026 17:33:27 +0100
+Message-ID: <20260317163005.956482239@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,83 +52,111 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit b0bd84c39289ef6a6c3827dd52c875659291970a ]
+[ Upstream commit 8ddc0c26916574395447ebf4cff684314f6873a9 ]
 
-In __ufshcd_wl_suspend(), cancel_delayed_work_sync() is called to cancel
-the UFS RTC work, but it is placed after ufshcd_vops_suspend(hba, pm_op,
-POST_CHANGE). This creates a race condition where ufshcd_rtc_work() can
-still be running while ufshcd_vops_suspend() is executing. When
-UFSHCD_CAP_CLK_GATING is not supported, the condition
-!hba->clk_gating.active_reqs is always true, causing ufshcd_update_rtc()
-to be executed. Since ufshcd_vops_suspend() typically performs clock
-gating operations, executing ufshcd_update_rtc() at that moment triggers
-an SError. The kernel panic trace is as follows:
+user_scan() invokes updated sas_user_scan() for channel 0, and if
+successful, iteratively scans remaining channels (1 to shost->max_channel)
+via scsi_scan_host_selected() in commit 37c4e72b0651 ("scsi: Fix
+sas_user_scan() to handle wildcard and multi-channel scans"). However,
+hisi_sas supports only one channel, and the current value of max_channel is
+1. sas_user_scan() for channel 1 will trigger the following NULL pointer
+exception:
 
-Kernel panic - not syncing: Asynchronous SError Interrupt
-Call trace:
- dump_backtrace+0xec/0x128
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0xa0
- dump_stack+0x18/0x24
- panic+0x148/0x374
- nmi_panic+0x3c/0x8c
- arm64_serror_panic+0x64/0x8c
- do_serror+0xc4/0xc8
- el1h_64_error_handler+0x34/0x4c
- el1h_64_error+0x68/0x6c
- el1_interrupt+0x20/0x58
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x68/0x6c
- ktime_get+0xc4/0x12c
- ufshcd_mcq_sq_stop+0x4c/0xec
- ufshcd_mcq_sq_cleanup+0x64/0x1dc
- ufshcd_clear_cmd+0x38/0x134
- ufshcd_issue_dev_cmd+0x298/0x4d0
- ufshcd_exec_dev_cmd+0x1a4/0x1c4
- ufshcd_query_attr+0xbc/0x19c
- ufshcd_rtc_work+0x10c/0x1c8
- process_scheduled_works+0x1c4/0x45c
- worker_thread+0x32c/0x3e8
- kthread+0x120/0x1d8
- ret_from_fork+0x10/0x20
+[  441.554662] Unable to handle kernel NULL pointer dereference at virtual address 00000000000008b0
+[  441.554699] Mem abort info:
+[  441.554710]   ESR = 0x0000000096000004
+[  441.554718]   EC = 0x25: DABT (current EL), IL = 32 bits
+[  441.554723]   SET = 0, FnV = 0
+[  441.554726]   EA = 0, S1PTW = 0
+[  441.554730]   FSC = 0x04: level 0 translation fault
+[  441.554735] Data abort info:
+[  441.554737]   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000
+[  441.554742]   CM = 0, WnR = 0, TnD = 0, TagAccess = 0
+[  441.554747]   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0
+[  441.554752] user pgtable: 4k pages, 48-bit VAs, pgdp=00000828377a6000
+[  441.554757] [00000000000008b0] pgd=0000000000000000, p4d=0000000000000000
+[  441.554769] Internal error: Oops: 0000000096000004 [#1]  SMP
+[  441.629589] Modules linked in: arm_spe_pmu arm_smmuv3_pmu tpm_tis_spi hisi_uncore_sllc_pmu hisi_uncore_pa_pmu hisi_uncore_l3c_pmu hisi_uncore_hha_pmu hisi_uncore_ddrc_pmu hisi_uncore_cpa_pmu hns3_pmu hisi_ptt hisi_pcie_pmu tpm_tis_core spidev spi_hisi_sfc_v3xx hisi_uncore_pmu spi_dw_mmio fuse hclge hclge_common hisi_sec2 hisi_hpre hisi_zip hisi_qm hns3 hisi_sas_v3_hw sm3_ce sbsa_gwdt hnae3 hisi_sas_main uacce hisi_dma i2c_hisi dm_mirror dm_region_hash dm_log dm_mod
+[  441.670819] CPU: 46 UID: 0 PID: 6994 Comm: bash Kdump: loaded Not tainted 7.0.0-rc2+ #84 PREEMPT
+[  441.691327] pstate: 81400009 (Nzcv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[  441.698277] pc : sas_find_dev_by_rphy+0x44/0x118
+[  441.702896] lr : sas_find_dev_by_rphy+0x3c/0x118
+[  441.707502] sp : ffff80009abbba40
+[  441.710805] x29: ffff80009abbba40 x28: ffff082819a40008 x27: ffff082810c37c08
+[  441.717930] x26: ffff082810c37c28 x25: ffff082819a40290 x24: ffff082810c37c00
+[  441.725054] x23: 0000000000000000 x22: 0000000000000001 x21: ffff082819a40000
+[  441.732179] x20: ffff082819a40290 x19: 0000000000000000 x18: 0000000000000020
+[  441.739304] x17: 0000000000000000 x16: ffffb5dad6bda690 x15: 00000000ffffffff
+[  441.746428] x14: ffff082814c3b26c x13: 00000000ffffffff x12: ffff082814c3b26a
+[  441.753553] x11: 00000000000000c0 x10: 000000000000003a x9 : ffffb5dad5ea94f4
+[  441.760678] x8 : 000000000000003a x7 : ffff80009abbbab0 x6 : 0000000000000030
+[  441.767802] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 0000000000000000
+[  441.774926] x2 : ffff08280f35a300 x1 : ffffb5dad7127180 x0 : 0000000000000000
+[  441.782053] Call trace:
+[  441.784488]  sas_find_dev_by_rphy+0x44/0x118 (P)
+[  441.789095]  sas_target_alloc+0x24/0xb0
+[  441.792920]  scsi_alloc_target+0x290/0x330
+[  441.797010]  __scsi_scan_target+0x88/0x258
+[  441.801096]  scsi_scan_channel+0x74/0xb8
+[  441.805008]  scsi_scan_host_selected+0x170/0x188
+[  441.809615]  sas_user_scan+0xfc/0x148
+[  441.813267]  store_scan+0x10c/0x180
+[  441.816743]  dev_attr_store+0x20/0x40
+[  441.820398]  sysfs_kf_write+0x84/0xa8
+[  441.824054]  kernfs_fop_write_iter+0x130/0x1c8
+[  441.828487]  vfs_write+0x2c0/0x370
+[  441.831880]  ksys_write+0x74/0x118
+[  441.835271]  __arm64_sys_write+0x24/0x38
+[  441.839182]  invoke_syscall+0x50/0x120
+[  441.842919]  el0_svc_common.constprop.0+0xc8/0xf0
+[  441.847611]  do_el0_svc+0x24/0x38
+[  441.850913]  el0_svc+0x38/0x158
+[  441.854043]  el0t_64_sync_handler+0xa0/0xe8
+[  441.858214]  el0t_64_sync+0x1ac/0x1b0
+[  441.861865] Code: aa1303e0 97ff70a8 34ffff80 d10a4273 (f9445a75)
+[  441.867946] ---[ end trace 0000000000000000 ]---
 
-Fix this by moving cancel_delayed_work_sync() before the call to
-ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE), ensuring the UFS RTC work is
-fully completed or cancelled at that point.
+Therefore, set max_channel to 0.
 
-Cc: Bean Huo <beanhuo@iokpp.de>
-Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
-Link: https://patch.msgid.link/20260307035128.3419687-1-wangshuaiwei1@xiaomi.com
+Fixes: e21fe3a52692 ("scsi: hisi_sas: add initialisation for v3 pci-based controller")
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Yihang Li <liyihang9@huawei.com>
+Link: https://patch.msgid.link/20260305064039.4096775-1-liyihang9@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c  | 2 +-
+ drivers/scsi/hisi_sas/hisi_sas_v3_hw.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index fe1425ea6718f..5371f173e28b9 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9925,6 +9925,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	}
- 
- 	flush_work(&hba->eeh_work);
-+	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 
- 	ret = ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE);
- 	if (ret)
-@@ -9979,7 +9980,6 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	if (ret)
- 		goto set_link_active;
- 
--	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 	goto out;
- 
- set_link_active:
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 30a9c66126513..c2b082f1252c3 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -2578,7 +2578,7 @@ int hisi_sas_probe(struct platform_device *pdev,
+ 	shost->transportt = hisi_sas_stt;
+ 	shost->max_id = HISI_SAS_MAX_DEVICES;
+ 	shost->max_lun = ~0;
+-	shost->max_channel = 1;
++	shost->max_channel = 0;
+ 	shost->max_cmd_len = HISI_SAS_MAX_CDB_LEN;
+ 	if (hisi_hba->hw->slot_index_alloc) {
+ 		shost->can_queue = HISI_SAS_MAX_COMMANDS;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+index 2f9e01717ef38..f69efc6494b8e 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_v3_hw.c
+@@ -4993,7 +4993,7 @@ hisi_sas_v3_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	shost->transportt = hisi_sas_stt;
+ 	shost->max_id = HISI_SAS_MAX_DEVICES;
+ 	shost->max_lun = ~0;
+-	shost->max_channel = 1;
++	shost->max_channel = 0;
+ 	shost->max_cmd_len = HISI_SAS_MAX_CDB_LEN;
+ 	shost->can_queue = HISI_SAS_UNRESERVED_IPTT;
+ 	shost->cmd_per_lun = HISI_SAS_UNRESERVED_IPTT;
 -- 
 2.51.0
 
