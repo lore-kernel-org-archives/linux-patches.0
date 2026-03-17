@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EB52D739D;
-	Tue, 17 Mar 2026 17:27:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACAF15E5BB;
+	Tue, 17 Mar 2026 17:27:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768473; cv=none; b=FSoUG/+SL5KnPO0CAG+wJcr4DBPuJ2I+UpDn0Na+FA2G47nC2ZNm1jNrV+5vF2LZtAfoL7Y2qYgPilgvZLfVNjxW4mmYAFDaD55ksIytaMG4rr4leRRsRSXVIiA3Vh+zvx41Bu+oSejpj04Rs4lGmIfWFpI9K/mA5IMiuWXovaE=
+	t=1773768477; cv=none; b=RYq1lzW04MpGC4hJfGEu3Rygp4RaUr2CsY0tDbj/eNQBu2DxKyZtzWajWj6deGaUSyQvkhvxDkdguz3AMGMt01MDnGIBuBre9ITqCnbQgEt4CLT0cQS5+222FABuoAAawiN4SVz+EQPQrEtE/bvwwPkHck6pdIFvfeSjwA9UCS8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768473; c=relaxed/simple;
-	bh=Dy/Y9mGI74ppeMnFnT4oEzeXIOlALgkKDus/fiuuleY=;
+	s=arc-20240116; t=1773768477; c=relaxed/simple;
+	bh=q201tWn09Xb++Yf+i0GtOSw6E69Qad9yxJz+XQF16F0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kqXaP7pw6vDffPxWBJi3m7OZ8iXR+KoG/aMdz8hzkavtPVN6T2G0G9H10geEjRjG4e+sc2SjsAzCRY9z3ERQ0t6/IwZJiy8L/ExKvoSI16ccSAeMDv8jQ6A3hHMOIe6/WlUrv6NbaUUcn69gAoBl5D0Wo/4GOw1/ER2EqNgcx6A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ndszbEAR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aOuFUtElYTNAd+2XnvGsedCPwZM79fe4M04MYiOgiBNnS3/KKARQn0lshjgGkXZOSSFyyjHwxg4CCovi9Lss4GIKs9pP8ghvNK9e/63IfTamaM5zwLlBnMVfKlZwcTw9PcKxRGs2B0R7RYfJ2m7cf9F6igOc+/OBeD4D2t04UuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zQvXocKC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ndszbEAR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4472DC2BC86;
-	Tue, 17 Mar 2026 17:27:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zQvXocKC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2735C4CEF7;
+	Tue, 17 Mar 2026 17:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768473;
-	bh=Dy/Y9mGI74ppeMnFnT4oEzeXIOlALgkKDus/fiuuleY=;
+	s=korg; t=1773768477;
+	bh=q201tWn09Xb++Yf+i0GtOSw6E69Qad9yxJz+XQF16F0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndszbEARsFSWcVrTRMtpZU7Jcqd8F+3aHPQI2dsoqdRNj+uENjeReIR8iA34p2wZX
-	 QnskyRXIx94/eKzFMG8e5fzf3yAlQYSubVtNNmWJoEsXC2PuynZpbqQNKQQwZJGI6C
-	 u2hdwvOkCNfVxqneIjuuMsnV/8WCtzUaOXjYHD8Q=
+	b=zQvXocKCVOOB/FPF9e+ftd97fhTjy7QPuTuGs7PMla1axxfpVH2kWQCIbYWsuWkXK
+	 0i0HCI8ls/nYn+xY4ScOtQKiIbhRgBBkGeUYIyPD/Ss2ebSfROQRgMraRhoFu580EA
+	 ZsphtU8fM0WB2t/Um2MuWbYC/+FWJxQZr4U/qoPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
 	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Bharath SM <bharathsm@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.18 284/333] smb: client: fix atomic open with O_DIRECT & O_SYNC
-Date: Tue, 17 Mar 2026 17:35:13 +0100
-Message-ID: <20260317163009.922481556@linuxfoundation.org>
+Subject: [PATCH 6.18 285/333] smb: client: fix in-place encryption corruption in SMB2_write()
+Date: Tue, 17 Mar 2026 17:35:14 +0100
+Message-ID: <20260317163009.959172181@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -54,102 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Bharath SM <bharathsm@microsoft.com>
 
-commit 4a7d2729dc99437dbb880a64c47828c0d191b308 upstream.
+commit d78840a6a38d312dc1a51a65317bb67e46f0b929 upstream.
 
-When user application requests O_DIRECT|O_SYNC along with O_CREAT on
-open(2), CREATE_NO_BUFFER and CREATE_WRITE_THROUGH bits were missed in
-CREATE request when performing an atomic open, thus leading to
-potentially data integrity issues.
+SMB2_write() places write payload in iov[1..n] as part of rq_iov.
+smb3_init_transform_rq() pointer-shares rq_iov, so crypt_message()
+encrypts iov[1] in-place, replacing the original plaintext with
+ciphertext. On a replayable error, the retry sends the same iov[1]
+which now contains ciphertext instead of the original data,
+resulting in corruption.
 
-Fix this by setting those missing bits in CREATE request when
-O_DIRECT|O_SYNC has been specified in cifs_do_create().
+The corruption is most likely to be observed when connections are
+unstable, as reconnects trigger write retries that re-send the
+already-encrypted data.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
+This affects SFU mknod, MF symlinks, etc. On kernels before
+6.10 (prior to the netfs conversion), sync writes also used
+this path and were similarly affected. The async write path
+wasn't unaffected as it uses rq_iter which gets deep-copied.
+
+Fix by moving the write payload into rq_iter via iov_iter_kvec(),
+so smb3_init_transform_rq() deep-copies it before encryption.
+
+Cc: stable@vger.kernel.org #6.3+
 Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: stable@vger.kernel.org
+Acked-by: Shyam Prasad N <sprasad@microsoft.com>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Bharath SM <bharathsm@microsoft.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |   11 +++++++++++
- fs/smb/client/dir.c      |    1 +
- fs/smb/client/file.c     |   18 +++---------------
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ fs/smb/client/smb2pdu.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -20,6 +20,7 @@
- #include <linux/utsname.h>
- #include <linux/sched/mm.h>
- #include <linux/netfs.h>
-+#include <linux/fcntl.h>
- #include "cifs_fs_sb.h"
- #include "cifsacl.h"
- #include <crypto/internal/hash.h>
-@@ -2396,4 +2397,14 @@ static inline void mid_execute_callback(
- 	 (le32_to_cpu((tcon)->fsAttrInfo.Attributes) & \
- 	  FILE_SUPPORTS_REPARSE_POINTS))
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -5172,7 +5172,10 @@ replay_again:
  
-+static inline int cifs_open_create_options(unsigned int oflags, int opts)
-+{
-+	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
-+	if (oflags & O_SYNC)
-+		opts |= CREATE_WRITE_THROUGH;
-+	if (oflags & O_DIRECT)
-+		opts |= CREATE_NO_BUFFER;
-+	return opts;
-+}
-+
- #endif	/* _CIFS_GLOB_H */
---- a/fs/smb/client/dir.c
-+++ b/fs/smb/client/dir.c
-@@ -307,6 +307,7 @@ static int cifs_do_create(struct inode *
- 		goto out;
- 	}
+ 	memset(&rqst, 0, sizeof(struct smb_rqst));
+ 	rqst.rq_iov = iov;
+-	rqst.rq_nvec = n_vec + 1;
++	/* iov[0] is the SMB header; move payload to rq_iter for encryption safety */
++	rqst.rq_nvec = 1;
++	iov_iter_kvec(&rqst.rq_iter, ITER_SOURCE, &iov[1], n_vec,
++		      io_parms->length);
  
-+	create_options |= cifs_open_create_options(oflags, create_options);
- 	/*
- 	 * if we're not using unix extensions, see if we need to set
- 	 * ATTR_READONLY on the create call
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -584,15 +584,8 @@ static int cifs_nt_open(const char *full
-  *********************************************************************/
- 
- 	disposition = cifs_get_disposition(f_flags);
--
- 	/* BB pass O_SYNC flag through on file attributes .. BB */
--
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(f_flags, create_options);
- 
- retry_open:
- 	oparms = (struct cifs_open_parms) {
-@@ -1318,13 +1311,8 @@ cifs_reopen_file(struct cifsFileInfo *cf
- 		rdwr_for_fscache = 1;
- 
- 	desired_access = cifs_convert_flags(cfile->f_flags, rdwr_for_fscache);
--
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (cfile->f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (cfile->f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(cfile->f_flags,
-+						   create_options);
- 
- 	if (server->ops->get_lease_key)
- 		server->ops->get_lease_key(inode, &cfile->fid);
+ 	if (retries)
+ 		smb2_set_replay(server, &rqst);
 
 
