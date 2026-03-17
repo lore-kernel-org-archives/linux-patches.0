@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC35726FD9B;
-	Tue, 17 Mar 2026 17:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEED23E6DCF;
+	Tue, 17 Mar 2026 17:12:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767562; cv=none; b=l+XDELoVAZnMv77SerRmnrNjle537sWp0AbYRmod29nD27b/Ht/0Nzq0wt+fuQkL22YAxDF5PO4ViLY6nHXc0j2QpxaJ2zagen8ETOvwcQ9eVdalbGIMYKvHe3CL97MaSHwGXQ625MwH2Rqzg8CXipdrZ5zwBVGGvA1lhGFeDDI=
+	t=1773767568; cv=none; b=fve4zjWsDseBOuoytx+CMZ7EEZSJ6A680VbCUxE2IoG/NDZVvBc3LiNbvuM6cYKKKQN/j/FMhXcKsTH3v7FFDa72Ei1NsRlAqhHJM//LLVsenDkqZfLiEKVTXASSzbStsspC0CRPdKUvvrHmpO8Iruqv/LOX2buzn2Cd/21Mrc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767562; c=relaxed/simple;
-	bh=F+yqQINf8MZoRnLjiuf1Mjbp97G6vidGXgYfkL4Xctc=;
+	s=arc-20240116; t=1773767568; c=relaxed/simple;
+	bh=Hr4r2O/JpvSofGlmpnQjkcjUx+LWTZILwDEaCZBp0w8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRrpZd6GVm1d7kc5swhyzSUJmnnO0j/sVqJr7JHY2/4GcNayCjRlRJ4zmuNTzdjW/bW8UhsWziUiv9Ao7DOHT/egzBciTQg2dnoUc2oFKUu7a3nSzARX/+TwyjTScOOY0gPSiZkZry3HBxbxYQrSD4iO/DjxE/KHHfiI3lGv+qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ELcwPbyF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OiAiIB6Iv5YXUGUAQ0dtdhloUj38YdP6FcPSprEA9GHYf1oXueQVG0i/52qpR16Q+4CPvgnWmJozAaUA0krV683Cy6naUtPSqZBRb7U5h6iAZ3wIkUjx12xp/YlsQOo/emG1dV/73hofVuZotKhgts9jlTT0KnNC0yQkgtUBNEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RANGS/Lc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ELcwPbyF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22A6EC4CEF7;
-	Tue, 17 Mar 2026 17:12:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RANGS/Lc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B05BAC4CEF7;
+	Tue, 17 Mar 2026 17:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767562;
-	bh=F+yqQINf8MZoRnLjiuf1Mjbp97G6vidGXgYfkL4Xctc=;
+	s=korg; t=1773767567;
+	bh=Hr4r2O/JpvSofGlmpnQjkcjUx+LWTZILwDEaCZBp0w8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ELcwPbyFnmw6qfZLwiUCJ5aj2TrGooCeYpsWoXh5DWkK4DhQ5I5jGO/+FEbR0Nut+
-	 tWEAPgA3dnv2i1rdrZnNQqNAUFqHES2L5Q2moxhfBOq4txytEkmAFhRya/Ku5vPyb6
-	 T7H5zycqJXUaET3CmjSwFbKOO6Rr3o9MqjheC36E=
+	b=RANGS/LcHuBPQlgK03EWc490LQeG8S7+8ZyYZhL01FOY4KN2w+7ohqbgGXcf12D1M
+	 Vj88KtVKHM7f/FxlSAyhk4P7RtampZFuGSdv+trZUz8AU4ir632jO+bnNZA9A9xvoN
+	 csLUtRiWItij/sctwXTMqbu1swMM8KFmTjKra0qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 113/333] net: usb: lan78xx: skip LTM configuration for LAN7850
-Date: Tue, 17 Mar 2026 17:32:22 +0100
-Message-ID: <20260317163003.558153558@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.18 114/333] rust_binder: fix oneway spam detection
+Date: Tue, 17 Mar 2026 17:32:23 +0100
+Message-ID: <20260317163003.595276780@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,46 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit d9cc0e440f0664f6f3e2c26e39ab9dd5f3badba7 upstream.
+commit 4fc87c240b8f30e22b7ebaae29d57105589e1c0b upstream.
 
-Do not configure Latency Tolerance Messaging (LTM) on USB 2.0 hardware.
+The spam detection logic in TreeRange was executed before the current
+request was inserted into the tree. So the new request was not being
+factored in the spam calculation. Fix this by moving the logic after
+the new range has been inserted.
 
-The LAN7850 is a High-Speed (USB 2.0) only device and does not support
-SuperSpeed features like LTM. Currently, the driver unconditionally
-attempts to configure LTM registers during initialization. On the
-LAN7850, these registers do not exist, resulting in writes to invalid
-or undocumented memory space.
+Also, the detection logic for ArrayRange was missing altogether which
+meant large spamming transactions could get away without being detected.
+Fix this by implementing an equivalent low_oneway_space() in ArrayRange.
 
-This issue was identified during a port to the regmap API with strict
-register validation enabled. While no functional issues or crashes have
-been observed from these invalid writes, bypassing LTM initialization
-on the LAN7850 ensures the driver strictly adheres to the hardware's
-valid register map.
+Note that I looked into centralizing this logic in RangeAllocator but
+iterating through 'state' and 'size' got a bit too complicated (for me)
+and I abandoned this effort.
 
-Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260305143429.530909-4-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: stable <stable@kernel.org>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260210232949.3770644-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/android/binder/range_alloc/array.rs |   35 ++++++++++++++++++++++++++--
+ drivers/android/binder/range_alloc/mod.rs   |    4 +--
+ drivers/android/binder/range_alloc/tree.rs  |   18 +++++++-------
+ 3 files changed, 44 insertions(+), 13 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -3119,6 +3119,10 @@ static int lan78xx_init_ltm(struct lan78
- 	int ret;
- 	u32 buf;
+--- a/drivers/android/binder/range_alloc/array.rs
++++ b/drivers/android/binder/range_alloc/array.rs
+@@ -118,7 +118,7 @@ impl<T> ArrayRangeAllocator<T> {
+         size: usize,
+         is_oneway: bool,
+         pid: Pid,
+-    ) -> Result<usize> {
++    ) -> Result<(usize, bool)> {
+         // Compute new value of free_oneway_space, which is set only on success.
+         let new_oneway_space = if is_oneway {
+             match self.free_oneway_space.checked_sub(size) {
+@@ -146,7 +146,38 @@ impl<T> ArrayRangeAllocator<T> {
+             .ok()
+             .unwrap();
  
-+	/* LAN7850 is USB 2.0 and does not support LTM */
-+	if (dev->chipid == ID_REV_CHIP_ID_7850_)
-+		return 0;
+-        Ok(insert_at_offset)
++        // Start detecting spammers once we have less than 20%
++        // of async space left (which is less than 10% of total
++        // buffer size).
++        //
++        // (This will short-circuit, so `low_oneway_space` is
++        // only called when necessary.)
++        let oneway_spam_detected =
++            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
 +
- 	ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
- 	if (ret < 0)
- 		goto init_ltm_failed;
++        Ok((insert_at_offset, oneway_spam_detected))
++    }
++
++    /// Find the amount and size of buffers allocated by the current caller.
++    ///
++    /// The idea is that once we cross the threshold, whoever is responsible
++    /// for the low async space is likely to try to send another async transaction,
++    /// and at some point we'll catch them in the act.  This is more efficient
++    /// than keeping a map per pid.
++    fn low_oneway_space(&self, calling_pid: Pid) -> bool {
++        let mut total_alloc_size = 0;
++        let mut num_buffers = 0;
++
++        // Warn if this pid has more than 50 transactions, or more than 50% of
++        // async space (which is 25% of total buffer size). Oneway spam is only
++        // detected when the threshold is exceeded.
++        for range in &self.ranges {
++            if range.state.is_oneway() && range.state.pid() == calling_pid {
++                total_alloc_size += range.size;
++                num_buffers += 1;
++            }
++        }
++        num_buffers > 50 || total_alloc_size > self.size / 4
+     }
+ 
+     pub(crate) fn reservation_abort(&mut self, offset: usize) -> Result<FreedRange> {
+--- a/drivers/android/binder/range_alloc/mod.rs
++++ b/drivers/android/binder/range_alloc/mod.rs
+@@ -188,11 +188,11 @@ impl<T> RangeAllocator<T> {
+                 self.reserve_new(args)
+             }
+             Impl::Array(array) => {
+-                let offset =
++                let (offset, oneway_spam_detected) =
+                     array.reserve_new(args.debug_id, args.size, args.is_oneway, args.pid)?;
+                 Ok(ReserveNew::Success(ReserveNewSuccess {
+                     offset,
+-                    oneway_spam_detected: false,
++                    oneway_spam_detected,
+                     _empty_array_alloc: args.empty_array_alloc,
+                     _new_tree_alloc: args.new_tree_alloc,
+                     _tree_alloc: args.tree_alloc,
+--- a/drivers/android/binder/range_alloc/tree.rs
++++ b/drivers/android/binder/range_alloc/tree.rs
+@@ -164,15 +164,6 @@ impl<T> TreeRangeAllocator<T> {
+             self.free_oneway_space
+         };
+ 
+-        // Start detecting spammers once we have less than 20%
+-        // of async space left (which is less than 10% of total
+-        // buffer size).
+-        //
+-        // (This will short-circut, so `low_oneway_space` is
+-        // only called when necessary.)
+-        let oneway_spam_detected =
+-            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
+-
+         let (found_size, found_off, tree_node, free_tree_node) = match self.find_best_match(size) {
+             None => {
+                 pr_warn!("ENOSPC from range_alloc.reserve_new - size: {}", size);
+@@ -203,6 +194,15 @@ impl<T> TreeRangeAllocator<T> {
+             self.free_tree.insert(free_tree_node);
+         }
+ 
++        // Start detecting spammers once we have less than 20%
++        // of async space left (which is less than 10% of total
++        // buffer size).
++        //
++        // (This will short-circuit, so `low_oneway_space` is
++        // only called when necessary.)
++        let oneway_spam_detected =
++            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
++
+         Ok((found_off, oneway_spam_detected))
+     }
+ 
 
 
