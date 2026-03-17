@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C36B9255F2C;
-	Tue, 17 Mar 2026 17:24:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF0F3176FD;
+	Tue, 17 Mar 2026 17:24:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768240; cv=none; b=Qy1f072FYKKQTP0h50BBiEmvkgG68K52820p+V4EGNXmntaAyYA+ZNbkysyTMavFKEtCnR/VzYbmjx3C7Xlm2asNBvEENwLlWTM0XssDruvr/o0nY6C95I3cElF1biQqJ8/9aRnrDkuOMQWsVDBChDz0nVtWV1Nh227sx6/OfsQ=
+	t=1773768244; cv=none; b=YWEj4hfuiAp8z/+sJdS/XE61W8utsSZT13ODb9kZBlaLkmhW72rMKkHBwsGfHZmNSoPNdTH1aXeWzYg0CsC7mK815CVRjSE3o3GVAfdmhRB5i/A3PKPzVVhaRBlnx3VYhhBDo4iFUp5DdUWDxAr9e20jIu8hisfvYWd/CJ7F7Z8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768240; c=relaxed/simple;
-	bh=rCQo9IxDQqx9KjYn3mhqYfUZDNg46er1KXAgZ7OpIZg=;
+	s=arc-20240116; t=1773768244; c=relaxed/simple;
+	bh=yQTuK8pQLAie59SivYFQQiO8F0ah4i74UiRHYyFosIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9WaEgw9kCy3UJWnn4Yf/04UyujqHBfnyOlBPRbYSIL82p4liL+NqiFgJQ2+zlFhEJEohXhzwwAtVmuTJ0Lr5/uICkYaah0aR5tTkztVIN25GsYRSz71/R+/ov+58ZqTQAaOKB6yLXUBo/3l2cYSKQbgaEM6Z5QVLwigPZzvTDk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kA1dHjUs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dFqADiI/+JpeFkri6pjdyigTSkhGbL5vaVPwfnEgOZ4VMaK1ahB4CqAr6c9sJPnsDf+SyED+kbMWaQ2QSZ1eZmLDZIGtxLrkuhi52bcczDzHzJjXcmH/hPE/lgtgvjrotFpFKc+jiP07Vg++Nu4Q3enf8Oq0RnremWrxiTxlW3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ic5Ae1AY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kA1dHjUs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 357BBC2BCAF;
-	Tue, 17 Mar 2026 17:24:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ic5Ae1AY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0141FC2BCAF;
+	Tue, 17 Mar 2026 17:24:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768240;
-	bh=rCQo9IxDQqx9KjYn3mhqYfUZDNg46er1KXAgZ7OpIZg=;
+	s=korg; t=1773768244;
+	bh=yQTuK8pQLAie59SivYFQQiO8F0ah4i74UiRHYyFosIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kA1dHjUsjjE2dPdFcP2woz5MhcWsbW0I0zBjG0Ff7tMeurLVwqgqVKAijyMPzd90S
-	 fITYLHnGpuXaFjZIB6pNMfL1DQ4uqF+eCOS7gmdK51+VzDZOTejlZBz8yBy7jopnEN
-	 3NjFxuqtH6wJHVbpt0SYxmzlLhtvDfbDpWerORT4=
+	b=ic5Ae1AYJQD6lXZ+ASkgtH2iQrzPKFWc8yAmxgv8zmkNvjm3sC00lASMOokCL/gm2
+	 rSMMSnoZiVkwSV0l+50wwQ6jaZhu+f4LHXo5ANCmDu5ydBGTtEoiLGjGSfyT6CNX8h
+	 B3bS0ZTJF8XmptaLB5X5kqZm5aX714P9nW/DmMrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.18 265/333] io_uring/kbuf: check if target buffer list is still legacy on recycle
-Date: Tue, 17 Mar 2026 17:34:54 +0100
-Message-ID: <20260317163009.196640874@linuxfoundation.org>
+	Bharath SM <bharathsm@microsoft.com>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 266/333] cifs: make default value of retrans as zero
+Date: Tue, 17 Mar 2026 17:34:55 +0100
+Message-ID: <20260317163009.232928521@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,48 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-commit c2c185be5c85d37215397c8e8781abf0a69bec1f upstream.
+commit e3beefd3af09f8e460ddaf39063d3d7664d7ab59 upstream.
 
-There's a gap between when the buffer was grabbed and when it
-potentially gets recycled, where if the list is empty, someone could've
-upgraded it to a ring provided type. This can happen if the request
-is forced via io-wq. The legacy recycling is missing checking if the
-buffer_list still exists, and if it's of the correct type. Add those
-checks.
+When retrans mount option was introduced, the default value was set
+as 1. However, in the light of some bugs that this has exposed recently
+we should change it to 0 and retain the old behaviour before this option
+was introduced.
 
-Cc: stable@vger.kernel.org
-Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Bharath SM <bharathsm@microsoft.com>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/kbuf.c |   13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ fs/smb/client/fs_context.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/kbuf.c
-+++ b/io_uring/kbuf.c
-@@ -111,9 +111,18 @@ bool io_kbuf_recycle_legacy(struct io_ki
+--- a/fs/smb/client/fs_context.c
++++ b/fs/smb/client/fs_context.c
+@@ -1920,7 +1920,7 @@ int smb3_init_fs_context(struct fs_conte
+ 	ctx->backupuid_specified = false; /* no backup intent for a user */
+ 	ctx->backupgid_specified = false; /* no backup intent for a group */
  
- 	buf = req->kbuf;
- 	bl = io_buffer_get_list(ctx, buf->bgid);
--	list_add(&buf->list, &bl->buf_list);
--	bl->nbufs++;
-+	/*
-+	 * If the buffer list was upgraded to a ring-based one, or removed,
-+	 * while the request was in-flight in io-wq, drop it.
-+	 */
-+	if (bl && !(bl->flags & IOBL_BUF_RING)) {
-+		list_add(&buf->list, &bl->buf_list);
-+		bl->nbufs++;
-+	} else {
-+		kfree(buf);
-+	}
- 	req->flags &= ~REQ_F_BUFFER_SELECTED;
-+	req->kbuf = NULL;
- 
- 	io_ring_submit_unlock(ctx, issue_flags);
- 	return true;
+-	ctx->retrans = 1;
++	ctx->retrans = 0;
+ 	ctx->reparse_type = CIFS_REPARSE_TYPE_DEFAULT;
+ 	ctx->symlink_type = CIFS_SYMLINK_TYPE_DEFAULT;
+ 	ctx->nonativesocket = 0;
 
 
