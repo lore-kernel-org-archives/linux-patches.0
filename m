@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AECE2E62B7;
-	Tue, 17 Mar 2026 16:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5890B357A4A;
+	Tue, 17 Mar 2026 16:50:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766249; cv=none; b=pb1T1EebEg9ZnNZMraVyRqY9jemN2PQ+LWb34bSMuIdvz2epIRx66YcrRFWLzSnF7HFy7D1pI9vSM2pSgTA39OCI9iyRzBsMgFd3wwCgxdr8xI7+ZdiZdh/ObEb5H9mTOakRCm9UL4cmJ8HKX4P+THNglfT2HRPrp8kzB0MGR+Q=
+	t=1773766253; cv=none; b=RYwNDveuDxsmTfz5G2h7RHIYvNJw3/L/UustjPFFHVB1ZFUdNDyDg228O/pX4zI6KRG5cWkSyA9QELLPJUoshrZFpytV+4l+DU5+I42k2xQqwkX/PVYEoVdG9uVkV8ZpLrEY76jXxXO971lNSUd5EcADfX4VcimrJ8Jbp+KrXgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766249; c=relaxed/simple;
-	bh=LInAmkVAznnqeAoHibBSQvK8g5BRCAGKIejXqvdMGMc=;
+	s=arc-20240116; t=1773766253; c=relaxed/simple;
+	bh=DRDF78o9YL3rPqeGqKXoKUiOcxg6UKjtciUtYJPpjOs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I+ZHf2tV7xeF1MW3FTM1Tv/kZSbCLCeIN4HEZvlTRGnHiimbxu3w8xUtoNICN2IueSfyLCHYJMtz2PawJxTIl6QTabWdPNvHLG+Um0FuHecr0ZVFJnkxXRk37bjakTuwo2VcSY+Mi9Iq6ozZwicmPqrYubutVA9hFtW6syMlI+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zto1SYcE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bbSoe+Bx5rXQI58YW26xIwIdo8I+0FYC+eoVKAMa5QwEZKzquXvmS0C0WBwPcsyM2NkutoE3juBW7ShlU949IYGTiDhK+mBRdN19W+0D8UvPedCddTPK5XyyWjs2aBsOa1eXXJyAD76wAK0/9WB0xsKzh7eTRcbtd0MIYXlXRBU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFb+piwK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zto1SYcE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE327C4CEF7;
-	Tue, 17 Mar 2026 16:50:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFb+piwK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC31FC4CEF7;
+	Tue, 17 Mar 2026 16:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766249;
-	bh=LInAmkVAznnqeAoHibBSQvK8g5BRCAGKIejXqvdMGMc=;
+	s=korg; t=1773766253;
+	bh=DRDF78o9YL3rPqeGqKXoKUiOcxg6UKjtciUtYJPpjOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zto1SYcEdxc9bp57h+gRP9x2mK4Ecb1NkaCkrAitCfQJaQKRlTS5VqJFLDF1Wrp7W
-	 eJjlyRmahD8JLMr+oYiLJv2bapT9D0/CeL5wldMjuA+AsXCZ+FvQzEaQ0wn2eCJIaj
-	 1voEJ0OM9h8PeZvI8LL3wWjyzCJ0QigLjT9WHEiw=
+	b=QFb+piwKYUUy//Chg8YQK4V+WQxaMAlOGEIL2TLFJcTyb/fkTpoOJTnGsi9HKqKOj
+	 bl8HowcplAQQzdN7fmSG0KR0TmjMZTv9f4S5lzCqv9btJ9cSae94AorJS3eddXw2T+
+	 jOECwxjYnWtUJa9jYnUmO4gjKWqpNeBmlVs175ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Heidelberg <david@ixit.cz>,
 	stable <stable@kernel.org>,
 	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.19 170/378] Revert "usb: gadget: f_ncm: align net_device lifecycle with bind/unbind"
-Date: Tue, 17 Mar 2026 17:32:07 +0100
-Message-ID: <20260317163013.264582950@linuxfoundation.org>
+Subject: [PATCH 6.19 171/378] Revert "usb: gadget: u_ether: add gether_opts for config caching"
+Date: Tue, 17 Mar 2026 17:32:08 +0100
+Message-ID: <20260317163013.300941537@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 37893bc5de2460c543ec1aa8250c37a305234054 upstream.
+commit 3131c1aff7cdffb96239f06f98e16188cbc2083f upstream.
 
-This reverts commit 56a512a9b4107079f68701e7d55da8507eb963d9.
+This reverts commit e065c6a7e46c2ee9c677fdbf50035323d2de1215.
 
 This commit is being reverted as part of a series-wide revert.
 
@@ -84,310 +84,286 @@ Closes: https://lore.kernel.org/linux-usb/70b558ea-a12e-4170-9b8e-c951131249af@i
 Fixes: 56a512a9b410 ("usb: gadget: f_ncm: align net_device lifecycle with bind/unbind")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-3-ea2afbc7d9b2@google.com
+Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-6-ea2afbc7d9b2@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |  128 ++++++++++++++++++------------------
- drivers/usb/gadget/function/u_ncm.h |    4 -
- 2 files changed, 66 insertions(+), 66 deletions(-)
+ drivers/usb/gadget/function/u_ether.c          |   30 ----
+ drivers/usb/gadget/function/u_ether.h          |   28 ---
+ drivers/usb/gadget/function/u_ether_configfs.h |  176 -------------------------
+ 3 files changed, 234 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -83,11 +83,6 @@ static inline struct f_ncm *func_to_ncm(
- 	return container_of(f, struct f_ncm, port.func);
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -1039,36 +1039,6 @@ int gether_set_ifname(struct net_device
  }
+ EXPORT_SYMBOL_GPL(gether_set_ifname);
  
--static inline struct f_ncm_opts *func_to_ncm_opts(struct usb_function *f)
+-void gether_setup_opts_default(struct gether_opts *opts, const char *name)
 -{
--	return container_of(f->fi, struct f_ncm_opts, func_inst);
+-	opts->qmult = QMULT_DEFAULT;
+-	snprintf(opts->name, sizeof(opts->name), "%s%%d", name);
+-	eth_random_addr(opts->dev_mac);
+-	opts->addr_assign_type = NET_ADDR_RANDOM;
+-	eth_random_addr(opts->host_mac);
 -}
+-EXPORT_SYMBOL_GPL(gether_setup_opts_default);
 -
- /*-------------------------------------------------------------------------*/
+-void gether_apply_opts(struct net_device *net, struct gether_opts *opts)
+-{
+-	struct eth_dev *dev = netdev_priv(net);
+-
+-	dev->qmult = opts->qmult;
+-
+-	if (opts->ifname_set) {
+-		strscpy(net->name, opts->name, sizeof(net->name));
+-		dev->ifname_set = true;
+-	}
+-
+-	memcpy(dev->host_mac, opts->host_mac, sizeof(dev->host_mac));
+-
+-	if (opts->addr_assign_type == NET_ADDR_SET) {
+-		memcpy(dev->dev_mac, opts->dev_mac, sizeof(dev->dev_mac));
+-		net->addr_assign_type = opts->addr_assign_type;
+-	}
+-}
+-EXPORT_SYMBOL_GPL(gether_apply_opts);
+-
+ void gether_suspend(struct gether *link)
+ {
+ 	struct eth_dev *dev = link->ioport;
+--- a/drivers/usb/gadget/function/u_ether.h
++++ b/drivers/usb/gadget/function/u_ether.h
+@@ -38,31 +38,6 @@
  
+ struct eth_dev;
+ 
+-/**
+- * struct gether_opts - Options for Ethernet gadget function instances
+- * @name: Pattern for the network interface name (e.g., "usb%d").
+- *        Used to generate the net device name.
+- * @qmult: Queue length multiplier for high/super speed.
+- * @host_mac: The MAC address to be used by the host side.
+- * @dev_mac: The MAC address to be used by the device side.
+- * @ifname_set: True if the interface name pattern has been set by userspace.
+- * @addr_assign_type: The method used for assigning the device MAC address
+- *                    (e.g., NET_ADDR_RANDOM, NET_ADDR_SET).
+- *
+- * This structure caches network-related settings provided through configfs
+- * before the net_device is fully instantiated. This allows for early
+- * configuration while deferring net_device allocation until the function
+- * is bound.
+- */
+-struct gether_opts {
+-	char			name[IFNAMSIZ];
+-	unsigned int		qmult;
+-	u8			host_mac[ETH_ALEN];
+-	u8			dev_mac[ETH_ALEN];
+-	bool			ifname_set;
+-	unsigned char		addr_assign_type;
+-};
+-
  /*
-@@ -864,7 +859,6 @@ invalid:
- static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
--	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
+  * This represents the USB side of an "ethernet" link, managed by a USB
+  * function which provides control and (maybe) framing.  Two functions
+@@ -284,9 +259,6 @@ int gether_set_ifname(struct net_device
  
- 	/* Control interface has only altsetting 0 */
-@@ -887,13 +881,12 @@ static int ncm_set_alt(struct usb_functi
- 		if (alt > 1)
- 			goto fail;
+ void gether_cleanup(struct eth_dev *dev);
  
--		scoped_guard(mutex, &opts->lock)
--			if (opts->net) {
--				DBG(cdev, "reset ncm\n");
--				opts->net = NULL;
--				gether_disconnect(&ncm->port);
--				ncm_reset_values(ncm);
--			}
-+		if (ncm->netdev) {
-+			DBG(cdev, "reset ncm\n");
-+			ncm->netdev = NULL;
-+			gether_disconnect(&ncm->port);
-+			ncm_reset_values(ncm);
-+		}
- 
- 		/*
- 		 * CDC Network only sends data in non-default altsettings.
-@@ -926,8 +919,7 @@ static int ncm_set_alt(struct usb_functi
- 			net = gether_connect(&ncm->port);
- 			if (IS_ERR(net))
- 				return PTR_ERR(net);
--			scoped_guard(mutex, &opts->lock)
--				opts->net = net;
-+			ncm->netdev = net;
- 		}
- 
- 		spin_lock(&ncm->lock);
-@@ -1374,16 +1366,14 @@ err:
- static void ncm_disable(struct usb_function *f)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
--	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
- 
- 	DBG(cdev, "ncm deactivated\n");
- 
--	scoped_guard(mutex, &opts->lock)
--		if (opts->net) {
--			opts->net = NULL;
--			gether_disconnect(&ncm->port);
--		}
-+	if (ncm->netdev) {
-+		ncm->netdev = NULL;
-+		gether_disconnect(&ncm->port);
-+	}
- 
- 	if (ncm->notify->enabled) {
- 		usb_ep_disable(ncm->notify);
-@@ -1443,44 +1433,39 @@ static int ncm_bind(struct usb_configura
- {
- 	struct usb_composite_dev *cdev = c->cdev;
- 	struct f_ncm		*ncm = func_to_ncm(f);
--	struct f_ncm_opts	*ncm_opts = func_to_ncm_opts(f);
- 	struct usb_string	*us;
- 	int			status = 0;
- 	struct usb_ep		*ep;
-+	struct f_ncm_opts	*ncm_opts;
- 
- 	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
--	struct net_device		*netdev __free(free_gether_netdev) = NULL;
- 	struct usb_request		*request __free(free_usb_request) = NULL;
- 
- 	if (!can_support_ecm(cdev->gadget))
- 		return -EINVAL;
- 
-+	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
-+
- 	if (cdev->use_os_string) {
- 		os_desc_table = kzalloc(sizeof(*os_desc_table), GFP_KERNEL);
- 		if (!os_desc_table)
- 			return -ENOMEM;
- 	}
- 
--	netdev = gether_setup_default();
--	if (IS_ERR(netdev))
--		return -ENOMEM;
+-void gether_setup_opts_default(struct gether_opts *opts, const char *name);
+-void gether_apply_opts(struct net_device *net, struct gether_opts *opts);
 -
--	scoped_guard(mutex, &ncm_opts->lock) {
--		gether_apply_opts(netdev, &ncm_opts->net_opts);
--		netdev->mtu = ncm_opts->max_segment_size - ETH_HLEN;
-+	mutex_lock(&ncm_opts->lock);
-+	gether_set_gadget(ncm_opts->net, cdev->gadget);
-+	if (!ncm_opts->bound) {
-+		ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
-+		status = gether_register_netdev(ncm_opts->net);
- 	}
-+	mutex_unlock(&ncm_opts->lock);
+ void gether_suspend(struct gether *link);
+ void gether_resume(struct gether *link);
  
--	gether_set_gadget(netdev, cdev->gadget);
--	status = gether_register_netdev(netdev);
- 	if (status)
- 		return status;
+--- a/drivers/usb/gadget/function/u_ether_configfs.h
++++ b/drivers/usb/gadget/function/u_ether_configfs.h
+@@ -13,12 +13,6 @@
+ #ifndef __U_ETHER_CONFIGFS_H
+ #define __U_ETHER_CONFIGFS_H
  
--	/* export host's Ethernet address in CDC format */
--	status = gether_get_host_addr_cdc(netdev, ncm->ethaddr,
--					  sizeof(ncm->ethaddr));
--	if (status < 12)
--		return -EINVAL;
--	ncm_string_defs[STRING_MAC_IDX].s = ncm->ethaddr;
-+	ncm_opts->bound = true;
-+
-+	ncm_string_defs[1].s = ncm->ethaddr;
- 
- 	us = usb_gstrings_attach(cdev, ncm_strings,
- 				 ARRAY_SIZE(ncm_string_defs));
-@@ -1578,8 +1563,6 @@ static int ncm_bind(struct usb_configura
- 		f->os_desc_n = 1;
- 	}
- 	ncm->notify_req = no_free_ptr(request);
--	ncm->netdev = no_free_ptr(netdev);
--	ncm->port.ioport = netdev_priv(ncm->netdev);
- 
- 	DBG(cdev, "CDC Network: IN/%s OUT/%s NOTIFY/%s\n",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
-@@ -1594,19 +1577,19 @@ static inline struct f_ncm_opts *to_f_nc
- }
- 
- /* f_ncm_item_ops */
--USB_ETHER_OPTS_ITEM(ncm);
-+USB_ETHERNET_CONFIGFS_ITEM(ncm);
- 
- /* f_ncm_opts_dev_addr */
--USB_ETHER_OPTS_ATTR_DEV_ADDR(ncm);
-+USB_ETHERNET_CONFIGFS_ITEM_ATTR_DEV_ADDR(ncm);
- 
- /* f_ncm_opts_host_addr */
--USB_ETHER_OPTS_ATTR_HOST_ADDR(ncm);
-+USB_ETHERNET_CONFIGFS_ITEM_ATTR_HOST_ADDR(ncm);
- 
- /* f_ncm_opts_qmult */
--USB_ETHER_OPTS_ATTR_QMULT(ncm);
-+USB_ETHERNET_CONFIGFS_ITEM_ATTR_QMULT(ncm);
- 
- /* f_ncm_opts_ifname */
--USB_ETHER_OPTS_ATTR_IFNAME(ncm);
-+USB_ETHERNET_CONFIGFS_ITEM_ATTR_IFNAME(ncm);
- 
- static ssize_t ncm_opts_max_segment_size_show(struct config_item *item,
- 					      char *page)
-@@ -1672,27 +1655,34 @@ static void ncm_free_inst(struct usb_fun
- 	struct f_ncm_opts *opts;
- 
- 	opts = container_of(f, struct f_ncm_opts, func_inst);
-+	if (opts->bound)
-+		gether_cleanup(netdev_priv(opts->net));
-+	else
-+		free_netdev(opts->net);
- 	kfree(opts->ncm_interf_group);
- 	kfree(opts);
- }
- 
- static struct usb_function_instance *ncm_alloc_inst(void)
- {
--	struct usb_function_instance *ret;
-+	struct f_ncm_opts *opts;
- 	struct usb_os_desc *descs[1];
- 	char *names[1];
- 	struct config_group *ncm_interf_group;
- 
--	struct f_ncm_opts *opts __free(kfree) = kzalloc(sizeof(*opts), GFP_KERNEL);
-+	opts = kzalloc(sizeof(*opts), GFP_KERNEL);
- 	if (!opts)
- 		return ERR_PTR(-ENOMEM);
+-#include <linux/cleanup.h>
+-#include <linux/if_ether.h>
+-#include <linux/mutex.h>
+-#include <linux/netdevice.h>
+-#include <linux/rtnetlink.h>
 -
--	opts->net = NULL;
- 	opts->ncm_os_desc.ext_compat_id = opts->ncm_ext_compat_id;
--	gether_setup_opts_default(&opts->net_opts, "usb");
+ #define USB_ETHERNET_CONFIGFS_ITEM(_f_)					\
+ 	static void _f_##_attr_release(struct config_item *item)	\
+ 	{								\
+@@ -203,174 +197,4 @@ out:									\
+ 									\
+ 	CONFIGFS_ATTR(_f_##_opts_, _n_)
  
- 	mutex_init(&opts->lock);
- 	opts->func_inst.free_func_inst = ncm_free_inst;
-+	opts->net = gether_setup_default();
-+	if (IS_ERR(opts->net)) {
-+		struct net_device *net = opts->net;
-+		kfree(opts);
-+		return ERR_CAST(net);
-+	}
- 	opts->max_segment_size = ETH_FRAME_LEN;
- 	INIT_LIST_HEAD(&opts->ncm_os_desc.ext_prop);
- 
-@@ -1703,22 +1693,26 @@ static struct usb_function_instance *ncm
- 	ncm_interf_group =
- 		usb_os_desc_prepare_interf_dir(&opts->func_inst.group, 1, descs,
- 					       names, THIS_MODULE);
--	if (IS_ERR(ncm_interf_group))
-+	if (IS_ERR(ncm_interf_group)) {
-+		ncm_free_inst(&opts->func_inst);
- 		return ERR_CAST(ncm_interf_group);
-+	}
- 	opts->ncm_interf_group = ncm_interf_group;
- 
--	ret = &opts->func_inst;
--	retain_and_null_ptr(opts);
--	return ret;
-+	return &opts->func_inst;
- }
- 
- static void ncm_free(struct usb_function *f)
- {
--	struct f_ncm_opts *opts = func_to_ncm_opts(f);
-+	struct f_ncm *ncm;
-+	struct f_ncm_opts *opts;
- 
--	scoped_guard(mutex, &opts->lock)
--		opts->refcnt--;
--	kfree(func_to_ncm(f));
-+	ncm = func_to_ncm(f);
-+	opts = container_of(f->fi, struct f_ncm_opts, func_inst);
-+	kfree(ncm);
-+	mutex_lock(&opts->lock);
-+	opts->refcnt--;
-+	mutex_unlock(&opts->lock);
- }
- 
- static void ncm_unbind(struct usb_configuration *c, struct usb_function *f)
-@@ -1742,15 +1736,13 @@ static void ncm_unbind(struct usb_config
- 
- 	kfree(ncm->notify_req->buf);
- 	usb_ep_free_request(ncm->notify, ncm->notify_req);
+-#define USB_ETHER_OPTS_ITEM(_f_)						\
+-	static void _f_##_attr_release(struct config_item *item)		\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-										\
+-		usb_put_function_instance(&opts->func_inst);			\
+-	}									\
+-										\
+-	static struct configfs_item_operations _f_##_item_ops = {		\
+-		.release	= _f_##_attr_release,				\
+-	}
 -
--	ncm->port.ioport = NULL;
--	gether_cleanup(netdev_priv(ncm->netdev));
- }
- 
- static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
- {
- 	struct f_ncm		*ncm;
- 	struct f_ncm_opts	*opts;
-+	int status;
- 
- 	/* allocate and initialize one new instance */
- 	ncm = kzalloc(sizeof(*ncm), GFP_KERNEL);
-@@ -1758,12 +1750,22 @@ static struct usb_function *ncm_alloc(st
- 		return ERR_PTR(-ENOMEM);
- 
- 	opts = container_of(fi, struct f_ncm_opts, func_inst);
-+	mutex_lock(&opts->lock);
-+	opts->refcnt++;
- 
--	scoped_guard(mutex, &opts->lock)
--		opts->refcnt++;
-+	/* export host's Ethernet address in CDC format */
-+	status = gether_get_host_addr_cdc(opts->net, ncm->ethaddr,
-+				      sizeof(ncm->ethaddr));
-+	if (status < 12) { /* strlen("01234567890a") */
-+		kfree(ncm);
-+		mutex_unlock(&opts->lock);
-+		return ERR_PTR(-EINVAL);
-+	}
- 
- 	spin_lock_init(&ncm->lock);
- 	ncm_reset_values(ncm);
-+	ncm->port.ioport = netdev_priv(opts->net);
-+	mutex_unlock(&opts->lock);
- 	ncm->port.is_fixed = true;
- 	ncm->port.supports_multi_frame = true;
- 
---- a/drivers/usb/gadget/function/u_ncm.h
-+++ b/drivers/usb/gadget/function/u_ncm.h
-@@ -15,13 +15,11 @@
- 
- #include <linux/usb/composite.h>
- 
--#include "u_ether.h"
+-#define USB_ETHER_OPTS_ATTR_DEV_ADDR(_f_)					\
+-	static ssize_t _f_##_opts_dev_addr_show(struct config_item *item,	\
+-						char *page)			\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		return sysfs_emit(page, "%pM\n", opts->net_opts.dev_mac);	\
+-	}									\
+-										\
+-	static ssize_t _f_##_opts_dev_addr_store(struct config_item *item,	\
+-						 const char *page, size_t len)	\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		u8 new_addr[ETH_ALEN];						\
+-		const char *p = page;						\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		if (opts->refcnt)						\
+-			return -EBUSY;						\
+-										\
+-		for (int i = 0; i < ETH_ALEN; i++) {				\
+-			unsigned char num;					\
+-			if ((*p == '.') || (*p == ':'))				\
+-				p++;						\
+-			num = hex_to_bin(*p++) << 4;				\
+-			num |= hex_to_bin(*p++);				\
+-			new_addr[i] = num;					\
+-		}								\
+-		if (!is_valid_ether_addr(new_addr))				\
+-			return -EINVAL;						\
+-		memcpy(opts->net_opts.dev_mac, new_addr, ETH_ALEN);		\
+-		opts->net_opts.addr_assign_type = NET_ADDR_SET;			\
+-		return len;							\
+-	}									\
+-										\
+-	CONFIGFS_ATTR(_f_##_opts_, dev_addr)
 -
- struct f_ncm_opts {
- 	struct usb_function_instance	func_inst;
- 	struct net_device		*net;
-+	bool				bound;
- 
--	struct gether_opts		net_opts;
- 	struct config_group		*ncm_interf_group;
- 	struct usb_os_desc		ncm_os_desc;
- 	char				ncm_ext_compat_id[16];
+-#define USB_ETHER_OPTS_ATTR_HOST_ADDR(_f_)					\
+-	static ssize_t _f_##_opts_host_addr_show(struct config_item *item,	\
+-						 char *page)			\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		return sysfs_emit(page, "%pM\n", opts->net_opts.host_mac);	\
+-	}									\
+-										\
+-	static ssize_t _f_##_opts_host_addr_store(struct config_item *item,	\
+-						  const char *page, size_t len)	\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		u8 new_addr[ETH_ALEN];						\
+-		const char *p = page;						\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		if (opts->refcnt)						\
+-			return -EBUSY;						\
+-										\
+-		for (int i = 0; i < ETH_ALEN; i++) {				\
+-			unsigned char num;					\
+-			if ((*p == '.') || (*p == ':'))				\
+-				p++;						\
+-			num = hex_to_bin(*p++) << 4;				\
+-			num |= hex_to_bin(*p++);				\
+-			new_addr[i] = num;					\
+-		}								\
+-		if (!is_valid_ether_addr(new_addr))				\
+-			return -EINVAL;						\
+-		memcpy(opts->net_opts.host_mac, new_addr, ETH_ALEN);		\
+-		return len;							\
+-	}									\
+-										\
+-	CONFIGFS_ATTR(_f_##_opts_, host_addr)
+-
+-#define USB_ETHER_OPTS_ATTR_QMULT(_f_)						\
+-	static ssize_t _f_##_opts_qmult_show(struct config_item *item,		\
+-					     char *page)			\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		return sysfs_emit(page, "%u\n", opts->net_opts.qmult);		\
+-	}									\
+-										\
+-	static ssize_t _f_##_opts_qmult_store(struct config_item *item,		\
+-					      const char *page, size_t len)	\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		u32 val;							\
+-		int ret;							\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		if (opts->refcnt)						\
+-			return -EBUSY;						\
+-										\
+-		ret = kstrtou32(page, 0, &val);					\
+-		if (ret)							\
+-			return ret;						\
+-										\
+-		opts->net_opts.qmult = val;					\
+-		return len;							\
+-	}									\
+-										\
+-	CONFIGFS_ATTR(_f_##_opts_, qmult)
+-
+-#define USB_ETHER_OPTS_ATTR_IFNAME(_f_)						\
+-	static ssize_t _f_##_opts_ifname_show(struct config_item *item,		\
+-					      char *page)			\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		const char *name;						\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		rtnl_lock();							\
+-		if (opts->net_opts.ifname_set)					\
+-			name = opts->net_opts.name;				\
+-		else if (opts->net)						\
+-			name = netdev_name(opts->net);				\
+-		else								\
+-			name = "(inactive net_device)";				\
+-		rtnl_unlock();							\
+-		return sysfs_emit(page, "%s\n", name);				\
+-	}									\
+-										\
+-	static ssize_t _f_##_opts_ifname_store(struct config_item *item,	\
+-					       const char *page, size_t len)	\
+-	{									\
+-		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		char tmp[IFNAMSIZ];						\
+-		const char *p;							\
+-		size_t c_len = len;						\
+-										\
+-		if (c_len > 0 && page[c_len - 1] == '\n')			\
+-			c_len--;						\
+-										\
+-		if (c_len >= sizeof(tmp))					\
+-			return -E2BIG;						\
+-										\
+-		strscpy(tmp, page, c_len + 1);					\
+-		if (!dev_valid_name(tmp))					\
+-			return -EINVAL;						\
+-										\
+-		/* Require exactly one %d */					\
+-		p = strchr(tmp, '%');						\
+-		if (!p || p[1] != 'd' || strchr(p + 2, '%'))			\
+-			return -EINVAL;						\
+-										\
+-		guard(mutex)(&opts->lock);					\
+-		if (opts->refcnt)						\
+-			return -EBUSY;						\
+-		strscpy(opts->net_opts.name, tmp, sizeof(opts->net_opts.name));	\
+-		opts->net_opts.ifname_set = true;				\
+-		return len;							\
+-	}									\
+-										\
+-	CONFIGFS_ATTR(_f_##_opts_, ifname)
+-
+ #endif /* __U_ETHER_CONFIGFS_H */
 
 
