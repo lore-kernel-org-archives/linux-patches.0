@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 051853F54CC;
-	Tue, 17 Mar 2026 17:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22ED3F54CE;
+	Tue, 17 Mar 2026 17:07:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767257; cv=none; b=fAjVR5qwPjJQag8E+yDV27gC/Ho3STEI62++2k8Y6P6tIhNDEI93yyndM658PWj/Q3WeICo3EaQgbybtwqinz+3KJ4E/fjUWtpwWsBsOEwYrEOKd5X9wp8tuGISMYh56KwjzzDKqBtLsP+qLMMIFISeiCn0tmmtaXrqCuYp1w7o=
+	t=1773767262; cv=none; b=bCUEU+dFCQ0J+I2k0SGpRdSY697d65w9DChpxWTxFRmpdZeVVYgYINsZkDVfVFSzUpzaJRdui5DjPPoZmHO8eUNvORoizDOGzPbCWPjTiutWr+i82iy6mRedfzWzMSVqI7/EGasqF2DdMJoSTsqmm3NCoad5qJVTPQ30301n1k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767257; c=relaxed/simple;
-	bh=L06UK78W4Chihhu98aKPBY7sNR3egVNvrof7lSmNKxA=;
+	s=arc-20240116; t=1773767262; c=relaxed/simple;
+	bh=UtGECo4WoArlV4ZaaYM6d+Nun27+AtL9qddXEvL9fPA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iCCeqUlAonTaE/AdVtRs6iWnPpGiKIrSYjjL+76dCGnb5ZT0K0nmCm4vpIwzpn6a5c4J5bTViuchTEJEaTPOsaBJxikkJpJ2OL5r3Bd84hRPbvVrKF3Z4ZybZzSI947MPVvl3jzxmHWGhbkU/ATT4+ZnM3ntQDy7JiatLo5YPvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=luMhOWOZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JRjILuEgMk27stfjpvNpEyMWcwpHRagtDe7w9XEVreZS1f16WqYXQoU8wGX36AKM+GDws6jg8w/Xwc8qV0nUDhpOf/UuE45Vfih3L3RVlDmOTWNCN9qc7sqkREsy7XFOO9YRYyvvDVoyEvNg/v9W8xW2asy6MKYerSPqFznJ/vA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FIieQ/6n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="luMhOWOZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EE0C4CEF7;
-	Tue, 17 Mar 2026 17:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FIieQ/6n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C1F1C19424;
+	Tue, 17 Mar 2026 17:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767256;
-	bh=L06UK78W4Chihhu98aKPBY7sNR3egVNvrof7lSmNKxA=;
+	s=korg; t=1773767262;
+	bh=UtGECo4WoArlV4ZaaYM6d+Nun27+AtL9qddXEvL9fPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luMhOWOZ044KpymjM8mEaCS4zDlZ37MHq+ZaobkjnvPz3d4X5dFCeqaUpFv9g2Jjw
-	 JZmodd2Iqol+GG3UyYDeXsBtOD8LTaJTfzal8Z9vksqVqnHurmDCTkpgEAKsDMm5ze
-	 ucI1Tb/yd39fNqnIU726c6DVlHkTqjl2caDOlikA=
+	b=FIieQ/6nPM2qpWD0TobeMQqPIH2P3kCCOF1A4SRxHBJyppRgXA54TrJDWAGHZg+Oo
+	 +REWw2oI4+cqm7c6lXCQX3ousk4oe3VSem7J1KeOIrxWT9WzEGGoA6QDtc//1+LrWd
+	 LltLFWgauoHiOzxFpIN5ejxEk+qRvG03F0teKWCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/333] drm/sitronix/st7586: fix bad pixel data due to byte swap
-Date: Tue, 17 Mar 2026 17:31:18 +0100
-Message-ID: <20260317163001.183762430@linuxfoundation.org>
+Subject: [PATCH 6.18 050/333] spi: amlogic: spifc-a4: Fix DMA mapping error handling
+Date: Tue, 17 Mar 2026 17:31:19 +0100
+Message-ID: <20260317163001.221620827@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,66 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Lechner <dlechner@baylibre.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 46d8a07b4ae262e2fec6ce2aa454e06243661265 ]
+[ Upstream commit b20b437666e1cb26a7c499d1664e8f2a0ac67000 ]
 
-Correctly set dbi->write_memory_bpw for the ST7586 driver. This driver
-is for a monochrome display that has an unusual data format, so the
-default value set in mipi_dbi_spi_init() is not correct simply because
-this controller is non-standard.
+Fix three bugs in aml_sfc_dma_buffer_setup() error paths:
+1. Unnecessary goto: When the first DMA mapping (sfc->daddr) fails,
+   nothing needs cleanup. Use direct return instead of goto.
+2. Double-unmap bug: When info DMA mapping failed, the code would
+   unmap sfc->daddr inline, then fall through to out_map_data which
+   would unmap it again, causing a double-unmap.
+3. Wrong unmap size: The out_map_info label used datalen instead of
+   infolen when unmapping sfc->iaddr, which could lead to incorrect
+   DMA sync behavior.
 
-Previously, we were using dbi->swap_bytes to make the same sort of
-workaround, but it was removed in the same commit that added
-dbi->write_memory_bpw, so we need to use the latter now to have the
-correct behavior.
-
-This fixes every 3 columns of pixels being swapped on the display. There
-are 3 pixels per byte, so the byte swap caused this effect.
-
-Fixes: df3fb27a74a4 ("drm/mipi-dbi: Make bits per word configurable for pixel transfers")
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Signed-off-by: David Lechner <dlechner@baylibre.com>
-Link: https://patch.msgid.link/20260228-drm-mipi-dbi-fix-st7586-byte-swap-v1-1-e78f6c24cd28@baylibre.com
+Fixes: 4670db6f32e9 ("spi: amlogic: add driver for Amlogic SPI Flash Controller")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260306-spifc-a4-v1-1-f22c9965f64a@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sitronix/st7586.c | 15 ++++++---------
- 1 file changed, 6 insertions(+), 9 deletions(-)
+ drivers/spi/spi-amlogic-spifc-a4.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/sitronix/st7586.c b/drivers/gpu/drm/sitronix/st7586.c
-index a29672d84eded..055383497aae7 100644
---- a/drivers/gpu/drm/sitronix/st7586.c
-+++ b/drivers/gpu/drm/sitronix/st7586.c
-@@ -346,6 +346,12 @@ static int st7586_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/spi/spi-amlogic-spifc-a4.c b/drivers/spi/spi-amlogic-spifc-a4.c
+index 35a7c4965e113..f324aa39a8976 100644
+--- a/drivers/spi/spi-amlogic-spifc-a4.c
++++ b/drivers/spi/spi-amlogic-spifc-a4.c
+@@ -411,7 +411,7 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 	ret = dma_mapping_error(sfc->dev, sfc->daddr);
+ 	if (ret) {
+ 		dev_err(sfc->dev, "DMA mapping error\n");
+-		goto out_map_data;
++		return ret;
+ 	}
  
-+	/*
-+	 * Override value set by mipi_dbi_spi_init(). This driver is a bit
-+	 * non-standard, so best to set it explicitly here.
-+	 */
-+	dbi->write_memory_bpw = 8;
-+
- 	/* Cannot read from this controller via SPI */
- 	dbi->read_commands = NULL;
+ 	cmd = CMD_DATA_ADDRL(sfc->daddr);
+@@ -429,7 +429,6 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 		ret = dma_mapping_error(sfc->dev, sfc->iaddr);
+ 		if (ret) {
+ 			dev_err(sfc->dev, "DMA mapping error\n");
+-			dma_unmap_single(sfc->dev, sfc->daddr, datalen, dir);
+ 			goto out_map_data;
+ 		}
  
-@@ -355,15 +361,6 @@ static int st7586_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
+@@ -448,7 +447,7 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 	return 0;
  
--	/*
--	 * we are using 8-bit data, so we are not actually swapping anything,
--	 * but setting mipi->swap_bytes makes mipi_dbi_typec3_command() do the
--	 * right thing and not use 16-bit transfers (which results in swapped
--	 * bytes on little-endian systems and causes out of order data to be
--	 * sent to the display).
--	 */
--	dbi->swap_bytes = true;
--
- 	drm_mode_config_reset(drm);
+ out_map_info:
+-	dma_unmap_single(sfc->dev, sfc->iaddr, datalen, dir);
++	dma_unmap_single(sfc->dev, sfc->iaddr, infolen, dir);
+ out_map_data:
+ 	dma_unmap_single(sfc->dev, sfc->daddr, datalen, dir);
  
- 	ret = drm_dev_register(drm, 0);
 -- 
 2.51.0
 
