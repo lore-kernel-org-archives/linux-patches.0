@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ECD9372ED3;
-	Tue, 17 Mar 2026 17:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E994B2D739D;
+	Tue, 17 Mar 2026 17:27:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768465; cv=none; b=ABKj3xRziXI66ohbsPJbsFGpjFBqNmgf3/3MQkMvGtnPZ8S3D6AWNiwGJ9ths5xaYfNazmcm17J74uUj98W17Mfz4BIwjhktjSmPORz1gW46j5oPPI8lkP0nr0+faMOJrPKhnFr9o8wt3K6gwg6nwYUNv2OsfGS2U4/uIJqRp/4=
+	t=1773768470; cv=none; b=dnUJb0vBRlg5KOUbOmi7Zhrlkkf0+FA5U9R8oHlAX6E3kTM5mHLo8B1coxGnYyQqLGMra26najXljveti+kdzIo0n2HL1laY0KBeeOLcQmpdlzzPlID97vOz7dfkPSmNf9KxFNGOcBSVCPrpjhZekI+ujMcDY0D8mpNQWNRRIpg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768465; c=relaxed/simple;
-	bh=IDuIDW7lYcA9Q6fiTWbpNa2xnqq6QkEjHux+/ZU2F0A=;
+	s=arc-20240116; t=1773768470; c=relaxed/simple;
+	bh=cR2PQx/aEv0EtFuKYTovJjwgkanBmdIfvgTLUxjkeaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fqu0/5hPNMMpeAsFn7iNE7PG1RUZlbv6xQg6M9AJkvD6rml57IVJYc6YmBQs5BVf8Bk47vbdH22A78jm9hjxo9QqrTKIQtInCNhT/qD1awlMUTqkXlrdWF3e+1/Qnp8gE/7nMMmHoj8IYlK2Xj57vkuuYF82xOTxDM+ezX5OgkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cG4G99DM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CDMlFSMtiBPcgI37dFl2aRDu0YrW6x+BVui3kC1DKkDODDH5hvqHfuA6rnu0nLu+kwsfLCxQ73UeSvXI0WbmUyu3bTIvY1/Jhmr/JuOSbJXVVVkn0CjcOaeOCa33SPZ/CRpIHEZ+gDVgt8WpGKg49S36f4oDNa9ch8UBS4Sa3vY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EItujorE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cG4G99DM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 730A6C2BC86;
-	Tue, 17 Mar 2026 17:27:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EItujorE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12757C4CEF7;
+	Tue, 17 Mar 2026 17:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768465;
-	bh=IDuIDW7lYcA9Q6fiTWbpNa2xnqq6QkEjHux+/ZU2F0A=;
+	s=korg; t=1773768469;
+	bh=cR2PQx/aEv0EtFuKYTovJjwgkanBmdIfvgTLUxjkeaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cG4G99DM6Ppu5qcFFWjZEIU1P0FuiodrpHPp4nkarx0THqY+tLpth0/PdmU0G+TYX
-	 S3GFPYsWbO6ruf8UoB1X9uYYsMPbQy7In9rCB2hUiRbwID5hIbFLBGYt6J0TI7slg7
-	 9FmlPchdjjdgFag2ttQ0Qh6LC0zeWhANe9Y8r0No=
+	b=EItujorENwSBtON7CV7NxEtH3QdyfYHBK19BK8D2kYIATWcUKYv+CeyWiZu6Gx4I1
+	 ty3Wd6VOUgpDrbm6uAUj6mh62/ZyojUXjufsNUqaAh1EpXcw03fMCly0ocY8Eh4qzn
+	 cn1dC9g/kTBM3I+/LpKvpD1CzHV+bhslp485pzao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 313/333] i3c: mipi-i3c-hci: Fix race in DMA ring dequeue
-Date: Tue, 17 Mar 2026 17:35:42 +0100
-Message-ID: <20260317163010.990995942@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 283/333] lib/bootconfig: check bounds before writing in __xbc_open_brace()
+Date: Tue, 17 Mar 2026 17:35:12 +0100
+Message-ID: <20260317163009.885674743@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,66 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Josh Law <objecting@objecting.org>
 
-commit 1dca8aee80eea76d2aae21265de5dd64f6ba0f09 upstream.
+commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
 
-The HCI DMA dequeue path (hci_dma_dequeue_xfer()) may be invoked for
-multiple transfers that timeout around the same time.  However, the
-function is not serialized and can race with itself.
+The bounds check for brace_index happens after the array write.
+While the current call pattern prevents an actual out-of-bounds
+access (the previous call would have returned an error), the
+write-before-check pattern is fragile and would become a real
+out-of-bounds write if the error return were ever not propagated.
 
-When a timeout occurs, hci_dma_dequeue_xfer() stops the ring, processes
-incomplete transfers, and then restarts the ring.  If another timeout
-triggers a parallel call into the same function, the two instances may
-interfere with each other - stopping or restarting the ring at unexpected
-times.
+Move the bounds check before the array write so the function is
+self-contained and safe regardless of caller behavior.
 
-Add a mutex so that hci_dma_dequeue_xfer() is serialized with respect to
-itself.
+Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
 
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-7-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/core.c |    1 +
- drivers/i3c/master/mipi-i3c-hci/dma.c  |    2 ++
- drivers/i3c/master/mipi-i3c-hci/hci.h  |    1 +
- 3 files changed, 4 insertions(+)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -632,6 +632,7 @@ static int i3c_hci_init(struct i3c_hci *
- 		return ret;
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -532,9 +532,9 @@ static char *skip_spaces_until_newline(c
+ static int __init __xbc_open_brace(char *p)
+ {
+ 	/* Push the last key as open brace */
+-	open_brace[brace_index++] = xbc_node_index(last_parent);
+ 	if (brace_index >= XBC_DEPTH_MAX)
+ 		return xbc_parse_error("Exceed max depth of braces", p);
++	open_brace[brace_index++] = xbc_node_index(last_parent);
  
- 	spin_lock_init(&hci->lock);
-+	mutex_init(&hci->control_mutex);
- 
- 	/*
- 	 * Now let's reset the hardware.
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -486,6 +486,8 @@ static bool hci_dma_dequeue_xfer(struct
- 	unsigned int i;
- 	bool did_unqueue = false;
- 
-+	guard(mutex)(&hci->control_mutex);
-+
- 	/* stop the ring */
- 	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
- 	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
---- a/drivers/i3c/master/mipi-i3c-hci/hci.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/hci.h
-@@ -46,6 +46,7 @@ struct i3c_hci {
- 	void *io_data;
- 	const struct hci_cmd_ops *cmd;
- 	spinlock_t lock;
-+	struct mutex control_mutex;
- 	atomic_t next_cmd_tid;
- 	u32 caps;
- 	unsigned int quirks;
+ 	return 0;
+ }
 
 
