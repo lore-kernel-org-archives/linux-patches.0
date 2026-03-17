@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EA83EB7F1;
-	Tue, 17 Mar 2026 16:37:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21FDA3BBA1A;
+	Tue, 17 Mar 2026 16:37:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765442; cv=none; b=u41oqd3GX04SV14IKBBvPm9NLumULvnHSj12/9mVXeu56g7hp6eBurn6vicya1rraG0Mnyv2ziF3iUsFBE0zyRFn8u8blPW41IlYXOA2RtMATKGdsylTNvsX72M/S2Q4n47rmtC6uYBcJICFgAnObLbB6odj5WTvuHCBybK0ZB0=
+	t=1773765446; cv=none; b=i3XiGY1LdA5jXxCpvz+azaAye+0m1a2/NiBk1fvEl0DKupeiugjRrJBaqvYgKv9LzUm/qap3h/vZtoT5b9ncvO6txWwmK1izgyb0rw1jPrqjnc9LLnsn0zkBGDCpWKC4e9gUFvb8NlyQh+c03jmeJjgcgwiG54lbcINk4GX4i+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765442; c=relaxed/simple;
-	bh=QzOcZ0KkU94BcnaaROJD1j3rLzynqtm/mQaaEWdLkIg=;
+	s=arc-20240116; t=1773765446; c=relaxed/simple;
+	bh=XKhM31bntlOp7REx9KYDOc58YCjoY75iFOwdJ66jIwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uFUwYsGkbKKeoPcBEEp5egSbZMLvHSIqsEAZkUbgpAdydpv2mKTvV72XBil50VcYegIhPnq7qrUMLQUjAtDVCd3RZ5AY7OJNyHw/HrVlXjKy0abyLOQ0EP1YoR7W+mx4PdQTM6+KKzh3cy7QOpWOH6Kb/y87VG8VcmZO1gNhTOA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQLAlDsn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kViqII2gJeQjngjtkMnMsohnUwCtH1EKAfQy8rfXMQnAzrpfmVfvHYG0sllNEOL0MRxvdD0oIaWSecNvRxC25w0RUBKFSDE4uoc5rB3LA3D9s0jZXJRVhXilNHvFkzjeNHJq21G+fTFxAJxxLeizRcc2C8DxdzosRLxxuTxljT4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uOfWtQrZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQLAlDsn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0E5C4CEF7;
-	Tue, 17 Mar 2026 16:37:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uOfWtQrZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41DBAC4CEF7;
+	Tue, 17 Mar 2026 16:37:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765441;
-	bh=QzOcZ0KkU94BcnaaROJD1j3rLzynqtm/mQaaEWdLkIg=;
+	s=korg; t=1773765445;
+	bh=XKhM31bntlOp7REx9KYDOc58YCjoY75iFOwdJ66jIwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eQLAlDsnsDB/5UX8xDAb31nakDRs2AYVQYF+m3ptsx924WCaQz88z7PaDs6v8u8/S
-	 hJTM6N2ViCuiyNIiaYoKbESazQtY2PhsLkRdN2bRVW3/+X9+VT8SUverKE9dElpAZv
-	 Dnzxi+BZOIjZFVAn91e9K+OHY4c1mjel88a/lVG0=
+	b=uOfWtQrZaoNPU3MEaIWJrXVOkVqb1CeOf4iBtgsmGsPdSMu8oLhkXjjYNXp7fMDS8
+	 F8/aAbM4U6r3Hsn3ebiJbzOa+pEXmLh8aRoewysSGmv4T+9XUfEDl+YLggAkO6Flr0
+	 MciXiegvEtGXxWmRPRiDkzPKKdYif9FbrrALDZ1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com,
-	Edward Adam Davis <eadavis@qq.com>,
-	Christian Brauner <brauner@kernel.org>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 012/378] fs: init flags_valid before calling vfs_fileattr_get
-Date: Tue, 17 Mar 2026 17:29:29 +0100
-Message-ID: <20260317163007.424676690@linuxfoundation.org>
+Subject: [PATCH 6.19 013/378] scsi: mpi3mr: Add NULL checks when resetting request and reply queues
+Date: Tue, 17 Mar 2026 17:29:30 +0100
+Message-ID: <20260317163007.462247947@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,50 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Edward Adam Davis <eadavis@qq.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit cb184dd19154fc486fa3d9e02afe70a97e54e055 ]
+[ Upstream commit fa96392ebebc8fade2b878acb14cce0f71016503 ]
 
-syzbot reported a uninit-value bug in [1].
+The driver encountered a crash during resource cleanup when the reply and
+request queues were NULL due to freed memory.  This issue occurred when the
+creation of reply or request queues failed, and the driver freed the memory
+first, but attempted to mem set the content of the freed memory, leading to
+a system crash.
 
-Similar to the "*get" context where the kernel's internal file_kattr
-structure is initialized before calling vfs_fileattr_get(), we should
-use the same mechanism when using fa.
+Add NULL pointer checks for reply and request queues before accessing the
+reply/request memory during cleanup
 
-[1]
-BUG: KMSAN: uninit-value in fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
- fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
- vfs_fileattr_get fs/file_attr.c:94 [inline]
- __do_sys_file_getattr fs/file_attr.c:416 [inline]
-
-Local variable fa.i created at:
- __do_sys_file_getattr fs/file_attr.c:380 [inline]
- __se_sys_file_getattr+0x8c/0xbd0 fs/file_attr.c:372
-
-Reported-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=7c31755f2cea07838b0c
-Tested-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
-Signed-off-by: Edward Adam Davis <eadavis@qq.com>
-Link: https://patch.msgid.link/tencent_B6C4583771D76766D71362A368696EC3B605@qq.com
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://patch.msgid.link/20260212070026.30263-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/file_attr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 34 ++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/fs/file_attr.c b/fs/file_attr.c
-index 13cdb31a3e947..4889cf59b2562 100644
---- a/fs/file_attr.c
-+++ b/fs/file_attr.c
-@@ -377,7 +377,7 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
- 	struct filename *name __free(putname) = NULL;
- 	unsigned int lookup_flags = 0;
- 	struct file_attr fattr;
--	struct file_kattr fa;
-+	struct file_kattr fa = { .flags_valid = true }; /* hint only */
- 	int error;
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index 8c4bb7169a87c..8382afed12813 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -4705,21 +4705,25 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
+ 	}
  
- 	BUILD_BUG_ON(sizeof(struct file_attr) < FILE_ATTR_SIZE_VER0);
+ 	for (i = 0; i < mrioc->num_queues; i++) {
+-		mrioc->op_reply_qinfo[i].qid = 0;
+-		mrioc->op_reply_qinfo[i].ci = 0;
+-		mrioc->op_reply_qinfo[i].num_replies = 0;
+-		mrioc->op_reply_qinfo[i].ephase = 0;
+-		atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
+-		atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
+-		mpi3mr_memset_op_reply_q_buffers(mrioc, i);
+-
+-		mrioc->req_qinfo[i].ci = 0;
+-		mrioc->req_qinfo[i].pi = 0;
+-		mrioc->req_qinfo[i].num_requests = 0;
+-		mrioc->req_qinfo[i].qid = 0;
+-		mrioc->req_qinfo[i].reply_qid = 0;
+-		spin_lock_init(&mrioc->req_qinfo[i].q_lock);
+-		mpi3mr_memset_op_req_q_buffers(mrioc, i);
++		if (mrioc->op_reply_qinfo) {
++			mrioc->op_reply_qinfo[i].qid = 0;
++			mrioc->op_reply_qinfo[i].ci = 0;
++			mrioc->op_reply_qinfo[i].num_replies = 0;
++			mrioc->op_reply_qinfo[i].ephase = 0;
++			atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
++			atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
++			mpi3mr_memset_op_reply_q_buffers(mrioc, i);
++		}
++
++		if (mrioc->req_qinfo) {
++			mrioc->req_qinfo[i].ci = 0;
++			mrioc->req_qinfo[i].pi = 0;
++			mrioc->req_qinfo[i].num_requests = 0;
++			mrioc->req_qinfo[i].qid = 0;
++			mrioc->req_qinfo[i].reply_qid = 0;
++			spin_lock_init(&mrioc->req_qinfo[i].q_lock);
++			mpi3mr_memset_op_req_q_buffers(mrioc, i);
++		}
+ 	}
+ 
+ 	atomic_set(&mrioc->pend_large_data_sz, 0);
 -- 
 2.51.0
 
