@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1313ECBFC;
-	Tue, 17 Mar 2026 16:41:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC213ED5A8;
+	Tue, 17 Mar 2026 16:41:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765714; cv=none; b=SshaD1eqa9z5lYeUN8hwv1G7lfptMxqRV5io0YVdhX2axyoHO5FuHaS5kQmMKCYAFdch7lUTAwA/0xdFVdpYBbEQj6ES1xlIyLOwxVuJVIMIi1nOa82uOO/FdLw9tiL+Vmw6EnjGV5yEC/jv8ml9IW1E3aykvgDA3pF+IU5ygEY=
+	t=1773765717; cv=none; b=UmF6g2Sy3GfXMDXUZPANVe+rgbAzwDZyZl8KzMgb2EOun6uQ6Ebkekp4qZidj9F7GgXzuhyKatNCi9tvZqg0C6mvXt638WD465EDwacnCWfvITIfjt1MelyVIcNL58vwYHduUCn8r7N/MklFD1/EEKgrPyh5m+OJ1QuXBMj/mWg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765714; c=relaxed/simple;
-	bh=ziXp6zhAULu4+unTafWSfE5RX6OkFQx4YbWhnyPYA2A=;
+	s=arc-20240116; t=1773765717; c=relaxed/simple;
+	bh=/zWSWyMnM6slBGajMfpw057eYFiXSXThzp9hk8Qxgxg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ji9tMEw0eUu/9BK+iReu6VIecP7B1RM0Fw8eULh8sfN1Zd4rlYIuG5RdYG2wdbwZeJusHyTZ7+PBcVpZu4YVt+KmFnBqsPpRD/54mYIUTmsuWOu0n5wbKGBFqV4kMLLRKeaWaXgsH80XVC+uI1vXXTmuYRs55kvDzMsXZso4D+Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3qXnYwY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e4JjESDR8WAaVZMzhNLYBORslgUllGBbOkVTSoOXu2nj93h9QDW35zAUbHsm3dWBqdpkh6q76j0h8ZTLl87RwJPnqhVgVIsGwFH09nmCz3yGDTZ9BXv+7IjDtS8dtBw8+vPFlabl5RsIA2QoY5t0LiODz5ZOms7+YTYPs5iL3W8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1DDoNK9p; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3qXnYwY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70097C4CEF7;
-	Tue, 17 Mar 2026 16:41:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1DDoNK9p"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB8F9C4CEF7;
+	Tue, 17 Mar 2026 16:41:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765713;
-	bh=ziXp6zhAULu4+unTafWSfE5RX6OkFQx4YbWhnyPYA2A=;
+	s=korg; t=1773765717;
+	bh=/zWSWyMnM6slBGajMfpw057eYFiXSXThzp9hk8Qxgxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l3qXnYwYTKh+LcCX2cvCqAN5k6ndosh1hnpezO3sQ0YdslxGRk58u7vK6FarVxjHL
-	 OFtm1bhb21Qrk8UbH8sQwGvCFY3bfOvqIFwDhRppytXqbv9xFh+FufsC5Fu0rVkJ0G
-	 vNTxXVIb4YDn59wmddUL9ZlPlqwhL/J/E5nl+edA=
+	b=1DDoNK9pDFQTNdehG4JGbhrjeRTXXfEkzFzxeeI4Pmm/Slq15X1JIG5P7rd0GJEOO
+	 oUw4GVseZ7o+fhgeTUWiXsWhxtk/bUNRsuObYGNsZ9iPSojJX6FcXV5GajVGAQGUc1
+	 P7zvS1C6HXVTmOcefZ/bwlJUvKFNUcLsrgnIojPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	David Dull <monderasdor@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 060/378] net: sfp: improve Huawei MA5671a fixup
-Date: Tue, 17 Mar 2026 17:30:17 +0100
-Message-ID: <20260317163009.199956961@linuxfoundation.org>
+Subject: [PATCH 6.19 078/378] netfilter: nfnetlink_queue: fix entry leak in bridge verdict error path
+Date: Tue, 17 Mar 2026 17:30:35 +0100
+Message-ID: <20260317163009.887111163@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -46,60 +46,55 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 87d126852158467ab87d5cbc36ccfd3f15464a6c ]
+[ Upstream commit f1ba83755d81c6fc66ac7acd723d238f974091e9 ]
 
-With the current sfp_fixup_ignore_tx_fault() fixup we ignore the TX_FAULT
-signal, but we also need to apply sfp_fixup_ignore_los() in order to be
-able to communicate with the module even if the fiber isn't connected for
-configuration purposes.
-This is needed for all the MA5671a firmwares, excluding the FS modded
-firmware.
+nfqnl_recv_verdict() calls find_dequeue_entry() to remove the queue
+entry from the queue data structures, taking ownership of the entry.
+For PF_BRIDGE packets, it then calls nfqa_parse_bridge() to parse VLAN
+attributes.  If nfqa_parse_bridge() returns an error (e.g. NFQA_VLAN
+present but NFQA_VLAN_TCI missing), the function returns immediately
+without freeing the dequeued entry or its sk_buff.
 
-Fixes: 2069624dac19 ("net: sfp: Add tx-fault workaround for Huawei MA5671A SFP ONT")
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260306125139.213637-1-noltari@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This leaks the nf_queue_entry, its associated sk_buff, and all held
+references (net_device refcounts, struct net refcount).  Repeated
+triggering exhausts kernel memory.
+
+Fix this by dropping the entry via nfqnl_reinject() with NF_DROP verdict
+on the error path, consistent with other error handling in this file.
+
+Fixes: 8d45ff22f1b4 ("netfilter: bridge: nf queue verdict to use NFQA_VLAN and NFQA_L2HDR")
+Reviewed-by: David Dull <monderasdor@gmail.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ net/netfilter/nfnetlink_queue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index 43aefdd8b70f7..ca09925335725 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -367,6 +367,12 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
- 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
- }
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index 34548213f2f14..0b96d20bacb73 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -1549,8 +1549,10 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
  
-+static void sfp_fixup_ignore_tx_fault_and_los(struct sfp *sfp)
-+{
-+	sfp_fixup_ignore_tx_fault(sfp);
-+	sfp_fixup_ignore_los(sfp);
-+}
-+
- static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
- {
- 	sfp->state_hw_mask &= ~mask;
-@@ -530,7 +536,7 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
- 	// their EEPROM
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
--		  sfp_fixup_ignore_tx_fault),
-+		  sfp_fixup_ignore_tx_fault_and_los),
+ 	if (entry->state.pf == PF_BRIDGE) {
+ 		err = nfqa_parse_bridge(entry, nfqa);
+-		if (err < 0)
++		if (err < 0) {
++			nfqnl_reinject(entry, NF_DROP);
+ 			return err;
++		}
+ 	}
  
- 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
- 	// incorrectly report 2500MBd NRZ in their EEPROM.
+ 	if (nfqa[NFQA_PAYLOAD]) {
 -- 
 2.51.0
 
