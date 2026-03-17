@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55C563F23DD;
-	Tue, 17 Mar 2026 16:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248323F54D3;
+	Tue, 17 Mar 2026 16:52:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766371; cv=none; b=ZsgWevfm27IMXTafsuqmmXG+8/2ec2mHQ2xNGDOcU6UhVYS6D6ONW8r3udq4eU1ADN/bS1DE+pcn8++EFF+GtJaIFnVpSiFPCyCITMno4PGSeqBn1GCaFWod/UTe25Ox7x/qfson8QChXazhNZ3A4mIsLkLu/kOVhU6uPJniajo=
+	t=1773766375; cv=none; b=C73xOQRFzldb2kYOwwvYN/biUOZA9vzb7eJ9Q3JDApzULhB6rCD1U2FVLirBcGcL05Syf3YilFG8PJY5gR2p2hgIMUVt+IzpCOD4AsuX07AsjjBchSTMZxy1mtxCSrX0AkgH6ZaAsoT6JlJqsVI8DkNOtAsV03dCnEA1z2OohK4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766371; c=relaxed/simple;
-	bh=ivthcyBx1UX4mfPBhFnkuLT6yIG/mOO3O1TJCLB9rq0=;
+	s=arc-20240116; t=1773766375; c=relaxed/simple;
+	bh=45BGe7o827ArAn26omWXTBYLpH8MEGKb/vwW3uB7/n8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DuSZDlT2ZGjtUBaTaoYhpzTSNC73HxiQP1+3whjbt+RLsh07DA8b3SY/j8iBeGJJviaMpgzCfi10G1asw8EP/DuYs7RBue6WdRNwRjFVvN9DX5ZPYVJMjeEYlIQp6XEyXFxcYhTkKXRa6qy4mCn7gA4JF7MPlZel2LafFmep0/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vQgnqYsU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JlOA79lakLldFTfrI36jdUpDQSEumeo8x39bK9Yy64OWNT9VoNAkJkPrISjCxQBxPutWUdWgapmRO4ToNS8+WiqjuEna3+rChjJnBHEJZnp5mFSs0VjuFOthnX+vmKTEI86zHqoWJ5pDpBb9dL3gV7lzgzI3aodhJRzUJdJujnY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cB+Uj8H8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vQgnqYsU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4A6C4CEF7;
-	Tue, 17 Mar 2026 16:52:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cB+Uj8H8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88C22C2BC86;
+	Tue, 17 Mar 2026 16:52:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766371;
-	bh=ivthcyBx1UX4mfPBhFnkuLT6yIG/mOO3O1TJCLB9rq0=;
+	s=korg; t=1773766375;
+	bh=45BGe7o827ArAn26omWXTBYLpH8MEGKb/vwW3uB7/n8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vQgnqYsUrWimRWI+ZrSVCQl42PMnLxawRt/RtnoKP+lUMVZTHJouiQrH7Ixr5pc4y
-	 CXiD7kmGcE6yrF0L8x4fdWiTibLijsYlz5OliWqPa2Dj4aeHjjc+uvLcjpg4K/NAcM
-	 Z/bgKZQscOmfPFcA+bKPgFPNYjZzh4ps1RLgWYaQ=
+	b=cB+Uj8H8cHs6SEhEM1PxVFlP9WSuFNdFHeHJnhYuMBArLsNtHjqpIAV5llUckF5ey
+	 Rlk2KazQ2iw6uGc7fGH9FfXjBqzCWj9vS+vnkeKDzo5IJ4w5ErFwWPbhJNwkCgyIDp
+	 G2Qp523YNMUlokUXoJaO3m8vO2PcNg8Qix3EvdO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matthew Brost <matthew.brost@intel.com>,
 	Shuicheng Lin <shuicheng.lin@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.19 230/378] drm/xe/sync: Fix user fence leak on alloc failure
-Date: Tue, 17 Mar 2026 17:33:07 +0100
-Message-ID: <20260317163015.472404626@linuxfoundation.org>
+Subject: [PATCH 6.19 231/378] drm/xe/sync: Cleanup partially initialized sync on parse failure
+Date: Tue, 17 Mar 2026 17:33:08 +0100
+Message-ID: <20260317163015.508307167@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,39 +53,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-commit 0879c3f04f67e2a1677c25dcc24669ce21eb6a6c upstream.
+commit 1bfd7575092420ba5a0b944953c95b74a5646ff8 upstream.
 
-When dma_fence_chain_alloc() fails, properly release the user fence
-reference to prevent a memory leak.
+xe_sync_entry_parse() can allocate references (syncobj, fence, chain fence,
+or user fence) before hitting a later failure path. Several of those paths
+returned directly, leaving partially initialized state and leaking refs.
 
-Fixes: 0995c2fc39b0 ("drm/xe: Enforce correct user fence signaling order using")
+Route these error paths through a common free_sync label and call
+xe_sync_entry_cleanup(sync) before returning the error.
+
+Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
 Cc: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
 Reviewed-by: Matthew Brost <matthew.brost@intel.com>
 Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260219233516.2938172-6-shuicheng.lin@intel.com
-(cherry picked from commit a5d5634cde48a9fcd68c8504aa07f89f175074a0)
+Link: https://patch.msgid.link/20260219233516.2938172-5-shuicheng.lin@intel.com
+(cherry picked from commit f939bdd9207a5d1fc55cced5459858480686ce22)
 Cc: stable@vger.kernel.org
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_sync.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/xe/xe_sync.c |   24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
 --- a/drivers/gpu/drm/xe/xe_sync.c
 +++ b/drivers/gpu/drm/xe/xe_sync.c
-@@ -200,8 +200,10 @@ int xe_sync_entry_parse(struct xe_device
- 			if (XE_IOCTL_DBG(xe, IS_ERR(sync->ufence)))
- 				return PTR_ERR(sync->ufence);
- 			sync->ufence_chain_fence = dma_fence_chain_alloc();
--			if (!sync->ufence_chain_fence)
+@@ -146,8 +146,10 @@ int xe_sync_entry_parse(struct xe_device
+ 
+ 		if (!signal) {
+ 			sync->fence = drm_syncobj_fence_get(sync->syncobj);
+-			if (XE_IOCTL_DBG(xe, !sync->fence))
+-				return -EINVAL;
++			if (XE_IOCTL_DBG(xe, !sync->fence)) {
++				err = -EINVAL;
++				goto free_sync;
++			}
+ 		}
+ 		break;
+ 
+@@ -167,17 +169,21 @@ int xe_sync_entry_parse(struct xe_device
+ 
+ 		if (signal) {
+ 			sync->chain_fence = dma_fence_chain_alloc();
+-			if (!sync->chain_fence)
 -				return -ENOMEM;
-+			if (!sync->ufence_chain_fence) {
++			if (!sync->chain_fence) {
 +				err = -ENOMEM;
 +				goto free_sync;
 +			}
- 			sync->ufence_syncobj = ufence_syncobj;
+ 		} else {
+ 			sync->fence = drm_syncobj_fence_get(sync->syncobj);
+-			if (XE_IOCTL_DBG(xe, !sync->fence))
+-				return -EINVAL;
++			if (XE_IOCTL_DBG(xe, !sync->fence)) {
++				err = -EINVAL;
++				goto free_sync;
++			}
+ 
+ 			err = dma_fence_chain_find_seqno(&sync->fence,
+ 							 sync_in.timeline_value);
+ 			if (err)
+-				return err;
++				goto free_sync;
  		}
+ 		break;
+ 
+@@ -218,6 +224,10 @@ int xe_sync_entry_parse(struct xe_device
+ 	sync->timeline_value = sync_in.timeline_value;
+ 
+ 	return 0;
++
++free_sync:
++	xe_sync_entry_cleanup(sync);
++	return err;
+ }
+ ALLOW_ERROR_INJECTION(xe_sync_entry_parse, ERRNO);
  
 
 
