@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA2D2459DC;
-	Tue, 17 Mar 2026 17:17:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FBBD23D7E3;
+	Tue, 17 Mar 2026 17:17:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767836; cv=none; b=WSEFZqB8FzC9Zu4agr+oxGQAGT+pT9RDNjxoqywpyjtZ/4qbMGPWbx7ckwVV8B314s6FxhcAl1Qi4zAtW3YZz1TVVC7MzLZwKkdv5JD44pWxvEvnxL8cYgbhodHDal4491EcdzsWDvwll1DXWl6E5Pp7EsHoblInbf+1k9ZIWUo=
+	t=1773767841; cv=none; b=Fzj6Kh1NtoelPA98U+tpMYPH0wyF+AC4l1iZOktO9prDEALuzYbzbwc+D74TPW9iyr7ZRvCRgnWFNe1Z6S4c8NJrvqUwlUbASEgxz3X2xLaXD0lvVZXPKzokTy1EqMvzh/9XU7r57jEwApOOSoO2nxoes02wGr1MdphxdRM8yZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767836; c=relaxed/simple;
-	bh=/QdK10yHQAtvRHWXp8d8vi1vxAarop0UwwmBYqrnZYk=;
+	s=arc-20240116; t=1773767841; c=relaxed/simple;
+	bh=SlCixQV3dKJDrcSAkQ94bzdYhJCTkml7YskZDAsZk58=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XHO5QtDrJwCgUtBfcKEaSUcelceBfZR37xa3YlZzxnTGIx7Am/RFjEji/252nZkWqZvdv80SFDvg3jhtgafdV7L8I8wJTUt+jER7sFXtPsnGCKiT6idt7owEXjn/4UVJVBLaZdaxAaeoux0BZ56yl56N0DmdrZEpc6oYeJDny5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BkIZllyd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cmqSLDSCY3WUuTeXaHz6YENoPH9+JR8Ooyhn59fRsXOmkjbCoPVnJBgCDN+cqlnwqrVUwODvmdbOsJln0FnwojeC6pe71Kh0Hj99p5/OxMLqEkL/ifO3WCVk1W4LUQaxNpjRLEP9jHYEQ/W3XI16grHRIdG0iFdXgnkEP4umCnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bNKGtdBR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BkIZllyd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C0AFC4CEF7;
-	Tue, 17 Mar 2026 17:17:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bNKGtdBR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDF5C4CEF7;
+	Tue, 17 Mar 2026 17:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767836;
-	bh=/QdK10yHQAtvRHWXp8d8vi1vxAarop0UwwmBYqrnZYk=;
+	s=korg; t=1773767841;
+	bh=SlCixQV3dKJDrcSAkQ94bzdYhJCTkml7YskZDAsZk58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BkIZllydhdtzZvVsoMzz7uO6vJhb0WRbiz8+orLHumid3qaO6YBjUuTiVDTd6Jb0w
-	 c8xgId4OASk/W76PESwAPRtCIf6f3wzynByWOX9bj6lkHkHBTpOi+VcMUlApcmcjST
-	 A7PzMD9+hSGOrZ7g07nQNr8cajglpCNY9SQVuqm8=
+	b=bNKGtdBRYdOZ2MLPY0BcCmy7Ao60kd5F91fG8172meQtglnieQQzjqsw4lCQTsIHW
+	 G1JGVD7bNgOVyiwlhdhbYQ7mA1aPj2VZrzfKi9qEqZ7ddWz5Vww4BzKjDPHzf7uyTb
+	 Ag7NC2eN3XmoY0kAYhrQbaDdTDvaV6pLqnhJ0xLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>
-Subject: [PATCH 6.18 141/333] usb: class: cdc-wdm: fix reordering issue in read code path
-Date: Tue, 17 Mar 2026 17:32:50 +0100
-Message-ID: <20260317163004.590041118@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 168/333] libceph: Use u32 for non-negative values in ceph_monmap_decode()
+Date: Tue, 17 Mar 2026 17:33:17 +0100
+Message-ID: <20260317163005.590341800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,50 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 8df672bfe3ec2268c2636584202755898e547173 upstream.
+commit 770444611f047dbfd4517ec0bc1b179d40c2f346 upstream.
 
-Quoting the bug report:
+This patch fixes unnecessary implicit conversions that change signedness
+of blob_len and num_mon in ceph_monmap_decode().
+Currently blob_len and num_mon are (signed) int variables. They are used
+to hold values that are always non-negative and get assigned in
+ceph_decode_32_safe(), which is meant to assign u32 values. Both
+variables are subsequently used as unsigned values, and the value of
+num_mon is further assigned to monmap->num_mon, which is of type u32.
+Therefore, both variables should be of type u32. This is especially
+relevant for num_mon. If the value read from the incoming message is
+very large, it is interpreted as a negative value, and the check for
+num_mon > CEPH_MAX_MON does not catch it. This leads to the attempt to
+allocate a very large chunk of memory for monmap, which will most likely
+fail. In this case, an unnecessary attempt to allocate memory is
+performed, and -ENOMEM is returned instead of -EINVAL.
 
-Due to compiler optimization or CPU out-of-order execution, the
-desc->length update can be reordered before the memmove. If this
-happens, wdm_read() can see the new length and call copy_to_user() on
-uninitialized memory. This also violates LKMM data race rules [1].
-
-Fix it by using WRITE_ONCE and memory barriers.
-
-Fixes: afba937e540c9 ("USB: CDC WDM driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Closes: https://lore.kernel.org/linux-usb/CALbr=LbrUZn_cfp7CfR-7Z5wDTHF96qeuM=3fO2m-q4cDrnC4A@mail.gmail.com/
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260304130116.1721682-1-oneukum@suse.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ceph/mon_client.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -225,7 +225,8 @@ static void wdm_in_callback(struct urb *
- 		/* we may already be in overflow */
- 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
- 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
--			desc->length += length;
-+			smp_wmb(); /* against wdm_read() */
-+			WRITE_ONCE(desc->length, desc->length + length);
- 		}
+--- a/net/ceph/mon_client.c
++++ b/net/ceph/mon_client.c
+@@ -72,8 +72,8 @@ static struct ceph_monmap *ceph_monmap_d
+ 	struct ceph_monmap *monmap = NULL;
+ 	struct ceph_fsid fsid;
+ 	u32 struct_len;
+-	int blob_len;
+-	int num_mon;
++	u32 blob_len;
++	u32 num_mon;
+ 	u8 struct_v;
+ 	u32 epoch;
+ 	int ret;
+@@ -112,7 +112,7 @@ static struct ceph_monmap *ceph_monmap_d
  	}
- skip_error:
-@@ -533,6 +534,7 @@ static ssize_t wdm_read
- 		return -ERESTARTSYS;
+ 	ceph_decode_32_safe(p, end, num_mon, e_inval);
  
- 	cntr = READ_ONCE(desc->length);
-+	smp_rmb(); /* against wdm_in_callback() */
- 	if (cntr == 0) {
- 		desc->read = 0;
- retry:
+-	dout("%s fsid %pU epoch %u num_mon %d\n", __func__, &fsid, epoch,
++	dout("%s fsid %pU epoch %u num_mon %u\n", __func__, &fsid, epoch,
+ 	     num_mon);
+ 	if (num_mon > CEPH_MAX_MON)
+ 		goto e_inval;
 
 
