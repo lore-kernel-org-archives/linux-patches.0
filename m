@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89DA03164B5;
-	Tue, 17 Mar 2026 16:48:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02823F23DD;
+	Tue, 17 Mar 2026 16:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766083; cv=none; b=E/8FSusPJOhCh5ixWrGSp1op4FHs0d5/B6N3NZIy8AktbtAUDj5WkRjFDTaC8WO6+sj20JUiwf/Z+yN6JLsuAhAMX7L2ciK7QMzq0cZKf7NCtBExIW1JeV7LBDiEHkVYTbY807cKoKv7xTW1dtBpcSgQhx40bv7iP0Adsbh9Neg=
+	t=1773766087; cv=none; b=WDBUx2pDDzl+mxptiKSn5az4ACvjIA6ZmZPr6U8BfMWfaSSYVHQDmpDtUXhoDDZpxjYOoTW/e82T5245r/8toJV+XwJdEMwB18v0AlXlFuODoYvNVqMiKZQPk5PqnbJgjhSgd5pqaA4HbC2DvSD4k+x8sfpAh9vJS5x4hPr3eek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766083; c=relaxed/simple;
-	bh=I+k6qkVRnALZQNQeveh7k0lh7VpZDJTmAmFBcNa0t1I=;
+	s=arc-20240116; t=1773766087; c=relaxed/simple;
+	bh=Vpzd5vCZaO49Q75X4gu14LIWsXCxwlX5M/Ph5Uhr71A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=twACLhc6vFiA0UVU6QBJ/b2zRE8BC076vSYYhY/UZpafHhUZW9eVKWtJNYeanH0eowZ/0BCcHAqB7yfgQZJIBBxDEse48DB64wyhLiP+mI7S1GT8FeudeNuBcNJao7+NTazJxEfdOAZ0RzpngwQHh6IRuzPN9Q+Gi6Teg5j9ed0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GIkJWn+G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qP1Gsi5w791oOvwdG91OgwOGLxAMXDSd+pT/TeLIvwG5MEqW+SfohiGJZpoBup4TYGuQGz7X3udqtn1LjN4Az12VSWRyr/tWXHUMLYkaQeLGaYtnN8B1YkHGU5uCBr10K67guvBu4sUgi4D3iSYmlig5rSpUhDJS6ogyeUlvUPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnfJGzrR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GIkJWn+G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82443C19424;
-	Tue, 17 Mar 2026 16:48:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnfJGzrR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B75C4CEF7;
+	Tue, 17 Mar 2026 16:48:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766083;
-	bh=I+k6qkVRnALZQNQeveh7k0lh7VpZDJTmAmFBcNa0t1I=;
+	s=korg; t=1773766087;
+	bh=Vpzd5vCZaO49Q75X4gu14LIWsXCxwlX5M/Ph5Uhr71A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIkJWn+G/9O9MP+fVW46DdzTqLF6YeFHYs3sbgacQ3qfAf2yLJqFnxGIoQNqG+rD6
-	 YotA8t0S2JoCknChgpD7KCZEujxf90vfvoqqDeFbztRYebpU6UzdV893sSkSTvhCYU
-	 nOCa3RGLktIEV69zMOfgwGAtX4vpszMxQ5ezUuZI=
+	b=qnfJGzrRaXUxhh787I1uajbsvX6CTmhW5/dyD3fMylxw0M0qe7YRtB+8K4a61VsY4
+	 WPRWiN4dvYHcuaG6MA/SHbnfjZlLnejRTFwB+CJo9ABm+fXNjKCde+cGFh8lojVnDJ
+	 byhN0zBi3/yUdsAj0CYNz3hXA2ee0MnhKjrtsuf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pedro Falcato <pfalcato@suse.de>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Hannes Reinecke <hare@suse.de>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.19 133/378] ata: libata-core: Add BRIDGE_OK quirk for QEMU drives
-Date: Tue, 17 Mar 2026 17:31:30 +0100
-Message-ID: <20260317163011.907854564@linuxfoundation.org>
+	Zhang Heng <zhangheng@kylinos.cn>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.19 134/378] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK PM1503CDA
+Date: Tue, 17 Mar 2026 17:31:31 +0100
+Message-ID: <20260317163011.944714627@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,48 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pedro Falcato <pfalcato@suse.de>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-commit b92b0075ee1870f78f59ab1f7da7dbfdd718ad7a upstream.
+commit 325291b20f8a6f14b9c82edbf5d12e4e71f6adaa upstream.
 
-Currently, whenever you boot with a QEMU drive over an AHCI interface,
-you get:
-[    1.632121] ata1.00: applying bridge limits
+Add a DMI quirk for the ASUS EXPERTBOOK PM1503CDA fixing the
+issue where the internal microphone was not detected.
 
-This happens due to the kernel not believing the given drive is SATA,
-since word 93 of IDENTIFY (ATA_ID_HW_CONFIG) is non-zero. The result is
-a pretty severe limit in max_hw_sectors_kb, which limits our IO sizes.
-
-QEMU has set word 93 erroneously for SATA drives but does not, in any
-way, emulate any of these real hardware details. There is no PATA
-drive and no SATA cable.
-
-As such, add a BRIDGE_OK quirk for QEMU HARDDISK. Special care is taken
-to limit this quirk to "2.5+", to allow for fixed future versions.
-
-This results in the max_hw_sectors being limited solely by the
-controller interface's limits. Which, for AHCI controllers, takes it
-from 128KB to 32767KB.
-
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221070
 Cc: stable@vger.kernel.org
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260304063255.139331-1-zhangheng@kylinos.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4228,6 +4228,7 @@ static const struct ata_dev_quirks_entry
- 	/* Devices that do not need bridging limits applied */
- 	{ "MTRON MSP-SATA*",		NULL,	ATA_QUIRK_BRIDGE_OK },
- 	{ "BUFFALO HD-QSU2/R5",		NULL,	ATA_QUIRK_BRIDGE_OK },
-+	{ "QEMU HARDDISK",		"2.5+",	ATA_QUIRK_BRIDGE_OK },
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -710,6 +710,13 @@ static const struct dmi_system_id yc_acp
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK BM1503CDA"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
++		}
++	},
+ 	{}
+ };
  
- 	/* Devices which aren't very happy with higher link speeds */
- 	{ "WD My Book",			NULL,	ATA_QUIRK_1_5_GBPS },
 
 
