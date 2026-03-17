@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F98C375F99;
-	Tue, 17 Mar 2026 16:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B380D3E4C73;
+	Tue, 17 Mar 2026 16:38:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765499; cv=none; b=BQ34lWPs6BkLjKNoeBxjuBa3G2ocv/I/FKoH34sAV5Q9yiALA1yrqvpXVsGba/NcCc11UjCkiwRAP6ceNtno0MUPu1cHqPbuX9TMCc0KM1kGiwWJHNEAfVd2HnDyMyiIFFQgmcBAFtjUNkvOs3RT8NKC2xpNpjJYaFVCaB4aLTA=
+	t=1773765503; cv=none; b=XL3lHQp0Tk4erzx5neeQSUbaMo+wIS9L/NEcNkzOc9THM16pApDl83ZoDzMQdwkKq8+cPNY9S8U10fJfhb0CzPhIaJWJLp6WK92Bve2+xx+RPjjOtFwWZakO+idbkondwppq5fPh0yVHYBN4ET4A19PzR3loLV/KfQAa0vZ+1x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765499; c=relaxed/simple;
-	bh=2ydWS2XYajKGGY4Q+Q0fmaEgU3DwFdaY8vozBWsP3r4=;
+	s=arc-20240116; t=1773765503; c=relaxed/simple;
+	bh=fzXbBKusYW/jXS8x2Uf2CNRmUTFjnoT1RBNckf22hQk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kaLzMVy3XfL+VxHPhGshAgx3sYHMvzQli8R39voWeZSMNrPqQn0/rNOn2Y9bHQpvCyIVS4fdWT8/xAn10zAbdUK6WMh4i9bRYb1xyVU9DT86XPF6AxWwWBLou/3aDjsaLUXBxAi657gZInZJnIpu7DjPI22HUw0Wp31ynPZOXE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AULqwQR1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o6p0KE6Uy2MnEYVpm+ypGEhsTaH9BGkrpbr3cV5vMeBpXCUEyMR03N+PnxIty5xi2tayTyq7nrtYhyZLJQ32li8HSZ1d0hqKJ/Z1t6hNv5nTkIgG46MP3qmK6Ka9AoKfyjceDFJNfXqLvf8lojQE0uJR4oJCHjUZJ78iW9wPru0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d0RAru41; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AULqwQR1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F1FAC4CEF7;
-	Tue, 17 Mar 2026 16:38:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d0RAru41"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4CF8C4CEF7;
+	Tue, 17 Mar 2026 16:38:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765498;
-	bh=2ydWS2XYajKGGY4Q+Q0fmaEgU3DwFdaY8vozBWsP3r4=;
+	s=korg; t=1773765503;
+	bh=fzXbBKusYW/jXS8x2Uf2CNRmUTFjnoT1RBNckf22hQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AULqwQR1pw7/bI7dba3bcBXoK+RCH/d/Ow5v8bnDlak+9YAF87Y2EgQtTmnxTnqcg
-	 1GD/oQCo2vepBd0P5Z2MK0LOsTtdA5qk8dbjRrHUEkKF685OnlCKu4pqFQXjL/li5V
-	 3LyNSRA5J5bl/FERKhInH1qFwD6v6FEkc8NezAs8=
+	b=d0RAru41MN1AJTXugt3rjUhaau7/VY3GvcysHOPQhoTNXOo9jKjaOiKGeJo0KR+v6
+	 cldD7aOaun5wm1fi3DbYcu8beteUqmcrXsRtylKQzVriUXF15qMaCRsfIWDZ1rf84O
+	 q38EvRjSsybYRng4uoxuExer7VCbmBXs4T17eHEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hari Bathini <hbathini@linux.ibm.com>,
-	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Chris Lew <christopher.lew@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 004/378] powerpc/crash: adjust the elfcorehdr size
-Date: Tue, 17 Mar 2026 17:29:21 +0100
-Message-ID: <20260317163007.130315221@linuxfoundation.org>
+Subject: [PATCH 6.19 005/378] remoteproc: sysmon: Correct subsys_name_len type in QMI request
+Date: Tue, 17 Mar 2026 17:29:22 +0100
+Message-ID: <20260317163007.166669647@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,65 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 04e707cb77c272cb0bb2e2e3c5c7f844d804a089 ]
+[ Upstream commit da994db94e60f9a9411108ddf4d1836147ad4c9c ]
 
-With crash hotplug support enabled, additional memory is allocated to
-the elfcorehdr kexec segment to accommodate resources added during
-memory hotplug events. However, the kdump FDT is not updated with the
-same size, which can result in elfcorehdr corruption in the kdump
-kernel.
+The QMI message encoder has up until recently read a single byte (as
+elem_size == 1), but with the introduction of big endian support it's
+become apparent that this field is expected to be a full u32 -
+regardless of the size of the length in the encoded message (which is
+what elem_size specifies).
 
-Update elf_headers_sz (the kimage member representing the size of the
-elfcorehdr kexec segment) to reflect the total memory allocated for the
-elfcorehdr segment instead of the elfcorehdr buffer size at the time of
-kdump load. This allows of_kexec_alloc_and_setup_fdt() to reserve the
-full elfcorehdr memory in the kdump FDT and prevents elfcorehdr
-corruption.
+The result is that the encoder now reads past the length byte and
+rejects the unreasonably large length formed when including the
+following 3 bytes from the subsys_name array.
 
-Fixes: 849599b702ef8 ("powerpc/crash: add crash memory hotplug support")
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260227171801.2238847-1-sourabhjain@linux.ibm.com
+Fix this by changing to the expected type.
+
+Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Chris Lew <christopher.lew@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/file_load_64.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_sysmon.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
-index e7ef8b2a25546..5f6d50e4c3d45 100644
---- a/arch/powerpc/kexec/file_load_64.c
-+++ b/arch/powerpc/kexec/file_load_64.c
-@@ -450,6 +450,11 @@ static int load_elfcorehdr_segment(struct kimage *image, struct kexec_buf *kbuf)
- 	kbuf->buffer = headers;
- 	kbuf->mem = KEXEC_BUF_MEM_UNKNOWN;
- 	kbuf->bufsz = headers_sz;
-+
-+	/*
-+	 * Account for extra space required to accommodate additional memory
-+	 * ranges in elfcorehdr due to memory hotplug events.
-+	 */
- 	kbuf->memsz = headers_sz + kdump_extra_elfcorehdr_size(cmem);
- 	kbuf->top_down = false;
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index 660ac6fc40821..c6cc6e519fe56 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -203,7 +203,7 @@ static const struct qmi_elem_info ssctl_shutdown_resp_ei[] = {
+ };
  
-@@ -460,7 +465,14 @@ static int load_elfcorehdr_segment(struct kimage *image, struct kexec_buf *kbuf)
- 	}
- 
- 	image->elf_load_addr = kbuf->mem;
--	image->elf_headers_sz = headers_sz;
-+
-+	/*
-+	 * If CONFIG_CRASH_HOTPLUG is enabled, the elfcorehdr kexec segment
-+	 * memsz can be larger than bufsz. Always initialize elf_headers_sz
-+	 * with memsz. This ensures the correct size is reserved for elfcorehdr
-+	 * memory in the FDT prepared for kdump.
-+	 */
-+	image->elf_headers_sz = kbuf->memsz;
- 	image->elf_headers = headers;
- out:
- 	kfree(cmem);
+ struct ssctl_subsys_event_req {
+-	u8 subsys_name_len;
++	u32 subsys_name_len;
+ 	char subsys_name[SSCTL_SUBSYS_NAME_LENGTH];
+ 	u32 event;
+ 	u8 evt_driven_valid;
 -- 
 2.51.0
 
