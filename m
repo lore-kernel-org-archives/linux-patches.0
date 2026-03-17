@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDD93EDADD;
-	Tue, 17 Mar 2026 16:49:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D9DB2E62B7;
+	Tue, 17 Mar 2026 16:50:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766198; cv=none; b=djlANrhc2NIm9uMsvjfefiu+SCx2duAlXPP8HvEuGgEXDPvx/lcBZRrUjHr4P3WmjFrmDxlXKTeBtwOVogSRvlh9QJfdJ3/U1Th/37fK44r3geoDpwyYA/M1DvOCs8GbBEXbuwhEeNVn0w2MUGVDKWqqYcId3if+opK8xqV4ZUc=
+	t=1773766203; cv=none; b=Ba0RX9iei96ewEm2wYL8wC3pv58RGjStZusLON2aWf5CqF7EF5Opdphpg2nilIF4Fp+DR6nFzmHx8K/U2WG9AsRuFKYK8OBdfHTihnz7VK8cp3IdoS7fJ7ysZjz/nWjXDM/QxuHmksQ/IwtRPLZtMBq3eH99goBh5LOGR2+KXLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766198; c=relaxed/simple;
-	bh=T4AjEnrJtTrwp+MNyBuXre9XF1YEGbibWqLFJRELy4A=;
+	s=arc-20240116; t=1773766203; c=relaxed/simple;
+	bh=/o240w/Gg2XkCQX7I1IH+ff9ScN9/g6wm6cDCSjE+no=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MBAwb6KIPc1EW9z0M5qibC9f0n9bYMjk1e+NGqqME/NW4ZrKl9aeZQxivYA7wvYBJn4j4rOHkCnHrHt8mVAwzJQfnJAjgh/y9DIJK5pnJqoyVt3YsNeV6nsNPMi2BKSOBLEplHABUb+5APxs5tXwj93Di+oY+pqcc6EsdOHb6TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiyac0UG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RKs4m4XAy+FloHoo4zPt/FxxUVj22O/JwZkJTVr0U8imMCmssfDP+aGKLWk65CE8rVHX0RXebUr9iCCgUfQ3IpxHRqebEhVk/FjwGjJgdqaBcMluA2PagkvM03HntMctbYGmMbUsWaI/U1Fjw8ioIgGIQmD2cOMVgb/GZe+rkGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0DxUEF3J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiyac0UG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 371CAC4CEF7;
-	Tue, 17 Mar 2026 16:49:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0DxUEF3J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F16F9C4CEF7;
+	Tue, 17 Mar 2026 16:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766198;
-	bh=T4AjEnrJtTrwp+MNyBuXre9XF1YEGbibWqLFJRELy4A=;
+	s=korg; t=1773766203;
+	bh=/o240w/Gg2XkCQX7I1IH+ff9ScN9/g6wm6cDCSjE+no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hiyac0UGIDEcK+8THDk1/vlxfHO35vvMCFPRAj6qoIxXVM2YmPbt9s4Ea04WabufO
-	 FgnDxqVIozt9IBDF0rcdiuf1EHyJHismSTeRKlIGzkLBnO8u7WkCchetR9/ZiyQqU1
-	 bu35hwjBBAcZ/iqDOuoDDBLEwK8zKQPQ04QfHwEQ=
+	b=0DxUEF3J14rMArMsimhIkqd8PlzgbT8BbiHRb4pm1af3jneR/pGOVSEfGGcyzNyYt
+	 jMWkwpOZXllg06lqaYkaN1doF2tjhSLRMxRMmDd58/aBqEqFl0ebwphY8CQmHTnHp4
+	 +n8arlrqfC/O1NTnlbL4zDuU23BWxSqxV34RrY/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@iokpp.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Wang Shuaiwei <wangshuaiwei1@xiaomi.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 191/378] scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend
-Date: Tue, 17 Mar 2026 17:32:28 +0100
-Message-ID: <20260317163014.033428964@linuxfoundation.org>
+	stable@kernel.org,
+	Kuen-Han Tsai <khtsai@google.com>
+Subject: [PATCH 6.19 165/378] usb: gadget: f_ncm: Fix atomic context locking issue
+Date: Tue, 17 Mar 2026 17:32:02 +0100
+Message-ID: <20260317163013.081156128@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,85 +50,153 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit b0bd84c39289ef6a6c3827dd52c875659291970a ]
+commit 0d6c8144ca4d93253de952a5ea0028c19ed7ab68 upstream.
 
-In __ufshcd_wl_suspend(), cancel_delayed_work_sync() is called to cancel
-the UFS RTC work, but it is placed after ufshcd_vops_suspend(hba, pm_op,
-POST_CHANGE). This creates a race condition where ufshcd_rtc_work() can
-still be running while ufshcd_vops_suspend() is executing. When
-UFSHCD_CAP_CLK_GATING is not supported, the condition
-!hba->clk_gating.active_reqs is always true, causing ufshcd_update_rtc()
-to be executed. Since ufshcd_vops_suspend() typically performs clock
-gating operations, executing ufshcd_update_rtc() at that moment triggers
-an SError. The kernel panic trace is as follows:
+The ncm_set_alt function was holding a mutex to protect against races
+with configfs, which invokes the might-sleep function inside an atomic
+context.
 
-Kernel panic - not syncing: Asynchronous SError Interrupt
-Call trace:
- dump_backtrace+0xec/0x128
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0xa0
- dump_stack+0x18/0x24
- panic+0x148/0x374
- nmi_panic+0x3c/0x8c
- arm64_serror_panic+0x64/0x8c
- do_serror+0xc4/0xc8
- el1h_64_error_handler+0x34/0x4c
- el1h_64_error+0x68/0x6c
- el1_interrupt+0x20/0x58
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x68/0x6c
- ktime_get+0xc4/0x12c
- ufshcd_mcq_sq_stop+0x4c/0xec
- ufshcd_mcq_sq_cleanup+0x64/0x1dc
- ufshcd_clear_cmd+0x38/0x134
- ufshcd_issue_dev_cmd+0x298/0x4d0
- ufshcd_exec_dev_cmd+0x1a4/0x1c4
- ufshcd_query_attr+0xbc/0x19c
- ufshcd_rtc_work+0x10c/0x1c8
- process_scheduled_works+0x1c4/0x45c
- worker_thread+0x32c/0x3e8
- kthread+0x120/0x1d8
- ret_from_fork+0x10/0x20
+Remove the struct net_device pointer from the f_ncm_opts structure to
+eliminate the contention. The connection state is now managed by a new
+boolean flag to preserve the use-after-free fix from
+commit 6334b8e4553c ("usb: gadget: f_ncm: Fix UAF ncm object at re-bind
+after usb ep transport error").
 
-Fix this by moving cancel_delayed_work_sync() before the call to
-ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE), ensuring the UFS RTC work is
-fully completed or cancelled at that point.
+BUG: sleeping function called from invalid context
+Call Trace:
+ dump_stack_lvl+0x83/0xc0
+ dump_stack+0x14/0x16
+ __might_resched+0x389/0x4c0
+ __might_sleep+0x8e/0x100
+ ...
+ __mutex_lock+0x6f/0x1740
+ ...
+ ncm_set_alt+0x209/0xa40
+ set_config+0x6b6/0xb40
+ composite_setup+0x734/0x2b40
+ ...
 
-Cc: Bean Huo <beanhuo@iokpp.de>
-Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
-Link: https://patch.msgid.link/20260307035128.3419687-1-wangshuaiwei1@xiaomi.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 56a512a9b410 ("usb: gadget: f_ncm: align net_device lifecycle with bind/unbind")
+Cc: stable@kernel.org
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260221-legacy-ncm-v2-2-dfb891d76507@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_ncm.c            |   29 ++++++++++---------------
+ drivers/usb/gadget/function/u_ether_configfs.h |   11 ---------
+ drivers/usb/gadget/function/u_ncm.h            |    1 
+ 3 files changed, 13 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 2048ebc86590e..5038b8428fc30 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -10061,6 +10061,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	}
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -58,6 +58,7 @@ struct f_ncm {
+ 	u8				notify_state;
+ 	atomic_t			notify_count;
+ 	bool				is_open;
++	bool				is_connected;
  
- 	flush_work(&hba->eeh_work);
-+	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+ 	const struct ndp_parser_opts	*parser_opts;
+ 	bool				is_crc;
+@@ -864,7 +865,6 @@ invalid:
+ static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
+ {
+ 	struct f_ncm		*ncm = func_to_ncm(f);
+-	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
+ 	struct usb_composite_dev *cdev = f->config->cdev;
  
- 	ret = ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE);
- 	if (ret)
-@@ -10115,7 +10116,6 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	if (ret)
- 		goto set_link_active;
+ 	/* Control interface has only altsetting 0 */
+@@ -887,13 +887,12 @@ static int ncm_set_alt(struct usb_functi
+ 		if (alt > 1)
+ 			goto fail;
  
--	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 	goto out;
+-		scoped_guard(mutex, &opts->lock)
+-			if (opts->net) {
+-				DBG(cdev, "reset ncm\n");
+-				opts->net = NULL;
+-				gether_disconnect(&ncm->port);
+-				ncm_reset_values(ncm);
+-			}
++		if (ncm->is_connected) {
++			DBG(cdev, "reset ncm\n");
++			ncm->is_connected = false;
++			gether_disconnect(&ncm->port);
++			ncm_reset_values(ncm);
++		}
  
- set_link_active:
--- 
-2.51.0
-
+ 		/*
+ 		 * CDC Network only sends data in non-default altsettings.
+@@ -926,8 +925,7 @@ static int ncm_set_alt(struct usb_functi
+ 			net = gether_connect(&ncm->port);
+ 			if (IS_ERR(net))
+ 				return PTR_ERR(net);
+-			scoped_guard(mutex, &opts->lock)
+-				opts->net = net;
++			ncm->is_connected = true;
+ 		}
+ 
+ 		spin_lock(&ncm->lock);
+@@ -1374,16 +1372,14 @@ err:
+ static void ncm_disable(struct usb_function *f)
+ {
+ 	struct f_ncm		*ncm = func_to_ncm(f);
+-	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
+ 	struct usb_composite_dev *cdev = f->config->cdev;
+ 
+ 	DBG(cdev, "ncm deactivated\n");
+ 
+-	scoped_guard(mutex, &opts->lock)
+-		if (opts->net) {
+-			opts->net = NULL;
+-			gether_disconnect(&ncm->port);
+-		}
++	if (ncm->is_connected) {
++		ncm->is_connected = false;
++		gether_disconnect(&ncm->port);
++	}
+ 
+ 	if (ncm->notify->enabled) {
+ 		usb_ep_disable(ncm->notify);
+@@ -1687,7 +1683,6 @@ static struct usb_function_instance *ncm
+ 	if (!opts)
+ 		return ERR_PTR(-ENOMEM);
+ 
+-	opts->net = NULL;
+ 	opts->ncm_os_desc.ext_compat_id = opts->ncm_ext_compat_id;
+ 	gether_setup_opts_default(&opts->net_opts, "usb");
+ 
+--- a/drivers/usb/gadget/function/u_ether_configfs.h
++++ b/drivers/usb/gadget/function/u_ether_configfs.h
+@@ -326,18 +326,9 @@ out:									\
+ 					      char *page)			\
+ 	{									\
+ 		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
+-		const char *name;						\
+ 										\
+ 		guard(mutex)(&opts->lock);					\
+-		rtnl_lock();							\
+-		if (opts->net_opts.ifname_set)					\
+-			name = opts->net_opts.name;				\
+-		else if (opts->net)						\
+-			name = netdev_name(opts->net);				\
+-		else								\
+-			name = "(inactive net_device)";				\
+-		rtnl_unlock();							\
+-		return sysfs_emit(page, "%s\n", name);				\
++		return sysfs_emit(page, "%s\n", opts->net_opts.name);		\
+ 	}									\
+ 										\
+ 	static ssize_t _f_##_opts_ifname_store(struct config_item *item,	\
+--- a/drivers/usb/gadget/function/u_ncm.h
++++ b/drivers/usb/gadget/function/u_ncm.h
+@@ -19,7 +19,6 @@
+ 
+ struct f_ncm_opts {
+ 	struct usb_function_instance	func_inst;
+-	struct net_device		*net;
+ 
+ 	struct gether_opts		net_opts;
+ 	struct config_group		*ncm_interf_group;
 
 
