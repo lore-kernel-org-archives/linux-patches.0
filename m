@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2904B3176FD;
-	Tue, 17 Mar 2026 17:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9158337C11D;
+	Tue, 17 Mar 2026 17:22:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768136; cv=none; b=f+dbxR0L2hL34e2Auuuqg62BpUiIgL/TbGAMD3BNjm664d68gK1MGF6bs2zhYtBKfBfZRk0NeDP9cmjTmN7CJ96CfMij0doV8csvT07f8JuBdPhpZ94aw2TOw8bzwNjJDW4AYK1FTREzqx90sQl+kGZAZ/CMgB1tIER2PLBgwX8=
+	t=1773768140; cv=none; b=l5Ezf3duDuoJN6y+8uyrD99CrsK8ZOUQObDUqEEkRSoHAGGrCCazgbBppr2U0O61/dvOOAgLsUET5Mp1Oyqq5FRCB+XxHoAg3i01f+WZgfjyIlGYKmbXijcXzLq1mN/CJSR4Y5OPSLpP2XjUx643jmgT7BnHWorjnwVXsgk2QD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768136; c=relaxed/simple;
-	bh=zV+WFLKu6nlgo0ZW9kkRZC597CK4NoZZQ4Mjl5edDuk=;
+	s=arc-20240116; t=1773768140; c=relaxed/simple;
+	bh=8qWclVZpTqo9GIdhjVZ/aMrV/wahafjJENOEKTQiT0w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kE7p4MNqZUN3qs4CVs6kVFBI1/Ktfl8oxN2xYBytKTrIJOtah7nVCs/lWJvMH7vHJOAqk8MM9vxynBC1MvVMQn6F9lRiED5uZ4Afl+ixMqVhp6J2fiQQQMDaMkSdq2BONA4uPWil00VthRwQg/GsvrWSMINyoSgZE8xeSCkJvag=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lm4i/UX2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P7KAJuEqPWXreuj56XXrswqBOERy/q44XjTNvQwwt440P4c91KIAuaeWA+B5mWvtnwb3EMkvuSVM137Jl/29Dun6oVGiRlPyoWNT7AfEPswbl/WpQQXXBWP2tWxMhSaUXBzYzm12UQoirPJntbhhY3kyKZs2kBshH2s00dTlrm4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KS0+ZbEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lm4i/UX2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3D4C19424;
-	Tue, 17 Mar 2026 17:22:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KS0+ZbEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B365EC2BCB0;
+	Tue, 17 Mar 2026 17:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768136;
-	bh=zV+WFLKu6nlgo0ZW9kkRZC597CK4NoZZQ4Mjl5edDuk=;
+	s=korg; t=1773768140;
+	bh=8qWclVZpTqo9GIdhjVZ/aMrV/wahafjJENOEKTQiT0w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lm4i/UX2SP88Rn7TxHjp4tZlK2YCgydVEiJU4yk+LseMt/phSS+REtCMHZG7ildoT
-	 kg0754nZSkcx1ux5Ck1fSiUuEyGYJKRq194+JJ/Ci6I29S3ZNV7jF/ppkr4dXvzeZY
-	 fmnRCg16BrwMg0FgAkc3gyp7DS9c/MbUrTDiMOZ4=
+	b=KS0+ZbEWACC3a5XezbegECtaO6X9JhBcqba3Btckpu+j7V8dcqHYi5xC1SjfB0su6
+	 6FYMARAHGl+EZuvArCFJBj4XAHgHUEbUDdAnFsH29kqJ5+c6JB3vDVd4gHwqxQmTiJ
+	 D4oQkuH5UXNExPDGYaIr/73IK9DTsBlMMb03U9go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Navaneeth K <knavaneeth786@gmail.com>
-Subject: [PATCH 6.18 211/333] staging: rtl8723bs: properly validate the data in rtw_get_ie_ex()
-Date: Tue, 17 Mar 2026 17:34:00 +0100
-Message-ID: <20260317163007.189076701@linuxfoundation.org>
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Dillon Varone <Dillon.Varone@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.18 238/333] drm/amd/display: Fallback to boot snapshot for dispclk
+Date: Tue, 17 Mar 2026 17:34:27 +0100
+Message-ID: <20260317163008.190032337@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,56 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Dillon Varone <Dillon.Varone@amd.com>
 
-commit f0109b9d3e1e455429279d602f6276e34689750a upstream.
+commit 30d937f63bd19bbcaafa4b892eb251f8bbbf04ef upstream.
 
-Just like in commit 154828bf9559 ("staging: rtl8723bs: fix out-of-bounds
-read in rtw_get_ie() parser"), we don't trust the data in the frame so
-we should check the length better before acting on it
+[WHY & HOW]
+If the dentist is unavailable, fallback to reading CLKIP via the boot
+snapshot to get the current dispclk.
 
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Tested-by: Navaneeth K <knavaneeth786@gmail.com>
-Reviewed-by: Navaneeth K <knavaneeth786@gmail.com>
-Link: https://patch.msgid.link/2026022336-arrange-footwork-6e54@gregkh
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2ab77600d1e55a042c02437326d3c7563e853c6c)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -187,20 +187,25 @@ u8 *rtw_get_ie_ex(u8 *in_ie, uint in_len
- 
- 	cnt = 0;
- 
--	while (cnt < in_len) {
-+	while (cnt + 2 <= in_len) {
-+		u8 ie_len = in_ie[cnt + 1];
-+
-+		if (cnt + 2 + ie_len > in_len)
-+			break;
-+
- 		if (eid == in_ie[cnt]
--			&& (!oui || !memcmp(&in_ie[cnt+2], oui, oui_len))) {
-+			&& (!oui || (ie_len >= oui_len && !memcmp(&in_ie[cnt + 2], oui, oui_len)))) {
- 			target_ie = &in_ie[cnt];
- 
- 			if (ie)
--				memcpy(ie, &in_ie[cnt], in_ie[cnt+1]+2);
-+				memcpy(ie, &in_ie[cnt], ie_len + 2);
- 
- 			if (ielen)
--				*ielen = in_ie[cnt+1]+2;
-+				*ielen = ie_len + 2;
- 
- 			break;
- 		}
--		cnt += in_ie[cnt+1]+2; /* goto next */
-+		cnt += ie_len + 2; /* goto next */
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -68,7 +68,11 @@ void dcn401_initialize_min_clocks(struct
+ 		 * audio corruption. Read current DISPCLK from DENTIST and request the same
+ 		 * freq to ensure that the timing is valid and unchanged.
+ 		 */
+-		clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
++		if (dc->clk_mgr->funcs->get_dispclk_from_dentist) {
++			clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
++		} else {
++			clocks->dispclk_khz = dc->clk_mgr->boot_snapshot.dispclk * 1000;
++		}
  	}
- 
- 	return target_ie;
+ 	clocks->ref_dtbclk_khz = dc->clk_mgr->bw_params->clk_table.entries[0].dtbclk_mhz * 1000;
+ 	clocks->fclk_p_state_change_support = true;
 
 
