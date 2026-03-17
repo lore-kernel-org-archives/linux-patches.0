@@ -1,47 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D8E3EDADF;
-	Tue, 17 Mar 2026 16:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 659FC3EDADB;
+	Tue, 17 Mar 2026 16:42:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765742; cv=none; b=YRrjFrr17TbR4Q+ciSf284Ap9Jo/K09PT6X4av8+wdqVzbbbUqET+cSGk/NTB6qxiOLFutTvwlCHzOGxOsfZzkzSHhQqv5ghnpvYNMus+04bYtLPCkJTUFNHWosPqJEknvQnAnrdA+Y5YKHYJBYs33uWwCx6VbSOhno6MqGvSac=
+	t=1773765746; cv=none; b=t7GbTKwKAH9KxiPWiFZXFQztA/FxwdQjiv49VWmT2o1muaX1VZ9j7DLjOxgJUyAJ3yMHeIrGgAzpldeA0jCIEvDkod3RkbE2EsqPsHz38njbwjBenqEfN+ipTj+xVqGIJh+EoDKakIMIDCje4KCkadclMr/+3bjkY/cjZZ13wTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765742; c=relaxed/simple;
-	bh=6yVLH/tX8QFR7alH7W7pnJTGc206Udk892KQTLwvQkg=;
+	s=arc-20240116; t=1773765746; c=relaxed/simple;
+	bh=9izNEn4/BweWIdsvM25m9BFUBohTdFcaArcB1QDu9Vg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfKBxd7sPjhgyL1elRcz6a/BrNS9jsYO9cGFMqnN9XgQBP4wkJD8WF1P9xG3wVohXQdgacft/TR8OkKN3JRHxdIZiBOGi1bBswV0xHUB167ciD4cyLl7m3HU/ejSzUl7UhDDkRG/CpQq9NaS/Nlu4Vx2zuNlAKAJQLDgSoTe/+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0Dflu3o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bi+j7zsVWWzox3QvydbWPP08fhpH037/vfn31Nqqqm76ZuN1oXmV5mGXp4M+usJw5XWaSHhXh5JZlqR/1exnDrlIlfYKJrR8KeBr+uiToeBLkyEukP+wL9GisKtGhGW0iOAbgPCp0y2sAKMygtsN3WT7uHfF/TU3lXl8YM8Npag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OTKiisfi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0Dflu3o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85317C4CEF7;
-	Tue, 17 Mar 2026 16:42:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OTKiisfi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DDC4CEF7;
+	Tue, 17 Mar 2026 16:42:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765741;
-	bh=6yVLH/tX8QFR7alH7W7pnJTGc206Udk892KQTLwvQkg=;
+	s=korg; t=1773765746;
+	bh=9izNEn4/BweWIdsvM25m9BFUBohTdFcaArcB1QDu9Vg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0Dflu3oZBGgoGVjfOV+gWwsb36mMVL2QcTRXZGoQQi2d4gYlDpkcNCX2HNP6hXmL
-	 ptgaAhVQsoDssN04afsIENxmvSnLJVeY2GpITN7mOJMh+bKpBvCHtiU/jcDgPvblJs
-	 qO8H7VLO/1ac/3cTuwqppqORPvp6YKmzPMi2KoMI=
+	b=OTKiisfiIJVpJVH4AIPOZrEfli7wqq04WBnr/KYBVQq8FmzF6isHZlYuBu4AAzRHv
+	 XVNMTDSWd7ifiiFZJBhIuUPGL71EEFVKIxZgMNWW69czae3AZHQdqxjXOVsa/Haml0
+	 dViGW2EbNqvWKZ3jCwyZVK1e0ABIvyO7cjCZvq5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 084/378] perf ftrace: Fix hashmap__new() error checking
-Date: Tue, 17 Mar 2026 17:30:41 +0100
-Message-ID: <20260317163010.106323385@linuxfoundation.org>
+Subject: [PATCH 6.19 085/378] sched: idle: Make skipping governor callbacks more consistent
+Date: Tue, 17 Mar 2026 17:30:42 +0100
+Message-ID: <20260317163010.142868871@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -60,60 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit be34705aa527872e5ce83927b7bc9307ba8095ca ]
+[ Upstream commit d557640e4ce589a24dca5ca7ce3b9680f471325f ]
 
-The hashmap__new() function never returns NULL, it returns error
-pointers. Fix the error checking to match.
+If the cpuidle governor .select() callback is skipped because there
+is only one idle state in the cpuidle driver, the .reflect() callback
+should be skipped as well, at least for consistency (if not for
+correctness), so do it.
 
-Additionally, set ftrace->profile_hash to NULL on error, and return the
-exact error code from hashmap__new().
-
-Fixes: 0f223813edd051a5 ("perf ftrace: Add 'profile' command")
-Suggested-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: e5c9ffc6ae1b ("cpuidle: Skip governor when only one idle state is available")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://patch.msgid.link/12857700.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-ftrace.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/cpuidle/cpuidle.c | 10 ----------
+ kernel/sched/idle.c       | 11 ++++++++++-
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
-index 6b6eec65f93f5..4cc33452d79b6 100644
---- a/tools/perf/builtin-ftrace.c
-+++ b/tools/perf/builtin-ftrace.c
-@@ -18,6 +18,7 @@
- #include <poll.h>
- #include <ctype.h>
- #include <linux/capability.h>
-+#include <linux/err.h>
- #include <linux/string.h>
- #include <sys/stat.h>
- 
-@@ -1209,8 +1210,12 @@ static int prepare_func_profile(struct perf_ftrace *ftrace)
- 	ftrace->graph_verbose = 0;
- 
- 	ftrace->profile_hash = hashmap__new(profile_hash, profile_equal, NULL);
--	if (ftrace->profile_hash == NULL)
--		return -ENOMEM;
-+	if (IS_ERR(ftrace->profile_hash)) {
-+		int err = PTR_ERR(ftrace->profile_hash);
-+
-+		ftrace->profile_hash = NULL;
-+		return err;
-+	}
- 
- 	return 0;
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 65fbb8e807b97..c7876e9e024f9 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -359,16 +359,6 @@ noinstr int cpuidle_enter_state(struct cpuidle_device *dev,
+ int cpuidle_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		   bool *stop_tick)
+ {
+-	/*
+-	 * If there is only a single idle state (or none), there is nothing
+-	 * meaningful for the governor to choose. Skip the governor and
+-	 * always use state 0 with the tick running.
+-	 */
+-	if (drv->state_count <= 1) {
+-		*stop_tick = false;
+-		return 0;
+-	}
+-
+ 	return cpuidle_curr_governor->select(drv, dev, stop_tick);
  }
+ 
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index abf8f15d60c9e..69c70d509e1cf 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -221,7 +221,7 @@ static void cpuidle_idle_call(void)
+ 
+ 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
+ 		call_cpuidle(drv, dev, next_state);
+-	} else {
++	} else if (drv->state_count > 1) {
+ 		bool stop_tick = true;
+ 
+ 		/*
+@@ -239,6 +239,15 @@ static void cpuidle_idle_call(void)
+ 		 * Give the governor an opportunity to reflect on the outcome
+ 		 */
+ 		cpuidle_reflect(dev, entered_state);
++	} else {
++		tick_nohz_idle_retain_tick();
++
++		/*
++		 * If there is only a single idle state (or none), there is
++		 * nothing meaningful for the governor to choose.  Skip the
++		 * governor and always use state 0.
++		 */
++		call_cpuidle(drv, dev, 0);
+ 	}
+ 
+ exit_idle:
 -- 
 2.51.0
 
