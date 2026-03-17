@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5890B357A4A;
-	Tue, 17 Mar 2026 16:50:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFCD2E62B7;
+	Tue, 17 Mar 2026 16:50:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766253; cv=none; b=RYwNDveuDxsmTfz5G2h7RHIYvNJw3/L/UustjPFFHVB1ZFUdNDyDg228O/pX4zI6KRG5cWkSyA9QELLPJUoshrZFpytV+4l+DU5+I42k2xQqwkX/PVYEoVdG9uVkV8ZpLrEY76jXxXO971lNSUd5EcADfX4VcimrJ8Jbp+KrXgs=
+	t=1773766257; cv=none; b=aGe47HF6HuDrg/OTFloz9pr9SS66iIRv8qwv+lX0Kkb2UbktZ6z5HB8xQ2+QAqLr2xC2LpUXbeBWUe7bIFaDrmFDzVqZBy7jy7Gxt2DsylSOpQiks9eXVf3ebj6JkRXrLUKFPK6N2tY2At76tLcvBUs2EdYv5q37rB/xCX5Clco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766253; c=relaxed/simple;
-	bh=DRDF78o9YL3rPqeGqKXoKUiOcxg6UKjtciUtYJPpjOs=;
+	s=arc-20240116; t=1773766257; c=relaxed/simple;
+	bh=WrRG++S6pZBImlQ6p1gmqlusHvf4YMWAKgaRfFC6qHk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bbSoe+Bx5rXQI58YW26xIwIdo8I+0FYC+eoVKAMa5QwEZKzquXvmS0C0WBwPcsyM2NkutoE3juBW7ShlU949IYGTiDhK+mBRdN19W+0D8UvPedCddTPK5XyyWjs2aBsOa1eXXJyAD76wAK0/9WB0xsKzh7eTRcbtd0MIYXlXRBU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QFb+piwK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qxuwPYTxRht/f/rCsdKZ4DNwZ8Np7gSquHq7t3IrGpO1zdf/pJeiQpI5huMcsW421dOuKMWBF+exVbXWnycQrCKeC8Npt7xgDhluRvvUbJb9cfa58+3CaUf3vKWkgRKlDTnCaYPviHonUV8esGQJqmPkpN4X+79kd/oYt9Y7ygk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JUcp8k8L; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QFb+piwK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC31FC4CEF7;
-	Tue, 17 Mar 2026 16:50:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JUcp8k8L"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C724C4CEF7;
+	Tue, 17 Mar 2026 16:50:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766253;
-	bh=DRDF78o9YL3rPqeGqKXoKUiOcxg6UKjtciUtYJPpjOs=;
+	s=korg; t=1773766257;
+	bh=WrRG++S6pZBImlQ6p1gmqlusHvf4YMWAKgaRfFC6qHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QFb+piwKYUUy//Chg8YQK4V+WQxaMAlOGEIL2TLFJcTyb/fkTpoOJTnGsi9HKqKOj
-	 bl8HowcplAQQzdN7fmSG0KR0TmjMZTv9f4S5lzCqv9btJ9cSae94AorJS3eddXw2T+
-	 jOECwxjYnWtUJa9jYnUmO4gjKWqpNeBmlVs175ao=
+	b=JUcp8k8LGcm6bmTNYcHpeNFhQZiv9IFvWanWfEUi1pxc5T9k4cZeZvbykTdil+QcV
+	 NRJ5xi36u/tPPo5pMALatrBsnZYlR9gnO1sLaJgxvtCqoFPyipvj2oZb82Z8xxk2hk
+	 Qlafe/DfzBB3hVNBSjeMDJUH9SR/Z0JXdvQk/FZM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Heidelberg <david@ixit.cz>,
 	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.19 171/378] Revert "usb: gadget: u_ether: add gether_opts for config caching"
-Date: Tue, 17 Mar 2026 17:32:08 +0100
-Message-ID: <20260317163013.300941537@linuxfoundation.org>
+	Junzhong Pan <panjunzhong@linux.spacemit.com>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.19 162/378] usb: gadget: uvc: fix interval_duration calculation
+Date: Tue, 17 Mar 2026 17:31:59 +0100
+Message-ID: <20260317163012.971848780@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,319 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
 
-commit 3131c1aff7cdffb96239f06f98e16188cbc2083f upstream.
+commit 56135c0c60b07729401af9d329fa9c0eded845a6 upstream.
 
-This reverts commit e065c6a7e46c2ee9c677fdbf50035323d2de1215.
+To correctly convert bInterval as interval_duration:
+  interval_duration = 2^(bInterval-1) * frame_interval
 
-This commit is being reverted as part of a series-wide revert.
+Current code uses a wrong left shift operand, computing 2^bInterval
+instead of 2^(bInterval-1).
 
-By deferring the net_device allocation to the bind() phase, a single
-function instance will spawn multiple network devices if it is symlinked
-to multiple USB configurations.
-
-This causes regressions for userspace tools (like the postmarketOS DHCP
-daemon) that rely on reading the interface name (e.g., "usb0") from
-configfs. Currently, configfs returns the template "usb%d", causing the
-userspace network setup to fail.
-
-Crucially, because this patch breaks the 1:1 mapping between the
-function instance and the network device, this naming issue cannot
-simply be patched. Configfs only exposes a single 'ifname' attribute per
-instance, making it impossible to accurately report the actual interface
-name when multiple underlying network devices can exist for that single
-instance.
-
-All configurations tied to the same function instance are meant to share
-a single network device. Revert this change to restore the 1:1 mapping
-by allocating the network device at the instance level (alloc_inst).
-
-Reported-by: David Heidelberg <david@ixit.cz>
-Closes: https://lore.kernel.org/linux-usb/70b558ea-a12e-4170-9b8e-c951131249af@ixit.cz/
-Fixes: 56a512a9b410 ("usb: gadget: f_ncm: align net_device lifecycle with bind/unbind")
+Fixes: 010dc57cb516 ("usb: gadget: uvc: fix interval_duration calculation")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-6-ea2afbc7d9b2@google.com
+Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260306-fix-uvc-interval-v1-1-9a2df6859859@linux.spacemit.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_ether.c          |   30 ----
- drivers/usb/gadget/function/u_ether.h          |   28 ---
- drivers/usb/gadget/function/u_ether_configfs.h |  176 -------------------------
- 3 files changed, 234 deletions(-)
+ drivers/usb/gadget/function/uvc_video.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -1039,36 +1039,6 @@ int gether_set_ifname(struct net_device
- }
- EXPORT_SYMBOL_GPL(gether_set_ifname);
+--- a/drivers/usb/gadget/function/uvc_video.c
++++ b/drivers/usb/gadget/function/uvc_video.c
+@@ -513,7 +513,7 @@ uvc_video_prep_requests(struct uvc_video
+ 		return;
+ 	}
  
--void gether_setup_opts_default(struct gether_opts *opts, const char *name)
--{
--	opts->qmult = QMULT_DEFAULT;
--	snprintf(opts->name, sizeof(opts->name), "%s%%d", name);
--	eth_random_addr(opts->dev_mac);
--	opts->addr_assign_type = NET_ADDR_RANDOM;
--	eth_random_addr(opts->host_mac);
--}
--EXPORT_SYMBOL_GPL(gether_setup_opts_default);
--
--void gether_apply_opts(struct net_device *net, struct gether_opts *opts)
--{
--	struct eth_dev *dev = netdev_priv(net);
--
--	dev->qmult = opts->qmult;
--
--	if (opts->ifname_set) {
--		strscpy(net->name, opts->name, sizeof(net->name));
--		dev->ifname_set = true;
--	}
--
--	memcpy(dev->host_mac, opts->host_mac, sizeof(dev->host_mac));
--
--	if (opts->addr_assign_type == NET_ADDR_SET) {
--		memcpy(dev->dev_mac, opts->dev_mac, sizeof(dev->dev_mac));
--		net->addr_assign_type = opts->addr_assign_type;
--	}
--}
--EXPORT_SYMBOL_GPL(gether_apply_opts);
--
- void gether_suspend(struct gether *link)
- {
- 	struct eth_dev *dev = link->ioport;
---- a/drivers/usb/gadget/function/u_ether.h
-+++ b/drivers/usb/gadget/function/u_ether.h
-@@ -38,31 +38,6 @@
- 
- struct eth_dev;
- 
--/**
-- * struct gether_opts - Options for Ethernet gadget function instances
-- * @name: Pattern for the network interface name (e.g., "usb%d").
-- *        Used to generate the net device name.
-- * @qmult: Queue length multiplier for high/super speed.
-- * @host_mac: The MAC address to be used by the host side.
-- * @dev_mac: The MAC address to be used by the device side.
-- * @ifname_set: True if the interface name pattern has been set by userspace.
-- * @addr_assign_type: The method used for assigning the device MAC address
-- *                    (e.g., NET_ADDR_RANDOM, NET_ADDR_SET).
-- *
-- * This structure caches network-related settings provided through configfs
-- * before the net_device is fully instantiated. This allows for early
-- * configuration while deferring net_device allocation until the function
-- * is bound.
-- */
--struct gether_opts {
--	char			name[IFNAMSIZ];
--	unsigned int		qmult;
--	u8			host_mac[ETH_ALEN];
--	u8			dev_mac[ETH_ALEN];
--	bool			ifname_set;
--	unsigned char		addr_assign_type;
--};
--
- /*
-  * This represents the USB side of an "ethernet" link, managed by a USB
-  * function which provides control and (maybe) framing.  Two functions
-@@ -284,9 +259,6 @@ int gether_set_ifname(struct net_device
- 
- void gether_cleanup(struct eth_dev *dev);
- 
--void gether_setup_opts_default(struct gether_opts *opts, const char *name);
--void gether_apply_opts(struct net_device *net, struct gether_opts *opts);
--
- void gether_suspend(struct gether *link);
- void gether_resume(struct gether *link);
- 
---- a/drivers/usb/gadget/function/u_ether_configfs.h
-+++ b/drivers/usb/gadget/function/u_ether_configfs.h
-@@ -13,12 +13,6 @@
- #ifndef __U_ETHER_CONFIGFS_H
- #define __U_ETHER_CONFIGFS_H
- 
--#include <linux/cleanup.h>
--#include <linux/if_ether.h>
--#include <linux/mutex.h>
--#include <linux/netdevice.h>
--#include <linux/rtnetlink.h>
--
- #define USB_ETHERNET_CONFIGFS_ITEM(_f_)					\
- 	static void _f_##_attr_release(struct config_item *item)	\
- 	{								\
-@@ -203,174 +197,4 @@ out:									\
- 									\
- 	CONFIGFS_ATTR(_f_##_opts_, _n_)
- 
--#define USB_ETHER_OPTS_ITEM(_f_)						\
--	static void _f_##_attr_release(struct config_item *item)		\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--										\
--		usb_put_function_instance(&opts->func_inst);			\
--	}									\
--										\
--	static struct configfs_item_operations _f_##_item_ops = {		\
--		.release	= _f_##_attr_release,				\
--	}
--
--#define USB_ETHER_OPTS_ATTR_DEV_ADDR(_f_)					\
--	static ssize_t _f_##_opts_dev_addr_show(struct config_item *item,	\
--						char *page)			\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--										\
--		guard(mutex)(&opts->lock);					\
--		return sysfs_emit(page, "%pM\n", opts->net_opts.dev_mac);	\
--	}									\
--										\
--	static ssize_t _f_##_opts_dev_addr_store(struct config_item *item,	\
--						 const char *page, size_t len)	\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--		u8 new_addr[ETH_ALEN];						\
--		const char *p = page;						\
--										\
--		guard(mutex)(&opts->lock);					\
--		if (opts->refcnt)						\
--			return -EBUSY;						\
--										\
--		for (int i = 0; i < ETH_ALEN; i++) {				\
--			unsigned char num;					\
--			if ((*p == '.') || (*p == ':'))				\
--				p++;						\
--			num = hex_to_bin(*p++) << 4;				\
--			num |= hex_to_bin(*p++);				\
--			new_addr[i] = num;					\
--		}								\
--		if (!is_valid_ether_addr(new_addr))				\
--			return -EINVAL;						\
--		memcpy(opts->net_opts.dev_mac, new_addr, ETH_ALEN);		\
--		opts->net_opts.addr_assign_type = NET_ADDR_SET;			\
--		return len;							\
--	}									\
--										\
--	CONFIGFS_ATTR(_f_##_opts_, dev_addr)
--
--#define USB_ETHER_OPTS_ATTR_HOST_ADDR(_f_)					\
--	static ssize_t _f_##_opts_host_addr_show(struct config_item *item,	\
--						 char *page)			\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--										\
--		guard(mutex)(&opts->lock);					\
--		return sysfs_emit(page, "%pM\n", opts->net_opts.host_mac);	\
--	}									\
--										\
--	static ssize_t _f_##_opts_host_addr_store(struct config_item *item,	\
--						  const char *page, size_t len)	\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--		u8 new_addr[ETH_ALEN];						\
--		const char *p = page;						\
--										\
--		guard(mutex)(&opts->lock);					\
--		if (opts->refcnt)						\
--			return -EBUSY;						\
--										\
--		for (int i = 0; i < ETH_ALEN; i++) {				\
--			unsigned char num;					\
--			if ((*p == '.') || (*p == ':'))				\
--				p++;						\
--			num = hex_to_bin(*p++) << 4;				\
--			num |= hex_to_bin(*p++);				\
--			new_addr[i] = num;					\
--		}								\
--		if (!is_valid_ether_addr(new_addr))				\
--			return -EINVAL;						\
--		memcpy(opts->net_opts.host_mac, new_addr, ETH_ALEN);		\
--		return len;							\
--	}									\
--										\
--	CONFIGFS_ATTR(_f_##_opts_, host_addr)
--
--#define USB_ETHER_OPTS_ATTR_QMULT(_f_)						\
--	static ssize_t _f_##_opts_qmult_show(struct config_item *item,		\
--					     char *page)			\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--										\
--		guard(mutex)(&opts->lock);					\
--		return sysfs_emit(page, "%u\n", opts->net_opts.qmult);		\
--	}									\
--										\
--	static ssize_t _f_##_opts_qmult_store(struct config_item *item,		\
--					      const char *page, size_t len)	\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--		u32 val;							\
--		int ret;							\
--										\
--		guard(mutex)(&opts->lock);					\
--		if (opts->refcnt)						\
--			return -EBUSY;						\
--										\
--		ret = kstrtou32(page, 0, &val);					\
--		if (ret)							\
--			return ret;						\
--										\
--		opts->net_opts.qmult = val;					\
--		return len;							\
--	}									\
--										\
--	CONFIGFS_ATTR(_f_##_opts_, qmult)
--
--#define USB_ETHER_OPTS_ATTR_IFNAME(_f_)						\
--	static ssize_t _f_##_opts_ifname_show(struct config_item *item,		\
--					      char *page)			\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--		const char *name;						\
--										\
--		guard(mutex)(&opts->lock);					\
--		rtnl_lock();							\
--		if (opts->net_opts.ifname_set)					\
--			name = opts->net_opts.name;				\
--		else if (opts->net)						\
--			name = netdev_name(opts->net);				\
--		else								\
--			name = "(inactive net_device)";				\
--		rtnl_unlock();							\
--		return sysfs_emit(page, "%s\n", name);				\
--	}									\
--										\
--	static ssize_t _f_##_opts_ifname_store(struct config_item *item,	\
--					       const char *page, size_t len)	\
--	{									\
--		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
--		char tmp[IFNAMSIZ];						\
--		const char *p;							\
--		size_t c_len = len;						\
--										\
--		if (c_len > 0 && page[c_len - 1] == '\n')			\
--			c_len--;						\
--										\
--		if (c_len >= sizeof(tmp))					\
--			return -E2BIG;						\
--										\
--		strscpy(tmp, page, c_len + 1);					\
--		if (!dev_valid_name(tmp))					\
--			return -EINVAL;						\
--										\
--		/* Require exactly one %d */					\
--		p = strchr(tmp, '%');						\
--		if (!p || p[1] != 'd' || strchr(p + 2, '%'))			\
--			return -EINVAL;						\
--										\
--		guard(mutex)(&opts->lock);					\
--		if (opts->refcnt)						\
--			return -EBUSY;						\
--		strscpy(opts->net_opts.name, tmp, sizeof(opts->net_opts.name));	\
--		opts->net_opts.ifname_set = true;				\
--		return len;							\
--	}									\
--										\
--	CONFIGFS_ATTR(_f_##_opts_, ifname)
--
- #endif /* __U_ETHER_CONFIGFS_H */
+-	interval_duration = 2 << (video->ep->desc->bInterval - 1);
++	interval_duration = 1 << (video->ep->desc->bInterval - 1);
+ 	if (cdev->gadget->speed < USB_SPEED_HIGH)
+ 		interval_duration *= 10000;
+ 	else
 
 
