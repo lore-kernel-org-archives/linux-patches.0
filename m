@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F42221D5B0;
-	Tue, 17 Mar 2026 17:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8D135A39A;
+	Tue, 17 Mar 2026 17:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768341; cv=none; b=BzNshwbLOkkgEtLDUxewvFwCiZKn8d2OhvgkgYCkuWYi2d7gbafgPnf9P8Y208Apc8HJ1B7fJiUIrIFDPFxC7EvShi8ChDm78ihsNA93Zv17nx0L4oZUuujIvHZsczuBXOOmtsbwdy+5I0KbDY95GYGaP5z0hU858lW8RH0Zrxg=
+	t=1773768346; cv=none; b=RK+ymSWvQfEVccnCXf3ZffWH0vpWk+aLgN8aKdwslxUDE8gM92pXFjPZUAC7PzAqL/ywd7SewEtHotddFKBEFU1zoOMLFv2bdA5AowFibewQ6yF8odM599mfFcfznN1jYGwivPs4JMTznW6UJ8j0cxbKPd2HDemJEgPumW0ocs4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768341; c=relaxed/simple;
-	bh=KJR401HqCDifkeGfh9amWEqwn9XbIGaV/3/rf9wWxVQ=;
+	s=arc-20240116; t=1773768346; c=relaxed/simple;
+	bh=Ueo7ZOU4UZgfC/3KPxILel9bjezFqX5g4xhjaaADom4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lJB6VyUrLBVmDki+AL91Vp0qkFqFcJT2Lu/YGade2P3pCH1rj0MSHqeQW9khGolXU0cUW0PCBCEtMYB54HJKpsTISnR2yOyvSCdAdvIhc3SEljXtmmoJ8Tu4RovEM7pnUPcdjJy8gyxeZpt7xQGZIqwU48gTLd6yuzJ/BLRM3hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1sgn6ry; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jhJpVoDlHsdL666dA9eB+8CHRUPSRV3IGJfaHXZkLgeyey25jRcz5qv9OlM2GjJxA922z4gWlSh0vO9OlfSoa1Nfu+GwkVQF3Afl1ZnzFkbAb23hNosrsN49Cni1rE84oRky4PWqgwuBk7h4aR6DMzby91OdOYo/CMB7F7HwZtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vPKm4hxl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1sgn6ry"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE64DC4CEF7;
-	Tue, 17 Mar 2026 17:25:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vPKm4hxl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734DBC19424;
+	Tue, 17 Mar 2026 17:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768341;
-	bh=KJR401HqCDifkeGfh9amWEqwn9XbIGaV/3/rf9wWxVQ=;
+	s=korg; t=1773768346;
+	bh=Ueo7ZOU4UZgfC/3KPxILel9bjezFqX5g4xhjaaADom4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1sgn6rygFCXCxkJ4WoeV0tsKF8/ULsRB+pAMBKoYGH5ZPCZGydD1xzty8jt1Uw5S
-	 wSewxWf7+3YifiFs6k6GuE1jvAbG7SYhT2NSbC8K50Rsdb4Jzr2wR7iNWxf4JJrPj2
-	 EIalwo2RSzR3evfZr83N3+Znx+XRXEMK4PUsZ3dI=
+	b=vPKm4hxlbd+tolOFTAML4I5/VGu8bk7g6HxoziaTI7StOoEmb8HwjMrkwmvS6jVlg
+	 1GCqWkmrH8OdZ47xylk6/pdwnC5uZmrIbrbeRZ7JXi4GMk6xWU6BgpePSGpkaDj5Jn
+	 M/SqDv17Xo/BXel05Myp/2CoWVXyd4iWi8d7QNFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Bukte <rahul.bukte@sony.com>,
-	Shashank Balaji <shashank.mahadasyam@sony.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Sohil Mehta <sohil.mehta@intel.com>
-Subject: [PATCH 6.18 280/333] x86/apic: Disable x2apic on resume if the kernel expects so
-Date: Tue, 17 Mar 2026 17:35:09 +0100
-Message-ID: <20260317163009.776995911@linuxfoundation.org>
+	Anand Jain <asj@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.18 289/333] btrfs: fix transaction abort on set received ioctl due to item overflow
+Date: Tue, 17 Mar 2026 17:35:18 +0100
+Message-ID: <20260317163010.109858731@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,86 +51,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shashank Balaji <shashank.mahadasyam@sony.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 8cc7dd77a1466f0ec58c03478b2e735a5b289b96 upstream.
+commit 87f2c46003fce4d739138aab4af1942b1afdadac upstream.
 
-When resuming from s2ram, firmware may re-enable x2apic mode, which may have
-been disabled by the kernel during boot either because it doesn't support IRQ
-remapping or for other reasons. This causes the kernel to continue using the
-xapic interface, while the hardware is in x2apic mode, which causes hangs.
-This happens on defconfig + bare metal + s2ram.
+If the set received ioctl fails due to an item overflow when attempting to
+add the BTRFS_UUID_KEY_RECEIVED_SUBVOL we have to abort the transaction
+since we did some metadata updates before.
 
-Fix this in lapic_resume() by disabling x2apic if the kernel expects it to be
-disabled, i.e. when x2apic_mode = 0.
+This means that if a user calls this ioctl with the same received UUID
+field for a lot of subvolumes, we will hit the overflow, trigger the
+transaction abort and turn the filesystem into RO mode. A malicious user
+could exploit this, and this ioctl does not even requires that a user
+has admin privileges (CAP_SYS_ADMIN), only that he/she owns the subvolume.
 
-The ACPI v6.6 spec, Section 16.3 [1] says firmware restores either the
-pre-sleep configuration or initial boot configuration for each CPU, including
-MSR state:
+Fix this by doing an early check for item overflow before starting a
+transaction. This is also race safe because we are holding the subvol_sem
+semaphore in exclusive (write) mode.
 
-  When executing from the power-on reset vector as a result of waking from an
-  S2 or S3 sleep state, the platform firmware performs only the hardware
-  initialization required to restore the system to either the state the
-  platform was in prior to the initial operating system boot, or to the
-  pre-sleep configuration state. In multiprocessor systems, non-boot
-  processors should be placed in the same state as prior to the initial
-  operating system boot.
+A test case for fstests will follow soon.
 
-  (further ahead)
-
-  If this is an S2 or S3 wake, then the platform runtime firmware restores
-  minimum context of the system before jumping to the waking vector. This
-  includes:
-
-	CPU configuration. Platform runtime firmware restores the pre-sleep
-	configuration or initial boot configuration of each CPU (MSR, MTRR,
-	firmware update, SMBase, and so on). Interrupts must be disabled (for
-	IA-32 processors, disabled by CLI instruction).
-
-	(and other things)
-
-So at least as per the spec, re-enablement of x2apic by the firmware is
-allowed if "x2apic on" is a part of the initial boot configuration.
-
-  [1] https://uefi.org/specs/ACPI/6.6/16_Waking_and_Sleeping.html#initialization
-
-  [ bp: Massage. ]
-
-Fixes: 6e1cb38a2aef ("x64, x2apic/intr-remap: add x2apic support, including enabling interrupt-remapping")
-Co-developed-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
-Signed-off-by: Shashank Balaji <shashank.mahadasyam@sony.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Sohil Mehta <sohil.mehta@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260306-x2apic-fix-v2-1-bee99c12efa3@sony.com
+Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
+CC: stable@vger.kernel.org # 3.12+
+Reviewed-by: Anand Jain <asj@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/apic.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/btrfs/ioctl.c     |   21 +++++++++++++++++++--
+ fs/btrfs/uuid-tree.c |   38 ++++++++++++++++++++++++++++++++++++++
+ fs/btrfs/uuid-tree.h |    2 ++
+ 3 files changed, 59 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/apic/apic.c
-+++ b/arch/x86/kernel/apic/apic.c
-@@ -1890,6 +1890,7 @@ void __init check_x2apic(void)
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3984,6 +3984,25 @@ static long _btrfs_ioctl_set_received_su
+ 		goto out;
+ 	}
  
- static inline void try_to_enable_x2apic(int remap_mode) { }
- static inline void __x2apic_enable(void) { }
-+static inline void __x2apic_disable(void) { }
- #endif /* !CONFIG_X86_X2APIC */
- 
- void __init enable_IR_x2apic(void)
-@@ -2452,6 +2453,11 @@ static void lapic_resume(void)
- 	if (x2apic_mode) {
- 		__x2apic_enable();
- 	} else {
-+		if (x2apic_enabled()) {
-+			pr_warn_once("x2apic: re-enabled by firmware during resume. Disabling\n");
-+			__x2apic_disable();
-+		}
++	received_uuid_changed = memcmp(root_item->received_uuid, sa->uuid,
++				       BTRFS_UUID_SIZE);
 +
- 		/*
- 		 * Make sure the APICBASE points to the right address
- 		 *
++	/*
++	 * Before we attempt to add the new received uuid, check if we have room
++	 * for it in case there's already an item. If the size of the existing
++	 * item plus this root's ID (u64) exceeds the maximum item size, we can
++	 * return here without the need to abort a transaction. If we don't do
++	 * this check, the btrfs_uuid_tree_add() call below would fail with
++	 * -EOVERFLOW and result in a transaction abort. Malicious users could
++	 * exploit this to turn the fs into RO mode.
++	 */
++	if (received_uuid_changed && !btrfs_is_empty_uuid(sa->uuid)) {
++		ret = btrfs_uuid_tree_check_overflow(fs_info, sa->uuid,
++						     BTRFS_UUID_KEY_RECEIVED_SUBVOL);
++		if (ret < 0)
++			goto out;
++	}
++
+ 	/*
+ 	 * 1 - root item
+ 	 * 2 - uuid items (received uuid + subvol uuid)
+@@ -3999,8 +4018,6 @@ static long _btrfs_ioctl_set_received_su
+ 	sa->rtime.sec = ct.tv_sec;
+ 	sa->rtime.nsec = ct.tv_nsec;
+ 
+-	received_uuid_changed = memcmp(root_item->received_uuid, sa->uuid,
+-				       BTRFS_UUID_SIZE);
+ 	if (received_uuid_changed &&
+ 	    !btrfs_is_empty_uuid(root_item->received_uuid)) {
+ 		ret = btrfs_uuid_tree_remove(trans, root_item->received_uuid,
+--- a/fs/btrfs/uuid-tree.c
++++ b/fs/btrfs/uuid-tree.c
+@@ -227,6 +227,44 @@ out:
+ 	return ret;
+ }
+ 
++/*
++ * Check if we can add one root ID to a UUID key.
++ * If the key does not yet exists, we can, otherwise only if extended item does
++ * not exceeds the maximum item size permitted by the leaf size.
++ *
++ * Returns 0 on success, negative value on error.
++ */
++int btrfs_uuid_tree_check_overflow(struct btrfs_fs_info *fs_info,
++				   const u8 *uuid, u8 type)
++{
++	BTRFS_PATH_AUTO_FREE(path);
++	int ret;
++	u32 item_size;
++	struct btrfs_key key;
++
++	if (WARN_ON_ONCE(!fs_info->uuid_root))
++		return -EINVAL;
++
++	path = btrfs_alloc_path();
++	if (!path)
++		return -ENOMEM;
++
++	btrfs_uuid_to_key(uuid, type, &key);
++	ret = btrfs_search_slot(NULL, fs_info->uuid_root, &key, path, 0, 0);
++	if (ret < 0)
++		return ret;
++	if (ret > 0)
++		return 0;
++
++	item_size = btrfs_item_size(path->nodes[0], path->slots[0]);
++
++	if (sizeof(struct btrfs_item) + item_size + sizeof(u64) >
++	    BTRFS_LEAF_DATA_SIZE(fs_info))
++		return -EOVERFLOW;
++
++	return 0;
++}
++
+ static int btrfs_uuid_iter_rem(struct btrfs_root *uuid_root, u8 *uuid, u8 type,
+ 			       u64 subid)
+ {
+--- a/fs/btrfs/uuid-tree.h
++++ b/fs/btrfs/uuid-tree.h
+@@ -12,6 +12,8 @@ int btrfs_uuid_tree_add(struct btrfs_tra
+ 			u64 subid);
+ int btrfs_uuid_tree_remove(struct btrfs_trans_handle *trans, const u8 *uuid, u8 type,
+ 			u64 subid);
++int btrfs_uuid_tree_check_overflow(struct btrfs_fs_info *fs_info,
++				   const u8 *uuid, u8 type);
+ int btrfs_uuid_tree_iterate(struct btrfs_fs_info *fs_info);
+ int btrfs_create_uuid_tree(struct btrfs_fs_info *fs_info);
+ int btrfs_uuid_scan_kthread(void *data);
 
 
