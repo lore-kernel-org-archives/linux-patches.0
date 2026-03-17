@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6956E1ACEDE;
-	Tue, 17 Mar 2026 17:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 482AE3A4F46;
+	Tue, 17 Mar 2026 17:01:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766906; cv=none; b=q9R7dAKVJy1tDkzJ/yH+M1BnFE7fFjqdKtYj2KyurIVGqtFKLM+a47Od9cuTRUsw4hT4qdDkHp55PJQ7oU1GFI9jCULIxOxovccFMWuPBuvg8OsSOlwlfdqcriBX1e16G1QVpXwaAzGGdpsdziSs4bqcW7k1oUkHTezOiF4T88g=
+	t=1773766910; cv=none; b=P3074+mzWAjHwWiS8SE//nGI6t2iFG++qJrEaxYyEbsc9FQXaEMApvmfmJ0ExIB5agduwSqEh7l9JwBT0dVGApWzxZxMWjUwtWNFgnYfUEcWZAGf77xmcC1h1MKpm0i8PGtdHiBuT0oUHN1LF5iVn7m6Py1yrO55DB5ImjvbGGA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766906; c=relaxed/simple;
-	bh=Wwisc8fP9J8C5AoMsszGqBpYGFcaDrcVe+mq++HI95Q=;
+	s=arc-20240116; t=1773766910; c=relaxed/simple;
+	bh=iiL4IbO5dp02fUSs46CquWXuTQU4CseQlo8UKisEHQA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFX+tDuAxy63uk4M5Ds72O7PjJhrvIEpjwhi2FLG4u6rR5N+iG2MjzbB+YjWrwfEIMx8i2TXctzbq2Rj09cKlL0Z/59DGwl8DMK11Tcszd89WCdggSzYcF9LCv4etk24MGocDvaCNTxjOVlohKjqo2oCwN26qYZmfUxP01pPDlA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9HMSEB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qE3W04ep54EUseRn2OIMGN2wFTDZ9YsLOWlbEAfr9zFGWrfbP9eL+GYqCktDOglnWGHC4pz9oJvkEZfPI9oDO0D84/F79HX5HK0Weatr2WWBtb83hQhKydVQQWl5+d4qk3cI9OAqIQIGxw1Lkq8AesCmIdRZPGYd9dY48b5lho0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N+PgOE9I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9HMSEB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941B0C4CEF7;
-	Tue, 17 Mar 2026 17:01:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N+PgOE9I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B74B8C4CEF7;
+	Tue, 17 Mar 2026 17:01:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766906;
-	bh=Wwisc8fP9J8C5AoMsszGqBpYGFcaDrcVe+mq++HI95Q=;
+	s=korg; t=1773766910;
+	bh=iiL4IbO5dp02fUSs46CquWXuTQU4CseQlo8UKisEHQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9HMSEB5muJkSIpHo0U2GraMK57XkCqfRBcxEixHyPhvf7QdrZbDf8o1TsCM2+jSk
-	 iroq3pm53WHQnWnyJA0lPtLvMCCHQ06ew9oFYycnyDrj68PmeVyzQLHvyk0B4SCfkz
-	 Te2JCa1VmWwEPxWHXruNfeqqdkzmSzmtVa5yBzww=
+	b=N+PgOE9I0pIdgu8br8LqCDeLOJjTnpcCrklccRUGJLidne4G2rmEsGiwfuNfZNQjp
+	 py31WdZGlPALXxVJp3b4qMzBC5NLvQ7Ys5e8tCqCE6c/4ymXMYGy3FceKtoLViv5Y8
+	 uLAFSbu7+sXDrbjWbX0iCrwRcY3PNizRQz87op0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 348/378] iio: chemical: sps30_serial: fix buffer size in sps30_serial_read_meas()
-Date: Tue, 17 Mar 2026 17:35:05 +0100
-Message-ID: <20260317163019.792364666@linuxfoundation.org>
+Subject: [PATCH 6.19 349/378] iio: chemical: sps30_i2c: fix buffer size in sps30_i2c_read_meas()
+Date: Tue, 17 Mar 2026 17:35:06 +0100
+Message-ID: <20260317163019.828182316@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -55,14 +55,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit c3914ce1963c4db25e186112c90fa5d2361e9e0a upstream.
+commit 216345f98cae7fcc84f49728c67478ac00321c87 upstream.
 
-sizeof(num) evaluates to sizeof(size_t) which is 8 bytes on 64-bit,
-but the buffer elements are only 4 bytes. The same function already
-uses sizeof(*meas) on line 312, making the mismatch evident. Use
-sizeof(*meas) consistently.
+sizeof(num) evaluates to sizeof(size_t) (8 bytes on 64-bit) instead
+of the intended __be32 element size (4 bytes). Use sizeof(*meas) to
+correctly match the buffer element type.
 
-Fixes: b2e171f5a5c6 ("iio: sps30: add support for serial interface")
+Fixes: 8f3f13085278 ("iio: sps30: separate core and interface specific code")
 Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
 Acked-by: Tomasz Duszynski <tduszyns@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
@@ -70,19 +69,19 @@ Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/sps30_serial.c |    2 +-
+ drivers/iio/chemical/sps30_i2c.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/chemical/sps30_serial.c
-+++ b/drivers/iio/chemical/sps30_serial.c
-@@ -303,7 +303,7 @@ static int sps30_serial_read_meas(struct
- 	if (msleep_interruptible(1000))
- 		return -EINTR;
+--- a/drivers/iio/chemical/sps30_i2c.c
++++ b/drivers/iio/chemical/sps30_i2c.c
+@@ -171,7 +171,7 @@ static int sps30_i2c_read_meas(struct sp
+ 	if (!sps30_i2c_meas_ready(state))
+ 		return -ETIMEDOUT;
  
--	ret = sps30_serial_command(state, SPS30_SERIAL_READ_MEAS, NULL, 0, meas, num * sizeof(num));
-+	ret = sps30_serial_command(state, SPS30_SERIAL_READ_MEAS, NULL, 0, meas, num * sizeof(*meas));
- 	if (ret < 0)
- 		return ret;
- 	/* if measurements aren't ready sensor returns empty frame */
+-	return sps30_i2c_command(state, SPS30_I2C_READ_MEAS, NULL, 0, meas, sizeof(num) * num);
++	return sps30_i2c_command(state, SPS30_I2C_READ_MEAS, NULL, 0, meas, sizeof(*meas) * num);
+ }
+ 
+ static int sps30_i2c_clean_fan(struct sps30_state *state)
 
 
