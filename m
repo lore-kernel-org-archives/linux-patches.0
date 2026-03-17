@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 265C62DF132;
-	Tue, 17 Mar 2026 17:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B552D5940;
+	Tue, 17 Mar 2026 17:19:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767980; cv=none; b=UtbTnizJZMA4CZRtpAlLfxcw+pVWQCwT1zMM76hArOYld8qTsf1Ka8JKCgH+3Kgu2sFGuzrdjDpo0IDIhzPluaMXyXIunoD/Va5UhmTlAlRBvrLYiwkxsYHO2L/ozWr3L+xKglABNJoHeU0wXYfGEaP3VGlhqwdWNjs+esvwn6g=
+	t=1773767984; cv=none; b=KPpFaCHxM//3pbY2W/h/BBmZYHwiCm8vg1adkBvvzdd9BZpvMxhaOef1AkVnywnz8LJ9iT96T7XXnXBQC4U9I2gby819YRPnC/cDanRndFPlvMudAmovsABMqUuHCvlztpfokK+bYwSuqqw8oFr/oMAITy5SIeuvQ6nZVI/2tSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767980; c=relaxed/simple;
-	bh=HoQeP54Aq+Oqnpp49JodQlWj5cWrG4q8UocxXFJUWsM=;
+	s=arc-20240116; t=1773767984; c=relaxed/simple;
+	bh=3sUQHDlffL/NO6K8ZQJKwwDGz8sU6riixgEy6njWVS0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cM4Lpvddaq5wxZa+xAqoU3zZxF1IM/86pc0rBiTqjyne/hFtpAF9Wao1p3ueagZuWUOy5Pd5/mBNd+1I1nmjruqdwj3JS6cF4drJZd1tmxhUcFuLCaugb6DL4ZiK/tHLPQWYz/vw1ws8HsyhPLLQnXs6iOrxVLBdnk/5M+aGEjE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=euLPIkza; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=px/MFd2gHMGyCXzZUIagsTLQ6+NfA+xWSv47Q+pcydg7EvYW9DPtwjzyOrq0OkPXtb5Y2SUjhZ94s12Ysn2j4CWoUo1vp/h0/yPXzgbp6HB0IWpuVRCrG4gk9d4kezP5Q2uTpo4YsuXBtZ4jW66SuYNPzqDk3DqW7GEsM+zYY1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSBoxlur; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="euLPIkza"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E71C4CEF7;
-	Tue, 17 Mar 2026 17:19:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSBoxlur"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C9BC4CEF7;
+	Tue, 17 Mar 2026 17:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767979;
-	bh=HoQeP54Aq+Oqnpp49JodQlWj5cWrG4q8UocxXFJUWsM=;
+	s=korg; t=1773767984;
+	bh=3sUQHDlffL/NO6K8ZQJKwwDGz8sU6riixgEy6njWVS0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=euLPIkzaYg/YIJ2kIea2TztH6wXu24NBRXyc3PtZ/0Q2AZW5GdxeqvqrRz2LsdTnv
-	 6KS+P/F6rDHEwm2Xb0HiQFoYp/6Mqu4X4tnXHfp0YknSvB1HnCttnOxxbS4eaMJnnX
-	 qGKws8d99pG87BrzUqgd2aNmvXI7kLxTV9LZqahc=
+	b=oSBoxlurych6ssc5IsgqOrXMYvOH3bZRKWhRxahVz/CPZlKXvUFTyZhyoUNkb4B/4
+	 w+oesdjAgFCZarV+OOo+NCARqKc4AjcvJh2K4VBvUHYf+7L0DQxsBs9EN5GdCS6R/U
+	 FMom4a2389nr2TcxV7FHjJ24AUgVpy+kJ+d7Eb20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filipe Manana <fdmanana@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.18 203/333] btrfs: fix chunk map leak in btrfs_map_block() after btrfs_chunk_map_num_copies()
-Date: Tue, 17 Mar 2026 17:33:52 +0100
-Message-ID: <20260317163006.883543310@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.18 204/333] iomap: reject delalloc mappings during writeback
+Date: Tue, 17 Mar 2026 17:33:53 +0100
+Message-ID: <20260317163006.923016024@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,38 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit f15fb3d41543244d1179f423da4a4832a55bc050 upstream.
+commit d320f160aa5ff36cdf83c645cca52b615e866e32 upstream.
 
-Fix a chunk map leak in btrfs_map_block(): if we return early with -EINVAL,
-we're not freeing the chunk map that we've just looked up.
+Filesystems should never provide a delayed allocation mapping to
+writeback; they're supposed to allocate the space before replying.
+This can lead to weird IO errors and crashes in the block layer if the
+filesystem is being malicious, or if it hadn't set iomap->dev because
+it's a delalloc mapping.
 
-Fixes: 0ae653fbec2b ("btrfs: reduce chunk_map lookups in btrfs_map_block()")
-CC: stable@vger.kernel.org # 6.12+
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fix this by failing writeback on delalloc mappings.  Currently no
+filesystems actually misbehave in this manner, but we ought to be
+stricter about things like that.
+
+Cc: stable@vger.kernel.org # v5.5
+Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/iomap/ioend.c |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -6759,8 +6759,10 @@ int btrfs_map_block(struct btrfs_fs_info
- 		return PTR_ERR(map);
+--- a/fs/iomap/ioend.c
++++ b/fs/iomap/ioend.c
+@@ -163,17 +163,18 @@ ssize_t iomap_add_to_ioend(struct iomap_
+ 	WARN_ON_ONCE(!folio->private && map_len < dirty_len);
  
- 	num_copies = btrfs_chunk_map_num_copies(map);
--	if (io_geom.mirror_num > num_copies)
--		return -EINVAL;
-+	if (io_geom.mirror_num > num_copies) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
+ 	switch (wpc->iomap.type) {
+-	case IOMAP_INLINE:
+-		WARN_ON_ONCE(1);
+-		return -EIO;
++	case IOMAP_UNWRITTEN:
++		ioend_flags |= IOMAP_IOEND_UNWRITTEN;
++		break;
++	case IOMAP_MAPPED:
++		break;
+ 	case IOMAP_HOLE:
+ 		return map_len;
+ 	default:
+-		break;
++		WARN_ON_ONCE(1);
++		return -EIO;
+ 	}
  
- 	map_offset = logical - map->start;
- 	io_geom.raid56_full_stripe_start = (u64)-1;
+-	if (wpc->iomap.type == IOMAP_UNWRITTEN)
+-		ioend_flags |= IOMAP_IOEND_UNWRITTEN;
+ 	if (wpc->iomap.flags & IOMAP_F_SHARED)
+ 		ioend_flags |= IOMAP_IOEND_SHARED;
+ 	if (folio_test_dropbehind(folio))
 
 
