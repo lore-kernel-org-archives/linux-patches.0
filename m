@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB6B2D5940;
-	Tue, 17 Mar 2026 17:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F4F2459DC;
+	Tue, 17 Mar 2026 17:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767988; cv=none; b=SEQ+hml+zjdHYEhqUucWHzzN1er/ZDbBNzNVkJP+0Ik3JtEGjVr9mXVh0M6VJK+4vsYEbhwFNdHoILQB2lnA2MAlcnUaa/98nFfCHkV4Crfd1LHLYSQVTcQNZFKngr63h+uQLgJn5440qto+CJQAm/It4wx+1c6LB1NaWRThacI=
+	t=1773767993; cv=none; b=sart/qWJZgUh7Fe1by+JVBykWePAGWrimMMBH1ijONVqu6xpzK1Fd6GNpwDOBG/bbdW7Domz+dOp6h3AmI02EBYcO4EUKfJE93weT0yJPWSbT77uZn/scPDlW+KWLlhoilXqrYekzote4a8zOa4d59tmIVkgXad/ZptEYKGmmvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767988; c=relaxed/simple;
-	bh=ptPtNRii128a2ubp0/7rGOTiQ4qpTU8s/EF1PnRCDlI=;
+	s=arc-20240116; t=1773767993; c=relaxed/simple;
+	bh=fJ6QJa6XO9USKGJd3UVojEtZdlDmtGh0vySKvadjskY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K7KIMadg4in2RT41wdyFBRD7ttUlAJWUHXmTwU9dZV8Utq7vg85ssiBY2PFxniwISvwof54r0k1DkY7xzYF/KcpCu1hwCYDE1dmMXIv30U8mtltmYZXQH/tkdMee5bUHTph/Y7kR1PtADI+rXAjuNEgCXU+ReTE7BBA9p+OJdQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DI1hsIgJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fCpQN9zqmucq8gIkzSrBnG2Vva/AjzIB+TuUwVvGJLK/FCyCbKJn5h4+QMFPEDiw4GdBup0SK/0zrEidafCno51SOtQNdjJ0cZHZMJ8yV5XmVKmYaDrjpUJgyOKbWZNkdMfO7UY9Yy9K0bhEEd35O+2d5e0KX5IXJeRfXp/n9nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZE7BzAN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DI1hsIgJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0879C4CEF7;
-	Tue, 17 Mar 2026 17:19:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZE7BzAN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE88C4CEF7;
+	Tue, 17 Mar 2026 17:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767988;
-	bh=ptPtNRii128a2ubp0/7rGOTiQ4qpTU8s/EF1PnRCDlI=;
+	s=korg; t=1773767992;
+	bh=fJ6QJa6XO9USKGJd3UVojEtZdlDmtGh0vySKvadjskY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DI1hsIgJpCUvHm7HTLrjasGq9GUHIejDZ7P7yh0309MG0pDYLlzOzTw6fX/84002k
-	 Gwb8F9aCJwyRmrVCJYi/lbCbVDDo3+KFvlfFq/ytdsOTPkgRCIWuBEKcHzef9TKt9i
-	 QnBegZViAXgVRZtdFRi6oqHbXAicVg1SxRmUhGFc=
+	b=2ZE7BzAN0kwXnRJOn/B5J4B8JaKPh0r+SL8o6NQX6pfsvEgD32eBHsGde+dzNc5fp
+	 e/6AgwizdnWpLpiAeKkfqccW48HWwDpZzg2Wt/oh2BDhwXkZLU4hUrQDImQpP/yvCY
+	 KyPMToQjKY4nj4BgstPB/nx4dFlne9LC5smXwdbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 205/333] ice: reintroduce retry mechanism for indirect AQ
-Date: Tue, 17 Mar 2026 17:33:54 +0100
-Message-ID: <20260317163006.961378817@linuxfoundation.org>
+	David Gow <david@davidgow.net>,
+	Eric Biggers <ebiggers@kernel.org>
+Subject: [PATCH 6.18 206/333] kunit: irq: Ensure timer doesnt fire too frequently
+Date: Tue, 17 Mar 2026 17:33:55 +0100
+Message-ID: <20260317163006.999274003@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -56,74 +50,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 326256c0a72d4877cec1d4df85357da106233128 upstream.
+commit 201ceb94aa1def0024a7c18ce643e5f65026be06 upstream.
 
-Add retry mechanism for indirect Admin Queue (AQ) commands. To do so we
-need to keep the command buffer.
+Fix a bug where kunit_run_irq_test() could hang if the system is too
+slow.  This was noticed with the crypto library tests in certain VMs.
 
-This technically reverts commit 43a630e37e25
-("ice: remove unused buffer copy code in ice_sq_send_cmd_retry()"),
-but combines it with a fix in the logic by using a kmemdup() call,
-making it more robust and less likely to break in the future due to
-programmer error.
+Specifically, if kunit_irq_test_timer_func() and the associated hrtimer
+code took over 5us to run, then the CPU would spend all its time
+executing that code in hardirq context.  As a result, the task executing
+kunit_run_irq_test() never had a chance to run, exit the loop, and
+cancel the timer.
 
-Cc: Michal Schmidt <mschmidt@redhat.com>
+To fix it, make kunit_irq_test_timer_func() increase the timer interval
+when the other contexts aren't having a chance to run.
+
+Fixes: 950a81224e8b ("lib/crypto: tests: Add hash-test-template.h and gen-hash-testvecs.py")
 Cc: stable@vger.kernel.org
-Fixes: 3056df93f7a8 ("ice: Re-send some AQ commands, as result of EBUSY AQ error")
-Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
-Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Link: https://lore.kernel.org/r/20260224033751.97615-1-ebiggers@kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ include/kunit/run-in-irq-context.h | 44 +++++++++++++++++++-----------
+ 1 file changed, 28 insertions(+), 16 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1879,6 +1879,7 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
- {
- 	struct libie_aq_desc desc_cpy;
- 	bool is_cmd_for_retry;
-+	u8 *buf_cpy = NULL;
- 	u8 idx = 0;
- 	u16 opcode;
- 	int status;
-@@ -1888,8 +1889,11 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
- 	memset(&desc_cpy, 0, sizeof(desc_cpy));
+diff --git a/include/kunit/run-in-irq-context.h b/include/kunit/run-in-irq-context.h
+index c89b1b1b12dd..bfe60d6cf28d 100644
+--- a/include/kunit/run-in-irq-context.h
++++ b/include/kunit/run-in-irq-context.h
+@@ -12,16 +12,16 @@
+ #include <linux/hrtimer.h>
+ #include <linux/workqueue.h>
  
- 	if (is_cmd_for_retry) {
--		/* All retryable cmds are direct, without buf. */
--		WARN_ON(buf);
-+		if (buf) {
-+			buf_cpy = kmemdup(buf, buf_size, GFP_KERNEL);
-+			if (!buf_cpy)
-+				return -ENOMEM;
-+		}
- 
- 		memcpy(&desc_cpy, desc, sizeof(desc_cpy));
- 	}
-@@ -1901,12 +1905,14 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
- 		    hw->adminq.sq_last_status != LIBIE_AQ_RC_EBUSY)
- 			break;
- 
-+		if (buf_cpy)
-+			memcpy(buf, buf_cpy, buf_size);
- 		memcpy(desc, &desc_cpy, sizeof(desc_cpy));
+-#define KUNIT_IRQ_TEST_HRTIMER_INTERVAL us_to_ktime(5)
 -
- 		msleep(ICE_SQ_SEND_DELAY_TIME_MS);
+ struct kunit_irq_test_state {
+ 	bool (*func)(void *test_specific_state);
+ 	void *test_specific_state;
+ 	bool task_func_reported_failure;
+ 	bool hardirq_func_reported_failure;
+ 	bool softirq_func_reported_failure;
++	atomic_t task_func_calls;
+ 	atomic_t hardirq_func_calls;
+ 	atomic_t softirq_func_calls;
++	ktime_t interval;
+ 	struct hrtimer timer;
+ 	struct work_struct bh_work;
+ };
+@@ -30,14 +30,25 @@ static enum hrtimer_restart kunit_irq_test_timer_func(struct hrtimer *timer)
+ {
+ 	struct kunit_irq_test_state *state =
+ 		container_of(timer, typeof(*state), timer);
++	int task_calls, hardirq_calls, softirq_calls;
  
- 	} while (++idx < ICE_SQ_SEND_MAX_EXECUTE);
+ 	WARN_ON_ONCE(!in_hardirq());
+-	atomic_inc(&state->hardirq_func_calls);
++	task_calls = atomic_read(&state->task_func_calls);
++	hardirq_calls = atomic_inc_return(&state->hardirq_func_calls);
++	softirq_calls = atomic_read(&state->softirq_func_calls);
++
++	/*
++	 * If the timer is firing too often for the softirq or task to ever have
++	 * a chance to run, increase the timer interval.  This is needed on very
++	 * slow systems.
++	 */
++	if (hardirq_calls >= 20 && (softirq_calls == 0 || task_calls == 0))
++		state->interval = ktime_add_ns(state->interval, 250);
  
-+	kfree(buf_cpy);
- 	return status;
+ 	if (!state->func(state->test_specific_state))
+ 		state->hardirq_func_reported_failure = true;
+ 
+-	hrtimer_forward_now(&state->timer, KUNIT_IRQ_TEST_HRTIMER_INTERVAL);
++	hrtimer_forward_now(&state->timer, state->interval);
+ 	queue_work(system_bh_wq, &state->bh_work);
+ 	return HRTIMER_RESTART;
  }
+@@ -86,10 +97,14 @@ static inline void kunit_run_irq_test(struct kunit *test, bool (*func)(void *),
+ 	struct kunit_irq_test_state state = {
+ 		.func = func,
+ 		.test_specific_state = test_specific_state,
++		/*
++		 * Start with a 5us timer interval.  If the system can't keep
++		 * up, kunit_irq_test_timer_func() will increase it.
++		 */
++		.interval = us_to_ktime(5),
+ 	};
+ 	unsigned long end_jiffies;
+-	int hardirq_calls, softirq_calls;
+-	bool allctx = false;
++	int task_calls, hardirq_calls, softirq_calls;
  
+ 	/*
+ 	 * Set up a hrtimer (the way we access hardirq context) and a work
+@@ -104,21 +119,18 @@ static inline void kunit_run_irq_test(struct kunit *test, bool (*func)(void *),
+ 	 * and hardirq), or 1 second, whichever comes first.
+ 	 */
+ 	end_jiffies = jiffies + HZ;
+-	hrtimer_start(&state.timer, KUNIT_IRQ_TEST_HRTIMER_INTERVAL,
+-		      HRTIMER_MODE_REL_HARD);
+-	for (int task_calls = 0, calls = 0;
+-	     ((calls < max_iterations) || !allctx) &&
+-	     !time_after(jiffies, end_jiffies);
+-	     task_calls++) {
++	hrtimer_start(&state.timer, state.interval, HRTIMER_MODE_REL_HARD);
++	do {
+ 		if (!func(test_specific_state))
+ 			state.task_func_reported_failure = true;
+ 
++		task_calls = atomic_inc_return(&state.task_func_calls);
+ 		hardirq_calls = atomic_read(&state.hardirq_func_calls);
+ 		softirq_calls = atomic_read(&state.softirq_func_calls);
+-		calls = task_calls + hardirq_calls + softirq_calls;
+-		allctx = (task_calls > 0) && (hardirq_calls > 0) &&
+-			 (softirq_calls > 0);
+-	}
++	} while ((task_calls + hardirq_calls + softirq_calls < max_iterations ||
++		  (task_calls == 0 || hardirq_calls == 0 ||
++		   softirq_calls == 0)) &&
++		 !time_after(jiffies, end_jiffies));
+ 
+ 	/* Cancel the timer and work. */
+ 	hrtimer_cancel(&state.timer);
+-- 
+2.53.0
+
 
 
