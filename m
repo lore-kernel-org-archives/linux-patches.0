@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54A63F7884;
-	Tue, 17 Mar 2026 17:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47E863793D4;
+	Tue, 17 Mar 2026 17:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767700; cv=none; b=InT2Q2F48E0RAKb4P8O5R6ezKJzJoaJwyNNiYS4092dKlSWZAiN2mmoZuHSFP+2c/gWsASvKV9B2Cnw/XRmGV3WDz4U62H1Ctobj+c/uAookl6l7VOMiSwN4KMfrBKE0TSZfEOlXHLnT6mA3n1Ybb5QXlfPULDL2w72t7dAOuus=
+	t=1773767705; cv=none; b=bjdj+JbtyF8oma5trK0CNo5V9+tKLVYnk/vLtsgQjOo/T9MRFefyJjreq2uMGlO1iWL9eS3vyyv2Y5puq1duB3AzvHyDw2CCGVOp4qsU8L3ywE/zheW18WCQ2bSrc9YnfqjLnLhZMzBYRx7B8SFXybAsqBgZGaDIhedbfuQM4AE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767700; c=relaxed/simple;
-	bh=BkKBaTxdKaNxSNVxH67B6XjXDqndxpcL18su2/ACDvo=;
+	s=arc-20240116; t=1773767705; c=relaxed/simple;
+	bh=tdKuKdvFHLu+BzVxvQDv5a+sNPLn5xqHUtTrYSsY3ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3QAkRKvTba21+3pnYvPPkQngVY8xloPvq4DyS09co1lu2KHSJuJ3/irhj4CwgmpeF46k6ACYk5aqJ3x+a+vfe24v/sN7bJMoBnOWINH5ZSIHImMd5yPbHgE+WQ7i589pYpFAcPmuqb3PxWyEz1cR/4MetCqHdEPQExrE/w+9kA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t6fu3zYD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=i9IKmgURsh/U6vu3p9LEV0tTMo/zvLUmHb0xUDrl+L/ofeIbzb7gsphgL44qPi8ebcMZ1GOtAKrTs+KmRj/P5tJPNgdHhLZsmxHzt6wybRCMsclc2O4t0BXYdmCRjQcy4OotjJvrlmFzSDDNpLqYDu5mbdSf6jdEH4Dm9oKMwzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muzPDzPq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t6fu3zYD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83CA1C2BC86;
-	Tue, 17 Mar 2026 17:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muzPDzPq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8829C2BCB0;
+	Tue, 17 Mar 2026 17:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767699;
-	bh=BkKBaTxdKaNxSNVxH67B6XjXDqndxpcL18su2/ACDvo=;
+	s=korg; t=1773767704;
+	bh=tdKuKdvFHLu+BzVxvQDv5a+sNPLn5xqHUtTrYSsY3ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t6fu3zYDYeEOrbSX3KYJCQHdVAEtsVMazV9o+d/Yme+ckuXicMD/3UcULbxRpwwC8
-	 mgdx1bnNBpHhvMWwhw7xVk/NW8ZlkC7fNs1cfB90BQ4DbUz62yEtyoNnzLVbEIxSqU
-	 2rSBZulob3Mkw09eTN/hMdhd/DadvSCmAOoaAmI0=
+	b=muzPDzPqcSEENIRs7w07AEDr9cS/p/btuthY+z5JndAhoe3sOZGzy5iOUKFisViGV
+	 DrwPQLt1nXjygu0cd2oygL3h9Q+evuSz4wBs5hrO0LC2T7RcEEj6aGGeyDyJNcTZdK
+	 eDmjEUsVl9Fl8OVhQPiyvToxy1po3XOXwWiKKumg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 106/333] sched_ext: Remove redundant css_put() in scx_cgroup_init()
-Date: Tue, 17 Mar 2026 17:32:15 +0100
-Message-ID: <20260317163003.299883167@linuxfoundation.org>
+	Mehul Rao <mehulrao@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.18 107/333] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
+Date: Tue, 17 Mar 2026 17:32:16 +0100
+Message-ID: <20260317163003.337662384@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -45,48 +44,85 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Mehul Rao <mehulrao@gmail.com>
 
-commit 1336b579f6079fb8520be03624fcd9ba443c930b upstream.
+commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 upstream.
 
-The iterator css_for_each_descendant_pre() walks the cgroup hierarchy
-under cgroup_lock(). It does not increment the reference counts on
-yielded css structs.
+In the drain loop, the local variable 'runtime' is reassigned to a
+linked stream's runtime (runtime = s->runtime at line 2157).  After
+releasing the stream lock at line 2169, the code accesses
+runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
+(lines 2170-2178) — all referencing the linked stream's runtime without
+any lock or refcount protecting its lifetime.
 
-According to the cgroup documentation, css_put() should only be used
-to release a reference obtained via css_get() or css_tryget_online().
-Since the iterator does not use either of these to acquire a reference,
-calling css_put() in the error path of scx_cgroup_init() causes a
-refcount underflow.
+A concurrent close() on the linked stream's fd triggers
+snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
+→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
+No synchronization prevents kfree(runtime) from completing while the
+drain path dereferences the stale pointer.
 
-Remove the unbalanced css_put() to prevent a potential Use-After-Free
-(UAF) vulnerability.
+Fix by caching the needed runtime fields (no_period_wakeup, rate,
+buffer_size) into local variables while still holding the stream lock,
+and using the cached values after the lock is released.
 
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/core/pcm_native.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3450,7 +3450,6 @@ static int scx_cgroup_init(struct scx_sc
- 		ret = SCX_CALL_OP_RET(sch, SCX_KF_UNLOCKED, cgroup_init, NULL,
- 				      css->cgroup, &args);
- 		if (ret) {
--			css_put(css);
- 			scx_error(sch, "ops.cgroup_init() failed (%d)", ret);
- 			return ret;
- 		}
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2144,6 +2144,10 @@ static int snd_pcm_drain(struct snd_pcm_
+ 	for (;;) {
+ 		long tout;
+ 		struct snd_pcm_runtime *to_check;
++		unsigned int drain_rate;
++		snd_pcm_uframes_t drain_bufsz;
++		bool drain_no_period_wakeup;
++
+ 		if (signal_pending(current)) {
+ 			result = -ERESTARTSYS;
+ 			break;
+@@ -2163,16 +2167,25 @@ static int snd_pcm_drain(struct snd_pcm_
+ 		snd_pcm_group_unref(group, substream);
+ 		if (!to_check)
+ 			break; /* all drained */
++		/*
++		 * Cache the runtime fields needed after unlock.
++		 * A concurrent close() on the linked stream may free
++		 * its runtime via snd_pcm_detach_substream() once we
++		 * release the stream lock below.
++		 */
++		drain_no_period_wakeup = to_check->no_period_wakeup;
++		drain_rate = to_check->rate;
++		drain_bufsz = to_check->buffer_size;
+ 		init_waitqueue_entry(&wait, current);
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		add_wait_queue(&to_check->sleep, &wait);
+ 		snd_pcm_stream_unlock_irq(substream);
+-		if (runtime->no_period_wakeup)
++		if (drain_no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+ 		else {
+ 			tout = 100;
+-			if (runtime->rate) {
+-				long t = runtime->buffer_size * 1100 / runtime->rate;
++			if (drain_rate) {
++				long t = drain_bufsz * 1100 / drain_rate;
+ 				tout = max(t, tout);
+ 			}
+ 			tout = msecs_to_jiffies(tout);
 
 
