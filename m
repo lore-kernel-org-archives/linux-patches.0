@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CF03EBF20;
-	Tue, 17 Mar 2026 16:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD0053EBF20;
+	Tue, 17 Mar 2026 16:39:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765561; cv=none; b=fZbf6F+XftLurQLuSl+tqKy7MG1H6S7qOHlg+P/mzpKo9AzaUBBHDzkik2xRf9KbHLGuH06tVw3I36eZ/Bi3Hey16CjB6KxllKZ6uFJMZPQfN6nIoMBjBWKlmvG4NJR9rLK0v2l4LSm6B3fZqj5jT1PRXxmpEKVzJb+P+SdZdDg=
+	t=1773765565; cv=none; b=Ctkhh+2ACNMyohSddu1By/T7cmu5K9VO63ro3i8TMieqBoFqFM8HMfiQHWksdJJVVWmkoYQGUGPcdWVPkY1Qd/wK+YH96NlVYk4dK0Tpi+LNc9SYTxGGaUgw498EF3mYOmmrkIgyjNpFvMKdNYzqneF4s0lIWD4QMdie1n0uLQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765561; c=relaxed/simple;
-	bh=Lxf4Gqlbk2ATcI4J/JyGGOmgB7WiAyhNGg1oM8OZTBc=;
+	s=arc-20240116; t=1773765565; c=relaxed/simple;
+	bh=lfI2g9OQRSuuRfm3uCjRWEGHPNyEp/SLAmNz4kwjjSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AXarIr8XNnCJHJUcMHbqYH0rONdI4o5P5SWAlqpRdrk8tzgTqGpn0cE5IZJKp0HPNoefDyFm4ZdZgKCsIil0Vd/4cyhyeF3VYBRFEVtRAdwr8p280/U1w5FLxt7HDatEszkn6oqbZdW/HxON+uHc7Wz9Alm/Smxfa6EO8FiRKew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3C3+H5u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BTKzCTXf/8zHfffELYESamX0l7W9K7UoPY3AhLBqYtCOe0OahfHBKDN1rWefmFx65o0UqLLrfhelyJsR4uZK2HZ7fIg1BRJdxi5ECdtnEx4FeJAZKbs1r5WpjF1D4XvXrKTpcjlZkIBkaqPcgzhz1DkfURNPZSk/g6Vd427QQfM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QOJ2cvDN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3C3+H5u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D18C2BC86;
-	Tue, 17 Mar 2026 16:39:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QOJ2cvDN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED113C4CEF7;
+	Tue, 17 Mar 2026 16:39:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765561;
-	bh=Lxf4Gqlbk2ATcI4J/JyGGOmgB7WiAyhNGg1oM8OZTBc=;
+	s=korg; t=1773765565;
+	bh=lfI2g9OQRSuuRfm3uCjRWEGHPNyEp/SLAmNz4kwjjSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W3C3+H5uOCcfD168dGTYEeY8d5cn445Wc3cPfKiQq8k10bOWtC5DzD8tebzJTHfWk
-	 uWrjEPIpAFH9jA7MWOP8l71JXaOKQfR6cZ2NfZtDJCR4JtrQOTUPVQ1w4s14Hl5BjM
-	 xkH/7sLfi6YPRMmBdMF9/RMwfDVvTrmaYk4S4O3M=
+	b=QOJ2cvDN9XAwl02wV+LcAfSW1bPtM+v4aRuXv343D09DGppDofpoJ1fhj0pEEf4KA
+	 KwjrYyrBi2E2E2ecXMWhWzqgRztkL+dpHR827q0nB7E5f6wdtv7DUIGEGiI2PPS404
+	 3hdGks2eVRJigI53kGGQV08tiHKO5wOcuXV+iKY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Melissa Wen <mwen@igalia.com>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 039/378] drm/amd/pm: add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v14
-Date: Tue, 17 Mar 2026 17:29:56 +0100
-Message-ID: <20260317163008.423362271@linuxfoundation.org>
+Subject: [PATCH 6.19 040/378] drm/amdgpu: Fix kernel-doc comments for some LUT properties
+Date: Tue, 17 Mar 2026 17:29:57 +0100
+Message-ID: <20260317163008.460235424@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,37 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Wang <kevinyang.wang@amd.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit 9d4837a26149355ffe3a1f80de80531eafdd3353 ]
+[ Upstream commit 52289ce48ef1f8a81cd39df1574098356e3c9d4c ]
 
-add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v14.0.2/14.0.3
+The following members of struct amdgpu_mode_info do not have valid
+references in the related kernel-doc sections:
 
-Fixes: 9710b84e2a6a ("drm/amd/pm: add overdrive support on smu v14.0.2/3")
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5018
-Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
+ - plane_shaper_lut_property
+ - plane_shaper_lut_size_property,
+ - plane_lut3d_size_property
+
+Correct all affected comment blocks.
+
+Fixes: f545d82479b4 ("drm/amd/display: add plane shaper LUT and TF driver-specific properties")
+Fixes: 671994e3bf33 ("drm/amd/display: add plane 3D LUT driver-specific properties")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 1b5cf07d80bb16d1593579ccdb23f08ea4262c14)
+(cherry picked from commit ec5708d6e547f7efe2f009073bfa98dbc4c5c2ac)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-index d7642d388bc38..fa535f43876b5 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
-@@ -2413,7 +2413,8 @@ static int smu_v14_0_2_restore_user_od_settings(struct smu_context *smu)
- 	user_od_table->OverDriveTable.FeatureCtrlMask = BIT(PP_OD_FEATURE_GFXCLK_BIT) |
- 							BIT(PP_OD_FEATURE_UCLK_BIT) |
- 							BIT(PP_OD_FEATURE_GFX_VF_CURVE_BIT) |
--							BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+							BIT(PP_OD_FEATURE_FAN_CURVE_BIT) |
-+							BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 	res = smu_v14_0_2_upload_overdrive_table(smu, user_od_table);
- 	user_od_table->OverDriveTable.FeatureCtrlMask = 0;
- 	if (res == 0)
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+index dc8d2f52c7d61..e244c12ceb238 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_mode.h
+@@ -368,15 +368,15 @@ struct amdgpu_mode_info {
+ 
+ 	struct drm_property *plane_ctm_property;
+ 	/**
+-	 * @shaper_lut_property: Plane property to set pre-blending shaper LUT
+-	 * that converts color content before 3D LUT. If
+-	 * plane_shaper_tf_property != Identity TF, AMD color module will
++	 * @plane_shaper_lut_property: Plane property to set pre-blending
++	 * shaper LUT that converts color content before 3D LUT.
++	 * If plane_shaper_tf_property != Identity TF, AMD color module will
+ 	 * combine the user LUT values with pre-defined TF into the LUT
+ 	 * parameters to be programmed.
+ 	 */
+ 	struct drm_property *plane_shaper_lut_property;
+ 	/**
+-	 * @shaper_lut_size_property: Plane property for the size of
++	 * @plane_shaper_lut_size_property: Plane property for the size of
+ 	 * pre-blending shaper LUT as supported by the driver (read-only).
+ 	 */
+ 	struct drm_property *plane_shaper_lut_size_property;
+@@ -400,10 +400,10 @@ struct amdgpu_mode_info {
+ 	 */
+ 	struct drm_property *plane_lut3d_property;
+ 	/**
+-	 * @plane_degamma_lut_size_property: Plane property to define the max
+-	 * size of 3D LUT as supported by the driver (read-only). The max size
+-	 * is the max size of one dimension and, therefore, the max number of
+-	 * entries for 3D LUT array is the 3D LUT size cubed;
++	 * @plane_lut3d_size_property: Plane property to define the max size
++	 * of 3D LUT as supported by the driver (read-only). The max size is
++	 * the max size of one dimension and, therefore, the max number of
++	 * entries for 3D LUT array is the 3D LUT size cubed.
+ 	 */
+ 	struct drm_property *plane_lut3d_size_property;
+ 	/**
 -- 
 2.51.0
 
