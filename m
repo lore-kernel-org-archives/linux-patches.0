@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFA02DF132;
-	Tue, 17 Mar 2026 16:45:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 541232FFDEA;
+	Tue, 17 Mar 2026 16:45:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765921; cv=none; b=WjZg9iAs4JOpKl98QGkk1GURTcE65XyK/I+1rbPbwU7OeRH1QQnn2eXRjbrvNvQLc+KgfiStouqGTBN7U/yCFYxt2BLQcrjFWAGJyaRsAw/LTY3z45Phr8JlxW6gkCg3uDG4GkpAX3JYsBLniUSCPbQDaYwC+2DNgdoVJTOjeKE=
+	t=1773765925; cv=none; b=DrK0HCq7lD2qhPmuhzkUal/g0qdzLK74jqH6O9Wbe0IWb4PwUZ0OqV1nSHX3fHF3lI6ZI9R7Kj1L+iL9kJnpkU3nG7moihEktRs0xAeDuF/pYRAguqMZJS4QR4D6+jnNDIbe7h7YxvpdOkxWpnNUIcfk1Xe0vSW/U7h3ngq3z0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765921; c=relaxed/simple;
-	bh=DIO67tpfSx2E5W9EBjcjsZym9e2iXO+2bBM/JFThLZQ=;
+	s=arc-20240116; t=1773765925; c=relaxed/simple;
+	bh=OlCBrCgrcM8mt3bZvLYuHdJoISquDWT+zoOmOodlskI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bKO2/AJzV0uTcppC/n3R5qivKacM40CmgaF17scZuDG8izBy1gGtT1EHT3/QEQKVmKKtOI653u+JKFFq7H9PfZ2H84Qhd+w/C/trOqFGjsHHRgRDxYDyWzZXlzuyY0/OZ1jw7Tnjx+tVOeuuHzn5/d0CxPVOwkxovsMpc7LOW24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bImQ/wm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bRJhLi5lynoe0kWLC2yodn4YMpJEB6rvAB2rj2uTU6aFB7UTUL3wp2k/+VB00PLU9r0V31C/CcPWXKvkzlEWcfsrPb1afHC8ir7CumIK8hq2fOaW+BAb/WFvMlnGXD9SnoA6Pn/1tc8GD32q4Sq+swFL4kg6ldHcBO85vpWePFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZIULuldk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bImQ/wm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5019BC4CEF7;
-	Tue, 17 Mar 2026 16:45:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZIULuldk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5463C4CEF7;
+	Tue, 17 Mar 2026 16:45:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765921;
-	bh=DIO67tpfSx2E5W9EBjcjsZym9e2iXO+2bBM/JFThLZQ=;
+	s=korg; t=1773765925;
+	bh=OlCBrCgrcM8mt3bZvLYuHdJoISquDWT+zoOmOodlskI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bImQ/wmb41S4UyulGkJI46L1tQQ21LkonebTHoKqC/ewbUu+Muvsm4P6IQthlqT0
-	 ktnk+64+HnzmIdtPN+tB3zUF7eQ3eDS3nSfseYGK8j32Fs2Tmy4XxsAoH6FdZRMDTe
-	 5Ef6OocUsRPhfhRefoWRLom0HPUWoWUKp5+fN5yY=
+	b=ZIULuldknFjw9udpSOY+UhgWuTw/kAOoVljpAaj1CQGI53mVtPt1KSLolsRW/oL06
+	 LX1o2SuuBMPe4SySSCfHBmlcOUodq6MTmKIxu3xYJMhDyPHoSq6pGf1ME2TRReZY2W
+	 onft8OhAvcfTXEM1I/oaoyhL8utNXVNV1Lcp3L3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Penkler <dpenkler@gmail.com>,
-	stable <stable@kernel.org>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.19 125/378] gpib: lpvo_usb: fix unintended binding of FTDI 8U232AM devices
-Date: Tue, 17 Mar 2026 17:31:22 +0100
-Message-ID: <20260317163011.613841642@linuxfoundation.org>
+	Jesper Dangaard Brouer <hawk@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 095/378] page_pool: store detach_time as ktime_t to avoid false-negatives
+Date: Tue, 17 Mar 2026 17:30:52 +0100
+Message-ID: <20260317163010.512852973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,53 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit 163cc462dea7d5b75be4db49ca78a2b99c55375e upstream.
+[ Upstream commit 28b225282d44e2ef40e7f46cfdbd5d1b20b8874f ]
 
-The LPVO USB GPIB adapter apparently uses an FTDI 8U232AM with the
-default PID, but this device id is already handled by the ftdi_sio
-serial driver.
+While testing other changes in vng I noticed that
+nl_netdev.page_pool_check flakes. This never happens in real CI.
 
-Stop binding to the default PID to avoid breaking existing setups with
-FTDI 8U232AM.
+Turns out vng may boot and get to that test in less than a second.
+page_pool_detached() records the detach time in seconds, so if
+vng is fast enough detach time is set to 0. Other code treats
+0 as "not detached". detach_time is only used to report the state
+to the user, so it's not a huge deal in practice but let's fix it.
+Store the raw ktime_t (nanoseconds) instead. A nanosecond value
+of 0 is practically impossible.
 
-Anyone using this driver should blacklist the ftdi_sio driver and add
-the device id manually through sysfs (e.g. using udev rules).
-
-Fixes: fce79512a96a ("staging: gpib: Add LPVO DIY USB GPIB driver")
-Fixes: e6ab504633e4 ("staging: gpib: Destage gpib")
-Cc: Dave Penkler <dpenkler@gmail.com>
-Cc: stable <stable@kernel.org>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260305151729.10501-2-johan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Jesper Dangaard Brouer <hawk@kernel.org>
+Fixes: 69cb4952b6f6 ("net: page_pool: report when page pool was destroyed")
+Link: https://patch.msgid.link/20260310003907.3540019-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ include/net/page_pool/types.h | 2 +-
+ net/core/page_pool_user.c     | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c
-+++ b/drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c
-@@ -38,8 +38,10 @@ MODULE_DESCRIPTION("GPIB driver for LPVO
- /*
-  * Table of devices that work with this driver.
-  *
-- * Currently, only one device is known to be used in the
-- * lpvo_usb_gpib adapter (FTDI 0403:6001).
-+ * Currently, only one device is known to be used in the lpvo_usb_gpib
-+ * adapter (FTDI 0403:6001) but as this device id is already handled by the
-+ * ftdi_sio USB serial driver the LPVO driver must not bind to it by default.
-+ *
-  * If your adapter uses a different chip, insert a line
-  * in the following table with proper <Vendor-id>, <Product-id>.
-  *
-@@ -50,7 +52,6 @@ MODULE_DESCRIPTION("GPIB driver for LPVO
-  */
- 
- static const struct usb_device_id skel_table[] = {
--	{ USB_DEVICE(0x0403, 0x6001) },
- 	{ }					   /* Terminating entry */
+diff --git a/include/net/page_pool/types.h b/include/net/page_pool/types.h
+index 1509a536cb855..fb4f03ccd6156 100644
+--- a/include/net/page_pool/types.h
++++ b/include/net/page_pool/types.h
+@@ -246,7 +246,7 @@ struct page_pool {
+ 	/* User-facing fields, protected by page_pools_lock */
+ 	struct {
+ 		struct hlist_node list;
+-		u64 detach_time;
++		ktime_t detach_time;
+ 		u32 id;
+ 	} user;
  };
- MODULE_DEVICE_TABLE(usb, skel_table);
+diff --git a/net/core/page_pool_user.c b/net/core/page_pool_user.c
+index c82a95beceff8..ee5060d8eec0e 100644
+--- a/net/core/page_pool_user.c
++++ b/net/core/page_pool_user.c
+@@ -245,7 +245,7 @@ page_pool_nl_fill(struct sk_buff *rsp, const struct page_pool *pool,
+ 		goto err_cancel;
+ 	if (pool->user.detach_time &&
+ 	    nla_put_uint(rsp, NETDEV_A_PAGE_POOL_DETACH_TIME,
+-			 pool->user.detach_time))
++			 ktime_divns(pool->user.detach_time, NSEC_PER_SEC)))
+ 		goto err_cancel;
+ 
+ 	if (pool->mp_ops && pool->mp_ops->nl_fill(pool->mp_priv, rsp, NULL))
+@@ -337,7 +337,7 @@ int page_pool_list(struct page_pool *pool)
+ void page_pool_detached(struct page_pool *pool)
+ {
+ 	mutex_lock(&page_pools_lock);
+-	pool->user.detach_time = ktime_get_boottime_seconds();
++	pool->user.detach_time = ktime_get_boottime();
+ 	netdev_nl_page_pool_event(pool, NETDEV_CMD_PAGE_POOL_CHANGE_NTF);
+ 	mutex_unlock(&page_pools_lock);
+ }
+-- 
+2.51.0
+
 
 
