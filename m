@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E268C377EDD;
-	Tue, 17 Mar 2026 17:02:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C60D2FFDEA;
+	Tue, 17 Mar 2026 17:02:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766951; cv=none; b=DKJeeOV2n4Zc56EpzAWM4N9TZjKIGI680xV6eZSC8/QhQNiskgMDVqszzPw4WMcw7jKOql8rXpcV1pL8rnDy00gfMTgOnyej/ev1wAc6Fdh+tYDT6waoF2cG2ePoXDv+1SDmNcpTvOldamYVJO/wVKPIDC8nqlIavJx1P3cZx/Q=
+	t=1773766954; cv=none; b=PdynyAIjp9kYwfel3hq9ikmxrAY6BzTjqz9J1MnmLqZ03tLNOachkzg2IfOJND4Sdf+0UUiqsicHAeR+pdffGNsPhxg587WHRZ/9BB5qe2ZgU2cNB+JnSLbSYj/DHfwbB7QgmHXOSV1hc3IU0UpBjo/AKyMvE7SHCfcTurTF4ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766951; c=relaxed/simple;
-	bh=F2hcWbi9BDE4o1jLSKWKS9mzz0SMyex1PUI6829Z+YA=;
+	s=arc-20240116; t=1773766954; c=relaxed/simple;
+	bh=D/Z/2vAoOddETP/k7RNxxuUiPmHQOHcJAJRS07plUHY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJ5uzFIsMWjRAxkJfJWLhs4nqE1d8my0Ga0cPY2pyNZgDnb78AngeVSKChSE8rReshdHfv0owkeeobrnrsEvA0FXGB+CZ892SKeW9ocrVGYnkOWEtfZXWyg6nNUDFchPSrMldV3M8j5ztDi+MDnt/Saajl95qCpT6WhyJ4BuiPA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qZaqB/jT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kOqTsYDkTQCcy7Hj+GxgrXosckwDXxG4wfOPCgA6tTuP/lTMCBS64AMh0cw2b8WFQakaEjEOvkriWDkyqOrOOg+3fwPP61rDxIzUGBNyXvm26pRFdLpaznN7do6d4RJvIHbyhzjlfneLBUZO6G5m5tIQmcN8laT7/r3V6E9qWU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KNNAAilP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qZaqB/jT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D8A1C4CEF7;
-	Tue, 17 Mar 2026 17:02:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KNNAAilP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA37C4CEF7;
+	Tue, 17 Mar 2026 17:02:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766950;
-	bh=F2hcWbi9BDE4o1jLSKWKS9mzz0SMyex1PUI6829Z+YA=;
+	s=korg; t=1773766954;
+	bh=D/Z/2vAoOddETP/k7RNxxuUiPmHQOHcJAJRS07plUHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qZaqB/jT6jAMbmV8Tb3SmpycqLqLGKpTZoxtUsRLNay1i1AxeRAgsH4ksdr0lRGu6
-	 iDITwgg96ZhzIjfFfuWyJtzCo2CRdd1J0mjRrUiBdm3W1txTjGKAs6SlNw5IFQZEBA
-	 jaHmNnMNBX296zHIO9OodH6BRN4BToTlGn+HEhp8=
+	b=KNNAAilPg6ZFfQrsWBZzJWRHvflAgRUDBMp/Nrr/SWeP+1IwxVjlB/9XGXoPVj6Y5
+	 g63c/V+B1aH3ybpgPjnvmwubLEjdGbuwjQqwgC+6eQ4lqXHnWlnTLF5jXx/J1Q3oNu
+	 pKUFQGNNmsfWYoCbqLYd7Wy452HfWssjUkOI93ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Stable@vger.kernel.org,
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Andy Shevchenko <andy@kernel.org>,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 358/378] iio: light: bh1780: fix PM runtime leak on error path
-Date: Tue, 17 Mar 2026 17:35:15 +0100
-Message-ID: <20260317163020.153259961@linuxfoundation.org>
+Subject: [PATCH 6.19 359/378] iio: imu: inv_icm45600: fix INT1 drive bit inverted
+Date: Tue, 17 Mar 2026 17:35:16 +0100
+Message-ID: <20260317163020.188553715@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,37 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-commit dd72e6c3cdea05cad24e99710939086f7a113fb5 upstream.
+commit 7ef74d961d1ad6ec72b50887ca119d7f98f07717 upstream.
 
-Move pm_runtime_put_autosuspend() before the error check to ensure
-the PM runtime reference count is always decremented after
-pm_runtime_get_sync(), regardless of whether the read operation
-succeeds or fails.
+Drive bit must be set for open-drain mode and be cleared for push-pull
+mode.
 
-Fixes: 1f0477f18306 ("iio: light: new driver for the ROHM BH1780")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Cc: <Stable@vger.kernel.org>
+Referring to datasheet DS-000576_ICM-45605.pdf section 17.23
+INT1_CONFIG2.
+
+Fixes: 06674a72cf7a ("iio: imu: inv_icm45600: add buffer support in iio devices")
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/bh1780.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/inv_icm45600/inv_icm45600.h      |    2 +-
+ drivers/iio/imu/inv_icm45600/inv_icm45600_core.c |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/light/bh1780.c
-+++ b/drivers/iio/light/bh1780.c
-@@ -109,9 +109,9 @@ static int bh1780_read_raw(struct iio_de
- 		case IIO_LIGHT:
- 			pm_runtime_get_sync(&bh1780->client->dev);
- 			value = bh1780_read_word(bh1780, BH1780_REG_DLOW);
-+			pm_runtime_put_autosuspend(&bh1780->client->dev);
- 			if (value < 0)
- 				return value;
--			pm_runtime_put_autosuspend(&bh1780->client->dev);
- 			*val = value;
+--- a/drivers/iio/imu/inv_icm45600/inv_icm45600.h
++++ b/drivers/iio/imu/inv_icm45600/inv_icm45600.h
+@@ -205,7 +205,7 @@ struct inv_icm45600_sensor_state {
+ #define INV_ICM45600_SPI_SLEW_RATE_38NS			0
  
- 			return IIO_VAL_INT;
+ #define INV_ICM45600_REG_INT1_CONFIG2			0x0018
+-#define INV_ICM45600_INT1_CONFIG2_PUSH_PULL		BIT(2)
++#define INV_ICM45600_INT1_CONFIG2_OPEN_DRAIN		BIT(2)
+ #define INV_ICM45600_INT1_CONFIG2_LATCHED		BIT(1)
+ #define INV_ICM45600_INT1_CONFIG2_ACTIVE_HIGH		BIT(0)
+ #define INV_ICM45600_INT1_CONFIG2_ACTIVE_LOW		0x00
+--- a/drivers/iio/imu/inv_icm45600/inv_icm45600_core.c
++++ b/drivers/iio/imu/inv_icm45600/inv_icm45600_core.c
+@@ -637,8 +637,8 @@ static int inv_icm45600_irq_init(struct
+ 		break;
+ 	}
+ 
+-	if (!open_drain)
+-		val |= INV_ICM45600_INT1_CONFIG2_PUSH_PULL;
++	if (open_drain)
++		val |= INV_ICM45600_INT1_CONFIG2_OPEN_DRAIN;
+ 
+ 	ret = regmap_write(st->map, INV_ICM45600_REG_INT1_CONFIG2, val);
+ 	if (ret)
 
 
