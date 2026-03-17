@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67D7329D26C;
-	Tue, 17 Mar 2026 17:04:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B648F2FFDEA;
+	Tue, 17 Mar 2026 17:04:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767074; cv=none; b=ES+Mg4EWUt2Wpn+tOZWX+e/umeRLK2dgs8gQWF61vYNSXLj99Jk4ipBzq/v4fzjslTicuL8y2VHO25X6PcsjmFbhA7gaOPZoCzWjvU9cCFGdLrk/wgglbB6g+2gVDf4LwTTHjmGHd7//uG0BN1ub8WRLAozXAoPudQd/QDRLydk=
+	t=1773767078; cv=none; b=q7Bnlt830qgpmbXB78/BEhhD4woXqytwRS4V8NmyL/0tfsU6eBRt9q4GBRQbqynRQmEawLy+PCFgCcudegaMM+FAPfAc5wZN1QBXIBGuZN/NBElP4u7qZHpJwEAgSoZ2kaRwlYxgsnow6UPpPDHPNK8xF/hGVEbM552OorlTkHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767074; c=relaxed/simple;
-	bh=zXPqQtK/ALa+x25maGWxNv5y8mjVrBreBWBaYfylSeQ=;
+	s=arc-20240116; t=1773767078; c=relaxed/simple;
+	bh=3/q6aGZkuVmbBcfGUQZ3jO4AkoceIV0CHZTFDNdq454=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uCDftazPZZUMXpbut/VWnelLudkHg+bTccdOI8mIIAtw6EcZFX8tTYUeK431gefZfu4YJU/U/y8bIY6HSztxZ/vvIODbd94B71DCdFUSuE6+Ji/KEmWJ5NC/9K43nxqIKvye/wlbZ5Pm7L+da4iIQpa3+WJcbMvEFV6nb4qph00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bUEw99e; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lo82iSS5QreEqSWL19Ut3TlPV19hqu6dr43XeJQIPC8zuN1UgLW9RKwA+CG3q2si/6PMBMYAGKLX9wBh4tagSpXwnQC4t/fDtNE2wnBnpbZqysLu4nPHEL4pq8dJ/roKGH7JgT6O7KzhJdVXQTkvd2uthRQBFp4csJ7XAreYLsg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XjWJMGEe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bUEw99e"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A88C4CEF7;
-	Tue, 17 Mar 2026 17:04:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XjWJMGEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 264F8C19424;
+	Tue, 17 Mar 2026 17:04:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767074;
-	bh=zXPqQtK/ALa+x25maGWxNv5y8mjVrBreBWBaYfylSeQ=;
+	s=korg; t=1773767078;
+	bh=3/q6aGZkuVmbBcfGUQZ3jO4AkoceIV0CHZTFDNdq454=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1bUEw99eZXtJM1qOMwjKwqoBYEr6Qm6OK4MehDSmX2RRreTrxxYfIoMeatuCfZ03e
-	 opFBuQfgk6Q5pGyxa2UenC2T4vaUlB6LNmoPyJdGOOO9vDM/GpFXlQjU+lCWg1coTx
-	 dEPiCo8w2REA0lk3Y7Dlb0227PH0hmni/w0lBCpk=
+	b=XjWJMGEeb2akQ5L92AK+ThLXgwtNW2ESwQ966gzaD93gcq7/hevfrYIZGEPoADAG+
+	 mTxIJ853zPUXambHZGf5G9+mSrtNBl8ZjT3W72pQZoKq697YejJZ5EO7R5uz0lhdtv
+	 3pLgkefA4bxjXKsXu26+tWgRpA/dHkDjltV9L7/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Michael Kelley <mhklinux@outlook.com>,
+	David Jeffery <djeffery@redhat.com>,
+	Tomas Henzl <thenzl@redhat.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 001/333] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
-Date: Tue, 17 Mar 2026 17:30:30 +0100
-Message-ID: <20260317162959.409709800@linuxfoundation.org>
+Subject: [PATCH 6.18 010/333] scsi: ses: Fix devices attaching to different hosts
+Date: Tue, 17 Mar 2026 17:30:39 +0100
+Message-ID: <20260317162959.740125408@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,107 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Tomas Henzl <thenzl@redhat.com>
 
-[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
+[ Upstream commit 70ca8caa96ce473647054f5c7b9dab5423902402 ]
 
-This resolves the follow splat and lock-up when running with PREEMPT_RT
-enabled on Hyper-V:
+On a multipath SAS system some devices don't end up with correct symlinks
+from the SCSI device to its enclosure. Some devices even have enclosure
+links pointing to enclosures attached to different SCSI hosts.
 
-[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
-[  415.140822] INFO: lockdep is turned off.
-[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
-[  415.140846] Preemption disabled at:
-[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
-[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
-[  415.140857] Call Trace:
-[  415.140861]  <TASK>
-[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140863]  dump_stack_lvl+0x91/0xb0
-[  415.140870]  __schedule_bug+0x9c/0xc0
-[  415.140875]  __schedule+0xdf6/0x1300
-[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
-[  415.140879]  ? rcu_is_watching+0x12/0x60
-[  415.140883]  schedule_rtlock+0x21/0x40
-[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
-[  415.140891]  rt_spin_lock+0x89/0x1e0
-[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
-[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
-[  415.140900]  ? rcu_is_watching+0x12/0x60
-[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
-[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
-[  415.140908]  ? __rq_qos_issue+0x28/0x40
-[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
-[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
-[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
-[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
-[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
-[  415.140935]  __blk_flush_plug+0xf4/0x150
-[  415.140940]  __submit_bio+0x2b2/0x5c0
-[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
-[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
-[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
-[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
-[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
-[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
-[  415.141060]  generic_perform_write+0x14e/0x2c0
-[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
-[  415.141083]  vfs_write+0x2ca/0x570
-[  415.141087]  ksys_write+0x76/0xf0
-[  415.141089]  do_syscall_64+0x99/0x1490
-[  415.141093]  ? rcu_is_watching+0x12/0x60
-[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
-[  415.141097]  ? rcu_is_watching+0x12/0x60
-[  415.141098]  ? lock_release+0x1f0/0x2a0
-[  415.141100]  ? rcu_is_watching+0x12/0x60
-[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
-[  415.141103]  ? rcu_is_watching+0x12/0x60
-[  415.141104]  ? __schedule+0xb34/0x1300
-[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
-[  415.141109]  ? do_nanosleep+0x8b/0x160
-[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
-[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
-[  415.141116]  ? xfd_validate_state+0x26/0x90
-[  415.141118]  ? rcu_is_watching+0x12/0x60
-[  415.141120]  ? do_syscall_64+0x1e0/0x1490
-[  415.141121]  ? do_syscall_64+0x1e0/0x1490
-[  415.141123]  ? rcu_is_watching+0x12/0x60
-[  415.141124]  ? do_syscall_64+0x1e0/0x1490
-[  415.141125]  ? do_syscall_64+0x1e0/0x1490
-[  415.141127]  ? irqentry_exit+0x140/0x7e0
-[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ses_match_to_enclosure() calls enclosure_for_each_device() which iterates
+over all enclosures on the system, not just enclosures attached to the
+current SCSI host.
 
-get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
-using is converted to an rt-mutex under PREEMPT_RT.
+Replace the iteration with a direct call to ses_enclosure_find_by_addr().
 
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
+Reviewed-by: David Jeffery <djeffery@redhat.com>
+Signed-off-by: Tomas Henzl <thenzl@redhat.com>
+Link: https://patch.msgid.link/20260210191850.36784-1-thenzl@redhat.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/scsi/ses.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index b43d876747b76..68c837146b9ea 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1855,8 +1855,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
- 	cmd_request->payload_sz = payload_sz;
+diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
+index 2c61624cb4b03..50e744e891295 100644
+--- a/drivers/scsi/ses.c
++++ b/drivers/scsi/ses.c
+@@ -529,9 +529,8 @@ struct efd {
+ };
  
- 	/* Invokes the vsc to start an IO */
--	ret = storvsc_do_io(dev, cmd_request, get_cpu());
--	put_cpu();
-+	migrate_disable();
-+	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
-+	migrate_enable();
+ static int ses_enclosure_find_by_addr(struct enclosure_device *edev,
+-				      void *data)
++				      struct efd *efd)
+ {
+-	struct efd *efd = data;
+ 	int i;
+ 	struct ses_component *scomp;
  
- 	if (ret)
- 		scsi_dma_unmap(scmnd);
+@@ -684,7 +683,7 @@ static void ses_match_to_enclosure(struct enclosure_device *edev,
+ 	if (efd.addr) {
+ 		efd.dev = &sdev->sdev_gendev;
+ 
+-		enclosure_for_each_device(ses_enclosure_find_by_addr, &efd);
++		ses_enclosure_find_by_addr(edev, &efd);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
