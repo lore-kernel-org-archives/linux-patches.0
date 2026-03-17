@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F29A3E5ED6;
-	Tue, 17 Mar 2026 16:49:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8DF3ED106;
+	Tue, 17 Mar 2026 16:49:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766163; cv=none; b=FgKeInNdgjHjYJB/hi9j3DHMmohkh9I+pnLgPqVJv0bxGByEAxZy9LzUTj9XKGoUnbvcHFSOe288bQ99AARuZ1lhmmEwuNbam4umuocqxPnilpaVu5dD5HUTHVQTl7L93Bqp0VtAZdO+BeXOFBOquiZF4+EH+KmAsQMrIemWltQ=
+	t=1773766168; cv=none; b=JV9s3GeH0a6Lp2FCK5iT5zunppkFoJdZIfpcSa1AuDavJ1tLgW1tH353VOfbjl0G2Lb2f9L7vwIojwLB5thmNm7DCKwguRB1fuvLwkb/eYcNl6e3h14/TXf0JrfTaLoPTgfyuqBLszmgTdM+JdHf+FJEYcEkr237zL2Edz8+Uwg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766163; c=relaxed/simple;
-	bh=1LQM42FAV7rMQACOHETfqaBJ9oXCGwTYv8Zo5SbBvm4=;
+	s=arc-20240116; t=1773766168; c=relaxed/simple;
+	bh=SOiUHUCNbVjiOnf/FI+NDoBuXBoZMLaXAlP7tIvVkvo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/Ms1M+JA8wTcCjc/o9Zf+C216XteAW696RfcS214NVEDGYVbpBl3edPcJhREE4WBS5c8rEGpQfrS8pYn+k8XiF+Dn3aFawJrj5c1RVwE6J+seK1JLSZsr/E11duM02fm9EJ1s1J1anM3qdhKxuWCmEPWbeZ9jIUxpmXTNQt+/4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mxThlu8j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hfg5D8K384qAXcnHw4vNdEwLpBoaSncS+k+uMcW7QJ9uPvfY6mq8eEcyvbyTksy8kiv4FeXlqAYD6tjucY6SElHbz2eW6bR21K+gHPr7iQcytvGUs/hgCaeZRJXSlovNyWpekrV+Ihp0Qx9INCgHBNl2E6chbzdkG3KOzSyZJbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sXvMkUSr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mxThlu8j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60ACC4CEF7;
-	Tue, 17 Mar 2026 16:49:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sXvMkUSr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1605C4CEF7;
+	Tue, 17 Mar 2026 16:49:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766163;
-	bh=1LQM42FAV7rMQACOHETfqaBJ9oXCGwTYv8Zo5SbBvm4=;
+	s=korg; t=1773766167;
+	bh=SOiUHUCNbVjiOnf/FI+NDoBuXBoZMLaXAlP7tIvVkvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mxThlu8jz+ReaM+d3GJo6FtTUI1PRXzqadENsbpwbv9M0CymsyRCVeG8I1ZhzP2Gg
-	 Y8ULNgfjyxifpTHuZ39OsuSCn2sB7tjvb/h6gEUk/RjVQqIry0ihVYua8rP6dBtC4X
-	 W0LptnzAtsDwdT20jtyL0SVu2nyMmeph6LN1ur7Y=
+	b=sXvMkUSrtTcIQSujU9JxQigMBuaJiX36orytmumLNtoFdImmvaNEj35VXeei/axyd
+	 Jsx0KVk59zcCTT8yt3f6G1j/87sGwDftVKndppQvtwVLWzqPtG/f/CImKbd1bm8M3a
+	 VNKRMNc8t2GNQM0npmAfhd76yk9gNvvKkKYCyYXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jessica Liu <liu.xuemei1@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 183/378] irqchip/riscv-aplic: Register syscore operations only once
-Date: Tue, 17 Mar 2026 17:32:20 +0100
-Message-ID: <20260317163013.740260526@linuxfoundation.org>
+Subject: [PATCH 6.19 184/378] time/jiffies: Mark jiffies_64_to_clock_t() notrace
+Date: Tue, 17 Mar 2026 17:32:21 +0100
+Message-ID: <20260317163013.776992020@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,65 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jessica Liu <liu.xuemei1@zte.com.cn>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit b330fbfd34d7624bec62b99ad88dba2614326a19 ]
+[ Upstream commit 755a648e78f12574482d4698d877375793867fa1 ]
 
-Since commit 95a8ddde3660 ("irqchip/riscv-aplic: Preserve APLIC
-states across suspend/resume"), when multiple NUMA nodes exist
-and AIA is not configured as "none", aplic_probe() is called
-multiple times. This leads to register_syscore(&aplic_syscore)
-being invoked repeatedly, causing the following Oops:
+The trace_clock_jiffies() function that handles the "uptime" clock for
+tracing calls jiffies_64_to_clock_t(). This causes the function tracer to
+constantly recurse when the tracing clock is set to "uptime". Mark it
+notrace to prevent unnecessary recursion when using the "uptime" clock.
 
- list_add double add: new=ffffffffb91461f0, prev=ffffffffb91461f0, next=ffffffffb915c408.
- [<ffffffffb7b5c8ca>] __list_add_valid_or_report+0x60/0xc0
- [<ffffffffb7cc3236>] register_syscore+0x3e/0x70
- [<ffffffffb7b8d61c>] aplic_probe+0xc6/0x112
-
-Fix this by registering syscore operations only once, using a static
-variable aplic_syscore_registered to track registration.
-
-[ tglx: Trim backtrace properly ]
-
-Fixes: 95a8ddde3660 ("irqchip/riscv-aplic: Preserve APLIC states across suspend/resume")
-Signed-off-by: Jessica Liu <liu.xuemei1@zte.com.cn>
+Fixes: 58d4e21e50ff3 ("tracing: Fix wraparound problems in "uptime" trace clock")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260310141731145xMwLsyvXl9Gw-m6A4VRYj@zte.com.cn
+Link: https://patch.msgid.link/20260306212403.72270bb2@robin
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-riscv-aplic-main.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/time/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-riscv-aplic-main.c b/drivers/irqchip/irq-riscv-aplic-main.c
-index 8775f188ea4fc..9f53979b69625 100644
---- a/drivers/irqchip/irq-riscv-aplic-main.c
-+++ b/drivers/irqchip/irq-riscv-aplic-main.c
-@@ -116,6 +116,16 @@ static struct syscore aplic_syscore = {
- 	.ops = &aplic_syscore_ops,
- };
- 
-+static bool aplic_syscore_registered __ro_after_init;
-+
-+static void aplic_syscore_init(void)
-+{
-+	if (!aplic_syscore_registered) {
-+		register_syscore(&aplic_syscore);
-+		aplic_syscore_registered = true;
-+	}
-+}
-+
- static int aplic_pm_notifier(struct notifier_block *nb, unsigned long action, void *data)
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index 0ba8e3c50d625..155cf7def9146 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -702,7 +702,7 @@ EXPORT_SYMBOL(clock_t_to_jiffies);
+  *
+  * Return: jiffies_64 value converted to 64-bit "clock_t" (CLOCKS_PER_SEC)
+  */
+-u64 jiffies_64_to_clock_t(u64 x)
++notrace u64 jiffies_64_to_clock_t(u64 x)
  {
- 	struct aplic_priv *priv = container_of(nb, struct aplic_priv, genpd_nb);
-@@ -379,7 +389,7 @@ static int aplic_probe(struct platform_device *pdev)
- 		return rc;
- 	}
- 
--	register_syscore(&aplic_syscore);
-+	aplic_syscore_init();
- 
- #ifdef CONFIG_ACPI
- 	if (!acpi_disabled)
+ #if (TICK_NSEC % (NSEC_PER_SEC / USER_HZ)) == 0
+ # if HZ < USER_HZ
 -- 
 2.51.0
 
