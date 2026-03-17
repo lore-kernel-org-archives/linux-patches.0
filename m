@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26832DF132;
-	Tue, 17 Mar 2026 16:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3203469E6;
+	Tue, 17 Mar 2026 16:45:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765948; cv=none; b=BYJRggDLI4Sjrsg6C96bcmERcpiPsVFMp4bouGh35gH/uFhvFoCUSZIYLfGyuoGh3dxvty7LHLzNypmELbLlSKjUAwSGLli8E0yeh0Yr9qL5OHPodc66ujCG7W5kaSLzoai4NKEsfBgpdHfNSw0K4wZL12ICT1RCeEtsbIuVcZw=
+	t=1773765951; cv=none; b=bb8uhYh4WBrF7OIModoVA46sd67AVG6we165o/iUTa5IPpRyDsch/r8TnNIbXKx8reGrz4kLEeckELL5vQiInG2s6op7Zz8kHcaWlzssEp6JfstRahsGY1MdavndMXongTkiU9cDspfTdzn7uLG31J9h3/QHpPZ8oSPBtGO+o+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765948; c=relaxed/simple;
-	bh=PAPXa7pnKhs66AeQZETzrPz4RaMxOxo8rLLJUJBtL9s=;
+	s=arc-20240116; t=1773765951; c=relaxed/simple;
+	bh=KwrvGiw3AMQXvjLAv31Gvd0fG7LJubUCrK8Qs6+FGOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JB0OKRrlnH5GUet+cfgCFs2X7MjWm0kqggNuUeXc0R4R5/6k69unRS0dnb4ej+F8U6K+S2rXsUNmXThWBRPnUA1deTb9Fynw1U9Yd8t/DME9TriqxJtXuhbZ5Ca3MOw3sPAUGyBSpCjBGclpjLL1rKXnrr05yn1/uYZXG2J7McU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QORLResI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qmAvyeqMPoem8De460kBWYdbLhzwxjGHNf/r3PEy4wfFlaAaZfoJ9S/yYccn8dJagkH9XZs2VcN64N83ukXjoU7g8+Jv79Ryh6SwXUIGHABRT3C3XhMMCAg7ssWIElGNX8mfND0kcoI936AveYNXr4OLgkXmI3GrC6LHeSNn7jo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hw49ol9j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QORLResI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66EFDC4CEF7;
-	Tue, 17 Mar 2026 16:45:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw49ol9j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33095C19424;
+	Tue, 17 Mar 2026 16:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765947;
-	bh=PAPXa7pnKhs66AeQZETzrPz4RaMxOxo8rLLJUJBtL9s=;
+	s=korg; t=1773765951;
+	bh=KwrvGiw3AMQXvjLAv31Gvd0fG7LJubUCrK8Qs6+FGOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QORLResIZi6HUXvHgAOP/1nj5q58MF8Y+6rgzlFvUofnuK8yTfYJAn8Hcn4JVcaN7
-	 P3J29pWCGPl6s9ajcs8D6TJ3xI8uFYYblLO87TD7GKqmTiHRmkHMRIZixMHMrzh+HV
-	 ZrBkLC4puFwpjVE+039FzGEe5MMec5A6mxNVTJr0=
+	b=hw49ol9jbgwAbULQvhNimLdxMlqSWqY5X94L8xnUe1Jq0N20zM6Kt4fgCrXwmAQ2j
+	 Os2FxD7fvu4jgMbgjeq4+H9O358oT7OG6lgsv1XfX+JmVjxebuuORlMNXdHTH5U31f
+	 C+W2CwC8oblXAQVB2Uk9u8VEbr00N8kmHoaNvCxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Mario Limonciello (AMD)" <superm1@kernel.org>,
-	Lizhi Hou <lizhi.hou@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 091/378] accel/amdxdna: Fix runtime suspend deadlock when there is pending job
-Date: Tue, 17 Mar 2026 17:30:48 +0100
-Message-ID: <20260317163010.366589852@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jann Horn <jannh@google.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Danilo Krummrich <dakr@kernel.org>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>
+Subject: [PATCH 6.19 127/378] rust_binder: check ownership before using vma
+Date: Tue, 17 Mar 2026 17:31:24 +0100
+Message-ID: <20260317163011.687561369@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,116 +53,178 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lizhi Hou <lizhi.hou@amd.com>
+From: Alice Ryhl <aliceryhl@google.com>
 
-[ Upstream commit 6b13cb8f48a42ddf6dd98865b673a82e37ff238b ]
+commit 8ef2c15aeae07647f530d30f6daaf79eb801bcd1 upstream.
 
-The runtime suspend callback drains the running job workqueue before
-suspending the device. If a job is still executing and calls
-pm_runtime_resume_and_get(), it can deadlock with the runtime suspend
-path.
+When installing missing pages (or zapping them), Rust Binder will look
+up the vma in the mm by address, and then call vm_insert_page (or
+zap_page_range_single). However, if the vma is closed and replaced with
+a different vma at the same address, this can lead to Rust Binder
+installing pages into the wrong vma.
 
-Fix this by moving pm_runtime_resume_and_get() from the job execution
-routine to the job submission routine, ensuring the device is resumed
-before the job is queued and avoiding the deadlock during runtime
-suspend.
+By installing the page into a writable vma, it becomes possible to write
+to your own binder pages, which are normally read-only. Although you're
+not supposed to be able to write to those pages, the intent behind the
+design of Rust Binder is that even if you get that ability, it should not
+lead to anything bad. Unfortunately, due to another bug, that is not the
+case.
 
-Fixes: 063db451832b ("accel/amdxdna: Enhance runtime power management")
-Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
-Signed-off-by: Lizhi Hou <lizhi.hou@amd.com>
-Link: https://patch.msgid.link/20260310180058.336348-1-lizhi.hou@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix this, store a pointer in vm_private_data and check that the vma
+returned by vma_lookup() has the right vm_ops and vm_private_data before
+trying to use the vma. This should ensure that Rust Binder will refuse
+to interact with any other VMA. The plan is to introduce more vma
+abstractions to avoid this unsafe access to vm_ops and vm_private_data,
+but for now let's start with the simplest possible fix.
+
+C Binder performs the same check in a slightly different way: it
+provides a vm_ops->close that sets a boolean to true, then checks that
+boolean after calling vma_lookup(), but this is more fragile
+than the solution in this patch. (We probably still want to do both, but
+the vm_ops->close callback will be added later as part of the follow-up
+vma API changes.)
+
+It's still possible to remap the vma so that pages appear in the right
+vma, but at the wrong offset, but this is a separate issue and will be
+fixed when Rust Binder gets a vm_ops->close callback.
+
+Cc: stable <stable@kernel.org>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Reported-by: Jann Horn <jannh@google.com>
+Reviewed-by: Jann Horn <jannh@google.com>
+Signed-off-by: Alice Ryhl <aliceryhl@google.com>
+Acked-by: Danilo Krummrich <dakr@kernel.org>
+Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Link: https://patch.msgid.link/20260218-binder-vma-check-v2-1-60f9d695a990@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/accel/amdxdna/aie2_ctx.c    | 14 ++------------
- drivers/accel/amdxdna/amdxdna_ctx.c | 10 ++++++++++
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/android/binder/page_range.rs |   83 ++++++++++++++++++++++++++---------
+ 1 file changed, 63 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/accel/amdxdna/aie2_ctx.c b/drivers/accel/amdxdna/aie2_ctx.c
-index 9fc33b4298f23..9284c35aacfbf 100644
---- a/drivers/accel/amdxdna/aie2_ctx.c
-+++ b/drivers/accel/amdxdna/aie2_ctx.c
-@@ -165,7 +165,6 @@ aie2_sched_notify(struct amdxdna_sched_job *job)
+--- a/drivers/android/binder/page_range.rs
++++ b/drivers/android/binder/page_range.rs
+@@ -142,6 +142,30 @@ pub(crate) struct ShrinkablePageRange {
+     _pin: PhantomPinned,
+ }
  
- 	trace_xdna_job(&job->base, job->hwctx->name, "signaled fence", job->seq);
- 
--	amdxdna_pm_suspend_put(job->hwctx->client->xdna);
- 	job->hwctx->priv->completed++;
- 	dma_fence_signal(fence);
- 
-@@ -290,19 +289,11 @@ aie2_sched_job_run(struct drm_sched_job *sched_job)
- 	struct dma_fence *fence;
- 	int ret;
- 
--	ret = amdxdna_pm_resume_get(hwctx->client->xdna);
--	if (ret)
-+	if (!hwctx->priv->mbox_chann)
- 		return NULL;
- 
--	if (!hwctx->priv->mbox_chann) {
--		amdxdna_pm_suspend_put(hwctx->client->xdna);
--		return NULL;
--	}
--
--	if (!mmget_not_zero(job->mm)) {
--		amdxdna_pm_suspend_put(hwctx->client->xdna);
-+	if (!mmget_not_zero(job->mm))
- 		return ERR_PTR(-ESRCH);
--	}
- 
- 	kref_get(&job->refcnt);
- 	fence = dma_fence_get(job->fence);
-@@ -333,7 +324,6 @@ aie2_sched_job_run(struct drm_sched_job *sched_job)
- 
- out:
- 	if (ret) {
--		amdxdna_pm_suspend_put(hwctx->client->xdna);
- 		dma_fence_put(job->fence);
- 		aie2_job_put(job);
- 		mmput(job->mm);
-diff --git a/drivers/accel/amdxdna/amdxdna_ctx.c b/drivers/accel/amdxdna/amdxdna_ctx.c
-index 4e48519b699ac..f678ae4c682d1 100644
---- a/drivers/accel/amdxdna/amdxdna_ctx.c
-+++ b/drivers/accel/amdxdna/amdxdna_ctx.c
-@@ -17,6 +17,7 @@
- #include "amdxdna_ctx.h"
- #include "amdxdna_gem.h"
- #include "amdxdna_pci_drv.h"
-+#include "amdxdna_pm.h"
- 
- #define MAX_HWCTX_ID		255
- #define MAX_ARG_COUNT		4095
-@@ -445,6 +446,7 @@ amdxdna_arg_bos_lookup(struct amdxdna_client *client,
- void amdxdna_sched_job_cleanup(struct amdxdna_sched_job *job)
- {
- 	trace_amdxdna_debug_point(job->hwctx->name, job->seq, "job release");
-+	amdxdna_pm_suspend_put(job->hwctx->client->xdna);
- 	amdxdna_arg_bos_put(job);
- 	amdxdna_gem_put_obj(job->cmd_bo);
- 	dma_fence_put(job->fence);
-@@ -482,6 +484,12 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
- 		goto cmd_put;
- 	}
- 
-+	ret = amdxdna_pm_resume_get(xdna);
-+	if (ret) {
-+		XDNA_ERR(xdna, "Resume failed, ret %d", ret);
-+		goto put_bos;
-+	}
++// We do not define any ops. For now, used only to check identity of vmas.
++static BINDER_VM_OPS: bindings::vm_operations_struct = pin_init::zeroed();
 +
- 	idx = srcu_read_lock(&client->hwctx_srcu);
- 	hwctx = xa_load(&client->hwctx_xa, hwctx_hdl);
- 	if (!hwctx) {
-@@ -522,6 +530,8 @@ int amdxdna_cmd_submit(struct amdxdna_client *client,
- 	dma_fence_put(job->fence);
- unlock_srcu:
- 	srcu_read_unlock(&client->hwctx_srcu, idx);
-+	amdxdna_pm_suspend_put(xdna);
-+put_bos:
- 	amdxdna_arg_bos_put(job);
- cmd_put:
- 	amdxdna_gem_put_obj(job->cmd_bo);
--- 
-2.51.0
-
++// To ensure that we do not accidentally install pages into or zap pages from the wrong vma, we
++// check its vm_ops and private data before using it.
++fn check_vma(vma: &virt::VmaRef, owner: *const ShrinkablePageRange) -> Option<&virt::VmaMixedMap> {
++    // SAFETY: Just reading the vm_ops pointer of any active vma is safe.
++    let vm_ops = unsafe { (*vma.as_ptr()).vm_ops };
++    if !ptr::eq(vm_ops, &BINDER_VM_OPS) {
++        return None;
++    }
++
++    // SAFETY: Reading the vm_private_data pointer of a binder-owned vma is safe.
++    let vm_private_data = unsafe { (*vma.as_ptr()).vm_private_data };
++    // The ShrinkablePageRange is only dropped when the Process is dropped, which only happens once
++    // the file's ->release handler is invoked, which means the ShrinkablePageRange outlives any
++    // VMA associated with it, so there can't be any false positives due to pointer reuse here.
++    if !ptr::eq(vm_private_data, owner.cast()) {
++        return None;
++    }
++
++    vma.as_mixedmap_vma()
++}
++
+ struct Inner {
+     /// Array of pages.
+     ///
+@@ -308,6 +332,18 @@ impl ShrinkablePageRange {
+         inner.size = num_pages;
+         inner.vma_addr = vma.start();
+ 
++        // This pointer is only used for comparison - it's not dereferenced.
++        //
++        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
++        // `vm_private_data`.
++        unsafe {
++            (*vma.as_ptr()).vm_private_data = ptr::from_ref(self).cast_mut().cast::<c_void>()
++        };
++
++        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
++        // `vm_ops`.
++        unsafe { (*vma.as_ptr()).vm_ops = &BINDER_VM_OPS };
++
+         Ok(num_pages)
+     }
+ 
+@@ -399,22 +435,24 @@ impl ShrinkablePageRange {
+         //
+         // Using `mmput_async` avoids this, because then the `mm` cleanup is instead queued to a
+         // workqueue.
+-        MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
+-            .mmap_read_lock()
+-            .vma_lookup(vma_addr)
+-            .ok_or(ESRCH)?
+-            .as_mixedmap_vma()
+-            .ok_or(ESRCH)?
+-            .vm_insert_page(user_page_addr, &new_page)
+-            .inspect_err(|err| {
+-                pr_warn!(
+-                    "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
+-                    user_page_addr,
+-                    vma_addr,
+-                    i,
+-                    err
+-                )
+-            })?;
++        check_vma(
++            MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
++                .mmap_read_lock()
++                .vma_lookup(vma_addr)
++                .ok_or(ESRCH)?,
++            self,
++        )
++        .ok_or(ESRCH)?
++        .vm_insert_page(user_page_addr, &new_page)
++        .inspect_err(|err| {
++            pr_warn!(
++                "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
++                user_page_addr,
++                vma_addr,
++                i,
++                err
++            )
++        })?;
+ 
+         let inner = self.lock.lock();
+ 
+@@ -667,12 +705,15 @@ unsafe extern "C" fn rust_shrink_free_pa
+     let mmap_read;
+     let mm_mutex;
+     let vma_addr;
++    let range_ptr;
+ 
+     {
+         // CAST: The `list_head` field is first in `PageInfo`.
+         let info = item as *mut PageInfo;
+         // SAFETY: The `range` field of `PageInfo` is immutable.
+-        let range = unsafe { &*((*info).range) };
++        range_ptr = unsafe { (*info).range };
++        // SAFETY: The `range` outlives its `PageInfo` values.
++        let range = unsafe { &*range_ptr };
+ 
+         mm = match range.mm.mmget_not_zero() {
+             Some(mm) => MmWithUser::into_mmput_async(mm),
+@@ -717,9 +758,11 @@ unsafe extern "C" fn rust_shrink_free_pa
+     // SAFETY: The lru lock is locked when this method is called.
+     unsafe { bindings::spin_unlock(&raw mut (*lru).lock) };
+ 
+-    if let Some(vma) = mmap_read.vma_lookup(vma_addr) {
+-        let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
+-        vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
++    if let Some(unchecked_vma) = mmap_read.vma_lookup(vma_addr) {
++        if let Some(vma) = check_vma(unchecked_vma, range_ptr) {
++            let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
++            vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
++        }
+     }
+ 
+     drop(mmap_read);
 
 
