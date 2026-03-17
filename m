@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3350331A63;
-	Tue, 17 Mar 2026 17:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E92F225A38;
+	Tue, 17 Mar 2026 17:19:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767946; cv=none; b=kZEwwELQ2yAUm5tLvz+hY45LZ7oH+8lZpX41gJJSPv69kInXiRXT2UTFxBtFvD4yTjfwNgkWF3/5RWj5avIAO9hS4CXYiXGCixHETTbBL6qO73JCo9+BqsGHbjSCA4qzhH/GCRzjLHQamZ1h+Nr4iPnmJC/WVlEahB9wsvD1qXY=
+	t=1773767949; cv=none; b=NJ0v7abg3XjiaMhkZJsOfw56ioOb6WmtLxLi2DgXkJ93uDTyU3K3g6dxJTecw7G4AM9wXESAvzGeYzNa0j3ZXEVAo+TrrPHnP5dAWI2P7xn1TdR9R+qHY/1sUWqAjhLTF6KLOyvOdPRZWPxy1HFPCyT78/K5lCOlc4II7huVszQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767946; c=relaxed/simple;
-	bh=ia+ufNiwbjPpVVlLTowaJKGK7mkhAZ13MQJTzTZLtkk=;
+	s=arc-20240116; t=1773767949; c=relaxed/simple;
+	bh=kHnhNwzWE3jDRdZ5LbviWfA8Jbr/rqQ3+ROEhQsgnTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Da7iXZzkm9G13jb96UJn5AH/dgOHs9JHs6lhiKI+ibv/2ijCo8t03csMyzeyq6Yj5q2zk3VMWjVREfkA6fJAa40VmyDWtL8r2/bpYYQ7HcSThcN45q6I7SOu776TEBtrkPDAQkaLwYUUSVmMLAS0MyTd6KuAhjs5H6ZMSfR5YVE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LT7iZVom; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GDyXiun1CA349+LMiPcqNtRkSQcoAa4e6VFEqmd64bDQno8Zna+P8Cc+7zeNBBOxdj5FIW7wAUusmZYqS9RGnH1a3shynSw8TW59FhOtPMzFrWF4TkNzkjxij4tBlvuCyyDm0dKTSZWvXPiAvvjKwiDR4e7Sji5+zvVSgGuVu+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjEdgdEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LT7iZVom"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14B76C4CEF7;
-	Tue, 17 Mar 2026 17:19:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjEdgdEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59904C4CEF7;
+	Tue, 17 Mar 2026 17:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767945;
-	bh=ia+ufNiwbjPpVVlLTowaJKGK7mkhAZ13MQJTzTZLtkk=;
+	s=korg; t=1773767948;
+	bh=kHnhNwzWE3jDRdZ5LbviWfA8Jbr/rqQ3+ROEhQsgnTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LT7iZVomraQ3KgAM5HzdAoqFqYtxd9AjMNQzhgc6xIuRjsrIpo07TijSaXalu6BO0
-	 2Y808ACtN8xroHi/qw217YR4GHkNuUB6sPBozW5A4kEBHhLvc54F6PJHUV7+Csiv5S
-	 T6rK5jxfNmAsRlZXDL1zjqN6GmMXABj+Nzy5NtqM=
+	b=ZjEdgdEWFR45E5/pJag9xCra203B+EGxqsqDs22JPS0+sqsh1hy/PAJqMfIUlxuz6
+	 2fsPFyWpi2kSgB/1xiRcNz6oOgitCjnE+g6sz6YiHzcpvnxveGAPFuiTN3C5sZxj6c
+	 facOOCJrycCKO/t//pjz0cKcG/k6AYLuVP4zEwYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 196/333] drm/xe/sync: Cleanup partially initialized sync on parse failure
-Date: Tue, 17 Mar 2026 17:33:45 +0100
-Message-ID: <20260317163006.625904665@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.18 197/333] s390/pfault: Fix virtual vs physical address confusion
+Date: Tue, 17 Mar 2026 17:33:46 +0100
+Message-ID: <20260317163006.662326571@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,83 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-commit 1bfd7575092420ba5a0b944953c95b74a5646ff8 upstream.
+commit d879ac6756b662a085a743e76023c768c3241579 upstream.
 
-xe_sync_entry_parse() can allocate references (syncobj, fence, chain fence,
-or user fence) before hitting a later failure path. Several of those paths
-returned directly, leaving partially initialized state and leaking refs.
+When Linux is running as guest, runs a user space process and the
+user space process accesses a page that the host has paged out,
+the guest gets a pfault interrupt and schedules a different process.
+Without this mechanism the host would have to suspend the whole
+virtual CPU until the page has been paged in.
 
-Route these error paths through a common free_sync label and call
-xe_sync_entry_cleanup(sync) before returning the error.
+To setup the pfault interrupt the real address of parameter list
+should be passed to DIAGNOSE 0x258, but a virtual address is passed
+instead.
 
-Fixes: dd08ebf6c352 ("drm/xe: Introduce a new DRM driver for Intel GPUs")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260219233516.2938172-5-shuicheng.lin@intel.com
-(cherry picked from commit f939bdd9207a5d1fc55cced5459858480686ce22)
+That has a performance impact, since the pfault setup never succeeds,
+the interrupt is never delivered to a guest and the whole virtual CPU
+is suspended as result.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Reported-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_sync.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ arch/s390/mm/pfault.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_sync.c
-+++ b/drivers/gpu/drm/xe/xe_sync.c
-@@ -146,8 +146,10 @@ int xe_sync_entry_parse(struct xe_device
- 
- 		if (!signal) {
- 			sync->fence = drm_syncobj_fence_get(sync->syncobj);
--			if (XE_IOCTL_DBG(xe, !sync->fence))
--				return -EINVAL;
-+			if (XE_IOCTL_DBG(xe, !sync->fence)) {
-+				err = -EINVAL;
-+				goto free_sync;
-+			}
- 		}
- 		break;
- 
-@@ -167,17 +169,21 @@ int xe_sync_entry_parse(struct xe_device
- 
- 		if (signal) {
- 			sync->chain_fence = dma_fence_chain_alloc();
--			if (!sync->chain_fence)
--				return -ENOMEM;
-+			if (!sync->chain_fence) {
-+				err = -ENOMEM;
-+				goto free_sync;
-+			}
- 		} else {
- 			sync->fence = drm_syncobj_fence_get(sync->syncobj);
--			if (XE_IOCTL_DBG(xe, !sync->fence))
--				return -EINVAL;
-+			if (XE_IOCTL_DBG(xe, !sync->fence)) {
-+				err = -EINVAL;
-+				goto free_sync;
-+			}
- 
- 			err = dma_fence_chain_find_seqno(&sync->fence,
- 							 sync_in.timeline_value);
- 			if (err)
--				return err;
-+				goto free_sync;
- 		}
- 		break;
- 
-@@ -216,6 +222,10 @@ int xe_sync_entry_parse(struct xe_device
- 	sync->timeline_value = sync_in.timeline_value;
- 
- 	return 0;
-+
-+free_sync:
-+	xe_sync_entry_cleanup(sync);
-+	return err;
+--- a/arch/s390/mm/pfault.c
++++ b/arch/s390/mm/pfault.c
+@@ -62,7 +62,7 @@ int __pfault_init(void)
+ 		"0:	nopr	%%r7\n"
+ 		EX_TABLE(0b, 0b)
+ 		: [rc] "+d" (rc)
+-		: [refbk] "a" (&pfault_init_refbk), "m" (pfault_init_refbk)
++		: [refbk] "a" (virt_to_phys(&pfault_init_refbk)), "m" (pfault_init_refbk)
+ 		: "cc");
+ 	return rc;
  }
- ALLOW_ERROR_INJECTION(xe_sync_entry_parse, ERRNO);
+@@ -84,7 +84,7 @@ void __pfault_fini(void)
+ 		"0:	nopr	%%r7\n"
+ 		EX_TABLE(0b, 0b)
+ 		:
+-		: [refbk] "a" (&pfault_fini_refbk), "m" (pfault_fini_refbk)
++		: [refbk] "a" (virt_to_phys(&pfault_fini_refbk)), "m" (pfault_fini_refbk)
+ 		: "cc");
+ }
  
 
 
