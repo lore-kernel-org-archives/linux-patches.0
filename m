@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C3AD3F54B8;
-	Tue, 17 Mar 2026 17:03:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0C53EDADD;
+	Tue, 17 Mar 2026 17:03:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767009; cv=none; b=CEkCXy+mZ7+PWbT7Mf5hlx9Kpqr0ar9Ryt+ziDOj1mNySTa9FiSdGBcR2ret7LOksZgQD+fiTehARsIDNzsEJt9mENGis25L5O7d1RInIXV9pd1Ck4OeY2b/M6/Rz7Qo1BR2ZbGpufts4JmGnhK8cCEQZXCvmNHJ3sVRhxVn6K8=
+	t=1773767013; cv=none; b=TUlByatTufqw/nPm8cbHuaL8ndCig2cpneYSoPHIxrmuWB8x+FSGqFHmxpqYWUmxp7MpzirH+HUChqZcyIdHI44jNWLzQ03K6iUytSjniGe8NzNEMvB+fUj+umzmpLGdA6kog11DCuodVL4dt0F/cooDt6aIqeHMF6z6TAsZVNw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767009; c=relaxed/simple;
-	bh=zfjNazBk7NtsPwbR3cvJsTru+kUFiSoQ4CiaGkm9bb0=;
+	s=arc-20240116; t=1773767013; c=relaxed/simple;
+	bh=gdgzZroqYZ4WlfCwYTJrAxu8Zug2iifWFDx7GZC8BNY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mIUYRAEzYPFjp6w1piPN+wSdhrolrz1Nq6HUKRNqcrqS03015RG1qCRWQLzHVLl4SjAzNAkza8DMK+5gaWHwiadrQMvKBJJwoqdJnf0+vvRQF+KAxjZY7kGyprmGdcz3eS4ypOCNkaINNQwFRONDyYLBa3og/+t6t6KXzeXjdc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNBYOQxr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rLUKhFenyqWHpb/+Y6Y1KyueY0UNC7LKw+Hn5vFzH4RMLgs0hBh0qd0BUYs0B3jMzehpTMEq55ZISay+Yhy54Yeq16LE1QnQer9H6DMOm+0l9VaEFoF036/8uR7x5N//oJ6uyEzUt5hhc5thZKd8zDl8bPj5co8QwrGB5ZGbbmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rt14Pilr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNBYOQxr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F20C19424;
-	Tue, 17 Mar 2026 17:03:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rt14Pilr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A08FC4CEF7;
+	Tue, 17 Mar 2026 17:03:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767009;
-	bh=zfjNazBk7NtsPwbR3cvJsTru+kUFiSoQ4CiaGkm9bb0=;
+	s=korg; t=1773767013;
+	bh=gdgzZroqYZ4WlfCwYTJrAxu8Zug2iifWFDx7GZC8BNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNBYOQxrG3xkJI4xvFAkqwG/bNMQzflH7a8/iPSRbyLPTgYhJYzAiqv+DaBzyI1SX
-	 GPmOaHm6lsCOCEWenMcX96wGiS0Nh/6KrQew+42YOw8tPdX/2N+xbFXTBKv1CWv2l6
-	 i0jEhPyK8IaKXNqxOKWXzlGEVdTTQ8qz4RyN0dyQ=
+	b=rt14PilrIXKgbXHEspaAlCIZp3vrArftOPqvoqQgMn5ArH++Mth4jRQEkk0dlu3dR
+	 WqD50RkMNnzzLr3zRn6RIP5seS7bsRhdGC7SQzFGRJfc7cy14aNDIu76Cnh9beUbkR
+	 n86fD7p1SJgdwwYlRq27cc/BPG9DOGrmhHBJwS94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 372/378] mm/damon: rename min_sz_region of damon_ctx to min_region_sz
-Date: Tue, 17 Mar 2026 17:35:29 +0100
-Message-ID: <20260317163020.664360270@linuxfoundation.org>
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.19 342/378] btrfs: fix transaction abort on file creation due to name hash collision
+Date: Tue, 17 Mar 2026 17:34:59 +0100
+Message-ID: <20260317163019.572381949@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,419 +52,189 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: SeongJae Park <sj@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit cc1db8dff8e751ec3ab352483de366b7f23aefe2 ]
+commit 2d1ababdedd4ba38867c2500eb7f95af5ddeeef7 upstream.
 
-'min_sz_region' field of 'struct damon_ctx' represents the minimum size of
-each DAMON region for the context.  'struct damos_access_pattern' has a
-field of the same name.  It confuses readers and makes 'grep' less optimal
-for them.  Rename it to 'min_region_sz'.
+If we attempt to create several files with names that result in the same
+hash, we have to pack them in same dir item and that has a limit inherent
+to the leaf size. However if we reach that limit, we trigger a transaction
+abort and turns the filesystem into RO mode. This allows for a malicious
+user to disrupt a system, without the need to have administration
+privileges/capabilities.
 
-Link: https://lkml.kernel.org/r/20260117175256.82826-9-sj@kernel.org
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: c80f46ac228b ("mm/damon/core: disallow non-power of two min_region_sz")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reproducer:
+
+  $ cat exploit-hash-collisions.sh
+  #!/bin/bash
+
+  DEV=/dev/sdi
+  MNT=/mnt/sdi
+
+  # Use smallest node size to make the test faster and require fewer file
+  # names that result in hash collision.
+  mkfs.btrfs -f --nodesize 4K $DEV
+  mount $DEV $MNT
+
+  # List of names that result in the same crc32c hash for btrfs.
+  declare -a names=(
+   'foobar'
+   '%a8tYkxfGMLWRGr55QSeQc4PBNH9PCLIvR6jZnkDtUUru1t@RouaUe_L:@xGkbO3nCwvLNYeK9vhE628gss:T$yZjZ5l-Nbd6CbC$M=hqE-ujhJICXyIxBvYrIU9-TDC'
+   'AQci3EUB%shMsg-N%frgU:02ByLs=IPJU0OpgiWit5nexSyxZDncY6WB:=zKZuk5Zy0DD$Ua78%MelgBuMqaHGyKsJUFf9s=UW80PcJmKctb46KveLSiUtNmqrMiL9-Y0I_l5Fnam04CGIg=8@U:Z'
+   'CvVqJpJzueKcuA$wqwePfyu7VxuWNN3ho$p0zi2H8QFYK$7YlEqOhhb%:hHgjhIjW5vnqWHKNP4'
+   'ET:vk@rFU4tsvMB0$C_p=xQHaYZjvoF%-BTc%wkFW8yaDAPcCYoR%x$FH5O:'
+   'HwTon%v7SGSP4FE08jBwwiu5aot2CFKXHTeEAa@38fUcNGOWvE@Mz6WBeDH_VooaZ6AgsXPkVGwy9l@@ZbNXabUU9csiWrrOp0MWUdfi$EZ3w9GkIqtz7I_eOsByOkBOO'
+   'Ij%2VlFGXSuPvxJGf5UWy6O@1svxGha%b@=%wjkq:CIgE6u7eJOjmQY5qTtxE2Rjbis9@us'
+   'KBkjG5%9R8K9sOG8UTnAYjxLNAvBmvV5vz3IiZaPmKuLYO03-6asI9lJ_j4@6Xo$KZicaLWJ3Pv8XEwVeUPMwbHYWwbx0pYvNlGMO9F:ZhHAwyctnGy%_eujl%WPd4U2BI7qooOSr85J-C2V$LfY'
+   'NcRfDfuUQ2=zP8K3CCF5dFcpfiOm6mwenShsAb_F%n6GAGC7fT2JFFn:c35X-3aYwoq7jNX5$ZJ6hI3wnZs$7KgGi7wjulffhHNUxAT0fRRLF39vJ@NvaEMxsMO'
+   'Oj42AQAEzRoTxa5OuSKIr=A_lwGMy132v4g3Pdq1GvUG9874YseIFQ6QU'
+   'Ono7avN5GjC:_6dBJ_'
+   'WHmN2gnmaN-9dVDy4aWo:yNGFzz8qsJyJhWEWcud7$QzN2D9R0efIWWEdu5kwWr73NZm4=@CoCDxrrZnRITr-kGtU_cfW2:%2_am'
+   'WiFnuTEhAG9FEC6zopQmj-A-$LDQ0T3WULz%ox3UZAPybSV6v1Z$b4L_XBi4M4BMBtJZpz93r9xafpB77r:lbwvitWRyo$odnAUYlYMmU4RvgnNd--e=I5hiEjGLETTtaScWlQp8mYsBovZwM2k'
+   'XKyH=OsOAF3p%uziGF_ZVr$ivrvhVgD@1u%5RtrV-gl_vqAwHkK@x7YwlxX3qT6WKKQ%PR56NrUBU2dOAOAdzr2=5nJuKPM-T-$ZpQfCL7phxQbUcb:BZOTPaFExc-qK-gDRCDW2'
+   'd3uUR6OFEwZr%ns1XH_@tbxA@cCPmbBRLdyh7p6V45H$P2$F%w0RqrD3M0g8aGvWpoTFMiBdOTJXjD:JF7=h9a_43xBywYAP%r$SPZi%zDg%ql-KvkdUCtF9OLaQlxmd'
+   'ePTpbnit%hyNm@WELlpKzNZYOzOTf8EQ$sEfkMy1VOfIUu3coyvIr13-Y7Sv5v-Ivax2Go_GQRFMU1b3362nktT9WOJf3SpT%z8sZmM3gvYQBDgmKI%%RM-G7hyrhgYflOw%z::ZRcv5O:lDCFm'
+   'evqk743Y@dvZAiG5J05L_ROFV@$2%rVWJ2%3nxV72-W7$e$-SK3tuSHA2mBt$qloC5jwNx33GmQUjD%akhBPu=VJ5g$xhlZiaFtTrjeeM5x7dt4cHpX0cZkmfImndYzGmvwQG:$euFYmXn$_2rA9mKZ'
+   'gkgUtnihWXsZQTEkrMAWIxir09k3t7jk_IK25t1:cy1XWN0GGqC%FrySdcmU7M8MuPO_ppkLw3=Dfr0UuBAL4%GFk2$Ma10V1jDRGJje%Xx9EV2ERaWKtjpwiZwh0gCSJsj5UL7CR8RtW5opCVFKGGy8Cky'
+   'hNgsG_8lNRik3PvphqPm0yEH3P%%fYG:kQLY=6O-61Wa6nrV_WVGR6TLB09vHOv%g4VQRP8Gzx7VXUY1qvZyS'
+   'isA7JVzN12xCxVPJZ_qoLm-pTBuhjjHMvV7o=F:EaClfYNyFGlsfw-Kf%uxdqW-kwk1sPl2vhbjyHU1A6$hz'
+   'kiJ_fgcdZFDiOptjgH5PN9-PSyLO4fbk_:u5_2tz35lV_iXiJ6cx7pwjTtKy-XGaQ5IefmpJ4N_ZqGsqCsKuqOOBgf9LkUdffHet@Wu'
+   'lvwtxyhE9:%Q3UxeHiViUyNzJsy:fm38pg_b6s25JvdhOAT=1s0$pG25x=LZ2rlHTszj=gN6M4zHZYr_qrB49i=pA--@WqWLIuX7o1S_SfS@2FSiUZN'
+   'rC24cw3UBDZ=5qJBUMs9e$=S4Y94ni%Z8639vnrGp=0Hv4z3dNFL0fBLmQ40=EYIY:Z=SLc@QLMSt2zsss2ZXrP7j4='
+   'uwGl2s-fFrf@GqS=DQqq2I0LJSsOmM%xzTjS:lzXguE3wChdMoHYtLRKPvfaPOZF2fER@j53evbKa7R%A7r4%YEkD=kicJe@SFiGtXHbKe4gCgPAYbnVn'
+   'UG37U6KKua2bgc:IHzRs7BnB6FD:2Mt5Cc5NdlsW%$1tyvnfz7S27FvNkroXwAW:mBZLA1@qa9WnDbHCDmQmfPMC9z-Eq6QT0jhhPpqyymaD:R02ghwYo%yx7SAaaq-:x33LYpei$5g8DMl3C'
+   'y2vjek0FE1PDJC0qpfnN:x8k2wCFZ9xiUF2ege=JnP98R%wxjKkdfEiLWvQzmnW'
+   '8-HCSgH5B%K7P8_jaVtQhBXpBk:pE-$P7ts58U0J@iR9YZntMPl7j$s62yAJO@_9eanFPS54b=UTw$94C-t=HLxT8n6o9P=QnIxq-f1=Ne2dvhe6WbjEQtc'
+   'YPPh:IFt2mtR6XWSmjHptXL_hbSYu8bMw-JP8@PNyaFkdNFsk$M=xfL6LDKCDM-mSyGA_2MBwZ8Dr4=R1D%7-mCaaKGxb990jzaagRktDTyp'
+   '9hD2ApKa_t_7x-a@GCG28kY:7$M@5udI1myQ$x5udtggvagmCQcq9QXWRC5hoB0o-_zHQUqZI5rMcz_kbMgvN5jr63LeYA4Cj-c6F5Ugmx6DgVf@2Jqm%MafecpgooqreJ53P-QTS'
+  )
+
+  # Now create files with all those names in the same parent directory.
+  # It should not fail since a 4K leaf has enough space for them.
+  for name in "${names[@]}"; do
+       touch $MNT/$name
+  done
+
+  # Now add one more file name that causes a crc32c hash collision.
+  # This should fail, but it should not turn the filesystem into RO mode
+  # (which could be exploited by malicious users) due to a transaction
+  # abort.
+  touch $MNT/'W6tIm-VK2@BGC@IBfcgg6j_p:pxp_QUqtWpGD5Ok_GmijKOJJt'
+
+  # Check that we are able to create another file, with a name that does not cause
+  # a crc32c hash collision.
+  echo -n "hello world" > $MNT/baz
+
+  # Unmount and mount again, verify file baz exists and with the right content.
+  umount $MNT
+  mount $DEV $MNT
+  echo "File baz content: $(cat $MNT/baz)"
+
+  umount $MNT
+
+When running the reproducer:
+
+  $ ./exploit-hash-collisions.sh
+  (...)
+  touch: cannot touch '/mnt/sdi/W6tIm-VK2@BGC@IBfcgg6j_p:pxp_QUqtWpGD5Ok_GmijKOJJt': Value too large for defined data type
+  ./exploit-hash-collisions.sh: line 57: /mnt/sdi/baz: Read-only file system
+  cat: /mnt/sdi/baz: No such file or directory
+  File baz content:
+
+And the transaction abort stack trace in dmesg/syslog:
+
+  $ dmesg
+  (...)
+  [758240.509761] ------------[ cut here ]------------
+  [758240.510668] BTRFS: Transaction aborted (error -75)
+  [758240.511577] WARNING: fs/btrfs/inode.c:6854 at btrfs_create_new_inode+0x805/0xb50 [btrfs], CPU#6: touch/888644
+  [758240.513513] Modules linked in: btrfs dm_zero (...)
+  [758240.523221] CPU: 6 UID: 0 PID: 888644 Comm: touch Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
+  [758240.524621] Tainted: [W]=WARN
+  [758240.525037] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [758240.526331] RIP: 0010:btrfs_create_new_inode+0x80b/0xb50 [btrfs]
+  [758240.527093] Code: 0f 82 cf (...)
+  [758240.529211] RSP: 0018:ffffce64418fbb48 EFLAGS: 00010292
+  [758240.529935] RAX: 00000000ffffffd3 RBX: 0000000000000000 RCX: 00000000ffffffb5
+  [758240.531040] RDX: 0000000d04f33e06 RSI: 00000000ffffffb5 RDI: ffffffffc0919dd0
+  [758240.531920] RBP: ffffce64418fbc10 R08: 0000000000000000 R09: 00000000ffffffb5
+  [758240.532928] R10: 0000000000000000 R11: ffff8e52c0000000 R12: ffff8e53eee7d0f0
+  [758240.533818] R13: ffff8e57f70932a0 R14: ffff8e5417629568 R15: 0000000000000000
+  [758240.534664] FS:  00007f1959a2a740(0000) GS:ffff8e5b27cae000(0000) knlGS:0000000000000000
+  [758240.535821] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [758240.536644] CR2: 00007f1959b10ce0 CR3: 000000012a2cc005 CR4: 0000000000370ef0
+  [758240.537517] Call Trace:
+  [758240.537828]  <TASK>
+  [758240.538099]  btrfs_create_common+0xbf/0x140 [btrfs]
+  [758240.538760]  path_openat+0x111a/0x15b0
+  [758240.539252]  do_filp_open+0xc2/0x170
+  [758240.539699]  ? preempt_count_add+0x47/0xa0
+  [758240.540200]  ? __virt_addr_valid+0xe4/0x1a0
+  [758240.540800]  ? __check_object_size+0x1b3/0x230
+  [758240.541661]  ? alloc_fd+0x118/0x180
+  [758240.542315]  do_sys_openat2+0x70/0xd0
+  [758240.543012]  __x64_sys_openat+0x50/0xa0
+  [758240.543723]  do_syscall_64+0x50/0xf20
+  [758240.544462]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [758240.545397] RIP: 0033:0x7f1959abc687
+  [758240.546019] Code: 48 89 fa (...)
+  [758240.548522] RSP: 002b:00007ffe16ff8690 EFLAGS: 00000202 ORIG_RAX: 0000000000000101
+  [758240.566278] RAX: ffffffffffffffda RBX: 00007f1959a2a740 RCX: 00007f1959abc687
+  [758240.567068] RDX: 0000000000000941 RSI: 00007ffe16ffa333 RDI: ffffffffffffff9c
+  [758240.567860] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  [758240.568707] R10: 00000000000001b6 R11: 0000000000000202 R12: 0000561eec7c4b90
+  [758240.569712] R13: 0000561eec7c311f R14: 00007ffe16ffa333 R15: 0000000000000000
+  [758240.570758]  </TASK>
+  [758240.571040] ---[ end trace 0000000000000000 ]---
+  [758240.571681] BTRFS: error (device sdi state A) in btrfs_create_new_inode:6854: errno=-75 unknown
+  [758240.572899] BTRFS info (device sdi state EA): forced readonly
+
+Fix this by checking for hash collision, and if the adding a new name is
+possible, early in btrfs_create_new_inode() before we do any tree updates,
+so that we don't need to abort the transaction if we cannot add the new
+name due to the leaf size limit.
+
+A test case for fstests will be sent soon.
+
+Fixes: caae78e03234 ("btrfs: move common inode creation code into btrfs_create_new_inode()")
+CC: stable@vger.kernel.org # 6.1+
+Reviewed-by: Boris Burkov <boris@bur.io>
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/damon.h |    8 ++---
- mm/damon/core.c       |   69 +++++++++++++++++++++++++-------------------------
- mm/damon/lru_sort.c   |    4 +-
- mm/damon/reclaim.c    |    4 +-
- mm/damon/stat.c       |    2 -
- mm/damon/sysfs.c      |    9 +++---
- 6 files changed, 49 insertions(+), 47 deletions(-)
+ fs/btrfs/inode.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/include/linux/damon.h
-+++ b/include/linux/damon.h
-@@ -769,7 +769,7 @@ struct damon_attrs {
-  *
-  * @ops:	Set of monitoring operations for given use cases.
-  * @addr_unit:	Scale factor for core to ops address conversion.
-- * @min_sz_region:		Minimum region size.
-+ * @min_region_sz:	Minimum region size.
-  * @adaptive_targets:	Head of monitoring targets (&damon_target) list.
-  * @schemes:		Head of schemes (&damos) list.
-  */
-@@ -812,7 +812,7 @@ struct damon_ctx {
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6542,6 +6542,25 @@ int btrfs_create_new_inode(struct btrfs_
+ 	int ret;
+ 	bool xa_reserved = false;
  
- 	struct damon_operations ops;
- 	unsigned long addr_unit;
--	unsigned long min_sz_region;
-+	unsigned long min_region_sz;
- 
- 	struct list_head adaptive_targets;
- 	struct list_head schemes;
-@@ -901,7 +901,7 @@ static inline void damon_insert_region(s
- void damon_add_region(struct damon_region *r, struct damon_target *t);
- void damon_destroy_region(struct damon_region *r, struct damon_target *t);
- int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
--		unsigned int nr_ranges, unsigned long min_sz_region);
-+		unsigned int nr_ranges, unsigned long min_region_sz);
- void damon_update_region_access_rate(struct damon_region *r, bool accessed,
- 		struct damon_attrs *attrs);
- 
-@@ -968,7 +968,7 @@ int damos_walk(struct damon_ctx *ctx, st
- 
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 				unsigned long *start, unsigned long *end,
--				unsigned long min_sz_region);
-+				unsigned long min_region_sz);
- 
- #endif	/* CONFIG_DAMON */
- 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -197,7 +197,7 @@ static int damon_fill_regions_holes(stru
-  * @t:		the given target.
-  * @ranges:	array of new monitoring target ranges.
-  * @nr_ranges:	length of @ranges.
-- * @min_sz_region:	minimum region size.
-+ * @min_region_sz:	minimum region size.
-  *
-  * This function adds new regions to, or modify existing regions of a
-  * monitoring target to fit in specific ranges.
-@@ -205,7 +205,7 @@ static int damon_fill_regions_holes(stru
-  * Return: 0 if success, or negative error code otherwise.
-  */
- int damon_set_regions(struct damon_target *t, struct damon_addr_range *ranges,
--		unsigned int nr_ranges, unsigned long min_sz_region)
-+		unsigned int nr_ranges, unsigned long min_region_sz)
- {
- 	struct damon_region *r, *next;
- 	unsigned int i;
-@@ -242,16 +242,16 @@ int damon_set_regions(struct damon_targe
- 			/* no region intersects with this range */
- 			newr = damon_new_region(
- 					ALIGN_DOWN(range->start,
--						min_sz_region),
--					ALIGN(range->end, min_sz_region));
-+						min_region_sz),
-+					ALIGN(range->end, min_region_sz));
- 			if (!newr)
- 				return -ENOMEM;
- 			damon_insert_region(newr, damon_prev_region(r), r, t);
- 		} else {
- 			/* resize intersecting regions to fit in this range */
- 			first->ar.start = ALIGN_DOWN(range->start,
--					min_sz_region);
--			last->ar.end = ALIGN(range->end, min_sz_region);
-+					min_region_sz);
-+			last->ar.end = ALIGN(range->end, min_region_sz);
- 
- 			/* fill possible holes in the range */
- 			err = damon_fill_regions_holes(first, last, t);
-@@ -546,7 +546,7 @@ struct damon_ctx *damon_new_ctx(void)
- 	ctx->attrs.max_nr_regions = 1000;
- 
- 	ctx->addr_unit = 1;
--	ctx->min_sz_region = DAMON_MIN_REGION_SZ;
-+	ctx->min_region_sz = DAMON_MIN_REGION_SZ;
- 
- 	INIT_LIST_HEAD(&ctx->adaptive_targets);
- 	INIT_LIST_HEAD(&ctx->schemes);
-@@ -1131,7 +1131,7 @@ static struct damon_target *damon_nth_ta
-  * If @src has no region, @dst keeps current regions.
-  */
- static int damon_commit_target_regions(struct damon_target *dst,
--		struct damon_target *src, unsigned long src_min_sz_region)
-+		struct damon_target *src, unsigned long src_min_region_sz)
- {
- 	struct damon_region *src_region;
- 	struct damon_addr_range *ranges;
-@@ -1148,7 +1148,7 @@ static int damon_commit_target_regions(s
- 	i = 0;
- 	damon_for_each_region(src_region, src)
- 		ranges[i++] = src_region->ar;
--	err = damon_set_regions(dst, ranges, i, src_min_sz_region);
-+	err = damon_set_regions(dst, ranges, i, src_min_region_sz);
- 	kfree(ranges);
- 	return err;
- }
-@@ -1156,11 +1156,11 @@ static int damon_commit_target_regions(s
- static int damon_commit_target(
- 		struct damon_target *dst, bool dst_has_pid,
- 		struct damon_target *src, bool src_has_pid,
--		unsigned long src_min_sz_region)
-+		unsigned long src_min_region_sz)
- {
- 	int err;
- 
--	err = damon_commit_target_regions(dst, src, src_min_sz_region);
-+	err = damon_commit_target_regions(dst, src, src_min_region_sz);
- 	if (err)
- 		return err;
- 	if (dst_has_pid)
-@@ -1187,7 +1187,7 @@ static int damon_commit_targets(
- 			err = damon_commit_target(
- 					dst_target, damon_target_has_pid(dst),
- 					src_target, damon_target_has_pid(src),
--					src->min_sz_region);
-+					src->min_region_sz);
- 			if (err)
- 				return err;
- 		} else {
-@@ -1214,7 +1214,7 @@ static int damon_commit_targets(
- 			return -ENOMEM;
- 		err = damon_commit_target(new_target, false,
- 				src_target, damon_target_has_pid(src),
--				src->min_sz_region);
-+				src->min_region_sz);
- 		if (err) {
- 			damon_destroy_target(new_target, NULL);
- 			return err;
-@@ -1261,7 +1261,7 @@ int damon_commit_ctx(struct damon_ctx *d
- 	}
- 	dst->ops = src->ops;
- 	dst->addr_unit = src->addr_unit;
--	dst->min_sz_region = src->min_sz_region;
-+	dst->min_region_sz = src->min_region_sz;
- 
- 	return 0;
- }
-@@ -1294,8 +1294,8 @@ static unsigned long damon_region_sz_lim
- 
- 	if (ctx->attrs.min_nr_regions)
- 		sz /= ctx->attrs.min_nr_regions;
--	if (sz < ctx->min_sz_region)
--		sz = ctx->min_sz_region;
-+	if (sz < ctx->min_region_sz)
-+		sz = ctx->min_region_sz;
- 
- 	return sz;
- }
-@@ -1673,7 +1673,7 @@ static bool damos_valid_target(struct da
-  * @t:	The target of the region.
-  * @rp:	The pointer to the region.
-  * @s:	The scheme to be applied.
-- * @min_sz_region:	minimum region size.
-+ * @min_region_sz:	minimum region size.
-  *
-  * If a quota of a scheme has exceeded in a quota charge window, the scheme's
-  * action would applied to only a part of the target access pattern fulfilling
-@@ -1691,7 +1691,8 @@ static bool damos_valid_target(struct da
-  * Return: true if the region should be entirely skipped, false otherwise.
-  */
- static bool damos_skip_charged_region(struct damon_target *t,
--		struct damon_region **rp, struct damos *s, unsigned long min_sz_region)
-+		struct damon_region **rp, struct damos *s,
-+		unsigned long min_region_sz)
- {
- 	struct damon_region *r = *rp;
- 	struct damos_quota *quota = &s->quota;
-@@ -1713,11 +1714,11 @@ static bool damos_skip_charged_region(st
- 		if (quota->charge_addr_from && r->ar.start <
- 				quota->charge_addr_from) {
- 			sz_to_skip = ALIGN_DOWN(quota->charge_addr_from -
--					r->ar.start, min_sz_region);
-+					r->ar.start, min_region_sz);
- 			if (!sz_to_skip) {
--				if (damon_sz_region(r) <= min_sz_region)
-+				if (damon_sz_region(r) <= min_region_sz)
- 					return true;
--				sz_to_skip = min_sz_region;
-+				sz_to_skip = min_region_sz;
- 			}
- 			damon_split_region_at(t, r, sz_to_skip);
- 			r = damon_next_region(r);
-@@ -1743,7 +1744,7 @@ static void damos_update_stat(struct dam
- 
- static bool damos_filter_match(struct damon_ctx *ctx, struct damon_target *t,
- 		struct damon_region *r, struct damos_filter *filter,
--		unsigned long min_sz_region)
-+		unsigned long min_region_sz)
- {
- 	bool matched = false;
- 	struct damon_target *ti;
-@@ -1760,8 +1761,8 @@ static bool damos_filter_match(struct da
- 		matched = target_idx == filter->target_idx;
- 		break;
- 	case DAMOS_FILTER_TYPE_ADDR:
--		start = ALIGN_DOWN(filter->addr_range.start, min_sz_region);
--		end = ALIGN_DOWN(filter->addr_range.end, min_sz_region);
-+		start = ALIGN_DOWN(filter->addr_range.start, min_region_sz);
-+		end = ALIGN_DOWN(filter->addr_range.end, min_region_sz);
- 
- 		/* inside the range */
- 		if (start <= r->ar.start && r->ar.end <= end) {
-@@ -1797,7 +1798,7 @@ static bool damos_filter_out(struct damo
- 
- 	s->core_filters_allowed = false;
- 	damos_for_each_core_filter(filter, s) {
--		if (damos_filter_match(ctx, t, r, filter, ctx->min_sz_region)) {
-+		if (damos_filter_match(ctx, t, r, filter, ctx->min_region_sz)) {
- 			if (filter->allow)
- 				s->core_filters_allowed = true;
- 			return !filter->allow;
-@@ -1932,7 +1933,7 @@ static void damos_apply_scheme(struct da
- 	if (c->ops.apply_scheme) {
- 		if (quota->esz && quota->charged_sz + sz > quota->esz) {
- 			sz = ALIGN_DOWN(quota->esz - quota->charged_sz,
--					c->min_sz_region);
-+					c->min_region_sz);
- 			if (!sz)
- 				goto update_stat;
- 			damon_split_region_at(t, r, sz);
-@@ -1980,7 +1981,7 @@ static void damon_do_apply_schemes(struc
- 		if (quota->esz && quota->charged_sz >= quota->esz)
- 			continue;
- 
--		if (damos_skip_charged_region(t, &r, s, c->min_sz_region))
-+		if (damos_skip_charged_region(t, &r, s, c->min_region_sz))
- 			continue;
- 
- 		if (!damos_valid_target(c, t, r, s))
-@@ -2429,7 +2430,7 @@ static void damon_split_region_at(struct
- 
- /* Split every region in the given target into 'nr_subs' regions */
- static void damon_split_regions_of(struct damon_target *t, int nr_subs,
--				  unsigned long min_sz_region)
-+				  unsigned long min_region_sz)
- {
- 	struct damon_region *r, *next;
- 	unsigned long sz_region, sz_sub = 0;
-@@ -2439,13 +2440,13 @@ static void damon_split_regions_of(struc
- 		sz_region = damon_sz_region(r);
- 
- 		for (i = 0; i < nr_subs - 1 &&
--				sz_region > 2 * min_sz_region; i++) {
-+				sz_region > 2 * min_region_sz; i++) {
- 			/*
- 			 * Randomly select size of left sub-region to be at
- 			 * least 10 percent and at most 90% of original region
- 			 */
- 			sz_sub = ALIGN_DOWN(damon_rand(1, 10) *
--					sz_region / 10, min_sz_region);
-+					sz_region / 10, min_region_sz);
- 			/* Do not allow blank region */
- 			if (sz_sub == 0 || sz_sub >= sz_region)
- 				continue;
-@@ -2485,7 +2486,7 @@ static void kdamond_split_regions(struct
- 		nr_subregions = 3;
- 
- 	damon_for_each_target(t, ctx)
--		damon_split_regions_of(t, nr_subregions, ctx->min_sz_region);
-+		damon_split_regions_of(t, nr_subregions, ctx->min_region_sz);
- 
- 	last_nr_regions = nr_regions;
- }
-@@ -2855,7 +2856,7 @@ static bool damon_find_biggest_system_ra
-  * @t:		The monitoring target to set the region.
-  * @start:	The pointer to the start address of the region.
-  * @end:	The pointer to the end address of the region.
-- * @min_sz_region:	Minimum region size.
-+ * @min_region_sz:	Minimum region size.
-  *
-  * This function sets the region of @t as requested by @start and @end.  If the
-  * values of @start and @end are zero, however, this function finds the biggest
-@@ -2867,7 +2868,7 @@ static bool damon_find_biggest_system_ra
-  */
- int damon_set_region_biggest_system_ram_default(struct damon_target *t,
- 			unsigned long *start, unsigned long *end,
--			unsigned long min_sz_region)
-+			unsigned long min_region_sz)
- {
- 	struct damon_addr_range addr_range;
- 
-@@ -2880,7 +2881,7 @@ int damon_set_region_biggest_system_ram_
- 
- 	addr_range.start = *start;
- 	addr_range.end = *end;
--	return damon_set_regions(t, &addr_range, 1, min_sz_region);
-+	return damon_set_regions(t, &addr_range, 1, min_region_sz);
- }
- 
- /*
---- a/mm/damon/lru_sort.c
-+++ b/mm/damon/lru_sort.c
-@@ -212,7 +212,7 @@ static int damon_lru_sort_apply_paramete
- 	if (!monitor_region_start && !monitor_region_end)
- 		addr_unit = 1;
- 	param_ctx->addr_unit = addr_unit;
--	param_ctx->min_sz_region = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
-+	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
- 	if (!damon_lru_sort_mon_attrs.sample_interval) {
- 		err = -EINVAL;
-@@ -243,7 +243,7 @@ static int damon_lru_sort_apply_paramete
- 	err = damon_set_region_biggest_system_ram_default(param_target,
- 					&monitor_region_start,
- 					&monitor_region_end,
--					param_ctx->min_sz_region);
-+					param_ctx->min_region_sz);
- 	if (err)
- 		goto out;
- 	err = damon_commit_ctx(ctx, param_ctx);
---- a/mm/damon/reclaim.c
-+++ b/mm/damon/reclaim.c
-@@ -208,7 +208,7 @@ static int damon_reclaim_apply_parameter
- 	if (!monitor_region_start && !monitor_region_end)
- 		addr_unit = 1;
- 	param_ctx->addr_unit = addr_unit;
--	param_ctx->min_sz_region = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
-+	param_ctx->min_region_sz = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
- 
- 	if (!damon_reclaim_mon_attrs.aggr_interval) {
- 		err = -EINVAL;
-@@ -251,7 +251,7 @@ static int damon_reclaim_apply_parameter
- 	err = damon_set_region_biggest_system_ram_default(param_target,
- 					&monitor_region_start,
- 					&monitor_region_end,
--					param_ctx->min_sz_region);
-+					param_ctx->min_region_sz);
- 	if (err)
- 		goto out;
- 	err = damon_commit_ctx(ctx, param_ctx);
---- a/mm/damon/stat.c
-+++ b/mm/damon/stat.c
-@@ -189,7 +189,7 @@ static struct damon_ctx *damon_stat_buil
- 		goto free_out;
- 	damon_add_target(ctx, target);
- 	if (damon_set_region_biggest_system_ram_default(target, &start, &end,
--							ctx->min_sz_region))
-+							ctx->min_region_sz))
- 		goto free_out;
- 	return ctx;
- free_out:
---- a/mm/damon/sysfs.c
-+++ b/mm/damon/sysfs.c
-@@ -1365,7 +1365,7 @@ static int damon_sysfs_set_attrs(struct
- 
- static int damon_sysfs_set_regions(struct damon_target *t,
- 		struct damon_sysfs_regions *sysfs_regions,
--		unsigned long min_sz_region)
-+		unsigned long min_region_sz)
- {
- 	struct damon_addr_range *ranges = kmalloc_array(sysfs_regions->nr,
- 			sizeof(*ranges), GFP_KERNEL | __GFP_NOWARN);
-@@ -1387,7 +1387,7 @@ static int damon_sysfs_set_regions(struc
- 		if (ranges[i - 1].end > ranges[i].start)
- 			goto out;
- 	}
--	err = damon_set_regions(t, ranges, sysfs_regions->nr, min_sz_region);
-+	err = damon_set_regions(t, ranges, sysfs_regions->nr, min_region_sz);
- out:
- 	kfree(ranges);
- 	return err;
-@@ -1409,7 +1409,8 @@ static int damon_sysfs_add_target(struct
- 			return -EINVAL;
- 	}
- 	t->obsolete = sys_target->obsolete;
--	return damon_sysfs_set_regions(t, sys_target->regions, ctx->min_sz_region);
-+	return damon_sysfs_set_regions(t, sys_target->regions,
-+			ctx->min_region_sz);
- }
- 
- static int damon_sysfs_add_targets(struct damon_ctx *ctx,
-@@ -1469,7 +1470,7 @@ static int damon_sysfs_apply_inputs(stru
- 	ctx->addr_unit = sys_ctx->addr_unit;
- 	/* addr_unit is respected by only DAMON_OPS_PADDR */
- 	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
--		ctx->min_sz_region = max(
-+		ctx->min_region_sz = max(
- 				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
- 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
- 	if (err)
++	if (!args->orphan && !args->subvol) {
++		/*
++		 * Before anything else, check if we can add the name to the
++		 * parent directory. We want to avoid a dir item overflow in
++		 * case we have an existing dir item due to existing name
++		 * hash collisions. We do this check here before we call
++		 * btrfs_add_link() down below so that we can avoid a
++		 * transaction abort (which could be exploited by malicious
++		 * users).
++		 *
++		 * For subvolumes we already do this in btrfs_mksubvol().
++		 */
++		ret = btrfs_check_dir_item_collision(BTRFS_I(dir)->root,
++						     btrfs_ino(BTRFS_I(dir)),
++						     name);
++		if (ret < 0)
++			return ret;
++	}
++
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
 
 
