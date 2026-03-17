@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994F43346A0;
-	Tue, 17 Mar 2026 17:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D6F2DF132;
+	Tue, 17 Mar 2026 17:20:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768052; cv=none; b=hA6NIqoyKqhSBpuHL6DDDe85I/J8AY+Ug2PCPP99utE8IAbUihdrbHT5PmFheYTCHaj9gWhyiQw2tBFx7BVaPdg2m+F1DmOwUlMFBtzJxRIlSoDBf7mnpXntrF5L6y85l3xEaf4HI0cx8U3lr+uncJJIQ+EYFHkk5qI6u8AAdGE=
+	t=1773768057; cv=none; b=mbxtm1Jm6M9fvPuSN3JMLk+LZmgVY4wwafSsDQqVIjYpx0v03pDBDDL95zKR5XRXRDoktc7vqCnLuwx9hUlUGJ4em7e6uK3RRRFhkKKT6x0Agar4rM9e3X38u8cuu5rgLSwtV4E8tLlyXie/FVao3+DxH39uvmhAGOdA8kG21/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768052; c=relaxed/simple;
-	bh=DJ4Fgm01AT+hPNjZsIl2ITUtlbZ2t6zWNIJnZwCXqPs=;
+	s=arc-20240116; t=1773768057; c=relaxed/simple;
+	bh=dGOdRmMSwHB1riDCOSb3gPsh6Q6QEXathuowAsFkWzU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U3d5PPJCKv+XuyYBzMk0ffT0ijcRPMN8cspELk3wK/kJf3kqH8hbw9on/eec838fHYpLbjc+myL5umY958kiqhngOZzi1flTnrUl03TZo/eOklDHGgR+pCfwypWMIhk6E5Xg9TsBXwGM5D9m8D4QQMLbVLP6s2whvgK4U5HYAIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=We2rdJAb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MnW14KTShOG0JefWyNzB6yvB2zJUh0RigxUzKG3Gpq0zcBs8Nmcvyf3K7cu/ZnSUNZO8sGlvewU1B5xfSgdZ0wFDx9Dfg2BpjeSyi7IpK7WnxQRvgPcR3ahPJgVXwkaLS8sClm8Vua/GCQSAYwYKtc8YqM1t48uESE/KTb0jGH8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulHm6V3d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="We2rdJAb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016DBC2BC86;
-	Tue, 17 Mar 2026 17:20:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulHm6V3d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E6DC19424;
+	Tue, 17 Mar 2026 17:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768052;
-	bh=DJ4Fgm01AT+hPNjZsIl2ITUtlbZ2t6zWNIJnZwCXqPs=;
+	s=korg; t=1773768057;
+	bh=dGOdRmMSwHB1riDCOSb3gPsh6Q6QEXathuowAsFkWzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=We2rdJAbR3fO7P7UrNVaKXhzdi6ggd+GkgKI7xbi/JoOPx63eJoPGvx5PM7sfsaC6
-	 TZSIZyxh8gCBZs9yQalUgpPdX4AP6MeuzYmgt/Ao1sDJnJnNnyctE3BNX1WuD/m8TP
-	 zURUpUh6rQprFYMJyuMrDhtmONzhI9F83GogDbeo=
+	b=ulHm6V3dmlruxOKD4SAJRlefNibCJTOhE+Ppar93cYlwROTw90iMlvdGvy247NRGh
+	 dnXY8ZMAuW6LrGcgRZmHdsCOZwmN+g5MsjMJ//KOam4d77ku08WHchvoqgArHbNQkV
+	 HiueetKg763+BRUO63IJ/0rWlad0Vcl43mu7g9mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aradhya Bhatia <aradhya.bhatia@intel.com>,
-	Tejas Upadhyay <tejas.upadhyay@intel.com>,
-	Ngai-Mint Kwan <ngai-mint.kwan@linux.intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.18 221/333] drm/xe/xe2_hpg: Correct implementation of Wa_16025250150
-Date: Tue, 17 Mar 2026 17:34:10 +0100
-Message-ID: <20260317163007.560290664@linuxfoundation.org>
+	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 222/333] pmdomain: rockchip: Fix PD_VCODEC for RK3588
+Date: Tue, 17 Mar 2026 17:34:11 +0100
+Message-ID: <20260317163007.597276357@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,52 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit 89865e6dc8487b627302bdced3f965cd0c406835 upstream.
+commit 0fb59eaca18f1254ecdce34354eec3cb1b3b5e10 upstream.
 
-Wa_16025250150 asks us to set five register fields of the register to
-0x1 each.  However we were just OR'ing this into the existing register
-value (which has a default of 0x4 for each nibble-sized field) resulting
-in final field values of 0x5 instead of the desired 0x1.  Correct the
-RTP programming (use FIELD_SET instead of SET) to ensure each field is
-assigned to exactly the value we want.
+>From the RK3588 TRM Table 7-1 RK3588 Voltage Domain and Power Domain Summary,
+PD_RKVDEC0/1 and PD_VENC0/1 rely on VD_VCODEC which require extra voltages to
+be applied, otherwise it breaks RK3588-evb1-v10 board after vdec support landed[1].
+The panic looks like below:
 
-Cc: Aradhya Bhatia <aradhya.bhatia@intel.com>
-Cc: Tejas Upadhyay <tejas.upadhyay@intel.com>
-Cc: stable@vger.kernel.org # v6.16+
-Fixes: 7654d51f1fd8 ("drm/xe/xe2hpg: Add Wa_16025250150")
-Reviewed-by: Ngai-Mint Kwan <ngai-mint.kwan@linux.intel.com>
-Link: https://patch.msgid.link/20260227164341.3600098-2-matthew.d.roper@intel.com
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-(cherry picked from commit d139209ef88e48af1f6731cd45440421c757b6b5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec0' on, val=0
+  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec1' on, val=0
+  ...
+  Hardware name: Rockchip RK3588S EVB1 V10 Board (DT)
+  Workqueue: pm genpd_power_off_work_fn
+  Call trace:
+  show_stack+0x18/0x24 (C)
+  dump_stack_lvl+0x40/0x84
+  dump_stack+0x18/0x24
+  vpanic+0x1ec/0x4fc
+  vpanic+0x0/0x4fc
+  check_panic_on_warn+0x0/0x94
+  arm64_serror_panic+0x6c/0x78
+  do_serror+0xc4/0xcc
+  el1h_64_error_handler+0x3c/0x5c
+  el1h_64_error+0x6c/0x70
+  regmap_mmio_read32le+0x18/0x24 (P)
+  regmap_bus_reg_read+0xfc/0x130
+  regmap_read+0x188/0x1ac
+  regmap_read+0x54/0x78
+  rockchip_pd_power+0xcc/0x5f0
+  rockchip_pd_power_off+0x1c/0x4c
+  genpd_power_off+0x84/0x120
+  genpd_power_off+0x1b4/0x260
+  genpd_power_off_work_fn+0x38/0x58
+  process_scheduled_works+0x194/0x2c4
+  worker_thread+0x2ac/0x3d8
+  kthread+0x104/0x124
+  ret_from_fork+0x10/0x20
+  SMP: stopping secondary CPUs
+  Kernel Offset: disabled
+  CPU features: 0x3000000,000e0005,40230521,0400720b
+  Memory Limit: none
+  ---[ end Kernel panic - not syncing: Asynchronous SError Interrupt ]---
+
+Chaoyi pointed out the PD_VCODEC is the parent of PD_RKVDEC0/1 and PD_VENC0/1, so checking
+the PD_VCODEC is enough.
+
+[1] https://lore.kernel.org/linux-rockchip/20251020212009.8852-2-detlev.casanova@collabora.com/
+
+Fixes: db6df2e3fc16 ("pmdomain: rockchip: add regulator support")
+Cc: stable@vger.kernel.org
+Suggested-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_wa.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/pmdomain/rockchip/pm-domains.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/xe/xe_wa.c
-+++ b/drivers/gpu/drm/xe/xe_wa.c
-@@ -255,12 +255,13 @@ static const struct xe_rtp_entry_sr gt_w
- 
- 	{ XE_RTP_NAME("16025250150"),
- 	  XE_RTP_RULES(GRAPHICS_VERSION(2001)),
--	  XE_RTP_ACTIONS(SET(LSN_VC_REG2,
--			     LSN_LNI_WGT(1) |
--			     LSN_LNE_WGT(1) |
--			     LSN_DIM_X_WGT(1) |
--			     LSN_DIM_Y_WGT(1) |
--			     LSN_DIM_Z_WGT(1)))
-+	  XE_RTP_ACTIONS(FIELD_SET(LSN_VC_REG2,
-+				   LSN_LNI_WGT_MASK | LSN_LNE_WGT_MASK |
-+				   LSN_DIM_X_WGT_MASK | LSN_DIM_Y_WGT_MASK |
-+				   LSN_DIM_Z_WGT_MASK,
-+				   LSN_LNI_WGT(1) | LSN_LNE_WGT(1) |
-+				   LSN_DIM_X_WGT(1) | LSN_DIM_Y_WGT(1) |
-+				   LSN_DIM_Z_WGT(1)))
- 	},
- 
- 	/* Xe2_HPM */
+--- a/drivers/pmdomain/rockchip/pm-domains.c
++++ b/drivers/pmdomain/rockchip/pm-domains.c
+@@ -1286,7 +1286,7 @@ static const struct rockchip_domain_info
+ static const struct rockchip_domain_info rk3588_pm_domains[] = {
+ 	[RK3588_PD_GPU]		= DOMAIN_RK3588("gpu",     0x0, BIT(0),  0,       0x0, 0,       BIT(1),  0x0, BIT(0),  BIT(0),  false, true),
+ 	[RK3588_PD_NPU]		= DOMAIN_RK3588("npu",     0x0, BIT(1),  BIT(1),  0x0, 0,       0,       0x0, 0,       0,       false, true),
+-	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, false),
++	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, true),
+ 	[RK3588_PD_NPUTOP]	= DOMAIN_RK3588("nputop",  0x0, BIT(3),  0,       0x0, BIT(11), BIT(2),  0x0, BIT(1),  BIT(1),  false, false),
+ 	[RK3588_PD_NPU1]	= DOMAIN_RK3588("npu1",    0x0, BIT(4),  0,       0x0, BIT(12), BIT(3),  0x0, BIT(2),  BIT(2),  false, false),
+ 	[RK3588_PD_NPU2]	= DOMAIN_RK3588("npu2",    0x0, BIT(5),  0,       0x0, BIT(13), BIT(4),  0x0, BIT(3),  BIT(3),  false, false),
 
 
