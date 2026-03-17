@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E15C0346AC6;
-	Tue, 17 Mar 2026 16:56:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FCE3BFE59;
+	Tue, 17 Mar 2026 16:57:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766617; cv=none; b=VdZkosYIAh9FYB10ErUH84ZKEVi2SDTkI2RDIJyXwycdrO+jLZXN4uweZZ8d199hQRY3c+c0h2OKOZ/YcXAVcknAHTDfjz/Lr8bcPQLcfbriA7cNLOCwGnxKFkapfI5CzLW24eI7TUC9RIEy6DXD+4UajUOWIRejLn//Xs2NNtc=
+	t=1773766621; cv=none; b=RZDkpBP0GzTf9APC7WPbEAn4eK8+GQ/nSvOXF2LwTEfZjUzKL/abq8+dws8ecsKiWNOO7gt9kn1DO9yKGO9hmyoJ6biRbq6DXjjLKEUxnN+OGHme8D7KmCR7HL6kJ3rYbr/IaQmpN+7Olp8czrxYToXwfVEphN04djwZraba2Rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766617; c=relaxed/simple;
-	bh=5OctUbxMFZYQd5ez5iKojxcvG/G2/XGm8Q6ZeEO6dd0=;
+	s=arc-20240116; t=1773766621; c=relaxed/simple;
+	bh=pz4XdF/r3uBnabl2eGS0kM8HmiMkgM6NGzoSqEzWiKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A+LYE3TCGot/X19W04+gbb7eizk8ZR5S8vBbbI23yd4LOHL7Cad7WfFBM3baJKmMsdFNNfIURTaw7a9BLSUROnlmEXMhplEk5pusCr9xV6odI9n+mQcz2OV+etULabef8mfecUpPD0nXi5v/zq2Y8lWfpWntHmi2cvrqrnbGc0o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEBLH230; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rV4BsIkIwDnSWtfxz6jK43o6pXc098dHTPhu7PXGYzzhw8fxBsZAAIkxsVIH3lgiURnWZ2XHmrXSZnjubJQ0kRMNS73Zw+xeKitXte4W0rLVtPVgYJKEPKDkUb3tDl8eQQXUH0QwcEZ4fFiKV+StJcWQayehoEyV6wG/3t2nZjQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuHR/ugg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEBLH230"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD23C19424;
-	Tue, 17 Mar 2026 16:56:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuHR/ugg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686FEC19424;
+	Tue, 17 Mar 2026 16:57:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766616;
-	bh=5OctUbxMFZYQd5ez5iKojxcvG/G2/XGm8Q6ZeEO6dd0=;
+	s=korg; t=1773766620;
+	bh=pz4XdF/r3uBnabl2eGS0kM8HmiMkgM6NGzoSqEzWiKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEBLH2303VP4sR4lpmiuQ366EkKvZ8mwJiBIifyUJpq1mN7+32+hW1VxPb4Fg3C/9
-	 xBM6sgaXfURC4p01mj9wAwWVesUZHX1drb0AIyO0vOpCygj1plR8rJIcYSSSw6y1x5
-	 163ZgfxTAS8gEYujH0HBWPbs8Hq2mts2JrGXbvhk=
+	b=SuHR/uggTZbNl+j0JHW1M6mCOxNQ801I6a9d3mh3gYrCmTXjNzRUMEj29JZ/8nzSM
+	 u6Kk1+yp33gmcIOr+seBCvoVrOFnYeyZ56CeMNO1/0FXq9UGaGQTZjlvNZGzMKwrYW
+	 ikVxcuRhTIM0+nGIIeAjhY69Nx74A28nxuDZtcnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.19 285/378] s390/xor: Fix xor_xc_2() inline assembly constraints
-Date: Tue, 17 Mar 2026 17:34:02 +0100
-Message-ID: <20260317163017.488863697@linuxfoundation.org>
+	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
+	Dillon Varone <Dillon.Varone@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Dan Wheeler <daniel.wheeler@amd.com>
+Subject: [PATCH 6.19 286/378] drm/amd/display: Fallback to boot snapshot for dispclk
+Date: Tue, 17 Mar 2026 17:34:03 +0100
+Message-ID: <20260317163017.527008891@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,39 +54,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Dillon Varone <Dillon.Varone@amd.com>
 
-commit f775276edc0c505dc0f782773796c189f31a1123 upstream.
+commit 30d937f63bd19bbcaafa4b892eb251f8bbbf04ef upstream.
 
-The inline assembly constraints for xor_xc_2() are incorrect. "bytes",
-"p1", and "p2" are input operands, while all three of them are modified
-within the inline assembly. Given that the function consists only of this
-inline assembly it seems unlikely that this may cause any problems, however
-fix this in any case.
+[WHY & HOW]
+If the dentist is unavailable, fallback to reading CLKIP via the boot
+snapshot to get the current dispclk.
 
-Fixes: 2cfc5f9ce7f5 ("s390/xor: optimized xor routing using the XC instruction")
+Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Cc: Alex Deucher <alexander.deucher@amd.com>
+Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 2ab77600d1e55a042c02437326d3c7563e853c6c)
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Link: https://lore.kernel.org/r/20260302133500.1560531-2-hca@linux.ibm.com
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/lib/xor.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/arch/s390/lib/xor.c
-+++ b/arch/s390/lib/xor.c
-@@ -28,8 +28,8 @@ static void xor_xc_2(unsigned long bytes
- 		"	j	3f\n"
- 		"2:	xc	0(1,%1),0(%2)\n"
- 		"3:"
--		: : "d" (bytes), "a" (p1), "a" (p2)
--		: "0", "cc", "memory");
-+		: "+d" (bytes), "+a" (p1), "+a" (p2)
-+		: : "0", "cc", "memory");
- }
- 
- static void xor_xc_3(unsigned long bytes, unsigned long * __restrict p1,
+--- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
+@@ -71,7 +71,11 @@ void dcn401_initialize_min_clocks(struct
+ 		 * audio corruption. Read current DISPCLK from DENTIST and request the same
+ 		 * freq to ensure that the timing is valid and unchanged.
+ 		 */
+-		clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
++		if (dc->clk_mgr->funcs->get_dispclk_from_dentist) {
++			clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
++		} else {
++			clocks->dispclk_khz = dc->clk_mgr->boot_snapshot.dispclk * 1000;
++		}
+ 	}
+ 	clocks->ref_dtbclk_khz = dc->clk_mgr->bw_params->clk_table.entries[0].dtbclk_mhz * 1000;
+ 	clocks->fclk_p_state_change_support = true;
 
 
