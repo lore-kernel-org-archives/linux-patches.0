@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590EF3246F8;
-	Tue, 17 Mar 2026 17:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EFDA1ACEDE;
+	Tue, 17 Mar 2026 17:28:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768508; cv=none; b=M0thPm3g7L8ets4F86ChDZVEWHaRszySFwoi8zLtef1fib+AEeCN0hmdBnV073iOf3qWdtn7HxZpzjM12DhjEJtv32yUQdoMA6OgCx9fCvisjZTPBu2QqGVvUvBRfVVq721hfKcI5l2PqYkbNwADD2rHBpvCuxCVAxzc/KDgtkw=
+	t=1773768512; cv=none; b=l39VkWxV71xkfDmbZd8ouqwCzIDXG4+7R1zj+OZYRD0BNDmSIIkqBcdzT0hvY1a1n8ygskZY6qDmbyJ23Gk9e2y4EeoL8DjOaain+XylvEhrtl0O7/xwhjvULv6L1Z1+EfTYWFDapb2mIE45ZfdssR73KP7PcJ669a/IpKxs0dg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768508; c=relaxed/simple;
-	bh=DCYm8Gh1iNP5NHe1ZK9TjJDeOI5NJgL8eVMVXglcunA=;
+	s=arc-20240116; t=1773768512; c=relaxed/simple;
+	bh=1QS14YKicU6WZU3EJU5wxbeJdKJIdLvNKawdad4BXGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gcZ3GCzvVncPzIL8gGsKp4IKKYNgl58824a7f7+m8voIjLOdfRYQKkdOsHeoCY6LFckohvJ2siMxcqD7AokV0Mp4fSNsMvgjFJ/G7PWOCGerVV5G3tVaj6zJwHxuJcngPPMXZ8/0Y6N7s3CGDItH0La2tcjYFOgrY7kPx+A4rso=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwCaS7Vu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t4y4u/CFXF+Z97Y/gMxxkY95E4LwIkjDXs4o37FrNkCGUOByNtQvxB3UbXjf/7b4UcBoW7XMH8UDPxJsaabhJ6NaXAMds++u7+AEIog3yKxp1bhO+y6YrS6p4ETfjavl4BOnRPX+z3kewZYSG079RlMAn303weTIvWbEsBncruQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TE/Sz8er; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwCaS7Vu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0747C4CEF7;
-	Tue, 17 Mar 2026 17:28:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TE/Sz8er"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73BA8C4CEF7;
+	Tue, 17 Mar 2026 17:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768508;
-	bh=DCYm8Gh1iNP5NHe1ZK9TjJDeOI5NJgL8eVMVXglcunA=;
+	s=korg; t=1773768511;
+	bh=1QS14YKicU6WZU3EJU5wxbeJdKJIdLvNKawdad4BXGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WwCaS7VunP9CO3L5nsOx7RLC3NSABdDYAPZORgWMVdqBepYmo8QlTmr+miqeaDxSo
-	 yb3msWdsY1ncht3hDvnMQWtfOWR0NMPH7V56FUqqVQyVUxbd0KHzW7cbjSTnMSF//c
-	 L/qYWeBV3a1433cuaMH0LRlEhcijsoi2Q0eMi+38=
+	b=TE/Sz8er3uBFEVxwpxmq0ZA+TOGtM7fS7Ir+zBWIw3vpGdfu1rTbXmPLfQ+17oH5N
+	 kQrPc6Bg8TNAXOlIRu2h6YwZhu5nUcrkxYZzlSsghCCD6lGhAqVxf6c3sDhoDBZFFy
+	 5CymKaatZ+Us3RB4hlaJ4rhm0geEpcGqmS2o3bes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
-	Rainer Fiebig <jrf@mailbox.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 326/333] kbuild: Leave objtool binary around with make clean
-Date: Tue, 17 Mar 2026 17:35:55 +0100
-Message-ID: <20260317163011.491128197@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 327/333] smb: client: Compare MACs in constant time
+Date: Tue, 17 Mar 2026 17:35:56 +0100
+Message-ID: <20260317163011.529402940@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -55,102 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit fdb12c8a24a453bdd6759979b6ef1e04ebd4beb4 ]
+commit 26bc83b88bbbf054f0980a4a42047a8d1e210e4c upstream.
 
-The difference between 'make clean' and 'make mrproper' is documented in
-'make help' as:
+To prevent timing attacks, MAC comparisons need to be constant-time.
+Replace the memcmp() with the correct function, crypto_memneq().
 
-  clean     - Remove most generated files but keep the config and
-              enough build support to build external modules
-  mrproper  - Remove all generated files + config + various backup files
-
-After commit 68b4fe32d737 ("kbuild: Add objtool to top-level clean
-target"), running 'make clean' then attempting to build an external
-module with the resulting build directory fails with
-
-  $ make ARCH=x86_64 O=build clean
-
-  $ make -C build M=... MO=...
-  ...
-  /bin/sh: line 1: .../build/tools/objtool/objtool: No such file or directory
-
-as 'make clean' removes the objtool binary.
-
-Split the objtool clean target into mrproper and clean like Kbuild does
-and remove all generated artifacts with 'make clean' except for the
-objtool binary, which is removed with 'make mrproper'. To avoid a small
-race when running the objtool clean target through both objtool_mrproper
-and objtool_clean when running 'make mrproper', modify objtool's clean
-up find command to avoid using find's '-delete' command by piping the
-files into 'xargs rm -f' like the rest of Kbuild does.
-
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Cc: stable@vger.kernel.org
-Fixes: 68b4fe32d737 ("kbuild: Add objtool to top-level clean target")
-Reported-by: Michal Suchanek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/20260225112633.6123-1-msuchanek@suse.de/
-Reported-by: Rainer Fiebig <jrf@mailbox.org>
-Closes: https://lore.kernel.org/62d12399-76e5-3d40-126a-7490b4795b17@mailbox.org/
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile               |    8 ++++----
- tools/objtool/Makefile |    8 +++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ fs/smb/client/cifsencrypt.c   |    3 ++-
+ fs/smb/client/smb2transport.c |    4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1441,13 +1441,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
- 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
- endif
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -26,6 +26,7 @@
+ #include <crypto/arc4.h>
+ #include <crypto/md5.h>
+ #include <crypto/sha2.h>
++#include <crypto/utils.h>
  
--PHONY += objtool_clean
-+PHONY += objtool_clean objtool_mrproper
+ static int cifs_sig_update(struct cifs_calc_sig_ctx *ctx,
+ 			   const u8 *data, size_t len)
+@@ -277,7 +278,7 @@ int cifs_verify_signature(struct smb_rqs
+ /*	cifs_dump_mem("what we think it should be: ",
+ 		      what_we_think_sig_should_be, 16); */
  
- objtool_O = $(abspath $(objtree))/tools/objtool
+-	if (memcmp(server_response_sig, what_we_think_sig_should_be, 8))
++	if (crypto_memneq(server_response_sig, what_we_think_sig_should_be, 8))
+ 		return -EACCES;
+ 	else
+ 		return 0;
+--- a/fs/smb/client/smb2transport.c
++++ b/fs/smb/client/smb2transport.c
+@@ -20,6 +20,7 @@
+ #include <linux/highmem.h>
+ #include <crypto/aead.h>
+ #include <crypto/sha2.h>
++#include <crypto/utils.h>
+ #include "cifsglob.h"
+ #include "cifsproto.h"
+ #include "smb2proto.h"
+@@ -617,7 +618,8 @@ smb2_verify_signature(struct smb_rqst *r
+ 	if (rc)
+ 		return rc;
  
--objtool_clean:
-+objtool_clean objtool_mrproper:
- ifneq ($(wildcard $(objtool_O)),)
--	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
-+	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) $(patsubst objtool_%,%,$@)
- endif
- 
- tools/: FORCE
-@@ -1624,7 +1624,7 @@ PHONY += $(mrproper-dirs) mrproper
- $(mrproper-dirs):
- 	$(Q)$(MAKE) $(clean)=$(patsubst _mrproper_%,%,$@)
- 
--mrproper: clean $(mrproper-dirs)
-+mrproper: clean objtool_mrproper $(mrproper-dirs)
- 	$(call cmd,rmfiles)
- 	@find . $(RCS_FIND_IGNORE) \
- 		\( -name '*.rmeta' \) \
---- a/tools/objtool/Makefile
-+++ b/tools/objtool/Makefile
-@@ -86,10 +86,12 @@ $(LIBSUBCMD)-clean:
- 	$(Q)$(RM) -r -- $(LIBSUBCMD_OUTPUT)
- 
- clean: $(LIBSUBCMD)-clean
--	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
--	$(Q)find $(OUTPUT) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
-+	$(Q)find $(OUTPUT) \( -name '*.o' -o -name '\.*.cmd' -o -name '\.*.d' \) -type f -print | xargs $(RM)
- 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/inat-tables.c $(OUTPUT)fixdep
- 
-+mrproper: clean
-+	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
-+
- FORCE:
- 
--.PHONY: clean FORCE
-+.PHONY: clean mrproper FORCE
+-	if (memcmp(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(server_response_sig, shdr->Signature,
++			  SMB2_SIGNATURE_SIZE)) {
+ 		cifs_dbg(VFS, "sign fail cmd 0x%x message id 0x%llx\n",
+ 			shdr->Command, shdr->MessageId);
+ 		return -EACCES;
 
 
