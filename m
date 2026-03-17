@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29D043F7860;
-	Tue, 17 Mar 2026 16:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7182E3F54CB;
+	Tue, 17 Mar 2026 16:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766709; cv=none; b=afQEueh7+RLozT8BOtJRRNrrFrw6hU1aPw1ocFvegAM84U3r6y7iVb/mCcrrMmwCPb+W1GMXYNkyLuvV1AiKP/rbjv9xhC3/r1m7DgLjo7fWoITN7y3nkWM9t8ZmllDWgcABPxRhKi1IzciZUIhOMI0+uVv3u9jgdZ5FfwgtVrg=
+	t=1773766714; cv=none; b=hL7vThG8nO9asbC0FEem3ynPAomu+YOAiFqUWDj9arJtjSQrH29stbE4YN/UFRIp2Cv+7nUEvEdCBJ2Sfs7K1O0KHmNa1oAK90R6T3WFH2LBTabIMrtUm0wfglhaYKKyS56KHPU2BG1w1HubCj5FEGOpoZyZOHufxZBuQNs2OaY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766709; c=relaxed/simple;
-	bh=K/A4Xw9MLLXOZh5/Ec5Kr7yoFD4Nf9Ew2SpER37eFIs=;
+	s=arc-20240116; t=1773766714; c=relaxed/simple;
+	bh=S77KFc9zbnqNyWRVS91lJh9vxEjM/gkTxpBdjispMtQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5eSXASRiN17GrmfDU2Ajn5/+fxR67qLbdk+nsKTBjYkQyZMdik+hoBUArMRwTFbJEAiFCvpxZXSgCaOE/lYWSFLeMYtytZq+KIOPDuD0oWxwaC+dBvy6n3UTeU8GmWuZWgF81ENieIA4GyvbwkICnsacfRPnR2MhHUPxsXF94g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IyBlfDO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cwlplpgiI1fBbsJjlfF0TIQszXVpFJKh0/HHc1AZi39VkvPaO26dM7nZ/ah50Pi2Q4BFHnfV3HMUfUSWifbDMs8DUGeSqpiSVwwIBwnf93gCf2YkCa7bYi98jJIsNBbsE9i3w6MWePdlBL+5qqvUnzsE491Bi5hH2kfmIuT+jPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uKqfXM4Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IyBlfDO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45F57C19424;
-	Tue, 17 Mar 2026 16:58:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uKqfXM4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921EDC2BC86;
+	Tue, 17 Mar 2026 16:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766709;
-	bh=K/A4Xw9MLLXOZh5/Ec5Kr7yoFD4Nf9Ew2SpER37eFIs=;
+	s=korg; t=1773766714;
+	bh=S77KFc9zbnqNyWRVS91lJh9vxEjM/gkTxpBdjispMtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyBlfDO04s/KtS3XQE4Gjv1BiUyIIDPnySedr8M6tK5ATOKpigHnlVvni64gzM4Lq
-	 ZA5yNRwb3UAOt6blxqbcQUxfaSrLfN6WuZf7+5VIBJRSTRnP1/uNVNxnM656uk7ajj
-	 sEeDWbFACnQuSB+8jtm1P8ubrftcc1Kthlg5NCeo=
+	b=uKqfXM4Z2raBBTqMV3cRdfYJUw2GXXrhzY9ior6pTdedeqhUfgXgtRrmA/OS6Lt/R
+	 tW4p/VnGkQ2ExnocJZX23GcX8ZMGQsaYJyVJ7AwLJNyz2cgDijGcwxZxsaKAYbsu75
+	 bPRVtrRBOwN8wMxd6hAdHdT1cMGPA6oIkrIbkvvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Will Deacon <will@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.19 272/378] arm64: mm: Add PTE_DIRTY back to PAGE_KERNEL* to fix kexec/hibernation
-Date: Tue, 17 Mar 2026 17:33:49 +0100
-Message-ID: <20260317163017.016514888@linuxfoundation.org>
+Subject: [PATCH 6.19 273/378] hwmon: (pmbus/q54sj108a2) fix stack overflow in debugfs read
+Date: Tue, 17 Mar 2026 17:33:50 +0100
+Message-ID: <20260317163017.052545767@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,63 +50,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-commit c25c4aa3f79a488cc270507935a29c07dc6bddfc upstream.
+commit 25dd70a03b1f5f3aa71e1a5091ecd9cd2a13ee43 upstream.
 
-Commit 143937ca51cc ("arm64, mm: avoid always making PTE dirty in
-pte_mkwrite()") changed pte_mkwrite_novma() to only clear PTE_RDONLY
-when PTE_DIRTY is set. This was to allow writable-clean PTEs for swap
-pages that haven't actually been written.
+The q54sj108a2_debugfs_read function suffers from a stack buffer overflow
+due to incorrect arguments passed to bin2hex(). The function currently
+passes 'data' as the destination and 'data_char' as the source.
 
-However, this broke kexec and hibernation for some platforms. Both go
-through trans_pgd_create_copy() -> _copy_pte(), which calls
-pte_mkwrite_novma() to make the temporary linear-map copy fully
-writable. With the updated pte_mkwrite_novma(), read-only kernel pages
-(without PTE_DIRTY) remain read-only in the temporary mapping.
-While such behaviour is fine for user pages where hardware DBM or
-trapping will make them writeable, subsequent in-kernel writes by the
-kexec relocation code will fault.
+Because bin2hex() converts each input byte into two hex characters, a
+32-byte block read results in 64 bytes of output. Since 'data' is only
+34 bytes (I2C_SMBUS_BLOCK_MAX + 2), this writes 30 bytes past the end
+of the buffer onto the stack.
 
-Add PTE_DIRTY back to all _PAGE_KERNEL* protection definitions. This was
-the case prior to 5.4, commit aa57157be69f ("arm64: Ensure
-VM_WRITE|VM_SHARED ptes are clean by default"). With the kernel
-linear-map PTEs always having PTE_DIRTY set, pte_mkwrite_novma()
-correctly clears PTE_RDONLY.
+Additionally, the arguments were swapped: it was reading from the
+zero-initialized 'data_char' and writing to 'data', resulting in
+all-zero output regardless of the actual I2C read.
 
-Fixes: 143937ca51cc ("arm64, mm: avoid always making PTE dirty in pte_mkwrite()")
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fix this by:
+1. Expanding 'data_char' to 66 bytes to safely hold the hex output.
+2. Correcting the bin2hex() argument order and using the actual read count.
+3. Using a pointer to select the correct output buffer for the final
+   simple_read_from_buffer call.
+
+Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
 Cc: stable@vger.kernel.org
-Reported-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Link: https://lore.kernel.org/r/20251204062722.3367201-1-jianpeng.chang.cn@windriver.com
-Cc: Will Deacon <will@kernel.org>
-Cc: Huang, Ying <ying.huang@linux.alibaba.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260304235116.1045-1-sanman.p211993@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/pgtable-prot.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/hwmon/pmbus/q54sj108a2.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/arch/arm64/include/asm/pgtable-prot.h
-+++ b/arch/arm64/include/asm/pgtable-prot.h
-@@ -50,11 +50,11 @@
+--- a/drivers/hwmon/pmbus/q54sj108a2.c
++++ b/drivers/hwmon/pmbus/q54sj108a2.c
+@@ -78,7 +78,8 @@ static ssize_t q54sj108a2_debugfs_read(s
+ 	int idx = *idxp;
+ 	struct q54sj108a2_data *psu = to_psu(idxp, idx);
+ 	char data[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
+-	char data_char[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
++	char data_char[I2C_SMBUS_BLOCK_MAX * 2 + 2] = { 0 };
++	char *out = data;
+ 	char *res;
  
- #define _PAGE_DEFAULT		(_PROT_DEFAULT | PTE_ATTRINDX(MT_NORMAL))
+ 	switch (idx) {
+@@ -149,27 +150,27 @@ static ssize_t q54sj108a2_debugfs_read(s
+ 		if (rc < 0)
+ 			return rc;
  
--#define _PAGE_KERNEL		(PROT_NORMAL)
--#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY)
--#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY)
--#define _PAGE_KERNEL_EXEC	(PROT_NORMAL & ~PTE_PXN)
--#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT)
-+#define _PAGE_KERNEL		(PROT_NORMAL | PTE_DIRTY)
-+#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY | PTE_DIRTY)
-+#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY | PTE_DIRTY)
-+#define _PAGE_KERNEL_EXEC	((PROT_NORMAL & ~PTE_PXN) | PTE_DIRTY)
-+#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT | PTE_DIRTY)
+-		res = bin2hex(data, data_char, 32);
+-		rc = res - data;
+-
++		res = bin2hex(data_char, data, rc);
++		rc = res - data_char;
++		out = data_char;
+ 		break;
+ 	case Q54SJ108A2_DEBUGFS_FLASH_KEY:
+ 		rc = i2c_smbus_read_block_data(psu->client, PMBUS_FLASH_KEY_WRITE, data);
+ 		if (rc < 0)
+ 			return rc;
  
- #define _PAGE_SHARED		(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_UXN | PTE_WRITE)
- #define _PAGE_SHARED_EXEC	(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_WRITE)
+-		res = bin2hex(data, data_char, 4);
+-		rc = res - data;
+-
++		res = bin2hex(data_char, data, rc);
++		rc = res - data_char;
++		out = data_char;
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
+-	data[rc] = '\n';
++	out[rc] = '\n';
+ 	rc += 2;
+ 
+-	return simple_read_from_buffer(buf, count, ppos, data, rc);
++	return simple_read_from_buffer(buf, count, ppos, out, rc);
+ }
+ 
+ static ssize_t q54sj108a2_debugfs_write(struct file *file, const char __user *buf,
 
 
