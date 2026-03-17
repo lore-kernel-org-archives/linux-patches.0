@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91583EAC6F;
-	Tue, 17 Mar 2026 16:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9870A3F54DB;
+	Tue, 17 Mar 2026 16:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766486; cv=none; b=BckFZuirZZD3MbzMDMO7VouC7pUGR08gexApF6Iax5mVPDMhA0w/QUmg8VLoLIRiWAhn28n3uWpkAUq8Mko9UTzAkF87toP/HvcX1B+GFozZjYpx1s46IWZHxaJsSlA+T3ixnxDm3fTvGR2/XfNEO8mibypjhC9W/gFgxdBic6o=
+	t=1773766491; cv=none; b=TsZV9vn4K1Xp4c2r6a3JSGV2VuBtqTMVKDADekIeQ4cZhY9H3ml8BnAlFCFoR06KJh68YsN0csyA/kvPvYLmPYYjikYfLEH37VY9cS+6skcuN35/zTAU5r7xEFFPvfKN4N6gk+ab/4HiYzhQSbiNdq43HWw/CGGil25IUS05C60=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766486; c=relaxed/simple;
-	bh=oQvg3HHMDT9xE8mziGJJFwtgZnvapOKh8QtFwu0hwAU=;
+	s=arc-20240116; t=1773766491; c=relaxed/simple;
+	bh=pZh/Vm3LDywhWtQrwRyWVTkRbMKDxySmvf1KxmUvJ/E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=njA9Nb5sk5o5+Sj/ZHOjlJPwALncjOV77dfITRfMMJrc9DX3eCzTYJarNEKwqdE4v/oleQVaKpsgvBJTE5RMJm/C6xAFmKZjQQ+cl/KQUPhRRIoOnnajngQ5N4rz6GRtPVdgPDaei/ygchAkzY8eGu2F6NCOu1msfUY9L50umak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fQXP5cuE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aiDAmKrMztcOL3nd5C8uzzIOuHURrSNrsOdYodze4Fua5feZh7/dH92V0yIaqyN4Z72C2KvUWSnFKHBlpqNqW33Qkp+46eEnZ/p8SZypdPCt40gFu5QRUnNCSFdqHi+lMMewaLTje9RE/uf8uAMp3fm2QjU87xPfzmDx3v/ggx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x+BvAmZ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fQXP5cuE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A539C4CEF7;
-	Tue, 17 Mar 2026 16:54:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x+BvAmZ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12291C4AF09;
+	Tue, 17 Mar 2026 16:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766486;
-	bh=oQvg3HHMDT9xE8mziGJJFwtgZnvapOKh8QtFwu0hwAU=;
+	s=korg; t=1773766491;
+	bh=pZh/Vm3LDywhWtQrwRyWVTkRbMKDxySmvf1KxmUvJ/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQXP5cuEk34WniCUaRy7JR82QkSG6ycj0K/9d0TBKJNhEVV9Voxpx68ZtlDzR9vNS
-	 m4To8f9Tpdtii9jCom+cSr+T5bXe76WBYEv9+i1xU2NgLjDoI/DNI1fp/ae4plvVtv
-	 WmtcIHOlQ0JxSvjGq8yPIAgyD/d7WZPZeDM6sky4=
+	b=x+BvAmZ3ck2CczZY0dIqgWc1M/aL5aXPR6f42x6KWbr/aVXTVJznki2mlgXFTJ0/h
+	 uekjUZg5ILWN/Uv7oJCvOB9Av3vSNaBRvex6hgShnMwdbShIQF7AZAbkWcUE/N6y1t
+	 ZgR7fnNwt3sAHRB1otG8wfwlMA1QC8KEglg6aA7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linusw@kernel.org>
-Subject: [PATCH 6.19 256/378] pinctrl: cy8c95x0: Dont miss reading the last bank registers
-Date: Tue, 17 Mar 2026 17:33:33 +0100
-Message-ID: <20260317163016.435634876@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.19 257/378] selftests: fix mntns iteration selftests
+Date: Tue, 17 Mar 2026 17:33:34 +0100
+Message-ID: <20260317163016.470804170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,45 +51,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit b6c3af46c26f2d07c10a1452adc34b821719327e upstream.
+commit 4c7b2ec23cc5d880e3ffe35e8c2aad686b67723a upstream.
 
-When code had been changed to use for_each_set_clump8(), it mistakenly
-switched from chip->nport to chip->tpin since the cy8c9540 and cy8c9560
-have a 4-pin gap. This, in particular, led to the missed read of
-the last bank interrupt status register and hence missing interrupts
-on those pins. Restore the upper limit in for_each_set_clump8() to take
-into consideration that gap.
+Now that we changed permission checking make sure that we reflect that
+in the selftests.
 
-Fixes: 83e29a7a1fdf ("pinctrl: cy8c95x0; Switch to use for_each_set_clump8()")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260226-work-visibility-fixes-v1-4-d2c2853313bd@kernel.org
+Fixes: 9d87b1067382 ("selftests: add tests for mntns iteration")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@kernel.org # v6.14+
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-cy8c95x0.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/filesystems/nsfs/iterate_mntns.c |   25 +++++++++------
+ 1 file changed, 15 insertions(+), 10 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-cy8c95x0.c
-+++ b/drivers/pinctrl/pinctrl-cy8c95x0.c
-@@ -627,7 +627,7 @@ static int cy8c95x0_write_regs_mask(stru
- 	bitmap_scatter(tmask, mask, chip->map, MAX_LINE);
- 	bitmap_scatter(tval, val, chip->map, MAX_LINE);
+--- a/tools/testing/selftests/filesystems/nsfs/iterate_mntns.c
++++ b/tools/testing/selftests/filesystems/nsfs/iterate_mntns.c
+@@ -37,17 +37,20 @@ FIXTURE(iterate_mount_namespaces) {
+ 	__u64 mnt_ns_id[MNT_NS_COUNT];
+ };
  
--	for_each_set_clump8(offset, bits, tmask, chip->tpin) {
-+	for_each_set_clump8(offset, bits, tmask, chip->nport * BANK_SZ) {
- 		unsigned int i = offset / 8;
++static inline bool mntns_in_list(__u64 *mnt_ns_id, struct mnt_ns_info *info)
++{
++	for (int i = 0; i < MNT_NS_COUNT; i++) {
++		if (mnt_ns_id[i] == info->mnt_ns_id)
++			return true;
++	}
++	return false;
++}
++
+ FIXTURE_SETUP(iterate_mount_namespaces)
+ {
+ 	for (int i = 0; i < MNT_NS_COUNT; i++)
+ 		self->fd_mnt_ns[i] = -EBADF;
  
- 		write_val = bitmap_get_value8(tval, offset);
-@@ -655,7 +655,7 @@ static int cy8c95x0_read_regs_mask(struc
- 	bitmap_scatter(tmask, mask, chip->map, MAX_LINE);
- 	bitmap_scatter(tval, val, chip->map, MAX_LINE);
+-	/*
+-	 * Creating a new user namespace let's us guarantee that we only see
+-	 * mount namespaces that we did actually create.
+-	 */
+-	ASSERT_EQ(unshare(CLONE_NEWUSER), 0);
+-
+ 	for (int i = 0; i < MNT_NS_COUNT; i++) {
+ 		struct mnt_ns_info info = {};
  
--	for_each_set_clump8(offset, bits, tmask, chip->tpin) {
-+	for_each_set_clump8(offset, bits, tmask, chip->nport * BANK_SZ) {
- 		unsigned int i = offset / 8;
+@@ -75,13 +78,15 @@ TEST_F(iterate_mount_namespaces, iterate
+ 	fd_mnt_ns_cur = fcntl(self->fd_mnt_ns[0], F_DUPFD_CLOEXEC);
+ 	ASSERT_GE(fd_mnt_ns_cur, 0);
  
- 		ret = cy8c95x0_regmap_read_bits(chip, reg, i, bits, &read_val);
+-	for (;; count++) {
++	for (;;) {
+ 		struct mnt_ns_info info = {};
+ 		int fd_mnt_ns_next;
+ 
+ 		fd_mnt_ns_next = ioctl(fd_mnt_ns_cur, NS_MNT_GET_NEXT, &info);
+ 		if (fd_mnt_ns_next < 0 && errno == ENOENT)
+ 			break;
++		if (mntns_in_list(self->mnt_ns_id, &info))
++			count++;
+ 		ASSERT_GE(fd_mnt_ns_next, 0);
+ 		ASSERT_EQ(close(fd_mnt_ns_cur), 0);
+ 		fd_mnt_ns_cur = fd_mnt_ns_next;
+@@ -96,13 +101,15 @@ TEST_F(iterate_mount_namespaces, iterate
+ 	fd_mnt_ns_cur = fcntl(self->fd_mnt_ns[MNT_NS_LAST_INDEX], F_DUPFD_CLOEXEC);
+ 	ASSERT_GE(fd_mnt_ns_cur, 0);
+ 
+-	for (;; count++) {
++	for (;;) {
+ 		struct mnt_ns_info info = {};
+ 		int fd_mnt_ns_prev;
+ 
+ 		fd_mnt_ns_prev = ioctl(fd_mnt_ns_cur, NS_MNT_GET_PREV, &info);
+ 		if (fd_mnt_ns_prev < 0 && errno == ENOENT)
+ 			break;
++		if (mntns_in_list(self->mnt_ns_id, &info))
++			count++;
+ 		ASSERT_GE(fd_mnt_ns_prev, 0);
+ 		ASSERT_EQ(close(fd_mnt_ns_cur), 0);
+ 		fd_mnt_ns_cur = fd_mnt_ns_prev;
+@@ -125,7 +132,6 @@ TEST_F(iterate_mount_namespaces, iterate
+ 		ASSERT_GE(fd_mnt_ns_next, 0);
+ 		ASSERT_EQ(close(fd_mnt_ns_cur), 0);
+ 		fd_mnt_ns_cur = fd_mnt_ns_next;
+-		ASSERT_EQ(info.mnt_ns_id, self->mnt_ns_id[i]);
+ 	}
+ }
+ 
+@@ -144,7 +150,6 @@ TEST_F(iterate_mount_namespaces, iterate
+ 		ASSERT_GE(fd_mnt_ns_prev, 0);
+ 		ASSERT_EQ(close(fd_mnt_ns_cur), 0);
+ 		fd_mnt_ns_cur = fd_mnt_ns_prev;
+-		ASSERT_EQ(info.mnt_ns_id, self->mnt_ns_id[i]);
+ 	}
+ }
+ 
 
 
