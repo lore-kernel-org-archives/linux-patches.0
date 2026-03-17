@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4133F660B;
-	Tue, 17 Mar 2026 16:59:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDFC3F23DD;
+	Tue, 17 Mar 2026 16:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766770; cv=none; b=MWfE7A3Z0DT9j/izHN0TCS7T3IYvwYaP6mgzsFFgqUv8fWSi1OZMA2lAJHMc84dTjkcVtajRQZHDmfuOoc0a17u5Fc+21dyA0zfq4wNCMiSVQyvNvn53a7FxTJSTfJK56Rw10iWt1wTTOK0y/2f6pl+sTLRRW8DHT/TaxCIhwzA=
+	t=1773766774; cv=none; b=DExKcoD64D6EkEOTRm3AZzIZNFDtNneIUYaUrQtQPn2LHsIKxwQg9nJUNyoY1FxhgyqmKNQY/KUEB+87BKLjSW1puzREn84E24rgNXHkbOGUNMHhif3mdeqboZlQViCyhuJFbkZ5PkXpPo1eq9BYIxxudPtQ6cM7a0b7rXab+DA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766770; c=relaxed/simple;
-	bh=5be8f31PtZlaVt913tEH0w5Gpg+UBBRTmZfCiIHD1Fw=;
+	s=arc-20240116; t=1773766774; c=relaxed/simple;
+	bh=g2z9iGDrT+oXJ2lJlJs9DXUv9z5c0kYfj5teWWOCAZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NWB7hrhJIAlauzOoxA0xExjxAhmWTzAvjj5LA28fgZhnt90GEp0DmNDm9BFMbegE7XwVlEQ59Gm/mZMqSx0WFNLekJDgqQRTk5Bkw3uenj2cFfjBIr+2qyawN7yaSZaXJuR8T9GCPdkzXE4ujpMKdB0+Tzz1KIi19RA2AhvdCe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZjkLh13+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PvGDzeWlVBK/sZQKt3ktUv5Nbz2AF3FNEGxfROLTH4VfX6DmTwgOm4OIoljHTg6sRzduByXTwu3wOUPy8oa0fFCP0z8123593TD69wEPrfSFcp9GkV4CBewrp5jY8ZdHPUhFt8UM9cBsV7eLVCYz+A/g1ERolth3MpMvml5H91k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gSgJK/GN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZjkLh13+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC44C4CEF7;
-	Tue, 17 Mar 2026 16:59:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gSgJK/GN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 068B2C4CEF7;
+	Tue, 17 Mar 2026 16:59:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766770;
-	bh=5be8f31PtZlaVt913tEH0w5Gpg+UBBRTmZfCiIHD1Fw=;
+	s=korg; t=1773766774;
+	bh=g2z9iGDrT+oXJ2lJlJs9DXUv9z5c0kYfj5teWWOCAZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjkLh13+T/YjWpn/aHPDoo/MEvCs1julNnT/I9RG95PGpeyqrsp9hLV+t/otQ7jDH
-	 ZIph+AdAzr/iT3NKG9FOtnZMOCTXXSPHQEx7ALEXV63NAgvDx7CmaGGDggEecbbXZh
-	 TK7a0GoX/wiXHTmv31q32PqAom7wYdt0ZvUJ3/ZE=
+	b=gSgJK/GNz9bCkEXvfE/pIcZQ3XdAykakmJD6E9vZDqUgRS2KuBtnWfX6qqK2Mjt9y
+	 M7F1NzIBt7RQoV25lyc9jC+nlB0dYHB+RVVgrAERcXzn433NUXREyZbSj3TmsakD81
+	 paeuZwy2PcdHqZqLJ0pm7G815f5TvXq5Y4N1V71w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bharath SM <bharathsm@microsoft.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 318/378] cifs: make default value of retrans as zero
-Date: Tue, 17 Mar 2026 17:34:35 +0100
-Message-ID: <20260317163018.690394075@linuxfoundation.org>
+	Long Li <leo.lilong@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.19 319/378] xfs: fix integer overflow in bmap intent sort comparator
+Date: Tue, 17 Mar 2026 17:34:36 +0100
+Message-ID: <20260317163018.725991316@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,34 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Long Li <leo.lilong@huawei.com>
 
-commit e3beefd3af09f8e460ddaf39063d3d7664d7ab59 upstream.
+commit 362c490980867930a098b99f421268fbd7ca05fd upstream.
 
-When retrans mount option was introduced, the default value was set
-as 1. However, in the light of some bugs that this has exposed recently
-we should change it to 0 and retain the old behaviour before this option
-was introduced.
+xfs_bmap_update_diff_items() sorts bmap intents by inode number using
+a subtraction of two xfs_ino_t (uint64_t) values, with the result
+truncated to int. This is incorrect when two inode numbers differ by
+more than INT_MAX (2^31 - 1), which is entirely possible on large XFS
+filesystems.
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Bharath SM <bharathsm@microsoft.com>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fix this by replacing the subtraction with cmp_int().
+
+Cc: <stable@vger.kernel.org> # v4.9
+Fixes: 9f3afb57d5f1 ("xfs: implement deferred bmbt map/unmap operations")
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/fs_context.c |    2 +-
+ fs/xfs/xfs_bmap_item.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/smb/client/fs_context.c
-+++ b/fs/smb/client/fs_context.c
-@@ -1998,7 +1998,7 @@ int smb3_init_fs_context(struct fs_conte
- 	ctx->backupuid_specified = false; /* no backup intent for a user */
- 	ctx->backupgid_specified = false; /* no backup intent for a group */
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -247,7 +247,7 @@ xfs_bmap_update_diff_items(
+ 	struct xfs_bmap_intent		*ba = bi_entry(a);
+ 	struct xfs_bmap_intent		*bb = bi_entry(b);
  
--	ctx->retrans = 1;
-+	ctx->retrans = 0;
- 	ctx->reparse_type = CIFS_REPARSE_TYPE_DEFAULT;
- 	ctx->symlink_type = CIFS_SYMLINK_TYPE_DEFAULT;
- 	ctx->nonativesocket = 0;
+-	return ba->bi_owner->i_ino - bb->bi_owner->i_ino;
++	return cmp_int(ba->bi_owner->i_ino, bb->bi_owner->i_ino);
+ }
+ 
+ /* Log bmap updates in the intent item. */
 
 
