@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A1CF3F54CC;
-	Tue, 17 Mar 2026 16:59:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91A8346AC6;
+	Tue, 17 Mar 2026 16:59:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766791; cv=none; b=K+KcXX7xCmah2VkldGX/+yB7GBA2cRKragSUvQgs0XzaGSxjkiIW4dtfpVbtMjlcj+tbgB2DLVhhW5TVo7BPyvZb4VXhmnI45EYFtjaeeSAZpkanTld7KVSjU4UoJpy4e1KBJh8UurBaD26QsL6rdHJj43rJyCFsaEJaOlklyuQ=
+	t=1773766796; cv=none; b=kvS5N6RccVBcvEFWi48yqqC4H6kgE/jPvrNVusC9uhOjDLDP2hc2OhYIMph4n3qEcQXXfE22UpxxYvgo1FII2Bb3vWIop1CUAjtu1tDCCOm7Uy0iVb5+QgBgxoX8x0UPl9FHB/X8GUzCg+GdTmoPzF8bz7LllX/MicIpOlFPRuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766791; c=relaxed/simple;
-	bh=jiB9UI1nLyd5Uy7cAb+CMYbohVrDs1UmdnCd4WlUg7g=;
+	s=arc-20240116; t=1773766796; c=relaxed/simple;
+	bh=ksJ1dSLuAb57S/1TdgHuJ+lBSMdcRr0WtsZ5oeSyrNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PCYQYOxUZuvSopwIe7vNkhVOoP4+213CrW6ecFtkx7Y3iM60jL31kt7KqY1N1r7bgl9nKn4bvP4fy0T8Lu8voDLEIO9oE0SXT2xiRZI3TxDz/52UXo+hoHER5V2h6nLf7fRDUbZekhtLp1EI4dKOUxcAF0svgGZnF0TSIqLbu/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s1dmjC3u; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EJMf/OmI8bLtUqHTMm42G4yu3NmaMdbr+YVkyQ3hdbPleSKfFHOvLO0se2N7O9GkID/cnxYD+AD49ioGVEuAYerV6pvYPabfoBbwrT3DL4J2L8gCq8+0TeAbrQufSJWuzIhMrLkzlBxbOKvM4KyMNVreqCoZRq9SpV5pfUdHgZg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yllIesek; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s1dmjC3u"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9243C4CEF7;
-	Tue, 17 Mar 2026 16:59:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yllIesek"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E73C4CEF7;
+	Tue, 17 Mar 2026 16:59:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766791;
-	bh=jiB9UI1nLyd5Uy7cAb+CMYbohVrDs1UmdnCd4WlUg7g=;
+	s=korg; t=1773766795;
+	bh=ksJ1dSLuAb57S/1TdgHuJ+lBSMdcRr0WtsZ5oeSyrNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s1dmjC3ulkiZMrgmS7pMonJ/+7Y5shylTGXx5hoNrcrsf/0Gb4+n9ATihVwNFTosO
-	 GY0qn8gbntDTboiSWAa4k9FeuaWxjhIDZp1LeS2YK9PbXf3bq2fm3HFCW8qs7IRApR
-	 9WU2SQ5OP2EgSzrKjPT4lMBzehVTh9ijfaVxW2Qg=
+	b=yllIeseklLNYSB/jXFB6fTTmVJ2iEp8KTh3J/z8q6n2FYXsI7drpqQe+QHpdOC5EC
+	 7CzE9r5w6q/QXHJ6N0uJFIehvRShLBkudDsjBJEtAkatEo2PW1wGKrqsW0FFmSl8s7
+	 RLgNqWSQ4UO6g9sb3HZRI7ly5rLU2HLV1L/szXfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Long Li <leo.lilong@huawei.com>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.19 322/378] xfs: ensure dquot item is deleted from AIL only after log shutdown
-Date: Tue, 17 Mar 2026 17:34:39 +0100
-Message-ID: <20260317163018.837034912@linuxfoundation.org>
+	Andrea Righi <arighi@nvidia.com>,
+	Tejun Heo <tj@kernel.org>
+Subject: [PATCH 6.19 323/378] sched_ext: Fix enqueue_task_scx() truncation of upper enqueue flags
+Date: Tue, 17 Mar 2026 17:34:40 +0100
+Message-ID: <20260317163018.873680538@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,65 +50,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Long Li <leo.lilong@huawei.com>
+From: Tejun Heo <tj@kernel.org>
 
-commit 186ac39b8a7d3ec7ce9c5dd45e5c2730177f375c upstream.
+commit 57ccf5ccdc56954f2a91a7f66684fd31c566bde5 upstream.
 
-In xfs_qm_dqflush(), when a dquot flush fails due to corruption
-(the out_abort error path), the original code removed the dquot log
-item from the AIL before calling xfs_force_shutdown(). This ordering
-introduces a subtle race condition that can lead to data loss after
-a crash.
+enqueue_task_scx() takes int enq_flags from the sched_class interface.
+SCX enqueue flags starting at bit 32 (SCX_ENQ_PREEMPT and above) are
+silently truncated when passed through activate_task(). extra_enq_flags
+was added as a workaround - storing high bits in rq->scx.extra_enq_flags
+and OR-ing them back in enqueue_task_scx(). However, the OR target is
+still the int parameter, so the high bits are lost anyway.
 
-The AIL tracks the oldest dirty metadata in the journal. The position
-of the tail item in the AIL determines the log tail LSN, which is the
-oldest LSN that must be preserved for crash recovery. When an item is
-removed from the AIL, the log tail can advance past the LSN of that item.
+The current impact is limited as the only affected flag is SCX_ENQ_PREEMPT
+which is informational to the BPF scheduler - its loss means the scheduler
+doesn't know about preemption but doesn't cause incorrect behavior.
 
-The race window is as follows: if the dquot item happens to be at
-the tail of the log, removing it from the AIL allows the log tail
-to advance. If a concurrent log write is sampling the tail LSN at
-the same time and subsequently writes a complete checkpoint (i.e.,
-one containing a commit record) to disk before the shutdown takes
-effect, the journal will no longer protect the dquot's last
-modification. On the next mount, log recovery will not replay the
-dquot changes, even though they were never written back to disk,
-resulting in silent data loss.
+Fix by renaming the int parameter to core_enq_flags and introducing a
+u64 enq_flags local that merges both sources. All downstream functions
+already take u64 enq_flags.
 
-Fix this by calling xfs_force_shutdown() before xfs_trans_ail_delete()
-in the out_abort path. Once the log is shut down, no new log writes
-can complete with an updated tail LSN, making it safe to remove the
-dquot item from the AIL.
-
-Cc: stable@vger.kernel.org
-Fixes: b707fffda6a3 ("xfs: abort consistently on dquot flush failure")
-Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Cc: stable@vger.kernel.org # v6.12+
+Acked-by: Andrea Righi <arighi@nvidia.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_dquot.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/sched/ext.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/xfs/xfs_dquot.c
-+++ b/fs/xfs/xfs_dquot.c
-@@ -1439,9 +1439,15 @@ xfs_qm_dqflush(
- 	return 0;
- 
- out_abort:
-+	/*
-+	 * Shut down the log before removing the dquot item from the AIL.
-+	 * Otherwise, the log tail may advance past this item's LSN while
-+	 * log writes are still in progress, making these unflushed changes
-+	 * unrecoverable on the next mount.
-+	 */
-+	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
- 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
- 	xfs_trans_ail_delete(lip, 0);
--	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
- 	xfs_dqfunlock(dqp);
- 	return error;
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1464,16 +1464,15 @@ static void clr_task_runnable(struct tas
+ 		p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
  }
+ 
+-static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int enq_flags)
++static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_flags)
+ {
+ 	struct scx_sched *sch = scx_root;
+ 	int sticky_cpu = p->scx.sticky_cpu;
++	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
+ 
+ 	if (enq_flags & ENQUEUE_WAKEUP)
+ 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
+ 
+-	enq_flags |= rq->scx.extra_enq_flags;
+-
+ 	if (sticky_cpu >= 0)
+ 		p->scx.sticky_cpu = -1;
+ 
 
 
