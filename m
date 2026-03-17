@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BC82116F6;
-	Tue, 17 Mar 2026 17:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B0F626FD9B;
+	Tue, 17 Mar 2026 17:12:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767555; cv=none; b=DClYfp/EX2LTprLKgdoP5ZH489u6IBwuc0eIUREZdA52XlrFRP5fIwDXymqm9JOeTOAfmQAxIghXr2q5EejYukNI/RiyC2riitF5iI0k/Ki56eAgXBVhbCa5m4ezqYhWoPHJLoLpnebK0RMYPO83vlC44L2SEpivDoTkba1zVuY=
+	t=1773767559; cv=none; b=SHYB2vn3Dh1xcoCapQT3bk19fY3Ra8oRKHawba30zkPvq+r/jra/NA8di7hWtugseO7f63A5IzKfMc4jhzBTH3U88Na4DGQHrbdzNs8829h2ekpy8m5YbDHwPpnFjBmylquP4guWJQgW+bQIjYdzPceKPyuWi/wplwREkBocVow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767555; c=relaxed/simple;
-	bh=3zhSDNsrH+60A3b5Vs+3RHnrfpsBKEvtHmQdqV2+pzI=;
+	s=arc-20240116; t=1773767559; c=relaxed/simple;
+	bh=/cuQQQ5fLk80S9ndcsoQz6bgwL6UJeiXutlZCDTcn0U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=moLupi2nZDHgadRTTtMsTFVyVT+NNfJOgRLaXngyKpA/rroeQmJWOPLiUtU3v2a/zquz85TBz1HkjJdob/n+mKFCISH+04t57FPK9HcyEG8U5hFi8dihKeY61GrQhwQBl/rgDRcpGlmt98XIzxzIhkk8Gbk/kiAlt/biPfIL1UI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4Gf3cIm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P2RnjSwB3vprnyrEHEOBA9Wm7tPUSW1dOeQIeqWZ/uzLy/56a01MqWWGJ58x1rV9U6eI+sMUbFqXtCqVfeeEDZyIGmbpFfPU8uOv/haXu/jNgUQz6UZvRuAv+00IMN8tZvT0780vuUV1nsG+tA/wcXN+PscptuVvhb6GafCxAZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lPDdrB2n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4Gf3cIm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEA82C4CEF7;
-	Tue, 17 Mar 2026 17:12:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lPDdrB2n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E582C4CEF7;
+	Tue, 17 Mar 2026 17:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767554;
-	bh=3zhSDNsrH+60A3b5Vs+3RHnrfpsBKEvtHmQdqV2+pzI=;
+	s=korg; t=1773767559;
+	bh=/cuQQQ5fLk80S9ndcsoQz6bgwL6UJeiXutlZCDTcn0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4Gf3cIm87SwU6x/gdFzWHadQ7MhLaHrVN628rMviIySX9lEXC8egT42F5px250tv
-	 Ei89Xd8NTv2065psQaHptD1ZUpiuIuEj6hXxZjeuSAloYDCuJ4f0SneVbpt1uaHbdO
-	 SteLFBbL1qLe5qmKZE5pes7ug6MHCgVBYPDE5vHU=
+	b=lPDdrB2nMvNAWHaY/N3hYsLIH0L7G+eo6EShirZrnSAbE4/Ze8qNIPwc/UsnxECJh
+	 HxqH7jS2QtubijcRjrTBaC63W+koyQ6t04tP0lJc3ci/gTC6NbfWEBX9CJAyTeaXbO
+	 dZhhiDO2vkAKWV7wbnd+1T6Iv4oEU4UXMNmDkoAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seungjin Bae <eeodqql09@gmail.com>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/333] usb: gadget: f_mass_storage: Fix potential integer overflow in check_command_size_in_blocks()
-Date: Tue, 17 Mar 2026 17:32:12 +0100
-Message-ID: <20260317163003.189661915@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 112/333] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
+Date: Tue, 17 Mar 2026 17:32:21 +0100
+Message-ID: <20260317163003.521263885@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,71 +50,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Seungjin Bae <eeodqql09@gmail.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit 8479891d1f04a8ce55366fe4ca361ccdb96f02e1 ]
+commit 312c816c6bc30342bc30dca0d6db617ab4d3ae4e upstream.
 
-The `check_command_size_in_blocks()` function calculates the data size
-in bytes by left shifting `common->data_size_from_cmnd` by the block
-size (`common->curlun->blkbits`). However, it does not validate whether
-this shift operation will cause an integer overflow.
+Remove redundant netif_napi_del() call from disconnect path.
 
-Initially, the block size is set up in `fsg_lun_open()` , and the
-`common->data_size_from_cmnd` is set up in `do_scsi_command()`. During
-initialization, there is no integer overflow check for the interaction
-between two variables.
+A WARN may be triggered in __netif_napi_del_locked() during USB device
+disconnect:
 
-So if a malicious USB host sends a SCSI READ or WRITE command
-requesting a large amount of data (`common->data_size_from_cmnd`), the
-left shift operation can wrap around. This results in a truncated data
-size, which can bypass boundary checks and potentially lead to memory
-corruption or out-of-bounds accesses.
+  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
 
-Fix this by using the check_shl_overflow() macro to safely perform the
-shift and catch any overflows.
+This happens because netif_napi_del() is called in the disconnect path while
+NAPI is still enabled. However, it is not necessary to call netif_napi_del()
+explicitly, since unregister_netdev() will handle NAPI teardown automatically
+and safely. Removing the redundant call avoids triggering the warning.
 
-Fixes: 144974e7f9e3 ("usb: gadget: mass_storage: support multi-luns with different logic block size")
-Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
-Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://patch.msgid.link/20260228104324.1696455-2-eeodqql09@gmail.com
+Full trace:
+ lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
+ lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
+ lan78xx 1-1:1.0 enu1: Link is Down
+ lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
+ ------------[ cut here ]------------
+ WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+ Modules linked in: flexcan can_dev fuse
+ CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
+ Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
+ Workqueue: usb_hub_wq hub_event
+ pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __netif_napi_del_locked+0x2b4/0x350
+ lr : __netif_napi_del_locked+0x7c/0x350
+ sp : ffffffc085b673c0
+ x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
+ x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
+ x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
+ x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
+ x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
+ x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
+ x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
+ x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
+ x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
+ x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
+ Call trace:
+  __netif_napi_del_locked+0x2b4/0x350 (P)
+  lan78xx_disconnect+0xf4/0x360
+  usb_unbind_interface+0x158/0x718
+  device_remove+0x100/0x150
+  device_release_driver_internal+0x308/0x478
+  device_release_driver+0x1c/0x30
+  bus_remove_device+0x1a8/0x368
+  device_del+0x2e0/0x7b0
+  usb_disable_device+0x244/0x540
+  usb_disconnect+0x220/0x758
+  hub_event+0x105c/0x35e0
+  process_one_work+0x760/0x17b0
+  worker_thread+0x768/0xce8
+  kthread+0x3bc/0x690
+  ret_from_fork+0x10/0x20
+ irq event stamp: 211604
+ hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
+ hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
+ softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
+ softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
+ ---[ end trace 0000000000000000 ]---
+ lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
+
+Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260305143429.530909-5-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_mass_storage.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/usb/lan78xx.c |    2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
-index 94d478b6bcd3d..6f275c3d11ac5 100644
---- a/drivers/usb/gadget/function/f_mass_storage.c
-+++ b/drivers/usb/gadget/function/f_mass_storage.c
-@@ -180,6 +180,7 @@
- #include <linux/kthread.h>
- #include <linux/sched/signal.h>
- #include <linux/limits.h>
-+#include <linux/overflow.h>
- #include <linux/pagemap.h>
- #include <linux/rwsem.h>
- #include <linux/slab.h>
-@@ -1853,8 +1854,15 @@ static int check_command_size_in_blocks(struct fsg_common *common,
- 		int cmnd_size, enum data_direction data_dir,
- 		unsigned int mask, int needs_medium, const char *name)
- {
--	if (common->curlun)
--		common->data_size_from_cmnd <<= common->curlun->blkbits;
-+	if (common->curlun) {
-+		if (check_shl_overflow(common->data_size_from_cmnd,
-+				       common->curlun->blkbits,
-+				       &common->data_size_from_cmnd)) {
-+			common->phase_error = 1;
-+			return -EINVAL;
-+		}
-+	}
-+
- 	return check_command(common, cmnd_size, data_dir,
- 			mask, needs_medium, name);
- }
--- 
-2.51.0
-
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -4548,8 +4548,6 @@ static void lan78xx_disconnect(struct us
+ 	phylink_disconnect_phy(dev->phylink);
+ 	rtnl_unlock();
+ 
+-	netif_napi_del(&dev->napi);
+-
+ 	unregister_netdev(net);
+ 
+ 	timer_shutdown_sync(&dev->stat_monitor);
 
 
