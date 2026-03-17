@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFA272DF132;
-	Tue, 17 Mar 2026 17:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27D82D73B8;
+	Tue, 17 Mar 2026 17:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768075; cv=none; b=CZyQaewbvRmxtBvJwLfDurb9DCZZdnU575oN0KzJs0xChCt6dNV2GEQ4ZTRdfTuU5NLKduIjjdfc2WJgP2+1KX42JOVVBNPs9LtNKMWmI0gdj7/Dy868KgKsnNl/vEGCdkIaCelM6Vg1urwsbpwdkhImnwTxQfyxAOHCxMcMqSQ=
+	t=1773768080; cv=none; b=Y1gxt9BBC5Q8MFfmn0S4lSkGBzYE3AH1y3i3xX75zwe7Wbh3J/7XluIgEXUiUoUZ5Oo0Q482OPi2uS1SeiKjbpDVtquitI/lLUemo+kl46y3DjDuzULk6AxFhTppzpENSk7XK2iaFj6itZcwLFq1joIGK3RMF8b242yxOkgZC00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768075; c=relaxed/simple;
-	bh=aylVh0kTZM8na+VERSW9EtDDhlAhrzoE7H0ZI57T7E0=;
+	s=arc-20240116; t=1773768080; c=relaxed/simple;
+	bh=ojfCWOaxbD5V5y4gIJ97OGfAJQPyUTyOsXskVa5wwL4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0sFWuI6128g14JSSsCvLK6Oy0falQt/BNf1e+KAn2cUtB1D5jM0En4bpyW0tmQJOel7pdY3e4Fm+MJGhbIGjIEQRAs2wkmvjyEy6OJwMQAStAsBeOX8Ut55rKmENTbizCMT5vhg1PUvydWC32+xfWaMrecyqpbS+UaFl9gdKeo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RTBs0ny3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=alCDnNhB/+kUmqPMpq/GKSqgs8KVtzfyqtk9qHX6Ip0q7JLblAxv8LEzW7HArjjDGO8ylClJF9bFQrXmNZ37XAHZAPipDFbEnjl4h1oV1gDxOqiBpb2ChpauagYWI4YJ6Yq6PrcFayr0NtmJnJvo5KSwHPD2E2zLbLdVp+ba/u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lBixH7Cj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RTBs0ny3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B30C4CEF7;
-	Tue, 17 Mar 2026 17:21:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lBixH7Cj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6043CC4CEF7;
+	Tue, 17 Mar 2026 17:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768075;
-	bh=aylVh0kTZM8na+VERSW9EtDDhlAhrzoE7H0ZI57T7E0=;
+	s=korg; t=1773768079;
+	bh=ojfCWOaxbD5V5y4gIJ97OGfAJQPyUTyOsXskVa5wwL4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RTBs0ny30ZXsO4MA8eBZ1vJV/SoqA3BEcuVk4lHkWmvfFHgbjeGUhVx10VqumIahq
-	 KIC+wlyuQgKoUaya2hwAD4yLc1wzn8KzXXXV248S6B4gwo6y0L4bCgQLZqf5gId5Tl
-	 IMKZkqzoW21af+/Vojqx2jKZKZ6WJPmH8YyIgRDk=
+	b=lBixH7CjHtd9IzI3bgzcULlfc1LDx2PHoqtAORrz6zu4w3r6nsMKi26J1w/420OUa
+	 DzT3zvmEJN7kA7yUMM1fT1X75/qDCrIT7hZoBDeHNGY1IPXIrHGrWkF5oV35S5dWMG
+	 Gfphg6o/yN8hScCxqL9NFEKKD9uWFydfhzw4thto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.18 226/333] hwmon: (pmbus/q54sj108a2) fix stack overflow in debugfs read
-Date: Tue, 17 Mar 2026 17:34:15 +0100
-Message-ID: <20260317163007.746756635@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 227/333] io_uring/zcrx: use READ_ONCE with user shared RQEs
+Date: Tue, 17 Mar 2026 17:34:16 +0100
+Message-ID: <20260317163007.782978784@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,86 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 25dd70a03b1f5f3aa71e1a5091ecd9cd2a13ee43 upstream.
+commit 531bb98a030cc1073bd7ed9a502c0a3a781e92ee upstream.
 
-The q54sj108a2_debugfs_read function suffers from a stack buffer overflow
-due to incorrect arguments passed to bin2hex(). The function currently
-passes 'data' as the destination and 'data_char' as the source.
+Refill queue entries are shared with the user space, use READ_ONCE when
+reading them.
 
-Because bin2hex() converts each input byte into two hex characters, a
-32-byte block read results in 64 bytes of output. Since 'data' is only
-34 bytes (I2C_SMBUS_BLOCK_MAX + 2), this writes 30 bytes past the end
-of the buffer onto the stack.
-
-Additionally, the arguments were swapped: it was reading from the
-zero-initialized 'data_char' and writing to 'data', resulting in
-all-zero output regardless of the actual I2C read.
-
-Fix this by:
-1. Expanding 'data_char' to 66 bytes to safely hold the hex output.
-2. Correcting the bin2hex() argument order and using the actual read count.
-3. Using a pointer to select the correct output buffer for the final
-   simple_read_from_buffer call.
-
-Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
+Fixes: 34a3e60821ab9 ("io_uring/zcrx: implement zerocopy receive pp memory provider");
 Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260304235116.1045-1-sanman.p211993@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/q54sj108a2.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ io_uring/zcrx.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/pmbus/q54sj108a2.c
-+++ b/drivers/hwmon/pmbus/q54sj108a2.c
-@@ -78,7 +78,8 @@ static ssize_t q54sj108a2_debugfs_read(s
- 	int idx = *idxp;
- 	struct q54sj108a2_data *psu = to_psu(idxp, idx);
- 	char data[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
--	char data_char[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
-+	char data_char[I2C_SMBUS_BLOCK_MAX * 2 + 2] = { 0 };
-+	char *out = data;
- 	char *res;
+--- a/io_uring/zcrx.c
++++ b/io_uring/zcrx.c
+@@ -767,11 +767,12 @@ static inline bool io_parse_rqe(struct i
+ 				struct io_zcrx_ifq *ifq,
+ 				struct net_iov **ret_niov)
+ {
++	__u64 off = READ_ONCE(rqe->off);
+ 	unsigned niov_idx, area_idx;
+ 	struct io_zcrx_area *area;
  
- 	switch (idx) {
-@@ -149,27 +150,27 @@ static ssize_t q54sj108a2_debugfs_read(s
- 		if (rc < 0)
- 			return rc;
+-	area_idx = rqe->off >> IORING_ZCRX_AREA_SHIFT;
+-	niov_idx = (rqe->off & ~IORING_ZCRX_AREA_MASK) >> ifq->niov_shift;
++	area_idx = off >> IORING_ZCRX_AREA_SHIFT;
++	niov_idx = (off & ~IORING_ZCRX_AREA_MASK) >> ifq->niov_shift;
  
--		res = bin2hex(data, data_char, 32);
--		rc = res - data;
--
-+		res = bin2hex(data_char, data, rc);
-+		rc = res - data_char;
-+		out = data_char;
- 		break;
- 	case Q54SJ108A2_DEBUGFS_FLASH_KEY:
- 		rc = i2c_smbus_read_block_data(psu->client, PMBUS_FLASH_KEY_WRITE, data);
- 		if (rc < 0)
- 			return rc;
- 
--		res = bin2hex(data, data_char, 4);
--		rc = res - data;
--
-+		res = bin2hex(data_char, data, rc);
-+		rc = res - data_char;
-+		out = data_char;
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
--	data[rc] = '\n';
-+	out[rc] = '\n';
- 	rc += 2;
- 
--	return simple_read_from_buffer(buf, count, ppos, data, rc);
-+	return simple_read_from_buffer(buf, count, ppos, out, rc);
- }
- 
- static ssize_t q54sj108a2_debugfs_write(struct file *file, const char __user *buf,
+ 	if (unlikely(rqe->__pad || area_idx))
+ 		return false;
 
 
