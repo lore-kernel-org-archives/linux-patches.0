@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F6093F87E6;
-	Tue, 17 Mar 2026 17:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537A33F54CD;
+	Tue, 17 Mar 2026 17:00:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766832; cv=none; b=F4LUinJr3TRFLqwMS9Hfdad+P0hsVea/vO/gFMZT+SDADE5gNALU9xfh5/MEwr5q7dKBScOjtZme2VHqxW8EddKkXp+/0eZhsF9r33xN2GWuBiaHcIB2hJWct7lvA7PW2ITp/PvZAtqxJB7NMxZpqh6kp+QiHZZ+mQFWdKKDP1s=
+	t=1773766836; cv=none; b=Y7AyKZl7lOF+tEFz9GONOW8t82Tmd342vkIIQf7/Ba9pZt76JBhah0u5os1gtXnXOMrQQ2/6gt/ZS3s8CDOprsf7C70HdzvNo+XOjB2pm6ec4y/xcK1gOipUrjyBVK3Z7Bu12oHoHA/Qw9rYnX6bQNCAvSCsW/iWPtHKkaafTKk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766832; c=relaxed/simple;
-	bh=JtzpE6R7CA5ZXwwevdaYTrXTHjn8UFufLxBDQIY1AKA=;
+	s=arc-20240116; t=1773766836; c=relaxed/simple;
+	bh=kbm8SRPp+bpXflixv8d7WhsYEyGahbvwzlmr+0XoLss=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FuTMvabawNA+tAEmgy/psifQ/nj1q5g9Ozl+Y4mn3fT3nluGIgV4LTOngLdCmnaBp5h64DVgArGuS1//OrC9J18zCBMU2UdyVGxg4vdtKfeVwUHJE78HWFBLetneIAV5G+UVC2JjyjbdsCCRBoMx8zGVTIdB1hAfVaSyXTDufnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpB35xVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jIFzg4FW55LxbN/j1rW8CzmPLZ6SugZHdHs2dzrNyrVUCjAdTDSHOdc9BDG1gUdRmfE366C5O/PZpSmcd3OObieS+esN3HGNcVGibwyMjmPoDV3o9kS/l8WforrYkj89ZjgKIgOtFEoZzePiT7vnKGFJsTclkReuKQiDp5P5aM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WBV5nFT4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpB35xVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89269C4CEF7;
-	Tue, 17 Mar 2026 17:00:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WBV5nFT4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C337C4CEF7;
+	Tue, 17 Mar 2026 17:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766831;
-	bh=JtzpE6R7CA5ZXwwevdaYTrXTHjn8UFufLxBDQIY1AKA=;
+	s=korg; t=1773766836;
+	bh=kbm8SRPp+bpXflixv8d7WhsYEyGahbvwzlmr+0XoLss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpB35xVYlo8/OmtrXM3/oW5hQOoMqzChbHiqmtYCubzcJt/QpVTYI/P/6chxh4a4P
-	 fi964Y0STUOv3A0L747EXqjv2/9bqax62h7zlJJqgBcO0uxM3hCPGtkqctfdMP0VLT
-	 1HROfzYwMlxwv+gljbhhXP7TzXedcqViCZBg13rY=
+	b=WBV5nFT4X9jNrb9JKmxU1YjIhbnthANZNxM8zQ7V/kBZxmrXBCaV6B2EmzMRQDnbL
+	 y1CE/yANHcWQu+7Ee4fBlX9yMYiWLCaeudiu2vGej90qGBDWKicZmTdATtyrgpGmGo
+	 16XJLoUD2uTRubxyuekM2tMlzASwnIOKJkpmZSLA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Abhishek Dubey <adubey@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	Hari Bathini <hbathini@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>
-Subject: [PATCH 6.19 330/378] powerpc64/bpf: fix kfunc call support
-Date: Tue, 17 Mar 2026 17:34:47 +0100
-Message-ID: <20260317163019.128758920@linuxfoundation.org>
+Subject: [PATCH 6.19 331/378] powerpc64/bpf: fix the address returned by bpf_get_func_ip
+Date: Tue, 17 Mar 2026 17:34:48 +0100
+Message-ID: <20260317163019.166136359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,165 +54,90 @@ Content-Transfer-Encoding: 8bit
 
 From: Hari Bathini <hbathini@linux.ibm.com>
 
-commit 01b6ac72729610ae732ca2a66e3a642e23f6cd60 upstream.
+commit 157820264ac3dadfafffad63184b883eb28f9ae0 upstream.
 
-Commit 61688a82e047 ("powerpc/bpf: enable kfunc call") inadvertently
-enabled kfunc call support for 32-bit powerpc but that support will
-not be possible until ABI mismatch between 32-bit powerpc and eBPF is
-handled in 32-bit powerpc JIT code. Till then, advertise support only
-for 64-bit powerpc. Also, in powerpc ABI, caller needs to extend the
-arguments properly based on signedness. The JIT code is responsible
-for handling this explicitly for kfunc calls as verifier can't handle
-this for each architecture-specific ABI needs. But this was not taken
-care of while kfunc call support was enabled for powerpc. Fix it by
-handling this with bpf_jit_find_kfunc_model() and using zero_extend()
-& sign_extend() helper functions.
+bpf_get_func_ip() helper function returns the address of the traced
+function. It relies on the IP address stored at ctx - 16 by the bpf
+trampoline. On 64-bit powerpc, this address is recovered from LR
+accounting for OOL trampoline. But the address stored here was off
+by 4-bytes. Ensure the address is the actual start of the traced
+function.
 
-Fixes: 61688a82e047 ("powerpc/bpf: enable kfunc call")
+Reported-by: Abhishek Dubey <adubey@linux.ibm.com>
+Fixes: d243b62b7bd3 ("powerpc64/bpf: Add support for bpf trampolines")
 Cc: stable@vger.kernel.org
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20260303181031.390073-7-hbathini@linux.ibm.com
+Link: https://patch.msgid.link/20260303181031.390073-3-hbathini@linux.ibm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/net/bpf_jit_comp.c   |    2 
- arch/powerpc/net/bpf_jit_comp64.c |  101 ++++++++++++++++++++++++++++++++++----
- 2 files changed, 94 insertions(+), 9 deletions(-)
+ arch/powerpc/net/bpf_jit_comp.c |   28 +++++++++++++++++++---------
+ 1 file changed, 19 insertions(+), 9 deletions(-)
 
 --- a/arch/powerpc/net/bpf_jit_comp.c
 +++ b/arch/powerpc/net/bpf_jit_comp.c
-@@ -437,7 +437,7 @@ void bpf_jit_free(struct bpf_prog *fp)
+@@ -722,9 +722,9 @@ static int __arch_prepare_bpf_trampoline
+ 	 *       retval_off             [ return value      ]
+ 	 *                              [ reg argN          ]
+ 	 *                              [ ...               ]
+-	 *       regs_off               [ reg_arg1          ] prog ctx context
+-	 *       nregs_off              [ args count        ]
+-	 *       ip_off                 [ traced function   ]
++	 *       regs_off               [ reg_arg1          ] prog_ctx
++	 *       nregs_off              [ args count        ] ((u64 *)prog_ctx)[-1]
++	 *       ip_off                 [ traced function   ] ((u64 *)prog_ctx)[-2]
+ 	 *                              [ ...               ]
+ 	 *       run_ctx_off            [ bpf_tramp_run_ctx ]
+ 	 *                              [ reg argN          ]
+@@ -824,7 +824,7 @@ static int __arch_prepare_bpf_trampoline
  
- bool bpf_jit_supports_kfunc_call(void)
- {
--	return true;
-+	return IS_ENABLED(CONFIG_PPC64);
- }
+ 	bpf_trampoline_save_args(image, ctx, func_frame_offset, nr_regs, regs_off);
  
- bool bpf_jit_supports_arena(void)
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -319,6 +319,83 @@ int bpf_jit_emit_func_call_rel(u32 *imag
- 	return 0;
- }
+-	/* Save our return address */
++	/* Save our LR/return address */
+ 	EMIT(PPC_RAW_MFLR(_R3));
+ 	if (IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE))
+ 		EMIT(PPC_RAW_STL(_R3, _R1, alt_lr_off));
+@@ -832,24 +832,34 @@ static int __arch_prepare_bpf_trampoline
+ 		EMIT(PPC_RAW_STL(_R3, _R1, bpf_frame_size + PPC_LR_STKOFF));
  
-+static int zero_extend(u32 *image, struct codegen_context *ctx, u32 src_reg, u32 dst_reg, u32 size)
-+{
-+	switch (size) {
-+	case 1:
-+		 /* zero-extend 8 bits into 64 bits */
-+		EMIT(PPC_RAW_RLDICL(dst_reg, src_reg, 0, 56));
-+		return 0;
-+	case 2:
-+		 /* zero-extend 16 bits into 64 bits */
-+		EMIT(PPC_RAW_RLDICL(dst_reg, src_reg, 0, 48));
-+		return 0;
-+	case 4:
-+		 /* zero-extend 32 bits into 64 bits */
-+		EMIT(PPC_RAW_RLDICL(dst_reg, src_reg, 0, 32));
-+		fallthrough;
-+	case 8:
-+		/* Nothing to do */
-+		return 0;
-+	default:
-+		return -1;
-+	}
-+}
-+
-+static int sign_extend(u32 *image, struct codegen_context *ctx, u32 src_reg, u32 dst_reg, u32 size)
-+{
-+	switch (size) {
-+	case 1:
-+		 /* sign-extend 8 bits into 64 bits */
-+		EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
-+		return 0;
-+	case 2:
-+		 /* sign-extend 16 bits into 64 bits */
-+		EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
-+		return 0;
-+	case 4:
-+		 /* sign-extend 32 bits into 64 bits */
-+		EMIT(PPC_RAW_EXTSW(dst_reg, src_reg));
-+		fallthrough;
-+	case 8:
-+		/* Nothing to do */
-+		return 0;
-+	default:
-+		return -1;
-+	}
-+}
-+
-+/*
-+ * Handle powerpc ABI expectations from caller:
-+ *   - Unsigned arguments are zero-extended.
-+ *   - Signed arguments are sign-extended.
-+ */
-+static int prepare_for_kfunc_call(const struct bpf_prog *fp, u32 *image,
-+				  struct codegen_context *ctx,
-+				  const struct bpf_insn *insn)
-+{
-+	const struct btf_func_model *m = bpf_jit_find_kfunc_model(fp, insn);
-+	int i;
-+
-+	if (!m)
-+		return -1;
-+
-+	for (i = 0; i < m->nr_args; i++) {
-+		/* Note that BPF ABI only allows up to 5 args for kfuncs */
-+		u32 reg = bpf_to_ppc(BPF_REG_1 + i), size = m->arg_size[i];
-+
-+		if (!(m->arg_flags[i] & BTF_FMODEL_SIGNED_ARG)) {
-+			if (zero_extend(image, ctx, reg, reg, size))
-+				return -1;
-+		} else {
-+			if (sign_extend(image, ctx, reg, reg, size))
-+				return -1;
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- static int bpf_jit_emit_tail_call(u32 *image, struct codegen_context *ctx, u32 out)
- {
  	/*
-@@ -931,14 +1008,16 @@ int bpf_jit_build_body(struct bpf_prog *
- 				/* special mov32 for zext */
- 				EMIT(PPC_RAW_RLWINM(dst_reg, dst_reg, 0, 0, 31));
- 				break;
--			} else if (off == 8) {
--				EMIT(PPC_RAW_EXTSB(dst_reg, src_reg));
--			} else if (off == 16) {
--				EMIT(PPC_RAW_EXTSH(dst_reg, src_reg));
--			} else if (off == 32) {
--				EMIT(PPC_RAW_EXTSW(dst_reg, src_reg));
--			} else if (dst_reg != src_reg)
--				EMIT(PPC_RAW_MR(dst_reg, src_reg));
-+			}
-+			if (off == 0) {
-+				/* MOV */
-+				if (dst_reg != src_reg)
-+					EMIT(PPC_RAW_MR(dst_reg, src_reg));
-+			} else {
-+				/* MOVSX: dst = (s8,s16,s32)src (off = 8,16,32) */
-+				if (sign_extend(image, ctx, src_reg, dst_reg, off / 8))
-+					return -1;
-+			}
- 			goto bpf_alu32_trunc;
- 		case BPF_ALU | BPF_MOV | BPF_K: /* (u32) dst = imm */
- 		case BPF_ALU64 | BPF_MOV | BPF_K: /* dst = (s64) imm */
-@@ -1395,6 +1474,12 @@ emit_clear:
- 			if (ret < 0)
- 				return ret;
+-	 * Save ip address of the traced function.
+-	 * We could recover this from LR, but we will need to address for OOL trampoline,
+-	 * and optional GEP area.
++	 * Derive IP address of the traced function.
++	 * In case of CONFIG_PPC_FTRACE_OUT_OF_LINE or BPF program, LR points to the instruction
++	 * after the 'bl' instruction in the OOL stub. Refer to ftrace_init_ool_stub() and
++	 * bpf_arch_text_poke() for OOL stub of kernel functions and bpf programs respectively.
++	 * Relevant stub sequence:
++	 *
++	 *               bl <tramp>
++	 *   LR (R3) =>  mtlr r0
++	 *               b <func_addr+4>
++	 *
++	 * Recover kernel function/bpf program address from the unconditional
++	 * branch instruction at the end of OOL stub.
+ 	 */
+ 	if (IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE) || flags & BPF_TRAMP_F_IP_ARG) {
+ 		EMIT(PPC_RAW_LWZ(_R4, _R3, 4));
+ 		EMIT(PPC_RAW_SLWI(_R4, _R4, 6));
+ 		EMIT(PPC_RAW_SRAWI(_R4, _R4, 6));
+ 		EMIT(PPC_RAW_ADD(_R3, _R3, _R4));
+-		EMIT(PPC_RAW_ADDI(_R3, _R3, 4));
+ 	}
  
-+			/* Take care of powerpc ABI requirements before kfunc call */
-+			if (insn[i].src_reg == BPF_PSEUDO_KFUNC_CALL) {
-+				if (prepare_for_kfunc_call(fp, image, ctx, &insn[i]))
-+					return -1;
-+			}
-+
- 			ret = bpf_jit_emit_func_call_rel(image, fimage, ctx, func_addr);
- 			if (ret)
- 				return ret;
+ 	if (flags & BPF_TRAMP_F_IP_ARG)
+ 		EMIT(PPC_RAW_STL(_R3, _R1, ip_off));
+ 
+-	if (IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE))
++	if (IS_ENABLED(CONFIG_PPC_FTRACE_OUT_OF_LINE)) {
+ 		/* Fake our LR for unwind */
++		EMIT(PPC_RAW_ADDI(_R3, _R3, 4));
+ 		EMIT(PPC_RAW_STL(_R3, _R1, bpf_frame_size + PPC_LR_STKOFF));
++	}
+ 
+ 	/* Save function arg count -- see bpf_get_func_arg_cnt() */
+ 	EMIT(PPC_RAW_LI(_R3, nr_regs));
 
 
