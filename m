@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645533446DA;
-	Tue, 17 Mar 2026 17:27:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E92F1ACEDE;
+	Tue, 17 Mar 2026 17:27:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768455; cv=none; b=nDziXLTBPIFdVhSQYPlrDTf/OTVfXEP7J/OrA+L2pHN9K7VA2ZyIqFJDzA0AP0S3NMbWCM8vOFyU6Vvt+r9e+nRyQpD6dZGer/Ey1YKxwzD0Su6y9P8yWwFLLagatyBWgjvSANZ0U/G//Hh+OlLOVeg8Ns25x1BGWkyP0LNobIc=
+	t=1773768460; cv=none; b=PUOwdTmwIYJFV4Kq25SaDlGTDS6EPHbyfSGxAeSzsQEU7kdifqH3LGV0opUY9ci1mbQJW+oRMwRLjjF7Yyfc4Zv4qKsCIRn0dIo/EtEqF7PhRjuGXc5gyH6w2gXxyqkoTQbp1S7lFZvJl1prEBnQiWjNIA4zOhKhzduWzame/Is=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768455; c=relaxed/simple;
-	bh=UhKxAc4aLLSHTBNz3bBmEgv7Wk/tGFawsZ9iX1BprKA=;
+	s=arc-20240116; t=1773768460; c=relaxed/simple;
+	bh=jtfQJcp+OSVK1aVurzkT29KQOatRHvLLY/1DomDA3iY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ogXLL5OoIHb8jEdoY2m1jFEBT9i852uOeUMt95CrUnsNBMZ7isUkDRMEtgTATR0KfyODFe38QUVlFuCo/VC72JTTgSShOXA2/Pezc7lNayVYxoIQn1E0Max1Yyq0GP3am27eyPSEHNUwY6lqd1e/bklkkTmNcZeq2kBy/TcIf2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A82Gqd/7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/JyNqKpIk8FYdW2mpXMjWjwH/r+rqCyMUKrKdJk+7mdUuT5sOvBLlOf6ICrM5ra6Uk9liQ3LvHf+BIoa82pFxLIE8eYT8F91IWCzZYRt2ycXgY5qCJ62ToILw0bN6DVugxbsZQNFemtuHVghqLipzNyudoXI33OqW5nUz6JpvA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RggPfBBi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A82Gqd/7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7BF8C4CEF7;
-	Tue, 17 Mar 2026 17:27:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RggPfBBi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B2BC4CEF7;
+	Tue, 17 Mar 2026 17:27:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768455;
-	bh=UhKxAc4aLLSHTBNz3bBmEgv7Wk/tGFawsZ9iX1BprKA=;
+	s=korg; t=1773768459;
+	bh=jtfQJcp+OSVK1aVurzkT29KQOatRHvLLY/1DomDA3iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A82Gqd/7Do3IjFTpG/1t63Y0x4xfWwqqaj29vGFdIvqy13u2uhIfhz4FQX0iswSVZ
-	 d/nSXhPe0p315XY7IStASEXvUzuXR/gaJbNEiINJqkEXNwN6Po8/mGqqwjCVHkMvDF
-	 6Kx4x8sfrq3ISELeyQzoX1gp1I1fOol94gD+VcqE=
+	b=RggPfBBioeCs8+//IspkYue2tjDVlHZUNGQn05747OzBtBPa/yeXh5Fb4hehKHXqZ
+	 16ofb7q+mcpLyhihq5iWYOQKGvc3QtI1jJ6dx/Qiu/rhalL2+UQSviNYcIODbNm2Gj
+	 AzyXo12SGiC1X267jFxeBaSYD4pRhMIrYgDntMsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 311/333] i3c: mipi-i3c-hci: Restart DMA ring correctly after dequeue abort
-Date: Tue, 17 Mar 2026 17:35:40 +0100
-Message-ID: <20260317163010.918736575@linuxfoundation.org>
+Subject: [PATCH 6.18 312/333] i3c: mipi-i3c-hci: Add missing TID field to no-op command descriptor
+Date: Tue, 17 Mar 2026 17:35:41 +0100
+Message-ID: <20260317163010.954755724@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,39 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit b6d586431ae20d5157ee468d0ef62ad26798ef13 upstream.
+commit ec3cfd835f7c4bbd23bc9ad909d2fdc772a578bb upstream.
 
-The DMA dequeue path attempts to restart the ring after aborting an
-in-flight transfer, but the current sequence is incomplete. The controller
-must be brought out of the aborted state and the ring control registers
-must be programmed in the correct order: first clearing ABORT, then
-re-enabling the ring and asserting RUN_STOP to resume operation.
+The internal control command descriptor used for no-op commands includes a
+Transaction ID (TID) field, but the no-op command constructed in
+hci_dma_dequeue_xfer() omitted it.  As a result, the hardware receives a
+no-op descriptor without the expected TID.
 
-Add the missing controller resume step and update the ring control writes
-so that the ring is restarted using the proper sequence.
+This bug has gone unnoticed because the TID is currently not validated in
+the no-op completion path, but the descriptor format requires it to be
+present.
+
+Add the missing TID field when generating a no-op descriptor so that its
+layout matches the defined command structure.
 
 Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-11-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260306072451.11131-10-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/i3c/master/mipi-i3c-hci/cmd.h |    1 +
+ drivers/i3c/master/mipi-i3c-hci/dma.c |    2 +-
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
+--- a/drivers/i3c/master/mipi-i3c-hci/cmd.h
++++ b/drivers/i3c/master/mipi-i3c-hci/cmd.h
+@@ -17,6 +17,7 @@
+ #define CMD_0_TOC			W0_BIT_(31)
+ #define CMD_0_ROC			W0_BIT_(30)
+ #define CMD_0_ATTR			W0_MASK(2, 0)
++#define CMD_0_TID			W0_MASK(6, 3)
+ 
+ /*
+  * Response Descriptor Structure
 --- a/drivers/i3c/master/mipi-i3c-hci/dma.c
 +++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -528,7 +528,9 @@ static bool hci_dma_dequeue_xfer(struct
- 	}
+@@ -510,7 +510,7 @@ static bool hci_dma_dequeue_xfer(struct
+ 			u32 *ring_data = rh->xfer + rh->xfer_struct_sz * idx;
  
- 	/* restart the ring */
-+	mipi_i3c_hci_resume(hci);
- 	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE);
-+	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_RUN_STOP);
- 
- 	return did_unqueue;
- }
+ 			/* store no-op cmd descriptor */
+-			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7);
++			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7) | FIELD_PREP(CMD_0_TID, xfer->cmd_tid);
+ 			*ring_data++ = 0;
+ 			if (hci->cmd == &mipi_i3c_hci_cmd_v2) {
+ 				*ring_data++ = 0;
 
 
