@@ -1,41 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6BF3368AE;
-	Tue, 17 Mar 2026 17:28:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590EF3246F8;
+	Tue, 17 Mar 2026 17:28:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768504; cv=none; b=dSnHSzOUeO/fUCYkneSQdKFT3pUpLejjT9sYMDNDoGVxvGmf0neaXOQRNpEU3ytI4w+aw2Q7XsElYqLbn/8mryPX4+Ep/VyirOT946eH2DQk8BeUj4MS2ZT6OBPu13HcmVL9zLHdh/DzA6DqkPlnZweyR6T6KEyoMfgXjQmlwQg=
+	t=1773768508; cv=none; b=M0thPm3g7L8ets4F86ChDZVEWHaRszySFwoi8zLtef1fib+AEeCN0hmdBnV073iOf3qWdtn7HxZpzjM12DhjEJtv32yUQdoMA6OgCx9fCvisjZTPBu2QqGVvUvBRfVVq721hfKcI5l2PqYkbNwADD2rHBpvCuxCVAxzc/KDgtkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768504; c=relaxed/simple;
-	bh=rjHp2Q5r18EoStYJJfrso+hJKYSykMATfTRYB/FrLtk=;
+	s=arc-20240116; t=1773768508; c=relaxed/simple;
+	bh=DCYm8Gh1iNP5NHe1ZK9TjJDeOI5NJgL8eVMVXglcunA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3S92B9FbAarXZVmxt4J20bm+R5Cdo/AZaJhN7fGtH6KpXEH+sxbFx7I3XagPCJY4OXEQpBhB1cfUGBOV24IAX0nf7k+Gkdl4VxHku5lJkqt1Uws+94hskoi7R4le2QLu3r1b4/erLaELkIOS/KvrlvKDybn21TO3gFZA41ARLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zV+RtdhH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gcZ3GCzvVncPzIL8gGsKp4IKKYNgl58824a7f7+m8voIjLOdfRYQKkdOsHeoCY6LFckohvJ2siMxcqD7AokV0Mp4fSNsMvgjFJ/G7PWOCGerVV5G3tVaj6zJwHxuJcngPPMXZ8/0Y6N7s3CGDItH0La2tcjYFOgrY7kPx+A4rso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WwCaS7Vu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zV+RtdhH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C182AC4CEF7;
-	Tue, 17 Mar 2026 17:28:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WwCaS7Vu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0747C4CEF7;
+	Tue, 17 Mar 2026 17:28:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768504;
-	bh=rjHp2Q5r18EoStYJJfrso+hJKYSykMATfTRYB/FrLtk=;
+	s=korg; t=1773768508;
+	bh=DCYm8Gh1iNP5NHe1ZK9TjJDeOI5NJgL8eVMVXglcunA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zV+RtdhHzn2LjHejAiMJzuuTasO6S7OZbvwJykkwJPRdnc8uj6fGKPP8gGBUxTOMn
-	 siLcubMuRvqnIO9SeJ36/PmGpjh4spZXvs+ltVhVJ1XhwFxNsldFPALTRXaUhcDW77
-	 3QzP0r/CGJKwllHCJ1H2H/UU6bzurOiIsw0Wq3s4=
+	b=WwCaS7VunP9CO3L5nsOx7RLC3NSABdDYAPZORgWMVdqBepYmo8QlTmr+miqeaDxSo
+	 yb3msWdsY1ncht3hDvnMQWtfOWR0NMPH7V56FUqqVQyVUxbd0KHzW7cbjSTnMSF//c
+	 L/qYWeBV3a1433cuaMH0LRlEhcijsoi2Q0eMi+38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Michal Suchanek <msuchanek@suse.de>,
+	Rainer Fiebig <jrf@mailbox.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 325/333] KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated
-Date: Tue, 17 Mar 2026 17:35:54 +0100
-Message-ID: <20260317163011.453766608@linuxfoundation.org>
+Subject: [PATCH 6.18 326/333] kbuild: Leave objtool binary around with make clean
+Date: Tue, 17 Mar 2026 17:35:55 +0100
+Message-ID: <20260317163011.491128197@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -54,98 +55,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 87d0f901a9bd8ae6be57249c737f20ac0cace93d ]
+[ Upstream commit fdb12c8a24a453bdd6759979b6ef1e04ebd4beb4 ]
 
-Explicitly set/clear CR8 write interception when AVIC is (de)activated to
-fix a bug where KVM leaves the interception enabled after AVIC is
-activated.  E.g. if KVM emulates INIT=>WFS while AVIC is deactivated, CR8
-will remain intercepted in perpetuity.
+The difference between 'make clean' and 'make mrproper' is documented in
+'make help' as:
 
-On its own, the dangling CR8 intercept is "just" a performance issue, but
-combined with the TPR sync bug fixed by commit d02e48830e3f ("KVM: SVM:
-Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active"), the danging
-intercept is fatal to Windows guests as the TPR seen by hardware gets
-wildly out of sync with reality.
+  clean     - Remove most generated files but keep the config and
+              enough build support to build external modules
+  mrproper  - Remove all generated files + config + various backup files
 
-Note, VMX isn't affected by the bug as TPR_THRESHOLD is explicitly ignored
-when Virtual Interrupt Delivery is enabled, i.e. when APICv is active in
-KVM's world.  I.e. there's no need to trigger update_cr8_intercept(), this
-is firmly an SVM implementation flaw/detail.
+After commit 68b4fe32d737 ("kbuild: Add objtool to top-level clean
+target"), running 'make clean' then attempting to build an external
+module with the resulting build directory fails with
 
-WARN if KVM gets a CR8 write #VMEXIT while AVIC is active, as KVM should
-never enter the guest with AVIC enabled and CR8 writes intercepted.
+  $ make ARCH=x86_64 O=build clean
 
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+  $ make -C build M=... MO=...
+  ...
+  /bin/sh: line 1: .../build/tools/objtool/objtool: No such file or directory
+
+as 'make clean' removes the objtool binary.
+
+Split the objtool clean target into mrproper and clean like Kbuild does
+and remove all generated artifacts with 'make clean' except for the
+objtool binary, which is removed with 'make mrproper'. To avoid a small
+race when running the objtool clean target through both objtool_mrproper
+and objtool_clean when running 'make mrproper', modify objtool's clean
+up find command to avoid using find's '-delete' command by piping the
+files into 'xargs rm -f' like the rest of Kbuild does.
+
 Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Squash fix to avic_deactivate_vmcb. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: 68b4fe32d737 ("kbuild: Add objtool to top-level clean target")
+Reported-by: Michal Suchanek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/20260225112633.6123-1-msuchanek@suse.de/
+Reported-by: Rainer Fiebig <jrf@mailbox.org>
+Closes: https://lore.kernel.org/62d12399-76e5-3d40-126a-7490b4795b17@mailbox.org/
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    7 +++++--
- arch/x86/kvm/svm/svm.c  |    7 ++++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ Makefile               |    8 ++++----
+ tools/objtool/Makefile |    8 +++++---
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -180,12 +180,12 @@ static void avic_activate_vmcb(struct vc
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
+--- a/Makefile
++++ b/Makefile
+@@ -1441,13 +1441,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
+ 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
+ endif
  
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
--
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 	vmcb->control.avic_physical_id |= avic_get_max_physical_id(vcpu);
--
- 	vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
+-PHONY += objtool_clean
++PHONY += objtool_clean objtool_mrproper
  
-+	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
+ objtool_O = $(abspath $(objtree))/tools/objtool
+ 
+-objtool_clean:
++objtool_clean objtool_mrproper:
+ ifneq ($(wildcard $(objtool_O)),)
+-	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
++	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) $(patsubst objtool_%,%,$@)
+ endif
+ 
+ tools/: FORCE
+@@ -1624,7 +1624,7 @@ PHONY += $(mrproper-dirs) mrproper
+ $(mrproper-dirs):
+ 	$(Q)$(MAKE) $(clean)=$(patsubst _mrproper_%,%,$@)
+ 
+-mrproper: clean $(mrproper-dirs)
++mrproper: clean objtool_mrproper $(mrproper-dirs)
+ 	$(call cmd,rmfiles)
+ 	@find . $(RCS_FIND_IGNORE) \
+ 		\( -name '*.rmeta' \) \
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -86,10 +86,12 @@ $(LIBSUBCMD)-clean:
+ 	$(Q)$(RM) -r -- $(LIBSUBCMD_OUTPUT)
+ 
+ clean: $(LIBSUBCMD)-clean
+-	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
+-	$(Q)find $(OUTPUT) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
++	$(Q)find $(OUTPUT) \( -name '*.o' -o -name '\.*.cmd' -o -name '\.*.d' \) -type f -print | xargs $(RM)
+ 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/inat-tables.c $(OUTPUT)fixdep
+ 
++mrproper: clean
++	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
 +
- 	/*
- 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
- 	 * accesses, while interrupt injection to a running vCPU can be
-@@ -217,6 +217,9 @@ static void avic_deactivate_vmcb(struct
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
+ FORCE:
  
-+	if (!sev_es_guest(svm->vcpu.kvm))
-+		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * If running nested and the guest uses its own MSR bitmap, there
- 	 * is no need to update L0's msr bitmap
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1032,8 +1032,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	svm_set_intercept(svm, INTERCEPT_CR0_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR3_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR4_WRITE);
--	if (!kvm_vcpu_apicv_active(vcpu))
--		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+	svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
- 
- 	set_dr_intercepts(svm);
- 
-@@ -2598,9 +2597,11 @@ static int dr_interception(struct kvm_vc
- 
- static int cr8_write_interception(struct kvm_vcpu *vcpu)
- {
-+	u8 cr8_prev = kvm_get_cr8(vcpu);
- 	int r;
- 
--	u8 cr8_prev = kvm_get_cr8(vcpu);
-+	WARN_ON_ONCE(kvm_vcpu_apicv_active(vcpu));
-+
- 	/* instruction emulation calls kvm_set_cr8() */
- 	r = cr_interception(vcpu);
- 	if (lapic_in_kernel(vcpu))
+-.PHONY: clean FORCE
++.PHONY: clean mrproper FORCE
 
 
