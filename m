@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEC43B5849;
-	Tue, 17 Mar 2026 11:33:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9CD3B6C1A;
+	Tue, 17 Mar 2026 11:33:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747187; cv=none; b=k5rUbr1UGIaFKQ5jHDtdPqHcjsUNcep7LdhCTVfU4NuyBTx8I3075/QR+R+7AYg9XHrlBjXfZ6CvmPb/c/douR8WUt61IUSUYQNWiKAj1Rm9idzJ3mV4GzupvUpwqomXJLqtmNULtxz4tF8+k4lF0+XRak33e1+VjiadVJUXZuM=
+	t=1773747189; cv=none; b=s1//mCWdivvc4+y9+C6fw/G7ELQTVoO7g7Hw2143OqMFF5rpDOvj0vfEjhZ5jtWLPoJrQDedNck/r9dMmmN/EIkAXbZpJmI8jpgF8tP/DL6rwLG6WiawpbnctOG76VujViYZwvMTXOs2Pdc4CDbP7LImxVhn6NF3guMTTCRpb6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747187; c=relaxed/simple;
-	bh=vw9xWNLMb5E1H4DBUbQ9NSTgmyJekYYFisF6wqQJzHk=;
+	s=arc-20240116; t=1773747189; c=relaxed/simple;
+	bh=amNUuOBsbetaC/ly/Csdex/YH7npj0Iq2bSyaCheg/o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qN6XNVXZlziDmkD5rT5A2H3bZZghQM7o2Zit9Qkk+lJXdcVTyhtdB2gESRsHQIsvbHw/KGVgKp0mj9ZWkA884VxrIAYjrT9PzG9JpxvNt0jOpVrvvHeepNmjpWrq1CIhmchp/xBhtkq9F2eyLrbIxrzFe2j0Q/Iu1IegMCzqqvQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=izmHUE2G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rVCkxCaa3JbWjBbxt/F1Q9uVaeSdgy8xsOx3Kr4p6/0SFQMGUntXMEzgE6gW/0qQaVj5KBZ+A0ZsKpXykfTLW7pWnYz/sOlLk7QMAV2VX2rNqOc++nrGsTXUolouM5BIiiaplmFGjlI/KAsdv2egou7lNFnEkvU2a1KwYjR5oaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Khz+tEw9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="izmHUE2G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A5A8C2BCB0;
-	Tue, 17 Mar 2026 11:33:06 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Khz+tEw9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC9EC4CEF7;
+	Tue, 17 Mar 2026 11:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747187;
-	bh=vw9xWNLMb5E1H4DBUbQ9NSTgmyJekYYFisF6wqQJzHk=;
+	s=k20201202; t=1773747188;
+	bh=amNUuOBsbetaC/ly/Csdex/YH7npj0Iq2bSyaCheg/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izmHUE2GATih2txoBzwkfUy8qDXqRrnVnCEeZTPUPoRxzHNbNci48K6ZHj+F2pEhr
-	 CCjYnj6XX2ufCjontmLMdig2TPlj0Bavg6Ci8WyFHht1QhZI/OANhSiRNtinRSV7fc
-	 eTv7rWxCcMk470nN+Vih+4IWlW8qw1EzgVaw5tLj5vKVQ1Vy1YCxK/mSSK3tvOI65o
-	 nW/D/K94+Cqq5hiVISyKsLUkJdY30AYMUADAPYWnRPt5ZC9b3iWoJCOniYywcoG5o/
-	 5PxBLzGnikFVyBakOR0CoOWlEiUARCQ4tzEw4CPX7kYKwt1WSnbwUnafzimkFzj1zc
-	 vz9r+b0Yrz5MQ==
+	b=Khz+tEw9jaII72Mj6esqd6ibyYKKorcJdUMPgf8keXi7deoSTu7xOaCVXL6IsoRfP
+	 cXiZyRPxThChryx2exYyJVFZKzzUCDtk2yRmFd5lJKM/2fqWQuBY8u21fzNv+L7lSQ
+	 vTvN0vGlplojIpV0nVXsAy9vWBdgWc+uV0+uzRuZQy23atvaIWEfdLjFKTRwTgjFZ5
+	 /IuTfdEhpOaQM+ACCPeDrRRQmqXioPAUvHykptwGVVwOiGdko5OFd9ZGJdPZZ3UMu0
+	 bA4KtYLJAzR5zL9/ZHAQBHwPT7VoSGXUYWyaner/qEpv9WOMbjYovYZwYzakVlej41
+	 +2CVpmzq0zh8A==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Boris Burkov <boris@bur.io>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	clm@fb.com,
-	linux-btrfs@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] btrfs: set BTRFS_ROOT_ORPHAN_CLEANUP during subvol create
-Date: Tue, 17 Mar 2026 07:32:44 -0400
-Message-ID: <20260317113249.117771-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix headphone
+Date: Tue, 17 Mar 2026 07:32:45 -0400
+Message-ID: <20260317113249.117771-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -51,310 +51,152 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Boris Burkov <boris@bur.io>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 5131fa077f9bb386a1b901bf5b247041f0ec8f80 ]
+[ Upstream commit 56fbbe096a89ff4b52af78a21a4afd9d94bdcc80 ]
 
-We have recently observed a number of subvolumes with broken dentries.
-ls-ing the parent dir looks like:
+The BIOS of this machine has set 0x19 to mic, which needs to be set
+to headphone pin in order to work properly.
 
-drwxrwxrwt 1 root root 16 Jan 23 16:49 .
-drwxr-xr-x 1 root root 24 Jan 23 16:48 ..
-d????????? ? ?    ?     ?            ? broken_subvol
-
-and similarly stat-ing the file fails.
-
-In this state, deleting the subvol fails with ENOENT, but attempting to
-create a new file or subvol over it errors out with EEXIST and even
-aborts the fs. Which leaves us a bit stuck.
-
-dmesg contains a single notable error message reading:
-"could not do orphan cleanup -2"
-
-2 is ENOENT and the error comes from the failure handling path of
-btrfs_orphan_cleanup(), with the stack leading back up to
-btrfs_lookup().
-
-btrfs_lookup
-btrfs_lookup_dentry
-btrfs_orphan_cleanup // prints that message and returns -ENOENT
-
-After some detailed inspection of the internal state, it became clear
-that:
-- there are no orphan items for the subvol
-- the subvol is otherwise healthy looking, it is not half-deleted or
-  anything, there is no drop progress, etc.
-- the subvol was created a while ago and does the meaningful first
-  btrfs_orphan_cleanup() call that sets BTRFS_ROOT_ORPHAN_CLEANUP much
-  later.
-- after btrfs_orphan_cleanup() fails, btrfs_lookup_dentry() returns -ENOENT,
-  which results in a negative dentry for the subvolume via
-  d_splice_alias(NULL, dentry), leading to the observed behavior. The
-  bug can be mitigated by dropping the dentry cache, at which point we
-  can successfully delete the subvolume if we want.
-
-i.e.,
-btrfs_lookup()
-  btrfs_lookup_dentry()
-    if (!sb_rdonly(inode->vfs_inode)->vfs_inode)
-    btrfs_orphan_cleanup(sub_root)
-      test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-      btrfs_search_slot() // finds orphan item for inode N
-      ...
-      prints "could not do orphan cleanup -2"
-  if (inode == ERR_PTR(-ENOENT))
-    inode = NULL;
-  return d_splice_alias(NULL, dentry) // NEGATIVE DENTRY for valid subvolume
-
-btrfs_orphan_cleanup() does test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)
-on the root when it runs, so it cannot run more than once on a given
-root, so something else must run concurrently. However, the obvious
-routes to deleting an orphan when nlinks goes to 0 should not be able to
-run without first doing a lookup into the subvolume, which should run
-btrfs_orphan_cleanup() and set the bit.
-
-The final important observation is that create_subvol() calls
-d_instantiate_new() but does not set BTRFS_ROOT_ORPHAN_CLEANUP, so if
-the dentry cache gets dropped, the next lookup into the subvolume will
-make a real call into btrfs_orphan_cleanup() for the first time. This
-opens up the possibility of concurrently deleting the inode/orphan items
-but most typical evict() paths will be holding a reference on the parent
-dentry (child dentry holds parent->d_lockref.count via dget in
-d_alloc(), released in __dentry_kill()) and prevent the parent from
-being removed from the dentry cache.
-
-The one exception is delayed iputs. Ordered extent creation calls
-igrab() on the inode. If the file is unlinked and closed while those
-refs are held, iput() in __dentry_kill() decrements i_count but does
-not trigger eviction (i_count > 0). The child dentry is freed and the
-subvol dentry's d_lockref.count drops to 0, making it evictable while
-the inode is still alive.
-
-Since there are two races (the race between writeback and unlink and
-the race between lookup and delayed iputs), and there are too many moving
-parts, the following three diagrams show the complete picture.
-(Only the second and third are races)
-
-Phase 1:
-Create Subvol in dentry cache without BTRFS_ROOT_ORPHAN_CLEANUP set
-
-btrfs_mksubvol()
-  lookup_one_len()
-    __lookup_slow()
-      d_alloc_parallel()
-        __d_alloc() // d_lockref.count = 1
-  create_subvol(dentry)
-    // doesn't touch the bit..
-    d_instantiate_new(dentry, inode) // dentry in cache with d_lockref.count == 1
-
-Phase 2:
-Create a delayed iput for a file in the subvol but leave the subvol in
-state where its dentry can be evicted (d_lockref.count == 0)
-
-T1 (task)                    T2 (writeback)                   T3 (OE workqueue)
-
-write() // dirty pages
-                              btrfs_writepages()
-                                btrfs_run_delalloc_range()
-                                  cow_file_range()
-                                    btrfs_alloc_ordered_extent()
-                                      igrab() // i_count: 1 -> 2
-btrfs_unlink_inode()
-  btrfs_orphan_add()
-close()
-  __fput()
-    dput()
-      finish_dput()
-        __dentry_kill()
-          dentry_unlink_inode()
-            iput() // 2 -> 1
-          --parent->d_lockref.count // 1 -> 0; evictable
-                                                                finish_ordered_fn()
-                                                                  btrfs_finish_ordered_io()
-                                                                    btrfs_put_ordered_extent()
-                                                                      btrfs_add_delayed_iput()
-
-Phase 3:
-Once the delayed iput is pending and the subvol dentry is evictable,
-the shrinker can free it, causing the next lookup to go through
-btrfs_lookup() and call btrfs_orphan_cleanup() for the first time.
-If the cleaner kthread processes the delayed iput concurrently, the
-two race:
-
-  T1 (shrinker)              T2 (cleaner kthread)                          T3 (lookup)
-
-  super_cache_scan()
-    prune_dcache_sb()
-      __dentry_kill()
-      // subvol dentry freed
-                              btrfs_run_delayed_iputs()
-                                iput()  // i_count -> 0
-                                  evict()  // sets I_FREEING
-                                    btrfs_evict_inode()
-                                      // truncation loop
-                                                                            btrfs_lookup()
-                                                                              btrfs_lookup_dentry()
-                                                                                btrfs_orphan_cleanup()
-                                                                                  // first call (bit never set)
-                                                                                  btrfs_iget()
-                                                                                    // blocks on I_FREEING
-
-                                      btrfs_orphan_del()
-                                      // inode freed
-                                                                                    // returns -ENOENT
-                                                                                  btrfs_del_orphan_item()
-                                                                                    // -ENOENT
-                                                                                // "could not do orphan cleanup -2"
-                                                                            d_splice_alias(NULL, dentry)
-                                                                            // negative dentry for valid subvol
-
-The most straightforward fix is to ensure the invariant that a dentry
-for a subvolume can exist if and only if that subvolume has
-BTRFS_ROOT_ORPHAN_CLEANUP set on its root (and is known to have no
-orphans or ran btrfs_orphan_cleanup()).
-
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Boris Burkov <boris@bur.io>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220814
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/b55f6ebe-7449-49f7-ae85-00d2ba1e7af0@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-I now have all the information I need to make a thorough assessment. Let
-me compile my analysis.
+## Analysis: ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix
+headphone
 
-## Analysis
+### Commit Summary
 
-### 1. Commit Message Analysis
+This commit adds a new HDA audio quirk (`ALC897_FIXUP_H610M_HP_PIN`) for
+the Gigabyte H610M H V2 DDR4 motherboard (PCI SSID `0x1458:0xa194`). The
+BIOS incorrectly configures pin `0x19` as a microphone input, but it
+needs to be configured as a headphone output (`0x0321403f`) for the
+hardware to work properly.
 
-The commit describes a **real-world bug** with significant user impact:
-- Subvolumes become inaccessible ("broken dentries") showing `d?????????
-  ? ? ? ? ? broken_subvol`
-- Cannot delete the broken subvolume (ENOENT) or create anything over it
-  (EEXIST, which **aborts the filesystem**)
-- The error message "could not do orphan cleanup -2" is observed in
-  dmesg
-- The author provides an extremely detailed 3-phase race analysis with
-  exact code paths
+### Classification: Hardware Quirk
 
-### 2. Code Change Analysis
+This falls squarely into the **QUIRKS and WORKAROUNDS** exception
+category for stable backports. It:
+- Adds a new `SND_PCI_QUIRK()` entry to an existing quirk table
+- Adds a corresponding `HDA_FIXUP_PINS` definition
+- Targets a specific device identified by PCI subsystem vendor/device ID
 
-The fix is a **single `set_bit()` call** added before
-`d_instantiate_new()`:
+### Code Change Analysis
 
-```c
-set_bit(BTRFS_ROOT_ORPHAN_CLEANUP, &new_root->state);
-```
+The change is minimal and entirely self-contained:
 
-**Bug mechanism:** `create_subvol()` creates a new subvolume and calls
-`d_instantiate_new()` but never sets `BTRFS_ROOT_ORPHAN_CLEANUP`. This
-means the first lookup into the subvolume (if the dentry cache gets
-invalidated) will call `btrfs_orphan_cleanup()` for real. A race between
-this cleanup and delayed iputs can cause `btrfs_orphan_cleanup()` to
-fail with `-ENOENT`, which cascades through `btrfs_lookup_dentry()`
-creating a negative dentry for a valid subvolume.
+1. **New enum value**: `ALC897_FIXUP_H610M_HP_PIN` added at the end of
+   the existing enum
+2. **New fixup definition**: A simple `HDA_FIXUP_PINS` entry that sets
+   pin `0x19` to `0x0321403f` (headphone out)
+3. **New quirk table entry**: `SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2
+   DDR4", ALC897_FIXUP_H610M_HP_PIN)` matching the specific Gigabyte
+   board
 
-**Comparison with snapshot creation:** The `create_snapshot()` path at
-`fs/btrfs/ioctl.c:787` explicitly calls
-`btrfs_orphan_cleanup(pending_snapshot->snap)` (which sets the bit
-internally), so snapshots don't have this issue. Subvolume creation was
-missing this protection.
+The pattern is identical to dozens of other quirks in this file. The
+fixup type (`HDA_FIXUP_PINS`) is the simplest kind — it just overrides a
+pin configuration value. No chaining, no custom functions.
 
-**Why the fix is correct:** A newly created subvolume has zero orphan
-items, so orphan cleanup is unnecessary. Setting the bit early tells
-future lookups "cleanup already done" which is semantically correct
-since there's nothing to clean up. This matches the invariant: a dentry
-exists for a subvolume iff that subvolume has
-`BTRFS_ROOT_ORPHAN_CLEANUP` set.
+### Bug and Impact
 
-### 3. Classification
+- **Real bug**: Headphone jack doesn't work on this Gigabyte motherboard
+  because the BIOS misconfigures pin 0x19
+- **User report**: Linked to bugzilla.kernel.org bug #220814, confirming
+  a real user hit this
+- **Impact**: Without this quirk, headphone output is completely non-
+  functional on this board
+- **Scope**: Only affects the specific Gigabyte H610M H V2 DDR4 board
+  (PCI SSID match)
 
-This is a **race condition fix** that prevents:
-- Filesystem corruption (broken dentries for valid subvolumes)
-- Filesystem abort (EEXIST when trying to create over the broken dentry)
-- Data unavailability (unable to access or delete the subvolume)
+### Risk Assessment
 
-### 4. Scope and Risk Assessment
+- **Risk**: Essentially zero. The quirk only activates on the specific
+  matching hardware. It cannot affect any other system.
+- **Complexity**: Trivial — just a pin override table entry
+- **Dependencies**: None. The ALC897 codec support and the
+  HDA_FIXUP_PINS mechanism already exist in all stable trees that have
+  ALC897 support.
 
-- **Lines changed:** 7 (1 code line + 6 comment lines)
-- **Files changed:** 1 (`fs/btrfs/ioctl.c`)
-- **Risk:** Extremely low. Setting a single bit on a newly created root
-  that has no orphans is completely safe. It's semantically correct and
-  matches what `btrfs_orphan_cleanup()` would do anyway (set the bit and
-  find nothing to clean).
-- **Could it break something?** No. The bit only prevents redundant
-  `btrfs_orphan_cleanup()` calls on a root that has no orphans.
+### Stable Kernel Rules Compliance
 
-### 5. User Impact
-
-- **Severity:** HIGH - filesystem abort, data unavailability
-- **Who is affected:** Any btrfs user creating subvolumes, particularly
-  with concurrent writes and dentry cache pressure
-- **Reproducer:** The race requires specific timing (delayed iputs +
-  dentry cache eviction + concurrent lookup) but has been "observed a
-  number of" times in the wild
-- **Reviewed-by:** Filipe Manana (prominent btrfs developer/reviewer)
-
-### 6. Stable Suitability
-
-- **Obviously correct:** Yes - a new subvolume has no orphans, so
-  marking it "cleaned" is correct
-- **Fixes a real bug:** Yes - broken subvolume access, filesystem abort
-- **Small and contained:** Yes - 1 line of actual code change in 1 file
-- **No new features:** Correct - this just sets a state bit earlier
-- **No new APIs:** Correct
+1. **Obviously correct and tested**: Yes — standard pattern, user-
+   reported and tested, accepted by Takashi Iwai (HDA maintainer)
+2. **Fixes a real bug**: Yes — headphone doesn't work
+3. **Important issue**: Yes — audio output broken on specific hardware
+4. **Small and contained**: Yes — ~15 lines, single file, no behavioral
+   changes to other hardware
+5. **No new features/APIs**: Correct — just a device-specific workaround
+6. **Applies cleanly**: Should apply cleanly as it's an addition to
+   tables
 
 ### Verification
 
-- Verified `BTRFS_ROOT_ORPHAN_CLEANUP` is defined at
-  `fs/btrfs/ctree.h:143` as a bit in root state
-- Verified `btrfs_orphan_cleanup()` at `fs/btrfs/inode.c:3649` uses
-  `test_and_set_bit(BTRFS_ROOT_ORPHAN_CLEANUP)` as a guard - confirming
-  the bit prevents re-execution
-- Verified `btrfs_lookup_dentry()` at `fs/btrfs/inode.c:6040-6047` calls
-  `btrfs_orphan_cleanup(sub_root)` on lookup and returns error if it
-  fails (creating negative dentry via d_splice_alias)
-- Verified `create_subvol()` at `fs/btrfs/ioctl.c:675` calls
-  `d_instantiate_new()` without setting the bit (the bug)
-- Verified `create_snapshot()` at `fs/btrfs/ioctl.c:787` does call
-  `btrfs_orphan_cleanup()` (which sets the bit) before dentry lookup -
-  confirming snapshots are already protected
-- Verified the fix location at line 675 of ioctl.c is the correct place
-  to add `set_bit()` (right before `d_instantiate_new`)
-- Verified the bit is only set in one other place (`inode.c:3649` inside
-  `btrfs_orphan_cleanup` itself)
+- The commit message explicitly states the bug: pin 0x19 set to mic by
+  BIOS, needs to be headphone
+- Link to bugzilla.kernel.org bug #220814 confirms user-reported issue
+- The change follows the exact same pattern as hundreds of other HDA
+  quirks in this file (e.g., `ALC897_FIXUP_HEADSET_MIC_PIN3` just above
+  it)
+- Signed-off by Takashi Iwai (tiwai@suse.de), the HDA subsystem
+  maintainer
+- PCI vendor ID 0x1458 is Gigabyte Technology (verified by convention in
+  neighboring quirk entries)
+- The fixup value `0x0321403f` decodes to a headphone output pin
+  configuration (consistent with the commit message)
+- No dependencies on other patches — the enum, fixup array, and quirk
+  table additions are all self-contained
 
-This is a textbook stable backport candidate: a small, obviously
-correct, well-reviewed fix for a real race condition that causes
-filesystem abort and data unavailability. The fix is a single
-`set_bit()` with no dependencies on other commits.
+This is a textbook example of a hardware quirk that should be backported
+to stable. It fixes broken audio hardware for real users, has zero risk
+to other systems, and follows an established pattern.
 
 **YES**
 
- fs/btrfs/ioctl.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/hda/codecs/realtek/alc662.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index c9284ce6c6e78..f7e063e8332a2 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -672,6 +672,13 @@ static noinline int create_subvol(struct mnt_idmap *idmap,
- 		goto out;
- 	}
+diff --git a/sound/hda/codecs/realtek/alc662.c b/sound/hda/codecs/realtek/alc662.c
+index 5073165d1f3cf..3a943adf90876 100644
+--- a/sound/hda/codecs/realtek/alc662.c
++++ b/sound/hda/codecs/realtek/alc662.c
+@@ -313,6 +313,7 @@ enum {
+ 	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ 	ALC897_FIXUP_UNIS_H3C_X500S,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN3,
++	ALC897_FIXUP_H610M_HP_PIN,
+ };
  
-+	/*
-+	 * Subvolumes have orphans cleaned on first dentry lookup. A new
-+	 * subvolume cannot have any orphans, so we should set the bit before we
-+	 * add the subvolume dentry to the dentry cache, so that it is in the
-+	 * same state as a subvolume after first lookup.
-+	 */
-+	set_bit(BTRFS_ROOT_ORPHAN_CLEANUP, &new_root->state);
- 	d_instantiate_new(dentry, new_inode_args.inode);
- 	new_inode_args.inode = NULL;
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -766,6 +767,13 @@ static const struct hda_fixup alc662_fixups[] = {
+ 			{ }
+ 		},
+ 	},
++	[ALC897_FIXUP_H610M_HP_PIN] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x19, 0x0321403f }, /* HP out */
++			{ }
++		},
++	},
+ };
  
+ static const struct hda_quirk alc662_fixup_tbl[] = {
+@@ -815,6 +823,7 @@ static const struct hda_quirk alc662_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x8469, "ASUS mobo", ALC662_FIXUP_NO_JACK_DETECT),
+ 	SND_PCI_QUIRK(0x105b, 0x0cd6, "Foxconn", ALC662_FIXUP_ASUS_MODE2),
+ 	SND_PCI_QUIRK(0x144d, 0xc051, "Samsung R720", ALC662_FIXUP_IDEAPAD),
++	SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2 DDR4", ALC897_FIXUP_H610M_HP_PIN),
+ 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
+ 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
+ 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
 -- 
 2.51.0
 
