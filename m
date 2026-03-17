@@ -1,39 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D6F2DF132;
-	Tue, 17 Mar 2026 17:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ABC71AA7A6;
+	Tue, 17 Mar 2026 17:21:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768057; cv=none; b=mbxtm1Jm6M9fvPuSN3JMLk+LZmgVY4wwafSsDQqVIjYpx0v03pDBDDL95zKR5XRXRDoktc7vqCnLuwx9hUlUGJ4em7e6uK3RRRFhkKKT6x0Agar4rM9e3X38u8cuu5rgLSwtV4E8tLlyXie/FVao3+DxH39uvmhAGOdA8kG21/w=
+	t=1773768062; cv=none; b=S2uMuysJ4tPWm6K5ZkAnqbWVDuGwgoWqPnZS60rBBEaXiMx6WGkKevmnyPlCg2uZFiXqK8wgrTSw/bDtd6NO6/pT5iZu6y0SOzhweiOXuBpklQoglYV75/LoPDIY0JJvlqAuYXFgcc5Mb73v9eCG6Dnv+0JJwDZbEzHTIjlV+OM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768057; c=relaxed/simple;
-	bh=dGOdRmMSwHB1riDCOSb3gPsh6Q6QEXathuowAsFkWzU=;
+	s=arc-20240116; t=1773768062; c=relaxed/simple;
+	bh=E9ouidIsFguRQ/kUdvOVfQjcFY7186X8O671v77PNiY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MnW14KTShOG0JefWyNzB6yvB2zJUh0RigxUzKG3Gpq0zcBs8Nmcvyf3K7cu/ZnSUNZO8sGlvewU1B5xfSgdZ0wFDx9Dfg2BpjeSyi7IpK7WnxQRvgPcR3ahPJgVXwkaLS8sClm8Vua/GCQSAYwYKtc8YqM1t48uESE/KTb0jGH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ulHm6V3d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Cqm+UZuWQ4u4pruOL1/qmmNj1OUWwi/gznj3mI1acH8cxDu92uM7dHWVk2tAvO2+G6Mk2ZyjAukd3xFrfOUqwyHxhDlU3qOQonr3Rh3qgwY+3KkbmjC/pkVwpNwLN9qfZ8czfW2ilLoEI7bzeNgrVErgSETjIzih8p1Shji+czU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nMh8ELoE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ulHm6V3d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96E6DC19424;
-	Tue, 17 Mar 2026 17:20:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nMh8ELoE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C7ECC4CEF7;
+	Tue, 17 Mar 2026 17:21:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768057;
-	bh=dGOdRmMSwHB1riDCOSb3gPsh6Q6QEXathuowAsFkWzU=;
+	s=korg; t=1773768061;
+	bh=E9ouidIsFguRQ/kUdvOVfQjcFY7186X8O671v77PNiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ulHm6V3dmlruxOKD4SAJRlefNibCJTOhE+Ppar93cYlwROTw90iMlvdGvy247NRGh
-	 dnXY8ZMAuW6LrGcgRZmHdsCOZwmN+g5MsjMJ//KOam4d77ku08WHchvoqgArHbNQkV
-	 HiueetKg763+BRUO63IJ/0rWlad0Vcl43mu7g9mw=
+	b=nMh8ELoEJy7qjBaaDrcV/8mDt+5K2RyCuFGbFQw7x3hKyy5FXJNrSpUdWHtV2RWPZ
+	 US86sjKimuHOITg2+2ERW8IcdJuhlmeCCMrX0D9Kd+eFxjJGe/BpTN+tMuYmvz58Gx
+	 8W9zLnp1rv32M7Lbi9JK6jHUipVHUnNWT/qp4A58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 222/333] pmdomain: rockchip: Fix PD_VCODEC for RK3588
-Date: Tue, 17 Mar 2026 17:34:11 +0100
-Message-ID: <20260317163007.597276357@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 223/333] parisc: Increase initial mapping to 64 MB with KALLSYMS
+Date: Tue, 17 Mar 2026 17:34:12 +0100
+Message-ID: <20260317163007.633517545@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,77 +49,30 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 0fb59eaca18f1254ecdce34354eec3cb1b3b5e10 upstream.
+commit 8e732934fb81282be41602550e7e07baf265e972 upstream.
 
->From the RK3588 TRM Table 7-1 RK3588 Voltage Domain and Power Domain Summary,
-PD_RKVDEC0/1 and PD_VENC0/1 rely on VD_VCODEC which require extra voltages to
-be applied, otherwise it breaks RK3588-evb1-v10 board after vdec support landed[1].
-The panic looks like below:
+The 32MB initial kernel mapping can become too small when CONFIG_KALLSYMS
+is used. Increase the mapping to 64 MB in this case.
 
-  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec0' on, val=0
-  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec1' on, val=0
-  ...
-  Hardware name: Rockchip RK3588S EVB1 V10 Board (DT)
-  Workqueue: pm genpd_power_off_work_fn
-  Call trace:
-  show_stack+0x18/0x24 (C)
-  dump_stack_lvl+0x40/0x84
-  dump_stack+0x18/0x24
-  vpanic+0x1ec/0x4fc
-  vpanic+0x0/0x4fc
-  check_panic_on_warn+0x0/0x94
-  arm64_serror_panic+0x6c/0x78
-  do_serror+0xc4/0xcc
-  el1h_64_error_handler+0x3c/0x5c
-  el1h_64_error+0x6c/0x70
-  regmap_mmio_read32le+0x18/0x24 (P)
-  regmap_bus_reg_read+0xfc/0x130
-  regmap_read+0x188/0x1ac
-  regmap_read+0x54/0x78
-  rockchip_pd_power+0xcc/0x5f0
-  rockchip_pd_power_off+0x1c/0x4c
-  genpd_power_off+0x84/0x120
-  genpd_power_off+0x1b4/0x260
-  genpd_power_off_work_fn+0x38/0x58
-  process_scheduled_works+0x194/0x2c4
-  worker_thread+0x2ac/0x3d8
-  kthread+0x104/0x124
-  ret_from_fork+0x10/0x20
-  SMP: stopping secondary CPUs
-  Kernel Offset: disabled
-  CPU features: 0x3000000,000e0005,40230521,0400720b
-  Memory Limit: none
-  ---[ end Kernel panic - not syncing: Asynchronous SError Interrupt ]---
-
-Chaoyi pointed out the PD_VCODEC is the parent of PD_RKVDEC0/1 and PD_VENC0/1, so checking
-the PD_VCODEC is enough.
-
-[1] https://lore.kernel.org/linux-rockchip/20251020212009.8852-2-detlev.casanova@collabora.com/
-
-Fixes: db6df2e3fc16 ("pmdomain: rockchip: add regulator support")
-Cc: stable@vger.kernel.org
-Suggested-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
-Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/rockchip/pm-domains.c |    2 +-
+ arch/parisc/include/asm/pgtable.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pmdomain/rockchip/pm-domains.c
-+++ b/drivers/pmdomain/rockchip/pm-domains.c
-@@ -1286,7 +1286,7 @@ static const struct rockchip_domain_info
- static const struct rockchip_domain_info rk3588_pm_domains[] = {
- 	[RK3588_PD_GPU]		= DOMAIN_RK3588("gpu",     0x0, BIT(0),  0,       0x0, 0,       BIT(1),  0x0, BIT(0),  BIT(0),  false, true),
- 	[RK3588_PD_NPU]		= DOMAIN_RK3588("npu",     0x0, BIT(1),  BIT(1),  0x0, 0,       0,       0x0, 0,       0,       false, true),
--	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, false),
-+	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, true),
- 	[RK3588_PD_NPUTOP]	= DOMAIN_RK3588("nputop",  0x0, BIT(3),  0,       0x0, BIT(11), BIT(2),  0x0, BIT(1),  BIT(1),  false, false),
- 	[RK3588_PD_NPU1]	= DOMAIN_RK3588("npu1",    0x0, BIT(4),  0,       0x0, BIT(12), BIT(3),  0x0, BIT(2),  BIT(2),  false, false),
- 	[RK3588_PD_NPU2]	= DOMAIN_RK3588("npu2",    0x0, BIT(5),  0,       0x0, BIT(13), BIT(4),  0x0, BIT(3),  BIT(3),  false, false),
+--- a/arch/parisc/include/asm/pgtable.h
++++ b/arch/parisc/include/asm/pgtable.h
+@@ -85,7 +85,7 @@ extern void __update_cache(pte_t pte);
+ 	printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, (unsigned long)pgd_val(e))
+ 
+ /* This is the size of the initially mapped kernel memory */
+-#if defined(CONFIG_64BIT)
++#if defined(CONFIG_64BIT) || defined(CONFIG_KALLSYMS)
+ #define KERNEL_INITIAL_ORDER	26	/* 1<<26 = 64MB */
+ #else
+ #define KERNEL_INITIAL_ORDER	25	/* 1<<25 = 32MB */
 
 
