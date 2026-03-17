@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89A33A4F46;
-	Tue, 17 Mar 2026 17:08:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B122A3F23B3;
+	Tue, 17 Mar 2026 17:08:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767308; cv=none; b=HT0iyJU+DMnWZ6xKngQYuXBa+y6p7iPBDFvkouLEE4aoB6ag9yb3NfUcakx29cvO40F7X8iYIyj8hCYfKqCLPWtJWpL+LXgxCJgX8uhB7TkM61ca5a6qYAkcF/jBL9EmzABenXKNYtB11eN6wYkgELlzRnQrX/QHiT3+ZAFzp6A=
+	t=1773767313; cv=none; b=eGE2j+wasosMUBKtsAAvnczCtK7bCfUWGJQnTQY0QIsveifRsdfTwMb9pFNcDdaS2eW7dacaTrSpVAQHx3RWVwuuNSOUygFhYAIlWR1leu2sW52Z/GS9eXW/Sj1LVlV5ZhXDNQudrCOga4embog56z8/zNXJ2GKs2UDe8Gc53OY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767308; c=relaxed/simple;
-	bh=aPw+eFrgZ6u1cFf4GscXJXLJOzLxux3ThCRj5v1admo=;
+	s=arc-20240116; t=1773767313; c=relaxed/simple;
+	bh=pnOAVYl/IKSqKKyAuzZtJY9vXmYSy0z+FkgRyi8Rmwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nAWSmVwGE2wUtlLSzxZNd41WYg9Db+vxVyEIBzrinMz7dcTegvDqQo/LFUK4q+JBwcxdGZlGywQ7rOWseadifjIu2GLPbSgW7UmGzvN4rSJrRpSazML4YwbNwTheI3+3ADkdCXSrb93gk0rDNsoVjL7ResZdE5PEUkihxTlxTDE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n175BTKB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bNS+wccNPQkjEmq5vjX5GV4bjuruhvgLlzftF5KRsXteRuv+1IUCCwZCAr1eqgrAZSP2wlsRTNzm78Y4AAXMRd4Rl+ekL4jE5PrKZViie4z2IhcFAXfOZ0KYyTseYCC0v56oefj6j/7opMwqY//uveSmlEz+XIXciZV6WbYBME8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmK40EB4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n175BTKB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55851C4CEF7;
-	Tue, 17 Mar 2026 17:08:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmK40EB4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E3FC2BCB0;
+	Tue, 17 Mar 2026 17:08:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767308;
-	bh=aPw+eFrgZ6u1cFf4GscXJXLJOzLxux3ThCRj5v1admo=;
+	s=korg; t=1773767313;
+	bh=pnOAVYl/IKSqKKyAuzZtJY9vXmYSy0z+FkgRyi8Rmwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n175BTKBz7EK5DkgoheTGkJT5llDzCPxCjIwvUIOiV6K/6KtP6tU/2rDcgsGlqzeh
-	 S3Kd9TZAxIKL5DsnsjFm878SX9bJh7v8r5i/sS4OPCCh2dXr+7/VnOl+PBLiRXnsXy
-	 PCg1gvDpr7eV5BKacBbmDASwV53ct4oVd5635BEA=
+	b=RmK40EB4VfaW9DJo/E+lFm9tBXb4hfbrmnLKBEJFDnVNGzHfqw8LTdxJm7B0jO9GE
+	 quICNOZVDygIbaps+/WqtAKH5dEU/CV7aq6vdusokEbaUufKlLgOslfhLdxT/032Uz
+	 YnPXHpVmIqs4a3rfnOYW/5iF1DPzpjQ9CmoxIPgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Sabrina Dubroca <sd@queasysnail.net>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 059/333] can: hi311x: hi3110_open(): add check for hi3110_power_enable() return value
-Date: Tue, 17 Mar 2026 17:31:28 +0100
-Message-ID: <20260317163001.558726208@linuxfoundation.org>
+Subject: [PATCH 6.18 060/333] bonding: use common function to compute the features
+Date: Tue, 17 Mar 2026 17:31:29 +0100
+Message-ID: <20260317163001.596425705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,49 +53,170 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit 47bba09b14fa21712398febf36cb14fd4fc3bded ]
+[ Upstream commit d4fde269a970666a30dd3abd0413273a06dd972d ]
 
-In hi3110_open(), the return value of hi3110_power_enable() is not checked.
-If power enable fails, the device may not function correctly, while the
-driver still returns success.
+Use the new functon netdev_compute_master_upper_features() to compute the bonding
+features.
 
-Add a check for the return value and propagate the error accordingly.
+Note that bond_compute_features() currently uses bond_for_each_slave()
+to traverse the lower devices list, and that is just a macro wrapper of
+netdev_for_each_lower_private(). We use similar helper
+netdev_for_each_lower_dev() in netdev_compute_master_upper_features() to
+iterate the slave device, as there is not need to get the private data.
 
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_B5E2E7528BB28AA8A2A56E16C49BD58B8B07@qq.com
-Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
-[mkl: adjust subject, commit message and jump label]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+No functional change intended.
+
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://patch.msgid.link/20251017034155.61990-3-liuhangbin@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 950803f72547 ("bonding: fix type confusion in bond_setup_by_slave()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/hi311x.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 99 ++-------------------------------
+ 1 file changed, 4 insertions(+), 95 deletions(-)
 
-diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
-index 6d4b643e135fd..5f5a7e7e547eb 100644
---- a/drivers/net/can/spi/hi311x.c
-+++ b/drivers/net/can/spi/hi311x.c
-@@ -755,7 +755,9 @@ static int hi3110_open(struct net_device *net)
- 		return ret;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 322f910b06fc8..8be99ae67b77f 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1476,97 +1476,6 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 	return features;
+ }
  
- 	mutex_lock(&priv->hi3110_lock);
--	hi3110_power_enable(priv->transceiver, 1);
-+	ret = hi3110_power_enable(priv->transceiver, 1);
-+	if (ret)
-+		goto out_close_candev;
+-#define BOND_VLAN_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
+-				 NETIF_F_GSO_ENCAP_ALL | \
+-				 NETIF_F_HIGHDMA | NETIF_F_LRO)
+-
+-#define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE | \
+-				 NETIF_F_GSO_PARTIAL)
+-
+-#define BOND_MPLS_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
+-				 NETIF_F_GSO_SOFTWARE)
+-
+-#define BOND_GSO_PARTIAL_FEATURES (NETIF_F_GSO_ESP)
+-
+-
+-static void bond_compute_features(struct bonding *bond)
+-{
+-	netdev_features_t gso_partial_features = BOND_GSO_PARTIAL_FEATURES;
+-	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
+-					IFF_XMIT_DST_RELEASE_PERM;
+-	netdev_features_t vlan_features = BOND_VLAN_FEATURES;
+-	netdev_features_t enc_features  = BOND_ENC_FEATURES;
+-#ifdef CONFIG_XFRM_OFFLOAD
+-	netdev_features_t xfrm_features  = BOND_XFRM_FEATURES;
+-#endif /* CONFIG_XFRM_OFFLOAD */
+-	netdev_features_t mpls_features  = BOND_MPLS_FEATURES;
+-	struct net_device *bond_dev = bond->dev;
+-	struct list_head *iter;
+-	struct slave *slave;
+-	unsigned short max_hard_header_len = ETH_HLEN;
+-	unsigned int tso_max_size = TSO_MAX_SIZE;
+-	u16 tso_max_segs = TSO_MAX_SEGS;
+-
+-	if (!bond_has_slaves(bond))
+-		goto done;
+-
+-	vlan_features = netdev_base_features(vlan_features);
+-	mpls_features = netdev_base_features(mpls_features);
+-
+-	bond_for_each_slave(bond, slave, iter) {
+-		vlan_features = netdev_increment_features(vlan_features,
+-			slave->dev->vlan_features, BOND_VLAN_FEATURES);
+-
+-		enc_features = netdev_increment_features(enc_features,
+-							 slave->dev->hw_enc_features,
+-							 BOND_ENC_FEATURES);
+-
+-#ifdef CONFIG_XFRM_OFFLOAD
+-		xfrm_features = netdev_increment_features(xfrm_features,
+-							  slave->dev->hw_enc_features,
+-							  BOND_XFRM_FEATURES);
+-#endif /* CONFIG_XFRM_OFFLOAD */
+-
+-		gso_partial_features = netdev_increment_features(gso_partial_features,
+-								 slave->dev->gso_partial_features,
+-								 BOND_GSO_PARTIAL_FEATURES);
+-
+-		mpls_features = netdev_increment_features(mpls_features,
+-							  slave->dev->mpls_features,
+-							  BOND_MPLS_FEATURES);
+-
+-		dst_release_flag &= slave->dev->priv_flags;
+-		if (slave->dev->hard_header_len > max_hard_header_len)
+-			max_hard_header_len = slave->dev->hard_header_len;
+-
+-		tso_max_size = min(tso_max_size, slave->dev->tso_max_size);
+-		tso_max_segs = min(tso_max_segs, slave->dev->tso_max_segs);
+-	}
+-	bond_dev->hard_header_len = max_hard_header_len;
+-
+-done:
+-	bond_dev->gso_partial_features = gso_partial_features;
+-	bond_dev->vlan_features = vlan_features;
+-	bond_dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
+-				    NETIF_F_HW_VLAN_CTAG_TX |
+-				    NETIF_F_HW_VLAN_STAG_TX;
+-#ifdef CONFIG_XFRM_OFFLOAD
+-	bond_dev->hw_enc_features |= xfrm_features;
+-#endif /* CONFIG_XFRM_OFFLOAD */
+-	bond_dev->mpls_features = mpls_features;
+-	netif_set_tso_max_segs(bond_dev, tso_max_segs);
+-	netif_set_tso_max_size(bond_dev, tso_max_size);
+-
+-	bond_dev->priv_flags &= ~IFF_XMIT_DST_RELEASE;
+-	if ((bond_dev->priv_flags & IFF_XMIT_DST_RELEASE_PERM) &&
+-	    dst_release_flag == (IFF_XMIT_DST_RELEASE | IFF_XMIT_DST_RELEASE_PERM))
+-		bond_dev->priv_flags |= IFF_XMIT_DST_RELEASE;
+-
+-	netdev_change_features(bond_dev);
+-}
+-
+ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 				struct net_device *slave_dev)
+ {
+@@ -2287,7 +2196,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
+ 	}
  
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -790,6 +792,7 @@ static int hi3110_open(struct net_device *net)
- 	hi3110_hw_sleep(spi);
-  out_close:
- 	hi3110_power_enable(priv->transceiver, 0);
-+ out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->hi3110_lock);
- 	return ret;
+ 	bond->slave_cnt++;
+-	bond_compute_features(bond);
++	netdev_compute_master_upper_features(bond->dev, true);
+ 	bond_set_carrier(bond);
+ 
+ 	/* Needs to be called before bond_select_active_slave(), which will
+@@ -2542,7 +2451,7 @@ static int __bond_release_one(struct net_device *bond_dev,
+ 		call_netdevice_notifiers(NETDEV_RELEASE, bond->dev);
+ 	}
+ 
+-	bond_compute_features(bond);
++	netdev_compute_master_upper_features(bond->dev, true);
+ 	if (!(bond_dev->features & NETIF_F_VLAN_CHALLENGED) &&
+ 	    (old_features & NETIF_F_VLAN_CHALLENGED))
+ 		slave_info(bond_dev, slave_dev, "last VLAN challenged slave left bond - VLAN blocking is removed\n");
+@@ -4050,7 +3959,7 @@ static int bond_slave_netdev_event(unsigned long event,
+ 	case NETDEV_FEAT_CHANGE:
+ 		if (!bond->notifier_ctx) {
+ 			bond->notifier_ctx = true;
+-			bond_compute_features(bond);
++			netdev_compute_master_upper_features(bond->dev, true);
+ 			bond->notifier_ctx = false;
+ 		}
+ 		break;
+@@ -6043,7 +5952,7 @@ void bond_setup(struct net_device *bond_dev)
+ 	 * capable
+ 	 */
+ 
+-	bond_dev->hw_features = BOND_VLAN_FEATURES |
++	bond_dev->hw_features = MASTER_UPPER_DEV_VLAN_FEATURES |
+ 				NETIF_F_HW_VLAN_CTAG_RX |
+ 				NETIF_F_HW_VLAN_CTAG_FILTER |
+ 				NETIF_F_HW_VLAN_STAG_RX |
 -- 
 2.51.0
 
