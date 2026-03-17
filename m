@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BC42116F6;
-	Tue, 17 Mar 2026 17:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C336A2F60A7;
+	Tue, 17 Mar 2026 17:08:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767300; cv=none; b=T8gcquQhMFtCd3Cpwtoyw0KqozmAKblhc7pxuFZEjR/OtbBguq8jVd4Ydl5SeKziwcXJK3Kit8ZW2Ze/0ewdV2hVkg5Zti9IWiSNMLv+86Du0OCl0xtkRk6DcNNzcwLy2+L2AyTQVkBSmTRyUic8smwrU7dGaI+Ng7ezbV4zwpE=
+	t=1773767304; cv=none; b=nJaQ6rkCQ7fN3UgLGY5jwTvkT/XHlA3gAzniORUwgNsbqB6bpIg484KQIgarPRIsMEay/HZ0RdLQmOx9En1OaQrWioa2fpspGc7JV0ycIDgN160N3B8jXrmTXaAwIjcrv5hfBvxFjXV6698kywtqOsF/PKoRAEHEHMiIfOSkVLI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767300; c=relaxed/simple;
-	bh=Qbw19ktFmwTcg9ud73JMrp/YLFViTmO8ceIaPYld8nc=;
+	s=arc-20240116; t=1773767304; c=relaxed/simple;
+	bh=GdDdqyakRiCmHHa4mPmjW/sWIYtlt4Tk8+UGoujpfVw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WYfhM1RI0Bj3uIqUj592yUlrdK9INb8MkpubUDZvznxYmfBDaabJSw3AJ6ufbAh10sHTxEoK/mzSyBNE3r4ls2UUrFUO5NlKD4yF6lb+1+a/gDdZLCR4rcJAVzKPQHkqAQyHktgPqdhKgUvj1pd+COrsnSJlFUyQTXvUfIylSu4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8wenCfe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CcahMzO6BtHgoYLDNEXol/UozW4vtl4bHTxWVsZILeMsZhnQTWVBboLBfQVMkFUq5Uh/CchtSkgIVd3r5gNBuTpHWu23tuMoSxjg2M+CH5c8dYq6imJF8T5PIcHYJE9eUi3RdUolqNJ0HDru6dXMnH8JwhPAPxA6oKwdsxW7xzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpuQ7W2K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8wenCfe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63709C4CEF7;
-	Tue, 17 Mar 2026 17:08:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpuQ7W2K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF778C4CEF7;
+	Tue, 17 Mar 2026 17:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767299;
-	bh=Qbw19ktFmwTcg9ud73JMrp/YLFViTmO8ceIaPYld8nc=;
+	s=korg; t=1773767304;
+	bh=GdDdqyakRiCmHHa4mPmjW/sWIYtlt4Tk8+UGoujpfVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8wenCfeziysYQbUtbSNOCLHs18IQMVxnwTEdHZ34QYY8ZQlCgETVpmTtg3mgTrvV
-	 x+vUPx69219lf0Yqge/V2a0yd467oCMgqqpkcrLht1F0gi3b0EEQY1nwL0q7ZVNozm
-	 ZFg6vEh+gL/dtEf5B3y/8ia9fEfrVnlDKGZw5/94=
+	b=TpuQ7W2KqhsTXg104UDPPPm7/n2NuSpPUnXq+JdIb1YroFVc1BX4defjNBo44yFtv
+	 s+0Xr6njwRXuiCxOSDmv+TVug3aIFszS9G878Ter0IcfggtS7TYYEgDPgxIPlLnMTU
+	 KzfJkhdqXiRU7AENR0NeeUY/DDYhzOdQhnsrOd5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Haiyue Wang <haiyuewa@163.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 057/333] bnxt_en: Fix RSS table size check when changing ethtool channels
-Date: Tue, 17 Mar 2026 17:31:26 +0100
-Message-ID: <20260317163001.485018622@linuxfoundation.org>
+Subject: [PATCH 6.18 058/333] mctp: i2c: fix skb memory leak in receive path
+Date: Tue, 17 Mar 2026 17:31:27 +0100
+Message-ID: <20260317163001.521705126@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -48,54 +45,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pavan Chebbi <pavan.chebbi@broadcom.com>
+From: Haiyue Wang <haiyuewa@163.com>
 
-[ Upstream commit 0d9a60a0618d255530ca56072c5f39eb58e1ed4a ]
+[ Upstream commit e3f5e0f22cfc2371e7471c9fd5b4da78f9df7c69 ]
 
-When changing channels, the current check in bnxt_set_channels()
-is not checking for non-default RSS contexts when the RSS table size
-changes. The current check for IFF_RXFH_CONFIGURED is only sufficient
-for the default RSS context. Expand the check to include the presence
-of any non-default RSS contexts.
+When 'midev->allow_rx' is false, the newly allocated skb isn't consumed
+by netif_rx(), it needs to free the skb directly.
 
-Allowing such change will result in incorrect configuration of the
-context's RSS table when the table size changes.
-
-Fixes: b3d0083caf9a ("bnxt_en: Support RSS contexts in ethtool .{get|set}_rxfh()")
-Reported-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/netdev/20260303181535.2671734-1-bjorn@kernel.org/
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/20260306225854.3575672-1-michael.chan@broadcom.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
+Signed-off-by: Haiyue Wang <haiyuewa@163.com>
+Link: https://patch.msgid.link/20260305143240.97592-1-haiyuewa@163.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/mctp/mctp-i2c.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index df4f0d15dd3d8..3237515f0e7ec 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -973,8 +973,8 @@ static int bnxt_set_channels(struct net_device *dev,
- 
- 	if (bnxt_get_nr_rss_ctxs(bp, req_rx_rings) !=
- 	    bnxt_get_nr_rss_ctxs(bp, bp->rx_nr_rings) &&
--	    netif_is_rxfh_configured(dev)) {
--		netdev_warn(dev, "RSS table size change required, RSS table entries must be default to proceed\n");
-+	    (netif_is_rxfh_configured(dev) || bp->num_rss_ctx)) {
-+		netdev_warn(dev, "RSS table size change required, RSS table entries must be default (with no additional RSS contexts present) to proceed\n");
- 		return -EINVAL;
+diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
+index 8043b57bdf250..f138b0251313e 100644
+--- a/drivers/net/mctp/mctp-i2c.c
++++ b/drivers/net/mctp/mctp-i2c.c
+@@ -343,6 +343,7 @@ static int mctp_i2c_recv(struct mctp_i2c_dev *midev)
+ 	} else {
+ 		status = NET_RX_DROP;
+ 		spin_unlock_irqrestore(&midev->lock, flags);
++		kfree_skb(skb);
  	}
  
+ 	if (status == NET_RX_SUCCESS) {
 -- 
 2.51.0
 
