@@ -1,42 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A23C83B0AE0;
-	Tue, 17 Mar 2026 11:32:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E559D3AD529;
+	Tue, 17 Mar 2026 11:33:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747179; cv=none; b=p4OV1JerO3IIiG/XQqYBFY/isKg1AqieilgyzUCnT3q+Pa23scriuYxDWdL4xgpYzAq8saPy+d3lZpsL6hc4hU8hT3sk0vOibHmmEjbQlwuuat+vhwIDTMV/OGwNgGCZxUF8ivxcNssZhZJ2D9C1w2kbjFY+WfBWcTbcIpj/qGs=
+	t=1773747181; cv=none; b=WwNlh1fjnSIa+G6/HA7GxmF82rIP3kj0jPshOigubd8PnkQOfbQvnx7RzCE2BYHpZZnPlM+UpspaEa0oQVsz284c7/UX/8mEShzJICta0zI88OYmIiJBDEcxbCBKT1/d+TWEYbjvlnpS3ojRJdOOaRblLysnEqZoV8hHFY8GnFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747179; c=relaxed/simple;
-	bh=U99OdghIk6gLBl7juOwEtaGoB5/CrEuDPPyd6ff2MYg=;
+	s=arc-20240116; t=1773747181; c=relaxed/simple;
+	bh=CzgQrQGavzr07umH5YZpLcH8Rt8BobUHo2uBy57QL6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iVcfPyGs8kk4o0+wVM67ZOL3Bo6lfUhbQo1g9D6BXEFJxjZqfLfDWk7LMcvrPPBdoJdfdpa4uikAZIOraSA5xq9KSHbrVs9Dg4ms12MNcq71KQLf3bp/i2Ie2vJDg9aUES0vEmZKkmlTCpjhT3pcVmFYfeEUEhoV3ZhnQZwt+vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QUvgOfoh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=T11PYxzcXSgcV4L8W+A5LEhlGs7WhZpbawwG1/21agpmTTYWMP7PPupTvhzSvJe/yAv1HeAl2cOmXlbH8a9XkJY47XrEtO7aQ1GTIpqIKwlTtCvdq3nOCwPM9H1Qi3uVR/QD4k/tdaGL22AWE7NK81DgUJ0dZajKL/QDBxqoU2g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Rxo52Wpd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QUvgOfoh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAAEC4CEF7;
-	Tue, 17 Mar 2026 11:32:58 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Rxo52Wpd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C758EC2BC9E;
+	Tue, 17 Mar 2026 11:32:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747179;
-	bh=U99OdghIk6gLBl7juOwEtaGoB5/CrEuDPPyd6ff2MYg=;
+	s=k20201202; t=1773747180;
+	bh=CzgQrQGavzr07umH5YZpLcH8Rt8BobUHo2uBy57QL6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QUvgOfohN2Z0USG2d4YLy7U96shHh0YxN8xq+EFnPERd4bqmNcvYONgxvC8cqs9jK
-	 XnChw2X6jy2TwQWVs9ZFrfJFgQIfnWiCMhm8pgrxt4vc3DARqOakbFr0W/TZFY3Z4N
-	 R8AMqu7vNiZrShDztZDkTXdmhx8hg5mMejdz7qqRoWrupFMZq7o+xSS8S+Jo9NClL/
-	 EK9OQ4+rM+ASFmsLqPfm89Ro7ykG9IVNlYzQi340ui38EJbPo7wKJKwRdlC7/9wvhJ
-	 jnvaer67qIhLA1xCtLwb7s+ozdXlT2/G8gz+HvkiqmxbEfzIdftu1QpH0LhBwL+KnR
-	 Sb4COjgtJ8jYA==
+	b=Rxo52Wpd0EjkCeNsXHg5Gln387o8OOlgU13VV++Zh4BTx2TOgxYwAmo2DGgEyhyyA
+	 O8+VQhyn7HleO0HX0x8ioHCAggh5RLS0TV9Bg48WsDJkBbxuGCvlKvZxn+c3jJjUY4
+	 v6iLQRlX0BlIUsM1Z4M8gpDhttQb9pf2yKat/qigKF7DSU4FsSM3Q5JpUkasdT/8+M
+	 /XZK9RrJBuYFig3e2q9YS/ztbDQvLfFl3AOCBlefo8V3ieild0LKZNlnt0cuPY0jvT
+	 VBftShIPizPst9HUoXgAkubxQ6Wh5Xj9Trh5ENor6xoJqFlg+zk6+vaqrt7M6eP7bw
+	 gVbFSxgcUrZCQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Song Liu <song@kernel.org>,
+Cc: Lianqin Hu <hulianqin@vivo.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	peterz@infradead.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] objtool/klp: Disable unsupported pr_debug() usage
-Date: Tue, 17 Mar 2026 07:32:38 -0400
-Message-ID: <20260317113249.117771-7-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19] ALSA: usb-audio: Add iface reset and delay quirk for SPACETOUCH USB Audio
+Date: Tue, 17 Mar 2026 07:32:39 -0400
+Message-ID: <20260317113249.117771-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -52,17 +54,22 @@ X-stable-base: Linux 6.19.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Lianqin Hu <hulianqin@vivo.com>
 
-[ Upstream commit e476bb277cf91b7ac3ea803ec78a4f0791bddec3 ]
+[ Upstream commit 5182e5ec4355dd690307f5d5c28cbfc5b2c06a97 ]
 
-Instead of erroring out on unsupported pr_debug() (e.g., when patching a
-module), issue a warning and make it inert, similar to how unsupported
-tracepoints are currently handled.
+Setting up the interface when suspended/resumeing fail on this card.
+Adding a reset and delay quirk will eliminate this problem.
 
-Reviewed-and-tested-by: Song Liu <song@kernel.org>
-Link: https://patch.msgid.link/3a7db3a5b7d4abf9b2534803a74e2e7231322738.1770759954.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+usb 1-1: New USB device found, idVendor=0666, idProduct=0880
+usb 1-1: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1: Product: USB Audio
+usb 1-1: Manufacturer: SPACETOUCH
+usb 1-1: SerialNumber: 000000000
+
+Signed-off-by: Lianqin Hu <hulianqin@vivo.com>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/TYUPR06MB6217ACC80B70BE25D87456B0D247A@TYUPR06MB6217.apcprd06.prod.outlook.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
@@ -70,143 +77,87 @@ LLM Generated explanations, may be completely bogus:
 
 ## Analysis
 
-### Commit Overview
-This commit fixes objtool's `klp-diff` subcommand to handle `pr_debug()`
-usage in livepatch modules targeting kernel modules. Previously,
-encountering a `pr_debug()` static branch key (identified by
-`__UNIQUE_ID_ddebug_` symbol name) would hit the generic "unsupported
-static branch key" error path and fail. The fix adds a specific check
-for these symbols and treats them like tracepoints — issuing a warning
-and making them inert (skipping the entry) rather than erroring out.
+### Commit Summary
+This commit adds a USB audio quirk entry for the SPACETOUCH USB Audio
+device (vendor `0x0666`, product `0x0880`), applying
+`QUIRK_FLAG_FORCE_IFACE_RESET` and `QUIRK_FLAG_IFACE_DELAY` flags. The
+commit message states this fixes suspend/resume failures on this device.
 
 ### Code Change Analysis
-The change is small and surgical — **7 lines of new code** that follow
-an identical pattern already used for tracepoints:
+The change is a **two-line addition** inserting a `DEVICE_FLG()` entry
+into the sorted `quirk_flags_table[]` array. It uses existing quirk
+flags (`QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY`) that are
+already used by many other devices in the same table (e.g., TEAC UD-701,
+Esoteric D-05X, etc.).
 
-```c
-if (strstr(reloc->sym->name, "__UNIQUE_ID_ddebug_")) {
-    WARN("%s: disabling unsupported pr_debug()",
-         code_sym->name);
-    ret = 1;
-    continue;
-}
-```
+### Classification: Hardware Quirk
+This is a textbook **hardware quirk addition** — one of the explicitly
+listed exception categories that ARE appropriate for stable backporting
+despite being "additions." The quirk:
+- Uses an existing driver and existing quirk infrastructure
+- Only targets a specific USB device by vendor/product ID
+- Applies well-understood flags already used by other devices
+- Fixes a real user-facing problem (suspend/resume failure)
 
-This mirrors the existing tracepoint handling at lines 1396-1401 of the
-current file. The logic is simple: detect the dynamic debug symbol,
-warn, and skip it instead of failing.
+### Bug Being Fixed
+The commit fixes a **suspend/resume failure** on the SPACETOUCH USB
+Audio device. Without the interface reset and delay quirk, the USB audio
+interface fails to set up properly when resuming from suspend. This is a
+real hardware issue that affects users of this specific device.
 
-### Bug Classification
-This is a **build/tool fix**: Without it, objtool errors out with a
-misleading "unsupported static branch key" error when building livepatch
-modules that use `pr_debug()`. The `pr_debug()` static branch key lives
-in the target module and can't be resolved via klp relocation, but
-disabling it is harmless (the debug output simply won't work in the
-patched function). This is the same reasoning used for tracepoints.
+### Risk Assessment
+- **Scope**: Minimal — only affects this specific USB device
+  (0x0666:0x0880)
+- **Risk of regression**: Near zero — the flags only apply to this one
+  device, and the same flags work correctly on many other devices
+- **Dependencies**: None — the quirk infrastructure and flags already
+  exist in all stable trees
+- **Lines changed**: 2 lines added, no lines removed or modified
 
-### Applicability to Stable Trees
-The file `tools/objtool/klp-diff.c` was **introduced in v6.19** (commit
-`dd590d4d57ebe`, September 2025). This means:
-- Older stable trees (6.6.y, 6.1.y, 5.15.y, etc.) **do not contain this
-  file** — the patch is irrelevant for them.
-- For **6.19.y stable**, this is a relevant fix that prevents a tool
-  error for livepatch developers.
-
-### Stable Criteria Assessment
-- **Fixes a real bug**: Yes — objtool incorrectly rejects valid
-  livepatch modules that use `pr_debug()`.
-- **Obviously correct and tested**: Yes — reviewed and tested by Song
-  Liu (Meta's livepatch maintainer). The pattern exactly mirrors
-  existing tracepoint handling.
-- **Small and contained**: Yes — 7 lines of new code in one file,
-  following an existing pattern.
-- **No new features**: Correct — this makes existing functionality work
-  correctly, not adding new capability.
-- **Risk**: Very low — the check is specific to `__UNIQUE_ID_ddebug_`
-  symbols, and the behavior (warn + skip) matches the existing
-  tracepoint handling.
-
-### Author and Review
-Josh Poimboeuf is the objtool maintainer and one of the key livepatch
-developers. Song Liu provided "Reviewed-and-tested-by", confirming both
-code correctness and functional testing.
+### Stable Kernel Rules Check
+1. **Obviously correct and tested**: Yes — simple table entry, same
+   pattern as dozens of others, signed off by the ALSA maintainer
+   (Takashi Iwai)
+2. **Fixes a real bug**: Yes — suspend/resume failure
+3. **Important issue**: Yes — device unusable after suspend/resume cycle
+4. **Small and contained**: Yes — 2-line addition to a quirk table
+5. **No new features**: Correct — uses existing quirk mechanism
+6. **Applies cleanly**: Should apply cleanly to any tree containing the
+   quirk flags table
 
 ### Verification
-- Read `tools/objtool/klp-diff.c` at lines 1310-1420 to confirm the
-  current state lacks the pr_debug() check and to verify the existing
-  tracepoint handling pattern the fix mirrors.
-- Verified via git log that `klp-diff.c` was introduced in commit
-  `dd590d4d57ebe` in v6.19 — the file does not exist in older stable
-  trees.
-- Confirmed the current repo is at v6.19.8 and does not yet contain this
-  fix.
-- The fix adds the check between the tracepoint check (line 1396) and
-  the generic error (line 1403), which is the correct location.
-- The commit was authored by Josh Poimboeuf (objtool maintainer) and
-  reviewed/tested by Song Liu (livepatch maintainer) — high confidence
-  in correctness.
+- Reviewed the diff: confirmed it's a simple 2-line `DEVICE_FLG()`
+  addition, inserted in sorted vendor ID order
+- Confirmed `QUIRK_FLAG_FORCE_IFACE_RESET` and `QUIRK_FLAG_IFACE_DELAY`
+  are used by multiple existing entries in the same table (visible in
+  the diff context)
+- Commit is signed off by Takashi Iwai (ALSA subsystem maintainer),
+  indicating proper review
+- The commit message includes USB device identification strings showing
+  the exact hardware affected
 
-### Risk vs. Benefit
-- **Benefit**: Fixes a real build-time error that prevents creating
-  livepatch modules containing `pr_debug()` calls.
-- **Risk**: Minimal — small, pattern-following change in a build tool,
-  with maintainer review and testing.
-
-This is a small, well-tested fix for a real functional issue in
-objtool's livepatch support. It only applies to 6.19.y stable (the file
-doesn't exist in older trees), but for that version it prevents a
-legitimate build error.
+This is a zero-risk, high-benefit hardware quirk that fixes
+suspend/resume for a specific USB audio device. It meets all stable
+kernel criteria.
 
 **YES**
 
- tools/objtool/klp-diff.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ sound/usb/quirks.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/objtool/klp-diff.c b/tools/objtool/klp-diff.c
-index 9f1f4011eb9cd..4691f423fca5c 100644
---- a/tools/objtool/klp-diff.c
-+++ b/tools/objtool/klp-diff.c
-@@ -1334,18 +1334,18 @@ static bool should_keep_special_sym(struct elf *elf, struct symbol *sym)
-  * be applied after static branch/call init, resulting in code corruption.
-  *
-  * Validate a special section entry to avoid that.  Note that an inert
-- * tracepoint is harmless enough, in that case just skip the entry and print a
-- * warning.  Otherwise, return an error.
-+ * tracepoint or pr_debug() is harmless enough, in that case just skip the
-+ * entry and print a warning.  Otherwise, return an error.
-  *
-- * This is only a temporary limitation which will be fixed when livepatch adds
-- * support for submodules: fully self-contained modules which are embedded in
-- * the top-level livepatch module's data and which can be loaded on demand when
-- * their corresponding to-be-patched module gets loaded.  Then klp relocs can
-- * be retired.
-+ * TODO: This is only a temporary limitation which will be fixed when livepatch
-+ * adds support for submodules: fully self-contained modules which are embedded
-+ * in the top-level livepatch module's data and which can be loaded on demand
-+ * when their corresponding to-be-patched module gets loaded.  Then klp relocs
-+ * can be retired.
-  *
-  * Return:
-  *   -1: error: validation failed
-- *    1: warning: tracepoint skipped
-+ *    1: warning: disabled tracepoint or pr_debug()
-  *    0: success
-  */
- static int validate_special_section_klp_reloc(struct elfs *e, struct symbol *sym)
-@@ -1400,6 +1400,13 @@ static int validate_special_section_klp_reloc(struct elfs *e, struct symbol *sym
- 				continue;
- 			}
- 
-+			if (strstr(reloc->sym->name, "__UNIQUE_ID_ddebug_")) {
-+				WARN("%s: disabling unsupported pr_debug()",
-+				     code_sym->name);
-+				ret = 1;
-+				continue;
-+			}
-+
- 			ERROR("%s+0x%lx: unsupported static branch key %s.  Use static_key_enabled() instead",
- 			      code_sym->name, code_offset, reloc->sym->name);
- 			return -1;
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index a89ea2233180a..ce6f479353b22 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2239,6 +2239,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_IFACE_DELAY | QUIRK_FLAG_FORCE_IFACE_RESET),
+ 	DEVICE_FLG(0x0661, 0x0883, /* iBasso DC04 Ultra */
+ 		   QUIRK_FLAG_DSD_RAW),
++	DEVICE_FLG(0x0666, 0x0880, /* SPACETOUCH USB Audio */
++		   QUIRK_FLAG_FORCE_IFACE_RESET | QUIRK_FLAG_IFACE_DELAY),
+ 	DEVICE_FLG(0x06f8, 0xb000, /* Hercules DJ Console (Windows Edition) */
+ 		   QUIRK_FLAG_IGNORE_CTL_ERROR),
+ 	DEVICE_FLG(0x06f8, 0xd002, /* Hercules DJ Console (Macintosh Edition) */
 -- 
 2.51.0
 
