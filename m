@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF2F3EF678;
-	Tue, 17 Mar 2026 16:46:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DECB3EFD18;
+	Tue, 17 Mar 2026 16:46:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765962; cv=none; b=MjUBICPr3RgktMt7F1yDL4u/aNI79E3Bb6JOZTnbqOnDf7lcKBC4tg5z5z4clekVj3Ujxycx4GGbd18tVgBl/Ta78T7zg63q2mkTXqxCE6nSy8L1SDBR3B/qXS5PJvZB0tZx2XeuWdlScwiP6CM0QmBwTCcbsgYX4dpIIo4shyI=
+	t=1773765966; cv=none; b=PLdVSzaYatKu5imZyXIl9FR8Pi33FcAKvgNN6TV90x8rCUPd5tFEJu8QyBOqd23pDTs0Bnuh3lfia5DB0+ZE5Fsp1qDaoQ8Po4rYHCKNUYU8kmKyS7VAEjyqEEZ9XcoaJOV5OfLFoZRFOlL9V+KSCE4wQ271zKfpGKO1lFJQwa8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765962; c=relaxed/simple;
-	bh=godUtRmVm3jLjM/n2AgvaMrk2MdEH6DpfMsLzM6Ebk4=;
+	s=arc-20240116; t=1773765966; c=relaxed/simple;
+	bh=IeCCt3GEgbQZFZSaZXQtkwcOC3clHuMd1q6PRPZ3OJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AaA79sZoMAMHCv7tRJeNBphg6+i18nE/XdG/vGTrf5FsOaPOi5Lf30uO1TUbUreExOHBkBBL8ZfryNIG0b46CkMAfIhv+vIoHdZzkmy+1WnMT+KlxEBGJRum/LvS4uxu1b0BF3pU8DFixEvL6ECeg5TX71n2d69hP5jiBUDgxLM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ryWxTXZR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sm4k4Xkcq7I9y5yrHkK66J1xvwtQz8ohUnGYupAjEx3afk3V4uM9In2Jf/OyJMwsziHEjge9ZkcUBBxn6hY7jU3c1wV/n8/4hmK0vlOzPmiT+CYoY7vTWtsBIriXo/cQ6fFQBZM4237o2gtjTHE8OMNi1Hwiq11l2alUQsHNVEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hXo1V6pp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ryWxTXZR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B26C4CEF7;
-	Tue, 17 Mar 2026 16:46:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hXo1V6pp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB6BBC4CEF7;
+	Tue, 17 Mar 2026 16:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765962;
-	bh=godUtRmVm3jLjM/n2AgvaMrk2MdEH6DpfMsLzM6Ebk4=;
+	s=korg; t=1773765966;
+	bh=IeCCt3GEgbQZFZSaZXQtkwcOC3clHuMd1q6PRPZ3OJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ryWxTXZRy807X2Lxyddsm/svpA3iOOvxGuiL5Jlkgs+HSFnnmNnbD1a3GLSvVvhOQ
-	 t7hXz85X6RdLEDwEs/Quhv8MpB4kycUcAW+WVeSFF+4VM8I4U2g7HSyVB5nUDleOBX
-	 N8qJFenp5IuCn1U/1YCkaAUYbFVE8MmUNtLosmX4=
+	b=hXo1V6ppOh3oJP0Sv4K3ikXBU6fNM1lTmGcAdb8d63X3fbgVFbfYshel6z4V5xqgG
+	 AqrPh2yxEr29orALPMft1Txfa38ALWXmMWDk1woUbN4TvSaH03ao5vvxmn+ZQWmK/l
+	 eaEOxT0rhMHrJr/XqfalMdOY8mMkasGNnDm+0p/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.19 138/378] KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated
-Date: Tue, 17 Mar 2026 17:31:35 +0100
-Message-ID: <20260317163012.090803529@linuxfoundation.org>
+	Quentin Perret <qperret@google.com>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.19 139/378] KVM: arm64: pkvm: Fallback to level-3 mapping on host stage-2 fault
+Date: Tue, 17 Mar 2026 17:31:36 +0100
+Message-ID: <20260317163012.126713959@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,97 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 87d0f901a9bd8ae6be57249c737f20ac0cace93d upstream.
+commit 8531d5a83d8eb8affb5c0249b466c28d94192603 upstream.
 
-Explicitly set/clear CR8 write interception when AVIC is (de)activated to
-fix a bug where KVM leaves the interception enabled after AVIC is
-activated.  E.g. if KVM emulates INIT=>WFS while AVIC is deactivated, CR8
-will remain intercepted in perpetuity.
+If, for any odd reason, we cannot converge to mapping size that is
+completely contained in a memblock region, we fail to install a S2
+mapping and go back to the faulting instruction. Rince, repeat.
 
-On its own, the dangling CR8 intercept is "just" a performance issue, but
-combined with the TPR sync bug fixed by commit d02e48830e3f ("KVM: SVM:
-Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active"), the danging
-intercept is fatal to Windows guests as the TPR seen by hardware gets
-wildly out of sync with reality.
+This happens when faulting in regions that are smaller than a page
+or that do not have PAGE_SIZE-aligned boundaries (as witnessed on
+an O6 board that refuses to boot in protected mode).
 
-Note, VMX isn't affected by the bug as TPR_THRESHOLD is explicitly ignored
-when Virtual Interrupt Delivery is enabled, i.e. when APICv is active in
-KVM's world.  I.e. there's no need to trigger update_cr8_intercept(), this
-is firmly an SVM implementation flaw/detail.
+In this situation, fallback to using a PAGE_SIZE mapping anyway --
+it isn't like we can go any lower.
 
-WARN if KVM gets a CR8 write #VMEXIT while AVIC is active, as KVM should
-never enter the guest with AVIC enabled and CR8 writes intercepted.
-
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
+Fixes: e728e705802fe ("KVM: arm64: Adjust range correctly during host stage-2 faults")
+Link: https://lore.kernel.org/r/86wlzr77cn.wl-maz@kernel.org
 Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Squash fix to avic_deactivate_vmcb. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Quentin Perret <qperret@google.com>
+Reviewed-by: Quentin Perret <qperret@google.com>
+Link: https://patch.msgid.link/20260305132751.2928138-1-maz@kernel.org
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    7 +++++--
- arch/x86/kvm/svm/svm.c  |    7 ++++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/mem_protect.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -189,12 +189,12 @@ static void avic_activate_vmcb(struct vc
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
- 
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
--
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 	vmcb->control.avic_physical_id |= avic_get_max_physical_id(vcpu);
--
- 	vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
- 
-+	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
- 	 * accesses, while interrupt injection to a running vCPU can be
-@@ -226,6 +226,9 @@ static void avic_deactivate_vmcb(struct
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 
-+	if (!sev_es_guest(svm->vcpu.kvm))
-+		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * If running nested and the guest uses its own MSR bitmap, there
- 	 * is no need to update L0's msr bitmap
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1032,8 +1032,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	svm_set_intercept(svm, INTERCEPT_CR0_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR3_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR4_WRITE);
--	if (!kvm_vcpu_apicv_active(vcpu))
--		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+	svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
- 
- 	set_dr_intercepts(svm);
- 
-@@ -2603,9 +2602,11 @@ static int dr_interception(struct kvm_vc
- 
- static int cr8_write_interception(struct kvm_vcpu *vcpu)
- {
-+	u8 cr8_prev = kvm_get_cr8(vcpu);
- 	int r;
- 
--	u8 cr8_prev = kvm_get_cr8(vcpu);
-+	WARN_ON_ONCE(kvm_vcpu_apicv_active(vcpu));
-+
- 	/* instruction emulation calls kvm_set_cr8() */
- 	r = cr_interception(vcpu);
- 	if (lapic_in_kernel(vcpu))
+--- a/arch/arm64/kvm/hyp/nvhe/mem_protect.c
++++ b/arch/arm64/kvm/hyp/nvhe/mem_protect.c
+@@ -516,7 +516,7 @@ static int host_stage2_adjust_range(u64
+ 		granule = kvm_granule_size(level);
+ 		cur.start = ALIGN_DOWN(addr, granule);
+ 		cur.end = cur.start + granule;
+-		if (!range_included(&cur, range))
++		if (!range_included(&cur, range) && level < KVM_PGTABLE_LAST_LEVEL)
+ 			continue;
+ 		*range = cur;
+ 		return 0;
 
 
