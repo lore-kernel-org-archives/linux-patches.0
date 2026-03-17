@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3013346797;
-	Tue, 17 Mar 2026 17:19:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C92B3246F8;
+	Tue, 17 Mar 2026 17:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767965; cv=none; b=oywJxiyTjsiypXtl8tV25RZEFQVn+AOoKPYW6ebOcY8rMX/ssRXLWw/Ajhn1wHykqnNVB+6RVbFqAxvrZCeMrgEDPBiyP1gJvYR5HRtjyKDXhUicKYJS+O90RolkKEtheVzL+9Z0PPT0Sg9NXUbhgFamLyWkFuoF9FjbMkNhVr0=
+	t=1773767970; cv=none; b=E62ZS/omLAmQkmmIQzlSSKe7/K1EVaoilnIYLX2oOrTR/BRLuV0DLfY0+y9jjdX3FsGQ+17+46ltxHxV/r410ppYXjn55qCB6MiVSLq20L6vVWSR6LK+UGkOtYWfWx44J2dSp0BpISdT7XAN2G3CkOxbQpA9tKbsNh2B8IjZQas=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767965; c=relaxed/simple;
-	bh=vcU711aL05sHZZ0YJEP2fgdN1Ff54bxaQ8OCd3t39s4=;
+	s=arc-20240116; t=1773767970; c=relaxed/simple;
+	bh=z3NYWMXo1sGa/C88qRQ4VGG9larvGWNfOdEt+Ly3Iug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HZIRYjXhWBVVoKnAtgX3ZRpQmK6oyPgb7Nn497LnEqy5fe1/07dogiII0ZMFpt9MoA88tBUWMolvQKIZkDS3xEUkXIBnnFlz+98OSjyJ0R/yM8uoaVKvEZNn0HHD7FNjxxti0NV0lX/gB0Xt+0kaqDJE/ISRkK0qZxX/Ni8Bbtc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gbGAWfs2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cz//SorVGG/gc/bXKACy/wJMXi0XagnomO3zUOcusR2nWQkEAlAjE7b7hft5w6tVm1qQN1UydWeKmI1lBMGzzf9eo2xGWYoSwRUQpRvG5qtMrC/bF5MmYkb4c+ehrGytiN0otQrtyonfKsEVTaxXjI0OgkVISNnf1i94p3EtbvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wAV7QwAs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gbGAWfs2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CED00C4CEF7;
-	Tue, 17 Mar 2026 17:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wAV7QwAs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC07C2BCB1;
+	Tue, 17 Mar 2026 17:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767965;
-	bh=vcU711aL05sHZZ0YJEP2fgdN1Ff54bxaQ8OCd3t39s4=;
+	s=korg; t=1773767970;
+	bh=z3NYWMXo1sGa/C88qRQ4VGG9larvGWNfOdEt+Ly3Iug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbGAWfs2cG+UJJmNjw4vJIqB3iyl+HA2pTDu0domULjzaGwBxFvQPndU18+OqHWnc
-	 6u3W6iEgH1YZvx5NtMv9Ueb7mVt7/vUZv1q5IrLWSLMewTe9CPYPQfXvpHd/fGO3aH
-	 qO4xHIOKOqDZjtHmFnC4ieV+9DF192aJm3rUWR60=
+	b=wAV7QwAsYLB7uMY1pom+i4xpD3pPPtHTMMPrtVHpsKnIwL7w0vA9muDT8odYYNsEh
+	 WYbN/WRxgMG1NwXnzDRTecP0g+MYo+Wzu35+1eO3RbbzQgPp2PQQu9lCQC3lQ1EnJV
+	 p6l/AH3tIQouUjJoLx85hmHVlTjbTUxuExEsNtWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Danilo Krummrich <dakr@kernel.org>
-Subject: [PATCH 6.18 201/333] device property: Allow secondary lookup in fwnode_get_next_child_node()
-Date: Tue, 17 Mar 2026 17:33:50 +0100
-Message-ID: <20260317163006.810295770@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>
+Subject: [PATCH 6.18 202/333] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
+Date: Tue, 17 Mar 2026 17:33:51 +0100
+Message-ID: <20260317163006.847267822@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,75 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 2692c614f8f05929d692b3dbfd3faef1f00fbaf0 upstream.
+commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
 
-When device_get_child_node_count() got split to the fwnode and device
-respective APIs, the fwnode didn't inherit the ability to traverse over
-the secondary fwnode. Hence any user, that switches from device to fwnode
-API misses this feature. In particular, this was revealed by the commit
-1490cbb9dbfd ("device property: Split fwnode_get_child_node_count()")
-that effectively broke the GPIO enumeration on Intel Galileo boards.
-Fix this by moving the secondary lookup from device to fwnode API.
+The ITS driver blindly assumes that EventIDs are in abundant supply, to the
+point where it never checks how many the hardware actually supports.
 
-Note, in general no device_*() API should go into the depth of the fwnode
-implementation.
+It turns out that some pretty esoteric integrations make it so that only a
+few bits are available, all the way down to a single bit.
 
-Fixes: 114dbb4fa7c4 ("drivers property: When no children in primary, try secondary")
+Enforce the advertised limitation at the point of allocating the device
+structure, and hope that the endpoint driver can deal with such limitation.
+
+Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: stable@vger.kernel.org
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://patch.msgid.link/20260210135822.47335-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Danilo Krummrich <dakr@kernel.org>
+Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/property.c |   27 +++++++++++++--------------
- 1 file changed, 13 insertions(+), 14 deletions(-)
+ drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
+ include/linux/irqchip/arm-gic-v3.h |    1 +
+ 2 files changed, 5 insertions(+)
 
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -797,7 +797,18 @@ struct fwnode_handle *
- fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
- 			   struct fwnode_handle *child)
- {
--	return fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-+	struct fwnode_handle *next;
-+
-+	if (IS_ERR_OR_NULL(fwnode))
-+		return NULL;
-+
-+	/* Try to find a child in primary fwnode */
-+	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
-+	if (next)
-+		return next;
-+
-+	/* When no more children in primary, continue with secondary */
-+	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
- }
- EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3475,6 +3475,7 @@ static struct its_device *its_create_dev
+ 	int lpi_base;
+ 	int nr_lpis;
+ 	int nr_ites;
++	int id_bits;
+ 	int sz;
  
-@@ -841,19 +852,7 @@ EXPORT_SYMBOL_GPL(fwnode_get_next_availa
- struct fwnode_handle *device_get_next_child_node(const struct device *dev,
- 						 struct fwnode_handle *child)
- {
--	const struct fwnode_handle *fwnode = dev_fwnode(dev);
--	struct fwnode_handle *next;
--
--	if (IS_ERR_OR_NULL(fwnode))
--		return NULL;
--
--	/* Try to find a child in primary fwnode */
--	next = fwnode_get_next_child_node(fwnode, child);
--	if (next)
--		return next;
--
--	/* When no more children in primary, continue with secondary */
--	return fwnode_get_next_child_node(fwnode->secondary, child);
-+	return fwnode_get_next_child_node(dev_fwnode(dev), child);
- }
- EXPORT_SYMBOL_GPL(device_get_next_child_node);
- 
+ 	if (!its_alloc_device_table(its, dev_id))
+@@ -3486,7 +3487,10 @@ static struct its_device *its_create_dev
+ 	/*
+ 	 * Even if the device wants a single LPI, the ITT must be
+ 	 * sized as a power of two (and you need at least one bit...).
++	 * Also honor the ITS's own EID limit.
+ 	 */
++	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
++	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
+ 	nr_ites = max(2, nvecs);
+ 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
+ 	sz = max(sz, ITS_ITT_ALIGN);
+--- a/include/linux/irqchip/arm-gic-v3.h
++++ b/include/linux/irqchip/arm-gic-v3.h
+@@ -394,6 +394,7 @@
+ #define GITS_TYPER_VLPIS		(1UL << 1)
+ #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
+ #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
++#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
+ #define GITS_TYPER_IDBITS_SHIFT		8
+ #define GITS_TYPER_DEVBITS_SHIFT	13
+ #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
 
 
