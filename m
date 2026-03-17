@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58CB02116F6;
-	Tue, 17 Mar 2026 17:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33C1ACEDE;
+	Tue, 17 Mar 2026 17:14:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767668; cv=none; b=f0GpNdMGm//SJKr0oirEjVme74ZJyFvdRhG7xc4R+YDlrMdlo62pJAb+v/3TRQYp4ROgnDuRckW7ZKDxMbXjrY0/BAvVP1c5IkXVPMkiLrfcFVpS2YgsJ4stZuTwtkfj+dyHic/+wRjU5lvtRxXVYOx3HNmt777KnQhoXaB3/3w=
+	t=1773767674; cv=none; b=NoLgYXqdL4QxP9YzhTjqy+WbtcI+7R1BB8BNV3apIzgG+cOHRd7GoZGZ/dTGYKfkyYq4n5KJUres8sDZXwrblbF6myRQmztGeFIpFWiUhHnQGTvG0OHfuTDXw9k+FWAIWMhZprRkis/CXPHwr/GBE4+CmHEtmbzymWXGq/xVEU8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767668; c=relaxed/simple;
-	bh=zhAz7256xZJVoCstLunHsPrJRZR99/ZdLqkio1HVaeI=;
+	s=arc-20240116; t=1773767674; c=relaxed/simple;
+	bh=JrAS3a7N/zH57GERoGgWsRSucoQEVyf39WH6eXlaCjQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X6ZpKAe7URRMilZkQlDk/lyLNC+1nclbENL4/U7/xq3+YWltBm0NgeD4tN62/xKQJCkMhsKPBFpYvD2Ga79oGv+AzBXTyvKSPZl2Quxh3CHZX7NMe4Fu/qSGFNqZRHIQP0IMZnk/ZVv3UWmRaaZcw/bdhuj/+EKf8aDnwXVX4pY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mejAQAQE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lRG7FMst4DbYeccGYyAP0wLGQjpIosCUYCiwesLFTXBvV1F1x8wCR31RoqLgHljb+unMjskyGd/dtTTOgNSbvk9NI/u2lMF1RQ+yYqW3KU36u3zjhzgMOLQwuL51EPH7bYFxpOLzCdKJPaeeLAqbMcgOadd2sE3sQFWx8KIWHww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCGFU+c0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mejAQAQE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A70DAC4CEF7;
-	Tue, 17 Mar 2026 17:14:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCGFU+c0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1FAC4CEF7;
+	Tue, 17 Mar 2026 17:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767668;
-	bh=zhAz7256xZJVoCstLunHsPrJRZR99/ZdLqkio1HVaeI=;
+	s=korg; t=1773767674;
+	bh=JrAS3a7N/zH57GERoGgWsRSucoQEVyf39WH6eXlaCjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mejAQAQEYyBAegS6M4SsF9WcRDGRyuN12UZTTmwXwEG3jsFd2iuyKH6FTv2/cyrl1
-	 PeSnUMvHbwBxN/WZrsIYozg0TxcvrdJJG+Tf7RaPsN+eNOIMhx4Lv7ndrjYWV/hy32
-	 nYZ0QyI+BEDBJCRotTy/MT9jRp6brFl0N4wEN8pY=
+	b=PCGFU+c09ujEIZLLm1QMDvTvmlPmstA9YtWweH0kPDxYGwXF3Vs/Gq0gbskYo+RJn
+	 g6BH4IwAO8kYsoR6nzGfnqW2uM7guGl04xT1IQ90iKi406consfG9lcfq1ntGbkbSO
+	 5wrJg0IcOWgJebjMm1EdXsttEa4N/sOjasEDKY+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 133/333] usb: misc: uss720: properly clean up reference in uss720_probe()
-Date: Tue, 17 Mar 2026 17:32:42 +0100
-Message-ID: <20260317163004.294453708@linuxfoundation.org>
+	Gabor Juhos <j4g8y7@gmail.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.18 134/333] usb: core: dont power off roothub PHYs if phy_set_mode() fails
+Date: Tue, 17 Mar 2026 17:32:43 +0100
+Message-ID: <20260317163004.331421321@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -49,33 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Gabor Juhos <j4g8y7@gmail.com>
 
-commit 45dba8011efac11a2f360383221b541f5ea53ce5 upstream.
+commit e293015ba76eb96ce4ebed7e3b2cb1a7d319f3e9 upstream.
 
-If get_1284_register() fails, the usb device reference count is
-incorrect and needs to be properly dropped before returning.  That will
-happen when the kref is dropped in the call to destroy_priv(), so jump
-to that error path instead of returning directly.
+Remove the error path from the usb_phy_roothub_set_mode() function.
+The code is clearly wrong, because phy_set_mode() calls can't be
+balanced with phy_power_off() calls.
 
-Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Link: https://patch.msgid.link/2026022342-smokiness-stove-d792@gregkh
+Additionally, the usb_phy_roothub_set_mode() function is called only
+from usb_add_hcd() before it powers on the PHYs, so powering off those
+makes no sense anyway.
+
+Presumably, the code is copy-pasted from the phy_power_on() function
+without adjusting the error handling.
+
+Cc: stable@vger.kernel.org # v5.1+
+Fixes: b97a31348379 ("usb: core: comply to PHY framework")
+Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
+Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://patch.msgid.link/20260218-usb-phy-poweroff-fix-v1-1-66e6831e860e@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/uss720.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/phy.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/usb/misc/uss720.c
-+++ b/drivers/usb/misc/uss720.c
-@@ -736,7 +736,7 @@ static int uss720_probe(struct usb_inter
- 	ret = get_1284_register(pp, 0, &reg, GFP_KERNEL);
- 	dev_dbg(&intf->dev, "reg: %7ph\n", priv->reg);
- 	if (ret < 0)
--		return ret;
-+		goto probe_abort;
+--- a/drivers/usb/core/phy.c
++++ b/drivers/usb/core/phy.c
+@@ -200,16 +200,10 @@ int usb_phy_roothub_set_mode(struct usb_
+ 	list_for_each_entry(roothub_entry, head, list) {
+ 		err = phy_set_mode(roothub_entry->phy, mode);
+ 		if (err)
+-			goto err_out;
++			return err;
+ 	}
  
- 	ret = usb_find_last_int_in_endpoint(interface, &epd);
- 	if (!ret) {
+ 	return 0;
+-
+-err_out:
+-	list_for_each_entry_continue_reverse(roothub_entry, head, list)
+-		phy_power_off(roothub_entry->phy);
+-
+-	return err;
+ }
+ EXPORT_SYMBOL_GPL(usb_phy_roothub_set_mode);
+ 
 
 
