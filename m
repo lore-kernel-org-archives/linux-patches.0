@@ -1,97 +1,343 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44D21922F5;
-	Tue, 17 Mar 2026 04:42:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773722554; cv=none; b=WJqeojJ0Lbc7pA1gOUSfyNCYSz5e+SvwZZhfe9nSpK7rGQqnwBHxf2/QWSYgg41hhqbPbwHDAa1GpamiQ1L1SuEa1lqeSnY4zXzhpIU2cM2hO3VGE5P+2S/kpayBzIO+jsEpk+ss4h5LnjxTNFtGN4OSCZ2ho6YerzS/lz5fHsc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773722554; c=relaxed/simple;
-	bh=gRznmthyaztYYX9C1fOAny2nKdQ5LS/ZDUatarmEMfQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TmD02k4ANLxhiWWJNCPspIWHASe/0o169Q9w9eQEfb7w8UgTtTMBQSoyeDIS0uTvCT5YsTWbBo0wca3UGrTb2z2Hw5DECkDyN5JfwPXyhTRWCk4w/zW1E4MejaKnxXKwVW102BEpY+VCK7r49Hv6tqowKIvlbfw47jODxDVjALM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V1kLCdEp; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8BED37EFED
+	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 05:38:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773725931; cv=fail; b=CAYQ/0a7gouAbFaNnNee3NTbSm0Hboby4WOd9uD1Ya9JAAaQT21tHKgPrAI3jofO+/ATzZxFGLcbVVSQz+7fSlq+sFiSA9vgAVuQLXSmpzgGRFrc/9LloxnTEmGXOiLaYTJGNxDMJTgDOfPt3SNyp470Vo2XA3aTm9oEaK9ML4M=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773725931; c=relaxed/simple;
+	bh=pn0VQnjk3rgLIb/i5B8PupWdqnUf3GK/RLfjuonPMno=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=PnopnZywyISRaGjlv6+RNWgNIVPN8nH/Zp301n6euJ4G4mtaQQtqAL3KRsW2tYssxwkTpoqrnbvdrz8M77kbZIHVwWk2/pFIL8hCGuqv8JcmEo4cZcg4qBQ5/pgVkx6zKrz6Sml834NgfkB8Gz4z748L1RkGHrp2eWAs8lTIuX0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=FT3k3BxU; arc=fail smtp.client-ip=198.175.65.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V1kLCdEp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B95C4CEF7;
-	Tue, 17 Mar 2026 04:42:33 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773722554;
-	bh=gRznmthyaztYYX9C1fOAny2nKdQ5LS/ZDUatarmEMfQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=V1kLCdEpHVjyTfl+xUm/AFwXy02Abbcj1tCsztx6HfTNiLRN5zCZOUfQ+1EsQziAl
-	 bhNr2VZfo4thhMV3ljC2tVJV31PVXtufIqGc74EIIjnK7p58EgCns/1wKXIbnR7H46
-	 B8nU3AuHi3Dl56D9FDrbQD0gJpefkT+E8Cus/V+A=
-Date: Tue, 17 Mar 2026 05:42:14 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/410] 5.15.202-rc2 review
-Message-ID: <2026031738-glade-glamorous-eacd@gregkh>
-References: <20260302160955.2522727-1-sashal@kernel.org>
- <20260305220801.GA3148061@ax162>
- <20260316220533.GD1329928@ax162>
- <abiuxFzZNLKbhz6F@laps>
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="FT3k3BxU"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1773725930; x=1805261930;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=pn0VQnjk3rgLIb/i5B8PupWdqnUf3GK/RLfjuonPMno=;
+  b=FT3k3BxUGkIB9vX+87EGollWQRfU53Mz9hmAqVwAqhqd1/1OcVJFPits
+   HzrYjelOLHPeSXxYBS+IGxACmskxf/Y1pPjK7EtpY6frjg4apO9rVxf/N
+   vfMjEb3svbKKqzh8f69GE0nnn+WJO5jQND3dP0VvVKufwkWwvjXHFXBXu
+   yfvavVf0nRqjDKXAzCIhBdABc48va0Crh/LEEmN/hRf04MtvYr4o1BBIg
+   DmPIN+yCuvmEDiIwQC/VyJKjHtsEXUed/BpoR5cC4dDGUTTDeKXXcUYoY
+   olSZLWjbkiZd5qzfM2FAhxHKOENPfgOVZYhvjixt3OrAwlWQKbtzvr6xk
+   w==;
+X-CSE-ConnectionGUID: 0oxzVb/5T4Om49hQkkPo7w==
+X-CSE-MsgGUID: dz5d7QFYQDS101ZO745kNw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="78603446"
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
+   d="scan'208";a="78603446"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 22:38:49 -0700
+X-CSE-ConnectionGUID: WR8IIcuXSq6NnvtVjBCuog==
+X-CSE-MsgGUID: bBbYjreVQ5aKsNV7zKK3EA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; 
+   d="scan'208";a="217889026"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Mar 2026 22:37:47 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 16 Mar 2026 22:37:46 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Mon, 16 Mar 2026 22:37:46 -0700
+Received: from SN4PR2101CU001.outbound.protection.outlook.com (40.93.195.2) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 16 Mar 2026 22:37:46 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CYSCrxAvtv/G9a6bMphv6zvd8xjSKV6V1NHXYBrteiYjYHKus8dSmVxOAZ1PDXSTuzoo4TJinHBmPoddmaR8ROiEqAEDqZSZopvD25gNdBc/E5H6GEbaBAJOm3f9tEkpt64P4uirqiFq1xJUDc/NqXPJbl7cuycfC23TvW84QHlrnJYarNiPVI7bBotQZ89CLMpqB1hkIyh9kFgplURon6Yb1XTSS6YAaF3hnz9lXbmbu9y+xCxZtdOvitifxebeHfkB7HhGxM9XjzsUU6jGvC0Bvy389ppR8EWqoM1OOHc3sEDdpDx2/gcWtpF+fFL0L7dJ+2q+RT32h3I1CJjqzw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=t+y2zQuUbpVjKNpv1DjSaAqpNskadbNbkwnUouPcj1U=;
+ b=h/CYkMkDnz8qHK7aVldNgTwCDq+23dgKwYM8OsCFL57jpjTZgEgUdNlr32nbTiIidbmHRJ2Xrnx7DjElQbg5nOX0r2UORXQru8tsjVZm1AFb5cUROFnOF5D4ldf6NZD29G+Yegwd6F3lzWUtGCOaYXjrs2glelGk9Za7E64QwSldtcgBVoqdqnzoAqobB6Rnqi06A50lz3P4sjIBEglTeMtxb0NS+/Eb0gAamtGp46FMYGNaYyXLe+zk8Zxy5aBE7Q2PET0Y6q3Xs2v4xNSkcNBNd8DlZU1BIbCk9NAPhqdEcDDbPI3AqOx1tMSReXnw6TofQcjYx/ijGa/cCnyuKQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from CH3PR11MB7177.namprd11.prod.outlook.com (2603:10b6:610:153::8)
+ by DS0PR11MB8134.namprd11.prod.outlook.com (2603:10b6:8:15a::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.17; Tue, 17 Mar
+ 2026 05:37:41 +0000
+Received: from CH3PR11MB7177.namprd11.prod.outlook.com
+ ([fe80::b997:e226:4979:c035]) by CH3PR11MB7177.namprd11.prod.outlook.com
+ ([fe80::b997:e226:4979:c035%5]) with mapi id 15.20.9723.016; Tue, 17 Mar 2026
+ 05:37:35 +0000
+From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, =?iso-8859-1?Q?Christian_K=F6nig?=
+	<christian.koenig@amd.com>, "dri-devel@lists.freedesktop.org"
+	<dri-devel@lists.freedesktop.org>, "linaro-mm-sig@lists.linaro.org"
+	<linaro-mm-sig@lists.linaro.org>, "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>, Sumit Semwal <sumit.semwal@linaro.org>
+CC: Dave Airlie <airlied@redhat.com>, Andrew Morton
+	<akpm@linux-foundation.org>, Arnd Bergmann <arnd@arndb.de>, Daniel Vetter
+	<daniel.vetter@ffwll.ch>, David Hildenbrand <david@redhat.com>, "Kim,
+ Dongwon" <dongwon.kim@intel.com>, Christoph Hellwig <hch@infradead.org>,
+	Christoph Hellwig <hch@lst.de>, Hugh Dickins <hughd@google.com>, Julian Orth
+	<ju.orth@gmail.com>, "Chang, Junxiao" <junxiao.chang@intel.com>, "Gerd
+ Hoffmann" <kraxel@redhat.com>, Oscar Salvador <osalvador@suse.de>,
+	"patches@lists.linux.dev" <patches@lists.linux.dev>, Peter Xu
+	<peterx@redhat.com>, Shuah Khan <shuah@kernel.org>, "Matthew Wilcox (Oracle)"
+	<willy@infradead.org>
+Subject: RE: [PATCH] udmabuf: Do not create malformed scatterlists
+Thread-Topic: [PATCH] udmabuf: Do not create malformed scatterlists
+Thread-Index: AQHcsxCg2jmO8KOozUyLmq08MkwvOLWvLm6A
+Date: Tue, 17 Mar 2026 05:37:34 +0000
+Message-ID: <CH3PR11MB7177AE4908A2D9511A647275F841A@CH3PR11MB7177.namprd11.prod.outlook.com>
+References: <0-v1-42779f29381a+4b9-udmabuf_sg_jgg@nvidia.com>
+In-Reply-To: <0-v1-42779f29381a+4b9-udmabuf_sg_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR11MB7177:EE_|DS0PR11MB8134:EE_
+x-ms-office365-filtering-correlation-id: 7a742da8-5e72-4639-cedd-08de83e74ad7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016|38070700021|18002099003|56012099003|22082099003;
+x-microsoft-antispam-message-info: Sq6l6zqWlo8QWN3qMRSdIlqYUMY0tFLYBddab20cg/8A0DXIxHKdA3TwIAivBXp0V+tENMZ9FmMCahjoBXVKsFYCBdJNFy10Nq0NXwoUTgFh2AJ9i6Bf784MgquA9YTl2tlk1un78sXKhnohhEcCo2sI2tmuIHeBFqrvKcXICh1Tkbp0cZPIZbF968SeQFB5easixbgH7hvBUeZPQn0FF8RTcl5PvIflHCVDvgeUdGD5D3WLTmZtrgmSOziutE+y7cctPDETe4UpEMg7Pv/uLtLjhmf1uWBnmPa6dJpuIjeNXtTODGxd7wvMbz50VpDxNtIwQ9X+Y1ZyVmozYh0nvbwfKBwto5KoBXRXKjIcxN8/WtfQrdz0ppVHCYIjCu1UTE+Faf0rkFmzRewqTe9nFAlfiYOFAq/mKgMST6nczl+R4wCmAOwI+gZsd2b812WguORqZk6vBP1DYiLrrJ9M8CJo4CYpxlpbv8QTbjVlMRLDUFeIHL+NLtND69vWe/oor6Q+KH8jfSm7NvCSxvX14lnID5aqNCCVso2UJCZmWoiiDD1a8FzK4xc6isNuPIrkjVD5QXIa6SXW0rNM+roTCSj0YoXr1S8TyAvNiDMZ2tGxdu7UrpOumyTHQ7GtEn0hFRllQAO2ZzO1m5MesEWPWaRFv82I1inoBK6/psc6E3bppxFCschpaI9B8LdfXtkW7GwsY9+CLyj4wUkGkvMu3lF6l7pZzaNMn0eclJ0DiHjOYGw5By7jKvnif420dXWPKldVv17HtdwczdrKYNpidNkwUtsM7vxdzvGLooNEiWM=
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CH3PR11MB7177.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(376014)(7416014)(1800799024)(366016)(38070700021)(18002099003)(56012099003)(22082099003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?DKn9WlKZCLQGR9Ps+ay2mbyV+8TPqkJg/NMNXvpz7/4jXsU5HLIXtwPLmK?=
+ =?iso-8859-1?Q?jBfI9HGTUO7xjWt+tTdnklbUB76XAHuwLkNOCPapge8McqkUJqDQ56DABG?=
+ =?iso-8859-1?Q?0SCDMYrg87Rv2qrgRKfREqBmLEO5Ya92miqlJKMjLYfKYTR4csJON6urqd?=
+ =?iso-8859-1?Q?jc0HNdTJSBfrGZWGf6i/c1dfFxY4NyFIbPVMEo6Yduku6bzpUmz283g0M4?=
+ =?iso-8859-1?Q?7Hxy0JAbsmy7G6MokdlVatUpmQAbEKQgSuj3I5Ccea7ZD09CC6MGYPCu9K?=
+ =?iso-8859-1?Q?iAscD9ET3KKJ5h/jACtmXEDJVgBzddjHH3aGTHcPLB0jziatCK+DIpUVKV?=
+ =?iso-8859-1?Q?2IM7FqtxUQo5ZZmIsycIE92FWQL8Jg/u/vM1AcwyJhqxf+TGGRbzi4Qin7?=
+ =?iso-8859-1?Q?ONAKAdT7B7W/ob7jKFFG40aKMz7Et8GPkO0wP9HsGUzxRm0fsVOEllgkcx?=
+ =?iso-8859-1?Q?qrk4aDL3bDch/yxY1aRz4292vXK4khgVaU85g4v6xQH8eEmhZz+h+6ifK6?=
+ =?iso-8859-1?Q?lh++p8arlGI8d4BinYk2ED4TqwK9ahYHtydpQCTzvcdG5PdeVgfilqKfVw?=
+ =?iso-8859-1?Q?zxxfjzGWM9lQRuXrj1NcIiHdJ+HoXZufY9QibJTsRyt/RmzilrcfGQAOLU?=
+ =?iso-8859-1?Q?HpZmi5JQYOxwiKRQL/K2zrcHbBh9pUlsSob8BSIB4rAd/2wZU1bAJ5bZaH?=
+ =?iso-8859-1?Q?6rrpRbqkeFPDPjxYvfKay5GEmh7eVCGU+9sudIOEr30J26x0WMYSZnWyu3?=
+ =?iso-8859-1?Q?c8BM2NhhHSsK9uh0wXXtfcsa4bxJqT2pyrgdTON4Wzhn85YbYcJaGwMUEv?=
+ =?iso-8859-1?Q?z/Mvrb30f3HFVNzbzix1qvETRlQ69vdNUE7kbqAVB/yzFfRJq74fBUfBVq?=
+ =?iso-8859-1?Q?IfnaLRbfzxD6xLH+Ev/BGmvWcTNV77Yv51OUHU6KEJgqLA7n0+6y+6Uzvq?=
+ =?iso-8859-1?Q?iLTJqBeZi/ggY4CR/43i7dfh49FqSsqYKW19shbtDagVBqZ8dlrQ/ETGXv?=
+ =?iso-8859-1?Q?gdsioqSm8WosjSrhqPPrlzykGOa1IOTZ5nnrhyshIRcGl3Hgaie464oDFy?=
+ =?iso-8859-1?Q?7I8zlucYwad5vte3J8Y7VYGa7Fm1sqX7qNXhAfWN2srWQiVobyxwxPJsQx?=
+ =?iso-8859-1?Q?edV4Xwr6IXe/YFDgezUM70inUDiqiGIYUxNbe6x4kJD43GDvREKTZ0JYmk?=
+ =?iso-8859-1?Q?srf6oqcF8sRtJE2Wj8Jgfa1wIw5fVJhwdxCX1yUMEh6fUCKBFRiyI9Heky?=
+ =?iso-8859-1?Q?6ZL7Jxz2BdnA4RhE91RNYsYPuHqXLtH1ghUQqXYO8uhOkxXWSpQCQNxl3L?=
+ =?iso-8859-1?Q?yNOMz1LSN/ZwRgqHAS4W+gEz+7niBBNPmMgleeXYJIvKM/zSfFlea45cL7?=
+ =?iso-8859-1?Q?7oVG+4Zsre7J9DXlHWzqEX2ZFReKTb5TVjNgDLufld4usHHJhBdFzlGb8a?=
+ =?iso-8859-1?Q?jc/UTVm/FvdkAX1sZaQcI3iCjcbH9ZsHuN014JC+PH7BWBX1rFxP/lW3DP?=
+ =?iso-8859-1?Q?zAcW5nYgn1Aw13F/ICXA5diWHziMWovol3Fx2RbYoeXgSUT2LZDDFNypav?=
+ =?iso-8859-1?Q?wur9QVu+xOCZWfLtqHczW8syXzZ3qlDRUq5wVDkBQ8d+lBYIWu8KHA04FK?=
+ =?iso-8859-1?Q?37z/q3s8JlPjEb+1o/AULLVvG6Av2u+AKJ/Ukp72kKWkCkxzklO9YO/Wlk?=
+ =?iso-8859-1?Q?KCTlRDH4oYAV6qcLEqO/VJ4NapgEkvj0P4NuX8aLtzccF9TFKVadxsC93p?=
+ =?iso-8859-1?Q?7wspr6pTsmWpVLcxvFAcrUrMqVLsQ4IQh6tGbviZhihhgWlT0XXnmfc6kK?=
+ =?iso-8859-1?Q?MMaHQOCK8A=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <abiuxFzZNLKbhz6F@laps>
+X-Exchange-RoutingPolicyChecked: dtYUUn1vInY7fjwIbvkGsCp6H5k9xqJSEpfztpCMAnPMAIHqGpmNvkBUUAhJ7Tzzr2AscHDss9RfDszkP+A4l2I54eKLUzbFEPP8mgzOoWNNVtD2F16I3Y5Q4JQSbfNgsCNuzH076J7lKnLvvusAgHfx9IeqLY+GCC7SzMdUs+rzrebOsLILJEa6YrIf+lmwvEQevaNWG/FTrJey+umt76qbNyoPpc3woYta05HBqphuLKHtyNX56A3dwlbjH09NNlKmiF2YtPKjWo77TEwO6K79jDhJRxielLJ1KxtRGuXOkpRsaRn0NgRy3hRrJ/NidmEIJHwqcXpp5W1PqYOgFA==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7177.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7a742da8-5e72-4639-cedd-08de83e74ad7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Mar 2026 05:37:34.9246
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: lFJEqlaMxkF40l2yYUC+O+IwqG8qKhcDoOhZTrjhcpHUE2eIFGaSQPXZa+3RzyZO/3rKkCuJSAlaMAaEnp/qiARcXVv4+4xD6M1VigkiueU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB8134
+X-OriginatorOrg: intel.com
 
-On Mon, Mar 16, 2026 at 09:30:44PM -0400, Sasha Levin wrote:
-> On Mon, Mar 16, 2026 at 03:05:33PM -0700, Nathan Chancellor wrote:
-> > On Thu, Mar 05, 2026 at 03:08:09PM -0700, Nathan Chancellor wrote:
-> > > On Mon, Mar 02, 2026 at 11:09:55AM -0500, Sasha Levin wrote:
-> > > > Jamie Iles (1):
-> > > >   i3c: remove i2c board info from i2c_dev_desc
-> > > 
-> > > You missed commit 6cbf8b38dfe3 ("i3c: fix uninitialized variable use in
-> > > i2c setup") as a fix for this one, as rightfully pointed out by clang:
-> > > 
-> > >   https://lore.kernel.org/177198114226.2577.15577566399399369654@d14e337afe00/
-> > > 
-> > >   $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 mrproper allmodconfig drivers/i3c/master.o
-> > >   drivers/i3c/master.c:2203:3: error: variable 'i2cdev' is uninitialized when used here [-Werror,-Wuninitialized]
-> > >    2203 |                 i2cdev->dev = i2c_new_client_device(adap, &i2cboardinfo->base);
-> > >         |                 ^~~~~~
-> > > 
-> > > I guess that report was missed because it was not actually addressed to
-> > > anyone?
-> > > 
-> > > FWIW, this patch appeared in a previous 5.15-rc release but Ben
-> > > rightfully pointed out it really was not necessary and Greg said he
-> > > would fix it up by hand:
-> > > 
-> > >   https://lore.kernel.org/2026011724-florist-brook-5f1f@gregkh/
-> > > 
-> > > Guess that never happened?
-> > 
-> > Ping? I don't see 6cbf8b38dfe3 queued up in 5.15 and this continues to
-> > break our builds:
-> > 
-> >  https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/23093834605
-> 
-> Hm, I queued it up, but looks like Greg dropped it:
-> 
-> 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=7c0d6910ad
-> 
-> I'm not sure why.
+> Subject: [PATCH] udmabuf: Do not create malformed scatterlists
+>=20
+> Using a sg_set_folio() loop for every 4K results in a malformed scatterli=
+st
+> because sg_set_folio() has an issue with offsets > PAGE_SIZE and because
+> scatterlist expects the creator to build a list which consolidates any
+> physical contiguity.
+>=20
+> sg_alloc_table_from_pages() creates a valid scatterlist directly from a
+> struct page array, so go back to that.
+>=20
+> Remove the offsets allocation and just store an array of tail pages as it
+> did before the below commit. Everything wants that anyhow.
+>=20
+> Fixes: 0c8b91ef5100 ("udmabuf: add back support for mapping hugetlb
+> pages")
+> Reported-by: Julian Orth <ju.orth@gmail.com>
+> Closes: https://lore.kernel.org/all/20260308-scatterlist-v1-1-
+> 39c4566b0bba@gmail.com/
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>  drivers/dma-buf/udmabuf.c | 49 +++++++++++----------------------------
+>  1 file changed, 13 insertions(+), 36 deletions(-)
+>=20
+> diff --git a/drivers/dma-buf/udmabuf.c b/drivers/dma-buf/udmabuf.c
+> index 94b8ecb892bb17..5d687860445137 100644
+> --- a/drivers/dma-buf/udmabuf.c
+> +++ b/drivers/dma-buf/udmabuf.c
+> @@ -26,10 +26,10 @@ MODULE_PARM_DESC(size_limit_mb, "Max size
+> of a dmabuf, in megabytes. Default is
+>=20
+>  struct udmabuf {
+>  	pgoff_t pagecount;
+> -	struct folio **folios;
+> +	struct page **pages;
+>=20
+>  	/**
+> -	 * Unlike folios, pinned_folios is only used for unpin.
+> +	 * Unlike pages, pinned_folios is only used for unpin.
+>  	 * So, nr_pinned is not the same to pagecount, the pinned_folios
+>  	 * only set each folio which already pinned when udmabuf_create.
+>  	 * Note that, since a folio may be pinned multiple times, each folio
+> @@ -41,7 +41,6 @@ struct udmabuf {
+>=20
+>  	struct sg_table *sg;
+>  	struct miscdevice *device;
+> -	pgoff_t *offsets;
+>  };
+>=20
+>  static vm_fault_t udmabuf_vm_fault(struct vm_fault *vmf)
+> @@ -55,8 +54,7 @@ static vm_fault_t udmabuf_vm_fault(struct vm_fault
+> *vmf)
+>  	if (pgoff >=3D ubuf->pagecount)
+>  		return VM_FAULT_SIGBUS;
+>=20
+> -	pfn =3D folio_pfn(ubuf->folios[pgoff]);
+> -	pfn +=3D ubuf->offsets[pgoff] >> PAGE_SHIFT;
+> +	pfn =3D page_to_pfn(ubuf->pages[pgoff]);
+>=20
+>  	ret =3D vmf_insert_pfn(vma, vmf->address, pfn);
+>  	if (ret & VM_FAULT_ERROR)
+> @@ -73,8 +71,7 @@ static vm_fault_t udmabuf_vm_fault(struct vm_fault
+> *vmf)
+>  		if (WARN_ON(pgoff >=3D ubuf->pagecount))
+>  			break;
+>=20
+> -		pfn =3D folio_pfn(ubuf->folios[pgoff]);
+> -		pfn +=3D ubuf->offsets[pgoff] >> PAGE_SHIFT;
+> +		pfn =3D page_to_pfn(ubuf->pages[pgoff]);
+>=20
+>  		/**
+>  		 * If the below vmf_insert_pfn() fails, we do not return an
+> @@ -109,22 +106,11 @@ static int mmap_udmabuf(struct dma_buf *buf,
+> struct vm_area_struct *vma)
+>  static int vmap_udmabuf(struct dma_buf *buf, struct iosys_map *map)
+>  {
+>  	struct udmabuf *ubuf =3D buf->priv;
+> -	struct page **pages;
+>  	void *vaddr;
+> -	pgoff_t pg;
+>=20
+>  	dma_resv_assert_held(buf->resv);
+>=20
+> -	pages =3D kvmalloc_objs(*pages, ubuf->pagecount);
+> -	if (!pages)
+> -		return -ENOMEM;
+> -
+> -	for (pg =3D 0; pg < ubuf->pagecount; pg++)
+> -		pages[pg] =3D folio_page(ubuf->folios[pg],
+> -				       ubuf->offsets[pg] >> PAGE_SHIFT);
+> -
+> -	vaddr =3D vm_map_ram(pages, ubuf->pagecount, -1);
+> -	kvfree(pages);
+> +	vaddr =3D vm_map_ram(ubuf->pages, ubuf->pagecount, -1);
+>  	if (!vaddr)
+>  		return -EINVAL;
+>=20
+> @@ -146,22 +132,18 @@ static struct sg_table *get_sg_table(struct
+> device *dev, struct dma_buf *buf,
+>  {
+>  	struct udmabuf *ubuf =3D buf->priv;
+>  	struct sg_table *sg;
+> -	struct scatterlist *sgl;
+> -	unsigned int i =3D 0;
+>  	int ret;
+>=20
+>  	sg =3D kzalloc_obj(*sg);
+>  	if (!sg)
+>  		return ERR_PTR(-ENOMEM);
+>=20
+> -	ret =3D sg_alloc_table(sg, ubuf->pagecount, GFP_KERNEL);
+> +	ret =3D sg_alloc_table_from_pages(sg, ubuf->pages, ubuf-
+> >pagecount, 0,
+> +					ubuf->pagecount << PAGE_SHIFT,
+> +					GFP_KERNEL);
+>  	if (ret < 0)
+>  		goto err_alloc;
+>=20
+> -	for_each_sg(sg->sgl, sgl, ubuf->pagecount, i)
+> -		sg_set_folio(sgl, ubuf->folios[i], PAGE_SIZE,
+> -			     ubuf->offsets[i]);
+> -
+>  	ret =3D dma_map_sgtable(dev, sg, direction, 0);
+>  	if (ret < 0)
+>  		goto err_map;
+> @@ -207,12 +189,8 @@ static void unpin_all_folios(struct udmabuf
+> *ubuf)
+>=20
+>  static __always_inline int init_udmabuf(struct udmabuf *ubuf, pgoff_t
+> pgcnt)
+>  {
+> -	ubuf->folios =3D kvmalloc_objs(*ubuf->folios, pgcnt);
+> -	if (!ubuf->folios)
+> -		return -ENOMEM;
+> -
+> -	ubuf->offsets =3D kvzalloc_objs(*ubuf->offsets, pgcnt);
+> -	if (!ubuf->offsets)
+> +	ubuf->pages =3D kvmalloc_objs(*ubuf->pages, pgcnt);
+> +	if (!ubuf->pages)
+>  		return -ENOMEM;
+>=20
+>  	ubuf->pinned_folios =3D kvmalloc_objs(*ubuf->pinned_folios,
+> pgcnt);
+> @@ -225,8 +203,7 @@ static __always_inline int init_udmabuf(struct
+> udmabuf *ubuf, pgoff_t pgcnt)
+>  static __always_inline void deinit_udmabuf(struct udmabuf *ubuf)
+>  {
+>  	unpin_all_folios(ubuf);
+> -	kvfree(ubuf->offsets);
+> -	kvfree(ubuf->folios);
+> +	kvfree(ubuf->pages);
+>  }
+>=20
+>  static void release_udmabuf(struct dma_buf *buf)
+> @@ -344,8 +321,8 @@ static long udmabuf_pin_folios(struct udmabuf
+> *ubuf, struct file *memfd,
+>  		ubuf->pinned_folios[nr_pinned++] =3D folios[cur_folio];
+>=20
+>  		for (; subpgoff < fsize; subpgoff +=3D PAGE_SIZE) {
+> -			ubuf->folios[upgcnt] =3D folios[cur_folio];
+> -			ubuf->offsets[upgcnt] =3D subpgoff;
+> +			ubuf->pages[upgcnt] =3D folio_page(folios[cur_folio],
+> +						subpgoff >> PAGE_SHIFT);
+>  			++upgcnt;
+LGTM.
+Reviewed-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 
-I am guessing that it broke some type of build, and so I figured it was
-safer to just drop them all.  I'll try it again later today, sorry about
-that...
+Thanks,
+Vivek
 
-greg k-h
+>=20
+>  			if (++cur_pgcnt >=3D pgcnt)
+>=20
+> base-commit: 1f318b96cc84d7c2ab792fcc0bfd42a7ca890681
+> --
+> 2.43.0
+
