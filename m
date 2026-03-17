@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64F25336EF1;
-	Tue, 17 Mar 2026 17:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C90A3368AE;
+	Tue, 17 Mar 2026 17:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768562; cv=none; b=htj/IqqlKQsqRkA7mOwS3KIlK2CHgSsvZNeZrgT0CmrUGxuX/4qsvkStW8tUBUkcFLbW4poAtqlE9FR5NcvFXU9P5Nl4y4DBfyGP9Siiqi5ToFJAmGc2iPDFpbyuK6jaKs1jWCrLpGspJ8GBnZishnL0Wraa3AIfQLV9KXIVKVw=
+	t=1773768566; cv=none; b=i4gNen1kLSUf+O4f38e2ju6ION9fyQK6+dcgqPhWsB5NTdpSATmN4kBf3YEG0yqL63rSvkHPkIG4BU+S6UeA5Ljyi2Wg4QNn6nyqOLKNzfiiy8rVuX/hwLwbC3Zh3Yq/7xWiUES5lYlSNTX0bj/rrGWMGm5jaTDpf758L5mQbFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768562; c=relaxed/simple;
-	bh=tc6ZTO5YyQ1kEimiT+Ie5LPo2fGI0Lvb5WyuM4sHC/A=;
+	s=arc-20240116; t=1773768566; c=relaxed/simple;
+	bh=YG+K6mnP/NJjJcGCe2EvWyosqsj9m6KhmhA3lycg9GY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BAYqDQLVAUJX7xeTi1cVFwQagZ2OgvBRohQVRRrS8UIKWvLLucSWPq7aWLa+j/TMRBS/zv7EQq+62pyVM8+gg+mN/yBsq2tFnme6BSuMpwaVTjtAs3IR2I+WnV0fGSgCieCZI/8sPY3OYTindPOIMCjt0FU+w6H30kzgOQ84NR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xuMf6xll; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmcP3KaOPs3A+DSbGKNgsthLfb2eV1N8o21m6YH9v9Gi1Lyi2d62AJstu2i3oxuHCkLJbXLTuZixx+Lf1GsRdk4xyWYCEL6ut+25cyFwaviUOPCTT+DL4HzEGWXpC3wamc5RmGQlyQjVgxA0vWE7fe24xL3DLKaYPI6a/j7yFlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZK7fvm6Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xuMf6xll"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F305C4CEF7;
-	Tue, 17 Mar 2026 17:29:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZK7fvm6Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB39C4CEF7;
+	Tue, 17 Mar 2026 17:29:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768562;
-	bh=tc6ZTO5YyQ1kEimiT+Ie5LPo2fGI0Lvb5WyuM4sHC/A=;
+	s=korg; t=1773768565;
+	bh=YG+K6mnP/NJjJcGCe2EvWyosqsj9m6KhmhA3lycg9GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xuMf6xllB0cpmKGwQIKp3izRAG6kiA1A6rWgJt1Y2EUU/0D5ONMxp6KoC24VaMDQW
-	 xVdZb7ijpFeU5nlIcWYvxrtjWETneCv1eqZ1kIuftErYAaJqPPdQzv5i3bm5pZ7kHs
-	 IBtq8q2OnWLBeJlwCv9eke8wCv+S5OWVcr49ub1k=
+	b=ZK7fvm6ZWBxQ2RPA3mjQNLpl9+4nYZgeDrWjaDgvRSaqlwfJGVm5PDYHeXzuPVhQE
+	 CqFncIY2nlEu1v2UeVKg+shozLZT0ISynWA9sCYfvrsWrxitj3HhtbNppKbJydYUNi
+	 UTiZ9wof9IUFWbKIHwjAFTBqUuLmfAeEbP9Mjl7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com,
-	Marc Zyngier <maz@kernel.org>,
+	"Naveen N Rao (AMD)" <naveen@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 322/333] KVM: arm64: Eagerly init vgic dist/redist on vgic creation
-Date: Tue, 17 Mar 2026 17:35:51 +0100
-Message-ID: <20260317163011.340998783@linuxfoundation.org>
+Subject: [PATCH 6.18 323/333] KVM: SVM: Limit AVIC physical max index based on configured max_vcpu_ids
+Date: Tue, 17 Mar 2026 17:35:52 +0100
+Message-ID: <20260317163011.378665840@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,84 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Naveen N Rao <naveen@kernel.org>
 
-[ Upstream commit ac6769c8f948dff33265c50e524aebf9aa6f1be0 ]
+[ Upstream commit 574ef752d4aea04134bc121294d717f4422c2755 ]
 
-If vgic_allocate_private_irqs_locked() fails for any odd reason,
-we exit kvm_vgic_create() early, leaving dist->rd_regions uninitialised.
+KVM allows VMMs to specify the maximum possible APIC ID for a virtual
+machine through KVM_CAP_MAX_VCPU_ID capability so as to limit data
+structures related to APIC/x2APIC. Utilize the same to set the AVIC
+physical max index in the VMCB, similar to VMX. This helps hardware
+limit the number of entries to be scanned in the physical APIC ID table
+speeding up IPI broadcasts for virtual machines with smaller number of
+vCPUs.
 
-kvm_vgic_dist_destroy() then comes along and walks into the weeds
-trying to free the RDs. Got to love this stuff.
+Unlike VMX, SVM AVIC requires a single page to be allocated for the
+Physical APIC ID table and the Logical APIC ID table, so retain the
+existing approach of allocating those during VM init.
 
-Solve it by moving all the static initialisation early, and make
-sure that if we fail halfway, we're in a reasonable shape to
-perform the rest of the teardown. While at it, reset the vgic model
-on failure, just in case...
-
-Reported-by: syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com
-Tested-by: syzbot+f6a46b038fc243ac0175@syzkaller.appspotmail.com
-Fixes: b3aa9283c0c50 ("KVM: arm64: vgic: Hoist SGI/PPI alloc from vgic_init() to kvm_create_vgic()")
-Link: https://lore.kernel.org/r/69a2d58c.050a0220.3a55be.003b.GAE@google.com
-Link: https://patch.msgid.link/20260228164559.936268-1-maz@kernel.org
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
+Link: https://lore.kernel.org/r/adb07ccdb3394cd79cb372ba6bcc69a4e4d4ef54.1757009416.git.naveen@kernel.org
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 87d0f901a9bd ("KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-init.c |   32 ++++++++++++++++----------------
- 1 file changed, 16 insertions(+), 16 deletions(-)
+ arch/x86/kvm/svm/avic.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-init.c
-+++ b/arch/arm64/kvm/vgic/vgic-init.c
-@@ -143,6 +143,21 @@ int kvm_vgic_create(struct kvm *kvm, u32
- 	kvm->arch.vgic.in_kernel = true;
- 	kvm->arch.vgic.vgic_model = type;
- 	kvm->arch.vgic.implementation_rev = KVM_VGIC_IMP_REV_LATEST;
-+	kvm->arch.vgic.vgic_dist_base = VGIC_ADDR_UNDEF;
-+
-+	aa64pfr0 = kvm_read_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1) & ~ID_AA64PFR0_EL1_GIC;
-+	pfr1 = kvm_read_vm_id_reg(kvm, SYS_ID_PFR1_EL1) & ~ID_PFR1_EL1_GIC;
-+
-+	if (type == KVM_DEV_TYPE_ARM_VGIC_V2) {
-+		kvm->arch.vgic.vgic_cpu_base = VGIC_ADDR_UNDEF;
-+	} else {
-+		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
-+		aa64pfr0 |= SYS_FIELD_PREP_ENUM(ID_AA64PFR0_EL1, GIC, IMP);
-+		pfr1 |= SYS_FIELD_PREP_ENUM(ID_PFR1_EL1, GIC, GICv3);
-+	}
-+
-+	kvm_set_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1, aa64pfr0);
-+	kvm_set_vm_id_reg(kvm, SYS_ID_PFR1_EL1, pfr1);
+--- a/arch/x86/kvm/svm/avic.c
++++ b/arch/x86/kvm/svm/avic.c
+@@ -161,6 +161,7 @@ static void avic_set_x2apic_msr_intercep
+ static void avic_activate_vmcb(struct vcpu_svm *svm)
+ {
+ 	struct vmcb *vmcb = svm->vmcb01.ptr;
++	struct kvm *kvm = svm->vcpu.kvm;
  
- 	kvm_for_each_vcpu(i, vcpu, kvm) {
- 		ret = vgic_allocate_private_irqs_locked(vcpu, type);
-@@ -157,25 +172,10 @@ int kvm_vgic_create(struct kvm *kvm, u32
- 			vgic_cpu->private_irqs = NULL;
- 		}
+ 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
+ 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
+@@ -176,7 +177,8 @@ static void avic_activate_vmcb(struct vc
+ 	 */
+ 	if (x2avic_enabled && apic_x2apic_mode(svm->vcpu.arch.apic)) {
+ 		vmcb->control.int_ctl |= X2APIC_MODE_MASK;
+-		vmcb->control.avic_physical_id |= X2AVIC_MAX_PHYSICAL_ID;
++		vmcb->control.avic_physical_id |= min(kvm->arch.max_vcpu_ids - 1,
++						      X2AVIC_MAX_PHYSICAL_ID);
+ 		/* Disabling MSR intercept for x2APIC registers */
+ 		avic_set_x2apic_msr_interception(svm, false);
+ 	} else {
+@@ -187,7 +189,8 @@ static void avic_activate_vmcb(struct vc
+ 		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
  
-+		kvm->arch.vgic.vgic_model = 0;
- 		goto out_unlock;
+ 		/* For xAVIC and hybrid-xAVIC modes */
+-		vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID;
++		vmcb->control.avic_physical_id |= min(kvm->arch.max_vcpu_ids - 1,
++						      AVIC_MAX_PHYSICAL_ID);
+ 		/* Enabling MSR intercept for x2APIC registers */
+ 		avic_set_x2apic_msr_interception(svm, true);
  	}
- 
--	kvm->arch.vgic.vgic_dist_base = VGIC_ADDR_UNDEF;
--
--	aa64pfr0 = kvm_read_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1) & ~ID_AA64PFR0_EL1_GIC;
--	pfr1 = kvm_read_vm_id_reg(kvm, SYS_ID_PFR1_EL1) & ~ID_PFR1_EL1_GIC;
--
--	if (type == KVM_DEV_TYPE_ARM_VGIC_V2) {
--		kvm->arch.vgic.vgic_cpu_base = VGIC_ADDR_UNDEF;
--	} else {
--		INIT_LIST_HEAD(&kvm->arch.vgic.rd_regions);
--		aa64pfr0 |= SYS_FIELD_PREP_ENUM(ID_AA64PFR0_EL1, GIC, IMP);
--		pfr1 |= SYS_FIELD_PREP_ENUM(ID_PFR1_EL1, GIC, GICv3);
--	}
--
--	kvm_set_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1, aa64pfr0);
--	kvm_set_vm_id_reg(kvm, SYS_ID_PFR1_EL1, pfr1);
--
- 	if (type == KVM_DEV_TYPE_ARM_VGIC_V3)
- 		kvm->arch.vgic.nassgicap = system_supports_direct_sgis();
- 
 
 
