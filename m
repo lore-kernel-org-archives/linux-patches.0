@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE6C3F54C4;
-	Tue, 17 Mar 2026 16:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C953EDADB;
+	Tue, 17 Mar 2026 16:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766294; cv=none; b=l4rEUMzTHJJtjhlH8mmVfrwLtmVEivXTgu+EjlXyg2HB4sfa6pd3haErC0LZbGrQy1Jynhlcy07oSLXOfL/nK6axVGlrkwHz6qZyMLRhvlXXkTF3GxUijaL3zgHS6Si+hF7/mgPBPLKyeQYP7CMCP3vq7iJVdBBijlycgFM3JRE=
+	t=1773766299; cv=none; b=C1q8CuYsv2u1YLoaSNrut4JF+aJ0JkPselwIKNnzmSAztD9O0e5EIYYjAsAE+TMk0B9Ifyr1HtqZbGHDexuJ0ndc5EmByMCgM6HHTPbB7mq/sK4C+MEIlfqoJ3YGuUJ4XgQrejaBk2EGSitTYx8LAlCcgrSJgz+8yMkeP8sS4Io=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766294; c=relaxed/simple;
-	bh=ZzOA64W1bTFuUKkz1MUv0k8hU6pQm6gr3mqqtMKFdQo=;
+	s=arc-20240116; t=1773766299; c=relaxed/simple;
+	bh=89CPsaG7S40w0PQBGl//7B9panRDtVTeZeCB/OZOhbc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tgPmQAQZGhJQfbcvkRGC5A8NTiYDnsHwzyn28dJlRjjXyLae5A8PgD1RMcRZ/Ksj2w1kf01lxaYRpqYHRuuAapFB8RwLdmuuEjr6rkM6V9S04f2J7KA1fAEmpqKad6uVvysg+fFSaz/q0VA5IHyMHlqG3mqeXQo8m/hr/wb+VNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ajm8Um7o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dXv9PWoO2cN36VbS6s0Mq2WJRAxZAZlzOsdiZXTZZ1oqRkh4VBsCXczXZd69AZMljs6LHV3l+9b2tIstdcFSN4LbXaOOivifaG3/+KhagtONBbfyeb1WIPf6HdzKGXZHFStqHSS41yOO4IOUlryKaoKBebL4UohW5Bry/QODHpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQs0Diht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ajm8Um7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD65C4CEF7;
-	Tue, 17 Mar 2026 16:51:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQs0Diht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A22C4CEF7;
+	Tue, 17 Mar 2026 16:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766294;
-	bh=ZzOA64W1bTFuUKkz1MUv0k8hU6pQm6gr3mqqtMKFdQo=;
+	s=korg; t=1773766299;
+	bh=89CPsaG7S40w0PQBGl//7B9panRDtVTeZeCB/OZOhbc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ajm8Um7oHLwvU9NGFqZ/o9mOaP5vhQCOol9Lh45gesXP2Ru+mlDClouxtcZjydjz5
-	 mOZsaolMX2uHvOX9YLdyyB7Orut3C2EtMU6pqyAUqnfWvApMj/8KLu6nLrr5aWXZwf
-	 vmm2/4BSNsqOgLkP3TUw7kpN+PTL0z+WkBb3fL50=
+	b=tQs0Dihtezr5IifKWAuMPQfSfskiEnHuTRXdOX03UpWJOwDvfo4lRxVP+ZyA75Uog
+	 bGshKWpcd8NF9iefWEavG85IBag2TtgLIA/a411vVhDgxsHa09DOrzMT17TxbFzAn1
+	 FT3w2oSc3FRNPOspPjLNUW+gvrAajHArg2C1qAhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.19 213/378] nsfs: tighten permission checks for ns iteration ioctls
-Date: Tue, 17 Mar 2026 17:32:50 +0100
-Message-ID: <20260317163014.844304463@linuxfoundation.org>
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.19 214/378] liveupdate: luo_file: remember retrieve() status
+Date: Tue, 17 Mar 2026 17:32:51 +0100
+Message-ID: <20260317163014.882532487@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,78 +52,208 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Brauner <brauner@kernel.org>
+From: Pratyush Yadav (Google) <pratyush@kernel.org>
 
-commit e6b899f08066e744f89df16ceb782e06868bd148 upstream.
+commit f85b1c6af5bc3872f994df0a5688c1162de07a62 upstream.
 
-Even privileged services should not necessarily be able to see other
-privileged service's namespaces so they can't leak information to each
-other. Use may_see_all_namespaces() helper that centralizes this policy
-until the nstree adapts.
+LUO keeps track of successful retrieve attempts on a LUO file.  It does so
+to avoid multiple retrievals of the same file.  Multiple retrievals cause
+problems because once the file is retrieved, the serialized data
+structures are likely freed and the file is likely in a very different
+state from what the code expects.
 
-Link: https://patch.msgid.link/20260226-work-visibility-fixes-v1-1-d2c2853313bd@kernel.org
-Fixes: a1d220d9dafa ("nsfs: iterate through mount namespaces")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@kernel.org # v6.12+
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+The retrieve boolean in struct luo_file keeps track of this, and is passed
+to the finish callback so it knows what work was already done and what it
+has left to do.
+
+All this works well when retrieve succeeds.  When it fails,
+luo_retrieve_file() returns the error immediately, without ever storing
+anywhere that a retrieve was attempted or what its error code was.  This
+results in an errored LIVEUPDATE_SESSION_RETRIEVE_FD ioctl to userspace,
+but nothing prevents it from trying this again.
+
+The retry is problematic for much of the same reasons listed above.  The
+file is likely in a very different state than what the retrieve logic
+normally expects, and it might even have freed some serialization data
+structures.  Attempting to access them or free them again is going to
+break things.
+
+For example, if memfd managed to restore 8 of its 10 folios, but fails on
+the 9th, a subsequent retrieve attempt will try to call
+kho_restore_folio() on the first folio again, and that will fail with a
+warning since it is an invalid operation.
+
+Apart from the retry, finish() also breaks.  Since on failure the
+retrieved bool in luo_file is never touched, the finish() call on session
+close will tell the file handler that retrieve was never attempted, and it
+will try to access or free the data structures that might not exist, much
+in the same way as the retry attempt.
+
+There is no sane way of attempting the retrieve again.  Remember the error
+retrieve returned and directly return it on a retry.  Also pass this
+status code to finish() so it can make the right decision on the work it
+needs to do.
+
+This is done by changing the bool to an integer.  A value of 0 means
+retrieve was never attempted, a positive value means it succeeded, and a
+negative value means it failed and the error code is the value.
+
+Link: https://lkml.kernel.org/r/20260216132221.987987-1-pratyush@kernel.org
+Fixes: 7c722a7f44e0 ("liveupdate: luo_file: implement file systems callbacks")
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nsfs.c                 |   13 +++++++++++++
- include/linux/ns_common.h |    2 ++
- kernel/nscommon.c         |    6 ++++++
- 3 files changed, 21 insertions(+)
+ include/linux/liveupdate.h   |    9 ++++++---
+ kernel/liveupdate/luo_file.c |   41 +++++++++++++++++++++++++----------------
+ mm/memfd_luo.c               |    7 ++++++-
+ 3 files changed, 37 insertions(+), 20 deletions(-)
 
---- a/fs/nsfs.c
-+++ b/fs/nsfs.c
-@@ -186,6 +186,17 @@ static bool nsfs_ioctl_valid(unsigned in
- 	return false;
- }
+--- a/include/linux/liveupdate.h
++++ b/include/linux/liveupdate.h
+@@ -20,8 +20,11 @@ struct file;
+ /**
+  * struct liveupdate_file_op_args - Arguments for file operation callbacks.
+  * @handler:          The file handler being called.
+- * @retrieved:        The retrieve status for the 'can_finish / finish'
+- *                    operation.
++ * @retrieve_status:  The retrieve status for the 'can_finish / finish'
++ *                    operation. A value of 0 means the retrieve has not been
++ *                    attempted, a positive value means the retrieve was
++ *                    successful, and a negative value means the retrieve failed,
++ *                    and the value is the error code of the call.
+  * @file:             The file object. For retrieve: [OUT] The callback sets
+  *                    this to the new file. For other ops: [IN] The caller sets
+  *                    this to the file being operated on.
+@@ -37,7 +40,7 @@ struct file;
+  */
+ struct liveupdate_file_op_args {
+ 	struct liveupdate_file_handler *handler;
+-	bool retrieved;
++	int retrieve_status;
+ 	struct file *file;
+ 	u64 serialized_data;
+ 	void *private_data;
+--- a/kernel/liveupdate/luo_file.c
++++ b/kernel/liveupdate/luo_file.c
+@@ -133,9 +133,12 @@ static LIST_HEAD(luo_file_handler_list);
+  *                 state that is not preserved. Set by the handler's .preserve()
+  *                 callback, and must be freed in the handler's .unpreserve()
+  *                 callback.
+- * @retrieved:     A flag indicating whether a user/kernel in the new kernel has
++ * @retrieve_status: Status code indicating whether a user/kernel in the new kernel has
+  *                 successfully called retrieve() on this file. This prevents
+- *                 multiple retrieval attempts.
++ *                 multiple retrieval attempts. A value of 0 means a retrieve()
++ *                 has not been attempted, a positive value means the retrieve()
++ *                 was successful, and a negative value means the retrieve()
++ *                 failed, and the value is the error code of the call.
+  * @mutex:         A mutex that protects the fields of this specific instance
+  *                 (e.g., @retrieved, @file), ensuring that operations like
+  *                 retrieving or finishing a file are atomic.
+@@ -160,7 +163,7 @@ struct luo_file {
+ 	struct file *file;
+ 	u64 serialized_data;
+ 	void *private_data;
+-	bool retrieved;
++	int retrieve_status;
+ 	struct mutex mutex;
+ 	struct list_head list;
+ 	u64 token;
+@@ -293,7 +296,6 @@ int luo_preserve_file(struct luo_file_se
+ 	luo_file->file = file;
+ 	luo_file->fh = fh;
+ 	luo_file->token = token;
+-	luo_file->retrieved = false;
+ 	mutex_init(&luo_file->mutex);
  
-+static bool may_use_nsfs_ioctl(unsigned int cmd)
-+{
-+	switch (_IOC_NR(cmd)) {
-+	case _IOC_NR(NS_MNT_GET_NEXT):
-+		fallthrough;
-+	case _IOC_NR(NS_MNT_GET_PREV):
-+		return may_see_all_namespaces();
+ 	args.handler = fh;
+@@ -569,7 +571,12 @@ int luo_retrieve_file(struct luo_file_se
+ 		return -ENOENT;
+ 
+ 	guard(mutex)(&luo_file->mutex);
+-	if (luo_file->retrieved) {
++	if (luo_file->retrieve_status < 0) {
++		/* Retrieve was attempted and it failed. Return the error code. */
++		return luo_file->retrieve_status;
 +	}
-+	return true;
-+}
 +
- static long ns_ioctl(struct file *filp, unsigned int ioctl,
- 			unsigned long arg)
- {
-@@ -201,6 +212,8 @@ static long ns_ioctl(struct file *filp,
- 
- 	if (!nsfs_ioctl_valid(ioctl))
- 		return -ENOIOCTLCMD;
-+	if (!may_use_nsfs_ioctl(ioctl))
-+		return -EPERM;
- 
- 	ns = get_proc_ns(file_inode(filp));
- 	switch (ioctl) {
---- a/include/linux/ns_common.h
-+++ b/include/linux/ns_common.h
-@@ -55,6 +55,8 @@ static __always_inline bool is_ns_init_i
- 
- #define ns_common_free(__ns) __ns_common_free(to_ns_common((__ns)))
- 
-+bool may_see_all_namespaces(void);
-+
- static __always_inline __must_check int __ns_ref_active_read(const struct ns_common *ns)
- {
- 	return atomic_read(&ns->__ns_ref_active);
---- a/kernel/nscommon.c
-+++ b/kernel/nscommon.c
-@@ -309,3 +309,9 @@ void __ns_ref_active_get(struct ns_commo
- 			return;
++	if (luo_file->retrieve_status > 0) {
+ 		/*
+ 		 * Someone is asking for this file again, so get a reference
+ 		 * for them.
+@@ -582,16 +589,19 @@ int luo_retrieve_file(struct luo_file_se
+ 	args.handler = luo_file->fh;
+ 	args.serialized_data = luo_file->serialized_data;
+ 	err = luo_file->fh->ops->retrieve(&args);
+-	if (!err) {
+-		luo_file->file = args.file;
+-
+-		/* Get reference so we can keep this file in LUO until finish */
+-		get_file(luo_file->file);
+-		*filep = luo_file->file;
+-		luo_file->retrieved = true;
++	if (err) {
++		/* Keep the error code for later use. */
++		luo_file->retrieve_status = err;
++		return err;
  	}
- }
+ 
+-	return err;
++	luo_file->file = args.file;
++	/* Get reference so we can keep this file in LUO until finish */
++	get_file(luo_file->file);
++	*filep = luo_file->file;
++	luo_file->retrieve_status = 1;
 +
-+bool may_see_all_namespaces(void)
-+{
-+	return (task_active_pid_ns(current) == &init_pid_ns) &&
-+	       ns_capable_noaudit(init_pid_ns.user_ns, CAP_SYS_ADMIN);
-+}
++	return 0;
+ }
+ 
+ static int luo_file_can_finish_one(struct luo_file_set *file_set,
+@@ -607,7 +617,7 @@ static int luo_file_can_finish_one(struc
+ 		args.handler = luo_file->fh;
+ 		args.file = luo_file->file;
+ 		args.serialized_data = luo_file->serialized_data;
+-		args.retrieved = luo_file->retrieved;
++		args.retrieve_status = luo_file->retrieve_status;
+ 		can_finish = luo_file->fh->ops->can_finish(&args);
+ 	}
+ 
+@@ -624,7 +634,7 @@ static void luo_file_finish_one(struct l
+ 	args.handler = luo_file->fh;
+ 	args.file = luo_file->file;
+ 	args.serialized_data = luo_file->serialized_data;
+-	args.retrieved = luo_file->retrieved;
++	args.retrieve_status = luo_file->retrieve_status;
+ 
+ 	luo_file->fh->ops->finish(&args);
+ }
+@@ -779,7 +789,6 @@ int luo_file_deserialize(struct luo_file
+ 		luo_file->file = NULL;
+ 		luo_file->serialized_data = file_ser[i].data;
+ 		luo_file->token = file_ser[i].token;
+-		luo_file->retrieved = false;
+ 		mutex_init(&luo_file->mutex);
+ 		list_add_tail(&luo_file->list, &file_set->files_list);
+ 	}
+--- a/mm/memfd_luo.c
++++ b/mm/memfd_luo.c
+@@ -326,7 +326,12 @@ static void memfd_luo_finish(struct live
+ 	struct memfd_luo_folio_ser *folios_ser;
+ 	struct memfd_luo_ser *ser;
+ 
+-	if (args->retrieved)
++	/*
++	 * If retrieve was successful, nothing to do. If it failed, retrieve()
++	 * already cleaned up everything it could. So nothing to do there
++	 * either. Only need to clean up when retrieve was not called.
++	 */
++	if (args->retrieve_status)
+ 		return;
+ 
+ 	ser = phys_to_virt(args->serialized_data);
 
 
