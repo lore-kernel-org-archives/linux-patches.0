@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FF2E3F23B3;
-	Tue, 17 Mar 2026 16:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92393F23B3;
+	Tue, 17 Mar 2026 16:59:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766757; cv=none; b=pYB6NpAn9zV9C/ebVfgiFTGJNtScfBkUcZ5q6GF6YkGa4JNxL3EbEH5gFh0ui4QQ7q9HSbK7ncF9VRBxDBGhZ5c3jWn/wo9s8WDLCjrmc7URIZQ9BAFBKJcHTRcOtmC/qJ52XQWpubYaLhUV0h9Jt9aHIzXL70DJrc1tL+bnYQk=
+	t=1773766761; cv=none; b=Flb95O6VmxDv2Z3EZtt27W/7ZzHadWu8hSIC0OD6voGkWZXv+PaPHdiY0vpttKxNUpdUy7GHdv3ieZZI5cRtOQ8IKn8zsxm6umVGubY1WLrpdrF+1nbPniauJ54uDndfhSt77cgf/lJJEpINHs1Yil+qIjKpKr9uMzYxFRkVMZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766757; c=relaxed/simple;
-	bh=GzuUF3fo4JHBL4PQ7Swhx90oUp+HnHBzKWdRoF9daO8=;
+	s=arc-20240116; t=1773766761; c=relaxed/simple;
+	bh=VXD1vzjG817AaMyFHHf2NDX/Dcy4H7XTZnQl2CXbN2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NZouWXTN64EVVlnHc2ntELKnJNJmTDwTXHFkSj/pP8iqrxlF6nDSVB098ce4CVEj0ep2+mFeLlm5iVCXLX3yMig7eBgGl+6mBtKSELGu60i0ytX+bTTKXPQl7354pWvbVJVNL9Z5/K9ZZ3yDO2Ie5KDt9+3vhhej7LL5wiKBHiQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J43ZBR1N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nxeoT5LYReIeEhhtvTY35ypY1JlvwO2YxXlgXCf349bNqwdzkylQQsFbQPnLKhHMnJT+9ZV9tqXMLGbCbXn7PdSfROu3jmiM7ttrTqwR/+3IlZgJHMhvhfnNzjpqtM7yklYsIQYA/KdT3XSVZAoaOLey1kRel0aiIYSHF40GDxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hMZEv6Xg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J43ZBR1N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DC8C2BC86;
-	Tue, 17 Mar 2026 16:59:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hMZEv6Xg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD3A3C4CEF7;
+	Tue, 17 Mar 2026 16:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766757;
-	bh=GzuUF3fo4JHBL4PQ7Swhx90oUp+HnHBzKWdRoF9daO8=;
+	s=korg; t=1773766761;
+	bh=VXD1vzjG817AaMyFHHf2NDX/Dcy4H7XTZnQl2CXbN2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J43ZBR1NZTXqvHy5uwuBdr9HBjL5GGrOkJbux2H0HQMFeuUrXPtdQmAGqSs6zNDbU
-	 L/xzh4FpszdittbxX/4XvkS9bbdW70sp8S50QxA5ZIPciasremWEgG02ZjSTJlsbDq
-	 yp8KkE1eReoyigVhLCkz7Bjuf8hQIaivL5Wg4iZQ=
+	b=hMZEv6XgKS0nBb9AzJK48KxceglS/y5kwJQcQ2u9YGTBE5XMGHa18wNt1IhTql1QM
+	 uXgr9dT45SNWV4qzdXwmO/oVjb9lOXBVsLC/Ka1RZD70uyIrDlMAMHZFMuPMlWJl9M
+	 QX+MKmwsI8mmK01ggn7FFCbHjxJQEVSOPRIS/uTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koen Vandeputte <koen.vandeputte@citymesh.com>,
-	Daniele Palmas <dnlplm@gmail.com>,
-	Laurent Vivier <lvivier@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 315/378] qmi_wwan: allow max_mtu above hard_mtu to control rx_urb_size
-Date: Tue, 17 Mar 2026 17:34:32 +0100
-Message-ID: <20260317163018.582300507@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	stable@kernel.org,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.19 316/378] can: dev: keep the max bitrate error at 5%
+Date: Tue, 17 Mar 2026 17:34:33 +0100
+Message-ID: <20260317163018.618383806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,90 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Laurent Vivier <lvivier@redhat.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 55f854dd5bdd8e19b936a00ef1f8d776ac32c7b0 upstream.
+commit 1eea46908c57abb7109b1fce024f366ae6c69c4f upstream.
 
-Commit c7159e960f14 ("usbnet: limit max_mtu based on device's hard_mtu")
-capped net->max_mtu to the device's hard_mtu in usbnet_probe(). While
-this correctly prevents oversized packets on standard USB network
-devices, it breaks the qmi_wwan driver.
+Commit b360a13d44db ("can: dev: print bitrate error with two decimal
+digits") changed calculation of the bit rate error from on-tenth of a
+percent to on-hundredth of a percent, but forgot to adjust the scale of the
+CAN_CALC_MAX_ERROR constant.
 
-qmi_wwan relies on userspace (e.g. ModemManager) setting a large MTU on
-the wwan0 interface to configure rx_urb_size via usbnet_change_mtu().
-QMI modems negotiate USB transfer sizes of 16,383 or 32,767 bytes, and
-the USB receive buffers must be sized accordingly. With max_mtu capped
-to hard_mtu (~1500 bytes), userspace can no longer raise the MTU, the
-receive buffers remain small, and download speeds drop from >300 Mbps
-to ~0.8 Mbps.
+Keeping the existing logic unchanged: Only when the bitrate error exceeds
+5% should an error be returned. Otherwise, simply output a warning log.
 
-Introduce a FLAG_NOMAXMTU driver flag that allows individual usbnet
-drivers to opt out of the max_mtu cap. Set this flag in qmi_wwan's
-driver_info structures to restore the previous behavior for QMI devices,
-while keeping the safety fix in place for all other usbnet drivers.
-
-Fixes: c7159e960f14 ("usbnet: limit max_mtu based on device's hard_mtu")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/lkml/CAPh3n803k8JcBPV5qEzUB-oKzWkAs-D5CU7z=Vd_nLRCr5ZqQg@mail.gmail.com/
-Reported-by: Koen Vandeputte <koen.vandeputte@citymesh.com>
-Tested-by: Daniele Palmas <dnlplm@gmail.com>
-Signed-off-by: Laurent Vivier <lvivier@redhat.com>
-Link: https://patch.msgid.link/20260304134338.1785002-1-lvivier@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b360a13d44db ("can: dev: print bitrate error with two decimal digits")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://patch.msgid.link/20260306-can-fix-v1-1-ac526cec6777@nxp.com
+Cc: stable@kernel.org
+[mkl: improve commit message]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/qmi_wwan.c |    4 ++--
- drivers/net/usb/usbnet.c   |    7 ++++---
- include/linux/usb/usbnet.h |    1 +
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/can/dev/calc_bittiming.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/qmi_wwan.c
-+++ b/drivers/net/usb/qmi_wwan.c
-@@ -928,7 +928,7 @@ err:
+diff --git a/drivers/net/can/dev/calc_bittiming.c b/drivers/net/can/dev/calc_bittiming.c
+index cc4022241553..42498e9d3f38 100644
+--- a/drivers/net/can/dev/calc_bittiming.c
++++ b/drivers/net/can/dev/calc_bittiming.c
+@@ -8,7 +8,7 @@
+ #include <linux/units.h>
+ #include <linux/can/dev.h>
  
- static const struct driver_info	qmi_wwan_info = {
- 	.description	= "WWAN/QMI device",
--	.flags		= FLAG_WWAN | FLAG_SEND_ZLP,
-+	.flags		= FLAG_WWAN | FLAG_NOMAXMTU | FLAG_SEND_ZLP,
- 	.bind		= qmi_wwan_bind,
- 	.unbind		= qmi_wwan_unbind,
- 	.manage_power	= qmi_wwan_manage_power,
-@@ -937,7 +937,7 @@ static const struct driver_info	qmi_wwan
+-#define CAN_CALC_MAX_ERROR 50 /* in one-tenth of a percent */
++#define CAN_CALC_MAX_ERROR 500 /* max error 5% */
  
- static const struct driver_info	qmi_wwan_info_quirk_dtr = {
- 	.description	= "WWAN/QMI device",
--	.flags		= FLAG_WWAN | FLAG_SEND_ZLP,
-+	.flags		= FLAG_WWAN | FLAG_NOMAXMTU | FLAG_SEND_ZLP,
- 	.bind		= qmi_wwan_bind,
- 	.unbind		= qmi_wwan_unbind,
- 	.manage_power	= qmi_wwan_manage_power,
---- a/drivers/net/usb/usbnet.c
-+++ b/drivers/net/usb/usbnet.c
-@@ -1821,11 +1821,12 @@ usbnet_probe(struct usb_interface *udev,
- 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
- 			net->flags |= IFF_NOARP;
- 
--		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
-+		if ((dev->driver_info->flags & FLAG_NOMAXMTU) == 0 &&
-+		    net->max_mtu > (dev->hard_mtu - net->hard_header_len))
- 			net->max_mtu = dev->hard_mtu - net->hard_header_len;
- 
--		if (net->mtu > net->max_mtu)
--			net->mtu = net->max_mtu;
-+		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
-+			net->mtu = dev->hard_mtu - net->hard_header_len;
- 
- 	} else if (!info->in || !info->out)
- 		status = usbnet_get_endpoints(dev, udev);
---- a/include/linux/usb/usbnet.h
-+++ b/include/linux/usb/usbnet.h
-@@ -132,6 +132,7 @@ struct driver_info {
- #define FLAG_MULTI_PACKET	0x2000
- #define FLAG_RX_ASSEMBLE	0x4000	/* rx packets may span >1 frames */
- #define FLAG_NOARP		0x8000	/* device can't do ARP */
-+#define FLAG_NOMAXMTU		0x10000	/* allow max_mtu above hard_mtu */
- 
- 	/* init device ... can sleep, or cause probe() failure */
- 	int	(*bind)(struct usbnet *, struct usb_interface *);
+ /* CiA recommended sample points for Non Return to Zero encoding. */
+ static int can_calc_sample_point_nrz(const struct can_bittiming *bt)
+-- 
+2.53.0
+
 
 
