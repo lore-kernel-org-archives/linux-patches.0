@@ -1,38 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 686E83F54A6;
-	Tue, 17 Mar 2026 16:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74BC3F23AA;
+	Tue, 17 Mar 2026 16:49:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766145; cv=none; b=Qed2KFb0aNBWyX5+mHVMWtbvzBlw6QYjufL997EOozX34fxhHHRS8x8mt4IkSNA0dx1nxcNAwMRJuoJdErT8AFOwsbXkrPPCnykN2Z9i2vny5EG9JonswTPx2PBCDoydNckup+ns7A7jGWveY+GvrRVT5f5W3bvWQbheJdO9mZk=
+	t=1773766149; cv=none; b=uh7FZ24qUJGsz1ZtFwrpJidjDHPr4K2EbcLDUdkvjA5MUQD9woxfiYOS7RKqvlCisB2S0dh4hYyKme3F+Sc0Ur2rTqb2Yzi8PngRSmtbGqQaEGwmVcJedli6jVzqVqCr8olMSHu+6yLInC/Q48knKe1+2Dwyb8+rHwzoVbzSQq8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766145; c=relaxed/simple;
-	bh=l3injB/bLXU277XZDx4vcwyF2nAj1VLJS2L1Py2HUhQ=;
+	s=arc-20240116; t=1773766149; c=relaxed/simple;
+	bh=aGXVHIrRuzHftgSKHICeXlbXMdjDBDLdrO3PN2nPrZ4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GqTLPzZTxgIDef5ffu2PRnDt/POKjIBxKi/welnIsjHP61sA+QAUUXmcsOWO9C07x25tMrDACIdTWv884612Z0lp5HqzAcFz6KsxM2wSd8OU3JepHQjrYunJqTsBCjFIlXl86XSEWe1h36D1OGPMo8qdWRRa0xj3535KZOe7+KA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UPr6zIUM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfYJD3HQ29mM9KMTfA4+uLv71T3UeYaaeGbSpQe65neTkkZTxlaYk/J+UjLmML6q5UB9OvewL0ZJ/EdxuTXUjdtLAu3Gn0EEA6pbAa3Cyb0xo1rQLDK+iVHfuA+wcOsLP3b4l2xkGvOEYgIEOO6mzw5O7cJcCC8pnF3d21XeW1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkAC7frI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UPr6zIUM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CF2C2BCB0;
-	Tue, 17 Mar 2026 16:49:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkAC7frI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBA7C4CEF7;
+	Tue, 17 Mar 2026 16:49:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766145;
-	bh=l3injB/bLXU277XZDx4vcwyF2nAj1VLJS2L1Py2HUhQ=;
+	s=korg; t=1773766149;
+	bh=aGXVHIrRuzHftgSKHICeXlbXMdjDBDLdrO3PN2nPrZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPr6zIUMnypb1YPDkZprJNTCrsiAtKk3FUVaeD+p9Vm3vptXnbnr/V0cU4FhAp+3v
-	 Cv3oc3RllArzY6yZSigWEHprGtyLJqIFGItryep1qc8fZklIrR7BwxJ9R9HdE8CELi
-	 a8cZTaeRxnYIDrg+I/EHX3sFHn4chlLQgfkBJd+c=
+	b=FkAC7frI9K0/DejLybS+atGNwVfpxKHQPWMhmOlmzph4a76ZltEq+WZU2e6CwMfcW
+	 GR27qLGmcBadXg9/QKLKTlXN+zCYkEJAQCursr/PWuoWsNIAEYkkmi8wiL/9zcptm8
+	 qbw5SoXIkc1j+b/kr1Bcj1lEAMX68Lxy6U/2hk64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+	Nick Hu <nick.hu@sifive.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
+	Cyan Yang <cyan.yang@sifive.com>,
+	Nutty Liu <liujingqi@lanxincomputing.com>,
+	Anup Patel <anup@brainfault.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 180/378] objtool: Fix another stack overflow in validate_branch()
-Date: Tue, 17 Mar 2026 17:32:17 +0100
-Message-ID: <20260317163013.630659940@linuxfoundation.org>
+Subject: [PATCH 6.19 181/378] irqchip/riscv-aplic: Preserve APLIC states across suspend/resume
+Date: Tue, 17 Mar 2026 17:32:18 +0100
+Message-ID: <20260317163013.667252295@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,77 +55,326 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: Nick Hu <nick.hu@sifive.com>
 
-[ Upstream commit 9a73f085dc91980ab7fcc5e9716f4449424b3b59 ]
+[ Upstream commit 95a8ddde36601d0a645475fb080ed118db59c8c3 ]
 
-The insn state is getting saved on the stack twice for each recursive
-iteration.  No need for that, once is enough.
+The APLIC states might be reset when the platform enters a low power
+state, but the register states are not being preserved and restored,
+which prevents interrupt delivery after the platform resumes.
+Solve this by adding a syscore ops and a power management notifier to
+preserve and restore the APLIC states on suspend and resume.
 
-Fixes the following reported stack overflow:
+[ tglx: Folded the build fix provided by Geert ]
 
-  drivers/scsi/qla2xxx/qla_dbg.o: error: SIGSEGV: objtool stack overflow!
-  Segmentation fault
-
-Fixes: 70589843b36f ("objtool: Add option to trace function validation")
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/90956545-2066-46e3-b547-10c884582eb0@app.fastmail.com
-Link: https://patch.msgid.link/8b97f62d083457f3b0a29a424275f7957dd3372f.1772821683.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Nick Hu <nick.hu@sifive.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
+Reviewed-by: Cyan Yang <cyan.yang@sifive.com>
+Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
+Reviewed-by: Anup Patel <anup@brainfault.org>
+Link: https://patch.msgid.link/20251202-preserve-aplic-imsic-v3-2-1844fbf1fe92@sifive.com
+Stable-dep-of: 620b6ded72a7 ("irqchip/riscv-aplic: Do not clear ACPI dependencies on probe failure")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/irqchip/irq-riscv-aplic-direct.c |  10 ++
+ drivers/irqchip/irq-riscv-aplic-main.c   | 170 ++++++++++++++++++++++-
+ drivers/irqchip/irq-riscv-aplic-main.h   |  19 +++
+ 3 files changed, 198 insertions(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 37ec0d757e9b1..eba35bb8c0bdf 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -3694,7 +3694,7 @@ static void checksum_update_insn(struct objtool_file *file, struct symbol *func,
- static int validate_branch(struct objtool_file *file, struct symbol *func,
- 			   struct instruction *insn, struct insn_state state);
- static int do_validate_branch(struct objtool_file *file, struct symbol *func,
--			      struct instruction *insn, struct insn_state state);
-+			      struct instruction *insn, struct insn_state *state);
+diff --git a/drivers/irqchip/irq-riscv-aplic-direct.c b/drivers/irqchip/irq-riscv-aplic-direct.c
+index c2a75bf3d20c6..5a9650225dd80 100644
+--- a/drivers/irqchip/irq-riscv-aplic-direct.c
++++ b/drivers/irqchip/irq-riscv-aplic-direct.c
+@@ -8,6 +8,7 @@
+ #include <linux/bitfield.h>
+ #include <linux/bitops.h>
+ #include <linux/cpu.h>
++#include <linux/cpumask.h>
+ #include <linux/interrupt.h>
+ #include <linux/irqchip.h>
+ #include <linux/irqchip/chained_irq.h>
+@@ -171,6 +172,15 @@ static void aplic_idc_set_delivery(struct aplic_idc *idc, bool en)
+ 	writel(de, idc->regs + APLIC_IDC_IDELIVERY);
+ }
  
- static int validate_insn(struct objtool_file *file, struct symbol *func,
- 			 struct instruction *insn, struct insn_state *statep,
-@@ -3959,7 +3959,7 @@ static int validate_insn(struct objtool_file *file, struct symbol *func,
-  * tools/objtool/Documentation/objtool.txt.
-  */
- static int do_validate_branch(struct objtool_file *file, struct symbol *func,
--			      struct instruction *insn, struct insn_state state)
-+			      struct instruction *insn, struct insn_state *state)
++void aplic_direct_restore_states(struct aplic_priv *priv)
++{
++	struct aplic_direct *direct = container_of(priv, struct aplic_direct, priv);
++	int cpu;
++
++	for_each_cpu(cpu, &direct->lmask)
++		aplic_idc_set_delivery(per_cpu_ptr(&aplic_idcs, cpu), true);
++}
++
+ static int aplic_direct_dying_cpu(unsigned int cpu)
  {
- 	struct instruction *next_insn, *prev_insn = NULL;
- 	bool dead_end;
-@@ -3990,7 +3990,7 @@ static int do_validate_branch(struct objtool_file *file, struct symbol *func,
- 			return 1;
- 		}
+ 	if (aplic_direct_parent_irq)
+diff --git a/drivers/irqchip/irq-riscv-aplic-main.c b/drivers/irqchip/irq-riscv-aplic-main.c
+index 93e7c51f944ab..4495ca26abf57 100644
+--- a/drivers/irqchip/irq-riscv-aplic-main.c
++++ b/drivers/irqchip/irq-riscv-aplic-main.c
+@@ -12,10 +12,169 @@
+ #include <linux/of.h>
+ #include <linux/of_irq.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_domain.h>
++#include <linux/pm_runtime.h>
+ #include <linux/printk.h>
++#include <linux/syscore_ops.h>
  
--		ret = validate_insn(file, func, insn, &state, prev_insn, next_insn,
-+		ret = validate_insn(file, func, insn, state, prev_insn, next_insn,
- 				    &dead_end);
+ #include "irq-riscv-aplic-main.h"
  
- 		if (!insn->trace) {
-@@ -4001,7 +4001,7 @@ static int do_validate_branch(struct objtool_file *file, struct symbol *func,
- 		}
++static LIST_HEAD(aplics);
++
++static void aplic_restore_states(struct aplic_priv *priv)
++{
++	struct aplic_saved_regs *saved_regs = &priv->saved_hw_regs;
++	struct aplic_src_ctrl *srcs;
++	void __iomem *regs;
++	u32 nr_irqs, i;
++
++	regs = priv->regs;
++	writel(saved_regs->domaincfg, regs + APLIC_DOMAINCFG);
++#ifdef CONFIG_RISCV_M_MODE
++	writel(saved_regs->msiaddr, regs + APLIC_xMSICFGADDR);
++	writel(saved_regs->msiaddrh, regs + APLIC_xMSICFGADDRH);
++#endif
++	/*
++	 * The sourcecfg[i] has to be restored prior to the target[i], interrupt-pending and
++	 * interrupt-enable bits. The AIA specification states that "Whenever interrupt source i is
++	 * inactive in an interrupt domain, the corresponding interrupt-pending and interrupt-enable
++	 * bits within the domain are read-only zeros, and register target[i] is also read-only
++	 * zero."
++	 */
++	nr_irqs = priv->nr_irqs;
++	for (i = 0; i < nr_irqs; i++) {
++		srcs = &priv->saved_hw_regs.srcs[i];
++		writel(srcs->sourcecfg, regs + APLIC_SOURCECFG_BASE + i * sizeof(u32));
++		writel(srcs->target, regs + APLIC_TARGET_BASE + i * sizeof(u32));
++	}
++
++	for (i = 0; i <= nr_irqs; i += 32) {
++		srcs = &priv->saved_hw_regs.srcs[i];
++		writel(-1U, regs + APLIC_CLRIE_BASE + (i / 32) * sizeof(u32));
++		writel(srcs->ie, regs + APLIC_SETIE_BASE + (i / 32) * sizeof(u32));
++
++		/* Re-trigger the interrupts if it forwards interrupts to target harts by MSIs */
++		if (!priv->nr_idcs)
++			writel(readl(regs + APLIC_CLRIP_BASE + (i / 32) * sizeof(u32)),
++			       regs + APLIC_SETIP_BASE + (i / 32) * sizeof(u32));
++	}
++
++	if (priv->nr_idcs)
++		aplic_direct_restore_states(priv);
++}
++
++static void aplic_save_states(struct aplic_priv *priv)
++{
++	struct aplic_src_ctrl *srcs;
++	void __iomem *regs;
++	u32 i, nr_irqs;
++
++	regs = priv->regs;
++	nr_irqs = priv->nr_irqs;
++	/* The valid interrupt source IDs range from 1 to N, where N is priv->nr_irqs */
++	for (i = 0; i < nr_irqs; i++) {
++		srcs = &priv->saved_hw_regs.srcs[i];
++		srcs->target = readl(regs + APLIC_TARGET_BASE + i * sizeof(u32));
++
++		if (i % 32)
++			continue;
++
++		srcs->ie = readl(regs + APLIC_SETIE_BASE + (i / 32) * sizeof(u32));
++	}
++
++	/* Save the nr_irqs bit if needed */
++	if (!(nr_irqs % 32)) {
++		srcs = &priv->saved_hw_regs.srcs[nr_irqs];
++		srcs->ie = readl(regs + APLIC_SETIE_BASE + (nr_irqs / 32) * sizeof(u32));
++	}
++}
++
++static int aplic_syscore_suspend(void *data)
++{
++	struct aplic_priv *priv;
++
++	list_for_each_entry(priv, &aplics, head)
++		aplic_save_states(priv);
++
++	return 0;
++}
++
++static void aplic_syscore_resume(void *data)
++{
++	struct aplic_priv *priv;
++
++	list_for_each_entry(priv, &aplics, head)
++		aplic_restore_states(priv);
++}
++
++static struct syscore_ops aplic_syscore_ops = {
++	.suspend = aplic_syscore_suspend,
++	.resume = aplic_syscore_resume,
++};
++
++static struct syscore aplic_syscore = {
++	.ops = &aplic_syscore_ops,
++};
++
++static int aplic_pm_notifier(struct notifier_block *nb, unsigned long action, void *data)
++{
++	struct aplic_priv *priv = container_of(nb, struct aplic_priv, genpd_nb);
++
++	switch (action) {
++	case GENPD_NOTIFY_PRE_OFF:
++		aplic_save_states(priv);
++		break;
++	case GENPD_NOTIFY_ON:
++		aplic_restore_states(priv);
++		break;
++	default:
++		break;
++	}
++
++	return 0;
++}
++
++static void aplic_pm_remove(void *data)
++{
++	struct aplic_priv *priv = data;
++	struct device *dev = priv->dev;
++
++	list_del(&priv->head);
++	if (dev->pm_domain)
++		dev_pm_genpd_remove_notifier(dev);
++}
++
++static int aplic_pm_add(struct device *dev, struct aplic_priv *priv)
++{
++	struct aplic_src_ctrl *srcs;
++	int ret;
++
++	srcs = devm_kzalloc(dev, (priv->nr_irqs + 1) * sizeof(*srcs), GFP_KERNEL);
++	if (!srcs)
++		return -ENOMEM;
++
++	priv->saved_hw_regs.srcs = srcs;
++	list_add(&priv->head, &aplics);
++	if (dev->pm_domain) {
++		priv->genpd_nb.notifier_call = aplic_pm_notifier;
++		ret = dev_pm_genpd_add_notifier(dev, &priv->genpd_nb);
++		if (ret)
++			goto remove_head;
++
++		ret = devm_pm_runtime_enable(dev);
++		if (ret)
++			goto remove_notifier;
++	}
++
++	return devm_add_action_or_reset(dev, aplic_pm_remove, priv);
++
++remove_notifier:
++	dev_pm_genpd_remove_notifier(dev);
++remove_head:
++	list_del(&priv->head);
++	return ret;
++}
++
+ void aplic_irq_unmask(struct irq_data *d)
+ {
+ 	struct aplic_priv *priv = irq_data_get_irq_chip_data(d);
+@@ -60,6 +219,8 @@ int aplic_irq_set_type(struct irq_data *d, unsigned int type)
+ 	sourcecfg += (d->hwirq - 1) * sizeof(u32);
+ 	writel(val, sourcecfg);
  
- 		if (!dead_end && !next_insn) {
--			if (state.cfi.cfa.base == CFI_UNDEFINED)
-+			if (state->cfi.cfa.base == CFI_UNDEFINED)
- 				return 0;
- 			if (file->ignore_unreachables)
- 				return 0;
-@@ -4026,7 +4026,7 @@ static int validate_branch(struct objtool_file *file, struct symbol *func,
- 	int ret;
++	priv->saved_hw_regs.srcs[d->hwirq - 1].sourcecfg = val;
++
+ 	return 0;
+ }
  
- 	trace_depth_inc();
--	ret = do_validate_branch(file, func, insn, state);
-+	ret = do_validate_branch(file, func, insn, &state);
- 	trace_depth_dec();
+@@ -82,6 +243,7 @@ int aplic_irqdomain_translate(struct irq_fwspec *fwspec, u32 gsi_base,
  
- 	return ret;
+ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
+ {
++	struct aplic_saved_regs *saved_regs = &priv->saved_hw_regs;
+ 	u32 val;
+ #ifdef CONFIG_RISCV_M_MODE
+ 	u32 valh;
+@@ -95,6 +257,8 @@ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
+ 		valh |= FIELD_PREP(APLIC_xMSICFGADDRH_HHXS, priv->msicfg.hhxs);
+ 		writel(val, priv->regs + APLIC_xMSICFGADDR);
+ 		writel(valh, priv->regs + APLIC_xMSICFGADDRH);
++		saved_regs->msiaddr = val;
++		saved_regs->msiaddrh = valh;
+ 	}
+ #endif
+ 
+@@ -106,6 +270,8 @@ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
+ 	writel(val, priv->regs + APLIC_DOMAINCFG);
+ 	if (readl(priv->regs + APLIC_DOMAINCFG) != val)
+ 		dev_warn(priv->dev, "unable to write 0x%x in domaincfg\n", val);
++
++	saved_regs->domaincfg = val;
+ }
+ 
+ static void aplic_init_hw_irqs(struct aplic_priv *priv)
+@@ -176,7 +342,7 @@ int aplic_setup_priv(struct aplic_priv *priv, struct device *dev, void __iomem *
+ 	/* Setup initial state APLIC interrupts */
+ 	aplic_init_hw_irqs(priv);
+ 
+-	return 0;
++	return aplic_pm_add(dev, priv);
+ }
+ 
+ static int aplic_probe(struct platform_device *pdev)
+@@ -209,6 +375,8 @@ static int aplic_probe(struct platform_device *pdev)
+ 	if (rc)
+ 		dev_err_probe(dev, rc, "failed to setup APLIC in %s mode\n",
+ 			      msi_mode ? "MSI" : "direct");
++	else
++		register_syscore(&aplic_syscore);
+ 
+ #ifdef CONFIG_ACPI
+ 	if (!acpi_disabled)
+diff --git a/drivers/irqchip/irq-riscv-aplic-main.h b/drivers/irqchip/irq-riscv-aplic-main.h
+index b0ad8cde69b13..2d8ad7138541a 100644
+--- a/drivers/irqchip/irq-riscv-aplic-main.h
++++ b/drivers/irqchip/irq-riscv-aplic-main.h
+@@ -23,7 +23,25 @@ struct aplic_msicfg {
+ 	u32			lhxw;
+ };
+ 
++struct aplic_src_ctrl {
++	u32			sourcecfg;
++	u32			target;
++	u32			ie;
++};
++
++struct aplic_saved_regs {
++	u32			domaincfg;
++#ifdef CONFIG_RISCV_M_MODE
++	u32			msiaddr;
++	u32			msiaddrh;
++#endif
++	struct aplic_src_ctrl	*srcs;
++};
++
+ struct aplic_priv {
++	struct list_head	head;
++	struct notifier_block	genpd_nb;
++	struct aplic_saved_regs	saved_hw_regs;
+ 	struct device		*dev;
+ 	u32			gsi_base;
+ 	u32			nr_irqs;
+@@ -40,6 +58,7 @@ int aplic_irqdomain_translate(struct irq_fwspec *fwspec, u32 gsi_base,
+ 			      unsigned long *hwirq, unsigned int *type);
+ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode);
+ int aplic_setup_priv(struct aplic_priv *priv, struct device *dev, void __iomem *regs);
++void aplic_direct_restore_states(struct aplic_priv *priv);
+ int aplic_direct_setup(struct device *dev, void __iomem *regs);
+ #ifdef CONFIG_RISCV_APLIC_MSI
+ int aplic_msi_setup(struct device *dev, void __iomem *regs);
 -- 
 2.51.0
 
