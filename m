@@ -1,108 +1,179 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7421391505;
-	Tue, 17 Mar 2026 07:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AC9B396B7D;
+	Tue, 17 Mar 2026 08:42:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773733161; cv=none; b=Av4vpnuOfQShBUK5RPEVY2FIndI42JOSX6o/rTBnjfComKurFXpnr9ID97z0iec993QnIdvfJ8ZJ1CDK4YYVV+jkIl0KeIT6kOjBm1TnoCoyGqboZABRxNdbdmPS+5U43z+Ixqt9SwXGr5lNy4+9eeUM3oVNPDgojjcerwg6wAY=
+	t=1773736941; cv=none; b=a7FvBwlOYC6gc1xXzHnvty1+efIVrT/Xy04JAUCXRsK5iCu/xm38Fr5cFIpiXn+dXAgC4mfddDrsJOMwgsOASxjEOUKDe5PDmE4/kjBEpxHzkCKnyG+qCV4nGhbV02Pfsf23H8KqqN6AO7uclAiPDLOn3Lj0gBY3tVUiUeJlI/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773733161; c=relaxed/simple;
-	bh=JRy7BlW+4YyMcr948u1R8Lh5p331m/L0Ornk6lRsZmk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=g0cfsT0YuWHg+ZnRLl6IML7wCSlf+Tf3CXrEIY3M5rvCorjUtC+zYEsuc/yU2/VaFXzUQH5gbsvZriYxvJ0lakBQKt1qf8cIWpJnR7qGgBVhN5TIUJWNfvLdeLQ2+oevEHvkbS6dwovFNrk3xWvuiOtkZRH9BCopz5LcSo9n2Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NeQYDe/l; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773736941; c=relaxed/simple;
+	bh=sjP2kUUv/ebsFWd0HXbv/74udIp3imRLZB7s841aAsE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gXulQu9m7TC0TePeKa9Nm1ojUMklK69cMsXJd4WydsYMiqt6zgHnsXftjsUsC/l4cyGMsbWRdWFwXCxI8X3b6qfRyyy/v6MaiVhIgXuaVkk63+BLfLf/dAm+QSVePv8y6Rc8q0P1V73+FuD6k/GlQysM6c9U9au8Nal1sFcVJPY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=haZfJrLw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NeQYDe/l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE380C19424;
-	Tue, 17 Mar 2026 07:39:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773733161;
-	bh=JRy7BlW+4YyMcr948u1R8Lh5p331m/L0Ornk6lRsZmk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NeQYDe/lv5rPotjsuUymvu6fKCCQDuUSo+4iAhsFkm1HyG4EkhUpe4MiaV5Luhz2b
-	 zU4z/tBzbDTMMx79QtyDURalBrdYrYC5yE/CvpQB7Koh3RZtkZAOWLXIDcoNm7tr13
-	 PKRAR/tSeE+IdC3PQbwiJDYQIt+CKyav41cDzhxM=
-Date: Tue, 17 Mar 2026 08:39:16 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>, linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@nabladev.com,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
-	sr@sladewatkins.com
-Subject: Re: [PATCH 5.15 000/410] 5.15.202-rc2 review
-Message-ID: <2026031714-undusted-rambling-c2ae@gregkh>
-References: <20260302160955.2522727-1-sashal@kernel.org>
- <20260305220801.GA3148061@ax162>
- <20260316220533.GD1329928@ax162>
- <abiuxFzZNLKbhz6F@laps>
- <2026031738-glade-glamorous-eacd@gregkh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="haZfJrLw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF175C19425;
+	Tue, 17 Mar 2026 08:42:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773736940;
+	bh=sjP2kUUv/ebsFWd0HXbv/74udIp3imRLZB7s841aAsE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+	b=haZfJrLwEcd2jNdOOzbE2T3kAK6kpT0Bzs2AIuf2VB1sHBSdUwtungxubXKz/VpqS
+	 UCwKGWdbfC9M4bG7N1PyRaiQCeiX0hmfQsYH2dSc5scA6+kzjh+tK336DKstaq4dx5
+	 g8XWVMP6xRPdbQ2Kgt8+UeqP49a30GqDbi+JRIiDyw7daG5ZZUMSIBgZVh1w/IGj3u
+	 Y0vw/RWadAqP8fq38d5XQTWQsBkW/XvBoSXHut3k7QRBxJm3ay+MO324mW9NPLc5GL
+	 eAWZfOoGHJVJgT443GDgSY/BprQ8VJIfBWvVgGjugmCEvzcXBDkdSZ4391O8T0O8n5
+	 kJeczJXlssy2Q==
+From: Andreas Hindborg <a.hindborg@kernel.org>
+To: Miguel Ojeda <ojeda@kernel.org>, Miguel Ojeda <ojeda@kernel.org>, Alex
+ Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>
+Cc: Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>,
+ =?utf-8?Q?Bj=C3=B6rn?=
+ Roy Baron <bjorn3_gh@protonmail.com>, Benno Lossin
+ <benno.lossin@proton.me>, Alice Ryhl <aliceryhl@google.com>, Trevor Gross
+ <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, Nick Desaulniers
+ <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, Justin
+ Stitt <justinstitt@google.com>, llvm@lists.linux.dev,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, Aaron Ballman
+ <aaron@aaronballman.com>, Bill Wendling <isanbard@gmail.com>, Cole
+ Nixon <nixontcole@gmail.com>, Connor Kuehl <cipkuehl@gmail.com>, Fangrui
+ Song <i@maskray.me>, James Foster <jafosterja@gmail.com>, Jeff
+ Takahashi <jeffrey.takahashi@gmail.com>, Jordan Cantrell
+ <jordan.cantrell@mail.com>, Matthew Maurer <mmaurer@google.com>, Nikk
+ Forbus <nicholas.forbus@gmail.com>, Qing Zhao <qing.zhao@oracle.com>, Sami
+ Tolvanen <samitolvanen@google.com>, Tim Pugh <nwtpugh@gmail.com>, Kees
+ Cook <kees@kernel.org>
+Subject: Re: [RFC PATCH] rust: allow Clang-native `RANDSTRUCT` configs
+In-Reply-To: <20241119185747.862544-1-ojeda@kernel.org>
+References: <GYMB6vN7uKNVSwQPEtPg0kZPHUkxHQbQe3ZIUqOGZm8ZGwCUE6-iRxJdUQ5xB_qV2bLZVauIZtAGbK1iduefTw==@protonmail.internalid>
+ <20241119185747.862544-1-ojeda@kernel.org>
+Date: Tue, 17 Mar 2026 09:42:04 +0100
+Message-ID: <871phisv8j.fsf@t14s.mail-host-address-is-not-set>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2026031738-glade-glamorous-eacd@gregkh>
+Content-Type: text/plain
 
-On Tue, Mar 17, 2026 at 05:42:14AM +0100, Greg Kroah-Hartman wrote:
-> On Mon, Mar 16, 2026 at 09:30:44PM -0400, Sasha Levin wrote:
-> > On Mon, Mar 16, 2026 at 03:05:33PM -0700, Nathan Chancellor wrote:
-> > > On Thu, Mar 05, 2026 at 03:08:09PM -0700, Nathan Chancellor wrote:
-> > > > On Mon, Mar 02, 2026 at 11:09:55AM -0500, Sasha Levin wrote:
-> > > > > Jamie Iles (1):
-> > > > >   i3c: remove i2c board info from i2c_dev_desc
-> > > > 
-> > > > You missed commit 6cbf8b38dfe3 ("i3c: fix uninitialized variable use in
-> > > > i2c setup") as a fix for this one, as rightfully pointed out by clang:
-> > > > 
-> > > >   https://lore.kernel.org/177198114226.2577.15577566399399369654@d14e337afe00/
-> > > > 
-> > > >   $ make -skj"$(nproc)" ARCH=x86_64 LLVM=1 mrproper allmodconfig drivers/i3c/master.o
-> > > >   drivers/i3c/master.c:2203:3: error: variable 'i2cdev' is uninitialized when used here [-Werror,-Wuninitialized]
-> > > >    2203 |                 i2cdev->dev = i2c_new_client_device(adap, &i2cboardinfo->base);
-> > > >         |                 ^~~~~~
-> > > > 
-> > > > I guess that report was missed because it was not actually addressed to
-> > > > anyone?
-> > > > 
-> > > > FWIW, this patch appeared in a previous 5.15-rc release but Ben
-> > > > rightfully pointed out it really was not necessary and Greg said he
-> > > > would fix it up by hand:
-> > > > 
-> > > >   https://lore.kernel.org/2026011724-florist-brook-5f1f@gregkh/
-> > > > 
-> > > > Guess that never happened?
-> > > 
-> > > Ping? I don't see 6cbf8b38dfe3 queued up in 5.15 and this continues to
-> > > break our builds:
-> > > 
-> > >  https://github.com/ClangBuiltLinux/continuous-integration2/actions/runs/23093834605
-> > 
-> > Hm, I queued it up, but looks like Greg dropped it:
-> > 
-> > 	https://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git/commit/?id=7c0d6910ad
-> > 
-> > I'm not sure why.
-> 
-> I am guessing that it broke some type of build, and so I figured it was
-> safer to just drop them all.  I'll try it again later today, sorry about
-> that...
+"Miguel Ojeda" <ojeda@kernel.org> writes:
 
-Wait, I removed them all, as that should have fixed the issue (I removed
-the offending commit that was originally causing the build problem
-here.)
+> The kernel supports `RANDSTRUCT_FULL` with Clang 16+, and `bindgen`
+> (which uses `libclang` under the hood) inherits the information, so the
+> generated bindings look correct.
+>
+> For instance, running:
+>
+>     bindgen x.h -- -frandomize-layout-seed=100
+>
+> with:
+>
+>     struct S1 {
+>         int a;
+>         int b;
+>     };
+>
+>     struct S2 {
+>         int a;
+>         int b;
+>     } __attribute__((randomize_layout));
+>
+>     struct S3 {
+>         void (*a)(void);
+>         void (*b)(void);
+>     };
+>
+>     struct S4 {
+>         void (*a)(void);
+>         void (*b)(void);
+>     } __attribute__((no_randomize_layout));
+>
+> may swap `S2`'s and `S3`'s members, but not `S1`'s nor `S4`'s:
+>
+>     pub struct S1 {
+>         pub a: ::std::os::raw::c_int,
+>         pub b: ::std::os::raw::c_int,
+>     }
+>
+>     pub struct S2 {
+>         pub b: ::std::os::raw::c_int,
+>         pub a: ::std::os::raw::c_int,
+>     }
+>
+>     pub struct S3 {
+>         pub b: ::std::option::Option<unsafe extern "C" fn()>,
+>         pub a: ::std::option::Option<unsafe extern "C" fn()>,
+>     }
+>
+>     pub struct S4 {
+>         pub a: ::std::option::Option<unsafe extern "C" fn()>,
+>         pub b: ::std::option::Option<unsafe extern "C" fn()>,
+>     }
+>
+> Thus allow those configurations by requiring a Clang compiler to use
+> `RANDSTRUCT`. In addition, remove the `!GCC_PLUGIN_RANDSTRUCT` check
+> since it is not needed.
+>
+> A simpler alternative would be to remove the `!RANDSTRUCT` check (keeping
+> the `!GCC_PLUGIN_RANDSTRUCT` one). However, if in the future GCC starts
+> supporting `RANDSTRUCT` natively, it would be likely that it would not
+> work unless GCC and Clang agree on the exact semantics of the flag. And,
+> as far as I can see, so far the randomization in Clang does not seem to be
+> guaranteed to remain stable across versions or platforms, i.e. only for a
+> given compiler Clang binary, given it is not documented and that LLVM's
+> `HEAD` has the revert in place for the expected field names in the test
+> (LLVM commit 8dbc6b560055 ("Revert "[randstruct] Check final randomized
+> layout ordering"")) [1][2]. And the GCC plugin definitely does not match,
+> e.g. its RNG is different (`std::mt19937` vs Bob Jenkins').
+>
+> And given it is not supposed to be guaranteed to remain stable across
+> versions, it is a good idea to match the Clang and `bindgen`'s
+> `libclang` versions -- we already have a warning for that in
+> `scripts/rust_is_available.sh`. In the future, it would also be good to
+> have a build test to double-check layouts do actually match (but that
+> is true regardless of this particular feature).
+>
+> Finally, make a required small change to take into account the anonymous
+> struct used in `randomized_struct_fields_*` in `struct task_struct`.
+>
+> Cc: Aaron Ballman <aaron@aaronballman.com>
+> Cc: Bill Wendling <isanbard@gmail.com>
+> Cc: Cole Nixon <nixontcole@gmail.com>
+> Cc: Connor Kuehl <cipkuehl@gmail.com>
+> Cc: Fangrui Song <i@maskray.me>
+> Cc: James Foster <jafosterja@gmail.com>
+> Cc: Jeff Takahashi <jeffrey.takahashi@gmail.com>
+> Cc: Jordan Cantrell <jordan.cantrell@mail.com>
+> Cc: Justin Stitt <justinstitt@google.com>
+> Cc: Matthew Maurer <mmaurer@google.com>
+> Cc: Nathan Chancellor <nathan@kernel.org>
+> Cc: Nikk Forbus <nicholas.forbus@gmail.com>
+> Cc: Qing Zhao <qing.zhao@oracle.com>
+> Cc: Sami Tolvanen <samitolvanen@google.com>
+> Cc: Tim Pugh <nwtpugh@gmail.com>
+> Link: https://reviews.llvm.org/D121556
+> Link: https://github.com/llvm/llvm-project/commit/8dbc6b560055ff5068ff45b550482ba62c36b5a5 [1]
+> Link: https://reviews.llvm.org/D124199 [2]
+> Reviewed-by: Kees Cook <kees@kernel.org>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-Nathan, what errors are you seeing now?  None of these changes are in a
-release, and I don't see any i3c patches in the current queue.
 
-confused,
+Tested-by: Andreas Hindborg <a.hindborg@kernel.org>
 
-greg k-h
+Tested with the rust null block driver patch series [1]. I did a
+few functional verification tests and a set of performance tests.
+
+For the rnull driver, enabling randstruct with this patch gives no
+statistically significant change to the average performance of the set
+of 120 workloads that we publish on [2]. Individual configurations see
+around 10% change in throughput, both directions.
+
+Best regards,
+Andreas Hindborg
+
+[1] https://lore.kernel.org/rust-for-linux/20260216-rnull-v6-19-rc5-send-v1-0-de9a7af4b469@kernel.org/
+[2] https://rust-for-linux.com/null-block-driver
+
