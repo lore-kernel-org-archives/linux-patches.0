@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60DB3EAC6F;
-	Tue, 17 Mar 2026 16:53:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9AD83EAC6F;
+	Tue, 17 Mar 2026 16:53:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766384; cv=none; b=fx9pJYSEdXtoZ8Vw+hWl3oUGDFvRmWm10h/dhG8xg4GhW6qGGpoWY8zdUFHPruwiLFeKF3FWOgTjCsu5vTD7YFa989IuwgfG1W6IM1pUNl3HcIAT7v2lBPVI21JVOhyUPnj7L91+by863rKfI9eJdN5gK+7I30+84gjtJ+KFGtM=
+	t=1773766388; cv=none; b=aJBrzj5zbELVJjfTFVdlPfSKncyL5V8MaxtKaj0sLOqwWXmQFq4K0NwjSH1QiulxrUSIbSfvWtUyNbyIb4PUoZXNYp4XDdeSYMqh0SFvM41Cg/iNjZ8PTM8OItdv80uo5Eq5x7ywQfpWsxnmx+hylyZhiOl76iQA7caedl0Wyog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766384; c=relaxed/simple;
-	bh=+exTHmcF4lX2DWzU5TiAn8RSnQGxF3vMwdNnii/U6Oc=;
+	s=arc-20240116; t=1773766388; c=relaxed/simple;
+	bh=EN7F63DggcC149eXgZ6Dyksjz/8SLYfjcLlrGfpK3WQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oCoAQlZlqXbqojIBLa/RAuYIra6MhPWmzd1YZc2lk4//biUPWKSWb/VLFLFToxk1UexTwBiFPnQKPvx4sTgtEanENSwC5ZdBEVebkvdwGOYk86EyRX8HIwBKIQY/lN3Lk/p90S5KCe2fFU/LRcs9vRJG6TFD13MiS1lSVeLu1Ow=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybGYXdM7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mhMes79+OqaR20VU/cABXv1PJAejV8b+YiuriIdxEYrmFYWDDBuT8RG3ceC7nOy8CsdCLVGGUUuMxldOKJ3+h/n56tmcQzszPvX6LpYJlesT2VCn7BE2jnjtYTx0292daYX6qz8DE274Uj7/riX3N2VvlGWvAUbOIH6OgYRjDEQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VaYrz/ha; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybGYXdM7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8D4C4CEF7;
-	Tue, 17 Mar 2026 16:53:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VaYrz/ha"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE5DC4CEF7;
+	Tue, 17 Mar 2026 16:53:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766383;
-	bh=+exTHmcF4lX2DWzU5TiAn8RSnQGxF3vMwdNnii/U6Oc=;
+	s=korg; t=1773766388;
+	bh=EN7F63DggcC149eXgZ6Dyksjz/8SLYfjcLlrGfpK3WQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybGYXdM75Y93kruldy9hVf3arID/PnA3l9zOAMHxlr7XcEo+oz0/uBLJBHCp+76C1
-	 VfsVuzt4Fqiqz8l8cH/9swqkTR/CK5/p1WRtNICo3gJGS2ugceK0Zd4p/Z3MNdQBmO
-	 XR5HwCqbntXBa0lqvK2Lon8AExoNYiIbi8aj+WXM=
+	b=VaYrz/hab12wLGNdnkLQjgrSZg+5NYv6IRuo7YNNOm74GZRAuRSCCI2iBXv2wTPzg
+	 uymsWmL4UuEnKnwIF9ddlKSfL+cYcW5YqQmoAnqKjgrzyBaU4BjnfYApRStHhqfPMQ
+	 oLrx3CiShVuy8pp49R4IGyp4TbJ3v8WqSl4gQUGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Liwei Song <liwei.song@windriver.com>,
-	Dinh Nguyen <dinguyen@kernel.org>
-Subject: [PATCH 6.19 202/378] firmware: stratix10-rsu: Fix NULL pointer dereference when RSU is disabled
-Date: Tue, 17 Mar 2026 17:32:39 +0100
-Message-ID: <20260317163014.443589025@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.19 203/378] kprobes: avoid crash when rmmod/insmod after ftrace killed
+Date: Tue, 17 Mar 2026 17:32:40 +0100
+Message-ID: <20260317163014.479569644@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,69 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Liwei Song <liwei.song@windriver.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit c45f7263100cece247dd3fa5fe277bd97fdb5687 upstream.
+commit e113f0b46d19626ec15388bcb91432c9a4fd6261 upstream.
 
-When the Remote System Update (RSU) isn't enabled in the First Stage
-Boot Loader (FSBL), the driver encounters a NULL pointer dereference when
-excute svc_normal_to_secure_thread() thread, resulting in a kernel panic:
+After we hit ftrace is killed by some errors, the kernel crash if
+we remove modules in which kprobe probes.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
-Mem abort info:
-...
-Data abort info:
-...
-[0000000000000008] user address but active_mm is swapper
-Internal error: Oops: 0000000096000004 [#1]  SMP
-Modules linked in:
-CPU: 0 UID: 0 PID: 79 Comm: svc_smc_hvc_thr Not tainted 6.19.0-rc8-yocto-standard+ #59 PREEMPT
-Hardware name: SoCFPGA Stratix 10 SoCDK (DT)
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : svc_normal_to_secure_thread+0x38c/0x990
-lr : svc_normal_to_secure_thread+0x144/0x990
-...
-Call trace:
- svc_normal_to_secure_thread+0x38c/0x990 (P)
- kthread+0x150/0x210
- ret_from_fork+0x10/0x20
-Code: 97cfc113 f9400260 aa1403e1 f9400400 (f9400402)
----[ end trace 0000000000000000 ]---
+BUG: unable to handle page fault for address: fffffbfff805000d
+PGD 817fcc067 P4D 817fcc067 PUD 817fc8067 PMD 101555067 PTE 0
+Oops: Oops: 0000 [#1] SMP KASAN PTI
+CPU: 4 UID: 0 PID: 2012 Comm: rmmod Tainted: G        W  OE
+Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+RIP: 0010:kprobes_module_callback+0x89/0x790
+RSP: 0018:ffff88812e157d30 EFLAGS: 00010a02
+RAX: 1ffffffff805000d RBX: dffffc0000000000 RCX: ffffffff86a8de90
+RDX: ffffed1025c2af9b RSI: 0000000000000008 RDI: ffffffffc0280068
+RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed1025c2af9a
+R10: ffff88812e157cd7 R11: 205d323130325420 R12: 0000000000000002
+R13: ffffffffc0290488 R14: 0000000000000002 R15: ffffffffc0280040
+FS:  00007fbc450dd740(0000) GS:ffff888420331000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffffbfff805000d CR3: 000000010f624000 CR4: 00000000000006f0
+Call Trace:
+ <TASK>
+ notifier_call_chain+0xc6/0x280
+ blocking_notifier_call_chain+0x60/0x90
+ __do_sys_delete_module.constprop.0+0x32a/0x4e0
+ do_syscall_64+0x5d/0xfa0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-The issue occurs because rsu_send_async_msg() fails when RSU is not enabled
-in firmware, causing the channel to be freed via stratix10_svc_free_channel().
-However, the probe function continues execution and registers
-svc_normal_to_secure_thread(), which subsequently attempts to access the
-already-freed channel, triggering the NULL pointer dereference.
+This is because the kprobe on ftrace does not correctly handles
+the kprobe_ftrace_disabled flag set by ftrace_kill().
 
-Fix this by properly cleaning up the async client and returning early on
-failure, preventing the thread from being used with an invalid channel.
+To prevent this error, check kprobe_ftrace_disabled in
+__disarm_kprobe_ftrace() and skip all ftrace related operations.
 
-Fixes: 15847537b623 ("firmware: stratix10-rsu: Migrate RSU driver to use stratix10 asynchronous framework.")
-Cc: stable@kernel.org
-Signed-off-by: Liwei Song <liwei.song@windriver.com>
-Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Link: https://lore.kernel.org/all/176473947565.1727781.13110060700668331950.stgit@mhiramat.tok.corp.google.com/
+
+Reported-by: Ye Bin <yebin10@huawei.com>
+Closes: https://lore.kernel.org/all/20251125020536.2484381-1-yebin@huaweicloud.com/
+Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/stratix10-rsu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kprobes.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/firmware/stratix10-rsu.c b/drivers/firmware/stratix10-rsu.c
-index 41da07c445a6..e1912108a0fe 100644
---- a/drivers/firmware/stratix10-rsu.c
-+++ b/drivers/firmware/stratix10-rsu.c
-@@ -768,7 +768,9 @@ static int stratix10_rsu_probe(struct platform_device *pdev)
- 				 rsu_async_status_callback);
- 	if (ret) {
- 		dev_err(dev, "Error, getting RSU status %i\n", ret);
-+		stratix10_svc_remove_async_client(priv->chan);
- 		stratix10_svc_free_channel(priv->chan);
-+		return ret;
- 	}
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1104,6 +1104,10 @@ static int __disarm_kprobe_ftrace(struct
+ 	int ret;
  
- 	/* get DCMF version from firmware */
--- 
-2.53.0
-
+ 	lockdep_assert_held(&kprobe_mutex);
++	if (unlikely(kprobe_ftrace_disabled)) {
++		/* Now ftrace is disabled forever, disarm is already done. */
++		return 0;
++	}
+ 
+ 	if (*cnt == 1) {
+ 		ret = unregister_ftrace_function(ops);
 
 
