@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 395B82E03EA;
-	Tue, 17 Mar 2026 16:40:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6E63EC2CC;
+	Tue, 17 Mar 2026 16:40:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765634; cv=none; b=C3BsvWRrVlCqCUfbUSKoLUmg3t9uFJPh5FnLi7N89DlIVJ6ywhPKZEtess8SVm9AxPNSI50+lYeT22wSsNQHrXm0IL5+aWtVgaH3BEpi+Z8x7fPz+cQWybeboI5VGxMxyOxa7NPfAonuOVp4MbvxO11QceTIJxAnaItYipiPL7E=
+	t=1773765637; cv=none; b=Ke8NTjGENYBFO9PVbAO5896JCjYskXQmQ8VvBd1cKWJMsn6qHUYZ0agp9qPd4z1XgydZzctsnlsJN5wMZuJbQTsvMwsgGPRaQEPQeG6m4FyhgE0QSkcPeDzh4wvsXvgC28oRBFNO5gB8zEkcr4mVEuK598DFWWnnGrYiA4fTeKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765634; c=relaxed/simple;
-	bh=dCtqpqzqHjNSaXAxhZaeX9SvKUDtQagmg32zXWuCrps=;
+	s=arc-20240116; t=1773765637; c=relaxed/simple;
+	bh=WDlUXzOrGZjs0zS7NNSq8M1wy2EPeW5t2IZn31Flzz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fp/E98X8yGoymE3seHIXIBoRscOld5vJgzV+hDwbZ9H9dPH96QFDNNdgZoDAve9n/43hV+lXSQgtbDIgu9be8I3UlAM+k6vWzpV2aWNbjCgk3K1w+l65IQjvBxtxH9npN8W07UUZWmdTt/szfXDXqxc8iyv4SfF3iPhrk5pSIPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Wxp4FhYF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CKocDrk29mZI+kytImg3Z9+JWJwMGyekbIze8k2Axxl3dE3BLGda1R/m2NU9L81j0Gu2i+9QaoOZirS6hdFdWa3G7RCQlaV7kizmzuO91KRuTVgqIUyDcEyjHkAiVRaGNPe0RB6EFZ1x2zUHyamuLAOi+9B/m5CwcId4HMpWMMA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ptng+Hth; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Wxp4FhYF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FB8C4CEF7;
-	Tue, 17 Mar 2026 16:40:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ptng+Hth"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214E4C4CEF7;
+	Tue, 17 Mar 2026 16:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765634;
-	bh=dCtqpqzqHjNSaXAxhZaeX9SvKUDtQagmg32zXWuCrps=;
+	s=korg; t=1773765637;
+	bh=WDlUXzOrGZjs0zS7NNSq8M1wy2EPeW5t2IZn31Flzz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wxp4FhYFrY2EmAV7TP8TxO+/ftXsz3iRm0pFU+FF1OtamhnuPf3R2A+6d6SxZsrer
-	 t8MeoREGkCfFF4+iXhYUg67meJUBWLA7X7iuaG7vsiypYVhoqpVuS+GWatY3IQD6rZ
-	 +KigbkpBp9m5QFeFDYr42tiPPWZUFM8TBJ0KGgD8=
+	b=ptng+Hth7y8vu27ySn5gYX7AAG0IbkpjIzq0WrrTiy8fn0L5WmPNPOADBmZ18XvHg
+	 GlQgu/A8P+Qae8WJ8bCz/T/0+hAkqvPHad2EzHSE3Ei8Ft631RZF6OtBxntXYQbcTp
+	 DM0SeAsEYy4Z4rZT56EvwiOOJvN5YI9XLC3+5GFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 054/378] firmware: cs_dsp: Fix fragmentation regression in firmware download
-Date: Tue, 17 Mar 2026 17:30:11 +0100
-Message-ID: <20260317163008.978605033@linuxfoundation.org>
+Subject: [PATCH 6.19 055/378] spi: amlogic: spifc-a4: Fix DMA mapping error handling
+Date: Tue, 17 Mar 2026 17:30:12 +0100
+Message-ID: <20260317163009.015199938@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,103 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit facfdef64d11c08e6f1e69d02a0b87cb74cee0f5 ]
+[ Upstream commit b20b437666e1cb26a7c499d1664e8f2a0ac67000 ]
 
-Use vmalloc() instead of kmalloc(..., GFP_DMA) to alloc the temporary
-buffer for firmware download blobs. This avoids the problem that a
-heavily fragmented system cannot allocate enough physically-contiguous
-memory for a large blob.
+Fix three bugs in aml_sfc_dma_buffer_setup() error paths:
+1. Unnecessary goto: When the first DMA mapping (sfc->daddr) fails,
+   nothing needs cleanup. Use direct return instead of goto.
+2. Double-unmap bug: When info DMA mapping failed, the code would
+   unmap sfc->daddr inline, then fall through to out_map_data which
+   would unmap it again, causing a double-unmap.
+3. Wrong unmap size: The out_map_info label used datalen instead of
+   infolen when unmapping sfc->iaddr, which could lead to incorrect
+   DMA sync behavior.
 
-The redundant alloc buffer mechanism was removed in commit 900baa6e7bb0
-("firmware: cs_dsp: Remove redundant download buffer allocator").
-While doing that I was overly focused on the possibility of the
-underlying bus requiring DMA-safe memory. So I used GFP_DMA kmalloc()s.
-I failed to notice that the code I was removing used vmalloc().
-This creates a regression.
-
-Way back in 2014 the problem of fragmentation with kmalloc()s was fixed
-by commit cdcd7f728753 ("ASoC: wm_adsp: Use vmalloc to allocate firmware
-download buffer").
-
-Although we don't need physically-contiguous memory, we don't know if the
-bus needs some particular alignment of the buffers. Since the change in
-2014, the firmware download has always used whatever alignment vmalloc()
-returns. To avoid introducing a new problem, the temporary buffer is still
-used, to keep the same alignment of pointers passed to regmap_raw_write().
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 900baa6e7bb0 ("firmware: cs_dsp: Remove redundant download buffer allocator")
-Link: https://patch.msgid.link/20260304141250.1578597-1-rf@opensource.cirrus.com
+Fixes: 4670db6f32e9 ("spi: amlogic: add driver for Amlogic SPI Flash Controller")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260306-spifc-a4-v1-1-f22c9965f64a@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/cirrus/cs_dsp.c | 24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/spi/spi-amlogic-spifc-a4.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/cirrus/cs_dsp.c b/drivers/firmware/cirrus/cs_dsp.c
-index abed96fa5853a..a34633b875758 100644
---- a/drivers/firmware/cirrus/cs_dsp.c
-+++ b/drivers/firmware/cirrus/cs_dsp.c
-@@ -1610,11 +1610,17 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
- 			   region_name);
+diff --git a/drivers/spi/spi-amlogic-spifc-a4.c b/drivers/spi/spi-amlogic-spifc-a4.c
+index 35a7c4965e113..f324aa39a8976 100644
+--- a/drivers/spi/spi-amlogic-spifc-a4.c
++++ b/drivers/spi/spi-amlogic-spifc-a4.c
+@@ -411,7 +411,7 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 	ret = dma_mapping_error(sfc->dev, sfc->daddr);
+ 	if (ret) {
+ 		dev_err(sfc->dev, "DMA mapping error\n");
+-		goto out_map_data;
++		return ret;
+ 	}
  
- 		if (reg) {
-+			/*
-+			 * Although we expect the underlying bus does not require
-+			 * physically-contiguous buffers, we pessimistically use
-+			 * a temporary buffer instead of trusting that the
-+			 * alignment of region->data is ok.
-+			 */
- 			region_len = le32_to_cpu(region->len);
- 			if (region_len > buf_len) {
- 				buf_len = round_up(region_len, PAGE_SIZE);
--				kfree(buf);
--				buf = kmalloc(buf_len, GFP_KERNEL | GFP_DMA);
-+				vfree(buf);
-+				buf = vmalloc(buf_len);
- 				if (!buf) {
- 					ret = -ENOMEM;
- 					goto out_fw;
-@@ -1643,7 +1649,7 @@ static int cs_dsp_load(struct cs_dsp *dsp, const struct firmware *firmware,
- 
- 	ret = 0;
- out_fw:
--	kfree(buf);
-+	vfree(buf);
- 
- 	if (ret == -EOVERFLOW)
- 		cs_dsp_err(dsp, "%s: file content overflows file data\n", file);
-@@ -2320,11 +2326,17 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
+ 	cmd = CMD_DATA_ADDRL(sfc->daddr);
+@@ -429,7 +429,6 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 		ret = dma_mapping_error(sfc->dev, sfc->iaddr);
+ 		if (ret) {
+ 			dev_err(sfc->dev, "DMA mapping error\n");
+-			dma_unmap_single(sfc->dev, sfc->daddr, datalen, dir);
+ 			goto out_map_data;
  		}
  
- 		if (reg) {
-+			/*
-+			 * Although we expect the underlying bus does not require
-+			 * physically-contiguous buffers, we pessimistically use
-+			 * a temporary buffer instead of trusting that the
-+			 * alignment of blk->data is ok.
-+			 */
- 			region_len = le32_to_cpu(blk->len);
- 			if (region_len > buf_len) {
- 				buf_len = round_up(region_len, PAGE_SIZE);
--				kfree(buf);
--				buf = kmalloc(buf_len, GFP_KERNEL | GFP_DMA);
-+				vfree(buf);
-+				buf = vmalloc(buf_len);
- 				if (!buf) {
- 					ret = -ENOMEM;
- 					goto out_fw;
-@@ -2355,7 +2367,7 @@ static int cs_dsp_load_coeff(struct cs_dsp *dsp, const struct firmware *firmware
+@@ -448,7 +447,7 @@ static int aml_sfc_dma_buffer_setup(struct aml_sfc *sfc, void *databuf,
+ 	return 0;
  
- 	ret = 0;
- out_fw:
--	kfree(buf);
-+	vfree(buf);
+ out_map_info:
+-	dma_unmap_single(sfc->dev, sfc->iaddr, datalen, dir);
++	dma_unmap_single(sfc->dev, sfc->iaddr, infolen, dir);
+ out_map_data:
+ 	dma_unmap_single(sfc->dev, sfc->daddr, datalen, dir);
  
- 	if (ret == -EOVERFLOW)
- 		cs_dsp_err(dsp, "%s: file content overflows file data\n", file);
 -- 
 2.51.0
 
