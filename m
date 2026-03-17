@@ -1,36 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C37B32AAC5;
-	Tue, 17 Mar 2026 17:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C72B36654E;
+	Tue, 17 Mar 2026 17:15:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767713; cv=none; b=sh84umWKgsIEg75KRjxvfb1XJe0mhSRsy7J2LPYIr4B06I3l4CuRWETzNFFpsNdwNNKqQNTIz9Vyxzf5sg4Ax9BCoSADtNVLYgXq1NS+0PCINz/zmkaylyOhdVINFDRCtnAkyy8QEFw5DPu+h4aF5N8UtTTMUleSJZWGm91zE5M=
+	t=1773767719; cv=none; b=Vp04o2rJ/yyQbieuNwrKD5ytP8gc3b/4TNf7UtLFFB7t9cTmmHwn1geRL2H/dJl5naUvaPLVFGvpr+Bex/wy89c/UELceFdscZuUFYsC5B21+ITRItr+7tOdn3xqsA+nNmwSWji6tohyUCt/hqr9fX5A2/wFMB880YGPqZ0cU2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767713; c=relaxed/simple;
-	bh=w2ZgWJTurucSqRHN4/XVhKlqG01KHwWnmeKUkZeb7SI=;
+	s=arc-20240116; t=1773767719; c=relaxed/simple;
+	bh=u0FW/0Xk3nnjKv4/D3R0MtFKLccPawy1iA/QekApbxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VbML8zUlElMwQaCx6SCr0wyGOspi0Mz6rUu94oj/gLM/6CPLx2Oi0JnWreB1/m5UJv0lYF4cCMccDBXAlMrSTvf7DjVX7rlUlnZE/ASI1R1MPIOS68+Gjim5QAkfEhYfEL0hvnvL7hHm4tvyfLq050gXgRMNG/3D1RcVsnQ2s2Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m8As6DyY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CkFIHKLh5kxwBaIQQ8vULjxeiGFnZFzWNBKzlDnj0gzvpZ+h90Av80MmkzEP1TXYGGKC/gofibqcgcBZUwwMJY8hNPm+poLNzQMKJoiUnBPie85oIqElaFZtsFE+VtU1SJRJkXZoh/fwzPZq7IIyyQk+YsXR/Hz2zMQR/3/HWAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aLT8Jrjh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m8As6DyY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3CB0C2BCAF;
-	Tue, 17 Mar 2026 17:15:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aLT8Jrjh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11DDCC2BC86;
+	Tue, 17 Mar 2026 17:15:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767713;
-	bh=w2ZgWJTurucSqRHN4/XVhKlqG01KHwWnmeKUkZeb7SI=;
+	s=korg; t=1773767718;
+	bh=u0FW/0Xk3nnjKv4/D3R0MtFKLccPawy1iA/QekApbxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8As6DyYrWz5QUV4A/fMl8o9LrX5Prm7w4UMMK5mzFIyy6fC6f3sMOCapsHO+2lYr
-	 s9Gd+j6vw/EIp8nyKPh4amTQoYiunlfqiNO6T3IDkrCFx0WxRmkdAYjRtJn3mNYjDu
-	 jq0WHlZTfD9dYRiJgtg0y2KFH9oQa9oJgcA7Kn7A=
+	b=aLT8JrjhqHs5l4NsfhIXMZHakZ/jOReicT+zRcqugOvxud8ii9OrMy8mE8E1T/se8
+	 7/VcpmQk9oY5Z3tvbCY9m+44bYjzeviDGvVTMNDR7sik2JlbJRxC1vFgFdwIaOwDEK
+	 3yoKuKWhL7fmw+rqVn0nTfqzrnLkGO4ipXv6ZNvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.18 109/333] can: gs_usb: gs_can_open(): always configure bitrates before starting device
-Date: Tue, 17 Mar 2026 17:32:18 +0100
-Message-ID: <20260317163003.410915194@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 110/333] net: usb: lan78xx: fix silent drop of packets with checksum errors
+Date: Tue, 17 Mar 2026 17:32:19 +0100
+Message-ID: <20260317163003.447749637@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -49,96 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 upstream.
+commit e4f774a0cc955ce762aec91c66915a6e15087ab7 upstream.
 
-So far the driver populated the struct can_priv::do_set_bittiming() and
-struct can_priv::fd::do_set_data_bittiming() callbacks.
+Do not drop packets with checksum errors at the USB driver level;
+pass them to the network stack.
 
-Before bringing up the interface, user space has to configure the bitrates.
-With these callbacks the configuration is directly forwarded into the CAN
-hardware. Then the interface can be brought up.
+Previously, the driver dropped all packets where the 'Receive Error
+Detected' (RED) bit was set, regardless of the specific error type. This
+caused packets with only IP or TCP/UDP checksum errors to be dropped
+before reaching the kernel, preventing the network stack from accounting
+for them or performing software fallback.
 
-An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
-the bitrates in the CAN hardware. This leads to a problem with the
-CANable-2.5 [1] firmware, which resets the configured bit rates during
-ifdown.
+Add a mask for hard hardware errors to safely drop genuinely corrupt
+frames, while allowing checksum-errored frames to pass with their
+ip_summed field explicitly set to CHECKSUM_NONE.
 
-To fix the problem remove both bit timing callbacks and always configure
-the bitrates in the struct net_device_ops::ndo_open() callback.
-
-[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
-
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
 Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260305143429.530909-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/usb/lan78xx.c |    4 +++-
+ drivers/net/usb/lan78xx.h |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -772,9 +772,8 @@ device_detach:
- 	}
- }
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3829,6 +3829,7 @@ static void lan78xx_rx_csum_offload(stru
+ 	 */
+ 	if (!(dev->net->features & NETIF_F_RXCSUM) ||
+ 	    unlikely(rx_cmd_a & RX_CMD_A_ICSM_) ||
++	    unlikely(rx_cmd_a & RX_CMD_A_CSE_MASK_) ||
+ 	    ((rx_cmd_a & RX_CMD_A_FVTG_) &&
+ 	     !(dev->net->features & NETIF_F_HW_VLAN_CTAG_RX))) {
+ 		skb->ip_summed = CHECKSUM_NONE;
+@@ -3901,7 +3902,8 @@ static int lan78xx_rx(struct lan78xx_net
+ 			return 0;
+ 		}
  
--static int gs_usb_set_bittiming(struct net_device *netdev)
-+static int gs_usb_set_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -791,9 +790,8 @@ static int gs_usb_set_bittiming(struct n
- 				    GFP_KERNEL);
- }
+-		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
++		if (unlikely(rx_cmd_a & RX_CMD_A_RED_) &&
++		    (rx_cmd_a & RX_CMD_A_RX_HARD_ERRS_MASK_)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
+ 		} else {
+--- a/drivers/net/usb/lan78xx.h
++++ b/drivers/net/usb/lan78xx.h
+@@ -74,6 +74,9 @@
+ #define RX_CMD_A_ICSM_			(0x00004000)
+ #define RX_CMD_A_LEN_MASK_		(0x00003FFF)
  
--static int gs_usb_set_data_bittiming(struct net_device *netdev)
-+static int gs_usb_set_data_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.fd.data_bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -1057,6 +1055,20 @@ static int gs_can_open(struct net_device
- 	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 		flags |= GS_CAN_MODE_HW_TIMESTAMP;
- 
-+	rc = gs_usb_set_bittiming(dev);
-+	if (rc) {
-+		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-+		goto out_usb_kill_anchored_urbs;
-+	}
++#define RX_CMD_A_RX_HARD_ERRS_MASK_ \
++	(RX_CMD_A_RX_ERRS_MASK_ & ~RX_CMD_A_CSE_MASK_)
 +
-+	if (ctrlmode & CAN_CTRLMODE_FD) {
-+		rc = gs_usb_set_data_bittiming(dev);
-+		if (rc) {
-+			netdev_err(netdev, "failed to set data bittiming: %pe\n", ERR_PTR(rc));
-+			goto out_usb_kill_anchored_urbs;
-+		}
-+	}
-+
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm.flags = cpu_to_le32(flags);
-@@ -1357,7 +1369,6 @@ static struct gs_can *gs_make_candev(uns
- 	dev->can.state = CAN_STATE_STOPPED;
- 	dev->can.clock.freq = le32_to_cpu(bt_const.fclk_can);
- 	dev->can.bittiming_const = &dev->bt_const;
--	dev->can.do_set_bittiming = gs_usb_set_bittiming;
- 
- 	dev->can.ctrlmode_supported = CAN_CTRLMODE_CC_LEN8_DLC;
- 
-@@ -1381,7 +1392,6 @@ static struct gs_can *gs_make_candev(uns
- 		 * GS_CAN_FEATURE_BT_CONST_EXT is set.
- 		 */
- 		dev->can.fd.data_bittiming_const = &dev->bt_const;
--		dev->can.fd.do_set_data_bittiming = gs_usb_set_data_bittiming;
- 	}
- 
- 	if (feature & GS_CAN_FEATURE_TERMINATION) {
+ /* Rx Command B */
+ #define RX_CMD_B_CSUM_SHIFT_		(16)
+ #define RX_CMD_B_CSUM_MASK_		(0xFFFF0000)
 
 
