@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B122A3F23B3;
-	Tue, 17 Mar 2026 17:08:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5823F788B;
+	Tue, 17 Mar 2026 17:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767313; cv=none; b=eGE2j+wasosMUBKtsAAvnczCtK7bCfUWGJQnTQY0QIsveifRsdfTwMb9pFNcDdaS2eW7dacaTrSpVAQHx3RWVwuuNSOUygFhYAIlWR1leu2sW52Z/GS9eXW/Sj1LVlV5ZhXDNQudrCOga4embog56z8/zNXJ2GKs2UDe8Gc53OY=
+	t=1773767319; cv=none; b=ai+HKzzL3c4OubWliEV75iTnh8ToGxTFJYpELYUZ/c7VFDsNpzqKQgGjee86ewTnAtv1VtLRZ35VbTdAw5+sTz168u4NrXnmFOgBMiyg4rpVTL5yzWw8AcDScEoE6dgEvaZ61dBNOU65aEs7n4Cvy5DOn7eA+4UVF7nRycp4kZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767313; c=relaxed/simple;
-	bh=pnOAVYl/IKSqKKyAuzZtJY9vXmYSy0z+FkgRyi8Rmwo=;
+	s=arc-20240116; t=1773767319; c=relaxed/simple;
+	bh=7umZ3xwWmASQpv0UBX8lCee6XY9PYlj28U8koN21Llk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bNS+wccNPQkjEmq5vjX5GV4bjuruhvgLlzftF5KRsXteRuv+1IUCCwZCAr1eqgrAZSP2wlsRTNzm78Y4AAXMRd4Rl+ekL4jE5PrKZViie4z2IhcFAXfOZ0KYyTseYCC0v56oefj6j/7opMwqY//uveSmlEz+XIXciZV6WbYBME8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmK40EB4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jtjSCJz23JxWbdqRgcNOfTNHxcRcdsPfSdNR5UDwXONYWUtqnJwcNmtqvRUZunQmFH7dOiowJnJ7SQxaxtFj0ZwlCIrsJ7SKlWWn2sz+il75jXCoO+d7nuqQAfcEePF1vPri/ygQWjXI3xipSY32hLRCGyV6FSZBGvmYi72I00w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hQddDyuA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmK40EB4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E3FC2BCB0;
-	Tue, 17 Mar 2026 17:08:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hQddDyuA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC24C2BCB3;
+	Tue, 17 Mar 2026 17:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767313;
-	bh=pnOAVYl/IKSqKKyAuzZtJY9vXmYSy0z+FkgRyi8Rmwo=;
+	s=korg; t=1773767319;
+	bh=7umZ3xwWmASQpv0UBX8lCee6XY9PYlj28U8koN21Llk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RmK40EB4VfaW9DJo/E+lFm9tBXb4hfbrmnLKBEJFDnVNGzHfqw8LTdxJm7B0jO9GE
-	 quICNOZVDygIbaps+/WqtAKH5dEU/CV7aq6vdusokEbaUufKlLgOslfhLdxT/032Uz
-	 YnPXHpVmIqs4a3rfnOYW/5iF1DPzpjQ9CmoxIPgY=
+	b=hQddDyuAoC6/6O7u2xMzoOZLLzbZIJF+oKVtXzpodOUdun1dOw0hRqrND/xibWF1Z
+	 o5iC32VKxh1By4F+zBfK0n6tLWvJULeKBeD+qA7yNfheEqqZhuiD09MczpPvTD1QTN
+	 dXK2Jg3znjiC2p889NBZBfGsAnr4JTuHBHaH561c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 060/333] bonding: use common function to compute the features
-Date: Tue, 17 Mar 2026 17:31:29 +0100
-Message-ID: <20260317163001.596425705@linuxfoundation.org>
+Subject: [PATCH 6.18 061/333] bonding: fix type confusion in bond_setup_by_slave()
+Date: Tue, 17 Mar 2026 17:31:30 +0100
+Message-ID: <20260317163001.633301528@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,170 +53,149 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit d4fde269a970666a30dd3abd0413273a06dd972d ]
+[ Upstream commit 950803f7254721c1c15858fbbfae3deaaeeecb11 ]
 
-Use the new functon netdev_compute_master_upper_features() to compute the bonding
-features.
+kernel BUG at net/core/skbuff.c:2306!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:pskb_expand_head+0xa08/0xfe0 net/core/skbuff.c:2306
+RSP: 0018:ffffc90004aff760 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff88807e3c8780 RCX: ffffffff89593e0e
+RDX: ffff88807b7c4900 RSI: ffffffff89594747 RDI: ffff88807b7c4900
+RBP: 0000000000000820 R08: 0000000000000005 R09: 0000000000000000
+R10: 00000000961a63e0 R11: 0000000000000000 R12: ffff88807e3c8780
+R13: 00000000961a6560 R14: dffffc0000000000 R15: 00000000961a63e0
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe1a0ed8df0 CR3: 000000002d816000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ ipgre_header+0xdd/0x540 net/ipv4/ip_gre.c:900
+ dev_hard_header include/linux/netdevice.h:3439 [inline]
+ packet_snd net/packet/af_packet.c:3028 [inline]
+ packet_sendmsg+0x3ae5/0x53c0 net/packet/af_packet.c:3108
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg net/socket.c:742 [inline]
+ ____sys_sendmsg+0xa54/0xc30 net/socket.c:2592
+ ___sys_sendmsg+0x190/0x1e0 net/socket.c:2646
+ __sys_sendmsg+0x170/0x220 net/socket.c:2678
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x106/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe1a0e6c1a9
 
-Note that bond_compute_features() currently uses bond_for_each_slave()
-to traverse the lower devices list, and that is just a macro wrapper of
-netdev_for_each_lower_private(). We use similar helper
-netdev_for_each_lower_dev() in netdev_compute_master_upper_features() to
-iterate the slave device, as there is not need to get the private data.
+When a non-Ethernet device (e.g. GRE tunnel) is enslaved to a bond,
+bond_setup_by_slave() directly copies the slave's header_ops to the
+bond device:
 
-No functional change intended.
+    bond_dev->header_ops = slave_dev->header_ops;
 
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Sabrina Dubroca <sd@queasysnail.net>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://patch.msgid.link/20251017034155.61990-3-liuhangbin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 950803f72547 ("bonding: fix type confusion in bond_setup_by_slave()")
+This causes a type confusion when dev_hard_header() is later called
+on the bond device. Functions like ipgre_header(), ip6gre_header(),all use
+netdev_priv(dev) to access their device-specific private data. When
+called with the bond device, netdev_priv() returns the bond's private
+data (struct bonding) instead of the expected type (e.g. struct
+ip_tunnel), leading to garbage values being read and kernel crashes.
+
+Fix this by introducing bond_header_ops with wrapper functions that
+delegate to the active slave's header_ops using the slave's own
+device. This ensures netdev_priv() in the slave's header functions
+always receives the correct device.
+
+The fix is placed in the bonding driver rather than individual device
+drivers, as the root cause is bond blindly inheriting header_ops from
+the slave without considering that these callbacks expect a specific
+netdev_priv() layout.
+
+The type confusion can be observed by adding a printk in
+ipgre_header() and running the following commands:
+
+    ip link add dummy0 type dummy
+    ip addr add 10.0.0.1/24 dev dummy0
+    ip link set dummy0 up
+    ip link add gre1 type gre local 10.0.0.1
+    ip link add bond1 type bond mode active-backup
+    ip link set gre1 master bond1
+    ip link set gre1 up
+    ip link set bond1 up
+    ip addr add fe80::1/64 dev bond1
+
+Fixes: 1284cd3a2b74 ("bonding: two small fixes for IPoIB support")
+Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260306021508.222062-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 99 ++-------------------------------
- 1 file changed, 4 insertions(+), 95 deletions(-)
+ drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 322f910b06fc8..8be99ae67b77f 100644
+index 8be99ae67b77f..139ece7676c50 100644
 --- a/drivers/net/bonding/bond_main.c
 +++ b/drivers/net/bonding/bond_main.c
-@@ -1476,97 +1476,6 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+@@ -1476,6 +1476,50 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
  	return features;
  }
  
--#define BOND_VLAN_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
--				 NETIF_F_FRAGLIST | NETIF_F_GSO_SOFTWARE | \
--				 NETIF_F_GSO_ENCAP_ALL | \
--				 NETIF_F_HIGHDMA | NETIF_F_LRO)
--
--#define BOND_ENC_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
--				 NETIF_F_RXCSUM | NETIF_F_GSO_SOFTWARE | \
--				 NETIF_F_GSO_PARTIAL)
--
--#define BOND_MPLS_FEATURES	(NETIF_F_HW_CSUM | NETIF_F_SG | \
--				 NETIF_F_GSO_SOFTWARE)
--
--#define BOND_GSO_PARTIAL_FEATURES (NETIF_F_GSO_ESP)
--
--
--static void bond_compute_features(struct bonding *bond)
--{
--	netdev_features_t gso_partial_features = BOND_GSO_PARTIAL_FEATURES;
--	unsigned int dst_release_flag = IFF_XMIT_DST_RELEASE |
--					IFF_XMIT_DST_RELEASE_PERM;
--	netdev_features_t vlan_features = BOND_VLAN_FEATURES;
--	netdev_features_t enc_features  = BOND_ENC_FEATURES;
--#ifdef CONFIG_XFRM_OFFLOAD
--	netdev_features_t xfrm_features  = BOND_XFRM_FEATURES;
--#endif /* CONFIG_XFRM_OFFLOAD */
--	netdev_features_t mpls_features  = BOND_MPLS_FEATURES;
--	struct net_device *bond_dev = bond->dev;
--	struct list_head *iter;
--	struct slave *slave;
--	unsigned short max_hard_header_len = ETH_HLEN;
--	unsigned int tso_max_size = TSO_MAX_SIZE;
--	u16 tso_max_segs = TSO_MAX_SEGS;
--
--	if (!bond_has_slaves(bond))
--		goto done;
--
--	vlan_features = netdev_base_features(vlan_features);
--	mpls_features = netdev_base_features(mpls_features);
--
--	bond_for_each_slave(bond, slave, iter) {
--		vlan_features = netdev_increment_features(vlan_features,
--			slave->dev->vlan_features, BOND_VLAN_FEATURES);
--
--		enc_features = netdev_increment_features(enc_features,
--							 slave->dev->hw_enc_features,
--							 BOND_ENC_FEATURES);
--
--#ifdef CONFIG_XFRM_OFFLOAD
--		xfrm_features = netdev_increment_features(xfrm_features,
--							  slave->dev->hw_enc_features,
--							  BOND_XFRM_FEATURES);
--#endif /* CONFIG_XFRM_OFFLOAD */
--
--		gso_partial_features = netdev_increment_features(gso_partial_features,
--								 slave->dev->gso_partial_features,
--								 BOND_GSO_PARTIAL_FEATURES);
--
--		mpls_features = netdev_increment_features(mpls_features,
--							  slave->dev->mpls_features,
--							  BOND_MPLS_FEATURES);
--
--		dst_release_flag &= slave->dev->priv_flags;
--		if (slave->dev->hard_header_len > max_hard_header_len)
--			max_hard_header_len = slave->dev->hard_header_len;
--
--		tso_max_size = min(tso_max_size, slave->dev->tso_max_size);
--		tso_max_segs = min(tso_max_segs, slave->dev->tso_max_segs);
--	}
--	bond_dev->hard_header_len = max_hard_header_len;
--
--done:
--	bond_dev->gso_partial_features = gso_partial_features;
--	bond_dev->vlan_features = vlan_features;
--	bond_dev->hw_enc_features = enc_features | NETIF_F_GSO_ENCAP_ALL |
--				    NETIF_F_HW_VLAN_CTAG_TX |
--				    NETIF_F_HW_VLAN_STAG_TX;
--#ifdef CONFIG_XFRM_OFFLOAD
--	bond_dev->hw_enc_features |= xfrm_features;
--#endif /* CONFIG_XFRM_OFFLOAD */
--	bond_dev->mpls_features = mpls_features;
--	netif_set_tso_max_segs(bond_dev, tso_max_segs);
--	netif_set_tso_max_size(bond_dev, tso_max_size);
--
--	bond_dev->priv_flags &= ~IFF_XMIT_DST_RELEASE;
--	if ((bond_dev->priv_flags & IFF_XMIT_DST_RELEASE_PERM) &&
--	    dst_release_flag == (IFF_XMIT_DST_RELEASE | IFF_XMIT_DST_RELEASE_PERM))
--		bond_dev->priv_flags |= IFF_XMIT_DST_RELEASE;
--
--	netdev_change_features(bond_dev);
--}
--
++static int bond_header_create(struct sk_buff *skb, struct net_device *bond_dev,
++			      unsigned short type, const void *daddr,
++			      const void *saddr, unsigned int len)
++{
++	struct bonding *bond = netdev_priv(bond_dev);
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
++
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->create)
++			ret = slave_ops->create(skb, slave->dev,
++						type, daddr, saddr, len);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static int bond_header_parse(const struct sk_buff *skb, unsigned char *haddr)
++{
++	struct bonding *bond = netdev_priv(skb->dev);
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
++
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->parse)
++			ret = slave_ops->parse(skb, haddr);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static const struct header_ops bond_header_ops = {
++	.create	= bond_header_create,
++	.parse	= bond_header_parse,
++};
++
  static void bond_setup_by_slave(struct net_device *bond_dev,
  				struct net_device *slave_dev)
  {
-@@ -2287,7 +2196,7 @@ int bond_enslave(struct net_device *bond_dev, struct net_device *slave_dev,
- 	}
+@@ -1483,7 +1527,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
  
- 	bond->slave_cnt++;
--	bond_compute_features(bond);
-+	netdev_compute_master_upper_features(bond->dev, true);
- 	bond_set_carrier(bond);
+ 	dev_close(bond_dev);
  
- 	/* Needs to be called before bond_select_active_slave(), which will
-@@ -2542,7 +2451,7 @@ static int __bond_release_one(struct net_device *bond_dev,
- 		call_netdevice_notifiers(NETDEV_RELEASE, bond->dev);
- 	}
+-	bond_dev->header_ops	    = slave_dev->header_ops;
++	bond_dev->header_ops	    = slave_dev->header_ops ?
++				      &bond_header_ops : NULL;
  
--	bond_compute_features(bond);
-+	netdev_compute_master_upper_features(bond->dev, true);
- 	if (!(bond_dev->features & NETIF_F_VLAN_CHALLENGED) &&
- 	    (old_features & NETIF_F_VLAN_CHALLENGED))
- 		slave_info(bond_dev, slave_dev, "last VLAN challenged slave left bond - VLAN blocking is removed\n");
-@@ -4050,7 +3959,7 @@ static int bond_slave_netdev_event(unsigned long event,
- 	case NETDEV_FEAT_CHANGE:
- 		if (!bond->notifier_ctx) {
- 			bond->notifier_ctx = true;
--			bond_compute_features(bond);
-+			netdev_compute_master_upper_features(bond->dev, true);
- 			bond->notifier_ctx = false;
- 		}
- 		break;
-@@ -6043,7 +5952,7 @@ void bond_setup(struct net_device *bond_dev)
- 	 * capable
- 	 */
- 
--	bond_dev->hw_features = BOND_VLAN_FEATURES |
-+	bond_dev->hw_features = MASTER_UPPER_DEV_VLAN_FEATURES |
- 				NETIF_F_HW_VLAN_CTAG_RX |
- 				NETIF_F_HW_VLAN_CTAG_FILTER |
- 				NETIF_F_HW_VLAN_STAG_RX |
+ 	bond_dev->type		    = slave_dev->type;
+ 	bond_dev->hard_header_len   = slave_dev->hard_header_len;
 -- 
 2.51.0
 
