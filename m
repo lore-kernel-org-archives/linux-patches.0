@@ -1,43 +1,44 @@
 Received: from mail.8bytes.org (mail.8bytes.org [85.214.250.239])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 91ECC3BFE36;
-	Tue, 17 Mar 2026 12:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 09C403C3BFB;
+	Tue, 17 Mar 2026 12:58:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=85.214.250.239
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773749750; cv=none; b=JHtjVFOpfVDwQsZKifpkON+o+68XLK1vGcnib2EOuKE7hLt1F3/Ua6ztA3bhCHqH8vnfLOcoCSdRCPjm5feWbiV2QASNzB/FReo+7b6BYgUvohIG9gqAHSS6xLHNLJm3JsUqIZsdbGib55BEqKjC3qQFVhLwUdB0Y8u4uamoE6o=
+	t=1773752287; cv=none; b=bD+LxlxjGbQBzGpClCM2zGx0IALGg7QCugnUrKWRgATfqriPdoTgrV2GFf4XRdzTfvUWy0A45CDApRT2giWko6hUpZXEAIHLOTRORXU38SiIGyc4cuDRO5OnXou7EJTdegMRcmM3rLkJEBuV7A+eybTy5m4xWUxqfbDVs5W9L98=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773749750; c=relaxed/simple;
-	bh=x69p62NX3k7xnp6+24OeE4Q9CclvuUZRZXYrHclJLo0=;
+	s=arc-20240116; t=1773752287; c=relaxed/simple;
+	bh=9/uo9pkdjaiyCRV4F24AuW12EWeVepIUAq+b4QEN54k=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eoCj0L1hPCGQwAEYp6urKZbvQAU5meI3NdYCjugqkg11ElxkcVpEm0SchkvvuZNg0iMRu4cni1EC40/xKhFrlRyUQYJOooHKti4fVGrO9QEEk1XNlXmIecR52Zn352VhixF3m+I7tfhy2CcqQ7pl2k1oBsp9cPVA0kbgM7SvWbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=zVGZvwak; arc=none smtp.client-ip=85.214.250.239
+	 Content-Type:Content-Disposition:In-Reply-To; b=o88MdULxIHNyb2l3yXAqH461DpIkb4hLhs9/73gUpfB/hRbSiiz0ER7GS4LGKVZLBEnDYWoVyT5TClpSnr3RNY49vx+JcdmpYSDmEk01GDpJl8MeqnZ/2mUq4of+dJM37kUbIjYG/adtesnlZeGXhlLIK7cK/eSfs8tNX6sI3Y0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org; spf=pass smtp.mailfrom=8bytes.org; dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b=BkA0fEKb; arc=none smtp.client-ip=85.214.250.239
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=8bytes.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="zVGZvwak"
+	dkim=pass (2048-bit key) header.d=8bytes.org header.i=@8bytes.org header.b="BkA0fEKb"
 Received: from 8bytes.org (p4ffe051a.dip0.t-ipconnect.de [79.254.5.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.8bytes.org (Postfix) with ESMTPSA id BA1871A5929;
-	Tue, 17 Mar 2026 13:15:48 +0100 (CET)
+	by mail.8bytes.org (Postfix) with ESMTPSA id 1E64B1A527B;
+	Tue, 17 Mar 2026 13:58:05 +0100 (CET)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=8bytes.org;
-	s=default; t=1773749748;
-	bh=x69p62NX3k7xnp6+24OeE4Q9CclvuUZRZXYrHclJLo0=;
+	s=default; t=1773752285;
+	bh=9/uo9pkdjaiyCRV4F24AuW12EWeVepIUAq+b4QEN54k=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zVGZvwakfCUV8llgZRmqGbUwbEFrAqeg9oMMTSOBfK8n67U6El1vUX8Tjsuy4nJQY
-	 OQUaWXSw1YLtcfBQ+kAxzrcLTMr7EbdicpwZVGdhQbno3BxrjCFDA3YzxWGHzoiWc4
-	 R2szJp9vS6Yagfev0EjW4YTuxx8+BGQLotQZggUj9D3G/SOmuBRVogh1YI/vNS536E
-	 UM7wswZqfH/CAuai8YnES0q9NERdjhCs3UajIB9deDtLq3lG6LJ9J1zixDk1dlrUig
-	 FldGBHjO0+fHNTkqviey5Ck9RXnSgqsnfuOxTaipmHal0rzJKABek2bG/YCyXkhRF4
-	 rPZZhzP49Gnfg==
-Date: Tue, 17 Mar 2026 13:15:47 +0100
+	b=BkA0fEKbn4NpVHfREskn/Jx0rEZuzKwlRIH0shji5VkycZU0stcYtrq4Xzc7o/TsP
+	 pAYPqeWP1mSBlnft5T5NGl65schhErNm27qfhRwNDpVyRsC4Pt8y13/i+xB4aDesw0
+	 T8q6PTSfL0EbPvTiP4Ejh8A2Km2pXzTm5BlmLochzeAjYlIRzuBFQWKlOLdihAkrFV
+	 H6vuAr++ZtuZYoXwInzrp55kLqpUWYnS3fJzv78ldjDlUKEYoWzp44CPm65/FgSIWf
+	 tP8DHm7URml++h4HMSb2LeXZg/J1FHkvwyTkQGKwhs6zjSQEMRMVTZdqbryeBj3AyP
+	 xFprgXdUNs+yw==
+Date: Tue, 17 Mar 2026 13:58:04 +0100
 From: Joerg Roedel <joro@8bytes.org>
 To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Will Deacon <will@kernel.org>, 
-	patches@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [PATCH] iommupt: Optimize the gather processing for DMA-FQ mode
-Message-ID: <6sqmt6ycp6tapxeqx64jncuw2zosnwvv3zzm2dksg3r2w2rvru@xc3zymvoniiv>
-References: <0-v1-37d146e56632+ce4-iommupt_no_gaps_fq_jgg@nvidia.com>
+Cc: iommu@lists.linux.dev, Robin Murphy <robin.murphy@arm.com>, 
+	Will Deacon <will@kernel.org>, Kevin Tian <kevin.tian@intel.com>, patches@lists.linux.dev, 
+	Samiullah Khawaja <skhawaja@google.com>
+Subject: Re: [PATCH v3 0/2] Let iommupt manage changes in page size internally
+Message-ID: <mmdfnhx7ji7v74rnbpn6j4faiefanseisjgfikt6rwlbjgli6y@ilyt5vis4cdu>
+References: <0-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,25 +47,19 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0-v1-37d146e56632+ce4-iommupt_no_gaps_fq_jgg@nvidia.com>
+In-Reply-To: <0-v3-a1777ea76519+370f-iommpt_map_direct_jgg@nvidia.com>
 
-On Fri, Feb 27, 2026 at 11:27:02AM -0400, Jason Gunthorpe wrote:
-> In PT_FEAT_FLUSH_RANGE mode the gather was accumulated but never flushed
-> and then the accumulated range was discarded by the dma-iommu code in
-> DMA-FQ mode. This is basically optimal.
+On Fri, Feb 27, 2026 at 03:30:09PM -0400, Jason Gunthorpe wrote:
+> Jason Gunthorpe (2):
+>   iommupt: Directly call iommupt's unmap_range()
+>   iommupt: Avoid rewalking during map
 > 
-> However for PT_FEAT_FLUSH_RANGE_NO_GAPS the page table would push flushes
-> that are redundant with the flush all generated by the DMA-FQ mode.
-> 
-> Disable all range accumulation in the gather, and iommu_pt triggered
-> flushing when in iommu_iotlb_gather_queued() indicates it is in DMA-FQ
-> mode.
-> 
-> Reported-by: Robin Murphy <robin.murphy@arm.com>
-> Closes: https://lore.kernel.org/r/794b6121-b66b-4819-b291-9761ed21cd83@arm.com
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/iommu/generic_pt/iommu_pt.h | 27 +++++++++++++++++++--------
->  1 file changed, 19 insertions(+), 8 deletions(-)
+>  drivers/iommu/generic_pt/iommu_pt.h         | 162 +++++++++++---------
+>  drivers/iommu/generic_pt/kunit_generic_pt.h |  12 ++
+>  drivers/iommu/generic_pt/pt_iter.h          |  22 +++
+>  drivers/iommu/iommu.c                       |  66 ++++++--
+>  include/linux/generic_pt/iommu.h            |  69 +++++++--
+>  include/linux/iommu.h                       |   1 +
+>  6 files changed, 231 insertions(+), 101 deletions(-)
 
 Applied, thanks.
