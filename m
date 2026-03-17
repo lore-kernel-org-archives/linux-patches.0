@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25FF13F210B;
-	Tue, 17 Mar 2026 16:46:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7173A3F2103;
+	Tue, 17 Mar 2026 16:46:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765980; cv=none; b=Kntwo4YmKc0ybi05VX4ZEF3p7B5d+szkjjrIBcd5np74hcfAsnPjyoPZYh9oXfTirAD5R/UOYbssX+PU3yZDer1HSiA8bZL6qsCsoIPrEj5Y506LAKggPhAr+UtdL6TveHWowGxF+qTiMEipjHMme9QRd0ktDrupjLHLSAS/J5w=
+	t=1773765984; cv=none; b=bez1PSEftJEDuQL/sbEsgEYHCoEh5+Q6wsNfGY+JdKcvWktn0eWSB3pEyjp0VbQ5imwgZdhvfqgieoJtzNkZmcPuei6sV5Z0JGM6nA740RgPnOnJe/GFFff0Xm/EvC1K5hSJ89W3qB5QXt+nbx3iwb0QbDxEOuK0U/zgLLKyeSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765980; c=relaxed/simple;
-	bh=oDPAgEIb0eR2kKiShX++j1qtDrG68BZE6+/fvx9QZlM=;
+	s=arc-20240116; t=1773765984; c=relaxed/simple;
+	bh=W47H5bDcoBVItdOPbjzqsro59xe47r9FcTCui0VC9l0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cywnMh/16zzficcBB+YIMPcrckg1xL0O2NCDmLkTOTB4LXAokVV7GdkHIxfazYtQI7pvpJVrrT8XWCpwAIxUJyRWdsQP1icfKCNwD+lOYM+MW89omnNb0vYSFZVWbOHZiziSG53XwEcDigzpCygMaG03cNRBWADJseA+K2GrCSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JQE5fHq8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=V1/BfYJ4/jKz82KLoGT92iL652IeErSP3oLFyMyW9K/HY9cogM4VFcuYnz/S7k1bWkMvE5NkQYJN492lJxAkyuHeq3Gc7rMHzQeGxbTrz9/FDohOOZulWNdCgVg3VFAjnDZWhQVSs68TYhkX5GCN3D4bDDZpvaqgKfjX1uRYbbE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyxV/IUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JQE5fHq8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435A3C2BC86;
-	Tue, 17 Mar 2026 16:46:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyxV/IUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA53C4CEF7;
+	Tue, 17 Mar 2026 16:46:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765979;
-	bh=oDPAgEIb0eR2kKiShX++j1qtDrG68BZE6+/fvx9QZlM=;
+	s=korg; t=1773765984;
+	bh=W47H5bDcoBVItdOPbjzqsro59xe47r9FcTCui0VC9l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JQE5fHq8P4OxdtzIq/Sqe0sPtnyhcWwc7lKxW1uKo6lDDCYUqXKQEnFeQYRZSwzw8
-	 XKr9KFmgkCqa+eyO+TX16v01nEd6tjHOa14ASI+hjtqTRA2b3N/1lZ/IAeTDBA/RML
-	 A4HH5AqG1smjlzBZso8U++AXtlQn95FYNaJ5rZM8=
+	b=CyxV/IUDQiS7Y2T9J0nXFZjVsFK1SIT/dm354EcMWQvIAU+z2hrZRsHMoatIBsmcd
+	 hZJnOgSRiFChy5G5NdGH+jejOsbS0EmdRlrlVdjjVG7EyJuaEAieWova6SRm23xdup
+	 70WAKuR7H+mhyQh55E0+UI/KV+ZqR5uEmxWvph3U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Christoffer Sandberg <cs@tuxedo.de>,
-	Werner Sembach <wse@tuxedocomputers.com>
-Subject: [PATCH 6.19 143/378] usb/core/quirks: Add Huawei ME906S-device to wakeup quirk
-Date: Tue, 17 Mar 2026 17:31:40 +0100
-Message-ID: <20260317163012.278041934@linuxfoundation.org>
+	Vyacheslav Vahnenko <vahnenko2003@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.19 144/378] USB: ezcap401 needs USB_QUIRK_NO_BOS to function on 10gbs usb speed
+Date: Tue, 17 Mar 2026 17:31:41 +0100
+Message-ID: <20260317163012.314522580@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,36 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoffer Sandberg <cs@tuxedo.de>
+From: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
 
-commit 0326ff28d56b4fa202de36ffc8462a354f383a64 upstream.
+commit d0d9b1f4f5391e6a00cee81d73ed2e8f98446d5f upstream.
 
-Similar to other Huawei LTE modules using this quirk, this version with
-another vid/pid suffers from spurious wakeups.
+Add USB_QUIRK_NO_BOS for ezcap401 capture card, without it dmesg will show
+"unable to get BOS descriptor or descriptor too short" and "unable to
+read config index 0 descriptor/start: -71" errors and device will not
+able to work at full speed at 10gbs
 
-Setting the quirk fixes the issue for this device as well.
-
+Signed-off-by: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Christoffer Sandberg <cs@tuxedo.de>
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Link: https://patch.msgid.link/20260306172817.2098898-1-wse@tuxedocomputers.com
+Link: https://patch.msgid.link/20260313123638.20481-1-vahnenko2003@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/usb/core/quirks.c
 +++ b/drivers/usb/core/quirks.c
-@@ -208,6 +208,10 @@ static const struct usb_device_id usb_qu
- 	/* HP v222w 16GB Mini USB Drive */
- 	{ USB_DEVICE(0x03f0, 0x3f40), .driver_info = USB_QUIRK_DELAY_INIT },
+@@ -588,6 +588,9 @@ static const struct usb_device_id usb_qu
+ 	/* Alcor Link AK9563 SC Reader used in 2022 Lenovo ThinkPads */
+ 	{ USB_DEVICE(0x2ce3, 0x9563), .driver_info = USB_QUIRK_NO_LPM },
  
-+	/* Huawei 4G LTE module ME906S  */
-+	{ USB_DEVICE(0x03f0, 0xa31d), .driver_info =
-+			USB_QUIRK_DISCONNECT_SUSPEND },
++	/* ezcap401 - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x32ed, 0x0401), .driver_info = USB_QUIRK_NO_BOS },
 +
- 	/* Creative SB Audigy 2 NX */
- 	{ USB_DEVICE(0x041e, 0x3020), .driver_info = USB_QUIRK_RESET_RESUME },
+ 	/* DELL USB GEN2 */
+ 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
  
 
 
