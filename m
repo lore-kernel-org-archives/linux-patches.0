@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79163ED10D;
-	Tue, 17 Mar 2026 16:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7053ED135;
+	Tue, 17 Mar 2026 16:41:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765681; cv=none; b=huFD1xVv49RvkWGfJbbpF1jMLIm9wQ5AfeoMAF76ou73DoHXhlxBBUbaahTxXaXfsBeu0EKg/cvz5vIW0AL/xnu8Ya2QlCJgDUujkRtHifpgUCoY1SRlMyjDy2XPn6R8p6q/O76SVSIXIghJj2DuvDebCC1DbCZlrs9c05zlcQo=
+	t=1773765685; cv=none; b=M7gdjdVJ4OGCRh/WJWadEe+qKtB3FRGu77c7EX/Qanx1AUKH01Vng6hzwhav3tmeB82DqVVohXM01cx7x8364rWikOeFyADPOcUa4OrtkFeZW7FlNXbbY9Jm/MkxA/n17YZwRIdYWdnPpSyuW1iVAy8vi7MBwZhRvTDOU5f0Uq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765681; c=relaxed/simple;
-	bh=yYhxEHxzjyyT1UQkOldvULUl8xrEIXIzvwIj2lbtIho=;
+	s=arc-20240116; t=1773765685; c=relaxed/simple;
+	bh=gS9slH6yVBUsBIlxjvwU4Y75OIr12tT1wu+n2JsalXY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P1+ikM5knhHGp4PtpB/BA3FPjgYedlTyH14rQWZAObkhQtzwUvM73xuj3V240CWwmFZv95+Ol+ZyX9f2vWqHCBFxZp0ZeMrR7FPLvDku3G8N0kgC9tP0V3qNJdyFnoD3O0CdQflCtPc4IR96TR9fMN0MV0VqimbQbthEAKiA/cA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J22PNSby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tb5lEmw9MyH78KRtlZ4ip2nwx4eTVSR9bOwHMWuo5ZmrOc0bFHI3mUs5Pim0WVCtxymcy3TFneFDaKr0SBvSGnbM3VUa2CrUsCdXeRky3NQPuuKdJ/eqgdFkuwhBQs7S0Op3x+3iM0Y+Nuw8xGTXOcMrWIhSUPGzCsqo1NM7WPc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YV3l2GEB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J22PNSby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A03C19424;
-	Tue, 17 Mar 2026 16:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YV3l2GEB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F143DC4CEF7;
+	Tue, 17 Mar 2026 16:41:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765681;
-	bh=yYhxEHxzjyyT1UQkOldvULUl8xrEIXIzvwIj2lbtIho=;
+	s=korg; t=1773765685;
+	bh=gS9slH6yVBUsBIlxjvwU4Y75OIr12tT1wu+n2JsalXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J22PNSbypszpCS0Zq/bZXVjubjFJDv8W+iiklu+Ch9mRAADaZhN5/lqUJuyl8rax2
-	 X/mta200hCZCS6Jh+bNeYGP5QrUaN8gpEwd3EMStAS6V9WdopTDMeK/Zx220BxV7ye
-	 FOwGqQsqHJSzuLeODUadlN/1tk76QG+MW+bIpOzI=
+	b=YV3l2GEByfbhnRPlFkLQCRe7dpso84B5k/gh3kYAEoY5jyZgavl889SL7ltehf6f9
+	 bsyxtHWYKy8DoSIIvxxdBkTtgCNvkIw+S7FXim9F/JY5NiWbSdVv5YFR0YqRLX/bCz
+	 L3wyLPG/M6mU3sIJzFiSZUAMYD1q2KKFL944bwIw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 069/378] mctp: route: hold key->lock in mctp_flow_prepare_output()
-Date: Tue, 17 Mar 2026 17:30:26 +0100
-Message-ID: <20260317163009.557235971@linuxfoundation.org>
+Subject: [PATCH 6.19 070/378] amd-xgbe: fix link status handling in xgbe_rx_adaptation
+Date: Tue, 17 Mar 2026 17:30:27 +0100
+Message-ID: <20260317163009.593618918@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,83 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 7d86aa41c073c4e7eb75fd2e674f1fd8f289728a ]
+[ Upstream commit 6485cb96be5cd0f4bf39554737ba11322cc9b053 ]
 
-mctp_flow_prepare_output() checks key->dev and may call
-mctp_dev_set_key(), but it does not hold key->lock while doing so.
+The link status bit is latched low to allow detection of momentary
+link drops. If the status indicates that the link is already down,
+read it again to obtain the current state.
 
-mctp_dev_set_key() and mctp_dev_release_key() are annotated with
-__must_hold(&key->lock), so key->dev access is intended to be
-serialized by key->lock. The mctp_sendmsg() transmit path reaches
-mctp_flow_prepare_output() via mctp_local_output() -> mctp_dst_output()
-without holding key->lock, so the check-and-set sequence is racy.
-
-Example interleaving:
-
-  CPU0                                  CPU1
-  ----                                  ----
-  mctp_flow_prepare_output(key, devA)
-    if (!key->dev)  // sees NULL
-                                        mctp_flow_prepare_output(
-                                            key, devB)
-                                          if (!key->dev)  // still NULL
-                                          mctp_dev_set_key(devB, key)
-                                            mctp_dev_hold(devB)
-                                            key->dev = devB
-    mctp_dev_set_key(devA, key)
-      mctp_dev_hold(devA)
-      key->dev = devA   // overwrites devB
-
-Now both devA and devB references were acquired, but only the final
-key->dev value is tracked for release. One reference can be lost,
-causing a resource leak as mctp_dev_release_key() would only decrease
-the reference on one dev.
-
-Fix by taking key->lock around the key->dev check and
-mctp_dev_set_key() call.
-
-Fixes: 67737c457281 ("mctp: Pass flow data & flow release events to drivers")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://patch.msgid.link/20260306031402.857224-1-dg573847474@gmail.com
+Fixes: 4f3b20bfbb75 ("amd-xgbe: add support for rx-adaptation")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260306111629.1515676-2-Raju.Rangoju@amd.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index ecbbe4beb2133..7a94b58f00978 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -359,6 +359,7 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index c63ddb12237ea..13c556dc0d67a 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -1942,7 +1942,7 @@ static void xgbe_set_rx_adap_mode(struct xgbe_prv_data *pdata,
+ static void xgbe_rx_adaptation(struct xgbe_prv_data *pdata)
  {
- 	struct mctp_sk_key *key;
- 	struct mctp_flow *flow;
-+	unsigned long flags;
+ 	struct xgbe_phy_data *phy_data = pdata->phy_data;
+-	unsigned int reg;
++	int reg;
  
- 	flow = skb_ext_find(skb, SKB_EXT_MCTP);
- 	if (!flow)
-@@ -366,12 +367,14 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+ 	/* step 2: force PCS to send RX_ADAPT Req to PHY */
+ 	XMDIO_WRITE_BITS(pdata, MDIO_MMD_PMAPMD, MDIO_PMA_RX_EQ_CTRL4,
+@@ -1964,11 +1964,20 @@ static void xgbe_rx_adaptation(struct xgbe_prv_data *pdata)
  
- 	key = flow->key;
+ 	/* Step 4: Check for Block lock */
  
--	if (key->dev) {
-+	spin_lock_irqsave(&key->lock, flags);
+-	/* Link status is latched low, so read once to clear
+-	 * and then read again to get current state
+-	 */
+-	reg = XMDIO_READ(pdata, MDIO_MMD_PCS, MDIO_STAT1);
+ 	reg = XMDIO_READ(pdata, MDIO_MMD_PCS, MDIO_STAT1);
++	if (reg < 0)
++		goto set_mode;
 +
-+	if (!key->dev)
-+		mctp_dev_set_key(dev, key);
-+	else
- 		WARN_ON(key->dev != dev);
--		return;
--	}
- 
--	mctp_dev_set_key(dev, key);
-+	spin_unlock_irqrestore(&key->lock, flags);
- }
- #else
- static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
++	/* Link status is latched low so that momentary link drops
++	 * can be detected. If link was already down read again
++	 * to get the latest state.
++	 */
++	if (!pdata->phy.link && !(reg & MDIO_STAT1_LSTATUS)) {
++		reg = XMDIO_READ(pdata, MDIO_MMD_PCS, MDIO_STAT1);
++		if (reg < 0)
++			goto set_mode;
++	}
++
+ 	if (reg & MDIO_STAT1_LSTATUS) {
+ 		/* If the block lock is found, update the helpers
+ 		 * and declare the link up
 -- 
 2.51.0
 
