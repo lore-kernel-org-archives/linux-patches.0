@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E85A357A4A;
-	Tue, 17 Mar 2026 16:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A05B3F23DD;
+	Tue, 17 Mar 2026 16:59:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766783; cv=none; b=I0uiQ1WwJKQYTUug6QXyU+lr617AY9HmmrSQhB1bifnJIa66ZyxNSPii+XDzc10/0ohTSZ3hHh8mdRLx6jinWtaJ8OExStvLwtxfS+rogmIjhsx58WZo6Mbsq5wVtcw2KetZD+n/6pqtAlPeKwpMgWzmyTbE5pdntm6EulLZ4dg=
+	t=1773766788; cv=none; b=kYXBNiozSNsWc386HIDSdsHd0iTToHhSV7BTV7r5SFRXRPicoQCM6G6wfV8qMqNrxs11tefzudEM4cs6IBIYMv9UeWl3c4Kzbk/pVy69VpkjrXnsecYj+UNyvuSve3TOQa8JaKI3q53QljTHpzPclY8LSWZmUcQsN/BEbAzyg2s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766783; c=relaxed/simple;
-	bh=kpVvomIlLaS9tQl93XxYsP1DeR2Ee43brCw6FpvmwBY=;
+	s=arc-20240116; t=1773766788; c=relaxed/simple;
+	bh=g+g1yRSEiUXKrVCsJ+V6jIlUSu7oMsp7gHBRWasYOwA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R5bOAB3YHkuBzQAQ3gscdfj5VXOM40qz2ghzRujl7rGAh6sB9pIV5BtV1+eDy+Ho5/PkiC/4NiCNkgBneYKGosDmasGqLsDJ44+0mJv6jl4dctINHaw9G/Gk2bi7QZPr0+4nY1EiHEgSls0zRf2DkqNTDmmNsqfjJn7AOHXykVQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dHG/lYmY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ya1+JlD1MQ2wzGK9nJkg4npnFZMjasJa6B17UmwYvzwoONBQ+xELiL+ZZqLnQKUBtVHsMwO5+AgVJCjLX1myoksD5C6xSdzFLG4umDib8KyusQO/5POZzNxBQeQQzPnm36RouUff3Sbj2E3SmtJVq2GKz+kWrLOBoLQz210l1ek=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AWnvkM09; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dHG/lYmY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC44C4CEF7;
-	Tue, 17 Mar 2026 16:59:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AWnvkM09"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C41C4CEF7;
+	Tue, 17 Mar 2026 16:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766782;
-	bh=kpVvomIlLaS9tQl93XxYsP1DeR2Ee43brCw6FpvmwBY=;
+	s=korg; t=1773766787;
+	bh=g+g1yRSEiUXKrVCsJ+V6jIlUSu7oMsp7gHBRWasYOwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dHG/lYmYIzQn8oqZZ2GOUXDmLk6lcUa8pmLiIYNq8AJfY3F2QunYs4XmcEH+4Mr6i
-	 7I46jFsRL4wP5K+0twiGeyEurgRDoSUKXmTaIv+NqFXEjh6/H7vTOlMJBjoWhn6Be3
-	 7gp+AzmBoQZYtXaExEB0Hq4hwC6ozTBz9HS+O4is=
+	b=AWnvkM09eUwaqxasMvQNXGUlsJ8ETSVc3/G6hgHCvowcveSu/hn2ctSbpoP1av7Za
+	 A1+sHxt3Q1LquSf8g3I14eu4HlZeOHoUrI+xM8g+o9Nb90UBsl/Hb4JNQ2ddIUW/Lk
+	 Pp+HBBbR/ghBsutw1GvtQ0KANrN4//oDftZ5xeMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.19 321/378] xfs: fix undersized l_iclog_roundoff values
-Date: Tue, 17 Mar 2026 17:34:38 +0100
-Message-ID: <20260317163018.800140669@linuxfoundation.org>
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.19 304/378] drm/bridge: ti-sn65dsi83: fix CHA_DSI_CLK_RANGE rounding
+Date: Tue, 17 Mar 2026 17:34:21 +0100
+Message-ID: <20260317163018.186593824@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,66 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit 52a8a1ba883defbfe3200baa22cf4cd21985d51a upstream.
+commit 2f22702dc0fee06a240404e0f7ead5b789b253d8 upstream.
 
-If the superblock doesn't list a log stripe unit, we set the incore log
-roundoff value to 512.  This leads to corrupt logs and unmountable
-filesystems in generic/617 on a disk with 4k physical sectors...
+The DSI frequency must be in the range:
 
-XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
-XFS (sda1): Torn write (CRC failure) detected at log block 0x318e. Truncating head block from 0x3197.
-XFS (sda1): failed to locate log tail
-XFS (sda1): log mount/recovery failed: error -74
-XFS (sda1): log mount failed
-XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
-XFS (sda1): Ending clean mount
+  (CHA_DSI_CLK_RANGE * 5 MHz) <= DSI freq < ((CHA_DSI_CLK_RANGE + 1) * 5 MHz)
 
-...on the current xfsprogs for-next which has a broken mkfs.  xfs_info
-shows this...
+So the register value should point to the lower range value, but
+DIV_ROUND_UP() rounds the division to the higher range value, resulting in
+an excess of 1 (unless the frequency is an exact multiple of 5 MHz).
 
-meta-data=/dev/sda1              isize=512    agcount=4, agsize=644992 blks
-         =                       sectsz=4096  attr=2, projid32bit=1
-         =                       crc=1        finobt=1, sparse=1, rmapbt=1
-         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
-         =                       exchange=1   metadir=1
-data     =                       bsize=4096   blocks=2579968, imaxpct=25
-         =                       sunit=0      swidth=0 blks
-naming   =version 2              bsize=4096   ascii-ci=0, ftype=1, parent=1
-log      =internal log           bsize=4096   blocks=16384, version=2
-         =                       sectsz=4096  sunit=0 blks, lazy-count=1
-realtime =none                   extsz=4096   blocks=0, rtextents=0
-         =                       rgcount=0    rgsize=268435456 extents
-         =                       zoned=0      start=0 reserved=0
+For example for a 437100000 MHz clock CHA_DSI_CLK_RANGE should be 87 (0x57):
 
-...observe that the log section has sectsz=4096 sunit=0, which means
-that the roundoff factor is 512, not 4096 as you'd expect.  We should
-fix mkfs not to generate broken filesystems, but anyone can fuzz the
-ondisk superblock so we should be more cautious.  I think the inadequate
-logic predates commit a6a65fef5ef8d0, but that's clearly going to
-require a different backport.
+  (87 * 5 = 435) <= 437.1 < (88 * 5 = 440)
 
-Cc: stable@vger.kernel.org # v5.14
-Fixes: a6a65fef5ef8d0 ("xfs: log stripe roundoff is a property of the log")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
+but current code returns 88 (0x58).
+
+Fix the computation by removing the DIV_ROUND_UP().
+
+Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
+Cc: stable@vger.kernel.org
+Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
+Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-1-2e15f5a9a6a0@bootlin.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1399,6 +1399,8 @@ xlog_alloc_log(
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -351,9 +351,9 @@ static u8 sn65dsi83_get_dsi_range(struct
+ 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
+ 	 * the 2 is there because the bus is DDR.
+ 	 */
+-	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
+-			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
+-			    ctx->dsi->lanes / 2, 40000U, 500000U), 5000U);
++	return clamp((unsigned int)mode->clock *
++		     mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
++		     ctx->dsi->lanes / 2, 40000U, 500000U) / 5000U;
+ }
  
- 	if (xfs_has_logv2(mp) && mp->m_sb.sb_logsunit > 1)
- 		log->l_iclog_roundoff = mp->m_sb.sb_logsunit;
-+	else if (mp->m_sb.sb_logsectsize > 0)
-+		log->l_iclog_roundoff = mp->m_sb.sb_logsectsize;
- 	else
- 		log->l_iclog_roundoff = BBSIZE;
- 
+ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
 
 
