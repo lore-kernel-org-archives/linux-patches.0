@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4182A36EABC;
-	Tue, 17 Mar 2026 17:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07DB2D739D;
+	Tue, 17 Mar 2026 17:23:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768214; cv=none; b=lV7PLl1JNrvrRVjv449rumQ5c3hVV5gO1uuXGdmddLNjcCrHopVRNcMsJ9Aq25RFM2cmhdYxy/8BJ+IIC2e72xzJLCOZ/amUup/05whkASpI7NffguypIAHr7jglasM5i1Q2YyzWVYSxIS7MXnHKOwSlOTvTnY7dcURrPITG0o0=
+	t=1773768217; cv=none; b=hqimy7nWczDNlrpcZgx2udFXiG3M4AynREFBAKWO5dBJgG/dGPjpf6UfXhM01rpXFKumHQ9BCoC0mwfWgGavm20HHd0g5lGoDSv5Ewcmn7mqney77QM3ldBSbylZw06+yopbwr0wK2GA9X8ki8WlUDcelV0Sd+D8UlVgEEeYaf0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768214; c=relaxed/simple;
-	bh=TW50JkB5zydTbsiLTm7aQp7GLIm3cpZDg9BHaggENTg=;
+	s=arc-20240116; t=1773768217; c=relaxed/simple;
+	bh=mA6HIoCs5IlvLShF4NvVboifBuS7XTyq9vfwpLcCIGQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F6d/nnrjgXJi1nShBGunyniAiMNC7CZT3ZP00vIweL39I4j+SbjCt5rcLrg8xneWEI+JqADzLvtVnmHscMdtdxfi4lDiyV4SjdOy9fxJVVBhuP8uyzD6b/2mweR2DlqdCEB4ognVqg2VtKDfKlfK/N0N1gz1ZBNlyCCq9L0zf5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qNL19uSS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pnW+ioTpPVEq5vBQkLgDr4+UpVkepMk2d2KEN9MfOTCOMehBpWeg70bV+vdIthIppoKkmJrq04A5KWGi0R40dnOS011HFE0gWe5rkvut1lPqUK6giueUeqf48ihrJun33ZDI6RPhWUJ464PSZpEIMLJptl8BdGrb1C+cJzCx0Uo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d74W1OPn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qNL19uSS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A71DEC4CEF7;
-	Tue, 17 Mar 2026 17:23:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d74W1OPn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5527EC4CEF7;
+	Tue, 17 Mar 2026 17:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768214;
-	bh=TW50JkB5zydTbsiLTm7aQp7GLIm3cpZDg9BHaggENTg=;
+	s=korg; t=1773768217;
+	bh=mA6HIoCs5IlvLShF4NvVboifBuS7XTyq9vfwpLcCIGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNL19uSSHwyXY6Q6ymd4oiLLK3LAK3AhAPGkTdkCCiwZg7XuQrk/cTHNbuEyanAuv
-	 8shpwrAuSS8E8yALh81pcuryFN/DcyST2cWCWETgaZ79x83FTPl4bWBjAK8/jLeHii
-	 tcLIjEljO14IGtxJJX8nIR8guEUitPFfXrX23UBc=
+	b=d74W1OPnXLMZAmf5cz/9b3x3N3qvLcebNFTbCb/Q9GXARV7bnWrUYY7MuLJaHBYYQ
+	 JE+ZO3uT1n3UpE1MTiRiMvvApGt4893EdewJdVa2TfTe2awpd3oXidAhwA3Bj57FEQ
+	 7niB3CTyqrZ8IRFisDHM9JK8dPRC6rR12DeZGbK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.18 259/333] drm/amd: Fix a few more NULL pointer dereference in device cleanup
-Date: Tue, 17 Mar 2026 17:34:48 +0100
-Message-ID: <20260317163008.975448294@linuxfoundation.org>
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Subject: [PATCH 6.18 260/333] drm/msm/dpu: Correct the SA8775P intr_underrun/intr_underrun index
+Date: Tue, 17 Mar 2026 17:34:49 +0100
+Message-ID: <20260317163009.011833421@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,54 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Abhinav Kumar <quic_abhinavk@quicinc.com>
 
-commit 72ecb1dae72775fa9fea0159d8445d620a0a2295 upstream.
+commit 4ce71cea574658f5c5c7412b1a3cc54efe4f9b50 upstream.
 
-I found a few more paths that cleanup fails due to a NULL version pointer
-on unsupported hardware.
+The intr_underrun and intr_vsync indices have been swapped, just simply
+corrects them.
 
-Add NULL checks as applicable.
-
-Fixes: 39fc2bc4da00 ("drm/amdgpu: Protect GPU register accesses in powergated state in some paths")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f5a05f8414fc10f307eb965f303580c7778f8dd2)
 Cc: stable@vger.kernel.org
+Fixes: b139c80d181c ("drm/msm/dpu: Add SA8775P support")
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/709209/
+Link: https://lore.kernel.org/r/20260305-mdss_catalog-v5-2-06678ac39ac7@oss.qualcomm.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3625,6 +3625,8 @@ static int amdgpu_device_ip_fini_early(s
- 	int i, r;
- 
- 	for (i = 0; i < adev->num_ip_blocks; i++) {
-+		if (!adev->ip_blocks[i].version)
-+			continue;
- 		if (!adev->ip_blocks[i].version->funcs->early_fini)
- 			continue;
- 
-@@ -3687,6 +3689,8 @@ static int amdgpu_device_ip_fini(struct
- 		if (!adev->ip_blocks[i].status.sw)
- 			continue;
- 
-+		if (!adev->ip_blocks[i].version)
-+			continue;
- 		if (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GMC) {
- 			amdgpu_ucode_free_bo(adev);
- 			amdgpu_free_static_csa(&adev->virt.csa_obj);
-@@ -3713,6 +3717,8 @@ static int amdgpu_device_ip_fini(struct
- 	for (i = adev->num_ip_blocks - 1; i >= 0; i--) {
- 		if (!adev->ip_blocks[i].status.late_initialized)
- 			continue;
-+		if (!adev->ip_blocks[i].version)
-+			continue;
- 		if (adev->ip_blocks[i].version->funcs->late_fini)
- 			adev->ip_blocks[i].version->funcs->late_fini(&adev->ip_blocks[i]);
- 		adev->ip_blocks[i].status.late_initialized = false;
+--- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
+@@ -366,8 +366,8 @@ static const struct dpu_intf_cfg sa8775p
+ 		.type = INTF_NONE,
+ 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
+ 		.prog_fetch_lines_worst_case = 24,
+-		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
+-		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
++		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
++		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
+ 	}, {
+ 		.name = "intf_7", .id = INTF_7,
+ 		.base = 0x3b000, .len = 0x280,
 
 
