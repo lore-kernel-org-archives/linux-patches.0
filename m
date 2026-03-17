@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8141129DB88;
-	Tue, 17 Mar 2026 17:23:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C42F362B;
+	Tue, 17 Mar 2026 17:23:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768191; cv=none; b=RAydDEEbcQVB+OikmwiGZy4JSJlmHIkDNx+FurIu1vzJhCXOWY9jlwm7a1YDrSohR+OCHYMxayBWVdaSzt/lXjXbr1s2AdA1lNMN3TPtrKMqjWWzhs9Z69BDRIpBXe/7izy5CxeFYyY4AjEVSZPq34oiJFPrIuD5d9eRjtXRYEI=
+	t=1773768195; cv=none; b=G86zcZPmK1+vvVdVzDCnibRLfn8UtbvcSedQTQydmDSt47KAw0d1RtuXy+X4ZFvxaOwUm3l+We/AP8z3n+0al0Mlle5KY+H69FZKL4/yb7LsC2dBWP2GsZeHRKr7aEpkwQXHAYS2Myj8HW0c8VpWEufDF2n5er+hWGQ0mK5BA4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768191; c=relaxed/simple;
-	bh=n9dTfo0zXUV8m9mpoUsH4+Z1PWYKUumpbcyLfxrzKvU=;
+	s=arc-20240116; t=1773768195; c=relaxed/simple;
+	bh=zw8NFosyJDbETH/BpoHoeuAcboGFgnPRFINr3dgoxhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UnXvA1XfpBYNkSis+rqRlCzrIk3PbOAn/tOFvti1iKbYISWJQo/03hmP81b3iepx7fwDSvRQ0/mencGIb1spzHheGO6uePuqNHiok3ZCbQqX+iA76/9WqqCbkutSzRlZM6AxuFyrWOtD0ayF/gEBME2/6OfEQ3nf7OPDDbAdCSM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0SJqW2P; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eUyrsQL59G35NLmudwAGIB3jN2/QcPbFcLR9JgkgLaOqDwuVKxLmtWdUQZWVFrsIazgw/G37AQRWMvhEHNPJsd0qJ6eSbidqChjmRQ9aH13aYa1I9G1hBsJ4j5gFC2dUDe8WUMbd5tObF8tDLiJUzn5m7pKYuEa1gGrOjKB3cJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpCvXgMd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0SJqW2P"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9154CC4CEF7;
-	Tue, 17 Mar 2026 17:23:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpCvXgMd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2693FC4CEF7;
+	Tue, 17 Mar 2026 17:23:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768191;
-	bh=n9dTfo0zXUV8m9mpoUsH4+Z1PWYKUumpbcyLfxrzKvU=;
+	s=korg; t=1773768195;
+	bh=zw8NFosyJDbETH/BpoHoeuAcboGFgnPRFINr3dgoxhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0SJqW2PFI0vSL0NV6oRxWNz7tK40s7pRJuKWNr52Ug4QjQvd7oVyACaKj22qiof5
-	 LJ2uzarJl5Bj8AQuz6r9bLhg+GAvu+g4hvHpLlRaNdPOJM5tTWEAKPkvK+WlSaA3jX
-	 ZjYzKg8IZdM7q+yQta01qLmWs/QAtdjsW5tiUkf0=
+	b=QpCvXgMd/7XlTUAJrNYncmAw2VufAqcwd9ZhC4o6Jt95a0fRWCJM9scr5giP34K1o
+	 N2Vgrnmg6XWNxpMIjNFseyUkqSnSiBsLLjCVa2BO7hAL/XEELq25jjlF+tMZOB1sqz
+	 e0QIN8foJysCWuZysEZD1GDkzBw389pRlwbwXl7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.18 253/333] drm/amd: Fix NULL pointer dereference in device cleanup
-Date: Tue, 17 Mar 2026 17:34:42 +0100
-Message-ID: <20260317163008.750874490@linuxfoundation.org>
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>
+Subject: [PATCH 6.18 254/333] drm/bridge: ti-sn65dsi83: fix CHA_DSI_CLK_RANGE rounding
+Date: Tue, 17 Mar 2026 17:34:43 +0100
+Message-ID: <20260317163008.787499924@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,52 +50,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit 062ea905fff7756b2e87143ffccaece5cdb44267 upstream.
+commit 2f22702dc0fee06a240404e0f7ead5b789b253d8 upstream.
 
-When GPU initialization fails due to an unsupported HW block
-IP blocks may have a NULL version pointer. During cleanup in
-amdgpu_device_fini_hw, the code calls amdgpu_device_set_pg_state and
-amdgpu_device_set_cg_state which iterate over all IP blocks and access
-adev->ip_blocks[i].version without NULL checks, leading to a kernel
-NULL pointer dereference.
+The DSI frequency must be in the range:
 
-Add NULL checks for adev->ip_blocks[i].version in both
-amdgpu_device_set_cg_state and amdgpu_device_set_pg_state to prevent
-dereferencing NULL pointers during GPU teardown when initialization has
-failed.
+  (CHA_DSI_CLK_RANGE * 5 MHz) <= DSI freq < ((CHA_DSI_CLK_RANGE + 1) * 5 MHz)
 
-Fixes: 39fc2bc4da00 ("drm/amdgpu: Protect GPU register accesses in powergated state in some paths")
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b7ac77468cda92eecae560b05f62f997a12fe2f2)
+So the register value should point to the lower range value, but
+DIV_ROUND_UP() rounds the division to the higher range value, resulting in
+an excess of 1 (unless the frequency is an exact multiple of 5 MHz).
+
+For example for a 437100000 MHz clock CHA_DSI_CLK_RANGE should be 87 (0x57):
+
+  (87 * 5 = 435) <= 437.1 < (88 * 5 = 440)
+
+but current code returns 88 (0x58).
+
+Fix the computation by removing the DIV_ROUND_UP().
+
+Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
 Cc: stable@vger.kernel.org
+Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
+Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-1-2e15f5a9a6a0@bootlin.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -3375,6 +3375,8 @@ int amdgpu_device_set_cg_state(struct am
- 		i = state == AMD_CG_STATE_GATE ? j : adev->num_ip_blocks - j - 1;
- 		if (!adev->ip_blocks[i].status.late_initialized)
- 			continue;
-+		if (!adev->ip_blocks[i].version)
-+			continue;
- 		/* skip CG for GFX, SDMA on S0ix */
- 		if (adev->in_s0ix &&
- 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
-@@ -3414,6 +3416,8 @@ int amdgpu_device_set_pg_state(struct am
- 		i = state == AMD_PG_STATE_GATE ? j : adev->num_ip_blocks - j - 1;
- 		if (!adev->ip_blocks[i].status.late_initialized)
- 			continue;
-+		if (!adev->ip_blocks[i].version)
-+			continue;
- 		/* skip PG for GFX, SDMA on S0ix */
- 		if (adev->in_s0ix &&
- 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -351,9 +351,9 @@ static u8 sn65dsi83_get_dsi_range(struct
+ 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
+ 	 * the 2 is there because the bus is DDR.
+ 	 */
+-	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
+-			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
+-			    ctx->dsi->lanes / 2, 40000U, 500000U), 5000U);
++	return clamp((unsigned int)mode->clock *
++		     mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
++		     ctx->dsi->lanes / 2, 40000U, 500000U) / 5000U;
+ }
+ 
+ static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
 
 
