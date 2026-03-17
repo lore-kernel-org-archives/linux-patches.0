@@ -1,97 +1,145 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id E353A2EF67A
-	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 17:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF812459DC;
+	Tue, 17 Mar 2026 17:20:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768012; cv=none; b=o8pRfjZd9CXVF2XgEw82BJX76iMaLnrcI8HgYqESrjPgUYI0MbyQcgTXcjjx6Vr58oN+XC6M1IFCJjaNLlzCINruwYd9LMCD9HhkoJh3D8wkB1kDKscZKvy4UsDPlpbir/a7hCI3KX0Mh0SV7+Cz5KhlT0r0Pbb7T8ed1y/YcJU=
+	t=1773768015; cv=none; b=swQG1PmshsTcOvjLurOaHyODQeFoz9PaVn9kMkh7NVRwng+Tw3QcEhyyKVqrb67ADUFeSr1gXZX5+Qx2CvyMb6ALhAJZOSfYkngL85e2mAefSa73lncsG7riO43jLmLy6IufpV1BVLQPcXxzwKAqyKq2WHrVMtJTfLq9FWzhVaQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768012; c=relaxed/simple;
-	bh=gnKs2wrfDyl8RJBMPsUwsgi2N0XQUT1Kl8Z5ISgInzQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=BFrHh4qyFVjzm74UYMRPum7Qo5QXguWRZPR0eogoaRTf/e9AA5X4Zs2S2eY9C5qZufwaEG2OEOg3i3hjxLSeI38+07Y/W2rnPtgOyekNKP7ynENZkD3p0dsjqDfCVwtuAPSPRX5qjl44lTigfpJBa+nFGgT92v6idYO9kj7OFEw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 285EE1477;
-	Tue, 17 Mar 2026 10:20:04 -0700 (PDT)
-Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8CF273F778;
-	Tue, 17 Mar 2026 10:20:08 -0700 (PDT)
-Message-ID: <371b3d40-55dc-40a2-8f5c-a5f1c1585733@arm.com>
-Date: Tue, 17 Mar 2026 17:20:07 +0000
+	s=arc-20240116; t=1773768015; c=relaxed/simple;
+	bh=9wsOM5YZP6I/p/RoCaOSsSlVZwbDv9kcDA5iiw8lY8U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=AGox9k4t/rAGKEQXXZ+N5vlPlJFRIjkzqmdd2iWstUAkaf4dB6nO/VvxyPJI66xtyEo2mUyGG1jFdkRWWWH7nEkfBmimbnMpcxi7/nj5W2tIV/zeShdXKQI0I4gNIj4uZkyvHpR+e6djHfzRnZMQLKyTSwHOUsXuQAyC6yVd8H0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXXd/yOe; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXXd/yOe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BE2C4CEF7;
+	Tue, 17 Mar 2026 17:20:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1773768015;
+	bh=9wsOM5YZP6I/p/RoCaOSsSlVZwbDv9kcDA5iiw8lY8U=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UXXd/yOeB9+lP+04haCzDFE6ZT5k2nd78M1ZiXeHp9ZXYMFzj7Q33cVQgqAjDtfwi
+	 qMAfg1TGV/moKQ/KDm92iVJxdc21+8k7HTJGjYTvyHpc1XnBuMMzMRhl64eesse5L5
+	 EHkF1ouRqJ2T9KoW8evVp2GPHtsYkx4d4WwAlXik=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Axel Rasmussen <axelrasmussen@google.com>,
+	Shakeel Butt <shakeel.butt@linux.dev>,
+	Johannes Weiner <hannes@cmpxchg.org>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	David Hildenbrand <david@kernel.org>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 180/333] Revert "ptdesc: remove references to folios from __pagetable_ctor() and pagetable_dtor()"
+Date: Tue, 17 Mar 2026 17:33:29 +0100
+Message-ID: <20260317163006.030793941@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
+References: <20260317162959.345812316@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH 10/11] fs/resctrl: Change last_cmd_status custom during
- input parsing
-To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
- james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
- tglx@linutronix.de, dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
- peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <cover.1772476561.git.reinette.chatre@intel.com>
- <021f736612186e9fd653d107b0642e8c1cf110d2.1772476561.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <021f736612186e9fd653d107b0642e8c1cf110d2.1772476561.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Reinette,
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-On 3/2/26 18:46, Reinette Chatre wrote:
-> A pattern of usage of last_cmd_status was introduced during its enabling in
-> commit
-> 
-> c377dcfbee80 ("x86/intel_rdt: Add diagnostics when writing the schemata file")
-> 
-> and since copied throughout resctrl to result in the following custom:
-> 
-> 	..._write()
-> 	{
-> 		/* Early parsing of input, exit on failure. */
-> 
-> 		/* Obtain rdtgroup_mutex */
-> 		rdt_last_cmd_clear(); /* Clear last_cmd_status buffer */
-> 
-> 		/*
-> 		 * Act on user command, failures result in detail
-> 		 * error message in last_cmd_status buffer via
-> 		 * rdt_last_cmd_puts()/rdt_last_cmd_printf().
-> 		 */
-> 
-> 		/* Release rdtgroup_mutex */
-> 	}
-> 
-> If resctrl exits with failure during early parsing of input there are two
-> possible scenarios:
->  - The last_cmd_status buffer is empty and a user's read of
->    info/last_cmd_status returns "ok".
->  - The last_cmd_status buffer contains details from an earlier ...write()
->    failure and a user's read of info/last_cmd_status returns this outdated
->    error description.
-> 
-> Writing to a resctrl file is considered a "resctrl command" and the
-> resctrl documentation states the following about the last_cmd_status file:
->    "If the command failed, it will provide more information that can be
->     conveyed in the error returns from file operations."
-> Neither of the current scenarios is correct behavior.
-> 
-> Move early input parsing to be done with rdtgroup_mutex held after the
-> last_cmd_status buffer is cleared. Let info/last_cmd_status be accurate
-> when an error is encountered during parsing of user command.
+------------------
 
-This seems useful and the patch looks good to me.
+From: Axel Rasmussen <axelrasmussen@google.com>
 
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+commit 2d28ed588f8d7d0d41b0a4fad7f0d05e4bbf1797 upstream.
 
-Thanks,
+This change swapped out mod_node_page_state for lruvec_stat_add_folio.
+But, these two APIs are not interchangeable: the lruvec version also
+increments memcg stats, in addition to "global" pgdat stats.
 
-Ben
+So after this change, the "pagetables" memcg stat in memory.stat always
+yields "0", which is a userspace visible regression.
+
+I tried to look for a refactor where we add a variant of
+lruvec_stat_mod_folio which takes a pgdat and a memcg instead of a folio,
+to try to adhere to the spirit of the original patch.  But at the end of
+the day this just means we have to call folio_memcg(ptdesc_folio(ptdesc))
+anyway, which doesn't really accomplish much.
+
+This regression is visible in master as well as 6.18 stable, so CC stable
+too.
+
+Link: https://lkml.kernel.org/r/20260225002434.2953895-1-axelrasmussen@google.com
+Fixes: f0c92726e89f ("ptdesc: remove references to folios from __pagetable_ctor() and pagetable_dtor()")
+Signed-off-by: Axel Rasmussen <axelrasmussen@google.com>
+Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
+Acked-by: Johannes Weiner <hannes@cmpxchg.org>
+Reviewed-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: Muchun Song <muchun.song@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ include/linux/mm.h |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
+
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -3138,26 +3138,21 @@ static inline bool ptlock_init(struct pt
+ static inline void ptlock_free(struct ptdesc *ptdesc) {}
+ #endif /* defined(CONFIG_SPLIT_PTE_PTLOCKS) */
+ 
+-static inline unsigned long ptdesc_nr_pages(const struct ptdesc *ptdesc)
+-{
+-	return compound_nr(ptdesc_page(ptdesc));
+-}
+-
+ static inline void __pagetable_ctor(struct ptdesc *ptdesc)
+ {
+-	pg_data_t *pgdat = NODE_DATA(memdesc_nid(ptdesc->pt_flags));
++	struct folio *folio = ptdesc_folio(ptdesc);
+ 
+-	__SetPageTable(ptdesc_page(ptdesc));
+-	mod_node_page_state(pgdat, NR_PAGETABLE, ptdesc_nr_pages(ptdesc));
++	__folio_set_pgtable(folio);
++	lruvec_stat_add_folio(folio, NR_PAGETABLE);
+ }
+ 
+ static inline void pagetable_dtor(struct ptdesc *ptdesc)
+ {
+-	pg_data_t *pgdat = NODE_DATA(memdesc_nid(ptdesc->pt_flags));
++	struct folio *folio = ptdesc_folio(ptdesc);
+ 
+ 	ptlock_free(ptdesc);
+-	__ClearPageTable(ptdesc_page(ptdesc));
+-	mod_node_page_state(pgdat, NR_PAGETABLE, -ptdesc_nr_pages(ptdesc));
++	__folio_clear_pgtable(folio);
++	lruvec_stat_sub_folio(folio, NR_PAGETABLE);
+ }
+ 
+ static inline void pagetable_dtor_free(struct ptdesc *ptdesc)
 
 
