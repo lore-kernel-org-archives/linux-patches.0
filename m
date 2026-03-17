@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4FCE3BFE59;
-	Tue, 17 Mar 2026 16:57:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809813F54BD;
+	Tue, 17 Mar 2026 16:57:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766621; cv=none; b=RZDkpBP0GzTf9APC7WPbEAn4eK8+GQ/nSvOXF2LwTEfZjUzKL/abq8+dws8ecsKiWNOO7gt9kn1DO9yKGO9hmyoJ6biRbq6DXjjLKEUxnN+OGHme8D7KmCR7HL6kJ3rYbr/IaQmpN+7Olp8czrxYToXwfVEphN04djwZraba2Rw=
+	t=1773766625; cv=none; b=APdbB3eDjltkI0Zy384Nycbe3BGeF6MiJH7FmnZueL6gK/OjdtMv50wiSEFQtRj83WCtkLemgm864tTgT8YJsGvzwtHYvt4IFtkk/oReS50q1akEjlCuVAWPIwi3HT4KEjtvUiZRmbSfmaNb6ummzEtXfL6rMeuKbFCTjbpyvDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766621; c=relaxed/simple;
-	bh=pz4XdF/r3uBnabl2eGS0kM8HmiMkgM6NGzoSqEzWiKQ=;
+	s=arc-20240116; t=1773766625; c=relaxed/simple;
+	bh=3Sv6leqd5b4ZhPgmDwj5jv0mNbh6lsgWOqvRhy4B+eU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rV4BsIkIwDnSWtfxz6jK43o6pXc098dHTPhu7PXGYzzhw8fxBsZAAIkxsVIH3lgiURnWZ2XHmrXSZnjubJQ0kRMNS73Zw+xeKitXte4W0rLVtPVgYJKEPKDkUb3tDl8eQQXUH0QwcEZ4fFiKV+StJcWQayehoEyV6wG/3t2nZjQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SuHR/ugg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dzcoh174pszRJ4W0LxsgZ98B6NXvhfPPqi8PtJa4Gr62sRisuewsXv7fR4Wc4Muctb/wouIpWn18rA8n3oCulRKtB0VE0TmYAyK5h7cO3e16cpkP8C0u8W0Mv4Vn3hcSifsepobjHNujPlxpzqgpRGVd2UuJXvU1KFLl2ILxCLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bCF7kVhl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SuHR/ugg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686FEC19424;
-	Tue, 17 Mar 2026 16:57:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bCF7kVhl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91DB0C2BC86;
+	Tue, 17 Mar 2026 16:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766620;
-	bh=pz4XdF/r3uBnabl2eGS0kM8HmiMkgM6NGzoSqEzWiKQ=;
+	s=korg; t=1773766625;
+	bh=3Sv6leqd5b4ZhPgmDwj5jv0mNbh6lsgWOqvRhy4B+eU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SuHR/uggTZbNl+j0JHW1M6mCOxNQ801I6a9d3mh3gYrCmTXjNzRUMEj29JZ/8nzSM
-	 u6Kk1+yp33gmcIOr+seBCvoVrOFnYeyZ56CeMNO1/0FXq9UGaGQTZjlvNZGzMKwrYW
-	 ikVxcuRhTIM0+nGIIeAjhY69Nx74A28nxuDZtcnY=
+	b=bCF7kVhlWSF0Xuofo0p8G10vmpl9m3a+zpxqgsH8znPeKfIpqZG3qbtmhOl5MDwb7
+	 Kjmusd2XTz7DbTu1CDq3xvGlY7kHJetM7pmoLyNbCj5upUvWHH8P/ev0zOaaU2rqx6
+	 gPREjh4x6irP+OpLT/Gl0vom0+Dg0giMBEj2+jMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Dan Wheeler <daniel.wheeler@amd.com>
-Subject: [PATCH 6.19 286/378] drm/amd/display: Fallback to boot snapshot for dispclk
-Date: Tue, 17 Mar 2026 17:34:03 +0100
-Message-ID: <20260317163017.527008891@linuxfoundation.org>
+	Chaoyi Chen <chaoyi.chen@rock-chips.com>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.19 269/378] pmdomain: rockchip: Fix PD_VCODEC for RK3588
+Date: Tue, 17 Mar 2026 17:33:46 +0100
+Message-ID: <20260317163016.908028714@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -54,42 +52,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-commit 30d937f63bd19bbcaafa4b892eb251f8bbbf04ef upstream.
+commit 0fb59eaca18f1254ecdce34354eec3cb1b3b5e10 upstream.
 
-[WHY & HOW]
-If the dentist is unavailable, fallback to reading CLKIP via the boot
-snapshot to get the current dispclk.
+>From the RK3588 TRM Table 7-1 RK3588 Voltage Domain and Power Domain Summary,
+PD_RKVDEC0/1 and PD_VENC0/1 rely on VD_VCODEC which require extra voltages to
+be applied, otherwise it breaks RK3588-evb1-v10 board after vdec support landed[1].
+The panic looks like below:
 
-Reviewed-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
-Signed-off-by: Alex Hung <alex.hung@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
-Tested-by: Dan Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 2ab77600d1e55a042c02437326d3c7563e853c6c)
+  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec0' on, val=0
+  rockchip-pm-domain fd8d8000.power-management:power-controller: failed to set domain 'rkvdec1' on, val=0
+  ...
+  Hardware name: Rockchip RK3588S EVB1 V10 Board (DT)
+  Workqueue: pm genpd_power_off_work_fn
+  Call trace:
+  show_stack+0x18/0x24 (C)
+  dump_stack_lvl+0x40/0x84
+  dump_stack+0x18/0x24
+  vpanic+0x1ec/0x4fc
+  vpanic+0x0/0x4fc
+  check_panic_on_warn+0x0/0x94
+  arm64_serror_panic+0x6c/0x78
+  do_serror+0xc4/0xcc
+  el1h_64_error_handler+0x3c/0x5c
+  el1h_64_error+0x6c/0x70
+  regmap_mmio_read32le+0x18/0x24 (P)
+  regmap_bus_reg_read+0xfc/0x130
+  regmap_read+0x188/0x1ac
+  regmap_read+0x54/0x78
+  rockchip_pd_power+0xcc/0x5f0
+  rockchip_pd_power_off+0x1c/0x4c
+  genpd_power_off+0x84/0x120
+  genpd_power_off+0x1b4/0x260
+  genpd_power_off_work_fn+0x38/0x58
+  process_scheduled_works+0x194/0x2c4
+  worker_thread+0x2ac/0x3d8
+  kthread+0x104/0x124
+  ret_from_fork+0x10/0x20
+  SMP: stopping secondary CPUs
+  Kernel Offset: disabled
+  CPU features: 0x3000000,000e0005,40230521,0400720b
+  Memory Limit: none
+  ---[ end Kernel panic - not syncing: Asynchronous SError Interrupt ]---
+
+Chaoyi pointed out the PD_VCODEC is the parent of PD_RKVDEC0/1 and PD_VENC0/1, so checking
+the PD_VCODEC is enough.
+
+[1] https://lore.kernel.org/linux-rockchip/20251020212009.8852-2-detlev.casanova@collabora.com/
+
+Fixes: db6df2e3fc16 ("pmdomain: rockchip: add regulator support")
 Cc: stable@vger.kernel.org
+Suggested-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Reviewed-by: Chaoyi Chen <chaoyi.chen@rock-chips.com>
+Reviewed-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/pmdomain/rockchip/pm-domains.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/hwss/dcn401/dcn401_hwseq.c
-@@ -71,7 +71,11 @@ void dcn401_initialize_min_clocks(struct
- 		 * audio corruption. Read current DISPCLK from DENTIST and request the same
- 		 * freq to ensure that the timing is valid and unchanged.
- 		 */
--		clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
-+		if (dc->clk_mgr->funcs->get_dispclk_from_dentist) {
-+			clocks->dispclk_khz = dc->clk_mgr->funcs->get_dispclk_from_dentist(dc->clk_mgr);
-+		} else {
-+			clocks->dispclk_khz = dc->clk_mgr->boot_snapshot.dispclk * 1000;
-+		}
- 	}
- 	clocks->ref_dtbclk_khz = dc->clk_mgr->bw_params->clk_table.entries[0].dtbclk_mhz * 1000;
- 	clocks->fclk_p_state_change_support = true;
+--- a/drivers/pmdomain/rockchip/pm-domains.c
++++ b/drivers/pmdomain/rockchip/pm-domains.c
+@@ -1311,7 +1311,7 @@ static const struct rockchip_domain_info
+ static const struct rockchip_domain_info rk3588_pm_domains[] = {
+ 	[RK3588_PD_GPU]		= DOMAIN_RK3588("gpu",     0x0, BIT(0),  0,       0x0, 0,       BIT(1),  0x0, BIT(0),  BIT(0),  false, true),
+ 	[RK3588_PD_NPU]		= DOMAIN_RK3588("npu",     0x0, BIT(1),  BIT(1),  0x0, 0,       0,       0x0, 0,       0,       false, true),
+-	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, false),
++	[RK3588_PD_VCODEC]	= DOMAIN_RK3588("vcodec",  0x0, BIT(2),  BIT(2),  0x0, 0,       0,       0x0, 0,       0,       false, true),
+ 	[RK3588_PD_NPUTOP]	= DOMAIN_RK3588("nputop",  0x0, BIT(3),  0,       0x0, BIT(11), BIT(2),  0x0, BIT(1),  BIT(1),  false, false),
+ 	[RK3588_PD_NPU1]	= DOMAIN_RK3588("npu1",    0x0, BIT(4),  0,       0x0, BIT(12), BIT(3),  0x0, BIT(2),  BIT(2),  false, false),
+ 	[RK3588_PD_NPU2]	= DOMAIN_RK3588("npu2",    0x0, BIT(5),  0,       0x0, BIT(13), BIT(4),  0x0, BIT(3),  BIT(3),  false, false),
 
 
