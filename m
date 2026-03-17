@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B3DA3F54B6;
-	Tue, 17 Mar 2026 16:47:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F253F23AA;
+	Tue, 17 Mar 2026 16:47:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766036; cv=none; b=Pgk8uAgcxT4DqC9SRECko33eehl0MvTVZeu6fZEHmMsTMqQ95y2cRYr4oFF6HTDXPH3Tgsx2lcgKHGYEVNlHncL+27CGKF7uUDEDiYbAf7YQZyK0zK6MeqhMSZi3tJ36jnE5AtIOOZiCxkNCkPFymUeBxymv1XZMm3RxynQjQYc=
+	t=1773766041; cv=none; b=bWTUf7Ls8+ufP835m9+B8UcwJrrzhHIB7VSCByevH5VEW1EnOo/03jChBGbbabeeXVu4Cr5IaB/EgRM2btZ2qPfuF6l4io+NyOPEYYySx0+K46OvrNQ5qtcl/vs4PgJ+5QQTmILptuTgyuhm4dIbT4VbN5IDIsHRd0JK/dfvrUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766036; c=relaxed/simple;
-	bh=t2zxRUBIRIFP2lgdJQEKIFFTwUREEQ+jWiojO84Blx0=;
+	s=arc-20240116; t=1773766041; c=relaxed/simple;
+	bh=Rnifv3Xi9B/vfNfslPHfaWvvqkJ5XMyCOuF+/w2WHWY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LkhVvzzZ3fAnDeqzivrnulUIaNKhM8ANPNFLmnfT5Em+QcMIqA4EFwyl6Wm2p8GylyTHS/jYvtVHLxpROIC466/NTRPd6Djqkrp1rylF4CdgwptuNdydgl9e3slplp5PWqg2iXzRwZPPJpQBYuWkB4eKpE5DMJ73wSgnPMJcU3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=V+nY6Udb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JWC1lcuLcqaEXTerF+gj0v2mB0flNKuOnumDuRdNa0z8K48iamnJ/vR+Qs8GEXTrxVtMyOo0aKIl3U0SIZ/lHzVwrL/VeuaLC3KDvtWvEnlu+SsxonvU3E6VEE0uuFO65jGX71XWa8/KYfaGJIsKxH8/GgMKspms/IU/aVLxrC8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bjgaDRlw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="V+nY6Udb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACDE5C4CEF7;
-	Tue, 17 Mar 2026 16:47:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bjgaDRlw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15E4BC4CEF7;
+	Tue, 17 Mar 2026 16:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766036;
-	bh=t2zxRUBIRIFP2lgdJQEKIFFTwUREEQ+jWiojO84Blx0=;
+	s=korg; t=1773766041;
+	bh=Rnifv3Xi9B/vfNfslPHfaWvvqkJ5XMyCOuF+/w2WHWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+nY6Udbb+/cp/zwt+uqgiG+jbzbZIowCKfnLCTKGIRhzqkWmDv7uIo9avHeYRe4q
-	 DaqUIx2oMGLjnPeZiKQUfHzVNgWPi8OfYl8400dDELY+hxGcjnw8dzR5az0iNCgj6i
-	 C4dO143IarmeF+aad5d9jqxfiPsVNkIU5r4Xrf7g=
+	b=bjgaDRlwZUOGdi5cZA1Y0iE+1Snil5tGq6+quuNyibTfEdHthVBRy2vX1kLUkDnXj
+	 9Ba/IS2g/mY10Q7+lOIxM69IQomUJDqDO/9QMCL9ydtu6ni46aRygDhHE0NYqk74e/
+	 mWempb8stmVO0jbr/i7sJ7cDjYDDy84ecfnD4/bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	syzbot+c8287e65a57a89e7fb72@syzkaller.appspotmail.com,
-	Alice Ryhl <aliceryhl@google.com>,
-	Gary Guo <gary@garyguo.net>,
-	Andreas Hindborg <a.hindborg@kernel.org>
-Subject: [PATCH 6.19 129/378] rust_binder: call set_notification_done() without proc lock
-Date: Tue, 17 Mar 2026 17:31:26 +0100
-Message-ID: <20260317163011.760686909@linuxfoundation.org>
+	syzbot+25ba18e2c5040447585d@syzkaller.appspotmail.com,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.19 156/378] USB: usbtmc: Use usb_bulk_msg_killable() with user-specified timeouts
+Date: Tue, 17 Mar 2026 17:31:53 +0100
+Message-ID: <20260317163012.752974695@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,59 +50,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 2e303f0febb65a434040774b793ba8356698802b upstream.
+commit 7784caa413a89487dd14dd5c41db8753483b2acb upstream.
 
-Consider the following sequence of events on a death listener:
-1. The remote process dies and sends a BR_DEAD_BINDER message.
-2. The local process invokes the BC_CLEAR_DEATH_NOTIFICATION command.
-3. The local process then invokes the BC_DEAD_BINDER_DONE.
-Then, the kernel will reply to the BC_DEAD_BINDER_DONE command with a
-BR_CLEAR_DEATH_NOTIFICATION_DONE reply using push_work_if_looper().
+The usbtmc driver accepts timeout values specified by the user in an
+ioctl command, and uses these timeouts for some usb_bulk_msg() calls.
+Since the user can specify arbitrarily long timeouts and
+usb_bulk_msg() uses unkillable waits, call usb_bulk_msg_killable()
+instead to avoid the possibility of the user hanging a kernel thread
+indefinitely.
 
-However, this can result in a deadlock if the current thread is not a
-looper. This is because dead_binder_done() still holds the proc lock
-during set_notification_done(), which called push_work_if_looper().
-Normally, push_work_if_looper() takes the thread lock, which is fine to
-take under the proc lock. But if the current thread is not a looper,
-then it falls back to delivering the reply to the process work queue,
-which involves taking the proc lock. Since the proc lock is already
-held, this is a deadlock.
-
-Fix this by releasing the proc lock during set_notification_done(). It
-was not intentional that it was held during that function to begin with.
-
-I don't think this ever happens in Android because BC_DEAD_BINDER_DONE
-is only invoked in response to BR_DEAD_BINDER messages, and the kernel
-always delivers BR_DEAD_BINDER to a looper. So there's no scenario where
-Android userspace will call BC_DEAD_BINDER_DONE on a non-looper thread.
-
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Reported-by: syzbot+c8287e65a57a89e7fb72@syzkaller.appspotmail.com
-Tested-by: syzbot+c8287e65a57a89e7fb72@syzkaller.appspotmail.com
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
-Link: https://patch.msgid.link/20260224-binder-dead-binder-done-proc-lock-v1-1-bbe1b8a6e74a@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: syzbot+25ba18e2c5040447585d@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/linux-usb/8e1c7ac5-e076-44b0-84b8-1b34b20f0ae1@suse.com/T/#t
+Tested-by: syzbot+25ba18e2c5040447585d@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 048c6d88a021 ("usb: usbtmc: Add ioctls to set/get usb timeout")
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/81c6fc24-0607-40f1-8c20-5270dab2fad5@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/process.rs |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/class/usbtmc.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/android/binder/process.rs
-+++ b/drivers/android/binder/process.rs
-@@ -1289,7 +1289,8 @@ impl Process {
-     }
+--- a/drivers/usb/class/usbtmc.c
++++ b/drivers/usb/class/usbtmc.c
+@@ -727,7 +727,7 @@ static int usbtmc488_ioctl_trigger(struc
+ 	buffer[1] = data->bTag;
+ 	buffer[2] = ~data->bTag;
  
-     pub(crate) fn dead_binder_done(&self, cookie: u64, thread: &Thread) {
--        if let Some(death) = self.inner.lock().pull_delivered_death(cookie) {
-+        let death = self.inner.lock().pull_delivered_death(cookie);
-+        if let Some(death) = death {
-             death.set_notification_done(thread);
-         }
-     }
+-	retval = usb_bulk_msg(data->usb_dev,
++	retval = usb_bulk_msg_killable(data->usb_dev,
+ 			      usb_sndbulkpipe(data->usb_dev,
+ 					      data->bulk_out),
+ 			      buffer, USBTMC_HEADER_SIZE,
+@@ -1347,7 +1347,7 @@ static int send_request_dev_dep_msg_in(s
+ 	buffer[11] = 0; /* Reserved */
+ 
+ 	/* Send bulk URB */
+-	retval = usb_bulk_msg(data->usb_dev,
++	retval = usb_bulk_msg_killable(data->usb_dev,
+ 			      usb_sndbulkpipe(data->usb_dev,
+ 					      data->bulk_out),
+ 			      buffer, USBTMC_HEADER_SIZE,
+@@ -1419,7 +1419,7 @@ static ssize_t usbtmc_read(struct file *
+ 	actual = 0;
+ 
+ 	/* Send bulk URB */
+-	retval = usb_bulk_msg(data->usb_dev,
++	retval = usb_bulk_msg_killable(data->usb_dev,
+ 			      usb_rcvbulkpipe(data->usb_dev,
+ 					      data->bulk_in),
+ 			      buffer, bufsize, &actual,
 
 
