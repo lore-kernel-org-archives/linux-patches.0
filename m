@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F802DECC6;
-	Tue, 17 Mar 2026 17:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78536EABD;
+	Tue, 17 Mar 2026 17:23:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768222; cv=none; b=vBYeY+jPtxGALxWXQyklav5exsPsITRw3aFrI6+yjsLVYDw+fKmGSKn7bwPuKeWi3irw4FOco1Iv/BLPdgxqIdePjFdBGeFbjzU+EXUuNQ0TH0BmqTO7Ro9sM+MpOkM9GxkvrO61m7l3/TX6C3n6MN9Gy7P2VzpoDsBUm5Ir3aw=
+	t=1773768225; cv=none; b=hHAP3qCipKRr0PALGl7zJsZjThU4ZDbfOqzu4Qnw5BEJVpIagVcOwddk0VAcLD4xmOFlJq3gOmlboQqZ/jeYoHvlOgIPTtcGKzgInbEfo4T34a6gANYgBulB4vPVEe3rHgWzBzJdcgi4AvMBPvBWeRQlJghRbwIV/q2KJgDEpAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768222; c=relaxed/simple;
-	bh=sinkKH5kMEc/NP4LhgbP45TeW6ldarB3rNqLPxCMHak=;
+	s=arc-20240116; t=1773768225; c=relaxed/simple;
+	bh=y480c/RRMSGu8HFUvSNtmsS/b8a2GU8LGM8a+qY5OJY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X46OAPkDeFjv61Y1vIDDONw3kCBemUKzy2TsggycloER/n/RGmXA1AtCZrr8HSMJoleqRj1nkLJHbQWvBaIPDxxJhC7AjBWzd4VonUgFBEcAr3XOazEyONPKQ1LsNwXVG0ZHVGzvj/We3HBFSFnbEjE086BkqsVLUQPz8V7Y1Lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZscHh7W1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KQLZpdLB+/D5GVBjnLGZyW6BvPQRSWQW/zik7DuLILImm95rHftS0hVmiKlrgRte1whcEOpnqEO71uaKiXkm4X2Eo2QwK5IyM6hDiMdt63bmdyLfI0QjYjfv/tfPLF0MOnpFTgZ0txfaHDQmFFVcALJH9ZQ3LCBKOrfLMWkVk6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYzUdqQy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZscHh7W1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DB6C4CEF7;
-	Tue, 17 Mar 2026 17:23:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYzUdqQy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E09C4CEF7;
+	Tue, 17 Mar 2026 17:23:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768221;
-	bh=sinkKH5kMEc/NP4LhgbP45TeW6ldarB3rNqLPxCMHak=;
+	s=korg; t=1773768225;
+	bh=y480c/RRMSGu8HFUvSNtmsS/b8a2GU8LGM8a+qY5OJY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZscHh7W1hlXDv+7j3g6r/ce7gQW2DBlsLxRkbNTG0wXyAFICtz3XrIZHSQPQupB8C
-	 iBu4pBLcqCGCcNSfoTNBGMnTxVVfdyqFuV8pMJQxsGf0mRctpUYOaP5RPI5wcaUJq2
-	 wiRH1vly06oAVhmee8zmgZTtZZH3aHDdOHWROZB4=
+	b=vYzUdqQyJmbeCnnUaNxMui5AsKuOjv1MPjEHocQlVk29qSEo0/Wl5+k4iqfnesTpP
+	 /spE0YbC36GaVflqQo4AdZ2dOmoDpwvLK58V6nW1vX8cex4+5B5Uj73r92B/qYIcoM
+	 sD4n08zvJJJPpwtzdJzM7P4b/itL328CKEJBkS4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masami Hiramatsu <mhiramat@kernel.org>,
 	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>,
+	Calvin Owens <calvin@wbinvd.org>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 261/333] tracing: Fix enabling multiple events on the kernel command line and bootconfig
-Date: Tue, 17 Mar 2026 17:34:50 +0100
-Message-ID: <20260317163009.048168259@linuxfoundation.org>
+Subject: [PATCH 6.18 262/333] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
+Date: Tue, 17 Mar 2026 17:34:51 +0100
+Message-ID: <20260317163009.086450832@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,48 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
+From: Calvin Owens <calvin@wbinvd.org>
 
-commit 3b1679e086bb869ca02722f6bd29b3573a6a0e7e upstream.
+commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
 
-Multiple events can be enabled on the kernel command line via a comma
-separator. But if the are specified one at a time, then only the last
-event is enabled. This is because the event names are saved in a temporary
-buffer, and each call by the init cmdline code will reset that buffer.
+Some of the sizing logic through tracer_alloc_buffers() uses int
+internally, causing unexpected behavior if the user passes a value that
+does not fit in an int (on my x86 machine, the result is uselessly tiny
+buffers).
 
-This also affects names in the boot config file, as it may call the
-callback multiple times with an example of:
+Fix by plumbing the parameter's real type (unsigned long) through to the
+ring buffer allocation functions, which already use unsigned long.
 
-  kernel.trace_event = ":mod:rproc_qcom_common", ":mod:qrtr", ":mod:qcom_aoss"
-
-Change the cmdline callback function to append a comma and the next value
-if the temporary buffer already has content.
+It has always been possible to create larger ring buffers via the sysfs
+interface: this only affects the cmdline parameter.
 
 Cc: stable@vger.kernel.org
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260302-trace-events-allow-multiple-modules-v1-1-ce4436e37fb8@oss.qualcomm.com
-Signed-off-by: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
+Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
+Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ kernel/trace/trace.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -4342,7 +4342,11 @@ static char bootup_event_buf[COMMAND_LIN
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9849,7 +9849,7 @@ static void setup_trace_scratch(struct t
+ }
  
- static __init int setup_trace_event(char *str)
+ static int
+-allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
++allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
  {
--	strscpy(bootup_event_buf, str, COMMAND_LINE_SIZE);
-+	if (bootup_event_buf[0] != '\0')
-+		strlcat(bootup_event_buf, ",", COMMAND_LINE_SIZE);
-+
-+	strlcat(bootup_event_buf, str, COMMAND_LINE_SIZE);
-+
- 	trace_set_ring_buffer_expanded(NULL);
- 	disable_tracing_selftest("running event tracing");
+ 	enum ring_buffer_flags rb_flags;
+ 	struct trace_scratch *tscratch;
+@@ -9904,7 +9904,7 @@ static void free_trace_buffer(struct arr
+ 	}
+ }
+ 
+-static int allocate_trace_buffers(struct trace_array *tr, int size)
++static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
+ {
+ 	int ret;
+ 
+@@ -11186,7 +11186,7 @@ __init static void enable_instances(void
+ 
+ __init static int tracer_alloc_buffers(void)
+ {
+-	int ring_buf_size;
++	unsigned long ring_buf_size;
+ 	int ret = -ENOMEM;
+ 
  
 
 
