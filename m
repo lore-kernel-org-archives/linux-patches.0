@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6457E3EDACE;
-	Tue, 17 Mar 2026 16:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79163ED10D;
+	Tue, 17 Mar 2026 16:41:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765678; cv=none; b=Lu3YiG7/7GED3eHC94q5gWEjJO2vfwhfrzdt1bmsgXrm7R1eMUiTkGMur1+vuFTkrxTI6//cyT4AxkcFSVA93iGiBNbutcYIlwfuYZE8zIVmPatwFiiQAAd8OL+0CXWqyxo/iSFVmsFc1WDUfLSzA/siF35U1m7tVnlfnbwIJys=
+	t=1773765681; cv=none; b=huFD1xVv49RvkWGfJbbpF1jMLIm9wQ5AfeoMAF76ou73DoHXhlxBBUbaahTxXaXfsBeu0EKg/cvz5vIW0AL/xnu8Ya2QlCJgDUujkRtHifpgUCoY1SRlMyjDy2XPn6R8p6q/O76SVSIXIghJj2DuvDebCC1DbCZlrs9c05zlcQo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765678; c=relaxed/simple;
-	bh=tujX4pQnuuZFZpH9Sv/oGbg10oMP9UBklyNXdCibeLA=;
+	s=arc-20240116; t=1773765681; c=relaxed/simple;
+	bh=yYhxEHxzjyyT1UQkOldvULUl8xrEIXIzvwIj2lbtIho=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kOkd2bUSwClbzwR1/MRlVUoG9JmgK4rpDdUOtcQJEp5u+JvdkP58d3vDodeJr9YgCy5A6td34/vwbCBvmuPFn2c/Vv3nL+kHVE4Gtupobmh3R9g6hOpS3Tdw15AMB9WyKBXcriX0XwKhwsF7/MWC/MWc1LOQGGEmqVKc2bRqYBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L56sigeR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P1+ikM5knhHGp4PtpB/BA3FPjgYedlTyH14rQWZAObkhQtzwUvM73xuj3V240CWwmFZv95+Ol+ZyX9f2vWqHCBFxZp0ZeMrR7FPLvDku3G8N0kgC9tP0V3qNJdyFnoD3O0CdQflCtPc4IR96TR9fMN0MV0VqimbQbthEAKiA/cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J22PNSby; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L56sigeR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B3AC2BC86;
-	Tue, 17 Mar 2026 16:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J22PNSby"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A03C19424;
+	Tue, 17 Mar 2026 16:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765678;
-	bh=tujX4pQnuuZFZpH9Sv/oGbg10oMP9UBklyNXdCibeLA=;
+	s=korg; t=1773765681;
+	bh=yYhxEHxzjyyT1UQkOldvULUl8xrEIXIzvwIj2lbtIho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L56sigeRFI4pN/VizqTFgqDkYHZaz0H/BPUCTRSWfmYbuO0GVGnMWvUSVEl4F6o67
-	 xrSPM9eBRQDixJLsKYTuo7byetYTUB20KHW55KNxCML1ksSiHPVGD11Ouc+ayquvVv
-	 i87SeuCe1RjesRyntyEk7LsKbd1naqbmvEdjWzu8=
+	b=J22PNSbypszpCS0Zq/bZXVjubjFJDv8W+iiklu+Ch9mRAADaZhN5/lqUJuyl8rax2
+	 X/mta200hCZCS6Jh+bNeYGP5QrUaN8gpEwd3EMStAS6V9WdopTDMeK/Zx220BxV7ye
+	 FOwGqQsqHJSzuLeODUadlN/1tk76QG+MW+bIpOzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jay Vosburgh <jv@jvosburgh.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Chengfeng Ye <dg573847474@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 068/378] bonding: fix type confusion in bond_setup_by_slave()
-Date: Tue, 17 Mar 2026 17:30:25 +0100
-Message-ID: <20260317163009.520352688@linuxfoundation.org>
+Subject: [PATCH 6.19 069/378] mctp: route: hold key->lock in mctp_flow_prepare_output()
+Date: Tue, 17 Mar 2026 17:30:26 +0100
+Message-ID: <20260317163009.557235971@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,149 +51,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-[ Upstream commit 950803f7254721c1c15858fbbfae3deaaeeecb11 ]
+[ Upstream commit 7d86aa41c073c4e7eb75fd2e674f1fd8f289728a ]
 
-kernel BUG at net/core/skbuff.c:2306!
-Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
-RIP: 0010:pskb_expand_head+0xa08/0xfe0 net/core/skbuff.c:2306
-RSP: 0018:ffffc90004aff760 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff88807e3c8780 RCX: ffffffff89593e0e
-RDX: ffff88807b7c4900 RSI: ffffffff89594747 RDI: ffff88807b7c4900
-RBP: 0000000000000820 R08: 0000000000000005 R09: 0000000000000000
-R10: 00000000961a63e0 R11: 0000000000000000 R12: ffff88807e3c8780
-R13: 00000000961a6560 R14: dffffc0000000000 R15: 00000000961a63e0
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fe1a0ed8df0 CR3: 000000002d816000 CR4: 00000000003526f0
-Call Trace:
- <TASK>
- ipgre_header+0xdd/0x540 net/ipv4/ip_gre.c:900
- dev_hard_header include/linux/netdevice.h:3439 [inline]
- packet_snd net/packet/af_packet.c:3028 [inline]
- packet_sendmsg+0x3ae5/0x53c0 net/packet/af_packet.c:3108
- sock_sendmsg_nosec net/socket.c:727 [inline]
- __sock_sendmsg net/socket.c:742 [inline]
- ____sys_sendmsg+0xa54/0xc30 net/socket.c:2592
- ___sys_sendmsg+0x190/0x1e0 net/socket.c:2646
- __sys_sendmsg+0x170/0x220 net/socket.c:2678
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x106/0xf80 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x77/0x7f
-RIP: 0033:0x7fe1a0e6c1a9
+mctp_flow_prepare_output() checks key->dev and may call
+mctp_dev_set_key(), but it does not hold key->lock while doing so.
 
-When a non-Ethernet device (e.g. GRE tunnel) is enslaved to a bond,
-bond_setup_by_slave() directly copies the slave's header_ops to the
-bond device:
+mctp_dev_set_key() and mctp_dev_release_key() are annotated with
+__must_hold(&key->lock), so key->dev access is intended to be
+serialized by key->lock. The mctp_sendmsg() transmit path reaches
+mctp_flow_prepare_output() via mctp_local_output() -> mctp_dst_output()
+without holding key->lock, so the check-and-set sequence is racy.
 
-    bond_dev->header_ops = slave_dev->header_ops;
+Example interleaving:
 
-This causes a type confusion when dev_hard_header() is later called
-on the bond device. Functions like ipgre_header(), ip6gre_header(),all use
-netdev_priv(dev) to access their device-specific private data. When
-called with the bond device, netdev_priv() returns the bond's private
-data (struct bonding) instead of the expected type (e.g. struct
-ip_tunnel), leading to garbage values being read and kernel crashes.
+  CPU0                                  CPU1
+  ----                                  ----
+  mctp_flow_prepare_output(key, devA)
+    if (!key->dev)  // sees NULL
+                                        mctp_flow_prepare_output(
+                                            key, devB)
+                                          if (!key->dev)  // still NULL
+                                          mctp_dev_set_key(devB, key)
+                                            mctp_dev_hold(devB)
+                                            key->dev = devB
+    mctp_dev_set_key(devA, key)
+      mctp_dev_hold(devA)
+      key->dev = devA   // overwrites devB
 
-Fix this by introducing bond_header_ops with wrapper functions that
-delegate to the active slave's header_ops using the slave's own
-device. This ensures netdev_priv() in the slave's header functions
-always receives the correct device.
+Now both devA and devB references were acquired, but only the final
+key->dev value is tracked for release. One reference can be lost,
+causing a resource leak as mctp_dev_release_key() would only decrease
+the reference on one dev.
 
-The fix is placed in the bonding driver rather than individual device
-drivers, as the root cause is bond blindly inheriting header_ops from
-the slave without considering that these callbacks expect a specific
-netdev_priv() layout.
+Fix by taking key->lock around the key->dev check and
+mctp_dev_set_key() call.
 
-The type confusion can be observed by adding a printk in
-ipgre_header() and running the following commands:
-
-    ip link add dummy0 type dummy
-    ip addr add 10.0.0.1/24 dev dummy0
-    ip link set dummy0 up
-    ip link add gre1 type gre local 10.0.0.1
-    ip link add bond1 type bond mode active-backup
-    ip link set gre1 master bond1
-    ip link set gre1 up
-    ip link set bond1 up
-    ip addr add fe80::1/64 dev bond1
-
-Fixes: 1284cd3a2b74 ("bonding: two small fixes for IPoIB support")
-Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Link: https://patch.msgid.link/20260306021508.222062-1-jiayuan.chen@linux.dev
+Fixes: 67737c457281 ("mctp: Pass flow data & flow release events to drivers")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://patch.msgid.link/20260306031402.857224-1-dg573847474@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++++++++++++++++-
- 1 file changed, 46 insertions(+), 1 deletion(-)
+ net/mctp/route.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 8be99ae67b77f..139ece7676c50 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -1476,6 +1476,50 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
- 	return features;
- }
- 
-+static int bond_header_create(struct sk_buff *skb, struct net_device *bond_dev,
-+			      unsigned short type, const void *daddr,
-+			      const void *saddr, unsigned int len)
-+{
-+	struct bonding *bond = netdev_priv(bond_dev);
-+	const struct header_ops *slave_ops;
-+	struct slave *slave;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	slave = rcu_dereference(bond->curr_active_slave);
-+	if (slave) {
-+		slave_ops = READ_ONCE(slave->dev->header_ops);
-+		if (slave_ops && slave_ops->create)
-+			ret = slave_ops->create(skb, slave->dev,
-+						type, daddr, saddr, len);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static int bond_header_parse(const struct sk_buff *skb, unsigned char *haddr)
-+{
-+	struct bonding *bond = netdev_priv(skb->dev);
-+	const struct header_ops *slave_ops;
-+	struct slave *slave;
-+	int ret = 0;
-+
-+	rcu_read_lock();
-+	slave = rcu_dereference(bond->curr_active_slave);
-+	if (slave) {
-+		slave_ops = READ_ONCE(slave->dev->header_ops);
-+		if (slave_ops && slave_ops->parse)
-+			ret = slave_ops->parse(skb, haddr);
-+	}
-+	rcu_read_unlock();
-+	return ret;
-+}
-+
-+static const struct header_ops bond_header_ops = {
-+	.create	= bond_header_create,
-+	.parse	= bond_header_parse,
-+};
-+
- static void bond_setup_by_slave(struct net_device *bond_dev,
- 				struct net_device *slave_dev)
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index ecbbe4beb2133..7a94b58f00978 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -359,6 +359,7 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
  {
-@@ -1483,7 +1527,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 	struct mctp_sk_key *key;
+ 	struct mctp_flow *flow;
++	unsigned long flags;
  
- 	dev_close(bond_dev);
+ 	flow = skb_ext_find(skb, SKB_EXT_MCTP);
+ 	if (!flow)
+@@ -366,12 +367,14 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
  
--	bond_dev->header_ops	    = slave_dev->header_ops;
-+	bond_dev->header_ops	    = slave_dev->header_ops ?
-+				      &bond_header_ops : NULL;
+ 	key = flow->key;
  
- 	bond_dev->type		    = slave_dev->type;
- 	bond_dev->hard_header_len   = slave_dev->hard_header_len;
+-	if (key->dev) {
++	spin_lock_irqsave(&key->lock, flags);
++
++	if (!key->dev)
++		mctp_dev_set_key(dev, key);
++	else
+ 		WARN_ON(key->dev != dev);
+-		return;
+-	}
+ 
+-	mctp_dev_set_key(dev, key);
++	spin_unlock_irqrestore(&key->lock, flags);
+ }
+ #else
+ static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
 -- 
 2.51.0
 
