@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CFA3F54B8;
-	Tue, 17 Mar 2026 17:00:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1413F54D1;
+	Tue, 17 Mar 2026 17:00:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766845; cv=none; b=W+/XGNCYGy4+S0nBrWFy2jy23/JopCU9dFbkUO2b8z9E7CW5ilh+lN9qm0d9gYLDBbw1LWYQOKQ73VBn6miRtxnrpUBqfNFwlyGkuQDplUlEQ/Eh+SZH6xdxgqO6pkwLSiR6ICDvr4p6F7DHEABDY60CAHy5NPAqtfpYvnQoe7Y=
+	t=1773766849; cv=none; b=Lr2spGl4pflFo1NOlHRN+WA2mjNVsh7vkeDKPwRmRfRTIIPqco86abIaMpCngVuqiOSColgpoR6fsx1tq5ZzaJTUondifo3BUwuUotJ3m5gpZ/9++HaMLZBjvMZuTX7naPQ4oB5RXLjEsqQ/lX0GcFY3Jp/RftUVfwiXj6TL+9U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766845; c=relaxed/simple;
-	bh=1tUVjkcuashVR9JQWGF2gYdoY8Q9otAHlj9IbEv3ZL8=;
+	s=arc-20240116; t=1773766849; c=relaxed/simple;
+	bh=XHo0PN3wAFVPLbZPAEOeq2+favWG7ik349uW1Ta53JE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YfOEcFibwEFnqV5WRbyzKh1S/l65OElH56ranNzxYbMJV+O7PsQptHoP3anLLB7t9Oi6RZEhH/fzlqHCHKICzxSeeDxan3XOpjc7NdweCNarVDQDD6zdLY+HpYGyo2FuW2FCYYDYCotxk6oHaKKm9r55W4mIte2up/hqpLvi78Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnKmJFxL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s4BRoqlpA+5LZILfMcln5LuGPJxAI9FBmh0OyNr4T8yz2bO2ISOhhFko07mJw7SG9OEkySy/L61SBh6dmx8Rl3Vs6p4G4xkCKbtyEi7eFqGpRdpqWk6Ou03fmET0eEA12bwXMiOUHGIxIRMjg6gZ4L8ySjSSYCqo/Z8M9RLyDNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sFledsBp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnKmJFxL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA9DC4CEF7;
-	Tue, 17 Mar 2026 17:00:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sFledsBp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20D7C4CEF7;
+	Tue, 17 Mar 2026 17:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766844;
-	bh=1tUVjkcuashVR9JQWGF2gYdoY8Q9otAHlj9IbEv3ZL8=;
+	s=korg; t=1773766849;
+	bh=XHo0PN3wAFVPLbZPAEOeq2+favWG7ik349uW1Ta53JE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnKmJFxLR+dAuITyXA7PtkadOf7yIA6CPntSciTtrKmS6EthxHJMepesCExCKm9f9
-	 6WPr8gdzSxwg0HCjtgMiMsxRgUNzyS2aFOFfF5C3LJlARn9DAn9wOzTQCQDK3iqPD1
-	 QgkbCPAolmc6Mv0xN34Q68AB2TtNi5XUlwxfgzFw=
+	b=sFledsBp7sjfwvGcZDsaDfHMRz+TQOMuCCBI6ECgqGh+L/ibRjNpntlGstHf+ygFB
+	 Uo/cdtvZkoc53qc/Zj10S2aDEFhgn/J1WNb8zybUNLTzPkR11piEGwyVsEcAm9XIzx
+	 ub3iFx7LpKfoQpEsbw/Tqq2RFsLBtPoZm0bojxl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.19 332/378] lib/bootconfig: fix off-by-one in xbc_verify_tree() unclosed brace error
-Date: Tue, 17 Mar 2026 17:34:49 +0100
-Message-ID: <20260317163019.201186775@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.19 333/378] scsi: core: Fix error handling for scsi_alloc_sdev()
+Date: Tue, 17 Mar 2026 17:34:50 +0100
+Message-ID: <20260317163019.236610628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,43 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit 39ebc8d7f561e1b64eca87353ef9b18e2825e591 upstream.
+commit 4ce7ada40c008fa21b7e52ab9d04e8746e2e9325 upstream.
 
-__xbc_open_brace() pushes entries with post-increment
-(open_brace[brace_index++]), so brace_index always points one past
-the last valid entry.  xbc_verify_tree() reads open_brace[brace_index]
-to report which brace is unclosed, but this is one past the last
-pushed entry and contains stale/zero data, causing the error message
-to reference the wrong node.
+After scsi_sysfs_device_initialize() was called, error paths must call
+__scsi_remove_device().
 
-Use open_brace[brace_index - 1] to correctly identify the unclosed
-brace.  brace_index is known to be > 0 here since we are inside the
-if (brace_index) guard.
-
-Link: https://lore.kernel.org/all/20260312191143.28719-2-objecting@objecting.org/
-
-Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
+Fixes: 1ac22c8eae81 ("scsi: core: Fix refcount leak for tagset_refcnt")
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Law <objecting@objecting.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260304164603.51528-1-junxiao.bi@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/scsi_scan.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -791,7 +791,7 @@ static int __init xbc_verify_tree(void)
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -360,12 +360,8 @@ static struct scsi_device *scsi_alloc_sd
+ 	 * default device queue depth to figure out sbitmap shift
+ 	 * since we use this queue depth most of times.
+ 	 */
+-	if (scsi_realloc_sdev_budget_map(sdev, depth)) {
+-		kref_put(&sdev->host->tagset_refcnt, scsi_mq_free_tags);
+-		put_device(&starget->dev);
+-		kfree(sdev);
+-		goto out;
+-	}
++	if (scsi_realloc_sdev_budget_map(sdev, depth))
++		goto out_device_destroy;
  
- 	/* Brace closing */
- 	if (brace_index) {
--		n = &xbc_nodes[open_brace[brace_index]];
-+		n = &xbc_nodes[open_brace[brace_index - 1]];
- 		return xbc_parse_error("Brace is not closed",
- 					xbc_node_get_data(n));
- 	}
+ 	scsi_change_queue_depth(sdev, depth);
+ 
 
 
