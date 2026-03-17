@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530093F23DD;
-	Tue, 17 Mar 2026 17:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F20B3F54A5;
+	Tue, 17 Mar 2026 17:01:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766861; cv=none; b=XKhfOlGR/JCJCguGY0+ERto+TTc1IhLa9gGD33d+GupNGCm/KI1cl/spsjSm2P89q6Gtm0wk8WI2zfwcn62m3Nr1SkQyB3EwS/cJuYfvnlMUlHVu7laY02UiLO4A0bFEsvmLGKaj64M4TsMrZRG5a6AmvWx11iBfvTSbMAtP+Cw=
+	t=1773766865; cv=none; b=jcSs5012Olgi+cKHYPMVC7e+kBKDZkL+sU0eKeWruJUfOvgf+GKsxOtFVZ6xI7ubRMusKnQhFcO/6PeX3tyLlQhDaUpsTSJj1meM4UIFB7SmJU0IMenpqPCr+3z5KxBE98XQOEpeRt41iAF307Uhiyr1HfGS4HFkgE8QOKhRzgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766861; c=relaxed/simple;
-	bh=UdZZUpQtNtdeLV383KGGzHd/qRjNhmWRxMSfIJt1dXU=;
+	s=arc-20240116; t=1773766865; c=relaxed/simple;
+	bh=GRH8OnEFf05KfYsDj4/b36f35s4Rj1j7EH40+IGlQbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GkTstPxnl2mfolUIC4C4QfN1vgHmEJDbRhgw7c+J/xdLb/koxU9QDSUbn1CyYGP0vtDOLEIqOtK6hmWCtGgZ6hwig2jB8arWNFIkHxZR0aNqPYal8QZSjuc5ndK75vsZCJYJ0iMYWFv5m/e6M4yHbj49oObd+lq2jNN4+hqSM7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ViHI2zOE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=d2aJ3JYEVHxhS0JT5cTWeAW7zee47DDmKXWbQaR6P9etX2agUzeAldmGhSY9nxAewph45A4qJvICPV9fBfglNHMHtrdNTcAfEuNuizqn3jVIBfN8EOIG3H+I8zP1klrxxsj9gSd72p1B1KazdWJrxLR2yGlkktI60W8fvXezdNc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vXuK2rx1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ViHI2zOE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3A5FC4CEF7;
-	Tue, 17 Mar 2026 17:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vXuK2rx1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B981AC4CEF7;
+	Tue, 17 Mar 2026 17:01:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766861;
-	bh=UdZZUpQtNtdeLV383KGGzHd/qRjNhmWRxMSfIJt1dXU=;
+	s=korg; t=1773766865;
+	bh=GRH8OnEFf05KfYsDj4/b36f35s4Rj1j7EH40+IGlQbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ViHI2zOE3pgOeRU3nNdx057x09NZdV3J8o74ATmZ0dJd67wwpEq33ysIMJ38wu67G
-	 5HEb3+Z6JmarUcbgqlYSOiWfn6ldy19hxNYJuDpMLMzklbLdJEMGT028doWVRCDGIL
-	 8AAET0kuWfk1QcwF9D33fF/316MY7Lpx6WjWfOkE=
+	b=vXuK2rx1Dm+yiWiZwiggwu4BrxeLGZq3HCXLU2a5iQ3SEKZZT9gLeTCDok1ax5urW
+	 W3X++n/s0Z//v8KaXTUk2fs8JCsxYNTrevO5bYDc2fHK+mHJV91TkxAGRd0uHEPmDP
+	 7PJeRlTxZ9nK89eYVORPbz95gbJ5eGAS82Erx2nY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Josh Law <objecting@objecting.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.19 336/378] lib/bootconfig: fix snprintf truncation check in xbc_node_compose_key_after()
-Date: Tue, 17 Mar 2026 17:34:53 +0100
-Message-ID: <20260317163019.344329848@linuxfoundation.org>
+Subject: [PATCH 6.19 337/378] lib/bootconfig: check bounds before writing in __xbc_open_brace()
+Date: Tue, 17 Mar 2026 17:34:54 +0100
+Message-ID: <20260317163019.381466769@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,20 +52,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Law <objecting@objecting.org>
 
-commit 1120a36bb1e9b9e22de75ecb4ef0b998f73a97f1 upstream.
+commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
 
-snprintf() returns the number of characters that would have been
-written excluding the NUL terminator.  Output is truncated when the
-return value is >= the buffer size, not just > the buffer size.
+The bounds check for brace_index happens after the array write.
+While the current call pattern prevents an actual out-of-bounds
+access (the previous call would have returned an error), the
+write-before-check pattern is fragile and would become a real
+out-of-bounds write if the error return were ever not propagated.
 
-When ret == size, the current code takes the non-truncated path,
-advancing buf by ret and reducing size to 0.  This is wrong because
-the output was actually truncated (the last character was replaced by
-NUL).  Fix by using >= so the truncation path is taken correctly.
+Move the bounds check before the array write so the function is
+self-contained and safe regardless of caller behavior.
 
-Link: https://lore.kernel.org/all/20260312191143.28719-4-objecting@objecting.org/
+Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
 
-Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
 Cc: stable@vger.kernel.org
 Signed-off-by: Josh Law <objecting@objecting.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
@@ -76,14 +76,16 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/lib/bootconfig.c
 +++ b/lib/bootconfig.c
-@@ -316,7 +316,7 @@ int __init xbc_node_compose_key_after(st
- 			       depth ? "." : "");
- 		if (ret < 0)
- 			return ret;
--		if (ret > size) {
-+		if (ret >= size) {
- 			size = 0;
- 		} else {
- 			size -= ret;
+@@ -532,9 +532,9 @@ static char *skip_spaces_until_newline(c
+ static int __init __xbc_open_brace(char *p)
+ {
+ 	/* Push the last key as open brace */
+-	open_brace[brace_index++] = xbc_node_index(last_parent);
+ 	if (brace_index >= XBC_DEPTH_MAX)
+ 		return xbc_parse_error("Exceed max depth of braces", p);
++	open_brace[brace_index++] = xbc_node_index(last_parent);
+ 
+ 	return 0;
+ }
 
 
