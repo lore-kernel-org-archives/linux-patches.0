@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40ABC3EF641;
-	Tue, 17 Mar 2026 16:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81582330B15;
+	Tue, 17 Mar 2026 16:54:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766478; cv=none; b=aMj7tj9Om8Fjuwk1nTCGLrzPgI3Xy2OuM+vQ/+rEFH5Jo2C38nZDUCXqRrjPyQcg1iTohLu0Sy6RyhzG4emTXr4GURmirBLjymYq1EEjdfIp3kN7nGCWYBTBEgHhdCkCnaw9VWiznk6rcg2Fa1cmkKbN9yMtl7R9NZ8BdUJKu5Q=
+	t=1773766482; cv=none; b=YZ2cmcBh3/B3SRNaiL7PmNBPMthgOckEltEbXGCvuOKxLJz9xkv0uKhkLiKoHtScbcvqSqLsS6C+ny7TTJ3t0SvI3+wd0Ag65lRw532chd4SNc430DanUWg01uHTa6AbwMlIiYVn/F75KorrLPRjdJYr4LfHhCo5iir1Tw+oAUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766478; c=relaxed/simple;
-	bh=XUOY/svCe85de2DnXplEl8jQbYI6nAWvwKV1G7Ydgzo=;
+	s=arc-20240116; t=1773766482; c=relaxed/simple;
+	bh=Baz5+yhNHkWJ/6DqRAguhhUaX58VkeGRLd3Sbg/0DAQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QxMvI54/oGMf0LlNIv+AX02fHb4jeZJ8/hwaxda9Z+l5MoYUDlsbvNHY879zXeG//l234M7fD16AMxSpP3HF+Xrlp0yUj9KyPSW3GPCQrGtTHGcKtZCGI3ZVABCO2DomsnWCotRnJzhmHXDK/7gJ4BPbi7Z/eOKkjagRIdwIc5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IH5IANEw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MGkUWMMDtlnKCHmayenKfqzFcnb65/CikmPkRuzJs6Y9rtiZuGiwM/pBdCsm9JVUVVSuy41rHhhpmgXDmD6GKXG3tEZkdl6Fo/wQb72pfE6EWbKM1nmzfbQQMhuCdCSJYhiC4sZGffD1p9jLqYqns7AnN8MLSg3J5AVvVEV1OSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kr7O92jd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IH5IANEw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947EEC4CEF7;
-	Tue, 17 Mar 2026 16:54:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kr7O92jd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6BD2C4CEF7;
+	Tue, 17 Mar 2026 16:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766478;
-	bh=XUOY/svCe85de2DnXplEl8jQbYI6nAWvwKV1G7Ydgzo=;
+	s=korg; t=1773766482;
+	bh=Baz5+yhNHkWJ/6DqRAguhhUaX58VkeGRLd3Sbg/0DAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IH5IANEwCgH29pgNiygZEKN62l3iy079ob6sbi0tcSCqM9LcUxeIfvgl0AygTtN5j
-	 T5OFhlrLH70gITscJm2DQm6xdZFWzmBmGmoda/wZcqn569YzutpMUjymYAaKZp6f2O
-	 qupLRtc2jEl1W2Bw/d/agKsk1vGNvKnduLVWAMVg=
+	b=Kr7O92jdzfqWdi7dMB7O529ncWMpmfD2B+I2qfR1YiqoLKO0an6I/bg+ifB+dAz7a
+	 CymRSC0oqBT+IeZ6JurcgE0YUzw8YdfRcLZjlmRDEBDsO3Av1hUe+LVXieeeqcppnP
+	 EDiZ2ARxp1nmAgd6KK8+6fctgmODs5uIFdtsWEFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Navaneeth K <knavaneeth786@gmail.com>
-Subject: [PATCH 6.19 254/378] staging: rtl8723bs: properly validate the data in rtw_get_ie_ex()
-Date: Tue, 17 Mar 2026 17:33:31 +0100
-Message-ID: <20260317163016.364742259@linuxfoundation.org>
+	Luka Gejak <luka.gejak@linux.dev>,
+	Dan Carpenter <dan.carpenter@linaro.org>
+Subject: [PATCH 6.19 255/378] staging: rtl8723bs: fix potential out-of-bounds read in rtw_restruct_wmm_ie
+Date: Tue, 17 Mar 2026 17:33:32 +0100
+Message-ID: <20260317163016.400453580@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,56 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Luka Gejak <luka.gejak@linux.dev>
 
-commit f0109b9d3e1e455429279d602f6276e34689750a upstream.
+commit a75281626fc8fa6dc6c9cc314ee423e8bc45203b upstream.
 
-Just like in commit 154828bf9559 ("staging: rtl8723bs: fix out-of-bounds
-read in rtw_get_ie() parser"), we don't trust the data in the frame so
-we should check the length better before acting on it
+The current code checks 'i + 5 < in_len' at the end of the if statement.
+However, it accesses 'in_ie[i + 5]' before that check, which can lead
+to an out-of-bounds read. Move the length check to the beginning of the
+conditional to ensure the index is within bounds before accessing the
+array.
 
+Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
 Cc: stable <stable@kernel.org>
-Assisted-by: gkh_clanker_2000
-Tested-by: Navaneeth K <knavaneeth786@gmail.com>
-Reviewed-by: Navaneeth K <knavaneeth786@gmail.com>
-Link: https://patch.msgid.link/2026022336-arrange-footwork-6e54@gregkh
+Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
+Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
+Link: https://patch.msgid.link/20260224132647.11642-2-luka.gejak@linux.dev
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/staging/rtl8723bs/core/rtw_mlme.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
-@@ -185,20 +185,25 @@ u8 *rtw_get_ie_ex(u8 *in_ie, uint in_len
+--- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
++++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
+@@ -2002,7 +2002,10 @@ int rtw_restruct_wmm_ie(struct adapter *
+ 	while (i < in_len) {
+ 		ielength = initial_out_len;
  
- 	cnt = 0;
- 
--	while (cnt < in_len) {
-+	while (cnt + 2 <= in_len) {
-+		u8 ie_len = in_ie[cnt + 1];
-+
-+		if (cnt + 2 + ie_len > in_len)
-+			break;
-+
- 		if (eid == in_ie[cnt]
--			&& (!oui || !memcmp(&in_ie[cnt+2], oui, oui_len))) {
-+			&& (!oui || (ie_len >= oui_len && !memcmp(&in_ie[cnt + 2], oui, oui_len)))) {
- 			target_ie = &in_ie[cnt];
- 
- 			if (ie)
--				memcpy(ie, &in_ie[cnt], in_ie[cnt+1]+2);
-+				memcpy(ie, &in_ie[cnt], ie_len + 2);
- 
- 			if (ielen)
--				*ielen = in_ie[cnt+1]+2;
-+				*ielen = ie_len + 2;
- 
- 			break;
- 		}
--		cnt += in_ie[cnt+1]+2; /* goto next */
-+		cnt += ie_len + 2; /* goto next */
- 	}
- 
- 	return target_ie;
+-		if (in_ie[i] == 0xDD && in_ie[i+2] == 0x00 && in_ie[i+3] == 0x50  && in_ie[i+4] == 0xF2 && in_ie[i+5] == 0x02 && i+5 < in_len) { /* WMM element ID and OUI */
++		if (i + 5 < in_len &&
++		    in_ie[i] == 0xDD && in_ie[i + 2] == 0x00 &&
++		    in_ie[i + 3] == 0x50 && in_ie[i + 4] == 0xF2 &&
++		    in_ie[i + 5] == 0x02) {
+ 			for (j = i; j < i + 9; j++) {
+ 				out_ie[ielength] = in_ie[j];
+ 				ielength++;
 
 
