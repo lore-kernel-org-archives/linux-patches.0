@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9BA37F008;
-	Tue, 17 Mar 2026 16:45:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFA02DF132;
+	Tue, 17 Mar 2026 16:45:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765918; cv=none; b=ELKgqUwAtIiVqR/AOUpHfBDwxFUk8klgBaeTpEoB8mvhYFriiBqtXRCpimO20qix0pVpUqJX5JePAGJbOdgblvUMX+lS1yLzQn9kpCTmFDzjERXd3Cz+m3rRMeAtU4vKZ43QOmcAZj+jvWGro2/Z0lvMnGxeQHXGk9pqTwEKEw0=
+	t=1773765921; cv=none; b=WjZg9iAs4JOpKl98QGkk1GURTcE65XyK/I+1rbPbwU7OeRH1QQnn2eXRjbrvNvQLc+KgfiStouqGTBN7U/yCFYxt2BLQcrjFWAGJyaRsAw/LTY3z45Phr8JlxW6gkCg3uDG4GkpAX3JYsBLniUSCPbQDaYwC+2DNgdoVJTOjeKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765918; c=relaxed/simple;
-	bh=6OrhKCTjNiWnp2uay5W4KVmIHVfDrdX1SWN8XO8Xk7M=;
+	s=arc-20240116; t=1773765921; c=relaxed/simple;
+	bh=DIO67tpfSx2E5W9EBjcjsZym9e2iXO+2bBM/JFThLZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oXEiwVhnAhQnXbOsH0erorfI3mKSwsbGBgbYaX5tsBt95btn5dNqyQoZcdWEB0TC56Ajqb4xf8XCWTIN00CHdBsj3oZ0H9RsbAgpp6kPrUxiIw/OjaEg3CDaPg0vBSjO2SyATOR7SnbO3an98OunkRmJZF+btWvPaIJgIJHrSIE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dooTeG7Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bKO2/AJzV0uTcppC/n3R5qivKacM40CmgaF17scZuDG8izBy1gGtT1EHT3/QEQKVmKKtOI653u+JKFFq7H9PfZ2H84Qhd+w/C/trOqFGjsHHRgRDxYDyWzZXlzuyY0/OZ1jw7Tnjx+tVOeuuHzn5/d0CxPVOwkxovsMpc7LOW24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1bImQ/wm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dooTeG7Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF49C4CEF7;
-	Tue, 17 Mar 2026 16:45:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1bImQ/wm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5019BC4CEF7;
+	Tue, 17 Mar 2026 16:45:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765918;
-	bh=6OrhKCTjNiWnp2uay5W4KVmIHVfDrdX1SWN8XO8Xk7M=;
+	s=korg; t=1773765921;
+	bh=DIO67tpfSx2E5W9EBjcjsZym9e2iXO+2bBM/JFThLZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dooTeG7Yaeag8PE2evDXr08dqcg9zBPCNU1SaY0yjLEs3H/sjDaCP6e+Wwus9Rkrq
-	 HkfWRt7DdMTRJJa2QaVoxYko5kDH7ACMPUNXURvjeoskunap1pCMIaQdri6fHcHVHq
-	 0uVmwVpk8ylMysaPxN9hGBdGgG3FtteriCZ52Aqs=
+	b=1bImQ/wmb41S4UyulGkJI46L1tQQ21LkonebTHoKqC/ewbUu+Muvsm4P6IQthlqT0
+	 ktnk+64+HnzmIdtPN+tB3zUF7eQ3eDS3nSfseYGK8j32Fs2Tmy4XxsAoH6FdZRMDTe
+	 5Ef6OocUsRPhfhRefoWRLom0HPUWoWUKp5+fN5yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 124/378] net: usb: lan78xx: skip LTM configuration for LAN7850
-Date: Tue, 17 Mar 2026 17:31:21 +0100
-Message-ID: <20260317163011.578048281@linuxfoundation.org>
+	Dave Penkler <dpenkler@gmail.com>,
+	stable <stable@kernel.org>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.19 125/378] gpib: lpvo_usb: fix unintended binding of FTDI 8U232AM devices
+Date: Tue, 17 Mar 2026 17:31:22 +0100
+Message-ID: <20260317163011.613841642@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,46 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-commit d9cc0e440f0664f6f3e2c26e39ab9dd5f3badba7 upstream.
+commit 163cc462dea7d5b75be4db49ca78a2b99c55375e upstream.
 
-Do not configure Latency Tolerance Messaging (LTM) on USB 2.0 hardware.
+The LPVO USB GPIB adapter apparently uses an FTDI 8U232AM with the
+default PID, but this device id is already handled by the ftdi_sio
+serial driver.
 
-The LAN7850 is a High-Speed (USB 2.0) only device and does not support
-SuperSpeed features like LTM. Currently, the driver unconditionally
-attempts to configure LTM registers during initialization. On the
-LAN7850, these registers do not exist, resulting in writes to invalid
-or undocumented memory space.
+Stop binding to the default PID to avoid breaking existing setups with
+FTDI 8U232AM.
 
-This issue was identified during a port to the regmap API with strict
-register validation enabled. While no functional issues or crashes have
-been observed from these invalid writes, bypassing LTM initialization
-on the LAN7850 ensures the driver strictly adheres to the hardware's
-valid register map.
+Anyone using this driver should blacklist the ftdi_sio driver and add
+the device id manually through sysfs (e.g. using udev rules).
 
-Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260305143429.530909-4-o.rempel@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: fce79512a96a ("staging: gpib: Add LPVO DIY USB GPIB driver")
+Fixes: e6ab504633e4 ("staging: gpib: Destage gpib")
+Cc: Dave Penkler <dpenkler@gmail.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260305151729.10501-2-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/usb/lan78xx.c
-+++ b/drivers/net/usb/lan78xx.c
-@@ -3119,6 +3119,10 @@ static int lan78xx_init_ltm(struct lan78
- 	int ret;
- 	u32 buf;
+--- a/drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c
++++ b/drivers/gpib/lpvo_usb_gpib/lpvo_usb_gpib.c
+@@ -38,8 +38,10 @@ MODULE_DESCRIPTION("GPIB driver for LPVO
+ /*
+  * Table of devices that work with this driver.
+  *
+- * Currently, only one device is known to be used in the
+- * lpvo_usb_gpib adapter (FTDI 0403:6001).
++ * Currently, only one device is known to be used in the lpvo_usb_gpib
++ * adapter (FTDI 0403:6001) but as this device id is already handled by the
++ * ftdi_sio USB serial driver the LPVO driver must not bind to it by default.
++ *
+  * If your adapter uses a different chip, insert a line
+  * in the following table with proper <Vendor-id>, <Product-id>.
+  *
+@@ -50,7 +52,6 @@ MODULE_DESCRIPTION("GPIB driver for LPVO
+  */
  
-+	/* LAN7850 is USB 2.0 and does not support LTM */
-+	if (dev->chipid == ID_REV_CHIP_ID_7850_)
-+		return 0;
-+
- 	ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
- 	if (ret < 0)
- 		goto init_ltm_failed;
+ static const struct usb_device_id skel_table[] = {
+-	{ USB_DEVICE(0x0403, 0x6001) },
+ 	{ }					   /* Terminating entry */
+ };
+ MODULE_DEVICE_TABLE(usb, skel_table);
 
 
