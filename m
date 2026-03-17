@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C953EDADB;
-	Tue, 17 Mar 2026 16:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA8B3EAC6F;
+	Tue, 17 Mar 2026 16:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766299; cv=none; b=C1q8CuYsv2u1YLoaSNrut4JF+aJ0JkPselwIKNnzmSAztD9O0e5EIYYjAsAE+TMk0B9Ifyr1HtqZbGHDexuJ0ndc5EmByMCgM6HHTPbB7mq/sK4C+MEIlfqoJ3YGuUJ4XgQrejaBk2EGSitTYx8LAlCcgrSJgz+8yMkeP8sS4Io=
+	t=1773766303; cv=none; b=jmqzJq2bFFvEFtleqdUmmJNDtOkVPv1Y2JuXvk7+kRssOl7BqQqHV7Dym1bVHpjQFh22mbapb5f9/UqZrku1x4FBNqo4RYsD+cpX/DfEMfcb+nGN6UjiBe+HyKmXgOKeXYHvNMyOzPAXg4rj1rpSCc8pkSBtNrgRL3MElHJh9oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766299; c=relaxed/simple;
-	bh=89CPsaG7S40w0PQBGl//7B9panRDtVTeZeCB/OZOhbc=;
+	s=arc-20240116; t=1773766303; c=relaxed/simple;
+	bh=65hkiwFo17fr3Y0wrCczs03x61FtbAJxvMn56gBhS78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dXv9PWoO2cN36VbS6s0Mq2WJRAxZAZlzOsdiZXTZZ1oqRkh4VBsCXczXZd69AZMljs6LHV3l+9b2tIstdcFSN4LbXaOOivifaG3/+KhagtONBbfyeb1WIPf6HdzKGXZHFStqHSS41yOO4IOUlryKaoKBebL4UohW5Bry/QODHpM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tQs0Diht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGNAfbNFTKLSUqLd3m2qcsjPuXxk0Fj1GZ9UK8NGNawm94yabFTHIunkztAHKQnq0jLcndUzm9BOYwWNvpsF2Aj35Pj7jevcFRT2NkTEaf6sw4isX355KZnAnXx1LfvPp0Q1DQHEz3NFlK4wezxJkbxpf7XRcN9CI/Ic1ket8qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MpX08jro; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tQs0Diht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65A22C4CEF7;
-	Tue, 17 Mar 2026 16:51:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MpX08jro"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D8FC4CEF7;
+	Tue, 17 Mar 2026 16:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766299;
-	bh=89CPsaG7S40w0PQBGl//7B9panRDtVTeZeCB/OZOhbc=;
+	s=korg; t=1773766303;
+	bh=65hkiwFo17fr3Y0wrCczs03x61FtbAJxvMn56gBhS78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tQs0Dihtezr5IifKWAuMPQfSfskiEnHuTRXdOX03UpWJOwDvfo4lRxVP+ZyA75Uog
-	 bGshKWpcd8NF9iefWEavG85IBag2TtgLIA/a411vVhDgxsHa09DOrzMT17TxbFzAn1
-	 FT3w2oSc3FRNPOspPjLNUW+gvrAajHArg2C1qAhg=
+	b=MpX08jro96Zh5EVi1O2ioUMwZvxhpNOeLR7F5gu8seZng6MQEcFZZSs5vGwLQ+82p
+	 LhktO3rKq3E60rqs0FuNwovpZr9PS7LxVTQ9iI2MYqq0m1lGIIlcBxhh0Tu2IwnPMM
+	 ahzJD2JXPkm06GBH5tbNjgFni6+X1d1h46xEjH44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
-	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
-	Pasha Tatashin <pasha.tatashin@soleen.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 214/378] liveupdate: luo_file: remember retrieve() status
-Date: Tue, 17 Mar 2026 17:32:51 +0100
-Message-ID: <20260317163014.882532487@linuxfoundation.org>
+	Guillaume Tucker <gtucker@gtucker.io>,
+	Mark Brown <broonie@kernel.org>,
+	David Gow <davidgow@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.19 215/378] kthread: consolidate kthread exit paths to prevent use-after-free
+Date: Tue, 17 Mar 2026 17:32:52 +0100
+Message-ID: <20260317163014.919132911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,208 +53,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav (Google) <pratyush@kernel.org>
+From: Christian Brauner <brauner@kernel.org>
 
-commit f85b1c6af5bc3872f994df0a5688c1162de07a62 upstream.
+commit 28aaa9c39945b7925a1cc1d513c8f21ed38f5e4f upstream.
 
-LUO keeps track of successful retrieve attempts on a LUO file.  It does so
-to avoid multiple retrievals of the same file.  Multiple retrievals cause
-problems because once the file is retrieved, the serialized data
-structures are likely freed and the file is likely in a very different
-state from what the code expects.
+Guillaume reported crashes via corrupted RCU callback function pointers
+during KUnit testing. The crash was traced back to the pidfs rhashtable
+conversion which replaced the 24-byte rb_node with an 8-byte rhash_head
+in struct pid, shrinking it from 160 to 144 bytes.
 
-The retrieve boolean in struct luo_file keeps track of this, and is passed
-to the finish callback so it knows what work was already done and what it
-has left to do.
+struct kthread (without CONFIG_BLK_CGROUP) is also 144 bytes. With
+CONFIG_SLAB_MERGE_DEFAULT and SLAB_HWCACHE_ALIGN both round up to
+192 bytes and share the same slab cache. struct pid.rcu.func and
+struct kthread.affinity_node both sit at offset 0x78.
 
-All this works well when retrieve succeeds.  When it fails,
-luo_retrieve_file() returns the error immediately, without ever storing
-anywhere that a retrieve was attempted or what its error code was.  This
-results in an errored LIVEUPDATE_SESSION_RETRIEVE_FD ioctl to userspace,
-but nothing prevents it from trying this again.
+When a kthread exits via make_task_dead() it bypasses kthread_exit() and
+misses the affinity_node cleanup. free_kthread_struct() frees the memory
+while the node is still linked into the global kthread_affinity_list. A
+subsequent list_del() by another kthread writes through dangling list
+pointers into the freed and reused memory, corrupting the pid's
+rcu.func pointer.
 
-The retry is problematic for much of the same reasons listed above.  The
-file is likely in a very different state than what the retrieve logic
-normally expects, and it might even have freed some serialization data
-structures.  Attempting to access them or free them again is going to
-break things.
+Instead of patching free_kthread_struct() to handle the missed cleanup,
+consolidate all kthread exit paths. Turn kthread_exit() into a macro
+that calls do_exit() and add kthread_do_exit() which is called from
+do_exit() for any task with PF_KTHREAD set. This guarantees that
+kthread-specific cleanup always happens regardless of the exit path -
+make_task_dead(), direct do_exit(), or kthread_exit().
 
-For example, if memfd managed to restore 8 of its 10 folios, but fails on
-the 9th, a subsequent retrieve attempt will try to call
-kho_restore_folio() on the first folio again, and that will fail with a
-warning since it is an invalid operation.
+Replace __to_kthread() with a new tsk_is_kthread() accessor in the
+public header. Export do_exit() since module code using the
+kthread_exit() macro now needs it directly.
 
-Apart from the retry, finish() also breaks.  Since on failure the
-retrieved bool in luo_file is never touched, the finish() call on session
-close will tell the file handler that retrieve was never attempted, and it
-will try to access or free the data structures that might not exist, much
-in the same way as the retry attempt.
-
-There is no sane way of attempting the retrieve again.  Remember the error
-retrieve returned and directly return it on a retry.  Also pass this
-status code to finish() so it can make the right decision on the work it
-needs to do.
-
-This is done by changing the bool to an integer.  A value of 0 means
-retrieve was never attempted, a positive value means it succeeded, and a
-negative value means it failed and the error code is the value.
-
-Link: https://lkml.kernel.org/r/20260216132221.987987-1-pratyush@kernel.org
-Fixes: 7c722a7f44e0 ("liveupdate: luo_file: implement file systems callbacks")
-Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
-Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
-Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Reported-by: Guillaume Tucker <gtucker@gtucker.io>
+Tested-by: Guillaume Tucker <gtucker@gtucker.io>
+Tested-by: Mark Brown <broonie@kernel.org>
+Tested-by: David Gow <davidgow@google.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/all/20260224-mittlerweile-besessen-2738831ae7f6@brauner
+Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 4d13f4304fa4 ("kthread: Implement preferred affinity")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/liveupdate.h   |    9 ++++++---
- kernel/liveupdate/luo_file.c |   41 +++++++++++++++++++++++++----------------
- mm/memfd_luo.c               |    7 ++++++-
- 3 files changed, 37 insertions(+), 20 deletions(-)
+ include/linux/kthread.h |   21 ++++++++++++++++++++-
+ kernel/exit.c           |    6 ++++++
+ kernel/kthread.c        |   41 +++++------------------------------------
+ 3 files changed, 31 insertions(+), 37 deletions(-)
 
---- a/include/linux/liveupdate.h
-+++ b/include/linux/liveupdate.h
-@@ -20,8 +20,11 @@ struct file;
- /**
-  * struct liveupdate_file_op_args - Arguments for file operation callbacks.
-  * @handler:          The file handler being called.
-- * @retrieved:        The retrieve status for the 'can_finish / finish'
-- *                    operation.
-+ * @retrieve_status:  The retrieve status for the 'can_finish / finish'
-+ *                    operation. A value of 0 means the retrieve has not been
-+ *                    attempted, a positive value means the retrieve was
-+ *                    successful, and a negative value means the retrieve failed,
-+ *                    and the value is the error code of the call.
-  * @file:             The file object. For retrieve: [OUT] The callback sets
-  *                    this to the new file. For other ops: [IN] The caller sets
-  *                    this to the file being operated on.
-@@ -37,7 +40,7 @@ struct file;
-  */
- struct liveupdate_file_op_args {
- 	struct liveupdate_file_handler *handler;
--	bool retrieved;
-+	int retrieve_status;
- 	struct file *file;
- 	u64 serialized_data;
- 	void *private_data;
---- a/kernel/liveupdate/luo_file.c
-+++ b/kernel/liveupdate/luo_file.c
-@@ -133,9 +133,12 @@ static LIST_HEAD(luo_file_handler_list);
-  *                 state that is not preserved. Set by the handler's .preserve()
-  *                 callback, and must be freed in the handler's .unpreserve()
-  *                 callback.
-- * @retrieved:     A flag indicating whether a user/kernel in the new kernel has
-+ * @retrieve_status: Status code indicating whether a user/kernel in the new kernel has
-  *                 successfully called retrieve() on this file. This prevents
-- *                 multiple retrieval attempts.
-+ *                 multiple retrieval attempts. A value of 0 means a retrieve()
-+ *                 has not been attempted, a positive value means the retrieve()
-+ *                 was successful, and a negative value means the retrieve()
-+ *                 failed, and the value is the error code of the call.
-  * @mutex:         A mutex that protects the fields of this specific instance
-  *                 (e.g., @retrieved, @file), ensuring that operations like
-  *                 retrieving or finishing a file are atomic.
-@@ -160,7 +163,7 @@ struct luo_file {
- 	struct file *file;
- 	u64 serialized_data;
- 	void *private_data;
--	bool retrieved;
-+	int retrieve_status;
- 	struct mutex mutex;
- 	struct list_head list;
- 	u64 token;
-@@ -293,7 +296,6 @@ int luo_preserve_file(struct luo_file_se
- 	luo_file->file = file;
- 	luo_file->fh = fh;
- 	luo_file->token = token;
--	luo_file->retrieved = false;
- 	mutex_init(&luo_file->mutex);
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -7,6 +7,24 @@
  
- 	args.handler = fh;
-@@ -569,7 +571,12 @@ int luo_retrieve_file(struct luo_file_se
- 		return -ENOENT;
+ struct mm_struct;
  
- 	guard(mutex)(&luo_file->mutex);
--	if (luo_file->retrieved) {
-+	if (luo_file->retrieve_status < 0) {
-+		/* Retrieve was attempted and it failed. Return the error code. */
-+		return luo_file->retrieve_status;
-+	}
++/* opaque kthread data */
++struct kthread;
 +
-+	if (luo_file->retrieve_status > 0) {
- 		/*
- 		 * Someone is asking for this file again, so get a reference
- 		 * for them.
-@@ -582,16 +589,19 @@ int luo_retrieve_file(struct luo_file_se
- 	args.handler = luo_file->fh;
- 	args.serialized_data = luo_file->serialized_data;
- 	err = luo_file->fh->ops->retrieve(&args);
--	if (!err) {
--		luo_file->file = args.file;
++/*
++ * When "(p->flags & PF_KTHREAD)" is set the task is a kthread and will
++ * always remain a kthread.  For kthreads p->worker_private always
++ * points to a struct kthread.  For tasks that are not kthreads
++ * p->worker_private is used to point to other things.
++ *
++ * Return NULL for any task that is not a kthread.
++ */
++static inline struct kthread *tsk_is_kthread(struct task_struct *p)
++{
++	if (p->flags & PF_KTHREAD)
++		return p->worker_private;
++	return NULL;
++}
++
+ __printf(4, 5)
+ struct task_struct *kthread_create_on_node(int (*threadfn)(void *data),
+ 					   void *data,
+@@ -98,8 +116,9 @@ void *kthread_probe_data(struct task_str
+ int kthread_park(struct task_struct *k);
+ void kthread_unpark(struct task_struct *k);
+ void kthread_parkme(void);
+-void kthread_exit(long result) __noreturn;
++#define kthread_exit(result) do_exit(result)
+ void kthread_complete_and_exit(struct completion *, long) __noreturn;
++void kthread_do_exit(struct kthread *, long);
+ 
+ int kthreadd(void *unused);
+ extern struct task_struct *kthreadd_task;
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -896,11 +896,16 @@ static void synchronize_group_exit(struc
+ void __noreturn do_exit(long code)
+ {
+ 	struct task_struct *tsk = current;
++	struct kthread *kthread;
+ 	int group_dead;
+ 
+ 	WARN_ON(irqs_disabled());
+ 	WARN_ON(tsk->plug);
+ 
++	kthread = tsk_is_kthread(tsk);
++	if (unlikely(kthread))
++		kthread_do_exit(kthread, code);
++
+ 	kcov_task_exit(tsk);
+ 	kmsan_task_exit(tsk);
+ 
+@@ -1013,6 +1018,7 @@ void __noreturn do_exit(long code)
+ 	lockdep_free_task(tsk);
+ 	do_task_dead();
+ }
++EXPORT_SYMBOL(do_exit);
+ 
+ void __noreturn make_task_dead(int signr)
+ {
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -85,24 +85,6 @@ static inline struct kthread *to_kthread
+ 	return k->worker_private;
+ }
+ 
+-/*
+- * Variant of to_kthread() that doesn't assume @p is a kthread.
+- *
+- * When "(p->flags & PF_KTHREAD)" is set the task is a kthread and will
+- * always remain a kthread.  For kthreads p->worker_private always
+- * points to a struct kthread.  For tasks that are not kthreads
+- * p->worker_private is used to point to other things.
+- *
+- * Return NULL for any task that is not a kthread.
+- */
+-static inline struct kthread *__to_kthread(struct task_struct *p)
+-{
+-	void *kthread = p->worker_private;
+-	if (kthread && !(p->flags & PF_KTHREAD))
+-		kthread = NULL;
+-	return kthread;
+-}
 -
--		/* Get reference so we can keep this file in LUO until finish */
--		get_file(luo_file->file);
--		*filep = luo_file->file;
--		luo_file->retrieved = true;
-+	if (err) {
-+		/* Keep the error code for later use. */
-+		luo_file->retrieve_status = err;
-+		return err;
- 	}
+ void get_kthread_comm(char *buf, size_t buf_size, struct task_struct *tsk)
+ {
+ 	struct kthread *kthread = to_kthread(tsk);
+@@ -193,7 +175,7 @@ EXPORT_SYMBOL_GPL(kthread_should_park);
  
--	return err;
-+	luo_file->file = args.file;
-+	/* Get reference so we can keep this file in LUO until finish */
-+	get_file(luo_file->file);
-+	*filep = luo_file->file;
-+	luo_file->retrieve_status = 1;
-+
-+	return 0;
+ bool kthread_should_stop_or_park(void)
+ {
+-	struct kthread *kthread = __to_kthread(current);
++	struct kthread *kthread = tsk_is_kthread(current);
+ 
+ 	if (!kthread)
+ 		return false;
+@@ -234,7 +216,7 @@ EXPORT_SYMBOL_GPL(kthread_freezable_shou
+  */
+ void *kthread_func(struct task_struct *task)
+ {
+-	struct kthread *kthread = __to_kthread(task);
++	struct kthread *kthread = tsk_is_kthread(task);
+ 	if (kthread)
+ 		return kthread->threadfn;
+ 	return NULL;
+@@ -266,7 +248,7 @@ EXPORT_SYMBOL_GPL(kthread_data);
+  */
+ void *kthread_probe_data(struct task_struct *task)
+ {
+-	struct kthread *kthread = __to_kthread(task);
++	struct kthread *kthread = tsk_is_kthread(task);
+ 	void *data = NULL;
+ 
+ 	if (kthread)
+@@ -309,19 +291,8 @@ void kthread_parkme(void)
  }
+ EXPORT_SYMBOL_GPL(kthread_parkme);
  
- static int luo_file_can_finish_one(struct luo_file_set *file_set,
-@@ -607,7 +617,7 @@ static int luo_file_can_finish_one(struc
- 		args.handler = luo_file->fh;
- 		args.file = luo_file->file;
- 		args.serialized_data = luo_file->serialized_data;
--		args.retrieved = luo_file->retrieved;
-+		args.retrieve_status = luo_file->retrieve_status;
- 		can_finish = luo_file->fh->ops->can_finish(&args);
+-/**
+- * kthread_exit - Cause the current kthread return @result to kthread_stop().
+- * @result: The integer value to return to kthread_stop().
+- *
+- * While kthread_exit can be called directly, it exists so that
+- * functions which do some additional work in non-modular code such as
+- * module_put_and_kthread_exit can be implemented.
+- *
+- * Does not return.
+- */
+-void __noreturn kthread_exit(long result)
++void kthread_do_exit(struct kthread *kthread, long result)
+ {
+-	struct kthread *kthread = to_kthread(current);
+ 	kthread->result = result;
+ 	if (!list_empty(&kthread->hotplug_node)) {
+ 		mutex_lock(&kthreads_hotplug_lock);
+@@ -333,9 +304,7 @@ void __noreturn kthread_exit(long result
+ 			kthread->preferred_affinity = NULL;
+ 		}
  	}
- 
-@@ -624,7 +634,7 @@ static void luo_file_finish_one(struct l
- 	args.handler = luo_file->fh;
- 	args.file = luo_file->file;
- 	args.serialized_data = luo_file->serialized_data;
--	args.retrieved = luo_file->retrieved;
-+	args.retrieve_status = luo_file->retrieve_status;
- 
- 	luo_file->fh->ops->finish(&args);
+-	do_exit(0);
  }
-@@ -779,7 +789,6 @@ int luo_file_deserialize(struct luo_file
- 		luo_file->file = NULL;
- 		luo_file->serialized_data = file_ser[i].data;
- 		luo_file->token = file_ser[i].token;
--		luo_file->retrieved = false;
- 		mutex_init(&luo_file->mutex);
- 		list_add_tail(&luo_file->list, &file_set->files_list);
- 	}
---- a/mm/memfd_luo.c
-+++ b/mm/memfd_luo.c
-@@ -326,7 +326,12 @@ static void memfd_luo_finish(struct live
- 	struct memfd_luo_folio_ser *folios_ser;
- 	struct memfd_luo_ser *ser;
+-EXPORT_SYMBOL(kthread_exit);
  
--	if (args->retrieved)
-+	/*
-+	 * If retrieve was successful, nothing to do. If it failed, retrieve()
-+	 * already cleaned up everything it could. So nothing to do there
-+	 * either. Only need to clean up when retrieve was not called.
-+	 */
-+	if (args->retrieve_status)
- 		return;
+ /**
+  * kthread_complete_and_exit - Exit the current kthread.
+@@ -680,7 +649,7 @@ void kthread_set_per_cpu(struct task_str
  
- 	ser = phys_to_virt(args->serialized_data);
+ bool kthread_is_per_cpu(struct task_struct *p)
+ {
+-	struct kthread *kthread = __to_kthread(p);
++	struct kthread *kthread = tsk_is_kthread(p);
+ 	if (!kthread)
+ 		return false;
+ 
 
 
