@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A17413F7A83;
-	Tue, 17 Mar 2026 16:57:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D308D3F7AA2;
+	Tue, 17 Mar 2026 16:58:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766678; cv=none; b=q7gV3dAnOKpCDLpCdVrhGxU7kgvSEwUb7lTXbInGuFtkvaw0NaP1ZJEpuKRQ0Te3ZKTc4I/LrwB0hNS+qtlU7ldGuu2RPkB4qCc5cZXyA7I1Fh28rhwJ/EeZpbtJjJFxGKbWQDbdfGWAhk7GAuxoaXY5EKb7xVVbR88t459A4nM=
+	t=1773766682; cv=none; b=T/KEIZkDv4ZWkzckipVl2Kne0ezDlB9iuBPgvXGmE9E3wZc4qdHVbF3dU4awrydFxZ1eGLl++XDoCcKNyQthX07eBUnqpHqiKNE5+Ysu+Txx0oIPkmHYQjkNYxnfQmJPkAHtnCEwND47V9F1AiYGadWLEcn6Q0CE9zuPobfH6pA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766678; c=relaxed/simple;
-	bh=dI2kkIMT6JvmyUAaM/J6tdjVDQud9ot/rTkDDhR2Hrc=;
+	s=arc-20240116; t=1773766682; c=relaxed/simple;
+	bh=o6t6Fk40jkW48wRNJWm2BpPK046rz6A2ch2f4z/x090=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=q5g8VegOXBsi5hZReYrv9sMpveih8y5gNFVjBr0cNmpgurvf103ooE2aQX+pMau8/tJcv871rblaBvITNOPzuc4+6yu+xfJisKUl4jSWFwOKsqOafSDRFgmo5BjPnqv2Jo5Oqpd+TfvSAycmX+BOzj3MIzxF8COfKH0hV2looYA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WleeeYFy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FmJ9wftSyK/rBeCONIiQC7uEeP7Sv5feo3OLLSLi1phoFEjlSMoOVcv8N49XBOVa4+EJOYcOGtTuE3H826YrIG4eSv4NvIHmjD6WWp4km0igv6eDkSPPpk3IebyEVC3I/CGJoJUEE0a89juuXv06Aw8kqt/Zo5Z/JTQ1GMKyp8g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pnvlri/k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WleeeYFy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C07C19424;
-	Tue, 17 Mar 2026 16:57:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pnvlri/k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11532C19424;
+	Tue, 17 Mar 2026 16:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766678;
-	bh=dI2kkIMT6JvmyUAaM/J6tdjVDQud9ot/rTkDDhR2Hrc=;
+	s=korg; t=1773766682;
+	bh=o6t6Fk40jkW48wRNJWm2BpPK046rz6A2ch2f4z/x090=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WleeeYFyoRvVnizlGyNzjzBCfySt8S2J+eKVzOmMr2aBeVwQZixvo0Hn5UVX5po3K
-	 TJkjnQJftmoClN+xohKiaq21H6BTvxqDV/HQwB0Ccvl1jgEhitMIyGtNVHFT9Gp6up
-	 H8SGY8AVEGGIp8M6myrM5hq9zaUZR2ZgkAY9e2XI=
+	b=pnvlri/kg3QLOoisUn7xP+W5ebUYHwfAGOEqYzGRuNjBjGTh6zPvCmWzmdbIUe1cN
+	 cW2rwUM9xkJIxP/4n4oM3Ift6/0jV1HI9liEPu9le3r6X2hwCDVESd8tpkR7qLROvh
+	 JfAWQAArjJwoW2iSTKBB0Jf1TrO5wILf62p5xAwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
+	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
+	Simon Horman <horms@kernel.org>,
+	Vladimir Oltean <olteanv@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 297/378] net: ethernet: arc: emac: quiesce interrupts before requesting IRQ
-Date: Tue, 17 Mar 2026 17:34:14 +0100
-Message-ID: <20260317163017.934633670@linuxfoundation.org>
+Subject: [PATCH 6.19 298/378] net: dsa: microchip: Fix error path in PTP IRQ setup
+Date: Tue, 17 Mar 2026 17:34:15 +0100
+Message-ID: <20260317163017.970568340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,53 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
 
-commit 2503d08f8a2de618e5c3a8183b250ff4a2e2d52c upstream.
+commit 99c8c16a4aad0b37293cae213e15957c573cf79b upstream.
 
-Normal RX/TX interrupts are enabled later, in arc_emac_open(), so probe
-should not see interrupt delivery in the usual case. However, hardware may
-still present stale or latched interrupt status left by firmware or the
-bootloader.
+If request_threaded_irq() fails during the PTP message IRQ setup, the
+newly created IRQ mapping is never disposed. Indeed, the
+ksz_ptp_irq_setup()'s error path only frees the mappings that were
+successfully set up.
 
-If probe later unwinds after devm_request_irq() has installed the handler,
-such a stale interrupt can still reach arc_emac_intr() during teardown and
-race with release of the associated net_device.
+Dispose the newly created mapping if the associated
+request_threaded_irq() fails at setup.
 
-Avoid that window by putting the device into a known quiescent state before
-requesting the IRQ: disable all EMAC interrupt sources and clear any
-pending EMAC interrupt status bits. This keeps the change hardware-focused
-and minimal, while preventing spurious IRQ delivery from leftover state.
-
-Fixes: e4f2379db6c6 ("ethernet/arc/arc_emac - Add new driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260309132409.584966-1-fanwu01@zju.edu.cn
+Fixes: d0b8fec8ae505 ("net: dsa: microchip: Fix symetry in ksz_ptp_msg_irq_{setup/free}()")
+Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://patch.msgid.link/20260309-ksz-ptp-irq-fix-v1-1-757b3b985955@bootlin.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_main.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/dsa/microchip/ksz_ptp.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/arc/emac_main.c
-+++ b/drivers/net/ethernet/arc/emac_main.c
-@@ -934,6 +934,17 @@ int arc_emac_probe(struct net_device *nd
- 	/* Set poll rate so that it polls every 1 ms */
- 	arc_reg_set(priv, R_POLLRATE, clock_frequency / 1000000);
+--- a/drivers/net/dsa/microchip/ksz_ptp.c
++++ b/drivers/net/dsa/microchip/ksz_ptp.c
+@@ -1095,6 +1095,7 @@ static int ksz_ptp_msg_irq_setup(struct
+ 	const struct ksz_dev_ops *ops = port->ksz_dev->dev_ops;
+ 	struct ksz_irq *ptpirq = &port->ptpirq;
+ 	struct ksz_ptp_irq *ptpmsg_irq;
++	int ret;
  
-+	/*
-+	 * Put the device into a known quiescent state before requesting
-+	 * the IRQ. Clear only EMAC interrupt status bits here; leave the
-+	 * MDIO completion bit alone and avoid writing TXPL_MASK, which is
-+	 * used to force TX polling rather than acknowledge interrupts.
-+	 */
-+	arc_reg_set(priv, R_ENABLE, 0);
-+	arc_reg_set(priv, R_STATUS, RXINT_MASK | TXINT_MASK | ERR_MASK |
-+		    TXCH_MASK | MSER_MASK | RXCR_MASK |
-+		    RXFR_MASK | RXFL_MASK);
+ 	ptpmsg_irq = &port->ptpmsg_irq[n];
+ 	ptpmsg_irq->num = irq_create_mapping(ptpirq->domain, n);
+@@ -1106,9 +1107,13 @@ static int ksz_ptp_msg_irq_setup(struct
+ 
+ 	strscpy(ptpmsg_irq->name, name[n]);
+ 
+-	return request_threaded_irq(ptpmsg_irq->num, NULL,
+-				    ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
+-				    ptpmsg_irq->name, ptpmsg_irq);
++	ret = request_threaded_irq(ptpmsg_irq->num, NULL,
++				   ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
++				   ptpmsg_irq->name, ptpmsg_irq);
++	if (ret)
++		irq_dispose_mapping(ptpmsg_irq->num);
 +
- 	ndev->irq = irq;
- 	dev_info(dev, "IRQ is %d\n", ndev->irq);
++	return ret;
+ }
  
+ int ksz_ptp_irq_setup(struct dsa_switch *ds, u8 p)
 
 
