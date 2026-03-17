@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA0373EC2DD;
-	Tue, 17 Mar 2026 16:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DD634AB17;
+	Tue, 17 Mar 2026 16:39:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765574; cv=none; b=b/N4UyK07n9nX4otsfZspr1nquLQjQGHTo+lJWbkdV2hYjkd6rCTPY7MGCZzMjbwAzGieSyN5Tle4KO9URgWJB+7ZW62aw1nFXnNvsDcjq5eNX4nOhSxLcKKWKv3TJYEWPVcTIiOmTXswmXkvc6eyPXz3iBSG+Wh3FSyzGhsKW0=
+	t=1773765579; cv=none; b=dxFsE7FS9mQstENoomvdWxtUmYTg8TYGT6Aa6f8xudGkxTJ1JFJ5IfJUJ4PUAc8nI7Z9O+SCqs9tzqBkM+wR7RlXwtTZXEXrnyITQERuP9gdU3yqjWRJMEGO4U8B2CgXWOzb+xkk7gIJnUCCpBZ3JWMRsspR+sH/wjixQS8AoYk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765574; c=relaxed/simple;
-	bh=TAk3dVgwMFq5a3koYOttsnnngPlBlJbO7Qa33uMZQhY=;
+	s=arc-20240116; t=1773765579; c=relaxed/simple;
+	bh=9xmVpsu3q6K/LNAAFx6wELRscEpczIlbrnAjBCwdYtI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ORkOULNZ+PFOApmjvpKQ3AUJzIgw1FxZ7jRL/+KJsLid+NPV/l+Hs+Iyi1P1JQ2XNJAjd0MLZaH7ZtX3rGCMfyXtDFrBMBsoI0MGS9AdxQwaV9C6poitl4BMzpJuBpPumGodLJxeemhFwya6NCd7Y4FllzQAi6DOs384KFYuCMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gzAHCnGv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oQ++brNAI9vs+ZbUfHu8L9oIt9qmR20vm/s42n6ymfFl2igItB5/lxF7JnzM581RibHQAgo33khTabPpIM675fP+mx8BsQp0G2p4q05I4Sq3bnVB22ZJn0QP/YSYHbd++minKo4sfNGnDwPMJCVIE9MfpAYR7Vxmr1b2VBrBSU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTGZw6lQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gzAHCnGv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248C9C19424;
-	Tue, 17 Mar 2026 16:39:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTGZw6lQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472BFC4CEF7;
+	Tue, 17 Mar 2026 16:39:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765574;
-	bh=TAk3dVgwMFq5a3koYOttsnnngPlBlJbO7Qa33uMZQhY=;
+	s=korg; t=1773765578;
+	bh=9xmVpsu3q6K/LNAAFx6wELRscEpczIlbrnAjBCwdYtI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gzAHCnGvQ9FhjNa40NF7n4d4XTWU4qLjzBOZgpDitCT6X1HLrG+yDVt7FZOMK6oJG
-	 3QSH9NoBucq+QskOaIK5uFdRiQ+L5zkTc7tLilUAP2N5WJaq/PNYKdfaUxtv4zU2WW
-	 ws21ragKS33W+AFlLld06NKSB/w7GocQNAcFC6Ug=
+	b=KTGZw6lQaa8YkXDnXxVveMWnJ17jrseJzB5puQuOxSkvdomcNsoS5iu69DnaKdn56
+	 X7V1w0IZNtRFqubDfyMD7S911sTZi9vqZ0mHPycRvdoaUqmvqqj/7vgRIMl+1iUC4o
+	 Bz8zOwwKKFiPEgMs76OQK4ki/EGsaQm+rK62N2ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 042/378] bonding: handle BOND_LINK_FAIL, BOND_LINK_BACK as valid link states
-Date: Tue, 17 Mar 2026 17:29:59 +0100
-Message-ID: <20260317163008.533718672@linuxfoundation.org>
+Subject: [PATCH 6.19 025/378] ALSA: usb-audio: Check max frame size for implicit feedback mode, too
+Date: Tue, 17 Mar 2026 17:29:42 +0100
+Message-ID: <20260317163007.904241209@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,58 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 3348be7978f450ede0c308a4e8416ac716cf1015 ]
+[ Upstream commit 7cb2a5422f5bbdf1cf32eae0eda41000485b9346 ]
 
-Before the fixed commit, we check slave->new_link during commit
-state, which values are only BOND_LINK_{NOCHANGE, UP, DOWN}. After
-the commit, we start using slave->link_new_state, which state also could
-be BOND_LINK_{FAIL, BACK}.
+When the packet sizes are taken from the capture stream in the
+implicit feedback mode, the sizes might be larger than the upper
+boundary defined by the descriptor.  As already done for other
+transfer modes, we have to cap the sizes accordingly at sending,
+otherwise this would lead to an error in USB core at submission of
+URBs.
 
-For example, when we set updelay/downdelay, after a failover,
-the slave->link_new_state could be set to BOND_LINK_{FAIL, BACK} in
-bond_miimon_inspect(). And later in bond_miimon_commit(), it will treat
-it as invalid and print an error, which would cause confusion for users.
-
-[  106.440254] bond0: (slave veth2): link status down for interface, disabling it in 200 ms
-[  106.440265] bond0: (slave veth2): invalid new link 1 on slave
-[  106.648276] bond0: (slave veth2): link status definitely down, disabling slave
-[  107.480271] bond0: (slave veth2): link status up, enabling it in 200 ms
-[  107.480288] bond0: (slave veth2): invalid new link 3 on slave
-[  107.688302] bond0: (slave veth2): link status definitely up, 10000 Mbps full duplex
-
-Let's handle BOND_LINK_{FAIL, BACK} as valid link states.
-
-Fixes: 1899bb325149 ("bonding: fix state transition issue in link monitoring")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260304-b4-bond_updelay-v1-2-f72eb2e454d0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ sound/usb/endpoint.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 5de38258c7d8b..8be99ae67b77f 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2769,8 +2769,14 @@ static void bond_miimon_commit(struct bonding *bond)
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 686f095290673..1a020ea558755 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -221,6 +221,7 @@ int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
  
- 			continue;
- 
-+		case BOND_LINK_FAIL:
-+		case BOND_LINK_BACK:
-+			slave_dbg(bond->dev, slave->dev, "link_new_state %d on slave\n",
-+				  slave->link_new_state);
-+			continue;
-+
- 		default:
--			slave_err(bond->dev, slave->dev, "invalid new link %d on slave\n",
-+			slave_err(bond->dev, slave->dev, "invalid link_new_state %d on slave\n",
- 				  slave->link_new_state);
- 			bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
- 
+ 	packet = ctx->packet_size[idx];
+ 	if (packet) {
++		packet = min(packet, ep->maxframesize);
+ 		if (avail && packet >= avail)
+ 			return -EAGAIN;
+ 		return packet;
 -- 
 2.51.0
 
