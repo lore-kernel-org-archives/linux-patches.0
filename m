@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F3E346797;
-	Tue, 17 Mar 2026 17:00:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8AE3F7AB4;
+	Tue, 17 Mar 2026 17:00:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766810; cv=none; b=D9rqA9giV/XqoLkrHH09WN8h9npubtR0TLqknGmCjbndMWKBYXhGh3lD0a/41sR3i7ss4NWa+Qp0s7mG8m0Agya+HlBeNAecU8Q+4fRRZyv7c96Tf6jVkkp9plMPPFC0o4PPv4+b5xRDvieTKEoU6bEpbH1QwuL/qTyHzWs4U88=
+	t=1773766815; cv=none; b=SZwM9cUzMeCR0x4M4GV68Zay5lJwJsTh/BODQiuf4fRHHQnES6BiP8lpPLsKRaoraNlHU19SmNxckuJmms1eebd5B/3B1CMygwYphtduYXVYxqxdZ71yztZzRk/Q7Pps1NkHsWJucFYFQWaqA4d6ZehPk0Z99bFjo4pcVGKte2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766810; c=relaxed/simple;
-	bh=t0iqsZRHz/04VDuPtEkM2aKOZnJQaDuF8gHb7XbF41M=;
+	s=arc-20240116; t=1773766815; c=relaxed/simple;
+	bh=5o615YaTVZULgMYRs9ctnIpY5VzTcazfQUjsOJD/9UM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nuvKHJilhg9KmHH2qg08tpsdnDeBlYy8b61bAthKws65WbUoE/1RGRtcnhCzdxFxAF2OIAVgDUdIXwLalSFMlPPaneSO2ByZUBjoEJzwAym5a9bTGYRdICt6XPvHvVG9lOFrFNKb74hVHyNFYCiLJZumnewy4QcWyzYIYGm6w8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q0lMtK0g; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kwpHXjg/roPQC53rKxAnYGlTmMLHgRBLWwjy+ukevIAqgUjgveP176OF8x+3iRN24FdOVhYlGzb873Qw7g3mFToHazC5iCRQzzA4Gc9xU4lpW9JoTYTkLCUbbTMy+QRC9Fy5hNzVDOfOy5Al1AN29wqqmrsIvQ13nUwhlH1doHA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ch9Mdxrg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q0lMtK0g"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD61C19424;
-	Tue, 17 Mar 2026 17:00:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ch9Mdxrg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C014C19424;
+	Tue, 17 Mar 2026 17:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766810;
-	bh=t0iqsZRHz/04VDuPtEkM2aKOZnJQaDuF8gHb7XbF41M=;
+	s=korg; t=1773766814;
+	bh=5o615YaTVZULgMYRs9ctnIpY5VzTcazfQUjsOJD/9UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q0lMtK0gd+UdFXlMtw7KSXbCzlutAsTfqxjpLAFmSaNsLVPnX0Mpmi1PZPhaFa9EB
-	 vH1/XMaEcMEkl2H5RvVoq7G3InLw33GsjhIvTuK584HHnZwmz7SYjMuSiw+pJ8i5Pq
-	 /jqsZcMAJvYbxTKcfB6LIA55QpMLMPJxMkNcRqUw=
+	b=ch9Mdxrgu2UCQdFTomLsZnIlHP37RE76zF1VgSS4pbOuS9y/cyJG/bzozKth7oWpz
+	 l6HhsEtrANxPSnpvOhgog7hCaWudYp37g/Oy+jEjadOUEFO1/5BkQNZ3xm45lTqkKz
+	 jl+N9vuUaRJWU+zKyEVfSPTvyGno8ROoR2q3UwKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Ming Lei <ming.lei@redhat.com>,
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.19 326/378] ublk: fix NULL pointer dereference in ublk_ctrl_set_size()
-Date: Tue, 17 Mar 2026 17:34:43 +0100
-Message-ID: <20260317163018.983282084@linuxfoundation.org>
+Subject: [PATCH 6.19 327/378] s390/dasd: Move quiesce state with pprc swap
+Date: Tue, 17 Mar 2026 17:34:44 +0100
+Message-ID: <20260317163019.018722207@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,68 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 25966fc097691e5c925ad080f64a2f19c5fd940a upstream.
+commit 40e9cd4ae8ec43b107ed2bff422a8fa39dcf4e4b upstream.
 
-ublk_ctrl_set_size() unconditionally dereferences ub->ub_disk via
-set_capacity_and_notify() without checking if it is NULL.
+Quiesce and resume is a mechanism to suspend operations on DASD devices.
+In the context of a controlled copy pair swap operation, the quiesce
+operation is usually issued before the actual swap and a resume
+afterwards.
 
-ub->ub_disk is NULL before UBLK_CMD_START_DEV completes (it is only
-assigned in ublk_ctrl_start_dev()) and after UBLK_CMD_STOP_DEV runs
-(ublk_detach_disk() sets it to NULL). Since the UBLK_CMD_UPDATE_SIZE
-handler performs no state validation, a user can trigger a NULL pointer
-dereference by sending UPDATE_SIZE to a device that has been added but
-not yet started, or one that has been stopped.
+During the swap operation, the underlying device is exchanged. Therefore,
+the quiesce flag must be moved to the secondary device to ensure a
+consistent quiesce state after the swap.
 
-Fix this by checking ub->ub_disk under ub->mutex before dereferencing
-it, and returning -ENODEV if the disk is not available.
+The secondary device itself cannot be suspended separately because there
+is no separate block device representation for it.
 
-Fixes: 98b995660bff ("ublk: Add UBLK_U_CMD_UPDATE_SIZE")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Fixes: 413862caad6f ("s390/dasd: add copy pair swap capability")
+Cc: stable@vger.kernel.org #6.1
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260310142330.4080106-2-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/ublk_drv.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/s390/block/dasd_eckd.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/block/ublk_drv.c
-+++ b/drivers/block/ublk_drv.c
-@@ -3534,15 +3534,22 @@ static int ublk_ctrl_get_features(const
- 	return 0;
- }
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -6182,6 +6182,11 @@ static int dasd_eckd_copy_pair_swap(stru
+ 			dev_name(&secondary->cdev->dev), rc);
+ 	}
  
--static void ublk_ctrl_set_size(struct ublk_device *ub, const struct ublksrv_ctrl_cmd *header)
-+static int ublk_ctrl_set_size(struct ublk_device *ub, const struct ublksrv_ctrl_cmd *header)
- {
- 	struct ublk_param_basic *p = &ub->params.basic;
- 	u64 new_size = header->data[0];
-+	int ret = 0;
- 
- 	mutex_lock(&ub->mutex);
-+	if (!ub->ub_disk) {
-+		ret = -ENODEV;
-+		goto out;
++	if (primary->stopped & DASD_STOPPED_QUIESCE) {
++		dasd_device_set_stop_bits(secondary, DASD_STOPPED_QUIESCE);
++		dasd_device_remove_stop_bits(primary, DASD_STOPPED_QUIESCE);
 +	}
- 	p->dev_sectors = new_size;
- 	set_capacity_and_notify(ub->ub_disk, p->dev_sectors);
-+out:
- 	mutex_unlock(&ub->mutex);
-+	return ret;
- }
- 
- struct count_busy {
-@@ -3853,8 +3860,7 @@ static int ublk_ctrl_uring_cmd(struct io
- 		ret = ublk_ctrl_end_recovery(ub, &header);
- 		break;
- 	case UBLK_CMD_UPDATE_SIZE:
--		ublk_ctrl_set_size(ub, &header);
--		ret = 0;
-+		ret = ublk_ctrl_set_size(ub, &header);
- 		break;
- 	case UBLK_CMD_QUIESCE_DEV:
- 		ret = ublk_ctrl_quiesce_dev(ub, &header);
++
+ 	/* re-enable device */
+ 	dasd_device_remove_stop_bits(primary, DASD_STOPPED_PPRC);
+ 	dasd_device_remove_stop_bits(secondary, DASD_STOPPED_PPRC);
 
 
