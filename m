@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7884357A4A;
-	Tue, 17 Mar 2026 16:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAC27357A4A;
+	Tue, 17 Mar 2026 16:50:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766235; cv=none; b=FsU9U/zvoNPPA+NFBUbgbTy+vd92kkrf2POdV0iJzdcNFI2SX1R2eS+PARRgTxoDt4JE7FmGjoJ220NK0l7wKBD4Zi7Qi2DVb4HmoVxZ35//jUM+ehb9D+s5iKaEviA2QAi5JMICgSquFjkeVEniA9WhRGlCgfZZzMZyL1rxxhA=
+	t=1773766240; cv=none; b=uMo2cbKRlY94bubVI5Uzr8n/mbLU4TMCWOqJjTwPsLM8EX75QbmaX/7IWOkmbu4Gzd5eaSwTYMDYmkUwJSBZ4qUMcWZHEQa25vxSDU/saSsALtJ0nx9QbROpR0R0zbbhqatDC062QhXpC1uDRJWJBbmPIPullF9mMiHxX85mMec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766235; c=relaxed/simple;
-	bh=m/2glunRJ71XD8QQ1fvpH8KPgmcsfcctkPFhvzion+w=;
+	s=arc-20240116; t=1773766240; c=relaxed/simple;
+	bh=tcfy3OK9iapy829/oL5HZ2xpVSdXHnxNirZ1Tr8X7Cc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Edy+fOi7GDMAIdl4mn/0/yo8FBkrQwUgixdmIOs1xyUDihWzsR5ukgLghEtrx7E7EKtBnN1HPKF4AXtg+loDoILYU00WzCP1j6MVX9N/gH6kMlKVfhHkz4sunYESKRzVzW2jcMG5v3779smgtozsIz7CuSj9AxHx1CJFHhknQms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UScCfas1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hAK1eqvyYY7++Tspo+zwxlnOWFodDRiS8zgXKZ1hjGdxWTtTIBEj9gQkCzCs0WXiqbMzSImeaYjF0TW3/U+Q/TDYTb7iNG7YYFlkskpk1RNb7laVjZ81oiOR302uX59njhER2pvkgSX6tgDcfb4x/2T5FQxwV/YwlZ/dthWN11o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aBuIj1cI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UScCfas1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52859C4CEF7;
-	Tue, 17 Mar 2026 16:50:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aBuIj1cI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ABCDC19424;
+	Tue, 17 Mar 2026 16:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766235;
-	bh=m/2glunRJ71XD8QQ1fvpH8KPgmcsfcctkPFhvzion+w=;
+	s=korg; t=1773766240;
+	bh=tcfy3OK9iapy829/oL5HZ2xpVSdXHnxNirZ1Tr8X7Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UScCfas1mJjtuyU+PovQ2K7Sz2pSKHIGYiMn9MjLBAV93FxaYTQp5qHQmTPC1t7Bi
-	 lwtkDxOOKwSkStZ4IionmfdnAM+I+zzdTZshr4/iLnYSATEh4CCkVRk7B+BRj8nbWA
-	 fLUH6WEx+ImPw7Ni4ZjHORO3ZfD5r7ZSQAgB0cK0=
+	b=aBuIj1cI2KY3WwXub5Chl/FKL7mt9gY4QVXZbpPWT2Sluu6eh7h8ZMVVuq3kyM/7A
+	 gmR08Pr6NJAgq+Z89tcOuZ+5zVzRU15GO6yXF0Qfeh7dG80TepsU8Fz9wkVBkbvd0j
+	 YAh72LKub4xZU3hSfb97cHNcp72ivwSsIjCCzb2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Heidelberg <david@ixit.cz>,
 	stable <stable@kernel.org>,
 	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.19 167/378] Revert "usb: gadget: f_ncm: Fix atomic context locking issue"
-Date: Tue, 17 Mar 2026 17:32:04 +0100
-Message-ID: <20260317163013.154037501@linuxfoundation.org>
+Subject: [PATCH 6.19 168/378] Revert "usb: legacy: ncm: Fix NPE in gncm_bind"
+Date: Tue, 17 Mar 2026 17:32:05 +0100
+Message-ID: <20260317163013.190322808@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,9 +53,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Kuen-Han Tsai <khtsai@google.com>
 
-commit 11199720fac2debbe718aec11e026ab3330dc80d upstream.
+commit f2524c0e6ff0a5f72f1e1a32441c69d3b56430c4 upstream.
 
-This reverts commit 0d6c8144ca4d93253de952a5ea0028c19ed7ab68.
+This reverts commit fde0634ad9856b3943a2d1a8cc8de174a63ac840.
 
 This commit is being reverted as part of a series-wide revert.
 
@@ -84,122 +84,51 @@ Closes: https://lore.kernel.org/linux-usb/70b558ea-a12e-4170-9b8e-c951131249af@i
 Fixes: 56a512a9b410 ("usb: gadget: f_ncm: align net_device lifecycle with bind/unbind")
 Cc: stable <stable@kernel.org>
 Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-1-ea2afbc7d9b2@google.com
+Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-2-ea2afbc7d9b2@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c            |   29 ++++++++++++++-----------
- drivers/usb/gadget/function/u_ether_configfs.h |   11 ++++++++-
- drivers/usb/gadget/function/u_ncm.h            |    1 
- 3 files changed, 28 insertions(+), 13 deletions(-)
+ drivers/usb/gadget/legacy/ncm.c |   13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -58,7 +58,6 @@ struct f_ncm {
- 	u8				notify_state;
- 	atomic_t			notify_count;
- 	bool				is_open;
--	bool				is_connected;
+--- a/drivers/usb/gadget/legacy/ncm.c
++++ b/drivers/usb/gadget/legacy/ncm.c
+@@ -15,10 +15,8 @@
+ /* #define DEBUG */
+ /* #define VERBOSE_DEBUG */
  
- 	const struct ndp_parser_opts	*parser_opts;
- 	bool				is_crc;
-@@ -865,6 +864,7 @@ invalid:
- static int ncm_set_alt(struct usb_function *f, unsigned intf, unsigned alt)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
-+	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
+-#include <linux/hex.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+-#include <linux/string.h>
+ #include <linux/usb/composite.h>
  
- 	/* Control interface has only altsetting 0 */
-@@ -887,12 +887,13 @@ static int ncm_set_alt(struct usb_functi
- 		if (alt > 1)
- 			goto fail;
+ #include "u_ether.h"
+@@ -131,7 +129,6 @@ static int gncm_bind(struct usb_composit
+ 	struct usb_gadget	*gadget = cdev->gadget;
+ 	struct f_ncm_opts	*ncm_opts;
+ 	int			status;
+-	u8			mac[ETH_ALEN];
  
--		if (ncm->is_connected) {
--			DBG(cdev, "reset ncm\n");
--			ncm->is_connected = false;
--			gether_disconnect(&ncm->port);
--			ncm_reset_values(ncm);
--		}
-+		scoped_guard(mutex, &opts->lock)
-+			if (opts->net) {
-+				DBG(cdev, "reset ncm\n");
-+				opts->net = NULL;
-+				gether_disconnect(&ncm->port);
-+				ncm_reset_values(ncm);
-+			}
+ 	f_ncm_inst = usb_get_function_instance("ncm");
+ 	if (IS_ERR(f_ncm_inst))
+@@ -139,15 +136,11 @@ static int gncm_bind(struct usb_composit
  
- 		/*
- 		 * CDC Network only sends data in non-default altsettings.
-@@ -925,7 +926,8 @@ static int ncm_set_alt(struct usb_functi
- 			net = gether_connect(&ncm->port);
- 			if (IS_ERR(net))
- 				return PTR_ERR(net);
--			ncm->is_connected = true;
-+			scoped_guard(mutex, &opts->lock)
-+				opts->net = net;
- 		}
+ 	ncm_opts = container_of(f_ncm_inst, struct f_ncm_opts, func_inst);
  
- 		spin_lock(&ncm->lock);
-@@ -1372,14 +1374,16 @@ err:
- static void ncm_disable(struct usb_function *f)
- {
- 	struct f_ncm		*ncm = func_to_ncm(f);
-+	struct f_ncm_opts	*opts = func_to_ncm_opts(f);
- 	struct usb_composite_dev *cdev = f->config->cdev;
- 
- 	DBG(cdev, "ncm deactivated\n");
- 
--	if (ncm->is_connected) {
--		ncm->is_connected = false;
--		gether_disconnect(&ncm->port);
+-	ncm_opts->net_opts.qmult = qmult;
+-	if (host_addr && mac_pton(host_addr, mac)) {
+-		memcpy(&ncm_opts->net_opts.host_mac, mac, ETH_ALEN);
++	gether_set_qmult(ncm_opts->net, qmult);
++	if (!gether_set_host_addr(ncm_opts->net, host_addr))
+ 		pr_info("using host ethernet address: %s", host_addr);
 -	}
-+	scoped_guard(mutex, &opts->lock)
-+		if (opts->net) {
-+			opts->net = NULL;
-+			gether_disconnect(&ncm->port);
-+		}
+-	if (dev_addr && mac_pton(dev_addr, mac)) {
+-		memcpy(&ncm_opts->net_opts.dev_mac, mac, ETH_ALEN);
++	if (!gether_set_dev_addr(ncm_opts->net, dev_addr))
+ 		pr_info("using self ethernet address: %s", dev_addr);
+-	}
  
- 	if (ncm->notify->enabled) {
- 		usb_ep_disable(ncm->notify);
-@@ -1683,6 +1687,7 @@ static struct usb_function_instance *ncm
- 	if (!opts)
- 		return ERR_PTR(-ENOMEM);
- 
-+	opts->net = NULL;
- 	opts->ncm_os_desc.ext_compat_id = opts->ncm_ext_compat_id;
- 	gether_setup_opts_default(&opts->net_opts, "usb");
- 
---- a/drivers/usb/gadget/function/u_ether_configfs.h
-+++ b/drivers/usb/gadget/function/u_ether_configfs.h
-@@ -326,9 +326,18 @@ out:									\
- 					      char *page)			\
- 	{									\
- 		struct f_##_f_##_opts *opts = to_f_##_f_##_opts(item);		\
-+		const char *name;						\
- 										\
- 		guard(mutex)(&opts->lock);					\
--		return sysfs_emit(page, "%s\n", opts->net_opts.name);		\
-+		rtnl_lock();							\
-+		if (opts->net_opts.ifname_set)					\
-+			name = opts->net_opts.name;				\
-+		else if (opts->net)						\
-+			name = netdev_name(opts->net);				\
-+		else								\
-+			name = "(inactive net_device)";				\
-+		rtnl_unlock();							\
-+		return sysfs_emit(page, "%s\n", name);				\
- 	}									\
- 										\
- 	static ssize_t _f_##_opts_ifname_store(struct config_item *item,	\
---- a/drivers/usb/gadget/function/u_ncm.h
-+++ b/drivers/usb/gadget/function/u_ncm.h
-@@ -19,6 +19,7 @@
- 
- struct f_ncm_opts {
- 	struct usb_function_instance	func_inst;
-+	struct net_device		*net;
- 
- 	struct gether_opts		net_opts;
- 	struct config_group		*ncm_interf_group;
+ 	/* Allocate string descriptor numbers ... note that string
+ 	 * contents can be overridden by the composite_dev glue.
 
 
