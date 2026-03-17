@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BD22FFDEA;
-	Tue, 17 Mar 2026 17:02:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEFDC357A4A;
+	Tue, 17 Mar 2026 17:02:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766928; cv=none; b=CibnSWhOXiNxeP8Xn59Waov8eWhZ6/HVtkQ8EMxOa5YKcJr2dvJOIjVobka10BdjtT62CuuN4+fwx+p0CWlvrHbE96+j2eggTumq1lrgY0FKyIaxaVQAHXof4xoeAo0VZySrMez/QsZcXW0asgi+D5jWsNhYEHvtGzgxPJ2rQOM=
+	t=1773766932; cv=none; b=LvT8GOi1z7g94auKoRS9Fs01Rj4Ke0Q93YulTojeiUfbkt55Eozs1O6ZSLzqL3xqpse6H5GXYsqLt/0cYtoUBJicGa08keEQB8cX92g3h6U0ZWgIM17mMiXjvf5T1aHvr67qvVbXzfgYXe7y5AR4PDZ6btlBq5iM65yVlcjM7ew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766928; c=relaxed/simple;
-	bh=2Op0Y71CeDSN0fqbNNdgACZjAuyZ6UgyJ4e1DTbbh68=;
+	s=arc-20240116; t=1773766932; c=relaxed/simple;
+	bh=03xPOeb/GrxwuuqC/OZgRVeFDKraVmCAiWGzRBW2RJM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=dXxxkW3rC37q3qDVaYXZQzEekBmJERFlR8PIgWCuDCeyeSTQ3c5kUyQ2P57o2LWrQkp2g+YeMNEjeZUXAZsQiDnkcYWLHjOFbmCX2ix4u3tDEYvwURkWd6A5mKX0bgEZlAiOryuKomHHERPR3U/GPCJ4pz3OoMwQ3NpJsuH6xsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SOJP6ccO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZAGTic56oOcFpGICdHfE9APu7ukb97XJlPg+M+9FcgmlgnQ0N0Em7ygBWlb5LIOXTPBnxL7No4RLee7iAbMUGFUyI1SDFxhwksbuj8JCv+Pj5DWWfjEk5+LyFzLlc14e5HZmiggJ4NkEGblzzC41bbXoaHi8SRVp6HGkQM1FguY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZOZMBGSk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SOJP6ccO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C5DC4CEF7;
-	Tue, 17 Mar 2026 17:02:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZOZMBGSk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9C45C4CEF7;
+	Tue, 17 Mar 2026 17:02:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766927;
-	bh=2Op0Y71CeDSN0fqbNNdgACZjAuyZ6UgyJ4e1DTbbh68=;
+	s=korg; t=1773766931;
+	bh=03xPOeb/GrxwuuqC/OZgRVeFDKraVmCAiWGzRBW2RJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SOJP6ccOoN6kbKDUOyLOkLmukOeS882tZ16/OBLTcu90fzxPsxw3dd47m11VJfb9g
-	 3NnLH/SYWjY54VBNRER5CWz7acpiVxT4+pXWMYE3ydmKkvKpPVvT3XbtU9YVwO4o0Y
-	 GL6GxJv1jy5/QlTSLaZcFbQvXMYH3hD3FI7K4gNg=
+	b=ZOZMBGSkQNdR6AhiBcsy7aQJB/ET2kvPDvHktrtnKpBwC2QKdPFxg1Z60Jrbj8+q8
+	 cfBFLD6aFVbL7Wh6oHYbLPYVkLAjViZOqx9J4yFd8WI10DkKyH7Ef8RZrpYZItfNWY
+	 qun59/+3WvLE+w2NpkyhjdYSmBfTv2JB3EIuMgn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	David Lechner <dlechner@baylibre.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 353/378] iio: buffer: Fix wait_queue not being removed
-Date: Tue, 17 Mar 2026 17:35:10 +0100
-Message-ID: <20260317163019.974294398@linuxfoundation.org>
+Subject: [PATCH 6.19 354/378] iio: gyro: mpu3050-core: fix pm_runtime error handling
+Date: Tue, 17 Mar 2026 17:35:11 +0100
+Message-ID: <20260317163020.010130558@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -46,45 +46,72 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 064234044056c93a3719d6893e6e5a26a94a61b6 upstream.
+commit acc3949aab3e8094641a9c7c2768de1958c88378 upstream.
 
-In the edge case where the IIO device is unregistered while we're
-buffering, we were directly returning an error without removing the wait
-queue. Instead, set 'ret' and break out of the loop.
+The return value of pm_runtime_get_sync() is not checked, allowing
+the driver to access hardware that may fail to resume. The device
+usage count is also unconditionally incremented. Use
+pm_runtime_resume_and_get() which propagates errors and avoids
+incrementing the usage count on failure.
 
-Fixes: 9eeee3b0bf19 ("iio: Add output buffer support")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: David Lechner <dlechner@baylibre.com>
+In preenable, add pm_runtime_put_autosuspend() on set_8khz_samplerate()
+failure since postdisable does not run when preenable fails.
+
+Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/industrialio-buffer.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iio/gyro/mpu3050-core.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/drivers/iio/industrialio-buffer.c
-+++ b/drivers/iio/industrialio-buffer.c
-@@ -228,8 +228,10 @@ static ssize_t iio_buffer_write(struct f
- 	written = 0;
- 	add_wait_queue(&rb->pollq, &wait);
- 	do {
--		if (!indio_dev->info)
--			return -ENODEV;
-+		if (!indio_dev->info) {
-+			ret = -ENODEV;
-+			break;
-+		}
+--- a/drivers/iio/gyro/mpu3050-core.c
++++ b/drivers/iio/gyro/mpu3050-core.c
+@@ -322,7 +322,9 @@ static int mpu3050_read_raw(struct iio_d
+ 		}
+ 	case IIO_CHAN_INFO_RAW:
+ 		/* Resume device */
+-		pm_runtime_get_sync(mpu3050->dev);
++		ret = pm_runtime_resume_and_get(mpu3050->dev);
++		if (ret)
++			return ret;
+ 		mutex_lock(&mpu3050->lock);
  
- 		if (!iio_buffer_space_available(rb)) {
- 			if (signal_pending(current)) {
+ 		ret = mpu3050_set_8khz_samplerate(mpu3050);
+@@ -647,14 +649,20 @@ out_trigger_unlock:
+ static int mpu3050_buffer_preenable(struct iio_dev *indio_dev)
+ {
+ 	struct mpu3050 *mpu3050 = iio_priv(indio_dev);
++	int ret;
+ 
+-	pm_runtime_get_sync(mpu3050->dev);
++	ret = pm_runtime_resume_and_get(mpu3050->dev);
++	if (ret)
++		return ret;
+ 
+ 	/* Unless we have OUR trigger active, run at full speed */
+-	if (!mpu3050->hw_irq_trigger)
+-		return mpu3050_set_8khz_samplerate(mpu3050);
++	if (!mpu3050->hw_irq_trigger) {
++		ret = mpu3050_set_8khz_samplerate(mpu3050);
++		if (ret)
++			pm_runtime_put_autosuspend(mpu3050->dev);
++	}
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static int mpu3050_buffer_postdisable(struct iio_dev *indio_dev)
 
 
