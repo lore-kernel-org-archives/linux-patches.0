@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA4D421D5B0;
-	Tue, 17 Mar 2026 17:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9064A2EF67A;
+	Tue, 17 Mar 2026 17:21:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768112; cv=none; b=BakhJa4DghDriW1gx2XWHOqnBOcdLsCV3WgYIsLa9UTD3DUsTkeDw/SarxIMNmN1HYPKBnQOxUd2gaOBvKSjXFrcgPnTQm99LosgQz5E4co7ZvCwGSySsBGnQrDYFuyUV6lBV7tn0lSqeAG9yDXIDnlkxjhNfQ0QSRZzJcVodes=
+	t=1773768118; cv=none; b=Z87y7Mn/jg7I2Y7TVsUk1VNsmlnAx9QJRuFsOByBrqTBlVYup/q/ok5fbcEHY7dVKNWqqDqYyT9/nJfzI/BxgZy4EXZY1rdMauvg2efOizWJcjLWNQqQ9cD2rWvghDjhuntsKdNNluaMeoo2GpMeu8B0OyQNvk5csiuVP/wbcyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768112; c=relaxed/simple;
-	bh=ARqy4z+Jd2cjBQjvq4yvWM79YkjqY31FUHUxaFPS15E=;
+	s=arc-20240116; t=1773768118; c=relaxed/simple;
+	bh=2BYqbc/WC6mktt16zcLqYzx3ZjIev7ue8qjzSgWDcwg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZrIrDNE1CWVS86i4ZfCOZnhyVK7NB0e3HI/3hA1KZ8X18/sKrX3PfM+YcMmW8dIMOZ8+62dwyyHvfqh2fsyfAM7jCIBx4xvgrlkMDALKxwUe0wCz9jJY/buFBXDaNoSBDdeIxBEJjkok46v4Ip1TS4QzxT5yc0iLhAgM0dqD8iY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xHZHEZLs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aEH5Wx8r8EQW9OGHC1Htr3LeqVUCVvUokhODi7iRn2y0MzoBK39Wq85soqzgRHdxHhmu3VOe68gMhJvt4BO+yvw+xQW4Xr9ky1l7yzpIANSbHPhkcq1Djavvin3ehTp5l8NrvFef6lpl+0mviCqoKDoknYgCjK9HgnWWRI14glY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vTdCjXrf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xHZHEZLs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C921C2BC86;
-	Tue, 17 Mar 2026 17:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vTdCjXrf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2DB9C4CEF7;
+	Tue, 17 Mar 2026 17:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768112;
-	bh=ARqy4z+Jd2cjBQjvq4yvWM79YkjqY31FUHUxaFPS15E=;
+	s=korg; t=1773768118;
+	bh=2BYqbc/WC6mktt16zcLqYzx3ZjIev7ue8qjzSgWDcwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHZHEZLsBu9ZKgpD6BrGpR2LwRsD+RihxqrzneXyulAI4qZi8ay/4cwYO8yFbICRE
-	 Plbp2KRmqX4A6p/5BeLGd2xWjqm6GhZvlhxcnHUQ1xwmVQLE0wrysGRt7q4gG7K4FJ
-	 a8nXzH/YeKLduZLnC76Ib2t0WOKNYj7rm0YoIc3g=
+	b=vTdCjXrfO+EM0nBKjt+I/66am675sWUmDSB3pN1Ys8Yhbqu8MHU3Pevom4iLAt/C+
+	 FpLjUeSBMvuKiMJaDfXpx5bu61prM6k5it2bA+fywVPboqwhHNow04Vl1g5gJ0e4sf
+	 LMg0wtJc594KZfWDi+w2BJqC8ScXM5zLJUoJ8J+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.18 233/333] pmdomain: bcm: bcm2835-power: Fix broken reset status read
-Date: Tue, 17 Mar 2026 17:34:22 +0100
-Message-ID: <20260317163008.006169928@linuxfoundation.org>
+	Ashish Kalra <ashish.kalra@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.18 234/333] crypto: ccp - allow callers to use HV-Fixed page API when SEV is disabled
+Date: Tue, 17 Mar 2026 17:34:23 +0100
+Message-ID: <20260317163008.042841633@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -46,59 +45,69 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Ashish Kalra <ashish.kalra@amd.com>
 
-commit 550bae2c0931dbb664a61b08c21cf156f0a5362a upstream.
+commit 8168a7b72bdee3790b126f63bd30306759206b15 upstream.
 
-bcm2835_reset_status() has a misplaced parenthesis on every PM_READ()
-call. Since PM_READ(reg) expands to readl(power->base + (reg)), the
-expression:
+When SEV is disabled, the HV-Fixed page allocation call fails, which in
+turn causes SFS initialization to fail.
 
-    PM_READ(PM_GRAFX & PM_V3DRSTN)
+Fix the HV-Fixed API so callers (for example, SFS) can use it even when
+SEV is disabled by performing normal page allocation and freeing.
 
-computes the bitwise AND of the register offset PM_GRAFX with the
-bitmask PM_V3DRSTN before using the result as a register offset, reading
-from the wrong MMIO address instead of the intended PM_GRAFX register.
-The same issue affects the PM_IMAGE cases.
-
-Fix by moving the closing parenthesis so PM_READ() receives only the
-register offset, and the bitmask is applied to the value returned by
-the read.
-
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Fixes: e09701dcdd9c ("crypto: ccp - Add new HV-Fixed page allocation/free API")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/bcm/bcm2835-power.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/sev-dev.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/drivers/pmdomain/bcm/bcm2835-power.c
-+++ b/drivers/pmdomain/bcm/bcm2835-power.c
-@@ -573,11 +573,11 @@ static int bcm2835_reset_status(struct r
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -1109,15 +1109,12 @@ struct page *snp_alloc_hv_fixed_pages(un
+ {
+ 	struct psp_device *psp_master = psp_get_master_device();
+ 	struct snp_hv_fixed_pages_entry *entry;
+-	struct sev_device *sev;
+ 	unsigned int order;
+ 	struct page *page;
  
- 	switch (id) {
- 	case BCM2835_RESET_V3D:
--		return !PM_READ(PM_GRAFX & PM_V3DRSTN);
-+		return !(PM_READ(PM_GRAFX) & PM_V3DRSTN);
- 	case BCM2835_RESET_H264:
--		return !PM_READ(PM_IMAGE & PM_H264RSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_H264RSTN);
- 	case BCM2835_RESET_ISP:
--		return !PM_READ(PM_IMAGE & PM_ISPRSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_ISPRSTN);
- 	default:
- 		return -EINVAL;
- 	}
+-	if (!psp_master || !psp_master->sev_data)
++	if (!psp_master)
+ 		return NULL;
+ 
+-	sev = psp_master->sev_data;
+-
+ 	order = get_order(PMD_SIZE * num_2mb_pages);
+ 
+ 	/*
+@@ -1130,7 +1127,8 @@ struct page *snp_alloc_hv_fixed_pages(un
+ 	 * This API uses SNP_INIT_EX to transition allocated pages to HV_Fixed
+ 	 * page state, fail if SNP is already initialized.
+ 	 */
+-	if (sev->snp_initialized)
++	if (psp_master->sev_data &&
++	    ((struct sev_device *)psp_master->sev_data)->snp_initialized)
+ 		return NULL;
+ 
+ 	/* Re-use freed pages that match the request */
+@@ -1166,7 +1164,7 @@ void snp_free_hv_fixed_pages(struct page
+ 	struct psp_device *psp_master = psp_get_master_device();
+ 	struct snp_hv_fixed_pages_entry *entry, *nentry;
+ 
+-	if (!psp_master || !psp_master->sev_data)
++	if (!psp_master)
+ 		return;
+ 
+ 	/*
 
 
