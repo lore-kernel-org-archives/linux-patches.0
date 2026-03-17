@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20E411AA7A6;
-	Tue, 17 Mar 2026 17:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867B730C63B;
+	Tue, 17 Mar 2026 17:21:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768085; cv=none; b=Gsplvv34Da3dwuNze3WR8vqRs/BOmO8thDPb1nlYd1w7PBnumFCX38/x/1WmUCX4W50Sp0Zta1rOPsCO9XoDY3hC4MaD72OIh5jCVKEp6cw/h46nNGnqqYWgkVTpz+60kY1/PIbuFHPMPgDGENoLe5VPSEb6AAocTuAKpLoUcaw=
+	t=1773768089; cv=none; b=GIC7lJKDp9Veur6E5C53VsqNKCBBgNv5ywcuiQNr9eEbXMAqm7xFFgP01jH4iR6eb8wWhqVCMfKK1OlixAsdMsUyCtf/ZPPM31rV4R3W3jPn/eNP86F+60slooQzJZ7FJKnUNasM5asd5hm595yqeSMjY+mMowhC/hUEpWlhWEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768085; c=relaxed/simple;
-	bh=hMvj3Uc0FRfeX7LUkYBWCGopvnipygVUd7xcFPZ6FyU=;
+	s=arc-20240116; t=1773768089; c=relaxed/simple;
+	bh=Fb0yfznBwMwNeaSfn44hfAzU/0h49t28RKhU8sdmYzw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ajm3HohmR/FX8Z44lTJ9vdu8m7mPkoyo+QTcK2uHTQbwMFZwIlsqeXTpn3RAkqW/52bHv17bAHt1yAFppNKKlh4Vqqryx6sHKnHnEl0f2s5UNduroPCVubbFKh19Ui9rHPj35bpSQ653ovjgByCX/+uvCI0E9cZetd+wmcbkr3I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0yCum2rM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ou8SLFDIP/YOs4vqCPmU1VLKXqee3O+aL5jNxFBUrjDzwnHn1WYc/cxbU4cmgY02ipvtXRk1qyuseteOr86HVOZF+7zOacaqz0Clu2kWuJFqa6YJIDNnkoBwHcIkCmf5ePWBqVZO8mtM1+mVLVMvu+l3EOf80u14vMbupbwOnNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tw3zVneR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0yCum2rM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A892C2BCAF;
-	Tue, 17 Mar 2026 17:21:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tw3zVneR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95CDBC19424;
+	Tue, 17 Mar 2026 17:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768085;
-	bh=hMvj3Uc0FRfeX7LUkYBWCGopvnipygVUd7xcFPZ6FyU=;
+	s=korg; t=1773768089;
+	bh=Fb0yfznBwMwNeaSfn44hfAzU/0h49t28RKhU8sdmYzw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0yCum2rM5Ea0ZX96LmGj7YfDHXFZemAqehKuKmxYQQrHJRvncGk68N+69C1wplP7S
-	 GGXC0VcfmaY4knNRgj8WPKGOTCU4xLmeYyk1M+gicP/a2DG4vz+Qvj5HhDOeYbgqVN
-	 1+2GaxGwH4LFIXrTYmDwMmlxzwsb90modxrTv9ng=
+	b=tw3zVneRy5FCtyIwDPM3DyASMSTRoIX/BKsFM4zBHmH4RciL/6veyKuVtE21Dkvpe
+	 PyWBu6v3pMq04MVjbq5S4wdt5Ef6pu2Ie6yGqK9RJ8r+09tVG7uwQb2spLTdZWzToo
+	 8H7qmkFW/9LAjYQ/ihRnkKXy5lNpQK1nA/gcl31Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Lytkin <iprintercanon@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 210/333] staging: sm750fb: add missing pci_release_region on error and removal
-Date: Tue, 17 Mar 2026 17:33:59 +0100
-Message-ID: <20260317163007.152654195@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.18 228/333] parisc: Fix initial page table creation for boot
+Date: Tue, 17 Mar 2026 17:34:17 +0100
+Message-ID: <20260317163007.819333980@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,90 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Artem Lytkin <iprintercanon@gmail.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 8225489ddb900656cc21573b4e1b00c9181fd777 upstream.
+commit 8475d8fe21ec9c7eb2faca555fbc5b68cf0d2597 upstream.
 
-hw_sm750_map() calls pci_request_region() but never releases the
-region on error paths or in lynxfb_pci_remove(). This causes a
-resource leak that prevents the PCI region from being mapped again
-after driver removal or a failed probe. A TODO comment in the code
-acknowledges this missing cleanup.
+The KERNEL_INITIAL_ORDER value defines the initial size (usually 32 or
+64 MB) of the page table during bootup. Up until now the whole area was
+initialized with PTE entries, but there was no check if we filled too
+many entries.  Change the code to fill up with so many entries that the
+"_end" symbol can be reached by the kernel, but not more entries than
+actually fit into the initial PTE tables.
 
-Restructure the error handling in hw_sm750_map() to properly release
-the PCI region on ioremap failures, and add pci_release_region() to
-lynxfb_pci_remove().
-
-Signed-off-by: Artem Lytkin <iprintercanon@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260216202038.1828-1-iprintercanon@gmail.com
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/sm750fb/sm750.c    |    1 +
- drivers/staging/sm750fb/sm750_hw.c |   22 +++++++++++-----------
- 2 files changed, 12 insertions(+), 11 deletions(-)
+ arch/parisc/kernel/head.S |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/sm750fb/sm750.c
-+++ b/drivers/staging/sm750fb/sm750.c
-@@ -1118,6 +1118,7 @@ static void lynxfb_pci_remove(struct pci
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -56,6 +56,7 @@ ENTRY(parisc_kernel_start)
  
- 	iounmap(sm750_dev->pvReg);
- 	iounmap(sm750_dev->pvMem);
-+	pci_release_region(pdev, 1);
- 	kfree(g_settings);
- }
+ 	.import __bss_start,data
+ 	.import __bss_stop,data
++	.import __end,data
  
---- a/drivers/staging/sm750fb/sm750_hw.c
-+++ b/drivers/staging/sm750fb/sm750_hw.c
-@@ -36,16 +36,11 @@ int hw_sm750_map(struct sm750_dev *sm750
+ 	load32		PA(__bss_start),%r3
+ 	load32		PA(__bss_stop),%r4
+@@ -149,7 +150,11 @@ $cpu_ok:
+ 	 * everything ... it will get remapped correctly later */
+ 	ldo		0+_PAGE_KERNEL_RWX(%r0),%r3 /* Hardwired 0 phys addr start */
+ 	load32		(1<<(KERNEL_INITIAL_ORDER-PAGE_SHIFT)),%r11 /* PFN count */
+-	load32		PA(pg0),%r1
++	load32		PA(_end),%r1
++	SHRREG		%r1,PAGE_SHIFT,%r1  /* %r1 is PFN count for _end symbol */
++	cmpb,<<,n	%r11,%r1,1f
++	copy		%r1,%r11	/* %r1 PFN count smaller than %r11 */
++1:	load32		PA(pg0),%r1
  
- 	pr_info("mmio phyAddr = %lx\n", sm750_dev->vidreg_start);
- 
--	/*
--	 * reserve the vidreg space of smi adaptor
--	 * if you do this, you need to add release region code
--	 * in lynxfb_remove, or memory will not be mapped again
--	 * successfully
--	 */
-+	/* reserve the vidreg space of smi adaptor */
- 	ret = pci_request_region(pdev, 1, "sm750fb");
- 	if (ret) {
- 		pr_err("Can not request PCI regions.\n");
--		goto exit;
-+		return ret;
- 	}
- 
- 	/* now map mmio and vidmem */
-@@ -54,7 +49,7 @@ int hw_sm750_map(struct sm750_dev *sm750
- 	if (!sm750_dev->pvReg) {
- 		pr_err("mmio failed\n");
- 		ret = -EFAULT;
--		goto exit;
-+		goto err_release_region;
- 	}
- 	pr_info("mmio virtual addr = %p\n", sm750_dev->pvReg);
- 
-@@ -79,13 +74,18 @@ int hw_sm750_map(struct sm750_dev *sm750
- 	sm750_dev->pvMem =
- 		ioremap_wc(sm750_dev->vidmem_start, sm750_dev->vidmem_size);
- 	if (!sm750_dev->pvMem) {
--		iounmap(sm750_dev->pvReg);
- 		pr_err("Map video memory failed\n");
- 		ret = -EFAULT;
--		goto exit;
-+		goto err_unmap_reg;
- 	}
- 	pr_info("video memory vaddr = %p\n", sm750_dev->pvMem);
--exit:
-+
-+	return 0;
-+
-+err_unmap_reg:
-+	iounmap(sm750_dev->pvReg);
-+err_release_region:
-+	pci_release_region(pdev, 1);
- 	return ret;
- }
- 
+ $pgt_fill_loop:
+ 	STREGM          %r3,ASM_PTE_ENTRY_SIZE(%r1)
 
 
