@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53B2F377579;
-	Tue, 17 Mar 2026 17:24:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EFE2459DC;
+	Tue, 17 Mar 2026 17:24:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768275; cv=none; b=YFuSMzJ1COFNwEGlaciemsn6/Fp/JuKa2YLuHqI5XjY+mj9TlYQMr4512GEd5QRSI8WD4heGAH+JLKdRShYgvK708rut6TgKZWZE9/BGHXGRttdFkxWRRVOF6nqVCcB55lB/OGsH+u1Hund+mOJnb6atIBWrBstbaL7F8NYwn7A=
+	t=1773768280; cv=none; b=p4LVsTNcG4y2ZvXVMGBvQ1sn9einsp5C1yWPmR1VqSLiouWbH8z3p0TljWwS8kQcil13JkFripT2owG83BIvj0D/na4YPXUYXQ/uqLvtAqbtGAznZG6ad8HmfaGXdGeBSkZ/5/arOGg+1T8Pggz8QP88AmLEV5HWn2sNHb4/sGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768275; c=relaxed/simple;
-	bh=3ZmH0BBfzw7+W9uNmkZ3W8VZOjDnT5pqCBPdcMwMY5c=;
+	s=arc-20240116; t=1773768280; c=relaxed/simple;
+	bh=0qZcJBz85Hf8vGjB5t/XNUFgCofit+r1dLROQmt1EAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ikMJzJIuMKyiGERYdbztNMw7fFx+d45ztnT82AcVsd3JocZAhekjePx71hIo9e19vVN2lzcVxI/s4AWfT+fBHxOjmiEfHdVqtF66Qi+RHECRnwQMa2+O5SvpReO2OiK+le/sIa/uNiedmFAEaHp7sPmDenuCpdxoehNylOH9Vo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zxvGa7NJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mof2AYzv9wdev0CakrWhltheKXBJXNb7ghDHQzUt6mlwXysFL0e2m0ukWcGlPx0gYm+hXCuVaHJdGRzttoYWMs729FZXtwyKCASaSnZkmxvkvM1VNzCVwheFfzHh7BxVqWsms7RgFQZ+w3SjfyntdYBFENwwg7+agR65E3RBUiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=md/aLUqo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zxvGa7NJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CC57C2BCB0;
-	Tue, 17 Mar 2026 17:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="md/aLUqo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51EC6C4CEF7;
+	Tue, 17 Mar 2026 17:24:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768275;
-	bh=3ZmH0BBfzw7+W9uNmkZ3W8VZOjDnT5pqCBPdcMwMY5c=;
+	s=korg; t=1773768279;
+	bh=0qZcJBz85Hf8vGjB5t/XNUFgCofit+r1dLROQmt1EAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zxvGa7NJlW41gfQyMH/jnRF6wspGUh9JsqVi/FiDQ6gE7pLJQsyafrYUINSUCv3+6
-	 +LRBUXcEmBxCULWSTFkqhkIH+6Xl2K66+dTn6/OwDYl3cH88Gg5Hgl1TL4UomnWLNq
-	 KG1S65dHdpwUn2Rghnqcd5GQDvbHKDpnxrxfotgU=
+	b=md/aLUqoxQ4Zd3pNVD4Vb48dR4OycJtxUSshWvjIOjsCT/pdJqTzcxY8PF/2fWAns
+	 LHEGAl4q8jtAsjtIhVeKAQILTfpvEHbN+jogBBcXRPWenns4PfKgnsnQfFTdqqaxXq
+	 0I6VV8CfbUAh+zaoKX81FAG7+I6xQlLi0TfHvNzI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 246/333] net: nexthop: fix percpu use-after-free in remove_nh_grp_entry
-Date: Tue, 17 Mar 2026 17:34:35 +0100
-Message-ID: <20260317163008.489019624@linuxfoundation.org>
+	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Stefan Haberland <sth@linux.ibm.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.18 273/333] s390/dasd: Move quiesce state with pprc swap
+Date: Tue, 17 Mar 2026 17:35:02 +0100
+Message-ID: <20260317163009.519221596@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -46,90 +45,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Stefan Haberland <sth@linux.ibm.com>
 
-commit b2662e7593e94ae09b1cf7ee5f09160a3612bcb2 upstream.
+commit 40e9cd4ae8ec43b107ed2bff422a8fa39dcf4e4b upstream.
 
-When removing a nexthop from a group, remove_nh_grp_entry() publishes
-the new group via rcu_assign_pointer() then immediately frees the
-removed entry's percpu stats with free_percpu(). However, the
-synchronize_net() grace period in the caller remove_nexthop_from_groups()
-runs after the free. RCU readers that entered before the publish still
-see the old group and can dereference the freed stats via
-nh_grp_entry_stats_inc() -> get_cpu_ptr(nhge->stats), causing a
-use-after-free on percpu memory.
+Quiesce and resume is a mechanism to suspend operations on DASD devices.
+In the context of a controlled copy pair swap operation, the quiesce
+operation is usually issued before the actual swap and a resume
+afterwards.
 
-Fix by deferring the free_percpu() until after synchronize_net() in the
-caller. Removed entries are chained via nh_list onto a local deferred
-free list. After the grace period completes and all RCU readers have
-finished, the percpu stats are safely freed.
+During the swap operation, the underlying device is exchanged. Therefore,
+the quiesce flag must be moved to the secondary device to ensure a
+consistent quiesce state after the swap.
 
-Fixes: f4676ea74b85 ("net: nexthop: Add nexthop group entry stats")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/20260306233821.196789-1-mehulrao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+The secondary device itself cannot be suspended separately because there
+is no separate block device representation for it.
+
+Fixes: 413862caad6f ("s390/dasd: add copy pair swap capability")
+Cc: stable@vger.kernel.org #6.1
+Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
+Link: https://patch.msgid.link/20260310142330.4080106-2-sth@linux.ibm.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/nexthop.c |   14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ drivers/s390/block/dasd_eckd.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/ipv4/nexthop.c
-+++ b/net/ipv4/nexthop.c
-@@ -2005,7 +2005,8 @@ static void nh_hthr_group_rebalance(stru
- }
+--- a/drivers/s390/block/dasd_eckd.c
++++ b/drivers/s390/block/dasd_eckd.c
+@@ -6193,6 +6193,11 @@ static int dasd_eckd_copy_pair_swap(stru
+ 			dev_name(&secondary->cdev->dev), rc);
+ 	}
  
- static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
--				struct nl_info *nlinfo)
-+				struct nl_info *nlinfo,
-+				struct list_head *deferred_free)
- {
- 	struct nh_grp_entry *nhges, *new_nhges;
- 	struct nexthop *nhp = nhge->nh_parent;
-@@ -2065,8 +2066,8 @@ static void remove_nh_grp_entry(struct n
- 	rcu_assign_pointer(nhp->nh_grp, newg);
- 
- 	list_del(&nhge->nh_list);
--	free_percpu(nhge->stats);
- 	nexthop_put(nhge->nh);
-+	list_add(&nhge->nh_list, deferred_free);
- 
- 	/* Removal of a NH from a resilient group is notified through
- 	 * bucket notifications.
-@@ -2086,6 +2087,7 @@ static void remove_nexthop_from_groups(s
- 				       struct nl_info *nlinfo)
- {
- 	struct nh_grp_entry *nhge, *tmp;
-+	LIST_HEAD(deferred_free);
- 
- 	/* If there is nothing to do, let's avoid the costly call to
- 	 * synchronize_net()
-@@ -2094,10 +2096,16 @@ static void remove_nexthop_from_groups(s
- 		return;
- 
- 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
--		remove_nh_grp_entry(net, nhge, nlinfo);
-+		remove_nh_grp_entry(net, nhge, nlinfo, &deferred_free);
- 
- 	/* make sure all see the newly published array before releasing rtnl */
- 	synchronize_net();
-+
-+	/* Now safe to free percpu stats — all RCU readers have finished */
-+	list_for_each_entry_safe(nhge, tmp, &deferred_free, nh_list) {
-+		list_del(&nhge->nh_list);
-+		free_percpu(nhge->stats);
++	if (primary->stopped & DASD_STOPPED_QUIESCE) {
++		dasd_device_set_stop_bits(secondary, DASD_STOPPED_QUIESCE);
++		dasd_device_remove_stop_bits(primary, DASD_STOPPED_QUIESCE);
 +	}
- }
- 
- static void remove_nexthop_group(struct nexthop *nh, struct nl_info *nlinfo)
++
+ 	/* re-enable device */
+ 	dasd_device_remove_stop_bits(primary, DASD_STOPPED_PPRC);
+ 	dasd_device_remove_stop_bits(secondary, DASD_STOPPED_PPRC);
 
 
