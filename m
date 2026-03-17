@@ -1,50 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF812459DC;
-	Tue, 17 Mar 2026 17:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B962DF132;
+	Tue, 17 Mar 2026 17:20:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768015; cv=none; b=swQG1PmshsTcOvjLurOaHyODQeFoz9PaVn9kMkh7NVRwng+Tw3QcEhyyKVqrb67ADUFeSr1gXZX5+Qx2CvyMb6ALhAJZOSfYkngL85e2mAefSa73lncsG7riO43jLmLy6IufpV1BVLQPcXxzwKAqyKq2WHrVMtJTfLq9FWzhVaQ=
+	t=1773768020; cv=none; b=tae9ukVvPR58ND24l+xRw+hWwLH7Bi6OkOJRe3RC7ICpaU/RfdmrNAr4QfNcFA0eb9WTT+7/aOrH2K5oZvINzz1u6RkbfZdR272tdBkfoJUd4vPOEMdCm1O4V7dsu+zADSQusYX2oY8cGQvLtxtR5d85uBa8ChqSlk3X/GtNDzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768015; c=relaxed/simple;
-	bh=9wsOM5YZP6I/p/RoCaOSsSlVZwbDv9kcDA5iiw8lY8U=;
+	s=arc-20240116; t=1773768020; c=relaxed/simple;
+	bh=14MxeKmiAsKwwvxyt8ihnjifIjW0WRvQm/mlNWzN/x4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGox9k4t/rAGKEQXXZ+N5vlPlJFRIjkzqmdd2iWstUAkaf4dB6nO/VvxyPJI66xtyEo2mUyGG1jFdkRWWWH7nEkfBmimbnMpcxi7/nj5W2tIV/zeShdXKQI0I4gNIj4uZkyvHpR+e6djHfzRnZMQLKyTSwHOUsXuQAyC6yVd8H0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UXXd/yOe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pzgJ85JoHyTzanZqaUKzCF5otHYDb2XwogmJ6/hNuAuElN31gB3kP8+MFdRgS33MgmT0qBzmw8wgMOv1kQIAHInOx/+P26cfMH69024vJdDLoZ0gMkkwr3icYho5b1m+JwlL2vyqk1l7RF/injbmBdFaUQRjLu4qAKFfQOphYgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q6ur/ENU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UXXd/yOe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36BE2C4CEF7;
-	Tue, 17 Mar 2026 17:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q6ur/ENU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A832C4CEF7;
+	Tue, 17 Mar 2026 17:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768015;
-	bh=9wsOM5YZP6I/p/RoCaOSsSlVZwbDv9kcDA5iiw8lY8U=;
+	s=korg; t=1773768019;
+	bh=14MxeKmiAsKwwvxyt8ihnjifIjW0WRvQm/mlNWzN/x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UXXd/yOeB9+lP+04haCzDFE6ZT5k2nd78M1ZiXeHp9ZXYMFzj7Q33cVQgqAjDtfwi
-	 qMAfg1TGV/moKQ/KDm92iVJxdc21+8k7HTJGjYTvyHpc1XnBuMMzMRhl64eesse5L5
-	 EHkF1ouRqJ2T9KoW8evVp2GPHtsYkx4d4WwAlXik=
+	b=Q6ur/ENUR1tYCYZmHynBguFaVsu7lQeWNTBH8utwRpY+ZD7wZhE9HcDbP6cz6HKTX
+	 BnBLfNOARZ+ifpBKhqsMj20xHKt9iwDiwemNxqXAuxj2RGnoI4l56f8u51D3i3X4dx
+	 cV3y4KUN2S/oQf6+NZpXXnocPNUufUhFox+Jb/D4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Axel Rasmussen <axelrasmussen@google.com>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	David Hildenbrand <david@kernel.org>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Muchun Song <muchun.song@linux.dev>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 180/333] Revert "ptdesc: remove references to folios from __pagetable_ctor() and pagetable_dtor()"
-Date: Tue, 17 Mar 2026 17:33:29 +0100
-Message-ID: <20260317163006.030793941@linuxfoundation.org>
+	Guillaume Tucker <gtucker@gtucker.io>,
+	Mark Brown <broonie@kernel.org>,
+	David Gow <davidgow@google.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.18 181/333] kthread: consolidate kthread exit paths to prevent use-after-free
+Date: Tue, 17 Mar 2026 17:33:30 +0100
+Message-ID: <20260317163006.067634764@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -63,83 +53,213 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Axel Rasmussen <axelrasmussen@google.com>
+From: Christian Brauner <brauner@kernel.org>
 
-commit 2d28ed588f8d7d0d41b0a4fad7f0d05e4bbf1797 upstream.
+commit 28aaa9c39945b7925a1cc1d513c8f21ed38f5e4f upstream.
 
-This change swapped out mod_node_page_state for lruvec_stat_add_folio.
-But, these two APIs are not interchangeable: the lruvec version also
-increments memcg stats, in addition to "global" pgdat stats.
+Guillaume reported crashes via corrupted RCU callback function pointers
+during KUnit testing. The crash was traced back to the pidfs rhashtable
+conversion which replaced the 24-byte rb_node with an 8-byte rhash_head
+in struct pid, shrinking it from 160 to 144 bytes.
 
-So after this change, the "pagetables" memcg stat in memory.stat always
-yields "0", which is a userspace visible regression.
+struct kthread (without CONFIG_BLK_CGROUP) is also 144 bytes. With
+CONFIG_SLAB_MERGE_DEFAULT and SLAB_HWCACHE_ALIGN both round up to
+192 bytes and share the same slab cache. struct pid.rcu.func and
+struct kthread.affinity_node both sit at offset 0x78.
 
-I tried to look for a refactor where we add a variant of
-lruvec_stat_mod_folio which takes a pgdat and a memcg instead of a folio,
-to try to adhere to the spirit of the original patch.  But at the end of
-the day this just means we have to call folio_memcg(ptdesc_folio(ptdesc))
-anyway, which doesn't really accomplish much.
+When a kthread exits via make_task_dead() it bypasses kthread_exit() and
+misses the affinity_node cleanup. free_kthread_struct() frees the memory
+while the node is still linked into the global kthread_affinity_list. A
+subsequent list_del() by another kthread writes through dangling list
+pointers into the freed and reused memory, corrupting the pid's
+rcu.func pointer.
 
-This regression is visible in master as well as 6.18 stable, so CC stable
-too.
+Instead of patching free_kthread_struct() to handle the missed cleanup,
+consolidate all kthread exit paths. Turn kthread_exit() into a macro
+that calls do_exit() and add kthread_do_exit() which is called from
+do_exit() for any task with PF_KTHREAD set. This guarantees that
+kthread-specific cleanup always happens regardless of the exit path -
+make_task_dead(), direct do_exit(), or kthread_exit().
 
-Link: https://lkml.kernel.org/r/20260225002434.2953895-1-axelrasmussen@google.com
-Fixes: f0c92726e89f ("ptdesc: remove references to folios from __pagetable_ctor() and pagetable_dtor()")
-Signed-off-by: Axel Rasmussen <axelrasmussen@google.com>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Reviewed-by: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Muchun Song <muchun.song@linux.dev>
+Replace __to_kthread() with a new tsk_is_kthread() accessor in the
+public header. Export do_exit() since module code using the
+kthread_exit() macro now needs it directly.
+
+Reported-by: Guillaume Tucker <gtucker@gtucker.io>
+Tested-by: Guillaume Tucker <gtucker@gtucker.io>
+Tested-by: Mark Brown <broonie@kernel.org>
+Tested-by: David Gow <davidgow@google.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/all/20260224-mittlerweile-besessen-2738831ae7f6@brauner
+Co-developed-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 4d13f4304fa4 ("kthread: Implement preferred affinity")
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mm.h |   17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ include/linux/kthread.h |   21 ++++++++++++++++++++-
+ kernel/exit.c           |    6 ++++++
+ kernel/kthread.c        |   41 +++++------------------------------------
+ 3 files changed, 31 insertions(+), 37 deletions(-)
 
---- a/include/linux/mm.h
-+++ b/include/linux/mm.h
-@@ -3138,26 +3138,21 @@ static inline bool ptlock_init(struct pt
- static inline void ptlock_free(struct ptdesc *ptdesc) {}
- #endif /* defined(CONFIG_SPLIT_PTE_PTLOCKS) */
+--- a/include/linux/kthread.h
++++ b/include/linux/kthread.h
+@@ -7,6 +7,24 @@
  
--static inline unsigned long ptdesc_nr_pages(const struct ptdesc *ptdesc)
+ struct mm_struct;
+ 
++/* opaque kthread data */
++struct kthread;
++
++/*
++ * When "(p->flags & PF_KTHREAD)" is set the task is a kthread and will
++ * always remain a kthread.  For kthreads p->worker_private always
++ * points to a struct kthread.  For tasks that are not kthreads
++ * p->worker_private is used to point to other things.
++ *
++ * Return NULL for any task that is not a kthread.
++ */
++static inline struct kthread *tsk_is_kthread(struct task_struct *p)
++{
++	if (p->flags & PF_KTHREAD)
++		return p->worker_private;
++	return NULL;
++}
++
+ __printf(4, 5)
+ struct task_struct *kthread_create_on_node(int (*threadfn)(void *data),
+ 					   void *data,
+@@ -98,8 +116,9 @@ void *kthread_probe_data(struct task_str
+ int kthread_park(struct task_struct *k);
+ void kthread_unpark(struct task_struct *k);
+ void kthread_parkme(void);
+-void kthread_exit(long result) __noreturn;
++#define kthread_exit(result) do_exit(result)
+ void kthread_complete_and_exit(struct completion *, long) __noreturn;
++void kthread_do_exit(struct kthread *, long);
+ 
+ int kthreadd(void *unused);
+ extern struct task_struct *kthreadd_task;
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -897,11 +897,16 @@ static void synchronize_group_exit(struc
+ void __noreturn do_exit(long code)
+ {
+ 	struct task_struct *tsk = current;
++	struct kthread *kthread;
+ 	int group_dead;
+ 
+ 	WARN_ON(irqs_disabled());
+ 	WARN_ON(tsk->plug);
+ 
++	kthread = tsk_is_kthread(tsk);
++	if (unlikely(kthread))
++		kthread_do_exit(kthread, code);
++
+ 	kcov_task_exit(tsk);
+ 	kmsan_task_exit(tsk);
+ 
+@@ -1008,6 +1013,7 @@ void __noreturn do_exit(long code)
+ 	lockdep_free_task(tsk);
+ 	do_task_dead();
+ }
++EXPORT_SYMBOL(do_exit);
+ 
+ void __noreturn make_task_dead(int signr)
+ {
+--- a/kernel/kthread.c
++++ b/kernel/kthread.c
+@@ -85,24 +85,6 @@ static inline struct kthread *to_kthread
+ 	return k->worker_private;
+ }
+ 
+-/*
+- * Variant of to_kthread() that doesn't assume @p is a kthread.
+- *
+- * When "(p->flags & PF_KTHREAD)" is set the task is a kthread and will
+- * always remain a kthread.  For kthreads p->worker_private always
+- * points to a struct kthread.  For tasks that are not kthreads
+- * p->worker_private is used to point to other things.
+- *
+- * Return NULL for any task that is not a kthread.
+- */
+-static inline struct kthread *__to_kthread(struct task_struct *p)
 -{
--	return compound_nr(ptdesc_page(ptdesc));
+-	void *kthread = p->worker_private;
+-	if (kthread && !(p->flags & PF_KTHREAD))
+-		kthread = NULL;
+-	return kthread;
 -}
 -
- static inline void __pagetable_ctor(struct ptdesc *ptdesc)
+ void get_kthread_comm(char *buf, size_t buf_size, struct task_struct *tsk)
  {
--	pg_data_t *pgdat = NODE_DATA(memdesc_nid(ptdesc->pt_flags));
-+	struct folio *folio = ptdesc_folio(ptdesc);
+ 	struct kthread *kthread = to_kthread(tsk);
+@@ -193,7 +175,7 @@ EXPORT_SYMBOL_GPL(kthread_should_park);
  
--	__SetPageTable(ptdesc_page(ptdesc));
--	mod_node_page_state(pgdat, NR_PAGETABLE, ptdesc_nr_pages(ptdesc));
-+	__folio_set_pgtable(folio);
-+	lruvec_stat_add_folio(folio, NR_PAGETABLE);
- }
- 
- static inline void pagetable_dtor(struct ptdesc *ptdesc)
+ bool kthread_should_stop_or_park(void)
  {
--	pg_data_t *pgdat = NODE_DATA(memdesc_nid(ptdesc->pt_flags));
-+	struct folio *folio = ptdesc_folio(ptdesc);
+-	struct kthread *kthread = __to_kthread(current);
++	struct kthread *kthread = tsk_is_kthread(current);
  
- 	ptlock_free(ptdesc);
--	__ClearPageTable(ptdesc_page(ptdesc));
--	mod_node_page_state(pgdat, NR_PAGETABLE, -ptdesc_nr_pages(ptdesc));
-+	__folio_clear_pgtable(folio);
-+	lruvec_stat_sub_folio(folio, NR_PAGETABLE);
+ 	if (!kthread)
+ 		return false;
+@@ -234,7 +216,7 @@ EXPORT_SYMBOL_GPL(kthread_freezable_shou
+  */
+ void *kthread_func(struct task_struct *task)
+ {
+-	struct kthread *kthread = __to_kthread(task);
++	struct kthread *kthread = tsk_is_kthread(task);
+ 	if (kthread)
+ 		return kthread->threadfn;
+ 	return NULL;
+@@ -266,7 +248,7 @@ EXPORT_SYMBOL_GPL(kthread_data);
+  */
+ void *kthread_probe_data(struct task_struct *task)
+ {
+-	struct kthread *kthread = __to_kthread(task);
++	struct kthread *kthread = tsk_is_kthread(task);
+ 	void *data = NULL;
+ 
+ 	if (kthread)
+@@ -309,19 +291,8 @@ void kthread_parkme(void)
  }
+ EXPORT_SYMBOL_GPL(kthread_parkme);
  
- static inline void pagetable_dtor_free(struct ptdesc *ptdesc)
+-/**
+- * kthread_exit - Cause the current kthread return @result to kthread_stop().
+- * @result: The integer value to return to kthread_stop().
+- *
+- * While kthread_exit can be called directly, it exists so that
+- * functions which do some additional work in non-modular code such as
+- * module_put_and_kthread_exit can be implemented.
+- *
+- * Does not return.
+- */
+-void __noreturn kthread_exit(long result)
++void kthread_do_exit(struct kthread *kthread, long result)
+ {
+-	struct kthread *kthread = to_kthread(current);
+ 	kthread->result = result;
+ 	if (!list_empty(&kthread->hotplug_node)) {
+ 		mutex_lock(&kthreads_hotplug_lock);
+@@ -333,9 +304,7 @@ void __noreturn kthread_exit(long result
+ 			kthread->preferred_affinity = NULL;
+ 		}
+ 	}
+-	do_exit(0);
+ }
+-EXPORT_SYMBOL(kthread_exit);
+ 
+ /**
+  * kthread_complete_and_exit - Exit the current kthread.
+@@ -682,7 +651,7 @@ void kthread_set_per_cpu(struct task_str
+ 
+ bool kthread_is_per_cpu(struct task_struct *p)
+ {
+-	struct kthread *kthread = __to_kthread(p);
++	struct kthread *kthread = tsk_is_kthread(p);
+ 	if (!kthread)
+ 		return false;
+ 
 
 
