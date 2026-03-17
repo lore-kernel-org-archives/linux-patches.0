@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3A63A4F46;
-	Tue, 17 Mar 2026 17:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52DE12FFDEA;
+	Tue, 17 Mar 2026 17:06:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767156; cv=none; b=SaP1aGMmS3F5Zgq2R7kxlq0aGeanV+qdCHdJW/Fxgdl1UK8zeWXjG6bh30g9vZAesGXnKgtOa2DFy7JC+KiNgf2XROhG0vGQSOTn0ClI2wPRumMcZl5zKKghgRT26UPAAF+QXm7SsOi1dVSZZdf7m+NvSxi667N8wpMI/wUqF2o=
+	t=1773767161; cv=none; b=lsgg9YcXLVHOZv5f8IE5hNHLd6oJdpUhSCiq22DA6oVtKVdeMFTekwfLxCJHkSJZdQF+atGEOSBlfLasaampTjxGvJbtPQG89rr/fj7GJZsKzSnYe5ODrpeMSE0mqMdCEwDWsmHvY2jwVCZvlWN9vuJqDHUmZ9lzZ4rt9P4tyEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767156; c=relaxed/simple;
-	bh=dFdF5J0VAG0SRXeZpDuw3ITxKUdfNTWk6ahg9Xgznko=;
+	s=arc-20240116; t=1773767161; c=relaxed/simple;
+	bh=cPOf2J3fg6ARnl6h3cAEoKs6SNN5hZtNnAEaK7uD/wY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cs8YEkf22RMNFU5VjM54JzS3hf5/seGq7fGNvdFmrZPLv4u0fFe9adqVtg1Oy4KwrLaYR30IHzqpyMVtjg4s0xgKOPIp+pKmIF+Lb9w+cwSqW3OGyq+qdtAHy4YjbwSzZvUC9MxH20Ue1Y3LKfnN94GK+7HASyJQ6K+ItCZwUCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XDc6c/3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BF3tOP4sNEkiMvqUiwpPO4OJwFlEWJtFV2Ej7kKvpdxIVNzL/sJkrN3MyVkRpWcEvU1jZ3TH+LSOdH1yGS8YLdE/FSZ0YHccQy3Kappg2Mh7Efc2+EhjHrBTac656KvZvMPJbRP0XNAfgLzpfcbcpgRjx26DXSK9y3VVHOloL68=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SGDgRzux; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XDc6c/3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08611C4CEF7;
-	Tue, 17 Mar 2026 17:05:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SGDgRzux"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F926C4CEF7;
+	Tue, 17 Mar 2026 17:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767156;
-	bh=dFdF5J0VAG0SRXeZpDuw3ITxKUdfNTWk6ahg9Xgznko=;
+	s=korg; t=1773767160;
+	bh=cPOf2J3fg6ARnl6h3cAEoKs6SNN5hZtNnAEaK7uD/wY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XDc6c/3Yt9FJPrFQgU1BBDRHLUOyEfAMkDwF/3qmUCHG12eZByPRLBjgecMPy1Vbp
-	 XfR1wvgG2uwH7/m8l2gvuIUI6OijJQp/+gSz/oReww/38xlznTSNjnXlf4XHg//x+9
-	 ATBfBcCogfcIwMrA9VBns6typBXViXKlg5eC/zNw=
+	b=SGDgRzuxBD4eHoIkZ9VhiNTeQD+egjp+HucV3zuMZGHeFxQw+PfqmQmp1i+Z04fHy
+	 dqNP0KKuQ7HPu+eU0SfjT7h3DRmZiasBtZr9rzGoob9Q/mxoEtC7UCfbOfqk3FpFD2
+	 e36gj4bzhFpgeHOeegxAE6HCK265cjpuIqgujWWo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Scott Mayhew <smayhew@redhat.com>,
-	Roberto Bergantinos Corpas <rbergant@redhat.com>,
-	Anna Schumaker <anna.schumaker@oracle.com>,
+	Pengyu Luo <mitltlatltl@gmail.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 026/333] nfs: return EISDIR on nfs3_proc_create if d_alias is a dir
-Date: Tue, 17 Mar 2026 17:30:55 +0100
-Message-ID: <20260317163000.331738366@linuxfoundation.org>
+Subject: [PATCH 6.18 027/333] drm/msm/dsi: fix hdisplay calculation when programming dsi registers
+Date: Tue, 17 Mar 2026 17:30:56 +0100
+Message-ID: <20260317163000.368791078@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,56 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Roberto Bergantinos Corpas <rbergant@redhat.com>
+From: Pengyu Luo <mitltlatltl@gmail.com>
 
-[ Upstream commit 410666a298c34ebd57256fde6b24c96bd23059a2 ]
+[ Upstream commit ac47870fd795549f03d57e0879fc730c79119f4b ]
 
-If we found an alias through nfs3_do_create/nfs_add_or_obtain
-/d_splice_alias which happens to be a dir dentry, we don't return
-any error, and simply forget about this alias, but the original
-dentry we were adding and passed as parameter remains negative.
+Recently, the hdisplay calculation is working for 3:1 compressed ratio
+only. If we have a video panel with DSC BPP = 8, and BPC = 10, we still
+use the default bits_per_pclk = 24, then we get the wrong hdisplay. We
+can draw the conclusion by cross-comparing the calculation with the
+calculation in dsi_adjust_pclk_for_compression().
 
-This later causes an oops on nfs_atomic_open_v23/finish_open since we
-supply a negative dentry to do_dentry_open.
+Since CMD mode does not use this, we can remove
+!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) safely.
 
-This has been observed running lustre-racer, where dirs and files are
-created/removed concurrently with the same name and O_EXCL is not
-used to open files (frequent file redirection).
-
-While d_splice_alias typically returns a directory alias or NULL, we
-explicitly check d_is_dir() to ensure that we don't attempt to perform
-file operations (like finish_open) on a directory inode, which triggers
-the observed oops.
-
-Fixes: 7c6c5249f061 ("NFS: add atomic_open for NFSv3 to handle O_TRUNC correctly.")
-Reviewed-by: Olga Kornievskaia <okorniev@redhat.com>
-Reviewed-by: Scott Mayhew <smayhew@redhat.com>
-Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
-Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
+Fixes: efcbd6f9cdeb ("drm/msm/dsi: Enable widebus for DSI")
+Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Patchwork: https://patchwork.freedesktop.org/patch/704822/
+Link: https://lore.kernel.org/r/20260214105145.105308-1-mitltlatltl@gmail.com
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs3proc.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfs/nfs3proc.c b/fs/nfs/nfs3proc.c
-index a4cb67573aa7c..993f62636a772 100644
---- a/fs/nfs/nfs3proc.c
-+++ b/fs/nfs/nfs3proc.c
-@@ -392,8 +392,13 @@ nfs3_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
- 	if (status != 0)
- 		goto out_release_acls;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index e0de545d40775..e8e83ee61eb09 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -993,7 +993,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
  
--	if (d_alias)
-+	if (d_alias) {
-+		if (d_is_dir(d_alias)) {
-+			status = -EISDIR;
-+			goto out_dput;
-+		}
- 		dentry = d_alias;
-+	}
+ 	if (msm_host->dsc) {
+ 		struct drm_dsc_config *dsc = msm_host->dsc;
+-		u32 bytes_per_pclk;
++		u32 bits_per_pclk;
  
- 	/* When we created the file with exclusive semantics, make
- 	 * sure we set the attributes afterwards. */
+ 		/* update dsc params with timing params */
+ 		if (!dsc || !mode->hdisplay || !mode->vdisplay) {
+@@ -1015,7 +1015,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 
+ 		/*
+ 		 * DPU sends 3 bytes per pclk cycle to DSI. If widebus is
+-		 * enabled, bus width is extended to 6 bytes.
++		 * enabled, MDP always sends out 48-bit compressed data per
++		 * pclk and on average, DSI consumes an amount of compressed
++		 * data equivalent to the uncompressed pixel depth per pclk.
+ 		 *
+ 		 * Calculate the number of pclks needed to transmit one line of
+ 		 * the compressed data.
+@@ -1027,12 +1029,12 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		 * unused anyway.
+ 		 */
+ 		h_total -= hdisplay;
+-		if (wide_bus_enabled && !(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO))
+-			bytes_per_pclk = 6;
++		if (wide_bus_enabled)
++			bits_per_pclk = mipi_dsi_pixel_format_to_bpp(msm_host->format);
+ 		else
+-			bytes_per_pclk = 3;
++			bits_per_pclk = 24;
+ 
+-		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), bytes_per_pclk);
++		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc) * 8, bits_per_pclk);
+ 
+ 		h_total += hdisplay;
+ 		ha_end = ha_start + hdisplay;
 -- 
 2.51.0
 
