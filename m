@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C835B255F2C;
-	Tue, 17 Mar 2026 17:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645D52D5940;
+	Tue, 17 Mar 2026 17:17:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767870; cv=none; b=WbhvkbPCY98R5rayTFpVh9S86UPHABKyYPVzQj6+bU5lVEG8Ol7MoCHk7OqkRE+j2ZgUmJDV5vgpcl9we3CB05Y9KBZ0f13B9j8PnGBcmva9dzeYPZ9+LYIWUM8o2vYY2K3KvxxCynVR/CVH+4ncpOOU5JUia8Ijo1GZEIJfZLo=
+	t=1773767874; cv=none; b=XrUoGy+LWUNE20qoiTGKmDN2QYwWFOAyGEohKW/9l6ODSUOYW4PouEe79TmCw18r35mSbHs6lefUixoV5INtMl90wc1khvegZMQq0/0HYXZfiCTD+ZdVs9ROdbZAdE/LuY3W+QS0TzBFf2x1Wz7waVgZBWwzr34zE8Alo7+z+gk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767870; c=relaxed/simple;
-	bh=bMe1kEpP65MVaMlzxl4o7ayd+jYaV2owLLBlhw7guWU=;
+	s=arc-20240116; t=1773767874; c=relaxed/simple;
+	bh=SsTFBgR/axyVDp7IldA14aRubu5qgVZwFKey+TdyAHo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=r5AQi7LzMyoB8KpOgqP/eNyCsWM9dfQvVrRRFnFbpgUKvE6QE6wqbfGn4PmIF+XWzlfBjnLfGnKmVPfzUr83+ZlqSHSOncDVOJjBr3mAfQSCu0294r6ZN1OXTRk1Udu5X/8V5owGv8CrWwDiHHOi2XTXQ7H02Gav3zy7qcn6RmI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOm3YaMa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kLXus4UN1tLIJxpvDjqihLqZAkDSODji9Cb3jcIMt5nfRA20L2+bfhZVedWsJUJCmY+vIWR8jfyMj0Yiwe0pMUfdB8aiClf/Ft2gz5AfRRZF2Fyq2Lq9KExWh9B74VjTcALgyJRoDuZPzMxGgxhYueeVZXT5+He5iaq1Foj0lBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QZyhBBpo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOm3YaMa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53874C4CEF7;
-	Tue, 17 Mar 2026 17:17:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QZyhBBpo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3E13C4CEF7;
+	Tue, 17 Mar 2026 17:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767870;
-	bh=bMe1kEpP65MVaMlzxl4o7ayd+jYaV2owLLBlhw7guWU=;
+	s=korg; t=1773767874;
+	bh=SsTFBgR/axyVDp7IldA14aRubu5qgVZwFKey+TdyAHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bOm3YaMa4MrAxrztb5Ib5FgUoziyE9/e/ZBVQiu9TIcyCgdINKByoWlVGxUJzysec
-	 2fEVKffBDN0jGCSCrWD1JAmN1w1bQOeFveO2njpjomeC1t/w/OOTkZCYNR3Hd1nkOD
-	 fYQPVqt8HbqOdIPDd5uJ47DUT7w94NuizjBoIc6M=
+	b=QZyhBBpo+avk13miNHgZHg4jqwhg4W9uWbnx+1JLOkYg1NcLUcPxAu6hbak4uOk5C
+	 8yJ5fcQCJKgB5x5vvbVucvs6q0tLOw7sPD4fgCodyqF+57neiF1bukQJB6igiZ4lZX
+	 PskQ6N8gVutoYCXMoCa0MG/JgO64X242DWjOthu4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 144/333] usb: mdc800: handle signal and read racing
-Date: Tue, 17 Mar 2026 17:32:53 +0100
-Message-ID: <20260317163004.699594146@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Junzhong Pan <panjunzhong@linux.spacemit.com>,
+	Xu Yang <xu.yang_2@nxp.com>
+Subject: [PATCH 6.18 145/333] usb: gadget: uvc: fix interval_duration calculation
+Date: Tue, 17 Mar 2026 17:32:54 +0100
+Message-ID: <20260317163004.736430469@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,32 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Junzhong Pan <panjunzhong@linux.spacemit.com>
 
-commit 2d6d260e9a3576256fe9ef6d1f7930c9ec348723 upstream.
+commit 56135c0c60b07729401af9d329fa9c0eded845a6 upstream.
 
-If a signal arrives after a read has partially completed,
-we need to return the number of bytes read. -EINTR is correct
-only if that number is zero.
+To correctly convert bInterval as interval_duration:
+  interval_duration = 2^(bInterval-1) * frame_interval
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Current code uses a wrong left shift operand, computing 2^bInterval
+instead of 2^(bInterval-1).
+
+Fixes: 010dc57cb516 ("usb: gadget: uvc: fix interval_duration calculation")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260209142048.1503791-1-oneukum@suse.com
+Signed-off-by: Junzhong Pan <panjunzhong@linux.spacemit.com>
+Reviewed-by: Xu Yang <xu.yang_2@nxp.com>
+Link: https://patch.msgid.link/20260306-fix-uvc-interval-v1-1-9a2df6859859@linux.spacemit.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/image/mdc800.c |    2 +-
+ drivers/usb/gadget/function/uvc_video.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/image/mdc800.c
-+++ b/drivers/usb/image/mdc800.c
-@@ -707,7 +707,7 @@ static ssize_t mdc800_device_read (struc
- 		if (signal_pending (current)) 
- 		{
- 			mutex_unlock(&mdc800->io_lock);
--			return -EINTR;
-+			return len == left ? -EINTR : len-left;
- 		}
+diff --git a/drivers/usb/gadget/function/uvc_video.c b/drivers/usb/gadget/function/uvc_video.c
+index 7cea641b06b4..2f9700b3f1b6 100644
+--- a/drivers/usb/gadget/function/uvc_video.c
++++ b/drivers/usb/gadget/function/uvc_video.c
+@@ -513,7 +513,7 @@ uvc_video_prep_requests(struct uvc_video *video)
+ 		return;
+ 	}
  
- 		sts=left > (mdc800->out_count-mdc800->out_ptr)?mdc800->out_count-mdc800->out_ptr:left;
+-	interval_duration = 2 << (video->ep->desc->bInterval - 1);
++	interval_duration = 1 << (video->ep->desc->bInterval - 1);
+ 	if (cdev->gadget->speed < USB_SPEED_HIGH)
+ 		interval_duration *= 10000;
+ 	else
+-- 
+2.53.0
+
 
 
