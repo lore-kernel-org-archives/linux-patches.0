@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D75A333745;
-	Tue, 17 Mar 2026 17:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67FD232548B;
+	Tue, 17 Mar 2026 17:25:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768331; cv=none; b=mByIVep31yzcSNW+D4s390lQsqsllgO+rPxkpEd9Fx2Hn4m/3IoIweHiA+kBk3mVlgR2q3cFG8L5EY/AjBjntMTKorvK7NuPnpZ4TYBwna1x+wEniMXbWS/kgljBQXBmt4CBUnVUKkDT2XwmCqRm1eLi03Gjq6/MmIQRzo5Gcvg=
+	t=1773768336; cv=none; b=Gx7cEZNKPtPsbNiy8OlFiVjflFJMS1XZrAYtrpK6yoEb5HMHvU8ZVQTpstIrojCpWSxj/986LCV3zmaa1kLTQA3tiUmM5TaimIEIMxAAkvxRTHZXdsboMlD+Hyz8Ie1yjtKzBVbePeXJBhoxUoJWxX1NaFoys8mnjf5Od4uk75c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768331; c=relaxed/simple;
-	bh=zJVCUtqPyLa19wDgdiRONi/QgBsfXRXCIOYnbGw6oSg=;
+	s=arc-20240116; t=1773768336; c=relaxed/simple;
+	bh=PnJ4rbtCB/1SpVuq2dWbomq3j4yUyYr1j3gXx45fzIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vCcJ+5TYj9oN9xCaI9FDBFveusUZKDUZwlJkFkCI7lZBcMYCkYQj7QcTTEA9qvkPUcNMBEmIs8FjoTn5KIMgrd5FpupHLs1SXGp04SlngyZfvjCXKZr7hgEh6ong56fLcFA/glKhpJD5wIhBGt2g7V4Op1LF4w/TQbYb6GpiL1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xOMojNBV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BsKMSJKq3mwGrA39SaUilOtwP/kG71egUmEXHRGvETCydrXUXWkzSll2cPNHmFXiHTaEWgCgLAKHXFsyCSus0Zurx26xEfh+SHPL40a8ZRu9V0KlLHC78KKr4NzDuQYrf2Sptt2mM0bjqOd3xDLhfldv3pY+Y4TtbLnnauNQYxM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kTqzvWQ3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xOMojNBV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2FEC19424;
-	Tue, 17 Mar 2026 17:25:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kTqzvWQ3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2BD1C4CEF7;
+	Tue, 17 Mar 2026 17:25:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768331;
-	bh=zJVCUtqPyLa19wDgdiRONi/QgBsfXRXCIOYnbGw6oSg=;
+	s=korg; t=1773768336;
+	bh=PnJ4rbtCB/1SpVuq2dWbomq3j4yUyYr1j3gXx45fzIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOMojNBVSJoyGbq2e0LwgJ+WRFKjAvg7ktkZDd+3wlK7CfYsagVqjb3oiYvicQs2l
-	 WrROE89V9c9VDWIuikdKlJrbSzkrDqA+73I3yHbHys1wiT80uNrvUBF8hIakuIx1EX
-	 +hKGY7XxjdM8jpuau9TisVCzGa5nODMSa0G0TLyM=
+	b=kTqzvWQ32qLAzXq+a1m8d0cK56H6Sg/sYXwToAPE7KaDmzM/66PFrNw/lsfA6h0Uq
+	 i1uJXhgBfu71dGp6bytiaHkA1jyf7KFpD9IhL4yY4H1SzFP0sWPN9NtrttOnfzazmx
+	 dDscebRh3gG5YAKzMbiR2v8mNnySy5luSAF26JYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.18 252/333] drm/amd: Set num IP blocks to 0 if discovery fails
-Date: Tue, 17 Mar 2026 17:34:41 +0100
-Message-ID: <20260317163008.713501669@linuxfoundation.org>
+	Marios Makassikis <mmakassikis@freebox.fr>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 243/333] smb: server: fix use-after-free in smb2_open()
+Date: Tue, 17 Mar 2026 17:34:32 +0100
+Message-ID: <20260317163008.375772562@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,53 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-commit 3646ff28780b4c52c5b5081443199e7a430110e5 upstream.
+commit 1e689a56173827669a35da7cb2a3c78ed5c53680 upstream.
 
-If discovery has failed for any reason (such as no support for a block)
-then there is no need to unwind all the IP blocks in fini. In this
-condition there can actually be failures during the unwind too.
+The opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is
+dereferenced after rcu_read_unlock(), creating a use-after-free
+window.
 
-Reset num_ip_blocks to zero during failure path and skip the unnecessary
-cleanup path.
-
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit fae5984296b981c8cc3acca35b701c1f332a6cd8)
 Cc: stable@vger.kernel.org
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    4 +++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c    |    2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2814,8 +2814,10 @@ static int amdgpu_device_ip_early_init(s
- 		break;
- 	default:
- 		r = amdgpu_discovery_set_ip_blocks(adev);
--		if (r)
-+		if (r) {
-+			adev->num_ip_blocks = 0;
- 			return r;
-+		}
- 		break;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3625,10 +3625,8 @@ int smb2_open(struct ksmbd_work *work)
+ 
+ reconnected_fp:
+ 	rsp->StructureSize = cpu_to_le16(89);
+-	rcu_read_lock();
+-	opinfo = rcu_dereference(fp->f_opinfo);
++	opinfo = opinfo_get(fp);
+ 	rsp->OplockLevel = opinfo != NULL ? opinfo->level : 0;
+-	rcu_read_unlock();
+ 	rsp->Flags = 0;
+ 	rsp->CreateAction = cpu_to_le32(file_info);
+ 	rsp->CreationTime = cpu_to_le64(fp->create_time);
+@@ -3669,6 +3667,7 @@ reconnected_fp:
+ 		next_ptr = &lease_ccontext->Next;
+ 		next_off = conn->vals->create_lease_size;
  	}
++	opinfo_put(opinfo);
  
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
-@@ -83,7 +83,7 @@ void amdgpu_driver_unload_kms(struct drm
- {
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 
--	if (adev == NULL)
-+	if (adev == NULL || !adev->num_ip_blocks)
- 		return;
- 
- 	amdgpu_unregister_gpu_instance(adev);
+ 	if (maximal_access_ctxt) {
+ 		struct create_context *mxac_ccontext;
 
 
