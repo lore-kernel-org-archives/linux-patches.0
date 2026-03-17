@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261BF179A3;
-	Tue, 17 Mar 2026 16:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94C4B2E62B7;
+	Tue, 17 Mar 2026 16:49:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766177; cv=none; b=Gpe0I7akbYl+yJ4mPC+01q2+eDCsgjfykzOhWRCtm0UrMd3h6zqYNNd8xKUZkm1BsBkTylxatpq1QAvJhcv1AEMBIkuzQLn+j8WAE40pED2DfkYFJuQXJnBK4ydswMEpmqttB6nSO69zqu2z5+nOzmcKFNI+svGvfPGGarA5NwM=
+	t=1773766181; cv=none; b=ueXc6GDu+DaxBYpAD6/il9hthct/xme0SijtspJ6mZl1WuOYGQ/4bE8XlzXYkIzAAao182luyAwIFC63I4EWCA+h6lCyR7PMfDMwAyubilqasvQKrqqvN/wkD7lmn9UFHZEvKpx8ZA3qGIDTsaGtezEc6KoMxaBSsAZvC95bCoc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766177; c=relaxed/simple;
-	bh=rI1Lx3ezxJSWaBit2QPc0TebgZnuzCiXNLj2ctIPGBM=;
+	s=arc-20240116; t=1773766181; c=relaxed/simple;
+	bh=mVgR5mWFb048iZnlTf3frKl9HQrKoAJ76BLx7cK3dmg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UftckR1My/xYC/jfa5CD2UbritSltkbJ5l1CAYqCw4G49+ng3pqEqeqA5FFJ0JHqH20gfS3bJXpsExXCgA/A7hJSghORWOPqbFopY17XzVQCebh/olu8d6YNhcrbjnqR787mjVMmLdcnS9+qdFgYkxMZFEpSN6RWfFq+xnQE7wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYHnd55N; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jG+7ySwcvWq2pkribju1pgUrHVmInzPsQFQgsdLkL+mlKxMbqttMBr+qXrJ8PoGvJBrM5r8HRdMM+ubyHvpUQoffw+iOx1f0nB5FTNrCZJan/x6QA1ezY7aPhDWQ600V7Rn6DDchEVH48ENF2LXbdrDpY9y9h8eHSXRZdaM6hdw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2V9GrW+H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYHnd55N"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46966C4CEF7;
-	Tue, 17 Mar 2026 16:49:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2V9GrW+H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1BCFC4CEF7;
+	Tue, 17 Mar 2026 16:49:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766176;
-	bh=rI1Lx3ezxJSWaBit2QPc0TebgZnuzCiXNLj2ctIPGBM=;
+	s=korg; t=1773766181;
+	bh=mVgR5mWFb048iZnlTf3frKl9HQrKoAJ76BLx7cK3dmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYHnd55NXUtpM/u+iuvm9Bkd6yh5odPZ0x4GGlwqWyxt1UtKdYCZe9vJp0W0SxGc8
-	 PJO9uf39XORwBHsdUknkjfCg03EP73bXcaCmuE4TTKTs+dr3+ISdHh0so8zy9XYsAC
-	 ZLLQ8+gsDLMqHM0kOP1GbZ4q17tIgw/j0Z0NDQ4k=
+	b=2V9GrW+H8wtnvbRIXybhf9tdc7NFrwtxcDA2rzSeIQEMGBEnMgIpGZPgKBxT3IsCg
+	 Hwb3+XReP7DoVJPhr9TRiN9jDruGI/jUReEii1fllnsdS7MhPm/MefiKSiu+rUIT31
+	 rSrQTSI0g0AtTpNZBq8jmtqhGgBf+EHtVSsSXv4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matttbe@kernel.org>,
-	Jiri Slaby <jirislaby@kernel.org>,
 	Thomas Gleixner <tglx@kernel.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 186/378] sched/mmcid: Handle vfork()/CLONE_VM correctly
-Date: Tue, 17 Mar 2026 17:32:23 +0100
-Message-ID: <20260317163013.849583054@linuxfoundation.org>
+Subject: [PATCH 6.19 187/378] sched/mmcid: Remove pointless preempt guard
+Date: Tue, 17 Mar 2026 17:32:24 +0100
+Message-ID: <20260317163013.886179410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -55,54 +54,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Thomas Gleixner <tglx@kernel.org>
 
-[ Upstream commit 28b5a1395036d6c7a6c8034d85ad3d7d365f192c ]
+[ Upstream commit 7574ac6e49789ddee1b1be9b2afb42b4a1b4b1f4 ]
 
-Matthieu and Jiri reported stalls where a task endlessly loops in
-mm_get_cid() when scheduling in.
+This is a leftover from the early versions of this function where it could
+be invoked without mm::mm_cid::lock held.
 
-It turned out that the logic which handles vfork()'ed tasks is broken. It
-is invoked when the number of tasks associated to a process is smaller than
-the number of MMCID users. It then walks the task list to find the
-vfork()'ed task, but accounts all the already processed tasks as well.
+Remove it and add lockdep asserts instead.
 
-If that double processing brings the number of to be handled tasks to 0,
-the walk stops and the vfork()'ed task's CID is not fixed up. As a
-consequence a subsequent schedule in fails to acquire a (transitional) CID
-and the machine stalls.
-
-Cure this by removing the accounting condition and make the fixup always
-walk the full task list if it could not find the exact number of users in
-the process' thread list.
-
-Fixes: fbd0e71dc370 ("sched/mmcid: Provide CID ownership mode fixup functions")
-Closes: https://lore.kernel.org/b24ffcb3-09d5-4e48-9070-0b69bc654281@kernel.org
-Reported-by: Matthieu Baerts <matttbe@kernel.org>
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Fixes: 653fda7ae73d ("sched/mmcid: Switch over to the new mechanism")
 Signed-off-by: Thomas Gleixner <tglx@kernel.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Tested-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260310202526.048657665@kernel.org
+Link: https://patch.msgid.link/20260310202526.116363613@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/core.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ kernel/sched/core.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/kernel/sched/core.c b/kernel/sched/core.c
-index ca6e6e4b17eaf..24d607c78f119 100644
+index 24d607c78f119..c80076fcd78f2 100644
 --- a/kernel/sched/core.c
 +++ b/kernel/sched/core.c
-@@ -10618,10 +10618,7 @@ static void mm_cid_do_fixup_tasks_to_cpus(struct mm_struct *mm)
- 	for_each_process_thread(p, t) {
- 		if (t == current || t->mm != mm)
- 			continue;
--		if (mm_cid_fixup_task_to_cpu(t, mm)) {
--			if (--users == 0)
--				return;
--		}
-+		mm_cid_fixup_task_to_cpu(t, mm);
- 	}
- }
+@@ -10632,6 +10632,8 @@ static void mm_cid_fixup_tasks_to_cpus(void)
  
+ static bool sched_mm_cid_add_user(struct task_struct *t, struct mm_struct *mm)
+ {
++	lockdep_assert_held(&mm->mm_cid.lock);
++
+ 	t->mm_cid.active = 1;
+ 	mm->mm_cid.users++;
+ 	return mm_update_max_cids(mm);
+@@ -10684,12 +10686,12 @@ static void sched_mm_cid_fork(struct task_struct *t)
+ 
+ static bool sched_mm_cid_remove_user(struct task_struct *t)
+ {
++	lockdep_assert_held(&t->mm->mm_cid.lock);
++
+ 	t->mm_cid.active = 0;
+-	scoped_guard(preempt) {
+-		/* Clear the transition bit */
+-		t->mm_cid.cid = cid_from_transit_cid(t->mm_cid.cid);
+-		mm_unset_cid_on_task(t);
+-	}
++	/* Clear the transition bit */
++	t->mm_cid.cid = cid_from_transit_cid(t->mm_cid.cid);
++	mm_unset_cid_on_task(t);
+ 	t->mm->mm_cid.users--;
+ 	return mm_update_max_cids(t->mm);
+ }
 -- 
 2.51.0
 
