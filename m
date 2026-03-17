@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F473EC2F1;
-	Tue, 17 Mar 2026 16:51:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B50DE3ED106;
+	Tue, 17 Mar 2026 16:51:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766275; cv=none; b=ccSDXLOA3xT9GX9wfZUflWzcITZrjenmu0AB6lxqn6V/l1mmfkrfTHu6g5gelNnuxrXMkrA9TlehAHwTlUiY4nTrYGlpAWfE0c3LZHG1nafMOp1xfKW2Fq9QjEGL6PJJ/r21ROKpt8ZbVGOSp6R9J/Wc70Rj34ku4VTj8PUlR1Q=
+	t=1773766280; cv=none; b=VYPonLJt9mw9zwBpCNV10BNkQ64e6KqijsUaJqn+1VtIsFNq4EgpvQU3S1PLntveSVhD9nBiFThyVRLVhVdhyitZjsz8An9T7hqJySpfb9EhDkkBD473iBMeZw+YQIf4CmKOxpdNxNIrPoI2gh0SaEqmt3wDay14skBvmiUySRI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766275; c=relaxed/simple;
-	bh=WJ1DFXSwXcqiv+P4yfgaH0GFW4g5PnIrnVGxhkXRgfk=;
+	s=arc-20240116; t=1773766280; c=relaxed/simple;
+	bh=3tNPiucf9S3DO7rNzEFfjSrxw1aEboGVYBFpLilXDfI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XGhztD87NfeFWfiBEteLKPiIGJwIgIqPQEB5KvgX/TYO5cSep4yS85qYIFaeSmkYL0AX4XbFNyYeV6opM0hnwA7o7KG8J+m3wBmE6k0WUlL+T+9DfnXOraNgxTUbJs3KIAyTHShAOP3eIv7UmKJhYg9vxolCXd27j5OEwrCU6Io=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GinvIQWn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s+sZZdAVtSOXgkKO2/UiqNelQWbjmKnwEas0OMJCZi0JcrVRwITsgtGzts1I7gTNU+mPyL2xRsPeN1k27oKxiZ6GLPdWn/iq432QL5j/9TqWX2oX7oX+huAxrtdF6d/P6UVuFH2icJipceO//AlYZ1Zy8sSRIUnGlbQ99z/LfgE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UxTUZ3pc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GinvIQWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04433C4CEF7;
-	Tue, 17 Mar 2026 16:51:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UxTUZ3pc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A9F4C4CEF7;
+	Tue, 17 Mar 2026 16:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766275;
-	bh=WJ1DFXSwXcqiv+P4yfgaH0GFW4g5PnIrnVGxhkXRgfk=;
+	s=korg; t=1773766280;
+	bh=3tNPiucf9S3DO7rNzEFfjSrxw1aEboGVYBFpLilXDfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GinvIQWnxrM4UV5bfCaOgKL1i1yQP0OfHbc4z72WPTJoIvEwSbgvwc5z+ZpBfCAfa
-	 kV4XPbh0qGvJm4p7rqpp8waXL+P/XFiKY5umoePPWvtBuQBe7WfS9QNBSFy3WiagUI
-	 ZbU+DkTmFtgyDH4m9CQ3W38wTVonny88Ci1+NseE=
+	b=UxTUZ3pciuAVwmLUsVxrfg2Hl4pYkQY20bT28uW2iObYgWog69fyIGF2lskOcRNP1
+	 gFKn7ST0XLy7EyeuBWxSQ24ROoLElQdkg6TrLPZYasMNeOpRhIlfutYPjXxIOAa2Pl
+	 TPvKWRPuXsOxSlaooWADxrGW3RBEQrPK7QcO3tUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Subject: [PATCH 6.19 209/378] libceph: admit message frames only in CEPH_CON_S_OPEN state
-Date: Tue, 17 Mar 2026 17:32:46 +0100
-Message-ID: <20260317163014.697825034@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Arnaud Ferraris <arnaud.ferraris@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Subject: [PATCH 6.19 210/378] Revert "tcpm: allow looking for role_sw device in the main node"
+Date: Tue, 17 Mar 2026 17:32:47 +0100
+Message-ID: <20260317163014.734064121@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,37 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-commit a5a373705081d7cc6363e16990e2361b0b362314 upstream.
+commit 6b275bfaa16be3fb1689fa6794e445ecd127a1b4 upstream.
 
-Similar checks are performed for all control frames, but an early check
-for message frames was missing.  process_message() is already set up to
-terminate the loop in case the state changes while con->ops->dispatch()
-handler is being executed.
+This reverts commit 1366cd228b0c67b60a2c0c26ef37fe9f7cfedb7f.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+The fwnode_usb_role_switch_get() returns NULL only if no connection is
+found, returns ERR_PTR(-EPROBE_DEFER) if connection is found but deferred
+probe is needed, or a valid pointer of usb_role_switch.
+
+When switching from a NULL check to IS_ERR_OR_NULL(), usb_role_switch_get()
+returns NULL and overwrites the ERR_PTR(-EPROBE_DEFER) returned by
+fwnode_usb_role_switch_get(). This causes the deferred probe indication to
+be lost, preventing the USB role switch from ever being retrieved.
+
+Fixes: 1366cd228b0c ("tcpm: allow looking for role_sw device in the main node")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Tested-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260309074313.2809867-2-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/typec/tcpm/tcpm.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -2904,6 +2904,11 @@ static int __handle_control(struct ceph_
- 	if (con->v2.in_desc.fd_tag != FRAME_TAG_MESSAGE)
- 		return process_control(con, p, end);
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -7890,7 +7890,7 @@ struct tcpm_port *tcpm_register_port(str
+ 	port->partner_desc.identity = &port->partner_ident;
  
-+	if (con->state != CEPH_CON_S_OPEN) {
-+		con->error_msg = "protocol error, unexpected message";
-+		return -EINVAL;
-+	}
-+
- 	ret = process_message_header(con, p, end);
- 	if (ret < 0)
- 		return ret;
+ 	port->role_sw = fwnode_usb_role_switch_get(tcpc->fwnode);
+-	if (IS_ERR_OR_NULL(port->role_sw))
++	if (!port->role_sw)
+ 		port->role_sw = usb_role_switch_get(port->dev);
+ 	if (IS_ERR(port->role_sw)) {
+ 		err = PTR_ERR(port->role_sw);
 
 
