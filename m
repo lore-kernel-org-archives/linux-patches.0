@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBAC30CDA2;
-	Tue, 17 Mar 2026 17:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15AD32F60A7;
+	Tue, 17 Mar 2026 17:10:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767409; cv=none; b=IDG8rPQlCmDaLKZ8oc+ue/C2a1IT5uq/Ognjl4z/W5LZYtxYsFEUpMN0AAUjerxxwaotfXsNFRDDJlqMN7AC9TeSmRsJcXGu1jB8wdVqwbI2ZpaIcmJ0CNhODJRFSiExvDx0xsdkaT+3aFlhnVHsfv2ZOmXT9/TvSggC9O6DTiM=
+	t=1773767415; cv=none; b=to2xkri936M6ZDVCSFA6UOKYGPPyb8KTzQYpxyl8qmvFLU8neQQ4hcZlDoNpt+/qQbubqWU3X/gM6uOtXfoNr7nt+I/XyWBM+GGhD4vq0tmyQg01YUaXFWNDVrQY8CBq+KQHeCLscfqHT1gnIoTU7htpncmnY94KyAkf1mILbbc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767409; c=relaxed/simple;
-	bh=YQl/6XMgB8CdJpYQzzmO2YLdqNJVFoo5LPVHsFbubrM=;
+	s=arc-20240116; t=1773767415; c=relaxed/simple;
+	bh=G1UfVPWgJXlPN5dPkhybqm6AmbcehoNGzc+CqljBvU4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=P/UKQATECq+2gR+rIUbRrW6auk7hGeWKE3Ob2KdddjnF5F6fcPeyU9HFFL9aBiQLc4v9UieeI4sTOMG1tMIsd+1V213SWssfi5SGzmu0odnLwVHdgA0yGsxh6WjKgEDhPfHt1Y6PT3SBBG4F+DkevHQ8ANG7ypHuHp+/uy1P5c4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYH49pg1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y3NxtOTSSMmuZn5KPQ4TikM+Q1VZWIEkeHFgI8SJcV83MUwxD+FWVtCQl4XLNg7VwgYlR6ifp52FOaQM1UUrnPt3WtKKTaR61J2BLRmBfdlz15OwiHlUa1frE5Ze9bwJg811ZT5n6qLMCq4xdAcL1UFktT0gqJoMZl9Gu1m+kJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UKxTINbp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYH49pg1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6332AC4CEF7;
-	Tue, 17 Mar 2026 17:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UKxTINbp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EBB0C4CEF7;
+	Tue, 17 Mar 2026 17:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767408;
-	bh=YQl/6XMgB8CdJpYQzzmO2YLdqNJVFoo5LPVHsFbubrM=;
+	s=korg; t=1773767415;
+	bh=G1UfVPWgJXlPN5dPkhybqm6AmbcehoNGzc+CqljBvU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dYH49pg1GrtOtzODJN5ui4oNxeFd4wzHQhBdbp7Dn7J/fZluqioyeZuESyDznJpIZ
-	 iE47RXLLFN+GjsRv5sr2JGMtBx56zxDc7zxQVlC7vATHBzwmO7SO9x8O4LXBfH1lBD
-	 CPHCiY4PzoLb3Sw12z1Js2eVUGuLqo7w9P6P0nW8=
+	b=UKxTINbpNBH2+57J/TJZSqXJQELVXDuS7NX2J6VenEdAQ4sR8/gD5fmtP1b1dyird
+	 cu6f2Kyv3ac9FGe2se1FMEm6FlvWLWhzNE8FnuhHD0QIUpO/hFfh8Dzj7ojcMWuyWT
+	 eBKOrybPnQhLrFBx2g9jtv8tuSRsCOMXQEKHRcRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Petr Oros <poros@redhat.com>,
+	Ivan Vecera <ivecera@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Vadim Fedorenko <vadim.fedorenko@linux.dev>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.18 081/333] drivers: net: ice: fix devlink parameters get without irdma
-Date: Tue, 17 Mar 2026 17:31:50 +0100
-Message-ID: <20260317163002.379717978@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 082/333] iavf: fix PTP use-after-free during reset
+Date: Tue, 17 Mar 2026 17:31:51 +0100
+Message-ID: <20260317163002.417674704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,57 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikolay Aleksandrov <nikolay@nvidia.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit bd98c6204d1195973b1760fe45860863deb6200c ]
+[ Upstream commit efc54fb13d79117a825fef17364315a58682c7ec ]
 
-If CONFIG_IRDMA isn't enabled but there are ice NICs in the system, the
-driver will prevent full devlink dev param show dump because its rdma get
-callbacks return ENODEV and stop the dump. For example:
- $ devlink dev param show
- pci/0000:82:00.0:
-   name msix_vec_per_pf_max type generic
-     values:
-       cmode driverinit value 2
-   name msix_vec_per_pf_min type generic
-     values:
-       cmode driverinit value 2
- kernel answers: No such device
+Commit 7c01dbfc8a1c5f ("iavf: periodically cache PHC time") introduced a
+worker to cache PHC time, but failed to stop it during reset or disable.
 
-Returning EOPNOTSUPP allows the dump to continue so we can see all devices'
-devlink parameters.
+This creates a race condition where `iavf_reset_task()` or
+`iavf_disable_vf()` free adapter resources (AQ) while the worker is still
+running. If the worker triggers `iavf_queue_ptp_cmd()` during teardown, it
+accesses freed memory/locks, leading to a crash.
 
-Fixes: c24a65b6a27c ("iidc/ice/irdma: Update IDC to support multiple consumers")
-Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Fix this by calling `iavf_ptp_release()` before tearing down the adapter.
+This ensures `ptp_clock_unregister()` synchronously cancels the worker and
+cleans up the chardev before the backing resources are destroyed.
+
+Fixes: 7c01dbfc8a1c5f ("iavf: periodically cache PHC time")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Reviewed-by: Ivan Vecera <ivecera@redhat.com>
+Acked-by: Jacob Keller <jacob.e.keller@intel.com>
+Reviewed-by: Vadim Fedorenko <vadim.fedorenko@linux.dev>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/devlink/devlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-index ac071c5b4ce38..862ff1cdd46d6 100644
---- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
-+++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
-@@ -1357,7 +1357,7 @@ ice_devlink_enable_roce_get(struct devlink *devlink, u32 id,
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 53a0366fbf998..3625c70bc3292 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -3040,6 +3040,8 @@ static void iavf_disable_vf(struct iavf_adapter *adapter)
  
- 	cdev = pf->cdev_info;
- 	if (!cdev)
--		return -ENODEV;
-+		return -EOPNOTSUPP;
+ 	adapter->flags |= IAVF_FLAG_PF_COMMS_FAILED;
  
- 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_ROCEV2);
++	iavf_ptp_release(adapter);
++
+ 	/* We don't use netif_running() because it may be true prior to
+ 	 * ndo_open() returning, so we can't assume it means all our open
+ 	 * tasks have finished, since we're not holding the rtnl_lock here.
+@@ -3215,6 +3217,8 @@ static void iavf_reset_task(struct work_struct *work)
+ 	iavf_change_state(adapter, __IAVF_RESETTING);
+ 	adapter->flags &= ~IAVF_FLAG_RESET_PENDING;
  
-@@ -1423,7 +1423,7 @@ ice_devlink_enable_iw_get(struct devlink *devlink, u32 id,
- 
- 	cdev = pf->cdev_info;
- 	if (!cdev)
--		return -ENODEV;
-+		return -EOPNOTSUPP;
- 
- 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_IWARP);
- 
++	iavf_ptp_release(adapter);
++
+ 	/* free the Tx/Rx rings and descriptors, might be better to just
+ 	 * re-use them sometime in the future
+ 	 */
 -- 
 2.51.0
 
