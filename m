@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FC53F54D7;
-	Tue, 17 Mar 2026 16:57:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36FB3F54B8;
+	Tue, 17 Mar 2026 16:57:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766629; cv=none; b=fgnuKiGdZTtSTr4ZT+fw8aps6w50OOin4frXDMf+bXX4g4U4dUiEw8jl+9nXSdo9cdJVlgmDtfwTZbt9LVyx0MdyoEV7W8MuDo1pzsUOK9edRrHcC4GtLwj1QoiWiQnUQELLp0Ty8wlqKL3ln+/pGb6g0pRepZK35Ah8i0h3RSM=
+	t=1773766633; cv=none; b=Usw87qRjW1PeU2ygpV/2h5dMVbWWXpmC6v5CCR4/gvgKIXc8pQEK2rXtjpYhrUciA9/Eu1psYNd8WaWLsfcPza2RbywXxLNzX4ulji4+X9EYD6kaUpcveSb/7FCQxXrhtRUKT417DR1715LXm1WGRF/Xy9zhn9/extP0L1XHcC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766629; c=relaxed/simple;
-	bh=VZfmLpdPqHyQVrI++ARq9Sv9M1KqLN9VjD7bYBknYDQ=;
+	s=arc-20240116; t=1773766633; c=relaxed/simple;
+	bh=kJBcu3hVyXcpBcpBTddZP+6NC0Ry3e8b7yapqhyAAaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2sgF6b1s51gtViH5s/XuOvdeEJKIYN2/OhwVZlG9lB1I2YdS7SVP0rPr7C1dXbNKozHf1vm1i5e7PD7v+h+tr6gbzj+N5MwrD2wVjXtN99L548HGjYzO77fFOfIyFpyC15Co1ju9rWLrWFoFipkljAh5p6+/WqR9mkB2+DLBy0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grnqgBIA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qm2GVkzQRJgA32dyZXUUgcsf+RrYrmQWLb7Ca9aogpPbyrRSX3NB8NXNWn/tmjfjcFxeP6Ayo8g9XJkaAJ74VnFsLuQfD+FH8IUi8PZgKRh3GDoxj/wor367mcakR3ee/QvVj5v8+q6Xh+FgHgVV3lzvy1m2NYxKu0GjG1GBGGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Atf4ByIp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grnqgBIA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96C77C4CEF7;
-	Tue, 17 Mar 2026 16:57:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Atf4ByIp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32295C4CEF7;
+	Tue, 17 Mar 2026 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766629;
-	bh=VZfmLpdPqHyQVrI++ARq9Sv9M1KqLN9VjD7bYBknYDQ=;
+	s=korg; t=1773766632;
+	bh=kJBcu3hVyXcpBcpBTddZP+6NC0Ry3e8b7yapqhyAAaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grnqgBIA6m/jEL+BsyLbURMW3LCd+KFUlkjoED3piiJkTkSQC2p4+hzczbNSXe8H9
-	 OILqzc+NQr13mPm+lUlfEygm7Pc6LCWXFAGM6r2+A/SCfABWrMEedF9OV4D2csgosX
-	 TXPjPYaHC51Vp0ri4SWAIwEggwoDlqqadg6Agmxw=
+	b=Atf4ByIp/Qv3sYY7fPnCjCtvAJK+T4Bcy0KVthtxvv7TSkxfb3wgTvQ1ZNaaGlV7H
+	 JtLLu/kKd5z4Q1OtkpC72X528Jcj7JpwrGS854Kta3/zfmk7k9okZDR/6/m9dTs2QN
+	 2qcJcdm3LvATjYZzQCrsMh6NVBajq6roTUG/bT2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Juergen Christ <jchrist@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Vasily Gorbik <gor@linux.ibm.com>
-Subject: [PATCH 6.19 287/378] s390/xor: Fix xor_xc_5() inline assembly
-Date: Tue, 17 Mar 2026 17:34:04 +0100
-Message-ID: <20260317163017.564508009@linuxfoundation.org>
+	Marcelo Tosatti <mtosatti@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Hao Li <hao.li@linux.dev>,
+	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
+Subject: [PATCH 6.19 288/378] slab: distinguish lock and trylock for sheaf_flush_main()
+Date: Tue, 17 Mar 2026 17:34:05 +0100
+Message-ID: <20260317163017.606702276@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,34 +53,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-commit 5f25805303e201f3afaff0a90f7c7ce257468704 upstream.
+commit 48647d3f9a644d1e81af6558102d43cdb260597b upstream.
 
-xor_xc_5() contains a larl 1,2f that is not used by the asm and is not
-declared as a clobber. This can corrupt a compiler-allocated value in %r1
-and lead to miscompilation. Remove the instruction.
+sheaf_flush_main() can be called from __pcs_replace_full_main() where
+it's fine if the trylock fails, and pcs_flush_all() where it's not
+expected to and for some flush callers (when destroying the cache or
+memory hotremove) it would be actually a problem if it failed and left
+the main sheaf not flushed. The flush callers can however safely use
+local_lock() instead of trylock.
 
-Fixes: 745600ed6965 ("s390/lib: Use exrl instead of ex in xor functions")
+The trylock failure should not happen in practice on !PREEMPT_RT, but
+can happen on PREEMPT_RT. The impact is limited in practice because when
+a trylock fails in the kmem_cache_destroy() path, it means someone is
+using the cache while destroying it, which is a bug on its own. The memory
+hotremove path is unlikely to be employed in a production RT config, but
+it's possible.
+
+To fix this, split the function into sheaf_flush_main() (using
+local_lock()) and sheaf_try_flush_main() (using local_trylock()) where
+both call __sheaf_flush_main_batch() to flush a single batch of objects.
+This will also allow lockdep to verify our context assumptions.
+
+The problem was raised in an off-list question by Marcelo.
+
+Fixes: 2d517aa09bbc ("slab: add opt-in caching layer of percpu sheaves")
 Cc: stable@vger.kernel.org
-Reviewed-by: Juergen Christ <jchrist@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Reviewed-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+Reported-by: Marcelo Tosatti <mtosatti@redhat.com>
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Reviewed-by: Hao Li <hao.li@linux.dev>
+Link: https://patch.msgid.link/20260211-b4-sheaf-flush-v1-1-4e7f492f0055@suse.cz
+Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/lib/xor.c |    1 -
- 1 file changed, 1 deletion(-)
+ mm/slub.c |   47 +++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 37 insertions(+), 10 deletions(-)
 
---- a/arch/s390/lib/xor.c
-+++ b/arch/s390/lib/xor.c
-@@ -96,7 +96,6 @@ static void xor_xc_5(unsigned long bytes
- 		     const unsigned long * __restrict p5)
+--- a/mm/slub.c
++++ b/mm/slub.c
+@@ -2730,19 +2730,19 @@ static void __kmem_cache_free_bulk(struc
+  * object pointers are moved to a on-stack array under the lock. To bound the
+  * stack usage, limit each batch to PCS_BATCH_MAX.
+  *
+- * returns true if at least partially flushed
++ * Must be called with s->cpu_sheaves->lock locked, returns with the lock
++ * unlocked.
++ *
++ * Returns how many objects are remaining to be flushed
+  */
+-static bool sheaf_flush_main(struct kmem_cache *s)
++static unsigned int __sheaf_flush_main_batch(struct kmem_cache *s)
  {
- 	asm volatile(
--		"	larl	1,2f\n"
- 		"	aghi	%0,-1\n"
- 		"	jm	6f\n"
- 		"	srlg	0,%0,8\n"
+ 	struct slub_percpu_sheaves *pcs;
+ 	unsigned int batch, remaining;
+ 	void *objects[PCS_BATCH_MAX];
+ 	struct slab_sheaf *sheaf;
+-	bool ret = false;
+ 
+-next_batch:
+-	if (!local_trylock(&s->cpu_sheaves->lock))
+-		return ret;
++	lockdep_assert_held(this_cpu_ptr(&s->cpu_sheaves->lock));
+ 
+ 	pcs = this_cpu_ptr(s->cpu_sheaves);
+ 	sheaf = pcs->main;
+@@ -2760,10 +2760,37 @@ next_batch:
+ 
+ 	stat_add(s, SHEAF_FLUSH, batch);
+ 
+-	ret = true;
++	return remaining;
++}
+ 
+-	if (remaining)
+-		goto next_batch;
++static void sheaf_flush_main(struct kmem_cache *s)
++{
++	unsigned int remaining;
++
++	do {
++		local_lock(&s->cpu_sheaves->lock);
++
++		remaining = __sheaf_flush_main_batch(s);
++
++	} while (remaining);
++}
++
++/*
++ * Returns true if the main sheaf was at least partially flushed.
++ */
++static bool sheaf_try_flush_main(struct kmem_cache *s)
++{
++	unsigned int remaining;
++	bool ret = false;
++
++	do {
++		if (!local_trylock(&s->cpu_sheaves->lock))
++			return ret;
++
++		ret = true;
++		remaining = __sheaf_flush_main_batch(s);
++
++	} while (remaining);
+ 
+ 	return ret;
+ }
+@@ -6215,7 +6242,7 @@ alloc_empty:
+ 	if (put_fail)
+ 		 stat(s, BARN_PUT_FAIL);
+ 
+-	if (!sheaf_flush_main(s))
++	if (!sheaf_try_flush_main(s))
+ 		return NULL;
+ 
+ 	if (!local_trylock(&s->cpu_sheaves->lock))
 
 
