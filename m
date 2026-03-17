@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF29C3F7863;
-	Tue, 17 Mar 2026 17:07:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E673F54D7;
+	Tue, 17 Mar 2026 17:07:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767221; cv=none; b=Bcxadtp3EgF9aVKNoSC5pW6q7GgdgkwecwTYpuXMV6LpuJDyBBgqOqRhRmZLv3KxqoZ08mwihN9MyKVNIgCzoPlcoiz8R5LlbqXR23EDBJgpYzXIDVyliW7ABuinEXgrZXsQmQf5g0MtyO5BPhh/uJYBdRlEifqWrTgtaQNxb4Q=
+	t=1773767225; cv=none; b=k2gCZ8wSdXsmqrT/S/Wx4yKoyTT8ZrI5z7q0ggk6Boc75OJjbNVzaKFp9huxZnCkJ9B15HcyUTzRySY6oyTxB12hGeA0aiTbQEftdrrROWpBczebeKPcNF2Xr3pt4gbNFkkGs44O9OsWcfkhl4aWxe/Bwv9z1rj6mruHw/ShjH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767221; c=relaxed/simple;
-	bh=L/jGbvOz74qRWfghKsUNOK5xqEPhQ9UJCQNUZ5a/H9c=;
+	s=arc-20240116; t=1773767225; c=relaxed/simple;
+	bh=hyXwJEmPiladEfKSgHA6FBDdLGZ+ozOpzJXpuSj03YU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZzaAG13UcKizkzTO+QbbBkSQ8W5cub2WS2S26eAoJmyEwNzj9wsa7xynYX542QwqmshahjpY4o/sXwZM2oVBf9aQ5/+9hbOPjx1S5BEFuS1dNZNlMAGdvDs/jYi8+4nG1VqdGVJkA8SvYB3436MyxvafgD9bOBr/2NHrzTZ5vs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I+urTPLt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EQODSFz5VP2kPxlXTmirEqkXzokS/2SKDRIKmy+4bx4VkKTXB8KPXF4bLajxaZEhNTQDJbcwDTOBnk9oMeS9jJ9TN1FnDvm30lGfU9Ys+BLBZuChgDQD7BM4wwTgSfKtlLyPtWYjWKgMtL4pjQ2JWUzpZWhohEhr4F30ExiAK/w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxTYxHEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I+urTPLt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3688EC19424;
-	Tue, 17 Mar 2026 17:07:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxTYxHEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D490C4CEF7;
+	Tue, 17 Mar 2026 17:07:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767221;
-	bh=L/jGbvOz74qRWfghKsUNOK5xqEPhQ9UJCQNUZ5a/H9c=;
+	s=korg; t=1773767225;
+	bh=hyXwJEmPiladEfKSgHA6FBDdLGZ+ozOpzJXpuSj03YU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I+urTPLtFajCIxD3x+Ep5xrtacX6ls8Y7K+fO3XqK6QkhkLECX4wcFMc2bIg5+QSK
-	 ams0AzRhawi7JUlwkC+e++KfQVowVqThd/CxXYgB4XyKVeVq1AFC36ymwXzRtHTrkS
-	 wjKsyV0XBRx3XZzG5nQng9gCIeJN8oCjAf9cLE1Y=
+	b=KxTYxHEWff3cfzt3VJ1TMUfefbpGh0Hz+qZA7podo/mkQjQsx+V90fA2n+ir03dK1
+	 GTBuIoa9yDR1e6UbJwXvEQF82zEm2+qDDaCwmcrc1zQNcw+6cUERCNmiIcuyENp9aD
+	 80KhaHR5z6uo7659nsvraPiU+f6pWnV8kKN9FsFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 033/333] net: dsa: realtek: rtl8365mb: remove ifOutDiscards from rx_packets
-Date: Tue, 17 Mar 2026 17:31:02 +0100
-Message-ID: <20260317163000.590724642@linuxfoundation.org>
+Subject: [PATCH 6.18 042/333] net/mlx5e: Fix DMA FIFO desync on error CQE SQ recovery
+Date: Tue, 17 Mar 2026 17:31:11 +0100
+Message-ID: <20260317163000.924761495@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -54,46 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit f76a93241d71fbba8425e3967097b498c29264ed ]
+[ Upstream commit 1633111d69053512d099658d4a05fc736fab36b0 ]
 
-rx_packets should report the number of frames successfully received:
-unicast + multicast + broadcast. Subtracting ifOutDiscards (a TX
-counter) is incorrect and can undercount RX packets. RX drops are
-already reported via rx_dropped (e.g. etherStatsDropEvents), so
-there is no need to adjust rx_packets.
+In case of a TX error CQE, a recovery flow is triggered,
+mlx5e_reset_txqsq_cc_pc() resets dma_fifo_cc to 0 but not dma_fifo_pc,
+desyncing the DMA FIFO producer and consumer.
 
-This patch removes the subtraction of ifOutDiscards from rx_packets
-in rtl8365mb_stats_update().
+After recovery, the producer pushes new DMA entries at the old
+dma_fifo_pc, while the consumer reads from position 0.
+This causes us to unmap stale DMA addresses from before the recovery.
 
-Link: https://lore.kernel.org/netdev/878777925.105015.1763423928520@mail.yahoo.com/
-Fixes: 4af2950c50c8 ("net: dsa: realtek-smi: add rtl8365mb subdriver for RTL8365MB-VC")
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260303-realtek_namiltd_fix2-v1-1-bfa433d3401e@gmail.com
+The DMA FIFO is a purely software construct with no HW counterpart.
+At the point of reset, all WQEs have been flushed so dma_fifo_cc is
+already equal to dma_fifo_pc. There is no need to reset either counter,
+similar to how skb_fifo pc/cc are untouched.
+
+Remove the 'dma_fifo_cc = 0' reset.
+
+This fixes the following WARNING:
+    WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1240 iommu_dma_unmap_page+0x79/0x90
+    Modules linked in: mlx5_vdpa vringh vdpa bonding mlx5_ib mlx5_vfio_pci ipip mlx5_fwctl tunnel4 mlx5_core ib_ipoib geneve ip6_gre ip_gre gre nf_tables ip6_tunnel rdma_ucm ib_uverbs ib_umad vfio_pci vfio_pci_core act_mirred act_skbedit act_vlan vhost_net vhost tap ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress vhost_iotlb iptable_raw tunnel6 vfio_iommu_type1 vfio openvswitch nsh rpcsec_gss_krb5 auth_rpcgss oid_registry xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter overlay zram zsmalloc rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core fuse [last unloaded: nf_tables]
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5_for_upstream_min_debug_2024_12_30_21_33 #1
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+    RIP: 0010:iommu_dma_unmap_page+0x79/0x90
+    Code: 2b 4d 3b 21 72 26 4d 3b 61 08 73 20 49 89 d8 44 89 f9 5b 4c 89 f2 4c 89 e6 48 89 ef 5d 41 5c 41 5d 41 5e 41 5f e9 c7 ae 9e ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 66 2e 0f 1f 84 00 00 00 00
+    Call Trace:
+     <IRQ>
+     ? __warn+0x7d/0x110
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? report_bug+0x16d/0x180
+     ? handle_bug+0x4f/0x90
+     ? exc_invalid_op+0x14/0x70
+     ? asm_exc_invalid_op+0x16/0x20
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? iommu_dma_unmap_page+0x2e/0x90
+     dma_unmap_page_attrs+0x10d/0x1b0
+     mlx5e_tx_wi_dma_unmap+0xbe/0x120 [mlx5_core]
+     mlx5e_poll_tx_cq+0x16d/0x690 [mlx5_core]
+     mlx5e_napi_poll+0x8b/0xac0 [mlx5_core]
+     __napi_poll+0x24/0x190
+     net_rx_action+0x32a/0x3b0
+     ? mlx5_eq_comp_int+0x7e/0x270 [mlx5_core]
+     ? notifier_call_chain+0x35/0xa0
+     handle_softirqs+0xc9/0x270
+     irq_exit_rcu+0x71/0xd0
+     common_interrupt+0x7f/0xa0
+     </IRQ>
+     <TASK>
+     asm_common_interrupt+0x22/0x40
+
+Fixes: db75373c91b0 ("net/mlx5e: Recover Send Queue (SQ) from error state")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260305142634.1813208-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index d06b384d47643..3a48db295e7e4 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -1480,8 +1480,7 @@ static void rtl8365mb_stats_update(struct realtek_priv *priv, int port)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+index 9f6454102cf79..d6ace2b6fc1df 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+@@ -46,7 +46,6 @@ static void mlx5e_reset_txqsq_cc_pc(struct mlx5e_txqsq *sq)
+ 		  "SQ 0x%x: cc (0x%x) != pc (0x%x)\n",
+ 		  sq->sqn, sq->cc, sq->pc);
+ 	sq->cc = 0;
+-	sq->dma_fifo_cc = 0;
+ 	sq->pc = 0;
+ }
  
- 	stats->rx_packets = cnt[RTL8365MB_MIB_ifInUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifInMulticastPkts] +
--			    cnt[RTL8365MB_MIB_ifInBroadcastPkts] -
--			    cnt[RTL8365MB_MIB_ifOutDiscards];
-+			    cnt[RTL8365MB_MIB_ifInBroadcastPkts];
- 
- 	stats->tx_packets = cnt[RTL8365MB_MIB_ifOutUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifOutMulticastPkts] +
 -- 
 2.51.0
 
