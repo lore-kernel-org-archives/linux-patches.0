@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F4F2459DC;
-	Tue, 17 Mar 2026 17:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1CB2DF132;
+	Tue, 17 Mar 2026 17:19:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767993; cv=none; b=sart/qWJZgUh7Fe1by+JVBykWePAGWrimMMBH1ijONVqu6xpzK1Fd6GNpwDOBG/bbdW7Domz+dOp6h3AmI02EBYcO4EUKfJE93weT0yJPWSbT77uZn/scPDlW+KWLlhoilXqrYekzote4a8zOa4d59tmIVkgXad/ZptEYKGmmvI=
+	t=1773767997; cv=none; b=dCo860YuAvqWCKaeIRXGgdV6i0BT8eBYljLlZC7LTV4BF9awGnOmTKSwUvGgQ4P93GeGfmgkHxyvwo3q064L372Samy35vXyG1EAecnqpY0BYNa4clRsB/AuX+3mCuYnjw73G4yjvnJjBlbLSEApxW6VRLEZJwCroC2bAqRGaDw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767993; c=relaxed/simple;
-	bh=fJ6QJa6XO9USKGJd3UVojEtZdlDmtGh0vySKvadjskY=;
+	s=arc-20240116; t=1773767997; c=relaxed/simple;
+	bh=2h/KgJoWXHaGvvKI9oCwsGvA8fuT/1cJ2UBRbi568aQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fCpQN9zqmucq8gIkzSrBnG2Vva/AjzIB+TuUwVvGJLK/FCyCbKJn5h4+QMFPEDiw4GdBup0SK/0zrEidafCno51SOtQNdjJ0cZHZMJ8yV5XmVKmYaDrjpUJgyOKbWZNkdMfO7UY9Yy9K0bhEEd35O+2d5e0KX5IXJeRfXp/n9nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2ZE7BzAN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AEMSm/FYSHpA5KKDMyPG3vbwDyP8QANdH8elWCll6Qd1ZG1Og6xc6xNvG47/hsInfBhSG+llhXVuOAxEeJHcGJ8krMiYZcivr43IngKW7xs2Bboh/7DIuqxmUvF/noquw7YAsgHOsYg9bfitdWHETJIAqrI2lh9bwgwQjQ3CadM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f1h9RiF0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2ZE7BzAN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FE88C4CEF7;
-	Tue, 17 Mar 2026 17:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f1h9RiF0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C471AC2BC86;
+	Tue, 17 Mar 2026 17:19:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767992;
-	bh=fJ6QJa6XO9USKGJd3UVojEtZdlDmtGh0vySKvadjskY=;
+	s=korg; t=1773767997;
+	bh=2h/KgJoWXHaGvvKI9oCwsGvA8fuT/1cJ2UBRbi568aQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ZE7BzAN0kwXnRJOn/B5J4B8JaKPh0r+SL8o6NQX6pfsvEgD32eBHsGde+dzNc5fp
-	 e/6AgwizdnWpLpiAeKkfqccW48HWwDpZzg2Wt/oh2BDhwXkZLU4hUrQDImQpP/yvCY
-	 KyPMToQjKY4nj4BgstPB/nx4dFlne9LC5smXwdbw=
+	b=f1h9RiF0O+I1O4BKCfTFRjHgIhniGKfFX7diUqTzAhIbIN90f3nUHae20esyxbjMH
+	 +DlTzsO5NZ0NizkTv+9xxUR9t2snIPXr1NwxUQ0nIl0rVpt+DJ+7k1831OYAqJVeVe
+	 NAcqUX+ThwPDDjRjdIHM63u0jhPf7c2Osfis/Edk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <david@davidgow.net>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.18 206/333] kunit: irq: Ensure timer doesnt fire too frequently
-Date: Tue, 17 Mar 2026 17:33:55 +0100
-Message-ID: <20260317163006.999274003@linuxfoundation.org>
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Piotr Kwapulinski <piotr.kwapulinski@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>
+Subject: [PATCH 6.18 207/333] ixgbevf: fix link setup issue
+Date: Tue, 17 Mar 2026 17:33:56 +0100
+Message-ID: <20260317163007.036155436@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,131 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
 
-commit 201ceb94aa1def0024a7c18ce643e5f65026be06 upstream.
+commit feae40a6a178bb525a15f19288016e5778102a99 upstream.
 
-Fix a bug where kunit_run_irq_test() could hang if the system is too
-slow.  This was noticed with the crypto library tests in certain VMs.
+It may happen that VF spawned for E610 adapter has problem with setting
+link up. This happens when ixgbevf supporting mailbox API 1.6 cooperates
+with PF driver which doesn't support this version of API, and hence
+doesn't support new approach for getting PF link data.
 
-Specifically, if kunit_irq_test_timer_func() and the associated hrtimer
-code took over 5us to run, then the CPU would spend all its time
-executing that code in hardirq context.  As a result, the task executing
-kunit_run_irq_test() never had a chance to run, exit the loop, and
-cancel the timer.
+In that case VF asks PF to provide link data but as PF doesn't support
+it, returns -EOPNOTSUPP what leads to early bail from link configuration
+sequence.
 
-To fix it, make kunit_irq_test_timer_func() increase the timer interval
-when the other contexts aren't having a chance to run.
+Avoid such situation by using legacy VFLINKS approach whenever negotiated
+API version is less than 1.6.
 
-Fixes: 950a81224e8b ("lib/crypto: tests: Add hash-test-template.h and gen-hash-testvecs.py")
+To reproduce the issue just create VF and set its link up - adapter must
+be any from the E610 family, ixgbevf must support API 1.6 or higher while
+ixgbevf must not.
+
+Fixes: 53f0eb62b4d2 ("ixgbevf: fix getting link speed data for E610 devices")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 Cc: stable@vger.kernel.org
-Reviewed-by: David Gow <david@davidgow.net>
-Link: https://lore.kernel.org/r/20260224033751.97615-1-ebiggers@kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/kunit/run-in-irq-context.h | 44 +++++++++++++++++++-----------
- 1 file changed, 28 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/intel/ixgbevf/vf.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/include/kunit/run-in-irq-context.h b/include/kunit/run-in-irq-context.h
-index c89b1b1b12dd..bfe60d6cf28d 100644
---- a/include/kunit/run-in-irq-context.h
-+++ b/include/kunit/run-in-irq-context.h
-@@ -12,16 +12,16 @@
- #include <linux/hrtimer.h>
- #include <linux/workqueue.h>
+--- a/drivers/net/ethernet/intel/ixgbevf/vf.c
++++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
+@@ -852,7 +852,8 @@ static s32 ixgbevf_check_mac_link_vf(str
+ 	if (!mac->get_link_status)
+ 		goto out;
  
--#define KUNIT_IRQ_TEST_HRTIMER_INTERVAL us_to_ktime(5)
--
- struct kunit_irq_test_state {
- 	bool (*func)(void *test_specific_state);
- 	void *test_specific_state;
- 	bool task_func_reported_failure;
- 	bool hardirq_func_reported_failure;
- 	bool softirq_func_reported_failure;
-+	atomic_t task_func_calls;
- 	atomic_t hardirq_func_calls;
- 	atomic_t softirq_func_calls;
-+	ktime_t interval;
- 	struct hrtimer timer;
- 	struct work_struct bh_work;
- };
-@@ -30,14 +30,25 @@ static enum hrtimer_restart kunit_irq_test_timer_func(struct hrtimer *timer)
- {
- 	struct kunit_irq_test_state *state =
- 		container_of(timer, typeof(*state), timer);
-+	int task_calls, hardirq_calls, softirq_calls;
- 
- 	WARN_ON_ONCE(!in_hardirq());
--	atomic_inc(&state->hardirq_func_calls);
-+	task_calls = atomic_read(&state->task_func_calls);
-+	hardirq_calls = atomic_inc_return(&state->hardirq_func_calls);
-+	softirq_calls = atomic_read(&state->softirq_func_calls);
-+
-+	/*
-+	 * If the timer is firing too often for the softirq or task to ever have
-+	 * a chance to run, increase the timer interval.  This is needed on very
-+	 * slow systems.
-+	 */
-+	if (hardirq_calls >= 20 && (softirq_calls == 0 || task_calls == 0))
-+		state->interval = ktime_add_ns(state->interval, 250);
- 
- 	if (!state->func(state->test_specific_state))
- 		state->hardirq_func_reported_failure = true;
- 
--	hrtimer_forward_now(&state->timer, KUNIT_IRQ_TEST_HRTIMER_INTERVAL);
-+	hrtimer_forward_now(&state->timer, state->interval);
- 	queue_work(system_bh_wq, &state->bh_work);
- 	return HRTIMER_RESTART;
- }
-@@ -86,10 +97,14 @@ static inline void kunit_run_irq_test(struct kunit *test, bool (*func)(void *),
- 	struct kunit_irq_test_state state = {
- 		.func = func,
- 		.test_specific_state = test_specific_state,
-+		/*
-+		 * Start with a 5us timer interval.  If the system can't keep
-+		 * up, kunit_irq_test_timer_func() will increase it.
-+		 */
-+		.interval = us_to_ktime(5),
- 	};
- 	unsigned long end_jiffies;
--	int hardirq_calls, softirq_calls;
--	bool allctx = false;
-+	int task_calls, hardirq_calls, softirq_calls;
- 
- 	/*
- 	 * Set up a hrtimer (the way we access hardirq context) and a work
-@@ -104,21 +119,18 @@ static inline void kunit_run_irq_test(struct kunit *test, bool (*func)(void *),
- 	 * and hardirq), or 1 second, whichever comes first.
- 	 */
- 	end_jiffies = jiffies + HZ;
--	hrtimer_start(&state.timer, KUNIT_IRQ_TEST_HRTIMER_INTERVAL,
--		      HRTIMER_MODE_REL_HARD);
--	for (int task_calls = 0, calls = 0;
--	     ((calls < max_iterations) || !allctx) &&
--	     !time_after(jiffies, end_jiffies);
--	     task_calls++) {
-+	hrtimer_start(&state.timer, state.interval, HRTIMER_MODE_REL_HARD);
-+	do {
- 		if (!func(test_specific_state))
- 			state.task_func_reported_failure = true;
- 
-+		task_calls = atomic_inc_return(&state.task_func_calls);
- 		hardirq_calls = atomic_read(&state.hardirq_func_calls);
- 		softirq_calls = atomic_read(&state.softirq_func_calls);
--		calls = task_calls + hardirq_calls + softirq_calls;
--		allctx = (task_calls > 0) && (hardirq_calls > 0) &&
--			 (softirq_calls > 0);
--	}
-+	} while ((task_calls + hardirq_calls + softirq_calls < max_iterations ||
-+		  (task_calls == 0 || hardirq_calls == 0 ||
-+		   softirq_calls == 0)) &&
-+		 !time_after(jiffies, end_jiffies));
- 
- 	/* Cancel the timer and work. */
- 	hrtimer_cancel(&state.timer);
--- 
-2.53.0
-
+-	if (hw->mac.type == ixgbe_mac_e610_vf) {
++	if (hw->mac.type == ixgbe_mac_e610_vf &&
++	    hw->api_version >= ixgbe_mbox_api_16) {
+ 		ret_val = ixgbevf_get_pf_link_state(hw, speed, link_up);
+ 		if (ret_val)
+ 			goto out;
 
 
