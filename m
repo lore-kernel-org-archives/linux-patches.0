@@ -1,44 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A9CD3B6C1A;
-	Tue, 17 Mar 2026 11:33:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8533ACF16;
+	Tue, 17 Mar 2026 11:33:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747189; cv=none; b=s1//mCWdivvc4+y9+C6fw/G7ELQTVoO7g7Hw2143OqMFF5rpDOvj0vfEjhZ5jtWLPoJrQDedNck/r9dMmmN/EIkAXbZpJmI8jpgF8tP/DL6rwLG6WiawpbnctOG76VujViYZwvMTXOs2Pdc4CDbP7LImxVhn6NF3guMTTCRpb6o=
+	t=1773747190; cv=none; b=Vkz/1SIRLhkPEE5vN5YFJfavb9dCuqDqDiVkibTHBgkUbfn0aHEMnLWje2RrcrZe/dLHiuIdrP+SiQghGmYNV5iL2PIh69kEN1TBBcZ8BIIoSNPFiSUg2RrrFu11zj4OCvidk1HpEOR3TRwAikHBgOGaTh1jb+FWQLLH2wdRqDM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747189; c=relaxed/simple;
-	bh=amNUuOBsbetaC/ly/Csdex/YH7npj0Iq2bSyaCheg/o=;
+	s=arc-20240116; t=1773747190; c=relaxed/simple;
+	bh=5U2mMX/BlLBee1LSdlSImz7BsVRSpnc0P2jc+ihhZZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rVCkxCaa3JbWjBbxt/F1Q9uVaeSdgy8xsOx3Kr4p6/0SFQMGUntXMEzgE6gW/0qQaVj5KBZ+A0ZsKpXykfTLW7pWnYz/sOlLk7QMAV2VX2rNqOc++nrGsTXUolouM5BIiiaplmFGjlI/KAsdv2egou7lNFnEkvU2a1KwYjR5oaE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Khz+tEw9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hCUyfCVF0jZUUcP0EKolLFy8Hhza3+tlOeZ6yanfmY2MT8RIbhfz948cAV7fPpJJODYHJCKfZO0HKlz2rL8gYs6z0PqSBddIOmLU+DV5o4mFYMuoHFDJc6vjoPZCQM8+xCkuVEpWV2Q5jw5S1rIV5zt5cOMxs2afqM6oXtuyGSg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=mbyn+2yd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Khz+tEw9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC9EC4CEF7;
-	Tue, 17 Mar 2026 11:33:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="mbyn+2yd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4091BC2BCB1;
+	Tue, 17 Mar 2026 11:33:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747188;
-	bh=amNUuOBsbetaC/ly/Csdex/YH7npj0Iq2bSyaCheg/o=;
+	s=k20201202; t=1773747190;
+	bh=5U2mMX/BlLBee1LSdlSImz7BsVRSpnc0P2jc+ihhZZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Khz+tEw9jaII72Mj6esqd6ibyYKKorcJdUMPgf8keXi7deoSTu7xOaCVXL6IsoRfP
-	 cXiZyRPxThChryx2exYyJVFZKzzUCDtk2yRmFd5lJKM/2fqWQuBY8u21fzNv+L7lSQ
-	 vTvN0vGlplojIpV0nVXsAy9vWBdgWc+uV0+uzRuZQy23atvaIWEfdLjFKTRwTgjFZ5
-	 /IuTfdEhpOaQM+ACCPeDrRRQmqXioPAUvHykptwGVVwOiGdko5OFd9ZGJdPZZ3UMu0
-	 bA4KtYLJAzR5zL9/ZHAQBHwPT7VoSGXUYWyaner/qEpv9WOMbjYovYZwYzakVlej41
-	 +2CVpmzq0zh8A==
+	b=mbyn+2ydh6nb/DaXAHMR6d/LaQ1K02bDSbe9iM4mfaIrIH6QtXRtdEhL4yo9QlMcy
+	 vWHFijTiNJko/1eYrtOGZdvq6I3TvhSFYwPGXfjyQBXsLLukeoU81C4bwV7Lc81dqj
+	 oZqgjzIYAK6CVCr5ypcPHPadaAVuDrdwMMJYkX4OZ4iNT1esr3AX66SP+BtBKxCrx/
+	 b6QkG2eArDhwbJ521Q8RWg3b9A93xtLfpystIwSB7gSbrlP45UHxP4P5q4Ei+QrVhc
+	 PGQyvuD24oK/EeQ4EKfsD3gmIi6BZL2gRvvWoYjQpNdlKPLqjPsm1HB466h9KcB7e0
+	 gflvrJCEMXM8Q==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Zhang Heng <zhangheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>,
+Cc: Peter Yin <peteryin.openbmc@gmail.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>,
-	perex@perex.cz,
-	tiwai@suse.com,
-	linux-sound@vger.kernel.org,
+	linux-i3c@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix headphone
-Date: Tue, 17 Mar 2026 07:32:45 -0400
-Message-ID: <20260317113249.117771-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] i3c: master: dw-i3c: Fix missing of_node for virtual I2C adapter
+Date: Tue, 17 Mar 2026 07:32:46 -0400
+Message-ID: <20260317113249.117771-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -51,152 +50,132 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Peter Yin <peteryin.openbmc@gmail.com>
 
-[ Upstream commit 56fbbe096a89ff4b52af78a21a4afd9d94bdcc80 ]
+[ Upstream commit f26ecaa0f0abfe5db173416214098a00d3b7db79 ]
 
-The BIOS of this machine has set 0x19 to mic, which needs to be set
-to headphone pin in order to work properly.
+The DesignWare I3C master driver creates a virtual I2C adapter to
+provide backward compatibility with I2C devices. However, the current
+implementation does not associate this virtual adapter with any
+Device Tree node.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=220814
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/b55f6ebe-7449-49f7-ae85-00d2ba1e7af0@kylinos.cn
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Propagate the of_node from the I3C master platform device to the
+virtual I2C adapter's device structure. This ensures that standard
+I2C aliases are correctly resolved and bus numbering remains consistent.
+
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260302075645.1492766-1-peteryin.openbmc@gmail.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-## Analysis: ALSA: hda/realtek: Add quirk for Gigabyte Technology to fix
-headphone
+Now I have the complete picture.
 
-### Commit Summary
+## Analysis
 
-This commit adds a new HDA audio quirk (`ALC897_FIXUP_H610M_HP_PIN`) for
-the Gigabyte H610M H V2 DDR4 motherboard (PCI SSID `0x1458:0xa194`). The
-BIOS incorrectly configures pin `0x19` as a microphone input, but it
-needs to be configured as a headphone output (`0x0321403f`) for the
-hardware to work properly.
+### What the commit fixes
 
-### Classification: Hardware Quirk
+The DesignWare I3C master driver creates a virtual I2C adapter
+(`master->base.i2c`) for backward compatibility. When this adapter is
+registered via `i3c_master_register()` ->
+`i3c_master_i2c_adapter_init()` -> `i2c_add_adapter()`, the I2C core
+calls `of_i2c_register_devices(adap)` (at `i2c-core-base.c:1593`).
 
-This falls squarely into the **QUIRKS and WORKAROUNDS** exception
-category for stable backports. It:
-- Adds a new `SND_PCI_QUIRK()` entry to an existing quirk table
-- Adds a corresponding `HDA_FIXUP_PINS` definition
-- Targets a specific device identified by PCI subsystem vendor/device ID
+The critical code in `of_i2c_register_devices()` at `i2c-core-of.c:90`:
+```c
+if (!adap->dev.of_node)
+    return;
+```
 
-### Code Change Analysis
+**Without this fix**, `adap->dev.of_node` is NULL, so
+`of_i2c_register_devices()` returns immediately without registering any
+I2C child devices described in the device tree. This means **I2C devices
+under the I3C master node in the DT will never be discovered or
+registered**.
 
-The change is minimal and entirely self-contained:
+### Bug severity
 
-1. **New enum value**: `ALC897_FIXUP_H610M_HP_PIN` added at the end of
-   the existing enum
-2. **New fixup definition**: A simple `HDA_FIXUP_PINS` entry that sets
-   pin `0x19` to `0x0321403f` (headphone out)
-3. **New quirk table entry**: `SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2
-   DDR4", ALC897_FIXUP_H610M_HP_PIN)` matching the specific Gigabyte
-   board
+This is a real functional bug. On systems using Device Tree (most
+ARM/embedded systems where this driver is used - OpenBMC systems, etc.),
+I2C devices behind the DW I3C master won't be enumerated. The author's
+email (`peteryin.openbmc@gmail.com`) confirms this is from an OpenBMC
+context where DT-based I2C device discovery is essential.
 
-The pattern is identical to dozens of other quirks in this file. The
-fixup type (`HDA_FIXUP_PINS`) is the simplest kind — it just overrides a
-pin configuration value. No chaining, no custom functions.
+### Stable criteria assessment
 
-### Bug and Impact
+- **Fixes a real bug**: Yes - I2C devices behind I3C master are not
+  discovered from DT
+- **Obviously correct**: Yes - `device_set_of_node_from_dev` is a well-
+  established helper, and propagating the parent's of_node to a virtual
+  adapter is standard practice
+- **Small and contained**: Yes - single line addition in one file
+- **No new features**: Correct - this restores expected functionality
+  (DT device discovery)
+- **Reviewed**: Yes - by Frank Li at NXP (an I3C hardware vendor)
 
-- **Real bug**: Headphone jack doesn't work on this Gigabyte motherboard
-  because the BIOS misconfigures pin 0x19
-- **User report**: Linked to bugzilla.kernel.org bug #220814, confirming
-  a real user hit this
-- **Impact**: Without this quirk, headphone output is completely non-
-  functional on this board
-- **Scope**: Only affects the specific Gigabyte H610M H V2 DDR4 board
-  (PCI SSID match)
+### Risk assessment
 
-### Risk Assessment
-
-- **Risk**: Essentially zero. The quirk only activates on the specific
-  matching hardware. It cannot affect any other system.
-- **Complexity**: Trivial — just a pin override table entry
-- **Dependencies**: None. The ALC897 codec support and the
-  HDA_FIXUP_PINS mechanism already exist in all stable trees that have
-  ALC897 support.
-
-### Stable Kernel Rules Compliance
-
-1. **Obviously correct and tested**: Yes — standard pattern, user-
-   reported and tested, accepted by Takashi Iwai (HDA maintainer)
-2. **Fixes a real bug**: Yes — headphone doesn't work
-3. **Important issue**: Yes — audio output broken on specific hardware
-4. **Small and contained**: Yes — ~15 lines, single file, no behavioral
-   changes to other hardware
-5. **No new features/APIs**: Correct — just a device-specific workaround
-6. **Applies cleanly**: Should apply cleanly as it's an addition to
-   tables
+Very low risk. The change adds one call to
+`device_set_of_node_from_dev()` before `i3c_master_register()`. The
+function safely handles refcounting (does `of_node_put` on old,
+`of_node_get` on new). If the pdev has no of_node, it's a no-op (NULL ->
+NULL).
 
 ### Verification
 
-- The commit message explicitly states the bug: pin 0x19 set to mic by
-  BIOS, needs to be headphone
-- Link to bugzilla.kernel.org bug #220814 confirms user-reported issue
-- The change follows the exact same pattern as hundreds of other HDA
-  quirks in this file (e.g., `ALC897_FIXUP_HEADSET_MIC_PIN3` just above
-  it)
-- Signed-off by Takashi Iwai (tiwai@suse.de), the HDA subsystem
-  maintainer
-- PCI vendor ID 0x1458 is Gigabyte Technology (verified by convention in
-  neighboring quirk entries)
-- The fixup value `0x0321403f` decodes to a headphone output pin
-  configuration (consistent with the commit message)
-- No dependencies on other patches — the enum, fixup array, and quirk
-  table additions are all self-contained
+- Read `dw-i3c-master.c:1616-1618`: confirmed the current code has no
+  of_node propagation before `i3c_master_register()`
+- Read `drivers/i3c/master.c:2554-2574`: confirmed
+  `i3c_master_i2c_adapter_init()` sets `adap->dev.parent` but NOT
+  `adap->dev.of_node`
+- Read `drivers/i2c/i2c-core-of.c:84-91`: confirmed
+  `of_i2c_register_devices()` returns immediately if `adap->dev.of_node`
+  is NULL - this is the concrete bug mechanism
+- Read `drivers/i2c/i2c-core-base.c:1593`: confirmed
+  `of_i2c_register_devices()` is called during adapter registration
+- git log confirmed the dw-i3c-master.c has existed for a long time and
+  this code path is established
+- The fix pattern (propagating of_node to virtual/child devices) is
+  standard across the kernel
 
-This is a textbook example of a hardware quirk that should be backported
-to stable. It fixes broken audio hardware for real users, has zero risk
-to other systems, and follows an established pattern.
+### Concerns
+
+- The commit doesn't have a `Fixes:` tag pointing to the original commit
+  that created the driver, but as noted in the guidelines, this is
+  expected for commits under review
+- No dependency on other patches - this is fully self-contained
+- The `device_set_of_node_from_dev()` function has been available since
+  kernel 5.x, so this should apply cleanly to all active stable trees
+  that have the DW I3C driver
+
+This is a clear bug fix: I2C devices described in Device Tree under an
+I3C master node are silently not discovered because the virtual I2C
+adapter lacks the of_node needed by the I2C core's DT enumeration. The
+fix is a single, safe, well-reviewed line.
 
 **YES**
 
- sound/hda/codecs/realtek/alc662.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/i3c/master/dw-i3c-master.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/hda/codecs/realtek/alc662.c b/sound/hda/codecs/realtek/alc662.c
-index 5073165d1f3cf..3a943adf90876 100644
---- a/sound/hda/codecs/realtek/alc662.c
-+++ b/sound/hda/codecs/realtek/alc662.c
-@@ -313,6 +313,7 @@ enum {
- 	ALC897_FIXUP_HEADSET_MIC_PIN2,
- 	ALC897_FIXUP_UNIS_H3C_X500S,
- 	ALC897_FIXUP_HEADSET_MIC_PIN3,
-+	ALC897_FIXUP_H610M_HP_PIN,
- };
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 4033bc16677ff..aa683894e6de9 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1614,6 +1614,8 @@ int dw_i3c_common_probe(struct dw_i3c_master *master,
+ 		pm_runtime_get_noresume(&pdev->dev);
  
- static const struct hda_fixup alc662_fixups[] = {
-@@ -766,6 +767,13 @@ static const struct hda_fixup alc662_fixups[] = {
- 			{ }
- 		},
- 	},
-+	[ALC897_FIXUP_H610M_HP_PIN] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x19, 0x0321403f }, /* HP out */
-+			{ }
-+		},
-+	},
- };
- 
- static const struct hda_quirk alc662_fixup_tbl[] = {
-@@ -815,6 +823,7 @@ static const struct hda_quirk alc662_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x1043, 0x8469, "ASUS mobo", ALC662_FIXUP_NO_JACK_DETECT),
- 	SND_PCI_QUIRK(0x105b, 0x0cd6, "Foxconn", ALC662_FIXUP_ASUS_MODE2),
- 	SND_PCI_QUIRK(0x144d, 0xc051, "Samsung R720", ALC662_FIXUP_IDEAPAD),
-+	SND_PCI_QUIRK(0x1458, 0xa194, "H610M H V2 DDR4", ALC897_FIXUP_H610M_HP_PIN),
- 	SND_PCI_QUIRK(0x14cd, 0x5003, "USI", ALC662_FIXUP_USI_HEADSET_MODE),
- 	SND_PCI_QUIRK(0x17aa, 0x1036, "Lenovo P520", ALC662_FIXUP_LENOVO_MULTI_CODECS),
- 	SND_PCI_QUIRK(0x17aa, 0x1057, "Lenovo P360", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	INIT_WORK(&master->hj_work, dw_i3c_hj_work);
++
++	device_set_of_node_from_dev(&master->base.i2c.dev, &pdev->dev);
+ 	ret = i3c_master_register(&master->base, &pdev->dev,
+ 				  &dw_mipi_i3c_ops, false);
+ 	if (ret)
 -- 
 2.51.0
 
