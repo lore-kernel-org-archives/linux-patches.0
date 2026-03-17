@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB6F3EBF3F;
-	Tue, 17 Mar 2026 16:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB863EC2C2;
+	Tue, 17 Mar 2026 16:37:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765467; cv=none; b=d/b8AlmFOj1mMTMHurzAehcvBWIl5k0cKPOAXlyTmDJ04RMokiOOxlv9veloEhVzSlSWp85s3jH10JAMhzMuVDw3AFjQBJ5x2AybywzcKJIJe4R2wPa16EpUUHPHkC/yugUzFDo6Ie64/MpTsKvpn+3RL00OuVQ6eEsZEFIQ+8c=
+	t=1773765472; cv=none; b=a74TeR4PMHrK+DrtqOEk+8TcAf9hZoe4BceQM0LV3NSc41DsFIoBQYL7ZR4PjV5fGWr2GEvMAPsYpIw8LUMzr2qTxABopRUHlc8naSNW/WbyXuXxYk6ZbOUyGN5Of5O8l+7CUWsq5CGco1mMq5QK0Uceg9ABPklJP8Umg1E5kFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765467; c=relaxed/simple;
-	bh=+Sp3z96lxiM7fx5QFN2GmaTmMWIlTjpF+3OeGUX68Zw=;
+	s=arc-20240116; t=1773765472; c=relaxed/simple;
+	bh=XAp/mjK4En7WHDJughDRRojviY1XYjb5IWxDBD4dLww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oHJM8UozvL1GdbXSsB4Jt+npvk+w6snYACs/9egzojOwlJpKlh2P4pnS11fz10M91H33gl41C0tJu0WFfhcjSKvyQ/l2J7GZmrqYEmzxBwqpK7SrNz50vEXwoQdJi243paVa+KwAH7F0fUnDD7yUJH9QeGHpmU6lrzGn6CKZDVU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KhSB90n+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E4ab1lG81vp9QHALd7qEE8LUzX5rw553GLkvgR/UldiNDxG8Kwp2xXq7jO7nsZY7qwbo14+0RzlOI5BvYDH5jDXwK1xnoddgvzb3gfVF7YQpG26i2HjVf8XX8l4RU6OlkEaPjTRZm31Wn75L6UHwpK6vH61NAxGLXRWAfKbCnFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=It35Xrwh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KhSB90n+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9EC3C4CEF7;
-	Tue, 17 Mar 2026 16:37:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="It35Xrwh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC60C4CEF7;
+	Tue, 17 Mar 2026 16:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765467;
-	bh=+Sp3z96lxiM7fx5QFN2GmaTmMWIlTjpF+3OeGUX68Zw=;
+	s=korg; t=1773765471;
+	bh=XAp/mjK4En7WHDJughDRRojviY1XYjb5IWxDBD4dLww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhSB90n+AsJ7hn1v5TIs29FbVu2MYO0gTgfrBocWMJWqQWp1lf77y1Jues0hhzusf
-	 ZJGMDRXf+cVUJF+b5HVi2riWKRARGxKAfi3JdVn+h1iF6eiIGuvp/tSC8YJwwRXr8o
-	 NTVlrFg+l5SNipBQgYWV9SO6TJtVp2jcySrDq8uY=
+	b=It35Xrwhr9UOaGsK+I0ODaJPec6Vu+D38aJEjv9IW/KCPtGoULu4dZKqVkJU4YDOL
+	 GGEA814zZXVY9pXJJfVfUKS0PXUCxZ3CZZzi2HgVJ5Y9Jfrnp2ZU0ZnMl7mPyS38z0
+	 4qhV9Cvc4uMFw0F4NKzTUkddcWRM90bM5cqX8X98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jeffery <djeffery@redhat.com>,
-	Tomas Henzl <thenzl@redhat.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Azamat Almazbek uulu <almazbek1608@gmail.com>,
+	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 018/378] scsi: ses: Fix devices attaching to different hosts
-Date: Tue, 17 Mar 2026 17:29:35 +0100
-Message-ID: <20260317163007.645444452@linuxfoundation.org>
+Subject: [PATCH 6.19 019/378] ASoC: amd: yc: Add ASUS EXPERTBOOK BM1503CDA to quirk table
+Date: Tue, 17 Mar 2026 17:29:36 +0100
+Message-ID: <20260317163007.681168842@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,52 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tomas Henzl <thenzl@redhat.com>
+From: Azamat Almazbek uulu <almazbek1608@gmail.com>
 
-[ Upstream commit 70ca8caa96ce473647054f5c7b9dab5423902402 ]
+[ Upstream commit 32fc4168fa56f6301d858c778a3d712774e9657e ]
 
-On a multipath SAS system some devices don't end up with correct symlinks
-from the SCSI device to its enclosure. Some devices even have enclosure
-links pointing to enclosures attached to different SCSI hosts.
+The ASUS ExpertBook BM1503CDA (Ryzen 5 7535U, Barcelo-R) has an
+internal DMIC connected through the AMD ACP (Audio CoProcessor)
+but is missing from the DMI quirk table, so the acp6x machine
+driver probe returns -ENODEV and no DMIC capture device is created.
 
-ses_match_to_enclosure() calls enclosure_for_each_device() which iterates
-over all enclosures on the system, not just enclosures attached to the
-current SCSI host.
+Add the DMI entry so the internal microphone works out of the box.
 
-Replace the iteration with a direct call to ses_enclosure_find_by_addr().
-
-Reviewed-by: David Jeffery <djeffery@redhat.com>
-Signed-off-by: Tomas Henzl <thenzl@redhat.com>
-Link: https://patch.msgid.link/20260210191850.36784-1-thenzl@redhat.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Azamat Almazbek uulu <almazbek1608@gmail.com>
+Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
+Link: https://patch.msgid.link/20260221114813.5610-1-almazbek1608@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ses.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/scsi/ses.c b/drivers/scsi/ses.c
-index 2c61624cb4b03..50e744e891295 100644
---- a/drivers/scsi/ses.c
-+++ b/drivers/scsi/ses.c
-@@ -529,9 +529,8 @@ struct efd {
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index f1a63475100d1..7af4daeb4c6ff 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -703,6 +703,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 				DMI_MATCH(DMI_PRODUCT_NAME, "Vivobook_ASUSLaptop M6501RR_M6501RR"),
+ 			}
+ 		},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK BM1503CDA"),
++		}
++	},
+ 	{}
  };
- 
- static int ses_enclosure_find_by_addr(struct enclosure_device *edev,
--				      void *data)
-+				      struct efd *efd)
- {
--	struct efd *efd = data;
- 	int i;
- 	struct ses_component *scomp;
- 
-@@ -684,7 +683,7 @@ static void ses_match_to_enclosure(struct enclosure_device *edev,
- 	if (efd.addr) {
- 		efd.dev = &sdev->sdev_gendev;
- 
--		enclosure_for_each_device(ses_enclosure_find_by_addr, &efd);
-+		ses_enclosure_find_by_addr(edev, &efd);
- 	}
- }
  
 -- 
 2.51.0
