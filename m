@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8621912B94;
-	Tue, 17 Mar 2026 16:44:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF84536C0B9;
+	Tue, 17 Mar 2026 16:44:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765849; cv=none; b=XTFGHXH80wfu54eoVAx+015m5pE5nZgJ0eUSlWUKM1pjRt/kBqH4zsmqgHa41kBoCkc38rIInUstL8Pf3dXl+/4H6WdxtGDfeFh/S+eGmwLJqddJwM3y0zcAxDqKmWZp8uZRjoqzrpT9CaT5RA5QVrN/bEjlH3NTS+mHltDP438=
+	t=1773765853; cv=none; b=HjSo+vwHIj484UCl1f2F9UmhasFZc+FsobebdN6RQuyxNlLTfO4Esvw0vG8RTE3GzzcJwTg+pcQhCA3ZoNbXxj/ygVo1TeNJNWkBg9TRFChiZ11ykyiqbpZyLGCsDu9/mPvgWOvDgOrxezcxHndwE6PXxgLTa2VEr96j8/k7O1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765849; c=relaxed/simple;
-	bh=SHmr2nCJw917qsEfnAsjlaAPlfsk4k0ijk4nSDpCWBg=;
+	s=arc-20240116; t=1773765853; c=relaxed/simple;
+	bh=8wcz3Jo78JjnLPh1ih8DMQgLQ+QlqW2ePZ+HbKiD32A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZlyrezCJYMeKYXk9HpmRW9j2MEcCBf0LQ64P/ZQ4v4Dfx9BAoTg30sREMAvvxdECB4YYlz2Ni/edBANViBYcHosZrnclULTcQqlnR1ftmjOKyecBTQqOmC7Q/cr/yLYUfCN9ltQgRVnnmyk+/3/YadXgctKgDTIy08Jyuo8UQ+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RePstaIQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hiciPzdQDUrqIzjuVEODkEJaEBUAmnLXKBJ3RvkAx+/AwXw46SJP9nwdrGOYu+RcZ0M/uzzel0Wd7yplbKzIao1FssPJbFkeVVJsau5yyGiXPPX0DjtJ/3Rqc3SKgBrDF3Z0Uh0PYH5+gi76c+Yt1cGANIXzD+Act9q/GaC3E74=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nWj5BwAi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RePstaIQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4787C4CEF7;
-	Tue, 17 Mar 2026 16:44:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nWj5BwAi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F40FBC4CEF7;
+	Tue, 17 Mar 2026 16:44:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765849;
-	bh=SHmr2nCJw917qsEfnAsjlaAPlfsk4k0ijk4nSDpCWBg=;
+	s=korg; t=1773765853;
+	bh=8wcz3Jo78JjnLPh1ih8DMQgLQ+QlqW2ePZ+HbKiD32A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RePstaIQ+lTJnO9hk8hsq9XS5EtOkww9VhVQqpqB4xDANNAKqMMbpJFigZE3wir6s
-	 HXDP2s3mST4DG4DxHuxf8MIbWBep0iujA8hsDNRBzWHwDscnzuJJk/mSgm8NOnUfM8
-	 NrnLSWWIiTSVIEUzdeZ4ka7sKdHUMJGa2WITu4r4=
+	b=nWj5BwAiLWDOVXoDXShinweycThD8zOSRB4D6MEg90QhcuBQb5TcHjQtxvdmSjV/F
+	 4NpSVJ4xIWiXBne/iD4XQBdTFOzFzGgXs0Y8V5r9+8RepszTbbfT2hdGJe7vpzlFRx
+	 CA/PvlBrCsxMQE648Sqi6F/uzw7/W1VS2Sw2H0yE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alok Tiwari <alok.a.tiwari@oracle.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 109/378] octeontx2-af: devlink: fix NIX RAS reporter recovery condition
-Date: Tue, 17 Mar 2026 17:31:06 +0100
-Message-ID: <20260317163011.026546254@linuxfoundation.org>
+Subject: [PATCH 6.19 110/378] octeontx2-af: devlink: fix NIX RAS reporter to use RAS interrupt status
+Date: Tue, 17 Mar 2026 17:31:07 +0100
+Message-ID: <20260317163011.062817572@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,37 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit dc26ca99b835e21e76a58b1463b84adb0ca34f58 ]
+[ Upstream commit 87f7dff3ec75b91def0024ebaaf732457f47a63b ]
 
-The NIX RAS health reporter recovery routine checks nix_af_rvu_int to
-decide whether to re-enable NIX_AF_RAS interrupts. This is the RVU
-interrupt status field and is unrelated to RAS events, so the recovery
-flow may incorrectly skip re-enabling NIX_AF_RAS interrupts.
+The NIX RAS health report path uses nix_af_rvu_err when handling the
+NIX_AF_RVU_RAS case, so the report prints the ERR interrupt status rather
+than the RAS interrupt status.
 
-Check nix_af_rvu_ras instead before writing NIX_AF_RAS_ENA_W1S.
+Use nix_af_rvu_ras for the NIX_AF_RVU_RAS report.
 
 Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
 Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20260310184824.1183651-1-alok.a.tiwari@oracle.com
+Link: https://patch.msgid.link/20260310184824.1183651-2-alok.a.tiwari@oracle.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index 0f9953eaf1b09..fa6ca4f41b59a 100644
+index fa6ca4f41b59a..2a715872e9edf 100644
 --- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
 +++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -475,7 +475,7 @@ static int rvu_hw_nix_ras_recover(struct devlink_health_reporter *reporter,
- 	if (blkaddr < 0)
- 		return blkaddr;
- 
--	if (nix_event_ctx->nix_af_rvu_int)
-+	if (nix_event_ctx->nix_af_rvu_ras)
- 		rvu_write64(rvu, blkaddr, NIX_AF_RAS_ENA_W1S, ~0ULL);
- 
- 	return 0;
+@@ -327,10 +327,10 @@ static int rvu_nix_report_show(struct devlink_fmsg *fmsg, void *ctx,
+ 		rvu_report_pair_end(fmsg);
+ 		break;
+ 	case NIX_AF_RVU_RAS:
+-		intr_val = nix_event_context->nix_af_rvu_err;
++		intr_val = nix_event_context->nix_af_rvu_ras;
+ 		rvu_report_pair_start(fmsg, "NIX_AF_RAS");
+ 		devlink_fmsg_u64_pair_put(fmsg, "\tNIX RAS Interrupt Reg ",
+-					  nix_event_context->nix_af_rvu_err);
++					  nix_event_context->nix_af_rvu_ras);
+ 		devlink_fmsg_string_put(fmsg, "\n\tPoison Data on:");
+ 		if (intr_val & BIT_ULL(34))
+ 			devlink_fmsg_string_put(fmsg, "\n\tNIX_AQ_INST_S");
 -- 
 2.51.0
 
