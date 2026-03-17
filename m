@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F40228B7DB;
-	Tue, 17 Mar 2026 17:17:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C835B255F2C;
+	Tue, 17 Mar 2026 17:17:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767867; cv=none; b=Xi/lsc2wXCZsb6hIBvAQE8d1zDZS0+OXcJIt85scgYP6KN12PdbTV+XzXRhwmugXsRlXn8IE7Ca6KCPaw+oDRFC22aedNtRDJdJL9G2t6DPuXJE3LaaRVcahUdXWS0bXYWq9t0q5Oozw0AiAJ8dBfr88h/D1lAFmLR2zlw80Sfs=
+	t=1773767870; cv=none; b=WbhvkbPCY98R5rayTFpVh9S86UPHABKyYPVzQj6+bU5lVEG8Ol7MoCHk7OqkRE+j2ZgUmJDV5vgpcl9we3CB05Y9KBZ0f13B9j8PnGBcmva9dzeYPZ9+LYIWUM8o2vYY2K3KvxxCynVR/CVH+4ncpOOU5JUia8Ijo1GZEIJfZLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767867; c=relaxed/simple;
-	bh=QJDIQRk0axnreDgPKZDc4O99XPPOf6qPjzB9OE7LF0U=;
+	s=arc-20240116; t=1773767870; c=relaxed/simple;
+	bh=bMe1kEpP65MVaMlzxl4o7ayd+jYaV2owLLBlhw7guWU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c802v0v2OQntQyHR3lnq/dkyQO5+bLJOvm6z7TcakCj1MHYDX29Tu/DDPmChHHC8sFhweQwOiCKnsh76pbjk+tHe4bbEziNo3wcVLT4GCmhj5wK6EU7buK/NOo+LFZMVX3Gr0zIegpmbSdWiVRD5rsWPBnDSM32BeB7b5WkdqD4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hO7M14bC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r5AQi7LzMyoB8KpOgqP/eNyCsWM9dfQvVrRRFnFbpgUKvE6QE6wqbfGn4PmIF+XWzlfBjnLfGnKmVPfzUr83+ZlqSHSOncDVOJjBr3mAfQSCu0294r6ZN1OXTRk1Udu5X/8V5owGv8CrWwDiHHOi2XTXQ7H02Gav3zy7qcn6RmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bOm3YaMa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hO7M14bC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86BCC4CEF7;
-	Tue, 17 Mar 2026 17:17:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bOm3YaMa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53874C4CEF7;
+	Tue, 17 Mar 2026 17:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767867;
-	bh=QJDIQRk0axnreDgPKZDc4O99XPPOf6qPjzB9OE7LF0U=;
+	s=korg; t=1773767870;
+	bh=bMe1kEpP65MVaMlzxl4o7ayd+jYaV2owLLBlhw7guWU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hO7M14bC+QjflrqT1aA3AZt17rn3gi71X20RuG8NLwhd6CH35Ft9hhRS8gNJ4cUNk
-	 1hOs9SRijorPCTYEfrJuw0trt6MeKijdedDYbXWqp77Oyxud/XKYUI19rMgtQvCqO8
-	 HtMUDlzuPoz1iYjcnAvVolTVo4IL4pNrvnZVT+D8=
+	b=bOm3YaMa4MrAxrztb5Ib5FgUoziyE9/e/ZBVQiu9TIcyCgdINKByoWlVGxUJzysec
+	 2fEVKffBDN0jGCSCrWD1JAmN1w1bQOeFveO2njpjomeC1t/w/OOTkZCYNR3Hd1nkOD
+	 fYQPVqt8HbqOdIPDd5uJ47DUT7w94NuizjBoIc6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	John Keeping <jkeeping@inmusicbrands.com>,
-	Peter Korsgaard <peter@korsgaard.com>
-Subject: [PATCH 6.18 143/333] usb: gadget: f_hid: fix SuperSpeed descriptors
-Date: Tue, 17 Mar 2026 17:32:52 +0100
-Message-ID: <20260317163004.663566937@linuxfoundation.org>
+	Oliver Neukum <oneukum@suse.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.18 144/333] usb: mdc800: handle signal and read racing
+Date: Tue, 17 Mar 2026 17:32:53 +0100
+Message-ID: <20260317163004.699594146@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,53 +50,32 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Keeping <jkeeping@inmusicbrands.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 7f58b4148ef5d8ee0fb7d8113dcc38ff5374babc upstream.
+commit 2d6d260e9a3576256fe9ef6d1f7930c9ec348723 upstream.
 
-When adding dynamic configuration for bInterval, the value was removed
-from the static SuperSpeed endpoint descriptors but was not set from the
-configured value in hidg_bind().  Thus at SuperSpeed the interrupt
-endpoints have bInterval as zero which is not valid per the USB
-specification.
+If a signal arrives after a read has partially completed,
+we need to return the number of bytes read. -EINTR is correct
+only if that number is zero.
 
-Add the missing setting for SuperSpeed endpoints.
-
-Fixes: ea34925f5b2ee ("usb: gadget: hid: allow dynamic interval configuration via configfs")
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: John Keeping <jkeeping@inmusicbrands.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://patch.msgid.link/20260227111540.431521-1-jkeeping@inmusicbrands.com
+Link: https://patch.msgid.link/20260209142048.1503791-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_hid.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/image/mdc800.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1207,9 +1207,11 @@ static int hidg_bind(struct usb_configur
- 	if (!hidg->interval_user_set) {
- 		hidg_fs_in_ep_desc.bInterval = 10;
- 		hidg_hs_in_ep_desc.bInterval = 4;
-+		hidg_ss_in_ep_desc.bInterval = 4;
- 	} else {
- 		hidg_fs_in_ep_desc.bInterval = hidg->interval;
- 		hidg_hs_in_ep_desc.bInterval = hidg->interval;
-+		hidg_ss_in_ep_desc.bInterval = hidg->interval;
- 	}
- 
- 	hidg_ss_out_comp_desc.wBytesPerInterval =
-@@ -1239,9 +1241,11 @@ static int hidg_bind(struct usb_configur
- 		if (!hidg->interval_user_set) {
- 			hidg_fs_out_ep_desc.bInterval = 10;
- 			hidg_hs_out_ep_desc.bInterval = 4;
-+			hidg_ss_out_ep_desc.bInterval = 4;
- 		} else {
- 			hidg_fs_out_ep_desc.bInterval = hidg->interval;
- 			hidg_hs_out_ep_desc.bInterval = hidg->interval;
-+			hidg_ss_out_ep_desc.bInterval = hidg->interval;
+--- a/drivers/usb/image/mdc800.c
++++ b/drivers/usb/image/mdc800.c
+@@ -707,7 +707,7 @@ static ssize_t mdc800_device_read (struc
+ 		if (signal_pending (current)) 
+ 		{
+ 			mutex_unlock(&mdc800->io_lock);
+-			return -EINTR;
++			return len == left ? -EINTR : len-left;
  		}
- 		status = usb_assign_descriptors(f,
- 			    hidg_fs_descriptors_intout,
+ 
+ 		sts=left > (mdc800->out_count-mdc800->out_ptr)?mdc800->out_count-mdc800->out_ptr:left;
 
 
