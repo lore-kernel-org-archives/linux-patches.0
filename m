@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D46C372B38;
-	Tue, 17 Mar 2026 17:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8457E32548B;
+	Tue, 17 Mar 2026 17:23:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768230; cv=none; b=TONGbNdqy8z8Mh+J267wJpSOwLXAR2D1Wrebzk7wlz1dLruMSgQ2i0MsKSIQxKYh5p6roGDjchKIm4MPKR0rSib3fj72yfr2QXQt3QSCvE2mOGmhVJsb3MLt5pHrT/vnDcW5w5H5TNxz6ryQNAZGLNqMLBmg7HqNoXYc1AyvWyI=
+	t=1773768233; cv=none; b=C8uzNJ5P/rI5kBuzzddN5eVtUUJFTcd2hsTeaRlgyMwgeN7BzVVrcS1DP+yH5MTX6kCk9wOA+/nZLPvCVcfFjKB8uPVseB8Gg3CRWv4GuFbnlUaZOedFH/pSZ54iK5MQpoK55OWp3hPeFdSUp/wBb6z31SEOHmiAdXETcPoe/hQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768230; c=relaxed/simple;
-	bh=o8+34pHCM8Ew+po/wFPG2ejsnax8fLErSMBZr+PXqtA=;
+	s=arc-20240116; t=1773768233; c=relaxed/simple;
+	bh=KKxUMH3CQwaF4Rtlzk2adU98pkqmFpC1nEFWw4u8Ja8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NyrK94QEVea6QxwPtbpqratG7pc9pKPoI7c3GDRYjZCJ5oLY7rsauke+WGAUMazaoFParXVRg8pnZm1fE+5wWpMTnJ2lXjekTBLQcOoYgNqtpsjGmUN4AdcR5iLAekqjo4TwlTuBWMCHHRFbsUkORvg/J8g6mizz/Tb+cryiILY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X17iKAal; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=euofY4yHUCkzIgXei4otw1G1Xj6mQybzlwDKqiWBflo5BfC2h+F9cR30jZ9I3GKOHFIDUfOyYKoYCMn9gJ6idBwp5oqLGi2VBxPGsJee5ZDcDMRQMduOXahCctXVeff9olrRJGp8ASYxlRq9wvKZnFtvvnB+cxLL5sGOES8Ziqs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iPBUwk5B; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X17iKAal"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F023C4CEF7;
-	Tue, 17 Mar 2026 17:23:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iPBUwk5B"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B623C2BCAF;
+	Tue, 17 Mar 2026 17:23:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768229;
-	bh=o8+34pHCM8Ew+po/wFPG2ejsnax8fLErSMBZr+PXqtA=;
+	s=korg; t=1773768233;
+	bh=KKxUMH3CQwaF4Rtlzk2adU98pkqmFpC1nEFWw4u8Ja8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X17iKAalFyWb2VY8slqATMXemgJWIMPg95Qpt7GlflKCoBGxPLjF/rTJKPXqevrCg
-	 nTq8X1FgBvJZRobe1J08ckaWLXoeKAOLcYaY4IYMM+4hwxCA0V9L+1rby38i0OqGvp
-	 UWy8HfU00fpRU5AvA6dzVb4GYX48CWf0NbPxzkBQ=
+	b=iPBUwk5B621h1XOvhhE7B1JgtZwnS/PjOFcjILMhque/zFwfs3GsrCKLq2BseJ52E
+	 ItdkZC+EYtmM6+N3UBVLVW9RmR2eMlexQvuvtgWJJCCJ7iU4fjY0PkqDWI7Z4YVzxr
+	 Fmk3uqjOZaDyOvmWxXb54fgwmRaubszCzzbDDvDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Paul Moses <p@1g4.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 245/333] net: mctp: fix device leak on probe failure
-Date: Tue, 17 Mar 2026 17:34:34 +0100
-Message-ID: <20260317163008.450773491@linuxfoundation.org>
+Subject: [PATCH 6.18 263/333] net-shapers: dont free reply skb after genlmsg_reply()
+Date: Tue, 17 Mar 2026 17:34:52 +0100
+Message-ID: <20260317163009.124199268@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,51 +50,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Paul Moses <p@1g4.org>
 
-commit 224a0d284c3caf1951302d1744a714784febed71 upstream.
+commit 57885276cc16a2e2b76282c808a4e84cbecb3aae upstream.
 
-Driver core holds a reference to the USB interface and its parent USB
-device while the interface is bound to a driver and there is no need to
-take additional references unless the structures are needed after
-disconnect.
+genlmsg_reply() hands the reply skb to netlink, and
+netlink_unicast() consumes it on all return paths, whether the
+skb is queued successfully or freed on an error path.
 
-This driver takes a reference to the USB device during probe but does
-not to release it on probe failures.
+net_shaper_nl_get_doit() and net_shaper_nl_cap_get_doit()
+currently jump to free_msg after genlmsg_reply() fails and call
+nlmsg_free(msg), which can hit the same skb twice.
 
-Drop the redundant device reference to fix the leak, reduce cargo
-culting, make it easier to spot drivers where an extra reference is
-needed, and reduce the risk of further memory leaks.
+Return the genlmsg_reply() error directly and keep free_msg
+only for pre-reply failures.
 
-Fixes: 0791c0327a6e ("net: mctp: Add MCTP USB transport driver")
-Cc: stable@vger.kernel.org	# 6.15
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Link: https://patch.msgid.link/20260305104549.16110-1-johan@kernel.org
+Fixes: 4b623f9f0f59 ("net-shapers: implement NL get operation")
+Fixes: 553ea9f1efd6 ("net: shaper: implement introspection support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Moses <p@1g4.org>
+Link: https://patch.msgid.link/20260309173450.538026-2-p@1g4.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/mctp/mctp-usb.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ net/shaper/shaper.c |   11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
---- a/drivers/net/mctp/mctp-usb.c
-+++ b/drivers/net/mctp/mctp-usb.c
-@@ -329,7 +329,7 @@ static int mctp_usb_probe(struct usb_int
- 	SET_NETDEV_DEV(netdev, &intf->dev);
- 	dev = netdev_priv(netdev);
- 	dev->netdev = netdev;
--	dev->usbdev = usb_get_dev(interface_to_usbdev(intf));
-+	dev->usbdev = interface_to_usbdev(intf);
- 	dev->intf = intf;
- 	usb_set_intfdata(intf, dev);
+--- a/net/shaper/shaper.c
++++ b/net/shaper/shaper.c
+@@ -759,11 +759,7 @@ int net_shaper_nl_get_doit(struct sk_buf
+ 	if (ret)
+ 		goto free_msg;
  
-@@ -365,7 +365,6 @@ static void mctp_usb_disconnect(struct u
- 	mctp_unregister_netdev(dev->netdev);
- 	usb_free_urb(dev->tx_urb);
- 	usb_free_urb(dev->rx_urb);
--	usb_put_dev(dev->usbdev);
- 	free_netdev(dev->netdev);
- }
+-	ret = genlmsg_reply(msg, info);
+-	if (ret)
+-		goto free_msg;
+-
+-	return 0;
++	return genlmsg_reply(msg, info);
  
+ free_msg:
+ 	nlmsg_free(msg);
+@@ -1314,10 +1310,7 @@ int net_shaper_nl_cap_get_doit(struct sk
+ 	if (ret)
+ 		goto free_msg;
+ 
+-	ret =  genlmsg_reply(msg, info);
+-	if (ret)
+-		goto free_msg;
+-	return 0;
++	return genlmsg_reply(msg, info);
+ 
+ free_msg:
+ 	nlmsg_free(msg);
 
 
