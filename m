@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2389F3EAC6F;
-	Tue, 17 Mar 2026 16:54:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A92DE70D;
+	Tue, 17 Mar 2026 16:54:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766458; cv=none; b=Ba2Pu1o1EnbsqmRjO//EfJnt+raPvEc7HAj80XSYvKrR8sE30DtDlMUWlI7tl0neBwkmzKPrpKtQwnkdOqg+ZHwaWfs7BvFxNfLzltKTBgNSBs64cuABoH5nv+K6tCZp79OU18zFgfDFisqy8gluS8sJnzTcFGSEA/JPKhOAAes=
+	t=1773766462; cv=none; b=IBzl7Ac1hrYdftPeiNCvxkOAHcRymZYj3kaFLDNLHYGX9I5F+ZRuRgFghtJ8GEj0a3pJIdiuXITR1NbA/XfMMDu/eEmAyJClvgCbXIM3DxZjxetKFckCv6SEc7m4jp0T1csYX/oDfv8rLB9TRAUDb1E9QHekpq46n/R1gdnRGc4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766458; c=relaxed/simple;
-	bh=9BgEFwl7QdL9mLHHGqJqDU4PpPHEGX0pmN8yHK62ZIM=;
+	s=arc-20240116; t=1773766462; c=relaxed/simple;
+	bh=FC618fzOw8gLxXKwikkNvPlRMbHAE4UY46PXpG0TLAA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pjthKGpBhLQnWOWmgxjDSl7d6qoBTGJlvg+AHky7GZhFffEgZuvJ+f9aY54DTsfJ0jxQTbZKabG3r1YGL8ahe91cllQ04sAdtBWihmmLZTI4jGwTyzP/+OElZzXKTD/MDi9j/KV4woXF9Ro0l3vsDHgvhuFpEtDGtylJ5O2TiKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OUiQ+Bm8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IYSTz8kK2VKZnYYm9k8rZShJVy40hKHu+KS4SRAQ2m/ezWh4YQ5qZ0BoRWKZAoZEFX7i4RJR2nEbWcy+U4uvAPHRKevgruiFBnzIBxei6xeB2Gsg2BrE0InR+1tqn5XOtN9MinNQojaq6+OL8e1J0R+PB2KTaJC6b5rts8k0+F0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=siGMNNZk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OUiQ+Bm8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7ABB7C4CEF7;
-	Tue, 17 Mar 2026 16:54:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="siGMNNZk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6138C4CEF7;
+	Tue, 17 Mar 2026 16:54:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766458;
-	bh=9BgEFwl7QdL9mLHHGqJqDU4PpPHEGX0pmN8yHK62ZIM=;
+	s=korg; t=1773766462;
+	bh=FC618fzOw8gLxXKwikkNvPlRMbHAE4UY46PXpG0TLAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OUiQ+Bm8bzhEm3RtR7vWBEd3nzKyqJ8uP05VIFX7sumVdlk7vwMeCxJuKIXhdnjSA
-	 EfLmZ8e++fsH6Ud1bD8PUd6/6OlBczvlCQINK2q3GBxBhX71T2o6JicFKsFniTYm44
-	 pc7k4VZ1OPDsVno+szESv8AZBRWTWxC07OTjjUgA=
+	b=siGMNNZkoJ331LQBCDLc6Y/0hQpItLye2tfyWkLHiT4LkeMMhay2S8MfoVkOdXWuD
+	 uQvz8aO5qrOwaRhfDXErgrxczW9feoY+0LYE4YEzygC7b3TWVaOd+iC8bIBTSElh0I
+	 vC0GuJ91no15oV8ESNMpQTJlSu4amssPYpwJxuMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 251/378] mm/damon/core: clear walk_control on inactive context in damos_walk()
-Date: Tue, 17 Mar 2026 17:33:28 +0100
-Message-ID: <20260317163016.254629637@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	David Hildenbrand <david@kernel.org>
+Subject: [PATCH 6.19 234/378] arm64: gcs: Honour mprotect(PROT_NONE) on shadow stack mappings
+Date: Tue, 17 Mar 2026 17:33:11 +0100
+Message-ID: <20260317163015.622701909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -45,77 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit d210fdcac9c0d1380eab448aebc93f602c1cd4e6 upstream.
+commit 47a8aad135ac1aed04b7b0c0a8157fd208075827 upstream.
 
-damos_walk() sets ctx->walk_control to the caller-provided control
-structure before checking whether the context is running.  If the context
-is inactive (damon_is_running() returns false), the function returns
--EINVAL without clearing ctx->walk_control.  This leaves a dangling
-pointer to a stack-allocated structure that will be freed when the caller
-returns.
+vm_get_page_prot() short-circuits the protection_map[] lookup for a
+VM_SHADOW_STACK mapping since it uses a different PIE index from the
+typical read/write/exec permissions. However, the side effect is that it
+also ignores mprotect(PROT_NONE) by creating an accessible PTE.
 
-This is structurally identical to the bug fixed in commit f9132fbc2e83
-("mm/damon/core: remove call_control in inactive contexts") for
-damon_call(), which had the same pattern of linking a control object and
-returning an error without unlinking it.
+Special-case the !(vm_flags & VM_ACCESS_FLAGS) flags to use the
+protection_map[VM_NONE] permissions instead. No GCS attributes are
+required for an inaccessible PTE.
 
-The dangling walk_control pointer can cause:
-1. Use-after-free if the context is later started and kdamond
-   dereferences ctx->walk_control (e.g., in damos_walk_cancel()
-   which writes to control->canceled and calls complete())
-2. Permanent -EBUSY from subsequent damos_walk() calls, since the
-   stale pointer is non-NULL
-
-Nonetheless, the real user impact is quite restrictive.  The
-use-after-free is impossible because there is no damos_walk() callers who
-starts the context later.  The permanent -EBUSY can actually confuse
-users, as DAMON is not running.  But the symptom is kept only while the
-context is turned off.  Turning it on again will make DAMON internally
-uses a newly generated damon_ctx object that doesn't have the invalid
-damos_walk_control pointer, so everything will work fine again.
-
-Fix this by clearing ctx->walk_control under walk_control_lock before
-returning -EINVAL, mirroring the fix pattern from f9132fbc2e83.
-
-Link: https://lkml.kernel.org/r/20260224011102.56033-1-sj@kernel.org
-Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-Reported-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
-Closes: https://lore.kernel.org/CPUPR80MB8171025468965E583EF2490F956CA@CPUPR80MB8171.lamprd80.prod.outlook.com
-Signed-off-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.14+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 6497b66ba694 ("arm64/mm: Map pages for guarded control stack")
+Cc: stable@vger.kernel.org
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ arch/arm64/mm/mmap.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1531,8 +1531,13 @@ int damos_walk(struct damon_ctx *ctx, st
- 	}
- 	ctx->walk_control = control;
- 	mutex_unlock(&ctx->walk_control_lock);
--	if (!damon_is_running(ctx))
-+	if (!damon_is_running(ctx)) {
-+		mutex_lock(&ctx->walk_control_lock);
-+		if (ctx->walk_control == control)
-+			ctx->walk_control = NULL;
-+		mutex_unlock(&ctx->walk_control_lock);
- 		return -EINVAL;
-+	}
- 	wait_for_completion(&control->completion);
- 	if (control->canceled)
- 		return -ECANCELED;
+--- a/arch/arm64/mm/mmap.c
++++ b/arch/arm64/mm/mmap.c
+@@ -91,7 +91,11 @@ pgprot_t vm_get_page_prot(vm_flags_t vm_
+ 
+ 	/* Short circuit GCS to avoid bloating the table. */
+ 	if (system_supports_gcs() && (vm_flags & VM_SHADOW_STACK)) {
+-		prot = gcs_page_prot;
++		/* Honour mprotect(PROT_NONE) on shadow stack mappings */
++		if (vm_flags & VM_ACCESS_FLAGS)
++			prot = gcs_page_prot;
++		else
++			prot = pgprot_val(protection_map[VM_NONE]);
+ 	} else {
+ 		prot = pgprot_val(protection_map[vm_flags &
+ 				   (VM_READ|VM_WRITE|VM_EXEC|VM_SHARED)]);
 
 
