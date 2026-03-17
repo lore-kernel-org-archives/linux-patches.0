@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC82C3EB7F1;
-	Tue, 17 Mar 2026 16:39:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EF53EB7F1;
+	Tue, 17 Mar 2026 16:39:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765544; cv=none; b=djJbGSqvyuZedeToYdtSprKE/hEGNbLzK52fPDnhIEiFO0jfaTG8WPuZzXos+KsaM9o5KgTodZZj6bM/BjbNzgJNLwL5XOfwBnjggT3lPvEYBbsxZA6K5sQW+ICegOCgI6Yvg+1rKmv1NkHfXX9msVwBUpnyBf6uUSGtMxj4GGo=
+	t=1773765549; cv=none; b=ed62j2r0DFdFK33n6+KvsueKeRuFhCGExXyAiyPj5gFTY6ec0H9M1Ksm4+vVPNLgfu8b1+k5VuPOeEzeo4DKL4J4O8QmLGXUj8tgCaOseZtu3wYDugxp8+iHAjh6eSXkf+gnmLdlSiLSVmvUpQCmxzbB2LBM1VxDmJBikttEoHw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765544; c=relaxed/simple;
-	bh=KrrXn/9EkxXCzfkyPsUtAQn0/5L3nMfDkiyeUJwEMng=;
+	s=arc-20240116; t=1773765549; c=relaxed/simple;
+	bh=zc4yEEar0XbTS3qKtFGjfWmuijB4il1JLc+qAE66y70=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XraDUfeZwZDwdeuxbwIfAsbwARC/cBqCd9ILmI+BDAfhkSN4f+5i2QUuMj2zUK6S5EVRsd6a3W6/5kAA95ZBpogxhWlmnpH8yQehxrz/2SWA0+q2XlEKZVPQsUiqghjkaoNZwRQYBQCIrxPFtYRsZKt2WC6fqrOX2R6DLY3eGU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pf4FmZHu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C6uz1Za7xkfftTQw8xd8Kf1dyRKSJGrMTbRFhbwb9F1RDtse3BaTo4ASKt/EFCjnlozfcTXwjz+h/osdxf4hhUPYI/+UsuIyc5AtIZb/b4MiV93HtGrGKpezk0/v2flK02DHAe8bLvUKUBM2GjFcQB+E+s2Uq4Sl3zpu+Oqw2UE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z58wO7PU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pf4FmZHu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17057C4CEF7;
-	Tue, 17 Mar 2026 16:39:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z58wO7PU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B308C4CEF7;
+	Tue, 17 Mar 2026 16:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765544;
-	bh=KrrXn/9EkxXCzfkyPsUtAQn0/5L3nMfDkiyeUJwEMng=;
+	s=korg; t=1773765548;
+	bh=zc4yEEar0XbTS3qKtFGjfWmuijB4il1JLc+qAE66y70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pf4FmZHujs/sRpjWAFrBh9UkUINj1XOqlRc0swflmd6lUBcqemobNBW7nG94RGUKd
-	 c1N8KrqXF0toqgQjqPRE0COSJMF56qV08KhvYSKJM+yqyzFRkOE3hJ1ircg55Bhgt7
-	 ved6J2NT4qXlgIiGbQAArkwICkajb+71WXpsJGjg=
+	b=Z58wO7PU7ZSmnI/hcWl38LfIKUHQFS8Nq4bUtJ4zvqZt7D1b+b1UhPa1VnaamW2m4
+	 R1YFR5ct8Ec0ai/g+Pn4GXyTFS0dipYWMSiruJCR04zZQA4eLrLFBN9iu+YK4diYOU
+	 Q4Tlm3q/NuFLtvVJrykMa3O6S9VSw50N49OkAeyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 035/378] dt-bindings: display/msm: qcom,sm8750-mdss: Fix model typo
-Date: Tue, 17 Mar 2026 17:29:52 +0100
-Message-ID: <20260317163008.274542348@linuxfoundation.org>
+Subject: [PATCH 6.19 036/378] net: dsa: realtek: rtl8365mb: remove ifOutDiscards from rx_packets
+Date: Tue, 17 Mar 2026 17:29:53 +0100
+Message-ID: <20260317163008.312306595@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,36 +54,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
+From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
 
-[ Upstream commit 4355b13d46f696d687f42b982efed7570e03e532 ]
+[ Upstream commit f76a93241d71fbba8425e3967097b498c29264ed ]
 
-Fix obvious model typo (SM8650->SM8750) in the description.
+rx_packets should report the number of frames successfully received:
+unicast + multicast + broadcast. Subtracting ifOutDiscards (a TX
+counter) is incorrect and can undercount RX packets. RX drops are
+already reported via rx_dropped (e.g. etherStatsDropEvents), so
+there is no need to adjust rx_packets.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@oss.qualcomm.com>
-Fixes: 6b93840116df ("dt-bindings: display/msm: qcom,sm8750-mdss: Add SM8750")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/707192/
-Link: https://lore.kernel.org/r/20260225173419.125565-2-krzysztof.kozlowski@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+This patch removes the subtraction of ifOutDiscards from rx_packets
+in rtl8365mb_stats_update().
+
+Link: https://lore.kernel.org/netdev/878777925.105015.1763423928520@mail.yahoo.com/
+Fixes: 4af2950c50c8 ("net: dsa: realtek-smi: add rtl8365mb subdriver for RTL8365MB-VC")
+Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Acked-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260303-realtek_namiltd_fix2-v1-1-bfa433d3401e@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/realtek/rtl8365mb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml b/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
-index d55fda9a523e2..a38c2261ef1ac 100644
---- a/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/qcom,sm8750-mdss.yaml
-@@ -10,7 +10,7 @@ maintainers:
-   - Krzysztof Kozlowski <krzk@kernel.org>
+diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
+index f938a3f701cc9..31fa94dac627d 100644
+--- a/drivers/net/dsa/realtek/rtl8365mb.c
++++ b/drivers/net/dsa/realtek/rtl8365mb.c
+@@ -1480,8 +1480,7 @@ static void rtl8365mb_stats_update(struct realtek_priv *priv, int port)
  
- description:
--  SM8650 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
-+  SM8750 MSM Mobile Display Subsystem(MDSS), which encapsulates sub-blocks like
-   DPU display controller, DSI and DP interfaces etc.
+ 	stats->rx_packets = cnt[RTL8365MB_MIB_ifInUcastPkts] +
+ 			    cnt[RTL8365MB_MIB_ifInMulticastPkts] +
+-			    cnt[RTL8365MB_MIB_ifInBroadcastPkts] -
+-			    cnt[RTL8365MB_MIB_ifOutDiscards];
++			    cnt[RTL8365MB_MIB_ifInBroadcastPkts];
  
- $ref: /schemas/display/msm/mdss-common.yaml#
+ 	stats->tx_packets = cnt[RTL8365MB_MIB_ifOutUcastPkts] +
+ 			    cnt[RTL8365MB_MIB_ifOutMulticastPkts] +
 -- 
 2.51.0
 
