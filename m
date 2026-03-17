@@ -1,37 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35D3D1A9B58;
-	Tue, 17 Mar 2026 17:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04931A9B58;
+	Tue, 17 Mar 2026 17:16:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767772; cv=none; b=PeO2pWVEOz1aurxMqQ8c7UnY7CmPWWPLc14k7wo8p73c0C7nqTikNGu7bcUt4TExOS1zY8eLx/o/1mOqN1RpmAfHkTucPVc3HsPEDE1o9j4k77A5AOute3nzffRszS6UaK61SQyB5R+o+602stJ2aiuRz70iaU/t4Lz8eEY7DM4=
+	t=1773767776; cv=none; b=GJjY5A0FOJ6XnxSHFD9jdiX/QzNRyBfFnuLBNgNNSNz/pMhCc2Kjt5JCKh/Z7CdiGvls1CK6u04VpY0SDHlK5nlN8y9eN75XPJJxWjhHVXin1tvE9ki7LXjBC9isfao1aLFUtP76/2CXOMs+DWFapxPuY7CRdU7f3+iToxlbWAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767772; c=relaxed/simple;
-	bh=cloq6SJ/WqCpc2HrVIE0coNIJRvoZH35AOckQCU9qBM=;
+	s=arc-20240116; t=1773767776; c=relaxed/simple;
+	bh=l++l+rw1mqmA2z7y8XzB5UEqCjMwgpUBMM3M7l5T6/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RoDxIGmiK1Z+L/u1H7SrXQyGfBva/rG4XVe0X+zb3CLaRsebGy11lMYqzgTYBJCjjDyv7suZouy+hSjFcoK5pDT0iTPyKf8GyCxpfCmUtsq3MbWTuhbBhlFMM2j6BiODyzu8WOQHPpbR4WcMzQILcTBtqp6YLZJsQJSsDWxBRhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1oRkiin; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nfg5ZjfvmauN2KHz9nWq9EK2VagPsTjyS6zlZGZbc7Figruvt0GdcKIQ+CRSpUecGkykL9reJ0wU/oproPaFMjOPJ5pzg2l3ZZ4cQUVOCL3Kpo4nbJmgAmuN7f9yzcB3U1WEKdI3t/cY2Tb8+ZFt2n6/IRrYbPTwspteYWju0Po=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLk74DnU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1oRkiin"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79B61C4CEF7;
-	Tue, 17 Mar 2026 17:16:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLk74DnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7979C4CEF7;
+	Tue, 17 Mar 2026 17:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767772;
-	bh=cloq6SJ/WqCpc2HrVIE0coNIJRvoZH35AOckQCU9qBM=;
+	s=korg; t=1773767776;
+	bh=l++l+rw1mqmA2z7y8XzB5UEqCjMwgpUBMM3M7l5T6/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1oRkiinqP3bWZ4wphnB1D5uGRmYq8qa4ErynnnUJa1U6a7MctHoTKIdA5c003HUp
-	 3+XxCH7MJ7c0aJ91QqoPX48UDBjASr/9pbiEe82qrP2cq5d0NdH+wZOw1V1MgD8/dg
-	 WHyqIBL7QRtaXyTdyCyZaSJf/x52N0fdm5Vcfgfw=
+	b=nLk74DnUaBIfuZ52tsAoKVZtKIQ6JU8NAAmhbGhMZaPP9K4DX82F6iwLpdJIdwdj5
+	 umzNbvp7AsoG00yR1q3INmqZTAoga0xRx4r1utQQAdNdbwJUCn+gYVAmkSae+xnFDP
+	 AVhkP1qChJGfPPiEXu1YjekveAnA1MYhiZbwNvQ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Kuen-Han Tsai <khtsai@google.com>
-Subject: [PATCH 6.18 155/333] usb: gadget: f_ncm: Fix net_device lifecycle with device_move
-Date: Tue, 17 Mar 2026 17:33:04 +0100
-Message-ID: <20260317163005.107844731@linuxfoundation.org>
+	Kalesh Singh <kaleshsingh@google.com>,
+	Zi Yan <ziy@nvidia.com>,
+	SeongJae Park <sj@kernel.org>,
+	Pedro Falcato <pfalcato@suse.de>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Minchan Kim <minchan@kernel.org>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Suren Baghdasaryan <surenb@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 156/333] mm/tracing: rss_stat: ensure curr is false from kthread context
+Date: Tue, 17 Mar 2026 17:33:05 +0100
+Message-ID: <20260317163005.144680485@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,208 +59,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuen-Han Tsai <khtsai@google.com>
+From: Kalesh Singh <kaleshsingh@google.com>
 
-commit ec35c1969650e7cb6c8a91020e568ed46e3551b0 upstream.
+commit 079c24d5690262e83ee476e2a548e416f3237511 upstream.
 
-The network device outlived its parent gadget device during
-disconnection, resulting in dangling sysfs links and null pointer
-dereference problems.
+The rss_stat trace event allows userspace tools, like Perfetto [1], to
+inspect per-process RSS metric changes over time.
 
-A prior attempt to solve this by removing SET_NETDEV_DEV entirely [1]
-was reverted due to power management ordering concerns and a NO-CARRIER
-regression.
+The curr field was introduced to rss_stat in commit e4dcad204d3a
+("rss_stat: add support to detect RSS updates of external mm").  Its
+intent is to indicate whether the RSS update is for the mm_struct of the
+current execution context; and is set to false when operating on a remote
+mm_struct (e.g., via kswapd or a direct reclaimer).
 
-A subsequent attempt to defer net_device allocation to bind [2] broke
-1:1 mapping between function instance and network device, making it
-impossible for configfs to report the resolved interface name. This
-results in a regression where the DHCP server fails on pmOS.
+However, an issue arises when a kernel thread temporarily adopts a user
+process's mm_struct.  Kernel threads do not have their own mm_struct and
+normally have current->mm set to NULL.  To operate on user memory, they
+can "borrow" a memory context using kthread_use_mm(), which sets
+current->mm to the user process's mm.
 
-Use device_move to reparent the net_device between the gadget device and
-/sys/devices/virtual/ across bind/unbind cycles. This preserves the
-network interface across USB reconnection, allowing the DHCP server to
-retain their binding.
+This can be observed, for example, in the USB Function Filesystem (FFS)
+driver.  The ffs_user_copy_worker() handles AIO completions and uses
+kthread_use_mm() to copy data to a user-space buffer.  If a page fault
+occurs during this copy, the fault handler executes in the kthread's
+context.
 
-Introduce gether_attach_gadget()/gether_detach_gadget() helpers and use
-__free(detach_gadget) macro to undo attachment on bind failure. The
-bind_count ensures device_move executes only on the first bind.
+At this point, current is the kthread, but current->mm points to the user
+process's mm.  Since the rss_stat event (from the page fault) is for that
+same mm, the condition current->mm == mm becomes true, causing curr to be
+incorrectly set to true when the trace event is emitted.
 
-[1] https://lore.kernel.org/lkml/f2a4f9847617a0929d62025748384092e5f35cce.camel@crapouillou.net/
-[2] https://lore.kernel.org/linux-usb/795ea759-7eaf-4f78-81f4-01ffbf2d7961@ixit.cz/
+This is misleading because it suggests the mm belongs to the kthread,
+confusing userspace tools that track per-process RSS changes and
+corrupting their mm_id-to-process association.
 
-Fixes: 40d133d7f542 ("usb: gadget: f_ncm: convert to new function interface with backward compatibility")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
-Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-7-ea2afbc7d9b2@google.com
+Fix this by ensuring curr is always false when the trace event is emitted
+from a kthread context by checking for the PF_KTHREAD flag.
+
+Link: https://lkml.kernel.org/r/20260219233708.1971199-1-kaleshsingh@google.com
+Link: https://perfetto.dev/ [1]
+Fixes: e4dcad204d3a ("rss_stat: add support to detect RSS updates of external mm")
+Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
+Acked-by: Zi Yan <ziy@nvidia.com>
+Acked-by: SeongJae Park <sj@kernel.org>
+Reviewed-by: Pedro Falcato <pfalcato@suse.de>
+Cc: "David Hildenbrand (Arm)" <david@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
+Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Minchan Kim <minchan@kernel.org>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Suren Baghdasaryan <surenb@google.com>
+Cc: <stable@vger.kernel.org>	[5.10+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c   |   38 ++++++++++++++++++++++------------
- drivers/usb/gadget/function/u_ether.c |   22 +++++++++++++++++++
- drivers/usb/gadget/function/u_ether.h |   26 +++++++++++++++++++++++
- drivers/usb/gadget/function/u_ncm.h   |    2 -
- 4 files changed, 74 insertions(+), 14 deletions(-)
+ include/trace/events/kmem.h |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -1439,6 +1439,7 @@ static int ncm_bind(struct usb_configura
- 	struct f_ncm_opts	*ncm_opts;
+--- a/include/trace/events/kmem.h
++++ b/include/trace/events/kmem.h
+@@ -440,7 +440,13 @@ TRACE_EVENT(rss_stat,
  
- 	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
-+	struct net_device		*net __free(detach_gadget) = NULL;
- 	struct usb_request		*request __free(free_usb_request) = NULL;
- 
- 	if (!can_support_ecm(cdev->gadget))
-@@ -1452,18 +1453,19 @@ static int ncm_bind(struct usb_configura
- 			return -ENOMEM;
- 	}
- 
--	mutex_lock(&ncm_opts->lock);
--	gether_set_gadget(ncm_opts->net, cdev->gadget);
--	if (!ncm_opts->bound) {
--		ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
--		status = gether_register_netdev(ncm_opts->net);
--	}
--	mutex_unlock(&ncm_opts->lock);
--
--	if (status)
--		return status;
--
--	ncm_opts->bound = true;
-+	scoped_guard(mutex, &ncm_opts->lock)
-+		if (ncm_opts->bind_count == 0) {
-+			if (!device_is_registered(&ncm_opts->net->dev)) {
-+				ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
-+				gether_set_gadget(ncm_opts->net, cdev->gadget);
-+				status = gether_register_netdev(ncm_opts->net);
-+			} else
-+				status = gether_attach_gadget(ncm_opts->net, cdev->gadget);
-+
-+			if (status)
-+				return status;
-+			net = ncm_opts->net;
-+		}
- 
- 	ncm_string_defs[1].s = ncm->ethaddr;
- 
-@@ -1564,6 +1566,9 @@ static int ncm_bind(struct usb_configura
- 	}
- 	ncm->notify_req = no_free_ptr(request);
- 
-+	ncm_opts->bind_count++;
-+	retain_and_null_ptr(net);
-+
- 	DBG(cdev, "CDC Network: IN/%s OUT/%s NOTIFY/%s\n",
- 			ncm->port.in_ep->name, ncm->port.out_ep->name,
- 			ncm->notify->name);
-@@ -1655,7 +1660,7 @@ static void ncm_free_inst(struct usb_fun
- 	struct f_ncm_opts *opts;
- 
- 	opts = container_of(f, struct f_ncm_opts, func_inst);
--	if (opts->bound)
-+	if (device_is_registered(&opts->net->dev))
- 		gether_cleanup(netdev_priv(opts->net));
- 	else
- 		free_netdev(opts->net);
-@@ -1718,9 +1723,12 @@ static void ncm_free(struct usb_function
- static void ncm_unbind(struct usb_configuration *c, struct usb_function *f)
- {
- 	struct f_ncm *ncm = func_to_ncm(f);
-+	struct f_ncm_opts *ncm_opts;
- 
- 	DBG(c->cdev, "ncm unbind\n");
- 
-+	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
-+
- 	hrtimer_cancel(&ncm->task_timer);
- 
- 	kfree(f->os_desc_table);
-@@ -1736,6 +1744,10 @@ static void ncm_unbind(struct usb_config
- 
- 	kfree(ncm->notify_req->buf);
- 	usb_ep_free_request(ncm->notify, ncm->notify_req);
-+
-+	ncm_opts->bind_count--;
-+	if (ncm_opts->bind_count == 0)
-+		gether_detach_gadget(ncm_opts->net);
- }
- 
- static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
---- a/drivers/usb/gadget/function/u_ether.c
-+++ b/drivers/usb/gadget/function/u_ether.c
-@@ -896,6 +896,28 @@ void gether_set_gadget(struct net_device
- }
- EXPORT_SYMBOL_GPL(gether_set_gadget);
- 
-+int gether_attach_gadget(struct net_device *net, struct usb_gadget *g)
-+{
-+	int ret;
-+
-+	ret = device_move(&net->dev, &g->dev, DPM_ORDER_DEV_AFTER_PARENT);
-+	if (ret)
-+		return ret;
-+
-+	gether_set_gadget(net, g);
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(gether_attach_gadget);
-+
-+void gether_detach_gadget(struct net_device *net)
-+{
-+	struct eth_dev *dev = netdev_priv(net);
-+
-+	device_move(&net->dev, NULL, DPM_ORDER_NONE);
-+	dev->gadget = NULL;
-+}
-+EXPORT_SYMBOL_GPL(gether_detach_gadget);
-+
- int gether_set_dev_addr(struct net_device *net, const char *dev_addr)
- {
- 	struct eth_dev *dev;
---- a/drivers/usb/gadget/function/u_ether.h
-+++ b/drivers/usb/gadget/function/u_ether.h
-@@ -151,6 +151,32 @@ static inline struct net_device *gether_
- void gether_set_gadget(struct net_device *net, struct usb_gadget *g);
- 
- /**
-+ * gether_attach_gadget - Reparent net_device to the gadget device.
-+ * @net: The network device to reparent.
-+ * @g: The target USB gadget device to parent to.
-+ *
-+ * This function moves the network device to be a child of the USB gadget
-+ * device in the device hierarchy. This is typically done when the function
-+ * is bound to a configuration.
-+ *
-+ * Returns 0 on success, or a negative error code on failure.
-+ */
-+int gether_attach_gadget(struct net_device *net, struct usb_gadget *g);
-+
-+/**
-+ * gether_detach_gadget - Detach net_device from its gadget parent.
-+ * @net: The network device to detach.
-+ *
-+ * This function moves the network device to be a child of the virtual
-+ * devices parent, effectively detaching it from the USB gadget device
-+ * hierarchy. This is typically done when the function is unbound
-+ * from a configuration but the instance is not yet freed.
-+ */
-+void gether_detach_gadget(struct net_device *net);
-+
-+DEFINE_FREE(detach_gadget, struct net_device *, if (_T) gether_detach_gadget(_T))
-+
-+/**
-  * gether_set_dev_addr - initialize an ethernet-over-usb link with eth address
-  * @net: device representing this link
-  * @dev_addr: eth address of this device
---- a/drivers/usb/gadget/function/u_ncm.h
-+++ b/drivers/usb/gadget/function/u_ncm.h
-@@ -18,7 +18,7 @@
- struct f_ncm_opts {
- 	struct usb_function_instance	func_inst;
- 	struct net_device		*net;
--	bool				bound;
-+	int				bind_count;
- 
- 	struct config_group		*ncm_interf_group;
- 	struct usb_os_desc		ncm_os_desc;
+ 	TP_fast_assign(
+ 		__entry->mm_id = mm_ptr_to_hash(mm);
+-		__entry->curr = !!(current->mm == mm);
++		/*
++		 * curr is true if the mm matches the current task's mm_struct.
++		 * Since kthreads (PF_KTHREAD) have no mm_struct of their own
++		 * but can borrow one via kthread_use_mm(), we must filter them
++		 * out to avoid incorrectly attributing the RSS update to them.
++		 */
++		__entry->curr = current->mm == mm && !(current->flags & PF_KTHREAD);
+ 		__entry->member = member;
+ 		__entry->size = (percpu_counter_sum_positive(&mm->rss_stat[member])
+ 							    << PAGE_SHIFT);
 
 
