@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270C93F6605;
-	Tue, 17 Mar 2026 17:09:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8B23F65FC;
+	Tue, 17 Mar 2026 17:09:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767385; cv=none; b=EDboKH16LeXNeYZDoUxw3d7ZNuSqS9VvjJ8dEAfb7WKTMK6AYUfro2OB8sxndeKFEiSlHBgB4b6TthDWnV9f3nPUD1glWx9U8mSiaG+Q34QWPRl5fBmwGz6jxEy/rmHFcCevQ9aNVpP2YWIh3dpadtbiPgPHeqVri9lxT5TQ0uY=
+	t=1773767389; cv=none; b=PbmUTK4PMi8c8jPGTwyTIXaplhGiyEMW3C/m1DRLIFEYH215GN4r8D+qnNIKuYvHhwk2i3gg81dojsAfJgQCkjQF5Wk0OwM4NRbHQW9MOGhI9W0JWJTnb9C1NKT2AxY4sOqQJCjOPan5fngQnGtN2gp8epsiznA6a3XoGC1WwjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767385; c=relaxed/simple;
-	bh=SHocelXTFFsDk3SgcaPfYIEvwATlhqhWrRFM0DAof48=;
+	s=arc-20240116; t=1773767389; c=relaxed/simple;
+	bh=SquOo5i7H2IaPJ4aOyWyLPc3j3T0EHM/Mn89pFneAQQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iBcGk1mCEPh0+6e+j2AZEd/EftjSlxVp9Z8hRSVmh27h8yU+XzdZjuIsbWPH00N7VKv9Q3ZfJ6r7HZ4SqTEvwwChMZNvCn/SSwSWG0Tk5VPjafZKLBIsEjRDSHOHjaMM3X6/kgQImN6Ctd0MRdvHKQBWTe2K4hpjc5Yuq1GIhJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PghUPrnD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rClpQpecCLWc9Q/MzSi51DUkbg5HFLpRgwRKIKfwfQeeAhN4b2JthYfrlEJC2fx3zOPpmEmFSVaG/ne2dBH9Jn2Nwdxh6iR1cAseF5QduHFHFuPWuCZLV0/UgJzwKY+vEvLe3693e0FXnCy8zMDimZvNDVCvZNHwJjpPE7ulR+E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kk8zIP35; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PghUPrnD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE9CC19424;
-	Tue, 17 Mar 2026 17:09:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kk8zIP35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 175F4C19424;
+	Tue, 17 Mar 2026 17:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767384;
-	bh=SHocelXTFFsDk3SgcaPfYIEvwATlhqhWrRFM0DAof48=;
+	s=korg; t=1773767389;
+	bh=SquOo5i7H2IaPJ4aOyWyLPc3j3T0EHM/Mn89pFneAQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PghUPrnDF9jRvB4Z27ub50nyYKSzAsMyXHmJrIfG/Rf26VZownB6GxQIoiIK3Ksck
-	 2B5oYnjtxGIYBJToANvIEUc9URfWwLuUCcX8U+WMgUbo0ERk2qC0m8Z1l3B4zPv0BE
-	 mHyGnwzZ0cSxxh3fDLOYNA+jVxLpQ2VPUqah7QMA=
+	b=Kk8zIP3505cah5lg2g5D0XVgt+0FpK/wznmRv1cEXUm6sLcPjECnxIak0adboZ0/F
+	 B3P2N6buVP0qoqyE/DlJiEVd/bDUD5RmP0c0peadRimqqBHs0RcZYGOB/xL2+hfrUw
+	 6geh8URN9mmuSNxV0QtlSsjuh49qe+ImvAcf9LdA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Ian Rogers <irogers@google.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 068/333] netfilter: nft_set_pipapo: fix stack out-of-bounds read in pipapo_drop()
-Date: Tue, 17 Mar 2026 17:31:37 +0100
-Message-ID: <20260317163001.899058237@linuxfoundation.org>
+Subject: [PATCH 6.18 077/333] perf ftrace: Fix hashmap__new() error checking
+Date: Tue, 17 Mar 2026 17:31:46 +0100
+Message-ID: <20260317163002.231620260@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,62 +60,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit d6d8cd2db236a9dd13dbc2d05843b3445cc964b5 ]
+[ Upstream commit be34705aa527872e5ce83927b7bc9307ba8095ca ]
 
-pipapo_drop() passes rulemap[i + 1].n to pipapo_unmap() as the
-to_offset argument on every iteration, including the last one where
-i == m->field_count - 1. This reads one element past the end of the
-stack-allocated rulemap array (declared as rulemap[NFT_PIPAPO_MAX_FIELDS]
-with NFT_PIPAPO_MAX_FIELDS == 16).
+The hashmap__new() function never returns NULL, it returns error
+pointers. Fix the error checking to match.
 
-Although pipapo_unmap() returns early when is_last is true without
-using the to_offset value, the argument is evaluated at the call site
-before the function body executes, making this a genuine out-of-bounds
-stack read confirmed by KASAN:
+Additionally, set ftrace->profile_hash to NULL on error, and return the
+exact error code from hashmap__new().
 
-  BUG: KASAN: stack-out-of-bounds in pipapo_drop+0x50c/0x57c [nf_tables]
-  Read of size 4 at addr ffff8000810e71a4
-
-  This frame has 1 object:
-   [32, 160) 'rulemap'
-
-  The buggy address is at offset 164 -- exactly 4 bytes past the end
-  of the rulemap array.
-
-Pass 0 instead of rulemap[i + 1].n on the last iteration to avoid
-the out-of-bounds read.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 0f223813edd051a5 ("perf ftrace: Add 'profile' command")
+Suggested-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/perf/builtin-ftrace.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index d9b74d588c768..394b78a00a6a5 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1641,6 +1641,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
- 	int i;
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index 6b6eec65f93f5..4cc33452d79b6 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -18,6 +18,7 @@
+ #include <poll.h>
+ #include <ctype.h>
+ #include <linux/capability.h>
++#include <linux/err.h>
+ #include <linux/string.h>
+ #include <sys/stat.h>
  
- 	nft_pipapo_for_each_field(f, i, m) {
-+		bool last = i == m->field_count - 1;
- 		int g;
+@@ -1209,8 +1210,12 @@ static int prepare_func_profile(struct perf_ftrace *ftrace)
+ 	ftrace->graph_verbose = 0;
  
- 		for (g = 0; g < f->groups; g++) {
-@@ -1660,7 +1661,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
- 		}
+ 	ftrace->profile_hash = hashmap__new(profile_hash, profile_equal, NULL);
+-	if (ftrace->profile_hash == NULL)
+-		return -ENOMEM;
++	if (IS_ERR(ftrace->profile_hash)) {
++		int err = PTR_ERR(ftrace->profile_hash);
++
++		ftrace->profile_hash = NULL;
++		return err;
++	}
  
- 		pipapo_unmap(f->mt, f->rules, rulemap[i].to, rulemap[i].n,
--			     rulemap[i + 1].n, i == m->field_count - 1);
-+			     last ? 0 : rulemap[i + 1].n, last);
- 		if (pipapo_resize(f, f->rules, f->rules - rulemap[i].n)) {
- 			/* We can ignore this, a failure to shrink tables down
- 			 * doesn't make tables invalid.
+ 	return 0;
+ }
 -- 
 2.51.0
 
