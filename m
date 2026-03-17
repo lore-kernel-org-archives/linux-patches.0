@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D56D2F83A2;
-	Tue, 17 Mar 2026 16:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB2D3EC2EA;
+	Tue, 17 Mar 2026 16:37:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765459; cv=none; b=Zi87dO7KD4kLYaSVdaS+HhqRK3H1X5SvI6gHnYnJRgFDyGZ4rTWc+vqzwMevYZeAL0y8JNxxOEoWF3WT/Q0QNmmGF3bbHodbLdamLhH1oZ2THHdTLjtcJpf/OHeMM5fyWzWc8uU1xxdQzB/2b1LgJ4HxmBtZ7GYsi3nMcUJK0f0=
+	t=1773765464; cv=none; b=d66rcQzKp6y6j828Vz8fPZQhD7jPFR98X/djmVgnN/4Ts2irXLQmZUZogpu9pHddFFFaMAnLnSVBERXvpaxxi1uBHZJsL34ctyBQNG8QTKqzJBmxTSY2RIOi1qJe/VQ6YLIfqpkW+wISSDtWtOrvalGvYBmURVLwlc5Lvb5f9Ks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765459; c=relaxed/simple;
-	bh=+r0dWqhqBmSoYxWY5Qgh6WrFV0W0sBrAj7h6w0MQGY8=;
+	s=arc-20240116; t=1773765464; c=relaxed/simple;
+	bh=TzMBZvDDeK05ZzI2Kjsl70nMWMh1Ji3e7oqNwSliVgY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RDIOX3tnQTu320Y7cIWwzcCCDw8Cv59IB5lL9EbwK6vl9/1uQ7T5pLLI8CP6UwtosiBtLL3GQY28TdZQ+Kh1PKPxDb+kwht1fwJ2puhV1n+gxRNDZjacmBB8e3gO9PvRYIYjunL/flxY9pDNe2wVg6+Ip/bqSGhDNMw0iw/GLVc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ghc7Akgh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OMxNjA2d84/yBH/LD4LOnvoITJKBpa9dy8S94f1KH077AIYfvnxKMDCdZ7Sp6hNOQNbwRZfhhqSWSYUrAFgZUGfZFJM1u98BPw8aaoABb20szJUGnu7ANzg9IiXw8bvHp0yHgjFJIedXloMGMMBCBIWbUEthV/g7XUv9Ir2rWUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rnyaS9KC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ghc7Akgh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94264C4CEF7;
-	Tue, 17 Mar 2026 16:37:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rnyaS9KC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0ECFC4CEF7;
+	Tue, 17 Mar 2026 16:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765459;
-	bh=+r0dWqhqBmSoYxWY5Qgh6WrFV0W0sBrAj7h6w0MQGY8=;
+	s=korg; t=1773765463;
+	bh=TzMBZvDDeK05ZzI2Kjsl70nMWMh1Ji3e7oqNwSliVgY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ghc7AkghwJDSqqROhpHoPQr7Jh5AgS58khSfX0VJSS87Uiys13VgOlUcVJcXNkTHG
-	 99b+f73kERP19VSCFbcxmkkZglTqWODG7OuGOocImmiaTaECEtqPCvcdGxLnGJnxFB
-	 uwN4CX77a/0j5IC15ba7vErkXLS+d9PYRRVChqCg=
+	b=rnyaS9KC2+LTBWP1fyh/XrxB+DWqzQyolQcg/RdjfJJIIC3lvZ7IuRADRt38sMFCg
+	 iBbTyD0PKpU7r0Uy1Gp+poyVnQNFU0ib5FhVqdgWzhIGctj+5EcljpkVhx6GHVHU7q
+	 o2VwIl6HIVNhqG5dpMn7QMWGA0Gw4Riplfgg3cMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramanathan Choodamani <quic_rchoodam@quicinc.com>,
-	Aishwarya R <aishwarya.r@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sofia Schneider <sofia@schn.dev>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 016/378] wifi: mac80211: set default WMM parameters on all links
-Date: Tue, 17 Mar 2026 17:29:33 +0100
-Message-ID: <20260317163007.572435721@linuxfoundation.org>
+Subject: [PATCH 6.19 017/378] ACPI: OSI: Add DMI quirk for Acer Aspire One D255
+Date: Tue, 17 Mar 2026 17:29:34 +0100
+Message-ID: <20260317163007.608989716@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,50 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ramanathan Choodamani <quic_rchoodam@quicinc.com>
+From: Sofia Schneider <sofia@schn.dev>
 
-[ Upstream commit 2259d14499d16b115ef8d5d2ddc867e2be7cb5b5 ]
+[ Upstream commit 5ede90206273ff156a778254f0f972a55e973c89 ]
 
-Currently, mac80211 only initializes default WMM parameters
-on the deflink during do_open(). For MLO cases, this
-leaves the additional links without proper WMM defaults
-if hostapd does not supply per-link WMM parameters, leading
-to inconsistent QoS behavior across links.
+The screen backlight turns off during boot (specifically during udev device
+initialization) when returning true for _OSI("Windows 2009").
 
-Set default WMM parameters for each link during
-ieee80211_vif_update_links(), because this ensures all
-individual links in an MLD have valid WMM settings during
-bring-up and behave consistently across different BSS.
+Analyzing the device's DSDT reveals that the firmware takes a different
+code path when Windows 7 is reported, which leads to the backlight shutoff.
+Add a DMI quirk to invoke dmi_disable_osi_win7 for this model.
 
-Signed-off-by: Ramanathan Choodamani <quic_rchoodam@quicinc.com>
-Signed-off-by: Aishwarya R <aishwarya.r@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260205094216.3093542-1-aishwarya.r@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sofia Schneider <sofia@schn.dev>
+Link: https://patch.msgid.link/20260223025240.518509-1-sofia@schn.dev
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/link.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/acpi/osi.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/net/mac80211/link.c b/net/mac80211/link.c
-index 1e05845872afc..b659497680b51 100644
---- a/net/mac80211/link.c
-+++ b/net/mac80211/link.c
-@@ -281,6 +281,7 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
- 	struct ieee80211_bss_conf *old[IEEE80211_MLD_MAX_NUM_LINKS];
- 	struct ieee80211_link_data *old_data[IEEE80211_MLD_MAX_NUM_LINKS];
- 	bool use_deflink = old_links == 0; /* set for error case */
-+	bool non_sta = sdata->vif.type != NL80211_IFTYPE_STATION;
+diff --git a/drivers/acpi/osi.c b/drivers/acpi/osi.c
+index f2c943b934be0..9470f1830ff50 100644
+--- a/drivers/acpi/osi.c
++++ b/drivers/acpi/osi.c
+@@ -389,6 +389,19 @@ static const struct dmi_system_id acpi_osi_dmi_table[] __initconst = {
+ 		},
+ 	},
  
- 	lockdep_assert_wiphy(sdata->local->hw.wiphy);
- 
-@@ -337,6 +338,7 @@ static int ieee80211_vif_update_links(struct ieee80211_sub_if_data *sdata,
- 		link = links[link_id];
- 		ieee80211_link_init(sdata, link_id, &link->data, &link->conf);
- 		ieee80211_link_setup(&link->data);
-+		ieee80211_set_wmm_default(&link->data, true, non_sta);
- 	}
- 
- 	if (new_links == 0)
++	/*
++	 * The screen backlight turns off during udev device creation
++	 * when returning true for _OSI("Windows 2009")
++	 */
++	{
++	.callback = dmi_disable_osi_win7,
++	.ident = "Acer Aspire One D255",
++	.matches = {
++		     DMI_MATCH(DMI_SYS_VENDOR, "Acer"),
++		     DMI_MATCH(DMI_PRODUCT_NAME, "AOD255"),
++		},
++	},
++
+ 	/*
+ 	 * The wireless hotkey does not work on those machines when
+ 	 * returning true for _OSI("Windows 2012")
 -- 
 2.51.0
 
