@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0163331A64;
-	Tue, 17 Mar 2026 17:23:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C310E2D73B8;
+	Tue, 17 Mar 2026 17:23:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768184; cv=none; b=JXfWDF9OLUeduZOu7VF6xKGCtvEiJPijPbI3sga+VJFHsRu8ZEmGS5SNXn56k5sXh1+hzjbX7aETHtceqwUkhe3FSnEoNYuspNMg6ctpAAgoskvvG3ZOMe73CB8b/O9kesrc7pXoLIV/2CCfDXv30oNmD7O7Z+GBRyAnhUNBpqw=
+	t=1773768187; cv=none; b=ZkZKh2GCWNidKGvyzhNRMF1TDLfcjH0wOwSZkEjhr1AxeVaX1EvTq1geYV8qe8/XUyFf/hiIqHtYcQXIke52EabK9O994/BwTaA8/fFVv5GvmcXYvBMrBnbzGdAWhPLQ7b54KxUKkVwBHKwM7UueQHXZeFTTOMNyjdrUn+8z35s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768184; c=relaxed/simple;
-	bh=SXob0keLDaAH5txR+TW2duJsvweHQcfWMf3QagB4KwA=;
+	s=arc-20240116; t=1773768187; c=relaxed/simple;
+	bh=Xj3gR+o2/+yAXjLncW+2cUzFTmd0Lgb7PtLeP0RwJr4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gtz81fubmJH9nwS0at/wGXeGl9aK0wLcBGP6MruLINaIQmAjNgxXfCqqUx/kufcZk3Yr1KQcvERfO9WYc4g3XzMCYMifvmpxC1OHe/eUuc3BhCHe5gIPUI57jdKPLXvNDM3KFp/PYmX8K1hj6ZfcXKKTS3Z5WOyV81snCW6uFYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trtPPDao; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4i58qoRuHykiU1styjpkd7UQ+acuaGOgOFMmgGdh9gt0HkeiXlPd2xZ1T5UImXEZ+cnBkT8eMs8WFRyfaK/i5Kyzaw5ClhassPqdars5dOR/riSYixS9aPeRBUMY0KuxNsFUS5AFnhuX7hhG00JjIR0rC10qQnmfyg51cv+OlI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UP+suMP4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trtPPDao"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D6AC4CEF7;
-	Tue, 17 Mar 2026 17:23:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UP+suMP4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB35C4CEF7;
+	Tue, 17 Mar 2026 17:23:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768183;
-	bh=SXob0keLDaAH5txR+TW2duJsvweHQcfWMf3QagB4KwA=;
+	s=korg; t=1773768187;
+	bh=Xj3gR+o2/+yAXjLncW+2cUzFTmd0Lgb7PtLeP0RwJr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trtPPDao0wNpyjds6QGkh71vdkrZpk2+VOmxwVjD1eRy32F9RAIpvF8SlVCoKAQ39
-	 nS+YyO6q+VKdfL0bWPDLGkQrq8SQs22Kr/y5Mt792JoWo4ohBxYTcvpWiyQWmTfESY
-	 lI7surm+BD+cbUpSwlV5PYfIRnsA0e/iE7yb/Rd4=
+	b=UP+suMP4J4BzJHBe9jorHGWijwSBeVpi/SP+1SF524fMC82E2QldcUfBNHu2Fyjw/
+	 7NNZLxLkO5Uv+7knXWQVKsVNjs7vLi/p30hez4NaRbRhAZAWdeHBzJLkaAyd+lI/AH
+	 kob0O9Lh9Np3ok2ccVdIu1p+pHsPuzXeRI0BwI1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>,
-	SeongJae Park <sj@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 208/333] mm/damon/core: clear walk_control on inactive context in damos_walk()
-Date: Tue, 17 Mar 2026 17:33:57 +0100
-Message-ID: <20260317163007.074098002@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.18 244/333] ksmbd: fix use-after-free by using call_rcu() for oplock_info
+Date: Tue, 17 Mar 2026 17:34:33 +0100
+Message-ID: <20260317163008.412863354@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -45,77 +44,120 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit d210fdcac9c0d1380eab448aebc93f602c1cd4e6 upstream.
+commit 1dfd062caa165ec9d7ee0823087930f3ab8a6294 upstream.
 
-damos_walk() sets ctx->walk_control to the caller-provided control
-structure before checking whether the context is running.  If the context
-is inactive (damon_is_running() returns false), the function returns
--EINVAL without clearing ctx->walk_control.  This leaves a dangling
-pointer to a stack-allocated structure that will be freed when the caller
-returns.
+ksmbd currently frees oplock_info immediately using kfree(), even
+though it is accessed under RCU read-side critical sections in places
+like opinfo_get() and proc_show_files().
 
-This is structurally identical to the bug fixed in commit f9132fbc2e83
-("mm/damon/core: remove call_control in inactive contexts") for
-damon_call(), which had the same pattern of linking a control object and
-returning an error without unlinking it.
+Since there is no RCU grace period delay between nullifying the pointer
+and freeing the memory, a reader can still access oplock_info
+structure after it has been freed. This can leads to a use-after-free
+especially in opinfo_get() where atomic_inc_not_zero() is called on
+already freed memory.
 
-The dangling walk_control pointer can cause:
-1. Use-after-free if the context is later started and kdamond
-   dereferences ctx->walk_control (e.g., in damos_walk_cancel()
-   which writes to control->canceled and calls complete())
-2. Permanent -EBUSY from subsequent damos_walk() calls, since the
-   stale pointer is non-NULL
+Fix this by switching to deferred freeing using call_rcu().
 
-Nonetheless, the real user impact is quite restrictive.  The
-use-after-free is impossible because there is no damos_walk() callers who
-starts the context later.  The permanent -EBUSY can actually confuse
-users, as DAMON is not running.  But the symptom is kept only while the
-context is turned off.  Turning it on again will make DAMON internally
-uses a newly generated damon_ctx object that doesn't have the invalid
-damos_walk_control pointer, so everything will work fine again.
-
-Fix this by clearing ctx->walk_control under walk_control_lock before
-returning -EINVAL, mirroring the fix pattern from f9132fbc2e83.
-
-Link: https://lkml.kernel.org/r/20260224011102.56033-1-sj@kernel.org
-Fixes: bf0eaba0ff9c ("mm/damon/core: implement damos_walk()")
-Reported-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
-Closes: https://lore.kernel.org/CPUPR80MB8171025468965E583EF2490F956CA@CPUPR80MB8171.lamprd80.prod.outlook.com
-Signed-off-by: Raul Pazemecxas De Andrade <raul_pazemecxas@hotmail.com>
-Signed-off-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: SeongJae Park <sj@kernel.org>
-Cc: <stable@vger.kernel.org>	[6.14+]
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 18b4fac5ef17 ("ksmbd: fix use-after-free in smb_break_all_levII_oplock()")
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/damon/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ fs/smb/server/oplock.c |   29 +++++++++++++++++++++--------
+ fs/smb/server/oplock.h |    5 +++--
+ 2 files changed, 24 insertions(+), 10 deletions(-)
 
---- a/mm/damon/core.c
-+++ b/mm/damon/core.c
-@@ -1526,8 +1526,13 @@ int damos_walk(struct damon_ctx *ctx, st
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -120,7 +120,7 @@ static void free_lease(struct oplock_inf
+ 	kfree(lease);
+ }
+ 
+-static void free_opinfo(struct oplock_info *opinfo)
++static void __free_opinfo(struct oplock_info *opinfo)
+ {
+ 	if (opinfo->is_lease)
+ 		free_lease(opinfo);
+@@ -129,6 +129,18 @@ static void free_opinfo(struct oplock_in
+ 	kfree(opinfo);
+ }
+ 
++static void free_opinfo_rcu(struct rcu_head *rcu)
++{
++	struct oplock_info *opinfo = container_of(rcu, struct oplock_info, rcu);
++
++	__free_opinfo(opinfo);
++}
++
++static void free_opinfo(struct oplock_info *opinfo)
++{
++	call_rcu(&opinfo->rcu, free_opinfo_rcu);
++}
++
+ struct oplock_info *opinfo_get(struct ksmbd_file *fp)
+ {
+ 	struct oplock_info *opinfo;
+@@ -176,9 +188,9 @@ void opinfo_put(struct oplock_info *opin
+ 	free_opinfo(opinfo);
+ }
+ 
+-static void opinfo_add(struct oplock_info *opinfo)
++static void opinfo_add(struct oplock_info *opinfo, struct ksmbd_file *fp)
+ {
+-	struct ksmbd_inode *ci = opinfo->o_fp->f_ci;
++	struct ksmbd_inode *ci = fp->f_ci;
+ 
+ 	down_write(&ci->m_lock);
+ 	list_add(&opinfo->op_entry, &ci->m_op_list);
+@@ -1279,20 +1291,21 @@ set_lev:
+ 	set_oplock_level(opinfo, req_op_level, lctx);
+ 
+ out:
+-	rcu_assign_pointer(fp->f_opinfo, opinfo);
+-	opinfo->o_fp = fp;
+-
+ 	opinfo_count_inc(fp);
+-	opinfo_add(opinfo);
++	opinfo_add(opinfo, fp);
++
+ 	if (opinfo->is_lease) {
+ 		err = add_lease_global_list(opinfo);
+ 		if (err)
+ 			goto err_out;
  	}
- 	ctx->walk_control = control;
- 	mutex_unlock(&ctx->walk_control_lock);
--	if (!damon_is_running(ctx))
-+	if (!damon_is_running(ctx)) {
-+		mutex_lock(&ctx->walk_control_lock);
-+		if (ctx->walk_control == control)
-+			ctx->walk_control = NULL;
-+		mutex_unlock(&ctx->walk_control_lock);
- 		return -EINVAL;
-+	}
- 	wait_for_completion(&control->completion);
- 	if (control->canceled)
- 		return -ECANCELED;
+ 
++	rcu_assign_pointer(fp->f_opinfo, opinfo);
++	opinfo->o_fp = fp;
++
+ 	return 0;
+ err_out:
+-	free_opinfo(opinfo);
++	__free_opinfo(opinfo);
+ 	return err;
+ }
+ 
+--- a/fs/smb/server/oplock.h
++++ b/fs/smb/server/oplock.h
+@@ -69,8 +69,9 @@ struct oplock_info {
+ 	struct lease		*o_lease;
+ 	struct list_head        op_entry;
+ 	struct list_head        lease_entry;
+-	wait_queue_head_t oplock_q; /* Other server threads */
+-	wait_queue_head_t oplock_brk; /* oplock breaking wait */
++	wait_queue_head_t	oplock_q; /* Other server threads */
++	wait_queue_head_t	oplock_brk; /* oplock breaking wait */
++	struct rcu_head		rcu;
+ };
+ 
+ struct lease_break_info {
 
 
