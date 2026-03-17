@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78536EABD;
-	Tue, 17 Mar 2026 17:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D46C372B38;
+	Tue, 17 Mar 2026 17:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768225; cv=none; b=hHAP3qCipKRr0PALGl7zJsZjThU4ZDbfOqzu4Qnw5BEJVpIagVcOwddk0VAcLD4xmOFlJq3gOmlboQqZ/jeYoHvlOgIPTtcGKzgInbEfo4T34a6gANYgBulB4vPVEe3rHgWzBzJdcgi4AvMBPvBWeRQlJghRbwIV/q2KJgDEpAU=
+	t=1773768230; cv=none; b=TONGbNdqy8z8Mh+J267wJpSOwLXAR2D1Wrebzk7wlz1dLruMSgQ2i0MsKSIQxKYh5p6roGDjchKIm4MPKR0rSib3fj72yfr2QXQt3QSCvE2mOGmhVJsb3MLt5pHrT/vnDcW5w5H5TNxz6ryQNAZGLNqMLBmg7HqNoXYc1AyvWyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768225; c=relaxed/simple;
-	bh=y480c/RRMSGu8HFUvSNtmsS/b8a2GU8LGM8a+qY5OJY=;
+	s=arc-20240116; t=1773768230; c=relaxed/simple;
+	bh=o8+34pHCM8Ew+po/wFPG2ejsnax8fLErSMBZr+PXqtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KQLZpdLB+/D5GVBjnLGZyW6BvPQRSWQW/zik7DuLILImm95rHftS0hVmiKlrgRte1whcEOpnqEO71uaKiXkm4X2Eo2QwK5IyM6hDiMdt63bmdyLfI0QjYjfv/tfPLF0MOnpFTgZ0txfaHDQmFFVcALJH9ZQ3LCBKOrfLMWkVk6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vYzUdqQy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NyrK94QEVea6QxwPtbpqratG7pc9pKPoI7c3GDRYjZCJ5oLY7rsauke+WGAUMazaoFParXVRg8pnZm1fE+5wWpMTnJ2lXjekTBLQcOoYgNqtpsjGmUN4AdcR5iLAekqjo4TwlTuBWMCHHRFbsUkORvg/J8g6mizz/Tb+cryiILY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X17iKAal; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vYzUdqQy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E09C4CEF7;
-	Tue, 17 Mar 2026 17:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X17iKAal"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F023C4CEF7;
+	Tue, 17 Mar 2026 17:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768225;
-	bh=y480c/RRMSGu8HFUvSNtmsS/b8a2GU8LGM8a+qY5OJY=;
+	s=korg; t=1773768229;
+	bh=o8+34pHCM8Ew+po/wFPG2ejsnax8fLErSMBZr+PXqtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYzUdqQyJmbeCnnUaNxMui5AsKuOjv1MPjEHocQlVk29qSEo0/Wl5+k4iqfnesTpP
-	 /spE0YbC36GaVflqQo4AdZ2dOmoDpwvLK58V6nW1vX8cex4+5B5Uj73r92B/qYIcoM
-	 sD4n08zvJJJPpwtzdJzM7P4b/itL328CKEJBkS4k=
+	b=X17iKAalFyWb2VY8slqATMXemgJWIMPg95Qpt7GlflKCoBGxPLjF/rTJKPXqevrCg
+	 nTq8X1FgBvJZRobe1J08ckaWLXoeKAOLcYaY4IYMM+4hwxCA0V9L+1rby38i0OqGvp
+	 UWy8HfU00fpRU5AvA6dzVb4GYX48CWf0NbPxzkBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Calvin Owens <calvin@wbinvd.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 262/333] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
-Date: Tue, 17 Mar 2026 17:34:51 +0100
-Message-ID: <20260317163009.086450832@linuxfoundation.org>
+	Johan Hovold <johan@kernel.org>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.18 245/333] net: mctp: fix device leak on probe failure
+Date: Tue, 17 Mar 2026 17:34:34 +0100
+Message-ID: <20260317163008.450773491@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,61 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Johan Hovold <johan@kernel.org>
 
-commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
+commit 224a0d284c3caf1951302d1744a714784febed71 upstream.
 
-Some of the sizing logic through tracer_alloc_buffers() uses int
-internally, causing unexpected behavior if the user passes a value that
-does not fit in an int (on my x86 machine, the result is uselessly tiny
-buffers).
+Driver core holds a reference to the USB interface and its parent USB
+device while the interface is bound to a driver and there is no need to
+take additional references unless the structures are needed after
+disconnect.
 
-Fix by plumbing the parameter's real type (unsigned long) through to the
-ring buffer allocation functions, which already use unsigned long.
+This driver takes a reference to the USB device during probe but does
+not to release it on probe failures.
 
-It has always been possible to create larger ring buffers via the sysfs
-interface: this only affects the cmdline parameter.
+Drop the redundant device reference to fix the leak, reduce cargo
+culting, make it easier to spot drivers where an extra reference is
+needed, and reduce the risk of further memory leaks.
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
-Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 0791c0327a6e ("net: mctp: Add MCTP USB transport driver")
+Cc: stable@vger.kernel.org	# 6.15
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Acked-by: Jeremy Kerr <jk@codeconstruct.com.au>
+Link: https://patch.msgid.link/20260305104549.16110-1-johan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/mctp/mctp-usb.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9849,7 +9849,7 @@ static void setup_trace_scratch(struct t
+--- a/drivers/net/mctp/mctp-usb.c
++++ b/drivers/net/mctp/mctp-usb.c
+@@ -329,7 +329,7 @@ static int mctp_usb_probe(struct usb_int
+ 	SET_NETDEV_DEV(netdev, &intf->dev);
+ 	dev = netdev_priv(netdev);
+ 	dev->netdev = netdev;
+-	dev->usbdev = usb_get_dev(interface_to_usbdev(intf));
++	dev->usbdev = interface_to_usbdev(intf);
+ 	dev->intf = intf;
+ 	usb_set_intfdata(intf, dev);
+ 
+@@ -365,7 +365,6 @@ static void mctp_usb_disconnect(struct u
+ 	mctp_unregister_netdev(dev->netdev);
+ 	usb_free_urb(dev->tx_urb);
+ 	usb_free_urb(dev->rx_urb);
+-	usb_put_dev(dev->usbdev);
+ 	free_netdev(dev->netdev);
  }
- 
- static int
--allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
-+allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
- {
- 	enum ring_buffer_flags rb_flags;
- 	struct trace_scratch *tscratch;
-@@ -9904,7 +9904,7 @@ static void free_trace_buffer(struct arr
- 	}
- }
- 
--static int allocate_trace_buffers(struct trace_array *tr, int size)
-+static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
- {
- 	int ret;
- 
-@@ -11186,7 +11186,7 @@ __init static void enable_instances(void
- 
- __init static int tracer_alloc_buffers(void)
- {
--	int ring_buf_size;
-+	unsigned long ring_buf_size;
- 	int ret = -ENOMEM;
- 
  
 
 
