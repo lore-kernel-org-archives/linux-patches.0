@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B5D3164B5;
-	Tue, 17 Mar 2026 16:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB8B3EDADD;
+	Tue, 17 Mar 2026 16:48:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766096; cv=none; b=ex2XWS+nEfuyqKlT6Uv4+HmdvTlrZulkJePVMjrKLQbTkBYx2jse+HmtRpVtc21LAFDYa92EbmwyapBX8X859y30TAGQvuN/0jy9JUled3GDIo6yQtHOoLNyccEZ5LwGUaUUfozFf41zLa9rdJybPAiX/lnbP/Swj1RV+od6ZT8=
+	t=1773766101; cv=none; b=ia2y7Rk47nrj0MH7g9PKRExonJr60zufyRL09inMbxJo1HQwLd9W8lxbxH163GqyspHMY8GVgE4ejX7AVNLw22fzBVfIXubFdaYdojZshtqrmP1lWD905Kt0d0/yJOrW2i38YO/4EREAEyEppU1Cx6N6tXxuemrFIgiAs7dI9H8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766096; c=relaxed/simple;
-	bh=V6Hxa1xBOGncamyFrnMyegGlU+KVndYKBwnfFpIcly4=;
+	s=arc-20240116; t=1773766101; c=relaxed/simple;
+	bh=rLVBCMNeAWg9zxr9Un9x68mSoKsDLpT/GXM678u5yeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I2CYkgBIyHsTLC9eVF1CrqNeSTjDrbNHy5vcDzt6Qq7s6CkS3SqZl/JTpVHbf/uHe1fTGGpgnkpR9o1P2IHduhvIgNb6jat/qtLqa5XnHyPoSWURzPp0KHCOziNTjpBzApQwEt2UjScucNeJ3zSFTICnznFRthJ6Gj2Xra9rOdo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLBZDWbW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=A+Hw+ygEIvMrXFBpOCpdfT9ExbxANqxZQL38j+TENv5bFlEFJ4TmKcK9TfyKsXudscGHyqabYI+9OxD4spw6U2xTwMzY/9trd8//TT+8lIw/PHM9brX6wUCVLaeN4drxPvYk33NJJKDrqZh0cmEXvdcRF7z2vT9+c/pVHYBtGJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EWC+uBz2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLBZDWbW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C42C4CEF7;
-	Tue, 17 Mar 2026 16:48:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EWC+uBz2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 988E3C4CEF7;
+	Tue, 17 Mar 2026 16:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766096;
-	bh=V6Hxa1xBOGncamyFrnMyegGlU+KVndYKBwnfFpIcly4=;
+	s=korg; t=1773766101;
+	bh=rLVBCMNeAWg9zxr9Un9x68mSoKsDLpT/GXM678u5yeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JLBZDWbWJv2gXltEqVQqc4hpe5tNgMoJdPBW/NK5hoQs3a2b2PzuZmiDHbvEc9b8V
-	 xW31VjM1DYWADpV0lpnnva3MlBsmwJxg93iiAPHmOKJl2Qxt4Ezgt7E5P5tsmzY6g7
-	 UxIu4xEITVD8647UdBOIz7AIhPVvJzRBlKF3bafU=
+	b=EWC+uBz2EhOGIxkIznNqlVLBPjiYs+B+OcbyaUa06UYQg9Vx3zmo+EeFt89ves66k
+	 EoNoQyG3Pl0Hpvj7VndS2IC9Bw/rVlvDi6GF62I1V4Y+i9r793JpAFnryK2C9TEEMR
+	 hcEWmPJ2iICB1CGy4wZUwuGOWD+KKloyVcqR25uM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Carlos Llamas <cmllamas@google.com>
-Subject: [PATCH 6.19 126/378] rust_binder: fix oneway spam detection
-Date: Tue, 17 Mar 2026 17:31:23 +0100
-Message-ID: <20260317163011.650411247@linuxfoundation.org>
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.19 163/378] usb: image: mdc800: kill download URB on timeout
+Date: Tue, 17 Mar 2026 17:32:00 +0100
+Message-ID: <20260317163013.008564984@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,136 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Carlos Llamas <cmllamas@google.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit 4fc87c240b8f30e22b7ebaae29d57105589e1c0b upstream.
+commit 1be3b77de4eb89af8ae2fd6610546be778e25589 upstream.
 
-The spam detection logic in TreeRange was executed before the current
-request was inserted into the tree. So the new request was not being
-factored in the spam calculation. Fix this by moving the logic after
-the new range has been inserted.
+mdc800_device_read() submits download_urb and waits for completion.
+If the timeout fires and the device has not responded, the function
+returns without killing the URB, leaving it active.
 
-Also, the detection logic for ArrayRange was missing altogether which
-meant large spamming transactions could get away without being detected.
-Fix this by implementing an equivalent low_oneway_space() in ArrayRange.
+A subsequent read() resubmits the same URB while it is still
+in-flight, triggering the WARN in usb_submit_urb():
 
-Note that I looked into centralizing this logic in RangeAllocator but
-iterating through 'state' and 'size' got a bit too complicated (for me)
-and I abandoned this effort.
+  "URB submitted while active"
 
+Check the return value of wait_event_timeout() and kill the URB if
+it indicates timeout, ensuring the URB is complete before its status
+is inspected or the URB is resubmitted.
+
+Similar to
+- commit 372c93131998 ("USB: yurex: fix control-URB timeout handling")
+- commit b98d5000c505 ("media: rc: iguanair: handle timeouts")
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
 Cc: stable <stable@kernel.org>
-Cc: Alice Ryhl <aliceryhl@google.com>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Signed-off-by: Carlos Llamas <cmllamas@google.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Link: https://patch.msgid.link/20260210232949.3770644-1-cmllamas@google.com
+Link: https://patch.msgid.link/20260209151937.2247202-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/range_alloc/array.rs |   35 ++++++++++++++++++++++++++--
- drivers/android/binder/range_alloc/mod.rs   |    4 +--
- drivers/android/binder/range_alloc/tree.rs  |   18 +++++++-------
- 3 files changed, 44 insertions(+), 13 deletions(-)
+ drivers/usb/image/mdc800.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/android/binder/range_alloc/array.rs
-+++ b/drivers/android/binder/range_alloc/array.rs
-@@ -118,7 +118,7 @@ impl<T> ArrayRangeAllocator<T> {
-         size: usize,
-         is_oneway: bool,
-         pid: Pid,
--    ) -> Result<usize> {
-+    ) -> Result<(usize, bool)> {
-         // Compute new value of free_oneway_space, which is set only on success.
-         let new_oneway_space = if is_oneway {
-             match self.free_oneway_space.checked_sub(size) {
-@@ -146,7 +146,38 @@ impl<T> ArrayRangeAllocator<T> {
-             .ok()
-             .unwrap();
- 
--        Ok(insert_at_offset)
-+        // Start detecting spammers once we have less than 20%
-+        // of async space left (which is less than 10% of total
-+        // buffer size).
-+        //
-+        // (This will short-circuit, so `low_oneway_space` is
-+        // only called when necessary.)
-+        let oneway_spam_detected =
-+            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
-+
-+        Ok((insert_at_offset, oneway_spam_detected))
-+    }
-+
-+    /// Find the amount and size of buffers allocated by the current caller.
-+    ///
-+    /// The idea is that once we cross the threshold, whoever is responsible
-+    /// for the low async space is likely to try to send another async transaction,
-+    /// and at some point we'll catch them in the act.  This is more efficient
-+    /// than keeping a map per pid.
-+    fn low_oneway_space(&self, calling_pid: Pid) -> bool {
-+        let mut total_alloc_size = 0;
-+        let mut num_buffers = 0;
-+
-+        // Warn if this pid has more than 50 transactions, or more than 50% of
-+        // async space (which is 25% of total buffer size). Oneway spam is only
-+        // detected when the threshold is exceeded.
-+        for range in &self.ranges {
-+            if range.state.is_oneway() && range.state.pid() == calling_pid {
-+                total_alloc_size += range.size;
-+                num_buffers += 1;
-+            }
-+        }
-+        num_buffers > 50 || total_alloc_size > self.size / 4
-     }
- 
-     pub(crate) fn reservation_abort(&mut self, offset: usize) -> Result<FreedRange> {
---- a/drivers/android/binder/range_alloc/mod.rs
-+++ b/drivers/android/binder/range_alloc/mod.rs
-@@ -188,11 +188,11 @@ impl<T> RangeAllocator<T> {
-                 self.reserve_new(args)
-             }
-             Impl::Array(array) => {
--                let offset =
-+                let (offset, oneway_spam_detected) =
-                     array.reserve_new(args.debug_id, args.size, args.is_oneway, args.pid)?;
-                 Ok(ReserveNew::Success(ReserveNewSuccess {
-                     offset,
--                    oneway_spam_detected: false,
-+                    oneway_spam_detected,
-                     _empty_array_alloc: args.empty_array_alloc,
-                     _new_tree_alloc: args.new_tree_alloc,
-                     _tree_alloc: args.tree_alloc,
---- a/drivers/android/binder/range_alloc/tree.rs
-+++ b/drivers/android/binder/range_alloc/tree.rs
-@@ -164,15 +164,6 @@ impl<T> TreeRangeAllocator<T> {
-             self.free_oneway_space
-         };
- 
--        // Start detecting spammers once we have less than 20%
--        // of async space left (which is less than 10% of total
--        // buffer size).
--        //
--        // (This will short-circut, so `low_oneway_space` is
--        // only called when necessary.)
--        let oneway_spam_detected =
--            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
--
-         let (found_size, found_off, tree_node, free_tree_node) = match self.find_best_match(size) {
-             None => {
-                 pr_warn!("ENOSPC from range_alloc.reserve_new - size: {}", size);
-@@ -203,6 +194,15 @@ impl<T> TreeRangeAllocator<T> {
-             self.free_tree.insert(free_tree_node);
-         }
- 
-+        // Start detecting spammers once we have less than 20%
-+        // of async space left (which is less than 10% of total
-+        // buffer size).
-+        //
-+        // (This will short-circuit, so `low_oneway_space` is
-+        // only called when necessary.)
-+        let oneway_spam_detected =
-+            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
-+
-         Ok((found_off, oneway_spam_detected))
-     }
- 
+--- a/drivers/usb/image/mdc800.c
++++ b/drivers/usb/image/mdc800.c
+@@ -730,9 +730,11 @@ static ssize_t mdc800_device_read (struc
+ 					mutex_unlock(&mdc800->io_lock);
+ 					return len-left;
+ 				}
+-				wait_event_timeout(mdc800->download_wait,
++				retval = wait_event_timeout(mdc800->download_wait,
+ 				     mdc800->downloaded,
+ 				     msecs_to_jiffies(TO_DOWNLOAD_GET_READY));
++				if (!retval)
++					usb_kill_urb(mdc800->download_urb);
+ 				mdc800->downloaded = 0;
+ 				if (mdc800->download_urb->status != 0)
+ 				{
 
 
