@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F6F2FFDEA;
-	Tue, 17 Mar 2026 17:05:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E2B2FFDEA;
+	Tue, 17 Mar 2026 17:05:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767129; cv=none; b=smrb+VAf9lAj3HReExgoGZs9xPt9Vtu0GStGDrDp+nKbObjsuZ8JKCiia15kBQpliOPFeylaqwBMS0qoEfxwyIklh0Tmb//rmcEZQfnBw1QT2J4hQ55ZT9V+FHfPAMgNIREuN48EDv65tAHpyC+FL2CClGDJos44enOt8md96Qo=
+	t=1773767133; cv=none; b=m7D3ZIx33WVwYlNAC4OahUqWJroqBUTvoXPtG0+aHQqZUF9f8LflcLIxDZqFtMoY+rVBH7nxqqM3tsG5RaE143t/J9beNrlILT0NTL4obf/BiJKnx0Z8daIZyOcvca6ISo+ki3OtT0DiceG3XZdQQlSLN7F59pmrM0mpDy+FhpE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767129; c=relaxed/simple;
-	bh=ab4P6mz3cP5Mt54lrdtbHTnFWB3KpbPa+sbiQT11+Hw=;
+	s=arc-20240116; t=1773767133; c=relaxed/simple;
+	bh=13CM0XThkCTHlt9uvhoYpLV0KYhmXkyF9dmqUPRAj6c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qyWtkmmJovCg8D21NprGl+MqUSlrJpzRjLO75JncQPgXlte2rlz62ksIO9/Qb48Rv+cfZsiARj2RQhHeD24vsDajWDe/SfcjB9CJt1JjUysLWn45jpqMyuvdoqBaDkqnpMZBDPzxgKhyuxcojo0R1ayv2FvJo7u2jp3TSTBPxQ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F/VbMP7O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OgLmahtOlhZ+8t2l4zz2jfNnoUqm9kzHhBoTQy/P91sSQc539rD6aTn1yVE4Ev8d1lyP3ewIC1fXajybSnlVw4OrgPqgmOnwrigjQg+mRxBQzInNp9ndmQ+jNAv2k9QJSeOs0WdUixmn53HdJThWCtUjTAAf1B4EeGJ1ODjXSZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hPI8F/y+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F/VbMP7O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D4DC4CEF7;
-	Tue, 17 Mar 2026 17:05:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hPI8F/y+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E799C4CEF7;
+	Tue, 17 Mar 2026 17:05:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767129;
-	bh=ab4P6mz3cP5Mt54lrdtbHTnFWB3KpbPa+sbiQT11+Hw=;
+	s=korg; t=1773767133;
+	bh=13CM0XThkCTHlt9uvhoYpLV0KYhmXkyF9dmqUPRAj6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F/VbMP7OhyYLpGu57+lQrw+MiRo35axvcCZdnS/Fd40QevaG0Qs5CLZjEPzLI74RB
-	 Okhk94Bsemm/l7bmY7JjUNT2RDw2T0R1podnRM81evplrYDdV7h3tXD0XSo0gpxmfX
-	 qmPrCoqcFsCa5/mM7azMuUA7EcIbOXojwhnhu9Gk=
+	b=hPI8F/y+qa9EztIw5/bub2AkJkh9hsoi4NJPQmUkmNcptMU5IYr02g9Ht77/zApzP
+	 2zgsUf59nNCENAuCNQ6SkS+iPCeNGgPU+pSQnZFGqQghFhKY8EYo4jBd0usq5vCM+x
+	 cjulLiKX+J/Wy53rlfuCpyO1aFyjxI/T0NzGC9f4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Hari Bathini <hbathini@linux.ibm.com>,
 	Sourabh Jain <sourabhjain@linux.ibm.com>,
-	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
 	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 020/333] powerpc/kexec/core: use big-endian types for crash variables
-Date: Tue, 17 Mar 2026 17:30:49 +0100
-Message-ID: <20260317163000.110109090@linuxfoundation.org>
+Subject: [PATCH 6.18 021/333] powerpc/crash: adjust the elfcorehdr size
+Date: Tue, 17 Mar 2026 17:30:50 +0100
+Message-ID: <20260317163000.146891694@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -55,100 +54,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Sourabh Jain <sourabhjain@linux.ibm.com>
 
-[ Upstream commit 20197b967a6a29dab81495f25a988515bda84cfe ]
+[ Upstream commit 04e707cb77c272cb0bb2e2e3c5c7f844d804a089 ]
 
-Use explicit word-sized big-endian types for kexec and crash related
-variables. This makes the endianness unambiguous and avoids type
-mismatches that trigger sparse warnings.
+With crash hotplug support enabled, additional memory is allocated to
+the elfcorehdr kexec segment to accommodate resources added during
+memory hotplug events. However, the kdump FDT is not updated with the
+same size, which can result in elfcorehdr corruption in the kdump
+kernel.
 
-The change addresses sparse warnings like below (seen on both 32-bit
-and 64-bit builds):
+Update elf_headers_sz (the kimage member representing the size of the
+elfcorehdr kexec segment) to reflect the total memory allocated for the
+elfcorehdr segment instead of the elfcorehdr buffer size at the time of
+kdump load. This allows of_kexec_alloc_and_setup_fdt() to reserve the
+full elfcorehdr memory in the kdump FDT and prevents elfcorehdr
+corruption.
 
-CHECK   ../arch/powerpc/kexec/core.c
-sparse:    expected unsigned int static [addressable] [toplevel] [usertype] crashk_base
-sparse:    got restricted __be32 [usertype]
-sparse: warning: incorrect type in assignment (different base types)
-sparse:    expected unsigned int static [addressable] [toplevel] [usertype] crashk_size
-sparse:    got restricted __be32 [usertype]
-sparse: warning: incorrect type in assignment (different base types)
-sparse:    expected unsigned long long static [addressable] [toplevel] mem_limit
-sparse:    got restricted __be32 [usertype]
-sparse: warning: incorrect type in assignment (different base types)
-sparse:    expected unsigned int static [addressable] [toplevel] [usertype] kernel_end
-sparse:    got restricted __be32 [usertype]
-
-No functional change intended.
-
-Fixes: ea961a828fe7 ("powerpc: Fix endian issues in kexec and crash dump code")
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202512221405.VHPKPjnp-lkp@intel.com/
+Fixes: 849599b702ef8 ("powerpc/crash: add crash memory hotplug support")
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
 Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/20251224151257.28672-1-sourabhjain@linux.ibm.com
+Link: https://patch.msgid.link/20260227171801.2238847-1-sourabhjain@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kexec/core.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ arch/powerpc/kexec/file_load_64.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/kexec/core.c b/arch/powerpc/kexec/core.c
-index cf803d09c8e51..f86a6fc11e91c 100644
---- a/arch/powerpc/kexec/core.c
-+++ b/arch/powerpc/kexec/core.c
-@@ -23,6 +23,7 @@
- #include <asm/firmware.h>
+diff --git a/arch/powerpc/kexec/file_load_64.c b/arch/powerpc/kexec/file_load_64.c
+index e7ef8b2a25546..5f6d50e4c3d45 100644
+--- a/arch/powerpc/kexec/file_load_64.c
++++ b/arch/powerpc/kexec/file_load_64.c
+@@ -450,6 +450,11 @@ static int load_elfcorehdr_segment(struct kimage *image, struct kexec_buf *kbuf)
+ 	kbuf->buffer = headers;
+ 	kbuf->mem = KEXEC_BUF_MEM_UNKNOWN;
+ 	kbuf->bufsz = headers_sz;
++
++	/*
++	 * Account for extra space required to accommodate additional memory
++	 * ranges in elfcorehdr due to memory hotplug events.
++	 */
+ 	kbuf->memsz = headers_sz + kdump_extra_elfcorehdr_size(cmem);
+ 	kbuf->top_down = false;
  
- #define cpu_to_be_ulong __PASTE(cpu_to_be, BITS_PER_LONG)
-+#define __be_word __PASTE(__be, BITS_PER_LONG)
+@@ -460,7 +465,14 @@ static int load_elfcorehdr_segment(struct kimage *image, struct kexec_buf *kbuf)
+ 	}
  
- #ifdef CONFIG_CRASH_DUMP
- void machine_crash_shutdown(struct pt_regs *regs)
-@@ -138,25 +139,25 @@ int __init overlaps_crashkernel(unsigned long start, unsigned long size)
- }
- 
- /* Values we need to export to the second kernel via the device tree. */
--static phys_addr_t crashk_base;
--static phys_addr_t crashk_size;
--static unsigned long long mem_limit;
-+static __be_word crashk_base;
-+static __be_word crashk_size;
-+static __be_word mem_limit;
- 
- static struct property crashk_base_prop = {
- 	.name = "linux,crashkernel-base",
--	.length = sizeof(phys_addr_t),
-+	.length = sizeof(__be_word),
- 	.value = &crashk_base
- };
- 
- static struct property crashk_size_prop = {
- 	.name = "linux,crashkernel-size",
--	.length = sizeof(phys_addr_t),
-+	.length = sizeof(__be_word),
- 	.value = &crashk_size,
- };
- 
- static struct property memory_limit_prop = {
- 	.name = "linux,memory-limit",
--	.length = sizeof(unsigned long long),
-+	.length = sizeof(__be_word),
- 	.value = &mem_limit,
- };
- 
-@@ -185,11 +186,11 @@ static void __init export_crashk_values(struct device_node *node)
- }
- #endif /* CONFIG_CRASH_RESERVE */
- 
--static phys_addr_t kernel_end;
-+static __be_word kernel_end;
- 
- static struct property kernel_end_prop = {
- 	.name = "linux,kernel-end",
--	.length = sizeof(phys_addr_t),
-+	.length = sizeof(__be_word),
- 	.value = &kernel_end,
- };
- 
+ 	image->elf_load_addr = kbuf->mem;
+-	image->elf_headers_sz = headers_sz;
++
++	/*
++	 * If CONFIG_CRASH_HOTPLUG is enabled, the elfcorehdr kexec segment
++	 * memsz can be larger than bufsz. Always initialize elf_headers_sz
++	 * with memsz. This ensures the correct size is reserved for elfcorehdr
++	 * memory in the FDT prepared for kdump.
++	 */
++	image->elf_headers_sz = kbuf->memsz;
+ 	image->elf_headers = headers;
+ out:
+ 	kfree(cmem);
 -- 
 2.51.0
 
