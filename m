@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2B17357A4A;
-	Tue, 17 Mar 2026 17:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F91377EDD;
+	Tue, 17 Mar 2026 17:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767032; cv=none; b=UT3DJqBaHbNRx16ylUQYUwPhUF5+mHwPkBGSwK6An7bce44DtyZ/jwkLI+mJ6e3EgYnzJ8MXZNY7AKxcbexcNBN6c40RNI0d3lEFX2gG6IQZlsBSXBcZOEzfGcGM2j9HEgkT6ZdsmPujoCWIb6DGfpSIXRO1KLtaCGnHVCGdqiw=
+	t=1773767036; cv=none; b=kQr4SjFAaIlXgS0AHWe1/XfNg7BSwu5XjlRTg2BxP7eareQLfjvp7XNfIxUPno4MkLAN18e20PF+k7NWjBIUT5CfH+bPnkqcuPsrICDXMySrHvJOZT0Hoc83qMSqnl6MJYvM5Po6++6EaLGl3UWphW4P8aPAPjKffMarQPdmFKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767032; c=relaxed/simple;
-	bh=O/pLcXIgaeMBwj/oqMJ5ZwWlHUX7NB7lX4bhWeVrYvQ=;
+	s=arc-20240116; t=1773767036; c=relaxed/simple;
+	bh=CCEc/LBqvUQ442jVv2dq34/cxcdh53hbUVBc85LJ31I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UbQBo9ZIx/lPX36B1uN61Fq3MMsGprq/mj9oB+jh7eMeGITOrBy3q9m30UTg/qgtJ6ARreh6VqDBH4rPUbyFJn56EtYCLvHMCGcBL4QA2LxYskurLaQwVgaIsFc80TH7CECf7h30jvEJCJPaCrL1B/vCO8udwgYEgoloJRo5P+M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i1fL+BN5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wi9Wx9j1sQLP3m7LaDyUwajTv5xo3yHqTaYxY1q4gDTWT/07XmrpfDAFo6ZMNZAHr1Fe6dXo/E3vOu3iBBHKwvHeQPbkPfHe6XxLOwdkfZ9w2I3OekqWr869CWEQWc4g2P+vpi3xBjeQYbqCaViD2beBOOG3Sjfa+okkBOUxhfY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rNFzx6sU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i1fL+BN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BF94C4CEF7;
-	Tue, 17 Mar 2026 17:03:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rNFzx6sU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A566C4CEF7;
+	Tue, 17 Mar 2026 17:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767032;
-	bh=O/pLcXIgaeMBwj/oqMJ5ZwWlHUX7NB7lX4bhWeVrYvQ=;
+	s=korg; t=1773767036;
+	bh=CCEc/LBqvUQ442jVv2dq34/cxcdh53hbUVBc85LJ31I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1fL+BN5H0Q03FAT0b4kqvPCoOiMsKsX7SuuCAaVmZ5+0g6TFAXC6Eb9xt8FoeCMD
-	 4vRMq5QgOAXBZAOz/TlDScz0ig6FNo4Wu6IY9FRYN7hrFJQly0nXA0DwxeAuvMZJaX
-	 GnSx2sRt/9tsfdwE/2b277CcDyA3gonAzwaWLQYQ=
+	b=rNFzx6sUVcDpYsO8QDZSks/wmZU7j3s6NqElnyS17q9kSxgSwfnjEWJHC/djt7eTE
+	 rRSAMg1XepPMjF7CI1oYObbUP3h+K1rZFxSMAVZwVFSECyW0YjfCZYrcCnk2fJV66X
+	 mxIMkm45RIO88JrVEf+cVJUpD6b3gqDCCVi6R16U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	SeungJu Cheon <suunj1331@gmail.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 346/378] iio: dac: ds4424: reject -128 RAW value
-Date: Tue, 17 Mar 2026 17:35:03 +0100
-Message-ID: <20260317163019.720695535@linuxfoundation.org>
+Subject: [PATCH 6.19 347/378] iio: frequency: adf4377: Fix duplicated soft reset mask
+Date: Tue, 17 Mar 2026 17:35:04 +0100
+Message-ID: <20260317163019.757081412@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,39 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: SeungJu Cheon <suunj1331@gmail.com>
 
-commit 5187e03b817c26c1c3bcb2645a612ea935c4be89 upstream.
+commit 6c8bf4b604a8a6346ca71f1c027fa01c2c2e04cb upstream.
 
-The DS442x DAC uses sign-magnitude encoding, so -128 cannot be represented
-in hardware (7-bit magnitude).
+The regmap_read_poll_timeout() uses ADF4377_0000_SOFT_RESET_R_MSK
+twice instead of checking both SOFT_RESET_MSK (bit 0) and
+SOFT_RESET_R_MSK (bit 7). This causes an incomplete reset status check.
 
-Previously, passing -128 resulted in a truncated value that programmed
-0mA (magnitude 0) instead of the expected maximum negative current,
-effectively failing silently.
+The code first sets both SOFT_RESET and SOFT_RESET_R bits to 1 via
+regmap_update_bits(), then polls for them to be cleared. Since we set
+both bits before polling, we should be waiting for both to clear.
 
-Reject -128 to avoid producing the wrong current.
+Fix by using both masks as done in regmap_update_bits() above.
 
-Fixes: d632a2bd8ffc ("iio: dac: ds4422/ds4424 dac driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Fixes: eda549e2e524 ("iio: frequency: adf4377: add support for ADF4377")
+Signed-off-by: SeungJu Cheon <suunj1331@gmail.com>
+Cc: Stable@vger.kernel.org
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ds4424.c |    2 +-
+ drivers/iio/frequency/adf4377.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/ds4424.c
-+++ b/drivers/iio/dac/ds4424.c
-@@ -141,7 +141,7 @@ static int ds4424_write_raw(struct iio_d
+--- a/drivers/iio/frequency/adf4377.c
++++ b/drivers/iio/frequency/adf4377.c
+@@ -501,7 +501,7 @@ static int adf4377_soft_reset(struct adf
+ 		return ret;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
--		if (val < S8_MIN || val > S8_MAX)
-+		if (val <= S8_MIN || val > S8_MAX)
- 			return -EINVAL;
+ 	return regmap_read_poll_timeout(st->regmap, 0x0, read_val,
+-					!(read_val & (ADF4377_0000_SOFT_RESET_R_MSK |
++					!(read_val & (ADF4377_0000_SOFT_RESET_MSK |
+ 					ADF4377_0000_SOFT_RESET_R_MSK)), 200, 200 * 100);
+ }
  
- 		if (val > 0) {
 
 
