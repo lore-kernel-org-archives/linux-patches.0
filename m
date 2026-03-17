@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B713EAC6F;
-	Tue, 17 Mar 2026 16:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0BAE3F23AA;
+	Tue, 17 Mar 2026 16:54:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766439; cv=none; b=ZahaYgwqkU2y0jBUm9y3Yle1ldqgC/JVDOk1MLofQQF67kl3YdfNXo4sqSe6IerD87YaLl0J/Ge8Qo+tzLG9clPGvjhCZvpPedYHJJCaKr8tIpm9ypptbudD7upE0DCOTc4hsuZb5sSDyX5z2f27JpPgloab/TJOY4bJsTKgkLM=
+	t=1773766443; cv=none; b=d86lm4W1ovJLWGz6L1g0j/jA0JLzJtqon+CfyxQuE+SmtD7h9H6BcE03ZQNXl3MvD7IwiTN09pUdoK/kLB6nKPWJg2JFc0viDHuovKOEaBjSlOXnlOP76vx55zhSC0Xk44cjlwfYkvpbYbCF/b586Mey2ZuPFqh2Sml8bQbLf0U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766439; c=relaxed/simple;
-	bh=rSLHmBZrVL+A7xzvjAaH6JDYyJtrPcUWn9J0yPUyeFY=;
+	s=arc-20240116; t=1773766443; c=relaxed/simple;
+	bh=IxWM7XapqTu/N1PQkZbsswifDkStzDx4qvefoRMwI5g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pRwZhgAZWOF1t1XTx/SM5qxwqT1vGCRy8wc4U7KcCBNO0TITwUVKseWxmj0W3xhrxRQy5e+HI2cutZ+fGhb+cxWrNU78tWS26iIKThbbNudRtZvRZx1x/Rxu81G0+iDCJnU6xXlh7XHLztsng2Gf+vNBPOLbl8larr97OdWM+us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MqjKyQzu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jGASj2GMCS3L3FgMTP9ifCvqNROZF282xcO7dfecHKV9LuJO7bayJZVuh2SVL2mCTKrbHT0USUpa2kcsGIpqSqp/qlXLIKCWPps8+9iEnoE0Ih35kVA+b7Pqi2fGzXplNOf+3aKTDqBi2ol3/3rYztq8/BkoAKwzcUTcIAmijLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfiVV0E7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MqjKyQzu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6869CC4CEF7;
-	Tue, 17 Mar 2026 16:53:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfiVV0E7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AFAEC19424;
+	Tue, 17 Mar 2026 16:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766438;
-	bh=rSLHmBZrVL+A7xzvjAaH6JDYyJtrPcUWn9J0yPUyeFY=;
+	s=korg; t=1773766443;
+	bh=IxWM7XapqTu/N1PQkZbsswifDkStzDx4qvefoRMwI5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MqjKyQzuxkroUQvzqGeJuXyGmYI6NXb3Ck8G98e7Z8CHM6ku81EutTY4acE7b/rpG
-	 FsH1hgimf6K6a+q5oJF+6/SMU0tT5Eiz3yQMGtDTrO12Gh9aEZHcbyOtP3JYoEK2zY
-	 yyDVWxan/yyapqwwjK7gSF5xjLvabzd0MtX4pzB4=
+	b=sfiVV0E75/j/Mz8Yf757uLU5gg6yStvLCSI1pKvSVPASL0OKlihMBGO9SOiTn5286
+	 0xqCz73A2uBBxRnq2tE5WRDyJS3UPI5cCDZNSn19MM3/eGOgmiLUY7OFN+f2merthW
+	 UMss8IWw9A2mTASo8w+kUjUQERehlbjCGC+u4Vj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Piotr Kwapulinski <piotr.kwapulinski@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Jedrzej Jagielski <jedrzej.jagielski@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.19 247/378] ixgbevf: fix link setup issue
-Date: Tue, 17 Mar 2026 17:33:24 +0100
-Message-ID: <20260317163016.108477715@linuxfoundation.org>
+	"Pratyush Yadav (Google)" <pratyush@kernel.org>,
+	"Mike Rapoport (Microsoft)" <rppt@kernel.org>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.19 248/378] mm: memfd_luo: always make all folios uptodate
+Date: Tue, 17 Mar 2026 17:33:25 +0100
+Message-ID: <20260317163016.144722662@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -54,50 +52,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
+From: Pratyush Yadav (Google) <pratyush@kernel.org>
 
-commit feae40a6a178bb525a15f19288016e5778102a99 upstream.
+commit 50d7b4332f27762d24641970fc34bb68a2621926 upstream.
 
-It may happen that VF spawned for E610 adapter has problem with setting
-link up. This happens when ixgbevf supporting mailbox API 1.6 cooperates
-with PF driver which doesn't support this version of API, and hence
-doesn't support new approach for getting PF link data.
+Patch series "mm: memfd_luo: fixes for folio flag preservation".
 
-In that case VF asks PF to provide link data but as PF doesn't support
-it, returns -EOPNOTSUPP what leads to early bail from link configuration
-sequence.
+This series contains a couple fixes for flag preservation for memfd live
+update.
 
-Avoid such situation by using legacy VFLINKS approach whenever negotiated
-API version is less than 1.6.
+The first patch fixes memfd preservation when fallocate() was used to
+pre-allocate some pages.  For these memfds, all the writes to fallocated
+pages touched after preserve were lost.
 
-To reproduce the issue just create VF and set its link up - adapter must
-be any from the E610 family, ixgbevf must support API 1.6 or higher while
-ixgbevf must not.
+The second patch fixes dirty flag tracking.  If the dirty flag is not
+tracked correctly, the next kernel might incorrectly reclaim some folios
+under memory pressure, losing user data.  This is a theoretical bug that I
+observed when reading the code, and haven't been able to reproduce it.
 
-Fixes: 53f0eb62b4d2 ("ixgbevf: fix getting link speed data for E610 devices")
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Piotr Kwapulinski <piotr.kwapulinski@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Jedrzej Jagielski <jedrzej.jagielski@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+
+This patch (of 2):
+
+When a folio is added to a shmem file via fallocate, it is not zeroed on
+allocation.  This is done as a performance optimization since it is
+possible the folio will never end up being used at all.  When the folio is
+used, shmem checks for the uptodate flag, and if absent, zeroes the folio
+(and sets the flag) before returning to user.
+
+With LUO, the flags of each folio are saved at preserve time.  It is
+possible to have a memfd with some folios fallocated but not uptodate.
+For those, the uptodate flag doesn't get saved.  The folios might later
+end up being used and become uptodate.  They would get passed to the next
+kernel via KHO correctly since they did get preserved.  But they won't
+have the MEMFD_LUO_FOLIO_UPTODATE flag.
+
+This means that when the memfd is retrieved, the folios will be added to
+the shmem file without the uptodate flag.  They will be zeroed before
+first use, losing the data in those folios.
+
+Since we take a big performance hit in allocating, zeroing, and pinning
+all folios at prepare time anyway, take some more and zero all
+non-uptodate ones too.
+
+Later when there is a stronger need to make prepare faster, this can be
+optimized.
+
+To avoid racing with another uptodate operation, take the folio lock.
+
+Link: https://lkml.kernel.org/r/20260223173931.2221759-2-pratyush@kernel.org
+Fixes: b3749f174d68 ("mm: memfd_luo: allow preserving memfd")
+Signed-off-by: Pratyush Yadav (Google) <pratyush@kernel.org>
+Reviewed-by: Mike Rapoport (Microsoft) <rppt@kernel.org>
+Cc: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbevf/vf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/memfd_luo.c | 25 +++++++++++++++++++++++--
+ 1 file changed, 23 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/intel/ixgbevf/vf.c
-+++ b/drivers/net/ethernet/intel/ixgbevf/vf.c
-@@ -852,7 +852,8 @@ static s32 ixgbevf_check_mac_link_vf(str
- 	if (!mac->get_link_status)
- 		goto out;
+diff --git a/mm/memfd_luo.c b/mm/memfd_luo.c
+index e485b828d173..1c9510289312 100644
+--- a/mm/memfd_luo.c
++++ b/mm/memfd_luo.c
+@@ -152,10 +152,31 @@ static int memfd_luo_preserve_folios(struct file *file,
+ 		if (err)
+ 			goto err_unpreserve;
  
--	if (hw->mac.type == ixgbe_mac_e610_vf) {
-+	if (hw->mac.type == ixgbe_mac_e610_vf &&
-+	    hw->api_version >= ixgbe_mbox_api_16) {
- 		ret_val = ixgbevf_get_pf_link_state(hw, speed, link_up);
- 		if (ret_val)
- 			goto out;
++		folio_lock(folio);
++
+ 		if (folio_test_dirty(folio))
+ 			flags |= MEMFD_LUO_FOLIO_DIRTY;
+-		if (folio_test_uptodate(folio))
+-			flags |= MEMFD_LUO_FOLIO_UPTODATE;
++
++		/*
++		 * If the folio is not uptodate, it was fallocated but never
++		 * used. Saving this flag at prepare() doesn't work since it
++		 * might change later when someone uses the folio.
++		 *
++		 * Since we have taken the performance penalty of allocating,
++		 * zeroing, and pinning all the folios in the holes, take a bit
++		 * more and zero all non-uptodate folios too.
++		 *
++		 * NOTE: For someone looking to improve preserve performance,
++		 * this is a good place to look.
++		 */
++		if (!folio_test_uptodate(folio)) {
++			folio_zero_range(folio, 0, folio_size(folio));
++			flush_dcache_folio(folio);
++			folio_mark_uptodate(folio);
++		}
++		flags |= MEMFD_LUO_FOLIO_UPTODATE;
++
++		folio_unlock(folio);
+ 
+ 		pfolio->pfn = folio_pfn(folio);
+ 		pfolio->flags = flags;
+-- 
+2.53.0
+
 
 
