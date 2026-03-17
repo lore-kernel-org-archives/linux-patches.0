@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC7A3C6612;
-	Tue, 17 Mar 2026 16:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAADA3C6612;
+	Tue, 17 Mar 2026 16:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766585; cv=none; b=clU2Dgyu0cZFAvIKpewvuO4l+m6OJT94+Y/91ZIwkohxmVdZ4Sr1NW0RiE+NO2tp3hUmycv+81R3ESA8op9KFyN+6t9HRC0nHwg2bB2+ae39La4JgAk5iT8Z6WU0xfkjbVACm3ZpoIW1L1SvGvVvXKRsiO9kpV33aLvNriw2eio=
+	t=1773766589; cv=none; b=IG6BRJqGXRlpyqWMHBcmbuyyRpR9MHx4iMZmdvLiobbA2+1+2F5UyJTKm+qcO8L/koRWGDhcKVjRbh2abFwRCmXpcHnwznTOQzb4T+gIb0d5+MrcNBzTgPbZ+QWSq66niDKZ1Ro4BKC/G4PzluxVANDyqusdjVgkWiQN7On3WyM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766585; c=relaxed/simple;
-	bh=p1KCMXP9S0EhXwXDOMH8mTjReu3JCKsx2zOD7gdYiWY=;
+	s=arc-20240116; t=1773766589; c=relaxed/simple;
+	bh=boTrJT/Vn07nYe8dbGm9ukx0rGEwtU5IYXDsuZvnJN8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pbOEOLG+Ci1zMo0u+fUWUXjmUI/Modzp0L0xMlzm7R2iAjvLWf7bKWcrioxCiuv4/6pdi/msDmDo8hcj4QWFeyH5ZqR5fa2bsQx01KgYTNCx28cPYf/yD0K27Kn2VRDBPLDn7BO0c7+9O/nzqmtwA3BGTWv3+UZn5W75MQFsTHU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ykFYtFJy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q45rka7Kl7cp//uT09C7EVoq/R6mSUSz2ktlkrfSKAG1Wpog0teYa8xezth5Pk0EkwoJgMMyDv0X8WQJCVYwWhFRQEMPK69SF5nDCoqDtBAbowdiGrHgHrq2ZozVBEj+KBO/AOxw8nt0cy4na3O4WsDduWxktMZ2+QojvsRR2/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wj01XWJA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ykFYtFJy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B149C4CEF7;
-	Tue, 17 Mar 2026 16:56:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wj01XWJA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3133DC2BC86;
+	Tue, 17 Mar 2026 16:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766584;
-	bh=p1KCMXP9S0EhXwXDOMH8mTjReu3JCKsx2zOD7gdYiWY=;
+	s=korg; t=1773766589;
+	bh=boTrJT/Vn07nYe8dbGm9ukx0rGEwtU5IYXDsuZvnJN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykFYtFJyrXNpyaw/CsL3hrYx0/g9djouNsvFs2nYYnB3xYPzXBUdCMtc03x/vhEAT
-	 BXpCsdM1aVhD8UEYnwT91EDLAfy9JPiqfAnqVAVBZhcbY9UOw4TN8LWQy5yWxlKI8m
-	 MxlPGAtsUW+cNys4yHMWPxu/Na1JXQB3SBbqrzCg=
+	b=wj01XWJA9UDDEA813WYE2iRKzJpncLobgFwixwW66zkvJLJM/STFHbmVNx1eHpu9d
+	 Q2JlRWj25NuKfqnyUXnoC8GtsdMJzOkb7rG+/JQCQ35PO7qbo56jGp29d9+P6d6TZ+
+	 XAMp7NKgGN+WGbspAW0fXHZnYq95ujnp3dY9cwaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.19 278/378] io_uring/net: reject SEND_VECTORIZED when unsupported
-Date: Tue, 17 Mar 2026 17:33:55 +0100
-Message-ID: <20260317163017.233975173@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.19 279/378] regulator: pf9453: Respect IRQ trigger settings from firmware
+Date: Tue, 17 Mar 2026 17:33:56 +0100
+Message-ID: <20260317163017.269761823@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,34 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit c36e28becd0586ac98318fd335e5e91d19cd2623 upstream.
+commit 2d85ecd6fb0eb2fee0ffa040ec1ddea57b09bc38 upstream.
 
-IORING_SEND_VECTORIZED with registered buffers is not implemented but
-could be. Don't silently ignore the flag in this case but reject it with
-an error. It only affects sendzc as normal sends don't support
-registered buffers.
+The datasheet specifies, that the IRQ_B pin is pulled low when any
+unmasked interrupt bit status is changed, and it is released high once
+the application processor reads the INT1 register. As it specifies a
+level-low behavior, it should not force a falling-edge interrupt.
 
-Fixes: 6f02527729bd3 ("io_uring/net: Allow to do vectorized send")
+Remove the IRQF_TRIGGER_FALLING to not force the falling-edge interrupt
+and instead rely on the flag from the device tree.
+
+Fixes: 0959b6706325 ("regulator: pf9453: add PMIC PF9453 support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Link: https://patch.msgid.link/20260218102518.238943-2-fra.schnyder@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/net.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/regulator/pf9453-regulator.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/io_uring/net.c
-+++ b/io_uring/net.c
-@@ -375,6 +375,8 @@ static int io_send_setup(struct io_kiocb
- 		kmsg->msg.msg_namelen = addr_len;
+--- a/drivers/regulator/pf9453-regulator.c
++++ b/drivers/regulator/pf9453-regulator.c
+@@ -809,7 +809,7 @@ static int pf9453_i2c_probe(struct i2c_c
  	}
- 	if (sr->flags & IORING_RECVSEND_FIXED_BUF) {
-+		if (sr->flags & IORING_SEND_VECTORIZED)
-+			return -EINVAL;
- 		req->flags |= REQ_F_IMPORT_BUFFER;
- 		return 0;
- 	}
+ 
+ 	ret = devm_request_threaded_irq(pf9453->dev, pf9453->irq, NULL, pf9453_irq_handler,
+-					(IRQF_TRIGGER_FALLING | IRQF_ONESHOT),
++					IRQF_ONESHOT,
+ 					"pf9453-irq", pf9453);
+ 	if (ret)
+ 		return dev_err_probe(pf9453->dev, ret, "Failed to request IRQ: %d\n", pf9453->irq);
 
 
