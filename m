@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C90A3368AE;
-	Tue, 17 Mar 2026 17:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E653368AE;
+	Tue, 17 Mar 2026 17:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768566; cv=none; b=i4gNen1kLSUf+O4f38e2ju6ION9fyQK6+dcgqPhWsB5NTdpSATmN4kBf3YEG0yqL63rSvkHPkIG4BU+S6UeA5Ljyi2Wg4QNn6nyqOLKNzfiiy8rVuX/hwLwbC3Zh3Yq/7xWiUES5lYlSNTX0bj/rrGWMGm5jaTDpf758L5mQbFI=
+	t=1773768569; cv=none; b=YyA+KNRCajvYqZyZNuuPfG8eNiFRso626D7KERsaYTx4LSvdncns3MNBQou18pY8ka41ms2Hkx9s3x0Od3Enngw1ctwpmE2Jhx3Ocs4y2Mgbc4U/lzN8CmJRv9WLl65Rtu2Jmp4IVyE8VEDDz4jvc+NHY+VAtsrX0IHQfZ+RqMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768566; c=relaxed/simple;
-	bh=YG+K6mnP/NJjJcGCe2EvWyosqsj9m6KhmhA3lycg9GY=;
+	s=arc-20240116; t=1773768569; c=relaxed/simple;
+	bh=dGxyNByFszYaIQOhNMEy65lrYTfqJx5EnG+1cGtWax0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UmcP3KaOPs3A+DSbGKNgsthLfb2eV1N8o21m6YH9v9Gi1Lyi2d62AJstu2i3oxuHCkLJbXLTuZixx+Lf1GsRdk4xyWYCEL6ut+25cyFwaviUOPCTT+DL4HzEGWXpC3wamc5RmGQlyQjVgxA0vWE7fe24xL3DLKaYPI6a/j7yFlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZK7fvm6Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ok66NEzCNlJ48cwElKyNmVgR/TrhQkc7TV5uG1e/nC5e5emcUAsQTrft/NyY+PmdyxRT+nMw3/gfuJsToX7BEmMb6/7X0ByNH9qjxK8xlbbwOMDYl8ycqxo+JUV0XwJM8U0JFcDcm5VGFvoOOtbmLDNk7HdBQ64jLTfzf0+rfVI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0KDCU5WI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZK7fvm6Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB39C4CEF7;
-	Tue, 17 Mar 2026 17:29:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0KDCU5WI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B57BC4CEF7;
+	Tue, 17 Mar 2026 17:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768565;
-	bh=YG+K6mnP/NJjJcGCe2EvWyosqsj9m6KhmhA3lycg9GY=;
+	s=korg; t=1773768569;
+	bh=dGxyNByFszYaIQOhNMEy65lrYTfqJx5EnG+1cGtWax0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZK7fvm6ZWBxQ2RPA3mjQNLpl9+4nYZgeDrWjaDgvRSaqlwfJGVm5PDYHeXzuPVhQE
-	 CqFncIY2nlEu1v2UeVKg+shozLZT0ISynWA9sCYfvrsWrxitj3HhtbNppKbJydYUNi
-	 UTiZ9wof9IUFWbKIHwjAFTBqUuLmfAeEbP9Mjl7Y=
+	b=0KDCU5WI0PbohLh15VmHHsaDQhxBCpRqLMPtAoeBrWV99MyyKa32A4YYNKQiArTDY
+	 LcjWiMxgFucB7TQpQLA0ptpRiADT4rgev1fgcMg22EYwlRved9ptMEmnou2KvhDTJF
+	 roChOvXUhhUO3chHxKk4/Gj3HPdTPANCvnI30M5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Sean Christopherson <seanjc@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 323/333] KVM: SVM: Limit AVIC physical max index based on configured max_vcpu_ids
-Date: Tue, 17 Mar 2026 17:35:52 +0100
-Message-ID: <20260317163011.378665840@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.18 314/333] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
+Date: Tue, 17 Mar 2026 17:35:43 +0100
+Message-ID: <20260317163011.027463248@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,61 +51,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Naveen N Rao <naveen@kernel.org>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-[ Upstream commit 574ef752d4aea04134bc121294d717f4422c2755 ]
+commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 upstream.
 
-KVM allows VMMs to specify the maximum possible APIC ID for a virtual
-machine through KVM_CAP_MAX_VCPU_ID capability so as to limit data
-structures related to APIC/x2APIC. Utilize the same to set the AVIC
-physical max index in the VMCB, similar to VMX. This helps hardware
-limit the number of entries to be scanned in the physical APIC ID table
-speeding up IPI broadcasts for virtual machines with smaller number of
-vCPUs.
+The logic used to abort the DMA ring contains several flaws:
 
-Unlike VMX, SVM AVIC requires a single page to be allocated for the
-Physical APIC ID table and the Logical APIC ID table, so retain the
-existing approach of allocating those during VM init.
+ 1. The driver unconditionally issues a ring abort even when the ring has
+    already stopped.
+ 2. The completion used to wait for abort completion is never
+    re-initialized, resulting in incorrect wait behavior.
+ 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
+    resets hardware ring pointers and disrupts the controller state.
+ 4. If the ring is already stopped, the abort operation should be
+    considered successful without attempting further action.
 
-Signed-off-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Link: https://lore.kernel.org/r/adb07ccdb3394cd79cb372ba6bcc69a4e4d4ef54.1757009416.git.naveen@kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Stable-dep-of: 87d0f901a9bd ("KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix the abort handling by checking whether the ring is running before
+issuing an abort, re-initializing the completion when needed, ensuring that
+RING_CTRL_ENABLE remains asserted during abort, and treating an already
+stopped ring as a successful condition.
+
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -161,6 +161,7 @@ static void avic_set_x2apic_msr_intercep
- static void avic_activate_vmcb(struct vcpu_svm *svm)
- {
- 	struct vmcb *vmcb = svm->vmcb01.ptr;
-+	struct kvm *kvm = svm->vcpu.kvm;
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -485,18 +485,25 @@ static bool hci_dma_dequeue_xfer(struct
+ 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
+ 	unsigned int i;
+ 	bool did_unqueue = false;
++	u32 ring_status;
  
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
-@@ -176,7 +177,8 @@ static void avic_activate_vmcb(struct vc
- 	 */
- 	if (x2avic_enabled && apic_x2apic_mode(svm->vcpu.arch.apic)) {
- 		vmcb->control.int_ctl |= X2APIC_MODE_MASK;
--		vmcb->control.avic_physical_id |= X2AVIC_MAX_PHYSICAL_ID;
-+		vmcb->control.avic_physical_id |= min(kvm->arch.max_vcpu_ids - 1,
-+						      X2AVIC_MAX_PHYSICAL_ID);
- 		/* Disabling MSR intercept for x2APIC registers */
- 		avic_set_x2apic_msr_interception(svm, false);
- 	} else {
-@@ -187,7 +189,8 @@ static void avic_activate_vmcb(struct vc
- 		kvm_make_request(KVM_REQ_TLB_FLUSH_CURRENT, &svm->vcpu);
+ 	guard(mutex)(&hci->control_mutex);
  
- 		/* For xAVIC and hybrid-xAVIC modes */
--		vmcb->control.avic_physical_id |= AVIC_MAX_PHYSICAL_ID;
-+		vmcb->control.avic_physical_id |= min(kvm->arch.max_vcpu_ids - 1,
-+						      AVIC_MAX_PHYSICAL_ID);
- 		/* Enabling MSR intercept for x2APIC registers */
- 		avic_set_x2apic_msr_interception(svm, true);
+-	/* stop the ring */
+-	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
+-	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
+-		/*
+-		 * We're deep in it if ever this condition is ever met.
+-		 * Hardware might still be writing to memory, etc.
+-		 */
+-		dev_crit(&hci->master.dev, "unable to abort the ring\n");
+-		WARN_ON(1);
++	ring_status = rh_reg_read(RING_STATUS);
++	if (ring_status & RING_STATUS_RUNNING) {
++		/* stop the ring */
++		reinit_completion(&rh->op_done);
++		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
++		wait_for_completion_timeout(&rh->op_done, HZ);
++		ring_status = rh_reg_read(RING_STATUS);
++		if (ring_status & RING_STATUS_RUNNING) {
++			/*
++			 * We're deep in it if ever this condition is ever met.
++			 * Hardware might still be writing to memory, etc.
++			 */
++			dev_crit(&hci->master.dev, "unable to abort the ring\n");
++			WARN_ON(1);
++		}
  	}
+ 
+ 	for (i = 0; i < n; i++) {
 
 
