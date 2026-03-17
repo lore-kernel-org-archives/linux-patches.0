@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B552D5940;
-	Tue, 17 Mar 2026 17:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB6B2D5940;
+	Tue, 17 Mar 2026 17:19:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767984; cv=none; b=KPpFaCHxM//3pbY2W/h/BBmZYHwiCm8vg1adkBvvzdd9BZpvMxhaOef1AkVnywnz8LJ9iT96T7XXnXBQC4U9I2gby819YRPnC/cDanRndFPlvMudAmovsABMqUuHCvlztpfokK+bYwSuqqw8oFr/oMAITy5SIeuvQ6nZVI/2tSQ=
+	t=1773767988; cv=none; b=SEQ+hml+zjdHYEhqUucWHzzN1er/ZDbBNzNVkJP+0Ik3JtEGjVr9mXVh0M6VJK+4vsYEbhwFNdHoILQB2lnA2MAlcnUaa/98nFfCHkV4Crfd1LHLYSQVTcQNZFKngr63h+uQLgJn5440qto+CJQAm/It4wx+1c6LB1NaWRThacI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767984; c=relaxed/simple;
-	bh=3sUQHDlffL/NO6K8ZQJKwwDGz8sU6riixgEy6njWVS0=;
+	s=arc-20240116; t=1773767988; c=relaxed/simple;
+	bh=ptPtNRii128a2ubp0/7rGOTiQ4qpTU8s/EF1PnRCDlI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=px/MFd2gHMGyCXzZUIagsTLQ6+NfA+xWSv47Q+pcydg7EvYW9DPtwjzyOrq0OkPXtb5Y2SUjhZ94s12Ysn2j4CWoUo1vp/h0/yPXzgbp6HB0IWpuVRCrG4gk9d4kezP5Q2uTpo4YsuXBtZ4jW66SuYNPzqDk3DqW7GEsM+zYY1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oSBoxlur; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K7KIMadg4in2RT41wdyFBRD7ttUlAJWUHXmTwU9dZV8Utq7vg85ssiBY2PFxniwISvwof54r0k1DkY7xzYF/KcpCu1hwCYDE1dmMXIv30U8mtltmYZXQH/tkdMee5bUHTph/Y7kR1PtADI+rXAjuNEgCXU+ReTE7BBA9p+OJdQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DI1hsIgJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oSBoxlur"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00C9BC4CEF7;
-	Tue, 17 Mar 2026 17:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DI1hsIgJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0879C4CEF7;
+	Tue, 17 Mar 2026 17:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767984;
-	bh=3sUQHDlffL/NO6K8ZQJKwwDGz8sU6riixgEy6njWVS0=;
+	s=korg; t=1773767988;
+	bh=ptPtNRii128a2ubp0/7rGOTiQ4qpTU8s/EF1PnRCDlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oSBoxlurych6ssc5IsgqOrXMYvOH3bZRKWhRxahVz/CPZlKXvUFTyZhyoUNkb4B/4
-	 w+oesdjAgFCZarV+OOo+NCARqKc4AjcvJh2K4VBvUHYf+7L0DQxsBs9EN5GdCS6R/U
-	 FMom4a2389nr2TcxV7FHjJ24AUgVpy+kJ+d7Eb20=
+	b=DI1hsIgJpCUvHm7HTLrjasGq9GUHIejDZ7P7yh0309MG0pDYLlzOzTw6fX/84002k
+	 Gwb8F9aCJwyRmrVCJYi/lbCbVDDo3+KFvlfFq/ytdsOTPkgRCIWuBEKcHzef9TKt9i
+	 QnBegZViAXgVRZtdFRi6oqHbXAicVg1SxRmUhGFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Carlos Maiolino <cmaiolino@redhat.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: [PATCH 6.18 204/333] iomap: reject delalloc mappings during writeback
-Date: Tue, 17 Mar 2026 17:33:53 +0100
-Message-ID: <20260317163006.923016024@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 205/333] ice: reintroduce retry mechanism for indirect AQ
+Date: Tue, 17 Mar 2026 17:33:54 +0100
+Message-ID: <20260317163006.961378817@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,58 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
 
-commit d320f160aa5ff36cdf83c645cca52b615e866e32 upstream.
+commit 326256c0a72d4877cec1d4df85357da106233128 upstream.
 
-Filesystems should never provide a delayed allocation mapping to
-writeback; they're supposed to allocate the space before replying.
-This can lead to weird IO errors and crashes in the block layer if the
-filesystem is being malicious, or if it hadn't set iomap->dev because
-it's a delalloc mapping.
+Add retry mechanism for indirect Admin Queue (AQ) commands. To do so we
+need to keep the command buffer.
 
-Fix this by failing writeback on delalloc mappings.  Currently no
-filesystems actually misbehave in this manner, but we ought to be
-stricter about things like that.
+This technically reverts commit 43a630e37e25
+("ice: remove unused buffer copy code in ice_sq_send_cmd_retry()"),
+but combines it with a fix in the logic by using a kmemdup() call,
+making it more robust and less likely to break in the future due to
+programmer error.
 
-Cc: stable@vger.kernel.org # v5.5
-Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
+Cc: Michal Schmidt <mschmidt@redhat.com>
+Cc: stable@vger.kernel.org
+Fixes: 3056df93f7a8 ("ice: Re-send some AQ commands, as result of EBUSY AQ error")
+Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/ioend.c |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/fs/iomap/ioend.c
-+++ b/fs/iomap/ioend.c
-@@ -163,17 +163,18 @@ ssize_t iomap_add_to_ioend(struct iomap_
- 	WARN_ON_ONCE(!folio->private && map_len < dirty_len);
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -1879,6 +1879,7 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ {
+ 	struct libie_aq_desc desc_cpy;
+ 	bool is_cmd_for_retry;
++	u8 *buf_cpy = NULL;
+ 	u8 idx = 0;
+ 	u16 opcode;
+ 	int status;
+@@ -1888,8 +1889,11 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 	memset(&desc_cpy, 0, sizeof(desc_cpy));
  
- 	switch (wpc->iomap.type) {
--	case IOMAP_INLINE:
--		WARN_ON_ONCE(1);
--		return -EIO;
-+	case IOMAP_UNWRITTEN:
-+		ioend_flags |= IOMAP_IOEND_UNWRITTEN;
-+		break;
-+	case IOMAP_MAPPED:
-+		break;
- 	case IOMAP_HOLE:
- 		return map_len;
- 	default:
--		break;
-+		WARN_ON_ONCE(1);
-+		return -EIO;
+ 	if (is_cmd_for_retry) {
+-		/* All retryable cmds are direct, without buf. */
+-		WARN_ON(buf);
++		if (buf) {
++			buf_cpy = kmemdup(buf, buf_size, GFP_KERNEL);
++			if (!buf_cpy)
++				return -ENOMEM;
++		}
+ 
+ 		memcpy(&desc_cpy, desc, sizeof(desc_cpy));
  	}
+@@ -1901,12 +1905,14 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 		    hw->adminq.sq_last_status != LIBIE_AQ_RC_EBUSY)
+ 			break;
  
--	if (wpc->iomap.type == IOMAP_UNWRITTEN)
--		ioend_flags |= IOMAP_IOEND_UNWRITTEN;
- 	if (wpc->iomap.flags & IOMAP_F_SHARED)
- 		ioend_flags |= IOMAP_IOEND_SHARED;
- 	if (folio_test_dropbehind(folio))
++		if (buf_cpy)
++			memcpy(buf, buf_cpy, buf_size);
+ 		memcpy(desc, &desc_cpy, sizeof(desc_cpy));
+-
+ 		msleep(ICE_SQ_SEND_DELAY_TIME_MS);
+ 
+ 	} while (++idx < ICE_SQ_SEND_MAX_EXECUTE);
+ 
++	kfree(buf_cpy);
+ 	return status;
+ }
+ 
 
 
