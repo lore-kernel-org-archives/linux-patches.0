@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11043F23D6;
-	Tue, 17 Mar 2026 16:47:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A789C3F23AA;
+	Tue, 17 Mar 2026 16:47:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766069; cv=none; b=YIto9DEq826jboXwH5jpL1xeH7QI6XFq985BRI5iSDWJ7o5uht0Kz4FYHlZhYU8IN3p7uGW7eeaejSD1v95g/oHAtNa+nOukgUNj3s5BKiZvkhHPs59ggxWk1Fr/M+s6je3AYC+qiSApACzA/PphXWlFbXZUlnX3KYGFohNlav4=
+	t=1773766073; cv=none; b=bcS1gs7EAjFcEp1I5T6JliUBcelSDKoV8MIvAV0nfW74HU2gC3YjN8mgOJQtZzobeGWq95YcLcwWctjph8k3YwYzqXgUyR4Wbj8yxMZCwTSwh4LaV+d6y7NiTErM14e12JjVEG0lDvOpIJKfZal3HydTJ0nGATuESWS75MITRfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766069; c=relaxed/simple;
-	bh=qOyrNyDKxZio8MVevgqcTt8QgY5YiK22ZYXf/zwUylM=;
+	s=arc-20240116; t=1773766073; c=relaxed/simple;
+	bh=mEfdfgDyB68Nc4LfIWLHAsp4mmi6DIq/BPrhni5ldlA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gjXi/HqA/lJdHOzUUtBT/map9ONEApqHSe4Sm4n2HoCrkZ/XciGagX044BRy9OTGTuFmouRd68XLXVulUr+EmN7sXW01OWugnmm18J+SqTKcH5n0RVEvXcQki39mg2WsimiMUGvnccmVeF0GsSA1vjFZdEhuwJKF+AZ41KkDk8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CTJqemwd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ZmroCrpATdkFicD8BfV8a0P7NcXu3iLZD8ZtpLxcn5jctrE8ycEenIKrqWW01yZ5t0fxBZjZ8tfbHoZwaaxPaeL0eM3GZvPcA6Ci7s5UxtPNIQCil75TjJFq/V6cTOCjebzla4XD/cWKWSkKp5JsSvRro+7RBuLT70fSL7D/HZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hiQV7M0U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CTJqemwd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E438C19424;
-	Tue, 17 Mar 2026 16:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hiQV7M0U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BF66C4CEF7;
+	Tue, 17 Mar 2026 16:47:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766068;
-	bh=qOyrNyDKxZio8MVevgqcTt8QgY5YiK22ZYXf/zwUylM=;
+	s=korg; t=1773766073;
+	bh=mEfdfgDyB68Nc4LfIWLHAsp4mmi6DIq/BPrhni5ldlA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTJqemwd15jKgPT8rS3FbC7xi5EPvexliXfXLMyXsqoelgYnY3vg7zsvzT/XhDUaD
-	 j+qKkP2BXIiFW8bVqXd1Cp+Kc4tuQuCF0G/eJ7Eaw+yJb1qC1ZJdi5OMS9cb5KsRRI
-	 BLWefiq6k+Y8lnx5zyEfOA3u8ZXw5FlbV2Oph3ZE=
+	b=hiQV7M0UJeVaBILX9uReh9pS4dJ+e9xtbRGJuS04NK3WKu1+PNfBF+3ga7n7e1/oz
+	 rNO2r1arROJpZnQTOU2vPeLBgwpGIA5zT+GQIXxsW+aMOs6jLPaMloQeLK8GmzrHIH
+	 fQB2HyWKEc6Y2ZjshclbO/5aORQvbWXGxqjq5k3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benno Lossin <lossin@kernel.org>,
+	=?UTF-8?q?Onur=20=C3=96zkan?= <work@onurozkan.dev>,
 	Gary Guo <gary@garyguo.net>,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.19 130/378] rust: kbuild: allow `unused_features`
-Date: Tue, 17 Mar 2026 17:31:27 +0100
-Message-ID: <20260317163011.797146775@linuxfoundation.org>
+Subject: [PATCH 6.19 131/378] rust: kbuild: emit dep-info into $(depfile) directly
+Date: Tue, 17 Mar 2026 17:31:28 +0100
+Message-ID: <20260317163011.834763682@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -45,76 +45,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Miguel Ojeda <ojeda@kernel.org>
+From: Gary Guo <gary@garyguo.net>
 
-commit 592c61f3bfceaa29f8275696bd67c3dfad7ef72e upstream.
+commit e174dd14bf0beac811a5201e370ab26ce8c67f23 upstream.
 
-Starting with the upcoming Rust 1.96.0 (to be released 2026-05-28),
-`rustc` introduces the new lint `unused_features` [1], which warns [2]:
+After commit 295d8398c67e ("kbuild: specify output names separately for
+each emission type from rustc"), the preferred pattern is to ask rustc to
+emit dependency information into $(depfile) directly, and after commit
+2185242faddd ("kbuild: remove sed commands after rustc rules"), the
+post-processing to remove comments is no longer necessary as fixdep can
+handle comments directly. Thus, emit dep-info into $(depfile) directly and
+remove the mv and sed invocation.
 
-    warning: feature `used_with_arg` is declared but not used
-     --> <crate attribute>:1:93
-      |
-    1 | #![feature(asm_const,asm_goto,arbitrary_self_types,lint_reasons,offset_of_nested,raw_ref_op,used_with_arg)]
-      |                                                                                             ^^^^^^^^^^^^^
-      |
-      = note: `#[warn(unused_features)]` (part of `#[warn(unused)]`) on by default
+This fixes the issue where a non-ignored .d file is emitted during
+compilation and removed shortly afterwards.
 
-The original goal of using `-Zcrate-attr` automatically was that there
-is a consistent set of features enabled and managed globally for all
-Rust kernel code (modulo exceptions like the `rust/` crated).
+[ Like Gary mentioned in Zulip, this likely happened due to rebasing
+  the builds part of the old `syn` work I had. - Miguel ]
 
-While we could require crates to enable features manually (even if we
-still keep the `-Zallow-features=` list, i.e. removing the `-Zcrate-attr`
-list), it is not really worth making all developers worry about it just
-for a new lint.
-
-The features are expected to eventually become stable anyway (most already
-did), and thus having to remove features in every file that may use them
-is not worth it either.
-
-Thus just allow the new lint globally.
-
-The lint actually existed for a long time, which is why `rustc` does
-not complain about an unknown lint in the stable versions we support,
-but it was "disabled" years ago [3], and now it was made to work again.
-
-For extra context, the new implementation of the lint has already been
-improved to avoid linting about features that became stable thanks to
-Benno's report and the ensuing discussion [4] [5], but while that helps,
-it is still the case that we may have features enabled that are not used
-for one reason or another in a particular crate.
-
-Cc: stable@vger.kernel.org # Needed in 6.12.y and later (Rust is pinned in older LTSs).
-Link: https://github.com/rust-lang/rust/pull/152164 [1]
-Link: https://github.com/Rust-for-Linux/pin-init/pull/114 [2]
-Link: https://github.com/rust-lang/rust/issues/44232 [3]
-Link: https://github.com/rust-lang/rust/issues/153523 [4]
-Link: https://github.com/rust-lang/rust/pull/153610 [5]
-Reviewed-by: Benno Lossin <lossin@kernel.org>
-Reviewed-by: Gary Guo <gary@garyguo.net>
-Link: https://patch.msgid.link/20260312111014.74198-1-ojeda@kernel.org
+Reported-by: Onur Özkan <work@onurozkan.dev>
+Closes: https://rust-for-linux.zulipchat.com/#narrow/channel/288089-General/topic/syn.20artifact.20being.20tracked.20by.20git/with/575467879
+Fixes: 7dbe46c0b11d ("rust: kbuild: add proc macro library support")
+Signed-off-by: Gary Guo <gary@garyguo.net>
+Tested-by: Onur Özkan <work@onurozkan.dev>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260224072957.214979-1-gary@garyguo.net
+[ Reworded for a couple of typos. - Miguel ]
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile |    1 +
- 1 file changed, 1 insertion(+)
+ rust/Makefile |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -473,6 +473,7 @@ KBUILD_USERLDFLAGS := $(USERLDFLAGS)
- export rust_common_flags := --edition=2021 \
- 			    -Zbinary_dep_depinfo=y \
- 			    -Astable_features \
-+			    -Aunused_features \
- 			    -Dnon_ascii_idents \
- 			    -Dunsafe_op_in_unsafe_fn \
- 			    -Wmissing_docs \
+--- a/rust/Makefile
++++ b/rust/Makefile
+@@ -509,11 +509,9 @@ quiet_cmd_rustc_procmacrolibrary = $(RUS
+       cmd_rustc_procmacrolibrary = \
+ 	$(if $(skip_clippy),$(RUSTC),$(RUSTC_OR_CLIPPY)) \
+ 		$(filter-out $(skip_flags),$(rust_common_flags) $(rustc_target_flags)) \
+-		--emit=dep-info,link --crate-type rlib -O \
++		--emit=dep-info=$(depfile) --emit=link=$@ --crate-type rlib -O \
+ 		--out-dir $(objtree)/$(obj) -L$(objtree)/$(obj) \
+-		--crate-name $(patsubst lib%.rlib,%,$(notdir $@)) $<; \
+-	mv $(objtree)/$(obj)/$(patsubst lib%.rlib,%,$(notdir $@)).d $(depfile); \
+-	sed -i '/^\#/d' $(depfile)
++		--crate-name $(patsubst lib%.rlib,%,$(notdir $@)) $<
+ 
+ $(obj)/libproc_macro2.rlib: private skip_clippy = 1
+ $(obj)/libproc_macro2.rlib: private rustc_target_flags = $(proc_macro2-flags)
 
 
