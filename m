@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74BC3F23AA;
-	Tue, 17 Mar 2026 16:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0212A3EAC6F;
+	Tue, 17 Mar 2026 16:49:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766149; cv=none; b=uh7FZ24qUJGsz1ZtFwrpJidjDHPr4K2EbcLDUdkvjA5MUQD9woxfiYOS7RKqvlCisB2S0dh4hYyKme3F+Sc0Ur2rTqb2Yzi8PngRSmtbGqQaEGwmVcJedli6jVzqVqCr8olMSHu+6yLInC/Q48knKe1+2Dwyb8+rHwzoVbzSQq8=
+	t=1773766154; cv=none; b=q9F3ioRmZZS51oP1d8LfdvmRNDXyLu/XSt+jKsB5bMRudNv0AM5QbgBqVYAfrCgF+wUio8HDdPuD/eoZF8ItIkr3WtfIwbUnE/rFIc1UOcAzx33ms+4FLIK1LmvpO/5oKM0oSaEDxX/T7YS+Bbtr3mI8zCVCvOkJ8LSd+0WzHzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766149; c=relaxed/simple;
-	bh=aGXVHIrRuzHftgSKHICeXlbXMdjDBDLdrO3PN2nPrZ4=;
+	s=arc-20240116; t=1773766154; c=relaxed/simple;
+	bh=DIIniBXaIyL68Q/qqQK94sXJOnNuvdrkZDaKvH/7Sag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RfYJD3HQ29mM9KMTfA4+uLv71T3UeYaaeGbSpQe65neTkkZTxlaYk/J+UjLmML6q5UB9OvewL0ZJ/EdxuTXUjdtLAu3Gn0EEA6pbAa3Cyb0xo1rQLDK+iVHfuA+wcOsLP3b4l2xkGvOEYgIEOO6mzw5O7cJcCC8pnF3d21XeW1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FkAC7frI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Fp7+n8tTDxxaU34HTpP1ltaFRlzTdTx9ObnfvYZYqDjqjjW/olOJfatEWzuzKcZ3Ox0iD+ynqIDxk14tw0uawx4qY4fh9BQm+pTpGh3nV7yExktwkUDir8SvXLc+/ePoNqUAtP6jq4PsFxwHaSwbTOMO0ikCsllcFRFH5gxTzLI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YjaNUcr8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FkAC7frI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBA7C4CEF7;
-	Tue, 17 Mar 2026 16:49:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YjaNUcr8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E4DC4CEF7;
+	Tue, 17 Mar 2026 16:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766149;
-	bh=aGXVHIrRuzHftgSKHICeXlbXMdjDBDLdrO3PN2nPrZ4=;
+	s=korg; t=1773766153;
+	bh=DIIniBXaIyL68Q/qqQK94sXJOnNuvdrkZDaKvH/7Sag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkAC7frI9K0/DejLybS+atGNwVfpxKHQPWMhmOlmzph4a76ZltEq+WZU2e6CwMfcW
-	 GR27qLGmcBadXg9/QKLKTlXN+zCYkEJAQCursr/PWuoWsNIAEYkkmi8wiL/9zcptm8
-	 qbw5SoXIkc1j+b/kr1Bcj1lEAMX68Lxy6U/2hk64=
+	b=YjaNUcr8UznfMlRehKIRh7vpX/2prBaKWvV8BsJKeiMnAidbRf9t9NGiHuQTRNb8E
+	 ljMDsKOr8wFTgfdMVuMKov3izW/oPjOX3ctKaXf52t1iVP0577JBIRyxzqJRpEGO68
+	 m++XFtbgsuOESM3D6lShtbUNzfe/+C1jso+2VJek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Hu <nick.hu@sifive.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Yong-Xuan Wang <yongxuan.wang@sifive.com>,
-	Cyan Yang <cyan.yang@sifive.com>,
-	Nutty Liu <liujingqi@lanxincomputing.com>,
-	Anup Patel <anup@brainfault.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 181/378] irqchip/riscv-aplic: Preserve APLIC states across suspend/resume
-Date: Tue, 17 Mar 2026 17:32:18 +0100
-Message-ID: <20260317163013.667252295@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Subject: [PATCH 6.19 164/378] usb: gadget: f_tcm: Fix NULL pointer dereferences in nexus handling
+Date: Tue, 17 Mar 2026 17:32:01 +0100
+Message-ID: <20260317163013.044635303@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -55,328 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nick Hu <nick.hu@sifive.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 95a8ddde36601d0a645475fb080ed118db59c8c3 ]
+commit b9fde507355342a2d64225d582dc8b98ff5ecb19 upstream.
 
-The APLIC states might be reset when the platform enters a low power
-state, but the register states are not being preserved and restored,
-which prevents interrupt delivery after the platform resumes.
-Solve this by adding a syscore ops and a power management notifier to
-preserve and restore the APLIC states on suspend and resume.
+The `tpg->tpg_nexus` pointer in the USB Target driver is dynamically
+managed and tied to userspace configuration via ConfigFS. It can be
+NULL if the USB host sends requests before the nexus is fully
+established or immediately after it is dropped.
 
-[ tglx: Folded the build fix provided by Geert ]
+Currently, functions like `bot_submit_command()` and the data
+transfer paths retrieve `tv_nexus = tpg->tpg_nexus` and immediately
+dereference `tv_nexus->tvn_se_sess` without any validation. If a
+malicious or misconfigured USB host sends a BOT (Bulk-Only Transport)
+command during this race window, it triggers a NULL pointer
+dereference, leading to a kernel panic (local DoS).
 
-Signed-off-by: Nick Hu <nick.hu@sifive.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Yong-Xuan Wang <yongxuan.wang@sifive.com>
-Reviewed-by: Cyan Yang <cyan.yang@sifive.com>
-Reviewed-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Reviewed-by: Anup Patel <anup@brainfault.org>
-Link: https://patch.msgid.link/20251202-preserve-aplic-imsic-v3-2-1844fbf1fe92@sifive.com
-Stable-dep-of: 620b6ded72a7 ("irqchip/riscv-aplic: Do not clear ACPI dependencies on probe failure")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This exposes an inconsistent API usage within the module, as peer
+functions like `usbg_submit_command()` and `bot_send_bad_response()`
+correctly implement a NULL check for `tv_nexus` before proceeding.
+
+Fix this by bringing consistency to the nexus handling. Add the
+missing `if (!tv_nexus)` checks to the vulnerable BOT command and
+request processing paths, aborting the command gracefully with an
+error instead of crashing the system.
+
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260219023834.17976-1-jiashengjiangcool@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-riscv-aplic-direct.c |  10 ++
- drivers/irqchip/irq-riscv-aplic-main.c   | 170 ++++++++++++++++++++++-
- drivers/irqchip/irq-riscv-aplic-main.h   |  19 +++
- 3 files changed, 198 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_tcm.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/irqchip/irq-riscv-aplic-direct.c b/drivers/irqchip/irq-riscv-aplic-direct.c
-index c2a75bf3d20c6..5a9650225dd80 100644
---- a/drivers/irqchip/irq-riscv-aplic-direct.c
-+++ b/drivers/irqchip/irq-riscv-aplic-direct.c
-@@ -8,6 +8,7 @@
- #include <linux/bitfield.h>
- #include <linux/bitops.h>
- #include <linux/cpu.h>
-+#include <linux/cpumask.h>
- #include <linux/interrupt.h>
- #include <linux/irqchip.h>
- #include <linux/irqchip/chained_irq.h>
-@@ -171,6 +172,15 @@ static void aplic_idc_set_delivery(struct aplic_idc *idc, bool en)
- 	writel(de, idc->regs + APLIC_IDC_IDELIVERY);
- }
- 
-+void aplic_direct_restore_states(struct aplic_priv *priv)
-+{
-+	struct aplic_direct *direct = container_of(priv, struct aplic_direct, priv);
-+	int cpu;
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1222,6 +1222,13 @@ static void usbg_submit_cmd(struct usbg_
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
 +
-+	for_each_cpu(cpu, &direct->lmask)
-+		aplic_idc_set_delivery(per_cpu_ptr(&aplic_idcs, cpu), true);
-+}
-+
- static int aplic_direct_dying_cpu(unsigned int cpu)
- {
- 	if (aplic_direct_parent_irq)
-diff --git a/drivers/irqchip/irq-riscv-aplic-main.c b/drivers/irqchip/irq-riscv-aplic-main.c
-index 93e7c51f944ab..4495ca26abf57 100644
---- a/drivers/irqchip/irq-riscv-aplic-main.c
-+++ b/drivers/irqchip/irq-riscv-aplic-main.c
-@@ -12,10 +12,169 @@
- #include <linux/of.h>
- #include <linux/of_irq.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_domain.h>
-+#include <linux/pm_runtime.h>
- #include <linux/printk.h>
-+#include <linux/syscore_ops.h>
- 
- #include "irq-riscv-aplic-main.h"
- 
-+static LIST_HEAD(aplics);
-+
-+static void aplic_restore_states(struct aplic_priv *priv)
-+{
-+	struct aplic_saved_regs *saved_regs = &priv->saved_hw_regs;
-+	struct aplic_src_ctrl *srcs;
-+	void __iomem *regs;
-+	u32 nr_irqs, i;
-+
-+	regs = priv->regs;
-+	writel(saved_regs->domaincfg, regs + APLIC_DOMAINCFG);
-+#ifdef CONFIG_RISCV_M_MODE
-+	writel(saved_regs->msiaddr, regs + APLIC_xMSICFGADDR);
-+	writel(saved_regs->msiaddrh, regs + APLIC_xMSICFGADDRH);
-+#endif
-+	/*
-+	 * The sourcecfg[i] has to be restored prior to the target[i], interrupt-pending and
-+	 * interrupt-enable bits. The AIA specification states that "Whenever interrupt source i is
-+	 * inactive in an interrupt domain, the corresponding interrupt-pending and interrupt-enable
-+	 * bits within the domain are read-only zeros, and register target[i] is also read-only
-+	 * zero."
-+	 */
-+	nr_irqs = priv->nr_irqs;
-+	for (i = 0; i < nr_irqs; i++) {
-+		srcs = &priv->saved_hw_regs.srcs[i];
-+		writel(srcs->sourcecfg, regs + APLIC_SOURCECFG_BASE + i * sizeof(u32));
-+		writel(srcs->target, regs + APLIC_TARGET_BASE + i * sizeof(u32));
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
 +	}
 +
-+	for (i = 0; i <= nr_irqs; i += 32) {
-+		srcs = &priv->saved_hw_regs.srcs[i];
-+		writel(-1U, regs + APLIC_CLRIE_BASE + (i / 32) * sizeof(u32));
-+		writel(srcs->ie, regs + APLIC_SETIE_BASE + (i / 32) * sizeof(u32));
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0)
+ 		goto out;
+@@ -1482,6 +1489,13 @@ static void bot_cmd_work(struct work_str
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
 +
-+		/* Re-trigger the interrupts if it forwards interrupts to target harts by MSIs */
-+		if (!priv->nr_idcs)
-+			writel(readl(regs + APLIC_CLRIP_BASE + (i / 32) * sizeof(u32)),
-+			       regs + APLIC_SETIP_BASE + (i / 32) * sizeof(u32));
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
 +	}
 +
-+	if (priv->nr_idcs)
-+		aplic_direct_restore_states(priv);
-+}
-+
-+static void aplic_save_states(struct aplic_priv *priv)
-+{
-+	struct aplic_src_ctrl *srcs;
-+	void __iomem *regs;
-+	u32 i, nr_irqs;
-+
-+	regs = priv->regs;
-+	nr_irqs = priv->nr_irqs;
-+	/* The valid interrupt source IDs range from 1 to N, where N is priv->nr_irqs */
-+	for (i = 0; i < nr_irqs; i++) {
-+		srcs = &priv->saved_hw_regs.srcs[i];
-+		srcs->target = readl(regs + APLIC_TARGET_BASE + i * sizeof(u32));
-+
-+		if (i % 32)
-+			continue;
-+
-+		srcs->ie = readl(regs + APLIC_SETIE_BASE + (i / 32) * sizeof(u32));
-+	}
-+
-+	/* Save the nr_irqs bit if needed */
-+	if (!(nr_irqs % 32)) {
-+		srcs = &priv->saved_hw_regs.srcs[nr_irqs];
-+		srcs->ie = readl(regs + APLIC_SETIE_BASE + (nr_irqs / 32) * sizeof(u32));
-+	}
-+}
-+
-+static int aplic_syscore_suspend(void *data)
-+{
-+	struct aplic_priv *priv;
-+
-+	list_for_each_entry(priv, &aplics, head)
-+		aplic_save_states(priv);
-+
-+	return 0;
-+}
-+
-+static void aplic_syscore_resume(void *data)
-+{
-+	struct aplic_priv *priv;
-+
-+	list_for_each_entry(priv, &aplics, head)
-+		aplic_restore_states(priv);
-+}
-+
-+static struct syscore_ops aplic_syscore_ops = {
-+	.suspend = aplic_syscore_suspend,
-+	.resume = aplic_syscore_resume,
-+};
-+
-+static struct syscore aplic_syscore = {
-+	.ops = &aplic_syscore_ops,
-+};
-+
-+static int aplic_pm_notifier(struct notifier_block *nb, unsigned long action, void *data)
-+{
-+	struct aplic_priv *priv = container_of(nb, struct aplic_priv, genpd_nb);
-+
-+	switch (action) {
-+	case GENPD_NOTIFY_PRE_OFF:
-+		aplic_save_states(priv);
-+		break;
-+	case GENPD_NOTIFY_ON:
-+		aplic_restore_states(priv);
-+		break;
-+	default:
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static void aplic_pm_remove(void *data)
-+{
-+	struct aplic_priv *priv = data;
-+	struct device *dev = priv->dev;
-+
-+	list_del(&priv->head);
-+	if (dev->pm_domain)
-+		dev_pm_genpd_remove_notifier(dev);
-+}
-+
-+static int aplic_pm_add(struct device *dev, struct aplic_priv *priv)
-+{
-+	struct aplic_src_ctrl *srcs;
-+	int ret;
-+
-+	srcs = devm_kzalloc(dev, (priv->nr_irqs + 1) * sizeof(*srcs), GFP_KERNEL);
-+	if (!srcs)
-+		return -ENOMEM;
-+
-+	priv->saved_hw_regs.srcs = srcs;
-+	list_add(&priv->head, &aplics);
-+	if (dev->pm_domain) {
-+		priv->genpd_nb.notifier_call = aplic_pm_notifier;
-+		ret = dev_pm_genpd_add_notifier(dev, &priv->genpd_nb);
-+		if (ret)
-+			goto remove_head;
-+
-+		ret = devm_pm_runtime_enable(dev);
-+		if (ret)
-+			goto remove_notifier;
-+	}
-+
-+	return devm_add_action_or_reset(dev, aplic_pm_remove, priv);
-+
-+remove_notifier:
-+	dev_pm_genpd_remove_notifier(dev);
-+remove_head:
-+	list_del(&priv->head);
-+	return ret;
-+}
-+
- void aplic_irq_unmask(struct irq_data *d)
- {
- 	struct aplic_priv *priv = irq_data_get_irq_chip_data(d);
-@@ -60,6 +219,8 @@ int aplic_irq_set_type(struct irq_data *d, unsigned int type)
- 	sourcecfg += (d->hwirq - 1) * sizeof(u32);
- 	writel(val, sourcecfg);
- 
-+	priv->saved_hw_regs.srcs[d->hwirq - 1].sourcecfg = val;
-+
- 	return 0;
- }
- 
-@@ -82,6 +243,7 @@ int aplic_irqdomain_translate(struct irq_fwspec *fwspec, u32 gsi_base,
- 
- void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
- {
-+	struct aplic_saved_regs *saved_regs = &priv->saved_hw_regs;
- 	u32 val;
- #ifdef CONFIG_RISCV_M_MODE
- 	u32 valh;
-@@ -95,6 +257,8 @@ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
- 		valh |= FIELD_PREP(APLIC_xMSICFGADDRH_HHXS, priv->msicfg.hhxs);
- 		writel(val, priv->regs + APLIC_xMSICFGADDR);
- 		writel(valh, priv->regs + APLIC_xMSICFGADDRH);
-+		saved_regs->msiaddr = val;
-+		saved_regs->msiaddrh = valh;
- 	}
- #endif
- 
-@@ -106,6 +270,8 @@ void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode)
- 	writel(val, priv->regs + APLIC_DOMAINCFG);
- 	if (readl(priv->regs + APLIC_DOMAINCFG) != val)
- 		dev_warn(priv->dev, "unable to write 0x%x in domaincfg\n", val);
-+
-+	saved_regs->domaincfg = val;
- }
- 
- static void aplic_init_hw_irqs(struct aplic_priv *priv)
-@@ -176,7 +342,7 @@ int aplic_setup_priv(struct aplic_priv *priv, struct device *dev, void __iomem *
- 	/* Setup initial state APLIC interrupts */
- 	aplic_init_hw_irqs(priv);
- 
--	return 0;
-+	return aplic_pm_add(dev, priv);
- }
- 
- static int aplic_probe(struct platform_device *pdev)
-@@ -209,6 +375,8 @@ static int aplic_probe(struct platform_device *pdev)
- 	if (rc)
- 		dev_err_probe(dev, rc, "failed to setup APLIC in %s mode\n",
- 			      msi_mode ? "MSI" : "direct");
-+	else
-+		register_syscore(&aplic_syscore);
- 
- #ifdef CONFIG_ACPI
- 	if (!acpi_disabled)
-diff --git a/drivers/irqchip/irq-riscv-aplic-main.h b/drivers/irqchip/irq-riscv-aplic-main.h
-index b0ad8cde69b13..2d8ad7138541a 100644
---- a/drivers/irqchip/irq-riscv-aplic-main.h
-+++ b/drivers/irqchip/irq-riscv-aplic-main.h
-@@ -23,7 +23,25 @@ struct aplic_msicfg {
- 	u32			lhxw;
- };
- 
-+struct aplic_src_ctrl {
-+	u32			sourcecfg;
-+	u32			target;
-+	u32			ie;
-+};
-+
-+struct aplic_saved_regs {
-+	u32			domaincfg;
-+#ifdef CONFIG_RISCV_M_MODE
-+	u32			msiaddr;
-+	u32			msiaddrh;
-+#endif
-+	struct aplic_src_ctrl	*srcs;
-+};
-+
- struct aplic_priv {
-+	struct list_head	head;
-+	struct notifier_block	genpd_nb;
-+	struct aplic_saved_regs	saved_hw_regs;
- 	struct device		*dev;
- 	u32			gsi_base;
- 	u32			nr_irqs;
-@@ -40,6 +58,7 @@ int aplic_irqdomain_translate(struct irq_fwspec *fwspec, u32 gsi_base,
- 			      unsigned long *hwirq, unsigned int *type);
- void aplic_init_hw_global(struct aplic_priv *priv, bool msi_mode);
- int aplic_setup_priv(struct aplic_priv *priv, struct device *dev, void __iomem *regs);
-+void aplic_direct_restore_states(struct aplic_priv *priv);
- int aplic_direct_setup(struct device *dev, void __iomem *regs);
- #ifdef CONFIG_RISCV_APLIC_MSI
- int aplic_msi_setup(struct device *dev, void __iomem *regs);
--- 
-2.51.0
-
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0)
+ 		goto out;
 
 
