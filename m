@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F21255F2C;
-	Tue, 17 Mar 2026 17:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F246F186E58;
+	Tue, 17 Mar 2026 17:16:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767814; cv=none; b=Xi/2QWiHAy0C5J2lTkiQKorgMEAfQGI0kd1QsCeb28w4MRya/vPrv/ioGPNjU1Rz12lwHKyThJwzRgNrWdsxoDgN8qXeKD4lOkteL6+avl3LLpbpp4BQ8sFJKzJJK+98q8pKqq+r0mRPupRArTJiYf9KnFRcJnlrxItDYwtyZCA=
+	t=1773767819; cv=none; b=GUpFrpHc8OSIYnW0MayQNmiugNjFBfzGOTbQOgvA+LZmsoH4Tg9tcKQjm/fykjZ7n4GCIzJnmzQ5LB9iajFofTt7HSmx6xaJ1sH12oDekhYip2uak5P1zPq4FNRmWT9E1qevjUWLMuhAG/45jEvk/gWdAroybVWIGqIjFb7woYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767814; c=relaxed/simple;
-	bh=myBuIs4Zt31ZitEe7401BQl5m3/jHckCWzsmynR4JEU=;
+	s=arc-20240116; t=1773767819; c=relaxed/simple;
+	bh=B3y2VF+xQX6Z/t+/ipvXKciZCYnc/KqXke8m6BYjUKo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TFovUk5gD/d4gu1Q5LxdvCLd3pWES98y/6x07pNdk51fplNDrhY8zKII11BQwhg1xW9CDIzSAZZ34HaWAOcyUrIcng8bFZ7WaXGSAAYU91Eg2ZHeUfYT59vmufEhY/VbHW1WjB/NLyLPg3ZjWsTkovwlTTnv4ecUEUwI0DV9TH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2kbIjdG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jmIEwXPVHH3QQkhpKZIzIe7UBMA1Mg7MmW6rfB7IsL0XSbHAsO3c2ZdA6F8jlFvFqAOc42i6ZQ0aOa4OHThveEB6lnLy77rEvW46NfyvzaZYOGmetRasXWitgmRSZVC0x8MK3WbAlgjJMX32DjelmgX0LXVbQU27s/zMmS5CiNY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjwqcKz9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2kbIjdG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE49C19424;
-	Tue, 17 Mar 2026 17:16:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjwqcKz9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0803C4CEF7;
+	Tue, 17 Mar 2026 17:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767814;
-	bh=myBuIs4Zt31ZitEe7401BQl5m3/jHckCWzsmynR4JEU=;
+	s=korg; t=1773767818;
+	bh=B3y2VF+xQX6Z/t+/ipvXKciZCYnc/KqXke8m6BYjUKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2kbIjdGM99EqMenxa6VcirS7gACCM893hgLdN9yjmHoslUA+m9SvONludYTQco0g
-	 FVNsURXRjlCBaxSrPDR57utadrzyThXRBvlsOe8eKz52neB0yG/GpsLuoIXVB3hx76
-	 PVsLIXNMRquzpFtdVzkVysuLUxWoEv8mQpFdZQGY=
+	b=GjwqcKz9D/+N8Fw6QJ4WNkugQcAsIJtzgG0KTxQgYXIw7x2GiE+x0Q7WxJ1qpKo18
+	 woVL4wJ72I4lHpdH8q28vNxi31+d7FPIOZO0m81gmClZmRx+txzD6pmQv3oYRx0+vE
+	 SRjAwu2PSvaF7K90aU8DGFGAI1mhYUJltokwiO5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 163/333] kprobes: avoid crash when rmmod/insmod after ftrace killed
-Date: Tue, 17 Mar 2026 17:33:12 +0100
-Message-ID: <20260317163005.407080416@linuxfoundation.org>
+	Max Kellermann <max.kellermann@ionos.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.18 164/333] ceph: add a bunch of missing ceph_path_info initializers
+Date: Tue, 17 Mar 2026 17:33:13 +0100
+Message-ID: <20260317163005.443994140@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,67 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Max Kellermann <max.kellermann@ionos.com>
 
-commit e113f0b46d19626ec15388bcb91432c9a4fd6261 upstream.
+commit 43323a5934b660afae687e8e4e95ac328615a5c4 upstream.
 
-After we hit ftrace is killed by some errors, the kernel crash if
-we remove modules in which kprobe probes.
+ceph_mdsc_build_path() must be called with a zero-initialized
+ceph_path_info parameter, or else the following
+ceph_mdsc_free_path_info() may crash.
 
-BUG: unable to handle page fault for address: fffffbfff805000d
-PGD 817fcc067 P4D 817fcc067 PUD 817fc8067 PMD 101555067 PTE 0
-Oops: Oops: 0000 [#1] SMP KASAN PTI
-CPU: 4 UID: 0 PID: 2012 Comm: rmmod Tainted: G        W  OE
-Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-RIP: 0010:kprobes_module_callback+0x89/0x790
-RSP: 0018:ffff88812e157d30 EFLAGS: 00010a02
-RAX: 1ffffffff805000d RBX: dffffc0000000000 RCX: ffffffff86a8de90
-RDX: ffffed1025c2af9b RSI: 0000000000000008 RDI: ffffffffc0280068
-RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed1025c2af9a
-R10: ffff88812e157cd7 R11: 205d323130325420 R12: 0000000000000002
-R13: ffffffffc0290488 R14: 0000000000000002 R15: ffffffffc0280040
-FS:  00007fbc450dd740(0000) GS:ffff888420331000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: fffffbfff805000d CR3: 000000010f624000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- notifier_call_chain+0xc6/0x280
- blocking_notifier_call_chain+0x60/0x90
- __do_sys_delete_module.constprop.0+0x32a/0x4e0
- do_syscall_64+0x5d/0xfa0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Example crash (on Linux 6.18.12):
 
-This is because the kprobe on ftrace does not correctly handles
-the kprobe_ftrace_disabled flag set by ftrace_kill().
+  virt_to_cache: Object is not a Slab page!
+  WARNING: CPU: 184 PID: 2871736 at mm/slub.c:6732 kmem_cache_free+0x316/0x400
+  [...]
+  Call Trace:
+   [...]
+   ceph_open+0x13d/0x3e0
+   do_dentry_open+0x134/0x480
+   vfs_open+0x2a/0xe0
+   path_openat+0x9a3/0x1160
+  [...]
+  cache_from_obj: Wrong slab cache. names_cache but object is from ceph_inode_info
+  WARNING: CPU: 184 PID: 2871736 at mm/slub.c:6746 kmem_cache_free+0x2dd/0x400
+  [...]
+  kernel BUG at mm/slub.c:634!
+  Oops: invalid opcode: 0000 [#1] SMP NOPTI
+  RIP: 0010:__slab_free+0x1a4/0x350
 
-To prevent this error, check kprobe_ftrace_disabled in
-__disarm_kprobe_ftrace() and skip all ftrace related operations.
+Some of the ceph_mdsc_build_path() callers had initializers, but
+others had not, even though they were all added by commit 15f519e9f883
+("ceph: fix race condition validating r_parent before applying state").
+The ones without initializer are suspectible to random crashes.  (I can
+imagine it could even be possible to exploit this bug to elevate
+privileges.)
 
-Link: https://lore.kernel.org/all/176473947565.1727781.13110060700668331950.stgit@mhiramat.tok.corp.google.com/
+Unfortunately, these Ceph functions are undocumented and its semantics
+can only be derived from the code.  I see that ceph_mdsc_build_path()
+initializes the structure only on success, but not on error.
 
-Reported-by: Ye Bin <yebin10@huawei.com>
-Closes: https://lore.kernel.org/all/20251125020536.2484381-1-yebin@huaweicloud.com/
-Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
+Calling ceph_mdsc_free_path_info() after a failed
+ceph_mdsc_build_path() call does not even make sense, but that's what
+all callers do, and for it to be safe, the structure must be
+zero-initialized.  The least intrusive approach to fix this is
+therefore to add initializers everywhere.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 15f519e9f883 ("ceph: fix race condition validating r_parent before applying state")
+Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ceph/debugfs.c |    4 ++--
+ fs/ceph/dir.c     |    2 +-
+ fs/ceph/file.c    |    4 ++--
+ fs/ceph/inode.c   |    2 +-
+ 4 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1104,6 +1104,10 @@ static int __disarm_kprobe_ftrace(struct
- 	int ret;
+--- a/fs/ceph/debugfs.c
++++ b/fs/ceph/debugfs.c
+@@ -79,7 +79,7 @@ static int mdsc_show(struct seq_file *s,
+ 		if (req->r_inode) {
+ 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
+ 		} else if (req->r_dentry) {
+-			struct ceph_path_info path_info;
++			struct ceph_path_info path_info = {0};
+ 			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &path_info, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+@@ -98,7 +98,7 @@ static int mdsc_show(struct seq_file *s,
+ 		}
  
- 	lockdep_assert_held(&kprobe_mutex);
-+	if (unlikely(kprobe_ftrace_disabled)) {
-+		/* Now ftrace is disabled forever, disarm is already done. */
-+		return 0;
-+	}
- 
- 	if (*cnt == 1) {
- 		ret = unregister_ftrace_function(ops);
+ 		if (req->r_old_dentry) {
+-			struct ceph_path_info path_info;
++			struct ceph_path_info path_info = {0};
+ 			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &path_info, 0);
+ 			if (IS_ERR(path))
+ 				path = NULL;
+--- a/fs/ceph/dir.c
++++ b/fs/ceph/dir.c
+@@ -1362,7 +1362,7 @@ static int ceph_unlink(struct inode *dir
+ 	if (!dn) {
+ 		try_async = false;
+ 	} else {
+-		struct ceph_path_info path_info;
++		struct ceph_path_info path_info = {0};
+ 		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			try_async = false;
+--- a/fs/ceph/file.c
++++ b/fs/ceph/file.c
+@@ -397,7 +397,7 @@ int ceph_open(struct inode *inode, struc
+ 	if (!dentry) {
+ 		do_sync = true;
+ 	} else {
+-		struct ceph_path_info path_info;
++		struct ceph_path_info path_info = {0};
+ 		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			do_sync = true;
+@@ -807,7 +807,7 @@ int ceph_atomic_open(struct inode *dir,
+ 	if (!dn) {
+ 		try_async = false;
+ 	} else {
+-		struct ceph_path_info path_info;
++		struct ceph_path_info path_info = {0};
+ 		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			try_async = false;
+--- a/fs/ceph/inode.c
++++ b/fs/ceph/inode.c
+@@ -2562,7 +2562,7 @@ int __ceph_setattr(struct mnt_idmap *idm
+ 	if (!dentry) {
+ 		do_sync = true;
+ 	} else {
+-		struct ceph_path_info path_info;
++		struct ceph_path_info path_info = {0};
+ 		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
+ 		if (IS_ERR(path)) {
+ 			do_sync = true;
 
 
