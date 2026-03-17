@@ -1,43 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470A33AE18E;
-	Tue, 17 Mar 2026 11:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13113AE6E8;
+	Tue, 17 Mar 2026 11:32:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747174; cv=none; b=h62PDK6aI0iAnepQ3AcTrk6ULz8OodzEOPBV1PbV0j+v8EyHoP8G6U/J+6Bu+3dU0Pk4FVkXQNMcjMTymyAVSzfUqBaELC8xLRXk/VTVIcSlCmzlzoozCXa8851uwwVxMv15kGFI5OfRZVMFVK+/DQuP8XgwLUir8mi3V1Cc9I4=
+	t=1773747175; cv=none; b=UkypXiB5eh02FFsaFRu4p1yEvO3Kk1tIISOTRhpvlL6Juac1ywa7u8L7953KPsbbjHfFK3AiTSs5MYIiK1O2VJrNoDD8eXYYvNJ1kxpFKyGSWeEgkTOh3Vun4teEcm8pzUTGUKMrYV3Ry0Yo9/7hEANMEblgP3pW7sF0aF/5W/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747174; c=relaxed/simple;
-	bh=5o96v/1i1Me6CnZbJzkrii5AQ8rclitXQ8OYqSTFhvc=;
+	s=arc-20240116; t=1773747175; c=relaxed/simple;
+	bh=UGyqG5Iwe9p4eN1rv2Et9opy6IVj+2NBMBzUOhP/oP4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=REN1814MVeb6SipYaBd6fEZu/28wblVibBaur0zmWVbVoi0iGT/wS4kUOWvJcS2iP902FXRsUWV0/ybwaZnKa5HxQPA2RJQt+AcnBHubxF9rgsC4CwUGBqoYkSzPn/NuprJs/ml1zNyje2EsEzJiw9PClL0HJ0xLAwX/zXpymVI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=tkPByqbG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BRyzUslKOMSAztmdRO7SO5J5fg+9Ba5bIAUTQZfDaEidP/8X3z2WYad7+7Pbj6+sGwrzVzk+8QHswWSxVehyXnKZKKZ/+Bd3Qmf8s9mzgxiDmmCX0MnUJkO0BYT2SY/fijnbyoY3mlSnNIuNY1c5e0EnP5mqBKaXAZIAKSIrwRQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=V60w4glQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="tkPByqbG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15F83C4CEF7;
-	Tue, 17 Mar 2026 11:32:53 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="V60w4glQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 495C7C19425;
+	Tue, 17 Mar 2026 11:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747173;
-	bh=5o96v/1i1Me6CnZbJzkrii5AQ8rclitXQ8OYqSTFhvc=;
+	s=k20201202; t=1773747175;
+	bh=UGyqG5Iwe9p4eN1rv2Et9opy6IVj+2NBMBzUOhP/oP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkPByqbGWFMU7x3BJYjvld2kqQ/sib158AGBzZE8vs9bGBk7aNOcg/pIH8dktPdPm
-	 4J6SHSTbdLtoTX137DLrh6NLqrtzxBdva1Hv5AI1YQ145MFJFsBhTJd7BqVHuj1HhG
-	 4GK5e6UF/Yv9G8AF0Y1IcKChpscQAylvXHDGgt65YR11hKymlyZTGMOSD/dOxm1zPo
-	 UICvnN6VtMDxkRGnfFAd0PM0Is3sqcWQSz/XC9mOJEZyHwfxs6rm0al1/9GP4b1lUh
-	 OZRMKttuV+VQeSPNydYyIQ9s77MiqMGQOS0WzvXc+oMszY2blPd1R+Z11Q1G6Yc3VS
-	 zTd8YTeLqBAOw==
+	b=V60w4glQOg+t3XUc3M46GSpTXAVBkIq/aU9RZrPCTxpBsSuyveCK9APO2w6c10dsu
+	 OWytaz1zRQ3MQ7XiVtgD/AB3GJyBCBE1QvfUUyRRnp60JLHDzFXKLTCqJ5pGJEIWRG
+	 8M3V53GSyU1x0faNdmE9Ke/zoUNVwbQrerQBETxNpqqqF13upp2EhEMfndsPS0eZtN
+	 EY7gTMCkGRXB6knWvUsb+AjQpTaneG/p8Gak1sTnGS9DGsMJ9WiQOMNRogTKkuRoVG
+	 bZLhiiWYXZiS/znIbFK1I0uVOjSfUCuzGnfaFOelDYzA8vejs+x5cl4C7p+4qsAIVa
+	 AVb7Rw5+DybMg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: HONG Yifan <elsk@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+Cc: Hari Bathini <hbathini@linux.ibm.com>,
+	Venkat Rao Bagalkote <venkat88@linux.ibm.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>,
-	peterz@infradead.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] objtool: Use HOSTCFLAGS for HAVE_XXHASH test
-Date: Tue, 17 Mar 2026 07:32:34 -0400
-Message-ID: <20260317113249.117771-3-sashal@kernel.org>
+	rostedt@goodmis.org,
+	mhiramat@kernel.org,
+	mpe@ellerman.id.au,
+	linux-kernel@vger.kernel.org,
+	linux-trace-kernel@vger.kernel.org,
+	linuxppc-dev@lists.ozlabs.org
+Subject: [PATCH AUTOSEL 6.19-6.18] powerpc64/ftrace: fix OOL stub count with clang
+Date: Tue, 17 Mar 2026 07:32:35 -0400
+Message-ID: <20260317113249.117771-4-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -50,106 +54,128 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.8
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: HONG Yifan <elsk@google.com>
+From: Hari Bathini <hbathini@linux.ibm.com>
 
-[ Upstream commit 32234049107d012703d50547e815f198f147968b ]
+[ Upstream commit 875612a7745013a43c67493cb0583ee3f7476344 ]
 
-Previously, HAVE_XXHASH is tested by invoking HOSTCC without HOSTCFLAGS.
+The total number of out-of-line (OOL) stubs required for function
+tracing is determined using the following command:
 
-Consider the following scenario:
+    $(OBJDUMP) -r -j __patchable_function_entries vmlinux.o
 
-- The host machine has libxxhash installed
-- We build the kernel with HOSTCFLAGS containing a --sysroot that does
-  not have xxhash.h (for hermetic builds)
+While this works correctly with GNU objdump, llvm-objdump does not
+list the expected relocation records for this section. Fix this by
+using the -d option and counting R_PPC64_ADDR64 relocation entries.
+This works as desired with both objdump and llvm-objdump.
 
-In this case, HAVE_XXHASH is set to y, but when it builds objtool with
-HOSTCFLAGS, because the --sysroot does not contain xxhash.h, the
-following error is raised:
-
-<...>/common/tools/objtool/include/objtool/checksum_types.h:12:10: fatal error: 'xxhash.h' file not found
-   12 | #include <xxhash.h>
-      |          ^~~~~~~~~~
-
-To resolve the error, we test HAVE_XXHASH by invoking HOSTCC with
-HOSTCFLAGS.
-
-Signed-off-by: HONG Yifan <elsk@google.com>
-Reviewed-by: Carlos Llamas <cmllamas@google.com>
-Link: https://patch.msgid.link/20260303010340.306164-1-elsk@google.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Signed-off-by: Hari Bathini <hbathini@linux.ibm.com>
+Tested-by: Venkat Rao Bagalkote <venkat88@linux.ibm.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260127084926.34497-3-hbathini@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Key Finding: Code Exists Only in v6.19+
+This is a **build fix**. When building with clang/LLVM toolchain:
+1. `llvm-objdump -r -j __patchable_function_entries` produces no
+   relocation records
+2. `grep -c "$RELOCATION"` finds 0 matches, returns exit code 1
+3. With `set -e` at the top of the script, the script aborts
+4. The kernel build fails
 
-The `HAVE_XXHASH` test was introduced in commit `0d83da43b1e1c`
-("objtool/klp: Add --checksum option to generate per-function
-checksums"), which first appeared in v6.19-rc1. This means:
-- The buggy code does **not exist** in any older stable trees (6.12.y,
-  6.6.y, 6.1.y, 5.15.y, etc.)
-- This fix is only relevant for the **6.19.y** stable tree
+This is a clear build failure for the LLVM/clang toolchain on powerpc64
+with ftrace OOL stubs enabled.
 
-### Assessment
+## Analysis
 
-**Pros:**
-- Build fix — explicitly listed as appropriate stable material
-- One-line change with zero runtime risk
-- Obviously correct: the feature test should use the same flags as the
-  actual build
-- Reviewed by Carlos Llamas, accepted by Josh Poimboeuf (objtool
-  maintainer)
-- Fixes a real `fatal error` that completely blocks compilation
+### What the commit fixes
+This commit fixes a **build failure** when compiling the Linux kernel
+with the LLVM/clang toolchain on powerpc64 with
+`CONFIG_PPC_FTRACE_OUT_OF_LINE` enabled. The `llvm-objdump` tool does
+not list relocation records the same way as GNU objdump when using `-r
+-j __patchable_function_entries`. Adding the `-d` flag makes both GNU
+objdump and llvm-objdump produce the expected output.
 
-**Cons:**
-- Only affects builds using custom `HOSTCFLAGS` with `--sysroot`
-  (hermetic builds) — a niche scenario
-- Only applicable to 6.19.y (the code doesn't exist in older stable
-  trees)
+### Stable kernel criteria assessment
+1. **Obviously correct and tested**: Yes. The fix adds `-d` to objdump
+   invocations. It has `Tested-by:` from Venkat Rao Bagalkote. The
+   commit message clearly explains the problem and solution.
+2. **Fixes a real bug**: Yes. Build failure with LLVM/clang toolchain.
+3. **Fixes an important issue**: Yes. Build fixes are explicitly listed
+   as acceptable for stable trees per stable kernel rules. Users
+   building with LLVM toolchain cannot build a working kernel without
+   this fix.
+4. **Small and contained**: Yes. Only 2 lines changed - adding `-d` flag
+   to two objdump invocations in a shell script.
+5. **No new features or APIs**: Correct. No new features.
 
-### Verdict
+### Scope and risk
+- **2 lines changed**: Minimal scope, adding a single flag to objdump
+  commands.
+- **Only affects build tooling**: A shell script used during build, not
+  runtime kernel code.
+- **Cross-toolchain compatible**: The fix works with both GNU objdump
+  and llvm-objdump.
+- **Risk**: Extremely low. The `-d` (disassemble) flag is standard for
+  both objdump implementations and the commit message confirms testing
+  with both.
 
-This is a legitimate build fix: small, obviously correct, zero risk, and
-it prevents a real compilation failure for users with custom sysroot
-configurations. Build fixes are explicitly called out as appropriate for
-stable trees. The only caveat is that it only applies to 6.19.y since
-the affected code was introduced in v6.19-rc1.
+### Affected versions
+- The file was introduced in v6.13 (commit eec37961a56aa)
+- The fix is in v7.0-rc4
+- Stable trees v6.13.y and v6.14.y are affected
 
-### Verification
+### Dependencies
+No dependencies on other commits. The fix is self-contained.
 
-- `git tag --contains 0d83da43b1e1c` confirmed the HAVE_XXHASH code was
-  introduced in v6.19-rc1, not present in earlier stable trees
-- `git log -- tools/objtool/Makefile | grep -i xxhash` confirmed the
-  history of xxhash-related changes
-- The diff is a one-line addition of `$(HOSTCFLAGS)` — verified by
-  reading the patch
-- Reviewed-by: Carlos Llamas and signed-off by Josh Poimboeuf (objtool
-  maintainer) confirmed in commit message
-- The fix logic is self-evident: if the build uses `$(HOSTCC)
-  $(HOSTCFLAGS)`, the test should too
+### User impact
+Anyone building the powerpc64 kernel with clang/LLVM and
+CONFIG_PPC_FTRACE_OUT_OF_LINE enabled hits a build failure. The
+clang/LLVM toolchain is increasingly used for kernel builds
+(ClangBuiltLinux project), making this a real-world issue.
+
+## Verification
+
+- `git log --follow -- arch/powerpc/tools/ftrace-gen-ool-stubs.sh`
+  confirmed the file was introduced in commit eec37961a56aa (v6.13)
+- `git merge-base --is-ancestor eec37961a56aa v6.13` confirmed the file
+  is in v6.13 but not v6.12
+- `git tag --contains 875612a774501` confirmed the fix landed in
+  v7.0-rc4
+- Read `arch/powerpc/kernel/trace/ftrace.c:190-239` confirmed that wrong
+  stub count leads to WARN_ON and -EINVAL (ftrace failure)
+- Read `arch/powerpc/tools/ftrace-gen-ool-stubs.sh` confirmed `set -e`
+  at line 5, meaning grep returning exit code 1 (zero matches) would
+  abort the script and fail the build
+- `git tag -l 'v6.13.*'` and `git tag -l 'v6.14.*'` confirmed both
+  stable trees exist and need this fix
+- The diff is exactly 2 lines changed (adding `-d` flag) - verified from
+  the commit diff
 
 **YES**
 
- tools/objtool/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/tools/ftrace-gen-ool-stubs.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/objtool/Makefile b/tools/objtool/Makefile
-index 76bcd4e85de34..b71d1886022e9 100644
---- a/tools/objtool/Makefile
-+++ b/tools/objtool/Makefile
-@@ -13,7 +13,7 @@ endif
+diff --git a/arch/powerpc/tools/ftrace-gen-ool-stubs.sh b/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
+index bac186bdf64a7..9218d43aeb548 100755
+--- a/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
++++ b/arch/powerpc/tools/ftrace-gen-ool-stubs.sh
+@@ -15,9 +15,9 @@ if [ -z "$is_64bit" ]; then
+ 	RELOCATION=R_PPC_ADDR32
+ fi
  
- ifeq ($(ARCH_HAS_KLP),y)
- 	HAVE_XXHASH = $(shell printf "$(pound)include <xxhash.h>\nXXH3_state_t *state;int main() {}" | \
--		      $(HOSTCC) -xc - -o /dev/null -lxxhash 2> /dev/null && echo y || echo n)
-+		      $(HOSTCC) $(HOSTCFLAGS) -xc - -o /dev/null -lxxhash 2> /dev/null && echo y || echo n)
- 	ifeq ($(HAVE_XXHASH),y)
- 		BUILD_KLP	 := y
- 		LIBXXHASH_CFLAGS := $(shell $(HOSTPKG_CONFIG) libxxhash --cflags 2>/dev/null) \
+-num_ool_stubs_total=$($objdump -r -j __patchable_function_entries "$vmlinux_o" |
++num_ool_stubs_total=$($objdump -r -j __patchable_function_entries -d "$vmlinux_o" |
+ 		      grep -c "$RELOCATION")
+-num_ool_stubs_inittext=$($objdump -r -j __patchable_function_entries "$vmlinux_o" |
++num_ool_stubs_inittext=$($objdump -r -j __patchable_function_entries -d "$vmlinux_o" |
+ 			 grep -e ".init.text" -e ".text.startup" | grep -c "$RELOCATION")
+ num_ool_stubs_text=$((num_ool_stubs_total - num_ool_stubs_inittext))
+ 
 -- 
 2.51.0
 
