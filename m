@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB1363C74;
-	Tue, 17 Mar 2026 17:24:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF0932AAC5;
+	Tue, 17 Mar 2026 17:24:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768264; cv=none; b=ZvXWbLlMo8VvXmfvDhTBhNBM6uMGL+BLN+kCHsMn02UyY2VF/aEkTZLUcSgYfMAnUrOMpX88RBePgdxz2XJJKKCbTTdcWSDI09cqms+NVrHCNkiFp4S2WFu5NdTnV4SU/3V/0QFWeA9NYKmxHAOCEXBtwaWfEPWvaK9QZXDKakc=
+	t=1773768269; cv=none; b=hhli/VjH90IcGpr1lgPKAhfY5G/V/OYwGNmb5iudTWXKJC6Jj96g6+8qGozRsvvHFVMmzXbMnGrXnTpaOgs3gPeu/HDd1ECv8iGx1zUdaJmTpA3syp7hf1EO4pJXiDJ8yYFk+OSRAb5Scb1syZV1EWbw4IYBdJ5DVyJiv561NRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768264; c=relaxed/simple;
-	bh=2B2/NunOo7PVNwiaaJjn0InVljN5NwKLrrx18SIWnKU=;
+	s=arc-20240116; t=1773768269; c=relaxed/simple;
+	bh=zYBw4uOKHKNWisJoKAQLGqo8ohP0aZntGR7u20j0U2Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ESrldRrejjXKQsCPR2SuATh9qA/wz+ZSu4iF79gjtIZdR5Y89DWzUCbrM6mMgUC5N3HvGmH0LyEbn1caf7pLZ9qBeB+PIxZMKiroSSOtmvrIfl8rF74SvdYyjI0ohmGgjLof9AnoJJfq0ENLfiEMeq5LveRWOxTSpYjOrSoeuQg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hK2qefQV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XMUk7bYR4IOwfdDu3ngdJCy6cUVZjgW+YLJq+i0gaO5L6O69WsaeSqKCWBPyTni2jTvOcTV7IpZUxCjt1ehofHWfZKDcER3rE+PrSbsccRZ4g9HL3q7YSMdEQrJN6MBSyHxbNI+/tqeby581ioerpssBsKsYGN6NiP/fKOu63LI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TGstgmjb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hK2qefQV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F6AFC2BC86;
-	Tue, 17 Mar 2026 17:24:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TGstgmjb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DBCFC19424;
+	Tue, 17 Mar 2026 17:24:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768264;
-	bh=2B2/NunOo7PVNwiaaJjn0InVljN5NwKLrrx18SIWnKU=;
+	s=korg; t=1773768269;
+	bh=zYBw4uOKHKNWisJoKAQLGqo8ohP0aZntGR7u20j0U2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hK2qefQVZr3K5IHtHngB2+/T6jlYuiZSZWpDcTYeO9RJpBC1fBPAboo825DnOcQrI
-	 hPILclkvadI+XzR3hyB2GoprVqPsz30OyMa+c1BtCmIKUTvZ8Sbq5Nfblqqwy5G+UU
-	 WLV/cAwjsZG0xulrgrDMRtZHIwQl3lAYR4pYxrOA=
+	b=TGstgmjbHItDc+oJIktgVeICsIhsvr0qvrKpU5HABxr5Rpf+6JCQoxvwqfjgF3kV/
+	 I+mZrnHV5Q2DB7+qDIn/2+MJbzQsxbN3n3M0qRulqvUei7cxGs/7ZXxTA8UAzVKqMs
+	 w3ZXEDCYJLb6uXuik1h6cVBECJlsirZheC8ByBAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.18 271/333] sched_ext: Fix enqueue_task_scx() truncation of upper enqueue flags
-Date: Tue, 17 Mar 2026 17:35:00 +0100
-Message-ID: <20260317163009.438566448@linuxfoundation.org>
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.18 272/333] s390/zcrypt: Enable AUTOSEL_DOM for CCA serialnr sysfs attribute
+Date: Tue, 17 Mar 2026 17:35:01 +0100
+Message-ID: <20260317163009.477783815@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,54 +51,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-commit 57ccf5ccdc56954f2a91a7f66684fd31c566bde5 upstream.
+commit 598bbefa8032cc58b564a81d1ad68bd815c8dc0f upstream.
 
-enqueue_task_scx() takes int enq_flags from the sched_class interface.
-SCX enqueue flags starting at bit 32 (SCX_ENQ_PREEMPT and above) are
-silently truncated when passed through activate_task(). extra_enq_flags
-was added as a workaround - storing high bits in rq->scx.extra_enq_flags
-and OR-ing them back in enqueue_task_scx(). However, the OR target is
-still the int parameter, so the high bits are lost anyway.
+The serialnr sysfs attribute for CCA cards when queried always
+used the default domain for sending the request down to the card.
+If for any reason exactly this default domain is disabled then
+the attribute code fails to retrieve the CCA info and the sysfs
+entry shows an empty string. Works as designed but the serial
+number is a card attribute and thus it does not matter which
+domain is used for the query. So if there are other domains on
+this card available, these could be used.
 
-The current impact is limited as the only affected flag is SCX_ENQ_PREEMPT
-which is informational to the BPF scheduler - its loss means the scheduler
-doesn't know about preemption but doesn't cause incorrect behavior.
+So extend the code to use AUTOSEL_DOM for the domain value to
+address any online domain within the card for querying the cca
+info and thus show the serialnr as long as there is one domain
+usable regardless of the default domain setting.
 
-Fix by renaming the int parameter to core_enq_flags and introducing a
-u64 enq_flags local that merges both sources. All downstream functions
-already take u64 enq_flags.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Acked-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: 8f291ebf3270 ("s390/zcrypt: enable card/domain autoselect on ep11 cprbs")
+Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c |   12 +++++++-----
+ drivers/s390/crypto/zcrypt_cex4.c    |    3 +--
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -1358,16 +1358,15 @@ static void clr_task_runnable(struct tas
- 		p->scx.flags |= SCX_TASK_RESET_RUNNABLE_AT;
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -1640,11 +1640,13 @@ int cca_get_info(u16 cardnr, u16 domain,
+ 
+ 	memset(ci, 0, sizeof(*ci));
+ 
+-	/* get first info from zcrypt device driver about this apqn */
+-	rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
+-	if (rc)
+-		return rc;
+-	ci->hwtype = devstat.hwtype;
++	/* if specific domain given, fetch status and hw info for this apqn */
++	if (domain != AUTOSEL_DOM) {
++		rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
++		if (rc)
++			return rc;
++		ci->hwtype = devstat.hwtype;
++	}
+ 
+ 	/*
+ 	 * Prep memory for rule array and var array use.
+--- a/drivers/s390/crypto/zcrypt_cex4.c
++++ b/drivers/s390/crypto/zcrypt_cex4.c
+@@ -84,8 +84,7 @@ static ssize_t cca_serialnr_show(struct
+ 
+ 	memset(&ci, 0, sizeof(ci));
+ 
+-	if (ap_domain_index >= 0)
+-		cca_get_info(ac->id, ap_domain_index, &ci, 0);
++	cca_get_info(ac->id, AUTOSEL_DOM, &ci, 0);
+ 
+ 	return sysfs_emit(buf, "%s\n", ci.serial);
  }
- 
--static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int enq_flags)
-+static void enqueue_task_scx(struct rq *rq, struct task_struct *p, int core_enq_flags)
- {
- 	struct scx_sched *sch = scx_root;
- 	int sticky_cpu = p->scx.sticky_cpu;
-+	u64 enq_flags = core_enq_flags | rq->scx.extra_enq_flags;
- 
- 	if (enq_flags & ENQUEUE_WAKEUP)
- 		rq->scx.flags |= SCX_RQ_IN_WAKEUP;
- 
--	enq_flags |= rq->scx.extra_enq_flags;
--
- 	if (sticky_cpu >= 0)
- 		p->scx.sticky_cpu = -1;
- 
 
 
