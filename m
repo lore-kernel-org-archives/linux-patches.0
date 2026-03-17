@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F9B93EAC6F;
-	Tue, 17 Mar 2026 16:52:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C083EAC6F;
+	Tue, 17 Mar 2026 16:52:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766320; cv=none; b=ua8Y1j7pXISA7wO+OWDx6Gt1TQD8I77KSGbFJeEmTplcPhb2TCJPbr4vI8C7oqhiPx6mJm/4JvCWXagmhxZRliPaXrR0qLZut0R4sRLw7As57zw+prihBUJikqfs/4SulEvgxGlbk1o4Sb1i7/AdEKK0P2Kvvis1zDwNtjYmhQ8=
+	t=1773766326; cv=none; b=RlvVm7p1tpC+uMk62O6/q81p28HMCNpHrTxTl8inO1UufY8j7knX99G6jM5fkyNhiy6pu5xHmoR2de/5EcluKnXFYh58IuRaiCmjV2OM7BlAV5TCs8z0RS6Wm6suKtFvufHDlI91WJ6pykX95GmrypjW3WC/ki4nOP0cbVpDpis=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766320; c=relaxed/simple;
-	bh=WT1MSkKr17WHZgbWTW/ew+TITKG7DltKEUHS9OESgys=;
+	s=arc-20240116; t=1773766326; c=relaxed/simple;
+	bh=1h69ogrC1pkQ9ZF9z5qU1HYd7FLQIFnZ2s+zOfA0xtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gyoZeXOWGMaPky9e5mjDqqwyyNtS44IkGozdtrDI5ROmow6uhSasHfYzLpN5ob5clYqCZ+bvb9tV4usPXDHkHVpSunmyWZJhne3fMB8TWNtiWnZyQ0qATLvqV/BCynIWXE2DMViFX+YGX3NVlxoEN36+OAi25+IWR/HmBRjIQTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XZmSzksV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=eJinLJAz9AS2hJZjCKSICLnl41Zg60lNhFWG5AsBSvrRFwRkVIuKppUk2s11uLVv3H/J9pB99rwTU8B/r/Vsa51ERCOpeNND7qqw5X/aqZIkWAwewq27qjHjKvZlqye+eM6f1qh+jgf+sXTEFQzkVL2ntFFzKYyzKMqdCK0ou4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=McFLPJcl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XZmSzksV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4932C4CEF7;
-	Tue, 17 Mar 2026 16:51:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="McFLPJcl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DDB9C4CEF7;
+	Tue, 17 Mar 2026 16:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766320;
-	bh=WT1MSkKr17WHZgbWTW/ew+TITKG7DltKEUHS9OESgys=;
+	s=korg; t=1773766326;
+	bh=1h69ogrC1pkQ9ZF9z5qU1HYd7FLQIFnZ2s+zOfA0xtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZmSzksV9BN4Tvz61Q+0eEqdmuMqY9wkcglvq/UdKvLIZXjv8I8IfL+wIibPMpwVK
-	 JSek5QERg62zL+EsU8pc5uhHUv7/9kpGBni083OvDOilbISUrmJoVBTOQrObt/yDKy
-	 z4U16IpN4GBq5o09LaYBxOc1jTB5q1W+d0Kv1fwY=
+	b=McFLPJcl/vj8BfqlzQfeFuGfi3QxjxsMmKH0UEET5uu7laWq5+V2JGc8t4nBcTMgW
+	 egBYWFQUDW1XfsX5yUlWI430cf0nDMSHlXGM2+2WhMl7oPFUTuixXvm0zG+zIIlPZS
+	 n8PHeHH80VILTeYFprkHMEF2TVIBl/FVwieNx3rg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@igalia.com>,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-Subject: [PATCH 6.19 218/378] drm/amdgpu/userq: Fix reference leak in amdgpu_userq_wait_ioctl
-Date: Tue, 17 Mar 2026 17:32:55 +0100
-Message-ID: <20260317163015.031516289@linuxfoundation.org>
+	Sunil Khatri <sunil.khatri@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 219/378] drm/amdgpu: add upper bound check on user inputs in wait ioctl
+Date: Tue, 17 Mar 2026 17:32:56 +0100
+Message-ID: <20260317163015.069374785@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,44 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
+From: Sunil Khatri <sunil.khatri@amd.com>
 
-commit 49abfa812617a7f2d0132c70d23ac98b389c6ec1 upstream.
+commit 64ac7c09fc44985ec9bb6a9db740899fa40ca613 upstream.
 
-Drop reference to syncobj and timeline fence when aborting the ioctl due
-output array being too small.
+Huge input values in amdgpu_userq_wait_ioctl can lead to a OOM and
+could be exploited.
 
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@igalia.com>
-Fixes: a292fdecd728 ("drm/amdgpu: Implement userqueue signal/wait IOCTL")
-Cc: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Alex Deucher <alexander.deucher@amd.com>
+So check these input value against AMDGPU_USERQ_MAX_HANDLES
+which is big enough value for genuine use cases and could
+potentially avoid OOM.
+
+v2: squash in Srini's fix
+
+Signed-off-by: Sunil Khatri <sunil.khatri@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 68951e9c3e6bb22396bc42ef2359751c8315dd27)
-Cc: <stable@vger.kernel.org> # v6.16+
+(cherry picked from commit fcec012c664247531aed3e662f4280ff804d1476)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_userq_fence.c
-@@ -880,6 +880,7 @@ int amdgpu_userq_wait_ioctl(struct drm_d
- 				dma_fence_unwrap_for_each(f, &iter, fence) {
- 					if (num_fences >= wait_info->num_fences) {
- 						r = -EINVAL;
-+						dma_fence_put(fence);
- 						goto free_fences;
- 					}
+@@ -668,6 +668,11 @@ int amdgpu_userq_wait_ioctl(struct drm_d
+ 	if (!amdgpu_userq_enabled(dev))
+ 		return -ENOTSUPP;
  
-@@ -904,6 +905,7 @@ int amdgpu_userq_wait_ioctl(struct drm_d
- 
- 			if (num_fences >= wait_info->num_fences) {
- 				r = -EINVAL;
-+				dma_fence_put(fence);
- 				goto free_fences;
- 			}
- 
++	if (wait_info->num_syncobj_handles > AMDGPU_USERQ_MAX_HANDLES ||
++	    wait_info->num_bo_write_handles > AMDGPU_USERQ_MAX_HANDLES ||
++	    wait_info->num_bo_read_handles > AMDGPU_USERQ_MAX_HANDLES)
++		return -EINVAL;
++
+ 	num_read_bo_handles = wait_info->num_bo_read_handles;
+ 	bo_handles_read = memdup_user(u64_to_user_ptr(wait_info->bo_read_handles),
+ 				      size_mul(sizeof(u32), num_read_bo_handles));
 
 
