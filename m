@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4983EB7E5;
-	Tue, 17 Mar 2026 16:45:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAB5B3590B8;
+	Tue, 17 Mar 2026 16:45:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765939; cv=none; b=Gvti6rnPysWCVpVU4QSDS1WhqZiNBaWBHvkNh8BELO6LybJuZnPNytIu9xuz9Z8KK+ZKyVpTF6OUb53ZIDQOIBo6U3cYZqcfO0UkMK000G69f5ZRhIscSGqvi0F3bjsGURtp7/VSiF5InGUpHZq+cufYYdPzsqrSyFdbnJsZzAk=
+	t=1773765943; cv=none; b=fpx2f0vkMHoKe1QFRO8KgHl3fhTK3uVcSt9RB0Qonlv2nZE8utJ3R/dDeq7H0qJT2/YuWhzQqxdGGcpyrfQMNtnmeGYAFUjN3fbVQ5iv98rFP+9NLCTmXIb//VJ5/fSIZS9D7GS27HCRwCg5TUeJ9JjYavxljtUy400nThbj/GI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765939; c=relaxed/simple;
-	bh=p+y0mWupIW1yrkYPSFWgz4x62T85uugqjHcqlQDllEE=;
+	s=arc-20240116; t=1773765943; c=relaxed/simple;
+	bh=sWsowVJjP+D85uX/59UWHtkQDhpp+SXF8++6rgBly1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AxSIyWfyGw3qiTMBzUpIT/4bXRfZI9lw27pX+zt2pHPJAsOwYUkRGrnY/G+a7j2ZMXYDSKz5H4tMsD5p8/QoyusmOESTQvZxEEcc0zRqamlMPN3NNDqybYSDJVLaL4WnTo6T8fyUZEsJ2FAPHBHU/i2TXt226Ng1hsW4caoMsU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vpSMrWDd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M7CggSFVuDr/1D+WbBWKAYu8GA2y5FJUTLwGORHbP3vr87hoXCwaHqqVDhiOoIELXdKKakA8F6CawvyGppFbJclm5IPI6C0gcHM9Nv+LMjZ1+493uc3BRcLJX2BsAz6ScA92d7gZWx9MPLsWu9wwRqSAE/E8RUlbJq2WMLQzE/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e58OS0cl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vpSMrWDd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8F0C2BC86;
-	Tue, 17 Mar 2026 16:45:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e58OS0cl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C03DC4CEF7;
+	Tue, 17 Mar 2026 16:45:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765939;
-	bh=p+y0mWupIW1yrkYPSFWgz4x62T85uugqjHcqlQDllEE=;
+	s=korg; t=1773765943;
+	bh=sWsowVJjP+D85uX/59UWHtkQDhpp+SXF8++6rgBly1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpSMrWDdXXARbi4YNTXpvzZzoQbnjKL+L7GAQPWau412/0Vqag8cvVBh33ufk/1r7
-	 tdsy1C7KF3s1FFxweScadnVSrno6nOyN7ObDhltGMZeJK/9MaBctawBX+M+Wt0TTBf
-	 b3gm4maB+4zykhKelAtiVrZHQdQPPwK9VMRU4gFo=
+	b=e58OS0clOMARpaypFwgeCVz1V1b5CHJ5q6bNOsjkJz7qAaGRSR6UoyKSjdB4+IiLe
+	 17dP0n50/dW6uAdlbxsRHemueffFyVqPiqY2fSjU8lDwmn3wXB5A0W7JiOknIcVSho
+	 xi/cIQe/7zwpLj7t9KP81Gd9WoOJ2ao9c6hyHK1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Casey Connolly <casey.connolly@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Alex Sierra <alex.sierra@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 099/378] ASoC: detect empty DMI strings
-Date: Tue, 17 Mar 2026 17:30:56 +0100
-Message-ID: <20260317163010.659666821@linuxfoundation.org>
+Subject: [PATCH 6.19 100/378] drm/amdkfd: Unreserve bo if queue update failed
+Date: Tue, 17 Mar 2026 17:30:57 +0100
+Message-ID: <20260317163010.696818772@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,45 +52,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Casey Connolly <casey.connolly@linaro.org>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit a9683730e8b1d632674f81844ed03ddfbe4821c0 ]
+[ Upstream commit 2ce75a0b7e1bfddbcb9bc8aeb2e5e7fa99971acf ]
 
-Some bootloaders like recent versions of U-Boot may install some DMI
-properties with empty values rather than not populate them. This manages
-to make its way through the validator and cleanup resulting in a rogue
-hyphen being appended to the card longname.
+Error handling path should unreserve bo then return failed.
 
-Fixes: 4e01e5dbba96 ("ASoC: improve the DMI long card code in asoc-core")
-Signed-off-by: Casey Connolly <casey.connolly@linaro.org>
-Link: https://patch.msgid.link/20260306174707.283071-2-casey.connolly@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 305cd109b761 ("drm/amdkfd: Validate user queue update")
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Alex Sierra <alex.sierra@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c24afed7de9ecce341825d8ab55a43a254348b33)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index e6045d30ee8e1..23ba821cd759d 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -1863,12 +1863,15 @@ static void cleanup_dmi_name(char *name)
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+index 7fbb5c274ccc4..7bf712032c52c 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process_queue_manager.c
+@@ -606,6 +606,7 @@ int pqm_update_queue_properties(struct process_queue_manager *pqm,
+ 					 p->queue_size)) {
+ 			pr_debug("ring buf 0x%llx size 0x%llx not mapped on GPU\n",
+ 				 p->queue_address, p->queue_size);
++			amdgpu_bo_unreserve(vm->root.bo);
+ 			return -EFAULT;
+ 		}
  
- /*
-  * Check if a DMI field is valid, i.e. not containing any string
-- * in the black list.
-+ * in the black list and not the empty string.
-  */
- static int is_dmi_valid(const char *field)
- {
- 	int i = 0;
- 
-+	if (!field[0])
-+		return 0;
-+
- 	while (dmi_blacklist[i]) {
- 		if (strstr(field, dmi_blacklist[i]))
- 			return 0;
 -- 
 2.51.0
 
