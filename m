@@ -1,51 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057BF3ECBDD;
-	Tue, 17 Mar 2026 16:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E7F3EBF00;
+	Tue, 17 Mar 2026 16:39:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765536; cv=none; b=caf2kAIU5rg3aVBk1+U+F3GHWVNF0ayKI9zDqOh5hPnnfPuKDvU/OdpfUlj9RPV/EBRbUPqv2ctwydRO/snHh6W/y1a/f7NWbFfxklbYdMScEBRvCsbb/k4BDzaHS6vbXtdGZJZqzywNZMRrVvqYRxAmCByPVnBTYywBqYXA/C0=
+	t=1773765540; cv=none; b=TSn7cXv/Tv2s7skbSiUn9BUHkWQm4xnZEs05uoA7lW193OE3v2PVgzniZM1Kep2OSrQw5seBpTDjWPUMeJVHjUJ5tcTaW0tjpx2ELPFwEfmcXLYwiAf7QAsUaqRYdrD4Tsdkll5zvq/Nfdl3avHmNFn1dpZZoA8+RWk5TfTbHSw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765536; c=relaxed/simple;
-	bh=mXZqbcXYYuzK9yF2v5ossP1gHpSiUmTRZbMHhxr8tvI=;
+	s=arc-20240116; t=1773765540; c=relaxed/simple;
+	bh=bgIp18f0BOflQ+uuJ4eak6WjATKG96+OdeZE2V1veOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cT/z49JzDTnLc34r3Fb0pBrtWJbNZvQCI32zG5q40TA5v/4Lro6PcySJQQEQCY4aPqkBvt3FtdSZcVqYQIK9uqrF7Nteh2PgvI94+i9e+yyTqVZ3HMHqXMLFeEMg6fo5sbs1uC8toO2TQ4/M2M39i9/AWq1lIL2QAIaNOKiQi20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXzqrXa1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AmZCeDSwUctM0/xm1wp7MZNr81rIg0iqmS5G28m/2CNYvQqYhTf29RgzlX+wlGiufiW7l1ds4u6a12ofO3/SYNuzwvE8/hhFeAsbHvZTWtWv9eE4NID6TWKbC4p+3ettOo/hYsy9GHfvlXrWM+2sYRXckNPm0kG+y6aPW0pwc8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HSL+HWwP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXzqrXa1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A28EC4CEF7;
-	Tue, 17 Mar 2026 16:38:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HSL+HWwP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C80EC4CEF7;
+	Tue, 17 Mar 2026 16:38:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765535;
-	bh=mXZqbcXYYuzK9yF2v5ossP1gHpSiUmTRZbMHhxr8tvI=;
+	s=korg; t=1773765540;
+	bh=bgIp18f0BOflQ+uuJ4eak6WjATKG96+OdeZE2V1veOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXzqrXa1C+uMaU3EQzt5DnJhrd9IP/lEkey2cwqlbT+fdGjQ3s0qT1DSEwEwgOCGU
-	 o9+e8oj54bSbCBtPLSVODQrxow/RV1djWrtCC36SbKdTwfqN9KizDrkzgpO+o5rZb9
-	 STAhhHVWzrGHB4SiFzKFydbZR1Wr6EiWirBTyTfg=
+	b=HSL+HWwPzGp70nKyT84wxOUhIUlMifKNL6AySHDOkKTa6I9eIVWtT7k2i2JCG1XV8
+	 E6dFABcgNmM4lfTAUHIE7uBqUBh/GaDE2dLiFJTmrOfhXhHFHPrhcImXLtPkh905bs
+	 HUhm/zeuk/3Vu4ofe4BmnBc1XH5shj3squG0yxuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Rogers <irogers@google.com>,
-	Peter Collingbourne <pcc@google.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Bill Wendling <morbo@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	James Clark <james.clark@linaro.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Justin Stitt <justinstitt@google.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <nick.desaulniers+lkml@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Akhil P Oommen <akhilpo@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Rob Clark <robin.clark@oss.qualcomm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 033/378] perf disasm: Fix off-by-one bug in outside check
-Date: Tue, 17 Mar 2026 17:29:50 +0100
-Message-ID: <20260317163008.200618444@linuxfoundation.org>
+Subject: [PATCH 6.19 034/378] drm/msm/a8xx: Fix ubwc config related to swizzling
+Date: Tue, 17 Mar 2026 17:29:51 +0100
+Message-ID: <20260317163008.237603556@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -64,51 +52,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Collingbourne <pcc@google.com>
+From: Akhil P Oommen <akhilpo@oss.qualcomm.com>
 
-[ Upstream commit b3ce769203a99d6f3c6d6269ec09232a8c5da422 ]
+[ Upstream commit 7e459c41264fdd87b096ede8da796a302d569722 ]
 
-If a branch target points to one past the end of a function, the branch
-should be treated as a branch to another function.
+To disable l2/l3 swizzling in A8x, set the respective bits in both
+GRAS_NC_MODE_CNTL and RB_CCU_NC_MODE_CNTL registers. This is required
+for Glymur where it is recommended to keep l2/l3 swizzling disabled.
 
-This can happen e.g. with a tail call to a function that is laid out
-immediately after the caller.
-
-Fixes: 751b1783da784299 ("perf annotate: Mark jumps to outher functions with the call arrow")
-Reviewed-by: Ian Rogers <irogers@google.com>
-Signed-off-by: Peter Collingbourne <pcc@google.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Bill Wendling <morbo@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: James Clark <james.clark@linaro.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Justin Stitt <justinstitt@google.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Nathan Chancellor <nathan@kernel.org>
-Cc: Nick Desaulniers <nick.desaulniers+lkml@gmail.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://linux-review.googlesource.com/id/Ide471112e82d68177e0faf08ca411d9fcf0a7bdf
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 288a93200892 ("drm/msm/adreno: Introduce A8x GPU Support")
+Signed-off-by: Akhil P Oommen <akhilpo@oss.qualcomm.com>
+Message-ID: <20260305-a8xx-ubwc-fix-v1-1-d99b6da4c5a9@oss.qualcomm.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Signed-off-by: Rob Clark <robin.clark@oss.qualcomm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/disasm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a8xx_gpu.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/disasm.c b/tools/perf/util/disasm.c
-index 88706b98b9064..b1be847446fea 100644
---- a/tools/perf/util/disasm.c
-+++ b/tools/perf/util/disasm.c
-@@ -412,7 +412,7 @@ static int jump__parse(struct arch *arch, struct ins_operands *ops, struct map_s
- 	start = map__unmap_ip(map, sym->start);
- 	end = map__unmap_ip(map, sym->end);
+diff --git a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+index 30de078e9dfd2..3b17ddac07532 100644
+--- a/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a8xx_gpu.c
+@@ -306,11 +306,21 @@ static void a8xx_set_ubwc_config(struct msm_gpu *gpu)
+ 	hbb = cfg->highest_bank_bit - 13;
+ 	hbb_hi = hbb >> 2;
+ 	hbb_lo = hbb & 3;
+-	a8xx_write_pipe(gpu, PIPE_BV, REG_A8XX_GRAS_NC_MODE_CNTL, hbb << 5);
+-	a8xx_write_pipe(gpu, PIPE_BR, REG_A8XX_GRAS_NC_MODE_CNTL, hbb << 5);
++
++	a8xx_write_pipe(gpu, PIPE_BV, REG_A8XX_GRAS_NC_MODE_CNTL,
++			hbb << 5 |
++			level3_swizzling_dis << 4 |
++			level2_swizzling_dis << 3);
++
++	a8xx_write_pipe(gpu, PIPE_BR, REG_A8XX_GRAS_NC_MODE_CNTL,
++			hbb << 5 |
++			level3_swizzling_dis << 4 |
++			level2_swizzling_dis << 3);
  
--	ops->target.outside = target.addr < start || target.addr > end;
-+	ops->target.outside = target.addr < start || target.addr >= end;
+ 	a8xx_write_pipe(gpu, PIPE_BR, REG_A8XX_RB_CCU_NC_MODE_CNTL,
+ 			yuvnotcomptofc << 6 |
++			level3_swizzling_dis << 5 |
++			level2_swizzling_dis << 4 |
+ 			hbb_hi << 3 |
+ 			hbb_lo << 1);
  
- 	/*
- 	 * FIXME: things like this in _cpp_lex_token (gcc's cc1 program):
 -- 
 2.51.0
 
