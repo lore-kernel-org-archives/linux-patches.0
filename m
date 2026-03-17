@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB3EF3ED5B2;
-	Tue, 17 Mar 2026 16:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B1313ECBFC;
+	Tue, 17 Mar 2026 16:41:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765710; cv=none; b=GMEmTuXUgz1qlOCLpE+9IENIqPR0JTSG4Wdk/k6Ae/TgyCxsm5v6nwlVX7jHvukjqf1cYnAfY6KF3hXIPBKH1fqUFKEYxdk00rUzQ+0e9WDQQ9wZW0WlgXxmQvv7qxsuYQVfEGjx9Ji7yIQZYJe43kYfDxfRYJpnhz5uLUKiidg=
+	t=1773765714; cv=none; b=SshaD1eqa9z5lYeUN8hwv1G7lfptMxqRV5io0YVdhX2axyoHO5FuHaS5kQmMKCYAFdch7lUTAwA/0xdFVdpYBbEQj6ES1xlIyLOwxVuJVIMIi1nOa82uOO/FdLw9tiL+Vmw6EnjGV5yEC/jv8ml9IW1E3aykvgDA3pF+IU5ygEY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765710; c=relaxed/simple;
-	bh=LAKvINm1GUIYht6d9gb3IZ5ooI1Zg3mQLu5Oz15tsfA=;
+	s=arc-20240116; t=1773765714; c=relaxed/simple;
+	bh=ziXp6zhAULu4+unTafWSfE5RX6OkFQx4YbWhnyPYA2A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYm0lHEH8QjWKQGJOYic/GDdwuVvw+pAQtVsAoHeAAfUwHFPy4bwenJyiBkj4HwWm/gKbVPNc0N5hgBYjnqWt3tdMdMi7YZdj5HMHgGkKlaJIbeai0+vdbzMX8W/6sadP2rty/hxxAK7C9tv3S74I3AryOyFnopXU+JxKJW15oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bd3TK6cQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ji9tMEw0eUu/9BK+iReu6VIecP7B1RM0Fw8eULh8sfN1Zd4rlYIuG5RdYG2wdbwZeJusHyTZ7+PBcVpZu4YVt+KmFnBqsPpRD/54mYIUTmsuWOu0n5wbKGBFqV4kMLLRKeaWaXgsH80XVC+uI1vXXTmuYRs55kvDzMsXZso4D+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l3qXnYwY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bd3TK6cQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE94C4CEF7;
-	Tue, 17 Mar 2026 16:41:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l3qXnYwY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70097C4CEF7;
+	Tue, 17 Mar 2026 16:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765710;
-	bh=LAKvINm1GUIYht6d9gb3IZ5ooI1Zg3mQLu5Oz15tsfA=;
+	s=korg; t=1773765713;
+	bh=ziXp6zhAULu4+unTafWSfE5RX6OkFQx4YbWhnyPYA2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bd3TK6cQL+XoQd3zT6AlziO28b81yuq4rvlJkfC5KRAmDq1ke5VtiVPS15BZ7HRWo
-	 I57j0r4+RDYhtoZUtSXWGPOL6ittFAH5wIhX8Uzl16GEzXTVedMKEVJS62jysDI9sh
-	 nrfUtKG3YqrBayNSlTW9/bYKycHCJR5LOjgAf6QU=
+	b=l3qXnYwYTKh+LcCX2cvCqAN5k6ndosh1hnpezO3sQ0YdslxGRk58u7vK6FarVxjHL
+	 OFtm1bhb21Qrk8UbH8sQwGvCFY3bfOvqIFwDhRppytXqbv9xFh+FufsC5Fu0rVkJ0G
+	 vNTxXVIb4YDn59wmddUL9ZlPlqwhL/J/E5nl+edA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Dull <monderasdor@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 077/378] netfilter: x_tables: guard option walkers against 1-byte tail reads
-Date: Tue, 17 Mar 2026 17:30:34 +0100
-Message-ID: <20260317163009.850950935@linuxfoundation.org>
+Subject: [PATCH 6.19 060/378] net: sfp: improve Huawei MA5671a fixup
+Date: Tue, 17 Mar 2026 17:30:17 +0100
+Message-ID: <20260317163009.199956961@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -45,66 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: David Dull <monderasdor@gmail.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit cfe770220ac2dbd3e104c6b45094037455da81d4 ]
+[ Upstream commit 87d126852158467ab87d5cbc36ccfd3f15464a6c ]
 
-When the last byte of options is a non-single-byte option kind, walkers
-that advance with i += op[i + 1] ? : 1 can read op[i + 1] past the end
-of the option area.
+With the current sfp_fixup_ignore_tx_fault() fixup we ignore the TX_FAULT
+signal, but we also need to apply sfp_fixup_ignore_los() in order to be
+able to communicate with the module even if the fiber isn't connected for
+configuration purposes.
+This is needed for all the MA5671a firmwares, excluding the FS modded
+firmware.
 
-Add an explicit i == optlen - 1 check before dereferencing op[i + 1]
-in xt_tcpudp and xt_dccp option walkers.
-
-Fixes: 2e4e6a17af35 ("[NETFILTER] x_tables: Abstraction layer for {ip,ip6,arp}_tables")
-Signed-off-by: David Dull <monderasdor@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 2069624dac19 ("net: sfp: Add tx-fault workaround for Huawei MA5671A SFP ONT")
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260306125139.213637-1-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_dccp.c   | 4 ++--
- net/netfilter/xt_tcpudp.c | 6 ++++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/phy/sfp.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
-index e5a13ecbe67a0..037ab93e25d0a 100644
---- a/net/netfilter/xt_dccp.c
-+++ b/net/netfilter/xt_dccp.c
-@@ -62,10 +62,10 @@ dccp_find_option(u_int8_t option,
- 			return true;
- 		}
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index 43aefdd8b70f7..ca09925335725 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -367,6 +367,12 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
+ 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
+ }
  
--		if (op[i] < 2)
-+		if (op[i] < 2 || i == optlen - 1)
- 			i++;
- 		else
--			i += op[i+1]?:1;
-+			i += op[i + 1] ? : 1;
- 	}
++static void sfp_fixup_ignore_tx_fault_and_los(struct sfp *sfp)
++{
++	sfp_fixup_ignore_tx_fault(sfp);
++	sfp_fixup_ignore_los(sfp);
++}
++
+ static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
+ {
+ 	sfp->state_hw_mask &= ~mask;
+@@ -530,7 +536,7 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
+ 	// their EEPROM
+ 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
+-		  sfp_fixup_ignore_tx_fault),
++		  sfp_fixup_ignore_tx_fault_and_los),
  
- 	spin_unlock_bh(&dccp_buflock);
-diff --git a/net/netfilter/xt_tcpudp.c b/net/netfilter/xt_tcpudp.c
-index e8991130a3de0..f76cf18f1a244 100644
---- a/net/netfilter/xt_tcpudp.c
-+++ b/net/netfilter/xt_tcpudp.c
-@@ -59,8 +59,10 @@ tcp_find_option(u_int8_t option,
- 
- 	for (i = 0; i < optlen; ) {
- 		if (op[i] == option) return !invert;
--		if (op[i] < 2) i++;
--		else i += op[i+1]?:1;
-+		if (op[i] < 2 || i == optlen - 1)
-+			i++;
-+		else
-+			i += op[i + 1] ? : 1;
- 	}
- 
- 	return invert;
+ 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
+ 	// incorrectly report 2500MBd NRZ in their EEPROM.
 -- 
 2.51.0
 
