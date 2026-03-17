@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A31E12B94;
-	Tue, 17 Mar 2026 16:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF5837F008;
+	Tue, 17 Mar 2026 16:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765899; cv=none; b=XngnMp577mpv44Ninu/9SNfx3+WWRXK2zZ0GyyV0xjVL2fIEV0J+Ya9LKsD23YWKIw+nTBi/TS391fSxrXkMm5Cg0gPVFxFpcxcN/UD1nD2ycUg1xNR32z0PBGZNkBfTr1AEkz1p9kbww8WBX1Ulm/RDtzh2n7K4IIW551NrNZw=
+	t=1773765903; cv=none; b=Mg02q1TwvaxKkA83oCx/NDSHVrJWdBzUF0HBOvoI2TlGUQ/08hgkLH+tQl/7/24J8dQ0DKwszGiYI+Oq+d1vFlJ0I4iJyzuL0Ba9lc7lgmqbVkqT6igf2dCVKPyipqMK8nuX5FssWn72bwNk/YHED8/VGKKX2t2rCOTFQ+9caSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765899; c=relaxed/simple;
-	bh=trxxd65tUrsB0Dgn45ThrRHIHUe9744i5pNPXIjSNzs=;
+	s=arc-20240116; t=1773765903; c=relaxed/simple;
+	bh=iHVaz+EtLwBwyfCzrkRyP1V9ZmDHU09dUtyUWgKVQwo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lfs7fZrIy1rDHEZQQ1p5wDRvAYTmppMW2txJh2kCQ3ORJ3rxhDrwQ37Scx4sjCmoOl4ieCDQkHMAcSXIDhmcKBs9dmADYw5AwoQDpCrD3JeyW/XRGZ/dTtt8dIfgm7Vt/6n5653WXLzAvx2VzcvbqGClGGSoy0wqetqxZDFD3t4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKShB7mJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVWOFz5gneg20VkkLEnLSgLsPMCEG7yX9I2tXzwPYJgHSH41oPJnVFWMt5tN9XFb5psMwm2AYdgaRQv/cXXHdlIkFSfFxON5BSyx545axjNaUt05MqXzSPLCOkTEHY/Eebidd/lm8fgZjb72LoMOLmYyhC3xOQWvW/twHgqsSl4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBgQ3FnC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKShB7mJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE95AC4CEF7;
-	Tue, 17 Mar 2026 16:44:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBgQ3FnC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5B2C4CEF7;
+	Tue, 17 Mar 2026 16:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765899;
-	bh=trxxd65tUrsB0Dgn45ThrRHIHUe9744i5pNPXIjSNzs=;
+	s=korg; t=1773765902;
+	bh=iHVaz+EtLwBwyfCzrkRyP1V9ZmDHU09dUtyUWgKVQwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NKShB7mJo3y7//6bBdRmxq2xRrbMYplw0a3PBvxK0exIkqdPSXg6FCKWuEC3u8c4Z
-	 cm7eW+wrc0+Dac4eGIjkobdCL0PLp3xyVjRyl8fyBJn5tJUNGbEX7YbjRUEq6skM8j
-	 O8oT/qF6TwVpL+l1I96xmBoC17R7wmxySuT+nHXI=
+	b=QBgQ3FnCO3yCWA+e6zpJ5fhPiWLKzJyfrKpdMlmxUsTMaOjRy9HnEyO2O2zUMSZvH
+	 4eC1636HBYpvJtDs1/dqHf3sPQI7umy2E6YON121PugHDZ7cf6W5/B2b9EIJPzTflR
+	 ibbn76UbCiS4HSdCD9X+Yrk0fJKhwrNJMnVFey14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.19 120/378] can: gs_usb: gs_can_open(): always configure bitrates before starting device
-Date: Tue, 17 Mar 2026 17:31:17 +0100
-Message-ID: <20260317163011.433415469@linuxfoundation.org>
+	Matt Vollrath <tactii@gmail.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 094/378] e1000/e1000e: Fix leak in DMA error cleanup
+Date: Tue, 17 Mar 2026 17:30:51 +0100
+Message-ID: <20260317163010.475980710@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -49,96 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Matt Vollrath <tactii@gmail.com>
 
-commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 upstream.
+[ Upstream commit e94eaef11142b01f77bf8ba4d0b59720b7858109 ]
 
-So far the driver populated the struct can_priv::do_set_bittiming() and
-struct can_priv::fd::do_set_data_bittiming() callbacks.
+If an error is encountered while mapping TX buffers, the driver should
+unmap any buffers already mapped for that skb.
 
-Before bringing up the interface, user space has to configure the bitrates.
-With these callbacks the configuration is directly forwarded into the CAN
-hardware. Then the interface can be brought up.
+Because count is incremented after a successful mapping, it will always
+match the correct number of unmappings needed when dma_error is reached.
+Decrementing count before the while loop in dma_error causes an
+off-by-one error. If any mapping was successful before an unsuccessful
+mapping, exactly one DMA mapping would leak.
 
-An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
-the bitrates in the CAN hardware. This leads to a problem with the
-CANable-2.5 [1] firmware, which resets the configured bit rates during
-ifdown.
+In these commits, a faulty while condition caused an infinite loop in
+dma_error:
+Commit 03b1320dfcee ("e1000e: remove use of skb_dma_map from e1000e
+driver")
+Commit 602c0554d7b0 ("e1000: remove use of skb_dma_map from e1000 driver")
 
-To fix the problem remove both bit timing callbacks and always configure
-the bitrates in the struct net_device_ops::ndo_open() callback.
+Commit c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of
+unsigned in *_tx_map()") fixed the infinite loop, but introduced the
+off-by-one error.
 
-[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
+This issue may still exist in the igbvf driver, but I did not address it
+in this patch.
 
-Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
+Assisted-by: Claude:claude-4.6-opus
+Signed-off-by: Matt Vollrath <tactii@gmail.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/gs_usb.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/e1000/e1000_main.c | 2 --
+ drivers/net/ethernet/intel/e1000e/netdev.c    | 2 --
+ 2 files changed, 4 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -772,9 +772,8 @@ device_detach:
- 	}
- }
+diff --git a/drivers/net/ethernet/intel/e1000/e1000_main.c b/drivers/net/ethernet/intel/e1000/e1000_main.c
+index 7f078ec9c14c5..15160427c8b30 100644
+--- a/drivers/net/ethernet/intel/e1000/e1000_main.c
++++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
+@@ -2952,8 +2952,6 @@ static int e1000_tx_map(struct e1000_adapter *adapter,
+ dma_error:
+ 	dev_err(&pdev->dev, "TX DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
  
--static int gs_usb_set_bittiming(struct net_device *netdev)
-+static int gs_usb_set_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -791,9 +790,8 @@ static int gs_usb_set_bittiming(struct n
- 				    GFP_KERNEL);
- }
+ 	while (count--) {
+ 		if (i == 0)
+diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
+index ddbe2f7d81121..6bcb57609d16a 100644
+--- a/drivers/net/ethernet/intel/e1000e/netdev.c
++++ b/drivers/net/ethernet/intel/e1000e/netdev.c
+@@ -5654,8 +5654,6 @@ static int e1000_tx_map(struct e1000_ring *tx_ring, struct sk_buff *skb,
+ dma_error:
+ 	dev_err(&pdev->dev, "Tx DMA map failed\n");
+ 	buffer_info->dma = 0;
+-	if (count)
+-		count--;
  
--static int gs_usb_set_data_bittiming(struct net_device *netdev)
-+static int gs_usb_set_data_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.fd.data_bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -1057,6 +1055,20 @@ static int gs_can_open(struct net_device
- 	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 		flags |= GS_CAN_MODE_HW_TIMESTAMP;
- 
-+	rc = gs_usb_set_bittiming(dev);
-+	if (rc) {
-+		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-+		goto out_usb_kill_anchored_urbs;
-+	}
-+
-+	if (ctrlmode & CAN_CTRLMODE_FD) {
-+		rc = gs_usb_set_data_bittiming(dev);
-+		if (rc) {
-+			netdev_err(netdev, "failed to set data bittiming: %pe\n", ERR_PTR(rc));
-+			goto out_usb_kill_anchored_urbs;
-+		}
-+	}
-+
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm.flags = cpu_to_le32(flags);
-@@ -1370,7 +1382,6 @@ static struct gs_can *gs_make_candev(uns
- 	dev->can.state = CAN_STATE_STOPPED;
- 	dev->can.clock.freq = le32_to_cpu(bt_const.fclk_can);
- 	dev->can.bittiming_const = &dev->bt_const;
--	dev->can.do_set_bittiming = gs_usb_set_bittiming;
- 
- 	dev->can.ctrlmode_supported = CAN_CTRLMODE_CC_LEN8_DLC;
- 
-@@ -1394,7 +1405,6 @@ static struct gs_can *gs_make_candev(uns
- 		 * GS_CAN_FEATURE_BT_CONST_EXT is set.
- 		 */
- 		dev->can.fd.data_bittiming_const = &dev->bt_const;
--		dev->can.fd.do_set_data_bittiming = gs_usb_set_data_bittiming;
- 	}
- 
- 	if (feature & GS_CAN_FEATURE_TERMINATION) {
+ 	while (count--) {
+ 		if (i == 0)
+-- 
+2.51.0
+
 
 
