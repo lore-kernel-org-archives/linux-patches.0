@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5951E2116F6;
-	Tue, 17 Mar 2026 17:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78CF13F54CE;
+	Tue, 17 Mar 2026 17:13:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767592; cv=none; b=uhHNQVxTDjdYaosUTqi4mwF37iMHxuXEGh9nrWon2LSjzLjmE589HeAgl+m2QmOrOYal1748kPlJKzp4Dm6CZvoEaKFZ+o9lnw1Djrvt3JOCSbiiZmwoGUuMD/KN3MjgDS7V8bUvLUGJ/5/uGkk6AQMUZ5zObvBTUitlbJZAgxE=
+	t=1773767596; cv=none; b=FU+XwQ0QJ+dhJFqXHXc+ywmTCtiz8gxUCuoDAbfsQF4LecgadnxL7+vhomREop3Ta1QO1qbQC+IYz4SO8AbmOonl+c3IRbNOnxWHwUsbLeQv1UoqyaY+h6/XgLd4FWeqBve67xyf1ELUz0R164UOxY46+OYqYXfJt3ZGaE/LUQU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767592; c=relaxed/simple;
-	bh=iibeBrn/3Jix+macebIUjbuAQkdSrUFJkeIiUojg/uE=;
+	s=arc-20240116; t=1773767596; c=relaxed/simple;
+	bh=NVYZOUW3gi9ZiAcooBdU43QGKx7aXL9cZQ/QrAmIYas=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uTSDTLcfPK4TTwDv/4vdzPhGZp/BWAtqCHySbIJaG2HbiJ7l4FHjFnM6A/70zLMAizDAlTQyRJ6bk7wtAgr5Q9ssJ/uf77xdBYszK5rXWedStGxyuAJbSQaeFAhuCHxvA7SLrCk9H5mO+Pe7FTgbB+PJeZCcfq9wyKGffv2ib0Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp8nzPPe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jOXz857FjAqYKVnwGWgNo++tr80QN9l/f7T4POIaaC5o+RZlB7AKcnf8Wtt0vfEVMPKQdCTL0owm8+RHNywOWuvCJmsvxklcIJCw37xOg1ZT7P4ePdzbedHi1cuiVML7fFAUWzwv11m5vY1OqDN7chdbmhbnTFrTOSHLUneb/14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c82965s1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp8nzPPe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBFEC4CEF7;
-	Tue, 17 Mar 2026 17:13:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c82965s1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1D0C4CEF7;
+	Tue, 17 Mar 2026 17:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767592;
-	bh=iibeBrn/3Jix+macebIUjbuAQkdSrUFJkeIiUojg/uE=;
+	s=korg; t=1773767596;
+	bh=NVYZOUW3gi9ZiAcooBdU43QGKx7aXL9cZQ/QrAmIYas=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xp8nzPPehQMJHD0Vu9nfxJRVq5OVCJXmmEYvZYum5bBZeTOK1pYUy3L44bf3+zxlQ
-	 4Y3X+xylXoaYvrjKKMrJwLplff33Zj9YMzHmviw+8DpjyG7f3NAT1FwQ1HgX+FVYmb
-	 aCUQ8bMz1Km79FnPU/T8iRyqtOXbYARh5ehLNLSU=
+	b=c82965s1+TdGFYgZkm2co07U6Gpx/aa8yG6BYzyt/TxbALyzCSfpaW2a3EZz1leFV
+	 kg5pJCBkGHihUPCcAzhBFBP9JsQws2rATTiQdTddPyAA/Gi+zUaF1UF5tl2e+J59Ie
+	 IAikGaP+hwFzeLQlxZAFBdZw34iKsJppFKOOL/j4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Courbot <acourbot@nvidia.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Andreas Hindborg <a.hindborg@kernel.org>,
-	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 6.18 119/333] rust: str: make NullTerminatedFormatter public
-Date: Tue, 17 Mar 2026 17:32:28 +0100
-Message-ID: <20260317163003.780625088@linuxfoundation.org>
+	Pedro Falcato <pfalcato@suse.de>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Hannes Reinecke <hare@suse.de>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.18 120/333] ata: libata-core: Add BRIDGE_OK quirk for QEMU drives
+Date: Tue, 17 Mar 2026 17:32:29 +0100
+Message-ID: <20260317163003.817403492@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,61 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexandre Courbot <acourbot@nvidia.com>
+From: Pedro Falcato <pfalcato@suse.de>
 
-commit 3ac88a9948792b092a4b11323e2abd1ecbe0cc68 upstream.
+commit b92b0075ee1870f78f59ab1f7da7dbfdd718ad7a upstream.
 
-If `CONFIG_BLOCK` is disabled, the following warnings are displayed
-during build:
+Currently, whenever you boot with a QEMU drive over an AHCI interface,
+you get:
+[    1.632121] ata1.00: applying bridge limits
 
-  warning: struct `NullTerminatedFormatter` is never constructed
-    --> ../rust/kernel/str.rs:667:19
-      |
-  667 | pub(crate) struct NullTerminatedFormatter<'a> {
-      |                   ^^^^^^^^^^^^^^^^^^^^^^^
-      |
-      = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
+This happens due to the kernel not believing the given drive is SATA,
+since word 93 of IDENTIFY (ATA_ID_HW_CONFIG) is non-zero. The result is
+a pretty severe limit in max_hw_sectors_kb, which limits our IO sizes.
 
-  warning: associated function `new` is never used
-    --> ../rust/kernel/str.rs:673:19
-      |
-  671 | impl<'a> NullTerminatedFormatter<'a> {
-      | ------------------------------------ associated function in this implementation
-  672 |     /// Create a new [`Self`] instance.
-  673 |     pub(crate) fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
+QEMU has set word 93 erroneously for SATA drives but does not, in any
+way, emulate any of these real hardware details. There is no PATA
+drive and no SATA cable.
 
-Fix them by making `NullTerminatedFormatter` public, as it could be
-useful for drivers anyway.
+As such, add a BRIDGE_OK quirk for QEMU HARDDISK. Special care is taken
+to limit this quirk to "2.5+", to allow for fixed future versions.
 
-Fixes: cdde7a1951ff ("rust: str: introduce `NullTerminatedFormatter`")
-Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
-Reviewed-by: Alice Ryhl <aliceryhl@google.com>
-Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+This results in the max_hw_sectors being limited solely by the
+controller interface's limits. Which, for AHCI controllers, takes it
+from 128KB to 32767KB.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260224-nullterminatedformatter-v1-1-5bef7b9b3d4c@nvidia.com
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- rust/kernel/str.rs |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/rust/kernel/str.rs
-+++ b/rust/kernel/str.rs
-@@ -880,13 +880,13 @@ impl fmt::Write for Formatter<'_> {
- ///
- /// * The first byte of `buffer` is always zero.
- /// * The length of `buffer` is at least 1.
--pub(crate) struct NullTerminatedFormatter<'a> {
-+pub struct NullTerminatedFormatter<'a> {
-     buffer: &'a mut [u8],
- }
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4199,6 +4199,7 @@ static const struct ata_dev_quirks_entry
+ 	/* Devices that do not need bridging limits applied */
+ 	{ "MTRON MSP-SATA*",		NULL,	ATA_QUIRK_BRIDGE_OK },
+ 	{ "BUFFALO HD-QSU2/R5",		NULL,	ATA_QUIRK_BRIDGE_OK },
++	{ "QEMU HARDDISK",		"2.5+",	ATA_QUIRK_BRIDGE_OK },
  
- impl<'a> NullTerminatedFormatter<'a> {
-     /// Create a new [`Self`] instance.
--    pub(crate) fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
-+    pub fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
-         *(buffer.first_mut()?) = 0;
- 
-         // INVARIANT:
+ 	/* Devices which aren't very happy with higher link speeds */
+ 	{ "WD My Book",			NULL,	ATA_QUIRK_1_5_GBPS },
 
 
