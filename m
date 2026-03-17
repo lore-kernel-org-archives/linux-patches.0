@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89DB3EDADD;
-	Tue, 17 Mar 2026 17:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B9EE2FFDEA;
+	Tue, 17 Mar 2026 17:04:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767065; cv=none; b=vCcUnECqFtIDl0W67yEyvz7Fqi9r7mOtaox54w+B8e4bI2XjPmbvOp6eHRXEwrMe7GAPUmM3AFwL1FeUafCXXR3/wH/0/r8OYGD3B3xOFGvPD26QLJFduOcnu47T+atFvxl4JfET93JlnDFcJMgD26JcGpv9667Mj+cG6yKpRog=
+	t=1773767069; cv=none; b=s6FA8xe6RoX1IcfHat6x38tlBPMDGmqHI0c9hftA/SHciWtWNRDB4vwu8SHH0Lr3eLZNfGS/42vczxkeomVsfsAXa/ey3i5EYHguGtdkXdMe5bck1P4VoRV9YwCxN90LXPZv4frNtKsEvV8UTMNH1AlttPiRQfVoQcA3UZkFozI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767065; c=relaxed/simple;
-	bh=/mA03QDiWAnAfCiXLFQ9+phhRK5oskhd/xf0NlMcjc0=;
+	s=arc-20240116; t=1773767069; c=relaxed/simple;
+	bh=qr4jz1e+eIMpGqOy1yNIsuymEUrME5D+B8yAXXaKDWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g5DCZQNw5kKxheXd4E/N0D2mafvf087xJJf1qVaku8J5kZmG5xTUFfQ7hWZxbQEelXA53Q8PIRlK1ZygpF4JuhWV6f1iBXWC3LOCmEJqX4o6DJlj/lpQ/mfFyieLcd2v0DHfo+XhJ7haKrjJEKhsTDB4WulV4HKu32mWy9fQRfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjeuYul4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MTwZZzkTt7VvAJkBtSb8A71uPWf7EQfYWML7wUwnZc75G9LYrpX/V5P6K+t1WUrTqZEGGuxlE7pofF1sUPVfaCRoEUvuQcIcxcsvos8sHbmz+JLLDly0XDz2+DvEahSmIc7kZJgRl/37rZINGonyWFunnAdNmADIIflgWIN2wQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mjxa/uI7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjeuYul4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BBDFC4CEF7;
-	Tue, 17 Mar 2026 17:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mjxa/uI7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8338BC19424;
+	Tue, 17 Mar 2026 17:04:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767064;
-	bh=/mA03QDiWAnAfCiXLFQ9+phhRK5oskhd/xf0NlMcjc0=;
+	s=korg; t=1773767069;
+	bh=qr4jz1e+eIMpGqOy1yNIsuymEUrME5D+B8yAXXaKDWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjeuYul4ZiWD2Fold6u39IW5soY71s+zVFGTSkh8GLUtue3M4Ssf192DndcJ+8NJ6
-	 WH8wgy+k3PEP7QCD1PZpYdPyxLWLKld79BlZojbHI2Dsq2TKCBFRqiLgSN75QZxDyS
-	 u61p2EHVuvocu1czZ/8ckHX5iBiyzL65f48ZMGO4=
+	b=mjxa/uI7sdiDOzDRZIluG85glZlabd5J8LRgEu5zj8TVaKT1ypRsSo3Wohcr0KKoz
+	 usOCUDDyk14J7GCk9RYhcwWKIk+Mw7AqjiBS2SqWnXZ/W7oGm2nitqVyxeQZRX3kYw
+	 t9PkAOSdKCn1edNpsFKttZe13S8lbBF2UXxjfnmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
-	Dan Williams <dan.j.williams@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>
-Subject: [PATCH 6.19 378/378] cxl/acpi: Fix CXL_ACPI and CXL_PMEM Kconfig tristate mismatch
-Date: Tue, 17 Mar 2026 17:35:35 +0100
-Message-ID: <20260317163020.886316423@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Quanmin Yan <yanquanmin1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 373/378] mm/damon/core: disallow non-power of two min_region_sz
+Date: Tue, 17 Mar 2026 17:35:30 +0100
+Message-ID: <20260317163020.702207146@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,48 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Keith Busch <kbusch@kernel.org>
+From: SeongJae Park <sj@kernel.org>
 
-commit 93d0fcdddc9e7be9d4f42acbe57bc90dbb0fe75d upstream.
+[ Upstream commit c80f46ac228b48403866d65391ad09bdf0e8562a ]
 
-Commit e7e222ad73d9 ("cxl: Move devm_cxl_add_nvdimm_bridge() to
-cxl_pmem.ko") moves devm_cxl_add_nvdimm_bridge() into the cxl_pmem file,
-which has independent config compile options for built-in or module. The
-call from cxl_acpi_probe() is guarded by IS_ENABLED(CONFIG_CXL_PMEM),
-which evaluates to true for both =y and =m.
+DAMON core uses min_region_sz parameter value as the DAMON region
+alignment.  The alignment is made using ALIGN() and ALIGN_DOWN(), which
+support only the power of two alignments.  But DAMON core API callers can
+set min_region_sz to an arbitrary number.  Users can also set it
+indirectly, using addr_unit.
 
-When CONFIG_CXL_PMEM=m, a built-in cxl_acpi attempts to reference a
-symbol exported by a module, which fails to link. CXL_PMEM cannot simply
-be promoted to =y in this configuration because it depends on LIBNVDIMM,
-which may itself be =m.
+When the alignment is not properly set, DAMON behavior becomes difficult
+to expect and understand, makes it effectively broken.  It doesn't cause a
+kernel crash-like significant issue, though.
 
-Add a Kconfig dependency to prevent CXL_ACPI from being built-in when
-CXL_PMEM is a module. This contrains CXL_ACPI to =m when CXL_PMEM=m,
-while still allowing CXL_ACPI to be freely configured when CXL_PMEM is
-either built-in or disabled.
+Fix the issue by disallowing min_region_sz input that is not a power of
+two.  Add the check to damon_commit_ctx(), as all DAMON API callers who
+set min_region_sz uses the function.
 
-[ dj: Fix up commit reference formatting. ]
+This can be a sort of behavioral change, but it does not break users, for
+the following reasons.  As the symptom is making DAMON effectively broken,
+it is not reasonable to believe there are real use cases of non-power of
+two min_region_sz.  There is no known use case or issue reports from the
+setup, either.
 
-Fixes: e7e222ad73d9 ("cxl: Move devm_cxl_add_nvdimm_bridge() to cxl_pmem.ko")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-Reviewed-by: Dan Williams <dan.j.williams@intel.com>
-Link: https://patch.msgid.link/20260305204057.1516948-1-kbusch@meta.com
-Signed-off-by: Dave Jiang <dave.jiang@intel.com>
+In future, if we find real use cases of non-power of two alignments and we
+can support it with low enough overhead, we can consider moving the
+restriction.  But, for now, simply disallowing the corner case should be
+good enough as a hot fix.
+
+Link: https://lkml.kernel.org/r/20260214214124.87689-1-sj@kernel.org
+Fixes: d8f867fa0825 ("mm/damon: add damon_ctx->min_sz_region")
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Cc: Quanmin Yan <yanquanmin1@huawei.com>
+Cc: <stable@vger.kernel.org>	[6.18+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ mm/damon/core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/cxl/Kconfig
-+++ b/drivers/cxl/Kconfig
-@@ -58,6 +58,7 @@ config CXL_ACPI
- 	tristate "CXL ACPI: Platform Support"
- 	depends on ACPI
- 	depends on ACPI_NUMA
-+	depends on CXL_PMEM || !CXL_PMEM
- 	default CXL_BUS
- 	select ACPI_TABLE_LIB
- 	select ACPI_HMAT
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -1241,6 +1241,9 @@ int damon_commit_ctx(struct damon_ctx *d
+ {
+ 	int err;
+ 
++	if (!is_power_of_2(src->min_region_sz))
++		return -EINVAL;
++
+ 	err = damon_commit_schemes(dst, src);
+ 	if (err)
+ 		return err;
 
 
