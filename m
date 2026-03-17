@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310C6346AC6;
-	Tue, 17 Mar 2026 16:56:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630DA179A3;
+	Tue, 17 Mar 2026 16:56:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766603; cv=none; b=g3oPNPXOdvPfEmpgw94Mc2rHvHPAhRLBhn8cD9BiEZ4z9jsO/PD3SdNvNWJmrfflM45Xifu4KXLw/kCwgypZl6l+GQYyOka9EcfZfqHqbxBlYoyfSyq+4I048emjag8PWZrZlmzsHYhyXCaPO6FN93WrbIL3JbBuHstt/YulIgI=
+	t=1773766607; cv=none; b=hSimilA+DUZMk+EvZd9yPD02p2JMY4LBvlwb8MUz2c42Bl4C6GrRXzUQP9x+WWuHf/nfp3T/6zKxKJh/NRedR//ThotIzY3Xl/sQqFjR8HQ/+LP9hrmPw9MqHCalDVT9wAJKjaLEc3xdpclrtTgu7NvmpW/TqV684v4kk7ra2sA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766603; c=relaxed/simple;
-	bh=tSkNcYw8hpTLyttWmXgWtJ/TcOhp+CfUYwVfT2ev5PY=;
+	s=arc-20240116; t=1773766607; c=relaxed/simple;
+	bh=qlOvRG0/9vAVARPEXmUSlqPumdszi8vTsoSU7mdoi7Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e5okcAJf9OlnCIlnhqJ4mmnnoSd4oOP/VeOqV/fWGIl47WhsuMkb7VBNz84jCHXkapoJcKoyRbEliFbhHl4uKPQGd0ol++O2ldBfWt4q68JQo010AwG8RbJdURIpDhFzfNF0YCd74dOkLg8vN987UkKXJqBhq4+qS6cBg6CkDHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DXxdi4/0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ev3AEntftCA2+AV2Su7s8xeOChJCxZ+Lp4buo8kQ1P7LguFwphjPVENyaXFQAc+CuIV7s1UvOEkylJ0SqbwcpxgSed9hdl2EZsw++Q/MFMT4B8ETlftSf+sg9+689AIMbbWQHk3fXIcz4QQxfjbgbgFD9ai4Tn7F3xXGkyv5VvQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v2vyZhVe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DXxdi4/0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4E92C4CEF7;
-	Tue, 17 Mar 2026 16:56:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v2vyZhVe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0B6C4CEF7;
+	Tue, 17 Mar 2026 16:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766602;
-	bh=tSkNcYw8hpTLyttWmXgWtJ/TcOhp+CfUYwVfT2ev5PY=;
+	s=korg; t=1773766607;
+	bh=qlOvRG0/9vAVARPEXmUSlqPumdszi8vTsoSU7mdoi7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DXxdi4/0PhEaKfdJMKZQ+kZIgfFhmLCjcfF6+e69Ut46JNJB8vldQEosCKQk7dsDj
-	 EKJk+TEkULlcvWFf1nJAWJHbh16fvWFO3qIYkgOukOh2llV1QmQ2K56SvouXvwJJJn
-	 CghkUJr3Sw/CGewF98ly364Q0AdchZEDyPSHzHyA=
+	b=v2vyZhVehsjKY9y6Sax+phqGBWDayy1fnP9cFKR/RxtFtvvdtf9U8sXv7yFUJs6YH
+	 K8VTE/lykOJpfD5lWQpecLa2y1n2lDHqenNuO9mWajQlX4nCc45YMXpf3K7vKA+jvY
+	 k4RqibWG0pg0LO+vRf6qBxQWdR+KkPpoJrikHopQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashish Kalra <ashish.kalra@amd.com>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>
-Subject: [PATCH 6.19 282/378] crypto: ccp - allow callers to use HV-Fixed page API when SEV is disabled
-Date: Tue, 17 Mar 2026 17:33:59 +0100
-Message-ID: <20260317163017.379604587@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.19 283/378] s390/stackleak: Fix __stackleak_poison() inline assembly constraint
+Date: Tue, 17 Mar 2026 17:34:00 +0100
+Message-ID: <20260317163017.415351048@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,63 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ashish Kalra <ashish.kalra@amd.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 8168a7b72bdee3790b126f63bd30306759206b15 upstream.
+commit 674c5ff0f440a051ebf299d29a4c013133d81a65 upstream.
 
-When SEV is disabled, the HV-Fixed page allocation call fails, which in
-turn causes SFS initialization to fail.
+The __stackleak_poison() inline assembly comes with a "count" operand where
+the "d" constraint is used. "count" is used with the exrl instruction and
+"d" means that the compiler may allocate any register from 0 to 15.
 
-Fix the HV-Fixed API so callers (for example, SFS) can use it even when
-SEV is disabled by performing normal page allocation and freeing.
+If the compiler would allocate register 0 then the exrl instruction would
+not or the value of "count" into the executed instruction - resulting in a
+stackframe which is only partially poisoned.
 
-Fixes: e09701dcdd9c ("crypto: ccp - Add new HV-Fixed page allocation/free API")
+Use the correct "a" constraint, which excludes register 0 from register
+allocation.
+
+Fixes: 2a405f6bb3a5 ("s390/stackleak: provide fast __stackleak_poison() implementation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ashish Kalra <ashish.kalra@amd.com>
-Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260302133500.1560531-4-hca@linux.ibm.com
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/ccp/sev-dev.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/s390/include/asm/processor.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/crypto/ccp/sev-dev.c
-+++ b/drivers/crypto/ccp/sev-dev.c
-@@ -1105,15 +1105,12 @@ struct page *snp_alloc_hv_fixed_pages(un
- {
- 	struct psp_device *psp_master = psp_get_master_device();
- 	struct snp_hv_fixed_pages_entry *entry;
--	struct sev_device *sev;
- 	unsigned int order;
- 	struct page *page;
- 
--	if (!psp_master || !psp_master->sev_data)
-+	if (!psp_master)
- 		return NULL;
- 
--	sev = psp_master->sev_data;
--
- 	order = get_order(PMD_SIZE * num_2mb_pages);
- 
- 	/*
-@@ -1126,7 +1123,8 @@ struct page *snp_alloc_hv_fixed_pages(un
- 	 * This API uses SNP_INIT_EX to transition allocated pages to HV_Fixed
- 	 * page state, fail if SNP is already initialized.
- 	 */
--	if (sev->snp_initialized)
-+	if (psp_master->sev_data &&
-+	    ((struct sev_device *)psp_master->sev_data)->snp_initialized)
- 		return NULL;
- 
- 	/* Re-use freed pages that match the request */
-@@ -1162,7 +1160,7 @@ void snp_free_hv_fixed_pages(struct page
- 	struct psp_device *psp_master = psp_get_master_device();
- 	struct snp_hv_fixed_pages_entry *entry, *nentry;
- 
--	if (!psp_master || !psp_master->sev_data)
-+	if (!psp_master)
- 		return;
- 
- 	/*
+--- a/arch/s390/include/asm/processor.h
++++ b/arch/s390/include/asm/processor.h
+@@ -158,7 +158,7 @@ static __always_inline void __stackleak_
+ 		"	j	4f\n"
+ 		"3:	mvc	8(1,%[addr]),0(%[addr])\n"
+ 		"4:"
+-		: [addr] "+&a" (erase_low), [count] "+&d" (count), [tmp] "=&a" (tmp)
++		: [addr] "+&a" (erase_low), [count] "+&a" (count), [tmp] "=&a" (tmp)
+ 		: [poison] "d" (poison)
+ 		: "memory", "cc"
+ 		);
 
 
