@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 615423F54D7;
-	Tue, 17 Mar 2026 16:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 362033F23B3;
+	Tue, 17 Mar 2026 16:55:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766530; cv=none; b=jTqwnWmsewStnVx84Mw6xYaQxXBME17Pi15XjeP60lJsGqBcSTH4fwixPWXCkYdM0BGkjNpGHovnw8+KPpDP1kWHsKTCJux6z0wzv9Q9/Gs/n62G7Mpmuc/jM8UFENNMg6wM7npNmzNSaM27MwmnC8pMhiV0TGSS3f93a1a1L3w=
+	t=1773766535; cv=none; b=Pfxpq6ghXo8aQ0mjSoKc1Ivet8EuWEkCDijQNIelsYfaQfku+Uv1xzh09csxXdkGCdfxiaZlhICcUdXCHoAL1QaKGlJKT90gVQOrpndfBkFvUdcr/YTsnTHqpw3dl/XTOHKIL+dIZdk5DvM4hDIYBrAZzenUriduR7gUm9FlFHY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766530; c=relaxed/simple;
-	bh=LBr+0j2Cu25FqgRbNo3WTr42ki9eS5Bor/46vYb+WBI=;
+	s=arc-20240116; t=1773766535; c=relaxed/simple;
+	bh=fvtuui02k6UJilAbeuOogXeub47zAPQB7HjVl2NgX1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OcxNH3jS7GoOsDYJEiPb/wWqYFn4OsfFbKbFD4EXSTmmJcpDtueUMxqYIguUzGKM8PGDo+rAe4gHDH+yyOjVReZQuGl0v6lvHt+BAfNN5vB/SBWVtNMAHNpIKJ5oH6Gp/7R4LIBFQ2IfnWyL0ApYrmSgbElF3eJ0KF/8UD7rLcE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BzRghdN1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nGXjzltuJwWbUpMKwve9H05c4GXCXNUL7GimqxqS51kJ62HQZKK7LKHxkezJD5yl3HLp5CeQfBHMKYUjyMKyY6PiQu5T70qenAL+v3knjhQx/bsoCFQux5bb7/EliO5XGTehClulHvczfFpq4zro+aBow+Sals9xVXqRBjsMsFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LcV02Uum; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BzRghdN1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFC0AC2BC86;
-	Tue, 17 Mar 2026 16:55:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LcV02Uum"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF63C2BC86;
+	Tue, 17 Mar 2026 16:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766530;
-	bh=LBr+0j2Cu25FqgRbNo3WTr42ki9eS5Bor/46vYb+WBI=;
+	s=korg; t=1773766535;
+	bh=fvtuui02k6UJilAbeuOogXeub47zAPQB7HjVl2NgX1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzRghdN19d74uG6Qtjstj2Hsv1l45kgxoETsf84ChrWRihcpG9frJf4l8QZNvMAJ+
-	 VQkeqb0NEpjSKQ0VeV7kLgEcllV2Oli+Y4LoWd3kroLSjDjZAB7MwxmUzfABoxWoLv
-	 aygszwKQv+nLqkE2rbZx9+sQ55ksCxq7lshExNi8=
+	b=LcV02Uum8nIm6pOPSEXm7ynwM/bKPzsScb3vjpSIY3NOC37V1o8lk6RiCdMRlwTO8
+	 rXPTuMgwF2ZvmTfbIKQPEipLM9Z32xCo+HQ4Geggf9auKTt0rd1G/RugmiQL9hpND5
+	 db9TaOcywwSwSig6dLki/R/70Gc6d/4BwAiCNOM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Dmitry Safonov <0x7f454c46@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 264/378] net/tcp-ao: Fix MAC comparison to be constant-time
-Date: Tue, 17 Mar 2026 17:33:41 +0100
-Message-ID: <20260317163016.724607772@linuxfoundation.org>
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.19 265/378] fgraph: Fix thresh_return nosleeptime double-adjust
+Date: Tue, 17 Mar 2026 17:33:42 +0100
+Message-ID: <20260317163016.762148030@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,53 +51,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-commit 67edfec516d30d3e62925c397be4a1e5185802fc upstream.
+commit b96d0c59cdbb2a22b2545f6f3d5c6276b05761dd upstream.
 
-To prevent timing attacks, MACs need to be compared in constant
-time.  Use the appropriate helper function for this.
+trace_graph_thresh_return() called handle_nosleeptime() and then delegated
+to trace_graph_return(), which calls handle_nosleeptime() again. When
+sleep-time accounting is disabled this double-adjusts calltime and can
+produce bogus durations (including underflow).
 
-Fixes: 0a3a809089eb ("net/tcp: Verify inbound TCP-AO signed segments")
+Fix this by computing rettime once, applying handle_nosleeptime() only
+once, using the adjusted calltime for threshold comparison, and writing
+the return event directly via __trace_graph_return() when the threshold is
+met.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Reviewed-by: Dmitry Safonov <0x7f454c46@gmail.com>
-Link: https://patch.msgid.link/20260302203600.13561-1-ebiggers@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260221113314048jE4VRwIyZEALiYByGK0My@zte.com.cn
+Fixes: 3c9880f3ab52b ("ftrace: Use a running sleeptime instead of saving on shadow stack")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/Kconfig  |    1 +
- net/ipv4/tcp_ao.c |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/trace_functions_graph.c |   14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
---- a/net/ipv4/Kconfig
-+++ b/net/ipv4/Kconfig
-@@ -748,6 +748,7 @@ config TCP_SIGPOOL
- config TCP_AO
- 	bool "TCP: Authentication Option (RFC5925)"
- 	select CRYPTO
-+	select CRYPTO_LIB_UTILS
- 	select TCP_SIGPOOL
- 	depends on 64BIT && IPV6 != m # seq-number extension needs WRITE_ONCE(u64)
- 	help
---- a/net/ipv4/tcp_ao.c
-+++ b/net/ipv4/tcp_ao.c
-@@ -10,6 +10,7 @@
- #define pr_fmt(fmt) "TCP: " fmt
+--- a/kernel/trace/trace_functions_graph.c
++++ b/kernel/trace/trace_functions_graph.c
+@@ -403,8 +403,12 @@ static void trace_graph_thresh_return(st
+ 	unsigned long *task_var = fgraph_get_task_var(gops);
+ 	struct fgraph_times *ftimes;
+ 	struct trace_array *tr;
++	unsigned int trace_ctx;
++	u64 calltime, rettime;
+ 	int size;
  
- #include <crypto/hash.h>
-+#include <crypto/utils.h>
- #include <linux/inetdevice.h>
- #include <linux/tcp.h>
++	rettime = trace_clock_local();
++
+ 	ftrace_graph_addr_finish(gops, trace);
  
-@@ -922,7 +923,7 @@ tcp_ao_verify_hash(const struct sock *sk
- 	/* XXX: make it per-AF callback? */
- 	tcp_ao_hash_skb(family, hash_buf, key, sk, skb, traffic_key,
- 			(phash - (u8 *)th), sne);
--	if (memcmp(phash, hash_buf, maclen)) {
-+	if (crypto_memneq(phash, hash_buf, maclen)) {
- 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPAOBAD);
- 		atomic64_inc(&info->counters.pkt_bad);
- 		atomic64_inc(&key->pkt_bad);
+ 	if (*task_var & TRACE_GRAPH_NOTRACE) {
+@@ -419,11 +423,13 @@ static void trace_graph_thresh_return(st
+ 	tr = gops->private;
+ 	handle_nosleeptime(tr, trace, ftimes, size);
+ 
+-	if (tracing_thresh &&
+-	    (trace_clock_local() - ftimes->calltime < tracing_thresh))
++	calltime = ftimes->calltime;
++
++	if (tracing_thresh && (rettime - calltime < tracing_thresh))
+ 		return;
+-	else
+-		trace_graph_return(trace, gops, fregs);
++
++	trace_ctx = tracing_gen_ctx();
++	__trace_graph_return(tr, trace, trace_ctx, calltime, rettime);
+ }
+ 
+ static struct fgraph_ops funcgraph_ops = {
 
 
