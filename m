@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677383F1652;
-	Tue, 17 Mar 2026 16:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38253F1641;
+	Tue, 17 Mar 2026 16:46:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765973; cv=none; b=ogOgGRIFyN9UbyBhLvjqOSZ/7vdWNanAvvqLBLP6c/AL8smKQ14lPcKlYkr3OMxZkFWyNDFWykhVkQ7l/XXWaF8HQAsbdwBXNPsA7MP9eU2gasn/TIANVFPqjWZkzHCuRKxxTeaU8rle0vAtNrllWfGpcrlvnwi5ZAnjX/tOHEg=
+	t=1773765976; cv=none; b=LI0GzH2s3jPIYqGER7Pt8z4qpQnghCns4MlQ6hlh6ZP/UU6g5Wr1wQa89MddrqCWtADsd3BukpJComwx0W7nk2keIJH2otHI61C5OaXjB1amK2r14Iar8T7I33xUcVyMR1KdLl4yOQCsORzRIcZZI3JYAsWHGCna9Kb51SmbiFI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765973; c=relaxed/simple;
-	bh=hhLHFM5gPglT3xFhIIlTH8GVyt2RUpG/WXaN3d910u0=;
+	s=arc-20240116; t=1773765976; c=relaxed/simple;
+	bh=5Sry85VGNo85nKQDAX1pMT13C8XrgMM44wLfN3LcWdQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=H6JDVld2BUo9KNu8REP7uQlObjxAR5JxCmVdh1qIhOvpTavambGSlxx59iadLT0I+pcO8yW/gAtjnFwYwaYirEAfGKfvz7+ZnEEnXIgtMjrD34aXGPm52PgsnZa5EEY60sHxm2ctff9IMHYLYIepJkDC8rN6JmjKpBHF2GZw4nk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y7cujY/O; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cKGwtxd7+1mTdvNMeeqq3AD+10I9FOV8yZrTXLT+ybQIJ9Yn+AW5+uv7Sw9Ikpq2RmQDKpba55Ki4hLJVy/dCAsU8rcIEQxAz3eQ1iYrigTe3HfxptsTjnAQSp8KVaAvqrdRvUdTpK8oAL2Juo8RC3R32tUKkFjmfAP5OPgAyyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2D6AgwEM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y7cujY/O"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F77C2BCAF;
-	Tue, 17 Mar 2026 16:46:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2D6AgwEM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E611C19424;
+	Tue, 17 Mar 2026 16:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765973;
-	bh=hhLHFM5gPglT3xFhIIlTH8GVyt2RUpG/WXaN3d910u0=;
+	s=korg; t=1773765976;
+	bh=5Sry85VGNo85nKQDAX1pMT13C8XrgMM44wLfN3LcWdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y7cujY/OY41hAgBMTxieT/QBvdyr6Lh09lju7c5re8hXnaVr/FjlsIw/Y75cIrYPZ
-	 Tq2k3EfIFcV6p3dnRgtFLzdpzUmiy/XE7+AbYbpfX3X+x9WCOeDc98jMIh71svbpeu
-	 ESUt/F3zISWr7s34/HTSfNiNqwnOF9xxbDWzJ8Lc=
+	b=2D6AgwEMGEpLYquSnnWoaI4Yt0JzqJI50Mm0QnL2IKITKsSz1wPb/QOHRSNbBfMhY
+	 NYsA0mn1GSzjCf3nz0rsupkJub1vqA0BoQvKdQ1XUww7moHuKi4Cj7r7Gy0TRXdLU2
+	 alxCbxQc0LZCGDXsIXEs+g797Pu0XRsS5wyBiBGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.19 141/378] KVM: arm64: pkvm: Dont reprobe for ICH_VTR_EL2.TDS on CPU hotplug
-Date: Tue, 17 Mar 2026 17:31:38 +0100
-Message-ID: <20260317163012.200228346@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	A1RM4X <dev@a1rm4x.com>
+Subject: [PATCH 6.19 142/378] USB: add QUIRK_NO_BOS for video capture several devices
+Date: Tue, 17 Mar 2026 17:31:39 +0100
+Message-ID: <20260317163012.236765192@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,48 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: A1RM4X <dev@a1rm4x.com>
 
-commit a79f7b4aeb8e7562cd6dbf9c223e2c2a04b1a85f upstream.
+commit 93cd0d664661f58f7e7bed7373714ab2ace41734 upstream.
 
-Hotplugging a CPU off and back on fails with pKVM, as we try to
-probe for ICH_VTR_EL2.TDS. In a non-VHE setup, this is achieved
-by using an EL2 stub helper. However, the stubs are out of reach
-once pKVM has deprivileged the kernel. The CPU never boots.
+Several USB capture devices also need the USB_QUIRK_NO_BOS set for them
+to work properly, odds are they are all the same chip inside, just
+different vendor/product ids.
 
-Since pKVM doesn't allow late onlining of CPUs, we can detect
-that protected mode is enforced early on, and return the current
-state of the capability.
+This fixes up:
+  - ASUS TUF 4K PRO
+  - Avermedia Live Gamer Ultra 2.1 (GC553G2)
+  - UGREEN 35871
+to now run at full speed (10 Gbps/4K 60 fps mode.)
 
-Fixes: 2a28810cbb8b2 ("KVM: arm64: GICv3: Detect and work around the lack of ICV_DIR_EL1 trapping")
-Reported-by: Vincent Donnefort <vdonnefort@google.com>
-Tested-by: Vincent Donnefort <vdonnefort@google.com>
-Reviewed-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://patch.msgid.link/20260310085433.3936742-1-maz@kernel.org
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/CACy+XB-f-51xGpNQFCSm5pE_momTQLu=BaZggHYU1DiDmFX=ug@mail.gmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: A1RM4X <dev@a1rm4x.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/cpufeature.c |    9 +++++++++
+ drivers/usb/core/quirks.c |    9 +++++++++
  1 file changed, 9 insertions(+)
 
---- a/arch/arm64/kernel/cpufeature.c
-+++ b/arch/arm64/kernel/cpufeature.c
-@@ -2336,6 +2336,15 @@ static bool can_trap_icv_dir_el1(const s
- 	if (this_cpu_has_cap(ARM64_HAS_GICV5_LEGACY))
- 		return true;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -377,6 +377,9 @@ static const struct usb_device_id usb_qu
+ 	/* SanDisk Extreme 55AE */
+ 	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
  
-+	/*
-+	 * pKVM prevents late onlining of CPUs. This means that whatever
-+	 * state the capability is in after deprivilege cannot be affected
-+	 * by a new CPU booting -- this is garanteed to be a CPU we have
-+	 * already seen, and the cap is therefore unchanged.
-+	 */
-+	if (system_capabilities_finalized() && is_protected_kvm_enabled())
-+		return cpus_have_final_cap(ARM64_HAS_ICH_HCR_EL2_TDIR);
++	/* Avermedia Live Gamer Ultra 2.1 (GC553G2) - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x07ca, 0x2553), .driver_info = USB_QUIRK_NO_BOS },
 +
- 	if (is_kernel_in_hyp_mode())
- 		res.a1 = read_sysreg_s(SYS_ICH_VTR_EL2);
- 	else
+ 	/* Realforce 87U Keyboard */
+ 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
+ 
+@@ -437,6 +440,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0b05, 0x17e0), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
+ 
++	/* ASUS TUF 4K PRO - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x0b05, 0x1ab9), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Realtek Semiconductor Corp. Mass Storage Device (Multicard Reader)*/
+ 	{ USB_DEVICE(0x0bda, 0x0151), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
+ 
+@@ -565,6 +571,9 @@ static const struct usb_device_id usb_qu
+ 
+ 	{ USB_DEVICE(0x2386, 0x350e), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* UGREEN 35871 - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x2b89, 0x5871), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* APTIV AUTOMOTIVE HUB */
+ 	{ USB_DEVICE(0x2c48, 0x0132), .driver_info =
+ 			USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT },
 
 
