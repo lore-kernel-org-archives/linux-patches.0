@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20DD634AB17;
-	Tue, 17 Mar 2026 16:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0A34AB17;
+	Tue, 17 Mar 2026 16:39:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765579; cv=none; b=dxFsE7FS9mQstENoomvdWxtUmYTg8TYGT6Aa6f8xudGkxTJ1JFJ5IfJUJ4PUAc8nI7Z9O+SCqs9tzqBkM+wR7RlXwtTZXEXrnyITQERuP9gdU3yqjWRJMEGO4U8B2CgXWOzb+xkk7gIJnUCCpBZ3JWMRsspR+sH/wjixQS8AoYk=
+	t=1773765582; cv=none; b=Hes5zKuMLoh15/NNr60SQV8AoxVqic916MAghuzz5C6e8sKt7PWY7ziM39LNXvvDXmon+GKtAXS9voBJAXXMH/2YjCebY3TN4PmoLZOUWc2fUp/m6UA2Z9B5Q1SfDdrgfFtg9/FQ55EbZbh2dlfmgryzCUfYTVECWYWL8C/llnw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765579; c=relaxed/simple;
-	bh=9xmVpsu3q6K/LNAAFx6wELRscEpczIlbrnAjBCwdYtI=;
+	s=arc-20240116; t=1773765582; c=relaxed/simple;
+	bh=YBhm87FFxJ1z+jGBwPmeeoNoZJnX7bwM5gVyw2N8VpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oQ++brNAI9vs+ZbUfHu8L9oIt9qmR20vm/s42n6ymfFl2igItB5/lxF7JnzM581RibHQAgo33khTabPpIM675fP+mx8BsQp0G2p4q05I4Sq3bnVB22ZJn0QP/YSYHbd++minKo4sfNGnDwPMJCVIE9MfpAYR7Vxmr1b2VBrBSU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KTGZw6lQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LI5h66tYnq2SW4FAQ3amEobe2zchSevqNwJ1cfxmd1UNOc7dcKlgrsG0kFstS5K+MFusxsBf2IabsP0Vd+LdJQ9GXCTwazil5KAVNA52xB55zWlj0b3PSc8o/pTxnerBWhMKRbsOFSvchSZvhtqE6Zd1jOuPEsFpoLNfNtt/nNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEjByTBQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KTGZw6lQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472BFC4CEF7;
-	Tue, 17 Mar 2026 16:39:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEjByTBQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E712C4CEF7;
+	Tue, 17 Mar 2026 16:39:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765578;
-	bh=9xmVpsu3q6K/LNAAFx6wELRscEpczIlbrnAjBCwdYtI=;
+	s=korg; t=1773765582;
+	bh=YBhm87FFxJ1z+jGBwPmeeoNoZJnX7bwM5gVyw2N8VpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTGZw6lQaa8YkXDnXxVveMWnJ17jrseJzB5puQuOxSkvdomcNsoS5iu69DnaKdn56
-	 X7V1w0IZNtRFqubDfyMD7S911sTZi9vqZ0mHPycRvdoaUqmvqqj/7vgRIMl+1iUC4o
-	 Bz8zOwwKKFiPEgMs76OQK4ki/EGsaQm+rK62N2ZE=
+	b=wEjByTBQtbAIrAJ7yfO7XZ0jYFr/1uWPIYRzBTFdxu7uyTZJCNk4OHR3GLOik9pBb
+	 JjEez5dErd1kEh6Anm9RHc2YR4Jv7YBEFYL0QyucBap0SKDlaW6OtIhyYlTuewSnOj
+	 rhtuw6G5giSX8zpHfVr9eKGFwfj5/1ap7D8nUEjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Simon Horman <horms@kernel.org>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 025/378] ALSA: usb-audio: Check max frame size for implicit feedback mode, too
-Date: Tue, 17 Mar 2026 17:29:42 +0100
-Message-ID: <20260317163007.904241209@linuxfoundation.org>
+Subject: [PATCH 6.19 043/378] net/mlx5: Fix deadlock between devlink lock and esw->wq
+Date: Tue, 17 Mar 2026 17:30:00 +0100
+Message-ID: <20260317163008.571021683@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,38 +55,150 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 7cb2a5422f5bbdf1cf32eae0eda41000485b9346 ]
+[ Upstream commit aed763abf0e905b4b8d747d1ba9e172961572f57 ]
 
-When the packet sizes are taken from the capture stream in the
-implicit feedback mode, the sizes might be larger than the upper
-boundary defined by the descriptor.  As already done for other
-transfer modes, we have to cap the sizes accordingly at sending,
-otherwise this would lead to an error in USB core at submission of
-URBs.
+esw->work_queue executes esw_functions_changed_event_handler ->
+esw_vfs_changed_event_handler and acquires the devlink lock.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260225085233.316306-3-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+.eswitch_mode_set (acquires devlink lock in devlink_nl_pre_doit) ->
+mlx5_devlink_eswitch_mode_set -> mlx5_eswitch_disable_locked ->
+mlx5_eswitch_event_handler_unregister -> flush_workqueue deadlocks
+when esw_vfs_changed_event_handler executes.
+
+Fix that by no longer flushing the work to avoid the deadlock, and using
+a generation counter to keep track of work relevance. This avoids an old
+handler manipulating an esw that has undergone one or more mode changes:
+- the counter is incremented in mlx5_eswitch_event_handler_unregister.
+- the counter is read and passed to the ephemeral mlx5_host_work struct.
+- the work handler takes the devlink lock and bails out if the current
+  generation is different than the one it was scheduled to operate on.
+- mlx5_eswitch_cleanup does the final draining before destroying the wq.
+
+No longer flushing the workqueue has the side effect of maybe no longer
+cancelling pending vport_change_handler work items, but that's ok since
+those are disabled elsewhere:
+- mlx5_eswitch_disable_locked disables the vport eq notifier.
+- mlx5_esw_vport_disable disarms the HW EQ notification and marks
+  vport->enabled under state_lock to false to prevent pending vport
+  handler from doing anything.
+- mlx5_eswitch_cleanup destroys the workqueue and makes sure all events
+  are disabled/finished.
+
+Fixes: f1bc646c9a06 ("net/mlx5: Use devl_ API in mlx5_esw_offloads_devlink_port_register")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260305081019.1811100-1-tariqt@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/endpoint.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/ethernet/mellanox/mlx5/core/eswitch.c  |  7 ++++---
+ .../net/ethernet/mellanox/mlx5/core/eswitch.h  |  2 ++
+ .../mellanox/mlx5/core/eswitch_offloads.c      | 18 +++++++++++++-----
+ 3 files changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index 686f095290673..1a020ea558755 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -221,6 +221,7 @@ int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+index 4b7a1ce7f406b..32bf93e4ffcec 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
+@@ -1072,10 +1072,11 @@ static void mlx5_eswitch_event_handler_register(struct mlx5_eswitch *esw)
  
- 	packet = ctx->packet_size[idx];
- 	if (packet) {
-+		packet = min(packet, ep->maxframesize);
- 		if (avail && packet >= avail)
- 			return -EAGAIN;
- 		return packet;
+ static void mlx5_eswitch_event_handler_unregister(struct mlx5_eswitch *esw)
+ {
+-	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev))
++	if (esw->mode == MLX5_ESWITCH_OFFLOADS &&
++	    mlx5_eswitch_is_funcs_handler(esw->dev)) {
+ 		mlx5_eq_notifier_unregister(esw->dev, &esw->esw_funcs.nb);
+-
+-	flush_workqueue(esw->work_queue);
++		atomic_inc(&esw->esw_funcs.generation);
++	}
+ }
+ 
+ static void mlx5_eswitch_clear_vf_vports_info(struct mlx5_eswitch *esw)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+index 714ad28e8445b..0276609a617c0 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
+@@ -334,10 +334,12 @@ struct esw_mc_addr { /* SRIOV only */
+ struct mlx5_host_work {
+ 	struct work_struct	work;
+ 	struct mlx5_eswitch	*esw;
++	int			work_gen;
+ };
+ 
+ struct mlx5_esw_functions {
+ 	struct mlx5_nb		nb;
++	atomic_t		generation;
+ 	bool			host_funcs_disabled;
+ 	u16			num_vfs;
+ 	u16			num_ec_vfs;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index ccf53d4783628..c79231b437976 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -3582,22 +3582,28 @@ static void esw_offloads_steering_cleanup(struct mlx5_eswitch *esw)
+ }
+ 
+ static void
+-esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, const u32 *out)
++esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, int work_gen,
++			      const u32 *out)
+ {
+ 	struct devlink *devlink;
+ 	bool host_pf_disabled;
+ 	u16 new_num_vfs;
+ 
++	devlink = priv_to_devlink(esw->dev);
++	devl_lock(devlink);
++
++	/* Stale work from one or more mode changes ago. Bail out. */
++	if (work_gen != atomic_read(&esw->esw_funcs.generation))
++		goto unlock;
++
+ 	new_num_vfs = MLX5_GET(query_esw_functions_out, out,
+ 			       host_params_context.host_num_of_vfs);
+ 	host_pf_disabled = MLX5_GET(query_esw_functions_out, out,
+ 				    host_params_context.host_pf_disabled);
+ 
+ 	if (new_num_vfs == esw->esw_funcs.num_vfs || host_pf_disabled)
+-		return;
++		goto unlock;
+ 
+-	devlink = priv_to_devlink(esw->dev);
+-	devl_lock(devlink);
+ 	/* Number of VFs can only change from "0 to x" or "x to 0". */
+ 	if (esw->esw_funcs.num_vfs > 0) {
+ 		mlx5_eswitch_unload_vf_vports(esw, esw->esw_funcs.num_vfs);
+@@ -3612,6 +3618,7 @@ esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, const u32 *out)
+ 		}
+ 	}
+ 	esw->esw_funcs.num_vfs = new_num_vfs;
++unlock:
+ 	devl_unlock(devlink);
+ }
+ 
+@@ -3628,7 +3635,7 @@ static void esw_functions_changed_event_handler(struct work_struct *work)
+ 	if (IS_ERR(out))
+ 		goto out;
+ 
+-	esw_vfs_changed_event_handler(esw, out);
++	esw_vfs_changed_event_handler(esw, host_work->work_gen, out);
+ 	kvfree(out);
+ out:
+ 	kfree(host_work);
+@@ -3648,6 +3655,7 @@ int mlx5_esw_funcs_changed_handler(struct notifier_block *nb, unsigned long type
+ 	esw = container_of(esw_funcs, struct mlx5_eswitch, esw_funcs);
+ 
+ 	host_work->esw = esw;
++	host_work->work_gen = atomic_read(&esw_funcs->generation);
+ 
+ 	INIT_WORK(&host_work->work, esw_functions_changed_event_handler);
+ 	queue_work(esw->work_queue, &host_work->work);
 -- 
 2.51.0
 
