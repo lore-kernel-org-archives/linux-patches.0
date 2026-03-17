@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE65F3F54C2;
-	Tue, 17 Mar 2026 17:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802E23E3DB1;
+	Tue, 17 Mar 2026 17:03:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767024; cv=none; b=D1kXvwBhB4F5PNvIDxX72EK9phhQrAZgSUd0j6sT2QPEvSYaPRAcKXLIvGLYZJ+j3yi00DDzqZ4zPim4IV45uo/ygnHm1f7cDpVu/ReeomEL0Obr8Td+lxNtIHQLKc3PEcp5x5LZVwAJPybslKJyrtPCbQA1uz4F/VnNa2bPOvI=
+	t=1773767028; cv=none; b=P1fzq3/n7dnM0kouygWhHp2H9a6nE6aH9zKCqYMtDtnQgHFhzQ6HE6YvrWUNYGctygP669Y9RgrLVVljk2FQH0Tzsc5T4R/dsaLI3XGbe6+H5R9qG2GTzoRXY7lMgN6Z8hp0Q+tl/hQo0q0mG2v+LG9zamVVUcy5YQK0x2+rMnM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767024; c=relaxed/simple;
-	bh=tuk4V/rYzR3gjXQ1tIgFK+UsBJuMf4B7JDhqpE3iYLI=;
+	s=arc-20240116; t=1773767028; c=relaxed/simple;
+	bh=xszVIwFPtspbgLHCJs+G6Od3/OPL4eHLtuuklTkg4I4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oJ6Af1TMrRy4h6YlUOqiZCgj0gnor1cjk4V7VB+pbLtmYLYMVGENaV5cbauOzs31R85LGNr3PJGKCmwHLoN/RO80l3EgcJH/NFgQ6atfgdZ0rti3pvmqdUD616q7wNDsWjFrDD356d4f4a6WjXVtbZaEL1XyMELeR4HKo2JOZ/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kwOssNQT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZHlJACauwPdtDfiCm1KRKp8mq7/q0wGeIc5jOLbs+C+0NJQgq0qhYGQb4E/euKZu+eg6Yw7SUGgTExLVElCNjz7KFw6b7OTYCIxZDDRiaXj5nIbj32oJP5PRphAPxPk7HzXH7iWgV++Lbs2tdMth5gfXDkVLZUqNjPyxS6O3ATQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K7Iams6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kwOssNQT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA40C2BC86;
-	Tue, 17 Mar 2026 17:03:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K7Iams6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94612C4CEF7;
+	Tue, 17 Mar 2026 17:03:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767023;
-	bh=tuk4V/rYzR3gjXQ1tIgFK+UsBJuMf4B7JDhqpE3iYLI=;
+	s=korg; t=1773767028;
+	bh=xszVIwFPtspbgLHCJs+G6Od3/OPL4eHLtuuklTkg4I4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kwOssNQTfCofDIu4UvzZ8jGLbnDaNR7bQFtZJXXBpUUIjhROlNsnbhYsVOc8QRJBu
-	 quWV3xGsVc/Fq0fkHwWtIYp70TMeB5eIXSlg93xLexryKz3DWJC1OW+F0hwiM6m4I4
-	 8U9WIpPJGE0rUaDoN9geh7ZQS+1pMPeoLT6M5rHU=
+	b=K7Iams6w4fmiIKYZ+3QssA9K73TaM2Wp/zLNPEhwLCcSrdQ+CXtJWc6tP+QFFj4U+
+	 Bu/579mKNHVROonAMggDYOoyfechxz18ztl6/AmCTFlN8S0z/mUC2kofC80MhV3Boz
+	 mHgxghdm3sBAicDuqc5AMTtaHQLmNxWCjOSanPYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Boris Burkov <boris@bur.io>,
-	Bart Van Assche <bvanassche@acm.org>,
+	Anand Jain <asj@kernel.org>,
+	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.19 344/378] btrfs: add missing RCU unlock in error path in try_release_subpage_extent_buffer()
-Date: Tue, 17 Mar 2026 17:35:01 +0100
-Message-ID: <20260317163019.647352027@linuxfoundation.org>
+Subject: [PATCH 6.19 345/378] btrfs: abort transaction on failure to update root in the received subvol ioctl
+Date: Tue, 17 Mar 2026 17:35:02 +0100
+Message-ID: <20260317163019.684146420@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,37 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit b2840e33127ce0eea880504b7f133e780f567a9b upstream.
+commit 0f475ee0ebce5c9492b260027cd95270191675fa upstream.
 
-Call rcu_read_lock() before exiting the loop in
-try_release_subpage_extent_buffer() because there is a rcu_read_unlock()
-call past the loop.
+If we failed to update the root we don't abort the transaction, which is
+wrong since we already used the transaction to remove an item from the
+uuid tree.
 
-This has been detected by the Clang thread-safety analyzer.
-
-Fixes: ad580dfa388f ("btrfs: fix subpage deadlock in try_release_subpage_extent_buffer()")
-CC: stable@vger.kernel.org # 6.18+
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
+CC: stable@vger.kernel.org # 3.12+
+Reviewed-by: Anand Jain <asj@kernel.org>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/extent_io.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/ioctl.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -4475,6 +4475,7 @@ static int try_release_subpage_extent_bu
- 		 */
- 		if (!test_and_clear_bit(EXTENT_BUFFER_TREE_REF, &eb->bflags)) {
- 			spin_unlock(&eb->refs_lock);
-+			rcu_read_lock();
- 			break;
- 		}
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3987,7 +3987,8 @@ static long _btrfs_ioctl_set_received_su
  
+ 	ret = btrfs_update_root(trans, fs_info->tree_root,
+ 				&root->root_key, &root->root_item);
+-	if (ret < 0) {
++	if (unlikely(ret < 0)) {
++		btrfs_abort_transaction(trans, ret);
+ 		btrfs_end_transaction(trans);
+ 		goto out;
+ 	}
 
 
