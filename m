@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70B4615E5BB;
-	Tue, 17 Mar 2026 17:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC4415E5BB;
+	Tue, 17 Mar 2026 17:27:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768435; cv=none; b=a+y/6ZXwpU93VygDOobjaZk/3YE0xq1QZT9322L374X39shSSvFJ7LP2zrVSZBQNnd69qXboqNQDcZZqYF3en5NncQ6vbqfVwkWcFUbF7NFipjdlvlQuqlNf6ZBQirVNDRUCuFFw5s8MOpBPI/iAAavvCs8emusaaHmP0rJdsjw=
+	t=1773768440; cv=none; b=UDx20q5yQDWrT1NpegLlaf8JAt+cM2a/uVq8bJqfiATBqmR2jEuZPIIYeZds+E8stUN/JsmC4f6waA59rdyOVsbysTVt1NtdBNTPVkEPNchWbmxHRNT7hfSrHqWVBLkKNhVUT7Bb1KpYTxrTr/vD9+rBkfq9zVB+1MN1Rq2xDD0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768435; c=relaxed/simple;
-	bh=Mdqa3E2UAMmNIy6x5nc+tPNXaFNWmwGDoXbX0wd/d48=;
+	s=arc-20240116; t=1773768440; c=relaxed/simple;
+	bh=wsgYCLc9nHSDRUo0ZLamb5hzsl5ad+6NzFGkQsB1DYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9X+7J/mXOHqauFd0ZW5wyESGE1gjkkftPfTI/iORQEXIHApI/hudtPddYCsQUZiCBAs2Xm4Of+NHA8L/iQ7UZlpdDVZleH66BKxlOcrgwl5QuHT0o1ep1aNDlwNXqJvBLX49dPOyg+fySMsLWWMqfFfnO+Exy4Jk2qmbNdSVJY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0TQ0Rs+m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TlEedc2Tet4+GCR1Da+Jyxnmz86cyYylQRWs1fyTeSremNeUZL7pDk0wAF1g3OW19cMiUEmrgpiCaWkpwhi67Jz3ztfxE76mGcP14qCv+DXbbBTxPPaoN3HVpqfawtLkfzdYv3rSS3Sy3hfgOQI0c+u1OfvPNWxxBr7GlVJ9B8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x5bl9nv/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0TQ0Rs+m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF977C19424;
-	Tue, 17 Mar 2026 17:27:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x5bl9nv/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E65C4CEF7;
+	Tue, 17 Mar 2026 17:27:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768435;
-	bh=Mdqa3E2UAMmNIy6x5nc+tPNXaFNWmwGDoXbX0wd/d48=;
+	s=korg; t=1773768440;
+	bh=wsgYCLc9nHSDRUo0ZLamb5hzsl5ad+6NzFGkQsB1DYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0TQ0Rs+mgd7M81RWY+szSagc3YlqV7x9s9tVY0uJgmLbLduAsEC1ZMapsQRfxoqEW
-	 fvhPtHiOdoqdWa2zEfeU3dbGzmb6DFOF9BzCBO+1ai/j/EBL4ezq0zHBxaovXIzwBQ
-	 LrtF2yYdRzyNQdkIhCt1UQuWnZG/KrUzOQTAhqeA=
+	b=x5bl9nv/2+Lnx4guydJ2TaGJGsmMMxzMaHZKg0r702s++/qB07DiI3zJs4MIkL1gq
+	 0KjXleeBfGeuNlilh6nBOzRu+lOYrc/6G0SNMrA7TijEckkeBVwSvjADdTyh2itp6+
+	 5gsrlIktjmxFeY0nKT5wnJhhy+ul/sbTmfDFVo98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.18 308/333] i3c: mipi-i3c-hci: Use ETIMEDOUT instead of ETIME for timeout errors
-Date: Tue, 17 Mar 2026 17:35:37 +0100
-Message-ID: <20260317163010.809529057@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.18 282/333] lib/bootconfig: fix snprintf truncation check in xbc_node_compose_key_after()
+Date: Tue, 17 Mar 2026 17:35:11 +0100
+Message-ID: <20260317163009.849695174@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,78 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Josh Law <objecting@objecting.org>
 
-commit 4167b8914463132654e01e16259847d097f8a7f7 upstream.
+commit 1120a36bb1e9b9e22de75ecb4ef0b998f73a97f1 upstream.
 
-The MIPI I3C HCI driver currently returns -ETIME for various timeout
-conditions, while other I3C master drivers consistently use -ETIMEDOUT
-for the same class of errors.  Align the HCI driver with the rest of the
-subsystem by replacing all uses of -ETIME with -ETIMEDOUT.
+snprintf() returns the number of characters that would have been
+written excluding the NUL terminator.  Output is truncated when the
+return value is >= the buffer size, not just > the buffer size.
 
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
+When ret == size, the current code takes the non-truncated path,
+advancing buf by ret and reducing size to 0.  This is wrong because
+the output was actually truncated (the last character was replaced by
+NUL).  Fix by using >= so the truncation path is taken correctly.
+
+Link: https://lore.kernel.org/all/20260312191143.28719-4-objecting@objecting.org/
+
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
 Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-2-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/cmd_v1.c |    2 +-
- drivers/i3c/master/mipi-i3c-hci/cmd_v2.c |    2 +-
- drivers/i3c/master/mipi-i3c-hci/core.c   |    6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
-@@ -336,7 +336,7 @@ static int hci_cmd_v1_daa(struct i3c_hci
- 		hci->io->queue_xfer(hci, xfer, 1);
- 		if (!wait_for_completion_timeout(&done, HZ) &&
- 		    hci->io->dequeue_xfer(hci, xfer, 1)) {
--			ret = -ETIME;
-+			ret = -ETIMEDOUT;
- 			break;
- 		}
- 		if ((RESP_STATUS(xfer->response) == RESP_ERR_ADDR_HEADER ||
---- a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
-@@ -277,7 +277,7 @@ static int hci_cmd_v2_daa(struct i3c_hci
- 		hci->io->queue_xfer(hci, xfer, 2);
- 		if (!wait_for_completion_timeout(&done, HZ) &&
- 		    hci->io->dequeue_xfer(hci, xfer, 2)) {
--			ret = -ETIME;
-+			ret = -ETIMEDOUT;
- 			break;
- 		}
- 		if (RESP_STATUS(xfer[0].response) != RESP_SUCCESS) {
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -230,7 +230,7 @@ static int i3c_hci_send_ccc_cmd(struct i
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, HZ) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
- 	}
- 	for (i = prefixed; i < nxfers; i++) {
-@@ -309,7 +309,7 @@ static int i3c_hci_priv_xfers(struct i3c
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, HZ) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
- 	}
- 	for (i = 0; i < nxfers; i++) {
-@@ -357,7 +357,7 @@ static int i3c_hci_i2c_xfers(struct i2c_
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, m->i2c.timeout) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
- 	}
- 	for (i = 0; i < nxfers; i++) {
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -316,7 +316,7 @@ int __init xbc_node_compose_key_after(st
+ 			       depth ? "." : "");
+ 		if (ret < 0)
+ 			return ret;
+-		if (ret > size) {
++		if (ret >= size) {
+ 			size = 0;
+ 		} else {
+ 			size -= ret;
 
 
