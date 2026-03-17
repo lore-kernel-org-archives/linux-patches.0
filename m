@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEF5837F008;
-	Tue, 17 Mar 2026 16:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6C972DF12E;
+	Tue, 17 Mar 2026 16:45:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765903; cv=none; b=Mg02q1TwvaxKkA83oCx/NDSHVrJWdBzUF0HBOvoI2TlGUQ/08hgkLH+tQl/7/24J8dQ0DKwszGiYI+Oq+d1vFlJ0I4iJyzuL0Ba9lc7lgmqbVkqT6igf2dCVKPyipqMK8nuX5FssWn72bwNk/YHED8/VGKKX2t2rCOTFQ+9caSM=
+	t=1773765906; cv=none; b=BPdJ/C3teyyQaMuMbATUbGhRclpl0epGnuHfo9EbZsoLV8NCRX7HkSJ7wnDiGnd5UPTbgoJMwb2039S6fReB21QPEtkBqvNwcfyS5oc6wbLIPh4s6oRaLq6il0SgLw6Ure7cgOEUjzEg4q4X19SQjZzaaQuCZ8nNPAMD0hgQtrs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765903; c=relaxed/simple;
-	bh=iHVaz+EtLwBwyfCzrkRyP1V9ZmDHU09dUtyUWgKVQwo=;
+	s=arc-20240116; t=1773765906; c=relaxed/simple;
+	bh=jkPJq5KyQD0olE4NRMLONKm20Kg8zXNHzDTUF+IOcbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lVWOFz5gneg20VkkLEnLSgLsPMCEG7yX9I2tXzwPYJgHSH41oPJnVFWMt5tN9XFb5psMwm2AYdgaRQv/cXXHdlIkFSfFxON5BSyx545axjNaUt05MqXzSPLCOkTEHY/Eebidd/lm8fgZjb72LoMOLmYyhC3xOQWvW/twHgqsSl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QBgQ3FnC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iseSLcGOVCQsup9qB69IieB6in/exU8m1ZBYxCgvlhX1OQJ8jYdSXVDbbqsb6P4jyzvgT9stE++ke4v5QCqicOEyr5iPKvilUCMC+spYMHJD1pn37tIauoCiYi7nvrGRJXF6/58rQi/XIMMT1aMJsOFkKEpa1TvvKTC4CxKO6gM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yYR0NN2c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QBgQ3FnC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F5B2C4CEF7;
-	Tue, 17 Mar 2026 16:45:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yYR0NN2c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABE3C4CEF7;
+	Tue, 17 Mar 2026 16:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765902;
-	bh=iHVaz+EtLwBwyfCzrkRyP1V9ZmDHU09dUtyUWgKVQwo=;
+	s=korg; t=1773765906;
+	bh=jkPJq5KyQD0olE4NRMLONKm20Kg8zXNHzDTUF+IOcbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QBgQ3FnCO3yCWA+e6zpJ5fhPiWLKzJyfrKpdMlmxUsTMaOjRy9HnEyO2O2zUMSZvH
-	 4eC1636HBYpvJtDs1/dqHf3sPQI7umy2E6YON121PugHDZ7cf6W5/B2b9EIJPzTflR
-	 ibbn76UbCiS4HSdCD9X+Yrk0fJKhwrNJMnVFey14=
+	b=yYR0NN2cg/r7sl7FqxdIVYpPxZwE1skogSrPsMzf+csQsLYtPcM62PPfo+07rwFgo
+	 n/QARQexHdTQ16pjQUB7u2JWQd11L7tNV/el1SIBO+WLZmyE5m+0b8xFx6K2wW8r0q
+	 H99k9msJXSiaIo1JqMcLcPdDoILLI3fmLncIj38g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Vollrath <tactii@gmail.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 094/378] e1000/e1000e: Fix leak in DMA error cleanup
-Date: Tue, 17 Mar 2026 17:30:51 +0100
-Message-ID: <20260317163010.475980710@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.19 121/378] net: usb: lan78xx: fix silent drop of packets with checksum errors
+Date: Tue, 17 Mar 2026 17:31:18 +0100
+Message-ID: <20260317163011.469109050@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,70 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matt Vollrath <tactii@gmail.com>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-[ Upstream commit e94eaef11142b01f77bf8ba4d0b59720b7858109 ]
+commit e4f774a0cc955ce762aec91c66915a6e15087ab7 upstream.
 
-If an error is encountered while mapping TX buffers, the driver should
-unmap any buffers already mapped for that skb.
+Do not drop packets with checksum errors at the USB driver level;
+pass them to the network stack.
 
-Because count is incremented after a successful mapping, it will always
-match the correct number of unmappings needed when dma_error is reached.
-Decrementing count before the while loop in dma_error causes an
-off-by-one error. If any mapping was successful before an unsuccessful
-mapping, exactly one DMA mapping would leak.
+Previously, the driver dropped all packets where the 'Receive Error
+Detected' (RED) bit was set, regardless of the specific error type. This
+caused packets with only IP or TCP/UDP checksum errors to be dropped
+before reaching the kernel, preventing the network stack from accounting
+for them or performing software fallback.
 
-In these commits, a faulty while condition caused an infinite loop in
-dma_error:
-Commit 03b1320dfcee ("e1000e: remove use of skb_dma_map from e1000e
-driver")
-Commit 602c0554d7b0 ("e1000: remove use of skb_dma_map from e1000 driver")
+Add a mask for hard hardware errors to safely drop genuinely corrupt
+frames, while allowing checksum-errored frames to pass with their
+ip_summed field explicitly set to CHECKSUM_NONE.
 
-Commit c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of
-unsigned in *_tx_map()") fixed the infinite loop, but introduced the
-off-by-one error.
-
-This issue may still exist in the igbvf driver, but I did not address it
-in this patch.
-
-Fixes: c1fa347f20f1 ("e1000/e1000e/igb/igbvf/ixgb/ixgbe: Fix tests of unsigned in *_tx_map()")
-Assisted-by: Claude:claude-4.6-opus
-Signed-off-by: Matt Vollrath <tactii@gmail.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260305143429.530909-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/e1000/e1000_main.c | 2 --
- drivers/net/ethernet/intel/e1000e/netdev.c    | 2 --
- 2 files changed, 4 deletions(-)
+ drivers/net/usb/lan78xx.c |    4 +++-
+ drivers/net/usb/lan78xx.h |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000/e1000_main.c b/drivers/net/ethernet/intel/e1000/e1000_main.c
-index 7f078ec9c14c5..15160427c8b30 100644
---- a/drivers/net/ethernet/intel/e1000/e1000_main.c
-+++ b/drivers/net/ethernet/intel/e1000/e1000_main.c
-@@ -2952,8 +2952,6 @@ static int e1000_tx_map(struct e1000_adapter *adapter,
- dma_error:
- 	dev_err(&pdev->dev, "TX DMA map failed\n");
- 	buffer_info->dma = 0;
--	if (count)
--		count--;
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3829,6 +3829,7 @@ static void lan78xx_rx_csum_offload(stru
+ 	 */
+ 	if (!(dev->net->features & NETIF_F_RXCSUM) ||
+ 	    unlikely(rx_cmd_a & RX_CMD_A_ICSM_) ||
++	    unlikely(rx_cmd_a & RX_CMD_A_CSE_MASK_) ||
+ 	    ((rx_cmd_a & RX_CMD_A_FVTG_) &&
+ 	     !(dev->net->features & NETIF_F_HW_VLAN_CTAG_RX))) {
+ 		skb->ip_summed = CHECKSUM_NONE;
+@@ -3901,7 +3902,8 @@ static int lan78xx_rx(struct lan78xx_net
+ 			return 0;
+ 		}
  
- 	while (count--) {
- 		if (i == 0)
-diff --git a/drivers/net/ethernet/intel/e1000e/netdev.c b/drivers/net/ethernet/intel/e1000e/netdev.c
-index ddbe2f7d81121..6bcb57609d16a 100644
---- a/drivers/net/ethernet/intel/e1000e/netdev.c
-+++ b/drivers/net/ethernet/intel/e1000e/netdev.c
-@@ -5654,8 +5654,6 @@ static int e1000_tx_map(struct e1000_ring *tx_ring, struct sk_buff *skb,
- dma_error:
- 	dev_err(&pdev->dev, "Tx DMA map failed\n");
- 	buffer_info->dma = 0;
--	if (count)
--		count--;
+-		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
++		if (unlikely(rx_cmd_a & RX_CMD_A_RED_) &&
++		    (rx_cmd_a & RX_CMD_A_RX_HARD_ERRS_MASK_)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
+ 		} else {
+--- a/drivers/net/usb/lan78xx.h
++++ b/drivers/net/usb/lan78xx.h
+@@ -74,6 +74,9 @@
+ #define RX_CMD_A_ICSM_			(0x00004000)
+ #define RX_CMD_A_LEN_MASK_		(0x00003FFF)
  
- 	while (count--) {
- 		if (i == 0)
--- 
-2.51.0
-
++#define RX_CMD_A_RX_HARD_ERRS_MASK_ \
++	(RX_CMD_A_RX_ERRS_MASK_ & ~RX_CMD_A_CSE_MASK_)
++
+ /* Rx Command B */
+ #define RX_CMD_B_CSUM_SHIFT_		(16)
+ #define RX_CMD_B_CSUM_MASK_		(0xFFFF0000)
 
 
