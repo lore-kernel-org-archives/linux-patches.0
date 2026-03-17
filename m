@@ -1,110 +1,219 @@
-Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
+Received: from CH1PR05CU001.outbound.protection.outlook.com (mail-northcentralusazon11020143.outbound.protection.outlook.com [52.101.193.143])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B91FA280A21
-	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 17:59:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773770382; cv=none; b=R9Hqb3sskDlYhLJbvK/Q6eICCu8PQkVnhRlSOLqPI/AByUV88lE265YsznfslC2opuBRUYistM4rsj1qARnCRmP9aWfd1BpZzydh7XkY7Nd5K6byonIBcHzHBAJQ/1qir4hu3+R4/PGCjdmnFIHL8ke/0roqYBK3w0XqFKHjsbE=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773770382; c=relaxed/simple;
-	bh=qEp2sShqi1KgMVodMBiFhJfJPmr3G501i0+Nsr1r/70=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=m2wDIJaqhWkQseqv9Rzj4YHuILKzU69xR0bqq4XcOX0SXZDx3Yuvwq1gQPG4Cd5+xsTCHkPaoJs3G+pcDI2iVVRmF1irVd7pgeXg69I/Jr6A0rqihtTvtG4Ogmp0I10+KJFl82pc84rQ28lzVq20KZ1VFyR1ss4a8TFBZfAbt+g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=qLMklQN4; arc=none smtp.client-ip=54.204.34.130
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE393F6604
+	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 18:04:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.101.193.143
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773770648; cv=fail; b=FU0hgG8WKP5T9qlB7aJ1BGZt6/gbKM/sBxNqAO0gL+lK9XT0iUP8NImrBvls+Zn+N0pnvqPkwLqzS4M9jTcHYkEzT51rZrSPjA/ycb3qztrvNJZWGTUs/vFhTcejzFHvFxFX7u311XkBVpn1h9QB8AZjf6nmGskoq536SJ5Ha3A=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773770648; c=relaxed/simple;
+	bh=0uvMB7dC+6mYjZPPR6YPDNRGRFSnl9GG1LKzwGMb7IQ=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=gxZPWJqZRgg1/tczWkGGyo8HBfEWrOa6l9PQE1qcgUFD0RQXDelxBTKwbV6oyvq7cY1pVVY5pUStOLo4UATyMIGndiijKknNEgLbBtMW8iAKL/QAMUB4phRpDYM4FWanN8b6pf3M4HaKXZ7J+ID4mFx+HSECgFzp+4DCIP6tqG8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=Y60VqY3V; arc=fail smtp.client-ip=52.101.193.143
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="qLMklQN4"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1773770352;
-	bh=dwHf63CrmgAOF+9cH5aTI2NFbzmXoNuZgytYJc9T92s=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=qLMklQN4ttGaVptIbhTIx66s/6/6HY6NQVt7HZFCq1O5scxI3RAFxoXSaaaQ+iPA4
-	 nfyDgeOZ8aZjLHJuZNhQSJkmpq8axN6RAIKFEeSjKpPyLBo9Dp0XLIArjUwmUQEoh2
-	 EMpgV38b9rm2ixAzsiu/WKHnOfrrOVIE1gukGm0k=
-X-QQ-mid: zesmtpip4t1773770344tea1b4c30
-X-QQ-Originating-IP: K5ac4WI8bp9cfw5clapaXR+RIF/6/c4o9JrjhC6KjGA=
-Received: from localhost.localdomain ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Wed, 18 Mar 2026 01:59:02 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 10242624894791450285
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: brauner@kernel.org,
-	broonie@kernel.org,
-	davidgow@google.com,
-	gtucker@gtucker.io,
-	patches@lists.linux.dev,
-	stable@vger.kernel.org
-Subject: Re: kthread: consolidate kthread exit paths to prevent use-after-free
-Date: Wed, 18 Mar 2026 01:58:12 +0800
-Message-Id: <20260317175812.707723-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260317163006.067634764@linuxfoundation.org>
-References: <20260317163006.067634764@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="Y60VqY3V"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B6r1m6ixJiFAW9zvZLtIwD9RhABFgVs7GwhI8cAhHZdZw4gH90ioytorropVV3m74T1bFHMolzBJS1Cr22RlIX1D3w1LZj0A/L9qSsF7c+8N4QIX2KbezQjZCSGCbdiTUzt7UFvca87NEoJia/h4aPb7wrZrfwJSDfcZr3PYm63JJCc3YJ9OyZBsggGn4QUGyIeG9ANKg0c3z4lYWyuEZ4ELCZ93EnfxJCJVzasttwuM7WPsjd2eQ6WtNXLf/iwyEW5qjj2gObNaqjaREQbYx4ZnIy0C/SvzJ5SeP9RGrs5hSHVNLb8sV57T89sys/tFkQZ7mi1sxSlMq0AkB1aPgA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=unxltpV+XyrqxvnnF8y/RumqqzYW4aodE2AV/mWga5g=;
+ b=R+/4+bsN2J+ZXCDg06n5LaHmcIvSPou4y4zCxH0awsWcqVMrtYXa5zT7MQfPJHwJnIbLRFLX1tZeqZgRyi33j1V04suu2BJXQLHbr3rL/aJuS0j03bUlGMKgCdexecNMpDR8V2xE4gYNUsdPoGSa65SE9nDZwpXcawUXNxC+c2O2ap90UV9ELEul4beqRKToPJre9ppvRaf3HqTebPATYOqVWWNutBen80HA7bjuXd0eD47DZH/E8lL9k5Chhv6S/EcEd/rF+n6kzGB8nrGr483bqet1hpsc99bEp14dX/c6xna2kG1LMxJYqvwFPO+JoWX2L0+0Xdw0olI1UWA3pg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=unxltpV+XyrqxvnnF8y/RumqqzYW4aodE2AV/mWga5g=;
+ b=Y60VqY3VL1cHpfUlRHLsH6K9VdFOR2r9HiVxSg6VEqzgWq5snlfHkgXthz0pEdbccefmNAqJMYtkOfX/cwhce5e7joScaN/OsWXSaeAdyH4ZsokRT/PZcPSNkPoyLWbJVRcXiDipiAdLPdrEoyO4IJD25vr7ko7JhwFF7vI0er4=
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com (2603:10b6:806:4a4::6)
+ by SA3PR21MB5864.namprd21.prod.outlook.com (2603:10b6:806:496::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.13; Tue, 17 Mar
+ 2026 18:04:02 +0000
+Received: from SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::879f:eec1:ca0e:d219]) by SA1PR21MB6683.namprd21.prod.outlook.com
+ ([fe80::879f:eec1:ca0e:d219%3]) with mapi id 15.20.9723.008; Tue, 17 Mar 2026
+ 18:03:57 +0000
+From: Long Li <longli@microsoft.com>
+To: Jason Gunthorpe <jgg@nvidia.com>, Abhijit Gangurde
+	<abhijit.gangurde@amd.com>, Allen Hubbe <allen.hubbe@amd.com>, Broadcom
+ internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Bernard
+ Metzler <bernard.metzler@linux.dev>, Bryan Tan <bryan-bt.tan@broadcom.com>,
+	Cheng Xu <chengyou@linux.alibaba.com>, Gal Pressman <gal.pressman@linux.dev>,
+	Junxian Huang <huangjunxian6@hisilicon.com>, Kai Shen
+	<kaishen@linux.alibaba.com>, Konstantin Taranov <kotaranov@microsoft.com>,
+	Krzysztof Czurylo <krzysztof.czurylo@intel.com>, Leon Romanovsky
+	<leon@kernel.org>, "linux-hyperv@vger.kernel.org"
+	<linux-hyperv@vger.kernel.org>, "linux-rdma@vger.kernel.org"
+	<linux-rdma@vger.kernel.org>, Michal Kalderon <mkalderon@marvell.com>,
+	Michael Margolin <mrgolin@amazon.com>, Nelson Escobar <neescoba@cisco.com>,
+	Satish Kharat <satishkh@cisco.com>, Selvin Xavier
+	<selvin.xavier@broadcom.com>, Yossi Leybovich <sleybo@amazon.com>, Chengchang
+ Tang <tangchengchang@huawei.com>, Tatyana Nikolova
+	<tatyana.e.nikolova@intel.com>, Vishnu Dasa <vishnu.dasa@broadcom.com>,
+	Yishai Hadas <yishaih@nvidia.com>, Zhu Yanjun <zyjzyj2000@gmail.com>
+CC: "patches@lists.linux.dev" <patches@lists.linux.dev>
+Subject: RE: [EXTERNAL] [PATCH 02/16] RDMA: Consolidate patterns with
+ offsetof() to ib_copy_validate_udata_in()
+Thread-Topic: [EXTERNAL] [PATCH 02/16] RDMA: Consolidate patterns with
+ offsetof() to ib_copy_validate_udata_in()
+Thread-Index: AQHcsbacjqMhlcJJu0KodvHfS52V5bWzDUBw
+Date: Tue, 17 Mar 2026 18:03:57 +0000
+Message-ID:
+ <SA1PR21MB66834C27F2279FE50899D087CE41A@SA1PR21MB6683.namprd21.prod.outlook.com>
+References: <0-v1-2b86f54cda42+7d-rdma_udata_req_jgg@nvidia.com>
+ <2-v1-2b86f54cda42+7d-rdma_udata_req_jgg@nvidia.com>
+In-Reply-To: <2-v1-2b86f54cda42+7d-rdma_udata_req_jgg@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+ MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=2a8b0f2b-0304-46de-96f0-90b4bd1cbda6;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2026-03-17T18:03:20Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Tag=10,
+ 3, 0, 1;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR21MB6683:EE_|SA3PR21MB5864:EE_
+x-ms-office365-filtering-correlation-id: 473bffe0-3ae3-436c-3daa-08de844f8f15
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|7416014|376014|1800799024|366016|22082099003|56012099003|18002099003|921020|38070700021;
+x-microsoft-antispam-message-info:
+ aXNBYk+aCmXHA1dKeyAXzpxQtW1SxWKngfdbooXTEMtCwPzevKDxyHgQDg8p1e00cyY1gNjw3tcUiwCfhsUnNsnhwrhysGzfGsBtGILH9yhY3uPxPWcpNNYCMkXy/Ag1JoCwq3sid583bmzvJUQBWejAPgxauiCHrgcfbPFvgKucGvcJzZKQxP0SeHQ3ggKnPkNtuQPnJPsl6S35E04UgU9grOaMHdb5Rfvr2epeI4UXFpk4N2gNCDVmdexY2qIBw5N9CXUgbQ4EDGtzyzyuWabw0hJ3T6LvBNRoft4vbtNL5Ks+6N2jt6aNx71BB3hN0/VfsCjyNraTGHT8q3P5Dl92yPdrbct2yaUFX2EIGoxbuth9rpT/t+A5KJZRbhqFRqfUrogxzLrQkbxGsCb2H+Hs9gV/QlIq1rx6fv97UGoTH8n6kN/SD0xffG4xqu73L7LkJKvZCMknTBXA2ML+M1kP5rTQSd0Vj0Mw1WTupcgAUkqEdchZyoTHPifceNIo71xVjnz1RgQcF+gA3uBts4b+ZCMeS+ikupoehAkpwqPAWgDgvJRqCt9uJ/kafhOwslD+TxT9xMf/Bgf6ZtJJ15wkD/UN2sbGeK/OjRddQHsKG2ypLRUJG4A18Jmw9BFvyaoh/UYhLR+KS47ibScsMAeZcwX5wk2ZrLbQsA02F9pHuyAB2PSnTIQU0Bp8gJb/uH4YvSQE+RZ9AgErNGcEhP2sJgnwqfClQ/THJGfcc9JDH2L/zqTR9neAYXvSJM6c4htCGuCRAHrCH6QoS7silav0B0PigpDwCtpeSjJmVBQ8j0qKHrADzqeu6l8dx+lj
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR21MB6683.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(7416014)(376014)(1800799024)(366016)(22082099003)(56012099003)(18002099003)(921020)(38070700021);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?XdUMOEqfAmfVcSSr/7U0jZVgt1E0F/EKjfCag1PaVNwSSJ1poC5Almf7qKzI?=
+ =?us-ascii?Q?LEWr4w8N5anRXQJXfH4UtNRre2oPJMO5OmZ0qN2tAKdZzhylc42XZWfTCiSI?=
+ =?us-ascii?Q?TVtURX+Cc8pFjky3XKCOGVYRsAhQ92ofrf/3Nly6wa7nMheXdDlNMHgvkc5p?=
+ =?us-ascii?Q?EAa4n/tkTuU0P8DTvHEisPqtXGrGGY5LtYavi+DQ7q3VysBSPQnIIUObxZ7V?=
+ =?us-ascii?Q?rwjSkuC8rCYFCFwYMGRefKBIKiPiVXpyjYmsVDgSvbXb0shtGB7vqo8bx1gS?=
+ =?us-ascii?Q?19o7TuG3s7qjMxc3pDJwBri00M7RWQRssJEg4acYuESZnITcvH2ZO9tVJeya?=
+ =?us-ascii?Q?4YDcZTttqp6SR2ExG0mIKB4YJJggSjLKBBGNj7j7ayCHHk+dI3RudY8N5s6t?=
+ =?us-ascii?Q?qg8IihmgtRF74ItHx7TH81BzZg+PhOyF8dWv0W+O5MwQcVIfX5DcR5Dkbk6o?=
+ =?us-ascii?Q?zEyhlPOIVklxZYGOyQJa8EXTeYzUsKD9tMqdEQf+Tw5Jo5sj49T94BClqrir?=
+ =?us-ascii?Q?0aLndQfmPzXDtfG/rJSfoWXFCwxPJxEQ4/zPOibp4WgAwl7hlAuINVXwsWHx?=
+ =?us-ascii?Q?B9yut6YoZMSRL1wsRCE0AY6VQAPT3+HZSFofgqPqoAq/Bb1PsB56lcs3xqwp?=
+ =?us-ascii?Q?hiObV//mW/MMLqpnvULTgdcjjtUoY9axIwqJCZhkILnCTxSJyGW59xrktlCQ?=
+ =?us-ascii?Q?Mm7qVsCItUC4nBrGPxCxtTxubqYB1hIJFudtgMVRfiZ7MMWWxazhcXyrMsOT?=
+ =?us-ascii?Q?9XVL9aB+tN1XcjOXIh2u/Ez7gQoiaimHCoLE07QXpFMiEG9JdWl5l1aOaxyI?=
+ =?us-ascii?Q?qLqEjy4TYHVS+vsj3WqQa/7sXB42ZSnmcowoSN+bruEtWc3gl13oSu996wr0?=
+ =?us-ascii?Q?MSSU39Xy/V1F9rK4KnTpx07m5J5FcQ/qM5go/m4Fta1/iIgSXrEgU56rlh/a?=
+ =?us-ascii?Q?A9iU5TGMY+B0rd3MDurStU81/QM+nh2skKtaxX2LUeIMwp5hVDYNW/fEIr2s?=
+ =?us-ascii?Q?gYOFdtVj/T8Ykj6StvUaV+xc7il5sTkel40kG8waXFIs/66kD3JfJBP2VcJF?=
+ =?us-ascii?Q?uo91LEQ8dBZv1RTvqWFHYTMTQUbl5KnuHKHGVGnJyMGzQQ6LNd3v5aMp4AtU?=
+ =?us-ascii?Q?PxSgdWmNQjXGAua28IRuUEDG15Qs5ogVEwPGluLBcT70BCSj2jYZgPN1d2qg?=
+ =?us-ascii?Q?wy3bm1Upc3jUkhbUwoNVXp3LwmnIJ8VqgKBbGWWyCvW/OH1FXmpTygJTQgi3?=
+ =?us-ascii?Q?EEmBCdwSUJDg/zq+b0/sz3kHZZA0RGCF1ic+8CwN2WHoFEr9ct+KSf73KDOA?=
+ =?us-ascii?Q?+R/F4I8WHZYMDuWCANoNb4PnfLwo9w8N6yhkgXbJGI2PrT6TUZhQkfOKJlr6?=
+ =?us-ascii?Q?fV0OWDbqX2axDbIgnk766cv+mpZmi83I9eSLMjp+IFAUxx05CI/XOCuMgFD8?=
+ =?us-ascii?Q?0PznxlgMd+FnwdS3Oud+4nWsBVoDwFhZGyOKSmocG7qkEccS+CaxJ8/5VCYA?=
+ =?us-ascii?Q?CkoUBZdRQuqi73Gz2R3JYHGSq7BDuPIMeu/HIf0zE2S32NcwdILWCkD7kvrZ?=
+ =?us-ascii?Q?2jg/imi6MnoXitR7Kct8pghG5/gPrC4cWTLwlHPd6Y3mfLvrMZdiI+0HBXEW?=
+ =?us-ascii?Q?AiXzF5JxdbTl6dNpMbPCt/lQ5coRUhCGTtxbH4k5Oub4nZzjar4dkV9QupR2?=
+ =?us-ascii?Q?bLFSbqcGoMttIZduY97Aq6qdIxF4+z0TSlkl2PSJJ/Vd1OYz?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: Mxh1r6NAWu99nW/jZC3dpUcMpD7RfQTxqIU+QF4jTo+jlUdm9ePbplyR
-	BYL6VUQPFwJvKj9GXRDAIstUyy1+Qto+e4BRrriYhJKRn/EWJlmOiWk3B/R4FcHOUcikjO9
-	qpmDH9JaBNvUQoNujS0ULDc8xgSOJ+91PzbA4ZcIG+CdQ7c8PKe+ExUlqHFZTRyRY2ghB8z
-	hFyKOZvI3LTeml04c9Y0astnfq+9I4y9UU+NKsFwuS1QYtxicD1jaA8hG+H0gcaGJWBxLgC
-	4hfEVYDyI3RxSyjZgQrq//khLXkX/cv4iOdlxmrEsooyuxPnQt1asim4EJZCL3A2XJkunbU
-	V7ymVZt4EIYBGiTHZDiSWXTzIOZthgXFxnKSrveix0kfGvrRZZhDqPVQIyamyT5ON94OCfm
-	5jkQXG5epBWc6ILN9XgvQW45jx0sLyM0dV4R9uW5nktVquSvvZW9TUjeAzbXmQ8Nd0SM3l5
-	BxRshISt8qtYIkMGmnYlJDeqGJ3BTMfvr4SXa0oPW+z7cN1AFaaxHHHqZgzHzcEPntHuLPk
-	SZ4Z5Ak/Xc/2nsHXjF5OT8mxGUwz3/dK/ZiNspSBkuW9Sny2oDI8utvSyDoy5X9dWc7w2Gl
-	3sYBSGRzph20y3697pj6ox0Yc3Eh9LYHGxB1SeSHOV0ZceMfJ1MEZBvo5w/WC0isDqqhvn9
-	4ESWQeIwVIDDpWfjFoufQyZo/IiL7vEHEtZyOJZyTqi6MB6PJGIKz1t8ViJhYBNi70WdjIp
-	EughS6OGgljbNjuOhjx3q3aL5hNXp6rvUBzAyhZTeqpDns77hzhJtW6G36LIA/DVD+8m5Ca
-	4UZO6A9kQXbUqFtySCF9WM8CjcWSVdKaMDpvWrwgU4kCA/XHxIIwjWrMpmp3T34U+N4/N4c
-	3p8kxhWRQW9xcDl8ysLuOsN1G/rJ4v4rB3JErrsqy43XF61uKQ2ZI05A0/28n4ap6S5m0WI
-	WppVFxHK9J7zR8yCzR2jq3PXFPz9GY1ezWFaFOVM/9EWPaOCUdmz4BuvgodBYLEkQ5ACkV9
-	G5WCK/0jNEsZ5EpEMl
-X-QQ-XMRINFO: OWPUhxQsoeAVwkVaQIEGSKwwgKCxK/fD5g==
-X-QQ-RECHKSPAM: 0
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR21MB6683.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 473bffe0-3ae3-436c-3daa-08de844f8f15
+X-MS-Exchange-CrossTenant-originalarrivaltime: 17 Mar 2026 18:03:57.0979
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: bmujeFU2j9Ds+iV+ax3X4IxOYi3/FZ0v0nMXAEndBuqF0aZ9eUT9nEK20zg6LVPP0c5MU4tibRrdk8Qb6b0kjg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA3PR21MB5864
 
-Hello,
+>=20
+> Similar to the prior patch, these patterns are open coding an offsetofend=
+(). The
+> use of offsetof() targets the prior field as the last field in the struct=
+.
+>=20
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 
-I want you know that need backport ("bpf: drop kthread_exit from noreturn_deny"),
-which commit 7fe44c4388146bdbb3c5932d81a26d9fa0fd3ec9 upstream,
-or will met "WARN: resolve_btfids: unresolved symbol kthread_exit" to cause build fail,
-I test v6.18.19-rc1 with the patch build ok for me.
+Reviewed-by: Long Li <longli@microsoft.com>
 
-BRs
-Wentao Guan
+> ---
+>  drivers/infiniband/hw/mana/cq.c |  9 ++-------  drivers/infiniband/hw/ml=
+x5/cq.c
+> | 10 +++-------
+>  2 files changed, 5 insertions(+), 14 deletions(-)
+>=20
+> diff --git a/drivers/infiniband/hw/mana/cq.c b/drivers/infiniband/hw/mana=
+/cq.c
+> index b2749f971cd0af..3f932ef6e5fff6 100644
+> --- a/drivers/infiniband/hw/mana/cq.c
+> +++ b/drivers/infiniband/hw/mana/cq.c
+> @@ -27,14 +27,9 @@ int mana_ib_create_cq(struct ib_cq *ibcq, const struct
+> ib_cq_init_attr *attr,
+>  	is_rnic_cq =3D mana_ib_is_rnic(mdev);
+>=20
+>  	if (udata) {
+> -		if (udata->inlen < offsetof(struct mana_ib_create_cq, flags))
+> -			return -EINVAL;
+> -
+> -		err =3D ib_copy_from_udata(&ucmd, udata, min(sizeof(ucmd),
+> udata->inlen));
+> -		if (err) {
+> -			ibdev_dbg(ibdev, "Failed to copy from udata for create
+> cq, %d\n", err);
+> +		err =3D ib_copy_validate_udata_in(udata, ucmd, buf_addr);
+> +		if (err)
+>  			return err;
+> -		}
+>=20
+>  		if ((!is_rnic_cq && attr->cqe > mdev->adapter_caps.max_qp_wr)
+> ||
+>  		    attr->cqe > U32_MAX / COMP_ENTRY_SIZE) { diff --git
+> a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c index
+> 43a7b5ca49dcc9..643b3b7d387834 100644
+> --- a/drivers/infiniband/hw/mlx5/cq.c
+> +++ b/drivers/infiniband/hw/mlx5/cq.c
+> @@ -723,7 +723,6 @@ static int create_cq_user(struct mlx5_ib_dev *dev, st=
+ruct
+> ib_udata *udata,
+>  	struct mlx5_ib_create_cq ucmd =3D {};
+>  	unsigned long page_size;
+>  	unsigned int page_offset_quantized;
+> -	size_t ucmdlen;
+>  	__be64 *pas;
+>  	int ncont;
+>  	void *cqc;
+> @@ -731,12 +730,9 @@ static int create_cq_user(struct mlx5_ib_dev *dev,
+> struct ib_udata *udata,
+>  	struct mlx5_ib_ucontext *context =3D rdma_udata_to_drv_context(
+>  		udata, struct mlx5_ib_ucontext, ibucontext);
+>=20
+> -	ucmdlen =3D min(udata->inlen, sizeof(ucmd));
+> -	if (ucmdlen < offsetof(struct mlx5_ib_create_cq, flags))
+> -		return -EINVAL;
+> -
+> -	if (ib_copy_from_udata(&ucmd, udata, ucmdlen))
+> -		return -EFAULT;
+> +	err =3D ib_copy_validate_udata_in(udata, ucmd, cqe_comp_res_format);
+> +	if (err)
+> +		return err;
+>=20
+>  	if ((ucmd.flags & ~(MLX5_IB_CREATE_CQ_FLAGS_CQE_128B_PAD |
+>  			    MLX5_IB_CREATE_CQ_FLAGS_UAR_PAGE_INDEX |
+> --
+> 2.43.0
 
-Log:
- AR      drivers/gpu/built-in.a
-  AR      drivers/built-in.a
-  AR      built-in.a
-  AR      vmlinux.a
-  LD      vmlinux.o
-  GEN     .vmlinux.objs
-  MODPOST Module.symvers
-  CC      .vmlinux.export.o
-  UPD     include/generated/utsversion.h
-  CC      init/version-timestamp.o
-  KSYMS   .tmp_vmlinux0.kallsyms.S
-  AS      .tmp_vmlinux0.kallsyms.o
-  LD      .tmp_vmlinux1
-  BTF     .tmp_vmlinux1.btf.o
-  NM      .tmp_vmlinux1.syms
-  KSYMS   .tmp_vmlinux1.kallsyms.S
-  AS      .tmp_vmlinux1.kallsyms.o
-  LD      .tmp_vmlinux2
-  NM      .tmp_vmlinux2.syms
-  KSYMS   .tmp_vmlinux2.kallsyms.S
-  AS      .tmp_vmlinux2.kallsyms.o
-  LD      vmlinux.unstripped
-  BTFIDS  vmlinux.unstripped
-WARN: resolve_btfids: unresolved symbol kthread_exit
