@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937BA3E6DCF;
-	Tue, 17 Mar 2026 17:12:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACDB2FFDEA;
+	Tue, 17 Mar 2026 17:12:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767572; cv=none; b=lzdmunpGdB2jaGNpiKaRQoUwCW0srl/QbWaa3IQSikGhIdWmWE4GBRo2UkdRhKvtNOjEAFN+VdOAA1WV6dJPL80PSpg1v14mI2hXqoDvoLuuT4Fmkm99YNzZ232yTXwL7l2qinE794PVdz1gC3mjImwQT9EgWLsYsz+P5oJ4ydw=
+	t=1773767577; cv=none; b=eY89k5jCwRiwLvM+zQJVUZEhbWYF/aqr7UZkYqX8hpc5j8Vydce+2a3120IH4k2eD2CZ7RIA2u6TGWjI3xkHSguOw/yEx15kVFZmGBwn7L6DHrLiaSjdHTQzjQdlgBtHhZnSJNB8Y8ivZ29QVhAm06vLJBNOIep3MAaA/2+47zE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767572; c=relaxed/simple;
-	bh=WeH1oipswextXQkQYD6+nlgXctFCjeAYxTxF6Yf6bz4=;
+	s=arc-20240116; t=1773767577; c=relaxed/simple;
+	bh=HfLz+0HkF1WCPuDP3HsDHjANpCHDPoFBwLyBeb4lp88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c8TtuoPXe3z2WREdNfuxfilkAnkw0tHSbEdtOCzzwD7RTQxbq7DSnD569gh9yZo5tTr4ngeNdd/WWpPkt2NXV1ARXME1AClAM66EdXQJMugG6CESat6Rrks2v+QJk6y+ELvuN9g47obwSw4qoRM+dou9xXEulXsZDlbczXz6dM0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWdNkgik; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rACunMhBu9OvsPLzihiSQBayIeiaA/6HMgDqzOr45eDDLHdh3ox6NT3bLwTLNiEwHFz1blpUN7G/kZV3a1+oqCW4GCIk1bC/CkSyi1w++E8AcniAW4OlkvDjqljtFSsAOtqBLgpcWOR5an5QbAN5YWe7yexm7t6Nbl+dmvdQi24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uS1rUrgB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWdNkgik"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CABAC2BCAF;
-	Tue, 17 Mar 2026 17:12:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uS1rUrgB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D1C6C19424;
+	Tue, 17 Mar 2026 17:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767572;
-	bh=WeH1oipswextXQkQYD6+nlgXctFCjeAYxTxF6Yf6bz4=;
+	s=korg; t=1773767577;
+	bh=HfLz+0HkF1WCPuDP3HsDHjANpCHDPoFBwLyBeb4lp88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWdNkgikf0abLR+dakKFlAVpBdtNKq1nu4VtWW0kxDo3hIK4WSpk+l5/7X3BHbALz
-	 u4DKruqz5807Vcv2Zs7lL5oklF5S4IOroEflZxAlfUpQIBtctdtOsfyDSvfpkFteht
-	 qB/0O/yYG5At2TxK8jkzRiDBnZoZzGWJKoukYP5Q=
+	b=uS1rUrgBFbDzxAeoztLj0aJL4HyYgIz8hQ++QR8OUXVO3zAuyCjbzuOWspVG/kgs9
+	 CdNhP1MnDy0P5fxB9FCgUF1JHurkbANtpqZiHGSuLq5nfOxqcbcWZOHvXlYLZhRe8r
+	 dhad+Hm7/qkkpkVVwtmPqW5I2isntIcM8k3iLyCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,11 +30,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Jann Horn <jannh@google.com>,
 	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
 	"Liam R. Howlett" <Liam.Howlett@oracle.com>
-Subject: [PATCH 6.18 115/333] rust_binder: check ownership before using vma
-Date: Tue, 17 Mar 2026 17:32:24 +0100
-Message-ID: <20260317163003.632655919@linuxfoundation.org>
+Subject: [PATCH 6.18 116/333] rust_binder: avoid reading the written value in offsets array
+Date: Tue, 17 Mar 2026 17:32:25 +0100
+Message-ID: <20260317163003.669295874@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -55,176 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Alice Ryhl <aliceryhl@google.com>
 
-commit 8ef2c15aeae07647f530d30f6daaf79eb801bcd1 upstream.
+commit 4cb9e13fec0de7c942f5f927469beb8e48ddd20f upstream.
 
-When installing missing pages (or zapping them), Rust Binder will look
-up the vma in the mm by address, and then call vm_insert_page (or
-zap_page_range_single). However, if the vma is closed and replaced with
-a different vma at the same address, this can lead to Rust Binder
-installing pages into the wrong vma.
+When sending a transaction, its offsets array is first copied into the
+target proc's vma, and then the values are read back from there. This is
+normally fine because the vma is a read-only mapping, so the target
+process cannot change the value under us.
 
-By installing the page into a writable vma, it becomes possible to write
-to your own binder pages, which are normally read-only. Although you're
-not supposed to be able to write to those pages, the intent behind the
-design of Rust Binder is that even if you get that ability, it should not
-lead to anything bad. Unfortunately, due to another bug, that is not the
-case.
+However, if the target process somehow gains the ability to write to its
+own vma, it could change the offset before it's read back, causing the
+kernel to misinterpret what the sender meant. If the sender happens to
+send a payload with a specific shape, this could in the worst case lead
+to the receiver being able to privilege escalate into the sender.
 
-To fix this, store a pointer in vm_private_data and check that the vma
-returned by vma_lookup() has the right vm_ops and vm_private_data before
-trying to use the vma. This should ensure that Rust Binder will refuse
-to interact with any other VMA. The plan is to introduce more vma
-abstractions to avoid this unsafe access to vm_ops and vm_private_data,
-but for now let's start with the simplest possible fix.
-
-C Binder performs the same check in a slightly different way: it
-provides a vm_ops->close that sets a boolean to true, then checks that
-boolean after calling vma_lookup(), but this is more fragile
-than the solution in this patch. (We probably still want to do both, but
-the vm_ops->close callback will be added later as part of the follow-up
-vma API changes.)
-
-It's still possible to remap the vma so that pages appear in the right
-vma, but at the wrong offset, but this is a separate issue and will be
-fixed when Rust Binder gets a vm_ops->close callback.
+The intent is that gaining the ability to change the read-only vma of
+your own process should not be exploitable, so remove this TOCTOU read
+even though it's unexploitable without another Binder bug.
 
 Cc: stable <stable@kernel.org>
 Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
 Reported-by: Jann Horn <jannh@google.com>
 Reviewed-by: Jann Horn <jannh@google.com>
 Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
 Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Link: https://patch.msgid.link/20260218-binder-vma-check-v2-1-60f9d695a990@google.com
+Link: https://patch.msgid.link/20260218-binder-vma-check-v2-2-60f9d695a990@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/page_range.rs |   83 ++++++++++++++++++++++++++---------
- 1 file changed, 63 insertions(+), 20 deletions(-)
+ drivers/android/binder/thread.rs |   17 ++++++-----------
+ 1 file changed, 6 insertions(+), 11 deletions(-)
 
---- a/drivers/android/binder/page_range.rs
-+++ b/drivers/android/binder/page_range.rs
-@@ -142,6 +142,30 @@ pub(crate) struct ShrinkablePageRange {
-     _pin: PhantomPinned,
- }
+--- a/drivers/android/binder/thread.rs
++++ b/drivers/android/binder/thread.rs
+@@ -1018,12 +1018,9 @@ impl Thread {
  
-+// We do not define any ops. For now, used only to check identity of vmas.
-+static BINDER_VM_OPS: bindings::vm_operations_struct = pin_init::zeroed();
-+
-+// To ensure that we do not accidentally install pages into or zap pages from the wrong vma, we
-+// check its vm_ops and private data before using it.
-+fn check_vma(vma: &virt::VmaRef, owner: *const ShrinkablePageRange) -> Option<&virt::VmaMixedMap> {
-+    // SAFETY: Just reading the vm_ops pointer of any active vma is safe.
-+    let vm_ops = unsafe { (*vma.as_ptr()).vm_ops };
-+    if !ptr::eq(vm_ops, &BINDER_VM_OPS) {
-+        return None;
-+    }
-+
-+    // SAFETY: Reading the vm_private_data pointer of a binder-owned vma is safe.
-+    let vm_private_data = unsafe { (*vma.as_ptr()).vm_private_data };
-+    // The ShrinkablePageRange is only dropped when the Process is dropped, which only happens once
-+    // the file's ->release handler is invoked, which means the ShrinkablePageRange outlives any
-+    // VMA associated with it, so there can't be any false positives due to pointer reuse here.
-+    if !ptr::eq(vm_private_data, owner.cast()) {
-+        return None;
-+    }
-+
-+    vma.as_mixedmap_vma()
-+}
-+
- struct Inner {
-     /// Array of pages.
-     ///
-@@ -308,6 +332,18 @@ impl ShrinkablePageRange {
-         inner.size = num_pages;
-         inner.vma_addr = vma.start();
+         // Copy offsets if there are any.
+         if offsets_size > 0 {
+-            {
+-                let mut reader =
+-                    UserSlice::new(UserPtr::from_addr(trd_data_ptr.offsets as _), offsets_size)
+-                        .reader();
+-                alloc.copy_into(&mut reader, aligned_data_size, offsets_size)?;
+-            }
++            let mut offsets_reader =
++                UserSlice::new(UserPtr::from_addr(trd_data_ptr.offsets as _), offsets_size)
++                    .reader();
  
-+        // This pointer is only used for comparison - it's not dereferenced.
-+        //
-+        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
-+        // `vm_private_data`.
-+        unsafe {
-+            (*vma.as_ptr()).vm_private_data = ptr::from_ref(self).cast_mut().cast::<c_void>()
-+        };
-+
-+        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
-+        // `vm_ops`.
-+        unsafe { (*vma.as_ptr()).vm_ops = &BINDER_VM_OPS };
-+
-         Ok(num_pages)
-     }
+             let offsets_start = aligned_data_size;
+             let offsets_end = aligned_data_size + offsets_size;
+@@ -1044,11 +1041,9 @@ impl Thread {
+                 .step_by(size_of::<u64>())
+                 .enumerate()
+             {
+-                let offset: usize = view
+-                    .alloc
+-                    .read::<u64>(index_offset)?
+-                    .try_into()
+-                    .map_err(|_| EINVAL)?;
++                let offset = offsets_reader.read::<u64>()?;
++                view.alloc.write(index_offset, &offset)?;
++                let offset: usize = offset.try_into().map_err(|_| EINVAL)?;
  
-@@ -399,22 +435,24 @@ impl ShrinkablePageRange {
-         //
-         // Using `mmput_async` avoids this, because then the `mm` cleanup is instead queued to a
-         // workqueue.
--        MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
--            .mmap_read_lock()
--            .vma_lookup(vma_addr)
--            .ok_or(ESRCH)?
--            .as_mixedmap_vma()
--            .ok_or(ESRCH)?
--            .vm_insert_page(user_page_addr, &new_page)
--            .inspect_err(|err| {
--                pr_warn!(
--                    "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
--                    user_page_addr,
--                    vma_addr,
--                    i,
--                    err
--                )
--            })?;
-+        check_vma(
-+            MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
-+                .mmap_read_lock()
-+                .vma_lookup(vma_addr)
-+                .ok_or(ESRCH)?,
-+            self,
-+        )
-+        .ok_or(ESRCH)?
-+        .vm_insert_page(user_page_addr, &new_page)
-+        .inspect_err(|err| {
-+            pr_warn!(
-+                "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
-+                user_page_addr,
-+                vma_addr,
-+                i,
-+                err
-+            )
-+        })?;
- 
-         let inner = self.lock.lock();
- 
-@@ -667,12 +705,15 @@ unsafe extern "C" fn rust_shrink_free_pa
-     let mmap_read;
-     let mm_mutex;
-     let vma_addr;
-+    let range_ptr;
- 
-     {
-         // CAST: The `list_head` field is first in `PageInfo`.
-         let info = item as *mut PageInfo;
-         // SAFETY: The `range` field of `PageInfo` is immutable.
--        let range = unsafe { &*((*info).range) };
-+        range_ptr = unsafe { (*info).range };
-+        // SAFETY: The `range` outlives its `PageInfo` values.
-+        let range = unsafe { &*range_ptr };
- 
-         mm = match range.mm.mmget_not_zero() {
-             Some(mm) => MmWithUser::into_mmput_async(mm),
-@@ -717,9 +758,11 @@ unsafe extern "C" fn rust_shrink_free_pa
-     // SAFETY: The lru lock is locked when this method is called.
-     unsafe { bindings::spin_unlock(&raw mut (*lru).lock) };
- 
--    if let Some(vma) = mmap_read.vma_lookup(vma_addr) {
--        let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
--        vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
-+    if let Some(unchecked_vma) = mmap_read.vma_lookup(vma_addr) {
-+        if let Some(vma) = check_vma(unchecked_vma, range_ptr) {
-+            let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
-+            vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
-+        }
-     }
- 
-     drop(mmap_read);
+                 if offset < end_of_previous_object || !is_aligned(offset, size_of::<u32>()) {
+                     pr_warn!("Got transaction with invalid offset.");
 
 
