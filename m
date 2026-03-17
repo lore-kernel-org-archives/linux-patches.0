@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F1EB2FFDEA;
-	Tue, 17 Mar 2026 17:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DDFC2EF67A;
+	Tue, 17 Mar 2026 17:20:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768033; cv=none; b=sWp9b4bmUXp3K71/C8o6zVxPFhTMnuC9FMzrjDT+IvZsrgswM1F0564AprLRE5SekqH3gbJZXWmhSHeIUTqMsz0+VWxP+WLBCBSadAOfS18X9qWAAcgd4ndV49N+lTDwp/elcnHG7g/MTS1RgRL0NXEUMpCpttxf0tQ4QFXDZus=
+	t=1773768039; cv=none; b=sGYfQ22SVgxf/9GGAmKQgkS/fdxsDomn4DA3UnaEJNjxN1P4tYlgNU4K1iaGDxEnfYWc7z/205ByhTrqYsWIwcI9sLAzxh/0pbLalX293uvZRnpNOQvlkQoswo0WxaQoyuBL5UplnG3KMDs9TaQ+34Y1zyHlXEBKQaRL16CBMT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768033; c=relaxed/simple;
-	bh=9GpKwjmY5KYK2D2y8pDifVM6FSwBSl0/WeVGBst86t4=;
+	s=arc-20240116; t=1773768039; c=relaxed/simple;
+	bh=Vh2w5K8i0x3QTf89oKe5qdj5N7EroNCemmRqmRwSvSI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gM0fRrqusq7j9RcqagEObmpArwcrFSGK5gV6gl7E1Ctrj6LHVNyDOQ9YdcwOCJLiGGtfrrlLWLV5CQXGCmyR7gvWfVNuh/A/tBl6wWSCgJ9hoj6uxqCUG2GS+VyMqZx8lMf2dDtEhu+33meFE9mMDz7Cow1UsOG0+czhkYSRfkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E+H4hrrT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJsaeu4cnzII3nLPepw5tM4skajZkU4hvszpecCF1etPNFt2itMR+AEB2ZWXJJqXipw/oA2Td27KEWjhkLv6f1WUvUUZhpNgj8/TokdwbqElCNk/D9eEdVbFk8TBAQ4d8mXTMAW3qrbfIhLE4fF1VL4Yjr2DFjca/KMT/WfpIow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x53+ZxvV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E+H4hrrT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE02C4CEF7;
-	Tue, 17 Mar 2026 17:20:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x53+ZxvV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C7A4C19424;
+	Tue, 17 Mar 2026 17:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768033;
-	bh=9GpKwjmY5KYK2D2y8pDifVM6FSwBSl0/WeVGBst86t4=;
+	s=korg; t=1773768039;
+	bh=Vh2w5K8i0x3QTf89oKe5qdj5N7EroNCemmRqmRwSvSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E+H4hrrTqXDtgaJhfxRQ7rgVdUSVwDxKigbv1ZFKwojSjBaxrEJYa/nkCGt22vin7
-	 hu2tMWARX5YSnaH50ZFJEwzaOa7LbaCaQkfzPUXVROLBUkiV4LGBAG+Kw8hhK7LsI5
-	 Gf1rbQ1RkDt6n91gsHyPlTkN9FebpGwAY82kmeOc=
+	b=x53+ZxvV+B0tZNGG5DystYBqE3qt9Cs/YczhxC/Xy/4b7N4QntOImUZS/jna5Ml2h
+	 P4VgH9t/N+8v/a1R43HXKTRrdPvKiPUDcrFpE91HTEKcviGApjb0m6gh7f5NiB0xWO
+	 tDD6j89nee3JObVfbVNTcyJTEDs1NZ/UdNyR66XY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zw Tang <shicenci@gmail.com>,
-	Harry Yoo <harry.yoo@oracle.com>,
-	"Vlastimil Babka (SUSE)" <vbabka@kernel.org>
-Subject: [PATCH 6.18 209/333] mm/slab: fix an incorrect check in obj_exts_alloc_size()
-Date: Tue, 17 Mar 2026 17:33:58 +0100
-Message-ID: <20260317163007.113797355@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Huiwen He <hehuiwen@kylinos.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 218/333] tracing: Fix syscall events activation by ensuring refcount hits zero
+Date: Tue, 17 Mar 2026 17:34:07 +0100
+Message-ID: <20260317163007.449574806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,60 +52,119 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Harry Yoo <harry.yoo@oracle.com>
+From: Huiwen He <hehuiwen@kylinos.cn>
 
-commit 8dafa9f5900c4855a65dbfee51e3bd00636deee1 upstream.
+commit 0a663b764dbdf135a126284f454c9f01f95a87d4 upstream.
 
-obj_exts_alloc_size() prevents recursive allocation of slabobj_ext
-array from the same cache, to avoid creating slabs that are never freed.
+When multiple syscall events are specified in the kernel command line
+(e.g., trace_event=syscalls:sys_enter_openat,syscalls:sys_enter_close),
+they are often not captured after boot, even though they appear enabled
+in the tracing/set_event file.
 
-There is one mistake that returns the original size when memory
-allocation profiling is disabled. The assumption was that
-memcg-triggered slabobj_ext allocation is always served from
-KMALLOC_CGROUP type. But this is wrong [1]: when the caller specifies
-both __GFP_RECLAIMABLE and __GFP_ACCOUNT with SLUB_TINY enabled, the
-allocation is served from normal kmalloc. This is because kmalloc_type()
-prioritizes __GFP_RECLAIMABLE over __GFP_ACCOUNT, and SLUB_TINY aliases
-KMALLOC_RECLAIM with KMALLOC_NORMAL.
+The issue stems from how syscall events are initialized. Syscall
+tracepoints require the global reference count (sys_tracepoint_refcount)
+to transition from 0 to 1 to trigger the registration of the syscall
+work (TIF_SYSCALL_TRACEPOINT) for tasks, including the init process (pid 1).
 
-As a result, the recursion guard is bypassed and the problematic slabs
-can be created. Fix this by removing the mem_alloc_profiling_enabled()
-check entirely. The remaining is_kmalloc_normal() check is still
-sufficient to detect whether the cache is of KMALLOC_NORMAL type and
-avoid bumping the size if it's not.
+The current implementation of early_enable_events() with disable_first=true
+used an interleaved sequence of "Disable A -> Enable A -> Disable B -> Enable B".
+If multiple syscalls are enabled, the refcount never drops to zero,
+preventing the 0->1 transition that triggers actual registration.
 
-Without SLUB_TINY, no functional change intended.
-With SLUB_TINY, allocations with __GFP_ACCOUNT|__GFP_RECLAIMABLE
-now allocate a larger array if the sizes equal.
+Fix this by splitting early_enable_events() into two distinct phases:
+1. Disable all events specified in the buffer.
+2. Enable all events specified in the buffer.
 
-Reported-by: Zw Tang <shicenci@gmail.com>
-Fixes: 280ea9c3154b ("mm/slab: avoid allocating slabobj_ext array from its own slab")
-Closes: https://lore.kernel.org/linux-mm/CAPHJ_VKuMKSke8b11AZQw1PTSFN4n2C0gFxC6xGOG0ZLHgPmnA@mail.gmail.com [1]
+This ensures the refcount hits zero before re-enabling, allowing syscall
+events to be properly activated during early boot.
+
+The code is also refactored to use a helper function to avoid logic
+duplication between the disable and enable phases.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Harry Yoo <harry.yoo@oracle.com>
-Link: https://patch.msgid.link/20260309072219.22653-1-harry.yoo@oracle.com
-Tested-by: Zw Tang <shicenci@gmail.com>
-Signed-off-by: Vlastimil Babka (SUSE) <vbabka@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260224023544.1250787-1-hehuiwen@kylinos.cn
+Fixes: ce1039bd3a89 ("tracing: Fix enabling of syscall events on the command line")
+Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/slub.c |    7 -------
- 1 file changed, 7 deletions(-)
+ kernel/trace/trace_events.c |   52 +++++++++++++++++++++++++++++++-------------
+ 1 file changed, 37 insertions(+), 15 deletions(-)
 
---- a/mm/slub.c
-+++ b/mm/slub.c
-@@ -2113,13 +2113,6 @@ static inline size_t obj_exts_alloc_size
- 	size_t sz = sizeof(struct slabobj_ext) * slab->objects;
- 	struct kmem_cache *obj_exts_cache;
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -4513,26 +4513,22 @@ static __init int event_trace_memsetup(v
+ 	return 0;
+ }
  
--	/*
--	 * slabobj_ext array for KMALLOC_CGROUP allocations
--	 * are served from KMALLOC_NORMAL caches.
--	 */
--	if (!mem_alloc_profiling_enabled())
--		return sz;
+-__init void
+-early_enable_events(struct trace_array *tr, char *buf, bool disable_first)
++/*
++ * Helper function to enable or disable a comma-separated list of events
++ * from the bootup buffer.
++ */
++static __init void __early_set_events(struct trace_array *tr, char *buf, bool enable)
+ {
+ 	char *token;
+-	int ret;
 -
- 	if (sz > KMALLOC_MAX_CACHE_SIZE)
- 		return sz;
+-	while (true) {
+-		token = strsep(&buf, ",");
+-
+-		if (!token)
+-			break;
  
++	while ((token = strsep(&buf, ","))) {
+ 		if (*token) {
+-			/* Restarting syscalls requires that we stop them first */
+-			if (disable_first)
++			if (enable) {
++				if (ftrace_set_clr_event(tr, token, 1))
++					pr_warn("Failed to enable trace event: %s\n", token);
++			} else {
+ 				ftrace_set_clr_event(tr, token, 0);
+-
+-			ret = ftrace_set_clr_event(tr, token, 1);
+-			if (ret)
+-				pr_warn("Failed to enable trace event: %s\n", token);
++			}
+ 		}
+ 
+ 		/* Put back the comma to allow this to be called again */
+@@ -4541,6 +4537,32 @@ early_enable_events(struct trace_array *
+ 	}
+ }
+ 
++/**
++ * early_enable_events - enable events from the bootup buffer
++ * @tr: The trace array to enable the events in
++ * @buf: The buffer containing the comma separated list of events
++ * @disable_first: If true, disable all events in @buf before enabling them
++ *
++ * This function enables events from the bootup buffer. If @disable_first
++ * is true, it will first disable all events in the buffer before enabling
++ * them.
++ *
++ * For syscall events, which rely on a global refcount to register the
++ * SYSCALL_WORK_SYSCALL_TRACEPOINT flag (especially for pid 1), we must
++ * ensure the refcount hits zero before re-enabling them. A simple
++ * "disable then enable" per-event is not enough if multiple syscalls are
++ * used, as the refcount will stay above zero. Thus, we need a two-phase
++ * approach: disable all, then enable all.
++ */
++__init void
++early_enable_events(struct trace_array *tr, char *buf, bool disable_first)
++{
++	if (disable_first)
++		__early_set_events(tr, buf, false);
++
++	__early_set_events(tr, buf, true);
++}
++
+ static __init int event_trace_enable(void)
+ {
+ 	struct trace_array *tr = top_trace_array();
 
 
