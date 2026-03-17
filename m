@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941F03D6698;
-	Tue, 17 Mar 2026 16:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87CF03EBF20;
+	Tue, 17 Mar 2026 16:39:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765557; cv=none; b=N05FD/21CskBvdBCAeaYMeSkHJVcdEJ4mNeA0LXV4SccvMOdz0xkvPPeOF22czBHHT5JuPBzkxaAN2NQfew1HREGXA2tUWTPpCR6KBdopN2g9CPCwX4wcEiiU3eHxUgDWwoVteunbB2akvf5Ig1bdZ7naDCB8+hcUSIDlCNna8U=
+	t=1773765561; cv=none; b=fZbf6F+XftLurQLuSl+tqKy7MG1H6S7qOHlg+P/mzpKo9AzaUBBHDzkik2xRf9KbHLGuH06tVw3I36eZ/Bi3Hey16CjB6KxllKZ6uFJMZPQfN6nIoMBjBWKlmvG4NJR9rLK0v2l4LSm6B3fZqj5jT1PRXxmpEKVzJb+P+SdZdDg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765557; c=relaxed/simple;
-	bh=bi74JSJVt8qA2ky0uWLrI2qDjvnJShCsMzzQr/1IFu8=;
+	s=arc-20240116; t=1773765561; c=relaxed/simple;
+	bh=Lxf4Gqlbk2ATcI4J/JyGGOmgB7WiAyhNGg1oM8OZTBc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UIeyy5yAM34sPg+G84jOIuN7D9DJr0RgS1w0IWGg8jzZ7c8XMbEPOegQycRtjm4VRQfP5rad5NZ1QG+hWOLEp2BB9LeTQFhOlBw/Q468Q+twMWIiJaMt0FN2XHJESOu7qPNhJtuHJ4CrWiXBkqP5Ty5gh4qAaB3mfdEhfeDTBIQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SW29+9h3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AXarIr8XNnCJHJUcMHbqYH0rONdI4o5P5SWAlqpRdrk8tzgTqGpn0cE5IZJKp0HPNoefDyFm4ZdZgKCsIil0Vd/4cyhyeF3VYBRFEVtRAdwr8p280/U1w5FLxt7HDatEszkn6oqbZdW/HxON+uHc7Wz9Alm/Smxfa6EO8FiRKew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W3C3+H5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SW29+9h3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED374C4CEF7;
-	Tue, 17 Mar 2026 16:39:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W3C3+H5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3D18C2BC86;
+	Tue, 17 Mar 2026 16:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765557;
-	bh=bi74JSJVt8qA2ky0uWLrI2qDjvnJShCsMzzQr/1IFu8=;
+	s=korg; t=1773765561;
+	bh=Lxf4Gqlbk2ATcI4J/JyGGOmgB7WiAyhNGg1oM8OZTBc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SW29+9h3Sx8ABxa/xiudl9PmVhFJQgtHmFeWxVsPSPOIjwHAha3ZVfhj6cOQr1645
-	 z3qTQfjgQhCywQ72tvaB46lBwyDvcfCjbqxZ9OJC4Z3DmUAwCCRcFUqjcaByoZVotU
-	 o1ay39pcGpvFe8Gp9H2hK8cvL+chSfMQe/ZG8qlY=
+	b=W3C3+H5uOCcfD168dGTYEeY8d5cn445Wc3cPfKiQq8k10bOWtC5DzD8tebzJTHfWk
+	 uWrjEPIpAFH9jA7MWOP8l71JXaOKQfR6cZ2NfZtDJCR4JtrQOTUPVQ1w4s14Hl5BjM
+	 xkH/7sLfi6YPRMmBdMF9/RMwfDVvTrmaYk4S4O3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Wang <kevinyang.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 038/378] drm/amd/pm: add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v13
-Date: Tue, 17 Mar 2026 17:29:55 +0100
-Message-ID: <20260317163008.385706674@linuxfoundation.org>
+Subject: [PATCH 6.19 039/378] drm/amd/pm: add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v14
+Date: Tue, 17 Mar 2026 17:29:56 +0100
+Message-ID: <20260317163008.423362271@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,48 +53,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Wang <kevinyang.wang@amd.com>
 
-[ Upstream commit cb47c882c31334aadc13ace80781728ed22a05ee ]
+[ Upstream commit 9d4837a26149355ffe3a1f80de80531eafdd3353 ]
 
-add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v13.0.0/13.0.7
+add missing od setting PP_OD_FEATURE_ZERO_FAN_BIT for smu v14.0.2/14.0.3
 
-Fixes: cfffd980bf21 ("drm/amd/pm: add zero RPM OD setting support for SMU13")
+Fixes: 9710b84e2a6a ("drm/amd/pm: add overdrive support on smu v14.0.2/3")
 Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5018
 Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
 Acked-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 576a10797b607ee9e4068218daf367b481564120)
+(cherry picked from commit 1b5cf07d80bb16d1593579ccdb23f08ea4262c14)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 3 ++-
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index eaeff6a9bc50f..e8f8c3bae0ab0 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -2290,7 +2290,8 @@ static int smu_v13_0_0_restore_user_od_settings(struct smu_context *smu)
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+index d7642d388bc38..fa535f43876b5 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu14/smu_v14_0_2_ppt.c
+@@ -2413,7 +2413,8 @@ static int smu_v14_0_2_restore_user_od_settings(struct smu_context *smu)
  	user_od_table->OverDriveTable.FeatureCtrlMask = BIT(PP_OD_FEATURE_GFXCLK_BIT) |
  							BIT(PP_OD_FEATURE_UCLK_BIT) |
  							BIT(PP_OD_FEATURE_GFX_VF_CURVE_BIT) |
 -							BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
 +							BIT(PP_OD_FEATURE_FAN_CURVE_BIT) |
 +							BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 	res = smu_v13_0_0_upload_overdrive_table(smu, user_od_table);
- 	user_od_table->OverDriveTable.FeatureCtrlMask = 0;
- 	if (res == 0)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-index a3fc35b9011e4..3c3393297c630 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -2276,7 +2276,8 @@ static int smu_v13_0_7_restore_user_od_settings(struct smu_context *smu)
- 	user_od_table->OverDriveTable.FeatureCtrlMask = BIT(PP_OD_FEATURE_GFXCLK_BIT) |
- 							BIT(PP_OD_FEATURE_UCLK_BIT) |
- 							BIT(PP_OD_FEATURE_GFX_VF_CURVE_BIT) |
--							BIT(PP_OD_FEATURE_FAN_CURVE_BIT);
-+							BIT(PP_OD_FEATURE_FAN_CURVE_BIT) |
-+							BIT(PP_OD_FEATURE_ZERO_FAN_BIT);
- 	res = smu_v13_0_7_upload_overdrive_table(smu, user_od_table);
+ 	res = smu_v14_0_2_upload_overdrive_table(smu, user_od_table);
  	user_od_table->OverDriveTable.FeatureCtrlMask = 0;
  	if (res == 0)
 -- 
