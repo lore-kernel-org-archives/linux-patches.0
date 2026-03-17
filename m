@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D33C1ACEDE;
-	Tue, 17 Mar 2026 17:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A53426FD9B;
+	Tue, 17 Mar 2026 17:14:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767674; cv=none; b=NoLgYXqdL4QxP9YzhTjqy+WbtcI+7R1BB8BNV3apIzgG+cOHRd7GoZGZ/dTGYKfkyYq4n5KJUres8sDZXwrblbF6myRQmztGeFIpFWiUhHnQGTvG0OHfuTDXw9k+FWAIWMhZprRkis/CXPHwr/GBE4+CmHEtmbzymWXGq/xVEU8=
+	t=1773767684; cv=none; b=msc5TciXnfZSPjhK8fuD27OYeSYjXSOI1yez81WSVDdnIVhWOzNqn//pLv+vmWNxAlOtewUn4CVaQkETbq/S19Q8BqD6rpUfxltSi2DB+Yxghp61lhSobWRLhLA/m43OURS9lNd5rPAsrFdoJanSWy9Ue+tQrOoCmGiCqOEUqJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767674; c=relaxed/simple;
-	bh=JrAS3a7N/zH57GERoGgWsRSucoQEVyf39WH6eXlaCjQ=;
+	s=arc-20240116; t=1773767684; c=relaxed/simple;
+	bh=sRV24jaom7yU2b6xCCmbLIstivvWhsC7iNV0vVROVpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lRG7FMst4DbYeccGYyAP0wLGQjpIosCUYCiwesLFTXBvV1F1x8wCR31RoqLgHljb+unMjskyGd/dtTTOgNSbvk9NI/u2lMF1RQ+yYqW3KU36u3zjhzgMOLQwuL51EPH7bYFxpOLzCdKJPaeeLAqbMcgOadd2sE3sQFWx8KIWHww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PCGFU+c0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rTWmcS/4TAM9hwT5elgEFzMbDD8+FltJ9E2yLLL10v4we6hUy5qoDyVzNxUTOQY0lJ3Gthqy3UjUBDZNDytdLC6L58pshbcONBgqrduckIqxudBWUJ1yrJrGpuKu8LdnSBxjmvoOIdsGrW5uiJRq+ZSHF1EHcHAml3Nt1FBTHII=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jjFMtpUm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PCGFU+c0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1FAC4CEF7;
-	Tue, 17 Mar 2026 17:14:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jjFMtpUm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA06BC4CEF7;
+	Tue, 17 Mar 2026 17:14:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767674;
-	bh=JrAS3a7N/zH57GERoGgWsRSucoQEVyf39WH6eXlaCjQ=;
+	s=korg; t=1773767684;
+	bh=sRV24jaom7yU2b6xCCmbLIstivvWhsC7iNV0vVROVpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PCGFU+c09ujEIZLLm1QMDvTvmlPmstA9YtWweH0kPDxYGwXF3Vs/Gq0gbskYo+RJn
-	 g6BH4IwAO8kYsoR6nzGfnqW2uM7guGl04xT1IQ90iKi406consfG9lcfq1ntGbkbSO
-	 5wrJg0IcOWgJebjMm1EdXsttEa4N/sOjasEDKY+U=
+	b=jjFMtpUmRne73mTcUZpZVwOwRMEDVYF0btpJPZeZntG+rUS2uA6hjCD93l5KD+FVp
+	 RITWganEXAh4eJFhauNeQdZUYManhRPUHa4GJvnFJVJCe0nPS9ar5xXX4DTjTVgW70
+	 0dMwecVWcwcYv/EAxmD1nPZu4G9jwb/zrCCy7WkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 134/333] usb: core: dont power off roothub PHYs if phy_set_mode() fails
-Date: Tue, 17 Mar 2026 17:32:43 +0100
-Message-ID: <20260317163004.331421321@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.18 135/333] usb: cdc-acm: Restore CAP_BRK functionnality to CH343
+Date: Tue, 17 Mar 2026 17:32:44 +0100
+Message-ID: <20260317163004.368552282@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,50 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit e293015ba76eb96ce4ebed7e3b2cb1a7d319f3e9 upstream.
+commit 14ae24cba291bddfdc296bbcbfd00cd09d0498ef upstream.
 
-Remove the error path from the usb_phy_roothub_set_mode() function.
-The code is clearly wrong, because phy_set_mode() calls can't be
-balanced with phy_power_off() calls.
+The CH343 USB/serial adapter is as buggy as it is popular (very).
+One of its quirks is that despite being capable of signalling a
+BREAK condition, it doesn't advertise it.
 
-Additionally, the usb_phy_roothub_set_mode() function is called only
-from usb_add_hcd() before it powers on the PHYs, so powering off those
-makes no sense anyway.
+This used to work nonetheless until 66aad7d8d3ec5 ("usb: cdc-acm:
+return correct error code on unsupported break") applied some
+reasonable restrictions, preventing breaks from being emitted on
+devices that do not advertise CAP_BRK.
 
-Presumably, the code is copy-pasted from the phy_power_on() function
-without adjusting the error handling.
+Add a quirk for this particular device, so that breaks can still
+be produced on some of my machines attached to my console server.
 
-Cc: stable@vger.kernel.org # v5.1+
-Fixes: b97a31348379 ("usb: core: comply to PHY framework")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://patch.msgid.link/20260218-usb-phy-poweroff-fix-v1-1-66e6831e860e@gmail.com
+Fixes: 66aad7d8d3ec5 ("usb: cdc-acm: return correct error code on unsupported break")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable <stable@kernel.org>
+Cc: Oliver Neukum <oneukum@suse.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260301124440.1192752-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/phy.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/usb/class/cdc-acm.c |    5 +++++
+ drivers/usb/class/cdc-acm.h |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/usb/core/phy.c
-+++ b/drivers/usb/core/phy.c
-@@ -200,16 +200,10 @@ int usb_phy_roothub_set_mode(struct usb_
- 	list_for_each_entry(roothub_entry, head, list) {
- 		err = phy_set_mode(roothub_entry->phy, mode);
- 		if (err)
--			goto err_out;
-+			return err;
- 	}
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1379,6 +1379,8 @@ made_compressed_probe:
+ 		acm->ctrl_caps = h.usb_cdc_acm_descriptor->bmCapabilities;
+ 	if (quirks & NO_CAP_LINE)
+ 		acm->ctrl_caps &= ~USB_CDC_CAP_LINE;
++	if (quirks & MISSING_CAP_BRK)
++		acm->ctrl_caps |= USB_CDC_CAP_BRK;
+ 	acm->ctrlsize = ctrlsize;
+ 	acm->readsize = readsize;
+ 	acm->rx_buflimit = num_rx_buf;
+@@ -2002,6 +2004,9 @@ static const struct usb_device_id acm_id
+ 	.driver_info = IGNORE_DEVICE,
+ 	},
  
- 	return 0;
--
--err_out:
--	list_for_each_entry_continue_reverse(roothub_entry, head, list)
--		phy_power_off(roothub_entry->phy);
--
--	return err;
- }
- EXPORT_SYMBOL_GPL(usb_phy_roothub_set_mode);
- 
++	/* CH343 supports CAP_BRK, but doesn't advertise it */
++	{ USB_DEVICE(0x1a86, 0x55d3), .driver_info = MISSING_CAP_BRK, },
++
+ 	/* control interfaces without any protocol set */
+ 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
+ 		USB_CDC_PROTO_NONE) },
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -113,3 +113,4 @@ struct acm {
+ #define CLEAR_HALT_CONDITIONS		BIT(5)
+ #define SEND_ZERO_PACKET		BIT(6)
+ #define DISABLE_ECHO			BIT(7)
++#define MISSING_CAP_BRK			BIT(8)
 
 
