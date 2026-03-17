@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FDD32116F6;
-	Tue, 17 Mar 2026 17:11:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE4926FD9B;
+	Tue, 17 Mar 2026 17:11:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767512; cv=none; b=bqiEruw21qlAPg89NWf96dkTuQmEguczLi86hGHCCob6XS7FIS1W0M0FWHsbWgl6AMeDkmcUaeWLJxAn9/LiD5pX2bQjqyP9iBVEAtuoQh5KrpS+eCBUSKDd67N2k2VcVwuLC5sto035qyfNJuQMtpy6B1GE3lhuCZLtLWB3FBs=
+	t=1773767516; cv=none; b=SkYf5hkd+ERG5yaErqS98DVozXGAuNKVazXc1ugN+Km2zyKtz9wG0eVGOf0+AYt9EJju7fN8wOUPQx5799yx/btfjn9aOb4ILHV1X54B6pqoY5QJj1L+Fxb57lsRYmU2y5aoxSUwvzqqWxJOLw/QeRf+zHsGqjrk+OlEKztv2/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767512; c=relaxed/simple;
-	bh=pja1PipAzKHntvkg5euYJ4wI6YRy3w0ZWyQ9ikDW00w=;
+	s=arc-20240116; t=1773767516; c=relaxed/simple;
+	bh=7biJQf+letdU5ffW1U7ceOu7gLQmt1+obeGazCOvYUk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JcSHZ8eRv/IacjsDOKB6ddeU1IKv24d2d8whhyDpKaDZz2L0yj7EmwHZ6cRECTY1SWYi9eb9UXBl0ujI5GcJYioH2Rq701VxCnfPOTmG16xvsmFOgdQfGaCMrezdH/MbW8J6JPWR7bMYKcXT5F63vYdwl8uL/+imjj5szg40c7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2YhUkSz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JXjqPEGUlRgHKVS6peeI1JmaMpC/2s0MpHRWJNOwKUG9X4Q3X/WxIXr3ouz2LiBThZxWtvl6Flzn3SC31Iihcz2C62TA9TGSRs+rBlCn0mejexLgwuzYVf9eqit5LPw8gaOCr1Q8/a/ID1r17tLc//KpxWX2J5zAuVO1VPSXXbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LeDQvDzM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2YhUkSz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D22C4CEF7;
-	Tue, 17 Mar 2026 17:11:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LeDQvDzM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F080BC4CEF7;
+	Tue, 17 Mar 2026 17:11:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767512;
-	bh=pja1PipAzKHntvkg5euYJ4wI6YRy3w0ZWyQ9ikDW00w=;
+	s=korg; t=1773767516;
+	bh=7biJQf+letdU5ffW1U7ceOu7gLQmt1+obeGazCOvYUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2YhUkSzJ+IdVPYxyBqCk597xoDe0zZCc02j3I0sD68tTPgKw6fZFImyQvT24UJnC
-	 O72MD193eg0vALFyCQTavDFXv0dJIpfPZTpg9f86ofoVuRIH3M2Mc4oCJariukZAW4
-	 n9sBZ5gLjM7pOmqL54/tuHcROq7Kpk0toZIVSDpM=
+	b=LeDQvDzMEggOCPpqWIBSOVBehmUHNcgu3IsPJoD0bkMn3maUXnTn34jpEH7W+Vwyu
+	 qsErABVemp2sYkgWpweVCFXV4MsHDaz6Jr8UnbgHWwQM5Bn8GWWStTmPVmoRNIggpE
+	 04s72hVb/P4fbRuZ+bmE7tDv2Hf9YjveKsT5XG2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 100/333] octeontx2-af: devlink: fix NIX RAS reporter to use RAS interrupt status
-Date: Tue, 17 Mar 2026 17:32:09 +0100
-Message-ID: <20260317163003.079820801@linuxfoundation.org>
+Subject: [PATCH 6.18 101/333] net: prevent NULL deref in ip[6]tunnel_xmit()
+Date: Tue, 17 Mar 2026 17:32:10 +0100
+Message-ID: <20260317163003.116355657@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,42 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 87f7dff3ec75b91def0024ebaaf732457f47a63b ]
+[ Upstream commit c38b8f5f791ecce13ab77e2257f8fd2444ba80f6 ]
 
-The NIX RAS health report path uses nix_af_rvu_err when handling the
-NIX_AF_RVU_RAS case, so the report prints the ERR interrupt status rather
-than the RAS interrupt status.
+Blamed commit missed that both functions can be called with dev == NULL.
 
-Use nix_af_rvu_ras for the NIX_AF_RVU_RAS report.
+Also add unlikely() hints for these conditions that only fuzzers can hit.
 
-Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20260310184824.1183651-2-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6f1a9140ecda ("net: add xmit recursion limit to tunnel xmit functions")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+CC: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260312043908.2790803-1-edumazet@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/ip6_tunnel.h  | 10 ++++++----
+ net/ipv4/ip_tunnel_core.c | 10 ++++++----
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index 23f51fed4666d..5852a72b22306 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -327,10 +327,10 @@ static int rvu_nix_report_show(struct devlink_fmsg *fmsg, void *ctx,
- 		rvu_report_pair_end(fmsg);
- 		break;
- 	case NIX_AF_RVU_RAS:
--		intr_val = nix_event_context->nix_af_rvu_err;
-+		intr_val = nix_event_context->nix_af_rvu_ras;
- 		rvu_report_pair_start(fmsg, "NIX_AF_RAS");
- 		devlink_fmsg_u64_pair_put(fmsg, "\tNIX RAS Interrupt Reg ",
--					  nix_event_context->nix_af_rvu_err);
-+					  nix_event_context->nix_af_rvu_ras);
- 		devlink_fmsg_string_put(fmsg, "\n\tPoison Data on:");
- 		if (intr_val & BIT_ULL(34))
- 			devlink_fmsg_string_put(fmsg, "\n\tNIX_AQ_INST_S");
+diff --git a/include/net/ip6_tunnel.h b/include/net/ip6_tunnel.h
+index 1253cbb4b0a45..359b595f1df93 100644
+--- a/include/net/ip6_tunnel.h
++++ b/include/net/ip6_tunnel.h
+@@ -156,10 +156,12 @@ static inline void ip6tunnel_xmit(struct sock *sk, struct sk_buff *skb,
+ {
+ 	int pkt_len, err;
+ 
+-	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
+-		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
+-				     dev->name);
+-		DEV_STATS_INC(dev, tx_errors);
++	if (unlikely(dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT)) {
++		if (dev) {
++			net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
++					     dev->name);
++			DEV_STATS_INC(dev, tx_errors);
++		}
+ 		kfree_skb(skb);
+ 		return;
+ 	}
+diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
+index b1b6bf949f65a..5683c328990f4 100644
+--- a/net/ipv4/ip_tunnel_core.c
++++ b/net/ipv4/ip_tunnel_core.c
+@@ -58,10 +58,12 @@ void iptunnel_xmit(struct sock *sk, struct rtable *rt, struct sk_buff *skb,
+ 	struct iphdr *iph;
+ 	int err;
+ 
+-	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
+-		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
+-				     dev->name);
+-		DEV_STATS_INC(dev, tx_errors);
++	if (unlikely(dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT)) {
++		if (dev) {
++			net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
++					     dev->name);
++			DEV_STATS_INC(dev, tx_errors);
++		}
+ 		ip_rt_put(rt);
+ 		kfree_skb(skb);
+ 		return;
 -- 
 2.51.0
 
