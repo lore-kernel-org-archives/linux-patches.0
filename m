@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E123F54CD;
-	Tue, 17 Mar 2026 16:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14ADB3F54B8;
+	Tue, 17 Mar 2026 16:58:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766732; cv=none; b=fEgppVWOBSVDwgVv57/cTPPgLAwCOU5a//h60vA2D2T4izRrbUuSIh10cfZOt3B4jga9Yn7Ihx9KGdG1caIjO5n7QkrJr/ZCxd3fLW0dstEKUdNQjl5pGQbW1N4gojHpKaxRv29Zn9+oIlMUjEn6oyLbFcSk5Qf8GFWqsqvXhwM=
+	t=1773766737; cv=none; b=lJvysiHCRqtNLi7ThL5rKzqdUEXp/Gf0R8Ocz/nIOCQP1BXTRXxHOrEKygKTWpEItS9irpmk7+qOH/TLgAQ7EYPI7D9iWFM7tVlm8S+uK8yI99lVxKG3Nym08TZQfcsnSmPMkEY9r5Q+0XVZH+KFDtqw/nNQoJpqbE3Q8hqmFnU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766732; c=relaxed/simple;
-	bh=XfZ3fMnrVD7lBj15HDfe+LmtlMX4RaN+fH19YW+Lxbw=;
+	s=arc-20240116; t=1773766737; c=relaxed/simple;
+	bh=CbZhMM63BONPtA0QsFU/Ti+I5D+kpBnX/nUdQ+RHte8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P1+swz0uVb+uZQWCmoKBGZls+hTGvBp4pnmgTAhr0AlCp09kYDMBgPwh+YHdxus/G4Zye7M8kTWckC2TMz1Hq/7GXIZ66zH21FyvZLcuGVutUFdhYwZW9FXDIkgEIJDbnn8fxMRMX0C1BcpbbjZDc0xUo8SO2nQg0i0TnOWpOKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h8LufIi2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W70+VI7p0zEM3VKxTWNcR0fO05BhwN74j+DOSYyugZAvabUU1mq1vR6dPYr3FubD1y26lIciR/hqlufwXMggHhWTfiYWlbtQ4pq0UqjGIUVsGZ0XcA8OhtNr3P0C+keCyibWAzN+BnJdW3iFFv1w0NmlDU9Ho3A4kUFTm/oJXSs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zCbGdppn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h8LufIi2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C5BDC2BCAF;
-	Tue, 17 Mar 2026 16:58:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zCbGdppn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C674C4CEF7;
+	Tue, 17 Mar 2026 16:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766732;
-	bh=XfZ3fMnrVD7lBj15HDfe+LmtlMX4RaN+fH19YW+Lxbw=;
+	s=korg; t=1773766737;
+	bh=CbZhMM63BONPtA0QsFU/Ti+I5D+kpBnX/nUdQ+RHte8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8LufIi20GxNdOo2xV5GCGp245viBrdbLVmR2h/VY8+KfHqCIBcdHv5jqGm3BxV8Y
-	 v8vgfYyuA2CsdWMZnj254AZi06q8I7ppuamK3L7HJ6ElDRUItZKSy3v/kzC0VUzaDJ
-	 kRjNa2+R71PmKvDR8KwcNqMSZNM+/rClgOvqSDOc=
+	b=zCbGdppnwF6Pfijm8ZSSqQVshJEp2V0ook55lkbnuC+oQOz4A7CnnrvexQnJ+vQ36
+	 kD/hZvuv1xwOz62cI9m5aSLboaR2LhuxGtq6DmlKXU0se1372TK3x3TFGonQCK3BdC
+	 NAWRiynNqSPEKiUO2zsdfVbEsEaC5ry6IEwTxUqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Schmidbauer <github@grische.xyz>,
-	Sven Eckelmann <sven@narfation.org>,
-	=?UTF-8?q?S=C3=B6ren=20Skaarup?= <freifunk_nordm4nn@gmx.de>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.19 267/378] batman-adv: Avoid double-rtnl_lock ELP metric worker
-Date: Tue, 17 Mar 2026 17:33:44 +0100
-Message-ID: <20260317163016.834299858@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.19 303/378] drm/amd: Fix NULL pointer dereference in device cleanup
+Date: Tue, 17 Mar 2026 17:34:20 +0100
+Message-ID: <20260317163018.151419340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -46,110 +44,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sven Eckelmann <sven@narfation.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit cfc83a3c71517b59c1047db57da31e26a9dc2f33 upstream.
+commit 062ea905fff7756b2e87143ffccaece5cdb44267 upstream.
 
-batadv_v_elp_get_throughput() might be called when the RTNL lock is already
-held. This could be problematic when the work queue item is cancelled via
-cancel_delayed_work_sync() in batadv_v_elp_iface_disable(). In this case,
-an rtnl_lock() would cause a deadlock.
+When GPU initialization fails due to an unsupported HW block
+IP blocks may have a NULL version pointer. During cleanup in
+amdgpu_device_fini_hw, the code calls amdgpu_device_set_pg_state and
+amdgpu_device_set_cg_state which iterate over all IP blocks and access
+adev->ip_blocks[i].version without NULL checks, leading to a kernel
+NULL pointer dereference.
 
-To avoid this, rtnl_trylock() was used in this function to skip the
-retrieval of the ethtool information in case the RTNL lock was already
-held.
+Add NULL checks for adev->ip_blocks[i].version in both
+amdgpu_device_set_cg_state and amdgpu_device_set_pg_state to prevent
+dereferencing NULL pointers during GPU teardown when initialization has
+failed.
 
-But for cfg80211 interfaces, batadv_get_real_netdev() was called - which
-also uses rtnl_lock(). The approach for __ethtool_get_link_ksettings() must
-also be used instead and the lockless version __batadv_get_real_netdev()
-has to be called.
-
+Fixes: 39fc2bc4da00 ("drm/amdgpu: Protect GPU register accesses in powergated state in some paths")
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit b7ac77468cda92eecae560b05f62f997a12fe2f2)
 Cc: stable@vger.kernel.org
-Fixes: 8c8ecc98f5c6 ("batman-adv: Drop unmanaged ELP metric worker")
-Reported-by: Christian Schmidbauer <github@grische.xyz>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Tested-by: Sören Skaarup <freifunk_nordm4nn@gmx.de>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_v_elp.c      |   10 +++++++++-
- net/batman-adv/hard-interface.c |    8 ++++----
- net/batman-adv/hard-interface.h |    1 +
- 3 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/batman-adv/bat_v_elp.c
-+++ b/net/batman-adv/bat_v_elp.c
-@@ -111,7 +111,15 @@ static bool batadv_v_elp_get_throughput(
- 			/* unsupported WiFi driver version */
- 			goto default_throughput;
- 
--		real_netdev = batadv_get_real_netdev(hard_iface->net_dev);
-+		/* only use rtnl_trylock because the elp worker will be cancelled while
-+		 * the rntl_lock is held. the cancel_delayed_work_sync() would otherwise
-+		 * wait forever when the elp work_item was started and it is then also
-+		 * trying to rtnl_lock
-+		 */
-+		if (!rtnl_trylock())
-+			return false;
-+		real_netdev = __batadv_get_real_netdev(hard_iface->net_dev);
-+		rtnl_unlock();
- 		if (!real_netdev)
- 			goto default_throughput;
- 
---- a/net/batman-adv/hard-interface.c
-+++ b/net/batman-adv/hard-interface.c
-@@ -204,7 +204,7 @@ static bool batadv_is_valid_iface(const
- }
- 
- /**
-- * batadv_get_real_netdevice() - check if the given netdev struct is a virtual
-+ * __batadv_get_real_netdev() - check if the given netdev struct is a virtual
-  *  interface on top of another 'real' interface
-  * @netdev: the device to check
-  *
-@@ -214,7 +214,7 @@ static bool batadv_is_valid_iface(const
-  * Return: the 'real' net device or the original net device and NULL in case
-  *  of an error.
-  */
--static struct net_device *batadv_get_real_netdevice(struct net_device *netdev)
-+struct net_device *__batadv_get_real_netdev(struct net_device *netdev)
- {
- 	struct batadv_hard_iface *hard_iface = NULL;
- 	struct net_device *real_netdev = NULL;
-@@ -267,7 +267,7 @@ struct net_device *batadv_get_real_netde
- 	struct net_device *real_netdev;
- 
- 	rtnl_lock();
--	real_netdev = batadv_get_real_netdevice(net_device);
-+	real_netdev = __batadv_get_real_netdev(net_device);
- 	rtnl_unlock();
- 
- 	return real_netdev;
-@@ -336,7 +336,7 @@ static u32 batadv_wifi_flags_evaluate(st
- 	if (batadv_is_cfg80211_netdev(net_device))
- 		wifi_flags |= BATADV_HARDIF_WIFI_CFG80211_DIRECT;
- 
--	real_netdev = batadv_get_real_netdevice(net_device);
-+	real_netdev = __batadv_get_real_netdev(net_device);
- 	if (!real_netdev)
- 		return wifi_flags;
- 
---- a/net/batman-adv/hard-interface.h
-+++ b/net/batman-adv/hard-interface.h
-@@ -67,6 +67,7 @@ enum batadv_hard_if_bcast {
- 
- extern struct notifier_block batadv_hard_if_notifier;
- 
-+struct net_device *__batadv_get_real_netdev(struct net_device *net_device);
- struct net_device *batadv_get_real_netdev(struct net_device *net_device);
- bool batadv_is_cfg80211_hardif(struct batadv_hard_iface *hard_iface);
- bool batadv_is_wifi_hardif(struct batadv_hard_iface *hard_iface);
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -3404,6 +3404,8 @@ int amdgpu_device_set_cg_state(struct am
+ 		i = state == AMD_CG_STATE_GATE ? j : adev->num_ip_blocks - j - 1;
+ 		if (!adev->ip_blocks[i].status.late_initialized)
+ 			continue;
++		if (!adev->ip_blocks[i].version)
++			continue;
+ 		/* skip CG for GFX, SDMA on S0ix */
+ 		if (adev->in_s0ix &&
+ 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
+@@ -3443,6 +3445,8 @@ int amdgpu_device_set_pg_state(struct am
+ 		i = state == AMD_PG_STATE_GATE ? j : adev->num_ip_blocks - j - 1;
+ 		if (!adev->ip_blocks[i].status.late_initialized)
+ 			continue;
++		if (!adev->ip_blocks[i].version)
++			continue;
+ 		/* skip PG for GFX, SDMA on S0ix */
+ 		if (adev->in_s0ix &&
+ 		    (adev->ip_blocks[i].version->type == AMD_IP_BLOCK_TYPE_GFX ||
 
 
