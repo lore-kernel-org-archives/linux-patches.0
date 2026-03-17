@@ -1,42 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA54F3ACF1D;
-	Tue, 17 Mar 2026 11:33:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5202D3AE1A2;
+	Tue, 17 Mar 2026 11:33:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747184; cv=none; b=SevacfGYgQT+gFRsVeVoxVOeqpI+CtESAO09bu623Ks0c33BtoMnFkFBySYK+WhsnxFArhRsgfAN9t241wVuHx5/svXwA3y2d9T6vx3B/CMLVUjs6PvyuEwHy2nswEys1PEhQ1d8q4wPQRiFSAARQtgBiF3GOnh9VaA+1jylcEc=
+	t=1773747186; cv=none; b=oPV0ZwvUzjUHc76loHBx6YSFo/2W4eV1V+fMwZXjt6SN1yatPPoFZmXwVI9mzmofr5LjVwt+5oxz9klvaxUGGNVLcXHGhhDtVcB25W3OFr9tFO9q6UOIPsUCYRacJoehXAVaSrPFWslfBSBt2IL2NrAsv84DEav/veZjHNz9aJo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747184; c=relaxed/simple;
-	bh=ocrzA554RPBN8PDIsqByge586AsLkqpsTPXG1Jp9Ue8=;
+	s=arc-20240116; t=1773747186; c=relaxed/simple;
+	bh=iUe5MH6DGp3rJV14U0Y5iVvgGFfkm2WLp8a6OaIr0N0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=smXAN8WdYN2hCfnegLMe/cp9OpZsQm3Ab8dh6NDsO4htPVymMmJPsy2UO/uKvd4pyO5Wp7JAr1ZqOw3uz7XB0FWfRZrIYx0YxY9SPjrYpTDpRzVCiGsdCLRDkiFQ803yKTH9+E8i3RUpH/eEK3IsCLlo2ys44uT3/vUBi4bqLzo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Lby4uTHJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fgrZSr+7FL/7S5W4K3QgSxdVx1Y+cw2pl81vdIx8lwDvDo4hVqcR46GolYcNr8oShupF71/GJ9kblWA5TXQTd2Ed+DrwotaMcMJRgJiTPis6/eutwCG0ZSVIVp5rI97dHVPdl/PJ73U42LpXtLFvORG9cnAPL6dL/UPKRWVY3is=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Bv77rShU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Lby4uTHJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E61FAC2BCAF;
-	Tue, 17 Mar 2026 11:33:03 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Bv77rShU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC24C2BCAF;
+	Tue, 17 Mar 2026 11:33:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747184;
-	bh=ocrzA554RPBN8PDIsqByge586AsLkqpsTPXG1Jp9Ue8=;
+	s=k20201202; t=1773747186;
+	bh=iUe5MH6DGp3rJV14U0Y5iVvgGFfkm2WLp8a6OaIr0N0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lby4uTHJFmUZCkRAvAfFyCdPKjwkRvsKJ4jBrLvEsBQ3k6qpXFaMA1F0qiCdysRUg
-	 NSdBEcoviJJnJ75gcazRoY9A8QBitHHP8FczSdoVCl4kSSkJWOI/30ienlLB1hqbAy
-	 gKzgC+wiOqCa1xQdwRtBVgH2Lq+sub/qaMuwp6Al8iVwSGETibf/vGQTYAUrfQw3Q8
-	 Z5JJd9vaEmo9fO0s+S0s96jEGqE/c/LE+P88+RsXvdbhwQA6SNJlYxYm/ERY+DZKZE
-	 ZodJbdiWg+Zq+iy+NyLBWmwktqcCDfAIWRTVBYNO6juPk/W7OWw8J5Ps9E9S3oj4gY
-	 YEM65jSsShwvw==
+	b=Bv77rShUsCZoaRkq2k9iI3PgqBOxkPvb++AYY1PdE/sbNvbh0m6MJKgVwc+0HsnwV
+	 8sZMkSAovepaGSCi27rFIa3KSyIhGNpEtuwy6DtVCUgrbHJLK9+AZQJsA6DaDQC+kH
+	 x+v1tBYz6HRkUdn4EaKlgIX9XCbLLVxNPhfSY5g+4ICb9bK13D6jGXq2eESXp3DOSR
+	 yNWvWL2XArhCwk91SaE2Pe+SeicLh7+WxA4tjar0d0aJoOx/AYULiZck7UDAutyBFf
+	 PJ68D9lmAGJdbC1P9YIHa3ZXlfBzg5Q9pI5sU+MpEeSoiAxK7BWQunw86TEP8hvX6w
+	 KMGqBf5FoXclw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Josh Poimboeuf <jpoimboe@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+Cc: zhidao su <soolaugust@gmail.com>,
+	zhidao su <suzhidao@xiaomi.com>,
+	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
+	mingo@redhat.com,
 	peterz@infradead.org,
+	juri.lelli@redhat.com,
+	vincent.guittot@linaro.org,
+	sched-ext@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] objtool: Handle Clang RSP musical chairs
-Date: Tue, 17 Mar 2026 07:32:42 -0400
-Message-ID: <20260317113249.117771-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] sched_ext: Use WRITE_ONCE() for the write side of dsq->seq update
+Date: Tue, 17 Mar 2026 07:32:43 -0400
+Message-ID: <20260317113249.117771-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -52,275 +57,156 @@ X-stable-base: Linux 6.19.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josh Poimboeuf <jpoimboe@kernel.org>
+From: zhidao su <soolaugust@gmail.com>
 
-[ Upstream commit 7fdaa640c810cb42090a182c33f905bcc47a616a ]
+[ Upstream commit 7a8464555d2e5f038758bb19e72ab4710b79e9cd ]
 
-For no apparent reason (possibly related to CONFIG_KMSAN), Clang can
-randomly pass the value of RSP to other registers and then back again to
-RSP.  Handle that accordingly.
+bpf_iter_scx_dsq_new() reads dsq->seq via READ_ONCE() without holding
+any lock, making dsq->seq a lock-free concurrently accessed variable.
+However, dispatch_enqueue(), the sole writer of dsq->seq, uses a plain
+increment without the matching WRITE_ONCE() on the write side:
 
-Fixes the following warnings:
+    dsq->seq++;
+    ^^^^^^^^^^^
+    plain write -- KCSAN data race
 
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: undefined stack state
-  drivers/input/misc/uinput.o: warning: objtool: uinput_str_to_user+0x165: unknown CFA base reg -1
+The KCSAN documentation requires that if one accessor uses READ_ONCE()
+or WRITE_ONCE() on a variable to annotate lock-free access, all other
+accesses must also use the appropriate accessor. A plain write leaves
+the pair incomplete and will trigger KCSAN warnings.
 
-Reported-by: Arnd Bergmann <arnd@arndb.de>
-Closes: https://lore.kernel.org/90956545-2066-46e3-b547-10c884582eb0@app.fastmail.com
-Link: https://patch.msgid.link/240e6a172cc73292499334a3724d02ccb3247fc7.1772818491.git.jpoimboe@kernel.org
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Fix by using WRITE_ONCE() for the write side of the update:
+
+    WRITE_ONCE(dsq->seq, dsq->seq + 1);
+
+This is consistent with bpf_iter_scx_dsq_new() and makes the
+concurrent access annotation complete and KCSAN-clean.
+
+Signed-off-by: zhidao su <suzhidao@xiaomi.com>
+Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I can see the full OP_SRC_REG handling. The new `else if` block goes
-between line 2961 (end of stack swizzle case 2) and line 2964 (break).
-
-Key insight about the decode.c change: Previously, only `mov %rsp, reg`
-and `mov reg, %rsp` generated OP_SRC_REG operations. Now ALL `mov reg,
-reg` instructions will generate OP_SRC_REG operations. But looking at
-the check.c handler, the OP_SRC_REG case only does something when
-specific conditions are met (source is CFI_SP, destination is CFI_BP,
-destination is cfa->base, etc.). For an arbitrary `mov %rax, %rbx` where
-neither register has special CFI state, none of the existing `if/else
-if` branches match, and the new branch also won't match (since
-`cfi->vals[op->src.reg].base` won't be CFI_CFA unless the register was
-previously set). So the change falls through to `break` harmlessly. This
-means the decode.c generalization is safe - it just generates more
-operations that get filtered in check.c.
-
-Now I have enough information to make my assessment.
-
----
+Now I have all the information I need for the analysis.
 
 ## Analysis
 
-### 1. What Problem Does This Fix?
+### 1. Commit Message Analysis
 
-This commit fixes objtool's inability to track RSP (stack pointer)
-values when Clang moves RSP through multiple intermediate registers in a
-"musical chairs" pattern:
-```
-mov %rsp, %rdx    → tracked by existing code
-mov %rdx, %rbx    → NOT tracked before this fix (intermediate)
-mov %rbx, %rsp    → tracked by existing code, BUT fails because %rbx's
-CFI state is unknown
-```
+The commit fixes a KCSAN data race annotation issue. `dsq->seq` is read
+lock-free via `READ_ONCE()` in `bpf_iter_scx_dsq_new()` (line 6589), but
+the write side in `dispatch_enqueue()` uses a plain `dsq->seq++` (line
+1100). KCSAN requires that if one side uses
+`READ_ONCE()`/`WRITE_ONCE()`, all accessors must also use the
+appropriate annotation. The fix is a one-line change from `dsq->seq++`
+to `WRITE_ONCE(dsq->seq, dsq->seq + 1)`.
 
-Without this fix, objtool loses track of the stack state, generating:
-- `"undefined stack state"` warning (check.c line 2834, returns error
-  code 1)
-- `"unknown CFA base reg -1"` error (orc.c line 74, returns -1)
+### 2. Code Change Analysis
 
-These are not mere cosmetic warnings - the ORC unwind data generation
-**fails** for the affected function, meaning no valid stack unwinding
-data is produced for that function.
+The change is trivially small and correct:
+- **Before**: `dsq->seq++` — plain write, incomplete KCSAN annotation
+- **After**: `WRITE_ONCE(dsq->seq, dsq->seq + 1)` — properly annotated
+  write
 
-### 2. Impact Assessment
+The read side at line 6589 already uses `READ_ONCE(kit->dsq->seq)`,
+confirming this is a lock-free concurrent access pattern. The write side
+holds a lock (dispatch queue lock), but the reader does not, making the
+`WRITE_ONCE()`/`READ_ONCE()` pair necessary for correctness under the
+KCSAN/C11 memory model.
 
-**Build impact:** With `CONFIG_OBJTOOL_WERROR=y` (recommended, "If
-unsure, say Y"), the objtool warnings become errors and **the build
-fails**. Even without WERROR, ORC generation fails for affected
-functions.
+### 3. Subsystem: sched_ext
 
-**Runtime impact:** Without proper ORC data, the kernel unwinder cannot
-produce correct stack traces for affected functions. This affects OOPS
-debugging, perf profiling, and live patching.
+**Critical factor**: `sched_ext` was introduced in **v6.12**. The
+current stable kernel trees are:
+- 6.12.y (contains sched_ext)
+- 6.6.y (does NOT contain sched_ext)
+- 6.1.y (does NOT contain sched_ext)
+- 5.15.y, 5.10.y, etc. (do NOT contain sched_ext)
 
-**Scope of affected users:** According to the original bug report by
-Arnd Bergmann, this affects **Clang versions 18 through 22** on x86
-builds, particularly with KMSAN config. Clang is used by many
-distributions and the Android kernel.
+This means the commit can only apply to **6.12.y** (and later, 6.19.y
+once it becomes a stable tree).
 
-### 3. Stable Kernel Rules Assessment
+### 4. Bug Severity
 
-- **Obviously correct and tested:** Yes - authored by Josh Poimboeuf,
-  the objtool maintainer. Accepted into `objtool/urgent` branch. The
-  logic is straightforward: track CFI_CFA state through intermediate
-  registers.
-- **Fixes a real bug:** Yes - build failures with Clang, broken ORC
-  data.
-- **Important issue:** Build fix category (explicitly allowed for
-  stable). Also fixes incorrect ORC unwind data.
-- **Small and contained:** Moderate size - changes to two files in
-  objtool tooling only. The decode.c restructuring is a bit large but
-  logically simple (generalize reg-to-reg tracking). The check.c
-  addition is a clean 14-line addition.
-- **No new features:** Correct - this only enables objtool to correctly
-  handle existing compiler output.
+This is a KCSAN annotation completeness fix. It:
+- Fixes a real data race (writer uses plain store while reader uses
+  `READ_ONCE()`)
+- Prevents KCSAN warnings
+- The practical impact on most architectures (especially x86) is minimal
+  since `dsq->seq` is a `u64` and the write is already atomic in
+  practice on 64-bit platforms
+- However, on some architectures (32-bit), a plain write to a 64-bit
+  value could be torn, potentially causing the reader to see a
+  partially-updated value
 
-### 4. Risk Assessment
+### 5. Risk Assessment
 
-**Low risk:**
-- Changes are confined to build-time tooling (objtool), not runtime
-  kernel code
-- The decode.c generalization (tracking all `mov reg, reg`) is safe
-  because the check.c handler already filters based on CFI state -
-  arbitrary register moves that don't involve CFI-tracked values hit the
-  `break` at the end of the if-else chain
-- The check.c addition only activates when a register actually holds a
-  CFI_CFA value, which only happens after a previous `mov %rsp, %reg`
-- Authored by the objtool maintainer, merged through objtool/urgent
+- **One-line change**: Minimal risk
+- **Obviously correct**: `WRITE_ONCE()` is the standard annotation for
+  this pattern
+- **No behavioral change**: Same value is written, just with proper
+  annotation
+- **Well-tested pattern**: `WRITE_ONCE(x, x + 1)` is used extensively
+  throughout the kernel
 
-**Potential concern:** The decode.c restructuring changes the code flow
-for the 0x89 handler, but careful analysis shows it preserves all
-existing semantics while adding general reg-to-reg tracking. The `mov
-%rsp, disp(%reg)` case is still handled (but now outside the
-`mod_is_reg()` branch). The `mov reg, %rsp` case is now handled by the
-general `mov reg, reg` case.
+### 6. Stable Criteria Assessment
 
-### 5. Backport Complexity
+- **Fixes a real bug**: Yes — data race (KCSAN violation), and
+  potentially a real torn-write issue on 32-bit
+- **Obviously correct**: Yes — standard `WRITE_ONCE()` pattern
+- **Small and contained**: Yes — one line changed
+- **No new features**: Correct
+- **Tested**: Accepted by maintainer (Tejun Heo)
 
-The patch should apply relatively cleanly to recent stable trees (6.6+,
-6.1+) since the 0x89 handler structure hasn't changed significantly.
-Older trees may need minor adjustments depending on objtool evolution.
+While this is a legitimate fix, the severity is quite low. It primarily
+silences KCSAN warnings and ensures correctness of the annotation pair.
+On 64-bit architectures (where sched_ext is primarily used), the plain
+store was already effectively atomic. The practical user impact is
+minimal.
 
 ### Verification
 
-- **Verified** the current tree has the old decode.c pattern (lines
-  394-446) matching the patch's "before" state
-- **Verified** the "Clang RSP musical chairs" comment is NOT in check.c,
-  confirming the commit is not yet applied
-- **Verified** objtool Makefile uses `-Werror` (line 50), and
-  `CONFIG_OBJTOOL_WERROR` passes `--werror` to objtool at build time
-- **Verified** `WARN_INSN` at check.c:2834 returns 1 (error), causing
-  build failure with WERROR
-- **Verified** `ERROR_INSN` at orc.c:74 returns -1, causing ORC
-  generation failure
-- **Verified** via lore.kernel.org that the patch was accepted into
-  objtool/urgent, indicating the maintainer considers it an urgent fix
-- **Verified** via the original bug report (Arnd Bergmann) that Clang
-  versions 18-22 are affected on x86
-- **Verified** that the OP_SRC_REG handler in check.c (lines 2849-2964)
-  has guarded conditions that prevent spurious matches from the
-  generalized decode.c output
-- **Verified** the commit is standalone (no patch series dependencies
-  mentioned in lore discussion)
-- **Verified** the affected code (0x89 handler) has existed since at
-  least v5.x (commit 2a512829840e added related decode logic in 2021)
+- Verified `sched_ext` was introduced in v6.12 via `git log --diff-
+  filter=A -- kernel/sched/ext.c` (commit `f0e1a0643a59b`)
+- Verified no commits to `kernel/sched/ext.c` exist in `v6.10..v6.11`
+  range (file didn't exist before 6.12)
+- Confirmed `READ_ONCE(kit->dsq->seq)` exists at line 6589 of
+  `kernel/sched/ext.c` (the reader)
+- Confirmed `dsq->seq++` exists at line 1100 (the writer being fixed)
+- The write occurs under a lock (dispatch queue lock held in
+  `dispatch_enqueue`), but the read in `bpf_iter_scx_dsq_new()` is lock-
+  free
+- Verified this is a one-line change with no dependencies
 
-### Conclusion
+### Decision
 
-This is a build fix for Clang users that prevents objtool errors and
-ensures correct ORC unwind data generation. Build fixes are explicitly
-allowed in stable. The fix is authored by the objtool maintainer, was
-merged through the `objtool/urgent` branch, is self-contained, and
-carries low risk since it only modifies build-time tooling. The affected
-Clang versions (18-22) are widely used. The change is logically sound
-and well-bounded.
+This is a valid but low-severity KCSAN data race annotation fix. It's a
+one-line change that is obviously correct and fixes a real (if minor)
+data race. It only applies to 6.12.y stable since sched_ext doesn't
+exist in older trees. The fix is small, surgical, and meets stable
+kernel criteria — it prevents KCSAN warnings and ensures proper memory
+access semantics for concurrent access to `dsq->seq`.
 
 **YES**
 
- tools/objtool/arch/x86/decode.c | 62 ++++++++++++---------------------
- tools/objtool/check.c           | 14 ++++++++
- 2 files changed, 37 insertions(+), 39 deletions(-)
+ kernel/sched/ext.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/objtool/arch/x86/decode.c b/tools/objtool/arch/x86/decode.c
-index f4af825082284..4544c2cb44400 100644
---- a/tools/objtool/arch/x86/decode.c
-+++ b/tools/objtool/arch/x86/decode.c
-@@ -395,52 +395,36 @@ int arch_decode_instruction(struct objtool_file *file, const struct section *sec
- 		if (!rex_w)
- 			break;
+diff --git a/kernel/sched/ext.c b/kernel/sched/ext.c
+index 0bb8fa927e9e9..413b9f9336fe9 100644
+--- a/kernel/sched/ext.c
++++ b/kernel/sched/ext.c
+@@ -1097,7 +1097,7 @@ static void dispatch_enqueue(struct scx_sched *sch, struct scx_dispatch_q *dsq,
+ 	}
  
--		if (modrm_reg == CFI_SP) {
--
--			if (mod_is_reg()) {
--				/* mov %rsp, reg */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG;
--					op->dest.reg = modrm_rm;
--				}
--				break;
--
--			} else {
--				/* skip RIP relative displacement */
--				if (is_RIP())
--					break;
--
--				/* skip nontrivial SIB */
--				if (have_SIB()) {
--					modrm_rm = sib_base;
--					if (sib_index != CFI_SP)
--						break;
--				}
--
--				/* mov %rsp, disp(%reg) */
--				ADD_OP(op) {
--					op->src.type = OP_SRC_REG;
--					op->src.reg = CFI_SP;
--					op->dest.type = OP_DEST_REG_INDIRECT;
--					op->dest.reg = modrm_rm;
--					op->dest.offset = ins.displacement.value;
--				}
--				break;
-+		if (mod_is_reg()) {
-+			/* mov reg, reg */
-+			ADD_OP(op) {
-+				op->src.type = OP_SRC_REG;
-+				op->src.reg = modrm_reg;
-+				op->dest.type = OP_DEST_REG;
-+				op->dest.reg = modrm_rm;
- 			}
--
- 			break;
- 		}
+ 	/* seq records the order tasks are queued, used by BPF DSQ iterator */
+-	dsq->seq++;
++	WRITE_ONCE(dsq->seq, dsq->seq + 1);
+ 	p->scx.dsq_seq = dsq->seq;
  
--		if (rm_is_reg(CFI_SP)) {
-+		/* skip RIP relative displacement */
-+		if (is_RIP())
-+			break;
- 
--			/* mov reg, %rsp */
-+		/* skip nontrivial SIB */
-+		if (have_SIB()) {
-+			modrm_rm = sib_base;
-+			if (sib_index != CFI_SP)
-+				break;
-+		}
-+
-+		/* mov %rsp, disp(%reg) */
-+		if (modrm_reg == CFI_SP) {
- 			ADD_OP(op) {
- 				op->src.type = OP_SRC_REG;
--				op->src.reg = modrm_reg;
--				op->dest.type = OP_DEST_REG;
--				op->dest.reg = CFI_SP;
-+				op->src.reg = CFI_SP;
-+				op->dest.type = OP_DEST_REG_INDIRECT;
-+				op->dest.reg = modrm_rm;
-+				op->dest.offset = ins.displacement.value;
- 			}
- 			break;
- 		}
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 37ec0d757e9b1..188c3095bf273 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -2960,6 +2960,20 @@ static int update_cfi_state(struct instruction *insn,
- 				cfi->stack_size += 8;
- 			}
- 
-+			else if (cfi->vals[op->src.reg].base == CFI_CFA) {
-+				/*
-+				 * Clang RSP musical chairs:
-+				 *
-+				 *   mov %rsp, %rdx [handled above]
-+				 *   ...
-+				 *   mov %rdx, %rbx [handled here]
-+				 *   ...
-+				 *   mov %rbx, %rsp [handled above]
-+				 */
-+				cfi->vals[op->dest.reg].base = CFI_CFA;
-+				cfi->vals[op->dest.reg].offset = cfi->vals[op->src.reg].offset;
-+			}
-+
- 
- 			break;
- 
+ 	dsq_mod_nr(dsq, 1);
 -- 
 2.51.0
 
