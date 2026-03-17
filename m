@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EB863EC2C2;
-	Tue, 17 Mar 2026 16:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9190E3E6DEE;
+	Tue, 17 Mar 2026 16:37:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765472; cv=none; b=a74TeR4PMHrK+DrtqOEk+8TcAf9hZoe4BceQM0LV3NSc41DsFIoBQYL7ZR4PjV5fGWr2GEvMAPsYpIw8LUMzr2qTxABopRUHlc8naSNW/WbyXuXxYk6ZbOUyGN5Of5O8l+7CUWsq5CGco1mMq5QK0Uceg9ABPklJP8Umg1E5kFg=
+	t=1773765476; cv=none; b=m9IEihHLoeeuu/A6mbWuMpl/xAVhYhoNKVOhksA4f7AtXencawprppgdl1BMKH53/QORe5ZmiAW7d1I1o1H/KlE9dNnxG+XGKfVgI7Mm0STKnYJh9IHUm1A6ljyB5VQ4Y7kBx0AU1GVZ2qmgl/5bxjUl5FD/d1Kre3yeIzFvrYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765472; c=relaxed/simple;
-	bh=XAp/mjK4En7WHDJughDRRojviY1XYjb5IWxDBD4dLww=;
+	s=arc-20240116; t=1773765476; c=relaxed/simple;
+	bh=+Y6XxjSypyXgJh39xOZRb2ViYpXOCfkdpbf+8nwri40=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=E4ab1lG81vp9QHALd7qEE8LUzX5rw553GLkvgR/UldiNDxG8Kwp2xXq7jO7nsZY7qwbo14+0RzlOI5BvYDH5jDXwK1xnoddgvzb3gfVF7YQpG26i2HjVf8XX8l4RU6OlkEaPjTRZm31Wn75L6UHwpK6vH61NAxGLXRWAfKbCnFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=It35Xrwh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kyGb+tdevrFG9cMyTBxZqyxq0wC+bzMTA6MfEytJEtjxQsSOpgZbR59Y8XIGIRUsqh4A+8ICdEf6JY+CARivzP3/4Ygxm3KAwCeDBALIUdM7dXMtjLv4kHiCIVK3XDSXX8/Q548OeDHOaOujfIbPVnWy3XPOTykc/5FBxlxPEfc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/kGI+uL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="It35Xrwh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAC60C4CEF7;
-	Tue, 17 Mar 2026 16:37:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/kGI+uL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED05C4CEF7;
+	Tue, 17 Mar 2026 16:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765471;
-	bh=XAp/mjK4En7WHDJughDRRojviY1XYjb5IWxDBD4dLww=;
+	s=korg; t=1773765476;
+	bh=+Y6XxjSypyXgJh39xOZRb2ViYpXOCfkdpbf+8nwri40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=It35Xrwhr9UOaGsK+I0ODaJPec6Vu+D38aJEjv9IW/KCPtGoULu4dZKqVkJU4YDOL
-	 GGEA814zZXVY9pXJJfVfUKS0PXUCxZ3CZZzi2HgVJ5Y9Jfrnp2ZU0ZnMl7mPyS38z0
-	 4qhV9Cvc4uMFw0F4NKzTUkddcWRM90bM5cqX8X98=
+	b=d/kGI+uLUlcB+gde+qZKiKiNpYa563CLeB85gXYE0FoykQSCVgGxZ51t8ahAxv/p8
+	 uWiDCaj9oLciPzXeGXhoBjgVRWKtx79DBntC0MCl81k4X87SE0k3+GLwharXAdACEv
+	 mXuL8HRNISb74n9Cijf1zvcZ1ixyi7Wkj081K0A4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Azamat Almazbek uulu <almazbek1608@gmail.com>,
-	Vijendar Mukunda <Vijendar.Mukunda@amd.com>,
-	Mark Brown <broonie@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 019/378] ASoC: amd: yc: Add ASUS EXPERTBOOK BM1503CDA to quirk table
-Date: Tue, 17 Mar 2026 17:29:36 +0100
-Message-ID: <20260317163007.681168842@linuxfoundation.org>
+Subject: [PATCH 6.19 002/378] powerpc/uaccess: Fix inline assembly for clang build on PPC32
+Date: Tue, 17 Mar 2026 17:29:19 +0100
+Message-ID: <20260317163007.057009911@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,44 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Azamat Almazbek uulu <almazbek1608@gmail.com>
+From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 
-[ Upstream commit 32fc4168fa56f6301d858c778a3d712774e9657e ]
+[ Upstream commit 0ee95a1d458630272d0415d0ffa9424fcb606c90 ]
 
-The ASUS ExpertBook BM1503CDA (Ryzen 5 7535U, Barcelo-R) has an
-internal DMIC connected through the AMD ACP (Audio CoProcessor)
-but is missing from the DMI quirk table, so the acp6x machine
-driver probe returns -ENODEV and no DMIC capture device is created.
+Test robot reports the following error with clang-16.0.6:
 
-Add the DMI entry so the internal microphone works out of the box.
+   In file included from kernel/rseq.c:75:
+   include/linux/rseq_entry.h:141:3: error: invalid operand for instruction
+                   unsafe_get_user(offset, &ucs->post_commit_offset, efault);
+                   ^
+   include/linux/uaccess.h:608:2: note: expanded from macro 'unsafe_get_user'
+           arch_unsafe_get_user(x, ptr, local_label);      \
+           ^
+   arch/powerpc/include/asm/uaccess.h:518:2: note: expanded from macro 'arch_unsafe_get_user'
+           __get_user_size_goto(__gu_val, __gu_addr, sizeof(*(p)), e); \
+           ^
+   arch/powerpc/include/asm/uaccess.h:284:2: note: expanded from macro '__get_user_size_goto'
+           __get_user_size_allowed(x, ptr, size, __gus_retval);    \
+           ^
+   arch/powerpc/include/asm/uaccess.h:275:10: note: expanded from macro '__get_user_size_allowed'
+           case 8: __get_user_asm2(x, (u64 __user *)ptr, retval);  break;  \
+                   ^
+   arch/powerpc/include/asm/uaccess.h:258:4: note: expanded from macro '__get_user_asm2'
+                   "       li %1+1,0\n"                    \
+                    ^
+   <inline asm>:7:5: note: instantiated into assembly here
+           li 31+1,0
+              ^
+   1 error generated.
 
-Signed-off-by: Azamat Almazbek uulu <almazbek1608@gmail.com>
-Reviewed-by: Vijendar Mukunda <Vijendar.Mukunda@amd.com>
-Link: https://patch.msgid.link/20260221114813.5610-1-almazbek1608@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+On PPC32, for 64 bits vars a pair of registers is used. Usually the
+lower register in the pair is the high part and the higher register is
+the low part. GCC uses r3/r4 ... r11/r12 ... r14/r15 ... r30/r31
+
+In older kernel code inline assembly was using %1 and %1+1 to represent
+64 bits values. However here it looks like clang uses r31 as high part,
+allthough r32 doesn't exist hence the error.
+
+Allthoug %1+1 should work, most places now use %L1 instead of %1+1, so
+let's do the same here.
+
+With that change, the build doesn't fail anymore and a disassembly shows
+clang uses r17/r18 and r31/r14 pair when GCC would have used r16/r17 and
+r30/r31:
+
+	Disassembly of section .fixup:
+
+	00000000 <.fixup>:
+	   0:	38 a0 ff f2 	li      r5,-14
+	   4:	3a 20 00 00 	li      r17,0
+	   8:	3a 40 00 00 	li      r18,0
+	   c:	48 00 00 00 	b       c <.fixup+0xc>
+				c: R_PPC_REL24	.text+0xbc
+	  10:	38 a0 ff f2 	li      r5,-14
+	  14:	3b e0 00 00 	li      r31,0
+	  18:	39 c0 00 00 	li      r14,0
+	  1c:	48 00 00 00 	b       1c <.fixup+0x1c>
+				1c: R_PPC_REL24	.text+0x144
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202602021825.otcItxGi-lkp@intel.com/
+Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Acked-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/8ca3a657a650e497a96bfe7acde2f637dadab344.1770103646.git.chleroy@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ arch/powerpc/include/asm/uaccess.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index f1a63475100d1..7af4daeb4c6ff 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -703,6 +703,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 				DMI_MATCH(DMI_PRODUCT_NAME, "Vivobook_ASUSLaptop M6501RR_M6501RR"),
- 			}
- 		},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK BM1503CDA"),
-+		}
-+	},
- 	{}
- };
- 
+diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
+index 3e622e647d622..f77c503ecc102 100644
+--- a/arch/powerpc/include/asm/uaccess.h
++++ b/arch/powerpc/include/asm/uaccess.h
+@@ -253,7 +253,7 @@ __gus_failed:								\
+ 		".section .fixup,\"ax\"\n"		\
+ 		"4:	li %0,%3\n"			\
+ 		"	li %1,0\n"			\
+-		"	li %1+1,0\n"			\
++		"	li %L1,0\n"			\
+ 		"	b 3b\n"				\
+ 		".previous\n"				\
+ 		EX_TABLE(1b, 4b)			\
 -- 
 2.51.0
 
