@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9190E3E6DEE;
-	Tue, 17 Mar 2026 16:37:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCB63EBF00;
+	Tue, 17 Mar 2026 16:38:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765476; cv=none; b=m9IEihHLoeeuu/A6mbWuMpl/xAVhYhoNKVOhksA4f7AtXencawprppgdl1BMKH53/QORe5ZmiAW7d1I1o1H/KlE9dNnxG+XGKfVgI7Mm0STKnYJh9IHUm1A6ljyB5VQ4Y7kBx0AU1GVZ2qmgl/5bxjUl5FD/d1Kre3yeIzFvrYA=
+	t=1773765481; cv=none; b=g5mbXfNEeRFnQhkehEs48gZPOJPpZXOlU1JuQaXKYeQ1zKr69/Bgs4IKb2p+8RtpuDoLjRH1gCQEcHeHUs7nsKWY+eiJkT16kGBVeiNLo1Bo6I30yDQe4qIB5NPvfjWsTDTbuJn2P6NqNvXv6nxL+UWYGyhmlqipDJ+MY9chRMM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765476; c=relaxed/simple;
-	bh=+Y6XxjSypyXgJh39xOZRb2ViYpXOCfkdpbf+8nwri40=;
+	s=arc-20240116; t=1773765481; c=relaxed/simple;
+	bh=xhogMsM6LQ/T1zfW2h06pTIXmEG9VgQfdCse3KuPpeo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kyGb+tdevrFG9cMyTBxZqyxq0wC+bzMTA6MfEytJEtjxQsSOpgZbR59Y8XIGIRUsqh4A+8ICdEf6JY+CARivzP3/4Ygxm3KAwCeDBALIUdM7dXMtjLv4kHiCIVK3XDSXX8/Q548OeDHOaOujfIbPVnWy3XPOTykc/5FBxlxPEfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d/kGI+uL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MRjykjIvg+QThWv12//Oj3qWjOVI2qwE8WlO7MRAL5LJq95okC3hqFgU7EhJbaNVUdNzyrKhEHA9hFXUaCfDL3tkGlyR4KWDA/3zWiLbB1wBk1KBqwhIC/mezVr1v+piFdENY7XMMPM/uBcXz/8iEQEnNCYGzvBy9DLmRI+oVzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gHPgJJk/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d/kGI+uL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ED05C4CEF7;
-	Tue, 17 Mar 2026 16:37:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gHPgJJk/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46DDEC4CEF7;
+	Tue, 17 Mar 2026 16:37:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765476;
-	bh=+Y6XxjSypyXgJh39xOZRb2ViYpXOCfkdpbf+8nwri40=;
+	s=korg; t=1773765481;
+	bh=xhogMsM6LQ/T1zfW2h06pTIXmEG9VgQfdCse3KuPpeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d/kGI+uLUlcB+gde+qZKiKiNpYa563CLeB85gXYE0FoykQSCVgGxZ51t8ahAxv/p8
-	 uWiDCaj9oLciPzXeGXhoBjgVRWKtx79DBntC0MCl81k4X87SE0k3+GLwharXAdACEv
-	 mXuL8HRNISb74n9Cijf1zvcZ1ixyi7Wkj081K0A4=
+	b=gHPgJJk/CrUnXIV90SWRA3rWfDGe0+60sEz0dGcGvFcu+0wZG/hxnBz3AlHRvuRwB
+	 aFlW+yoj7QigiR+Cnxcg5eI1gCKuRbHlG6N+soIq06V4pg56ac9hVV9zTyW2YjrIZY
+	 6TONzcFT5LgyeYSF0vTHG+PX6Y4mw58DI6QiZpAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 002/378] powerpc/uaccess: Fix inline assembly for clang build on PPC32
-Date: Tue, 17 Mar 2026 17:29:19 +0100
-Message-ID: <20260317163007.057009911@linuxfoundation.org>
+Subject: [PATCH 6.19 020/378] ASoC: cs42l43: Report insert for exotic peripherals
+Date: Tue, 17 Mar 2026 17:29:37 +0100
+Message-ID: <20260317163007.718415973@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,90 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 0ee95a1d458630272d0415d0ffa9424fcb606c90 ]
+[ Upstream commit 6510e1324bcdc8caf21f6d17efe27604c48f0d64 ]
 
-Test robot reports the following error with clang-16.0.6:
+For some exotic peripherals the type detect can return a reserved value
+of 0x4. This will currently return an error and not report anything to
+user-space, update this to report the insert normally.
 
-   In file included from kernel/rseq.c:75:
-   include/linux/rseq_entry.h:141:3: error: invalid operand for instruction
-                   unsafe_get_user(offset, &ucs->post_commit_offset, efault);
-                   ^
-   include/linux/uaccess.h:608:2: note: expanded from macro 'unsafe_get_user'
-           arch_unsafe_get_user(x, ptr, local_label);      \
-           ^
-   arch/powerpc/include/asm/uaccess.h:518:2: note: expanded from macro 'arch_unsafe_get_user'
-           __get_user_size_goto(__gu_val, __gu_addr, sizeof(*(p)), e); \
-           ^
-   arch/powerpc/include/asm/uaccess.h:284:2: note: expanded from macro '__get_user_size_goto'
-           __get_user_size_allowed(x, ptr, size, __gus_retval);    \
-           ^
-   arch/powerpc/include/asm/uaccess.h:275:10: note: expanded from macro '__get_user_size_allowed'
-           case 8: __get_user_asm2(x, (u64 __user *)ptr, retval);  break;  \
-                   ^
-   arch/powerpc/include/asm/uaccess.h:258:4: note: expanded from macro '__get_user_asm2'
-                   "       li %1+1,0\n"                    \
-                    ^
-   <inline asm>:7:5: note: instantiated into assembly here
-           li 31+1,0
-              ^
-   1 error generated.
-
-On PPC32, for 64 bits vars a pair of registers is used. Usually the
-lower register in the pair is the high part and the higher register is
-the low part. GCC uses r3/r4 ... r11/r12 ... r14/r15 ... r30/r31
-
-In older kernel code inline assembly was using %1 and %1+1 to represent
-64 bits values. However here it looks like clang uses r31 as high part,
-allthough r32 doesn't exist hence the error.
-
-Allthoug %1+1 should work, most places now use %L1 instead of %1+1, so
-let's do the same here.
-
-With that change, the build doesn't fail anymore and a disassembly shows
-clang uses r17/r18 and r31/r14 pair when GCC would have used r16/r17 and
-r30/r31:
-
-	Disassembly of section .fixup:
-
-	00000000 <.fixup>:
-	   0:	38 a0 ff f2 	li      r5,-14
-	   4:	3a 20 00 00 	li      r17,0
-	   8:	3a 40 00 00 	li      r18,0
-	   c:	48 00 00 00 	b       c <.fixup+0xc>
-				c: R_PPC_REL24	.text+0xbc
-	  10:	38 a0 ff f2 	li      r5,-14
-	  14:	3b e0 00 00 	li      r31,0
-	  18:	39 c0 00 00 	li      r14,0
-	  1c:	48 00 00 00 	b       1c <.fixup+0x1c>
-				1c: R_PPC_REL24	.text+0x144
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202602021825.otcItxGi-lkp@intel.com/
-Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8ca3a657a650e497a96bfe7acde2f637dadab344.1770103646.git.chleroy@kernel.org
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260223093616.3800350-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/uaccess.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/codecs/cs42l43-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
-index 3e622e647d622..f77c503ecc102 100644
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -253,7 +253,7 @@ __gus_failed:								\
- 		".section .fixup,\"ax\"\n"		\
- 		"4:	li %0,%3\n"			\
- 		"	li %1,0\n"			\
--		"	li %1+1,0\n"			\
-+		"	li %L1,0\n"			\
- 		"	b 3b\n"				\
- 		".previous\n"				\
- 		EX_TABLE(1b, 4b)			\
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index b83bc4de1301d..3e04e6897b142 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -699,6 +699,7 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
+ 	switch (type & CS42L43_HSDET_TYPE_STS_MASK) {
+ 	case 0x0: // CTIA
+ 	case 0x1: // OMTP
++	case 0x4:
+ 		return cs42l43_run_load_detect(priv, true);
+ 	case 0x2: // 3-pole
+ 		return cs42l43_run_load_detect(priv, false);
 -- 
 2.51.0
 
