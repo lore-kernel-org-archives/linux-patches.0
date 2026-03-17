@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED103F7A9D;
-	Tue, 17 Mar 2026 16:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77A9A3F7E63;
+	Tue, 17 Mar 2026 16:57:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766647; cv=none; b=fylH7og7+Kqf6SDd3kRBAfH3HFSnHHZn43b5QfC26h+I5TQRNsVaPd+B/im9A4U83eQyB53cZ4FVr62TvEezYvcQagpLfAW/Opf25aYfMQyenOaJaC2/YDrrsvmGQkwicbodZm0+lYxxk4H4qeF8gS1WavpBGdbad0dbHEb3YoY=
+	t=1773766651; cv=none; b=EAp0dQufg7U3EoV9jFDesal08Gp1xPiECDAMEc40ymxcF0nNRy79htm9co9LWdaAmlTOcevzRG9AP+3AKcJ7HStBZHM32rQvDTB+6mpd7+R7M/mGoIJkBngDYnnG4x4nG+bpSUkYqgIxZtQ4Z23phIm8It4Ae/YHa7iIRq74rLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766647; c=relaxed/simple;
-	bh=EvmKxSUMuTfBaadqsNg9zb6BLzBnTOFIWYUdlbqn/sA=;
+	s=arc-20240116; t=1773766651; c=relaxed/simple;
+	bh=UlvyNl4OgH2sr4uV7XhmR42hAaVaxzDfhFl497AuWPU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uDVxrHczvzsUdkO9SgG+sETI0h3vEq19bcA8aP4JCFeECyHTm7ttj5nbo5UXUDsGK75hgUCBhwUb7i/NeuTtwLZ8B4d5h7ICTL2FYHeNWgrenRkrXPlXvP9UYPNKQAN7F9T0OdHhtbdvJpxi5qDyC1gTW4/0j9a5luHQDXXDGWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSmSNA3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=afnSQZbAgxNmkr7+4IQ5Gi0MRTb2japDXRK/Hfwq2DK3trFGfn2X5RoAwzYVRgMp0VrBngd/BazX3AOWm+ulVATpvzd3Vk5q4CFKy2Zi91BRCue1vqnl9EFD34gzMAvU2qWqPMHGUSvgS68RUmS+B+jgBAeZH/oxtwWGc71DEas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bFUe6ekU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSmSNA3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40BDCC2BCB3;
-	Tue, 17 Mar 2026 16:57:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bFUe6ekU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A20EC2BCB2;
+	Tue, 17 Mar 2026 16:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766647;
-	bh=EvmKxSUMuTfBaadqsNg9zb6BLzBnTOFIWYUdlbqn/sA=;
+	s=korg; t=1773766651;
+	bh=UlvyNl4OgH2sr4uV7XhmR42hAaVaxzDfhFl497AuWPU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSmSNA3YrC6elzlYJVtk5QX9zn5AnaogBg6E/MetQop4W/liDVZbLu0Qlck5u/AMS
-	 p3Cq/pvBFh8H4q1mRPK5JQR34TDaXD5umP87V0VIQ2Pfy1/FzVrxOEMyfnK6/q/NUC
-	 VZjM6tN6dIiR3Mi485UPo/A3N9jHZUiP4mt95IEc=
+	b=bFUe6ekUet19pnoKob44CcmsYWKzNmiOFzbeFyjmdihPMf18E/3L1XUGgmUhSZtHz
+	 q4s0olWaVbiym52Vn1Dy1xb1QVHLMj9mYknfgTK8xi6kbqN9JzsA4bFIdMJPRMSQoJ
+	 Mm+sFi+PZaCgLSslhBZohoQiuzfp7yfO0YjZQ/WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 291/378] smb: server: fix use-after-free in smb2_open()
-Date: Tue, 17 Mar 2026 17:34:08 +0100
-Message-ID: <20260317163017.717052046@linuxfoundation.org>
+Subject: [PATCH 6.19 292/378] ksmbd: Dont log keys in SMB3 signing and encryption key generation
+Date: Tue, 17 Mar 2026 17:34:09 +0100
+Message-ID: <20260317163017.752998906@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,44 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit 1e689a56173827669a35da7cb2a3c78ed5c53680 upstream.
+commit 441336115df26b966575de56daf7107ed474faed upstream.
 
-The opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is
-dereferenced after rcu_read_unlock(), creating a use-after-free
-window.
+When KSMBD_DEBUG_AUTH logging is enabled, generate_smb3signingkey() and
+generate_smb3encryptionkey() log the session, signing, encryption, and
+decryption key bytes. Remove the logs to avoid exposing credentials.
 
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
 Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/smb/server/auth.c |   22 ++--------------------
+ 1 file changed, 2 insertions(+), 20 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3616,10 +3616,8 @@ int smb2_open(struct ksmbd_work *work)
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -589,12 +589,8 @@ static int generate_smb3signingkey(struc
+ 	if (!(conn->dialect >= SMB30_PROT_ID && signing->binding))
+ 		memcpy(chann->smb3signingkey, key, SMB3_SIGN_KEY_SIZE);
  
- reconnected_fp:
- 	rsp->StructureSize = cpu_to_le16(89);
--	rcu_read_lock();
--	opinfo = rcu_dereference(fp->f_opinfo);
-+	opinfo = opinfo_get(fp);
- 	rsp->OplockLevel = opinfo != NULL ? opinfo->level : 0;
--	rcu_read_unlock();
- 	rsp->Flags = 0;
- 	rsp->CreateAction = cpu_to_le32(file_info);
- 	rsp->CreationTime = cpu_to_le64(fp->create_time);
-@@ -3660,6 +3658,7 @@ reconnected_fp:
- 		next_ptr = &lease_ccontext->Next;
- 		next_off = conn->vals->create_lease_size;
- 	}
-+	opinfo_put(opinfo);
+-	ksmbd_debug(AUTH, "dumping generated AES signing keys\n");
++	ksmbd_debug(AUTH, "generated SMB3 signing key\n");
+ 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
+-	ksmbd_debug(AUTH, "Session Key   %*ph\n",
+-		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
+-	ksmbd_debug(AUTH, "Signing Key   %*ph\n",
+-		    SMB3_SIGN_KEY_SIZE, key);
+ 	return 0;
+ }
  
- 	if (maximal_access_ctxt) {
- 		struct create_context *mxac_ccontext;
+@@ -652,23 +648,9 @@ static void generate_smb3encryptionkey(s
+ 		     ptwin->decryption.context,
+ 		     sess->smb3decryptionkey, SMB3_ENC_DEC_KEY_SIZE);
+ 
+-	ksmbd_debug(AUTH, "dumping generated AES encryption keys\n");
++	ksmbd_debug(AUTH, "generated SMB3 encryption/decryption keys\n");
+ 	ksmbd_debug(AUTH, "Cipher type   %d\n", conn->cipher_type);
+ 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
+-	ksmbd_debug(AUTH, "Session Key   %*ph\n",
+-		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
+-	if (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
+-	    conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM) {
+-		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
+-			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3encryptionkey);
+-		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
+-			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3decryptionkey);
+-	} else {
+-		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
+-			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3encryptionkey);
+-		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
+-			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3decryptionkey);
+-	}
+ }
+ 
+ void ksmbd_gen_smb30_encryptionkey(struct ksmbd_conn *conn,
 
 
