@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5274B264A9D;
-	Tue, 17 Mar 2026 16:37:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EA83EB7F1;
+	Tue, 17 Mar 2026 16:37:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765438; cv=none; b=aF1Gw5GkBjUim47xS7QV456h4t1SVEeW4ZdQ2TGT++9EYrqwOmDR3PDSOdxlAzbQlPsP+EUFt/LHp9PB6f811wAmzulOcWexpEUrSwHVc97jJu5SOaM2c+IZo2k40BqNuSbspbKgVsqUfWc+K/YgHNHTFeLu2DtrSfATjv0uVRY=
+	t=1773765442; cv=none; b=u41oqd3GX04SV14IKBBvPm9NLumULvnHSj12/9mVXeu56g7hp6eBurn6vicya1rraG0Mnyv2ziF3iUsFBE0zyRFn8u8blPW41IlYXOA2RtMATKGdsylTNvsX72M/S2Q4n47rmtC6uYBcJICFgAnObLbB6odj5WTvuHCBybK0ZB0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765438; c=relaxed/simple;
-	bh=Nt1QBZbpBfk71m2yN58VkX7lhapHB3GWhFJbntOCJig=;
+	s=arc-20240116; t=1773765442; c=relaxed/simple;
+	bh=QzOcZ0KkU94BcnaaROJD1j3rLzynqtm/mQaaEWdLkIg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S4MzglKl9DouqzPKvqu1/+Va8kr6I4E7wH34kVXYAaf1oe4cCfweFm8/eDi/rmuDbmNvYcEtVlUOlRYIUuxpB3wnR6a6oK3XqFl1R1aQQrO4jIbdlbY6WJGaBQSNncezHpmto08nDtIQj8wfLhCpAGL6P4PbjqT81UCiqI66sds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dWKtYxj5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uFUwYsGkbKKeoPcBEEp5egSbZMLvHSIqsEAZkUbgpAdydpv2mKTvV72XBil50VcYegIhPnq7qrUMLQUjAtDVCd3RZ5AY7OJNyHw/HrVlXjKy0abyLOQ0EP1YoR7W+mx4PdQTM6+KKzh3cy7QOpWOH6Kb/y87VG8VcmZO1gNhTOA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQLAlDsn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dWKtYxj5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D0AC4CEF7;
-	Tue, 17 Mar 2026 16:37:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQLAlDsn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0E5C4CEF7;
+	Tue, 17 Mar 2026 16:37:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765437;
-	bh=Nt1QBZbpBfk71m2yN58VkX7lhapHB3GWhFJbntOCJig=;
+	s=korg; t=1773765441;
+	bh=QzOcZ0KkU94BcnaaROJD1j3rLzynqtm/mQaaEWdLkIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dWKtYxj5i0VvveHC1JVetaSzV8B4BysENtPQnt6vqYTt9g35iREA+kUtEnyAfygpn
-	 C6YSxtnnjtnBXvMDMKgwzem81KGJlZExyqemVww3CuQ46ava36ieMVyEm4mQvBb3X9
-	 uQcjM2+18Hp0qp2Z2k+VLhxMZkTUw4ds2k9lK5yE=
+	b=eQLAlDsnsDB/5UX8xDAb31nakDRs2AYVQYF+m3ptsx924WCaQz88z7PaDs6v8u8/S
+	 hJTM6N2ViCuiyNIiaYoKbESazQtY2PhsLkRdN2bRVW3/+X9+VT8SUverKE9dElpAZv
+	 Dnzxi+BZOIjZFVAn91e9K+OHY4c1mjel88a/lVG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Won Jung <wone.jung@samsung.com>,
-	Peter Wang <peter.wang@mediatek.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com,
+	Edward Adam Davis <eadavis@qq.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 011/378] scsi: ufs: core: Reset urgent_bkops_lvl to allow runtime PM power mode
-Date: Tue, 17 Mar 2026 17:29:28 +0100
-Message-ID: <20260317163007.387491798@linuxfoundation.org>
+Subject: [PATCH 6.19 012/378] fs: init flags_valid before calling vfs_fileattr_get
+Date: Tue, 17 Mar 2026 17:29:29 +0100
+Message-ID: <20260317163007.424676690@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,72 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Won Jung <wone.jung@samsung.com>
+From: Edward Adam Davis <eadavis@qq.com>
 
-[ Upstream commit 5b313760059c9df7d60aba7832279bcb81b4aec0 ]
+[ Upstream commit cb184dd19154fc486fa3d9e02afe70a97e54e055 ]
 
-Ensures that UFS Runtime PM can achieve power saving after System PM
-suspend by resetting hba->urgent_bkops_lvl. Also modify the
-ufshcd_bkops_exception_event_handler to avoid setting urgent_bkops_lvl when
-status is 0, which helps maintain optimal power management.
+syzbot reported a uninit-value bug in [1].
 
-On UFS devices supporting UFSHCD_CAP_AUTO_BKOPS_SUSPEND, a BKOPS exception
-event can lead to a situation where UFS Runtime PM can't enter low-power
-mode states even after the BKOPS exception has been resolved.
+Similar to the "*get" context where the kernel's internal file_kattr
+structure is initialized before calling vfs_fileattr_get(), we should
+use the same mechanism when using fa.
 
-BKOPS exception with bkops status 0 occurs, the driver logs:
+[1]
+BUG: KMSAN: uninit-value in fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
+ fuse_fileattr_get+0xeb4/0x1450 fs/fuse/ioctl.c:517
+ vfs_fileattr_get fs/file_attr.c:94 [inline]
+ __do_sys_file_getattr fs/file_attr.c:416 [inline]
 
- "ufshcd_bkops_exception_event_handler: device raised urgent BKOPS exception for bkops status 0"
+Local variable fa.i created at:
+ __do_sys_file_getattr fs/file_attr.c:380 [inline]
+ __se_sys_file_getattr+0x8c/0xbd0 fs/file_attr.c:372
 
-When a BKOPS exception occurs, ufshcd_bkops_exception_event_handler() reads
-the BKOPS status and sets hba->urgent_bkops_lvl to BKOPS_STATUS_NO_OP(0).
-This allows the device to perform Runtime PM without changing the UFS power
-mode.  (__ufshcd_wl_suspend(hba, UFS_RUNTIME_PM))
-
-During system PM suspend, ufshcd_disable_auto_bkops() is called, disabling
-auto bkops. After UFS System PM Resume, when runtime PM attempts to suspend
-again, ufshcd_urgent_bkops() is invoked. Since hba->urgent_bkops_lvl
-remains at BKOPS_STATUS_NO_OP(0), ufshcd_enable_auto_bkops() is triggered.
-
-However, in ufshcd_bkops_ctrl(), the driver compares the current BKOPS
-status with hba->urgent_bkops_lvl, and only enables auto bkops if
-curr_status >= hba->urgent_bkops_lvl.  Since both values are 0, the
-condition is met
-
-As a result, __ufshcd_wl_suspend(hba, UFS_RUNTIME_PM) skips power mode
-transitions and remains in an active state, preventing power saving even
-though no urgent BKOPS condition exists.
-
-Signed-off-by: Won Jung <wone.jung@samsung.com>
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Link: https://patch.msgid.link/1891546521.01770806581968.JavaMail.epsvc@epcpadp2new
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=7c31755f2cea07838b0c
+Tested-by: syzbot+7c31755f2cea07838b0c@syzkaller.appspotmail.com
+Signed-off-by: Edward Adam Davis <eadavis@qq.com>
+Link: https://patch.msgid.link/tencent_B6C4583771D76766D71362A368696EC3B605@qq.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/file_attr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 80fafad339c75..6f9c5d7012812 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5971,6 +5971,7 @@ static int ufshcd_disable_auto_bkops(struct ufs_hba *hba)
+diff --git a/fs/file_attr.c b/fs/file_attr.c
+index 13cdb31a3e947..4889cf59b2562 100644
+--- a/fs/file_attr.c
++++ b/fs/file_attr.c
+@@ -377,7 +377,7 @@ SYSCALL_DEFINE5(file_getattr, int, dfd, const char __user *, filename,
+ 	struct filename *name __free(putname) = NULL;
+ 	unsigned int lookup_flags = 0;
+ 	struct file_attr fattr;
+-	struct file_kattr fa;
++	struct file_kattr fa = { .flags_valid = true }; /* hint only */
+ 	int error;
  
- 	hba->auto_bkops_enabled = false;
- 	trace_ufshcd_auto_bkops_state(hba, "Disabled");
-+	hba->urgent_bkops_lvl = BKOPS_STATUS_PERF_IMPACT;
- 	hba->is_urgent_bkops_lvl_checked = false;
- out:
- 	return err;
-@@ -6074,7 +6075,7 @@ static void ufshcd_bkops_exception_event_handler(struct ufs_hba *hba)
- 	 * impacted or critical. Handle these device by determining their urgent
- 	 * bkops status at runtime.
- 	 */
--	if (curr_status < BKOPS_STATUS_PERF_IMPACT) {
-+	if ((curr_status > BKOPS_STATUS_NO_OP) && (curr_status < BKOPS_STATUS_PERF_IMPACT)) {
- 		dev_err(hba->dev, "%s: device raised urgent BKOPS exception for bkops status %d\n",
- 				__func__, curr_status);
- 		/* update the current status as the urgent bkops level */
+ 	BUILD_BUG_ON(sizeof(struct file_attr) < FILE_ATTR_SIZE_VER0);
 -- 
 2.51.0
 
