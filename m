@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5B43246F8;
-	Tue, 17 Mar 2026 17:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2276B191F94;
+	Tue, 17 Mar 2026 17:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767931; cv=none; b=uYYP3yPFBobwz5VfplUKXbMCBtARSe05k/7fObWJASkFqvOBwmoP5Y8vWr2oeZ2olYi74Wq2yffPR1OtSwJAAY4+ptys11Hgrk1b/XCZb2puQoqlaYH/+2/nXqkmckjBG/XA6Vp56abll3s02YZ4DkhQ0yVBezRj7j7lS16iJ14=
+	t=1773767935; cv=none; b=ENW9yqEOfsKU63SQiwOK4YAMJSlHfZvu4Dil4ZV/13zwk+HeUq6e5CFe14FpMsvPYFZZCEY8h+CIWPhl16QtIFebb1Ke7k/6fDmm9gCAe/lzAxUXwh8msdhveHfChbcrqTk4MJuiKOw1uguvLhQnBIxAV2kJyEaJwwkLpIwe43s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767931; c=relaxed/simple;
-	bh=usv8McoHmnnnP7PSJ0MNiLBSJNowkF9Fj45X0Zq+9To=;
+	s=arc-20240116; t=1773767935; c=relaxed/simple;
+	bh=6NiVTJ2l03YA3IvUPda/7j8uEyQn7ccOJVLHcPg12p4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aQ8eH6uMVpEqZ/TUXN2md6AUhApRy2yOqTzBZlEdufyJrflofMcFTUTvnBujTjWGuFSkUHUMCvHuod2MGGq7kkShpa5ceBI+xZB683jPB1yql1jdc6qR6h61uPdCNPY0t9Pu3r7GnJ3F5ztRPvh3YN7YnwkKpuq+vBkq925qLnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LZt1l0l2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=B494qbhbp4x+Q1zqsQLQ6vnyWoIjVgRBF495evKX+YXyRUL5otz6RAahMZNyVPpnfKkYh1YhgQxChV5Br7rO1oLmTtTrVYNaMhHfju9haiRdGbqBh/avki45/H2woPdPpE+NFXAk/GKFp/1RmsEa76RsiMfvDSq3o1W9hDbVmiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AK9uhr6g; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LZt1l0l2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0F76C4CEF7;
-	Tue, 17 Mar 2026 17:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AK9uhr6g"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54300C4CEF7;
+	Tue, 17 Mar 2026 17:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767931;
-	bh=usv8McoHmnnnP7PSJ0MNiLBSJNowkF9Fj45X0Zq+9To=;
+	s=korg; t=1773767934;
+	bh=6NiVTJ2l03YA3IvUPda/7j8uEyQn7ccOJVLHcPg12p4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZt1l0l2nspYwFoV1nVaFx5zS2J6KkyeXyejfGMaN88A+EyfUFlz1f+mcMgVXa5m2
-	 a2O9sp7MXyFF9+oaPeXlqZwzWvr8DtSLweZS/RTl8/58V7zAc2pj1bflZEzM7Lvxie
-	 WrZxM2Z1gS4FkrIGF2nmXu+St5JT13cFOOQQtExc=
+	b=AK9uhr6gDrlxnhHZ9/III0/Le8GaGdbmDtULTXNGCAiBoqFsDVhD1Fb4idWnjxDnD
+	 3MZHe8fJm/QEYQdx/duajsvBQ97eYZqEsl4iPzPmLzZBYG18Z6MV4LU/g9mCphpHHY
+	 7VMRBDdV/ScyBkE3s/6Hxrfbuef+nRtJFMhZUw20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/333] i3c: dw-i3c-master: Set SIR_REJECT in DAT on device attach and reattach
-Date: Tue, 17 Mar 2026 17:33:24 +0100
-Message-ID: <20260317163005.846454275@linuxfoundation.org>
+	Animesh Manna <animesh.manna@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	=?UTF-8?q?Micha=C5=82=20Grzelak?= <michal.grzelak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.18 193/333] drm/i915/alpm: ALPM disable fixes
+Date: Tue, 17 Mar 2026 17:33:42 +0100
+Message-ID: <20260317163006.513741346@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -46,62 +47,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-[ Upstream commit f311a05784634febd299f03476b80f3f18489767 ]
+commit eb4a7139e97374f42b7242cc754e77f1623fbcd5 upstream.
 
-The DesignWare I3C master controller ACKs IBIs as soon as a valid
-Device Address Table (DAT) entry is present. This can create a race
-between device attachment (after DAA) and the point where the client
-driver enables IBIs via i3c_device_enable_ibi().
+PORT_ALPM_CTL is supposed to be written only before link training. Remove
+writing it from ALPM disable.
 
-Set DEV_ADDR_TABLE_SIR_REJECT in the DAT entry during
-attach_i3c_dev() and reattach_i3c_dev() so that IBIs are rejected
-by default. The bit is managed thereafter by the existing
-dw_i3c_master_set_sir_enabled() function, which clears it in
-enable_ibi() after ENEC is issued, and restores it in disable_ibi()
-after DISEC.
+Also clearing ALPM_CTL_ALPM_AUX_LESS_ENABLE and is not about disabling ALPM
+but switching to AUX-Wake ALPM. Stop touching this bit on ALPM disable.
 
-Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
-Signed-off-by: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/53f5b8cbdd8af789ec38b95b02873f32f9182dd6.1770962368.git.adrianhoyin.ng@altera.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7153
+Fixes: 1ccbf135862b ("drm/i915/psr: Enable ALPM on source side for eDP Panel replay")
+Cc: Animesh Manna <animesh.manna@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: <stable@vger.kernel.org> # v6.10+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Michał Grzelak <michal.grzelak@intel.com>
+Link: https://patch.msgid.link/20260212062731.397801-1-jouni.hogander@intel.com
+(cherry picked from commit 008304c9ae75c772d3460040de56e12112cdf5e6)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/display/intel_alpm.c |    7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index c06595cb74010..41ddac1d49d5e 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -1005,7 +1005,7 @@ static int dw_i3c_master_reattach_i3c_dev(struct i3c_dev_desc *dev,
- 		master->free_pos &= ~BIT(pos);
- 	}
+--- a/drivers/gpu/drm/i915/display/intel_alpm.c
++++ b/drivers/gpu/drm/i915/display/intel_alpm.c
+@@ -577,12 +577,7 @@ void intel_alpm_disable(struct intel_dp
+ 	mutex_lock(&intel_dp->alpm_parameters.lock);
  
--	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr),
-+	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr) | DEV_ADDR_TABLE_SIR_REJECT,
- 	       master->regs +
- 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
+ 	intel_de_rmw(display, ALPM_CTL(display, cpu_transcoder),
+-		     ALPM_CTL_ALPM_ENABLE | ALPM_CTL_LOBF_ENABLE |
+-		     ALPM_CTL_ALPM_AUX_LESS_ENABLE, 0);
+-
+-	intel_de_rmw(display,
+-		     PORT_ALPM_CTL(cpu_transcoder),
+-		     PORT_ALPM_CTL_ALPM_AUX_LESS_ENABLE, 0);
++		     ALPM_CTL_ALPM_ENABLE | ALPM_CTL_LOBF_ENABLE, 0);
  
-@@ -1034,7 +1034,7 @@ static int dw_i3c_master_attach_i3c_dev(struct i3c_dev_desc *dev)
- 	master->free_pos &= ~BIT(pos);
- 	i3c_dev_set_master_data(dev, data);
- 
--	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr),
-+	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr) | DEV_ADDR_TABLE_SIR_REJECT,
- 	       master->regs +
- 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
- 
--- 
-2.51.0
-
+ 	drm_dbg_kms(display->drm, "Disabling ALPM\n");
+ 	mutex_unlock(&intel_dp->alpm_parameters.lock);
 
 
