@@ -1,46 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04931A9B58;
-	Tue, 17 Mar 2026 17:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C0C255F2C;
+	Tue, 17 Mar 2026 17:16:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767776; cv=none; b=GJjY5A0FOJ6XnxSHFD9jdiX/QzNRyBfFnuLBNgNNSNz/pMhCc2Kjt5JCKh/Z7CdiGvls1CK6u04VpY0SDHlK5nlN8y9eN75XPJJxWjhHVXin1tvE9ki7LXjBC9isfao1aLFUtP76/2CXOMs+DWFapxPuY7CRdU7f3+iToxlbWAM=
+	t=1773767781; cv=none; b=Qb6a42BupA1uP8Q1jA3I3zmQ0rkSZKockCfo63Vt5GC6OrFselbWJTGxDGGf4HTivGSW13j8ZMVKrpDRFiObd9f+UxyWHCHl4jau52Z/CCNoznyRqSc4cO3SeP0nEvdVUpxVHDIk6T7bY3j+D42SaLYMqpk3CAxG5f9pAuWdBHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767776; c=relaxed/simple;
-	bh=l++l+rw1mqmA2z7y8XzB5UEqCjMwgpUBMM3M7l5T6/8=;
+	s=arc-20240116; t=1773767781; c=relaxed/simple;
+	bh=XjipR3gl1dC+jGnjsZ461aSZavw9cYUdGqLSw2d9p6U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nfg5ZjfvmauN2KHz9nWq9EK2VagPsTjyS6zlZGZbc7Figruvt0GdcKIQ+CRSpUecGkykL9reJ0wU/oproPaFMjOPJ5pzg2l3ZZ4cQUVOCL3Kpo4nbJmgAmuN7f9yzcB3U1WEKdI3t/cY2Tb8+ZFt2n6/IRrYbPTwspteYWju0Po=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nLk74DnU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ewycZ5GnXzh/N836A5ma9XXgmtEcNxF8S1vgtFJiB8uKMmVyuPKDOeJ/C+sYyljaX1QF/f/Vq7tzvnBopFzUApgTucSfbESMGhBARq3s3Yx+74PgD1tro7DZCdTvh7/gkee7fI760K7cGgHts3ThGpcnrDvZ74xBrtJqsRRjUbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfU8tS9T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nLk74DnU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7979C4CEF7;
-	Tue, 17 Mar 2026 17:16:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfU8tS9T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC49C4CEF7;
+	Tue, 17 Mar 2026 17:16:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767776;
-	bh=l++l+rw1mqmA2z7y8XzB5UEqCjMwgpUBMM3M7l5T6/8=;
+	s=korg; t=1773767781;
+	bh=XjipR3gl1dC+jGnjsZ461aSZavw9cYUdGqLSw2d9p6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nLk74DnUaBIfuZ52tsAoKVZtKIQ6JU8NAAmhbGhMZaPP9K4DX82F6iwLpdJIdwdj5
-	 umzNbvp7AsoG00yR1q3INmqZTAoga0xRx4r1utQQAdNdbwJUCn+gYVAmkSae+xnFDP
-	 AVhkP1qChJGfPPiEXu1YjekveAnA1MYhiZbwNvQ0=
+	b=yfU8tS9TIwKNcjHr4hbZG0U0BaU0qoCelZsB/Z1dGgJYF/aD2R7tWxuH5oWQjZKgK
+	 FCwmQsgwq4FiR897+XsxpBhkHvUu7MwNDEew5ZWYaWPLGUWP/210ev1zqUIBP2tVyC
+	 HggkpI6gT2j4dUzOD51qpc8oTICRS6RqpcHK1kzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kalesh Singh <kaleshsingh@google.com>,
-	Zi Yan <ziy@nvidia.com>,
-	SeongJae Park <sj@kernel.org>,
-	Pedro Falcato <pfalcato@suse.de>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Minchan Kim <minchan@kernel.org>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 156/333] mm/tracing: rss_stat: ensure curr is false from kthread context
-Date: Tue, 17 Mar 2026 17:33:05 +0100
-Message-ID: <20260317163005.144680485@linuxfoundation.org>
+Subject: [PATCH 6.18 157/333] mm/kfence: fix KASAN hardware tag faults during late enablement
+Date: Tue, 17 Mar 2026 17:33:06 +0100
+Message-ID: <20260317163005.182713939@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -59,79 +56,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kalesh Singh <kaleshsingh@google.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 079c24d5690262e83ee476e2a548e416f3237511 upstream.
+commit d155aab90fffa00f93cea1f107aef0a3d548b2ff upstream.
 
-The rss_stat trace event allows userspace tools, like Perfetto [1], to
-inspect per-process RSS metric changes over time.
+When KASAN hardware tags are enabled, re-enabling KFENCE late (via
+/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
 
-The curr field was introduced to rss_stat in commit e4dcad204d3a
-("rss_stat: add support to detect RSS updates of external mm").  Its
-intent is to indicate whether the RSS update is for the mm_struct of the
-current execution context; and is set to false when operating on a remote
-mm_struct (e.g., via kswapd or a direct reclaimer).
+This happens because the KFENCE pool and metadata are allocated via the
+page allocator, which tags the memory, while KFENCE continues to access it
+using untagged pointers during initialization.
 
-However, an issue arises when a kernel thread temporarily adopts a user
-process's mm_struct.  Kernel threads do not have their own mm_struct and
-normally have current->mm set to NULL.  To operate on user memory, they
-can "borrow" a memory context using kthread_use_mm(), which sets
-current->mm to the user process's mm.
+Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
+ensure the memory remains untagged, consistent with early allocations from
+memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
+__alloc_contig_verify_gfp_mask().
 
-This can be observed, for example, in the USB Function Filesystem (FFS)
-driver.  The ffs_user_copy_worker() handles AIO completions and uses
-kthread_use_mm() to copy data to a user-space buffer.  If a page fault
-occurs during this copy, the fault handler executes in the kthread's
-context.
-
-At this point, current is the kthread, but current->mm points to the user
-process's mm.  Since the rss_stat event (from the page fault) is for that
-same mm, the condition current->mm == mm becomes true, causing curr to be
-incorrectly set to true when the trace event is emitted.
-
-This is misleading because it suggests the mm belongs to the kthread,
-confusing userspace tools that track per-process RSS changes and
-corrupting their mm_id-to-process association.
-
-Fix this by ensuring curr is always false when the trace event is emitted
-from a kthread context by checking for the PF_KTHREAD flag.
-
-Link: https://lkml.kernel.org/r/20260219233708.1971199-1-kaleshsingh@google.com
-Link: https://perfetto.dev/ [1]
-Fixes: e4dcad204d3a ("rss_stat: add support to detect RSS updates of external mm")
-Signed-off-by: Kalesh Singh <kaleshsingh@google.com>
-Acked-by: Zi Yan <ziy@nvidia.com>
-Acked-by: SeongJae Park <sj@kernel.org>
-Reviewed-by: Pedro Falcato <pfalcato@suse.de>
-Cc: "David Hildenbrand (Arm)" <david@kernel.org>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Cc: Minchan Kim <minchan@kernel.org>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: <stable@vger.kernel.org>	[5.10+]
+Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/kmem.h |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ mm/kfence/core.c |   14 ++++++++------
+ mm/page_alloc.c  |    3 ++-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
---- a/include/trace/events/kmem.h
-+++ b/include/trace/events/kmem.h
-@@ -440,7 +440,13 @@ TRACE_EVENT(rss_stat,
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -951,14 +951,14 @@ static int kfence_init_late(void)
+ #ifdef CONFIG_CONTIG_ALLOC
+ 	struct page *pages;
  
- 	TP_fast_assign(
- 		__entry->mm_id = mm_ptr_to_hash(mm);
--		__entry->curr = !!(current->mm == mm);
-+		/*
-+		 * curr is true if the mm matches the current task's mm_struct.
-+		 * Since kthreads (PF_KTHREAD) have no mm_struct of their own
-+		 * but can borrow one via kthread_use_mm(), we must filter them
-+		 * out to avoid incorrectly attributing the RSS update to them.
-+		 */
-+		__entry->curr = current->mm == mm && !(current->flags & PF_KTHREAD);
- 		__entry->member = member;
- 		__entry->size = (percpu_counter_sum_positive(&mm->rss_stat[member])
- 							    << PAGE_SHIFT);
+-	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (!pages)
+ 		return -ENOMEM;
+ 
+ 	__kfence_pool = page_to_virt(pages);
+-	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (pages)
+ 		kfence_metadata_init = page_to_virt(pages);
+ #else
+@@ -968,11 +968,13 @@ static int kfence_init_late(void)
+ 		return -EINVAL;
+ 	}
+ 
+-	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
++	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE,
++					  GFP_KERNEL | __GFP_SKIP_KASAN);
+ 	if (!__kfence_pool)
+ 		return -ENOMEM;
+ 
+-	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE, GFP_KERNEL);
++	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE,
++						 GFP_KERNEL | __GFP_SKIP_KASAN);
+ #endif
+ 
+ 	if (!kfence_metadata_init)
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -6888,7 +6888,8 @@ static int __alloc_contig_verify_gfp_mas
+ {
+ 	const gfp_t reclaim_mask = __GFP_IO | __GFP_FS | __GFP_RECLAIM;
+ 	const gfp_t action_mask = __GFP_COMP | __GFP_RETRY_MAYFAIL | __GFP_NOWARN |
+-				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO;
++				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO |
++				  __GFP_SKIP_KASAN;
+ 	const gfp_t cc_action_mask = __GFP_RETRY_MAYFAIL | __GFP_NOWARN;
+ 
+ 	/*
 
 
