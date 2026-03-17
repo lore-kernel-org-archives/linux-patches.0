@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBDF43F54B5;
-	Tue, 17 Mar 2026 16:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D5F3EAC6F;
+	Tue, 17 Mar 2026 16:52:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766342; cv=none; b=ozYE6AFolW5nV+D4peHhueoGofdsnUUh4+Q6o3TEeSj5vSRJz4tKGh+r9qN3NFsLe5pNrUD9vqZfXq/QvX2/YpuG+xJ2Xpx08VFSZSVcmJQRl6DqpWl6cJUedoXEFkRTcCzPPBTibNc5YnYP2HXyWr7UwGJY5e0LgNSTLK9yZa0=
+	t=1773766346; cv=none; b=OeL5Q/Y10jlu/U9rssXhxr4+8rRncirFXRKC6nH96VmtkNCsPgItrX8rdcahELDpoCgkZoqwd3xB1NpFdw0DnO2tri5DIgeScw30u8d1Taizray9WIpjttLI51MQHm9u/TPxz107rT//MqEQiV82DSp8WAFXwZvjbywxU/MyUhI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766342; c=relaxed/simple;
-	bh=DTYj8OI58soKfqmk/J1g6IAG7m6knwfjPhTOu5kW8Wg=;
+	s=arc-20240116; t=1773766346; c=relaxed/simple;
+	bh=xvnZ0k3Mp720xvn6VT2wMkf8h2pNmxjb97FdHdlrm08=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dbSvSiBcK1Nfiqj8Meh62BiEOf41tIJg8t6Dbpf2BgY7wpN4Yz+t13SBmX+SLz6WQkm9PCb+3paZZa//qNgjHPdoAhmVJkSlzrQO7SbjAGFKb4B3n4ubTg0d86pRzLMKh/fBC0OEm/oTL46iUPOieIfoMc3kHd8wj09IRb5j/i8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zm5wq+3A; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hS3QWFA5mqFV9UauN2UyB16vh2sSI/+8rACcAl73y+3n83EXLi1XS8W1hA47VVpKhF4mOsl8lOwQxOUK1CdU1EtUdioSUuohbwgsn+t41hLmIRNuQOaM7JigdFWG/Uo3UM39S2awhoLWUEvyUw3cv0RaELnKkHdaFNw58+80xhU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NBMtUE90; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zm5wq+3A"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFCBAC4CEF7;
-	Tue, 17 Mar 2026 16:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NBMtUE90"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A72C0C4CEF7;
+	Tue, 17 Mar 2026 16:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766342;
-	bh=DTYj8OI58soKfqmk/J1g6IAG7m6knwfjPhTOu5kW8Wg=;
+	s=korg; t=1773766346;
+	bh=xvnZ0k3Mp720xvn6VT2wMkf8h2pNmxjb97FdHdlrm08=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zm5wq+3Af18gZAGezKJVOtwZi2P7JH9UWazzJsUkGymgBjiutfVUaemTZ+IizjhMR
-	 xETFTxYKqm4moq1xpwhE9gHiHMxnxEr0QVH+a0Jvy1aSPPPKLDs40sFnfPxcR9Rnsq
-	 k3jsiIrIIwPsVrLPjFN4Fd+fmOCUV9JmAua4rTss=
+	b=NBMtUE90tId+MgoVUS7Y7TDYG101rA3h4RZUSA5IH5p57HZo1T98ELkMMwjXbo1mb
+	 lCtkXwslVVjNsKqzQBpv3HS5WSF62frj8/zdga7rboRhVYoiYLF2NJ3ej7id/9EveE
+	 OCwXXkprDPItDMLAwn1UCzMj7QQYSKxdTJQuAMxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abdelkader <osama.abdelkader@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.19 223/378] drm/bridge: samsung-dsim: Fix memory leak in error path
-Date: Tue, 17 Mar 2026 17:33:00 +0100
-Message-ID: <20260317163015.214981921@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.19 224/378] drm/bridge: ti-sn65dsi86: Enable HPD polling if IRQ is not used
+Date: Tue, 17 Mar 2026 17:33:01 +0100
+Message-ID: <20260317163015.250934040@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,87 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Osama Abdelkader <osama.abdelkader@gmail.com>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit 803ec1faf7c1823e6e3b1f2aaa81be18528c9436 upstream.
+commit 0b87d51690dd5131cbe9fbd23746b037aab89815 upstream.
 
-In samsung_dsim_host_attach(), drm_bridge_add() is called to add the
-bridge. However, if samsung_dsim_register_te_irq() or
-pdata->host_ops->attach() fails afterwards, the function returns
-without removing the bridge, causing a memory leak.
+Fallback to polling to detect hotplug events on systems without
+interrupts.
 
-Fix this by adding proper error handling with goto labels to ensure
-drm_bridge_remove() is called in all error paths. Also ensure that
-samsung_dsim_unregister_te_irq() is called if the attach operation
-fails after the TE IRQ has been registered.
+On systems where the interrupt line of the bridge is not connected,
+the bridge cannot notify hotplug events. Only add the
+DRM_BRIDGE_OP_HPD flag if an interrupt has been registered
+otherwise remain in polling mode.
 
-samsung_dsim_unregister_te_irq() function is moved without changes
-to be before samsung_dsim_host_attach() to avoid forward declaration.
-
-Fixes: e7447128ca4a ("drm: bridge: Generalize Exynos-DSI driver into a Samsung DSIM bridge")
-Cc: stable@vger.kernel.org
-Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Link: https://patch.msgid.link/20260209184115.10937-1-osama.abdelkader@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
+Cc: stable@vger.kernel.org # 6.16: 9133bc3f0564: drm/bridge: ti-sn65dsi86: Add
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[dianders: Adjusted Fixes/stable line based on discussion]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260206123758.374555-1-fra.schnyder@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/samsung-dsim.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/bridge/samsung-dsim.c
-+++ b/drivers/gpu/drm/bridge/samsung-dsim.c
-@@ -1881,6 +1881,14 @@ static int samsung_dsim_register_te_irq(
- 	return 0;
- }
- 
-+static void samsung_dsim_unregister_te_irq(struct samsung_dsim *dsi)
-+{
-+	if (dsi->te_gpio) {
-+		free_irq(gpiod_to_irq(dsi->te_gpio), dsi);
-+		gpiod_put(dsi->te_gpio);
-+	}
-+}
-+
- static int samsung_dsim_host_attach(struct mipi_dsi_host *host,
- 				    struct mipi_dsi_device *device)
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1415,6 +1415,7 @@ static int ti_sn_bridge_probe(struct aux
  {
-@@ -1955,13 +1963,13 @@ of_find_panel_or_bridge:
- 	if (!(device->mode_flags & MIPI_DSI_MODE_VIDEO)) {
- 		ret = samsung_dsim_register_te_irq(dsi, &device->dev);
- 		if (ret)
--			return ret;
-+			goto err_remove_bridge;
- 	}
+ 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(adev->dev.parent);
+ 	struct device_node *np = pdata->dev->of_node;
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
+ 	int ret;
  
- 	if (pdata->host_ops && pdata->host_ops->attach) {
- 		ret = pdata->host_ops->attach(dsi, device);
- 		if (ret)
--			return ret;
-+			goto err_unregister_te_irq;
- 	}
+ 	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+@@ -1433,8 +1434,9 @@ static int ti_sn_bridge_probe(struct aux
+ 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
  
- 	dsi->lanes = device->lanes;
-@@ -1969,14 +1977,13 @@ of_find_panel_or_bridge:
- 	dsi->mode_flags = device->mode_flags;
- 
- 	return 0;
--}
- 
--static void samsung_dsim_unregister_te_irq(struct samsung_dsim *dsi)
--{
--	if (dsi->te_gpio) {
--		free_irq(gpiod_to_irq(dsi->te_gpio), dsi);
--		gpiod_put(dsi->te_gpio);
--	}
-+err_unregister_te_irq:
-+	if (!(device->mode_flags & MIPI_DSI_MODE_VIDEO))
-+		samsung_dsim_unregister_te_irq(dsi);
-+err_remove_bridge:
-+	drm_bridge_remove(&dsi->bridge);
-+	return ret;
- }
- 
- static int samsung_dsim_host_detach(struct mipi_dsi_host *host,
+ 	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
+-		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
+-				    DRM_BRIDGE_OP_HPD;
++		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
++		if (client->irq)
++			pdata->bridge.ops |= DRM_BRIDGE_OP_HPD;
+ 		/*
+ 		 * If comms were already enabled they would have been enabled
+ 		 * with the wrong value of HPD_DISABLE. Update it now. Comms
 
 
