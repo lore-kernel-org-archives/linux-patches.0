@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E942F12B94;
-	Tue, 17 Mar 2026 16:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2A73EE1F3;
+	Tue, 17 Mar 2026 16:44:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765885; cv=none; b=iQBdTrpZNrB8HNYqxA77FVs+pvZFfK90FTAJsjEpISviinwQrQLjWgz6s3uQebkSVALX5rNOGCgTPPrF12jCjkDKFSsNH/xMUuVw4Zf46croeuEBlzXCrwgCeQEp1S02IsXSdqTXey1GtcqXXe0QBCzNgo5EFVd+GE5yeKAj2I0=
+	t=1773765888; cv=none; b=WJ3g7rdAEbZi4uQRWRqv2jeZRzB/vMTDhBi9UaeiSXkO8EAyVhXloXGubrrregMZsdw7xo2TB5WBYUAWy+sXebmVuhb/78ITB5NPXROqsoUZIsfBGNYqreWg2znu59jdZJIR4rQd3AiAFt+iEIjaldoSfjSMbt6egqirdoUihgs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765885; c=relaxed/simple;
-	bh=uBjGPQqOLihfMJrKV+CJoJ9lTIn841ZugsFUh9F2BmI=;
+	s=arc-20240116; t=1773765888; c=relaxed/simple;
+	bh=yHJb/SJNvGoQrXP597EolvGeHroQEV+/NzSe5sCY/D8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=o4gKtukwhdQfKsRhfuCkMjmPA05tyjJK8Q+qMeGjp5TF6SXisxiA/K6/VhBmTWGCT1q5gB+EJOpfALxcQnjhlrSx7gDLE/RlnSDcg6NJRIvABGmIu4CA8m9UGLS5hNh4rVNK4LAIr3fojtS7RWEV6JQxSysIwhdbXTeHj0Tq7TU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sllqlCjr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgH0e0S1XUKb/v4KhWfIxx0DrZs4l+dFkKJnaUSycsIRBSmIwP+K1VCvLaa5a2rpCHwy53N5+/Xgsgf0AqHP/tXF42lFKGdDifQzW0iyCGKmmDry+xsJ80junwl+58z0mtqTeY78bMQeSCjUVrS1LpkVjYGpNcHwh4Z/3zQFc8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZNcAq8ES; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sllqlCjr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5595FC4CEF7;
-	Tue, 17 Mar 2026 16:44:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZNcAq8ES"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12CE6C4CEF7;
+	Tue, 17 Mar 2026 16:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765884;
-	bh=uBjGPQqOLihfMJrKV+CJoJ9lTIn841ZugsFUh9F2BmI=;
+	s=korg; t=1773765888;
+	bh=yHJb/SJNvGoQrXP597EolvGeHroQEV+/NzSe5sCY/D8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sllqlCjrF0447+lcjyOrM6K9B39/SlpMgcnUYgOzq4EreWJ+qLeuXAMcGj8iuAqW/
-	 zuXifwWQRS9IqXs7ZVL/CklEJw0McnYXgC+yUtduXDUuZrkOmf4nv23l+NiDpRW4rc
-	 EUiR6h3xMvgEgmy6eedHTDsIhGH/0VmPJOMafrrs=
+	b=ZNcAq8ESHo5vy1wVmvvjd+WSm1+eyY2u9l8JFs5fm31X00lt/iQ4HsCrOQ8daeH0n
+	 n3EjKBAM31B9XT31VxQfEEBvNVX6zYs9SvmoMQI4eAw2WIxWg4FKI84EWxTri4mpru
+	 9iVvoIcPxICZZ3upBYNM7mKwDIlznfRdr/sEWoiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Andrea Righi <arighi@nvidia.com>,
+	Bert Karwatzki <spasswolf@web.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
 	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.19 116/378] sched_ext: Remove redundant css_put() in scx_cgroup_init()
-Date: Tue, 17 Mar 2026 17:31:13 +0100
-Message-ID: <20260317163011.283936440@linuxfoundation.org>
+Subject: [PATCH 6.19 117/378] cgroup: Dont expose dead tasks in cgroup
+Date: Tue, 17 Mar 2026 17:31:14 +0100
+Message-ID: <20260317163011.321522918@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,42 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-commit 1336b579f6079fb8520be03624fcd9ba443c930b upstream.
+commit a72f73c4dd9b209c53cf8b03b6e97fcefad4262c upstream.
 
-The iterator css_for_each_descendant_pre() walks the cgroup hierarchy
-under cgroup_lock(). It does not increment the reference counts on
-yielded css structs.
+Once a task exits it has its state set to TASK_DEAD and then it is
+removed from the cgroup it belonged to. The last step happens on the task
+gets out of its last schedule() invocation and is delayed on PREEMPT_RT
+due to locking constraints.
 
-According to the cgroup documentation, css_put() should only be used
-to release a reference obtained via css_get() or css_tryget_online().
-Since the iterator does not use either of these to acquire a reference,
-calling css_put() in the error path of scx_cgroup_init() causes a
-refcount underflow.
+As a result it is possible to receive a pid via waitpid() of a task
+which is still listed in cgroup.procs for the cgroup it belonged
+to. This is something that systemd does not expect and as a result it
+waits for its exit until a time out occurs.
+This can also be reproduced on !PREEMPT_RT kernel with a significant
+delay in do_exit() after exit_notify().
 
-Remove the unbalanced css_put() to prevent a potential Use-After-Free
-(UAF) vulnerability.
+Hide the task from the output which have PF_EXITING set which is done
+before the parent is notified. Keeping zombies with live threads
+shouldn't break anything (suggested by Tejun).
 
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
+Reported-by: Bert Karwatzki <spasswolf@web.de>
+Closes: https://lore.kernel.org/all/20260219164648.3014-1-spasswolf@web.de/
+Tested-by: Bert Karwatzki <spasswolf@web.de>
+Fixes: 9311e6c29b34 ("cgroup: Fix sleeping from invalid context warning on PREEMPT_RT")
+Cc: stable@vger.kernel.org # v6.19+
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 Signed-off-by: Tejun Heo <tj@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    1 -
- 1 file changed, 1 deletion(-)
+ kernel/cgroup/cgroup.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -3553,7 +3553,6 @@ static int scx_cgroup_init(struct scx_sc
- 		ret = SCX_CALL_OP_RET(sch, SCX_KF_UNLOCKED, cgroup_init, NULL,
- 				      css->cgroup, &args);
- 		if (ret) {
--			css_put(css);
- 			scx_error(sch, "ops.cgroup_init() failed (%d)", ret);
- 			return ret;
- 		}
+diff --git a/kernel/cgroup/cgroup.c b/kernel/cgroup/cgroup.c
+index be1d71dda317..01fc2a93f3ef 100644
+--- a/kernel/cgroup/cgroup.c
++++ b/kernel/cgroup/cgroup.c
+@@ -5109,6 +5109,12 @@ static void css_task_iter_advance(struct css_task_iter *it)
+ 		return;
+ 
+ 	task = list_entry(it->task_pos, struct task_struct, cg_list);
++	/*
++	 * Hide tasks that are exiting but not yet removed. Keep zombie
++	 * leaders with live threads visible.
++	 */
++	if ((task->flags & PF_EXITING) && !atomic_read(&task->signal->live))
++		goto repeat;
+ 
+ 	if (it->flags & CSS_TASK_ITER_PROCS) {
+ 		/* if PROCS, skip over tasks which aren't group leaders */
+-- 
+2.53.0
+
 
 
