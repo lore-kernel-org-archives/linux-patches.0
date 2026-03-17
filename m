@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9343F23DD;
-	Tue, 17 Mar 2026 16:48:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94B5D3164B5;
+	Tue, 17 Mar 2026 16:48:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766092; cv=none; b=E8w+wVnpq5Kqk/93+mgKLgsycabyru/fhaScxrC+xO3rVbqk8YUdYawZFeY4JiJqKem1GsHM0lIVoPZbOjewDdqA9spRDAk4m99bA5mQGQNLE+qNWt6iEjpCYdMuxSJd979FmyOYGQ0LeG2eBemyBjBbo5uyX8cB71KBf/gK8Jg=
+	t=1773766096; cv=none; b=ex2XWS+nEfuyqKlT6Uv4+HmdvTlrZulkJePVMjrKLQbTkBYx2jse+HmtRpVtc21LAFDYa92EbmwyapBX8X859y30TAGQvuN/0jy9JUled3GDIo6yQtHOoLNyccEZ5LwGUaUUfozFf41zLa9rdJybPAiX/lnbP/Swj1RV+od6ZT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766092; c=relaxed/simple;
-	bh=IX8XhHk9FuFshYtZ2mXPUWj6WRqcaVQ4bLHXuMP6LNk=;
+	s=arc-20240116; t=1773766096; c=relaxed/simple;
+	bh=V6Hxa1xBOGncamyFrnMyegGlU+KVndYKBwnfFpIcly4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aZkO4S5733E18flu5Ma0m4lYM8SKDr8OigGUEOvXYQv+F9cVwmg+DxXkWiCRM+qQV8wDCRBO61nRs4BoEvb0h+ewr/4aR56e+wqWQlLduCikx+oDVZ+rNigbmdHumsa+f7HySgHRWrVoRJSTJZm8M6/yNhN4qewksFAwBlWn0sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0rdWo0x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I2CYkgBIyHsTLC9eVF1CrqNeSTjDrbNHy5vcDzt6Qq7s6CkS3SqZl/JTpVHbf/uHe1fTGGpgnkpR9o1P2IHduhvIgNb6jat/qtLqa5XnHyPoSWURzPp0KHCOziNTjpBzApQwEt2UjScucNeJ3zSFTICnznFRthJ6Gj2Xra9rOdo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JLBZDWbW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0rdWo0x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 851EEC4CEF7;
-	Tue, 17 Mar 2026 16:48:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JLBZDWbW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C42C4CEF7;
+	Tue, 17 Mar 2026 16:48:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766092;
-	bh=IX8XhHk9FuFshYtZ2mXPUWj6WRqcaVQ4bLHXuMP6LNk=;
+	s=korg; t=1773766096;
+	bh=V6Hxa1xBOGncamyFrnMyegGlU+KVndYKBwnfFpIcly4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0rdWo0xLErtOt+TKGWiMLnIpp7RvBPqFBWwSSiGK+IbUuXi37SSUvlspXbs4bYhj
-	 mnU9Q8ei/wcHvoJrLCDL+hdDVf8Q0NtAMnmeBhL3dClp1OZelDAvWheTYHKHFIEZBj
-	 gOa7OB5qfC5mvYLD52ZI78UdubrWdUVi4lwgEjGg=
+	b=JLBZDWbWJv2gXltEqVQqc4hpe5tNgMoJdPBW/NK5hoQs3a2b2PzuZmiDHbvEc9b8V
+	 xW31VjM1DYWADpV0lpnnva3MlBsmwJxg93iiAPHmOKJl2Qxt4Ezgt7E5P5tsmzY6g7
+	 UxIu4xEITVD8647UdBOIz7AIhPVvJzRBlKF3bafU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fuad Tabba <tabba@google.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.19 135/378] KVM: arm64: Fix protected mode handling of pages larger than 4kB
-Date: Tue, 17 Mar 2026 17:31:32 +0100
-Message-ID: <20260317163011.982006007@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 6.19 126/378] rust_binder: fix oneway spam detection
+Date: Tue, 17 Mar 2026 17:31:23 +0100
+Message-ID: <20260317163011.650411247@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -50,81 +51,136 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Carlos Llamas <cmllamas@google.com>
 
-commit 08f97454b7fa39bfcf82524955c771d2d693d6fe upstream.
+commit 4fc87c240b8f30e22b7ebaae29d57105589e1c0b upstream.
 
-Since 3669ddd8fa8b5 ("KVM: arm64: Add a range to pkvm_mappings"),
-pKVM tracks the memory that has been mapped into a guest in a
-side data structure. Crucially, it uses it to find out whether
-a page has already been mapped, and therefore refuses to map it
-twice. So far, so good.
+The spam detection logic in TreeRange was executed before the current
+request was inserted into the tree. So the new request was not being
+factored in the spam calculation. Fix this by moving the logic after
+the new range has been inserted.
 
-However, this very patch completely breaks non-4kB page support,
-with guests being unable to boot. The most obvious symptom is that
-we take the same fault repeatedly, and not making forward progress.
-A quick investigation shows that this is because of the above
-rejection code.
+Also, the detection logic for ArrayRange was missing altogether which
+meant large spamming transactions could get away without being detected.
+Fix this by implementing an equivalent low_oneway_space() in ArrayRange.
 
-As it turns out, there are multiple issues at play:
+Note that I looked into centralizing this logic in RangeAllocator but
+iterating through 'state' and 'size' got a bit too complicated (for me)
+and I abandoned this effort.
 
-- while the HPFAR_EL2 register gives you the faulting IPA minus
-  the bottom 12 bits, it will still give you the extra bits that
-  are part of the page offset for anything larger than 4kB,
-  even for a level-3 mapping
-
-- pkvm_pgtable_stage2_map() assumes that the address passed as
-  a parameter is aligned to the size of the intended mapping
-
-- the faulting address is only aligned for a non-page mapping
-
-When the planets are suitably aligned (pun intended), the guest
-faults on a page by accessing it past the bottom 4kB, and extra bits
-get set in the HPFAR_EL2 register. If this results in a page mapping
-(which is likely with large granule sizes), nothing aligns it further
-down, and pkvm_mapping_iter_first() finds an intersection that
-doesn't really exist. We assume this is a spurious fault and return
--EAGAIN. And again...
-
-This doesn't hit outside of the protected code, as the page table
-code always aligns the IPA down to a page boundary, hiding the issue
-for everyone else.
-
-Fix it by always forcing the alignment on vma_pagesize, irrespective
-of the value of vma_pagesize.
-
-Fixes: 3669ddd8fa8b5 ("KVM: arm64: Add a range to pkvm_mappings")
-Reviewed-by: Fuad Tabba <tabba@google.com>
-Tested-by: Fuad Tabba <tabba@google.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://https://patch.msgid.link/20260222141000.3084258-1-maz@kernel.org
-Cc: stable@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Cc: Alice Ryhl <aliceryhl@google.com>
+Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Link: https://patch.msgid.link/20260210232949.3770644-1-cmllamas@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/mmu.c |   12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ drivers/android/binder/range_alloc/array.rs |   35 ++++++++++++++++++++++++++--
+ drivers/android/binder/range_alloc/mod.rs   |    4 +--
+ drivers/android/binder/range_alloc/tree.rs  |   18 +++++++-------
+ 3 files changed, 44 insertions(+), 13 deletions(-)
 
---- a/arch/arm64/kvm/mmu.c
-+++ b/arch/arm64/kvm/mmu.c
-@@ -1753,14 +1753,12 @@ static int user_mem_abort(struct kvm_vcp
- 	}
+--- a/drivers/android/binder/range_alloc/array.rs
++++ b/drivers/android/binder/range_alloc/array.rs
+@@ -118,7 +118,7 @@ impl<T> ArrayRangeAllocator<T> {
+         size: usize,
+         is_oneway: bool,
+         pid: Pid,
+-    ) -> Result<usize> {
++    ) -> Result<(usize, bool)> {
+         // Compute new value of free_oneway_space, which is set only on success.
+         let new_oneway_space = if is_oneway {
+             match self.free_oneway_space.checked_sub(size) {
+@@ -146,7 +146,38 @@ impl<T> ArrayRangeAllocator<T> {
+             .ok()
+             .unwrap();
  
- 	/*
--	 * Both the canonical IPA and fault IPA must be hugepage-aligned to
--	 * ensure we find the right PFN and lay down the mapping in the right
--	 * place.
-+	 * Both the canonical IPA and fault IPA must be aligned to the
-+	 * mapping size to ensure we find the right PFN and lay down the
-+	 * mapping in the right place.
- 	 */
--	if (vma_pagesize == PMD_SIZE || vma_pagesize == PUD_SIZE) {
--		fault_ipa &= ~(vma_pagesize - 1);
--		ipa &= ~(vma_pagesize - 1);
--	}
-+	fault_ipa = ALIGN_DOWN(fault_ipa, vma_pagesize);
-+	ipa = ALIGN_DOWN(ipa, vma_pagesize);
+-        Ok(insert_at_offset)
++        // Start detecting spammers once we have less than 20%
++        // of async space left (which is less than 10% of total
++        // buffer size).
++        //
++        // (This will short-circuit, so `low_oneway_space` is
++        // only called when necessary.)
++        let oneway_spam_detected =
++            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
++
++        Ok((insert_at_offset, oneway_spam_detected))
++    }
++
++    /// Find the amount and size of buffers allocated by the current caller.
++    ///
++    /// The idea is that once we cross the threshold, whoever is responsible
++    /// for the low async space is likely to try to send another async transaction,
++    /// and at some point we'll catch them in the act.  This is more efficient
++    /// than keeping a map per pid.
++    fn low_oneway_space(&self, calling_pid: Pid) -> bool {
++        let mut total_alloc_size = 0;
++        let mut num_buffers = 0;
++
++        // Warn if this pid has more than 50 transactions, or more than 50% of
++        // async space (which is 25% of total buffer size). Oneway spam is only
++        // detected when the threshold is exceeded.
++        for range in &self.ranges {
++            if range.state.is_oneway() && range.state.pid() == calling_pid {
++                total_alloc_size += range.size;
++                num_buffers += 1;
++            }
++        }
++        num_buffers > 50 || total_alloc_size > self.size / 4
+     }
  
- 	gfn = ipa >> PAGE_SHIFT;
- 	mte_allowed = kvm_vma_mte_allowed(vma);
+     pub(crate) fn reservation_abort(&mut self, offset: usize) -> Result<FreedRange> {
+--- a/drivers/android/binder/range_alloc/mod.rs
++++ b/drivers/android/binder/range_alloc/mod.rs
+@@ -188,11 +188,11 @@ impl<T> RangeAllocator<T> {
+                 self.reserve_new(args)
+             }
+             Impl::Array(array) => {
+-                let offset =
++                let (offset, oneway_spam_detected) =
+                     array.reserve_new(args.debug_id, args.size, args.is_oneway, args.pid)?;
+                 Ok(ReserveNew::Success(ReserveNewSuccess {
+                     offset,
+-                    oneway_spam_detected: false,
++                    oneway_spam_detected,
+                     _empty_array_alloc: args.empty_array_alloc,
+                     _new_tree_alloc: args.new_tree_alloc,
+                     _tree_alloc: args.tree_alloc,
+--- a/drivers/android/binder/range_alloc/tree.rs
++++ b/drivers/android/binder/range_alloc/tree.rs
+@@ -164,15 +164,6 @@ impl<T> TreeRangeAllocator<T> {
+             self.free_oneway_space
+         };
+ 
+-        // Start detecting spammers once we have less than 20%
+-        // of async space left (which is less than 10% of total
+-        // buffer size).
+-        //
+-        // (This will short-circut, so `low_oneway_space` is
+-        // only called when necessary.)
+-        let oneway_spam_detected =
+-            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
+-
+         let (found_size, found_off, tree_node, free_tree_node) = match self.find_best_match(size) {
+             None => {
+                 pr_warn!("ENOSPC from range_alloc.reserve_new - size: {}", size);
+@@ -203,6 +194,15 @@ impl<T> TreeRangeAllocator<T> {
+             self.free_tree.insert(free_tree_node);
+         }
+ 
++        // Start detecting spammers once we have less than 20%
++        // of async space left (which is less than 10% of total
++        // buffer size).
++        //
++        // (This will short-circuit, so `low_oneway_space` is
++        // only called when necessary.)
++        let oneway_spam_detected =
++            is_oneway && new_oneway_space < self.size / 10 && self.low_oneway_space(pid);
++
+         Ok((found_off, oneway_spam_detected))
+     }
+ 
 
 
