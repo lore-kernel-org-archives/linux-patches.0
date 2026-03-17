@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48913A4F46;
-	Tue, 17 Mar 2026 17:01:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780C5357A4A;
+	Tue, 17 Mar 2026 17:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766870; cv=none; b=rxI+LvqMgKkhC7Tf1vXM3i6AOOPY0PvugNfLa+10qVNd4dqq/skNatENtdZ/cvwSr5ha8n185ZfXjALjBU9Ggn7pG2KcmuwrlySZgKw1cwt5va4pFllPTxEf53ZGW4HiW12hnRhHUjEQA1lVSRoeyMPaJSpBZE4IJa6nXwSJr38=
+	t=1773766874; cv=none; b=VprBCsNJEed95iIaIWnZhtkoSg10iZxirDVCc6gbuH0EbGT2fiurE0aHOJ+CFC+I+KIZ1hI2JbqsKdQZM3mq4TEfzv/bC83bnyR5zmPopK8R008w+4LfYatKqEsGpnJTKnFCcY8Y8Hj898z9ipyhVHnH7QwsO7+vMx6eJK8qHPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766870; c=relaxed/simple;
-	bh=41jfm+SWZMXzron/agyA1E52+CMg1VNSbjtO1C7qx7w=;
+	s=arc-20240116; t=1773766874; c=relaxed/simple;
+	bh=iGklnnbYjOCYHgKm3bfoAdwG1algAGvqr1A4ejCm2Cw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pn4Ac+OogiwAQbV1Q/tdP7G8J0uoSeXwn94ecNfWk9KX35BDbtYIvRIhHq+EGkPjaRDT2q+RMbKiaqa6qOEFJ7IHS+or0OHeIjgCdTTn3uKgCav4SyTviGKqOSLvaD+F7OLYuJhiGZCfeS4GL+OD1ZBUdaRFKMtXTK+jLOCwxTY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PB/WglJK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cARtOgJ3VxTK/Jqc6fKUIltcadRnfuFhxoMLgYa+AZAW6UXNKGgiH6yDws1vYTE9d5K2Gv91yrZMCS/2AcsRSRrWRXNoWWkFHCIedSLQrEb3ieZFLSetvTPLj8b/InGHBK9UyGGGJqyQhC3GaEwIXLibthvJ0Sb23N4pdyKAWZo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkz7v4eA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PB/WglJK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 282B8C4CEF7;
-	Tue, 17 Mar 2026 17:01:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkz7v4eA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1E8C4CEF7;
+	Tue, 17 Mar 2026 17:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766869;
-	bh=41jfm+SWZMXzron/agyA1E52+CMg1VNSbjtO1C7qx7w=;
+	s=korg; t=1773766874;
+	bh=iGklnnbYjOCYHgKm3bfoAdwG1algAGvqr1A4ejCm2Cw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PB/WglJKPDk8LbWFc2kTn9f//SVovDVUZ7v/pYQxEUMebR3U/saWLg1+0rrFHcsDX
-	 fW/kPih2SrCxk1N21qEGP3pneZcZ/jODrSFvZ0yoQVwjt2ritV20fSPexaWtNkoMRv
-	 YXXlFrCCuafd+NmnizZw6eGFP76Q6O6UypPz9oUM=
+	b=xkz7v4eANOBuluObQ+LnvYSKyXQl5qDIHs/Aaq2ZUmasRglKoahML47d6Bd/kcnDQ
+	 287MrnmMmbIEC+bdU3Y4Ia77p1SVBDoHKgfiM9LBzmeCWWndDrR+rVGoLFiymLXXMo
+	 QIHhPNiSdt1bGOANB8c04iaAMCwKcjGVAgOcwz0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
 	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.19 306/378] drm/i915: Fix potential overflow of shmem scatterlist length
-Date: Tue, 17 Mar 2026 17:34:23 +0100
-Message-ID: <20260317163018.259010301@linuxfoundation.org>
+Subject: [PATCH 6.19 307/378] drm/i915/psr: Repeat Selective Update area alignment
+Date: Tue, 17 Mar 2026 17:34:24 +0100
+Message-ID: <20260317163018.295764605@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -47,97 +45,125 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit 029ae067431ab9d0fca479bdabe780fa436706ea upstream.
+commit 1be2fca84f520105413d0d89ed04bb0ff742ab16 upstream.
 
-When a scatterlists table of a GEM shmem object of size 4 GB or more is
-populated with pages allocated from a folio, unsigned int .length
-attribute of a scatterlist may get overflowed if total byte length of
-pages allocated to that single scatterlist happens to reach or cross the
-4GB limit.  As a consequence, users of the object may suffer from hitting
-unexpected, premature end of the object's backing pages.
+Currently we are aligning Selective Update area to cover cursor fully if
+needed only once. It may happen that cursor is in Selective Update area
+after pipe alignment and after that covering cursor plane only
+partially. Fix this by looping alignment as long as alignment isn't needed
+anymore.
 
-[278.780187] ------------[ cut here ]------------
-[278.780377] WARNING: CPU: 1 PID: 2326 at drivers/gpu/drm/i915/i915_mm.c:55 remap_sg+0x199/0x1d0 [i915]
-...
-[278.780654] CPU: 1 UID: 0 PID: 2326 Comm: gem_mmap_offset Tainted: G S   U              6.17.0-rc1-CI_DRM_16981-ged823aaa0607+ #1 PREEMPT(voluntary)
-[278.780656] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
-[278.780658] Hardware name: Intel Corporation Meteor Lake Client Platform/MTL-P LP5x T3 RVP, BIOS MTLPFWI1.R00.3471.D91.2401310918 01/31/2024
-[278.780659] RIP: 0010:remap_sg+0x199/0x1d0 [i915]
-...
-[278.780786] Call Trace:
-[278.780787]  <TASK>
-[278.780788]  ? __apply_to_page_range+0x3e6/0x910
-[278.780795]  ? __pfx_remap_sg+0x10/0x10 [i915]
-[278.780906]  apply_to_page_range+0x14/0x30
-[278.780908]  remap_io_sg+0x14d/0x260 [i915]
-[278.781013]  vm_fault_cpu+0xd2/0x330 [i915]
-[278.781137]  __do_fault+0x3a/0x1b0
-[278.781140]  do_fault+0x322/0x640
-[278.781143]  __handle_mm_fault+0x938/0xfd0
-[278.781150]  handle_mm_fault+0x12c/0x300
-[278.781152]  ? lock_mm_and_find_vma+0x4b/0x760
-[278.781155]  do_user_addr_fault+0x2d6/0x8e0
-[278.781160]  exc_page_fault+0x96/0x2c0
-[278.781165]  asm_exc_page_fault+0x27/0x30
-...
+v2:
+  - do not unecessarily loop if cursor was already fully covered
+  - rename aligned as su_area_changed
 
-That issue was apprehended by the author of a change that introduced it,
-and potential risk even annotated with a comment, but then never addressed.
-
-When adding folio pages to a scatterlist table, take care of byte length
-of any single scatterlist not exceeding max_segment.
-
-Fixes: 0b62af28f249b ("i915: convert shmem_sg_free_table() to use a folio_batch")
-Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14809
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: stable@vger.kernel.org # v6.5+
-Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://lore.kernel.org/r/20260224094944.2447913-2-janusz.krzysztofik@linux.intel.com
-(cherry picked from commit 06249b4e691a75694c014a61708c007fb5755f60)
+Fixes: 1bff93b8bc27 ("drm/i915/psr: Extend SU area to cover cursor fully if needed")
+Cc: <stable@vger.kernel.org> # v6.9+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260304113011.626542-2-jouni.hogander@intel.com
+(cherry picked from commit 681e12440d8b110350a5709101169f319e10ccbb)
 Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   50 +++++++++++++++++++++++--------
+ 1 file changed, 38 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -151,8 +151,12 @@ int shmem_sg_alloc_table(struct drm_i915
- 			}
- 		} while (1);
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2667,11 +2667,12 @@ static void clip_area_update(struct drm_
+ 		overlap_damage_area->y2 = damage_area->y2;
+ }
  
--		nr_pages = min_t(unsigned long,
--				folio_nr_pages(folio), page_count - i);
-+		nr_pages = min_array(((unsigned long[]) {
-+					folio_nr_pages(folio),
-+					page_count - i,
-+					max_segment / PAGE_SIZE,
-+				      }), 3);
+-static void intel_psr2_sel_fetch_pipe_alignment(struct intel_crtc_state *crtc_state)
++static bool intel_psr2_sel_fetch_pipe_alignment(struct intel_crtc_state *crtc_state)
+ {
+ 	struct intel_display *display = to_intel_display(crtc_state);
+ 	const struct drm_dsc_config *vdsc_cfg = &crtc_state->dsc.config;
+ 	u16 y_alignment;
++	bool su_area_changed = false;
+ 
+ 	/* ADLP aligns the SU region to vdsc slice height in case dsc is enabled */
+ 	if (crtc_state->dsc.compression_enable &&
+@@ -2680,10 +2681,18 @@ static void intel_psr2_sel_fetch_pipe_al
+ 	else
+ 		y_alignment = crtc_state->su_y_granularity;
+ 
+-	crtc_state->psr2_su_area.y1 -= crtc_state->psr2_su_area.y1 % y_alignment;
+-	if (crtc_state->psr2_su_area.y2 % y_alignment)
++	if (crtc_state->psr2_su_area.y1 % y_alignment) {
++		crtc_state->psr2_su_area.y1 -= crtc_state->psr2_su_area.y1 % y_alignment;
++		su_area_changed = true;
++	}
 +
- 		if (!i ||
- 		    sg->length >= max_segment ||
- 		    folio_pfn(folio) != next_pfn) {
-@@ -162,7 +166,9 @@ int shmem_sg_alloc_table(struct drm_i915
- 			st->nents++;
- 			sg_set_folio(sg, folio, nr_pages * PAGE_SIZE, 0);
- 		} else {
--			/* XXX: could overflow? */
-+			nr_pages = min_t(unsigned long, nr_pages,
-+					 (max_segment - sg->length) / PAGE_SIZE);
++	if (crtc_state->psr2_su_area.y2 % y_alignment) {
+ 		crtc_state->psr2_su_area.y2 = ((crtc_state->psr2_su_area.y2 /
+ 						y_alignment) + 1) * y_alignment;
++		su_area_changed = true;
++	}
 +
- 			sg->length += nr_pages * PAGE_SIZE;
- 		}
- 		next_pfn = folio_pfn(folio) + nr_pages;
++	return su_area_changed;
+ }
+ 
+ /*
+@@ -2816,7 +2825,7 @@ int intel_psr2_sel_fetch_update(struct i
+ 	struct intel_crtc_state *crtc_state = intel_atomic_get_new_crtc_state(state, crtc);
+ 	struct intel_plane_state *new_plane_state, *old_plane_state;
+ 	struct intel_plane *plane;
+-	bool full_update = false, cursor_in_su_area = false;
++	bool full_update = false, su_area_changed;
+ 	int i, ret;
+ 
+ 	if (!crtc_state->enable_psr2_sel_fetch)
+@@ -2923,15 +2932,32 @@ int intel_psr2_sel_fetch_update(struct i
+ 	if (ret)
+ 		return ret;
+ 
+-	/*
+-	 * Adjust su area to cover cursor fully as necessary (early
+-	 * transport). This needs to be done after
+-	 * drm_atomic_add_affected_planes to ensure visible cursor is added into
+-	 * affected planes even when cursor is not updated by itself.
+-	 */
+-	intel_psr2_sel_fetch_et_alignment(state, crtc, &cursor_in_su_area);
++	do {
++		bool cursor_in_su_area;
+ 
+-	intel_psr2_sel_fetch_pipe_alignment(crtc_state);
++		/*
++		 * Adjust su area to cover cursor fully as necessary
++		 * (early transport). This needs to be done after
++		 * drm_atomic_add_affected_planes to ensure visible
++		 * cursor is added into affected planes even when
++		 * cursor is not updated by itself.
++		 */
++		intel_psr2_sel_fetch_et_alignment(state, crtc, &cursor_in_su_area);
++
++		su_area_changed = intel_psr2_sel_fetch_pipe_alignment(crtc_state);
++
++		/*
++		 * If the cursor was outside the SU area before
++		 * alignment, the alignment step (which only expands
++		 * SU) may pull the cursor partially inside, so we
++		 * must run ET alignment again to fully cover it. But
++		 * if the cursor was already fully inside before
++		 * alignment, expanding the SU area won't change that,
++		 * so no further work is needed.
++		 */
++		if (cursor_in_su_area)
++			break;
++	} while (su_area_changed);
+ 
+ 	/*
+ 	 * Now that we have the pipe damaged area check if it intersect with
 
 
