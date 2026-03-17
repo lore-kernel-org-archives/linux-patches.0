@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD952D73B8;
-	Tue, 17 Mar 2026 17:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474F9225A38;
+	Tue, 17 Mar 2026 17:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767908; cv=none; b=BkUPFoEWUGS52jUB99jn8Yfv0Ae06j36t7AXotgwvTcpKuNlEJWnr/4H0Lk9ccwt71DN5R5HkaZiqyWD9xXT2ejQXUt7cPMQjAKSy58qZT9+S6IzvXpojeamuPaRddZIn1kfJrc9qAUzS2iKDMn0IdUQcbLd3ya+934uaZYtHeo=
+	t=1773767912; cv=none; b=szMIXiYLboc5kZlkmJLJAZnIBzAsKn88Mx2XLIkgnal+neLWOMBZItn6920BxlYpeTHrOg4Opvjmu1fUJOCepf4oCgv/WJsqGDSWPDKMwoKKpNWC3yKmkcphAEbTsW6iTLhcMlEwxzHpxE5bOsCKL5oocPaMN7etP60W3lmelLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767908; c=relaxed/simple;
-	bh=TA9EySaRAyvQp9md/CP5oWHmAIkrLJATXTuNzX+53AM=;
+	s=arc-20240116; t=1773767912; c=relaxed/simple;
+	bh=jHwUB1fSc9fHLTwnOHfZqP2IOSTaBMFV57vAP9BNhjs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=einun07+FYHCyEwSPm3Xph1TXEX61wTd4YBPm7iQ3ishrtJm1R9EDeRQGuEUCljb8b0qukscPyqgxssTWsPuU8FV5BVXmqEWArJMHyku1agUNHzBp6TeGkoGUOJ9wigPZUUSjXUdUxbXJziXIV+HqMKDYjkFF46iqVNxKKmE1BY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RgQEdKPG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NIJDSWd6cWYTvF4hn2/nw8hmTTXta06hG1Tqtw3BHYcdFlyRtkGaCzFTJgmUDAZMMiuzSoMzQuvnJ/RgQZNdGTamF0zpugC4l5bnvkzXaqZJRkxFvDfkYapd/kXxWFNUsBDYqTwvR2yetnFr0g+clzSW45Y9wy/b20M+gP0Ns+k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBXM8lWq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RgQEdKPG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C99CC4CEF7;
-	Tue, 17 Mar 2026 17:18:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBXM8lWq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC433C4CEF7;
+	Tue, 17 Mar 2026 17:18:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767908;
-	bh=TA9EySaRAyvQp9md/CP5oWHmAIkrLJATXTuNzX+53AM=;
+	s=korg; t=1773767912;
+	bh=jHwUB1fSc9fHLTwnOHfZqP2IOSTaBMFV57vAP9BNhjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgQEdKPGqVxCDaNDwO39J0SzWVhgglK2vrB93Ea5qorwaahadjIegR4MVqHI2kFyA
-	 +HXq1R7xRGfNxBQF8Jvr/Zu+r+rQj1P1oon6die4/Go78jQKBzmVrQSxS8z/A4nFcs
-	 KwegQTbZk8tlsagk4SmGxOLTq7kSsw1nxYpXOASs=
+	b=wBXM8lWqpJb2dHWWtmqcNneJYKUQU0OrwkeeVO2ZK29C+9qVKIs886FaHhkDJIXPv
+	 6PeXkf4Xc6ctwU8bUsTTs2B586aE8cAVfOfXCyzdtkTTD7z3KKMJzoVuY+9r2D70gj
+	 zOQJin+ARMzLav6N5XXR2xfrXCjO+d+xQ6bXE92s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Igor Raits <igor@gooddata.com>,
 	Corey Minyard <corey@minyard.net>
-Subject: [PATCH 6.18 187/333] ipmi:si: Dont block module unload if the BMC is messed up
-Date: Tue, 17 Mar 2026 17:33:36 +0100
-Message-ID: <20260317163006.288845343@linuxfoundation.org>
+Subject: [PATCH 6.18 188/333] ipmi:si: Use a long timeout when the BMC is misbehaving
+Date: Tue, 17 Mar 2026 17:33:37 +0100
+Message-ID: <20260317163006.326524901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,33 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Corey Minyard <corey@minyard.net>
 
-commit f895e5df80316a308c2f7d64d13a78494630ea05 upstream.
+commit c3bb3295637cc9bf514f690941ca9a385bf30113 upstream.
 
-If the BMC is in a bad state, don't bother waiting for queues messages
-since there can't be any.  Otherwise the unload is blocked until the
-BMC is back in a good state.
+If the driver goes into HOSED state, don't reset the timeout to the
+short timeout in the timeout handler.
 
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
+Reported-by: Igor Raits <igor@gooddata.com>
+Closes: https://lore.kernel.org/linux-acpi/CAK8fFZ58fidGUCHi5WFX0uoTPzveUUDzT=k=AAm4yWo3bAuCFg@mail.gmail.com/
 Fixes: bc3a9d217755 ("ipmi:si: Gracefully handle if the BMC is non-functional")
 Cc: stable@vger.kernel.org # 4.18
 Signed-off-by: Corey Minyard <corey@minyard.net>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_si_intf.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/char/ipmi/ipmi_si_intf.c
 +++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -2227,7 +2227,8 @@ static void wait_msg_processed(struct sm
- 	unsigned long jiffies_now;
- 	long time_diff;
- 
--	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
-+	while (smi_info->si_state != SI_HOSED &&
-+		    (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL))) {
- 		jiffies_now = jiffies;
- 		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
+@@ -1114,7 +1114,9 @@ static void smi_timeout(struct timer_lis
  		     * SI_USEC_PER_JIFFY);
+ 	smi_result = smi_event_handler(smi_info, time_diff);
+ 
+-	if ((smi_info->io.irq) && (!smi_info->interrupt_disabled)) {
++	if (smi_info->si_state == SI_HOSED) {
++		timeout = jiffies + SI_TIMEOUT_HOSED;
++	} else if ((smi_info->io.irq) && (!smi_info->interrupt_disabled)) {
+ 		/* Running with interrupts, only do long timeouts. */
+ 		timeout = jiffies + SI_TIMEOUT_JIFFIES;
+ 		smi_inc_stat(smi_info, long_timeouts);
 
 
