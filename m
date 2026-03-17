@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4CE3ED5A8;
-	Tue, 17 Mar 2026 16:42:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D8E3EDADF;
+	Tue, 17 Mar 2026 16:42:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765737; cv=none; b=fLCZUoee/jqdD1TsHhzkNHJMSbZyApTv0bS8LOtgdWmCv13+gMgKBsCrdyRsqQZUtDSADTY5i9t2aghzjkCyvZKZbt/H2tE7iXwD4YkQ3qtw/mfYk/YCmi/kHVCwKWt1jDHBheLs/SEkYng3sGCt7s0EU8EZlf/tA/yWAqBaGak=
+	t=1773765742; cv=none; b=YRrjFrr17TbR4Q+ciSf284Ap9Jo/K09PT6X4av8+wdqVzbbbUqET+cSGk/NTB6qxiOLFutTvwlCHzOGxOsfZzkzSHhQqv5ghnpvYNMus+04bYtLPCkJTUFNHWosPqJEknvQnAnrdA+Y5YKHYJBYs33uWwCx6VbSOhno6MqGvSac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765737; c=relaxed/simple;
-	bh=SZmJTsrKHjIKR8zBgGNsOAf8m52DS8yHT4kjqSq+3h4=;
+	s=arc-20240116; t=1773765742; c=relaxed/simple;
+	bh=6yVLH/tX8QFR7alH7W7pnJTGc206Udk892KQTLwvQkg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l03ghrKoBOuj79EBtx9jH5LoPPim3pH75ip51+hCX5RNR8ajhZ+59PDfcXhlqOtKyCqGhHS7dbs5nmy6RVycS8YiiVxM5lSRIf16W4l59Vlv6SoMMyHTz2iS7KAjUEXtyBy+lsaHFPJ6PS3Lzsoc/fd4LPdmjR9+wG1FrIRKcu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h6CcekUY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RfKBxd7sPjhgyL1elRcz6a/BrNS9jsYO9cGFMqnN9XgQBP4wkJD8WF1P9xG3wVohXQdgacft/TR8OkKN3JRHxdIZiBOGi1bBswV0xHUB167ciD4cyLl7m3HU/ejSzUl7UhDDkRG/CpQq9NaS/Nlu4Vx2zuNlAKAJQLDgSoTe/+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w0Dflu3o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h6CcekUY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F02C4CEF7;
-	Tue, 17 Mar 2026 16:42:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w0Dflu3o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85317C4CEF7;
+	Tue, 17 Mar 2026 16:42:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765736;
-	bh=SZmJTsrKHjIKR8zBgGNsOAf8m52DS8yHT4kjqSq+3h4=;
+	s=korg; t=1773765741;
+	bh=6yVLH/tX8QFR7alH7W7pnJTGc206Udk892KQTLwvQkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h6CcekUY/6h7/7m30ALCiJR09F96d4NN+cW9KsqS0ReVvn+nQ/BWsEg+o/xqlXjbH
-	 Bhu8wR/9T0gn9QTwEzMj2b8K/N5aP4lmE28TZQlxt3301RyuTEid/51YvbAz2w7qae
-	 F9B1zbV2I9nRViHMjxeoYGLgpUcEotatjWKOurNk=
+	b=w0Dflu3oZBGgoGVjfOV+gWwsb36mMVL2QcTRXZGoQQi2d4gYlDpkcNCX2HNP6hXmL
+	 ptgaAhVQsoDssN04afsIENxmvSnLJVeY2GpITN7mOJMh+bKpBvCHtiU/jcDgPvblJs
+	 qO8H7VLO/1ac/3cTuwqppqORPvp6YKmzPMi2KoMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 083/378] regulator: pca9450: Correct probed name for PCA9452
-Date: Tue, 17 Mar 2026 17:30:40 +0100
-Message-ID: <20260317163010.069229423@linuxfoundation.org>
+Subject: [PATCH 6.19 084/378] perf ftrace: Fix hashmap__new() error checking
+Date: Tue, 17 Mar 2026 17:30:41 +0100
+Message-ID: <20260317163010.106323385@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,69 +60,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 21b3fb7dc19caa488d285e3c47999f7f1a179334 ]
+[ Upstream commit be34705aa527872e5ce83927b7bc9307ba8095ca ]
 
-An incorrect device name was logged for PCA9452 because the dev_info()
-ternary omitted PCA9452 and fell through to "pca9450bc". Introduce a
-type_name and set it per device type so the probed message matches the
-actual PMIC. While here, make the PCA9451A case explicit.
+The hashmap__new() function never returns NULL, it returns error
+pointers. Fix the error checking to match.
 
-No functional changes.
+Additionally, set ftrace->profile_hash to NULL on error, and return the
+exact error code from hashmap__new().
 
-Fixes: 017b76fb8e5b6 ("regulator: pca9450: Add PMIC pca9452 support")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260310-pca9450-irq-v1-2-36adf52c2c55@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0f223813edd051a5 ("perf ftrace: Add 'profile' command")
+Suggested-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pca9450-regulator.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/perf/builtin-ftrace.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index 2205f6de37e7d..45d7dc44c2cd0 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -1293,6 +1293,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
- 	struct regulator_dev *ldo5;
- 	struct pca9450 *pca9450;
- 	unsigned int device_id, i;
-+	const char *type_name;
- 	int ret;
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index 6b6eec65f93f5..4cc33452d79b6 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -18,6 +18,7 @@
+ #include <poll.h>
+ #include <ctype.h>
+ #include <linux/capability.h>
++#include <linux/err.h>
+ #include <linux/string.h>
+ #include <sys/stat.h>
  
- 	pca9450 = devm_kzalloc(&i2c->dev, sizeof(struct pca9450), GFP_KERNEL);
-@@ -1303,15 +1304,22 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
- 	case PCA9450_TYPE_PCA9450A:
- 		regulator_desc = pca9450a_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9450a_regulators);
-+		type_name = "pca9450a";
- 		break;
- 	case PCA9450_TYPE_PCA9450BC:
- 		regulator_desc = pca9450bc_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9450bc_regulators);
-+		type_name = "pca9450bc";
- 		break;
- 	case PCA9450_TYPE_PCA9451A:
-+		regulator_desc = pca9451a_regulators;
-+		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
-+		type_name = "pca9451a";
-+		break;
- 	case PCA9450_TYPE_PCA9452:
- 		regulator_desc = pca9451a_regulators;
- 		pca9450->rcnt = ARRAY_SIZE(pca9451a_regulators);
-+		type_name = "pca9452";
- 		break;
- 	default:
- 		dev_err(&i2c->dev, "Unknown device type");
-@@ -1413,9 +1421,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
- 					  pca9450_i2c_restart_handler, pca9450))
- 		dev_warn(&i2c->dev, "Failed to register restart handler\n");
+@@ -1209,8 +1210,12 @@ static int prepare_func_profile(struct perf_ftrace *ftrace)
+ 	ftrace->graph_verbose = 0;
  
--	dev_info(&i2c->dev, "%s probed.\n",
--		type == PCA9450_TYPE_PCA9450A ? "pca9450a" :
--		(type == PCA9450_TYPE_PCA9451A ? "pca9451a" : "pca9450bc"));
-+	dev_info(&i2c->dev, "%s probed.\n", type_name);
+ 	ftrace->profile_hash = hashmap__new(profile_hash, profile_equal, NULL);
+-	if (ftrace->profile_hash == NULL)
+-		return -ENOMEM;
++	if (IS_ERR(ftrace->profile_hash)) {
++		int err = PTR_ERR(ftrace->profile_hash);
++
++		ftrace->profile_hash = NULL;
++		return err;
++	}
  
  	return 0;
  }
