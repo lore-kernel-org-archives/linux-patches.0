@@ -1,93 +1,97 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EED2D5940;
-	Tue, 17 Mar 2026 17:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id E353A2EF67A
+	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 17:20:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768010; cv=none; b=eg8HOqsJWQ2m0ruJadtTSw1abWOAFkbMY7ceGzMQ5C2JRpFZaoCIzmKmPRQr4vv1/5tPcz/959qU4nnEptyBSiGCMYs+fBt2YplTkTlWLe6q8uNyIGrhufbBCjhmJxZVKEnk/n+VIKnSBd4buy+JtUI4NSsZJFctDB8mY2E9oPg=
+	t=1773768012; cv=none; b=o8pRfjZd9CXVF2XgEw82BJX76iMaLnrcI8HgYqESrjPgUYI0MbyQcgTXcjjx6Vr58oN+XC6M1IFCJjaNLlzCINruwYd9LMCD9HhkoJh3D8wkB1kDKscZKvy4UsDPlpbir/a7hCI3KX0Mh0SV7+Cz5KhlT0r0Pbb7T8ed1y/YcJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768010; c=relaxed/simple;
-	bh=azwFhMgl+Ps0g7fsy1LQoOfJR74rXC0TNSqXVYpf424=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RTXmgOT/VyN2WI9epE/CRBRaPO8w+oVd/4ZZGiD/Ex+sjDPcJi3LcBjtVPhODflgZT0qULW34DlbvPMlrk+NJCalBsPlrnAbar/eBb/YqJmkZkVQKGRnxr1EPAXlgoStqSnlX2iSInpVuuBoD9iZH8c0CHezWJiY4/nd57ovGbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=15XllwnX; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="15XllwnX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C96EC19424;
-	Tue, 17 Mar 2026 17:20:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768010;
-	bh=azwFhMgl+Ps0g7fsy1LQoOfJR74rXC0TNSqXVYpf424=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=15XllwnXXRVXMqM+IktQIrSujSC+X1gCEQe0LAM4OQDXqEEIG/gpyxWCmPUWCetIh
-	 iIqqm/A0WdYwLC5FxZevFg6Ltgv1WZZ4ouyI99aCI40HEJwfU1tfh6AZu/XC6JIHcO
-	 oFr9W0V0KYNAY03Fzb6FPU3LDATgamZew7G+swRw=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Xu Yang <xu.yang_2@nxp.com>,
-	Arnaud Ferraris <arnaud.ferraris@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.18 179/333] Revert "tcpm: allow looking for role_sw device in the main node"
-Date: Tue, 17 Mar 2026 17:33:28 +0100
-Message-ID: <20260317163005.993001694@linuxfoundation.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
-References: <20260317162959.345812316@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	s=arc-20240116; t=1773768012; c=relaxed/simple;
+	bh=gnKs2wrfDyl8RJBMPsUwsgi2N0XQUT1Kl8Z5ISgInzQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BFrHh4qyFVjzm74UYMRPum7Qo5QXguWRZPR0eogoaRTf/e9AA5X4Zs2S2eY9C5qZufwaEG2OEOg3i3hjxLSeI38+07Y/W2rnPtgOyekNKP7ynENZkD3p0dsjqDfCVwtuAPSPRX5qjl44lTigfpJBa+nFGgT92v6idYO9kj7OFEw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 285EE1477;
+	Tue, 17 Mar 2026 10:20:04 -0700 (PDT)
+Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 8CF273F778;
+	Tue, 17 Mar 2026 10:20:08 -0700 (PDT)
+Message-ID: <371b3d40-55dc-40a2-8f5c-a5f1c1585733@arm.com>
+Date: Tue, 17 Mar 2026 17:20:07 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH 10/11] fs/resctrl: Change last_cmd_status custom during
+ input parsing
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+ tglx@linutronix.de, dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
+ peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1772476561.git.reinette.chatre@intel.com>
+ <021f736612186e9fd653d107b0642e8c1cf110d2.1772476561.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <021f736612186e9fd653d107b0642e8c1cf110d2.1772476561.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-6.18-stable review patch.  If anyone has any objections, please let me know.
+Hi Reinette,
 
-------------------
+On 3/2/26 18:46, Reinette Chatre wrote:
+> A pattern of usage of last_cmd_status was introduced during its enabling in
+> commit
+> 
+> c377dcfbee80 ("x86/intel_rdt: Add diagnostics when writing the schemata file")
+> 
+> and since copied throughout resctrl to result in the following custom:
+> 
+> 	..._write()
+> 	{
+> 		/* Early parsing of input, exit on failure. */
+> 
+> 		/* Obtain rdtgroup_mutex */
+> 		rdt_last_cmd_clear(); /* Clear last_cmd_status buffer */
+> 
+> 		/*
+> 		 * Act on user command, failures result in detail
+> 		 * error message in last_cmd_status buffer via
+> 		 * rdt_last_cmd_puts()/rdt_last_cmd_printf().
+> 		 */
+> 
+> 		/* Release rdtgroup_mutex */
+> 	}
+> 
+> If resctrl exits with failure during early parsing of input there are two
+> possible scenarios:
+>  - The last_cmd_status buffer is empty and a user's read of
+>    info/last_cmd_status returns "ok".
+>  - The last_cmd_status buffer contains details from an earlier ...write()
+>    failure and a user's read of info/last_cmd_status returns this outdated
+>    error description.
+> 
+> Writing to a resctrl file is considered a "resctrl command" and the
+> resctrl documentation states the following about the last_cmd_status file:
+>    "If the command failed, it will provide more information that can be
+>     conveyed in the error returns from file operations."
+> Neither of the current scenarios is correct behavior.
+> 
+> Move early input parsing to be done with rdtgroup_mutex held after the
+> last_cmd_status buffer is cleared. Let info/last_cmd_status be accurate
+> when an error is encountered during parsing of user command.
 
-From: Xu Yang <xu.yang_2@nxp.com>
+This seems useful and the patch looks good to me.
 
-commit 6b275bfaa16be3fb1689fa6794e445ecd127a1b4 upstream.
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 
-This reverts commit 1366cd228b0c67b60a2c0c26ef37fe9f7cfedb7f.
+Thanks,
 
-The fwnode_usb_role_switch_get() returns NULL only if no connection is
-found, returns ERR_PTR(-EPROBE_DEFER) if connection is found but deferred
-probe is needed, or a valid pointer of usb_role_switch.
-
-When switching from a NULL check to IS_ERR_OR_NULL(), usb_role_switch_get()
-returns NULL and overwrites the ERR_PTR(-EPROBE_DEFER) returned by
-fwnode_usb_role_switch_get(). This causes the deferred probe indication to
-be lost, preventing the USB role switch from ever being retrieved.
-
-Fixes: 1366cd228b0c ("tcpm: allow looking for role_sw device in the main node")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
-Tested-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://patch.msgid.link/20260309074313.2809867-2-xu.yang_2@nxp.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/usb/typec/tcpm/tcpm.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/drivers/usb/typec/tcpm/tcpm.c
-+++ b/drivers/usb/typec/tcpm/tcpm.c
-@@ -7877,7 +7877,7 @@ struct tcpm_port *tcpm_register_port(str
- 	port->partner_desc.identity = &port->partner_ident;
- 
- 	port->role_sw = fwnode_usb_role_switch_get(tcpc->fwnode);
--	if (IS_ERR_OR_NULL(port->role_sw))
-+	if (!port->role_sw)
- 		port->role_sw = usb_role_switch_get(port->dev);
- 	if (IS_ERR(port->role_sw)) {
- 		err = PTR_ERR(port->role_sw);
+Ben
 
 
