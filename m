@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7922FFDEA;
-	Tue, 17 Mar 2026 16:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9BA37F008;
+	Tue, 17 Mar 2026 16:45:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765914; cv=none; b=FRwg2fvxYXYbKaIHwxL4wp8PdTInViQLZhgl4mYcF6ONymZdrIPX1WGMVyinxt4oZFN3RNQEFe/tZnVkgz30umuZJHK8jmyVAb+LgeIV00f4AHt9wI0gnf4427etYWwohcExJdke2f5PR/myIazaCGfrIobatZu06W1nTC8dCZM=
+	t=1773765918; cv=none; b=ELKgqUwAtIiVqR/AOUpHfBDwxFUk8klgBaeTpEoB8mvhYFriiBqtXRCpimO20qix0pVpUqJX5JePAGJbOdgblvUMX+lS1yLzQn9kpCTmFDzjERXd3Cz+m3rRMeAtU4vKZ43QOmcAZj+jvWGro2/Z0lvMnGxeQHXGk9pqTwEKEw0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765914; c=relaxed/simple;
-	bh=CcL9aCTzi/sVGU0cmXmn798EWXcv8onWRqLs2bIAB14=;
+	s=arc-20240116; t=1773765918; c=relaxed/simple;
+	bh=6OrhKCTjNiWnp2uay5W4KVmIHVfDrdX1SWN8XO8Xk7M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=If3MfuqUbTiX8YMDFwoZ+vbR0XzK5RI/JCcptugZ0DoxssQvx7r9raYvClCyssSsjlHsx4M5trVZqcw+JwuQcu+OXbMVqeBBUe7U22cbIL2vT4gMw+Mxag6uPYbs4n56XWI/N6/mJsU4hicYC55liVN2eYKyeMgNo7D3yijpV+w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dUgwe5jo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oXEiwVhnAhQnXbOsH0erorfI3mKSwsbGBgbYaX5tsBt95btn5dNqyQoZcdWEB0TC56Ajqb4xf8XCWTIN00CHdBsj3oZ0H9RsbAgpp6kPrUxiIw/OjaEg3CDaPg0vBSjO2SyATOR7SnbO3an98OunkRmJZF+btWvPaIJgIJHrSIE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dooTeG7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dUgwe5jo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F307C4CEF7;
-	Tue, 17 Mar 2026 16:45:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dooTeG7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF49C4CEF7;
+	Tue, 17 Mar 2026 16:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765914;
-	bh=CcL9aCTzi/sVGU0cmXmn798EWXcv8onWRqLs2bIAB14=;
+	s=korg; t=1773765918;
+	bh=6OrhKCTjNiWnp2uay5W4KVmIHVfDrdX1SWN8XO8Xk7M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUgwe5jo25dcLSDSvMK7ds53SrwoaRuWFznK/CF7C57Ejcvm0mn64kAxky5tz7+Gi
-	 Qls/0iEelCQm0Fs2QZAUx3/KSJOPyxzk1Sk6A7jUqNJ5b1aYnAf9MPObze5oqv0ua2
-	 TQCqbEMgYrsMcXXc+jV878xYUfKse4ZQJgGqEmlI=
+	b=dooTeG7Yaeag8PE2evDXr08dqcg9zBPCNU1SaY0yjLEs3H/sjDaCP6e+Wwus9Rkrq
+	 HkfWRt7DdMTRJJa2QaVoxYko5kDH7ACMPUNXURvjeoskunap1pCMIaQdri6fHcHVHq
+	 0uVmwVpk8ylMysaPxN9hGBdGgG3FtteriCZ52Aqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 123/378] net: usb: lan78xx: fix WARN in __netif_napi_del_locked on disconnect
-Date: Tue, 17 Mar 2026 17:31:20 +0100
-Message-ID: <20260317163011.542148472@linuxfoundation.org>
+Subject: [PATCH 6.19 124/378] net: usb: lan78xx: skip LTM configuration for LAN7850
+Date: Tue, 17 Mar 2026 17:31:21 +0100
+Message-ID: <20260317163011.578048281@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,89 +52,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit 312c816c6bc30342bc30dca0d6db617ab4d3ae4e upstream.
+commit d9cc0e440f0664f6f3e2c26e39ab9dd5f3badba7 upstream.
 
-Remove redundant netif_napi_del() call from disconnect path.
+Do not configure Latency Tolerance Messaging (LTM) on USB 2.0 hardware.
 
-A WARN may be triggered in __netif_napi_del_locked() during USB device
-disconnect:
+The LAN7850 is a High-Speed (USB 2.0) only device and does not support
+SuperSpeed features like LTM. Currently, the driver unconditionally
+attempts to configure LTM registers during initialization. On the
+LAN7850, these registers do not exist, resulting in writes to invalid
+or undocumented memory space.
 
-  WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
+This issue was identified during a port to the regmap API with strict
+register validation enabled. While no functional issues or crashes have
+been observed from these invalid writes, bypassing LTM initialization
+on the LAN7850 ensures the driver strictly adheres to the hardware's
+valid register map.
 
-This happens because netif_napi_del() is called in the disconnect path while
-NAPI is still enabled. However, it is not necessary to call netif_napi_del()
-explicitly, since unregister_netdev() will handle NAPI teardown automatically
-and safely. Removing the redundant call avoids triggering the warning.
-
-Full trace:
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x000000c4. ret = -ENODEV
- lan78xx 1-1:1.0 enu1: Failed to set MAC down with error -ENODEV
- lan78xx 1-1:1.0 enu1: Link is Down
- lan78xx 1-1:1.0 enu1: Failed to read register index 0x00000120. ret = -ENODEV
- ------------[ cut here ]------------
- WARNING: CPU: 0 PID: 11 at net/core/dev.c:7417 __netif_napi_del_locked+0x2b4/0x350
- Modules linked in: flexcan can_dev fuse
- CPU: 0 UID: 0 PID: 11 Comm: kworker/0:1 Not tainted 6.16.0-rc2-00624-ge926949dab03 #9 PREEMPT
- Hardware name: SKOV IMX8MP CPU revC - bd500 (DT)
- Workqueue: usb_hub_wq hub_event
- pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __netif_napi_del_locked+0x2b4/0x350
- lr : __netif_napi_del_locked+0x7c/0x350
- sp : ffffffc085b673c0
- x29: ffffffc085b673c0 x28: ffffff800b7f2000 x27: ffffff800b7f20d8
- x26: ffffff80110bcf58 x25: ffffff80110bd978 x24: 1ffffff0022179eb
- x23: ffffff80110bc000 x22: ffffff800b7f5000 x21: ffffff80110bc000
- x20: ffffff80110bcf38 x19: ffffff80110bcf28 x18: dfffffc000000000
- x17: ffffffc081578940 x16: ffffffc08284cee0 x15: 0000000000000028
- x14: 0000000000000006 x13: 0000000000040000 x12: ffffffb0022179e8
- x11: 1ffffff0022179e7 x10: ffffffb0022179e7 x9 : dfffffc000000000
- x8 : 0000004ffdde8619 x7 : ffffff80110bcf3f x6 : 0000000000000001
- x5 : ffffff80110bcf38 x4 : ffffff80110bcf38 x3 : 0000000000000000
- x2 : 0000000000000000 x1 : 1ffffff0022179e7 x0 : 0000000000000000
- Call trace:
-  __netif_napi_del_locked+0x2b4/0x350 (P)
-  lan78xx_disconnect+0xf4/0x360
-  usb_unbind_interface+0x158/0x718
-  device_remove+0x100/0x150
-  device_release_driver_internal+0x308/0x478
-  device_release_driver+0x1c/0x30
-  bus_remove_device+0x1a8/0x368
-  device_del+0x2e0/0x7b0
-  usb_disable_device+0x244/0x540
-  usb_disconnect+0x220/0x758
-  hub_event+0x105c/0x35e0
-  process_one_work+0x760/0x17b0
-  worker_thread+0x768/0xce8
-  kthread+0x3bc/0x690
-  ret_from_fork+0x10/0x20
- irq event stamp: 211604
- hardirqs last  enabled at (211603): [<ffffffc0828cc9ec>] _raw_spin_unlock_irqrestore+0x84/0x98
- hardirqs last disabled at (211604): [<ffffffc0828a9a84>] el1_dbg+0x24/0x80
- softirqs last  enabled at (211296): [<ffffffc080095f10>] handle_softirqs+0x820/0xbc8
- softirqs last disabled at (210993): [<ffffffc080010288>] __do_softirq+0x18/0x20
- ---[ end trace 0000000000000000 ]---
- lan78xx 1-1:1.0 enu1: failed to kill vid 0081/0
-
-Fixes: e110bc825897 ("net: usb: lan78xx: Convert to PHYLINK for improved PHY and MAC management")
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
-Link: https://patch.msgid.link/20260305143429.530909-5-o.rempel@pengutronix.de
+Link: https://patch.msgid.link/20260305143429.530909-4-o.rempel@pengutronix.de
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/lan78xx.c |    2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/usb/lan78xx.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
 --- a/drivers/net/usb/lan78xx.c
 +++ b/drivers/net/usb/lan78xx.c
-@@ -4548,8 +4548,6 @@ static void lan78xx_disconnect(struct us
- 	phylink_disconnect_phy(dev->phylink);
- 	rtnl_unlock();
+@@ -3119,6 +3119,10 @@ static int lan78xx_init_ltm(struct lan78
+ 	int ret;
+ 	u32 buf;
  
--	netif_napi_del(&dev->napi);
--
- 	unregister_netdev(net);
- 
- 	timer_shutdown_sync(&dev->stat_monitor);
++	/* LAN7850 is USB 2.0 and does not support LTM */
++	if (dev->chipid == ID_REV_CHIP_ID_7850_)
++		return 0;
++
+ 	ret = lan78xx_read_reg(dev, USB_CFG1, &buf);
+ 	if (ret < 0)
+ 		goto init_ltm_failed;
 
 
