@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B46672D7393;
-	Tue, 17 Mar 2026 17:16:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F21255F2C;
+	Tue, 17 Mar 2026 17:16:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767809; cv=none; b=boAmM9eLAc835ZSvvn+jcXo2dHFApG/s3XEeLskuYU+cRBLRfcff1X+M7pvluX8RRjZ3pziQsCjqr9mLopQ6Oej3noZdtd1Ch8SD7rCAIME5ABsqP5EozrVYKvs9PDXca4ENQ+ohI3La8hnKaMWxzPxnOLhVzu76vOM2zosvp3Q=
+	t=1773767814; cv=none; b=Xi/2QWiHAy0C5J2lTkiQKorgMEAfQGI0kd1QsCeb28w4MRya/vPrv/ioGPNjU1Rz12lwHKyThJwzRgNrWdsxoDgN8qXeKD4lOkteL6+avl3LLpbpp4BQ8sFJKzJJK+98q8pKqq+r0mRPupRArTJiYf9KnFRcJnlrxItDYwtyZCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767809; c=relaxed/simple;
-	bh=GIkIaGTQQy0h6Y4mxJgyfZsIlY/qHc8SjAAZl2FJkZk=;
+	s=arc-20240116; t=1773767814; c=relaxed/simple;
+	bh=myBuIs4Zt31ZitEe7401BQl5m3/jHckCWzsmynR4JEU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A9Bj1HdXlPwzLMwm/0Kd2El0BQrwy01XqKhWk2hlrbXL3yaPKQKOe7LYXOtgBUGXzmlPyzcRSwKEFvSHsBYq8DAEO17HaWVY5PUNZYy7XeAy1wZrxHjdMH6pZmzpGgd5Bbh0QadmrnnvjxVs0OYcO2AOVB77XEGj6jlB1gvjYKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zo1OZLn0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TFovUk5gD/d4gu1Q5LxdvCLd3pWES98y/6x07pNdk51fplNDrhY8zKII11BQwhg1xW9CDIzSAZZ34HaWAOcyUrIcng8bFZ7WaXGSAAYU91Eg2ZHeUfYT59vmufEhY/VbHW1WjB/NLyLPg3ZjWsTkovwlTTnv4ecUEUwI0DV9TH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J2kbIjdG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zo1OZLn0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48E5C4CEF7;
-	Tue, 17 Mar 2026 17:16:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J2kbIjdG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE49C19424;
+	Tue, 17 Mar 2026 17:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767809;
-	bh=GIkIaGTQQy0h6Y4mxJgyfZsIlY/qHc8SjAAZl2FJkZk=;
+	s=korg; t=1773767814;
+	bh=myBuIs4Zt31ZitEe7401BQl5m3/jHckCWzsmynR4JEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zo1OZLn0xRp9pbcAxsjR7UhnRs/EbuknopQVA9P76HAoS9gNTmX0vMiBP6PFEhZY8
-	 jSjEitTuBrIgQtmnk3lvbDzBmlR/rnx0w/uRkpTx/VlNsx47lKLEJfVQqQIwxgLBEs
-	 +5ogvGWdFU35qFSqS7bUd5zTXYjzzbE38YNpWJZM=
+	b=J2kbIjdGM99EqMenxa6VcirS7gACCM893hgLdN9yjmHoslUA+m9SvONludYTQco0g
+	 FVNsURXRjlCBaxSrPDR57utadrzyThXRBvlsOe8eKz52neB0yG/GpsLuoIXVB3hx76
+	 PVsLIXNMRquzpFtdVzkVysuLUxWoEv8mQpFdZQGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 162/333] tipc: fix divide-by-zero in tipc_sk_filter_connect()
-Date: Tue, 17 Mar 2026 17:33:11 +0100
-Message-ID: <20260317163005.368610504@linuxfoundation.org>
+	Ye Bin <yebin10@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 163/333] kprobes: avoid crash when rmmod/insmod after ftrace killed
+Date: Tue, 17 Mar 2026 17:33:12 +0100
+Message-ID: <20260317163005.407080416@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,55 +51,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 6c5a9baa15de240e747263aba435a0951da8d8d2 upstream.
+commit e113f0b46d19626ec15388bcb91432c9a4fd6261 upstream.
 
-A user can set conn_timeout to any value via
-setsockopt(TIPC_CONN_TIMEOUT), including values less than 4.  When a
-SYN is rejected with TIPC_ERR_OVERLOAD and the retry path in
-tipc_sk_filter_connect() executes:
+After we hit ftrace is killed by some errors, the kernel crash if
+we remove modules in which kprobe probes.
 
-    delay %= (tsk->conn_timeout / 4);
-
-If conn_timeout is in the range [0, 3], the integer division yields 0,
-and the modulo operation triggers a divide-by-zero exception, causing a
-kernel oops/panic.
-
-Fix this by clamping conn_timeout to a minimum of 4 at the point of use
-in tipc_sk_filter_connect().
-
-Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 119 Comm: poc-F144 Not tainted 7.0.0-rc2+
-RIP: 0010:tipc_sk_filter_rcv (net/tipc/socket.c:2236 net/tipc/socket.c:2362)
+BUG: unable to handle page fault for address: fffffbfff805000d
+PGD 817fcc067 P4D 817fcc067 PUD 817fc8067 PMD 101555067 PTE 0
+Oops: Oops: 0000 [#1] SMP KASAN PTI
+CPU: 4 UID: 0 PID: 2012 Comm: rmmod Tainted: G        W  OE
+Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
+RIP: 0010:kprobes_module_callback+0x89/0x790
+RSP: 0018:ffff88812e157d30 EFLAGS: 00010a02
+RAX: 1ffffffff805000d RBX: dffffc0000000000 RCX: ffffffff86a8de90
+RDX: ffffed1025c2af9b RSI: 0000000000000008 RDI: ffffffffc0280068
+RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed1025c2af9a
+R10: ffff88812e157cd7 R11: 205d323130325420 R12: 0000000000000002
+R13: ffffffffc0290488 R14: 0000000000000002 R15: ffffffffc0280040
+FS:  00007fbc450dd740(0000) GS:ffff888420331000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffffbfff805000d CR3: 000000010f624000 CR4: 00000000000006f0
 Call Trace:
- tipc_sk_backlog_rcv (include/linux/instrumented.h:82 include/linux/atomic/atomic-instrumented.h:32 include/net/sock.h:2357 net/tipc/socket.c:2406)
- __release_sock (include/net/sock.h:1185 net/core/sock.c:3213)
- release_sock (net/core/sock.c:3797)
- tipc_connect (net/tipc/socket.c:2570)
- __sys_connect (include/linux/file.h:62 include/linux/file.h:83 net/socket.c:2098)
+ <TASK>
+ notifier_call_chain+0xc6/0x280
+ blocking_notifier_call_chain+0x60/0x90
+ __do_sys_delete_module.constprop.0+0x32a/0x4e0
+ do_syscall_64+0x5d/0xfa0
+ entry_SYSCALL_64_after_hwframe+0x76/0x7e
 
-Fixes: 6787927475e5 ("tipc: buffer overflow handling in listener socket")
+This is because the kprobe on ftrace does not correctly handles
+the kprobe_ftrace_disabled flag set by ftrace_kill().
+
+To prevent this error, check kprobe_ftrace_disabled in
+__disarm_kprobe_ftrace() and skip all ftrace related operations.
+
+Link: https://lore.kernel.org/all/176473947565.1727781.13110060700668331950.stgit@mhiramat.tok.corp.google.com/
+
+Reported-by: Ye Bin <yebin10@huawei.com>
+Closes: https://lore.kernel.org/all/20251125020536.2484381-1-yebin@huaweicloud.com/
+Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260310170730.28841-1-mehulrao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/kprobes.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2233,6 +2233,8 @@ static bool tipc_sk_filter_connect(struc
- 		if (skb_queue_empty(&sk->sk_write_queue))
- 			break;
- 		get_random_bytes(&delay, 2);
-+		if (tsk->conn_timeout < 4)
-+			tsk->conn_timeout = 4;
- 		delay %= (tsk->conn_timeout / 4);
- 		delay = msecs_to_jiffies(delay + 100);
- 		sk_reset_timer(sk, &sk->sk_timer, jiffies + delay);
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1104,6 +1104,10 @@ static int __disarm_kprobe_ftrace(struct
+ 	int ret;
+ 
+ 	lockdep_assert_held(&kprobe_mutex);
++	if (unlikely(kprobe_ftrace_disabled)) {
++		/* Now ftrace is disabled forever, disarm is already done. */
++		return 0;
++	}
+ 
+ 	if (*cnt == 1) {
+ 		ret = unregister_ftrace_function(ops);
 
 
