@@ -1,42 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6093F661A;
-	Tue, 17 Mar 2026 17:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBAC30CDA2;
+	Tue, 17 Mar 2026 17:10:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767404; cv=none; b=ZyJOF5MPeCAun2o75FIUhJHrfujEMkkiskNaFApxUblE+c8UojRhLagSkXO72lfc+0xM1/vj0K0jng7aDY3oaL0LNjv9sCgcUuvpsgxKLOrCAarMDXRSUwS6bKV5SPgvgVdKGFz3c4rcA4cJGLMhL4Sa+FvkQZw5LFA3uJF//MU=
+	t=1773767409; cv=none; b=IDG8rPQlCmDaLKZ8oc+ue/C2a1IT5uq/Ognjl4z/W5LZYtxYsFEUpMN0AAUjerxxwaotfXsNFRDDJlqMN7AC9TeSmRsJcXGu1jB8wdVqwbI2ZpaIcmJ0CNhODJRFSiExvDx0xsdkaT+3aFlhnVHsfv2ZOmXT9/TvSggC9O6DTiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767404; c=relaxed/simple;
-	bh=Hto6r0JRNEfJEwRRQy/s/+8QoFPjeSiq3Rk3SKYJ6IA=;
+	s=arc-20240116; t=1773767409; c=relaxed/simple;
+	bh=YQl/6XMgB8CdJpYQzzmO2YLdqNJVFoo5LPVHsFbubrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N7QAxzR9B3LvUp566hBpRxA0IU+tzi1hcw/Xh6azST32LUwLqy0z2mY7ZepU1JW90+H3GsyByT3opEB0DK68Byn3uKLlWFat4OHcfDe30y58jAMdpJTSvAixPZ1R7buHJZjB+SGuTLtMKpY4MDyApvJCOMmJ1JqHEK1koYlFvxk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h4VtrkLR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P/UKQATECq+2gR+rIUbRrW6auk7hGeWKE3Ob2KdddjnF5F6fcPeyU9HFFL9aBiQLc4v9UieeI4sTOMG1tMIsd+1V213SWssfi5SGzmu0odnLwVHdgA0yGsxh6WjKgEDhPfHt1Y6PT3SBBG4F+DkevHQ8ANG7ypHuHp+/uy1P5c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYH49pg1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h4VtrkLR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900B0C4CEF7;
-	Tue, 17 Mar 2026 17:10:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYH49pg1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6332AC4CEF7;
+	Tue, 17 Mar 2026 17:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767404;
-	bh=Hto6r0JRNEfJEwRRQy/s/+8QoFPjeSiq3Rk3SKYJ6IA=;
+	s=korg; t=1773767408;
+	bh=YQl/6XMgB8CdJpYQzzmO2YLdqNJVFoo5LPVHsFbubrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4VtrkLRqLJgm/9JSfyoBxXdc88+WxwoRGR0BpIUY/xMfFoet0ZxTGK0vLS42fpIe
-	 oECg6rQISGjGmCpweLotdU8fgfw1JRwjfC3TssnTk4HpLXSU4vVAZJgCwEELweySal
-	 dbGTelItT4dQ1q9A+7B2v6ZiwAm/sV1Gt96kYAA4=
+	b=dYH49pg1GrtOtzODJN5ui4oNxeFd4wzHQhBdbp7Dn7J/fZluqioyeZuESyDznJpIZ
+	 iE47RXLLFN+GjsRv5sr2JGMtBx56zxDc7zxQVlC7vATHBzwmO7SO9x8O4LXBfH1lBD
+	 CPHCiY4PzoLb3Sw12z1Js2eVUGuLqo7w9P6P0nW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Christoph Hellwig <hch@lst.de>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 080/333] nvme-pci: Fix race bug in nvme_poll_irqdisable()
-Date: Tue, 17 Mar 2026 17:31:49 +0100
-Message-ID: <20260317163002.342244030@linuxfoundation.org>
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.18 081/333] drivers: net: ice: fix devlink parameters get without irdma
+Date: Tue, 17 Mar 2026 17:31:50 +0100
+Message-ID: <20260317163002.379717978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -55,120 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Nikolay Aleksandrov <nikolay@nvidia.com>
 
-[ Upstream commit fc71f409b22ca831a9f87a2712eaa09ef2bb4a5e ]
+[ Upstream commit bd98c6204d1195973b1760fe45860863deb6200c ]
 
-In the following scenario, pdev can be disabled between (1) and (3) by
-(2). This sets pdev->msix_enabled = 0. Then, pci_irq_vector() will
-return MSI-X IRQ(>15) for (1) whereas return INTx IRQ(<=15) for (2).
-This causes IRQ warning because it tries to enable INTx IRQ that has
-never been disabled before.
+If CONFIG_IRDMA isn't enabled but there are ice NICs in the system, the
+driver will prevent full devlink dev param show dump because its rdma get
+callbacks return ENODEV and stop the dump. For example:
+ $ devlink dev param show
+ pci/0000:82:00.0:
+   name msix_vec_per_pf_max type generic
+     values:
+       cmode driverinit value 2
+   name msix_vec_per_pf_min type generic
+     values:
+       cmode driverinit value 2
+ kernel answers: No such device
 
-To fix this, save IRQ number into a local variable and ensure
-disable_irq() and enable_irq() operate on the same IRQ number.  Even if
-pci_free_irq_vectors() frees the IRQ concurrently, disable_irq() and
-enable_irq() on a stale IRQ number is still valid and safe, and the
-depth accounting reamins balanced.
+Returning EOPNOTSUPP allows the dump to continue so we can see all devices'
+devlink parameters.
 
-task 1:
-nvme_poll_irqdisable()
-  disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector)) ...(1)
-  enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector))  ...(3)
-
-task 2:
-nvme_reset_work()
-  nvme_dev_disable()
-    pdev->msix_enable = 0;  ...(2)
-
-crash log:
-
-------------[ cut here ]------------
-Unbalanced enable for IRQ 10
-WARNING: kernel/irq/manage.c:753 at __enable_irq+0x102/0x190 kernel/irq/manage.c:753, CPU#1: kworker/1:0H/26
-Modules linked in:
-CPU: 1 UID: 0 PID: 26 Comm: kworker/1:0H Not tainted 6.19.0-dirty #9 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: kblockd blk_mq_timeout_work
-RIP: 0010:__enable_irq+0x107/0x190 kernel/irq/manage.c:753
-Code: ff df 48 89 fa 48 c1 ea 03 0f b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 79 48 8d 3d 2e 7a 3f 05 41 8b 74 24 2c <67> 48 0f b9 3a e8 ef b9 21 00 5b 41 5c 5d e9 46 54 66 03 e8 e1 b9
-RSP: 0018:ffffc900001bf550 EFLAGS: 00010046
-RAX: 0000000000000007 RBX: 0000000000000000 RCX: ffffffffb20c0e90
-RDX: 0000000000000000 RSI: 000000000000000a RDI: ffffffffb74b88f0
-RBP: ffffc900001bf560 R08: ffff88800197cf00 R09: 0000000000000001
-R10: 0000000000000003 R11: 0000000000000003 R12: ffff8880012a6000
-R13: 1ffff92000037eae R14: 000000000000000a R15: 0000000000000293
-FS:  0000000000000000(0000) GS:ffff8880b49f7000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000555da4a25fa8 CR3: 00000000208e8000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- enable_irq+0x121/0x1e0 kernel/irq/manage.c:797
- nvme_poll_irqdisable+0x162/0x1c0 drivers/nvme/host/pci.c:1494
- nvme_timeout+0x965/0x14b0 drivers/nvme/host/pci.c:1744
- blk_mq_rq_timed_out block/blk-mq.c:1653 [inline]
- blk_mq_handle_expired+0x227/0x2d0 block/blk-mq.c:1721
- bt_iter+0x2fc/0x3a0 block/blk-mq-tag.c:292
- __sbitmap_for_each_set include/linux/sbitmap.h:269 [inline]
- sbitmap_for_each_set include/linux/sbitmap.h:290 [inline]
- bt_for_each block/blk-mq-tag.c:324 [inline]
- blk_mq_queue_tag_busy_iter+0x969/0x1e80 block/blk-mq-tag.c:536
- blk_mq_timeout_work+0x627/0x870 block/blk-mq.c:1763
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
- </TASK>
-irq event stamp: 74478
-hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] __raw_spin_unlock_irq include/linux/spinlock_api_smp.h:159 [inline]
-hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] _raw_spin_unlock_irq+0x2c/0x60 kernel/locking/spinlock.c:202
-hardirqs last disabled at (74478): [<ffffffffb57207b5>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
-hardirqs last disabled at (74478): [<ffffffffb57207b5>] _raw_spin_lock_irqsave+0x85/0xa0 kernel/locking/spinlock.c:162
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
----[ end trace 0000000000000000 ]---
-
-Fixes: fa059b856a59 (nvme-pci: Simplify nvme_poll_irqdisable)
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: c24a65b6a27c ("iidc/ice/irdma: Update IDC to support multiple consumers")
+Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ice/devlink/devlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index fe2343823e79e..9987b711091f0 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1413,14 +1413,16 @@ static irqreturn_t nvme_irq_check(int irq, void *data)
- static void nvme_poll_irqdisable(struct nvme_queue *nvmeq)
- {
- 	struct pci_dev *pdev = to_pci_dev(nvmeq->dev->dev);
-+	int irq;
+diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+index ac071c5b4ce38..862ff1cdd46d6 100644
+--- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
++++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+@@ -1357,7 +1357,7 @@ ice_devlink_enable_roce_get(struct devlink *devlink, u32 id,
  
- 	WARN_ON_ONCE(test_bit(NVMEQ_POLLED, &nvmeq->flags));
+ 	cdev = pf->cdev_info;
+ 	if (!cdev)
+-		return -ENODEV;
++		return -EOPNOTSUPP;
  
--	disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
-+	irq = pci_irq_vector(pdev, nvmeq->cq_vector);
-+	disable_irq(irq);
- 	spin_lock(&nvmeq->cq_poll_lock);
- 	nvme_poll_cq(nvmeq, NULL);
- 	spin_unlock(&nvmeq->cq_poll_lock);
--	enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
-+	enable_irq(irq);
- }
+ 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_ROCEV2);
  
- static int nvme_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
+@@ -1423,7 +1423,7 @@ ice_devlink_enable_iw_get(struct devlink *devlink, u32 id,
+ 
+ 	cdev = pf->cdev_info;
+ 	if (!cdev)
+-		return -ENODEV;
++		return -EOPNOTSUPP;
+ 
+ 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_IWARP);
+ 
 -- 
 2.51.0
 
