@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECA60373C18;
-	Tue, 17 Mar 2026 17:11:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A72226E706;
+	Tue, 17 Mar 2026 17:11:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767471; cv=none; b=rdQuovpkY790ELzxA5ZLlS3e7+VVqs6EiTQn/apl5Zr/72/F5k2bXW1L6Myc4GT3pPob27LM+sh4Z5LHkm8b+bF4X8625tsUHD9yDuXmoUeOiV4zaH5+kHlS0uokyvewKDkotHP8C/DQbagYlQx0mW1Ve8zfCneexbr0t2B8iDo=
+	t=1773767476; cv=none; b=OPKq4yeKPfcSX+26BwMS6JDuXXkjNYvzEaVSiA+ZbNLkJyP1AcMqluVIIo3AvuJN1+OTf1jwGjhHlmsaEizKu4F2Oo7Q8JFHoLVaP9NwNcZd3Wlc501GWPJuY3r2H5cYixxbuDkLJ2VaEG5b+eQLmrTyvp2/hu/tIoTLRwF/K4A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767471; c=relaxed/simple;
-	bh=Mh5Ea09549Vh3S9AYIYEAS/AVIe1Y5+jftt3PoGhwJc=;
+	s=arc-20240116; t=1773767476; c=relaxed/simple;
+	bh=6/uQFQEeZQ8vM29YZFuvmlb9CM6cTTu7tZ0AJMcYHl0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Y1H3927nwxqGBa14GyLzy2S8fAMT3ghEBjruuI9M+R/Ej6854rSZ2d6q+poo6gdF/6KguXQ6HELib9ezRkvxlbkeV8GLxIRuZh8kdDVSRGLSEVKJhruyGHa53pHehzsLUuOcDj13adPT472cZHvVMPSEAdoSuv0dGMsQQhYWT94=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cF8aFG9G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nrf262LdKVWPSoIeqGHclPK924jee9Y1Rn2k5onm1g5xMkPjZdeTqyszWVVlvOvl4LnP+4REV3IxCZtai7SRkJfHIUUCJmg3vovPjgmgqLI1aZZnl1pBRhXt0HKrrAF77crJRPJIuZ9CDXdMvNv1j7tRh1Hlu0eIHSMXvFOln/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VigRoEMX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cF8aFG9G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C298C4CEF7;
-	Tue, 17 Mar 2026 17:11:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VigRoEMX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56413C4CEF7;
+	Tue, 17 Mar 2026 17:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767470;
-	bh=Mh5Ea09549Vh3S9AYIYEAS/AVIe1Y5+jftt3PoGhwJc=;
+	s=korg; t=1773767476;
+	bh=6/uQFQEeZQ8vM29YZFuvmlb9CM6cTTu7tZ0AJMcYHl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cF8aFG9GxDBGBlfC2FWJZXR3Xrs089k6ay9d9eDJI1z0wQ4kxe6JDhwnAJIrsIEtT
-	 F3UsLav3qDuSu23nFDxy5MxZzj5kpfecEdWCeIkqpn7FVNeSMM9gBmmTrVCAKAT1fD
-	 +lvqMJIPZp0tKpV6OxqUWvP1XLjdIa6juzkCZy34=
+	b=VigRoEMXXBMEjFHMK3yzgUPRisU8w9ytIzjdBhuRcEZQRL4vFb/6CccjLduwGVDHv
+	 csBwKiQf4Kf4fEpTMC6eAnxytl+IHsg/+pk8xs8+UcCreSzoJajzUv8bySgg7sAD29
+	 /j81YO+Mz7RkMtXRoy9eCKXTECqGtyJBc+JE+TTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
-	"=?UTF-8?q?Ricardo=20B . =20Marli=C3=A8re?=" <rbm@suse.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 093/333] net: bonding: Fix nd_tbl NULL dereference when IPv6 is disabled
-Date: Tue, 17 Mar 2026 17:32:02 +0100
-Message-ID: <20260317163002.819659653@linuxfoundation.org>
+Subject: [PATCH 6.18 094/333] net: dsa: realtek: Fix LED group port bit for non-zero LED group
+Date: Tue, 17 Mar 2026 17:32:03 +0100
+Message-ID: <20260317163002.856548766@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -54,87 +53,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ricardo B. Marlière <rbm@suse.com>
+From: Marek Behún <kabel@kernel.org>
 
-[ Upstream commit 30021e969d48e5819d5ae56936c2f34c0f7ce997 ]
+[ Upstream commit e8f0dc024ce55451ebd54bad975134ba802e4fcc ]
 
-When booting with the 'ipv6.disable=1' parameter, the nd_tbl is never
-initialized because inet6_init() exits before ndisc_init() is called
-which initializes it. If bonding ARP/NS validation is enabled, an IPv6
-NS/NA packet received on a slave can reach bond_validate_na(), which
-calls bond_has_this_ip6(). That path calls ipv6_chk_addr() and can
-crash in __ipv6_chk_addr_and_flags().
+The rtl8366rb_led_group_port_mask() function always returns LED port
+bit in LED group 0; the switch statement returns the same thing in all
+non-default cases.
 
- BUG: kernel NULL pointer dereference, address: 00000000000005d8
- Oops: Oops: 0000 [#1] SMP NOPTI
- RIP: 0010:__ipv6_chk_addr_and_flags+0x69/0x170
- Call Trace:
-  <IRQ>
-  ipv6_chk_addr+0x1f/0x30
-  bond_validate_na+0x12e/0x1d0 [bonding]
-  ? __pfx_bond_handle_frame+0x10/0x10 [bonding]
-  bond_rcv_validate+0x1a0/0x450 [bonding]
-  bond_handle_frame+0x5e/0x290 [bonding]
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  __netif_receive_skb_core.constprop.0+0x3e8/0xe50
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? update_cfs_rq_load_avg+0x1a/0x240
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? __enqueue_entity+0x5e/0x240
-  __netif_receive_skb_one_core+0x39/0xa0
-  process_backlog+0x9c/0x150
-  __napi_poll+0x30/0x200
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  net_rx_action+0x338/0x3b0
-  handle_softirqs+0xc9/0x2a0
-  do_softirq+0x42/0x60
-  </IRQ>
-  <TASK>
-  __local_bh_enable_ip+0x62/0x70
-  __dev_queue_xmit+0x2d3/0x1000
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? packet_parse_headers+0x10a/0x1a0
-  packet_sendmsg+0x10da/0x1700
-  ? kick_pool+0x5f/0x140
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  ? __queue_work+0x12d/0x4f0
-  __sys_sendto+0x1f3/0x220
-  __x64_sys_sendto+0x24/0x30
-  do_syscall_64+0x101/0xf80
-  ? exc_page_fault+0x6e/0x170
-  ? srso_alias_return_thunk+0x5/0xfbef5
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
-  </TASK>
+This means that the driver does not currently support configuring LEDs
+in non-zero LED groups.
 
-Fix this by checking ipv6_mod_enabled() before dispatching IPv6 packets to
-bond_na_rcv(). If IPv6 is disabled, return early from bond_rcv_validate()
-and avoid the path to ipv6_chk_addr().
+Fix this.
 
-Suggested-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Fixes: 4e24be018eb9 ("bonding: add new parameter ns_targets")
-Signed-off-by: Ricardo B. Marlière <rbm@suse.com>
-Reviewed-by: Hangbin Liu <liuhangbin@gmail.com>
-Link: https://patch.msgid.link/20260307-net-nd_tbl_fixes-v4-2-e2677e85628c@suse.com
+Fixes: 32d617005475a71e ("net: dsa: realtek: add LED drivers for rtl8366rb")
+Signed-off-by: Marek Behún <kabel@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260311111237.29002-1-kabel@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/realtek/rtl8366rb-leds.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 139ece7676c50..e8e261e0cb4e1 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -3402,7 +3402,7 @@ int bond_rcv_validate(const struct sk_buff *skb, struct bonding *bond,
- 	} else if (is_arp) {
- 		return bond_arp_rcv(skb, bond, slave);
- #if IS_ENABLED(CONFIG_IPV6)
--	} else if (is_ipv6) {
-+	} else if (is_ipv6 && likely(ipv6_mod_enabled())) {
- 		return bond_na_rcv(skb, bond, slave);
- #endif
- 	} else {
+diff --git a/drivers/net/dsa/realtek/rtl8366rb-leds.c b/drivers/net/dsa/realtek/rtl8366rb-leds.c
+index 99c890681ae60..509ffd3f8db5c 100644
+--- a/drivers/net/dsa/realtek/rtl8366rb-leds.c
++++ b/drivers/net/dsa/realtek/rtl8366rb-leds.c
+@@ -12,11 +12,11 @@ static inline u32 rtl8366rb_led_group_port_mask(u8 led_group, u8 port)
+ 	case 0:
+ 		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
+ 	case 1:
+-		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
++		return FIELD_PREP(RTL8366RB_LED_X_1_CTRL_MASK, BIT(port));
+ 	case 2:
+-		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
++		return FIELD_PREP(RTL8366RB_LED_2_X_CTRL_MASK, BIT(port));
+ 	case 3:
+-		return FIELD_PREP(RTL8366RB_LED_0_X_CTRL_MASK, BIT(port));
++		return FIELD_PREP(RTL8366RB_LED_X_3_CTRL_MASK, BIT(port));
+ 	default:
+ 		return 0;
+ 	}
 -- 
 2.51.0
 
