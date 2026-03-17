@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF822F362B;
-	Tue, 17 Mar 2026 17:23:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67235372EE8;
+	Tue, 17 Mar 2026 17:23:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768199; cv=none; b=d7aP61xWnQOUJFVR5dZJMfff1qkUvk+7+hSK/XnePMDP7QAllGeVWxctKtYEKPsU969XIJKVFhrABcpWNxkmsIpEFMxY/+rXAs5sGSafzMErXb/TFJ0ukfpMpFH7PKxFSH1kHD3LSK5Lsyv4+VCqCXZXgNS1iZLXRSy4ghj14Qk=
+	t=1773768203; cv=none; b=FZhM4Jqy0gzn0+tkUOHEtxx2WZEGvKZBEBh1FIhvi0kWbDM2G9syV5BfQfbplSEJ5dxdxWUy/n4B/wrNCi2ikmqvjHT+ueiA2WQiuPz5dZGnjo8CtmJuQIVFty0yfsnoouzw2b0NQ2pEVfWbrLOczxZ399yzS70X32RlmqygU2w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768199; c=relaxed/simple;
-	bh=ungHzVpcs12NyM9sWoC4UOCJX24gnATKzZqw+b8d3NU=;
+	s=arc-20240116; t=1773768203; c=relaxed/simple;
+	bh=HSlQT3UECw+OywlzjJh+0iHULAIYgVTW/13JR/g/l2g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pZxgD2LMIOhA8cHc/vy5tq8yN44pyM3Av7K07yn5mNr0Xx3uFJuzWZHkREpcc6JnJa8SZ6EmVySGup8ulTOcLLWFHMdgrTmr5wXEgwDfL1f9GK7o1en/jeXbxfscU/+Uw7A0PIWDD7Qbp7zP8ry4gPcez7w5/H7ss/c7lknVX0c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6ynPNPi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fKWQ83m4c8mfEyklFWgXQlhlIuFnaxQPKTbqHRyLtWEv0+l5/7m+kluElhb7mhCjCXmFX4soWlweD2bUCdU3LKWeH0qRx1CsVcUReq6dShlJK9XHYYiHrxjHu8YVuNvP80AXyXc0xq/mHKy9vSS48vfN8A+WFKiq1Yb8X/x84Ss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XbnvVxam; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6ynPNPi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6748C19424;
-	Tue, 17 Mar 2026 17:23:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XbnvVxam"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3637C2BCB0;
+	Tue, 17 Mar 2026 17:23:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768199;
-	bh=ungHzVpcs12NyM9sWoC4UOCJX24gnATKzZqw+b8d3NU=;
+	s=korg; t=1773768203;
+	bh=HSlQT3UECw+OywlzjJh+0iHULAIYgVTW/13JR/g/l2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6ynPNPiLdvgQmJ3VOJuETxKnW7/iYVg4ovuqvD9iRysCjm9CvjufY2Dfdkrt5Yjn
-	 VrtkhAkRgAng+c9Dve8RGipbbA2pviDsy5GFMKMnhCU5dHaQCUEOKAP4a8JoubD4Zm
-	 lhDZ7Z1vZkZtwvcn451NsCpVhXbBbEi+U74b5UlY=
+	b=XbnvVxamGSRivBkwpYXBeAL6JFX2Y7u1JJ4VNE3ZW4n6GsylcyuISZRNPIz8Y0YRR
+	 wjSjv1gkKzUfxnv03r1jKN8za16BBec/KPZV244VbZkcUXV0tkM773WH4Y8rfyprt2
+	 h/TLGDZPExjDV/nd86UCOwXcVQRofddie/aL0S+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.18 255/333] drm/bridge: ti-sn65dsi83: halve horizontal syncs for dual LVDS output
-Date: Tue, 17 Mar 2026 17:34:44 +0100
-Message-ID: <20260317163008.824481426@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.18 256/333] drm/i915: Fix potential overflow of shmem scatterlist length
+Date: Tue, 17 Mar 2026 17:34:45 +0100
+Message-ID: <20260317163008.861397009@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,68 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit d0d727746944096a6681dc6adb5f123fc5aa018d upstream.
+commit 029ae067431ab9d0fca479bdabe780fa436706ea upstream.
 
-Dual LVDS output (available on the SN65DSI84) requires HSYNC_PULSE_WIDTH
-and HORIZONTAL_BACK_PORCH to be divided by two with respect to the values
-used for single LVDS output.
+When a scatterlists table of a GEM shmem object of size 4 GB or more is
+populated with pages allocated from a folio, unsigned int .length
+attribute of a scatterlist may get overflowed if total byte length of
+pages allocated to that single scatterlist happens to reach or cross the
+4GB limit.  As a consequence, users of the object may suffer from hitting
+unexpected, premature end of the object's backing pages.
 
-While not clearly stated in the datasheet, this is needed according to the
-DSI Tuner [0] output. It also makes sense intuitively because in dual LVDS
-output two pixels at a time are output and so the output clock is half of
-the pixel clock.
+[278.780187] ------------[ cut here ]------------
+[278.780377] WARNING: CPU: 1 PID: 2326 at drivers/gpu/drm/i915/i915_mm.c:55 remap_sg+0x199/0x1d0 [i915]
+...
+[278.780654] CPU: 1 UID: 0 PID: 2326 Comm: gem_mmap_offset Tainted: G S   U              6.17.0-rc1-CI_DRM_16981-ged823aaa0607+ #1 PREEMPT(voluntary)
+[278.780656] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+[278.780658] Hardware name: Intel Corporation Meteor Lake Client Platform/MTL-P LP5x T3 RVP, BIOS MTLPFWI1.R00.3471.D91.2401310918 01/31/2024
+[278.780659] RIP: 0010:remap_sg+0x199/0x1d0 [i915]
+...
+[278.780786] Call Trace:
+[278.780787]  <TASK>
+[278.780788]  ? __apply_to_page_range+0x3e6/0x910
+[278.780795]  ? __pfx_remap_sg+0x10/0x10 [i915]
+[278.780906]  apply_to_page_range+0x14/0x30
+[278.780908]  remap_io_sg+0x14d/0x260 [i915]
+[278.781013]  vm_fault_cpu+0xd2/0x330 [i915]
+[278.781137]  __do_fault+0x3a/0x1b0
+[278.781140]  do_fault+0x322/0x640
+[278.781143]  __handle_mm_fault+0x938/0xfd0
+[278.781150]  handle_mm_fault+0x12c/0x300
+[278.781152]  ? lock_mm_and_find_vma+0x4b/0x760
+[278.781155]  do_user_addr_fault+0x2d6/0x8e0
+[278.781160]  exc_page_fault+0x96/0x2c0
+[278.781165]  asm_exc_page_fault+0x27/0x30
+...
 
-Some dual-LVDS panels refuse to show any picture without this fix.
+That issue was apprehended by the author of a change that introduced it,
+and potential risk even annotated with a comment, but then never addressed.
 
-Divide by two HORIZONTAL_FRONT_PORCH too, even though this register is used
-only for test pattern generation which is not currently implemented by this
-driver.
+When adding folio pages to a scatterlist table, take care of byte length
+of any single scatterlist not exceeding max_segment.
 
-[0] https://www.ti.com/tool/DSI-TUNER
-
-Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
-Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-2-2e15f5a9a6a0@bootlin.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 0b62af28f249b ("i915: convert shmem_sg_free_table() to use a folio_batch")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14809
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # v6.5+
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20260224094944.2447913-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 06249b4e691a75694c014a61708c007fb5755f60)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_shmem.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -474,6 +474,7 @@ static void sn65dsi83_atomic_pre_enable(
- 					struct drm_atomic_state *state)
- {
- 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
-+	const unsigned int dual_factor = ctx->lvds_dual_link ? 2 : 1;
- 	const struct drm_bridge_state *bridge_state;
- 	const struct drm_crtc_state *crtc_state;
- 	const struct drm_display_mode *mode;
-@@ -606,18 +607,18 @@ static void sn65dsi83_atomic_pre_enable(
- 	/* 32 + 1 pixel clock to ensure proper operation */
- 	le16val = cpu_to_le16(32 + 1);
- 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_SYNC_DELAY_LOW, &le16val, 2);
--	le16val = cpu_to_le16(mode->hsync_end - mode->hsync_start);
-+	le16val = cpu_to_le16((mode->hsync_end - mode->hsync_start) / dual_factor);
- 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
- 			  &le16val, 2);
- 	le16val = cpu_to_le16(mode->vsync_end - mode->vsync_start);
- 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
- 			  &le16val, 2);
- 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,
--		     mode->htotal - mode->hsync_end);
-+		     (mode->htotal - mode->hsync_end) / dual_factor);
- 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH,
- 		     mode->vtotal - mode->vsync_end);
- 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
--		     mode->hsync_start - mode->hdisplay);
-+		     (mode->hsync_start - mode->hdisplay) / dual_factor);
- 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
- 		     mode->vsync_start - mode->vdisplay);
- 	regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x00);
+--- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+@@ -151,8 +151,12 @@ int shmem_sg_alloc_table(struct drm_i915
+ 			}
+ 		} while (1);
+ 
+-		nr_pages = min_t(unsigned long,
+-				folio_nr_pages(folio), page_count - i);
++		nr_pages = min_array(((unsigned long[]) {
++					folio_nr_pages(folio),
++					page_count - i,
++					max_segment / PAGE_SIZE,
++				      }), 3);
++
+ 		if (!i ||
+ 		    sg->length >= max_segment ||
+ 		    folio_pfn(folio) != next_pfn) {
+@@ -162,7 +166,9 @@ int shmem_sg_alloc_table(struct drm_i915
+ 			st->nents++;
+ 			sg_set_folio(sg, folio, nr_pages * PAGE_SIZE, 0);
+ 		} else {
+-			/* XXX: could overflow? */
++			nr_pages = min_t(unsigned long, nr_pages,
++					 (max_segment - sg->length) / PAGE_SIZE);
++
+ 			sg->length += nr_pages * PAGE_SIZE;
+ 		}
+ 		next_pfn = folio_pfn(folio) + nr_pages;
 
 
