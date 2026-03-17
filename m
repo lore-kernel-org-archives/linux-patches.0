@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F246F186E58;
-	Tue, 17 Mar 2026 17:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65D123D7E3;
+	Tue, 17 Mar 2026 17:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767819; cv=none; b=GUpFrpHc8OSIYnW0MayQNmiugNjFBfzGOTbQOgvA+LZmsoH4Tg9tcKQjm/fykjZ7n4GCIzJnmzQ5LB9iajFofTt7HSmx6xaJ1sH12oDekhYip2uak5P1zPq4FNRmWT9E1qevjUWLMuhAG/45jEvk/gWdAroybVWIGqIjFb7woYE=
+	t=1773767823; cv=none; b=oioBudMqXnH2DTTHlGOy9xeN6ItKvw/cafTCAI28ji1l1W9XU5VELXWNX3PkaI17V9261aZepGMmD+3WvTIuMqVqZuYeSFPinKRdT1GwBw5ZKjWhnREqSure55T4j9UAuyAdhVB8T9+tes1XZhaJFUh8L8GgBLXh1uTHtkoxn3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767819; c=relaxed/simple;
-	bh=B3y2VF+xQX6Z/t+/ipvXKciZCYnc/KqXke8m6BYjUKo=;
+	s=arc-20240116; t=1773767823; c=relaxed/simple;
+	bh=0UQy0kxIHeFbAG5sh8FHpzGdExQrWnGlVhEM0BIOjbs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jmIEwXPVHH3QQkhpKZIzIe7UBMA1Mg7MmW6rfB7IsL0XSbHAsO3c2ZdA6F8jlFvFqAOc42i6ZQ0aOa4OHThveEB6lnLy77rEvW46NfyvzaZYOGmetRasXWitgmRSZVC0x8MK3WbAlgjJMX32DjelmgX0LXVbQU27s/zMmS5CiNY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GjwqcKz9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKHVQtSYs1JkkAq5cQQ5n504MUecRVBzPaIWPw3p4Fvrqpxwj6HUef7UIVGU8CX+Mo5AFyXeQrWN7tCq5xFaWvlSM0ojZXmw5wbS83lWkP5kNd3lMezYUNfZviO9FMGV39snj8orTJv8zJ6rruNjJBIzApkZDuw8tUPN9XU6fqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oAaZq00/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GjwqcKz9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0803C4CEF7;
-	Tue, 17 Mar 2026 17:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oAaZq00/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98206C4CEF7;
+	Tue, 17 Mar 2026 17:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767818;
-	bh=B3y2VF+xQX6Z/t+/ipvXKciZCYnc/KqXke8m6BYjUKo=;
+	s=korg; t=1773767823;
+	bh=0UQy0kxIHeFbAG5sh8FHpzGdExQrWnGlVhEM0BIOjbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GjwqcKz9D/+N8Fw6QJ4WNkugQcAsIJtzgG0KTxQgYXIw7x2GiE+x0Q7WxJ1qpKo18
-	 woVL4wJ72I4lHpdH8q28vNxi31+d7FPIOZO0m81gmClZmRx+txzD6pmQv3oYRx0+vE
-	 SRjAwu2PSvaF7K90aU8DGFGAI1mhYUJltokwiO5g=
+	b=oAaZq00/6vUk7FeRNoHqDQgDAc1t+xAsk8U742kijOeBYJZk9nfqQy8aJUyGeN39/
+	 9HtMe3cecU2fAd8+AwR65ayjerUnLq45TtT3TrTZ7xdHEVlkuhPLocabzbIEKBkxGE
+	 F9bI7ejYYMMBeR9SNUgjye4kU4djHutvPZqRLYos=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
 	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
 	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 164/333] ceph: add a bunch of missing ceph_path_info initializers
-Date: Tue, 17 Mar 2026 17:33:13 +0100
-Message-ID: <20260317163005.443994140@linuxfoundation.org>
+Subject: [PATCH 6.18 165/333] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
+Date: Tue, 17 Mar 2026 17:33:14 +0100
+Message-ID: <20260317163005.480264637@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,124 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 43323a5934b660afae687e8e4e95ac328615a5c4 upstream.
+commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
 
-ceph_mdsc_build_path() must be called with a zero-initialized
-ceph_path_info parameter, or else the following
-ceph_mdsc_free_path_info() may crash.
+This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
+that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
+ceph_handle_auth_reply(), the value of the payload_len field of such a
+message is stored in a variable of type int. A value greater than
+INT_MAX leads to an integer overflow and is interpreted as a negative
+value. This leads to decrementing the pointer address by this value and
+subsequently accessing it because ceph_decode_need() only checks that
+the memory access does not exceed the end address of the allocation.
 
-Example crash (on Linux 6.18.12):
+This patch fixes the issue by changing the data type of payload_len to
+u32. Additionally, the data type of result_msg_len is changed to u32,
+as it is also a variable holding a non-negative length.
 
-  virt_to_cache: Object is not a Slab page!
-  WARNING: CPU: 184 PID: 2871736 at mm/slub.c:6732 kmem_cache_free+0x316/0x400
-  [...]
-  Call Trace:
-   [...]
-   ceph_open+0x13d/0x3e0
-   do_dentry_open+0x134/0x480
-   vfs_open+0x2a/0xe0
-   path_openat+0x9a3/0x1160
-  [...]
-  cache_from_obj: Wrong slab cache. names_cache but object is from ceph_inode_info
-  WARNING: CPU: 184 PID: 2871736 at mm/slub.c:6746 kmem_cache_free+0x2dd/0x400
-  [...]
-  kernel BUG at mm/slub.c:634!
-  Oops: invalid opcode: 0000 [#1] SMP NOPTI
-  RIP: 0010:__slab_free+0x1a4/0x350
+Also, an additional layer of sanity checks is introduced, ensuring that
+directly after reading it from the message, payload_len and
+result_msg_len are not greater than the overall segment length.
 
-Some of the ceph_mdsc_build_path() callers had initializers, but
-others had not, even though they were all added by commit 15f519e9f883
-("ceph: fix race condition validating r_parent before applying state").
-The ones without initializer are suspectible to random crashes.  (I can
-imagine it could even be possible to exploit this bug to elevate
-privileges.)
+BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
 
-Unfortunately, these Ceph functions are undocumented and its semantics
-can only be derived from the code.  I see that ceph_mdsc_build_path()
-initializes the structure only on success, but not on error.
+CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: ceph-msgr ceph_con_workfn [libceph]
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x76/0xa0
+ print_report+0xd1/0x620
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? kasan_complete_mode_report_info+0x72/0x210
+ kasan_report+0xe7/0x130
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ __asan_report_load_n_noabort+0xf/0x20
+ ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ mon_dispatch+0x973/0x23d0 [libceph]
+ ? apparmor_socket_recvmsg+0x6b/0xa0
+ ? __pfx_mon_dispatch+0x10/0x10 [libceph]
+ ? __kasan_check_write+0x14/0x30i
+ ? mutex_unlock+0x7f/0xd0
+ ? __pfx_mutex_unlock+0x10/0x10
+ ? __pfx_do_recvmsg+0x10/0x10 [libceph]
+ ceph_con_process_message+0x1f1/0x650 [libceph]
+ process_message+0x1e/0x450 [libceph]
+ ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
+ ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
+ ? save_fpregs_to_fpstate+0xb0/0x230
+ ? raw_spin_rq_unlock+0x17/0xa0
+ ? finish_task_switch.isra.0+0x13b/0x760
+ ? __switch_to+0x385/0xda0
+ ? __kasan_check_write+0x14/0x30
+ ? mutex_lock+0x8d/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ceph_con_workfn+0x248/0x10c0 [libceph]
+ process_one_work+0x629/0xf80
+ ? __kasan_check_write+0x14/0x30
+ worker_thread+0x87f/0x1570
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? __pfx_try_to_wake_up+0x10/0x10
+ ? kasan_print_address_stack_frame+0x1f7/0x280
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x396/0x830
+ ? __pfx__raw_spin_lock_irq+0x10/0x10
+ ? __pfx_kthread+0x10/0x10
+ ? __kasan_check_write+0x14/0x30
+ ? recalc_sigpending+0x180/0x210
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3f7/0x610
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? __switch_to+0x385/0xda0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Calling ceph_mdsc_free_path_info() after a failed
-ceph_mdsc_build_path() call does not even make sense, but that's what
-all callers do, and for it to be safe, the structure must be
-zero-initialized.  The least intrusive approach to fix this is
-therefore to add initializers everywhere.
+[ idryomov: replace if statements with ceph_decode_need() for
+  payload_len and result_msg_len ]
 
 Cc: stable@vger.kernel.org
-Fixes: 15f519e9f883 ("ceph: fix race condition validating r_parent before applying state")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/debugfs.c |    4 ++--
- fs/ceph/dir.c     |    2 +-
- fs/ceph/file.c    |    4 ++--
- fs/ceph/inode.c   |    2 +-
- 4 files changed, 6 insertions(+), 6 deletions(-)
+ net/ceph/auth.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ceph/debugfs.c
-+++ b/fs/ceph/debugfs.c
-@@ -79,7 +79,7 @@ static int mdsc_show(struct seq_file *s,
- 		if (req->r_inode) {
- 			seq_printf(s, " #%llx", ceph_ino(req->r_inode));
- 		} else if (req->r_dentry) {
--			struct ceph_path_info path_info;
-+			struct ceph_path_info path_info = {0};
- 			path = ceph_mdsc_build_path(mdsc, req->r_dentry, &path_info, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
-@@ -98,7 +98,7 @@ static int mdsc_show(struct seq_file *s,
- 		}
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	s32 result;
+ 	u64 global_id;
+ 	void *payload, *payload_end;
+-	int payload_len;
++	u32 payload_len;
+ 	char *result_msg;
+-	int result_msg_len;
++	u32 result_msg_len;
+ 	int ret = -EINVAL;
  
- 		if (req->r_old_dentry) {
--			struct ceph_path_info path_info;
-+			struct ceph_path_info path_info = {0};
- 			path = ceph_mdsc_build_path(mdsc, req->r_old_dentry, &path_info, 0);
- 			if (IS_ERR(path))
- 				path = NULL;
---- a/fs/ceph/dir.c
-+++ b/fs/ceph/dir.c
-@@ -1362,7 +1362,7 @@ static int ceph_unlink(struct inode *dir
- 	if (!dn) {
- 		try_async = false;
- 	} else {
--		struct ceph_path_info path_info;
-+		struct ceph_path_info path_info = {0};
- 		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
- 		if (IS_ERR(path)) {
- 			try_async = false;
---- a/fs/ceph/file.c
-+++ b/fs/ceph/file.c
-@@ -397,7 +397,7 @@ int ceph_open(struct inode *inode, struc
- 	if (!dentry) {
- 		do_sync = true;
- 	} else {
--		struct ceph_path_info path_info;
-+		struct ceph_path_info path_info = {0};
- 		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
- 		if (IS_ERR(path)) {
- 			do_sync = true;
-@@ -807,7 +807,7 @@ int ceph_atomic_open(struct inode *dir,
- 	if (!dn) {
- 		try_async = false;
- 	} else {
--		struct ceph_path_info path_info;
-+		struct ceph_path_info path_info = {0};
- 		path = ceph_mdsc_build_path(mdsc, dn, &path_info, 0);
- 		if (IS_ERR(path)) {
- 			try_async = false;
---- a/fs/ceph/inode.c
-+++ b/fs/ceph/inode.c
-@@ -2562,7 +2562,7 @@ int __ceph_setattr(struct mnt_idmap *idm
- 	if (!dentry) {
- 		do_sync = true;
- 	} else {
--		struct ceph_path_info path_info;
-+		struct ceph_path_info path_info = {0};
- 		path = ceph_mdsc_build_path(mdsc, dentry, &path_info, 0);
- 		if (IS_ERR(path)) {
- 			do_sync = true;
+ 	mutex_lock(&ac->mutex);
+@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	result = ceph_decode_32(&p);
+ 	global_id = ceph_decode_64(&p);
+ 	payload_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, payload_len, bad);
+ 	payload = p;
+ 	p += payload_len;
+ 	ceph_decode_need(&p, end, sizeof(u32), bad);
+ 	result_msg_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, result_msg_len, bad);
+ 	result_msg = p;
+ 	p += result_msg_len;
+ 	if (p != end)
 
 
