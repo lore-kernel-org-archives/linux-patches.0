@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E5283EE1CC;
-	Tue, 17 Mar 2026 16:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9957E3EE1D8;
+	Tue, 17 Mar 2026 16:42:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765760; cv=none; b=tCuLxR8l/HlnHLMguuRdwPphqcJhHnFl9c7TooNbegUNjBZDF6o+4++PAHbrI7/n+jwWcBGooUBMt37AR+HSInYXZZXSUUuYaVADDiRjcIZt7H43fo1018B0kZczKmTmCENOLaRQAUYH90kRD05rwqP8+jCkuKbZ+YdRZhx+Mm4=
+	t=1773765764; cv=none; b=aF98xasAPXF179MeASI98+V0O3GvMi20Cwn3mS54i4m5xwqemRNYvWAUQgW7r2k+YZn7wcvSxaYH+mbs8ILVdfIs45XNCFouFIQveY4knKu2lmf49ISObubKJZDxZJEx2509YgVtVSWerMEjdYczPW2xDGqrphFh1iLmQ17Nhlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765760; c=relaxed/simple;
-	bh=oV07dfO3x2SR3EBAKAZ5U5LyPu8U0asA4u9OSNgneQM=;
+	s=arc-20240116; t=1773765764; c=relaxed/simple;
+	bh=jfaIziGwpZjobJtpeXrbP2Xb6VNi0N/qM9/wpf6vzcw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=X8CM4Vr6StJtVhRavUxf1PHQK7ELlDOU+azf+axLpM27Pt/o1sungtxFSIw1QHaQpnNp+cpco6y5lQIaeUBIUgWwA8+5gGzAJn0c6oRVOgSqOCn63JokK3/R4brYLBo28ncGQlmw4PDEJ80HCkPVcNMrD5bXUpaszwYUusV/4I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xkYAntVY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JyNv8lPUqNETWz1UA82xczwnuyBxeeLECuOS8xQTaXviy3Y9HMRkMd0wsyWgZ2AY9+VXjjnuGaf71JkpEYqjCdNfCuz6el/lQ32By3QssTrLXS2gnxqrJJbmrLw/yJufzPIBPmXSrpjPgBUkxw/Fm6Ti85289zqAtQHwZ9S3kU8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UNy979Qz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xkYAntVY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6B33C2BC86;
-	Tue, 17 Mar 2026 16:42:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UNy979Qz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4892C4CEF7;
+	Tue, 17 Mar 2026 16:42:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765760;
-	bh=oV07dfO3x2SR3EBAKAZ5U5LyPu8U0asA4u9OSNgneQM=;
+	s=korg; t=1773765764;
+	bh=jfaIziGwpZjobJtpeXrbP2Xb6VNi0N/qM9/wpf6vzcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkYAntVYP+zEx0vrlxx4r457WR1Ytc3yOWvT7T/QIUwuE3Dl9JhK1Bb+wnXDi/TJN
-	 c3MhzLhQ9kk9JRjI25nTLBycZA1NxGYELrQhKM68Rb84MBgatNc7pAECCBldYJyOiR
-	 nmfnu5F9eY/fvgL0yUTRbancfQ2UXPGP8NinmQLI=
+	b=UNy979Qz+FWlNuUA9+bE/6lA7vJjWpnqnltgG6s2f2A4CVeHlLvh1MaYaf/t9nFFb
+	 aX3UQOZdH54qeI3cO2Foj4BTs4yicGY1A0sTSZpZ2HueexTdrDEa4YQlhTkwsE+mky
+	 J24kAos49uwDiKeUHQnF8YirWiHzSyhpx6DbbZI8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 061/378] serial: caif: hold tty->link reference in ldisc_open and ser_release
-Date: Tue, 17 Mar 2026 17:30:18 +0100
-Message-ID: <20260317163009.236720185@linuxfoundation.org>
+	Nikolay Aleksandrov <nikolay@nvidia.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.19 088/378] drivers: net: ice: fix devlink parameters get without irdma
+Date: Tue, 17 Mar 2026 17:30:45 +0100
+Message-ID: <20260317163010.252760925@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,61 +52,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Nikolay Aleksandrov <nikolay@nvidia.com>
 
-[ Upstream commit 288598d80a068a0e9281de35bcb4ce495f189e2a ]
+[ Upstream commit bd98c6204d1195973b1760fe45860863deb6200c ]
 
-A reproducer triggers a KASAN slab-use-after-free in pty_write_room()
-when caif_serial's TX path calls tty_write_room(). The faulting access
-is on tty->link->port.
+If CONFIG_IRDMA isn't enabled but there are ice NICs in the system, the
+driver will prevent full devlink dev param show dump because its rdma get
+callbacks return ENODEV and stop the dump. For example:
+ $ devlink dev param show
+ pci/0000:82:00.0:
+   name msix_vec_per_pf_max type generic
+     values:
+       cmode driverinit value 2
+   name msix_vec_per_pf_min type generic
+     values:
+       cmode driverinit value 2
+ kernel answers: No such device
 
-Hold an extra kref on tty->link for the lifetime of the caif_serial line
-discipline: get it in ldisc_open() and drop it in ser_release(), and
-also drop it on the ldisc_open() error path.
+Returning EOPNOTSUPP allows the dump to continue so we can see all devices'
+devlink parameters.
 
-With this change applied, the reproducer no longer triggers the UAF in
-my testing.
-
-Link: https://gist.github.com/shuangpengbai/c898debad6bdf170a84be7e6b3d8707f
-Link: https://lore.kernel.org/netdev/20260301220525.1546355-1-shuangpeng.kernel@gmail.com
-Fixes: e31d5a05948e ("caif: tty's are kref objects so take a reference")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260306034006.3395740-1-shuangpeng.kernel@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c24a65b6a27c ("iidc/ice/irdma: Update IDC to support multiple consumers")
+Signed-off-by: Nikolay Aleksandrov <nikolay@nvidia.com>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_serial.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/intel/ice/devlink/devlink.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
-index b90890030751f..1873d8287bb9b 100644
---- a/drivers/net/caif/caif_serial.c
-+++ b/drivers/net/caif/caif_serial.c
-@@ -297,6 +297,7 @@ static void ser_release(struct work_struct *work)
- 			dev_close(ser->dev);
- 			unregister_netdevice(ser->dev);
- 			debugfs_deinit(ser);
-+			tty_kref_put(tty->link);
- 			tty_kref_put(tty);
- 		}
- 		rtnl_unlock();
-@@ -331,6 +332,7 @@ static int ldisc_open(struct tty_struct *tty)
+diff --git a/drivers/net/ethernet/intel/ice/devlink/devlink.c b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+index 2ef39cc70c21d..7de749d3f0479 100644
+--- a/drivers/net/ethernet/intel/ice/devlink/devlink.c
++++ b/drivers/net/ethernet/intel/ice/devlink/devlink.c
+@@ -1360,7 +1360,7 @@ ice_devlink_enable_roce_get(struct devlink *devlink, u32 id,
  
- 	ser = netdev_priv(dev);
- 	ser->tty = tty_kref_get(tty);
-+	tty_kref_get(tty->link);
- 	ser->dev = dev;
- 	debugfs_init(ser, tty);
- 	tty->receive_room = 4096;
-@@ -339,6 +341,7 @@ static int ldisc_open(struct tty_struct *tty)
- 	rtnl_lock();
- 	result = register_netdevice(dev);
- 	if (result) {
-+		tty_kref_put(tty->link);
- 		tty_kref_put(tty);
- 		rtnl_unlock();
- 		free_netdev(dev);
+ 	cdev = pf->cdev_info;
+ 	if (!cdev)
+-		return -ENODEV;
++		return -EOPNOTSUPP;
+ 
+ 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_ROCEV2);
+ 
+@@ -1427,7 +1427,7 @@ ice_devlink_enable_iw_get(struct devlink *devlink, u32 id,
+ 
+ 	cdev = pf->cdev_info;
+ 	if (!cdev)
+-		return -ENODEV;
++		return -EOPNOTSUPP;
+ 
+ 	ctx->val.vbool = !!(cdev->rdma_protocol & IIDC_RDMA_PROTOCOL_IWARP);
+ 
 -- 
 2.51.0
 
