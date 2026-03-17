@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B16BD3F54BD;
-	Tue, 17 Mar 2026 16:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E60DB3EAC6F;
+	Tue, 17 Mar 2026 16:53:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766378; cv=none; b=paTAXJ426aGoX5NabRZ98XE6WhSfwWkFY7i63y2CXwn7A514xgmYvBs6MLmQamjPGmaScXjZkuPz9xGXcSGeGUue7v5INBfLkJ87XLiSeOtLiWNDU0rtsXHqVysyT/yMu2miu7Ghyo79esUVqgLu3bHj+M1hlTK2RoTRCHHwSrc=
+	t=1773766384; cv=none; b=fx9pJYSEdXtoZ8Vw+hWl3oUGDFvRmWm10h/dhG8xg4GhW6qGGpoWY8zdUFHPruwiLFeKF3FWOgTjCsu5vTD7YFa989IuwgfG1W6IM1pUNl3HcIAT7v2lBPVI21JVOhyUPnj7L91+by863rKfI9eJdN5gK+7I30+84gjtJ+KFGtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766378; c=relaxed/simple;
-	bh=qjvgtGNVQLpKtUJDd/JyCoeST7OS96jeqomasgqQoEc=;
+	s=arc-20240116; t=1773766384; c=relaxed/simple;
+	bh=+exTHmcF4lX2DWzU5TiAn8RSnQGxF3vMwdNnii/U6Oc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gGWbFbirk9w5DdExCf1Bm4NRR5y7K7j/DACHOFoSRMPw1fZBt8HLnxv9cOyiWRbMFxUkRTidUFjwVP199aFm61/yhcWOLeaFq2g1Gl6ypsKlSsBP1bK20jgEnczy3QkIKTzYWl5nu6W3MBvgoxqif/IMQk2kUbBzlbOAzi6gdvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xgcJ6hyk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oCoAQlZlqXbqojIBLa/RAuYIra6MhPWmzd1YZc2lk4//biUPWKSWb/VLFLFToxk1UexTwBiFPnQKPvx4sTgtEanENSwC5ZdBEVebkvdwGOYk86EyRX8HIwBKIQY/lN3Lk/p90S5KCe2fFU/LRcs9vRJG6TFD13MiS1lSVeLu1Ow=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybGYXdM7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xgcJ6hyk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2219AC2BC86;
-	Tue, 17 Mar 2026 16:52:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybGYXdM7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8D4C4CEF7;
+	Tue, 17 Mar 2026 16:53:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766378;
-	bh=qjvgtGNVQLpKtUJDd/JyCoeST7OS96jeqomasgqQoEc=;
+	s=korg; t=1773766383;
+	bh=+exTHmcF4lX2DWzU5TiAn8RSnQGxF3vMwdNnii/U6Oc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgcJ6hykHeooUOcSIpXNk79UVVYuPvzHckiZ3HGhRNeHXmMlWVBJATwx2uX4pIGDp
-	 HKXC0mA9Z5TvO0RK9d0h+ruvqJMkiWpiRSbFEJUrSeh3AdshT0M2sZaZAsJ4esdRuK
-	 UAkihcJM9V5+WZ2payIXF/ZLdGqooeyip/ndttG8=
+	b=ybGYXdM75Y93kruldy9hVf3arID/PnA3l9zOAMHxlr7XcEo+oz0/uBLJBHCp+76C1
+	 VfsVuzt4Fqiqz8l8cH/9swqkTR/CK5/p1WRtNICo3gJGS2ugceK0Zd4p/Z3MNdQBmO
+	 XR5HwCqbntXBa0lqvK2Lon8AExoNYiIbi8aj+WXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 201/378] tipc: fix divide-by-zero in tipc_sk_filter_connect()
-Date: Tue, 17 Mar 2026 17:32:38 +0100
-Message-ID: <20260317163014.397579146@linuxfoundation.org>
+	stable@kernel.org,
+	Liwei Song <liwei.song@windriver.com>,
+	Dinh Nguyen <dinguyen@kernel.org>
+Subject: [PATCH 6.19 202/378] firmware: stratix10-rsu: Fix NULL pointer dereference when RSU is disabled
+Date: Tue, 17 Mar 2026 17:32:39 +0100
+Message-ID: <20260317163014.443589025@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,55 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Liwei Song <liwei.song@windriver.com>
 
-commit 6c5a9baa15de240e747263aba435a0951da8d8d2 upstream.
+commit c45f7263100cece247dd3fa5fe277bd97fdb5687 upstream.
 
-A user can set conn_timeout to any value via
-setsockopt(TIPC_CONN_TIMEOUT), including values less than 4.  When a
-SYN is rejected with TIPC_ERR_OVERLOAD and the retry path in
-tipc_sk_filter_connect() executes:
+When the Remote System Update (RSU) isn't enabled in the First Stage
+Boot Loader (FSBL), the driver encounters a NULL pointer dereference when
+excute svc_normal_to_secure_thread() thread, resulting in a kernel panic:
 
-    delay %= (tsk->conn_timeout / 4);
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+Mem abort info:
+...
+Data abort info:
+...
+[0000000000000008] user address but active_mm is swapper
+Internal error: Oops: 0000000096000004 [#1]  SMP
+Modules linked in:
+CPU: 0 UID: 0 PID: 79 Comm: svc_smc_hvc_thr Not tainted 6.19.0-rc8-yocto-standard+ #59 PREEMPT
+Hardware name: SoCFPGA Stratix 10 SoCDK (DT)
+pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : svc_normal_to_secure_thread+0x38c/0x990
+lr : svc_normal_to_secure_thread+0x144/0x990
+...
+Call trace:
+ svc_normal_to_secure_thread+0x38c/0x990 (P)
+ kthread+0x150/0x210
+ ret_from_fork+0x10/0x20
+Code: 97cfc113 f9400260 aa1403e1 f9400400 (f9400402)
+---[ end trace 0000000000000000 ]---
 
-If conn_timeout is in the range [0, 3], the integer division yields 0,
-and the modulo operation triggers a divide-by-zero exception, causing a
-kernel oops/panic.
+The issue occurs because rsu_send_async_msg() fails when RSU is not enabled
+in firmware, causing the channel to be freed via stratix10_svc_free_channel().
+However, the probe function continues execution and registers
+svc_normal_to_secure_thread(), which subsequently attempts to access the
+already-freed channel, triggering the NULL pointer dereference.
 
-Fix this by clamping conn_timeout to a minimum of 4 at the point of use
-in tipc_sk_filter_connect().
+Fix this by properly cleaning up the async client and returning early on
+failure, preventing the thread from being used with an invalid channel.
 
-Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 119 Comm: poc-F144 Not tainted 7.0.0-rc2+
-RIP: 0010:tipc_sk_filter_rcv (net/tipc/socket.c:2236 net/tipc/socket.c:2362)
-Call Trace:
- tipc_sk_backlog_rcv (include/linux/instrumented.h:82 include/linux/atomic/atomic-instrumented.h:32 include/net/sock.h:2357 net/tipc/socket.c:2406)
- __release_sock (include/net/sock.h:1185 net/core/sock.c:3213)
- release_sock (net/core/sock.c:3797)
- tipc_connect (net/tipc/socket.c:2570)
- __sys_connect (include/linux/file.h:62 include/linux/file.h:83 net/socket.c:2098)
-
-Fixes: 6787927475e5 ("tipc: buffer overflow handling in listener socket")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260310170730.28841-1-mehulrao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 15847537b623 ("firmware: stratix10-rsu: Migrate RSU driver to use stratix10 asynchronous framework.")
+Cc: stable@kernel.org
+Signed-off-by: Liwei Song <liwei.song@windriver.com>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    2 ++
+ drivers/firmware/stratix10-rsu.c | 2 ++
  1 file changed, 2 insertions(+)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2233,6 +2233,8 @@ static bool tipc_sk_filter_connect(struc
- 		if (skb_queue_empty(&sk->sk_write_queue))
- 			break;
- 		get_random_bytes(&delay, 2);
-+		if (tsk->conn_timeout < 4)
-+			tsk->conn_timeout = 4;
- 		delay %= (tsk->conn_timeout / 4);
- 		delay = msecs_to_jiffies(delay + 100);
- 		sk_reset_timer(sk, &sk->sk_timer, jiffies + delay);
+diff --git a/drivers/firmware/stratix10-rsu.c b/drivers/firmware/stratix10-rsu.c
+index 41da07c445a6..e1912108a0fe 100644
+--- a/drivers/firmware/stratix10-rsu.c
++++ b/drivers/firmware/stratix10-rsu.c
+@@ -768,7 +768,9 @@ static int stratix10_rsu_probe(struct platform_device *pdev)
+ 				 rsu_async_status_callback);
+ 	if (ret) {
+ 		dev_err(dev, "Error, getting RSU status %i\n", ret);
++		stratix10_svc_remove_async_client(priv->chan);
+ 		stratix10_svc_free_channel(priv->chan);
++		return ret;
+ 	}
+ 
+ 	/* get DCMF version from firmware */
+-- 
+2.53.0
+
 
 
