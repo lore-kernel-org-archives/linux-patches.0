@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07DB2D739D;
-	Tue, 17 Mar 2026 17:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1F802DECC6;
+	Tue, 17 Mar 2026 17:23:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768217; cv=none; b=hqimy7nWczDNlrpcZgx2udFXiG3M4AynREFBAKWO5dBJgG/dGPjpf6UfXhM01rpXFKumHQ9BCoC0mwfWgGavm20HHd0g5lGoDSv5Ewcmn7mqney77QM3ldBSbylZw06+yopbwr0wK2GA9X8ki8WlUDcelV0Sd+D8UlVgEEeYaf0=
+	t=1773768222; cv=none; b=vBYeY+jPtxGALxWXQyklav5exsPsITRw3aFrI6+yjsLVYDw+fKmGSKn7bwPuKeWi3irw4FOco1Iv/BLPdgxqIdePjFdBGeFbjzU+EXUuNQ0TH0BmqTO7Ro9sM+MpOkM9GxkvrO61m7l3/TX6C3n6MN9Gy7P2VzpoDsBUm5Ir3aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768217; c=relaxed/simple;
-	bh=mA6HIoCs5IlvLShF4NvVboifBuS7XTyq9vfwpLcCIGQ=;
+	s=arc-20240116; t=1773768222; c=relaxed/simple;
+	bh=sinkKH5kMEc/NP4LhgbP45TeW6ldarB3rNqLPxCMHak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pnW+ioTpPVEq5vBQkLgDr4+UpVkepMk2d2KEN9MfOTCOMehBpWeg70bV+vdIthIppoKkmJrq04A5KWGi0R40dnOS011HFE0gWe5rkvut1lPqUK6giueUeqf48ihrJun33ZDI6RPhWUJ464PSZpEIMLJptl8BdGrb1C+cJzCx0Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=d74W1OPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=X46OAPkDeFjv61Y1vIDDONw3kCBemUKzy2TsggycloER/n/RGmXA1AtCZrr8HSMJoleqRj1nkLJHbQWvBaIPDxxJhC7AjBWzd4VonUgFBEcAr3XOazEyONPKQ1LsNwXVG0ZHVGzvj/We3HBFSFnbEjE086BkqsVLUQPz8V7Y1Lg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZscHh7W1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="d74W1OPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5527EC4CEF7;
-	Tue, 17 Mar 2026 17:23:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZscHh7W1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0DB6C4CEF7;
+	Tue, 17 Mar 2026 17:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768217;
-	bh=mA6HIoCs5IlvLShF4NvVboifBuS7XTyq9vfwpLcCIGQ=;
+	s=korg; t=1773768221;
+	bh=sinkKH5kMEc/NP4LhgbP45TeW6ldarB3rNqLPxCMHak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d74W1OPnXLMZAmf5cz/9b3x3N3qvLcebNFTbCb/Q9GXARV7bnWrUYY7MuLJaHBYYQ
-	 JE+ZO3uT1n3UpE1MTiRiMvvApGt4893EdewJdVa2TfTe2awpd3oXidAhwA3Bj57FEQ
-	 7niB3CTyqrZ8IRFisDHM9JK8dPRC6rR12DeZGbK8=
+	b=ZscHh7W1hlXDv+7j3g6r/ce7gQW2DBlsLxRkbNTG0wXyAFICtz3XrIZHSQPQupB8C
+	 iBu4pBLcqCGCcNSfoTNBGMnTxVVfdyqFuV8pMJQxsGf0mRctpUYOaP5RPI5wcaUJq2
+	 wiRH1vly06oAVhmee8zmgZTtZZH3aHDdOHWROZB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Yongxing Mou <yongxing.mou@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Subject: [PATCH 6.18 260/333] drm/msm/dpu: Correct the SA8775P intr_underrun/intr_underrun index
-Date: Tue, 17 Mar 2026 17:34:49 +0100
-Message-ID: <20260317163009.011833421@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 261/333] tracing: Fix enabling multiple events on the kernel command line and bootconfig
+Date: Tue, 17 Mar 2026 17:34:50 +0100
+Message-ID: <20260317163009.048168259@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,39 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Abhinav Kumar <quic_abhinavk@quicinc.com>
+From: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
 
-commit 4ce71cea574658f5c5c7412b1a3cc54efe4f9b50 upstream.
+commit 3b1679e086bb869ca02722f6bd29b3573a6a0e7e upstream.
 
-The intr_underrun and intr_vsync indices have been swapped, just simply
-corrects them.
+Multiple events can be enabled on the kernel command line via a comma
+separator. But if the are specified one at a time, then only the last
+event is enabled. This is because the event names are saved in a temporary
+buffer, and each call by the init cmdline code will reset that buffer.
+
+This also affects names in the boot config file, as it may call the
+callback multiple times with an example of:
+
+  kernel.trace_event = ":mod:rproc_qcom_common", ":mod:qrtr", ":mod:qcom_aoss"
+
+Change the cmdline callback function to append a comma and the next value
+if the temporary buffer already has content.
 
 Cc: stable@vger.kernel.org
-Fixes: b139c80d181c ("drm/msm/dpu: Add SA8775P support")
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Yongxing Mou <yongxing.mou@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/709209/
-Link: https://lore.kernel.org/r/20260305-mdss_catalog-v5-2-06678ac39ac7@oss.qualcomm.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260302-trace-events-allow-multiple-modules-v1-1-ce4436e37fb8@oss.qualcomm.com
+Signed-off-by: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/catalog/dpu_8_4_sa8775p.h
-@@ -366,8 +366,8 @@ static const struct dpu_intf_cfg sa8775p
- 		.type = INTF_NONE,
- 		.controller_id = MSM_DP_CONTROLLER_0,	/* pair with intf_0 for DP MST */
- 		.prog_fetch_lines_worst_case = 24,
--		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
--		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_underrun = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 16),
-+		.intr_vsync = DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR, 17),
- 	}, {
- 		.name = "intf_7", .id = INTF_7,
- 		.base = 0x3b000, .len = 0x280,
+--- a/kernel/trace/trace_events.c
++++ b/kernel/trace/trace_events.c
+@@ -4342,7 +4342,11 @@ static char bootup_event_buf[COMMAND_LIN
+ 
+ static __init int setup_trace_event(char *str)
+ {
+-	strscpy(bootup_event_buf, str, COMMAND_LINE_SIZE);
++	if (bootup_event_buf[0] != '\0')
++		strlcat(bootup_event_buf, ",", COMMAND_LINE_SIZE);
++
++	strlcat(bootup_event_buf, str, COMMAND_LINE_SIZE);
++
+ 	trace_set_ring_buffer_expanded(NULL);
+ 	disable_tracing_selftest("running event tracing");
+ 
 
 
