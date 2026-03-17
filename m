@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC7DB357A4A;
-	Tue, 17 Mar 2026 16:51:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B7F2E62B7;
+	Tue, 17 Mar 2026 16:51:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766262; cv=none; b=MGUTtytfzAOvrO8iHbd3wCLu0DEK+qrOv2xuRf/49K/HhW+cHtzQOrj+aYtxR+P57C7JofMQ8aw5I2MhAkSgOWSWYROm6+ufpeIUXouhx31kQjxeHvkHBxOlfVmy9IcaC2+mJHZ7CfwBvxkA7ApYmWz6+CaYoeJEPIMuZtiC1Ws=
+	t=1773766267; cv=none; b=ug3iK0mamUVmoLjPEvADkSKSOSXFXqp4lbvApSWXVXd7xdAv04rWyxmsDgRcvfIBrLLCQeH3sA6nAY+/SbJKh7CWL98ELKvMUq32AXrBH+/oug5XzDZJZ2hSC6WkEo1+xU4+06SxGip3ARM3BI1oCT9hxu4Ar345l6Z55kKgOJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766262; c=relaxed/simple;
-	bh=JSxME+bIy1ukHbuKdYqpX/bum6n8zskmYfYYIVIkMT0=;
+	s=arc-20240116; t=1773766267; c=relaxed/simple;
+	bh=+8nuGWxF8LWbb6dPpAEAwIv5AoC0WN5fLgUKRPDbiRI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=e+xlptIsllsm5Em5/GjEgZ4xxNidGTm/f3qt3eyw64/yNv5PEBoO/KCpbv2FNIgiUYJqL1KjVBrUi5bcOYFV5IxLhgHE/I4WxgFOEd6ep+qvf71bN38rUB9m7MXyK0ncUOMuolHbxuH4BtY7SH+4Iwc+25+hrCK0atBRHZW1Nuo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Iasqaach; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kjtOCjUErQm6z69h1rZ0WVqK3Vk4WsCTexIv2jxcvqcl6OKXMXdMQq5/lso+mXpVBe/p+nUViWvegxVmtLK8e2COIdZmztTwGLasy6EAytJJCdcnUNEgtUHsWzo89R751RMQ3PKAnNKuTJdXLBcP7QA5GdoSk46gI20ZTpJoqIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxfwcyS8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Iasqaach"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00A12C4CEF7;
-	Tue, 17 Mar 2026 16:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxfwcyS8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6EB1C4CEF7;
+	Tue, 17 Mar 2026 16:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766262;
-	bh=JSxME+bIy1ukHbuKdYqpX/bum6n8zskmYfYYIVIkMT0=;
+	s=korg; t=1773766267;
+	bh=+8nuGWxF8LWbb6dPpAEAwIv5AoC0WN5fLgUKRPDbiRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IasqaachwjKAMjGrirP+TsAJk3jCZLkm+PLQlG2rJ2vsdKEx/J2BxKzVj8bNm9tYc
-	 3fBdV/FTcqI6ntPCeR6XMo+2EBp7NBOpCiy/nsj53VYFNdGFC47XeljqrSEJwM6jrM
-	 oRDL4bkPXEtRaZIKeTwrGFLnrs7Cc0EBYGZcTDdM=
+	b=fxfwcyS8OSBSX/IHDQtMzxvigHKiDWTgrYQlGuB+qTyFUdnn+NyqeYVMItEgAmX26
+	 uqoy4VaYhSUIPCgu7JgzGaX6ikGZsw3Zxi2Li+M4TfD2tDzixwZYvou//6hsqh9VtO
+	 v+SlWWwy7uKvU9Z+Ma6CMeWNiJYxDpZQBKNwRQ+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Marco Schirrmeister <mschirrmeister@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.19 198/378] mmc: dw_mmc-rockchip: Fix runtime PM support for internal phase support
-Date: Tue, 17 Mar 2026 17:32:35 +0100
-Message-ID: <20260317163014.287277395@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.19 207/378] libceph: prevent potential out-of-bounds reads in process_message_header()
+Date: Tue, 17 Mar 2026 17:32:44 +0100
+Message-ID: <20260317163014.625514968@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -52,83 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 6465a8bbb0f6ad98aeb66dc9ea19c32c193a610b upstream.
+commit 69fb5d91bba44ecf7eb80530b85fa4fb028921d5 upstream.
 
-RK3576 is the first platform to introduce internal phase support, and
-subsequent platforms are expected to adopt a similar design. In this
-architecture, runtime suspend powers off the attached power domain, which
-resets registers, including vendor-specific ones such as SDMMC_TIMING_CON0,
-SDMMC_TIMING_CON1, and SDMMC_MISC_CON. These registers must be saved and
-restored, a requirement that falls outside the scope of the dw_mmc core.
+If the message frame is (maliciously) corrupted in a way that the
+length of the control segment ends up being less than the size of the
+message header or a different frame is made to look like a message
+frame, out-of-bounds reads may ensue in process_message_header().
 
-Fixes: 59903441f5e4 ("mmc: dw_mmc-rockchip: Add internal phase support")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Tested-by: Marco Schirrmeister <mschirrmeister@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Perform an explicit bounds check before decoding the message header.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reported-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc-rockchip.c |   38 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ net/ceph/messenger_v2.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/dw_mmc-rockchip.c
-+++ b/drivers/mmc/host/dw_mmc-rockchip.c
-@@ -36,6 +36,8 @@ struct dw_mci_rockchip_priv_data {
- 	int			default_sample_phase;
- 	int			num_phases;
- 	bool			internal_phase;
-+	int                     sample_phase;
-+	int                     drv_phase;
- };
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -2832,12 +2832,15 @@ static int process_message_header(struct
+ 				  void *p, void *end)
+ {
+ 	struct ceph_frame_desc *desc = &con->v2.in_desc;
+-	struct ceph_msg_header2 *hdr2 = p;
++	struct ceph_msg_header2 *hdr2;
+ 	struct ceph_msg_header hdr;
+ 	int skip;
+ 	int ret;
+ 	u64 seq;
  
- /*
-@@ -574,9 +576,43 @@ static void dw_mci_rockchip_remove(struc
- 	dw_mci_pltfm_remove(pdev);
++	ceph_decode_need(&p, end, sizeof(*hdr2), bad);
++	hdr2 = p;
++
+ 	/* verify seq# */
+ 	seq = le64_to_cpu(hdr2->seq);
+ 	if ((s64)seq - (s64)con->in_seq < 1) {
+@@ -2868,6 +2871,10 @@ static int process_message_header(struct
+ 	WARN_ON(!con->in_msg);
+ 	WARN_ON(con->in_msg->con != con);
+ 	return 1;
++
++bad:
++	pr_err("failed to decode message header\n");
++	return -EINVAL;
  }
  
-+static int dw_mci_rockchip_runtime_suspend(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct dw_mci *host = platform_get_drvdata(pdev);
-+	struct dw_mci_rockchip_priv_data *priv = host->priv;
-+
-+	if (priv->internal_phase) {
-+		priv->sample_phase = rockchip_mmc_get_phase(host, true);
-+		priv->drv_phase = rockchip_mmc_get_phase(host, false);
-+	}
-+
-+	return dw_mci_runtime_suspend(dev);
-+}
-+
-+static int dw_mci_rockchip_runtime_resume(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct dw_mci *host = platform_get_drvdata(pdev);
-+	struct dw_mci_rockchip_priv_data *priv = host->priv;
-+	int ret;
-+
-+	ret = dw_mci_runtime_resume(dev);
-+	if (ret)
-+		return ret;
-+
-+	if (priv->internal_phase) {
-+		rockchip_mmc_set_phase(host, true, priv->sample_phase);
-+		rockchip_mmc_set_phase(host, false, priv->drv_phase);
-+		mci_writel(host, MISC_CON, MEM_CLK_AUTOGATE_ENABLE);
-+	}
-+
-+	return ret;
-+}
-+
- static const struct dev_pm_ops dw_mci_rockchip_dev_pm_ops = {
- 	SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
--	RUNTIME_PM_OPS(dw_mci_runtime_suspend, dw_mci_runtime_resume, NULL)
-+	RUNTIME_PM_OPS(dw_mci_rockchip_runtime_suspend, dw_mci_rockchip_runtime_resume, NULL)
- };
- 
- static struct platform_driver dw_mci_rockchip_pltfm_driver = {
+ static int process_message(struct ceph_connection *con)
 
 
