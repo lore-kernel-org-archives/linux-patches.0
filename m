@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43D2225A38;
-	Tue, 17 Mar 2026 17:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3F5B2EF67A;
+	Tue, 17 Mar 2026 17:19:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767953; cv=none; b=FnFKoZ0exR+gLKFdxFVccipW9/d1spbc1aSwxT18V5cJaBvS0CCyUaGD7tbXEIM5hgLhd1Cg3abdAfAR/ZN/lwx5SU4807R35Shx6R3yLyFYwU6WxmWyC5iWwqZwrBcGaGJbFvCzF5G6rceYUoeW87eyKhJ5gO/GheFqqkjsr4o=
+	t=1773767956; cv=none; b=JDLMgKBoeby2jULfP6vz5XxWz9Xonf5p/w4iLgGSvOUKw0mN3+8IFOH8k/SBNJf9S+GvXFM/tRExI/JDU/J7uA/rZ6kp/pf/0JY5iKjYwPS849/vLTsm2G75ZQrIMXlykITao3ZKyQTuAm++2FO9rmZq2lyCRXrT4Y1BcHuaeDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767953; c=relaxed/simple;
-	bh=2fJJJAeCeAtL+J/RBrjx0Q29GFyfq/0eqvhy3Btr0I4=;
+	s=arc-20240116; t=1773767956; c=relaxed/simple;
+	bh=baCl0x+tSpav4pU+4UJwbxjO3oXLPfXcl95B88v2870=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lWvRPghxl3SSWwqBniYGmpuFc5Q7xo0Yf3949lvwMtdArZy6pQbNO3RGiY0A3db/dHA9dPIzqxscJndIh0MXT3ot5+anX8a4HaK2OgSLLX8oWwePfAeasi9LNLMNPxhMOgs/oflt6JfakZI9hk+7WnkG69dlkxBO5PQ/BEhjlwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MRY/YkpV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cedeNorZZD6coxTEPATum+ecxKfeNNIiZn0Cu2l56RXgJ/CCvtP64SOEa9RzUhgwSwF7GbTRPLlfWoMoAC/0iSH/X94XbjwgyC9toGvDlGS8hEuxG2jggMT15UR5YEAJkmbOFV0U7TZphqvoFzXGjP3dcwOMS1nT8DjVBPvAosA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TAIF7RSF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MRY/YkpV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 544D2C2BCAF;
-	Tue, 17 Mar 2026 17:19:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TAIF7RSF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24141C4CEF7;
+	Tue, 17 Mar 2026 17:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767952;
-	bh=2fJJJAeCeAtL+J/RBrjx0Q29GFyfq/0eqvhy3Btr0I4=;
+	s=korg; t=1773767956;
+	bh=baCl0x+tSpav4pU+4UJwbxjO3oXLPfXcl95B88v2870=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MRY/YkpVTK/txtnEUYnKlyvD4H1w22D4a880qVd3lPEBXvt2Ozife8iHUDgZNU5zx
-	 oHhtLqBatYZq0PEl2w89GE6mc2EccYs5P1rf9Bm6wAIPOGzVOHBIwpWW9FymwK+hYt
-	 UtIgu69Ef47uqch95UT6KeHxpP0egB+aLijSYY3o=
+	b=TAIF7RSFSkPWg25w6+oVtMbv7htZoIA+6Mm4Uc5B7GVY1I6dIumF884O/kTLwOMUb
+	 TWNjYHyI0kdpQBKGbJimgz9QuK3BKfKtN4yZKUCJ9B3PnJSp2TcXZ8NeifmzrQyuTZ
+	 XF0oBCV17YxqQ6RbrJW3ISMsa+Hxg3neZaZlow0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.18 198/333] bpf: Fix kprobe_multi cookies access in show_fdinfo callback
-Date: Tue, 17 Mar 2026 17:33:47 +0100
-Message-ID: <20260317163006.699626981@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Mark Brown <broonie@kernel.org>,
+	Will Deacon <will@kernel.org>,
+	David Hildenbrand <david@kernel.org>
+Subject: [PATCH 6.18 199/333] arm64: gcs: Honour mprotect(PROT_NONE) on shadow stack mappings
+Date: Tue, 17 Mar 2026 17:33:48 +0100
+Message-ID: <20260317163006.737166680@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,44 +52,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit ad6fface76da42721c15e8fb281570aaa44a2c01 upstream.
+commit 47a8aad135ac1aed04b7b0c0a8157fd208075827 upstream.
 
-We don't check if cookies are available on the kprobe_multi link
-before accessing them in show_fdinfo callback, we should.
+vm_get_page_prot() short-circuits the protection_map[] lookup for a
+VM_SHADOW_STACK mapping since it uses a different PIE index from the
+typical read/write/exec permissions. However, the side effect is that it
+also ignores mprotect(PROT_NONE) by creating an accessible PTE.
 
+Special-case the !(vm_flags & VM_ACCESS_FLAGS) flags to use the
+protection_map[VM_NONE] permissions instead. No GCS attributes are
+required for an inaccessible PTE.
+
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: 6497b66ba694 ("arm64/mm: Map pages for guarded control stack")
 Cc: stable@vger.kernel.org
-Fixes: da7e9c0a7fbc ("bpf: Add show_fdinfo for kprobe_multi")
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20260225111249.186230-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Will Deacon <will@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/bpf_trace.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/mm/mmap.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -2441,8 +2441,10 @@ static void bpf_kprobe_multi_show_fdinfo
- 					 struct seq_file *seq)
- {
- 	struct bpf_kprobe_multi_link *kmulti_link;
-+	bool has_cookies;
+--- a/arch/arm64/mm/mmap.c
++++ b/arch/arm64/mm/mmap.c
+@@ -91,7 +91,11 @@ pgprot_t vm_get_page_prot(vm_flags_t vm_
  
- 	kmulti_link = container_of(link, struct bpf_kprobe_multi_link, link);
-+	has_cookies = !!kmulti_link->cookies;
- 
- 	seq_printf(seq,
- 		   "kprobe_cnt:\t%u\n"
-@@ -2454,7 +2456,7 @@ static void bpf_kprobe_multi_show_fdinfo
- 	for (int i = 0; i < kmulti_link->cnt; i++) {
- 		seq_printf(seq,
- 			   "%llu\t %pS\n",
--			   kmulti_link->cookies[i],
-+			   has_cookies ? kmulti_link->cookies[i] : 0,
- 			   (void *)kmulti_link->addrs[i]);
- 	}
- }
+ 	/* Short circuit GCS to avoid bloating the table. */
+ 	if (system_supports_gcs() && (vm_flags & VM_SHADOW_STACK)) {
+-		prot = gcs_page_prot;
++		/* Honour mprotect(PROT_NONE) on shadow stack mappings */
++		if (vm_flags & VM_ACCESS_FLAGS)
++			prot = gcs_page_prot;
++		else
++			prot = pgprot_val(protection_map[VM_NONE]);
+ 	} else {
+ 		prot = pgprot_val(protection_map[vm_flags &
+ 				   (VM_READ|VM_WRITE|VM_EXEC|VM_SHARED)]);
 
 
