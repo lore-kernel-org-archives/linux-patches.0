@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EC183F660E;
-	Tue, 17 Mar 2026 17:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F043F54D9;
+	Tue, 17 Mar 2026 17:03:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766999; cv=none; b=k7TRuxRrAJd3wwaGCENd63w7IawA3vqUNjvccObRziIxo542fEVliJYX6iPzEoNQkJgOAH4yOFrTBAyPuORoPuZ4A1Xi/24+2lTIfZ3CZvTQEOUF2tegv/4r1EgIXjLVuIcfcS9BGYJN9s/1UCyMLP9dgfrHhGRvPfC8BskFvzA=
+	t=1773767004; cv=none; b=kxyCCO1rS6KOTC4AgpF+5TY4knzx0Trclj2dbDQs7mKzeclCNtAWlw3JBSVdpEt96Dau9ZEwgqUcVrf7UxpXpA05EAUizp9JJEx9lmSGr696VaRTjyMz7by0ILF30GS01VyiFfaC0ZFv3UGVPVKtPIe6zy7C/Yt+XSHWgGPoa9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766999; c=relaxed/simple;
-	bh=S3V16MdUKaJKxtOnKJFCGHluGAi9HpnqhTZ/wkOu940=;
+	s=arc-20240116; t=1773767004; c=relaxed/simple;
+	bh=vGat6SrpF2rvRCHIEXfLDW+7qVycveNl0CYVU+jcSdc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uvyhthGEHFnDWGe2hqnqlECwp44Ktc+c4J7NCfjkxMQMzhI+u6AVhAvyZ/o4V5gudUE7Vlnab3wVJuL6R79ayktnboZUGBGjsS7NzokneOZtv59OZ/XkyrCPRSBxPLL9HST1e8nDxOa1S83mDgv/P15CEIsk8qbHdRDwhJaORao=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WPNWyRDN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LKCwbVVTHEEsORJ4zjIr+meJVNuYI8VO6EFSH7is0mGrsDFT1xpVbfCYg6ID15ZpyOnRUqjNXi0nlQuuOLH5irg067Nsyakx8SmuWdiGeBkUEMjBTkTXsQkt2gcfXUCrYcotarhE19vqKuH+o0j1ACIwJz+1YH9nL4ap0fjUaKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=moz1OiO3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WPNWyRDN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1805C4CEF7;
-	Tue, 17 Mar 2026 17:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="moz1OiO3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A3A6C19424;
+	Tue, 17 Mar 2026 17:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766999;
-	bh=S3V16MdUKaJKxtOnKJFCGHluGAi9HpnqhTZ/wkOu940=;
+	s=korg; t=1773767004;
+	bh=vGat6SrpF2rvRCHIEXfLDW+7qVycveNl0CYVU+jcSdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPNWyRDN5erdTnPRNBgoSb1TbmPZNpPvHW8Wjk4tY5Y1xbLdjHuSNPIrIHS1SrcjQ
-	 hEjdoFZSB6FpdJAxaPiCXqXa+RySo8syuasztmIcCZ86e8rFCBIaGrp96WR3UCOIFB
-	 AxR8BaUq4UsNSqrtpOrJ0eYxaB4O2VTzuPSmdO2E=
+	b=moz1OiO3xjZlyuo5GBWXLoSPdC1/oinUjm+BzhWwOx4BVvmN8ELwFvdQrrbW/zGCY
+	 gaPzLIKtKNDw1V7ro1s6Ab2Ex19aoZnnwHtOG6qVIUfqmNFByF1ou0QAZBccv7a91v
+	 Z2mL+citLv99cnYiK6RiDr+cXcCkmXbpsTCcxdss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.19 370/378] i3c: mipi-i3c-hci: Correct RING_CTRL_ABORT handling in DMA dequeue
-Date: Tue, 17 Mar 2026 17:35:27 +0100
-Message-ID: <20260317163020.590001568@linuxfoundation.org>
+	SeongJae Park <sj@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 371/378] mm/damon: rename DAMON_MIN_REGION to DAMON_MIN_REGION_SZ
+Date: Tue, 17 Mar 2026 17:35:28 +0100
+Message-ID: <20260317163020.626677193@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,73 +51,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: SeongJae Park <sj@kernel.org>
 
-commit b795e68bf3073d67bebbb5a44d93f49efc5b8cc7 upstream.
+[ Upstream commit dfb1b0c9dc0d61e422905640e1e7334b3cf6f384 ]
 
-The logic used to abort the DMA ring contains several flaws:
+The macro is for the default minimum size of each DAMON region.  There was
+a case that a reader was confused if it is the minimum number of total
+DAMON regions, which is set on damon_attrs->min_nr_regions.  Make the name
+more explicit.
 
- 1. The driver unconditionally issues a ring abort even when the ring has
-    already stopped.
- 2. The completion used to wait for abort completion is never
-    re-initialized, resulting in incorrect wait behavior.
- 3. The abort sequence unintentionally clears RING_CTRL_ENABLE, which
-    resets hardware ring pointers and disrupts the controller state.
- 4. If the ring is already stopped, the abort operation should be
-    considered successful without attempting further action.
-
-Fix the abort handling by checking whether the ring is running before
-issuing an abort, re-initializing the completion when needed, ensuring that
-RING_CTRL_ENABLE remains asserted during abort, and treating an already
-stopped ring as a successful condition.
-
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-9-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Link: https://lkml.kernel.org/r/20260117175256.82826-8-sj@kernel.org
+Signed-off-by: SeongJae Park <sj@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: c80f46ac228b ("mm/damon/core: disallow non-power of two min_region_sz")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/dma.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ include/linux/damon.h        |    2 +-
+ mm/damon/core.c              |    2 +-
+ mm/damon/lru_sort.c          |    2 +-
+ mm/damon/reclaim.c           |    2 +-
+ mm/damon/sysfs.c             |    2 +-
+ mm/damon/tests/vaddr-kunit.h |    2 +-
+ mm/damon/vaddr.c             |   24 ++++++++++++------------
+ 7 files changed, 18 insertions(+), 18 deletions(-)
 
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -485,18 +485,25 @@ static bool hci_dma_dequeue_xfer(struct
- 	struct hci_rh_data *rh = &rings->headers[xfer_list[0].ring_number];
- 	unsigned int i;
- 	bool did_unqueue = false;
-+	u32 ring_status;
+--- a/include/linux/damon.h
++++ b/include/linux/damon.h
+@@ -15,7 +15,7 @@
+ #include <linux/random.h>
  
- 	guard(mutex)(&hci->control_mutex);
+ /* Minimal region size.  Every damon_region is aligned by this. */
+-#define DAMON_MIN_REGION	PAGE_SIZE
++#define DAMON_MIN_REGION_SZ	PAGE_SIZE
+ /* Max priority score for DAMON-based operation schemes */
+ #define DAMOS_MAX_SCORE		(99)
  
--	/* stop the ring */
--	rh_reg_write(RING_CONTROL, RING_CTRL_ABORT);
--	if (wait_for_completion_timeout(&rh->op_done, HZ) == 0) {
--		/*
--		 * We're deep in it if ever this condition is ever met.
--		 * Hardware might still be writing to memory, etc.
--		 */
--		dev_crit(&hci->master.dev, "unable to abort the ring\n");
--		WARN_ON(1);
-+	ring_status = rh_reg_read(RING_STATUS);
-+	if (ring_status & RING_STATUS_RUNNING) {
-+		/* stop the ring */
-+		reinit_completion(&rh->op_done);
-+		rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_ABORT);
-+		wait_for_completion_timeout(&rh->op_done, HZ);
-+		ring_status = rh_reg_read(RING_STATUS);
-+		if (ring_status & RING_STATUS_RUNNING) {
-+			/*
-+			 * We're deep in it if ever this condition is ever met.
-+			 * Hardware might still be writing to memory, etc.
-+			 */
-+			dev_crit(&hci->master.dev, "unable to abort the ring\n");
-+			WARN_ON(1);
-+		}
+--- a/mm/damon/core.c
++++ b/mm/damon/core.c
+@@ -546,7 +546,7 @@ struct damon_ctx *damon_new_ctx(void)
+ 	ctx->attrs.max_nr_regions = 1000;
+ 
+ 	ctx->addr_unit = 1;
+-	ctx->min_sz_region = DAMON_MIN_REGION;
++	ctx->min_sz_region = DAMON_MIN_REGION_SZ;
+ 
+ 	INIT_LIST_HEAD(&ctx->adaptive_targets);
+ 	INIT_LIST_HEAD(&ctx->schemes);
+--- a/mm/damon/lru_sort.c
++++ b/mm/damon/lru_sort.c
+@@ -212,7 +212,7 @@ static int damon_lru_sort_apply_paramete
+ 	if (!monitor_region_start && !monitor_region_end)
+ 		addr_unit = 1;
+ 	param_ctx->addr_unit = addr_unit;
+-	param_ctx->min_sz_region = max(DAMON_MIN_REGION / addr_unit, 1);
++	param_ctx->min_sz_region = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+ 
+ 	if (!damon_lru_sort_mon_attrs.sample_interval) {
+ 		err = -EINVAL;
+--- a/mm/damon/reclaim.c
++++ b/mm/damon/reclaim.c
+@@ -208,7 +208,7 @@ static int damon_reclaim_apply_parameter
+ 	if (!monitor_region_start && !monitor_region_end)
+ 		addr_unit = 1;
+ 	param_ctx->addr_unit = addr_unit;
+-	param_ctx->min_sz_region = max(DAMON_MIN_REGION / addr_unit, 1);
++	param_ctx->min_sz_region = max(DAMON_MIN_REGION_SZ / addr_unit, 1);
+ 
+ 	if (!damon_reclaim_mon_attrs.aggr_interval) {
+ 		err = -EINVAL;
+--- a/mm/damon/sysfs.c
++++ b/mm/damon/sysfs.c
+@@ -1470,7 +1470,7 @@ static int damon_sysfs_apply_inputs(stru
+ 	/* addr_unit is respected by only DAMON_OPS_PADDR */
+ 	if (sys_ctx->ops_id == DAMON_OPS_PADDR)
+ 		ctx->min_sz_region = max(
+-				DAMON_MIN_REGION / sys_ctx->addr_unit, 1);
++				DAMON_MIN_REGION_SZ / sys_ctx->addr_unit, 1);
+ 	err = damon_sysfs_set_attrs(ctx, sys_ctx->attrs);
+ 	if (err)
+ 		return err;
+--- a/mm/damon/tests/vaddr-kunit.h
++++ b/mm/damon/tests/vaddr-kunit.h
+@@ -147,7 +147,7 @@ static void damon_do_test_apply_three_re
+ 		damon_add_region(r, t);
  	}
  
- 	for (i = 0; i < n; i++) {
+-	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION);
++	damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION_SZ);
+ 
+ 	for (i = 0; i < nr_expected / 2; i++) {
+ 		r = __nth_region_of(t, i);
+--- a/mm/damon/vaddr.c
++++ b/mm/damon/vaddr.c
+@@ -19,8 +19,8 @@
+ #include "ops-common.h"
+ 
+ #ifdef CONFIG_DAMON_VADDR_KUNIT_TEST
+-#undef DAMON_MIN_REGION
+-#define DAMON_MIN_REGION 1
++#undef DAMON_MIN_REGION_SZ
++#define DAMON_MIN_REGION_SZ 1
+ #endif
+ 
+ /*
+@@ -78,7 +78,7 @@ static int damon_va_evenly_split_region(
+ 
+ 	orig_end = r->ar.end;
+ 	sz_orig = damon_sz_region(r);
+-	sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION);
++	sz_piece = ALIGN_DOWN(sz_orig / nr_pieces, DAMON_MIN_REGION_SZ);
+ 
+ 	if (!sz_piece)
+ 		return -EINVAL;
+@@ -161,12 +161,12 @@ next:
+ 		swap(first_gap, second_gap);
+ 
+ 	/* Store the result */
+-	regions[0].start = ALIGN(start, DAMON_MIN_REGION);
+-	regions[0].end = ALIGN(first_gap.start, DAMON_MIN_REGION);
+-	regions[1].start = ALIGN(first_gap.end, DAMON_MIN_REGION);
+-	regions[1].end = ALIGN(second_gap.start, DAMON_MIN_REGION);
+-	regions[2].start = ALIGN(second_gap.end, DAMON_MIN_REGION);
+-	regions[2].end = ALIGN(prev->vm_end, DAMON_MIN_REGION);
++	regions[0].start = ALIGN(start, DAMON_MIN_REGION_SZ);
++	regions[0].end = ALIGN(first_gap.start, DAMON_MIN_REGION_SZ);
++	regions[1].start = ALIGN(first_gap.end, DAMON_MIN_REGION_SZ);
++	regions[1].end = ALIGN(second_gap.start, DAMON_MIN_REGION_SZ);
++	regions[2].start = ALIGN(second_gap.end, DAMON_MIN_REGION_SZ);
++	regions[2].end = ALIGN(prev->vm_end, DAMON_MIN_REGION_SZ);
+ 
+ 	return 0;
+ }
+@@ -259,8 +259,8 @@ static void __damon_va_init_regions(stru
+ 		sz += regions[i].end - regions[i].start;
+ 	if (ctx->attrs.min_nr_regions)
+ 		sz /= ctx->attrs.min_nr_regions;
+-	if (sz < DAMON_MIN_REGION)
+-		sz = DAMON_MIN_REGION;
++	if (sz < DAMON_MIN_REGION_SZ)
++		sz = DAMON_MIN_REGION_SZ;
+ 
+ 	/* Set the initial three regions of the target */
+ 	for (i = 0; i < 3; i++) {
+@@ -299,7 +299,7 @@ static void damon_va_update(struct damon
+ 	damon_for_each_target(t, ctx) {
+ 		if (damon_va_three_regions(t, three_regions))
+ 			continue;
+-		damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION);
++		damon_set_regions(t, three_regions, 3, DAMON_MIN_REGION_SZ);
+ 	}
+ }
+ 
 
 
