@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8E673F54D7;
-	Tue, 17 Mar 2026 17:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7A93F65E2;
+	Tue, 17 Mar 2026 17:07:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767225; cv=none; b=k2gCZ8wSdXsmqrT/S/Wx4yKoyTT8ZrI5z7q0ggk6Boc75OJjbNVzaKFp9huxZnCkJ9B15HcyUTzRySY6oyTxB12hGeA0aiTbQEftdrrROWpBczebeKPcNF2Xr3pt4gbNFkkGs44O9OsWcfkhl4aWxe/Bwv9z1rj6mruHw/ShjH0=
+	t=1773767230; cv=none; b=HAKKHu2Novo6Rk4MH1DFihvJ2d9RlwikDPQnJNv0quE0ACM6gBM298RjD8dDwQRvvXKQ+GckRcMpZtmsEpW7OCH00mR5ErXAwpR3RBTym6ATYl5twZQNORv1cDDk5M+ed2YrMYRGn1aJmguu9N37nc2sKVn3wSCU6wEWMc/39qI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767225; c=relaxed/simple;
-	bh=hyXwJEmPiladEfKSgHA6FBDdLGZ+ozOpzJXpuSj03YU=;
+	s=arc-20240116; t=1773767230; c=relaxed/simple;
+	bh=+vlvdvt62dL/gsDnfx+TpigW+EY+6ngtLtjjyIJ2IYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQODSFz5VP2kPxlXTmirEqkXzokS/2SKDRIKmy+4bx4VkKTXB8KPXF4bLajxaZEhNTQDJbcwDTOBnk9oMeS9jJ9TN1FnDvm30lGfU9Ys+BLBZuChgDQD7BM4wwTgSfKtlLyPtWYjWKgMtL4pjQ2JWUzpZWhohEhr4F30ExiAK/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KxTYxHEW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=S8Q45pEcvwiG/jjVKd/GtZDdX+LZCKESHQdOwoE2LUSXyqihodTLBuvQdkVkL6YuEhtdLvhzilhaXBKn0YroVuOL4+G6Rx5hvF6vqSWqDMLmQ0HnJrlDmuESU7k+5msp8lAVZ8CfQKJX3k3Lv5g12FVe0GYeqqU1HBRHErS+gtI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kVHpk9YG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KxTYxHEW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D490C4CEF7;
-	Tue, 17 Mar 2026 17:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kVHpk9YG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEAE7C4CEF7;
+	Tue, 17 Mar 2026 17:07:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767225;
-	bh=hyXwJEmPiladEfKSgHA6FBDdLGZ+ozOpzJXpuSj03YU=;
+	s=korg; t=1773767230;
+	bh=+vlvdvt62dL/gsDnfx+TpigW+EY+6ngtLtjjyIJ2IYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxTYxHEWff3cfzt3VJ1TMUfefbpGh0Hz+qZA7podo/mkQjQsx+V90fA2n+ir03dK1
-	 GTBuIoa9yDR1e6UbJwXvEQF82zEm2+qDDaCwmcrc1zQNcw+6cUERCNmiIcuyENp9aD
-	 80KhaHR5z6uo7659nsvraPiU+f6pWnV8kKN9FsFY=
+	b=kVHpk9YGqyuJraG5fTAgKuJI6kIbxdJElf+jzV0brlLHY1aDkqlo7JNmhh5MvgL8s
+	 ATbeSU9PkQP0GT8WXznunXmttZ9r2Y6XWLuXHyLFRdUKxSi3tpGTD2VhlPAvKWXkV3
+	 cLgOn2WmJfN715nwNossgV+J7OIPFESZZkgdwPUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gal Pressman <gal@nvidia.com>,
 	Dragos Tatulea <dtatulea@nvidia.com>,
+	Amery Hung <ameryhung@gmail.com>,
+	Nimrod Oren <noren@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/333] net/mlx5e: Fix DMA FIFO desync on error CQE SQ recovery
-Date: Tue, 17 Mar 2026 17:31:11 +0100
-Message-ID: <20260317163000.924761495@linuxfoundation.org>
+Subject: [PATCH 6.18 043/333] net/mlx5e: RX, Fix XDP multi-buf frag counting for striding RQ
+Date: Tue, 17 Mar 2026 17:31:12 +0100
+Message-ID: <20260317163000.961816826@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,80 +54,140 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gal Pressman <gal@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 1633111d69053512d099658d4a05fc736fab36b0 ]
+[ Upstream commit db25c42c2e1f9c0d136420fff5e5700f7e771a6f ]
 
-In case of a TX error CQE, a recovery flow is triggered,
-mlx5e_reset_txqsq_cc_pc() resets dma_fifo_cc to 0 but not dma_fifo_pc,
-desyncing the DMA FIFO producer and consumer.
+XDP multi-buf programs can modify the layout of the XDP buffer when the
+program calls bpf_xdp_pull_data() or bpf_xdp_adjust_tail(). The
+referenced commit in the fixes tag corrected the assumption in the mlx5
+driver that the XDP buffer layout doesn't change during a program
+execution. However, this fix introduced another issue: the dropped
+fragments still need to be counted on the driver side to avoid page
+fragment reference counting issues.
 
-After recovery, the producer pushes new DMA entries at the old
-dma_fifo_pc, while the consumer reads from position 0.
-This causes us to unmap stale DMA addresses from before the recovery.
+The issue was discovered by the drivers/net/xdp.py selftest,
+more specifically the test_xdp_native_tx_mb:
+- The mlx5 driver allocates a page_pool page and initializes it with
+  a frag counter of 64 (pp_ref_count=64) and the internal frag counter
+  to 0.
+- The test sends one packet with no payload.
+- On RX (mlx5e_skb_from_cqe_mpwrq_nonlinear()), mlx5 configures the XDP
+  buffer with the packet data starting in the first fragment which is the
+  page mentioned above.
+- The XDP program runs and calls bpf_xdp_pull_data() which moves the
+  header into the linear part of the XDP buffer. As the packet doesn't
+  contain more data, the program drops the tail fragment since it no
+  longer contains any payload (pp_ref_count=63).
+- mlx5 device skips counting this fragment. Internal frag counter
+  remains 0.
+- mlx5 releases all 64 fragments of the page but page pp_ref_count is
+  63 => negative reference counting error.
 
-The DMA FIFO is a purely software construct with no HW counterpart.
-At the point of reset, all WQEs have been flushed so dma_fifo_cc is
-already equal to dma_fifo_pc. There is no need to reset either counter,
-similar to how skb_fifo pc/cc are untouched.
+Resulting splat during the test:
 
-Remove the 'dma_fifo_cc = 0' reset.
+  WARNING: CPU: 0 PID: 188225 at ./include/net/page_pool/helpers.h:297 mlx5e_page_release_fragmented.isra.0+0xbd/0xe0 [mlx5_core]
+  Modules linked in: [...]
+  CPU: 0 UID: 0 PID: 188225 Comm: ip Not tainted 6.18.0-rc7_for_upstream_min_debug_2025_12_08_11_44 #1 NONE
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+  RIP: 0010:mlx5e_page_release_fragmented.isra.0+0xbd/0xe0 [mlx5_core]
+  [...]
+  Call Trace:
+   <TASK>
+   mlx5e_free_rx_mpwqe+0x20a/0x250 [mlx5_core]
+   mlx5e_dealloc_rx_mpwqe+0x37/0xb0 [mlx5_core]
+   mlx5e_free_rx_descs+0x11a/0x170 [mlx5_core]
+   mlx5e_close_rq+0x78/0xa0 [mlx5_core]
+   mlx5e_close_queues+0x46/0x2a0 [mlx5_core]
+   mlx5e_close_channel+0x24/0x90 [mlx5_core]
+   mlx5e_close_channels+0x5d/0xf0 [mlx5_core]
+   mlx5e_safe_switch_params+0x2ec/0x380 [mlx5_core]
+   mlx5e_change_mtu+0x11d/0x490 [mlx5_core]
+   mlx5e_change_nic_mtu+0x19/0x30 [mlx5_core]
+   netif_set_mtu_ext+0xfc/0x240
+   do_setlink.isra.0+0x226/0x1100
+   rtnl_newlink+0x7a9/0xba0
+   rtnetlink_rcv_msg+0x220/0x3c0
+   netlink_rcv_skb+0x4b/0xf0
+   netlink_unicast+0x255/0x380
+   netlink_sendmsg+0x1f3/0x420
+   __sock_sendmsg+0x38/0x60
+   ____sys_sendmsg+0x1e8/0x240
+   ___sys_sendmsg+0x7c/0xb0
+   [...]
+   __sys_sendmsg+0x5f/0xb0
+   do_syscall_64+0x55/0xc70
 
-This fixes the following WARNING:
-    WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1240 iommu_dma_unmap_page+0x79/0x90
-    Modules linked in: mlx5_vdpa vringh vdpa bonding mlx5_ib mlx5_vfio_pci ipip mlx5_fwctl tunnel4 mlx5_core ib_ipoib geneve ip6_gre ip_gre gre nf_tables ip6_tunnel rdma_ucm ib_uverbs ib_umad vfio_pci vfio_pci_core act_mirred act_skbedit act_vlan vhost_net vhost tap ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress vhost_iotlb iptable_raw tunnel6 vfio_iommu_type1 vfio openvswitch nsh rpcsec_gss_krb5 auth_rpcgss oid_registry xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter overlay zram zsmalloc rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core fuse [last unloaded: nf_tables]
-    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5_for_upstream_min_debug_2024_12_30_21_33 #1
-    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-    RIP: 0010:iommu_dma_unmap_page+0x79/0x90
-    Code: 2b 4d 3b 21 72 26 4d 3b 61 08 73 20 49 89 d8 44 89 f9 5b 4c 89 f2 4c 89 e6 48 89 ef 5d 41 5c 41 5d 41 5e 41 5f e9 c7 ae 9e ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 66 2e 0f 1f 84 00 00 00 00
-    Call Trace:
-     <IRQ>
-     ? __warn+0x7d/0x110
-     ? iommu_dma_unmap_page+0x79/0x90
-     ? report_bug+0x16d/0x180
-     ? handle_bug+0x4f/0x90
-     ? exc_invalid_op+0x14/0x70
-     ? asm_exc_invalid_op+0x16/0x20
-     ? iommu_dma_unmap_page+0x79/0x90
-     ? iommu_dma_unmap_page+0x2e/0x90
-     dma_unmap_page_attrs+0x10d/0x1b0
-     mlx5e_tx_wi_dma_unmap+0xbe/0x120 [mlx5_core]
-     mlx5e_poll_tx_cq+0x16d/0x690 [mlx5_core]
-     mlx5e_napi_poll+0x8b/0xac0 [mlx5_core]
-     __napi_poll+0x24/0x190
-     net_rx_action+0x32a/0x3b0
-     ? mlx5_eq_comp_int+0x7e/0x270 [mlx5_core]
-     ? notifier_call_chain+0x35/0xa0
-     handle_softirqs+0xc9/0x270
-     irq_exit_rcu+0x71/0xd0
-     common_interrupt+0x7f/0xa0
-     </IRQ>
-     <TASK>
-     asm_common_interrupt+0x22/0x40
+The problem applies for XDP_PASS as well which is handled in a different
+code path in the driver.
 
-Fixes: db75373c91b0 ("net/mlx5e: Recover Send Queue (SQ) from error state")
-Signed-off-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+This patch fixes the issue by doing page frag counting on all the
+original XDP buffer fragments for all relevant XDP actions (XDP_TX ,
+XDP_REDIRECT and XDP_PASS). This is basically reverting to the original
+counting before the commit in the fixes tag.
+
+As frag_page is still pointing to the original tail, the nr_frags
+parameter to xdp_update_skb_frags_info() needs to be calculated
+in a different way to reflect the new nr_frags.
+
+Fixes: 87bcef158ac1 ("net/mlx5e: RX, Fix generating skb from non-linear xdp_buff for striding RQ")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Cc: Amery Hung <ameryhung@gmail.com>
+Reviewed-by: Nimrod Oren <noren@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260305142634.1813208-4-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260305142634.1813208-5-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_rx.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-index 9f6454102cf79..d6ace2b6fc1df 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
-@@ -46,7 +46,6 @@ static void mlx5e_reset_txqsq_cc_pc(struct mlx5e_txqsq *sq)
- 		  "SQ 0x%x: cc (0x%x) != pc (0x%x)\n",
- 		  sq->sqn, sq->cc, sq->pc);
- 	sq->cc = 0;
--	sq->dma_fifo_cc = 0;
- 	sq->pc = 0;
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+index 687cf123211d7..348c451473cd6 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_rx.c
+@@ -2118,14 +2118,13 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
  
+ 	if (prog) {
+ 		u8 nr_frags_free, old_nr_frags = sinfo->nr_frags;
++		u8 new_nr_frags;
+ 		u32 len;
+ 
+ 		if (mlx5e_xdp_handle(rq, prog, mxbuf)) {
+ 			if (__test_and_clear_bit(MLX5E_RQ_FLAG_XDP_XMIT, rq->flags)) {
+ 				struct mlx5e_frag_page *pfp;
+ 
+-				frag_page -= old_nr_frags - sinfo->nr_frags;
+-
+ 				for (pfp = head_page; pfp < frag_page; pfp++)
+ 					pfp->frags++;
+ 
+@@ -2136,13 +2135,12 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 			return NULL; /* page/packet was consumed by XDP */
+ 		}
+ 
+-		nr_frags_free = old_nr_frags - sinfo->nr_frags;
+-		if (unlikely(nr_frags_free)) {
+-			frag_page -= nr_frags_free;
++		new_nr_frags = sinfo->nr_frags;
++		nr_frags_free = old_nr_frags - new_nr_frags;
++		if (unlikely(nr_frags_free))
+ 			truesize -= (nr_frags_free - 1) * PAGE_SIZE +
+ 				ALIGN(pg_consumed_bytes,
+ 				      BIT(rq->mpwqe.log_stride_sz));
+-		}
+ 
+ 		len = mxbuf->xdp.data_end - mxbuf->xdp.data;
+ 
+@@ -2164,7 +2162,7 @@ mlx5e_skb_from_cqe_mpwrq_nonlinear(struct mlx5e_rq *rq, struct mlx5e_mpw_info *w
+ 			struct mlx5e_frag_page *pagep;
+ 
+ 			/* sinfo->nr_frags is reset by build_skb, calculate again. */
+-			xdp_update_skb_frags_info(skb, frag_page - head_page,
++			xdp_update_skb_frags_info(skb, new_nr_frags,
+ 						  sinfo->xdp_frags_size,
+ 						  truesize,
+ 						  xdp_buff_get_skb_flags(&mxbuf->xdp));
 -- 
 2.51.0
 
