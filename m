@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C336A2F60A7;
-	Tue, 17 Mar 2026 17:08:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D89A33A4F46;
+	Tue, 17 Mar 2026 17:08:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767304; cv=none; b=nJaQ6rkCQ7fN3UgLGY5jwTvkT/XHlA3gAzniORUwgNsbqB6bpIg484KQIgarPRIsMEay/HZ0RdLQmOx9En1OaQrWioa2fpspGc7JV0ycIDgN160N3B8jXrmTXaAwIjcrv5hfBvxFjXV6698kywtqOsF/PKoRAEHEHMiIfOSkVLI=
+	t=1773767308; cv=none; b=HT0iyJU+DMnWZ6xKngQYuXBa+y6p7iPBDFvkouLEE4aoB6ag9yb3NfUcakx29cvO40F7X8iYIyj8hCYfKqCLPWtJWpL+LXgxCJgX8uhB7TkM61ca5a6qYAkcF/jBL9EmzABenXKNYtB11eN6wYkgELlzRnQrX/QHiT3+ZAFzp6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767304; c=relaxed/simple;
-	bh=GdDdqyakRiCmHHa4mPmjW/sWIYtlt4Tk8+UGoujpfVw=;
+	s=arc-20240116; t=1773767308; c=relaxed/simple;
+	bh=aPw+eFrgZ6u1cFf4GscXJXLJOzLxux3ThCRj5v1admo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CcahMzO6BtHgoYLDNEXol/UozW4vtl4bHTxWVsZILeMsZhnQTWVBboLBfQVMkFUq5Uh/CchtSkgIVd3r5gNBuTpHWu23tuMoSxjg2M+CH5c8dYq6imJF8T5PIcHYJE9eUi3RdUolqNJ0HDru6dXMnH8JwhPAPxA6oKwdsxW7xzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TpuQ7W2K; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nAWSmVwGE2wUtlLSzxZNd41WYg9Db+vxVyEIBzrinMz7dcTegvDqQo/LFUK4q+JBwcxdGZlGywQ7rOWseadifjIu2GLPbSgW7UmGzvN4rSJrRpSazML4YwbNwTheI3+3ADkdCXSrb93gk0rDNsoVjL7ResZdE5PEUkihxTlxTDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n175BTKB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TpuQ7W2K"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF778C4CEF7;
-	Tue, 17 Mar 2026 17:08:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n175BTKB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55851C4CEF7;
+	Tue, 17 Mar 2026 17:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767304;
-	bh=GdDdqyakRiCmHHa4mPmjW/sWIYtlt4Tk8+UGoujpfVw=;
+	s=korg; t=1773767308;
+	bh=aPw+eFrgZ6u1cFf4GscXJXLJOzLxux3ThCRj5v1admo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpuQ7W2KqhsTXg104UDPPPm7/n2NuSpPUnXq+JdIb1YroFVc1BX4defjNBo44yFtv
-	 s+0Xr6njwRXuiCxOSDmv+TVug3aIFszS9G878Ter0IcfggtS7TYYEgDPgxIPlLnMTU
-	 KzfJkhdqXiRU7AENR0NeeUY/DDYhzOdQhnsrOd5M=
+	b=n175BTKBz7EK5DkgoheTGkJT5llDzCPxCjIwvUIOiV6K/6KtP6tU/2rDcgsGlqzeh
+	 S3Kd9TZAxIKL5DsnsjFm878SX9bJh7v8r5i/sS4OPCCh2dXr+7/VnOl+PBLiRXnsXy
+	 PCg1gvDpr7eV5BKacBbmDASwV53ct4oVd5635BEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyue Wang <haiyuewa@163.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Wenyuan Li <2063309626@qq.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 058/333] mctp: i2c: fix skb memory leak in receive path
-Date: Tue, 17 Mar 2026 17:31:27 +0100
-Message-ID: <20260317163001.521705126@linuxfoundation.org>
+Subject: [PATCH 6.18 059/333] can: hi311x: hi3110_open(): add check for hi3110_power_enable() return value
+Date: Tue, 17 Mar 2026 17:31:28 +0100
+Message-ID: <20260317163001.558726208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,34 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Haiyue Wang <haiyuewa@163.com>
+From: Wenyuan Li <2063309626@qq.com>
 
-[ Upstream commit e3f5e0f22cfc2371e7471c9fd5b4da78f9df7c69 ]
+[ Upstream commit 47bba09b14fa21712398febf36cb14fd4fc3bded ]
 
-When 'midev->allow_rx' is false, the newly allocated skb isn't consumed
-by netif_rx(), it needs to free the skb directly.
+In hi3110_open(), the return value of hi3110_power_enable() is not checked.
+If power enable fails, the device may not function correctly, while the
+driver still returns success.
 
-Fixes: f5b8abf9fc3d ("mctp i2c: MCTP I2C binding driver")
-Signed-off-by: Haiyue Wang <haiyuewa@163.com>
-Link: https://patch.msgid.link/20260305143240.97592-1-haiyuewa@163.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Add a check for the return value and propagate the error accordingly.
+
+Signed-off-by: Wenyuan Li <2063309626@qq.com>
+Link: https://patch.msgid.link/tencent_B5E2E7528BB28AA8A2A56E16C49BD58B8B07@qq.com
+Fixes: 57e83fb9b746 ("can: hi311x: Add Holt HI-311x CAN driver")
+[mkl: adjust subject, commit message and jump label]
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mctp/mctp-i2c.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/spi/hi311x.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/mctp/mctp-i2c.c b/drivers/net/mctp/mctp-i2c.c
-index 8043b57bdf250..f138b0251313e 100644
---- a/drivers/net/mctp/mctp-i2c.c
-+++ b/drivers/net/mctp/mctp-i2c.c
-@@ -343,6 +343,7 @@ static int mctp_i2c_recv(struct mctp_i2c_dev *midev)
- 	} else {
- 		status = NET_RX_DROP;
- 		spin_unlock_irqrestore(&midev->lock, flags);
-+		kfree_skb(skb);
- 	}
+diff --git a/drivers/net/can/spi/hi311x.c b/drivers/net/can/spi/hi311x.c
+index 6d4b643e135fd..5f5a7e7e547eb 100644
+--- a/drivers/net/can/spi/hi311x.c
++++ b/drivers/net/can/spi/hi311x.c
+@@ -755,7 +755,9 @@ static int hi3110_open(struct net_device *net)
+ 		return ret;
  
- 	if (status == NET_RX_SUCCESS) {
+ 	mutex_lock(&priv->hi3110_lock);
+-	hi3110_power_enable(priv->transceiver, 1);
++	ret = hi3110_power_enable(priv->transceiver, 1);
++	if (ret)
++		goto out_close_candev;
+ 
+ 	priv->force_quit = 0;
+ 	priv->tx_skb = NULL;
+@@ -790,6 +792,7 @@ static int hi3110_open(struct net_device *net)
+ 	hi3110_hw_sleep(spi);
+  out_close:
+ 	hi3110_power_enable(priv->transceiver, 0);
++ out_close_candev:
+ 	close_candev(net);
+ 	mutex_unlock(&priv->hi3110_lock);
+ 	return ret;
 -- 
 2.51.0
 
