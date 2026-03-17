@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D4329D26C;
-	Tue, 17 Mar 2026 17:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDFC29D26C;
+	Tue, 17 Mar 2026 17:04:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767040; cv=none; b=cWYEV+Ydu8bD0iLSBwcq3lV6CHOe6g6LbSSGVNsuCX3NNLDMQqmdWP92o+puGOG5eHxEHTsITpVP4NlrrH0WxSrPu4VqMAhVWWIuikxz7+2LhTF1HFWilwnfLJ1VBQa14o1/aGW+CxypgCVm4Hdd04IeLQy6wAraexCkgyBda7I=
+	t=1773767046; cv=none; b=kIoQBpvA1Jmh2euz1CsxoOxefCKTJcEELHw3pmLLBxvJSE8IBakYy73ffJbXRAJt1GlKEbPofS/Bq97f8mUF/XmBk+TjmhSns/2djkEo4y3qYWJgTdsHeUiM9IatU3HBrIK1CdwmUUaEpARZqEawKIrblsGgru53CAVST7JRO9A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767040; c=relaxed/simple;
-	bh=FpdbZxCluD+KeMnkeK/dRWuH9GYMfMu8evtSHGhJe+I=;
+	s=arc-20240116; t=1773767046; c=relaxed/simple;
+	bh=oWm5LCrrBwFxIRh58tkHvrO+AvBJVnZVHJ/np1mcKBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zn3MfZJUP9te2ioDFQsm1idQjlAX1fskrP8NIgwpG6jIHDbWVvCmWhTz6syufoKyeXj3fe+/icPefSMNVFRWEDtOxHRIT8/RJ9B1x7f9MkW0+Hb3g/qN7U3ToN1b6UfMkJ7zWSVhAITpRurleHlb0NNH5ewyhnUNrlcA+pwK7s4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=obQxks29; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k6oEFQbMBA24OBcODL4HUfugzec4J0k7hdnZh5qT0tUIaRXCAJGllTyWst7dMIMvjmGNVe3mEuhnMmv25htWereL9uwWbcWLUDSCotVf566FLGcPBsKRSVYRkR90IirNil/tUBz8DIQREk5V7cdzZmUFL1xCJt7tj12A39BUU5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rSeDAH+I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="obQxks29"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B270C4CEF7;
-	Tue, 17 Mar 2026 17:04:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rSeDAH+I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA44C4CEF7;
+	Tue, 17 Mar 2026 17:04:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767040;
-	bh=FpdbZxCluD+KeMnkeK/dRWuH9GYMfMu8evtSHGhJe+I=;
+	s=korg; t=1773767045;
+	bh=oWm5LCrrBwFxIRh58tkHvrO+AvBJVnZVHJ/np1mcKBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obQxks29zPIAExVST5TIq87bD1+cRC4OILXNzGilKDk8h8hxJyEKtnE3qlnt5tWyu
-	 i5ILn5TPY+dkhrpA3Phfp7bZvVFlEw4EvOsz+pLch5vQz8d2IGTfrajXpmoaqn6G//
-	 npA4s1WisFVa4Sm8KybaY4kHO3ISo6TbSj/jZ24A=
+	b=rSeDAH+IGZqT5dU3RJjqxpNsUcN9tHmmJJjkjEbhYJ0nv/Fu44xdPfsL7T6SqBQ9W
+	 sLTkKVJIyt98V/4kJ7llEDsdsCGm+Ys4vPx5q8En4IhZ7qoE7SzoykKl20NVs1Cbpm
+	 OcWINsRkJAFoVV3CwFxegOw0H/uQsiLmYb5FbjDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	David Howells <dhowells@redhat.com>,
-	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Tom Talpey <tom@talpey.com>,
-	linux-cifs@vger.kernel.org,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 338/378] smb: client: fix atomic open with O_DIRECT & O_SYNC
-Date: Tue, 17 Mar 2026 17:34:55 +0100
-Message-ID: <20260317163019.417166820@linuxfoundation.org>
+	Sascha Bischoff <sascha.bischoff@arm.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 374/378] KVM: arm64: gic: Set vgic_model before initing private IRQs
+Date: Tue, 17 Mar 2026 17:35:31 +0100
+Message-ID: <20260317163020.739581176@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -54,102 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paulo Alcantara <pc@manguebit.org>
+From: Sascha Bischoff <Sascha.Bischoff@arm.com>
 
-commit 4a7d2729dc99437dbb880a64c47828c0d191b308 upstream.
+[ Upstream commit 9435c1e1431003e23aa34ef8e46c30d09c3dbcb5 ]
 
-When user application requests O_DIRECT|O_SYNC along with O_CREAT on
-open(2), CREATE_NO_BUFFER and CREATE_WRITE_THROUGH bits were missed in
-CREATE request when performing an atomic open, thus leading to
-potentially data integrity issues.
+Different GIC types require the private IRQs to be initialised
+differently. GICv5 is the culprit as it supports both a different
+number of private IRQs, and all of these are PPIs (there are no
+SGIs). Moreover, as GICv5 uses the top bits of the interrupt ID to
+encode the type, the intid also needs to computed differently.
 
-Fix this by setting those missing bits in CREATE request when
-O_DIRECT|O_SYNC has been specified in cifs_do_create().
+Up until now, the GIC model has been set after initialising the
+private IRQs for a VCPU. Move this earlier to ensure that the GIC
+model is available when configuring the private IRQs. While we're at
+it, also move the setting of the in_kernel flag and implementation
+revision to keep them grouped together as before.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Reviewed-by: David Howells <dhowells@redhat.com>
-Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Cc: Tom Talpey <tom@talpey.com>
-Cc: linux-cifs@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Sascha Bischoff <sascha.bischoff@arm.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Link: https://patch.msgid.link/20260128175919.3828384-7-sascha.bischoff@arm.com
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Stable-dep-of: ac6769c8f948 ("KVM: arm64: Eagerly init vgic dist/redist on vgic creation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsglob.h |   11 +++++++++++
- fs/smb/client/dir.c      |    1 +
- fs/smb/client/file.c     |   18 +++---------------
- 3 files changed, 15 insertions(+), 15 deletions(-)
+ arch/arm64/kvm/vgic/vgic-init.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/smb/client/cifsglob.h
-+++ b/fs/smb/client/cifsglob.h
-@@ -20,6 +20,7 @@
- #include <linux/utsname.h>
- #include <linux/sched/mm.h>
- #include <linux/netfs.h>
-+#include <linux/fcntl.h>
- #include "cifs_fs_sb.h"
- #include "cifsacl.h"
- #include <crypto/internal/hash.h>
-@@ -2313,4 +2314,14 @@ static inline void cifs_requeue_server_r
- 	queue_delayed_work(cifsiod_wq, &server->reconnect, delay * HZ);
- }
- 
-+static inline int cifs_open_create_options(unsigned int oflags, int opts)
-+{
-+	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
-+	if (oflags & O_SYNC)
-+		opts |= CREATE_WRITE_THROUGH;
-+	if (oflags & O_DIRECT)
-+		opts |= CREATE_NO_BUFFER;
-+	return opts;
-+}
-+
- #endif	/* _CIFS_GLOB_H */
---- a/fs/smb/client/dir.c
-+++ b/fs/smb/client/dir.c
-@@ -307,6 +307,7 @@ static int cifs_do_create(struct inode *
- 		goto out;
+--- a/arch/arm64/kvm/vgic/vgic-init.c
++++ b/arch/arm64/kvm/vgic/vgic-init.c
+@@ -140,6 +140,10 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 		goto out_unlock;
  	}
  
-+	create_options |= cifs_open_create_options(oflags, create_options);
- 	/*
- 	 * if we're not using unix extensions, see if we need to set
- 	 * ATTR_READONLY on the create call
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -585,15 +585,8 @@ static int cifs_nt_open(const char *full
-  *********************************************************************/
++	kvm->arch.vgic.in_kernel = true;
++	kvm->arch.vgic.vgic_model = type;
++	kvm->arch.vgic.implementation_rev = KVM_VGIC_IMP_REV_LATEST;
++
+ 	kvm_for_each_vcpu(i, vcpu, kvm) {
+ 		ret = vgic_allocate_private_irqs_locked(vcpu, type);
+ 		if (ret)
+@@ -156,10 +160,6 @@ int kvm_vgic_create(struct kvm *kvm, u32
+ 		goto out_unlock;
+ 	}
  
- 	disposition = cifs_get_disposition(f_flags);
+-	kvm->arch.vgic.in_kernel = true;
+-	kvm->arch.vgic.vgic_model = type;
+-	kvm->arch.vgic.implementation_rev = KVM_VGIC_IMP_REV_LATEST;
 -
- 	/* BB pass O_SYNC flag through on file attributes .. BB */
--
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(f_flags, create_options);
+ 	kvm->arch.vgic.vgic_dist_base = VGIC_ADDR_UNDEF;
  
- retry_open:
- 	oparms = (struct cifs_open_parms) {
-@@ -1319,13 +1312,8 @@ cifs_reopen_file(struct cifsFileInfo *cf
- 		rdwr_for_fscache = 1;
- 
- 	desired_access = cifs_convert_flags(cfile->f_flags, rdwr_for_fscache);
--
--	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
--	if (cfile->f_flags & O_SYNC)
--		create_options |= CREATE_WRITE_THROUGH;
--
--	if (cfile->f_flags & O_DIRECT)
--		create_options |= CREATE_NO_BUFFER;
-+	create_options |= cifs_open_create_options(cfile->f_flags,
-+						   create_options);
- 
- 	if (server->ops->get_lease_key)
- 		server->ops->get_lease_key(inode, &cfile->fid);
+ 	aa64pfr0 = kvm_read_vm_id_reg(kvm, SYS_ID_AA64PFR0_EL1) & ~ID_AA64PFR0_EL1_GIC;
 
 
