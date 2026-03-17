@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3203469E6;
-	Tue, 17 Mar 2026 16:45:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741BE244694;
+	Tue, 17 Mar 2026 16:45:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765951; cv=none; b=bb8uhYh4WBrF7OIModoVA46sd67AVG6we165o/iUTa5IPpRyDsch/r8TnNIbXKx8reGrz4kLEeckELL5vQiInG2s6op7Zz8kHcaWlzssEp6JfstRahsGY1MdavndMXongTkiU9cDspfTdzn7uLG31J9h3/QHpPZ8oSPBtGO+o+A=
+	t=1773765955; cv=none; b=esaaIHNTaDOj5V4ZjZD07CH8S5uG5jOrof2W2CrGMr7DDxUc/6SR25j2rYJzWDW0e9hpqQAD3Aw+cORufnK0qNM0PP5tnnGqlHQoOkAaOxA8+AfMHCehxt4UmIJVzeixuj7udNZq9w66P21x/ryo9qp7cRIbCWX7dRFnK3kUMKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765951; c=relaxed/simple;
-	bh=KwrvGiw3AMQXvjLAv31Gvd0fG7LJubUCrK8Qs6+FGOQ=;
+	s=arc-20240116; t=1773765955; c=relaxed/simple;
+	bh=uP4YDgKPqy4xYWPY5beT2HfKKuPJN15rS10aKjZCiGs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qmAvyeqMPoem8De460kBWYdbLhzwxjGHNf/r3PEy4wfFlaAaZfoJ9S/yYccn8dJagkH9XZs2VcN64N83ukXjoU7g8+Jv79Ryh6SwXUIGHABRT3C3XhMMCAg7ssWIElGNX8mfND0kcoI936AveYNXr4OLgkXmI3GrC6LHeSNn7jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hw49ol9j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YmrSmSlzCmAvjZmr/ML/LFl2bgESv8MYI5GgWQakXK146tX0uu3jx4fh1wac27dehW3hAp7KFjDxcVUYYbLmK/U60B84FOU/JkKh9lwO96Nu0ZUf2KPP/SUqq12JJI4M9ZhaPMLQ5Uy6bwCbjVNaQqqnYX5VLAaFmxsRser/zys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z6K4i4K1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hw49ol9j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33095C19424;
-	Tue, 17 Mar 2026 16:45:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z6K4i4K1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECE1C4CEF7;
+	Tue, 17 Mar 2026 16:45:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765951;
-	bh=KwrvGiw3AMQXvjLAv31Gvd0fG7LJubUCrK8Qs6+FGOQ=;
+	s=korg; t=1773765955;
+	bh=uP4YDgKPqy4xYWPY5beT2HfKKuPJN15rS10aKjZCiGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hw49ol9jbgwAbULQvhNimLdxMlqSWqY5X94L8xnUe1Jq0N20zM6Kt4fgCrXwmAQ2j
-	 Os2FxD7fvu4jgMbgjeq4+H9O358oT7OG6lgsv1XfX+JmVjxebuuORlMNXdHTH5U31f
-	 C+W2CwC8oblXAQVB2Uk9u8VEbr00N8kmHoaNvCxA=
+	b=z6K4i4K1AT+W9JILj0FF7Q0e9sboBwznW4VwAx2JzD5xI/lJY6xrW5o7vVEtT1R6R
+	 e2h10Ob6dLznb6twM7ffzp11XDKoP1IJ3tDVymuBCN8ntKPx+KY3gdba2dSe6dkjFC
+	 dvMTtv9E8D2Kv+FKTMSDsCuBKx5Ox8xsQd+X/jJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Jann Horn <jannh@google.com>,
-	Alice Ryhl <aliceryhl@google.com>,
-	Danilo Krummrich <dakr@kernel.org>,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>
-Subject: [PATCH 6.19 127/378] rust_binder: check ownership before using vma
-Date: Tue, 17 Mar 2026 17:31:24 +0100
-Message-ID: <20260317163011.687561369@linuxfoundation.org>
+	Jim Mattson <jmattson@google.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.19 136/378] KVM: x86: Introduce KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM
+Date: Tue, 17 Mar 2026 17:31:33 +0100
+Message-ID: <20260317163012.017810337@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,178 +51,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alice Ryhl <aliceryhl@google.com>
+From: Jim Mattson <jmattson@google.com>
 
-commit 8ef2c15aeae07647f530d30f6daaf79eb801bcd1 upstream.
+commit e2ffe85b6d2bb7780174b87aa4468a39be17eb81 upstream.
 
-When installing missing pages (or zapping them), Rust Binder will look
-up the vma in the mm by address, and then call vm_insert_page (or
-zap_page_range_single). However, if the vma is closed and replaced with
-a different vma at the same address, this can lead to Rust Binder
-installing pages into the wrong vma.
+Add KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM to allow L1 to set
+FREEZE_IN_SMM in vmcs12's GUEST_IA32_DEBUGCTL field, as permitted
+prior to commit 6b1dd26544d0 ("KVM: VMX: Preserve host's
+DEBUGCTLMSR_FREEZE_IN_SMM while running the guest").  Enable the quirk
+by default for backwards compatibility (like all quirks); userspace
+can disable it via KVM_CAP_DISABLE_QUIRKS2 for consistency with the
+constraints on WRMSR(IA32_DEBUGCTL).
 
-By installing the page into a writable vma, it becomes possible to write
-to your own binder pages, which are normally read-only. Although you're
-not supposed to be able to write to those pages, the intent behind the
-design of Rust Binder is that even if you get that ability, it should not
-lead to anything bad. Unfortunately, due to another bug, that is not the
-case.
+Note that the quirk only bypasses the consistency check.  The vmcs02 bit is
+still owned by the host, and PMCs are not frozen during virtualized SMM.
+In particular, if a host administrator decides that PMCs should not be
+frozen during physical SMM, then L1 has no say in the matter.
 
-To fix this, store a pointer in vm_private_data and check that the vma
-returned by vma_lookup() has the right vm_ops and vm_private_data before
-trying to use the vma. This should ensure that Rust Binder will refuse
-to interact with any other VMA. The plan is to introduce more vma
-abstractions to avoid this unsafe access to vm_ops and vm_private_data,
-but for now let's start with the simplest possible fix.
-
-C Binder performs the same check in a slightly different way: it
-provides a vm_ops->close that sets a boolean to true, then checks that
-boolean after calling vma_lookup(), but this is more fragile
-than the solution in this patch. (We probably still want to do both, but
-the vm_ops->close callback will be added later as part of the follow-up
-vma API changes.)
-
-It's still possible to remap the vma so that pages appear in the right
-vma, but at the wrong offset, but this is a separate issue and will be
-fixed when Rust Binder gets a vm_ops->close callback.
-
-Cc: stable <stable@kernel.org>
-Fixes: eafedbc7c050 ("rust_binder: add Rust Binder driver")
-Reported-by: Jann Horn <jannh@google.com>
-Reviewed-by: Jann Horn <jannh@google.com>
-Signed-off-by: Alice Ryhl <aliceryhl@google.com>
-Acked-by: Danilo Krummrich <dakr@kernel.org>
-Acked-by: Liam R. Howlett <Liam.Howlett@oracle.com>
-Link: https://patch.msgid.link/20260218-binder-vma-check-v2-1-60f9d695a990@google.com
+Fixes: 095686e6fcb4 ("KVM: nVMX: Check vmcs12->guest_ia32_debugctl on nested VM-Enter")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jim Mattson <jmattson@google.com>
+Link: https://patch.msgid.link/20260205231537.1278753-1-jmattson@google.com
+[sean: tag for stable@, clean-up and fix goofs in the comment and docs]
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+[Rename quirk. - Paolo]
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/android/binder/page_range.rs |   83 ++++++++++++++++++++++++++---------
- 1 file changed, 63 insertions(+), 20 deletions(-)
+ Documentation/virt/kvm/api.rst  |    8 ++++++++
+ arch/x86/include/asm/kvm_host.h |    3 ++-
+ arch/x86/include/uapi/asm/kvm.h |    1 +
+ arch/x86/kvm/vmx/nested.c       |   22 ++++++++++++++++++----
+ 4 files changed, 29 insertions(+), 5 deletions(-)
 
---- a/drivers/android/binder/page_range.rs
-+++ b/drivers/android/binder/page_range.rs
-@@ -142,6 +142,30 @@ pub(crate) struct ShrinkablePageRange {
-     _pin: PhantomPinned,
- }
- 
-+// We do not define any ops. For now, used only to check identity of vmas.
-+static BINDER_VM_OPS: bindings::vm_operations_struct = pin_init::zeroed();
+--- a/Documentation/virt/kvm/api.rst
++++ b/Documentation/virt/kvm/api.rst
+@@ -8438,6 +8438,14 @@ KVM_X86_QUIRK_IGNORE_GUEST_PAT      By d
+                                     guest software, for example if it does not
+                                     expose a bochs graphics device (which is
+                                     known to have had a buggy driver).
 +
-+// To ensure that we do not accidentally install pages into or zap pages from the wrong vma, we
-+// check its vm_ops and private data before using it.
-+fn check_vma(vma: &virt::VmaRef, owner: *const ShrinkablePageRange) -> Option<&virt::VmaMixedMap> {
-+    // SAFETY: Just reading the vm_ops pointer of any active vma is safe.
-+    let vm_ops = unsafe { (*vma.as_ptr()).vm_ops };
-+    if !ptr::eq(vm_ops, &BINDER_VM_OPS) {
-+        return None;
-+    }
++KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM   By default, KVM relaxes the consistency
++                                      check for GUEST_IA32_DEBUGCTL in vmcs12
++                                      to allow FREEZE_IN_SMM to be set.  When
++                                      this quirk is disabled, KVM requires this
++                                      bit to be cleared.  Note that the vmcs02
++                                      bit is still completely controlled by the
++                                      host, regardless of the quirk setting.
+ =================================== ============================================
+ 
+ 7.32 KVM_CAP_MAX_VCPU_ID
+--- a/arch/x86/include/asm/kvm_host.h
++++ b/arch/x86/include/asm/kvm_host.h
+@@ -2470,7 +2470,8 @@ int memslot_rmap_alloc(struct kvm_memory
+ 	 KVM_X86_QUIRK_MWAIT_NEVER_UD_FAULTS |	\
+ 	 KVM_X86_QUIRK_SLOT_ZAP_ALL |		\
+ 	 KVM_X86_QUIRK_STUFF_FEATURE_MSRS |	\
+-	 KVM_X86_QUIRK_IGNORE_GUEST_PAT)
++	 KVM_X86_QUIRK_IGNORE_GUEST_PAT |	\
++	 KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM)
+ 
+ #define KVM_X86_CONDITIONAL_QUIRKS		\
+ 	(KVM_X86_QUIRK_CD_NW_CLEARED |		\
+--- a/arch/x86/include/uapi/asm/kvm.h
++++ b/arch/x86/include/uapi/asm/kvm.h
+@@ -476,6 +476,7 @@ struct kvm_sync_regs {
+ #define KVM_X86_QUIRK_SLOT_ZAP_ALL		(1 << 7)
+ #define KVM_X86_QUIRK_STUFF_FEATURE_MSRS	(1 << 8)
+ #define KVM_X86_QUIRK_IGNORE_GUEST_PAT		(1 << 9)
++#define KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM (1 << 10)
+ 
+ #define KVM_STATE_NESTED_FORMAT_VMX	0
+ #define KVM_STATE_NESTED_FORMAT_SVM	1
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -3292,10 +3292,24 @@ static int nested_vmx_check_guest_state(
+ 	if (CC(vmcs12->guest_cr4 & X86_CR4_CET && !(vmcs12->guest_cr0 & X86_CR0_WP)))
+ 		return -EINVAL;
+ 
+-	if ((vmcs12->vm_entry_controls & VM_ENTRY_LOAD_DEBUG_CONTROLS) &&
+-	    (CC(!kvm_dr7_valid(vmcs12->guest_dr7)) ||
+-	     CC(!vmx_is_valid_debugctl(vcpu, vmcs12->guest_ia32_debugctl, false))))
+-		return -EINVAL;
++	if (vmcs12->vm_entry_controls & VM_ENTRY_LOAD_DEBUG_CONTROLS) {
++		u64 debugctl = vmcs12->guest_ia32_debugctl;
 +
-+    // SAFETY: Reading the vm_private_data pointer of a binder-owned vma is safe.
-+    let vm_private_data = unsafe { (*vma.as_ptr()).vm_private_data };
-+    // The ShrinkablePageRange is only dropped when the Process is dropped, which only happens once
-+    // the file's ->release handler is invoked, which means the ShrinkablePageRange outlives any
-+    // VMA associated with it, so there can't be any false positives due to pointer reuse here.
-+    if !ptr::eq(vm_private_data, owner.cast()) {
-+        return None;
-+    }
++		/*
++		 * FREEZE_IN_SMM is not virtualized, but allow L1 to set it in
++		 * vmcs12's DEBUGCTL under a quirk for backwards compatibility.
++		 * Note that the quirk only relaxes the consistency check.  The
++		 * vmcc02 bit is still under the control of the host.  In
++		 * particular, if a host administrator decides to clear the bit,
++		 * then L1 has no say in the matter.
++		 */
++		if (kvm_check_has_quirk(vcpu->kvm, KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM))
++			debugctl &= ~DEBUGCTLMSR_FREEZE_IN_SMM;
 +
-+    vma.as_mixedmap_vma()
-+}
-+
- struct Inner {
-     /// Array of pages.
-     ///
-@@ -308,6 +332,18 @@ impl ShrinkablePageRange {
-         inner.size = num_pages;
-         inner.vma_addr = vma.start();
++		if (CC(!kvm_dr7_valid(vmcs12->guest_dr7)) ||
++		    CC(!vmx_is_valid_debugctl(vcpu, debugctl, false)))
++			return -EINVAL;
++	}
  
-+        // This pointer is only used for comparison - it's not dereferenced.
-+        //
-+        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
-+        // `vm_private_data`.
-+        unsafe {
-+            (*vma.as_ptr()).vm_private_data = ptr::from_ref(self).cast_mut().cast::<c_void>()
-+        };
-+
-+        // SAFETY: We own the vma, and we don't use any methods on VmaNew that rely on
-+        // `vm_ops`.
-+        unsafe { (*vma.as_ptr()).vm_ops = &BINDER_VM_OPS };
-+
-         Ok(num_pages)
-     }
- 
-@@ -399,22 +435,24 @@ impl ShrinkablePageRange {
-         //
-         // Using `mmput_async` avoids this, because then the `mm` cleanup is instead queued to a
-         // workqueue.
--        MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
--            .mmap_read_lock()
--            .vma_lookup(vma_addr)
--            .ok_or(ESRCH)?
--            .as_mixedmap_vma()
--            .ok_or(ESRCH)?
--            .vm_insert_page(user_page_addr, &new_page)
--            .inspect_err(|err| {
--                pr_warn!(
--                    "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
--                    user_page_addr,
--                    vma_addr,
--                    i,
--                    err
--                )
--            })?;
-+        check_vma(
-+            MmWithUser::into_mmput_async(self.mm.mmget_not_zero().ok_or(ESRCH)?)
-+                .mmap_read_lock()
-+                .vma_lookup(vma_addr)
-+                .ok_or(ESRCH)?,
-+            self,
-+        )
-+        .ok_or(ESRCH)?
-+        .vm_insert_page(user_page_addr, &new_page)
-+        .inspect_err(|err| {
-+            pr_warn!(
-+                "Failed to vm_insert_page({}): vma_addr:{} i:{} err:{:?}",
-+                user_page_addr,
-+                vma_addr,
-+                i,
-+                err
-+            )
-+        })?;
- 
-         let inner = self.lock.lock();
- 
-@@ -667,12 +705,15 @@ unsafe extern "C" fn rust_shrink_free_pa
-     let mmap_read;
-     let mm_mutex;
-     let vma_addr;
-+    let range_ptr;
- 
-     {
-         // CAST: The `list_head` field is first in `PageInfo`.
-         let info = item as *mut PageInfo;
-         // SAFETY: The `range` field of `PageInfo` is immutable.
--        let range = unsafe { &*((*info).range) };
-+        range_ptr = unsafe { (*info).range };
-+        // SAFETY: The `range` outlives its `PageInfo` values.
-+        let range = unsafe { &*range_ptr };
- 
-         mm = match range.mm.mmget_not_zero() {
-             Some(mm) => MmWithUser::into_mmput_async(mm),
-@@ -717,9 +758,11 @@ unsafe extern "C" fn rust_shrink_free_pa
-     // SAFETY: The lru lock is locked when this method is called.
-     unsafe { bindings::spin_unlock(&raw mut (*lru).lock) };
- 
--    if let Some(vma) = mmap_read.vma_lookup(vma_addr) {
--        let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
--        vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
-+    if let Some(unchecked_vma) = mmap_read.vma_lookup(vma_addr) {
-+        if let Some(vma) = check_vma(unchecked_vma, range_ptr) {
-+            let user_page_addr = vma_addr + (page_index << PAGE_SHIFT);
-+            vma.zap_page_range_single(user_page_addr, PAGE_SIZE);
-+        }
-     }
- 
-     drop(mmap_read);
+ 	if ((vmcs12->vm_entry_controls & VM_ENTRY_LOAD_IA32_PAT) &&
+ 	    CC(!kvm_pat_valid(vmcs12->guest_ia32_pat)))
 
 
