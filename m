@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255B9332604;
-	Tue, 17 Mar 2026 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B14A83E3DB1;
+	Tue, 17 Mar 2026 17:05:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767102; cv=none; b=XrzbXnkjy4ZVSieb1oSZDbRnfE37jlaLnl/QIVSYbXdsvW9cKzedRccLCy/STuiHgv2FkB1wqKap2SO2QpP6rjJ4vEFqVi/jGuaG/12we7rKvv79txGjGNw4MX3TJ+NYSJ4Kr5pjGztuV6sRJsU5cnbiaB/RAK6UJPOehbHLGaQ=
+	t=1773767106; cv=none; b=YJ2R9PwJ+4BpyYZIJn5atj3xxnXZN8gvaC4pslpIu+cye5Lzx1nF3zlqy4YVLwRMxmV7tDitYMy1Thfmke0jrUF8AzEPWuBauGiG8DkCo8LzozD45t/UWdEv0Vi1EtToyS9OuVOAV/Jqte6rcghlppFshxEktMwT05Um3wjS2W0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767102; c=relaxed/simple;
-	bh=pLExz5N3BJ+X54xkMLh7+guTCPEr9vjs0rIXP0abisA=;
+	s=arc-20240116; t=1773767106; c=relaxed/simple;
+	bh=YDdJABeX1E5tOS2RUEd3GMgtzFkWj2hlvS2f5wYhtCQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sWEyGEAsNQqZvOx2TniERs9sWPo0bMgCgLKgYKaLHmFwetB+b/KQblNC869VF2vaz+T7ZESxNsCLRYmTJMgCPepcLi38WlbIf+JDvOH837BaGt4yLnROqQB0OeQqOK7LFceD/+6iYmo3UrCootx2iTmFYR7iDAU+3cWmHpsqxb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cOMynkaB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Y2Sr5eNjwj6Akw5I2kHWo2EnTUh9JfvR/g7o267Vjt7la5dYbL+t7AqxiPV16U23rKmlQFeIs6N1pQ3zB7VVvtaRvTvbnJqH5CRtljzNM8qqovEgRW62JMm2rvMS/sk5l4qSnojRzIt0fxMEun8dBcLMVGlhHMcRQp5g5JJjhBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F3ASgb66; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cOMynkaB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E92BC2BC86;
-	Tue, 17 Mar 2026 17:05:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F3ASgb66"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AE84C4CEF7;
+	Tue, 17 Mar 2026 17:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767102;
-	bh=pLExz5N3BJ+X54xkMLh7+guTCPEr9vjs0rIXP0abisA=;
+	s=korg; t=1773767106;
+	bh=YDdJABeX1E5tOS2RUEd3GMgtzFkWj2hlvS2f5wYhtCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cOMynkaBc6mpmPIY/G+bZEfpr8jHc2+uxEFAsrmzuXGSYDmZ3BXRB2IjG4QYHK/UQ
-	 7wfyJlsAJjaExToWbYsPjvMFxE9t7eQrxTJDXeTD3MVtKBc/WI1V57uBAOZXvLbupH
-	 mi/ZqeU3xsIRpRTuIsaYBbJjIuBRle1zqJYz4hmI=
+	b=F3ASgb66afWbd1Q66a+CK/jejPKQjMlxzH8Ps2lQKMZVTFlSfrc+FYZDkTsmbHLVI
+	 VJFnUv1a5gC0NCFFMzTungqL8zPchlz1Pn9t2dIXzdxlk3RU8HPGwjdehlaRu3X0W3
+	 2Y/PkgOOIRUZQBXKQmJSzb0jEP2rjwulIh+qxRFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	sguttula <suresh.guttula@amd.com>,
+	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 015/333] ALSA: usb-audio: Avoid implicit feedback mode on DIYINHK USB Audio 2.0
-Date: Tue, 17 Mar 2026 17:30:44 +0100
-Message-ID: <20260317162959.925849893@linuxfoundation.org>
+Subject: [PATCH 6.18 016/333] drm/amdgpu/vcn5: Add SMU dpm interface type
+Date: Tue, 17 Mar 2026 17:30:45 +0100
+Message-ID: <20260317162959.962538128@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,45 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: sguttula <suresh.guttula@amd.com>
 
-[ Upstream commit c5bf24c8aba1ff711226ee0f039ff01a5754692b ]
+[ Upstream commit a5fe1a54513196e4bc8f9170006057dc31e7155e ]
 
-Although DIYINHK USB Audio 2.0 (ID 20b1:2009) shows the implicit
-feedback source for the capture stream, this would cause several
-problems for the playback.  Namely, the device can get wMaxPackSize
-1024 for 24/32 bit format with 6 channels, and when a high sample rate
-like 352.8kHz or 384kHz is played, the packet size overflows the max
-limit.  Also, the device has another two playback altsets, and those
-aren't properly handled with the implicit feedback.
+This will set AMDGPU_VCN_SMU_DPM_INTERFACE_* smu_type
+based on soc type and fixing ring timeout issue seen
+for DPM enabled case.
 
-Since the device has been working well even before introducing the
-implicit feedback, we can assume that it works fine in the async mode.
-This patch adds the explicit skip of the implicit fb detection to make
-the playback running in the async mode.
-
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260225085233.316306-4-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: sguttula <suresh.guttula@amd.com>
+Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit f0f23c315b38c55e8ce9484cf59b65811f350630)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index c411005cd4d87..fd50bf7c381d6 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2362,6 +2362,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x2040, 0x7281, /* Hauppauge HVR-950Q-MXL */
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
-+	DEVICE_FLG(0x20b1, 0x2009, /* XMOS Ltd DIYINHK USB Audio 2.0 */
-+		   QUIRK_FLAG_SKIP_IMPLICIT_FB | QUIRK_FLAG_DSD_RAW),
- 	DEVICE_FLG(0x2040, 0x8200, /* Hauppauge Woodbury */
- 		   QUIRK_FLAG_SHARE_MEDIA_DEVICE | QUIRK_FLAG_ALIGN_TRANSFER),
- 	DEVICE_FLG(0x21b4, 0x0081, /* AudioQuest DragonFly */
+diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
+index 0202df5db1e12..6109124f852e5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
+@@ -174,6 +174,10 @@ static int vcn_v5_0_0_sw_init(struct amdgpu_ip_block *ip_block)
+ 		fw_shared->present_flag_0 = cpu_to_le32(AMDGPU_FW_SHARED_FLAG_0_UNIFIED_QUEUE);
+ 		fw_shared->sq.is_enabled = 1;
+ 
++		fw_shared->present_flag_0 |= cpu_to_le32(AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG);
++		fw_shared->smu_dpm_interface.smu_interface_type = (adev->flags & AMD_IS_APU) ?
++			AMDGPU_VCN_SMU_DPM_INTERFACE_APU : AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU;
++
+ 		if (amdgpu_vcnfw_log)
+ 			amdgpu_vcn_fwlog_init(&adev->vcn.inst[i]);
+ 
 -- 
 2.51.0
 
