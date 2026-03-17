@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996142FFDEA;
-	Tue, 17 Mar 2026 17:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7862D29D26C;
+	Tue, 17 Mar 2026 17:02:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766965; cv=none; b=U0N412p2pk6GG4rHQ32YdryKChIEwrQ7lRsMS7yBhtxiaoOfRoYgBfXIstRHOSqLlyw2YebhGWa5FdfaS0QdLy0OyqKzDMiiUpi6HlGBhVtMTIoyVeP/CSoRgBvwAFPOfDoJfhhzYJW28lnCjeZZJMCahZHJZ4rfN8fC1o0860A=
+	t=1773766969; cv=none; b=e0RI42ZFRtFKnFWjFfZ7U/VSxsp+sZvevKC2gj345c9uhSsXcW0fSWd0Xvy5f6k4avakcc+fAFblnIm269ClrnuMlaPH+OSBnvVgfbDwn7GyE8pxdsjGOylp9cNyEMq9ac3ZXKpSgLU/22Dmj7MfwwK1jPXYGckBCMkg0rR7Ou4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766965; c=relaxed/simple;
-	bh=VqCfk3xc55naKq87WAQ3YyKBeNDBS2YghXx4Ar5kypc=;
+	s=arc-20240116; t=1773766969; c=relaxed/simple;
+	bh=4KtGeHTq7lvl0SROgeUKhlGIIJ3fvuNms6J272VgChI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N/DqX/JwuSg+UoPXjlf8fsImPtwfpFrWZdipzSUbSrbjhbM7kX88SSK6BcnaKZ341BcxRezQ6cRBG1ViX6SvxYQPmEs3mUOOBq1n5ZIL4ObQcDVI+h+gq/ybDdJbyYFHMTDqISH7LFse+KQ7qS4yL7+HLbJ1ypuhVgbsBUG1jWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=srUUOtd+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDDg1YmqRUpMELRC1F2TvGVMCYJ/WxJAIwmgDkP1IExG3d5Jyu5bXMI1u4DgMdMHYQdaAQB/hUUXmQOs4SEvpqV4QBC9pUr2/t8rcZ4K7tZEzbUKgA1D5Q3qlUXtW0mZ6IuIz7o0uqpsOR9IW/HFp+J9Z5gX5UmGUT/EYVeV/fA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ef0jmWU7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="srUUOtd+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 001BEC4CEF7;
-	Tue, 17 Mar 2026 17:02:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ef0jmWU7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBBF1C4CEF7;
+	Tue, 17 Mar 2026 17:02:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766965;
-	bh=VqCfk3xc55naKq87WAQ3YyKBeNDBS2YghXx4Ar5kypc=;
+	s=korg; t=1773766969;
+	bh=4KtGeHTq7lvl0SROgeUKhlGIIJ3fvuNms6J272VgChI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=srUUOtd+LfOq6+DyUyyaMBxZKhwgauko2dY2jXrx6GGWSwfIIiMf4RZueEU4R9TGp
-	 gjLfph5FDOr/yiFMdCqUXNNZVjt9Gqnlue5RPtd/e7iHMbvJlVcrFvd2pIQ329qgnB
-	 +uV3urrpMx5LjC3nTu+c1czPUnIKMXk7CMBNDKfM=
+	b=Ef0jmWU7rOLxTe/NGGdEZs45rbkUkTxi9PuJMHyH62ignxRmNYJLV0O3Nwu2nQjsl
+	 3RBtNvIK/mcINyxTNRkIrOsU42+h61KpYhw/KbJDck+9eLSVfLLG7eGQohOMsIn3GP
+	 0PF+m74ynVC4ZL8xuVHXg93QskHuOzTcRWMtjk1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.19 362/378] iio: proximity: hx9023s: fix assignment order for __counted_by
-Date: Tue, 17 Mar 2026 17:35:19 +0100
-Message-ID: <20260317163020.298078152@linuxfoundation.org>
+Subject: [PATCH 6.19 363/378] iio: proximity: hx9023s: Protect against division by zero in set_samp_freq
+Date: Tue, 17 Mar 2026 17:35:20 +0100
+Message-ID: <20260317163020.335084975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -54,34 +54,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Yasin Lee <yasin.lee.x@gmail.com>
 
-commit 585b90c0161ab77416fe3acdbdc55b978e33e16c upstream.
+commit a318cfc0853706f1d6ce682dba660bc455d674ef upstream.
 
-Initialize fw_size before copying firmware data into the flexible
-array member to match the __counted_by() annotation. This fixes the
-incorrect assignment order that triggers runtime safety checks.
+Avoid division by zero when sampling frequency is unspecified.
 
-Fixes: e9ed97be4fcc ("iio: proximity: hx9023s: Added firmware file parsing functionality")
+Fixes: 60df548277b7 ("iio: proximity: Add driver support for TYHX's HX9023S capacitive proximity sensor")
 Signed-off-by: Yasin Lee <yasin.lee.x@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/proximity/hx9023s.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iio/proximity/hx9023s.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
 --- a/drivers/iio/proximity/hx9023s.c
 +++ b/drivers/iio/proximity/hx9023s.c
-@@ -1034,9 +1034,8 @@ static int hx9023s_send_cfg(const struct
- 	if (!bin)
- 		return -ENOMEM;
+@@ -719,6 +719,9 @@ static int hx9023s_set_samp_freq(struct
+ 	struct device *dev = regmap_get_device(data->regmap);
+ 	unsigned int i, period_ms;
  
--	memcpy(bin->data, fw->data, fw->size);
--
- 	bin->fw_size = fw->size;
-+	memcpy(bin->data, fw->data, bin->fw_size);
- 	bin->fw_ver = bin->data[FW_VER_OFFSET];
- 	bin->reg_count = get_unaligned_le16(bin->data + FW_REG_CNT_OFFSET);
++	if (!val && !val2)
++		return -EINVAL;
++
+ 	period_ms = div_u64(NANO, (val * MEGA + val2));
  
+ 	for (i = 0; i < ARRAY_SIZE(hx9023s_samp_freq_table); i++) {
 
 
