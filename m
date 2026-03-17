@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC263F23AA;
-	Tue, 17 Mar 2026 16:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9853F23B3;
+	Tue, 17 Mar 2026 16:53:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766420; cv=none; b=jvgm9VhK43Jh6ZLKKYo1maHs+ZMdni31kse1su+heKYO4u9/z2DmvGsZegcpuUNuc6Q/upwnL8wWXTUJjQwLW8toEwGzeP9XuaNWtdfyLHAR14ngcrHrjtMZ1I5rV7vI/9R2SJ7uVjVbzMzEiPLbbgsx3OdF5igXIeY6ZWNCUyQ=
+	t=1773766425; cv=none; b=S+aChyWMr1jyS7LnX8ycvADZagt80oohj3Y+0+WJUfXJ77/Skw+IGdcHjbfSXSRPTXjCnnTVYdf8FyuMGCasWq+OeoI29uuhd9sV+TBRvD09qaw9W+Cyr6wOy3yGjBteDh/UAo8rTWo0ZRsetq1ttO33zGfrp05TlCZx6CUdYvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766420; c=relaxed/simple;
-	bh=6fQx/sgCtTzBqqwjBJGEJYZAAl+e+XNQUbaou0h59nE=;
+	s=arc-20240116; t=1773766425; c=relaxed/simple;
+	bh=kBYZeSiRxcVhe6HbbzYFQtU2HtqxHwKPcAMg1HlP9OE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLpBUPG+0iRX1tG/rH447fGeo6Ogk1OgG/7IodpEaQlpQq0ptsHqsua4XHfrjeft1QgwmfhQ2NqfBc3lhsnMCTAnAV1wG9L60ahEp0Y/ORNqPAiLPgSAul0yv90OrFa1XpsLxwWlTHSPgCCzRX5ce1QNZS51/ICCGfX4MicuDhk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tI1RzD3V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iQXsiQb/7cTornCeGkfcECGcd+jxF/o8NHwi8hNNKfGTsfoWTNJvuixBeOSrFTj8xCsK1yS4rTXYaiio4Y1O54ep7djSON7y5hWEJnDrZWBjgnJ19gDtZArjY8u2I61p7h3AyCzssvmaZFuJdYle+4mw1SdjA65NHp8IGlIJT4c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BTFTsjPV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tI1RzD3V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39CE7C4CEF7;
-	Tue, 17 Mar 2026 16:53:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BTFTsjPV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9796FC4CEF7;
+	Tue, 17 Mar 2026 16:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766420;
-	bh=6fQx/sgCtTzBqqwjBJGEJYZAAl+e+XNQUbaou0h59nE=;
+	s=korg; t=1773766425;
+	bh=kBYZeSiRxcVhe6HbbzYFQtU2HtqxHwKPcAMg1HlP9OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tI1RzD3VqcWldInB/0AfC0T6ReAVngmSlGjuUswHU5F8SJ6n8he/S97OAcq8TNhMY
-	 Ue5FX8Txue9Bq5wwYYRdquEpiXlj1gpKGkaPYnnrwpzl9B3w/T0vv3hhQFWfiSw1KL
-	 K2jCGCVJsGdM3DiDUuO3QiurcsSrzsdhX2qN6h3E=
+	b=BTFTsjPV07+sgNxxx5MU1BfCPlTjG7W7CUl/RMFvD+C4HbntsjnqfQgzTijEgViVX
+	 eQsL37/cnKJ/AV1mdFCkesZpHWoH/Pgu7pBFA0RqkNG8AaRgApLq7heHCErjXA8vbx
+	 gHogI/akn8HsaQQcd84BHdmIVqG6cE3KyU+kO61A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeff Layton <jlayton@kernel.org>,
 	Christian Brauner <brauner@kernel.org>,
 	stable@kernel.org
-Subject: [PATCH 6.19 243/378] nsfs: tighten permission checks for handle opening
-Date: Tue, 17 Mar 2026 17:33:20 +0100
-Message-ID: <20260317163015.957951224@linuxfoundation.org>
+Subject: [PATCH 6.19 244/378] nstree: tighten permission checks for listing
+Date: Tue, 17 Mar 2026 17:33:21 +0100
+Message-ID: <20260317163015.995600371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -53,33 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Brauner <brauner@kernel.org>
 
-commit d2324a9317f00013facb0ba00b00440e19d2af5e upstream.
+commit 8d76afe84fa2babf604b3c173730d4d2b067e361 upstream.
 
 Even privileged services should not necessarily be able to see other
 privileged service's namespaces so they can't leak information to each
 other. Use may_see_all_namespaces() helper that centralizes this policy
 until the nstree adapts.
 
-Link: https://patch.msgid.link/20260226-work-visibility-fixes-v1-2-d2c2853313bd@kernel.org
-Fixes: 5222470b2fbb ("nsfs: support file handles")
+Link: https://patch.msgid.link/20260226-work-visibility-fixes-v1-3-d2c2853313bd@kernel.org
+Fixes: 76b6f5dfb3fd ("nstree: add listns()")
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Cc: stable@kernel.org # v6.18+
+Cc: stable@kernel.org # v6.19+
 Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nsfs.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/nstree.c | 29 ++++-------------------------
+ 1 file changed, 4 insertions(+), 25 deletions(-)
 
---- a/fs/nsfs.c
-+++ b/fs/nsfs.c
-@@ -614,7 +614,7 @@ static struct dentry *nsfs_fh_to_dentry(
- 		return ERR_PTR(-EOPNOTSUPP);
- 	}
+diff --git a/kernel/nstree.c b/kernel/nstree.c
+index f36c59e6951d..6d12e5900ac0 100644
+--- a/kernel/nstree.c
++++ b/kernel/nstree.c
+@@ -515,32 +515,11 @@ static inline bool __must_check ns_requested(const struct klistns *kls,
+ static inline bool __must_check may_list_ns(const struct klistns *kls,
+ 					    struct ns_common *ns)
+ {
+-	if (kls->user_ns) {
+-		if (kls->userns_capable)
+-			return true;
+-	} else {
+-		struct ns_common *owner;
+-		struct user_namespace *user_ns;
+-
+-		owner = ns_owner(ns);
+-		if (owner)
+-			user_ns = to_user_ns(owner);
+-		else
+-			user_ns = &init_user_ns;
+-		if (ns_capable_noaudit(user_ns, CAP_SYS_ADMIN))
+-			return true;
+-	}
+-
++	if (kls->user_ns && kls->userns_capable)
++		return true;
+ 	if (is_current_namespace(ns))
+ 		return true;
+-
+-	if (ns->ns_type != CLONE_NEWUSER)
+-		return false;
+-
+-	if (ns_capable_noaudit(to_user_ns(ns), CAP_SYS_ADMIN))
+-		return true;
+-
+-	return false;
++	return may_see_all_namespaces();
+ }
  
--	if (owning_ns && !ns_capable(owning_ns, CAP_SYS_ADMIN)) {
-+	if (owning_ns && !may_see_all_namespaces()) {
- 		ns->ops->put(ns);
- 		return ERR_PTR(-EPERM);
- 	}
+ static inline void ns_put(struct ns_common *ns)
+@@ -600,7 +579,7 @@ static ssize_t do_listns_userns(struct klistns *kls)
+ 
+ 	ret = 0;
+ 	head = &to_ns_common(kls->user_ns)->ns_owner_root.ns_list_head;
+-	kls->userns_capable = ns_capable_noaudit(kls->user_ns, CAP_SYS_ADMIN);
++	kls->userns_capable = may_see_all_namespaces();
+ 
+ 	rcu_read_lock();
+ 
+-- 
+2.53.0
+
 
 
