@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D95C12B94;
-	Tue, 17 Mar 2026 16:44:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A31E12B94;
+	Tue, 17 Mar 2026 16:44:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765896; cv=none; b=u+KIq5ITzIlfkub9SPZNwHqZkng43nx+Abt3E6f2PMz164P/02ngblDa5J/jtYwUn4Rq/ezedpI8rm8idRaSieDubo2d4M8VjJzGVyfU8IwKWflknbZ4r9hfX3Rqb7jNh6Regox6I544ut93262uY5wCVLSVf1OMS0/dcFDTypI=
+	t=1773765899; cv=none; b=XngnMp577mpv44Ninu/9SNfx3+WWRXK2zZ0GyyV0xjVL2fIEV0J+Ya9LKsD23YWKIw+nTBi/TS391fSxrXkMm5Cg0gPVFxFpcxcN/UD1nD2ycUg1xNR32z0PBGZNkBfTr1AEkz1p9kbww8WBX1Ulm/RDtzh2n7K4IIW551NrNZw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765896; c=relaxed/simple;
-	bh=uORlzAev+/MMJtt84Bf3aA0n7Or4oCswgWdDZUksQys=;
+	s=arc-20240116; t=1773765899; c=relaxed/simple;
+	bh=trxxd65tUrsB0Dgn45ThrRHIHUe9744i5pNPXIjSNzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WjtoAEVoO1yz/fOeA6airZC4PLNU2cF3aC+SXAVuCwoKlH/ZN0cQLQBWe+KDnOXVJ+r7ViTTAdUXmGpQt7YMyIua9+E6sCB4odDbHApLqLdntWIJoW07gKk1p/PfbTHb7/i+O5rdGzvuW7WKEUMs/yuYse2e/p5gyFjf0OEmpLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LrlDvyn3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lfs7fZrIy1rDHEZQQ1p5wDRvAYTmppMW2txJh2kCQ3ORJ3rxhDrwQ37Scx4sjCmoOl4ieCDQkHMAcSXIDhmcKBs9dmADYw5AwoQDpCrD3JeyW/XRGZ/dTtt8dIfgm7Vt/6n5653WXLzAvx2VzcvbqGClGGSoy0wqetqxZDFD3t4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NKShB7mJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LrlDvyn3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65DEEC4CEF7;
-	Tue, 17 Mar 2026 16:44:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NKShB7mJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE95AC4CEF7;
+	Tue, 17 Mar 2026 16:44:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765895;
-	bh=uORlzAev+/MMJtt84Bf3aA0n7Or4oCswgWdDZUksQys=;
+	s=korg; t=1773765899;
+	bh=trxxd65tUrsB0Dgn45ThrRHIHUe9744i5pNPXIjSNzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LrlDvyn34pLrtbSqo/kze3BA5x8S9ZVTKcc28WCg8WQ3KgDH6N/FTJZtB8y3hlO5U
-	 RcW/xBOrq73RU0poX3zVA9gIYLSZNkMwSLWFucmWdUb58Da4QutDKoAskPTmhwPYD8
-	 Bi0NSVBfpjrwhLV//7Gz+PquB7bkc/dttLCNFaKI=
+	b=NKShB7mJo3y7//6bBdRmxq2xRrbMYplw0a3PBvxK0exIkqdPSXg6FCKWuEC3u8c4Z
+	 cm7eW+wrc0+Dac4eGIjkobdCL0PLp3xyVjRyl8fyBJn5tJUNGbEX7YbjRUEq6skM8j
+	 O8oT/qF6TwVpL+l1I96xmBoC17R7wmxySuT+nHXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8f29539ef9a1c8334f42@syzkaller.appspotmail.com,
-	syzbot+ae893a8901067fde2741@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.19 119/378] ALSA: usb-audio: Check endpoint numbers at parsing Scarlett2 mixer interfaces
-Date: Tue, 17 Mar 2026 17:31:16 +0100
-Message-ID: <20260317163011.397274581@linuxfoundation.org>
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 6.19 120/378] can: gs_usb: gs_can_open(): always configure bitrates before starting device
+Date: Tue, 17 Mar 2026 17:31:17 +0100
+Message-ID: <20260317163011.433415469@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -51,40 +49,96 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Marc Kleine-Budde <mkl@pengutronix.de>
 
-commit df1d8abf36ca3681c21a6809eaa9a1e01ef897a6 upstream.
+commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 upstream.
 
-The Scarlett2 mixer quirk in USB-audio driver may hit a NULL
-dereference when a malformed USB descriptor is passed, since it
-assumes the presence of an endpoint in the parsed interface in
-scarlett2_find_fc_interface(), as reported by fuzzer.
+So far the driver populated the struct can_priv::do_set_bittiming() and
+struct can_priv::fd::do_set_data_bittiming() callbacks.
 
-For avoiding the NULL dereference, just add the sanity check of
-bNumEndpoints and skip the invalid interface.
+Before bringing up the interface, user space has to configure the bitrates.
+With these callbacks the configuration is directly forwarded into the CAN
+hardware. Then the interface can be brought up.
 
-Reported-by: syzbot+8f29539ef9a1c8334f42@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/69acbbe1.050a0220.310d8.0001.GAE@google.com
-Reported-by: syzbot+ae893a8901067fde2741@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/69acf72a.050a0220.310d8.0004.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260309104632.141895-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
+the bitrates in the CAN hardware. This leads to a problem with the
+CANable-2.5 [1] firmware, which resets the configured bit rates during
+ifdown.
+
+To fix the problem remove both bit timing callbacks and always configure
+the bitrates in the struct net_device_ops::ndo_open() callback.
+
+[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
+
+Cc: stable@vger.kernel.org
+Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
+Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/can/usb/gs_usb.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -8251,6 +8251,8 @@ static int scarlett2_find_fc_interface(s
+--- a/drivers/net/can/usb/gs_usb.c
++++ b/drivers/net/can/usb/gs_usb.c
+@@ -772,9 +772,8 @@ device_detach:
+ 	}
+ }
  
- 		if (desc->bInterfaceClass != 255)
- 			continue;
-+		if (desc->bNumEndpoints < 1)
-+			continue;
+-static int gs_usb_set_bittiming(struct net_device *netdev)
++static int gs_usb_set_bittiming(struct gs_can *dev)
+ {
+-	struct gs_can *dev = netdev_priv(netdev);
+ 	struct can_bittiming *bt = &dev->can.bittiming;
+ 	struct gs_device_bittiming dbt = {
+ 		.prop_seg = cpu_to_le32(bt->prop_seg),
+@@ -791,9 +790,8 @@ static int gs_usb_set_bittiming(struct n
+ 				    GFP_KERNEL);
+ }
  
- 		epd = get_endpoint(intf->altsetting, 0);
- 		private->bInterfaceNumber = desc->bInterfaceNumber;
+-static int gs_usb_set_data_bittiming(struct net_device *netdev)
++static int gs_usb_set_data_bittiming(struct gs_can *dev)
+ {
+-	struct gs_can *dev = netdev_priv(netdev);
+ 	struct can_bittiming *bt = &dev->can.fd.data_bittiming;
+ 	struct gs_device_bittiming dbt = {
+ 		.prop_seg = cpu_to_le32(bt->prop_seg),
+@@ -1057,6 +1055,20 @@ static int gs_can_open(struct net_device
+ 	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
+ 		flags |= GS_CAN_MODE_HW_TIMESTAMP;
+ 
++	rc = gs_usb_set_bittiming(dev);
++	if (rc) {
++		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
++		goto out_usb_kill_anchored_urbs;
++	}
++
++	if (ctrlmode & CAN_CTRLMODE_FD) {
++		rc = gs_usb_set_data_bittiming(dev);
++		if (rc) {
++			netdev_err(netdev, "failed to set data bittiming: %pe\n", ERR_PTR(rc));
++			goto out_usb_kill_anchored_urbs;
++		}
++	}
++
+ 	/* finally start device */
+ 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
+ 	dm.flags = cpu_to_le32(flags);
+@@ -1370,7 +1382,6 @@ static struct gs_can *gs_make_candev(uns
+ 	dev->can.state = CAN_STATE_STOPPED;
+ 	dev->can.clock.freq = le32_to_cpu(bt_const.fclk_can);
+ 	dev->can.bittiming_const = &dev->bt_const;
+-	dev->can.do_set_bittiming = gs_usb_set_bittiming;
+ 
+ 	dev->can.ctrlmode_supported = CAN_CTRLMODE_CC_LEN8_DLC;
+ 
+@@ -1394,7 +1405,6 @@ static struct gs_can *gs_make_candev(uns
+ 		 * GS_CAN_FEATURE_BT_CONST_EXT is set.
+ 		 */
+ 		dev->can.fd.data_bittiming_const = &dev->bt_const;
+-		dev->can.fd.do_set_data_bittiming = gs_usb_set_data_bittiming;
+ 	}
+ 
+ 	if (feature & GS_CAN_FEATURE_TERMINATION) {
 
 
