@@ -1,43 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C0C255F2C;
-	Tue, 17 Mar 2026 17:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAAFE1A9B58;
+	Tue, 17 Mar 2026 17:16:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767781; cv=none; b=Qb6a42BupA1uP8Q1jA3I3zmQ0rkSZKockCfo63Vt5GC6OrFselbWJTGxDGGf4HTivGSW13j8ZMVKrpDRFiObd9f+UxyWHCHl4jau52Z/CCNoznyRqSc4cO3SeP0nEvdVUpxVHDIk6T7bY3j+D42SaLYMqpk3CAxG5f9pAuWdBHs=
+	t=1773767786; cv=none; b=guE3ge5xZ6yCuTsoWr58qczDMyKxuNlVDiAV7GzBEczTRuRJLjg8afn89HQH+3mK4noU4Ms7tXHdbipUyKYkvEWc6cCqy1yh6VfytjUqMbS5lNpvWJrkJ/E0nCJ8WDEueXw25ihKibXHeDfH2UsW0CiurHfUndotbUjjDBN9ZuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767781; c=relaxed/simple;
-	bh=XjipR3gl1dC+jGnjsZ461aSZavw9cYUdGqLSw2d9p6U=;
+	s=arc-20240116; t=1773767786; c=relaxed/simple;
+	bh=F7v3h2L+CuNrzERvcSyT8Nv2XUQz9mpCHdA60b90dqA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ewycZ5GnXzh/N836A5ma9XXgmtEcNxF8S1vgtFJiB8uKMmVyuPKDOeJ/C+sYyljaX1QF/f/Vq7tzvnBopFzUApgTucSfbESMGhBARq3s3Yx+74PgD1tro7DZCdTvh7/gkee7fI760K7cGgHts3ThGpcnrDvZ74xBrtJqsRRjUbA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yfU8tS9T; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K90cIfloi1vVXjgg2Hnca1yikNoaPix6VnA6ODKXAdEX38/LjZ4NQSDCU2Wie9IX80Igm56HIZu5LeRwglyUyj5DhIqMVuzWPqnT/Ervl+knmc3adJApzHWq3gsbpDQI+sg+s+5pvmo7QMowthtzwNBfcysL3EevI+/Lk3mz0PA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kF14OS5u; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yfU8tS9T"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC49C4CEF7;
-	Tue, 17 Mar 2026 17:16:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kF14OS5u"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED1FBC4CEF7;
+	Tue, 17 Mar 2026 17:16:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767781;
-	bh=XjipR3gl1dC+jGnjsZ461aSZavw9cYUdGqLSw2d9p6U=;
+	s=korg; t=1773767786;
+	bh=F7v3h2L+CuNrzERvcSyT8Nv2XUQz9mpCHdA60b90dqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfU8tS9TIwKNcjHr4hbZG0U0BaU0qoCelZsB/Z1dGgJYF/aD2R7tWxuH5oWQjZKgK
-	 FCwmQsgwq4FiR897+XsxpBhkHvUu7MwNDEew5ZWYaWPLGUWP/210ev1zqUIBP2tVyC
-	 HggkpI6gT2j4dUzOD51qpc8oTICRS6RqpcHK1kzU=
+	b=kF14OS5uzPAyanxvtTNuNVUQrj+cvn5qckGG3H6ok+Lcxqr6Z1XSvIWu06DkUVBo3
+	 MHiiR9gIasieKeUbLw9G7mpQORE/gHwaWcnvsLaSlFEYRpa4oeVHSF+Rq28JAAshoa
+	 UindT9TpR7iJcGi3Ppeqem8R61fKRB1macvb5OSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 157/333] mm/kfence: fix KASAN hardware tag faults during late enablement
-Date: Tue, 17 Mar 2026 17:33:06 +0100
-Message-ID: <20260317163005.182713939@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.18 140/333] USB: core: Limit the length of unkillable synchronous timeouts
+Date: Tue, 17 Mar 2026 17:32:49 +0100
+Message-ID: <20260317163004.553222385@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -56,88 +49,134 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit d155aab90fffa00f93cea1f107aef0a3d548b2ff upstream.
+commit 1015c27a5e1a63efae2b18a9901494474b4d1dc3 upstream.
 
-When KASAN hardware tags are enabled, re-enabling KFENCE late (via
-/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
+The usb_control_msg(), usb_bulk_msg(), and usb_interrupt_msg() APIs in
+usbcore allow unlimited timeout durations.  And since they use
+uninterruptible waits, this leaves open the possibility of hanging a
+task for an indefinitely long time, with no way to kill it short of
+unplugging the target device.
 
-This happens because the KFENCE pool and metadata are allocated via the
-page allocator, which tags the memory, while KFENCE continues to access it
-using untagged pointers during initialization.
+To prevent this sort of problem, enforce a maximum limit on the length
+of these unkillable timeouts.  The limit chosen here, somewhat
+arbitrarily, is 60 seconds.  On many systems (although not all) this
+is short enough to avoid triggering the kernel's hung-task detector.
 
-Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
-ensure the memory remains untagged, consistent with early allocations from
-memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
-__alloc_contig_verify_gfp_mask().
+In addition, clear up the ambiguity of negative timeout values by
+treating them the same as 0, i.e., using the maximum allowed timeout.
 
-Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/linux-usb/3acfe838-6334-4f6d-be7c-4bb01704b33d@rowland.harvard.edu/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/15fc9773-a007-47b0-a703-df89a8cf83dd@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   14 ++++++++------
- mm/page_alloc.c  |    3 ++-
- 2 files changed, 10 insertions(+), 7 deletions(-)
+ drivers/usb/core/message.c |   27 +++++++++++++--------------
+ include/linux/usb.h        |    3 +++
+ 2 files changed, 16 insertions(+), 14 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -951,14 +951,14 @@ static int kfence_init_late(void)
- #ifdef CONFIG_CONTIG_ALLOC
- 	struct page *pages;
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -45,6 +45,8 @@ static void usb_api_blocking_completion(
+  * Starts urb and waits for completion or timeout.
+  * Whether or not the wait is killable depends on the flag passed in.
+  * For example, compare usb_bulk_msg() and usb_bulk_msg_killable().
++ *
++ * For non-killable waits, we enforce a maximum limit on the timeout value.
+  */
+ static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length,
+ 		bool killable)
+@@ -61,7 +63,9 @@ static int usb_start_wait_urb(struct urb
+ 	if (unlikely(retval))
+ 		goto out;
  
--	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL, first_online_node,
--				   NULL);
-+	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL | __GFP_SKIP_KASAN,
-+				   first_online_node, NULL);
- 	if (!pages)
- 		return -ENOMEM;
+-	expire = timeout ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
++	if (!killable && (timeout <= 0 || timeout > USB_MAX_SYNCHRONOUS_TIMEOUT))
++		timeout = USB_MAX_SYNCHRONOUS_TIMEOUT;
++	expire = (timeout > 0) ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
+ 	if (killable)
+ 		rc = wait_for_completion_killable_timeout(&ctx.done, expire);
+ 	else
+@@ -127,8 +131,7 @@ static int usb_internal_control_msg(stru
+  * @index: USB message index value
+  * @data: pointer to the data to send
+  * @size: length in bytes of the data to send
+- * @timeout: time in msecs to wait for the message to complete before timing
+- *	out (if 0 the wait is forever)
++ * @timeout: time in msecs to wait for the message to complete before timing out
+  *
+  * Context: task context, might sleep.
+  *
+@@ -183,8 +186,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg);
+  * @index: USB message index value
+  * @driver_data: pointer to the data to send
+  * @size: length in bytes of the data to send
+- * @timeout: time in msecs to wait for the message to complete before timing
+- *	out (if 0 the wait is forever)
++ * @timeout: time in msecs to wait for the message to complete before timing out
+  * @memflags: the flags for memory allocation for buffers
+  *
+  * Context: !in_interrupt ()
+@@ -242,8 +244,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg_send);
+  * @index: USB message index value
+  * @driver_data: pointer to the data to be filled in by the message
+  * @size: length in bytes of the data to be received
+- * @timeout: time in msecs to wait for the message to complete before timing
+- *	out (if 0 the wait is forever)
++ * @timeout: time in msecs to wait for the message to complete before timing out
+  * @memflags: the flags for memory allocation for buffers
+  *
+  * Context: !in_interrupt ()
+@@ -314,8 +315,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg_recv);
+  * @len: length in bytes of the data to send
+  * @actual_length: pointer to a location to put the actual length transferred
+  *	in bytes
+- * @timeout: time in msecs to wait for the message to complete before
+- *	timing out (if 0 the wait is forever)
++ * @timeout: time in msecs to wait for the message to complete before timing out
+  *
+  * Context: task context, might sleep.
+  *
+@@ -347,8 +347,7 @@ EXPORT_SYMBOL_GPL(usb_interrupt_msg);
+  * @len: length in bytes of the data to send
+  * @actual_length: pointer to a location to put the actual length transferred
+  *	in bytes
+- * @timeout: time in msecs to wait for the message to complete before
+- *	timing out (if 0 the wait is forever)
++ * @timeout: time in msecs to wait for the message to complete before timing out
+  *
+  * Context: task context, might sleep.
+  *
+@@ -408,12 +407,12 @@ EXPORT_SYMBOL_GPL(usb_bulk_msg);
+  * @actual_length: pointer to a location to put the actual length transferred
+  *	in bytes
+  * @timeout: time in msecs to wait for the message to complete before
+- *	timing out (if 0 the wait is forever)
++ *	timing out (if <= 0, the wait is as long as possible)
+  *
+  * Context: task context, might sleep.
+  *
+- * This function is just like usb_blk_msg() except that it waits in a
+- * killable state.
++ * This function is just like usb_blk_msg(), except that it waits in a
++ * killable state and there is no limit on the timeout length.
+  *
+  * Return:
+  * If successful, 0. Otherwise a negative error number. The number of actual
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1863,6 +1863,9 @@ void usb_free_noncoherent(struct usb_dev
+  *                         SYNCHRONOUS CALL SUPPORT                  *
+  *-------------------------------------------------------------------*/
  
- 	__kfence_pool = page_to_virt(pages);
--	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL, first_online_node,
--				   NULL);
-+	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL | __GFP_SKIP_KASAN,
-+				   first_online_node, NULL);
- 	if (pages)
- 		kfence_metadata_init = page_to_virt(pages);
- #else
-@@ -968,11 +968,13 @@ static int kfence_init_late(void)
- 		return -EINVAL;
- 	}
- 
--	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
-+	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE,
-+					  GFP_KERNEL | __GFP_SKIP_KASAN);
- 	if (!__kfence_pool)
- 		return -ENOMEM;
- 
--	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE, GFP_KERNEL);
-+	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE,
-+						 GFP_KERNEL | __GFP_SKIP_KASAN);
- #endif
- 
- 	if (!kfence_metadata_init)
---- a/mm/page_alloc.c
-+++ b/mm/page_alloc.c
-@@ -6888,7 +6888,8 @@ static int __alloc_contig_verify_gfp_mas
- {
- 	const gfp_t reclaim_mask = __GFP_IO | __GFP_FS | __GFP_RECLAIM;
- 	const gfp_t action_mask = __GFP_COMP | __GFP_RETRY_MAYFAIL | __GFP_NOWARN |
--				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO;
-+				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO |
-+				  __GFP_SKIP_KASAN;
- 	const gfp_t cc_action_mask = __GFP_RETRY_MAYFAIL | __GFP_NOWARN;
- 
- 	/*
++/* Maximum value allowed for timeout in synchronous routines below */
++#define USB_MAX_SYNCHRONOUS_TIMEOUT		60000	/* ms */
++
+ extern int usb_control_msg(struct usb_device *dev, unsigned int pipe,
+ 	__u8 request, __u8 requesttype, __u16 value, __u16 index,
+ 	void *data, __u16 size, int timeout);
 
 
