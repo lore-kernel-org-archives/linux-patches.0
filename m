@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74E92225A38;
-	Tue, 17 Mar 2026 17:17:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9422D5940;
+	Tue, 17 Mar 2026 17:17:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767860; cv=none; b=ttDpFJv3x5VCGL8Ib3/SA7HaFLZ2hXo3xL1vQ3VjgZHiVMJxyVz5GtWT3majFmrsCjb/qtWhAlJsZ3k5cSsMo8YqjI7AUSf2oy4/N2hS8gCa7lVzUiFChwLxbayzICL1rk/QqmpBBX0odoj/KeQcepMJn36Kfgbq/lOnJ4jMOXc=
+	t=1773767864; cv=none; b=Wf4i4hyCKB6e8NZRkp5qJTpz+s2iec8r7D/8IQj71Fawe91VyEBH+sPxyO6NEizBXHrjNE99X1jdC0k81hMoypyjRey7DU5y4jNFx8ZMRWzFdk/mXZZpTIbEGgvNzcZgEXO95+y49wH6iSUPaRDiounFqpVjKBCT2s5H0rpreHM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767860; c=relaxed/simple;
-	bh=aVwqHn0dzhiSqSNuAGzZfXxgYTY/JT/vHNpWxvKAMug=;
+	s=arc-20240116; t=1773767864; c=relaxed/simple;
+	bh=LQTaURo6SEdp7Dj8QI4CbwfqaDh/h66cT3FEqm7Ciko=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y9vKYx3PEai54Oqv8FPDNT9aer4UtYl69X1KxjRph/z2CIgBgN7hoJqcvOHImq/m3f7VG6P7S9df7EiDyj9exG6Xs/PGL7TaCCyWnRuobpsPubDrV1rhBHauKFZUnz7l+9t8cIJ15LjrDR2uYmTKiy/f5ILDLCwk4D8QcIeJwAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0NU4k+RI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p6/I/PbX4rwUYWqS2z26jiQDRHFOkuq3xs4mr+emgiaM4/+CcOYZBOE4EHbw8LovIwciHde2G8wrngZTkmSA1Sw/e43Z3sSkhaGeRzEjIX3bw9dJjbBLdNX8Q+gDma5k/SJLJX47vHYS72eGcbAneeqzhIfbzuxPkwSXCixcLNQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fC5w5OU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0NU4k+RI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9088AC4CEF7;
-	Tue, 17 Mar 2026 17:17:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fC5w5OU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 292F4C4CEF7;
+	Tue, 17 Mar 2026 17:17:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767860;
-	bh=aVwqHn0dzhiSqSNuAGzZfXxgYTY/JT/vHNpWxvKAMug=;
+	s=korg; t=1773767863;
+	bh=LQTaURo6SEdp7Dj8QI4CbwfqaDh/h66cT3FEqm7Ciko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0NU4k+RIjNX+Z6qc9W0ByZ6OgI7c2bF26k08shDEf38/jHSRiAPqAwl6Ug4hRBv1O
-	 blC+AnMZhMvFMQMsiFPd0zWreuc7ytGfNvfTuu36zhrpZ63XoymMfeZGWdVG8TmM6u
-	 9xxn7rldRcQQggpPYaC46HkCt/PLBVeQWxpCaBCA=
+	b=fC5w5OU3XEqcpDHPNr7OxlCf83qmbeViyage8Mf1IjJXEVwg2Q1z/xtIBXwMTk3mS
+	 g1szixRzn8etJOkxLRMSNF/91G26/1WDjLUy8Qr9Ct+zVavmcxCNDKTEP3XM5fYaEZ
+	 yCSMZK9D4JJW3JkN1b4rUwQWidkUOTTjPLlDNfu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.18 172/333] ceph: fix memory leaks in ceph_mdsc_build_path()
-Date: Tue, 17 Mar 2026 17:33:21 +0100
-Message-ID: <20260317163005.737083707@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.18 142/333] usb: renesas_usbhs: fix use-after-free in ISR during device removal
+Date: Tue, 17 Mar 2026 17:32:51 +0100
+Message-ID: <20260317163004.626611734@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -51,51 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 040d159a45ded7f33201421a81df0aa2a86e5a0b upstream.
+commit 3cbc242b88c607f55da3d0d0d336b49bf1e20412 upstream.
 
-Add __putname() calls to error code paths that did not free the "path"
-pointer obtained by __getname().  If ownership of this pointer is not
-passed to the caller via path_info.path, the function must free it
-before returning.
+In usbhs_remove(), the driver frees resources (including the pipe array)
+while the interrupt handler (usbhs_interrupt) is still registered. If an
+interrupt fires after usbhs_pipe_remove() but before the driver is fully
+unbound, the ISR may access freed memory, causing a use-after-free.
 
-Cc: stable@vger.kernel.org
-Fixes: 3fd945a79e14 ("ceph: encode encrypted name in ceph_mdsc_build_path and dentry release")
-Fixes: 550f7ca98ee0 ("ceph: give up on paths longer than PATH_MAX")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Fix this by calling devm_free_irq() before freeing resources. This ensures
+the interrupt handler is both disabled and synchronized (waits for any
+running ISR to complete) before usbhs_pipe_remove() is called.
+
+Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
+Cc: stable <stable@kernel.org>
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260303073344.34577-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ceph/mds_client.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/renesas_usbhs/common.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -2767,6 +2767,7 @@ retry:
- 			if (ret < 0) {
- 				dput(parent);
- 				dput(cur);
-+				__putname(path);
- 				return ERR_PTR(ret);
- 			}
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -815,6 +815,15 @@ static void usbhs_remove(struct platform
  
-@@ -2776,6 +2777,7 @@ retry:
- 				if (len < 0) {
- 					dput(parent);
- 					dput(cur);
-+					__putname(path);
- 					return ERR_PTR(len);
- 				}
- 			}
-@@ -2812,6 +2814,7 @@ retry:
- 		 * cannot ever succeed.  Creating paths that long is
- 		 * possible with Ceph, but Linux cannot use them.
- 		 */
-+		__putname(path);
- 		return ERR_PTR(-ENAMETOOLONG);
- 	}
- 
+ 	usbhs_platform_call(priv, hardware_exit, pdev);
+ 	reset_control_assert(priv->rsts);
++
++	/*
++	 * Explicitly free the IRQ to ensure the interrupt handler is
++	 * disabled and synchronized before freeing resources.
++	 * devm_free_irq() calls free_irq() which waits for any running
++	 * ISR to complete, preventing UAF.
++	 */
++	devm_free_irq(&pdev->dev, priv->irq, priv);
++
+ 	usbhs_mod_remove(priv);
+ 	usbhs_fifo_remove(priv);
+ 	usbhs_pipe_remove(priv);
 
 
