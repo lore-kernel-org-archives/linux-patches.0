@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BAEC3EF0CF;
-	Tue, 17 Mar 2026 16:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CBE3EF642;
+	Tue, 17 Mar 2026 16:42:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765774; cv=none; b=bAIP4LfcyY4+EUapZZH/qUQpackV/0ABWIOQ6mfomsyNkXrm/7ukzE+0e7Es2yqpI8x6/GjXz5uad1/0MC8iDFpUe1tKp9Xlzv9aLaqfGfLIaGPw9ZL9k1ucS1/cesexJL95mlEaV88P0GbJmm+IOGBrBz4cOFAGQLAlv+AGC2M=
+	t=1773765778; cv=none; b=h1LZtAzFpBw3hyz7xb2iDV87SPwR53JSp16wVGYleVhWO5qr9ktbtch6+551KYV5vTo3/498yX2m9dtDnIXjxaBryuXbJ8FnZRjRoe4yVcO7dR4mi05xvz1GEhp/ni+O/Q50DKZa5jDi3q23KvmIdm/4NUn0N5HvN2Nu5+Fxq+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765774; c=relaxed/simple;
-	bh=2MoQsx4RMp6fKebiCXSD8I0I96Mxcix4OdLlKkWExe0=;
+	s=arc-20240116; t=1773765778; c=relaxed/simple;
+	bh=28XDHSNyGprUfTLjKLnraY0BgsU8D2filpfr6Xhffp8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jXSQN5otASp3ojFi29PZQElp50BBZ06bbyzbD6ZPIsbJ8879zqWMDdCKmpuoIk7/UlKuPI+rTOq9jYOp5C8BClpQj05yUbb5VcC+8mO5nISpm++SzZy44NlxpEopQQO2XPdOLviiNdUtHdSu53VowB/HEHlC8PHTy13Izm1OI7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Blp8hXxA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WPujp5RxLGdeb1Qb5lqwlfAqXIzh6Wxwo7yg/ByP3PB5NSxaBu9ImmM35HO6/rpqpLjBtBmki4bSv/bQ0ifIp4Y+vCPeY8jsVBi78Uh//RoJpCNsItJbJI7ctqmjxaLElmSzUgru//wPqgtik8E+a+QGB3JqsnjnbnIzhC13UjY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RiZiSjQv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Blp8hXxA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1389C19424;
-	Tue, 17 Mar 2026 16:42:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RiZiSjQv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 105C9C19424;
+	Tue, 17 Mar 2026 16:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765774;
-	bh=2MoQsx4RMp6fKebiCXSD8I0I96Mxcix4OdLlKkWExe0=;
+	s=korg; t=1773765778;
+	bh=28XDHSNyGprUfTLjKLnraY0BgsU8D2filpfr6Xhffp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Blp8hXxAADtLzhbia3qjZM/GfFegTmuhNYbuZQkyO2nS36yRfXpNNX+ywfgMWqxTB
-	 +SOyrFwTSayVjN4jIs1akE4YnFil8jk5Xw6+z+W/GpqtOLOk3abGNydZCu3CT/Hqup
-	 Qpa5oiS4d8sfcjBYFGWNVdTAjvy08kY3U+FhNU9s=
+	b=RiZiSjQvC33iXdb8SNFn8kFcbY/Wa6kwXzuyBPLf681tYZxfD55Di+H9vFZGWGGBa
+	 BqX/FtwKvWVKpiclUVrbRiEOy+5UdluxkQZhUmXq0TKQuP1GWI3c3tiI3oIh1CGg9k
+	 U/525M3R7uOGRE5Vw9utR9nypVmnMeGugWXX6EnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Petr Oros <poros@redhat.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 090/378] iavf: fix incorrect reset handling in callbacks
-Date: Tue, 17 Mar 2026 17:30:47 +0100
-Message-ID: <20260317163010.328670517@linuxfoundation.org>
+Subject: [PATCH 6.19 062/378] bnxt_en: Fix RSS table size check when changing ethtool channels
+Date: Tue, 17 Mar 2026 17:30:19 +0100
+Message-ID: <20260317163009.273558168@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -48,345 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Petr Oros <poros@redhat.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit fdadbf6e84c44df8dbb85cfdd38bc10e4431501d ]
+[ Upstream commit 0d9a60a0618d255530ca56072c5f39eb58e1ed4a ]
 
-Three driver callbacks schedule a reset and wait for its completion:
-ndo_change_mtu(), ethtool set_ringparam(), and ethtool set_channels().
+When changing channels, the current check in bnxt_set_channels()
+is not checking for non-default RSS contexts when the RSS table size
+changes. The current check for IFF_RXFH_CONFIGURED is only sufficient
+for the default RSS context. Expand the check to include the presence
+of any non-default RSS contexts.
 
-Waiting for reset in ndo_change_mtu() and set_ringparam() was added by
-commit c2ed2403f12c ("iavf: Wait for reset in callbacks which trigger
-it") to fix a race condition where adding an interface to bonding
-immediately after MTU or ring parameter change failed because the
-interface was still in __RESETTING state. The same commit also added
-waiting in iavf_set_priv_flags(), which was later removed by commit
-53844673d555 ("iavf: kill "legacy-rx" for good").
+Allowing such change will result in incorrect configuration of the
+context's RSS table when the table size changes.
 
-Waiting in set_channels() was introduced earlier by commit 4e5e6b5d9d13
-("iavf: Fix return of set the new channel count") to ensure the PF has
-enough time to complete the VF reset when changing channel count, and to
-return correct error codes to userspace.
-
-Commit ef490bbb2267 ("iavf: Add net_shaper_ops support") added
-net_shaper_ops to iavf, which required reset_task to use _locked NAPI
-variants (napi_enable_locked, napi_disable_locked) that need the netdev
-instance lock.
-
-Later, commit 7e4d784f5810 ("net: hold netdev instance lock during
-rtnetlink operations") and commit 2bcf4772e45a ("net: ethtool: try to
-protect all callback with netdev instance lock") started holding the
-netdev instance lock during ndo and ethtool callbacks for drivers with
-net_shaper_ops.
-
-Finally, commit 120f28a6f314 ("iavf: get rid of the crit lock")
-replaced the driver's crit_lock with netdev_lock in reset_task, causing
-incorrect behavior: the callback holds netdev_lock and waits for
-reset_task, but reset_task needs the same lock:
-
-  Thread 1 (callback)               Thread 2 (reset_task)
-  -------------------               ---------------------
-  netdev_lock()                     [blocked on workqueue]
-  ndo_change_mtu() or ethtool op
-    iavf_schedule_reset()
-    iavf_wait_for_reset()           iavf_reset_task()
-      waiting...                      netdev_lock() <- blocked
-
-This does not strictly deadlock because iavf_wait_for_reset() uses
-wait_event_interruptible_timeout() with a 5-second timeout. The wait
-eventually times out, the callback returns an error to userspace, and
-after the lock is released reset_task completes the reset. This leads to
-incorrect behavior: userspace sees an error even though the configuration
-change silently takes effect after the timeout.
-
-Fix this by extracting the reset logic from iavf_reset_task() into a new
-iavf_reset_step() function that expects netdev_lock to be already held.
-The three callbacks now call iavf_reset_step() directly instead of
-scheduling the work and waiting, performing the reset synchronously in
-the caller's context which already holds netdev_lock. This eliminates
-both the incorrect error reporting and the need for
-iavf_wait_for_reset(), which is removed along with the now-unused
-reset_waitqueue.
-
-The workqueue-based iavf_reset_task() becomes a thin wrapper that
-acquires netdev_lock and calls iavf_reset_step(), preserving its use
-for PF-initiated resets.
-
-The callbacks may block for several seconds while iavf_reset_step()
-polls hardware registers, but this is acceptable since netdev_lock is a
-per-device mutex and only serializes operations on the same interface.
-
-v3:
-- Remove netif_running() guard from iavf_set_channels(). Unlike
-  set_ringparam where descriptor counts are picked up by iavf_open()
-  directly, num_req_queues is only consumed during
-  iavf_reinit_interrupt_scheme() in the reset path. Skipping the reset
-  on a down device would silently discard the channel count change.
-- Remove dead reset_waitqueue code (struct field, init, and all
-  wake_up calls) since iavf_wait_for_reset() was the only consumer.
-
-Fixes: 120f28a6f314 ("iavf: get rid of the crit lock")
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: Petr Oros <poros@redhat.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: b3d0083caf9a ("bnxt_en: Support RSS contexts in ethtool .{get|set}_rxfh()")
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/netdev/20260303181535.2671734-1-bjorn@kernel.org/
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260306225854.3575672-1-michael.chan@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/iavf/iavf.h        |  3 +-
- .../net/ethernet/intel/iavf/iavf_ethtool.c    | 19 ++---
- drivers/net/ethernet/intel/iavf/iavf_main.c   | 77 ++++++-------------
- .../net/ethernet/intel/iavf/iavf_virtchnl.c   |  1 -
- 4 files changed, 31 insertions(+), 69 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf.h b/drivers/net/ethernet/intel/iavf/iavf.h
-index a87e0c6d4017a..e9fb0a0919e37 100644
---- a/drivers/net/ethernet/intel/iavf/iavf.h
-+++ b/drivers/net/ethernet/intel/iavf/iavf.h
-@@ -260,7 +260,6 @@ struct iavf_adapter {
- 	struct work_struct adminq_task;
- 	struct work_struct finish_config;
- 	wait_queue_head_t down_waitqueue;
--	wait_queue_head_t reset_waitqueue;
- 	wait_queue_head_t vc_waitqueue;
- 	struct iavf_q_vector *q_vectors;
- 	struct list_head vlan_filter_list;
-@@ -626,5 +625,5 @@ void iavf_add_adv_rss_cfg(struct iavf_adapter *adapter);
- void iavf_del_adv_rss_cfg(struct iavf_adapter *adapter);
- struct iavf_mac_filter *iavf_add_filter(struct iavf_adapter *adapter,
- 					const u8 *macaddr);
--int iavf_wait_for_reset(struct iavf_adapter *adapter);
-+void iavf_reset_step(struct iavf_adapter *adapter);
- #endif /* _IAVF_H_ */
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-index 2cc21289a7077..6ff3842a1ff1f 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_ethtool.c
-@@ -492,7 +492,6 @@ static int iavf_set_ringparam(struct net_device *netdev,
- {
- 	struct iavf_adapter *adapter = netdev_priv(netdev);
- 	u32 new_rx_count, new_tx_count;
--	int ret = 0;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index c76a7623870be..fa452d6272e0f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -979,8 +979,8 @@ static int bnxt_set_channels(struct net_device *dev,
  
- 	if ((ring->rx_mini_pending) || (ring->rx_jumbo_pending))
+ 	if (bnxt_get_nr_rss_ctxs(bp, req_rx_rings) !=
+ 	    bnxt_get_nr_rss_ctxs(bp, bp->rx_nr_rings) &&
+-	    netif_is_rxfh_configured(dev)) {
+-		netdev_warn(dev, "RSS table size change required, RSS table entries must be default to proceed\n");
++	    (netif_is_rxfh_configured(dev) || bp->num_rss_ctx)) {
++		netdev_warn(dev, "RSS table size change required, RSS table entries must be default (with no additional RSS contexts present) to proceed\n");
  		return -EINVAL;
-@@ -537,13 +536,11 @@ static int iavf_set_ringparam(struct net_device *netdev,
  	}
  
- 	if (netif_running(netdev)) {
--		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
--		ret = iavf_wait_for_reset(adapter);
--		if (ret)
--			netdev_warn(netdev, "Changing ring parameters timeout or interrupted waiting for reset");
-+		adapter->flags |= IAVF_FLAG_RESET_NEEDED;
-+		iavf_reset_step(adapter);
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- /**
-@@ -1723,7 +1720,6 @@ static int iavf_set_channels(struct net_device *netdev,
- {
- 	struct iavf_adapter *adapter = netdev_priv(netdev);
- 	u32 num_req = ch->combined_count;
--	int ret = 0;
- 
- 	if ((adapter->vf_res->vf_cap_flags & VIRTCHNL_VF_OFFLOAD_ADQ) &&
- 	    adapter->num_tc) {
-@@ -1745,13 +1741,10 @@ static int iavf_set_channels(struct net_device *netdev,
- 
- 	adapter->num_req_queues = num_req;
- 	adapter->flags |= IAVF_FLAG_REINIT_ITR_NEEDED;
--	iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
-+	adapter->flags |= IAVF_FLAG_RESET_NEEDED;
-+	iavf_reset_step(adapter);
- 
--	ret = iavf_wait_for_reset(adapter);
--	if (ret)
--		netdev_warn(netdev, "Changing channel count timeout or interrupted waiting for reset");
--
--	return ret;
-+	return 0;
- }
- 
- /**
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
-index 3625c70bc3292..03ab2a4276bbf 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_main.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
-@@ -185,31 +185,6 @@ static bool iavf_is_reset_in_progress(struct iavf_adapter *adapter)
- 	return false;
- }
- 
--/**
-- * iavf_wait_for_reset - Wait for reset to finish.
-- * @adapter: board private structure
-- *
-- * Returns 0 if reset finished successfully, negative on timeout or interrupt.
-- */
--int iavf_wait_for_reset(struct iavf_adapter *adapter)
--{
--	int ret = wait_event_interruptible_timeout(adapter->reset_waitqueue,
--					!iavf_is_reset_in_progress(adapter),
--					msecs_to_jiffies(5000));
--
--	/* If ret < 0 then it means wait was interrupted.
--	 * If ret == 0 then it means we got a timeout while waiting
--	 * for reset to finish.
--	 * If ret > 0 it means reset has finished.
--	 */
--	if (ret > 0)
--		return 0;
--	else if (ret < 0)
--		return -EINTR;
--	else
--		return -EBUSY;
--}
--
- /**
-  * iavf_allocate_dma_mem_d - OS specific memory alloc for shared code
-  * @hw:   pointer to the HW structure
-@@ -3117,18 +3092,16 @@ static void iavf_reconfig_qs_bw(struct iavf_adapter *adapter)
- }
- 
- /**
-- * iavf_reset_task - Call-back task to handle hardware reset
-- * @work: pointer to work_struct
-+ * iavf_reset_step - Perform the VF reset sequence
-+ * @adapter: board private structure
-  *
-- * During reset we need to shut down and reinitialize the admin queue
-- * before we can use it to communicate with the PF again. We also clear
-- * and reinit the rings because that context is lost as well.
-- **/
--static void iavf_reset_task(struct work_struct *work)
-+ * Requests a reset from PF, polls for completion, and reconfigures
-+ * the driver. Caller must hold the netdev instance lock.
-+ *
-+ * This can sleep for several seconds while polling HW registers.
-+ */
-+void iavf_reset_step(struct iavf_adapter *adapter)
- {
--	struct iavf_adapter *adapter = container_of(work,
--						      struct iavf_adapter,
--						      reset_task);
- 	struct virtchnl_vf_resource *vfres = adapter->vf_res;
- 	struct net_device *netdev = adapter->netdev;
- 	struct iavf_hw *hw = &adapter->hw;
-@@ -3139,7 +3112,7 @@ static void iavf_reset_task(struct work_struct *work)
- 	int i = 0, err;
- 	bool running;
- 
--	netdev_lock(netdev);
-+	netdev_assert_locked(netdev);
- 
- 	iavf_misc_irq_disable(adapter);
- 	if (adapter->flags & IAVF_FLAG_RESET_NEEDED) {
-@@ -3184,7 +3157,6 @@ static void iavf_reset_task(struct work_struct *work)
- 		dev_err(&adapter->pdev->dev, "Reset never finished (%x)\n",
- 			reg_val);
- 		iavf_disable_vf(adapter);
--		netdev_unlock(netdev);
- 		return; /* Do not attempt to reinit. It's dead, Jim. */
- 	}
- 
-@@ -3196,7 +3168,6 @@ static void iavf_reset_task(struct work_struct *work)
- 		iavf_startup(adapter);
- 		queue_delayed_work(adapter->wq, &adapter->watchdog_task,
- 				   msecs_to_jiffies(30));
--		netdev_unlock(netdev);
- 		return;
- 	}
- 
-@@ -3339,9 +3310,6 @@ static void iavf_reset_task(struct work_struct *work)
- 
- 	adapter->flags &= ~IAVF_FLAG_REINIT_ITR_NEEDED;
- 
--	wake_up(&adapter->reset_waitqueue);
--	netdev_unlock(netdev);
--
- 	return;
- reset_err:
- 	if (running) {
-@@ -3350,10 +3318,21 @@ static void iavf_reset_task(struct work_struct *work)
- 	}
- 	iavf_disable_vf(adapter);
- 
--	netdev_unlock(netdev);
- 	dev_err(&adapter->pdev->dev, "failed to allocate resources during reinit\n");
- }
- 
-+static void iavf_reset_task(struct work_struct *work)
-+{
-+	struct iavf_adapter *adapter = container_of(work,
-+						      struct iavf_adapter,
-+						      reset_task);
-+	struct net_device *netdev = adapter->netdev;
-+
-+	netdev_lock(netdev);
-+	iavf_reset_step(adapter);
-+	netdev_unlock(netdev);
-+}
-+
- /**
-  * iavf_adminq_task - worker thread to clean the admin queue
-  * @work: pointer to work_struct containing our data
-@@ -4619,22 +4598,17 @@ static int iavf_close(struct net_device *netdev)
- static int iavf_change_mtu(struct net_device *netdev, int new_mtu)
- {
- 	struct iavf_adapter *adapter = netdev_priv(netdev);
--	int ret = 0;
- 
- 	netdev_dbg(netdev, "changing MTU from %d to %d\n",
- 		   netdev->mtu, new_mtu);
- 	WRITE_ONCE(netdev->mtu, new_mtu);
- 
- 	if (netif_running(netdev)) {
--		iavf_schedule_reset(adapter, IAVF_FLAG_RESET_NEEDED);
--		ret = iavf_wait_for_reset(adapter);
--		if (ret < 0)
--			netdev_warn(netdev, "MTU change interrupted waiting for reset");
--		else if (ret)
--			netdev_warn(netdev, "MTU change timed out waiting for reset");
-+		adapter->flags |= IAVF_FLAG_RESET_NEEDED;
-+		iavf_reset_step(adapter);
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- /**
-@@ -5439,9 +5413,6 @@ static int iavf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	/* Setup the wait queue for indicating transition to down status */
- 	init_waitqueue_head(&adapter->down_waitqueue);
- 
--	/* Setup the wait queue for indicating transition to running state */
--	init_waitqueue_head(&adapter->reset_waitqueue);
--
- 	/* Setup the wait queue for indicating virtchannel events */
- 	init_waitqueue_head(&adapter->vc_waitqueue);
- 
-diff --git a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-index 88156082a41da..a52c100dcbc56 100644
---- a/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-+++ b/drivers/net/ethernet/intel/iavf/iavf_virtchnl.c
-@@ -2736,7 +2736,6 @@ void iavf_virtchnl_completion(struct iavf_adapter *adapter,
- 	case VIRTCHNL_OP_ENABLE_QUEUES:
- 		/* enable transmits */
- 		iavf_irq_enable(adapter, true);
--		wake_up(&adapter->reset_waitqueue);
- 		adapter->flags &= ~IAVF_FLAG_QUEUES_DISABLED;
- 		break;
- 	case VIRTCHNL_OP_DISABLE_QUEUES:
 -- 
 2.51.0
 
