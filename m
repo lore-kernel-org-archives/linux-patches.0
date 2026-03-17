@@ -1,103 +1,112 @@
-Received: from foss.arm.com (foss.arm.com [217.140.110.172])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id B556226561A
-	for <patches@lists.linux.dev>; Tue, 17 Mar 2026 17:13:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5951E2116F6;
+	Tue, 17 Mar 2026 17:13:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767591; cv=none; b=h1/EdEARySeE8BdWR6fUtV21yKB6n1yl0tcPvMu3wuwTVINogbS3gs5DEAZzxd/LoBRnOIlGlobUAuRUi3+r/ZwN/IWz3xMuZsAxPPQvKs39La2xKVZe/PMAjjIsuqTdWAxxRYGtKo+DZRjPri3XkHzOu+uruXrjOKWA9uBnXnU=
+	t=1773767592; cv=none; b=uhHNQVxTDjdYaosUTqi4mwF37iMHxuXEGh9nrWon2LSjzLjmE589HeAgl+m2QmOrOYal1748kPlJKzp4Dm6CZvoEaKFZ+o9lnw1Djrvt3JOCSbiiZmwoGUuMD/KN3MjgDS7V8bUvLUGJ/5/uGkk6AQMUZ5zObvBTUitlbJZAgxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767591; c=relaxed/simple;
-	bh=TB50MSoAFmUwo0wLkKhA0xXd3Sq/iDrmOtT8MPw7Q+U=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=r0r4nekCTF/jjkoRULOwCfKx5oXRDN7Q8A9EuunDIWDR4/tKFSBVyzef3AdRb3M/3CCrCKkWi2Eb4h4l0Wd63b5zaQrmsmjyyxKMQGzbt/ubFSSJG0C0f8oQU58mYdsTW+stHGHfOvHUo8j6AMRUFsDXixbUinZj03KF5Co/3R4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 1C7AC1477;
-	Tue, 17 Mar 2026 10:13:04 -0700 (PDT)
-Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
-	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 2E04A3F778;
-	Tue, 17 Mar 2026 10:13:08 -0700 (PDT)
-Message-ID: <26291ece-b2a2-4207-b9e8-a0697e8e478d@arm.com>
-Date: Tue, 17 Mar 2026 17:13:06 +0000
+	s=arc-20240116; t=1773767592; c=relaxed/simple;
+	bh=iibeBrn/3Jix+macebIUjbuAQkdSrUFJkeIiUojg/uE=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=uTSDTLcfPK4TTwDv/4vdzPhGZp/BWAtqCHySbIJaG2HbiJ7l4FHjFnM6A/70zLMAizDAlTQyRJ6bk7wtAgr5Q9ssJ/uf77xdBYszK5rXWedStGxyuAJbSQaeFAhuCHxvA7SLrCk9H5mO+Pe7FTgbB+PJeZCcfq9wyKGffv2ib0Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xp8nzPPe; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xp8nzPPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFBFEC4CEF7;
+	Tue, 17 Mar 2026 17:13:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1773767592;
+	bh=iibeBrn/3Jix+macebIUjbuAQkdSrUFJkeIiUojg/uE=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=xp8nzPPehQMJHD0Vu9nfxJRVq5OVCJXmmEYvZYum5bBZeTOK1pYUy3L44bf3+zxlQ
+	 4Y3X+xylXoaYvrjKKMrJwLplff33Zj9YMzHmviw+8DpjyG7f3NAT1FwQ1HgX+FVYmb
+	 aCUQ8bMz1Km79FnPU/T8iRyqtOXbYARh5ehLNLSU=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	Andreas Hindborg <a.hindborg@kernel.org>,
+	Miguel Ojeda <ojeda@kernel.org>
+Subject: [PATCH 6.18 119/333] rust: str: make NullTerminatedFormatter public
+Date: Tue, 17 Mar 2026 17:32:28 +0100
+Message-ID: <20260317163003.780625088@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
+References: <20260317162959.345812316@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Thunderbird Daily
-Subject: Re: [PATCH 07/11] fs/resctrl: Add last_cmd_status support for writes
- to max_threshold_occupancy
-To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
- james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
- tglx@linutronix.de, dave.hansen@linux.intel.com
-Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
- peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
-References: <cover.1772476561.git.reinette.chatre@intel.com>
- <b3faaf0daf235ed1d95cec3b879afc6d12cc7010.1772476561.git.reinette.chatre@intel.com>
-Content-Language: en-US
-From: Ben Horgan <ben.horgan@arm.com>
-In-Reply-To: <b3faaf0daf235ed1d95cec3b879afc6d12cc7010.1772476561.git.reinette.chatre@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Hi Reinette,
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
-On 3/2/26 18:46, Reinette Chatre wrote:
-> info/last_cmd_status is intended to contain more information if a write to
-> any resctrl file fails. Writes to max_threshold_occupancy did not receive
-> last_cmd_status support during initial last_cmd_status enabling. Add it now.
+------------------
 
-All looks sensible to me.
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
+commit 3ac88a9948792b092a4b11323e2abd1ecbe0cc68 upstream.
 
-Thanks,
+If `CONFIG_BLOCK` is disabled, the following warnings are displayed
+during build:
 
-Ben
+  warning: struct `NullTerminatedFormatter` is never constructed
+    --> ../rust/kernel/str.rs:667:19
+      |
+  667 | pub(crate) struct NullTerminatedFormatter<'a> {
+      |                   ^^^^^^^^^^^^^^^^^^^^^^^
+      |
+      = note: `#[warn(dead_code)]` (part of `#[warn(unused)]`) on by default
 
-> 
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> ---
->  fs/resctrl/rdtgroup.c | 21 ++++++++++++++++-----
->  1 file changed, 16 insertions(+), 5 deletions(-)
-> 
-> diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-> index 3c9508fc558d..933f6ae26d59 100644
-> --- a/fs/resctrl/rdtgroup.c
-> +++ b/fs/resctrl/rdtgroup.c
-> @@ -1238,16 +1238,27 @@ static ssize_t max_threshold_occ_write(struct kernfs_open_file *of,
->  	unsigned int bytes;
->  	int ret;
->  
-> +	mutex_lock(&rdtgroup_mutex);
-> +	rdt_last_cmd_clear();
-> +
->  	ret = kstrtouint(buf, 0, &bytes);
-> -	if (ret)
-> -		return ret;
-> +	if (ret) {
-> +		rdt_last_cmd_puts("Invalid input\n");
-> +		goto out_unlock;
-> +	}
->  
-> -	if (bytes > resctrl_rmid_realloc_limit)
-> -		return -EINVAL;
-> +	if (bytes > resctrl_rmid_realloc_limit) {
-> +		rdt_last_cmd_printf("Exceeds limit (before adjustment) of %u bytes\n",
-> +				    resctrl_rmid_realloc_limit);
-> +		ret = -EINVAL;
-> +		goto out_unlock;
-> +	}
->  
->  	resctrl_rmid_realloc_threshold = resctrl_arch_round_mon_val(bytes);
->  
-> -	return nbytes;
-> +out_unlock:
-> +	mutex_unlock(&rdtgroup_mutex);
-> +	return ret ?: nbytes;
->  }
->  
->  /*
+  warning: associated function `new` is never used
+    --> ../rust/kernel/str.rs:673:19
+      |
+  671 | impl<'a> NullTerminatedFormatter<'a> {
+      | ------------------------------------ associated function in this implementation
+  672 |     /// Create a new [`Self`] instance.
+  673 |     pub(crate) fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
+
+Fix them by making `NullTerminatedFormatter` public, as it could be
+useful for drivers anyway.
+
+Fixes: cdde7a1951ff ("rust: str: introduce `NullTerminatedFormatter`")
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: Andreas Hindborg <a.hindborg@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260224-nullterminatedformatter-v1-1-5bef7b9b3d4c@nvidia.com
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ rust/kernel/str.rs |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/rust/kernel/str.rs
++++ b/rust/kernel/str.rs
+@@ -880,13 +880,13 @@ impl fmt::Write for Formatter<'_> {
+ ///
+ /// * The first byte of `buffer` is always zero.
+ /// * The length of `buffer` is at least 1.
+-pub(crate) struct NullTerminatedFormatter<'a> {
++pub struct NullTerminatedFormatter<'a> {
+     buffer: &'a mut [u8],
+ }
+ 
+ impl<'a> NullTerminatedFormatter<'a> {
+     /// Create a new [`Self`] instance.
+-    pub(crate) fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
++    pub fn new(buffer: &'a mut [u8]) -> Option<NullTerminatedFormatter<'a>> {
+         *(buffer.first_mut()?) = 0;
+ 
+         // INVARIANT:
+
 
