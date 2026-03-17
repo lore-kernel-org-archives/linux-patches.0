@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE7C42F362B;
-	Tue, 17 Mar 2026 17:23:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FF822F362B;
+	Tue, 17 Mar 2026 17:23:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768195; cv=none; b=G86zcZPmK1+vvVdVzDCnibRLfn8UtbvcSedQTQydmDSt47KAw0d1RtuXy+X4ZFvxaOwUm3l+We/AP8z3n+0al0Mlle5KY+H69FZKL4/yb7LsC2dBWP2GsZeHRKr7aEpkwQXHAYS2Myj8HW0c8VpWEufDF2n5er+hWGQ0mK5BA4s=
+	t=1773768199; cv=none; b=d7aP61xWnQOUJFVR5dZJMfff1qkUvk+7+hSK/XnePMDP7QAllGeVWxctKtYEKPsU969XIJKVFhrABcpWNxkmsIpEFMxY/+rXAs5sGSafzMErXb/TFJ0ukfpMpFH7PKxFSH1kHD3LSK5Lsyv4+VCqCXZXgNS1iZLXRSy4ghj14Qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768195; c=relaxed/simple;
-	bh=zw8NFosyJDbETH/BpoHoeuAcboGFgnPRFINr3dgoxhg=;
+	s=arc-20240116; t=1773768199; c=relaxed/simple;
+	bh=ungHzVpcs12NyM9sWoC4UOCJX24gnATKzZqw+b8d3NU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUyrsQL59G35NLmudwAGIB3jN2/QcPbFcLR9JgkgLaOqDwuVKxLmtWdUQZWVFrsIazgw/G37AQRWMvhEHNPJsd0qJ6eSbidqChjmRQ9aH13aYa1I9G1hBsJ4j5gFC2dUDe8WUMbd5tObF8tDLiJUzn5m7pKYuEa1gGrOjKB3cJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpCvXgMd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pZxgD2LMIOhA8cHc/vy5tq8yN44pyM3Av7K07yn5mNr0Xx3uFJuzWZHkREpcc6JnJa8SZ6EmVySGup8ulTOcLLWFHMdgrTmr5wXEgwDfL1f9GK7o1en/jeXbxfscU/+Uw7A0PIWDD7Qbp7zP8ry4gPcez7w5/H7ss/c7lknVX0c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F6ynPNPi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpCvXgMd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2693FC4CEF7;
-	Tue, 17 Mar 2026 17:23:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F6ynPNPi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6748C19424;
+	Tue, 17 Mar 2026 17:23:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768195;
-	bh=zw8NFosyJDbETH/BpoHoeuAcboGFgnPRFINr3dgoxhg=;
+	s=korg; t=1773768199;
+	bh=ungHzVpcs12NyM9sWoC4UOCJX24gnATKzZqw+b8d3NU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QpCvXgMd/7XlTUAJrNYncmAw2VufAqcwd9ZhC4o6Jt95a0fRWCJM9scr5giP34K1o
-	 N2Vgrnmg6XWNxpMIjNFseyUkqSnSiBsLLjCVa2BO7hAL/XEELq25jjlF+tMZOB1sqz
-	 e0QIN8foJysCWuZysEZD1GDkzBw389pRlwbwXl7I=
+	b=F6ynPNPiLdvgQmJ3VOJuETxKnW7/iYVg4ovuqvD9iRysCjm9CvjufY2Dfdkrt5Yjn
+	 VrtkhAkRgAng+c9Dve8RGipbbA2pviDsy5GFMKMnhCU5dHaQCUEOKAP4a8JoubD4Zm
+	 lhDZ7Z1vZkZtwvcn451NsCpVhXbBbEi+U74b5UlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Marek Vasut <marek.vasut@mailbox.org>,
 	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.18 254/333] drm/bridge: ti-sn65dsi83: fix CHA_DSI_CLK_RANGE rounding
-Date: Tue, 17 Mar 2026 17:34:43 +0100
-Message-ID: <20260317163008.787499924@linuxfoundation.org>
+Subject: [PATCH 6.18 255/333] drm/bridge: ti-sn65dsi83: halve horizontal syncs for dual LVDS output
+Date: Tue, 17 Mar 2026 17:34:44 +0100
+Message-ID: <20260317163008.824481426@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,48 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-commit 2f22702dc0fee06a240404e0f7ead5b789b253d8 upstream.
+commit d0d727746944096a6681dc6adb5f123fc5aa018d upstream.
 
-The DSI frequency must be in the range:
+Dual LVDS output (available on the SN65DSI84) requires HSYNC_PULSE_WIDTH
+and HORIZONTAL_BACK_PORCH to be divided by two with respect to the values
+used for single LVDS output.
 
-  (CHA_DSI_CLK_RANGE * 5 MHz) <= DSI freq < ((CHA_DSI_CLK_RANGE + 1) * 5 MHz)
+While not clearly stated in the datasheet, this is needed according to the
+DSI Tuner [0] output. It also makes sense intuitively because in dual LVDS
+output two pixels at a time are output and so the output clock is half of
+the pixel clock.
 
-So the register value should point to the lower range value, but
-DIV_ROUND_UP() rounds the division to the higher range value, resulting in
-an excess of 1 (unless the frequency is an exact multiple of 5 MHz).
+Some dual-LVDS panels refuse to show any picture without this fix.
 
-For example for a 437100000 MHz clock CHA_DSI_CLK_RANGE should be 87 (0x57):
+Divide by two HORIZONTAL_FRONT_PORCH too, even though this register is used
+only for test pattern generation which is not currently implemented by this
+driver.
 
-  (87 * 5 = 435) <= 437.1 < (88 * 5 = 440)
-
-but current code returns 88 (0x58).
-
-Fix the computation by removing the DIV_ROUND_UP().
+[0] https://www.ti.com/tool/DSI-TUNER
 
 Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
 Cc: stable@vger.kernel.org
 Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
-Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-1-2e15f5a9a6a0@bootlin.com
+Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-2-2e15f5a9a6a0@bootlin.com
 Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
 --- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
 +++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -351,9 +351,9 @@ static u8 sn65dsi83_get_dsi_range(struct
- 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
- 	 * the 2 is there because the bus is DDR.
- 	 */
--	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
--			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
--			    ctx->dsi->lanes / 2, 40000U, 500000U), 5000U);
-+	return clamp((unsigned int)mode->clock *
-+		     mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
-+		     ctx->dsi->lanes / 2, 40000U, 500000U) / 5000U;
- }
- 
- static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
+@@ -474,6 +474,7 @@ static void sn65dsi83_atomic_pre_enable(
+ 					struct drm_atomic_state *state)
+ {
+ 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
++	const unsigned int dual_factor = ctx->lvds_dual_link ? 2 : 1;
+ 	const struct drm_bridge_state *bridge_state;
+ 	const struct drm_crtc_state *crtc_state;
+ 	const struct drm_display_mode *mode;
+@@ -606,18 +607,18 @@ static void sn65dsi83_atomic_pre_enable(
+ 	/* 32 + 1 pixel clock to ensure proper operation */
+ 	le16val = cpu_to_le16(32 + 1);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_SYNC_DELAY_LOW, &le16val, 2);
+-	le16val = cpu_to_le16(mode->hsync_end - mode->hsync_start);
++	le16val = cpu_to_le16((mode->hsync_end - mode->hsync_start) / dual_factor);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
+ 			  &le16val, 2);
+ 	le16val = cpu_to_le16(mode->vsync_end - mode->vsync_start);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
+ 			  &le16val, 2);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,
+-		     mode->htotal - mode->hsync_end);
++		     (mode->htotal - mode->hsync_end) / dual_factor);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH,
+ 		     mode->vtotal - mode->vsync_end);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
+-		     mode->hsync_start - mode->hdisplay);
++		     (mode->hsync_start - mode->hdisplay) / dual_factor);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
+ 		     mode->vsync_start - mode->vdisplay);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x00);
 
 
