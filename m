@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B0633986F;
-	Tue, 17 Mar 2026 17:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C93C8328B61;
+	Tue, 17 Mar 2026 17:22:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768127; cv=none; b=XVtAahRFWPy8oinM3qFrl45zvrkJyC9cGncuLAI03ycJ97KXyaROunW7mknwI1Diq9RzDonIlzmK2/k0iVD5t/o76718czmZIyAsp0ex4qjzUWu+HI3Zw7sAILclC3TqcbOBWap/mlLNkzROcI7RaSUvzkeBNhiYF6HhPW6Snck=
+	t=1773768131; cv=none; b=l9CyHmrRfcV807Zh+6BfxPu7F6fXv2fEFNKmdCqlnt8ztQ1pCd0Zf7RZqRTpOe3Hz9EodDG1wTe9qaY+wBS4MDqNRcCWHg66UMT90Q6Zot9vbKxpQeo02wi/Iyl0DqsEk79Wb6s3p4JNU5MQ11ta7PkH84BPj+vlswBsn1Cu1TU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768127; c=relaxed/simple;
-	bh=mRxu0bKmRUDO7jFybH3zwg5cwCFkIi1rn4yP/eIyPKE=;
+	s=arc-20240116; t=1773768131; c=relaxed/simple;
+	bh=TdavJe4XyBR2sXcziIeP/ecLJapnZyx6NeuhaG6c87A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a95G2hnHkIWu/3zXWD3/PTt6h4uP4OlWnoNi8yKpYdHe31ZLoStZtyxvj75oa4tvQY+vyy/Wn+pGGj4LmKKdYXuM/EqbovPv6Cgo2jsoA5DKW4i0tqRwhUdDLoFg1NSnu9cuGR6R9KMQ/xtW/WZpa9ITj0+X/LvI2pnx8Kl2ceA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2RTbs7uq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kSHECaQRA8E04d9IdS5NSMbzEKlkru1YpynPTza7eInaJP/gz5oTHa/5YJ24C7saehdPHAymR/c9Q/XC3eXVEZpUa5QRGc70ZIFERSpiEQ9RDa6PgLcEXVJWKw5/XXxS6nBdOxvUhTQ8nItSXoj2WyRH1Rody1cbQMrkW2wOCLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sDdliwI/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2RTbs7uq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1260DC2BCB3;
-	Tue, 17 Mar 2026 17:22:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sDdliwI/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496BBC2BCAF;
+	Tue, 17 Mar 2026 17:22:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768127;
-	bh=mRxu0bKmRUDO7jFybH3zwg5cwCFkIi1rn4yP/eIyPKE=;
+	s=korg; t=1773768131;
+	bh=TdavJe4XyBR2sXcziIeP/ecLJapnZyx6NeuhaG6c87A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2RTbs7uqfXD5VJdiUkbsLgaqZ0rI08E6pCfwiLnrRzgvPAxlhhN2MBH6qvDCzgMbi
-	 4dVpAcZY+jLloKorL1sInjHuq/l2A2fykiG5GvuBqaEweG3PVshBpc6gjAbbXh+4Iy
-	 v3n1AQnGnLAdHk9SvsMCHXY3u7qbU1p5E9efKDkg=
+	b=sDdliwI/2qBs4f274E0fbS3CujgT2kZ/sTMez9Ijxze4xS+8JlH/u+r/JshaagQuF
+	 C4uzdqC2PXNtTbky4qTTDSUZ3MQ6RYOJYZ5uFkVrP03grCjgVA+0HRVfpDjG5CitmG
+	 7ra6hVrpBK/IFwDxA4JKpqditN9R/oduk+IM++tI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Filippo Baiamonte <filippo.ba03@bugzilla.kernel.org>,
-	Maximilian Pezzullo <maximilianpezzullo@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.18 236/333] ata: libata-core: Disable LPM on ST1000DM010-2EP102
-Date: Tue, 17 Mar 2026 17:34:25 +0100
-Message-ID: <20260317163008.116602409@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.18 237/333] s390/xor: Fix xor_xc_2() inline assembly constraints
+Date: Tue, 17 Mar 2026 17:34:26 +0100
+Message-ID: <20260317163008.153719410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -52,35 +50,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit b3b1d3ae1d87bc9398fb715c945968bf4c75a09a upstream.
+commit f775276edc0c505dc0f782773796c189f31a1123 upstream.
 
-According to a user report, the ST1000DM010-2EP102 has problems with LPM,
-causing random system freezes. The drive belongs to the same BarraCuda
-family as the ST2000DM008-2FR102 which has the same issue.
+The inline assembly constraints for xor_xc_2() are incorrect. "bytes",
+"p1", and "p2" are input operands, while all three of them are modified
+within the inline assembly. Given that the function consists only of this
+inline assembly it seems unlikely that this may cause any problems, however
+fix this in any case.
 
+Fixes: 2cfc5f9ce7f5 ("s390/xor: optimized xor routing using the XC instruction")
 Cc: stable@vger.kernel.org
-Fixes: 7627a0edef54 ("ata: ahci: Drop low power policy board type")
-Reported-by: Filippo Baiamonte <filippo.ba03@bugzilla.kernel.org>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221163
-Signed-off-by: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
-Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
+Link: https://lore.kernel.org/r/20260302133500.1560531-2-hca@linux.ibm.com
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/s390/lib/xor.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4157,6 +4157,7 @@ static const struct ata_dev_quirks_entry
- 						ATA_QUIRK_FIRMWARE_WARN },
+--- a/arch/s390/lib/xor.c
++++ b/arch/s390/lib/xor.c
+@@ -28,8 +28,8 @@ static void xor_xc_2(unsigned long bytes
+ 		"	j	3f\n"
+ 		"2:	xc	0(1,%1),0(%2)\n"
+ 		"3:"
+-		: : "d" (bytes), "a" (p1), "a" (p2)
+-		: "0", "cc", "memory");
++		: "+d" (bytes), "+a" (p1), "+a" (p2)
++		: : "0", "cc", "memory");
+ }
  
- 	/* Seagate disks with LPM issues */
-+	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
- 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
- 
- 	/* drives which fail FPDMA_AA activation (some may freeze afterwards)
+ static void xor_xc_3(unsigned long bytes, unsigned long * __restrict p1,
 
 
