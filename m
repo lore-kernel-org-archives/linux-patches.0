@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C0A34AB17;
-	Tue, 17 Mar 2026 16:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A0683D6698;
+	Tue, 17 Mar 2026 16:39:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773765582; cv=none; b=Hes5zKuMLoh15/NNr60SQV8AoxVqic916MAghuzz5C6e8sKt7PWY7ziM39LNXvvDXmon+GKtAXS9voBJAXXMH/2YjCebY3TN4PmoLZOUWc2fUp/m6UA2Z9B5Q1SfDdrgfFtg9/FQ55EbZbh2dlfmgryzCUfYTVECWYWL8C/llnw=
+	t=1773765587; cv=none; b=UZLh7bp8Rw4ZmWboNLMUAWxAC2uFcgR/Cz7k2LeiDIyTC7KW41MzwGn0UGGGTMDdtpu+T24v700b8E6B3lMux+HpIMn5rshuXVPMdAQVyiKwjVCZAl4lIyv7RqJlqQiey1MBElmMSqBq6eWzHU2L3lyFKxY1+4aAHrupmo46MQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773765582; c=relaxed/simple;
-	bh=YBhm87FFxJ1z+jGBwPmeeoNoZJnX7bwM5gVyw2N8VpA=;
+	s=arc-20240116; t=1773765587; c=relaxed/simple;
+	bh=B0906JFSWAtDlXOWON7ZNKk0oFMRYmduhsKLI5qun6I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LI5h66tYnq2SW4FAQ3amEobe2zchSevqNwJ1cfxmd1UNOc7dcKlgrsG0kFstS5K+MFusxsBf2IabsP0Vd+LdJQ9GXCTwazil5KAVNA52xB55zWlj0b3PSc8o/pTxnerBWhMKRbsOFSvchSZvhtqE6Zd1jOuPEsFpoLNfNtt/nNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wEjByTBQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MWcZaYiaYT2NUI0cH9cosHReW603TBbzERJWKf/Opz5oS9xOh8maxlT99OxJIjg4uYb/IF/Bq5MgJoUYsqUkYVv0YVpBqwIrO9/aigz6rT6qs3iIJZiJQxMTlCtO8WEFg9kLB5MuV56TYN8wiCHGZ9ZkcwIAgJYCfZC4iM5MP3I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YctdN0r6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wEjByTBQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E712C4CEF7;
-	Tue, 17 Mar 2026 16:39:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YctdN0r6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70B73C4CEF7;
+	Tue, 17 Mar 2026 16:39:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773765582;
-	bh=YBhm87FFxJ1z+jGBwPmeeoNoZJnX7bwM5gVyw2N8VpA=;
+	s=korg; t=1773765587;
+	bh=B0906JFSWAtDlXOWON7ZNKk0oFMRYmduhsKLI5qun6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wEjByTBQtbAIrAJ7yfO7XZ0jYFr/1uWPIYRzBTFdxu7uyTZJCNk4OHR3GLOik9pBb
-	 JjEez5dErd1kEh6Anm9RHc2YR4Jv7YBEFYL0QyucBap0SKDlaW6OtIhyYlTuewSnOj
-	 rhtuw6G5giSX8zpHfVr9eKGFwfj5/1ap7D8nUEjg=
+	b=YctdN0r6+HklggnAHYNFYsxlyXCUFqzpS8ztrhKYPjXNnJEwdEYY/kX/SNww1/t8q
+	 bIdGEb56rr7pX5zWKnlnJ7D08pfWFQ0aaHaygT0CKPzws2EisQ8Hww+FcGQAKLxy3v
+	 0RAhLiqXKaPYFcZ5H7hx4cDeB1+EB7mlUqKdrodo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Ratiu <cratiu@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Simon Horman <horms@kernel.org>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 043/378] net/mlx5: Fix deadlock between devlink lock and esw->wq
-Date: Tue, 17 Mar 2026 17:30:00 +0100
-Message-ID: <20260317163008.571021683@linuxfoundation.org>
+Subject: [PATCH 6.19 044/378] net/mlx5: Fix crash when moving to switchdev mode
+Date: Tue, 17 Mar 2026 17:30:01 +0100
+Message-ID: <20260317163008.608184774@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -55,150 +53,146 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cosmin Ratiu <cratiu@nvidia.com>
+From: Patrisious Haddad <phaddad@nvidia.com>
 
-[ Upstream commit aed763abf0e905b4b8d747d1ba9e172961572f57 ]
+[ Upstream commit 24b2795f9683e092dc22a68f487e7aaaf2ddafea ]
 
-esw->work_queue executes esw_functions_changed_event_handler ->
-esw_vfs_changed_event_handler and acquires the devlink lock.
+When moving to switchdev mode when the device doesn't support IPsec,
+we try to clean up the IPsec resources anyway which causes the crash
+below, fix that by correctly checking for IPsec support before trying
+to clean up its resources.
 
-.eswitch_mode_set (acquires devlink lock in devlink_nl_pre_doit) ->
-mlx5_devlink_eswitch_mode_set -> mlx5_eswitch_disable_locked ->
-mlx5_eswitch_event_handler_unregister -> flush_workqueue deadlocks
-when esw_vfs_changed_event_handler executes.
+[27642.515799] WARNING: arch/x86/mm/fault.c:1276 at
+do_user_addr_fault+0x18a/0x680, CPU#4: devlink/6490
+[27642.517159] Modules linked in: xt_conntrack xt_MASQUERADE
+ip6table_nat ip6table_filter ip6_tables iptable_nat nf_nat xt_addrtype
+rpcsec_gss_krb5 auth_rpcgss oid_registry overlay mlx5_fwctl nfnetlink
+zram zsmalloc mlx5_ib fuse rpcrdma rdma_ucm ib_uverbs ib_iser libiscsi
+scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_core
+ib_core
+[27642.521358] CPU: 4 UID: 0 PID: 6490 Comm: devlink Not tainted
+6.19.0-rc5_for_upstream_min_debug_2026_01_14_16_47 #1 NONE
+[27642.522923] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
+rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
+[27642.524528] RIP: 0010:do_user_addr_fault+0x18a/0x680
+[27642.525362] Code: ff 0f 84 75 03 00 00 48 89 ee 4c 89 e7 e8 5e b9 22
+00 49 89 c0 48 85 c0 0f 84 a8 02 00 00 f7 c3 60 80 00 00 74 22 31 c9 eb
+   ae <0f> 0b 48 83 c4 10 48 89 ea 48 89 de 4c 89 f7 5b 5d 41 5c 41 5d
+41
+[27642.528166] RSP: 0018:ffff88810770f6b8 EFLAGS: 00010046
+[27642.529038] RAX: 0000000000000000 RBX: 0000000000000002 RCX:
+ffff88810b980f00
+[27642.530158] RDX: 00000000000000a0 RSI: 0000000000000002 RDI:
+ffff88810770f728
+[27642.531270] RBP: 00000000000000a0 R08: 0000000000000000 R09:
+0000000000000000
+[27642.532383] R10: 0000000000000000 R11: 0000000000000000 R12:
+ffff888103f3c4c0
+[27642.533499] R13: 0000000000000000 R14: ffff88810770f728 R15:
+0000000000000000
+[27642.534614] FS:  00007f197c741740(0000) GS:ffff88856a94c000(0000)
+knlGS:0000000000000000
+[27642.535915] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[27642.536858] CR2: 00000000000000a0 CR3: 000000011334c003 CR4:
+0000000000172eb0
+[27642.537982] Call Trace:
+[27642.538466]  <TASK>
+[27642.538907]  exc_page_fault+0x76/0x140
+[27642.539583]  asm_exc_page_fault+0x22/0x30
+[27642.540282] RIP: 0010:_raw_spin_lock_irqsave+0x10/0x30
+[27642.541134] Code: 07 85 c0 75 11 ba ff 00 00 00 f0 0f b1 17 75 06 b8
+01 00 00 00 c3 31 c0 c3 90 0f 1f 44 00 00 53 9c 5b fa 31 c0 ba 01 00 00
+   00 <f0> 0f b1 17 75 05 48 89 d8 5b c3 89 c6 e8 7e 02 00 00 48 89 d8
+      5b
+[27642.543936] RSP: 0018:ffff88810770f7d8 EFLAGS: 00010046
+[27642.544803] RAX: 0000000000000000 RBX: 0000000000000202 RCX:
+ffff888113ad96d8
+[27642.545916] RDX: 0000000000000001 RSI: ffff88810770f818 RDI:
+00000000000000a0
+[27642.547027] RBP: 0000000000000098 R08: 0000000000000400 R09:
+ffff88810b980f00
+[27642.548140] R10: 0000000000000001 R11: ffff888101845a80 R12:
+00000000000000a8
+[27642.549263] R13: ffffffffa02a9060 R14: 00000000000000a0 R15:
+ffff8881130d8a40
+[27642.550379]  complete_all+0x20/0x90
+[27642.551010]  mlx5e_ipsec_disable_events+0xb6/0xf0 [mlx5_core]
+[27642.552022]  mlx5e_nic_disable+0x12d/0x220 [mlx5_core]
+[27642.552929]  mlx5e_detach_netdev+0x66/0xf0 [mlx5_core]
+[27642.553822]  mlx5e_netdev_change_profile+0x5b/0x120 [mlx5_core]
+[27642.554821]  mlx5e_vport_rep_load+0x419/0x590 [mlx5_core]
+[27642.555757]  ? xa_load+0x53/0x90
+[27642.556361]  __esw_offloads_load_rep+0x54/0x70 [mlx5_core]
+[27642.557328]  mlx5_esw_offloads_rep_load+0x45/0xd0 [mlx5_core]
+[27642.558320]  esw_offloads_enable+0xb4b/0xc90 [mlx5_core]
+[27642.559247]  mlx5_eswitch_enable_locked+0x34e/0x4f0 [mlx5_core]
+[27642.560257]  ? mlx5_rescan_drivers_locked+0x222/0x2d0 [mlx5_core]
+[27642.561284]  mlx5_devlink_eswitch_mode_set+0x5ac/0x9c0 [mlx5_core]
+[27642.562334]  ? devlink_rate_set_ops_supported+0x21/0x3a0
+[27642.563220]  devlink_nl_eswitch_set_doit+0x67/0xe0
+[27642.564026]  genl_family_rcv_msg_doit+0xe0/0x130
+[27642.564816]  genl_rcv_msg+0x183/0x290
+[27642.565466]  ? __devlink_nl_pre_doit.isra.0+0x160/0x160
+[27642.566329]  ? devlink_nl_eswitch_get_doit+0x290/0x290
+[27642.567181]  ? devlink_nl_pre_doit_parent_dev_optional+0x20/0x20
+[27642.568147]  ? genl_family_rcv_msg_dumpit+0xf0/0xf0
+[27642.568966]  netlink_rcv_skb+0x4b/0xf0
+[27642.569629]  genl_rcv+0x24/0x40
+[27642.570215]  netlink_unicast+0x255/0x380
+[27642.570901]  ? __alloc_skb+0xfa/0x1e0
+[27642.571560]  netlink_sendmsg+0x1f3/0x420
+[27642.572249]  __sock_sendmsg+0x38/0x60
+[27642.572911]  __sys_sendto+0x119/0x180
+[27642.573561]  ? __sys_recvmsg+0x5c/0xb0
+[27642.574227]  __x64_sys_sendto+0x20/0x30
+[27642.574904]  do_syscall_64+0x55/0xc10
+[27642.575554]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+[27642.576391] RIP: 0033:0x7f197c85e807
+[27642.577050] Code: c7 c0 ff ff ff ff eb be 66 2e 0f 1f 84 00 00 00 00
+00 90 f3 0f 1e fa 80 3d 45 08 0d 00 00 41 89 ca 74 10 b8 2c 00 00 00 0f
+   05 <48> 3d 00 f0 ff ff 77 69 c3 55 48 89 e5 53 48 83 ec 38 44 89 4d
+      d0
+[27642.579846] RSP: 002b:00007ffebd4e2248 EFLAGS: 00000202 ORIG_RAX:
+000000000000002c
+[27642.581082] RAX: ffffffffffffffda RBX: 000055cfcd9cd2a0 RCX:
+00007f197c85e807
+[27642.582200] RDX: 0000000000000038 RSI: 000055cfcd9cd490 RDI:
+0000000000000003
+[27642.583320] RBP: 00007ffebd4e2290 R08: 00007f197c942200 R09:
+000000000000000c
+[27642.584437] R10: 0000000000000000 R11: 0000000000000202 R12:
+0000000000000000
+[27642.585555] R13: 000055cfcd9cd490 R14: 00007ffebd4e45d1 R15:
+000055cfcd9cd2a0
+[27642.586671]  </TASK>
+[27642.587121] ---[ end trace 0000000000000000 ]---
+[27642.587910] BUG: kernel NULL pointer dereference, address:
+00000000000000a0
 
-Fix that by no longer flushing the work to avoid the deadlock, and using
-a generation counter to keep track of work relevance. This avoids an old
-handler manipulating an esw that has undergone one or more mode changes:
-- the counter is incremented in mlx5_eswitch_event_handler_unregister.
-- the counter is read and passed to the ephemeral mlx5_host_work struct.
-- the work handler takes the devlink lock and bails out if the current
-  generation is different than the one it was scheduled to operate on.
-- mlx5_eswitch_cleanup does the final draining before destroying the wq.
-
-No longer flushing the workqueue has the side effect of maybe no longer
-cancelling pending vport_change_handler work items, but that's ok since
-those are disabled elsewhere:
-- mlx5_eswitch_disable_locked disables the vport eq notifier.
-- mlx5_esw_vport_disable disarms the HW EQ notification and marks
-  vport->enabled under state_lock to false to prevent pending vport
-  handler from doing anything.
-- mlx5_eswitch_cleanup destroys the workqueue and makes sure all events
-  are disabled/finished.
-
-Fixes: f1bc646c9a06 ("net/mlx5: Use devl_ API in mlx5_esw_offloads_devlink_port_register")
-Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: 664f76be38a1 ("net/mlx5: Fix IPsec cleanup over MPV device")
+Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260305081019.1811100-1-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260305142634.1813208-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c  |  7 ++++---
- .../net/ethernet/mellanox/mlx5/core/eswitch.h  |  2 ++
- .../mellanox/mlx5/core/eswitch_offloads.c      | 18 +++++++++++++-----
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index 4b7a1ce7f406b..32bf93e4ffcec 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1072,10 +1072,11 @@ static void mlx5_eswitch_event_handler_register(struct mlx5_eswitch *esw)
- 
- static void mlx5_eswitch_event_handler_unregister(struct mlx5_eswitch *esw)
- {
--	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev))
-+	if (esw->mode == MLX5_ESWITCH_OFFLOADS &&
-+	    mlx5_eswitch_is_funcs_handler(esw->dev)) {
- 		mlx5_eq_notifier_unregister(esw->dev, &esw->esw_funcs.nb);
--
--	flush_workqueue(esw->work_queue);
-+		atomic_inc(&esw->esw_funcs.generation);
-+	}
- }
- 
- static void mlx5_eswitch_clear_vf_vports_info(struct mlx5_eswitch *esw)
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 714ad28e8445b..0276609a617c0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -334,10 +334,12 @@ struct esw_mc_addr { /* SRIOV only */
- struct mlx5_host_work {
- 	struct work_struct	work;
- 	struct mlx5_eswitch	*esw;
-+	int			work_gen;
- };
- 
- struct mlx5_esw_functions {
- 	struct mlx5_nb		nb;
-+	atomic_t		generation;
- 	bool			host_funcs_disabled;
- 	u16			num_vfs;
- 	u16			num_ec_vfs;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-index ccf53d4783628..c79231b437976 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
-@@ -3582,22 +3582,28 @@ static void esw_offloads_steering_cleanup(struct mlx5_eswitch *esw)
- }
- 
- static void
--esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, const u32 *out)
-+esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, int work_gen,
-+			      const u32 *out)
- {
- 	struct devlink *devlink;
- 	bool host_pf_disabled;
- 	u16 new_num_vfs;
- 
-+	devlink = priv_to_devlink(esw->dev);
-+	devl_lock(devlink);
-+
-+	/* Stale work from one or more mode changes ago. Bail out. */
-+	if (work_gen != atomic_read(&esw->esw_funcs.generation))
-+		goto unlock;
-+
- 	new_num_vfs = MLX5_GET(query_esw_functions_out, out,
- 			       host_params_context.host_num_of_vfs);
- 	host_pf_disabled = MLX5_GET(query_esw_functions_out, out,
- 				    host_params_context.host_pf_disabled);
- 
- 	if (new_num_vfs == esw->esw_funcs.num_vfs || host_pf_disabled)
--		return;
-+		goto unlock;
- 
--	devlink = priv_to_devlink(esw->dev);
--	devl_lock(devlink);
- 	/* Number of VFs can only change from "0 to x" or "x to 0". */
- 	if (esw->esw_funcs.num_vfs > 0) {
- 		mlx5_eswitch_unload_vf_vports(esw, esw->esw_funcs.num_vfs);
-@@ -3612,6 +3618,7 @@ esw_vfs_changed_event_handler(struct mlx5_eswitch *esw, const u32 *out)
- 		}
- 	}
- 	esw->esw_funcs.num_vfs = new_num_vfs;
-+unlock:
- 	devl_unlock(devlink);
- }
- 
-@@ -3628,7 +3635,7 @@ static void esw_functions_changed_event_handler(struct work_struct *work)
- 	if (IS_ERR(out))
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+index feef86fff4bfd..91cfabc450325 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
+@@ -2912,7 +2912,7 @@ void mlx5e_ipsec_disable_events(struct mlx5e_priv *priv)
  		goto out;
  
--	esw_vfs_changed_event_handler(esw, out);
-+	esw_vfs_changed_event_handler(esw, host_work->work_gen, out);
- 	kvfree(out);
- out:
- 	kfree(host_work);
-@@ -3648,6 +3655,7 @@ int mlx5_esw_funcs_changed_handler(struct notifier_block *nb, unsigned long type
- 	esw = container_of(esw_funcs, struct mlx5_eswitch, esw_funcs);
+ 	peer_priv = mlx5_devcom_get_next_peer_data(priv->devcom, &tmp);
+-	if (peer_priv)
++	if (peer_priv && peer_priv->ipsec)
+ 		complete_all(&peer_priv->ipsec->comp);
  
- 	host_work->esw = esw;
-+	host_work->work_gen = atomic_read(&esw_funcs->generation);
- 
- 	INIT_WORK(&host_work->work, esw_functions_changed_event_handler);
- 	queue_work(esw->work_queue, &host_work->work);
+ 	mlx5_devcom_for_each_peer_end(priv->devcom);
 -- 
 2.51.0
 
