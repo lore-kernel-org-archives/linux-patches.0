@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DF762D739D;
-	Tue, 17 Mar 2026 17:27:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05D85336EF1;
+	Tue, 17 Mar 2026 17:27:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773768422; cv=none; b=qUVnvAcjJk6EREqhbsrwVLShgOtgDKCD6xJz9GImR2oxyc14zrvVY14ksuXr38Zuw5T5I65RFTqdJ0QSiX2sJ32kbyOBL4VzyoCZnLV9k0u/z5sDxzfPOZ4Vv6SL52ERFCFx09Qh2F1ViCzDdl75+BJNfJ+nKkwCDI40MLdTWaE=
+	t=1773768427; cv=none; b=YWeMbykZvYToHp89HmO8IC1V7M8d/BmzcgMuolimPFtkVSfaQPaY95wJtLzEjPxUKlVkI3PpZ+xiOgLuS3sWgzITZb0JOhauRPdmFGHeygC46pRwC20fl9D29GzdfG+MFG5ATMUA6bgPbfP6H3Mx/YSC36GKlVzJdwENHTAKKoQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773768422; c=relaxed/simple;
-	bh=r2d/1OqHOQoK2zfUPW0cYLs/IcDSL5PsVpmUqAa5/gQ=;
+	s=arc-20240116; t=1773768427; c=relaxed/simple;
+	bh=iqLfbxTLfyxp8z01K9ijVNn119m99wfMgxr9gZZfpNc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hghzBBlwKIFgZUzTBpfVY1dzwx4Xra/uIVwf5z6c/T4LoyhQBZC8rDJD+rg2mTGVRo3PA4od59ZQCtKjJo7FnhcSK8J2f6TPDYQ5k4Jl91G9M0up+nmXUqFKbvZfhr7CNkUGBTpJzNOzjGXxANH268AVR3sDoySbF9TXHGpRsOw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZA39LGk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t+6cc0DYMPiXqG9eGgPYVT8o63JUi+COfKtYyemRsZ7NpkYGZ6qdxJUzJ86wKmOWYv+wBgTVcCAAZKYFedVOZJfaGMYoSLQtduBw2qmMSPyPtBSPzp1daxu+dvoGaKCtPwtlcEojYcx2fuyTFDEW/UKUCtUgQw77vhSlTsV/u6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5fyTngr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZA39LGk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7723CC4CEF7;
-	Tue, 17 Mar 2026 17:27:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5fyTngr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11016C19424;
+	Tue, 17 Mar 2026 17:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773768422;
-	bh=r2d/1OqHOQoK2zfUPW0cYLs/IcDSL5PsVpmUqAa5/gQ=;
+	s=korg; t=1773768426;
+	bh=iqLfbxTLfyxp8z01K9ijVNn119m99wfMgxr9gZZfpNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZA39LGkp/v/y1p7iDmgO6Cy3FqHHNsc/zLV09eTzCcVA3q3bekdcDEaoeZKG4lkD
-	 kXgSLcpOysOEXtzrxgMRqSGkDw7yyftUYQvDiMhdBXV+fwqw1LKtGnv6XtQ7T3wv4l
-	 t7A99cpe6VYndW4JhmAeXdYtlRrsgv8gLasL5VKI=
+	b=m5fyTngrC1W+aMVmzQGHH9IDkkUXon3Mq4eY09721AgkHiWVbNZ6pQYmQIf2ZlZId
+	 8BoM6Bbiq/dKW763vF37uTRe0wBRxlgxrN/igQGhvDzch0alA5hD9uvnqlYcB3Pf7A
+	 CK/40Tkv9KP9lL4t2sa1wlDWe7m6JLD8iLivRtKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Yasin Lee <yasin.lee.x@gmail.com>,
+	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.18 305/333] iio: imu: inv_icm42600: fix odr switch when turning buffer off
-Date: Tue, 17 Mar 2026 17:35:34 +0100
-Message-ID: <20260317163010.700436856@linuxfoundation.org>
+Subject: [PATCH 6.18 306/333] iio: proximity: hx9023s: fix assignment order for __counted_by
+Date: Tue, 17 Mar 2026 17:35:35 +0100
+Message-ID: <20260317163010.737212460@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -50,46 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
+From: Yasin Lee <yasin.lee.x@gmail.com>
 
-commit ffd32db8263d2d785a2c419486a450dc80693235 upstream.
+commit 585b90c0161ab77416fe3acdbdc55b978e33e16c upstream.
 
-ODR switch is done in 2 steps when FIFO is on : change the ODR register
-value and acknowledge change when reading the FIFO ODR change flag.
-When we are switching odr and turning buffer off just afterward, we are
-losing the FIFO ODR change flag and ODR switch is blocked.
+Initialize fw_size before copying firmware data into the flexible
+array member to match the __counted_by() annotation. This fixes the
+incorrect assignment order that triggers runtime safety checks.
 
-Fix the issue by force applying any waiting ODR change when turning
-buffer off.
-
-Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
-Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
-Cc: stable@vger.kernel.org
+Fixes: e9ed97be4fcc ("iio: proximity: hx9023s: Added firmware file parsing functionality")
+Signed-off-by: Yasin Lee <yasin.lee.x@gmail.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/iio/proximity/hx9023s.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-+++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
-@@ -371,6 +371,8 @@ static int inv_icm42600_buffer_predisabl
- static int inv_icm42600_buffer_postdisable(struct iio_dev *indio_dev)
- {
- 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
-+	struct inv_icm42600_sensor_state *sensor_st = iio_priv(indio_dev);
-+	struct inv_sensors_timestamp *ts = &sensor_st->ts;
- 	struct device *dev = regmap_get_device(st->map);
- 	unsigned int sensor;
- 	unsigned int *watermark;
-@@ -392,6 +394,8 @@ static int inv_icm42600_buffer_postdisab
+--- a/drivers/iio/proximity/hx9023s.c
++++ b/drivers/iio/proximity/hx9023s.c
+@@ -1034,9 +1034,8 @@ static int hx9023s_send_cfg(const struct
+ 	if (!bin)
+ 		return -ENOMEM;
  
- 	mutex_lock(&st->lock);
+-	memcpy(bin->data, fw->data, fw->size);
+-
+ 	bin->fw_size = fw->size;
++	memcpy(bin->data, fw->data, bin->fw_size);
+ 	bin->fw_ver = bin->data[FW_VER_OFFSET];
+ 	bin->reg_count = get_unaligned_le16(bin->data + FW_REG_CNT_OFFSET);
  
-+	inv_sensors_timestamp_apply_odr(ts, 0, 0, 0);
-+
- 	ret = inv_icm42600_buffer_set_fifo_en(st, st->fifo.en & ~sensor);
- 	if (ret)
- 		goto out_unlock;
 
 
