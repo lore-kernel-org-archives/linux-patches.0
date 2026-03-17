@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7809B3F65F2;
-	Tue, 17 Mar 2026 17:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69D1C3F661E;
+	Tue, 17 Mar 2026 17:08:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767276; cv=none; b=ITWL+Svg+nL+uCyt8O+Fm0FMIDQhpxJRCZJW/21DmFEd2o1UCfNZxWs2FXD7RvrwwmEJlGG2dExP7s8tmTWwDTllmauKx59H5n6xe935TWy2Fpui9VuhyMNIg+MTdpurkQWqO9m8MWxHpGKws40aJ3HX2PDHOil/Iy6MpMvm4RI=
+	t=1773767281; cv=none; b=BimeT+RsYWEh8h9JI5AZWjBpd/4K7QIWXShKg4kMT+nxxfi0CL3RHR6g8lK4bNX8DFbz4yS/IY+SabzB6Mu+W0aqx4f2/qlypzapzofwMIvJULRLXlgnjCyI2+otPQ8DmdZhAzVws0U1jQ+R8S0dmKLLapKmIc4shG9CpvJc4jQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767276; c=relaxed/simple;
-	bh=YODosPvtFiK2EB7DYBYU/0SN0yxH5wZA9InfrCHWINI=;
+	s=arc-20240116; t=1773767281; c=relaxed/simple;
+	bh=R0e32i0fuQZ7KMr1UyWD266GE2+BzUFpM0doR9zEmOQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hmFkRqK5Q/2FmxJ74EUjivlD3Afc9wvBzpSxjWDajJfUklZF7Clf6EcKggEDJHJwIbL7ws8lk4+yZUITDnkVmgOTaQ3ILzWSHjKUNbV4dtZspE+dnCBDLcXKElmumf5ve+RtMcQosDbh/VjOzkGLMdSeErGhBiDBKix4poYpnm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zhxC9y1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jE5aDI9t3oKVGZpxMdZgXVl7SZ1z9yawzxuOTlOg7kVbrcpuCb3lWQSud4uXo4SbYNmSoWLYMc/9gmpUKLP84/VtbfGx1/5NdZsXTiwOoi3PRaJMnoQMnvD39GdWOvZ/vSoPJ42vbG1//7590ib3wqgx0nc4deoJ04YQKKKbue4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EKNvJkaY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zhxC9y1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 837B2C4CEF7;
-	Tue, 17 Mar 2026 17:07:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EKNvJkaY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368E7C2BC86;
+	Tue, 17 Mar 2026 17:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767276;
-	bh=YODosPvtFiK2EB7DYBYU/0SN0yxH5wZA9InfrCHWINI=;
+	s=korg; t=1773767280;
+	bh=R0e32i0fuQZ7KMr1UyWD266GE2+BzUFpM0doR9zEmOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zhxC9y1/T3hmAB7EwU76VDNjT2GNRisvA4KxeptUFPOk/2t4UGYp9nH9uBPhVcR1v
-	 Ia2+8gpE0HKAuIM0UNtB9EemM0rPQMhRm7yJZBLC/ytHaeOElkEwaCglS1XPrSAarZ
-	 L+WMnMkPtsT1mJtuteTujv2MgJpQ89hQl/940BtE=
+	b=EKNvJkaYSNrfSlcaCnaGQViXUN8vL6UN0DFWUkauhy9YPaodf1ytKa27YteaqkkxA
+	 RZIEite9A7kcSyiCZpCVfmgcpg5XSuvY0NQFKNN6p9jfqsEKyR1EnWa1z9Bv+2Auw/
+	 wttP+146y41JQBREYdR8FDLLHbi5lmQwCH/5goIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Matteo Cotifava <cotifavamatteo@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 052/333] ASoC: soc-core: drop delayed_work_pending() check before flush
-Date: Tue, 17 Mar 2026 17:31:21 +0100
-Message-ID: <20260317163001.296757893@linuxfoundation.org>
+Subject: [PATCH 6.18 053/333] ASoC: soc-core: flush delayed work before removing DAIs and widgets
+Date: Tue, 17 Mar 2026 17:31:22 +0100
+Message-ID: <20260317163001.333940004@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -53,41 +53,53 @@ Content-Transfer-Encoding: 8bit
 
 From: matteo.cotifava <cotifavamatteo@gmail.com>
 
-[ Upstream commit 3c99c9f0ed60582c1c9852b685d78d5d3a50de63 ]
+[ Upstream commit 95bc5c225513fc3c4ce169563fb5e3929fbb938b ]
 
-The delayed_work_pending() check before flush_delayed_work() in
-soc_free_pcm_runtime() is unnecessary and racy. flush_delayed_work()
-is safe to call unconditionally - it is a no-op when no work is
-pending. Remove the check.
+When a sound card is unbound while a PCM stream is open, a
+use-after-free can occur in snd_soc_dapm_stream_event(), called from
+the close_delayed_work workqueue handler.
 
-The original check was added by commit 9c9b65203492 ("ASoC: core:
-only flush inited work during free") but delayed_work_pending()
-followed by flush_delayed_work() has a time-of-check/time-of-use
-window where work can become pending between the two calls.
+During unbind, snd_soc_unbind_card() flushes delayed work and then
+calls soc_cleanup_card_resources(). Inside cleanup,
+snd_card_disconnect_sync() releases all PCM file descriptors, and
+the resulting PCM close path can call snd_soc_dapm_stream_stop()
+which schedules new delayed work with a pmdown_time timer delay.
+Since this happens after the flush in snd_soc_unbind_card(), the
+new work is not caught. soc_remove_link_components() then frees
+DAPM widgets before this work fires, leading to the use-after-free.
 
-Fixes: 9c9b65203492 ("ASoC: core: only flush inited work during free")
+The existing flush in soc_free_pcm_runtime() also cannot help as it
+runs after soc_remove_link_components() has already freed the widgets.
+
+Add a flush in soc_cleanup_card_resources() after
+snd_card_disconnect_sync() (after which no new PCM closes can
+schedule further delayed work) and before soc_remove_link_dais()
+and soc_remove_link_components() (which tear down the structures the
+delayed work accesses).
+
+Fixes: e894efef9ac7 ("ASoC: core: add support to card rebind")
 Signed-off-by: Matteo Cotifava <cotifavamatteo@gmail.com>
-Link: https://patch.msgid.link/20260309215412.545628-2-cotifavamatteo@gmail.com
+Link: https://patch.msgid.link/20260309215412.545628-3-cotifavamatteo@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ sound/soc/soc-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 9dd84d73046be..3b98b3f6cd5fe 100644
+index 3b98b3f6cd5fe..013437f845e06 100644
 --- a/sound/soc/soc-core.c
 +++ b/sound/soc/soc-core.c
-@@ -462,8 +462,7 @@ static void soc_free_pcm_runtime(struct snd_soc_pcm_runtime *rtd)
- 
- 	list_del(&rtd->list);
- 
--	if (delayed_work_pending(&rtd->delayed_work))
--		flush_delayed_work(&rtd->delayed_work);
-+	flush_delayed_work(&rtd->delayed_work);
- 	snd_soc_pcm_component_free(rtd);
- 
- 	/*
+@@ -2118,6 +2118,9 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+ 	for_each_card_rtds(card, rtd)
+ 		if (rtd->initialized)
+ 			snd_soc_link_exit(rtd);
++	/* flush delayed work before removing DAIs and DAPM widgets */
++	snd_soc_flush_all_delayed_work(card);
++
+ 	/* remove and free each DAI */
+ 	soc_remove_link_dais(card);
+ 	soc_remove_link_components(card);
 -- 
 2.51.0
 
