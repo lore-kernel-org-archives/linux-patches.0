@@ -1,43 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8063B3F787D;
-	Tue, 17 Mar 2026 16:57:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767933F7A8B;
+	Tue, 17 Mar 2026 16:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773766638; cv=none; b=SVWQSddO7iwNHmZhm9Fh5CLhvoGlfhy4epsX47fyrmzsgLitaJzpRMtwngpX2rGLah9JuN2aXa+K98piSTmCV8yq0cBs4n25E4NxZ8SuPoVQEWrufOBfoU6EZXc14nJJJYX+pLk/+nl9zMERCC9d8YA+8/yPDfeTX4lcc+5xLrk=
+	t=1773766642; cv=none; b=ibduE0uZbka1vXkWPI6+ZbyqvhHLzJ8Mk4QpJNjomLNs90e4ltbqnGDh6RkkEsEE11Nu3a/uTEjDj/pmk7wUSEVxSxmnUMdEq45Wj8aGOT2RHmli/KjWa3FJ9miaqxKFxrkXEXYl6Fp/0ge4zbB6yxhW1kqsIM1OnKYBWXgetW0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773766638; c=relaxed/simple;
-	bh=+aSi36l/qgHBTfUJjn4Ul8bQEYbGe4XQ3zdfNZ+qJM8=;
+	s=arc-20240116; t=1773766642; c=relaxed/simple;
+	bh=4+BdIaJy6eQ7JGoHp/9V8gOwy/M4n91ScRarHkXfyHM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jwLlbnBbgdOmLE4oHQ907ZdH2xyJoG0xNMGVrW2QSTb6vOGFhcKkJILGWoX7PFhHM+pA2RLFNIBpAeYhyFFrf86gaznihQ3ayfdKtFmBlnedTD4jZQaarn6i6mDDFMCB61AZT/iAybRbTap6xVIozyvc3ByAVaejyu3snVQ2Pto=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xMMEFo9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u7HXrRLruw6tIPRC+ArbWBSQ3qA2IPjxUxcSPqyJ35ANvEyLr+v1wwLd4JNLZxCbGu4SS9zy9+/dpEwSuzap7AkON3Y1vrT4qARP8UPoO5YW2QcbRVXTXQh6XxH7nuqJUQVDFlDLrHYYu5YBEUCVLzurazv1Ioz48/XydeX7mYs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBUalQRU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xMMEFo9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF39C2BCB0;
-	Tue, 17 Mar 2026 16:57:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBUalQRU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA91C2BC86;
+	Tue, 17 Mar 2026 16:57:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773766638;
-	bh=+aSi36l/qgHBTfUJjn4Ul8bQEYbGe4XQ3zdfNZ+qJM8=;
+	s=korg; t=1773766642;
+	bh=4+BdIaJy6eQ7JGoHp/9V8gOwy/M4n91ScRarHkXfyHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMMEFo9VwMQMkI163Rz7lwgS8r4KCCCL9oYJzY6bSjIDKx9LwF6d8mipg2+d+bnw4
-	 JNaWafbcO5E62JOmijlJIeLg9ntZ6kC/ZG48WQEeGECpJoFS4FockiL/WdCMrmagId
-	 RmX8un5S8vymQ9JMQLQoiHbPinG3j6DxKKHz0sKQ=
+	b=HBUalQRUIB9/7i5ykWXf3nimv6VDtv3VIlVeTMVloND+X4FC1gVb3lDkbEgDL99hA
+	 f+1rFl7eKgtXmzXd2jjwfESVmWtZO7OyFPHinT/VU21rLEC+kyh7FpLis6YhlxKhwD
+	 5kPiVjws3H9HpMDsxW2hmZet8hDGo6ymO7nQyXWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Li <hao.li@linux.dev>,
-	Shakeel Butt <shakeel.butt@linux.dev>,
-	Johannes Weiner <hannes@cmpxchg.org>,
-	Michal Hocko <mhocko@kernel.org>,
-	Muchun Song <muchun.song@linux.dev>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Vlastimil Babka <vbabka@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 289/378] memcg: fix slab accounting in refill_obj_stock() trylock path
-Date: Tue, 17 Mar 2026 17:34:06 +0100
-Message-ID: <20260317163017.644134495@linuxfoundation.org>
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 290/378] ksmbd: fix use-after-free in smb_lazy_parent_lease_break_close()
+Date: Tue, 17 Mar 2026 17:34:07 +0100
+Message-ID: <20260317163017.680403962@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317163006.959177102@linuxfoundation.org>
 References: <20260317163006.959177102@linuxfoundation.org>
@@ -56,52 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hao Li <hao.li@linux.dev>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit dccd5ee2625d50239510bcd73ed78559005e00a3 upstream.
+commit eac3361e3d5dd8067b3258c69615888eb45e9f25 upstream.
 
-In the trylock path of refill_obj_stock(), mod_objcg_mlstate() should use
-the real alloc/free bytes (i.e., nr_acct) for accounting, rather than
-nr_bytes.
+opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is being
+accessed after rcu_read_unlock() has been called. This creates a
+race condition where the memory could be freed by a concurrent
+writer between the unlock and the subsequent pointer dereferences
+(opinfo->is_lease, etc.), leading to a use-after-free.
 
-The user-visible impact is that the NR_SLAB_RECLAIMABLE_B and
-NR_SLAB_UNRECLAIMABLE_B stats can end up being incorrect.
-
-For example, if a user allocates a 6144-byte object, then before this
-fix efill_obj_stock() calls mod_objcg_mlstate(..., nr_bytes=2048), even
-though it should account for 6144 bytes (i.e., nr_acct).
-
-When the user later frees the same object with kfree(),
-refill_obj_stock() calls mod_objcg_mlstate(..., nr_bytes=6144).  This
-ends up adding 6144 to the stats, but it should be applying -6144
-(i.e., nr_acct) since the object is being freed.
-
-Link: https://lkml.kernel.org/r/20260226115145.62903-1-hao.li@linux.dev
-Fixes: 200577f69f29 ("memcg: objcg stock trylock without irq disabling")
-Signed-off-by: Hao Li <hao.li@linux.dev>
-Acked-by: Shakeel Butt <shakeel.butt@linux.dev>
-Acked-by: Johannes Weiner <hannes@cmpxchg.org>
-Cc: Michal Hocko <mhocko@kernel.org>
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Vlastimil Babka <vbabka@suse.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5fb282ba4fef ("ksmbd: fix possible null-deref in smb_lazy_parent_lease_break_close")
+Cc: stable@vger.kernel.org
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/memcontrol.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/oplock.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/mm/memcontrol.c
-+++ b/mm/memcontrol.c
-@@ -3052,7 +3052,7 @@ static void refill_obj_stock(struct obj_
+--- a/fs/smb/server/oplock.c
++++ b/fs/smb/server/oplock.c
+@@ -1123,10 +1123,12 @@ void smb_lazy_parent_lease_break_close(s
  
- 	if (!local_trylock(&obj_stock.lock)) {
- 		if (pgdat)
--			mod_objcg_mlstate(objcg, pgdat, idx, nr_bytes);
-+			mod_objcg_mlstate(objcg, pgdat, idx, nr_acct);
- 		nr_pages = nr_bytes >> PAGE_SHIFT;
- 		nr_bytes = nr_bytes & (PAGE_SIZE - 1);
- 		atomic_add(nr_bytes, &objcg->nr_charged_bytes);
+ 	rcu_read_lock();
+ 	opinfo = rcu_dereference(fp->f_opinfo);
+-	rcu_read_unlock();
+ 
+-	if (!opinfo || !opinfo->is_lease || opinfo->o_lease->version != 2)
++	if (!opinfo || !opinfo->is_lease || opinfo->o_lease->version != 2) {
++		rcu_read_unlock();
+ 		return;
++	}
++	rcu_read_unlock();
+ 
+ 	p_ci = ksmbd_inode_lookup_lock(fp->filp->f_path.dentry->d_parent);
+ 	if (!p_ci)
 
 
