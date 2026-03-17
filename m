@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8940B3B3BF0;
-	Tue, 17 Mar 2026 11:33:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8FDA3AE18D;
+	Tue, 17 Mar 2026 11:33:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773747182; cv=none; b=qWPq/7cExtnTQvzZQifcFFB7nRxtuMDUupeyuC0Kw3QoIdbM8npjcJChlvjtcn53cGVT5XYU7PT7hiBSGSK5OSx1cbo968WS3an3XC2iU4ZLcoMwT96L+qqi7GVcF+LTckZTjUS7/jZG3o0esdKRbHtjOyAErGJjldFD71ZhJcs=
+	t=1773747183; cv=none; b=sO7o0Qd1zKkDyBhr/KblZkJvwr54hslL6L0RWDmrp1oRCY54n/SLHnBbasQtwRIHYGmPL/a6sPsrxJdi8jwp5qdTEdD18HHH5GSBjaj0vIH4SsXFW3SDdYVzeQh262rd967MqDu4zJpSekVcom/lohJJRGi+Kk9c4lFCDYL8+Zo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773747182; c=relaxed/simple;
-	bh=1r9IQwqFZijzWT6K13gnGBbK+Qk2kFjyObhsKxHBSx4=;
+	s=arc-20240116; t=1773747183; c=relaxed/simple;
+	bh=+JM2tjMeVXAO1CS/F5tFHtTKkD1y46T3nIZLDfPO1jI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=JJlfeeo6VoQTR/DtFYBIv1cTbHOIsTj/PNFuyxUL5DxjecSP2Y1ZN0iXg5/usQG3y4Fsj4/qnzQEMpMTKmnIhiQ9Robj8ZEibwidSIvEk66Q15PQnQSX87b3qLv4rJN9CeNN2BIgTh9OHCsR2m0rb+ab6Yxju5h+HsmwtUHvzgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=B/mjzzIV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aQUtvSt6TY8DdkuToPLVFrnnVDEd+imcjaiqVzQyFtdJh0820RvZOeI763O7etGnaQeWw5ue+3EdbrJRf+1faMexqmE/GThMRQrpvd+2MG4q07cTFDBcivGf4Wu45LxSWJOZx3MLpTCHqavEOXhs1BMFK8IARsG752aISHSOaUU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=msVysCTc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="B/mjzzIV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45DCDC2BC9E;
-	Tue, 17 Mar 2026 11:33:01 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="msVysCTc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 969FAC2BCB2;
+	Tue, 17 Mar 2026 11:33:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773747182;
-	bh=1r9IQwqFZijzWT6K13gnGBbK+Qk2kFjyObhsKxHBSx4=;
+	s=k20201202; t=1773747183;
+	bh=+JM2tjMeVXAO1CS/F5tFHtTKkD1y46T3nIZLDfPO1jI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B/mjzzIVrMdbFycq9RD5F3xPxMzkMxRtKwo9DZwjFhetE8xgad2RSTbHayvzfEh/f
-	 2chzNSaAIV0QRy4i4UvFGDzCzbxqBKqgI6TaYi7ZBPT2aG4FzFSO6367dHE2wx4wjV
-	 IhDJ8vwB5mc6AbZ6YkrBqXbmb6PJ4Qzi32G44vnuM+D2qY8harTH6zRrrEEXXzsQfS
-	 E3nuiEsFegO0ojXUb56iFV/RMn/SSnJ47Jz+dMVMlTJUET8/SUgVUgOilJraW3M77Y
-	 HtmSpAmquFQaV4cEMCeB6oB9V1dZ7sefE2NmzRW+m1f9XSiMKNJfSNnpT0WqSTOyMs
-	 yKNPhn891Fs2w==
+	b=msVysCTcOfNVPHhokB03F3kFkCPY948GP2N4oORtkiU+Rp50MnR7dDFomKc+tzPuu
+	 0J13bwAcqmsfaKWR+2VC0ySV/VD/LO2L3VuMAkiLkPG+QUN7HcJrWboQYVEaZQvNHA
+	 fuAFpj+7M+a8QYR+Gaye3jxS7GI0Xb97xyCvfDWowhT2L4zVdoO7ZTqAC8NmieJJtr
+	 cXsiXgRpBgin2PGWp3MYCbQAO9qbZJtZQtsHrA4vFulazjgc3uU3YHhXPG9x8Vxaau
+	 onZQ1dxUrf6OBSGbi+/vP8hDGRJ1SM5E4zv7Vo2kaekzQcERFJRW7osU3v9MWgqVnZ
+	 QTAnuMtaLPQBA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Jie Deng <dengjie03@kylinos.cn>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+Cc: Zhang Heng <zhangheng@kylinos.cn>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	corbet@lwn.net,
-	linux-doc@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	linux-usb@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.1] usb: core: new quirk to handle devices with zero configurations
-Date: Tue, 17 Mar 2026 07:32:40 -0400
-Message-ID: <20260317113249.117771-9-sashal@kernel.org>
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.12] ALSA: hda/realtek: add quirk for ASUS UM6702RC
+Date: Tue, 17 Mar 2026 07:32:41 -0400
+Message-ID: <20260317113249.117771-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260317113249.117771-1-sashal@kernel.org>
 References: <20260317113249.117771-1-sashal@kernel.org>
@@ -54,213 +54,127 @@ X-stable-base: Linux 6.19.8
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Deng <dengjie03@kylinos.cn>
+From: Zhang Heng <zhangheng@kylinos.cn>
 
-[ Upstream commit 9f6a983cfa22ac662c86e60816d3a357d4b551e9 ]
+[ Upstream commit 0d3429f12133c2ca47aa82ddab2342bc360c47d3 ]
 
-Some USB devices incorrectly report bNumConfigurations as 0 in their
-device descriptor, which causes the USB core to reject them during
-enumeration.
-logs:
-usb 1-2: device descriptor read/64, error -71
-usb 1-2: no configurations
-usb 1-2: can't read configurations, error -22
+The sound card of this machine cannot adjust the volume, it can only
+be 0 or 100%. The reason is that the DAC with pin 0x17 is connected
+to 0x06. Testing found that connecting 0x02 can fix this problem.
 
-However, these devices actually work correctly when
-treated as having a single configuration.
-
-Add a new quirk USB_QUIRK_FORCE_ONE_CONFIG to handle such devices.
-When this quirk is set, assume the device has 1 configuration instead
-of failing with -EINVAL.
-
-This quirk is applied to the device with VID:PID 5131:2007 which
-exhibits this behavior.
-
-Signed-off-by: Jie Deng <dengjie03@kylinos.cn>
-Link: https://patch.msgid.link/20260227084931.1527461-1-dengjie03@kylinos.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=220356
+Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
+Link: https://patch.msgid.link/20260306123317.575346-1-zhangheng@kylinos.cn
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
+Good. Now I have all the information needed for analysis.
+
 ## Analysis
 
-### What the commit does
+### 1. Commit Message Analysis
+This commit adds a hardware quirk for the ASUS UM6702RC laptop where
+volume control is broken (only 0% or 100%). The root cause is
+identified: DAC pin 0x17 is connected to 0x06 (which lacks volume
+control), and connecting to 0x02 fixes it. The commit links to
+**bugzilla.kernel.org bug #220356**, confirming a real user-reported
+issue. Accepted by ALSA maintainer Takashi Iwai.
 
-This commit introduces a new USB quirk `USB_QUIRK_FORCE_ONE_CONFIG`
-(BIT(18)) for devices that incorrectly report `bNumConfigurations = 0`
-in their device descriptor. Without this quirk, such devices are
-rejected during enumeration with `-EINVAL` ("no configurations"). The
-quirk forces the configuration count to 1, allowing the device to
-enumerate normally.
+### 2. Code Change Analysis
+The change adds a single line:
+```c
+HDA_CODEC_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC",
+ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1),
+```
+This is placed before the existing `SND_PCI_QUIRK` entry for the same
+device. The `HDA_CODEC_QUIRK` macro matches by **codec SSID** (rather
+than PCI SSID), enabling the `ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1`
+fixup which:
+1. Overrides the connection list for NID 0x17 to route to DAC 0x02
+   instead of 0x06 (fixing volume control)
+2. Chains to `ALC287_FIXUP_CS35L41_I2C_2` (the existing CS35L41
+   amplifier configuration)
 
-It's applied to the Noji-MCS SmartCard Reader (VID:PID 5131:2007).
+### 3. Classification
+This is a **hardware quirk addition** — one of the explicitly allowed
+exception categories for stable backports. It fixes broken audio volume
+control on a specific ASUS laptop model.
 
-### Changes across files:
-1. **`include/linux/usb/quirks.h`**: Adds `USB_QUIRK_FORCE_ONE_CONFIG`
-   as BIT(18) — the next available bit
-2. **`drivers/usb/core/config.c`**: Modifies `usb_get_configuration()`
-   to force `ncfg=1` when the quirk is set, instead of returning
-   `-EINVAL`
-3. **`drivers/usb/core/quirks.c`**: Adds the device entry and 'q' case
-   in the module parameter parser
-4. **`Documentation/admin-guide/kernel-parameters.txt`**: Documents the
-   'q' character mapping
+### 4. Scope and Risk
+- **One line added** — minimal change
+- Only affects this specific ASUS UM6702RA/RC hardware
+- Zero risk to other hardware — quirks only match specific vendor/device
+  IDs
+- The fixup function (`alc285_fixup_speaker2_to_dac1`) is well-
+  established and used for other devices (Lenovo Carbon X1, ASUS GU605,
+  etc.)
 
-### Bug classification: Hardware quirk
+### 5. User Impact
+Users with ASUS UM6702RC laptops have effectively **non-functional
+volume control** — audio is either completely silent or at maximum
+volume. This is a significant usability issue that makes the laptop's
+audio nearly unusable for normal tasks.
 
-This is a textbook USB hardware quirk — a specific device reports broken
-descriptors, and a per-device quirk makes it work. The stable kernel
-rules explicitly allow hardware quirks as exceptions because they:
-- Fix real hardware for real users
-- Are narrowly scoped to specific VID:PID
-- Use established, well-tested infrastructure
-- Carry near-zero risk to other devices
+### 6. Dependency Analysis
+- **`ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1`**: Present in v6.6+ and
+  v6.12+ stable trees ✓
+- **`HDA_CODEC_QUIRK` macro**: Introduced in commit `5b1913a79c3e0`
+  (v6.13-rc1). **NOT present in v6.12.y or older stable trees**
+- **File reorganization**: Code moved from
+  `sound/pci/hda/patch_realtek.c` to `sound/hda/codecs/realtek/alc269.c`
+  in v6.19+
 
-### Code quality concerns
-
-**Missing `break` in case 'q'**: The new case 'q' in
-`quirks_param_set()` lacks a `break` statement (every other case a-p has
-one). However, since 'q' is the **last case** before the switch closing
-brace `}`, this is functionally harmless — fall-through hits the end of
-the switch. It's a style issue, not a functional bug.
-
-**Operator precedence in config.c**: The condition `ncfg < 1 &&
-dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG` is correct due to C
-precedence: `<` (6) > `&` (8) > `&&` (11), so it evaluates as `(ncfg <
-1) && (dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG)`.
-
-### Risk assessment
-
-- **Scope**: Only affects VID:PID 5131:2007 — zero risk to other devices
-- **Mechanism**: The quirk check in `usb_get_configuration()` is gated
-  by the device-specific quirk flag
-- **Timing**: `usb_detect_quirks()` is called in `hub_port_init()`
-  before `usb_get_configuration()` is called in
-  `usb_enumerate_device()`, so the quirk is available when needed
-- **Size**: Small (~16 insertions), well-contained
-- **Maintainer**: Signed off by Greg KH (USB subsystem maintainer)
-- **Review**: Went through 3 versions (v1, v2, v3), with review from
-  Alan Stern and Greg KH
-
-### Considerations for stable
-
-This is slightly more than a typical "add device ID to existing quirk"
-because it introduces a new quirk type with new logic in
-`usb_get_configuration()`. However:
-- The new logic is 4 lines, guarded by the quirk flag
-- It follows established patterns exactly
-- Without it, the specific SmartCard reader is completely non-functional
-- The USB quirk infrastructure is identical across stable trees
+For **v6.13.y+**: The `HDA_CODEC_QUIRK` infrastructure exists; backport
+needs only file path adjustment.
+For **v6.12.y and older**: Would need adaptation — either backport the
+`HDA_CODEC_QUIRK` infrastructure or use the older codec SSID matching
+mechanism. The fixup itself exists but the macro to reference it in the
+quirk table does not.
 
 ### Verification
-
-- **Verified current code**: Read `drivers/usb/core/config.c:925-944`
-  confirming the existing `ncfg < 1` check at line 930 that returns
-  `-EINVAL`
-- **Verified quirk bit allocation**: Read `include/linux/usb/quirks.h` —
-  BIT(17) is `USB_QUIRK_NO_BOS`, BIT(18) is the next available
-- **Verified missing break**: Read `drivers/usb/core/quirks.c:130-149` —
-  confirmed all other cases (a-p) have `break` statements; the `}` at
-  line 145 closes the switch, making the missing break harmless
-- **Verified operator precedence**: C precedence rules make `ncfg < 1 &&
-  dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG` evaluate correctly
-- **Verified timing**: Agent traced the call chain `hub_port_connect()`
-  → `hub_port_init()` (calls `usb_detect_quirks()`) → `usb_new_device()`
-  → `usb_enumerate_device()` → `usb_get_configuration()` — quirks are
-  set before config reading
-- **Verified mailing list**: lore.kernel.org shows 3 patch versions with
-  review from Alan Stern and Greg KH; could not access full discussion
-  content to determine specific reviewer concerns (unverified whether
-  break issue was discussed)
-- **Verified recent history**: `git log` shows `usb_quirk_list` and
-  `quirks.h` are regularly updated with new quirks (e.g.,
-  `USB_QUIRK_NO_BOS` was recently added following the same pattern)
+- Confirmed `ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1` exists in v6.6
+  (`git show v6.6:sound/pci/hda/patch_realtek.c`) and v6.12
+- Confirmed `HDA_CODEC_QUIRK` was introduced in commit `5b1913a79c3e0`
+  (Oct 2024, v6.13-rc1) via `git tag --contains`
+- Confirmed the existing `SND_PCI_QUIRK(0x1043, 0x1ee2, ...)` entry
+  exists in v6.12 stable tree
+- Confirmed the `alc285_fixup_speaker2_to_dac1` function overrides NID
+  0x17 connection to DAC 0x02 (read from current source)
+- Confirmed the `ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1` chains to
+  `ALC287_FIXUP_CS35L41_I2C_2` (verified in source at line 5006)
+- Bug report exists at bugzilla.kernel.org #220356 (linked in commit
+  message, not independently fetched)
 
 ### Conclusion
-
-This is a hardware quirk that makes a completely broken USB SmartCard
-reader functional. It follows the established USB quirk pattern, is
-narrowly scoped to one device, carries near-zero risk, and was reviewed
-and accepted by the USB subsystem maintainer. Hardware quirks are
-explicitly listed as stable-worthy exceptions. The minor style issue
-(missing `break`) does not affect functionality.
+This is a textbook stable-worthy hardware quirk. It's a single-line
+addition that fixes completely broken volume control on a specific ASUS
+laptop, reported by a real user with a bugzilla entry. The fix uses an
+existing, well-tested fixup mechanism. The only concern is that
+backporting to v6.12.y and older requires adaptation due to the
+`HDA_CODEC_QUIRK` infrastructure dependency, but that's a mechanical
+concern for the stable maintainers, not a reason to reject the backport.
+For v6.13.y+, it's a trivial backport.
 
 **YES**
 
- Documentation/admin-guide/kernel-parameters.txt | 3 +++
- drivers/usb/core/config.c                       | 6 +++++-
- drivers/usb/core/quirks.c                       | 5 +++++
- include/linux/usb/quirks.h                      | 3 +++
- 4 files changed, 16 insertions(+), 1 deletion(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index aa0031108bc1d..f31e9e4c598fc 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -8090,6 +8090,9 @@ Kernel parameters
- 				p = USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT
- 					(Reduce timeout of the SET_ADDRESS
- 					request from 5000 ms to 500 ms);
-+				q = USB_QUIRK_FORCE_ONE_CONFIG (Device
-+					claims zero configurations,
-+					forcing to 1);
- 			Example: quirks=0781:5580:bk,0a5c:5834:gij
- 
- 	usbhid.mousepoll=
-diff --git a/drivers/usb/core/config.c b/drivers/usb/core/config.c
-index 2bb1ceb9d621a..3067e18ec4d8a 100644
---- a/drivers/usb/core/config.c
-+++ b/drivers/usb/core/config.c
-@@ -927,7 +927,11 @@ int usb_get_configuration(struct usb_device *dev)
- 		dev->descriptor.bNumConfigurations = ncfg = USB_MAXCONFIG;
- 	}
- 
--	if (ncfg < 1) {
-+	if (ncfg < 1 && dev->quirks & USB_QUIRK_FORCE_ONE_CONFIG) {
-+		dev_info(ddev, "Device claims zero configurations, forcing to 1\n");
-+		dev->descriptor.bNumConfigurations = 1;
-+		ncfg = 1;
-+	} else if (ncfg < 1) {
- 		dev_err(ddev, "no configurations\n");
- 		return -EINVAL;
- 	}
-diff --git a/drivers/usb/core/quirks.c b/drivers/usb/core/quirks.c
-index c4d85089d19b1..53380296c94c6 100644
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -141,6 +141,8 @@ static int quirks_param_set(const char *value, const struct kernel_param *kp)
- 			case 'p':
- 				flags |= USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT;
- 				break;
-+			case 'q':
-+				flags |= USB_QUIRK_FORCE_ONE_CONFIG;
- 			/* Ignore unrecognized flag characters */
- 			}
- 		}
-@@ -581,6 +583,9 @@ static const struct usb_device_id usb_quirk_list[] = {
- 	/* VCOM device */
- 	{ USB_DEVICE(0x4296, 0x7570), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
- 
-+	/* Noji-MCS SmartCard Reader */
-+	{ USB_DEVICE(0x5131, 0x2007), .driver_info = USB_QUIRK_FORCE_ONE_CONFIG },
-+
- 	/* INTEL VALUE SSD */
- 	{ USB_DEVICE(0x8086, 0xf1a5), .driver_info = USB_QUIRK_RESET_RESUME },
- 
-diff --git a/include/linux/usb/quirks.h b/include/linux/usb/quirks.h
-index 2f7bd2fdc6164..b3cc7beab4a3c 100644
---- a/include/linux/usb/quirks.h
-+++ b/include/linux/usb/quirks.h
-@@ -78,4 +78,7 @@
- /* skip BOS descriptor request */
- #define USB_QUIRK_NO_BOS			BIT(17)
- 
-+/* Device claims zero configurations, forcing to 1 */
-+#define USB_QUIRK_FORCE_ONE_CONFIG		BIT(18)
-+
- #endif /* __LINUX_USB_QUIRKS_H */
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index f213f8792b01f..1a9973e1e9a84 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7251,6 +7251,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1043, 0x1e93, "ASUS ExpertBook B9403CVAR", ALC294_FIXUP_ASUS_HPE),
+ 	SND_PCI_QUIRK(0x1043, 0x1eb3, "ASUS Ally RCLA72", ALC287_FIXUP_TAS2781_I2C),
+ 	SND_PCI_QUIRK(0x1043, 0x1ed3, "ASUS HN7306W", ALC287_FIXUP_CS35L41_I2C_2),
++	HDA_CODEC_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC285_FIXUP_ASUS_I2C_SPEAKER2_TO_DAC1),
+ 	SND_PCI_QUIRK(0x1043, 0x1ee2, "ASUS UM6702RA/RC", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x1043, 0x1c52, "ASUS Zephyrus G15 2022", ALC289_FIXUP_ASUS_GA401),
+ 	SND_PCI_QUIRK(0x1043, 0x1f11, "ASUS Zephyrus G14", ALC289_FIXUP_ASUS_GA401),
 -- 
 2.51.0
 
