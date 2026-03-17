@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45593E122D;
-	Tue, 17 Mar 2026 17:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8854C26FD9B;
+	Tue, 17 Mar 2026 17:14:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773767642; cv=none; b=aqa+Zs6n+ag07mS6i8J40VZcIsldxHSAMtJg8lgCCWb9m62I/NzPbzskmNxBUgmB+RJ7Hjvx7D+ZK2HtNK8YMmZzEse9035fo6OcnnH478/vjeSFuiMF2MI2yeFu1I3rw29PtzmUUMW447mtYGSt6zMWHdY35Gh4PE4qOOFMFKk=
+	t=1773767647; cv=none; b=to/xj6qs4VKPqe7mF2A+DWLZZQekDpszGeDKBYQxIDJ/aihc84UroNTzJ7qJTZiYE2jXLGxcBhK5Zs91caMxxfZ7ovZSipAcIfYtpVUR7q6b6sOI+j9JhyHdYacnYohDEHAkz0CVIpHqQR8GxsA/Bt2dGfLyjEQUYqXVraP9obI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773767642; c=relaxed/simple;
-	bh=f7Vyz9Wq4jTUeRMCaiZwwIGxDfbtf+lB/80pxAC5A4k=;
+	s=arc-20240116; t=1773767647; c=relaxed/simple;
+	bh=QFVg//+h6Re0Tc2xoKx+/sSjlSOipII10FbcNnMGk0Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p5udIlOvZtnIP8vNVMep2GjeEiwBqc3ugDWiI3X59nJQqnnn+XEl1WvlFHLVkQblMqL3BuKDcJ+exR3psEibgRprHg8hnvvjUUAu6fYEF8KTGEm3AxvBN0L5yp8LZTI++FENp/DQKGMal0ApXKVYriKCEz86e2p2gaPOBXpPexc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qH3kqRN/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=u/NKVufvWnn+LlWyFSgD7YWYvWIVbNU90/JKuO2s83PmF8bAfDCyjkChK3Tw6At8tY6VPlrH8L9gChFHEkiD8PfU9wp4Z7P9EvIfn7ZOh5er3dSPqMMDT6FTnXdiU5JJ8Kt5UeyYSqkchiJPjjpUhC+6Zfsek7vs/0IXHUzNNGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TzaUSgnU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qH3kqRN/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8358C4CEF7;
-	Tue, 17 Mar 2026 17:14:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TzaUSgnU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88AD6C4CEF7;
+	Tue, 17 Mar 2026 17:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773767642;
-	bh=f7Vyz9Wq4jTUeRMCaiZwwIGxDfbtf+lB/80pxAC5A4k=;
+	s=korg; t=1773767647;
+	bh=QFVg//+h6Re0Tc2xoKx+/sSjlSOipII10FbcNnMGk0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qH3kqRN/bhGzy2KmgfQeML3BQy0U/wNCieIZfKM2ENqJb9HzK48/2L06vsHS+P+N6
-	 GgbJasMZLPcWl12Fbkb5tPFYNNHHjcgFVBLoNJkM1E1/o4RAj73FOqY8e16D77tu8W
-	 OQfPY8hjU26XUS+THuzzucqoX4OTapL7xtHDrPQg=
+	b=TzaUSgnUHecK963fpidDjy+D8PsGvC829dO02juRYQ1wTX6Fw4Di8rokkSt8N0c5/
+	 WAGGf62Z5bLuD/Mfi/iJVctCUazTMlZvV9PhERcSlJpjrK8yG0J5o7Z5mODAOKBvE6
+	 nAGxG7HEC6hk+XEjzyO3e9BPK0khEAhyywzC7o+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Dayu Jiang <jiangdayu@xiaomi.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.18 129/333] usb: xhci: Fix memory leak in xhci_disable_slot()
-Date: Tue, 17 Mar 2026 17:32:38 +0100
-Message-ID: <20260317163004.147754500@linuxfoundation.org>
+Subject: [PATCH 6.18 130/333] usb: xhci: Prevent interrupt storm on host controller error (HCE)
+Date: Tue, 17 Mar 2026 17:32:39 +0100
+Message-ID: <20260317163004.184352266@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317162959.345812316@linuxfoundation.org>
 References: <20260317162959.345812316@linuxfoundation.org>
@@ -44,72 +44,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Dayu Jiang <jiangdayu@xiaomi.com>
 
-commit c1c8550e70401159184130a1afc6261db01fc0ce upstream.
+commit d6d5febd12452b7fd951fdd15c3ec262f01901a4 upstream.
 
-xhci_alloc_command() allocates a command structure and, when the
-second argument is true, also allocates a completion structure.
-Currently, the error handling path in xhci_disable_slot() only frees
-the command structure using kfree(), causing the completion structure
-to leak.
+The xHCI controller reports a Host Controller Error (HCE) in UAS Storage
+Device plug/unplug scenarios on Android devices. HCE is checked in
+xhci_irq() function and causes an interrupt storm (since the interrupt
+isn’t cleared), leading to severe system-level faults.
 
-Use xhci_free_command() instead of kfree(). xhci_free_command() correctly
-frees both the command structure and the associated completion structure.
-Since the command structure is allocated with zero-initialization,
-command->in_ctx is NULL and will not be erroneously freed by
-xhci_free_command().
+When the xHC controller reports HCE in the interrupt handler, the driver
+only logs a warning and assumes xHC activity will stop as stated in xHCI
+specification. An interrupt storm does however continue on some hosts
+even after HCE, and only ceases after manually disabling xHC interrupt
+and stopping the controller by calling xhci_halt().
 
-This bug was found using an experimental static analysis tool we are
-developing. The tool is based on the LLVM framework and is specifically
-designed to detect memory management issues. It is currently under
-active development and not yet publicly available, but we plan to
-open-source it after our research is published.
+Add xhci_halt() to xhci_irq() function where STS_HCE status is checked,
+mirroring the existing error handling pattern used for STS_FATAL errors.
 
-The bug was originally detected on v6.13-rc1 using our static analysis
-tool, and we have verified that the issue persists in the latest mainline
-kernel.
+This only fixes the interrupt storm. Proper HCE recovery requires resetting
+and re-initializing the xHC.
 
-We performed build testing on x86_64 with allyesconfig using GCC=11.4.0.
-Since triggering these error paths in xhci_disable_slot() requires specific
-hardware conditions or abnormal state, we were unable to construct a test
-case to reliably trigger these specific error paths at runtime.
-
-Fixes: 7faac1953ed1 ("xhci: avoid race between disable slot command and host runtime suspend")
 CC: stable@vger.kernel.org
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Signed-off-by: Dayu Jiang <jiangdayu@xiaomi.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260304223639.3882398-2-mathias.nyman@linux.intel.com
+Link: https://patch.msgid.link/20260304223639.3882398-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-ring.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -4139,7 +4139,7 @@ int xhci_disable_slot(struct xhci_hcd *x
- 	if (state == 0xffffffff || (xhci->xhc_state & XHCI_STATE_DYING) ||
- 			(xhci->xhc_state & XHCI_STATE_HALTED)) {
- 		spin_unlock_irqrestore(&xhci->lock, flags);
--		kfree(command);
-+		xhci_free_command(xhci, command);
- 		return -ENODEV;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -3224,6 +3224,7 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd
+ 
+ 	if (status & STS_HCE) {
+ 		xhci_warn(xhci, "WARNING: Host Controller Error\n");
++		xhci_halt(xhci);
+ 		goto out;
  	}
  
-@@ -4147,7 +4147,7 @@ int xhci_disable_slot(struct xhci_hcd *x
- 				slot_id);
- 	if (ret) {
- 		spin_unlock_irqrestore(&xhci->lock, flags);
--		kfree(command);
-+		xhci_free_command(xhci, command);
- 		return ret;
- 	}
- 	xhci_ring_cmd_db(xhci);
 
 
