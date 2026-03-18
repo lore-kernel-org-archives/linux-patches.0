@@ -1,83 +1,234 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AE26383C8E;
-	Wed, 18 Mar 2026 11:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id B8F1A333440
+	for <patches@lists.linux.dev>; Wed, 18 Mar 2026 11:59:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773834850; cv=none; b=NggIRQ6ySzYHIE4TBi6HzYocnA03JeC6eTYQBtq7R3PEdGpjkig21uWbYpAcETx7T2dkgCv2BFNAEbdPBnv9qRAtSu1kgMAbFWVlr/36HjPloXws5g1pGR9yUAYvC7thFAJQE40aON1lqIMXJF6OXhs6DMk9N95BHiQzBTA/SfY=
+	t=1773835191; cv=none; b=lwgTsQQuOppLcf36pcxlEiMmN/uTQoPmtvSRIsT6Rw7fscZnj1d2RbGs3/vzwSxE/u4KauvzUmToaWUphhoxIIXpKXs7EIIFGa7rHvHpwc4BX6odhdXBee66f+j9gzS6DtoS31Ls7q3JUlVs75Gz3/+k8zrr452tTw3g7wcZBUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773834850; c=relaxed/simple;
-	bh=xna2Qv5/4+vYiNyKiIvdpy6Tz/hk4ZsegI8AL++TUYQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=UFqCGPEda1Cfyo7XS2y9eHbYpxDza0Xvny6/wJlsIt2X4vkIOO9Zx+FU+HlkiSBbNlUi1W0piDxUPF+7vYP9HdhjZE/O1FBRE5xGlh6xEfFvi3/A1+9clpGSB65Mwa3M8fmRUgqwZhwSa4NrXQppRDmuiWTRwsm4q/oS0ZyOPew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ugjzPJgQ; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ugjzPJgQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF4BC19421;
-	Wed, 18 Mar 2026 11:54:09 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773834849;
-	bh=xna2Qv5/4+vYiNyKiIvdpy6Tz/hk4ZsegI8AL++TUYQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ugjzPJgQ7DRRP69RVdAJY8t3Uv9V1CwLtCVR84vqoLFGvTEVGID+/auVpthB2WT//
-	 4Hb1EPt7hvDSeO/SU4dm/KzNOYS6fxqBY7knlmTrEijR1Pr6UCBbPXuqWhFFIWeVZv
-	 Iy1lR4e46ibvP6zprKdttsvdozU5zTGbxyW30tYM=
-Date: Wed, 18 Mar 2026 12:54:06 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Ronald Warsow <rwarsow@gmx.de>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, conor@kernel.org, hargar@microsoft.com,
-	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.19 000/378] 6.19.9-rc1 review
-Message-ID: <2026031858-ungodly-corrosive-37eb@gregkh>
-References: <20260317163006.959177102@linuxfoundation.org>
- <10df8843-67e6-4830-955c-befc783f25df@gmx.de>
+	s=arc-20240116; t=1773835191; c=relaxed/simple;
+	bh=QI4WHSZb/3wJC+HI0KZIFSroISv/nE1V/wB2HFAYPSk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=syZeU3JxHmOzv6U2pD78FAbwOYH66yK5fiVoR4Di7HNPbhQn/Fqc89RRvPgcp+JXjhq+n995sQ59RwYw/oqJ371Qoah+djE+HSMaj+YaAaOdrAke6U0PVi79wYkWDCTJZKUj5q40orLIZ6SW2mS6ZDdxUbzl/KBtpWd2u1HOoC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 2D2F71E7D;
+	Wed, 18 Mar 2026 04:59:42 -0700 (PDT)
+Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 923B63F73B;
+	Wed, 18 Mar 2026 04:59:46 -0700 (PDT)
+Message-ID: <d4460f04-813f-4a6f-ad1f-6f2e5bb1c9fa@arm.com>
+Date: Wed, 18 Mar 2026 11:59:45 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <10df8843-67e6-4830-955c-befc783f25df@gmx.de>
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH 00/11] x86,fs/resctrl: Improve resctrl quality and
+ consistency
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+ tglx@linutronix.de, dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
+ peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1772476561.git.reinette.chatre@intel.com>
+ <8be6feef-b7a5-4fd7-9bc0-9aeed7ef0fda@arm.com>
+ <e334f16f-2576-43af-b64d-013d7a14f291@intel.com>
+ <38e5c384-4d08-425e-a4fb-a63913be35ac@arm.com>
+ <f37db924-dc65-432b-ae48-ddd986b3efd9@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <f37db924-dc65-432b-ae48-ddd986b3efd9@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Tue, Mar 17, 2026 at 06:47:30PM +0100, Ronald Warsow wrote:
-> Hi
+Hi Reinette,
+
+On 3/17/26 18:09, Reinette Chatre wrote:
+> Hi Ben,
 > 
-> compile runs in an error:
+> On 3/17/26 3:25 AM, Ben Horgan wrote:
+>> On 3/16/26 18:18, Reinette Chatre wrote:
+>>> On 3/16/26 10:44 AM, Ben Horgan wrote:
+>>>> On 3/2/26 18:46, Reinette Chatre wrote:
+>>> ...
+>>>> One related issue I've just noticed is that when ABMC and mbm_assign_on_mkdir are
+>>>> enabled the creation of MON/CTRL_MON directories may succeed but an error message
+>>>> is written to last_cmd_status. E.g.
+>>>>
+>>>> /sys/fs/resctrl# mkdir mon_groups/new5
+>>>> /sys/fs/resctrl# cat info/last_cmd_status
+>>>> Failed to allocate counter for mbm_total_bytes in domain 2
+>>>>
+>>>> The failure is ignored, as expected, in rdt_assign_cntrs() but the last_cmd_status
+>>>> is never cleared. I think this could be fixed by:
+>>>>
+>>>> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+>>>> index 62edb464410a..396f17ed72c6 100644
+>>>> --- a/fs/resctrl/monitor.c
+>>>> +++ b/fs/resctrl/monitor.c
+>>>> @@ -1260,6 +1260,8 @@ void rdtgroup_assign_cntrs(struct rdtgroup *rdtgrp)
+>>>>         if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
+>>>>                 rdtgroup_assign_cntr_event(NULL, rdtgrp,
+>>>>                                            &mon_event_all[QOS_L3_MBM_LOCAL_EVENT_ID]);
+>>>> +
+>>>> +       rdt_last_cmd_clear();
+>>>>  }
+>>>>
+>>>> Is this right thing to do? Let me know if you want a proper patch.
+>>>
+>>> Letting group be created without any counters assigned while writing the error
+>>> to last_cmd_status is the intended behavior. If the last_cmd_status buffer is cleared
+>>> at this point then user space will never have the opportunity to see the message that
+>>> contains the details.
+>>>
+>>> It did not seem appropriate to let resource group creation fail when no counters
+>>> are available. I see that the documentation is not clear on this. What do you think
+>>> of an update to documentation instead? Would something like below help clarify behavior?
+>>>
+>>> diff --git a/Documentation/filesystems/resctrl.rst b/Documentation/filesystems/resctrl.rst
+>>> index ba609f8d4de5..20dc58d281cf 100644
+>>> --- a/Documentation/filesystems/resctrl.rst
+>>> +++ b/Documentation/filesystems/resctrl.rst
+>>> @@ -478,6 +478,12 @@ with the following files:
+>>>  	  # cat /sys/fs/resctrl/info/L3_MON/mbm_assign_on_mkdir
+>>>  	  0
+>>>  
+>>> +	Automatic counter assignment is done with best effort. If auto assignment
+>>> +	is enabled but there are not enough available counters then monitor group
+>>> +	creation could succeed while one or more events belonging to the group may
+>>> +	not have a counter assigned. Consult last_cmd_status for details during
+>>> +	such scenario.
+>>> +
+>>
+>> This does the improve the situation but the multiple domain failure behaviour depends
+>> on the order the domains are iterated through. This is stable as the list is sorted but
+>> does seem a bit complicated.
+>> I.e. if you have two domains, with ids 2 and 3, with no counters remaining on domain 2 but
+>> some on domain 3 then rdtgroup_assign_cntr_event() will fail early and the counter won't
+>> be assigned for domain 3 but the last_cmd_status will only be about domain 2. The user
+>> either needs to know a failure at one domain means all higher domains will not be
+>> considered for that counter or look at the new mbm_L3_assignments to understand what's happened.
+>> In this case we have:
+>>
+>> /sys/fs/resctrl# cat info/L3_MON/mbm_assign_on_mkdir
+>> 1
+>> /sys/fs/resctrl# cat info/L3_MON/available_mbm_cntrs
+>> 2=0;3=1
+>> /sys/fs/resctrl# mkdir mon_groups/new
+>> /sys/fs/resctrl# cat info/last_cmd_status
+>> Failed to allocate counter for mbm_total_bytes in domain 2
+>> /sys/fs/resctrl# cat mon_groups/new/mbm_L3_assignments
+>> mbm_total_bytes:2=_;3=_
 > 
->   LD      vmlinux.unstripped
->   BTFIDS  vmlinux.unstripped
-> WARN: resolve_btfids: unresolved symbol kthread_exit
-> make[2]: *** [scripts/Makefile.vmlinux:72: vmlinux.unstripped] Error 255
-> make[2]: *** Deleting file 'vmlinux.unstripped'
-> make[1]: *** [/home/DATA/DEVEL/linux/Makefile:1277: vmlinux] Error 2
-> make: *** [Makefile:248: __sub-make] Error 2
+> Good point.
+> 
+>>
+>> Would it be better for each domain to be considered even if a previous failure occurred or
+>> is this now a fixed behaviour? For illustration:
+> 
+> I do not believe this needs to be fixed.
+> 
+>>
+>> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+>> index 62edb464410a..8e061bce9742 100644
+>> --- a/fs/resctrl/monitor.c
+>> +++ b/fs/resctrl/monitor.c
+>> @@ -1248,18 +1248,25 @@ static int rdtgroup_assign_cntr_event(struct rdt_l3_mon_domain *d, struct rdtgro
+>>  void rdtgroup_assign_cntrs(struct rdtgroup *rdtgrp)
+>>  {
+>>         struct rdt_resource *r = resctrl_arch_get_resource(RDT_RESOURCE_L3);
+>> +       struct rdt_l3_mon_domain *d;
+>>
+>>         if (!r->mon_capable || !resctrl_arch_mbm_cntr_assign_enabled(r) ||
+>>             !r->mon.mbm_assign_on_mkdir)
+>>                 return;
+>>
+>> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID))
+>> -               rdtgroup_assign_cntr_event(NULL, rdtgrp,
+>> -                                          &mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID]);
+>> +       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_TOTAL_EVENT_ID)) {
+>> +               list_for_each_entry(d, &r->mon_domains, hdr.list) {
+>> +                       rdtgroup_assign_cntr_event(d, rdtgrp,
+>> +                                                  &mon_event_all[QOS_L3_MBM_TOTAL_EVENT_ID]);
+>> +               }
+>> +       }
+>>
+>> -       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID))
+>> -               rdtgroup_assign_cntr_event(NULL, rdtgrp,
+>> -                                          &mon_event_all[QOS_L3_MBM_LOCAL_EVENT_ID]);
+>> +       if (resctrl_is_mon_event_enabled(QOS_L3_MBM_LOCAL_EVENT_ID)) {
+>> +               list_for_each_entry(d, &r->mon_domains, hdr.list) {
+>> +                       rdtgroup_assign_cntr_event(d, rdtgrp,
+>> +                                                  &mon_event_all[QOS_L3_MBM_LOCAL_EVENT_ID]);
+>> +               }
+>> +       }
+>>  }
+> 
+> With a solution like this last_cmd_status could potentially contain multiple lines, one
+> line per domain that failed. last_cmd_status is 512 bytes so if this is a system with 
+> many domains there is a risk of overflow and user space not seeing all failures.
+> That may be ok?
+
+Probably but maybe we can do better. I wonder that given that we know we are trying to allocate
+counters in all domains the information in last_cmd_status could summarize which
+domains failed. 512 bytes isn't that large so a hex encoded bit map or something else information
+dense would be needed. This does make last_cmd_status a bit less human readable so may not
+be the way to go.
+
+> 
+> I think this can be simplified within rdt_assign_cntr_event() though. Consider:
+> 
+> diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+> index 49f3f6b846b2..a6a791a15e30 100644
+> --- a/fs/resctrl/monitor.c
+> +++ b/fs/resctrl/monitor.c
+> @@ -1209,12 +1209,13 @@ static int rdtgroup_alloc_assign_cntr(struct rdt_resource *r, struct rdt_l3_mon_
+>   * NULL; otherwise, assign the counter to the specified domain @d.
+>   *
+>   * If all counters in a domain are already in use, rdtgroup_alloc_assign_cntr()
+> - * will fail. The assignment process will abort at the first failure encountered
+> - * during domain traversal, which may result in the event being only partially
+> - * assigned.
+> + * will fail. Ignore errors when attempting to assign a counter to all domains
+> + * since only some domains may have counters available and goal is to assign
+> + * counters where possible. Only caller providing @d of NULL is
+> + * rdtgroup_assign_cntrs() that ignores errors.
+>   *
+>   * Return:
+> - * 0 on success, < 0 on failure.
+> + * 0 on success when @d is specified, 0 always when @d is NULL, < 0 on failure.
+>   */
+>  static int rdtgroup_assign_cntr_event(struct rdt_l3_mon_domain *d, struct rdtgroup *rdtgrp,
+>  				      struct mon_evt *mevt)
+> @@ -1223,11 +1224,8 @@ static int rdtgroup_assign_cntr_event(struct rdt_l3_mon_domain *d, struct rdtgro
+>  	int ret = 0;
+>  
+>  	if (!d) {
+> -		list_for_each_entry(d, &r->mon_domains, hdr.list) {
+> -			ret = rdtgroup_alloc_assign_cntr(r, d, rdtgrp, mevt);
+> -			if (ret)
+> -				return ret;
+> -		}
+> +		list_for_each_entry(d, &r->mon_domains, hdr.list)
+> +			rdtgroup_alloc_assign_cntr(r, d, rdtgrp, mevt);
+>  	} else {
+>  		ret = rdtgroup_alloc_assign_cntr(r, d, rdtgrp, mevt);
+>  	}
+
+That does the job but is it simpler to delete rdtgroup_assign_cntr_event()
+and call rdtgroup_alloc_assign_cntr() directly from rdtgroup_assign_cntrs()
+and rdtgroup_modify_assign_state() rather than special casing it further?
+
+Thanks,
+
+Ben
+
 > 
 > 
-> if I do:
-> 
-> git revert f5ee297b23d843d4ae690595aa29e8f5baeaecf9 --no-edit
-> 
-> see:
-> 
-> https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git/commit/?h=linux-6.19.y&id=f5ee297b23d843d4ae690595aa29e8f5baeaecf9
-> 
-> 
-> 
-> all is fine here on x86_64 (Intel 11th Gen. CPU)
-> 
-> Thanks
-> 
-> Tested-by: Ronald Warsow <rwarsow@gmx.de>
+> Reinette
 > 
 
-I've fixed this now, thanks!
-
-greg k-h
