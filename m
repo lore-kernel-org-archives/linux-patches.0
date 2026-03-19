@@ -1,108 +1,109 @@
-Received: from smtpbg154.qq.com (smtpbg154.qq.com [15.184.224.54])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD2A36BCD7
-	for <patches@lists.linux.dev>; Thu, 19 Mar 2026 06:59:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=15.184.224.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A6239D6EB;
+	Thu, 19 Mar 2026 07:11:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773903557; cv=none; b=puxSk6XQZQzdRXWvN0YtB6ofdqFRpcwvLNvVOsACxDb7pivRHYGRVXTZpH30Xzn/CMQpA33c9nwZyZUo+WnwLoc/GXsGHEvZ4dZGOI80T18MfPRl9NpIqfDrM/nmgmfW67Qe49JN9y47eAOuJkUsbpiWy5Mzi9WiZaThs8KgzDI=
+	t=1773904303; cv=none; b=VrX1b69rmS37ushu6NQrcYG4H3lX6p9NDeuaWqe0y0PPtMQSEOD9VsN6l8yoA9m+VLaDAWCCWOEHq/uFKs7rkwlry1f0Zx+eQj0Rwtpcg0il2AVbKoMsYhsjOtZn0F0n8BCUzR2ajsNw4IWn+kWEQooVX6A9jyhfAyN7Yot/xSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773903557; c=relaxed/simple;
-	bh=tfSo07p9kP2k0yOq/vyE8jSA85R5JBaNYmOl4Di8iWs=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=Dmy6xIo0jTkixG6IDUlsRzpYXECPwSLlvY9w+j9znguOBQU3JXkdaC5v8ys5peWsEfjrPLQdvbBowmJj0VD4P5ZkBsQXXf8JTC3b7cJWsUXJGePDC2g59RRHtTattFnL2GFU7wvEVsK+SPNhkYysKnN5/ih+BMwvpV7RYIa/JsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=eYVb1JgF; arc=none smtp.client-ip=15.184.224.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
+	s=arc-20240116; t=1773904303; c=relaxed/simple;
+	bh=kXY1gYLHGqK32ypVhPf+B2coaNzQbaU4YGC4a5J2YUA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=j5MSVPKVAFkYNNOlSE/vhOadxgZC1/8GgTXZS8euFc4mSB/s4gjxNtYlyxz7JHXUe7V73DYdz8P8m3TlZvKIy6BQsdADjsImLMMUzTkpTq/jDsZWpApOSfnrDXXMms9wqnAteLpSxTm4UXQ46/kx0X/Ar199/D/FZN9O9Ps+OQk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pptqe5Ai; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="eYVb1JgF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
-	s=onoh2408; t=1773903502;
-	bh=tfSo07p9kP2k0yOq/vyE8jSA85R5JBaNYmOl4Di8iWs=;
-	h=From:To:Subject:Date:Message-Id:MIME-Version;
-	b=eYVb1JgFKg1jOEJ/VH1RJrDT3VdQa1mu4/RCCuTo2rOTLGstJkpz3kW/QqRXQRz7E
-	 FDoOxgD6dXm2Fbr1qMSSbn2N8lvTBVbi8Ws4YDtoMCKsivKN/8fBBk87qfP35tNDJ6
-	 7UmdR/cCPN7lMv4IP+6f0M7WDIhfXlQWNAdttrPE=
-X-QQ-mid: zesmtpip3t1773903495t1cdd0f2e
-X-QQ-Originating-IP: Z14SeiRpFBicsPXaWHT63VJxEZPfcm7o6/zAG1l1+gw=
-Received: from localhost.localdomain ( [localhost])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 19 Mar 2026 14:58:13 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 4130904497638004089
-EX-QQ-RecipientCnt: 21
-From: Wentao Guan <guanwentao@uniontech.com>
-To: gregkh@linuxfoundation.org
-Cc: achill@achill.org,
-	akpm@linux-foundation.org,
-	broonie@kernel.org,
-	conor@kernel.org,
-	f.fainelli@gmail.com,
-	hargar@microsoft.com,
-	jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org,
-	linux@roeck-us.net,
-	lkft-triage@lists.linaro.org,
-	patches@kernelci.org,
-	patches@lists.linux.dev,
-	pavel@nabladev.com,
-	rwarsow@gmx.de,
-	shuah@kernel.org,
-	sr@sladewatkins.com,
-	stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com,
-	torvalds@linux-foundation.org,
-	Wentao Guan <guanwentao@uniontech.com>
-Subject: Re: [PATCH 6.18 000/335] 6.18.19-rc2 review
-Date: Thu, 19 Mar 2026 14:57:14 +0800
-Message-Id: <20260319065714.925454-1-guanwentao@uniontech.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20260318122621.714862892@linuxfoundation.org>
-References: <20260318122621.714862892@linuxfoundation.org>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pptqe5Ai"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6D1C19424;
+	Thu, 19 Mar 2026 07:11:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773904302;
+	bh=kXY1gYLHGqK32ypVhPf+B2coaNzQbaU4YGC4a5J2YUA=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pptqe5Ai+H1IH940ofLccFd+Do0TDzRWS/WDMelouc7p5fLZWHk+iG4Z6vxjltrkf
+	 3/eInx3t4MMQJBls4ObZegxiy6lV/BvjJeNS4cv+wkSOFi+qkLGfN7zo9ENbrrBCe0
+	 fdc+JT7dHle8/SaP1itGEejDgLSpd65H8CYVJk/Y8ZT0A5DCS/qkUYWcSB796VfLZh
+	 RdcHaUxq7Cuuiq8IknExjtNfDxDOYSug4/Dii767CrPqSf9deG4cEEAGf5swQzrqDE
+	 +jxWV7J261lms62eWeIkVlOcsw3IA3NM3gXu/2kHqpZFFOwY5S8Na0vMwWUH1wLi2h
+	 9ly7N0cz/o/7g==
+Message-ID: <d80f17e4-bd3f-4053-bdf5-671439d5b72e@kernel.org>
+Date: Thu, 19 Mar 2026 08:11:39 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
-X-QQ-XMAILINFO: OPf0glEsUFOQi8r/9kwQt1mbs/ywgIYLyJQP1Zj/+BUjQPNSnXA2JHeb
-	qWviGXUtBZgz7ljNNTSg1bHdTDIg7wRRsmS2+ZlXlrFHOw0gqoB2WYizLfC1OBGP+r0rhLP
-	B+/Uh6JweFKAMZl3IduR1jupe2x2mEhcC3vsiIRjtBbTX3/xs+c29FF+QlAggCAsBA3AOZ/
-	Cck4lKz5xWi2EBnygq+clrzoEz3Y0AJCEeRFLx1Axt674i487NPJ0m7k/HxWZlPuCz/vWNb
-	zFYEoJT7raGLtI0BUwoF6/gaOnB7sx7zdiJfUT+igMZZ85MvN1iTAKR7hQKEvp7alOo6LV5
-	B5V4iDqFjOvtkA2lqzINsoGwg/GVPBiiCSxMv0lnxT77USRyzoK7bYsyUcTnnaXSlgzETst
-	VjXG4OoVwebsYVzQ6CEJBEnawhE60ELxQZXuKzJDmMhYGQjr8q8VAtBISG0R01Q3CKOOt4g
-	HmN9/HvvcS7pDjyxuLyCgoUL1E+mnY3yjStrNKViSY9rOiIsRKbneYRDa/0xEdNCuw17/WS
-	/MabBTNl9YqBCnH2LLf6qtUgkbFoHDUyWU2l19Hb3FZCZu8uQZy0rkblc5ezVn1EPJfWLq5
-	rgtYD3Eeny6tkQEICwGumjpmTpPfmJVYwNbai8gWxP2E7i5WGg99FZ0cKWNxkhoCiH1zBPP
-	KDVvgMoq6fqTiJtuPCGosA+td8PL/f7yNruy5Fwdysah9HpN8LxjZOBokqplIbJpeofUOp3
-	ogBkSEg4ZbS+PVUYA5J7X3sf1hg7Mxb8Ra5f9q6fiatnDdGtVxijV/5w3p+116wyDxQ2RbL
-	L2+EyWXySdmnZy0XXWiTJ0v2eI7g5Bj0Zb4fFnSN0izUtmlSFNcAcshnMh7B+edzTTVWQqv
-	/WExbnvTC2QRNxCAuBPzal8LcS2TF7q6fA/p+Uza3g2Q0fIurveF2mqVc91XxzOvNnOpHhO
-	mMopUplJUs9LxZ1wI6R/LTvnWweP3pZRzP1R/sIaoxDX+p+l6jQmmEORtj2y2yxdV3q2Oa6
-	lIP4UveCISOwTGsFbdXpt5ellYYEw=
-X-QQ-XMRINFO: NS+P29fieYNwqS3WCnRCOn9D1NpZuCnCRA==
-X-QQ-RECHKSPAM: 0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.19 240/378] sched_ext: Fix starvation of scx_enable()
+ under fair-class saturation
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Tejun Heo <tj@kernel.org>
+References: <20260317163006.959177102@linuxfoundation.org>
+ <20260317163015.844144806@linuxfoundation.org>
+Content-Language: en-US
+From: Jiri Slaby <jirislaby@kernel.org>
+Autocrypt: addr=jirislaby@kernel.org; keydata=
+ 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
+In-Reply-To: <20260317163015.844144806@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello,
+On 17. 03. 26, 17:33, Greg Kroah-Hartman wrote:
+> 6.19-stable review patch.  If anyone has any objections, please let me know.
+> 
+> ------------------
+> 
+> From: Tejun Heo <tj@kernel.org>
+> 
+> commit b06ccbabe2506fd70b9167a644978b049150224a upstream.
 
-Now build success in our x86,arm64,loongarch config without error.
+This one likely needs also:
+2fcfe5951eb2 sched_ext: Use WRITE_ONCE() for the write side of 
+scx_enable helper pointer
 
-Tested-by: Wentao Guan <guanwentao@uniontech.com>
-
-BRs
-Wentao Guan
-
-Log:
-strings vmlinux-* | grep "Linux version 6.18.19-rc2"
-Linux version 6.18.19-rc2-g1cc312cd0408-dirty (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.18.19-rc2-g1cc312cd0408-dirty (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #25.01.00.17 SMP PREEMPT_DYNAMIC Thu Mar 19 13:43:54 CST 2026
-Linux version 6.18.19-rc2-loong64-desktop-hwe-g1cc312cd0408-dirty (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.18.19-rc2-loong64-desktop-hwe-g1cc312cd0408-dirty (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #25.01.00.17 SMP PREEMPT_DYNAMIC Thu Mar 19 14:25:35 CST 2026
-Linux version 6.18.19-rc2-g1cc312cd0408-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC
-Linux version 6.18.19-rc2-g1cc312cd0408-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #25.01.00.17 SMP PREEMPT_DYNAMIC Thu Mar 19 12:35:44 CST 2026
+thanks,
+-- 
+js
+suse labs
 
