@@ -1,128 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7103CCA08;
-	Thu, 19 Mar 2026 12:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DBC3D16F7;
+	Thu, 19 Mar 2026 12:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773921749; cv=none; b=g+CbXDb/CGxriKhnpTh5YqAJoe8HKxvaR/uTVgP7OBEJ/uZNOjKTQHvClhi+TcTnoWJP4rSmC/YSgn5woF/0MNmqi8i8ttrn/snv57N0sOeEAmT9mIhCIG4Sq7a+75ZNiesMdjSBJRppOVlRO007URav4g5r2eFnxvyMPmwCrpE=
+	t=1773921973; cv=none; b=q2Jgom0aA6cfsFL9zwssKkfNhrSHJQooZm5wEsyoUVdEkc39wwpxbER63N/DAtnoIoIb+d3CMZBO/YJuaF2IPsrQnl4e5qN0lsCvsKU4MvP616q7WJBh+d4XtiQzjgavfy+8nDDQWWoLWR1bKWlOFAoinOZ/V5WBvTSBbOHBPok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773921749; c=relaxed/simple;
-	bh=8jmJNCgZGx85ynWXPJ7+yOg8GAcNkBqGAW949+P1Uy4=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=X/6GdTAUuRndCSgpxlhrmVCv2izYOssmoCBRu38hD0g1Jm1UPQ2jilbIPy81No/0HQgfbCBL1thzGYAokXkdTvUc6umT1UsnshlOkTvrmbwRCE2ozbtIRadTcliJbT8BoscWhT5H2SJ1UoJOAoeMJbE6fVY+dI4Hg86HM80kPWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbkAqobb; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773921973; c=relaxed/simple;
+	bh=iTkE+K3nUYUQ+3z30Cr8X0Bzm1oelJd+pJ9uHSVtPsM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=CvH9vxytL74b/8coo8Irii1RpWyiB5hodoG7CfB0+KIzz2BP3H+ut11umjbVihWz+oscZoDYkjjicn2uOR11QktlZzKLnXlLiOJhPRQrH0dUl7nGfzRw6zYXqTneeQV0aCJ0sQesClbjwWlwLmlohq+x4w8aPoItZZVDjG8yhmA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=jIggeOtj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbkAqobb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A80EC19424;
-	Thu, 19 Mar 2026 12:02:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773921748;
-	bh=8jmJNCgZGx85ynWXPJ7+yOg8GAcNkBqGAW949+P1Uy4=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=QbkAqobbXuMO1CSBPyYqV50tCvtPvjd19550kzcz5i9j5rcB0u/2uxyfauom3uXVU
-	 /1bsKta+MKswIM1vQSfIHlxVJVWYdcO273c5CmCTVE4f6GbDE17eWWn8wsxDybMjQ5
-	 enH8P2y8E3GVnwilzNQgSkdB+C3VHzx15da1qAHc=
-Subject: Patch "rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access" has been added to the 6.6-stable tree
-To: frederic@kernel.org,gregkh@linuxfoundation.org,jiangshanlai@gmail.com,jianqkang@sina.cn,joel@joelfernandes.org,josh@joshtriplett.org,mathieu.desnoyers@efficios.com,neeraj.upadhyay@kernel.org,patches@lists.linux.dev,paulmck@kernel.org,qiang.zhang1211@gmail.com,quic_neeraju@quicinc.com,rostedt@goodmis.org
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Thu, 19 Mar 2026 13:01:32 +0100
-In-Reply-To: <20260304025724.2365669-1-jianqkang@sina.cn>
-Message-ID: <2026031932-rare-cylinder-744e@gregkh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="jIggeOtj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C498DC2BC87;
+	Thu, 19 Mar 2026 12:06:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773921973;
+	bh=iTkE+K3nUYUQ+3z30Cr8X0Bzm1oelJd+pJ9uHSVtPsM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=jIggeOtjYgmg6CcxAIYms7YoIXuBO6Cut9QuitgmStN062OphWNQQKKQvIKWrWnIN
+	 yWMEfMfYiLZgoPtCyaN0Z28vj729qREeTlhUE4f7KLB3ZSd8P54k8teLW64SdwfwMP
+	 oH1pXopUAE6I5vfbJkPcP1gVpBPQ6xyrgXZxXPkEyXva/d47nklB5RQMaU1P0Gvs/L
+	 zlOztQsI2dKsXweh4inYrO1QA7N7Dxkv+GBM043Y8vWZcWwgTssBoBVS+AX1MWRict
+	 cB+PwxxRGX8Ey3y931YrVj4vzcj+fRpMbk9DN2eoYtOtuR143MF7saNqZjKwlTbnT4
+	 rep2Hi8okvXlg==
+Date: Thu, 19 Mar 2026 12:06:05 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.18 000/335] 6.18.19-rc2 review
+Message-ID: <70483da9-089d-40a1-a8f4-94a62032028e@sirena.org.uk>
+References: <20260318122621.714862892@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="hCdT4vb5e9UhsWH4"
+Content-Disposition: inline
+In-Reply-To: <20260318122621.714862892@linuxfoundation.org>
+X-Cookie: Given my druthers, I'd druther not.
 
 
-This is a note to let you know that I've just added the patch titled
+--hCdT4vb5e9UhsWH4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-    rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access
+On Wed, Mar 18, 2026 at 01:27:58PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.18.19 release.
+> There are 335 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-to the 6.6-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Tested-by: Mark Brown <brooniekernel.org>
 
-The filename of the patch is:
-     rcu-nocb-fix-possible-invalid-rdp-s-nocb_cb_kthread-pointer-access.patch
-and it can be found in the queue-6.6 subdirectory.
+--hCdT4vb5e9UhsWH4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmm75q0ACgkQJNaLcl1U
+h9CAJgf+L5Hc+n5x75vqCr+nlldZXGB6XRKvrjjTofYKactKH6MV13HJbkrgbgU2
+w7KAIQBPgxu/8FFDpHlSbFZ6gJ0btCijOsF8P9ffV/TvaPj3ppMyLq7zIXunC/je
+zA9Q0ODyObymxe62LnQJLF64JBLXiEmHNhOP5eleau0WVqhgDrG8AC8zSqNi0rto
+TeMOyX3doS/IdTZwtDuEhP88Bf/JXqaLLwm0eXJRpeqJ4ZeGGURH8gs12lcnofB/
+PPJBHd3pKZ/z631BHHzfDxGa+aaj5+wGq7udqsNi92aM9AgTSgdvDTvM93LU0m85
+uDjnz6cGT3gLNL1EzewMwf7jwYyWdg==
+=SyZs
+-----END PGP SIGNATURE-----
 
-From stable+bounces-222973-greg=kroah.com@vger.kernel.org Wed Mar  4 03:59:38 2026
-From: Jianqiang kang <jianqkang@sina.cn>
-Date: Wed,  4 Mar 2026 10:57:24 +0800
-Subject: rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, qiang.zhang1211@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com, josh@joshtriplett.org, rostedt@goodmis.org, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com, joel@joelfernandes.org, rcu@vger.kernel.org, neeraj.upadhyay@kernel.org
-Message-ID: <20260304025724.2365669-1-jianqkang@sina.cn>
-
-From: Zqiang <qiang.zhang1211@gmail.com>
-
-[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
-
-In the preparation stage of CPU online, if the corresponding
-the rdp's->nocb_cb_kthread does not exist, will be created,
-there is a situation where the rdp's rcuop kthreads creation fails,
-and then de-offload this CPU's rdp, does not assign this CPU's
-rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
-rdp's->rdp_gp->nocb_gp_kthread is still valid.
-
-This will cause the subsequent re-offload operation of this offline
-CPU, which will pass the conditional check and the kthread_unpark()
-will access invalid rdp's->nocb_cb_kthread pointer.
-
-This commit therefore use rdp's->nocb_gp_kthread instead of
-rdp_gp's->nocb_gp_kthread for safety check.
-
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- kernel/rcu/tree_nocb.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
-
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1221,7 +1221,6 @@ static long rcu_nocb_rdp_offload(void *a
- 	struct rcu_segcblist *cblist = &rdp->cblist;
- 	unsigned long flags;
- 	int wake_gp;
--	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
- 
- 	WARN_ON_ONCE(rdp->cpu != raw_smp_processor_id());
- 	/*
-@@ -1231,7 +1230,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	if (!rdp->nocb_gp_rdp)
- 		return -EINVAL;
- 
--	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
-+	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
- 		return -EINVAL;
- 
- 	pr_info("Offloading %d\n", rdp->cpu);
-@@ -1260,7 +1259,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	 */
- 	wake_gp = rdp_offload_toggle(rdp, true, flags);
- 	if (wake_gp)
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		wake_up_process(rdp->nocb_gp_kthread);
- 	swait_event_exclusive(rdp->nocb_state_wq,
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_CB) &&
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_GP));
-
-
-Patches currently in stable-queue which might be from jianqkang@sina.cn are
-
-queue-6.6/rcu-nocb-fix-possible-invalid-rdp-s-nocb_cb_kthread-pointer-access.patch
+--hCdT4vb5e9UhsWH4--
