@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB3D3803C1;
-	Thu, 19 Mar 2026 11:37:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FA1D374748;
+	Thu, 19 Mar 2026 11:37:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773920254; cv=none; b=aLK7yjmUAe+xkFQcsPb4uaifYqlpT1ctuKAqy79abD4vhUEybe9PDz7O8AECnnyCce9iEoll4sG7tI3qzb2ebdia1/gWr3z8io46JkH6WGkBCfX1QQeu6hRZ4LJG2y7aTIqxLXvzjKPA9klRCrPcUxskb5kuCH8HPAPqmzgsbtI=
+	t=1773920257; cv=none; b=T7nojyRmj588u2R8Lgihg8vda9Hg1spWpsWf83tMJMcXQQGj8nScMX9GAJWLMgYc8vIO6gFU9SCHDBxZNu8ytZPvMczEL7pGw/5EZXUJN7PPc95e2VynJwHe0nejNFdq5xR2BEy+9qKD1ZoIJVmwhqqYrOF80OPEEq1k726Rhus=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773920254; c=relaxed/simple;
-	bh=vtbhdS3rnv4I8MZtbAA7ngfm+Krl+vH0T4SS9cqsd/o=;
+	s=arc-20240116; t=1773920257; c=relaxed/simple;
+	bh=lx3Y+gONMDNkZQlJ1Ecsu+oIAch8sjLVYDK451EVLAs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=XuucmhiRPy75yMKkBXIO5AEWAD1x3Dk9sJd4PktABp65jUNZxKhkXYHzyyQHb3vzLUPiAdVVNf5TRQcjAvvNRAcJzSh5MYvgUnbM882Dis1GDctL009XwwWeIJM4vnilAshwRZHxJeJ2N6froRKXV6+7rSw7LNqfYna/5E6Cm9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=svb8s5s+; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=jV9f1UChVbQBoqVpYN2lGbdwygXpilUNKhHLNFLCCIOIFKXnQFpuM6+hR6Pg4f+UW8BgKO8Og0Vg7aGNRnBfKP+WufS7tkALelJ4j9xzOoH5KP3jn06/NIj5SzIVMsqUdKlKF7bgpq+7O0N0MlMhGEq5hDSv4pMsFUFnW2uqZ7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TIqMu0r8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="svb8s5s+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44D69C19424;
-	Thu, 19 Mar 2026 11:37:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TIqMu0r8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539CBC19424;
+	Thu, 19 Mar 2026 11:37:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773920253;
-	bh=vtbhdS3rnv4I8MZtbAA7ngfm+Krl+vH0T4SS9cqsd/o=;
+	s=korg; t=1773920256;
+	bh=lx3Y+gONMDNkZQlJ1Ecsu+oIAch8sjLVYDK451EVLAs=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=svb8s5s+nytIXF0b6il1h6pVbbGCY+o0U5HqrR5ssWJY46z9UhPFYMxZ6RGeN7Wio
-	 RKkglwqRQ004zzg1WLAe2jCdkT09o6RaVo6R1pT7wHxGxw+Nq3IlaJlxrcioH0Ygrq
-	 p2M8lKbU1/BOK30ErmNN7D+UFEbOztootDkd1pHU=
-Subject: Patch "net: add support for segmenting TCP fraglist GSO packets" has been added to the 6.6-stable tree
-To: 1468888505@139.com,davem@davemloft.net,dsahern@kernel.org,edumazet@google.com,gregkh@linuxfoundation.org,kuba@kernel.org,nbd@nbd.name,pabeni@redhat.com,patches@lists.linux.dev,willemb@google.com,yoshfuji@linux-ipv6.org
+	b=TIqMu0r8gWgNr4iiaObtgH4fXn3tc6ogxD13etxBoMy8tYq29d+gf8ccdQcdrn9Tf
+	 LX0Hw7LnW7+5GFOE6gwQ72W2DX60HazGw7hnqQ5jkAF1rWgc2kMcn3QvJulP0A6fxK
+	 gHyQVz/AGxNs5x/k68KYY8IbzGgxhqpObZgMlIVM=
+Subject: Patch "net: fix segmentation of forwarding fraglist GRO" has been added to the 6.6-stable tree
+To: 1468888505@139.com,andrii@kernel.org,ast@kernel.org,daniel@iogearbox.net,davem@davemloft.net,dsahern@kernel.org,edumazet@google.com,gregkh@linuxfoundation.org,haoluo@google.com,jibin.zhang@mediatek.com,john.fastabend@gmail.com,jolsa@kernel.org,kpsingh@kernel.org,kuba@kernel.org,linux-arm-kernel@lists.infradead.org,linux-mediatek@lists.infradead.org,martin.lau@linux.dev,matthias.bgg@gmail.com,pabeni@redhat.com,patches@lists.linux.dev,sdf@google.com,song@kernel.org,steffen.klassert@secunet.com,willemb@google.com,yhs@fb.com,yoshfuji@linux-ipv6.org
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
 Date: Thu, 19 Mar 2026 12:37:12 +0100
-In-Reply-To: <20260302065513.2695586-1-1468888505@139.com>
-Message-ID: <2026031912-bonded-disk-eac1@gregkh>
+In-Reply-To: <20260302065528.2695652-1-1468888505@139.com>
+Message-ID: <2026031912-depress-subsidy-9617@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,205 +44,122 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    net: add support for segmenting TCP fraglist GSO packets
+    net: fix segmentation of forwarding fraglist GRO
 
 to the 6.6-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     net-add-support-for-segmenting-tcp-fraglist-gso-packets.patch
+     net-fix-segmentation-of-forwarding-fraglist-gro.patch
 and it can be found in the queue-6.6 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From stable+bounces-222523-greg=kroah.com@vger.kernel.org Mon Mar  2 07:55:21 2026
+From stable+bounces-222525-greg=kroah.com@vger.kernel.org Mon Mar  2 07:56:28 2026
 From: Li hongliang <1468888505@139.com>
-Date: Mon,  2 Mar 2026 14:55:13 +0800
-Subject: net: add support for segmenting TCP fraglist GSO packets
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, nbd@nbd.name
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, edumazet@google.com, davem@davemloft.net, yoshfuji@linux-ipv6.org, dsahern@kernel.org, kuba@kernel.org, pabeni@redhat.com, netdev@vger.kernel.org, willemb@google.com
-Message-ID: <20260302065513.2695586-1-1468888505@139.com>
+Date: Mon,  2 Mar 2026 14:55:28 +0800
+Subject: net: fix segmentation of forwarding fraglist GRO
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, jibin.zhang@mediatek.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, ast@kernel.org, daniel@iogearbox.net, andrii@kernel.org, martin.lau@linux.dev, song@kernel.org, yhs@fb.com, john.fastabend@gmail.com, kpsingh@kernel.org, sdf@google.com, haoluo@google.com, jolsa@kernel.org, davem@davemloft.net, edumazet@google.com, kuba@kernel.org, pabeni@redhat.com, yoshfuji@linux-ipv6.org, dsahern@kernel.org, matthias.bgg@gmail.com, willemb@google.com, steffen.klassert@secunet.com, bpf@vger.kernel.org, netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org
+Message-ID: <20260302065528.2695652-1-1468888505@139.com>
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jibin Zhang <jibin.zhang@mediatek.com>
 
-[ Upstream commit bee88cd5bd83d40b8aec4d6cb729378f707f6197 ]
+[ Upstream commit 426ca15c7f6cb6562a081341ca88893a50c59fa2 ]
 
-Preparation for adding TCP fraglist GRO support. It expects packets to be
-combined in a similar way as UDP fraglist GSO packets.
-For IPv4 packets, NAT is handled in the same way as UDP fraglist GSO.
+This patch enhances GSO segment handling by properly checking
+the SKB_GSO_DODGY flag for frag_list GSO packets, addressing
+low throughput issues observed when a station accesses IPv4
+servers via hotspots with an IPv6-only upstream interface.
 
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
+Specifically, it fixes a bug in GSO segmentation when forwarding
+GRO packets containing a frag_list. The function skb_segment_list
+cannot correctly process GRO skbs that have been converted by XLAT,
+since XLAT only translates the header of the head skb. Consequently,
+skbs in the frag_list may remain untranslated, resulting in protocol
+inconsistencies and reduced throughput.
+
+To address this, the patch explicitly sets the SKB_GSO_DODGY flag
+for GSO packets in XLAT's IPv4/IPv6 protocol translation helpers
+(bpf_skb_proto_4_to_6 and bpf_skb_proto_6_to_4). This marks GSO
+packets as potentially modified after protocol translation. As a
+result, GSO segmentation will avoid using skb_segment_list and
+instead falls back to skb_segment for packets with the SKB_GSO_DODGY
+flag. This ensures that only safe and fully translated frag_list
+packets are processed by skb_segment_list, resolving protocol
+inconsistencies and improving throughput when forwarding GRO packets
+converted by XLAT.
+
+Signed-off-by: Jibin Zhang <jibin.zhang@mediatek.com>
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260126152114.1211-1-jibin.zhang@mediatek.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/tcp_offload.c   |   67 +++++++++++++++++++++++++++++++++++++++++++++++
- net/ipv6/tcpv6_offload.c |   58 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 125 insertions(+)
+ net/core/filter.c        |    2 ++
+ net/ipv4/tcp_offload.c   |    3 ++-
+ net/ipv4/udp_offload.c   |    3 ++-
+ net/ipv6/tcpv6_offload.c |    3 ++-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3340,6 +3340,7 @@ static int bpf_skb_proto_4_to_6(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV4;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV6;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
+ 	}
+ 
+ 	bpf_skb_change_protocol(skb, ETH_P_IPV6);
+@@ -3370,6 +3371,7 @@ static int bpf_skb_proto_6_to_4(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV6;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV4;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
+ 	}
+ 
+ 	bpf_skb_change_protocol(skb, ETH_P_IP);
 --- a/net/ipv4/tcp_offload.c
 +++ b/net/ipv4/tcp_offload.c
-@@ -31,6 +31,70 @@ static void tcp_gso_tstamp(struct sk_buf
- 	}
- }
- 
-+static void __tcpv4_gso_segment_csum(struct sk_buff *seg,
-+				     __be32 *oldip, __be32 newip,
-+				     __be16 *oldport, __be16 newport)
-+{
-+	struct tcphdr *th;
-+	struct iphdr *iph;
-+
-+	if (*oldip == newip && *oldport == newport)
-+		return;
-+
-+	th = tcp_hdr(seg);
-+	iph = ip_hdr(seg);
-+
-+	inet_proto_csum_replace4(&th->check, seg, *oldip, newip, true);
-+	inet_proto_csum_replace2(&th->check, seg, *oldport, newport, false);
-+	*oldport = newport;
-+
-+	csum_replace4(&iph->check, *oldip, newip);
-+	*oldip = newip;
-+}
-+
-+static struct sk_buff *__tcpv4_gso_segment_list_csum(struct sk_buff *segs)
-+{
-+	const struct tcphdr *th;
-+	const struct iphdr *iph;
-+	struct sk_buff *seg;
-+	struct tcphdr *th2;
-+	struct iphdr *iph2;
-+
-+	seg = segs;
-+	th = tcp_hdr(seg);
-+	iph = ip_hdr(seg);
-+	th2 = tcp_hdr(seg->next);
-+	iph2 = ip_hdr(seg->next);
-+
-+	if (!(*(const u32 *)&th->source ^ *(const u32 *)&th2->source) &&
-+	    iph->daddr == iph2->daddr && iph->saddr == iph2->saddr)
-+		return segs;
-+
-+	while ((seg = seg->next)) {
-+		th2 = tcp_hdr(seg);
-+		iph2 = ip_hdr(seg);
-+
-+		__tcpv4_gso_segment_csum(seg,
-+					 &iph2->saddr, iph->saddr,
-+					 &th2->source, th->source);
-+		__tcpv4_gso_segment_csum(seg,
-+					 &iph2->daddr, iph->daddr,
-+					 &th2->dest, th->dest);
-+	}
-+
-+	return segs;
-+}
-+
-+static struct sk_buff *__tcp4_gso_segment_list(struct sk_buff *skb,
-+					      netdev_features_t features)
-+{
-+	skb = skb_segment_list(skb, features, skb_mac_header_len(skb));
-+	if (IS_ERR(skb))
-+		return skb;
-+
-+	return __tcpv4_gso_segment_list_csum(skb);
-+}
-+
- static struct sk_buff *tcp4_gso_segment(struct sk_buff *skb,
- 					netdev_features_t features)
- {
-@@ -40,6 +104,9 @@ static struct sk_buff *tcp4_gso_segment(
- 	if (!pskb_may_pull(skb, sizeof(struct tcphdr)))
- 		return ERR_PTR(-EINVAL);
- 
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
-+		return __tcp4_gso_segment_list(skb, features);
-+
- 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
- 		const struct iphdr *iph = ip_hdr(skb);
+@@ -107,7 +107,8 @@ static struct sk_buff *tcp4_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
  		struct tcphdr *th = tcp_hdr(skb);
+ 
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp4_gso_segment_list(skb, features);
+ 
+ 		skb->ip_summed = CHECKSUM_NONE;
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -352,7 +352,8 @@ struct sk_buff *__udp_gso_segment(struct
+ 
+ 	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		 /* Detect modified geometry and pass those to skb_segment. */
+-		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
++		if ((skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size) &&
++		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY))
+ 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
+ 
+ 		ret = __skb_linearize(gso_skb);
 --- a/net/ipv6/tcpv6_offload.c
 +++ b/net/ipv6/tcpv6_offload.c
-@@ -40,6 +40,61 @@ INDIRECT_CALLABLE_SCOPE int tcp6_gro_com
- 	return 0;
- }
- 
-+static void __tcpv6_gso_segment_csum(struct sk_buff *seg,
-+				     __be16 *oldport, __be16 newport)
-+{
-+	struct tcphdr *th;
-+
-+	if (*oldport == newport)
-+		return;
-+
-+	th = tcp_hdr(seg);
-+	inet_proto_csum_replace2(&th->check, seg, *oldport, newport, false);
-+	*oldport = newport;
-+}
-+
-+static struct sk_buff *__tcpv6_gso_segment_list_csum(struct sk_buff *segs)
-+{
-+	const struct tcphdr *th;
-+	const struct ipv6hdr *iph;
-+	struct sk_buff *seg;
-+	struct tcphdr *th2;
-+	struct ipv6hdr *iph2;
-+
-+	seg = segs;
-+	th = tcp_hdr(seg);
-+	iph = ipv6_hdr(seg);
-+	th2 = tcp_hdr(seg->next);
-+	iph2 = ipv6_hdr(seg->next);
-+
-+	if (!(*(const u32 *)&th->source ^ *(const u32 *)&th2->source) &&
-+	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
-+	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
-+		return segs;
-+
-+	while ((seg = seg->next)) {
-+		th2 = tcp_hdr(seg);
-+		iph2 = ipv6_hdr(seg);
-+
-+		iph2->saddr = iph->saddr;
-+		iph2->daddr = iph->daddr;
-+		__tcpv6_gso_segment_csum(seg, &th2->source, th->source);
-+		__tcpv6_gso_segment_csum(seg, &th2->dest, th->dest);
-+	}
-+
-+	return segs;
-+}
-+
-+static struct sk_buff *__tcp6_gso_segment_list(struct sk_buff *skb,
-+					      netdev_features_t features)
-+{
-+	skb = skb_segment_list(skb, features, skb_mac_header_len(skb));
-+	if (IS_ERR(skb))
-+		return skb;
-+
-+	return __tcpv6_gso_segment_list_csum(skb);
-+}
-+
- static struct sk_buff *tcp6_gso_segment(struct sk_buff *skb,
- 					netdev_features_t features)
- {
-@@ -51,6 +106,9 @@ static struct sk_buff *tcp6_gso_segment(
- 	if (!pskb_may_pull(skb, sizeof(*th)))
- 		return ERR_PTR(-EINVAL);
- 
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
-+		return __tcp6_gso_segment_list(skb, features);
-+
- 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
- 		const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
+@@ -109,7 +109,8 @@ static struct sk_buff *tcp6_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
  		struct tcphdr *th = tcp_hdr(skb);
+ 
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp6_gso_segment_list(skb, features);
+ 
+ 		skb->ip_summed = CHECKSUM_NONE;
 
 
 Patches currently in stable-queue which might be from 1468888505@139.com are
