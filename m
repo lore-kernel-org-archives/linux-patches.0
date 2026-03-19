@@ -1,149 +1,176 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC4E83BD640;
-	Thu, 19 Mar 2026 10:02:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E383C73F9;
+	Thu, 19 Mar 2026 11:13:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773914548; cv=none; b=f9DSi5DLEeZe958t9KuN/46Ez2uH5jqKUiqyyUVGWyPZuG1gBUwdYgVo98mzeW2E4QPYgWoDKxNQYy6bRr4MAIUJWEeXR8HvONV+0KYJwmYz3zjc0NNDdyY1/9t3QPvZiZ9bZxhNjdKhqlT/1Q1OEH8y1Ra3FB88A3J+VgrZCT4=
+	t=1773918817; cv=none; b=ujPswF/HojjuzWQS7WW/rBnf25DWAxbAzntAMpyQ5yUnVfwV9zMV1cC9y7NxAHQtheIjZvAm0MKiHFPFzVWl1a2pFKDFDBEy4HvfA+HJJtddrnFH3acH99+iTj8Krim1pExIiQ05zBsacIEk0IwZ7p1iDeYeg4IYsDwn7kH4SSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773914548; c=relaxed/simple;
-	bh=RPvAUzkCv/Pg1fjsxwFvMt7kmQMeT2lgZoA0riWocrA=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=P7Z3UK2szp7VdcShGewksj9ngD7+0yjjiWcw/V4BQxE/tfxmWMqxNkGApFBFDU9s8+8EUXn3vUn/pQnCqlg8CjLKgwQuvk57unWtiX82yJx8YBRimpVJ1UpB2g1XtuGnee1iEF8g3P59gqJ8PluDz6NG1aVTNRHKGYlZMIAFfdQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ktFpM7N1; arc=none smtp.client-ip=192.198.163.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
+	s=arc-20240116; t=1773918817; c=relaxed/simple;
+	bh=6beKDERkuTDR2mjmfUbAvd+YsuHGYv8cQ3gCS0jJuWQ=;
+	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
+	 Content-Type; b=oCBuXxGqFLPDPDrKfRc4MVifN0EDSVbiGM/YfzlZsGU6chM4vWZ6n3D0pr/QUAOmcHNzjnBbTO/T+8VfN9A5qjHo+2iMRH+qq+Df2pQnM7NgtQWh+ef7DscyBOkDj1iilbhau/Xpq3i7jVxgV6TQvW0e0c/TNFsyf8ZpOu1YF9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zRWHzgf7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ktFpM7N1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1773914545; x=1805450545;
-  h=message-id:subject:from:to:cc:date:in-reply-to:
-   references:content-transfer-encoding:mime-version;
-  bh=RPvAUzkCv/Pg1fjsxwFvMt7kmQMeT2lgZoA0riWocrA=;
-  b=ktFpM7N1wHwZmPE6RZj7BCF4TQGerpPFU7+062BZS6jndAiFQ7L4PmaT
-   9pK2KrarbT1tPBn7PBqDmp9/W4T7Mg4LxWGek5h0bjpm50/1ENmVX+Kd/
-   hNYsq1vRYf9kwIakWU5ltuYlVxLeBSrdzdPZZB65XsHxJknPJHcPoQfY9
-   aael+bdpfK9pofoSo5fuH1eB93oXLO+tKIZ+JhS+vj9aQMUp1zF3d8DIc
-   vx3FOViAhodSJnOd7nsZ+S76ckkKv+IGIEBM/mNhFM0kBdl1ZnXBQy85H
-   lIaHW+ua3LxXrKZmsImYsW0zh9W0s3Rsm4gHzksDQ7Vb1Nc/PeTKwjWiJ
-   Q==;
-X-CSE-ConnectionGUID: ikeoipgGSByfuZGL1nCrCQ==
-X-CSE-MsgGUID: JnsIzTcMTDmxrFMy7DuUYg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="86343481"
-X-IronPort-AV: E=Sophos;i="6.23,129,1770624000"; 
-   d="scan'208";a="86343481"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
-  by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2026 03:02:23 -0700
-X-CSE-ConnectionGUID: A09ByfiZQamABRDREZboHw==
-X-CSE-MsgGUID: PEsfxwSjRTe84v9y6cuxPw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,129,1770624000"; 
-   d="scan'208";a="218840320"
-Received: from jkrzyszt-mobl2.ger.corp.intel.com (HELO mwiniars-MOBL.ger.corp.intel.com) ([10.245.246.121])
-  by fmviesa010-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Mar 2026 03:02:21 -0700
-Message-ID: <60a007aeebab10377b66951d958e711ae89e573a.camel@linux.intel.com>
-Subject: Re: [PATCH rc 1/2] iommu: Do not call drivers for empty gathers
-From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
-To: Robin Murphy <robin.murphy@arm.com>, Jason Gunthorpe <jgg@nvidia.com>
-Cc: iommu@lists.linux.dev, Joerg Roedel <joro@8bytes.org>, Will Deacon	
- <will@kernel.org>, Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Joerg Roedel <joerg.roedel@amd.com>, Kevin Tian <kevin.tian@intel.com>,
- Pasha Tatashin	 <pasha.tatashin@soleen.com>, patches@lists.linux.dev,
- Samiullah Khawaja	 <skhawaja@google.com>, stable@vger.kernel.org
-Date: Thu, 19 Mar 2026 11:02:18 +0100
-In-Reply-To: <ed985e72-dbfe-4d60-b5f1-581ba58e3c18@arm.com>
-References: <1-v1-13a02eb0e031+a5-iommu_gather_jgg@nvidia.com>
-	 <13e28ac2-a4d6-466a-aef2-7b3d7d9167bd@arm.com>
-	 <20260303130420.GB972761@nvidia.com>
-	 <ed985e72-dbfe-4d60-b5f1-581ba58e3c18@arm.com>
-Organization: Intel Technology Poland sp. z o.o. - ul. Slowackiego 173,
- 80-298 Gdansk - KRS 101882 - NIP 957-07-52-316
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zRWHzgf7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94169C19424;
+	Thu, 19 Mar 2026 11:13:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1773918817;
+	bh=6beKDERkuTDR2mjmfUbAvd+YsuHGYv8cQ3gCS0jJuWQ=;
+	h=Subject:To:Cc:From:Date:In-Reply-To:From;
+	b=zRWHzgf75n6GiFCdgVQie8ogfZPRiRopmr2AChlOwFAEUb3QY7jioPRIDLjlaVsgq
+	 RR6HfWH2mIHI8kCp6hYxmdYYGh4uMcugLeF7as54z3SPLFHRux/4H9931Fz6Fe7UGO
+	 s5Ci7p8NUlkGalEei6yrhmnAEkrL8l9A2efhrvo0=
+Subject: Patch "NFS: Fix a deadlock involving nfs_release_folio()" has been added to the 6.6-stable tree
+To: 1468888505@139.com,anna@kernel.org,gregkh@linuxfoundation.org,patches@lists.linux.dev,trond.myklebust@hammerspace.com,wangzhaolong@huaweicloud.com
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Thu, 19 Mar 2026 12:12:52 +0100
+In-Reply-To: <20260224070237.2933965-1-1468888505@139.com>
+Message-ID: <2026031952-erupt-scoff-c087@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
-Hi,
 
-On Tue, 2026-03-03 at 15:56 +0000, Robin Murphy wrote:
-> On 2026-03-03 1:04 pm, Jason Gunthorpe wrote:
-> > On Tue, Mar 03, 2026 at 12:53:28PM +0000, Robin Murphy wrote:
-> >=20
-> > > > Further, there are several callers that can trigger empty gathers,
-> > > > especially in unusual conditions. For example iommu_map_nosync() wi=
-ll call
-> > > > a 0 size unmap on some error paths. Also in VFIO, iommupt and other
-> > > > places.
-> > >=20
-> > > My instinct is still to tidy up the 0-length unmap case(s), but I gue=
-ss
-> > > iommu_iotlb_sync() is itself also a public API where being more robus=
-t
-> > > against erroneous usage is no bad thing.
-> >=20
-> > I also wanted to do that but found enough problematic cases I lost
-> > confidence I could reliably catch them all..
->=20
-> I reckon an early "if (!size) return 0;" in iommu_unmap() would suffice=
-=20
-> to cover the internal error cleanup paths and most careless external=20
-> users. However if we don't trust iommu_unmap_fast() users to always do=
-=20
-> the right thing either then we want this check in iommu_iotlb_sync()=20
-> anyway, at which point the iommu_unmap() check would really only serve=
-=20
-> to skip a bit more unnecessary work on error cleanup paths, and do we=20
-> really care about optimising errors? Hence I'm satisfied that this patch=
-=20
-> does in fact seem to be the best option.
+This is a note to let you know that I've just added the patch titled
 
-Is this patch going to be applied soon to one of your branches? I'm=C2=A0
-waiting for that to happen because I want to cherry-pick it and propose as=
-=C2=A0
-a temporary fix to be applied to our core-for-CI sub-branch of drm-tip=C2=
-=A0
-until=C2=A0the original=C2=A0lands in=C2=A0mainline.
+    NFS: Fix a deadlock involving nfs_release_folio()
 
-Thanks,
-Janusz
+to the 6.6-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
->=20
-> > > > -	if (domain->ops->iotlb_sync)
-> > > > +	if (domain->ops->iotlb_sync &&
-> > > > +	    likely(iotlb_gather->start < iotlb_gather->end))
-> > >=20
-> > > Elsewhere we just use "gather->end !=3D 0" as the "non-empty" conditi=
-on; how
-> > > concerned are we about defending against more-intentionally malformed
-> > > gathers here?
-> >=20
-> > I choose this deliberately to protect the driver, a malformed gather
-> > that is 0 sized, or negative sized looks like it will have Weird
-> > Things happen in drivers.
-> >=20
-> > We could further classify the < and WARN_ON the malformed cases, but I
-> > don't want to pass negative sized gathers into drivers. We'd probably
-> > also have to de-inline the function if more is added. Do you have a
-> > preference?
->=20
-> No, that's fine, I just wanted to confirm the intent - this isn't a=20
-> place where we should need to be concerned about micro-optimising to=20
-> maybe save a load and an extra ALU op or two, just that I don't think=20
-> it's worth doing any more than strictly necessary for our own=20
-> robustness. Thus there's no need to change the check in=20
-> iommu_iotlb_gather_is_disjoint() either, as that now just serves to skip=
-=20
-> the redundant reinitialisation of an already-empty gather, which is=20
-> justifiably a different thing from the actual validity-of-sync condition=
-=20
-> anyway.
->=20
-> Cheers,
-> Robin.
+The filename of the patch is:
+     nfs-fix-a-deadlock-involving-nfs_release_folio.patch
+and it can be found in the queue-6.6 subdirectory.
+
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
+
+
+From stable+bounces-217867-greg=kroah.com@vger.kernel.org Tue Feb 24 08:02:54 2026
+From: Li hongliang <1468888505@139.com>
+Date: Tue, 24 Feb 2026 15:02:37 +0800
+Subject: NFS: Fix a deadlock involving nfs_release_folio()
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, trond.myklebust@hammerspace.com
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, anna@kernel.org, linux-nfs@vger.kernel.org, wangzhaolong@huaweicloud.com
+Message-ID: <20260224070237.2933965-1-1468888505@139.com>
+
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
+
+[ Upstream commit cce0be6eb4971456b703aaeafd571650d314bcca ]
+
+Wang Zhaolong reports a deadlock involving NFSv4.1 state recovery
+waiting on kthreadd, which is attempting to reclaim memory by calling
+nfs_release_folio(). The latter cannot make progress due to state
+recovery being needed.
+
+It seems that the only safe thing to do here is to kick off a writeback
+of the folio, without waiting for completion, or else kicking off an
+asynchronous commit.
+
+Reported-by: Wang Zhaolong <wangzhaolong@huaweicloud.com>
+Fixes: 96780ca55e3c ("NFS: fix up nfs_release_folio() to try to release the page")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/nfs/file.c          |    3 ++-
+ fs/nfs/nfstrace.h      |    3 +++
+ fs/nfs/write.c         |   33 +++++++++++++++++++++++++++++++++
+ include/linux/nfs_fs.h |    1 +
+ 4 files changed, 39 insertions(+), 1 deletion(-)
+
+--- a/fs/nfs/file.c
++++ b/fs/nfs/file.c
+@@ -459,7 +459,8 @@ static bool nfs_release_folio(struct fol
+ 		if ((current_gfp_context(gfp) & GFP_KERNEL) != GFP_KERNEL ||
+ 		    current_is_kswapd() || current_is_kcompactd())
+ 			return false;
+-		if (nfs_wb_folio(folio_file_mapping(folio)->host, folio) < 0)
++		if (nfs_wb_folio_reclaim(folio_file_mapping(folio)->host, folio) < 0 ||
++		    folio_test_private(folio))
+ 			return false;
+ 	}
+ 	return nfs_fscache_release_folio(folio, gfp);
+--- a/fs/nfs/nfstrace.h
++++ b/fs/nfs/nfstrace.h
+@@ -1033,6 +1033,9 @@ DECLARE_EVENT_CLASS(nfs_folio_event_done
+ DEFINE_NFS_FOLIO_EVENT(nfs_aop_readpage);
+ DEFINE_NFS_FOLIO_EVENT_DONE(nfs_aop_readpage_done);
+ 
++DEFINE_NFS_FOLIO_EVENT(nfs_writeback_folio_reclaim);
++DEFINE_NFS_FOLIO_EVENT_DONE(nfs_writeback_folio_reclaim_done);
++
+ DEFINE_NFS_FOLIO_EVENT(nfs_writeback_folio);
+ DEFINE_NFS_FOLIO_EVENT_DONE(nfs_writeback_folio_done);
+ 
+--- a/fs/nfs/write.c
++++ b/fs/nfs/write.c
+@@ -2122,6 +2122,39 @@ int nfs_wb_folio_cancel(struct inode *in
+ }
+ 
+ /**
++ * nfs_wb_folio_reclaim - Write back all requests on one page
++ * @inode: pointer to page
++ * @folio: pointer to folio
++ *
++ * Assumes that the folio has been locked by the caller
++ */
++int nfs_wb_folio_reclaim(struct inode *inode, struct folio *folio)
++{
++	loff_t range_start = folio_pos(folio);
++	size_t len = folio_size(folio);
++	struct writeback_control wbc = {
++		.sync_mode = WB_SYNC_ALL,
++		.nr_to_write = 0,
++		.range_start = range_start,
++		.range_end = range_start + len - 1,
++		.for_sync = 1,
++	};
++	int ret;
++
++	if (folio_test_writeback(folio))
++		return -EBUSY;
++	if (folio_clear_dirty_for_io(folio)) {
++		trace_nfs_writeback_folio_reclaim(inode, range_start, len);
++		ret = nfs_writepage_locked(folio, &wbc);
++		trace_nfs_writeback_folio_reclaim_done(inode, range_start, len,
++						       ret);
++		return ret;
++	}
++	nfs_commit_inode(inode, 0);
++	return 0;
++}
++
++/**
+  * nfs_wb_folio - Write back all requests on one page
+  * @inode: pointer to page
+  * @folio: pointer to folio
+--- a/include/linux/nfs_fs.h
++++ b/include/linux/nfs_fs.h
+@@ -608,6 +608,7 @@ extern int  nfs_update_folio(struct file
+ extern int nfs_sync_inode(struct inode *inode);
+ extern int nfs_wb_all(struct inode *inode);
+ extern int nfs_wb_folio(struct inode *inode, struct folio *folio);
++extern int nfs_wb_folio_reclaim(struct inode *inode, struct folio *folio);
+ int nfs_wb_folio_cancel(struct inode *inode, struct folio *folio);
+ extern int  nfs_commit_inode(struct inode *, int);
+ extern struct nfs_commit_data *nfs_commitdata_alloc(void);
+
+
+Patches currently in stable-queue which might be from 1468888505@139.com are
+
+queue-6.6/pnfs-fix-a-deadlock-when-returning-a-delegation-during-open.patch
+queue-6.6/nfs-pass-explicit-offset-count-to-trace-events.patch
+queue-6.6/nfs-fix-a-deadlock-involving-nfs_release_folio.patch
