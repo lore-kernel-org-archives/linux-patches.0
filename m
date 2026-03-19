@@ -1,109 +1,144 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-dl1-f46.google.com (mail-dl1-f46.google.com [74.125.82.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A6239D6EB;
-	Thu, 19 Mar 2026 07:11:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773904303; cv=none; b=VrX1b69rmS37ushu6NQrcYG4H3lX6p9NDeuaWqe0y0PPtMQSEOD9VsN6l8yoA9m+VLaDAWCCWOEHq/uFKs7rkwlry1f0Zx+eQj0Rwtpcg0il2AVbKoMsYhsjOtZn0F0n8BCUzR2ajsNw4IWn+kWEQooVX6A9jyhfAyN7Yot/xSM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773904303; c=relaxed/simple;
-	bh=kXY1gYLHGqK32ypVhPf+B2coaNzQbaU4YGC4a5J2YUA=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=j5MSVPKVAFkYNNOlSE/vhOadxgZC1/8GgTXZS8euFc4mSB/s4gjxNtYlyxz7JHXUe7V73DYdz8P8m3TlZvKIy6BQsdADjsImLMMUzTkpTq/jDsZWpApOSfnrDXXMms9wqnAteLpSxTm4UXQ46/kx0X/Ar199/D/FZN9O9Ps+OQk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=pptqe5Ai; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE119CC0C
+	for <patches@lists.linux.dev>; Thu, 19 Mar 2026 07:19:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.46
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1773904761; cv=pass; b=OH8c9DPp/66+Kb5njgwXsPwdGy1ivYjBK5jPokyB6Ff8gSmQ/3Om/Fi+uEhP+dqXyGqADo7grb3z6JqAnBV3rod+9y5ltOUl3LorDCKDuvnA8oAXq34ywH8zQVOlij/ZWAKLny2XrN+mWbo7GZNeMh/LDiG8heup7DE7OVz1LjU=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1773904761; c=relaxed/simple;
+	bh=Ess8UgzNaW/EIxirEyq7C8jN6f+gM036d2+Xn+xAiV4=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=rWoNhl+i1u5oWcT78APtFpTFQPSkDxxhTMnj/6JGI7LJGSun4t7hwqPiokmszon9ZS5uDKK9McGQd1InG+6cFKICnKUOqVf0WtDtJ9PBTZCHv6a4lNKFlNjrQ+OzaNW17f2dz8VlsW6bkiUYX0cimWOsj4/3zCFATsxeKnccLSY=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=ZJAFSLrF; arc=pass smtp.client-ip=74.125.82.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="pptqe5Ai"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC6D1C19424;
-	Thu, 19 Mar 2026 07:11:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1773904302;
-	bh=kXY1gYLHGqK32ypVhPf+B2coaNzQbaU4YGC4a5J2YUA=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=pptqe5Ai+H1IH940ofLccFd+Do0TDzRWS/WDMelouc7p5fLZWHk+iG4Z6vxjltrkf
-	 3/eInx3t4MMQJBls4ObZegxiy6lV/BvjJeNS4cv+wkSOFi+qkLGfN7zo9ENbrrBCe0
-	 fdc+JT7dHle8/SaP1itGEejDgLSpd65H8CYVJk/Y8ZT0A5DCS/qkUYWcSB796VfLZh
-	 RdcHaUxq7Cuuiq8IknExjtNfDxDOYSug4/Dii767CrPqSf9deG4cEEAGf5swQzrqDE
-	 +jxWV7J261lms62eWeIkVlOcsw3IA3NM3gXu/2kHqpZFFOwY5S8Na0vMwWUH1wLi2h
-	 9ly7N0cz/o/7g==
-Message-ID: <d80f17e4-bd3f-4053-bdf5-671439d5b72e@kernel.org>
-Date: Thu, 19 Mar 2026 08:11:39 +0100
+	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="ZJAFSLrF"
+Received: by mail-dl1-f46.google.com with SMTP id a92af1059eb24-12732165d1eso902683c88.1
+        for <patches@lists.linux.dev>; Thu, 19 Mar 2026 00:19:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773904759; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Ez7SK22D8ENnqZWJc8bOyd6GBRrYK8LxLWXt/Xnt+sb8tgwJTMZpsrGfdgMXAW7HgL
+         D/VEPec20EFj35zvaOvAPJt97HbcuLy1MFMtf0g/GQqkVOyg0B06J8KazP0wesqInSr6
+         895N6OkIYrhxauHhqAYzS6nMHjjhSGWoawMO+IXhwjy7HyBZXNedM2FiQx2GCIkSWv9v
+         Kim2r++n1qwk1C2f3JPdM96zK1Hs1lTWQv1W3UjuynpetoiReU1KKreLqz/yMJZhfpDf
+         WTXRV1V1h3CXRzyO9UPdbS3l9JoiYrfpPG4luUIfjndwtGR43vPKvSvkIQ9lymT6paYk
+         jgiw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=1l/IMVVtSfWuUyVYPnAu5GRDB9eD9+5LvhqvP+t2DrU=;
+        fh=C/EqVxXHA+bogZCNksOCPB7rNWiQj5GSxuwoDF5dpc4=;
+        b=DSPfKqFD7sESmf6H61oNCkN3OZOVRtSN8Mh991xeALFxeC3DmWmifylCSOO7nnuo0j
+         /uOOfOwmTB5K3jq6oP35XbCJ2w+8IEGNN3SfJTiOikPJFzC5c4kOrdZIy9v1WbEmKCgg
+         VTFQqprZ73t0Ftpf1fPI5AQP8JQLBu7NOf10Qa72DVp078KNYLa1jqKJetU5DIndmVRp
+         2hiyDSwt6dzAfTdtc7rn/zzqJ1+z90wYy6qCHoY2eDF3I+lTw2S5nSOXnGA8DlFZWbj6
+         VhVtsKVTtIB/n64NygFxGxuLuxkLI8JOwYIjKzg1WVN65s3/+JuRaN9a4jvusiB1k2lq
+         wk/g==;
+        darn=lists.linux.dev
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl.com; s=google; t=1773904759; x=1774509559; darn=lists.linux.dev;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1l/IMVVtSfWuUyVYPnAu5GRDB9eD9+5LvhqvP+t2DrU=;
+        b=ZJAFSLrF4LbuaghFLFyqIg/HRk5ydkOfU+WK5N0TjnH93+Lwn7OMZAoOxMN9CEVIwU
+         MqbA1IZx4WKxtmXgWN05p1fDgZeZKVN+m19RhBStocZtQkh4VboYu6zCG88Kn9yRUccL
+         uPPuvSA32yfUnYDkSMBKsI6RXs0gdRmiJttCYliiy8/IhIdJQfYypXAxzP8ylw9xBWSl
+         DWSUfCl7GQOgjKH9tRQ3YlMfbnQx8kiI/uXEgn9/y0WMOjFM/Srk8eL4D7Uhty4AGmWT
+         xE+ckU1GDCoIfS0Cu2aEaPakrY3T+A05rZhzxPuqDFqE++0hG4vz0YDKSGA76mces6uu
+         bQhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1773904759; x=1774509559;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=1l/IMVVtSfWuUyVYPnAu5GRDB9eD9+5LvhqvP+t2DrU=;
+        b=g4emjes+YaUtEc/hZFD0fVxXC05j+FGjfZ5QaiUfLmR4bru8DQ6rghGN2Xsc45e47m
+         r8QjmuWZRBvfjqjr5uTnEEuZUTesfc4pohTm2Ivsb5DX+BALdoZbyXXGYRrB2WdeUElQ
+         pidXICy8C4zHbsMUg5NdkAhKhtfWp82L6hPeC9pZsXYwSVliP6ZqUd0CDmvZ2KeV/TOX
+         WaJUhp1Eqn6Wd0L8uXNj0a9RQ18Cn7ggjg5ibMqpnMrDdCNA6eOzCB7w/nqtejaak22R
+         MN3i5tDxamJdpJ9Un1fVWxYu1Zo3SSCe29JmqxupLvAOfJPkQKQW7190/Gwi/GqkXona
+         ae0Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXHVjCD6o8F9JU9Tvq0bb0Sv6bx7x4HkQIWuj7l7dmBplS1/3T+Rilk5HbdpdqXBev51eklZQiJ@lists.linux.dev
+X-Gm-Message-State: AOJu0Yyg+DBbwaQQIRf/Ax82I/tubKY9VdmCCQUne5wl+2JIGVuPCaUO
+	OGy/v282VSs2Kxm+rbpW6HMfY8PYS3p/b84n3/zlHVKaVFW9cQxwfMWIhvXz0C2/bs4qe3TfPHn
+	zLhHkfHJwmUuIJEtw+6hdCuQ/qLbQssMlX7U/V0DPTw==
+X-Gm-Gg: ATEYQzxzYrwTnKxcLfifSJ7v09PSyHoR5Nonk5ezPKvJmiUz5XW0LpVlWSZiYpsy7lx
+	f/828S6Ta4AQIP0rHar808Dqn7dVZTMELnSOJHzl6ODvsf/nIn6nMxuz8jQItWoI34lKsp4l+RZ
+	EPOOBSyTZ+/sgr01lbdisFCfoV4RVg9JOz4JCrsazcWpKJHqYq4a3fY3PXP0viUvkFXNzGMJA0s
+	9+b+SoWkZ7PGHp6H6ijng+23/FrkNyn3ltJzD6Pcd+t7H9D/jC3AzrIUgh9X6JrJXnIjW1EHWm7
+	H3L4jNnW
+X-Received: by 2002:a05:7022:4387:b0:119:e56b:98b1 with SMTP id
+ a92af1059eb24-129a710b318mr3124030c88.24.1773904759139; Thu, 19 Mar 2026
+ 00:19:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.19 240/378] sched_ext: Fix starvation of scx_enable()
- under fair-class saturation
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Tejun Heo <tj@kernel.org>
-References: <20260317163006.959177102@linuxfoundation.org>
- <20260317163015.844144806@linuxfoundation.org>
-Content-Language: en-US
-From: Jiri Slaby <jirislaby@kernel.org>
-Autocrypt: addr=jirislaby@kernel.org; keydata=
- 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
-In-Reply-To: <20260317163015.844144806@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20260318122547.233850204@linuxfoundation.org>
+In-Reply-To: <20260318122547.233850204@linuxfoundation.org>
+From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+Date: Thu, 19 Mar 2026 16:19:02 +0900
+X-Gm-Features: AaiRm538NfcS2nSWnnd6YoZ0SN9yUH9Nu9tWCxpdQAUJqOjdqqRIGvM2oxef_xE
+Message-ID: <CAKL4bV4hCfaHMUuU1xx_=3fkOAS8Y-6wtZHY7Prgi096SLoqcw@mail.gmail.com>
+Subject: Re: [PATCH 6.19 000/379] 6.19.9-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
+	achill@achill.org, sr@sladewatkins.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 17. 03. 26, 17:33, Greg Kroah-Hartman wrote:
-> 6.19-stable review patch.  If anyone has any objections, please let me know.
-> 
-> ------------------
-> 
-> From: Tejun Heo <tj@kernel.org>
-> 
-> commit b06ccbabe2506fd70b9167a644978b049150224a upstream.
+Hi Greg
 
-This one likely needs also:
-2fcfe5951eb2 sched_ext: Use WRITE_ONCE() for the write side of 
-scx_enable helper pointer
+On Wed, Mar 18, 2026 at 9:30=E2=80=AFPM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.19.9 release.
+> There are 379 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 20 Mar 2026 12:24:39 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.19.9-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-thanks,
--- 
-js
-suse labs
+6.19.9-rc2 tested.
 
+Build successfully completed.
+Boot successfully completed.
+No dmesg regressions.
+Video output normal.
+Sound output normal.
+
+Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+
+[    0.000000] Linux version 6.19.9-rc2rv-g08e4691d3bc0
+(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20260209, GNU ld (GNU
+Binutils) 2.46) #1 SMP PREEMPT_DYNAMIC Thu Mar 19 15:47:54 JST 2026
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
