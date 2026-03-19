@@ -1,157 +1,82 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D2637BE77;
-	Thu, 19 Mar 2026 11:37:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B233729B781;
+	Thu, 19 Mar 2026 11:46:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1773920261; cv=none; b=s09njQr/HKHCJU/c7c3417soVT6ULeJJLDgFPykdevSHvn/HSGyKGlJ/3g/ihdLzU9kDFItCY7JwSbolCslx2GC0qP7u1dHHBXVBrP2vmarW1/ufATuaqUroCVsOWMbyTELXQC8j+n9LY+GPCN8EKKbW2dpjHfVAZssJnXuImls=
+	t=1773920781; cv=none; b=Ov9rIT/7CABeR9dmbY9Bn5uv0TbcUY5S2TDAYP8J90tjr5IFk8pMJHMemkzbdZFNOvDt1mOvs77Nw6DQJQjq3vIApuu2r2l89/mwP8IKGnO4xEgK9HhMOdmtrGYpzcWAD1JUvnVNPsEGFP2QbQDVhTJLUiZ1iS5GAaOY4eXoHwY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1773920261; c=relaxed/simple;
-	bh=MIzWb14uWVOfRWgpIeFl+RNd8KZIR7SHWTeh3IGagsQ=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=sM6R1jtThaeH+faKkuIIJ1cbXebtJv4OVP+9/dX5pX1fgmy4zKh7FT+YNstwFesN+pztvq14eqlhuno7C/SD1IP51A5LD/lnlIQfr1pxeh/y09fJWUYgeIQqSi+/WaFGFEL5inDsAqNCtwucwatcKIizwA6+RcHQrWlYgPmq3w0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f6M0tH+1; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1773920781; c=relaxed/simple;
+	bh=vZ5UBILwN8dBnboImtLXk+RobTLy+VmfD8DSAK+0y5A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=VbLz5N/WIasxQpLTwW0p+G5YXJtQOefWWthAj1DPr48fTYqHLwgyKw639NSj2toMXNw3glF+33mdoQRGLgSqydQ7NLxUnNdrcbQHChCjSuIbxGDQDQdt6+BNcM8398qpUg2k5YcY2mBHpZPwPfVgU1xJhQyKLitsdlqqYNDMpzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QRty2Sbg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f6M0tH+1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C84DC2BCB0;
-	Thu, 19 Mar 2026 11:37:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1773920260;
-	bh=MIzWb14uWVOfRWgpIeFl+RNd8KZIR7SHWTeh3IGagsQ=;
-	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=f6M0tH+13gjROVN0algEs0UAtPylRxcskt4+z7oJDiU3nJhwJGAidWq9MkVnkLlvT
-	 ohRviyYe6tqUqH8OMUjod6d9DnK8a70ESAtKetQOLR0sNknlqAIW44j8NLRDhHHiwy
-	 Ir06iBY+53c4LOGLUWeEXZaPsDRl4a+qvhL6vitM=
-Subject: Patch "net: gso: fix tcp fraglist segmentation after pull from frag_list" has been added to the 6.6-stable tree
-To: 1468888505@139.com,angelogioacchino.delregno@collabora.com,davem@davemloft.net,dsahern@kernel.org,edumazet@google.com,gregkh@linuxfoundation.org,kuba@kernel.org,linux-arm-kernel@lists.infradead.org,linux-mediatek@lists.infradead.org,matthias.bgg@gmail.com,nbd@nbd.name,pabeni@redhat.com,patches@lists.linux.dev,willemb@google.com
-Cc: <stable-commits@vger.kernel.org>
-From: <gregkh@linuxfoundation.org>
-Date: Thu, 19 Mar 2026 12:37:12 +0100
-In-Reply-To: <20260302065522.2695626-1-1468888505@139.com>
-Message-ID: <2026031912-cacti-mumbo-b576@gregkh>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QRty2Sbg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA2A2C19424;
+	Thu, 19 Mar 2026 11:46:17 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1773920781;
+	bh=vZ5UBILwN8dBnboImtLXk+RobTLy+VmfD8DSAK+0y5A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=QRty2SbgZ6fDHBiRyPMNnud+6Jda20oktl0Ul/fqJOKlt4z2SkNm5nX7I9tBClvpW
+	 Xyuqo5kFgWEq7/ZeqJi7L1poXTgkS1Q+KMJWBeK1NTYJzalrNfyD2GSEI1gQ1+TjcE
+	 qRZIiL+ASg/2Zr8Uyocl83eO4x5+wFlVp1lqMiHj12zH0N1yV0oh1F8x6hikt9rP63
+	 fsh44qSQALbrJ4iwLAlDzwpD+wzK1ra7/unqyujLb4JOi+UnwGq2809DWfh1qieLAv
+	 1law6lWYdV+XVlWtLTyIfsOPNM8AJibAHBHlG0z0JfAHUrvMPK6D4Iqq6G6r8FJqZq
+	 nqd6Ng6wUORcg==
+Date: Thu, 19 Mar 2026 11:46:14 +0000
+From: Mark Brown <broonie@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.19 000/379] 6.19.9-rc2 review
+Message-ID: <9f7e4bd1-ec3d-4181-a677-156e6f58e537@sirena.org.uk>
+References: <20260318122547.233850204@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=ANSI_X3.4-1968
-Content-Transfer-Encoding: 8bit
-X-stable: commit
-X-Patchwork-Hint: ignore 
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="AcV0a+jQxcwwIzRW"
+Content-Disposition: inline
+In-Reply-To: <20260318122547.233850204@linuxfoundation.org>
+X-Cookie: Given my druthers, I'd druther not.
 
 
-This is a note to let you know that I've just added the patch titled
+--AcV0a+jQxcwwIzRW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-    net: gso: fix tcp fraglist segmentation after pull from frag_list
+On Wed, Mar 18, 2026 at 01:28:05PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.19.9 release.
+> There are 379 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-to the 6.6-stable tree which can be found at:
-    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+Tested-by: Mark Brown <broonie@kernel.org>
 
-The filename of the patch is:
-     net-gso-fix-tcp-fraglist-segmentation-after-pull-from-frag_list.patch
-and it can be found in the queue-6.6 subdirectory.
+--AcV0a+jQxcwwIzRW
+Content-Type: application/pgp-signature; name="signature.asc"
 
-If you, or anyone else, feels it should not be added to the stable tree,
-please let <stable@vger.kernel.org> know about it.
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmm74gYACgkQJNaLcl1U
+h9C81Af8DDzXURzj3oKTVXr/egFse/wOAvaM6DORM0VpMYTYLLYf5ovymlEpvPU5
+9JzFHf0G+MDiQMLfdFq72Dx11AnHx64/MeMX2SFe6N4r3Kxkmb6V/ad6k/nvSUk0
+aj39ointDX9ZE6VwMqnO+Sd1N2OTVs+L5BecW+BKm/tZrXRT74TX/i25AGPD8kWE
+JOj6zw+bIqhoTTQaWOY0LjUYQMUrhC1Ixoq9QSu7DShlk+rtbj++sUnhJm7tgCFx
+cn/xHEOIsxomdv2ao+b1NdE+uiIpvoBYbHGd6pkBdvFU6ROVr+2kpZixREb3pT0N
+cRcVBp+sefOt54hZMoVe0kT+hY0MKA==
+=9lnx
+-----END PGP SIGNATURE-----
 
-From stable+bounces-222524-greg=kroah.com@vger.kernel.org Mon Mar  2 07:56:08 2026
-From: Li hongliang <1468888505@139.com>
-Date: Mon,  2 Mar 2026 14:55:22 +0800
-Subject: net: gso: fix tcp fraglist segmentation after pull from frag_list
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, nbd@nbd.name
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, edumazet@google.com, davem@davemloft.net, dsahern@kernel.org, kuba@kernel.org, pabeni@redhat.com, matthias.bgg@gmail.com, angelogioacchino.delregno@collabora.com, willemb@google.com, netdev@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, bpf@vger.kernel.org
-Message-ID: <20260302065522.2695626-1-1468888505@139.com>
-
-From: Felix Fietkau <nbd@nbd.name>
-
-[ Upstream commit 17bd3bd82f9f79f3feba15476c2b2c95a9b11ff8 ]
-
-Detect tcp gso fraglist skbs with corrupted geometry (see below) and
-pass these to skb_segment instead of skb_segment_list, as the first
-can segment them correctly.
-
-Valid SKB_GSO_FRAGLIST skbs
-- consist of two or more segments
-- the head_skb holds the protocol headers plus first gso_size
-- one or more frag_list skbs hold exactly one segment
-- all but the last must be gso_size
-
-Optional datapath hooks such as NAT and BPF (bpf_skb_pull_data) can
-modify these skbs, breaking these invariants.
-
-In extreme cases they pull all data into skb linear. For TCP, this
-causes a NULL ptr deref in __tcpv4_gso_segment_list_csum at
-tcp_hdr(seg->next).
-
-Detect invalid geometry due to pull, by checking head_skb size.
-Don't just drop, as this may blackhole a destination. Convert to be
-able to pass to regular skb_segment.
-
-Approach and description based on a patch by Willem de Bruijn.
-
-Link: https://lore.kernel.org/netdev/20240428142913.18666-1-shiming.cheng@mediatek.com/
-Link: https://lore.kernel.org/netdev/20240922150450.3873767-1-willemdebruijn.kernel@gmail.com/
-Fixes: bee88cd5bd83 ("net: add support for segmenting TCP fraglist GSO packets")
-Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://patch.msgid.link/20240926085315.51524-1-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Li hongliang <1468888505@139.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/ipv4/tcp_offload.c   |   10 ++++++++--
- net/ipv6/tcpv6_offload.c |   10 ++++++++--
- 2 files changed, 16 insertions(+), 4 deletions(-)
-
---- a/net/ipv4/tcp_offload.c
-+++ b/net/ipv4/tcp_offload.c
-@@ -104,8 +104,14 @@ static struct sk_buff *tcp4_gso_segment(
- 	if (!pskb_may_pull(skb, sizeof(struct tcphdr)))
- 		return ERR_PTR(-EINVAL);
- 
--	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __tcp4_gso_segment_list(skb, features);
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
-+		struct tcphdr *th = tcp_hdr(skb);
-+
-+		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
-+			return __tcp4_gso_segment_list(skb, features);
-+
-+		skb->ip_summed = CHECKSUM_NONE;
-+	}
- 
- 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
- 		const struct iphdr *iph = ip_hdr(skb);
---- a/net/ipv6/tcpv6_offload.c
-+++ b/net/ipv6/tcpv6_offload.c
-@@ -106,8 +106,14 @@ static struct sk_buff *tcp6_gso_segment(
- 	if (!pskb_may_pull(skb, sizeof(*th)))
- 		return ERR_PTR(-EINVAL);
- 
--	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
--		return __tcp6_gso_segment_list(skb, features);
-+	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
-+		struct tcphdr *th = tcp_hdr(skb);
-+
-+		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
-+			return __tcp6_gso_segment_list(skb, features);
-+
-+		skb->ip_summed = CHECKSUM_NONE;
-+	}
- 
- 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
- 		const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
-
-
-Patches currently in stable-queue which might be from 1468888505@139.com are
-
-queue-6.6/pnfs-fix-a-deadlock-when-returning-a-delegation-during-open.patch
-queue-6.6/net-add-support-for-segmenting-tcp-fraglist-gso-packets.patch
-queue-6.6/net-fix-segmentation-of-forwarding-fraglist-gro.patch
-queue-6.6/nfs-pass-explicit-offset-count-to-trace-events.patch
-queue-6.6/net-gso-fix-tcp-fraglist-segmentation-after-pull-from-frag_list.patch
-queue-6.6/nfs-fix-a-deadlock-involving-nfs_release_folio.patch
+--AcV0a+jQxcwwIzRW--
