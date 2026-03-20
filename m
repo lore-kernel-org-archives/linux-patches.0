@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C730131327F
-	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13F2314B66
+	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044236; cv=none; b=FAn1PrcdSuTuc3Nq5UX8F0hqIX9TN7dr53Ss1KhkANXDpQXmfjA1UU+4eYdVNZAteBLbh8pol5W6xUwSMCpq7o7a7fsv36Zm+JHVJ+OX3NwzNAHxk6jx1Eeag4WnYGC7ptC3gEY7D2z0zYmCojspHFJ9j3K1cnLuFEkOB+CEoCQ=
+	t=1774044236; cv=none; b=QS2P9NHwD1wKwd0IhcdQu5mWx+4Esu4C3V6byqMRDgx8K7fiOtvdbnwCsH25SKpEOODtoNkJig0xt6ZnmKhgsopyP3ocSaxRLHGn9EGekvgV3myyy6UTY8wjgFzOgqUBV+SFdB9PvpNH9cTyJhG81gNdJorFmbbNy/g/CDZ+xHs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774044236; c=relaxed/simple;
-	bh=2r426URiTXvlx3tT0QDuPcVGD3bn2C8Tq1rwhDsXsgo=;
+	bh=+S/4TGzCCyx9HY4E3iHxxpFMHM+peJEtYrBOdwsV+tM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fkmJXtfboHHlfcaPynHzaBP7vxZjmbjMc4ku66QL5gg67tvRZkksJbz/ks7Y4Vb8KnB7pjpdJdxR8cSdLrt/wtoBjnMhciHrhohhpm/Z03Azcs3S3dL8yy+isjzCq1cW/CzfhTM141biRH9cH5PKIeaogPbkBFWz9wHCEKfpaXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hh7t11LD; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=s60cQgDdxc81zABUjK6ppqfVGY+LjK08uqd6Lq4erjHJI7w7ZN5TR3NiDphnF7kggqr4OlPCyUXs1YwfHZL1QbgclDO0VQfU3xONa5rseCa4+YrmYApcx23ss25bTeO5Kgs+6FCp31qbiFYzd84DLLaPzOz7IR7DoEdYlO5zS3A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=VjKvpxVw; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hh7t11LD"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="VjKvpxVw"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044234; x=1805580234;
+  t=1774044235; x=1805580235;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=2r426URiTXvlx3tT0QDuPcVGD3bn2C8Tq1rwhDsXsgo=;
-  b=Hh7t11LDonCgD7L+mJO4WlLxolXuxorhSTsooRuVzGwlw4+EpV0kAB7z
-   1nx3HA/slDApWt1Xj9R8PvZzhcCFEPBA6GaIctK1ywAJj2Zs1PRnllhoA
-   MtwKmxmOWcJmVlOfiLexdmpfJIK1L2VBwuT91CV88SQWOHO9fK/Y09Xa7
-   1Hw9XVbhqgdxuJ4AgBD7d0J6cBvlT4KOuL8vnqCeLr0lf3SSgLz2Yt8Lf
-   0v0ULgjA4EcfB7Zqije/mbUY4c+akn1lvJRO5/W9b1hnnESoG2RStVVDj
-   7NgWVbB+4IzDhXEltdzsBTibhVpENMhnXUyJstEJvLLOqNzM/XvezxkoE
-   w==;
-X-CSE-ConnectionGUID: n+OBjUzGSvucFCYAw1e0MA==
-X-CSE-MsgGUID: 5b9YEK1sQXm0kQO3z15HEw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758333"
+  bh=+S/4TGzCCyx9HY4E3iHxxpFMHM+peJEtYrBOdwsV+tM=;
+  b=VjKvpxVwL2V6xNHnI+0DV4FeAaX1k1whUVkHXluo45LR0OyUdqhuI6Qy
+   FFR/EZT+Yf87t33LdO2pj0+7QJCVjD+/XtVHsYRbVKjZS/T3pd0a69FOb
+   Q0QObT9MEl4FUueGaqwxUR/rEC2DIkTSurRygd1hSgqAuR2WaAYS+QWK3
+   vppk/faBSQa6EwX78rsOpTdp5J3YaxMbhUv9Hds3aNtnPTxWpPdy3RcMx
+   04VX7avpq+C9GxgCYMlcnmgHZAHdApXiOnO3Jpp9l+yhURENcaCeP8R2r
+   SbzKrGyVyrn9b11HCulPJaQPKZPU1TM/bogboxUI+fmL95qgOsVUKnEwd
+   A==;
+X-CSE-ConnectionGUID: OJH2H48sTrGkVFZQQZroBA==
+X-CSE-MsgGUID: vkUPQs2hQMK/LH2XZNP5iw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758344"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758333"
+   d="scan'208";a="97758344"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:53 -0700
-X-CSE-ConnectionGUID: /BRBff0JSgi+kMQRwu62aw==
-X-CSE-MsgGUID: 0iA09wfkTOOGB4Jo0h3t0Q==
+X-CSE-ConnectionGUID: oa2KjgbzSKuaMUPzDUTG2Q==
+X-CSE-MsgGUID: gHKT/FcnQgeAiYavngLJng==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:53 -0700
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 01/14] MAINTAINERS: Update resctrl entry
-Date: Fri, 20 Mar 2026 15:03:11 -0700
-Message-ID: <a6090f1b67b395bddc842dce12582f5db18fd70b.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 02/14] fs/resctrl: Add missing return value descriptions
+Date: Fri, 20 Mar 2026 15:03:12 -0700
+Message-ID: <4261365d3cba00afbe846dc85fb4a3386eb5feb2.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -72,46 +72,69 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The x86 maintainers handle the resctrl filesystem and x86 architectural
-resctrl code. Even so, the x86 maintainers are not part of the resctrl
-section and not returned when scripts/get_maintainer.pl is run on resctrl
-filesystem code. With patches flowing via x86 maintainers resctrl should
-also ensure it follows the tip rules.
+Using the stricter "./tools/docs/kernel-doc -Wall -v" to verify proper
+formatting of documentation comments includes warnings related to return
+markup on functions that are omitted during the default verification
+checks. This stricter verification reports a couple of missing return
+descriptions in resctrl:
 
-Add the x86 maintainer alias, x86@kernel.org, to the resctrl section to
-ensure x86 maintainers are included in associated resctrl submissions.
+    Warning: .../fs/resctrl/rdtgroup.c:1536 No description found for return value of 'rdtgroup_cbm_to_size'
+    Warning: .../fs/resctrl/rdtgroup.c:3131 No description found for return value of 'mon_get_kn_priv'
+    Warning: .../fs/resctrl/rdtgroup.c:3523 No description found for return value of 'cbm_ensure_valid'
+    Warning: .../fs/resctrl/monitor.c:238 No description found for return value of 'resctrl_find_cleanest_closid'
 
-Add a reference to the tip tree handbook to make it clear which rules
-resctrl follows.
+Add the missing return descriptions.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
-Changes since v1:
-- Add reference to tip tree handbook to follow similar change to other
-  tip subsystems:
-  https://lore.kernel.org/all/20260305212215.3188399-1-dave.hansen@linux.intel.com/
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/resctrl/monitor.c  | 2 ++
+ fs/resctrl/rdtgroup.c | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 77fdfcb55f06..622d17046db5 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -22134,11 +22134,13 @@ F:	tools/testing/selftests/net/rds/
- RDT - RESOURCE ALLOCATION
- M:	Tony Luck <tony.luck@intel.com>
- M:	Reinette Chatre <reinette.chatre@intel.com>
-+M:	x86@kernel.org
- R:	Dave Martin <Dave.Martin@arm.com>
- R:	James Morse <james.morse@arm.com>
- R:	Babu Moger <babu.moger@amd.com>
- L:	linux-kernel@vger.kernel.org
- S:	Supported
-+P:	Documentation/process/maintainer-tip.rst
- F:	Documentation/filesystems/resctrl.rst
- F:	arch/x86/include/asm/resctrl.h
- F:	arch/x86/kernel/cpu/resctrl/
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 49f3f6b846b2..9fd901c78dc6 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -234,6 +234,8 @@ static struct rmid_entry *resctrl_find_free_rmid(u32 closid)
+  *
+  * When the CLOSID and RMID are independent numbers, the first free CLOSID will
+  * be returned.
++ *
++ * Return: Free CLOSID on success, < 0 on failure.
+  */
+ int resctrl_find_cleanest_closid(void)
+ {
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 5da305bd36c9..111bff8e33fd 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -1519,6 +1519,8 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+  *
+  * @cbm is unsigned long, even if only 32 bits are used to make the
+  * bitmap functions work correctly.
++ *
++ * Return: size in bytes, 0 on failure.
+  */
+ unsigned int rdtgroup_cbm_to_size(struct rdt_resource *r,
+ 				  struct rdt_ctrl_domain *d, unsigned long cbm)
+@@ -3102,6 +3104,8 @@ static void rmdir_all_sub(void)
+  * @mevt:   The type of event file being created.
+  * @do_sum: Whether SNC summing monitors are being created. Only set
+  *	    when @rid == RDT_RESOURCE_L3.
++ *
++ * Return: Pointer to mon_data private data of the event, NULL on failure.
+  */
+ static struct mon_data *mon_get_kn_priv(enum resctrl_res_level rid, int domid,
+ 					struct mon_evt *mevt,
+@@ -3496,6 +3500,8 @@ static int mkdir_mondata_all(struct kernfs_node *parent_kn,
+  * resource group is initialized. The user can follow this with a
+  * modification to the CBM if the default does not satisfy the
+  * requirements.
++ *
++ * Return: A CBM that is valid for resource @r.
+  */
+ static u32 cbm_ensure_valid(u32 _val, struct rdt_resource *r)
+ {
 -- 
 2.50.1
 
