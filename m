@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 771063542CA
-	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C6F369996
+	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:04:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044243; cv=none; b=QIXl/ZseDndh+sdOwKGmsebOSYe/fhh3bZ8fdZAC9YSW8xDC9Ih0b7/vg/6RBcoQSa8nOYfxAAYdHAtq6RiSn5qPqxr/xlxnEZrbBCcZcGbiYTYiErKJUAbQJrdm+mD2Seb4WV7l7l/x395qUNDm8gCVE6dn27uygYwePYq/aig=
+	t=1774044243; cv=none; b=BJMYzVVy6UBKWdkE1cfdyzckYl90TM/dcR4fYlxGMdPk5V0T+ezIxf0PMPcQYP1snJt86E9AjkZxLtEdAXtHG/gvtfQLF/sAFUuDMJcRS5Ks9aLOgTFY1J5To0rTAsiAgom0kgcOYWD7lM0piqSAjXHXBE9CBYjk0v5lut6hi9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774044243; c=relaxed/simple;
-	bh=A21P6fI2hgZ/+eGK6RsbbZ/oeCdwqcvHzTT8GH5JBd0=;
+	bh=WuOr17rmOeSXijSalpBw2VvgVcngOVpjuie0BTD4cHE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gfdrlbjOfoZFqGFbfC+LneGqI4oPKWFAtRqqwIDCnXlz9XnUeehQWvvAkHsH+oEJHE/xwkb0Ue5fijrlRaRjXeg0vaz8CW9N4qcY/nzDwb9JqpsATTPvwbmvKky6pjLokH0cb9LrMUhmWRiHmOQ6XgI8392oSc3OSye0SfWkbyk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=L4c1tsV7; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=WWtnSL0S5pZOqzHHuoVS49PSkcngycP0p/oTy29h9kohEVmZ4oObzbuMwwM8+E/UaWIjWrWQHDZnz2dcmCnfJMfyLRrziIfMCZJyVPOMQWZfyf1KV0R8PED+pLdkRWfWzKYkJ6AQWDhqAGI1PKrOlnVQp2fJPatSDiren04umSI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=cUArm1Lt; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="L4c1tsV7"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="cUArm1Lt"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044239; x=1805580239;
+  t=1774044240; x=1805580240;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=A21P6fI2hgZ/+eGK6RsbbZ/oeCdwqcvHzTT8GH5JBd0=;
-  b=L4c1tsV7QMSTDOStau5hMre3FoMpez1LCJGpxXYN0sXbgsE+REr9+w1Y
-   OnBjkJS+19AP6JwOzBnqkElD26OYuxZd5J5lxqsLYpZkCl1gSIDUS3+i1
-   rLfqwTc2oUsjqypzDHvaT0JRs9MZx/rS6UlfiyOnnD04wi7uq7JutGp3+
-   99pxX10jETqnkj80u3QEAHXf/8DvvayIOpWaors1sh0Oq0oBX3kUacJ65
-   a4BgvzOaVPGqlH6dDdXUkB9qLNrnB/zb0zPqsGCY3RC/B/NC0wtEass4d
-   LKLpfQFyx+5vU+jbQQy9JS2OPgk2eQTciIgW1r4ZomXUnjB5P0MH/5kKp
+  bh=WuOr17rmOeSXijSalpBw2VvgVcngOVpjuie0BTD4cHE=;
+  b=cUArm1Lt8TVLwl4wwt1mjG8zcfMlXzCB/U1Q6hg0fch2Pv/SohfV8HY/
+   j1LBiC26GDXiGWZo8GYztHStxaUIHFhcFqLb+PTJsoAZAgYhkdYpbwvEa
+   8euvnh6ozfAIB3WmH9ePvNbQzCCnBuhPJhhMARx959qjOP3cB89EuaW0F
+   sSIb72QSxFLhc7II9k+wiOsuB+M2Sa4kcUa3EKdLFH0ON+4dw3+vaRxCa
+   STn6uIAWiID0Xdl7WKWmuKoxMShXaJ/XXaAW9yHlyGLfumhG90Zo4oHwq
+   ZhOKzDVXbXB4F149j4chaRhmqM0zrhq7xS4wdpKXXyxoZyFKVqCidnfvj
    A==;
-X-CSE-ConnectionGUID: 6hdGDTr9QbKUt+zEuciioQ==
-X-CSE-MsgGUID: DO343f9uTrS08Zm7erytcQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758409"
+X-CSE-ConnectionGUID: qeE/9+1NQXqAfNR/it/cXw==
+X-CSE-MsgGUID: qjKd6rZ9T4umUaPgBAUbgQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758429"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758409"
+   d="scan'208";a="97758429"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:55 -0700
-X-CSE-ConnectionGUID: e4cAP81TTAiJddZq0V4Bjg==
-X-CSE-MsgGUID: TzSsMQ1jRQulBuQ+wuk3tg==
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:56 -0700
+X-CSE-ConnectionGUID: zSK5T1MTT2Gc7XBDpdDXkA==
+X-CSE-MsgGUID: ribkLN90S4Cj7R8E95sgwA==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:55 -0700
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:56 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 08/14] fs/resctrl: Pass error reading event through to user space
-Date: Fri, 20 Mar 2026 15:03:18 -0700
-Message-ID: <38f8735190251f75e2e8b33861cc86135aefb748.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 10/14] fs/resctrl: Use accurate and symmetric exit flows
+Date: Fri, 20 Mar 2026 15:03:20 -0700
+Message-ID: <445ac564270970f5736f39f892c9997728fc9bc0.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -72,57 +72,74 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Reading of event data is managed through populating a struct rmid_read with
-properties of event needing to be read. This data is dispatched to an
-appropriate CPU and upon completion any error can be found in rmid_read::err,
-or on success the event data will be in rmid_read::val.
+During schemata file write handling there is one error exit path labeled
+"out" that handles all cleanup and unlocking needed on exit. The staged
+configs cleared during an error exit may not have been used at the time
+of exit making the clearing of the staged configs unnecessary.
 
-rmid_read::err is not updated in the unlikely scenario that the reading
-of the event was dispatched to a wrong CPU. If this ever occurs due to
-a bug in resctrl the user space read will return "success" but the data
-reported will be invalid.
-
-Ensure accurate error reporting so that if there may be an issue with
-how resctrl picks a CPU it could be learned with an error to user space
-instead of silent failure.
+Access the exit code using two labels and only clear the staged
+configuration if it was in use at the time of exit. Doing so makes the
+code flow obvious and simplifies upcoming changes that improve the
+handling of failures during early input parsing.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 ---
-Changes since v1:
-- Add Ben's RB tag.
----
- fs/resctrl/monitor.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ fs/resctrl/ctrlmondata.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 8194fdfbea81..101b2911d582 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -453,8 +453,10 @@ static int __l3_mon_event_count(struct rdtgroup *rdtgrp, struct rmid_read *rr)
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index cc4237c57cbe..a8e7cdcfec6e 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -331,7 +331,7 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 		ret = -EINVAL;
+ 		rdt_last_cmd_puts("Resource group is pseudo-locked\n");
+-		goto out;
++		goto out_unlock;
  	}
  
- 	/* Reading a single domain, must be on a CPU in that domain. */
--	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask))
-+	if (!cpumask_test_cpu(cpu, &d->hdr.cpu_mask)) {
-+		rr->err = -EIO;
- 		return -EINVAL;
-+	}
- 	if (rr->is_mbm_cntr)
- 		rr->err = resctrl_arch_cntr_read(rr->r, d, closid, rmid, cntr_id,
- 						 rr->evt->evtid, &tval);
-@@ -491,8 +493,10 @@ static int __l3_mon_event_count_sum(struct rdtgroup *rdtgrp, struct rmid_read *r
+ 	rdt_staged_configs_clear();
+@@ -341,16 +341,16 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		if (!tok) {
+ 			rdt_last_cmd_puts("Missing ':'\n");
+ 			ret = -EINVAL;
+-			goto out;
++			goto out_clear_staged;
+ 		}
+ 		if (tok[0] == '\0') {
+ 			rdt_last_cmd_printf("Missing '%s' value\n", resname);
+ 			ret = -EINVAL;
+-			goto out;
++			goto out_clear_staged;
+ 		}
+ 		ret = rdtgroup_parse_resource(resname, tok, rdtgrp);
+ 		if (ret)
+-			goto out;
++			goto out_clear_staged;
  	}
  
- 	/* Summing domains that share a cache, must be on a CPU for that cache. */
--	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map))
-+	if (!cpumask_test_cpu(cpu, &rr->ci->shared_cpu_map)) {
-+		rr->err = -EIO;
- 		return -EINVAL;
-+	}
+ 	list_for_each_entry(s, &resctrl_schema_all, list) {
+@@ -365,7 +365,7 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
  
- 	/*
- 	 * Legacy files must report the sum of an event across all
+ 		ret = resctrl_arch_update_domains(r, rdtgrp->closid);
+ 		if (ret)
+-			goto out;
++			goto out_clear_staged;
+ 	}
+ 
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+@@ -378,8 +378,9 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		ret = rdtgroup_pseudo_lock_create(rdtgrp);
+ 	}
+ 
+-out:
++out_clear_staged:
+ 	rdt_staged_configs_clear();
++out_unlock:
+ 	rdtgroup_kn_unlock(of->kn);
+ 	return ret ?: nbytes;
+ }
 -- 
 2.50.1
 
