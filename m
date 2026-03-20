@@ -1,46 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FDA93803F4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBD2381AE7
 	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:04:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044244; cv=none; b=ppc8f436kk57RvBjCMTsDDVd0oh1SDWUz2bSqrx3DdfFlKHsA5ghOQqXPPWrAo1RIQ6HZHxdSpwlTrzNMP6iZbshEMx/k7KeX3QHdJwbiBX0nxtRNEEAedlE5iF6v7fTi7/xvDubhc8ajcFG3CnwT3sjWdizUVjPwZl+/GJaxZ0=
+	t=1774044245; cv=none; b=b3bPg3ww6l/Ox11D4jZj6wdB60aExq0y9EVw8hCb0DznXDG/lBChFwMXoYXz9sqdlfP4g9IkWLoZ8DNxv5g7b8MgfiUw+4/NosPG77U5L7UAb+pNgtHiQxdPWADoKksb+uGCbC8pmpVFl6Gpzpw7fDFENGtu/HblGvigSy2oQvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774044244; c=relaxed/simple;
-	bh=zOWxlg7FblfuC6kp+IHmTGlYUnlqsa+9riVd1/eAi4w=;
+	s=arc-20240116; t=1774044245; c=relaxed/simple;
+	bh=nFf5lyjZOmv1Kwhc8O1v5V+0vN0yj3DlyLSNBpRiX4o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Hc9wntpgAEo12/ICtn+q37X0KNFmaQx0FL1bBrPodh4wlU5/iFF+xv4nabNfCeZ6AbVZNMuGkWPz0g00l50Vy8wISGj6ojzmHU1YY/U2nbe2OvT8pDgA1K1CbhwIUCcewEIDHTT3nTV6lxW6aC1RNGBwakys+HlrtbVfVomi60c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=HK121tmI; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=OYHi4YlxmI/PWHoUK6g0Z8EeyonK1Irzc9RSc5xCMBASqMHPCWwbOuw92oj1czjPs21BF4DxAn+Sh4gIBTdkukqd9YPhqNfKIwI2jSxjY4uhq7Z4DCWcOU936PuJVHFL9shW+wOhJuyVHDvPiTP4oNCznvy+uiVUFPtlGRU6GA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=TxI00kJU; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="HK121tmI"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="TxI00kJU"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
   t=1774044243; x=1805580243;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=zOWxlg7FblfuC6kp+IHmTGlYUnlqsa+9riVd1/eAi4w=;
-  b=HK121tmIhUeTExwU2YVbEyKLgsBSseHgRHudvGX4nBJNmZ4Tpt4xkAXK
-   qWuoRPdvrajRBg03sA7QgZi5jBWMF6Q+txuHhoSHyT0B24PdJbPNxfKHm
-   UoOwUirGAUYDcWQAmap+ppgpDmnyGPFrKPqrsZBhyJLdJ1a5/eZ7f6EWn
-   la+00DRPNmlqKN6717Ov9K165kNejWMo72RmUeJ19ZnBvAEOGdDHTC0Ed
-   crSxb6zBc+v3dQ3C278Ho38q2kzK67LtS0TFKrm5q7NohHd5lZ/yLDyHs
-   JgvrfRCpzI7hrrlRRKWiW1YKY/NCmcJFyukw/FOVxqIwRcUGD/XV1XR1D
-   w==;
-X-CSE-ConnectionGUID: +19w7eaySUGJYz44wmBgHw==
-X-CSE-MsgGUID: DsVIqDo4SdGixiMnEv4WFw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758439"
+  bh=nFf5lyjZOmv1Kwhc8O1v5V+0vN0yj3DlyLSNBpRiX4o=;
+  b=TxI00kJUOQwzeXN3VfbT/vwbKc5HbDBNrlyl+SLXFUW/mfVW3RyAJSze
+   cPmSHYFyUeoVaUa48/S3cnqNqTqNYIIk5vSw5fwgvEUF6GDvXmjgEYCp1
+   g+ILL0DnjdZg6fcHx8dRErONNxzd2KppyoPvdWwTmgp6vZXBZgXCxGTqk
+   Q2GXqbjvXzf66NJnEUsz3rQrvBNoBkCUMUf7m9wbwKhEx7KjLS/j6XBS3
+   l1j4Xb6xwueoIdeGwPSrQ+1HOVbqye3AZLmbOjWqeCSoiUEUM6b9k1wFe
+   Kl2je/45ui9wufOYDOyWUeaebB/RZKg0NHEpMr5j13d+cKSvaGBc4Lxh5
+   Q==;
+X-CSE-ConnectionGUID: 5AcZ1OHwRoCKCHzWR3dp0w==
+X-CSE-MsgGUID: P4lqXbpmTJ6kx91cCnEhMw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758459"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758439"
+   d="scan'208";a="97758459"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:57 -0700
-X-CSE-ConnectionGUID: Mhd5f3P5TbyKpgkA7EVB+Q==
-X-CSE-MsgGUID: UEjAPUgZSJiy0I5UejOINw==
+X-CSE-ConnectionGUID: tPfDtAp0Qm6bYGPu1sBI/w==
+X-CSE-MsgGUID: Pz2u+9iYSduaYSRWlV1y0w==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:56 -0700
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:57 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 11/14] fs/resctrl: Use stricter checks on input to cpus/cpus_list file
-Date: Fri, 20 Mar 2026 15:03:21 -0700
-Message-ID: <744ddfbc6365832a5707b4d1631158f42e121401.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 13/14] fs/resctrl: Communicate resource group deleted error via last_cmd_status
+Date: Fri, 20 Mar 2026 15:03:23 -0700
+Message-ID: <1c78707dd99102518b3205d03f0bfce611d96e6d.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -72,58 +72,162 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Callbacks handling writes to resctrl files are called via
-kernfs_fop_write_iter() that ensures that the resctrl callback is never
-called with a NULL buffer. Even if user space issues a write() with a NULL
-buffer and zero count the resctrl callback receives a valid buffer
-terminated with '\0' and the number of bytes parameter set to zero.
+User space expects last_cmd_status to contain additional information if
+any resctrl command fails.
 
-The NULL buffer check at the beginning of rdtgroup_cpus_write(), while
-making no assumptions about caller behavior, is not useful. An empty
-buffer is transformed into an empty cpumask that is passed through entire
-flow that results in no changes.
+A resctrl command may be blocked waiting on the rdtgroup_mutex waiting for
+another command to finish and find that once the mutex is available that
+the resource group has since been deleted. In this scenario the command
+will fail while last_cmd_status contains either "ok" if the last_cmd_status
+buffer is empty or an outdated error from a previous command failure if
+last_cmd_status buffer has content.
 
-Ensure that the user provided buffer contains some data before attempting
-to parse it using the same check as other resctrl files (the familiar
-"nbytes == 0"). The custom is for resctrl file callbacks to fail on an
-empty buffer and this brings interactions with the cpus/cpus_list file in
-line with this custom. The risk is that if there exists a user space that
-uses empty writes to this specific file then those successful interactions
-will start failing.
+Include clearing of last_cmd_status buffer as part of
+rdtgroup_kn_lock_live() that is used to obtain access and needed locking
+to a resource group before attempting a command on the group. With the
+last_cmd_status buffer ready, provide an appropriate message to user space
+if the resource group has been deleted.
 
-Exit right away if there was no failure yet no cpumask could be created
-from the input. It is of no use to pass an empty cpumask through the
-entire flow, just return with success to short-circuit the existing
-behavior.
+No last_cmd_status treatment is needed for the remaining failure of
+rdtgroup_kn_lock_live() encountering a non-existent resource group since
+that could only occur during an attempt to obtain a resource group lock
+on a file in info/ which is an invalid usage.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- fs/resctrl/rdtgroup.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+Changes since v1:
+- Add snippet about why it is safe to dereference the kn to get
+  to resource group name when resource group is deleted.
+---
+ fs/resctrl/ctrlmondata.c |  3 ---
+ fs/resctrl/monitor.c     |  2 --
+ fs/resctrl/rdtgroup.c    | 20 +++++++++++---------
+ 3 files changed, 11 insertions(+), 14 deletions(-)
 
-diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
-index 6fa5c8f14e3a..5f3d89c7757c 100644
---- a/fs/resctrl/rdtgroup.c
-+++ b/fs/resctrl/rdtgroup.c
-@@ -515,7 +515,7 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
- 	struct rdtgroup *rdtgrp;
- 	int ret;
+diff --git a/fs/resctrl/ctrlmondata.c b/fs/resctrl/ctrlmondata.c
+index 7b90c36ff0a6..9915f714e26a 100644
+--- a/fs/resctrl/ctrlmondata.c
++++ b/fs/resctrl/ctrlmondata.c
+@@ -317,7 +317,6 @@ ssize_t rdtgroup_schemata_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
  
--	if (!buf)
-+	if (!buf || nbytes == 0)
- 		return -EINVAL;
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+@@ -434,7 +433,6 @@ int rdtgroup_schemata_show(struct kernfs_open_file *of,
+ 			}
+ 		} else if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 			if (!rdtgrp->plr->d) {
+-				rdt_last_cmd_clear();
+ 				rdt_last_cmd_puts("Cache domain offline\n");
+ 				ret = -ENODEV;
+ 			} else {
+@@ -475,7 +473,6 @@ ssize_t rdtgroup_mba_mbps_event_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
  
- 	if (!zalloc_cpumask_var(&tmpmask, GFP_KERNEL))
-@@ -555,6 +555,9 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
- 		goto unlock;
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 1a38f3b6a1f1..88f1fa0b9d8d 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -1632,7 +1632,6 @@ int mbm_L3_assignments_show(struct kernfs_open_file *of, struct seq_file *s, voi
+ 		goto out_unlock;
  	}
  
-+	if (cpumask_empty(newmask))
-+		goto unlock;
-+
- 	/* check that user didn't specify any offline cpus */
- 	cpumask_andnot(tmpmask, newmask, cpu_online_mask);
- 	if (!cpumask_empty(tmpmask)) {
+-	rdt_last_cmd_clear();
+ 	if (!resctrl_arch_mbm_cntr_assign_enabled(r)) {
+ 		rdt_last_cmd_puts("mbm_event counter assignment mode is not enabled\n");
+ 		ret = -EINVAL;
+@@ -1772,7 +1771,6 @@ ssize_t mbm_L3_assignments_write(struct kernfs_open_file *of, char *buf,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+diff --git a/fs/resctrl/rdtgroup.c b/fs/resctrl/rdtgroup.c
+index 5100a8bb16f3..0f753a820702 100644
+--- a/fs/resctrl/rdtgroup.c
++++ b/fs/resctrl/rdtgroup.c
+@@ -359,7 +359,6 @@ static int rdtgroup_cpus_show(struct kernfs_open_file *of,
+ 	if (rdtgrp) {
+ 		if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 			if (!rdtgrp->plr->d) {
+-				rdt_last_cmd_clear();
+ 				rdt_last_cmd_puts("Cache domain offline\n");
+ 				ret = -ENODEV;
+ 			} else {
+@@ -522,8 +521,6 @@ static ssize_t rdtgroup_cpus_write(struct kernfs_open_file *of,
+ 		goto out_unlock;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+-
+ 	if (!buf || nbytes == 0) {
+ 		rdt_last_cmd_puts("Invalid input\n");
+ 		ret = -EINVAL;
+@@ -783,7 +780,6 @@ static ssize_t rdtgroup_tasks_write(struct kernfs_open_file *of,
+ 		rdtgroup_kn_unlock(of->kn);
+ 		return -ENOENT;
+ 	}
+-	rdt_last_cmd_clear();
+ 
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED ||
+ 	    rdtgrp->mode == RDT_MODE_PSEUDO_LOCKSETUP) {
+@@ -1464,7 +1460,6 @@ static ssize_t rdtgroup_mode_write(struct kernfs_open_file *of,
+ 		return -ENOENT;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+ 	/* Valid input requires a trailing newline */
+ 	if (nbytes == 0 || buf[nbytes - 1] != '\n') {
+ 		rdt_last_cmd_puts("Invalid input\n");
+@@ -1601,7 +1596,6 @@ static int rdtgroup_size_show(struct kernfs_open_file *of,
+ 
+ 	if (rdtgrp->mode == RDT_MODE_PSEUDO_LOCKED) {
+ 		if (!rdtgrp->plr->d) {
+-			rdt_last_cmd_clear();
+ 			rdt_last_cmd_puts("Cache domain offline\n");
+ 			ret = -ENODEV;
+ 		} else {
+@@ -2639,10 +2633,20 @@ struct rdtgroup *rdtgroup_kn_lock_live(struct kernfs_node *kn)
+ 
+ 	cpus_read_lock();
+ 	mutex_lock(&rdtgroup_mutex);
++	rdt_last_cmd_clear();
+ 
+ 	/* Was this group deleted while we waited? */
+-	if (rdtgrp->flags & RDT_DELETED)
++	if (rdtgrp->flags & RDT_DELETED) {
++		/*
++		 * It is safe to dereference kn to obtain the resource group's
++		 * name because one extra reference to kn is obtained
++		 * during resource group creation that will be released by
++		 * rdtgroup_remove() called by rdtgroup_kn_put().
++		 */
++		rdt_last_cmd_printf("Resource group %s deleted. No commands possible.\n",
++				    rdt_kn_name(rdtgrp->kn));
+ 		return NULL;
++	}
+ 
+ 	return rdtgrp;
+ }
+@@ -3765,8 +3769,6 @@ static int mkdir_rdt_prepare(struct kernfs_node *parent_kn,
+ 		goto out_unlock;
+ 	}
+ 
+-	rdt_last_cmd_clear();
+-
+ 	/*
+ 	 * Check that the parent directory for a monitor group is a "mon_groups"
+ 	 * directory.
 -- 
 2.50.1
 
