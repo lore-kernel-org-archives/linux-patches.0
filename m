@@ -1,45 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DD23B9604;
-	Fri, 20 Mar 2026 13:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C01953BA24F;
+	Fri, 20 Mar 2026 14:46:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774012584; cv=none; b=EWZRan5ye1hRHR9a6Icct+kvj26ND3+4W6vBskYpal5JtPzUg99Bh4QQSpp0fDwffNt57RAS6IUJLEyesWFrb27s3TmOOoWtjFg5MkaOyxIUS4YZVdc2M37d5GafkZBfmBAVnCw4J+GWqgCfXZmdD9OT49eEEhbcILJ+adXHduY=
+	t=1774017996; cv=none; b=aGLIsnUK/xNoImkXOovBw6zS75XTkrgbaEs5UBWPk4suKBta/LKytsk755uY08lt/JM0vsIhK4jcOUBqcqayFxGwawUScQs0s0RM3mkSwmn301Q8bm+9wQsRTZaoylPLoC3YUy7MPLpFS4ZjjOIsRp7YemQTHy0mNt4pk4sdXZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774012584; c=relaxed/simple;
-	bh=psBMVgv76byQe1HFfS0z712vDXpgLslntH8P3twRIR8=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=IbZVVfGVELX5+6Oc1J8c21KTVwvqYNBkJbpqXba/PIEr+jb2wgacB5LF94l09pYxDbtp5K11j+IIKelvbZufFGDzob7dfyGmQe4iiVtLqvBqGuPPM4N3Y0X6AyYITIP9gApG9X811coW37gW15IjdnZ45pJMfU+pin4yT7j0zF4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=omnhhQ9J; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774017996; c=relaxed/simple;
+	bh=HAj2cheHD7JQ4BRqS6pwR3rvbsK5zTArRXYGLLpkoNU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=V6PZbn5i4RgisU5/u+5IQ3FUx0Ech7rltv4TbQutlPCFlcA/8j+yFKxr5U4EFUfbZOMU86gpqGbTQcv717bNYIUfQ3KMx8mvq6O+oBPH4JVpRpF6IZqTb7NzwdY3zLbWkmImsDtY9mS+MBE/hPPJcsR6bgaxwRxmhVxrGpk/s/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=bQu/SXlK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="omnhhQ9J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4F12C4CEF7;
-	Fri, 20 Mar 2026 13:16:21 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="bQu/SXlK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64237C4CEF7;
+	Fri, 20 Mar 2026 14:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774012583;
-	bh=psBMVgv76byQe1HFfS0z712vDXpgLslntH8P3twRIR8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omnhhQ9Jj3oQ5rONv68fHVeyY1zc4AX/FXQ3S47ENt57Y5DjuKqtdADGw3lKZMiMk
-	 VzGulnCbzqUyaL9Nz9UR92EK5Ap77rSGoyA6vShmrp2RrKi/qpZj756yLFX2XZv5v+
-	 GejKoaHAUES7dYoLH/UXU3RP7vSJ5RGx+O5coCicvWHhm4JcHKweMcjeM8oB+P9ACn
-	 XnB1HWCx1lSb+x6Uk+IHI1FWtwIvFzzaQ7DvzoHysfBmRuL7FEklgHLy1jdrU4U2+f
-	 29QwJC0ENasx+F5wQ+0tw1lM855CS0RFuZEKlS+eDx56S1EJ8OJVDAcPvq89HQUkZL
-	 ReADJAsuToJSw==
-From: Christian Brauner <brauner@kernel.org>
+	s=k20201202; t=1774017996;
+	bh=HAj2cheHD7JQ4BRqS6pwR3rvbsK5zTArRXYGLLpkoNU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bQu/SXlKtrQ+XLgYupRXIiU7z/rKGNFA4Gj/Am48BXJykG2L2IaxkNx+vgAWWM7C5
+	 tCweFj18Ec6rAm2SoSTAB/pMhTbQvliz73VSpxfvNCvWkt70yDwdXVnND7YC1a3vZM
+	 FGd/YcOUwgDGaJlI72J0NJlNXOUNUqNH28M2SP5xbmwTnHaeeXKzgJxORl6dsZag96
+	 wBV6xYi6MoorQ/Cos2z7Jw2Z3vPG5Fu6zwBvWWKtMHsicGsZ+3bSIczwgrMFNNGnfX
+	 NyEwgXrc6AcXg9zr/R7j+WmcQ998CTapD/ol5DZQDgSWJJqt8N9dH61sYMypOebBG+
+	 OcscDH9xxXxpw==
+Date: Fri, 20 Mar 2026 07:46:35 -0700
+From: "Darrick J. Wong" <djwong@kernel.org>
 To: Askar Safin <safinaskar@gmail.com>
-Cc: Christian Brauner <brauner@kernel.org>,
-	patches@lists.linux.dev,
-	kernel-janitors@vger.kernel.org,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jan Kara <jack@suse.cz>,
-	linux-fsdevel@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] init/initramfs.c: trivial fix: FSM -> Finite-state machine
-Date: Fri, 20 Mar 2026 14:16:13 +0100
-Message-ID: <20260320-geeilt-westufer-4ed00f188709@brauner>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260319232721.452950-1-safinaskar@gmail.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>,
+	Christian Brauner <brauner@kernel.org>, Jan Kara <jack@suse.cz>,
+	linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH] init/initramfs.c: trivial fix: FSM -> Finite-state
+ machine
+Message-ID: <20260320144635.GA6202@frogsfrogsfrogs>
 References: <20260319232721.452950-1-safinaskar@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -47,29 +43,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-X-Developer-Signature: v=1; a=openpgp-sha256; l=923; i=brauner@kernel.org; h=from:subject:message-id; bh=psBMVgv76byQe1HFfS0z712vDXpgLslntH8P3twRIR8=; b=owGbwMvMwCU28Zj0gdSKO4sYT6slMWTu9VhUnctiusHpTeAbq50al2ZlmLUvfNRuOnvDzYrFw fvybBhvdpSyMIhxMciKKbI4tJuEyy3nqdhslKkBM4eVCWQIAxenAEwkk5vhn2UAb/7ZoJ5Cj8nZ eiIOBk/nLHm1bXPohTnP6i5msl5pTWT4K7n+UZIK1y6Oh2zs/pWhYjx+2qYcfyd2Mz1gXRv6sKa WCwA=
-X-Developer-Key: i=brauner@kernel.org; a=openpgp; fpr=4880B8C9BD0E5106FC070F4F7B3C391EFEA93624
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260319232721.452950-1-safinaskar@gmail.com>
 
-On Thu, 19 Mar 2026 23:27:21 +0000, Askar Safin wrote:
+On Thu, Mar 19, 2026 at 11:27:21PM +0000, Askar Safin wrote:
 > FSM means "finite-state machine", but I think this is not obvious to
 > everyone.
+> 
+> Signed-off-by: Askar Safin <safinaskar@gmail.com>
+> ---
+>  init/initramfs.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/init/initramfs.c b/init/initramfs.c
+> index 139baed06..d29fe0a5c 100644
+> --- a/init/initramfs.c
+> +++ b/init/initramfs.c
+> @@ -212,7 +212,7 @@ static void __init parse_header(char *s)
+>  	hdr_csum = parsed[12];
+>  }
+>  
+> -/* FSM */
 
-Applied to the vfs-7.1.misc branch of the vfs/vfs.git tree.
-Patches in the vfs-7.1.misc branch should appear in linux-next soon.
+...and here I thought all along that the initramfs code had been blessed
+by the flying spaghetti monster! ;)
 
-Please report any outstanding bugs that were missed during review in a
-new review to the original patch series allowing us to drop it.
+Reviewed-by: "Darrick J. Wong" <djwong@kernel.org>
 
-It's encouraged to provide Acked-bys and Reviewed-bys even though the
-patch has now been applied. If possible patch trailers will be updated.
+--D
 
-Note that commit hashes shown below are subject to change due to rebase,
-trailer updates or similar. If in doubt, please check the listed branch.
-
-tree:   https://git.kernel.org/pub/scm/linux/kernel/git/vfs/vfs.git
-branch: vfs-7.1.misc
-
-[1/1] init/initramfs.c: trivial fix: FSM -> Finite-state machine
-      https://git.kernel.org/vfs/vfs/c/49e64d713636
+> +/* Finite-state machine */
+>  
+>  static __initdata enum state {
+>  	Start,
+> 
+> base-commit: a1d9d8e833781c44ab688708804ce35f20f3cbbd (mainline)
+> -- 
+> 2.47.3
+> 
+> 
