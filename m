@@ -1,45 +1,46 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CCC2ED846
-	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C730131327F
+	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044235; cv=none; b=SqhtH7DArMYVe5AdwfIS2kO1SSgkN9JjkBEU4857XEiio8C2QXJb6G93hGnZD/cKKc+7zifdNjIdDqMlqKB3gMjc+T4MGdgcTB+SNIsDDhO7B4FJecVBWL3vkeRgeVcgYRdxPjV5//VJ7kWJf2OytdyE7xLbS/yueG7Sde6bFdQ=
+	t=1774044236; cv=none; b=FAn1PrcdSuTuc3Nq5UX8F0hqIX9TN7dr53Ss1KhkANXDpQXmfjA1UU+4eYdVNZAteBLbh8pol5W6xUwSMCpq7o7a7fsv36Zm+JHVJ+OX3NwzNAHxk6jx1Eeag4WnYGC7ptC3gEY7D2z0zYmCojspHFJ9j3K1cnLuFEkOB+CEoCQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774044235; c=relaxed/simple;
-	bh=+e8kpRBt7Bz02RMHeF2deNwekfepP0rgAolx8zRW8aQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ZNTfvHQr7NZup5xjX6Kwoo/KoRK74Y+Ogbz0/L31/q/YtAn36WQ9OtSBF4j3jsjxPzsqND7reLxsdrnOwbqY1pIWvxMc4snx42fIBF+lpHeuVysQFh0gq4q0OXTkXLN8vt67EKvp9yo4mlrF9OHnGfJO/X/ebEgf33+tBORZZrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=K9xJV4CN; arc=none smtp.client-ip=198.175.65.9
+	s=arc-20240116; t=1774044236; c=relaxed/simple;
+	bh=2r426URiTXvlx3tT0QDuPcVGD3bn2C8Tq1rwhDsXsgo=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fkmJXtfboHHlfcaPynHzaBP7vxZjmbjMc4ku66QL5gg67tvRZkksJbz/ks7Y4Vb8KnB7pjpdJdxR8cSdLrt/wtoBjnMhciHrhohhpm/Z03Azcs3S3dL8yy+isjzCq1cW/CzfhTM141biRH9cH5PKIeaogPbkBFWz9wHCEKfpaXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Hh7t11LD; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="K9xJV4CN"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Hh7t11LD"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044233; x=1805580233;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=+e8kpRBt7Bz02RMHeF2deNwekfepP0rgAolx8zRW8aQ=;
-  b=K9xJV4CNjm5UufRWo1rOGUkPH+CDEDnFMsIU8sSEnRRZMSQAMgpDqgXr
-   mYb8MDyKo0ykaUJ3/a6Dc/CHi0THG4UDKbLpdckduCtlT5yif0HgvHeuC
-   vTRWBVKt2oItuJw3G4xzYe9nv85aNIV8ras3lAv3MN0rQKbsyZFvRCAU4
-   WGpnQRpGqBnwzyuLIDRxQyJt/9fYJ979KQy1kzWWF8tT5BiQjn1J9D9/j
-   ULJk02JPgKt4H9CK1nEg7+TG/l1r/A7MhTV3SeZG/EMiVPgbDxHdLDyOr
-   DUZK1xkfngvEaNA3vSAYkb6/dY346M88Xpd02XPhRT1+4PX2AhUwV317F
-   A==;
-X-CSE-ConnectionGUID: 6qavOzfrQ2SHSqpf5JUzYQ==
-X-CSE-MsgGUID: p1eq15i2QvmqYhAFNHT1dA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758324"
+  t=1774044234; x=1805580234;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=2r426URiTXvlx3tT0QDuPcVGD3bn2C8Tq1rwhDsXsgo=;
+  b=Hh7t11LDonCgD7L+mJO4WlLxolXuxorhSTsooRuVzGwlw4+EpV0kAB7z
+   1nx3HA/slDApWt1Xj9R8PvZzhcCFEPBA6GaIctK1ywAJj2Zs1PRnllhoA
+   MtwKmxmOWcJmVlOfiLexdmpfJIK1L2VBwuT91CV88SQWOHO9fK/Y09Xa7
+   1Hw9XVbhqgdxuJ4AgBD7d0J6cBvlT4KOuL8vnqCeLr0lf3SSgLz2Yt8Lf
+   0v0ULgjA4EcfB7Zqije/mbUY4c+akn1lvJRO5/W9b1hnnESoG2RStVVDj
+   7NgWVbB+4IzDhXEltdzsBTibhVpENMhnXUyJstEJvLLOqNzM/XvezxkoE
+   w==;
+X-CSE-ConnectionGUID: n+OBjUzGSvucFCYAw1e0MA==
+X-CSE-MsgGUID: 5b9YEK1sQXm0kQO3z15HEw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758333"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758324"
+   d="scan'208";a="97758333"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:53 -0700
-X-CSE-ConnectionGUID: uVBQhpjKQrmOf3RTyGAIRA==
-X-CSE-MsgGUID: lZT/e7olQFSD7F9j6DHogw==
+X-CSE-ConnectionGUID: /BRBff0JSgi+kMQRwu62aw==
+X-CSE-MsgGUID: 0iA09wfkTOOGB4Jo0h3t0Q==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
-  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:52 -0700
+  by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:53 -0700
 From: Reinette Chatre <reinette.chatre@intel.com>
 To: tony.luck@intel.com,
 	james.morse@arm.com,
@@ -57,110 +58,60 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 00/14] x86,fs/resctrl: Improve resctrl quality and consistency
-Date: Fri, 20 Mar 2026 15:03:10 -0700
-Message-ID: <cover.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 01/14] MAINTAINERS: Update resctrl entry
+Date: Fri, 20 Mar 2026 15:03:11 -0700
+Message-ID: <a6090f1b67b395bddc842dce12582f5db18fd70b.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
+References: <cover.1774043709.git.reinette.chatre@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
+The x86 maintainers handle the resctrl filesystem and x86 architectural
+resctrl code. Even so, the x86 maintainers are not part of the resctrl
+section and not returned when scripts/get_maintainer.pl is run on resctrl
+filesystem code. With patches flowing via x86 maintainers resctrl should
+also ensure it follows the tip rules.
+
+Add the x86 maintainer alias, x86@kernel.org, to the resctrl section to
+ensure x86 maintainers are included in associated resctrl submissions.
+
+Add a reference to the tip tree handbook to make it clear which rules
+resctrl follows.
+
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+---
 Changes since v1:
-- v1: https://lore.kernel.org/lkml/cover.1772476561.git.reinette.chatre@intel.com/
-- To simplify tracking, include patch to MAINTAINERS submitted separately:
-  https://lore.kernel.org/lkml/4274c478922c01f9ceebc805acf991f10a95519f.1771442788.git.reinette.chatre@intel.com/
-- Follow recent upstream changes to add reference to tip tree handbook in
-  MAINTAINERS entry.
-- Use new pattern in resctrl to enable looping over all entries of an enum
-  while making adding new enum entries more clear all while avoiding warnings
-  when compiling with -Wswitch. (Ben)
-- Add another last_cmd_status enhancement that appends "[truncated]" to
-  output of info/last_cmd_status if the backing buffer overflowed.
-- Please see patch changelogs for details of changes.
-- Add tags.
+- Add reference to tip tree handbook to follow similar change to other
+  tip subsystems:
+  https://lore.kernel.org/all/20260305212215.3188399-1-dave.hansen@linux.intel.com/
+---
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Hi Everybody,
-
-This is a collection of resctrl cleanups assembled together for convenience
-and simpler tracking. I'd be happy to split them up if it makes review and/or
-handling easier.
-
-Summary of changes:
-
-- Let resctrl pass stricter checks from various tools to provide a cleaner
-  baseline with the goal to promote healthier contributions:
-  - ./tools/docs/kernel-doc -Wall -v <files>
-  - Build with W=12
-  - ./scripts/coccicheck
-  - Static checkers
-
-- Use accurate and consistent type for all uses of resource ID.
-
-- In the unlikely scenario that resctrl picked a wrong CPU to read an event
-  from, pass the error through to user space instead of claiming to succeed
-  and returning a (wrong) result.
-
-- Since inception of last_cmd_status feature there have been mismatches
-  between resctrl file operation failures and the contents of
-  info/last_cmd_status. This pattern keeps propagating with each new resctrl
-  feature. Establish a new baseline with a new pattern that ensures
-  info/last_cmd_status contains an accurate failure description that matches
-  the most recent resctrl file operation failure.
-
-One potential open:
-
-There remains an inconsistency between resctrl file operations that do/can
-_not_ fail and the contents of info/last_cmd_status. If a resctrl
-file operation fails and an informational error is printed to last_cmd_status
-then a subsequent reading of a resctrl file (specifically most of the files
-found in info/) may succeed while info/last_cmd_status may or may not return
-the error from previous failure.
-
-Ensuring last_cmd_status is reset on every read carries the cost of taking
-rdtgroup_mutex on several more user space initiated paths and thus increase
-contention on rdtgroup_mutex. I opted to not make this change and instead
-focus this work on ensuring that last_cmd_status is accurate whenever there is
-a failure during any resctrl file operation. Please let me know if you have
-opinions in this regard.
-
-Any feedback is appreciated.
-
-Regards,
-
-Reinette
-
-Reinette Chatre (14):
-  MAINTAINERS: Update resctrl entry
-  fs/resctrl: Add missing return value descriptions
-  fs/resctrl: Avoid "may be used uninitialized" warning
-  fs/resctrl: Use correct format specifier for printing error pointers
-  x86/resctrl: Protect against bad shift
-  fs/resctrl: Change pattern used to track number of entries in enum
-  fs/resctrl: Use accurate type for rdt_resource::rid
-  fs/resctrl: Pass error reading event through to user space
-  fs/resctrl: Add last_cmd_status support for writes to
-    max_threshold_occupancy
-  fs/resctrl: Use accurate and symmetric exit flows
-  fs/resctrl: Use stricter checks on input to cpus/cpus_list file
-  fs/resctrl: Change last_cmd_status custom during input parsing
-  fs/resctrl: Communicate resource group deleted error via
-    last_cmd_status
-  fs/resctrl: Inform user space when status buffer overflowed
-
- MAINTAINERS                        |   2 +
- arch/x86/kernel/cpu/resctrl/core.c |   4 +-
- fs/resctrl/ctrlmondata.c           |  70 +++++++++------
- fs/resctrl/monitor.c               |  80 ++++++++++-------
- fs/resctrl/pseudo_lock.c           |   2 +-
- fs/resctrl/rdtgroup.c              | 137 ++++++++++++++++++-----------
- include/linux/resctrl.h            |  11 +--
- 7 files changed, 188 insertions(+), 118 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 77fdfcb55f06..622d17046db5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -22134,11 +22134,13 @@ F:	tools/testing/selftests/net/rds/
+ RDT - RESOURCE ALLOCATION
+ M:	Tony Luck <tony.luck@intel.com>
+ M:	Reinette Chatre <reinette.chatre@intel.com>
++M:	x86@kernel.org
+ R:	Dave Martin <Dave.Martin@arm.com>
+ R:	James Morse <james.morse@arm.com>
+ R:	Babu Moger <babu.moger@amd.com>
+ L:	linux-kernel@vger.kernel.org
+ S:	Supported
++P:	Documentation/process/maintainer-tip.rst
+ F:	Documentation/filesystems/resctrl.rst
+ F:	arch/x86/include/asm/resctrl.h
+ F:	arch/x86/kernel/cpu/resctrl/
 -- 
 2.50.1
 
