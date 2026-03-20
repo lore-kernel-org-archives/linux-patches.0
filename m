@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2D03264D6
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E332632E151
 	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044239; cv=none; b=suY6WTdwU3tnoiS1RXGzsX5fBFrr5C8Gw280op71W43l6VpK93xCbWHPNE6rLozudveTg2sjtUa/TThEQ0BY2mk7iNPPKKJfSzkNgwekjcFQ/Oi6adVhkOk5nnVue3Aa+NRL4nDefKm6DVuR9LV9FNSJOOBu3MLv0CjTtgh7hlE=
+	t=1774044240; cv=none; b=HT/nPnIZpuYPiXog9nT8MCVjL0mx7DOu0dOV/cyDRV5lC1dEIopvYmTbi/JZM6LEPPIbLPoXhEDflaqm92I0jcHrIIr5zPg6qA9iCcFDOKwonpyFcCH3BAQgQkd+0t5u9UM1zsNdQR/lz02aeYWl2HoQ3vitZXGAPji4TabRo4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774044239; c=relaxed/simple;
-	bh=oQkNYBpCA5AlmfxOePF5QgebJUzdQ5GMSBoc3afjB/0=;
+	s=arc-20240116; t=1774044240; c=relaxed/simple;
+	bh=6S4Kbf26Ho80olkPFiZ8UngQhelhtisWM0bMfgO68B4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fqk6zjFZCbupgf55UL1PYM7b9B4LPIQJiNWYs8gQSnQjDJjtZoNeL9Eufh+N6aDGh41fsqx18C/9iBv5a960AQ4RUHrXbMCPPf7LOtyoFQs6pnjrTeARk/SkqFEqFBm/Dx/hJuzG4k/ppuPasCwGV/4y8xORDIq6B4TqI61OHig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=jSTuKlse; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=QHsOyn6lmic0iGcxN9Pt4bomT/7Tt+mNTt486tZYa5Ec6PFDTbSKTd3q9psANBMRxlSB1yGjwMC6VhbJbVJQ+rAAK77hcnkMN8kRgl1EOfK++rKt8dG47pkQE7Nq0mdI2uww+u6Sautb4hZpboaEDPsibxS/44OZ9RgU08uu1WM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=N+fXL2oP; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="jSTuKlse"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="N+fXL2oP"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044237; x=1805580237;
+  t=1774044238; x=1805580238;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=oQkNYBpCA5AlmfxOePF5QgebJUzdQ5GMSBoc3afjB/0=;
-  b=jSTuKlseF1LF1RvO2sYGSVvab50VKHWbMttj5vKDZld/1p3FS25lDk4B
-   s3ypL/xAzIcAkppe7Woql/w3lvtiPQJmbr74raBAEEFAHX7ldI0PobUOO
-   4GXhrbINtDRQJQ5mlymm8aV4E1sDx6MfDfVwra0zrgzW8IsmlXJD3sm9n
-   FqLeO0jwcb9gwYTI3F1WpRB5/DGdeFXjnqipVRwtOUDfsA0GnwjlpNIfR
-   8dhTGk6tk0jRjhcm8aV9JrUP8pN9WaHcU4l4VgsEEw5asA/JAogczPn0n
-   I5HGfmaPpNhYIB7jgdTQAtg/RODu2bFjAQyFT6h61cQNPMGYI9eMeyD51
-   w==;
-X-CSE-ConnectionGUID: 2KlVNwZNTdmZejdNsEhX9g==
-X-CSE-MsgGUID: mKVW2fokTuSL6IklJsnRkg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758386"
+  bh=6S4Kbf26Ho80olkPFiZ8UngQhelhtisWM0bMfgO68B4=;
+  b=N+fXL2oP004bR0/rTCxa3qVu5NdLsQ0XFd1sZH5WxSdymT+HIBlYywNV
+   zmpukLzaEpx68xjBV5aOE+QBuMACg7vIN3gMYsGLNThRX41WdcqFI1FfZ
+   cI9vU2GCqfJ0YyWz1aSclkIBGrlB40HHBOMRRo7bFGFjGYi+mdL4MSwzy
+   b7cJ+Nn/asDStzPWoMRPYc1xQGDwM4DSJSdXfGnCaQeMSbg2aJtttxgJ3
+   gi2Xyd17tqIQ6RqxQ7U/hwYRO7VBE7ghOTYUw8mk7G+/qfL+grS5PcIJH
+   GTVHZG4xPu1iAeqYR3/WF7LYsKAFF29bDNbHO+2435O1nMQaTbX7WOrmL
+   Q==;
+X-CSE-ConnectionGUID: wjPqW7DuSv+GruDTi/JrOA==
+X-CSE-MsgGUID: xLuHUL3nSzSub3b1pPN5zQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758396"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758386"
+   d="scan'208";a="97758396"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:55 -0700
-X-CSE-ConnectionGUID: HO/vQbH8QjWM/x/xTzQ2jw==
-X-CSE-MsgGUID: yAJt7dBiRZahamLcz6rihA==
+X-CSE-ConnectionGUID: o6e4Ft09Sp6BLbxL0J9nUQ==
+X-CSE-MsgGUID: gV+OJ3KRS6KM/I9o0gt0bQ==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:55 -0700
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 06/14] fs/resctrl: Change pattern used to track number of entries in enum
-Date: Fri, 20 Mar 2026 15:03:16 -0700
-Message-ID: <24b86569a2d3428f7fddf3572adebaec909e696e.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 07/14] fs/resctrl: Use accurate type for rdt_resource::rid
+Date: Fri, 20 Mar 2026 15:03:17 -0700
+Message-ID: <1ae8867b43acb509f6359139297ee3a340bd0441.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -72,38 +72,58 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-CDP_NUM_TYPES tracks the number of different configuration types that can
-be applied to a resource. CDP_NUM_TYPES is required to iterate over the
-different configurations but is not a member of enum resctrl_conf_type to
-avoid the warning generated with -Wswitch when CDP_NUM_TYPES lacks a case.
+Every resctrl resource has a unique ID described by enum resctrl_res_level.
+enum resctrl_res_level is used in all resource ID initializations and all
+resource ID comparisons. All functions consuming the resource ID expects an
+enum resctrl_res_level. Of the four structures that contain a resource ID
+(struct mon_data, struct mon_evt, struct rdt_domain_hdr, and struct
+ rdt_resource) only struct rdt_resource does not use enum resctrl_res_level.
 
-Add a new CDP_LAST enum entry used in CDP_NUM_TYPES definition to simplify
-adding a new enum entry. Do this to create a cleaner pattern for tracking
-the number of enum entries in resctrl in preparation for other enums
-needing to do so.
+Switch the type of rdt_resource::rid to be enum resctrl_res_level to make
+it obvious what values are valid, match the type everywhere this member is
+used, and obtain benefits from tools that can flag any enum misuse.
 
-Suggested-by: Ben Horgan <ben.horgan@arm.com>
+Move define of RDT_NUM_RESOURCES outside the enum to enable tools to catch
+when a switch() on the resource ID does not handle all the resources and
+thus help flag which switch statements need an update when a new resource
+is added.
+
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- include/linux/resctrl.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Changes since v1:
+- Use RDT_RESOURCE_LAST = RDT_RESOURCE_PERF_PKG as last entry in enum.(Ben)
+---
+ include/linux/resctrl.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/include/linux/resctrl.h b/include/linux/resctrl.h
-index 006e57fd7ca5..0b28049378c8 100644
+index 0b28049378c8..99a4774735c7 100644
 --- a/include/linux/resctrl.h
 +++ b/include/linux/resctrl.h
-@@ -69,9 +69,10 @@ enum resctrl_conf_type {
- 	CDP_NONE,
- 	CDP_CODE,
- 	CDP_DATA,
-+	CDP_LAST = CDP_DATA
+@@ -54,11 +54,11 @@ enum resctrl_res_level {
+ 	RDT_RESOURCE_MBA,
+ 	RDT_RESOURCE_SMBA,
+ 	RDT_RESOURCE_PERF_PKG,
+-
+-	/* Must be the last */
+-	RDT_NUM_RESOURCES,
++	RDT_RESOURCE_LAST = RDT_RESOURCE_PERF_PKG
  };
  
--#define CDP_NUM_TYPES	(CDP_DATA + 1)
-+#define CDP_NUM_TYPES	(CDP_LAST + 1)
- 
- /*
-  * struct pseudo_lock_region - pseudo-lock region information
++#define RDT_NUM_RESOURCES (RDT_RESOURCE_LAST + 1)
++
+ /**
+  * enum resctrl_conf_type - The type of configuration.
+  * @CDP_NONE:	No prioritisation, both code and data are controlled or monitored.
+@@ -320,7 +320,7 @@ struct resctrl_mon {
+  * @cdp_capable:	Is the CDP feature available on this resource
+  */
+ struct rdt_resource {
+-	int			rid;
++	enum resctrl_res_level	rid;
+ 	bool			alloc_capable;
+ 	bool			mon_capable;
+ 	enum resctrl_scope	ctrl_scope;
 -- 
 2.50.1
 
