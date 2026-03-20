@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C47C3317145
-	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7E12E7635
+	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044237; cv=none; b=ZV1KAGs8jHcmwywY4fkeoxnjY9o2I1UDi8X1k3L68FpgGS20cekJS1HQnO5uRB14ljh4tQpGSpf6nseOFMHNhGemNHXBc8FWif/1IziRh97RXPzsf+8qyRe6cjWNuzUtmpe189slB8SyU5mXR3wSA1a+vRl3P0FzfoS7Diz9k5E=
+	t=1774044237; cv=none; b=nwAl9lV926o9Aa7zZt9nOCnf8E+vEk7rAGA18Xl228I/Q685QkTfCoyCjZ/Qb+Ex8updDtHD5Z3dUTUJUKkLDV+Qc9eZOfKEMjdNlS0Kz6hpQcmdpZQqTh991koXoeBJpP4BDhHDRtXzlYGcVM9Zxg2XfAW+KeZETQWASxc0l1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1774044237; c=relaxed/simple;
-	bh=v12I4fNHeG9jvYo3wUAhnOp8GtSP5lv3bu1tJwepx+o=;
+	bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=C5rNnjE4OQORDynbkmd1yy7EBt1QWYpcubvMO66rhPWNlkWDIQrhyiORhk/BczJVhUSbEKhPcnwjynKR4D6X/eGurbYgwYXKtOz6G8ruJLj/gTMN+PunNhwJnTVYSk2nmqI2ziYBIAY28Up6StvC+v+bmokmQgHvKGncdvHsFd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=Mlpmhmmy; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=M24JGO8FT4YFCnRDso/CwZ3tIYokZP9rmL0uSkh9EIg6oC7so9j1jSnuOYQ4o5x6rAisq3gl/0zkEPfAz4zMS465WY1PdjUgud8+O+77zUrDJajyWsUUqer0JnIqkzSXT4g9nvekfMcR79CD8hwJXhTGi9L9zOfDoSOsZp+B8oc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CY6ZV/yf; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="Mlpmhmmy"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CY6ZV/yf"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044235; x=1805580235;
+  t=1774044236; x=1805580236;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=v12I4fNHeG9jvYo3wUAhnOp8GtSP5lv3bu1tJwepx+o=;
-  b=MlpmhmmyRLgPYDN8wiFowur77AlKkbq/Cb7wy80O8pez7DPC6Wu7j8+y
-   urNMFCZ0ZanGeby+pXkeXzXybU/ditDTjivmRGT2vZiMrro1CIfcj9PZz
-   Ta/zs2dJMkyrggovFQBVP8u3xa74VALOWwU4GLzVF/GAm2/TQdk7wNK96
-   hBzMblWacQ4OvZBMwuK0ouZbVLcF7iLzOI+Iz3phOV4Za1ZX+JTXHL4AS
-   /sNNsY3L5OMP8OsIweERPIIcGc9nlXn5asTciZoX36UrZuNbPQTAqZR+u
-   zWmyNZlJoXpq5XoY/wkonIpJ3iefwP0UPgrm7VY9WmOYuQ0aCdSXnTFsJ
-   A==;
-X-CSE-ConnectionGUID: FFd7yib7Rom8RDJMNQoF9w==
-X-CSE-MsgGUID: CYm1CUbiTG6y63YlA2hGhw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758355"
+  bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
+  b=CY6ZV/yfg/osb7uDMhxn5SfMoiRXuxnDidzCngjszEfaIc8vZ2JE9zAf
+   G4bMrT3TUtsTvjzRRDhcM3rKf/Xs9WStwsZcvsW8fHTkhZo7cb+VdIElz
+   VMZqj9USlUriF9w6uP173foYEWa41TP3jx/p+7nEWItMqvQ5HzZbokN3b
+   w2atSq7kPPxrqRLshTsnyr0VooVTdUpVK5ivk5XKm6hkrp12ojTgAvIxB
+   xuB1wv3vexlHhtPrrhgx4uikaYvugPLNdA5ZKU4s0K8OQvuBltEGTYoRi
+   hMn2RhkdUWsCl0nOgwcefxSlKAZwvkXB5YCJJsI0w0QQV7xI+sgJs9zwj
+   g==;
+X-CSE-ConnectionGUID: xdDr2qQGSNCRR6BexHbiSQ==
+X-CSE-MsgGUID: khUG3IfIQEC0SxVA2Z/ANw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758365"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758355"
+   d="scan'208";a="97758365"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:54 -0700
-X-CSE-ConnectionGUID: juNpR+9uSgqXmYawAE9nYA==
-X-CSE-MsgGUID: cLgOUIwQQSaNyYlEim28OQ==
+X-CSE-ConnectionGUID: kjgW30mDRiqcqnbSuLmq9w==
+X-CSE-MsgGUID: D1js8yzHTdK8hJxtnJ6ogA==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:54 -0700
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 03/14] fs/resctrl: Avoid "may be used uninitialized" warning
-Date: Fri, 20 Mar 2026 15:03:13 -0700
-Message-ID: <0e64fcf4e6be27a1144e569f591f2bbd54eb7ccf.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 04/14] fs/resctrl: Use correct format specifier for printing error pointers
+Date: Fri, 20 Mar 2026 15:03:14 -0700
+Message-ID: <a53c700d3f555953283750a1ac089359e4b94e04.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -70,44 +70,43 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Building resctrl with extra checks ("W=12") produces the following warning:
- .../include/linux/ucopysize.h:22:17: warning: ‘buf’ may be used uninitialized [-Wmaybe-uninitialized]
-   22 |                 __check_object_size(ptr, n, to_user);
-      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
- .../include/linux/ucopysize.h: In function ‘pseudo_lock_measure_trigger’:
- .../include/linux/ucopysize.h:10:13: note: by argument 1 of type ‘const void *’ to ‘__check_object_size’ declared here
-   10 | extern void __check_object_size(const void *ptr, unsigned long n,
-      |             ^~~~~~~~~~~~~~~~~~~
- .../fs/resctrl/pseudo_lock.c:754:14: note: ‘buf’ declared here
-  754 |         char buf[32];
-      |              ^~~
-
-__check_object_size() ensures the provided buffer is within a valid location
-but does not read from the uninitialized buffer. Even so, initialize the
-buffer to silence the warning to help resctrl have a cleaner build.
+Use correct format specifier for error pointer as coccinelle suggests:
+    .../fs/resctrl/monitor.c:148:8-15: WARNING: Consider using %pe to print PTR_ERR()
+    .../fs/resctrl/monitor.c:760:9-16: WARNING: Consider using %pe to print PTR_ERR()
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- fs/resctrl/pseudo_lock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/resctrl/monitor.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/resctrl/pseudo_lock.c b/fs/resctrl/pseudo_lock.c
-index fa3687d69ebd..e1e9134474f4 100644
---- a/fs/resctrl/pseudo_lock.c
-+++ b/fs/resctrl/pseudo_lock.c
-@@ -750,8 +750,8 @@ static ssize_t pseudo_lock_measure_trigger(struct file *file,
- 					   size_t count, loff_t *ppos)
- {
- 	struct rdtgroup *rdtgrp = file->private_data;
-+	char buf[32] = {};
- 	size_t buf_size;
--	char buf[32];
- 	int ret;
- 	int sel;
+diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
+index 9fd901c78dc6..8194fdfbea81 100644
+--- a/fs/resctrl/monitor.c
++++ b/fs/resctrl/monitor.c
+@@ -144,8 +144,8 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
+ 	arch_priv = mon_event_all[QOS_L3_OCCUP_EVENT_ID].arch_priv;
+ 	arch_mon_ctx = resctrl_arch_mon_ctx_alloc(r, QOS_L3_OCCUP_EVENT_ID);
+ 	if (IS_ERR(arch_mon_ctx)) {
+-		pr_warn_ratelimited("Failed to allocate monitor context: %ld",
+-				    PTR_ERR(arch_mon_ctx));
++		pr_warn_ratelimited("Failed to allocate monitor context: %pe",
++				    arch_mon_ctx);
+ 		return;
+ 	}
  
+@@ -752,8 +752,8 @@ static void mbm_update_one_event(struct rdt_resource *r, struct rdt_l3_mon_domai
+ 	} else {
+ 		rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, evtid);
+ 		if (IS_ERR(rr.arch_mon_ctx)) {
+-			pr_warn_ratelimited("Failed to allocate monitor context: %ld",
+-					    PTR_ERR(rr.arch_mon_ctx));
++			pr_warn_ratelimited("Failed to allocate monitor context: %pe",
++					    rr.arch_mon_ctx);
+ 			return;
+ 		}
+ 	}
 -- 
 2.50.1
 
