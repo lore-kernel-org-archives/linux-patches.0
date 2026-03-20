@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D7E12E7635
-	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1149F3246E8
+	for <patches@lists.linux.dev>; Fri, 20 Mar 2026 22:03:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774044237; cv=none; b=nwAl9lV926o9Aa7zZt9nOCnf8E+vEk7rAGA18Xl228I/Q685QkTfCoyCjZ/Qb+Ex8updDtHD5Z3dUTUJUKkLDV+Qc9eZOfKEMjdNlS0Kz6hpQcmdpZQqTh991koXoeBJpP4BDhHDRtXzlYGcVM9Zxg2XfAW+KeZETQWASxc0l1o=
+	t=1774044239; cv=none; b=Rnn8Cqd5W9mMkgrtS21KWX51e8fX5m+f2AZXTo1tQYYMHIJ6oGX5iSpItMV10AQonOP7Q8+jesr55WkOwV3O1mMVO2bzLBPKTsLFj8tL6FybbGobislWW9+nBTPv3FqWrxpY1qqvSOmqEiZkQYypYi6iqpn2022td8Dpn/qGjco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774044237; c=relaxed/simple;
-	bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
+	s=arc-20240116; t=1774044239; c=relaxed/simple;
+	bh=XQbrDtV7kC3BagIoRNk2xRfz81oxluInULTjgTirvbA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M24JGO8FT4YFCnRDso/CwZ3tIYokZP9rmL0uSkh9EIg6oC7so9j1jSnuOYQ4o5x6rAisq3gl/0zkEPfAz4zMS465WY1PdjUgud8+O+77zUrDJajyWsUUqer0JnIqkzSXT4g9nvekfMcR79CD8hwJXhTGi9L9zOfDoSOsZp+B8oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=CY6ZV/yf; arc=none smtp.client-ip=198.175.65.9
+	 MIME-Version; b=OxQnWC/TJhbfM5r/cXwwfT177agvkTZ5NTFZFLV34nL5oJ1w9xRKSV+YxH0bWg5H9laiBCEQ8MlcuSYNCpPIuxy55r48zpob6uUWD2LDOPuYuWTYrsgjwharJuZ/UE5sbPVDntrSkLOLhcuv21BpQBl0SiFVewsKHX4CEtnsaSc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=eIeUNT6e; arc=none smtp.client-ip=198.175.65.9
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="CY6ZV/yf"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="eIeUNT6e"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774044236; x=1805580236;
+  t=1774044237; x=1805580237;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=dxMeQSQAI9H8hX2jXObajzEdPFMeYDHhhrSWJaEFRwc=;
-  b=CY6ZV/yfg/osb7uDMhxn5SfMoiRXuxnDidzCngjszEfaIc8vZ2JE9zAf
-   G4bMrT3TUtsTvjzRRDhcM3rKf/Xs9WStwsZcvsW8fHTkhZo7cb+VdIElz
-   VMZqj9USlUriF9w6uP173foYEWa41TP3jx/p+7nEWItMqvQ5HzZbokN3b
-   w2atSq7kPPxrqRLshTsnyr0VooVTdUpVK5ivk5XKm6hkrp12ojTgAvIxB
-   xuB1wv3vexlHhtPrrhgx4uikaYvugPLNdA5ZKU4s0K8OQvuBltEGTYoRi
-   hMn2RhkdUWsCl0nOgwcefxSlKAZwvkXB5YCJJsI0w0QQV7xI+sgJs9zwj
-   g==;
-X-CSE-ConnectionGUID: xdDr2qQGSNCRR6BexHbiSQ==
-X-CSE-MsgGUID: khUG3IfIQEC0SxVA2Z/ANw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758365"
+  bh=XQbrDtV7kC3BagIoRNk2xRfz81oxluInULTjgTirvbA=;
+  b=eIeUNT6e8wC8fBCMempBqRztqQNho25CgnHDwiLwifRbeGkOfhJlaQDo
+   u1Rnb+UUKD5WtmKaNM+cELy+ZSOEW8PCskeJL2flbI/7b8ZJYBzBFCgGN
+   bpyw+6GzvvocVkkUMcKeMdqN9esShyXI7pI/kPOS0RQBSQ9JAzZGC1sI/
+   SBUgkjL5MnVWHM7ubxuMMlhjHdJ6jO6LhoacU2DvrzNGiV+A/3iTwX2DZ
+   icxdbP9fGXXWAbpDn4xmLiXV/1+DzJnKsM7wSws0THYsEf9QS5aT+pUhv
+   MNr3w4GL4BVO5Iipr0TfGFHgyTps5v1pw+KMTc9hOnJfN2L5dYIPC1NTA
+   w==;
+X-CSE-ConnectionGUID: vqw9+D1pRkyrj15aabzZUA==
+X-CSE-MsgGUID: VuNTU22rQFikxft1iUov3g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11735"; a="97758375"
 X-IronPort-AV: E=Sophos;i="6.23,132,1770624000"; 
-   d="scan'208";a="97758365"
+   d="scan'208";a="97758375"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
   by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:54 -0700
-X-CSE-ConnectionGUID: kjgW30mDRiqcqnbSuLmq9w==
-X-CSE-MsgGUID: D1js8yzHTdK8hJxtnJ6ogA==
+X-CSE-ConnectionGUID: Ry5l89fCQ6C2vcyNccHOEQ==
+X-CSE-MsgGUID: TaiTYti/QPGKR/HrGD1zAA==
 X-ExtLoop1: 1
 Received: from rchatre-desk1.jf.intel.com ([10.165.154.99])
   by fmviesa003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2026 15:03:54 -0700
@@ -58,9 +58,9 @@ Cc: x86@kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	reinette.chatre@intel.com
-Subject: [PATCH v2 04/14] fs/resctrl: Use correct format specifier for printing error pointers
-Date: Fri, 20 Mar 2026 15:03:14 -0700
-Message-ID: <a53c700d3f555953283750a1ac089359e4b94e04.1774043709.git.reinette.chatre@intel.com>
+Subject: [PATCH v2 05/14] x86/resctrl: Protect against bad shift
+Date: Fri, 20 Mar 2026 15:03:15 -0700
+Message-ID: <18825382dd74ef5d7c7871a269204ec236da4790.1774043709.git.reinette.chatre@intel.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <cover.1774043709.git.reinette.chatre@intel.com>
 References: <cover.1774043709.git.reinette.chatre@intel.com>
@@ -72,41 +72,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Use correct format specifier for error pointer as coccinelle suggests:
-    .../fs/resctrl/monitor.c:148:8-15: WARNING: Consider using %pe to print PTR_ERR()
-    .../fs/resctrl/monitor.c:760:9-16: WARNING: Consider using %pe to print PTR_ERR()
+The size of the bandwidth specifier field is enumerated from AMD hardware.
+resctrl uses this field width to determine the maximum bandwidth supported
+that is stored in resctrl_membw::max_bw to which user space allocation
+requests are compared for validity.
+
+resctrl_membw::max_bw is of type u32 while the register containing the
+bandwidth specifier field, L3QOS_BW_CONTROL_n, is 64 bits. While not an
+issue with current hardware it is theoretically possible that enumeration
+of maximum bandwidth may trigger invalid behavior if a future system can
+use a bandwidth specifier field larger than 32 bits. Whether this could
+ever represent a reasonable bandwidth value is unknown but addressing the
+issue will appease static checkers.
+
+Ensure resctrl can accommodate the hardware's bandwidth specifier field
+width with an additional check. Switch to BIT() instead of open-coding the
+bitshift to avoid signed integer overflow if the number of bits is a
+valid 31.
 
 Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
 ---
- fs/resctrl/monitor.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/x86/kernel/cpu/resctrl/core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/resctrl/monitor.c b/fs/resctrl/monitor.c
-index 9fd901c78dc6..8194fdfbea81 100644
---- a/fs/resctrl/monitor.c
-+++ b/fs/resctrl/monitor.c
-@@ -144,8 +144,8 @@ void __check_limbo(struct rdt_l3_mon_domain *d, bool force_free)
- 	arch_priv = mon_event_all[QOS_L3_OCCUP_EVENT_ID].arch_priv;
- 	arch_mon_ctx = resctrl_arch_mon_ctx_alloc(r, QOS_L3_OCCUP_EVENT_ID);
- 	if (IS_ERR(arch_mon_ctx)) {
--		pr_warn_ratelimited("Failed to allocate monitor context: %ld",
--				    PTR_ERR(arch_mon_ctx));
-+		pr_warn_ratelimited("Failed to allocate monitor context: %pe",
-+				    arch_mon_ctx);
- 		return;
- 	}
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 7667cf7c4e94..db787c4dee61 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -246,7 +246,9 @@ static __init bool __rdt_get_mem_config_amd(struct rdt_resource *r)
  
-@@ -752,8 +752,8 @@ static void mbm_update_one_event(struct rdt_resource *r, struct rdt_l3_mon_domai
- 	} else {
- 		rr.arch_mon_ctx = resctrl_arch_mon_ctx_alloc(rr.r, evtid);
- 		if (IS_ERR(rr.arch_mon_ctx)) {
--			pr_warn_ratelimited("Failed to allocate monitor context: %ld",
--					    PTR_ERR(rr.arch_mon_ctx));
-+			pr_warn_ratelimited("Failed to allocate monitor context: %pe",
-+					    rr.arch_mon_ctx);
- 			return;
- 		}
- 	}
+ 	cpuid_count(0x80000020, subleaf, &eax, &ebx, &ecx, &edx);
+ 	hw_res->num_closid = edx + 1;
+-	r->membw.max_bw = 1 << eax;
++	if (WARN_ON(BITS_PER_TYPE(r->membw.max_bw) <= eax))
++		return false;
++	r->membw.max_bw = BIT(eax);
+ 
+ 	/* AMD does not use delay */
+ 	r->membw.delay_linear = false;
 -- 
 2.50.1
 
