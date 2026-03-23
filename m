@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF6A3AD517;
-	Mon, 23 Mar 2026 13:49:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0C32199FAB;
+	Mon, 23 Mar 2026 13:49:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273790; cv=none; b=dJUVM84VaCryaD38FsygAsjjlyU8D4sQYM68/ZuxsRYwFmHL5fXYSaFGRqXj36IG86twNqCAvMssb8bf4Br/LceSH2lPfSqAFEUap3q+fuvmlKN+dJk4/qRv9az2fGmHulIUSnek9019q1Ud7Zgr479S9hQTcASf+N3qw7DkbtY=
+	t=1774273793; cv=none; b=oip1GFKhRQjiJWa5VaullkbLWeQyQr2q6oqwfUS/Xtx1S3iE5Ie6Ceeois+FILftq9JzxO5xMWm7IqwFlmwXFR1O9yus++KWYn4S3DlZH4VTs34xVOGrxF+auFxw/dVX2UsDfpDbhQ48hnPjvfmS0+LTZ6U3erVHhmk0RRWNDec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273790; c=relaxed/simple;
-	bh=z2y+bztiQ2rRcDpQSnhzx0SRk4wxHpXI2j3AGTJklJI=;
+	s=arc-20240116; t=1774273793; c=relaxed/simple;
+	bh=eG8v+v94y11ftNPYiTYPIy1Gq7J1KgH8yKnUAOcEWaw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IG2z6XE8Ooymezn+2V4AF1+Eca2aYsu2nHveywE3m4C6wqQCEI0QeF6es+2SKX+OIKFIDbCgPRr85SdrWK7oqJ98Em7P60Ewmcfsptq2ub3R/KZFlyxRm0WXvjpbEZFUJr1rmc+egKheRmxP9/bwrd2sOHxhzz7WSPX1pR1hmns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cgPMQWHF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e0vRMlbttcjnuiF7OTsYnJKV6EoXBaMzqTuGdH+DM9av5qdpMT+DIfqnPhkN2Tyv3LFcoyvmn41X2/zssVJmnYxeZpJSIIPg3G7LSXBKwHRkMAn1/fSQLoZPt/R2+Zt66LPOwQFzWYjWZfab8/AijXr0Dr9FRM3NYDaHSb3tca8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RIkK/God; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cgPMQWHF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEB7BC4CEF7;
-	Mon, 23 Mar 2026 13:49:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RIkK/God"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC729C2BCB1;
+	Mon, 23 Mar 2026 13:49:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273790;
-	bh=z2y+bztiQ2rRcDpQSnhzx0SRk4wxHpXI2j3AGTJklJI=;
+	s=korg; t=1774273793;
+	bh=eG8v+v94y11ftNPYiTYPIy1Gq7J1KgH8yKnUAOcEWaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgPMQWHFzXwgRDl35bAxRoe6jtdbLDBZD2QDR956HF3LT/zxXSBegD3dniPXp5pp9
-	 gAqtpvBBjzw1V9WLQpKVk/UPYEqseJpTZjhrUC914STG3gau6ACDQ1bkcHBQauB/lX
-	 8xttS/TDeEU8TGBVSzzF/AXPUh8X3yOTNkQc1938=
+	b=RIkK/God/7pEvfHsfpGxaJ2JHUcbQW5N7TMDI9IY8kM1TLCI9uKsoxyB8wopl9Hjv
+	 SlnXjxZb2f+NfU/b3huC/9a2q3bKe8k9eLoukze72rFKXfXm10v8eyQDLPpkiba6OZ
+	 56cvZnmCUTCTpWCIEYQ7RoTfKYBtY/nz8DKKkMTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Down <chris@chrisdown.name>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Gavin Guo <gavinguo@igalia.com>,
+	"David Hildenbrand (arm)" <david@kernel.org>,
+	"Lorenzo Stoakes (Oracle)" <ljs@kernel.org>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 010/220] mm/huge_memory: fix use of NULL folio in move_pages_huge_pmd()
-Date: Mon, 23 Mar 2026 14:43:07 +0100
-Message-ID: <20260323134504.908002929@linuxfoundation.org>
+Subject: [PATCH 6.19 011/220] mm/huge_memory: fix early failure try_to_migrate() when split huge pmd for shared THP
+Date: Mon, 23 Mar 2026 14:43:08 +0100
+Message-ID: <20260323134504.937875443@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,64 +56,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Down <chris@chrisdown.name>
+From: Wei Yang <richard.weiyang@gmail.com>
 
-commit fae654083bfa409bb2244f390232e2be47f05bfc upstream.
+commit 939080834fef3ce42fdbcfef33fd29c9ffe5bbed upstream.
 
-move_pages_huge_pmd() handles UFFDIO_MOVE for both normal THPs and huge
-zero pages.  For the huge zero page path, src_folio is explicitly set to
-NULL, and is used as a sentinel to skip folio operations like lock and
-rmap.
+Commit 60fbb14396d5 ("mm/huge_memory: adjust try_to_migrate_one() and
+split_huge_pmd_locked()") return false unconditionally after
+split_huge_pmd_locked().  This may fail try_to_migrate() early when
+TTU_SPLIT_HUGE_PMD is specified.
 
-In the huge zero page branch, src_folio is NULL, so folio_mk_pmd(NULL,
-pgprot) passes NULL through folio_pfn() and page_to_pfn().  With
-SPARSEMEM_VMEMMAP this silently produces a bogus PFN, installing a PMD
-pointing to non-existent physical memory.  On other memory models it is a
-NULL dereference.
+The reason is the above commit adjusted try_to_migrate_one() to, when a
+PMD-mapped THP entry is found, and TTU_SPLIT_HUGE_PMD is specified (for
+example, via unmap_folio()), return false unconditionally.  This breaks
+the rmap walk and fail try_to_migrate() early, if this PMD-mapped THP is
+mapped in multiple processes.
 
-Use page_folio(src_page) to obtain the valid huge zero folio from the
-page, which was obtained from pmd_page() and remains valid throughout.
+The user sensible impact of this bug could be:
 
-After commit d82d09e48219 ("mm/huge_memory: mark PMD mappings of the huge
-zero folio special"), moved huge zero PMDs must remain special so
-vm_normal_page_pmd() continues to treat them as special mappings.
+  * On memory pressure, shrink_folio_list() may split partially mapped
+    folio with split_folio_to_list(). Then free unmapped pages without IO.
+    If failed, it may not be reclaimed.
+  * On memory failure, memory_failure() would call try_to_split_thp_page()
+    to split folio contains the bad page. If succeed, the PG_has_hwpoisoned
+    bit is only set in the after-split folio contains @split_at. By doing
+    so, we limit bad memory. If failed to split, the whole folios is not
+    usable.
 
-move_pages_huge_pmd() currently reconstructs the destination PMD in the
-huge zero page branch, which drops PMD state such as pmd_special() on
-architectures with CONFIG_ARCH_HAS_PTE_SPECIAL.  As a result,
-vm_normal_page_pmd() can treat the moved huge zero PMD as a normal page
-and corrupt its refcount.
+One way to reproduce:
 
-Instead of reconstructing the PMD from the folio, derive the destination
-entry from src_pmdval after pmdp_huge_clear_flush(), then handle the PMD
-metadata the same way move_huge_pmd() does for moved entries by marking it
-soft-dirty and clearing uffd-wp.
+    Create an anonymous THP range and fork 512 children, so we have a
+    THP shared mapped in 513 processes. Then trigger folio split with
+    /sys/kernel/debug/split_huge_pages debugfs to split the THP folio to
+    order 0.
 
-Link: https://lkml.kernel.org/r/a1e787dd-b911-474d-8570-f37685357d86@lucifer.local
-Fixes: e3981db444a0 ("mm: add folio_mk_pmd()")
-Signed-off-by: Chris Down <chris@chrisdown.name>
-Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Tested-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Without the above commit, we can successfully split to order 0.  With the
+above commit, the folio is still a large folio.
+
+And currently there are two core users of TTU_SPLIT_HUGE_PMD:
+
+  * try_to_unmap_one()
+  * try_to_migrate_one()
+
+try_to_unmap_one() would restart the rmap walk, so only
+try_to_migrate_one() is affected.
+
+We can't simply revert commit 60fbb14396d5 ("mm/huge_memory: adjust
+try_to_migrate_one() and split_huge_pmd_locked()"), since it removed some
+duplicated check covered by page_vma_mapped_walk().
+
+This patch fixes this by restart page_vma_mapped_walk() after
+split_huge_pmd_locked().  Since we cannot simply return "true" to fix the
+problem, as that would affect another case:
+
+    When invoking folio_try_share_anon_rmap_pmd() from
+    split_huge_pmd_locked(), the latter can fail and leave a large folio
+    mapped through PTEs, in which case we ought to return true from
+    try_to_migrate_one(). This might result in unnecessary walking of the
+    rmap but is relatively harmless.
+
+Link: https://lkml.kernel.org/r/20260305015006.27343-1-richard.weiyang@gmail.com
+Fixes: 60fbb14396d5 ("mm/huge_memory: adjust try_to_migrate_one() and split_huge_pmd_locked()")
+Signed-off-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Gavin Guo <gavinguo@igalia.com>
+Acked-by: David Hildenbrand (arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes (Oracle) <ljs@kernel.org>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/rmap.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -2797,7 +2797,8 @@ int move_pages_huge_pmd(struct mm_struct
- 		_dst_pmd = pmd_mkwrite(pmd_mkdirty(_dst_pmd), dst_vma);
- 	} else {
- 		src_pmdval = pmdp_huge_clear_flush(src_vma, src_addr, src_pmd);
--		_dst_pmd = folio_mk_pmd(src_folio, dst_vma->vm_page_prot);
-+		_dst_pmd = move_soft_dirty_pmd(src_pmdval);
-+		_dst_pmd = clear_uffd_wp_pmd(_dst_pmd);
- 	}
- 	set_pmd_at(mm, dst_addr, dst_pmd, _dst_pmd);
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -2338,11 +2338,17 @@ static bool try_to_migrate_one(struct fo
+ 			__maybe_unused pmd_t pmdval;
  
+ 			if (flags & TTU_SPLIT_HUGE_PMD) {
++				/*
++				 * split_huge_pmd_locked() might leave the
++				 * folio mapped through PTEs. Retry the walk
++				 * so we can detect this scenario and properly
++				 * abort the walk.
++				 */
+ 				split_huge_pmd_locked(vma, pvmw.address,
+ 						      pvmw.pmd, true);
+-				ret = false;
+-				page_vma_mapped_walk_done(&pvmw);
+-				break;
++				flags &= ~TTU_SPLIT_HUGE_PMD;
++				page_vma_mapped_walk_restart(&pvmw);
++				continue;
+ 			}
+ #ifdef CONFIG_ARCH_ENABLE_THP_MIGRATION
+ 			pmdval = pmdp_get(pvmw.pmd);
 
 
