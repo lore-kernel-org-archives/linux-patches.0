@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD713AEF5F;
-	Mon, 23 Mar 2026 14:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F10A03AEF5F;
+	Mon, 23 Mar 2026 14:01:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274504; cv=none; b=Ns2jh8UqBuO4jl8DTsHEJg0hIoDGIkmjhUqhwQ9fgs0iwJrfhEOTy4njz1/pfl/WicmZodVYJodgZMhkcCx3eoDkZLSCjCfVaT4t59oOiWPjiZ1uN3a5uLcKSJGtiL1ui21b3uE3ZdK9ebazY2APh35C2MmY7pCMnkl0ygCmi6Q=
+	t=1774274508; cv=none; b=TPoiJbVPlnIXta7bqjRUDRdgE1wzKrMGqb/KvjN8k6ZzBJz+8fJcCdmPGc3lK/w8lwD2n2P44kZEf+NiPlWB2Z9tFjtR5yPcFbwBfddZcsnxyerh/pwZUmUaXCG++WEU52+4+9KFXAAdo1zp2Yu6/Ra7rpDhkIBXvaM514yJQB8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274504; c=relaxed/simple;
-	bh=nI57aAdO1R8Zwc5kguQ6zWdeQ/T1lTP1dpjnM9T0DrE=;
+	s=arc-20240116; t=1774274508; c=relaxed/simple;
+	bh=7iVFwWDbERo5gG9RyFA072wQJFIvwHS3c/kHNW8BpEs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pC01TQZ28PPhNw4L0i2eVqcMXU6/T2zJ+OwHuZsUacCaCzruPH+eqZSa2HcjEOkf3Cme+t+R/QG8I1Kq1Lj/b4v5G2+lScMSTXIoAi2Ugj3OGievxiO3rZwVxaFsNePmfCKUjfSKEteNTKaIcAk/JEjypYp+bX4bUvfeS8WgNE0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l6JYwcFT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sT/FkKEk4h0K3Nds4HPIzT+il4lV2MxylC8ssHUwILWpayJb8jRdC5YnGaPHtvXMLDgkJwXR5rUCB50y3BaINiKF3OHEhzjrOnaLtKt5/XkGkkhlW64ZNESV6aRm+uM9tD9qbCACoWsXrCCV6/EQhCA9/xbTdDAn4QPmzcyBBUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DuhaLU8O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l6JYwcFT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60F34C4CEF7;
-	Mon, 23 Mar 2026 14:01:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DuhaLU8O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A8FC4CEF7;
+	Mon, 23 Mar 2026 14:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274504;
-	bh=nI57aAdO1R8Zwc5kguQ6zWdeQ/T1lTP1dpjnM9T0DrE=;
+	s=korg; t=1774274507;
+	bh=7iVFwWDbERo5gG9RyFA072wQJFIvwHS3c/kHNW8BpEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l6JYwcFTF7GIHc+WEgJhUoRKi9eAono6HxQ098DahD6y/tSIlRNbQPqQyCJ+iDo4a
-	 tNGscTYvuQP4x+N3R0t1KnGkJz8LgMG6Jw2R6eNSP3RDcsa388Eu3nlkdqa9pNblhf
-	 nPf9g52pf2pHyrWVELATTPAoKtc0tfSdEdScoE4k=
+	b=DuhaLU8OXCQDJwVociq+jRXVAZdxllstih0HPvHYGKQMv8qybV4+qGXsQL1kgSmYO
+	 9WTWET2IRaNkvQrWyw280lQG18tyw0SWm3e8Zm2GEoCCygmTsuNB5/+T0meVB2ONMj
+	 F1sJX5obyxfaWumEQih/30+qtU4p4CwxlkCOC6zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.18 019/212] mac80211: fix crash in ieee80211_chan_bw_change for AP_VLAN stations
-Date: Mon, 23 Mar 2026 14:44:00 +0100
-Message-ID: <20260323134504.367397086@linuxfoundation.org>
+	Misbah Anjum N <misanjum@linux.ibm.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 002/212] NFSD: Hold net reference for the lifetime of /proc/fs/nfs/exports fd
+Date: Mon, 23 Mar 2026 14:43:43 +0100
+Message-ID: <20260323134503.847271012@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,51 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 672e5229e1ecfc2a3509b53adcb914d8b024a853 upstream.
+commit e7fcf179b82d3a3730fd8615da01b087cc654d0b upstream.
 
-ieee80211_chan_bw_change() iterates all stations and accesses
-link->reserved.oper via sta->sdata->link[link_id]. For stations on
-AP_VLAN interfaces (e.g. 4addr WDS clients), sta->sdata points to
-the VLAN sdata, whose link never participates in chanctx reservations.
-This leaves link->reserved.oper zero-initialized with chan == NULL,
-causing a NULL pointer dereference in __ieee80211_sta_cap_rx_bw()
-when accessing chandef->chan->band during CSA.
+The /proc/fs/nfs/exports proc entry is created at module init
+and persists for the module's lifetime. exports_proc_open()
+captures the caller's current network namespace and stores
+its svc_export_cache in seq->private, but takes no reference
+on the namespace. If the namespace is subsequently torn down
+(e.g. container destruction after the opener does setns() to a
+different namespace), nfsd_net_exit() calls nfsd_export_shutdown()
+which frees the cache. Subsequent reads on the still-open fd
+dereference the freed cache_detail, walking a freed hash table.
 
-Resolve the VLAN sdata to its parent AP sdata using get_bss_sdata()
-before accessing link data.
+Hold a reference on the struct net for the lifetime of the open
+file descriptor. This prevents nfsd_net_exit() from running --
+and thus prevents nfsd_export_shutdown() from freeing the cache
+-- while any exports fd is open. cache_detail already stores
+its net pointer (cd->net, set by cache_create_net()), so
+exports_release() can retrieve it without additional per-file
+storage.
 
+Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
+Fixes: 96d851c4d28d ("nfsd: use proper net while reading "exports" file")
 Cc: stable@vger.kernel.org
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260305170812.2904208-1-nbd@nbd.name
-[also change sta->sdata in ARRAY_SIZE even if it doesn't matter]
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/chan.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsctl.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/chan.c
-+++ b/net/mac80211/chan.c
-@@ -441,14 +441,16 @@ static void ieee80211_chan_bw_change(str
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(sta, &local->sta_list,
- 				list) {
--		struct ieee80211_sub_if_data *sdata = sta->sdata;
-+		struct ieee80211_sub_if_data *sdata;
- 		enum ieee80211_sta_rx_bandwidth new_sta_bw;
- 		unsigned int link_id;
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -149,9 +149,19 @@ static int exports_net_open(struct net *
  
- 		if (!ieee80211_sdata_running(sta->sdata))
- 			continue;
+ 	seq = file->private_data;
+ 	seq->private = nn->svc_export_cache;
++	get_net(net);
+ 	return 0;
+ }
  
--		for (link_id = 0; link_id < ARRAY_SIZE(sta->sdata->link); link_id++) {
-+		sdata = get_bss_sdata(sta->sdata);
++static int exports_release(struct inode *inode, struct file *file)
++{
++	struct seq_file *seq = file->private_data;
++	struct cache_detail *cd = seq->private;
 +
-+		for (link_id = 0; link_id < ARRAY_SIZE(sdata->link); link_id++) {
- 			struct ieee80211_link_data *link =
- 				rcu_dereference(sdata->link[link_id]);
- 			struct ieee80211_bss_conf *link_conf;
++	put_net(cd->net);
++	return seq_release(inode, file);
++}
++
+ static int exports_nfsd_open(struct inode *inode, struct file *file)
+ {
+ 	return exports_net_open(inode->i_sb->s_fs_info, file);
+@@ -161,7 +171,7 @@ static const struct file_operations expo
+ 	.open		= exports_nfsd_open,
+ 	.read		= seq_read,
+ 	.llseek		= seq_lseek,
+-	.release	= seq_release,
++	.release	= exports_release,
+ };
+ 
+ static int export_features_show(struct seq_file *m, void *v)
+@@ -1375,7 +1385,7 @@ static const struct proc_ops exports_pro
+ 	.proc_open	= exports_proc_open,
+ 	.proc_read	= seq_read,
+ 	.proc_lseek	= seq_lseek,
+-	.proc_release	= seq_release,
++	.proc_release	= exports_release,
+ };
+ 
+ static int create_proc_exports_entry(void)
 
 
