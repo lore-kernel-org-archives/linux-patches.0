@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A313A6B88;
-	Mon, 23 Mar 2026 13:50:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B223E3AD51E;
+	Mon, 23 Mar 2026 13:50:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273843; cv=none; b=mwa2RqqeX8zOjrotYNgAsaojSqPDQzDhrXAqyY/GcySGrb0ZwEXt3uAvsvbhorWnubsy48gdL7S3PCFvrNbsNC8az7GM2w4uFbbbooB8HuN3N86zYDp3YgZDReVu525NHco4Gzir9qTWER82T52JOBIN4X7xsQzjcFMi8ObYwS4=
+	t=1774273846; cv=none; b=auEy6TYOJ5iiqaEy1oJQCmN2qivhGhkU9VdaOImsxuEflsZzdwoxRbOR3Q2dvKUomPByFBmyLW1uVogqPex7LmitalKaJ/SmsC+iIzYGTuYqJwiJS2iIP4to27eZzgA78847YNFDhn6WTDfK/KzPEanRR7rLW4Nmzu94oFQbEJc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273843; c=relaxed/simple;
-	bh=SaPd7N0Io+SREiC/uaN2tpAHXtspnmkO66XuS/rwMh0=;
+	s=arc-20240116; t=1774273846; c=relaxed/simple;
+	bh=CuIhkMKcvTSJ4SjJ4t2fuPF0niZ3AF/HufLpyFd8ECc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+TBCsdbTnR8/MJjUGL/4SZKJhoQ+fuCV8la8hQY18sCQJS7GT74EhA35vxX1w3LA+1w+GPi+/6wiopL8vFZIK0rJCwZHi25k1hLqf55Rfe0pCo+uFSJ2ua4xq0ix994qmN4LrB4ISuT3OCahD5fEatbUD3VYyxb7x+sSUbHIcc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AKxd5Nf3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QCf/LtXKZBv2QK95J0BYtP3wvwblLSVgwWLUkhgqM9dzqiadGCFO2YD8OD1W7XmYf/svjN1fslkUbQlqAPfpuuJ06I0+uj1R2Qfdimcn3vhN8rA5ceOAA4C/kku9yEFllxlqrLu9tzwaQtXr52fKsfvm05YyDdEo3Xa8QkwbrtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oR3XEn4I; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AKxd5Nf3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D49BFC4CEF7;
-	Mon, 23 Mar 2026 13:50:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oR3XEn4I"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39B4C2BC9E;
+	Mon, 23 Mar 2026 13:50:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273843;
-	bh=SaPd7N0Io+SREiC/uaN2tpAHXtspnmkO66XuS/rwMh0=;
+	s=korg; t=1774273846;
+	bh=CuIhkMKcvTSJ4SjJ4t2fuPF0niZ3AF/HufLpyFd8ECc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKxd5Nf3IOJalC0fSiMlQhZ2+PnLJdcdO1aJiIvkWkelOGVBKd7ioAJo5x0x+26ZY
-	 QMqG2IyGPeEdCYkEofSyeIQZARlRj0RrUlQ50axm7nEcIEm0hgaJ71KT7Pm4JUMmM7
-	 jGiFo+ySzOqpBW2Ybr0WRp3wDPTWORpodReCtcbs=
+	b=oR3XEn4ICRdr7dwPt/hubJ5wYArTpQuE1NKqk0W4208ifuRePy2Lmj0cmOLqvwsBL
+	 G4kkjNjfeq7LcATJrHUSadcESf9QRmuyWKr4DiXrF1dT7FMNMNOx6YBvoiKSC862j/
+	 zJn98yE1U5fhkuuKB5pMwmA+FBFRFIJLEDi8Q960=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.19 026/220] ksmbd: use volume UUID in FS_OBJECT_ID_INFORMATION
-Date: Mon, 23 Mar 2026 14:43:23 +0100
-Message-ID: <20260323134505.408631131@linuxfoundation.org>
+	stable@kernel.org,
+	Nicholas Carlini <npc@anthropic.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.19 003/220] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
+Date: Mon, 23 Mar 2026 14:43:00 +0100
+Message-ID: <20260323134504.687257393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,47 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 3a64125730cabc34fccfbc230c2667c2e14f7308 upstream.
+commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 upstream.
 
-Use sb->s_uuid for a proper volume identifier as the primary choice.
-For filesystems that do not provide a UUID, fall back to stfs.f_fsid
-obtained from vfs_statfs().
+The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
+(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
+This size was calculated based on OPEN responses and does not account
+for LOCK denied responses, which include the conflicting lock owner as
+a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
 
-Cc: stable@vger.kernel.org
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+When a LOCK operation is denied due to a conflict with an existing lock
+that has a large owner, nfsd4_encode_operation() copies the full encoded
+response into the undersized replay buffer via read_bytes_from_xdr_buf()
+with no bounds check. This results in a slab-out-of-bounds write of up
+to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
+
+This can be triggered remotely by an unauthenticated attacker with two
+cooperating NFSv4.0 clients: one sets a lock with a large owner string,
+then the other requests a conflicting lock to provoke the denial.
+
+We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
+opaque, but that would increase the size of every stateowner, when most
+lockowners are not that large.
+
+Instead, fix this by checking the encoded response length against
+NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
+response is too large, set rp_buflen to 0 to skip caching the replay
+payload. The status is still cached, and the client already received the
+correct response on the original request.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Tested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4xdr.c |    9 +++++++--
+ fs/nfsd/state.h   |   17 ++++++++++++-----
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -5452,7 +5452,6 @@ static int smb2_get_info_filesystem(stru
- 				    struct smb2_query_info_req *req,
- 				    struct smb2_query_info_rsp *rsp)
- {
--	struct ksmbd_session *sess = work->sess;
- 	struct ksmbd_conn *conn = work->conn;
- 	struct ksmbd_share_config *share = work->tcon->share_conf;
- 	int fsinfoclass = 0;
-@@ -5589,10 +5588,11 @@ static int smb2_get_info_filesystem(stru
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5946,9 +5946,14 @@ nfsd4_encode_operation(struct nfsd4_comp
+ 		int len = xdr->buf->len - (op_status_offset + XDR_UNIT);
  
- 		info = (struct object_id_info *)(rsp->Buffer);
+ 		so->so_replay.rp_status = op->status;
+-		so->so_replay.rp_buflen = len;
+-		read_bytes_from_xdr_buf(xdr->buf, op_status_offset + XDR_UNIT,
++		if (len <= NFSD4_REPLAY_ISIZE) {
++			so->so_replay.rp_buflen = len;
++			read_bytes_from_xdr_buf(xdr->buf,
++						op_status_offset + XDR_UNIT,
+ 						so->so_replay.rp_buf, len);
++		} else {
++			so->so_replay.rp_buflen = 0;
++		}
+ 	}
+ status:
+ 	op->status = nfsd4_map_status(op->status,
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -541,11 +541,18 @@ struct nfs4_client_reclaim {
+ 	struct xdr_netobj	cr_princhash;
+ };
  
--		if (!user_guest(sess->user))
--			memcpy(info->objid, user_passkey(sess->user), 16);
-+		if (path.mnt->mnt_sb->s_uuid_len == 16)
-+			memcpy(info->objid, path.mnt->mnt_sb->s_uuid.b,
-+					path.mnt->mnt_sb->s_uuid_len);
- 		else
--			memset(info->objid, 0, 16);
-+			memcpy(info->objid, &stfs.f_fsid, sizeof(stfs.f_fsid));
+-/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
+- * The OPEN response, typically the largest, requires 
+- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
+- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
+- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
++/*
++ * REPLAY_ISIZE is sized for an OPEN response with delegation:
++ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
++ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
++ *   4(deleg. recall flag) + 20(deleg. space limit) +
++ *   ~32(deleg. ace) = 112 bytes
++ *
++ * Some responses can exceed this. A LOCK denial includes the conflicting
++ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
++ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
++ * saved. Enlarging this constant increases the size of every
++ * nfs4_stateowner.
+  */
  
- 		info->extended_info.magic = cpu_to_le32(EXTENDED_INFO_MAGIC);
- 		info->extended_info.version = cpu_to_le32(1);
+ #define NFSD4_REPLAY_ISIZE       112 
 
 
