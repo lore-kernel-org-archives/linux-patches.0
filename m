@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13428504F;
-	Mon, 23 Mar 2026 15:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90868261B9E;
+	Mon, 23 Mar 2026 15:13:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278812; cv=none; b=AlHBeJMsRg/lnR0Ot5rdrkr1/lL1clNgLXi9cr/UpEzD9iZMQQ4j1mgYJZqbRPdoGlhVJ3CxYEmTkl9WyzIh77GPqZw9ndrpFGUVxwruHnjojky2Gq3XUd9Rx9SI6SNaVK7cmkU31+PdFeOt0AvOuAminLV72RlYWJDSD1qsJGM=
+	t=1774278815; cv=none; b=nBHmoVDuBKP0/2SC3uU4SrJ8LWn64U4jOnRo29vSEIqq7hZGrqCVygf/H92M5a9aY+pU2kMYrfEaYuXktE0u4q2Jl3IgcSUcDhxyGYMK+guoYnmS4u2t4Pz5xN4DYy6cwmRv1wqE34q5mY6NePAQs1YGNcWH5Bpu1BxefgM0nos=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278812; c=relaxed/simple;
-	bh=+y6GSzQuFIbCrAqTI4sIZ9U6VQPhVL/m2OKanp/n4cE=;
+	s=arc-20240116; t=1774278815; c=relaxed/simple;
+	bh=kvX2PHraH7M7FanVZvFi0ON39S1tZ9i0cED4qIfIeao=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wfyxx/33wH9/3b0sTViLVZtuaY3M3JQuJH+cG0dXabQQT36yXx0YpHnQ+GRtsYqbLJt76H7JkY597Fhc477Yq5vA3MIPQEjUPHuMzeAJXKF5imVDaPYAa0ZICGZBNIiMmqhxUVTuld1BlmAxoqARm679ZNrVbiYSZ+N6arfCM4s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhmetnWc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=mDaU7PAwttAba7H6QOIMHCWY45Tu3mHOayeqJdbsvBa7LWXcpAYJ3A9JIw337yovcGiQBRxEScmzLDJEQbV30eNXPKQjUwgE+hiItwXFWt/8DpkkwhANKnsrxCgRwH+wBuoGvCk2rE2R2ZvI6+TMYhyKTdg9/YNM7+GJ6bGxZkk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wC2p7dVl; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhmetnWc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EA1C2BCB5;
-	Mon, 23 Mar 2026 15:13:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wC2p7dVl"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 147A6C4CEF7;
+	Mon, 23 Mar 2026 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278812;
-	bh=+y6GSzQuFIbCrAqTI4sIZ9U6VQPhVL/m2OKanp/n4cE=;
+	s=korg; t=1774278815;
+	bh=kvX2PHraH7M7FanVZvFi0ON39S1tZ9i0cED4qIfIeao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhmetnWcDHzSghI2HyyJGT0fgpII6bHTqetIVgON27rgIg47uWkew2pEmD19Fg+af
-	 pIdhGKjE0DGZV8nFvxC3TpX0/bA3z6ifuGn5geT6Do2IbuYsb2fT1ZJMNPFLUrhp85
-	 maT+2IlI2xSQYke5F27YNLSnZ5Kg2bURr/r2ytkk=
+	b=wC2p7dVlsw8AWnJzaauN3XRbaUHpbbJRZbsumR56bB/ogG/SnHTUTV5M+nrKvihBy
+	 PTWTvN0OBB8wNyRYEQBG5CaMYa7N3jNVD2dKrTsLv//tvZuam4N5Pvin/nAK8To8Q6
+	 r4TiEK8khoGEyFpNA8kzzaZLLBx2lJ/H/6BM8OUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Ke <make24@iscas.ac.cn>,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.6 428/567] net: dsa: properly keep track of conduit reference
-Date: Mon, 23 Mar 2026 14:45:48 +0100
-Message-ID: <20260323134544.498577403@linuxfoundation.org>
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Rosen Penev <rosenp@gmail.com>
+Subject: [PATCH 6.6 429/567] drm/amd/display: Add pixel_clock to amd_pp_display_configuration
+Date: Mon, 23 Mar 2026 14:45:49 +0100
+Message-ID: <20260323134544.543627197@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,296 +45,81 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-commit 06e219f6a706c367c93051f408ac61417643d2f9 upstream.
+commit b515dcb0dc4e85d8254f5459cfb32fce88dacbfb upstream.
 
-Problem description
--------------------
+This commit adds the pixel_clock field to the display config
+struct so that power management (DPM) can use it.
 
-DSA has a mumbo-jumbo of reference handling of the conduit net device
-and its kobject which, sadly, is just wrong and doesn't make sense.
+We currently don't have a proper bandwidth calculation on old
+GPUs with DCE 6-10 because dce_calcs only supports DCE 11+.
+So the power management (DPM) on these GPUs may need to make
+ad-hoc decisions for display based on the pixel clock.
 
-There are two distinct problems.
+Also rename sym_clock to pixel_clock in dm_pp_single_disp_config
+to avoid confusion with other code where the sym_clock refers to
+the DisplayPort symbol clock.
 
-1. The OF path, which uses of_find_net_device_by_node(), never releases
-   the elevated refcount on the conduit's kobject. Nominally, the OF and
-   non-OF paths should result in objects having identical reference
-   counts taken, and it is already suspicious that
-   dsa_dev_to_net_device() has a put_device() call which is missing in
-   dsa_port_parse_of(), but we can actually even verify that an issue
-   exists. With CONFIG_DEBUG_KOBJECT_RELEASE=y, if we run this command
-   "before" and "after" applying this patch:
-
-(unbind the conduit driver for net device eno2)
-echo 0000:00:00.2 > /sys/bus/pci/drivers/fsl_enetc/unbind
-
-we see these lines in the output diff which appear only with the patch
-applied:
-
-kobject: 'eno2' (ffff002009a3a6b8): kobject_release, parent 0000000000000000 (delayed 1000)
-kobject: '109' (ffff0020099d59a0): kobject_release, parent 0000000000000000 (delayed 1000)
-
-2. After we find the conduit interface one way (OF) or another (non-OF),
-   it can get unregistered at any time, and DSA remains with a long-lived,
-   but in this case stale, cpu_dp->conduit pointer. Holding the net
-   device's underlying kobject isn't actually of much help, it just
-   prevents it from being freed (but we never need that kobject
-   directly). What helps us to prevent the net device from being
-   unregistered is the parallel netdev reference mechanism (dev_hold()
-   and dev_put()).
-
-Actually we actually use that netdev tracker mechanism implicitly on
-user ports since commit 2f1e8ea726e9 ("net: dsa: link interfaces with
-the DSA master to get rid of lockdep warnings"), via netdev_upper_dev_link().
-But time still passes at DSA switch probe time between the initial
-of_find_net_device_by_node() code and the user port creation time, time
-during which the conduit could unregister itself and DSA wouldn't know
-about it.
-
-So we have to run of_find_net_device_by_node() under rtnl_lock() to
-prevent that from happening, and release the lock only with the netdev
-tracker having acquired the reference.
-
-Do we need to keep the reference until dsa_unregister_switch() /
-dsa_switch_shutdown()?
-1: Maybe yes. A switch device will still be registered even if all user
-   ports failed to probe, see commit 86f8b1c01a0a ("net: dsa: Do not
-   make user port errors fatal"), and the cpu_dp->conduit pointers
-   remain valid.  I haven't audited all call paths to see whether they
-   will actually use the conduit in lack of any user port, but if they
-   do, it seems safer to not rely on user ports for that reference.
-2. Definitely yes. We support changing the conduit which a user port is
-   associated to, and we can get into a situation where we've moved all
-   user ports away from a conduit, thus no longer hold any reference to
-   it via the net device tracker. But we shouldn't let it go nonetheless
-   - see the next change in relation to dsa_tree_find_first_conduit()
-   and LAG conduits which disappear.
-   We have to be prepared to return to the physical conduit, so the CPU
-   port must explicitly keep another reference to it. This is also to
-   say: the user ports and their CPU ports may not always keep a
-   reference to the same conduit net device, and both are needed.
-
-As for the conduit's kobject for the /sys/class/net/ entry, we don't
-care about it, we can release it as soon as we hold the net device
-object itself.
-
-History and blame attribution
------------------------------
-
-The code has been refactored so many times, it is very difficult to
-follow and properly attribute a blame, but I'll try to make a short
-history which I hope to be correct.
-
-We have two distinct probing paths:
-- one for OF, introduced in 2016 in commit 83c0afaec7b7 ("net: dsa: Add
-  new binding implementation")
-- one for non-OF, introduced in 2017 in commit 71e0bbde0d88 ("net: dsa:
-  Add support for platform data")
-
-These are both complete rewrites of the original probing paths (which
-used struct dsa_switch_driver and other weird stuff, instead of regular
-devices on their respective buses for register access, like MDIO, SPI,
-I2C etc):
-- one for OF, introduced in 2013 in commit 5e95329b701c ("dsa: add
-  device tree bindings to register DSA switches")
-- one for non-OF, introduced in 2008 in commit 91da11f870f0 ("net:
-  Distributed Switch Architecture protocol support")
-
-except for tiny bits and pieces like dsa_dev_to_net_device() which were
-seemingly carried over since the original commit, and used to this day.
-
-The point is that the original probing paths received a fix in 2015 in
-the form of commit 679fb46c5785 ("net: dsa: Add missing master netdev
-dev_put() calls"), but the fix never made it into the "new" (dsa2)
-probing paths that can still be traced to today, and the fixed probing
-path was later deleted in 2019 in commit 93e86b3bc842 ("net: dsa: Remove
-legacy probing support").
-
-That is to say, the new probing paths were never quite correct in this
-area.
-
-The existence of the legacy probing support which was deleted in 2019
-explains why dsa_dev_to_net_device() returns a conduit with elevated
-refcount (because it was supposed to be released during
-dsa_remove_dst()). After the removal of the legacy code, the only user
-of dsa_dev_to_net_device() calls dev_put(conduit) immediately after this
-function returns. This pattern makes no sense today, and can only be
-interpreted historically to understand why dev_hold() was there in the
-first place.
-
-Change details
---------------
-
-Today we have a better netdev tracking infrastructure which we should
-use. Logically netdev_hold() belongs in common code
-(dsa_port_parse_cpu(), where dp->conduit is assigned), but there is a
-tradeoff to be made with the rtnl_lock() section which would become a
-bit too long if we did that - dsa_port_parse_cpu() also calls
-request_module(). So we duplicate a bit of logic in order for the
-callers of dsa_port_parse_cpu() to be the ones responsible of holding
-the conduit reference and releasing it on error. This shortens the
-rtnl_lock() section significantly.
-
-In the dsa_switch_probe() error path, dsa_switch_release_ports() will be
-called in a number of situations, one being where dsa_port_parse_cpu()
-maybe didn't get the chance to run at all (a different port failed
-earlier, etc). So we have to test for the conduit being NULL prior to
-calling netdev_put().
-
-There have still been so many transformations to the code since the
-blamed commits (rename master -> conduit, commit 0650bf52b31f ("net:
-dsa: be compatible with masters which unregister on shutdown")), that it
-only makes sense to fix the code using the best methods available today
-and see how it can be backported to stable later. I suspect the fix
-cannot even be backported to kernels which lack dsa_switch_shutdown(),
-and I suspect this is also maybe why the long-lived conduit reference
-didn't make it into the new DSA probing paths at the time (problems
-during shutdown).
-
-Because dsa_dev_to_net_device() has a single call site and has to be
-changed anyway, the logic was just absorbed into the non-OF
-dsa_port_parse().
-
-Tested on the ocelot/felix switch and on dsa_loop, both on the NXP
-LS1028A with CONFIG_DEBUG_KOBJECT_RELEASE=y.
-
-Reported-by: Ma Ke <make24@iscas.ac.cn>
-Closes: https://lore.kernel.org/netdev/20251214131204.4684-1-make24@iscas.ac.cn/
-Fixes: 83c0afaec7b7 ("net: dsa: Add new binding implementation")
-Fixes: 71e0bbde0d88 ("net: dsa: Add support for platform data")
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://patch.msgid.link/20251215150236.3931670-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ backport: "conduit" -> "master" in code, kept original commit message ]
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/dsa.h |    1 
- net/dsa/dsa.c     |   59 +++++++++++++++++++++++++++++++-----------------------
- 2 files changed, 35 insertions(+), 25 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c       |    1 +
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |    2 +-
+ drivers/gpu/drm/amd/display/dc/dm_services_types.h             |    2 +-
+ drivers/gpu/drm/amd/include/dm_pp_interface.h                  |    1 +
+ 4 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/net/dsa.h
-+++ b/include/net/dsa.h
-@@ -297,6 +297,7 @@ struct dsa_port {
- 	struct devlink_port	devlink_port;
- 	struct phylink		*pl;
- 	struct phylink_config	pl_config;
-+	netdevice_tracker	master_tracker;
- 	struct dsa_lag		*lag;
- 	struct net_device	*hsr_dev;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
+@@ -97,6 +97,7 @@ bool dm_pp_apply_display_requirements(
+ 			const struct dm_pp_single_disp_config *dc_cfg =
+ 						&pp_display_cfg->disp_configs[i];
+ 			adev->pm.pm_display_cfg.displays[i].controller_id = dc_cfg->pipe_idx + 1;
++			adev->pm.pm_display_cfg.displays[i].pixel_clock = dc_cfg->pixel_clock;
+ 		}
  
---- a/net/dsa/dsa.c
-+++ b/net/dsa/dsa.c
-@@ -1257,14 +1257,25 @@ static int dsa_port_parse_of(struct dsa_
- 	if (ethernet) {
- 		struct net_device *master;
- 		const char *user_protocol;
-+		int err;
+ 		amdgpu_dpm_display_configuration_change(adev, &adev->pm.pm_display_cfg);
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+@@ -164,7 +164,7 @@ void dce110_fill_display_configs(
+ 			stream->link->cur_link_settings.link_rate;
+ 		cfg->link_settings.link_spread =
+ 			stream->link->cur_link_settings.link_spread;
+-		cfg->sym_clock = stream->phy_pix_clk;
++		cfg->pixel_clock = stream->phy_pix_clk;
+ 		/* Round v_refresh*/
+ 		cfg->v_refresh = stream->timing.pix_clk_100hz * 100;
+ 		cfg->v_refresh /= stream->timing.h_total;
+--- a/drivers/gpu/drm/amd/display/dc/dm_services_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dm_services_types.h
+@@ -127,7 +127,7 @@ struct dm_pp_single_disp_config {
+ 	uint32_t src_height;
+ 	uint32_t src_width;
+ 	uint32_t v_refresh;
+-	uint32_t sym_clock; /* HDMI only */
++	uint32_t pixel_clock; /* Pixel clock in KHz (for HDMI only: normalized) */
+ 	struct dc_link_settings link_settings; /* DP only */
+ };
  
-+		rtnl_lock();
- 		master = of_find_net_device_by_node(ethernet);
- 		of_node_put(ethernet);
--		if (!master)
-+		if (!master) {
-+			rtnl_unlock();
- 			return -EPROBE_DEFER;
-+		}
-+
-+		netdev_hold(master, &dp->master_tracker, GFP_KERNEL);
-+		put_device(&master->dev);
-+		rtnl_unlock();
+--- a/drivers/gpu/drm/amd/include/dm_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/dm_pp_interface.h
+@@ -66,6 +66,7 @@ struct single_display_configuration
+ 	uint32_t view_resolution_cy;
+ 	enum amd_pp_display_config_type displayconfigtype;
+ 	uint32_t vertical_refresh; /* for active display */
++	uint32_t pixel_clock; /* Pixel clock in KHz (for HDMI only: normalized) */
+ };
  
- 		user_protocol = of_get_property(dn, "dsa-tag-protocol", NULL);
--		return dsa_port_parse_cpu(dp, master, user_protocol);
-+		err = dsa_port_parse_cpu(dp, master, user_protocol);
-+		if (err)
-+			netdev_put(master, &dp->master_tracker);
-+		return err;
- 	}
- 
- 	if (link)
-@@ -1397,37 +1408,30 @@ static struct device *dev_find_class(str
- 	return device_find_child(parent, class, dev_is_class);
- }
- 
--static struct net_device *dsa_dev_to_net_device(struct device *dev)
--{
--	struct device *d;
--
--	d = dev_find_class(dev, "net");
--	if (d != NULL) {
--		struct net_device *nd;
--
--		nd = to_net_dev(d);
--		dev_hold(nd);
--		put_device(d);
--
--		return nd;
--	}
--
--	return NULL;
--}
--
- static int dsa_port_parse(struct dsa_port *dp, const char *name,
- 			  struct device *dev)
- {
- 	if (!strcmp(name, "cpu")) {
- 		struct net_device *master;
-+		struct device *d;
-+		int err;
- 
--		master = dsa_dev_to_net_device(dev);
--		if (!master)
-+		rtnl_lock();
-+		d = dev_find_class(dev, "net");
-+		if (!d) {
-+			rtnl_unlock();
- 			return -EPROBE_DEFER;
-+		}
- 
--		dev_put(master);
-+		master = to_net_dev(d);
-+		netdev_hold(master, &dp->master_tracker, GFP_KERNEL);
-+		put_device(d);
-+		rtnl_unlock();
- 
--		return dsa_port_parse_cpu(dp, master, NULL);
-+		err = dsa_port_parse_cpu(dp, master, NULL);
-+		if (err)
-+			netdev_put(master, &dp->master_tracker);
-+		return err;
- 	}
- 
- 	if (!strcmp(name, "dsa"))
-@@ -1495,6 +1499,9 @@ static void dsa_switch_release_ports(str
- 	struct dsa_vlan *v, *n;
- 
- 	dsa_switch_for_each_port_safe(dp, next, ds) {
-+		if (dsa_port_is_cpu(dp) && dp->master)
-+			netdev_put(dp->master, &dp->master_tracker);
-+
- 		/* These are either entries that upper layers lost track of
- 		 * (probably due to bugs), or installed through interfaces
- 		 * where one does not necessarily have to remove them, like
-@@ -1639,8 +1646,10 @@ void dsa_switch_shutdown(struct dsa_swit
- 	/* Disconnect from further netdevice notifiers on the master,
- 	 * since netdev_uses_dsa() will now return false.
- 	 */
--	dsa_switch_for_each_cpu_port(dp, ds)
-+	dsa_switch_for_each_cpu_port(dp, ds) {
- 		dp->master->dsa_ptr = NULL;
-+		netdev_put(dp->master, &dp->master_tracker);
-+	}
- 
- 	rtnl_unlock();
- out:
+ #define MAX_NUM_DISPLAY 32
 
 
