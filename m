@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A298E387599;
-	Mon, 23 Mar 2026 14:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5BD7383C7C;
+	Mon, 23 Mar 2026 14:56:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277806; cv=none; b=UUI7lJnac3Dof6HBdzIDFa55GrdGPKl0qJ+dFkoDe7bXQiXkhRFLd02tZvHqPGbwl9Hs7q5b72ZZS9GZ+DPExrs4kPnbO5d025yPCVvoXFqsv2lgGzZ/J39b+9gjRsPJN4KCVg6bThzWq+Fk2oZSuH7ReNGiFZgkHHCa32FZu+4=
+	t=1774277809; cv=none; b=EOE3cJH0FHZ3HH/WofYKC5h9enMDB+JfJTYsyXAoFXdKGI8Ba4lwlUoGScof3OKq+aqI6PbQJuKWW7Ni9UfdtauAJcuplK3SjfGDyKbddenLkzV+GRG9HOmjaMVWMDUCkRg5ugO/dU2EYkYzcctp2xwUhkovu/5gl4WryVnQ8RE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277806; c=relaxed/simple;
-	bh=CXtclEEVX3TVygyhJIugTZQWiKVsdSM529dB/os49Xg=;
+	s=arc-20240116; t=1774277809; c=relaxed/simple;
+	bh=y0QKB461XB7sJWLJ01HJNxmikchJLJsq0/j4Hon+YIs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kAynFIJ1Y72Msh0idQFsTFqsti7u5+u8IDznEg/kRxj1jyHwmB1h67HkR4J6K0Z2mS82K8dtdQ/L4lLX7PtQRCF1NYtpAtGfTP28f7NwbBSq2J+NLYYWrAoDVVb67jmWax+ZXbwll6LzS/tk33I2zanaEsx7lxLHpeckULWmokY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AVIk4tgm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ff8SKkZDqkJhqpn5CqtPUliv7RmjqyseMdsbQBNP4xTE5yUdOy3o4zfeZe9UL9TJZTGR7hcFz7LHnpwpsUEtraNCvyQYMW6RbeRswDS4TrMcWzlI7aOl8awH3dclFilyAkVX18kd5WSvjRPT093vqDHCoRFjgg4mP7tkS9/8ato=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=z4qRi+3r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AVIk4tgm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314E7C4CEF7;
-	Mon, 23 Mar 2026 14:56:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="z4qRi+3r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E328C2BCB1;
+	Mon, 23 Mar 2026 14:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277806;
-	bh=CXtclEEVX3TVygyhJIugTZQWiKVsdSM529dB/os49Xg=;
+	s=korg; t=1774277809;
+	bh=y0QKB461XB7sJWLJ01HJNxmikchJLJsq0/j4Hon+YIs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVIk4tgm2wcVkMM7hlgculUZHpMQchZ4uVZQ9uPD27Fsfq+8gYyjizRgXqi5pL7Zj
-	 XrVpcarVek86kBcnb0b10KGj53uxlUDZsR7GM/AMC3dpWEmuwjpj/9nSkFipK61Ri+
-	 EUQGjrRuMADjF05HlMKQzGNo69LjwD+1xhYH6f0Y=
+	b=z4qRi+3rEVvxxNN5Y5YgWtat+PCFxC95J94jFI+BNGUMbB9RSIuOc6BuRfdFP++/2
+	 HooDs11+jmJ2QwDuwIVyLxF/Q+E4LVe++fhMXo05luQ5WPe7cdtpIywAlYOQhQkloD
+	 d3uZ05FjY0s20L8K1l89O/t7dlbyTtz1eoeEZ+ag=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Caratti <dcaratti@redhat.com>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 110/567] net/sched: ets: fix divide by zero in the offload path
-Date: Mon, 23 Mar 2026 14:40:30 +0100
-Message-ID: <20260323134536.535897133@linuxfoundation.org>
+	syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com,
+	Prithvi Tambewagh <activprithvi@gmail.com>,
+	Dmitry Bogdanov <d.bogdanov@yadro.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.6 111/567] scsi: target: Fix recursive locking in __configfs_open_file()
+Date: Mon, 23 Mar 2026 14:40:31 +0100
+Message-ID: <20260323134536.558550852@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,115 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Davide Caratti <dcaratti@redhat.com>
+From: Prithvi Tambewagh <activprithvi@gmail.com>
 
-commit e35626f610f3d2b7953ccddf6a77453da22b3a9e upstream.
+commit 14d4ac19d1895397532eec407433c5d74d9da53b upstream.
 
-Offloading ETS requires computing each class' WRR weight: this is done by
-averaging over the sums of quanta as 'q_sum' and 'q_psum'. Using unsigned
-int, the same integer size as the individual DRR quanta, can overflow and
-even cause division by zero, like it happened in the following splat:
+In flush_write_buffer, &p->frag_sem is acquired and then the loaded store
+function is called, which, here, is target_core_item_dbroot_store().  This
+function called filp_open(), following which these functions were called
+(in reverse order), according to the call trace:
 
- Oops: divide error: 0000 [#1] SMP PTI
- CPU: 13 UID: 0 PID: 487 Comm: tc Tainted: G            E       6.19.0-virtme #45 PREEMPT(full)
- Tainted: [E]=UNSIGNED_MODULE
- Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
- RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
- Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
- RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
- RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
- RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
- R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
- R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
- FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
- Call Trace:
-  <TASK>
-  ets_qdisc_change+0x870/0xf40 [sch_ets]
-  qdisc_create+0x12b/0x540
-  tc_modify_qdisc+0x6d7/0xbd0
-  rtnetlink_rcv_msg+0x168/0x6b0
-  netlink_rcv_skb+0x5c/0x110
-  netlink_unicast+0x1d6/0x2b0
-  netlink_sendmsg+0x22e/0x470
-  ____sys_sendmsg+0x38a/0x3c0
-  ___sys_sendmsg+0x99/0xe0
-  __sys_sendmsg+0x8a/0xf0
-  do_syscall_64+0x111/0xf80
-  entry_SYSCALL_64_after_hwframe+0x77/0x7f
- RIP: 0033:0x7f440b81c77e
- Code: 4d 89 d8 e8 d4 bc 00 00 4c 8b 5d f8 41 8b 93 08 03 00 00 59 5e 48 83 f8 fc 74 11 c9 c3 0f 1f 80 00 00 00 00 48 8b 45 10 0f 05 <c9> c3 83 e2 39 83 fa 08 75 e7 e8 13 ff ff ff 0f 1f 00 f3 0f 1e fa
- RSP: 002b:00007fff951e4c10 EFLAGS: 00000202 ORIG_RAX: 000000000000002e
- RAX: ffffffffffffffda RBX: 0000000000481820 RCX: 00007f440b81c77e
- RDX: 0000000000000000 RSI: 00007fff951e4cd0 RDI: 0000000000000003
- RBP: 00007fff951e4c20 R08: 0000000000000000 R09: 0000000000000000
- R10: 0000000000000000 R11: 0000000000000202 R12: 00007fff951f4fa8
- R13: 00000000699ddede R14: 00007f440bb01000 R15: 0000000000486980
-  </TASK>
- Modules linked in: sch_ets(E) netdevsim(E)
- ---[ end trace 0000000000000000 ]---
- RIP: 0010:ets_offload_change+0x11f/0x290 [sch_ets]
- Code: e4 45 31 ff eb 03 41 89 c7 41 89 cb 89 ce 83 f9 0f 0f 87 b7 00 00 00 45 8b 08 31 c0 45 01 cc 45 85 c9 74 09 41 6b c4 64 31 d2 <41> f7 f2 89 c2 44 29 fa 45 89 df 41 83 fb 0f 0f 87 c7 00 00 00 44
- RSP: 0018:ffffd0a180d77588 EFLAGS: 00010246
- RAX: 00000000ffffff38 RBX: ffff8d3d482ca000 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffd0a180d77660
- RBP: ffffd0a180d77690 R08: ffff8d3d482ca2d8 R09: 00000000fffffffe
- R10: 0000000000000000 R11: 0000000000000000 R12: 00000000fffffffe
- R13: ffff8d3d472f2000 R14: 0000000000000003 R15: 0000000000000000
- FS:  00007f440b6c2740(0000) GS:ffff8d3dc9803000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 000000003cdd2000 CR3: 0000000007b58002 CR4: 0000000000172ef0
- Kernel panic - not syncing: Fatal exception
- Kernel Offset: 0x30000000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
- ---[ end Kernel panic - not syncing: Fatal exception ]---
+  down_read
+  __configfs_open_file
+  do_dentry_open
+  vfs_open
+  do_open
+  path_openat
+  do_filp_open
+  file_open_name
+  filp_open
+  target_core_item_dbroot_store
+  flush_write_buffer
+  configfs_write_iter
 
-Fix this using 64-bit integers for 'q_sum' and 'q_psum'.
+target_core_item_dbroot_store() tries to validate the new file path by
+trying to open the file path provided to it; however, in this case, the bug
+report shows:
 
+db_root: not a directory: /sys/kernel/config/target/dbroot
+
+indicating that the same configfs file was tried to be opened, on which it
+is currently working on. Thus, it is trying to acquire frag_sem semaphore
+of the same file of which it already holds the semaphore obtained in
+flush_write_buffer(), leading to acquiring the semaphore in a nested manner
+and a possibility of recursive locking.
+
+Fix this by modifying target_core_item_dbroot_store() to use kern_path()
+instead of filp_open() to avoid opening the file using filesystem-specific
+function __configfs_open_file(), and further modifying it to make this fix
+compatible.
+
+Reported-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f6e8174215573a84b797
+Tested-by: syzbot+f6e8174215573a84b797@syzkaller.appspotmail.com
 Cc: stable@vger.kernel.org
-Fixes: d35eb52bd2ac ("net: sch_ets: Make the ETS qdisc offloadable")
-Signed-off-by: Davide Caratti <dcaratti@redhat.com>
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://patch.msgid.link/28504887df314588c7255e9911769c36f751edee.1771964872.git.dcaratti@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Prithvi Tambewagh <activprithvi@gmail.com>
+Reviewed-by: Dmitry Bogdanov <d.bogdanov@yadro.com>
+Link: https://patch.msgid.link/20260216062002.61937-1-activprithvi@gmail.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_ets.c |   12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/target/target_core_configfs.c |   15 ++++++---------
+ 1 file changed, 6 insertions(+), 9 deletions(-)
 
---- a/net/sched/sch_ets.c
-+++ b/net/sched/sch_ets.c
-@@ -115,12 +115,12 @@ static void ets_offload_change(struct Qd
- 	struct ets_sched *q = qdisc_priv(sch);
- 	struct tc_ets_qopt_offload qopt;
- 	unsigned int w_psum_prev = 0;
--	unsigned int q_psum = 0;
--	unsigned int q_sum = 0;
- 	unsigned int quantum;
- 	unsigned int w_psum;
- 	unsigned int weight;
- 	unsigned int i;
-+	u64 q_psum = 0;
-+	u64 q_sum = 0;
+--- a/drivers/target/target_core_configfs.c
++++ b/drivers/target/target_core_configfs.c
+@@ -108,8 +108,8 @@ static ssize_t target_core_item_dbroot_s
+ 					const char *page, size_t count)
+ {
+ 	ssize_t read_bytes;
+-	struct file *fp;
+ 	ssize_t r = -EINVAL;
++	struct path path = {};
  
- 	if (!tc_can_offload(dev) || !dev->netdev_ops->ndo_setup_tc)
- 		return;
-@@ -138,8 +138,12 @@ static void ets_offload_change(struct Qd
+ 	mutex_lock(&target_devices_lock);
+ 	if (target_devices) {
+@@ -131,17 +131,14 @@ static ssize_t target_core_item_dbroot_s
+ 		db_root_stage[read_bytes - 1] = '\0';
  
- 	for (i = 0; i < q->nbands; i++) {
- 		quantum = q->classes[i].quantum;
--		q_psum += quantum;
--		w_psum = quantum ? q_psum * 100 / q_sum : 0;
-+		if (quantum) {
-+			q_psum += quantum;
-+			w_psum = div64_u64(q_psum * 100, q_sum);
-+		} else {
-+			w_psum = 0;
-+		}
- 		weight = w_psum - w_psum_prev;
- 		w_psum_prev = w_psum;
+ 	/* validate new db root before accepting it */
+-	fp = filp_open(db_root_stage, O_RDONLY, 0);
+-	if (IS_ERR(fp)) {
++	r = kern_path(db_root_stage, LOOKUP_FOLLOW | LOOKUP_DIRECTORY, &path);
++	if (r) {
+ 		pr_err("db_root: cannot open: %s\n", db_root_stage);
++		if (r == -ENOTDIR)
++			pr_err("db_root: not a directory: %s\n", db_root_stage);
+ 		goto unlock;
+ 	}
+-	if (!S_ISDIR(file_inode(fp)->i_mode)) {
+-		filp_close(fp, NULL);
+-		pr_err("db_root: not a directory: %s\n", db_root_stage);
+-		goto unlock;
+-	}
+-	filp_close(fp, NULL);
++	path_put(&path);
  
+ 	strncpy(db_root, db_root_stage, read_bytes);
+ 	pr_debug("Target_Core_ConfigFS: db_root set to %s\n", db_root);
 
 
