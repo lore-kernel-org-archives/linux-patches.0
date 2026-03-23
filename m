@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68E242C181;
-	Mon, 23 Mar 2026 14:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81210365A0A;
+	Mon, 23 Mar 2026 14:21:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275665; cv=none; b=ZwqQ/XDZe8GQ1aygS3QVuwYjlCfEOCA1Jde4o58DBRLn8kUBsea5pHbKLm80jlD0JxVeexDMBhS0g7jdO1ADHlaYq/TUNQ74Li9suYts1sDYb6Kp48XEC+I9TdxmOG3eyT3eYN75DL1WY9PQdMp5qa4Az/WpAdw10jtyYHlO9tc=
+	t=1774275668; cv=none; b=R6AotRC0cEbPnL7cGCz2cdBGSxYXQcQ854IvbfqaV7oFp4Y9VEcFtZaP2rC1DF2P1zr446weRjPkRq/rTmvVZZHSSftFYKUg11b5J3spv9da09W5TT8TeF/YdRPG0XxEOJpVG4lEIV60j6marAobufmK8gW0qqDrIozGlvP9ORY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275665; c=relaxed/simple;
-	bh=JAlSIjyoYsnQYbDylN8wPoOU7Gr5+inuKzIdeUMG3HY=;
+	s=arc-20240116; t=1774275668; c=relaxed/simple;
+	bh=8ODFTQijnmCmpSg9AauVG89wcZHsBsxDgEdhWk9VbqM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EGVqKc8kiXUT4CdQVxGceCaCOvofrbz1l/kLKfuhu3uYVRuGTzaiwuDbMznfkCmIcLO3PQ/GW+ubb2F/KQyhA7RvKiCiR01/msB9Eq8GeBE/eO3Tj97mnGILwlMhKVYxwpzsYzZ2oi+QkOeIHbnmxWPcKT0Qc1QCcgDhzBB4DZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EQQdMmqZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pn+baiYMQPkvtAEZD3kt0uoPWhW+Ro3GfnreKvXkpniSxRYazgY0zqIYVkzRqoQER5rEkG9OnxqWEnGq7QjqT0bmR900UDbeAtANMJwrPScMmzcZFEnISs15TREUH6izZgYy72m1bhYhECotNB6Zgidixkrl96qR0yDWtJdzGKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pj5UBeGT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EQQdMmqZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1B5CC4CEF7;
-	Mon, 23 Mar 2026 14:21:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pj5UBeGT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06555C4CEF7;
+	Mon, 23 Mar 2026 14:21:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275665;
-	bh=JAlSIjyoYsnQYbDylN8wPoOU7Gr5+inuKzIdeUMG3HY=;
+	s=korg; t=1774275668;
+	bh=8ODFTQijnmCmpSg9AauVG89wcZHsBsxDgEdhWk9VbqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQQdMmqZZzHxmWuCQwY4PyW9u/3QjL6m7s6MuhTF8zZEd1gYEd85NGX8jKhTrZpbK
-	 MPTNIX2JTrefx8TGPbkKuSpf2Uz585f93uKOZaYpMgo2LMkKEfmZGgc4beBMVYxabR
-	 5BOSCB3TlZtcLpDuMoqswuXvftE4iqKElNCNhw4M=
+	b=Pj5UBeGTPdQ3q1JpkX7TrTPwDBUL/eUrlia7nQe7dWhqK6nDbZnc+yfGXOpG8c+pw
+	 9uadoAZ/94VLnOGQa6cZLt3qLYiBnGdxaGdnV4SEulSgZo7IM7Zle+mudMkjydDhmo
+	 X9r+daQVvLDd2NRxM85LS7GB7Cles389b46joOZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
-	Simon Horman <horms@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 176/460] net: dsa: microchip: Fix error path in PTP IRQ setup
-Date: Mon, 23 Mar 2026 14:42:52 +0100
-Message-ID: <20260323134530.867346444@linuxfoundation.org>
+	Yang Wang <kevinyang.wang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 177/460] drm/amd/pm: remove invalid gpu_metrics.energy_accumulator on smu v13.0.x
+Date: Mon, 23 Mar 2026 14:42:53 +0100
+Message-ID: <20260323134530.891380995@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,56 +50,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+From: Yang Wang <kevinyang.wang@amd.com>
 
-commit 99c8c16a4aad0b37293cae213e15957c573cf79b upstream.
+commit 68785c5e79e0fc1eacf63026fbba32be3867f410 upstream.
 
-If request_threaded_irq() fails during the PTP message IRQ setup, the
-newly created IRQ mapping is never disposed. Indeed, the
-ksz_ptp_irq_setup()'s error path only frees the mappings that were
-successfully set up.
+v1:
+The metrics->EnergyAccumulator field has been deprecated on newer pmfw.
 
-Dispose the newly created mapping if the associated
-request_threaded_irq() fails at setup.
+v2:
+add smu 13.0.0/13.0.7/13.0.10 support.
 
+Signed-off-by: Yang Wang <kevinyang.wang@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 8de9edb35976fa56565dc8fbb5d1310e8e10187c)
 Cc: stable@vger.kernel.org
-Fixes: d0b8fec8ae505 ("net: dsa: microchip: Fix symetry in ksz_ptp_msg_irq_{setup/free}()")
-Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260309-ksz-ptp-irq-fix-v1-1-757b3b985955@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_ptp.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    8 +++++++-
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    3 ++-
+ 2 files changed, 9 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/microchip/ksz_ptp.c
-+++ b/drivers/net/dsa/microchip/ksz_ptp.c
-@@ -1101,6 +1101,7 @@ static int ksz_ptp_msg_irq_setup(struct
- 	const struct ksz_dev_ops *ops = port->ksz_dev->dev_ops;
- 	struct ksz_irq *ptpirq = &port->ptpirq;
- 	struct ksz_ptp_irq *ptpmsg_irq;
-+	int ret;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -2033,6 +2033,7 @@ static ssize_t smu_v13_0_0_get_gpu_metri
+ 		(struct gpu_metrics_v1_3 *)smu_table->gpu_metrics_table;
+ 	SmuMetricsExternal_t metrics_ext;
+ 	SmuMetrics_t *metrics = &metrics_ext.SmuMetrics;
++	uint32_t mp1_ver = amdgpu_ip_version(smu->adev, MP1_HWIP, 0);
+ 	int ret = 0;
  
- 	ptpmsg_irq = &port->ptpmsg_irq[n];
- 	ptpmsg_irq->num = irq_create_mapping(ptpirq->domain, n);
-@@ -1112,9 +1113,13 @@ static int ksz_ptp_msg_irq_setup(struct
+ 	ret = smu_cmn_get_metrics_table(smu,
+@@ -2057,7 +2058,12 @@ static ssize_t smu_v13_0_0_get_gpu_metri
+ 					       metrics->Vcn1ActivityPercentage);
  
- 	snprintf(ptpmsg_irq->name, sizeof(ptpmsg_irq->name), name[n]);
- 
--	return request_threaded_irq(ptpmsg_irq->num, NULL,
--				    ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
--				    ptpmsg_irq->name, ptpmsg_irq);
-+	ret = request_threaded_irq(ptpmsg_irq->num, NULL,
-+				   ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
-+				   ptpmsg_irq->name, ptpmsg_irq);
-+	if (ret)
-+		irq_dispose_mapping(ptpmsg_irq->num);
+ 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
+-	gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
 +
-+	return ret;
- }
++	if ((mp1_ver == IP_VERSION(13, 0, 0) && smu->smc_fw_version <= 0x004e1e00) ||
++	    (mp1_ver == IP_VERSION(13, 0, 10) && smu->smc_fw_version <= 0x00500800))
++		gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
++	else
++		gpu_metrics->energy_accumulator = UINT_MAX;
  
- int ksz_ptp_irq_setup(struct dsa_switch *ds, u8 p)
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_0_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -2043,7 +2043,8 @@ static ssize_t smu_v13_0_7_get_gpu_metri
+ 					       metrics->Vcn1ActivityPercentage);
+ 
+ 	gpu_metrics->average_socket_power = metrics->AverageSocketPower;
+-	gpu_metrics->energy_accumulator = metrics->EnergyAccumulator;
++	gpu_metrics->energy_accumulator = smu->smc_fw_version <= 0x00521400 ?
++		metrics->EnergyAccumulator : UINT_MAX;
+ 
+ 	if (metrics->AverageGfxActivity <= SMU_13_0_7_BUSY_THRESHOLD)
+ 		gpu_metrics->average_gfxclk_frequency = metrics->AverageGfxclkFrequencyPostDs;
 
 
