@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 380973B52F5;
-	Mon, 23 Mar 2026 15:15:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459233B8933;
+	Mon, 23 Mar 2026 15:15:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278918; cv=none; b=AJZeoYn/4DVf87LiwKLbpBHy5GmdcSZLTLCTiCw6/kSp8LttifEYN5SxiLDqANivtdtdRVFY8t3pDPCnXOFHvG98jvpqANR/gR/FHzNeEsdpHxi3Q/xXPfzmX0qMHqDXPJrZOTkgrx4yP/nJoRLWBM13ybEPrDJOHsNONMHF7fg=
+	t=1774278921; cv=none; b=U42f8XjZV55ub/z8Nta3rPtC+LM17iRfsQIZ0Fnlz7M9dvaCwcMB/4kPb4S4Y3Fto52m0T4tCiSThCFBBTuVVx/nqaHzBYa4LItS/LcTQY0sPYoohPvExATS2PPyRSXWzWCeFUf1U+JaN0wKpV3L84PRal1qjQB7SzoD798NnSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278918; c=relaxed/simple;
-	bh=lDObL2TngL/jMWp6ZrR848TeEjQvdPGBFjWwZcfbR7E=;
+	s=arc-20240116; t=1774278921; c=relaxed/simple;
+	bh=IcVKYIqk83fGYz7Tfeg41olf8Obf1xkORYMadpAMdno=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HevQ0G4wPKImdUWwHL+a8hw5Npw90mSmcjZPMlvpFqOHm0ODvlMGEMredn27akqV6wW7eEQDRhinYCT8ehlaycTH870jNINUB9FE+Bw6WRL4pvSE7CLnuE9/tS9hRyYqkSwy0jf7oh/S3uD5evcpHE2tXfHPyBWCwVu85GTIdcs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0KHcKSY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CacEwBAk4I0NIRkf9qfmAENcGzAju/A2u9hbk7iEsMYUeVqKX7IYYtcpn/g3/yYXa3Hxw/iFWPKl/0KHVzBtlp/mA2bfloXaaptDLePb+VAVC57vCQjycCGtiJCTQLiZf3HXlTb48J6kEn86gFm+HECSVpNE/CcwhY3lSNHtOH0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L03J47p8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0KHcKSY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF4EC4CEF7;
-	Mon, 23 Mar 2026 15:15:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L03J47p8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBFC2BCB1;
+	Mon, 23 Mar 2026 15:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278917;
-	bh=lDObL2TngL/jMWp6ZrR848TeEjQvdPGBFjWwZcfbR7E=;
+	s=korg; t=1774278920;
+	bh=IcVKYIqk83fGYz7Tfeg41olf8Obf1xkORYMadpAMdno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a0KHcKSYHDnCN1ycbgweNRQy8xntlLtdDxVOorrKrhvmNV8CyTwwDlcePau7sw9sE
-	 bQ01Bz62cSM2mJrc2FxJ96NfKcEzhClQMD+ycnCKXBBfwF3+XVKGR7Qpg7MlAJg3ll
-	 uLFMZgV/mgujc9OoPkfChBzmyhe5XmrJYXNPu1Ng=
+	b=L03J47p8PfKfpEO6Qzs9UJWkSv5g1KjcflsvY+hKkJ9wTPSmjQZ//1CA6x6545Xpl
+	 jxUd86X7U3OJbhmZ+2uc34UF6Sh0RZiqKuYZtUAgFIaXbpVi1WLvI07mUxE0vAKQTp
+	 e+N6kXP29eGgMqr1O1D8RD6lC/fOYcDCmXNLrz4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Lechner <felix.lechner@lease-up.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 458/567] parisc: Flush correct cache in cacheflush() syscall
-Date: Mon, 23 Mar 2026 14:46:18 +0100
-Message-ID: <20260323134545.315395963@linuxfoundation.org>
+	syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Chen Yu <xnguchen@sina.cn>
+Subject: [PATCH 6.6 419/567] iomap: allocate s_dio_done_wq for async reads as well
+Date: Mon, 23 Mar 2026 14:45:39 +0100
+Message-ID: <20260323134544.255084351@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,56 +54,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Christoph Hellwig <hch@lst.de>
 
-commit 2c98a8fbd6aa647414c6248dacf254ebe91c79ad upstream.
+commit 7fd8720dff2d9c70cf5a1a13b7513af01952ec02 upstream.
 
-The assembly flush instructions were swapped for I- and D-cache flags:
+Since commit 222f2c7c6d14 ("iomap: always run error completions in user
+context"), read error completions are deferred to s_dio_done_wq.  This
+means the workqueue also needs to be allocated for async reads.
 
-SYSCALL_DEFINE3(cacheflush, ...)
-{
-	if (cache & DCACHE) {
-			"fic ...\n"
-	}
-	if (cache & ICACHE && error == 0) {
-			"fdc ...\n"
-	}
-
-Fix it by using fdc for DCACHE, and fic for ICACHE flushing.
-
-Reported-by: Felix Lechner <felix.lechner@lease-up.com>
-Fixes: c6d96328fecd ("parisc: Add cacheflush() syscall")
-Cc: <stable@vger.kernel.org> # v6.5+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 222f2c7c6d14 ("iomap: always run error completions in user context")
+Reported-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://patch.msgid.link/20251124140013.902853-1-hch@lst.de
+Tested-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Chen Yu <xnguchen@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/iomap/direct-io.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/parisc/kernel/cache.c b/arch/parisc/kernel/cache.c
-index 4c5240d3a3c7..b189265785dc 100644
---- a/arch/parisc/kernel/cache.c
-+++ b/arch/parisc/kernel/cache.c
-@@ -953,7 +953,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, bytes,
- #else
- 			"1: cmpb,<<,n	%0,%2,1b\n"
- #endif
--			"   fic,m	%3(%4,%0)\n"
-+			"   fdc,m	%3(%4,%0)\n"
- 			"2: sync\n"
- 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
- 			: "+r" (start), "+r" (error)
-@@ -968,7 +968,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned long, addr, unsigned long, bytes,
- #else
- 			"1: cmpb,<<,n	%0,%2,1b\n"
- #endif
--			"   fdc,m	%3(%4,%0)\n"
-+			"   fic,m	%3(%4,%0)\n"
- 			"2: sync\n"
- 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
- 			: "+r" (start), "+r" (error)
--- 
-2.53.0
-
+--- a/fs/iomap/direct-io.c
++++ b/fs/iomap/direct-io.c
+@@ -659,12 +659,12 @@ __iomap_dio_rw(struct kiocb *iocb, struc
+ 			}
+ 			goto out_free_dio;
+ 		}
++	}
+ 
+-		if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
+-			ret = sb_init_dio_done_wq(inode->i_sb);
+-			if (ret < 0)
+-				goto out_free_dio;
+-		}
++	if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
++		ret = sb_init_dio_done_wq(inode->i_sb);
++		if (ret < 0)
++			goto out_free_dio;
+ 	}
+ 
+ 	inode_dio_begin(inode);
 
 
