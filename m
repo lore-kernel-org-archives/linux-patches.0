@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DC4A3BE644;
-	Mon, 23 Mar 2026 16:29:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51323C2764;
+	Mon, 23 Mar 2026 16:29:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283378; cv=none; b=Mq8+P7ukd2tk65MNzUrmoTlKQAcK6/3pfDCRTumasCYgOkyDMb7k7pCfdKkyHon2NLwimOdm2UOIlznpDqi+MvRuJEiGonsOq6e1ucr3bm5OkVPC24vBXhA50zxYMIeJxCTkqilpDXtcYEPm69AhWNkpjPpWcRSpi+QEFLlUBSU=
+	t=1774283380; cv=none; b=Xs26Oil6xHjcZ2QfbAj00HEyy7cozUvCJHW2uhBjx46lOywXbKkU6zTKnLV1zUpM6oX9aaZ0re4xeDJQE9Jio/0D0ZjbGSTPpQrn88imuEAOKe7VuhesZaWBnbU8ssAx/M8zBiQzsRXkTI/3WxbvgbAje+purnEvEYSVYTqHvn4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283378; c=relaxed/simple;
-	bh=NQJegeNQehNHhgF/u2R2CEQ+yO93d8L1BfJAM9JN0KY=;
+	s=arc-20240116; t=1774283380; c=relaxed/simple;
+	bh=+j2+syTLgW6wYaFmPS3EYLBE2xoQYhMx20Ca8waVSyk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h7xHQx6j3B0yuiamSPQArRbu2SXFmohHtLhaqEsk8YFJGeiKRqZsHxrA4L8yFlBS6VOOUuJEjS/GO/Ce+agvKo3YcjE/o0mJ70skNrTPDtxcn7gAwhTp96YHq3qYFS463l+Dzn4V3uG7IYNWVyx9mBQ3UVoDjkeFQE5rNhFxljY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LIpegjpD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WytGMkt1qAYz1oS6DDxfvHh7OkL6bN2POpDdMhlzAceN+WnXTnhZbHG8Fi1IeimjWVzICojKCSUbY5XWqcItS+WH3QY6lyphZGL37wTXN3cpxjujxvxjbGw/BweFYoEIqY+Fpfs+hxFZ/X+YGYcNWDqiwR0wBVmNHXMxHB952kQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pHGu0vPv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LIpegjpD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9430CC2BCB0;
-	Mon, 23 Mar 2026 16:29:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pHGu0vPv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56BBAC4CEF7;
+	Mon, 23 Mar 2026 16:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283377;
-	bh=NQJegeNQehNHhgF/u2R2CEQ+yO93d8L1BfJAM9JN0KY=;
+	s=korg; t=1774283380;
+	bh=+j2+syTLgW6wYaFmPS3EYLBE2xoQYhMx20Ca8waVSyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIpegjpDKWSb6vx0Mp7RNtJO0LaXL+Bini6ZGtIp4piYff5cA8Uz7ZbByGgyu3Iwf
-	 grrRx9EFgteO79ALCD5O3JENYvLCi6PsTGb+vcCLzMuQBTNcUWWq2ZNwSMIqzYLaTN
-	 TPjW9IHJGFt4rnluB325oPBLIW8R35OgOfe4GFlo=
+	b=pHGu0vPvaKq4DKmLEibudwAt6DU+C7fnl1QX9yWRtEtSp6os6SUSLtOe5Cqwuo2jd
+	 3Ryr2Vn4LDVEhrl/M3Kj3JJLhc8/3C2ifSkVE10Oin0DSQk3ozCcUQcd5E6l436Di5
+	 QzQ/R/UMGSTqdE9kIqrtDAGQxOhKiQcHOgfQtMvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"pablo@netfilter.org, netdev@vger.kernel.org, sbrivio@redhat.com, XiaoHua Wang" <561399680@139.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Stefano Brivio <sbrivio@redhat.com>,
-	XiaoHua Wang <561399680@139.com>
-Subject: [PATCH 6.1 474/481] netfilter: nft_set_pipapo: prevent overflow in lookup table allocation
-Date: Mon, 23 Mar 2026 14:47:36 +0100
-Message-ID: <20260323134536.768408830@linuxfoundation.org>
+	Jibin Zhang <jibin.zhang@mediatek.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.1 465/481] net: fix segmentation of forwarding fraglist GRO
+Date: Mon, 23 Mar 2026 14:47:27 +0100
+Message-ID: <20260323134536.544791211@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,153 +51,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jibin Zhang <jibin.zhang@mediatek.com>
 
-[ Upstream commit 4c5c6aa9967dbe55bd017bb509885928d0f31206 ]
+[ Upstream commit 426ca15c7f6cb6562a081341ca88893a50c59fa2 ]
 
-When calculating the lookup table size, ensure the following
-multiplication does not overflow:
+This patch enhances GSO segment handling by properly checking
+the SKB_GSO_DODGY flag for frag_list GSO packets, addressing
+low throughput issues observed when a station accesses IPv4
+servers via hotspots with an IPv6-only upstream interface.
 
-- desc->field_len[] maximum value is U8_MAX multiplied by
-  NFT_PIPAPO_GROUPS_PER_BYTE(f) that can be 2, worst case.
-- NFT_PIPAPO_BUCKETS(f->bb) is 2^8, worst case.
-- sizeof(unsigned long), from sizeof(*f->lt), lt in
-  struct nft_pipapo_field.
+Specifically, it fixes a bug in GSO segmentation when forwarding
+GRO packets containing a frag_list. The function skb_segment_list
+cannot correctly process GRO skbs that have been converted by XLAT,
+since XLAT only translates the header of the head skb. Consequently,
+skbs in the frag_list may remain untranslated, resulting in protocol
+inconsistencies and reduced throughput.
 
-Then, use check_mul_overflow() to multiply by bucket size and then use
-check_add_overflow() to the alignment for avx2 (if needed). Finally, add
-lt_size_check_overflow() helper and use it to consolidate this.
+To address this, the patch explicitly sets the SKB_GSO_DODGY flag
+for GSO packets in XLAT's IPv4/IPv6 protocol translation helpers
+(bpf_skb_proto_4_to_6 and bpf_skb_proto_6_to_4). This marks GSO
+packets as potentially modified after protocol translation. As a
+result, GSO segmentation will avoid using skb_segment_list and
+instead falls back to skb_segment for packets with the SKB_GSO_DODGY
+flag. This ensures that only safe and fully translated frag_list
+packets are processed by skb_segment_list, resolving protocol
+inconsistencies and improving throughput when forwarding GRO packets
+converted by XLAT.
 
-While at it, replace leftover allocation using the GFP_KERNEL to
-GFP_KERNEL_ACCOUNT for consistency, in pipapo_resize().
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-[ Adjust context ]
-Signed-off-by: XiaoHua Wang <561399680@139.com>
+Signed-off-by: Jibin Zhang <jibin.zhang@mediatek.com>
+Fixes: 9fd1ff5d2ac7 ("udp: Support UDP fraglist GRO/GSO.")
+Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260126152114.1211-1-jibin.zhang@mediatek.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_pipapo.c |   58 +++++++++++++++++++++++++++++++----------
- 1 file changed, 44 insertions(+), 14 deletions(-)
+ net/core/filter.c        |    2 ++
+ net/ipv4/tcp_offload.c   |    3 ++-
+ net/ipv4/udp_offload.c   |    3 ++-
+ net/ipv6/tcpv6_offload.c |    3 ++-
+ 4 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -610,6 +610,30 @@ static void *nft_pipapo_get(const struct
- 			 nft_genmask_cur(net), get_jiffies_64());
- }
- 
-+
-+/**
-+ * lt_calculate_size() - Get storage size for lookup table with overflow check
-+ * @groups:	Amount of bit groups
-+ * @bb:		Number of bits grouped together in lookup table buckets
-+ * @bsize:	Size of each bucket in lookup table, in longs
-+ *
-+ * Return: allocation size including alignment overhead, negative on overflow
-+ */
-+static ssize_t lt_calculate_size(unsigned int groups, unsigned int bb,
-+				 unsigned int bsize)
-+{
-+	ssize_t ret = groups * NFT_PIPAPO_BUCKETS(bb) * sizeof(long);
-+
-+	if (check_mul_overflow(ret, bsize, &ret))
-+		return -1;
-+	if (check_add_overflow(ret, NFT_PIPAPO_ALIGN_HEADROOM, &ret))
-+		return -1;
-+	if (ret > INT_MAX)
-+		return -1;
-+
-+	return ret;
-+}
-+
- /**
-  * pipapo_resize() - Resize lookup or mapping table, or both
-  * @f:		Field containing lookup and mapping tables
-@@ -628,6 +652,7 @@ static int pipapo_resize(struct nft_pipa
- 	union nft_pipapo_map_bucket *new_mt, *old_mt = f->mt;
- 	size_t new_bucket_size, copy;
- 	int group, bucket;
-+	ssize_t lt_size;
- 
- 	new_bucket_size = DIV_ROUND_UP(rules, BITS_PER_LONG);
- #ifdef NFT_PIPAPO_ALIGN
-@@ -643,10 +668,11 @@ static int pipapo_resize(struct nft_pipa
- 	else
- 		copy = new_bucket_size;
- 
--	new_lt = kvzalloc(f->groups * NFT_PIPAPO_BUCKETS(f->bb) *
--			  new_bucket_size * sizeof(*new_lt) +
--			  NFT_PIPAPO_ALIGN_HEADROOM,
--			  GFP_KERNEL);
-+	lt_size = lt_calculate_size(f->groups, f->bb, new_bucket_size);
-+	if (lt_size < 0)
-+		return -ENOMEM;
-+
-+	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 	if (!new_lt)
- 		return -ENOMEM;
- 
-@@ -845,7 +871,7 @@ static void pipapo_lt_bits_adjust(struct
- {
- 	unsigned long *new_lt;
- 	int groups, bb;
--	size_t lt_size;
-+	ssize_t lt_size;
- 
- 	lt_size = f->groups * NFT_PIPAPO_BUCKETS(f->bb) * f->bsize *
- 		  sizeof(*f->lt);
-@@ -855,15 +881,17 @@ static void pipapo_lt_bits_adjust(struct
- 		groups = f->groups * 2;
- 		bb = NFT_PIPAPO_GROUP_BITS_LARGE_SET;
- 
--		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
--			  sizeof(*f->lt);
-+		lt_size = lt_calculate_size(groups, bb, f->bsize);
-+		if (lt_size < 0)
-+			return;
- 	} else if (f->bb == NFT_PIPAPO_GROUP_BITS_LARGE_SET &&
- 		   lt_size < NFT_PIPAPO_LT_SIZE_LOW) {
- 		groups = f->groups / 2;
- 		bb = NFT_PIPAPO_GROUP_BITS_SMALL_SET;
- 
--		lt_size = groups * NFT_PIPAPO_BUCKETS(bb) * f->bsize *
--			  sizeof(*f->lt);
-+		lt_size = lt_calculate_size(groups, bb, f->bsize);
-+		if (lt_size < 0)
-+			return;
- 
- 		/* Don't increase group width if the resulting lookup table size
- 		 * would exceed the upper size threshold for a "small" set.
-@@ -874,7 +902,7 @@ static void pipapo_lt_bits_adjust(struct
- 		return;
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -3333,6 +3333,7 @@ static int bpf_skb_proto_4_to_6(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV4;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV6;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
  	}
  
--	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
-+	new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 	if (!new_lt)
- 		return;
+ 	bpf_skb_change_protocol(skb, ETH_P_IPV6);
+@@ -3363,6 +3364,7 @@ static int bpf_skb_proto_6_to_4(struct s
+ 			shinfo->gso_type &= ~SKB_GSO_TCPV6;
+ 			shinfo->gso_type |=  SKB_GSO_TCPV4;
+ 		}
++		shinfo->gso_type |=  SKB_GSO_DODGY;
+ 	}
  
-@@ -1348,13 +1376,15 @@ static struct nft_pipapo_match *pipapo_c
+ 	bpf_skb_change_protocol(skb, ETH_P_IP);
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -106,7 +106,8 @@ static struct sk_buff *tcp4_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		struct tcphdr *th = tcp_hdr(skb);
  
- 	for (i = 0; i < old->field_count; i++) {
- 		unsigned long *new_lt;
-+		ssize_t lt_size;
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp4_gso_segment_list(skb, features);
  
- 		memcpy(dst, src, offsetof(struct nft_pipapo_field, lt));
+ 		skb->ip_summed = CHECKSUM_NONE;
+--- a/net/ipv4/udp_offload.c
++++ b/net/ipv4/udp_offload.c
+@@ -351,7 +351,8 @@ struct sk_buff *__udp_gso_segment(struct
  
--		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
--				  src->bsize * sizeof(*dst->lt) +
--				  NFT_PIPAPO_ALIGN_HEADROOM,
--				  GFP_KERNEL_ACCOUNT);
-+		lt_size = lt_calculate_size(src->groups, src->bb, src->bsize);
-+		if (lt_size < 0)
-+			goto out_lt;
-+
-+		new_lt = kvzalloc(lt_size, GFP_KERNEL_ACCOUNT);
- 		if (!new_lt)
- 			goto out_lt;
+ 	if (skb_shinfo(gso_skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		 /* Detect modified geometry and pass those to skb_segment. */
+-		if (skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size)
++		if ((skb_pagelen(gso_skb) - sizeof(*uh) == skb_shinfo(gso_skb)->gso_size) &&
++		    !(skb_shinfo(gso_skb)->gso_type & SKB_GSO_DODGY))
+ 			return __udp_gso_segment_list(gso_skb, features, is_ipv6);
  
+ 		ret = __skb_linearize(gso_skb);
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -108,7 +108,8 @@ static struct sk_buff *tcp6_gso_segment(
+ 	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST) {
+ 		struct tcphdr *th = tcp_hdr(skb);
+ 
+-		if (skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size)
++		if ((skb_pagelen(skb) - th->doff * 4 == skb_shinfo(skb)->gso_size) &&
++		    !(skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
+ 			return __tcp6_gso_segment_list(skb, features);
+ 
+ 		skb->ip_summed = CHECKSUM_NONE;
 
 
