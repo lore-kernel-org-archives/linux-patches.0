@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351B438C41E;
-	Mon, 23 Mar 2026 14:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB29823DD;
+	Mon, 23 Mar 2026 14:10:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275029; cv=none; b=trKtTj8MpKTwBTdq89wEHiN8k7QaiWjhehuXPEIozZnz3JMghO/h/ds8vhvix59Z/9q/nAJ+hWHQkBpYpJv+qDXQsmg1Ny9DIZRIgc5BipR+15c9Gl2YffuhgsdXK6kt1tK6BogbWX8pjhFyKgOiWdoVdi99cBp8ZPXUgvHPiGQ=
+	t=1774275032; cv=none; b=KKox7X2UVS/BD4btzf8byR/Kh6R5RN59Wih2H9al7uMYz7cNNcD9bkHthervErj3Ku/1aMPzV9L0XdXG0EX69frFBAoq9+vIvZpNU7LJO2//gHslRnf0lz2zrB+Lhn+cLYQ6GnXS4jW8I83UDc9jvzIMakzflUsbALyoyq0rlKY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275029; c=relaxed/simple;
-	bh=TNgZMf4ZCTNRKCnTUwJSc3DQ1nebD+m65kYayOq1wKA=;
+	s=arc-20240116; t=1774275032; c=relaxed/simple;
+	bh=czMRImCI0YTC5LVXJg+LgwKCXKQxI412QI334XW4quk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CG2uxwU82hRoHGbrv+QO84638lKexuaDYiF4TtMycBYuFl7LM/z+v7il+57g4EEPfh8GRgGt5tCDlkdsF5IuJbE+PcjyFfwz/Wu7u8wwHd4e+73SfpggHbXFCK5O0Y3M4Hlnya0YIqOY+Z9/+zxhbGWT75vLGfRi5ZXvi2sMKck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aE7VGmSE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lNv1AQ7QyNKICtcVlwCmFKRJ2xfEFUC9AZ6yZ+fZjI9AhIJBvIHy6vfj8v7eiieFU+I3ZDOrnFi1e0fdW3hFOh7nRSjO5HrcKY1reVJAQ2XGri8zXYsIvDVFu9NGepUZ7SdyvYk+NQqekyj2vK7r28Fq6dWDnm200ZGNkqK62TY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLM7eWwb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aE7VGmSE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABCAFC4CEF7;
-	Mon, 23 Mar 2026 14:10:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLM7eWwb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C445CC4CEF7;
+	Mon, 23 Mar 2026 14:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275029;
-	bh=TNgZMf4ZCTNRKCnTUwJSc3DQ1nebD+m65kYayOq1wKA=;
+	s=korg; t=1774275032;
+	bh=czMRImCI0YTC5LVXJg+LgwKCXKQxI412QI334XW4quk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aE7VGmSETxVvpCOzHPij+4zwvw/xO+gX3G055fqO/JvLIgOD3/bgj9+9dW/ofQBeb
-	 1bwAXO7uYfkvpqZSbjto2/azDKPANLslNiR6Hh21sWf+V8zS4/RaGVDfAETgg4X/49
-	 XyU+HY0kGJFfIzwvPjZmNSJLkyt6ki/ty0fy6Znw=
+	b=FLM7eWwbuSfzgKbFmbxjQOzFGnx8N/8/5rmjpnA0bZd4d63Xl7vHjE1KuMIChqG+w
+	 Npz3apCXGsg1osJgiOtyXEBRqT98YkHSG0mmkjoZlB5AVfVPtDXQXIVJm3ea1alkl6
+	 20LTEcaNRWQtatHfPmV7fUwqc7YYtsup3uNv6LQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 198/212] spi: amlogic: spifc-a4: Remove redundant clock cleanup
-Date: Mon, 23 Mar 2026 14:46:59 +0100
-Message-ID: <20260323134510.048600851@linuxfoundation.org>
+Subject: [PATCH 6.18 172/212] netfilter: nf_tables: release flowtable after rcu grace period on error
+Date: Mon, 23 Mar 2026 14:46:33 +0100
+Message-ID: <20260323134509.206081955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,113 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit a00da54d06f435dbbeacb84f9121dbbe6d6eda74 ]
+[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
 
-The driver uses devm_clk_get_enabled() which enables the clock and
-registers a callback to automatically disable it when the device
-is unbound.
+Call synchronize_rcu() after unregistering the hooks from error path,
+since a hook that already refers to this flowtable can be already
+registered, exposing this flowtable to packet path and nfnetlink_hook
+control plane.
 
-Remove the redundant aml_sfc_disable_clk() call in the error paths
-and remove callback.
+This error path is rare, it should only happen by reaching the maximum
+number hooks or by failing to set up to hardware offload, just call
+synchronize_rcu().
 
-Fixes: 4670db6f32e9 ("spi: amlogic: add driver for Amlogic SPI Flash Controller")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260308-spifc-a4-1-v1-1-77e286c26832@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+There is a check for already used device hooks by different flowtable
+that could result in EEXIST at this late stage. The hook parser can be
+updated to perform this check earlier to this error path really becomes
+rarely exercised.
+
+Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
+when dumping hooks.
+
+Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spifc-a4.c | 46 +++++-------------------------
- 1 file changed, 7 insertions(+), 39 deletions(-)
+ net/netfilter/nf_tables_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-amlogic-spifc-a4.c b/drivers/spi/spi-amlogic-spifc-a4.c
-index f324aa39a8976..b2589fe2425cc 100644
---- a/drivers/spi/spi-amlogic-spifc-a4.c
-+++ b/drivers/spi/spi-amlogic-spifc-a4.c
-@@ -1083,14 +1083,6 @@ static int aml_sfc_clk_init(struct aml_sfc *sfc)
- 	return clk_set_rate(sfc->core_clk, SFC_BUS_DEFAULT_CLK);
- }
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 0992869b33b35..a6a7fe216396d 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -9369,6 +9369,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 	return 0;
  
--static int aml_sfc_disable_clk(struct aml_sfc *sfc)
--{
--	clk_disable_unprepare(sfc->core_clk);
--	clk_disable_unprepare(sfc->gate_clk);
--
--	return 0;
--}
--
- static int aml_sfc_probe(struct platform_device *pdev)
- {
- 	struct device_node *np = pdev->dev.of_node;
-@@ -1141,16 +1133,12 @@ static int aml_sfc_probe(struct platform_device *pdev)
- 
- 	/* Enable Amlogic flash controller spi mode */
- 	ret = regmap_write(sfc->regmap_base, SFC_SPI_CFG, SPI_MODE_EN);
--	if (ret) {
--		dev_err(dev, "failed to enable SPI mode\n");
--		goto err_out;
--	}
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to enable SPI mode\n");
- 
- 	ret = dma_set_mask(sfc->dev, DMA_BIT_MASK(32));
--	if (ret) {
--		dev_err(sfc->dev, "failed to set dma mask\n");
--		goto err_out;
--	}
-+	if (ret)
-+		return dev_err_probe(sfc->dev, ret, "failed to set dma mask\n");
- 
- 	sfc->ecc_eng.dev = &pdev->dev;
- 	sfc->ecc_eng.integration = NAND_ECC_ENGINE_INTEGRATION_PIPELINED;
-@@ -1158,10 +1146,8 @@ static int aml_sfc_probe(struct platform_device *pdev)
- 	sfc->ecc_eng.priv = sfc;
- 
- 	ret = nand_ecc_register_on_host_hw_engine(&sfc->ecc_eng);
--	if (ret) {
--		dev_err(&pdev->dev, "failed to register Aml host ecc engine.\n");
--		goto err_out;
--	}
-+	if (ret)
-+		return dev_err_probe(&pdev->dev, ret, "failed to register Aml host ecc engine.\n");
- 
- 	ret = of_property_read_u32(np, "amlogic,rx-adj", &val);
- 	if (!ret)
-@@ -1177,24 +1163,7 @@ static int aml_sfc_probe(struct platform_device *pdev)
- 	ctrl->min_speed_hz = SFC_MIN_FREQUENCY;
- 	ctrl->num_chipselect = SFC_MAX_CS_NUM;
- 
--	ret = devm_spi_register_controller(dev, ctrl);
--	if (ret)
--		goto err_out;
--
--	return 0;
--
--err_out:
--	aml_sfc_disable_clk(sfc);
--
--	return ret;
--}
--
--static void aml_sfc_remove(struct platform_device *pdev)
--{
--	struct spi_controller *ctlr = platform_get_drvdata(pdev);
--	struct aml_sfc *sfc = spi_controller_get_devdata(ctlr);
--
--	aml_sfc_disable_clk(sfc);
-+	return devm_spi_register_controller(dev, ctrl);
- }
- 
- static const struct of_device_id aml_sfc_of_match[] = {
-@@ -1212,7 +1181,6 @@ static struct platform_driver aml_sfc_driver = {
- 		.of_match_table = aml_sfc_of_match,
- 	},
- 	.probe = aml_sfc_probe,
--	.remove = aml_sfc_remove,
- };
- module_platform_driver(aml_sfc_driver);
- 
+ err_flowtable_hooks:
++	synchronize_rcu();
+ 	nft_trans_destroy(trans);
+ err_flowtable_trans:
+ 	nft_hooks_destroy(&flowtable->hook_list);
 -- 
 2.51.0
 
