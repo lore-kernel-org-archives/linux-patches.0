@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8703AF649;
-	Mon, 23 Mar 2026 14:00:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BC33B38B2;
+	Mon, 23 Mar 2026 14:00:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274430; cv=none; b=pPn15FqpGhGX8ybcUnhQC9O0ma2UZtgUyKTlAc7RQwd0lyVgHxurJoJmGn1p3eh985JB4sMMxKdu/4qWJ5QjFwFJeJJ4vTxRJMHSD/5l1AbpLM4Z2UkOWcAOCWnoB4SCdyu6Ie+lTZvw0Czq6k6bwPj/rpVRD6ZZcaQ0DDMZHcc=
+	t=1774274434; cv=none; b=t5ENJtlocG6QZOYAgZKpmLk8GD47HWLvHxr84hCNk9xgO/UJ8+1y3sX80FL2da01GsZqJ7OVE0ugPqK+t92dG1zmj1AbNIQ7gGlIHqyF9tQQfSeEhWX2nNHN703Ga2/r+lf4imkxHW3fg3PHPwYCHx4uNSWmS2IGll4wOU8KC/U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274430; c=relaxed/simple;
-	bh=CNTX7XqlRIlL1rmhgtDtyz3EXWRteb7O9U4v6zOsb3M=;
+	s=arc-20240116; t=1774274434; c=relaxed/simple;
+	bh=9TCACvc3VVCPDnRoG1jgXwHhj/apDfK/hYvhUP0bk7o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YJ/e8ksLi2xZKi8jg9H6TO6MH0Gg/hVgVcZX+3rm6LsrKLST52es50DDLIasa3dPKp0hi1DcoElYswKf7vthw0c4xeVg09UGC2iyVW/tuk6OQrRFKoEsBwWlK7fUsyTM3JgQnHc+0OQaxQKKzLxcAQ9mW5yWUbOSK21idrfAq5o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y/fl7Qlq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lvtZ5zYl91BoqXa56E4ytoWIzbb5P9VdMyzsqndOuIlOmGFp+5yR8qLSfzmNzS5irPjjndJ4OQOyADNmv0mKW+lMqrSNMWDQlwmL20t2c0dFHwUDeMkaMLWou87da68WJ//IyEFf5ZqXL5XERarrOm8L+de7w/mP4hS7Q3d9fy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f4LjAS4S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y/fl7Qlq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09016C4CEF7;
-	Mon, 23 Mar 2026 14:00:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f4LjAS4S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 532B6C2BC9E;
+	Mon, 23 Mar 2026 14:00:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274430;
-	bh=CNTX7XqlRIlL1rmhgtDtyz3EXWRteb7O9U4v6zOsb3M=;
+	s=korg; t=1774274433;
+	bh=9TCACvc3VVCPDnRoG1jgXwHhj/apDfK/hYvhUP0bk7o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y/fl7QlqB5mSpqmV3jFTwDYkz9FCZLU60uGqeD4yX/nI2B5DF4P/nwwvEjzDBAAxz
-	 J+OUqZiPY4lSvOBHllG5qOMP9eo3sQZZPlhYTnsUj2vJhz41HAkAublJLvWOxLUAp0
-	 FLEm5aE0eJgCJLmKumCLz6tFr6LmdiuZtlaUjE1o=
+	b=f4LjAS4Sf0iKQwnKmLMESxZXe/0eu3wJxJei5h4P6kQiQUUgxaA42xxQVInifm6E+
+	 wDFjA5sa8X/Rzjs/zP7fN/tTek/5pBmoo5Oi9ZqWz6JVOUW3vpcfra+vDZt1Tuoe+6
+	 EJX74TH+0XBXVVc6oM87R+0lj5tF/2srJ42+u5lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 213/220] ksmbd: fix use-after-free in durable v2 replay of active file handles
-Date: Mon, 23 Mar 2026 14:46:30 +0100
-Message-ID: <20260323134511.262408034@linuxfoundation.org>
+Subject: [PATCH 6.19 172/220] net: bonding: fix NULL deref in bond_debug_rlb_hash_show
+Date: Mon, 23 Mar 2026 14:45:49 +0100
+Message-ID: <20260323134510.019724482@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,126 +52,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit b425e4d0eb321a1116ddbf39636333181675d8f4 ]
+[ Upstream commit 605b52497bf89b3b154674deb135da98f916e390 ]
 
-parse_durable_handle_context() unconditionally assigns dh_info->fp->conn
-to the current connection when handling a DURABLE_REQ_V2 context with
-SMB2_FLAGS_REPLAY_OPERATION. ksmbd_lookup_fd_cguid() does not filter by
-fp->conn, so it returns file handles that are already actively connected.
-The unconditional overwrite replaces fp->conn, and when the overwriting
-connection is subsequently freed, __ksmbd_close_fd() dereferences the
-stale fp->conn via spin_lock(&fp->conn->llist_lock), causing a
-use-after-free.
+rlb_clear_slave intentionally keeps RLB hash-table entries on
+the rx_hashtbl_used_head list with slave set to NULL when no
+replacement slave is available. However, bond_debug_rlb_hash_show
+visites client_info->slave without checking if it's NULL.
 
-KASAN report:
+Other used-list iterators in bond_alb.c already handle this NULL-slave
+state safely:
 
-[    7.349357] ==================================================================
-[    7.349607] BUG: KASAN: slab-use-after-free in _raw_spin_lock+0x75/0xe0
-[    7.349811] Write of size 4 at addr ffff8881056ac18c by task kworker/1:2/108
-[    7.350010]
-[    7.350064] CPU: 1 UID: 0 PID: 108 Comm: kworker/1:2 Not tainted 7.0.0-rc3+ #58 PREEMPTLAZY
-[    7.350068] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    7.350070] Workqueue: ksmbd-io handle_ksmbd_work
-[    7.350083] Call Trace:
-[    7.350087]  <TASK>
-[    7.350087]  dump_stack_lvl+0x64/0x80
-[    7.350094]  print_report+0xce/0x660
-[    7.350100]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[    7.350101]  ? __pfx___mod_timer+0x10/0x10
-[    7.350106]  ? _raw_spin_lock+0x75/0xe0
-[    7.350108]  kasan_report+0xce/0x100
-[    7.350109]  ? _raw_spin_lock+0x75/0xe0
-[    7.350114]  kasan_check_range+0x105/0x1b0
-[    7.350116]  _raw_spin_lock+0x75/0xe0
-[    7.350118]  ? __pfx__raw_spin_lock+0x10/0x10
-[    7.350119]  ? __call_rcu_common.constprop.0+0x25e/0x780
-[    7.350125]  ? close_id_del_oplock+0x2cc/0x4e0
-[    7.350128]  __ksmbd_close_fd+0x27f/0xaf0
-[    7.350131]  ksmbd_close_fd+0x135/0x1b0
-[    7.350133]  smb2_close+0xb19/0x15b0
-[    7.350142]  ? __pfx_smb2_close+0x10/0x10
-[    7.350143]  ? xas_load+0x18/0x270
-[    7.350146]  ? _raw_spin_lock+0x84/0xe0
-[    7.350148]  ? __pfx__raw_spin_lock+0x10/0x10
-[    7.350150]  ? _raw_spin_unlock+0xe/0x30
-[    7.350151]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
-[    7.350153]  ? ksmbd_tree_conn_lookup+0xcd/0xf0
-[    7.350154]  handle_ksmbd_work+0x40f/0x1080
-[    7.350156]  process_one_work+0x5fa/0xef0
-[    7.350162]  ? assign_work+0x122/0x3e0
-[    7.350163]  worker_thread+0x54b/0xf70
-[    7.350165]  ? __pfx_worker_thread+0x10/0x10
-[    7.350166]  kthread+0x346/0x470
-[    7.350170]  ? recalc_sigpending+0x19b/0x230
-[    7.350176]  ? __pfx_kthread+0x10/0x10
-[    7.350178]  ret_from_fork+0x4fb/0x6c0
-[    7.350183]  ? __pfx_ret_from_fork+0x10/0x10
-[    7.350185]  ? __switch_to+0x36c/0xbe0
-[    7.350188]  ? __pfx_kthread+0x10/0x10
-[    7.350190]  ret_from_fork_asm+0x1a/0x30
-[    7.350197]  </TASK>
-[    7.350197]
-[    7.355160] Allocated by task 123:
-[    7.355261]  kasan_save_stack+0x33/0x60
-[    7.355373]  kasan_save_track+0x14/0x30
-[    7.355484]  __kasan_kmalloc+0x8f/0xa0
-[    7.355593]  ksmbd_conn_alloc+0x44/0x6d0
-[    7.355711]  ksmbd_kthread_fn+0x243/0xd70
-[    7.355839]  kthread+0x346/0x470
-[    7.355942]  ret_from_fork+0x4fb/0x6c0
-[    7.356051]  ret_from_fork_asm+0x1a/0x30
-[    7.356164]
-[    7.356214] Freed by task 134:
-[    7.356305]  kasan_save_stack+0x33/0x60
-[    7.356416]  kasan_save_track+0x14/0x30
-[    7.356527]  kasan_save_free_info+0x3b/0x60
-[    7.356646]  __kasan_slab_free+0x43/0x70
-[    7.356761]  kfree+0x1ca/0x430
-[    7.356862]  ksmbd_tcp_disconnect+0x59/0xe0
-[    7.356993]  ksmbd_conn_handler_loop+0x77e/0xd40
-[    7.357138]  kthread+0x346/0x470
-[    7.357240]  ret_from_fork+0x4fb/0x6c0
-[    7.357350]  ret_from_fork_asm+0x1a/0x30
-[    7.357463]
-[    7.357513] The buggy address belongs to the object at ffff8881056ac000
-[    7.357513]  which belongs to the cache kmalloc-1k of size 1024
-[    7.357857] The buggy address is located 396 bytes inside of
-[    7.357857]  freed 1024-byte region [ffff8881056ac000, ffff8881056ac400)
+- rlb_update_client returns early on !client_info->slave
+- rlb_req_update_slave_clients, rlb_clear_slave, and rlb_rebalance
+compare slave values before visiting
+- lb_req_update_subnet_clients continues if slave is NULL
 
-Fix by removing the unconditional fp->conn assignment and rejecting the
-replay when fp->conn is non-NULL. This is consistent with
-ksmbd_lookup_durable_fd(), which also rejects file handles with a
-non-NULL fp->conn. For disconnected file handles (fp->conn == NULL),
-ksmbd_reopen_durable_fd() handles setting fp->conn.
+The following NULL deref crash can be trigger in
+bond_debug_rlb_hash_show:
 
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+[    1.289791] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[    1.292058] RIP: 0010:bond_debug_rlb_hash_show (drivers/net/bonding/bond_debugfs.c:41)
+[    1.293101] RSP: 0018:ffffc900004a7d00 EFLAGS: 00010286
+[    1.293333] RAX: 0000000000000000 RBX: ffff888102b48200 RCX: ffff888102b48204
+[    1.293631] RDX: ffff888102b48200 RSI: ffffffff839daad5 RDI: ffff888102815078
+[    1.293924] RBP: ffff888102815078 R08: ffff888102b4820e R09: 0000000000000000
+[    1.294267] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888100f929c0
+[    1.294564] R13: ffff888100f92a00 R14: 0000000000000001 R15: ffffc900004a7ed8
+[    1.294864] FS:  0000000001395380(0000) GS:ffff888196e75000(0000) knlGS:0000000000000000
+[    1.295239] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[    1.295480] CR2: 0000000000000000 CR3: 0000000102adc004 CR4: 0000000000772ef0
+[    1.295897] Call Trace:
+[    1.296134]  seq_read_iter (fs/seq_file.c:231)
+[    1.296341]  seq_read (fs/seq_file.c:164)
+[    1.296493]  full_proxy_read (fs/debugfs/file.c:378 (discriminator 1))
+[    1.296658]  vfs_read (fs/read_write.c:572)
+[    1.296981]  ksys_read (fs/read_write.c:717)
+[    1.297132]  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+[    1.297325]  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+
+Add a NULL check and print "(none)" for entries with no assigned slave.
+
+Fixes: caafa84251b88 ("bonding: add the debugfs interface to see RLB hash table")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260317005034.1888794-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/bonding/bond_debugfs.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 80ca55e28a972..8d18a97eed275 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2830,7 +2830,11 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 						goto out;
- 					}
+diff --git a/drivers/net/bonding/bond_debugfs.c b/drivers/net/bonding/bond_debugfs.c
+index 8adbec7c5084a..8967b65f6d840 100644
+--- a/drivers/net/bonding/bond_debugfs.c
++++ b/drivers/net/bonding/bond_debugfs.c
+@@ -34,11 +34,17 @@ static int bond_debug_rlb_hash_show(struct seq_file *m, void *v)
+ 	for (; hash_index != RLB_NULL_INDEX;
+ 	     hash_index = client_info->used_next) {
+ 		client_info = &(bond_info->rx_hashtbl[hash_index]);
+-		seq_printf(m, "%-15pI4 %-15pI4 %-17pM %s\n",
+-			&client_info->ip_src,
+-			&client_info->ip_dst,
+-			&client_info->mac_dst,
+-			client_info->slave->dev->name);
++		if (client_info->slave)
++			seq_printf(m, "%-15pI4 %-15pI4 %-17pM %s\n",
++				   &client_info->ip_src,
++				   &client_info->ip_dst,
++				   &client_info->mac_dst,
++				   client_info->slave->dev->name);
++		else
++			seq_printf(m, "%-15pI4 %-15pI4 %-17pM (none)\n",
++				   &client_info->ip_src,
++				   &client_info->ip_dst,
++				   &client_info->mac_dst);
+ 	}
  
--					dh_info->fp->conn = conn;
-+					if (dh_info->fp->conn) {
-+						ksmbd_put_durable_fd(dh_info->fp);
-+						err = -EBADF;
-+						goto out;
-+					}
- 					dh_info->reconnected = true;
- 					goto out;
- 				}
+ 	spin_unlock_bh(&bond->mode_lock);
 -- 
 2.51.0
 
