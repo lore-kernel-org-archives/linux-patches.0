@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741A1FC101;
-	Mon, 23 Mar 2026 14:16:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7520F1FC101;
+	Mon, 23 Mar 2026 14:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275367; cv=none; b=dMI9oZkFjAvmet15486bVb++9iu85EoAT1Cq32Mw7cup0k1GnsZBkCLokbRLTtCc+IODZuQ92U2pD2Mt1/WLcLaebNJ1CVUdCgPPMwyqCdE+D0lRNxJT/VItD616XL7Hl2n6XepkR0RvEEi5zoIWfYQDXwt9pjk3arE0n2x+nAg=
+	t=1774275370; cv=none; b=rkrqFF6aQWMTCdKjnYO02V5zV3AY3kQs/Qk+zKtBU7kmOyd9ZjPWCsRGNygzQMD9Co+8pSJnvp/CeoHjC11P6SHwHJeMbZrdwTPMpoN1v8Fk72b/yzRz4nj3FpRp6bItNSwbBl4iHMZ+uHfla2R7lS6Ss/PUJPCMfl6uLSLc7gU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275367; c=relaxed/simple;
-	bh=AJefUeFJIdcbLwM2VgrSEOHtAe4SchYrqind1ITXhTQ=;
+	s=arc-20240116; t=1774275370; c=relaxed/simple;
+	bh=FrUrWpInkSmBJ7chiSUS3iDc+FVsRh5yI3a9KUodr6Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IZZzaB+9QLMkUcu3r4LIEdzu+s6j10AP2ryiYr+/dhMZw6/UXVJOLgZeHZixu36/N1Rgy60OGj2Qxx/HtRLfObrN4iJmgi0sh50l+HhOiS3AUQnnW0ZxaAWXldzeigggXVnVId/7Vp9baFVmNK4zgAgHmiLT3XsHi8iyJ8rVrrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeQx03q7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ESmvg1bEntPQwuiuXdm3yUCUCGl/ZNynO5gOT9FMXAcUvXwefyNg7cDy8c8YZhiOFR7RHLemwx6WD+TK/NLC6Ar+TK6/fOgNvLN7NVp4kGuVu9Th4bOC0KvcCUrvE1W7kL9zkc1EiFFMeoqKykn0FuVu2UfUIP+nujZWT/t8s+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vw16ciRO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeQx03q7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592EBC4CEF7;
-	Mon, 23 Mar 2026 14:16:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vw16ciRO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0725DC4CEF7;
+	Mon, 23 Mar 2026 14:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275367;
-	bh=AJefUeFJIdcbLwM2VgrSEOHtAe4SchYrqind1ITXhTQ=;
+	s=korg; t=1774275370;
+	bh=FrUrWpInkSmBJ7chiSUS3iDc+FVsRh5yI3a9KUodr6Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeQx03q7bXA6OR4lXdyEuR+nQIV8y3jqrwMBSUXdYE3ZKQtxfr8AXhX1ZL186Hdgu
-	 I+8CYcWg+Mu2pe3ZYO3Q5nUXCIOu5WckmKNZVRalOJCIqEyQQJRVkr5c+OBAFHeXUL
-	 jwwcWPxVrNrVOmLzu6NztrweM2El/2OIsxw/GQJE=
+	b=vw16ciRONWgNsrFnOc8DyOJZwq6RE8/YsgDDEatJKMIQiLLt8ukk9zzTbxl8ncMeN
+	 aGmtKFToZCyaCS42/Zz42FTF3nNd4ISfATQTuDk0Gwj+BtbCOJbn4i/1azWcdosA7s
+	 HBK5PjPYUeNxfIRrzbAsmSQbSK9W1vKsyJYmymVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Christoph Hellwig <hch@lst.de>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Keith Busch <kbusch@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 073/460] nvme-pci: Fix race bug in nvme_poll_irqdisable()
-Date: Mon, 23 Mar 2026 14:41:09 +0100
-Message-ID: <20260323134528.485547681@linuxfoundation.org>
+Subject: [PATCH 6.12 074/460] i40e: fix src IP mask checks and memcpy argument names in cloud filter
+Date: Mon, 23 Mar 2026 14:41:10 +0100
+Message-ID: <20260323134528.507275305@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -55,120 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit fc71f409b22ca831a9f87a2712eaa09ef2bb4a5e ]
+[ Upstream commit e809085f492842ce7a519c9ef72d40f4bca89c13 ]
 
-In the following scenario, pdev can be disabled between (1) and (3) by
-(2). This sets pdev->msix_enabled = 0. Then, pci_irq_vector() will
-return MSI-X IRQ(>15) for (1) whereas return INTx IRQ(<=15) for (2).
-This causes IRQ warning because it tries to enable INTx IRQ that has
-never been disabled before.
+Fix following issues in the IPv4 and IPv6 cloud filter handling logic in
+both the add and delete paths:
 
-To fix this, save IRQ number into a local variable and ensure
-disable_irq() and enable_irq() operate on the same IRQ number.  Even if
-pci_free_irq_vectors() frees the IRQ concurrently, disable_irq() and
-enable_irq() on a stale IRQ number is still valid and safe, and the
-depth accounting reamins balanced.
+- The source-IP mask check incorrectly compares mask.src_ip[0] against
+  tcf.dst_ip[0]. Update it to compare against tcf.src_ip[0]. This likely
+  goes unnoticed because the check is in an "else if" path that only
+  executes when dst_ip is not set, most cloud filter use cases focus on
+  destination-IP matching, and the buggy condition can accidentally
+  evaluate true in some cases.
 
-task 1:
-nvme_poll_irqdisable()
-  disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector)) ...(1)
-  enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector))  ...(3)
+- memcpy() for the IPv4 source address incorrectly uses
+  ARRAY_SIZE(tcf.dst_ip) instead of ARRAY_SIZE(tcf.src_ip), although
+  both arrays are the same size.
 
-task 2:
-nvme_reset_work()
-  nvme_dev_disable()
-    pdev->msix_enable = 0;  ...(2)
+- The IPv4 memcpy operations used ARRAY_SIZE(tcf.dst_ip) and ARRAY_SIZE
+  (tcf.src_ip), Update these to use sizeof(cfilter->ip.v4.dst_ip) and
+  sizeof(cfilter->ip.v4.src_ip) to ensure correct and explicit copy size.
 
-crash log:
+- In the IPv6 delete path, memcmp() uses sizeof(src_ip6) when comparing
+  dst_ip6 fields. Replace this with sizeof(dst_ip6) to make the intent
+  explicit, even though both fields are struct in6_addr.
 
-------------[ cut here ]------------
-Unbalanced enable for IRQ 10
-WARNING: kernel/irq/manage.c:753 at __enable_irq+0x102/0x190 kernel/irq/manage.c:753, CPU#1: kworker/1:0H/26
-Modules linked in:
-CPU: 1 UID: 0 PID: 26 Comm: kworker/1:0H Not tainted 6.19.0-dirty #9 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: kblockd blk_mq_timeout_work
-RIP: 0010:__enable_irq+0x107/0x190 kernel/irq/manage.c:753
-Code: ff df 48 89 fa 48 c1 ea 03 0f b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 79 48 8d 3d 2e 7a 3f 05 41 8b 74 24 2c <67> 48 0f b9 3a e8 ef b9 21 00 5b 41 5c 5d e9 46 54 66 03 e8 e1 b9
-RSP: 0018:ffffc900001bf550 EFLAGS: 00010046
-RAX: 0000000000000007 RBX: 0000000000000000 RCX: ffffffffb20c0e90
-RDX: 0000000000000000 RSI: 000000000000000a RDI: ffffffffb74b88f0
-RBP: ffffc900001bf560 R08: ffff88800197cf00 R09: 0000000000000001
-R10: 0000000000000003 R11: 0000000000000003 R12: ffff8880012a6000
-R13: 1ffff92000037eae R14: 000000000000000a R15: 0000000000000293
-FS:  0000000000000000(0000) GS:ffff8880b49f7000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000555da4a25fa8 CR3: 00000000208e8000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- enable_irq+0x121/0x1e0 kernel/irq/manage.c:797
- nvme_poll_irqdisable+0x162/0x1c0 drivers/nvme/host/pci.c:1494
- nvme_timeout+0x965/0x14b0 drivers/nvme/host/pci.c:1744
- blk_mq_rq_timed_out block/blk-mq.c:1653 [inline]
- blk_mq_handle_expired+0x227/0x2d0 block/blk-mq.c:1721
- bt_iter+0x2fc/0x3a0 block/blk-mq-tag.c:292
- __sbitmap_for_each_set include/linux/sbitmap.h:269 [inline]
- sbitmap_for_each_set include/linux/sbitmap.h:290 [inline]
- bt_for_each block/blk-mq-tag.c:324 [inline]
- blk_mq_queue_tag_busy_iter+0x969/0x1e80 block/blk-mq-tag.c:536
- blk_mq_timeout_work+0x627/0x870 block/blk-mq.c:1763
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
- </TASK>
-irq event stamp: 74478
-hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] __raw_spin_unlock_irq include/linux/spinlock_api_smp.h:159 [inline]
-hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] _raw_spin_unlock_irq+0x2c/0x60 kernel/locking/spinlock.c:202
-hardirqs last disabled at (74478): [<ffffffffb57207b5>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
-hardirqs last disabled at (74478): [<ffffffffb57207b5>] _raw_spin_lock_irqsave+0x85/0xa0 kernel/locking/spinlock.c:162
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
-softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
-softirqs last disabled at (74287): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
----[ end trace 0000000000000000 ]---
-
-Fixes: fa059b856a59 (nvme-pci: Simplify nvme_poll_irqdisable)
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index c7d1e9c2b1571..6bd02c9116501 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1201,14 +1201,16 @@ static irqreturn_t nvme_irq_check(int irq, void *data)
- static void nvme_poll_irqdisable(struct nvme_queue *nvmeq)
- {
- 	struct pci_dev *pdev = to_pci_dev(nvmeq->dev->dev);
-+	int irq;
- 
- 	WARN_ON_ONCE(test_bit(NVMEQ_POLLED, &nvmeq->flags));
- 
--	disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
-+	irq = pci_irq_vector(pdev, nvmeq->cq_vector);
-+	disable_irq(irq);
- 	spin_lock(&nvmeq->cq_poll_lock);
- 	nvme_poll_cq(nvmeq, NULL);
- 	spin_unlock(&nvmeq->cq_poll_lock);
--	enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
-+	enable_irq(irq);
- }
- 
- static int nvme_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 3251ffa7d994b..9cf5b6349b0d7 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -3821,10 +3821,10 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter.n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter.ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter.ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter.ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter.ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter.n_proto = ETH_P_IPV6;
+@@ -3879,7 +3879,7 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		/* for ipv6, mask is set for all sixteen bytes (4 words) */
+ 		if (cfilter.n_proto == ETH_P_IPV6 && mask.dst_ip[3])
+ 			if (memcmp(&cfilter.ip.v6.dst_ip6, &cf->ip.v6.dst_ip6,
+-				   sizeof(cfilter.ip.v6.src_ip6)))
++				   sizeof(cfilter.ip.v6.dst_ip6)))
+ 				continue;
+ 		if (mask.vlan_id)
+ 			if (cfilter.vlan_id != cf->vlan_id)
+@@ -3967,10 +3967,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter->n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter->ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter->ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter->ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter->ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter->n_proto = ETH_P_IPV6;
 -- 
 2.51.0
 
