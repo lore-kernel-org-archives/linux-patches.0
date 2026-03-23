@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2B53B895A;
-	Mon, 23 Mar 2026 15:21:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FD33B52E2;
+	Mon, 23 Mar 2026 15:21:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279272; cv=none; b=E1pkp22xQxv+9Kv3/NbvJAOUPv/vuyxuq3yQMqOaqk7zvPoDNjTe+s6LY7we8L3+Ytq9wpXTl45/XqVqdWclezsh39MSehQB6QwDpQq9XH3O4Vo279pin9F1+yh3wSFIZet/b1y+EhBcbPIiyqXu32MR7eJXg4CvRYdHh7RitEM=
+	t=1774279275; cv=none; b=BrQkrlJixmcP8Ln2E/1Au/8R1TvDxkBoX9MQm5eAds8vrf5H5mY+hseA1C2Y6IhH3cI2kouQ8N2OrGnsOB72X/dXxu2vPSK+n57hn8rRv0keaQ/QjDbCIpUi2r0I5V1ipR2V5lQ/UQkQxR+aVV07k6LUUbeQAHGatiGASasTPP0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279272; c=relaxed/simple;
-	bh=shH1kPPcRxgmwoY1OTKgfS4QwP7UcCPRH60reQOo6ww=;
+	s=arc-20240116; t=1774279275; c=relaxed/simple;
+	bh=vlmvF6TzT4g/EQDOrX4qQ7d5aRE4DDVhZ7JAcE/SWQM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SHHA4t6BwoDZ7ECP+zQrOW+AW90z7OAeUstTIxvm2VeHHlPyMIO1i+SH2HHu5zo/sFcbG1y9XjDgK0O3gxBf30IaAxuwg5JNJV7+aHKKRc05WF0CChGZstwG70kkPVr3PeaqavZF9KfOcroEhyEatS8hXqfHOmaowEXE7L570lQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UyNNK6+L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nNKNitixNYoFeNtSqOjVdqqrRUX391kLIVdcFr7KgRPjp4hd1CJwtTm6T2JWa5WuxuCPwn0Uea3Splx6UlI3Z2fkeiE7A+RvGJmv/+eepbmmWJuxCcGLRCGYzCo8DPF1P/dGP1Py/uGgcflpiy+FpKGUhYb5LUqYGlkLajU9b8Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nz4ZVTUz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UyNNK6+L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06828C4CEF7;
-	Mon, 23 Mar 2026 15:21:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nz4ZVTUz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B775C4CEF7;
+	Mon, 23 Mar 2026 15:21:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279272;
-	bh=shH1kPPcRxgmwoY1OTKgfS4QwP7UcCPRH60reQOo6ww=;
+	s=korg; t=1774279275;
+	bh=vlmvF6TzT4g/EQDOrX4qQ7d5aRE4DDVhZ7JAcE/SWQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UyNNK6+LJc7ewkPWltDOlOgX2o9KxlkHxq2fl5ja1MxAJ6cxfWegskpKZ2SnsZ7U9
-	 VAeRjlXYs+4znB/pzdKiq6aUDjeBXXAllE+CreKmKr3b/6J9ftzx68HY7ePzAqWavO
-	 b5zgxZeowfZSTzaizzcrOvqrtBnOiPvOKvifowaE=
+	b=nz4ZVTUziyAiZ+2bL1WXp2u00qn6AWddgq59aJ5J0V0WUyiiuRdZHshPk+b4TB/rS
+	 eYNATwhB0Gg/33Jxld4BWdJD/fqIblMZE4i9Few7kdoYgjSVDb1zQYsSG8I8YrtZZD
+	 IR6FgEdbDCAK8WcbKg+dkMry+UknJ5p6ZSgaKPA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kohei Enju <kohei@enjuk.jp>,
+	Simon Horman <horms@kernel.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Avigail Dahan <avigailx.dahan@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 531/567] net: usb: aqc111: Do not perform PM inside suspend callback
-Date: Mon, 23 Mar 2026 14:47:31 +0100
-Message-ID: <20260323134547.130937225@linuxfoundation.org>
+Subject: [PATCH 6.6 532/567] igc: fix missing update of skb->tail in igc_xmit_frame()
+Date: Mon, 23 Mar 2026 14:47:32 +0100
+Message-ID: <20260323134547.160574654@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,67 +54,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Kohei Enju <kohei@enjuk.jp>
 
-[ Upstream commit 069c8f5aebe4d5224cf62acc7d4b3486091c658a ]
+[ Upstream commit 0ffba246652faf4a36aedc66059c2f94e4c83ea5 ]
 
-syzbot reports "task hung in rpm_resume"
+igc_xmit_frame() misses updating skb->tail when the packet size is
+shorter than the minimum one.
+Use skb_put_padto() in alignment with other Intel Ethernet drivers.
 
-This is caused by aqc111_suspend calling
-the PM variant of its write_cmd routine.
-
-The simplified call trace looks like this:
-
-rpm_suspend()
-  usb_suspend_both() - here udev->dev.power.runtime_status == RPM_SUSPENDING
-    aqc111_suspend() - called for the usb device interface
-      aqc111_write32_cmd()
-        usb_autopm_get_interface()
-          pm_runtime_resume_and_get()
-            rpm_resume() - here we call rpm_resume() on our parent
-              rpm_resume() - Here we wait for a status change that will never happen.
-
-At this point we block another task which holds
-rtnl_lock and locks up the whole networking stack.
-
-Fix this by replacing the write_cmd calls with their _nopm variants
-
-Reported-by: syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48dc1e8dfc92faf1124c
-Fixes: e58ba4544c77 ("net: usb: aqc111: Add support for wake on LAN by MAGIC packet")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Link: https://patch.msgid.link/20260313141643.1181386-1-zlatistiv@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0507ef8a0372 ("igc: Add transmit and receive fastpath and interrupt handlers")
+Signed-off-by: Kohei Enju <kohei@enjuk.jp>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index 3ebb1f84d3025..f1820c0d4830f 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -1400,14 +1400,14 @@ static int aqc111_suspend(struct usb_interface *intf, pm_message_t message)
- 		aqc111_write16_cmd_nopm(dev, AQ_ACCESS_MAC,
- 					SFR_MEDIUM_STATUS_MODE, 2, &reg16);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 3e1408e1c1fcf..13c41facfc976 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -1700,11 +1700,8 @@ static netdev_tx_t igc_xmit_frame(struct sk_buff *skb,
+ 	/* The minimum packet size with TCTL.PSP set is 17 so pad the skb
+ 	 * in order to meet this minimum size requirement.
+ 	 */
+-	if (skb->len < 17) {
+-		if (skb_padto(skb, 17))
+-			return NETDEV_TX_OK;
+-		skb->len = 17;
+-	}
++	if (skb_put_padto(skb, 17))
++		return NETDEV_TX_OK;
  
--		aqc111_write_cmd(dev, AQ_WOL_CFG, 0, 0,
--				 WOL_CFG_SIZE, &wol_cfg);
--		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
--				   &aqc111_data->phy_cfg);
-+		aqc111_write_cmd_nopm(dev, AQ_WOL_CFG, 0, 0,
-+				      WOL_CFG_SIZE, &wol_cfg);
-+		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
-+					&aqc111_data->phy_cfg);
- 	} else {
- 		aqc111_data->phy_cfg |= AQ_LOW_POWER;
--		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
--				   &aqc111_data->phy_cfg);
-+		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
-+					&aqc111_data->phy_cfg);
- 
- 		/* Disable RX path */
- 		aqc111_read16_cmd_nopm(dev, AQ_ACCESS_MAC,
+ 	return igc_xmit_frame_ring(skb, igc_tx_queue_mapping(adapter, skb));
+ }
 -- 
 2.51.0
 
