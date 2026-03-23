@@ -1,41 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0319D3B530F;
-	Mon, 23 Mar 2026 15:11:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1416B3A9D9D;
+	Mon, 23 Mar 2026 15:11:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278675; cv=none; b=owJlWfPt2TBt2Nl4ycNrqKt4U3lcvgNwUyOiCMPllzA+tM3N414vuaDiLAAwohFQwQjkoshWRA1Fldi7A1g6AysM/aU56FyQwVNmPHMk9pnBUNucE2YCJ8J8BZU3ENZwt2uQAgoA1Bj1D/R59NSlNu6BDVBsVVKRdxriFDYJQzg=
+	t=1774278678; cv=none; b=OVHDtJ5E/jh+Jq5CcTLZ+H5YCNEPqj4Eprj+aADWFfElR3elHOgC/bqg60he5PGNsF+c9bo8GPq4iIzUJFi/+1MM8yFKqFp0Jtzwa6OZ1SwPlF1ohnZrXaoZ+IWP8BYmhZSfu1hVXnexbo9RkueRABzmY90A751VSyiuhBN3d/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278675; c=relaxed/simple;
-	bh=FluGPMPOaRSHQUyJqFkNLAVg7vHlJPcrCs8RlGeWTLU=;
+	s=arc-20240116; t=1774278678; c=relaxed/simple;
+	bh=+wSBZK6WmXwtKTpR0P7bOOIgqOQ6N7gghYuU4gFYsDM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sqM8arssUDN0UjljyGNmE1AcYr9kU3ydqSojGx9ADz8Ki71cLHEJGTl7m6ns2O6s0CCnEzClORnFhL/3kX/q1SMyD5KgVTUaTcNabhC5F/Cucw+yfzqRXhuN8tyQUuksAxyTwIjZOHXhnPbz17zZdsdO269oNg7DpjxRuRW1tbM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mItV02Ax; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FixMh7LNBb6gDuITQmcuRH5bjS6R3tKU5oW/7jBlfN8gkVJxrd0cjsLAkR7EnOIE10PD8aPtcj0qn6objH1m3FaglUv2X5I94YHah5ZdD23ZCZko6h+rDUFK/Fc1ZZZn7uc0D1XttDB0W88vKNj35y0HjTXeMW4hXoVkA0IOUiw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2IE7aP7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mItV02Ax"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BF76C4CEF7;
-	Mon, 23 Mar 2026 15:11:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2IE7aP7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F26C4CEF7;
+	Mon, 23 Mar 2026 15:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278674;
-	bh=FluGPMPOaRSHQUyJqFkNLAVg7vHlJPcrCs8RlGeWTLU=;
+	s=korg; t=1774278678;
+	bh=+wSBZK6WmXwtKTpR0P7bOOIgqOQ6N7gghYuU4gFYsDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mItV02AxF336FgyK5eE774+3ZWKDHX9+tgPaJOtS8NtU2IuR/O/f81fvQ3aBEi7OQ
-	 6xWIotXmYgOi1+DQcRNLeNLh8HMvlgjv8NpTymtw9R4KIdlfj/2ywx9u1Ri9Von97f
-	 LlXRbYTvBeildFip3znFw7BphUdxvZO4oi4cRQcY=
+	b=a2IE7aP7rVV9RCmmI+iC3TEHzrKxwCMadDc4B1h3t4X+rBzTfn0Xkm++eyOBhR/wI
+	 hcTd1E29LAjLWwkIEa+kdG/3n9LzqML50FerkF1fC4TfOxuT9UEKQc+RgtPdRzPfXy
+	 yda3lOM1B7NlebWbtYyKBYNrsy5GNG6+2q2CGW/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Alexander Potapenko <glider@google.com>,
+	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 384/567] KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated
-Date: Mon, 23 Mar 2026 14:45:04 +0100
-Message-ID: <20260323134543.347281662@linuxfoundation.org>
+Subject: [PATCH 6.6 385/567] mm/kfence: fix KASAN hardware tag faults during late enablement
+Date: Mon, 23 Mar 2026 14:45:05 +0100
+Message-ID: <20260323134543.373004557@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,98 +57,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit 87d0f901a9bd8ae6be57249c737f20ac0cace93d ]
+[ Upstream commit d155aab90fffa00f93cea1f107aef0a3d548b2ff ]
 
-Explicitly set/clear CR8 write interception when AVIC is (de)activated to
-fix a bug where KVM leaves the interception enabled after AVIC is
-activated.  E.g. if KVM emulates INIT=>WFS while AVIC is deactivated, CR8
-will remain intercepted in perpetuity.
+When KASAN hardware tags are enabled, re-enabling KFENCE late (via
+/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
 
-On its own, the dangling CR8 intercept is "just" a performance issue, but
-combined with the TPR sync bug fixed by commit d02e48830e3f ("KVM: SVM:
-Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active"), the danging
-intercept is fatal to Windows guests as the TPR seen by hardware gets
-wildly out of sync with reality.
+This happens because the KFENCE pool and metadata are allocated via the
+page allocator, which tags the memory, while KFENCE continues to access it
+using untagged pointers during initialization.
 
-Note, VMX isn't affected by the bug as TPR_THRESHOLD is explicitly ignored
-when Virtual Interrupt Delivery is enabled, i.e. when APICv is active in
-KVM's world.  I.e. there's no need to trigger update_cr8_intercept(), this
-is firmly an SVM implementation flaw/detail.
+Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
+ensure the memory remains untagged, consistent with early allocations from
+memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
+__alloc_contig_verify_gfp_mask().
 
-WARN if KVM gets a CR8 write #VMEXIT while AVIC is active, as KVM should
-never enter the guest with AVIC enabled and CR8 writes intercepted.
-
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Squash fix to avic_deactivate_vmcb. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ dropped page_alloc.c hunk adding __GFP_SKIP_KASAN ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    7 +++++--
- arch/x86/kvm/svm/svm.c  |    7 ++++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ mm/kfence/core.c |   14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -104,12 +104,12 @@ static void avic_activate_vmcb(struct vc
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -945,14 +945,14 @@ static int kfence_init_late(void)
+ #ifdef CONFIG_CONTIG_ALLOC
+ 	struct page *pages;
  
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
--
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 	vmcb->control.avic_physical_id |= avic_get_max_physical_id(vcpu);
--
- 	vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
+-	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (!pages)
+ 		return -ENOMEM;
  
-+	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
- 	 * accesses, while interrupt injection to a running vCPU can be
-@@ -141,6 +141,9 @@ static void avic_deactivate_vmcb(struct
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
+ 	__kfence_pool = page_to_virt(pages);
+-	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (pages)
+ 		kfence_metadata_init = page_to_virt(pages);
+ #else
+@@ -962,11 +962,13 @@ static int kfence_init_late(void)
+ 		return -EINVAL;
+ 	}
  
-+	if (!sev_es_guest(svm->vcpu.kvm))
-+		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * If running nested and the guest uses its own MSR bitmap, there
- 	 * is no need to update L0's msr bitmap
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1261,8 +1261,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	svm_set_intercept(svm, INTERCEPT_CR0_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR3_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR4_WRITE);
--	if (!kvm_vcpu_apicv_active(vcpu))
--		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+	svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
+-	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
++	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE,
++					  GFP_KERNEL | __GFP_SKIP_KASAN);
+ 	if (!__kfence_pool)
+ 		return -ENOMEM;
  
- 	set_dr_intercepts(svm);
+-	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE, GFP_KERNEL);
++	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE,
++						 GFP_KERNEL | __GFP_SKIP_KASAN);
+ #endif
  
-@@ -2806,9 +2805,11 @@ static int dr_interception(struct kvm_vc
- 
- static int cr8_write_interception(struct kvm_vcpu *vcpu)
- {
-+	u8 cr8_prev = kvm_get_cr8(vcpu);
- 	int r;
- 
--	u8 cr8_prev = kvm_get_cr8(vcpu);
-+	WARN_ON_ONCE(kvm_vcpu_apicv_active(vcpu));
-+
- 	/* instruction emulation calls kvm_set_cr8() */
- 	r = cr_interception(vcpu);
- 	if (lapic_in_kernel(vcpu))
+ 	if (!kfence_metadata_init)
 
 
