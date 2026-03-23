@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8656D3B5846;
-	Mon, 23 Mar 2026 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D3C33BED57;
+	Mon, 23 Mar 2026 15:15:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278955; cv=none; b=CjVK9OCOK3CkvsLXGG/OtMMcC/Dri0/LSk2ITdjoTFBsY5Dg4nmmFitpLXXABAiAVa3J4LTdVTmw9IIoSkrZ5c6nS1sPrwPqTBludJapQ5Hy1N4TwkWaZtRDyPO+xtmylJ5OlbKb5BjZTEB0e5ZZgzCJwQEvkvWXHBmIHDCYFiE=
+	t=1774278958; cv=none; b=VQV1PjcSjakDW3u0lFYxtY+h9XPVl/s/bMXh94Jkt+e2o9xr9xET/US5JtNWq+2Ut7sCkLHiG05q9vvFfCkgYgd3OSka4fJFPWVarINp6WtGMONWjYEfATuYSSAzbufOPZ1tKrPQLymdYdL9q52vaLDncT1OpfmKIqiggcQpKuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278955; c=relaxed/simple;
-	bh=VOPcoPHDYYU+PRsisjVTIKgkoh4zbiTeRwJE6KS1ooU=;
+	s=arc-20240116; t=1774278958; c=relaxed/simple;
+	bh=rcaFPVO7IFienQizPcLRRS0Pj4wdLjnJufdUo3lfKf8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jZkRO29Qh/zjT+3kP4ZIYTqVud7VwhPc+lP5i/j0B61wRvVQUEyqRyUlxsPQpNp9y2c0Zkc7+YtWpJZV4QfAD1ssYqpiF+NDJ637rEVkTr52ndz/B35gYKecpG4ZSYb6M/LvMRGl4IC4r0snsCihb9rRBzproYgGbCCEoLFzQh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcjbkqiY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nyqxn6q9lH0x2OwgfYUqgt6DRJfNAMwdnJAAeJEj0F3GrRuuoiWhPzkhMlMxjOx9Eo3s9g3pb0loIPfxJz+7qu/83fPBJEnCY9Q09wVT9BJ3BVoZRsdMHtWMsmGFmbJkrlkT7XY+peuvaSxlPGgzFitP/o7F6TtatDM9uYrHObs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pe2wtOwg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcjbkqiY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC88CC4CEF7;
-	Mon, 23 Mar 2026 15:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pe2wtOwg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8841C2BCC4;
+	Mon, 23 Mar 2026 15:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278955;
-	bh=VOPcoPHDYYU+PRsisjVTIKgkoh4zbiTeRwJE6KS1ooU=;
+	s=korg; t=1774278958;
+	bh=rcaFPVO7IFienQizPcLRRS0Pj4wdLjnJufdUo3lfKf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hcjbkqiYBvOrcoP9dKiigAyFTODdQmBzBdczCrLsmnS3YY4DknbnXJdj2MVpYUSaw
-	 eZOwNJ0yCbYzeDetQlXpa+txZm+EOfXutA5PZ+LXun978/aFHt489vQl/Xr84CHrrh
-	 Z8oQmyH6v6SjmvDizX0oLnL2Y6/BcUfPNpVJXNkc=
+	b=pe2wtOwgVt2WlHBeI06K8EF1hVBSG2wMLgRiiFZP8Pdke4aeh3Hft8KQFT19bt0vR
+	 kUbT/MePLciGWIvyAZjEVAbzjRhXx7iz/mzYiHHjIRRit5dQBtd8Nq8YxbeZ0MRFzl
+	 iYT3sHRlN7VGHUkD5D5sQXD+lqESgPnLG37wsk7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanyang Wang <quanyang.wang@windriver.com>,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 473/567] net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume
-Date: Mon, 23 Mar 2026 14:46:33 +0100
-Message-ID: <20260323134545.693156233@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 474/567] mmc: sdhci-pci-gli: fix GL9750 DMA write corruption
+Date: Mon, 23 Mar 2026 14:46:34 +0100
+Message-ID: <20260323134545.715901374@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,58 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-[ Upstream commit 718d0766ce4c7634ce62fa78b526ea7263487edd ]
+commit 2b76e0cc7803e5ab561c875edaba7f6bbd87fbb0 upstream.
 
-On certain platforms, such as AMD Versal boards, the tx/rx queue pointer
-registers are cleared after suspend, and the rx queue pointer register
-is also disabled during suspend if WOL is enabled. Previously, we assumed
-that these registers would be restored by macb_mac_link_up(). However,
-in commit bf9cf80cab81, macb_init_buffers() was moved from
-macb_mac_link_up() to macb_open(). Therefore, we should call
-macb_init_buffers() to reinitialize the tx/rx queue pointer registers
-during resume.
+The GL9750 SD host controller has intermittent data corruption during
+DMA write operations. The GM_BURST register's R_OSRC_Lmt field
+(bits 17:16), which limits outstanding DMA read requests from system
+memory, is not being cleared during initialization. The Windows driver
+sets R_OSRC_Lmt to zero, limiting requests to the smallest unit.
 
-Due to the reset of these two registers, we also need to adjust the
-tx/rx rings accordingly. The tx ring will be handled by
-gem_shuffle_tx_rings() in macb_mac_link_up(), so we only need to
-initialize the rx ring here.
+Clear R_OSRC_Lmt to match the Windows driver behavior. This eliminates
+write corruption verified with f3write/f3read tests while maintaining
+DMA performance.
 
-Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
-Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Tested-by: Quanyang Wang <quanyang.wang@windriver.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260312-macb-versal-v1-2-467647173fa4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e51df6ce668a ("mmc: host: sdhci-pci: Add Genesys Logic GL975x support")
+Closes: https://lore.kernel.org/linux-mmc/33d12807-5c72-41ce-8679-57aa11831fad@linux.dev/
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/sdhci-pci-gli.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5500,8 +5500,18 @@ static int __maybe_unused macb_resume(st
- 		rtnl_unlock();
- 	}
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -70,6 +70,9 @@
+ #define   GLI_9750_MISC_TX1_DLY_VALUE    0x5
+ #define   SDHCI_GLI_9750_MISC_SSC_OFF    BIT(26)
  
-+	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
-+		macb_init_buffers(bp);
++#define SDHCI_GLI_9750_GM_BURST_SIZE		  0x510
++#define   SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT  GENMASK(17, 16)
 +
- 	for (q = 0, queue = bp->queues; q < bp->num_queues;
- 	     ++q, ++queue) {
-+		if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
-+			if (macb_is_gem(bp))
-+				gem_init_rx_ring(queue);
-+			else
-+				macb_init_rx_ring(queue);
-+		}
+ #define SDHCI_GLI_9750_TUNING_CONTROL	          0x540
+ #define   SDHCI_GLI_9750_TUNING_CONTROL_EN          BIT(4)
+ #define   GLI_9750_TUNING_CONTROL_EN_ON             0x1
+@@ -277,10 +280,16 @@ static void gli_set_9750(struct sdhci_ho
+ 	u32 misc_value;
+ 	u32 parameter_value;
+ 	u32 control_value;
++	u32 burst_value;
+ 	u16 ctrl2;
+ 
+ 	gl9750_wt_on(host);
+ 
++	/* clear R_OSRC_Lmt to avoid DMA write corruption */
++	burst_value = sdhci_readl(host, SDHCI_GLI_9750_GM_BURST_SIZE);
++	burst_value &= ~SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT;
++	sdhci_writel(host, burst_value, SDHCI_GLI_9750_GM_BURST_SIZE);
 +
- 		napi_enable(&queue->napi_rx);
- 		napi_enable(&queue->napi_tx);
- 	}
+ 	driving_value = sdhci_readl(host, SDHCI_GLI_9750_DRIVING);
+ 	pll_value = sdhci_readl(host, SDHCI_GLI_9750_PLL);
+ 	sw_ctrl_value = sdhci_readl(host, SDHCI_GLI_9750_SW_CTRL);
 
 
