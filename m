@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB45A3B0AD0;
-	Mon, 23 Mar 2026 14:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F5E17C203;
+	Mon, 23 Mar 2026 14:14:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275296; cv=none; b=k4kD0zxSRzA55w4GUVH7cVdol7Bta6IuR5Jc3EPE0DDJv9nTaVZFJx+NbC8MjysLHu+PN4Plx/Hv1rTdjJ99WSRLo7+NJTazSWF0gDoxN+vUz9mjYmqQXydB/PgiHOt5suTYquKjeImrGSOe83798gnHqztgnbAza87Alzu2Vec=
+	t=1774275299; cv=none; b=QFRV1DqWL1NnN/0XlVVDvSxXBZVaIaj6oRvb8gciSdRgwuKCEiDUfJdGQGjRepRU8mRaX3xNfN7ouz6BBConElflnxUqn/ovyz7O+P9QlPcW7/eYCvFV3XWvDM6lI8C03w6fmPL7cbHSOiljjsmazBiEzSlB+Zunf4Ec3h18MuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275296; c=relaxed/simple;
-	bh=LpsL4sJqSdaDW1JSX182FDrMsrQwZ7Cxgt7VwIVqOzs=;
+	s=arc-20240116; t=1774275299; c=relaxed/simple;
+	bh=MN8lNK7vSWhphBmcdcSQfWDtjHAT7HSFzV0miFZRpKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CDhOoEil5hCd6I3+rFjPML7woaoM3SYDFtZyghYpa03bnh0iM5sBEqNmyW+OPHaicNSCxAZ+ZvpZ1sSKkBrS/VNbdUjKJeeb+uSm8ecLfoA0cadM5CunxzEJWvEbqvDVXyDLxilwDXC8mlXpk5482Up7TdcJ3ZALwqkQZune3V8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cVzIhtS+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hdYFFOrxx0owSmPkHcKPuY9z3hU/Y1oOILkoUHPLWqdU1i9EM+PlNsKMXneZs3Y5s8OC7C8+antEXak+VcfWeq/Cv5zL3En2Hm3CrEezguGSUnM/CO+yLzF092lQa3u9mW2rXs/9bD91Z3ISt95AUK5WqMuECxAGa/pB/29YKiI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8fJCdnw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cVzIhtS+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CC9DC4CEF7;
-	Mon, 23 Mar 2026 14:14:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8fJCdnw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17145C2BCB1;
+	Mon, 23 Mar 2026 14:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275296;
-	bh=LpsL4sJqSdaDW1JSX182FDrMsrQwZ7Cxgt7VwIVqOzs=;
+	s=korg; t=1774275299;
+	bh=MN8lNK7vSWhphBmcdcSQfWDtjHAT7HSFzV0miFZRpKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cVzIhtS+h1q0z5D6fC7WLnm1DrJeUJsw3MIp0NaJppzFJm0c+/J6BTBnjAdQ1Zv2J
-	 4FQAUgpYkuNFn6XwgzQ44R3nz0iqlR1VJYZjcDr5mKcih3PHZ7G3KqYlIGMyAVMLvg
-	 D/5pml6bej3JVuTzK10+tIa6iPyRXeCzCnxNyWSY=
+	b=p8fJCdnwDHfniju2YrO2HvaC2SwrvH5b31d9cROUb2g2FHSya1UY0oz79L1su8vsH
+	 xeMI2eM99nDnGAYUrqw2FRjLp83jmezC73dXRX3kGH8TYxBVkjhq1TyDxJO7jQ2hN1
+	 +trtmha54XzQvuqSC6HJ9fHgbodvBcye9DOhTtoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sen Wang <sen@ti.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 045/460] ASoC: simple-card-utils: fix graph_util_is_ports0() for DT overlays
-Date: Mon, 23 Mar 2026 14:40:41 +0100
-Message-ID: <20260323134527.821424451@linuxfoundation.org>
+Subject: [PATCH 6.12 046/460] net: sfp: improve Huawei MA5671a fixup
+Date: Mon, 23 Mar 2026 14:40:42 +0100
+Message-ID: <20260323134527.845073129@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,64 +46,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sen Wang <sen@ti.com>
+From: Álvaro Fernández Rojas <noltari@gmail.com>
 
-[ Upstream commit 4185b95f8a42d92d68c49289b4644546b51e252b ]
+[ Upstream commit 87d126852158467ab87d5cbc36ccfd3f15464a6c ]
 
-graph_util_is_ports0() identifies DPCM front-end (ports@0) vs back-end
-(ports@1) by calling of_get_child_by_name() to find the first "ports"
-child and comparing pointers. This relies on child iteration order
-matching DTS source order.
+With the current sfp_fixup_ignore_tx_fault() fixup we ignore the TX_FAULT
+signal, but we also need to apply sfp_fixup_ignore_los() in order to be
+able to communicate with the module even if the fiber isn't connected for
+configuration purposes.
+This is needed for all the MA5671a firmwares, excluding the FS modded
+firmware.
 
-When the DPCM topology comes from a DT overlay, __of_attach_node()
-inserts new children at the head of the sibling list, reversing the
-order. of_get_child_by_name() then returns ports@1 instead of ports@0,
-causing all front-end links to be classified as back-ends. The card
-registers with no PCM devices.
-
-Fix this by matching the unit address directly from the node name
-instead of relying on sibling order.
-
-Fixes: 92939252458f ("ASoC: simple-card-utils: add asoc_graph_is_ports0()")
-Signed-off-by: Sen Wang <sen@ti.com>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://patch.msgid.link/20260309042109.2576612-1-sen@ti.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2069624dac19 ("net: sfp: Add tx-fault workaround for Huawei MA5671A SFP ONT")
+Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://patch.msgid.link/20260306125139.213637-1-noltari@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/generic/simple-card-utils.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/phy/sfp.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
-index 4857ceecbdc4a..c9f92d445f4c9 100644
---- a/sound/soc/generic/simple-card-utils.c
-+++ b/sound/soc/generic/simple-card-utils.c
-@@ -1008,11 +1008,15 @@ int graph_util_is_ports0(struct device_node *np)
- 	else
- 		port = np;
- 
--	struct device_node *ports  __free(device_node) = of_get_parent(port);
--	struct device_node *top    __free(device_node) = of_get_parent(ports);
--	struct device_node *ports0 __free(device_node) = of_get_child_by_name(top, "ports");
-+	struct device_node *ports __free(device_node) = of_get_parent(port);
-+	const char *at = strchr(kbasename(ports->full_name), '@');
- 
--	return ports0 == ports;
-+	/*
-+	 * Since child iteration order may differ
-+	 * between a base DT and DT overlays,
-+	 * string match "ports" or "ports@0" in the node name instead.
-+	 */
-+	return !at || !strcmp(at, "@0");
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index cae748b762236..dd8d37b44aac8 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -360,6 +360,12 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
+ 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
  }
- EXPORT_SYMBOL_GPL(graph_util_is_ports0);
  
++static void sfp_fixup_ignore_tx_fault_and_los(struct sfp *sfp)
++{
++	sfp_fixup_ignore_tx_fault(sfp);
++	sfp_fixup_ignore_los(sfp);
++}
++
+ static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
+ {
+ 	sfp->state_hw_mask &= ~mask;
+@@ -523,7 +529,7 @@ static const struct sfp_quirk sfp_quirks[] = {
+ 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
+ 	// their EEPROM
+ 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
+-		  sfp_fixup_ignore_tx_fault),
++		  sfp_fixup_ignore_tx_fault_and_los),
+ 
+ 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
+ 	// incorrectly report 2500MBd NRZ in their EEPROM.
 -- 
 2.51.0
 
