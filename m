@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F8D39890A;
-	Mon, 23 Mar 2026 14:12:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391ED21D00A;
+	Mon, 23 Mar 2026 14:12:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275175; cv=none; b=tmp0esZis5MAiVyE89BWtqbpy6Zi+7MkkkeafPbIx5nUHwiqWwUgA3IgVtPnzb4y/LCcsYAIl30ZKo9Ghh0BYYJzM5pKRTx9ZMKels9Sq2lTn6TWQraLoVwfAlE4h01a12VcrxlkueL1OSv5IuCrfJfXRa2M2QADPvMcU88BMlk=
+	t=1774275179; cv=none; b=jkLQwaaQW0qLH1eVhVeOeb2ZV5Y+RoGkaW7Cs4r6nK+ayiqNExOM1fkGRUsg0GPrXUpV7TC4M9KKx0HhorARnr5Nu7Vx/Vkrbv/s+Cfc8prQsYSZ7SnjN6DUdqoMHaQKEKXE3wLt2UBdnTHk0TkSFT4UUm2S0vq4WoBCeaxL39M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275175; c=relaxed/simple;
-	bh=+9rvgksqrulQA1lJK47xtIOEnGyI2al/ncIkay1FIOo=;
+	s=arc-20240116; t=1774275179; c=relaxed/simple;
+	bh=zciGad+s09/KHQKR1GJ2+Y61XM13IFgRRF7UV7xDbsI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YgbWzWhxoady2LPrBl+YkDuqcIJrKkxQ/DSK6SVgLcQPKXZdzfHCi7L/c5yio7w200/4EUp/z1OmCEEdEi7wdxoRO3K6bp5KqaL/j47slXZgMvCx8UW5Qm51IesBMP9an3gtGHskSlXV5wDpwpINXyAPtQBVQijuCce8fcWbpl4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=deKSggnF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=liHkTLMbjuGgmGIRFyDkShevpfq/AMvDw+jdw+YHwVFO3N6SumjEl3Yh59q2LIL9rYStvCTxl3y5eKWqkLhuuyzBoGjyeu14iK+SpOEL1AbpDuONkdKPh0zCGtfwdkbvQaQdL+Y8AdAfwL8ihjgUnsytM55lpkZQemDcHiCUMkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3Pk8e78; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="deKSggnF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62B43C4CEF7;
-	Mon, 23 Mar 2026 14:12:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3Pk8e78"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD27C4CEF7;
+	Mon, 23 Mar 2026 14:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275175;
-	bh=+9rvgksqrulQA1lJK47xtIOEnGyI2al/ncIkay1FIOo=;
+	s=korg; t=1774275178;
+	bh=zciGad+s09/KHQKR1GJ2+Y61XM13IFgRRF7UV7xDbsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deKSggnF58a+wwXMH0Ddv6+B3FIXrFpiUM2claecbSx1eYCcbYNYu3BGRo9xOrilv
-	 sSVcydEEgy7RoV9RNG9iyG388XWVfQ5q5CgXb0A7xPA4kqTPaQWEcHpJks9437JU9Y
-	 vkHqW5nDzsLsnpkiu0IiUXdaU7u7W9vjlKmb6AmU=
+	b=r3Pk8e78UUlLfCezQNFxqstiWjSitdXvsW9I6g8+anpXQm/npo2iNYIsqGjZhHLx2
+	 lDFSJNWBpw1DMCu0YFzWrP1TXYtUNjQU1P2qbCc0TfrciA9bMJ8NVDbo80v+O4J8+q
+	 YAXz64WKd+caMySEcA9eMchG2J8sGkpNdY1y+IIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simond Hu <cmdhh1767@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/481] perf: Fix __perf_event_overflow() vs perf_remove_from_context() race
-Date: Mon, 23 Mar 2026 14:39:54 +0100
-Message-ID: <20260323134525.550958983@linuxfoundation.org>
+Subject: [PATCH 6.1 013/481] btrfs: move btrfs_crc32c_final into free-space-cache.c
+Date: Mon, 23 Mar 2026 14:39:55 +0100
+Message-ID: <20260323134525.574672963@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,116 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit c9bc1753b3cc41d0e01fbca7f035258b5f4db0ae ]
+[ Upstream commit 102f2640a346e84cb5c2d19805a9dd38a776013c ]
 
-Make sure that __perf_event_overflow() runs with IRQs disabled for all
-possible callchains. Specifically the software events can end up running
-it with only preemption disabled.
+This is the only place this helper is used, take it out of ctree.h and
+move it into free-space-cache.c.
 
-This opens up a race vs perf_event_exit_event() and friends that will go
-and free various things the overflow path expects to be present, like
-the BPF program.
-
-Fixes: 592903cdcbf6 ("perf_counter: add an event_list")
-Reported-by: Simond Hu <cmdhh1767@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Simond Hu <cmdhh1767@gmail.com>
-Link: https://patch.msgid.link/20260224122909.GV1395416@noisy.programming.kicks-ass.net
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 511dc8912ae3 ("btrfs: fix incorrect key offset in error message in check_dev_extent_item()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 42 +++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 41 insertions(+), 1 deletion(-)
+ fs/btrfs/ctree.h            | 5 -----
+ fs/btrfs/free-space-cache.c | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 4d7bf0536348f..146b37e97832a 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9507,6 +9507,13 @@ int perf_event_overflow(struct perf_event *event,
- 			struct perf_sample_data *data,
- 			struct pt_regs *regs)
- {
-+	/*
-+	 * Entry point from hardware PMI, interrupts should be disabled here.
-+	 * This serializes us against perf_event_remove_from_context() in
-+	 * things like perf_event_release_kernel().
-+	 */
-+	lockdep_assert_irqs_disabled();
-+
- 	return __perf_event_overflow(event, 1, data, regs);
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index bd84a8b774a68..96146b920bdd3 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -2827,11 +2827,6 @@ static inline u32 btrfs_crc32c(u32 crc, const void *address, unsigned length)
+ 	return crc32c(crc, address, length);
  }
  
-@@ -9587,6 +9594,19 @@ static void perf_swevent_event(struct perf_event *event, u64 nr,
+-static inline void btrfs_crc32c_final(u32 crc, u8 *result)
+-{
+-	put_unaligned_le32(~crc, result);
+-}
+-
+ static inline u64 btrfs_name_hash(const char *name, int len)
  {
- 	struct hw_perf_event *hwc = &event->hw;
+        return crc32c((u32)~1, name, len);
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index 75ad735322c4a..9f4dae426037b 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -48,6 +48,11 @@ static void bitmap_clear_bits(struct btrfs_free_space_ctl *ctl,
+ 			      struct btrfs_free_space *info, u64 offset,
+ 			      u64 bytes, bool update_stats);
  
-+	/*
-+	 * This is:
-+	 *   - software		preempt
-+	 *   - tracepoint	preempt
-+	 *   -   tp_target_task	irq (ctx->lock)
-+	 *   - uprobes		preempt/irq
-+	 *   - kprobes		preempt/irq
-+	 *   - hw_breakpoint	irq
-+	 *
-+	 * Any of these are sufficient to hold off RCU and thus ensure @event
-+	 * exists.
-+	 */
-+	lockdep_assert_preemption_disabled();
- 	local64_add(nr, &event->count);
- 
- 	if (!regs)
-@@ -9595,6 +9615,16 @@ static void perf_swevent_event(struct perf_event *event, u64 nr,
- 	if (!is_sampling_event(event))
- 		return;
- 
-+	/*
-+	 * Serialize against event_function_call() IPIs like normal overflow
-+	 * event handling. Specifically, must not allow
-+	 * perf_event_release_kernel() -> perf_remove_from_context() to make
-+	 * progress and 'release' the event from under us.
-+	 */
-+	guard(irqsave)();
-+	if (event->state != PERF_EVENT_STATE_ACTIVE)
-+		return;
++static void btrfs_crc32c_final(u32 crc, u8 *result)
++{
++	put_unaligned_le32(~crc, result);
++}
 +
- 	if ((event->attr.sample_type & PERF_SAMPLE_PERIOD) && !event->attr.freq) {
- 		data->period = nr;
- 		return perf_swevent_overflow(event, 1, data, regs);
-@@ -10011,6 +10041,11 @@ void perf_tp_event(u16 event_type, u64 count, void *record, int entry_size,
- 	struct perf_sample_data data;
- 	struct perf_event *event;
- 
-+	/*
-+	 * Per being a tracepoint, this runs with preemption disabled.
-+	 */
-+	lockdep_assert_preemption_disabled();
-+
- 	struct perf_raw_record raw = {
- 		.frag = {
- 			.size = entry_size,
-@@ -10472,6 +10507,11 @@ void perf_bp_event(struct perf_event *bp, void *data)
- 	struct perf_sample_data sample;
- 	struct pt_regs *regs = data;
- 
-+	/*
-+	 * Exception context, will have interrupts disabled.
-+	 */
-+	lockdep_assert_irqs_disabled();
-+
- 	perf_sample_data_init(&sample, bp->attr.bp_addr, 0);
- 
- 	if (!bp->hw.state && !perf_exclude_event(bp, regs))
-@@ -10924,7 +10964,7 @@ static enum hrtimer_restart perf_swevent_hrtimer(struct hrtimer *hrtimer)
- 
- 	if (regs && !perf_exclude_event(event, regs)) {
- 		if (!(event->attr.exclude_idle && is_idle_task(current)))
--			if (__perf_event_overflow(event, 1, &data, regs))
-+			if (perf_event_overflow(event, &data, regs))
- 				ret = HRTIMER_NORESTART;
- 	}
- 
+ static void __btrfs_remove_free_space_cache(struct btrfs_free_space_ctl *ctl)
+ {
+ 	struct btrfs_free_space *info;
 -- 
 2.51.0
 
