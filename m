@@ -1,36 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 095E63AF662;
-	Mon, 23 Mar 2026 15:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CFB5242D70;
+	Mon, 23 Mar 2026 15:14:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278838; cv=none; b=uLrCNxI8eAi73+7U3zLM+xO2IhWNDEiBe9OKiX0xWfY5eZoTRTL3sCc3p/Hn0zgdxZYzCXuVU+fE/ZsKodiKFXMmSe5Ta4kATXKoASzsCC1U/muYtZMFfPmJuXR/Fb7ep2bisBTIgBdKwylN59TtqzdQB7cHPp1WQAR9SCplb+Y=
+	t=1774278841; cv=none; b=IBZvjU7+d5Bx/cmMoKdW97iIdNvHFt7XeAK3hDO1fp9QaGDFNIU0VTUgGhlsAh7xazAlHjOXp/XyOJKVdlqc5MihzNuYjEHyXhHVPJFg2KckyfraoooSHGmoY+9BAsGeQGZLJT3H/HsmBRVnHdBn/c5xrU/0OfnvHK4Br6X4nPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278838; c=relaxed/simple;
-	bh=Qey1Gt+uNVzPmq96uXWAyjs2YM6nGg9Mt1NBJvh8Hjw=;
+	s=arc-20240116; t=1774278841; c=relaxed/simple;
+	bh=VLNjPdEmIkT2VC+7jJTeXQvRbFpYt6+UELxyh/5lJhI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dyBGe2g0sHTOzvAPXO5XlSmTlo/gLHVP6cftaIUJJhLAZLFt4BIEHSXUSlzxYJCs1p8475liSlCvK3QejosfO9x803fNT7aG7g4LFGQ7gU954MY2b7CiDPbGfXsTohvB9cs+9YkrfMkhTIImfO4B6j5fByA/jllhtmEmH3FQNJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ip05WPwZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xm/f8c2x4G8khy6/gEZ7I1gQHej/cWQ4XxqFzS1R+Ou2W4O3vTS8VOfzrpoABqHm5nOdg+u05M4pAIYoYO4tVYECENUXtyooUDlVipvniQsXXOxhIAPSpjW+sEDF6W7AMHgOyiMfeam33oPzcGGXhi+/IhWz267M1XeoIsz0RKM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXLivmke; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ip05WPwZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83739C2BC9E;
-	Mon, 23 Mar 2026 15:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXLivmke"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5C4C2BC9E;
+	Mon, 23 Mar 2026 15:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278837;
-	bh=Qey1Gt+uNVzPmq96uXWAyjs2YM6nGg9Mt1NBJvh8Hjw=;
+	s=korg; t=1774278841;
+	bh=VLNjPdEmIkT2VC+7jJTeXQvRbFpYt6+UELxyh/5lJhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ip05WPwZK4bx4CQc9vw6r3NPUncJ90c/aoNZF6OQlvDElVnZLGKKd1zmJJ9AZhQVP
-	 J146/k3g8DDH5PRxjwOyz1BRMTYL+vQXUCErIpI+DCzPyIKDpjE2mFVACPlRd0U9xk
-	 0+8vPQ1oINWbseC3zqmTT0lSey0fNM9aKFJeMzls=
+	b=AXLivmkeb9ndKQrvO1w498p1ykWJPw5sgYh8iSlwvooLAN6ohMkXZQja5pH3DQPH4
+	 uD7vnlQ3gPhuCNMoZfz0yTH7yK5k3uUAiZ9vA3wm/swtqrnQcUsFHn26gQTPK+L6C3
+	 7QnnLQH5Rqu7oMw62TOYiFBXbVC2IEYw8wCD0ywI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>
-Subject: [PATCH 6.6 435/567] drm/exynos: vidi: use ctx->lock to protect struct vidi_context member variables related to memory alloc/free
-Date: Mon, 23 Mar 2026 14:45:55 +0100
-Message-ID: <20260323134544.697316299@linuxfoundation.org>
+	"edumazet@google.com, kuniyu@google.com, kuba@kernel.org, dsahern@kernel.org, netdev@vger.kernel.org, Ruohan Lan" <ruohanlan@aliyun.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Ruohan Lan <ruohanlan@aliyun.com>
+Subject: [PATCH 6.6 436/567] net: dst: add four helpers to annotate data-races around dst->dev
+Date: Mon, 23 Mar 2026 14:45:56 +0100
+Message-ID: <20260323134544.721291485@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -49,199 +53,132 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 52b330799e2d6f825ae2bb74662ec1b10eb954bb ]
+[ Upstream commit 88fe14253e181878c2ddb51a298ae8c468a63010 ]
 
-Exynos Virtual Display driver performs memory alloc/free operations
-without lock protection, which easily causes concurrency problem.
+dst->dev is read locklessly in many contexts,
+and written in dst_dev_put().
 
-For example, use-after-free can occur in race scenario like this:
-```
-	CPU0				CPU1				CPU2
-	----				----				----
-  vidi_connection_ioctl()
-    if (vidi->connection) // true
-      drm_edid = drm_edid_alloc(); // alloc drm_edid
-      ...
-      ctx->raw_edid = drm_edid;
-      ...
-								drm_mode_getconnector()
-								  drm_helper_probe_single_connector_modes()
-								    vidi_get_modes()
-								      if (ctx->raw_edid) // true
-								        drm_edid_dup(ctx->raw_edid);
-								          if (!drm_edid) // false
-								          ...
-				vidi_connection_ioctl()
-				  if (vidi->connection) // false
-				    drm_edid_free(ctx->raw_edid); // free drm_edid
-				    ...
-								          drm_edid_alloc(drm_edid->edid)
-								            kmemdup(edid); // UAF!!
-								            ...
-```
+Fixing all the races is going to need many changes.
 
-To prevent these vulns, at least in vidi_context, member variables related
-to memory alloc/free should be protected with ctx->lock.
+We probably will have to add full RCU protection.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
+Add three helpers to ease this painful process.
+
+static inline struct net_device *dst_dev(const struct dst_entry *dst)
+{
+       return READ_ONCE(dst->dev);
+}
+
+static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
+{
+       return dst_dev(skb_dst(skb));
+}
+
+static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
+{
+       return dev_net(skb_dst_dev(skb));
+}
+
+static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
+{
+       return dev_net_rcu(skb_dst_dev(skb));
+}
+
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20250630121934.3399505-7-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ Minor context conflict resolved. ]
+Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_vidi.c |   43 +++++++++++++++++++++++++------
- 1 file changed, 35 insertions(+), 8 deletions(-)
+ include/net/dst.h |   20 ++++++++++++++++++++
+ net/core/dst.c    |    4 ++--
+ net/core/sock.c   |    8 ++++----
+ 3 files changed, 26 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -186,15 +186,17 @@ static ssize_t vidi_store_connection(str
- 				const char *buf, size_t len)
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -581,6 +581,26 @@ static inline struct net_device *skb_dst
+ 	return dst_dev_rcu(skb_dst(skb));
+ }
+ 
++static inline struct net_device *dst_dev(const struct dst_entry *dst)
++{
++	return READ_ONCE(dst->dev);
++}
++
++static inline struct net_device *skb_dst_dev(const struct sk_buff *skb)
++{
++	return dst_dev(skb_dst(skb));
++}
++
++static inline struct net *skb_dst_dev_net(const struct sk_buff *skb)
++{
++	return dev_net(skb_dst_dev(skb));
++}
++
++static inline struct net *skb_dst_dev_net_rcu(const struct sk_buff *skb)
++{
++	return dev_net_rcu(skb_dst_dev(skb));
++}
++
+ struct dst_entry *dst_blackhole_check(struct dst_entry *dst, u32 cookie);
+ void dst_blackhole_update_pmtu(struct dst_entry *dst, struct sock *sk,
+ 			       struct sk_buff *skb, u32 mtu, bool confirm_neigh);
+--- a/net/core/dst.c
++++ b/net/core/dst.c
+@@ -153,7 +153,7 @@ void dst_dev_put(struct dst_entry *dst)
+ 		dst->ops->ifdown(dst, dev);
+ 	WRITE_ONCE(dst->input, dst_discard);
+ 	WRITE_ONCE(dst->output, dst_discard_out);
+-	dst->dev = blackhole_netdev;
++	WRITE_ONCE(dst->dev, blackhole_netdev);
+ 	netdev_ref_replace(dev, blackhole_netdev, &dst->dev_tracker,
+ 			   GFP_ATOMIC);
+ }
+@@ -266,7 +266,7 @@ unsigned int dst_blackhole_mtu(const str
  {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
--	int ret;
-+	int ret, new_connected;
+ 	unsigned int mtu = dst_metric_raw(dst, RTAX_MTU);
  
--	ret = kstrtoint(buf, 0, &ctx->connected);
-+	ret = kstrtoint(buf, 0, &new_connected);
- 	if (ret)
- 		return ret;
- 
--	if (ctx->connected > 1)
-+	if (new_connected > 1)
- 		return -EINVAL;
- 
-+	mutex_lock(&ctx->lock);
-+
- 	/* use fake edid data for test. */
- 	if (!ctx->raw_edid)
- 		ctx->raw_edid = (struct edid *)fake_edid_info;
-@@ -202,14 +204,21 @@ static ssize_t vidi_store_connection(str
- 	/* if raw_edid isn't same as fake data then it can't be tested. */
- 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
- 		DRM_DEV_DEBUG_KMS(dev, "edid data is not fake data.\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto fail;
- 	}
- 
-+	ctx->connected = new_connected;
-+	mutex_unlock(&ctx->lock);
-+
- 	DRM_DEV_DEBUG_KMS(dev, "requested connection.\n");
- 
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return len;
-+fail:
-+	mutex_unlock(&ctx->lock);
-+	return ret;
+-	return mtu ? : dst->dev->mtu;
++	return mtu ? : dst_dev(dst)->mtu;
  }
+ EXPORT_SYMBOL_GPL(dst_blackhole_mtu);
  
- static DEVICE_ATTR(connection, 0644, vidi_show_connection,
-@@ -244,11 +253,14 @@ int vidi_connection_ioctl(struct drm_dev
- 		return -EINVAL;
- 	}
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -2450,8 +2450,8 @@ static u32 sk_dst_gso_max_size(struct so
+ 		   !ipv6_addr_v4mapped(&sk->sk_v6_rcv_saddr));
+ #endif
+ 	/* pairs with the WRITE_ONCE() in netif_set_gso(_ipv4)_max_size() */
+-	max_size = is_ipv6 ? READ_ONCE(dst->dev->gso_max_size) :
+-			READ_ONCE(dst->dev->gso_ipv4_max_size);
++	max_size = is_ipv6 ? READ_ONCE(dst_dev(dst)->gso_max_size) :
++			READ_ONCE(dst_dev(dst)->gso_ipv4_max_size);
+ 	if (max_size > GSO_LEGACY_MAX_SIZE && !sk_is_tcp(sk))
+ 		max_size = GSO_LEGACY_MAX_SIZE;
  
-+	mutex_lock(&ctx->lock);
- 	if (ctx->connected == vidi->connection) {
-+		mutex_unlock(&ctx->lock);
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "same connection request.\n");
- 		return -EINVAL;
- 	}
-+	mutex_unlock(&ctx->lock);
- 
- 	if (vidi->connection) {
- 		struct edid *raw_edid;
-@@ -271,20 +283,27 @@ int vidi_connection_ioctl(struct drm_dev
- 					  "failed to allocate raw_edid.\n");
- 			return -ENOMEM;
- 		}
-+		mutex_lock(&ctx->lock);
- 		ctx->raw_edid = raw_edid;
-+		mutex_unlock(&ctx->lock);
- 	} else {
- 		/*
- 		 * with connection = 0, free raw_edid
- 		 * only if raw edid data isn't same as fake data.
- 		 */
-+		mutex_lock(&ctx->lock);
- 		if (ctx->raw_edid && ctx->raw_edid !=
- 				(struct edid *)fake_edid_info) {
- 			kfree(ctx->raw_edid);
- 			ctx->raw_edid = NULL;
- 		}
-+		mutex_unlock(&ctx->lock);
- 	}
- 
-+	mutex_lock(&ctx->lock);
- 	ctx->connected = vidi->connection;
-+	mutex_unlock(&ctx->lock);
-+
- 	drm_helper_hpd_irq_event(ctx->drm_dev);
- 
- 	return 0;
-@@ -299,7 +318,7 @@ static enum drm_connector_status vidi_de
- 	 * connection request would come from user side
- 	 * to do hotplug through specific ioctl.
- 	 */
--	return ctx->connected ? connector_status_connected :
-+	return READ_ONCE(ctx->connected) ? connector_status_connected :
- 			connector_status_disconnected;
- }
- 
-@@ -321,22 +340,24 @@ static int vidi_get_modes(struct drm_con
- 	struct vidi_context *ctx = ctx_from_connector(connector);
- 	struct edid *edid;
- 	int edid_len;
--	int count;
-+	int count = 0;
- 
- 	/*
- 	 * the edid data comes from user side and it would be set
- 	 * to ctx->raw_edid through specific ioctl.
- 	 */
-+
-+	mutex_lock(&ctx->lock);
- 	if (!ctx->raw_edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "raw_edid is null.\n");
--		return 0;
-+		goto fail;
- 	}
- 
- 	edid_len = (1 + ctx->raw_edid->extensions) * EDID_LENGTH;
- 	edid = kmemdup(ctx->raw_edid, edid_len, GFP_KERNEL);
- 	if (!edid) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev, "failed to allocate edid\n");
--		return 0;
-+		goto fail;
- 	}
- 
- 	drm_connector_update_edid_property(connector, edid);
-@@ -345,6 +366,8 @@ static int vidi_get_modes(struct drm_con
- 
- 	kfree(edid);
- 
-+fail:
-+	mutex_unlock(&ctx->lock);
- 	return count;
- }
- 
-@@ -490,11 +513,15 @@ static int vidi_remove(struct platform_d
+@@ -2462,7 +2462,7 @@ void sk_setup_caps(struct sock *sk, stru
  {
- 	struct vidi_context *ctx = platform_get_drvdata(pdev);
+ 	u32 max_segs = 1;
  
-+	mutex_lock(&ctx->lock);
-+
- 	if (ctx->raw_edid != (struct edid *)fake_edid_info) {
- 		kfree(ctx->raw_edid);
- 		ctx->raw_edid = NULL;
+-	sk->sk_route_caps = dst->dev->features;
++	sk->sk_route_caps = dst_dev(dst)->features;
+ 	if (sk_is_tcp(sk))
+ 		sk->sk_route_caps |= NETIF_F_GSO;
+ 	if (sk->sk_route_caps & NETIF_F_GSO)
+@@ -2476,7 +2476,7 @@ void sk_setup_caps(struct sock *sk, stru
+ 			sk->sk_route_caps |= NETIF_F_SG | NETIF_F_HW_CSUM;
+ 			sk->sk_gso_max_size = sk_dst_gso_max_size(sk, dst);
+ 			/* pairs with the WRITE_ONCE() in netif_set_gso_max_segs() */
+-			max_segs = max_t(u32, READ_ONCE(dst->dev->gso_max_segs), 1);
++			max_segs = max_t(u32, READ_ONCE(dst_dev(dst)->gso_max_segs), 1);
+ 		}
  	}
- 
-+	mutex_unlock(&ctx->lock);
-+
- 	component_del(&pdev->dev, &vidi_component_ops);
- 
- 	return 0;
+ 	sk->sk_gso_max_segs = max_segs;
 
 
