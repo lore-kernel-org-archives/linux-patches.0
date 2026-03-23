@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1043D1F91F6;
-	Mon, 23 Mar 2026 13:57:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53DA61EB9F2;
+	Mon, 23 Mar 2026 13:57:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274246; cv=none; b=a170TnZ3wZ3H5Y+1vjxhZM7qRUZ6LTNqQ3YheO2/JGO4zBKqv2qLkji3M7F3QakheDtwo9wvYqKcXYyFxWui8p3syhKjyz+JyuLSzkXhMkQHVnSNPOgalEuGbQTywntci+0nkW4rYnLrKrjzBQSRf+JM848qSvP8wOU8SKWIjKI=
+	t=1774274249; cv=none; b=EouPGr3psU+i6WMiyNpVOstjTokPP+1dMgcCcSfwI8LenayLChcG01zc7W3GN5K/628kiDEk7OTTsbGcz2ul86jFwh1DfJVe5xfbC+dJG6/MxIsdRFtH99nhc/eunMgJqUZQSBcMz0bXMyqy4QdeWMVxRGOl3VYTi+gdyfZdoRY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274246; c=relaxed/simple;
-	bh=dbfPbLfjpklAliAXq3/KLD0lLMPeAau6Rq9tW4CEnYY=;
+	s=arc-20240116; t=1774274249; c=relaxed/simple;
+	bh=oZ32sqpoowpo6zVpXtxt8jjm4Ix6XGaoS9szJCwnM+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=R+rLyHaOeVnEJLa1xRrzlaNDof2XSIeNC1KpWklki+P5p54cwhCohZ2iOKz5HxKv1DDhrIwzo5zjX3QVrGUaK7EwDW4glVldisS8MbkvzsuHurIU3SJKCdTqUkoHJGbdRBfKCQvPuOWdQryLSXFJqiDbMG0Cnpn+i1hFG4KLpuQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dwlFmWB5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ab74eELvXUgTVLP4tjfcXZtbBrC427ek8l/r1xGWTc2AJ7XaQnJstJ9i2Q4BjtwIX//TzKjMD4CSC1sl9r50RkSXv7QYQJLZWjtUJvs2PhbmOnMlKZMjA7Y+j7JuZ15nwi0CRlsh2pDg42t5vQM2ynfy9ZHUL6/qkmSLzL5ynYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZ0gMrQb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dwlFmWB5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F06C4CEF7;
-	Mon, 23 Mar 2026 13:57:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZ0gMrQb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DD2C4CEF7;
+	Mon, 23 Mar 2026 13:57:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274245;
-	bh=dbfPbLfjpklAliAXq3/KLD0lLMPeAau6Rq9tW4CEnYY=;
+	s=korg; t=1774274248;
+	bh=oZ32sqpoowpo6zVpXtxt8jjm4Ix6XGaoS9szJCwnM+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwlFmWB57JlW8NVnrE6AfSQTgy+qjpZ6JKhAoWbhFysECCumVupo+J0ULDfqaRfZu
-	 aw3nIlRHWnX5QJynIzbeovC4Ch21/mnVO5iycCJtsjQUsRQsVhTxKQ2Dl2mJhk+FqD
-	 mfek6G4y0KE6qXrT2HYFG4picl2QP0m1pVFFwabI=
+	b=HZ0gMrQbgF7QDlK9dgQGsHd525vdbbJCEbtzoMBKX2OtjA9+hOxXpmsT/dEJyy+qg
+	 o9a/qdObAy8aYTjWvEgLR/MrGlU6yceukAwkEHiz0ZhDr2vyMd0WSw9VnIUFOqelqe
+	 CZWrqb/6x+dLmcERJZJAoZMPfUocsTmdb+03CZZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com,
-	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Saket Dumbre <saket.dumbre@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 155/220] net: usb: aqc111: Do not perform PM inside suspend callback
-Date: Mon, 23 Mar 2026 14:45:32 +0100
-Message-ID: <20260323134509.472791507@linuxfoundation.org>
+Subject: [PATCH 6.19 156/220] ACPICA: Update the format of Arg3 of _DSM
+Date: Mon, 23 Mar 2026 14:45:33 +0100
+Message-ID: <20260323134509.502328016@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,67 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nikola Z. Ivanov <zlatistiv@gmail.com>
+From: Saket Dumbre <saket.dumbre@intel.com>
 
-[ Upstream commit 069c8f5aebe4d5224cf62acc7d4b3486091c658a ]
+[ Upstream commit ab93d7eee94205430fc3b0532557cb0494bf2faf ]
 
-syzbot reports "task hung in rpm_resume"
+To get rid of type incompatibility warnings in Linux.
 
-This is caused by aqc111_suspend calling
-the PM variant of its write_cmd routine.
-
-The simplified call trace looks like this:
-
-rpm_suspend()
-  usb_suspend_both() - here udev->dev.power.runtime_status == RPM_SUSPENDING
-    aqc111_suspend() - called for the usb device interface
-      aqc111_write32_cmd()
-        usb_autopm_get_interface()
-          pm_runtime_resume_and_get()
-            rpm_resume() - here we call rpm_resume() on our parent
-              rpm_resume() - Here we wait for a status change that will never happen.
-
-At this point we block another task which holds
-rtnl_lock and locks up the whole networking stack.
-
-Fix this by replacing the write_cmd calls with their _nopm variants
-
-Reported-by: syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=48dc1e8dfc92faf1124c
-Fixes: e58ba4544c77 ("net: usb: aqc111: Add support for wake on LAN by MAGIC packet")
-Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
-Link: https://patch.msgid.link/20260313141643.1181386-1-zlatistiv@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 81f92cff6d42 ("ACPICA: ACPI_TYPE_ANY does not include the package type")
+Link: https://github.com/acpica/acpica/commit/4fb74872dcec
+Signed-off-by: Saket Dumbre <saket.dumbre@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/12856643.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/aqc111.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/acpi/acpica/acpredef.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
-index 9201ee10a13f7..d316aa66dbc23 100644
---- a/drivers/net/usb/aqc111.c
-+++ b/drivers/net/usb/aqc111.c
-@@ -1400,14 +1400,14 @@ static int aqc111_suspend(struct usb_interface *intf, pm_message_t message)
- 		aqc111_write16_cmd_nopm(dev, AQ_ACCESS_MAC,
- 					SFR_MEDIUM_STATUS_MODE, 2, &reg16);
+diff --git a/drivers/acpi/acpica/acpredef.h b/drivers/acpi/acpica/acpredef.h
+index da2c45880cc7e..c9e65c6a20690 100644
+--- a/drivers/acpi/acpica/acpredef.h
++++ b/drivers/acpi/acpica/acpredef.h
+@@ -450,7 +450,7 @@ const union acpi_predefined_info acpi_gbl_predefined_methods[] = {
  
--		aqc111_write_cmd(dev, AQ_WOL_CFG, 0, 0,
--				 WOL_CFG_SIZE, &wol_cfg);
--		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
--				   &aqc111_data->phy_cfg);
-+		aqc111_write_cmd_nopm(dev, AQ_WOL_CFG, 0, 0,
-+				      WOL_CFG_SIZE, &wol_cfg);
-+		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
-+					&aqc111_data->phy_cfg);
- 	} else {
- 		aqc111_data->phy_cfg |= AQ_LOW_POWER;
--		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
--				   &aqc111_data->phy_cfg);
-+		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
-+					&aqc111_data->phy_cfg);
+ 	{{"_DSM",
+ 	  METHOD_4ARGS(ACPI_TYPE_BUFFER, ACPI_TYPE_INTEGER, ACPI_TYPE_INTEGER,
+-		       ACPI_TYPE_ANY | ACPI_TYPE_PACKAGE) |
++		       ACPI_TYPE_PACKAGE | ACPI_TYPE_ANY) |
+ 		       ARG_COUNT_IS_MINIMUM,
+ 	  METHOD_RETURNS(ACPI_RTYPE_ALL)}},	/* Must return a value, but it can be of any type */
  
- 		/* Disable RX path */
- 		aqc111_read16_cmd_nopm(dev, AQ_ACCESS_MAC,
 -- 
 2.51.0
 
