@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B104242D60;
-	Mon, 23 Mar 2026 15:02:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E9927A123;
+	Mon, 23 Mar 2026 15:02:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278133; cv=none; b=c0VeFigiW3e6vZoDELeJOFdxCU1QkXThACrGiHDsM2imoJt0Ie7aCOCl2TWNgmpvYoNj2i/DVeApXf1xn9uqByp/AYgQYHd8HOSD7Eq6jtRzV/YiCBmkg1KVAfEVNdt3fLwAnFFjSJrFL4o1N7err+Jxwm4V/zA2sRiJdMy18WQ=
+	t=1774278136; cv=none; b=iIKAdaJC1rsyii+SM/zc6wyt6/u0E0z/Ndvhb+XCLEvfLFaod4jjRvzJtAuwSL5kzRcOqMkDViNHRMBLqsuhyDT6k9QmDaWjdV9+6e+FTgZbdD3VRZsbjP+2CWbuzhlomqVa3BAEYbSipEiNA0fXBoMwGmG1IjfZayRyAzsVaAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278133; c=relaxed/simple;
-	bh=OeSxTLjHEHFOg3t9Xz9lH5YmKYM9xw9kYGZenYHcZCw=;
+	s=arc-20240116; t=1774278136; c=relaxed/simple;
+	bh=ckP+H3JljC/AIq5+RV2WJs/M3Yk2p/BInwiK2JGoeHc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d/Cx0fWmomimrldvcJPC9AIfKTlF0WJDF/TxcLGAndESTKL4UbpxO0nEbOTCzqOQOlbNI+zUx3iUTKilHH6soiHG/BBXYvjinItE/Mq9oT6AhesMlz/gQOCsAy2oCAS9L1FOmbsvBnTOWckpDz00OIrzEhb+Fi/C4NJGkQW4WME=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nySS/ErR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nhMgFkb1DdiIBirPmxt+rliiXylKxvRT1ddBSkxfbwCW8S1KGorUwa2fY6QDbjCM88xHuBB5BCXVcMKYogbmQ1F044g2t22CxyfG+nLY0kP/lrUX77PNR4rx4nr4l/CWfa8TFRyAgSaZcsBss4wJ7SdSfCaygyWtvKphfaAr2io=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEbwyTG3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nySS/ErR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BE6C4CEF7;
-	Mon, 23 Mar 2026 15:02:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEbwyTG3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFB6BC4CEF7;
+	Mon, 23 Mar 2026 15:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278133;
-	bh=OeSxTLjHEHFOg3t9Xz9lH5YmKYM9xw9kYGZenYHcZCw=;
+	s=korg; t=1774278136;
+	bh=ckP+H3JljC/AIq5+RV2WJs/M3Yk2p/BInwiK2JGoeHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nySS/ErRtZY5giPjkrCEt+h0ZwOs9XjrlCm7NrM8H1QB2FqHUDF9l7y5O06qyvNGV
-	 l+EUXuVuyzjaKaHv2i7oTW07btmrxUU0ucGczBrEGpR55QA4hiCBXqRxBqJy5BIt6X
-	 aeOziX7eBJpo3gZEKCMSETGWah6Euo9ItFsCspbE=
+	b=HEbwyTG31E5/+9Q31HMaIYmuI23qBIO2XPKIJWEv0kn/KHlpS3hs8gXJKYCFwFwHS
+	 yDwVN8TP/MnuTYscn59crKFDZefOHANErDd+yxxZYVkmR3OmgDnIKCSqOUiHI34gFT
+	 CvZ7QpkOaa7ciDejCp48YiczfWs8bIztXWUXMM+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
+	Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>,
+	Chris Lew <christopher.lew@oss.qualcomm.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 211/567] powerpc/uaccess: Fix inline assembly for clang build on PPC32
-Date: Mon, 23 Mar 2026 14:42:11 +0100
-Message-ID: <20260323134539.053415183@linuxfoundation.org>
+Subject: [PATCH 6.6 212/567] remoteproc: sysmon: Correct subsys_name_len type in QMI request
+Date: Mon, 23 Mar 2026 14:42:12 +0100
+Message-ID: <20260323134539.077192090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,90 +52,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+From: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
 
-[ Upstream commit 0ee95a1d458630272d0415d0ffa9424fcb606c90 ]
+[ Upstream commit da994db94e60f9a9411108ddf4d1836147ad4c9c ]
 
-Test robot reports the following error with clang-16.0.6:
+The QMI message encoder has up until recently read a single byte (as
+elem_size == 1), but with the introduction of big endian support it's
+become apparent that this field is expected to be a full u32 -
+regardless of the size of the length in the encoded message (which is
+what elem_size specifies).
 
-   In file included from kernel/rseq.c:75:
-   include/linux/rseq_entry.h:141:3: error: invalid operand for instruction
-                   unsafe_get_user(offset, &ucs->post_commit_offset, efault);
-                   ^
-   include/linux/uaccess.h:608:2: note: expanded from macro 'unsafe_get_user'
-           arch_unsafe_get_user(x, ptr, local_label);      \
-           ^
-   arch/powerpc/include/asm/uaccess.h:518:2: note: expanded from macro 'arch_unsafe_get_user'
-           __get_user_size_goto(__gu_val, __gu_addr, sizeof(*(p)), e); \
-           ^
-   arch/powerpc/include/asm/uaccess.h:284:2: note: expanded from macro '__get_user_size_goto'
-           __get_user_size_allowed(x, ptr, size, __gus_retval);    \
-           ^
-   arch/powerpc/include/asm/uaccess.h:275:10: note: expanded from macro '__get_user_size_allowed'
-           case 8: __get_user_asm2(x, (u64 __user *)ptr, retval);  break;  \
-                   ^
-   arch/powerpc/include/asm/uaccess.h:258:4: note: expanded from macro '__get_user_asm2'
-                   "       li %1+1,0\n"                    \
-                    ^
-   <inline asm>:7:5: note: instantiated into assembly here
-           li 31+1,0
-              ^
-   1 error generated.
+The result is that the encoder now reads past the length byte and
+rejects the unreasonably large length formed when including the
+following 3 bytes from the subsys_name array.
 
-On PPC32, for 64 bits vars a pair of registers is used. Usually the
-lower register in the pair is the high part and the higher register is
-the low part. GCC uses r3/r4 ... r11/r12 ... r14/r15 ... r30/r31
+Fix this by changing to the expected type.
 
-In older kernel code inline assembly was using %1 and %1+1 to represent
-64 bits values. However here it looks like clang uses r31 as high part,
-allthough r32 doesn't exist hence the error.
-
-Allthoug %1+1 should work, most places now use %L1 instead of %1+1, so
-let's do the same here.
-
-With that change, the build doesn't fail anymore and a disassembly shows
-clang uses r17/r18 and r31/r14 pair when GCC would have used r16/r17 and
-r30/r31:
-
-	Disassembly of section .fixup:
-
-	00000000 <.fixup>:
-	   0:	38 a0 ff f2 	li      r5,-14
-	   4:	3a 20 00 00 	li      r17,0
-	   8:	3a 40 00 00 	li      r18,0
-	   c:	48 00 00 00 	b       c <.fixup+0xc>
-				c: R_PPC_REL24	.text+0xbc
-	  10:	38 a0 ff f2 	li      r5,-14
-	  14:	3b e0 00 00 	li      r31,0
-	  18:	39 c0 00 00 	li      r14,0
-	  1c:	48 00 00 00 	b       1c <.fixup+0x1c>
-				1c: R_PPC_REL24	.text+0x144
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202602021825.otcItxGi-lkp@intel.com/
-Fixes: c20beffeec3c ("powerpc/uaccess: Use flexible addressing with __put_user()/__get_user()")
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Acked-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Link: https://patch.msgid.link/8ca3a657a650e497a96bfe7acde2f637dadab344.1770103646.git.chleroy@kernel.org
+Fixes: 1fb82ee806d1 ("remoteproc: qcom: Introduce sysmon")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@oss.qualcomm.com>
+Reviewed-by: Chris Lew <christopher.lew@oss.qualcomm.com>
+Link: https://lore.kernel.org/r/20260220-qmi-encode-invalid-length-v2-1-5674be35ab29@oss.qualcomm.com
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/uaccess.h | 2 +-
+ drivers/remoteproc/qcom_sysmon.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/include/asm/uaccess.h b/arch/powerpc/include/asm/uaccess.h
-index ec7f001d03d01..fa6d8410bc07d 100644
---- a/arch/powerpc/include/asm/uaccess.h
-+++ b/arch/powerpc/include/asm/uaccess.h
-@@ -242,7 +242,7 @@ __gus_failed:								\
- 		".section .fixup,\"ax\"\n"		\
- 		"4:	li %0,%3\n"			\
- 		"	li %1,0\n"			\
--		"	li %1+1,0\n"			\
-+		"	li %L1,0\n"			\
- 		"	b 3b\n"				\
- 		".previous\n"				\
- 		EX_TABLE(1b, 4b)			\
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index c24e4a8828738..db33a41051a3e 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -203,7 +203,7 @@ static const struct qmi_elem_info ssctl_shutdown_resp_ei[] = {
+ };
+ 
+ struct ssctl_subsys_event_req {
+-	u8 subsys_name_len;
++	u32 subsys_name_len;
+ 	char subsys_name[SSCTL_SUBSYS_NAME_LENGTH];
+ 	u32 event;
+ 	u8 evt_driven_valid;
 -- 
 2.51.0
 
