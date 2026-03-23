@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9C03B3C1F;
-	Mon, 23 Mar 2026 15:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A629B2737EE;
+	Mon, 23 Mar 2026 15:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279231; cv=none; b=pfNkcXdQsI6MpmxWWWbKtqCPf9F1pzjSDldvJ3taxiuUyyo0wIJGQ0ZZcPte3ExJjcJR7DpAOBROyPVMh7Gxn2X8vv3+kOMAu25FQgl/dYQdn3IG0qlYzYg75NQ7nwXabH15vOov3z00v0FnxzgKLyuykPNzG8CfnjIoQx2t+1M=
+	t=1774279234; cv=none; b=DKLK3jGLnFZwOhRmQHbBGLbXr0JwEHcLlrJ1VMIV4awUQZ5/AXTuMhgJLYvrGn0Uragl2riCyaACJqMC/rZXAKOe8rbch3C8zsLpAD6P4DfmozEB1rUSJ1VmLrkAo1ogpRZiqCikhQmQec0uKCVBKIvPBh7l5Klm55SiFG9/zig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279231; c=relaxed/simple;
-	bh=1LqqhXtNMRWpzklj2IfeXA8KOlld2G6KMbJuGoA1ccE=;
+	s=arc-20240116; t=1774279234; c=relaxed/simple;
+	bh=IpLL1lgIX1uaXgiO+T1n78BGU/BG5z8RCraXRI2ySCY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxJGBjt700/p7+Np5LoHIOKcOKRG3wwi8Px/T61HXTtkA9LdM3pHMD1t1i9SfO4NA3lBbBWbCLRquGmZXaTzb02PcBOWGDm4XM9iyWbsQSoAuPLmltlWSlzyOlGdqRcaKsxEBri7sgH6hdobUYzqjL36+0wYzW318pmBO81pX5E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x/aqBSPo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Fj/dFC9znAfAoE87/OocH6sKdgXacc+l/xBGy/bW+h0J41JzIYMfQNF+ywqWsm7OI6soUb0Mm7jljEyQ6z42g6psMV454aJKbZ2lwjplEQnm0G7TRPk1U865i64qkq5rmjOsY9Gm+KXaL5Y+Tn7U5b2FtWXnGJd0y8UqaHci+nI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NdSsYYAO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x/aqBSPo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15100C4CEF7;
-	Mon, 23 Mar 2026 15:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NdSsYYAO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A209C4CEF7;
+	Mon, 23 Mar 2026 15:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279231;
-	bh=1LqqhXtNMRWpzklj2IfeXA8KOlld2G6KMbJuGoA1ccE=;
+	s=korg; t=1774279234;
+	bh=IpLL1lgIX1uaXgiO+T1n78BGU/BG5z8RCraXRI2ySCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x/aqBSPooT6NEj+2a9PTjg+7gCBTvFybsXbUU1W8Lkdm4SUsOR+PWs7er3/58bxxs
-	 zJKRz/XFkGfTYKOSrv9Ag3/RYNi6+yln8qYyhvbVmZrSupCWQCdqx2WWkedZREBcPC
-	 7N0gQyhuixOuJct5c/OHHLzWmymK8lm/Tru8YP7Y=
+	b=NdSsYYAOyQG3VnRo5DSQuK41MgkwIV+afjwdCNqHBLPFBa1+48vTR60NoM7rPjFjh
+	 cygMtwc3RpFQBNHXlhY5Hf1fZBNdKwY5+kxeC7r2eYprIa46MllCXdkMzS5JnYsvJz
+	 86PND1JM76m2GWe+ep/s+4T9buN0vjNgSSMtoekM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Klaudia Kloc <klaudia@vidocsecurity.com>,
+	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
+	Jenny Guanni Qu <qguanni@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 519/567] netfilter: xt_CT: drop pending enqueued packets on template removal
-Date: Mon, 23 Mar 2026 14:47:19 +0100
-Message-ID: <20260323134546.850553517@linuxfoundation.org>
+Subject: [PATCH 6.6 520/567] netfilter: xt_time: use unsigned int for monthday bit shift
+Date: Mon, 23 Mar 2026 14:47:20 +0100
+Message-ID: <20260323134546.875328945@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,57 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jenny Guanni Qu <qguanni@gmail.com>
 
-[ Upstream commit f62a218a946b19bb59abdd5361da85fa4606b96b ]
+[ Upstream commit 00050ec08cecfda447e1209b388086d76addda3a ]
 
-Templates refer to objects that can go away while packets are sitting in
-nfqueue refer to:
+The monthday field can be up to 31, and shifting a signed integer 1
+by 31 positions (1 << 31) is undefined behavior in C, as the result
+overflows a 32-bit signed int. Use 1U to ensure well-defined behavior
+for all valid monthday values.
 
-- helper, this can be an issue on module removal.
-- timeout policy, nfnetlink_cttimeout might remove it.
+Change the weekday shift to 1U as well for consistency.
 
-The use of templates with zone and event cache filter are safe, since
-this just copies values.
-
-Flush these enqueued packets in case the template rule gets removed.
-
-Fixes: 24de58f46516 ("netfilter: xt_CT: allow to attach timeout policy + glue code")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: ee4411a1b1e0 ("[NETFILTER]: x_tables: add xt_time match")
+Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
+Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
+Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_CT.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/xt_time.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
-index 3ba94c34297cf..498f5871c84a0 100644
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -16,6 +16,7 @@
- #include <net/netfilter/nf_conntrack_ecache.h>
- #include <net/netfilter/nf_conntrack_timeout.h>
- #include <net/netfilter/nf_conntrack_zones.h>
-+#include "nf_internals.h"
+diff --git a/net/netfilter/xt_time.c b/net/netfilter/xt_time.c
+index 6aa12d0f54e23..61de85e02a40f 100644
+--- a/net/netfilter/xt_time.c
++++ b/net/netfilter/xt_time.c
+@@ -227,13 +227,13 @@ time_mt(const struct sk_buff *skb, struct xt_action_param *par)
  
- static inline int xt_ct_target(struct sk_buff *skb, struct nf_conn *ct)
- {
-@@ -283,6 +284,9 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
- 	struct nf_conn_help *help;
+ 	localtime_2(&current_time, stamp);
  
- 	if (ct) {
-+		if (info->helper[0] || info->timeout[0])
-+			nf_queue_nf_hook_drop(par->net);
-+
- 		help = nfct_help(ct);
- 		xt_ct_put_helper(help);
+-	if (!(info->weekdays_match & (1 << current_time.weekday)))
++	if (!(info->weekdays_match & (1U << current_time.weekday)))
+ 		return false;
+ 
+ 	/* Do not spend time computing monthday if all days match anyway */
+ 	if (info->monthdays_match != XT_TIME_ALL_MONTHDAYS) {
+ 		localtime_3(&current_time, stamp);
+-		if (!(info->monthdays_match & (1 << current_time.monthday)))
++		if (!(info->monthdays_match & (1U << current_time.monthday)))
+ 			return false;
+ 	}
  
 -- 
 2.51.0
