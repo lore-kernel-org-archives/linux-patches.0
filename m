@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1031A26B2DA;
-	Mon, 23 Mar 2026 15:05:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997CA258EE9;
+	Mon, 23 Mar 2026 15:05:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278301; cv=none; b=p1i0ukzquQw0UCPfC7vNx1rGPT132WCz11M+gtFQdORCYS8oM3bsvdON/rhSpAo6FGXW/grXpce1c1hA9XyuTEtR0IDpc32hmufsbqCoOXmy4cy5W8HChJ/Q4myT+qjmMgimLLZX0e9eh/ZI7uziCEJv6kOVsm/8YzibYT0Ymsw=
+	t=1774278303; cv=none; b=hBHzSBc23yIcHkxjCH007mRf+0ql95kqGz4CdTtuUoNuJSYrOdkg+cXSmzd/K10rZ5V0sxmfovHVOOSb3YmGGDyX5vvrv36nkAv3SDHlKvnQWnV37IO8/IFUso7+DwkD617oB3hwVbnw4Kpv7tgbDr8kAEo3FgUX6ZNFRtkORM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278301; c=relaxed/simple;
-	bh=ynwjM3cJ+1z5x4ci2DHABlQqA038fU6Jpg70wLnkAtg=;
+	s=arc-20240116; t=1774278303; c=relaxed/simple;
+	bh=1ir3VECauYn4ZBI330A5QcgGg0P0xBARVYCNsTyYDmA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pGyPJxTSKSbZgsn8TiMptybjuNj5xQyECwyLdDgBl7TYbTMp1YLuUgsY5gaOBVjvmxwz99gsa6mhMTqJqXNGosmgB4iBgUf36ErgCvllbyjXtKoOPl8l4/15IieN/BT+I22H6WUEQLBExYq2GBLM7iTXUkjhkK+fUIX98pv4hGA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hIKQ9+7G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=od1G3wqzrMOBAB7n0kjNnN/6gkES6LCtft8zcmW95mD+oeCrmNQQVs18pv/jDaVOj3UuhD3myQoDxA9zzNGIFeZv85E5bdArNgRNbLhy2QmXXdmkq7jOqdCGq93hJPl9DaVaxKC24Wjc0A74POyiRl5Y2evVALUqsPratjYTYZc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=I4L+OfAr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hIKQ9+7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54F1C4CEF7;
-	Mon, 23 Mar 2026 15:04:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="I4L+OfAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC10C4CEF7;
+	Mon, 23 Mar 2026 15:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278300;
-	bh=ynwjM3cJ+1z5x4ci2DHABlQqA038fU6Jpg70wLnkAtg=;
+	s=korg; t=1774278303;
+	bh=1ir3VECauYn4ZBI330A5QcgGg0P0xBARVYCNsTyYDmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hIKQ9+7GLWkF4me543T1lCx3UTUfKcq/BHmAIR33c1EIkHy4G1oBhyakAmnfPfris
-	 htdGw0EJ6tNufT7wBW30rFhSBAUdt2uA7wOpAY5VUFj4w4upwuE2dwzxPA9g6Q8ut2
-	 zhvIFGThVR08/UVmlcjROhyYFOteqoWmJ9gP7cug=
+	b=I4L+OfArURVE655Dz17GAahMCDk6yAMr2NR/ySTDUp2AQ45Fmqz3Z74BVyOKg/Hkq
+	 FOGJFhfIskitAP/3TchmyssHo3Q0O+5OfnonOlFely10JzVj4ANctVAY5/GUUhrG2B
+	 ahyOiFy3lq8x/AROXCTp/NRjWOzts0h4tXSbQEx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8f29539ef9a1c8334f42@syzkaller.appspotmail.com,
-	syzbot+ae893a8901067fde2741@syzkaller.appspotmail.com,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.6 263/567] ALSA: usb-audio: Check endpoint numbers at parsing Scarlett2 mixer interfaces
-Date: Mon, 23 Mar 2026 14:43:03 +0100
-Message-ID: <20260323134540.338808357@linuxfoundation.org>
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 264/567] net: usb: lan78xx: fix silent drop of packets with checksum errors
+Date: Mon, 23 Mar 2026 14:43:04 +0100
+Message-ID: <20260323134540.362468909@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,40 +50,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Oleksij Rempel <o.rempel@pengutronix.de>
 
-commit df1d8abf36ca3681c21a6809eaa9a1e01ef897a6 upstream.
+commit e4f774a0cc955ce762aec91c66915a6e15087ab7 upstream.
 
-The Scarlett2 mixer quirk in USB-audio driver may hit a NULL
-dereference when a malformed USB descriptor is passed, since it
-assumes the presence of an endpoint in the parsed interface in
-scarlett2_find_fc_interface(), as reported by fuzzer.
+Do not drop packets with checksum errors at the USB driver level;
+pass them to the network stack.
 
-For avoiding the NULL dereference, just add the sanity check of
-bNumEndpoints and skip the invalid interface.
+Previously, the driver dropped all packets where the 'Receive Error
+Detected' (RED) bit was set, regardless of the specific error type. This
+caused packets with only IP or TCP/UDP checksum errors to be dropped
+before reaching the kernel, preventing the network stack from accounting
+for them or performing software fallback.
 
-Reported-by: syzbot+8f29539ef9a1c8334f42@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/69acbbe1.050a0220.310d8.0001.GAE@google.com
-Reported-by: syzbot+ae893a8901067fde2741@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/69acf72a.050a0220.310d8.0004.GAE@google.com
-Cc: <stable@vger.kernel.org>
-Link: https://patch.msgid.link/20260309104632.141895-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Add a mask for hard hardware errors to safely drop genuinely corrupt
+frames, while allowing checksum-errored frames to pass with their
+ip_summed field explicitly set to CHECKSUM_NONE.
+
+Fixes: 55d7de9de6c3 ("Microchip's LAN7800 family USB 2/3 to 10/100/1000 Ethernet device driver")
+Cc: stable@vger.kernel.org
+Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://patch.msgid.link/20260305143429.530909-2-o.rempel@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/mixer_scarlett2.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/lan78xx.c |    4 +++-
+ drivers/net/usb/lan78xx.h |    3 +++
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
---- a/sound/usb/mixer_scarlett2.c
-+++ b/sound/usb/mixer_scarlett2.c
-@@ -3898,6 +3898,8 @@ static int scarlett2_find_fc_interface(s
+--- a/drivers/net/usb/lan78xx.c
++++ b/drivers/net/usb/lan78xx.c
+@@ -3537,6 +3537,7 @@ static void lan78xx_rx_csum_offload(stru
+ 	 */
+ 	if (!(dev->net->features & NETIF_F_RXCSUM) ||
+ 	    unlikely(rx_cmd_a & RX_CMD_A_ICSM_) ||
++	    unlikely(rx_cmd_a & RX_CMD_A_CSE_MASK_) ||
+ 	    ((rx_cmd_a & RX_CMD_A_FVTG_) &&
+ 	     !(dev->net->features & NETIF_F_HW_VLAN_CTAG_RX))) {
+ 		skb->ip_summed = CHECKSUM_NONE;
+@@ -3609,7 +3610,8 @@ static int lan78xx_rx(struct lan78xx_net
+ 			return 0;
+ 		}
  
- 		if (desc->bInterfaceClass != 255)
- 			continue;
-+		if (desc->bNumEndpoints < 1)
-+			continue;
+-		if (unlikely(rx_cmd_a & RX_CMD_A_RED_)) {
++		if (unlikely(rx_cmd_a & RX_CMD_A_RED_) &&
++		    (rx_cmd_a & RX_CMD_A_RX_HARD_ERRS_MASK_)) {
+ 			netif_dbg(dev, rx_err, dev->net,
+ 				  "Error rx_cmd_a=0x%08x", rx_cmd_a);
+ 		} else {
+--- a/drivers/net/usb/lan78xx.h
++++ b/drivers/net/usb/lan78xx.h
+@@ -74,6 +74,9 @@
+ #define RX_CMD_A_ICSM_			(0x00004000)
+ #define RX_CMD_A_LEN_MASK_		(0x00003FFF)
  
- 		epd = get_endpoint(intf->altsetting, 0);
- 		private->bInterfaceNumber = desc->bInterfaceNumber;
++#define RX_CMD_A_RX_HARD_ERRS_MASK_ \
++	(RX_CMD_A_RX_ERRS_MASK_ & ~RX_CMD_A_CSE_MASK_)
++
+ /* Rx Command B */
+ #define RX_CMD_B_CSUM_SHIFT_		(16)
+ #define RX_CMD_B_CSUM_MASK_		(0xFFFF0000)
 
 
