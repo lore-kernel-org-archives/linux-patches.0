@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692641F91F6;
-	Mon, 23 Mar 2026 14:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AAB3C07A;
+	Mon, 23 Mar 2026 14:07:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274817; cv=none; b=AsTGOF8bzRJDpU9bTZYGdGtxlESd0hxM3rgJ/LJbwiDdxBd9G3JI8FtOCZE5DvUZ0sJyN98bRV3uLgFivSHgCKIPj+Z/mCb7gPREmt6ylqcTrPrB7qLtmOxqQfkwY+JigWaFAv/iS1SlvbGIqJRcDKY4eko0FS3Mo2OYk2L8ogg=
+	t=1774274821; cv=none; b=IpWjriZO3NB10nkwKfsx169c7cOK3vhFdCDqlsZzO4hPdyp1ISzwCbYZmAcyVb5Qjx8YkLzLoPf7A22EbR9DtnaD4r9Firu9ZVTCwZPz1XWbsFyMpzVUC7WuZCOJUXQNuoLzuQW0dDKMigR1MxlbTJC8k0rnbasAT8sm/kG+kuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274817; c=relaxed/simple;
-	bh=28SU7CkmfCX36M+nbNeoMVdZHH+alPU8wkHK9E4BNFw=;
+	s=arc-20240116; t=1774274821; c=relaxed/simple;
+	bh=uC0y2LSZp8VJaPQGttGE0fOAXQbD+OrznBfCpPq3Fis=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jxw/sWcob96TewIFd+Du9aN1vTjp2f6uNEUqXMq/KU+Q8OV92nf9D3hnHYRgbWODCKkroA56jxk8U31MO3/VRUrhY+HyP1WiBYpYnaXPv3zTRwjrWQ5H4aJ8yKobiSa02wcxFIMjlYq7VJzGdfGDOkrxAIek3J60NGFDlHE52y4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o+ZpTguk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GraTRuL5tAOTLB4IZyeESOhK5KqgAKHItYW1ro4SmBkQgqh6vMhDj6dYgrqcC1pytfYXLf0xmHDGcOaOPyGufLY7Kfm770RVkzytVC5iZMvNJWiYEKiN5DwZ5i8W5CqR8fS4HF08hJcm4fMB93jXkkrGSfsycxqF38a+F663r5s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sj1EcKqj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o+ZpTguk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA15FC4CEF7;
-	Mon, 23 Mar 2026 14:06:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sj1EcKqj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96CAC4CEF7;
+	Mon, 23 Mar 2026 14:07:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274817;
-	bh=28SU7CkmfCX36M+nbNeoMVdZHH+alPU8wkHK9E4BNFw=;
+	s=korg; t=1774274821;
+	bh=uC0y2LSZp8VJaPQGttGE0fOAXQbD+OrznBfCpPq3Fis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+ZpTguk9bue4srbZZXoCQIL9TWkQN8tlZci1NTNd03zy9iuvJm4xUBU1qlR3NofN
-	 gWk9pq+vVqHkOm/0bV02Lu1mVyLufZly1bPOtYt3XClOxY2tgLEu/Lv+vbq+6s2pZt
-	 UD3h0HyV5HG1kHraAGhAkOiCEz+cEIESPbhjbARU=
+	b=sj1EcKqj5AUfG+r5KVynGwlPdoYtG/ONCyzByWPRZO/pp/2shY3iEb3pnrJG7pRDD
+	 nXhmPjHCe2IgKSiknUvuNKUZMFtI7ANDFdQ9Itj4CAb2p+7s+OlgSyf09jNPWucROV
+	 4aWIzuXXUP/eKOrKiKeNsFqosJN4FJyezTqJMAiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 117/212] arm64: dts: renesas: r9a09g087: Fix CPG register region sizes
-Date: Mon, 23 Mar 2026 14:45:38 +0100
-Message-ID: <20260323134507.472171257@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.18 082/212] drm/amdgpu/mmhub2.0: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:45:03 +0100
+Message-ID: <20260323134506.366298123@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,42 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit f459672cf3ffd3c062973838951418271aa2ceef ]
+commit 0b26edac4ac5535df1f63e6e8ab44c24fe1acad7 upstream.
 
-The CPG register regions were incorrectly sized.  Update them to match
-the actual hardware specification:
-  - First region (0x80280000): 0x1000 -> 0x10000 (64kiB)
-  - Second region (0x81280000): 0x9000 -> 0x10000 (64kiB)
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-Fixes: 4b3d31f0b81fe ("arm64: dts: renesas: Add initial SoC DTSI for the RZ/N2H SoC")
-Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260213131742.3606334-3-prabhakar.mahadev-lad.rj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e064cef4b53552602bb6ac90399c18f662f3cacd)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g087.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-index f06c19c73adb8..6dd80fa2755e8 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g087.dtsi
-@@ -267,8 +267,8 @@ i2c2: i2c@81008000 {
- 
- 		cpg: clock-controller@80280000 {
- 			compatible = "renesas,r9a09g087-cpg-mssr";
--			reg = <0 0x80280000 0 0x1000>,
--			      <0 0x81280000 0 0x9000>;
-+			reg = <0 0x80280000 0 0x10000>,
-+			      <0 0x81280000 0 0x10000>;
- 			clocks = <&extal_clk>;
- 			clock-names = "extal";
- 			#clock-cells = <2>;
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
+@@ -154,14 +154,17 @@ mmhub_v2_0_print_l2_protection_fault_sta
+ 	switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
+ 	case IP_VERSION(2, 0, 0):
+ 	case IP_VERSION(2, 0, 2):
+-		mmhub_cid = mmhub_client_ids_navi1x[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_navi1x) ?
++			mmhub_client_ids_navi1x[cid][rw] : NULL;
+ 		break;
+ 	case IP_VERSION(2, 1, 0):
+ 	case IP_VERSION(2, 1, 1):
+-		mmhub_cid = mmhub_client_ids_sienna_cichlid[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_sienna_cichlid) ?
++			mmhub_client_ids_sienna_cichlid[cid][rw] : NULL;
+ 		break;
+ 	case IP_VERSION(2, 1, 2):
+-		mmhub_cid = mmhub_client_ids_beige_goby[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_beige_goby) ?
++			mmhub_client_ids_beige_goby[cid][rw] : NULL;
+ 		break;
+ 	default:
+ 		mmhub_cid = NULL;
 
 
