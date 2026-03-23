@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D08A1282F3A;
-	Mon, 23 Mar 2026 16:11:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9AA2284881;
+	Mon, 23 Mar 2026 16:11:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282264; cv=none; b=kFm/EUF+f9nTP5BP2dsVKP3bljqrJU0Ozv0zePOsPURriOeCkqm4GQrdRsMGrbmzY+sIzsLCCo4wHtrnGi1RkK7qwMovTHlG1qnejl4uGOKX/53aEwe36h4iAcNrEIkAEG1dekzpGJChH9OPAH84E96iEgMOoIy1esojJ7gzk9s=
+	t=1774282267; cv=none; b=UegOJK/eUSU9pRg1Y37sMAmh5pqhDvsAWhLrNftKnuuSqmyeHT1BjE1KjuNQf0Ugsj+uwgA1Q6y42NQP+2Bj/nMcqh1TvMcU4yjhnUshwt3SL7nSqjnNpWFnSPbnVwa0cv8XOLwApnhCPep+lst8EOi8pffisc0bbwc6ns5SH3Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282264; c=relaxed/simple;
-	bh=6qs4Pe/64LLyw6ThE57PoPyZB1Mk2ydAxXIRPOKKVck=;
+	s=arc-20240116; t=1774282267; c=relaxed/simple;
+	bh=CaKjdepu4vgGoQgmu54JWLJPXS8ysGGaYA0b36EhQJ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Yd2TteJxjYidFdNvr36ZaN8wAY/xMtrJjSL9AXAW9ZgWBmci5X4tRfmO2ij6aHQQqM/EcqH92r2HVN8uq6rbBrmkRF5r2TV6pTPJ80MkMnggfDb6vCvPodRPfviG3RNez6NfU09X8DfCDClRECnxXQaElrCXKGSKmLSePlVSg+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CXo63WE8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zr7NokTorLO4XQlNspfmM+jeH33+mBBi7JpM6dcVdQ3YgK3heOa1GJTcwa1OjSZB2Fj99mLORotmqqQW/1ZU/WF+BVbT1SgeTPQ9NwyTEKJMbK5//OJoYZGULf/0e9464dVs3B34Sj2SM4TFBd7UtP9tdAkDGi1WAm48TBjKFlw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IE8x6Y4A; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CXo63WE8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6229BC4CEF7;
-	Mon, 23 Mar 2026 16:11:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IE8x6Y4A"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F23AC4CEF7;
+	Mon, 23 Mar 2026 16:11:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282264;
-	bh=6qs4Pe/64LLyw6ThE57PoPyZB1Mk2ydAxXIRPOKKVck=;
+	s=korg; t=1774282267;
+	bh=CaKjdepu4vgGoQgmu54JWLJPXS8ysGGaYA0b36EhQJ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXo63WE8Ym0dHwOuU8CXa3IwNR6d47VlbXuKPF9mBN9GHmbjQv9IeKnRkkvkKMl3c
-	 X2wfPA4rWQknm73kpeq17ykB6HFP/okIURCaiuj2ooUK0TrecHDT2SCM8pczkqQYue
-	 0LIn7KcrRRjZMavtOIaeJbREYiICZl6T6cfZlmqg=
+	b=IE8x6Y4AsBZ59WGQ3EifF3wHddJO0BY7Eg3MZrGhWAQibLwzsWTHGNZmE3r6FBjuz
+	 x1xgGgx6j5O2gEhtLCemOkW1pw6TYAVk32uBf2kPqm5uLGR4WjgP601Yp77lmifo74
+	 z4MFJIqaeT4jpG5MppGgkBnOP9bEvYtPJOMHgBFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Gou Hao <gouhao@uniontech.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/481] ext4: convert some BUG_ONs in mballoc to use WARN_RATELIMITED instead
-Date: Mon, 23 Mar 2026 14:40:31 +0100
-Message-ID: <20260323134526.425174090@linuxfoundation.org>
+Subject: [PATCH 6.1 050/481] ext4: delete redundant calculations in ext4_mb_get_buddy_page_lock()
+Date: Mon, 23 Mar 2026 14:40:32 +0100
+Message-ID: <20260323134526.447604596@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,83 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Theodore Ts'o <tytso@mit.edu>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 19b8b035a776939ceb3de0f45aded4751d7849ef ]
+[ Upstream commit f2fec3e99a32d7c14dbf63c824f8286ebc94b18d ]
 
-In cases where we have an obvious way of continuing, let's use
-WARN_RATELIMITED() instead of BUG_ON().
+'blocks_per_page' is always 1 after 'if (blocks_per_page >= 2)',
+'pnum' and 'block' are equal in this case.
 
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231024035215.29474-1-gouhao@uniontech.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: bdc56a9c46b2 ("ext4: fix e4b bitmap inconsistency reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/mballoc.c | 25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ fs/ext4/mballoc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
-index 7431ff97a68c8..2a385dc610704 100644
+index 2a385dc610704..899d7eb6df3dc 100644
 --- a/fs/ext4/mballoc.c
 +++ b/fs/ext4/mballoc.c
-@@ -1531,7 +1531,13 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 			put_page(page);
- 		page = find_or_create_page(inode->i_mapping, pnum, gfp);
- 		if (page) {
--			BUG_ON(page->mapping != inode->i_mapping);
-+			if (WARN_RATELIMIT(page->mapping != inode->i_mapping,
-+	"ext4: bitmap's paging->mapping != inode->i_mapping\n")) {
-+				/* should never happen */
-+				unlock_page(page);
-+				ret = -EINVAL;
-+				goto err;
-+			}
- 			if (!PageUptodate(page)) {
- 				ret = ext4_mb_init_cache(page, NULL, gfp);
- 				if (ret) {
-@@ -1567,7 +1573,13 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
- 			put_page(page);
- 		page = find_or_create_page(inode->i_mapping, pnum, gfp);
- 		if (page) {
--			BUG_ON(page->mapping != inode->i_mapping);
-+			if (WARN_RATELIMIT(page->mapping != inode->i_mapping,
-+	"ext4: buddy bitmap's page->mapping != inode->i_mapping\n")) {
-+				/* should never happen */
-+				unlock_page(page);
-+				ret = -EINVAL;
-+				goto err;
-+			}
- 			if (!PageUptodate(page)) {
- 				ret = ext4_mb_init_cache(page, e4b->bd_bitmap,
- 							 gfp);
-@@ -2286,7 +2298,9 @@ void ext4_mb_simple_scan_group(struct ext4_allocation_context *ac,
- 			continue;
+@@ -1370,9 +1370,8 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
+ 		return 0;
+ 	}
  
- 		buddy = mb_find_buddy(e4b, i, &max);
--		BUG_ON(buddy == NULL);
-+		if (WARN_RATELIMIT(buddy == NULL,
-+			 "ext4: mb_simple_scan_group: mb_find_buddy failed, (%d)\n", i))
-+			continue;
- 
- 		k = mb_find_next_zero_bit(buddy, max, 0);
- 		if (k >= max) {
-@@ -4312,15 +4326,14 @@ static void ext4_discard_allocated_blocks(struct ext4_allocation_context *ac)
- 		if (ac->ac_f_ex.fe_len == 0)
- 			return;
- 		err = ext4_mb_load_buddy(ac->ac_sb, ac->ac_f_ex.fe_group, &e4b);
--		if (err) {
-+		if (WARN_RATELIMIT(err,
-+				   "ext4: mb_load_buddy failed (%d)", err))
- 			/*
- 			 * This should never happen since we pin the
- 			 * pages in the ext4_allocation_context so
- 			 * ext4_mb_load_buddy() should never fail.
- 			 */
--			WARN(1, "mb_load_buddy failed (%d)", err);
- 			return;
--		}
- 		ext4_lock_group(ac->ac_sb, ac->ac_f_ex.fe_group);
- 		mb_free_blocks(ac->ac_inode, &e4b, ac->ac_f_ex.fe_start,
- 			       ac->ac_f_ex.fe_len);
+-	block++;
+-	pnum = block / blocks_per_page;
+-	page = find_or_create_page(inode->i_mapping, pnum, gfp);
++	/* blocks_per_page == 1, hence we need another page for the buddy */
++	page = find_or_create_page(inode->i_mapping, block + 1, gfp);
+ 	if (!page)
+ 		return -ENOMEM;
+ 	BUG_ON(page->mapping != inode->i_mapping);
 -- 
 2.51.0
 
