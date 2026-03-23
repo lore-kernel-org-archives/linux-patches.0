@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3C721D00A;
-	Mon, 23 Mar 2026 13:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9A2D1DF25C;
+	Mon, 23 Mar 2026 13:56:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274186; cv=none; b=VonEUURMnRYpqvlqh5RTF3I0lJGcRJvZq2FsVP9t7v6s9COSP3EKeDISqHUiT+l1Qw/Jf3xF5bAFXIMskQBiQuIJXY2t0QcGDb0g85LuB1oCvrz3QmtoQc7wMdUu47yWPe6MTZH+ByJ8h51WjqsHs4Df0aRH0aFddB7kvsges90=
+	t=1774274189; cv=none; b=rZGQVT+d7vZqwrzMHvyUhTwCLLMwyXFB5OTuOniSIzQRDKXpec/qPaCgPSl6b7yb8NrkRlOV+atQ1PLpwRwkgmtcsaR5sqMKSGb6WAfvhx3568QuXhIK/4S6/JxzMpP53IUvOm7k0HOkRXixc3UanvKpY2tJJd8OdYUt8mcqSRs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274186; c=relaxed/simple;
-	bh=5b92ULWGqdtfFvslQIF9HiKSvA+HzS42An2K8b5AIw0=;
+	s=arc-20240116; t=1774274189; c=relaxed/simple;
+	bh=Asz9HWthUha/qED+G9P2fFUM3YhlAX/gU0nz+R0KWuw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D1JDeNHNy+jWYw/nD1Y7IyDqUqqOJyaB8G5pWvDa+aoGdkUk+fMHtUWhWBGWEwAV+ExM6v01AgPKOwMVgIfWUSZNuzOubyc9et7Aw7ftc8x8bAFMlm9JbO81AfilflkN2wwXKv6dzzA+eWQDmfk9nlZX85KO2bM35Dq5TTbSsKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TNVb6IzT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g7+ggqw+3mLDWtTsP3Z91dAq56ZjYRklc9yBlyIwQSXuwZBnJwff9cgFYbDxU2dBV+qTpMerqqLmXpP5M3OxjlppctOthP2k98DtDmAgfVTUMNusglahdbc6CduWmVh8YyAH8Bo0ZQqHv65wHxUnAUUzO/NsXg7RzM09xEih1lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zptlhKN9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TNVb6IzT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCBEC2BCB1;
-	Mon, 23 Mar 2026 13:56:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zptlhKN9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0606C2BC9E;
+	Mon, 23 Mar 2026 13:56:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274186;
-	bh=5b92ULWGqdtfFvslQIF9HiKSvA+HzS42An2K8b5AIw0=;
+	s=korg; t=1774274189;
+	bh=Asz9HWthUha/qED+G9P2fFUM3YhlAX/gU0nz+R0KWuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TNVb6IzTr6IV7bLjYvfGlQJUpXhWmmN0WW+9u9TNyMCDIu2nRgoln8z+MruhKn5u2
-	 j1nhKUCmQbeb4bCTzv4wTuTBS5NNUQVeTBR+jtG7IBikGxZqiv3xQ5HIz65hxyUaDM
-	 2mZSCChWzZBX3Zab9FmsPxK0TDa6O6J+veeJ9WDw=
+	b=zptlhKN9Aw2lw3Pc4iq4ckKaSDkknkdRHkmErDPiM7Q+FwAhjjoSu4wJpPV45/Wdj
+	 ww4NNwKqVKRrG2gUiQdw3ky3zcMwY1+ljieSAxHXhWKFCpBjK5G5ChqTABoxenDJxa
+	 aMoKl7aI7Hokp3XF1PhxArlbl0Cs5u25/8I6pbXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 138/220] netfilter: nft_ct: drop pending enqueued packets on removal
-Date: Mon, 23 Mar 2026 14:45:15 +0100
-Message-ID: <20260323134508.929136673@linuxfoundation.org>
+Subject: [PATCH 6.19 121/220] Bluetooth: ISO: Fix defer tests being unstable
+Date: Mon, 23 Mar 2026 14:44:58 +0100
+Message-ID: <20260323134508.420003827@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,68 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 36eae0956f659e48d5366d9b083d9417f3263ddc ]
+[ Upstream commit 62bcaa6b351b6dc400f6c6b83762001fd9f5c12d ]
 
-Packets sitting in nfqueue might hold a reference to:
+iso-tester defer tests seem to fail with hci_conn_hash_lookup_cig
+being unable to resolve a cig in set_cig_params_sync due a race
+where it is run immediatelly before hci_bind_cis is able to set
+the QoS settings into the hci_conn object.
 
-- templates that specify the conntrack zone, because a percpu area is
-  used and module removal is possible.
-- conntrack timeout policies and helper, where object removal leave
-  a stale reference.
+So this moves the assigning of the QoS settings to be done directly
+by hci_le_set_cig_params to prevent that from happening again.
 
-Since these objects can just go away, drop enqueued packets to avoid
-stale reference to them.
-
-If there is a need for finer grain removal, this logic can be revisited
-to make selective packet drop upon dependencies.
-
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/bluetooth/hci_conn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 6f2ae7cad7310..db1bf69f87750 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -23,6 +23,7 @@
- #include <net/netfilter/nf_conntrack_l4proto.h>
- #include <net/netfilter/nf_conntrack_expect.h>
- #include <net/netfilter/nf_conntrack_seqadj.h>
-+#include "nf_internals.h"
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index dc085856f5e91..0f512c2c2fd3c 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1944,6 +1944,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 		return false;
  
- struct nft_ct_helper_obj  {
- 	struct nf_conntrack_helper *helper4;
-@@ -543,6 +544,7 @@ static void __nft_ct_set_destroy(const struct nft_ctx *ctx, struct nft_ct *priv)
- #endif
- #ifdef CONFIG_NF_CONNTRACK_ZONES
- 	case NFT_CT_ZONE:
-+		nf_queue_nf_hook_drop(ctx->net);
- 		mutex_lock(&nft_ct_pcpu_mutex);
- 		if (--nft_ct_pcpu_template_refcnt == 0)
- 			nft_ct_tmpl_put_pcpu();
-@@ -1016,6 +1018,7 @@ static void nft_ct_timeout_obj_destroy(const struct nft_ctx *ctx,
- 	struct nft_ct_timeout_obj *priv = nft_obj_data(obj);
- 	struct nf_ct_timeout *timeout = priv->timeout;
+ done:
++	conn->iso_qos = *qos;
++
+ 	if (hci_cmd_sync_queue(hdev, set_cig_params_sync,
+ 			       UINT_PTR(qos->ucast.cig), NULL) < 0)
+ 		return false;
+@@ -2013,8 +2015,6 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	}
  
-+	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
- 	kfree(priv->timeout);
-@@ -1148,6 +1151,7 @@ static void nft_ct_helper_obj_destroy(const struct nft_ctx *ctx,
- {
- 	struct nft_ct_helper_obj *priv = nft_obj_data(obj);
+ 	hci_conn_hold(cis);
+-
+-	cis->iso_qos = *qos;
+ 	cis->state = BT_BOUND;
  
-+	nf_queue_nf_hook_drop(ctx->net);
- 	if (priv->helper4)
- 		nf_conntrack_helper_put(priv->helper4);
- 	if (priv->helper6)
+ 	return cis;
 -- 
 2.51.0
 
