@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F4433CE9A;
-	Mon, 23 Mar 2026 14:44:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8E11459FA;
+	Mon, 23 Mar 2026 14:44:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277058; cv=none; b=ZXWfToNjC2D1qRCupDFuTCFv1Gc1xJnJdmj7lcTQyM3wCaMpSXUpWKycTIpPmp6mhcZcZiE+qFOhVjQVrE6DdWDFCg8d36fRSbLj/LcOheaR9QO6GjyPFluBAJ8vr/reyza8rIFDuOw0wVXpiBdHqRJ4TZsKXAsN1pkJ0unCj/k=
+	t=1774277060; cv=none; b=JZXh5M4kNspaXX9hVEeslCOftBNi5afW+NdZsqIwA5OqeV4q2z0+eWrb9EDvw6aMgQv2jmmuYMeBKgoea1ktO2JOyWyhTKkQ0v/rIjdW6fIGX08y8rx76ZVDlQkOVmtCqgAXkBnPlpOvXV62UvgUXpdWBUJ+aHugvXbsuc3axM0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277058; c=relaxed/simple;
-	bh=FrN99LkMlR0kaFlwkqCc229h8UXNCG5K4u5Zu8MiNWA=;
+	s=arc-20240116; t=1774277060; c=relaxed/simple;
+	bh=nFUUGDrPpVPeTB3tYS8bHQZ9NaZ1HB1HrTS10FjziPo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k09UwcI3DVJDufyXhk/M2Y7Npoy6WKsBBZNkX0l+ypAsmw+IVS6sbYuqsWwTWdR7MUV7KgcGsgCJgcgO0sHZEWbthYIcmww1NIJlIzc1gdT/kbAN7cjvU3HlySDh5MVG5sd9fvJZTLx9/MuCOc0cIqld88yopYqptRdvhlFhh7A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D0sAEsjq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JzX2rzDVkJIQZPmQRbMoeljXdEafVq/O2/QLO+NrPqyvdVkpQEUfVjQjhE8mE9u8Iy6nLuwMdMY2ywX+9Olmmoqaw3KeS3/fM7eILuXhoLn+XsBjFXAITjoPNXdUBJWqOzmkQCoTLTVXYl8OEEKr1ilASAG6/DpKA9aXWr6Laig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmok/ItQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D0sAEsjq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9F3FC4CEF7;
-	Mon, 23 Mar 2026 14:44:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmok/ItQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E784C2BC9E;
+	Mon, 23 Mar 2026 14:44:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277058;
-	bh=FrN99LkMlR0kaFlwkqCc229h8UXNCG5K4u5Zu8MiNWA=;
+	s=korg; t=1774277060;
+	bh=nFUUGDrPpVPeTB3tYS8bHQZ9NaZ1HB1HrTS10FjziPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D0sAEsjqHLXvSPp1V+NnLaHgy9LD3Z9EwBn3jtISwK8o3Rqdlk69nHsdsDEycgeGa
-	 Gw7IY0DfzSuuzXfShdbBP8HXdRmtde+Jp8a8i5SaUzsOK6E6fICb415Jc3y/l99xWh
-	 KPzCfsd3CisHhgyX+2ucbnS1bj9X3DJum+e8LBFg=
+	b=tmok/ItQ0Ykx6ImlsHyF45MjQ72j8g/nUbeBFCbwiQhL+mi2q5xIwjVXnTJ8X1PV4
+	 ko3Nlquu8auy/PYbcsVq4Zf/MD0nuTjqPKigbgIPe7jxPQQhpzYRbDlQ5aFlV46U6H
+	 8Fk8m6pkg+aalXaSyEGhqItS8KS2Kh7MSIhcQTow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Alva Lan <alvalan9@foxmail.com>
-Subject: [PATCH 6.12 305/460] drm/amdgpu: Add basic validation for RAS header
-Date: Mon, 23 Mar 2026 14:45:01 +0100
-Message-ID: <20260323134533.985230802@linuxfoundation.org>
+	Misbah Anjum N <misanjum@linux.ibm.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 306/460] NFSD: Hold net reference for the lifetime of /proc/fs/nfs/exports fd
+Date: Mon, 23 Mar 2026 14:45:02 +0100
+Message-ID: <20260323134534.011959341@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,59 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lijo Lazar <lijo.lazar@amd.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit 5df0d6addb7e9b6f71f7162d1253762a5be9138e upstream.
+commit e7fcf179b82d3a3730fd8615da01b087cc654d0b upstream.
 
-If RAS header read from EEPROM is corrupted, it could result in trying
-to allocate huge memory for reading the records. Add some validation to
-header fields.
+The /proc/fs/nfs/exports proc entry is created at module init
+and persists for the module's lifetime. exports_proc_open()
+captures the caller's current network namespace and stores
+its svc_export_cache in seq->private, but takes no reference
+on the namespace. If the namespace is subsequently torn down
+(e.g. container destruction after the opener does setns() to a
+different namespace), nfsd_net_exit() calls nfsd_export_shutdown()
+which frees the cache. Subsequent reads on the still-open fd
+dereference the freed cache_detail, walking a freed hash table.
 
-Signed-off-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-[ RAS_TABLE_VER_V3 is not supported in v6.6.y. ]
-Signed-off-by: Alva Lan <alvalan9@foxmail.com>
+Hold a reference on the struct net for the lifetime of the open
+file descriptor. This prevents nfsd_net_exit() from running --
+and thus prevents nfsd_export_shutdown() from freeing the cache
+-- while any exports fd is open. cache_detail already stores
+its net pointer (cd->net, set by cache_create_net()), so
+exports_release() can retrieve it without additional per-file
+storage.
+
+Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
+Fixes: 96d851c4d28d ("nfsd: use proper net while reading "exports" file")
+Cc: stable@vger.kernel.org
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c |   20 ++++++++++++++++++--
- 1 file changed, 18 insertions(+), 2 deletions(-)
+ fs/nfsd/nfsctl.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_ras_eeprom.c
-@@ -1362,15 +1362,31 @@ int amdgpu_ras_eeprom_init(struct amdgpu
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -152,9 +152,19 @@ static int exports_net_open(struct net *
  
- 	__decode_table_header_from_buf(hdr, buf);
+ 	seq = file->private_data;
+ 	seq->private = nn->svc_export_cache;
++	get_net(net);
+ 	return 0;
+ }
  
--	if (hdr->version == RAS_TABLE_VER_V2_1) {
-+	switch (hdr->version) {
-+	case RAS_TABLE_VER_V2_1:
- 		control->ras_num_recs = RAS_NUM_RECS_V2_1(hdr);
- 		control->ras_record_offset = RAS_RECORD_START_V2_1;
- 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT_V2_1;
--	} else {
-+		break;
-+	case RAS_TABLE_VER_V1:
- 		control->ras_num_recs = RAS_NUM_RECS(hdr);
- 		control->ras_record_offset = RAS_RECORD_START;
- 		control->ras_max_record_count = RAS_MAX_RECORD_COUNT;
-+		break;
-+	default:
-+		dev_err(adev->dev,
-+			"RAS header invalid, unsupported version: %u",
-+			hdr->version);
-+		return -EINVAL;
- 	}
++static int exports_release(struct inode *inode, struct file *file)
++{
++	struct seq_file *seq = file->private_data;
++	struct cache_detail *cd = seq->private;
 +
-+	if (control->ras_num_recs > control->ras_max_record_count) {
-+		dev_err(adev->dev,
-+			"RAS header invalid, records in header: %u max allowed :%u",
-+			control->ras_num_recs, control->ras_max_record_count);
-+		return -EINVAL;
-+	}
++	put_net(cd->net);
++	return seq_release(inode, file);
++}
 +
- 	control->ras_fri = RAS_OFFSET_TO_INDEX(control, hdr->first_rec_offset);
+ static int exports_nfsd_open(struct inode *inode, struct file *file)
+ {
+ 	return exports_net_open(inode->i_sb->s_fs_info, file);
+@@ -164,7 +174,7 @@ static const struct file_operations expo
+ 	.open		= exports_nfsd_open,
+ 	.read		= seq_read,
+ 	.llseek		= seq_lseek,
+-	.release	= seq_release,
++	.release	= exports_release,
+ };
  
- 	if (hdr->header == RAS_TABLE_HDR_VAL) {
+ static int export_features_show(struct seq_file *m, void *v)
+@@ -1456,7 +1466,7 @@ static const struct proc_ops exports_pro
+ 	.proc_open	= exports_proc_open,
+ 	.proc_read	= seq_read,
+ 	.proc_lseek	= seq_lseek,
+-	.proc_release	= seq_release,
++	.proc_release	= exports_release,
+ };
+ 
+ static int create_proc_exports_entry(void)
 
 
