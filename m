@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5273AB277;
-	Mon, 23 Mar 2026 16:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 475563AB277;
+	Mon, 23 Mar 2026 16:12:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282376; cv=none; b=Q81FaYsdk9Ux4+FfRqupcOWxGNp8DGYq2OSYZdnO9P+YsSntlDLmOV22bR70fXvgBXwkcoDykXtDfrjV0SHb8b+TfdbwAjEUm+dMHpYpcz77nISINg+ka85lVqpAmmZL8Qr4vz3eGC0fleZem5YE+l5tBsC5AXyZvekpcl6X2Bc=
+	t=1774282379; cv=none; b=NKb7/gHlBj1jE6kfiDixsgiNis5iONzFP+CPHMEJW8FBBlZfOXfnaJe5r1K1H7mCwGGLGeA21mX7SpD0erM+zPY3cC3xSFbW7j5hZtwMVEnoA6+RGuiBlNrptJ/TlcJlhGnunD4S2ZX4H4k0S9C30NUjLMfSRwtG65GXyJYvz0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282376; c=relaxed/simple;
-	bh=Kn/MHoicoQJwG+baPsywfXKsPfTm2VwUMlyBe1aChzE=;
+	s=arc-20240116; t=1774282379; c=relaxed/simple;
+	bh=R2oF5RS3t5hRP9UUadSj/fSmcJqGPXLZgVDsg0oP4EY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kinOg1AhoVOUDYKJomRuKvxm8I5wBRCBW0FuKwaR6ggZ9Fa3j8E8yxT+E2rTZZV57brk29Y9FDMQ8Db7vdwgg05AgxDo4ADEJf+U93UoIAvUBi0FnpDWZ7hwMBFRVCebpYoJI638tMYpaOtazhWNZDjWRGHI4jlvX0XeySQk6hE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbxarVTd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tovExsgE/kCQHZu3HhtbbFxYxeq4kUfpaCZ5QDFxcPTdPN6DLYe8Xghxaoe0599O8migmPhY6g3J6XMmMDfYpimv7vyQ2PPccl6oCSPQYfD2ox/lo9+VpS/qNtDzvuZ05dVHz8VoSCXELYf9DHnqdHcwfkqqjCmxIqadAzIiLrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JVvNNv48; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbxarVTd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502EAC4CEF7;
-	Mon, 23 Mar 2026 16:12:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JVvNNv48"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC648C4CEF7;
+	Mon, 23 Mar 2026 16:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282376;
-	bh=Kn/MHoicoQJwG+baPsywfXKsPfTm2VwUMlyBe1aChzE=;
+	s=korg; t=1774282379;
+	bh=R2oF5RS3t5hRP9UUadSj/fSmcJqGPXLZgVDsg0oP4EY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QbxarVTdEebc3N5ksnPP7/ihHfamZZQjt9bmLHkE6ciREXsJg/0+aVPJNMcThvlH9
-	 oPakXJUt1tL74DCdh2iDV/DK+6e9kDJ1fw3/qcriTxUjVT5iKyoliCo+QyI86ACm/T
-	 ruifqz88/h68f76tIuV7PqR6tj4HfbdW7IIGllSc=
+	b=JVvNNv483MCaa6OFIkC9/KWz1Zs7s4evhb2nbIr5/NYkwidHeMnHYFOJFxQUK3Lwz
+	 SMMMsCaDRy9at/KsiBRypjJyQ1KkfIWkJ5cUB5zu34mC5b5qGLbh5yAgJFrkpN5VnW
+	 R/qz2abrTd1laF1d/qGNGdROxKu7dr1/uySXo8DQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/481] nfc: nci: free skb on nci_transceive early error paths
-Date: Mon, 23 Mar 2026 14:41:54 +0100
-Message-ID: <20260323134528.483809471@linuxfoundation.org>
+Subject: [PATCH 6.1 133/481] nfc: nci: clear NCI_DATA_EXCHANGE before calling completion callback
+Date: Mon, 23 Mar 2026 14:41:55 +0100
+Message-ID: <20260323134528.506111749@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,69 +53,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 7bd4b0c4779f978a6528c9b7937d2ca18e936e2c ]
+[ Upstream commit 0efdc02f4f6d52f8ca5d5889560f325a836ce0a8 ]
 
-nci_transceive() takes ownership of the skb passed by the caller,
-but the -EPROTO, -EINVAL, and -EBUSY error paths return without
-freeing it.
+Move clear_bit(NCI_DATA_EXCHANGE) before invoking the data exchange
+callback in nci_data_exchange_complete().
 
-Due to issues clearing NCI_DATA_EXCHANGE fixed by subsequent changes
-the nci/nci_dev selftest hits the error path occasionally in NIPA,
-and kmemleak detects leaks:
+The callback (e.g. rawsock_data_exchange_complete) may immediately
+schedule another data exchange via schedule_work(tx_work).  On a
+multi-CPU system, tx_work can run and reach nci_transceive() before
+the current nci_data_exchange_complete() clears the flag, causing
+test_and_set_bit(NCI_DATA_EXCHANGE) to return -EBUSY and the new
+transfer to fail.
 
-unreferenced object 0xff11000015ce6a40 (size 640):
-  comm "nci_dev", pid 3954, jiffies 4295441246
-  hex dump (first 32 bytes):
-    6b 6b 6b 6b 00 a4 00 0c 02 e1 03 6b 6b 6b 6b 6b  kkkk.......kkkkk
-    6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
-  backtrace (crc 7c40cc2a):
-    kmem_cache_alloc_node_noprof+0x492/0x630
-    __alloc_skb+0x11e/0x5f0
-    alloc_skb_with_frags+0xc6/0x8f0
-    sock_alloc_send_pskb+0x326/0x3f0
-    nfc_alloc_send_skb+0x94/0x1d0
-    rawsock_sendmsg+0x162/0x4c0
-    do_syscall_64+0x117/0xfc0
+This causes intermittent flakes in nci/nci_dev in NIPA:
 
-Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+  # #  RUN           NCI.NCI1_0.t4t_tag_read ...
+  # # t4t_tag_read: Test terminated by timeout
+  # #          FAIL  NCI.NCI1_0.t4t_tag_read
+  # not ok 3 NCI.NCI1_0.t4t_tag_read
+
+Fixes: 38f04c6b1b68 ("NFC: protect nci_data_exchange transactions")
 Reviewed-by: Joe Damato <joe@dama.to>
-Link: https://patch.msgid.link/20260303162346.2071888-2-kuba@kernel.org
+Link: https://patch.msgid.link/20260303162346.2071888-5-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/nfc/nci/data.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 6b62218718a06..cdc1aa8662544 100644
---- a/net/nfc/nci/core.c
-+++ b/net/nfc/nci/core.c
-@@ -1023,18 +1023,23 @@ static int nci_transceive(struct nfc_dev *nfc_dev, struct nfc_target *target,
- 	struct nci_conn_info *conn_info;
- 
- 	conn_info = ndev->rf_conn_info;
--	if (!conn_info)
-+	if (!conn_info) {
-+		kfree_skb(skb);
- 		return -EPROTO;
-+	}
- 
- 	pr_debug("target_idx %d, len %d\n", target->idx, skb->len);
- 
- 	if (!ndev->target_active_prot) {
- 		pr_err("unable to exchange data, no active target\n");
-+		kfree_skb(skb);
- 		return -EINVAL;
+diff --git a/net/nfc/nci/data.c b/net/nfc/nci/data.c
+index 3d36ea5701f02..7a3fb2a397a1e 100644
+--- a/net/nfc/nci/data.c
++++ b/net/nfc/nci/data.c
+@@ -33,7 +33,8 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
+ 	conn_info = nci_get_conn_info_by_conn_id(ndev, conn_id);
+ 	if (!conn_info) {
+ 		kfree_skb(skb);
+-		goto exit;
++		clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
++		return;
  	}
  
--	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags))
-+	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
-+		kfree_skb(skb);
- 		return -EBUSY;
-+	}
+ 	cb = conn_info->data_exchange_cb;
+@@ -45,6 +46,12 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
+ 	del_timer_sync(&ndev->data_timer);
+ 	clear_bit(NCI_DATA_EXCHANGE_TO, &ndev->flags);
  
- 	/* store cb and context to be used on receiving data */
- 	conn_info->data_exchange_cb = cb;
++	/* Mark the exchange as done before calling the callback.
++	 * The callback (e.g. rawsock_data_exchange_complete) may
++	 * want to immediately queue another data exchange.
++	 */
++	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
++
+ 	if (cb) {
+ 		/* forward skb to nfc core */
+ 		cb(cb_context, skb, err);
+@@ -54,9 +61,6 @@ void nci_data_exchange_complete(struct nci_dev *ndev, struct sk_buff *skb,
+ 		/* no waiting callback, free skb */
+ 		kfree_skb(skb);
+ 	}
+-
+-exit:
+-	clear_bit(NCI_DATA_EXCHANGE, &ndev->flags);
+ }
+ 
+ /* ----------------- NCI TX Data ----------------- */
 -- 
 2.51.0
 
