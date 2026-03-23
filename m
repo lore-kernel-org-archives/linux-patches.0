@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 978833B8D5C;
-	Mon, 23 Mar 2026 16:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 127833BA235;
+	Mon, 23 Mar 2026 16:10:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282235; cv=none; b=tUzEa6RnLGzL05+QFODPdKSwd2OKIMYTYKWLfdd4hrIKV87HiMw/jRH8/DNNoxTm1BXK9ngHIfdxtvOsH5nyTptfnq+oxoBIobHf1aywVMabj4wWFr6LWYGJteAGR0LQcwpMe0lVSWt9cHePI6RegpbYLjsAadf4YRaBJV0YUPg=
+	t=1774282238; cv=none; b=a9q6Xg85bCLw+ae4gcyMIUlUOSQmp1USDKPq7ef19lpApRQ8agf6GN+s22GIX09SAX9hqNQ7qpjETNOzdZCQz3S1q95K2nYepJPFHI45GZ++9uCYH5eK8D4mbfWtPyZ4ejxVJBarcCo+UQ0zOyUhfsitvrmHRw2Hbeket0Gl+oQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282235; c=relaxed/simple;
-	bh=G2ltqW/ok5LE3qiCCOMsfGLnUI2yaFJC8vj3qJbzMFw=;
+	s=arc-20240116; t=1774282238; c=relaxed/simple;
+	bh=SBTnzSAj+ZK6jsrGgxrD1DekNTjC+f4OFGWIwaVz0/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=iq+Euq22enwWbPn20rJVbQKxKSZ6V/qIVUT6o4CbjAhV2xSrqQy1TXp+u3RPMsod+R3CAwojIDtZ40NYYLWB5yTj5DV9ipM+uxwO9bJtlwva5kwpCj3YWFPYwBnuFTsFbeBXb0m7+JnfoSqExwOQQsu/Lsak8ZcBXQp5RPXcZGE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rvwhmSMy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TciJQlBc+WfkeOIfJfhHNxM8a6PwhmWWbrCjaPGhG48g6Wdey3cyC8y1aPvRzVSdm9g6X4vUEdX4rFdcgk6/uEStlEJzAdeNFS2ieimIKG+tvwDopA5YMWyIyMzyCThTFmkwym8ZwgKPxHYD6CLLxesCMzoy9hCOxTThpzNSHPo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cGt3rTv3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rvwhmSMy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD137C4CEF7;
-	Mon, 23 Mar 2026 16:10:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cGt3rTv3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ABB8C4CEF7;
+	Mon, 23 Mar 2026 16:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282235;
-	bh=G2ltqW/ok5LE3qiCCOMsfGLnUI2yaFJC8vj3qJbzMFw=;
+	s=korg; t=1774282237;
+	bh=SBTnzSAj+ZK6jsrGgxrD1DekNTjC+f4OFGWIwaVz0/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rvwhmSMyEJW0BOl71l9UwW4VUK4o6M5ydBjJdOm9q1qkpvCSplcNpbUnRpYS7t6Ys
-	 ayYnHwk3eufbY8lu8e0qb4/h8LMtavmytIgnKn12UEp/7yf7YCs/mGWmrEFiUlJ8GQ
-	 YtRr8ns9OVMjgf9YbCM5mln4Xi9V2E0bgqZZ67tY=
+	b=cGt3rTv3Id4KmXWOI9bhEVPtFbEbDW2f4oAofAEpfq0H1IlQYo5faBq8nT6zeNrkb
+	 hbYtmpaP8hp3MuapEWI98zQNq/44OU+LrukB/8aWzlvsPNfdaUGmJ3klsQXBn0NRkY
+	 gDauwUnsUTwoJdAmA/Ejmz/fezTDsfdrvipu2vto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
+	Olexa Bilaniuk <obilaniu@gmail.com>,
+	Kurt Borja <kuurtb@gmail.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.1 080/481] platform/x86: dell-wmi-sysman: Dont hex dump plaintext password data
-Date: Mon, 23 Mar 2026 14:41:02 +0100
-Message-ID: <20260323134527.208775506@linuxfoundation.org>
+Subject: [PATCH 6.1 081/481] platform/x86: dell-wmi: Add audio/mic mute key codes
+Date: Mon, 23 Mar 2026 14:41:03 +0100
+Message-ID: <20260323134527.230820139@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,34 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Kurt Borja <kuurtb@gmail.com>
 
-commit d1a196e0a6dcddd03748468a0e9e3100790fc85c upstream.
+commit 26a7601471f62b95d56a81c3a8ccb551b5a6630f upstream.
 
-set_new_password() hex dumps the entire buffer, which contains plaintext
-password data, including current and new passwords. Remove the hex dump
-to avoid leaking credentials.
+Add audio/mic mute key codes found in Alienware m18 r1 AMD.
 
-Fixes: e8a60aa7404b ("platform/x86: Introduce support for Systems Management Driver over WMI for Dell Systems")
 Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Link: https://patch.msgid.link/20260303113050.58127-2-thorsten.blum@linux.dev
+Tested-by: Olexa Bilaniuk <obilaniu@gmail.com>
+Suggested-by: Olexa Bilaniuk <obilaniu@gmail.com>
+Signed-off-by: Kurt Borja <kuurtb@gmail.com>
+Acked-by: Pali Rohár <pali@kernel.org>
+Link: https://patch.msgid.link/20260207-mute-keys-v2-1-c55e5471c9c1@gmail.com
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/platform/x86/dell/dell-wmi-base.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c
-+++ b/drivers/platform/x86/dell/dell-wmi-sysman/passwordattr-interface.c
-@@ -93,7 +93,6 @@ int set_new_password(const char *passwor
- 	if (ret < 0)
- 		goto out;
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -80,6 +80,12 @@ static const struct dmi_system_id dell_w
+ static const struct key_entry dell_wmi_keymap_type_0000[] = {
+ 	{ KE_IGNORE, 0x003a, { KEY_CAPSLOCK } },
  
--	print_hex_dump_bytes("set new password data: ", DUMP_PREFIX_NONE, buffer, buffer_size);
- 	ret = call_password_interface(wmi_priv.password_attr_wdev, buffer, buffer_size);
- 	/* on success copy the new password to current password */
- 	if (!ret)
++	/* Audio mute toggle */
++	{ KE_KEY,    0x0109, { KEY_MUTE } },
++
++	/* Mic mute toggle */
++	{ KE_KEY,    0x0150, { KEY_MICMUTE } },
++
+ 	/* Meta key lock */
+ 	{ KE_IGNORE, 0xe000, { KEY_RIGHTMETA } },
+ 
 
 
