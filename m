@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB7B257851;
-	Mon, 23 Mar 2026 16:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F0F271A6D;
+	Mon, 23 Mar 2026 16:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282216; cv=none; b=j1KVEHVbYEvuLhVP0IaLY/4GX0Gj1pkPdbRUucts4sgIci09jvphOXLq1LBFg7kbRUZ+Ht+geKjk3Wb92v0Ao9+45sh6KLDvC00xMAm5iOq8zB+cQGIOuxlOjPbQqYjvwSB+jYtmo+7V1lzxfuSIPo4+0EA8owiTHZGmHr7Ftps=
+	t=1774282219; cv=none; b=TXlQatTCmJ+FE+7SMmDQrHk6caV21ekHreLKneSnQ2Y7YUiJJocBp6ZrgDhnd0EUH4poNETQ1QxvDcn7sG5tgB8eJnVxPouNiCOzCjLFnq6zgilebjF5lotNtArXPefRAa0MyfAXcOGbCGXmW1ZsXYxX6RurrpMj3mFmxGsGSSk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282216; c=relaxed/simple;
-	bh=IKxjvbQqaJfirJUQ9m9djcF99aSHBGYJi2PTIO4PL6c=;
+	s=arc-20240116; t=1774282219; c=relaxed/simple;
+	bh=+po8PmzL0vU8W93CIk3fCM2Io1Q2n3R3C1/DIYVV7CE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=m3ONyPhHgBAJmU3NX0BeL2/EjYFHng5iGRqyDG1+KHSr/WFmg/rfb/BDePCyvmSePQNoBl+Ir6sZFvK80m24JFYCrZYPv1vtX3U8KdAF1imJmhwe2v+GNl1iAPDm9SQMj2D785H+LUv8zB9RYOY8TMTYFVBc9sY1EDcTt0wbQ4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VadKHdgV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bl3hZZDA8eogaBEW6teU5gf18RZdAjRILU4rF/7DjDK9/l65PRnL7cg7lSxtQwPxoxVa6U7VqStzCvpkiKpvMCiFqlaFfdqFzFTbGWr6VS6uT3exE0NbS+Gz1IOojpCZU6WOQo9xi4Z0mOKv7fZaPasFezuYCRhZMR/HeEWhTe0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K103Rsgj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VadKHdgV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E63DC2BCB0;
-	Mon, 23 Mar 2026 16:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K103Rsgj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4352C2BCB0;
+	Mon, 23 Mar 2026 16:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282216;
-	bh=IKxjvbQqaJfirJUQ9m9djcF99aSHBGYJi2PTIO4PL6c=;
+	s=korg; t=1774282219;
+	bh=+po8PmzL0vU8W93CIk3fCM2Io1Q2n3R3C1/DIYVV7CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VadKHdgVe1S8A1n65F5HK6LacCQgQnV5KM1nHFiGuGUFR4XJmiA50Db8afSjjCw4i
-	 pIexPrefzE9fHadyevvfCKUbIuz2HCm0jPnQZXbVKB3e2S3NFo7K3/YLJYR2N/312n
-	 HxRPkagRlNjPexK/yEu9UFoA0IqcjLd1LwWnab0Q=
+	b=K103RsgjgdcVuEiOwyr6BEIPQdV+o8pFlJmDLcP9hcXf5nHUHigEN98y/JWOZq3UY
+	 vdm4mQw9anOCbkiFhPWbA5geRUpLzoA/gPtsK6WibgKKrdHjXn7bujnhKN7+A/pScb
+	 L1JX8AvNWnak0H+3A26WwFh+xVWODmUZuH+F+FtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/481] ext4: drop extent cache when splitting extent fails
-Date: Mon, 23 Mar 2026 14:40:29 +0100
-Message-ID: <20260323134526.377959844@linuxfoundation.org>
+	Petko Manolov <petkan@nucleusys.com>,
+	stable <stable@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 074/481] net: usb: pegasus: validate USB endpoints
+Date: Mon, 23 Mar 2026 14:40:56 +0100
+Message-ID: <20260323134527.038265899@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,61 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 79b592e8f1b435796cbc2722190368e3e8ffd7a1 ]
+commit 11de1d3ae5565ed22ef1f89d73d8f2d00322c699 upstream.
 
-When the split extent fails, we might leave some extents still being
-processed and return an error directly, which will result in stale
-extent entries remaining in the extent status tree. So drop all of the
-remaining potentially stale extents if the splitting fails.
+The pegasus driver should validate that the device it is probing has the
+proper number and types of USB endpoints it is expecting before it binds
+to it.  If a malicious device were to not have the same urbs the driver
+will crash later on when it blindly accesses these endpoints.
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <20251129103247.686136-8-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Petko Manolov <petkan@nucleusys.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026022347-legibly-attest-cc5c@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/usb/pegasus.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 30b0b25aac9ff..bb27c04798d2b 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3252,7 +3252,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+--- a/drivers/net/usb/pegasus.c
++++ b/drivers/net/usb/pegasus.c
+@@ -815,8 +815,19 @@ static void unlink_all_urbs(pegasus_t *p
  
- 	err = PTR_ERR(path);
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
--		return path;
-+		goto out_path;
+ static int alloc_urbs(pegasus_t *pegasus)
+ {
++	static const u8 bulk_ep_addr[] = {
++		1 | USB_DIR_IN,
++		2 | USB_DIR_OUT,
++		0};
++	static const u8 int_ep_addr[] = {
++		3 | USB_DIR_IN,
++		0};
+ 	int res = -ENOMEM;
  
- 	/*
- 	 * Get a new path to try to zeroout or fix the extent length.
-@@ -3266,7 +3266,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 	if (IS_ERR(path)) {
- 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
- 				 split, PTR_ERR(path));
--		return path;
-+		goto out_path;
- 	}
- 	depth = ext_depth(inode);
- 	ex = path[depth].p_ext;
-@@ -3343,6 +3343,10 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 		ext4_free_ext_path(path);
- 		path = ERR_PTR(err);
- 	}
-+out_path:
-+	if (IS_ERR(path))
-+		/* Remove all remaining potentially stale extents. */
-+		ext4_es_remove_extent(inode, ee_block, ee_len);
- 	ext4_ext_show_leaf(inode, path);
- 	return path;
- }
--- 
-2.51.0
-
++	if (!usb_check_bulk_endpoints(pegasus->intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(pegasus->intf, int_ep_addr))
++		return -ENODEV;
++
+ 	pegasus->rx_urb = usb_alloc_urb(0, GFP_KERNEL);
+ 	if (!pegasus->rx_urb) {
+ 		return res;
+@@ -1171,6 +1182,7 @@ static int pegasus_probe(struct usb_inte
+ 
+ 	pegasus = netdev_priv(net);
+ 	pegasus->dev_index = dev_index;
++	pegasus->intf = intf;
+ 
+ 	res = alloc_urbs(pegasus);
+ 	if (res < 0) {
+@@ -1182,7 +1194,6 @@ static int pegasus_probe(struct usb_inte
+ 
+ 	INIT_DELAYED_WORK(&pegasus->carrier_check, check_carrier);
+ 
+-	pegasus->intf = intf;
+ 	pegasus->usb = dev;
+ 	pegasus->net = net;
+ 
 
 
