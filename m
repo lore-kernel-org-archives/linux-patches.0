@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272D23B2FD5;
-	Mon, 23 Mar 2026 14:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFE373B2FD5;
+	Mon, 23 Mar 2026 14:41:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276865; cv=none; b=mWob/85TUTWLAa87o97RipHDjlFbHDeBz6cCPVmhtFMPTIKqwiXbkMo3VZorXxjA9RcQTYO8KfT7KXogyQbXHBrnmuyfsdN3amYUSZxjozH1BdNmMLDWRU1A6jyaDbFj3rj9c+HY5j40uAhkv/zDBlUqDMRhyR3hof4LQXXAmGM=
+	t=1774276867; cv=none; b=ent+zQ+3yzs4smQpMISSuXVik49X+oAf/uGkFM3Q6QV7tuRfIuA1g+Hai68tcOXqX+3UOmwupDaSj2QaPlVJ6FDOaGpuaZYS0LW5cSNv+NTvNoGcWxJ0oeNkrAGjsn/27bGr39+jDrBBeTK1eqVts/MqFNVaToEQ3WDNMlThePs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276865; c=relaxed/simple;
-	bh=wrHBWuND6Pxg8QZZInWGxfQoCOtI4eGLJVfnUpr9hJQ=;
+	s=arc-20240116; t=1774276867; c=relaxed/simple;
+	bh=1iX+WRB/+jYmfKYKbZqnj/rs9vk1rwWGNYGvNdcSPCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RNdFywoqpAb0Qiw0iORun7QCtrMr91k/FlLGXAyDqtlGlYl+CvwF4iwWeywyMDgu46nLeWLI9mCgjt41sImdnnyRps5YDSy8BgP8lM/pohkp0S8zb3kuw5H/QS+zhFo5G8No8F+kvt46okEtmBv5rRoxo1SCixPiB5cRxJFfSG4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQKIDksa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nKqeagE8HWXix65qcj77JHv5GWmtJz2sGW7UdJ3Wh8OuSZH8e69ITD2HXRhVnx+oeWFAVvR85Kl4JwV3dREjHsXRAsUJvTWVRq3rxrQ51vAqHG6mtUu9sfO2jpOAwHCtGv+6TgaTW9Vbi3hkYhsoOGG9cygGFZ6VtvRqQXUtRIQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oQjMxnYs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQKIDksa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1332C4CEF7;
-	Mon, 23 Mar 2026 14:41:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oQjMxnYs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5253FC4CEF7;
+	Mon, 23 Mar 2026 14:41:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276865;
-	bh=wrHBWuND6Pxg8QZZInWGxfQoCOtI4eGLJVfnUpr9hJQ=;
+	s=korg; t=1774276867;
+	bh=1iX+WRB/+jYmfKYKbZqnj/rs9vk1rwWGNYGvNdcSPCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CQKIDksa/WLN90Awe9bEtyDZqwhR1gV7NP7BeRrzA/IqS632Djm2RjHsK9Pce3KRf
-	 1Q9EhMKq3k6sGpzp2gTg5JQwkI4fYZY6etH9JxF4Fyn6lt4LJZEqlRBftx+IozfD1f
-	 sX/aIiKZf2RLYDGY2MhscksNjf+CntZ8SC4BnAAU=
+	b=oQjMxnYstviBTFLJmdq2C4w0+UWD3drOfnQ8dCy/dYkxdWzUwU1/A10KzcaHhoBNc
+	 FR3NzChFBKDwDOKFtHvhV/2kbKAQv95FxwRePb6XuEUp0BdLEmAd/2l+Tx6L/9DrPA
+	 kN+s89NaVkC4ItVdS28okosZPapW3gQdXF8tCl+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Zide Chen <zide.chen@intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 231/460] perf/x86/intel/uncore: Add per-scheduler IMC CAS count events
-Date: Mon, 23 Mar 2026 14:43:47 +0100
-Message-ID: <20260323134532.172888130@linuxfoundation.org>
+Subject: [PATCH 6.12 232/460] mptcp: pm: in-kernel: always mark signal+subflow endp as used
+Date: Mon, 23 Mar 2026 14:43:48 +0100
+Message-ID: <20260323134532.197129272@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,82 +52,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zide Chen <zide.chen@intel.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 6a8a48644c4b804123e59dbfc5d6cd29a0194046 ]
+[ Upstream commit 579a752464a64cb5f9139102f0e6b90a1f595ceb ]
 
-IMC on SPR and EMR does not support sub-channels.  In contrast, CPUs
-that use gnr_uncores[] (e.g. Granite Rapids and Sierra Forest)
-implement two command schedulers (SCH0/SCH1) per memory channel,
-providing logically independent command and data paths.
+Syzkaller managed to find a combination of actions that was generating
+this warning:
 
-Do not reuse the spr_uncore_imc[] configuration for these CPUs.
-Instead, introduce a dedicated gnr_uncore_imc[] with per-scheduler
-events, so userspace can monitor SCH0 and SCH1 independently.
+  msk->pm.local_addr_used == 0
+  WARNING: net/mptcp/pm_kernel.c:1071 at __mark_subflow_endp_available net/mptcp/pm_kernel.c:1071 [inline], CPU#1: syz.2.17/961
+  WARNING: net/mptcp/pm_kernel.c:1071 at mptcp_nl_remove_subflow_and_signal_addr net/mptcp/pm_kernel.c:1103 [inline], CPU#1: syz.2.17/961
+  WARNING: net/mptcp/pm_kernel.c:1071 at mptcp_pm_nl_del_addr_doit+0x81d/0x8f0 net/mptcp/pm_kernel.c:1210, CPU#1: syz.2.17/961
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 961 Comm: syz.2.17 Not tainted 6.19.0-08368-gfafda3b4b06b #22 PREEMPT(full)
+  Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.17.0-debian-1.17.0-1build1 04/01/2014
+  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_kernel.c:1071 [inline]
+  RIP: 0010:mptcp_nl_remove_subflow_and_signal_addr net/mptcp/pm_kernel.c:1103 [inline]
+  RIP: 0010:mptcp_pm_nl_del_addr_doit+0x81d/0x8f0 net/mptcp/pm_kernel.c:1210
+  Code: 89 c5 e8 46 30 6f fe e9 21 fd ff ff 49 83 ed 80 e8 38 30 6f fe 4c 89 ef be 03 00 00 00 e8 db 49 df fe eb ac e8 24 30 6f fe 90 <0f> 0b 90 e9 1d ff ff ff e8 16 30 6f fe eb 05 e8 0f 30 6f fe e8 9a
+  RSP: 0018:ffffc90001663880 EFLAGS: 00010293
+  RAX: ffffffff82de1a6c RBX: 0000000000000000 RCX: ffff88800722b500
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: ffff8880158b22d0 R08: 0000000000010425 R09: ffffffffffffffff
+  R10: ffffffff82de18ba R11: 0000000000000000 R12: ffff88800641a640
+  R13: ffff8880158b1880 R14: ffff88801ec3c900 R15: ffff88800641a650
+  FS:  00005555722c3500(0000) GS:ffff8880f909d000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f66346e0f60 CR3: 000000001607c000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   genl_family_rcv_msg_doit+0x117/0x180 net/netlink/genetlink.c:1115
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0x3a8/0x3f0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x16d/0x240 net/netlink/af_netlink.c:2550
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+   netlink_unicast+0x3e9/0x4c0 net/netlink/af_netlink.c:1344
+   netlink_sendmsg+0x4aa/0x5b0 net/netlink/af_netlink.c:1894
+   sock_sendmsg_nosec net/socket.c:727 [inline]
+   __sock_sendmsg+0xc9/0xf0 net/socket.c:742
+   ____sys_sendmsg+0x272/0x3b0 net/socket.c:2592
+   ___sys_sendmsg+0x2de/0x320 net/socket.c:2646
+   __sys_sendmsg net/socket.c:2678 [inline]
+   __do_sys_sendmsg net/socket.c:2683 [inline]
+   __se_sys_sendmsg net/socket.c:2681 [inline]
+   __x64_sys_sendmsg+0x110/0x1a0 net/socket.c:2681
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x143/0x440 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f66346f826d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007ffc83d8bdc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007f6634985fa0 RCX: 00007f66346f826d
+  RDX: 00000000040000b0 RSI: 0000200000000740 RDI: 0000000000000007
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00007f6634985fa8
+  R13: 00007f6634985fac R14: 0000000000000000 R15: 0000000000001770
+   </TASK>
 
-On these CPUs, replace cas_count_{read,write} with
-cas_count_{read,write}_sch{0,1}.  This may break existing userspace
-that relies on cas_count_{read,write}, prompting it to switch to the
-per-scheduler events, as the legacy event reports only partial
-traffic (SCH0).
+The actions that caused that seem to be:
 
-Fixes: 632c4bf6d007 ("perf/x86/intel/uncore: Support Granite Rapids")
-Fixes: cb4a6ccf3583 ("perf/x86/intel/uncore: Support Sierra Forest and Grand Ridge")
-Reported-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Zide Chen <zide.chen@intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+ - Set the MPTCP subflows limit to 0
+ - Create an MPTCP endpoint with both the 'signal' and 'subflow' flags
+ - Create a new MPTCP connection from a different address: an ADD_ADDR
+   linked to the MPTCP endpoint will be sent ('signal' flag), but no
+   subflows is initiated ('subflow' flag)
+ - Remove the MPTCP endpoint
+
+In this case, msk->pm.local_addr_used has been kept to 0 -- because no
+subflows have been created -- but the corresponding bit in
+msk->pm.id_avail_bitmap has been cleared when the ADD_ADDR has been
+sent. This later causes a splat when removing the MPTCP endpoint because
+msk->pm.local_addr_used has been kept to 0.
+
+Now, if an endpoint has both the signal and subflow flags, but it is not
+possible to create subflows because of the limits or the c-flag case,
+then the local endpoint counter is still incremented: the endpoint is
+used at the end. This avoids issues later when removing the endpoint and
+calling __mark_subflow_endp_available(), which expects
+msk->pm.local_addr_used to have been previously incremented if the
+endpoint was marked as used according to msk->pm.id_avail_bitmap.
+
+Note that signal_and_subflow variable is reset to false when the limits
+and the c-flag case allows subflows creation. Also, local_addr_used is
+only incremented for non ID0 subflows.
+
+Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260210005225.20311-1-zide.chen@intel.com
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/613
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-4-4b5462b6f016@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ pm_kernel.c => pm_netlink.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -6607,6 +6607,32 @@ static struct intel_uncore_type gnr_unco
- 	.attr_update		= uncore_alias_groups,
- };
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -661,6 +661,15 @@ subflow:
+ 	}
  
-+static struct uncore_event_desc gnr_uncore_imc_events[] = {
-+	INTEL_UNCORE_EVENT_DESC(clockticks,      "event=0x01,umask=0x00"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0,  "event=0x05,umask=0xcf"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1,  "event=0x06,umask=0xcf"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0, "event=0x05,umask=0xf0"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.unit, "MiB"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1, "event=0x06,umask=0xf0"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.scale, "6.103515625e-5"),
-+	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.unit, "MiB"),
-+	{ /* end: all zeroes */ },
-+};
+ exit:
++	/* If an endpoint has both the signal and subflow flags, but it is not
++	 * possible to create subflows -- the 'while' loop body above never
++	 * executed --  then still mark the endp as used, which is somehow the
++	 * case. This avoids issues later when removing the endpoint and calling
++	 * __mark_subflow_endp_available(), which expects the increment here.
++	 */
++	if (signal_and_subflow && local.addr.id != msk->mpc_endpoint_id)
++		msk->pm.local_addr_used++;
 +
-+static struct intel_uncore_type gnr_uncore_imc = {
-+	SPR_UNCORE_MMIO_COMMON_FORMAT(),
-+	.name			= "imc",
-+	.fixed_ctr_bits		= 48,
-+	.fixed_ctr		= SNR_IMC_MMIO_PMON_FIXED_CTR,
-+	.fixed_ctl		= SNR_IMC_MMIO_PMON_FIXED_CTL,
-+	.event_descs		= gnr_uncore_imc_events,
-+};
-+
- static struct intel_uncore_type gnr_uncore_pciex8 = {
- 	SPR_UNCORE_PCI_COMMON_FORMAT(),
- 	.name			= "pciex8",
-@@ -6654,7 +6680,7 @@ static struct intel_uncore_type *gnr_unc
- 	NULL,
- 	&spr_uncore_pcu,
- 	&gnr_uncore_ubox,
--	&spr_uncore_imc,
-+	&gnr_uncore_imc,
- 	NULL,
- 	&gnr_uncore_upi,
- 	NULL,
+ 	mptcp_pm_nl_check_work_pending(msk);
+ }
+ 
 
 
