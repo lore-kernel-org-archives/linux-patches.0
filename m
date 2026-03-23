@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA78B3AC0EB;
-	Mon, 23 Mar 2026 15:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E5E3B2FEB;
+	Mon, 23 Mar 2026 15:14:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278857; cv=none; b=BaFxdQyOXLfG7n7P6R6TYHsj0vjtkGPFE7ryjss5OyzyoSMytec0XimFXXCa7KDgVyiTQv0uZ94kk4L4um33HrW0RBsYeZg2H16xvaBNDAxmmybpIKBFNV+S1I9s6JCJ+CZ+aVHq3WmKRBRm4HuUSlVhAEkAmNjVWt7YH6u56P0=
+	t=1774278860; cv=none; b=svWYMmXK4dg6negj7ZUMbxxqs6gwBkZ3o408tsHH0ueiWZjHc8ob9qQBWapjntpxyMzDuyxemjz/WZlHtszfGVHn/lk5a5zPdvegBAY+TtQIDiieXnrlFbI8s7QRqL2EljcYv3Hv2YK+I0XpBOwY6gE2KW46OFEMn67Felgrr1w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278857; c=relaxed/simple;
-	bh=swgZ750nisCCA9k5TCjend08luBlZdmoXC3268bJbd4=;
+	s=arc-20240116; t=1774278860; c=relaxed/simple;
+	bh=geYQScBO11h6ejrvHJFGvdBWcfQtFe3cmE1ukYwmgkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fop4na5YA4D+jCEgDeh1pRY1h/KF2xeo1vJcqdJOYyhk0IzGsR+dpzGqin1FKhjyKR2EI7l5tPhmp+MeqN78joY4toISLnjuwBmCUa4yxq8Jyxll8OC1kMoAhGl5YKWG9Ke27ALk7kG0AcKJ3rX1z9YUdi0nUW73WpZ+VM3qWkw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZQBybggh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KJ7TZXX5Dq6hykRhfincwJxvr1oheQIPEp1OPyPuW0UNfVRyKnlPH/lx60a8o0G/GI0+0oKZmsWQd+rikYgKOdvD6c3y5RxM+ENxvXj+yxY9o1LJfAT+eqpzFoCCbqvosPhJX2ouovipj07Ldmw5mi30U958Ka0D4gcD01Noddc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zo+JSiCZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZQBybggh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D6F3C2BC9E;
-	Mon, 23 Mar 2026 15:14:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zo+JSiCZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBA5C2BC9E;
+	Mon, 23 Mar 2026 15:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278856;
-	bh=swgZ750nisCCA9k5TCjend08luBlZdmoXC3268bJbd4=;
+	s=korg; t=1774278859;
+	bh=geYQScBO11h6ejrvHJFGvdBWcfQtFe3cmE1ukYwmgkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZQBybgghg4h3F5VV8PkTAxvtLSoOgvlE+bDRHbreaV9lWQZ5y/HTQ+8JJYguUQZz7
-	 qvhbeniM3E5ShR/e0AzXIB9lBhCtntFx3KjE9b7/PQI7NPVlyTJiWrdJ+omfmRbArg
-	 17uahOzbmnynI+F2WN0+Yr2QQxOTD3GDM+LclK18=
+	b=Zo+JSiCZp1fvC8S1dGphr+7xWF7qJRd5CBK1aoi+7bj3kgRMEPDYS5qQjb9wccngD
+	 o8iXWPsmmr0LNwOwD92NWHq9elxfnys2jiNZ75oy4BJPHq5K9U3ihsbG/ko2lIKoA1
+	 5mC7Wkhta4aNJ+Zr6IcBojR6tynR+7JfIRpYnXSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zqiang <qiang.zhang1211@gmail.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
-	Jianqiang kang <jianqkang@sina.cn>
-Subject: [PATCH 6.6 441/567] rcu/nocb: Fix possible invalid rdps->nocb_cb_kthread pointer access
-Date: Mon, 23 Mar 2026 14:46:01 +0100
-Message-ID: <20260323134544.865160413@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 442/567] f2fs: zone: fix to avoid inconsistence in between SIT and SSA
+Date: Mon, 23 Mar 2026 14:46:02 +0100
+Message-ID: <20260323134544.889206837@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,61 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Chao Yu <chao@kernel.org>
 
-[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
+[ Upstream commit 773704c1ef96a8b70d0d186ab725f50548de82c4 ]
 
-In the preparation stage of CPU online, if the corresponding
-the rdp's->nocb_cb_kthread does not exist, will be created,
-there is a situation where the rdp's rcuop kthreads creation fails,
-and then de-offload this CPU's rdp, does not assign this CPU's
-rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
-rdp's->rdp_gp->nocb_gp_kthread is still valid.
+w/ below testcase, it will cause inconsistence in between SIT and SSA.
 
-This will cause the subsequent re-offload operation of this offline
-CPU, which will pass the conditional check and the kthread_unpark()
-will access invalid rdp's->nocb_cb_kthread pointer.
+create_null_blk 512 2 1024 1024
+mkfs.f2fs -m /dev/nullb0
+mount /dev/nullb0 /mnt/f2fs/
+touch /mnt/f2fs/file
+f2fs_io pinfile set /mnt/f2fs/file
+fallocate -l 4GiB /mnt/f2fs/file
 
-This commit therefore use rdp's->nocb_gp_kthread instead of
-rdp_gp's->nocb_gp_kthread for safety check.
+F2FS-fs (nullb0): Inconsistent segment (0) type [1, 0] in SSA and SIT
+CPU: 5 UID: 0 PID: 2398 Comm: fallocate Tainted: G           O       6.13.0-rc1 #84
+Tainted: [O]=OOT_MODULE
+Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0xb3/0xd0
+ dump_stack+0x14/0x20
+ f2fs_handle_critical_error+0x18c/0x220 [f2fs]
+ f2fs_stop_checkpoint+0x38/0x50 [f2fs]
+ do_garbage_collect+0x674/0x6e0 [f2fs]
+ f2fs_gc_range+0x12b/0x230 [f2fs]
+ f2fs_allocate_pinning_section+0x5c/0x150 [f2fs]
+ f2fs_expand_inode_data+0x1cc/0x3c0 [f2fs]
+ f2fs_fallocate+0x3c3/0x410 [f2fs]
+ vfs_fallocate+0x15f/0x4b0
+ __x64_sys_fallocate+0x4a/0x80
+ x64_sys_call+0x15e8/0x1b80
+ do_syscall_64+0x68/0x130
+ entry_SYSCALL_64_after_hwframe+0x67/0x6f
+RIP: 0033:0x7f9dba5197ca
+F2FS-fs (nullb0): Stopped filesystem due to reason: 4
 
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+The reason is f2fs_gc_range() may try to migrate block in curseg, however,
+its SSA block is not uptodate due to the last summary block data is still
+in cache of curseg.
+
+In this patch, we add a condition in f2fs_gc_range() to check whether
+section is opened or not, and skip block migration for opened section.
+
+Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
+Reviewed-by: Daeho Jeong <daehojeong@google.com>
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 [ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree_nocb.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/f2fs/gc.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1221,7 +1221,6 @@ static long rcu_nocb_rdp_offload(void *a
- 	struct rcu_segcblist *cblist = &rdp->cblist;
- 	unsigned long flags;
- 	int wake_gp;
--	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2019,6 +2019,9 @@ int f2fs_gc_range(struct f2fs_sb_info *s
+ 		if (!get_valid_blocks(sbi, segno, true))
+ 			continue;
  
- 	WARN_ON_ONCE(rdp->cpu != raw_smp_processor_id());
- 	/*
-@@ -1231,7 +1230,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	if (!rdp->nocb_gp_rdp)
- 		return -EINVAL;
- 
--	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
-+	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
- 		return -EINVAL;
- 
- 	pr_info("Offloading %d\n", rdp->cpu);
-@@ -1260,7 +1259,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	 */
- 	wake_gp = rdp_offload_toggle(rdp, true, flags);
- 	if (wake_gp)
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		wake_up_process(rdp->nocb_gp_kthread);
- 	swait_event_exclusive(rdp->nocb_state_wq,
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_CB) &&
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_GP));
++		if (IS_CURSEC(sbi, GET_SEC_FROM_SEG(sbi, segno)))
++			continue;
++
+ 		do_garbage_collect(sbi, segno, &gc_list, FG_GC,
+ 						dry_run_sections == 0);
+ 		put_gc_inode(&gc_list);
 
 
