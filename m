@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B7C33BD25E;
-	Mon, 23 Mar 2026 16:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 491E6285417;
+	Mon, 23 Mar 2026 16:17:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282655; cv=none; b=ZmLnyi39aiWN5kpQgPWCujqzyWWk5vcHkBwkYPuPBk8DMwaARm6N9kFNgPcyaIROcruApHNTsYyjQapenESiFh7dzMDtBsUqDJhhifVLAH1kXBMiYEUbYVSxdFFIBXrQOQgubxAJIg1slpb+Wzh39UpzADmkc23iD6BnFsaoGf8=
+	t=1774282658; cv=none; b=BriHsf6XL8fWw7JPxxOME28+4iqXLNRoeEFIS50gAwSGzAeBBUXQiMxiWs9oZE9XPrUT/q9iBaPFeTMlOt0nGqy9y+VOs8sCs/mJISzajyfSSzJzK+s4fGr4cn6dC8/F2o+0ZqlXcdw1EqsNh2u8/ULN4rrYv+Xq2NPL4g4f1kg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282655; c=relaxed/simple;
-	bh=fjruk6GVN1SM/ee+6euWIN1MhOvaz/AKKODKbm/rE68=;
+	s=arc-20240116; t=1774282658; c=relaxed/simple;
+	bh=WwkL3o/iA0k7H0zb2ecsbuFlM6UvtVu2vDxqaw7aD9I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=PzwFymxosBWt2Q30SKAx90REKpo5F2r2iN+Vby9GENMIu93p+XwSVleHM5l7hkNfLXYViStadhCcM5+ZsD64zTDNChgDzdNi7oHXUFSMzEtrUgdnUvxTkPrsAb36Au3hxKHads+p5Vc29MR7ngLgXtfN+nrF/6QAlCbCd0YMeCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnmT2utP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P5CIymkS7tTwCnMWySTSUNSNgFNPvzZPmzTSuyWBOuwapzP3vWxd7qAdbtGSO8OEgdGNJEP6Pqr+At2WwPexGv8ubNERQSQpHuAwgaxxKWVx7XF6z3mDHFkaQcqCtZ+CyCfVEvR0VEWEoGlm+4Iggche2IXaEY1GqMlNN/dYEuI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gP/hnyzJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnmT2utP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87F6FC4CEF7;
-	Mon, 23 Mar 2026 16:17:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gP/hnyzJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F829C2BC9E;
+	Mon, 23 Mar 2026 16:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282654;
-	bh=fjruk6GVN1SM/ee+6euWIN1MhOvaz/AKKODKbm/rE68=;
+	s=korg; t=1774282657;
+	bh=WwkL3o/iA0k7H0zb2ecsbuFlM6UvtVu2vDxqaw7aD9I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnmT2utPoK4VIpCebJXDVvhLq7PkHxzAy6pUtzp/RJROu8Y6mTTli93SO9/TjogJO
-	 l3VIJyn/GSn4MZsUt6qOjQyk8PucwGVjErgcuwk2aWYVgnk4I8W0q8WB1uFBHJ/chj
-	 TWR/DAsm8zhGdwFGColOAmeaTLS5L0sy87dj3RR4=
+	b=gP/hnyzJrhHMDIDVjet1l0QMVLwCZQSU1z42s+zVchWyldd/cS/jO1TsmkpoYsTbu
+	 QxuR7iw2z30p6XHIAZI/+XU9ANcWfzFDZGXgZLM0V2JvepD5kieWhL4yqQiHsKAmgx
+	 RXDS4vCza75x6C01NZEA9u4E498LeZaPusXdxDbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Keith Busch <kbusch@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 184/481] nvme-pci: Fix slab-out-of-bounds in nvme_dbbuf_set
-Date: Mon, 23 Mar 2026 14:42:46 +0100
-Message-ID: <20260323134529.691548355@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.1 231/481] drm/bridge: ti-sn65dsi86: Enable HPD polling if IRQ is not used
+Date: Mon, 23 Mar 2026 14:43:33 +0100
+Message-ID: <20260323134530.765481881@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -48,134 +44,57 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-[ Upstream commit b4e78f1427c7d6859229ae9616df54e1fc05a516 ]
+commit 0b87d51690dd5131cbe9fbd23746b037aab89815 upstream.
 
-dev->online_queues is a count incremented in nvme_init_queue. Thus,
-valid indices are 0 through dev->online_queues − 1.
+Fallback to polling to detect hotplug events on systems without
+interrupts.
 
-This patch fixes the loop condition to ensure the index stays within the
-valid range. Index 0 is excluded because it is the admin queue.
+On systems where the interrupt line of the bridge is not connected,
+the bridge cannot notify hotplug events. Only add the
+DRM_BRIDGE_OP_HPD flag if an interrupt has been registered
+otherwise remain in polling mode.
 
-KASAN splat:
-
-==================================================================
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
-Read of size 2 at addr ffff88800592a574 by task kworker/u8:5/74
-
-CPU: 0 UID: 0 PID: 74 Comm: kworker/u8:5 Not tainted 6.19.0-dirty #10 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: nvme-reset-wq nvme_reset_work
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xea/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x5d0 mm/kasan/report.c:482
- kasan_report+0xdc/0x110 mm/kasan/report.c:595
- __asan_report_load2_noabort+0x18/0x20 mm/kasan/report_generic.c:379
- nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
- nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
- nvme_reset_work+0x36b/0x8c0 drivers/nvme/host/pci.c:3252
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
- </TASK>
-
-Allocated by task 34 on cpu 1 at 4.241550s:
- kasan_save_stack+0x2c/0x60 mm/kasan/common.c:57
- kasan_save_track+0x1c/0x70 mm/kasan/common.c:78
- kasan_save_alloc_info+0x3c/0x50 mm/kasan/generic.c:570
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xb5/0xc0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5657 [inline]
- __kmalloc_node_noprof+0x2bf/0x8d0 mm/slub.c:5663
- kmalloc_array_node_noprof include/linux/slab.h:1075 [inline]
- nvme_pci_alloc_dev drivers/nvme/host/pci.c:3479 [inline]
- nvme_probe+0x2f1/0x1820 drivers/nvme/host/pci.c:3534
- local_pci_probe+0xef/0x1c0 drivers/pci/pci-driver.c:324
- pci_call_probe drivers/pci/pci-driver.c:392 [inline]
- __pci_device_probe drivers/pci/pci-driver.c:417 [inline]
- pci_device_probe+0x743/0x920 drivers/pci/pci-driver.c:451
- call_driver_probe drivers/base/dd.c:583 [inline]
- really_probe+0x29b/0xb70 drivers/base/dd.c:661
- __driver_probe_device+0x3b0/0x4a0 drivers/base/dd.c:803
- driver_probe_device+0x56/0x1f0 drivers/base/dd.c:833
- __driver_attach_async_helper+0x155/0x340 drivers/base/dd.c:1159
- async_run_entry_fn+0xa6/0x4b0 kernel/async.c:129
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-The buggy address belongs to the object at ffff88800592a000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 244 bytes to the right of
- allocated 1152-byte region [ffff88800592a000, ffff88800592a480)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x5928
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-anon flags: 0xfffffc0000040(head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: f5(slab)
-raw: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-raw: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-head: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000003 ffffea0000164a01 00000000ffffffff 00000000ffffffff
-head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88800592a400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff88800592a480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88800592a500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                                                             ^
- ffff88800592a580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800592a600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-
-Fixes: 0f0d2c876c96 (nvme: free sq/cq dbbuf pointers when dbbuf set fails)
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
+Cc: stable@vger.kernel.org # 6.16: 9133bc3f0564: drm/bridge: ti-sn65dsi86: Add
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[dianders: Adjusted Fixes/stable line based on discussion]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260206123758.374555-1-fra.schnyder@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 7ee4362f0ccae..9f3d5959755fd 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -329,7 +329,7 @@ static void nvme_dbbuf_set(struct nvme_dev *dev)
- 		/* Free memory and continue on */
- 		nvme_dbbuf_dma_free(dev);
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1307,6 +1307,7 @@ static int ti_sn_bridge_probe(struct aux
+ {
+ 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(adev->dev.parent);
+ 	struct device_node *np = pdata->dev->of_node;
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
+ 	int ret;
  
--		for (i = 1; i <= dev->online_queues; i++)
-+		for (i = 1; i < dev->online_queues; i++)
- 			nvme_dbbuf_free(&dev->queues[i]);
- 	}
- }
--- 
-2.51.0
-
+ 	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+@@ -1326,8 +1327,9 @@ static int ti_sn_bridge_probe(struct aux
+ 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
+ 
+ 	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
+-		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
+-				    DRM_BRIDGE_OP_HPD;
++		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
++		if (client->irq)
++			pdata->bridge.ops |= DRM_BRIDGE_OP_HPD;
+ 		/*
+ 		 * If comms were already enabled they would have been enabled
+ 		 * with the wrong value of HPD_DISABLE. Update it now. Comms
 
 
