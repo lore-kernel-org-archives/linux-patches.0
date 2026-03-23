@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FD43AB295;
-	Mon, 23 Mar 2026 14:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD78C3AF66A;
+	Mon, 23 Mar 2026 14:53:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277618; cv=none; b=PjKsukSmzFl+RsaFYbWwaECDNArJRSE17+5Aypsyq7fzZQ1p8kiM0yYwNHwtljjOYSQqn2erTxcyUbEyNgHNOcjlYViJzi/0X90r91bsdbHV+toHhqOU9axl4CVi5dOzKTwwIlmxD+jH9ql5W+hExX7s7teAnD60ybpVJmpVHwk=
+	t=1774277620; cv=none; b=iiyXVDNe00z15iMO+bqeux7QRESKxsgeE5NeBw1gD2GlyebWn4sjOUd0mxqfVSWk5fQauADE540g1bNru/PqYsuX6+aj4MX2WMENLVj0SPgL1p4D5J79L2gKH1Y74DReClMGPk2/nu6G2W0FKUHPMj4LTWJTsLmF89gTtZ2Nb1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277618; c=relaxed/simple;
-	bh=XbjOLcqtP30lVa/It6CUL7Os0hjrdq7GEyj/brI67Rc=;
+	s=arc-20240116; t=1774277620; c=relaxed/simple;
+	bh=0etu4/JAD+lxf6/p8bCARvQ8nPMT6TrcIfARZ5bzTf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=imhxSDLc/lE7tH1p6eMGJW5E7TFgIJtxWzbpHKjW96dFKMOob9kuyVuX1rKG7XhznvSco8+j5a/zEPAVIn6o7HqQQ3hYy8SG6FUzQpOFe7jaqzjnqvAPYBDJkITpQcS+0wJGSxJsKDVR0vxhpFpd1nfap2kVPBNJkL5jzIZtozU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sja4mFzA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cUwaf/WUeyE6NnyoeOvBQOLgBIbn0237T9aEpVDd+yG6wPKCELwU9kHkqG8p8tLaFrhiNiIoVv6JOm6b3J5yS/3AAoxePLrBkK+eAKhga4aJgYGgkrMBz2jOyb0Q7iLGYsmjVt4PXKgs6KG+cfVKKgZly25KSiIZnPm1Jg94nPM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tJIMFAfa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sja4mFzA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31E2C2BCB9;
-	Mon, 23 Mar 2026 14:53:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tJIMFAfa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43653C2BCB1;
+	Mon, 23 Mar 2026 14:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277617;
-	bh=XbjOLcqtP30lVa/It6CUL7Os0hjrdq7GEyj/brI67Rc=;
+	s=korg; t=1774277620;
+	bh=0etu4/JAD+lxf6/p8bCARvQ8nPMT6TrcIfARZ5bzTf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sja4mFzAexjIdHwfojcC4i7glPP3OJjlItCTmzqIIKV+MujtcxtTv5mR2TJx54Qzd
-	 ECYMVIfhAVSlArnsBqNKNuPsYXLrYT7nu+WJGJFwGw9ZhKa2+i6EaeKQ+J7knhRNaW
-	 pMOOC6F+hLMRBHBDhbDJVoR6mWGH4J/H9o72G8Kc=
+	b=tJIMFAfaG5v+dD3EDYQQ/MmXJ0By/J96Ne2jFqBKOYnJX3XO8hwUC231WKrUGTo0E
+	 rZAPWOWXdA/U3NX/Ey/ToqeoZREyV0a111vjCNWPHsBAyztEEC0R4YARSTjQNwZWl1
+	 mrThqi5O9ZGGaur2PLw48ebL7wVBaPtiZ1PTcTsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 027/567] memory: mtk-smi: Convert to platform remove callback returning void
-Date: Mon, 23 Mar 2026 14:39:07 +0100
-Message-ID: <20260323134534.445279401@linuxfoundation.org>
+Subject: [PATCH 6.6 028/567] memory: mtk-smi: fix device leaks on common probe
+Date: Mon, 23 Mar 2026 14:39:08 +0100
+Message-ID: <20260323134534.472747630@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,93 +47,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 08c1aeaa45ce0fd18912e92c6705586c8aa5240f ]
+[ Upstream commit 6cfa038bddd710f544076ea2ef7792fc82fbedd6 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Make sure to drop the reference taken when looking up the SMI device
+during common probe on late probe failure (e.g. probe deferral) and on
+driver unbind.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
-
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/5c35a33cfdc359842e034ddd2e9358f10e91fa1f.1702822744.git.u.kleine-koenig@pengutronix.de
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Stable-dep-of: 6cfa038bddd7 ("memory: mtk-smi: fix device leaks on common probe")
+Fixes: 47404757702e ("memory: mtk-smi: Add device link for smi-sub-common")
+Fixes: 038ae37c510f ("memory: mtk-smi: add missing put_device() call in mtk_smi_device_link_common")
+Cc: stable@vger.kernel.org	# 5.16: 038ae37c510f
+Cc: stable@vger.kernel.org	# 5.16
+Cc: Yong Wu <yong.wu@mediatek.com>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20251121164624.13685-2-johan@kernel.org
+Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/mtk-smi.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/memory/mtk-smi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
-index 6523cb5105182..572c7fbdcfd3a 100644
+index 572c7fbdcfd3a..668afd12e4c51 100644
 --- a/drivers/memory/mtk-smi.c
 +++ b/drivers/memory/mtk-smi.c
-@@ -566,14 +566,13 @@ static int mtk_smi_larb_probe(struct platform_device *pdev)
+@@ -563,6 +563,7 @@ static int mtk_smi_larb_probe(struct platform_device *pdev)
+ err_pm_disable:
+ 	pm_runtime_disable(dev);
+ 	device_link_remove(dev, larb->smi_common_dev);
++	put_device(larb->smi_common_dev);
  	return ret;
  }
  
--static int mtk_smi_larb_remove(struct platform_device *pdev)
-+static void mtk_smi_larb_remove(struct platform_device *pdev)
- {
- 	struct mtk_smi_larb *larb = platform_get_drvdata(pdev);
- 
- 	device_link_remove(&pdev->dev, larb->smi_common_dev);
- 	pm_runtime_disable(&pdev->dev);
- 	component_del(&pdev->dev, &mtk_smi_larb_component_ops);
--	return 0;
- }
- 
- static int __maybe_unused mtk_smi_larb_resume(struct device *dev)
-@@ -616,7 +615,7 @@ static const struct dev_pm_ops smi_larb_pm_ops = {
- 
- static struct platform_driver mtk_smi_larb_driver = {
- 	.probe	= mtk_smi_larb_probe,
--	.remove	= mtk_smi_larb_remove,
-+	.remove_new = mtk_smi_larb_remove,
- 	.driver	= {
- 		.name = "mtk-smi-larb",
- 		.of_match_table = mtk_smi_larb_of_ids,
-@@ -795,14 +794,13 @@ static int mtk_smi_common_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int mtk_smi_common_remove(struct platform_device *pdev)
-+static void mtk_smi_common_remove(struct platform_device *pdev)
- {
- 	struct mtk_smi *common = dev_get_drvdata(&pdev->dev);
- 
+@@ -801,6 +802,7 @@ static void mtk_smi_common_remove(struct platform_device *pdev)
  	if (common->plat->type == MTK_SMI_GEN2_SUB_COMM)
  		device_link_remove(&pdev->dev, common->smi_common_dev);
  	pm_runtime_disable(&pdev->dev);
--	return 0;
++	put_device(common->smi_common_dev);
  }
  
  static int __maybe_unused mtk_smi_common_resume(struct device *dev)
-@@ -842,7 +840,7 @@ static const struct dev_pm_ops smi_common_pm_ops = {
- 
- static struct platform_driver mtk_smi_common_driver = {
- 	.probe	= mtk_smi_common_probe,
--	.remove = mtk_smi_common_remove,
-+	.remove_new = mtk_smi_common_remove,
- 	.driver	= {
- 		.name = "mtk-smi-common",
- 		.of_match_table = mtk_smi_common_of_ids,
 -- 
 2.51.0
 
