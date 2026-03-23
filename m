@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473893B775A;
-	Mon, 23 Mar 2026 16:23:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2507D3B95FD;
+	Mon, 23 Mar 2026 16:23:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283004; cv=none; b=LwSo0Ij5dpKV7oMqtfMItPeIXk0f/cbZYYNLpcPjWcMMv70RRSbekrMk2l8+5XW01Je0/3OjMqpcMTJFfak2UxdtBy53g0rMhqELPJkZyv8hPP+jzMmB8DfhYf0fGoS/ML2tYvCQGJ33nx0bhm8KKJFj566XSrI5qd3d45bNLF8=
+	t=1774283007; cv=none; b=UgW+2MF4av6T/Mx7cUTVjjsOCE23AcqfAJMGlTpOiYTStKh96vLu1fhFs66+92ouG8O4mpfDqvDbVVibVBx6/TEgLO9YiBOtGeXcDcPgR4gS7y8/J+6cm3OCyXJQ2NJAQgL8xC7cWs+ZTZJNQiJIKw7MShc2TG7Bx+muZwKTiYA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283004; c=relaxed/simple;
-	bh=E3dVqjA1Ef0h4LUh/jB+VmM5QTEU34+G2IJga3BOLek=;
+	s=arc-20240116; t=1774283007; c=relaxed/simple;
+	bh=Ox8TFkaGWN3k2+XnV7xx1gr+ZzuDBHZXgeFELlGMKVQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HV9TSaNVu3A5raM5P1UYDLyIWK4iJiF7aTS6DDNhXdFTlx+HddNkiDmsuOaab/0OH0IRYkCwsNVn4S2sgI1S/A7BQ5vEf6A4vWNQisQ5IhLgLDvo71lW0BOhnm/P7RJ67hSf0c7CfXjX7jpowyLiWVTkPYpfmVi4B6mZ4YY1fC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoTpvbYd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nuj7yLe0XDj2++6tLO++8qqsJmkANCmn2pi3b+dw1B/4yj5lgRBHO9eRPWqUmboVFwurUHR1KDyV0M9UD/T2mkfoQnfBiX0Ar5daO+lIbIAmt9KtD62/MDVuDBN9YAQfGiq3Qc+FFKpE0M7rsyzRIM9aHfYL0/poL+B/zLinaT8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rrOyQmjp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoTpvbYd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC98CC2BC9E;
-	Mon, 23 Mar 2026 16:23:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rrOyQmjp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9BCAC2BCB3;
+	Mon, 23 Mar 2026 16:23:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283004;
-	bh=E3dVqjA1Ef0h4LUh/jB+VmM5QTEU34+G2IJga3BOLek=;
+	s=korg; t=1774283007;
+	bh=Ox8TFkaGWN3k2+XnV7xx1gr+ZzuDBHZXgeFELlGMKVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoTpvbYdOJwtRIGHIh0fPmb4GWoy5WztS4GUkyZ4S6cQlBoOVl8jT0DvGC08GQyTM
-	 LMGe+CVeWebyfOonXB9JqbiXKFWy0Webk/ZTdWNLuxJeNGLv/6FpQ6If2IB9U017Ld
-	 3k+ML82TpeElv5CLWfz0MFd3FwXxKU46Q0P94tT8=
+	b=rrOyQmjplw7HW22d01HKe8rO4OhB7WuoD3NJB79bU88jmL6aivvC7JwA8zAsaSYmO
+	 BpfY3CrqQ5GduwNY8oHuMo/AQUeZnNXW8jZ1X3FZ6PJltX5gQa02gxSym83WlwNUSG
+	 QC1q9HrX+yKzvwPKZ7erhHmzCUTvQf9m8cTiXvk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 364/481] pmdomain: bcm: bcm2835-power: Increase ASB control timeout
-Date: Mon, 23 Mar 2026 14:45:46 +0100
-Message-ID: <20260323134533.986105843@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Sunitha Mekala <sunithax.d.mekala@intel.com>
+Subject: [PATCH 6.1 365/481] ice: remove unused buffer copy code in ice_sq_send_cmd_retry()
+Date: Mon, 23 Mar 2026 14:45:47 +0100
+Message-ID: <20260323134534.010611754@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -46,81 +48,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Michal Schmidt <mschmidt@redhat.com>
 
-[ Upstream commit b826d2c0b0ecb844c84431ba6b502e744f5d919a ]
+[ Upstream commit 43a630e37e259fee83ab3fd769c42e2fed97ca81 ]
 
-The bcm2835_asb_control() function uses a tight polling loop to wait
-for the ASB bridge to acknowledge a request. During intensive workloads,
-this handshake intermittently fails for V3D's master ASB on BCM2711,
-resulting in "Failed to disable ASB master for v3d" errors during
-runtime PM suspend. As a consequence, the failed power-off leaves V3D in
-a broken state, leading to bus faults or system hangs on later accesses.
+The 'buf_cpy'-related code in ice_sq_send_cmd_retry() looks broken.
+'buf' is nowhere copied into 'buf_cpy'.
 
-As the timeout is insufficient in some scenarios, increase the polling
-timeout from 1us to 5us, which is still negligible in the context of a
-power domain transition. Also, replace the open-coded ktime_get_ns()/
-cpu_relax() polling loop with readl_poll_timeout_atomic().
+The reason this does not cause problems is that all commands for which
+'is_cmd_for_retry' is true go with a NULL buf.
 
-Cc: stable@vger.kernel.org
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Let's remove 'buf_cpy'. Add a WARN_ON in case the assumption no longer
+holds in the future.
+
+Signed-off-by: Michal Schmidt <mschmidt@redhat.com>
+Reviewed-by: Arkadiusz Kubalewski <arkadiusz.kubalewski@intel.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Tested-by: Sunitha Mekala <sunithax.d.mekala@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 326256c0a72d ("ice: reintroduce retry mechanism for indirect AQ")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/bcm/bcm2835-power.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/intel/ice/ice_common.c |   13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
---- a/drivers/soc/bcm/bcm2835-power.c
-+++ b/drivers/soc/bcm/bcm2835-power.c
-@@ -9,6 +9,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/mfd/bcm2835-pm.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-@@ -152,7 +153,6 @@ struct bcm2835_power {
- static int bcm2835_asb_control(struct bcm2835_power *power, u32 reg, bool enable)
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -1596,7 +1596,6 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
  {
- 	void __iomem *base = power->asb;
--	u64 start;
- 	u32 val;
+ 	struct ice_aq_desc desc_cpy;
+ 	bool is_cmd_for_retry;
+-	u8 *buf_cpy = NULL;
+ 	u8 idx = 0;
+ 	u16 opcode;
+ 	int status;
+@@ -1606,11 +1605,8 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 	memset(&desc_cpy, 0, sizeof(desc_cpy));
  
- 	switch (reg) {
-@@ -165,8 +165,6 @@ static int bcm2835_asb_control(struct bc
- 		break;
+ 	if (is_cmd_for_retry) {
+-		if (buf) {
+-			buf_cpy = kzalloc(buf_size, GFP_KERNEL);
+-			if (!buf_cpy)
+-				return -ENOMEM;
+-		}
++		/* All retryable cmds are direct, without buf. */
++		WARN_ON(buf);
+ 
+ 		memcpy(&desc_cpy, desc, sizeof(desc_cpy));
  	}
+@@ -1622,17 +1618,12 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 		    hw->adminq.sq_last_status != ICE_AQ_RC_EBUSY)
+ 			break;
  
--	start = ktime_get_ns();
+-		if (buf_cpy)
+-			memcpy(buf, buf_cpy, buf_size);
 -
- 	/* Enable the module's async AXI bridges. */
- 	if (enable) {
- 		val = readl(base + reg) & ~ASB_REQ_STOP;
-@@ -175,11 +173,9 @@ static int bcm2835_asb_control(struct bc
- 	}
- 	writel(PM_PASSWORD | val, base + reg);
+ 		memcpy(desc, &desc_cpy, sizeof(desc_cpy));
  
--	while (!!(readl(base + reg) & ASB_ACK) == enable) {
--		cpu_relax();
--		if (ktime_get_ns() - start >= 1000)
--			return -ETIMEDOUT;
--	}
-+	if (readl_poll_timeout_atomic(base + reg, val,
-+				      !!(val & ASB_ACK) != enable, 0, 5))
-+		return -ETIMEDOUT;
+ 		mdelay(ICE_SQ_SEND_DELAY_TIME_MS);
  
- 	return 0;
+ 	} while (++idx < ICE_SQ_SEND_MAX_EXECUTE);
+ 
+-	kfree(buf_cpy);
+-
+ 	return status;
  }
+ 
 
 
