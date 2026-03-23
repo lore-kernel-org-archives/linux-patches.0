@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6201387563;
-	Mon, 23 Mar 2026 14:06:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 452BB387563;
+	Mon, 23 Mar 2026 14:06:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274807; cv=none; b=pBeEBM9PR5n2BIWSZoskhOizauHMjMNH5uW+Js9GUwQXrbB0FVGXsss7WHm0o8e19kMui7L0ea4Yx+axiSZDXPAw1vZYB8BmL0sqSdZzMW3wp42WOrX80GJVRDtNR9q5gdgD5gV2bMQ3If9PfrYbG29WfCEc0c2c4MDfNn4/WBY=
+	t=1774274811; cv=none; b=EUamaXcwEgOPPsA85rqR/EQVL0sNbeTu6pUhaj6mn7+3T55PF9fezFHNJAD+ViwfR0Ndg/LCf/NoOHU5F6zCZo5BvWdqS5azCqpR1f00TPB3o/c/DzbUWApRmdUCFORHxf6mJZByjnAP1qSwinTO30pHcC9viBCgHeIWrljlejM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274807; c=relaxed/simple;
-	bh=NHDZO5dJYU0mMWz/itVtQwLFWFWVz9NSmaahRgh26Kg=;
+	s=arc-20240116; t=1774274811; c=relaxed/simple;
+	bh=0ffgAKdcl4ddkhjCgpFYlqyEi/xpCq4aHZe2LgpNk6Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DahVnDqcNW871tDIpd7EHu8FB/3eeSlW+e6fWdejtsJhg4kopCDvKk0otuK3kyzsMdOTGOIyGqitMmc01/psxeubhZgCN+qas57MP/uehPWXwxZEY3U/mAyl7yxczW2ZpU+vZKgtJiS7g5Nm99kP+k+iv1QUobTzNm70ybOFDqU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=njNC9ikb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KRqKqJ1N2YBtwWDDYjZrsJwA6fzpM89VjG+2yH2SyNhMauCKFCbCak5hD9GIJI+V+AAJpCrvHwvoxaXDSdFnB6+F7ZRR3UexpR21D5ZjFkzwxDv+hAS05EWoHj7z2OIpzxoyNSXHUZKrsSA8z69n6iJXlunwv4xB91XbuX8T1eo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEYSyuKw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="njNC9ikb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5710CC4CEF7;
-	Mon, 23 Mar 2026 14:06:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEYSyuKw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66837C2BC9E;
+	Mon, 23 Mar 2026 14:06:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274807;
-	bh=NHDZO5dJYU0mMWz/itVtQwLFWFWVz9NSmaahRgh26Kg=;
+	s=korg; t=1774274810;
+	bh=0ffgAKdcl4ddkhjCgpFYlqyEi/xpCq4aHZe2LgpNk6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=njNC9ikbZkzj8UQTysjrssqQUALAdjX8rNtZ2RI9rcymQGJDeC43YtCtTjS1LZ41W
-	 D+wgoi75W5r7rXLeqyDRPNLIvR0nZlfa93Cs4uBNcrOklsrCoV9PMFdBNYLWfmrlB5
-	 fVKg8CS6J7dlN9Pd4j1OFyMo/QSx7SXlx5s66v24=
+	b=LEYSyuKwtjH9TfnWXlA43+6hlTfknyrZxlMM+nmyRbJJJ9eI9F7bNYI5iivVOJwU7
+	 B5NxiKOJIA8uy5G4xqYSk8moHrULgzIjfsP+Ml9wvIIiDXg/7e64I0KTaiR4y3pJI4
+	 C5notF3Mcs1YbchmM/FXIo4nV/z/tA50Wj0smRJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 114/212] arm64: dts: renesas: r9a09g057: Add RTC node
-Date: Mon, 23 Mar 2026 14:45:35 +0100
-Message-ID: <20260323134507.379115286@linuxfoundation.org>
+Subject: [PATCH 6.18 115/212] arm64: dts: renesas: r9a09g057: Remove wdt{0,2,3} nodes
+Date: Mon, 23 Mar 2026 14:45:36 +0100
+Message-ID: <20260323134507.413276335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,48 +51,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-[ Upstream commit cfc733da4e79018f88d8ac5f3a5306abbba8ef89 ]
+[ Upstream commit a3f34651de4287138c0da19ba321ad72622b4af3 ]
 
-Add RTC node to Renesas RZ/V2H ("R9A09G057") SoC DTSI.
+The HW user manual for the Renesas RZ/V2H(P) SoC (a.k.a r9a09g057)
+states that only WDT1 is supposed to be accessed by the CA55 cores.
+WDT0 is supposed to be used by the CM33 core, WDT2 is supposed
+to be used by the CR8 core 0, and WDT3 is supposed to be used
+by the CR8 core 1.
 
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Remove wdt{0,2,3} from the SoC specific device tree to make it
+compliant with the specification from the HW manual.
+
+This change is harmless as there are currently no users of the
+wdt{0,2,3} device tree nodes, only the wdt1 node is actually used.
+
+Fixes: 095105496e7d ("arm64: dts: renesas: r9a09g057: Add WDT0-WDT3 nodes")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20251107210706.45044-4-ovidiu.panait.rb@renesas.com
+Link: https://patch.msgid.link/20260203124247.7320-3-fabrizio.castro.jz@renesas.com
 Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Stable-dep-of: a3f34651de42 ("arm64: dts: renesas: r9a09g057: Remove wdt{0,2,3} nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g057.dtsi | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ arch/arm64/boot/dts/renesas/r9a09g057.dtsi | 30 ----------------------
+ 1 file changed, 30 deletions(-)
 
 diff --git a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-index 630f7a98df386..f59c3040f536a 100644
+index f59c3040f536a..100d5cab9b12f 100644
 --- a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
 +++ b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-@@ -586,6 +586,21 @@ wdt3: watchdog@13000400 {
+@@ -546,16 +546,6 @@ ostm7: timer@12c03000 {
  			status = "disabled";
  		};
  
-+		rtc: rtc@11c00800 {
-+			compatible = "renesas,r9a09g057-rtca3", "renesas,rz-rtca3";
-+			reg = <0 0x11c00800 0 0x400>;
-+			interrupts = <GIC_SPI 524 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 525 IRQ_TYPE_EDGE_RISING>,
-+				     <GIC_SPI 526 IRQ_TYPE_EDGE_RISING>;
-+			interrupt-names = "alarm", "period", "carry";
-+			clocks = <&cpg CPG_MOD 0x53>, <&rtxin_clk>;
-+			clock-names = "bus", "counter";
-+			power-domains = <&cpg>;
-+			resets = <&cpg 0x79>, <&cpg 0x7a>;
-+			reset-names = "rtc", "rtest";
-+			status = "disabled";
-+		};
-+
- 		scif: serial@11c01400 {
- 			compatible = "renesas,scif-r9a09g057";
- 			reg = <0 0x11c01400 0 0x400>;
+-		wdt0: watchdog@11c00400 {
+-			compatible = "renesas,r9a09g057-wdt";
+-			reg = <0 0x11c00400 0 0x400>;
+-			clocks = <&cpg CPG_MOD 0x4b>, <&cpg CPG_MOD 0x4c>;
+-			clock-names = "pclk", "oscclk";
+-			resets = <&cpg 0x75>;
+-			power-domains = <&cpg>;
+-			status = "disabled";
+-		};
+-
+ 		wdt1: watchdog@14400000 {
+ 			compatible = "renesas,r9a09g057-wdt";
+ 			reg = <0 0x14400000 0 0x400>;
+@@ -566,26 +556,6 @@ wdt1: watchdog@14400000 {
+ 			status = "disabled";
+ 		};
+ 
+-		wdt2: watchdog@13000000 {
+-			compatible = "renesas,r9a09g057-wdt";
+-			reg = <0 0x13000000 0 0x400>;
+-			clocks = <&cpg CPG_MOD 0x4f>, <&cpg CPG_MOD 0x50>;
+-			clock-names = "pclk", "oscclk";
+-			resets = <&cpg 0x77>;
+-			power-domains = <&cpg>;
+-			status = "disabled";
+-		};
+-
+-		wdt3: watchdog@13000400 {
+-			compatible = "renesas,r9a09g057-wdt";
+-			reg = <0 0x13000400 0 0x400>;
+-			clocks = <&cpg CPG_MOD 0x51>, <&cpg CPG_MOD 0x52>;
+-			clock-names = "pclk", "oscclk";
+-			resets = <&cpg 0x78>;
+-			power-domains = <&cpg>;
+-			status = "disabled";
+-		};
+-
+ 		rtc: rtc@11c00800 {
+ 			compatible = "renesas,r9a09g057-rtca3", "renesas,rz-rtca3";
+ 			reg = <0 0x11c00800 0 0x400>;
 -- 
 2.51.0
 
