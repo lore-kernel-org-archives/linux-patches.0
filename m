@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A923ACF03;
-	Mon, 23 Mar 2026 14:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1604F2C181;
+	Mon, 23 Mar 2026 14:21:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275688; cv=none; b=Z0m7J/RzX+p/p3sjb2HnIBKYmP16Pjtr6eSrMZhltdnWcEJCdmMR1wZceQdvXD4auScD2a/1kRjyKhbK0mJXNuNa2DbMJThNMYBGtRy4eNLpmZ5CwT+UCDWTzrv34Bdh27XgnQ0ylYAZiamCuHJMZezfV988ZeqwWX0BE0eQPNM=
+	t=1774275691; cv=none; b=NQlsLNBTtEJZNXKmtKLuVg3VIDvHklMXvZwylFOuWV8UDe3pYnPhEOJOfp5Tsxm7q1Fg7++r5OpGPug/4uSqatOjH3s0rp6ArVWRVBKDgO/At33nmFqKPHqIarNpqBkCAqrMi4vdftnn97+C054DUgWXCGgXN78WitXD8iDW2NM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275688; c=relaxed/simple;
-	bh=GD0ww/ZP5oY3AlUI1XuA2g8zxu47eaTpyGd4H+LFO8E=;
+	s=arc-20240116; t=1774275691; c=relaxed/simple;
+	bh=xmXccoLUHRb96XMtXe8+ONaj0ApHLFzK5XXS1F8ZiVI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gT5WIDeldLdYWaeoJ6pUjf3/Nb5AP7cIb3954pFR3ywZI28cT7yRYl8qCAueVNTIXBLAdyBoUlexYlvZKH/TF3KMd1Sxpg0rYKx18/wH94XEiDPPuCm4sc9K6vtPSOQFOmNMhFNhsXM5djknxh84FOv2MZTOhSLr+CxBVokbw98=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gfPETkr5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZLjG7nqdiOfMatPmVwKLvmUta7y8IkbNSchTFTExL041KnfiojqYffDZnMXiV9mLMNYrBhIpFjwceZs+aDcrSB6TZrRZGJERbju+aRrIJIoMvB2LoiDlqCjCksX4T8eOZOP+MsFfLKjWCEDINzGDDYEGIdEJY3GYZZ1ZRlRgcH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8n2OLVZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gfPETkr5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0078DC2BCB3;
-	Mon, 23 Mar 2026 14:21:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8n2OLVZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DADDC4CEF7;
+	Mon, 23 Mar 2026 14:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275688;
-	bh=GD0ww/ZP5oY3AlUI1XuA2g8zxu47eaTpyGd4H+LFO8E=;
+	s=korg; t=1774275691;
+	bh=xmXccoLUHRb96XMtXe8+ONaj0ApHLFzK5XXS1F8ZiVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gfPETkr5l2Q5dSm4LoZuWCFRpOh42SHCzCvH8dC4NfV4JRAbiW670tTiKdIQfiBq9
-	 0PpZ9AVLfznPizYt0Rji79MUpK9tC45c+bKBOqjQ69yGvMUbSGnkvkXVf+XoI5jN/u
-	 82XsR2+jPWrfsyvKYrGNksLgWFWnyXXj1eqIuaOs=
+	b=a8n2OLVZo0yHNuJrBIXBoqL8p6/RkhvhQsb19CsH9eJ0NamvNHPhbQbHcDFvOx2my
+	 CZ22X69T/NSw2SHET6fa8DVYizv9f7RMOCWM2p5FB6tmnnirzjDWnodVD43OOR41Lo
+	 IBSbocwwnVdquME5SOFky/6RrI5leOW1qxu8huJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 183/460] tracing: Fix enabling multiple events on the kernel command line and bootconfig
-Date: Mon, 23 Mar 2026 14:42:59 +0100
-Message-ID: <20260323134531.039235695@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Zenghui Yu <zenghui.yu@linux.dev>
+Subject: [PATCH 6.12 148/460] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
+Date: Mon, 23 Mar 2026 14:42:24 +0100
+Message-ID: <20260323134530.215940404@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,48 +52,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 3b1679e086bb869ca02722f6bd29b3573a6a0e7e upstream.
+commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
 
-Multiple events can be enabled on the kernel command line via a comma
-separator. But if the are specified one at a time, then only the last
-event is enabled. This is because the event names are saved in a temporary
-buffer, and each call by the init cmdline code will reset that buffer.
+The ITS driver blindly assumes that EventIDs are in abundant supply, to the
+point where it never checks how many the hardware actually supports.
 
-This also affects names in the boot config file, as it may call the
-callback multiple times with an example of:
+It turns out that some pretty esoteric integrations make it so that only a
+few bits are available, all the way down to a single bit.
 
-  kernel.trace_event = ":mod:rproc_qcom_common", ":mod:qrtr", ":mod:qcom_aoss"
+Enforce the advertised limitation at the point of allocating the device
+structure, and hope that the endpoint driver can deal with such limitation.
 
-Change the cmdline callback function to append a comma and the next value
-if the temporary buffer already has content.
-
+Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260302-trace-events-allow-multiple-modules-v1-1-ce4436e37fb8@oss.qualcomm.com
-Signed-off-by: Andrei-Alexandru Tachici <andrei-alexandru.tachici@oss.qualcomm.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
+ include/linux/irqchip/arm-gic-v3.h |    1 +
+ 2 files changed, 5 insertions(+)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -3999,7 +3999,11 @@ static char bootup_event_buf[COMMAND_LIN
+--- a/drivers/irqchip/irq-gic-v3-its.c
++++ b/drivers/irqchip/irq-gic-v3-its.c
+@@ -3393,6 +3393,7 @@ static struct its_device *its_create_dev
+ 	int lpi_base;
+ 	int nr_lpis;
+ 	int nr_ites;
++	int id_bits;
+ 	int sz;
  
- static __init int setup_trace_event(char *str)
- {
--	strscpy(bootup_event_buf, str, COMMAND_LINE_SIZE);
-+	if (bootup_event_buf[0] != '\0')
-+		strlcat(bootup_event_buf, ",", COMMAND_LINE_SIZE);
-+
-+	strlcat(bootup_event_buf, str, COMMAND_LINE_SIZE);
-+
- 	trace_set_ring_buffer_expanded(NULL);
- 	disable_tracing_selftest("running event tracing");
- 
+ 	if (!its_alloc_device_table(its, dev_id))
+@@ -3405,7 +3406,10 @@ static struct its_device *its_create_dev
+ 	/*
+ 	 * Even if the device wants a single LPI, the ITT must be
+ 	 * sized as a power of two (and you need at least one bit...).
++	 * Also honor the ITS's own EID limit.
+ 	 */
++	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
++	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
+ 	nr_ites = max(2, nvecs);
+ 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
+ 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
+--- a/include/linux/irqchip/arm-gic-v3.h
++++ b/include/linux/irqchip/arm-gic-v3.h
+@@ -394,6 +394,7 @@
+ #define GITS_TYPER_VLPIS		(1UL << 1)
+ #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
+ #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
++#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
+ #define GITS_TYPER_IDBITS_SHIFT		8
+ #define GITS_TYPER_DEVBITS_SHIFT	13
+ #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
 
 
