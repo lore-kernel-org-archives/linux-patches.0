@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 900C4282F3A;
-	Mon, 23 Mar 2026 15:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4882248883;
+	Mon, 23 Mar 2026 15:02:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278155; cv=none; b=JqgKmeQxwt0v3X7K+NiwbDXzNV9lmN0yY6epCJ4y291EYF1JHPH6cNr0tg14LJ93j0ALQk5LS14BlqWXMVwwCZspePjrpzR30uuQI9uIkJZ0AylnGUFIM3wM7Zun8dJFTUxLzawcIcEa6JezgFTiiU7MOCVqkHhH4HpYsdR4hIU=
+	t=1774278159; cv=none; b=kILD6FDOHjvbsuZQ4/vttJdvPz0szBmr9bt2DhQ6veoU72WxBNyAh4w5CHL0FhlGZJRC9fUKzM1Ew5k4kuCTy9cflcXck6iGeF82AVcMyOa6/SNw5gZBuxxLDYAekADNIBwOEcwXUai6jh8zRidDrVYFX9Tc1wy0LQSjhZtuTcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278155; c=relaxed/simple;
-	bh=JoaO1/5oMoxA8ekyg6vRt3BYk6MMDAU0x7s6m5bqNF4=;
+	s=arc-20240116; t=1774278159; c=relaxed/simple;
+	bh=H40aJHTkio0Ky9zkhqB4WkQ92WPOFBL2o+62XruVlgk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eCyQSzRtlEPzIv0oBNKDvn4BlKCsradazhK2lNduLS3tg64l06YazgHYZLaw61Gp6Xiqt6wjFsiFVGY9R8mvV/xRsF/HD3k5J29v3mIBWAZdfSu2QqbBR2Db0AhMctBfo4W9NvUWJZdo7a+StMlZ3QLLdMdYRzWeOD8dw+kW5Q4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKix/9cr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=btKk+WTyLwd++H1NubwzYpSnPlfu0yK8dScXXRIeyM29FnIeP+NbM/t9Tc9DtAwaomfoduiuVJDUUmw2oKmckIq8XQPXLg+NPU6lycgZxDk/YyTOmHzG/KNwQkpTWNVLfIF3RjwoTSjZAgfGG1NohHbE6i94Oe6isU/tcgSiip0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pIfZIWHV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKix/9cr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AFAC2BCB5;
-	Mon, 23 Mar 2026 15:02:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pIfZIWHV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1CFC2BC9E;
+	Mon, 23 Mar 2026 15:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278155;
-	bh=JoaO1/5oMoxA8ekyg6vRt3BYk6MMDAU0x7s6m5bqNF4=;
+	s=korg; t=1774278158;
+	bh=H40aJHTkio0Ky9zkhqB4WkQ92WPOFBL2o+62XruVlgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jKix/9cr5AvIwWVwT/LRbMp6SVIIvGsyCDpfEJp9NxYo7hbX1YwZN4ae2PnpbaGZz
-	 dKrNmPy/6rZZqIg2LMTaz6XLCKt0uNSpsLUEoJy8mDBhki2bDC1eJtBMH5QNkWkL2u
-	 BBiAczzLgtx3eu6fwc0u9paI0PDomsFKOTExOzvc=
+	b=pIfZIWHVGuY1pnVeOUMAitC5b2/JwfMXANL6QXwcRbfwVe32K5vUkMBA/qimtPn7M
+	 zrXG5Pnkfv0/sXux/tz3OhT1Db5sWoAKqQxzWiH2XOa68g5umByLA3TDEMQbgM14AZ
+	 KqM4U1DDII9QZylKj8YptpxE0cFYFKd4CiCNSkEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 217/567] net: dsa: realtek: rtl8365mb: remove ifOutDiscards from rx_packets
-Date: Mon, 23 Mar 2026 14:42:17 +0100
-Message-ID: <20260323134539.196810378@linuxfoundation.org>
+Subject: [PATCH 6.6 218/567] drm/msm/dsi: Document DSC related pclk_rate and hdisplay calculations
+Date: Mon, 23 Mar 2026 14:42:18 +0100
+Message-ID: <20260323134539.221450453@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,46 +51,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit f76a93241d71fbba8425e3967097b498c29264ed ]
+[ Upstream commit 3b56d27ba1578c3d61f51de4102cf896a9a8617e ]
 
-rx_packets should report the number of frames successfully received:
-unicast + multicast + broadcast. Subtracting ifOutDiscards (a TX
-counter) is incorrect and can undercount RX packets. RX drops are
-already reported via rx_dropped (e.g. etherStatsDropEvents), so
-there is no need to adjust rx_packets.
+Provide actual documentation for the pclk and hdisplay calculations in
+the case of DSC compression being used.
 
-This patch removes the subtraction of ifOutDiscards from rx_packets
-in rtl8365mb_stats_update().
-
-Link: https://lore.kernel.org/netdev/878777925.105015.1763423928520@mail.yahoo.com/
-Fixes: 4af2950c50c8 ("net: dsa: realtek-smi: add rtl8365mb subdriver for RTL8365MB-VC")
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260303-realtek_namiltd_fix2-v1-1-bfa433d3401e@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/577534/
+Link: https://lore.kernel.org/r/20240208-fd_document_dsc_pclk_rate-v4-1-56fe59d0a2e0@linaro.org
+Stable-dep-of: e4eb11b34d6c ("drm/msm/dsi: fix pclk rate calculation for bonded dsi")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 33 ++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index 318eced8f0d34..9d59d93807825 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -1482,8 +1482,7 @@ static void rtl8365mb_stats_update(struct realtek_priv *priv, int port)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index f90ccdfbb2fc7..48a39f8727441 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -529,6 +529,25 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
+ 	clk_disable_unprepare(msm_host->byte_clk);
+ }
  
- 	stats->rx_packets = cnt[RTL8365MB_MIB_ifInUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifInMulticastPkts] +
--			    cnt[RTL8365MB_MIB_ifInBroadcastPkts] -
--			    cnt[RTL8365MB_MIB_ifOutDiscards];
-+			    cnt[RTL8365MB_MIB_ifInBroadcastPkts];
++/**
++ * dsi_adjust_pclk_for_compression() - Adjust the pclk rate for compression case
++ * @mode: The selected mode for the DSI output
++ * @dsc: DRM DSC configuration for this DSI output
++ *
++ * Adjust the pclk rate by calculating a new hdisplay proportional to
++ * the compression ratio such that:
++ *     new_hdisplay = old_hdisplay * compressed_bpp / uncompressed_bpp
++ *
++ * Porches do not need to be adjusted:
++ * - For VIDEO mode they are not compressed by DSC and are passed as is.
++ * - For CMD mode there are no actual porches. Instead these fields
++ *   currently represent the overhead to the image data transfer. As such, they
++ *   are calculated for the final mode parameters (after the compression) and
++ *   are not to be adjusted too.
++ *
++ *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
++ *  transfer time and data overhead as a starting point of the calculations.
++ */
+ static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
+ 		const struct drm_dsc_config *dsc)
+ {
+@@ -937,8 +956,18 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		if (ret)
+ 			return;
  
- 	stats->tx_packets = cnt[RTL8365MB_MIB_ifOutUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifOutMulticastPkts] +
+-		/* Divide the display by 3 but keep back/font porch and
+-		 * pulse width same
++		/*
++		 * DPU sends 3 bytes per pclk cycle to DSI. If widebus is
++		 * enabled, bus width is extended to 6 bytes.
++		 *
++		 * Calculate the number of pclks needed to transmit one line of
++		 * the compressed data.
++
++		 * The back/font porch and pulse width are kept intact. For
++		 * VIDEO mode they represent timing parameters rather than
++		 * actual data transfer, see the documentation for
++		 * dsi_adjust_pclk_for_compression(). For CMD mode they are
++		 * unused anyway.
+ 		 */
+ 		h_total -= hdisplay;
+ 		hdisplay = DIV_ROUND_UP(msm_dsc_get_bytes_per_line(msm_host->dsc), 3);
 -- 
 2.51.0
 
