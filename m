@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1163AB277;
-	Mon, 23 Mar 2026 16:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD9323AE70E;
+	Mon, 23 Mar 2026 16:13:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282387; cv=none; b=RCj4E109/nrDVR8qnX3tGURQpOv7km/MTxcX2vBxPfnnyoORkQMnFOsSQWpiuUq8kkzu4sqQzrDbGyQGAR5dt0qrjshis2QGT7gaejG/UumECR+/qP8CiZEb1qTn/UclBvrbquZac7l7z1lrUrlIC/WlxUz9HA594u7V4MSH9U8=
+	t=1774282393; cv=none; b=BfwxoC96tv8cR6zHr2cMNTiWqK5ZRDfPE+UlIguA0aNfpSaVU1cC7bLPDvS55u99wjCSk6bQuo2AJPGdx8IN3wyt3YTC3Zx7m569XG2U3XH/2r525xk4f2F5Jbgaq44LgtmwheB101oheh6B1D0mcs0FZHeO3okjbGzB3TI/Lp4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282387; c=relaxed/simple;
-	bh=BzZl9UXnLdMV+IlRjl6zIYuV0xc87b49TWOi+jWJhYg=;
+	s=arc-20240116; t=1774282393; c=relaxed/simple;
+	bh=RlTC32bCYNmEY+5TmwnxJiE9f61foLCPGq+0yIl0bq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LDf3+VKMXL4oEdcfZkg3YDCqegV6rvrXMBrsVEGcaM8jYgefZvsm2BsUG0DvSxOnKRxnWQccYMngPmbjFcWt6c/c5eY/zXDLwUP4a0L5nu9mKoe3niKntt28VnvH71Y+IXuY0BbozCV89wuyvWZwA7Zvf/EjZAr0K5SAu+0Mo6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2W+XgWEq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=buwdnGLTW4M2qhSAtOrNeUc4pUks1vlR/lkC8gzthypuPMj5KETPeWMnEeEji+Pg2oBBV+LYrhhmuCGjo49qSo+O8x4NvYZVibpvUGJ91Oipf7BTGKNd6kAzUv0awJYF1cxTAlZBxOiUrWTd16tqoxHKHUCVjpgGmXkT2JtlecM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WgxfbhOD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2W+XgWEq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83136C4CEF7;
-	Mon, 23 Mar 2026 16:13:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WgxfbhOD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78044C4CEF7;
+	Mon, 23 Mar 2026 16:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282386;
-	bh=BzZl9UXnLdMV+IlRjl6zIYuV0xc87b49TWOi+jWJhYg=;
+	s=korg; t=1774282393;
+	bh=RlTC32bCYNmEY+5TmwnxJiE9f61foLCPGq+0yIl0bq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2W+XgWEqHtNjNYXOr6hxEUthpFA5hvDILg/JQe/8pPjeyVdGL5RshvSJ346ZrmsOp
-	 4KPEMGIPSS9LBhrBeyEUmBH5GCIu0dhFfbA+wu77IJ5tGZmf7CzBr9HWbpVxg4iUCB
-	 BpirnJOXY6rAVCGOP3jFq6VYU3gSz4CyW4cRnLIc=
+	b=WgxfbhODzCsLEP9qOgNEylToq9ZhGf1n5B7W5oshNroSwBO0FfdG0eQycstP5b8Bq
+	 kz4SUYRiVrpsP6m6DZzXqNPgeEYngOBILRTnd1Jim21usBkptQkUgL76si5O9z5ugZ
+	 qh+KKrovLV9VREtSeeEqIMnC/BxqI5r9BRI5sp1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 095/481] selftests: mptcp: join: check removing signal+subflow endp
-Date: Mon, 23 Mar 2026 14:41:17 +0100
-Message-ID: <20260323134527.595315873@linuxfoundation.org>
+	Jonathan Teh <jonathan.teh@outlook.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 097/481] platform/x86: thinkpad_acpi: Fix errors reading battery thresholds
+Date: Mon, 23 Mar 2026 14:41:19 +0100
+Message-ID: <20260323134527.647417053@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -45,63 +46,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+From: Jonathan Teh <jonathan.teh@outlook.com>
 
-commit 1777f349ff41b62dfe27454b69c27b0bc99ffca5 upstream.
+[ Upstream commit 53e977b1d50c46f2c4ec3865cd13a822f58ad3cd ]
 
-This validates the previous commit: endpoints with both the signal and
-subflow flags should always be marked as used even if it was not
-possible to create new subflows due to the MPTCP PM limits.
+Check whether the battery supports the relevant charge threshold before
+reading the value to silence these errors:
 
-For this test, an extra endpoint is created with both the signal and the
-subflow flags, and limits are set not to create extra subflows. In this
-case, an ADD_ADDR is sent, but no subflows are created. Still, the local
-endpoint is marked as used, and no warning is fired when removing the
-endpoint, after having sent a RM_ADDR.
+thinkpad_acpi: acpi_evalf(BCTG, dd, ...) failed: AE_NOT_FOUND
+ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCTG: evaluate failed
+thinkpad_acpi: acpi_evalf(BCSG, dd, ...) failed: AE_NOT_FOUND
+ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCSG: evaluate failed
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+when reading the charge thresholds via sysfs on platforms that do not
+support them such as the ThinkPad T400.
 
-Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-5-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 2801b9683f74 ("thinkpad_acpi: Add support for battery thresholds")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202619
+Signed-off-by: Jonathan Teh <jonathan.teh@outlook.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/MI0P293MB01967B206E1CA6F337EBFB12926CA@MI0P293MB0196.ITAP293.PROD.OUTLOOK.COM
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/platform/x86/thinkpad_acpi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -2389,6 +2389,19 @@ remove_tests()
- 		chk_rst_nr 0 0
- 	fi
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index c0977ffec96c4..3f2098e686f73 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -9643,14 +9643,16 @@ static int tpacpi_battery_get(int what, int battery, int *ret)
+ {
+ 	switch (what) {
+ 	case THRESHOLD_START:
+-		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery))
++		if (!battery_info.batteries[battery].start_support ||
++		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery)))
+ 			return -ENODEV;
  
-+	# signal+subflow with limits, remove
-+	if reset "remove signal+subflow with limits"; then
-+		pm_nl_set_limits $ns1 0 0
-+		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,subflow
-+		pm_nl_set_limits $ns2 0 0
-+		addr_nr_ns1=-1 speed=slow \
-+			run_tests $ns1 $ns2 10.0.1.1
-+		chk_join_nr 0 0 0
-+		chk_add_nr 1 1
-+		chk_rm_nr 1 0 invert
-+		chk_rst_nr 0 0
-+	fi
-+
- 	# addresses remove
- 	if reset "remove addresses"; then
- 		pm_nl_set_limits $ns1 3 3
+ 		/* The value is in the low 8 bits of the response */
+ 		*ret = *ret & 0xFF;
+ 		return 0;
+ 	case THRESHOLD_STOP:
+-		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery))
++		if (!battery_info.batteries[battery].stop_support ||
++		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery)))
+ 			return -ENODEV;
+ 		/* Value is in lower 8 bits */
+ 		*ret = *ret & 0xFF;
+-- 
+2.51.0
+
 
 
