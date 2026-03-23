@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F27B3B775A;
-	Mon, 23 Mar 2026 16:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABB271DA0E1;
+	Mon, 23 Mar 2026 16:21:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282877; cv=none; b=YTmQp5W7owLZ+Hb2FHAPWuAEcfrEqYJH6RPgalGWer2N/+yYkhe6FnGhrDSKULZeJYg0G1a9p/gVoNGCukRtpNfotiCD9xsWBkAoKKIjzZiUicwqyzQ1pS8G45EcHP0zpfA6WctKqGBLeSx8liU4NVWFM/E6xEgHyn+oJMdUGyQ=
+	t=1774282879; cv=none; b=ZF85FBsbHoQhvTASLebcGsXu5OWditES3Te0FXXNvXgUQJoa2ybfUyAczb65avcphDNBOhy5fOZo0LZI3H/a2iIcdziOYIdRS5KAMdR3HwdSgQFXhERUH9lo1TWrH4mBqRDROFYRg0/waVxjmiPN+Z3s24g1h5NtpujI/Gno1ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282877; c=relaxed/simple;
-	bh=IU3hw/hiqslC/qK2Q2uGvXJillS573boybe54JJsOr0=;
+	s=arc-20240116; t=1774282879; c=relaxed/simple;
+	bh=Pl+O3Gw2Mnle4RlwgednxSQqGN/+l7KmYvKIULLgUc4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tWpkvDDVpYFE+K9lFH7nx+gnoITTZAfOfmSNk/xacnd6NEXPT6ze2f77vlnyvPMxXbZpD4WUQ5Gk1AAYZ5toKpqhW70qbcECPxSEP5TP9MP8Xtf76Hk8gOv3biKfiX0WS8VvoyegEjms9oZI0WtoCc/TZA9nnmZ/x5ReAAJEA+I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b+eRx4t0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bFs/PTsNWHe9kk4R5sKojZhdDEm9D1C81L1Ory91maY7I2evjKsSN85qQcKXOzCRtvRI1caBmK2oMp1YUv+e5O4PSo98qO2aComdjCnwgCOMv4EtaAuJf/npUr2nLIbW1MwRO3sVCIjasKjEBcP1zxuE9rWTPi6cvY0zkMkVsDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LxKZsehj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b+eRx4t0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA186C4CEF7;
-	Mon, 23 Mar 2026 16:21:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LxKZsehj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 429D9C2BCB3;
+	Mon, 23 Mar 2026 16:21:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282877;
-	bh=IU3hw/hiqslC/qK2Q2uGvXJillS573boybe54JJsOr0=;
+	s=korg; t=1774282879;
+	bh=Pl+O3Gw2Mnle4RlwgednxSQqGN/+l7KmYvKIULLgUc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b+eRx4t0ZrUouHJftuc2haFXiOUoF4sQ3xTHfdeRy73DyLZjFV+YVUt6TmMbbipSs
-	 cgPzVncPN21IIQtfxc5i25F8Vb5ZnLanALey3Gkp3E3sjk/+uiwb+lYboKqQPTyXBM
-	 FPhbU+Zuxl/3xkxup0+0ZlzwTA/nnMS5U0lbUgn4=
+	b=LxKZsehj8vB8KXGoUx9lSwRl1eSj6jhOHoE6gbrPPeVgktDFOOgsS1C0ncvpV90VL
+	 zVn0m7oSv21+byKfBcaXL8ZAGs2I/KAilCsAElpQGA7TfTPAKpue7IosQprU792GBj
+	 LViUQrnFzFxbM45lvHMlXvN4L0lJocJgqXVGyC7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Hodges <git@danielhodges.dev>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 317/481] wifi: libertas: fix use-after-free in lbs_free_adapter()
-Date: Mon, 23 Mar 2026 14:44:59 +0100
-Message-ID: <20260323134532.826628406@linuxfoundation.org>
+Subject: [PATCH 6.1 318/481] wifi: cfg80211: move scan done work to wiphy work
+Date: Mon, 23 Mar 2026 14:45:00 +0100
+Message-ID: <20260323134532.849347427@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,56 +50,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Hodges <git@danielhodges.dev>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 03cc8f90d0537fcd4985c3319b4fafbf2e3fb1f0 ]
+[ Upstream commit fe0af9fe54d0ff53aa49eef390c8962355b274e2 ]
 
-The lbs_free_adapter() function uses timer_delete() (non-synchronous)
-for both command_timer and tx_lockup_timer before the structure is
-freed. This is incorrect because timer_delete() does not wait for
-any running timer callback to complete.
+Move the scan done work to the new wiphy work to
+simplify the code a bit.
 
-If a timer callback is executing when lbs_free_adapter() is called,
-the callback will access freed memory since lbs_cfg_free() frees the
-containing structure immediately after lbs_free_adapter() returns.
-
-Both timer callbacks (lbs_cmd_timeout_handler and lbs_tx_lockup_handler)
-access priv->driver_lock, priv->cur_cmd, priv->dev, and other fields,
-which would all be use-after-free violations.
-
-Use timer_delete_sync() instead to ensure any running timer callback
-has completed before returning.
-
-This bug was introduced in commit 8f641d93c38a ("libertas: detect TX
-lockups and reset hardware") where del_timer() was used instead of
-del_timer_sync() in the cleanup path. The command_timer has had the
-same issue since the driver was first written.
-
-Fixes: 8f641d93c38a ("libertas: detect TX lockups and reset hardware")
-Fixes: 954ee164f4f4 ("[PATCH] libertas: reorganize and simplify init sequence")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniel Hodges <git@danielhodges.dev>
-Link: https://patch.msgid.link/20260206195356.15647-1-git@danielhodges.dev
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ del_timer() => timer_delete_sync() ]
+Stable-dep-of: 767d23ade706 ("wifi: cfg80211: cancel rfkill_block work in wiphy_unregister()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/libertas/main.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/wireless/core.c |    3 +--
+ net/wireless/core.h |    4 ++--
+ net/wireless/scan.c |   14 ++++----------
+ 3 files changed, 7 insertions(+), 14 deletions(-)
 
---- a/drivers/net/wireless/marvell/libertas/main.c
-+++ b/drivers/net/wireless/marvell/libertas/main.c
-@@ -881,8 +881,8 @@ static void lbs_free_adapter(struct lbs_
- {
- 	lbs_free_cmd_buffer(priv);
- 	kfifo_free(&priv->event_fifo);
--	del_timer(&priv->command_timer);
--	del_timer(&priv->tx_lockup_timer);
-+	timer_delete_sync(&priv->command_timer);
-+	timer_delete_sync(&priv->tx_lockup_timer);
- 	del_timer(&priv->auto_deepsleep_timer);
+--- a/net/wireless/core.c
++++ b/net/wireless/core.c
+@@ -525,7 +525,7 @@ use_default_name:
+ 	spin_lock_init(&rdev->bss_lock);
+ 	INIT_LIST_HEAD(&rdev->bss_list);
+ 	INIT_LIST_HEAD(&rdev->sched_scan_req_list);
+-	INIT_WORK(&rdev->scan_done_wk, __cfg80211_scan_done);
++	wiphy_work_init(&rdev->scan_done_wk, __cfg80211_scan_done);
+ 	INIT_DELAYED_WORK(&rdev->dfs_update_channels_wk,
+ 			  cfg80211_dfs_channels_update_work);
+ #ifdef CONFIG_CFG80211_WEXT
+@@ -1125,7 +1125,6 @@ void wiphy_unregister(struct wiphy *wiph
+ 	/* this has nothing to do now but make sure it's gone */
+ 	cancel_work_sync(&rdev->wiphy_work);
+ 
+-	flush_work(&rdev->scan_done_wk);
+ 	cancel_work_sync(&rdev->conn_work);
+ 	flush_work(&rdev->event_work);
+ 	cancel_delayed_work_sync(&rdev->dfs_update_channels_wk);
+--- a/net/wireless/core.h
++++ b/net/wireless/core.h
+@@ -75,7 +75,7 @@ struct cfg80211_registered_device {
+ 	struct sk_buff *scan_msg;
+ 	struct list_head sched_scan_req_list;
+ 	time64_t suspend_at;
+-	struct work_struct scan_done_wk;
++	struct wiphy_work scan_done_wk;
+ 
+ 	struct genl_info *cur_cmd_info;
+ 
+@@ -447,7 +447,7 @@ bool cfg80211_valid_key_idx(struct cfg80
+ int cfg80211_validate_key_settings(struct cfg80211_registered_device *rdev,
+ 				   struct key_params *params, int key_idx,
+ 				   bool pairwise, const u8 *mac_addr);
+-void __cfg80211_scan_done(struct work_struct *wk);
++void __cfg80211_scan_done(struct wiphy *wiphy, struct wiphy_work *wk);
+ void ___cfg80211_scan_done(struct cfg80211_registered_device *rdev,
+ 			   bool send_message);
+ void cfg80211_add_sched_scan_req(struct cfg80211_registered_device *rdev,
+--- a/net/wireless/scan.c
++++ b/net/wireless/scan.c
+@@ -1096,16 +1096,9 @@ void ___cfg80211_scan_done(struct cfg802
+ 		nl80211_send_scan_msg(rdev, msg);
  }
+ 
+-void __cfg80211_scan_done(struct work_struct *wk)
++void __cfg80211_scan_done(struct wiphy *wiphy, struct wiphy_work *wk)
+ {
+-	struct cfg80211_registered_device *rdev;
+-
+-	rdev = container_of(wk, struct cfg80211_registered_device,
+-			    scan_done_wk);
+-
+-	wiphy_lock(&rdev->wiphy);
+-	___cfg80211_scan_done(rdev, true);
+-	wiphy_unlock(&rdev->wiphy);
++	___cfg80211_scan_done(wiphy_to_rdev(wiphy), true);
+ }
+ 
+ void cfg80211_scan_done(struct cfg80211_scan_request *request,
+@@ -1131,7 +1124,8 @@ void cfg80211_scan_done(struct cfg80211_
+ 	}
+ 
+ 	request->notified = true;
+-	queue_work(cfg80211_wq, &wiphy_to_rdev(request->wiphy)->scan_done_wk);
++	wiphy_work_queue(request->wiphy,
++			 &wiphy_to_rdev(request->wiphy)->scan_done_wk);
+ }
+ EXPORT_SYMBOL(cfg80211_scan_done);
  
 
 
