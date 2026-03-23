@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CED03BADAB;
-	Mon, 23 Mar 2026 14:01:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE523BADAC;
+	Mon, 23 Mar 2026 14:01:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274461; cv=none; b=R3RS43dqzXojWvMe5T6ritGw6pCmQdLNt6ut2ef5uvdK5ouHvI13Bm8xKaeqb5fOB/NgsK5aJIfAKHYF6rgyoapYsDfm7HZX7xGmn/Bjie78feHY+5bFfoco//PPFkSQyuPgCn8rHDi4+c80k8oramQmAMo+m3tIud/gYQ1746U=
+	t=1774274464; cv=none; b=CfPumj7UzgMuhvKNA1tjlBzUmDwlZLBDI7bajdL+rOXSKFf/w+FHUhIyPW+nPanT26cWrE1axjngKTDGFa0bwvWdcyMFcEsqBkbJdo/V/BctceMLpygpkW4+tcBJhy4K/nCb1p61gD5gHgjATBthwZgrFlv971dzEjXSy0dK5oI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274461; c=relaxed/simple;
-	bh=0yIOgovWR6VYVrtTyHP1tbTVMtQta0O6QpKP8ywjnuc=;
+	s=arc-20240116; t=1774274464; c=relaxed/simple;
+	bh=Y7cNYwuCgIXiRJVc4twunvwbJP6jmBgrJGE20m5nejA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fJ4vkPXjyZmC4uRJqjaP6/nAP//LKRvNKN3oByPNHNYbw/QQIfTfCl3Ln/lNnl/4IuFXJCb0rOQkzss/Tapb3yS0eCX518sZA7yKMKuxaqhocA3oAwz8erktE+7dTWjlqhGCkSp2FvfvT3djqPjQNT5zT5LsO+xctJU3zi2KEFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8LcWA1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=rQKIA5rnnXG+ubiM3wipkRQjFIKJH4KBRncZngtHBte0Y049On7jy5FfFb4I7NWCeClZn2AbAvHbcOTuYdTvR+HQAYZbXWp5K0trajTwiJssucvPfzFssvvqOjxjrz/kbuvuZxRuAK8o05aPgqfaMnBLB0pbnoKNmkHhWwtl1nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQ7rFxQ6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8LcWA1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13A56C2BC9E;
-	Mon, 23 Mar 2026 14:01:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQ7rFxQ6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218ADC2BC9E;
+	Mon, 23 Mar 2026 14:01:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274461;
-	bh=0yIOgovWR6VYVrtTyHP1tbTVMtQta0O6QpKP8ywjnuc=;
+	s=korg; t=1774274464;
+	bh=Y7cNYwuCgIXiRJVc4twunvwbJP6jmBgrJGE20m5nejA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8LcWA1SwxW3Ms6zHTeAHGVQZvWXzCtqdoV6G7DMSp6H538H8T5LqplH5EqV9jryv
-	 ugr3C66771cpvK7VWE7DECOTgxSOLWlgixkCd4SbfVv7xLJ+b+WWvytUg2s/8+VGDa
-	 pF6JzT/ULj8L4y+bFameygc6pOJGPPkTEjh1wqMo=
+	b=cQ7rFxQ6xi2vfeqxD6OegYpw2cHz5OkpQYFqKItLUKnhwDDzjiQ/MAS7z95JHE6fz
+	 zOaqNB2KAaccBluW3ej/Yg265PUVeV6F5k1j9N6u4zBoVhK8NpG62EjEYBpqybXqpl
+	 5Ytx1cD24rJmKORxPOnBHFk6J527mqAMl7DryEmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 218/220] arm64: realm: Fix PTE_NS_SHARED for 52bit PA support
-Date: Mon, 23 Mar 2026 14:46:35 +0100
-Message-ID: <20260323134511.394565416@linuxfoundation.org>
+Subject: [PATCH 6.19 219/220] drm/xe/guc: Fail immediately on GuC load error
+Date: Mon, 23 Mar 2026 14:46:36 +0100
+Message-ID: <20260323134511.423617505@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -47,68 +47,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
 
-[ Upstream commit 8c6e9b60f5c7985a9fe41320556a92d7a33451df ]
+[ Upstream commit 9b72283ec9b8685acdb3467de8fbc3352fdb70bb ]
 
-With LPA/LPA2, the top bits of the PFN (Bits[51:48]) end up in the lower bits
-of the PTE. So, simply creating a mask of the "top IPA bit" doesn't work well
-for these configurations to set the "top" bit at the output of Stage1
-translation.
+By using the same variable for both the return of poll_timeout_us and
+the return of the polled function guc_wait_ucode, the return value of
+the latter is overwritten and lost after exiting the polling loop. Since
+guc_wait_ucode returns -1 on GuC load failure, we lose that information
+and always continue as if the GuC had been loaded correctly.
 
-Fix this by using the __phys_to_pte_val() to do the right thing for all
-configurations.
+This is fixed by simply using 2 separate variables.
 
-Tested using, kvmtool, placing the memory at a higher address (-m <size>@<Addr>).
-
- e.g:
- # lkvm run --realm -c 4 -m 512M@@128T -k Image --console serial
-
- sh-5.0# dmesg | grep "LPA2\|RSI"
-[    0.000000] RME: Using RSI version 1.0
-[    0.000000] CPU features: detected: 52-bit Virtual Addressing (LPA2)
-[    0.777354] CPU features: detected: 52-bit Virtual Addressing for KVM (LPA2)
-
-Fixes: 399306954996 ("arm64: realm: Query IPA size from the RMM")
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: a4916b4da448 ("drm/xe/guc: Refactor GuC load to use poll_timeout_us()")
+Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
+Link: https://patch.msgid.link/20260303001732.2540493-2-daniele.ceraolospurio@intel.com
+(cherry picked from commit c85ec5c5753a46b5c2aea1292536487be9470ffe)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/rsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/xe/xe_guc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/kernel/rsi.c b/arch/arm64/kernel/rsi.c
-index c64a06f58c0bc..9e846ce4ef9ca 100644
---- a/arch/arm64/kernel/rsi.c
-+++ b/arch/arm64/kernel/rsi.c
-@@ -12,6 +12,7 @@
+diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
+index edb939f262685..2eaa009ba2d8d 100644
+--- a/drivers/gpu/drm/xe/xe_guc.c
++++ b/drivers/gpu/drm/xe/xe_guc.c
+@@ -1121,14 +1121,14 @@ static int guc_wait_ucode(struct xe_guc *guc)
+ 	struct xe_guc_pc *guc_pc = &gt->uc.guc.pc;
+ 	u32 before_freq, act_freq, cur_freq;
+ 	u32 status = 0, tries = 0;
++	int load_result, ret;
+ 	ktime_t before;
+ 	u64 delta_ms;
+-	int ret;
  
- #include <asm/io.h>
- #include <asm/mem_encrypt.h>
-+#include <asm/pgtable.h>
- #include <asm/rsi.h>
+ 	before_freq = xe_guc_pc_get_act_freq(guc_pc);
+ 	before = ktime_get();
  
- static struct realm_config config;
-@@ -146,7 +147,7 @@ void __init arm64_rsi_init(void)
- 		return;
- 	if (WARN_ON(rsi_get_realm_config(&config)))
- 		return;
--	prot_ns_shared = BIT(config.ipa_bits - 1);
-+	prot_ns_shared = __phys_to_pte_val(BIT(config.ipa_bits - 1));
+-	ret = poll_timeout_us(ret = guc_load_done(gt, &status, &tries), ret,
++	ret = poll_timeout_us(load_result = guc_load_done(gt, &status, &tries), load_result,
+ 			      10 * USEC_PER_MSEC,
+ 			      GUC_LOAD_TIMEOUT_SEC * USEC_PER_SEC, false);
  
- 	if (arm64_ioremap_prot_hook_register(realm_ioremap_hook))
- 		return;
+@@ -1136,7 +1136,7 @@ static int guc_wait_ucode(struct xe_guc *guc)
+ 	act_freq = xe_guc_pc_get_act_freq(guc_pc);
+ 	cur_freq = xe_guc_pc_get_cur_freq_fw(guc_pc);
+ 
+-	if (ret) {
++	if (ret || load_result <= 0) {
+ 		xe_gt_err(gt, "load failed: status = 0x%08X, time = %lldms, freq = %dMHz (req %dMHz)\n",
+ 			  status, delta_ms, xe_guc_pc_get_act_freq(guc_pc),
+ 			  xe_guc_pc_get_cur_freq_fw(guc_pc));
 -- 
 2.51.0
 
