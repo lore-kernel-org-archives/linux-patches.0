@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830003AB27F;
-	Mon, 23 Mar 2026 14:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5E83BA235;
+	Mon, 23 Mar 2026 14:00:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274402; cv=none; b=BAi0OnQ0sWv+SiEa1gQeVlVIzEJs71UpG3WYc+1GaYMP2jvT2d0ZQEi1afwhG1fzuhx4LHWDnI7xVpQ7NX5Uk9M4aiuUvC2Vv+sqzayvvzrqH3yaa/jgUndts809PwygXMptAktJPAdj/aDmUzcqNeEBiYvBMKladrtyE9vE6pg=
+	t=1774274405; cv=none; b=RreR4j8e5P3og2Ek521C1vEy3tIYPuBrtrrDjDGqkDomuIehXO/xTpi3tNBPI0YsEBExz2okxh80QaLHx5egbo9FXBAvYvvPT/1oOf14i8GogrMbmij0B2Qx1MmHAcVglf+tVSHEOrocI5kKL7XBnOrBYDt7Oxv1d4mrbtdj+Vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274402; c=relaxed/simple;
-	bh=UzvTfDE88vnBKsv+w89wHweCGhssCNnxYW17lTHJbZ0=;
+	s=arc-20240116; t=1774274405; c=relaxed/simple;
+	bh=UB2QMPaWYzT0kzkyfhKdLS3nUGijDQkfZKvz1u+uIS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=GwfvCJqm5u89pfaSfgp2f8yYm/hLgBV4k9vc4y5yTUrQX/r3ukwDUyAytVjXmcbdH0pqSZ1C1xMCPLMl8Qtq/BbSqER3PnjhjvnpfpVsGUkWg9B6EsFx6AV7cUyvmezFcrM/19nr8kNKEdbpcNpoEUDoRiG0DUiAjLAWOYxDCXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LskZTgEs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XAVcbD5LTCgldiIvu2RQGzM2PsS0eLg6gs2qoM6doRYu915hycu6iPWzjd7N/70FHBAtyDNaHXNCLRF+4jzQizdZp+Ok6KNA3XLH5O0HsRxORxQM+e9ShNHVYQxb9uS0sQlzQ5vlYM4cdX/5cggWxs90aqhBBWAugd6xr3vPITI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHGrFLDO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LskZTgEs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42ABC2BCB6;
-	Mon, 23 Mar 2026 14:00:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHGrFLDO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F376C4CEF7;
+	Mon, 23 Mar 2026 14:00:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274402;
-	bh=UzvTfDE88vnBKsv+w89wHweCGhssCNnxYW17lTHJbZ0=;
+	s=korg; t=1774274405;
+	bh=UB2QMPaWYzT0kzkyfhKdLS3nUGijDQkfZKvz1u+uIS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LskZTgEs2S8pA26uEsn+FIKBkQc4A7oR5kIltt+cr+GSGyanLNUeQPpittIrHloXh
-	 x5l3vQ4fOr2QAjEuAQNLbSafjX0/CfNOO1XPLpn3uYfXQCslK7buN9Qzn31YrnfXnB
-	 RjDbhaN3LTq9+KMk3e/kHTcLd30SsoyGk2L6q9CA=
+	b=bHGrFLDOB69AbIWAlm6yK244RYp/AxfkMjVoa0IhlLWf59bNkioL8QWM4gp96XNnI
+	 5OvAusXYLU8kFZaor4K7CRtaF/8Hug1DbhnWWbepe5bHO0sGOV1z4RDat0DdiCUhY3
+	 ZeILr0u8wNvDMjmExTuPcrT+3M1koQluyjFuwiVA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mpenttil@redhat.com>,
-	Ian Forbes <ian.forbes@broadcom.com>,
-	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
-	Zack Rusin <zack.rusin@broadcom.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	Vasant Hegde <vasant.hegde@amd.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Joerg Roedel <joerg.roedel@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 205/220] drm/vmwgfx: Dont overwrite KMS surface dirty tracker
-Date: Mon, 23 Mar 2026 14:46:22 +0100
-Message-ID: <20260323134511.045663705@linuxfoundation.org>
+Subject: [PATCH 6.19 206/220] iommu: Fix mapping check for 0x0 to avoid re-mapping it
+Date: Mon, 23 Mar 2026 14:46:23 +0100
+Message-ID: <20260323134511.073155680@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -47,45 +48,78 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ian Forbes <ian.forbes@broadcom.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit c6cb77c474a32265e21c4871c7992468bf5e7638 ]
+[ Upstream commit 0a4d00e2e99a39a5698e4b63c394415dcbb39d90 ]
 
-We were overwriting the surface's dirty tracker here causing a memory leak.
+Commit 789a5913b29c ("iommu/amd: Use the generic iommu page table")
+introduces the shared iommu page table for AMD IOMMU. Some bioses
+contain an identity mapping for address 0x0, which is not parsed
+properly (e.g., certain Strix Halo devices). This causes the DMA
+components of the device to fail to initialize (e.g., the NVMe SSD
+controller), leading to a failed post.
 
-Reported-by: Mika Penttilä <mpenttil@redhat.com>
-Closes: https://lore.kernel.org/dri-devel/8c53f3c6-c6de-46fe-a8ca-d98dd52b3abe@redhat.com/
-Fixes: 965544150d1c ("drm/vmwgfx: Refactor cursor handling")
-Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
-Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
-Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
-Link: https://patch.msgid.link/20260302200330.66763-1-ian.forbes@broadcom.com
+Specifically, on the GPD Win 5, the NVME and SSD GPU fail to mount,
+making collecting errors difficult. While debugging, it was found that
+a -EADDRINUSE error was emitted and its source was traced to
+iommu_iova_to_phys(). After adding some debug prints, it was found that
+phys_addr becomes 0, which causes the code to try to re-map the 0
+address and fail, causing a cascade leading to a failed post. This is
+because the GPD Win 5 contains a 0x0-0x1 identity mapping for DMA
+devices, causing it to be repeated for each device.
+
+The cause of this failure is the following check in
+iommu_create_device_direct_mappings(), where address aliasing is handled
+via the following check:
+
+```
+phys_addr = iommu_iova_to_phys(domain, addr);
+if (!phys_addr) {
+        map_size += pg_size;
+        continue;
+}
+````
+
+Obviously, the iommu_iova_to_phys() signature is faulty and aliases
+unmapped and 0 together, causing the allocation code to try to
+re-allocate the 0 address per device. However, it has too many
+instantiations to fix. Therefore, use a ternary so that when addr
+is 0, the check is done for address 1 instead.
+
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Fixes: 789a5913b29c ("iommu/amd: Use the generic iommu page table")
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/iommu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-index bc51b5d55e38a..35c7277521a90 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -771,7 +771,8 @@ static struct drm_framebuffer *vmw_kms_fb_create(struct drm_device *dev,
- 		ret = vmw_bo_dirty_add(bo);
- 		if (!ret && surface && surface->res.func->dirty_alloc) {
- 			surface->res.coherent = true;
--			ret = surface->res.func->dirty_alloc(&surface->res);
-+			if (surface->res.dirty == NULL)
-+				ret = surface->res.func->dirty_alloc(&surface->res);
- 		}
- 		ttm_bo_unreserve(&bo->tbo);
- 	}
+diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
+index 2ca990dfbb884..3a0c0e4b42fff 100644
+--- a/drivers/iommu/iommu.c
++++ b/drivers/iommu/iommu.c
+@@ -1207,7 +1207,11 @@ static int iommu_create_device_direct_mappings(struct iommu_domain *domain,
+ 			if (addr == end)
+ 				goto map_end;
+ 
+-			phys_addr = iommu_iova_to_phys(domain, addr);
++			/*
++			 * Return address by iommu_iova_to_phys for 0 is
++			 * ambiguous. Offset to address 1 if addr is 0.
++			 */
++			phys_addr = iommu_iova_to_phys(domain, addr ? addr : 1);
+ 			if (!phys_addr) {
+ 				map_size += pg_size;
+ 				continue;
 -- 
 2.51.0
 
