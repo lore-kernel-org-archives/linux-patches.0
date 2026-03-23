@@ -1,41 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B07B92343D2;
-	Mon, 23 Mar 2026 14:15:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2292D2343D2;
+	Mon, 23 Mar 2026 14:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275349; cv=none; b=SjrMR8tZbTIxmq208C4sZXVs5az7vRBTHykdxTK7zGs5ez/frG5H2TH/qQSxMImc+3LpmTZlCHY4r+jyhxLW9tAvc2BZpcKahKctXOuXRBlFjG48rR2JKhYUmp56hBppg3DL3NCBNSAC3d2kab6HiL8iMGOmX52pPZYi8JkbJW8=
+	t=1774275352; cv=none; b=DH2c7nAcWc8FR2bixquxA+Fwd80/NTIEi0s+As0rV6ds9UTcdQMY7VvR//R+WUpkGOjrjb9y9hTA24f0adqdcsDn0ZvE/+tNvZUyNzlGibSK+uc++Tnd1cXbhLRBtTJm7+KAAnuhP1V5KVCu6Yns7WEdj/ku1C3v8e+UDn4NluY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275349; c=relaxed/simple;
-	bh=v4Ml8UJYqJdDg/yu6NNjQQPF1N39Q6FKIX/KKwnxe/s=;
+	s=arc-20240116; t=1774275352; c=relaxed/simple;
+	bh=+16F4oczrZckXDQhDrjLlVTCLquG4rnBQn48ZeBxmUM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b78VnwIjg8Ql2rUV1jsEkJLCGRLQHtelEUqxC5UDASmlxjaRrO/RQ1QAYwc2y/7NhuDczr/Jx0DJJLXopBqo0xPqzeBer49H/+51k7+9+VWmBUuySuBhOFgPe5UdBwEQBQ+iR+AjgrTIdFRZCab7HMFpkIkIj+9hoSUmpMHoQ3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HEMYwrxC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FXcEYO/4UOaw298eP2l3OZtVuD9bPd5LPeWa5JtfrD0xmfavwYR29Xac1ye5lnAihcKaUyLcaNUJ0jLTcVResdUdRPbKOXRP5cLKjdF7M6AnMFqMeQcfFLeLYqFceVGHdGjtnzJKXngr6CS1gX295kIXuUOVZPavwbepsyyggsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=phMDa4ee; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HEMYwrxC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02294C4CEF7;
-	Mon, 23 Mar 2026 14:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="phMDa4ee"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F479C4CEF7;
+	Mon, 23 Mar 2026 14:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275349;
-	bh=v4Ml8UJYqJdDg/yu6NNjQQPF1N39Q6FKIX/KKwnxe/s=;
+	s=korg; t=1774275352;
+	bh=+16F4oczrZckXDQhDrjLlVTCLquG4rnBQn48ZeBxmUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEMYwrxC0u8E/KuVks1Aufve84JURWGfn34MHzgtpE4XAtFr4RUi0lJ0zF35nu4ck
-	 6Ef3mj4bdBNVUZ8gbEjHFK7JIlGC82DNcb1H7vtZXTuETFOpiZcHJENemBCOd47X0m
-	 cXY0P08UIxwjpO2YwPTUmJ+7tXDPRUeSWoiweBmo=
+	b=phMDa4ee896j0WlkDM9HgJ5IbQguFhYqNN+qTmJrAEBD2eRG55LAUr3qUmyekLvP0
+	 LRoYlULeEFfHFIX+7XILPYcUaKO5jdecTfLP4iNeHACAdceHLSs60mnowhs9pjd+Ew
+	 ca/QTsA3UwSWb37CHxYPfdKxCTiBU+BahoKK2Ciw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <dstsmallbird@foxmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Ian Rogers <irogers@google.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Tianyou Li <tianyou.li@intel.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 067/460] netfilter: xt_IDLETIMER: reject rev0 reuse of ALARM timer labels
-Date: Mon, 23 Mar 2026 14:41:03 +0100
-Message-ID: <20260323134528.348815625@linuxfoundation.org>
+Subject: [PATCH 6.12 068/460] perf annotate: Fix hashmap__new() error checking
+Date: Mon, 23 Mar 2026 14:41:04 +0100
+Message-ID: <20260323134528.372363382@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -54,52 +61,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yuan Tan <tanyuan98@outlook.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 329f0b9b48ee6ab59d1ab72fef55fe8c6463a6cf ]
+[ Upstream commit bf29cb3641b80bac759c3332b02e0b270e16bf94 ]
 
-IDLETIMER revision 0 rules reuse existing timers by label and always call
-mod_timer() on timer->timer.
+The hashmap__new() function never returns NULL, it returns error
+pointers. Fix the error checking to match.
 
-If the label was created first by revision 1 with XT_IDLETIMER_ALARM,
-the object uses alarm timer semantics and timer->timer is never initialized.
-Reusing that object from revision 0 causes mod_timer() on an uninitialized
-timer_list, triggering debugobjects warnings and possible panic when
-panic_on_warn=1.
+Additionally, set src->samples to NULL to prevent any later code from
+accidentally using the error pointer.
 
-Fix this by rejecting revision 0 rule insertion when an existing timer with
-the same label is of ALARM type.
-
-Fixes: 68983a354a65 ("netfilter: xtables: Add snapshot of hardidletimer target")
-Co-developed-by: Yifan Wu <yifanwucs@gmail.com>
-Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
-Co-developed-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Xin Liu <dstsmallbird@foxmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: d3e7cad6f36d9e80 ("perf annotate: Add a hashmap for symbol histogram")
+Reviewed-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Tianyou Li <tianyou.li@intel.com>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_IDLETIMER.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ tools/perf/util/annotate.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_IDLETIMER.c b/net/netfilter/xt_IDLETIMER.c
-index 9869ef3c2ab37..92a8289b1cb35 100644
---- a/net/netfilter/xt_IDLETIMER.c
-+++ b/net/netfilter/xt_IDLETIMER.c
-@@ -320,6 +320,12 @@ static int idletimer_tg_checkentry(const struct xt_tgchk_param *par)
+diff --git a/tools/perf/util/annotate.c b/tools/perf/util/annotate.c
+index cb8f191e19fd9..890cc0a69fa5e 100644
+--- a/tools/perf/util/annotate.c
++++ b/tools/perf/util/annotate.c
+@@ -44,6 +44,7 @@
+ #include "strbuf.h"
+ #include <regex.h>
+ #include <linux/bitops.h>
++#include <linux/err.h>
+ #include <linux/kernel.h>
+ #include <linux/string.h>
+ #include <linux/zalloc.h>
+@@ -135,8 +136,10 @@ static int annotated_source__alloc_histograms(struct annotated_source *src,
+ 		return -1;
  
- 	info->timer = __idletimer_tg_find_by_label(info->label);
- 	if (info->timer) {
-+		if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
-+			pr_debug("Adding/Replacing rule with same label and different timer type is not allowed\n");
-+			mutex_unlock(&list_mutex);
-+			return -EINVAL;
-+		}
-+
- 		info->timer->refcnt++;
- 		mod_timer(&info->timer->timer,
- 			  msecs_to_jiffies(info->timeout * 1000) + jiffies);
+ 	src->samples = hashmap__new(sym_hist_hash, sym_hist_equal, NULL);
+-	if (src->samples == NULL)
++	if (IS_ERR(src->samples)) {
+ 		zfree(&src->histograms);
++		src->samples = NULL;
++	}
+ 
+ 	return src->histograms ? 0 : -1;
+ }
 -- 
 2.51.0
 
