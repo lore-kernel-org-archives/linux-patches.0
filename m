@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E6E1DA0E1;
-	Mon, 23 Mar 2026 16:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8141DA0E1;
+	Mon, 23 Mar 2026 16:21:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282893; cv=none; b=fW3/HCKI0ncYOkDnsfFifQ+8tVrQVnF6Tb7PBhF+PMuL6U4YPTvedVJbagpo7X4T8WENd8FsvQ0sdn1TS+Yl7ICHaxpc/9ZK5istFkXg2oEyelr32Kn+/WSnOpl0vbteGgP1GUy8tVpyr92edEAm6QXr4pA2l1hq+ENmo1EGSeA=
+	t=1774282895; cv=none; b=D4T6D/ZTrN/yHtIjJvRFGv3Ym4Hipl9nD0LWrJxN4Y6wtV4FPRX/f1X8vpWueN4pYMorT3ePe4jmtIBBBenmWFoZXytbx33GcFHcIaGVBcLl6uR818RSjPfJywokhxgMIgCYEuUvZWB3VfEobK9YU2L48FmYXwceO6Bjif/5HWI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282893; c=relaxed/simple;
-	bh=blFAuFJEqGsOpw5dC0UwnJG1iopBdg73YgJIOLkfvaQ=;
+	s=arc-20240116; t=1774282895; c=relaxed/simple;
+	bh=KXZMKzZ5lbwNETOam0VigdyONNf/s3nl+PC2RoUHqUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b8fnO90OWOO4luF5cYY/lWz5FHD/7EK6pHnAgk73EOa29lpBInbymeVRcVqQ1TCmDeQOJEj4KspF5cL9s8k8oucO973r/cFd8zniokS2XDUzZw8gvEpg9/ecuBJvcKkWusGT6yiLn9aJ9FntTlxKDka4r9DE3Gmtbkqmb709PTw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P5hbyXQH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pMCtASR12y97/JELV32vwwfR3wCyWF1qr/kcSwoK+OkxaeR9kH7Gc/woyBIN8rX94TZ1Q2z44c0i5CENJ3g6t5cRpTn3SEmQSkh8NmKWD3GvXTHl7x18VYi7SpcPgW5Xeqh9q0NI9L3bDaIc8Q8Y29rMVSUbK1YpORehJKj4wjM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1uPBsnq3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P5hbyXQH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB713C4CEF7;
-	Mon, 23 Mar 2026 16:21:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1uPBsnq3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D484C4CEF7;
+	Mon, 23 Mar 2026 16:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282893;
-	bh=blFAuFJEqGsOpw5dC0UwnJG1iopBdg73YgJIOLkfvaQ=;
+	s=korg; t=1774282895;
+	bh=KXZMKzZ5lbwNETOam0VigdyONNf/s3nl+PC2RoUHqUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P5hbyXQHVliqIWtewk47Ojo82U9dTdJf8PS1t7R9IeJLXCQ1MH9Ju+4Seo5mK/b+I
-	 9X3PSK7myn8GjwfOPGmDs8yDxjRqK0cxfIZkAauGkGDpftZdt8lkH5XCxlpgLqqMZd
-	 YO9dWhaXiTfI0xNyD34W4Z+n8+8wgz948I11r8yY=
+	b=1uPBsnq3jKABJ2l3KnFHsQgzHCXuYycByJNPaQAmb2hmTuZsPoiKKhjyLqdNJi7kE
+	 Zj2Cysg5yb7SIYv4eDJK9m8JZ3M5533eBhBE3uGmVGMI1puMlQhqLdxGomC3dWJWY/
+	 hJCiMQYkA2xf4uRSJ6vT/j+kkftE69cB59ae7mLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Lorenz <lorenz-frank@web.de>,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 323/481] mptcp: pm: avoid sending RM_ADDR over same subflow
-Date: Mon, 23 Mar 2026 14:45:05 +0100
-Message-ID: <20260323134532.972982356@linuxfoundation.org>
+	NeilBrown <neilb@ownmail.net>,
+	stable@kernel.org,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.1 282/481] sunrpc: fix cache_request leak in cache_release
+Date: Mon, 23 Mar 2026 14:44:24 +0100
+Message-ID: <20260323134531.987913625@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,125 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit fb8d0bccb221080630efcd9660c9f9349e53cc9e ]
+commit 17ad31b3a43b72aec3a3d83605891e1397d0d065 upstream.
 
-RM_ADDR are sent over an active subflow, the first one in the subflows
-list. There is then a high chance the initial subflow is picked. With
-the in-kernel PM, when an endpoint is removed, a RM_ADDR is sent, then
-linked subflows are closed. This is done for each active MPTCP
-connection.
+When a reader's file descriptor is closed while in the middle of reading
+a cache_request (rp->offset != 0), cache_release() decrements the
+request's readers count but never checks whether it should free the
+request.
 
-MPTCP endpoints are likely removed because the attached network is no
-longer available or usable. In this case, it is better to avoid sending
-this RM_ADDR over the subflow that is going to be removed, but prefer
-sending it over another active and non stale subflow, if any.
+In cache_read(), when readers drops to 0 and CACHE_PENDING is clear, the
+cache_request is removed from the queue and freed along with its buffer
+and cache_head reference. cache_release() lacks this cleanup.
 
-This modification avoids situations where the other end is not notified
-when a subflow is no longer usable: typically when the endpoint linked
-to the initial subflow is removed, especially on the server side.
+The only other path that frees requests with readers == 0 is
+cache_dequeue(), but it runs only when CACHE_PENDING transitions from
+set to clear. If that transition already happened while readers was
+still non-zero, cache_dequeue() will have skipped the request, and no
+subsequent call will clean it up.
 
-Fixes: 8dd5efb1f91b ("mptcp: send ack for rm_addr")
-Cc: stable@vger.kernel.org
-Reported-by: Frank Lorenz <lorenz-frank@web.de>
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/612
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-2-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted to _nl-prefixed function names in pm_netlink.c and omitted stale subflow fallback ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add the same cleanup logic from cache_read() to cache_release(): after
+decrementing readers, check if it reached 0 with CACHE_PENDING clear,
+and if so, dequeue and free the cache_request.
+
+Reported-by: NeilBrown <neilb@ownmail.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c         |    2 +-
- net/mptcp/pm_netlink.c |   43 ++++++++++++++++++++++++++++++++++++++-----
- net/mptcp/protocol.h   |    2 ++
- 3 files changed, 41 insertions(+), 6 deletions(-)
+ net/sunrpc/cache.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -55,7 +55,7 @@ int mptcp_pm_remove_addr(struct mptcp_so
- 	msk->pm.rm_list_tx = *rm_list;
- 	rm_addr |= BIT(MPTCP_RM_ADDR_SIGNAL);
- 	WRITE_ONCE(msk->pm.addr_signal, rm_addr);
--	mptcp_pm_nl_addr_send_ack(msk);
-+	mptcp_pm_nl_addr_send_ack_avoid_list(msk, rm_list);
- 	return 0;
- }
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1052,14 +1052,25 @@ static int cache_release(struct inode *i
+ 	struct cache_reader *rp = filp->private_data;
  
---- a/net/mptcp/pm_netlink.c
-+++ b/net/mptcp/pm_netlink.c
-@@ -850,9 +850,23 @@ bool mptcp_pm_nl_is_init_remote_addr(str
- 	return mptcp_addresses_equal(&mpc_remote, remote, remote->port);
- }
+ 	if (rp) {
++		struct cache_request *rq = NULL;
++
+ 		spin_lock(&queue_lock);
+ 		if (rp->offset) {
+ 			struct cache_queue *cq;
+-			for (cq= &rp->q; &cq->list != &cd->queue;
+-			     cq = list_entry(cq->list.next, struct cache_queue, list))
++			for (cq = &rp->q; &cq->list != &cd->queue;
++			     cq = list_entry(cq->list.next,
++					     struct cache_queue, list))
+ 				if (!cq->reader) {
+-					container_of(cq, struct cache_request, q)
+-						->readers--;
++					struct cache_request *cr =
++						container_of(cq,
++						struct cache_request, q);
++					cr->readers--;
++					if (cr->readers == 0 &&
++					    !test_bit(CACHE_PENDING,
++						      &cr->item->flags)) {
++						list_del(&cr->q.list);
++						rq = cr;
++					}
+ 					break;
+ 				}
+ 			rp->offset = 0;
+@@ -1067,9 +1078,14 @@ static int cache_release(struct inode *i
+ 		list_del(&rp->q.list);
+ 		spin_unlock(&queue_lock);
  
--void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk)
-+static bool subflow_in_rm_list(const struct mptcp_subflow_context *subflow,
-+			       const struct mptcp_rm_list *rm_list)
-+{
-+	u8 i, id = subflow_get_local_id(subflow);
++		if (rq) {
++			cache_put(rq->item, cd);
++			kfree(rq->buf);
++			kfree(rq);
++		}
 +
-+	for (i = 0; i < rm_list->nr; i++) {
-+		if (rm_list->ids[i] == id)
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
-+void mptcp_pm_nl_addr_send_ack_avoid_list(struct mptcp_sock *msk,
-+					  const struct mptcp_rm_list *rm_list)
- {
--	struct mptcp_subflow_context *subflow;
-+	struct mptcp_subflow_context *subflow, *same_id = NULL;
- 
- 	msk_owned_by_me(msk);
- 	lockdep_assert_held(&msk->pm.lock);
-@@ -862,11 +876,30 @@ void mptcp_pm_nl_addr_send_ack(struct mp
- 		return;
- 
- 	mptcp_for_each_subflow(msk, subflow) {
--		if (__mptcp_subflow_active(subflow)) {
--			mptcp_pm_send_ack(msk, subflow, false, false);
--			break;
-+		if (!__mptcp_subflow_active(subflow))
-+			continue;
-+
-+		if (unlikely(rm_list &&
-+			     subflow_in_rm_list(subflow, rm_list))) {
-+			if (!same_id)
-+				same_id = subflow;
-+		} else {
-+			goto send_ack;
- 		}
+ 		filp->private_data = NULL;
+ 		kfree(rp);
+-
  	}
-+
-+	if (same_id)
-+		subflow = same_id;
-+	else
-+		return;
-+
-+send_ack:
-+	mptcp_pm_send_ack(msk, subflow, false, false);
-+}
-+
-+void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk)
-+{
-+	mptcp_pm_nl_addr_send_ack_avoid_list(msk, NULL);
- }
- 
- int mptcp_pm_nl_mp_prio_send_ack(struct mptcp_sock *msk,
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -818,6 +818,8 @@ void mptcp_pm_add_addr_send_ack(struct m
- bool mptcp_pm_nl_is_init_remote_addr(struct mptcp_sock *msk,
- 				     const struct mptcp_addr_info *remote);
- void mptcp_pm_nl_addr_send_ack(struct mptcp_sock *msk);
-+void mptcp_pm_nl_addr_send_ack_avoid_list(struct mptcp_sock *msk,
-+					  const struct mptcp_rm_list *rm_list);
- void mptcp_pm_rm_addr_received(struct mptcp_sock *msk,
- 			       const struct mptcp_rm_list *rm_list);
- void mptcp_pm_mp_prio_received(struct sock *sk, u8 bkup);
+ 	if (filp->f_mode & FMODE_WRITE) {
+ 		atomic_dec(&cd->writers);
 
 
