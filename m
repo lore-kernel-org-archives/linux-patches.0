@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEBD43AD527;
-	Mon, 23 Mar 2026 13:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDDA53AE18C;
+	Mon, 23 Mar 2026 13:55:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274152; cv=none; b=Ld3wX+Kn33drOCbQjrak3X9JYt8nKIQ/MkBzdiSjbTPlOPVu27R+bdd5MDnMjKmQ9t5CJwhFsE2F1AiHNWBL1x65HPykVDRwJisJ2Ei8ZO7UCJco7tAAXsFJ4hdi9iRzgFgmFIf2WcTCSeNEn5QT14qMYac7ATrYRxhPBAR83kk=
+	t=1774274155; cv=none; b=QjwPNRshVTYhTOJdz/McFMDlO9OIPpu5vBcOT+ltp/KEXQn4R113jXbs8DGKtXKyWhwJadyHCSH89n37du9MH2ETgWImqlHRZ0VLC2EB0S8wWhtBApkiy2Ic/rZT97slku5+v+YKMaxusRDvdX7FW9RUEExNWx0Wcxifd4R6wYE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274152; c=relaxed/simple;
-	bh=Xg1Ex0QOZ5CzLNt3zKVn2JK9nAhqzLM9i54Dbyfu75I=;
+	s=arc-20240116; t=1774274155; c=relaxed/simple;
+	bh=gglKwFHzSi34rMYGrOqRQjhFVInUuNTH4/NAZfh449Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nkUHbXvs8ieWYLUNmdCgF0bpjnGJN9GZqjtb/qsRy8YetEziLY0jduZelDxmg4jTRpvsofSL3rEXgKlX1g7ol5pyfsyiu8UR4j5aERUiWd5fwP7jG94AaIFhsmyWx5swRvtk09uwHeCsrEAiNBL7+w2NM6jK2Qyh+qFmVgwiP1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=stWbvpPE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JoDANc9cjcopXquC/CbGPUiEfO0ELPeOcXwN8j7SXs5wDVtwydlkuoQmIEIoCiNHZhMxaZcmRjYIZkoaXeIGchgbXd8EI3GJK38wSzGDZgpefb9COa/UXwxps/gM8Ji/+LcVDBSvCcqsdL+RIhg3yDCuZra1nT6Z2Xa+HvMje7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JIh8hbkW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="stWbvpPE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF0AC2BCB1;
-	Mon, 23 Mar 2026 13:55:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JIh8hbkW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44550C4CEF7;
+	Mon, 23 Mar 2026 13:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274152;
-	bh=Xg1Ex0QOZ5CzLNt3zKVn2JK9nAhqzLM9i54Dbyfu75I=;
+	s=korg; t=1774274155;
+	bh=gglKwFHzSi34rMYGrOqRQjhFVInUuNTH4/NAZfh449Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=stWbvpPEBvr13w6tKu7/aptO+lA8DegOSkTLfS0Ma83RBQMshkv2QowGMAoQZoBen
-	 rmEzBQR8KoC8Kx5aBbgTgIhtH10pU4oiRssJ6JTbiIRobDZFgQE20KLTVv3Jz1gLEO
-	 8igaCrbUgL9EoU18AjiqpJOm4yyMdjVwIpC0MCoA=
+	b=JIh8hbkWc1ZAkhYQS7sJ40IMeq+UKi2UnGF6wW3qxxlSs2JF5bKmmvAa6djjhstyZ
+	 QKnxft88+HWW7AcFLc3UM1usHOmt5oLk0tkjLZhVUAaliAppMcVhnGHixG74ti5N2a
+	 peeTtSaQEKAABMzrbWFWiWp1FojloInLnPUS6KUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 074/220] drm/amdgpu/mmhub2.0: add bounds checking for cid
-Date: Mon, 23 Mar 2026 14:44:11 +0100
-Message-ID: <20260323134506.935406335@linuxfoundation.org>
+	Christian Eggers <ceggers@arri.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 120/220] Bluetooth: SMP: make SM/PER/KDU/BI-04-C happy
+Date: Mon, 23 Mar 2026 14:44:57 +0100
+Message-ID: <20260323134508.391210570@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,45 +51,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Christian Eggers <ceggers@arri.de>
 
-commit 0b26edac4ac5535df1f63e6e8ab44c24fe1acad7 upstream.
+[ Upstream commit 0e4d4dcc1a6e82cc6f9abf32193558efa7e1613d ]
 
-The value should never exceed the array size as those
-are the only values the hardware is expected to return,
-but add checks anyway.
+The last test step ("Test with Invalid public key X and Y, all set to
+0") expects to get an "DHKEY check failed" instead of "unspecified".
 
-Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e064cef4b53552602bb6ac90399c18f662f3cacd)
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6d19628f539f ("Bluetooth: SMP: Fail if remote and local public keys are identical")
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/bluetooth/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-@@ -154,14 +154,17 @@ mmhub_v2_0_print_l2_protection_fault_sta
- 	switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
- 	case IP_VERSION(2, 0, 0):
- 	case IP_VERSION(2, 0, 2):
--		mmhub_cid = mmhub_client_ids_navi1x[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_navi1x) ?
-+			mmhub_client_ids_navi1x[cid][rw] : NULL;
- 		break;
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
--		mmhub_cid = mmhub_client_ids_sienna_cichlid[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_sienna_cichlid) ?
-+			mmhub_client_ids_sienna_cichlid[cid][rw] : NULL;
- 		break;
- 	case IP_VERSION(2, 1, 2):
--		mmhub_cid = mmhub_client_ids_beige_goby[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_beige_goby) ?
-+			mmhub_client_ids_beige_goby[cid][rw] : NULL;
- 		break;
- 	default:
- 		mmhub_cid = NULL;
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 3a1ce04a7a536..9d96040745897 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2743,7 +2743,7 @@ static int smp_cmd_public_key(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (!test_bit(SMP_FLAG_DEBUG_KEY, &smp->flags) &&
+ 	    !crypto_memneq(key, smp->local_pk, 64)) {
+ 		bt_dev_err(hdev, "Remote and local public keys are identical");
+-		return SMP_UNSPECIFIED;
++		return SMP_DHKEY_CHECK_FAILED;
+ 	}
+ 
+ 	memcpy(smp->remote_pk, key, 64);
+-- 
+2.51.0
+
 
 
