@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96AAB257824;
-	Mon, 23 Mar 2026 16:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473893B775A;
+	Mon, 23 Mar 2026 16:23:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283001; cv=none; b=DevgChTpetPYuZuYzRSi5edbuNHNdWtV2o2uO6+34l/WbRGk5Tcks5xIfmXHZJNbZKxsBmuJWNEWEkR985nS2GfmidzHG542Wh/0/B+x2M27ax/UWwczf1eLTgfuB7rSyFFt8tnLzFq85tyjJ7/2IYPy1D1ksVfE0MUPrqibPus=
+	t=1774283004; cv=none; b=LwSo0Ij5dpKV7oMqtfMItPeIXk0f/cbZYYNLpcPjWcMMv70RRSbekrMk2l8+5XW01Je0/3OjMqpcMTJFfak2UxdtBy53g0rMhqELPJkZyv8hPP+jzMmB8DfhYf0fGoS/ML2tYvCQGJ33nx0bhm8KKJFj566XSrI5qd3d45bNLF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283001; c=relaxed/simple;
-	bh=T+oKLm9ol9Q+cbMQ2dEREvuETBll28MiJ7uHAXeNThA=;
+	s=arc-20240116; t=1774283004; c=relaxed/simple;
+	bh=E3dVqjA1Ef0h4LUh/jB+VmM5QTEU34+G2IJga3BOLek=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=g+BJz0HYJjrsvAxurbH4A+iU0wqnGvhPl2+zEe1z3izIphlESebFZJfLhhszDeNEAYMm5TCYxAYPCb8+or74HIYshDX2tRn73pQhuD1lpXKuBgrXaLjWLAI98YWbwGOgmw66HNCjEIhnJCGssjGZxKwIRtPV9J8oJJn4twdXlgI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKWbuPEg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HV9TSaNVu3A5raM5P1UYDLyIWK4iJiF7aTS6DDNhXdFTlx+HddNkiDmsuOaab/0OH0IRYkCwsNVn4S2sgI1S/A7BQ5vEf6A4vWNQisQ5IhLgLDvo71lW0BOhnm/P7RJ67hSf0c7CfXjX7jpowyLiWVTkPYpfmVi4B6mZ4YY1fC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LoTpvbYd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKWbuPEg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30968C4CEF7;
-	Mon, 23 Mar 2026 16:23:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LoTpvbYd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC98CC2BC9E;
+	Mon, 23 Mar 2026 16:23:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283001;
-	bh=T+oKLm9ol9Q+cbMQ2dEREvuETBll28MiJ7uHAXeNThA=;
+	s=korg; t=1774283004;
+	bh=E3dVqjA1Ef0h4LUh/jB+VmM5QTEU34+G2IJga3BOLek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKWbuPEg1x7gK0dG4z1ErirA+26YhsflrPNyiav4n1fjtaNgGrLBMx56nLDV2qK1Z
-	 0XkJhjPNOC1syBYfWoG7KJkafPyRcWS8p7nC2MaJ2HKxaB4Lxt28CDWqKR7FWXk9l6
-	 fqtJDFc9tZmmwiRKHXn5VEdDgkQYhUVZ9YiRbMx4=
+	b=LoTpvbYdOJwtRIGHIh0fPmb4GWoy5WztS4GUkyZ4S6cQlBoOVl8jT0DvGC08GQyTM
+	 LMGe+CVeWebyfOonXB9JqbiXKFWy0Webk/ZTdWNLuxJeNGLv/6FpQ6If2IB9U017Ld
+	 3k+ML82TpeElv5CLWfz0MFd3FwXxKU46Q0P94tT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 328/481] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
-Date: Mon, 23 Mar 2026 14:45:10 +0100
-Message-ID: <20260323134533.098160778@linuxfoundation.org>
+Subject: [PATCH 6.1 364/481] pmdomain: bcm: bcm2835-power: Increase ASB control timeout
+Date: Mon, 23 Mar 2026 14:45:46 +0100
+Message-ID: <20260323134533.986105843@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,79 +53,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 ]
+[ Upstream commit b826d2c0b0ecb844c84431ba6b502e744f5d919a ]
 
-In the drain loop, the local variable 'runtime' is reassigned to a
-linked stream's runtime (runtime = s->runtime at line 2157).  After
-releasing the stream lock at line 2169, the code accesses
-runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
-(lines 2170-2178) — all referencing the linked stream's runtime without
-any lock or refcount protecting its lifetime.
+The bcm2835_asb_control() function uses a tight polling loop to wait
+for the ASB bridge to acknowledge a request. During intensive workloads,
+this handshake intermittently fails for V3D's master ASB on BCM2711,
+resulting in "Failed to disable ASB master for v3d" errors during
+runtime PM suspend. As a consequence, the failed power-off leaves V3D in
+a broken state, leading to bus faults or system hangs on later accesses.
 
-A concurrent close() on the linked stream's fd triggers
-snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
-→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
-No synchronization prevents kfree(runtime) from completing while the
-drain path dereferences the stale pointer.
+As the timeout is insufficient in some scenarios, increase the polling
+timeout from 1us to 5us, which is still negligible in the context of a
+power domain transition. Also, replace the open-coded ktime_get_ns()/
+cpu_relax() polling loop with readl_poll_timeout_atomic().
 
-Fix by caching the needed runtime fields (no_period_wakeup, rate,
-buffer_size) into local variables while still holding the stream lock,
-and using the cached values after the lock is released.
-
-Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/pcm_native.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/soc/bcm/bcm2835-power.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2146,6 +2146,10 @@ static int snd_pcm_drain(struct snd_pcm_
- 	for (;;) {
- 		long tout;
- 		struct snd_pcm_runtime *to_check;
-+		unsigned int drain_rate;
-+		snd_pcm_uframes_t drain_bufsz;
-+		bool drain_no_period_wakeup;
-+
- 		if (signal_pending(current)) {
- 			result = -ERESTARTSYS;
- 			break;
-@@ -2165,16 +2169,25 @@ static int snd_pcm_drain(struct snd_pcm_
- 		snd_pcm_group_unref(group, substream);
- 		if (!to_check)
- 			break; /* all drained */
-+		/*
-+		 * Cache the runtime fields needed after unlock.
-+		 * A concurrent close() on the linked stream may free
-+		 * its runtime via snd_pcm_detach_substream() once we
-+		 * release the stream lock below.
-+		 */
-+		drain_no_period_wakeup = to_check->no_period_wakeup;
-+		drain_rate = to_check->rate;
-+		drain_bufsz = to_check->buffer_size;
- 		init_waitqueue_entry(&wait, current);
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		add_wait_queue(&to_check->sleep, &wait);
- 		snd_pcm_stream_unlock_irq(substream);
--		if (runtime->no_period_wakeup)
-+		if (drain_no_period_wakeup)
- 			tout = MAX_SCHEDULE_TIMEOUT;
- 		else {
- 			tout = 100;
--			if (runtime->rate) {
--				long t = runtime->buffer_size * 1100 / runtime->rate;
-+			if (drain_rate) {
-+				long t = drain_bufsz * 1100 / drain_rate;
- 				tout = max(t, tout);
- 			}
- 			tout = msecs_to_jiffies(tout);
+--- a/drivers/soc/bcm/bcm2835-power.c
++++ b/drivers/soc/bcm/bcm2835-power.c
+@@ -9,6 +9,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/mfd/bcm2835-pm.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -152,7 +153,6 @@ struct bcm2835_power {
+ static int bcm2835_asb_control(struct bcm2835_power *power, u32 reg, bool enable)
+ {
+ 	void __iomem *base = power->asb;
+-	u64 start;
+ 	u32 val;
+ 
+ 	switch (reg) {
+@@ -165,8 +165,6 @@ static int bcm2835_asb_control(struct bc
+ 		break;
+ 	}
+ 
+-	start = ktime_get_ns();
+-
+ 	/* Enable the module's async AXI bridges. */
+ 	if (enable) {
+ 		val = readl(base + reg) & ~ASB_REQ_STOP;
+@@ -175,11 +173,9 @@ static int bcm2835_asb_control(struct bc
+ 	}
+ 	writel(PM_PASSWORD | val, base + reg);
+ 
+-	while (!!(readl(base + reg) & ASB_ACK) == enable) {
+-		cpu_relax();
+-		if (ktime_get_ns() - start >= 1000)
+-			return -ETIMEDOUT;
+-	}
++	if (readl_poll_timeout_atomic(base + reg, val,
++				      !!(val & ASB_ACK) != enable, 0, 5))
++		return -ETIMEDOUT;
+ 
+ 	return 0;
+ }
 
 
