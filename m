@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF14537F8A0;
-	Mon, 23 Mar 2026 14:04:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7DB3AE1AA;
+	Mon, 23 Mar 2026 14:04:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274695; cv=none; b=UHf+jtczQ8T0gZJH/x4ZoNGMUALo+HRD+Oh/LjBusGqbOh9um4ssCsHsQ0Tw3cDGyRdKPmLXikUIn/G43eMGsN03gacWnjqzbVa4pEFPZYIW2dmUt7eibRsbGhrwtM2vXyA7OxM8EVwd3t0ZrPawasrc7hh1IEPeSC6NuB5/V6Y=
+	t=1774274699; cv=none; b=Fcp9A/EfPlxZMASMzGTLbNvtWXo50YVS5tnb1/PTXTXUcMePZypl/9lQryZjgvQzrHNb1psCIRUomtm9HnT9ZPNiqZ0HBqwEeimwrp/NZ+ebP3FbJqDNMygsHIb5Jnw1fojQPVNqJSapiGTOewkhhD9SpofVDGCxQTK1bOHvWFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274695; c=relaxed/simple;
-	bh=pFgkpakPW7KS18y1DxBewUcbpXzMu55pLFHSxm7DCHQ=;
+	s=arc-20240116; t=1774274699; c=relaxed/simple;
+	bh=JTz7mFkxzcEzIgaMyE9KAjpClGPCE1NDsIEvY2MvCJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YekV3WiGInmLtllZXq+aZ6m6Fo8/EmvaS6l3VZyi+YgTFPXL/4YpdTNFoprqZk/PJ8fFE8B61E2m6S4hoe+ghTnDcwjOTtMco8sJsmBYj95Ll4exOLU/a9dULp/iHpjihaIsDiwxp1w7Swc/45Y/RIfCBM1KDDBKfYzCpU8fzYk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BLI/S23b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=MaOGRf0mZelaOV0ph2aY3O8uUCFij9+GhRBEZwDEQXqSniSsyDrJTi6Ul+dmknUnNyQ7Xsb+P+oOEsmVW+cDjEYk4gVtzLeuokQf1uC4HIDHIg6vRUikqSG9XUAx5MY0gPkdqMowVMzvHAGPImI5MzjAfg+LBPqekaTdbRfjFw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1st0fgAJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BLI/S23b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18624C4CEF7;
-	Mon, 23 Mar 2026 14:04:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1st0fgAJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457B3C4CEF7;
+	Mon, 23 Mar 2026 14:04:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274695;
-	bh=pFgkpakPW7KS18y1DxBewUcbpXzMu55pLFHSxm7DCHQ=;
+	s=korg; t=1774274698;
+	bh=JTz7mFkxzcEzIgaMyE9KAjpClGPCE1NDsIEvY2MvCJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BLI/S23be7T9bWbK70v4APE0N2G3H3DWlSHtzSD2W/o+JYJ6TLKb4NJwkiF+TqGRb
-	 aN9n1OlzZ1ntmXReMIpMKYx6POP95vyCGm3pNHRaYe7iXno/L3TvNdqCLesuQRx662
-	 KfgA7s1N6/Xw3IVwrWpN+wEO2mpIzy+VL88ethX8=
+	b=1st0fgAJCeOD2sb13i6dJ+8oGHTeKyaP9LGx3fXIn565auVhmp+zhQXMFZ+0rxgiS
+	 ScsxG75951EnEzpV73zu3YSSDMefWmYIXMt4DQRIMSehm8Rr38nkuDIQU3cOXW81Va
+	 9QyWUGhzN7m0SKnvNKpI9x70+FwAtnlrWPOGi57E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.18 077/212] serial: core: fix infinite loop in handle_tx() for PORT_UNKNOWN
-Date: Mon, 23 Mar 2026 14:44:58 +0100
-Message-ID: <20260323134506.195883500@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 037/212] drm/i915/vrr: Move HAS_VRR() check into intel_vrr_set_transcoder_timings()
+Date: Mon, 23 Mar 2026 14:44:18 +0100
+Message-ID: <20260323134504.935859405@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -44,60 +45,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 455ce986fa356ff43a43c0d363ba95fa152f21d5 upstream.
+[ Upstream commit 78ea8eb5b6235b3ef68fa0fb8ffe0b3b490baf38 ]
 
-uart_write_room() and uart_write() behave inconsistently when
-xmit_buf is NULL (which happens for PORT_UNKNOWN ports that were
-never properly initialized):
+Reduce the clutter in hsw_configure_cpu_transcoder() a bit by moving
+the HAS_VRR() check into intel_vrr_set_transcoder_timings().
 
-- uart_write_room() returns kfifo_avail() which can be > 0
-- uart_write() checks xmit_buf and returns 0 if NULL
-
-This inconsistency causes an infinite loop in drivers that rely on
-tty_write_room() to determine if they can write:
-
-  while (tty_write_room(tty) > 0) {
-      written = tty->ops->write(...);
-      // written is always 0, loop never exits
-  }
-
-For example, caif_serial's handle_tx() enters an infinite loop when
-used with PORT_UNKNOWN serial ports, causing system hangs.
-
-Fix by making uart_write_room() also check xmit_buf and return 0 if
-it's NULL, consistent with uart_write().
-
-Reproducer: https://gist.github.com/mrpre/d9a694cc0e19828ee3bc3b37983fde13
-
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260204074327.226165-1-jiayuan.chen@linux.dev
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20251020185038.4272-18-ville.syrjala@linux.intel.com
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Stable-dep-of: 237aab549676 ("drm/i915/vrr: Configure VRR timings after enabling TRANS_DDI_FUNC_CTL")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/serial_core.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display.c |    3 +--
+ drivers/gpu/drm/i915/display/intel_vrr.c     |    3 +++
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/serial_core.c
-+++ b/drivers/tty/serial/serial_core.c
-@@ -643,7 +643,10 @@ static unsigned int uart_write_room(stru
- 	unsigned int ret;
+--- a/drivers/gpu/drm/i915/display/intel_display.c
++++ b/drivers/gpu/drm/i915/display/intel_display.c
+@@ -1642,8 +1642,7 @@ static void hsw_configure_cpu_transcoder
+ 	}
  
- 	port = uart_port_ref_lock(state, &flags);
--	ret = kfifo_avail(&state->port.xmit_fifo);
-+	if (!state->port.xmit_buf)
-+		ret = 0;
-+	else
-+		ret = kfifo_avail(&state->port.xmit_fifo);
- 	uart_port_unlock_deref(port, flags);
- 	return ret;
- }
+ 	intel_set_transcoder_timings(crtc_state);
+-	if (HAS_VRR(display))
+-		intel_vrr_set_transcoder_timings(crtc_state);
++	intel_vrr_set_transcoder_timings(crtc_state);
+ 
+ 	if (cpu_transcoder != TRANSCODER_EDP)
+ 		intel_de_write(display, TRANS_MULT(display, cpu_transcoder),
+--- a/drivers/gpu/drm/i915/display/intel_vrr.c
++++ b/drivers/gpu/drm/i915/display/intel_vrr.c
+@@ -461,6 +461,9 @@ void intel_vrr_set_transcoder_timings(co
+ 	struct intel_display *display = to_intel_display(crtc_state);
+ 	enum transcoder cpu_transcoder = crtc_state->cpu_transcoder;
+ 
++	if (!HAS_VRR(display))
++		return;
++
+ 	/*
+ 	 * This bit seems to have two meanings depending on the platform:
+ 	 * TGL: generate VRR "safe window" for DSB vblank waits
 
 
