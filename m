@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834A826ED46;
-	Mon, 23 Mar 2026 14:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B97395DB5;
+	Mon, 23 Mar 2026 14:51:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277466; cv=none; b=NaeXQk+yZit3tMZh3vQPGj/ltxXkNaRBhVtdNOf1VWedaCnl1THRbTXUfk1qKZtu2QEI6kh7KwBLHCPwywQMWlf+ggTjTnhrpqKS1nUK8rTBNjGdgPFIPkXj0goPhAFFf3QxkU53epWHpEPMD4Lyk2/3gsmspW/SbtTDVzd8Iyo=
+	t=1774277469; cv=none; b=fgWLJ02dYptcja91o9KENqGI2+95cS5STjVjx3YRSPOryP/ibmX2CQDjorQYw6HwklQxd0pbEBX2XwZv+ocVbYPLEVm+lGY1htVLRCsvvDDNfSwt180WCpjCOikyoVGSTX1e9pCqZtspuJhW3IqOWirumdR/4y/TigVClZrHjdE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277466; c=relaxed/simple;
-	bh=0sEVdAI1vu7okh33FF4Fe5Lxm1/XQh5oYa6ku3eGESE=;
+	s=arc-20240116; t=1774277469; c=relaxed/simple;
+	bh=FjHuroO9fJCkpLTSGg53+bwRMbks4w33TVl5C+jZY4w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CKrE51kR16YZNAuW6biJEn5uqeU49Pn7fEAHSXCNiYcrxNy21UWz2emtztDmE5bTWbiIs2RotNdytlrqRuE4AnouoSOTG6V7Z2HfgtbjQisTQk+ZYcVZj10krlVLpn2uI/H8DwRMPS0qI/ywfYZrFx+/K7hmREdbKblj22bvgMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fGL05jE7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RRgn83Vz0R0EIt3NsEfZb5ssvqamLs5XCoK0CeNZC/lup7Oo1j1sezzkElQmC2SDXUJI4hFNlU2vvnRnycmpVsaPxcNMUCH3b39ai/HZ9MPcdh7AFk9KX+BRFOfsEUrEAhPtHuef/BGVRQO1N6v0+Fz0PS2F86ENpGCH4J+39Dc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aMP2OWgL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fGL05jE7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16519C4CEF7;
-	Mon, 23 Mar 2026 14:51:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aMP2OWgL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 972BEC4CEF7;
+	Mon, 23 Mar 2026 14:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277466;
-	bh=0sEVdAI1vu7okh33FF4Fe5Lxm1/XQh5oYa6ku3eGESE=;
+	s=korg; t=1774277469;
+	bh=FjHuroO9fJCkpLTSGg53+bwRMbks4w33TVl5C+jZY4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGL05jE7kcLRfqMZN/8NEQDjLHtqvV+56F1BSO22hZVYeUSXNcku6R1wV48xafmDq
-	 sr4L7oQ3HbsTfYfsavVL34+k6ndRoFwTZ9+jqHlrUlz//Sa0HUi2q8hXSLhmUYK6M1
-	 YVHGIHKN/3E5HQtyuSizMoqT81/VMmjwOS+gPrdc=
+	b=aMP2OWgLnVIaQv1gX/pCAUCHhPS1KRx5D2qvNkHuBmHf8HbZY8VcsVVC4CW5UXdNf
+	 Foyn/MOvPRWIUk9ElGgVPy2HhZi4H7R4Ww37TT+USnHvf0ioZWSNudGdX6KlvBjWDA
+	 8nYcr0X2eADQlAz6kqbUkgIyiXDOJZ6MHXpX4bx0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Sun peng Li <sunpeng.li@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 450/460] mtd: rawnand: brcmnand: skip DMA during panic write
-Date: Mon, 23 Mar 2026 14:47:26 +0100
-Message-ID: <20260323134537.642077777@linuxfoundation.org>
+Subject: [PATCH 6.12 451/460] drm/amd/display: Fix DisplayID not-found handling in parse_edid_displayid_vrr()
+Date: Mon, 23 Mar 2026 14:47:27 +0100
+Message-ID: <20260323134537.665290716@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,47 +58,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit da9ba4dcc01e7cf52b7676f0ee9607b8358c2171 ]
+[ Upstream commit 2323b019651ad81c20a0f7f817c63392b3110652 ]
 
-When oops_panic_write is set, the driver disables interrupts and
-switches to PIO polling mode but still falls through into the DMA
-path. DMA cannot be used reliably in panic context, so make the
-DMA path an else branch to ensure only PIO is used during panic
-writes.
+parse_edid_displayid_vrr() searches the EDID extension blocks for a
+DisplayID extension before parsing the dynamic video timing range.
 
-Fixes: c1ac2dc34b51 ("mtd: rawnand: brcmnand: When oops in progress use pio and interrupt polling")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+The code previously checked whether edid_ext was NULL after the search
+loop. However, edid_ext is assigned during each iteration of the loop,
+so it will never be NULL once the loop has executed. If no DisplayID
+extension is found, edid_ext ends up pointing to the last extension
+block, and the NULL check does not correctly detect the failure case.
+
+Instead, check whether the loop completed without finding a matching
+DisplayID block by testing "i == edid->extensions". This ensures the
+function exits early when no DisplayID extension is present and avoids
+parsing an unrelated EDID extension block.
+
+Also simplify the EDID validation check using "!edid ||
+!edid->extensions".
+
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:13079 parse_edid_displayid_vrr() warn: variable dereferenced before check 'edid_ext' (see line 13075)
+
+Fixes: a638b837d0e6 ("drm/amd/display: Fix refresh rate range for some panel")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Sun peng Li <sunpeng.li@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 91c7e6342e98c846b259c57273436fdea4c043f2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index 2eb44c1428fbc..bbba3cf477e98 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2303,14 +2303,12 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
- 	for (i = 0; i < ctrl->max_oob; i += 4)
- 		oob_reg_write(ctrl, i, 0xffffffff);
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index 4d508129a5e65..e092d2372a4e6 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -12318,7 +12318,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
+ 	u16 min_vfreq;
+ 	u16 max_vfreq;
  
--	if (mtd->oops_panic_write)
-+	if (mtd->oops_panic_write) {
- 		/* switch to interrupt polling and PIO mode */
- 		disable_ctrl_irqs(ctrl);
--
--	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
-+	} else if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
- 		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
- 				    CMD_PROGRAM_PAGE))
--
- 			ret = -EIO;
+-	if (edid == NULL || edid->extensions == 0)
++	if (!edid || !edid->extensions)
+ 		return;
  
- 		goto out;
+ 	/* Find DisplayID extension */
+@@ -12328,7 +12328,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
+ 			break;
+ 	}
+ 
+-	if (edid_ext == NULL)
++	if (i == edid->extensions)
+ 		return;
+ 
+ 	while (j < EDID_LENGTH) {
 -- 
 2.51.0
 
