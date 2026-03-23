@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF06D2C0298;
-	Mon, 23 Mar 2026 16:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBC73AF647;
+	Mon, 23 Mar 2026 16:18:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282717; cv=none; b=AtfhSrYCaQUmlMcOIvmcDixJ17eVQh9YmJNe6yWPm6OjqwREdAVanOPZt7o3qpHLyiqfx7YvqgOBIwepEmM6zn+ox8c7vP2SeuXhgzq1g5O8Hi/Esnd1UIE/AuDcXWPIWUdmGVGICc7WBC7y3iuJPdK1Sd9KGa4jsKKuXt6g99A=
+	t=1774282720; cv=none; b=My4MND0WJreK+58dj2MuT+P2tQh7b4wlk6Iit9KjzrDliqvs8l8SxgNFQW+8GOuyaj3v74zJLDvxCDQjWtbpxzNh33kGa9NreEPhlgT6aTBnHHmjUe/tUYXV9JMLBFY9JGfa4mwY7MG89QSEJNP3WjJK9OLo8FAYcinqpPxvquE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282717; c=relaxed/simple;
-	bh=saVG+wDok9UVwysexqffaHS8aP5z9EOxazUcjp3srQU=;
+	s=arc-20240116; t=1774282720; c=relaxed/simple;
+	bh=Ruz0ozznDgR3C1X9NGzUbQQmirYYhlIhpyVEl2SIfD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eUUDPiHuBwlJAR+JV2Mq/pEz87u7ZeMng9u/oZH2VYmbefcIwIbmd0kYIq3IEHhxlsOSRNlYvfpK/6qahpsEVHjBgKHKXKpCrCsuen/kOu+6o/8A4DL+MDD4dIMfdK3QF4asGcO/hYI+sCSpoq9Y8NQ1wDRLC7uimITqh8EigLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oI0xkaxi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=R5LCH9O0c0mxwvukgUw0DMiewYOBnompvt6N1UFprqfp3bDpfNs1I+GZYqlvskJzEXC4JNXAGExQJvmhy+lujfAInEFqkBVOI5160JQnS8GHXdG4knYLMU6JL+OyhYBv0FtIAwOEKinxPXSO0jlPvY8vRI1nQkNSNVjkMg7ykds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C+ZxPSCq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oI0xkaxi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C658C4CEF7;
-	Mon, 23 Mar 2026 16:18:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C+ZxPSCq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A67FC4CEF7;
+	Mon, 23 Mar 2026 16:18:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282717;
-	bh=saVG+wDok9UVwysexqffaHS8aP5z9EOxazUcjp3srQU=;
+	s=korg; t=1774282720;
+	bh=Ruz0ozznDgR3C1X9NGzUbQQmirYYhlIhpyVEl2SIfD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oI0xkaxiqJKzWAkh9DEnPn3nolGfIAQspMLco7iQ/XSc3H5YbJ73jCMyO/hpHt3V1
-	 nR7PYHwYiAZEDCVq5tPXddjImtPD4W4ym/72Minf2/qqz7DbQtfjLvogM4N92ASerm
-	 89gWZH8Z+9HXMaSH9TeOnN15UK9E/Mbbwa4PO1Wk=
+	b=C+ZxPSCqBuCNmREAAZj9Hv4JEBJ1bAGXv8WcsRV3UYIcVU55Is2ZIDymlmQYZF9R4
+	 egSXB8KnutqgNsppoQXVXH1A6xBn0QSE65D1cbBzPjRpv2LpPletwRkTJyip4MYCFI
+	 u59A8drsE/KhSxe4UPlXE3LK/TRPLaqGBTsOh/nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>
-Subject: [PATCH 6.1 233/481] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
-Date: Mon, 23 Mar 2026 14:43:35 +0100
-Message-ID: <20260323134530.814639740@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 260/481] lib/bootconfig: check bounds before writing in __xbc_open_brace()
+Date: Mon, 23 Mar 2026 14:44:02 +0100
+Message-ID: <20260323134531.486024508@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,62 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Josh Law <objecting@objecting.org>
 
-commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
+commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
 
-The ITS driver blindly assumes that EventIDs are in abundant supply, to the
-point where it never checks how many the hardware actually supports.
+The bounds check for brace_index happens after the array write.
+While the current call pattern prevents an actual out-of-bounds
+access (the previous call would have returned an error), the
+write-before-check pattern is fragile and would become a real
+out-of-bounds write if the error return were ever not propagated.
 
-It turns out that some pretty esoteric integrations make it so that only a
-few bits are available, all the way down to a single bit.
+Move the bounds check before the array write so the function is
+self-contained and safe regardless of caller behavior.
 
-Enforce the advertised limitation at the point of allocating the device
-structure, and hope that the endpoint driver can deal with such limitation.
+Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
 
-Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
- include/linux/irqchip/arm-gic-v3.h |    1 +
- 2 files changed, 5 insertions(+)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3382,6 +3382,7 @@ static struct its_device *its_create_dev
- 	int lpi_base;
- 	int nr_lpis;
- 	int nr_ites;
-+	int id_bits;
- 	int sz;
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -534,9 +534,9 @@ static char *skip_spaces_until_newline(c
+ static int __init __xbc_open_brace(char *p)
+ {
+ 	/* Push the last key as open brace */
+-	open_brace[brace_index++] = xbc_node_index(last_parent);
+ 	if (brace_index >= XBC_DEPTH_MAX)
+ 		return xbc_parse_error("Exceed max depth of braces", p);
++	open_brace[brace_index++] = xbc_node_index(last_parent);
  
- 	if (!its_alloc_device_table(its, dev_id))
-@@ -3394,7 +3395,10 @@ static struct its_device *its_create_dev
- 	/*
- 	 * Even if the device wants a single LPI, the ITT must be
- 	 * sized as a power of two (and you need at least one bit...).
-+	 * Also honor the ITS's own EID limit.
- 	 */
-+	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
-+	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
---- a/include/linux/irqchip/arm-gic-v3.h
-+++ b/include/linux/irqchip/arm-gic-v3.h
-@@ -394,6 +394,7 @@
- #define GITS_TYPER_VLPIS		(1UL << 1)
- #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
- #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
-+#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
- #define GITS_TYPER_IDBITS_SHIFT		8
- #define GITS_TYPER_DEVBITS_SHIFT	13
- #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
+ 	return 0;
+ }
 
 
