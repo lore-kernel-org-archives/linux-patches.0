@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1604F2C181;
-	Mon, 23 Mar 2026 14:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8385199FAB;
+	Mon, 23 Mar 2026 14:21:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275691; cv=none; b=NQlsLNBTtEJZNXKmtKLuVg3VIDvHklMXvZwylFOuWV8UDe3pYnPhEOJOfp5Tsxm7q1Fg7++r5OpGPug/4uSqatOjH3s0rp6ArVWRVBKDgO/At33nmFqKPHqIarNpqBkCAqrMi4vdftnn97+C054DUgWXCGgXN78WitXD8iDW2NM=
+	t=1774275693; cv=none; b=kq72/N2orp688/YMPabClSDelj7jEuDzHY0G6/fBS8Q57BNxJZF6Oi+H7DiGfmlLBoEceTS3Wk0eS6KSNSLl5YXd2aIkZDupVNdViHjSMWymXZXGiE/+S0MXG8zj7RcPNF+fQU6zr9kInU0CsT7fFSe0rzobn4hMzJlyZ1nKtbY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275691; c=relaxed/simple;
-	bh=xmXccoLUHRb96XMtXe8+ONaj0ApHLFzK5XXS1F8ZiVI=;
+	s=arc-20240116; t=1774275693; c=relaxed/simple;
+	bh=O254SxLn6JbhtO1ZFc1M5v3yYSdwrQ5g2djGWfYlbm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZLjG7nqdiOfMatPmVwKLvmUta7y8IkbNSchTFTExL041KnfiojqYffDZnMXiV9mLMNYrBhIpFjwceZs+aDcrSB6TZrRZGJERbju+aRrIJIoMvB2LoiDlqCjCksX4T8eOZOP+MsFfLKjWCEDINzGDDYEGIdEJY3GYZZ1ZRlRgcH4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a8n2OLVZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BDyR++iMzaPzjg/cqOCkVyFrlGbSRTo/4CPqxm+nZEWzMt0o8C98ee0BEWJewCOaq7U18P+gSdBZaZI542FYFP6IuJrgQcvX0h7Pf6eCFZgiqSoPsWnZNPkev93AiPm4U2xhNeixlU9phTa9agut+7PrHxmlk8fq+6GE/sAhKWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBWsE+rt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a8n2OLVZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DADDC4CEF7;
-	Mon, 23 Mar 2026 14:21:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBWsE+rt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B189C4CEF7;
+	Mon, 23 Mar 2026 14:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275691;
-	bh=xmXccoLUHRb96XMtXe8+ONaj0ApHLFzK5XXS1F8ZiVI=;
+	s=korg; t=1774275693;
+	bh=O254SxLn6JbhtO1ZFc1M5v3yYSdwrQ5g2djGWfYlbm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a8n2OLVZo0yHNuJrBIXBoqL8p6/RkhvhQsb19CsH9eJ0NamvNHPhbQbHcDFvOx2my
-	 CZ22X69T/NSw2SHET6fa8DVYizv9f7RMOCWM2p5FB6tmnnirzjDWnodVD43OOR41Lo
-	 IBSbocwwnVdquME5SOFky/6RrI5leOW1qxu8huJ0=
+	b=uBWsE+rtN+mlcd/ETN54bKQ+ZkSkSonoUcB78KYRoNG2Rk59tVN+CB8h8sMtuTSxF
+	 ITXhGYInJjrFkI4crEZbxZaQQF5vBBaAcgmRVjOz2Sp4WVTW5e+NxAhauMKFECfTJF
+	 JXZfIKbwc3lUU/7HwbtGeek5ZIHvs8haiP9Midqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>
-Subject: [PATCH 6.12 148/460] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
-Date: Mon, 23 Mar 2026 14:42:24 +0100
-Message-ID: <20260323134530.215940404@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Calvin Owens <calvin@wbinvd.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.12 184/460] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
+Date: Mon, 23 Mar 2026 14:43:00 +0100
+Message-ID: <20260323134531.067899537@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,62 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Calvin Owens <calvin@wbinvd.org>
 
-commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
+commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
 
-The ITS driver blindly assumes that EventIDs are in abundant supply, to the
-point where it never checks how many the hardware actually supports.
+Some of the sizing logic through tracer_alloc_buffers() uses int
+internally, causing unexpected behavior if the user passes a value that
+does not fit in an int (on my x86 machine, the result is uselessly tiny
+buffers).
 
-It turns out that some pretty esoteric integrations make it so that only a
-few bits are available, all the way down to a single bit.
+Fix by plumbing the parameter's real type (unsigned long) through to the
+ring buffer allocation functions, which already use unsigned long.
 
-Enforce the advertised limitation at the point of allocating the device
-structure, and hope that the endpoint driver can deal with such limitation.
+It has always been possible to create larger ring buffers via the sysfs
+interface: this only affects the cmdline parameter.
 
-Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
+Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
- include/linux/irqchip/arm-gic-v3.h |    1 +
- 2 files changed, 5 insertions(+)
+ kernel/trace/trace.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3393,6 +3393,7 @@ static struct its_device *its_create_dev
- 	int lpi_base;
- 	int nr_lpis;
- 	int nr_ites;
-+	int id_bits;
- 	int sz;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9227,7 +9227,7 @@ static void
+ init_tracer_tracefs(struct trace_array *tr, struct dentry *d_tracer);
  
- 	if (!its_alloc_device_table(its, dev_id))
-@@ -3405,7 +3406,10 @@ static struct its_device *its_create_dev
- 	/*
- 	 * Even if the device wants a single LPI, the ITT must be
- 	 * sized as a power of two (and you need at least one bit...).
-+	 * Also honor the ITS's own EID limit.
- 	 */
-+	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
-+	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
---- a/include/linux/irqchip/arm-gic-v3.h
-+++ b/include/linux/irqchip/arm-gic-v3.h
-@@ -394,6 +394,7 @@
- #define GITS_TYPER_VLPIS		(1UL << 1)
- #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
- #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
-+#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
- #define GITS_TYPER_IDBITS_SHIFT		8
- #define GITS_TYPER_DEVBITS_SHIFT	13
- #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
+ static int
+-allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
++allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
+ {
+ 	enum ring_buffer_flags rb_flags;
+ 
+@@ -9277,7 +9277,7 @@ static void free_trace_buffer(struct arr
+ 	}
+ }
+ 
+-static int allocate_trace_buffers(struct trace_array *tr, int size)
++static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
+ {
+ 	int ret;
+ 
+@@ -10479,7 +10479,7 @@ __init static void enable_instances(void
+ 
+ __init static int tracer_alloc_buffers(void)
+ {
+-	int ring_buf_size;
++	unsigned long ring_buf_size;
+ 	int ret = -ENOMEM;
+ 
+ 
 
 
