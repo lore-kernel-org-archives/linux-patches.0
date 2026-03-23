@@ -1,45 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C6A3AF643;
-	Mon, 23 Mar 2026 14:10:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2DDE3AD50A;
+	Mon, 23 Mar 2026 14:10:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275044; cv=none; b=ucBDVCw6HX4wUH05oitCXNV5KCu2wFscZeO3cCvZGe+uNEMoQCK1qU/XBO6TGa90C9x7C3fEKmokcaRQu/1p/pTBU/5dWQEUx0yAJqGcwhIHy14buDHk1h2lz9HWKrb3yCTFYGvN0yTWRH/o7BqoaEA5U75qC0JasL9eceR8k0Q=
+	t=1774275048; cv=none; b=jSPF2BdP6guRE39VKdMynohAB9LXiOookNpkJKBVRQz++GUpFzZfWCHP5eBLTAp2/j9StPaN+Xv2MMjJjwIbnN8y8yRCY5neixyuct9I5FgmrbNbDTEL8JnEiTTRMCXvvfp0dd6CzuW8g87s/Ng0DOmsOvtmrWn9moMqY6h9OoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275044; c=relaxed/simple;
-	bh=PRkQo9KzQ1k6bk6vaDMuMzDPa4h4CoeZPbfHLrPrRYI=;
+	s=arc-20240116; t=1774275048; c=relaxed/simple;
+	bh=2lBreaDLY4/rx66oQRtnW+4WOnPRpsQfHLYfrEh1LQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=prSWp2MdRLIuFMiZfgXMTuIIMp5MTIoApowPvOGu0pEZJ0jIx4hc6dAULeUkY+VA+oHSz4ozBoC79feCAy26P1fgdLy9pmAUvUHNJMIBo8LVPMnE3SCsgO21GuRoyKeC5aXi7gn1b7Rdq4xqdpUeilA1pBw6s0GTKKDAJ3uQFRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=trliNg7j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dEBpYwK0LJWAzYlGhOCYaJpaUT3nnWx8hiY+B3/UjGZwwlKtbkHN87EDicOCdGbTAlhQaFDOj1c3UNGIEAIKm0njnf+v8LKVobLVaeSwFID9jV0SEqmmYq0so7JbgScCJ+o1T09LZaQe96m2Sefjxfjt8hzzdxTqtYHoik60jmE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KPrkTDho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="trliNg7j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DECA3C2BCB1;
-	Mon, 23 Mar 2026 14:10:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KPrkTDho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D163C4CEF7;
+	Mon, 23 Mar 2026 14:10:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275044;
-	bh=PRkQo9KzQ1k6bk6vaDMuMzDPa4h4CoeZPbfHLrPrRYI=;
+	s=korg; t=1774275047;
+	bh=2lBreaDLY4/rx66oQRtnW+4WOnPRpsQfHLYfrEh1LQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trliNg7jnvmiUQb9R3i8khmDVuHq2mXSA6limDPIHkmfG+reKOMzJxM2q/tEU3v5o
-	 5venuOpkZinR1RSfKl1I7yZ8yWcsNj7Nu7NmBE8Xny+97zrnLRNdOiCse+XpVQGVyj
-	 q93vpHfIXpmZP/BPo1lxm3c9UCQH365+lySXrAlI=
+	b=KPrkTDhowcEaMqGAQmIQHgKPqyVrG8kWUeXlxcubkWLdWRJ4dna6/QYhddOP2KEbd
+	 smz25TL/XOhs/SZMoUVAi/fmjUeF/amAKF6rC0+tTBXfUowAH10Fl34eRkruCjx6Et
+	 ofMVEZO8Exy97/qH8Q0UywIORAdPAZKMBzzc1i2k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Andy Nguyen <theofficialflow1996@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 202/212] drm/amd/display: Fix DisplayID not-found handling in parse_edid_displayid_vrr()
-Date: Mon, 23 Mar 2026 14:47:03 +0100
-Message-ID: <20260323134510.171460472@linuxfoundation.org>
+Subject: [PATCH 6.18 203/212] drm/amd: fix dcn 2.01 check
+Date: Mon, 23 Mar 2026 14:47:04 +0100
+Message-ID: <20260323134510.201937323@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -58,69 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Andy Nguyen <theofficialflow1996@gmail.com>
 
-[ Upstream commit 2323b019651ad81c20a0f7f817c63392b3110652 ]
+[ Upstream commit 39f44f54afa58661ecae9c27e15f5dbce2372892 ]
 
-parse_edid_displayid_vrr() searches the EDID extension blocks for a
-DisplayID extension before parsing the dynamic video timing range.
+The ASICREV_IS_BEIGE_GOBY_P check always took precedence, because it includes all chip revisions upto NV_UNKNOWN.
 
-The code previously checked whether edid_ext was NULL after the search
-loop. However, edid_ext is assigned during each iteration of the loop,
-so it will never be NULL once the loop has executed. If no DisplayID
-extension is found, edid_ext ends up pointing to the last extension
-block, and the NULL check does not correctly detect the failure case.
-
-Instead, check whether the loop completed without finding a matching
-DisplayID block by testing "i == edid->extensions". This ensures the
-function exits early when no DisplayID extension is present and avoids
-parsing an unrelated EDID extension block.
-
-Also simplify the EDID validation check using "!edid ||
-!edid->extensions".
-
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:13079 parse_edid_displayid_vrr() warn: variable dereferenced before check 'edid_ext' (see line 13075)
-
-Fixes: a638b837d0e6 ("drm/amd/display: Fix refresh rate range for some panel")
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Jerry Zuo <jerry.zuo@amd.com>
-Cc: Sun peng Li <sunpeng.li@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Fixes: 54b822b3eac3 ("drm/amd/display: Use dce_version instead of chip_id")
+Signed-off-by: Andy Nguyen <theofficialflow1996@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 91c7e6342e98c846b259c57273436fdea4c043f2)
+(cherry picked from commit 9c7be0efa6f0daa949a5f3e3fdf9ea090b0713cb)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 7db2d1a3784bd..77840b6cb2065 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -12864,7 +12864,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
- 	u16 min_vfreq;
- 	u16 max_vfreq;
- 
--	if (edid == NULL || edid->extensions == 0)
-+	if (!edid || !edid->extensions)
- 		return;
- 
- 	/* Find DisplayID extension */
-@@ -12874,7 +12874,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
- 			break;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
+index 15cf13ec53026..c450feae5fa5b 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
+@@ -255,6 +255,10 @@ struct clk_mgr *dc_clk_mgr_create(struct dc_context *ctx, struct pp_smu_funcs *p
+ 			BREAK_TO_DEBUGGER();
+ 			return NULL;
+ 		}
++		if (ctx->dce_version == DCN_VERSION_2_01) {
++			dcn201_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
++			return &clk_mgr->base;
++		}
+ 		if (ASICREV_IS_SIENNA_CICHLID_P(asic_id.hw_internal_rev)) {
+ 			dcn3_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+ 			return &clk_mgr->base;
+@@ -267,10 +271,6 @@ struct clk_mgr *dc_clk_mgr_create(struct dc_context *ctx, struct pp_smu_funcs *p
+ 			dcn3_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+ 			return &clk_mgr->base;
+ 		}
+-		if (ctx->dce_version == DCN_VERSION_2_01) {
+-			dcn201_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+-			return &clk_mgr->base;
+-		}
+ 		dcn20_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
+ 		return &clk_mgr->base;
  	}
- 
--	if (edid_ext == NULL)
-+	if (i == edid->extensions)
- 		return;
- 
- 	while (j < EDID_LENGTH) {
 -- 
 2.51.0
 
