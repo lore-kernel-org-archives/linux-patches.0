@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 867143B27DC;
-	Mon, 23 Mar 2026 14:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E38A13B27D9;
+	Mon, 23 Mar 2026 14:13:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275205; cv=none; b=RChKT4brakMZuILNRHlpMdq/NMKnkcTm0y8VcEfBmMPlnXBgXia9Pz57n0eDDUSLGlr2z2Uu6+ioyIl/nK2UJWYlT7I4X6IK5E9geRBwIjs3IhWaJVUaza/zBL83UXZHUAyiXXdw9wEQKa5yJRqHsXeX8eKIKqguRCjiryN41XM=
+	t=1774275208; cv=none; b=ulE3NaRljqw2oklN0vBAO5SBqsUZA6bDHPht0xHk1n0s5dtPMAR7z8x8sAQEjAtI+0d8rSS+5/7Hx1i0Ks13JuwuBiVKX2VhERZrpFKYpWDSHFe+V7L9fCRp2zTtIHp+3oggD2CJi4xUribfT04ER0PCozFS93uZf1YfdP69Emo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275205; c=relaxed/simple;
-	bh=RF555vhuTEWBTxjDxuDAVvT7f3qY+X1em8pIVP6mEX0=;
+	s=arc-20240116; t=1774275208; c=relaxed/simple;
+	bh=af06i7TCsEVswL2s/XTS9+GdL5QQyVhXhW1mnrmr98U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JbyyRy8HXUgH/EVGAWZ3lUCHYRGHHTSgIjaWpdhbdM7POFxlMhtPpE9K6u6E7RS47szyL1WUUE1vdOncn5aLhXZs6AhduGL0GahNUZRzk892wV8acXNmAAxngpiQFNlnz6ldyd++oLTmZCfxJOgeFfYtiNqgXAyFC5wzjRaOqfc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eFZhAKru; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TdNeX7Z56rhltiJpMncpYshNcfjEOYgiGjkU2dPnyvpEgSoomBLtABOEhx+TSfI3LCYPbouiiLaUQAJg6yGT1YJWfqJ/TlNZDeGFKlW0Czytd79iKGm6cK3z9ksBeolLCeRjBs4Q3K1aqZGr5yQO+kL2dE9INAQwfNQFzKq2e/U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ilvOa/ov; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eFZhAKru"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC672C2BCB4;
-	Mon, 23 Mar 2026 14:13:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ilvOa/ov"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAA7C4CEF7;
+	Mon, 23 Mar 2026 14:13:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275205;
-	bh=RF555vhuTEWBTxjDxuDAVvT7f3qY+X1em8pIVP6mEX0=;
+	s=korg; t=1774275207;
+	bh=af06i7TCsEVswL2s/XTS9+GdL5QQyVhXhW1mnrmr98U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFZhAKruCbO3RqFlZPrCH2ZeVzSgFpXoRPXzU67vNg0y8xUy5zdWooaSeuwgcucEW
-	 sBTOy0YwDX+I/apTsrZc/Q3OXKCIm/5lz3OpQt/n7IdUqDfAjHStOWhCCFqyJUazpG
-	 bdS7hpJzRHCc5Kvl5EqBAz7aFUpeZqRYSLiNG9+c=
+	b=ilvOa/ovDriz4fibVrH/BchZudgKnM8FMv6rJPZcb6QEaulZEeIQI6TY+c+2XvMq4
+	 zJDps6G/FJsoxel1hVCFRjXER5Uk5yQeMYwZFxjxlywu1ZKlKskdy2VstNvo2wl0tf
+	 wb9diLTHxlNGmI6rq+HPQZMlPtk6Tv2FO9s/qa9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 007/567] ALSA: usb-audio: Remove VALIDATE_RATES quirk for Focusrite devices
-Date: Mon, 23 Mar 2026 14:38:47 +0100
-Message-ID: <20260323134533.933869311@linuxfoundation.org>
+Subject: [PATCH 6.6 013/567] ALSA: pci: hda: use snd_kcontrol_chip()
+Date: Mon, 23 Mar 2026 14:38:53 +0100
+Message-ID: <20260323134534.089968635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,42 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit a8cc55bf81a45772cad44c83ea7bb0e98431094a ]
+[ Upstream commit 483dd12dbe34c6d4e71d4d543bcb1292bcb62d08 ]
 
-Remove QUIRK_FLAG_VALIDATE_RATES for Focusrite. With the previous
-commit, focusrite_valid_sample_rate() produces correct rate tables
-without USB probing.
+We can use snd_kcontrol_chip(). Let's use it.
 
-QUIRK_FLAG_VALIDATE_RATES sends SET_CUR requests for each rate (~25ms
-each) and leaves the device at 192kHz. This is a problem because that
-rate: 1) disables the internal mixer, so outputs are silent until an
-application opens the PCM and sets a lower rate, and 2) the Air and
-Safe modes get disabled.
-
-Fixes: 5963e5262180 ("ALSA: usb-audio: Enable rate validation for Scarlett devices")
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/09b9c012024c998c4ca14bd876ef0dce0d0b6101.1771594828.git.g@b4.vu
+Link: https://patch.msgid.link/87plglauda.wl-kuninori.morimoto.gx@renesas.com
+Stable-dep-of: 003ce8c9b2ca ("ALSA: hda: cs35l56: Fix signedness error in cs35l56_hda_posture_put()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/cs35l56_hda.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index ff2bbe761ee3a..15e72c419dbc2 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2308,7 +2308,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	VENDOR_FLG(0x07fd, /* MOTU */
- 		   QUIRK_FLAG_VALIDATE_RATES),
- 	VENDOR_FLG(0x1235, /* Focusrite Novation */
--		   QUIRK_FLAG_VALIDATE_RATES),
-+		   0),
- 	VENDOR_FLG(0x1511, /* AURALiC */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x152a, /* Thesycon devices */
+diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
+index b84f3b3eb1409..03b2a6a919b4d 100644
+--- a/sound/pci/hda/cs35l56_hda.c
++++ b/sound/pci/hda/cs35l56_hda.c
+@@ -174,7 +174,7 @@ static int cs35l56_hda_mixer_info(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_mixer_get(struct snd_kcontrol *kcontrol,
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	unsigned int reg_val;
+ 	int i;
+ 
+@@ -194,7 +194,7 @@ static int cs35l56_hda_mixer_get(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_mixer_put(struct snd_kcontrol *kcontrol,
+ 				 struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	unsigned int item = ucontrol->value.enumerated.item[0];
+ 	bool changed;
+ 
+@@ -221,7 +221,7 @@ static int cs35l56_hda_posture_info(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_posture_get(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	unsigned int pos;
+ 	int ret;
+ 
+@@ -237,7 +237,7 @@ static int cs35l56_hda_posture_get(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_posture_put(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	unsigned long pos = ucontrol->value.integer.value[0];
+ 	bool changed;
+ 	int ret;
+@@ -284,7 +284,7 @@ static int cs35l56_hda_vol_info(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_vol_get(struct snd_kcontrol *kcontrol,
+ 			       struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	unsigned int raw_vol;
+ 	int vol;
+ 	int ret;
+@@ -308,7 +308,7 @@ static int cs35l56_hda_vol_get(struct snd_kcontrol *kcontrol,
+ static int cs35l56_hda_vol_put(struct snd_kcontrol *kcontrol,
+ 			       struct snd_ctl_elem_value *ucontrol)
+ {
+-	struct cs35l56_hda *cs35l56 = (struct cs35l56_hda *)kcontrol->private_data;
++	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
+ 	long vol = ucontrol->value.integer.value[0];
+ 	unsigned int raw_vol;
+ 	bool changed;
 -- 
 2.51.0
 
