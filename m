@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7E33B38B5;
-	Mon, 23 Mar 2026 14:00:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4513B3BE7;
+	Mon, 23 Mar 2026 14:00:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274421; cv=none; b=ZTjoua7xuJYP2UNb8xk2RPilcOlwa4VVJWnN/zjYpiwMRZtay92t+aYpqbgq0lZXkeapJ/EvJy4D87keHSMvjVpVUgTQSBuCKbpvCsyqsIwqdERZHTvbOaa+fr/YYP9UH9s+sYdKfA3KI3P2RgKAaZWewICpWs+9ZCT5iKAIk7k=
+	t=1774274424; cv=none; b=XZCt4DAyIFiiI3wj0b3c6JYEKZ04CeAgRhQx41gglBmDotR9CelRi4pQIkZDujFBoXwgeJOLhSyOikmFvSJdUJkzR2v2YkYEYWy+8+j8i5ywVrQxshTk8boq6GvKC9ZjWLZmTihBGm5Emh8bftxIPtjsgjv2q45Kvb5QAAmabI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274421; c=relaxed/simple;
-	bh=F4U/ANmC2TlyFx6U4PP8DtU1YWKlUg326IOcwr6z/e0=;
+	s=arc-20240116; t=1774274424; c=relaxed/simple;
+	bh=Zzr/TZdP6nra41VkRssJpCxhyL1WLDsH8wY+cSr1rh0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=giHYYD/Au6ZBKQRc+leTTkqjI/MxX3fO+w8SthJJy3dKb+D19gacVT5ftOyeiXXKNqVdZQkufXS001bFycBc8fttelPdL/oCnzBZbPGievE/5sUQZHJiud5KOIHp3v6+Bk4Dgnh/j4cu5U71Hxf2wyFR279itLTs9aYXsVPzU9I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cDopCB7W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=foLrN9V/qltLlt5FNs9ZZU5c/ymswYITBHf7egdMcp1johh3wln/tDu1Sd1XwEWYNNjW/CpOCfd5ElidcF3RmYalo54qz+Ner8LJ7XWcbVh9UpugGSjNr/3TWtYfZASzjseE8kaScHdkAzyPbssNQE9b1wyOd0ArGvm3Nbq55Zw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ht7Lg/Ju; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cDopCB7W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2655C4CEF7;
-	Mon, 23 Mar 2026 14:00:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ht7Lg/Ju"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FE5C4CEF7;
+	Mon, 23 Mar 2026 14:00:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274421;
-	bh=F4U/ANmC2TlyFx6U4PP8DtU1YWKlUg326IOcwr6z/e0=;
+	s=korg; t=1774274424;
+	bh=Zzr/TZdP6nra41VkRssJpCxhyL1WLDsH8wY+cSr1rh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cDopCB7W/hQOIKyiQWwd3qEcL5hHZr+h25f+hqqmeGCb/P3dDlmEC/Jec713QqFMW
-	 W7CaVwXb7HDjB2faj1KY5ajZhnTn50JtLGcOTUcUjcjBsWQ4XxwGDd9zuYNEVfE4tL
-	 exSEExGXDihF3QOaNBPf2t7yAUJju7U/Km+WvxXg=
+	b=ht7Lg/JuzeNwH6usdwtWR2rNv8lYgfHa3U0c/fTTRxjEnKA9E4AYvdgN33KIDiZBo
+	 8sRWRUtd12Qf5Fs3mt5GfExjnkzMiXEQqW2Wc/qtnW0Zv9h0Ns3VZIAyYiahhA7dob
+	 TggePKYzgHjtuD3HIdR8I/TG2H4YLRWc8wwLnZ64=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Nguyen <theofficialflow1996@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christian Hewitt <christianshewitt@gmail.com>,
+	Jonas Karlman <jonas@kwiboo.se>,
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 210/220] drm/amd: fix dcn 2.01 check
-Date: Mon, 23 Mar 2026 14:46:27 +0100
-Message-ID: <20260323134511.180177882@linuxfoundation.org>
+Subject: [PATCH 6.19 211/220] drm/bridge: dw-hdmi-qp: fix multi-channel audio output
+Date: Mon, 23 Mar 2026 14:46:28 +0100
+Message-ID: <20260323134511.206063437@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,47 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andy Nguyen <theofficialflow1996@gmail.com>
+From: Jonas Karlman <jonas@kwiboo.se>
 
-[ Upstream commit 39f44f54afa58661ecae9c27e15f5dbce2372892 ]
+[ Upstream commit cffcb42c57686e9a801dfcf37a3d0c62e51c1c3e ]
 
-The ASICREV_IS_BEIGE_GOBY_P check always took precedence, because it includes all chip revisions upto NV_UNKNOWN.
+Channel Allocation (PB4) and Level Shift Information (PB5) are
+configured with values from PB1 and PB2 due to the wrong offset
+being used. This results in missing audio channels or incorrect
+speaker placement when playing multi-channel audio.
 
-Fixes: 54b822b3eac3 ("drm/amd/display: Use dce_version instead of chip_id")
-Signed-off-by: Andy Nguyen <theofficialflow1996@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 9c7be0efa6f0daa949a5f3e3fdf9ea090b0713cb)
+Use the correct offset to fix multi-channel audio output.
+
+Fixes: fd0141d1a8a2 ("drm/bridge: synopsys: Add audio support for dw-hdmi-qp")
+Reported-by: Christian Hewitt <christianshewitt@gmail.com>
+Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
+Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
+Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://patch.msgid.link/20260228112822.4056354-1-christianshewitt@gmail.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
-index 15cf13ec53026..c450feae5fa5b 100644
---- a/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
-+++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/clk_mgr.c
-@@ -255,6 +255,10 @@ struct clk_mgr *dc_clk_mgr_create(struct dc_context *ctx, struct pp_smu_funcs *p
- 			BREAK_TO_DEBUGGER();
- 			return NULL;
- 		}
-+		if (ctx->dce_version == DCN_VERSION_2_01) {
-+			dcn201_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
-+			return &clk_mgr->base;
-+		}
- 		if (ASICREV_IS_SIENNA_CICHLID_P(asic_id.hw_internal_rev)) {
- 			dcn3_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
- 			return &clk_mgr->base;
-@@ -267,10 +271,6 @@ struct clk_mgr *dc_clk_mgr_create(struct dc_context *ctx, struct pp_smu_funcs *p
- 			dcn3_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
- 			return &clk_mgr->base;
- 		}
--		if (ctx->dce_version == DCN_VERSION_2_01) {
--			dcn201_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
--			return &clk_mgr->base;
--		}
- 		dcn20_clk_mgr_construct(ctx, clk_mgr, pp_smu, dccg);
- 		return &clk_mgr->base;
- 	}
+diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
+index 60166919c5b54..ace9d8bcdd197 100644
+--- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
++++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
+@@ -838,7 +838,7 @@ static int dw_hdmi_qp_config_audio_infoframe(struct dw_hdmi_qp *hdmi,
+ 
+ 	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS0, &header_bytes, 1);
+ 	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS1, &buffer[3], 1);
+-	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS2, &buffer[4], 1);
++	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS2, &buffer[7], 1);
+ 
+ 	/* Enable ACR, AUDI, AMD */
+ 	dw_hdmi_qp_mod(hdmi,
 -- 
 2.51.0
 
