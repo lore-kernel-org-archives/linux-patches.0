@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46DCE3BF67A;
-	Mon, 23 Mar 2026 16:16:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71DE3BF66F;
+	Mon, 23 Mar 2026 16:16:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282599; cv=none; b=MFGyn3Hu8EiHIRGfuslyP+Y0S5apdHuTvqywIRqrKEtx08zDe8Fb1nNKLCkR6Peov88eED9+eapxO4NKE4MceLcaYvFbYtBPC5m55/fGtmWxZxbA4sSUgIiBRlMm58rT6QMeY1GmWGdQcmwMjh1klEQ/gOGTdkutKKqMVuyW5sI=
+	t=1774282601; cv=none; b=E7WkFtUejHHRV1Dr8HdzUVbEu3olyQox3Y8epn3ykA48najSHp2AlKZoCvXMJ9CRkaag6ZIUoqYlA8Hh/UXmBA6PdXdrxhEUQqVky1BXualAgsrx1jp90Shw9n4g0aILIzPiyHDcief0bbnd09Di2+E+JCPR0iKcXKuWQZrIGfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282599; c=relaxed/simple;
-	bh=CPoChzPPZwHz5rpdkfFoRYLLfFk/BF529BFnXzY7kuQ=;
+	s=arc-20240116; t=1774282601; c=relaxed/simple;
+	bh=krjPHeUYHKSxSlM6TzmYOMIevxjvHQcihJScY77Mo7Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iu7K1DPSYZIpMnABFmk2gVnyCSViZfmAmKWGTYHZ9A4bDP0lMXGk+akhBVpr1rfSTgmtgcq7rewoCmBVDml2feKiNx/n3glTueIHcHh8EhGjGoEiIGUGFyPnG6egeBSCu+haz8Ae8pYQoT2jPw+xLU45+1vrY0UpnTCxp2/5wLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uH3M+Dch; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SpI3UcLkj2kblsPHnbFAgiL4kGlCsOOjFVdcox1pBNdNz3hxt6Y87OFWM0mugQgmofwFNHH4SLa6KxPss8FrYesNUi2BhIhQUoTA8thD5dfPlPqPlV+jGOMFKn624dr5IkoY5vdGG7W0VoNL5dTg7LBlsMhRjav6Ru1A1Hnn388=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ScGUJies; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uH3M+Dch"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35056C2BCB0;
-	Mon, 23 Mar 2026 16:16:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ScGUJies"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EA48C2BC9E;
+	Mon, 23 Mar 2026 16:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282598;
-	bh=CPoChzPPZwHz5rpdkfFoRYLLfFk/BF529BFnXzY7kuQ=;
+	s=korg; t=1774282601;
+	bh=krjPHeUYHKSxSlM6TzmYOMIevxjvHQcihJScY77Mo7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uH3M+DchLQU+m4/mTfgh6dR/tj3rxV13Oxz0slwEg1No/UAdWeqy139M9MMJ5pq6F
-	 lqGIhapfCNnte3UTmeaKlmK8y16NzauZeS9OzAQODczH98WlzeRM8CLo5toAeG87oB
-	 1mPHkNMDqfctiyN1QVvl57JCnQ3hRMGCrhAFvOt0=
+	b=ScGUJiesjAoZDNBg6e59OY9A9Sq+RNNDIsH9/wrUyACjgy4qHyTu6ov79nwXCzjb8
+	 IIsOlUL+k5l8TlbXpYmh7lDmhWGjj5+bhKTQ9fESbWWJyn+O4B5+M6XlqcX7qUU0jw
+	 62Yrosc/F/i71h6vvg7VLbPtU7Ab9JcMHjXfPrx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Oliver Neukum <oneukum@suse.com>,
-	Gui-Dong Han <hanguidong02@gmail.com>
-Subject: [PATCH 6.1 215/481] usb: class: cdc-wdm: fix reordering issue in read code path
-Date: Mon, 23 Mar 2026 14:43:17 +0100
-Message-ID: <20260323134530.397039556@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Fan Wu <fanwu01@zju.edu.cn>
+Subject: [PATCH 6.1 216/481] usb: renesas_usbhs: fix use-after-free in ISR during device removal
+Date: Mon, 23 Mar 2026 14:43:18 +0100
+Message-ID: <20260323134530.420120704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,50 +51,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Fan Wu <fanwu01@zju.edu.cn>
 
-commit 8df672bfe3ec2268c2636584202755898e547173 upstream.
+commit 3cbc242b88c607f55da3d0d0d336b49bf1e20412 upstream.
 
-Quoting the bug report:
+In usbhs_remove(), the driver frees resources (including the pipe array)
+while the interrupt handler (usbhs_interrupt) is still registered. If an
+interrupt fires after usbhs_pipe_remove() but before the driver is fully
+unbound, the ISR may access freed memory, causing a use-after-free.
 
-Due to compiler optimization or CPU out-of-order execution, the
-desc->length update can be reordered before the memmove. If this
-happens, wdm_read() can see the new length and call copy_to_user() on
-uninitialized memory. This also violates LKMM data race rules [1].
+Fix this by calling devm_free_irq() before freeing resources. This ensures
+the interrupt handler is both disabled and synchronized (waits for any
+running ISR to complete) before usbhs_pipe_remove() is called.
 
-Fix it by using WRITE_ONCE and memory barriers.
-
-Fixes: afba937e540c9 ("USB: CDC WDM driver")
+Fixes: f1407d5c6624 ("usb: renesas_usbhs: Add Renesas USBHS common code")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
-Closes: https://lore.kernel.org/linux-usb/CALbr=LbrUZn_cfp7CfR-7Z5wDTHF96qeuM=3fO2m-q4cDrnC4A@mail.gmail.com/
-Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
-Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://patch.msgid.link/20260304130116.1721682-1-oneukum@suse.com
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
+Link: https://patch.msgid.link/20260303073344.34577-1-fanwu01@zju.edu.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-wdm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/renesas_usbhs/common.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/usb/class/cdc-wdm.c
-+++ b/drivers/usb/class/cdc-wdm.c
-@@ -225,7 +225,8 @@ static void wdm_in_callback(struct urb *
- 		/* we may already be in overflow */
- 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
- 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
--			desc->length += length;
-+			smp_wmb(); /* against wdm_read() */
-+			WRITE_ONCE(desc->length, desc->length + length);
- 		}
- 	}
- skip_error:
-@@ -533,6 +534,7 @@ static ssize_t wdm_read
- 		return -ERESTARTSYS;
+--- a/drivers/usb/renesas_usbhs/common.c
++++ b/drivers/usb/renesas_usbhs/common.c
+@@ -800,6 +800,15 @@ static void usbhs_remove(struct platform
  
- 	cntr = READ_ONCE(desc->length);
-+	smp_rmb(); /* against wdm_in_callback() */
- 	if (cntr == 0) {
- 		desc->read = 0;
- retry:
+ 	usbhs_platform_call(priv, hardware_exit, pdev);
+ 	reset_control_assert(priv->rsts);
++
++	/*
++	 * Explicitly free the IRQ to ensure the interrupt handler is
++	 * disabled and synchronized before freeing resources.
++	 * devm_free_irq() calls free_irq() which waits for any running
++	 * ISR to complete, preventing UAF.
++	 */
++	devm_free_irq(&pdev->dev, priv->irq, priv);
++
+ 	usbhs_mod_remove(priv);
+ 	usbhs_fifo_remove(priv);
+ 	usbhs_pipe_remove(priv);
 
 
