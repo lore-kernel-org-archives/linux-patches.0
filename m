@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656433CCFA1;
-	Mon, 23 Mar 2026 15:20:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306593B7772;
+	Mon, 23 Mar 2026 15:20:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279215; cv=none; b=WV95d77fAhVxTsX21Ap2aeVmxT34h67acLY7aizVR2XSL0nI+q+E8f1EMPvsGSAfym5FwMVcEiL3CcEXyiGq0kU/x0rGQHi9wUGqlb0GhowCc1V4JB0MjigyiCeSZt6/xmS7z+Amj6rvsyR7wPIX4y3UuKNNdmZABqtf6prhQQ4=
+	t=1774279218; cv=none; b=KkD4zswMyuzVYQJh4oEEMYO5GUs1MDTsTY64YCepW1R3UPWteaqeRRPCd1GY5B55CqZQ+pucMV6JbhINJ2dYUJU8jAjujBZJK4vCBxOtTICoFKIUPT29mZS5gDV5i/IoX4xUYjhpxMjo7zCrySHU02NBX9AZw9FUembfx44xZio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279215; c=relaxed/simple;
-	bh=SoYOVKsZaxRLv/+3P3YUqkujmW+nxY0rd8+eeyi9j8o=;
+	s=arc-20240116; t=1774279218; c=relaxed/simple;
+	bh=8ZxQAS0K9bg2dWRCT4bot1uowLBfXPaop5idZHHUb4Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hEz7hUGp+MasyYPA/KB3K1XLPiJ16FqeeuuCnqn7Rt5vxferByWNIK9fN+bUOTaBT7uYcX7bZ33vIWh7QQUkexvSQBkM5Bc0RAuZiPYRkfWZ45dLUJxpGUaWumKdS5qRJCd7AxksHvcywsytJWCZk5jQvyEowueLAXvF06tFxNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6ErZ41s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jYGHnMwVsgBg7LBhQfYNNwcDv4GzxZFyClD43rW5HTy6YuCLLA5nghx0C3NR5M6Dbc3P00D2WKkkNAjHB6EMDOI7pLVS2iSXT7sCyUWSPOf0H7SMs4MGLtpRQ5P1c07g9tpTugY6weF1MxvGrpmQfdaVmz8GBT/Ju6mza/7cyrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjgHRCk3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6ErZ41s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D358C4AF0B;
-	Mon, 23 Mar 2026 15:20:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjgHRCk3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D39C4CEF7;
+	Mon, 23 Mar 2026 15:20:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279215;
-	bh=SoYOVKsZaxRLv/+3P3YUqkujmW+nxY0rd8+eeyi9j8o=;
+	s=korg; t=1774279218;
+	bh=8ZxQAS0K9bg2dWRCT4bot1uowLBfXPaop5idZHHUb4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6ErZ41sBOnZUvAfb2EZ8gPxrpwuk/PFD/qtoVuNlS34nBxodZ0Bsi2Ab4rJJCAmN
-	 Em/XArKKzHqUyLn8YosXWYLcbA0deHMPQ1ATeWtmgoK9bqobwCeEeL8nMI/qpMfTIL
-	 XExabWVTzP/gI02bBWxcB8IMwYMTN3B2VKGVVV5s=
+	b=EjgHRCk3ivTYH0DoVX7pKZTwX3eNPTJ+f5YbGU06E0UTgiDo+aoHS1HVrAxYIXb5W
+	 zrTqAe2Ltc09FsaJAAarNRF5yI+jBk5laLjVV+W9iJLlzGBKkrQt83uyYRx5chTXZB
+	 2iOjr9kYovk/EXLy3eYsAlvpXM2eA267Jf+oeM54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.6 459/567] Bluetooth: L2CAP: Fix type confusion in l2cap_ecred_reconf_rsp()
-Date: Mon, 23 Mar 2026 14:46:19 +0100
-Message-ID: <20260323134545.339913746@linuxfoundation.org>
+	Michael Grzeschik <m.grzeschik@pengutronix.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 507/567] Bluetooth: hci_sync: Fix hci_le_create_conn_sync
+Date: Mon, 23 Mar 2026 14:47:07 +0100
+Message-ID: <20260323134546.562615008@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -44,62 +45,58 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Johannes Möller <research@johannes-moeller.dev>
+From: Michael Grzeschik <m.grzeschik@pengutronix.de>
 
-commit 15145675690cab2de1056e7ed68e59cbd0452529 upstream.
+[ Upstream commit 2cabe7ff1001b7a197009cf50ba71701f9cbd354 ]
 
-l2cap_ecred_reconf_rsp() casts the incoming data to struct
-l2cap_ecred_conn_rsp (the ECRED *connection* response, 8 bytes with
-result at offset 6) instead of struct l2cap_ecred_reconf_rsp (2 bytes
-with result at offset 0).
+While introducing hci_le_create_conn_sync the functionality
+of hci_connect_le was ported to hci_le_create_conn_sync including
+the disable of the scan before starting the connection.
 
-This causes two problems:
+When this code was run non synchronously the immediate call that was
+setting the flag HCI_LE_SCAN_INTERRUPTED had an impact. Since the
+completion handler for the LE_SCAN_DISABLE was not immediately called.
+In the completion handler of the LE_SCAN_DISABLE event, this flag is
+checked to set the state of the hdev to DISCOVERY_STOPPED.
 
- - The sizeof(*rsp) length check requires 8 bytes instead of the
-   correct 2, so valid L2CAP_ECRED_RECONF_RSP packets are rejected
-   with -EPROTO.
+With the synchronised approach the later setting of the
+HCI_LE_SCAN_INTERRUPTED flag has not the same effect. The completion
+handler would immediately fire in the LE_SCAN_DISABLE call, check for
+the flag, which is then not yet set and do nothing.
 
- - rsp->result reads from offset 6 instead of offset 0, returning
-   wrong data when the packet is large enough to pass the check.
+To fix this issue and make the function call work as before, we move the
+setting of the flag HCI_LE_SCAN_INTERRUPTED before disabling the scan.
 
-Fix by using the correct type.  Also pass the already byte-swapped
-result variable to BT_DBG instead of the raw __le16 field.
-
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
+Fixes: 8e8b92ee60de ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
+Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/hci_sync.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5372,7 +5372,7 @@ static inline int l2cap_ecred_reconf_rsp
- 					 u8 *data)
- {
- 	struct l2cap_chan *chan, *tmp;
--	struct l2cap_ecred_conn_rsp *rsp = (void *) data;
-+	struct l2cap_ecred_reconf_rsp *rsp = (void *)data;
- 	u16 result;
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 6a14f76071077..6192f70e4d393 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -6555,8 +6555,8 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
+ 	 * state.
+ 	 */
+ 	if (hci_dev_test_flag(hdev, HCI_LE_SCAN)) {
+-		hci_scan_disable_sync(hdev);
+ 		hci_dev_set_flag(hdev, HCI_LE_SCAN_INTERRUPTED);
++		hci_scan_disable_sync(hdev);
+ 	}
  
- 	if (cmd_len < sizeof(*rsp))
-@@ -5380,7 +5380,7 @@ static inline int l2cap_ecred_reconf_rsp
- 
- 	result = __le16_to_cpu(rsp->result);
- 
--	BT_DBG("result 0x%4.4x", rsp->result);
-+	BT_DBG("result 0x%4.4x", result);
- 
- 	if (!result)
- 		return 0;
+ 	/* Update random address, but set require_privacy to false so
+-- 
+2.51.0
+
 
 
