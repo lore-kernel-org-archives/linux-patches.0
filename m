@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AC93803EF;
-	Mon, 23 Mar 2026 14:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F253803EF;
+	Mon, 23 Mar 2026 14:02:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274540; cv=none; b=KedSlWrn79wVMhnHDTL6mI+n6sneNy3NIsCKrpQ31t67pi0OdOog77uH3IeZC/Y8W0KWJimbUKyT2UNPKSvFVm4jcxrcBgIiNDo7W4klYticTh0ovO33X/bAKzEe7zpi32eerGVQijOC8xBbYHIbJUZSXYpzySeePOpDprxLB1w=
+	t=1774274543; cv=none; b=syA3Qyo4jPVg1joHBt2MllRs6+Y+L6PPTQMBG7/cDAjUEAJk2xcdIgE5fm5XYENuWDSqoYYe9g8mAlwbmDeLjP7X6j6Bh5iE1zXJW3t3Wsccv/kEd2MS0lfhXqyy0bogP9F1/Ui+F0TyKxQUGCgSOT3W8+XJn3/yE1agafn6x4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274540; c=relaxed/simple;
-	bh=4K0rRoLPW01ykeCxPNelZRG3/Z9iuVle0lsCn3YoHLU=;
+	s=arc-20240116; t=1774274543; c=relaxed/simple;
+	bh=dXQyW+Olf8L9+7Bb3P0TgRs6HTK+RhVGH04JNooXbd8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Qq5mGMyeQjaFGtKtEWyjcyMjKkD0Kr/B5nnieamh05ZPlKmMVG0K0BcEHQOYYPGEKdrjYQpi9GugdNp9FtWJ1Z9SLjt+bzWtSfzCyOqV4Nzccj+1IwUk4s2r9Ma4pjLfQvt1rpr2Qmxue8pO1rlnh0LCvFu5GEwWdgYeiuME/Yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DlmgAne4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zu+SOqgYjuFPROG2G1h+iQ5xLKZnMPaUnEibEsezp8nbHONjIxiB0d5pW/dOMyz4itaAlBBK2dUZsgQAwibXiwv/BNB+Mh/7SzlJFY/zCzsQit+c0PC7si5QYcJkhHmTcmT1ibAOJ4fmRl2FIjsreESfBfj/R7y+eJHPVK38bes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IUAT3kvB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DlmgAne4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9222FC4CEF7;
-	Mon, 23 Mar 2026 14:02:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IUAT3kvB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC41C4CEF7;
+	Mon, 23 Mar 2026 14:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274540;
-	bh=4K0rRoLPW01ykeCxPNelZRG3/Z9iuVle0lsCn3YoHLU=;
+	s=korg; t=1774274543;
+	bh=dXQyW+Olf8L9+7Bb3P0TgRs6HTK+RhVGH04JNooXbd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DlmgAne4XfOXOB67Lghp22++cT3fef6GqUKhy1ZkzwVGvUB4TukajX2Ob5ncaV0aK
-	 XP7hz1V9GEfTCeBAL38bDf1nD+PB1XGb5n/kUnAzIVv1AIgLTyESmqHonuTyATuhF/
-	 w67nTSej2PvtP0hLOl+c+nVp63zajqgg0tgdQK+E=
+	b=IUAT3kvBniKlRScL5NZzQKtPweiJcUfjzP2OdTlQhkTiwgR+nSlGzSb8zM+Vz/uXZ
+	 ZXehRcCn+qQTJnFwYOxlPx1dduEVf4AXgTTO4mbjhqBlUSt8IAJQpxOT4pwL7meOu9
+	 ShP8+G67IQyNRUmVjJ8suNJ4HJmRvaBvmfVops7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 029/212] net: macb: Introduce gem_init_rx_ring()
-Date: Mon, 23 Mar 2026 14:44:10 +0100
-Message-ID: <20260323134504.681852795@linuxfoundation.org>
+	stable@kernel.org,
+	Nicholas Carlini <npc@anthropic.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.18 003/212] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
+Date: Mon, 23 Mar 2026 14:43:44 +0100
+Message-ID: <20260323134503.878060124@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,53 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 1a7124ecd655bcaf1845197fe416aa25cff4c3ea ]
+commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 upstream.
 
-Extract the initialization code for the GEM RX ring into a new function.
-This change will be utilized in a subsequent patch. No functional changes
-are introduced.
+The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
+(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
+This size was calculated based on OPEN responses and does not account
+for LOCK denied responses, which include the conflicting lock owner as
+a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
 
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260312-macb-versal-v1-1-467647173fa4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 718d0766ce4c ("net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+When a LOCK operation is denied due to a conflict with an existing lock
+that has a large owner, nfsd4_encode_operation() copies the full encoded
+response into the undersized replay buffer via read_bytes_from_xdr_buf()
+with no bounds check. This results in a slab-out-of-bounds write of up
+to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
+
+This can be triggered remotely by an unauthenticated attacker with two
+cooperating NFSv4.0 clients: one sets a lock with a large owner string,
+then the other requests a conflicting lock to provoke the denial.
+
+We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
+opaque, but that would increase the size of every stateowner, when most
+lockowners are not that large.
+
+Instead, fix this by checking the encoded response length against
+NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
+response is too large, set rp_buflen to 0 to skip caching the replay
+payload. The status is still cached, and the client already received the
+correct response on the original request.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Tested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4xdr.c |    9 +++++++--
+ fs/nfsd/state.h   |   17 ++++++++++++-----
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2614,6 +2614,14 @@ static void macb_init_tieoff(struct macb
- 	desc->ctrl = 0;
- }
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5934,9 +5934,14 @@ nfsd4_encode_operation(struct nfsd4_comp
+ 		int len = xdr->buf->len - (op_status_offset + XDR_UNIT);
  
-+static void gem_init_rx_ring(struct macb_queue *queue)
-+{
-+	queue->rx_tail = 0;
-+	queue->rx_prepared_head = 0;
-+
-+	gem_rx_refill(queue);
-+}
-+
- static void gem_init_rings(struct macb *bp)
- {
- 	struct macb_queue *queue;
-@@ -2631,10 +2639,7 @@ static void gem_init_rings(struct macb *
- 		queue->tx_head = 0;
- 		queue->tx_tail = 0;
- 
--		queue->rx_tail = 0;
--		queue->rx_prepared_head = 0;
--
--		gem_rx_refill(queue);
-+		gem_init_rx_ring(queue);
+ 		so->so_replay.rp_status = op->status;
+-		so->so_replay.rp_buflen = len;
+-		read_bytes_from_xdr_buf(xdr->buf, op_status_offset + XDR_UNIT,
++		if (len <= NFSD4_REPLAY_ISIZE) {
++			so->so_replay.rp_buflen = len;
++			read_bytes_from_xdr_buf(xdr->buf,
++						op_status_offset + XDR_UNIT,
+ 						so->so_replay.rp_buf, len);
++		} else {
++			so->so_replay.rp_buflen = 0;
++		}
  	}
+ status:
+ 	op->status = nfsd4_map_status(op->status,
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -541,11 +541,18 @@ struct nfs4_client_reclaim {
+ 	struct xdr_netobj	cr_princhash;
+ };
  
- 	macb_init_tieoff(bp);
+-/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
+- * The OPEN response, typically the largest, requires 
+- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
+- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
+- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
++/*
++ * REPLAY_ISIZE is sized for an OPEN response with delegation:
++ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
++ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
++ *   4(deleg. recall flag) + 20(deleg. space limit) +
++ *   ~32(deleg. ace) = 112 bytes
++ *
++ * Some responses can exceed this. A LOCK denial includes the conflicting
++ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
++ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
++ * saved. Enlarging this constant increases the size of every
++ * nfs4_stateowner.
+  */
+ 
+ #define NFSD4_REPLAY_ISIZE       112 
 
 
