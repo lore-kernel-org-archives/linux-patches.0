@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1241529ACC5;
-	Mon, 23 Mar 2026 16:22:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3ED01DA0E1;
+	Mon, 23 Mar 2026 16:22:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282932; cv=none; b=JpJ5ekzanbdKzt3OuUfT+yUcOkTRtfax+Be8zW8PQlptGquetpeweF79HyDMlZdSs/RXT2fh7fTOiCTVG0zmslBdA/6mnrJK+aWCB2cssxwED64Bv1d4Jw3+8QjMGaDKc3zIssbbHkJ0izZYjHufCgDvdZ0JELSX8xd5g5mLqmc=
+	t=1774282934; cv=none; b=hqF7ncdME8jVITfbwZPSGAUfweVGXqrAJNMRbAHi8jSvHke5ajD1Ma7jI92fl6vCwpVyY7LUZhWywx+4k9KxmSZo6yzbbstdzRnaMESpW2pkgjK+f19ieyyXnB+O0Mt1aX4ybOpdVX3R+Z+ubhRXA1DTlAsm2AlTqBPU71FbRxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282932; c=relaxed/simple;
-	bh=0FJsuyi0tSRchEQdGJqDikRfG3BYotUpmcQGI591z38=;
+	s=arc-20240116; t=1774282934; c=relaxed/simple;
+	bh=I9Y9NN8bVgp8JDR1ER8kWCPyzT7c2sjtOxE8pfwcG4s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tf6xPhDz1kBw+vxsWLXbl9/3OK6/krRMU/HqnMQkqDX8bal/0sqqbxEUtahjFnF8+7xQ0yL2eTyo8+1VmwvmJ9vjntx3/xMQuy6RUKzTttOYCGOKPv1EY5vtiSvbpTfE1dslHgR8Gb0mWyYhRWCMN0PYbE68Z23C1DkgIDinMqs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rwktq10L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cZMKaz09t4r5i4LKkdLUF3CLlIJ6AtFgCNjDcaWlNiUh7fCMwBmw5FEhr4WB4M2FDxx9Vfja3Br6WVaajl0Le92a7+FpujBdy0/3PnAfzih+z2NO/99PA/9xRtqFI7fudZWliN2LO+ftwr4x7bBb7sLyGvj6uAUvUqkCRxATItQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RDeL8zfp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rwktq10L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E80C4CEF7;
-	Mon, 23 Mar 2026 16:22:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RDeL8zfp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0265EC4CEF7;
+	Mon, 23 Mar 2026 16:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282931;
-	bh=0FJsuyi0tSRchEQdGJqDikRfG3BYotUpmcQGI591z38=;
+	s=korg; t=1774282934;
+	bh=I9Y9NN8bVgp8JDR1ER8kWCPyzT7c2sjtOxE8pfwcG4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rwktq10L+DlXXxuZOCWWNRnrnBcqwbOK/nriYamxSNONt3zglwt7n/Rs3xqKG1jzm
-	 rNiVvafacdNJBWvL5f1GIq2xZWx8QO3pGy23N4S6ARZpS326OiP/dHU9b70iBPOj9e
-	 8JKv18qEXedQKYqDgR9YlF0G9KaB28g0hKvq2gj8=
+	b=RDeL8zfpmw+xvJmc3MfmNUp5dYJzH+66u/sRnKFruLwKekMxMzVImgyjTAz8giHPT
+	 3P10Vz3P7140dDAnQXaYRvpoNzo/wWTDtqxBgwAnbBWW6swxa/wuDsonfuwLosLfOW
+	 hvRrwEYrE6EsuXyAtvrEiOlPbwL5Q1GOTfWYCNt0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
-	Will Deacon <will@kernel.org>,
-	"Huang, Ying" <ying.huang@linux.alibaba.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 340/481] arm64: mm: Add PTE_DIRTY back to PAGE_KERNEL* to fix kexec/hibernation
-Date: Mon, 23 Mar 2026 14:45:22 +0100
-Message-ID: <20260323134533.383262824@linuxfoundation.org>
+Subject: [PATCH 6.1 341/481] ksmbd: Dont log keys in SMB3 signing and encryption key generation
+Date: Mon, 23 Mar 2026 14:45:23 +0100
+Message-ID: <20260323134533.406453204@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,64 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-[ Upstream commit c25c4aa3f79a488cc270507935a29c07dc6bddfc ]
+[ Upstream commit 441336115df26b966575de56daf7107ed474faed ]
 
-Commit 143937ca51cc ("arm64, mm: avoid always making PTE dirty in
-pte_mkwrite()") changed pte_mkwrite_novma() to only clear PTE_RDONLY
-when PTE_DIRTY is set. This was to allow writable-clean PTEs for swap
-pages that haven't actually been written.
+When KSMBD_DEBUG_AUTH logging is enabled, generate_smb3signingkey() and
+generate_smb3encryptionkey() log the session, signing, encryption, and
+decryption key bytes. Remove the logs to avoid exposing credentials.
 
-However, this broke kexec and hibernation for some platforms. Both go
-through trans_pgd_create_copy() -> _copy_pte(), which calls
-pte_mkwrite_novma() to make the temporary linear-map copy fully
-writable. With the updated pte_mkwrite_novma(), read-only kernel pages
-(without PTE_DIRTY) remain read-only in the temporary mapping.
-While such behaviour is fine for user pages where hardware DBM or
-trapping will make them writeable, subsequent in-kernel writes by the
-kexec relocation code will fault.
-
-Add PTE_DIRTY back to all _PAGE_KERNEL* protection definitions. This was
-the case prior to 5.4, commit aa57157be69f ("arm64: Ensure
-VM_WRITE|VM_SHARED ptes are clean by default"). With the kernel
-linear-map PTEs always having PTE_DIRTY set, pte_mkwrite_novma()
-correctly clears PTE_RDONLY.
-
-Fixes: 143937ca51cc ("arm64, mm: avoid always making PTE dirty in pte_mkwrite()")
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Reported-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
-Link: https://lore.kernel.org/r/20251204062722.3367201-1-jianpeng.chang.cn@windriver.com
-Cc: Will Deacon <will@kernel.org>
-Cc: Huang, Ying <ying.huang@linux.alibaba.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/pgtable-prot.h |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/smb/server/auth.c |   22 ++--------------------
+ 1 file changed, 2 insertions(+), 20 deletions(-)
 
---- a/arch/arm64/include/asm/pgtable-prot.h
-+++ b/arch/arm64/include/asm/pgtable-prot.h
-@@ -45,11 +45,11 @@
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -795,12 +795,8 @@ static int generate_smb3signingkey(struc
+ 	if (!(conn->dialect >= SMB30_PROT_ID && signing->binding))
+ 		memcpy(chann->smb3signingkey, key, SMB3_SIGN_KEY_SIZE);
  
- #define _PAGE_DEFAULT		(_PROT_DEFAULT | PTE_ATTRINDX(MT_NORMAL))
+-	ksmbd_debug(AUTH, "dumping generated AES signing keys\n");
++	ksmbd_debug(AUTH, "generated SMB3 signing key\n");
+ 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
+-	ksmbd_debug(AUTH, "Session Key   %*ph\n",
+-		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
+-	ksmbd_debug(AUTH, "Signing Key   %*ph\n",
+-		    SMB3_SIGN_KEY_SIZE, key);
+ 	return 0;
+ }
  
--#define _PAGE_KERNEL		(PROT_NORMAL)
--#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY)
--#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY)
--#define _PAGE_KERNEL_EXEC	(PROT_NORMAL & ~PTE_PXN)
--#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT)
-+#define _PAGE_KERNEL		(PROT_NORMAL | PTE_DIRTY)
-+#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY | PTE_DIRTY)
-+#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY | PTE_DIRTY)
-+#define _PAGE_KERNEL_EXEC	((PROT_NORMAL & ~PTE_PXN) | PTE_DIRTY)
-+#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT | PTE_DIRTY)
+@@ -864,23 +860,9 @@ static int generate_smb3encryptionkey(st
+ 	if (rc)
+ 		return rc;
  
- #define _PAGE_SHARED		(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_UXN | PTE_WRITE)
- #define _PAGE_SHARED_EXEC	(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_WRITE)
+-	ksmbd_debug(AUTH, "dumping generated AES encryption keys\n");
++	ksmbd_debug(AUTH, "generated SMB3 encryption/decryption keys\n");
+ 	ksmbd_debug(AUTH, "Cipher type   %d\n", conn->cipher_type);
+ 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
+-	ksmbd_debug(AUTH, "Session Key   %*ph\n",
+-		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
+-	if (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
+-	    conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM) {
+-		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
+-			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3encryptionkey);
+-		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
+-			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3decryptionkey);
+-	} else {
+-		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
+-			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3encryptionkey);
+-		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
+-			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3decryptionkey);
+-	}
+ 	return 0;
+ }
+ 
 
 
