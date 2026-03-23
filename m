@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F8883B0ADD;
-	Mon, 23 Mar 2026 14:11:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5375321D00A;
+	Mon, 23 Mar 2026 14:11:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275083; cv=none; b=c4oobCZiRwDcQKHGQ3oinrX54WQ13YiIDnwm8+mEPMCIQBmSW5VDR08Yck1W3sCYmn3V6juljfWc/82w4Vm5QW1gCu9KoE453gJ39rz2zpYVOikjGsnXKZjKIX2avo4EiWH4pNEIOcugLa52IWXGlWaGPVr+R+gCxOZ4jFeh8Ug=
+	t=1774275086; cv=none; b=b+/Iq8L1ncYtdaUqxno7Uy2JCsZvklcc4OwlZz9il6Vf0DmDs+2rR+ci/IaPtVhbr38v86o2rVG1SPX1ljPLzZqZF+avzEVFjIXDPoisyDH78pGAs5PCGDD92MCl48Q956SUufGPXpwSYNbLw70+/GwpdKKfSHCRg5E0xrDGLZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275083; c=relaxed/simple;
-	bh=t/tXdQHdvEvSFNIg760vOUoy+QDyDQEQqEK3r6PFlEg=;
+	s=arc-20240116; t=1774275086; c=relaxed/simple;
+	bh=2h3mX10Fgfs2Jwmrjqhf03pQjaN6+g1X26YuxDsEqQg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hF8558tlEUKepGRMybwHK8pNi6rqgHtuOXPPXL+ctW5Ik4uwRp3Z2OVf/490YY3dcxfzWRZTRj5ZZAMa68sW1bDMFzEvO5h1KjeVMJbeK4BSIBVMvC02JINjGLB75/zB2gO4bJ6G+BqXHIId6o0+K1zbUWka0rZaShFjA3bTfd0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lbZqVmfq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u/DP9QQ3TstJon1j95B/+ZD+yh69VpSC3wTnLsumz8savmPDYhUZ2zkL+rSqkClb2kPJ+UPHq4q0afJIbln90YktPEVYIZD2LwpNptgilqY3ffQuy3CecgsM3M69Ac8/ZgOiYreq0Sro5dOU9eigsZ3j+I5gpmN3HaepPBUba4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFApTyXg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lbZqVmfq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 982CAC2BC9E;
-	Mon, 23 Mar 2026 14:11:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFApTyXg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B593EC4CEF7;
+	Mon, 23 Mar 2026 14:11:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275083;
-	bh=t/tXdQHdvEvSFNIg760vOUoy+QDyDQEQqEK3r6PFlEg=;
+	s=korg; t=1774275086;
+	bh=2h3mX10Fgfs2Jwmrjqhf03pQjaN6+g1X26YuxDsEqQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lbZqVmfqR2eKkRvPID8jsA2AcL1PKXk5Tp/tUcmofW1FvzKiL2TXSmi6qm7Jmd7eD
-	 CtyOaF+c6kDHbSsQMSmIs/uacw268iPIglr+sLA/ZRMAO2riakuMZ2HaoIYJds2Xs1
-	 yQ4sbg50PXObLFrpemUEsXTqqoWGfJm1gkJ5syyM=
+	b=YFApTyXgtFXZXELZnreORm009oK/wRDY9DhhSC+kgcVnekKXbz3Hh8ggrocVhb113
+	 QxUvSevI7CsGTQn/oJx+NOvlP2NY2XPaioj8bH3jsw36+hD+MS0je5RhtqihmnkFO4
+	 Bcy9qTydspVk2r2EPYRm0saXSjggBW1S5rlsrRk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Hammad Ijaz <mhijaz@amazon.com>,
-	Gunnar Kudrjavets <gunnarku@amazon.com>,
+	Paul Moses <p@1g4.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 174/212] net: mvpp2: guard flow control update with global_tx_fc in buffer switching
-Date: Mon, 23 Mar 2026 14:46:35 +0100
-Message-ID: <20260323134509.263306342@linuxfoundation.org>
+Subject: [PATCH 6.18 175/212] net: shaper: protect late read accesses to the hierarchy
+Date: Mon, 23 Mar 2026 14:46:36 +0100
+Message-ID: <20260323134509.293932794@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,83 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Hammad Ijaz <mhijaz@amazon.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 8a63baadf08453f66eb582fdb6dd234f72024723 ]
+[ Upstream commit 0f9ea7141f365b4f27226898e62220fb98ef8dc6 ]
 
-mvpp2_bm_switch_buffers() unconditionally calls
-mvpp2_bm_pool_update_priv_fc() when switching between per-cpu and
-shared buffer pool modes. This function programs CM3 flow control
-registers via mvpp2_cm3_read()/mvpp2_cm3_write(), which dereference
-priv->cm3_base without any NULL check.
+We look up a netdev during prep of Netlink ops (pre- callbacks)
+and take a ref to it. Then later in the body of the callback
+we take its lock or RCU which are the actual protections.
 
-When the CM3 SRAM resource is not present in the device tree (the
-third reg entry added by commit 60523583b07c ("dts: marvell: add CM3
-SRAM memory to cp11x ethernet device tree")), priv->cm3_base remains
-NULL and priv->global_tx_fc is false. Any operation that triggers
-mvpp2_bm_switch_buffers(), for example an MTU change that crosses
-the jumbo frame threshold, will crash:
+This is not proper, a conversion from a ref to a locked netdev
+must include a liveness check (a check if the netdev hasn't been
+unregistered already). Fix the read cases (those under RCU).
+Writes needs a separate change to protect from creating the
+hierarchy after flush has already run.
 
-  Unable to handle kernel NULL pointer dereference at
-  virtual address 0000000000000000
-  Mem abort info:
-    ESR = 0x0000000096000006
-    EC = 0x25: DABT (current EL), IL = 32 bits
-  pc : readl+0x0/0x18
-  lr : mvpp2_cm3_read.isra.0+0x14/0x20
-  Call trace:
-   readl+0x0/0x18
-   mvpp2_bm_pool_update_fc+0x40/0x12c
-   mvpp2_bm_pool_update_priv_fc+0x94/0xd8
-   mvpp2_bm_switch_buffers.isra.0+0x80/0x1c0
-   mvpp2_change_mtu+0x140/0x380
-   __dev_set_mtu+0x1c/0x38
-   dev_set_mtu_ext+0x78/0x118
-   dev_set_mtu+0x48/0xa8
-   dev_ifsioc+0x21c/0x43c
-   dev_ioctl+0x2d8/0x42c
-   sock_ioctl+0x314/0x378
-
-Every other flow control call site in the driver already guards
-hardware access with either priv->global_tx_fc or port->tx_fc.
-mvpp2_bm_switch_buffers() is the only place that omits this check.
-
-Add the missing priv->global_tx_fc guard to both the disable and
-re-enable calls in mvpp2_bm_switch_buffers(), consistent with the
-rest of the driver.
-
-Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
-Signed-off-by: Muhammad Hammad Ijaz <mhijaz@amazon.com>
-Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
-Link: https://patch.msgid.link/20260316193157.65748-1-mhijaz@amazon.com
+Fixes: 4b623f9f0f59 ("net-shapers: implement NL get operation")
+Reported-by: Paul Moses <p@1g4.org>
+Link: https://lore.kernel.org/20260309173450.538026-1-p@1g4.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://patch.msgid.link/20260317161014.779569-1-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/shaper/shaper.c | 26 ++++++++++++++++++++++----
+ 1 file changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index ab0c99aa9f9a5..74d44510684bf 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -5018,7 +5018,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
- 	if (priv->percpu_pools)
- 		numbufs = port->nrxqs * 2;
+diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
+index 318a0567a6981..081dac917dc2d 100644
+--- a/net/shaper/shaper.c
++++ b/net/shaper/shaper.c
+@@ -65,6 +65,21 @@ net_shaper_hierarchy(struct net_shaper_binding *binding)
+ 	return NULL;
+ }
  
--	if (change_percpu)
-+	if (change_percpu && priv->global_tx_fc)
- 		mvpp2_bm_pool_update_priv_fc(priv, false);
++static struct net_shaper_hierarchy *
++net_shaper_hierarchy_rcu(struct net_shaper_binding *binding)
++{
++	/* Readers look up the device and take a ref, then take RCU lock
++	 * later at which point netdev may have been unregistered and flushed.
++	 * READ_ONCE() pairs with WRITE_ONCE() in net_shaper_hierarchy_setup.
++	 */
++	if (binding->type == NET_SHAPER_BINDING_TYPE_NETDEV &&
++	    READ_ONCE(binding->netdev->reg_state) <= NETREG_REGISTERED)
++		return READ_ONCE(binding->netdev->net_shaper_hierarchy);
++
++	/* No other type supported yet. */
++	return NULL;
++}
++
+ static const struct net_shaper_ops *
+ net_shaper_ops(struct net_shaper_binding *binding)
+ {
+@@ -251,9 +266,10 @@ static struct net_shaper *
+ net_shaper_lookup(struct net_shaper_binding *binding,
+ 		  const struct net_shaper_handle *handle)
+ {
+-	struct net_shaper_hierarchy *hierarchy = net_shaper_hierarchy(binding);
+ 	u32 index = net_shaper_handle_to_index(handle);
++	struct net_shaper_hierarchy *hierarchy;
  
- 	for (i = 0; i < numbufs; i++)
-@@ -5043,7 +5043,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
- 			mvpp2_open(port->dev);
++	hierarchy = net_shaper_hierarchy_rcu(binding);
+ 	if (!hierarchy || xa_get_mark(&hierarchy->shapers, index,
+ 				      NET_SHAPER_NOT_VALID))
+ 		return NULL;
+@@ -778,17 +794,19 @@ int net_shaper_nl_get_dumpit(struct sk_buff *skb,
+ 
+ 	/* Don't error out dumps performed before any set operation. */
+ 	binding = net_shaper_binding_from_ctx(ctx);
+-	hierarchy = net_shaper_hierarchy(binding);
+-	if (!hierarchy)
+-		return 0;
+ 
+ 	rcu_read_lock();
++	hierarchy = net_shaper_hierarchy_rcu(binding);
++	if (!hierarchy)
++		goto out_unlock;
++
+ 	for (; (shaper = xa_find(&hierarchy->shapers, &ctx->start_index,
+ 				 U32_MAX, XA_PRESENT)); ctx->start_index++) {
+ 		ret = net_shaper_fill_one(skb, binding, shaper, info);
+ 		if (ret)
+ 			break;
  	}
++out_unlock:
+ 	rcu_read_unlock();
  
--	if (change_percpu)
-+	if (change_percpu && priv->global_tx_fc)
- 		mvpp2_bm_pool_update_priv_fc(priv, true);
- 
- 	return 0;
+ 	return ret;
 -- 
 2.51.0
 
