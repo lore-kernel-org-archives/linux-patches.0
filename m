@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5514D386554;
-	Mon, 23 Mar 2026 14:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 646473AE6E1;
+	Mon, 23 Mar 2026 14:58:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277904; cv=none; b=S4jp60zjU7JhROu053lZwdGbZXfTyCYTc/jIK1yo1d0h7RpOeVl42DW5Qh4JwpMZDKDLjvX1aJG/o49uFlvLK9yQbwqd7fhRV7ya6/vlPl2hjDwELD8qcCgm6nf5zRkdYgtDj/tGY58D8lf1uBKqxnfltr+5qQUdLbszEbCId1I=
+	t=1774277907; cv=none; b=kF3etbnt0I7WaArYczZ/q4hIatY5uZqWPcBlejaSMLkHLkNlNHzmAHi1ASrrDlNPRfJ6id9DXhtPiZgMJME6enijgOjJex6A+cSv+d1IfYFrndvRcFsBR1HeNGhxYHTdbMz1vjJlICMjSnfE68F+7hnESJFBH8kgUot9xKVWlMQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277904; c=relaxed/simple;
-	bh=q2BSjUe8LewONTvvxADYGtUCIE2vYwuTxcS57t5/0hE=;
+	s=arc-20240116; t=1774277907; c=relaxed/simple;
+	bh=VWq9zvo/gNc+GLwga+Elj9A7jChOFkbsso04KWhljBs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fnN4qegBirm6FFs2cinT8vG7gIMRDdfsvcie/kY6mX4p3IQKRZV1BlqCCt7FG8+WD93u9KJcIxuaofI2ieqo7r7CQLJyI01PhoxApS3qWgITpm+3DP0do83LGdzXS7JE5Up+VWP1jaVuqhVWZ+oD5Zx23PrgeZr7Bt4jUB9rZNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j0ozM7M2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=t8P8tCcqnahl1E0AsnirStS3v1uIQZ/xfgoQY8HmGQXevxNTr+eorhbaMnqFtm7dzo9M8JTdlEUAHOmggINCMJUIaIxE/LULWc64U26wzLAf/jfIg5K3NbHR4rhYNoP9SZfjJbxsxCc5CDPofNLmV6FZF2nVuXC2oEa2maN5Rss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RAPhUBVG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j0ozM7M2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF074C4CEF7;
-	Mon, 23 Mar 2026 14:58:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RAPhUBVG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E414FC2BC9E;
+	Mon, 23 Mar 2026 14:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277904;
-	bh=q2BSjUe8LewONTvvxADYGtUCIE2vYwuTxcS57t5/0hE=;
+	s=korg; t=1774277907;
+	bh=VWq9zvo/gNc+GLwga+Elj9A7jChOFkbsso04KWhljBs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j0ozM7M2OOog+p9VBb1ofzoT3c5Fcj1ysBhZOM4nVv97qtOzMvKvVFumRjzy0Cydl
-	 5yEPGpUn+FVdKvX7eVwShnqCTvWDluL/gBiJll2iYyd71y9moLyWWNzYBoQFcCPKku
-	 D1JnycNwosgSxjMB+aiTXmc/PZrEe50xyVifWcN4=
+	b=RAPhUBVGHDs/tIbabxWLqCWqbf8lj3mnBzZn9nVY8Fa5/nYPKdTDgrJXbDW1pwa1V
+	 ul2RV8XnEZUOrGx4hPMmiGR1EX6ifvo6np8m10yJXRkCkwJghEESSuaTXOztbT7TzD
+	 8K53jfpE3C3pZsNwiDuK7TfPFuH8fo028n827IZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
 	"Nikhil P. Rao" <nikhil.rao@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 137/567] xsk: Fix fragment node deletion to prevent buffer leak
-Date: Mon, 23 Mar 2026 14:40:57 +0100
-Message-ID: <20260323134537.193813149@linuxfoundation.org>
+Subject: [PATCH 6.6 138/567] xsk: Fix zero-copy AF_XDP fragment drop
+Date: Mon, 23 Mar 2026 14:40:58 +0100
+Message-ID: <20260323134537.222562476@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,79 +53,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Nikhil P. Rao <nikhil.rao@amd.com>
 
-[ Upstream commit 60abb0ac11dccd6b98fd9182bc5f85b621688861 ]
+[ Upstream commit f7387d6579d65efd490a864254101cb665f2e7a7 ]
 
-After commit b692bf9a7543 ("xsk: Get rid of xdp_buff_xsk::xskb_list_node"),
-the list_node field is reused for both the xskb pool list and the buffer
-free list, this causes a buffer leak as described below.
+AF_XDP should ensure that only a complete packet is sent to application.
+In the zero-copy case, if the Rx queue gets full as fragments are being
+enqueued, the remaining fragments are dropped.
 
-xp_free() checks if a buffer is already on the free list using
-list_empty(&xskb->list_node). When list_del() is used to remove a node
-from the xskb pool list, it doesn't reinitialize the node pointers.
-This means list_empty() will return false even after the node has been
-removed, causing xp_free() to incorrectly skip adding the buffer to the
-free list.
+For the multi-buffer case, add a check to ensure that the Rx queue has
+enough space for all fragments of a packet before starting to enqueue
+them.
 
-Fix this by using list_del_init() instead of list_del() in all fragment
-handling paths, this ensures the list node is reinitialized after removal,
-allowing the list_empty() to work correctly.
-
-Fixes: b692bf9a7543 ("xsk: Get rid of xdp_buff_xsk::xskb_list_node")
-Acked-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
 Signed-off-by: Nikhil P. Rao <nikhil.rao@amd.com>
-Link: https://patch.msgid.link/20260225000456.107806-2-nikhil.rao@amd.com
+Link: https://patch.msgid.link/20260225000456.107806-3-nikhil.rao@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: f7387d6579d6 ("xsk: Fix zero-copy AF_XDP fragment drop")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/xdp_sock_drv.h | 6 +++---
- net/xdp/xsk.c              | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ net/xdp/xsk.c | 24 +++++++++++++++---------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
-index 7be51bdd9c63a..91339ffd2f2a8 100644
---- a/include/net/xdp_sock_drv.h
-+++ b/include/net/xdp_sock_drv.h
-@@ -115,7 +115,7 @@ static inline void xsk_buff_free(struct xdp_buff *xdp)
- 		goto out;
- 
- 	list_for_each_entry_safe(pos, tmp, xskb_list, list_node) {
--		list_del(&pos->list_node);
-+		list_del_init(&pos->list_node);
- 		xp_free(pos);
- 	}
- 
-@@ -140,7 +140,7 @@ static inline struct xdp_buff *xsk_buff_get_frag(struct xdp_buff *first)
- 	frag = list_first_entry_or_null(&xskb->pool->xskb_list,
- 					struct xdp_buff_xsk, list_node);
- 	if (frag) {
--		list_del(&frag->list_node);
-+		list_del_init(&frag->list_node);
- 		ret = &frag->xdp;
- 	}
- 
-@@ -151,7 +151,7 @@ static inline void xsk_buff_del_tail(struct xdp_buff *tail)
- {
- 	struct xdp_buff_xsk *xskb = container_of(tail, struct xdp_buff_xsk, xdp);
- 
--	list_del(&xskb->list_node);
-+	list_del_init(&xskb->list_node);
- }
- 
- static inline struct xdp_buff *xsk_buff_get_tail(struct xdp_buff *first)
 diff --git a/net/xdp/xsk.c b/net/xdp/xsk.c
-index 8ccc2f2a99d97..8f3971a94d967 100644
+index 8f3971a94d967..9e1ac917f9708 100644
 --- a/net/xdp/xsk.c
 +++ b/net/xdp/xsk.c
-@@ -179,7 +179,7 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
- 		err = __xsk_rcv_zc(xs, pos, len, contd);
- 		if (err)
- 			goto err;
--		list_del(&pos->list_node);
-+		list_del_init(&pos->list_node);
+@@ -160,25 +160,31 @@ static int xsk_rcv_zc(struct xdp_sock *xs, struct xdp_buff *xdp, u32 len)
+ 	struct xdp_buff_xsk *pos, *tmp;
+ 	struct list_head *xskb_list;
+ 	u32 contd = 0;
++	u32 num_desc;
+ 	int err;
+ 
+-	if (frags)
+-		contd = XDP_PKT_CONTD;
++	if (likely(!frags)) {
++		err = __xsk_rcv_zc(xs, xskb, len, contd);
++		if (err)
++			goto err;
++		return 0;
++	}
+ 
+-	err = __xsk_rcv_zc(xs, xskb, len, contd);
+-	if (err)
++	contd = XDP_PKT_CONTD;
++	num_desc = xdp_get_shared_info_from_buff(xdp)->nr_frags + 1;
++	if (xskq_prod_nb_free(xs->rx, num_desc) < num_desc) {
++		xs->rx_queue_full++;
++		err = -ENOBUFS;
+ 		goto err;
+-	if (likely(!frags))
+-		return 0;
++	}
+ 
++	__xsk_rcv_zc(xs, xskb, len, contd);
+ 	xskb_list = &xskb->pool->xskb_list;
+ 	list_for_each_entry_safe(pos, tmp, xskb_list, list_node) {
+ 		if (list_is_singular(xskb_list))
+ 			contd = 0;
+ 		len = pos->xdp.data_end - pos->xdp.data;
+-		err = __xsk_rcv_zc(xs, pos, len, contd);
+-		if (err)
+-			goto err;
++		__xsk_rcv_zc(xs, pos, len, contd);
+ 		list_del_init(&pos->list_node);
  	}
  
- 	return 0;
 -- 
 2.51.0
 
