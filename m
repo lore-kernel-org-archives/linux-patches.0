@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DFC199FAB;
-	Mon, 23 Mar 2026 14:20:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC11C2C181;
+	Mon, 23 Mar 2026 14:20:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275634; cv=none; b=TN8XphpwpiseQ6GwfTn1Fs+ctdYtVoxHNgACLqdL5JiZzTojUcXgYKsoNmJuRF7JrDYCfOPcqKVNTBsxPXjorbJJHZaxLLjx+yIRw+U9RA3LvoaHHgnAw8FQpyU7JUPFh3FMYYf3YDimHMKWX64KjcuwK6djKAsJuuh/tIEkASE=
+	t=1774275637; cv=none; b=GsdLjg6qloQDIsf90JoME0YIuUcoF10CF7sq0p7u+/W5/++sWkH8ZVpgfdmlCuxtmgz+dRMCP9RQqRMyYFJtp+LNDFll0+fzo4kbpGqZZM6k9DhfoQH5dq5KLp8i5vjO2+rwy698pLjV0xmqV4itTYkNF0CtSSm4WNcT+FtMvvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275634; c=relaxed/simple;
-	bh=QY68GLT8PpWj2nSkQlo57g/LhjfMDmGwDExz6TBc0Jw=;
+	s=arc-20240116; t=1774275637; c=relaxed/simple;
+	bh=TXYAR186E10hyYBQePB1mzORwv36ZLM3f2jRgrJef+8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aVN8luE0AINHD4vXF5khYuTzRB55ikiVrOTeuGKZ4V/NZu5eu+2DYujrOsIT6rS6Ql/qiXRM9Mf/2848pn4CQSjXQKcKs/IMVzM279jTa20fcTmzLZ/FO/KteV6zK1ecz9VdiwlTkzXKTN9k+hb25sD/RpPIw7uMyAZLxc/j6gE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4srZLEe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EjfIeNGarRyRF6D09i/0yhS+SVe6EGRymn2DGJyRI7hKL23UtGXkVvZMWmyGW7fUAqUcxkcEC5vL8lvc3wdUOmC4W9C6LzGpQlJR+BFbs0sm1nuOpFgGJSMRYxDIrXl4++9TfbOzLANotFgp0LKfd8WVzH6oGi04KhtI282irXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PZdgVZZw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4srZLEe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AA9C4CEF7;
-	Mon, 23 Mar 2026 14:20:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PZdgVZZw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34E0EC4CEF7;
+	Mon, 23 Mar 2026 14:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275634;
-	bh=QY68GLT8PpWj2nSkQlo57g/LhjfMDmGwDExz6TBc0Jw=;
+	s=korg; t=1774275637;
+	bh=TXYAR186E10hyYBQePB1mzORwv36ZLM3f2jRgrJef+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l4srZLEet0e8aZMOPAjJNTnUL43AD3VwtwJkOPD6Ffy0EOczezn4zXuGKhp2tGojE
-	 07qTlAM/lpCgg04SblPqk6+QfZxRFeOVoM0dx4JxEU3lPDWuK4BWKm8hgTS7+RZNW1
-	 SdR4Gro5AN56pOrFZL6J0W3yiDpIl/oyCiQ9iJxU=
+	b=PZdgVZZwoG/uqAIMQlZ8vCDHYdwdT1wqP2y0O+ZXLoC4xC0+vlw8VUwG357fZOOLC
+	 8qCa3UJfLlU+1gRspLNvMZqdXwdzPhCYBqqa+t8EApG5LtYldfvxKtuuSaFD9jLmgc
+	 GsVeif0vLG4APSNtj3TLq2Yg7U2xrXyu2FA5cs6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 167/460] pmdomain: bcm: bcm2835-power: Fix broken reset status read
-Date: Mon, 23 Mar 2026 14:42:43 +0100
-Message-ID: <20260323134530.653395836@linuxfoundation.org>
+	Filippo Baiamonte <filippo.ba03@bugzilla.kernel.org>,
+	Maximilian Pezzullo <maximilianpezzullo@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.12 168/460] ata: libata-core: Disable LPM on ST1000DM010-2EP102
+Date: Mon, 23 Mar 2026 14:42:44 +0100
+Message-ID: <20260323134530.676048368@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,59 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
 
-commit 550bae2c0931dbb664a61b08c21cf156f0a5362a upstream.
+commit b3b1d3ae1d87bc9398fb715c945968bf4c75a09a upstream.
 
-bcm2835_reset_status() has a misplaced parenthesis on every PM_READ()
-call. Since PM_READ(reg) expands to readl(power->base + (reg)), the
-expression:
+According to a user report, the ST1000DM010-2EP102 has problems with LPM,
+causing random system freezes. The drive belongs to the same BarraCuda
+family as the ST2000DM008-2FR102 which has the same issue.
 
-    PM_READ(PM_GRAFX & PM_V3DRSTN)
-
-computes the bitwise AND of the register offset PM_GRAFX with the
-bitmask PM_V3DRSTN before using the result as a register offset, reading
-from the wrong MMIO address instead of the intended PM_GRAFX register.
-The same issue affects the PM_IMAGE cases.
-
-Fix by moving the closing parenthesis so PM_READ() receives only the
-register offset, and the bitmask is applied to the value returned by
-the read.
-
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 7627a0edef54 ("ata: ahci: Drop low power policy board type")
+Reported-by: Filippo Baiamonte <filippo.ba03@bugzilla.kernel.org>
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221163
+Signed-off-by: Maximilian Pezzullo <maximilianpezzullo@gmail.com>
+Reviewed-by: Damien Le Moal <dlemoal@kernel.org>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/bcm/bcm2835-power.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/ata/libata-core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/pmdomain/bcm/bcm2835-power.c
-+++ b/drivers/pmdomain/bcm/bcm2835-power.c
-@@ -580,11 +580,11 @@ static int bcm2835_reset_status(struct r
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4102,6 +4102,7 @@ static const struct ata_dev_quirks_entry
+ 						ATA_QUIRK_FIRMWARE_WARN },
  
- 	switch (id) {
- 	case BCM2835_RESET_V3D:
--		return !PM_READ(PM_GRAFX & PM_V3DRSTN);
-+		return !(PM_READ(PM_GRAFX) & PM_V3DRSTN);
- 	case BCM2835_RESET_H264:
--		return !PM_READ(PM_IMAGE & PM_H264RSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_H264RSTN);
- 	case BCM2835_RESET_ISP:
--		return !PM_READ(PM_IMAGE & PM_ISPRSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_ISPRSTN);
- 	default:
- 		return -EINVAL;
- 	}
+ 	/* Seagate disks with LPM issues */
++	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
+ 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
+ 
+ 	/* drives which fail FPDMA_AA activation (some may freeze afterwards)
 
 
