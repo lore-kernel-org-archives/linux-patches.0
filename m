@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED85B24DFF3;
-	Mon, 23 Mar 2026 14:48:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E23AC0D2;
+	Mon, 23 Mar 2026 14:48:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277297; cv=none; b=o9Sujn+1CLCTRHQlHPWkJd5+EH9eV6IwBj1uC8P2hCW7M3g6SepcUuUMc1Vyo9g6LNahoGc/3Jz32eswkDMkz1Os2pss/+BeKufp+dkCiZTGX/TeSgxWKultN6NOzgGfz5XEDKk74bW1D2VHNZISwcEnG1TFjVTW8qnrv+fGCIk=
+	t=1774277300; cv=none; b=EkEDNxG2T3uh/4EH20G8H5RIDM1LlFV2PrpeBhVlUI+Ul8ODeOyk4pDTHI4bDu+WQhYQKx+hnw3yG5AeC4p8hLgQi5QlZIBrFDbBwHnjLNqqDWj688/XaKZdPQw9O/8gKdq0AkS3kIgCiUfLb4kOBRjRuc9d1dzzUrgwRHxdDj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277297; c=relaxed/simple;
-	bh=fWfBNHPb5p8Lb+U+P4vUYyQJO7Qp7VDEidVLOCA21Yw=;
+	s=arc-20240116; t=1774277300; c=relaxed/simple;
+	bh=11iqDMz2ZKT6XMzUxgP1lGctFblo4EhkpJH7174cmJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcQ9/cj2wodtsHP1QHi3sbbiV4vxm3U0sJ+0nVp04ON8P1g9TJw8A3IqqniKeI1WIZr/iU85PXxrixfOF0hc5hIhwFwVaD1tLjZWXYupvRYZ1m90MQNNnwWiP7PQ86ZFtjv+k4s2D83Ycecp1p/Te2s0hYuhEgbFaoOcnVTw4Wc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LPqRvqBa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DGd8iir4zpu++FCqpME0Rf2X8seGGGwcKo2EssaugVBGoSw6SwR/6yVwKzuQS6XJC5wB7pUiQpH/pUmNh6cDgFVzlKIVbOhoeIp7js8ing0ocWhqGIOHStyXwDa8OmVR49AP8wKTEWEBTWVEOWSnKbNxfR3zu2nw1tR8n2x5xoE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoaUGtXB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LPqRvqBa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76895C4CEF7;
-	Mon, 23 Mar 2026 14:48:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoaUGtXB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4FFC4CEF7;
+	Mon, 23 Mar 2026 14:48:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277296;
-	bh=fWfBNHPb5p8Lb+U+P4vUYyQJO7Qp7VDEidVLOCA21Yw=;
+	s=korg; t=1774277299;
+	bh=11iqDMz2ZKT6XMzUxgP1lGctFblo4EhkpJH7174cmJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPqRvqBaBLpI4p+GPCSf0CTWN7yDv6CvPM9ZgU3D5wJSZ89CKRZN7bnbWl153IU+l
-	 soYdwqnzy+HRoxVuxY5t3UOobnq8cz253yl2GetlxCEnowbjV2nW/EJWy6FNCzxnhB
-	 5PdfWE23ko6lm12V+plv0AZz42WbZcEV0RNg2u9c=
+	b=GoaUGtXBIBpWj+boPGlCCgIia5HfOti8Keoy9GN2k/2rWRqecfKyDfABNWMtFEirv
+	 nDE+iMtZiQ0bWunhJ6D3PikuFfRoCTI7Vk++3wlgyI39gEyk6CcK5XWv+1Zw8nfMte
+	 cycCCfoFwBgthLiZxwhR6YAl6H2w3x5H1tSh6dgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 380/460] Bluetooth: LE L2CAP: Disconnect if received packets SDU exceeds IMTU
-Date: Mon, 23 Mar 2026 14:46:16 +0100
-Message-ID: <20260323134535.908169454@linuxfoundation.org>
+Subject: [PATCH 6.12 389/460] bridge: cfm: Fix race condition in peer_mep deletion
+Date: Mon, 23 Mar 2026 14:46:25 +0100
+Message-ID: <20260323134536.128696526@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,53 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit e1d9a66889867c232657a9b6f25d451d7c3ab96f ]
+[ Upstream commit 3715a00855316066cdda69d43648336367422127 ]
 
-Core 6.0, Vol 3, Part A, 3.4.3:
-"If the SDU length field value exceeds the receiver's MTU, the receiver
-shall disconnect the channel..."
+When a peer MEP is being deleted, cancel_delayed_work_sync() is called
+on ccm_rx_dwork before freeing. However, br_cfm_frame_rx() runs in
+softirq context under rcu_read_lock (without RTNL) and can re-schedule
+ccm_rx_dwork via ccm_rx_timer_start() between cancel_delayed_work_sync()
+returning and kfree_rcu() being called.
 
-This fixes L2CAP/LE/CFC/BV-26-C (running together with 'l2test -r -P
-0x0027 -V le_public -I 100').
+The following is a simple race scenario:
 
-Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+           cpu0                                     cpu1
+
+mep_delete_implementation()
+  cancel_delayed_work_sync(ccm_rx_dwork);
+                                           br_cfm_frame_rx()
+                                             // peer_mep still in hlist
+                                             if (peer_mep->ccm_defect)
+                                               ccm_rx_timer_start()
+                                                 queue_delayed_work(ccm_rx_dwork)
+  hlist_del_rcu(&peer_mep->head);
+  kfree_rcu(peer_mep, rcu);
+                                           ccm_rx_work_expired()
+                                             // on freed peer_mep
+
+To prevent this, cancel_delayed_work_sync() is replaced with
+disable_delayed_work_sync() in both peer MEP deletion paths, so
+that subsequent queue_delayed_work() calls from br_cfm_frame_rx()
+are silently rejected.
+
+The cc_peer_disable() helper retains cancel_delayed_work_sync()
+because it is also used for the CC enable/disable toggle path where
+the work must remain re-schedulable.
+
+Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/abBgYT5K_FI9rD1a@v4bel
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bridge/br_cfm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index a95949bc36b2a..de8e18fe50557 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6619,8 +6619,10 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		return -ENOBUFS;
+diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
+index a3c755d0a09de..ffa571e38c540 100644
+--- a/net/bridge/br_cfm.c
++++ b/net/bridge/br_cfm.c
+@@ -576,7 +576,7 @@ static void mep_delete_implementation(struct net_bridge *br,
+ 
+ 	/* Empty and free peer MEP list */
+ 	hlist_for_each_entry_safe(peer_mep, n_store, &mep->peer_mep_list, head) {
+-		cancel_delayed_work_sync(&peer_mep->ccm_rx_dwork);
++		disable_delayed_work_sync(&peer_mep->ccm_rx_dwork);
+ 		hlist_del_rcu(&peer_mep->head);
+ 		kfree_rcu(peer_mep, rcu);
+ 	}
+@@ -732,7 +732,7 @@ int br_cfm_cc_peer_mep_remove(struct net_bridge *br, const u32 instance,
+ 		return -ENOENT;
  	}
  
--	if (chan->imtu < skb->len) {
--		BT_ERR("Too big LE L2CAP PDU");
-+	if (skb->len > chan->imtu) {
-+		BT_ERR("Too big LE L2CAP PDU: len %u > %u", skb->len,
-+		       chan->imtu);
-+		l2cap_send_disconn_req(chan, ECONNRESET);
- 		return -ENOBUFS;
- 	}
+-	cc_peer_disable(peer_mep);
++	disable_delayed_work_sync(&peer_mep->ccm_rx_dwork);
  
-@@ -6646,7 +6648,9 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		       sdu_len, skb->len, chan->imtu);
- 
- 		if (sdu_len > chan->imtu) {
--			BT_ERR("Too big LE L2CAP SDU length received");
-+			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
-+			       skb->len, sdu_len);
-+			l2cap_send_disconn_req(chan, ECONNRESET);
- 			err = -EMSGSIZE;
- 			goto failed;
- 		}
+ 	hlist_del_rcu(&peer_mep->head);
+ 	kfree_rcu(peer_mep, rcu);
 -- 
 2.51.0
 
