@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ACE53AE6EE;
-	Mon, 23 Mar 2026 14:15:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26C06397E84;
+	Mon, 23 Mar 2026 14:15:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275341; cv=none; b=b2niGUkprDlOtaaBhTZAfkq0AKTU6/c5BUHIsTjR2CAc71CU0Pe11+vZE9a84qku8o4o/Wwgy2ooH46iCkjQzfGk6c6mp83/Q+5nnDy/Y7ImiUnKBmq1xWJ/8Zlom1Nnv2lFoCS9qNMHjVPyjVV5GLN8U0xEG3L30570aNcbhmE=
+	t=1774275344; cv=none; b=OaOC2G6MNEnmCfkrhI+BIewrXSOLX5dsxC5r+swKqL7PZtPfWxIx/fZ5k8hd9nbCueyXHbHxQ3Q4jaS5dw/i4kG6lFQqNcLJvcBTCRXYJLxefv/vMyqB1Kznr9d26RDENjs2BGGwdGUKr6WGnMMqd4K0GEl+5SY4Gg0m10SQn0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275341; c=relaxed/simple;
-	bh=LoXjb8cYQSYLH01wRFN4n/6HMOLJg6REJ3qWVFX/PNw=;
+	s=arc-20240116; t=1774275344; c=relaxed/simple;
+	bh=u0Hpa0Ovr0wD/qwPUcpc1W0kKAbCSL34P5dRjMxjHG8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AYKkQ9AYhAl0cxuSM+b+mVY0Mb/X3fhaR008GdqcL92A6bKo1lDvoV9fAR1ehkWDaF+iwAQ3m+B1f/q6N5wr282JFPdJQdNlcq27RET2qjJNz5UY+h5G185eh2fD/koUY+933zBKeDxlfMRYFL235P6J7G1gIRscJ/JucYI/+rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a5wKom56; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OxtbWCZBoKrgNj4ctya7tewPoZ6xUjIjDTMoG1qjFwXdcJbOf3jqEXXJtK2V1BS7wqpRoq9zTm85RFrmAxkRdPWuA/yNasrOYseVGx/1898bBdJHRbEQTV6DgzBm+z4t+RLu4qj6Rlh2sQ/f18QOvu3l2Nr6RsKIuBl6dty/m80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eZoA/ZX6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a5wKom56"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC8DC4CEF7;
-	Mon, 23 Mar 2026 14:15:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eZoA/ZX6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE56BC4CEF7;
+	Mon, 23 Mar 2026 14:15:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275341;
-	bh=LoXjb8cYQSYLH01wRFN4n/6HMOLJg6REJ3qWVFX/PNw=;
+	s=korg; t=1774275344;
+	bh=u0Hpa0Ovr0wD/qwPUcpc1W0kKAbCSL34P5dRjMxjHG8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5wKom569D1HkyOxZP36FjMWYpAWofRJ887/vDf8M0El9saE4PLZ5FJpwTWSj5I73
-	 BxxRfhA4gbLZ3yEjXHlJlpPaBt/R9/nO0AbktUj+gaa0nBak3O7KSPdr0KjJeXcDTi
-	 6TwUN6XifOes43QDa+oCE2v2NPVV3k+OdM/ZR3GA=
+	b=eZoA/ZX6CN5kTbJnK9T/K9rVRaX2JhGKgyPe7tbfs2DjKJA3aEfL9brKjNn1nytY0
+	 6EZFYKSL/MVPx6zCzgPnxWA0QNTxaWLyBT/GFgnbNA9/Mg4Vpi5jUMuzI3AmRyQmT2
+	 3Yq6e6Z8oasnkr+QgzBiifKcOU93tAzTzj+vK1ao=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	David Dull <monderasdor@gmail.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 064/460] netfilter: x_tables: guard option walkers against 1-byte tail reads
-Date: Mon, 23 Mar 2026 14:41:00 +0100
-Message-ID: <20260323134528.281183349@linuxfoundation.org>
+Subject: [PATCH 6.12 065/460] netfilter: nfnetlink_queue: fix entry leak in bridge verdict error path
+Date: Mon, 23 Mar 2026 14:41:01 +0100
+Message-ID: <20260323134528.303452383@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,60 +52,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Dull <monderasdor@gmail.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit cfe770220ac2dbd3e104c6b45094037455da81d4 ]
+[ Upstream commit f1ba83755d81c6fc66ac7acd723d238f974091e9 ]
 
-When the last byte of options is a non-single-byte option kind, walkers
-that advance with i += op[i + 1] ? : 1 can read op[i + 1] past the end
-of the option area.
+nfqnl_recv_verdict() calls find_dequeue_entry() to remove the queue
+entry from the queue data structures, taking ownership of the entry.
+For PF_BRIDGE packets, it then calls nfqa_parse_bridge() to parse VLAN
+attributes.  If nfqa_parse_bridge() returns an error (e.g. NFQA_VLAN
+present but NFQA_VLAN_TCI missing), the function returns immediately
+without freeing the dequeued entry or its sk_buff.
 
-Add an explicit i == optlen - 1 check before dereferencing op[i + 1]
-in xt_tcpudp and xt_dccp option walkers.
+This leaks the nf_queue_entry, its associated sk_buff, and all held
+references (net_device refcounts, struct net refcount).  Repeated
+triggering exhausts kernel memory.
 
-Fixes: 2e4e6a17af35 ("[NETFILTER] x_tables: Abstraction layer for {ip,ip6,arp}_tables")
-Signed-off-by: David Dull <monderasdor@gmail.com>
+Fix this by dropping the entry via nfqnl_reinject() with NF_DROP verdict
+on the error path, consistent with other error handling in this file.
+
+Fixes: 8d45ff22f1b4 ("netfilter: bridge: nf queue verdict to use NFQA_VLAN and NFQA_L2HDR")
+Reviewed-by: David Dull <monderasdor@gmail.com>
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_dccp.c   | 4 ++--
- net/netfilter/xt_tcpudp.c | 6 ++++--
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ net/netfilter/nfnetlink_queue.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
-index e5a13ecbe67a0..037ab93e25d0a 100644
---- a/net/netfilter/xt_dccp.c
-+++ b/net/netfilter/xt_dccp.c
-@@ -62,10 +62,10 @@ dccp_find_option(u_int8_t option,
- 			return true;
- 		}
+diff --git a/net/netfilter/nfnetlink_queue.c b/net/netfilter/nfnetlink_queue.c
+index af35dbc19864a..df0232cf24ce2 100644
+--- a/net/netfilter/nfnetlink_queue.c
++++ b/net/netfilter/nfnetlink_queue.c
+@@ -1547,8 +1547,10 @@ static int nfqnl_recv_verdict(struct sk_buff *skb, const struct nfnl_info *info,
  
--		if (op[i] < 2)
-+		if (op[i] < 2 || i == optlen - 1)
- 			i++;
- 		else
--			i += op[i+1]?:1;
-+			i += op[i + 1] ? : 1;
+ 	if (entry->state.pf == PF_BRIDGE) {
+ 		err = nfqa_parse_bridge(entry, nfqa);
+-		if (err < 0)
++		if (err < 0) {
++			nfqnl_reinject(entry, NF_DROP);
+ 			return err;
++		}
  	}
  
- 	spin_unlock_bh(&dccp_buflock);
-diff --git a/net/netfilter/xt_tcpudp.c b/net/netfilter/xt_tcpudp.c
-index e8991130a3de0..f76cf18f1a244 100644
---- a/net/netfilter/xt_tcpudp.c
-+++ b/net/netfilter/xt_tcpudp.c
-@@ -59,8 +59,10 @@ tcp_find_option(u_int8_t option,
- 
- 	for (i = 0; i < optlen; ) {
- 		if (op[i] == option) return !invert;
--		if (op[i] < 2) i++;
--		else i += op[i+1]?:1;
-+		if (op[i] < 2 || i == optlen - 1)
-+			i++;
-+		else
-+			i += op[i + 1] ? : 1;
- 	}
- 
- 	return invert;
+ 	if (nfqa[NFQA_PAYLOAD]) {
 -- 
 2.51.0
 
