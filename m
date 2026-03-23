@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D9C3BAD8F;
-	Mon, 23 Mar 2026 16:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688783BC685;
+	Mon, 23 Mar 2026 16:12:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282328; cv=none; b=EK5iXUbMxpRDaw1TBqan97CbmErGC4blYvgVf4t3IBjreHTmeciVXRqeBcv3WH5ZQPgFj4V/oJJMoxv+RwTMvp98+Sdv28T5JVs/69QD+ZqOsxWbQjfKMC2ejI0owowImpT56H6+0/9Ch1yQvdfK5osHwx3q1LHCEzRadStpEOM=
+	t=1774282331; cv=none; b=an88iptnj2eYIDOy5nqSZ8423dQY2TSj/kWEzECol6DRj/BqFWV7b8A/uX4z1ANqxaKCTGux9M6U38FeOWTKDDwBOkBtUXQtfIMvYSJjUvPvsANZYiHK6fgC6XdFQompVBa0WBXR505cLrCFIdU3WZdt7UtPMxurYC+A7ApmkUo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282328; c=relaxed/simple;
-	bh=s6iTrP8lE7HUfthDsUfV4iUJHrfXo7e+BTQ3yHwD3V0=;
+	s=arc-20240116; t=1774282331; c=relaxed/simple;
+	bh=2rM3QNxpPIcYmP4FtSSlhwyPOa7Lmh3Wi9B1n5VKnSs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uYMbQx2pcvf28kDKHDHzkDTALOJ3Onup4JWf/nGAXstrErEUtAPK4+JqzoNf6aUf02WQvfZjyeNHoiWWMTTQ3kZJwpJ6CpO0PHJqJYBn3/6kIjcrxy0McHq9SmY+VR7V6AydGivctFGvSN89yHHly2dG86qfa1h7XqBt39Z8QRA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chm9jKlL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jCumXPJ75GmGQeW66X6gOz+LiyXKHZuhb52MKFVm+QGxGjSya+Fc5hG/PrRxUFOD+fAFY0ehSHokOxx+mR1mCz/GPVrEPTgP08YEstJP6M8ROHNKq1YQ3Q+mD+SPLarKoH1yYjIYnM6KZB3pjD0e5D8lmN+9o2OBN/QIIrX/Af0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RmbMHCH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chm9jKlL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8D57C4CEF7;
-	Mon, 23 Mar 2026 16:12:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RmbMHCH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC49EC4CEF7;
+	Mon, 23 Mar 2026 16:12:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282328;
-	bh=s6iTrP8lE7HUfthDsUfV4iUJHrfXo7e+BTQ3yHwD3V0=;
+	s=korg; t=1774282331;
+	bh=2rM3QNxpPIcYmP4FtSSlhwyPOa7Lmh3Wi9B1n5VKnSs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chm9jKlLEMZg9dyYw6ZDMfP1iZbkJEngiNZk7RBodpIYdRpmYOv6/miG3QsSTvyvJ
-	 WjPXMAdULUhrTkdvhyaMaDk6epyxXyLWQbNXa4Np3nTifHZ8KtpxQSuLChBVrwlPH3
-	 v77ReG2ilywuQQiSnBNzjEp6VG75M92tuHZJw8Zs=
+	b=RmbMHCH4mntT+bOM0xpjUbi4GbQtoa5MJJoat01ASomHMR1lhleBJJXBnNRfiRwWS
+	 COpPEVxPicmPg8VZSJhsaFVN7D5um6mS6+ZiDKnXrJTCTUGPTh1f7AKhejEcFv4L4o
+	 iXknSCbtyvVJrX/Aet61pfnuGWe1pan3boSBIf9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Gow <davidgow@google.com>,
-	Rae Moar <rmoar@google.com>,
+	Shuvam Pandey <shuvampandey1@gmail.com>,
+	David Gow <david@davidgow.net>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 116/481] kunit: tool: Add command line interface to filter and report attributes
-Date: Mon, 23 Mar 2026 14:41:38 +0100
-Message-ID: <20260323134528.106988357@linuxfoundation.org>
+Subject: [PATCH 6.1 117/481] kunit: tool: copy caller args in run_kernel to prevent mutation
+Date: Mon, 23 Mar 2026 14:41:39 +0100
+Message-ID: <20260323134528.134107519@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,412 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rae Moar <rmoar@google.com>
+From: Shuvam Pandey <shuvampandey1@gmail.com>
 
-[ Upstream commit 723c8258c8fe167191b53e274dea435c4522e4d7 ]
+[ Upstream commit 40804c4974b8df2adab72f6475d343eaff72b7f6 ]
 
-Add ability to kunit.py to filter attributes and report a list of tests
-including attributes without running tests.
+run_kernel() appended KUnit flags directly to the caller-provided args
+list. When exec_tests() calls run_kernel() repeatedly (e.g. with
+--run_isolated), each call mutated the same list, causing later runs
+to inherit stale filter_glob values and duplicate kunit.enable flags.
 
-Add flag "--filter" to input filters on test attributes. Tests will be
-filtered out if they do not match all inputted filters.
+Fix this by copying args at the start of run_kernel(). Add a regression
+test that calls run_kernel() twice with the same list and verifies the
+original remains unchanged.
 
-Example: --filter speed=slow (This filter would run only the tests that are
-marked as slow)
-
-Filters have operations: <, >, <=, >=, !=, and =. But note that the
-characters < and > are often interpreted by the shell, so they may need to
-be quoted or escaped.
-
-Example: --filter "speed>slow" or --filter speed\>slow (This filter would
-run only the tests that have the speed faster than slow.
-
-Additionally, multiple filters can be used.
-
-Example: --filter "speed=slow, module!=example" (This filter would run
-only the tests that have the speed slow and are not in the "example"
-module)
-
-Note if the user wants to skip filtered tests instead of not
-running/showing them use the "--filter_action=skip" flag instead.
-
-Expose the output of kunit.action=list option with flag "--list_tests" to
-output a list of tests. Additionally, add flag "--list_tests_attr" to
-output a list of tests and their attributes. These flags are useful to see
-tests and test attributes without needing to run tests.
-
-Example of the output of "--list_tests_attr":
-  example
-  example.test_1
-  example.test_2
-  # example.test_2.speed: slow
-
-This output includes a suite, example, with two test cases, test_1 and
-test_2. And in this instance test_2 has been marked as slow.
-
-Reviewed-by: David Gow <davidgow@google.com>
-Signed-off-by: Rae Moar <rmoar@google.com>
+Fixes: ff9e09a3762f ("kunit: tool: support running each suite/test separately")
+Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
+Reviewed-by: David Gow <david@davidgow.net>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Stable-dep-of: 40804c4974b8 ("kunit: tool: copy caller args in run_kernel to prevent mutation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit.py           | 70 ++++++++++++++++++++++++--
- tools/testing/kunit/kunit_kernel.py    |  8 ++-
- tools/testing/kunit/kunit_parser.py    | 11 +++-
- tools/testing/kunit/kunit_tool_test.py | 39 +++++++-------
- 4 files changed, 99 insertions(+), 29 deletions(-)
+ tools/testing/kunit/kunit_kernel.py    |  6 ++++--
+ tools/testing/kunit/kunit_tool_test.py | 26 ++++++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/kunit/kunit.py b/tools/testing/kunit/kunit.py
-index 1ed7f0f86dee3..23f84f405b4a0 100755
---- a/tools/testing/kunit/kunit.py
-+++ b/tools/testing/kunit/kunit.py
-@@ -55,8 +55,12 @@ class KunitExecRequest(KunitParseRequest):
- 	build_dir: str
- 	timeout: int
- 	filter_glob: str
-+	filter: str
-+	filter_action: Optional[str]
- 	kernel_args: Optional[List[str]]
- 	run_isolated: Optional[str]
-+	list_tests: bool
-+	list_tests_attr: bool
- 
- @dataclass
- class KunitRequest(KunitExecRequest, KunitBuildRequest):
-@@ -111,19 +115,41 @@ def config_and_build_tests(linux: kunit_kernel.LinuxSourceTree,
- 
- def _list_tests(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -> List[str]:
- 	args = ['kunit.action=list']
-+
-+	if request.kernel_args:
-+		args.extend(request.kernel_args)
-+
-+	output = linux.run_kernel(args=args,
-+			   timeout=request.timeout,
-+			   filter_glob=request.filter_glob,
-+			   filter=request.filter,
-+			   filter_action=request.filter_action,
-+			   build_dir=request.build_dir)
-+	lines = kunit_parser.extract_tap_lines(output)
-+	# Hack! Drop the dummy TAP version header that the executor prints out.
-+	lines.pop()
-+
-+	# Filter out any extraneous non-test output that might have gotten mixed in.
-+	return [l for l in output if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
-+
-+def _list_tests_attr(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -> Iterable[str]:
-+	args = ['kunit.action=list_attr']
-+
- 	if request.kernel_args:
- 		args.extend(request.kernel_args)
- 
- 	output = linux.run_kernel(args=args,
- 			   timeout=request.timeout,
- 			   filter_glob=request.filter_glob,
-+			   filter=request.filter,
-+			   filter_action=request.filter_action,
- 			   build_dir=request.build_dir)
- 	lines = kunit_parser.extract_tap_lines(output)
- 	# Hack! Drop the dummy TAP version header that the executor prints out.
- 	lines.pop()
- 
- 	# Filter out any extraneous non-test output that might have gotten mixed in.
--	return [l for l in lines if re.match(r'^[^\s.]+\.[^\s.]+$', l)]
-+	return lines
- 
- def _suites_from_test_list(tests: List[str]) -> List[str]:
- 	"""Extracts all the suites from an ordered list of tests."""
-@@ -137,10 +163,18 @@ def _suites_from_test_list(tests: List[str]) -> List[str]:
- 			suites.append(suite)
- 	return suites
- 
--
--
- def exec_tests(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -> KunitResult:
- 	filter_globs = [request.filter_glob]
-+	if request.list_tests:
-+		output = _list_tests(linux, request)
-+		for line in output:
-+			print(line.rstrip())
-+		return KunitResult(status=KunitStatus.SUCCESS, elapsed_time=0.0)
-+	if request.list_tests_attr:
-+		attr_output = _list_tests_attr(linux, request)
-+		for line in attr_output:
-+			print(line.rstrip())
-+		return KunitResult(status=KunitStatus.SUCCESS, elapsed_time=0.0)
- 	if request.run_isolated:
- 		tests = _list_tests(linux, request)
- 		if request.run_isolated == 'test':
-@@ -164,6 +198,8 @@ def exec_tests(linux: kunit_kernel.LinuxSourceTree, request: KunitExecRequest) -
- 			args=request.kernel_args,
- 			timeout=request.timeout,
- 			filter_glob=filter_glob,
-+			filter=request.filter,
-+			filter_action=request.filter_action,
- 			build_dir=request.build_dir)
- 
- 		_, test_result = parse_tests(request, metadata, run_result)
-@@ -350,6 +386,16 @@ def add_exec_opts(parser: argparse.ArgumentParser) -> None:
- 			    nargs='?',
- 			    default='',
- 			    metavar='filter_glob')
-+	parser.add_argument('--filter',
-+			    help='Filter KUnit tests with attributes, '
-+			    'e.g. module=example or speed>slow',
-+			    type=str,
-+				default='')
-+	parser.add_argument('--filter_action',
-+			    help='If set to skip, filtered tests will be skipped, '
-+				'e.g. --filter_action=skip. Otherwise they will not run.',
-+			    type=str,
-+				choices=['skip'])
- 	parser.add_argument('--kernel_args',
- 			    help='Kernel command-line parameters. Maybe be repeated',
- 			     action='append', metavar='')
-@@ -359,6 +405,12 @@ def add_exec_opts(parser: argparse.ArgumentParser) -> None:
- 			    'what ran before it.',
- 			    type=str,
- 			    choices=['suite', 'test'])
-+	parser.add_argument('--list_tests', help='If set, list all tests that will be '
-+			    'run.',
-+			    action='store_true')
-+	parser.add_argument('--list_tests_attr', help='If set, list all tests and test '
-+			    'attributes.',
-+			    action='store_true')
- 
- def add_parse_opts(parser: argparse.ArgumentParser) -> None:
- 	parser.add_argument('--raw_output', help='If set don\'t parse output from kernel. '
-@@ -407,8 +459,12 @@ def run_handler(cli_args: argparse.Namespace) -> None:
- 					json=cli_args.json,
- 					timeout=cli_args.timeout,
- 					filter_glob=cli_args.filter_glob,
-+					filter=cli_args.filter,
-+					filter_action=cli_args.filter_action,
- 					kernel_args=cli_args.kernel_args,
--					run_isolated=cli_args.run_isolated)
-+					run_isolated=cli_args.run_isolated,
-+					list_tests=cli_args.list_tests,
-+					list_tests_attr=cli_args.list_tests_attr)
- 	result = run_tests(linux, request)
- 	if result.status != KunitStatus.SUCCESS:
- 		sys.exit(1)
-@@ -450,8 +506,12 @@ def exec_handler(cli_args: argparse.Namespace) -> None:
- 					json=cli_args.json,
- 					timeout=cli_args.timeout,
- 					filter_glob=cli_args.filter_glob,
-+					filter=cli_args.filter,
-+					filter_action=cli_args.filter_action,
- 					kernel_args=cli_args.kernel_args,
--					run_isolated=cli_args.run_isolated)
-+					run_isolated=cli_args.run_isolated,
-+					list_tests=cli_args.list_tests,
-+					list_tests_attr=cli_args.list_tests_attr)
- 	result = exec_tests(linux, exec_request)
- 	stdout.print_with_timestamp((
- 		'Elapsed time: %.3fs\n') % (result.elapsed_time))
 diff --git a/tools/testing/kunit/kunit_kernel.py b/tools/testing/kunit/kunit_kernel.py
-index faf90dcfed32d..86accd53644c1 100644
+index 86accd53644c1..2343f9a77a65a 100644
 --- a/tools/testing/kunit/kunit_kernel.py
 +++ b/tools/testing/kunit/kunit_kernel.py
-@@ -329,11 +329,15 @@ class LinuxSourceTree:
- 			return False
+@@ -330,8 +330,10 @@ class LinuxSourceTree:
  		return self.validate_config(build_dir)
  
--	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', timeout: Optional[int]=None) -> Iterator[str]:
-+	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', filter: str='', filter_action: Optional[str]=None, timeout: Optional[int]=None) -> Iterator[str]:
- 		if not args:
- 			args = []
+ 	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', filter: str='', filter_action: Optional[str]=None, timeout: Optional[int]=None) -> Iterator[str]:
+-		if not args:
+-			args = []
++		# Copy to avoid mutating the caller-supplied list. exec_tests() reuses
++		# the same args across repeated run_kernel() calls (e.g. --run_isolated),
++		# so appending to the original would accumulate stale flags on each call.
++		args = list(args) if args else []
  		if filter_glob:
--			args.append('kunit.filter_glob='+filter_glob)
-+			args.append('kunit.filter_glob=' + filter_glob)
-+		if filter:
-+			args.append('kunit.filter="' + filter + '"')
-+		if filter_action:
-+			args.append('kunit.filter_action=' + filter_action)
- 		args.append('kunit.enable=1')
- 
- 		process = self._ops.start(args, build_dir)
-diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
-index d5abd0567c8e0..ca9921ea328a4 100644
---- a/tools/testing/kunit/kunit_parser.py
-+++ b/tools/testing/kunit/kunit_parser.py
-@@ -221,6 +221,7 @@ KTAP_START = re.compile(r'\s*KTAP version ([0-9]+)$')
- TAP_START = re.compile(r'\s*TAP version ([0-9]+)$')
- KTAP_END = re.compile(r'\s*(List of all partitions:|'
- 	'Kernel panic - not syncing: VFS:|reboot: System halted)')
-+EXECUTOR_ERROR = re.compile(r'\s*kunit executor: (.*)$')
- 
- def extract_tap_lines(kernel_output: Iterable[str]) -> LineStream:
- 	"""Extracts KTAP lines from the kernel output."""
-@@ -251,6 +252,8 @@ def extract_tap_lines(kernel_output: Iterable[str]) -> LineStream:
- 				# remove the prefix, if any.
- 				line = line[prefix_len:]
- 				yield line_num, line
-+			elif EXECUTOR_ERROR.search(line):
-+				yield line_num, line
- 	return LineStream(lines=isolate_ktap_output(kernel_output))
- 
- KTAP_VERSIONS = [1]
-@@ -456,7 +459,7 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
- 	Log of diagnostic lines
- 	"""
- 	log = []  # type: List[str]
--	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START]
-+	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START, TAP_START]
- 	while lines and not any(re.match(lines.peek())
- 			for re in non_diagnostic_lines):
- 		log.append(lines.pop())
-@@ -722,6 +725,11 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 	"""
- 	test = Test()
- 	test.log.extend(log)
-+
-+	# Parse any errors prior to parsing tests
-+	err_log = parse_diagnostic(lines)
-+	test.log.extend(err_log)
-+
- 	if not is_subtest:
- 		# If parsing the main/top-level test, parse KTAP version line and
- 		# test plan
-@@ -783,6 +791,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest:
- 		# Don't override a bad status if this test had one reported.
- 		# Assumption: no subtests means CRASHED is from Test.__init__()
- 		if test.status in (TestStatus.TEST_CRASHED, TestStatus.SUCCESS):
-+			print_log(test.log)
- 			test.status = TestStatus.NO_TESTS
- 			test.add_error('0 tests run!')
- 
+ 			args.append('kunit.filter_glob=' + filter_glob)
+ 		if filter:
 diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
-index 9ba0ff95fad5c..04714f59fced6 100755
+index 04714f59fced6..29063d9ae2851 100755
 --- a/tools/testing/kunit/kunit_tool_test.py
 +++ b/tools/testing/kunit/kunit_tool_test.py
-@@ -612,7 +612,7 @@ class KUnitMainTest(unittest.TestCase):
- 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 0)
- 		self.assertEqual(self.linux_source_mock.run_kernel.call_count, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='', timeout=300)
-+			args=None, build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
+@@ -479,6 +479,32 @@ class LinuxSourceTreeTest(unittest.TestCase):
+ 			with open(kunit_kernel.get_outfile_path(build_dir), 'rt') as outfile:
+ 				self.assertEqual(outfile.read(), 'hi\nbye\n', msg='Missing some output')
  
- 	def test_run_passes_args_pass(self):
-@@ -620,7 +620,7 @@ class KUnitMainTest(unittest.TestCase):
- 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
- 		self.assertEqual(self.linux_source_mock.run_kernel.call_count, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='', timeout=300)
-+			args=None, build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_exec_passes_args_fail(self):
-@@ -644,7 +644,7 @@ class KUnitMainTest(unittest.TestCase):
- 			kunit.main(['run'])
- 		self.assertEqual(e.exception.code, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='', timeout=300)
-+			args=None, build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains(' 0 tests run!'))
- 
- 	def test_exec_raw_output(self):
-@@ -685,13 +685,13 @@ class KUnitMainTest(unittest.TestCase):
- 		self.linux_source_mock.run_kernel = mock.Mock(return_value=[])
- 		kunit.main(['run', '--raw_output', 'filter_glob'])
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='filter_glob', timeout=300)
-+			args=None, build_dir='.kunit', filter_glob='filter_glob', filter='', filter_action=None, timeout=300)
- 
- 	def test_exec_timeout(self):
- 		timeout = 3453
- 		kunit.main(['exec', '--timeout', str(timeout)])
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
-+			args=None, build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=timeout)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_run_timeout(self):
-@@ -699,7 +699,7 @@ class KUnitMainTest(unittest.TestCase):
- 		kunit.main(['run', '--timeout', str(timeout)])
- 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir='.kunit', filter_glob='', timeout=timeout)
-+			args=None, build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=timeout)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_run_builddir(self):
-@@ -707,7 +707,7 @@ class KUnitMainTest(unittest.TestCase):
- 		kunit.main(['run', '--build_dir=.kunit'])
- 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir=build_dir, filter_glob='', timeout=300)
-+			args=None, build_dir=build_dir, filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_config_builddir(self):
-@@ -725,7 +725,7 @@ class KUnitMainTest(unittest.TestCase):
- 		build_dir = '.kunit'
- 		kunit.main(['exec', '--build_dir', build_dir])
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=None, build_dir=build_dir, filter_glob='', timeout=300)
-+			args=None, build_dir=build_dir, filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_run_kunitconfig(self):
-@@ -801,7 +801,7 @@ class KUnitMainTest(unittest.TestCase):
- 		kunit.main(['run', '--kernel_args=a=1', '--kernel_args=b=2'])
- 		self.assertEqual(self.linux_source_mock.build_reconfig.call_count, 1)
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--		      args=['a=1','b=2'], build_dir='.kunit', filter_glob='', timeout=300)
-+		      args=['a=1','b=2'], build_dir='.kunit', filter_glob='', filter='', filter_action=None, timeout=300)
- 		self.print_mock.assert_any_call(StrContains('Testing complete.'))
- 
- 	def test_list_tests(self):
-@@ -809,13 +809,11 @@ class KUnitMainTest(unittest.TestCase):
- 		self.linux_source_mock.run_kernel.return_value = ['TAP version 14', 'init: random output'] + want
- 
- 		got = kunit._list_tests(self.linux_source_mock,
--				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*', None, 'suite'))
--
-+				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*', '', None, None, 'suite', False, False))
- 		self.assertEqual(got, want)
- 		# Should respect the user's filter glob when listing tests.
- 		self.linux_source_mock.run_kernel.assert_called_once_with(
--			args=['kunit.action=list'], build_dir='.kunit', filter_glob='suite*', timeout=300)
--
-+			args=['kunit.action=list'], build_dir='.kunit', filter_glob='suite*', filter='', filter_action=None, timeout=300)
- 
- 	@mock.patch.object(kunit, '_list_tests')
- 	def test_run_isolated_by_suite(self, mock_tests):
-@@ -824,10 +822,10 @@ class KUnitMainTest(unittest.TestCase):
- 
- 		# Should respect the user's filter glob when listing tests.
- 		mock_tests.assert_called_once_with(mock.ANY,
--				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*.test*', None, 'suite'))
-+				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*.test*', '', None, None, 'suite', False, False))
- 		self.linux_source_mock.run_kernel.assert_has_calls([
--			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test*', timeout=300),
--			mock.call(args=None, build_dir='.kunit', filter_glob='suite2.test*', timeout=300),
-+			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test*', filter='', filter_action=None, timeout=300),
-+			mock.call(args=None, build_dir='.kunit', filter_glob='suite2.test*', filter='', filter_action=None, timeout=300),
- 		])
- 
- 	@mock.patch.object(kunit, '_list_tests')
-@@ -837,13 +835,12 @@ class KUnitMainTest(unittest.TestCase):
- 
- 		# Should respect the user's filter glob when listing tests.
- 		mock_tests.assert_called_once_with(mock.ANY,
--				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*', None, 'test'))
-+				     kunit.KunitExecRequest(None, None, '.kunit', 300, 'suite*', '', None, None, 'test', False, False))
- 		self.linux_source_mock.run_kernel.assert_has_calls([
--			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test1', timeout=300),
--			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test2', timeout=300),
--			mock.call(args=None, build_dir='.kunit', filter_glob='suite2.test1', timeout=300),
-+			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test1', filter='', filter_action=None, timeout=300),
-+			mock.call(args=None, build_dir='.kunit', filter_glob='suite.test2', filter='', filter_action=None, timeout=300),
-+			mock.call(args=None, build_dir='.kunit', filter_glob='suite2.test1', filter='', filter_action=None, timeout=300),
- 		])
- 
--
- if __name__ == '__main__':
- 	unittest.main()
++	def test_run_kernel_args_not_mutated(self):
++		"""Verify run_kernel() copies args so callers can reuse them."""
++		start_calls = []
++
++		def fake_start(start_args, unused_build_dir):
++			start_calls.append(list(start_args))
++			return subprocess.Popen(['printf', 'KTAP version 1\n'],
++						text=True, stdout=subprocess.PIPE)
++
++		with tempfile.TemporaryDirectory('') as build_dir:
++			tree = kunit_kernel.LinuxSourceTree(build_dir,
++					kunitconfig_paths=[os.devnull])
++			with mock.patch.object(tree._ops, 'start', side_effect=fake_start), \
++			     mock.patch.object(kunit_kernel.subprocess, 'call'):
++				kernel_args = ['mem=1G']
++				for _ in tree.run_kernel(args=kernel_args, build_dir=build_dir,
++							 filter_glob='suite.test1'):
++					pass
++				for _ in tree.run_kernel(args=kernel_args, build_dir=build_dir,
++							 filter_glob='suite.test2'):
++					pass
++				self.assertEqual(kernel_args, ['mem=1G'],
++					'run_kernel() should not modify caller args')
++				self.assertIn('kunit.filter_glob=suite.test1', start_calls[0])
++				self.assertIn('kunit.filter_glob=suite.test2', start_calls[1])
++
+ 	def test_build_reconfig_no_config(self):
+ 		with tempfile.TemporaryDirectory('') as build_dir:
+ 			with open(kunit_kernel.get_kunitconfig_path(build_dir), 'w') as f:
 -- 
 2.51.0
 
