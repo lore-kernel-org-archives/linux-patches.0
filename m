@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DD8283FEA;
-	Mon, 23 Mar 2026 15:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6423B62C;
+	Mon, 23 Mar 2026 15:08:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278481; cv=none; b=uMcaYGqfa4je1yLm3wih14bWbE4m0xJxQ1h5urmBySy2Tzv8hyqHfC7mFS1XKCV+f3MQldZRQfFFvTLWCV9jvdoFsuLEU76FBuHpjwvkCf2XhgtUpSwda4N65SmY9X36iH9Un5nk3Z+YMLfEcQ1UG99A6jD4EEMxCJbDw3pr1pI=
+	t=1774278485; cv=none; b=t2sPDf+r0Knk6SsfSfTSbhVVb/yptqvGj7Hvr5xGrvALs9fO98Da2Mbh0ROzA4C7rxrpZUoCkRBKYc8C8sPgCEQQFAZiaNieKp0H/KVCaxqUM2OVUBiJo7fUz02dG8R2zswolKLx0MTKkfuoV6A2C9EXchWtnMqhIowPrOco7lM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278481; c=relaxed/simple;
-	bh=9PVVOY5NQk27j1jQXSYVWWeoLciYSJnLZGYoklOM0Io=;
+	s=arc-20240116; t=1774278485; c=relaxed/simple;
+	bh=5Z0nI7Yeimtaocc7Omeafw9mN1FI6wqebgYh7XPfgB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t/GkFg5UipRqwB16IdBLNEfIfdohxa8SGO92KeBsRP4cOznsez5UqJTX+QdeMzgKMVga7AOXqhK9b3vNHaQYWIKqUuytGQ75jCdIQ/g8nnFNdNwM+E31J53VNd6WmGdd5WRIl79ymWGoepSBr9m+ZwcuCroWJ1HyvdQ85lcL0VA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gz/O/7gr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WdogJiRWGQdqwcMjYIWIkoj9GMYR1wSG+1aw5hn3vjnBQ7esR45tds30KpCm5MHkpwvFxVObUOeHmBZSU1rRem1XBjVo2iPBrmyKnEUmXqIGq3kzfMWUVsW1bEkKenhr8YnXJKS5y8g1lVdK2eHBpZtd9C/Qi11t8p5Z18doPVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QxzTfKDw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gz/O/7gr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F51C4CEF7;
-	Mon, 23 Mar 2026 15:08:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QxzTfKDw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374B2C4CEF7;
+	Mon, 23 Mar 2026 15:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278481;
-	bh=9PVVOY5NQk27j1jQXSYVWWeoLciYSJnLZGYoklOM0Io=;
+	s=korg; t=1774278484;
+	bh=5Z0nI7Yeimtaocc7Omeafw9mN1FI6wqebgYh7XPfgB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gz/O/7gry+rLOyL6UzililPn2h7NSWfTfqK9QOgj1XMm4kVLOnvzAjVQRApd9gDxq
-	 Tw0azePP+l2gaExhiToXLc5BQ3n1qZ96f7rY5Ot/1+bvyeKyhtSj25ZYT9z15tk2Gi
-	 17VEdKI/u/sHUmVLsEqDMasidJq2cnLZR46deju0=
+	b=QxzTfKDw126TSdSixXzBs3OCGhw8O0ymDV1VJmCcyvyrdlGLxd5/diAXMt/seT39A
+	 npGQjsnhc4QVvc5n7f1ZVomTxcvwVP0P4lHb/nS9xeK0RYMFC3WnEcG7W6W4h+VM0l
+	 I35uK6LNwfveVFzkPy5ZrAB8gSbA/6MxlN+Qb2lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Huiwen He <hehuiwen@kylinos.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 319/567] tracing: Fix syscall events activation by ensuring refcount hits zero
-Date: Mon, 23 Mar 2026 14:43:59 +0100
-Message-ID: <20260323134541.725958050@linuxfoundation.org>
+	Christian Schmidbauer <github@grische.xyz>,
+	Sven Eckelmann <sven@narfation.org>,
+	=?UTF-8?q?S=C3=B6ren=20Skaarup?= <freifunk_nordm4nn@gmx.de>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.6 320/567] batman-adv: Avoid double-rtnl_lock ELP metric worker
+Date: Mon, 23 Mar 2026 14:44:00 +0100
+Message-ID: <20260323134541.749990227@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,125 +46,110 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Huiwen He <hehuiwen@kylinos.cn>
+From: Sven Eckelmann <sven@narfation.org>
 
-commit 0a663b764dbdf135a126284f454c9f01f95a87d4 upstream.
+commit cfc83a3c71517b59c1047db57da31e26a9dc2f33 upstream.
 
-When multiple syscall events are specified in the kernel command line
-(e.g., trace_event=syscalls:sys_enter_openat,syscalls:sys_enter_close),
-they are often not captured after boot, even though they appear enabled
-in the tracing/set_event file.
+batadv_v_elp_get_throughput() might be called when the RTNL lock is already
+held. This could be problematic when the work queue item is cancelled via
+cancel_delayed_work_sync() in batadv_v_elp_iface_disable(). In this case,
+an rtnl_lock() would cause a deadlock.
 
-The issue stems from how syscall events are initialized. Syscall
-tracepoints require the global reference count (sys_tracepoint_refcount)
-to transition from 0 to 1 to trigger the registration of the syscall
-work (TIF_SYSCALL_TRACEPOINT) for tasks, including the init process (pid 1).
+To avoid this, rtnl_trylock() was used in this function to skip the
+retrieval of the ethtool information in case the RTNL lock was already
+held.
 
-The current implementation of early_enable_events() with disable_first=true
-used an interleaved sequence of "Disable A -> Enable A -> Disable B -> Enable B".
-If multiple syscalls are enabled, the refcount never drops to zero,
-preventing the 0->1 transition that triggers actual registration.
-
-Fix this by splitting early_enable_events() into two distinct phases:
-1. Disable all events specified in the buffer.
-2. Enable all events specified in the buffer.
-
-This ensures the refcount hits zero before re-enabling, allowing syscall
-events to be properly activated during early boot.
-
-The code is also refactored to use a helper function to avoid logic
-duplication between the disable and enable phases.
+But for cfg80211 interfaces, batadv_get_real_netdev() was called - which
+also uses rtnl_lock(). The approach for __ethtool_get_link_ksettings() must
+also be used instead and the lockless version __batadv_get_real_netdev()
+has to be called.
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260224023544.1250787-1-hehuiwen@kylinos.cn
-Fixes: ce1039bd3a89 ("tracing: Fix enabling of syscall events on the command line")
-Signed-off-by: Huiwen He <hehuiwen@kylinos.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8c8ecc98f5c6 ("batman-adv: Drop unmanaged ELP metric worker")
+Reported-by: Christian Schmidbauer <github@grische.xyz>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Tested-by: Sören Skaarup <freifunk_nordm4nn@gmx.de>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events.c |   52 +++++++++++++++++++++++++++++++-------------
- 1 file changed, 37 insertions(+), 15 deletions(-)
+ net/batman-adv/bat_v_elp.c      |   10 +++++++++-
+ net/batman-adv/hard-interface.c |    8 ++++----
+ net/batman-adv/hard-interface.h |    1 +
+ 3 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace_events.c
-+++ b/kernel/trace/trace_events.c
-@@ -4140,26 +4140,22 @@ static __init int event_trace_memsetup(v
- 	return 0;
+--- a/net/batman-adv/bat_v_elp.c
++++ b/net/batman-adv/bat_v_elp.c
+@@ -112,7 +112,15 @@ static bool batadv_v_elp_get_throughput(
+ 			/* unsupported WiFi driver version */
+ 			goto default_throughput;
+ 
+-		real_netdev = batadv_get_real_netdev(hard_iface->net_dev);
++		/* only use rtnl_trylock because the elp worker will be cancelled while
++		 * the rntl_lock is held. the cancel_delayed_work_sync() would otherwise
++		 * wait forever when the elp work_item was started and it is then also
++		 * trying to rtnl_lock
++		 */
++		if (!rtnl_trylock())
++			return false;
++		real_netdev = __batadv_get_real_netdev(hard_iface->net_dev);
++		rtnl_unlock();
+ 		if (!real_netdev)
+ 			goto default_throughput;
+ 
+--- a/net/batman-adv/hard-interface.c
++++ b/net/batman-adv/hard-interface.c
+@@ -203,7 +203,7 @@ static bool batadv_is_valid_iface(const
  }
  
--__init void
--early_enable_events(struct trace_array *tr, char *buf, bool disable_first)
-+/*
-+ * Helper function to enable or disable a comma-separated list of events
-+ * from the bootup buffer.
-+ */
-+static __init void __early_set_events(struct trace_array *tr, char *buf, bool enable)
+ /**
+- * batadv_get_real_netdevice() - check if the given netdev struct is a virtual
++ * __batadv_get_real_netdev() - check if the given netdev struct is a virtual
+  *  interface on top of another 'real' interface
+  * @netdev: the device to check
+  *
+@@ -213,7 +213,7 @@ static bool batadv_is_valid_iface(const
+  * Return: the 'real' net device or the original net device and NULL in case
+  *  of an error.
+  */
+-static struct net_device *batadv_get_real_netdevice(struct net_device *netdev)
++struct net_device *__batadv_get_real_netdev(struct net_device *netdev)
  {
- 	char *token;
--	int ret;
--
--	while (true) {
--		token = strsep(&buf, ",");
--
--		if (!token)
--			break;
+ 	struct batadv_hard_iface *hard_iface = NULL;
+ 	struct net_device *real_netdev = NULL;
+@@ -266,7 +266,7 @@ struct net_device *batadv_get_real_netde
+ 	struct net_device *real_netdev;
  
-+	while ((token = strsep(&buf, ","))) {
- 		if (*token) {
--			/* Restarting syscalls requires that we stop them first */
--			if (disable_first)
-+			if (enable) {
-+				if (ftrace_set_clr_event(tr, token, 1))
-+					pr_warn("Failed to enable trace event: %s\n", token);
-+			} else {
- 				ftrace_set_clr_event(tr, token, 0);
--
--			ret = ftrace_set_clr_event(tr, token, 1);
--			if (ret)
--				pr_warn("Failed to enable trace event: %s\n", token);
-+			}
- 		}
+ 	rtnl_lock();
+-	real_netdev = batadv_get_real_netdevice(net_device);
++	real_netdev = __batadv_get_real_netdev(net_device);
+ 	rtnl_unlock();
  
- 		/* Put back the comma to allow this to be called again */
-@@ -4168,6 +4164,32 @@ early_enable_events(struct trace_array *
- 	}
- }
+ 	return real_netdev;
+@@ -335,7 +335,7 @@ static u32 batadv_wifi_flags_evaluate(st
+ 	if (batadv_is_cfg80211_netdev(net_device))
+ 		wifi_flags |= BATADV_HARDIF_WIFI_CFG80211_DIRECT;
  
-+/**
-+ * early_enable_events - enable events from the bootup buffer
-+ * @tr: The trace array to enable the events in
-+ * @buf: The buffer containing the comma separated list of events
-+ * @disable_first: If true, disable all events in @buf before enabling them
-+ *
-+ * This function enables events from the bootup buffer. If @disable_first
-+ * is true, it will first disable all events in the buffer before enabling
-+ * them.
-+ *
-+ * For syscall events, which rely on a global refcount to register the
-+ * SYSCALL_WORK_SYSCALL_TRACEPOINT flag (especially for pid 1), we must
-+ * ensure the refcount hits zero before re-enabling them. A simple
-+ * "disable then enable" per-event is not enough if multiple syscalls are
-+ * used, as the refcount will stay above zero. Thus, we need a two-phase
-+ * approach: disable all, then enable all.
-+ */
-+__init void
-+early_enable_events(struct trace_array *tr, char *buf, bool disable_first)
-+{
-+	if (disable_first)
-+		__early_set_events(tr, buf, false);
-+
-+	__early_set_events(tr, buf, true);
-+}
-+
- static __init int event_trace_enable(void)
- {
- 	struct trace_array *tr = top_trace_array();
+-	real_netdev = batadv_get_real_netdevice(net_device);
++	real_netdev = __batadv_get_real_netdev(net_device);
+ 	if (!real_netdev)
+ 		return wifi_flags;
+ 
+--- a/net/batman-adv/hard-interface.h
++++ b/net/batman-adv/hard-interface.h
+@@ -68,6 +68,7 @@ enum batadv_hard_if_bcast {
+ 
+ extern struct notifier_block batadv_hard_if_notifier;
+ 
++struct net_device *__batadv_get_real_netdev(struct net_device *net_device);
+ struct net_device *batadv_get_real_netdev(struct net_device *net_device);
+ bool batadv_is_cfg80211_hardif(struct batadv_hard_iface *hard_iface);
+ bool batadv_is_wifi_hardif(struct batadv_hard_iface *hard_iface);
 
 
