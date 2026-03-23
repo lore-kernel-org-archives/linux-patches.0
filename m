@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A9C2517AF;
-	Mon, 23 Mar 2026 15:07:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA604250BEC;
+	Mon, 23 Mar 2026 15:07:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278465; cv=none; b=Z87jcAlgzv0nJTuQ1r/M+M8q+of1+pymIOtC0HjIpl5LLKpAIhRu+LJn0BU3NseQw55guxrRX5wWoI8nbDuuu+TFg1rp8JlcUfczaw1uRCrbCKAqMe2n/WChNp5yNry+VNT/LxF07mq/fGzDxoTNmey1f7knt9+WJ5kDZ9lyhKE=
+	t=1774278469; cv=none; b=trQQSxMoOsRlf3PU0lpzvg3a0yC75UASoCOR/TNR/gGUVA4GsH+p74QvYkI5FG6bDZcBiFVyL4LUy0n3stbV8RQ5ZxwN5rahrf7KwiaFGWBl0xAZzgs/P7HHlP3iURqua6LHp/K4cVphvixU/WA3ayWi1MwsX/icmogaUcAzMEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278465; c=relaxed/simple;
-	bh=nkm2w9LVeM+tTQOVFpsWPtNwhrnW1Bjt9ocW/WcVOxM=;
+	s=arc-20240116; t=1774278469; c=relaxed/simple;
+	bh=YZalz3Hy4cM00fod2YrVwYtIQ7zacxMHVPuvK8IPX4Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DPyeAk4e4PfbBm/cGHrb859mMTc0522Lf63yQs1vZpli6ZwAWrmWI7PprpgdrwArgvkuovfAKwEtWjr6e89q8NQN/2i+wXs2aW/o5TmHqwq+hlWzEy4GcPOIV9DIYKsWFDNLIu4JL/M6N6GHwaZtNNwn5dhcENxPiGdMgxhxhJ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p4tzN4xB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UewA6uKWgtIWPZr7ZYqNpPBe2iTP6iGBy7pnsJ5y1RoYBtAdJzDnyfLgHYAX68eUgU6wm+wMLjfHndsLCTcNWmxMtj2NC4bkfSiGRYuxyB7OsCxuH4jDaf9iPOir5pec+wkNtKc3noLsPqE+O0TZ850ujY81LkncpWbPJP1BCFg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gOK/3a6e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p4tzN4xB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB3FC4CEF7;
-	Mon, 23 Mar 2026 15:07:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gOK/3a6e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233BEC4CEF7;
+	Mon, 23 Mar 2026 15:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278465;
-	bh=nkm2w9LVeM+tTQOVFpsWPtNwhrnW1Bjt9ocW/WcVOxM=;
+	s=korg; t=1774278468;
+	bh=YZalz3Hy4cM00fod2YrVwYtIQ7zacxMHVPuvK8IPX4Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4tzN4xBY8ExQdyrJeGhlEgtPBUAflSzcR0Ze2aXxP9DZTmNktx+PPgM0dFoV7mpo
-	 oVGfYW67qTfCztVQJtvMTTsuUaEZJ6C+/myki/mK4AIZLDP7dhaUmTIXnooggDPGqp
-	 TSBKPJjyAazZo9xkjBoLqMC20Je99ZT4z9enBpto=
+	b=gOK/3a6eFd/Bt8taKXO6NaymR/9CQH9maWeJJjO001N3Weg/8+z5Ezlc7GIXidRwQ
+	 4IAOtB1gRDB7dvp+WtbfMRTJpt2BP4fsjcLsGTfk5DTmUKHe8FUVfLNPQFVOoFMMJB
+	 /kE643+X1204pJlnCJGPmoRQpTQJRyp23ybAk82k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.6 315/567] staging: rtl8723bs: fix potential out-of-bounds read in rtw_restruct_wmm_ie
-Date: Mon, 23 Mar 2026 14:43:55 +0100
-Message-ID: <20260323134541.621160852@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.6 280/567] USB: usbcore: Introduce usb_bulk_msg_killable()
+Date: Mon, 23 Mar 2026 14:43:20 +0100
+Message-ID: <20260323134540.757605341@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,39 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit a75281626fc8fa6dc6c9cc314ee423e8bc45203b upstream.
+commit 416909962e7cdf29fd01ac523c953f37708df93d upstream.
 
-The current code checks 'i + 5 < in_len' at the end of the if statement.
-However, it accesses 'in_ie[i + 5]' before that check, which can lead
-to an out-of-bounds read. Move the length check to the beginning of the
-conditional to ensure the index is within bounds before accessing the
-array.
+The synchronous message API in usbcore (usb_control_msg(),
+usb_bulk_msg(), and so on) uses uninterruptible waits.  However,
+drivers may call these routines in the context of a user thread, which
+means it ought to be possible to at least kill them.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20260224132647.11642-2-luka.gejak@linux.dev
+For this reason, introduce a new usb_bulk_msg_killable() function
+which behaves the same as usb_bulk_msg() except for using
+wait_for_completion_killable_timeout() instead of
+wait_for_completion_timeout().  The same can be done later for
+usb_control_msg() later on, if it turns out to be needed.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Suggested-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/linux-usb/3acfe838-6334-4f6d-be7c-4bb01704b33d@rowland.harvard.edu/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/248628b4-cc83-4e81-a620-3ce4e0376d41@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/core/message.c |   79 +++++++++++++++++++++++++++++++++++++++------
+ include/linux/usb.h        |    5 +-
+ 2 files changed, 72 insertions(+), 12 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -2000,7 +2000,10 @@ int rtw_restruct_wmm_ie(struct adapter *
- 	while (i < in_len) {
- 		ielength = initial_out_len;
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -42,16 +42,17 @@ static void usb_api_blocking_completion(
  
--		if (in_ie[i] == 0xDD && in_ie[i+2] == 0x00 && in_ie[i+3] == 0x50  && in_ie[i+4] == 0xF2 && in_ie[i+5] == 0x02 && i+5 < in_len) { /* WMM element ID and OUI */
-+		if (i + 5 < in_len &&
-+		    in_ie[i] == 0xDD && in_ie[i + 2] == 0x00 &&
-+		    in_ie[i + 3] == 0x50 && in_ie[i + 4] == 0xF2 &&
-+		    in_ie[i + 5] == 0x02) {
- 			for (j = i; j < i + 9; j++) {
- 				out_ie[ielength] = in_ie[j];
- 				ielength++;
+ 
+ /*
+- * Starts urb and waits for completion or timeout. Note that this call
+- * is NOT interruptible. Many device driver i/o requests should be
+- * interruptible and therefore these drivers should implement their
+- * own interruptible routines.
++ * Starts urb and waits for completion or timeout.
++ * Whether or not the wait is killable depends on the flag passed in.
++ * For example, compare usb_bulk_msg() and usb_bulk_msg_killable().
+  */
+-static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length)
++static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length,
++		bool killable)
+ {
+ 	struct api_context ctx;
+ 	unsigned long expire;
+ 	int retval;
++	long rc;
+ 
+ 	init_completion(&ctx.done);
+ 	urb->context = &ctx;
+@@ -61,12 +62,21 @@ static int usb_start_wait_urb(struct urb
+ 		goto out;
+ 
+ 	expire = timeout ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
+-	if (!wait_for_completion_timeout(&ctx.done, expire)) {
++	if (killable)
++		rc = wait_for_completion_killable_timeout(&ctx.done, expire);
++	else
++		rc = wait_for_completion_timeout(&ctx.done, expire);
++	if (rc <= 0) {
+ 		usb_kill_urb(urb);
+-		retval = (ctx.status == -ENOENT ? -ETIMEDOUT : ctx.status);
++		if (ctx.status != -ENOENT)
++			retval = ctx.status;
++		else if (rc == 0)
++			retval = -ETIMEDOUT;
++		else
++			retval = rc;
+ 
+ 		dev_dbg(&urb->dev->dev,
+-			"%s timed out on ep%d%s len=%u/%u\n",
++			"%s timed out or killed on ep%d%s len=%u/%u\n",
+ 			current->comm,
+ 			usb_endpoint_num(&urb->ep->desc),
+ 			usb_urb_dir_in(urb) ? "in" : "out",
+@@ -100,7 +110,7 @@ static int usb_internal_control_msg(stru
+ 	usb_fill_control_urb(urb, usb_dev, pipe, (unsigned char *)cmd, data,
+ 			     len, usb_api_blocking_completion, NULL);
+ 
+-	retv = usb_start_wait_urb(urb, timeout, &length);
++	retv = usb_start_wait_urb(urb, timeout, &length, false);
+ 	if (retv < 0)
+ 		return retv;
+ 	else
+@@ -385,10 +395,59 @@ int usb_bulk_msg(struct usb_device *usb_
+ 		usb_fill_bulk_urb(urb, usb_dev, pipe, data, len,
+ 				usb_api_blocking_completion, NULL);
+ 
+-	return usb_start_wait_urb(urb, timeout, actual_length);
++	return usb_start_wait_urb(urb, timeout, actual_length, false);
+ }
+ EXPORT_SYMBOL_GPL(usb_bulk_msg);
+ 
++/**
++ * usb_bulk_msg_killable - Builds a bulk urb, sends it off and waits for completion in a killable state
++ * @usb_dev: pointer to the usb device to send the message to
++ * @pipe: endpoint "pipe" to send the message to
++ * @data: pointer to the data to send
++ * @len: length in bytes of the data to send
++ * @actual_length: pointer to a location to put the actual length transferred
++ *	in bytes
++ * @timeout: time in msecs to wait for the message to complete before
++ *	timing out (if 0 the wait is forever)
++ *
++ * Context: task context, might sleep.
++ *
++ * This function is just like usb_blk_msg() except that it waits in a
++ * killable state.
++ *
++ * Return:
++ * If successful, 0. Otherwise a negative error number. The number of actual
++ * bytes transferred will be stored in the @actual_length parameter.
++ *
++ */
++int usb_bulk_msg_killable(struct usb_device *usb_dev, unsigned int pipe,
++		 void *data, int len, int *actual_length, int timeout)
++{
++	struct urb *urb;
++	struct usb_host_endpoint *ep;
++
++	ep = usb_pipe_endpoint(usb_dev, pipe);
++	if (!ep || len < 0)
++		return -EINVAL;
++
++	urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!urb)
++		return -ENOMEM;
++
++	if ((ep->desc.bmAttributes & USB_ENDPOINT_XFERTYPE_MASK) ==
++			USB_ENDPOINT_XFER_INT) {
++		pipe = (pipe & ~(3 << 30)) | (PIPE_INTERRUPT << 30);
++		usb_fill_int_urb(urb, usb_dev, pipe, data, len,
++				usb_api_blocking_completion, NULL,
++				ep->desc.bInterval);
++	} else
++		usb_fill_bulk_urb(urb, usb_dev, pipe, data, len,
++				usb_api_blocking_completion, NULL);
++
++	return usb_start_wait_urb(urb, timeout, actual_length, true);
++}
++EXPORT_SYMBOL_GPL(usb_bulk_msg_killable);
++
+ /*-------------------------------------------------------------------*/
+ 
+ static void sg_clean(struct usb_sg_request *io)
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1849,8 +1849,9 @@ extern int usb_control_msg(struct usb_de
+ extern int usb_interrupt_msg(struct usb_device *usb_dev, unsigned int pipe,
+ 	void *data, int len, int *actual_length, int timeout);
+ extern int usb_bulk_msg(struct usb_device *usb_dev, unsigned int pipe,
+-	void *data, int len, int *actual_length,
+-	int timeout);
++	void *data, int len, int *actual_length, int timeout);
++extern int usb_bulk_msg_killable(struct usb_device *usb_dev, unsigned int pipe,
++	void *data, int len, int *actual_length, int timeout);
+ 
+ /* wrappers around usb_control_msg() for the most common standard requests */
+ int usb_control_msg_send(struct usb_device *dev, __u8 endpoint, __u8 request,
 
 
