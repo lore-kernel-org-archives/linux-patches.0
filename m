@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983903AE1A6;
-	Mon, 23 Mar 2026 14:14:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F5B3AEF24;
+	Mon, 23 Mar 2026 14:14:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275278; cv=none; b=f8Gug9pvwhesWmgL/d15qjkK9/eMupbbXNIgPR3GVi9mz9R8/GjldH7wY/EzdZYzyxS/IshSveJ5yWg/3INGRl3tAhoUQdTvCFOOoe61ntPIIjPO/n9qz7SN6izPa5ZBVUmoGsAZjuIaEmS0wUqhfJvb8gV/mdbAmWC14K/Dv7U=
+	t=1774275281; cv=none; b=lrCEZnu8yVb1Q+iUR/yvXCqlT77HFL1b7nx3hAIKnSzvXdNqVCs+JiG1NziNs6BBhgY1MsSPIWS1uFNyV6z2BRX+Dvj9EdAVzYvEwlxaDdXcfMB76Iv4LzoDf3OXIKuPPb1OozjgALNUzkIlxan5M3V/4aHUbaSiEvnyQ9btY9g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275278; c=relaxed/simple;
-	bh=+c7DR6ioV2QE/cMTTN6c42X453GKhNDPOxF1/OtLops=;
+	s=arc-20240116; t=1774275281; c=relaxed/simple;
+	bh=4h6PpsJvPBKeBsMUBMIIBIUJL/jj2rdlRIxnjTgyVlM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reZasxhhjLxBBqbV9MXKeg5Qk273oqUL2od1VHLGgAKkCslZaNyLx7mNrxfv2Z5EdExRPckLjNFo+FmQ2eR/NjaXaxjFefUeyltLcwajYMAR7pw4bsXBkn555+lA3SF0B0mi9RE2tOhrB1yv4xcHrUNBlvPDRknOQLPr8RGRVjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k16mfJjX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hMYQtCYKqU5mmZj6cEwxo7UMUCfdBMpvRJvkSdUPaYfihs1BwPu+wo7onieFE3RzQ3/kS+RnwcVKvLKducHSvVM6kqKTyp+CVoZTgvzSgBAJxamW+C5voHuiG0MteVuFgy60b9KbyfzL+IKfAag8JnHMpEIdITVK5/BQYTUvFY8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KzB7L6If; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k16mfJjX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A227C4CEF7;
-	Mon, 23 Mar 2026 14:14:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KzB7L6If"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DE2C4CEF7;
+	Mon, 23 Mar 2026 14:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275278;
-	bh=+c7DR6ioV2QE/cMTTN6c42X453GKhNDPOxF1/OtLops=;
+	s=korg; t=1774275281;
+	bh=4h6PpsJvPBKeBsMUBMIIBIUJL/jj2rdlRIxnjTgyVlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k16mfJjXlcyy4BCVXO+IuHTjJd1HLahVYgWSipMgUdrlQJtlw6KiLA+hIFMCxBPP8
-	 85tdkbkuKeHy69Izj7dPCKx0WqSDMs93xF6Azyz0BjuFlnm3DJZcKdCeVeT1YCepnj
-	 cu9pfze9ngdTBBdypAHEJLYRtJC3DljAmJTf6dyE=
+	b=KzB7L6IffSUMQjouAugH7NX39L4p2WiJk1EXdmeMu+eFufB5bkR0BO9Lvo1Kz+/Ih
+	 fz6libYbktmaYt2NuMGIDlzK1L26MnHRT1POHwpulbCemAhff4ZpsRFMmGZjr0pcY2
+	 zI2vsElvLhTe1UexsQgNbRkpGGtKSO0SIV/UmAfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 038/460] net/mlx5: Fix crash when moving to switchdev mode
-Date: Mon, 23 Mar 2026 14:40:34 +0100
-Message-ID: <20260323134527.643824277@linuxfoundation.org>
+Subject: [PATCH 6.12 039/460] net/mlx5e: Fix DMA FIFO desync on error CQE SQ recovery
+Date: Mon, 23 Mar 2026 14:40:35 +0100
+Message-ID: <20260323134527.668300505@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,146 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Patrisious Haddad <phaddad@nvidia.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 24b2795f9683e092dc22a68f487e7aaaf2ddafea ]
+[ Upstream commit 1633111d69053512d099658d4a05fc736fab36b0 ]
 
-When moving to switchdev mode when the device doesn't support IPsec,
-we try to clean up the IPsec resources anyway which causes the crash
-below, fix that by correctly checking for IPsec support before trying
-to clean up its resources.
+In case of a TX error CQE, a recovery flow is triggered,
+mlx5e_reset_txqsq_cc_pc() resets dma_fifo_cc to 0 but not dma_fifo_pc,
+desyncing the DMA FIFO producer and consumer.
 
-[27642.515799] WARNING: arch/x86/mm/fault.c:1276 at
-do_user_addr_fault+0x18a/0x680, CPU#4: devlink/6490
-[27642.517159] Modules linked in: xt_conntrack xt_MASQUERADE
-ip6table_nat ip6table_filter ip6_tables iptable_nat nf_nat xt_addrtype
-rpcsec_gss_krb5 auth_rpcgss oid_registry overlay mlx5_fwctl nfnetlink
-zram zsmalloc mlx5_ib fuse rpcrdma rdma_ucm ib_uverbs ib_iser libiscsi
-scsi_transport_iscsi ib_umad rdma_cm ib_ipoib iw_cm ib_cm mlx5_core
-ib_core
-[27642.521358] CPU: 4 UID: 0 PID: 6490 Comm: devlink Not tainted
-6.19.0-rc5_for_upstream_min_debug_2026_01_14_16_47 #1 NONE
-[27642.522923] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS
-rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-[27642.524528] RIP: 0010:do_user_addr_fault+0x18a/0x680
-[27642.525362] Code: ff 0f 84 75 03 00 00 48 89 ee 4c 89 e7 e8 5e b9 22
-00 49 89 c0 48 85 c0 0f 84 a8 02 00 00 f7 c3 60 80 00 00 74 22 31 c9 eb
-   ae <0f> 0b 48 83 c4 10 48 89 ea 48 89 de 4c 89 f7 5b 5d 41 5c 41 5d
-41
-[27642.528166] RSP: 0018:ffff88810770f6b8 EFLAGS: 00010046
-[27642.529038] RAX: 0000000000000000 RBX: 0000000000000002 RCX:
-ffff88810b980f00
-[27642.530158] RDX: 00000000000000a0 RSI: 0000000000000002 RDI:
-ffff88810770f728
-[27642.531270] RBP: 00000000000000a0 R08: 0000000000000000 R09:
-0000000000000000
-[27642.532383] R10: 0000000000000000 R11: 0000000000000000 R12:
-ffff888103f3c4c0
-[27642.533499] R13: 0000000000000000 R14: ffff88810770f728 R15:
-0000000000000000
-[27642.534614] FS:  00007f197c741740(0000) GS:ffff88856a94c000(0000)
-knlGS:0000000000000000
-[27642.535915] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[27642.536858] CR2: 00000000000000a0 CR3: 000000011334c003 CR4:
-0000000000172eb0
-[27642.537982] Call Trace:
-[27642.538466]  <TASK>
-[27642.538907]  exc_page_fault+0x76/0x140
-[27642.539583]  asm_exc_page_fault+0x22/0x30
-[27642.540282] RIP: 0010:_raw_spin_lock_irqsave+0x10/0x30
-[27642.541134] Code: 07 85 c0 75 11 ba ff 00 00 00 f0 0f b1 17 75 06 b8
-01 00 00 00 c3 31 c0 c3 90 0f 1f 44 00 00 53 9c 5b fa 31 c0 ba 01 00 00
-   00 <f0> 0f b1 17 75 05 48 89 d8 5b c3 89 c6 e8 7e 02 00 00 48 89 d8
-      5b
-[27642.543936] RSP: 0018:ffff88810770f7d8 EFLAGS: 00010046
-[27642.544803] RAX: 0000000000000000 RBX: 0000000000000202 RCX:
-ffff888113ad96d8
-[27642.545916] RDX: 0000000000000001 RSI: ffff88810770f818 RDI:
-00000000000000a0
-[27642.547027] RBP: 0000000000000098 R08: 0000000000000400 R09:
-ffff88810b980f00
-[27642.548140] R10: 0000000000000001 R11: ffff888101845a80 R12:
-00000000000000a8
-[27642.549263] R13: ffffffffa02a9060 R14: 00000000000000a0 R15:
-ffff8881130d8a40
-[27642.550379]  complete_all+0x20/0x90
-[27642.551010]  mlx5e_ipsec_disable_events+0xb6/0xf0 [mlx5_core]
-[27642.552022]  mlx5e_nic_disable+0x12d/0x220 [mlx5_core]
-[27642.552929]  mlx5e_detach_netdev+0x66/0xf0 [mlx5_core]
-[27642.553822]  mlx5e_netdev_change_profile+0x5b/0x120 [mlx5_core]
-[27642.554821]  mlx5e_vport_rep_load+0x419/0x590 [mlx5_core]
-[27642.555757]  ? xa_load+0x53/0x90
-[27642.556361]  __esw_offloads_load_rep+0x54/0x70 [mlx5_core]
-[27642.557328]  mlx5_esw_offloads_rep_load+0x45/0xd0 [mlx5_core]
-[27642.558320]  esw_offloads_enable+0xb4b/0xc90 [mlx5_core]
-[27642.559247]  mlx5_eswitch_enable_locked+0x34e/0x4f0 [mlx5_core]
-[27642.560257]  ? mlx5_rescan_drivers_locked+0x222/0x2d0 [mlx5_core]
-[27642.561284]  mlx5_devlink_eswitch_mode_set+0x5ac/0x9c0 [mlx5_core]
-[27642.562334]  ? devlink_rate_set_ops_supported+0x21/0x3a0
-[27642.563220]  devlink_nl_eswitch_set_doit+0x67/0xe0
-[27642.564026]  genl_family_rcv_msg_doit+0xe0/0x130
-[27642.564816]  genl_rcv_msg+0x183/0x290
-[27642.565466]  ? __devlink_nl_pre_doit.isra.0+0x160/0x160
-[27642.566329]  ? devlink_nl_eswitch_get_doit+0x290/0x290
-[27642.567181]  ? devlink_nl_pre_doit_parent_dev_optional+0x20/0x20
-[27642.568147]  ? genl_family_rcv_msg_dumpit+0xf0/0xf0
-[27642.568966]  netlink_rcv_skb+0x4b/0xf0
-[27642.569629]  genl_rcv+0x24/0x40
-[27642.570215]  netlink_unicast+0x255/0x380
-[27642.570901]  ? __alloc_skb+0xfa/0x1e0
-[27642.571560]  netlink_sendmsg+0x1f3/0x420
-[27642.572249]  __sock_sendmsg+0x38/0x60
-[27642.572911]  __sys_sendto+0x119/0x180
-[27642.573561]  ? __sys_recvmsg+0x5c/0xb0
-[27642.574227]  __x64_sys_sendto+0x20/0x30
-[27642.574904]  do_syscall_64+0x55/0xc10
-[27642.575554]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[27642.576391] RIP: 0033:0x7f197c85e807
-[27642.577050] Code: c7 c0 ff ff ff ff eb be 66 2e 0f 1f 84 00 00 00 00
-00 90 f3 0f 1e fa 80 3d 45 08 0d 00 00 41 89 ca 74 10 b8 2c 00 00 00 0f
-   05 <48> 3d 00 f0 ff ff 77 69 c3 55 48 89 e5 53 48 83 ec 38 44 89 4d
-      d0
-[27642.579846] RSP: 002b:00007ffebd4e2248 EFLAGS: 00000202 ORIG_RAX:
-000000000000002c
-[27642.581082] RAX: ffffffffffffffda RBX: 000055cfcd9cd2a0 RCX:
-00007f197c85e807
-[27642.582200] RDX: 0000000000000038 RSI: 000055cfcd9cd490 RDI:
-0000000000000003
-[27642.583320] RBP: 00007ffebd4e2290 R08: 00007f197c942200 R09:
-000000000000000c
-[27642.584437] R10: 0000000000000000 R11: 0000000000000202 R12:
-0000000000000000
-[27642.585555] R13: 000055cfcd9cd490 R14: 00007ffebd4e45d1 R15:
-000055cfcd9cd2a0
-[27642.586671]  </TASK>
-[27642.587121] ---[ end trace 0000000000000000 ]---
-[27642.587910] BUG: kernel NULL pointer dereference, address:
-00000000000000a0
+After recovery, the producer pushes new DMA entries at the old
+dma_fifo_pc, while the consumer reads from position 0.
+This causes us to unmap stale DMA addresses from before the recovery.
 
-Fixes: 664f76be38a1 ("net/mlx5: Fix IPsec cleanup over MPV device")
-Signed-off-by: Patrisious Haddad <phaddad@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+The DMA FIFO is a purely software construct with no HW counterpart.
+At the point of reset, all WQEs have been flushed so dma_fifo_cc is
+already equal to dma_fifo_pc. There is no need to reset either counter,
+similar to how skb_fifo pc/cc are untouched.
+
+Remove the 'dma_fifo_cc = 0' reset.
+
+This fixes the following WARNING:
+    WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1240 iommu_dma_unmap_page+0x79/0x90
+    Modules linked in: mlx5_vdpa vringh vdpa bonding mlx5_ib mlx5_vfio_pci ipip mlx5_fwctl tunnel4 mlx5_core ib_ipoib geneve ip6_gre ip_gre gre nf_tables ip6_tunnel rdma_ucm ib_uverbs ib_umad vfio_pci vfio_pci_core act_mirred act_skbedit act_vlan vhost_net vhost tap ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress vhost_iotlb iptable_raw tunnel6 vfio_iommu_type1 vfio openvswitch nsh rpcsec_gss_krb5 auth_rpcgss oid_registry xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter overlay zram zsmalloc rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core fuse [last unloaded: nf_tables]
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5_for_upstream_min_debug_2024_12_30_21_33 #1
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+    RIP: 0010:iommu_dma_unmap_page+0x79/0x90
+    Code: 2b 4d 3b 21 72 26 4d 3b 61 08 73 20 49 89 d8 44 89 f9 5b 4c 89 f2 4c 89 e6 48 89 ef 5d 41 5c 41 5d 41 5e 41 5f e9 c7 ae 9e ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 66 2e 0f 1f 84 00 00 00 00
+    Call Trace:
+     <IRQ>
+     ? __warn+0x7d/0x110
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? report_bug+0x16d/0x180
+     ? handle_bug+0x4f/0x90
+     ? exc_invalid_op+0x14/0x70
+     ? asm_exc_invalid_op+0x16/0x20
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? iommu_dma_unmap_page+0x2e/0x90
+     dma_unmap_page_attrs+0x10d/0x1b0
+     mlx5e_tx_wi_dma_unmap+0xbe/0x120 [mlx5_core]
+     mlx5e_poll_tx_cq+0x16d/0x690 [mlx5_core]
+     mlx5e_napi_poll+0x8b/0xac0 [mlx5_core]
+     __napi_poll+0x24/0x190
+     net_rx_action+0x32a/0x3b0
+     ? mlx5_eq_comp_int+0x7e/0x270 [mlx5_core]
+     ? notifier_call_chain+0x35/0xa0
+     handle_softirqs+0xc9/0x270
+     irq_exit_rcu+0x71/0xd0
+     common_interrupt+0x7f/0xa0
+     </IRQ>
+     <TASK>
+     asm_common_interrupt+0x22/0x40
+
+Fixes: db75373c91b0 ("net/mlx5e: Recover Send Queue (SQ) from error state")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260305142634.1813208-2-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260305142634.1813208-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-index 831d4b17ad07a..c48eeb399a422 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_fs.c
-@@ -2449,7 +2449,7 @@ void mlx5e_ipsec_disable_events(struct mlx5e_priv *priv)
- 		goto out;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+index dbd9482359e1e..74f9703013b43 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+@@ -45,7 +45,6 @@ static void mlx5e_reset_txqsq_cc_pc(struct mlx5e_txqsq *sq)
+ 		  "SQ 0x%x: cc (0x%x) != pc (0x%x)\n",
+ 		  sq->sqn, sq->cc, sq->pc);
+ 	sq->cc = 0;
+-	sq->dma_fifo_cc = 0;
+ 	sq->pc = 0;
+ }
  
- 	peer_priv = mlx5_devcom_get_next_peer_data(priv->devcom, &tmp);
--	if (peer_priv)
-+	if (peer_priv && peer_priv->ipsec)
- 		complete_all(&peer_priv->ipsec->comp);
- 
- 	mlx5_devcom_for_each_peer_end(priv->devcom);
 -- 
 2.51.0
 
