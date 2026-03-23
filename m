@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E973AD538;
-	Mon, 23 Mar 2026 13:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9FBF1D5CF2;
+	Mon, 23 Mar 2026 13:56:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274158; cv=none; b=VJoPP6fDwPUFT96omW8bU1lryHG6DH2IvRnzhjvPbOjhBm5NHpmtEEWW5MZf/2H+tvTvq7TxPKqrId+EKswkbMhYBTNLpv0IM1GbTtiYlzXvVEbatZHYJaqbRFdEOPY/UnXniKz/F/+fSm+doulrIPwxLOBJQXL2v7x1IX81nBQ=
+	t=1774274161; cv=none; b=UoWKjPNjd3o4xKVVfAQTdSpwvln3r5Om5UR8/rBFzE3LcAs9RI35EHTb+OWlo8a3imynMuX7FcuTRM8McExCKofhlhM5eNUQP3zCC5wOluU+oNXqhKfrnME+y16brP4fAH8CkID7LwDVZJOa+g+S1kdm0lO6G/+Sk+A/ew/jkSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274158; c=relaxed/simple;
-	bh=C95JoYdPGjnVZnXTm6kT/rmuAcJkGUM5qG+9A19YVBw=;
+	s=arc-20240116; t=1774274161; c=relaxed/simple;
+	bh=NPMvhvUGAhUiuPc0jf3LHyahIzMo6uyYyOll9z0r6jc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FX0sb6DriroZqcotd3iJK2iaTKkAz7Z4Bytc1MOqexLamps3Yi+GCpPo4gF+qgX0cO7QVVrLL5X4Od0KRFA1MslIKrW8Ca9PcKA9oZxNeFm5GiWsArl06dyiPiDoxaBYF7RL86DLgXYh5Go7r51s/lCG3MlNEdqpSOwWNgTsCSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qpnYZyMU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=H0n7ETOA0MiAx31o/1XCKsAiDb54iQ1dCWGGWF/+2EoMYHGHhpt+TU/V7hxEKgEuLB+0EkhL84GbhliVFSy/3Txg3biqv1lzJVZz6jKmXtokVkZIFJ266X6F4DdgLKbrdxR4jxDAXV6kmOoNNjJE1ThQs8PRB2BE+vJoArk/Iec=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Def3D7Dh; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qpnYZyMU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF8EC4CEF7;
-	Mon, 23 Mar 2026 13:55:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Def3D7Dh"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3373FC2BCB3;
+	Mon, 23 Mar 2026 13:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274158;
-	bh=C95JoYdPGjnVZnXTm6kT/rmuAcJkGUM5qG+9A19YVBw=;
+	s=korg; t=1774274161;
+	bh=NPMvhvUGAhUiuPc0jf3LHyahIzMo6uyYyOll9z0r6jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpnYZyMUIj6byl+L3cRKw5zUrtDKw/TB16Kp/7qkmzPxBNQgab4Movo6BJooYjoHC
-	 JUZqjntlmZxSaPA4Aq1UHtyL4QH6lbUfqwVDhB3ksUl0VgEr0Fs61u+EypKG6IAJje
-	 2F1nhQEVN1Mg9kfmIuj9BYebKD6XFQBUut6habv8=
+	b=Def3D7Dh4ZEzsZUW7th6FB7BKzisgqY8rFFe/FhGAyKUje75sdt0XJJeFbkpBmKqv
+	 2O6ttF5UwG7F9eSDMPwWciUx9fwQMj4gyd6rCmjg8noI+HI9ETqasTuodaAWnZktdI
+	 GuTQ1qXWu+63si0Hms73jtq2N0VU4+qGbFe0Hgc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
 	Eric Dumazet <edumazet@google.com>,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Guillaume Nault <gnault@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 129/220] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
-Date: Mon, 23 Mar 2026 14:45:06 +0100
-Message-ID: <20260323134508.662891355@linuxfoundation.org>
+Subject: [PATCH 6.19 130/220] ip_tunnel: adapt iptunnel_xmit_stats() to NETDEV_PCPU_STAT_DSTATS
+Date: Mon, 23 Mar 2026 14:45:07 +0100
+Message-ID: <20260323134508.695450734@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,60 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e1f0a18c9564cdb16523c802e2c6fe5874e3d944 ]
+[ Upstream commit 8431c602f551549f082bbfa67f3003f2d8e3e132 ]
 
-syzkaller reported a bug [1], and the reproducer is available at [2].
+Blamed commits forgot that vxlan/geneve use udp_tunnel[6]_xmit_skb() which
+call iptunnel_xmit_stats().
 
-ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
-TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
-calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
-(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
+iptunnel_xmit_stats() was assuming tunnels were only using
+NETDEV_PCPU_STAT_TSTATS.
 
-When rose_connect() is called a second time while the first connection
-attempt is still in progress (TCP_SYN_SENT), it overwrites
-rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
-is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
-When the socket is subsequently closed, rose_release() sees
-ROSE_STATE_1 and calls rose_write_internal() ->
-rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
+@syncp offset in pcpu_sw_netstats and pcpu_dstats is different.
 
-Per connect(2), a second connect() while a connection is already in
-progress should return -EALREADY. Add this missing check for
-TCP_SYN_SENT to complete the state validation in rose_connect().
+32bit kernels would either have corruptions or freezes if the syncp
+sequence was overwritten.
 
-[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
-[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
+This patch also moves pcpu_stat_type closer to dev->{t,d}stats to avoid
+a potential cache line miss since iptunnel_xmit_stats() needs to read it.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260311070611.76913-1-jiayuan.chen@linux.dev
+Fixes: 6fa6de302246 ("geneve: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
+Fixes: be226352e8dc ("vxlan: Handle stats using NETDEV_PCPU_STAT_DSTATS.")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20260311123110.1471930-1-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ include/linux/netdevice.h |  3 +--
+ include/net/ip_tunnels.h  | 30 +++++++++++++++++++++++-------
+ 2 files changed, 24 insertions(+), 9 deletions(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index c0f5a515a8ce5..de18af4e40660 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -811,6 +811,11 @@ static int rose_connect(struct socket *sock, struct sockaddr_unsized *uaddr, int
- 		goto out_release;
- 	}
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index 65d85dc9c8f05..444e52eb8ed99 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -2153,6 +2153,7 @@ struct net_device {
+ 	unsigned long		state;
+ 	unsigned int		flags;
+ 	unsigned short		hard_header_len;
++	enum netdev_stat_type	pcpu_stat_type:8;
+ 	netdev_features_t	features;
+ 	struct inet6_dev __rcu	*ip6_ptr;
+ 	__cacheline_group_end(net_device_read_txrx);
+@@ -2401,8 +2402,6 @@ struct net_device {
+ 	void				*ml_priv;
+ 	enum netdev_ml_priv_type	ml_priv_type;
  
-+	if (sk->sk_state == TCP_SYN_SENT) {
-+		err = -EALREADY;
-+		goto out_release;
-+	}
+-	enum netdev_stat_type		pcpu_stat_type:8;
+-
+ #if IS_ENABLED(CONFIG_GARP)
+ 	struct garp_port __rcu	*garp_port;
+ #endif
+diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
+index 80662f8120803..1f577a4f8ce9b 100644
+--- a/include/net/ip_tunnels.h
++++ b/include/net/ip_tunnels.h
+@@ -665,13 +665,29 @@ static inline int iptunnel_pull_offloads(struct sk_buff *skb)
+ static inline void iptunnel_xmit_stats(struct net_device *dev, int pkt_len)
+ {
+ 	if (pkt_len > 0) {
+-		struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
+-
+-		u64_stats_update_begin(&tstats->syncp);
+-		u64_stats_add(&tstats->tx_bytes, pkt_len);
+-		u64_stats_inc(&tstats->tx_packets);
+-		u64_stats_update_end(&tstats->syncp);
+-		put_cpu_ptr(tstats);
++		if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_DSTATS) {
++			struct pcpu_dstats *dstats = get_cpu_ptr(dev->dstats);
 +
- 	sk->sk_state   = TCP_CLOSE;
- 	sock->state = SS_UNCONNECTED;
++			u64_stats_update_begin(&dstats->syncp);
++			u64_stats_add(&dstats->tx_bytes, pkt_len);
++			u64_stats_inc(&dstats->tx_packets);
++			u64_stats_update_end(&dstats->syncp);
++			put_cpu_ptr(dstats);
++			return;
++		}
++		if (dev->pcpu_stat_type == NETDEV_PCPU_STAT_TSTATS) {
++			struct pcpu_sw_netstats *tstats = get_cpu_ptr(dev->tstats);
++
++			u64_stats_update_begin(&tstats->syncp);
++			u64_stats_add(&tstats->tx_bytes, pkt_len);
++			u64_stats_inc(&tstats->tx_packets);
++			u64_stats_update_end(&tstats->syncp);
++			put_cpu_ptr(tstats);
++			return;
++		}
++		pr_err_once("iptunnel_xmit_stats pcpu_stat_type=%d\n",
++			    dev->pcpu_stat_type);
++		WARN_ON_ONCE(1);
+ 		return;
+ 	}
  
 -- 
 2.51.0
