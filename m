@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F751DA0E1;
-	Mon, 23 Mar 2026 14:57:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7A02370D76;
+	Mon, 23 Mar 2026 14:57:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277865; cv=none; b=qfwimbUcljKsoDWgTmd8zAJXAQ8h61HcBGtgnVgM1fm3k1asul3ij/ICvJiViHJVMU3TXsEH886zZ6Tlx1mwOM0Mju9zQ+NwKEPBc+LdECjUAc5demj/nrB+UjFmqzoJnew4NY7DaUnPoOdzGskvL6zw+JT4ETfkJNFdw7pcZew=
+	t=1774277868; cv=none; b=ecX22cMRdfYOJd24B91VhLAwXMA/L4wfnlwrU3PHsif/RdZ86t3PZNWIGmED4ypJt0EkUiof+Cx3ZSZwr8GhFrJTIa71+dxVfMoGBCeCVwZ1xj9pmzRtBxkiZJ87MABs6DJ9AE/Vw3QqNaezaq5g4bk59FYiFlCVoIN3Csarc/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277865; c=relaxed/simple;
-	bh=asSkKOYL0DhADxKVfcjVvLe9ScinLgcvecqGKEuHjBM=;
+	s=arc-20240116; t=1774277868; c=relaxed/simple;
+	bh=rZtDFOb1ayk2LHEQw+4aEkzaPJUAUZvTA1NC3NA9Mzs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nHkWCSz+WvzpqpBXDQJcRfMb4S8fvB8eoWiQsbVMO82j0+3AR6JpN2hnJOrI/8mIogg/ycVV9R8VrU6+nw4n36Wv14Z6q3F9C2LY7bENQAAOEASEvMvItqT0Cc+TUUk4fwqCD/w47kYMeZRnZtQYJrW8R/qKoIlbAXxKwF2+mmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+6+SHBA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KlrysizRlgJ7vBwIRHILIq3jgKyYbHLXzxRA5iAhJCwVnZkixAdISN16rv2jIeLYLIUN4UzZSNKsr1G7+Wd2fXMe5YR0zpE0rDS0WjSW6zoAbA5Ws6++yJl3uY+f92/Bv55it21lfK7Qzu1ZvE5pimw3VGEYGUykUj2XGu/9eGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDaZRj5D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+6+SHBA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB377C4CEF7;
-	Mon, 23 Mar 2026 14:57:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDaZRj5D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C803C4CEF7;
+	Mon, 23 Mar 2026 14:57:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277865;
-	bh=asSkKOYL0DhADxKVfcjVvLe9ScinLgcvecqGKEuHjBM=;
+	s=korg; t=1774277868;
+	bh=rZtDFOb1ayk2LHEQw+4aEkzaPJUAUZvTA1NC3NA9Mzs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+6+SHBAVR9Tafb1E65vSLnyBcdKDLaqfkn+DYsSBM5nUEib2XiJvYlr4jFe5jAQS
-	 cBoslWWtDLaEZ2UAdo/aC0FaK9HEEcUNf/TrUmaAlxAnAyM0KU8AQFNHEkPRyeS2i+
-	 fJGNXW2N67Fh+z5BiYaDg1/38b7aKQgxG2zd+HEg=
+	b=DDaZRj5D8TyUCzCI1lR8uEwF2XNY1QSLGe7WihOWVAD6B/XTqirhcfl4HDM2OVh5t
+	 93lg5dwLASc4h4zQrzaSRIU8fqyJeZfevHKeTvgQOBSWfffZp7rb82s9ExHCzcFRLI
+	 173BO3WhU+erwft+fXmq1FDUHA2ZI+58aCCJFpx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Teh <jonathan.teh@outlook.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Linus Walleij <linusw@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 126/567] platform/x86: thinkpad_acpi: Fix errors reading battery thresholds
-Date: Mon, 23 Mar 2026 14:40:46 +0100
-Message-ID: <20260323134536.924257634@linuxfoundation.org>
+Subject: [PATCH 6.6 127/567] pinctrl: cirrus: cs42l43: Fix double-put in cs42l43_pin_probe()
+Date: Mon, 23 Mar 2026 14:40:47 +0100
+Message-ID: <20260323134536.948739798@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,63 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jonathan Teh <jonathan.teh@outlook.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 53e977b1d50c46f2c4ec3865cd13a822f58ad3cd ]
+[ Upstream commit fd5bed798f45eb3a178ad527b43ab92705faaf8a ]
 
-Check whether the battery supports the relevant charge threshold before
-reading the value to silence these errors:
+devm_add_action_or_reset() already invokes the action on failure,
+so the explicit put causes a double-put.
 
-thinkpad_acpi: acpi_evalf(BCTG, dd, ...) failed: AE_NOT_FOUND
-ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCTG: evaluate failed
-thinkpad_acpi: acpi_evalf(BCSG, dd, ...) failed: AE_NOT_FOUND
-ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCSG: evaluate failed
-
-when reading the charge thresholds via sysfs on platforms that do not
-support them such as the ThinkPad T400.
-
-Fixes: 2801b9683f74 ("thinkpad_acpi: Add support for battery thresholds")
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202619
-Signed-off-by: Jonathan Teh <jonathan.teh@outlook.com>
-Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://patch.msgid.link/MI0P293MB01967B206E1CA6F337EBFB12926CA@MI0P293MB0196.ITAP293.PROD.OUTLOOK.COM
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Fixes: 9b07cdf86a0b ("pinctrl: cirrus: Fix fwnode leak in cs42l43_pin_probe()")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Signed-off-by: Linus Walleij <linusw@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/thinkpad_acpi.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/pinctrl/cirrus/pinctrl-cs42l43.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
-index 88364a5502e69..be46479d54afe 100644
---- a/drivers/platform/x86/thinkpad_acpi.c
-+++ b/drivers/platform/x86/thinkpad_acpi.c
-@@ -9441,14 +9441,16 @@ static int tpacpi_battery_get(int what, int battery, int *ret)
- {
- 	switch (what) {
- 	case THRESHOLD_START:
--		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery))
-+		if (!battery_info.batteries[battery].start_support ||
-+		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery)))
- 			return -ENODEV;
- 
- 		/* The value is in the low 8 bits of the response */
- 		*ret = *ret & 0xFF;
- 		return 0;
- 	case THRESHOLD_STOP:
--		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery))
-+		if (!battery_info.batteries[battery].stop_support ||
-+		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery)))
- 			return -ENODEV;
- 		/* Value is in lower 8 bits */
- 		*ret = *ret & 0xFF;
+diff --git a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+index e1ac89be7c847..1640c5522f0e8 100644
+--- a/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
++++ b/drivers/pinctrl/cirrus/pinctrl-cs42l43.c
+@@ -574,10 +574,9 @@ static int cs42l43_pin_probe(struct platform_device *pdev)
+ 		if (child) {
+ 			ret = devm_add_action_or_reset(&pdev->dev,
+ 				cs42l43_fwnode_put, child);
+-			if (ret) {
+-				fwnode_handle_put(child);
++			if (ret)
+ 				return ret;
+-			}
++
+ 			if (!child->dev)
+ 				child->dev = priv->dev;
+ 			fwnode = child;
 -- 
 2.51.0
 
