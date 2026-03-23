@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EF87394476;
-	Mon, 23 Mar 2026 14:44:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEA0399352;
+	Mon, 23 Mar 2026 14:44:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277079; cv=none; b=f/MAosw8b46phkuW3+s+/v15gv/C+Uidir5vY13OBerALvdTYxCtDc9WVvIPwB3DLWamVgvB11ugnmk/HabZimkigZOmTfR3LXepyF/pkhqDwF437UxtUEJKu5/LFrT+HI0ZDjhlfG4NK0nwimMugedDFSqA5rgCZeleOBs7xyY=
+	t=1774277082; cv=none; b=AYXUbOEeFmC+UgoyCm3muqqmalgsKCh+ySXTjq745DXmi1X5Ja76PzPders+ToA62v431fVQO+Y7ogWdGnGd8ZmJvYTElzmWZ0h7L7tm4EgLjiUPhaUvohWjhmBLA1WNDyrw5uP205WCiSmWuvSaaSZYVV3ae2VfbzJwhRIljmc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277079; c=relaxed/simple;
-	bh=3VT75q+d7nVL9zKUODLC774Orox/1hCet5mAD1w44gs=;
+	s=arc-20240116; t=1774277082; c=relaxed/simple;
+	bh=2f9MO6xDgkBt2C/6+SUeFzFkrXut/ii9C8PBK5dVlsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mCvp1rX8y4s2Eg9PpCticxECQsckQnf4AziYIjjo85aSuR3bXfJBIyv+DoCuJLyUrJWs32pZkDNmzaCuKYfEfeSXN4xy6zRuslXU0jlv2q1twJVUUo/pl8mBj6rK0TujKzjk/pV+b1WGiOd/lMbHrdyTPllsQoT88SVIeIApI5U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kn3K7Yf+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Jm/atG9blxNKLmHk0sbnvZlLRy/lFvES3PQRGPB/yqNaN7th/pFh1XlddGyyK9t4apqHPPDoLcCH8QhmaboWfBFp0ZbNgSXBcMLD/GC8ljNeSiQCvsUSKohEKUUzNDwv6769z7iFVBXIOdUlrk3phOOvKXprRp2ZPVWXaV1UfYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKKdWiRs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kn3K7Yf+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260AFC4CEF7;
-	Mon, 23 Mar 2026 14:44:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKKdWiRs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0C0C4CEF7;
+	Mon, 23 Mar 2026 14:44:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277079;
-	bh=3VT75q+d7nVL9zKUODLC774Orox/1hCet5mAD1w44gs=;
+	s=korg; t=1774277082;
+	bh=2f9MO6xDgkBt2C/6+SUeFzFkrXut/ii9C8PBK5dVlsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kn3K7Yf+mx9V7C4wINTRj6pNHTCK2zfxQcM5MouW+hbkysAx++cEsOpQ/1lKD+sNi
-	 DVer/dUwE+2LrpeUziNjcXOrP2I/MDs+juVvpBW4JEEnhrpyHpf3IDd5GXKAdsf0tG
-	 fB9sVJckKdDroUGVs6XKraowhNdqMMwRbbJxX22o=
+	b=OKKdWiRsyn3MJEXnXINuQFW0Alc2K3aDkR67IrHhs1KgDKSUTjF5seXF3r4jhGBn1
+	 7PiU7c6O3KDcHBdDJhZSjd5eYpMTNdEGYUxLZWijo64s+7t497pmaESx+soxQkFsif
+	 xzCsWgJomk7kjcEfOSvHWStzIm8lnqmbCiMsN1po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 313/460] NFC: nxp-nci: allow GPIOs to sleep
-Date: Mon, 23 Mar 2026 14:45:09 +0100
-Message-ID: <20260323134534.192338988@linuxfoundation.org>
+Subject: [PATCH 6.12 314/460] net: macb: fix use-after-free access to PTP clock
+Date: Mon, 23 Mar 2026 14:45:10 +0100
+Message-ID: <20260323134534.216685800@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,41 +50,128 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-commit 55dc632ab2ac2889b15995a9eef56c753d48ebc7 upstream.
+commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
 
-Allow the firmware and enable GPIOs to sleep.
+PTP clock is registered on every opening of the interface and destroyed on
+every closing.  However it may be accessed via get_ts_info ethtool call
+which is possible while the interface is just present in the kernel.
 
-This fixes a `WARN_ON' and allows the driver to operate GPIOs which are
-connected to I2C GPIO expanders.
+BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
+Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
 
--- >8 --
-kernel: WARNING: CPU: 3 PID: 2636 at drivers/gpio/gpiolib.c:3880 gpiod_set_value+0x88/0x98
--- >8 --
+CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:316 [inline]
+ print_report+0x17f/0x496 mm/kasan/report.c:420
+ kasan_report+0xd9/0x180 mm/kasan/report.c:524
+ ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
+ gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
+ macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
+ __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
+ ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
+ __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
+ dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
+ dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
+ sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
+ sock_ioctl+0x577/0x6d0 net/socket.c:1320
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:46 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+ </TASK>
 
-Fixes: 43201767b44c ("NFC: nxp-nci: Convert to use GPIO descriptor")
+Allocated by task 457:
+ kmalloc include/linux/slab.h:563 [inline]
+ kzalloc include/linux/slab.h:699 [inline]
+ ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
+ gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
+ macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
+ __dev_open+0x2ce/0x500 net/core/dev.c:1501
+ __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
+ dev_change_flags+0x92/0x170 net/core/dev.c:8722
+ do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
+ __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
+ rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
+ rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
+ netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
+ netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+ netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
+ netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
+ sock_sendmsg_nosec net/socket.c:718 [inline]
+ __sock_sendmsg+0x14b/0x180 net/socket.c:730
+ __sys_sendto+0x320/0x3b0 net/socket.c:2152
+ __do_sys_sendto net/socket.c:2164 [inline]
+ __se_sys_sendto net/socket.c:2160 [inline]
+ __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
+ do_syscall_x64 arch/x86/entry/common.c:46 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Freed by task 938:
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ slab_free_hook mm/slub.c:1729 [inline]
+ slab_free_freelist_hook mm/slub.c:1755 [inline]
+ slab_free mm/slub.c:3687 [inline]
+ __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
+ device_release+0xa0/0x240 drivers/base/core.c:2507
+ kobject_cleanup lib/kobject.c:681 [inline]
+ kobject_release lib/kobject.c:712 [inline]
+ kref_put include/linux/kref.h:65 [inline]
+ kobject_put+0x1cd/0x350 lib/kobject.c:729
+ put_device+0x1b/0x30 drivers/base/core.c:3805
+ ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
+ gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
+ macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
+ __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
+ __dev_close net/core/dev.c:1597 [inline]
+ __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
+ dev_change_flags+0x92/0x170 net/core/dev.c:8722
+ dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
+ dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
+ sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
+ sock_ioctl+0x577/0x6d0 net/socket.c:1320
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:46 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+
+Set the PTP clock pointer to NULL after unregistering.
+
+Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260317085337.146545-1-ian.ray@gehealthcare.com
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/nxp-nci/i2c.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/nfc/nxp-nci/i2c.c
-+++ b/drivers/nfc/nxp-nci/i2c.c
-@@ -47,8 +47,8 @@ static int nxp_nci_i2c_set_mode(void *ph
+--- a/drivers/net/ethernet/cadence/macb_ptp.c
++++ b/drivers/net/ethernet/cadence/macb_ptp.c
+@@ -355,8 +355,10 @@ void gem_ptp_remove(struct net_device *n
  {
- 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
+ 	struct macb *bp = netdev_priv(ndev);
  
--	gpiod_set_value(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
--	gpiod_set_value(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
-+	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
-+	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
- 	usleep_range(10000, 15000);
+-	if (bp->ptp_clock)
++	if (bp->ptp_clock) {
+ 		ptp_clock_unregister(bp->ptp_clock);
++		bp->ptp_clock = NULL;
++	}
  
- 	if (mode == NXP_NCI_MODE_COLD)
+ 	gem_ptp_clear_timer(bp);
+ 
 
 
