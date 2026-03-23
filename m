@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BCC3AD534;
-	Mon, 23 Mar 2026 13:53:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D761A6818;
+	Mon, 23 Mar 2026 13:53:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273995; cv=none; b=nZ+zB91XoZzS1I1u6o07+gBnYI/lj/yKpwFBrSbeGcvq0LIRdDkPVMi8yjd8wC/KkGGQ7ynUNqxn2KJohE3GQi6ksZKHX+z/Qy1EA67k5vY5NtFK1HEi75MQ8F8ebY+5wjDKuAmSk82LcLoKjVPkXYJKDBZM0WFkNCFRHS0Swsc=
+	t=1774273998; cv=none; b=NrYj1dS4fDBunJqH4WgR3VUrPwRmizdUHbLhAqnspHktA5tBqCCsZ4HsmALraBft076jARyLjrddnlfhs9WERNebMiIYoI3ADJGs2wg1z68oYPLxZH3jNOsM/oksmv6hY4LRvISU56t6kNVmeH5c8jbPxtY2fMAF3FudATMLL+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273995; c=relaxed/simple;
-	bh=D867QGKSkpr7nvA2mf4Pn/u5kbUzUoMrPzlanco5EPY=;
+	s=arc-20240116; t=1774273998; c=relaxed/simple;
+	bh=B40Bg09Uvfo9fW4OAes5pcoQX43PBVc53VPMvDf9O+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fuV5Vm5xYUviusCiaC+++uiU5h2hnWRAv6DtE8+BvoqDbL47v4wXLOIsKDVRHCuNK9GcigCyytcp7+XLyhHDwaTpeK2Iqf2FO6Z//wMpzNAQuxd/LMy+zRSBhFStIhdmEtRJ+tYBCED3XukwjSLtFOy2+UCl2hBadlLM15ZQWdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/PinPNn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TkuSWKn36cgvn95OAqLsLmjLCBou9Pbnvo6/phlnBaYY2AKKUCV+i5cV2qM2p7dqAYZ8nC8Rj+EiQ9A3GjOhoJKj9KrVL8E5cKRFn7W1sKcPcHXe8eFXgAzkR1CCIuWFU/nzbXbsVHTi3cPjoDJvQ7aacWbEN5aja1GLDC12xLY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8T3amf4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/PinPNn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F349C4CEF7;
-	Mon, 23 Mar 2026 13:53:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8T3amf4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8363C2BCB1;
+	Mon, 23 Mar 2026 13:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273995;
-	bh=D867QGKSkpr7nvA2mf4Pn/u5kbUzUoMrPzlanco5EPY=;
+	s=korg; t=1774273998;
+	bh=B40Bg09Uvfo9fW4OAes5pcoQX43PBVc53VPMvDf9O+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q/PinPNnw6xKLkZb3BrHCst2xoNwQUvZcrY2gUQKqK+j4fkZji0L6CKNjCcdS2m7a
-	 Wd34jK853G5b7yrw8GRMFubwP5JK8+P2Kk/H4cOhB+9w5BxDRqqizQJzCkvR1E8u2Y
-	 JOwbgf6leiK1RBttekhA8OPQe3PFWYz3HyxF6S98=
+	b=U8T3amf4nTEKNT1POf21YnHzehWfg5V4hHEDjWGTrdff8mtqMS64yiWvNzD05CqTB
+	 wGN6r7PHx/FsII0rV3QGzmB/mfCp3hF+PZmzP/CJtN9iV2iRItStgY3sG9mMxyCa0+
+	 K3CDWcwofwQ+qSnk2ba4Snw1HI8tRzJvxYYMQRZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 073/220] drm/amdgpu/gmc9.0: add bounds checking for cid
-Date: Mon, 23 Mar 2026 14:44:10 +0100
-Message-ID: <20260323134506.903121223@linuxfoundation.org>
+	Quanyang Wang <quanyang.wang@windriver.com>,
+	Kevin Hao <haokexin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 032/220] net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume
+Date: Mon, 23 Mar 2026 14:43:29 +0100
+Message-ID: <20260323134505.591908982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,68 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit f39e1270277f4b06db0b2c6ec9405b6dd766fb13 upstream.
+[ Upstream commit 718d0766ce4c7634ce62fa78b526ea7263487edd ]
 
-The value should never exceed the array size as those
-are the only values the hardware is expected to return,
-but add checks anyway.
+On certain platforms, such as AMD Versal boards, the tx/rx queue pointer
+registers are cleared after suspend, and the rx queue pointer register
+is also disabled during suspend if WOL is enabled. Previously, we assumed
+that these registers would be restored by macb_mac_link_up(). However,
+in commit bf9cf80cab81, macb_init_buffers() was moved from
+macb_mac_link_up() to macb_open(). Therefore, we should call
+macb_init_buffers() to reinitialize the tx/rx queue pointer registers
+during resume.
 
-Cc: Benjamin Cheng <benjamin.cheng@amd.com>
-Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e14d468304832bcc4a082d95849bc0a41b18ddea)
+Due to the reset of these two registers, we also need to adjust the
+tx/rx rings accordingly. The tx ring will be handled by
+gem_shuffle_tx_rings() in macb_mac_link_up(), so we only need to
+initialize the rx ring here.
+
+Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
+Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Tested-by: Quanyang Wang <quanyang.wang@windriver.com>
 Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260312-macb-versal-v1-2-467647173fa4@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
-@@ -693,28 +693,35 @@ static int gmc_v9_0_process_interrupt(st
- 	} else {
- 		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
- 		case IP_VERSION(9, 0, 0):
--			mmhub_cid = mmhub_client_ids_vega10[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega10) ?
-+				mmhub_client_ids_vega10[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(9, 3, 0):
--			mmhub_cid = mmhub_client_ids_vega12[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega12) ?
-+				mmhub_client_ids_vega12[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(9, 4, 0):
--			mmhub_cid = mmhub_client_ids_vega20[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega20) ?
-+				mmhub_client_ids_vega20[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(9, 4, 1):
--			mmhub_cid = mmhub_client_ids_arcturus[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_arcturus) ?
-+				mmhub_client_ids_arcturus[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(9, 1, 0):
- 		case IP_VERSION(9, 2, 0):
--			mmhub_cid = mmhub_client_ids_raven[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_raven) ?
-+				mmhub_client_ids_raven[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(1, 5, 0):
- 		case IP_VERSION(2, 4, 0):
--			mmhub_cid = mmhub_client_ids_renoir[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_renoir) ?
-+				mmhub_client_ids_renoir[cid][rw] : NULL;
- 			break;
- 		case IP_VERSION(1, 8, 0):
- 		case IP_VERSION(9, 4, 2):
--			mmhub_cid = mmhub_client_ids_aldebaran[cid][rw];
-+			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_aldebaran) ?
-+				mmhub_client_ids_aldebaran[cid][rw] : NULL;
- 			break;
- 		default:
- 			mmhub_cid = NULL;
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -5949,8 +5949,18 @@ static int __maybe_unused macb_resume(st
+ 		rtnl_unlock();
+ 	}
+ 
++	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
++		macb_init_buffers(bp);
++
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues;
+ 	     ++q, ++queue) {
++		if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
++			if (macb_is_gem(bp))
++				gem_init_rx_ring(queue);
++			else
++				macb_init_rx_ring(queue);
++		}
++
+ 		napi_enable(&queue->napi_rx);
+ 		napi_enable(&queue->napi_tx);
+ 	}
 
 
