@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9672735957;
-	Mon, 23 Mar 2026 15:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E688435957;
+	Mon, 23 Mar 2026 15:06:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278404; cv=none; b=AoNZkZDJr7gbhYVNtgmqoqB0CT+vOP3QEhscrnsIkj0m76pBNslL2k299P7lSpX0M78UX8fKG6UdzDBK7fLCzukMWFiDJof2HUVv7bXYUELteYbYGsblWbRWLCADomQpGFfO/v5JQAnKb7KSLWevVNna4QfuRntE1DGxaBQ0Pr0=
+	t=1774278408; cv=none; b=M5pwkLpBXRpdi6WCecLYB5XLeLmqotV8+oMsbR+RiHqfD3ctS5BjZJ0kpGYsgiOGsHV4IhbzjkxIXRkH8tj+t6GZEfNjg4e3y43ofnj6wVNnaG/t+k61A6My0r4MU6OCb3DHao2LU08iwWP8cpIfnWW30E/VNyi7Xnxk7Adetsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278404; c=relaxed/simple;
-	bh=ERp4pesnM22Dk3cf/gEfrFMUdEUFARIiWh+NKwgQLA4=;
+	s=arc-20240116; t=1774278408; c=relaxed/simple;
+	bh=kDNOPNpA4H+sIIDf/alN/YbrlefZuymJQkWWImVIsNM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3WNdLWcJvIoAHdy8qQ6lyz3nkfO9Jn0bZFsb8HKG8nCu728joUcrQxDk8yBqFf6o4WalZ8czzp8ogpW2HJdssjBWfpdsSQHJ0tLzmAk07U0FftnCCcoolNJ/TH/KHsi5aPv9Ks5UVk7pbE5nqzPatx3LDJZ8v+OEYVsQNZsAJI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KrR9DH9v; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RWAdoCtARugu1TE7pRxPuYYX/oFbgZQxN04c7LKGA+cGRyxZO33m1slYmVsEo/JjiEM9pA594XCOKTQtt61A5cyU1tQj9uD6kIcYPqD3J9wRu28EsZjOGwvWG9I8InEGFXLgLUR8L7rTgrhVUk9biYGWtJ8FMuHxCG0sgnWCQoA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZLegFORZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KrR9DH9v"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDEFC4CEF7;
-	Mon, 23 Mar 2026 15:06:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZLegFORZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE5FC4CEF7;
+	Mon, 23 Mar 2026 15:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278404;
-	bh=ERp4pesnM22Dk3cf/gEfrFMUdEUFARIiWh+NKwgQLA4=;
+	s=korg; t=1774278407;
+	bh=kDNOPNpA4H+sIIDf/alN/YbrlefZuymJQkWWImVIsNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrR9DH9vhiBPjmPFd97SLWYLf8av4iUZp51JHy4t2Lm7KH3OA+sdqbF1K1wSUd9h2
-	 Xkj602hiFLFWEMoe3dC+f/ktvzXKnKk9XRvPuSyMggV4LCToKG1vOC/Fo/Umzzreoe
-	 T843y0a2lOaWdMSTY9O5KLdgXjGm/H1H8YLhtIzk=
+	b=ZLegFORZMnJbtuar4mrLyKOuDqmGTSPaPsR5Fg+0kqiTMz5iA48gv4o5IYUFJrj6l
+	 Kv0mQ4ftUA+MAkqJuVqb3m6+upsiN8/+XQBg+5B8UO0RQ6tcG4/S+ZMxKvrCKPJ5Un
+	 oXuZRCrvZxrf3A8eIM8IRBzhv9KL2mlBWHE5F41c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 297/567] libceph: Use u32 for non-negative values in ceph_monmap_decode()
-Date: Mon, 23 Mar 2026 14:43:37 +0100
-Message-ID: <20260323134541.168067466@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Subject: [PATCH 6.6 298/567] libceph: admit message frames only in CEPH_CON_S_OPEN state
+Date: Mon, 23 Mar 2026 14:43:38 +0100
+Message-ID: <20260323134541.191368265@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,56 +51,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit 770444611f047dbfd4517ec0bc1b179d40c2f346 upstream.
+commit a5a373705081d7cc6363e16990e2361b0b362314 upstream.
 
-This patch fixes unnecessary implicit conversions that change signedness
-of blob_len and num_mon in ceph_monmap_decode().
-Currently blob_len and num_mon are (signed) int variables. They are used
-to hold values that are always non-negative and get assigned in
-ceph_decode_32_safe(), which is meant to assign u32 values. Both
-variables are subsequently used as unsigned values, and the value of
-num_mon is further assigned to monmap->num_mon, which is of type u32.
-Therefore, both variables should be of type u32. This is especially
-relevant for num_mon. If the value read from the incoming message is
-very large, it is interpreted as a negative value, and the check for
-num_mon > CEPH_MAX_MON does not catch it. This leads to the attempt to
-allocate a very large chunk of memory for monmap, which will most likely
-fail. In this case, an unnecessary attempt to allocate memory is
-performed, and -ENOMEM is returned instead of -EINVAL.
+Similar checks are performed for all control frames, but an early check
+for message frames was missing.  process_message() is already set up to
+terminate the loop in case the state changes while con->ops->dispatch()
+handler is being executed.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/mon_client.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ceph/messenger_v2.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/ceph/mon_client.c
-+++ b/net/ceph/mon_client.c
-@@ -72,8 +72,8 @@ static struct ceph_monmap *ceph_monmap_d
- 	struct ceph_monmap *monmap = NULL;
- 	struct ceph_fsid fsid;
- 	u32 struct_len;
--	int blob_len;
--	int num_mon;
-+	u32 blob_len;
-+	u32 num_mon;
- 	u8 struct_v;
- 	u32 epoch;
- 	int ret;
-@@ -112,7 +112,7 @@ static struct ceph_monmap *ceph_monmap_d
- 	}
- 	ceph_decode_32_safe(p, end, num_mon, e_inval);
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -2940,6 +2940,11 @@ static int __handle_control(struct ceph_
+ 	if (con->v2.in_desc.fd_tag != FRAME_TAG_MESSAGE)
+ 		return process_control(con, p, end);
  
--	dout("%s fsid %pU epoch %u num_mon %d\n", __func__, &fsid, epoch,
-+	dout("%s fsid %pU epoch %u num_mon %u\n", __func__, &fsid, epoch,
- 	     num_mon);
- 	if (num_mon > CEPH_MAX_MON)
- 		goto e_inval;
++	if (con->state != CEPH_CON_S_OPEN) {
++		con->error_msg = "protocol error, unexpected message";
++		return -EINVAL;
++	}
++
+ 	ret = process_message_header(con, p, end);
+ 	if (ret < 0)
+ 		return ret;
 
 
