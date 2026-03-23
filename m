@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513503AB277;
-	Mon, 23 Mar 2026 16:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5273AB277;
+	Mon, 23 Mar 2026 16:12:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282374; cv=none; b=T55tIXTk+k76IkPqLJNVIl0x5lu9zTNElQTSwf+sAfHNOczrvHeV1+9ErgAmwI6dJ2I5w62ua4WbTdvcWSuYdtmd6QnOb7n/KQu/7sbSBy579PiHkybKxG5lE/LQ03A8QPEKe+oKfw23dGSojG3Ko5Vw9wlLL0SPXNELaRtiJMg=
+	t=1774282376; cv=none; b=Q81FaYsdk9Ux4+FfRqupcOWxGNp8DGYq2OSYZdnO9P+YsSntlDLmOV22bR70fXvgBXwkcoDykXtDfrjV0SHb8b+TfdbwAjEUm+dMHpYpcz77nISINg+ka85lVqpAmmZL8Qr4vz3eGC0fleZem5YE+l5tBsC5AXyZvekpcl6X2Bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282374; c=relaxed/simple;
-	bh=jLIQMus2J1QyB7VKp/v+qgIHrOdT4Sn8x5GXWnyj5Cg=;
+	s=arc-20240116; t=1774282376; c=relaxed/simple;
+	bh=Kn/MHoicoQJwG+baPsywfXKsPfTm2VwUMlyBe1aChzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M+9Khp4IHnB1waAJnQ9Zk5I+ToUzDGndSQaHYTLAMBxOr8fJl0P/sRr8cOsTqQVz6VxghLv6v9pW+skO429Fwb25o1kA+pRIxCRr/AD+1nnHTbQGYF4x+pULRHFVgwNpw0HiZvTnZJNPGlWXmw783x7RBb3kMPY3a/LwHcceh1k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FcLmub1/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kinOg1AhoVOUDYKJomRuKvxm8I5wBRCBW0FuKwaR6ggZ9Fa3j8E8yxT+E2rTZZV57brk29Y9FDMQ8Db7vdwgg05AgxDo4ADEJf+U93UoIAvUBi0FnpDWZ7hwMBFRVCebpYoJI638tMYpaOtazhWNZDjWRGHI4jlvX0XeySQk6hE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QbxarVTd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FcLmub1/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBF0C4CEF7;
-	Mon, 23 Mar 2026 16:12:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QbxarVTd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 502EAC4CEF7;
+	Mon, 23 Mar 2026 16:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282374;
-	bh=jLIQMus2J1QyB7VKp/v+qgIHrOdT4Sn8x5GXWnyj5Cg=;
+	s=korg; t=1774282376;
+	bh=Kn/MHoicoQJwG+baPsywfXKsPfTm2VwUMlyBe1aChzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FcLmub1/0T210wTaziJc3fSfY5AISZs5xXkRdOdpWwMhvfmExLTi0DOgriNqSm9Pc
-	 lUs6eNJtvqAuAgK8XYxSEufjWeBAuQnyptKNtv6XcoDO5TjwaN0nF3zWlSyUF8ZIG2
-	 u0nHuaEDr78fpRvxydr4p+5BiNu8dBMZ6mU6Boek=
+	b=QbxarVTdEebc3N5ksnPP7/ihHfamZZQjt9bmLHkE6ciREXsJg/0+aVPJNMcThvlH9
+	 oPakXJUt1tL74DCdh2iDV/DK+6e9kDJ1fw3/qcriTxUjVT5iKyoliCo+QyI86ACm/T
+	 ruifqz88/h68f76tIuV7PqR6tj4HfbdW7IIGllSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Ray <ian.ray@gehealthcare.com>,
+	Joe Damato <joe@dama.to>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 131/481] net: nfc: nci: Fix zero-length proprietary notifications
-Date: Mon, 23 Mar 2026 14:41:53 +0100
-Message-ID: <20260323134528.460399440@linuxfoundation.org>
+Subject: [PATCH 6.1 132/481] nfc: nci: free skb on nci_transceive early error paths
+Date: Mon, 23 Mar 2026 14:41:54 +0100
+Message-ID: <20260323134528.483809471@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,73 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ian Ray <ian.ray@gehealthcare.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit f7d92f11bd33a6eb49c7c812255ef4ab13681f0f ]
+[ Upstream commit 7bd4b0c4779f978a6528c9b7937d2ca18e936e2c ]
 
-NCI NFC controllers may have proprietary OIDs with zero-length payload.
-One example is: drivers/nfc/nxp-nci/core.c, NXP_NCI_RF_TXLDO_ERROR_NTF.
+nci_transceive() takes ownership of the skb passed by the caller,
+but the -EPROTO, -EINVAL, and -EBUSY error paths return without
+freeing it.
 
-Allow a zero length payload in proprietary notifications *only*.
+Due to issues clearing NCI_DATA_EXCHANGE fixed by subsequent changes
+the nci/nci_dev selftest hits the error path occasionally in NIPA,
+and kmemleak detects leaks:
 
-Before:
+unreferenced object 0xff11000015ce6a40 (size 640):
+  comm "nci_dev", pid 3954, jiffies 4295441246
+  hex dump (first 32 bytes):
+    6b 6b 6b 6b 00 a4 00 0c 02 e1 03 6b 6b 6b 6b 6b  kkkk.......kkkkk
+    6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b 6b  kkkkkkkkkkkkkkkk
+  backtrace (crc 7c40cc2a):
+    kmem_cache_alloc_node_noprof+0x492/0x630
+    __alloc_skb+0x11e/0x5f0
+    alloc_skb_with_frags+0xc6/0x8f0
+    sock_alloc_send_pskb+0x326/0x3f0
+    nfc_alloc_send_skb+0x94/0x1d0
+    rawsock_sendmsg+0x162/0x4c0
+    do_syscall_64+0x117/0xfc0
 
--- >8 --
-kernel: nci: nci_recv_frame: len 3
--- >8 --
-
-After:
-
--- >8 --
-kernel: nci: nci_recv_frame: len 3
-kernel: nci: nci_ntf_packet: NCI RX: MT=ntf, PBF=0, GID=0x1, OID=0x23, plen=0
-kernel: nci: nci_ntf_packet: unknown ntf opcode 0x123
-kernel: nfc nfc0: NFC: RF transmitter couldn't start. Bad power and/or configuration?
--- >8 --
-
-After fixing the hardware:
-
--- >8 --
-kernel: nci: nci_recv_frame: len 27
-kernel: nci: nci_ntf_packet: NCI RX: MT=ntf, PBF=0, GID=0x1, OID=0x5, plen=24
-kernel: nci: nci_rf_intf_activated_ntf_packet: rf_discovery_id 1
--- >8 --
-
-Fixes: d24b03535e5e ("nfc: nci: Fix uninit-value in nci_dev_up and nci_ntf_packet")
-Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
-Link: https://patch.msgid.link/20260302163238.140576-1-ian.ray@gehealthcare.com
+Fixes: 6a2968aaf50c ("NFC: basic NCI protocol implementation")
+Reviewed-by: Joe Damato <joe@dama.to>
+Link: https://patch.msgid.link/20260303162346.2071888-2-kuba@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/nci/core.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/nfc/nci/core.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
 diff --git a/net/nfc/nci/core.c b/net/nfc/nci/core.c
-index 2ffdbbf90eb70..6b62218718a06 100644
+index 6b62218718a06..cdc1aa8662544 100644
 --- a/net/nfc/nci/core.c
 +++ b/net/nfc/nci/core.c
-@@ -1470,10 +1470,20 @@ static bool nci_valid_size(struct sk_buff *skb)
- 	unsigned int hdr_size = NCI_CTRL_HDR_SIZE;
+@@ -1023,18 +1023,23 @@ static int nci_transceive(struct nfc_dev *nfc_dev, struct nfc_target *target,
+ 	struct nci_conn_info *conn_info;
  
- 	if (skb->len < hdr_size ||
--	    !nci_plen(skb->data) ||
- 	    skb->len < hdr_size + nci_plen(skb->data)) {
- 		return false;
- 	}
-+
-+	if (!nci_plen(skb->data)) {
-+		/* Allow zero length in proprietary notifications (0x20 - 0x3F). */
-+		if (nci_opcode_oid(nci_opcode(skb->data)) >= 0x20 &&
-+		    nci_mt(skb->data) == NCI_MT_NTF_PKT)
-+			return true;
-+
-+		/* Disallow zero length otherwise. */
-+		return false;
+ 	conn_info = ndev->rf_conn_info;
+-	if (!conn_info)
++	if (!conn_info) {
++		kfree_skb(skb);
+ 		return -EPROTO;
 +	}
-+
- 	return true;
- }
  
+ 	pr_debug("target_idx %d, len %d\n", target->idx, skb->len);
+ 
+ 	if (!ndev->target_active_prot) {
+ 		pr_err("unable to exchange data, no active target\n");
++		kfree_skb(skb);
+ 		return -EINVAL;
+ 	}
+ 
+-	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags))
++	if (test_and_set_bit(NCI_DATA_EXCHANGE, &ndev->flags)) {
++		kfree_skb(skb);
+ 		return -EBUSY;
++	}
+ 
+ 	/* store cb and context to be used on receiving data */
+ 	conn_info->data_exchange_cb = cb;
 -- 
 2.51.0
 
