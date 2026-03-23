@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C0D426CE2D;
-	Mon, 23 Mar 2026 14:46:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF66242D62;
+	Mon, 23 Mar 2026 14:46:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277169; cv=none; b=M4Go0OoiXseFeHL0MKTaXJxgvtgyoa28sG0ou3aYnK6SmLqtSYDYxSdvBaD/RotPrxMF8CUnn5Nmr5gQ4FOAxLHtQbUlHvcJSietcTmPvvv6LstjGpRC74w31ufriXAh3GQB+rhH35zSSbosaV7dpdPueT6CgDe/zMcZFP30nqg=
+	t=1774277173; cv=none; b=OVCrWjk/7CAdZB9v+rqroTJF7yhXvLp6pyFvmMUvfrS+4GgDD26LVvcNTGq6ISdNvOxUUZcDORKc7ejoIdyKJPuVnQb/I1WxsEIY/LPfCbmLqr9uxSSrvUtFZ6UNcXQS3pGE4HLzKsLMuqWwBljVj+Gjs+ri8GvuxCOhTJWIlGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277169; c=relaxed/simple;
-	bh=trbhmRnQzzcvo5nz5peKWyU7IEoH6Y4ksz3E0qpijW4=;
+	s=arc-20240116; t=1774277173; c=relaxed/simple;
+	bh=bBb00pBxHG3CYnkCqDn0Ali//yVnCYVrGMM/BsMKhRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=b7QjChZovIKvM9otQ2fPkTWlqmwtxwyz/xJVk3Jg1SoqUivmlwN77nd8btT6IYdY5Ef5gPS11ChnVO/Jt1bnS3UhvmMpYAalsPZOcvy3fd8zyznFIvDxmnAr81RMKrZFM39FJrmT7G7cyTgUYUlMnAy2QQsoIybBLX+pCPsFrN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzCVwzsC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ka8bTa+1h/5BvCd09JiRaR83hLsXx6UfCD6RwJhwZiVvW3ZYvShY0ERjIqYClZCu/qafRt0EjPxJivn0XbQSbta/GdD8Y49ITzmiq7HFcHpjloK+7jA1v3NQbX47BW3qEaAp1/lEYlOwt2bRZ2PgTz62g5EddGTKk600E8hvCVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Qw8R41SA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzCVwzsC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0DFC4CEF7;
-	Mon, 23 Mar 2026 14:46:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Qw8R41SA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFADAC4CEF7;
+	Mon, 23 Mar 2026 14:46:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277169;
-	bh=trbhmRnQzzcvo5nz5peKWyU7IEoH6Y4ksz3E0qpijW4=;
+	s=korg; t=1774277172;
+	bh=bBb00pBxHG3CYnkCqDn0Ali//yVnCYVrGMM/BsMKhRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzCVwzsCleD/Z4gjp4DWEOAGwjYMsqcqJJtDNCiorQ2uUVceE0xunrr2xCRKT18Wu
-	 aHSaCngD37UVe/G24rQ5X39HvMFSL9ULg/iPbcECvp/tH16ce7iPdnzsY7zs8tZUA6
-	 gjJ/Vzakn/w+brQW+4SLLnYrgsYR9r5hY1x63TOo=
+	b=Qw8R41SAA0iNBVd+MklZ4+ubl50nbncHUQBvW4BYGgCh5jZc2iG1msgrpLNJCKPG0
+	 N4IEUDbo2jtmtxjG/GXjUeVUMgqRND9azRCXe+Iz7BUwCDA5W2Xa9nYzY8R27sT8RB
+	 ezR2eDJTiT0d4o32Cq7cvGKVHjliaua3UzB5688c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Roukala=20 ?= <martin.roukala@mupuf.org>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 344/460] serial: 8250_pci: add support for the AX99100
-Date: Mon, 23 Mar 2026 14:45:40 +0100
-Message-ID: <20260323134534.994786447@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Raul E Rangel <rrangel@google.com>
+Subject: [PATCH 6.12 345/460] serial: 8250: Fix TX deadlock when using DMA
+Date: Mon, 23 Mar 2026 14:45:41 +0100
+Message-ID: <20260323134535.020663691@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -44,83 +44,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Martin Roukala (né Peres) <martin.roukala@mupuf.org>
+From: Raul E Rangel <rrangel@chromium.org>
 
-commit 9c0072bc33d349c83d223e64be30794e11938a6b upstream.
+commit a424a34b8faddf97b5af41689087e7a230f79ba7 upstream.
 
-This is found in popular brands such as StarTech.com or Delock, and has
-been a source of frustration to quite a few people, if I can trust
-Amazon comments complaining about Linux support via the official
-out-of-the-tree driver.
+`dmaengine_terminate_async` does not guarantee that the
+`__dma_tx_complete` callback will run. The callback is currently the
+only place where `dma->tx_running` gets cleared. If the transaction is
+canceled and the callback never runs, then `dma->tx_running` will never
+get cleared and we will never schedule new TX DMA transactions again.
 
-Signed-off-by: Martin Roukala (né Peres) <martin.roukala@mupuf.org>
+This change makes it so we clear `dma->tx_running` after we terminate
+the DMA transaction. This is "safe" because `serial8250_tx_dma_flush`
+is holding the UART port lock. The first thing the callback does is also
+grab the UART port lock, so access to `dma->tx_running` is serialized.
+
+Fixes: 9e512eaaf8f4 ("serial: 8250: Fix fifo underflow on flush")
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260309-8250_pci_ax99100-v1-1-3328bdfd8e94@mupuf.org
+Signed-off-by: Raul E Rangel <rrangel@google.com>
+Link: https://patch.msgid.link/20260209135815.1.I16366ecb0f62f3c96fe3dd5763fcf6f3c2b4d8cd@changeid
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_pci.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ drivers/tty/serial/8250/8250_dma.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/tty/serial/8250/8250_pci.c
-+++ b/drivers/tty/serial/8250/8250_pci.c
-@@ -137,6 +137,8 @@ struct serial_private {
- };
- 
- #define PCI_DEVICE_ID_HPE_PCI_SERIAL	0x37e
-+#define PCIE_VENDOR_ID_ASIX		0x125B
-+#define PCIE_DEVICE_ID_AX99100		0x9100
- 
- static const struct pci_device_id pci_use_msi[] = {
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_NETMOS, PCI_DEVICE_ID_NETMOS_9900,
-@@ -149,6 +151,8 @@ static const struct pci_device_id pci_us
- 			 0xA000, 0x1000) },
- 	{ PCI_DEVICE_SUB(PCI_VENDOR_ID_HP_3PAR, PCI_DEVICE_ID_HPE_PCI_SERIAL,
- 			 PCI_ANY_ID, PCI_ANY_ID) },
-+	{ PCI_DEVICE_SUB(PCIE_VENDOR_ID_ASIX, PCIE_DEVICE_ID_AX99100,
-+			 0xA000, 0x1000) },
- 	{ }
- };
- 
-@@ -912,6 +916,7 @@ static int pci_netmos_init(struct pci_de
- 	case PCI_DEVICE_ID_NETMOS_9912:
- 	case PCI_DEVICE_ID_NETMOS_9922:
- 	case PCI_DEVICE_ID_NETMOS_9900:
-+	case PCIE_DEVICE_ID_AX99100:
- 		num_serial = pci_netmos_9900_numports(dev);
- 		break;
- 
-@@ -2507,6 +2512,14 @@ static struct pci_serial_quirk pci_seria
- 		.init		= pci_netmos_init,
- 		.setup		= pci_netmos_9900_setup,
- 	},
-+	{
-+		.vendor		= PCIE_VENDOR_ID_ASIX,
-+		.device		= PCI_ANY_ID,
-+		.subvendor	= PCI_ANY_ID,
-+		.subdevice	= PCI_ANY_ID,
-+		.init		= pci_netmos_init,
-+		.setup		= pci_netmos_9900_setup,
-+	},
- 	/*
- 	 * EndRun Technologies
- 	*/
-@@ -6028,6 +6041,10 @@ static const struct pci_device_id serial
- 		0xA000, 0x3002,
- 		0, 0, pbn_NETMOS9900_2s_115200 },
- 
-+	{	PCIE_VENDOR_ID_ASIX, PCIE_DEVICE_ID_AX99100,
-+		0xA000, 0x1000,
-+		0, 0, pbn_b0_1_115200 },
-+
- 	/*
- 	 * Best Connectivity and Rosewill PCI Multi I/O cards
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -162,7 +162,22 @@ void serial8250_tx_dma_flush(struct uart
  	 */
+ 	dma->tx_size = 0;
+ 
++	/*
++	 * We can't use `dmaengine_terminate_sync` because `uart_flush_buffer` is
++	 * holding the uart port spinlock.
++	 */
+ 	dmaengine_terminate_async(dma->txchan);
++
++	/*
++	 * The callback might or might not run. If it doesn't run, we need to ensure
++	 * that `tx_running` is cleared so that we can schedule new transactions.
++	 * If it does run, then the zombie callback will clear `tx_running` again
++	 * and perform a no-op since `tx_size` was cleared above.
++	 *
++	 * In either case, we ASSUME the DMA transaction will terminate before we
++	 * issue a new `serial8250_tx_dma`.
++	 */
++	dma->tx_running = 0;
+ }
+ 
+ int serial8250_rx_dma(struct uart_8250_port *p)
 
 
