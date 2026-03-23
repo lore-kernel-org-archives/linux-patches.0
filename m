@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD502737EB;
-	Mon, 23 Mar 2026 14:57:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67718370D76;
+	Mon, 23 Mar 2026 14:57:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277875; cv=none; b=BF75D6NTeQ/mjOysQ4IcmQuzGuAGGrlnpFyDroAymmfKiVZwzG2lx5cF/M02klXRJLxZQ1GwjjJ5Vt3u+k6VqKdFhAwFFHQt1bP5niZiLeim7tMqY4PR8Phha6ytHK98cfzl7Tjq6iHwjQjiYTXkZ/YoknkY/6rAG6QcLB/A/x0=
+	t=1774277878; cv=none; b=kEWy+PDcXbdzOvhJVv8ddv37WOn+GFlzwiwoNCKnzhojLrCc67LALTbQ4t893sfEXCdkgvwR9pFs4dW5XtQnuLCPNwM97KdjWIWZuwNvIslsQFh0wHynjtCtTXjsmU/qysoaWLrvjvVbQ1keQ9Gl168CWUuthKQhw9MT3RhQe1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277875; c=relaxed/simple;
-	bh=B9Dq+jzg9vCijCaCGH2rDd43/+BdMLeJ0kZAETSvz8U=;
+	s=arc-20240116; t=1774277878; c=relaxed/simple;
+	bh=KlA2CAu3K+MUiVS5Zj2gkUpTlKLLyS6+0FbPbgEgkDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WupzmSXI0SQ3A0gk6axIOk8ASTLwFSqQXl+PMLtyYXQTPVWTkYDqOnFlitB28wVjHNJULdps7+8v0riSzQ+KC/KgtE31XezMbmxSNuceM+AVOI0FUHDOvDzskgOcFxHNb+S7iFKxhZHGv1UbGX/HjISnIWkzfe/a0+It2CKCeeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lH8k7Kxf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gG5tCwwtE8+hcb9r6GAtZj4mjIhOxnCrY+76Cap4dL1lfx2ZvUR3CBxfThTu5AIO6ZsTol9fdGysPM1Q8BaALP1buNUcg8XLyodBVsE50mBVNo2ClgpxY3tfd51KNuIQt4t3b6I8xM26q7yADWMH7sFJWrRKjSucV+W+b/QAUw8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBVUbLsp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lH8k7Kxf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C473FC2BCB1;
-	Mon, 23 Mar 2026 14:57:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBVUbLsp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E324CC2BCB3;
+	Mon, 23 Mar 2026 14:57:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277875;
-	bh=B9Dq+jzg9vCijCaCGH2rDd43/+BdMLeJ0kZAETSvz8U=;
+	s=korg; t=1774277878;
+	bh=KlA2CAu3K+MUiVS5Zj2gkUpTlKLLyS6+0FbPbgEgkDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lH8k7KxfIS/NnSYMU1W9Zv8WR3VKRYsAopYLcQnXw9qlfAv87W8BbuNTIsyWUedek
-	 UVKM5Z49ESXNji0qa0yyWIbSWbPRgrRKtCHy/X1AG0+T9DLA/4Vc3E1ZmmKjw2Qe9g
-	 w4NYEZ9qzIfjjRRfwwM32Ua0CTw0lytXrEK+8rCs=
+	b=wBVUbLspOk/j4a78CyiIM/GrNeOiQ2RfWzyUtI7mWqfOjl/pnDP70RGs7ib0wyaUZ
+	 cXe89IDOHs3WIAaqSKkZEZ2sQZbNA9U6qnlS0gtD+fmn1CXYK3811Dz/Z69+1wXxv4
+	 Jtr7dInFn9iK1qSAxNWhTSpWfJTThRJhk0JbXiFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Lifshits <vitaly.lifshits@intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Geert Uytterhoeven <geert@linux-m68k.org>,
+	Javier Martinez Canillas <javierm@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 129/567] e1000e: clear DPG_EN after reset to avoid autonomous power-gating
-Date: Mon, 23 Mar 2026 14:40:49 +0100
-Message-ID: <20260323134536.997417987@linuxfoundation.org>
+Subject: [PATCH 6.6 130/567] drm/ssd130x: Use bool for ssd130x_deviceinfo flags
+Date: Mon, 23 Mar 2026 14:40:50 +0100
+Message-ID: <20260323134537.020481325@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,59 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vitaly Lifshits <vitaly.lifshits@intel.com>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
 
-[ Upstream commit 0942fc6d324eb9c6b16187b2aa994c0823557f06 ]
+[ Upstream commit 15d30b46573d75f5cb58cfacded8ebab9c76a2b0 ]
 
-Panther Lake systems introduced an autonomous power gating feature for
-the integrated Gigabit Ethernet in shutdown state (S5) state. As part of
-it, the reset value of DPG_EN bit was changed to 1. Clear this bit after
-performing hardware reset to avoid errors such as Tx/Rx hangs, or packet
-loss/corruption.
+The .need_pwm and .need_chargepump fields in struct ssd130x_deviceinfo
+are flags that can have only two possible values: 0 and 1.
+Reduce kernel size by changing their types from int to bool.
 
-Fixes: 0c9183ce61bc ("e1000e: Add support for the next LOM generation")
-Signed-off-by: Vitaly Lifshits <vitaly.lifshits@intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
+Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
+Tested-by: Javier Martinez Canillas <javierm@redhat.com>
+Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/285005ff361969eff001386c5f97990f0e703838.1692888745.git.geert@linux-m68k.org
+Stable-dep-of: 36d9579fed6c ("drm/solomon: Fix page start when updating rectangle in page addressing mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/e1000e/defines.h | 1 +
- drivers/net/ethernet/intel/e1000e/ich8lan.c | 9 +++++++++
- 2 files changed, 10 insertions(+)
+ drivers/gpu/drm/solomon/ssd130x.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/e1000e/defines.h b/drivers/net/ethernet/intel/e1000e/defines.h
-index 955bb11618572..c4db2927c6c42 100644
---- a/drivers/net/ethernet/intel/e1000e/defines.h
-+++ b/drivers/net/ethernet/intel/e1000e/defines.h
-@@ -33,6 +33,7 @@
- 
- /* Extended Device Control */
- #define E1000_CTRL_EXT_LPCD  0x00000004     /* LCD Power Cycle Done */
-+#define E1000_CTRL_EXT_DPG_EN	0x00000008 /* Dynamic Power Gating Enable */
- #define E1000_CTRL_EXT_SDP3_DATA 0x00000080 /* Value of SW Definable Pin 3 */
- #define E1000_CTRL_EXT_FORCE_SMBUS 0x00000800 /* Force SMBus mode */
- #define E1000_CTRL_EXT_EE_RST    0x00002000 /* Reinitialize from EEPROM */
-diff --git a/drivers/net/ethernet/intel/e1000e/ich8lan.c b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-index df4e7d781cb1c..f9328caefe44b 100644
---- a/drivers/net/ethernet/intel/e1000e/ich8lan.c
-+++ b/drivers/net/ethernet/intel/e1000e/ich8lan.c
-@@ -4925,6 +4925,15 @@ static s32 e1000_reset_hw_ich8lan(struct e1000_hw *hw)
- 	reg |= E1000_KABGTXD_BGSQLBIAS;
- 	ew32(KABGTXD, reg);
- 
-+	/* The hardware reset value of the DPG_EN bit is 1.
-+	 * Clear DPG_EN to prevent unexpected autonomous power gating.
-+	 */
-+	if (hw->mac.type >= e1000_pch_ptp) {
-+		reg = er32(CTRL_EXT);
-+		reg &= ~E1000_CTRL_EXT_DPG_EN;
-+		ew32(CTRL_EXT, reg);
-+	}
-+
- 	return 0;
- }
+diff --git a/drivers/gpu/drm/solomon/ssd130x.h b/drivers/gpu/drm/solomon/ssd130x.h
+index 87968b3e7fb82..aa39b13615ebe 100644
+--- a/drivers/gpu/drm/solomon/ssd130x.h
++++ b/drivers/gpu/drm/solomon/ssd130x.h
+@@ -40,8 +40,8 @@ struct ssd130x_deviceinfo {
+ 	u32 default_width;
+ 	u32 default_height;
+ 	u32 page_height;
+-	int need_pwm;
+-	int need_chargepump;
++	bool need_pwm;
++	bool need_chargepump;
+ 	bool page_mode_only;
+ };
  
 -- 
 2.51.0
