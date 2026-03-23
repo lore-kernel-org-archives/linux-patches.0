@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712EA283FC8;
-	Mon, 23 Mar 2026 16:26:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F683BA25B;
+	Mon, 23 Mar 2026 16:26:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283178; cv=none; b=P+NRxtPaVA8WkgRG+kt45/KVNj8b/t2xo37Vu89A9s/dlYqtSXUNVAduva7ObEVa+JtIL1h8c7h8nAeZ5LVLznjiIKIfQZD3IMZqyyDWoDxLp3N+55mV/B/W6h7c+t67bXPb/rNf5pjOqj2cuzVSC+NrlSrFdTSSGQtr/lZgxV8=
+	t=1774283181; cv=none; b=JMb8HL0SyyVDraCHFcQQ6UV2xmekURNaEnwnWL62oBr3YVsOLCIh+8+Z5mPvvyFDoUFc0pBr8PgLvJNRZgnY9oHAxG3j/9ZOhJZ9N+pyNnMF1ueTR6dnEjyiI1LNr+ykXu723yWMyNrY/9J5Laew2T7Y9ZkXe3ebejXUSMw3AAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283178; c=relaxed/simple;
-	bh=1CUn2DU8t3JX0puNA3BDa4fvm1f9Uw82nply509SDwQ=;
+	s=arc-20240116; t=1774283181; c=relaxed/simple;
+	bh=Lzloqu9hTyERji/sv7jR3/UwVC43kCs9a1lqgOv6fPE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K/93hsguzRM4HYwnYIeSC6Y2LEM8NUkNSQ2RY/zmnLvIvs9v3YpfqnB8O63C1C/GvndenOxt+Jgl2Liyn8h3ZfeXghQJsGsgRBWFvhrIFtZDpQ7favOgvHXqiN468LHMQ6O7BnL0x0IH4FD0UDBaB/jd1N0RbP9s6EbHiWcOMPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwWg3sZI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WqSsoGNVFtaZO3AoHwDzXubyxqnNAH5J2m7adK75SC+2WFTxDfOH6emm7xzXLtnMFM+pPh/ZYz2kB08KlNKRatJR84Pel8QtOUxApwgtcBjscE12zOs+kXhM49EIZyqx7h8StxCZ+Fmt0FZv2YctEnRwJJ1n/VBJA2+EUbeMepI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wF1CoKDb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwWg3sZI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02434C4CEF7;
-	Mon, 23 Mar 2026 16:26:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wF1CoKDb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84C6FC2BC9E;
+	Mon, 23 Mar 2026 16:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283178;
-	bh=1CUn2DU8t3JX0puNA3BDa4fvm1f9Uw82nply509SDwQ=;
+	s=korg; t=1774283180;
+	bh=Lzloqu9hTyERji/sv7jR3/UwVC43kCs9a1lqgOv6fPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwWg3sZIL+Nn8KnC7Y28roCqEFqK09QS2tsWepqWfm6frLw5piXXVy7Rt3wbNstio
-	 06HF+RwokS2hNVOjbJqlVAARsIgOp5Ki5Ii6KoMwVxZzUOTAnUUDjB2A2gnJKvGcyP
-	 roSoK+NmnWeQuoI47UmibS9o+QIb+h8phdAQhUJI=
+	b=wF1CoKDbkjG6VTlTu7WmfdKk5XLkRIph+Vv/avE+2WfojmefviFbgpyV9jRE92+RH
+	 BA0fjwZDLfhrXVIB8mbH6WcwJWRsqCISDXo7rvn927ke/c6K/YLWh+LZVHXpaikfko
+	 6lBnupEJXPpW48F26G/ZKIbmw/ln9MFKn4lUEW7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 432/481] net: macb: fix uninitialized rx_fs_lock
-Date: Mon, 23 Mar 2026 14:46:54 +0100
-Message-ID: <20260323134535.730943280@linuxfoundation.org>
+Subject: [PATCH 6.1 433/481] udp_tunnel: fix NULL deref caused by udp_sock_create6 when CONFIG_IPV6=n
+Date: Mon, 23 Mar 2026 14:46:55 +0100
+Message-ID: <20260323134535.754973083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,76 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 34b11cc56e4369bc08b1f4c4a04222d75ed596ce ]
+[ Upstream commit b3a6df291fecf5f8a308953b65ca72b7fc9e015d ]
 
-If hardware doesn't support RX Flow Filters, rx_fs_lock spinlock is not
-initialized leading to the following assertion splat triggerable via
-set_rxnfc callback.
+When CONFIG_IPV6 is disabled, the udp_sock_create6() function returns 0
+(success) without actually creating a socket. Callers such as
+fou_create() then proceed to dereference the uninitialized socket
+pointer, resulting in a NULL pointer dereference.
 
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 1 PID: 949 Comm: syz.0.6 Not tainted 6.1.164+ #113
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- assign_lock_key kernel/locking/lockdep.c:974 [inline]
- register_lock_class+0x141b/0x17f0 kernel/locking/lockdep.c:1287
- __lock_acquire+0x74f/0x6c40 kernel/locking/lockdep.c:4928
- lock_acquire kernel/locking/lockdep.c:5662 [inline]
- lock_acquire+0x190/0x4b0 kernel/locking/lockdep.c:5627
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0x33/0x50 kernel/locking/spinlock.c:162
- gem_del_flow_filter drivers/net/ethernet/cadence/macb_main.c:3562 [inline]
- gem_set_rxnfc+0x533/0xac0 drivers/net/ethernet/cadence/macb_main.c:3667
- ethtool_set_rxnfc+0x18c/0x280 net/ethtool/ioctl.c:961
- __dev_ethtool net/ethtool/ioctl.c:2956 [inline]
- dev_ethtool+0x229c/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+The captured NULL deref crash:
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+  RIP: 0010:fou_nl_add_doit (net/ipv4/fou_core.c:590 net/ipv4/fou_core.c:764)
+  [...]
+  Call Trace:
+    <TASK>
+    genl_family_rcv_msg_doit.constprop.0 (net/netlink/genetlink.c:1114)
+    genl_rcv_msg (net/netlink/genetlink.c:1194 net/netlink/genetlink.c:1209)
+    [...]
+    netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+    genl_rcv (net/netlink/genetlink.c:1219)
+    netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
+    netlink_sendmsg (net/netlink/af_netlink.c:1894)
+    __sock_sendmsg (net/socket.c:727 (discriminator 1) net/socket.c:742 (discriminator 1))
+    __sys_sendto (./include/linux/file.h:62 (discriminator 1) ./include/linux/file.h:83 (discriminator 1) net/socket.c:2183 (discriminator 1))
+    __x64_sys_sendto (net/socket.c:2213 (discriminator 1) net/socket.c:2209 (discriminator 1) net/socket.c:2209 (discriminator 1))
+    do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+    entry_SYSCALL_64_after_hwframe (net/arch/x86/entry/entry_64.S:130)
 
-A more straightforward solution would be to always initialize rx_fs_lock,
-just like rx_fs_list.  However, in this case the driver set_rxnfc callback
-would return with a rather confusing error code, e.g. -EINVAL.  So deny
-set_rxnfc attempts directly if the RX filtering feature is not supported
-by hardware.
+This patch makes udp_sock_create6 return -EPFNOSUPPORT instead, so
+callers correctly take their error paths. There is only one caller of
+the vulnerable function and only privileged users can trigger it.
 
-Fixes: ae8223de3df5 ("net: macb: Added support for RX filtering")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-2-pchelkin@ispras.ru
+Fixes: fd384412e199b ("udp_tunnel: Seperate ipv6 functions into its own file.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260317010241.1893893-1-xmei5@asu.edu
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ include/net/udp_tunnel.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 471e3ebd7c5de..412a821148d7b 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -3770,6 +3770,9 @@ static int gem_set_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd)
- 	struct macb *bp = netdev_priv(netdev);
- 	int ret;
+diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
+index e5f81710b18f4..cd2bd3826d168 100644
+--- a/include/net/udp_tunnel.h
++++ b/include/net/udp_tunnel.h
+@@ -47,7 +47,7 @@ int udp_sock_create6(struct net *net, struct udp_port_cfg *cfg,
+ static inline int udp_sock_create6(struct net *net, struct udp_port_cfg *cfg,
+ 				   struct socket **sockp)
+ {
+-	return 0;
++	return -EPFNOSUPPORT;
+ }
+ #endif
  
-+	if (!(netdev->hw_features & NETIF_F_NTUPLE))
-+		return -EOPNOTSUPP;
-+
- 	switch (cmd->cmd) {
- 	case ETHTOOL_SRXCLSRLINS:
- 		if ((cmd->fs.location >= bp->max_tuples)
 -- 
 2.51.0
 
