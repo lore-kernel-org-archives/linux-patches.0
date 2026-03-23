@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F263B6370;
-	Mon, 23 Mar 2026 15:03:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94FF27FB3A;
+	Mon, 23 Mar 2026 15:03:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278204; cv=none; b=r1l3/oH/9HRBnbSVwkn6ZqnvGK/gzU4NfqAv3KZciKIZXprGi7Q8uO+EQYENDE5NFRoOFRBMywW23expu9BEWSg7ocqcUwlAUADdc9ZmxfREdoa9bpQPFDvTv37WhBNaH6CNk+ChomfQZH1EXbJoRfsEWc4H6dMpdnZdbBSKmY8=
+	t=1774278206; cv=none; b=fXxr8ln9kWqGunCuhu0cdYGgVtDyRMcBDj1lp/Lagcu4ff5NMAjFtD0K1xc6MAHHd1T9vdZqt5tA7g3BuD6E8Z3LTPQikXuihCSnIrHdPnd/yQ7qcyZRsFElM9NgVa67v58nnWe3yO5h99ftuzaDRR2pYIzIi3R8M1uYiVOpjKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278204; c=relaxed/simple;
-	bh=+/Bdhsfnc2p5m0vzli10FdOgVxChApS/Si+THwUm8pA=;
+	s=arc-20240116; t=1774278206; c=relaxed/simple;
+	bh=ZVYg+qJPwm1ONaOtiQQ37rtq2SNGnpThMrqpL/q7Tp4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hNPYoZ6Zo2zg1oYocOBCo+fnww1bdtIeWwl0fBS9nDy/JeZXTxpgfnYB8FpKSiDgzuQhrtnlMqxiCuFlDqZqblEDJUVyZa1tmDxDBdoAhCI99V+/mlILq0uaLVhH3j4FUCnQKk2BNmw0wawGtQcNbr/D+0tbsDq7LAIJE0/ytWg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0Wp0k6gs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GB5xEYZdTMlwVIwRS1qwOOKqwaUO8qHc1SQ5nADz1WpSr9qtkixqY4XBewBzHAWgktyWZ1eTcETToc+SV8p5mkyKaW2Np96KPuoKnuBd88AIDsfvs3/4LIQEk2E8CkZd+pXZp6tYidgHs/MTpgEDE8r87+9pWEw3gAUV7LqCcfQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aOLr46xF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0Wp0k6gs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F1F1C4CEF7;
-	Mon, 23 Mar 2026 15:03:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aOLr46xF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA71C4CEF7;
+	Mon, 23 Mar 2026 15:03:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278203;
-	bh=+/Bdhsfnc2p5m0vzli10FdOgVxChApS/Si+THwUm8pA=;
+	s=korg; t=1774278206;
+	bh=ZVYg+qJPwm1ONaOtiQQ37rtq2SNGnpThMrqpL/q7Tp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wp0k6gs5RSwgOTnUHXHecJoUltHN1f7+ByG3c9mX1j22oy8lcG6f3yHCPxJ7NApF
-	 Al19MZhI8ZZ+WvJurNQxXQ9K++gQl92pc9xhnPWD9n/y66e4FLBH2XU/mafbo0pH8Q
-	 gCFLhRC6SjR/I2u3/vgXG86NczjZf53oPhoNNiJ4=
+	b=aOLr46xFplNX+h4g8LL6CMoOhz7LjN42Grz5TpPB3z1ZtdEEkYtS0uyWdAmXWB8iq
+	 X0VsHb3p/lXY418+Ba6hdZ3Nm4Xd1n3u5jVQ2Ypkc1ryUVPZMkpdMJFGgLyL7p10wo
+	 kBBqoo+i09yBWmWvnji3J0nTJT5thDSWlecrx0Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Qualys Security Advisory <qsa@qualys.com>,
-	Ryan Lee <ryan.lee@canonical.com>,
+	Salvatore Bonaccorso <carnil@debian.org>,
+	Georgia Garcia <georgia.garcia@canonical.com>,
 	Cengiz Can <cengiz.can@canonical.com>,
+	Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.6 190/567] apparmor: fix: limit the number of levels of policy namespaces
-Date: Mon, 23 Mar 2026 14:41:50 +0100
-Message-ID: <20260323134538.554189184@linuxfoundation.org>
+Subject: [PATCH 6.6 191/567] apparmor: fix side-effect bug in match_char() macro usage
+Date: Mon, 23 Mar 2026 14:41:51 +0100
+Message-ID: <20260323134538.578177431@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,49 +54,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 
-commit 306039414932c80f8420695a24d4fe10c84ccfb2 upstream.
+commit 8756b68edae37ff546c02091989a4ceab3f20abd upstream.
 
-Currently the number of policy namespaces is not bounded relying on
-the user namespace limit. However policy namespaces aren't strictly
-tied to user namespaces and it is possible to create them and nest
-them arbitrarily deep which can be used to exhaust system resource.
+The match_char() macro evaluates its character parameter multiple
+times when traversing differential encoding chains. When invoked
+with *str++, the string pointer advances on each iteration of the
+inner do-while loop, causing the DFA to check different characters
+at each iteration and therefore skip input characters.
+This results in out-of-bounds reads when the pointer advances past
+the input buffer boundary.
 
-Hard cap policy namespaces to the same depth as user namespaces.
+[   94.984676] ==================================================================
+[   94.985301] BUG: KASAN: slab-out-of-bounds in aa_dfa_match+0x5ae/0x760
+[   94.985655] Read of size 1 at addr ffff888100342000 by task file/976
 
-Fixes: c88d4c7b049e8 ("AppArmor: core policy routines")
+[   94.986319] CPU: 7 UID: 1000 PID: 976 Comm: file Not tainted 6.19.0-rc7-next-20260127 #1 PREEMPT(lazy)
+[   94.986322] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[   94.986329] Call Trace:
+[   94.986341]  <TASK>
+[   94.986347]  dump_stack_lvl+0x5e/0x80
+[   94.986374]  print_report+0xc8/0x270
+[   94.986384]  ? aa_dfa_match+0x5ae/0x760
+[   94.986388]  kasan_report+0x118/0x150
+[   94.986401]  ? aa_dfa_match+0x5ae/0x760
+[   94.986405]  aa_dfa_match+0x5ae/0x760
+[   94.986408]  __aa_path_perm+0x131/0x400
+[   94.986418]  aa_path_perm+0x219/0x2f0
+[   94.986424]  apparmor_file_open+0x345/0x570
+[   94.986431]  security_file_open+0x5c/0x140
+[   94.986442]  do_dentry_open+0x2f6/0x1120
+[   94.986450]  vfs_open+0x38/0x2b0
+[   94.986453]  ? may_open+0x1e2/0x2b0
+[   94.986466]  path_openat+0x231b/0x2b30
+[   94.986469]  ? __x64_sys_openat+0xf8/0x130
+[   94.986477]  do_file_open+0x19d/0x360
+[   94.986487]  do_sys_openat2+0x98/0x100
+[   94.986491]  __x64_sys_openat+0xf8/0x130
+[   94.986499]  do_syscall_64+0x8e/0x660
+[   94.986515]  ? count_memcg_events+0x15f/0x3c0
+[   94.986526]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   94.986540]  ? handle_mm_fault+0x1639/0x1ef0
+[   94.986551]  ? vma_start_read+0xf0/0x320
+[   94.986558]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   94.986561]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   94.986563]  ? fpregs_assert_state_consistent+0x50/0xe0
+[   94.986572]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   94.986574]  ? arch_exit_to_user_mode_prepare+0x9/0xb0
+[   94.986587]  ? srso_alias_return_thunk+0x5/0xfbef5
+[   94.986588]  ? irqentry_exit+0x3c/0x590
+[   94.986595]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+[   94.986597] RIP: 0033:0x7fda4a79c3ea
+
+Fix by extracting the character value before invoking match_char,
+ensuring single evaluation per outer loop.
+
+Fixes: 074c1cd798cb ("apparmor: dfa move character match into a macro")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Reviewed-by: Ryan Lee <ryan.lee@canonical.com>
+Tested-by: Salvatore Bonaccorso <carnil@debian.org>
+Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
 Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
+Signed-off-by: Massimiliano Pellizzer <massimiliano.pellizzer@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/include/policy_ns.h |    2 ++
- security/apparmor/policy_ns.c         |    2 ++
- 2 files changed, 4 insertions(+)
+ security/apparmor/match.c |   30 ++++++++++++++++++++----------
+ 1 file changed, 20 insertions(+), 10 deletions(-)
 
---- a/security/apparmor/include/policy_ns.h
-+++ b/security/apparmor/include/policy_ns.h
-@@ -18,6 +18,8 @@
- #include "label.h"
- #include "policy.h"
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -408,13 +408,18 @@ aa_state_t aa_dfa_match_len(struct aa_df
+ 	if (dfa->tables[YYTD_ID_EC]) {
+ 		/* Equivalence class table defined */
+ 		u8 *equiv = EQUIV_TABLE(dfa);
+-		for (; len; len--)
+-			match_char(state, def, base, next, check,
+-				   equiv[(u8) *str++]);
++		for (; len; len--) {
++			u8 c = equiv[(u8) *str];
++
++			match_char(state, def, base, next, check, c);
++			str++;
++		}
+ 	} else {
+ 		/* default is direct to next state */
+-		for (; len; len--)
+-			match_char(state, def, base, next, check, (u8) *str++);
++		for (; len; len--) {
++			match_char(state, def, base, next, check, (u8) *str);
++			str++;
++		}
+ 	}
  
-+/* Match max depth of user namespaces */
-+#define MAX_NS_DEPTH 32
+ 	return state;
+@@ -448,13 +453,18 @@ aa_state_t aa_dfa_match(struct aa_dfa *d
+ 		/* Equivalence class table defined */
+ 		u8 *equiv = EQUIV_TABLE(dfa);
+ 		/* default is direct to next state */
+-		while (*str)
+-			match_char(state, def, base, next, check,
+-				   equiv[(u8) *str++]);
++		while (*str) {
++			u8 c = equiv[(u8) *str];
++
++			match_char(state, def, base, next, check, c);
++			str++;
++		}
+ 	} else {
+ 		/* default is direct to next state */
+-		while (*str)
+-			match_char(state, def, base, next, check, (u8) *str++);
++		while (*str) {
++			match_char(state, def, base, next, check, (u8) *str);
++			str++;
++		}
+ 	}
  
- /* struct aa_ns_acct - accounting of profiles in namespace
-  * @max_size: maximum space allowed for all profiles in namespace
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -260,6 +260,8 @@ static struct aa_ns *__aa_create_ns(stru
- 	AA_BUG(!name);
- 	AA_BUG(!mutex_is_locked(&parent->lock));
- 
-+	if (parent->level > MAX_NS_DEPTH)
-+		return ERR_PTR(-ENOSPC);
- 	ns = alloc_ns(parent->base.hname, name);
- 	if (!ns)
- 		return ERR_PTR(-ENOMEM);
+ 	return state;
 
 
