@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687126D4F9;
-	Mon, 23 Mar 2026 14:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6046626F28D;
+	Mon, 23 Mar 2026 14:51:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277509; cv=none; b=H/PCmpo72oLh+PKOI0ap5t213C7PK5Xij4nq0Kd1OOGU5HTrUTBJ+7Ak4YvPhL7/S4jhDIWT7l8bzmF3wg5FVdVRUf8K672ari61dHLdy0HF7pSRUQQ4ksuIt2uVKIc3FbskLgzCw7Z8YFlYMEqkVrpAf40QyXNDQn/QEtzyg0k=
+	t=1774277513; cv=none; b=SvlGnN9WOPSlk1MyUDno8DGKH+asFfj6ffn9q+1xb7Rrn70gMrZPzvL/mTmyF8xYvqRRZvz6V+sOvtkhsk+XML+g+yJ5RVW81dEF1BmQw74HyepF5HhWkAXDOHz/wJNAcYoN4TJ81A9P6zDxCzTaDOTBYYHN/M/9WiuLnI7ZNlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277509; c=relaxed/simple;
-	bh=VlabTOk98ggNaKlEq6t37thx/Sbj5g018pyZKYF4jD8=;
+	s=arc-20240116; t=1774277513; c=relaxed/simple;
+	bh=n8ybsdhuyvg2XLLGsXoN3vavRBsuu9IB1zu9qsKqtSc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Nh0Na0M64wPv04+GA1sBEtIPvEVnxjRImN7Tt1zbJEE2WQ6AoNRPXqELIhb1PWq/hIstuzE36MsjW9SJXjvbuHBJjCfbMLCq5yFD9y/aXcUTeH87ubyv5K3lav8zoKbb32URla0+o93rTjmAw9EPN8heZwc74oZl9I3oBdEJTvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4L/8QGF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cbSXj/9iC1BCNZOn+bXI8BFHZdY3tQYfyyRH+4UR9FVH5sJKVFbjdsa8LnFvDZbMYePugwn9IlA+HHKMJKdetL45FC4+u0K9gbZGPjfio+pBAFkkYscAgeWjtfGBER/LWSsPI/9H5LUNetBWhXklpZBzSBg43HnQc1FEe48bJbI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vfTul4+o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4L/8QGF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33804C4CEF7;
-	Mon, 23 Mar 2026 14:51:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vfTul4+o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD3DC4CEF7;
+	Mon, 23 Mar 2026 14:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277509;
-	bh=VlabTOk98ggNaKlEq6t37thx/Sbj5g018pyZKYF4jD8=;
+	s=korg; t=1774277513;
+	bh=n8ybsdhuyvg2XLLGsXoN3vavRBsuu9IB1zu9qsKqtSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n4L/8QGF4XiBJ8PXNIp+nT4j5S8gTTSF+Aefbkw4XgTIZKHzMHWOo7gGDFkCbzc+u
-	 oI64IppXSU5kB7QL1FiPCgelSriBaEGLC+bOxAHoCARonVmO/Hp3aLTOms4++J2a0P
-	 6eC+FTW1nVc51SR/gUeeu+8T3R5L4RFmt9VhuekU=
+	b=vfTul4+oQv6fhDzUVc5QzGxJbdj1ON6fAbn7YV4zxAUD1h2tHLltZEkqZuhqtb21N
+	 kIOWBnYVFmHJ2tS/4+iVHG3Mbt9AhzGhY7bBkWOGuiKlBKbiiyZZm2ypQ4kGtBz+vn
+	 7bPfm6XDORugtpwPf5Zj0OgKHUDFKg8PUX2AN/5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.12 434/460] hwmon: (pmbus/mp2975) Add error check for pmbus_read_word_data() return value
-Date: Mon, 23 Mar 2026 14:47:10 +0100
-Message-ID: <20260323134537.222862863@linuxfoundation.org>
+Subject: [PATCH 6.12 435/460] hwmon: (pmbus/isl68137) Fix unchecked return value and use sysfs_emit()
+Date: Mon, 23 Mar 2026 14:47:11 +0100
+Message-ID: <20260323134537.252676013@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,36 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanman Pradhan <psanman@juniper.net>
 
-commit 19d4b9c8a136704d5f2544e7ac550f27918a5004 upstream.
+commit 86259558e422b250aa6aa57163a6d759074573f5 upstream.
 
-mp2973_read_word_data() XORs the return value of pmbus_read_word_data()
-with PB_STATUS_POWER_GOOD_N without first checking for errors. If the I2C
-transaction fails, a negative error code is XORed with the constant,
-producing a corrupted value that is returned as valid status data instead
-of propagating the error.
+isl68137_avs_enable_show_page() uses the return value of
+pmbus_read_byte_data() without checking for errors. If the I2C transaction
+fails, a negative error code is passed through bitwise operations,
+producing incorrect output.
 
-Add the missing error check before modifying the return value.
+Add an error check to propagate the return value if it is negative.
+Additionally, modernize the callback by replacing sprintf()
+with sysfs_emit().
 
-Fixes: acda945afb465 ("hwmon: (pmbus/mp2975) Fix PGOOD in READ_STATUS_WORD")
+Fixes: 038a9c3d1e424 ("hwmon: (pmbus/isl68137) Add driver for Intersil ISL68137 PWM Controller")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260317173308.382545-3-sanman.pradhan@hpe.com
+Link: https://lore.kernel.org/r/20260318193952.47908-2-sanman.pradhan@hpe.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/mp2975.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/pmbus/isl68137.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/hwmon/pmbus/mp2975.c
-+++ b/drivers/hwmon/pmbus/mp2975.c
-@@ -313,6 +313,8 @@ static int mp2973_read_word_data(struct
- 	case PMBUS_STATUS_WORD:
- 		/* MP2973 & MP2971 return PGOOD instead of PB_STATUS_POWER_GOOD_N. */
- 		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
- 		ret ^= PB_STATUS_POWER_GOOD_N;
- 		break;
- 	case PMBUS_OT_FAULT_LIMIT:
+--- a/drivers/hwmon/pmbus/isl68137.c
++++ b/drivers/hwmon/pmbus/isl68137.c
+@@ -80,8 +80,11 @@ static ssize_t isl68137_avs_enable_show_
+ {
+ 	int val = pmbus_read_byte_data(client, page, PMBUS_OPERATION);
+ 
+-	return sprintf(buf, "%d\n",
+-		       (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS ? 1 : 0);
++	if (val < 0)
++		return val;
++
++	return sysfs_emit(buf, "%d\n",
++			   (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS);
+ }
+ 
+ static ssize_t isl68137_avs_enable_store_page(struct i2c_client *client,
 
 
