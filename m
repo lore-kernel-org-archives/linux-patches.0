@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BF5194AD7;
-	Mon, 23 Mar 2026 13:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F00D194AD7;
+	Mon, 23 Mar 2026 13:04:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774271088; cv=none; b=uE6oxXzrK70m+vsuXmLGZQNFJBvfMQKG2Ig3D66tAK9bvBm9iH1Z53cUWkX7ZZhwM+PZgS6p/JXnNK4NdGuAZ0p3j00VtO2+Du46xjHCxGfdYNKPdHB78RbyzjknDM7iQ7Der1W8hgZwVEvnCJGCL/2hP43bFwg/1hMv25OQ5cU=
+	t=1774271095; cv=none; b=J9X+qhnZMeDEBxYgctCQA4paE+Xvp9PRVF6Fa+9fDizBAxTf/r7UOTCdGo1XU3Uw1gl+N+kc3le6vmfjH4d8d7l4l6/v/Jf5uxNvify8x514ubzHzqn0xZUbY+BVCp8VnSCOFUQ+VPPCQ2YgrfmnhdYOO0xK9Sh3IqB8G/tbWRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774271088; c=relaxed/simple;
-	bh=beMDJA3aNT3RHRUCvb+d9gBZnwCyhVvZxT6aFHZNjDs=;
+	s=arc-20240116; t=1774271095; c=relaxed/simple;
+	bh=nHxiC3qjtQiNvi5v5lj0/I0qKpbb54iQFDbxGgpzau8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:Message-ID:MIME-Version:
-	 Content-Type; b=GgTaWPoZ/PZVK1C9tmTh9WkpkYEMACpUcrAoOJnV0PWjDGwgujKcSa6C0SJWbtDWRi4BJ/gotwdTKjUKWZb2DFcHL2tTmiVo3eAdjlnuY3b3lhWvjTxlrVjyvqOtlLgtrM9enag+ryrTU2AeO8JTC7HMnsE6v20+Ji9HYEvf0qM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvHvCRAs; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type; b=lI9hRP/C0ew3xv1SmWCnNXRW6RATcojLmLutrXoXVg3leATWdlcA7lRpSOh/oE3d7jGLlSl854DXGuSgcVWn8P5aBG/KtvR3g2wljLNoDkHGqWT6uatpAh8TMVDZgu8oX8zIj7ZX2Q6fcCcvZNBBk8RwNDn4su0lVeK6GmBI/rk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UBhrrLAK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvHvCRAs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E134C4CEF7;
-	Mon, 23 Mar 2026 13:04:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UBhrrLAK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961ABC4CEF7;
+	Mon, 23 Mar 2026 13:04:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774271088;
-	bh=beMDJA3aNT3RHRUCvb+d9gBZnwCyhVvZxT6aFHZNjDs=;
+	s=korg; t=1774271095;
+	bh=nHxiC3qjtQiNvi5v5lj0/I0qKpbb54iQFDbxGgpzau8=;
 	h=Subject:To:Cc:From:Date:In-Reply-To:From;
-	b=AvHvCRAsrhtPBY0rbZ79YCG+Q4C1kQe6+by7zg1m30/10sqa4THFx+tk7a2Apb/Th
-	 M1M4FcFcLwWu/mVMtiyvWlJlNfvgE3xaUxFm2189bkipOhR0ig1GOIiTQiduuPCo9U
-	 tkOXOlpUPxyjTzelOqe/tp5CBCJWRKaq975UCs2A=
-Subject: Patch "rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access" has been added to the 6.1-stable tree
-To: frederic@kernel.org,gregkh@linuxfoundation.org,jiangshanlai@gmail.com,jianqkang@sina.cn,joel@joelfernandes.org,josh@joshtriplett.org,mathieu.desnoyers@efficios.com,neeraj.upadhyay@kernel.org,patches@lists.linux.dev,paulmck@kernel.org,qiang.zhang1211@gmail.com,quic_neeraju@quicinc.com,rostedt@goodmis.org
+	b=UBhrrLAKZAE6tJfgeNxJbRKuuEoudifOitwswrFaJfVNzptPn2Mo1KozSYV6atB85
+	 BR8OtMenO+nI1qk0Nk0bOowe8sTHW1Jh12oh31aep+6U48SjbFgCCthvZG14Tp5pnS
+	 5tXUNyCRcyY+gpsY1mE2kDai77/2eA1XrQBImlOI=
+Subject: Patch "riscv: stacktrace: Disable KASAN checks for non-current tasks" has been added to the 6.1-stable tree
+To: aou@eecs.berkeley.edu,gregkh@linuxfoundation.org,jianqkang@sina.cn,linux-riscv@lists.infradead.org,palmer@dabbelt.com,patches@lists.linux.dev,paul.walmsley@sifive.com,pjw@kernel.org,xujiakai2025@iscas.ac.cn,zhangchunyan@iscas.ac.cn
 Cc: <stable-commits@vger.kernel.org>
 From: <gregkh@linuxfoundation.org>
-Date: Mon, 23 Mar 2026 14:03:51 +0100
-In-Reply-To: <20260304024934.2364383-1-jianqkang@sina.cn>
-Message-ID: <2026032351-untidy-cyclic-2027@gregkh>
+Date: Mon, 23 Mar 2026 14:03:52 +0100
+In-Reply-To: <20260323063115.3555043-1-jianqkang@sina.cn>
+Message-ID: <2026032352-unwired-estranged-bbc0@gregkh>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -44,83 +44,92 @@ X-Patchwork-Hint: ignore
 
 This is a note to let you know that I've just added the patch titled
 
-    rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access
+    riscv: stacktrace: Disable KASAN checks for non-current tasks
 
 to the 6.1-stable tree which can be found at:
     http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
 
 The filename of the patch is:
-     rcu-nocb-fix-possible-invalid-rdp-s-nocb_cb_kthread-pointer-access.patch
+     riscv-stacktrace-disable-kasan-checks-for-non-current-tasks.patch
 and it can be found in the queue-6.1 subdirectory.
 
 If you, or anyone else, feels it should not be added to the stable tree,
 please let <stable@vger.kernel.org> know about it.
 
 
-From jianqkang@sina.cn Wed Mar  4 03:49:40 2026
+From stable+bounces-227888-greg=kroah.com@vger.kernel.org Mon Mar 23 07:32:09 2026
 From: Jianqiang kang <jianqkang@sina.cn>
-Date: Wed,  4 Mar 2026 10:49:34 +0800
-Subject: rcu/nocb: Fix possible invalid rdp's->nocb_cb_kthread pointer access
-To: gregkh@linuxfoundation.org, stable@vger.kernel.org, qiang.zhang1211@gmail.com
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, paulmck@kernel.org, frederic@kernel.org, quic_neeraju@quicinc.com, josh@joshtriplett.org, rostedt@goodmis.org, mathieu.desnoyers@efficios.com, jiangshanlai@gmail.com, joel@joelfernandes.org, rcu@vger.kernel.org, neeraj.upadhyay@kernel.org
-Message-ID: <20260304024934.2364383-1-jianqkang@sina.cn>
+Date: Mon, 23 Mar 2026 14:31:14 +0800
+Subject: riscv: stacktrace: Disable KASAN checks for non-current tasks
+To: gregkh@linuxfoundation.org, stable@vger.kernel.org, zhangchunyan@iscas.ac.cn
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org, paul.walmsley@sifive.com, palmer@dabbelt.com, aou@eecs.berkeley.edu, xujiakai2025@iscas.ac.cn, linux-riscv@lists.infradead.org, pjw@kernel.org
+Message-ID: <20260323063115.3555043-1-jianqkang@sina.cn>
 
-From: Zqiang <qiang.zhang1211@gmail.com>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
+[ Upstream commit 060ea84a484e852b52b938f234bf9b5503a6c910 ]
 
-In the preparation stage of CPU online, if the corresponding
-the rdp's->nocb_cb_kthread does not exist, will be created,
-there is a situation where the rdp's rcuop kthreads creation fails,
-and then de-offload this CPU's rdp, does not assign this CPU's
-rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
-rdp's->rdp_gp->nocb_gp_kthread is still valid.
+Unwinding the stack of a task other than current, KASAN would report
+"BUG: KASAN: out-of-bounds in walk_stackframe+0x41c/0x460"
 
-This will cause the subsequent re-offload operation of this offline
-CPU, which will pass the conditional check and the kthread_unpark()
-will access invalid rdp's->nocb_cb_kthread pointer.
+There is a same issue on x86 and has been resolved by the commit
+84936118bdf3 ("x86/unwind: Disable KASAN checks for non-current tasks")
+The solution could be applied to RISC-V too.
 
-This commit therefore use rdp's->nocb_gp_kthread instead of
-rdp_gp's->nocb_gp_kthread for safety check.
+This patch also can solve the issue:
+https://seclists.org/oss-sec/2025/q4/23
 
-Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Co-developed-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251022072608.743484-1-zhangchunyan@iscas.ac.cn
+[pjw@kernel.org: clean up checkpatch issues]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
 [ Minor conflict resolved. ]
 Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/rcu/tree_nocb.h |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/riscv/kernel/stacktrace.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/kernel/rcu/tree_nocb.h
-+++ b/kernel/rcu/tree_nocb.h
-@@ -1112,7 +1112,6 @@ static long rcu_nocb_rdp_offload(void *a
- 	struct rcu_segcblist *cblist = &rdp->cblist;
- 	unsigned long flags;
- 	int wake_gp;
--	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -16,6 +16,22 @@
  
- 	WARN_ON_ONCE(rdp->cpu != raw_smp_processor_id());
- 	/*
-@@ -1122,7 +1121,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	if (!rdp->nocb_gp_rdp)
- 		return -EINVAL;
+ #ifdef CONFIG_FRAME_POINTER
  
--	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
-+	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
- 		return -EINVAL;
++/*
++ * This disables KASAN checking when reading a value from another task's stack,
++ * since the other task could be running on another CPU and could have poisoned
++ * the stack in the meantime.
++ */
++#define READ_ONCE_TASK_STACK(task, x)			\
++({							\
++	unsigned long val;				\
++	unsigned long addr = x;				\
++	if ((task) == current)				\
++		val = READ_ONCE(addr);			\
++	else						\
++		val = READ_ONCE_NOCHECK(addr);		\
++	val;						\
++})
++
+ extern asmlinkage void ret_from_exception(void);
  
- 	pr_info("Offloading %d\n", rdp->cpu);
-@@ -1151,7 +1150,7 @@ static long rcu_nocb_rdp_offload(void *a
- 	 */
- 	wake_gp = rdp_offload_toggle(rdp, true, flags);
- 	if (wake_gp)
--		wake_up_process(rdp_gp->nocb_gp_kthread);
-+		wake_up_process(rdp->nocb_gp_kthread);
- 	swait_event_exclusive(rdp->nocb_state_wq,
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_CB) &&
- 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_GP));
+ static inline int fp_is_valid(unsigned long fp, unsigned long sp)
+@@ -68,8 +84,9 @@ void notrace walk_stackframe(struct task
+ 			fp = frame->ra;
+ 			pc = regs->ra;
+ 		} else {
+-			fp = frame->fp;
+-			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
++			fp = READ_ONCE_TASK_STACK(task, frame->fp);
++			pc = READ_ONCE_TASK_STACK(task, frame->ra);
++			pc = ftrace_graph_ret_addr(current, &graph_idx, pc,
+ 						   &frame->ra);
+ 			if (pc == (unsigned long)ret_from_exception) {
+ 				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
 
 
 Patches currently in stable-queue which might be from jianqkang@sina.cn are
