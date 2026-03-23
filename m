@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913653B0AF1;
-	Mon, 23 Mar 2026 14:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4643A3B27DC;
+	Mon, 23 Mar 2026 14:15:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275320; cv=none; b=mHVvxgHPt8+SwZ+8KAL8p8cNWmJEm+AsJKxx+EB7fCslPOEC/NlFVA0AtVbNb3X6n8Q5PCKArty6TFHBzUZ1ACYyviUrQs8dJbi47ieDN622+MG/UrIflLCoXA9CvB8b7QDq1pF6HQ1Fng7AOofL/pxeS/UDXq5W47tmxN2PLlA=
+	t=1774275323; cv=none; b=JoJBl4uJ5T5H5zyjKGvuA/zOdAL+TxDiIucYBY8JQ7O7AOT3rxY1PuPjKf1vDtkNLZ7rJIe07sw9L4jeCUEAsT+gVw0zTGUyCl6sPe+AIvqDnPoCKX7jwB/l10M364730IaDRNAHGt7gtIQTk8INT98iQdODGeNOkGs9u2XXY2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275320; c=relaxed/simple;
-	bh=YmN7iasrB8x/IZc5+a9latALHGd5byIk35ToVRUgmgY=;
+	s=arc-20240116; t=1774275323; c=relaxed/simple;
+	bh=d29qOttFzky5zopKytvEGdV/VuXfDGZVzueM0fpcrmM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1E5TS2vbpIwED+LnNd2h7mBPCGzmw5jVS2ZfcEAxPg5mTeHUmyxke8Uztnqnz1LLJ5f1ZMj6CfVTyiP64lMiaMgi+f9hMmw4C+yECjdICwPFKkjmjX2zyEhI1nAgsuamRa2D7H/DlEi9Br2SN7MSiSd9qDhnf+d1vUMA/KRQno=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vcuVpPOy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RIIpQbPHptGsbHpnq5fXYgyTMtdAac9o0PCdW+nWtePyDLtE9rraj81MiOjKlSCUJCl8c9nqbwTgmfBUiw1BwyUfRUWnYt7FHOATNQVNEa70NZJE60uoavVc9D5BwuKK0CA1fB6bLVJP8iBpZ+A0RYVUprpZjkylJ5Fh2iMvcfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VkT9ns6z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vcuVpPOy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A236C2BC9E;
-	Mon, 23 Mar 2026 14:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VkT9ns6z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD196C4CEF7;
+	Mon, 23 Mar 2026 14:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275320;
-	bh=YmN7iasrB8x/IZc5+a9latALHGd5byIk35ToVRUgmgY=;
+	s=korg; t=1774275323;
+	bh=d29qOttFzky5zopKytvEGdV/VuXfDGZVzueM0fpcrmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vcuVpPOy8W4US27gbpa7+iIQRwi4LJEaEWhwXxgZKR2Ch1VBCnVaAjvJWqxGSY0C2
-	 uH07O8KVEHsegKDViWePDKuNccjt+JSK/INAyEOKXklRVxZZ6Am4/K0Tb0Z2UF87NV
-	 523IgQ18rwDER3CIN4rsICh3PDM06BpXM7JrOkP8=
+	b=VkT9ns6zkyHtAldkU8SiyT0RPPh468Dp3//pZM/wycKmg9ylYtXuKDejYBQs0goxE
+	 h+Z7r/DKC/DI/AMYseKI8UconfcffRUU+1HGdoazZhoecyjCaWHWIGl74w01QAzGdj
+	 cnBDYC5H/0PzKXih8RnqbPpO/D0wn8s3mGo/mfHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	sguttula <suresh.guttula@amd.com>,
-	Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 014/460] drm/amdgpu/vcn5: Add SMU dpm interface type
-Date: Mon, 23 Mar 2026 14:40:10 +0100
-Message-ID: <20260323134527.014157734@linuxfoundation.org>
+Subject: [PATCH 6.12 015/460] ALSA: usb-audio: Check max frame size for implicit feedback mode, too
+Date: Mon, 23 Mar 2026 14:40:11 +0100
+Message-ID: <20260323134527.039246610@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,38 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: sguttula <suresh.guttula@amd.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit a5fe1a54513196e4bc8f9170006057dc31e7155e ]
+[ Upstream commit 7cb2a5422f5bbdf1cf32eae0eda41000485b9346 ]
 
-This will set AMDGPU_VCN_SMU_DPM_INTERFACE_* smu_type
-based on soc type and fixing ring timeout issue seen
-for DPM enabled case.
+When the packet sizes are taken from the capture stream in the
+implicit feedback mode, the sizes might be larger than the upper
+boundary defined by the descriptor.  As already done for other
+transfer modes, we have to cap the sizes accordingly at sending,
+otherwise this would lead to an error in USB core at submission of
+URBs.
 
-Signed-off-by: sguttula <suresh.guttula@amd.com>
-Reviewed-by: Pratik Vishwakarma <Pratik.Vishwakarma@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit f0f23c315b38c55e8ce9484cf59b65811f350630)
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ sound/usb/endpoint.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-index a359d612182dd..3aa715830fbe8 100644
---- a/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/vcn_v5_0_0.c
-@@ -166,6 +166,10 @@ static int vcn_v5_0_0_sw_init(void *handle)
- 		fw_shared->present_flag_0 = cpu_to_le32(AMDGPU_FW_SHARED_FLAG_0_UNIFIED_QUEUE);
- 		fw_shared->sq.is_enabled = 1;
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 9d22613f71e24..2616a7efcc212 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -224,6 +224,7 @@ int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
  
-+		fw_shared->present_flag_0 |= cpu_to_le32(AMDGPU_VCN_SMU_DPM_INTERFACE_FLAG);
-+		fw_shared->smu_dpm_interface.smu_interface_type = (adev->flags & AMD_IS_APU) ?
-+			AMDGPU_VCN_SMU_DPM_INTERFACE_APU : AMDGPU_VCN_SMU_DPM_INTERFACE_DGPU;
-+
- 		if (amdgpu_vcnfw_log)
- 			amdgpu_vcn_fwlog_init(&adev->vcn.inst[i]);
- 	}
+ 	packet = ctx->packet_size[idx];
+ 	if (packet) {
++		packet = min(packet, ep->maxframesize);
+ 		if (avail && packet >= avail)
+ 			return -EAGAIN;
+ 		return packet;
 -- 
 2.51.0
 
