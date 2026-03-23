@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A28C3AEF51;
-	Mon, 23 Mar 2026 14:07:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B96D3A0B3D;
+	Mon, 23 Mar 2026 14:07:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274856; cv=none; b=Jg/yXwO4UhdWxzfLLIkhOnOtRwv5H7tvYpsU/aCscq2SFeXvhjMtNYyMCsKB0E9C0avv69kTaEQw8X6VBgxkbJjriJcYppllX78HX4fqMwvN6WFWOQPq3Zf3FjCkMt93ZIEo8AjcAbzviaAx5qQnC9NKAtmhwGqh26iZRFg7on4=
+	t=1774274858; cv=none; b=JlLNGj7MoO2DYtIO8+Kt3HzFR0CX8cZpXbT5DdTH2cjJO9CuYpE9+mBcCVcHhkmtMgDsQd+M2eY645S97zDWpnhnGCS7OgK4TICkgFAsOFAoMtIo/BuF8iMpgANcANEZ/6gHFZpqSzWcXr7J1jVB8vL6feG/yc7W3uTI9xX3uzU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274856; c=relaxed/simple;
-	bh=3/MJwTqKaclFx9DobQ5BjuO9GBqhoztWhQE11QYnnsE=;
+	s=arc-20240116; t=1774274858; c=relaxed/simple;
+	bh=6rwdOkk4VBCmsI48rAtQQSisi9S7eOl/TjYrf2R31pU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jx7ymacBWUnQQoEbynVaK+cRS4J1oX4jysqQRaRZkUvHEcx7VouhKog4VauxbfwTfj+oVtjKIUj5m+8uca3yE4k13SFg5boSbVxr3jpbyMe6nh46Af0GmTkw8Uv26Ez+eRpHHDy2gJi4yidQfhKufhh33bSPNpJ6+K1088Ci1kU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CI6QUt33; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NzE7SxtK08fvJpM1v7WhZsAVCpCxOILuMrBNT8lHuMpYdMubvS6kK4jnMwLB1QhmO5QIDL3U1nPd5YQ59px4LZNWAwffOPsHPQ0cESDvzpkMLiw+sT5tNCvckp4PczCjzJDpUlJI8fJk8sLdTWvKyY7YtFU7DwFmd4arGJxrSu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G2nui/UG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CI6QUt33"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E6FC4CEF7;
-	Mon, 23 Mar 2026 14:07:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G2nui/UG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2950C4CEF7;
+	Mon, 23 Mar 2026 14:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274855;
-	bh=3/MJwTqKaclFx9DobQ5BjuO9GBqhoztWhQE11QYnnsE=;
+	s=korg; t=1774274858;
+	bh=6rwdOkk4VBCmsI48rAtQQSisi9S7eOl/TjYrf2R31pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CI6QUt33bR77B1PXBz1HNjUm+yg8aqkzb6euFGyUd65xV91FQtBG5XxL02/08Erf+
-	 +A9uGxKGslW/EZI2xuxkn0dGqaZIr9t308v7xex7vBRZPDPbdO7Dn4Hl2FRT5OXA+H
-	 soURh+C4zrAblbLmjVTOgji8Ox289eIbm2sGERno=
+	b=G2nui/UG3TA9P0AB/IH7N7/8voFSZgQqyVSrBfWKuKB4SRwKmQB8Xj4s3HopeCTid
+	 VetlJVdsK9oP2Ps9DKHkxf24JSajAFsHKYBmWO1nYEgVq683KzCWdPLd1GQ4xeHvzy
+	 UZfN7/FBhcgi2nXQCKVrfsWzFueJwxtAsa/fnKD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 125/212] Bluetooth: ISO: Fix defer tests being unstable
-Date: Mon, 23 Mar 2026 14:45:46 +0100
-Message-ID: <20260323134507.719260646@linuxfoundation.org>
+Subject: [PATCH 6.18 134/212] netfilter: ctnetlink: fix use-after-free in ctnetlink_dump_exp_ct()
+Date: Mon, 23 Mar 2026 14:45:55 +0100
+Message-ID: <20260323134508.006315803@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,47 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 62bcaa6b351b6dc400f6c6b83762001fd9f5c12d ]
+[ Upstream commit 5cb81eeda909dbb2def209dd10636b51549a3f8a ]
 
-iso-tester defer tests seem to fail with hci_conn_hash_lookup_cig
-being unable to resolve a cig in set_cig_params_sync due a race
-where it is run immediatelly before hci_bind_cis is able to set
-the QoS settings into the hci_conn object.
+ctnetlink_dump_exp_ct() stores a conntrack pointer in cb->data for the
+netlink dump callback ctnetlink_exp_ct_dump_table(), but drops the
+conntrack reference immediately after netlink_dump_start().  When the
+dump spans multiple rounds, the second recvmsg() triggers the dump
+callback which dereferences the now-freed conntrack via nfct_help(ct),
+leading to a use-after-free on ct->ext.
 
-So this moves the assigning of the QoS settings to be done directly
-by hci_le_set_cig_params to prevent that from happening again.
+The bug is that the netlink_dump_control has no .start or .done
+callbacks to manage the conntrack reference across dump rounds.  Other
+dump functions in the same file (e.g. ctnetlink_get_conntrack) properly
+use .start/.done callbacks for this purpose.
 
-Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fix this by adding .start and .done callbacks that hold and release the
+conntrack reference for the duration of the dump, and move the
+nfct_help() call after the cb->args[0] early-return check in the dump
+callback to avoid dereferencing ct->ext unnecessarily.
+
+ BUG: KASAN: slab-use-after-free in ctnetlink_exp_ct_dump_table+0x4f/0x2e0
+ Read of size 8 at addr ffff88810597ebf0 by task ctnetlink_poc/133
+
+ CPU: 1 UID: 0 PID: 133 Comm: ctnetlink_poc Not tainted 7.0.0-rc2+ #3 PREEMPTLAZY
+ Call Trace:
+  <TASK>
+  ctnetlink_exp_ct_dump_table+0x4f/0x2e0
+  netlink_dump+0x333/0x880
+  netlink_recvmsg+0x3e2/0x4b0
+  ? aa_sk_perm+0x184/0x450
+  sock_recvmsg+0xde/0xf0
+
+ Allocated by task 133:
+  kmem_cache_alloc_noprof+0x134/0x440
+  __nf_conntrack_alloc+0xa8/0x2b0
+  ctnetlink_create_conntrack+0xa1/0x900
+  ctnetlink_new_conntrack+0x3cf/0x7d0
+  nfnetlink_rcv_msg+0x48e/0x510
+  netlink_rcv_skb+0xc9/0x1f0
+  nfnetlink_rcv+0xdb/0x220
+  netlink_unicast+0x3ec/0x590
+  netlink_sendmsg+0x397/0x690
+  __sys_sendmsg+0xf4/0x180
+
+ Freed by task 0:
+  slab_free_after_rcu_debug+0xad/0x1e0
+  rcu_core+0x5c3/0x9c0
+
+Fixes: e844a928431f ("netfilter: ctnetlink: allow to dump expectation per master conntrack")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_conn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
-index 6a27ac5a751ca..8906526ff32c5 100644
---- a/net/bluetooth/hci_conn.c
-+++ b/net/bluetooth/hci_conn.c
-@@ -1927,6 +1927,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
- 		return false;
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index 3a04665adf992..f261dd48973fe 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3211,7 +3211,7 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
+ 	struct nf_conn *ct = cb->data;
+-	struct nf_conn_help *help = nfct_help(ct);
++	struct nf_conn_help *help;
+ 	u_int8_t l3proto = nfmsg->nfgen_family;
+ 	unsigned long last_id = cb->args[1];
+ 	struct nf_conntrack_expect *exp;
+@@ -3219,6 +3219,10 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 	if (cb->args[0])
+ 		return 0;
  
- done:
-+	conn->iso_qos = *qos;
++	help = nfct_help(ct);
++	if (!help)
++		return 0;
 +
- 	if (hci_cmd_sync_queue(hdev, set_cig_params_sync,
- 			       UINT_PTR(qos->ucast.cig), NULL) < 0)
- 		return false;
-@@ -1996,8 +1998,6 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
- 	}
+ 	rcu_read_lock();
  
- 	hci_conn_hold(cis);
--
--	cis->iso_qos = *qos;
- 	cis->state = BT_BOUND;
+ restart:
+@@ -3248,6 +3252,24 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 	return skb->len;
+ }
  
- 	return cis;
++static int ctnetlink_dump_exp_ct_start(struct netlink_callback *cb)
++{
++	struct nf_conn *ct = cb->data;
++
++	if (!refcount_inc_not_zero(&ct->ct_general.use))
++		return -ENOENT;
++	return 0;
++}
++
++static int ctnetlink_dump_exp_ct_done(struct netlink_callback *cb)
++{
++	struct nf_conn *ct = cb->data;
++
++	if (ct)
++		nf_ct_put(ct);
++	return 0;
++}
++
+ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
+ 				 struct sk_buff *skb,
+ 				 const struct nlmsghdr *nlh,
+@@ -3263,6 +3285,8 @@ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
+ 	struct nf_conntrack_zone zone;
+ 	struct netlink_dump_control c = {
+ 		.dump = ctnetlink_exp_ct_dump_table,
++		.start = ctnetlink_dump_exp_ct_start,
++		.done = ctnetlink_dump_exp_ct_done,
+ 	};
+ 
+ 	err = ctnetlink_parse_tuple(cda, &tuple, CTA_EXPECT_MASTER,
 -- 
 2.51.0
 
