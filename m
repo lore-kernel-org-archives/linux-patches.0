@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D94973B3C06;
-	Mon, 23 Mar 2026 14:05:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65343B3C11;
+	Mon, 23 Mar 2026 14:05:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274705; cv=none; b=ApkYtRVzJZDxjFGx5sKbykNnapdIX9Ba2tc5jqUBYD9moNR2jDJ0iWgl3yGi6f50xv13gUBF5j+SB5e/HJBTAYo0UwHZwdD8NGmw38YJyFS8av7Nb7/Nl8Gqly4nRNK8INwhNQ7WTaTcO/qCT8ammmAeM8OcVGPU0OGvRc9JoQ4=
+	t=1774274708; cv=none; b=kMYsTV90iOUeqp3M8QgMdDUVq6aJga2cYtWJCHqsDm76Va62JA/KXPOovuK60iKrv+9QMKlMtQPAyah1hB+Gsj3scMHOypB10YmEJlDtiNwEylucrlwTvpx41F19JCHGhobo3QNwNvLTafBX06GkEMMyWibkvfmED05nzfLgTAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274705; c=relaxed/simple;
-	bh=3WNVs1dmviCe8b8BFqfkdg/NyUB39gjyyOdV2F9/nmE=;
+	s=arc-20240116; t=1774274708; c=relaxed/simple;
+	bh=NN/ExGxhZJE0rCHXhWjC2kTXTaVtmkZMqbGhiLHNfE4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=KKK/vI2p214nGGOAAOOJruVucD73YK6bO6uUPuwjDZzr5l54YXznW1uSyHriB9hnvpKOI/01AvgHcXgOdVvGSl5rnJtcNR38cnKSHW/5xgoD9OhRjmmnCmtmAboAK5aX1C1zYRJ/zaJUSgpgsZzJx1oym8IvXlnhEL6ABOl/GZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Ph+bDYo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+SSSho4e2QLdy+qYjmK9p/3KKhv7+dikSdVMbbLg96AH28L5l9a3VestNsFg6CNrIw81Sg5fgObHcNuqrBU3RFgZmH/8lzdRaoo+CvjnWE4NyEiCEYLxUjpRlkaviMqnTDfVjXp9QZisEUchsuukGs2dB3JKoGfJZSVUouRV4Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J9zPdUDX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Ph+bDYo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7D1C2BCB6;
-	Mon, 23 Mar 2026 14:05:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J9zPdUDX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAF2C2BCB3;
+	Mon, 23 Mar 2026 14:05:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274705;
-	bh=3WNVs1dmviCe8b8BFqfkdg/NyUB39gjyyOdV2F9/nmE=;
+	s=korg; t=1774274708;
+	bh=NN/ExGxhZJE0rCHXhWjC2kTXTaVtmkZMqbGhiLHNfE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Ph+bDYoWfKI9FKWjNPIfyxWzAg0rbqBxqZ6X9DtBWTzmbqgIzkEEQ+g13dlXb3ny
-	 QAGAvzgoO2HQ3MXe8Z6Ge/Cdb908NsY0E+cVV3t3N/DnD3L/bT66OzsU2+vvefICHw
-	 OTOuumOosi01jewkbNIt3Z/NkyQM5+2iPB0lGgsA=
+	b=J9zPdUDXUVFQ2hKc6cyjddLKcaept1CvPzHy3kwO4VKBSbgNYC8GNviwqtNqu9w8/
+	 iu5wJz6Jk/QsOH8VfGV2A8J+YEvck1gZsdCeFokb8FKBXgEr0t4dnO7CikP83gTjKi
+	 Nb2Az6FaZqnm2mZzeiemM8kU4p/J0n+EdRBIZNL4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Sean Anderson <sean.anderson@linux.dev>,
-	=?UTF-8?q?Th=C3=A9o=20Lebrun?= <theo.lebrun@bootlin.com>,
+	Quanyang Wang <quanyang.wang@windriver.com>,
+	Kevin Hao <haokexin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 039/212] net: macb: sort #includes
-Date: Mon, 23 Mar 2026 14:44:20 +0100
-Message-ID: <20260323134504.998886137@linuxfoundation.org>
+Subject: [PATCH 6.18 040/212] net: macb: Shuffle the tx ring before enabling tx
+Date: Mon, 23 Mar 2026 14:44:21 +0100
+Message-ID: <20260323134505.033845053@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -47,88 +47,191 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Théo Lebrun <theo.lebrun@bootlin.com>
+From: Kevin Hao <haokexin@gmail.com>
 
-[ Upstream commit 8ebeef3d01c8b9e5807afdf1d38547f4625d0e4e ]
+[ Upstream commit 881a0263d502e1a93ebc13a78254e9ad19520232 ]
 
-Sort #include preprocessor directives.
+Quanyang observed that when using an NFS rootfs on an AMD ZynqMp board,
+the rootfs may take an extended time to recover after a suspend.
+Upon investigation, it was determined that the issue originates from a
+problem in the macb driver.
 
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Sean Anderson <sean.anderson@linux.dev>
-Signed-off-by: Théo Lebrun <theo.lebrun@bootlin.com>
-Link: https://patch.msgid.link/20251014-macb-cleanup-v1-15-31cd266e22cd@bootlin.com
+According to the Zynq UltraScale TRM [1], when transmit is disabled,
+the transmit buffer queue pointer resets to point to the address
+specified by the transmit buffer queue base address register.
+
+In the current implementation, the code merely resets `queue->tx_head`
+and `queue->tx_tail` to '0'. This approach presents several issues:
+
+- Packets already queued in the tx ring are silently lost,
+  leading to memory leaks since the associated skbs cannot be released.
+
+- Concurrent write access to `queue->tx_head` and `queue->tx_tail` may
+  occur from `macb_tx_poll()` or `macb_start_xmit()` when these values
+  are reset to '0'.
+
+- The transmission may become stuck on a packet that has already been sent
+  out, with its 'TX_USED' bit set, but has not yet been processed. However,
+  due to the manipulation of 'queue->tx_head' and 'queue->tx_tail',
+  `macb_tx_poll()` incorrectly assumes there are no packets to handle
+  because `queue->tx_head == queue->tx_tail`. This issue is only resolved
+  when a new packet is placed at this position. This is the root cause of
+  the prolonged recovery time observed for the NFS root filesystem.
+
+To resolve this issue, shuffle the tx ring and tx skb array so that
+the first unsent packet is positioned at the start of the tx ring.
+Additionally, ensure that updates to `queue->tx_head` and
+`queue->tx_tail` are properly protected with the appropriate lock.
+
+[1] https://docs.amd.com/v/u/en-US/ug1085-zynq-ultrascale-trm
+
+Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
+Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260307-zynqmp-v2-1-6ef98a70e1d0@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 881a0263d502 ("net: macb: Shuffle the tx ring before enabling tx")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   37 +++++++++++++++----------------
- 1 file changed, 19 insertions(+), 18 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   98 ++++++++++++++++++++++++++++++-
+ 1 file changed, 95 insertions(+), 3 deletions(-)
 
 --- a/drivers/net/ethernet/cadence/macb_main.c
 +++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -6,36 +6,37 @@
-  */
- 
- #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
--#include <linux/clk.h>
-+#include <linux/circ_buf.h>
- #include <linux/clk-provider.h>
-+#include <linux/clk.h>
- #include <linux/crc32.h>
--#include <linux/module.h>
--#include <linux/moduleparam.h>
--#include <linux/kernel.h>
--#include <linux/types.h>
--#include <linux/circ_buf.h>
--#include <linux/slab.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/etherdevice.h>
-+#include <linux/firmware/xlnx-zynqmp.h>
-+#include <linux/inetdevice.h>
-+#include <linux/inetdevice.h>
- #include <linux/init.h>
--#include <linux/io.h>
- #include <linux/interrupt.h>
-+#include <linux/io.h>
-+#include <linux/iopoll.h>
-+#include <linux/ip.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/moduleparam.h>
- #include <linux/netdevice.h>
--#include <linux/etherdevice.h>
--#include <linux/dma-mapping.h>
--#include <linux/platform_device.h>
--#include <linux/phylink.h>
- #include <linux/of.h>
- #include <linux/of_mdio.h>
- #include <linux/of_net.h>
--#include <linux/ip.h>
--#include <linux/udp.h>
--#include <linux/tcp.h>
--#include <linux/iopoll.h>
- #include <linux/phy/phy.h>
-+#include <linux/phylink.h>
-+#include <linux/platform_device.h>
- #include <linux/pm_runtime.h>
- #include <linux/ptp_classify.h>
- #include <linux/reset.h>
--#include <linux/firmware/xlnx-zynqmp.h>
--#include <linux/inetdevice.h>
-+#include <linux/slab.h>
-+#include <linux/tcp.h>
-+#include <linux/types.h>
-+#include <linux/udp.h>
+@@ -37,6 +37,7 @@
+ #include <linux/tcp.h>
+ #include <linux/types.h>
+ #include <linux/udp.h>
++#include <linux/gcd.h>
  #include <net/pkt_sched.h>
  #include "macb.h"
  
+@@ -705,6 +706,97 @@ static void macb_mac_link_down(struct ph
+ 	netif_tx_stop_all_queues(ndev);
+ }
+ 
++/* Use juggling algorithm to left rotate tx ring and tx skb array */
++static void gem_shuffle_tx_one_ring(struct macb_queue *queue)
++{
++	unsigned int head, tail, count, ring_size, desc_size;
++	struct macb_tx_skb tx_skb, *skb_curr, *skb_next;
++	struct macb_dma_desc *desc_curr, *desc_next;
++	unsigned int i, cycles, shift, curr, next;
++	struct macb *bp = queue->bp;
++	unsigned char desc[24];
++	unsigned long flags;
++
++	desc_size = macb_dma_desc_get_size(bp);
++
++	if (WARN_ON_ONCE(desc_size > ARRAY_SIZE(desc)))
++		return;
++
++	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
++	head = queue->tx_head;
++	tail = queue->tx_tail;
++	ring_size = bp->tx_ring_size;
++	count = CIRC_CNT(head, tail, ring_size);
++
++	if (!(tail % ring_size))
++		goto unlock;
++
++	if (!count) {
++		queue->tx_head = 0;
++		queue->tx_tail = 0;
++		goto unlock;
++	}
++
++	shift = tail % ring_size;
++	cycles = gcd(ring_size, shift);
++
++	for (i = 0; i < cycles; i++) {
++		memcpy(&desc, macb_tx_desc(queue, i), desc_size);
++		memcpy(&tx_skb, macb_tx_skb(queue, i),
++		       sizeof(struct macb_tx_skb));
++
++		curr = i;
++		next = (curr + shift) % ring_size;
++
++		while (next != i) {
++			desc_curr = macb_tx_desc(queue, curr);
++			desc_next = macb_tx_desc(queue, next);
++
++			memcpy(desc_curr, desc_next, desc_size);
++
++			if (next == ring_size - 1)
++				desc_curr->ctrl &= ~MACB_BIT(TX_WRAP);
++			if (curr == ring_size - 1)
++				desc_curr->ctrl |= MACB_BIT(TX_WRAP);
++
++			skb_curr = macb_tx_skb(queue, curr);
++			skb_next = macb_tx_skb(queue, next);
++			memcpy(skb_curr, skb_next, sizeof(struct macb_tx_skb));
++
++			curr = next;
++			next = (curr + shift) % ring_size;
++		}
++
++		desc_curr = macb_tx_desc(queue, curr);
++		memcpy(desc_curr, &desc, desc_size);
++		if (i == ring_size - 1)
++			desc_curr->ctrl &= ~MACB_BIT(TX_WRAP);
++		if (curr == ring_size - 1)
++			desc_curr->ctrl |= MACB_BIT(TX_WRAP);
++		memcpy(macb_tx_skb(queue, curr), &tx_skb,
++		       sizeof(struct macb_tx_skb));
++	}
++
++	queue->tx_head = count;
++	queue->tx_tail = 0;
++
++	/* Make descriptor updates visible to hardware */
++	wmb();
++
++unlock:
++	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
++}
++
++/* Rotate the queue so that the tail is at index 0 */
++static void gem_shuffle_tx_rings(struct macb *bp)
++{
++	struct macb_queue *queue;
++	int q;
++
++	for (q = 0, queue = bp->queues; q < bp->num_queues; q++, queue++)
++		gem_shuffle_tx_one_ring(queue);
++}
++
+ static void macb_mac_link_up(struct phylink_config *config,
+ 			     struct phy_device *phy,
+ 			     unsigned int mode, phy_interface_t interface,
+@@ -743,8 +835,6 @@ static void macb_mac_link_up(struct phyl
+ 			ctrl |= MACB_BIT(PAE);
+ 
+ 		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+-			queue->tx_head = 0;
+-			queue->tx_tail = 0;
+ 			queue_writel(queue, IER,
+ 				     bp->rx_intr_mask | MACB_TX_INT_FLAGS | MACB_BIT(HRESP));
+ 		}
+@@ -758,8 +848,10 @@ static void macb_mac_link_up(struct phyl
+ 
+ 	spin_unlock_irqrestore(&bp->lock, flags);
+ 
+-	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
++	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
+ 		macb_set_tx_clk(bp, speed);
++		gem_shuffle_tx_rings(bp);
++	}
+ 
+ 	/* Enable Rx and Tx; Enable PTP unicast */
+ 	ctrl = macb_readl(bp, NCR);
 
 
