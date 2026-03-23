@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C61241C8C;
-	Mon, 23 Mar 2026 15:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8656D3B5846;
+	Mon, 23 Mar 2026 15:15:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278952; cv=none; b=cLjzyohOuzfRE7qoxKC3o1WSK4/m5pGPjWMiYAWAqmn/83dSnPPymoPgA5FE8femrMGTlLImhDRSo6BG27rTL0EkC392yPs8AezHyKFyQiyagIBJ2LukNLniUhcRt91NPppro2ydec0LqLUOwIzqcePyoYcsm8AaIGxOTR62quc=
+	t=1774278955; cv=none; b=CjVK9OCOK3CkvsLXGG/OtMMcC/Dri0/LSk2ITdjoTFBsY5Dg4nmmFitpLXXABAiAVa3J4LTdVTmw9IIoSkrZ5c6nS1sPrwPqTBludJapQ5Hy1N4TwkWaZtRDyPO+xtmylJ5OlbKb5BjZTEB0e5ZZgzCJwQEvkvWXHBmIHDCYFiE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278952; c=relaxed/simple;
-	bh=9hMgPdLU2XkNaWlbLHcZyVtoDhGajhKqK39L+Cg0t10=;
+	s=arc-20240116; t=1774278955; c=relaxed/simple;
+	bh=VOPcoPHDYYU+PRsisjVTIKgkoh4zbiTeRwJE6KS1ooU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lSem1orvb1VhSg4fCe8VIa8D9v8HdIP/Wbea2t4oi7TH0SXMAeCRg3N+mIPgT2IZlUyBcC0egQSZgRdQgM1rGCIP1RXLBq2S5lLiT7XonWtD63Vi48LcYYhZ0GUUJiLF/GMVutK22g9mb2aDRT1YIxdkHfXiwmt40FwiyY2rec8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwvZ/3Jk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jZkRO29Qh/zjT+3kP4ZIYTqVud7VwhPc+lP5i/j0B61wRvVQUEyqRyUlxsPQpNp9y2c0Zkc7+YtWpJZV4QfAD1ssYqpiF+NDJ637rEVkTr52ndz/B35gYKecpG4ZSYb6M/LvMRGl4IC4r0snsCihb9rRBzproYgGbCCEoLFzQh4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hcjbkqiY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwvZ/3Jk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D56C2BCB4;
-	Mon, 23 Mar 2026 15:15:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hcjbkqiY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC88CC4CEF7;
+	Mon, 23 Mar 2026 15:15:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278952;
-	bh=9hMgPdLU2XkNaWlbLHcZyVtoDhGajhKqK39L+Cg0t10=;
+	s=korg; t=1774278955;
+	bh=VOPcoPHDYYU+PRsisjVTIKgkoh4zbiTeRwJE6KS1ooU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DwvZ/3JkkTHUyg/xosxmHDUwbjUUedQsmiJjCjPzPPmoCPNj1r1/ahBIgNNPQVeX0
-	 bnrjWfRVr1A48jzQJkGDJjGHyxQ/QEkdHgs9qBAXqkokqeSe1VRbQ5q3HouMG2fIJJ
-	 SxlYBUoFCyHdqK1AYrqIUVm9V3V7X8dinb7no2W4=
+	b=hcjbkqiYBvOrcoP9dKiigAyFTODdQmBzBdczCrLsmnS3YY4DknbnXJdj2MVpYUSaw
+	 eZOwNJ0yCbYzeDetQlXpa+txZm+EOfXutA5PZ+LXun978/aFHt489vQl/Xr84CHrrh
+	 Z8oQmyH6v6SjmvDizX0oLnL2Y6/BcUfPNpVJXNkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Quanyang Wang <quanyang.wang@windriver.com>,
 	Kevin Hao <haokexin@gmail.com>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 472/567] net: macb: Introduce gem_init_rx_ring()
-Date: Mon, 23 Mar 2026 14:46:32 +0100
-Message-ID: <20260323134545.667300360@linuxfoundation.org>
+Subject: [PATCH 6.6 473/567] net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume
+Date: Mon, 23 Mar 2026 14:46:33 +0100
+Message-ID: <20260323134545.693156233@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,51 +55,56 @@ Content-Transfer-Encoding: 8bit
 
 From: Kevin Hao <haokexin@gmail.com>
 
-[ Upstream commit 1a7124ecd655bcaf1845197fe416aa25cff4c3ea ]
+[ Upstream commit 718d0766ce4c7634ce62fa78b526ea7263487edd ]
 
-Extract the initialization code for the GEM RX ring into a new function.
-This change will be utilized in a subsequent patch. No functional changes
-are introduced.
+On certain platforms, such as AMD Versal boards, the tx/rx queue pointer
+registers are cleared after suspend, and the rx queue pointer register
+is also disabled during suspend if WOL is enabled. Previously, we assumed
+that these registers would be restored by macb_mac_link_up(). However,
+in commit bf9cf80cab81, macb_init_buffers() was moved from
+macb_mac_link_up() to macb_open(). Therefore, we should call
+macb_init_buffers() to reinitialize the tx/rx queue pointer registers
+during resume.
 
+Due to the reset of these two registers, we also need to adjust the
+tx/rx rings accordingly. The tx ring will be handled by
+gem_shuffle_tx_rings() in macb_mac_link_up(), so we only need to
+initialize the rx ring here.
+
+Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
+Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
 Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Tested-by: Quanyang Wang <quanyang.wang@windriver.com>
+Cc: stable@vger.kernel.org
 Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260312-macb-versal-v1-1-467647173fa4@gmail.com
+Link: https://patch.msgid.link/20260312-macb-versal-v1-2-467647173fa4@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 718d0766ce4c ("net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
 --- a/drivers/net/ethernet/cadence/macb_main.c
 +++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2700,6 +2700,14 @@ static void macb_init_tieoff(struct macb
- 	desc->ctrl = 0;
- }
- 
-+static void gem_init_rx_ring(struct macb_queue *queue)
-+{
-+	queue->rx_tail = 0;
-+	queue->rx_prepared_head = 0;
-+
-+	gem_rx_refill(queue);
-+}
-+
- static void gem_init_rings(struct macb *bp)
- {
- 	struct macb_queue *queue;
-@@ -2717,10 +2725,7 @@ static void gem_init_rings(struct macb *
- 		queue->tx_head = 0;
- 		queue->tx_tail = 0;
- 
--		queue->rx_tail = 0;
--		queue->rx_prepared_head = 0;
--
--		gem_rx_refill(queue);
-+		gem_init_rx_ring(queue);
+@@ -5500,8 +5500,18 @@ static int __maybe_unused macb_resume(st
+ 		rtnl_unlock();
  	}
  
- 	macb_init_tieoff(bp);
++	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
++		macb_init_buffers(bp);
++
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues;
+ 	     ++q, ++queue) {
++		if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
++			if (macb_is_gem(bp))
++				gem_init_rx_ring(queue);
++			else
++				macb_init_rx_ring(queue);
++		}
++
+ 		napi_enable(&queue->napi_rx);
+ 		napi_enable(&queue->napi_tx);
+ 	}
 
 
