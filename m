@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED5C3AD536;
-	Mon, 23 Mar 2026 13:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CBD3B9D8F;
+	Mon, 23 Mar 2026 13:59:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274389; cv=none; b=L8SniBwrTj2hTtQ7LrpZ7ZGCekHfTonqLPxX1Zh74gq+TENUA5FwRj2OM1gLLLCNRBMT57WupZ+r9j82dJcSZ3sTJJN4p3t0QZCXD+AHoxWmyfQ6pbn4HabqTyzPqwJlnGw3XXJrxMHYKMz1qJPi9IdTEwiz488x7rTzRCDjk8g=
+	t=1774274392; cv=none; b=FSOfYMSDv2i6D/lcO9vDevwgtVE6BuHIJhLQLNVevExsSMHPoJeNYH/ahWJM6tZSxERr/Clf0k6CfylubzGmB+1PZszvWNgDvhygpVs2Wi11OtCP9XDdrX7pHKxbXbZ0behn6BLKL/ETDGEC0mbQDy4GCKxgwK+vwZTy+3ac/TE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274389; c=relaxed/simple;
-	bh=+CHolI0OoLHZYDLufhHM5SNrDl3HwUgcGhgXG0Fngac=;
+	s=arc-20240116; t=1774274392; c=relaxed/simple;
+	bh=x0+1FWgBQoB60MM7o5dSB/Ut5c3DqL2IRwA2XeURWCc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CbwBJDZZ3WNUIfkMouMR8auAnEl08yRu1HZu+REPuFLL+wfSWwdRgiRgoXDVRqA3aRQZPcoCdOknY9j+dVhfVNdrC6Fl+53j/vrnPK4fdusfhOOrXmGmr+rxjg8UtBq+FwNpxf5HFUtCZrYL/2WJKtaNALzClAvD4ATX1QgTDes=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2N8x75LR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OEtriAN9tmjcmBXfroJWlQGI8kxhr1CVIPOL4ZYa7nBZ3YPS8a279MbUqni64ZT2BFb8io95hfF7e5pmBseBPE33GhVlJzsCngumhSa+8sIjPbj0A6W8ihiHbsJylk5ibYB59M6Rf/faMuWahtXWiQKNEb2eLkInIcNW7ZbdosE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1t9w0JMp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2N8x75LR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A514DC2BCB6;
-	Mon, 23 Mar 2026 13:59:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1t9w0JMp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC701C2BCB1;
+	Mon, 23 Mar 2026 13:59:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274389;
-	bh=+CHolI0OoLHZYDLufhHM5SNrDl3HwUgcGhgXG0Fngac=;
+	s=korg; t=1774274392;
+	bh=x0+1FWgBQoB60MM7o5dSB/Ut5c3DqL2IRwA2XeURWCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2N8x75LR5HjX8X2SaFhO2KaBYa98EdQdmX0BHHBA545j5amGq1luLqq3hcm9BiabJ
-	 kQ+Up8lWxx/0JJ99L3v1nqdfX8YPFhyNOi3hAmp2wpJkKgrEA9M5AAWcmg3w5LsdSi
-	 hBBHziu7NE/pkjJwnL6op2clazma7xWupSz8rvR8=
+	b=1t9w0JMpcmwK/ipwkVaHAhY4JLB9CofquQ1Lwx8JYJo0Q8cw8VbXpBQP07ituVdtr
+	 Dd/II0BkAo5B4Xtd55Io8KMoYSBmWjUb23HxwhTZGhDhrdRVRzLZnrX/lpP1337DS0
+	 owGCXzd6/TKJfiwtmMhjPCqS0IjfX/XMawmasUEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Horgan <ben.horgan@arm.com>,
-	James Morse <james.morse@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 201/220] arm_mpam: Fix null pointer dereference when restoring bandwidth counters
-Date: Mon, 23 Mar 2026 14:46:18 +0100
-Message-ID: <20260323134510.923477284@linuxfoundation.org>
+Subject: [PATCH 6.19 202/220] mshv: Fix use-after-free in mshv_map_user_memory error path
+Date: Mon, 23 Mar 2026 14:46:19 +0100
+Message-ID: <20260323134510.953520770@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,59 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ben Horgan <ben.horgan@arm.com>
+From: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
 
-[ Upstream commit 4ad79c874e53ebb7fe3b8ae7ac6c858a2121f415 ]
+[ Upstream commit 6922db250422a0dfee34de322f86b7a73d713d33 ]
 
-When an MSC supporting memory bandwidth monitoring is brought offline and
-then online, mpam_restore_mbwu_state() calls __ris_msmon_read() via ipi to
-restore the configuration of the bandwidth counters. It doesn't care about
-the value read, mbwu_arg.val, and doesn't set it leading to a null pointer
-dereference when __ris_msmon_read() adds to it. This results in a kernel
-oops with a call trace such as:
+In the error path of mshv_map_user_memory(), calling vfree() directly on
+the region leaves the MMU notifier registered. When userspace later unmaps
+the memory, the notifier fires and accesses the freed region, causing a
+use-after-free and potential kernel panic.
 
-Call trace:
-__ris_msmon_read+0x19c/0x64c (P)
-mpam_restore_mbwu_state+0xa0/0xe8
-smp_call_on_cpu_callback+0x1c/0x38
-process_one_work+0x154/0x4b4
-worker_thread+0x188/0x310
-kthread+0x11c/0x130
-ret_from_fork+0x10/0x20
+Replace vfree() with mshv_partition_put() to properly unregister
+the MMU notifier before freeing the region.
 
-Provide a local variable for val to avoid __ris_msmon_read() dereferencing
-a null pointer when adding to val.
-
-Fixes: 41e8a14950e1 ("arm_mpam: Track bandwidth counter state for power management")
-Signed-off-by: Ben Horgan <ben.horgan@arm.com>
-Reviewed-by: James Morse <james.morse@arm.com>
-Signed-off-by: James Morse <james.morse@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: b9a66cd5ccbb9 ("mshv: Add support for movable memory regions")
+Signed-off-by: Stanislav Kinsburskii <skinsburskii@linux.microsoft.com>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/resctrl/mpam_devices.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hv/mshv_root_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/resctrl/mpam_devices.c b/drivers/resctrl/mpam_devices.c
-index b495d52918681..41fe421171813 100644
---- a/drivers/resctrl/mpam_devices.c
-+++ b/drivers/resctrl/mpam_devices.c
-@@ -1428,6 +1428,7 @@ static void mpam_reprogram_ris_partid(struct mpam_msc_ris *ris, u16 partid,
- static int mpam_restore_mbwu_state(void *_ris)
- {
- 	int i;
-+	u64 val;
- 	struct mon_read mwbu_arg;
- 	struct mpam_msc_ris *ris = _ris;
- 	struct mpam_class *class = ris->vmsc->comp->class;
-@@ -1437,6 +1438,7 @@ static int mpam_restore_mbwu_state(void *_ris)
- 			mwbu_arg.ris = ris;
- 			mwbu_arg.ctx = &ris->mbwu_state[i].cfg;
- 			mwbu_arg.type = mpam_msmon_choose_counter(class);
-+			mwbu_arg.val = &val;
+diff --git a/drivers/hv/mshv_root_main.c b/drivers/hv/mshv_root_main.c
+index d3e8a66443ad6..45cf086ad430d 100644
+--- a/drivers/hv/mshv_root_main.c
++++ b/drivers/hv/mshv_root_main.c
+@@ -1334,7 +1334,7 @@ mshv_map_user_memory(struct mshv_partition *partition,
+ 	return 0;
  
- 			__ris_msmon_read(&mwbu_arg);
- 		}
+ errout:
+-	vfree(region);
++	mshv_region_put(region);
+ 	return ret;
+ }
+ 
 -- 
 2.51.0
 
