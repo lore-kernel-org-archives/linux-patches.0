@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78EDF3BA234;
-	Mon, 23 Mar 2026 16:14:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D15E2980A8;
+	Mon, 23 Mar 2026 16:14:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282464; cv=none; b=tiDIyLGSM629N64WwfrnmuIxO5CFSbwDOAiY619rImo8gvtTAHBAvEGszjh6HEUTFLL9vocqk//xEaMc7Ns7Z4fg+vMOdLABKbnkpMh8HYQcU7z35LvGFlO5Xif2Z7aBA6Ne2BiMm8xJSzRU8DkC228awDK7Eds35zOdz8AYqDg=
+	t=1774282467; cv=none; b=KKJnT+pPEFF/UjQZ+w6Y/xtzaUw6mLca7NNS3JzzGNB8hRRLC8mm/Jh8s2mFsuFRwgxw2ulkzwlmezIN4js+/WSJ78njajTHKq7J2sk7rUBN2S3NmvPjVhXdqWFIAk9Aq+eAcujGOAhyKxduM1Jchuq/bl5TOPE75dkVA2hZIhE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282464; c=relaxed/simple;
-	bh=sMfjbdV0/DRmuyGSC28hcHw7hMnqcrRG4F3FRRZs1kE=;
+	s=arc-20240116; t=1774282467; c=relaxed/simple;
+	bh=uP/qB+TCrHVVlmxViG9I+z0Lj8SDWJDBkyXzB6zRWdg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b5IEfvfq5i7oaLn/+BHhxUwGUQZfLfT0NCettTynH3l2HLFLTLSeeIT7qgpTiwIQk4pSfZznM/XROZoCM1R1o7HIPJA3oRHYwRBL9EEJPN2WnmC2rdV4LaytKe+0+1vbneplaMO6cJNIh0sM2NvGM497QRWg/rNeej/N1zdRK/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=T7dgF4gk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bSbYQNfw4RoVNRbsKnFF7wg+JOjsq3JFOpSbp4oRqA06+YCGFGWJQbDCsQ5Etne4XxWe06LaPjnXChu+RlPaQXyy+UTPxYXlUyBS6znVhnxIIqhQAokTabkFwNvxLQXKnb3zh79KfAlmZImzNS/h9+0thDt7maZwFcH9wVXNkzo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AXSj9ffe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="T7dgF4gk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07A0C4CEF7;
-	Mon, 23 Mar 2026 16:14:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AXSj9ffe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65E22C4CEF7;
+	Mon, 23 Mar 2026 16:14:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282464;
-	bh=sMfjbdV0/DRmuyGSC28hcHw7hMnqcrRG4F3FRRZs1kE=;
+	s=korg; t=1774282466;
+	bh=uP/qB+TCrHVVlmxViG9I+z0Lj8SDWJDBkyXzB6zRWdg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T7dgF4gkJbx/KSsM0pOl3tBSWdxVPAA/dn8uQ3RBx7Cb/h2GJVgQQNIXcWlbujFKf
-	 We41Ch/By11IV/vzulL9617pIQtvVM69jqLVT+XtAPt4uTlxJycThmsA5ruhAou1cN
-	 CWCGZVSxs7xnydloA2HPK6hDxHIt6Xgi7i51x3LI=
+	b=AXSj9ffexT3eeIOuEzeI7AYgwyqzcm48T1EP36ZvO7wE1DYE9F0JRWtNSUQvy5bSp
+	 3a/CLX6k7AD5xSrqWMjF9hRyt/XnGIw36kluIL7aY0o7y0yoTiLE6jxc4Log1v30Y1
+	 O+E7sIEff2SdPATRORtB0O77nURcFYgXE4uYEHTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com,
-	Jiayuan Chen <jiayuan.chen@shopee.com>,
-	David Ahern <dsahern@kernel.org>,
+	Gal Pressman <gal@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/481] net: ipv6: fix panic when IPv4 route references loopback IPv6 nexthop
-Date: Mon, 23 Mar 2026 14:42:01 +0100
-Message-ID: <20260323134528.647549083@linuxfoundation.org>
+Subject: [PATCH 6.1 166/481] net/mlx5e: Fix DMA FIFO desync on error CQE SQ recovery
+Date: Mon, 23 Mar 2026 14:42:28 +0100
+Message-ID: <20260323134529.274861206@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,81 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiayuan Chen <jiayuan.chen@shopee.com>
+From: Gal Pressman <gal@nvidia.com>
 
-[ Upstream commit 21ec92774d1536f71bdc90b0e3d052eff99cf093 ]
+[ Upstream commit 1633111d69053512d099658d4a05fc736fab36b0 ]
 
-When a standalone IPv6 nexthop object is created with a loopback device
-(e.g., "ip -6 nexthop add id 100 dev lo"), fib6_nh_init() misclassifies
-it as a reject route. This is because nexthop objects have no destination
-prefix (fc_dst=::), causing fib6_is_reject() to match any loopback
-nexthop. The reject path skips fib_nh_common_init(), leaving
-nhc_pcpu_rth_output unallocated. If an IPv4 route later references this
-nexthop, __mkroute_output() dereferences NULL nhc_pcpu_rth_output and
-panics.
+In case of a TX error CQE, a recovery flow is triggered,
+mlx5e_reset_txqsq_cc_pc() resets dma_fifo_cc to 0 but not dma_fifo_pc,
+desyncing the DMA FIFO producer and consumer.
 
-Simplify the check in fib6_nh_init() to only match explicit reject
-routes (RTF_REJECT) instead of using fib6_is_reject(). The loopback
-promotion heuristic in fib6_is_reject() is handled separately by
-ip6_route_info_create_nh(). After this change, the three cases behave
-as follows:
+After recovery, the producer pushes new DMA entries at the old
+dma_fifo_pc, while the consumer reads from position 0.
+This causes us to unmap stale DMA addresses from before the recovery.
 
-1. Explicit reject route ("ip -6 route add unreachable 2001:db8::/64"):
-   RTF_REJECT is set, enters reject path, skips fib_nh_common_init().
-   No behavior change.
+The DMA FIFO is a purely software construct with no HW counterpart.
+At the point of reset, all WQEs have been flushed so dma_fifo_cc is
+already equal to dma_fifo_pc. There is no need to reset either counter,
+similar to how skb_fifo pc/cc are untouched.
 
-2. Implicit loopback reject route ("ip -6 route add 2001:db8::/32 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. ip6_route_info_create_nh() still promotes it to reject
-   afterward. nhc_pcpu_rth_output is allocated but unused, which is
-   harmless.
+Remove the 'dma_fifo_cc = 0' reset.
 
-3. Standalone nexthop object ("ip -6 nexthop add id 100 dev lo"):
-   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
-   called. nhc_pcpu_rth_output is properly allocated, fixing the crash
-   when IPv4 routes reference this nexthop.
+This fixes the following WARNING:
+    WARNING: CPU: 0 PID: 0 at drivers/iommu/dma-iommu.c:1240 iommu_dma_unmap_page+0x79/0x90
+    Modules linked in: mlx5_vdpa vringh vdpa bonding mlx5_ib mlx5_vfio_pci ipip mlx5_fwctl tunnel4 mlx5_core ib_ipoib geneve ip6_gre ip_gre gre nf_tables ip6_tunnel rdma_ucm ib_uverbs ib_umad vfio_pci vfio_pci_core act_mirred act_skbedit act_vlan vhost_net vhost tap ip6table_mangle ip6table_nat ip6table_filter ip6_tables iptable_mangle cls_matchall nfnetlink_cttimeout act_gact cls_flower sch_ingress vhost_iotlb iptable_raw tunnel6 vfio_iommu_type1 vfio openvswitch nsh rpcsec_gss_krb5 auth_rpcgss oid_registry xt_conntrack xt_MASQUERADE nf_conntrack_netlink nfnetlink iptable_nat nf_nat xt_addrtype br_netfilter overlay zram zsmalloc rpcrdma ib_iser libiscsi scsi_transport_iscsi rdma_cm iw_cm ib_cm ib_core fuse [last unloaded: nf_tables]
+    CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.13.0-rc5_for_upstream_min_debug_2024_12_30_21_33 #1
+    Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+    RIP: 0010:iommu_dma_unmap_page+0x79/0x90
+    Code: 2b 4d 3b 21 72 26 4d 3b 61 08 73 20 49 89 d8 44 89 f9 5b 4c 89 f2 4c 89 e6 48 89 ef 5d 41 5c 41 5d 41 5e 41 5f e9 c7 ae 9e ff <0f> 0b 5b 5d 41 5c 41 5d 41 5e 41 5f c3 66 2e 0f 1f 84 00 00 00 00
+    Call Trace:
+     <IRQ>
+     ? __warn+0x7d/0x110
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? report_bug+0x16d/0x180
+     ? handle_bug+0x4f/0x90
+     ? exc_invalid_op+0x14/0x70
+     ? asm_exc_invalid_op+0x16/0x20
+     ? iommu_dma_unmap_page+0x79/0x90
+     ? iommu_dma_unmap_page+0x2e/0x90
+     dma_unmap_page_attrs+0x10d/0x1b0
+     mlx5e_tx_wi_dma_unmap+0xbe/0x120 [mlx5_core]
+     mlx5e_poll_tx_cq+0x16d/0x690 [mlx5_core]
+     mlx5e_napi_poll+0x8b/0xac0 [mlx5_core]
+     __napi_poll+0x24/0x190
+     net_rx_action+0x32a/0x3b0
+     ? mlx5_eq_comp_int+0x7e/0x270 [mlx5_core]
+     ? notifier_call_chain+0x35/0xa0
+     handle_softirqs+0xc9/0x270
+     irq_exit_rcu+0x71/0xd0
+     common_interrupt+0x7f/0xa0
+     </IRQ>
+     <TASK>
+     asm_common_interrupt+0x22/0x40
 
-Suggested-by: Ido Schimmel <idosch@nvidia.com>
-Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
-Reported-by: syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/698f8482.a70a0220.2c38d7.00ca.GAE@google.com/T/
-Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260304113817.294966-2-jiayuan.chen@linux.dev
+Fixes: db75373c91b0 ("net/mlx5e: Recover Send Queue (SQ) from error state")
+Signed-off-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260305142634.1813208-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index 5aa5390da1095..987ef0954e2ea 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -3558,7 +3558,6 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
- {
- 	struct net_device *dev = NULL;
- 	struct inet6_dev *idev = NULL;
--	int addr_type;
- 	int err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+index 02d9fb0c5ec24..7c39f14e57cd8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_tx.c
+@@ -33,7 +33,6 @@ static void mlx5e_reset_txqsq_cc_pc(struct mlx5e_txqsq *sq)
+ 		  "SQ 0x%x: cc (0x%x) != pc (0x%x)\n",
+ 		  sq->sqn, sq->cc, sq->pc);
+ 	sq->cc = 0;
+-	sq->dma_fifo_cc = 0;
+ 	sq->pc = 0;
+ }
  
- 	fib6_nh->fib_nh_family = AF_INET6;
-@@ -3599,11 +3598,10 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
- 
- 	fib6_nh->fib_nh_weight = 1;
- 
--	/* We cannot add true routes via loopback here,
--	 * they would result in kernel looping; promote them to reject routes
-+	/* Reset the nexthop device to the loopback device in case of reject
-+	 * routes.
- 	 */
--	addr_type = ipv6_addr_type(&cfg->fc_dst);
--	if (fib6_is_reject(cfg->fc_flags, dev, addr_type)) {
-+	if (cfg->fc_flags & RTF_REJECT) {
- 		/* hold loopback dev/idev if we haven't done so. */
- 		if (dev != net->loopback_dev) {
- 			if (dev) {
 -- 
 2.51.0
 
