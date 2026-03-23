@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADBC38837F;
-	Mon, 23 Mar 2026 14:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AAD3AA516;
+	Mon, 23 Mar 2026 14:56:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277763; cv=none; b=eIvfCf/SLk9jCVqwHlsEfOIJeGOtUxVATm5ZGdCyIjPZCrEYpk7vFs6ysL2l7yEtF1QuJjOvrgpOfR7mcvmKh4+UuidXgnW7gK1q18Y8I/X+Cn7pet2s3azH8y+awzauPRR4/AnJ7CX4SKaEimwpphI37mw3uL1hXbY0LXr2pZY=
+	t=1774277766; cv=none; b=kR10TRonFuc7tQn9aaygMTmb7gGW8T/4sg8J6WLLAkdEC8YsYwiqJXSLhfj9JKy/HVDXk9zQ/PZWJuK8BGxsaoCDoEvx/nddA0qW3jw03m0ziWb3zYidNT/XNyceMwzvcPnUMIAlhg57ltRzYlltqLP4KHkHVbkDkhx4xt8SoCM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277763; c=relaxed/simple;
-	bh=rubOrBp2FyFGs8jlxGLodKLJVWXv2L4THOIlm3JAKAE=;
+	s=arc-20240116; t=1774277766; c=relaxed/simple;
+	bh=RGdknytjLxYzDoMZwznuSKam1Jo4r79oU5tp8QAHhrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V3iNnQs8prUAdNFcKSMbGNpdsIRQLMgZM94kDNM7Xb+qLdw7tS5WVb+6DqQnGK3ElRRCobYk1DkX3cnODi/vlnMKueTFcUhnSoV0ExIiGO89LUJ/E6efTa8bhhwJg3De3SyFitVt9Qw2gzGYzCdH/FQPbWdwWo3WSrBiGQvbTy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RZTA1ReQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gJEOU807Ah/3I5U3amskNPBKjIE5lp/rp4SD/EtxMXyLN2zWzx22/qUi34n36ovvuyrTpFcPCq6knWLrQS8tJLAHMlWf9+HHqV/iyxw9aQl2Kx5GRJZeUCvJQL9vpykFJMewe64Etm0GDJNXDtjK3sEqr53dxrGM8d/isI3tQds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DCwsaRzV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RZTA1ReQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91EF6C4CEF7;
-	Mon, 23 Mar 2026 14:56:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DCwsaRzV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1927C2BCB1;
+	Mon, 23 Mar 2026 14:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277763;
-	bh=rubOrBp2FyFGs8jlxGLodKLJVWXv2L4THOIlm3JAKAE=;
+	s=korg; t=1774277766;
+	bh=RGdknytjLxYzDoMZwznuSKam1Jo4r79oU5tp8QAHhrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZTA1ReQhXOfSVJ2YS8h6Zw/dy6OLYuPjjrcVgBvAKbMeFZ6XVEPz2bHF7SLCGXZ8
-	 6P+9qUBxizM497S8cO33FbBaeSpTgbCFFQS2ZO80n3fq9E0Hh/MyLvoxY1Gln1q40V
-	 HNivL1vOyF79Ag6dNBcLVHZaCEI9lNVLjsy+ocSg=
+	b=DCwsaRzVC1iApxkRjPZcSuIIaCfDqqzoSf3wxjiRF3ukEtm18a3j7nQTF1UJTV/Vj
+	 xzj44N4r50QBxQTlXCXiYyV0qn1Ku83Cl5rRXBT7iKmSxMMvgbWbcYAmowCQXlbm95
+	 EO4td8fbcRjMIkKHljjXirEXr5h8hyNb9JFppVaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 052/567] ext4: get rid of ppath in ext4_convert_unwritten_extents_endio()
-Date: Mon, 23 Mar 2026 14:39:32 +0100
-Message-ID: <20260323134535.098284737@linuxfoundation.org>
+Subject: [PATCH 6.6 053/567] ext4: get rid of ppath in ext4_ext_convert_to_initialized()
+Date: Mon, 23 Mar 2026 14:39:33 +0100
+Message-ID: <20260323134535.124923041@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,16 +55,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 8d5ad7b08f9234bc92b9567cfe52e521df5f6626 ]
+[ Upstream commit 33c14b8bd8a9ef8b3dfde136b0ca779e68c2f576 ]
 
 The use of path and ppath is now very confusing, so to make the code more
 readable, pass path between functions uniformly, and get rid of ppath.
 
-To get rid of the ppath in ext4_convert_unwritten_extents_endio(), the
-following is done here:
+To get rid of the ppath in ext4_ext_convert_to_initialized(), the following
+is done here:
 
  * Free the extents path when an error is encountered.
  * Its caller needs to update ppath if it uses ppath.
+ * The 'allocated' is changed from passing a value to passing an address.
 
 No functional changes.
 
@@ -72,75 +73,159 @@ Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-20-libaokun@huaweicloud.com
+Link: https://patch.msgid.link/20240822023545.1994557-21-libaokun@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: feaf2a80e78f ("ext4: don't set EXT4_GET_BLOCKS_CONVERT when splitting before submitting I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 43 +++++++++++++++++++++++--------------------
- 1 file changed, 23 insertions(+), 20 deletions(-)
+ fs/ext4/extents.c | 73 +++++++++++++++++++++++------------------------
+ 1 file changed, 35 insertions(+), 38 deletions(-)
 
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 27bacfa7d492c..8eb004700437e 100644
+index 8eb004700437e..fe39d86d3a7e6 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -3753,12 +3753,11 @@ static struct ext4_ext_path *ext4_split_convert_extents(handle_t *handle,
- 				 allocated);
- }
- 
--static int ext4_convert_unwritten_extents_endio(handle_t *handle,
--						struct inode *inode,
--						struct ext4_map_blocks *map,
--						struct ext4_ext_path **ppath)
+@@ -3445,13 +3445,11 @@ static struct ext4_ext_path *ext4_split_extent(handle_t *handle,
+  *    that are allocated and initialized.
+  *    It is guaranteed to be >= map->m_len.
+  */
+-static int ext4_ext_convert_to_initialized(handle_t *handle,
+-					   struct inode *inode,
+-					   struct ext4_map_blocks *map,
+-					   struct ext4_ext_path **ppath,
+-					   int flags)
 +static struct ext4_ext_path *
-+ext4_convert_unwritten_extents_endio(handle_t *handle, struct inode *inode,
-+				     struct ext4_map_blocks *map,
-+				     struct ext4_ext_path *path)
++ext4_ext_convert_to_initialized(handle_t *handle, struct inode *inode,
++			struct ext4_map_blocks *map, struct ext4_ext_path *path,
++			int flags, unsigned int *allocated)
  {
 -	struct ext4_ext_path *path = *ppath;
- 	struct ext4_extent *ex;
- 	ext4_lblk_t ee_block;
- 	unsigned int ee_len;
-@@ -3788,24 +3787,19 @@ static int ext4_convert_unwritten_extents_endio(handle_t *handle,
- #endif
- 		path = ext4_split_convert_extents(handle, inode, map, path,
- 						EXT4_GET_BLOCKS_CONVERT, NULL);
--		if (IS_ERR(path)) {
--			*ppath = NULL;
--			return PTR_ERR(path);
--		}
-+		if (IS_ERR(path))
-+			return path;
+ 	struct ext4_sb_info *sbi;
+ 	struct ext4_extent_header *eh;
+ 	struct ext4_map_blocks split_map;
+@@ -3461,7 +3459,6 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 	unsigned int ee_len, depth, map_len = map->m_len;
+ 	int err = 0;
+ 	int split_flag = EXT4_EXT_DATA_VALID2;
+-	int allocated = 0;
+ 	unsigned int max_zeroout = 0;
  
- 		path = ext4_find_extent(inode, map->m_lblk, path, 0);
--		if (IS_ERR(path)) {
--			*ppath = NULL;
--			return PTR_ERR(path);
--		}
--		*ppath = path;
-+		if (IS_ERR(path))
-+			return path;
- 		depth = ext_depth(inode);
- 		ex = path[depth].p_ext;
+ 	ext_debug(inode, "logical block %llu, max_blocks %u\n",
+@@ -3502,6 +3499,7 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 	 *  - L2: we only attempt to merge with an extent stored in the
+ 	 *    same extent tree node.
+ 	 */
++	*allocated = 0;
+ 	if ((map->m_lblk == ee_block) &&
+ 		/* See if we can merge left */
+ 		(map_len < ee_len) &&		/*L1*/
+@@ -3531,7 +3529,7 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 			(prev_len < (EXT_INIT_MAX_LEN - map_len))) {	/*C4*/
+ 			err = ext4_ext_get_access(handle, inode, path + depth);
+ 			if (err)
+-				goto out;
++				goto errout;
+ 
+ 			trace_ext4_ext_convert_to_initialized_fastpath(inode,
+ 				map, ex, abut_ex);
+@@ -3546,7 +3544,7 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 			abut_ex->ee_len = cpu_to_le16(prev_len + map_len);
+ 
+ 			/* Result: number of initialized blocks past m_lblk */
+-			allocated = map_len;
++			*allocated = map_len;
+ 		}
+ 	} else if (((map->m_lblk + map_len) == (ee_block + ee_len)) &&
+ 		   (map_len < ee_len) &&	/*L1*/
+@@ -3577,7 +3575,7 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 		    (next_len < (EXT_INIT_MAX_LEN - map_len))) {	/*C4*/
+ 			err = ext4_ext_get_access(handle, inode, path + depth);
+ 			if (err)
+-				goto out;
++				goto errout;
+ 
+ 			trace_ext4_ext_convert_to_initialized_fastpath(inode,
+ 				map, ex, abut_ex);
+@@ -3592,18 +3590,20 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 			abut_ex->ee_len = cpu_to_le16(next_len + map_len);
+ 
+ 			/* Result: number of initialized blocks past m_lblk */
+-			allocated = map_len;
++			*allocated = map_len;
+ 		}
+ 	}
+-	if (allocated) {
++	if (*allocated) {
+ 		/* Mark the block containing both extents as dirty */
+ 		err = ext4_ext_dirty(handle, inode, path + depth);
+ 
+ 		/* Update path to point to the right extent */
+ 		path[depth].p_ext = abut_ex;
++		if (err)
++			goto errout;
+ 		goto out;
+ 	} else
+-		allocated = ee_len - (map->m_lblk - ee_block);
++		*allocated = ee_len - (map->m_lblk - ee_block);
+ 
+ 	WARN_ON(map->m_lblk < ee_block);
+ 	/*
+@@ -3630,21 +3630,21 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 	split_map.m_lblk = map->m_lblk;
+ 	split_map.m_len = map->m_len;
+ 
+-	if (max_zeroout && (allocated > split_map.m_len)) {
+-		if (allocated <= max_zeroout) {
++	if (max_zeroout && (*allocated > split_map.m_len)) {
++		if (*allocated <= max_zeroout) {
+ 			/* case 3 or 5 */
+ 			zero_ex1.ee_block =
+ 				 cpu_to_le32(split_map.m_lblk +
+ 					     split_map.m_len);
+ 			zero_ex1.ee_len =
+-				cpu_to_le16(allocated - split_map.m_len);
++				cpu_to_le16(*allocated - split_map.m_len);
+ 			ext4_ext_store_pblock(&zero_ex1,
+ 				ext4_ext_pblock(ex) + split_map.m_lblk +
+ 				split_map.m_len - ee_block);
+ 			err = ext4_ext_zeroout(inode, &zero_ex1);
+ 			if (err)
+ 				goto fallback;
+-			split_map.m_len = allocated;
++			split_map.m_len = *allocated;
+ 		}
+ 		if (split_map.m_lblk - ee_block + split_map.m_len <
+ 								max_zeroout) {
+@@ -3662,27 +3662,24 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+ 
+ 			split_map.m_len += split_map.m_lblk - ee_block;
+ 			split_map.m_lblk = ee_block;
+-			allocated = map->m_len;
++			*allocated = map->m_len;
+ 		}
  	}
  
- 	err = ext4_ext_get_access(handle, inode, path + depth);
- 	if (err)
+ fallback:
+ 	path = ext4_split_extent(handle, inode, path, &split_map, split_flag,
+ 				 flags, NULL);
+-	if (IS_ERR(path)) {
+-		err = PTR_ERR(path);
+-		*ppath = NULL;
 -		goto out;
-+		goto errout;
- 	/* first mark the extent as initialized */
- 	ext4_ext_mark_initialized(ex);
- 
-@@ -3816,9 +3810,15 @@ static int ext4_convert_unwritten_extents_endio(handle_t *handle,
- 
- 	/* Mark modified extent as dirty */
- 	err = ext4_ext_dirty(handle, inode, path + path->p_depth);
--out:
-+	if (err)
-+		goto errout;
-+
- 	ext4_ext_show_leaf(inode, path);
--	return err;
+-	}
+-	err = 0;
+-	*ppath = path;
++	if (IS_ERR(path))
++		return path;
+ out:
+ 	/* If we have gotten a failure, don't zero out status tree */
+-	if (!err) {
+-		ext4_zeroout_es(inode, &zero_ex1);
+-		ext4_zeroout_es(inode, &zero_ex2);
+-	}
+-	return err ? err : allocated;
++	ext4_zeroout_es(inode, &zero_ex1);
++	ext4_zeroout_es(inode, &zero_ex2);
 +	return path;
 +
 +errout:
@@ -148,24 +233,47 @@ index 27bacfa7d492c..8eb004700437e 100644
 +	return ERR_PTR(err);
  }
  
- static int
-@@ -3946,10 +3946,13 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ /*
+@@ -3904,7 +3901,6 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ 			struct ext4_ext_path **ppath, int flags,
+ 			unsigned int allocated, ext4_fsblk_t newblock)
+ {
+-	int ret = 0;
+ 	int err = 0;
+ 
+ 	ext_debug(inode, "logical block %llu, max_blocks %u, flags 0x%x, allocated %u\n",
+@@ -3984,23 +3980,24 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ 	 * For buffered writes, at writepage time, etc.  Convert a
+ 	 * discovered unwritten extent to written.
+ 	 */
+-	ret = ext4_ext_convert_to_initialized(handle, inode, map, ppath, flags);
+-	if (ret < 0) {
+-		err = ret;
++	*ppath = ext4_ext_convert_to_initialized(handle, inode, map, *ppath,
++						 flags, &allocated);
++	if (IS_ERR(*ppath)) {
++		err = PTR_ERR(*ppath);
++		*ppath = NULL;
+ 		goto out2;
  	}
- 	/* IO end_io complete, convert the filled extent to written */
- 	if (flags & EXT4_GET_BLOCKS_CONVERT) {
--		err = ext4_convert_unwritten_extents_endio(handle, inode, map,
--							   ppath);
--		if (err < 0)
-+		*ppath = ext4_convert_unwritten_extents_endio(handle, inode,
-+							      map, *ppath);
-+		if (IS_ERR(*ppath)) {
-+			err = PTR_ERR(*ppath);
-+			*ppath = NULL;
- 			goto out2;
-+		}
- 		ext4_update_inode_fsync_trans(handle, inode, 1);
- 		goto map_out;
+ 	ext4_update_inode_fsync_trans(handle, inode, 1);
+ 	/*
+-	 * shouldn't get a 0 return when converting an unwritten extent
++	 * shouldn't get a 0 allocated when converting an unwritten extent
+ 	 * unless m_len is 0 (bug) or extent has been corrupted
+ 	 */
+-	if (unlikely(ret == 0)) {
+-		EXT4_ERROR_INODE(inode, "unexpected ret == 0, m_len = %u",
++	if (unlikely(allocated == 0)) {
++		EXT4_ERROR_INODE(inode, "unexpected allocated == 0, m_len = %u",
+ 				 map->m_len);
+ 		err = -EFSCORRUPTED;
+ 		goto out2;
  	}
+-	allocated = ret;
+ 
+ out:
+ 	map->m_flags |= EXT4_MAP_NEW;
 -- 
 2.51.0
 
