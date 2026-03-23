@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8538D395DB5;
-	Mon, 23 Mar 2026 16:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391F43BE17D;
+	Mon, 23 Mar 2026 16:27:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283233; cv=none; b=CRxZMYN+YY+H6aYpftRYEZv0prVNXFyzT/QVpEDa6Vw7uM5rHto7h2A0N0bF65umPqotO8LNDVe28NWuswm85Ebc+VPlrWAbwSdpTThsFG2UeSt6g7BfdEzETH7S8U3bTmXjLIwmFJDzXa7oB756+sVnO1LQg59iMDZ2riBFiCw=
+	t=1774283236; cv=none; b=mJcvUVuIm54nOy6Si51lPj9vp5VZaRamZ1GV8QA1hFV3bFgWYT1G4UEyLKyFUV2JSZ2lPCNKcY3xuGM9kmFXbNUa5kvbN2DbujGtF0fwDbWHdn/M32HDgMdtxVrcNNkC+zUapONqgc52Fi66gg7hcIGskuzTWRumIz/p/K7wIx4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283233; c=relaxed/simple;
-	bh=ejoNf5smfYfZhqIM+oCul4245RRC/hAI06UrlvfAmfg=;
+	s=arc-20240116; t=1774283236; c=relaxed/simple;
+	bh=+0kQUKw1VsoVtwi5gUe8+OQoxWzVaVnCmRnCOEMPsmw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J1ryjEXT1ZeNgCwp3+SY9PDyiAakhbhd9f1SzwjI1UmOrg3MGFvAK5uprNWxNbiu2W+xm9s60JnClmgvRKrTalOhmu5itWPI0uMwJQogjNGk+TuhvN9aNfCTAyxOw5jES7ZJzrqidT9GVDnnREzRregEClSo4UKY66GhM1HxCvw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ragq2fBx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fQFZRomdOa2nMNLLyUPEmslNCN2NseJVEKeQGI+c7yjpRm1E/pbVhtFDSyPboLhNlpxXIePNZIxk7U/El/nGZ79dl0asoCUl4Q9Wlf/6UO7SlVWCGylmlfnI5rixo93fHoEZ8GFcvpuNA+TOvVeSXSfytJZh8OQl4G/NoIh93ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=X2j69ble; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ragq2fBx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A9CC4CEF7;
-	Mon, 23 Mar 2026 16:27:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="X2j69ble"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1FFC2BCB3;
+	Mon, 23 Mar 2026 16:27:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283233;
-	bh=ejoNf5smfYfZhqIM+oCul4245RRC/hAI06UrlvfAmfg=;
+	s=korg; t=1774283236;
+	bh=+0kQUKw1VsoVtwi5gUe8+OQoxWzVaVnCmRnCOEMPsmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ragq2fBxyh04xn+Ux+RMJ2kiEMduPyLZPk5cKypb7JJNfzpQCiN4pipYVp7nL7//J
-	 8fIJrvPaXENxydrCVeVNVIpWEgeyRb4BzaBoAsJlpfJTISpNNjVpe3nsaVh7Xnh9oM
-	 FNRLOKP7YwtFKl3a0aKrnWEYwDfmNIBwimZPUoUo=
+	b=X2j69bleVyaAkGoq4Q5l2k4ctG5fF+AVkdRajBr9HOK6aU8lmYOl+DuUHe8JxOeRn
+	 iKvqVXvSi1pgFiuahP1YWHgcxc1DF8aLSTlPslHOdTNp9KMbv4yjuwFX+2IYrXea54
+	 8F+WflBK8W9G7QQo2z6jt+tTz0rjMT/jQmkSjVnQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Rahul Bukte <rahul.bukte@sony.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 450/481] ksmbd: fix use-after-free of share_conf in compound request
-Date: Mon, 23 Mar 2026 14:47:12 +0100
-Message-ID: <20260323134536.180088887@linuxfoundation.org>
+Subject: [PATCH 6.1 451/481] drm/i915/gt: Check set_default_submission() before deferencing
+Date: Mon, 23 Mar 2026 14:47:13 +0100
+Message-ID: <20260323134536.206369814@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,133 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Rahul Bukte <rahul.bukte@sony.com>
 
-[ Upstream commit c33615f995aee80657b9fdfbc4ee7f49c2bd733d ]
+[ Upstream commit 0162ab3220bac870e43e229e6e3024d1a21c3f26 ]
 
-smb2_get_ksmbd_tcon() reuses work->tcon in compound requests without
-validating tcon->t_state. ksmbd_tree_conn_lookup() checks t_state ==
-TREE_CONNECTED on the initial lookup path, but the compound reuse path
-bypasses this check entirely.
+When the i915 driver firmware binaries are not present, the
+set_default_submission pointer is not set. This pointer is
+dereferenced during suspend anyways.
 
-If a prior command in the compound (SMB2_TREE_DISCONNECT) sets t_state
-to TREE_DISCONNECTED and frees share_conf via ksmbd_share_config_put(),
-subsequent commands dereference the freed share_conf through
-work->tcon->share_conf.
+Add a check to make sure it is set before dereferencing.
 
-KASAN report:
+[   23.289926] PM: suspend entry (deep)
+[   23.293558] Filesystems sync: 0.000 seconds
+[   23.298010] Freezing user space processes
+[   23.302771] Freezing user space processes completed (elapsed 0.000 seconds)
+[   23.309766] OOM killer disabled.
+[   23.313027] Freezing remaining freezable tasks
+[   23.318540] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[   23.342038] serial 00:05: disabled
+[   23.345719] serial 00:02: disabled
+[   23.349342] serial 00:01: disabled
+[   23.353782] sd 0:0:0:0: [sda] Synchronizing SCSI cache
+[   23.358993] sd 1:0:0:0: [sdb] Synchronizing SCSI cache
+[   23.361635] ata1.00: Entering standby power mode
+[   23.368863] ata2.00: Entering standby power mode
+[   23.445187] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   23.452194] #PF: supervisor instruction fetch in kernel mode
+[   23.457896] #PF: error_code(0x0010) - not-present page
+[   23.463065] PGD 0 P4D 0
+[   23.465640] Oops: Oops: 0010 [#1] SMP NOPTI
+[   23.469869] CPU: 8 UID: 0 PID: 211 Comm: kworker/u48:18 Tainted: G S      W           6.19.0-rc4-00020-gf0b9d8eb98df #10 PREEMPT(voluntary)
+[   23.482512] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   23.496511] Workqueue: async async_run_entry_fn
+[   23.501087] RIP: 0010:0x0
+[   23.503755] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+[   23.510324] RSP: 0018:ffffb4a60065fca8 EFLAGS: 00010246
+[   23.515592] RAX: 0000000000000000 RBX: ffff9f428290e000 RCX: 000000000000000f
+[   23.522765] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff9f428290e000
+[   23.529937] RBP: ffff9f4282907070 R08: ffff9f4281130428 R09: 00000000ffffffff
+[   23.537111] R10: 0000000000000000 R11: 0000000000000001 R12: ffff9f42829070f8
+[   23.544284] R13: ffff9f4282906028 R14: ffff9f4282900000 R15: ffff9f4282906b68
+[   23.551457] FS:  0000000000000000(0000) GS:ffff9f466b2cf000(0000) knlGS:0000000000000000
+[   23.559588] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   23.565365] CR2: ffffffffffffffd6 CR3: 000000031c230001 CR4: 0000000000f70ef0
+[   23.572539] PKRU: 55555554
+[   23.575281] Call Trace:
+[   23.577770]  <TASK>
+[   23.579905]  intel_engines_reset_default_submission+0x42/0x60
+[   23.585695]  __intel_gt_unset_wedged+0x191/0x200
+[   23.590360]  intel_gt_unset_wedged+0x20/0x40
+[   23.594675]  gt_sanitize+0x15e/0x170
+[   23.598290]  i915_gem_suspend_late+0x6b/0x180
+[   23.602692]  i915_drm_suspend_late+0x35/0xf0
+[   23.607008]  ? __pfx_pci_pm_suspend_late+0x10/0x10
+[   23.611843]  dpm_run_callback+0x78/0x1c0
+[   23.615817]  device_suspend_late+0xde/0x2e0
+[   23.620037]  async_suspend_late+0x18/0x30
+[   23.624082]  async_run_entry_fn+0x25/0xa0
+[   23.628129]  process_one_work+0x15b/0x380
+[   23.632182]  worker_thread+0x2a5/0x3c0
+[   23.635973]  ? __pfx_worker_thread+0x10/0x10
+[   23.640279]  kthread+0xf6/0x1f0
+[   23.643464]  ? __pfx_kthread+0x10/0x10
+[   23.647263]  ? __pfx_kthread+0x10/0x10
+[   23.651045]  ret_from_fork+0x131/0x190
+[   23.654837]  ? __pfx_kthread+0x10/0x10
+[   23.658634]  ret_from_fork_asm+0x1a/0x30
+[   23.662597]  </TASK>
+[   23.664826] Modules linked in:
+[   23.667914] CR2: 0000000000000000
+[   23.671271] ------------[ cut here ]------------
 
-[    4.144653] ==================================================================
-[    4.145059] BUG: KASAN: slab-use-after-free in smb2_write+0xc74/0xe70
-[    4.145415] Read of size 4 at addr ffff88810430c194 by task kworker/1:1/44
-[    4.145772]
-[    4.145867] CPU: 1 UID: 0 PID: 44 Comm: kworker/1:1 Not tainted 7.0.0-rc3+ #60 PREEMPTLAZY
-[    4.145871] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    4.145875] Workqueue: ksmbd-io handle_ksmbd_work
-[    4.145888] Call Trace:
-[    4.145892]  <TASK>
-[    4.145894]  dump_stack_lvl+0x64/0x80
-[    4.145910]  print_report+0xce/0x660
-[    4.145919]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[    4.145928]  ? smb2_write+0xc74/0xe70
-[    4.145931]  kasan_report+0xce/0x100
-[    4.145934]  ? smb2_write+0xc74/0xe70
-[    4.145937]  smb2_write+0xc74/0xe70
-[    4.145939]  ? __pfx_smb2_write+0x10/0x10
-[    4.145942]  ? _raw_spin_unlock+0xe/0x30
-[    4.145945]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
-[    4.145948]  ? smb2_tree_disconnect+0x31c/0x480
-[    4.145951]  handle_ksmbd_work+0x40f/0x1080
-[    4.145953]  process_one_work+0x5fa/0xef0
-[    4.145962]  ? assign_work+0x122/0x3e0
-[    4.145964]  worker_thread+0x54b/0xf70
-[    4.145967]  ? __pfx_worker_thread+0x10/0x10
-[    4.145970]  kthread+0x346/0x470
-[    4.145976]  ? recalc_sigpending+0x19b/0x230
-[    4.145980]  ? __pfx_kthread+0x10/0x10
-[    4.145984]  ret_from_fork+0x4fb/0x6c0
-[    4.145992]  ? __pfx_ret_from_fork+0x10/0x10
-[    4.145995]  ? __switch_to+0x36c/0xbe0
-[    4.145999]  ? __pfx_kthread+0x10/0x10
-[    4.146003]  ret_from_fork_asm+0x1a/0x30
-[    4.146013]  </TASK>
-[    4.146014]
-[    4.149858] Allocated by task 44:
-[    4.149953]  kasan_save_stack+0x33/0x60
-[    4.150061]  kasan_save_track+0x14/0x30
-[    4.150169]  __kasan_kmalloc+0x8f/0xa0
-[    4.150274]  ksmbd_share_config_get+0x1dd/0xdd0
-[    4.150401]  ksmbd_tree_conn_connect+0x7e/0x600
-[    4.150529]  smb2_tree_connect+0x2e6/0x1000
-[    4.150645]  handle_ksmbd_work+0x40f/0x1080
-[    4.150761]  process_one_work+0x5fa/0xef0
-[    4.150873]  worker_thread+0x54b/0xf70
-[    4.150978]  kthread+0x346/0x470
-[    4.151071]  ret_from_fork+0x4fb/0x6c0
-[    4.151176]  ret_from_fork_asm+0x1a/0x30
-[    4.151286]
-[    4.151332] Freed by task 44:
-[    4.151418]  kasan_save_stack+0x33/0x60
-[    4.151526]  kasan_save_track+0x14/0x30
-[    4.151634]  kasan_save_free_info+0x3b/0x60
-[    4.151751]  __kasan_slab_free+0x43/0x70
-[    4.151861]  kfree+0x1ca/0x430
-[    4.151952]  __ksmbd_tree_conn_disconnect+0xc8/0x190
-[    4.152088]  smb2_tree_disconnect+0x1cd/0x480
-[    4.152211]  handle_ksmbd_work+0x40f/0x1080
-[    4.152326]  process_one_work+0x5fa/0xef0
-[    4.152438]  worker_thread+0x54b/0xf70
-[    4.152545]  kthread+0x346/0x470
-[    4.152638]  ret_from_fork+0x4fb/0x6c0
-[    4.152743]  ret_from_fork_asm+0x1a/0x30
-[    4.152853]
-[    4.152900] The buggy address belongs to the object at ffff88810430c180
-[    4.152900]  which belongs to the cache kmalloc-96 of size 96
-[    4.153226] The buggy address is located 20 bytes inside of
-[    4.153226]  freed 96-byte region [ffff88810430c180, ffff88810430c1e0)
-[    4.153549]
-[    4.153596] The buggy address belongs to the physical page:
-[    4.153750] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88810430ce80 pfn:0x10430c
-[    4.154000] flags: 0x100000000000200(workingset|node=0|zone=2)
-[    4.154160] page_type: f5(slab)
-[    4.154251] raw: 0100000000000200 ffff888100041280 ffff888100040110 ffff888100040110
-[    4.154461] raw: ffff88810430ce80 0000000800200009 00000000f5000000 0000000000000000
-[    4.154668] page dumped because: kasan: bad access detected
-[    4.154820]
-[    4.154866] Memory state around the buggy address:
-[    4.155002]  ffff88810430c080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    4.155196]  ffff88810430c100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    4.155391] >ffff88810430c180: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
-[    4.155587]                          ^
-[    4.155693]  ffff88810430c200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    4.155891]  ffff88810430c280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-[    4.156087] ==================================================================
-
-Add the same t_state validation to the compound reuse path, consistent
-with ksmbd_tree_conn_lookup().
-
-Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260203044839.1555147-1-suraj.kandpal@intel.com
+(cherry picked from commit daa199abc3d3d1740c9e3a2c3e9216ae5b447cad)
+Fixes: ff44ad51ebf8 ("drm/i915: Move engine->submit_request selection to a vfunc")
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index fb756953fec3a..65b55e824aa8b 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -117,6 +117,8 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
- 			pr_err("The first operation in the compound does not have tcon\n");
- 			return -EINVAL;
- 		}
-+		if (work->tcon->t_state != TREE_CONNECTED)
-+			return -ENOENT;
- 		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
- 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
- 					tree_id, work->tcon->id);
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index 07967adce16aa..20d4b9f4a4959 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -1798,7 +1798,8 @@ void intel_engines_reset_default_submission(struct intel_gt *gt)
+ 		if (engine->sanitize)
+ 			engine->sanitize(engine);
+ 
+-		engine->set_default_submission(engine);
++		if (engine->set_default_submission)
++			engine->set_default_submission(engine);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
