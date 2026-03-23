@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6653925CC40;
-	Mon, 23 Mar 2026 15:13:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E13428504F;
+	Mon, 23 Mar 2026 15:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278809; cv=none; b=AyUNQGx6YwGP2sKPaZnplh7epWorgIJOodaJ/U3OyqNy1UB3lf/Ze3+JweSo3g4S50LFIzwcrFXvTnqwyD5gelj5RraU8IigBMsbDfNJACPLHs8tAamoLyuTaGhoNnmWzQM7C/tRJajbPNiHa8Qb39rx37ClaZ38UIaD5vecSx0=
+	t=1774278812; cv=none; b=AlHBeJMsRg/lnR0Ot5rdrkr1/lL1clNgLXi9cr/UpEzD9iZMQQ4j1mgYJZqbRPdoGlhVJ3CxYEmTkl9WyzIh77GPqZw9ndrpFGUVxwruHnjojky2Gq3XUd9Rx9SI6SNaVK7cmkU31+PdFeOt0AvOuAminLV72RlYWJDSD1qsJGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278809; c=relaxed/simple;
-	bh=/jqE3yJfq6R6W/SPTUtuKRTlyjHN0yLqEtg+jkQ2Us4=;
+	s=arc-20240116; t=1774278812; c=relaxed/simple;
+	bh=+y6GSzQuFIbCrAqTI4sIZ9U6VQPhVL/m2OKanp/n4cE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q9wLgXQwGJugOpe4zb9Crdvo6ct2sHrWhru9apavgfRa7jQSvUG57L1ThJDghhoRr6IpvdEGaiFLX+ms2gNRjc0XCGDxG/6HwHKuaH22gv6S2+xCDeEIKimWcN/b8TK4JDB6IoyanHFdcbgrpLOeraJaGWwJtmGckDnPgSwR5Us=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fEISdrEL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Wfyxx/33wH9/3b0sTViLVZtuaY3M3JQuJH+cG0dXabQQT36yXx0YpHnQ+GRtsYqbLJt76H7JkY597Fhc477Yq5vA3MIPQEjUPHuMzeAJXKF5imVDaPYAa0ZICGZBNIiMmqhxUVTuld1BlmAxoqARm679ZNrVbiYSZ+N6arfCM4s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhmetnWc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fEISdrEL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D68F6C4CEF7;
-	Mon, 23 Mar 2026 15:13:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhmetnWc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05EA1C2BCB5;
+	Mon, 23 Mar 2026 15:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278809;
-	bh=/jqE3yJfq6R6W/SPTUtuKRTlyjHN0yLqEtg+jkQ2Us4=;
+	s=korg; t=1774278812;
+	bh=+y6GSzQuFIbCrAqTI4sIZ9U6VQPhVL/m2OKanp/n4cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fEISdrEL9Kpa4aA0HARVLwNE74XKfspCGNgbgouo/O2FWpJXQf3up3uG2FV9rBjJ1
-	 Q0xzdU7mDFBJSuqBzr3ENZD6mQGgLonOwoWFLfxx0wYnRT5TF/iLjEsQ5TwkgDEi+T
-	 pMvQMQD7sSAUMi1T0IOOWMstiuxYR04KOkunC92w=
+	b=nhmetnWcDHzSghI2HyyJGT0fgpII6bHTqetIVgON27rgIg47uWkew2pEmD19Fg+af
+	 pIdhGKjE0DGZV8nFvxC3TpX0/bA3z6ifuGn5geT6Do2IbuYsb2fT1ZJMNPFLUrhp85
+	 maT+2IlI2xSQYke5F27YNLSnZ5Kg2bURr/r2ytkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+c711ce17dd78e5d4fdcf@syzkaller.appspotmail.com,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Yonghong Song <yonghong.song@linux.dev>,
-	Paul Chaignon <paul.chaignon@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Subject: [PATCH 6.6 427/567] bpf: Forget ranges when refining tnum after JSET
-Date: Mon, 23 Mar 2026 14:45:47 +0100
-Message-ID: <20260323134544.465275960@linuxfoundation.org>
+	Ma Ke <make24@iscas.ac.cn>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.6 428/567] net: dsa: properly keep track of conduit reference
+Date: Mon, 23 Mar 2026 14:45:48 +0100
+Message-ID: <20260323134544.498577403@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,68 +52,290 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paul Chaignon <paul.chaignon@gmail.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-commit 6279846b9b2532e1b04559ef8bd0dec049f29383 upstream.
+commit 06e219f6a706c367c93051f408ac61417643d2f9 upstream.
 
-Syzbot reported a kernel warning due to a range invariant violation on
-the following BPF program.
+Problem description
+-------------------
 
-  0: call bpf_get_netns_cookie
-  1: if r0 == 0 goto <exit>
-  2: if r0 & Oxffffffff goto <exit>
+DSA has a mumbo-jumbo of reference handling of the conduit net device
+and its kobject which, sadly, is just wrong and doesn't make sense.
 
-The issue is on the path where we fall through both jumps.
+There are two distinct problems.
 
-That path is unreachable at runtime: after insn 1, we know r0 != 0, but
-with the sign extension on the jset, we would only fallthrough insn 2
-if r0 == 0. Unfortunately, is_branch_taken() isn't currently able to
-figure this out, so the verifier walks all branches. The verifier then
-refines the register bounds using the second condition and we end
-up with inconsistent bounds on this unreachable path:
+1. The OF path, which uses of_find_net_device_by_node(), never releases
+   the elevated refcount on the conduit's kobject. Nominally, the OF and
+   non-OF paths should result in objects having identical reference
+   counts taken, and it is already suspicious that
+   dsa_dev_to_net_device() has a put_device() call which is missing in
+   dsa_port_parse_of(), but we can actually even verify that an issue
+   exists. With CONFIG_DEBUG_KOBJECT_RELEASE=y, if we run this command
+   "before" and "after" applying this patch:
 
-  1: if r0 == 0 goto <exit>
-    r0: u64=[0x1, 0xffffffffffffffff] var_off=(0, 0xffffffffffffffff)
-  2: if r0 & 0xffffffff goto <exit>
-    r0 before reg_bounds_sync: u64=[0x1, 0xffffffffffffffff] var_off=(0, 0)
-    r0 after reg_bounds_sync:  u64=[0x1, 0] var_off=(0, 0)
+(unbind the conduit driver for net device eno2)
+echo 0000:00:00.2 > /sys/bus/pci/drivers/fsl_enetc/unbind
 
-Improving the range refinement for JSET to cover all cases is tricky. We
-also don't expect many users to rely on JSET given LLVM doesn't generate
-those instructions. So instead of improving the range refinement for
-JSETs, Eduard suggested we forget the ranges whenever we're narrowing
-tnums after a JSET. This patch implements that approach.
+we see these lines in the output diff which appear only with the patch
+applied:
 
-Reported-by: syzbot+c711ce17dd78e5d4fdcf@syzkaller.appspotmail.com
-Suggested-by: Eduard Zingerman <eddyz87@gmail.com>
-Acked-by: Yonghong Song <yonghong.song@linux.dev>
-Acked-by: Eduard Zingerman <eddyz87@gmail.com>
-Signed-off-by: Paul Chaignon <paul.chaignon@gmail.com>
-Link: https://lore.kernel.org/r/9d4fd6432a095d281f815770608fdcd16028ce0b.1752171365.git.paul.chaignon@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-[ shung-hsi.yu: no detection or kernel warning for invariant violation before
-  6.8, but the same umin=1,umax=0 state can occur when jset is preceed by r0 < 1.
-  Changes were made to adapt to older range refinement logic before commit
-  67420501e868 ("bpf: generalize reg_set_min_max() to handle non-const register
-  comparisons"). ]
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+kobject: 'eno2' (ffff002009a3a6b8): kobject_release, parent 0000000000000000 (delayed 1000)
+kobject: '109' (ffff0020099d59a0): kobject_release, parent 0000000000000000 (delayed 1000)
+
+2. After we find the conduit interface one way (OF) or another (non-OF),
+   it can get unregistered at any time, and DSA remains with a long-lived,
+   but in this case stale, cpu_dp->conduit pointer. Holding the net
+   device's underlying kobject isn't actually of much help, it just
+   prevents it from being freed (but we never need that kobject
+   directly). What helps us to prevent the net device from being
+   unregistered is the parallel netdev reference mechanism (dev_hold()
+   and dev_put()).
+
+Actually we actually use that netdev tracker mechanism implicitly on
+user ports since commit 2f1e8ea726e9 ("net: dsa: link interfaces with
+the DSA master to get rid of lockdep warnings"), via netdev_upper_dev_link().
+But time still passes at DSA switch probe time between the initial
+of_find_net_device_by_node() code and the user port creation time, time
+during which the conduit could unregister itself and DSA wouldn't know
+about it.
+
+So we have to run of_find_net_device_by_node() under rtnl_lock() to
+prevent that from happening, and release the lock only with the netdev
+tracker having acquired the reference.
+
+Do we need to keep the reference until dsa_unregister_switch() /
+dsa_switch_shutdown()?
+1: Maybe yes. A switch device will still be registered even if all user
+   ports failed to probe, see commit 86f8b1c01a0a ("net: dsa: Do not
+   make user port errors fatal"), and the cpu_dp->conduit pointers
+   remain valid.  I haven't audited all call paths to see whether they
+   will actually use the conduit in lack of any user port, but if they
+   do, it seems safer to not rely on user ports for that reference.
+2. Definitely yes. We support changing the conduit which a user port is
+   associated to, and we can get into a situation where we've moved all
+   user ports away from a conduit, thus no longer hold any reference to
+   it via the net device tracker. But we shouldn't let it go nonetheless
+   - see the next change in relation to dsa_tree_find_first_conduit()
+   and LAG conduits which disappear.
+   We have to be prepared to return to the physical conduit, so the CPU
+   port must explicitly keep another reference to it. This is also to
+   say: the user ports and their CPU ports may not always keep a
+   reference to the same conduit net device, and both are needed.
+
+As for the conduit's kobject for the /sys/class/net/ entry, we don't
+care about it, we can release it as soon as we hold the net device
+object itself.
+
+History and blame attribution
+-----------------------------
+
+The code has been refactored so many times, it is very difficult to
+follow and properly attribute a blame, but I'll try to make a short
+history which I hope to be correct.
+
+We have two distinct probing paths:
+- one for OF, introduced in 2016 in commit 83c0afaec7b7 ("net: dsa: Add
+  new binding implementation")
+- one for non-OF, introduced in 2017 in commit 71e0bbde0d88 ("net: dsa:
+  Add support for platform data")
+
+These are both complete rewrites of the original probing paths (which
+used struct dsa_switch_driver and other weird stuff, instead of regular
+devices on their respective buses for register access, like MDIO, SPI,
+I2C etc):
+- one for OF, introduced in 2013 in commit 5e95329b701c ("dsa: add
+  device tree bindings to register DSA switches")
+- one for non-OF, introduced in 2008 in commit 91da11f870f0 ("net:
+  Distributed Switch Architecture protocol support")
+
+except for tiny bits and pieces like dsa_dev_to_net_device() which were
+seemingly carried over since the original commit, and used to this day.
+
+The point is that the original probing paths received a fix in 2015 in
+the form of commit 679fb46c5785 ("net: dsa: Add missing master netdev
+dev_put() calls"), but the fix never made it into the "new" (dsa2)
+probing paths that can still be traced to today, and the fixed probing
+path was later deleted in 2019 in commit 93e86b3bc842 ("net: dsa: Remove
+legacy probing support").
+
+That is to say, the new probing paths were never quite correct in this
+area.
+
+The existence of the legacy probing support which was deleted in 2019
+explains why dsa_dev_to_net_device() returns a conduit with elevated
+refcount (because it was supposed to be released during
+dsa_remove_dst()). After the removal of the legacy code, the only user
+of dsa_dev_to_net_device() calls dev_put(conduit) immediately after this
+function returns. This pattern makes no sense today, and can only be
+interpreted historically to understand why dev_hold() was there in the
+first place.
+
+Change details
+--------------
+
+Today we have a better netdev tracking infrastructure which we should
+use. Logically netdev_hold() belongs in common code
+(dsa_port_parse_cpu(), where dp->conduit is assigned), but there is a
+tradeoff to be made with the rtnl_lock() section which would become a
+bit too long if we did that - dsa_port_parse_cpu() also calls
+request_module(). So we duplicate a bit of logic in order for the
+callers of dsa_port_parse_cpu() to be the ones responsible of holding
+the conduit reference and releasing it on error. This shortens the
+rtnl_lock() section significantly.
+
+In the dsa_switch_probe() error path, dsa_switch_release_ports() will be
+called in a number of situations, one being where dsa_port_parse_cpu()
+maybe didn't get the chance to run at all (a different port failed
+earlier, etc). So we have to test for the conduit being NULL prior to
+calling netdev_put().
+
+There have still been so many transformations to the code since the
+blamed commits (rename master -> conduit, commit 0650bf52b31f ("net:
+dsa: be compatible with masters which unregister on shutdown")), that it
+only makes sense to fix the code using the best methods available today
+and see how it can be backported to stable later. I suspect the fix
+cannot even be backported to kernels which lack dsa_switch_shutdown(),
+and I suspect this is also maybe why the long-lived conduit reference
+didn't make it into the new DSA probing paths at the time (problems
+during shutdown).
+
+Because dsa_dev_to_net_device() has a single call site and has to be
+changed anyway, the logic was just absorbed into the non-OF
+dsa_port_parse().
+
+Tested on the ocelot/felix switch and on dsa_loop, both on the NXP
+LS1028A with CONFIG_DEBUG_KOBJECT_RELEASE=y.
+
+Reported-by: Ma Ke <make24@iscas.ac.cn>
+Closes: https://lore.kernel.org/netdev/20251214131204.4684-1-make24@iscas.ac.cn/
+Fixes: 83c0afaec7b7 ("net: dsa: Add new binding implementation")
+Fixes: 71e0bbde0d88 ("net: dsa: Add support for platform data")
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20251215150236.3931670-1-vladimir.oltean@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ backport: "conduit" -> "master" in code, kept original commit message ]
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ include/net/dsa.h |    1 
+ net/dsa/dsa.c     |   59 +++++++++++++++++++++++++++++++-----------------------
+ 2 files changed, 35 insertions(+), 25 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -14158,6 +14158,10 @@ static void reg_set_min_max(struct bpf_r
- 		}
- 		break;
- 	case BPF_JSET:
-+		/* Forget the ranges before narrowing tnums, to avoid invariant
-+		 * violations if we're on a dead branch.
-+		 */
-+		__mark_reg_unbounded(false_reg);
- 		if (is_jmp32) {
- 			false_32off = tnum_and(false_32off, tnum_const(~val32));
- 			if (is_power_of_2(val32))
+--- a/include/net/dsa.h
++++ b/include/net/dsa.h
+@@ -297,6 +297,7 @@ struct dsa_port {
+ 	struct devlink_port	devlink_port;
+ 	struct phylink		*pl;
+ 	struct phylink_config	pl_config;
++	netdevice_tracker	master_tracker;
+ 	struct dsa_lag		*lag;
+ 	struct net_device	*hsr_dev;
+ 
+--- a/net/dsa/dsa.c
++++ b/net/dsa/dsa.c
+@@ -1257,14 +1257,25 @@ static int dsa_port_parse_of(struct dsa_
+ 	if (ethernet) {
+ 		struct net_device *master;
+ 		const char *user_protocol;
++		int err;
+ 
++		rtnl_lock();
+ 		master = of_find_net_device_by_node(ethernet);
+ 		of_node_put(ethernet);
+-		if (!master)
++		if (!master) {
++			rtnl_unlock();
+ 			return -EPROBE_DEFER;
++		}
++
++		netdev_hold(master, &dp->master_tracker, GFP_KERNEL);
++		put_device(&master->dev);
++		rtnl_unlock();
+ 
+ 		user_protocol = of_get_property(dn, "dsa-tag-protocol", NULL);
+-		return dsa_port_parse_cpu(dp, master, user_protocol);
++		err = dsa_port_parse_cpu(dp, master, user_protocol);
++		if (err)
++			netdev_put(master, &dp->master_tracker);
++		return err;
+ 	}
+ 
+ 	if (link)
+@@ -1397,37 +1408,30 @@ static struct device *dev_find_class(str
+ 	return device_find_child(parent, class, dev_is_class);
+ }
+ 
+-static struct net_device *dsa_dev_to_net_device(struct device *dev)
+-{
+-	struct device *d;
+-
+-	d = dev_find_class(dev, "net");
+-	if (d != NULL) {
+-		struct net_device *nd;
+-
+-		nd = to_net_dev(d);
+-		dev_hold(nd);
+-		put_device(d);
+-
+-		return nd;
+-	}
+-
+-	return NULL;
+-}
+-
+ static int dsa_port_parse(struct dsa_port *dp, const char *name,
+ 			  struct device *dev)
+ {
+ 	if (!strcmp(name, "cpu")) {
+ 		struct net_device *master;
++		struct device *d;
++		int err;
+ 
+-		master = dsa_dev_to_net_device(dev);
+-		if (!master)
++		rtnl_lock();
++		d = dev_find_class(dev, "net");
++		if (!d) {
++			rtnl_unlock();
+ 			return -EPROBE_DEFER;
++		}
+ 
+-		dev_put(master);
++		master = to_net_dev(d);
++		netdev_hold(master, &dp->master_tracker, GFP_KERNEL);
++		put_device(d);
++		rtnl_unlock();
+ 
+-		return dsa_port_parse_cpu(dp, master, NULL);
++		err = dsa_port_parse_cpu(dp, master, NULL);
++		if (err)
++			netdev_put(master, &dp->master_tracker);
++		return err;
+ 	}
+ 
+ 	if (!strcmp(name, "dsa"))
+@@ -1495,6 +1499,9 @@ static void dsa_switch_release_ports(str
+ 	struct dsa_vlan *v, *n;
+ 
+ 	dsa_switch_for_each_port_safe(dp, next, ds) {
++		if (dsa_port_is_cpu(dp) && dp->master)
++			netdev_put(dp->master, &dp->master_tracker);
++
+ 		/* These are either entries that upper layers lost track of
+ 		 * (probably due to bugs), or installed through interfaces
+ 		 * where one does not necessarily have to remove them, like
+@@ -1639,8 +1646,10 @@ void dsa_switch_shutdown(struct dsa_swit
+ 	/* Disconnect from further netdevice notifiers on the master,
+ 	 * since netdev_uses_dsa() will now return false.
+ 	 */
+-	dsa_switch_for_each_cpu_port(dp, ds)
++	dsa_switch_for_each_cpu_port(dp, ds) {
+ 		dp->master->dsa_ptr = NULL;
++		netdev_put(dp->master, &dp->master_tracker);
++	}
+ 
+ 	rtnl_unlock();
+ out:
 
 
