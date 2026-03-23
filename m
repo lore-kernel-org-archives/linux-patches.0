@@ -1,47 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D676E387593;
-	Mon, 23 Mar 2026 14:41:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C133ACF03;
+	Mon, 23 Mar 2026 14:41:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276911; cv=none; b=jW/7pzuHlPocEILbwgTtjKM1UWPEHdXWlT7cBYJSd3j6msORD9CYDld9RQ1vYSlIQKD5vfxu3uKDTKZGIDGDNq8rkNurlYnVyz4Mvgn/q4BmSAo0kk2Q2jsnpzu4MAaw/hEuZ200SU8bu/Nmbh3EVnPdvJ3H7uNhTi/pNzFNPyg=
+	t=1774276914; cv=none; b=AWZtBDrtVjfW4FqwjkBWJPeknJZruRtLzlAPpUj0rT3g2yAL2MFl0tzEpEsUNqxKl9mG7cdXEkKgrju1Chr3NYa2aqYMgQTHCFeuu7zrmZwZR1E4hbpRPNH4KRzhXn5/l2R+jo3c0unwdtEX5CIXayE8KI9VKFyVe1MK0XYmMGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276911; c=relaxed/simple;
-	bh=+ne5dcj5rOucQiG3Z49b+DjkhtN0VhGepV4zQm4wn5o=;
+	s=arc-20240116; t=1774276914; c=relaxed/simple;
+	bh=fYB5Mb189iPAlEP2723Q70NQvNQTDPiW0uE0YvScQUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ml9zKWPCm5fcN7wV3ExVnAY51hcQ0iPZ9+8Cwg/kixtjAvp8Q4cETJ8Di8L0li7YXyyRPkpGr5lBCqZRrUkzRVDXIHFlyO0Q4JZMGdY8Sr3RnQI5GXR6Ek9muZSmmkfrqZo0+vNWzOZ8ZSK8alA2G4DY/2pFKOCWpZBXUnCLUb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tPUYDR7D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=stzpLt49qVxJ7iWIQN6jHUpok4jt0ZGIOT5v8RzWPkNWdyrpETBmxBclKI2D5zAKx/Zl6JS4yD6kMNOnXKbZc9DKrvySUO7NA9dQrzNnkPJ9CPcWXZvCnW90qin4N6lIMKvcwyTCrCGRWe1oZd1ymnDkFP/wWFJcy2OvZ3/V3HE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1LSCq88J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tPUYDR7D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF18C4CEF7;
-	Mon, 23 Mar 2026 14:41:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1LSCq88J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2D56C2BCB1;
+	Mon, 23 Mar 2026 14:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276911;
-	bh=+ne5dcj5rOucQiG3Z49b+DjkhtN0VhGepV4zQm4wn5o=;
+	s=korg; t=1774276914;
+	bh=fYB5Mb189iPAlEP2723Q70NQvNQTDPiW0uE0YvScQUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPUYDR7DkbY96YYFmPlOTxgmwjIA9Q+dql/haEHsHko2DJJbHU0ADlj//FPq/Bvn9
-	 C3TulcBuEnGeOgvGAkd8qAaboX83weAyI4l2s4/6pBh6UcABIdlmvoh0FCbBrt4tAl
-	 AnDN/V9eNoP/ywH57KGLmpUKhmxMbF+seyqo3wag=
+	b=1LSCq88Jg2KvYW/EmnKFJO6j7370O0Oyxqbg48xelKqSxrPLE0vZVphp/mWTQKM2A
+	 wm8B71lNtz7Xm1au7e6wmIOEMmbxIUnzc7mClRhWGWsmOY2bpVMgNL8b7wSxoLTPa5
+	 kfRbCoIM05KzvAktBGnZ1qsUGfH5lZ0oypa2y9To=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Oscar Salvador <osalvador@suse.de>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Naveen N Rao <naveen@kernel.org>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Zi Yan <ziy@nvidia.com>,
+	Alexander Potapenko <glider@google.com>,
+	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 252/460] mm/page_alloc: forward the gfp flags from alloc_contig_range() to post_alloc_hook()
-Date: Mon, 23 Mar 2026 14:44:08 +0100
-Message-ID: <20260323134532.684058386@linuxfoundation.org>
+Subject: [PATCH 6.12 253/460] mm/kfence: fix KASAN hardware tag faults during late enablement
+Date: Mon, 23 Mar 2026 14:44:09 +0100
+Message-ID: <20260323134532.707684506@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -60,84 +57,89 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: David Hildenbrand <david@redhat.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit 7b755570064fcb9cde37afd48f6bc65151097ba7 ]
+[ Upstream commit d155aab90fffa00f93cea1f107aef0a3d548b2ff ]
 
-In the __GFP_COMP case, we already pass the gfp_flags to
-prep_new_page()->post_alloc_hook().  However, in the !__GFP_COMP case, we
-essentially pass only hardcoded __GFP_MOVABLE to post_alloc_hook(),
-preventing some action modifiers from being effective..
+When KASAN hardware tags are enabled, re-enabling KFENCE late (via
+/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
 
-Let's pass our now properly adjusted gfp flags there as well.
+This happens because the KFENCE pool and metadata are allocated via the
+page allocator, which tags the memory, while KFENCE continues to access it
+using untagged pointers during initialization.
 
-This way, we can now support __GFP_ZERO for alloc_contig_*().
+Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
+ensure the memory remains untagged, consistent with early allocations from
+memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
+__alloc_contig_verify_gfp_mask().
 
-As a side effect, we now also support __GFP_SKIP_ZERO and__GFP_ZEROTAGS;
-but we'll keep the more special stuff (KASAN, NOLOCKDEP) disabled for now.
-
-It's worth noting that with __GFP_ZERO, we might unnecessarily zero pages
-when we have to release part of our range using free_contig_range() again.
-This can be optimized in the future, if ever required; the caller we'll
-be converting (powernv/memtrace) next won't trigger this.
-
-Link: https://lkml.kernel.org/r/20241203094732.200195-6-david@redhat.com
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
-Reviewed-by: Oscar Salvador <osalvador@suse.de>
-Cc: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: Madhavan Srinivasan <maddy@linux.ibm.com>
-Cc: Michael Ellerman <mpe@ellerman.id.au>
-Cc: Naveen N Rao <naveen@kernel.org>
-Cc: Nicholas Piggin <npiggin@gmail.com>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Zi Yan <ziy@nvidia.com>
+Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: d155aab90fff ("mm/kfence: fix KASAN hardware tag faults during late enablement")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/page_alloc.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ mm/kfence/core.c |   14 ++++++++------
+ mm/page_alloc.c  |    3 ++-
+ 2 files changed, 10 insertions(+), 7 deletions(-)
 
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -964,14 +964,14 @@ static int kfence_init_late(void)
+ #ifdef CONFIG_CONTIG_ALLOC
+ 	struct page *pages;
+ 
+-	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (!pages)
+ 		return -ENOMEM;
+ 
+ 	__kfence_pool = page_to_virt(pages);
+-	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL, first_online_node,
+-				   NULL);
++	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL | __GFP_SKIP_KASAN,
++				   first_online_node, NULL);
+ 	if (pages)
+ 		kfence_metadata_init = page_to_virt(pages);
+ #else
+@@ -981,11 +981,13 @@ static int kfence_init_late(void)
+ 		return -EINVAL;
+ 	}
+ 
+-	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
++	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE,
++					  GFP_KERNEL | __GFP_SKIP_KASAN);
+ 	if (!__kfence_pool)
+ 		return -ENOMEM;
+ 
+-	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE, GFP_KERNEL);
++	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE,
++						 GFP_KERNEL | __GFP_SKIP_KASAN);
+ #endif
+ 
+ 	if (!kfence_metadata_init)
 --- a/mm/page_alloc.c
 +++ b/mm/page_alloc.c
-@@ -6579,7 +6579,7 @@ int __alloc_contig_migrate_range(struct
- 	return (ret < 0) ? ret : 0;
- }
- 
--static void split_free_pages(struct list_head *list)
-+static void split_free_pages(struct list_head *list, gfp_t gfp_mask)
- {
- 	int order;
- 
-@@ -6590,7 +6590,7 @@ static void split_free_pages(struct list
- 		list_for_each_entry_safe(page, next, &list[order], lru) {
- 			int i;
- 
--			post_alloc_hook(page, order, __GFP_MOVABLE);
-+			post_alloc_hook(page, order, gfp_mask);
- 			set_page_refcounted(page);
- 			if (!order)
- 				continue;
-@@ -6608,7 +6608,8 @@ static void split_free_pages(struct list
- static int __alloc_contig_verify_gfp_mask(gfp_t gfp_mask, gfp_t *gfp_cc_mask)
+@@ -6609,7 +6609,8 @@ static int __alloc_contig_verify_gfp_mas
  {
  	const gfp_t reclaim_mask = __GFP_IO | __GFP_FS | __GFP_RECLAIM;
--	const gfp_t action_mask = __GFP_COMP | __GFP_RETRY_MAYFAIL | __GFP_NOWARN;
-+	const gfp_t action_mask = __GFP_COMP | __GFP_RETRY_MAYFAIL | __GFP_NOWARN |
-+				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO;
+ 	const gfp_t action_mask = __GFP_COMP | __GFP_RETRY_MAYFAIL | __GFP_NOWARN |
+-				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO;
++				  __GFP_ZERO | __GFP_ZEROTAGS | __GFP_SKIP_ZERO |
++				  __GFP_SKIP_KASAN;
  	const gfp_t cc_action_mask = __GFP_RETRY_MAYFAIL | __GFP_NOWARN;
  
  	/*
-@@ -6756,7 +6757,7 @@ int alloc_contig_range_noprof(unsigned l
- 	}
- 
- 	if (!(gfp_mask & __GFP_COMP)) {
--		split_free_pages(cc.freepages);
-+		split_free_pages(cc.freepages, gfp_mask);
- 
- 		/* Free head and tail (if any) */
- 		if (start != outer_start)
 
 
