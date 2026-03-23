@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A06AC246BD5;
-	Mon, 23 Mar 2026 15:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE013245020;
+	Mon, 23 Mar 2026 15:07:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278446; cv=none; b=hqYS0xfLAKsDLCeHrCqw59NvEJqgD1oCwGy8HgiBS9Ern0ts8+XlasDaGE0DDuUQ3Tbr1vFSa/tHKzG/BzlLkr4etpl+xPkdaRGuW8fZ8+BTGPNl3dE3DDQtkNsuUKar1D8DKPSEyYiLSguTD2Ge5sFINI8xVg8xrDMkIC4O7AU=
+	t=1774278449; cv=none; b=Y4TzGSA0ZxLd/4Q6HJRK3qI1GoBt/iK0A/R8QVO7rBoFOYy5HQUUfjQa9x4F687ioX3U6NngNpXXrg72LMynIklOGB1lpNACS1/NpJduYU5kNOZeT3OvFnMmnorqJ/ngqADKtFUp2M0FXamHMYa0atAKz9fb0AqU32n1l5q0tqw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278446; c=relaxed/simple;
-	bh=DunqzimuA1lwS2hlZqw1qDLtOGcPleYqxrhOuTrqMfg=;
+	s=arc-20240116; t=1774278449; c=relaxed/simple;
+	bh=MssYNBAMJOYf7zDcOhePiWbKw2rFr61KHtUWYgMK8/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=On+5WFzOGkqqSGQjNlps0LB6lIdzRCYQfvDeEgsAkeTZ/8e+dy7Um2Dp0CFxQsEVBUCYXAnhNgFPmNd8Xrg/W62qo2Gek9Gji7iJDtnXp5iH7GThHkPPvm7CHTiKmPti7HP9PwZ1Ddt+J+SI7nSBXtK2dC6lRrbKNSNrQ3tgNt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mzfioIWn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Vj1fSqqY/WRhggm/Hzj+VetlkjNrSHP+rZryV2mp+l0XJD0L4RGP9YeJ4HMmAzVEJCwme6TDGvq+5eRBrsfOLjV+ATVD097Ezm3JpZWGXz4IufUK+BbI9xffC9Ud+wfN3VAY9tmjTbaTBeiaUkiS2ugG84/hMiASZ0lhRLhK2j4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PxDs7oNd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mzfioIWn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2FDC2BC9E;
-	Mon, 23 Mar 2026 15:07:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PxDs7oNd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32956C2BCB1;
+	Mon, 23 Mar 2026 15:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278446;
-	bh=DunqzimuA1lwS2hlZqw1qDLtOGcPleYqxrhOuTrqMfg=;
+	s=korg; t=1774278449;
+	bh=MssYNBAMJOYf7zDcOhePiWbKw2rFr61KHtUWYgMK8/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzfioIWnaxxAVeBr+nO+j3gDmkrnnnYxYNrKlrE5+T2idJHGAJRuOYtPaDKxQ3GF5
-	 jHKWvj7FnCPogwgE84beZCx75b4HwXxXG31zM4IApzPbaManmdbvsr856k4nslMX2F
-	 koLqCL4iDO6EDVWIdzS5ScT8dEp0w1PVn39PoSvk=
+	b=PxDs7oNdyAY/nBvLkoe8V1KZOhrJggzOY9SkAfeKPUkRhUAcM7ZFnNuEDAM5ghH8A
+	 cdZuV7kMEw8JFotJJusxXw1FM1CS3c6yfjBupBVzpFB5EU0Htp847u/AV2CIpCSNOS
+	 HkrBvaNSJDiFsNBdsc8hqmMCLJ9kXX3tVz6NmYJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Franz Schnyder <franz.schnyder@toradex.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.6 309/567] drm/bridge: ti-sn65dsi86: Enable HPD polling if IRQ is not used
-Date: Mon, 23 Mar 2026 14:43:49 +0100
-Message-ID: <20260323134541.469302569@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Rafael J. Wysocki (Intel)" <rafael@kernel.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 310/567] device property: Allow secondary lookup in fwnode_get_next_child_node()
+Date: Mon, 23 Mar 2026 14:43:50 +0100
+Message-ID: <20260323134541.494077997@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,51 +52,75 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Franz Schnyder <franz.schnyder@toradex.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 0b87d51690dd5131cbe9fbd23746b037aab89815 upstream.
+commit 2692c614f8f05929d692b3dbfd3faef1f00fbaf0 upstream.
 
-Fallback to polling to detect hotplug events on systems without
-interrupts.
+When device_get_child_node_count() got split to the fwnode and device
+respective APIs, the fwnode didn't inherit the ability to traverse over
+the secondary fwnode. Hence any user, that switches from device to fwnode
+API misses this feature. In particular, this was revealed by the commit
+1490cbb9dbfd ("device property: Split fwnode_get_child_node_count()")
+that effectively broke the GPIO enumeration on Intel Galileo boards.
+Fix this by moving the secondary lookup from device to fwnode API.
 
-On systems where the interrupt line of the bridge is not connected,
-the bridge cannot notify hotplug events. Only add the
-DRM_BRIDGE_OP_HPD flag if an interrupt has been registered
-otherwise remain in polling mode.
+Note, in general no device_*() API should go into the depth of the fwnode
+implementation.
 
-Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
-Cc: stable@vger.kernel.org # 6.16: 9133bc3f0564: drm/bridge: ti-sn65dsi86: Add
-Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-[dianders: Adjusted Fixes/stable line based on discussion]
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://patch.msgid.link/20260206123758.374555-1-fra.schnyder@gmail.com
+Fixes: 114dbb4fa7c4 ("drivers property: When no children in primary, try secondary")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://patch.msgid.link/20260210135822.47335-1-andriy.shevchenko@linux.intel.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/base/property.c |   27 +++++++++++++--------------
+ 1 file changed, 13 insertions(+), 14 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -1326,6 +1326,7 @@ static int ti_sn_bridge_probe(struct aux
+--- a/drivers/base/property.c
++++ b/drivers/base/property.c
+@@ -750,7 +750,18 @@ struct fwnode_handle *
+ fwnode_get_next_child_node(const struct fwnode_handle *fwnode,
+ 			   struct fwnode_handle *child)
  {
- 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(adev->dev.parent);
- 	struct device_node *np = pdata->dev->of_node;
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
- 	int ret;
+-	return fwnode_call_ptr_op(fwnode, get_next_child_node, child);
++	struct fwnode_handle *next;
++
++	if (IS_ERR_OR_NULL(fwnode))
++		return NULL;
++
++	/* Try to find a child in primary fwnode */
++	next = fwnode_call_ptr_op(fwnode, get_next_child_node, child);
++	if (next)
++		return next;
++
++	/* When no more children in primary, continue with secondary */
++	return fwnode_call_ptr_op(fwnode->secondary, get_next_child_node, child);
+ }
+ EXPORT_SYMBOL_GPL(fwnode_get_next_child_node);
  
- 	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
-@@ -1345,8 +1346,9 @@ static int ti_sn_bridge_probe(struct aux
- 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
+@@ -794,19 +805,7 @@ EXPORT_SYMBOL_GPL(fwnode_get_next_availa
+ struct fwnode_handle *device_get_next_child_node(const struct device *dev,
+ 						 struct fwnode_handle *child)
+ {
+-	const struct fwnode_handle *fwnode = dev_fwnode(dev);
+-	struct fwnode_handle *next;
+-
+-	if (IS_ERR_OR_NULL(fwnode))
+-		return NULL;
+-
+-	/* Try to find a child in primary fwnode */
+-	next = fwnode_get_next_child_node(fwnode, child);
+-	if (next)
+-		return next;
+-
+-	/* When no more children in primary, continue with secondary */
+-	return fwnode_get_next_child_node(fwnode->secondary, child);
++	return fwnode_get_next_child_node(dev_fwnode(dev), child);
+ }
+ EXPORT_SYMBOL_GPL(device_get_next_child_node);
  
- 	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
--		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
--				    DRM_BRIDGE_OP_HPD;
-+		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
-+		if (client->irq)
-+			pdata->bridge.ops |= DRM_BRIDGE_OP_HPD;
- 		/*
- 		 * If comms were already enabled they would have been enabled
- 		 * with the wrong value of HPD_DISABLE. Update it now. Comms
 
 
