@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524253B47CC;
-	Mon, 23 Mar 2026 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A5EF3B47E6;
+	Mon, 23 Mar 2026 15:05:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278335; cv=none; b=uInpftkpPAZkN+I0Un9EfjZqlXsA2OCoNAMqoFOlVXQcmCci95X8OO/tNtReLxrk9oJyw7AoPfi5m0ZRxpBj1vVV5l5NXtTr/q5GKA5qB1V+HZHUN0L5yinU9/i9Wqb5fIWzvtwqWxqjRBtedTyjPQjpH1tMWo5rTlW2sOC+z6U=
+	t=1774278338; cv=none; b=Npgukx48EL+lGWbdFLIyPbQM820Hj5/KpZoJxjhRBdVSmssSdkBlTTqwpK0Fu3Zt1QypmlnTtIwkjkr7g6hex/Ar8EjAyBl65+H7sGJYNqlKXzYooy8ombHhokVLVflCpoEw3stjgt0YwX5wQdmloTrY6F+Dlh3toiQUGwsIYrE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278335; c=relaxed/simple;
-	bh=U29+0NKCpZycOWQo7KBSOfBCY44nReAHzXqRUZ7HUi0=;
+	s=arc-20240116; t=1774278338; c=relaxed/simple;
+	bh=U2ONHiB4vf9QGFPCCpLGQ8v01f8yTvEUwFmXxDpbzyc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=aVWK9XSqLzQQtNe68S/UH4cb9BoErKuO50Si0w5ki0z1LsN/0bIkT6yw+Ay89vaPmRoZ5gZU2FXlGUGbA/ircQu99iKvcwMiu/X24TLClSIrXaX68/7iotSVO2Gurvk1SxIlYn9FUt6OUK3nSjl8uitEetqq2oMCCp24zFCBg9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XqRlZckL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XPLL9dxQVOwE6DEz1x5OFskc1RVZU433poubZ7KnxNLaDe9MLvysEhqteu8Mqxyc9EngXN+lSKojJIrVItd+LQ6tXpVE5DT7aLo0+QKu2vmHke2u0B091wtpnddnPNb3fG4wzvMRA4p77Z+d+/HrkCORos18kEy7U3Kb5qKxUhI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i9EvRdij; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XqRlZckL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928BAC4CEF7;
-	Mon, 23 Mar 2026 15:05:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i9EvRdij"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD017C2BC9E;
+	Mon, 23 Mar 2026 15:05:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278335;
-	bh=U29+0NKCpZycOWQo7KBSOfBCY44nReAHzXqRUZ7HUi0=;
+	s=korg; t=1774278338;
+	bh=U2ONHiB4vf9QGFPCCpLGQ8v01f8yTvEUwFmXxDpbzyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqRlZckLLL+zgimlCRqcxt3mqh7GMfM3F4r0JwjJCkJwPpCZKcVbEZ+ZXYCyqvgRt
-	 ObzrpQ8aJRRxpKq3QZmLp6X+eGLZFzcNcZKQ+B9Zvup04s+w22qzQsLvrX21PCb/u+
-	 8CEY1Rkyl0XBuwGsxqAsOa9U6hDzvmvbV8izflfg=
+	b=i9EvRdijefWAivwzGBRBjLkTCQbN6aGaJeOVWKMT1s3GX8RWHkBbEBn0nlhgRp1aT
+	 ctCWubIapq4qkmREK41OQryJJy4ADOk6gPEPprKzBVTuzTAOQockuolN13zSnFyecC
+	 kaWgc7WNrxZkMqRTp3rmn3dY9tD7/eIgHptaffFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dayu Jiang <jiangdayu@xiaomi.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.6 273/567] usb: xhci: Prevent interrupt storm on host controller error (HCE)
-Date: Mon, 23 Mar 2026 14:43:13 +0100
-Message-ID: <20260323134540.585843131@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.6 274/567] usb: yurex: fix race in probe
+Date: Mon, 23 Mar 2026 14:43:14 +0100
+Message-ID: <20260323134540.608496850@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -44,52 +44,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Dayu Jiang <jiangdayu@xiaomi.com>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit d6d5febd12452b7fd951fdd15c3ec262f01901a4 upstream.
+commit 7a875c09899ba0404844abfd8f0d54cdc481c151 upstream.
 
-The xHCI controller reports a Host Controller Error (HCE) in UAS Storage
-Device plug/unplug scenarios on Android devices. HCE is checked in
-xhci_irq() function and causes an interrupt storm (since the interrupt
-isn’t cleared), leading to severe system-level faults.
+The bbu member of the descriptor must be set to the value
+standing for uninitialized values before the URB whose
+completion handler sets bbu is submitted. Otherwise there is
+a window during which probing can overwrite already retrieved
+data.
 
-When the xHC controller reports HCE in the interrupt handler, the driver
-only logs a warning and assumes xHC activity will stop as stated in xHCI
-specification. An interrupt storm does however continue on some hosts
-even after HCE, and only ceases after manually disabling xHC interrupt
-and stopping the controller by calling xhci_halt().
-
-Add xhci_halt() to xhci_irq() function where STS_HCE status is checked,
-mirroring the existing error handling pattern used for STS_FATAL errors.
-
-This only fixes the interrupt storm. Proper HCE recovery requires resetting
-and re-initializing the xHC.
-
-CC: stable@vger.kernel.org
-Signed-off-by: Dayu Jiang <jiangdayu@xiaomi.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://patch.msgid.link/20260304223639.3882398-3-mathias.nyman@linux.intel.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260209143720.1507500-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/misc/yurex.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -3219,6 +3219,7 @@ irqreturn_t xhci_irq(struct usb_hcd *hcd
+--- a/drivers/usb/misc/yurex.c
++++ b/drivers/usb/misc/yurex.c
+@@ -272,6 +272,7 @@ static int yurex_probe(struct usb_interf
+ 			 dev->int_buffer, YUREX_BUF_SIZE, yurex_interrupt,
+ 			 dev, 1);
+ 	dev->urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
++	dev->bbu = -1;
+ 	if (usb_submit_urb(dev->urb, GFP_KERNEL)) {
+ 		retval = -EIO;
+ 		dev_err(&interface->dev, "Could not submitting URB\n");
+@@ -280,7 +281,6 @@ static int yurex_probe(struct usb_interf
  
- 	if (status & STS_HCE) {
- 		xhci_warn(xhci, "WARNING: Host Controller Error\n");
-+		xhci_halt(xhci);
- 		goto out;
- 	}
+ 	/* save our data pointer in this interface device */
+ 	usb_set_intfdata(interface, dev);
+-	dev->bbu = -1;
  
+ 	/* we can register the device now, as it is ready */
+ 	retval = usb_register_dev(interface, &yurex_class);
 
 
