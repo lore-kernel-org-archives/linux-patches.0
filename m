@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1262B3BB9E8;
-	Mon, 23 Mar 2026 16:15:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455113BBA03;
+	Mon, 23 Mar 2026 16:15:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282512; cv=none; b=hERGMZegikuLouSJfpdChq+8lSEVQEEEE6iXoU98nRvTYV+MkVxhgjHWyLmVVxR0T7KlgDnTktbSvKKNh54tBpvs3/kb5PODC1VjJOJBUtfzrKkhE4lKsK/5k8PoRBDvxXF1QGUEnTt4TC9TYpDrsfjlFpQgbu9U1rewdGdy7Pc=
+	t=1774282515; cv=none; b=Y9dB83UgAFACskumAjmHxMT6dssHT3Db7/5AlP2sAncgo+D4eORRB5N4gp4wsGDX0GLrHCGaG8eyPuTafDew9o1gYsHVYqIJU9Bb99M2btfESk+5th5TF/vpRcTPnFzZ33DgB8rbrLRCPpK8R54qXnL1Twv2fQ2NY7n+IdUtrEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282512; c=relaxed/simple;
-	bh=umHeD6cZM720wCRKv2N2IcyQ9xhcTPbxcM052ybsTvo=;
+	s=arc-20240116; t=1774282515; c=relaxed/simple;
+	bh=3up0qiJ9Omar2b0hroYMAkmfL3cbkNgVt1bxwStEI0M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z0SLZb8eLaG3Pa3aLwBiYU5+viaIVisdMqdOQq18mnxVNIusKNjleXB5IjgAagjuj1x9utEv4UfxlyXBWxbsmxEKJVljZCKd8iqhOYT+Zxji30q1cgUQZE/8QWK7Nisa0GepUfRUcXWkYmyACb6Qoegl0XruY8oBG8E1p89YTXY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ps6eSB+V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tH2Yan2oVPzbee1aF7m4b31Di89vCie/WC3KoK8VPHDkei1vwRKr7RALetD5BWYN8aMrx+DCl1q+1Ndj6gyfMza6W9rSnaCb+WyAWO+kMmt1BcFfH9CfYM1PY4mPfgMAD+r+PAgjf8XMox+0S4trdKYFuXt76AgOiur0P1OT+q4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TJEdymt+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ps6eSB+V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D988C2BC9E;
-	Mon, 23 Mar 2026 16:15:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TJEdymt+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5341DC2BCB4;
+	Mon, 23 Mar 2026 16:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282511;
-	bh=umHeD6cZM720wCRKv2N2IcyQ9xhcTPbxcM052ybsTvo=;
+	s=korg; t=1774282514;
+	bh=3up0qiJ9Omar2b0hroYMAkmfL3cbkNgVt1bxwStEI0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ps6eSB+VRcDU8bB/x6PnMnWn4zhe+e12nlg/HvFU3G4OFWE/05OTkADZw/zp59Bph
-	 U2M7l0+dYy9RuWFOe1qikgFhyp71mVElobAsjytvPYncXVHNk/OMQkkC/pt+RoG3xK
-	 bx/fUS1gSyGM5Oqxsoq1jvq2kSEUv6Bt6OBoaPD0=
+	b=TJEdymt+bQlIWTnHu9d0j5a/gMPEMXH2YNqaiPGgIR4oPu/8fSY0LWJf6dMxvICZ7
+	 kHDTG/y+Mkbz6iyUrHX54Xw4tyokC3kbkYymxKrdFI0JY8GJksVAh50r2FO9Nv3TRc
+	 c1Fh8USObvmxmpnVi2djfXXPhm2vwrD6aBDLnADU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/481] regulator: pca9450: Correct interrupt type
-Date: Mon, 23 Mar 2026 14:42:44 +0100
-Message-ID: <20260323134529.642937842@linuxfoundation.org>
+Subject: [PATCH 6.1 183/481] sched: idle: Make skipping governor callbacks more consistent
+Date: Mon, 23 Mar 2026 14:42:45 +0100
+Message-ID: <20260323134529.665510825@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,42 +53,77 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5d0efaf47ee90ac60efae790acee3a3ed99ebf80 ]
+[ Upstream commit d557640e4ce589a24dca5ca7ce3b9680f471325f ]
 
-Kernel warning on i.MX8MP-EVK when doing module test:
-irq: type mismatch, failed to map hwirq-3 for gpio@30200000!
+If the cpuidle governor .select() callback is skipped because there
+is only one idle state in the cpuidle driver, the .reflect() callback
+should be skipped as well, at least for consistency (if not for
+correctness), so do it.
 
-Per PCA945[X] specification: The IRQ_B pin is pulled low when any unmasked
-interrupt bit status is changed and it is released high once application
-processor read INT1 register.
-
-So the interrupt should be configured as IRQF_TRIGGER_LOW, not
-IRQF_TRIGGER_FALLING.
-
-Fixes: 0935ff5f1f0a4 ("regulator: pca9450: add pca9450 pmic driver")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260310-pca9450-irq-v1-1-36adf52c2c55@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e5c9ffc6ae1b ("cpuidle: Skip governor when only one idle state is available")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Link: https://patch.msgid.link/12857700.O9o76ZdvQC@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pca9450-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpuidle/cpuidle.c | 10 ----------
+ kernel/sched/idle.c       | 11 ++++++++++-
+ 2 files changed, 10 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index 8848afa48598f..7922af4f7895b 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -782,7 +782,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c,
- 	if (pca9450->irq) {
- 		ret = devm_request_threaded_irq(pca9450->dev, pca9450->irq, NULL,
- 						pca9450_irq_handler,
--						(IRQF_TRIGGER_FALLING | IRQF_ONESHOT),
-+						(IRQF_TRIGGER_LOW | IRQF_ONESHOT),
- 						"pca9450-irq", pca9450);
- 		if (ret != 0) {
- 			dev_err(pca9450->dev, "Failed to request IRQ: %d\n",
+diff --git a/drivers/cpuidle/cpuidle.c b/drivers/cpuidle/cpuidle.c
+index 482bf87354a38..fdd25271106a3 100644
+--- a/drivers/cpuidle/cpuidle.c
++++ b/drivers/cpuidle/cpuidle.c
+@@ -324,16 +324,6 @@ int cpuidle_enter_state(struct cpuidle_device *dev, struct cpuidle_driver *drv,
+ int cpuidle_select(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 		   bool *stop_tick)
+ {
+-	/*
+-	 * If there is only a single idle state (or none), there is nothing
+-	 * meaningful for the governor to choose. Skip the governor and
+-	 * always use state 0 with the tick running.
+-	 */
+-	if (drv->state_count <= 1) {
+-		*stop_tick = false;
+-		return 0;
+-	}
+-
+ 	return cpuidle_curr_governor->select(drv, dev, stop_tick);
+ }
+ 
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index 200a0fac03b8e..6ff593a8eeb17 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -220,7 +220,7 @@ static void cpuidle_idle_call(void)
+ 
+ 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
+ 		call_cpuidle(drv, dev, next_state);
+-	} else {
++	} else if (drv->state_count > 1) {
+ 		bool stop_tick = true;
+ 
+ 		/*
+@@ -238,6 +238,15 @@ static void cpuidle_idle_call(void)
+ 		 * Give the governor an opportunity to reflect on the outcome
+ 		 */
+ 		cpuidle_reflect(dev, entered_state);
++	} else {
++		tick_nohz_idle_retain_tick();
++
++		/*
++		 * If there is only a single idle state (or none), there is
++		 * nothing meaningful for the governor to choose.  Skip the
++		 * governor and always use state 0.
++		 */
++		call_cpuidle(drv, dev, 0);
+ 	}
+ 
+ exit_idle:
 -- 
 2.51.0
 
