@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3EB63B6C0A;
-	Mon, 23 Mar 2026 15:03:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11946282F26;
+	Mon, 23 Mar 2026 15:03:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278213; cv=none; b=e9Cbro46aHTuBsKYxHTr45P059CsaaGD1AAuI0xj+rnJ6Fm1JyVS3VbdWDb0gwcmA8OKH8OJ8Eg+YhEYTAmgu0Bd9H0MRGbF0xdcy8kKMDOa/CE4Y90jHN+aJR6hoB0qJ1qYSNMQ7JqUuu/9LSPdDJDQiTcMBeJDlfxwXuZht1E=
+	t=1774278216; cv=none; b=d5HbHFsMkWzYp90A8ZkKRRTwfbfvSjcYoomqkPOtOBckOpJOmz+I9CZcNx0a1i3c2S+nbDhzXvm0/0xi26gRiKQbzXE0v9xxJ79TlbpUHnh6PhMokdb6RoHslLpK4PLve2kn+5aIS+Xi/GE1klhg15aylGHgpjTy577PdnKMmNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278213; c=relaxed/simple;
-	bh=VKLwxMKue+jlLlndP93Oq4dJOvL3ItPCo8yVHyuzmgg=;
+	s=arc-20240116; t=1774278216; c=relaxed/simple;
+	bh=l8qk98T3va4nd57oVH33YDIrDdMAKqwOrrl1NFhwnTk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l0Bi1DqD7V5SO90jI+6OiICmVv/l1UAW5HRmjbdM5OpyQDGPWIq6JJEU2okMA7FJ6GfmaElUcpiF1JjqmNdW3nvlJJkUrGM7nh6Kq7pwO/2CoaVFgkg/8w9YsMzvHcGboDZs6EsdKkoqZCDX2eqtgkx+sGQVXAMPWKTsprSQ05I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vn7N1Prf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tf32QWN1895rfjE6CeHrlivqv7zmBBYTOvnqFdz2ZobQwVg1V+8o4p7e0B8+zjxCW2BwM6alHZZ7NmVWGNJ/E7iazbx+leIHD9y65pswXurloG9Ntqox1Qif4mqzDk0FAyJmTe2uBOpCjT/jLoZ1ZGFxoCDKfgj04kzPnUg+1xg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dYI4W0Sr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vn7N1Prf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EBAAC4CEF7;
-	Mon, 23 Mar 2026 15:03:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dYI4W0Sr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FA9DC4CEF7;
+	Mon, 23 Mar 2026 15:03:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278212;
-	bh=VKLwxMKue+jlLlndP93Oq4dJOvL3ItPCo8yVHyuzmgg=;
+	s=korg; t=1774278216;
+	bh=l8qk98T3va4nd57oVH33YDIrDdMAKqwOrrl1NFhwnTk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vn7N1Prf1K/GpM6Z77auGyXWaCyNuu7pXojGFQP1qpwmNPRMONj1Px5p/J/TsIfga
-	 +OObCFhIYdlInzFq0MrmtJEcMavuMnPWZIG1bdV11BfEvbJeZhrpEJGovfsM0QQmG5
-	 ra811rfPS5VHZ/3/h5fMb82sYRzR85hcEwLz9ziY=
+	b=dYI4W0SrIyGgvIYsGCjVV03UndwDoyEUBBoEVvJBiGvqy8UOBPUECJoDmwmozbRGT
+	 m+cILFWTXDVTkGMzAEoNLXCjaykX788kiNiORjKN0G4uhcJ9FZnxnvL4TYaDSlbv6Y
+	 a3wbZBpMkY4FuvhwAwZmDWIcUwtN3HafKnjslW9s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qualys Security Advisory <qsa@qualys.com>,
-	Salvatore Bonaccorso <carnil@debian.org>,
-	Georgia Garcia <georgia.garcia@canonical.com>,
-	Cengiz Can <cengiz.can@canonical.com>,
-	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.6 193/567] apparmor: Fix double free of ns_name in aa_replace_profiles()
-Date: Mon, 23 Mar 2026 14:41:53 +0100
-Message-ID: <20260323134538.626504179@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 184/567] tracing: Add NULL pointer check to trigger_data_free()
+Date: Mon, 23 Mar 2026 14:41:44 +0100
+Message-ID: <20260323134538.406638433@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,47 +54,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Johansen <john.johansen@canonical.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-commit 5df0c44e8f5f619d3beb871207aded7c78414502 upstream.
+[ Upstream commit 457965c13f0837a289c9164b842d0860133f6274 ]
 
-if ns_name is NULL after
-1071         error = aa_unpack(udata, &lh, &ns_name);
+If trigger_data_alloc() fails and returns NULL, event_hist_trigger_parse()
+jumps to the out_free error path. While kfree() safely handles a NULL
+pointer, trigger_data_free() does not. This causes a NULL pointer
+dereference in trigger_data_free() when evaluating
+data->cmd_ops->set_filter.
 
-and if ent->ns_name contains an ns_name in
-1089                 } else if (ent->ns_name) {
+Fix the problem by adding a NULL pointer check to trigger_data_free().
 
-then ns_name is assigned the ent->ns_name
-1095                         ns_name = ent->ns_name;
+The problem was found by an experimental code review agent based on
+gemini-3.1-pro while reviewing backports into v6.18.y.
 
-however ent->ns_name is freed at
-1262                 aa_load_ent_free(ent);
-
-and then again when freeing ns_name at
-1270         kfree(ns_name);
-
-Fix this by NULLing out ent->ns_name after it is transferred to ns_name
-
-Fixes: 145a0ef21c8e9 ("apparmor: fix blob compression when ns is forced on a policy load")
-Reported-by: Qualys Security Advisory <qsa@qualys.com>
-Tested-by: Salvatore Bonaccorso <carnil@debian.org>
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/20260305193339.2810953-1-linux@roeck-us.net
+Fixes: 0550069cc25f ("tracing: Properly process error handling in event_hist_trigger_parse()")
+Assisted-by: Gemini:gemini-3.1-pro
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace_events_trigger.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -1115,6 +1115,7 @@ ssize_t aa_replace_profiles(struct aa_ns
- 				goto fail;
- 			}
- 			ns_name = ent->ns_name;
-+			ent->ns_name = NULL;
- 		} else
- 			count++;
- 	}
+diff --git a/kernel/trace/trace_events_trigger.c b/kernel/trace/trace_events_trigger.c
+index fe079ff82ef1b..3ef1fe15493d3 100644
+--- a/kernel/trace/trace_events_trigger.c
++++ b/kernel/trace/trace_events_trigger.c
+@@ -19,6 +19,9 @@ static DEFINE_MUTEX(trigger_cmd_mutex);
+ 
+ void trigger_data_free(struct event_trigger_data *data)
+ {
++	if (!data)
++		return;
++
+ 	if (data->cmd_ops->set_filter)
+ 		data->cmd_ops->set_filter(NULL, data, NULL);
+ 
+-- 
+2.51.0
+
 
 
