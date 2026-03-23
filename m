@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAACB3AF67D;
-	Mon, 23 Mar 2026 14:43:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACD7387593;
+	Mon, 23 Mar 2026 14:43:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276998; cv=none; b=A0grmYUIapxe2aoU1rmu1asu0Flxhc81MwKluu+CI4yLus9HR0DzzT7+Dy3zBmNVVXMf+k9eQWv1oCe+AtHcaB0itLP3W4UtocZjg142YmoRZalfBPfPI4usv5mv8XfMnFmb8932d8XDHI6u/KjoWDfD5IQ4/PjR0B0nttPiwrM=
+	t=1774277000; cv=none; b=fLyjSJnIt6AjpNPfWYHOAWjvqYILE/ML8cr4fjIr1JUo0EOC/H5u2sIvQbXrjRjJcd4kOZ70yELJTyREPq+mEmPLNSc61A4VrbCMLPMxxLMJHmkY+05i6jjV48OJDAWSbbl2Fbmp8llJMhHbhpcng8u7dxtezyls6ENk6zzVT+s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276998; c=relaxed/simple;
-	bh=d6JBE4ZrP+2RqJL1MNSUFja7TeEf4FofABoZ8l3kmSI=;
+	s=arc-20240116; t=1774277000; c=relaxed/simple;
+	bh=tjz/uXlcYtFBZBGg1uf5qfwY2swGDdUB3UHvBp8sjSk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=na8zBc/rfvSzWl6lccWuA7BIohbuwKpyhPH1x0yd8FaMcydU81OKOkMLnLmZs6XFqa3MSokGtFrdOU9yQXQdt7zMRwB6vuvE5tY8mCmcsyUMUYTndWZ57p6qtVwJ85NpIPQcoEI3tudlQnGb2cspswv3gdvpLqbt8iplMakqV38=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBNOAWeH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NBCh3XcyQAIOZ5flUrw/0hW++hgLDWTyRXfFwS8Zr3Ami0wWwHA0pNF1J0zWWF6etGFathADL8c0WTTn2OGLHB6gNsTuSqyU/Gb218/+U74S1XCk5CahkkD8X0U3473XCdQe9NsA4SXEsJw+Y3w4BYt2dUDnMy57mP7ao/OQpLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8nTsKDe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBNOAWeH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79E73C4CEF7;
-	Mon, 23 Mar 2026 14:43:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8nTsKDe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60391C4CEF7;
+	Mon, 23 Mar 2026 14:43:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276997;
-	bh=d6JBE4ZrP+2RqJL1MNSUFja7TeEf4FofABoZ8l3kmSI=;
+	s=korg; t=1774277000;
+	bh=tjz/uXlcYtFBZBGg1uf5qfwY2swGDdUB3UHvBp8sjSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBNOAWeHITFpcohIEJ/OoaZjgOa9/xuZQzkbe3mXEzjwhy7h/gAbxphm1WclAtEiP
-	 2axYtHxeX6edoBiX8Od/1ElcHAluNHNsnl6OjH9nL2D6b+SieG7Hjn+bl5XlBA7Dug
-	 fVAdS3gRlcoCDqHQbcuW1qEWCYj9l90eTuLoC/nU=
+	b=n8nTsKDedLH/PsU5t+jxraWbDW4mgXuygt/tLl9bWfC+RjUmVLxVtugsRqXUQRfpx
+	 oXNZ4a1awdW5Hqry7AxLh79YcNfQImd9tas1nPzt7FBmMVDcFRdj50gHzBau9nZtdi
+	 GnvAdooUw6e043fxAFuH8xLEGf58EeTp+wgmzq90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	Sasha Levin <sashal@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Asbj=C3=B8rn=20Sloth=20T=C3=B8nnesen?= <ast@fiberby.net>,
-	Gabriel Krisman Bertazi <krisman@suse.de>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.12 281/460] io_uring/uring_cmd: fix too strict requirement on ioctl
-Date: Mon, 23 Mar 2026 14:44:37 +0100
-Message-ID: <20260323134533.383114411@linuxfoundation.org>
+	Paulo Andrade <pandrade@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.12 282/460] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
+Date: Mon, 23 Mar 2026 14:44:38 +0100
+Message-ID: <20260323134533.407124029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -45,67 +46,132 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: "Asbj�rn Sloth T�nnesen" <ast@fiberby.net>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 600b665b903733bd60334e86031b157cc823ee55 ]
+[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
 
-Attempting SOCKET_URING_OP_SETSOCKOPT on an AF_NETLINK socket resulted
-in an -EOPNOTSUPP, as AF_NETLINK doesn't have an ioctl in its struct
-proto, but only in struct proto_ops.
+This script
 
-Prior to the blamed commit, io_uring_cmd_sock() only had two cmd_op
-operations, both requiring ioctl, thus the check was warranted.
+	#!/usr/bin/bash
 
-Since then, 4 new cmd_op operations have been added, none of which
-depend on ioctl. This patch moves the ioctl check, so it only applies
-to the original operations.
+	echo 0 > /proc/sys/kernel/randomize_va_space
 
-AFAICT, the ioctl requirement was unintentional, and it wasn't
-visible in the blamed patch within 3 lines of context.
+	echo 'void main(void) {}' > TEST.c
 
+	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
+	gcc -m32 -fcf-protection=branch TEST.c -o test
+
+	bpftrace -e 'uprobe:./test:main {}' -c ./test
+
+"hangs", the probed ./test task enters an endless loop.
+
+The problem is that with randomize_va_space == 0
+get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
+just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
+by the stack vma.
+
+arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
+in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
+vm_unmapped_area() happily returns the high address > TASK_SIZE and then
+get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
+check.
+
+handle_swbp() doesn't report this failure (probably it should) and silently
+restarts the probed insn. Endless loop.
+
+I think that the right fix should change the x86 get_unmapped_area() paths
+to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
+CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
+because ->orig_ax = -1.
+
+But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
+the probed task is 32-bit to make in_ia32_syscall() true.
+
+Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
+Reported-by: Paulo Andrade <pandrade@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
 Cc: stable@vger.kernel.org
-Fixes: a5d2f99aff6b ("io_uring/cmd: Introduce SOCKET_URING_OP_GETSOCKOPT")
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
-Reviewed-by: Gabriel Krisman Bertazi <krisman@suse.de>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-[Asbjørn: function moved in commit 91db6edc573b; updated subject prefix]
-Signed-off-by: Asbjørn Sloth Tønnesen <ast@fiberby.net>
+Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/uring_cmd.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/x86/kernel/uprobes.c |   24 ++++++++++++++++++++++++
+ include/linux/uprobes.h   |    1 +
+ kernel/events/uprobes.c   |   10 +++++++---
+ 3 files changed, 32 insertions(+), 3 deletions(-)
 
---- a/io_uring/uring_cmd.c
-+++ b/io_uring/uring_cmd.c
-@@ -338,16 +338,19 @@ int io_uring_cmd_sock(struct io_uring_cm
- 	struct proto *prot = READ_ONCE(sk->sk_prot);
- 	int ret, arg = 0;
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -1223,3 +1223,27 @@ bool arch_uretprobe_is_alive(struct retu
+ 	else
+ 		return regs->sp <= ret->stack;
+ }
++
++#ifdef CONFIG_IA32_EMULATION
++unsigned long arch_uprobe_get_xol_area(void)
++{
++	struct thread_info *ti = current_thread_info();
++	unsigned long vaddr;
++
++	/*
++	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
++	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
++	 * vm_unmapped_area_info.high_limit.
++	 *
++	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
++	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
++	 * (falsely) returns true because ->orig_ax == -1.
++	 */
++	if (test_thread_flag(TIF_ADDR32))
++		ti->status |= TS_COMPAT;
++	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++	ti->status &= ~TS_COMPAT;
++
++	return vaddr;
++}
++#endif
+--- a/include/linux/uprobes.h
++++ b/include/linux/uprobes.h
+@@ -146,6 +146,7 @@ extern void arch_uprobe_copy_ixol(struct
+ extern void uprobe_handle_trampoline(struct pt_regs *regs);
+ extern void *arch_uprobe_trampoline(unsigned long *psize);
+ extern unsigned long uprobe_get_trampoline_vaddr(void);
++extern unsigned long arch_uprobe_get_xol_area(void);
+ #else /* !CONFIG_UPROBES */
+ struct uprobes_state {
+ };
+--- a/kernel/events/uprobes.c
++++ b/kernel/events/uprobes.c
+@@ -1493,6 +1493,12 @@ static const struct vm_special_mapping x
+ 	.fault = xol_fault,
+ };
  
--	if (!prot || !prot->ioctl)
--		return -EOPNOTSUPP;
--
- 	switch (cmd->cmd_op) {
- 	case SOCKET_URING_OP_SIOCINQ:
-+		if (!prot || !prot->ioctl)
-+			return -EOPNOTSUPP;
++unsigned long __weak arch_uprobe_get_xol_area(void)
++{
++	/* Try to map as high as possible, this is only a hint. */
++	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
++}
 +
- 		ret = prot->ioctl(sk, SIOCINQ, &arg);
- 		if (ret)
- 			return ret;
- 		return arg;
- 	case SOCKET_URING_OP_SIOCOUTQ:
-+		if (!prot || !prot->ioctl)
-+			return -EOPNOTSUPP;
-+
- 		ret = prot->ioctl(sk, SIOCOUTQ, &arg);
- 		if (ret)
- 			return ret;
+ /* Slot allocation for XOL */
+ static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
+ {
+@@ -1508,9 +1514,7 @@ static int xol_add_vma(struct mm_struct
+ 	}
+ 
+ 	if (!area->vaddr) {
+-		/* Try to map as high as possible, this is only a hint. */
+-		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
+-						PAGE_SIZE, 0, 0);
++		area->vaddr = arch_uprobe_get_xol_area();
+ 		if (IS_ERR_VALUE(area->vaddr)) {
+ 			ret = area->vaddr;
+ 			goto fail;
 
 
