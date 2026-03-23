@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 787EE1FFC48;
-	Mon, 23 Mar 2026 14:22:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EDF39A055;
+	Mon, 23 Mar 2026 14:22:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275762; cv=none; b=Y6b5BdD6jeReq6+g0Ch/notQcRxEumW02dXNgqgCrCPWH816Vm+3/8t//uHbmRP/NUxOlO3OOFl+h+b8BDLykm36LAag1tmnLanDaevXmksl7L2Wkn8qBtMSegVsK1ObVY2F7FCGyMluoeaHaVZrult+uuGlVcva+OyPAAURey4=
+	t=1774275765; cv=none; b=QgncTFLv4il+uzJF19lJrdJ5UKjVLfgRr86Ddsa+lSTL11pRrQ/B/6QQ/oHkvBgM9l6KEfeS8m82JfD6MC8KIo/XuN5qIKGHxfjiuxL/x67iIMLD7ZwsmNYbVxn2pbv36mGHftd/FBZbsqqFEP51W+w/zWek4OivlVTCJu5vKHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275762; c=relaxed/simple;
-	bh=yFMXBRcDVDw9G1z8b4lHqLW8/Am9IWI7f2Wi8cSOMsk=;
+	s=arc-20240116; t=1774275765; c=relaxed/simple;
+	bh=z//uCOUTRWA/sC7bvRBYy5vxGnobZ1qjCwCCudkWaAw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OAlAc4qNee9PqXD5Q/R561bDGYTHrcx63t46OHB7Yod3GchU4kKsNUrfKVytHHenkX/meAD3H/OysXNLkTEDqjllcjKlFjUovGaB8/NHH4dixLbSt/4C0J8u/ue03ECnqO3vdsCvuEqR9MMBbFgyGTnN3F67j0xmj/tCB7oJ/n0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGYUyBwG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nooUPexq1AxGVwwbgAp6qrDShRgbNkyCWJ3//weZnvy/chnTjYOPIE3lBIeEUr0AACltbKXfuHLjcqhbLnc2SlVxLPWmZVhQKxcqp0iw9N5+NBwYNqV/n5vs7N0r/iFNl5lTjLCzHZz7lp++KIxduXox1iew0CLkQQNLOBISqIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J6fH+fqP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGYUyBwG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3950C4CEF7;
-	Mon, 23 Mar 2026 14:22:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J6fH+fqP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB5BC4CEF7;
+	Mon, 23 Mar 2026 14:22:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275762;
-	bh=yFMXBRcDVDw9G1z8b4lHqLW8/Am9IWI7f2Wi8cSOMsk=;
+	s=korg; t=1774275765;
+	bh=z//uCOUTRWA/sC7bvRBYy5vxGnobZ1qjCwCCudkWaAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGYUyBwGD0LzVyKf6XGbKoLXeLxr+dVatmPudpxQvznwnDdclJSSsLanDPuwGzWUu
-	 aEN7ZQt06s4TPMM+wSwl2mFngaiAY3dQKmKFZoXg1CFdmQJeo9sXkR9B4okRyG3XtE
-	 OPZJxjfP2KJ8J1v8RynUSxTWhi7IVE8vRjRNUdNY=
+	b=J6fH+fqPWx6FAdy4e3RxLPAHNPWgiYeNmykYEfFywSlZNRHAZ96gNXTtTiVKQW5yu
+	 IQmEh69aWIIDDVAbXRAFDFikNh4wIxjFbjMNsA5Ehorl6uLaCrTB3I96nXwW812YKQ
+	 i3Jp5FyQKny6PL2LXyaG9Ifvf3AI1wBMJOcyqP+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linusw@kernel.org>,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 210/460] iio: gyro: mpu3050-core: fix pm_runtime error handling
-Date: Mon, 23 Mar 2026 14:43:26 +0100
-Message-ID: <20260323134531.679139155@linuxfoundation.org>
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	John Garry <john.g.garry@oracle.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.12 193/460] scsi: core: Fix error handling for scsi_alloc_sdev()
+Date: Mon, 23 Mar 2026 14:43:09 +0100
+Message-ID: <20260323134531.290423651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,66 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Junxiao Bi <junxiao.bi@oracle.com>
 
-commit acc3949aab3e8094641a9c7c2768de1958c88378 upstream.
+commit 4ce7ada40c008fa21b7e52ab9d04e8746e2e9325 upstream.
 
-The return value of pm_runtime_get_sync() is not checked, allowing
-the driver to access hardware that may fail to resume. The device
-usage count is also unconditionally incremented. Use
-pm_runtime_resume_and_get() which propagates errors and avoids
-incrementing the usage count on failure.
+After scsi_sysfs_device_initialize() was called, error paths must call
+__scsi_remove_device().
 
-In preenable, add pm_runtime_put_autosuspend() on set_8khz_samplerate()
-failure since postdisable does not run when preenable fails.
-
-Fixes: 3904b28efb2c ("iio: gyro: Add driver for the MPU-3050 gyroscope")
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 1ac22c8eae81 ("scsi: core: Fix refcount leak for tagset_refcnt")
+Cc: stable@vger.kernel.org
+Signed-off-by: Junxiao Bi <junxiao.bi@oracle.com>
+Reviewed-by: John Garry <john.g.garry@oracle.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260304164603.51528-1-junxiao.bi@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/gyro/mpu3050-core.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/scsi/scsi_scan.c |    8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/iio/gyro/mpu3050-core.c
-+++ b/drivers/iio/gyro/mpu3050-core.c
-@@ -322,7 +322,9 @@ static int mpu3050_read_raw(struct iio_d
- 		}
- 	case IIO_CHAN_INFO_RAW:
- 		/* Resume device */
--		pm_runtime_get_sync(mpu3050->dev);
-+		ret = pm_runtime_resume_and_get(mpu3050->dev);
-+		if (ret)
-+			return ret;
- 		mutex_lock(&mpu3050->lock);
+--- a/drivers/scsi/scsi_scan.c
++++ b/drivers/scsi/scsi_scan.c
+@@ -353,12 +353,8 @@ static struct scsi_device *scsi_alloc_sd
+ 	 * default device queue depth to figure out sbitmap shift
+ 	 * since we use this queue depth most of times.
+ 	 */
+-	if (scsi_realloc_sdev_budget_map(sdev, depth)) {
+-		kref_put(&sdev->host->tagset_refcnt, scsi_mq_free_tags);
+-		put_device(&starget->dev);
+-		kfree(sdev);
+-		goto out;
+-	}
++	if (scsi_realloc_sdev_budget_map(sdev, depth))
++		goto out_device_destroy;
  
- 		ret = mpu3050_set_8khz_samplerate(mpu3050);
-@@ -648,14 +650,20 @@ out_trigger_unlock:
- static int mpu3050_buffer_preenable(struct iio_dev *indio_dev)
- {
- 	struct mpu3050 *mpu3050 = iio_priv(indio_dev);
-+	int ret;
+ 	scsi_change_queue_depth(sdev, depth);
  
--	pm_runtime_get_sync(mpu3050->dev);
-+	ret = pm_runtime_resume_and_get(mpu3050->dev);
-+	if (ret)
-+		return ret;
- 
- 	/* Unless we have OUR trigger active, run at full speed */
--	if (!mpu3050->hw_irq_trigger)
--		return mpu3050_set_8khz_samplerate(mpu3050);
-+	if (!mpu3050->hw_irq_trigger) {
-+		ret = mpu3050_set_8khz_samplerate(mpu3050);
-+		if (ret)
-+			pm_runtime_put_autosuspend(mpu3050->dev);
-+	}
- 
--	return 0;
-+	return ret;
- }
- 
- static int mpu3050_buffer_postdisable(struct iio_dev *indio_dev)
 
 
