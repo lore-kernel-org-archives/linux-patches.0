@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6892D275AF5;
-	Mon, 23 Mar 2026 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B63F35957;
+	Mon, 23 Mar 2026 15:06:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278392; cv=none; b=edzGnwtokHueCiMlxXHS1J9UozFIElwZk+MuiLTktC9kz8GV+FzuKzBiAOdcTw5w30RsYBd0z00GGlWJkn+wN1OYJKC7oWYcSq03LXC2FV5bGkInTJ7R4fF3x3fyRIzOm91nly4azEuqDPt4gtJvZHmILcWnc87GxIvjUdsp9WA=
+	t=1774278395; cv=none; b=P4wOQvLni6/hrIeApDMmU7nUodxnALVZdEDNDOBZUfzSYv0sf2WcEy+nwqahKyYJVyY9k4VtIFxZ2SAL++yUqYJm4LMyyIdQt8xDiopLnawdX5A/PuwGZNohDEZkGx1qAGQ8oxR94RtNl7O3sIZ8WRXvnotPcvG9ZwgK8Ojuj/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278392; c=relaxed/simple;
-	bh=5CTNordbXUxrDSQD8c20CtGf+aPBuVjGPyfjUbHo2ic=;
+	s=arc-20240116; t=1774278395; c=relaxed/simple;
+	bh=MiWQEh0h40Gkklf0kMDuTO1vdcMK8ppmGJD0QmdHBFE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J0yAziQmPUYy+a5z2HF7pjvNV+m0zYtLK1qdDV6rOP6VqUO5gWpZZLUmHX4cYE7+zV/aZB9ookrXifvr6HHsyphQHs21XfWXQ20tydBCPqZgbd0fCyP32wQsyTDxKw4ugP+4bc6lZgSe7iYFSqj62cWyE2i9EKLGQjKDHnSIdkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7eRDd02; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=eoytlH5FKCKosxqVcZ+e2zmy3tcw4hjWk5iNRgWhcPWpv2grYVzdG0l2Gy0SapZDMdout6hbENVqSHpF2dcY+V1vcVUuI4BNst0YcFBLA0DGhdvqbPOtVqVBRS1jWC0iwlK8NXwHxKzzQsBGNYMSJafitAHrimQZQu66sovVC6g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10Q6YEns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7eRDd02"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1670C4CEF7;
-	Mon, 23 Mar 2026 15:06:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10Q6YEns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EE1C4CEF7;
+	Mon, 23 Mar 2026 15:06:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278392;
-	bh=5CTNordbXUxrDSQD8c20CtGf+aPBuVjGPyfjUbHo2ic=;
+	s=korg; t=1774278395;
+	bh=MiWQEh0h40Gkklf0kMDuTO1vdcMK8ppmGJD0QmdHBFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J7eRDd026eIfzKi9gLakr9u/+eIh4PmXigN1yjCknVoClx7gtsecT5NNEu/GVgtSX
-	 8JEC4hnFg8u5/+h71ndT9IeLyX95UY/4hceELGRKvuih1etcrP/K9t917mEq+jjJP1
-	 ITu7l0/KprdJszaxUL7DwG+NriKvNtFWtehP/ch8=
+	b=10Q6YEns8PlTGrvI6pe28aK95KDIJDYgIKm/jJxGMwaj4HePZZv035qFQBDdu60GM
+	 Ko23VI/RayH9tC9JhzzY2lQEs7b5grPq5C8ZuULPNvlfsZSX0WXUos657ICb8r3jTJ
+	 33OOwX1Jw8OrPpychWFzowB8MuXxm2U7Dal+kmNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 294/567] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
-Date: Mon, 23 Mar 2026 14:43:34 +0100
-Message-ID: <20260323134541.094151989@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>
+Subject: [PATCH 6.6 295/567] libceph: reject preamble if control segment is empty
+Date: Mon, 23 Mar 2026 14:43:35 +0100
+Message-ID: <20260323134541.119049709@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,122 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
+commit c4c22b846eceff05b1129b8844a80310e55a7f87 upstream.
 
-This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
-that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
-ceph_handle_auth_reply(), the value of the payload_len field of such a
-message is stored in a variable of type int. A value greater than
-INT_MAX leads to an integer overflow and is interpreted as a negative
-value. This leads to decrementing the pointer address by this value and
-subsequently accessing it because ceph_decode_need() only checks that
-the memory access does not exceed the end address of the allocation.
-
-This patch fixes the issue by changing the data type of payload_len to
-u32. Additionally, the data type of result_msg_len is changed to u32,
-as it is also a variable holding a non-negative length.
-
-Also, an additional layer of sanity checks is introduced, ensuring that
-directly after reading it from the message, payload_len and
-result_msg_len are not greater than the overall segment length.
-
-BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
-Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
-
-CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: ceph-msgr ceph_con_workfn [libceph]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x76/0xa0
- print_report+0xd1/0x620
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? kasan_complete_mode_report_info+0x72/0x210
- kasan_report+0xe7/0x130
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- __asan_report_load_n_noabort+0xf/0x20
- ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- mon_dispatch+0x973/0x23d0 [libceph]
- ? apparmor_socket_recvmsg+0x6b/0xa0
- ? __pfx_mon_dispatch+0x10/0x10 [libceph]
- ? __kasan_check_write+0x14/0x30i
- ? mutex_unlock+0x7f/0xd0
- ? __pfx_mutex_unlock+0x10/0x10
- ? __pfx_do_recvmsg+0x10/0x10 [libceph]
- ceph_con_process_message+0x1f1/0x650 [libceph]
- process_message+0x1e/0x450 [libceph]
- ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
- ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
- ? save_fpregs_to_fpstate+0xb0/0x230
- ? raw_spin_rq_unlock+0x17/0xa0
- ? finish_task_switch.isra.0+0x13b/0x760
- ? __switch_to+0x385/0xda0
- ? __kasan_check_write+0x14/0x30
- ? mutex_lock+0x8d/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- ceph_con_workfn+0x248/0x10c0 [libceph]
- process_one_work+0x629/0xf80
- ? __kasan_check_write+0x14/0x30
- worker_thread+0x87f/0x1570
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? __pfx_try_to_wake_up+0x10/0x10
- ? kasan_print_address_stack_frame+0x1f7/0x280
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x396/0x830
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- ? __pfx_kthread+0x10/0x10
- ? __kasan_check_write+0x14/0x30
- ? recalc_sigpending+0x180/0x210
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3f7/0x610
- ? __pfx_ret_from_fork+0x10/0x10
- ? __switch_to+0x385/0xda0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-[ idryomov: replace if statements with ceph_decode_need() for
-  payload_len and result_msg_len ]
+While head_onwire_len() has a branch to handle ctrl_len == 0 case,
+prepare_read_control() always sets up a kvec for the CRC meaning that
+a non-empty control segment is effectively assumed.  All frames that
+clients deal with meet that assumption, so let's make it official and
+treat the preamble with an empty control segment as malformed.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/auth.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ net/ceph/messenger_v2.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/net/ceph/auth.c
-+++ b/net/ceph/auth.c
-@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
- 	s32 result;
- 	u64 global_id;
- 	void *payload, *payload_end;
--	int payload_len;
-+	u32 payload_len;
- 	char *result_msg;
--	int result_msg_len;
-+	u32 result_msg_len;
- 	int ret = -EINVAL;
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -392,7 +392,7 @@ static int head_onwire_len(int ctrl_len,
+ 	int head_len;
+ 	int rem_len;
  
- 	mutex_lock(&ac->mutex);
-@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
- 	result = ceph_decode_32(&p);
- 	global_id = ceph_decode_64(&p);
- 	payload_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, payload_len, bad);
- 	payload = p;
- 	p += payload_len;
- 	ceph_decode_need(&p, end, sizeof(u32), bad);
- 	result_msg_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, result_msg_len, bad);
- 	result_msg = p;
- 	p += result_msg_len;
- 	if (p != end)
+-	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
++	BUG_ON(ctrl_len < 1 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
+ 
+ 	if (secure) {
+ 		head_len = CEPH_PREAMBLE_SECURE_LEN;
+@@ -401,9 +401,7 @@ static int head_onwire_len(int ctrl_len,
+ 			head_len += padded_len(rem_len) + CEPH_GCM_TAG_LEN;
+ 		}
+ 	} else {
+-		head_len = CEPH_PREAMBLE_PLAIN_LEN;
+-		if (ctrl_len)
+-			head_len += ctrl_len + CEPH_CRC_LEN;
++		head_len = CEPH_PREAMBLE_PLAIN_LEN + ctrl_len + CEPH_CRC_LEN;
+ 	}
+ 	return head_len;
+ }
+@@ -528,11 +526,16 @@ static int decode_preamble(void *p, stru
+ 		desc->fd_aligns[i] = ceph_decode_16(&p);
+ 	}
+ 
+-	if (desc->fd_lens[0] < 0 ||
++	/*
++	 * This would fire for FRAME_TAG_WAIT (it has one empty
++	 * segment), but we should never get it as client.
++	 */
++	if (desc->fd_lens[0] < 1 ||
+ 	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
+ 		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
+ 		return -EINVAL;
+ 	}
++
+ 	if (desc->fd_lens[1] < 0 ||
+ 	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
+ 		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
+@@ -549,10 +552,6 @@ static int decode_preamble(void *p, stru
+ 		return -EINVAL;
+ 	}
+ 
+-	/*
+-	 * This would fire for FRAME_TAG_WAIT (it has one empty
+-	 * segment), but we should never get it as client.
+-	 */
+ 	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
+ 		pr_err("last segment empty, segment count %d\n",
+ 		       desc->fd_seg_cnt);
 
 
