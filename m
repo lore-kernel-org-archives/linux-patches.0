@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D761A6818;
-	Mon, 23 Mar 2026 13:53:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0413AC0C9;
+	Mon, 23 Mar 2026 13:53:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273998; cv=none; b=NrYj1dS4fDBunJqH4WgR3VUrPwRmizdUHbLhAqnspHktA5tBqCCsZ4HsmALraBft076jARyLjrddnlfhs9WERNebMiIYoI3ADJGs2wg1z68oYPLxZH3jNOsM/oksmv6hY4LRvISU56t6kNVmeH5c8jbPxtY2fMAF3FudATMLL+A=
+	t=1774274001; cv=none; b=OhfGmU2zwv+nsfPoDqG5FSWNAasv0HuGfXYdMEAFFn9uRBXfvqB9K5zEWEAQfpccCW3/VsBIfwvgNJ2g6125qFM+7e8eqMR8nT6lTWL8skZlNNIXfmddJYX8JTb5q7tiSTX8P7XTtlId/9wxGkywCi74SmAkHHSqntznLWIuk9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273998; c=relaxed/simple;
-	bh=B40Bg09Uvfo9fW4OAes5pcoQX43PBVc53VPMvDf9O+s=;
+	s=arc-20240116; t=1774274001; c=relaxed/simple;
+	bh=kCWwm7/OkZZfHu9AL1KN6P9A3qWER7Uj4/2FESNo0As=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkuSWKn36cgvn95OAqLsLmjLCBou9Pbnvo6/phlnBaYY2AKKUCV+i5cV2qM2p7dqAYZ8nC8Rj+EiQ9A3GjOhoJKj9KrVL8E5cKRFn7W1sKcPcHXe8eFXgAzkR1CCIuWFU/nzbXbsVHTi3cPjoDJvQ7aacWbEN5aja1GLDC12xLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U8T3amf4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qbMvE6fAnInna8SDCS8q9Ni8Fke3x1+r2Zz+l8c5WkbKmXS6ZHNEUkjffQMvcUYIeycl16RfTM6i+vZMQJtxbterUj8+nZ2+u27/IsoOuEEhrIrF/Nrrds9ON6oyM5Ht/YwQa3npzveiRzQf0FujBz3kjW6UJKvLbaRB7wYjnTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0poIxfEG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U8T3amf4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8363C2BCB1;
-	Mon, 23 Mar 2026 13:53:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0poIxfEG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFD22C4AF09;
+	Mon, 23 Mar 2026 13:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273998;
-	bh=B40Bg09Uvfo9fW4OAes5pcoQX43PBVc53VPMvDf9O+s=;
+	s=korg; t=1774274001;
+	bh=kCWwm7/OkZZfHu9AL1KN6P9A3qWER7Uj4/2FESNo0As=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8T3amf4nTEKNT1POf21YnHzehWfg5V4hHEDjWGTrdff8mtqMS64yiWvNzD05CqTB
-	 wGN6r7PHx/FsII0rV3QGzmB/mfCp3hF+PZmzP/CJtN9iV2iRItStgY3sG9mMxyCa0+
-	 K3CDWcwofwQ+qSnk2ba4Snw1HI8tRzJvxYYMQRZs=
+	b=0poIxfEGkLenIz/Mmja5YL+S6NRpF9dXKuRr3SgAYCmBMvytWAcO17CyL332ae+9f
+	 o8aee6l+7tcddOGwQBEpOaXS545peuVOmlUANW/00JZru4qbh/qYWbOecGonP5+sj7
+	 Z2hSsnFqniDsWCeCn/RYlbk5/DGxKxGfSS21DJaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanyang Wang <quanyang.wang@windriver.com>,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Dinh Nguyen <dinguyen@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 032/220] net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume
-Date: Mon, 23 Mar 2026 14:43:29 +0100
-Message-ID: <20260323134505.591908982@linuxfoundation.org>
+Subject: [PATCH 6.19 033/220] firmware: stratix10-svc: Delete some stray tabs
+Date: Mon, 23 Mar 2026 14:43:30 +0100
+Message-ID: <20260323134505.628102692@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,58 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Dan Carpenter <dan.carpenter@linaro.org>
 
-[ Upstream commit 718d0766ce4c7634ce62fa78b526ea7263487edd ]
+[ Upstream commit 9e51d1da5b245c9bf97fc49b06cca7e901c0fe94 ]
 
-On certain platforms, such as AMD Versal boards, the tx/rx queue pointer
-registers are cleared after suspend, and the rx queue pointer register
-is also disabled during suspend if WOL is enabled. Previously, we assumed
-that these registers would be restored by macb_mac_link_up(). However,
-in commit bf9cf80cab81, macb_init_buffers() was moved from
-macb_mac_link_up() to macb_open(). Therefore, we should call
-macb_init_buffers() to reinitialize the tx/rx queue pointer registers
-during resume.
+These lines are indented one tab too far.  Delete the extra tabs
+for readability.
 
-Due to the reset of these two registers, we also need to adjust the
-tx/rx rings accordingly. The tx ring will be handled by
-gem_shuffle_tx_rings() in macb_mac_link_up(), so we only need to
-initialize the rx ring here.
-
-Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
-Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Tested-by: Quanyang Wang <quanyang.wang@windriver.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260312-macb-versal-v1-2-467647173fa4@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+Signed-off-by: Dinh Nguyen <dinguyen@kernel.org>
+Stable-dep-of: 22fd7f7fed2a ("firmware: stratix10-svc: Add Multi SVC clients support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/firmware/stratix10-svc.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -5949,8 +5949,18 @@ static int __maybe_unused macb_resume(st
- 		rtnl_unlock();
+--- a/drivers/firmware/stratix10-svc.c
++++ b/drivers/firmware/stratix10-svc.c
+@@ -1317,7 +1317,7 @@ int stratix10_svc_async_send(struct stra
+ 		dev_dbg(ctrl->dev,
+ 			"Async message sent with transaction_id 0x%02x\n",
+ 			handle->transaction_id);
+-			*handler = handle;
++		*handler = handle;
+ 		return 0;
+ 	case INTEL_SIP_SMC_STATUS_BUSY:
+ 		dev_warn(ctrl->dev, "Mailbox is busy, try after some time\n");
+@@ -1702,12 +1702,12 @@ int stratix10_svc_send(struct stratix10_
+ 			kthread_run_on_cpu(svc_normal_to_secure_thread,
+ 					   (void *)chan->ctrl,
+ 					   cpu, "svc_smc_hvc_thread");
+-			if (IS_ERR(chan->ctrl->task)) {
+-				dev_err(chan->ctrl->dev,
+-					"failed to create svc_smc_hvc_thread\n");
+-				kfree(p_data);
+-				return -EINVAL;
+-			}
++		if (IS_ERR(chan->ctrl->task)) {
++			dev_err(chan->ctrl->dev,
++				"failed to create svc_smc_hvc_thread\n");
++			kfree(p_data);
++			return -EINVAL;
++		}
  	}
  
-+	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
-+		macb_init_buffers(bp);
-+
- 	for (q = 0, queue = bp->queues; q < bp->num_queues;
- 	     ++q, ++queue) {
-+		if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
-+			if (macb_is_gem(bp))
-+				gem_init_rx_ring(queue);
-+			else
-+				macb_init_rx_ring(queue);
-+		}
-+
- 		napi_enable(&queue->napi_rx);
- 		napi_enable(&queue->napi_tx);
- 	}
+ 	pr_debug("%s: sent P-va=%p, P-com=%x, P-size=%u\n", __func__,
 
 
