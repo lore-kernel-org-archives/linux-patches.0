@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BF093B0AE2;
-	Mon, 23 Mar 2026 13:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314773B3890;
+	Mon, 23 Mar 2026 13:58:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274320; cv=none; b=mwfKNhgljOt7deALWEWLGiCMxcWsE/GKYY8Okr6znnGUTq16j0Q32UB7kmvlNNda8ALENsxF3c+xJw93GsEXnk+XGvw9sBb6pEojryRVUxQxht6hz7mkHy+PPVIH3TIv32pG8+0ly0sO2R8Nq5n9j//wKhI/EdOB1h+O5wOwyFE=
+	t=1774274323; cv=none; b=ELKXmjnynUaDEzmJUnMfaXt8KYXy6AscOE+QIEN/CCP9qjuGV+GJ8pbmJp4L8HU4/LP0BEhwIAqX/CH2EE/4HwqqJndEQGEzcWpJ/fQWvk/CT7R6RZisavfixYaWYhv6UR0NnL7+uH4g0BX5h3Y4IZrIfhCIf3he+q6uXiPe0ZY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274320; c=relaxed/simple;
-	bh=CZrXkwPq0tHTpjl4cK0QUgN4ke9pv4XgUPVNPRC5UMs=;
+	s=arc-20240116; t=1774274323; c=relaxed/simple;
+	bh=vd4ZAOnh06TKWyg+5bUiFTOZzGADuAyF6jReF5AYFgo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L4BaqQ9TpUxGclX+5Wj58MdHbso8NtuqEEcdIbUnoF2uEIWZ/nZbY1xKEmz5F0Te79HWjicJ98VR/Urd49EZiIKmPWtd6o7P+2aGnJhVsML75UHgTob5CX8WF05omMOBPQNTqtbhcTRYDsvFhf4R/2f7jpWg05C855ELt6Z55kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AbiwqyG8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FR203YnZI45HIjnLg5FluoxOAmIE18ueEd075FhkoQ/NaR31c0SUwmhz6NzCq1eXZFliq/Ne39CRqY5hsi7klYKuu5fJjcxxSjPwjlwHLTKlxDYllUopLIz5pEaXgUZvMagehvv8lk5mPcOUYdNmLuawaSmtNyH3NlIBGRI/PPI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoqvyvKs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AbiwqyG8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9535EC2BCB1;
-	Mon, 23 Mar 2026 13:58:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoqvyvKs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF55DC4AF09;
+	Mon, 23 Mar 2026 13:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274320;
-	bh=CZrXkwPq0tHTpjl4cK0QUgN4ke9pv4XgUPVNPRC5UMs=;
+	s=korg; t=1774274323;
+	bh=vd4ZAOnh06TKWyg+5bUiFTOZzGADuAyF6jReF5AYFgo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbiwqyG8mvnM1LJeIyzVUlNzNVbvq90lkl1+Z6ZhhvsxNg9pVk7mP8AFYOcCvQnqN
-	 zlyRObPHmO6UvxAn+NAHAXZquWZdex+r3VWObiov52pgiMPXEJ9f8zm01GtiaunQaK
-	 furPahqtvPke6YopNp3aCtVVSAK5+Qoxc3OLtBt8=
+	b=yoqvyvKsdvvfqz6pcX0V4T8E05g0F8S3u0m4cPWIkyTZ1u2wo0srqXNFSN08Snona
+	 1BhBk7r55BFWJPgYLtp8C8zb0PPraOsQtu/5lqGX+kXGeMQSbEruTZguxGdV/HidAv
+	 JySCyS2Q+dWpJbm9JqZ1SXd6Wt2lAlQlEIlvjrYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Xiasong <lixiasong1@huawei.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 181/220] MPTCP: fix lock class name family in pm_nl_create_listen_socket
-Date: Mon, 23 Mar 2026 14:45:58 +0100
-Message-ID: <20260323134510.293776309@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.19 182/220] hwmon: (pmbus/ina233) Add error check for pmbus_read_word_data() return value
+Date: Mon, 23 Mar 2026 14:45:59 +0100
+Message-ID: <20260323134510.324874120@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,39 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Li Xiasong <lixiasong1@huawei.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit 7ab4a7c5d969642782b8a5b608da0dd02aa9f229 ]
+commit 32f59301b9898c0ab5e72908556d553e2d481945 upstream.
 
-In mptcp_pm_nl_create_listen_socket(), use entry->addr.family
-instead of sk->sk_family for lock class setup. The 'sk' parameter
-is a netlink socket, not the MPTCP subflow socket being created.
+ina233_read_word_data() uses the return value of pmbus_read_word_data()
+directly in a DIV_ROUND_CLOSEST() computation without first checking for
+errors. If the underlying I2C transaction fails, a negative error code is
+used in the arithmetic, producing a garbage sensor value instead of
+propagating the error.
 
-Fixes: cee4034a3db1 ("mptcp: fix lockdep false positive in mptcp_pm_nl_create_listen_socket()")
-Signed-off-by: Li Xiasong <lixiasong1@huawei.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260319112159.3118874-1-lixiasong1@huawei.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Add the missing error check before using the return value.
+
+Fixes: b64b6cb163f16 ("hwmon: Add driver for TI INA233 Current and Power Monitor")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260317174553.385567-1-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm_kernel.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hwmon/pmbus/ina233.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/mptcp/pm_kernel.c b/net/mptcp/pm_kernel.c
-index 0ef43993e15ad..17eb50276e778 100644
---- a/net/mptcp/pm_kernel.c
-+++ b/net/mptcp/pm_kernel.c
-@@ -838,7 +838,7 @@ static struct lock_class_key mptcp_keys[2];
- static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 					    struct mptcp_pm_addr_entry *entry)
- {
--	bool is_ipv6 = sk->sk_family == AF_INET6;
-+	bool is_ipv6 = entry->addr.family == AF_INET6;
- 	int addrlen = sizeof(struct sockaddr_in);
- 	struct sockaddr_storage addr;
- 	struct sock *newsk, *ssk;
--- 
-2.51.0
-
+--- a/drivers/hwmon/pmbus/ina233.c
++++ b/drivers/hwmon/pmbus/ina233.c
+@@ -67,6 +67,8 @@ static int ina233_read_word_data(struct
+ 	switch (reg) {
+ 	case PMBUS_VIRT_READ_VMON:
+ 		ret = pmbus_read_word_data(client, 0, 0xff, MFR_READ_VSHUNT);
++		if (ret < 0)
++			return ret;
+ 
+ 		/* Adjust returned value to match VIN coefficients */
+ 		/* VIN: 1.25 mV VSHUNT: 2.5 uV LSB */
 
 
