@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E4DA3B0ADD;
-	Mon, 23 Mar 2026 15:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F43F258EE9;
+	Mon, 23 Mar 2026 15:04:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278294; cv=none; b=GRh9hYxhikaaceZGVFyB9kMm62Qr8Pkhdvc4KmKCefqSZ8tqFGQZ+mV30WjEG/vXvT1UDIdAp4ogoXUd0iX7xscP0gPqhuIw53f8bQztYbYznPU09nMG6W9bkFJS1hRvVkxG6ylcoOq2Hsx4crI4e8IlDo6JGAVPbesEGR/1Hx8=
+	t=1774278297; cv=none; b=Ei+8u/RgVOQz2iXX9X34B8zVIN70OVJVMSmoIECp0516ba8CJaS7lO5rlNfSic8+2qb+gQxEojFIG5aHI4mxVOo8CZUgbofPFTCMytK6v5FDmQZkw9TokUFjCf8H+esGWu7E08R2VoJT1o86FeBK0mFtZEWe0bUAwGSNJG0eNPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278294; c=relaxed/simple;
-	bh=NPPfXCUaEsEfRQkXwAeI1Hr4be7scM2jtvNcnk0dXf8=;
+	s=arc-20240116; t=1774278297; c=relaxed/simple;
+	bh=WgBE758EYTpk/L+J04ljxDzEis7UK2/CYEk+QdgnCe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=My4DCOu83pdC9SOJFpbJY2SreJhOcK7ev39L5I5JoJTVa1wRhRZQTMG9mmbSv4PdlvVYltAo+m9zgS+Lgrd8ZH2k98nJMbOroeaX3MCNUIMelRjCDCGT8YJY3lfDhtyMTI9dBqbwn2MI2fkP7b6VdOUNAWT7d8Dr+ghF78o01xQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JWn4n/Yy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=E0hGkSByvZNUL1HBZAE1swfIqfU7WDURcyBagx7Gly1xrX9Q++z8JyEKlh/ZcEAk9x/FXd9sesP5lPVeAwhs5Ctsu0chFiH5fU238QdI+n8y9rGWo7k+JCCY+s6WvF4+ctQtX57vVjmjH4DXHxC1Q497i9OKDNAZfwZ3xucB2BA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YHKTtzM6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JWn4n/Yy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7639C4CEF7;
-	Mon, 23 Mar 2026 15:04:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YHKTtzM6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65FAC4CEF7;
+	Mon, 23 Mar 2026 15:04:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278294;
-	bh=NPPfXCUaEsEfRQkXwAeI1Hr4be7scM2jtvNcnk0dXf8=;
+	s=korg; t=1774278297;
+	bh=WgBE758EYTpk/L+J04ljxDzEis7UK2/CYEk+QdgnCe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWn4n/YyHP8faju4baMuKF1SV/OWTUhUhE0mMUDKg+iKnGMHvD+fYoBXQ86YTaWlQ
-	 oFUhEjao5inBC/Ji/8gA8uSdXPc67zo1BdBznpbx5vpzyh8utCOZ8T5/e6Vw1nHtrz
-	 NiuUDk+/WYn8JHT2vwb7K28RJmQl1EfQr6qhrqTw=
+	b=YHKTtzM6p1kky2lmb9Xy78cJrgzMJDiL67VYbydWy/FzdpSK7o/IiJnZ/GEyLqO9M
+	 UhVHMsP5DALQWRVZCAb9IKZThCJhak8AL3LDiVp0PGriiiqfR2AeaPhMAQ6q72hxeG
+	 QJyGpb8otE7rNzyS4I7SSCZNoe/R0nCDpzjOUC0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingye Zhao <zhaoqingye@honor.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.6 261/567] cgroup: fix race between task migration and iteration
-Date: Mon, 23 Mar 2026 14:43:01 +0100
-Message-ID: <20260323134540.286964822@linuxfoundation.org>
+	Mehul Rao <mehulrao@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.6 262/567] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
+Date: Mon, 23 Mar 2026 14:43:02 +0100
+Message-ID: <20260323134540.311735501@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,81 +51,78 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qingye Zhao <zhaoqingye@honor.com>
+From: Mehul Rao <mehulrao@gmail.com>
 
-commit 5ee01f1a7343d6a3547b6802ca2d4cdce0edacb1 upstream.
+commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 upstream.
 
-When a task is migrated out of a css_set, cgroup_migrate_add_task()
-first moves it from cset->tasks to cset->mg_tasks via:
+In the drain loop, the local variable 'runtime' is reassigned to a
+linked stream's runtime (runtime = s->runtime at line 2157).  After
+releasing the stream lock at line 2169, the code accesses
+runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
+(lines 2170-2178) — all referencing the linked stream's runtime without
+any lock or refcount protecting its lifetime.
 
-    list_move_tail(&task->cg_list, &cset->mg_tasks);
+A concurrent close() on the linked stream's fd triggers
+snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
+→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
+No synchronization prevents kfree(runtime) from completing while the
+drain path dereferences the stale pointer.
 
-If a css_task_iter currently has it->task_pos pointing to this task,
-css_set_move_task() calls css_task_iter_skip() to keep the iterator
-valid. However, since the task has already been moved to ->mg_tasks,
-the iterator is advanced relative to the mg_tasks list instead of the
-original tasks list. As a result, remaining tasks on cset->tasks, as
-well as tasks queued on cset->mg_tasks, can be skipped by iteration.
+Fix by caching the needed runtime fields (no_period_wakeup, rate,
+buffer_size) into local variables while still holding the stream lock,
+and using the cached values after the lock is released.
 
-Fix this by calling css_set_skip_task_iters() before unlinking
-task->cg_list from cset->tasks. This advances all active iterators to
-the next task on cset->tasks, so iteration continues correctly even
-when a task is concurrently being migrated.
-
-This race is hard to hit in practice without instrumentation, but it
-can be reproduced by artificially slowing down cgroup_procs_show().
-For example, on an Android device a temporary
-/sys/kernel/cgroup/cgroup_test knob can be added to inject a delay
-into cgroup_procs_show(), and then:
-
-  1) Spawn three long-running tasks (PIDs 101, 102, 103).
-  2) Create a test cgroup and move the tasks into it.
-  3) Enable a large delay via /sys/kernel/cgroup/cgroup_test.
-  4) In one shell, read cgroup.procs from the test cgroup.
-  5) Within the delay window, in another shell migrate PID 102 by
-     writing it to a different cgroup.procs file.
-
-Under this setup, cgroup.procs can intermittently show only PID 101
-while skipping PID 103. Once the migration completes, reading the
-file again shows all tasks as expected.
-
-Note that this change does not allow removing the existing
-css_set_skip_task_iters() call in css_set_move_task(). The new call
-in cgroup_migrate_add_task() only handles iterators that are racing
-with migration while the task is still on cset->tasks. Iterators may
-also start after the task has been moved to cset->mg_tasks. If we
-dropped css_set_skip_task_iters() from css_set_move_task(), such
-iterators could keep task_pos pointing to a migrating task, causing
-css_task_iter_advance() to malfunction on the destination css_set,
-up to and including crashes or infinite loops.
-
-The race window between migration and iteration is very small, and
-css_task_iter is not on a hot path. In the worst case, when an
-iterator is positioned on the first thread of the migrating process,
-cgroup_migrate_add_task() may have to skip multiple tasks via
-css_set_skip_task_iters(). However, this only happens when migration
-and iteration actually race, so the performance impact is negligible
-compared to the correctness fix provided here.
-
-Fixes: b636fd38dc40 ("cgroup: Implement css_task_iter_skip()")
-Cc: stable@vger.kernel.org # v5.2+
-Signed-off-by: Qingye Zhao <zhaoqingye@honor.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/cgroup/cgroup.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/core/pcm_native.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/kernel/cgroup/cgroup.c
-+++ b/kernel/cgroup/cgroup.c
-@@ -2457,6 +2457,7 @@ static void cgroup_migrate_add_task(stru
- 
- 	mgctx->tset.nr_tasks++;
- 
-+	css_set_skip_task_iters(cset, task);
- 	list_move_tail(&task->cg_list, &cset->mg_tasks);
- 	if (list_empty(&cset->mg_node))
- 		list_add_tail(&cset->mg_node,
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -2148,6 +2148,10 @@ static int snd_pcm_drain(struct snd_pcm_
+ 	for (;;) {
+ 		long tout;
+ 		struct snd_pcm_runtime *to_check;
++		unsigned int drain_rate;
++		snd_pcm_uframes_t drain_bufsz;
++		bool drain_no_period_wakeup;
++
+ 		if (signal_pending(current)) {
+ 			result = -ERESTARTSYS;
+ 			break;
+@@ -2167,16 +2171,25 @@ static int snd_pcm_drain(struct snd_pcm_
+ 		snd_pcm_group_unref(group, substream);
+ 		if (!to_check)
+ 			break; /* all drained */
++		/*
++		 * Cache the runtime fields needed after unlock.
++		 * A concurrent close() on the linked stream may free
++		 * its runtime via snd_pcm_detach_substream() once we
++		 * release the stream lock below.
++		 */
++		drain_no_period_wakeup = to_check->no_period_wakeup;
++		drain_rate = to_check->rate;
++		drain_bufsz = to_check->buffer_size;
+ 		init_waitqueue_entry(&wait, current);
+ 		set_current_state(TASK_INTERRUPTIBLE);
+ 		add_wait_queue(&to_check->sleep, &wait);
+ 		snd_pcm_stream_unlock_irq(substream);
+-		if (runtime->no_period_wakeup)
++		if (drain_no_period_wakeup)
+ 			tout = MAX_SCHEDULE_TIMEOUT;
+ 		else {
+ 			tout = 100;
+-			if (runtime->rate) {
+-				long t = runtime->buffer_size * 1100 / runtime->rate;
++			if (drain_rate) {
++				long t = drain_bufsz * 1100 / drain_rate;
+ 				tout = max(t, tout);
+ 			}
+ 			tout = msecs_to_jiffies(tout);
 
 
