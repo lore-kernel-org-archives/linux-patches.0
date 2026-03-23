@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9483BC673;
-	Mon, 23 Mar 2026 16:16:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 308623BED00;
+	Mon, 23 Mar 2026 16:16:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282604; cv=none; b=imLBEprz9+i2CDS/GCzgZx5aJF2nA32pIKtd5mJVw2lLq6Yk0roSGn3PQ15z49zf48XnpTD7dUwHVO+FXH9Eg4DGID0n0GQK83P3RfAjvM/ynFAU5R2L7TPdpH+zoUnczRpOuWGlYyV0EOTVOX0fCoIRlqT0K9iEVRBr8PzHvfA=
+	t=1774282607; cv=none; b=oyjgeX00jsxI7dYXpnVWlRgUFNg5BJK7bNB+Vgg8+YbGauAr43LkBhS8GuL2kyp2pBlr+8PKPz/l0Jlnbwl/yzOCPT/EexiEz/QAKYagg9uZ4j2waRnngoUZdI5bK1TsKDjf37J32R1/iwfA8XnInpzsh9lrOiAqQ4mInjFAc48=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282604; c=relaxed/simple;
-	bh=K0YtApIJaP5N6bGFBE1nOglm9miVjH7fYe7Cgam8a8E=;
+	s=arc-20240116; t=1774282607; c=relaxed/simple;
+	bh=u4Z2XHJwyDyzcydpoEgGcTgjGKaW130U7zmbSMKcbbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IxuLWLDe7UlT1mq+E4cCjW/MCXfQAsYO0GHSo/GTile59TzsNZrHssSrewxpOcFEfQvFfdZ2ll/tKRnV40HWdsfInV8UJyG9ygUO8J1/kBfqfeaLMLjWrhqGdbVGPXMDlGRMQpi1ZhOj3o0uDlXsyAdZAmYiP2qhExlhD8Pi4xU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gi3H+vu+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRJBVrv9sA3jmJX/j2sH7/1K0LbEOtAF9nrN6854Ejc2eL/9JaSSPdOUy0YUG1+Plw4rypDQlQsfM8gOy4/QnEWlFrLcDTHVrRF+S0Un+53rG+oHiRQ6MdXFBms344Or2AidKV96dWnSsvoBomu6Z1guDMpIRC2dRs1t3iCx4ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYoHZPZc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gi3H+vu+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA444C2BC9E;
-	Mon, 23 Mar 2026 16:16:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYoHZPZc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935E1C2BC9E;
+	Mon, 23 Mar 2026 16:16:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282604;
-	bh=K0YtApIJaP5N6bGFBE1nOglm9miVjH7fYe7Cgam8a8E=;
+	s=korg; t=1774282606;
+	bh=u4Z2XHJwyDyzcydpoEgGcTgjGKaW130U7zmbSMKcbbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gi3H+vu++PFEtu7fVpEsUGnP0+kGNYOsijvQghcUVSsH4LofovyH7mEs89T5MOBDX
-	 TcCrckx/ixLV2cBSGWqrecmxXmV8zJ/aI7DK7zt1Hb0CwxZbf8C9joI/N5D1k0Aqca
-	 9OujF8S33u870dPNMtsDK7E8Q7jub29p1sLumu/U=
+	b=oYoHZPZcsUktGiGTvYB2dpSnT7wZdKrpHXA5qK/sQVsZbRGBEUORLpZj5/i7axa6/
+	 JH79Lo64KkW9ZzOnwXjrRuFqtTzSE8hUKslKRmCMZTwJrxwk/DYZR956WFViPRhHu9
+	 0gFzvc2nz4zb5/kjHSuQ0r0/VxHELk0FO14u321U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Neukum <oneukum@suse.com>,
+	Ziyi Guo <n7l8m4@u.northwestern.edu>,
 	stable <stable@kernel.org>
-Subject: [PATCH 6.1 217/481] usb: mdc800: handle signal and read racing
-Date: Mon, 23 Mar 2026 14:43:19 +0100
-Message-ID: <20260323134530.442926398@linuxfoundation.org>
+Subject: [PATCH 6.1 218/481] usb: image: mdc800: kill download URB on timeout
+Date: Mon, 23 Mar 2026 14:43:20 +0100
+Message-ID: <20260323134530.466110841@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,32 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Neukum <oneukum@suse.com>
+From: Ziyi Guo <n7l8m4@u.northwestern.edu>
 
-commit 2d6d260e9a3576256fe9ef6d1f7930c9ec348723 upstream.
+commit 1be3b77de4eb89af8ae2fd6610546be778e25589 upstream.
 
-If a signal arrives after a read has partially completed,
-we need to return the number of bytes read. -EINTR is correct
-only if that number is zero.
+mdc800_device_read() submits download_urb and waits for completion.
+If the timeout fires and the device has not responded, the function
+returns without killing the URB, leaving it active.
 
-Signed-off-by: Oliver Neukum <oneukum@suse.com>
+A subsequent read() resubmits the same URB while it is still
+in-flight, triggering the WARN in usb_submit_urb():
+
+  "URB submitted while active"
+
+Check the return value of wait_event_timeout() and kill the URB if
+it indicates timeout, ensuring the URB is complete before its status
+is inspected or the URB is resubmitted.
+
+Similar to
+- commit 372c93131998 ("USB: yurex: fix control-URB timeout handling")
+- commit b98d5000c505 ("media: rc: iguanair: handle timeouts")
+
+Signed-off-by: Ziyi Guo <n7l8m4@u.northwestern.edu>
 Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260209142048.1503791-1-oneukum@suse.com
+Link: https://patch.msgid.link/20260209151937.2247202-1-n7l8m4@u.northwestern.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/image/mdc800.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/image/mdc800.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 --- a/drivers/usb/image/mdc800.c
 +++ b/drivers/usb/image/mdc800.c
-@@ -708,7 +708,7 @@ static ssize_t mdc800_device_read (struc
- 		if (signal_pending (current)) 
- 		{
- 			mutex_unlock(&mdc800->io_lock);
--			return -EINTR;
-+			return len == left ? -EINTR : len-left;
- 		}
- 
- 		sts=left > (mdc800->out_count-mdc800->out_ptr)?mdc800->out_count-mdc800->out_ptr:left;
+@@ -731,9 +731,11 @@ static ssize_t mdc800_device_read (struc
+ 					mutex_unlock(&mdc800->io_lock);
+ 					return len-left;
+ 				}
+-				wait_event_timeout(mdc800->download_wait,
++				retval = wait_event_timeout(mdc800->download_wait,
+ 				     mdc800->downloaded,
+ 				     msecs_to_jiffies(TO_DOWNLOAD_GET_READY));
++				if (!retval)
++					usb_kill_urb(mdc800->download_urb);
+ 				mdc800->downloaded = 0;
+ 				if (mdc800->download_urb->status != 0)
+ 				{
 
 
