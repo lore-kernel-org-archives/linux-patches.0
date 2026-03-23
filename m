@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996323ACA5C;
-	Mon, 23 Mar 2026 13:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE94F3ACA68;
+	Mon, 23 Mar 2026 13:51:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273883; cv=none; b=eNOyFa+qcmor/jYaoDDW4DU0gJ6QHfiHxzhbrvhmGMIjUG/u4xhex4v8CXess8BIQFFE6XWLTqUJy0uKMAvIgRerev+FcHijQrozXnJz4Nz0zJ4WQ6N6++087huZmr0R5ugh7kF1X7DUgcd+io0iM4w4ovP4t5SGErYPa1tU5G8=
+	t=1774273887; cv=none; b=AieTne1rPJ6le1lp6Ln5I1UoOfJDq3+n2wzE6pdtbspp8WyrBObYtdqy/TyhrOlX6xGjIjU4Wz172BYHoTNd615vQzNABTv+Hn7N7uLaH8+O+3wuhM/9/y+XrZNOQbdsQ7kVoQSonSvS6zsmhc8bzCe0+naiU2x5+G5oRqMWUF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273883; c=relaxed/simple;
-	bh=4lo7yHi0eD0NwZJU1UBNm8zQuVR6rBQyj66VqE5cwyk=;
+	s=arc-20240116; t=1774273887; c=relaxed/simple;
+	bh=obVCHDciLX8h4BCJdGIKHavTc46ZkXN55WZtI2q3yPc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EUkrIVKR7tLMu85NtVzP5yioyCbUFzP6VVnLyp6uBzh1ObfDbhpkHRRYbCZBxrH6H5yzLFKTZyseTowQegycSKhyoxKrpHo8rFMUU3WQ4YqbkXZ7ijKVMHqv2NiGEcVqevL7PGy2UY4QiJKwMQ3Vkot2U8e8TJ/Lo2vdg7oN1+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YxeYcQnZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFGrIm/mQYRGTDBUU9r1wZ0NPzTrDxKTj9IbOBd0YF0jndcHCCNrRaOiZyYws7/ZXpv9jyiBFY5oXkXGBNb1TDymjcLImxW6Bt6gXtZClORoXxATwv/inCaD3MrkW+YcanqiwSpMzH254eN8RJ/tyky8wVqTksHrrE8pVLVXMHM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dxJ6CSBu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YxeYcQnZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B48DC2BCB1;
-	Mon, 23 Mar 2026 13:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dxJ6CSBu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F6EC2BC9E;
+	Mon, 23 Mar 2026 13:51:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273883;
-	bh=4lo7yHi0eD0NwZJU1UBNm8zQuVR6rBQyj66VqE5cwyk=;
+	s=korg; t=1774273886;
+	bh=obVCHDciLX8h4BCJdGIKHavTc46ZkXN55WZtI2q3yPc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YxeYcQnZui9FiOv/CyAWp8Sz0smiT3CXPFPxHDJdEiZN+Gaz6SvKXKuA9jLIXFnFi
-	 e5bw94JvtamfxcqH6sAi6wAob4T6eGepR2bmg6uwLstMo50+cn48HY8SiFPsWzTjei
-	 dMHHJeca2IdFdK6oc2TFj27rcJB8iljjfWHOFylA=
+	b=dxJ6CSBuByRcURmXiaNAoQGJk529G3NhMWJlqnTc/84UTjg8FLVOVM6LyYRRuy8D6
+	 mTlDowpra38awaA2KOCdEUrCHixXq0CetKbxrSPyQeXr8HDzDB5mAaryVCjpgqGj8R
+	 Ffm4r/iUkPIKJB/A2RzfkzT/9HU4leTQxgjmbInU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Corey Minyard <corey@minyard.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 040/220] ipmi:msghandler: Handle error returns from the SMI sender
-Date: Mon, 23 Mar 2026 14:43:37 +0100
-Message-ID: <20260323134505.857446668@linuxfoundation.org>
+	Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.19 041/220] ata: libata-core: disable LPM on ADATA SU680 SSD
+Date: Mon, 23 Mar 2026 14:43:38 +0100
+Message-ID: <20260323134505.891469990@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,213 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-[ Upstream commit 62cd145453d577113f993efd025f258dd86aa183 ]
+commit ce5ae93d1a216680460040c7c0465a6e3b629dec upstream.
 
-It used to be, until recently, that the sender operation on the low
-level interfaces would not fail.  That's not the case any more with
-recent changes.
+ADATA SU680 SSDs suffer from NCQ read and write commands timeouts or bus
+errors when link power management (LPM) is enabled. Flag these devices
+with the ATA_QUIRK_NOLPM quirk to prevent the use of LPM and avoid these
+command failures.
 
-So check the return value from the sender operation, and propagate it
-back up from there and handle the errors in all places.
-
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
-Fixes: bc3a9d217755 ("ipmi:si: Gracefully handle if the BMC is non-functional")
-Cc: stable@vger.kernel.org # 4.18
-Signed-off-by: Corey Minyard <corey@minyard.net>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-6.17/+bug/2144060
+Cc: stable@vger.kernel.org
+Tested-by: Mohammad-Khaled Bayan <mhd.khaled.bayan@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |  100 ++++++++++++++++++++++++------------
- 1 file changed, 68 insertions(+), 32 deletions(-)
+ drivers/ata/libata-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1887,19 +1887,32 @@ static struct ipmi_smi_msg *smi_add_send
- 	return smi_msg;
- }
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4185,6 +4185,9 @@ static const struct ata_dev_quirks_entry
+ 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_QUIRK_NONCQ |
+ 						ATA_QUIRK_FIRMWARE_WARN },
  
--static void smi_send(struct ipmi_smi *intf,
-+static int smi_send(struct ipmi_smi *intf,
- 		     const struct ipmi_smi_handlers *handlers,
- 		     struct ipmi_smi_msg *smi_msg, int priority)
- {
- 	int run_to_completion = READ_ONCE(intf->run_to_completion);
- 	unsigned long flags = 0;
-+	int rv = 0;
- 
- 	ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
- 	smi_msg = smi_add_send_msg(intf, smi_msg, priority);
- 	ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
- 
--	if (smi_msg)
--		handlers->sender(intf->send_info, smi_msg);
-+	if (smi_msg) {
-+		rv = handlers->sender(intf->send_info, smi_msg);
-+		if (rv) {
-+			ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
-+			intf->curr_msg = NULL;
-+			ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
-+			/*
-+			 * Something may have been added to the transmit
-+			 * queue, so schedule a check for that.
-+			 */
-+			queue_work(system_wq, &intf->smi_work);
-+		}
-+	}
-+	return rv;
- }
- 
- static bool is_maintenance_mode_cmd(struct kernel_ipmi_msg *msg)
-@@ -2312,6 +2325,7 @@ static int i_ipmi_request(struct ipmi_us
- 	struct ipmi_recv_msg *recv_msg;
- 	int run_to_completion = READ_ONCE(intf->run_to_completion);
- 	int rv = 0;
-+	bool in_seq_table = false;
- 
- 	if (supplied_recv) {
- 		recv_msg = supplied_recv;
-@@ -2365,33 +2379,50 @@ static int i_ipmi_request(struct ipmi_us
- 		rv = i_ipmi_req_ipmb(intf, addr, msgid, msg, smi_msg, recv_msg,
- 				     source_address, source_lun,
- 				     retries, retry_time_ms);
-+		in_seq_table = true;
- 	} else if (is_ipmb_direct_addr(addr)) {
- 		rv = i_ipmi_req_ipmb_direct(intf, addr, msgid, msg, smi_msg,
- 					    recv_msg, source_lun);
- 	} else if (is_lan_addr(addr)) {
- 		rv = i_ipmi_req_lan(intf, addr, msgid, msg, smi_msg, recv_msg,
- 				    source_lun, retries, retry_time_ms);
-+		in_seq_table = true;
- 	} else {
--	    /* Unknown address type. */
-+		/* Unknown address type. */
- 		ipmi_inc_stat(intf, sent_invalid_commands);
- 		rv = -EINVAL;
- 	}
- 
--	if (rv) {
--out_err:
--		if (!supplied_smi)
--			ipmi_free_smi_msg(smi_msg);
--		if (!supplied_recv)
--			ipmi_free_recv_msg(recv_msg);
--	} else {
-+	if (!rv) {
- 		dev_dbg(intf->si_dev, "Send: %*ph\n",
- 			smi_msg->data_size, smi_msg->data);
- 
--		smi_send(intf, intf->handlers, smi_msg, priority);
-+		rv = smi_send(intf, intf->handlers, smi_msg, priority);
-+		if (rv != IPMI_CC_NO_ERROR)
-+			/* smi_send() returns an IPMI err, return a Linux one. */
-+			rv = -EIO;
-+		if (rv && in_seq_table) {
-+			/*
-+			 * If it's in the sequence table, it will be
-+			 * retried later, so ignore errors.
-+			 */
-+			rv = 0;
-+			/* But we need to fix the timeout. */
-+			intf_start_seq_timer(intf, smi_msg->msgid);
-+			ipmi_free_smi_msg(smi_msg);
-+			smi_msg = NULL;
-+		}
- 	}
-+out_err:
- 	if (!run_to_completion)
- 		mutex_unlock(&intf->users_mutex);
- 
-+	if (rv) {
-+		if (!supplied_smi)
-+			ipmi_free_smi_msg(smi_msg);
-+		if (!supplied_recv)
-+			ipmi_free_recv_msg(recv_msg);
-+	}
- 	return rv;
- }
- 
-@@ -3965,12 +3996,12 @@ static int handle_ipmb_get_msg_cmd(struc
- 		dev_dbg(intf->si_dev, "Invalid command: %*ph\n",
- 			msg->data_size, msg->data);
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		ipmb_addr = (struct ipmi_ipmb_addr *) &recv_msg->addr;
-@@ -4044,12 +4075,12 @@ static int handle_ipmb_direct_rcv_cmd(st
- 		msg->data[4] = IPMI_INVALID_CMD_COMPLETION_CODE;
- 		msg->data_size = 5;
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		daddr = (struct ipmi_ipmb_direct_addr *)&recv_msg->addr;
-@@ -4189,7 +4220,7 @@ static int handle_lan_get_msg_cmd(struct
- 				  struct ipmi_smi_msg *msg)
- {
- 	struct cmd_rcvr          *rcvr;
--	int                      rv = 0;
-+	int                      rv = 0; /* Free by default */
- 	unsigned char            netfn;
- 	unsigned char            cmd;
- 	unsigned char            chan;
-@@ -4242,12 +4273,12 @@ static int handle_lan_get_msg_cmd(struct
- 		dev_dbg(intf->si_dev, "Invalid command: %*ph\n",
- 			msg->data_size, msg->data);
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		lan_addr = (struct ipmi_lan_addr *) &recv_msg->addr;
-@@ -5056,7 +5087,12 @@ static void check_msg_timeout(struct ipm
- 				ipmi_inc_stat(intf,
- 					      retransmitted_ipmb_commands);
- 
--			smi_send(intf, intf->handlers, smi_msg, 0);
-+			/* If this fails we'll retry later or timeout. */
-+			if (smi_send(intf, intf->handlers, smi_msg, 0) != IPMI_CC_NO_ERROR) {
-+				/* But fix the timeout. */
-+				intf_start_seq_timer(intf, smi_msg->msgid);
-+				ipmi_free_smi_msg(smi_msg);
-+			}
- 		} else
- 			ipmi_free_smi_msg(smi_msg);
- 
++	/* ADATA devices with LPM issues. */
++	{ "ADATA SU680",	NULL,		ATA_QUIRK_NOLPM },
++
+ 	/* Seagate disks with LPM issues */
+ 	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
+ 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
 
 
