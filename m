@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7683B2FE9;
-	Mon, 23 Mar 2026 15:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C984282F0C;
+	Mon, 23 Mar 2026 15:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278737; cv=none; b=lQonYXku8K5oG5BqR9V58ZBB9uP3ES4udUUexhq2hJR2G16242KHtdusPy8CQ2UVZSbsrkqiCOMg5TKLGw0SDG17sql0E8Y3W7tsO5sZrMPwjKU1C3z6Tt0iTG02cXjoeZ4Nw3QZ1O2oF49RHPedOExRlWdgUJ/BBb7VKkA1vM8=
+	t=1774278740; cv=none; b=Sv2FMbMNQz+3vQa/vfd3hConW8pGjo2/X1o9JtFIf405CGA0SgqulF4AC1I4su51T9BZMygPK2u8f+LB30RSuz0enPA7XiJdg6B34vc8X6M2QwJVxVpBT+l9ELQfSNimZoSwz9vuVnSksfm32ENKBUmMalXZIDd1YZ8owVj8AYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278737; c=relaxed/simple;
-	bh=5W3KklrOrA6hA8A7mtdchKrpSaHsniPaSYRS1duiz7E=;
+	s=arc-20240116; t=1774278740; c=relaxed/simple;
+	bh=z2tKeE60t1ifKNA9H5ufsEwqreeYJ0lMVnUL+53q9vM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PXQ+ICaHui7Xg91FUCiGfLp09lPbdLd7eqllqbVRu4N5Ur6JxeBkclC2mm9chyLf7k6G5ncCVyplfj8Af7guJSvG8mYsyRQSZX8r7JyKzB9kbKdcwk3viWkqqLYWAM+kKlv3JCG0vjP8W6fcHa7skeFH+6TVqkVQKhC8GlJ3Inc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iWcwAWtH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bynPb782Wncd7CFre/obdIdwgkV011zKC6vBPAPGpQW4O8x0Rjjkl3NdMX8tGLMkB8NvslIqBiHW+tnvJl2nIwW8A6uHtvegsiYAqLfNVUSE4p2xde/BlcsJDrLlRfFM6mDqPRXM8EOWYOVqiZDAM8MeElkPFWlTwQeyq3QDH4U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swlYwepL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iWcwAWtH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842D5C4CEF7;
-	Mon, 23 Mar 2026 15:12:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swlYwepL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9548EC2BC9E;
+	Mon, 23 Mar 2026 15:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278736;
-	bh=5W3KklrOrA6hA8A7mtdchKrpSaHsniPaSYRS1duiz7E=;
+	s=korg; t=1774278740;
+	bh=z2tKeE60t1ifKNA9H5ufsEwqreeYJ0lMVnUL+53q9vM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iWcwAWtHtn4jGi3e4q5iXZ3Z376cSdIpAWCUfweR7dpstQfsTKgpxGs9DE7/lvBby
-	 H0GAaYluct1mLYFFMK6LaQeaw3s6h1hcjqfj5Ve4m2XiBjwHm2YwseJogq9vp0mkjd
-	 ORqdV2ox9Cu0AGbIr4+/c6X3RAWdHVkYEgq+dd0I=
+	b=swlYwepLgKZlyx3B0iLVINc11a5SZPXfpF+faLifKND4fzgc7oMQ2IA6essOMf9xb
+	 KRsceP4Oz1qgzo0rdr0LBoZTi9xRbp7Lr95zTvg2a/xCMO+XMN4RiwpoBcgBirnTGt
+	 zHTfwMgcLVq33ZUVScLweRhCXvgOzj3tiaYSSSSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mark Rutland <mark.rutland@arm.com>,
 	Ard Biesheuvel <ardb@kernel.org>,
 	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.6 402/567] arm64: mm: Dont remap pgtables per-cont(pte|pmd) block
-Date: Mon, 23 Mar 2026 14:45:22 +0100
-Message-ID: <20260323134543.812649374@linuxfoundation.org>
+Subject: [PATCH 6.6 403/567] arm64: mm: Batch dsb and isb when populating pgtables
+Date: Mon, 23 Mar 2026 14:45:23 +0100
+Message-ID: <20260323134543.840900035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -56,23 +56,13 @@ Content-Transfer-Encoding: 8bit
 
 From: Ryan Roberts <ryan.roberts@arm.com>
 
-[ Upstream commit 5c63db59c5f89925add57642be4f789d0d671ccd ]
+[ Upstream commit 1fcb7cea8a5f7747e02230f816c2c80b060d9517 ]
 
-A large part of the kernel boot time is creating the kernel linear map
-page tables. When rodata=full, all memory is mapped by pte. And when
-there is lots of physical ram, there are lots of pte tables to populate.
-The primary cost associated with this is mapping and unmapping the pte
-table memory in the fixmap; at unmap time, the TLB entry must be
-invalidated and this is expensive.
-
-Previously, each pmd and pte table was fixmapped/fixunmapped for each
-cont(pte|pmd) block of mappings (16 entries with 4K granule). This means
-we ended up issuing 32 TLBIs per (pmd|pte) table during the population
-phase.
-
-Let's fix that, and fixmap/fixunmap each page once per population, for a
-saving of 31 TLBIs per (pmd|pte) table. This gives a significant boot
-speedup.
+After removing uneccessary TLBIs, the next bottleneck when creating the
+page tables for the linear map is DSB and ISB, which were previously
+issued per-pte in __set_pte(). Since we are writing multiple ptes in a
+given pte table, we can elide these barriers and insert them once we
+have finished writing to the table.
 
 Execution time of map_mem(), which creates the kernel linear map page
 tables, was measured on different machines with different RAM configs:
@@ -82,129 +72,68 @@ tables, was measured on different machines with different RAM configs:
 ---------------|-------------|-------------|-------------|-------------
                |   ms    (%) |   ms    (%) |   ms    (%) |    ms    (%)
 ---------------|-------------|-------------|-------------|-------------
-before         |  168   (0%) | 2198   (0%) | 8644   (0%) | 17447   (0%)
-after          |   78 (-53%) |  435 (-80%) | 1723 (-80%) |  3779 (-78%)
+before         |   78   (0%) |  435   (0%) | 1723   (0%) |  3779   (0%)
+after          |   11 (-86%) |  161 (-63%) |  656 (-62%) |  1654 (-56%)
 
 Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
 Tested-by: Eric Chanudet <echanude@redhat.com>
 Reviewed-by: Mark Rutland <mark.rutland@arm.com>
 Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20240412131908.433043-2-ryan.roberts@arm.com
+Link: https://lore.kernel.org/r/20240412131908.433043-3-ryan.roberts@arm.com
 Signed-off-by: Will Deacon <will@kernel.org>
 [ Ryan: Trivial backport ]
 Signed-off-by: Ryan Roberts <ryan.roberts@arm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/mm/mmu.c |   27 ++++++++++++++-------------
- 1 file changed, 14 insertions(+), 13 deletions(-)
+ arch/arm64/include/asm/pgtable.h |    7 ++++++-
+ arch/arm64/mm/mmu.c              |   11 ++++++++++-
+ 2 files changed, 16 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/mm/mmu.c
-+++ b/arch/arm64/mm/mmu.c
-@@ -169,12 +169,9 @@ bool pgattr_change_is_safe(u64 old, u64
- 	return ((old ^ new) & ~mask) == 0;
+--- a/arch/arm64/include/asm/pgtable.h
++++ b/arch/arm64/include/asm/pgtable.h
+@@ -262,9 +262,14 @@ static inline pte_t pte_mkdevmap(pte_t p
+ 	return set_pte_bit(pte, __pgprot(PTE_DEVMAP | PTE_SPECIAL));
  }
  
--static void init_pte(pmd_t *pmdp, unsigned long addr, unsigned long end,
-+static void init_pte(pte_t *ptep, unsigned long addr, unsigned long end,
- 		     phys_addr_t phys, pgprot_t prot)
+-static inline void set_pte(pte_t *ptep, pte_t pte)
++static inline void set_pte_nosync(pte_t *ptep, pte_t pte)
  {
--	pte_t *ptep;
--
--	ptep = pte_set_fixmap_offset(pmdp, addr);
+ 	WRITE_ONCE(*ptep, pte);
++}
++
++static inline void set_pte(pte_t *ptep, pte_t pte)
++{
++	set_pte_nosync(ptep, pte);
+ 
+ 	/*
+ 	 * Only if the new pte is valid and kernel, otherwise TLB maintenance
+--- a/arch/arm64/mm/mmu.c
++++ b/arch/arm64/mm/mmu.c
+@@ -175,7 +175,11 @@ static void init_pte(pte_t *ptep, unsign
  	do {
  		pte_t old_pte = READ_ONCE(*ptep);
  
-@@ -189,8 +186,6 @@ static void init_pte(pmd_t *pmdp, unsign
+-		set_pte(ptep, pfn_pte(__phys_to_pfn(phys), prot));
++		/*
++		 * Required barriers to make this visible to the table walker
++		 * are deferred to the end of alloc_init_cont_pte().
++		 */
++		set_pte_nosync(ptep, pfn_pte(__phys_to_pfn(phys), prot));
  
- 		phys += PAGE_SIZE;
- 	} while (ptep++, addr += PAGE_SIZE, addr != end);
--
--	pte_clear_fixmap();
- }
- 
- static void alloc_init_cont_pte(pmd_t *pmdp, unsigned long addr,
-@@ -201,6 +196,7 @@ static void alloc_init_cont_pte(pmd_t *p
- {
- 	unsigned long next;
- 	pmd_t pmd = READ_ONCE(*pmdp);
-+	pte_t *ptep;
- 
- 	BUG_ON(pmd_sect(pmd));
- 	if (pmd_none(pmd)) {
-@@ -216,6 +212,7 @@ static void alloc_init_cont_pte(pmd_t *p
- 	}
- 	BUG_ON(pmd_bad(pmd));
- 
-+	ptep = pte_set_fixmap_offset(pmdp, addr);
- 	do {
- 		pgprot_t __prot = prot;
- 
-@@ -226,20 +223,21 @@ static void alloc_init_cont_pte(pmd_t *p
- 		    (flags & NO_CONT_MAPPINGS) == 0)
- 			__prot = __pgprot(pgprot_val(prot) | PTE_CONT);
- 
--		init_pte(pmdp, addr, next, phys, __prot);
-+		init_pte(ptep, addr, next, phys, __prot);
- 
-+		ptep += pte_index(next) - pte_index(addr);
+ 		/*
+ 		 * After the PTE entry has been populated once, we
+@@ -229,6 +233,11 @@ static void alloc_init_cont_pte(pmd_t *p
  		phys += next - addr;
  	} while (addr = next, addr != end);
-+
-+	pte_clear_fixmap();
+ 
++	/*
++	 * Note: barriers and maintenance necessary to clear the fixmap slot
++	 * ensure that all previous pgtable writes are visible to the table
++	 * walker.
++	 */
+ 	pte_clear_fixmap();
  }
  
--static void init_pmd(pud_t *pudp, unsigned long addr, unsigned long end,
-+static void init_pmd(pmd_t *pmdp, unsigned long addr, unsigned long end,
- 		     phys_addr_t phys, pgprot_t prot,
- 		     phys_addr_t (*pgtable_alloc)(int), int flags)
- {
- 	unsigned long next;
--	pmd_t *pmdp;
- 
--	pmdp = pmd_set_fixmap_offset(pudp, addr);
- 	do {
- 		pmd_t old_pmd = READ_ONCE(*pmdp);
- 
-@@ -265,8 +263,6 @@ static void init_pmd(pud_t *pudp, unsign
- 		}
- 		phys += next - addr;
- 	} while (pmdp++, addr = next, addr != end);
--
--	pmd_clear_fixmap();
- }
- 
- static void alloc_init_cont_pmd(pud_t *pudp, unsigned long addr,
-@@ -276,6 +272,7 @@ static void alloc_init_cont_pmd(pud_t *p
- {
- 	unsigned long next;
- 	pud_t pud = READ_ONCE(*pudp);
-+	pmd_t *pmdp;
- 
- 	/*
- 	 * Check for initial section mappings in the pgd/pud.
-@@ -294,6 +291,7 @@ static void alloc_init_cont_pmd(pud_t *p
- 	}
- 	BUG_ON(pud_bad(pud));
- 
-+	pmdp = pmd_set_fixmap_offset(pudp, addr);
- 	do {
- 		pgprot_t __prot = prot;
- 
-@@ -304,10 +302,13 @@ static void alloc_init_cont_pmd(pud_t *p
- 		    (flags & NO_CONT_MAPPINGS) == 0)
- 			__prot = __pgprot(pgprot_val(prot) | PTE_CONT);
- 
--		init_pmd(pudp, addr, next, phys, __prot, pgtable_alloc, flags);
-+		init_pmd(pmdp, addr, next, phys, __prot, pgtable_alloc, flags);
- 
-+		pmdp += pmd_index(next) - pmd_index(addr);
- 		phys += next - addr;
- 	} while (addr = next, addr != end);
-+
-+	pmd_clear_fixmap();
- }
- 
- static void alloc_init_pud(pgd_t *pgdp, unsigned long addr, unsigned long end,
 
 
