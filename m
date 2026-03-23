@@ -1,43 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436673B95EB;
-	Mon, 23 Mar 2026 15:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC303B8BCB;
+	Mon, 23 Mar 2026 15:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278933; cv=none; b=Hy7NHX3zhvyhPWQ1zboEXwl8Fphv0vInSp3WClwOhHOfL7zbw5kxe9H6O9eRmhlXMof/3XxE5ZS+1EndUA4UpMCBnNEiQclW/CJfY7h9Sq7hrfLXBxqlncUzPMWCyA4LG0w+SZdih4JWWnoFBbEUcpMmK7sdqS8UMY12E/uUQcQ=
+	t=1774278936; cv=none; b=IE+yT4sTEMzXJVrstiK2Vmj1nWi98Sl8SVGlMM/jmZLJIz0NyUIxv+VVc34tz24dHeVI8aV03xmzEQIHD5igTMC0EYU23i98AJY2ZFF+EUT9l9On2bwVZb7CrjkSjC2Q5GR7ctLlaZtVNHU8erbwGDbEpRNNtwWyX/WolFTQR6c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278933; c=relaxed/simple;
-	bh=FR+xJpa0UruSvCkOHg7QvDfRkITs647WFokf7GpWgWQ=;
+	s=arc-20240116; t=1774278936; c=relaxed/simple;
+	bh=eXVhKOtywXEPxojTjjgdLADL8uSKsdXMT1zGm8ekus8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kk06hbmmAUq7dokxIexsrT5dZZ+5mml3j5XLKeIq60u0oqPexhxIjkABaCZxy74c3OeyGdUG6UdD+FwtAzh0gemmtVGXcTJ1uLXofShWYbaqFknck2dXWB+E/LwLLyefnJ00RFLLd/CS1vXMhU0vlk1V/IaSQpNVJA6d+z4xb8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UHG4Xa6/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mgknSuuezmBUeVVw72WYkkcX9CZAlwj5pKmkcG8S1pRvg/jEZ0aOzUQzn7njFNuhmB8JGVJcNqBcQyCTqc3qh3XzWKoLd3kbbIR+gvZ1uxAZxmZeLU10l0mKk0TiDXE7qvzlgmtS0TW6FOUZBJ7lBfPTDd5XuklfXVtZKp/cR7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGc/y56D; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UHG4Xa6/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D412C2BC9E;
-	Mon, 23 Mar 2026 15:15:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGc/y56D"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BD6C2BCB4;
+	Mon, 23 Mar 2026 15:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278933;
-	bh=FR+xJpa0UruSvCkOHg7QvDfRkITs647WFokf7GpWgWQ=;
+	s=korg; t=1774278936;
+	bh=eXVhKOtywXEPxojTjjgdLADL8uSKsdXMT1zGm8ekus8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHG4Xa6/KAL50S9zsbuJS5h04erE7tyjvtgjBq8uIgJLdOpxP5ZiZz7rwq2X0HdpH
-	 yKI5PKP0yh2J/RVTdkqcQ6tkOygAHNzju+CbZ9gXLqmaoclzqL1T/x4gBHJ6N6WudK
-	 SB7UobZe7O6ySEIxOOC75h3HRTV5ew76Xi9IRIgg=
+	b=pGc/y56Dd3eRgayG7fWhyvy3qLpjQNtQ1VwZfgA5LXUzw30ga3zc0DlHxhHTUZ8Rg
+	 4JrZcdBgLo3XfMbuZWkN1l9VNPrwp8+5+Qd1UMpZdjwqAyuOX0cRz4CsIQgOusFP7k
+	 ej1bS5Au37E+8NGqHyGRNukjf/t6JxWOaimontvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Joel Fernandes <joel@joelfernandes.org>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Yao Kai <yaokai34@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Leon Chen <leonchen.oss@139.com>
-Subject: [PATCH 6.6 423/567] tracing: Add recursion protection in kernel stack trace recording
-Date: Mon, 23 Mar 2026 14:45:43 +0100
-Message-ID: <20260323134544.354050710@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Guangwu Zhang <guazhang@redhat.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.6 414/567] dm-verity: disable recursive forward error correction
+Date: Mon, 23 Mar 2026 14:45:34 +0100
+Message-ID: <20260323134544.132034761@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -56,91 +53,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 5f1ef0dfcb5b7f4a91a9b0e0ba533efd9f7e2cdb ]
+[ Upstream commit d9f3e47d3fae0c101d9094bc956ed24e7a0ee801 ]
 
-A bug was reported about an infinite recursion caused by tracing the rcu
-events with the kernel stack trace trigger enabled. The stack trace code
-called back into RCU which then called the stack trace again.
+There are two problems with the recursive correction:
 
-Expand the ftrace recursion protection to add a set of bits to protect
-events from recursion. Each bit represents the context that the event is
-in (normal, softirq, interrupt and NMI).
+1. It may cause denial-of-service. In fec_read_bufs, there is a loop that
+has 253 iterations. For each iteration, we may call verity_hash_for_block
+recursively. There is a limit of 4 nested recursions - that means that
+there may be at most 253^4 (4 billion) iterations. Red Hat QE team
+actually created an image that pushes dm-verity to this limit - and this
+image just makes the udev-worker process get stuck in the 'D' state.
 
-Have the stack trace code use the interrupt context to protect against
-recursion.
+2. It doesn't work. In fec_read_bufs we store data into the variable
+"fio->bufs", but fio bufs is shared between recursive invocations, if
+"verity_hash_for_block" invoked correction recursively, it would
+overwrite partially filled fio->bufs.
 
-Note, the bug showed an issue in both the RCU code as well as the tracing
-stacktrace code. This only handles the tracing stack trace side of the
-bug. The RCU fix will be handled separately.
-
-Link: https://lore.kernel.org/all/20260102122807.7025fc87@gandalf.local.home/
-
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Joel Fernandes <joel@joelfernandes.org>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Boqun Feng <boqun.feng@gmail.com>
-Link: https://patch.msgid.link/20260105203141.515cd49f@gandalf.local.home
-Reported-by: Yao Kai <yaokai34@huawei.com>
-Tested-by: Yao Kai <yaokai34@huawei.com>
-Fixes: 5f5fa7ea89dc ("rcu: Don't use negative nesting depth in __rcu_read_unlock()")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Reported-by: Guangwu Zhang <guazhang@redhat.com>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Eric Biggers <ebiggers@kernel.org>
+[ The context change is due to the commit bdf253d580d7
+("dm-verity: remove support for asynchronous hashes")
+in v6.18 and the commit 9356fcfe0ac4
+("dm verity: set DM_TARGET_SINGLETON feature flag") in v6.9
+which are irrelevant to the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/trace_recursion.h |    9 +++++++++
- kernel/trace/trace.c            |    6 ++++++
- 2 files changed, 15 insertions(+)
+ drivers/md/dm-verity-fec.c |    4 +---
+ drivers/md/dm-verity-fec.h |    3 ---
+ 2 files changed, 1 insertion(+), 6 deletions(-)
 
---- a/include/linux/trace_recursion.h
-+++ b/include/linux/trace_recursion.h
-@@ -34,6 +34,13 @@ enum {
- 	TRACE_INTERNAL_SIRQ_BIT,
- 	TRACE_INTERNAL_TRANSITION_BIT,
+--- a/drivers/md/dm-verity-fec.c
++++ b/drivers/md/dm-verity-fec.c
+@@ -439,10 +439,8 @@ int verity_fec_decode(struct dm_verity *
+ 	if (!verity_fec_is_enabled(v))
+ 		return -EOPNOTSUPP;
  
-+	/* Internal event use recursion bits */
-+	TRACE_INTERNAL_EVENT_BIT,
-+	TRACE_INTERNAL_EVENT_NMI_BIT,
-+	TRACE_INTERNAL_EVENT_IRQ_BIT,
-+	TRACE_INTERNAL_EVENT_SIRQ_BIT,
-+	TRACE_INTERNAL_EVENT_TRANSITION_BIT,
-+
- 	TRACE_BRANCH_BIT,
- /*
-  * Abuse of the trace_recursion.
-@@ -97,6 +104,8 @@ enum {
+-	if (fio->level >= DM_VERITY_FEC_MAX_RECURSION) {
+-		DMWARN_LIMIT("%s: FEC: recursion too deep", v->data_dev->name);
++	if (fio->level)
+ 		return -EIO;
+-	}
  
- #define TRACE_LIST_START	TRACE_INTERNAL_BIT
+ 	fio->level++;
  
-+#define TRACE_EVENT_START	TRACE_INTERNAL_EVENT_BIT
-+
- #define TRACE_CONTEXT_MASK	((1 << (TRACE_LIST_START + TRACE_CONTEXT_BITS)) - 1)
+--- a/drivers/md/dm-verity-fec.h
++++ b/drivers/md/dm-verity-fec.h
+@@ -23,9 +23,6 @@
+ #define DM_VERITY_FEC_BUF_MAX \
+ 	(1 << (PAGE_SHIFT - DM_VERITY_FEC_BUF_RS_BITS))
  
- /*
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -3105,6 +3105,11 @@ static void __ftrace_trace_stack(struct
- 	struct ftrace_stack *fstack;
- 	struct stack_entry *entry;
- 	int stackidx;
-+	int bit;
-+
-+	bit = trace_test_and_set_recursion(_THIS_IP_, _RET_IP_, TRACE_EVENT_START);
-+	if (bit < 0)
-+		return;
- 
- 	/*
- 	 * Add one, for this function and the call to save_stack_trace()
-@@ -3162,6 +3167,7 @@ static void __ftrace_trace_stack(struct
- 	__this_cpu_dec(ftrace_stack_reserve);
- 	preempt_enable_notrace();
- 
-+	trace_clear_recursion(bit);
- }
- 
- static inline void ftrace_trace_stack(struct trace_array *tr,
+-/* maximum recursion level for verity_fec_decode */
+-#define DM_VERITY_FEC_MAX_RECURSION	4
+-
+ #define DM_VERITY_OPT_FEC_DEV		"use_fec_from_device"
+ #define DM_VERITY_OPT_FEC_BLOCKS	"fec_blocks"
+ #define DM_VERITY_OPT_FEC_START		"fec_start"
 
 
