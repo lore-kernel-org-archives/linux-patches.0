@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8371DA0E1;
-	Mon, 23 Mar 2026 16:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B871DA0E1;
+	Mon, 23 Mar 2026 16:26:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283207; cv=none; b=dya53IcF9LcRXMDwd96EXeLfRJFxmbAhwGtOMjC/GF95znPg0EOPBMLGO2fwh723lmvGfJpzg7DQ+9JuIKC5mbnkA29lABtJ17pqPG1dkb6UU2HFwJSTmSFObfntk+egTt0I0lpFlcM9xQno9V8dNRb1H8JfIod89DgoGVCMugY=
+	t=1774283210; cv=none; b=eFrEXzi2tnQvHXr/Xqh2JMIq/OhYUzGIq2LhoVGi7g9iG65Bt9n1Or+aHOCrOq1GPgqt1fEoQk31fvXVtJ95+Y7N/GYiPu87f/S3xLMZU4mTa2fR5l39jMbvA2Y0PjaLkjQdo551CI9opfL7PaqiOl6AqJdIfhxCHDiW/3OytN0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283207; c=relaxed/simple;
-	bh=EjiBjqj3Hfi3BwzFPp2avUY8lUBvfmYjMptEy7b1kQY=;
+	s=arc-20240116; t=1774283210; c=relaxed/simple;
+	bh=T0cS8KQOOB3zAh3pwuFwNVBG+jStzQ6NMj4ZLKsJrMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=MKEdKeaxSk6Y108VGBs3QxN6EswbrM+3dXrr7USpmtAJSsLnY+HYT+7xXQtQXI7WeQiozmjLNXI1dIFgpFfwKEj7kNoXeWO5NQ6E/lidH20v9jugi9lLKO/AM76L7qpH5bKnUI8iTo82oaP/POPuqDippi3SQvru2rTumxUumO0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zz02iert; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VE503m5BULpyVnTgRe3+CTLY6krvyaCVcu6Izgrc2i/Uu1qBEQkbnlde3HAMQlTf/mxiQIBTDCgX/IV9j5BMDG6v069aaRYLUDMk407g4w+cHpy5QYuN8rez9IC1AaFtjJKJGp8gbztZ/LFr2RZrYAsrxY0cL8wDsWAv9N9+62Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLkSRPWe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zz02iert"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77132C4CEF7;
-	Mon, 23 Mar 2026 16:26:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLkSRPWe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33E81C4CEF7;
+	Mon, 23 Mar 2026 16:26:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283207;
-	bh=EjiBjqj3Hfi3BwzFPp2avUY8lUBvfmYjMptEy7b1kQY=;
+	s=korg; t=1774283210;
+	bh=T0cS8KQOOB3zAh3pwuFwNVBG+jStzQ6NMj4ZLKsJrMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zz02iertYG/x1peQ/z1fwZ6cpuKnjaeNXQolIFwKoYQfNfC2w0r8mB4Ite9clf9HR
-	 ZG3cK0RAFBVX5oNVR0wCGYoIGyct1AUPZWOX2ZBpsWw82viM2NIy+JS44FBlpz4nDd
-	 yNf7ywV/ErZpulyjWbUpKeeUtNxRZqTf2WWcaE98=
+	b=fLkSRPWedrcqVpA2cpF7UCpNLz/wQRFukZ1wqmT91HmiPc82Cp4YhGniy8UwXDFl/
+	 yoEv1pw9BDuSaf9S0sbkTzk8wRMiRqI+ybYL6lTfUcT6pKYB3LGZ/hzqOrPzezUSS9
+	 wnHU5xyyuqsTsbKTeuQtGyehUZVNRngPQSVx2KrM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Maarten Lankhorst <dev@lankhorst.se>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 442/481] drm: Fix use-after-free on framebuffers and property blobs when calling drm_dev_unplug
-Date: Mon, 23 Mar 2026 14:47:04 +0100
-Message-ID: <20260323134535.985776252@linuxfoundation.org>
+	syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Ruohan Lan <ruohanlan@aliyun.com>
+Subject: [PATCH 6.1 443/481] Bluetooth: hci_core: Fix use-after-free in vhci_flush()
+Date: Mon, 23 Mar 2026 14:47:05 +0100
+Message-ID: <20260323134536.010406829@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -45,313 +47,254 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maarten Lankhorst <dev@lankhorst.se>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 6bee098b91417654703e17eb5c1822c6dfd0c01d ]
+[ Upstream commit 1d6123102e9fbedc8d25bf4731da6d513173e49e ]
 
-When trying to do a rather aggressive test of igt's "xe_module_load
---r reload" with a full desktop environment and game running I noticed
-a few OOPSes when dereferencing freed pointers, related to
-framebuffers and property blobs after the compositor exits.
+syzbot reported use-after-free in vhci_flush() without repro. [0]
 
-Solve this by guarding the freeing in drm_file with drm_dev_enter/exit,
-and immediately put the references from struct drm_file objects during
-drm_dev_unplug().
+>From the splat, a thread close()d a vhci file descriptor while
+its device was being used by iotcl() on another thread.
 
-Related warnings for framebuffers on the subtest:
-[  739.713076] ------------[ cut here ]------------
-               WARN_ON(!list_empty(&dev->mode_config.fb_list))
-[  739.713079] WARNING: drivers/gpu/drm/drm_mode_config.c:584 at drm_mode_c=
-onfig_cleanup+0x30b/0x320 [drm], CPU#12: xe_module_load/13145
-....
-[  739.713328] Call Trace:
-[  739.713330]  <TASK>
-[  739.713335]  ? intel_pmdemand_destroy_state+0x11/0x20 [xe]
-[  739.713574]  ? intel_atomic_global_obj_cleanup+0xe4/0x1a0 [xe]
-[  739.713794]  intel_display_driver_remove_noirq+0x51/0xb0 [xe]
-[  739.714041]  xe_display_fini_early+0x33/0x50 [xe]
-[  739.714284]  devm_action_release+0xf/0x20
-[  739.714294]  devres_release_all+0xad/0xf0
-[  739.714301]  device_unbind_cleanup+0x12/0xa0
-[  739.714305]  device_release_driver_internal+0x1b7/0x210
-[  739.714311]  device_driver_detach+0x14/0x20
-[  739.714315]  unbind_store+0xa6/0xb0
-[  739.714319]  drv_attr_store+0x21/0x30
-[  739.714322]  sysfs_kf_write+0x48/0x60
-[  739.714328]  kernfs_fop_write_iter+0x16b/0x240
-[  739.714333]  vfs_write+0x266/0x520
-[  739.714341]  ksys_write+0x72/0xe0
-[  739.714345]  __x64_sys_write+0x19/0x20
-[  739.714347]  x64_sys_call+0xa15/0xa30
-[  739.714355]  do_syscall_64+0xd8/0xab0
-[  739.714361]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Once the last fd refcnt is released, vhci_release() calls
+hci_unregister_dev(), hci_free_dev(), and kfree() for struct
+vhci_data, which is set to hci_dev->dev->driver_data.
 
-and
+The problem is that there is no synchronisation after unlinking
+hdev from hci_dev_list in hci_unregister_dev().  There might be
+another thread still accessing the hdev which was fetched before
+the unlink operation.
 
-[  739.714459] ------------[ cut here ]------------
-[  739.714461] xe 0000:67:00.0: [drm] drm_WARN_ON(!list_empty(&fb->filp_hea=
-d))
-[  739.714464] WARNING: drivers/gpu/drm/drm_framebuffer.c:833 at drm_frameb=
-uffer_free+0x6c/0x90 [drm], CPU#12: xe_module_load/13145
-[  739.714715] RIP: 0010:drm_framebuffer_free+0x7a/0x90 [drm]
-...
-[  739.714869] Call Trace:
-[  739.714871]  <TASK>
-[  739.714876]  drm_mode_config_cleanup+0x26a/0x320 [drm]
-[  739.714998]  ? __drm_printfn_seq_file+0x20/0x20 [drm]
-[  739.715115]  ? drm_mode_config_cleanup+0x207/0x320 [drm]
-[  739.715235]  intel_display_driver_remove_noirq+0x51/0xb0 [xe]
-[  739.715576]  xe_display_fini_early+0x33/0x50 [xe]
-[  739.715821]  devm_action_release+0xf/0x20
-[  739.715828]  devres_release_all+0xad/0xf0
-[  739.715843]  device_unbind_cleanup+0x12/0xa0
-[  739.715850]  device_release_driver_internal+0x1b7/0x210
-[  739.715856]  device_driver_detach+0x14/0x20
-[  739.715860]  unbind_store+0xa6/0xb0
-[  739.715865]  drv_attr_store+0x21/0x30
-[  739.715868]  sysfs_kf_write+0x48/0x60
-[  739.715873]  kernfs_fop_write_iter+0x16b/0x240
-[  739.715878]  vfs_write+0x266/0x520
-[  739.715886]  ksys_write+0x72/0xe0
-[  739.715890]  __x64_sys_write+0x19/0x20
-[  739.715893]  x64_sys_call+0xa15/0xa30
-[  739.715900]  do_syscall_64+0xd8/0xab0
-[  739.715905]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
+We can use SRCU for such synchronisation.
 
-and then finally file close blows up:
+Let's run hci_dev_reset() under SRCU and wait for its completion
+in hci_unregister_dev().
 
-[  743.186530] Oops: general protection fault, probably for non-canonical a=
-ddress 0xdead000000000122: 0000 [#1] SMP
-[  743.186535] CPU: 3 UID: 1000 PID: 3453 Comm: kwin_wayland Tainted: G    =
-    W           7.0.0-rc1-valkyria+ #110 PREEMPT_{RT,(lazy)}
-[  743.186537] Tainted: [W]=3DWARN
-[  743.186538] Hardware name: Gigabyte Technology Co., Ltd. X299 AORUS Gami=
-ng 3/X299 AORUS Gaming 3-CF, BIOS F8n 12/06/2021
-[  743.186539] RIP: 0010:drm_framebuffer_cleanup+0x55/0xc0 [drm]
-[  743.186588] Code: d8 72 73 0f b6 42 05 ff c3 39 c3 72 e8 49 8d bd 50 07 =
-00 00 31 f6 e8 3a 80 d3 e1 49 8b 44 24 10 49 8d 7c 24 08 49 8b 54 24 08 <48=
-> 3b 38 0f 85 95 7f 02 00 48 3b 7a 08 0f 85 8b 7f 02 00 48 89 42
-[  743.186589] RSP: 0018:ffffc900085e3cf8 EFLAGS: 00010202
-[  743.186591] RAX: dead000000000122 RBX: 0000000000000001 RCX: ffffffff821=
-7ed03
-[  743.186592] RDX: dead000000000100 RSI: 0000000000000000 RDI: ffff8881467=
-5ba08
-[  743.186593] RBP: ffffc900085e3d10 R08: 0000000000000000 R09: 00000000000=
-00000
-[  743.186593] R10: 0000000000000000 R11: 0000000000000000 R12: ffff8881467=
-5ba00
-[  743.186594] R13: ffff88810d778000 R14: ffff888119f6dca0 R15: ffff88810c6=
-60bb0
-[  743.186595] FS:  00007ff377d21280(0000) GS:ffff888cec3f8000(0000) knlGS:=
-0000000000000000
-[  743.186596] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  743.186596] CR2: 000055690b55e000 CR3: 0000000113586003 CR4: 00000000003=
-706f0
-[  743.186597] Call Trace:
-[  743.186598]  <TASK>
-[  743.186603]  intel_user_framebuffer_destroy+0x12/0x90 [xe]
-[  743.186722]  drm_framebuffer_free+0x3a/0x90 [drm]
-[  743.186750]  ? trace_hardirqs_on+0x5f/0x120
-[  743.186754]  drm_mode_object_put+0x51/0x70 [drm]
-[  743.186786]  drm_fb_release+0x105/0x190 [drm]
-[  743.186812]  ? rt_mutex_slowunlock+0x3aa/0x410
-[  743.186817]  ? rt_spin_lock+0xea/0x1b0
-[  743.186819]  drm_file_free+0x1e0/0x2c0 [drm]
-[  743.186843]  drm_release_noglobal+0x91/0xf0 [drm]
-[  743.186865]  __fput+0x100/0x2e0
-[  743.186869]  fput_close_sync+0x40/0xa0
-[  743.186870]  __x64_sys_close+0x3e/0x80
-[  743.186873]  x64_sys_call+0xa07/0xa30
-[  743.186879]  do_syscall_64+0xd8/0xab0
-[  743.186881]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[  743.186882] RIP: 0033:0x7ff37e567732
-[  743.186884] Code: 08 0f 85 a1 38 ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 =
-ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3=
-> 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 55 bf 01 00
-[  743.186885] RSP: 002b:00007ffc818169a8 EFLAGS: 00000246 ORIG_RAX: 000000=
-0000000003
-[  743.186886] RAX: ffffffffffffffda RBX: 00007ffc81816a30 RCX: 00007ff37e5=
-67732
-[  743.186887] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00000000000=
-00012
-[  743.186888] RBP: 00007ffc818169d0 R08: 0000000000000000 R09: 00000000000=
-00000
-[  743.186889] R10: 0000000000000000 R11: 0000000000000246 R12: 000055d60a7=
-996e0
-[  743.186889] R13: 00007ffc81816a90 R14: 00007ffc81816a90 R15: 000055d60a7=
-82a30
-[  743.186892]  </TASK>
-[  743.186893] Modules linked in: rfcomm snd_hrtimer xt_CHECKSUM xt_MASQUER=
-ADE xt_conntrack ipt_REJECT nf_reject_ipv4 xt_tcpudp xt_addrtype nft_compat=
- x_tables nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 n=
-f_tables overlay cfg80211 bnep mtd_intel_dg snd_hda_codec_intelhdmi mtd snd=
-_hda_codec_hdmi nls_utf8 mxm_wmi intel_wmi_thunderbolt gigabyte_wmi wmi_bmo=
-f xe drm_gpuvm drm_gpusvm_helper i2c_algo_bit drm_buddy drm_ttm_helper ttm =
-video drm_suballoc_helper gpu_sched drm_client_lib drm_exec drm_display_hel=
-per cec drm_kunit_helpers drm_kms_helper kunit x86_pkg_temp_thermal intel_p=
-owerclamp coretemp snd_hda_codec_alc882 snd_hda_codec_realtek_lib snd_hda_c=
-odec_generic snd_hda_intel snd_soc_avs snd_soc_hda_codec snd_hda_ext_core s=
-nd_hda_codec snd_hwdep snd_hda_core snd_intel_dspcfg snd_soc_core snd_compr=
-ess ac97_bus snd_pcm snd_seq snd_seq_device snd_timer i2c_i801 i2c_mux snd =
-i2c_smbus btusb btrtl btbcm btmtk btintel bluetooth ecdh_generic rfkill ecc=
- mei_me mei ioatdma dca wmi nfsd drm i2c_dev fuse nfnetlink
-[  743.186938] ---[ end trace 0000000000000000 ]---
+Another option would be to restore hci_dev->destruct(), which was
+removed in commit 587ae086f6e4 ("Bluetooth: Remove unused
+hci-destruct cb").  However, this would not be a good solution, as
+we should not run hci_unregister_dev() while there are in-flight
+ioctl() requests, which could lead to another data-race KCSAN splat.
 
-And for property blobs:
+Note that other drivers seem to have the same problem, for exmaple,
+virtbt_remove().
 
-void drm_mode_config_cleanup(struct drm_device *dev)
-{
-...
-	list_for_each_entry_safe(blob, bt, &dev->mode_config.property_blob_list,
-				 head_global) {
-		drm_property_blob_put(blob);
-	}
+[0]:
+BUG: KASAN: slab-use-after-free in skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
+BUG: KASAN: slab-use-after-free in skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
+Read of size 8 at addr ffff88807cb8d858 by task syz.1.219/6718
 
-Resulting in:
+CPU: 1 UID: 0 PID: 6718 Comm: syz.1.219 Not tainted 6.16.0-rc1-syzkaller-00196-g08207f42d3ff #0 PREEMPT(full)
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 05/07/2025
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x189/0x250 lib/dump_stack.c:120
+ print_address_description mm/kasan/report.c:408 [inline]
+ print_report+0xd2/0x2b0 mm/kasan/report.c:521
+ kasan_report+0x118/0x150 mm/kasan/report.c:634
+ skb_queue_empty_lockless include/linux/skbuff.h:1891 [inline]
+ skb_queue_purge_reason+0x99/0x360 net/core/skbuff.c:3937
+ skb_queue_purge include/linux/skbuff.h:3368 [inline]
+ vhci_flush+0x44/0x50 drivers/bluetooth/hci_vhci.c:69
+ hci_dev_do_reset net/bluetooth/hci_core.c:552 [inline]
+ hci_dev_reset+0x420/0x5c0 net/bluetooth/hci_core.c:592
+ sock_do_ioctl+0xd9/0x300 net/socket.c:1190
+ sock_ioctl+0x576/0x790 net/socket.c:1311
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:907 [inline]
+ __se_sys_ioctl+0xf9/0x170 fs/ioctl.c:893
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fcf5b98e929
+Code: ff ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fcf5c7b9038 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007fcf5bbb6160 RCX: 00007fcf5b98e929
+RDX: 0000000000000000 RSI: 00000000400448cb RDI: 0000000000000009
+RBP: 00007fcf5ba10b39 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 0000000000000000 R14: 00007fcf5bbb6160 R15: 00007ffd6353d528
+ </TASK>
 
-[  371.072940] BUG: unable to handle page fault for address: 000001ffffffff=
-ff
-[  371.072944] #PF: supervisor read access in kernel mode
-[  371.072945] #PF: error_code(0x0000) - not-present page
-[  371.072947] PGD 0 P4D 0
-[  371.072950] Oops: Oops: 0000 [#1] SMP
-[  371.072953] CPU: 0 UID: 1000 PID: 3693 Comm: kwin_wayland Not tainted 7.=
-0.0-rc1-valkyria+ #111 PREEMPT_{RT,(lazy)}
-[  371.072956] Hardware name: Gigabyte Technology Co., Ltd. X299 AORUS Gami=
-ng 3/X299 AORUS Gaming 3-CF, BIOS F8n 12/06/2021
-[  371.072957] RIP: 0010:drm_property_destroy_user_blobs+0x3b/0x90 [drm]
-[  371.073019] Code: 00 00 48 83 ec 10 48 8b 86 30 01 00 00 48 39 c3 74 59 =
-48 89 c2 48 8d 48 c8 48 8b 00 4c 8d 60 c8 eb 04 4c 8d 60 c8 48 8b 71 40 <48=
-> 39 16 0f 85 39 32 01 00 48 3b 50 08 0f 85 2f 32 01 00 48 89 70
-[  371.073021] RSP: 0018:ffffc90006a73de8 EFLAGS: 00010293
-[  371.073022] RAX: 000001ffffffffff RBX: ffff888118a1a930 RCX: ffff8881b92=
-355c0
-[  371.073024] RDX: ffff8881b92355f8 RSI: 000001ffffffffff RDI: ffff888118b=
-e4000
-[  371.073025] RBP: ffffc90006a73e08 R08: ffff8881009b7300 R09: ffff888cecc=
-5b000
-[  371.073026] R10: ffffc90006a73e90 R11: 0000000000000002 R12: 000001fffff=
-fffc7
-[  371.073027] R13: ffff888118a1a980 R14: ffff88810b366d20 R15: ffff888118a=
-1a970
-[  371.073028] FS:  00007f1faccbb280(0000) GS:ffff888cec2db000(0000) knlGS:=
-0000000000000000
-[  371.073029] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  371.073030] CR2: 000001ffffffffff CR3: 000000010655c001 CR4: 00000000003=
-706f0
-[  371.073031] Call Trace:
-[  371.073033]  <TASK>
-[  371.073036]  drm_file_free+0x1df/0x2a0 [drm]
-[  371.073077]  drm_release_noglobal+0x7a/0xe0 [drm]
-[  371.073113]  __fput+0xe2/0x2b0
-[  371.073118]  fput_close_sync+0x40/0xa0
-[  371.073119]  __x64_sys_close+0x3e/0x80
-[  371.073122]  x64_sys_call+0xa07/0xa30
-[  371.073126]  do_syscall_64+0xc0/0x840
-[  371.073130]  entry_SYSCALL_64_after_hwframe+0x4b/0x53
-[  371.073132] RIP: 0033:0x7f1fb3501732
-[  371.073133] Code: 08 0f 85 a1 38 ff ff 49 89 fb 48 89 f0 48 89 d7 48 89 =
-ce 4c 89 c2 4d 89 ca 4c 8b 44 24 08 4c 8b 4c 24 10 4c 89 5c 24 08 0f 05 <c3=
-> 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 00 f3 0f 1e fa 55 bf 01 00
-[  371.073135] RSP: 002b:00007ffe8e6f0278 EFLAGS: 00000246 ORIG_RAX: 000000=
-0000000003
-[  371.073136] RAX: ffffffffffffffda RBX: 00007ffe8e6f0300 RCX: 00007f1fb35=
-01732
-[  371.073137] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 00000000000=
-00012
-[  371.073138] RBP: 00007ffe8e6f02a0 R08: 0000000000000000 R09: 00000000000=
-00000
-[  371.073139] R10: 0000000000000000 R11: 0000000000000246 R12: 00005585ba4=
-6eea0
-[  371.073140] R13: 00007ffe8e6f0360 R14: 00007ffe8e6f0360 R15: 00005585ba4=
-58a30
-[  371.073143]  </TASK>
-[  371.073144] Modules linked in: rfcomm snd_hrtimer xt_addrtype xt_CHECKSU=
-M xt_MASQUERADE xt_conntrack ipt_REJECT nf_reject_ipv4 xt_tcpudp nft_compat=
- x_tables nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 n=
-f_tables overlay cfg80211 bnep snd_hda_codec_intelhdmi snd_hda_codec_hdmi m=
-td_intel_dg mtd nls_utf8 wmi_bmof mxm_wmi gigabyte_wmi intel_wmi_thunderbol=
-t xe drm_gpuvm drm_gpusvm_helper i2c_algo_bit drm_buddy drm_ttm_helper ttm =
-video drm_suballoc_helper gpu_sched drm_client_lib drm_exec drm_display_hel=
-per cec drm_kunit_helpers drm_kms_helper kunit x86_pkg_temp_thermal intel_p=
-owerclamp coretemp snd_hda_codec_alc882 snd_hda_codec_realtek_lib snd_hda_c=
-odec_generic snd_hda_intel snd_soc_avs snd_soc_hda_codec snd_hda_ext_core s=
-nd_hda_codec snd_hwdep snd_hda_core snd_intel_dspcfg snd_soc_core snd_compr=
-ess ac97_bus snd_pcm snd_seq snd_seq_device snd_timer i2c_i801 btusb i2c_mu=
-x i2c_smbus btrtl snd btbcm btmtk btintel bluetooth ecdh_generic rfkill ecc=
- mei_me mei ioatdma dca wmi nfsd drm i2c_dev fuse nfnetlink
-[  371.073198] CR2: 000001ffffffffff
-[  371.073199] ---[ end trace 0000000000000000 ]---
+Allocated by task 6535:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
+ poison_kmalloc_redzone mm/kasan/common.c:377 [inline]
+ __kasan_kmalloc+0x93/0xb0 mm/kasan/common.c:394
+ kasan_kmalloc include/linux/kasan.h:260 [inline]
+ __kmalloc_cache_noprof+0x230/0x3d0 mm/slub.c:4359
+ kmalloc_noprof include/linux/slab.h:905 [inline]
+ kzalloc_noprof include/linux/slab.h:1039 [inline]
+ vhci_open+0x57/0x360 drivers/bluetooth/hci_vhci.c:635
+ misc_open+0x2bc/0x330 drivers/char/misc.c:161
+ chrdev_open+0x4c9/0x5e0 fs/char_dev.c:414
+ do_dentry_open+0xdf0/0x1970 fs/open.c:964
+ vfs_open+0x3b/0x340 fs/open.c:1094
+ do_open fs/namei.c:3887 [inline]
+ path_openat+0x2ee5/0x3830 fs/namei.c:4046
+ do_filp_open+0x1fa/0x410 fs/namei.c:4073
+ do_sys_openat2+0x121/0x1c0 fs/open.c:1437
+ do_sys_open fs/open.c:1452 [inline]
+ __do_sys_openat fs/open.c:1468 [inline]
+ __se_sys_openat fs/open.c:1463 [inline]
+ __x64_sys_openat+0x138/0x170 fs/open.c:1463
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Add a guard around file close, and ensure the warnings from drm_mode_config
-do not trigger. Fix those by allowing an open reference to the file descrip=
-tor
-and cleaning up the file linked list entry in drm_mode_config_cleanup().
+Freed by task 6535:
+ kasan_save_stack mm/kasan/common.c:47 [inline]
+ kasan_save_track+0x3e/0x80 mm/kasan/common.c:68
+ kasan_save_free_info+0x46/0x50 mm/kasan/generic.c:576
+ poison_slab_object mm/kasan/common.c:247 [inline]
+ __kasan_slab_free+0x62/0x70 mm/kasan/common.c:264
+ kasan_slab_free include/linux/kasan.h:233 [inline]
+ slab_free_hook mm/slub.c:2381 [inline]
+ slab_free mm/slub.c:4643 [inline]
+ kfree+0x18e/0x440 mm/slub.c:4842
+ vhci_release+0xbc/0xd0 drivers/bluetooth/hci_vhci.c:671
+ __fput+0x44c/0xa70 fs/file_table.c:465
+ task_work_run+0x1d1/0x260 kernel/task_work.c:227
+ exit_task_work include/linux/task_work.h:40 [inline]
+ do_exit+0x6ad/0x22e0 kernel/exit.c:955
+ do_group_exit+0x21c/0x2d0 kernel/exit.c:1104
+ __do_sys_exit_group kernel/exit.c:1115 [inline]
+ __se_sys_exit_group kernel/exit.c:1113 [inline]
+ __x64_sys_exit_group+0x3f/0x40 kernel/exit.c:1113
+ x64_sys_call+0x21ba/0x21c0 arch/x86/include/generated/asm/syscalls_64.h:232
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xfa/0x3b0 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
 
-Cc: <stable@vger.kernel.org> # v4.18+
-Fixes: bee330f3d672 ("drm: Use srcu to protect drm_device.unplugged")
-Cc: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-Reviewed-by: Thomas Hellstr=C3=B6m <thomas.hellstrom@linux.intel.com>
-Link: https://patch.msgid.link/20260313151728.14990-4-dev@lankhorst.se
-Signed-off-by: Maarten Lankhorst <dev@lankhorst.se>
-[ adapted drm_dbg_printer(dev, DRM_UT_KMS, ...) call to older drm_debug_pri=
-nter(...) API ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The buggy address belongs to the object at ffff88807cb8d800
+ which belongs to the cache kmalloc-1k of size 1024
+The buggy address is located 88 bytes inside of
+ freed 1024-byte region [ffff88807cb8d800, ffff88807cb8dc00)
+
+Fixes: bf18c7118cf8 ("Bluetooth: vhci: Free driver_data on file release")
+Reported-by: syzbot+2faa4825e556199361f9@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=f62d64848fc4c7c30cd6
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Acked-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ Minor context conflict resolved. ]
+Signed-off-by: Ruohan Lan <ruohanlan@aliyun.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_file.c        |    5 ++++-
- drivers/gpu/drm/drm_mode_config.c |    9 ++++++---
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ include/net/bluetooth/hci_core.h |    3 +++
+ net/bluetooth/hci_core.c         |   34 ++++++++++++++++++++++++++++++----
+ 2 files changed, 33 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/drm_file.c
-+++ b/drivers/gpu/drm/drm_file.c
-@@ -239,6 +239,7 @@ static void drm_events_release(struct dr
- void drm_file_free(struct drm_file *file)
+--- a/include/net/bluetooth/hci_core.h
++++ b/include/net/bluetooth/hci_core.h
+@@ -29,6 +29,8 @@
+ #include <linux/leds.h>
+ #include <linux/rculist.h>
+ #include <linux/spinlock.h>
++#include <linux/srcu.h>
++
+ #include <net/bluetooth/hci.h>
+ #include <net/bluetooth/hci_sync.h>
+ #include <net/bluetooth/hci_sock.h>
+@@ -347,6 +349,7 @@ struct amp_assoc {
+ 
+ struct hci_dev {
+ 	struct list_head list;
++	struct srcu_struct srcu;
+ 	struct mutex	lock;
+ 
+ 	const char	*name;
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -65,7 +65,7 @@ static DEFINE_IDA(hci_index_ida);
+ 
+ /* Get HCI device by index.
+  * Device is held on return. */
+-struct hci_dev *hci_dev_get(int index)
++static struct hci_dev *__hci_dev_get(int index, int *srcu_index)
  {
- 	struct drm_device *dev;
-+	int idx;
-=20
- 	if (!file)
- 		return;
-@@ -264,9 +265,11 @@ void drm_file_free(struct drm_file *file
-=20
- 	drm_events_release(file);
-=20
--	if (drm_core_check_feature(dev, DRIVER_MODESET)) {
-+	if (drm_core_check_feature(dev, DRIVER_MODESET) &&
-+	    drm_dev_enter(dev, &idx)) {
- 		drm_fb_release(file);
- 		drm_property_destroy_user_blobs(dev, file);
-+		drm_dev_exit(idx);
+ 	struct hci_dev *hdev = NULL, *d;
+ 
+@@ -78,6 +78,8 @@ struct hci_dev *hci_dev_get(int index)
+ 	list_for_each_entry(d, &hci_dev_list, list) {
+ 		if (d->id == index) {
+ 			hdev = hci_dev_hold(d);
++			if (srcu_index)
++				*srcu_index = srcu_read_lock(&d->srcu);
+ 			break;
+ 		}
  	}
-=20
- 	if (drm_core_check_feature(dev, DRIVER_SYNCOBJ))
---- a/drivers/gpu/drm/drm_mode_config.c
-+++ b/drivers/gpu/drm/drm_mode_config.c
-@@ -544,10 +544,13 @@ void drm_mode_config_cleanup(struct drm_
- 	 */
- 	WARN_ON(!list_empty(&dev->mode_config.fb_list));
- 	list_for_each_entry_safe(fb, fbt, &dev->mode_config.fb_list, head) {
--		struct drm_printer p =3D drm_debug_printer("[leaked fb]");
-+		if (list_empty(&fb->filp_head) || drm_framebuffer_read_refcount(fb) > 1)=
+@@ -85,6 +87,22 @@ struct hci_dev *hci_dev_get(int index)
+ 	return hdev;
+ }
+ 
++struct hci_dev *hci_dev_get(int index)
++{
++	return __hci_dev_get(index, NULL);
++}
++
++static struct hci_dev *hci_dev_get_srcu(int index, int *srcu_index)
++{
++	return __hci_dev_get(index, srcu_index);
++}
++
++static void hci_dev_put_srcu(struct hci_dev *hdev, int srcu_index)
++{
++	srcu_read_unlock(&hdev->srcu, srcu_index);
++	hci_dev_put(hdev);
++}
++
+ /* ---- Inquiry support ---- */
+ 
+ bool hci_discovery_active(struct hci_dev *hdev)
+@@ -595,9 +613,9 @@ static int hci_dev_do_reset(struct hci_d
+ int hci_dev_reset(__u16 dev)
  {
-+			struct drm_printer p =3D drm_debug_printer("[leaked fb]");
-=20
--		drm_printf(&p, "framebuffer[%u]:\n", fb->base.id);
--		drm_framebuffer_print_info(&p, 1, fb);
-+			drm_printf(&p, "framebuffer[%u]:\n", fb->base.id);
-+			drm_framebuffer_print_info(&p, 1, fb);
-+		}
-+		list_del_init(&fb->filp_head);
- 		drm_framebuffer_free(&fb->base.refcount);
- 	}
-=20
+ 	struct hci_dev *hdev;
+-	int err;
++	int err, srcu_index;
+ 
+-	hdev = hci_dev_get(dev);
++	hdev = hci_dev_get_srcu(dev, &srcu_index);
+ 	if (!hdev)
+ 		return -ENODEV;
+ 
+@@ -619,7 +637,7 @@ int hci_dev_reset(__u16 dev)
+ 	err = hci_dev_do_reset(hdev);
+ 
+ done:
+-	hci_dev_put(hdev);
++	hci_dev_put_srcu(hdev, srcu_index);
+ 	return err;
+ }
+ 
+@@ -2435,6 +2453,11 @@ struct hci_dev *hci_alloc_dev_priv(int s
+ 	if (!hdev)
+ 		return NULL;
+ 
++	if (init_srcu_struct(&hdev->srcu)) {
++		kfree(hdev);
++		return NULL;
++	}
++
+ 	hdev->pkt_type  = (HCI_DM1 | HCI_DH1 | HCI_HV1);
+ 	hdev->esco_type = (ESCO_HV1);
+ 	hdev->link_mode = (HCI_LM_ACCEPT);
+@@ -2692,6 +2715,9 @@ void hci_unregister_dev(struct hci_dev *
+ 	list_del(&hdev->list);
+ 	write_unlock(&hci_dev_list_lock);
+ 
++	synchronize_srcu(&hdev->srcu);
++	cleanup_srcu_struct(&hdev->srcu);
++
+ 	cancel_work_sync(&hdev->rx_work);
+ 	cancel_work_sync(&hdev->cmd_work);
+ 	cancel_work_sync(&hdev->tx_work);
 
 
