@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFF721D00A;
-	Mon, 23 Mar 2026 13:54:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034BA3AE1A5;
+	Mon, 23 Mar 2026 13:54:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274053; cv=none; b=aR1oZJASoQhZijN3wsyj7WN0BGpB3V8JPQLJ9XYMc7Fk0/TaFp5vXvYgd0RnuMpNfV4tbVqQU7DzydgrCObZZfrAD966k1onm02hup3CbCATdJ7awYDZ8ejAam59+Rxm5h2qxgTzL1GOe5Rghd1csTyHgpsDb7YeoBoX5tKhzy0=
+	t=1774274057; cv=none; b=UKHPRSaBLkk0fchViAOcwSi+hcTrplSeH1DioVvF7CJI3dV/tqtI06PIwRhrvZLM+2uifJfQVCghuhWCJiplU5+6RaciSCO4kWFPJITTprNVZMCg3N0vKEUGG8akOYx8RZ0OV9FjUy+Y5eUp/FV8o9cJe+F4WC9raNzdRQA2NqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274053; c=relaxed/simple;
-	bh=RbeoQd7qZDPbgJLGkLjZ8sHdSA3LCUExbH3Q7e98a0c=;
+	s=arc-20240116; t=1774274057; c=relaxed/simple;
+	bh=EOsOr+vUUdp7wRMLoeltvqrVOugVfvgctEgewW0/JLY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ez7Imlj0FvoE48yOJFKzlDH/i2ctRrESjc5bWOIeUsv22n2pwK+qcH2orTkSddbMITrvA9tkjMv8JgcrRkDKhPNJeztuidM/QCMiQn3cTBIvP14RZJUip813e9TKg6yEWDfeZIqNxEZZGBPpI3TZE9TKCkQixPz6yNFxMrnnwKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=W9J+HGpQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CoDwp1jI1zc1R6z/BVzIaRy3QTinfbU9q7brX78GBq4ZrQlQByqyzBY9YjocUkNa0f6ZSYtHog1ka86xCqji+fUFQxDGEMGfM1RdQ28wf4eD4pMUol+KRiyNbveIy2cOU1tYBSln7C491z74v3pfDiihNgtoqLdDnuMb9220QXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OMLwecx/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="W9J+HGpQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61294C4CEF7;
-	Mon, 23 Mar 2026 13:54:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OMLwecx/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 779E6C4CEF7;
+	Mon, 23 Mar 2026 13:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274053;
-	bh=RbeoQd7qZDPbgJLGkLjZ8sHdSA3LCUExbH3Q7e98a0c=;
+	s=korg; t=1774274056;
+	bh=EOsOr+vUUdp7wRMLoeltvqrVOugVfvgctEgewW0/JLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W9J+HGpQKVfZk5Zc+r7GlFN8DS9vGAFnpmn5NOPer2A+2yWiVZWoVFA7BgSZsoxMs
-	 wcMX9L1O2RmbWk4rQDFgvpYUPfOHNZ95aK/ohrl/e4oK0MeZB9vQ+w/qUQxFMMeU/e
-	 z73M2DDMy4v4qbxLX/E0r5vCJSkhrxuuS8xXhzbg=
+	b=OMLwecx/7jIB/fVFV6hV0fqlGDKJmJNrj0LTj/LjWKoRnJHheddC28xbcpKTZULnE
+	 csriJgbsCuNUmgPwsmBl4D2d1rw2175LLrigMkGYBARgToq+7ta9rYaPrwrbW///NZ
+	 tYA89FdDeyUprs/qNgI1G8kjlzMeMbRM1NN/JnLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.19 094/220] Bluetooth: L2CAP: Fix accepting multiple L2CAP_ECRED_CONN_REQ
-Date: Mon, 23 Mar 2026 14:44:31 +0100
-Message-ID: <20260323134507.568882929@linuxfoundation.org>
+	Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>,
+	Boris Burkov <boris@bur.io>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.19 095/220] btrfs: log new dentries when logging parent dir of a conflicting inode
+Date: Mon, 23 Mar 2026 14:44:32 +0100
+Message-ID: <20260323134507.600892587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,59 +53,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 5b3e2052334f2ff6d5200e952f4aa66994d09899 upstream.
+[ Upstream commit 9573a365ff9ff45da9222d3fe63695ce562beb24 ]
 
-Currently the code attempts to accept requests regardless of the
-command identifier which may cause multiple requests to be marked
-as pending (FLAG_DEFER_SETUP) which can cause more than
-L2CAP_ECRED_MAX_CID(5) to be allocated in l2cap_ecred_rsp_defer
-causing an overflow.
+If we log the parent directory of a conflicting inode, we are not logging
+the new dentries of the directory, so when we finish we have the parent
+directory's inode marked as logged but we did not log its new dentries.
+As a consequence if the parent directory is explicitly fsynced later and
+it does not have any new changes since we logged it, the fsync is a no-op
+and after a power failure the new dentries are missing.
 
-The spec is quite clear that the same identifier shall not be used on
-subsequent requests:
+Example scenario:
 
-'Within each signaling channel a different Identifier shall be used
-for each successive request or indication.'
-https://www.bluetooth.com/wp-content/uploads/Files/Specification/HTML/Core-62/out/en/host/logical-link-control-and-adaptation-protocol-specification.html#UUID-32a25a06-4aa4-c6c7-77c5-dcfe3682355d
+  $ mkdir foo
 
-So this attempts to check if there are any channels pending with the
-same identifier and rejects if any are found.
+  $ sync
 
-Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  $rmdir foo
+
+  $ mkdir dir1
+  $ mkdir dir2
+
+  # A file with the same name and parent as the directory we just deleted
+  # and was persisted in a past transaction. So the deleted directory's
+  # inode is a conflicting inode of this new file's inode.
+  $ touch foo
+
+  $ ln foo dir2/link
+
+  # The fsync on dir2 will log the parent directory (".") because the
+  # conflicting inode (deleted directory) does not exists anymore, but it
+  # it does not log its new dentries (dir1).
+  $ xfs_io -c "fsync" dir2
+
+  # This fsync on the parent directory is no-op, since the previous fsync
+  # logged it (but without logging its new dentries).
+  $ xfs_io -c "fsync" .
+
+  <power failure>
+
+  # After log replay dir1 is missing.
+
+Fix this by ensuring we log new dir dentries whenever we log the parent
+directory of a no longer existing conflicting inode.
+
+A test case for fstests will follow soon.
+
+Reported-by: Vyacheslav Kovalevsky <slava.kovalevskiy.2014@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/182055fa-e9ce-4089-9f5f-4b8a23e8dd91@gmail.com/
+Fixes: a3baaf0d786e ("Btrfs: fix fsync after succession of renames and unlink/rmdir")
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/btrfs/tree-log.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -5045,7 +5045,7 @@ static inline int l2cap_ecred_conn_req(s
- 	u16 mtu, mps;
- 	__le16 psm;
- 	u8 result, rsp_len = 0;
--	int i, num_scid;
-+	int i, num_scid = 0;
- 	bool defer = false;
+diff --git a/fs/btrfs/tree-log.c b/fs/btrfs/tree-log.c
+index 6cffcf0c3e7af..6c40f48cc194d 100644
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -6195,6 +6195,7 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 				  struct btrfs_root *root,
+ 				  struct btrfs_log_ctx *ctx)
+ {
++	const bool orig_log_new_dentries = ctx->log_new_dentries;
+ 	int ret = 0;
  
- 	if (!enable_ecred)
-@@ -5057,6 +5057,14 @@ static inline int l2cap_ecred_conn_req(s
- 		result = L2CAP_CR_LE_INVALID_PARAMS;
- 		goto response;
- 	}
+ 	/*
+@@ -6256,7 +6257,11 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 			 * dir index key range logged for the directory. So we
+ 			 * must make sure the deletion is recorded.
+ 			 */
++			ctx->log_new_dentries = false;
+ 			ret = btrfs_log_inode(trans, inode, LOG_INODE_ALL, ctx);
++			if (!ret && ctx->log_new_dentries)
++				ret = log_new_dir_dentries(trans, inode, ctx);
 +
-+	/* Check if there are no pending channels with the same ident */
-+	__l2cap_chan_list_id(conn, cmd->ident, l2cap_ecred_list_defer,
-+			     &num_scid);
-+	if (num_scid) {
-+		result = L2CAP_CR_LE_INVALID_PARAMS;
-+		goto response;
-+	}
+ 			btrfs_add_delayed_iput(inode);
+ 			if (ret)
+ 				break;
+@@ -6291,6 +6296,7 @@ static int log_conflicting_inodes(struct btrfs_trans_handle *trans,
+ 			break;
+ 	}
  
- 	cmd_len -= sizeof(*req);
- 	num_scid = cmd_len / sizeof(u16);
++	ctx->log_new_dentries = orig_log_new_dentries;
+ 	ctx->logging_conflict_inodes = false;
+ 	if (ret)
+ 		free_conflicting_inodes(ctx);
+-- 
+2.51.0
+
 
 
