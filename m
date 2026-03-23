@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8CC93803EF;
-	Mon, 23 Mar 2026 14:15:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B7A3AE706;
+	Mon, 23 Mar 2026 14:15:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275333; cv=none; b=A9+ri8knUTg0FtF5t2zEuxA6YP+h3hNQthzF1v7y5ug2QF/2EyljzPk6pypbXkyLfJ6+CkGKNj4oRFVvDqetHzN/Axs3YKSPf3b7US1s33c+xC6E9QfZQ7gpIAj4jOAN8foupLvE+z+T4TciurYqmdOLKtEtuAkso5lMy6jS58o=
+	t=1774275336; cv=none; b=U1PVPGE6h1JUTI80Y/z+Ym8gWIOC66V5PWAPLe7uehsGFmhmAWhu2xYBK0Mk5Ghu6Rm/sIvdH8Rz6MNx28qzTXHcikbUEZ/WlWBqJ5EX0nB47x0Z0AfPZ/osO/rXRzqFmm10EGVjNtxvntUi+H3h8iQ0lWK3rW3LdJsyIlkAK2k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275333; c=relaxed/simple;
-	bh=xE8DdALOSzmekuJeUDg4s46FkLe6DuIBjUjqbyWxf/Q=;
+	s=arc-20240116; t=1774275336; c=relaxed/simple;
+	bh=21B7ts7vgAEtNnjha/iUyWUZRP3pSO+TjNfepmK9dn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=S93BLZwveoDCTx6KPuUKBZNWiUIqinzZbAzYbCWG0Qr7n3pSJJByu/esKyVU3VXdjc4sIynvZF77/xhOkpLePHeG6q0NZ1ClTP9lNE914Y86awZtOaFDmyFVX+GJefcveNyUKzzxoG8MkiBo3Jde0ShmlG0ggFu9qdIF6e/wqhA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DAcUo5FM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lr2oshKmozifZaEzh3ztgvu4P3FaF/jIM+3PwSrDSiulQDeRhx3+bmX5vFmn8tgHq704rE72XWk0LRgSpG1Kczz24GJQrJoptnw7fPqSG4gHfrhtbKf1HVivNR9ykXjwXiG6VrJuWQLNqjqSFAKhJyUZr3lphU6DU7n23cSl2eg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xGnfAQXq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DAcUo5FM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BECBC4CEF7;
-	Mon, 23 Mar 2026 14:15:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xGnfAQXq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B59BFC2BC9E;
+	Mon, 23 Mar 2026 14:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275333;
-	bh=xE8DdALOSzmekuJeUDg4s46FkLe6DuIBjUjqbyWxf/Q=;
+	s=korg; t=1774275336;
+	bh=21B7ts7vgAEtNnjha/iUyWUZRP3pSO+TjNfepmK9dn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DAcUo5FM+mamk2o7ml0QZDnU2W6j8Ea3UQuTNRGOnvlx+Dsh4Z+ieD0+34ut1FYbX
-	 Vwq1Lpzvxo7ttBd/pkTwzihi/Wi0ia2Wc9Qjbc8VaceDblonoVrAn4k05r7MYEOedV
-	 WPohDGzNtvxK4n+YIHt84ATqa3kH4nz09FD/a3+I=
+	b=xGnfAQXqWp+aWCezyjZpaq+Lkut2mFIR4PY73UWYZfsjLxVvfESBPg/g5XpCCytEa
+	 odparfVqWmeB7ecdMnRbFptn0PelNL/o3uL+5i/GLFuqGUBOJqNZ4LE5zKqSL/xPSg
+	 2BbVoxopfRE42c28JwCqLgWADrl7TXdbqyX+wJQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 061/460] net: add xmit recursion limit to tunnel xmit functions
-Date: Mon, 23 Mar 2026 14:40:57 +0100
-Message-ID: <20260323134528.208624958@linuxfoundation.org>
+Subject: [PATCH 6.12 062/460] netfilter: nf_tables: always walk all pending catchall elements
+Date: Mon, 23 Mar 2026 14:40:58 +0100
+Message-ID: <20260323134528.232251078@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,270 +51,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 6f1a9140ecda3baba3d945b9a6155af4268aafc4 ]
+[ Upstream commit 7cb9a23d7ae40a702577d3d8bacb7026f04ac2a9 ]
 
-Tunnel xmit functions (iptunnel_xmit, ip6tunnel_xmit) lack their own
-recursion limit. When a bond device in broadcast mode has GRE tap
-interfaces as slaves, and those GRE tunnels route back through the
-bond, multicast/broadcast traffic triggers infinite recursion between
-bond_xmit_broadcast() and ip_tunnel_xmit()/ip6_tnl_xmit(), causing
-kernel stack overflow.
+During transaction processing we might have more than one catchall element:
+1 live catchall element and 1 pending element that is coming as part of the
+new batch.
 
-The existing XMIT_RECURSION_LIMIT (8) in the no-qdisc path is not
-sufficient because tunnel recursion involves route lookups and full IP
-output, consuming much more stack per level. Use a lower limit of 4
-(IP_TUNNEL_RECURSION_LIMIT) to prevent overflow.
+If the map holding the catchall elements is also going away, its
+required to toggle all catchall elements and not just the first viable
+candidate.
 
-Add recursion detection using dev_xmit_recursion helpers directly in
-iptunnel_xmit() and ip6tunnel_xmit() to cover all IPv4/IPv6 tunnel
-paths including UDP encapsulated tunnels (VXLAN, Geneve, etc.).
+Otherwise, we get:
+ WARNING: ./include/net/netfilter/nf_tables.h:1281 at nft_data_release+0xb7/0xe0 [nf_tables], CPU#2: nft/1404
+ RIP: 0010:nft_data_release+0xb7/0xe0 [nf_tables]
+ [..]
+ __nft_set_elem_destroy+0x106/0x380 [nf_tables]
+ nf_tables_abort_release+0x348/0x8d0 [nf_tables]
+ nf_tables_abort+0xcf2/0x3ac0 [nf_tables]
+ nfnetlink_rcv_batch+0x9c9/0x20e0 [..]
 
-Move dev_xmit_recursion helpers from net/core/dev.h to public header
-include/linux/netdevice.h so they can be used by tunnel code.
-
- BUG: KASAN: stack-out-of-bounds in blake2s.constprop.0+0xe7/0x160
- Write of size 32 at addr ffff88810033fed0 by task kworker/0:1/11
- Workqueue: mld mld_ifc_work
- Call Trace:
-  <TASK>
-  __build_flow_key.constprop.0 (net/ipv4/route.c:515)
-  ip_rt_update_pmtu (net/ipv4/route.c:1073)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:84)
-  ip_tunnel_xmit (net/ipv4/ip_tunnel.c:847)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  ip_finish_output2 (net/ipv4/ip_output.c:237)
-  ip_output (net/ipv4/ip_output.c:438)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:86)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  ip_finish_output2 (net/ipv4/ip_output.c:237)
-  ip_output (net/ipv4/ip_output.c:438)
-  iptunnel_xmit (net/ipv4/ip_tunnel_core.c:86)
-  ip_tunnel_xmit (net/ipv4/ip_tunnel.c:847)
-  gre_tap_xmit (net/ipv4/ip_gre.c:779)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  sch_direct_xmit (net/sched/sch_generic.c:347)
-  __dev_queue_xmit (net/core/dev.c:4802)
-  bond_dev_queue_xmit (drivers/net/bonding/bond_main.c:312)
-  bond_xmit_broadcast (drivers/net/bonding/bond_main.c:5279)
-  bond_start_xmit (drivers/net/bonding/bond_main.c:5530)
-  dev_hard_start_xmit (net/core/dev.c:3887)
-  __dev_queue_xmit (net/core/dev.c:4841)
-  mld_sendpack
-  mld_ifc_work
-  process_one_work
-  worker_thread
-  </TASK>
-
-Fixes: 745e20f1b626 ("net: add a recursion limit in xmit path")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260306160133.3852900-2-bestswngs@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 628bd3e49cba ("netfilter: nf_tables: drop map element references from preparation phase")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 32 ++++++++++++++++++++++++++++++++
- include/net/ip6_tunnel.h  | 12 ++++++++++++
- include/net/ip_tunnels.h  |  7 +++++++
- net/core/dev.h            | 35 -----------------------------------
- net/ipv4/ip_tunnel_core.c | 13 +++++++++++++
- 5 files changed, 64 insertions(+), 35 deletions(-)
+ net/netfilter/nf_tables_api.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index d5215f23f2b99..12edeeb172c4e 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -3258,17 +3258,49 @@ struct softnet_data {
- DECLARE_PER_CPU_ALIGNED(struct softnet_data, softnet_data);
- DECLARE_PER_CPU(struct page_pool *, system_page_pool);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index c1b9b00907bbb..268d00ffee0cb 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -700,7 +700,6 @@ static void nft_map_catchall_deactivate(const struct nft_ctx *ctx,
  
-+#define XMIT_RECURSION_LIMIT	8
-+
- #ifndef CONFIG_PREEMPT_RT
- static inline int dev_recursion_level(void)
- {
- 	return this_cpu_read(softnet_data.xmit.recursion);
- }
-+
-+static inline bool dev_xmit_recursion(void)
-+{
-+	return unlikely(__this_cpu_read(softnet_data.xmit.recursion) >
-+			XMIT_RECURSION_LIMIT);
-+}
-+
-+static inline void dev_xmit_recursion_inc(void)
-+{
-+	__this_cpu_inc(softnet_data.xmit.recursion);
-+}
-+
-+static inline void dev_xmit_recursion_dec(void)
-+{
-+	__this_cpu_dec(softnet_data.xmit.recursion);
-+}
- #else
- static inline int dev_recursion_level(void)
- {
- 	return current->net_xmit.recursion;
- }
- 
-+static inline bool dev_xmit_recursion(void)
-+{
-+	return unlikely(current->net_xmit.recursion > XMIT_RECURSION_LIMIT);
-+}
-+
-+static inline void dev_xmit_recursion_inc(void)
-+{
-+	current->net_xmit.recursion++;
-+}
-+
-+static inline void dev_xmit_recursion_dec(void)
-+{
-+	current->net_xmit.recursion--;
-+}
- #endif
- 
- void __netif_schedule(struct Qdisc *q);
-diff --git a/include/net/ip6_tunnel.h b/include/net/ip6_tunnel.h
-index 399592405c72a..dfdb4dba5be8f 100644
---- a/include/net/ip6_tunnel.h
-+++ b/include/net/ip6_tunnel.h
-@@ -156,6 +156,16 @@ static inline void ip6tunnel_xmit(struct sock *sk, struct sk_buff *skb,
- {
- 	int pkt_len, err;
- 
-+	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
-+		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
-+				     dev->name);
-+		DEV_STATS_INC(dev, tx_errors);
-+		kfree_skb(skb);
-+		return;
-+	}
-+
-+	dev_xmit_recursion_inc();
-+
- 	memset(skb->cb, 0, sizeof(struct inet6_skb_parm));
- 	pkt_len = skb->len - skb_inner_network_offset(skb);
- 	err = ip6_local_out(dev_net(skb_dst(skb)->dev), sk, skb);
-@@ -165,6 +175,8 @@ static inline void ip6tunnel_xmit(struct sock *sk, struct sk_buff *skb,
- 			pkt_len = -1;
- 		iptunnel_xmit_stats(dev, pkt_len);
+ 		nft_set_elem_change_active(ctx->net, set, ext);
+ 		nft_setelem_data_deactivate(ctx->net, set, catchall->elem);
+-		break;
  	}
-+
-+	dev_xmit_recursion_dec();
  }
- #endif
- #endif
-diff --git a/include/net/ip_tunnels.h b/include/net/ip_tunnels.h
-index 1f92cc7fdbd21..0a5556ef16729 100644
---- a/include/net/ip_tunnels.h
-+++ b/include/net/ip_tunnels.h
-@@ -24,6 +24,13 @@
- #include <net/ip6_route.h>
- #endif
  
-+/* Recursion limit for tunnel xmit to detect routing loops.
-+ * Unlike XMIT_RECURSION_LIMIT (8) used in the no-qdisc path, tunnel
-+ * recursion involves route lookups and full IP output, consuming much
-+ * more stack per level, so a lower limit is needed.
-+ */
-+#define IP_TUNNEL_RECURSION_LIMIT	4
-+
- /* Keep error state on tunnel for 30 sec */
- #define IPTUNNEL_ERR_TIMEO	(30*HZ)
+@@ -5706,7 +5705,6 @@ static void nft_map_catchall_activate(const struct nft_ctx *ctx,
  
-diff --git a/net/core/dev.h b/net/core/dev.h
-index 764e0097ccf22..e0603dcb6aa12 100644
---- a/net/core/dev.h
-+++ b/net/core/dev.h
-@@ -162,41 +162,6 @@ static inline void napi_assert_will_not_race(const struct napi_struct *napi)
- 
- void kick_defer_list_purge(struct softnet_data *sd, unsigned int cpu);
- 
--#define XMIT_RECURSION_LIMIT	8
--
--#ifndef CONFIG_PREEMPT_RT
--static inline bool dev_xmit_recursion(void)
--{
--	return unlikely(__this_cpu_read(softnet_data.xmit.recursion) >
--			XMIT_RECURSION_LIMIT);
--}
--
--static inline void dev_xmit_recursion_inc(void)
--{
--	__this_cpu_inc(softnet_data.xmit.recursion);
--}
--
--static inline void dev_xmit_recursion_dec(void)
--{
--	__this_cpu_dec(softnet_data.xmit.recursion);
--}
--#else
--static inline bool dev_xmit_recursion(void)
--{
--	return unlikely(current->net_xmit.recursion > XMIT_RECURSION_LIMIT);
--}
--
--static inline void dev_xmit_recursion_inc(void)
--{
--	current->net_xmit.recursion++;
--}
--
--static inline void dev_xmit_recursion_dec(void)
--{
--	current->net_xmit.recursion--;
--}
--#endif
--
- int dev_set_hwtstamp_phylib(struct net_device *dev,
- 			    struct kernel_hwtstamp_config *cfg,
- 			    struct netlink_ext_ack *extack);
-diff --git a/net/ipv4/ip_tunnel_core.c b/net/ipv4/ip_tunnel_core.c
-index 8392d304a72eb..53d02602c17a3 100644
---- a/net/ipv4/ip_tunnel_core.c
-+++ b/net/ipv4/ip_tunnel_core.c
-@@ -57,6 +57,17 @@ void iptunnel_xmit(struct sock *sk, struct rtable *rt, struct sk_buff *skb,
- 	struct iphdr *iph;
- 	int err;
- 
-+	if (dev_recursion_level() > IP_TUNNEL_RECURSION_LIMIT) {
-+		net_crit_ratelimited("Dead loop on virtual device %s, fix it urgently!\n",
-+				     dev->name);
-+		DEV_STATS_INC(dev, tx_errors);
-+		ip_rt_put(rt);
-+		kfree_skb(skb);
-+		return;
-+	}
-+
-+	dev_xmit_recursion_inc();
-+
- 	skb_scrub_packet(skb, xnet);
- 
- 	skb_clear_hash_if_not_l4(skb);
-@@ -86,6 +97,8 @@ void iptunnel_xmit(struct sock *sk, struct rtable *rt, struct sk_buff *skb,
- 			pkt_len = 0;
- 		iptunnel_xmit_stats(dev, pkt_len);
+ 		nft_clear(ctx->net, ext);
+ 		nft_setelem_data_activate(ctx->net, set, catchall->elem);
+-		break;
  	}
-+
-+	dev_xmit_recursion_dec();
  }
- EXPORT_SYMBOL_GPL(iptunnel_xmit);
  
 -- 
 2.51.0
