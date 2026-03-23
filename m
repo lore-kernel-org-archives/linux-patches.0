@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2E8C2C181;
-	Mon, 23 Mar 2026 14:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E513AD523;
+	Mon, 23 Mar 2026 14:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275433; cv=none; b=F0Erg2lpyW+ai5TmrQ3bVE6RJG87wTWmfGlVd5IE2cZhAMCF6HFYBo4T4fIkeifjdmG/GzLbm28z1NuqPQmxLZPziPbZUgAFAAcBp827Ej8Qvzh5OQ0obS9idv4VF0mUIfmjjiWrY4o6qfCVBsOvrxbFocC0CkFYEAIXJoEM1HY=
+	t=1774275435; cv=none; b=NCEEmWSqaRja8ufi4zZM2i3675JEHZh/qXLozIvwiRAg3ztuA1W+7656dolxwUNrOs2tCyeXWB4o2uYBD4V2TsBIsjghxpVo9yop8LXJXsYogTTkaYHKVhghwtx+BwyNfFe2HtdHjnppJUsK95FOk+os3K0u1IUl/+Xx72q0O2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275433; c=relaxed/simple;
-	bh=dZeNsB/SVKAeJZioJek9SECj3aLCpAlesQOzKAw4QVc=;
+	s=arc-20240116; t=1774275435; c=relaxed/simple;
+	bh=IJ7PktKUaOLy7H/WRdzvqmXCLd7FkNzz7zb8ig4XZq0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZfFY+KuMXjZ+SMN+84izLLWPAziZKTryswWkO0Gek8rfFYbnOfdWPIZTRAzdYcSWnklDGvXaTtgQEn9xqvvQ/zNR5P+LUZob1B7nEUBbDbN+atb9K2JTnDG7bE7No9SHdr3tsxNTN3ZJ+E19mE9Oaa3MzVifzL8TtsTkp1gtI1Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2YqFLjDy; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=f1CAI81bjbuk0aaruqRgiDAIKHub2vTGEAT3keXLGl4YvFuvVTq48KX/IfNjUCVtlxD87h+prcS9x0GB2rPVlWtvW2QnVygW236b7k3sjTNRM8LxL8R/oToeVyUxFZQfc1VcCsuC1K5hSe287LnXiu1Q/sz9uXrK95cnsqFVn7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Uyt/F7U/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2YqFLjDy"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85818C4CEF7;
-	Mon, 23 Mar 2026 14:17:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Uyt/F7U/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 315F9C4CEF7;
+	Mon, 23 Mar 2026 14:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275432;
-	bh=dZeNsB/SVKAeJZioJek9SECj3aLCpAlesQOzKAw4QVc=;
+	s=korg; t=1774275435;
+	bh=IJ7PktKUaOLy7H/WRdzvqmXCLd7FkNzz7zb8ig4XZq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2YqFLjDyWA/zMF5W1zkrbD45sIESzMC5igickNKtXHkFB/swNPBzCT5wYZDPujq8O
-	 E9BdO5SbmqtJKhrWvuIZYLXpYDvHZQaPH31dlLXXQ/eeiMG62Z8MB+hCPOH/ynOcUr
-	 SU1zTXttiAMVdmhex52DA+Vcmyt20L5dU3jTV9pA=
+	b=Uyt/F7U/PdupWujiqwfa/iCKiHSqCmfRsM4/95baOCiV1GgEkly5AzChXx/+7r1FK
+	 L2Wxl4/QNPNOiTv6djHEikdmL0QKi5fqlG/3f1APggdMXFD2b097mgUpGaw6Ag3/WU
+	 +5uQurxifG39XB4Yn2cRsDRH6499o/VVUnF3IxTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Heng <zhangheng@kylinos.cn>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.12 096/460] ASoC: amd: yc: Add DMI quirk for ASUS EXPERTBOOK PM1503CDA
-Date: Mon, 23 Mar 2026 14:41:32 +0100
-Message-ID: <20260323134529.017314062@linuxfoundation.org>
+	Chengfeng Ye <dg573847474@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 056/460] mctp: route: hold key->lock in mctp_flow_prepare_output()
+Date: Mon, 23 Mar 2026 14:40:52 +0100
+Message-ID: <20260323134528.081961221@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,38 +51,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Heng <zhangheng@kylinos.cn>
+From: Chengfeng Ye <dg573847474@gmail.com>
 
-commit 325291b20f8a6f14b9c82edbf5d12e4e71f6adaa upstream.
+[ Upstream commit 7d86aa41c073c4e7eb75fd2e674f1fd8f289728a ]
 
-Add a DMI quirk for the ASUS EXPERTBOOK PM1503CDA fixing the
-issue where the internal microphone was not detected.
+mctp_flow_prepare_output() checks key->dev and may call
+mctp_dev_set_key(), but it does not hold key->lock while doing so.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221070
-Cc: stable@vger.kernel.org
-Signed-off-by: Zhang Heng <zhangheng@kylinos.cn>
-Link: https://patch.msgid.link/20260304063255.139331-1-zhangheng@kylinos.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+mctp_dev_set_key() and mctp_dev_release_key() are annotated with
+__must_hold(&key->lock), so key->dev access is intended to be
+serialized by key->lock. The mctp_sendmsg() transmit path reaches
+mctp_flow_prepare_output() via mctp_local_output() -> mctp_dst_output()
+without holding key->lock, so the check-and-set sequence is racy.
+
+Example interleaving:
+
+  CPU0                                  CPU1
+  ----                                  ----
+  mctp_flow_prepare_output(key, devA)
+    if (!key->dev)  // sees NULL
+                                        mctp_flow_prepare_output(
+                                            key, devB)
+                                          if (!key->dev)  // still NULL
+                                          mctp_dev_set_key(devB, key)
+                                            mctp_dev_hold(devB)
+                                            key->dev = devB
+    mctp_dev_set_key(devA, key)
+      mctp_dev_hold(devA)
+      key->dev = devA   // overwrites devB
+
+Now both devA and devB references were acquired, but only the final
+key->dev value is tracked for release. One reference can be lost,
+causing a resource leak as mctp_dev_release_key() would only decrease
+the reference on one dev.
+
+Fix by taking key->lock around the key->dev check and
+mctp_dev_set_key() call.
+
+Fixes: 67737c457281 ("mctp: Pass flow data & flow release events to drivers")
+Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
+Link: https://patch.msgid.link/20260306031402.857224-1-dg573847474@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/mctp/route.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -703,6 +703,13 @@ static const struct dmi_system_id yc_acp
- 			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS EXPERTBOOK BM1503CDA"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "ASUSTeK COMPUTER INC."),
-+			DMI_MATCH(DMI_BOARD_NAME, "PM1503CDA"),
-+		}
-+	},
- 	{}
- };
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index 19ff259d7bc43..08bbd861dc42e 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -306,6 +306,7 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+ {
+ 	struct mctp_sk_key *key;
+ 	struct mctp_flow *flow;
++	unsigned long flags;
  
+ 	flow = skb_ext_find(skb, SKB_EXT_MCTP);
+ 	if (!flow)
+@@ -313,12 +314,14 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+ 
+ 	key = flow->key;
+ 
+-	if (key->dev) {
++	spin_lock_irqsave(&key->lock, flags);
++
++	if (!key->dev)
++		mctp_dev_set_key(dev, key);
++	else
+ 		WARN_ON(key->dev != dev);
+-		return;
+-	}
+ 
+-	mctp_dev_set_key(dev, key);
++	spin_unlock_irqrestore(&key->lock, flags);
+ }
+ #else
+ static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
+-- 
+2.51.0
+
 
 
