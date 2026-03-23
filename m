@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88003AF66A;
-	Mon, 23 Mar 2026 14:41:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78F42396D3D;
+	Mon, 23 Mar 2026 14:41:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276898; cv=none; b=R8pdKlwkpAJ704UABFFSfWaXJ/jJb6wPsQ/YOqNHGMCtCaaY3sOxEAHLzOF/seFybtGEZ1fwiSjHnSwxc3Huu3EVqHeByeKdcdxByr+AmF/sakLdSWAyjlckQFOtiNgw7vwZ1yQU2/aHU3sOcYSHlmE74pZD9PMUpOj2Rsrycoo=
+	t=1774276901; cv=none; b=g5+70bj6QLsDpcx13ZVAnDElsweGzsenXPeryaP55DGZVVIYzCe74nBz+W7rNCSTJOHWYwjTlaPffLtPWH0m6fJ1UBgX5LILnDa00JsVTYL8tJLCMuLDFYbQsj9T3B40+5RKdG75k50lnaqcZoi1EvWXk4sFPlFJ1GIZEfdjgv4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276898; c=relaxed/simple;
-	bh=iySqGAV1ae9CH7yzf1rOgdbiGVOe/uWFDBZPLeXEZb0=;
+	s=arc-20240116; t=1774276901; c=relaxed/simple;
+	bh=JA6TUCk08pHccPL0JEjpiWUvXPHiIqp8gwPwIBrywKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Dwbi4YhXgdfS+TGIqASYmOMqdKbPrl9mKFbqI+TsQFdGKSaooNInb8ad/pPyCJzIzo6aNaWiSGB6Q6Zu7hl1mhCDDPOK6lOOjmNfeLeYfw73yPsvqw2kXgOD0fOrw7Ug2UO42TajX9pizgFkacfTYzNyWNyJ2JxPM/pE3rrA8ps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHYxTx2y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lVc59EVxsN1nbsYMf55+pMfQT93pHBImq00hYDX1baxB564MZQjakPwDeF9Zv+CfClyGLWs43RevK//86Sm0p1ATtcLdJhkfd+NgwJ6EGQkP3puRGBopXjtmIOUhPYPwZDnwZokxC01CuH4UHAwzC3iS3F8n/YSgpWh7RNfLMrM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfPsGTsd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHYxTx2y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B066C4CEF7;
-	Mon, 23 Mar 2026 14:41:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfPsGTsd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA70C4CEF7;
+	Mon, 23 Mar 2026 14:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276898;
-	bh=iySqGAV1ae9CH7yzf1rOgdbiGVOe/uWFDBZPLeXEZb0=;
+	s=korg; t=1774276901;
+	bh=JA6TUCk08pHccPL0JEjpiWUvXPHiIqp8gwPwIBrywKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHYxTx2yq7YZZNGMjQPyRnJU77VPYxWtLYFAs03jJG1K47TAfqzuo+Ix5xTyIogA7
-	 /kOmDGbPMwFT5x4gyyUUslKxJopQ4WbgIC1PTDQ2YY2aernGOmXMAuYj2M4EDr59kW
-	 wzDZTgZA3uLFKsQ7ioF5fCmdjm1GmuR7gY61xRLc=
+	b=qfPsGTsdRnj2j0/0VFlfpbU2jNIW5PHTt3PjOAXvin/7+LuNWNISA56xDdFAbV+zB
+	 EGAc4ZZjgF97M+EjLxr1jGgHr7G2SuGYfqBr9oT3/Ql1GuwqHRmhjupH8qyNDObkDo
+	 FZGO196mU1n4x5/SqVD9vLaAs9GD6kg0M1HPlNic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ethan Tidmore <ethantidmore06@gmail.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	"Nirjhar Roy (IBM)" <nirjhar.roy.lists@gmail.com>,
-	Carlos Maiolino <cem@kernel.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 239/460] xfs: Fix error pointer dereference
-Date: Mon, 23 Mar 2026 14:43:55 +0100
-Message-ID: <20260323134532.377540977@linuxfoundation.org>
+Subject: [PATCH 6.12 248/460] mmc: dw_mmc-rockchip: Add memory clock auto-gating support
+Date: Mon, 23 Mar 2026 14:44:04 +0100
+Message-ID: <20260323134532.592353565@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,58 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Tidmore <ethantidmore06@gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit cddfa648f1ab99e30e91455be19cd5ade26338c2 ]
+[ Upstream commit ff6f0286c896f062853552097220dd93961be9c4 ]
 
-The function try_lookup_noperm() can return an error pointer and is not
-checked for one.
+Per design recommendations, the memory clock can be gated when there
+is no in-flight transfer, which helps save power. This feature is
+introduced alongside internal phase support, and this patch enables it.
 
-Add checks for error pointer in xrep_adoption_check_dcache() and
-xrep_adoption_zap_dcache().
-
-Detected by Smatch:
-fs/xfs/scrub/orphanage.c:449 xrep_adoption_check_dcache() error:
-'d_child' dereferencing possible ERR_PTR()
-
-fs/xfs/scrub/orphanage.c:485 xrep_adoption_zap_dcache() error:
-'d_child' dereferencing possible ERR_PTR()
-
-Fixes: 73597e3e42b4 ("xfs: ensure dentry consistency when the orphanage adopts a file")
-Cc: stable@vger.kernel.org # v6.16
-Signed-off-by: Ethan Tidmore <ethantidmore06@gmail.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Nirjhar Roy (IBM) <nirjhar.roy.lists@gmail.com>
-Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ adapted try_lookup_noperm() calls to d_hash_and_lookup() ]
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 6465a8bbb0f6 ("mmc: dw_mmc-rockchip: Fix runtime PM support for internal phase support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/scrub/orphanage.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mmc/host/dw_mmc-rockchip.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/xfs/scrub/orphanage.c
-+++ b/fs/xfs/scrub/orphanage.c
-@@ -443,6 +443,11 @@ xrep_adoption_check_dcache(
- 		return 0;
+--- a/drivers/mmc/host/dw_mmc-rockchip.c
++++ b/drivers/mmc/host/dw_mmc-rockchip.c
+@@ -18,6 +18,8 @@
+ #define RK3288_CLKGEN_DIV		2
+ #define SDMMC_TIMING_CON0		0x130
+ #define SDMMC_TIMING_CON1		0x134
++#define SDMMC_MISC_CON			0x138
++#define MEM_CLK_AUTOGATE_ENABLE		BIT(5)
+ #define ROCKCHIP_MMC_DELAY_SEL		BIT(10)
+ #define ROCKCHIP_MMC_DEGREE_MASK	0x3
+ #define ROCKCHIP_MMC_DEGREE_OFFSET	1
+@@ -469,6 +471,7 @@ static int dw_mci_rk3576_parse_dt(struct
  
- 	d_child = d_hash_and_lookup(d_orphanage, &qname);
-+	if (IS_ERR(d_child)) {
-+		dput(d_orphanage);
-+		return PTR_ERR(d_child);
-+	}
+ static int dw_mci_rockchip_init(struct dw_mci *host)
+ {
++	struct dw_mci_rockchip_priv_data *priv = host->priv;
+ 	int ret, i;
+ 
+ 	/* It is slot 8 on Rockchip SoCs */
+@@ -493,6 +496,9 @@ static int dw_mci_rockchip_init(struct d
+ 			dev_warn(host->dev, "no valid minimum freq: %d\n", ret);
+ 	}
+ 
++	if (priv->internal_phase)
++		mci_writel(host, MISC_CON, MEM_CLK_AUTOGATE_ENABLE);
 +
- 	if (d_child) {
- 		trace_xrep_adoption_check_child(sc->mp, d_child);
+ 	return 0;
+ }
  
-@@ -480,7 +485,7 @@ xrep_adoption_zap_dcache(
- 		return;
- 
- 	d_child = d_hash_and_lookup(d_orphanage, &qname);
--	while (d_child != NULL) {
-+	while (!IS_ERR_OR_NULL(d_child)) {
- 		trace_xrep_adoption_invalidate_child(sc->mp, d_child);
- 
- 		ASSERT(d_is_negative(d_child));
 
 
