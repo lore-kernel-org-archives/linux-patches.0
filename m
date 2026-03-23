@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0408728504F;
-	Mon, 23 Mar 2026 15:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ADCD2BEC3F;
+	Mon, 23 Mar 2026 15:08:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278488; cv=none; b=BspEgVY0NONNW0DayYcnoEgc1yLfdCD3xUhZLS/ECp737p3oAD8NYnHgv/CE5StqPHJI7KZ9W0OnCawWB68YkUhuFOM9V+4X3SeHtt8vjcl55GJP3ELid3XigfNjOS+k3BlMi4DbPQZ3NwPRODKiv3P+OriME7MT5Z+DLEMhTVs=
+	t=1774278491; cv=none; b=UP8Li2TTXw6gOg9yq+Z43JDn2lQlcNLjy2CHs2wq56ujL+y/balee9XCGT/9X5Dl3bkd/rVFWudHZGk+8DCCw3mfIoThVw+06FjBdwHJrzceGsVRRr+CurTkd6xR1tH62IHY+qRKj4tGtr+kwX2bJ3t4I948kTQ0wHgAPVjgdSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278488; c=relaxed/simple;
-	bh=aBwMCxIAKgRJDSc51+pmSHQRZqXKQrLYrTt8IqGm+vo=;
+	s=arc-20240116; t=1774278491; c=relaxed/simple;
+	bh=m434Ct8Jr+lIQU8DdNKTlGgAqy062bGAnOmHXv7IHIw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F4Vw6348G+ch2kEfMrb4Z+nbfefSBE9Rez3oqmT9HTMz76iHnT4Aw60z6b4cLB8eiHAyX28fBCxS8qqZxGGEmjv3sR90PJvTtGjHl2kMlgApCFpiL1oLoIOYyvoTRB0agP+zGgOV5KqJ4Mwn5NuHu85vvwsYpJe6EPivQHIpvPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CY2Htecb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=W3wM1u5SvWXESWV+lPzF5ev+3ou0bFGxMmBJwZKtxYVlo9+GRxz6M/114d0G06jz6etxBDkLVKCUtRSK9k1f+g0N+efuMr33Z+yZlI0iG4ifpDB44d4N9u+f2OrWqD1hxnawRD6eITSLLEX5gOSRxxLpNSgsHXOTZDfZla1HE7I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=txGFysmU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CY2Htecb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DC59C2BC9E;
-	Mon, 23 Mar 2026 15:08:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="txGFysmU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4865C4CEF7;
+	Mon, 23 Mar 2026 15:08:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278487;
-	bh=aBwMCxIAKgRJDSc51+pmSHQRZqXKQrLYrTt8IqGm+vo=;
+	s=korg; t=1774278491;
+	bh=m434Ct8Jr+lIQU8DdNKTlGgAqy062bGAnOmHXv7IHIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CY2HtecbQ8fcADlv8mZZMMnLOz4dnNfzFJWA9t1YsawBGSv9O+RHu0p68Wy3T4bQx
-	 9BUjXIfRc2eN6v1rIBJuE1Qg6pFe30EG+P0E8KdbOAPmFc4e1UXqXG48AJcDFRfS5m
-	 iohhzvxE9mOcOLsjgiHVeFpo6u2ls0hvd0qyvq7A=
+	b=txGFysmUkOSRjPFZkcGgmfjPBwDtqhLHb4UIkE/2kdHJxaHbvtSg4EGuovoGMMhCd
+	 QBc5ci2qj5So2Ra8KYUg9pnENV5pg5/vlCA7NIrdwj/nvF5otZKPNbKAvBR4YA0QJl
+	 2HM/afQqoCvdXtNfM3au6G4poTxLzmIIIUDaqlYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.6 321/567] parisc: Increase initial mapping to 64 MB with KALLSYMS
-Date: Mon, 23 Mar 2026 14:44:01 +0100
-Message-ID: <20260323134541.772199895@linuxfoundation.org>
+	Lyude Paul <lyude@redhat.com>,
+	Dave Airlie <airlied@redhat.com>,
+	Danilo Krummrich <dakr@kernel.org>
+Subject: [PATCH 6.6 322/567] nouveau/dpcd: return EBUSY for aux xfer if the device is asleep
+Date: Mon, 23 Mar 2026 14:44:02 +0100
+Message-ID: <20260323134541.799146898@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -49,30 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Dave Airlie <airlied@redhat.com>
 
-commit 8e732934fb81282be41602550e7e07baf265e972 upstream.
+commit 8f3c6f08ababad2e3bdd239728cf66a9949446b4 upstream.
 
-The 32MB initial kernel mapping can become too small when CONFIG_KALLSYMS
-is used. Increase the mapping to 64 MB in this case.
+If we have runtime suspended, and userspace wants to use /dev/drm_dp_*
+then just tell it the device is busy instead of crashing in the GSP
+code.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
+WARNING: CPU: 2 PID: 565741 at drivers/gpu/drm/nouveau/nvkm/subdev/gsp/rm/r535/rpc.c:164 r535_gsp_msgq_wait+0x9a/0xb0 [nouveau]
+CPU: 2 UID: 0 PID: 565741 Comm: fwupd Not tainted 6.18.10-200.fc43.x86_64 #1 PREEMPT(lazy)
+Hardware name: LENOVO 20QTS0PQ00/20QTS0PQ00, BIOS N2OET65W (1.52 ) 08/05/2024
+RIP: 0010:r535_gsp_msgq_wait+0x9a/0xb0 [nouveau]
+
+This is a simple fix to get backported. We should probably engineer a
+proper power domain solution to wake up devices and keep them awake
+while fw updates are happening.
+
+Cc: stable@vger.kernel.org
+Fixes: 8894f4919bc4 ("drm/nouveau: register a drm_dp_aux channel for each dp connector")
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Dave Airlie <airlied@redhat.com>
+Link: https://patch.msgid.link/20260224031750.791621-1-airlied@gmail.com
+Signed-off-by: Danilo Krummrich <dakr@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/pgtable.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/nouveau/nouveau_connector.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/parisc/include/asm/pgtable.h
-+++ b/arch/parisc/include/asm/pgtable.h
-@@ -85,7 +85,7 @@ extern void __update_cache(pte_t pte);
- 	printk("%s:%d: bad pgd %08lx.\n", __FILE__, __LINE__, (unsigned long)pgd_val(e))
+--- a/drivers/gpu/drm/nouveau/nouveau_connector.c
++++ b/drivers/gpu/drm/nouveau/nouveau_connector.c
+@@ -1212,6 +1212,9 @@ nouveau_connector_aux_xfer(struct drm_dp
+ 	u8 size = msg->size;
+ 	int ret;
  
- /* This is the size of the initially mapped kernel memory */
--#if defined(CONFIG_64BIT)
-+#if defined(CONFIG_64BIT) || defined(CONFIG_KALLSYMS)
- #define KERNEL_INITIAL_ORDER	26	/* 1<<26 = 64MB */
- #else
- #define KERNEL_INITIAL_ORDER	25	/* 1<<25 = 32MB */
++	if (pm_runtime_suspended(nv_connector->base.dev->dev))
++		return -EBUSY;
++
+ 	nv_encoder = find_encoder(&nv_connector->base, DCB_OUTPUT_DP);
+ 	if (!nv_encoder || !(aux = nv_encoder->aux))
+ 		return -ENODEV;
 
 
