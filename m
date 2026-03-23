@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABA43C060B;
-	Mon, 23 Mar 2026 16:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE3719D07A;
+	Mon, 23 Mar 2026 16:17:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282618; cv=none; b=p5R3jhYyz8EEY0oAzrZrdDUZW75wuEYO9H6oy5ZMbAoFbH89OV8RG+wBVDW10dD3pYdDWNil8nsq1+9L/yAQRSdyO6uVbr5317XcRm/JQ0cEeGDWodh3CznC8nt+rrsumunwnQ1yclnXoayZoTpRXAdGdh/3o+F9NWV+YwY5ms4=
+	t=1774282620; cv=none; b=EHMQJx2lwr1Z/hmxWwKtr/sHrAH71q+QjNJ9+5FdENK2EtFhDY9sVFQNb1XbRkjko+5FVf+6yfHA0eLiOiGngEb5vrWmLvikmqH0GGeZJ9EZiVyUqwNoJZK5AVb2ybaDqrhwFYNPpPM1NJkXz42AFIQ8bvux2+x391oMBPkNe7w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282618; c=relaxed/simple;
-	bh=n6xcYK2nGJ8es1RYXk0d4H65BR7tCt7OYEJ0hc1FCZI=;
+	s=arc-20240116; t=1774282620; c=relaxed/simple;
+	bh=HEeE8p43+0V3Y9oA1UKurYf3DLivz8agfKdca3xGWvI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cFZf3Gqvf0kzoRegpfNd3f7ktiFlfIhCdzRat5FJp/e049GdlmUDE3ls939V48b96TtkpjwdbwCB5dEh62n6c2KB3OmESCSkSMAxRhsDFBh/kJaHgUspzHOL4O43FkXDj7AlNwQHGFAFe9kE+jS8/v7SQlhoRHFqsgj3xAwrWDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB7fCZH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lwVeonJDc6OOCAATJTqRgWR0cb1m/csuCk0cjw9pVAyyg+bp2cCQRLNRyWEvt2YupYs+lx1l2QWfyX30sbNKR2rAHQF9EeZAGX9AilVJzaNGw8QFs+wUewfHzY1dsawsfCVigqqXaSN5vXBe7O7HE6kWPmRcabNdGmmRjLkiRI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lf2uVLL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB7fCZH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E36C4CEF7;
-	Mon, 23 Mar 2026 16:16:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lf2uVLL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF41C4CEF7;
+	Mon, 23 Mar 2026 16:16:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282617;
-	bh=n6xcYK2nGJ8es1RYXk0d4H65BR7tCt7OYEJ0hc1FCZI=;
+	s=korg; t=1774282620;
+	bh=HEeE8p43+0V3Y9oA1UKurYf3DLivz8agfKdca3xGWvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sB7fCZH4f794Pe305ZDjNytWSON2OocejW4cDVnBVKqSr6jagJLAx9knj+ZQ871gU
-	 JT+uAA2rb/XjkdYKhJZYyueG1IYf0qX9t4QXrXJina36Q+lRgOeDmDsaPqe40Fte13
-	 Z3XrG69l+gsXV57yvhS5qqyWqf6V7yVMTmklf5OU=
+	b=0lf2uVLLOr2EXYN+1uhk7nJjy+lxDIsEueyW3Wllsrfpk3ClvQM9RIieO/lOU3z6h
+	 7F0UW8179eZkQ/JrZ4mRCTsDJthoFjQolPMRrPewskcY70vqzjlnW4g4CINx8TML42
+	 RENY0ztaxw+ScBYOzrPT8v9JatDgbwNVfCTZ1nAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Tung Nguyen <tung.quang.nguyen@est.tech>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 222/481] tipc: fix divide-by-zero in tipc_sk_filter_connect()
-Date: Mon, 23 Mar 2026 14:43:24 +0100
-Message-ID: <20260323134530.559590679@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.1 223/481] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
+Date: Mon, 23 Mar 2026 14:43:25 +0100
+Message-ID: <20260323134530.585761186@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,55 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit 6c5a9baa15de240e747263aba435a0951da8d8d2 upstream.
+commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
 
-A user can set conn_timeout to any value via
-setsockopt(TIPC_CONN_TIMEOUT), including values less than 4.  When a
-SYN is rejected with TIPC_ERR_OVERLOAD and the retry path in
-tipc_sk_filter_connect() executes:
+This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
+that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
+ceph_handle_auth_reply(), the value of the payload_len field of such a
+message is stored in a variable of type int. A value greater than
+INT_MAX leads to an integer overflow and is interpreted as a negative
+value. This leads to decrementing the pointer address by this value and
+subsequently accessing it because ceph_decode_need() only checks that
+the memory access does not exceed the end address of the allocation.
 
-    delay %= (tsk->conn_timeout / 4);
+This patch fixes the issue by changing the data type of payload_len to
+u32. Additionally, the data type of result_msg_len is changed to u32,
+as it is also a variable holding a non-negative length.
 
-If conn_timeout is in the range [0, 3], the integer division yields 0,
-and the modulo operation triggers a divide-by-zero exception, causing a
-kernel oops/panic.
+Also, an additional layer of sanity checks is introduced, ensuring that
+directly after reading it from the message, payload_len and
+result_msg_len are not greater than the overall segment length.
 
-Fix this by clamping conn_timeout to a minimum of 4 at the point of use
-in tipc_sk_filter_connect().
+BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
 
-Oops: divide error: 0000 [#1] SMP KASAN NOPTI
-CPU: 0 UID: 0 PID: 119 Comm: poc-F144 Not tainted 7.0.0-rc2+
-RIP: 0010:tipc_sk_filter_rcv (net/tipc/socket.c:2236 net/tipc/socket.c:2362)
+CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: ceph-msgr ceph_con_workfn [libceph]
 Call Trace:
- tipc_sk_backlog_rcv (include/linux/instrumented.h:82 include/linux/atomic/atomic-instrumented.h:32 include/net/sock.h:2357 net/tipc/socket.c:2406)
- __release_sock (include/net/sock.h:1185 net/core/sock.c:3213)
- release_sock (net/core/sock.c:3797)
- tipc_connect (net/tipc/socket.c:2570)
- __sys_connect (include/linux/file.h:62 include/linux/file.h:83 net/socket.c:2098)
+ <TASK>
+ dump_stack_lvl+0x76/0xa0
+ print_report+0xd1/0x620
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? kasan_complete_mode_report_info+0x72/0x210
+ kasan_report+0xe7/0x130
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ __asan_report_load_n_noabort+0xf/0x20
+ ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ mon_dispatch+0x973/0x23d0 [libceph]
+ ? apparmor_socket_recvmsg+0x6b/0xa0
+ ? __pfx_mon_dispatch+0x10/0x10 [libceph]
+ ? __kasan_check_write+0x14/0x30i
+ ? mutex_unlock+0x7f/0xd0
+ ? __pfx_mutex_unlock+0x10/0x10
+ ? __pfx_do_recvmsg+0x10/0x10 [libceph]
+ ceph_con_process_message+0x1f1/0x650 [libceph]
+ process_message+0x1e/0x450 [libceph]
+ ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
+ ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
+ ? save_fpregs_to_fpstate+0xb0/0x230
+ ? raw_spin_rq_unlock+0x17/0xa0
+ ? finish_task_switch.isra.0+0x13b/0x760
+ ? __switch_to+0x385/0xda0
+ ? __kasan_check_write+0x14/0x30
+ ? mutex_lock+0x8d/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ceph_con_workfn+0x248/0x10c0 [libceph]
+ process_one_work+0x629/0xf80
+ ? __kasan_check_write+0x14/0x30
+ worker_thread+0x87f/0x1570
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? __pfx_try_to_wake_up+0x10/0x10
+ ? kasan_print_address_stack_frame+0x1f7/0x280
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x396/0x830
+ ? __pfx__raw_spin_lock_irq+0x10/0x10
+ ? __pfx_kthread+0x10/0x10
+ ? __kasan_check_write+0x14/0x30
+ ? recalc_sigpending+0x180/0x210
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3f7/0x610
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? __switch_to+0x385/0xda0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-Fixes: 6787927475e5 ("tipc: buffer overflow handling in listener socket")
+[ idryomov: replace if statements with ceph_decode_need() for
+  payload_len and result_msg_len ]
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
-Link: https://patch.msgid.link/20260310170730.28841-1-mehulrao@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/tipc/socket.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/ceph/auth.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/tipc/socket.c
-+++ b/net/tipc/socket.c
-@@ -2235,6 +2235,8 @@ static bool tipc_sk_filter_connect(struc
- 		if (skb_queue_empty(&sk->sk_write_queue))
- 			break;
- 		get_random_bytes(&delay, 2);
-+		if (tsk->conn_timeout < 4)
-+			tsk->conn_timeout = 4;
- 		delay %= (tsk->conn_timeout / 4);
- 		delay = msecs_to_jiffies(delay + 100);
- 		sk_reset_timer(sk, &sk->sk_timer, jiffies + delay);
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	s32 result;
+ 	u64 global_id;
+ 	void *payload, *payload_end;
+-	int payload_len;
++	u32 payload_len;
+ 	char *result_msg;
+-	int result_msg_len;
++	u32 result_msg_len;
+ 	int ret = -EINVAL;
+ 
+ 	mutex_lock(&ac->mutex);
+@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	result = ceph_decode_32(&p);
+ 	global_id = ceph_decode_64(&p);
+ 	payload_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, payload_len, bad);
+ 	payload = p;
+ 	p += payload_len;
+ 	ceph_decode_need(&p, end, sizeof(u32), bad);
+ 	result_msg_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, result_msg_len, bad);
+ 	result_msg = p;
+ 	p += result_msg_len;
+ 	if (p != end)
 
 
