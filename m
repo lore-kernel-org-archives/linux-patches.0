@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3DE2550D5;
-	Mon, 23 Mar 2026 16:28:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22B83BF69E;
+	Mon, 23 Mar 2026 16:28:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283321; cv=none; b=J1mTykiUbJncWRENtlQl2jNUgBAbK0rAXIgmwexcu6uzHDaaEr0gfjauyR8tU8cYBjjAvEUWE8hsPuxihEBwzfuBzXcG5zPy0FrjhuIf211g2878II4Ve90xMy9wFBnh/moqTMJkk4esHNECSqHTfHZYT37nB4UrZHpd7tR0zPY=
+	t=1774283323; cv=none; b=tnLDu/0yHuzaGwFVhEygr5vjMBg789LevsW9XSwJybphYBKh9DR1mjXtzWRynz5Qb6gwU75azaMCQmhfvd4EW6VEUbo1Go9u9kMgomVzYOzcOBf3qxeeKispu5UZW5kx9bHSAIWIejAYApoOLQRBjRLleqQZhE/hY70LTTqF1vI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283321; c=relaxed/simple;
-	bh=CtBDXZDSFN+Ivxr9mMUTs1cwpRwo7YAZ6pJY24WeQqo=;
+	s=arc-20240116; t=1774283323; c=relaxed/simple;
+	bh=pDmZMVBwvl9vw0PDY4eTylkgGs7B7T9U93Bmw3Xs9Yg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LpOm91wXaeYHbuk1/OQcLO5OPWPBqejDM83I/dtJVZCe7J8imqD7ZhvjfrKY6/uY16SqEhgKhwcZtjbpy9FG7IP1wEpAz1Clhpd4okyw/g4vOpEng+CHL+1NnIASusKjPFmMGST3KXJOw6/IUwSJQp7iZCcdRRrwS0Oxbg1Uxo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DS/OgYLQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i9f7+RaOD4Q/21teDgbmi/H8LL0fUBkoNFStoCEzGRTVRGaLLmWmWZpDJljT9LPZXXgP48tR4btzJ8O47GsHOeuVx4BWsAE0qT34z4KVzkwIbiNjwvamRDemkYRDRN8i3kuFdouCvJN8zBA8Irt0LZ3RRnZgVyoYnTHck3ZIc7o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fP1LDINs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DS/OgYLQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48316C2BCB6;
-	Mon, 23 Mar 2026 16:28:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fP1LDINs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDC8BC2BC9E;
+	Mon, 23 Mar 2026 16:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283320;
-	bh=CtBDXZDSFN+Ivxr9mMUTs1cwpRwo7YAZ6pJY24WeQqo=;
+	s=korg; t=1774283323;
+	bh=pDmZMVBwvl9vw0PDY4eTylkgGs7B7T9U93Bmw3Xs9Yg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DS/OgYLQMNLjHAPDB2q2AzPGj1hE79hvWrspuQOumBb9h6LjeaQ+sonfc1/vaWTOl
-	 ZsvjYUv4UvOOlV6vk1rkwktQxl128LHhhSRdoZo2/OSGw4lyFHzNGBqJ9QsTm/DEQR
-	 MEzqQ4x2EmBIx0Pqjs1mGLeeQkSEgnqFQ0fz3Fdw=
+	b=fP1LDINs8fKmZONQcW35HoJk8dEviN0+ES90INS78D84FkYpk8La4jvAz3HeOEGuL
+	 tkFW+3fkdJ5P0IDqvcIyqfqKTcdjUzXQMqYPiY7Cj1OGqEz532VFf6cIJhnY6/OyHP
+	 MezcgfujbqzBF7P14LYxUZy9zUryzW85BhXY+ihk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Lei <ming.lei@redhat.com>,
-	syzbot+6c905ab800f20cf4086c@syzkaller.appspotmail.com,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	syzbot+827ae2bfb3a3529333e9@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 423/481] PM: runtime: Fix a race condition related to device removal
-Date: Mon, 23 Mar 2026 14:46:45 +0100
-Message-ID: <20260323134535.502676187@linuxfoundation.org>
+Subject: [PATCH 6.1 424/481] net/smc: fix NULL dereference and UAF in smc_tcp_syn_recv_sock()
+Date: Mon, 23 Mar 2026 14:46:46 +0100
+Message-ID: <20260323134535.529844028@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,124 +53,206 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 29ab768277617452d88c0607c9299cdc63b6e9ff ]
+[ Upstream commit 6d5e4538364b9ceb1ac2941a4deb86650afb3538 ]
 
-The following code in pm_runtime_work() may dereference the dev->parent
-pointer after the parent device has been freed:
+Syzkaller reported a panic in smc_tcp_syn_recv_sock() [1].
 
-	/* Maybe the parent is now able to suspend. */
-	if (parent && !parent->power.ignore_children) {
-		spin_unlock(&dev->power.lock);
+smc_tcp_syn_recv_sock() is called in the TCP receive path
+(softirq) via icsk_af_ops->syn_recv_sock on the clcsock (TCP
+listening socket). It reads sk_user_data to get the smc_sock
+pointer. However, when the SMC listen socket is being closed
+concurrently, smc_close_active() sets clcsock->sk_user_data
+to NULL under sk_callback_lock, and then the smc_sock itself
+can be freed via sock_put() in smc_release().
 
-		spin_lock(&parent->power.lock);
-		rpm_idle(parent, RPM_ASYNC);
-		spin_unlock(&parent->power.lock);
+This leads to two issues:
 
-		spin_lock(&dev->power.lock);
-	}
+1) NULL pointer dereference: sk_user_data is NULL when
+   accessed.
+2) Use-after-free: sk_user_data is read as non-NULL, but the
+   smc_sock is freed before its fields (e.g., queued_smc_hs,
+   ori_af_ops) are accessed.
 
-Fix this by inserting a flush_work() call in pm_runtime_remove().
+The race window looks like this (the syzkaller crash [1]
+triggers via the SYN cookie path: tcp_get_cookie_sock() ->
+smc_tcp_syn_recv_sock(), but the normal tcp_check_req() path
+has the same race):
 
-Without this patch blktest block/001 triggers the following complaint
-sporadically:
+  CPU A (softirq)              CPU B (process ctx)
 
-BUG: KASAN: slab-use-after-free in lock_acquire+0x70/0x160
-Read of size 1 at addr ffff88812bef7198 by task kworker/u553:1/3081
-Workqueue: pm pm_runtime_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x61/0x80
- print_address_description.constprop.0+0x8b/0x310
- print_report+0xfd/0x1d7
- kasan_report+0xd8/0x1d0
- __kasan_check_byte+0x42/0x60
- lock_acquire.part.0+0x38/0x230
- lock_acquire+0x70/0x160
- _raw_spin_lock+0x36/0x50
- rpm_suspend+0xc6a/0xfe0
- rpm_idle+0x578/0x770
- pm_runtime_work+0xee/0x120
- process_one_work+0xde3/0x1410
- worker_thread+0x5eb/0xfe0
- kthread+0x37b/0x480
- ret_from_fork+0x6cb/0x920
- ret_from_fork_asm+0x11/0x20
- </TASK>
+  tcp_v4_rcv()
+    TCP_NEW_SYN_RECV:
+    sk = req->rsk_listener
+    sock_hold(sk)
+    /* No lock on listener */
+                               smc_close_active():
+                                 write_lock_bh(cb_lock)
+                                 sk_user_data = NULL
+                                 write_unlock_bh(cb_lock)
+                                 ...
+                                 smc_clcsock_release()
+                                 sock_put(smc->sk) x2
+                                   -> smc_sock freed!
+    tcp_check_req()
+      smc_tcp_syn_recv_sock():
+        smc = user_data(sk)
+          -> NULL or dangling
+        smc->queued_smc_hs
+          -> crash!
 
-Allocated by task 4314:
- kasan_save_stack+0x2a/0x50
- kasan_save_track+0x18/0x40
- kasan_save_alloc_info+0x3d/0x50
- __kasan_kmalloc+0xa0/0xb0
- __kmalloc_noprof+0x311/0x990
- scsi_alloc_target+0x122/0xb60 [scsi_mod]
- __scsi_scan_target+0x101/0x460 [scsi_mod]
- scsi_scan_channel+0x179/0x1c0 [scsi_mod]
- scsi_scan_host_selected+0x259/0x2d0 [scsi_mod]
- store_scan+0x2d2/0x390 [scsi_mod]
- dev_attr_store+0x43/0x80
- sysfs_kf_write+0xde/0x140
- kernfs_fop_write_iter+0x3ef/0x670
- vfs_write+0x506/0x1470
- ksys_write+0xfd/0x230
- __x64_sys_write+0x76/0xc0
- x64_sys_call+0x213/0x1810
- do_syscall_64+0xee/0xfc0
- entry_SYSCALL_64_after_hwframe+0x4b/0x53
+Note that the clcsock and smc_sock are two independent objects
+with separate refcounts. TCP stack holds a reference on the
+clcsock, which keeps it alive, but this does NOT prevent the
+smc_sock from being freed.
 
-Freed by task 4314:
- kasan_save_stack+0x2a/0x50
- kasan_save_track+0x18/0x40
- kasan_save_free_info+0x3f/0x50
- __kasan_slab_free+0x67/0x80
- kfree+0x225/0x6c0
- scsi_target_dev_release+0x3d/0x60 [scsi_mod]
- device_release+0xa3/0x220
- kobject_cleanup+0x105/0x3a0
- kobject_put+0x72/0xd0
- put_device+0x17/0x20
- scsi_device_dev_release+0xacf/0x12c0 [scsi_mod]
- device_release+0xa3/0x220
- kobject_cleanup+0x105/0x3a0
- kobject_put+0x72/0xd0
- put_device+0x17/0x20
- scsi_device_put+0x7f/0xc0 [scsi_mod]
- sdev_store_delete+0xa5/0x120 [scsi_mod]
- dev_attr_store+0x43/0x80
- sysfs_kf_write+0xde/0x140
- kernfs_fop_write_iter+0x3ef/0x670
- vfs_write+0x506/0x1470
- ksys_write+0xfd/0x230
- __x64_sys_write+0x76/0xc0
- x64_sys_call+0x213/0x1810
+Fix this by using RCU and refcount_inc_not_zero() to safely
+access smc_sock. Since smc_tcp_syn_recv_sock() is called in
+the TCP three-way handshake path, taking read_lock_bh on
+sk_callback_lock is too heavy and would not survive a SYN
+flood attack. Using rcu_read_lock() is much more lightweight.
 
-Reported-by: Ming Lei <ming.lei@redhat.com>
-Closes: https://lore.kernel.org/all/ZxdNvLNI8QaOfD2d@fedora/
-Reported-by: syzbot+6c905ab800f20cf4086c@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/all/68c13942.050a0220.2ff435.000b.GAE@google.com/
-Fixes: 5e928f77a09a ("PM: Introduce core framework for run-time PM of I/O devices (rev. 17)")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260312182720.2776083-1-bvanassche@acm.org
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+- Set SOCK_RCU_FREE on the SMC listen socket so that
+  smc_sock freeing is deferred until after the RCU grace
+  period. This guarantees the memory is still valid when
+  accessed inside rcu_read_lock().
+- Use rcu_read_lock() to protect reading sk_user_data.
+- Use refcount_inc_not_zero(&smc->sk.sk_refcnt) to pin the
+  smc_sock. If the refcount has already reached zero (close
+  path completed), it returns false and we bail out safely.
+
+Note: smc_hs_congested() has a similar lockless read of
+sk_user_data without rcu_read_lock(), but it only checks for
+NULL and accesses the global smc_hs_wq, never dereferencing
+any smc_sock field, so it is not affected.
+
+Reproducer was verified with mdelay injection and smc_run,
+the issue no longer occurs with this patch applied.
+
+[1] https://syzkaller.appspot.com/bug?extid=827ae2bfb3a3529333e9
+
+Fixes: 8270d9c21041 ("net/smc: Limit backlog connections")
+Reported-by: syzbot+827ae2bfb3a3529333e9@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/67eaf9b8.050a0220.3c3d88.004a.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260312092909.48325-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/smc/af_smc.c    | 23 +++++++++++++++++------
+ net/smc/smc.h       |  5 +++++
+ net/smc/smc_close.c |  2 +-
+ 3 files changed, 23 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index ad043709d7f3f..ca86d7bf804ca 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -1813,6 +1813,7 @@ void pm_runtime_reinit(struct device *dev)
- void pm_runtime_remove(struct device *dev)
- {
- 	__pm_runtime_disable(dev, false);
-+	flush_work(&dev->power.work);
- 	pm_runtime_reinit(dev);
+diff --git a/net/smc/af_smc.c b/net/smc/af_smc.c
+index c951e5c483b51..a609b220b215d 100644
+--- a/net/smc/af_smc.c
++++ b/net/smc/af_smc.c
+@@ -123,7 +123,14 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 	struct smc_sock *smc;
+ 	struct sock *child;
+ 
+-	smc = smc_clcsock_user_data(sk);
++	rcu_read_lock();
++	smc = smc_clcsock_user_data_rcu(sk);
++	if (!smc || !refcount_inc_not_zero(&smc->sk.sk_refcnt)) {
++		rcu_read_unlock();
++		smc = NULL;
++		goto drop;
++	}
++	rcu_read_unlock();
+ 
+ 	if (READ_ONCE(sk->sk_ack_backlog) + atomic_read(&smc->queued_smc_hs) >
+ 				sk->sk_max_ack_backlog)
+@@ -145,11 +152,14 @@ static struct sock *smc_tcp_syn_recv_sock(const struct sock *sk,
+ 		if (inet_csk(child)->icsk_af_ops == inet_csk(sk)->icsk_af_ops)
+ 			inet_csk(child)->icsk_af_ops = smc->ori_af_ops;
+ 	}
++	sock_put(&smc->sk);
+ 	return child;
+ 
+ drop:
+ 	dst_release(dst);
+ 	tcp_listendrop(sk);
++	if (smc)
++		sock_put(&smc->sk);
+ 	return NULL;
  }
  
+@@ -248,7 +258,7 @@ static void smc_fback_restore_callbacks(struct smc_sock *smc)
+ 	struct sock *clcsk = smc->clcsock->sk;
+ 
+ 	write_lock_bh(&clcsk->sk_callback_lock);
+-	clcsk->sk_user_data = NULL;
++	rcu_assign_sk_user_data(clcsk, NULL);
+ 
+ 	smc_clcsock_restore_cb(&clcsk->sk_state_change, &smc->clcsk_state_change);
+ 	smc_clcsock_restore_cb(&clcsk->sk_data_ready, &smc->clcsk_data_ready);
+@@ -862,7 +872,7 @@ static void smc_fback_replace_callbacks(struct smc_sock *smc)
+ 	struct sock *clcsk = smc->clcsock->sk;
+ 
+ 	write_lock_bh(&clcsk->sk_callback_lock);
+-	clcsk->sk_user_data = (void *)((uintptr_t)smc | SK_USER_DATA_NOCOPY);
++	__rcu_assign_sk_user_data_with_flags(clcsk, smc, SK_USER_DATA_NOCOPY);
+ 
+ 	smc_clcsock_replace_cb(&clcsk->sk_state_change, smc_fback_state_change,
+ 			       &smc->clcsk_state_change);
+@@ -2550,8 +2560,8 @@ static int smc_listen(struct socket *sock, int backlog)
+ 	 * smc-specific sk_data_ready function
+ 	 */
+ 	write_lock_bh(&smc->clcsock->sk->sk_callback_lock);
+-	smc->clcsock->sk->sk_user_data =
+-		(void *)((uintptr_t)smc | SK_USER_DATA_NOCOPY);
++	__rcu_assign_sk_user_data_with_flags(smc->clcsock->sk, smc,
++					     SK_USER_DATA_NOCOPY);
+ 	smc_clcsock_replace_cb(&smc->clcsock->sk->sk_data_ready,
+ 			       smc_clcsock_data_ready, &smc->clcsk_data_ready);
+ 	write_unlock_bh(&smc->clcsock->sk->sk_callback_lock);
+@@ -2572,10 +2582,11 @@ static int smc_listen(struct socket *sock, int backlog)
+ 		write_lock_bh(&smc->clcsock->sk->sk_callback_lock);
+ 		smc_clcsock_restore_cb(&smc->clcsock->sk->sk_data_ready,
+ 				       &smc->clcsk_data_ready);
+-		smc->clcsock->sk->sk_user_data = NULL;
++		rcu_assign_sk_user_data(smc->clcsock->sk, NULL);
+ 		write_unlock_bh(&smc->clcsock->sk->sk_callback_lock);
+ 		goto out;
+ 	}
++	sock_set_flag(sk, SOCK_RCU_FREE);
+ 	sk->sk_max_ack_backlog = backlog;
+ 	sk->sk_ack_backlog = 0;
+ 	sk->sk_state = SMC_LISTEN;
+diff --git a/net/smc/smc.h b/net/smc/smc.h
+index bcb57e60b2155..f480b956c45ef 100644
+--- a/net/smc/smc.h
++++ b/net/smc/smc.h
+@@ -302,6 +302,11 @@ static inline struct smc_sock *smc_clcsock_user_data(const struct sock *clcsk)
+ 	       ((uintptr_t)clcsk->sk_user_data & ~SK_USER_DATA_NOCOPY);
+ }
+ 
++static inline struct smc_sock *smc_clcsock_user_data_rcu(const struct sock *clcsk)
++{
++	return (struct smc_sock *)rcu_dereference_sk_user_data(clcsk);
++}
++
+ /* save target_cb in saved_cb, and replace target_cb with new_cb */
+ static inline void smc_clcsock_replace_cb(void (**target_cb)(struct sock *),
+ 					  void (*new_cb)(struct sock *),
+diff --git a/net/smc/smc_close.c b/net/smc/smc_close.c
+index 10219f55aad14..bb0313ef5f7c1 100644
+--- a/net/smc/smc_close.c
++++ b/net/smc/smc_close.c
+@@ -218,7 +218,7 @@ int smc_close_active(struct smc_sock *smc)
+ 			write_lock_bh(&smc->clcsock->sk->sk_callback_lock);
+ 			smc_clcsock_restore_cb(&smc->clcsock->sk->sk_data_ready,
+ 					       &smc->clcsk_data_ready);
+-			smc->clcsock->sk->sk_user_data = NULL;
++			rcu_assign_sk_user_data(smc->clcsock->sk, NULL);
+ 			write_unlock_bh(&smc->clcsock->sk->sk_callback_lock);
+ 			rc = kernel_sock_shutdown(smc->clcsock, SHUT_RDWR);
+ 		}
 -- 
 2.51.0
 
