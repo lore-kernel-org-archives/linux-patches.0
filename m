@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790DE3BE166;
-	Mon, 23 Mar 2026 16:24:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F96A3BD655;
+	Mon, 23 Mar 2026 16:24:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283044; cv=none; b=L1q6TP3Wxljg0shRqe+au9vyUesWeU4WHB1KApATzLzb9NQmTOrahH6JRxsHiAQj0dr5VkKkpacDzEw9CUJ3wa1mXyKJ9ZdTtVNs17eeYdILm6HKX02/3vhfGkDYjrkdSqSzwu11cs3d0cGQGli49PqTawuzHaRp0RxWPOdKpCk=
+	t=1774283047; cv=none; b=Ldb3MRXwCbIUi6gd2Zgo8wHDHxIha0xdczQfNvMufGeZhNojGUrI/saQw6c4yR6EA3Js5g0o2LHdS/+FZkPcrQtyfuYdBnNW+tf35CtRJA/xGyxCLW18DJNJwgEd1WvSUnitdmRFbaIuOzKHYgOJxcaR5K2gJlT4QkM/0yRsGPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283044; c=relaxed/simple;
-	bh=7UJtKZCTneT7WYdHS14JnuIG22ZAS+E61kOyS7oV1TA=;
+	s=arc-20240116; t=1774283047; c=relaxed/simple;
+	bh=1RNcVwuIbamLtaZctYjGHq2fly5iC0ejEexxHqV7Ma4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A4h1GWbB586DvytSpC4fbUZmOWNa4Z0J6JdeQbhMK9RjwJsi30RtU9PGYyWomFnR0hVBmfnupnb722Jz7VZa9j4qSRNT9nmH9vh7jyylinLfx4UcxEhnhLWysU/yYOqeC728UAj+NyElAAc/HVIdfwQAJ4moK/cnDhrLiUenLIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ryh0OZXz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uTH3ueSdRirvd4qop5HHLS06Buh9nFKO5twhLHS8/GgqbfgnThLO9j9kw5wTaqaCJhU5AjZAWA0eavicsBUuaAaTnjJxYgwAFud4+oHJTyPVYfOMvAzGviR1H0IfYOJiq7CVk99yCXxGG8f4BkOP5XI+2ZB5vVHEmKGWZmodc4k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sfjTO8ej; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ryh0OZXz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12481C4CEF7;
-	Mon, 23 Mar 2026 16:24:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sfjTO8ej"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DA2C4CEF7;
+	Mon, 23 Mar 2026 16:24:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283044;
-	bh=7UJtKZCTneT7WYdHS14JnuIG22ZAS+E61kOyS7oV1TA=;
+	s=korg; t=1774283047;
+	bh=1RNcVwuIbamLtaZctYjGHq2fly5iC0ejEexxHqV7Ma4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ryh0OZXzt1sEi75FwpCd0s36f0zHms3OgDUK8lDm4w9FV6lHkQu1Xks+l9xf9KZAm
-	 JluXi79gtYPcQebQVfJ78mUQNiEPRrBA7mu/uZslkixu0ucGMWiAb1uoHLNqaxkgFf
-	 9pvd+LEjhMixOFEB7sBKIRYXpRNDoRz4cah3d2zA=
+	b=sfjTO8ejl2cgba/Bj0oj5DYlVyk/q6dQ2e9/H4YQ4B29TjtMwxVdHgTD6ZrmqVU7N
+	 62NQAZxmfNcNt4aiApP6o6ZRqgRQLf7Iv0pOID2QEIcGq+Lw9zLzHKZOzHqV5tPxCU
+	 RznResKSMzyE+/lh8qvGsMsX8bEan7M1nNTWhplA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GangMin Kim <km.kim1503@gmail.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.1 382/481] net/sched: cls_u32: use skb_header_pointer_careful()
-Date: Mon, 23 Mar 2026 14:46:04 +0100
-Message-ID: <20260323134534.446465516@linuxfoundation.org>
+	Bart Van Assche <bvanassche@acm.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rajani Kantha <681739313@139.com>
+Subject: [PATCH 6.1 383/481] scsi: ufs: core: Fix handling of lrbp->cmd
+Date: Mon, 23 Mar 2026 14:46:05 +0100
+Message-ID: <20260323134534.473825700@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,66 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit cabd1a976375780dabab888784e356f574bbaed8 ]
+[ Upstream commit 549e91a9bbaa0ee480f59357868421a61d369770 ]
 
-skb_header_pointer() does not fully validate negative @offset values.
+ufshcd_queuecommand() may be called two times in a row for a SCSI command
+before it is completed. Hence make the following changes:
 
-Use skb_header_pointer_careful() instead.
+ - In the functions that submit a command, do not check the old value of
+   lrbp->cmd nor clear lrbp->cmd in error paths.
 
-GangMin Kim provided a report and a repro fooling u32_classify():
+ - In ufshcd_release_scsi_cmd(), do not clear lrbp->cmd.
 
-BUG: KASAN: slab-out-of-bounds in u32_classify+0x1180/0x11b0
-net/sched/cls_u32.c:221
+See also scsi_send_eh_cmnd().
 
-Fixes: fbc2e7d9cf49 ("cls_u32: use skb_header_pointer() to dereference data safely")
-Reported-by: GangMin Kim <km.kim1503@gmail.com>
-Closes: https://lore.kernel.org/netdev/CANn89iJkyUZ=mAzLzC4GdcAgLuPnUoivdLaOs6B9rq5_erj76w@mail.gmail.com/T/
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260128141539.3404400-3-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Bin Lan <lanbincn@139.com>
+This commit prevents that the following appears if a command times out:
+
+WARNING: at drivers/ufs/core/ufshcd.c:2965 ufshcd_queuecommand+0x6f8/0x9a8
+Call trace:
+ ufshcd_queuecommand+0x6f8/0x9a8
+ scsi_send_eh_cmnd+0x2c0/0x960
+ scsi_eh_test_devices+0x100/0x314
+ scsi_eh_ready_devs+0xd90/0x114c
+ scsi_error_handler+0x2b4/0xb70
+ kthread+0x16c/0x1e0
+
+Fixes: 5a0b0cb9bee7 ("[SCSI] ufs: Add support for sending NOP OUT UPIU")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230524203659.1394307-3-bvanassche@acm.org
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+[ Removed the change in ufshcd_advanced_rpmb_req_handler() due to missing
+commit:6ff265fc5ef6("scsi: ufs: core: bsg: Add advanced RPMB support in ufs_bsg") ]
+Signed-off-by: Rajani Kantha <681739313@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_u32.c |   13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ drivers/ufs/core/ufshcd.c |    6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
---- a/net/sched/cls_u32.c
-+++ b/net/sched/cls_u32.c
-@@ -159,10 +159,8 @@ next_knode:
- 			int toff = off + key->off + (off2 & key->offmask);
- 			__be32 *data, hdata;
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -2821,7 +2821,6 @@ static int ufshcd_queuecommand(struct Sc
+ 		(hba->clk_gating.state != CLKS_ON));
  
--			if (skb_headroom(skb) + toff > INT_MAX)
--				goto out;
--
--			data = skb_header_pointer(skb, toff, 4, &hdata);
-+			data = skb_header_pointer_careful(skb, toff, 4,
-+							  &hdata);
- 			if (!data)
- 				goto out;
- 			if ((*data ^ key->val) & key->mask) {
-@@ -212,8 +210,9 @@ check_terminal:
- 		if (ht->divisor) {
- 			__be32 *data, hdata;
+ 	lrbp = &hba->lrb[tag];
+-	WARN_ON(lrbp->cmd);
+ 	lrbp->cmd = cmd;
+ 	lrbp->task_tag = tag;
+ 	lrbp->lun = ufshcd_scsi_to_upiu_lun(cmd->device->lun);
+@@ -2837,7 +2836,6 @@ static int ufshcd_queuecommand(struct Sc
  
--			data = skb_header_pointer(skb, off + n->sel.hoff, 4,
--						  &hdata);
-+			data = skb_header_pointer_careful(skb,
-+							  off + n->sel.hoff,
-+							  4, &hdata);
- 			if (!data)
- 				goto out;
- 			sel = ht->divisor & u32_hash_fold(*data, &n->sel,
-@@ -227,7 +226,7 @@ check_terminal:
- 			if (n->sel.flags & TC_U32_VAROFFSET) {
- 				__be16 *data, hdata;
+ 	err = ufshcd_map_sg(hba, lrbp);
+ 	if (err) {
+-		lrbp->cmd = NULL;
+ 		ufshcd_release(hba);
+ 		goto out;
+ 	}
+@@ -3047,7 +3045,7 @@ static int ufshcd_exec_dev_cmd(struct uf
+ 	down_read(&hba->clk_scaling_lock);
  
--				data = skb_header_pointer(skb,
-+				data = skb_header_pointer_careful(skb,
- 							  off + n->sel.offoff,
- 							  2, &hdata);
- 				if (!data)
+ 	lrbp = &hba->lrb[tag];
+-	WARN_ON(lrbp->cmd);
++	lrbp->cmd = NULL;
+ 	err = ufshcd_compose_dev_cmd(hba, lrbp, cmd_type, tag);
+ 	if (unlikely(err))
+ 		goto out;
+@@ -5357,7 +5355,6 @@ static void ufshcd_release_scsi_cmd(stru
+ 	struct scsi_cmnd *cmd = lrbp->cmd;
+ 
+ 	scsi_dma_unmap(cmd);
+-	lrbp->cmd = NULL;	/* Mark the command as completed. */
+ 	ufshcd_release(hba);
+ 	ufshcd_clk_scaling_update_busy(hba);
+ }
+@@ -6936,7 +6933,6 @@ static int ufshcd_issue_devman_upiu_cmd(
+ 	down_read(&hba->clk_scaling_lock);
+ 
+ 	lrbp = &hba->lrb[tag];
+-	WARN_ON(lrbp->cmd);
+ 	lrbp->cmd = NULL;
+ 	lrbp->task_tag = tag;
+ 	lrbp->lun = 0;
 
 
