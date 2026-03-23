@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D35E20125F;
-	Mon, 23 Mar 2026 13:50:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFD1366570;
+	Mon, 23 Mar 2026 13:50:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273834; cv=none; b=VGe+94B19XgPyWCzhEo8XrW+AS13bUYbREP/fyJ2Dp1P8q9NSpzr0Lmn+XWoY+MhAL7FBQ6EsDkmZvIQP0rc/+roQwzY57MzPksBUDVSXQLKLdnVtMPOyR0pS+nZT6jFAhdayJWC/p9lPauQbzHP277DC579absfUtScV3qLbsU=
+	t=1774273837; cv=none; b=ENZMWZEcAkz/14yxOytGTip5zAFPNdFBb0ab1g1KjlVLKFk4RXFUryyZy0QVNFGlW7JpaC/WozAfrY25fdm9ZQfCkKCOOl/yil9Mgs9LdRW9my8ULC9gmm2ft3devhTMPSdStE/vyq3A1bFcXzOrMjMX8u3I24qCRJMQn+XT81M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273834; c=relaxed/simple;
-	bh=5t4M1XlwLUSorJna0EilYbU/ionyLIzSJxruZ7Lxv7M=;
+	s=arc-20240116; t=1774273837; c=relaxed/simple;
+	bh=fM/FHuzAeKcxyNS4YNrbL7z4FP7VvSIqlm4jjzDuLMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WRsmsr9+BNWQDvdp8cKzVBbYeAOMeKwMJnuStg8Ogzx7sa42HBY4Wi6+qYc4RwQ4g4s7MBGM91KemmCxQTV0LDu+sEZgcFFa3pZJjA/xtPu25Kv1ZahdBKSBsoTBdSqLL2tQDhJnM7GHgMdzjuy8pXyw9YHlN+51wHCx3ryWfew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VR1jSAYP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UARAh3+H4wEq07Nw3APjQ5xASrfNchORQ1avCdZp+db+dnjtmf5RFnNNLT2gHcpwQrVf9uHGWZ4sdujwKsdSHaCtOhGvHPl4W+qRvuFT0yGAOjxrtv9vcuU9PQYAMYWEzdNTVLsTw3vIl942PcXsqvRDWW5UMvXNAXPERtLmW+w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RsY0z5Gj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VR1jSAYP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61328C4CEF7;
-	Mon, 23 Mar 2026 13:50:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RsY0z5Gj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77774C4CEF7;
+	Mon, 23 Mar 2026 13:50:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273833;
-	bh=5t4M1XlwLUSorJna0EilYbU/ionyLIzSJxruZ7Lxv7M=;
+	s=korg; t=1774273836;
+	bh=fM/FHuzAeKcxyNS4YNrbL7z4FP7VvSIqlm4jjzDuLMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VR1jSAYPaER+5KbRELbK7+ratmmM18mtCvQmuZfbg8fEyeQvsyEK5ThFVeYXF0myY
-	 5R9KC4AKt4c2t18UgCQnOHKOb7AQwYMlwaoFbiiiXke54n/bYD3SauCXkDVmUbumYH
-	 VpBXASb3dUz4z+NfYbJU7tsIDxH2vHK7rGUIo8xU=
+	b=RsY0z5GjUGKFNyiU3PylY+KWh+TDNkObQX1UGa3e2drjF+hgnTqUl91ZtqYDmSbQY
+	 BY9SssAsvSTz6b1ZjaG/VaP7mhPb/1JCTjUObbGs9DNGtssHgxyJvLMQVxLyloP0j+
+	 5pGWdFeWxn6lV2uW9oYjY00x+LUeQ0bllGyCm0Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cal Peake <cp@absolutedigital.net>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>
-Subject: [PATCH 6.19 023/220] drm/amd: Fix hang on amdgpu unload by using pci_dev_is_disconnected()
-Date: Mon, 23 Mar 2026 14:43:20 +0100
-Message-ID: <20260323134505.316223428@linuxfoundation.org>
+	Oscar Santos <ossantos@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.19 024/220] smb: client: fix krb5 mount with username option
+Date: Mon, 23 Mar 2026 14:43:21 +0100
+Message-ID: <20260323134505.345160349@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,62 +53,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit f7afda7fcd169a9168695247d07ad94cf7b9798f upstream.
+commit 12b4c5d98cd7ca46d5035a57bcd995df614c14e1 upstream.
 
-The commit 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise
-disconnect") introduced early KFD cleanup when drm_dev_is_unplugged()
-returns true. However, this causes hangs during normal module unload
-(rmmod amdgpu).
+Customer reported that some of their krb5 mounts were failing against
+a single server as the client was trying to mount the shares with
+wrong credentials.  It turned out the client was reusing SMB session
+from first mount to try mounting the other shares, even though a
+different username= option had been specified to the other mounts.
 
-The issue occurs because drm_dev_unplug() is called in amdgpu_pci_remove()
-for all removal scenarios, not just surprise disconnects. This was done
-intentionally in commit 39934d3ed572 ("Revert "drm/amdgpu: TA unload
-messages are not actually sent to psp when amdgpu is uninstalled"") to
-fix IGT PCI software unplug test failures. As a result,
-drm_dev_is_unplugged() returns true even during normal module unload,
-triggering the early KFD cleanup inappropriately.
+By using username mount option along with sec=krb5 to search for
+principals from keytab is supported by cifs.upcall(8) since
+cifs-utils-4.8.  So fix this by matching username mount option in
+match_session() even with Kerberos.
 
-The correct check should distinguish between:
-- Actual surprise disconnect (eGPU unplugged): pci_dev_is_disconnected()
-  returns true
-- Normal module unload (rmmod): pci_dev_is_disconnected() returns false
+For example, the second mount below should fail with -ENOKEY as there
+is no 'foobar' principal in keytab (/etc/krb5.keytab).  The client
+ends up reusing SMB session from first mount to perform the second
+one, which is wrong.
 
-Replace drm_dev_is_unplugged() with pci_dev_is_disconnected() to ensure
-the early cleanup only happens during true hardware disconnect events.
+```
+$ ktutil
+ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
+Password for testuser@ZELDA.TEST:
+ktutil:  write_kt /etc/krb5.keytab
+ktutil:  quit
+$ klist -ke
+Keytab name: FILE:/etc/krb5.keytab
+KVNO Principal
+ ---- ----------------------------------------------------------------
+   1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
+$ mount.cifs //w22-root2/scratch /mnt/1 -o sec=krb5,username=testuser
+$ mount.cifs //w22-root2/scratch /mnt/2 -o sec=krb5,username=foobar
+$ mount -t cifs | grep -Po 'username=\K\w+'
+testuser
+testuser
+```
 
+Reported-by: Oscar Santos <ossantos@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
-Reported-by: Cal Peake <cp@absolutedigital.net>
-Closes: https://lore.kernel.org/all/b0c22deb-c0fa-3343-33cf-fd9a77d7db99@absolutedigital.net/
-Fixes: 6a23e7b4332c ("drm/amd: Clean up kfd node on surprise disconnect")
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -5081,7 +5081,7 @@ void amdgpu_device_fini_hw(struct amdgpu
- 	 * before ip_fini_early to prevent kfd locking refcount issues by calling
- 	 * amdgpu_amdkfd_suspend()
- 	 */
--	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+	if (pci_dev_is_disconnected(adev->pdev))
- 		amdgpu_amdkfd_device_fini_sw(adev);
- 
- 	amdgpu_device_ip_fini_early(adev);
-@@ -5093,7 +5093,7 @@ void amdgpu_device_fini_hw(struct amdgpu
- 
- 	amdgpu_gart_dummy_page_fini(adev);
- 
--	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+	if (pci_dev_is_disconnected(adev->pdev))
- 		amdgpu_device_unmap_mmio(adev);
- 
- }
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1952,6 +1952,10 @@ static int match_session(struct cifs_ses
+ 	case Kerberos:
+ 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
+ 			return 0;
++		if (strncmp(ses->user_name ?: "",
++			    ctx->username ?: "",
++			    CIFS_MAX_USERNAME_LEN))
++			return 0;
+ 		break;
+ 	case NTLMv2:
+ 	case RawNTLMSSP:
 
 
