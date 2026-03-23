@@ -1,41 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC633BAD95;
-	Mon, 23 Mar 2026 16:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E62D27B340;
+	Mon, 23 Mar 2026 16:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282278; cv=none; b=uBPb6nyD8pYeBvgP25s4z2i8TdvoCHtiGE5ECSC9aTR8GRZNfmA/rc6db86O1C7hhlnCYClAj5gkJ0J8tmH/mdNbzv8Zjj0pDD7vPW5+M7xf06A+TOpVvxOeaLf25y1K56WmnJFjoBNfeomzeqYi3jJoHfQc0LYgUEJI62nUmu0=
+	t=1774282281; cv=none; b=cQ4PgzmfCx0xXaGmZ81KlF8CftWvLmbwwTGQRY3v3IR5kqRTxl/tAr0mQo7iVBW8ChMsgrocGcI0uc0yKCPTOMBTH6OYXn+tEbQH5CaiomPf4dM7fVJVIpPCq+ufRawIYvHLtja+Dz8oKiAMP0YbX0dZKV2Juiw1g0mDKDXPJhU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282278; c=relaxed/simple;
-	bh=DjWM8Fig+RLD82hp4mWp3EWGl6o9GXUAQkNRLq+o+2o=;
+	s=arc-20240116; t=1774282281; c=relaxed/simple;
+	bh=NhCf3Uq2XdDay+pOToS++ou2A9QG8o5zcR0KSKSSrjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SsDMWm4x8o6Ic5cxGrjOxvk5elowXoJC6m9xte5vquvhzZU5bO5FKmLz9Y6VHtG04YunM58L1OceWmKbaA2dobyOVtvYssH2QWtJVlOGNoFyz+S5kpWVkcRybmFq7V36VZDvDCqH13YXyvo+064rVjRIAx5CdWqdlrevP3ULA74=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dCyVXx4S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p+abXdHjmwN6I/17xQEoWqeyfPUzGs3p0ml5WF183P1GH3xC/S7myh4bS/AP61yF0N+SMgNP6Dkfvp39KPAiCuXooQf9U5ECsmvw56+UaZ9buvdNUg0cm1NOZYkBVjW3EmaI/Jj5xHAeqy91csvJegiyvjRP0/h2yIej9i/Cd/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mY5yg7y9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dCyVXx4S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A82AC4CEF7;
-	Mon, 23 Mar 2026 16:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mY5yg7y9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B33C4CEF7;
+	Mon, 23 Mar 2026 16:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282278;
-	bh=DjWM8Fig+RLD82hp4mWp3EWGl6o9GXUAQkNRLq+o+2o=;
+	s=korg; t=1774282280;
+	bh=NhCf3Uq2XdDay+pOToS++ou2A9QG8o5zcR0KSKSSrjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dCyVXx4SF6nCu+wKt/C6JnxIoKDHC2IAK99eiihSoIOjQT8ZuGhwDiENQEeXeejlF
-	 stiWDFTWF2zz9PazLD7Hvw6hf51e7SSLVCh2gvLxTEvGxSxmgUXS3rPB8V6dI1r7l3
-	 Y3xZWjfwurg/cyBEMoFpsmdCDR8vKhKzrKBqm4sU=
+	b=mY5yg7y9pzGCz+sS9uKg7m/HJrRcQvUlWtppe2/REywR9k18dbg042aMqZw9wn/Hd
+	 JCxaUsbDwcoJ9JZ7DRylZNu/3kdocUDkulKxrdPLUv2Hm9GO9I6yWZY2AgGQvQsk5v
+	 1y8cb5ShyFHhtMr9by6LjpqZ3CSmSzLj3YJXPdZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 044/481] ext4: subdivide EXT4_EXT_DATA_VALID1
-Date: Mon, 23 Mar 2026 14:40:26 +0100
-Message-ID: <20260323134526.308248603@linuxfoundation.org>
+	Xiaoli Feng <xifeng@redhat.com>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 091/481] smb: client: fix broken multichannel with krb5+signing
+Date: Mon, 23 Mar 2026 14:41:13 +0100
+Message-ID: <20260323134527.496502676@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,90 +54,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Paulo Alcantara <pc@manguebit.org>
 
-[ Upstream commit 22784ca541c0f01c5ebad14e8228298dc0a390ed ]
+commit d9d1e319b39ea685ede59319002d567c159d23c3 upstream.
 
-When splitting an extent, if the EXT4_GET_BLOCKS_CONVERT flag is set and
-it is necessary to split the target extent in the middle,
-ext4_split_extent() first handles splitting the latter half of the
-extent and passes the EXT4_EXT_DATA_VALID1 flag. This flag implies that
-all blocks before the split point contain valid data; however, this
-assumption is incorrect.
+When mounting a share with 'multichannel,max_channels=n,sec=krb5i',
+the client was duplicating signing key for all secondary channels,
+thus making the server fail all commands sent from secondary channels
+due to bad signatures.
 
-Therefore, subdivid EXT4_EXT_DATA_VALID1 into
-EXT4_EXT_DATA_ENTIRE_VALID1 and EXT4_EXT_DATA_PARTIAL_VALID1, which
-indicate that the first half of the extent is either entirely valid or
-only partially valid, respectively. These two flags cannot be set
-simultaneously.
+Every channel has its own signing key, so when establishing a new
+channel with krb5 auth, make sure to use the new session key as the
+derived key to generate channel's signing key in SMB2_auth_kerberos().
 
-This patch does not use EXT4_EXT_DATA_PARTIAL_VALID1, it only replaces
-EXT4_EXT_DATA_VALID1 with EXT4_EXT_DATA_ENTIRE_VALID1 at the location
-where it is set, no logical changes.
+Repro:
 
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Message-ID: <20251129103247.686136-2-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+$ mount.cifs //srv/share /mnt -o multichannel,max_channels=4,sec=krb5i
+$ sleep 5
+$ umount /mnt
+$ dmesg
+  ...
+  CIFS: VFS: sign fail cmd 0x5 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+  CIFS: VFS: sign fail cmd 0x5 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+  CIFS: VFS: sign fail cmd 0x4 message id 0x2
+  CIFS: VFS: \\srv SMB signature verification returned error = -13
+
+Reported-by: Xiaoli Feng <xifeng@redhat.com>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ fs/smb/client/smb2pdu.c |   22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 6da0bf3cf406d..e2f9c27c7e161 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -43,8 +43,13 @@
- #define EXT4_EXT_MARK_UNWRIT1	0x2  /* mark first half unwritten */
- #define EXT4_EXT_MARK_UNWRIT2	0x4  /* mark second half unwritten */
+--- a/fs/smb/client/smb2pdu.c
++++ b/fs/smb/client/smb2pdu.c
+@@ -1484,19 +1484,17 @@ SMB2_auth_kerberos(struct SMB2_sess_data
+ 	is_binding = (ses->ses_status == SES_GOOD);
+ 	spin_unlock(&ses->ses_lock);
  
--#define EXT4_EXT_DATA_VALID1	0x8  /* first half contains valid data */
--#define EXT4_EXT_DATA_VALID2	0x10 /* second half contains valid data */
-+/* first half contains valid data */
-+#define EXT4_EXT_DATA_ENTIRE_VALID1	0x8   /* has entirely valid data */
-+#define EXT4_EXT_DATA_PARTIAL_VALID1	0x10  /* has partially valid data */
-+#define EXT4_EXT_DATA_VALID1		(EXT4_EXT_DATA_ENTIRE_VALID1 | \
-+					 EXT4_EXT_DATA_PARTIAL_VALID1)
-+
-+#define EXT4_EXT_DATA_VALID2	0x20 /* second half contains valid data */
+-	/* keep session key if binding */
+-	if (!is_binding) {
+-		kfree_sensitive(ses->auth_key.response);
+-		ses->auth_key.response = kmemdup(msg->data, msg->sesskey_len,
+-						 GFP_KERNEL);
+-		if (!ses->auth_key.response) {
+-			cifs_dbg(VFS, "Kerberos can't allocate (%u bytes) memory\n",
+-				 msg->sesskey_len);
+-			rc = -ENOMEM;
+-			goto out_put_spnego_key;
+-		}
+-		ses->auth_key.len = msg->sesskey_len;
++	kfree_sensitive(ses->auth_key.response);
++	ses->auth_key.response = kmemdup(msg->data,
++					 msg->sesskey_len,
++					 GFP_KERNEL);
++	if (!ses->auth_key.response) {
++		cifs_dbg(VFS, "%s: can't allocate (%u bytes) memory\n",
++			 __func__, msg->sesskey_len);
++		rc = -ENOMEM;
++		goto out_put_spnego_key;
+ 	}
++	ses->auth_key.len = msg->sesskey_len;
  
- static __le32 ext4_extent_block_csum(struct inode *inode,
- 				     struct ext4_extent_header *eh)
-@@ -3175,8 +3180,9 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 	unsigned int ee_len, depth;
- 	int err = 0;
- 
--	BUG_ON((split_flag & (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2)) ==
--	       (EXT4_EXT_DATA_VALID1 | EXT4_EXT_DATA_VALID2));
-+	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) == EXT4_EXT_DATA_VALID1);
-+	BUG_ON((split_flag & EXT4_EXT_DATA_VALID1) &&
-+	       (split_flag & EXT4_EXT_DATA_VALID2));
- 
- 	/* Do not cache extents that are in the process of being modified. */
- 	flags |= EXT4_EX_NOCACHE;
-@@ -3367,7 +3373,7 @@ static int ext4_split_extent(handle_t *handle,
- 			split_flag1 |= EXT4_EXT_MARK_UNWRIT1 |
- 				       EXT4_EXT_MARK_UNWRIT2;
- 		if (split_flag & EXT4_EXT_DATA_VALID2)
--			split_flag1 |= EXT4_EXT_DATA_VALID1;
-+			split_flag1 |= EXT4_EXT_DATA_ENTIRE_VALID1;
- 		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk + map->m_len, split_flag1, flags1);
- 		if (IS_ERR(path)) {
-@@ -3731,7 +3737,7 @@ static int ext4_split_convert_extents(handle_t *handle,
- 
- 	/* Convert to unwritten */
- 	if (flags & EXT4_GET_BLOCKS_CONVERT_UNWRITTEN) {
--		split_flag |= EXT4_EXT_DATA_VALID1;
-+		split_flag |= EXT4_EXT_DATA_ENTIRE_VALID1;
- 	/* Convert to initialized */
- 	} else if (flags & EXT4_GET_BLOCKS_CONVERT) {
- 		split_flag |= ee_block + ee_len <= eof_block ?
--- 
-2.51.0
-
+ 	sess_data->iov[1].iov_base = msg->data + msg->sesskey_len;
+ 	sess_data->iov[1].iov_len = msg->secblob_len;
 
 
