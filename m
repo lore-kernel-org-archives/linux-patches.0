@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562CA40DFC4;
-	Mon, 23 Mar 2026 14:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 735533B19BA;
+	Mon, 23 Mar 2026 14:02:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274549; cv=none; b=Eny+ToosJVo9JGzbnHEoHUvaocKY8Hc8UDm0LECYJFy95r7Vo7PMTC/OshQ+ETepE2pPjfb08EvzJdrDnsry3PjoDNd6Icp+ibY8Y9sRZPphMA+F5iVKA2Nz39zqWjku1qTc3G1cCemc5Snb5LK556x06NLEXIkHd/KCd4xilHs=
+	t=1774274552; cv=none; b=eJVxpy3XWuBP3RBMYP/r+xxWtDCuj3lxJB08vtuh4NCRvNb04mVyLBQaJtUI/srJ70gAgdIIQMx2m4WFeQ3TKLKB60M9Bj9Iw7Kwc7F+mi+EnNbQruTsRpBLshMziMGIllyIRZfIWhuM0X7Dud6ZJ6owPN3zJKwOf7TRm3p3Sqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274549; c=relaxed/simple;
-	bh=2RQRbrDwnr0lHBnybZlTD1KHrlvxNhkTnMF6UlY2mNs=;
+	s=arc-20240116; t=1774274552; c=relaxed/simple;
+	bh=rWbkPG5agv8t0cLW8YmwnUQA/OXn+FggLma40faK/h8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=vAAxiyiUyU9yZ60OGEekeOB4l9J744zCvUQd+ycflh1y7J+rX4VGeXPT/Q0w6m+ZNY+ez0Yu30SonL9ZlciiTiNtk3zL8qTGXCs+VeBFUfjuC0ez/weNwqGDem6nXSzgj0FLlbX1Qm7vGIjk8Cc4HUnCZT4swEkVmUqqEKG+yx0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VxpaKV9c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=fpSnaz9HaDt/xsn7BEYjR5oaNWTILXE2lQ3Cp9VUfyBMnoHsszOthN8DISgcbgvxQ2DVIEgiHOUcnbjC00GRMUH8rAApDH0M+Oy5R1wqoA61/HhB5Y/0CkzctMEpFLpO+5nZhMHyG9k91tFR8yaADIrqcuDL5HU7DtmxWzifKfk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=faFQDAFo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VxpaKV9c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCC02C4CEF7;
-	Mon, 23 Mar 2026 14:02:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="faFQDAFo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E09F2C4CEF7;
+	Mon, 23 Mar 2026 14:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274549;
-	bh=2RQRbrDwnr0lHBnybZlTD1KHrlvxNhkTnMF6UlY2mNs=;
+	s=korg; t=1774274552;
+	bh=rWbkPG5agv8t0cLW8YmwnUQA/OXn+FggLma40faK/h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VxpaKV9csHPRJuaSGZx8nJdhvuvzCNPPuwy+jM2AX7H4XXAjivPWqRD6yuDKB2aR1
-	 e114Vj3VnpWa3boA5ufmg0GlQcErUpBfT9ydVjXubD0JgDSFZwbE5wZ5mlScUDGWt9
-	 JRGzEg02sIxiRul3AXD+f+bHySotS1Sqa5XySo5k=
+	b=faFQDAFoOO+72wxgoLOl6LkITPtZ4xQ67Dv9A3iuEKCzf/bJU/Er2hJulqT9JAZKa
+	 mciw4K6oQ89C4k0dzZcAhKiscWs6fzrOJYomBUaqFmXxJt/rjrMl73QTImR4P2dGlu
+	 djwydSUgcZ6/b1RWb/vtIB64U69NkAhcckzOh20k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 031/212] LoongArch: Check return values for set_memory_{rw,rox}
-Date: Mon, 23 Mar 2026 14:44:12 +0100
-Message-ID: <20260323134504.750031229@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Jiri Kosina <jkosina@suse.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
+	Benjamin Tissoires <bentiss@kernel.org>
+Subject: [PATCH 6.18 004/212] selftests/hid: fix compilation when bpf_wq and hid_device are not exported
+Date: Mon, 23 Mar 2026 14:43:45 +0100
+Message-ID: <20260323134503.911876855@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -45,60 +46,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Benjamin Tissoires <bentiss@kernel.org>
 
-[ Upstream commit 431ce839dad66d0d56fb604785452c6a57409f35 ]
+commit 5d4c6c132ea9a967d48890dd03e6a786c060e968 upstream.
 
-set_memory_rw() and set_memory_rox() may fail, so we should check the
-return values and return immediately in larch_insn_text_copy().
+This can happen in situations when CONFIG_HID_SUPPORT is set to no, or
+some complex situations where struct bpf_wq is not exported.
 
+So do the usual dance of hiding them before including vmlinux.h, and
+then redefining them and make use of CO-RE to have the correct offsets.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Closes: https://lore.kernel.org/oe-kbuild-all/202603111558.KLCIxsZB-lkp@intel.com/
+Fixes: fe8d561db3e8 ("selftests/hid: add wq test for hid_bpf_input_report()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
-[ kept `stop_machine()` instead of `stop_machine_cpuslocked()` ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Acked-by: Jiri Kosina <jkosina@suse.com>
+Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/kernel/inst.c |   15 +++++++++++++--
- 1 file changed, 13 insertions(+), 2 deletions(-)
+ tools/testing/selftests/hid/progs/hid_bpf_helpers.h |   12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/arch/loongarch/kernel/inst.c
-+++ b/arch/loongarch/kernel/inst.c
-@@ -260,6 +260,7 @@ static int text_copy_cb(void *data)
- int larch_insn_text_copy(void *dst, void *src, size_t len)
- {
- 	int ret = 0;
-+	int err = 0;
- 	size_t start, end;
- 	struct insn_copy copy = {
- 		.dst = dst,
-@@ -271,9 +272,19 @@ int larch_insn_text_copy(void *dst, void
- 	start = round_down((size_t)dst, PAGE_SIZE);
- 	end   = round_up((size_t)dst + len, PAGE_SIZE);
+--- a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
++++ b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
+@@ -6,8 +6,10 @@
+ #define __HID_BPF_HELPERS_H
  
--	set_memory_rw(start, (end - start) / PAGE_SIZE);
-+	err = set_memory_rw(start, (end - start) / PAGE_SIZE);
-+	if (err) {
-+		pr_info("%s: set_memory_rw() failed\n", __func__);
-+		return err;
-+	}
-+
- 	ret = stop_machine(text_copy_cb, &copy, cpu_online_mask);
--	set_memory_rox(start, (end - start) / PAGE_SIZE);
-+
-+	err = set_memory_rox(start, (end - start) / PAGE_SIZE);
-+	if (err) {
-+		pr_info("%s: set_memory_rox() failed\n", __func__);
-+		return err;
-+	}
+ /* "undefine" structs and enums in vmlinux.h, because we "override" them below */
++#define bpf_wq bpf_wq___not_used
+ #define hid_bpf_ctx hid_bpf_ctx___not_used
+ #define hid_bpf_ops hid_bpf_ops___not_used
++#define hid_device hid_device___not_used
+ #define hid_report_type hid_report_type___not_used
+ #define hid_class_request hid_class_request___not_used
+ #define hid_bpf_attach_flags hid_bpf_attach_flags___not_used
+@@ -27,8 +29,10 @@
  
- 	return ret;
- }
+ #include "vmlinux.h"
+ 
++#undef bpf_wq
+ #undef hid_bpf_ctx
+ #undef hid_bpf_ops
++#undef hid_device
+ #undef hid_report_type
+ #undef hid_class_request
+ #undef hid_bpf_attach_flags
+@@ -55,6 +59,14 @@ enum hid_report_type {
+ 	HID_REPORT_TYPES,
+ };
+ 
++struct hid_device {
++	unsigned int id;
++} __attribute__((preserve_access_index));
++
++struct bpf_wq {
++	__u64 __opaque[2];
++};
++
+ struct hid_bpf_ctx {
+ 	struct hid_device *hid;
+ 	__u32 allocated_size;
 
 
