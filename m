@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337313B3887;
-	Mon, 23 Mar 2026 14:04:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4575D23BCFD;
+	Mon, 23 Mar 2026 14:04:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274664; cv=none; b=ldgcfAeqe5CJaa3S7bWXWmUH8yVpO+V+GrfsJzhPCsIgMVp0Xfrv4B5wyrk+6XHjWbLYkMX0vKuze50xsAVgYtc79aUL/emTBF/N+WfPFCXdpkcVjL5gpXr0JCBVmtUf9wHBxoFOZqdj3LtQVncFXFzAzWSE4ORWNdajtz0m8YY=
+	t=1774274667; cv=none; b=arkW7mdflgBBcSAJ7v+t3//uDFkOk5XxKkdnZkvnn2l+DCwIz4JXqKrY2+3fgoGkvrlrgudnwfy/S5CNpkDUQ6FVagiZ8W0ZtARp+nD7cXMT0Exe5fDcVBY3KZRAalbvUCOo4jLUyrdsdfX8bO3Wo335ExHS5HgK4S6534q2Www=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274664; c=relaxed/simple;
-	bh=VfHdnWVsml7icsseu7xFQPhldr1/AC20Hiuzs/kwELQ=;
+	s=arc-20240116; t=1774274667; c=relaxed/simple;
+	bh=PgaB0uceDATYatEzhCR59mT4oJPE7rowdup3pzCU5gI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=HbTrWyrcZXPexfq2btZYOtRkeTc8I2ExHgXHTEftYdO86V2D4O+bMXtLDTJ2w3oES/YBg3UFnSPQsd/NxIAkQKxKHzbFszFACQSn1PI0ijqTl5sW3TYj+rbig4nZMCYfXDnXHn2E3tjLuBLo2frUWlaZ/wLIUt8b4TLdsaSjCpg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gUjl7Fs0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B2ePGhtuaeA8KhaXySyCPE/kk5WAjbk1Aa9F3b6vhyTMYEaQ23Ul3xZgMG/XzX1g5t7S4kX3OnZ7maKLDel5LZue5GQO8/dVgSCtUghEyDYKuKsFFe/GHyZfaPlz0FJoB/1TRuVlbon6HwdCWhkMr/dJ2SAmIYUDwJw1fKa/zl0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N29Fe2EN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gUjl7Fs0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAED7C4CEF7;
-	Mon, 23 Mar 2026 14:04:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N29Fe2EN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD54BC2BCB4;
+	Mon, 23 Mar 2026 14:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274664;
-	bh=VfHdnWVsml7icsseu7xFQPhldr1/AC20Hiuzs/kwELQ=;
+	s=korg; t=1774274667;
+	bh=PgaB0uceDATYatEzhCR59mT4oJPE7rowdup3pzCU5gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUjl7Fs0Ldl5iL0qLeYatk561i/uBsrfJHTKLnFPrBAVFW5OptUd5PYKCLxOpruF5
-	 5cMWAaI7mv3ZnPJdmNco0FDy8bRgRshPdGB5vJChFrFwPTxThfu1XfE8SWZ8Nl1eAe
-	 nZEKBslrA7T6+081ZYWDX/WSl51dMAL6tl+HNzWM=
+	b=N29Fe2ENG/YjelpC/WV2GIBv3NE0AAd3xcljUmBwjpYtHDg2KMjUn8p1no8eJIjdP
+	 wVpzgYu2uBP3Vnu+yoglJLQEEvZapz3vzg8D4M/DYgadCmJloRVutSH1q1Lm0Monjc
+	 IDMas3w43Tma1iord4Rm3TkM+Z66bvU/z+w8vKno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Raul E Rangel <rrangel@google.com>
-Subject: [PATCH 6.18 068/212] serial: 8250: Fix TX deadlock when using DMA
-Date: Mon, 23 Mar 2026 14:44:49 +0100
-Message-ID: <20260323134505.919588860@linuxfoundation.org>
+	Peng Zhang <zhangpeng.00@bytedance.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Alban Bedel <alban.bedel@lht.dlh.de>,
+	Maximilian Lueer <maximilian.lueer@lht.dlh.de>
+Subject: [PATCH 6.18 069/212] serial: 8250: always disable IRQ during THRE test
+Date: Mon, 23 Mar 2026 14:44:50 +0100
+Message-ID: <20260323134505.950339978@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,54 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raul E Rangel <rrangel@chromium.org>
+From: Peng Zhang <zhangpeng.00@bytedance.com>
 
-commit a424a34b8faddf97b5af41689087e7a230f79ba7 upstream.
+commit 24b98e8664e157aff0814a0f49895ee8223f382f upstream.
 
-`dmaengine_terminate_async` does not guarantee that the
-`__dma_tx_complete` callback will run. The callback is currently the
-only place where `dma->tx_running` gets cleared. If the transaction is
-canceled and the callback never runs, then `dma->tx_running` will never
-get cleared and we will never schedule new TX DMA transactions again.
+commit 039d4926379b ("serial: 8250: Toggle IER bits on only after irq
+has been set up") moved IRQ setup before the THRE test, in combination
+with commit 205d300aea75 ("serial: 8250: change lock order in
+serial8250_do_startup()") the interrupt handler can run during the
+test and race with its IIR reads. This can produce wrong THRE test
+results and cause spurious registration of the
+serial8250_backup_timeout timer. Unconditionally disable the IRQ for
+the short duration of the test and re-enable it afterwards to avoid
+the race.
 
-This change makes it so we clear `dma->tx_running` after we terminate
-the DMA transaction. This is "safe" because `serial8250_tx_dma_flush`
-is holding the UART port lock. The first thing the callback does is also
-grab the UART port lock, so access to `dma->tx_running` is serialized.
-
-Fixes: 9e512eaaf8f4 ("serial: 8250: Fix fifo underflow on flush")
+Fixes: 039d4926379b ("serial: 8250: Toggle IER bits on only after irq has been set up")
+Depends-on: 205d300aea75 ("serial: 8250: change lock order in serial8250_do_startup()")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Raul E Rangel <rrangel@google.com>
-Link: https://patch.msgid.link/20260209135815.1.I16366ecb0f62f3c96fe3dd5763fcf6f3c2b4d8cd@changeid
+Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
+Reviewed-by: Muchun Song <songmuchun@bytedance.com>
+Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
+Tested-by: Maximilian Lueer <maximilian.lueer@lht.dlh.de>
+Link: https://patch.msgid.link/20260224121639.579404-1-alban.bedel@lht.dlh.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/tty/serial/8250/8250_port.c |    6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -162,7 +162,22 @@ void serial8250_tx_dma_flush(struct uart
- 	 */
- 	dma->tx_size = 0;
+--- a/drivers/tty/serial/8250/8250_port.c
++++ b/drivers/tty/serial/8250/8250_port.c
+@@ -2147,8 +2147,7 @@ static void serial8250_THRE_test(struct
+ 	if (up->port.flags & UPF_NO_THRE_TEST)
+ 		return;
  
-+	/*
-+	 * We can't use `dmaengine_terminate_sync` because `uart_flush_buffer` is
-+	 * holding the uart port spinlock.
-+	 */
- 	dmaengine_terminate_async(dma->txchan);
-+
-+	/*
-+	 * The callback might or might not run. If it doesn't run, we need to ensure
-+	 * that `tx_running` is cleared so that we can schedule new transactions.
-+	 * If it does run, then the zombie callback will clear `tx_running` again
-+	 * and perform a no-op since `tx_size` was cleared above.
-+	 *
-+	 * In either case, we ASSUME the DMA transaction will terminate before we
-+	 * issue a new `serial8250_tx_dma`.
-+	 */
-+	dma->tx_running = 0;
- }
+-	if (port->irqflags & IRQF_SHARED)
+-		disable_irq_nosync(port->irq);
++	disable_irq(port->irq);
  
- int serial8250_rx_dma(struct uart_8250_port *p)
+ 	/*
+ 	 * Test for UARTs that do not reassert THRE when the transmitter is idle and the interrupt
+@@ -2170,8 +2169,7 @@ static void serial8250_THRE_test(struct
+ 		serial_port_out(port, UART_IER, 0);
+ 	}
+ 
+-	if (port->irqflags & IRQF_SHARED)
+-		enable_irq(port->irq);
++	enable_irq(port->irq);
+ 
+ 	/*
+ 	 * If the interrupt is not reasserted, or we otherwise don't trust the iir, setup a timer to
 
 
