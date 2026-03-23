@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56AF33947A6;
-	Mon, 23 Mar 2026 14:08:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03AA9399004;
+	Mon, 23 Mar 2026 14:08:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274912; cv=none; b=GVluT4RU/8q+aceSthhS7whF7c39qP2p/inEkN3mjBpY4N7DBYU0YRm1VAYKlO+J6tsVW3bzOJXCblBj0NTMQUEVeDToRop54cJdFf9i5bR3fXRPQ//GFK4zQBgy79Hjck5sjt1PDibtmJH2tyl69FPGGnZh6NdiIVA4ku1DYao=
+	t=1774274915; cv=none; b=cIAbGya0mPC4op8wH3zSMMyatNjogSvpQLbQOvB8sE1i3pRSUai3SQI2hxDkS0ZUa1wT7h9zObhF0evMKQkQHy4z+iyrzcoTx78TdDCtN1TNhn06M+75Ce1yWNz0N/lHdsfkdrtn07lUwJsjxmAPNn+rAZFxj/oC//+AxpYKIZc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274912; c=relaxed/simple;
-	bh=nzjy+XaIGenUDTNQsexW67DG2QRo3PWZlzFg4GQ2fWs=;
+	s=arc-20240116; t=1774274915; c=relaxed/simple;
+	bh=7f8QoszGXvDLiQ2i1YkrWCDq1MrmSXqbBkSPxbcwdYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pM53ten5hrEcBTxQ+C6+M3LAvvxC+FD3Tzv/bvCex46+h6AafzSFv4DE8+QJEplocnHVfHIQHxw3S5zWmiTzeqvdhgkio8av16hkdI1JBzIDu0/JiqsCxhyQEVhkXxD7e4d5G6UjBWuws/SSw0ra/QbhNUnsi+2XZJ0qycRLNV8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D6RQSq7G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aCjktKeTRBnETFN4rt867uEj5hbnih1nLrju+5dZCyb+z8sXKYSTm63vkr1s78VdBMJy6nse3nk7i1V7PGiyw43hOkv3SNUrZ/D1aq47sVqLDR7/BKcm61jXhWJtTM6SvBme05KpEXJTjBzmtRF1yTHu0SubAT8sGMpbmw0I0rU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tpyt3ajm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D6RQSq7G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF4EFC4CEF7;
-	Mon, 23 Mar 2026 14:08:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tpyt3ajm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFEFC4CEF7;
+	Mon, 23 Mar 2026 14:08:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274912;
-	bh=nzjy+XaIGenUDTNQsexW67DG2QRo3PWZlzFg4GQ2fWs=;
+	s=korg; t=1774274914;
+	bh=7f8QoszGXvDLiQ2i1YkrWCDq1MrmSXqbBkSPxbcwdYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D6RQSq7GeouOUOp4kdw06VnQAe+E4PEnnPJ5Z/TqOKVuryYvqek4GZ5C4VDohlmNK
-	 NWYXX8d85JA/C7eMDCDwtr4GkqDVKbKnohvPUiF18TKSgfyPvenKFZKrzoesNsTR5m
-	 PvQl6bzhIeeEZxnxUAxQwEcocrE4m9j0OQ0YvQ/Y=
+	b=tpyt3ajmdto8NclZ7Cq0m5O5OnFh4nOCZFDKqIZY0h6E9DsaPKrdQfOLnisPQ0E2o
+	 q8g3di4Cv9yMzRFOpAUsaOYYAFRjuwrW7fZRtUuysMviwvsjIEhq3QvDP2PBklnALC
+	 DdAVx5kZI0xahfQIXa6FrFh8/Y7kvGxVh7FC3pRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Tao <wangtao554@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 127/212] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
-Date: Mon, 23 Mar 2026 14:45:48 +0100
-Message-ID: <20260323134507.781832641@linuxfoundation.org>
+Subject: [PATCH 6.18 154/212] net: usb: aqc111: Do not perform PM inside suspend callback
+Date: Mon, 23 Mar 2026 14:46:15 +0100
+Message-ID: <20260323134508.623362515@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,64 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Tao <wangtao554@huawei.com>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit 17f89341cb4281d1da0e2fb0de5406ab7c4e25ef ]
+[ Upstream commit 069c8f5aebe4d5224cf62acc7d4b3486091c658a ]
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
-mgmt_pending_valid(), which not only validates the pending command but
-also unlinks it from the pending list if it is valid. This change in
-semantics requires updates to several completion handlers to avoid list
-corruption and memory safety issues.
+syzbot reports "task hung in rpm_resume"
 
-This patch addresses two left-over issues from the aforementioned rework:
+This is caused by aqc111_suspend calling
+the PM variant of its write_cmd routine.
 
-1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
-is replaced with mgmt_pending_free() in the success path. Since
-mgmt_pending_valid() already unlinks the command at the beginning of
-the function, calling mgmt_pending_remove() leads to a double list_del()
-and subsequent list corruption/kernel panic.
+The simplified call trace looks like this:
 
-2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
-path is removed. Since the current command is already unlinked by
-mgmt_pending_valid(), this foreach loop would incorrectly target other
-pending mesh commands, potentially freeing them while they are still being
-processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
-is also simplified to use cmd->opcode directly.
+rpm_suspend()
+  usb_suspend_both() - here udev->dev.power.runtime_status == RPM_SUSPENDING
+    aqc111_suspend() - called for the usb device interface
+      aqc111_write32_cmd()
+        usb_autopm_get_interface()
+          pm_runtime_resume_and_get()
+            rpm_resume() - here we call rpm_resume() on our parent
+              rpm_resume() - Here we wait for a status change that will never happen.
 
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+At this point we block another task which holds
+rtnl_lock and locks up the whole networking stack.
+
+Fix this by replacing the write_cmd calls with their _nopm variants
+
+Reported-by: syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=48dc1e8dfc92faf1124c
+Fixes: e58ba4544c77 ("net: usb: aqc111: Add support for wake on LAN by MAGIC packet")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Link: https://patch.msgid.link/20260313141643.1181386-1-zlatistiv@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/usb/aqc111.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index ee2dd26b1b82b..1a270f0b17d9e 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2183,10 +2183,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 9201ee10a13f7..d316aa66dbc23 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1400,14 +1400,14 @@ static int aqc111_suspend(struct usb_interface *intf, pm_message_t message)
+ 		aqc111_write16_cmd_nopm(dev, AQ_ACCESS_MAC,
+ 					SFR_MEDIUM_STATUS_MODE, 2, &reg16);
  
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
--				status);
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
- 		goto done;
- 	}
+-		aqc111_write_cmd(dev, AQ_WOL_CFG, 0, 0,
+-				 WOL_CFG_SIZE, &wol_cfg);
+-		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
+-				   &aqc111_data->phy_cfg);
++		aqc111_write_cmd_nopm(dev, AQ_WOL_CFG, 0, 0,
++				      WOL_CFG_SIZE, &wol_cfg);
++		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
++					&aqc111_data->phy_cfg);
+ 	} else {
+ 		aqc111_data->phy_cfg |= AQ_LOW_POWER;
+-		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
+-				   &aqc111_data->phy_cfg);
++		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
++					&aqc111_data->phy_cfg);
  
-@@ -5295,7 +5292,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_dev_unlock(hdev);
- 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
+ 		/* Disable RX path */
+ 		aqc111_read16_cmd_nopm(dev, AQ_ACCESS_MAC,
 -- 
 2.51.0
 
