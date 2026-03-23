@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEC0F285056;
-	Mon, 23 Mar 2026 15:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C231F258EE0;
+	Mon, 23 Mar 2026 15:04:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278253; cv=none; b=jHZkp5sZl4jkxWSMBfIzONt9NZsJzYUhe3pbm2h3H6Fv5FxZmsx187nUbWa7HuJp+KFwCAZ0jqwRZXAggi27MWtOJ9dBAGOuHcurEdByKWT0bhukuTvC1AoiYHanUJ8TQDTyZeWXQY9vqL43sEyTetqUxW42nlEskySt/Q0rUuk=
+	t=1774278256; cv=none; b=MOdUl5jCws/iy72ifBcjws+3hb+hY7qdxDAAAfJyu9cjuR3bM1voBXZYaCzdWTTIndBiwf3EpKU0DyV9S3p3+pskqc/c+yOwN2fCnOSVtb70Uwg8HwOJPa6bUCHbNlWKEd/hrk4C56FaxiilTcIzFZ7+EsP/DROOq2JZMiAH27Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278253; c=relaxed/simple;
-	bh=kwZ5sQW5MNiZrqfW4WOlSOxeIal45BGl7hoQ0bZAt6g=;
+	s=arc-20240116; t=1774278256; c=relaxed/simple;
+	bh=ZAtNgsz+K4eJEa7jtUSWnf6BNkR4ivqBmY3ws2F7HB8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VuF57/op+OdNDad/ZN9193EaC1ZKbpixM+QXacshAgPr7l2XvnTJfnLSwMiaybU31XMluGHpwiKdFk0J3H7NZBRVeZEkGyZDmXKWYoNU/nBq3giwBk/x8ygG+Hj0r45eD7TYnaOHiojldQJg7v3axWTC97zMnvzKF9gggpCSqeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cjDO04eh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yih9dLrhlQh/sO1YEN39kvGNEloJS2ei5DpUkaM0gf7gUUylQoG/Gy2NMiqqoXR1vxEadVIEI1I+4ieo9gSrk/hSawJd4XM/sevIzcsb/rJfRGOQibGpyIPnO4wrO2f6fIURerbqniEp88Axp1YlPKMMtX8mWBbp+9h9135UNtA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ETOJJ+Pg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cjDO04eh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314CFC4CEF7;
-	Mon, 23 Mar 2026 15:04:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ETOJJ+Pg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484D5C4CEF7;
+	Mon, 23 Mar 2026 15:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278253;
-	bh=kwZ5sQW5MNiZrqfW4WOlSOxeIal45BGl7hoQ0bZAt6g=;
+	s=korg; t=1774278256;
+	bh=ZAtNgsz+K4eJEa7jtUSWnf6BNkR4ivqBmY3ws2F7HB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjDO04ehp6xITzDid6VGzTDKc0OEDj6qcCJh+BeJIN/TJhcTVEjz2eDmktK8o9RLz
-	 GzeFUZz3W58nytJEJsCcnpO+QWRpaayz5KzEo08VhLBL2bdzBqDtq4ThOKqSQIYotP
-	 GNUW37k9BIzv5RzKgrEgqYX7Rq0m8x1jME+y3Txw=
+	b=ETOJJ+PgcMgf0X48wKI0Scixvj4RCaqukUWh7nsmTLp8bAf75GF6F3jRIv8q8224b
+	 1HD5d5kzXDhfrI8SKUUIsejMVXLb5Gep629b/+26+xCHCw5O5ST2YehwwzvkcEvXDW
+	 GfvFDhxMUkV07Vu2AKu8Haib9K+SdQJiATK7hgSE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 232/567] net: sfp: add quirk for Potron SFP+ XGSPON ONU Stick
-Date: Mon, 23 Mar 2026 14:42:32 +0100
-Message-ID: <20260323134539.573791778@linuxfoundation.org>
+Subject: [PATCH 6.6 250/567] i40e: fix src IP mask checks and memcpy argument names in cloud filter
+Date: Mon, 23 Mar 2026 14:42:50 +0100
+Message-ID: <20260323134540.022911264@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,75 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chris Morgan <macromorgan@hotmail.com>
+From: Alok Tiwari <alok.a.tiwari@oracle.com>
 
-[ Upstream commit dfec1c14aecee6813f9bafc7b560cc3a31d24079 ]
+[ Upstream commit e809085f492842ce7a519c9ef72d40f4bca89c13 ]
 
-Add quirk for Potron SFP+ XGSPON ONU Stick (YV SFP+ONT-XGSPON).
+Fix following issues in the IPv4 and IPv6 cloud filter handling logic in
+both the add and delete paths:
 
-This device uses pins 2 and 7 for UART communication, so disable
-TX_FAULT and LOS. Additionally as it is an embedded system in an
-SFP+ form factor provide it enough time to fully boot before we
-attempt to use it.
+- The source-IP mask check incorrectly compares mask.src_ip[0] against
+  tcf.dst_ip[0]. Update it to compare against tcf.src_ip[0]. This likely
+  goes unnoticed because the check is in an "else if" path that only
+  executes when dst_ip is not set, most cloud filter use cases focus on
+  destination-IP matching, and the buggy condition can accidentally
+  evaluate true in some cases.
 
-https://www.potrontec.com/index/index/list/cat_id/2.html#11-83
-https://pon.wiki/xgs-pon/ont/potron-technology/x-onu-sfpp/
+- memcpy() for the IPv4 source address incorrectly uses
+  ARRAY_SIZE(tcf.dst_ip) instead of ARRAY_SIZE(tcf.src_ip), although
+  both arrays are the same size.
 
-Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
-Link: https://patch.msgid.link/20250617180324.229487-1-macroalpha82@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 87d126852158 ("net: sfp: improve Huawei MA5671a fixup")
+- The IPv4 memcpy operations used ARRAY_SIZE(tcf.dst_ip) and ARRAY_SIZE
+  (tcf.src_ip), Update these to use sizeof(cfilter->ip.v4.dst_ip) and
+  sizeof(cfilter->ip.v4.src_ip) to ensure correct and explicit copy size.
+
+- In the IPv6 delete path, memcmp() uses sizeof(src_ip6) when comparing
+  dst_ip6 fields. Replace this with sizeof(dst_ip6) to make the intent
+  explicit, even though both fields are struct in6_addr.
+
+Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
+Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index c47d7232d1c6e..6ef50d1ce2eda 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -359,6 +359,11 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
- 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
- }
- 
-+static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
-+{
-+	sfp->state_hw_mask &= ~mask;
-+}
-+
- static void sfp_fixup_nokia(struct sfp *sfp)
- {
- 	sfp_fixup_long_startup(sfp);
-@@ -392,7 +397,19 @@ static void sfp_fixup_halny_gsfp(struct sfp *sfp)
- 	 * these are possibly used for other purposes on this
- 	 * module, e.g. a serial port.
- 	 */
--	sfp->state_hw_mask &= ~(SFP_F_TX_FAULT | SFP_F_LOS);
-+	sfp_fixup_ignore_hw(sfp, SFP_F_TX_FAULT | SFP_F_LOS);
-+}
-+
-+static void sfp_fixup_potron(struct sfp *sfp)
-+{
-+	/*
-+	 * The TX_FAULT and LOS pins on this device are used for serial
-+	 * communication, so ignore them. Additionally, provide extra
-+	 * time for this device to fully start up.
-+	 */
-+
-+	sfp_fixup_long_startup(sfp);
-+	sfp_fixup_ignore_hw(sfp, SFP_F_TX_FAULT | SFP_F_LOS);
- }
- 
- static void sfp_fixup_rollball(struct sfp *sfp)
-@@ -500,6 +517,8 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	SFP_QUIRK_F("Walsun", "HXSX-ATRC-1", sfp_fixup_fs_10gt),
- 	SFP_QUIRK_F("Walsun", "HXSX-ATRI-1", sfp_fixup_fs_10gt),
- 
-+	SFP_QUIRK_F("YV", "SFP+ONU-XGSPON", sfp_fixup_potron),
-+
- 	// OEM SFP-GE-T is a 1000Base-T module with broken TX_FAULT indicator
- 	SFP_QUIRK_F("OEM", "SFP-GE-T", sfp_fixup_ignore_tx_fault),
- 
+diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+index 7f5538e2c9de5..a9c492d747b9f 100644
+--- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
+@@ -3825,10 +3825,10 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter.n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter.ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter.ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter.ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter.ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter.n_proto = ETH_P_IPV6;
+@@ -3883,7 +3883,7 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		/* for ipv6, mask is set for all sixteen bytes (4 words) */
+ 		if (cfilter.n_proto == ETH_P_IPV6 && mask.dst_ip[3])
+ 			if (memcmp(&cfilter.ip.v6.dst_ip6, &cf->ip.v6.dst_ip6,
+-				   sizeof(cfilter.ip.v6.src_ip6)))
++				   sizeof(cfilter.ip.v6.dst_ip6)))
+ 				continue;
+ 		if (mask.vlan_id)
+ 			if (cfilter.vlan_id != cf->vlan_id)
+@@ -3971,10 +3971,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
+ 		cfilter->n_proto = ETH_P_IP;
+ 		if (mask.dst_ip[0] & tcf.dst_ip[0])
+ 			memcpy(&cfilter->ip.v4.dst_ip, tcf.dst_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
+-		else if (mask.src_ip[0] & tcf.dst_ip[0])
++			       sizeof(cfilter->ip.v4.dst_ip));
++		else if (mask.src_ip[0] & tcf.src_ip[0])
+ 			memcpy(&cfilter->ip.v4.src_ip, tcf.src_ip,
+-			       ARRAY_SIZE(tcf.dst_ip));
++			       sizeof(cfilter->ip.v4.src_ip));
+ 		break;
+ 	case VIRTCHNL_TCP_V6_FLOW:
+ 		cfilter->n_proto = ETH_P_IPV6;
 -- 
 2.51.0
 
