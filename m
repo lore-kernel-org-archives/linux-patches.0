@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E36B73BF67B;
-	Mon, 23 Mar 2026 16:28:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8AF03B2FC6;
+	Mon, 23 Mar 2026 16:28:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283308; cv=none; b=Mw6aUwwGuCXX3k9SIxGIyZThq074a7d0LiDJE+H2HwMFlOkQI97rGQ9Nxlm1UQo+8mkEZP2+kCzDIjukCe7p2iMJWGLHbjHP15ANNGxflErNkg5TCN7JgAquPVaFacsM9VamJ6ioGIlCVGVwCimFTtZXN/XVGZoMxiN49+pQmW0=
+	t=1774283310; cv=none; b=Llwlff2s8GF5zIHt+avhZbOdEQ6I7GeNI3W88UdekvX8O5J/8jzK/9SVm96dG5RLFs9JfWQ7bCOaVQCCKsXLUbUZwc8krpYeAcoXJB/gQEUEVZTVlAEgjMsJ0NmwHC5KIvGN1amaatMp76/MpBa30ytYwGw8V9yHTqhC94q8aS0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283308; c=relaxed/simple;
-	bh=x4GIOloxbHACPRtiGA2MF6KFY9eB071wckxhG0bpx4s=;
+	s=arc-20240116; t=1774283310; c=relaxed/simple;
+	bh=o3lUt+yybVhCpa+2VLuzxywLMlCqkMOYP8I+Qhzh3io=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=d7B9E1yYpKDZawNa+o09ttCka5+s6oOLhM90jISkeuEQYRGmcAbghdESCA0xD6GzE0WxYvOS/50bIasqeJUZ/idGGdgwS4RBKdI2YXLj+AQBCuClmQpN75gCw953vDXhI/iR1o6W/uvPgpc4BGsejXFqiqUeJcbc+8VKDOm+3j4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iZFuFldI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=BVcyDECAzN7KO6qaMR30tXKy8kRD7IXvEc/msvmY2ekyuR1C2LzIvfC1kMe2+wUHBCBVOkdLbPgZE7QTOJnQ44L+8U89VBfR2mMKoLvkRO6qF58Ku3+WrwfHE3rC0DGqjg8wWSNXBzI+EAPbXJLe7W8eBDwtJwXKYlwt5Xn6v6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cUGBd/BA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iZFuFldI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1085AC4CEF7;
-	Mon, 23 Mar 2026 16:28:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cUGBd/BA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DAFC4CEF7;
+	Mon, 23 Mar 2026 16:28:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283307;
-	bh=x4GIOloxbHACPRtiGA2MF6KFY9eB071wckxhG0bpx4s=;
+	s=korg; t=1774283310;
+	bh=o3lUt+yybVhCpa+2VLuzxywLMlCqkMOYP8I+Qhzh3io=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZFuFldI04vGNx3AOTsgQDmtlc2A5RJmtDvSTXVuVtNet+rU7MdMFVBz09cuNyUY/
-	 +Drgy9cMPadW3t7vLClmgPQU5bJMjqUcTKWcsqgNiCmNhX5orKQAfPA7S65eENUQwf
-	 1JzLPvJBL6YEm/dkMXZ/QfbI5u2/mMHYSVBF0do4=
+	b=cUGBd/BAJ8Qg6Tqp1Pz9/atRiKfEE6HRZZYumhhM3CnpLBmd+wPmSTqzT0PPmna2L
+	 QADk748sqDv9zh2vUZoTBckn9OZ50LuaPf6T4KJ+Xuh5siq6n1cDbrjAdSzZW5StAo
+	 NTi1oMONjEdGMRwwMWlDQXIDdvkrhu0UttOr3gg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Rosen Penev <rosenp@gmail.com>
-Subject: [PATCH 6.1 460/481] drm/amdgpu: clarify DC checks
-Date: Mon, 23 Mar 2026 14:47:22 +0100
-Message-ID: <20260323134536.428244473@linuxfoundation.org>
+Subject: [PATCH 6.1 461/481] drm/amd/display: Add pixel_clock to amd_pp_display_configuration
+Date: Mon, 23 Mar 2026 14:47:23 +0100
+Message-ID: <20260323134536.450042148@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,158 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Timur Kristóf <timur.kristof@gmail.com>
 
-[ Upstream commit d09ef243035b75a6d403ebfeb7e87fa20d7e25c6 ]
+[ Upstream commit b515dcb0dc4e85d8254f5459cfb32fce88dacbfb ]
 
-There are several places where we don't want to check
-if a particular asic could support DC, but rather, if
-DC is enabled.  Set a flag if DC is enabled and check
-for that rather than if a device supports DC or not.
+This commit adds the pixel_clock field to the display config
+struct so that power management (DPM) can use it.
 
-Acked-by: Christian König <christian.koenig@amd.com>
+We currently don't have a proper bandwidth calculation on old
+GPUs with DCE 6-10 because dce_calcs only supports DCE 11+.
+So the power management (DPM) on these GPUs may need to make
+ad-hoc decisions for display based on the pixel clock.
+
+Also rename sym_clock to pixel_clock in dm_pp_single_disp_config
+to avoid confusion with other code where the sym_clock refers to
+the DisplayPort symbol clock.
+
+Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Rosen Penev <rosenp@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c          |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c       |    2 -
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c        |   32 +++++++++++-----------
- drivers/gpu/drm/amd/amdgpu/amdgpu_display.c       |    4 +-
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |    2 -
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c  |    2 -
- 8 files changed, 25 insertions(+), 21 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c       |    1 +
+ drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c |    2 +-
+ drivers/gpu/drm/amd/display/dc/dm_services_types.h             |    2 +-
+ drivers/gpu/drm/amd/include/dm_pp_interface.h                  |    1 +
+ 4 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -1071,6 +1071,7 @@ struct amdgpu_device {
- 	struct work_struct		reset_work;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_pp_smu.c
+@@ -97,6 +97,7 @@ bool dm_pp_apply_display_requirements(
+ 			const struct dm_pp_single_disp_config *dc_cfg =
+ 						&pp_display_cfg->disp_configs[i];
+ 			adev->pm.pm_display_cfg.displays[i].controller_id = dc_cfg->pipe_idx + 1;
++			adev->pm.pm_display_cfg.displays[i].pixel_clock = dc_cfg->pixel_clock;
+ 		}
  
- 	bool                            job_hang;
-+	bool                            dc_enabled;
+ 		amdgpu_dpm_display_configuration_change(adev, &adev->pm.pm_display_cfg);
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dce110/dce110_clk_mgr.c
+@@ -164,7 +164,7 @@ void dce110_fill_display_configs(
+ 			stream->link->cur_link_settings.link_rate;
+ 		cfg->link_settings.link_spread =
+ 			stream->link->cur_link_settings.link_spread;
+-		cfg->sym_clock = stream->phy_pix_clk;
++		cfg->pixel_clock = stream->phy_pix_clk;
+ 		/* Round v_refresh*/
+ 		cfg->v_refresh = stream->timing.pix_clk_100hz * 100;
+ 		cfg->v_refresh /= stream->timing.h_total;
+--- a/drivers/gpu/drm/amd/display/dc/dm_services_types.h
++++ b/drivers/gpu/drm/amd/display/dc/dm_services_types.h
+@@ -127,7 +127,7 @@ struct dm_pp_single_disp_config {
+ 	uint32_t src_height;
+ 	uint32_t src_width;
+ 	uint32_t v_refresh;
+-	uint32_t sym_clock; /* HDMI only */
++	uint32_t pixel_clock; /* Pixel clock in KHz (for HDMI only: normalized) */
+ 	struct dc_link_settings link_settings; /* DP only */
  };
  
- static inline struct amdgpu_device *drm_to_adev(struct drm_device *ddev)
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_acpi.c
-@@ -857,7 +857,7 @@ int amdgpu_acpi_init(struct amdgpu_devic
- 	struct amdgpu_atif *atif = &amdgpu_acpi_priv.atif;
+--- a/drivers/gpu/drm/amd/include/dm_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/dm_pp_interface.h
+@@ -66,6 +66,7 @@ struct single_display_configuration
+ 	uint32_t view_resolution_cy;
+ 	enum amd_pp_display_config_type displayconfigtype;
+ 	uint32_t vertical_refresh; /* for active display */
++	uint32_t pixel_clock; /* Pixel clock in KHz (for HDMI only: normalized) */
+ };
  
- 	if (atif->notifications.brightness_change) {
--		if (amdgpu_device_has_dc_support(adev)) {
-+		if (adev->dc_enabled) {
- #if defined(CONFIG_DRM_AMD_DC)
- 			struct amdgpu_display_manager *dm = &adev->dm;
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_debugfs.c
-@@ -1981,7 +1981,7 @@ int amdgpu_debugfs_init(struct amdgpu_de
- 	amdgpu_ta_if_debugfs_init(adev);
- 
- #if defined(CONFIG_DRM_AMD_DC)
--	if (amdgpu_device_has_dc_support(adev))
-+	if (adev->dc_enabled)
- 		dtn_debugfs_init(adev);
- #endif
- 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4404,25 +4404,27 @@ int amdgpu_device_resume(struct drm_devi
- 
- 	amdgpu_ras_resume(adev);
- 
--	/*
--	 * Most of the connector probing functions try to acquire runtime pm
--	 * refs to ensure that the GPU is powered on when connector polling is
--	 * performed. Since we're calling this from a runtime PM callback,
--	 * trying to acquire rpm refs will cause us to deadlock.
--	 *
--	 * Since we're guaranteed to be holding the rpm lock, it's safe to
--	 * temporarily disable the rpm helpers so this doesn't deadlock us.
--	 */
-+	if (adev->mode_info.num_crtc) {
-+		/*
-+		 * Most of the connector probing functions try to acquire runtime pm
-+		 * refs to ensure that the GPU is powered on when connector polling is
-+		 * performed. Since we're calling this from a runtime PM callback,
-+		 * trying to acquire rpm refs will cause us to deadlock.
-+		 *
-+		 * Since we're guaranteed to be holding the rpm lock, it's safe to
-+		 * temporarily disable the rpm helpers so this doesn't deadlock us.
-+		 */
- #ifdef CONFIG_PM
--	dev->dev->power.disable_depth++;
-+		dev->dev->power.disable_depth++;
- #endif
--	if (!amdgpu_device_has_dc_support(adev))
--		drm_helper_hpd_irq_event(dev);
--	else
--		drm_kms_helper_hotplug_event(dev);
-+		if (!adev->dc_enabled)
-+			drm_helper_hpd_irq_event(dev);
-+		else
-+			drm_kms_helper_hotplug_event(dev);
- #ifdef CONFIG_PM
--	dev->dev->power.disable_depth--;
-+		dev->dev->power.disable_depth--;
- #endif
-+	}
- 	adev->in_suspend = false;
- 
- 	if (adev->enable_mes)
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_display.c
-@@ -534,7 +534,7 @@ uint32_t amdgpu_display_supported_domain
- 	 */
- 	if ((bo_flags & AMDGPU_GEM_CREATE_CPU_GTT_USWC) &&
- 	    amdgpu_bo_support_uswc(bo_flags) &&
--	    amdgpu_device_has_dc_support(adev) &&
-+	    adev->dc_enabled &&
- 	    adev->mode_info.gpu_vm_support)
- 		domain |= AMDGPU_GEM_DOMAIN_GTT;
- #endif
-@@ -1330,7 +1330,7 @@ int amdgpu_display_modeset_create_props(
- 					 "dither",
- 					 amdgpu_dither_enum_list, sz);
- 
--	if (amdgpu_device_has_dc_support(adev)) {
-+	if (adev->dc_enabled) {
- 		adev->mode_info.abm_level_property =
- 			drm_property_create_range(adev_to_drm(adev), 0,
- 						  "abm level", 0, 4);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2530,7 +2530,7 @@ static int amdgpu_runtime_idle_check_dis
- 		if (ret)
- 			return ret;
- 
--		if (amdgpu_device_has_dc_support(adev)) {
-+		if (adev->dc_enabled) {
- 			struct drm_crtc *crtc;
- 
- 			drm_for_each_crtc(crtc, drm_dev) {
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4842,6 +4842,7 @@ static int dm_early_init(void *handle)
- 		adev_to_drm(adev)->dev,
- 		&dev_attr_s3_debug);
- #endif
-+	adev->dc_enabled = true;
- 
- 	return 0;
- }
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -1567,7 +1567,7 @@ static void pp_pm_compute_clocks(void *h
- 	struct pp_hwmgr *hwmgr = handle;
- 	struct amdgpu_device *adev = hwmgr->adev;
- 
--	if (!amdgpu_device_has_dc_support(adev)) {
-+	if (!adev->dc_enabled) {
- 		amdgpu_dpm_get_active_displays(adev);
- 		adev->pm.pm_display_cfg.num_display = adev->pm.dpm.new_active_crtc_count;
- 		adev->pm.pm_display_cfg.vrefresh = amdgpu_dpm_get_vrefresh(adev);
+ #define MAX_NUM_DISPLAY 32
 
 
