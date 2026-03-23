@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BECD7285417;
-	Mon, 23 Mar 2026 16:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DE2282F35;
+	Mon, 23 Mar 2026 16:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282906; cv=none; b=OOQjcyRX8VqqgVPuZ8jN4dcJPpC4iSvEnFGRlghAyLAry//dg3EiIiRMQt1saqMKGMKKqysUq2hCvKRuPatgHiVxoTLaP0wqVnWFWEzTKfZBhIKD1LMpf5XBIXhqCDkBYZgo8MzjsmHvoDsSZ7G8q8hYXPN3ZMtivJ6I96dEG/I=
+	t=1774282909; cv=none; b=fe/UjLYN51lMGCP6GZYcHxdL7QqmwTfRv9g6eD04TQDKfGX9q/M1FYzE5rq3Cy7Ekpp4b0f/iPhw9tNhW6s5JUAVTH6WgIEv9QiNYqCIdfoK1qvvtkbYfeAafZGM+rvheHRN6ic1yBN9cZYfq4vy1YQwHeDeL6Qnt+iLImhBaCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282906; c=relaxed/simple;
-	bh=X8ykuWGP4lrdJ+vExtecDC4sH7HbP2mRVvMQ4oyAikk=;
+	s=arc-20240116; t=1774282909; c=relaxed/simple;
+	bh=L0Jm6wduFaczRQjIYdistB0U8zFZWuFZearJlnzQhX4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Py0g9AQEUNgSdnMuYmPaMjRFjqsr4qgMqHSBRpYbZAVTyPrRTkzxAIa/iJ4fh+Hq8Rcxibl80C8ANJ/q2k3tJoc+NRy3Xfz01QPvUBrKLNO0VBlTt7UNq4J0q5XLBkRAZSD9NO6Nf23JFYTXVIus63FewsynTIRArpZR4pPMK34=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kdLtrM/r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nwfc1mUN9Vtj1QApOulBtx9cx9dkH3NKq5kTbG+BUu2fnsa/08hSEf7OmYQHIu56sNmFQ7GtNM2rlTBO0iAEdbTYWjdbZ42H50Avir6H3vR7mlL0zV5QOdw+R18rmpOLl+sFO5dDPsZERQJv4o0wXJOduS+W5jvB6MSj9U6L9rY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=x2bPFrqk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kdLtrM/r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59644C4CEF7;
-	Mon, 23 Mar 2026 16:21:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="x2bPFrqk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 290DEC4CEF7;
+	Mon, 23 Mar 2026 16:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282906;
-	bh=X8ykuWGP4lrdJ+vExtecDC4sH7HbP2mRVvMQ4oyAikk=;
+	s=korg; t=1774282909;
+	bh=L0Jm6wduFaczRQjIYdistB0U8zFZWuFZearJlnzQhX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kdLtrM/r6CRG/rodszV1GHPF9yx/fRYtT/TWQKd/Vlg7AV4OHOc73FQL8jcx6gtlI
-	 ASeQnfdXw8AhTjQv5C0Ox0UpLazlDLHBHQCNNJKuO1+j7fwt0thPKBvPfSKNvXEvf/
-	 5ku2cDcbiXLFio4zyFiJwcKOtPW1GCVTrQtZnDFs=
+	b=x2bPFrqkf8jC5q8ykn3/SfIUJ5xArDCq0JSbCDx2y7ggfL2SKcFeRNIN9dPi5zA/l
+	 JfjFCRNbYZV/ejT/zjX7anMT0r/QCU3NgsUKjIvU/eLsFI4fuRKdolo5wfoSXUberq
+	 QRUzH+OjGf+CwLw7bhOXX4BlEvC/1xUj94XoPeZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 286/481] net: macb: fix use-after-free access to PTP clock
-Date: Mon, 23 Mar 2026 14:44:28 +0100
-Message-ID: <20260323134532.081710471@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Keerthana K <keerthana.kalyanasundaram@broadcom.com>,
+	Shivani Agarwal <shivani.agarwal@broadcom.com>
+Subject: [PATCH 6.1 277/481] ipv6: use RCU in ip6_xmit()
+Date: Mon, 23 Mar 2026 14:44:19 +0100
+Message-ID: <20260323134531.871590100@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,128 +53,109 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
+commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c upstream.
 
-PTP clock is registered on every opening of the interface and destroyed on
-every closing.  However it may be accessed via get_ts_info ethtool call
-which is possible while the interface is just present in the kernel.
+Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
+possible UAF.
 
-BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
-Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
-
-CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x17f/0x496 mm/kasan/report.c:420
- kasan_report+0xd9/0x180 mm/kasan/report.c:524
- ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
- gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
- macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
- __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
- ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
- __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
- dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- </TASK>
-
-Allocated by task 457:
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:699 [inline]
- ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
- gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
- macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
- __dev_open+0x2ce/0x500 net/core/dev.c:1501
- __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
- __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
- rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
- rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
- netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
- netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
- netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
- netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0x14b/0x180 net/socket.c:730
- __sys_sendto+0x320/0x3b0 net/socket.c:2152
- __do_sys_sendto net/socket.c:2164 [inline]
- __se_sys_sendto net/socket.c:2160 [inline]
- __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Freed by task 938:
- kasan_slab_free include/linux/kasan.h:177 [inline]
- slab_free_hook mm/slub.c:1729 [inline]
- slab_free_freelist_hook mm/slub.c:1755 [inline]
- slab_free mm/slub.c:3687 [inline]
- __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
- device_release+0xa0/0x240 drivers/base/core.c:2507
- kobject_cleanup lib/kobject.c:681 [inline]
- kobject_release lib/kobject.c:712 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1cd/0x350 lib/kobject.c:729
- put_device+0x1b/0x30 drivers/base/core.c:3805
- ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
- gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
- macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
- __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
- __dev_close net/core/dev.c:1597 [inline]
- __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
- dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Set the PTP clock pointer to NULL after unregistering.
-
-Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
+Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
+Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv6/ip6_output.c |   35 +++++++++++++++++++++--------------
+ 1 file changed, 21 insertions(+), 14 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -400,8 +400,10 @@ void gem_ptp_remove(struct net_device *n
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -258,35 +258,36 @@ bool ip6_autoflowlabel(struct net *net,
+ int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
+ 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
  {
- 	struct macb *bp = netdev_priv(ndev);
+-	struct net *net = sock_net(sk);
+ 	const struct ipv6_pinfo *np = inet6_sk(sk);
+ 	struct in6_addr *first_hop = &fl6->daddr;
+ 	struct dst_entry *dst = skb_dst(skb);
+-	struct net_device *dev = dst->dev;
+ 	struct inet6_dev *idev = ip6_dst_idev(dst);
+ 	struct hop_jumbo_hdr *hop_jumbo;
+ 	int hoplen = sizeof(*hop_jumbo);
++	struct net *net = sock_net(sk);
+ 	unsigned int head_room;
++	struct net_device *dev;
+ 	struct ipv6hdr *hdr;
+ 	u8  proto = fl6->flowi6_proto;
+ 	int seg_len = skb->len;
+-	int hlimit = -1;
++	int ret, hlimit = -1;
+ 	u32 mtu;
  
--	if (bp->ptp_clock)
-+	if (bp->ptp_clock) {
- 		ptp_clock_unregister(bp->ptp_clock);
-+		bp->ptp_clock = NULL;
-+	}
++	rcu_read_lock();
++
++	dev = dst_dev_rcu(dst);
+ 	head_room = sizeof(struct ipv6hdr) + hoplen + LL_RESERVED_SPACE(dev);
+ 	if (opt)
+ 		head_room += opt->opt_nflen + opt->opt_flen;
  
- 	gem_ptp_clear_timer(bp);
+ 	if (unlikely(head_room > skb_headroom(skb))) {
+-		/* Make sure idev stays alive */
+-		rcu_read_lock();
++		/* idev stays alive while we hold rcu_read_lock(). */
+ 		skb = skb_expand_head(skb, head_room);
+ 		if (!skb) {
+ 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
+-			rcu_read_unlock();
+-			return -ENOBUFS;
++			ret = -ENOBUFS;
++			goto unlock;
+ 		}
+-		rcu_read_unlock();
+ 	}
+ 
+ 	if (opt) {
+@@ -348,17 +349,21 @@ int ip6_xmit(const struct sock *sk, stru
+ 		 * skb to its handler for processing
+ 		 */
+ 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
+-		if (unlikely(!skb))
+-			return 0;
++		if (unlikely(!skb)) {
++			ret = 0;
++			goto unlock;
++		}
+ 
+ 		/* hooks should never assume socket lock is held.
+ 		 * we promote our socket to non const
+ 		 */
+-		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
+-			       net, (struct sock *)sk, skb, NULL, dev,
+-			       dst_output);
++		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
++			      net, (struct sock *)sk, skb, NULL, dev,
++			      dst_output);
++		goto unlock;
+ 	}
+ 
++	ret = -EMSGSIZE;
+ 	skb->dev = dev;
+ 	/* ipv6_local_error() does not require socket lock,
+ 	 * we promote our socket to non const
+@@ -367,7 +372,9 @@ int ip6_xmit(const struct sock *sk, stru
+ 
+ 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
+ 	kfree_skb(skb);
+-	return -EMSGSIZE;
++unlock:
++	rcu_read_unlock();
++	return ret;
+ }
+ EXPORT_SYMBOL(ip6_xmit);
  
 
 
