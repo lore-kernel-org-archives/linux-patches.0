@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1EE267B07;
-	Mon, 23 Mar 2026 14:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169D33AA516;
+	Mon, 23 Mar 2026 14:48:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277308; cv=none; b=cxX8LpNBJEsN/4NsqEXO7MMim6X7DYken/dVkOF6Ht1X0mzr8YoBs/6aYELcTd+wM8vZsbik547OFPTtltPPaRGAIIY9VcnoJ89aW/Q9kpPBE7Z832jCT3fPKGn/p38K2XtqsHMRnDAIUXTTcUUTv7cAgIxIW5DwwyTKkXiXZTw=
+	t=1774277311; cv=none; b=VaPQR5JrKYd1KiMx40jQJ3gegViVHKBpvaUxW6XqZy7jqlU+FMSM4ceezO6zc5hZ+Sp1EKjfjKHpvU3r25omUQOtqbh+Mjuqn1gZrFMpm7tl1FfRMYl4Xym7rdeIlIWN7SKNo2dzOOZ4haA91lGWmg+o94XfnsVHMM4o0IacHKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277308; c=relaxed/simple;
-	bh=NXVNsShYt0ryBRXWtNZi9LOUQI1NFMrzhHvTPc8cT8Q=;
+	s=arc-20240116; t=1774277311; c=relaxed/simple;
+	bh=yRXem0Pt361mm+3gN1RuwjUDfWOKftEywolsyNM/y+s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rfqXCOTFCuAkFVzfBXfolEY7za6UrSHr3XTM31ovirT0oEWuhAyn+yu0FvaCYJLhPDXpq9YNpiNMjLRorrzRYNqoJo5Pe6S0HUSHK6pZB6yVJ3ozbOfiD+ULIVpyRUMsjmjkePqfmSHFkTlpDOVUfEtIKlk8Yuyr5k8bgMCt3g4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wQ8ymCeF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZMltkim1LXEIhRE3dxY/2ViZAgrOrhqNHlEPvANdLGqtac5q/IeAL6EKP9tu8NnAXQigxG4KjXy2AnY1iJCruW87KhfjHetA56GIciHlSIvaTbICu9ZhzighVBnrfz+t+WEWjKEddl0rC//gISg5DYef5VHCLYKzeSKlqEMYFp0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a0CGhBoN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wQ8ymCeF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D909C2BC9E;
-	Mon, 23 Mar 2026 14:48:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a0CGhBoN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EBF9C4CEF7;
+	Mon, 23 Mar 2026 14:48:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277307;
-	bh=NXVNsShYt0ryBRXWtNZi9LOUQI1NFMrzhHvTPc8cT8Q=;
+	s=korg; t=1774277310;
+	bh=yRXem0Pt361mm+3gN1RuwjUDfWOKftEywolsyNM/y+s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wQ8ymCeF81UJkGaXFo+xfsHF6VKsm1JdRVCrMjrZHb3t8HQw09Yf35391h4UAzm3W
-	 584xf6RZHgjQ5OQw9scQ3Tu7tUW8mkc78vxdV85EJGaG2MWTNGoffz0fbKfBUXUkTD
-	 TiL/2mvNlVvcNOHfPdalx+7yFNZg0SO+yKsYIosM=
+	b=a0CGhBoNLA03ciLry0HWsL2q2VfjfykI4UdlJtE38zNGXK+OLoBtHFx8CcyinXlX+
+	 MVig5wiVn3Ap0/t4ZwjOcMFVsvx3t2hpgPj/bTS1/2MPbcb4cFkx/FgvijlH5ef3ZI
+	 zOomp2NhGLyxjq3KRu/7nAN5B3nAR5J7h5jZBK6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Hyunwoo Kim <imv4bel@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 392/460] netfilter: ctnetlink: remove refcounting in expectation dumpers
-Date: Mon, 23 Mar 2026 14:46:28 +0100
-Message-ID: <20260323134536.201240670@linuxfoundation.org>
+Subject: [PATCH 6.12 393/460] netfilter: ctnetlink: fix use-after-free in ctnetlink_dump_exp_ct()
+Date: Mon, 23 Mar 2026 14:46:29 +0100
+Message-ID: <20260323134536.224843043@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,163 +51,121 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Florian Westphal <fw@strlen.de>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 1492e3dcb2be3aa46d1963da96aa9593e4e4db5a ]
+[ Upstream commit 5cb81eeda909dbb2def209dd10636b51549a3f8a ]
 
-Same pattern as previous patch: do not keep the expectation object
-alive via refcount, only store a cookie value and then use that
-as the skip hint for dump resumption.
+ctnetlink_dump_exp_ct() stores a conntrack pointer in cb->data for the
+netlink dump callback ctnetlink_exp_ct_dump_table(), but drops the
+conntrack reference immediately after netlink_dump_start().  When the
+dump spans multiple rounds, the second recvmsg() triggers the dump
+callback which dereferences the now-freed conntrack via nfct_help(ct),
+leading to a use-after-free on ct->ext.
 
-AFAICS this has the same issue as the one resolved in the conntrack
-dumper, when we do
-  if (!refcount_inc_not_zero(&exp->use))
+The bug is that the netlink_dump_control has no .start or .done
+callbacks to manage the conntrack reference across dump rounds.  Other
+dump functions in the same file (e.g. ctnetlink_get_conntrack) properly
+use .start/.done callbacks for this purpose.
 
-to increment the refcount, there is a chance that exp == last, which
-causes a double-increment of the refcount and subsequent memory leak.
+Fix this by adding .start and .done callbacks that hold and release the
+conntrack reference for the duration of the dump, and move the
+nfct_help() call after the cb->args[0] early-return check in the dump
+callback to avoid dereferencing ct->ext unnecessarily.
 
-Fixes: cf6994c2b981 ("[NETFILTER]: nf_conntrack_netlink: sync expectation dumping with conntrack table dumping")
+ BUG: KASAN: slab-use-after-free in ctnetlink_exp_ct_dump_table+0x4f/0x2e0
+ Read of size 8 at addr ffff88810597ebf0 by task ctnetlink_poc/133
+
+ CPU: 1 UID: 0 PID: 133 Comm: ctnetlink_poc Not tainted 7.0.0-rc2+ #3 PREEMPTLAZY
+ Call Trace:
+  <TASK>
+  ctnetlink_exp_ct_dump_table+0x4f/0x2e0
+  netlink_dump+0x333/0x880
+  netlink_recvmsg+0x3e2/0x4b0
+  ? aa_sk_perm+0x184/0x450
+  sock_recvmsg+0xde/0xf0
+
+ Allocated by task 133:
+  kmem_cache_alloc_noprof+0x134/0x440
+  __nf_conntrack_alloc+0xa8/0x2b0
+  ctnetlink_create_conntrack+0xa1/0x900
+  ctnetlink_new_conntrack+0x3cf/0x7d0
+  nfnetlink_rcv_msg+0x48e/0x510
+  netlink_rcv_skb+0xc9/0x1f0
+  nfnetlink_rcv+0xdb/0x220
+  netlink_unicast+0x3ec/0x590
+  netlink_sendmsg+0x397/0x690
+  __sys_sendmsg+0xf4/0x180
+
+ Freed by task 0:
+  slab_free_after_rcu_debug+0xad/0x1e0
+  rcu_core+0x5c3/0x9c0
+
 Fixes: e844a928431f ("netfilter: ctnetlink: allow to dump expectation per master conntrack")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: 5cb81eeda909 ("netfilter: ctnetlink: fix use-after-free in ctnetlink_dump_exp_ct()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_netlink.c | 41 ++++++++++++----------------
- 1 file changed, 17 insertions(+), 24 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 26 +++++++++++++++++++++++++-
+ 1 file changed, 25 insertions(+), 1 deletion(-)
 
 diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index 18a91c031554c..13836723223e0 100644
+index 13836723223e0..627790fcb6bb0 100644
 --- a/net/netfilter/nf_conntrack_netlink.c
 +++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3146,23 +3146,27 @@ ctnetlink_expect_event(unsigned int events, const struct nf_exp_event *item)
- 	return 0;
- }
- #endif
--static int ctnetlink_exp_done(struct netlink_callback *cb)
-+
-+static unsigned long ctnetlink_exp_id(const struct nf_conntrack_expect *exp)
+@@ -3206,7 +3206,7 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
  {
--	if (cb->args[1])
--		nf_ct_expect_put((struct nf_conntrack_expect *)cb->args[1]);
--	return 0;
-+	unsigned long id = (unsigned long)exp;
-+
-+	id += nf_ct_get_id(exp->master);
-+	id += exp->class;
-+
-+	return id ? id : 1;
- }
- 
- static int
- ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- {
- 	struct net *net = sock_net(skb->sk);
--	struct nf_conntrack_expect *exp, *last;
- 	struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
- 	u_int8_t l3proto = nfmsg->nfgen_family;
-+	unsigned long last_id = cb->args[1];
-+	struct nf_conntrack_expect *exp;
- 
- 	rcu_read_lock();
--	last = (struct nf_conntrack_expect *)cb->args[1];
- 	for (; cb->args[0] < nf_ct_expect_hsize; cb->args[0]++) {
- restart:
- 		hlist_for_each_entry_rcu(exp, &nf_ct_expect_hash[cb->args[0]],
-@@ -3174,7 +3178,7 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 				continue;
- 
- 			if (cb->args[1]) {
--				if (exp != last)
-+				if (ctnetlink_exp_id(exp) != last_id)
- 					continue;
- 				cb->args[1] = 0;
- 			}
-@@ -3183,9 +3187,7 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 						    cb->nlh->nlmsg_seq,
- 						    IPCTNL_MSG_EXP_NEW,
- 						    exp) < 0) {
--				if (!refcount_inc_not_zero(&exp->use))
--					continue;
--				cb->args[1] = (unsigned long)exp;
-+				cb->args[1] = ctnetlink_exp_id(exp);
- 				goto out;
- 			}
- 		}
-@@ -3196,32 +3198,30 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 	}
- out:
- 	rcu_read_unlock();
--	if (last)
--		nf_ct_expect_put(last);
--
- 	return skb->len;
- }
- 
- static int
- ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- {
--	struct nf_conntrack_expect *exp, *last;
  	struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
  	struct nf_conn *ct = cb->data;
- 	struct nf_conn_help *help = nfct_help(ct);
+-	struct nf_conn_help *help = nfct_help(ct);
++	struct nf_conn_help *help;
  	u_int8_t l3proto = nfmsg->nfgen_family;
-+	unsigned long last_id = cb->args[1];
-+	struct nf_conntrack_expect *exp;
- 
+ 	unsigned long last_id = cb->args[1];
+ 	struct nf_conntrack_expect *exp;
+@@ -3214,6 +3214,10 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
  	if (cb->args[0])
  		return 0;
  
- 	rcu_read_lock();
--	last = (struct nf_conntrack_expect *)cb->args[1];
++	help = nfct_help(ct);
++	if (!help)
++		return 0;
 +
+ 	rcu_read_lock();
+ 
  restart:
- 	hlist_for_each_entry_rcu(exp, &help->expectations, lnode) {
- 		if (l3proto && exp->tuple.src.l3num != l3proto)
- 			continue;
- 		if (cb->args[1]) {
--			if (exp != last)
-+			if (ctnetlink_exp_id(exp) != last_id)
- 				continue;
- 			cb->args[1] = 0;
- 		}
-@@ -3229,9 +3229,7 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 					    cb->nlh->nlmsg_seq,
- 					    IPCTNL_MSG_EXP_NEW,
- 					    exp) < 0) {
--			if (!refcount_inc_not_zero(&exp->use))
--				continue;
--			cb->args[1] = (unsigned long)exp;
-+			cb->args[1] = ctnetlink_exp_id(exp);
- 			goto out;
- 		}
- 	}
-@@ -3242,9 +3240,6 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 	cb->args[0] = 1;
- out:
- 	rcu_read_unlock();
--	if (last)
--		nf_ct_expect_put(last);
--
+@@ -3243,6 +3247,24 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
  	return skb->len;
  }
  
-@@ -3263,7 +3258,6 @@ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
++static int ctnetlink_dump_exp_ct_start(struct netlink_callback *cb)
++{
++	struct nf_conn *ct = cb->data;
++
++	if (!refcount_inc_not_zero(&ct->ct_general.use))
++		return -ENOENT;
++	return 0;
++}
++
++static int ctnetlink_dump_exp_ct_done(struct netlink_callback *cb)
++{
++	struct nf_conn *ct = cb->data;
++
++	if (ct)
++		nf_ct_put(ct);
++	return 0;
++}
++
+ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
+ 				 struct sk_buff *skb,
+ 				 const struct nlmsghdr *nlh,
+@@ -3258,6 +3280,8 @@ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
  	struct nf_conntrack_zone zone;
  	struct netlink_dump_control c = {
  		.dump = ctnetlink_exp_ct_dump_table,
--		.done = ctnetlink_exp_done,
++		.start = ctnetlink_dump_exp_ct_start,
++		.done = ctnetlink_dump_exp_ct_done,
  	};
  
  	err = ctnetlink_parse_tuple(cda, &tuple, CTA_EXPECT_MASTER,
-@@ -3313,7 +3307,6 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
- 		else {
- 			struct netlink_dump_control c = {
- 				.dump = ctnetlink_exp_dump_table,
--				.done = ctnetlink_exp_done,
- 			};
- 			return netlink_dump_start(info->sk, skb, info->nlh, &c);
- 		}
 -- 
 2.51.0
 
