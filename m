@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6377A22FE0A;
-	Mon, 23 Mar 2026 15:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825B0248883;
+	Mon, 23 Mar 2026 15:03:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278222; cv=none; b=IwYJE3jbK7pEAjQBgWFPSU8dSJ2aX0ib7hyiv0+xlx5yo7ElkgIXeAVWaVWmwF3x3gqS+2HWhv9z4tI4lJX4nvvBM2bA9NDENlKmyYLxbILdKrabNrx4St9Dy+SSfKOo+LM59k6c2n0Wm5IcPYa/FngxqL/deA20M1Ei88WgrsM=
+	t=1774278225; cv=none; b=jRSjCpjrZbDBj7ins1QiRsISVBn3eztlRIat6YWvqqzTbPYfTkDlStQIHcpOKDEsuNQZotG6VYizYHqf19kEVTNzWH9DiLY7zlsrOEPY2sHToGP+waHXPiY0wr2C+yCodIuYK6P3X7BDFZhX5BTz3UFKFrJlfruNnuhWQOI4WkU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278222; c=relaxed/simple;
-	bh=2Ow+tLWbORctv/J+hGvCad1P7luP+rI5DzNk7NRJtyQ=;
+	s=arc-20240116; t=1774278225; c=relaxed/simple;
+	bh=iJRZb26qwjjTw53ukgy3YzDf8yR0taQ6EGDWdatcgKc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BPJIcr8rNcrJAeXYcvxDPmxeEqiP65h/8tboMf/VVk2nMTmAGW9+l8z0bS6ZtLDtY1NUZV2v0lLdNactE9EaaL5MpOaQq8pL3OGT10DBItPEv6noM4KlNNOh9fuykOxtmydh1pYBWaiQog2Y4ylrTt9PaEXFw5JUDmvKL2RFiy8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CH5gpff+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=drhhYj3srUSmHYIrqM9P8VUtLC8nDAEpFw+wWU9bPoVaVuWxIbKUbbNvkX6rDgGJbxBsJc2+9vMcA1C/wjT7P4dKmPUduJdspzhOjKi1kIRIxfxp/w6DMz49jDanKtbORp6mpaep53ECBtUTKKSCVDqTtlgQL7COq6sbwgb+5xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aXGr+RHy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CH5gpff+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0382C4CEF7;
-	Mon, 23 Mar 2026 15:03:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aXGr+RHy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C954BC2BCB3;
+	Mon, 23 Mar 2026 15:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278222;
-	bh=2Ow+tLWbORctv/J+hGvCad1P7luP+rI5DzNk7NRJtyQ=;
+	s=korg; t=1774278225;
+	bh=iJRZb26qwjjTw53ukgy3YzDf8yR0taQ6EGDWdatcgKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CH5gpff+QkeXkOrIe8IpDxw0RiYxjgTVAur5Eevlcrm3+j44rqBZn34s1hjHArqMe
-	 WOroNSOP21mZ6MYaTrVxYEOsLystPDXV/24uR8UmHsn9JN83k0snPb9FaMQPSY60VL
-	 KTNC/ZiV8X7fZH85YYY7Qzy+PYPm6CHMdCF0/KZA=
+	b=aXGr+RHyTeQB0muYxM0dWR0kTqb9y6ce+k5ST8szMhSL6vA4HmG8KalnI/XqSNYfQ
+	 S0E9jH+KIPD9jS2ShvF0Py8LxB0IYDlsR0dxHHRm4U+BijP9pQWloT3ukUKZ51ShxC
+	 gdEOrnGFtJLfmUp8Xe371qa6u5uyz6YLskOmvLQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jenny Guanni Qu <qguanni@gmail.com>,
+	David Dull <monderasdor@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 240/567] netfilter: nft_set_pipapo: fix stack out-of-bounds read in pipapo_drop()
-Date: Mon, 23 Mar 2026 14:42:40 +0100
-Message-ID: <20260323134539.772232661@linuxfoundation.org>
+Subject: [PATCH 6.6 241/567] netfilter: x_tables: guard option walkers against 1-byte tail reads
+Date: Mon, 23 Mar 2026 14:42:41 +0100
+Message-ID: <20260323134539.796238717@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,62 +51,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: David Dull <monderasdor@gmail.com>
 
-[ Upstream commit d6d8cd2db236a9dd13dbc2d05843b3445cc964b5 ]
+[ Upstream commit cfe770220ac2dbd3e104c6b45094037455da81d4 ]
 
-pipapo_drop() passes rulemap[i + 1].n to pipapo_unmap() as the
-to_offset argument on every iteration, including the last one where
-i == m->field_count - 1. This reads one element past the end of the
-stack-allocated rulemap array (declared as rulemap[NFT_PIPAPO_MAX_FIELDS]
-with NFT_PIPAPO_MAX_FIELDS == 16).
+When the last byte of options is a non-single-byte option kind, walkers
+that advance with i += op[i + 1] ? : 1 can read op[i + 1] past the end
+of the option area.
 
-Although pipapo_unmap() returns early when is_last is true without
-using the to_offset value, the argument is evaluated at the call site
-before the function body executes, making this a genuine out-of-bounds
-stack read confirmed by KASAN:
+Add an explicit i == optlen - 1 check before dereferencing op[i + 1]
+in xt_tcpudp and xt_dccp option walkers.
 
-  BUG: KASAN: stack-out-of-bounds in pipapo_drop+0x50c/0x57c [nf_tables]
-  Read of size 4 at addr ffff8000810e71a4
-
-  This frame has 1 object:
-   [32, 160) 'rulemap'
-
-  The buggy address is at offset 164 -- exactly 4 bytes past the end
-  of the rulemap array.
-
-Pass 0 instead of rulemap[i + 1].n on the last iteration to avoid
-the out-of-bounds read.
-
-Fixes: 3c4287f62044 ("nf_tables: Add set type for arbitrary concatenation of ranges")
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Fixes: 2e4e6a17af35 ("[NETFILTER] x_tables: Abstraction layer for {ip,ip6,arp}_tables")
+Signed-off-by: David Dull <monderasdor@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_set_pipapo.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/netfilter/xt_dccp.c   | 4 ++--
+ net/netfilter/xt_tcpudp.c | 6 ++++--
+ 2 files changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nft_set_pipapo.c b/net/netfilter/nft_set_pipapo.c
-index c3ada6798d4a3..f4d0bb6b377d1 100644
---- a/net/netfilter/nft_set_pipapo.c
-+++ b/net/netfilter/nft_set_pipapo.c
-@@ -1570,6 +1570,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
- 	int i;
- 
- 	nft_pipapo_for_each_field(f, i, m) {
-+		bool last = i == m->field_count - 1;
- 		int g;
- 
- 		for (g = 0; g < f->groups; g++) {
-@@ -1589,7 +1590,7 @@ static void pipapo_drop(struct nft_pipapo_match *m,
+diff --git a/net/netfilter/xt_dccp.c b/net/netfilter/xt_dccp.c
+index e5a13ecbe67a0..037ab93e25d0a 100644
+--- a/net/netfilter/xt_dccp.c
++++ b/net/netfilter/xt_dccp.c
+@@ -62,10 +62,10 @@ dccp_find_option(u_int8_t option,
+ 			return true;
  		}
  
- 		pipapo_unmap(f->mt, f->rules, rulemap[i].to, rulemap[i].n,
--			     rulemap[i + 1].n, i == m->field_count - 1);
-+			     last ? 0 : rulemap[i + 1].n, last);
- 		if (pipapo_resize(f, f->rules, f->rules - rulemap[i].n)) {
- 			/* We can ignore this, a failure to shrink tables down
- 			 * doesn't make tables invalid.
+-		if (op[i] < 2)
++		if (op[i] < 2 || i == optlen - 1)
+ 			i++;
+ 		else
+-			i += op[i+1]?:1;
++			i += op[i + 1] ? : 1;
+ 	}
+ 
+ 	spin_unlock_bh(&dccp_buflock);
+diff --git a/net/netfilter/xt_tcpudp.c b/net/netfilter/xt_tcpudp.c
+index e8991130a3de0..f76cf18f1a244 100644
+--- a/net/netfilter/xt_tcpudp.c
++++ b/net/netfilter/xt_tcpudp.c
+@@ -59,8 +59,10 @@ tcp_find_option(u_int8_t option,
+ 
+ 	for (i = 0; i < optlen; ) {
+ 		if (op[i] == option) return !invert;
+-		if (op[i] < 2) i++;
+-		else i += op[i+1]?:1;
++		if (op[i] < 2 || i == optlen - 1)
++			i++;
++		else
++			i += op[i + 1] ? : 1;
+ 	}
+ 
+ 	return invert;
 -- 
 2.51.0
 
