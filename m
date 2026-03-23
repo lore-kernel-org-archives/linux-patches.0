@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C27733B27C5;
-	Mon, 23 Mar 2026 15:14:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B0B3B47CF;
+	Mon, 23 Mar 2026 15:14:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278872; cv=none; b=SIrzmOe0WOhOEeFavtytIYU90Bbp9IixBzB3jQAScUWzMT6TKHZho2PSc1UGAncKQ8H+dqpUJcXjbVg12PVNLuDm7O6JgBzmODnBntsvymnXXV0AMVht8qHODOw+ytDXMbKQoaRj/DA7RvqStDtv6e+rq7cJyIkkSbiyxIpLoyc=
+	t=1774278875; cv=none; b=eeQOrUQG9g02czx8+y0QZZSjpk2FNKVWJFpX3mTa0CS/lQQcsSAYkLDY8pj3g6e4JmdqMvFqDdeNf3u5+6M2RYwDJwUr2c5ZZ7Zz+h4A8M6GGDpuGD5TPT72e3M67xgWdM0Eo9oMwG9UigyPLa8iHpJdDH9/t9x6WRoy3JvM/6o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278872; c=relaxed/simple;
-	bh=MMzqA+Dbg2RNNt6LexGsyfqhYByOnlzP2G4aX/vCmD4=;
+	s=arc-20240116; t=1774278875; c=relaxed/simple;
+	bh=q+T1pzfP83n+bMRmVRJcN5N8ezn9yRJr9lbLUlKHbOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gRj7qWRjYtT8mIG8gQbQNX0pFUsbottVDqfxcT7jw+orSWSZwO7guu2dD1gxTSMH2wp3yyRtV2g8e8qNTo7d8DTSunCXyX65ic62mSK1dba1ZWhPzoYIJ5rzGqh7T/qeQBMZ/KZEPSOqqhZEq4RlnnFJFsSEXxPN5iSzv5ltT7g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFuB51ja; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CtMnWkZiws7IhSUIZL/iqvktNOkqFEJRD2WOG+W4sTuYU1XAJTdkEwLxr2fk6agEZmn4ay+bbGUWv7ehYOQ3fbF1vvtSRzEDCJETKdumKk5f+vL/yiACTcwoL39W68gusgdHxRQ0FVCUc4NDXJ48aNJWgozXF95uwtLm/oFqKf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1u5s6CH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFuB51ja"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45706C4CEF7;
-	Mon, 23 Mar 2026 15:14:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1u5s6CH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9FAC4CEF7;
+	Mon, 23 Mar 2026 15:14:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278872;
-	bh=MMzqA+Dbg2RNNt6LexGsyfqhYByOnlzP2G4aX/vCmD4=;
+	s=korg; t=1774278875;
+	bh=q+T1pzfP83n+bMRmVRJcN5N8ezn9yRJr9lbLUlKHbOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFuB51jaTb3g30Qro0ujICX3EaYXLFotm6fA2xYUFFZ1act9p0fZta+fpQS+J76Ig
-	 zu1YHDdplt6gtskjzg3ykkivfF1QLEFuT6WTpxeKJnnygB+8f5wKnidGfZD7/STpXL
-	 z4iyS/7/0JpAFQ+7FVZUkVQD39CgcWSu6TY6is7w=
+	b=Q1u5s6CHnO/EDV9ya1DIbcM1j+0Tqe4RWpd4RQwtNTda1377/lsx9m2v4ijz+1xki
+	 jOYpXrpsT0twcdNoac0fh56KypZJwJi3Y1BgQTCqy4Ct3AJdxzEVMz9Mxr4sxE/1Kx
+	 8ZrWFk/YVHnS2mmos2YpfuwiAjeAqWatUcZgbU8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	syzbot+f56f7d56e2c6e11a01b6@syzkaller.appspotmail.com,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 445/567] net: stmmac: remove support for lpi_intr_o
-Date: Mon, 23 Mar 2026 14:46:05 +0100
-Message-ID: <20260323134544.975103378@linuxfoundation.org>
+Subject: [PATCH 6.6 446/567] mptcp: pm: in-kernel: always set ID as avail when rm endp
+Date: Mon, 23 Mar 2026 14:46:06 +0100
+Message-ID: <20260323134545.006365035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,211 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-commit 14eb64db8ff07b58a35b98375f446d9e20765674 upstream.
+commit d191101dee25567c2af3b28565f45346c33d65f5 upstream.
 
-The dwmac databook for v3.74a states that lpi_intr_o is a sideband
-signal which should be used to ungate the application clock, and this
-signal is synchronous to the receive clock. The receive clock can run
-at 2.5, 25 or 125MHz depending on the media speed, and can stop under
-the control of the link partner. This means that the time it takes to
-clear is dependent on the negotiated media speed, and thus can be 8,
-40, or 400ns after reading the LPI control and status register.
+Syzkaller managed to find a combination of actions that was generating
+this warning:
 
-It has been observed with some aggressive link partners, this clock
-can stop while lpi_intr_o is still asserted, meaning that the signal
-remains asserted for an indefinite period that the local system has
-no direct control over.
+  WARNING: net/mptcp/pm_kernel.c:1074 at __mark_subflow_endp_available net/mptcp/pm_kernel.c:1074 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_fullmesh net/mptcp/pm_kernel.c:1446 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_set_flags_all net/mptcp/pm_kernel.c:1474 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_set_flags+0x5de/0x640 net/mptcp/pm_kernel.c:1538, CPU#1: syz.7.48/2535
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 2535 Comm: syz.7.48 Not tainted 6.18.0-03987-gea5f5e676cf5 #17 PREEMPT(voluntary)
+  Hardware name: QEMU Ubuntu 25.10 PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_kernel.c:1074 [inline]
+  RIP: 0010:mptcp_pm_nl_fullmesh net/mptcp/pm_kernel.c:1446 [inline]
+  RIP: 0010:mptcp_pm_nl_set_flags_all net/mptcp/pm_kernel.c:1474 [inline]
+  RIP: 0010:mptcp_pm_nl_set_flags+0x5de/0x640 net/mptcp/pm_kernel.c:1538
+  Code: 89 c7 e8 c5 8c 73 fe e9 f7 fd ff ff 49 83 ef 80 e8 b7 8c 73 fe 4c 89 ff be 03 00 00 00 e8 4a 29 e3 fe eb ac e8 a3 8c 73 fe 90 <0f> 0b 90 e9 3d ff ff ff e8 95 8c 73 fe b8 a1 ff ff ff eb 1a e8 89
+  RSP: 0018:ffffc9001535b820 EFLAGS: 00010287
+  netdevsim0: tun_chr_ioctl cmd 1074025677
+  RAX: ffffffff82da294d RBX: 0000000000000001 RCX: 0000000000080000
+  RDX: ffffc900096d0000 RSI: 00000000000006d6 RDI: 00000000000006d7
+  netdevsim0: linktype set to 823
+  RBP: ffff88802cdb2240 R08: 00000000000104ae R09: ffffffffffffffff
+  R10: ffffffff82da27d4 R11: 0000000000000000 R12: 0000000000000000
+  R13: ffff88801246d8c0 R14: ffffc9001535b8b8 R15: ffff88802cdb1800
+  FS:  00007fc6ac5a76c0(0000) GS:ffff8880f90c8000(0000) knlGS:0000000000000000
+  netlink: 'syz.3.50': attribute type 5 has an invalid length.
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  netlink: 1232 bytes leftover after parsing attributes in process `syz.3.50'.
+  CR2: 0000200000010000 CR3: 0000000025b1a000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   mptcp_pm_set_flags net/mptcp/pm_netlink.c:277 [inline]
+   mptcp_pm_nl_set_flags_doit+0x1d7/0x210 net/mptcp/pm_netlink.c:282
+   genl_family_rcv_msg_doit+0x117/0x180 net/netlink/genetlink.c:1115
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0x3a8/0x3f0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x16d/0x240 net/netlink/af_netlink.c:2550
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+   netlink_unicast+0x3e9/0x4c0 net/netlink/af_netlink.c:1344
+   netlink_sendmsg+0x4ab/0x5b0 net/netlink/af_netlink.c:1894
+   sock_sendmsg_nosec net/socket.c:718 [inline]
+   __sock_sendmsg+0xc9/0xf0 net/socket.c:733
+   ____sys_sendmsg+0x272/0x3b0 net/socket.c:2608
+   ___sys_sendmsg+0x2de/0x320 net/socket.c:2662
+   __sys_sendmsg net/socket.c:2694 [inline]
+   __do_sys_sendmsg net/socket.c:2699 [inline]
+   __se_sys_sendmsg net/socket.c:2697 [inline]
+   __x64_sys_sendmsg+0x110/0x1a0 net/socket.c:2697
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xed/0x360 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7fc6adb66f6d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007fc6ac5a6ff8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007fc6addf5fa0 RCX: 00007fc6adb66f6d
+  RDX: 0000000000048084 RSI: 00002000000002c0 RDI: 000000000000000e
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  netlink: 'syz.5.51': attribute type 2 has an invalid length.
+  R13: 00007fff25e91fe0 R14: 00007fc6ac5a7ce4 R15: 00007fff25e920d7
+   </TASK>
 
-The LPI interrupts will still be signalled through the main interrupt
-path in any case, and this path is not dependent on the receive clock.
+The actions that caused that seem to be:
 
-This, since we do not gate the application clock, and the chances of
-adding clock gating in the future are slim due to the clocks being
-ill-defined, lpi_intr_o serves no useful purpose. Remove the code which
-requests the interrupt, and all associated code.
+ - Create an MPTCP endpoint for address A without any flags
+ - Create a new MPTCP connection from address A
+ - Remove the MPTCP endpoint: the corresponding subflows will be removed
+ - Recreate the endpoint with the same ID, but with the subflow flag
+ - Change the same endpoint to add the fullmesh flag
 
-Reported-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Tested-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com> # Renesas RZ/V2H board
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Link: https://patch.msgid.link/E1vnJbt-00000007YYN-28nm@rmk-PC.armlinux.org.uk
+In this case, msk->pm.local_addr_used has been kept to 0 as expected,
+but the corresponding bit in msk->pm.id_avail_bitmap was still unset
+after having removed the endpoint, causing the splat later on.
+
+When removing an endpoint, the corresponding endpoint ID was only marked
+as available for "signal" types with an announced address, plus all
+"subflow" types, but not the other types like an endpoint corresponding
+to the initial subflow. In these cases, re-creating an endpoint with the
+same ID didn't signal/create anything. Here, adding the fullmesh flag
+was creating the splat when calling __mark_subflow_endp_available() from
+mptcp_pm_nl_fullmesh(), because msk->pm.local_addr_used was set to 0
+while the ID was marked as used.
+
+To fix this issue, the corresponding bit in msk->pm.id_avail_bitmap can
+always be set as available when removing an MPTCP in-kernel endpoint. In
+other words, moving the call to __set_bit() to do it in all cases,
+except for "subflow" types where this bit is handled in a dedicated
+helper.
+
+Note: instead of adding a new spin_(un)lock_bh that would be taken in
+all cases, do all the actions requiring the spin lock under the same
+block.
+
+This modification potentially fixes another issue reported by syzbot,
+see [1]. But without a reproducer or more details about what exactly
+happened before, it is hard to confirm.
+
+Fixes: e255683c06df ("mptcp: pm: re-using ID of unused removed ADD_ADDR")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/606
+Reported-by: syzbot+f56f7d56e2c6e11a01b6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/68fcfc4a.050a0220.346f24.02fb.GAE@google.com [1]
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260205-net-mptcp-misc-fixes-6-19-rc8-v2-1-c2720ce75c34@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+[ Conflict in pm_netlink.c, because commit 8617e85e04bd ("mptcp: pm:
+  split in-kernel PM specific code") is not in this version, and move
+  code from pm_netlink.c to pm_kernel.c. Also, commit 636113918508
+  ("mptcp: pm: remove '_nl' from mptcp_pm_nl_rm_addr_received") renamed
+  mptcp_pm_nl_rm_subflow_received() to mptcp_pm_rm_subflow(). Apart from
+  that, the same patch can be applied in pm_netlink.c. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/common.h          |    1 
- drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c     |    4 --
- drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c  |    7 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h          |    2 -
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c     |   36 ------------------
- drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |    8 ----
- include/linux/stmmac.h                                |    1 
- 7 files changed, 59 deletions(-)
+ net/mptcp/pm_netlink.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/common.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/common.h
-@@ -371,7 +371,6 @@ enum request_irq_err {
- 	REQ_IRQ_ERR_RX,
- 	REQ_IRQ_ERR_SFTY_UE,
- 	REQ_IRQ_ERR_SFTY_CE,
--	REQ_IRQ_ERR_LPI,
- 	REQ_IRQ_ERR_WOL,
- 	REQ_IRQ_ERR_MAC,
- 	REQ_IRQ_ERR_NO,
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
-@@ -612,7 +612,6 @@ static int intel_mgbe_common_data(struct
- 
- 	/* Setup MSI vector offset specific to Intel mGbE controller */
- 	plat->msi_mac_vec = 29;
--	plat->msi_lpi_vec = 28;
- 	plat->msi_sfty_ce_vec = 27;
- 	plat->msi_sfty_ue_vec = 26;
- 	plat->msi_rx_base_vec = 0;
-@@ -998,8 +997,6 @@ static int stmmac_config_multi_msi(struc
- 		res->irq = pci_irq_vector(pdev, plat->msi_mac_vec);
- 	if (plat->msi_wol_vec < STMMAC_MSI_VEC_MAX)
- 		res->wol_irq = pci_irq_vector(pdev, plat->msi_wol_vec);
--	if (plat->msi_lpi_vec < STMMAC_MSI_VEC_MAX)
--		res->lpi_irq = pci_irq_vector(pdev, plat->msi_lpi_vec);
- 	if (plat->msi_sfty_ce_vec < STMMAC_MSI_VEC_MAX)
- 		res->sfty_ce_irq = pci_irq_vector(pdev, plat->msi_sfty_ce_vec);
- 	if (plat->msi_sfty_ue_vec < STMMAC_MSI_VEC_MAX)
-@@ -1081,7 +1078,6 @@ static int intel_eth_pci_probe(struct pc
- 	 */
- 	plat->msi_mac_vec = STMMAC_MSI_VEC_MAX;
- 	plat->msi_wol_vec = STMMAC_MSI_VEC_MAX;
--	plat->msi_lpi_vec = STMMAC_MSI_VEC_MAX;
- 	plat->msi_sfty_ce_vec = STMMAC_MSI_VEC_MAX;
- 	plat->msi_sfty_ue_vec = STMMAC_MSI_VEC_MAX;
- 	plat->msi_rx_base_vec = STMMAC_MSI_VEC_MAX;
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
-@@ -138,13 +138,6 @@ static int loongson_dwmac_probe(struct p
- 		res.wol_irq = res.irq;
- 	}
- 
--	res.lpi_irq = of_irq_get_byname(np, "eth_lpi");
--	if (res.lpi_irq < 0) {
--		dev_err(&pdev->dev, "IRQ eth_lpi not found\n");
--		ret = -ENODEV;
--		goto err_disable_msi;
--	}
--
- 	ret = stmmac_dvr_probe(&pdev->dev, plat, &res);
- 	if (ret)
- 		goto err_disable_msi;
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -29,7 +29,6 @@ struct stmmac_resources {
- 	void __iomem *addr;
- 	u8 mac[ETH_ALEN];
- 	int wol_irq;
--	int lpi_irq;
- 	int irq;
- 	int sfty_ce_irq;
- 	int sfty_ue_irq;
-@@ -260,7 +259,6 @@ struct stmmac_priv {
- 	bool wol_irq_disabled;
- 	int clk_csr;
- 	struct timer_list eee_ctrl_timer;
--	int lpi_irq;
- 	int eee_enabled;
- 	int eee_active;
- 	int tx_lpi_timer;
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -3496,10 +3496,6 @@ static void stmmac_free_irq(struct net_d
- 			free_irq(priv->sfty_ce_irq, dev);
- 		fallthrough;
- 	case REQ_IRQ_ERR_SFTY_CE:
--		if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq)
--			free_irq(priv->lpi_irq, dev);
--		fallthrough;
--	case REQ_IRQ_ERR_LPI:
- 		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
- 			free_irq(priv->wol_irq, dev);
- 		fallthrough;
-@@ -3554,24 +3550,6 @@ static int stmmac_request_irq_multi_msi(
- 		}
- 	}
- 
--	/* Request the LPI IRQ in case of another line
--	 * is used for LPI
--	 */
--	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
--		int_name = priv->int_name_lpi;
--		sprintf(int_name, "%s:%s", dev->name, "lpi");
--		ret = request_irq(priv->lpi_irq,
--				  stmmac_mac_interrupt,
--				  0, int_name, dev);
--		if (unlikely(ret < 0)) {
--			netdev_err(priv->dev,
--				   "%s: alloc lpi MSI %d (error: %d)\n",
--				   __func__, priv->lpi_irq, ret);
--			irq_err = REQ_IRQ_ERR_LPI;
--			goto irq_error;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1647,10 +1647,8 @@ static bool mptcp_pm_remove_anno_addr(st
+ 	ret = remove_anno_list_by_saddr(msk, addr);
+ 	if (ret || force) {
+ 		spin_lock_bh(&msk->pm.lock);
+-		if (ret) {
+-			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++		if (ret)
+ 			msk->pm.add_addr_signaled--;
 -		}
--	}
--
- 	/* Request the Safety Feature Correctible Error line in
- 	 * case of another line is used
- 	 */
-@@ -3695,19 +3673,6 @@ static int stmmac_request_irq_single(str
- 		}
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		spin_unlock_bh(&msk->pm.lock);
  	}
+@@ -1688,17 +1686,15 @@ static int mptcp_nl_remove_subflow_and_s
+ 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
  
--	/* Request the IRQ lines */
--	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
--		ret = request_irq(priv->lpi_irq, stmmac_interrupt,
--				  IRQF_SHARED, dev->name, dev);
--		if (unlikely(ret < 0)) {
--			netdev_err(priv->dev,
--				   "%s: ERROR: allocating the LPI IRQ %d (%d)\n",
--				   __func__, priv->lpi_irq, ret);
--			irq_err = REQ_IRQ_ERR_LPI;
--			goto irq_error;
+ 		list.ids[0] = mptcp_endp_get_local_id(msk, addr);
+-		if (remove_subflow) {
+-			spin_lock_bh(&msk->pm.lock);
+-			mptcp_pm_nl_rm_subflow_received(msk, &list);
+-			spin_unlock_bh(&msk->pm.lock);
 -		}
--	}
--
- 	return 0;
  
- irq_error:
-@@ -7436,7 +7401,6 @@ int stmmac_dvr_probe(struct device *devi
+-		if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW) {
+-			spin_lock_bh(&msk->pm.lock);
++		spin_lock_bh(&msk->pm.lock);
++		if (remove_subflow)
++			mptcp_pm_nl_rm_subflow_received(msk, &list);
++		if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
+ 			__mark_subflow_endp_available(msk, list.ids[0]);
+-			spin_unlock_bh(&msk->pm.lock);
+-		}
++		else /* mark endp ID as available, e.g. Signal or MPC endp */
++			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++		spin_unlock_bh(&msk->pm.lock);
  
- 	priv->dev->irq = res->irq;
- 	priv->wol_irq = res->wol_irq;
--	priv->lpi_irq = res->lpi_irq;
- 	priv->sfty_ce_irq = res->sfty_ce_irq;
- 	priv->sfty_ue_irq = res->sfty_ue_irq;
- 	for (i = 0; i < MTL_MAX_RX_QUEUES; i++)
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
-@@ -762,14 +762,6 @@ int stmmac_get_platform_resources(struct
- 		stmmac_res->wol_irq = stmmac_res->irq;
- 	}
- 
--	stmmac_res->lpi_irq =
--		platform_get_irq_byname_optional(pdev, "eth_lpi");
--	if (stmmac_res->lpi_irq < 0) {
--		if (stmmac_res->lpi_irq == -EPROBE_DEFER)
--			return -EPROBE_DEFER;
--		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
--	}
--
- 	stmmac_res->addr = devm_platform_ioremap_resource(pdev, 0);
- 
- 	return PTR_ERR_OR_ZERO(stmmac_res->addr);
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -306,7 +306,6 @@ struct plat_stmmacenet_data {
- 	int ext_snapshot_num;
- 	int msi_mac_vec;
- 	int msi_wol_vec;
--	int msi_lpi_vec;
- 	int msi_sfty_ce_vec;
- 	int msi_sfty_ue_vec;
- 	int msi_rx_base_vec;
+ 		if (msk->mpc_endpoint_id == entry->addr.id)
+ 			msk->mpc_endpoint_id = 0;
 
 
