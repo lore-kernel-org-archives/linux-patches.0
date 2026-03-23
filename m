@@ -1,42 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C773BED02;
-	Mon, 23 Mar 2026 15:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF74241C8C;
+	Mon, 23 Mar 2026 15:15:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278942; cv=none; b=jnfklRQ7Y2n+oRaB4xULfoE4SM1e+3qMX77c/lObEUAx4YVrO9Tvevgtk6irIJpxqVJuY2jscDFx/HpWbBc+N4FuUxxMJbaNZRAZOdGMATmmHkiIYwpDPm93p84tM+9dpdCwV8KushtjYQuWuSz/FfF3q5COUHX/9v3nMp7AHbo=
+	t=1774278945; cv=none; b=gjh2wobO9oJhBRwWPXncHsYTdOCOVwhizvyTe7+wsgxmlmGXu7mWtnnzCAk861h1IQGEJS5klPBOD4p4Kv33TocWj1svTcpEysp85UdlgvxCq4oNJqU5V5kPmR4vUJ3O2VpKRNYUOw95itoKq/q4CUmRwoeP7YQv8bOVulghYTY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278942; c=relaxed/simple;
-	bh=t+6Vroif82shphfeskDCML8IqVFzP2e4588+H/28YvI=;
+	s=arc-20240116; t=1774278945; c=relaxed/simple;
+	bh=uuUsQr6BWKe1JiK9K7S7JPAsjwOSZcJ1NsNkM5bIsjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pct0O16uA+y11RJQtE1beP6t5vB1L5ahpVu/4P79JkdmJkTa1WokMRJgj75UbbY9olSWCXYOt5lIUf3dT48/8nH2ILoJ6Jsa4MXsfdBqyZBt00tSwmReyFKnxBZQLdZ7Na+3XAxYVoJIpc4Zx6RVKLLkNro2IuA25e8pPoYtrHA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ajxgOzTr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZTeEr2LT2uW2baVeTqWG1BfmwvOyE4K8ZE0/AsHOthdzuqHViPqyNcurt/9hEB4YKFRoYDsdUFakTz+GYRsXCNxdfVY7TtybTFKINZb49AGV7IIyM+LBaPGaEw8jOA8KefWNm5MAFVT5N/9ozJqKHBiDoaJELpy7IUiYcpjaPNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nls1/j9U; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ajxgOzTr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C02C2BC9E;
-	Mon, 23 Mar 2026 15:15:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nls1/j9U"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A23C2BCB1;
+	Mon, 23 Mar 2026 15:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278942;
-	bh=t+6Vroif82shphfeskDCML8IqVFzP2e4588+H/28YvI=;
+	s=korg; t=1774278945;
+	bh=uuUsQr6BWKe1JiK9K7S7JPAsjwOSZcJ1NsNkM5bIsjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ajxgOzTr2HMlxoCjSo3hoDHVCar5rjHHUjMXxA/7dheei/6Qun9NT4B7hhJ0h0YA5
-	 hrmkwg/lEQ1SJmoS8ksbLbZKd9yLYEwzEOwphPjYyMnavCWy/EYzI/7H+S/m0QuaWl
-	 U3ubdeMbgGAlt/QMQ1JnTfkdC2jqSZP5kCRxV6EQ=
+	b=Nls1/j9UHG/y1yH/MDa8t0U+k/j4TWMobiETC2lRHJXvJbBliZeUTaNe6o+QtA0xJ
+	 FS230PwMPwnpGmcApBfvqtyzDkxq+3+/KXOI7OLjFFyUZvNxg4dCi+t/kxqZx1vpKt
+	 FfL/2wFXA3FNjFtx9TRBvdxkHs+tshBW0AhFyqw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.6 469/567] batman-adv: avoid OGM aggregation when skb tailroom is insufficient
-Date: Mon, 23 Mar 2026 14:46:29 +0100
-Message-ID: <20260323134545.589783796@linuxfoundation.org>
+	stable@kernel.org,
+	Nicholas Carlini <npc@anthropic.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 470/567] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
+Date: Mon, 23 Mar 2026 14:46:30 +0100
+Message-ID: <20260323134545.614796685@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,47 +53,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 0d4aef630be9d5f9c1227d07669c26c4383b5ad0 upstream.
+[ Upstream commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 ]
 
-When OGM aggregation state is toggled at runtime, an existing forwarded
-packet may have been allocated with only packet_len bytes, while a later
-packet can still be selected for aggregation. Appending in this case can
-hit skb_put overflow conditions.
+The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
+(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
+This size was calculated based on OPEN responses and does not account
+for LOCK denied responses, which include the conflicting lock owner as
+a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
 
-Reject aggregation when the target skb tailroom cannot accommodate the new
-packet. The caller then falls back to creating a new forward packet
-instead of appending.
+When a LOCK operation is denied due to a conflict with an existing lock
+that has a large owner, nfsd4_encode_operation() copies the full encoded
+response into the undersized replay buffer via read_bytes_from_xdr_buf()
+with no bounds check. This results in a slab-out-of-bounds write of up
+to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
 
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
-Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
-[ Adjust context ]
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
+This can be triggered remotely by an unauthenticated attacker with two
+cooperating NFSv4.0 clients: one sets a lock with a large owner string,
+then the other requests a conflicting lock to provoke the denial.
+
+We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
+opaque, but that would increase the size of every stateowner, when most
+lockowners are not that large.
+
+Instead, fix this by checking the encoded response length against
+NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
+response is too large, set rp_buflen to 0 to skip caching the replay
+payload. The status is still cached, and the client already received the
+correct response on the original request.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Reported-by: Nicholas Carlini <npc@anthropic.com>
+Tested-by: Nicholas Carlini <npc@anthropic.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+[ replaced `op_status_offset + XDR_UNIT` with existing `post_err_offset` variable ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_iv_ogm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfsd/nfs4xdr.c |    9 +++++++--
+ fs/nfsd/state.h   |   17 ++++++++++++-----
+ 2 files changed, 19 insertions(+), 7 deletions(-)
 
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -464,6 +464,9 @@ batadv_iv_ogm_can_aggregate(const struct
- 	    !time_after_eq(aggregation_end_time, forw_packet->send_time))
- 		return false;
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -5425,9 +5425,14 @@ nfsd4_encode_operation(struct nfsd4_comp
+ 		int len = xdr->buf->len - post_err_offset;
  
-+	if (skb_tailroom(forw_packet->skb) < packet_len)
-+		return false;
-+
- 	if (aggregated_bytes > BATADV_MAX_AGGREGATION_BYTES)
- 		return false;
+ 		so->so_replay.rp_status = op->status;
+-		so->so_replay.rp_buflen = len;
+-		read_bytes_from_xdr_buf(xdr->buf, post_err_offset,
++		if (len <= NFSD4_REPLAY_ISIZE) {
++			so->so_replay.rp_buflen = len;
++			read_bytes_from_xdr_buf(xdr->buf,
++						post_err_offset,
+ 						so->so_replay.rp_buf, len);
++		} else {
++			so->so_replay.rp_buflen = 0;
++		}
+ 	}
+ status:
+ 	*p = op->status;
+--- a/fs/nfsd/state.h
++++ b/fs/nfsd/state.h
+@@ -430,11 +430,18 @@ struct nfs4_client_reclaim {
+ 	struct xdr_netobj	cr_princhash;
+ };
  
+-/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
+- * The OPEN response, typically the largest, requires 
+- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
+- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
+- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
++/*
++ * REPLAY_ISIZE is sized for an OPEN response with delegation:
++ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
++ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
++ *   4(deleg. recall flag) + 20(deleg. space limit) +
++ *   ~32(deleg. ace) = 112 bytes
++ *
++ * Some responses can exceed this. A LOCK denial includes the conflicting
++ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
++ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
++ * saved. Enlarging this constant increases the size of every
++ * nfs4_stateowner.
+  */
+ 
+ #define NFSD4_REPLAY_ISIZE       112 
 
 
