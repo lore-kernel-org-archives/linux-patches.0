@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5435F3AE6F8;
-	Mon, 23 Mar 2026 16:25:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D543B3BE5;
+	Mon, 23 Mar 2026 16:25:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283110; cv=none; b=qKqvtzu4NY/QEeK0xWKoN3xNX8L//e0Gq3vUOdf96Kd/8DC9S4AvzKNkcSuxzWXeMe3RN3EVMoJUd2yRGWZEzwUA7nd6WVsX7pyxOfg4BANYuPHdMSlUJbwooeESzAdYL+XRr9PRfDQJ8NUM5ruOfOdCoXZuf9WhanHcUBo5hKQ=
+	t=1774283113; cv=none; b=QhUpQeXnQjSL2FDEdNA+JBdh3zJ5v5q270q+ClQmRTXia983ziejWUsnX1uB82uHBPNOkEweg8v+ICOXK/+3CQ2siN5h9cTsG5C24oyefpdAPyWFs0ej6vYjXgNPVopasJUaD9sGG7ARLnwPJgJOCY37+zGiQtXt4/rkuw3hj5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283110; c=relaxed/simple;
-	bh=28ezYnE9VVlv2ZDzbsnOe9evy7ycjq04L76+r+PDpGo=;
+	s=arc-20240116; t=1774283113; c=relaxed/simple;
+	bh=QJZe3QMmiIkWSPY6RiVr0KMc66d5lv48orwttDBcwaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IDm+fOzi4lksuZiCLVJ+i9wgSdDjNDyvgVUy71W2k3jjgDMpOxW+r7wqB7SN7NQ6lPvu3v19gO5irY1ZLKX4zYGc4NYgQmX7xOtJ2xhmJ63Anh18VsTMEPwkeeOt0mPxO2YTlsAD3zrN3fjvqvojP5SmCqmYa7OQbOVStqFGYhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4fS5fir; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e5l8oMEPz0m1GcWxhFWmo0I1KNxDq2KEgwLRzd8gqKN2oqRguZbeljG88Ybkahj8mcxIJSY05D2rDPKCDg0r7hptVOD45TI4mu8Cfx4o8DsDrSEDts8fCYu/Bu8Sj5AJYj/QL1b6LBO9Js1pozJuz3klggq3uUG0dJ+ghskTj8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=doV+UWZa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4fS5fir"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B980CC4CEF7;
-	Mon, 23 Mar 2026 16:25:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="doV+UWZa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CD2C2BC9E;
+	Mon, 23 Mar 2026 16:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283110;
-	bh=28ezYnE9VVlv2ZDzbsnOe9evy7ycjq04L76+r+PDpGo=;
+	s=korg; t=1774283112;
+	bh=QJZe3QMmiIkWSPY6RiVr0KMc66d5lv48orwttDBcwaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4fS5firypsZ8JkZwmN9oO6TYnZ0LCxwsNhU7bpKdS2MRgEHf2FrdXAOMuRwLoncM
-	 M3ZCXQSRw7hh1h7fCnkQT/Kcdfwi2gHpzOQw70UUB9WTekuse1uH7TCvLnV7neJsPF
-	 mUx9WMmfLP1f+J5lk9ucvW6Oj/IzYAWCjgXHlP7s=
+	b=doV+UWZaes+LQuzMMKN0dEzMq3EolyAqdfhsGgUrd6k/Dyb7SzyweYIkx9EXCn3Ul
+	 I4a3pSFOC1CmOKK9t8Fu/qIV+ep2iV6tlrynsn83Pe4Pq/Qczr6+fvFBNHUUTMvbOC
+	 eymNnkhzpimAGo2Ny5iWyCHb6M0hRkte7TWrmlXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Eggers <ceggers@arri.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 404/481] Bluetooth: LE L2CAP: Disconnect if received packets SDU exceeds IMTU
-Date: Mon, 23 Mar 2026 14:46:26 +0100
-Message-ID: <20260323134535.020784795@linuxfoundation.org>
+Subject: [PATCH 6.1 405/481] Bluetooth: LE L2CAP: Disconnect if sum of payload sizes exceed SDU
+Date: Mon, 23 Mar 2026 14:46:27 +0100
+Message-ID: <20260323134535.045765626@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,51 +53,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit e1d9a66889867c232657a9b6f25d451d7c3ab96f ]
+[ Upstream commit b6a2bf43aa37670432843bc73ae2a6288ba4d6f8 ]
 
 Core 6.0, Vol 3, Part A, 3.4.3:
-"If the SDU length field value exceeds the receiver's MTU, the receiver
-shall disconnect the channel..."
+"... If the sum of the payload sizes for the K-frames exceeds the
+specified SDU length, the receiver shall disconnect the channel."
 
-This fixes L2CAP/LE/CFC/BV-26-C (running together with 'l2test -r -P
-0x0027 -V le_public -I 100').
+This fixes L2CAP/LE/CFC/BV-27-C (running together with 'l2test -r -P
+0x0027 -V le_public').
 
 Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
 Signed-off-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ net/bluetooth/l2cap_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 7899600cd3724..db62b4f2c5210 100644
+index db62b4f2c5210..e2ca5d95c96be 100644
 --- a/net/bluetooth/l2cap_core.c
 +++ b/net/bluetooth/l2cap_core.c
-@@ -7678,8 +7678,10 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		return -ENOBUFS;
- 	}
+@@ -7745,6 +7745,7 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
  
--	if (chan->imtu < skb->len) {
--		BT_ERR("Too big LE L2CAP PDU");
-+	if (skb->len > chan->imtu) {
-+		BT_ERR("Too big LE L2CAP PDU: len %u > %u", skb->len,
-+		       chan->imtu);
+ 	if (chan->sdu->len + skb->len > chan->sdu_len) {
+ 		BT_ERR("Too much LE L2CAP data received");
 +		l2cap_send_disconn_req(chan, ECONNRESET);
- 		return -ENOBUFS;
+ 		err = -EINVAL;
+ 		goto failed;
  	}
- 
-@@ -7705,7 +7707,9 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		       sdu_len, skb->len, chan->imtu);
- 
- 		if (sdu_len > chan->imtu) {
--			BT_ERR("Too big LE L2CAP SDU length received");
-+			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
-+			       skb->len, sdu_len);
-+			l2cap_send_disconn_req(chan, ECONNRESET);
- 			err = -EMSGSIZE;
- 			goto failed;
- 		}
 -- 
 2.51.0
 
