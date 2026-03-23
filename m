@@ -1,43 +1,47 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from bregans-0.gladserv.net (bregans-0.gladserv.net [185.128.210.58])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C1663B19CD;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6915B3B19D4;
 	Mon, 23 Mar 2026 14:13:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.128.210.58
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275201; cv=none; b=QSFVRnPvBGbXCq55cgvaQEyuFpTOapPscVZoGCWZrhBoDemNJraYMDhX4FcGjfbvVqP63WADatwr5s4+Z9+vFQ1ZidAzItISPraWO0V92TFjLQgJzd/OccS6kPlmGZeTkSl4hDvnvPGE+U/KRQvL10/mBjuvcW+mOdGR8CrlHuo=
+	t=1774275204; cv=none; b=a0IkZ4U4Zh8V7V1yrSxRvsUTOcbjJ3TmHixHf0yd+gLazL6AwZ/237RNkMPNmPe8sJA6OkIzlamiCSwtY2xWo7feRCZld79ehU+WaO/HNUMj0zgrxdd+xAwuVlWFwNT4Z+aA3ebTlrQ2tXC8kZWKBTHCotV1Zq2W+mtb0GgAnwU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275201; c=relaxed/simple;
-	bh=Ixnh3lCdv9+50M4EWU1/BwvMdTFp/Bh9d305QOmj75k=;
+	s=arc-20240116; t=1774275204; c=relaxed/simple;
+	bh=sGoqZYtTY1W1VmSLDgzscN9OahB1SaWtPZdq/fQhw2w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WUEc/ABfRYs5k2caK7/fwFK986oRwP+HQZxBy2DT2CNqleIfK5YOag0ppjiyFT43IyL1hQ6JcDzSMCW5Vy7n37GZJN3uB8WAso4sP/IcvBS0B7SrnOJd2VKOGbC4XZBwJsiZyBZsNPr95jwcjEN/z26b5+os4WAnatfvnFu+9Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SeTw+eLE; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SeTw+eLE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AFC5C2BCB6;
-	Mon, 23 Mar 2026 14:13:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275201;
-	bh=Ixnh3lCdv9+50M4EWU1/BwvMdTFp/Bh9d305QOmj75k=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SeTw+eLEGNLF5oBFtr0RSiofB9az++/6gFaptdmXcWx/EfLaQqpZiObTA2JIeNr40
-	 N5zWko7hy7T2bMldvk0aKcQLyUY3JP6i44z0ApIf7svM/SyH6DhEivU7Y+Pe2CKsq2
-	 CfxnfDjXxOs6oJEVIzBzF3nVJVF9n5wkY0Cxv8O0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	 MIME-Version; b=TGG9v5rMVAbsZh6bE0NILbEXFKKdB5epq1ADH1KfOVRFvO0pEUunaeCxHyvChvDUlo2zAenzyBX3AbmZ42fAZri/YDUxAXhmKZOLHOBt2BuxKsE/RJJ5YvYIiDdhPWFX4FiYcmYavKyW/rohweDh7HmIOSQj5OOfkuFhuXBChL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net; spf=pass smtp.mailfrom=librecast.net; arc=none smtp.client-ip=185.128.210.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=librecast.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=librecast.net
+From: Brett A C Sheffield <bacs@librecast.net>
+To: gregkh@linuxfoundation.org
+Cc: stable@vger.kernel.org,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 011/567] ALSA: usb-audio: Use inclusive terms
-Date: Mon, 23 Mar 2026 14:38:51 +0100
-Message-ID: <20260323134534.038633265@linuxfoundation.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
-References: <20260323134533.749096647@linuxfoundation.org>
-User-Agent: quilt/0.69
-X-stable: review
-X-Patchwork-Hint: ignore
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@nabladev.com,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	rwarsow@gmx.de,
+	conor@kernel.org,
+	hargar@microsoft.com,
+	broonie@kernel.org,
+	achill@achill.org,
+	sr@sladewatkins.com,
+	Brett A C Sheffield <bacs@librecast.net>
+Subject: Re: [PATCH 6.19 000/220] 6.19.10-rc1 review
+Date: Mon, 23 Mar 2026 14:12:47 +0000
+Message-ID: <20260323141257.48446-1-bacs@librecast.net>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
+References: <20260323134504.575022936@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,52 +50,12 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.6-stable review patch.  If anyone has any objections, please let me know.
+# Librecast Test Results
 
-------------------
+020/020 [ OK ] liblcrq
+010/010 [ OK ] libmld
+120/120 [ OK ] liblibrecast
 
-From: Takashi Iwai <tiwai@suse.de>
+CPU/kernel: Linux auntie 6.19.10-rc1-g5cf3b8242cca #1 SMP PREEMPT_DYNAMIC Mon Mar 23 14:10:11 -00 2026 x86_64 AMD Ryzen 9 9950X 16-Core Processor AuthenticAMD GNU/Linux
 
-[ Upstream commit 4e9113c533acee2ba1f72fd68ee6ecd36b64484e ]
-
-Replace the remaining with inclusive terms; it's only this function
-name we overlooked at the previous conversion.
-
-Fixes: 53837b4ac2bd ("ALSA: usb-audio: Replace slave/master terms")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/20260225085233.316306-5-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- sound/usb/endpoint.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
-
-diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
-index d035b25f67b64..806755a65fc05 100644
---- a/sound/usb/endpoint.c
-+++ b/sound/usb/endpoint.c
-@@ -160,8 +160,8 @@ int snd_usb_endpoint_implicit_feedback_sink(struct snd_usb_endpoint *ep)
-  * This won't be used for implicit feedback which takes the packet size
-  * returned from the sync source
-  */
--static int slave_next_packet_size(struct snd_usb_endpoint *ep,
--				  unsigned int avail)
-+static int synced_next_packet_size(struct snd_usb_endpoint *ep,
-+				   unsigned int avail)
- {
- 	unsigned long flags;
- 	unsigned int phase;
-@@ -230,7 +230,7 @@ int snd_usb_endpoint_next_packet_size(struct snd_usb_endpoint *ep,
- 	}
- 
- 	if (ep->sync_source)
--		return slave_next_packet_size(ep, avail);
-+		return synced_next_packet_size(ep, avail);
- 	else
- 		return next_packet_size(ep, avail);
- }
--- 
-2.51.0
-
-
-
+Tested-by: Brett A C Sheffield <bacs@librecast.net>
