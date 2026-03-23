@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988741A00F0;
-	Mon, 23 Mar 2026 15:11:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BC723B8932;
+	Mon, 23 Mar 2026 15:11:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278662; cv=none; b=BdqVQDPDAqCRPA/RYVGnN9/L5huAh8h907AfwVSd18pwTptiESGUI7PFBNOakkwe3FVddXjkKWOzIE++QWcw1t221LMbsF2jGZFA8Vqy8foejHyVgX06HN1Ph/OGlD88WW8bLW/BbU41kXgMQuQ4JqwOjbONfUGzhy+4W67n8rQ=
+	t=1774278666; cv=none; b=VowD7+lElYiACAqWgNYrzQJhE4ZlMpFf6kH+R7h3n15dRdi/6hSIUKkSnmbYuJ9GJihJquUmUoNJjLvCm/ej2VR5meA4VZ3RURxFQl0iD7CXPi2tISCt5OIGG6ppXTG5rtinnfg+dh8l9RwOtxwOe2D8wErJSSyIQsh45pEZc0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278662; c=relaxed/simple;
-	bh=7ZcTPvgljryblKoeB6yRW/hOxRlk3u76vL4CLKMioBw=;
+	s=arc-20240116; t=1774278666; c=relaxed/simple;
+	bh=ZYuQ6Gr2KzK2oDaHfBqOaC1lDG40TCVTGKU64i07Mvw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FewsA+slep/9kPGWik1RYntJ+pSKyMqN/RV3CaH10q2bD9hMyZw1fvXFw5cx7x8eSGCkkE40r+Yh4rtTsg6ZMzM0b8fwqDgJjRjyGKAX4DNkZOv63uRkzRvuB4pZRUaE/kkikF7+ZDlz2GIl1pw90YryGYi/rZPEUs9v0EctITQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UcKS5lFj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rJ7mLJgtCrjclFs1NTpaJ/QFYigETp8kB+w/Qa0BanJGMpoeFeRuOxu3Rywfpx6wGtcqi6vRDs1YZnYndtiEqp2QzOY0k5T5TS73CBHxtDWLWvcFy3cdxukefl2FWc2ihLUeeiy+2PGjSct9U6EoSXJCjGA13MiTFKpm8pC4b+U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKRW07Bo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UcKS5lFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B52C4CEF7;
-	Mon, 23 Mar 2026 15:11:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKRW07Bo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 416EDC4CEF7;
+	Mon, 23 Mar 2026 15:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278662;
-	bh=7ZcTPvgljryblKoeB6yRW/hOxRlk3u76vL4CLKMioBw=;
+	s=korg; t=1774278665;
+	bh=ZYuQ6Gr2KzK2oDaHfBqOaC1lDG40TCVTGKU64i07Mvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UcKS5lFj3bcyMeCTWkt3roZc8yEvPjRO1YZUi5tH72cG+szKvl2rwIQbNiZ63UH9o
-	 /UnxX75Obnv+PGO70/EQIEEuTqGG3Uz4mO8sYzxe29P/E+n1swt3qYdyD579EJQcrX
-	 12SIl9YVWCBk2HX4CyO3ilDlj1vZekNsA6pOM+HQ=
+	b=GKRW07Bo7bqk56Zx+48L9BS092LZJicnrxKChKNR045Vaux7DxG+SuFI0hR4ITkE2
+	 Y9qG1zJ9JN2DXxSsMXsK3ubRjTUlukH6V72Bm4J+L+Qob2qGmzV13ngR1Vvt/rqWTm
+	 /xp670B94BuJ9HftozvC1A083lSVW+E47bt+IE0k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	stable <stable@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 380/567] can: gs_usb: gs_can_open(): always configure bitrates before starting device
-Date: Mon, 23 Mar 2026 14:45:00 +0100
-Message-ID: <20260323134543.239383231@linuxfoundation.org>
+Subject: [PATCH 6.6 381/567] usb: gadget: f_tcm: Fix NULL pointer dereferences in nexus handling
+Date: Mon, 23 Mar 2026 14:45:01 +0100
+Message-ID: <20260323134543.266023910@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,98 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 ]
+[ Upstream commit b9fde507355342a2d64225d582dc8b98ff5ecb19 ]
 
-So far the driver populated the struct can_priv::do_set_bittiming() and
-struct can_priv::fd::do_set_data_bittiming() callbacks.
+The `tpg->tpg_nexus` pointer in the USB Target driver is dynamically
+managed and tied to userspace configuration via ConfigFS. It can be
+NULL if the USB host sends requests before the nexus is fully
+established or immediately after it is dropped.
 
-Before bringing up the interface, user space has to configure the bitrates.
-With these callbacks the configuration is directly forwarded into the CAN
-hardware. Then the interface can be brought up.
+Currently, functions like `bot_submit_command()` and the data
+transfer paths retrieve `tv_nexus = tpg->tpg_nexus` and immediately
+dereference `tv_nexus->tvn_se_sess` without any validation. If a
+malicious or misconfigured USB host sends a BOT (Bulk-Only Transport)
+command during this race window, it triggers a NULL pointer
+dereference, leading to a kernel panic (local DoS).
 
-An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
-the bitrates in the CAN hardware. This leads to a problem with the
-CANable-2.5 [1] firmware, which resets the configured bit rates during
-ifdown.
+This exposes an inconsistent API usage within the module, as peer
+functions like `usbg_submit_command()` and `bot_send_bad_response()`
+correctly implement a NULL check for `tv_nexus` before proceeding.
 
-To fix the problem remove both bit timing callbacks and always configure
-the bitrates in the struct net_device_ops::ndo_open() callback.
+Fix this by bringing consistency to the nexus handling. Add the
+missing `if (!tv_nexus)` checks to the vulnerable BOT command and
+request processing paths, aborting the command gracefully with an
+error instead of crashing the system.
 
-[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
-
-Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ adapted the `.fd` sub-struct ]
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260219023834.17976-1-jiashengjiangcool@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -769,9 +769,8 @@ device_detach:
- 	}
- }
- 
--static int gs_usb_set_bittiming(struct net_device *netdev)
-+static int gs_usb_set_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -788,9 +787,8 @@ static int gs_usb_set_bittiming(struct n
- 				    GFP_KERNEL);
- }
- 
--static int gs_usb_set_data_bittiming(struct net_device *netdev)
-+static int gs_usb_set_data_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.data_bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -1054,6 +1052,20 @@ static int gs_can_open(struct net_device
- 	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 		flags |= GS_CAN_MODE_HW_TIMESTAMP;
- 
-+	rc = gs_usb_set_bittiming(dev);
-+	if (rc) {
-+		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-+		goto out_usb_kill_anchored_urbs;
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1032,6 +1032,13 @@ static void usbg_cmd_work(struct work_st
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
++
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
 +	}
 +
-+	if (ctrlmode & CAN_CTRLMODE_FD) {
-+		rc = gs_usb_set_data_bittiming(dev);
-+		if (rc) {
-+			netdev_err(netdev, "failed to set data bittiming: %pe\n", ERR_PTR(rc));
-+			goto out_usb_kill_anchored_urbs;
-+		}
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0) {
+ 		__target_init_cmd(se_cmd,
+@@ -1160,6 +1167,13 @@ static void bot_cmd_work(struct work_str
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
++
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
 +	}
 +
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm.flags = cpu_to_le32(flags);
-@@ -1354,7 +1366,6 @@ static struct gs_can *gs_make_candev(uns
- 	dev->can.state = CAN_STATE_STOPPED;
- 	dev->can.clock.freq = le32_to_cpu(bt_const.fclk_can);
- 	dev->can.bittiming_const = &dev->bt_const;
--	dev->can.do_set_bittiming = gs_usb_set_bittiming;
- 
- 	dev->can.ctrlmode_supported = CAN_CTRLMODE_CC_LEN8_DLC;
- 
-@@ -1378,7 +1389,6 @@ static struct gs_can *gs_make_candev(uns
- 		 * GS_CAN_FEATURE_BT_CONST_EXT is set.
- 		 */
- 		dev->can.data_bittiming_const = &dev->bt_const;
--		dev->can.do_set_data_bittiming = gs_usb_set_data_bittiming;
- 	}
- 
- 	if (feature & GS_CAN_FEATURE_TERMINATION) {
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0) {
+ 		__target_init_cmd(se_cmd,
 
 
