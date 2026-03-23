@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1EB1DA0E1;
-	Mon, 23 Mar 2026 14:58:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D5D1DE4E0;
+	Mon, 23 Mar 2026 14:58:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277936; cv=none; b=LDi94101gOb2t7gu33btbOJ+5CIbFBmkrfVQ6PNKxmbrM5qTCm2COr5TpVCEs1iPDaVRvRzyX5vLEMjliTD4wU3u7hfuN0Cj+UHD6K560P69nzVCODUpX1h9G7mlbecgqC47zI9ExWo3cmR1u3TVXY5vtQ+a9r8LPKMgZ/eleyo=
+	t=1774277940; cv=none; b=Wngz1FmaXPAJPEFuq/8eLJCrqlLWK/aLfck+5Fm15BELVGtOvyKZwbBq9jlp8hiyBiyPNiSY8ErLfqdypdWgteFLuN5TyAmAGQKq9c9TBI5qMkqp44/XywZaly3y2mFXaX1roAWIvH8Z0UPYaMLOgoAilJFun48fGv3UtY2hYmM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277936; c=relaxed/simple;
-	bh=EpfWRMLp9EHqlLg+wIIdfkPW/ClfQsgEenrFFNVKyMM=;
+	s=arc-20240116; t=1774277940; c=relaxed/simple;
+	bh=yw9FYCoa4uI+Ugmt3n3tD8h71+4PkFmRTSGJ+7G0L3M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AJ4tF6ITk4RU740cSXU9rrT8N1HbXdKEd3O4L57hZYrw+fl949qOpO9eB54kxBajN2sSEL7ax3dYDC2rMdANlD9qu9EQU5ra08EPgOxxVN8Eox9lO1STwM+dvmZXCD5wrUcqv4TobsuwDGZ7XF3vSb3/H23Xr9B8lt9wkhZHbqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qx8oO2vD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=keP9lxl72KH7enDUfLTZdL6Yx43wHI50BQvfeeTFpufAjh9ZIKZR4uXivHvcyZO30IrS/iYZ9hS+/eieQmN2hma/WzC8aAbuBpsVT5FUFTPHfJA6SUIZQm192ilhchqMDY21D15aw043Q4bP0s/anuW3LfnGhQpq5jDogzJBuTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KJDC6xtb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qx8oO2vD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9B15C2BCB4;
-	Mon, 23 Mar 2026 14:58:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KJDC6xtb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E8F7C4CEF7;
+	Mon, 23 Mar 2026 14:58:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277936;
-	bh=EpfWRMLp9EHqlLg+wIIdfkPW/ClfQsgEenrFFNVKyMM=;
+	s=korg; t=1774277939;
+	bh=yw9FYCoa4uI+Ugmt3n3tD8h71+4PkFmRTSGJ+7G0L3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qx8oO2vD1Zk8GNEsHU5mEum6FM4CAnv5GfkpOx+D90aD3Xmu2KoYG8aZVB1hB3hQy
-	 3uyFICW6MpGqVSIpAyRNMPq6ScMDLnkGsBYDE1ongZXsp5bUot7UUczBl3tbf2o2Q+
-	 80AgtEHNk44mcf8l79MERLsWjMqvA4ShhZ3IE8ow=
+	b=KJDC6xtbqB6QPUm720jDaaxm/AkdK10Q6ClqgKfAFUXLWU3FkTyRkECFA53Cz3ncZ
+	 oXcQi8RsBHNffDLZxup+y0FYX1zWc8IuRPgsH0uqqXq5rrraCjBlCCesTR4dpwgRz1
+	 DE4trLwKq6qkNkOB10711Mq+UJ9WZX1XCJLTx9kU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sathesh Edara <sedara@marvell.com>,
-	Shinas Rasheed <srasheed@marvell.com>,
-	Vimlesh Kumar <vimleshk@marvell.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 150/567] octeon_ep: avoid compiler and IQ/OQ reordering
-Date: Mon, 23 Mar 2026 14:41:10 +0100
-Message-ID: <20260323134537.543097171@linuxfoundation.org>
+Subject: [PATCH 6.6 151/567] wifi: cw1200: Fix locking in error paths
+Date: Mon, 23 Mar 2026 14:41:11 +0100
+Message-ID: <20260323134537.569863704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,153 +51,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vimlesh Kumar <vimleshk@marvell.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 43b3160cb639079a15daeb5f080120afbfbfc918 ]
+[ Upstream commit d98c24617a831e92e7224a07dcaed2dd0b02af96 ]
 
-Utilize READ_ONCE and WRITE_ONCE APIs for IO queue Tx/Rx
-variable access to prevent compiler optimization and reordering.
-Additionally, ensure IO queue OUT/IN_CNT registers are flushed
-by performing a read-back after writing.
+cw1200_wow_suspend() must only return with priv->conf_mutex locked if it
+returns zero. This mutex must be unlocked if an error is returned. Add
+mutex_unlock() calls to the error paths from which that call is missing.
+This has been detected by the Clang thread-safety analyzer.
 
-The compiler could reorder reads/writes to pkts_pending, last_pkt_count,
-etc., causing stale values to be used when calculating packets to process
-or register updates to send to hardware. The Octeon hardware requires a
-read-back after writing to OUT_CNT/IN_CNT registers to ensure the write
-has been flushed through any posted write buffers before the interrupt
-resend bit is set. Without this, we have observed cases where the hardware
-didn't properly update its internal state.
-
-wmb/rmb only provides ordering guarantees but doesn't prevent the compiler
-from performing optimizations like caching in registers, load tearing etc.
-
-Fixes: 37d79d0596062 ("octeon_ep: add Tx/Rx processing and interrupt support")
-Signed-off-by: Sathesh Edara <sedara@marvell.com>
-Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
-Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
-Link: https://patch.msgid.link/20260227091402.1773833-3-vimleshk@marvell.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: a910e4a94f69 ("cw1200: add driver for the ST-E CW1100 & CW1200 WLAN chipsets")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223220102.2158611-25-bart.vanassche@linux.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/marvell/octeon_ep/octep_main.c   | 21 +++++++++------
- .../net/ethernet/marvell/octeon_ep/octep_rx.c | 27 +++++++++++++------
- 2 files changed, 32 insertions(+), 16 deletions(-)
+ drivers/net/wireless/st/cw1200/pm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-index 111caa5ce12fa..e4a78d5e73495 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
-@@ -541,17 +541,22 @@ static void octep_clean_irqs(struct octep_device *oct)
-  */
- static void octep_update_pkt(struct octep_iq *iq, struct octep_oq *oq)
- {
--	u32 pkts_pend = oq->pkts_pending;
-+	u32 pkts_pend = READ_ONCE(oq->pkts_pending);
-+	u32 last_pkt_count = READ_ONCE(oq->last_pkt_count);
-+	u32 pkts_processed = READ_ONCE(iq->pkts_processed);
-+	u32 pkt_in_done = READ_ONCE(iq->pkt_in_done);
- 
- 	netdev_dbg(iq->netdev, "enabling intr for Q-%u\n", iq->q_no);
--	if (iq->pkts_processed) {
--		writel(iq->pkts_processed, iq->inst_cnt_reg);
--		iq->pkt_in_done -= iq->pkts_processed;
--		iq->pkts_processed = 0;
-+	if (pkts_processed) {
-+		writel(pkts_processed, iq->inst_cnt_reg);
-+		readl(iq->inst_cnt_reg);
-+		WRITE_ONCE(iq->pkt_in_done, (pkt_in_done - pkts_processed));
-+		WRITE_ONCE(iq->pkts_processed, 0);
- 	}
--	if (oq->last_pkt_count - pkts_pend) {
--		writel(oq->last_pkt_count - pkts_pend, oq->pkts_sent_reg);
--		oq->last_pkt_count = pkts_pend;
-+	if (last_pkt_count - pkts_pend) {
-+		writel(last_pkt_count - pkts_pend, oq->pkts_sent_reg);
-+		readl(oq->pkts_sent_reg);
-+		WRITE_ONCE(oq->last_pkt_count, pkts_pend);
+diff --git a/drivers/net/wireless/st/cw1200/pm.c b/drivers/net/wireless/st/cw1200/pm.c
+index a20ab577a3644..212b6f2af8de4 100644
+--- a/drivers/net/wireless/st/cw1200/pm.c
++++ b/drivers/net/wireless/st/cw1200/pm.c
+@@ -264,12 +264,14 @@ int cw1200_wow_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
+ 		wiphy_err(priv->hw->wiphy,
+ 			  "PM request failed: %d. WoW is disabled.\n", ret);
+ 		cw1200_wow_resume(hw);
++		mutex_unlock(&priv->conf_mutex);
+ 		return -EBUSY;
  	}
  
- 	/* Flush the previous wrties before writing to RESEND bit */
-diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-index 60afb6bf2f679..e0c1e13e48c02 100644
---- a/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-+++ b/drivers/net/ethernet/marvell/octeon_ep/octep_rx.c
-@@ -323,10 +323,16 @@ static int octep_oq_check_hw_for_pkts(struct octep_device *oct,
- 				      struct octep_oq *oq)
- {
- 	u32 pkt_count, new_pkts;
-+	u32 last_pkt_count, pkts_pending;
- 
- 	pkt_count = readl(oq->pkts_sent_reg);
--	new_pkts = pkt_count - oq->last_pkt_count;
-+	last_pkt_count = READ_ONCE(oq->last_pkt_count);
-+	new_pkts = pkt_count - last_pkt_count;
- 
-+	if (pkt_count < last_pkt_count) {
-+		dev_err(oq->dev, "OQ-%u pkt_count(%u) < oq->last_pkt_count(%u)\n",
-+			oq->q_no, pkt_count, last_pkt_count);
-+	}
- 	/* Clear the hardware packets counter register if the rx queue is
- 	 * being processed continuously with-in a single interrupt and
- 	 * reached half its max value.
-@@ -337,8 +343,9 @@ static int octep_oq_check_hw_for_pkts(struct octep_device *oct,
- 		pkt_count = readl(oq->pkts_sent_reg);
- 		new_pkts += pkt_count;
- 	}
--	oq->last_pkt_count = pkt_count;
--	oq->pkts_pending += new_pkts;
-+	WRITE_ONCE(oq->last_pkt_count, pkt_count);
-+	pkts_pending = READ_ONCE(oq->pkts_pending);
-+	WRITE_ONCE(oq->pkts_pending, (pkts_pending + new_pkts));
- 	return new_pkts;
- }
- 
-@@ -411,7 +418,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
- 	u16 data_offset;
- 	u32 read_idx;
- 
--	read_idx = oq->host_read_idx;
-+	read_idx = READ_ONCE(oq->host_read_idx);
- 	rx_bytes = 0;
- 	desc_used = 0;
- 	for (pkt = 0; pkt < pkts_to_process; pkt++) {
-@@ -494,7 +501,7 @@ static int __octep_oq_process_rx(struct octep_device *oct,
- 		napi_gro_receive(oq->napi, skb);
- 	}
- 
--	oq->host_read_idx = read_idx;
-+	WRITE_ONCE(oq->host_read_idx, read_idx);
- 	oq->refill_count += desc_used;
- 	oq->stats.packets += pkt;
- 	oq->stats.bytes += rx_bytes;
-@@ -517,22 +524,26 @@ int octep_oq_process_rx(struct octep_oq *oq, int budget)
- {
- 	u32 pkts_available, pkts_processed, total_pkts_processed;
- 	struct octep_device *oct = oq->octep_dev;
-+	u32 pkts_pending;
- 
- 	pkts_available = 0;
- 	pkts_processed = 0;
- 	total_pkts_processed = 0;
- 	while (total_pkts_processed < budget) {
- 		 /* update pending count only when current one exhausted */
--		if (oq->pkts_pending == 0)
-+		pkts_pending = READ_ONCE(oq->pkts_pending);
-+		if (pkts_pending == 0)
- 			octep_oq_check_hw_for_pkts(oct, oq);
-+		pkts_pending = READ_ONCE(oq->pkts_pending);
- 		pkts_available = min(budget - total_pkts_processed,
--				     oq->pkts_pending);
-+				     pkts_pending);
- 		if (!pkts_available)
- 			break;
- 
- 		pkts_processed = __octep_oq_process_rx(oct, oq,
- 						       pkts_available);
--		oq->pkts_pending -= pkts_processed;
-+		pkts_pending = READ_ONCE(oq->pkts_pending);
-+		WRITE_ONCE(oq->pkts_pending, (pkts_pending - pkts_processed));
- 		total_pkts_processed += pkts_processed;
+ 	/* Force resume if event is coming from the device. */
+ 	if (atomic_read(&priv->bh_rx)) {
+ 		cw1200_wow_resume(hw);
++		mutex_unlock(&priv->conf_mutex);
+ 		return -EAGAIN;
  	}
  
 -- 
