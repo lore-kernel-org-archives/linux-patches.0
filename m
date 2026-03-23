@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7587D25B2F4;
-	Mon, 23 Mar 2026 15:01:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B12038759C;
+	Mon, 23 Mar 2026 15:01:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278094; cv=none; b=cs6U8tOiHQn5BNJDqM967J571L750tMqcWxoi1oyjT5PGzqGUCDBrY9L9AutgAWW0f5bZngw3ftryiCboP907/bc21nlKu2YPJbCunMaDVK6MxJ4Td1j+kgRKLGQWi/TsHdLw0atwzKvGrtvgCfIBgaeP4PcKWlbaA2ItfmNqk0=
+	t=1774278097; cv=none; b=kGadeQ6F6wEAHcDfElnay1gl2qy0UT0b4cVU0cOuJsprStpu5xdztMsQzvKsVFh6+y5frhp8PtEYGESClkFbDR45TciFRpglKzhdvOuaQlHbKYgUM5uCO5xxdv4qxqRsHbaheYBCJPvvEZochlDfRmRAuGjN1R7nQObjWUhW9nE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278094; c=relaxed/simple;
-	bh=pxxNd374d8sP7s9PG82LvmpH8AqiFl1Z9SUnPN95idQ=;
+	s=arc-20240116; t=1774278097; c=relaxed/simple;
+	bh=nyqt5n2PG4sAmAICeHWf1XrHKsbVc2C3ZUhQfoND0ks=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sTJ1HE2k8PmIMnlaaSkfP3cbBKlqEjaCV0/M9EGwzY2h75r2h+XapA03SCAuzgHJcsvUzGigFS9zmvmkqNdv3DiR24ENgOG9F9IY6yCkN4Xf6gOk+GOclJuTCltKSHh5o1MWgofC60eVpt1hAkPKIiZmKnCwr/QzGFjkWjV3y6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXKd0nAv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qhAVixzQgGBAh1qiaMVxG2MXKkL4Eg07Hk2JjTm1IS6HaJDAs3XOVZX+arsGVOTb0mzwiJosbPssjl42nfMYoq5an6vY5NXa9Bd4zFmTwnSoDyXmZI28LR8zLp3zIj6uJi8/hW0knABBlCUIbC5RsG4brFnXw01N324jr548eno=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fbPkYSZo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXKd0nAv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6A7C4CEF7;
-	Mon, 23 Mar 2026 15:01:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fbPkYSZo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE159C4CEF7;
+	Mon, 23 Mar 2026 15:01:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278094;
-	bh=pxxNd374d8sP7s9PG82LvmpH8AqiFl1Z9SUnPN95idQ=;
+	s=korg; t=1774278097;
+	bh=nyqt5n2PG4sAmAICeHWf1XrHKsbVc2C3ZUhQfoND0ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FXKd0nAvmUXinUVoh/Lsv/lC0IufAGENlHDX5n6xOQkZcwzRTUP/E9kOODMuNCS0I
-	 1u6NGf9osthMPlsbcI2HXGhG6wIy+HFsb99TG5322fDi6mB76HHrMO0tTcyhI03Exp
-	 Y2KKrIWjh5e80sIhPh7AX+s9wQfGN20Cy419MvZ8=
+	b=fbPkYSZofnDkj3zRFgEHF9P099Gv/2cnWHGhDpuADdrfc1t/XaJWETK4dRqYuknnh
+	 z1TcyGKLd1OQuDQhNTdKLVZKDCcaR9dw37osoZ8VoyWKtUOeueM9sx4NedrDb/MjyH
+	 6K8xWM/4Dikc0ucZov+0QMs/VDmxBz88J0Q1JxUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjan Kumar <ranjan.kumar@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Waiman Long <longman@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 200/567] scsi: mpi3mr: Add NULL checks when resetting request and reply queues
-Date: Mon, 23 Mar 2026 14:42:00 +0100
-Message-ID: <20260323134538.795087982@linuxfoundation.org>
+Subject: [PATCH 6.6 201/567] unshare: fix unshare_fs() handling
+Date: Mon, 23 Mar 2026 14:42:01 +0100
+Message-ID: <20260323134538.818623867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,72 +52,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ranjan Kumar <ranjan.kumar@broadcom.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit fa96392ebebc8fade2b878acb14cce0f71016503 ]
+[ Upstream commit 6c4b2243cb6c0755159bd567130d5e12e7b10d9f ]
 
-The driver encountered a crash during resource cleanup when the reply and
-request queues were NULL due to freed memory.  This issue occurred when the
-creation of reply or request queues failed, and the driver freed the memory
-first, but attempted to mem set the content of the freed memory, leading to
-a system crash.
+There's an unpleasant corner case in unshare(2), when we have a
+CLONE_NEWNS in flags and current->fs hadn't been shared at all; in that
+case copy_mnt_ns() gets passed current->fs instead of a private copy,
+which causes interesting warts in proof of correctness]
 
-Add NULL pointer checks for reply and request queues before accessing the
-reply/request memory during cleanup
+> I guess if private means fs->users == 1, the condition could still be true.
 
-Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
-Link: https://patch.msgid.link/20260212070026.30263-1-ranjan.kumar@broadcom.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Unfortunately, it's worse than just a convoluted proof of correctness.
+Consider the case when we have CLONE_NEWCGROUP in addition to CLONE_NEWNS
+(and current->fs->users == 1).
+
+We pass current->fs to copy_mnt_ns(), all right.  Suppose it succeeds and
+flips current->fs->{pwd,root} to corresponding locations in the new namespace.
+Now we proceed to copy_cgroup_ns(), which fails (e.g. with -ENOMEM).
+We call put_mnt_ns() on the namespace created by copy_mnt_ns(), it's
+destroyed and its mount tree is dissolved, but...  current->fs->root and
+current->fs->pwd are both left pointing to now detached mounts.
+
+They are pinning those, so it's not a UAF, but it leaves the calling
+process with unshare(2) failing with -ENOMEM _and_ leaving it with
+pwd and root on detached isolated mounts.  The last part is clearly a bug.
+
+There is other fun related to that mess (races with pivot_root(), including
+the one between pivot_root() and fork(), of all things), but this one
+is easy to isolate and fix - treat CLONE_NEWNS as "allocate a new
+fs_struct even if it hadn't been shared in the first place".  Sure, we could
+go for something like "if both CLONE_NEWNS *and* one of the things that might
+end up failing after copy_mnt_ns() call in create_new_namespaces() are set,
+force allocation of new fs_struct", but let's keep it simple - the cost
+of copy_fs_struct() is trivial.
+
+Another benefit is that copy_mnt_ns() with CLONE_NEWNS *always* gets
+a freshly allocated fs_struct, yet to be attached to anything.  That
+seriously simplifies the analysis...
+
+FWIW, that bug had been there since the introduction of unshare(2) ;-/
+
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Link: https://patch.msgid.link/20260207082524.GE3183987@ZenIV
+Tested-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpi3mr/mpi3mr_fw.c | 34 ++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 15 deletions(-)
+ kernel/fork.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-index b6ae7ba6de523..b742ece3f0507 100644
---- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
-+++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
-@@ -4262,21 +4262,25 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
- 	}
+diff --git a/kernel/fork.c b/kernel/fork.c
+index 2141ebb2ef92a..ce6f6e1e39057 100644
+--- a/kernel/fork.c
++++ b/kernel/fork.c
+@@ -3350,7 +3350,7 @@ static int unshare_fs(unsigned long unshare_flags, struct fs_struct **new_fsp)
+ 		return 0;
  
- 	for (i = 0; i < mrioc->num_queues; i++) {
--		mrioc->op_reply_qinfo[i].qid = 0;
--		mrioc->op_reply_qinfo[i].ci = 0;
--		mrioc->op_reply_qinfo[i].num_replies = 0;
--		mrioc->op_reply_qinfo[i].ephase = 0;
--		atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
--		atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
--		mpi3mr_memset_op_reply_q_buffers(mrioc, i);
--
--		mrioc->req_qinfo[i].ci = 0;
--		mrioc->req_qinfo[i].pi = 0;
--		mrioc->req_qinfo[i].num_requests = 0;
--		mrioc->req_qinfo[i].qid = 0;
--		mrioc->req_qinfo[i].reply_qid = 0;
--		spin_lock_init(&mrioc->req_qinfo[i].q_lock);
--		mpi3mr_memset_op_req_q_buffers(mrioc, i);
-+		if (mrioc->op_reply_qinfo) {
-+			mrioc->op_reply_qinfo[i].qid = 0;
-+			mrioc->op_reply_qinfo[i].ci = 0;
-+			mrioc->op_reply_qinfo[i].num_replies = 0;
-+			mrioc->op_reply_qinfo[i].ephase = 0;
-+			atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
-+			atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
-+			mpi3mr_memset_op_reply_q_buffers(mrioc, i);
-+		}
-+
-+		if (mrioc->req_qinfo) {
-+			mrioc->req_qinfo[i].ci = 0;
-+			mrioc->req_qinfo[i].pi = 0;
-+			mrioc->req_qinfo[i].num_requests = 0;
-+			mrioc->req_qinfo[i].qid = 0;
-+			mrioc->req_qinfo[i].reply_qid = 0;
-+			spin_lock_init(&mrioc->req_qinfo[i].q_lock);
-+			mpi3mr_memset_op_req_q_buffers(mrioc, i);
-+		}
- 	}
+ 	/* don't need lock here; in the worst case we'll do useless copy */
+-	if (fs->users == 1)
++	if (!(unshare_flags & CLONE_NEWNS) && fs->users == 1)
+ 		return 0;
  
- 	atomic_set(&mrioc->pend_large_data_sz, 0);
+ 	*new_fsp = copy_fs_struct(fs);
 -- 
 2.51.0
 
