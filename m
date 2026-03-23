@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED46D3AE6EE;
-	Mon, 23 Mar 2026 14:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0846F3AE6EE;
+	Mon, 23 Mar 2026 14:11:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275077; cv=none; b=UAcz3iD8brMFZ/Z76TPsth7mU3FfNgJdWalJbFxKb558SvI1LqwGg/zWwrWvOkQwzIm33449CGS3HnMNXzgtYQwGdBTz965ZzO+GXMdOB1WAJC7F+MS2SKhpwTahJwb51F68zk0xl1jHAknV9aUX+1vBhqJis/DklpkWrbvePpw=
+	t=1774275080; cv=none; b=CnnsamA5g3Njl4JG7zXXmzl1sg4Z9wBKbDjEbCzYptUxUb/3LcxysVdDFrFyLAlaPC2tev8R9LWXyd/peLTGz4frT+LYjaUBh9vAQ6iSuLgp4rE6f8ddrzFV2CvJ9CoMd4m1D0rCGEonb/5n0gegA3Hzpf0r4X/oRJQKbNh/ark=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275077; c=relaxed/simple;
-	bh=0dzu53iFUkaEb09cIxFDQqj+M5YOwxhFL+Q0oHOYN/Q=;
+	s=arc-20240116; t=1774275080; c=relaxed/simple;
+	bh=Mzo3XbRlY6G0WkcPMck1qKkwYIaASWDb1BLMJjeQDDU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lbzXSItXOQAxU+WXjknOO2vfuVIbOgnv+TWtVQovb17Ug9xLxhdbNRcPy7hNrMBaD7ldM8E054cdNQUHsIcCSwBHCtJybh5j1C1MYWFOjXoUJg6Kx4AGcPEo0z8RG+f8Iy/F4khQN1DfKki1lxzqD3sZEX7ShwiNzO9LwUr31gU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ky87a+UA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gg50+KNuj6mwmwvY0O+2FMozIiNlYIVW3Pro4eu58cQEkCeFUycq1WpGnlTk8+hZ0i7f0MCLRGhWRp1Hn3LoL/xbWmfxRBZvJ1IuJE7i4BPhmK//qHfNlFTPaTQ9gynz+/Jr5fF6TiRbb8tVsdwezIWvEYWODM4MlsBOjRmNYiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bj1KCn7W; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ky87a+UA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70732C4CEF7;
-	Mon, 23 Mar 2026 14:11:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bj1KCn7W"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85EC7C4CEF7;
+	Mon, 23 Mar 2026 14:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275076;
-	bh=0dzu53iFUkaEb09cIxFDQqj+M5YOwxhFL+Q0oHOYN/Q=;
+	s=korg; t=1774275079;
+	bh=Mzo3XbRlY6G0WkcPMck1qKkwYIaASWDb1BLMJjeQDDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ky87a+UA5AQoksLJsmAuhrOuVKGusCPoe6afuOkHIGQPeLsVKY2vZBP7NBxaRDMfg
-	 jbZ8gZg8AkogMUnnxoqDRT4wuZp6b3y2436Ac3BhPKpx0n+Au3lNsA2AHpV4Y/izl+
-	 V405EHVXZTUgXOa4yIrEJXQj105r0Ux59bCeNjU8=
+	b=bj1KCn7WWvPMn/iSkl77AGe1B4oBIQEtNKZJ5KfgkrYbzfCAypoXvRp7X1WkGgkW7
+	 EzBo0RSfl/fR0CmSjEEEY5cPLxv3XZprY6aCN+v+2TX0u/I3EDjF/y7tkwviQ/wVcn
+	 K6Hbfvl/RLIUO7exVp3sH6dXQ7000T9SsGZVk8w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Steven Price <steven.price@arm.com>,
-	Will Deacon <will@kernel.org>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Naresh Solanki <naresh.solanki@9elements.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 211/212] arm64: realm: Fix PTE_NS_SHARED for 52bit PA support
-Date: Mon, 23 Mar 2026 14:47:12 +0100
-Message-ID: <20260323134510.452735844@linuxfoundation.org>
+Subject: [PATCH 6.18 212/212] hwmon: (max6639) Fix pulses-per-revolution implementation
+Date: Mon, 23 Mar 2026 14:47:13 +0100
+Message-ID: <20260323134510.491650850@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -53,62 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Suzuki K Poulose <suzuki.poulose@arm.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 8c6e9b60f5c7985a9fe41320556a92d7a33451df ]
+[ Upstream commit e7bae9a7a5e1251ab414291f4e9304d702bb9221 ]
 
-With LPA/LPA2, the top bits of the PFN (Bits[51:48]) end up in the lower bits
-of the PTE. So, simply creating a mask of the "top IPA bit" doesn't work well
-for these configurations to set the "top" bit at the output of Stage1
-translation.
+The valid range for the pulses-per-revolution devicetree property is
+1..4. The current code checks for a range of 1..5. Fix it.
 
-Fix this by using the __phys_to_pte_val() to do the right thing for all
-configurations.
+Declare the variable used to retrieve pulses per revolution from
+devicetree as u32 (unsigned) to match the of_property_read_u32() API.
 
-Tested using, kvmtool, placing the memory at a higher address (-m <size>@<Addr>).
+The current code uses a postfix decrement when writing the pulses per
+resolution into the chip. This has no effect since the value is evaluated
+before it is decremented. Fix it by decrementing before evaluating the
+value.
 
- e.g:
- # lkvm run --realm -c 4 -m 512M@@128T -k Image --console serial
-
- sh-5.0# dmesg | grep "LPA2\|RSI"
-[    0.000000] RME: Using RSI version 1.0
-[    0.000000] CPU features: detected: 52-bit Virtual Addressing (LPA2)
-[    0.777354] CPU features: detected: 52-bit Virtual Addressing for KVM (LPA2)
-
-Fixes: 399306954996 ("arm64: realm: Query IPA size from the RMM")
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Steven Price <steven.price@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Reviewed-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Catalin Marinas <catalin.marinas@arm.com>
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 7506ebcd662b ("hwmon: (max6639) : Configure based on DT property")
+Cc: Naresh Solanki <naresh.solanki@9elements.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/kernel/rsi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/hwmon/max6639.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/kernel/rsi.c b/arch/arm64/kernel/rsi.c
-index c64a06f58c0bc..9e846ce4ef9ca 100644
---- a/arch/arm64/kernel/rsi.c
-+++ b/arch/arm64/kernel/rsi.c
-@@ -12,6 +12,7 @@
+diff --git a/drivers/hwmon/max6639.c b/drivers/hwmon/max6639.c
+index 1fc12e1463b58..447e8cdbc74c6 100644
+--- a/drivers/hwmon/max6639.c
++++ b/drivers/hwmon/max6639.c
+@@ -235,7 +235,7 @@ static int max6639_read_fan(struct device *dev, u32 attr, int channel,
+ static int max6639_set_ppr(struct max6639_data *data, int channel, u8 ppr)
+ {
+ 	/* Decrement the PPR value and shift left by 6 to match the register format */
+-	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), ppr-- << 6);
++	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), --ppr << 6);
+ }
  
- #include <asm/io.h>
- #include <asm/mem_encrypt.h>
-+#include <asm/pgtable.h>
- #include <asm/rsi.h>
+ static int max6639_write_fan(struct device *dev, u32 attr, int channel,
+@@ -537,8 +537,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
  
- static struct realm_config config;
-@@ -146,7 +147,7 @@ void __init arm64_rsi_init(void)
- 		return;
- 	if (WARN_ON(rsi_get_realm_config(&config)))
- 		return;
--	prot_ns_shared = BIT(config.ipa_bits - 1);
-+	prot_ns_shared = __phys_to_pte_val(BIT(config.ipa_bits - 1));
+ {
+ 	struct device *dev = &client->dev;
+-	u32 i;
+-	int err, val;
++	u32 i, val;
++	int err;
  
- 	if (arm64_ioremap_prot_hook_register(realm_ioremap_hook))
- 		return;
+ 	err = of_property_read_u32(child, "reg", &i);
+ 	if (err) {
+@@ -553,8 +553,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
+ 
+ 	err = of_property_read_u32(child, "pulses-per-revolution", &val);
+ 	if (!err) {
+-		if (val < 1 || val > 5) {
+-			dev_err(dev, "invalid pulses-per-revolution %d of %pOFn\n", val, child);
++		if (val < 1 || val > 4) {
++			dev_err(dev, "invalid pulses-per-revolution %u of %pOFn\n", val, child);
+ 			return -EINVAL;
+ 		}
+ 		data->ppr[i] = val;
 -- 
 2.51.0
 
