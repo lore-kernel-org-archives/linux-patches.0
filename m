@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4EA23E33D;
-	Mon, 23 Mar 2026 15:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410793BF664;
+	Mon, 23 Mar 2026 15:23:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279416; cv=none; b=ZLm6ucdITY4mcOMb4+tmlkr1oS1f5KuAhz/mMKJNNeBYhOfbGRTUv1dGmah0YGxff0zAskGtW6SD5zWSvTUYR0g27oIACiHinvRcdCgVFS2wvkm4aFltqLz+BDPTQlXP5TBYCmt1Imp70ZLdna1mNSFsIJ1nMkfG1aMx6OIM4XI=
+	t=1774279419; cv=none; b=l0kQSdQ0rDg+49OCONq4NGJDcttyNorNBG120HlvuJ3uiatPfQuPhDsNI9HZoBO+XQUtaNhD3xF0CoGMQ/ZFolJ5j7wjzZfIhraGLb1Vg6+i5I+bM1Sk0q8cg6iE2+j7ZAfsJ7sKcJJ9lG9lu4+ee7bX5S7IlrG7o4AsCm3uxEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279416; c=relaxed/simple;
-	bh=OyGyeMik9fWY0UMfEEKimu1ZZ8LLsFlXz0ylexkhzBc=;
+	s=arc-20240116; t=1774279419; c=relaxed/simple;
+	bh=Kgy9DIQZRBZ1mWxT8l6VdDq9wlRGNwhzhYzybtKL8go=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pydeEtLFCpv6iURXLs3PhNc9xb54Yiq2ZXCMBH3lkh8gvnVxUwiIH+7JH1Tu8Ya2asd+JAQLvzFNUC5K2MCYxl/V0Y1JKTIjqF0EblBqgPv7WH+ReCELnN/5S6X+6WezMmyvCobxJ5JIVfUy02RBJ/vJxMdg5GIw/APyiwNHnlI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PaiEFRRj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VSu7gXrbPU3P6k41ec24YDoPrug1xOUcA13wXKPUMqrUED9yFOxH/M3Y3Cj4EW+K3QxvTYoONrsup1g9gK12p2AO8R6ks1H0hp1bdEYJNNiBX3Sk9yk5ZwoIPoUU1BlOjHb/DhSncIatTbGf+gjKdu5HtVCjd1FG0r/uEHwny8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnFLEnZ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PaiEFRRj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD7CCC4CEF7;
-	Mon, 23 Mar 2026 15:23:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnFLEnZ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B49C4CEF7;
+	Mon, 23 Mar 2026 15:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279416;
-	bh=OyGyeMik9fWY0UMfEEKimu1ZZ8LLsFlXz0ylexkhzBc=;
+	s=korg; t=1774279419;
+	bh=Kgy9DIQZRBZ1mWxT8l6VdDq9wlRGNwhzhYzybtKL8go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaiEFRRjpve8nF5TYgr9lUIVSX0sm8GgcahNMaxT8Jlmc2wuf6a9JS7XYRN7FpgS4
-	 fR/4ualvZgQlBd12c1ig+lM0vLyd0cEGCFDlSEAY3W3Eo0fsv5JE+oNxOjDbhdmPq/
-	 nXPh68ogaHzoPZeqhpK/2L6UyybOp3H4CPsMfuh0=
+	b=ZnFLEnZ5+aqCi21Y4DtwFJumno+87a7whcLLQkZ8oVc36aZKEf9utzXPDJAhcXKi4
+	 t20j5D6NdssUCCD2nikBJ0IQepb9NYEb83/EU6KFOBW68O6106w1JLTw412Jtz18RD
+	 5KXBDdIE+uV5BZy+FbXr2h+k2yVg2SQAWm90wsYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Puranjay Mohan <puranjay12@gmail.com>,
 	Bjorn Helgaas <bhelgaas@google.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/481] PCI: Update BAR # and window messages
-Date: Mon, 23 Mar 2026 14:40:04 +0100
-Message-ID: <20260323134525.784672230@linuxfoundation.org>
+Subject: [PATCH 6.1 021/481] PCI: Fix printk field formatting
+Date: Mon, 23 Mar 2026 14:40:03 +0100
+Message-ID: <20260323134525.764409737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -45,120 +45,53 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Puranjay Mohan <puranjay12@gmail.com>
+From: Bjorn Helgaas <bhelgaas@google.com>
 
-[ Upstream commit 65f8e0beac5a495b8f3b387add1f9f4470678cb5 ]
+[ Upstream commit 62008578b73f16e274070a232b939ba5933bb8ba ]
 
-The PCI log messages print the register offsets at some places and BAR
-numbers at other places. There is no uniformity in this logging mechanism.
-It would be better to print names than register offsets.
+Previously we used "%#08x" to print a 32-bit value.  This fills an
+8-character field with "0x...", but of course many 32-bit values require a
+10-character field "0x12345678" for this format.  Fix the formats to avoid
+confusion.
 
-Add a helper function that aids in printing more meaningful information
-about the BAR numbers like "VF BAR", "ROM", "bridge window", etc.  This
-function can be called while printing PCI log messages.
-
-[bhelgaas: fold in Lukas' static array suggestion from
-https: //lore.kernel.org/all/20211106115831.GA7452@wunner.de/]
-Link: https://lore.kernel.org/r/20211106112606.192563-2-puranjay12@gmail.com
-Signed-off-by: Puranjay Mohan <puranjay12@gmail.com>
+Link: https://lore.kernel.org/r/20230824193712.542167-5-helgaas@kernel.org
 Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Stable-dep-of: 11721c45a826 ("PCI: Use resource_set_range() that correctly sets ->end")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/pci.c | 60 +++++++++++++++++++++++++++++++++++++++++++++++
- drivers/pci/pci.h |  2 ++
- 2 files changed, 62 insertions(+)
+ drivers/pci/setup-res.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/pci.c b/drivers/pci/pci.c
-index 516eaec6488de..2975a5c781df4 100644
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -844,6 +844,66 @@ struct resource *pci_find_resource(struct pci_dev *dev, struct resource *res)
- }
- EXPORT_SYMBOL(pci_find_resource);
+diff --git a/drivers/pci/setup-res.c b/drivers/pci/setup-res.c
+index 967f9a7589239..ceaa69491f5ef 100644
+--- a/drivers/pci/setup-res.c
++++ b/drivers/pci/setup-res.c
+@@ -104,7 +104,7 @@ static void pci_std_update_resource(struct pci_dev *dev, int resno)
+ 	pci_read_config_dword(dev, reg, &check);
  
-+/**
-+ * pci_resource_name - Return the name of the PCI resource
-+ * @dev: PCI device to query
-+ * @i: index of the resource
-+ *
-+ * Return the standard PCI resource (BAR) name according to their index.
-+ */
-+const char *pci_resource_name(struct pci_dev *dev, unsigned int i)
-+{
-+	static const char * const bar_name[] = {
-+		"BAR 0",
-+		"BAR 1",
-+		"BAR 2",
-+		"BAR 3",
-+		"BAR 4",
-+		"BAR 5",
-+		"ROM",
-+#ifdef CONFIG_PCI_IOV
-+		"VF BAR 0",
-+		"VF BAR 1",
-+		"VF BAR 2",
-+		"VF BAR 3",
-+		"VF BAR 4",
-+		"VF BAR 5",
-+#endif
-+		"bridge window",	/* "io" included in %pR */
-+		"bridge window",	/* "mem" included in %pR */
-+		"bridge window",	/* "mem pref" included in %pR */
-+	};
-+	static const char * const cardbus_name[] = {
-+		"BAR 1",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+#ifdef CONFIG_PCI_IOV
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+		"unknown",
-+#endif
-+		"CardBus bridge window 0",	/* I/O */
-+		"CardBus bridge window 1",	/* I/O */
-+		"CardBus bridge window 0",	/* mem */
-+		"CardBus bridge window 1",	/* mem */
-+	};
-+
-+	if (dev->hdr_type == PCI_HEADER_TYPE_CARDBUS &&
-+	    i < ARRAY_SIZE(cardbus_name))
-+		return cardbus_name[i];
-+
-+	if (i < ARRAY_SIZE(bar_name))
-+		return bar_name[i];
-+
-+	return "unknown";
-+}
-+
- /**
-  * pci_wait_for_pending - wait for @mask bit(s) to clear in status word @pos
-  * @dev: the PCI device to operate on
-diff --git a/drivers/pci/pci.h b/drivers/pci/pci.h
-index fc760fd3ad948..4fb02de24271b 100644
---- a/drivers/pci/pci.h
-+++ b/drivers/pci/pci.h
-@@ -251,6 +251,8 @@ void __pci_bus_assign_resources(const struct pci_bus *bus,
- 				struct list_head *fail_head);
- bool pci_bus_clip_resource(struct pci_dev *dev, int idx);
+ 	if ((new ^ check) & mask) {
+-		pci_err(dev, "BAR %d: error updating (%#08x != %#08x)\n",
++		pci_err(dev, "BAR %d: error updating (%#010x != %#010x)\n",
+ 			resno, new, check);
+ 	}
  
-+const char *pci_resource_name(struct pci_dev *dev, unsigned int i);
-+
- void pci_reassigndev_resource_alignment(struct pci_dev *dev);
- void pci_disable_bridge_window(struct pci_dev *dev);
- struct pci_bus *pci_bus_get(struct pci_bus *bus);
+@@ -113,7 +113,7 @@ static void pci_std_update_resource(struct pci_dev *dev, int resno)
+ 		pci_write_config_dword(dev, reg + 4, new);
+ 		pci_read_config_dword(dev, reg + 4, &check);
+ 		if (check != new) {
+-			pci_err(dev, "BAR %d: error updating (high %#08x != %#08x)\n",
++			pci_err(dev, "BAR %d: error updating (high %#010x != %#010x)\n",
+ 				resno, new, check);
+ 		}
+ 	}
 -- 
 2.51.0
 
