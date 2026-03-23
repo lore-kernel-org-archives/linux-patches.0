@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCB13B3BE7;
-	Mon, 23 Mar 2026 15:19:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B5083CB2EB;
+	Mon, 23 Mar 2026 15:19:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279196; cv=none; b=dp0JeyLtJtQOfxBw7RMN4ePxC7AtWojqerHWERIo8cvPJasV9DNek/PlPbs0QXJAUanduVYe0WWpZtRzJwEb8FHbP8/z10WgwRmwqvDB2Qzp2aInjiKEvVC7dg+88Cs83dwMG+b9ybOlM7ZABYgK+nBbfkYO9RRWB5MmIjTXtBw=
+	t=1774279199; cv=none; b=ejq44dPA4owEkpXVgmGdQxjEonT4zr8fCjQ0tK97ZBbzznaZZT7m6qd4P+9AWqukDulAK2KEfeM1UQRovP2D8B6IozmktOaMv3r/rSiaF2IQDGWEvJn9ciGNhpur+axb0vbb6EmsPWOq1zNCgwmuP22ubRN7d+1/jgb99bf1pa4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279196; c=relaxed/simple;
-	bh=Ui2lZ3iFeRpDuZNkC4pkn3VdJClzjbXDYhMmQNuVMLA=;
+	s=arc-20240116; t=1774279199; c=relaxed/simple;
+	bh=o1phMiveFS7z9JkDU2SiyqeBcWVkIQTxWp5mlDhOlxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g+BlycvhfIt1ElJfYEOhw/9T4zaqOGLKNTiIBNOzDvtozLGWV3488nqoDzH14iSfBZ3QApsZevH9VYIBC3r3ppNIlIjn5vd+OHRuW7UoCo1Bn7JlGj+5IOaEEHUx1vLd2R30xOTW6LqjldJ19beEZKC8zSzkItW9YHzQ61ViDMo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgVTDd94; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gUrgzFlN6kfrQW3QQlY9d+7DoiBFRur81eVBeefb1R/nt8LSw9uThxq134GLpgNZ/dG4ND229tub5F7Ut6hclUaMmmIweYP+IcgnDK68mfFMUg5293YtyR5H/MMfB/S5V9bDNneVZaoSqL73amlk/Yc9pAq+u7HIKWFRfWTTeM8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HVBjMdu+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgVTDd94"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2202C2BCB1;
-	Mon, 23 Mar 2026 15:19:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HVBjMdu+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F125EC2BC9E;
+	Mon, 23 Mar 2026 15:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279196;
-	bh=Ui2lZ3iFeRpDuZNkC4pkn3VdJClzjbXDYhMmQNuVMLA=;
+	s=korg; t=1774279199;
+	bh=o1phMiveFS7z9JkDU2SiyqeBcWVkIQTxWp5mlDhOlxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GgVTDd949RirQoI+tH1EvUW28FSb12iWLHYf+jk2PiQdLSCjw+ubZDIFfv4DnZH83
-	 UYdm0BIdSFXIOCaVqTXCxuYrK5SeKEgvpbA+9Z1dnWwm37cNu1ISndjWE8D2WJsgZy
-	 TaqqgSsRgulknpXyhbojNYwWYDwbCldvmTTl5jvs=
+	b=HVBjMdu+p5CxBFpPdWePedOmptjdYnT9NtSVAxS1GiktyWZq8bLzS1kvI86v/67R4
+	 LUiEXS7o7uk/GT8U4z/vEZWDrbq/ZPxoHFsjuNmvlLMVppNwTI7DhjnqGfEB7ry3mp
+	 na/rBa/k9FiG1QgnP77B+GMNbHSW/kD5BHo+jasU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Zw Tang <shicenci@gmail.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 505/567] Bluetooth: SMP: make SM/PER/KDU/BI-04-C happy
-Date: Mon, 23 Mar 2026 14:47:05 +0100
-Message-ID: <20260323134546.514509098@linuxfoundation.org>
+Subject: [PATCH 6.6 464/567] kprobes: Remove unneeded warnings from __arm_kprobe_ftrace()
+Date: Mon, 23 Mar 2026 14:46:24 +0100
+Message-ID: <20260323134545.464999559@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,36 +51,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 0e4d4dcc1a6e82cc6f9abf32193558efa7e1613d ]
+[ Upstream commit 5ef268cb7a0aac55521fd9881f1939fa94a8988e ]
 
-The last test step ("Test with Invalid public key X and Y, all set to
-0") expects to get an "DHKEY check failed" instead of "unspecified".
+Remove unneeded warnings for handled errors from __arm_kprobe_ftrace()
+because all caller handled the error correctly.
 
-Fixes: 6d19628f539f ("Bluetooth: SMP: Fail if remote and local public keys are identical")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Link: https://lore.kernel.org/all/177261531182.1312989.8737778408503961141.stgit@mhiramat.tok.corp.google.com/
+
+Reported-by: Zw Tang <shicenci@gmail.com>
+Closes: https://lore.kernel.org/all/CAPHJ_V+J6YDb_wX2nhXU6kh466Dt_nyDSas-1i_Y8s7tqY-Mzw@mail.gmail.com/
+Fixes: 9c89bb8e3272 ("kprobes: treewide: Cleanup the error messages for kprobes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/smp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/kprobes.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
-index e7ee13fe83a74..62c8eab1b84a5 100644
---- a/net/bluetooth/smp.c
-+++ b/net/bluetooth/smp.c
-@@ -2744,7 +2744,7 @@ static int smp_cmd_public_key(struct l2cap_conn *conn, struct sk_buff *skb)
- 	if (!test_bit(SMP_FLAG_DEBUG_KEY, &smp->flags) &&
- 	    !crypto_memneq(key, smp->local_pk, 64)) {
- 		bt_dev_err(hdev, "Remote and local public keys are identical");
--		return SMP_UNSPECIFIED;
-+		return SMP_DHKEY_CHECK_FAILED;
- 	}
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1078,12 +1078,12 @@ static int __arm_kprobe_ftrace(struct kp
+ 	lockdep_assert_held(&kprobe_mutex);
  
- 	memcpy(smp->remote_pk, key, 64);
--- 
-2.51.0
-
+ 	ret = ftrace_set_filter_ip(ops, (unsigned long)p->addr, 0, 0);
+-	if (WARN_ONCE(ret < 0, "Failed to arm kprobe-ftrace at %pS (error %d)\n", p->addr, ret))
++	if (ret < 0)
+ 		return ret;
+ 
+ 	if (*cnt == 0) {
+ 		ret = register_ftrace_function(ops);
+-		if (WARN(ret < 0, "Failed to register kprobe-ftrace (error %d)\n", ret)) {
++		if (ret < 0) {
+ 			/*
+ 			 * At this point, sinec ops is not registered, we should be sefe from
+ 			 * registering empty filter.
 
 
