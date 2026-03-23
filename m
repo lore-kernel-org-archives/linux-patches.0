@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A145C33CE9A;
-	Mon, 23 Mar 2026 14:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43AE3AF679;
+	Mon, 23 Mar 2026 14:44:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277068; cv=none; b=s3jM0zmPzYH98REx+2hp5pQxc+6dDnp6KgG3ScyrP+3koZTkvr28Gx0rszdvMudZnff3R/q904FUnTrYBhXPuuR4AlOp15td4UmP7nsWS9U3IZ/9WvCIGmatGG+MN3ql6Ojvj7moWCaNXeFuntAcUVx2h7R041OmTD4+XZe4ADE=
+	t=1774277071; cv=none; b=Z8CcjZbI3m6S9XcEPZKpbV/RjLb04NW7cJCzGQ81Me8cvfb+HP1MGDI/edif5LBVhjKltanS+U8fY4M2Q9wDWxmOpW/LF9wVmnGnOVhKGIgqgJp9uvSrOhnuxJv2YCBU2GPM417uzO4STU3hgB71F+iS6OmH4zFBelSifiYIVNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277068; c=relaxed/simple;
-	bh=KOWjegGwcsgPa3U8MDbF5s4W8Qr1XTHwj3PqBbLU5Ak=;
+	s=arc-20240116; t=1774277071; c=relaxed/simple;
+	bh=sCWvowsv1PPBFEZTH9ea0RSjQOLoPc/hdBvLkzqtE4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NTPr04XJv0Su9TbTUP3PPz5DOLVLyulxtiMxPsNpsqYxXcX/sxnIl9zQIR/v5d4kmLf36Ceiy+rhR2vAkv82OSlKnlmVl0LpW27pnAkPg26uCBbixbbSE1q0i01NHLOE+WtUyUfehu8srnXiDb66CWLIkW1Qc5ojLqISRjLvr8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+er2zAr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tAeiXgFw6DKYdPbBj4+4UNSqCk+vfDJrAQJsUkxGr4CRMzfduQPoweW5Vp/6d69cQ7COrX+3vat9U1PPQeFcCTVgJ3mCfBt1VxtO+BzkHmamRy4mzu7nXfQs/OllblmUmG4yhm2gPJwUv84eXGRrVTJjGM+ZaNaX34W/r1TKpN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kROD5Ouw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+er2zAr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37918C4CEF7;
-	Mon, 23 Mar 2026 14:44:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kROD5Ouw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353D0C2BCB3;
+	Mon, 23 Mar 2026 14:44:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277068;
-	bh=KOWjegGwcsgPa3U8MDbF5s4W8Qr1XTHwj3PqBbLU5Ak=;
+	s=korg; t=1774277071;
+	bh=sCWvowsv1PPBFEZTH9ea0RSjQOLoPc/hdBvLkzqtE4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+er2zArZwdfxtD4SCdMfGMMtJhwZeCduB3NQ5UVFMORIKkwgs8FPHhbcSulJZEOY
-	 JEf6Pth+2u4/1g7aUuqbWlDpC1ScVsZYgjgGBCTEcHcHzoFDv49gKfjNBNzhgI2rhH
-	 aAU31IKLiFrh27JbdVBMYnPe7xEkSEWRxodnLF9o=
+	b=kROD5OuwfvZIHuJvtxe838jgphTwqE8QDcbhAhMqZTORRrviF79GQsEY/REZb7HT0
+	 7l3NWDq+CDja3z7+N4a45A4win+GLyL33BbzF3YowfWBFdz2y0jHpcEDSUC8gMcMk8
+	 Gjp/63+H/XcyG6OkgLHhcNeKG35sUx8qwL71Aq6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Kosina <jkosina@suse.com>,
-	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 309/460] HID: bpf: prevent buffer overflow in hid_hw_request
-Date: Mon, 23 Mar 2026 14:45:05 +0100
-Message-ID: <20260323134534.089979321@linuxfoundation.org>
+	NeilBrown <neilb@ownmail.net>,
+	stable@kernel.org,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 6.12 310/460] sunrpc: fix cache_request leak in cache_release
+Date: Mon, 23 Mar 2026 14:45:06 +0100
+Message-ID: <20260323134534.117822737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,35 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Benjamin Tissoires <bentiss@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 2b658c1c442ec1cd9eec5ead98d68662c40fe645 upstream.
+commit 17ad31b3a43b72aec3a3d83605891e1397d0d065 upstream.
 
-right now the returned value is considered to be always valid. However,
-when playing with HID-BPF, the return value can be arbitrary big,
-because it's the return value of dispatch_hid_bpf_raw_requests(), which
-calls the struct_ops and we have no guarantees that the value makes
-sense.
+When a reader's file descriptor is closed while in the middle of reading
+a cache_request (rp->offset != 0), cache_release() decrements the
+request's readers count but never checks whether it should free the
+request.
 
-Fixes: 8bd0488b5ea5 ("HID: bpf: add HID-BPF hooks for hid_hw_raw_requests")
-Cc: stable@vger.kernel.org
-Acked-by: Jiri Kosina <jkosina@suse.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+In cache_read(), when readers drops to 0 and CACHE_PENDING is clear, the
+cache_request is removed from the queue and freed along with its buffer
+and cache_head reference. cache_release() lacks this cleanup.
+
+The only other path that frees requests with readers == 0 is
+cache_dequeue(), but it runs only when CACHE_PENDING transitions from
+set to clear. If that transition already happened while readers was
+still non-zero, cache_dequeue() will have skipped the request, and no
+subsequent call will clean it up.
+
+Add the same cleanup logic from cache_read() to cache_release(): after
+decrementing readers, check if it reached 0 with CACHE_PENDING clear,
+and if so, dequeue and free the cache_request.
+
+Reported-by: NeilBrown <neilb@ownmail.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/bpf/hid_bpf_dispatch.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/sunrpc/cache.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
---- a/drivers/hid/bpf/hid_bpf_dispatch.c
-+++ b/drivers/hid/bpf/hid_bpf_dispatch.c
-@@ -450,6 +450,8 @@ hid_bpf_hw_request(struct hid_bpf_ctx *c
- 					      (u64)(long)ctx,
- 					      true); /* prevent infinite recursions */
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1049,14 +1049,25 @@ static int cache_release(struct inode *i
+ 	struct cache_reader *rp = filp->private_data;
  
-+	if (ret > size)
-+		ret = size;
- 	if (ret > 0)
- 		memcpy(buf, dma_data, ret);
+ 	if (rp) {
++		struct cache_request *rq = NULL;
++
+ 		spin_lock(&queue_lock);
+ 		if (rp->offset) {
+ 			struct cache_queue *cq;
+-			for (cq= &rp->q; &cq->list != &cd->queue;
+-			     cq = list_entry(cq->list.next, struct cache_queue, list))
++			for (cq = &rp->q; &cq->list != &cd->queue;
++			     cq = list_entry(cq->list.next,
++					     struct cache_queue, list))
+ 				if (!cq->reader) {
+-					container_of(cq, struct cache_request, q)
+-						->readers--;
++					struct cache_request *cr =
++						container_of(cq,
++						struct cache_request, q);
++					cr->readers--;
++					if (cr->readers == 0 &&
++					    !test_bit(CACHE_PENDING,
++						      &cr->item->flags)) {
++						list_del(&cr->q.list);
++						rq = cr;
++					}
+ 					break;
+ 				}
+ 			rp->offset = 0;
+@@ -1064,9 +1075,14 @@ static int cache_release(struct inode *i
+ 		list_del(&rp->q.list);
+ 		spin_unlock(&queue_lock);
  
++		if (rq) {
++			cache_put(rq->item, cd);
++			kfree(rq->buf);
++			kfree(rq);
++		}
++
+ 		filp->private_data = NULL;
+ 		kfree(rp);
+-
+ 	}
+ 	if (filp->f_mode & FMODE_WRITE) {
+ 		atomic_dec(&cd->writers);
 
 
