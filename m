@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293DA1DA0E1;
-	Mon, 23 Mar 2026 14:57:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F751DA0E1;
+	Mon, 23 Mar 2026 14:57:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277862; cv=none; b=HDSuUwROc8a9ii6JPAb8K2dT7Nx68MoseGvD2xbQ2WRg3yrc8P4aAs95EzRO1XYekkd56CLDqGokJg43UgS0pAVXpvQiHNXT7nfJanH9K6IkSyOb6rUsKNCN2xV5vE+Kli6bk8q6tTwlczL3JaH5i8TDjUQ6o6189RMilUB3r38=
+	t=1774277865; cv=none; b=qfwimbUcljKsoDWgTmd8zAJXAQ8h61HcBGtgnVgM1fm3k1asul3ij/ICvJiViHJVMU3TXsEH886zZ6Tlx1mwOM0Mju9zQ+NwKEPBc+LdECjUAc5demj/nrB+UjFmqzoJnew4NY7DaUnPoOdzGskvL6zw+JT4ETfkJNFdw7pcZew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277862; c=relaxed/simple;
-	bh=vQdtecHWWyZ/7enrabJ6PjXzkjL2/jcC5RypIXoma+s=;
+	s=arc-20240116; t=1774277865; c=relaxed/simple;
+	bh=asSkKOYL0DhADxKVfcjVvLe9ScinLgcvecqGKEuHjBM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CPR0iyaOBoPSLgc7HGv9iYB2HeeKYXpmcb8nY1P0GpLB5yoNnKi/e0WeMgMW9v+B1NbN1KgKcdggd4hWXFaNhdbWvPPi5p/82Ect55YeYXpsL9giv9w9LB288DCeFcD7w7FWBZFIub/3frHV4MDjMP90t8BtlGGB6MTqYIZbiW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KXeN/7KW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nHkWCSz+WvzpqpBXDQJcRfMb4S8fvB8eoWiQsbVMO82j0+3AR6JpN2hnJOrI/8mIogg/ycVV9R8VrU6+nw4n36Wv14Z6q3F9C2LY7bENQAAOEASEvMvItqT0Cc+TUUk4fwqCD/w47kYMeZRnZtQYJrW8R/qKoIlbAXxKwF2+mmo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+6+SHBA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KXeN/7KW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84528C4CEF7;
-	Mon, 23 Mar 2026 14:57:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+6+SHBA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB377C4CEF7;
+	Mon, 23 Mar 2026 14:57:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277862;
-	bh=vQdtecHWWyZ/7enrabJ6PjXzkjL2/jcC5RypIXoma+s=;
+	s=korg; t=1774277865;
+	bh=asSkKOYL0DhADxKVfcjVvLe9ScinLgcvecqGKEuHjBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXeN/7KWV59sCtij22RSlf+/UipbKzdQbGyTzSCwTG7WZrpR2hXkGvLSHTxguhrTD
-	 EeNil3IUaEBN5z1aou8ZsZ27CBTj/YEaz84vzwrYLdgyHcSjuziJVOc3029UC4zD63
-	 dpBzqla87Y0LFEfS9WzC7T07A+0FImI6RkW/RZUs=
+	b=a+6+SHBAVR9Tafb1E65vSLnyBcdKDLaqfkn+DYsSBM5nUEib2XiJvYlr4jFe5jAQS
+	 cBoslWWtDLaEZ2UAdo/aC0FaK9HEEcUNf/TrUmaAlxAnAyM0KU8AQFNHEkPRyeS2i+
+	 fJGNXW2N67Fh+z5BiYaDg1/38b7aKQgxG2zd+HEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Eckert <fe@dev.tdt.de>,
-	Linus Walleij <linusw@kernel.org>,
+	Jonathan Teh <jonathan.teh@outlook.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 125/567] pinctrl: equilibrium: fix warning trace on load
-Date: Mon, 23 Mar 2026 14:40:45 +0100
-Message-ID: <20260323134536.900717000@linuxfoundation.org>
+Subject: [PATCH 6.6 126/567] platform/x86: thinkpad_acpi: Fix errors reading battery thresholds
+Date: Mon, 23 Mar 2026 14:40:46 +0100
+Message-ID: <20260323134536.924257634@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,82 +46,63 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Florian Eckert <fe@dev.tdt.de>
+From: Jonathan Teh <jonathan.teh@outlook.com>
 
-[ Upstream commit 3e00b1b332e54ba50cca6691f628b9c06574024f ]
+[ Upstream commit 53e977b1d50c46f2c4ec3865cd13a822f58ad3cd ]
 
-The callback functions 'eqbr_irq_mask()' and 'eqbr_irq_ack()' are also
-called in the callback function 'eqbr_irq_mask_ack()'. This is done to
-avoid source code duplication. The problem, is that in the function
-'eqbr_irq_mask()' also calles the gpiolib function 'gpiochip_disable_irq()'
+Check whether the battery supports the relevant charge threshold before
+reading the value to silence these errors:
 
-This generates the following warning trace in the log for every gpio on
-load.
+thinkpad_acpi: acpi_evalf(BCTG, dd, ...) failed: AE_NOT_FOUND
+ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCTG: evaluate failed
+thinkpad_acpi: acpi_evalf(BCSG, dd, ...) failed: AE_NOT_FOUND
+ACPI: \_SB_.PCI0.LPC_.EC__.HKEY: BCSG: evaluate failed
 
-[    6.088111] ------------[ cut here ]------------
-[    6.092440] WARNING: CPU: 3 PID: 1 at drivers/gpio/gpiolib.c:3810 gpiochip_disable_irq+0x39/0x50
-[    6.097847] Modules linked in:
-[    6.097847] CPU: 3 UID: 0 PID: 1 Comm: swapper/0 Tainted: G        W          6.12.59+ #0
-[    6.097847] Tainted: [W]=WARN
-[    6.097847] RIP: 0010:gpiochip_disable_irq+0x39/0x50
-[    6.097847] Code: 39 c6 48 19 c0 21 c6 48 c1 e6 05 48 03 b2 38 03 00 00 48 81 fe 00 f0 ff ff 77 11 48 8b 46 08 f6 c4 02 74 06 f0 80 66 09 fb c3 <0f> 0b 90 0f 1f 40 00 c3 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40
-[    6.097847] RSP: 0000:ffffc9000000b830 EFLAGS: 00010046
-[    6.097847] RAX: 0000000000000045 RBX: ffff888001be02a0 RCX: 0000000000000008
-[    6.097847] RDX: ffff888001be9000 RSI: ffff888001b2dd00 RDI: ffff888001be02a0
-[    6.097847] RBP: ffffc9000000b860 R08: 0000000000000000 R09: 0000000000000000
-[    6.097847] R10: 0000000000000001 R11: ffff888001b2a154 R12: ffff888001be0514
-[    6.097847] R13: ffff888001be02a0 R14: 0000000000000008 R15: 0000000000000000
-[    6.097847] FS:  0000000000000000(0000) GS:ffff888041d80000(0000) knlGS:0000000000000000
-[    6.097847] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    6.097847] CR2: 0000000000000000 CR3: 0000000003030000 CR4: 00000000001026b0
-[    6.097847] Call Trace:
-[    6.097847]  <TASK>
-[    6.097847]  ? eqbr_irq_mask+0x63/0x70
-[    6.097847]  ? no_action+0x10/0x10
-[    6.097847]  eqbr_irq_mask_ack+0x11/0x60
+when reading the charge thresholds via sysfs on platforms that do not
+support them such as the ThinkPad T400.
 
-In an other driver (drivers/pinctrl/starfive/pinctrl-starfive-jh7100.c) the
-interrupt is not disabled here.
-
-To fix this, do not call the 'eqbr_irq_mask()' and 'eqbr_irq_ack()'
-function. Implement instead this directly without disabling the interrupts.
-
-Fixes: 52066a53bd11 ("pinctrl: equilibrium: Convert to immutable irq_chip")
-Signed-off-by: Florian Eckert <fe@dev.tdt.de>
-Signed-off-by: Linus Walleij <linusw@kernel.org>
+Fixes: 2801b9683f74 ("thinkpad_acpi: Add support for battery thresholds")
+Closes: https://bugzilla.kernel.org/show_bug.cgi?id=202619
+Signed-off-by: Jonathan Teh <jonathan.teh@outlook.com>
+Reviewed-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://patch.msgid.link/MI0P293MB01967B206E1CA6F337EBFB12926CA@MI0P293MB0196.ITAP293.PROD.OUTLOOK.COM
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-equilibrium.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/platform/x86/thinkpad_acpi.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-equilibrium.c b/drivers/pinctrl/pinctrl-equilibrium.c
-index a5f7e34146c7c..e1d8c656576a8 100644
---- a/drivers/pinctrl/pinctrl-equilibrium.c
-+++ b/drivers/pinctrl/pinctrl-equilibrium.c
-@@ -63,8 +63,15 @@ static void eqbr_irq_ack(struct irq_data *d)
- 
- static void eqbr_irq_mask_ack(struct irq_data *d)
+diff --git a/drivers/platform/x86/thinkpad_acpi.c b/drivers/platform/x86/thinkpad_acpi.c
+index 88364a5502e69..be46479d54afe 100644
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -9441,14 +9441,16 @@ static int tpacpi_battery_get(int what, int battery, int *ret)
  {
--	eqbr_irq_mask(d);
--	eqbr_irq_ack(d);
-+	struct gpio_chip *gc = irq_data_get_irq_chip_data(d);
-+	struct eqbr_gpio_ctrl *gctrl = gpiochip_get_data(gc);
-+	unsigned int offset = irqd_to_hwirq(d);
-+	unsigned long flags;
-+
-+	raw_spin_lock_irqsave(&gctrl->lock, flags);
-+	writel(BIT(offset), gctrl->membase + GPIO_IRNENCLR);
-+	writel(BIT(offset), gctrl->membase + GPIO_IRNCR);
-+	raw_spin_unlock_irqrestore(&gctrl->lock, flags);
- }
+ 	switch (what) {
+ 	case THRESHOLD_START:
+-		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery))
++		if (!battery_info.batteries[battery].start_support ||
++		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_START, ret, battery)))
+ 			return -ENODEV;
  
- static inline void eqbr_cfg_bit(void __iomem *addr,
+ 		/* The value is in the low 8 bits of the response */
+ 		*ret = *ret & 0xFF;
+ 		return 0;
+ 	case THRESHOLD_STOP:
+-		if ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery))
++		if (!battery_info.batteries[battery].stop_support ||
++		    ACPI_FAILURE(tpacpi_battery_acpi_eval(GET_STOP, ret, battery)))
+ 			return -ENODEV;
+ 		/* Value is in lower 8 bits */
+ 		*ret = *ret & 0xFF;
 -- 
 2.51.0
 
