@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE72E381AEB;
-	Mon, 23 Mar 2026 14:03:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 204043AEF4E;
+	Mon, 23 Mar 2026 14:03:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274611; cv=none; b=Bg1ZmK0TyrCMYEQCJt2wjNKZnZbF6QnbvpzE30iuvEsiLkiWMNd5VM24cauADnPw9Ui4Amwydf/p/90wkO/3PPkoEbpdmf8XM65OpdIGAPAIgJ/owNMtEiu4DhXluoeWlvEZ+z6ml5auGJQw0Y6JMB6SAjTN+J2hK3Zx/BcNt1Y=
+	t=1774274615; cv=none; b=jkLh06z0kD2Xlv6jJ3Jsrd8ZTuxjgmV9jCIpDIi0dYQCDNsSfHd+I512odNjnndyBHLR3PRhu/AXO76UAMo7qCGNESEgkp9QOvg1tU6KjwIWlK7xoqZMhhQfUtY12M10/uY6EIY7+L/2VAnAwSWju9m4oZx+JVszOpUs7lgn2bc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274611; c=relaxed/simple;
-	bh=om0WnHu5ylxOvEfx9WSPsajyhAnyEw8o8sPuFcuXt7U=;
+	s=arc-20240116; t=1774274615; c=relaxed/simple;
+	bh=KyrSSWQSwv1WDq79ghrko66jAACPShmKJLiehdOPXrM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=K+eY7GGJMiJO+wwMernSaf1TKQ/0NPu76vb+kjnRrErKpKoN7B/ORH1ITIMFMTT4fPsEKwUOuU59wYfJkfb7JJ0NSBN0bMfEs1bKR0rU1dHmP3pf9tHX9bhHseJi2Sv+V9Jix4//OPsymY/E9HD6CjQRqyKJ3oYNsOiUO++KBoA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ERghv9D7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q3nV2FtPgSbfWAPvOjn/KaVu/RBzA7vi6qf4ysb9mLQkMSkIuFw+nCWrr3l5K0E7wixrWoSpMg3j827/YzWSKUupqbOHA2JZMo/OFYzGTmOI7P8GrUGGliZrljSx1Ly8rZPQQ6VnBCO5Ve7JFGhjl4gKM+t7/3aijRXhOrg5ta0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TDrl3/zC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ERghv9D7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51872C2BCB3;
-	Mon, 23 Mar 2026 14:03:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TDrl3/zC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A042C4CEF7;
+	Mon, 23 Mar 2026 14:03:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274611;
-	bh=om0WnHu5ylxOvEfx9WSPsajyhAnyEw8o8sPuFcuXt7U=;
+	s=korg; t=1774274614;
+	bh=KyrSSWQSwv1WDq79ghrko66jAACPShmKJLiehdOPXrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERghv9D78Z4OtqnfPT7lmQ5Vg7cSIWuasR+Kh5SPyvIPn1vifHHO/6H0XRS6PoLb1
-	 Kk3uIGVOOiClDZ35dQjEXRyts3s7SaiTNQczdPzRtWRs0UlVWCrWSieduX6IIFA8sk
-	 wOR4rgoz7w18MdALz1fxih38Ia4hEiNwhlYeAF7s=
+	b=TDrl3/zCwnDhz8LppFN8x6trRhcwwGRHAjisQcyEzclzIEAMuQ7qMmkVoyLH9LCVa
+	 FoNepkasjNovlPoldqQqG+I5T45C6czECUjqzGWgs1EjZhDqddvhYefEjjaRp23+ab
+	 QAooYgvQwzopSp5XW+cYK1rR84GfMo7X5YZB2f2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.18 052/212] ata: libata-scsi: report correct sense field pointer in ata_scsiop_maint_in()
-Date: Mon, 23 Mar 2026 14:44:33 +0100
-Message-ID: <20260323134505.414694682@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Matthew Schwartz <matthew.schwartz@linux.dev>,
+	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.18 053/212] mmc: sdhci-pci-gli: fix GL9750 DMA write corruption
+Date: Mon, 23 Mar 2026 14:44:34 +0100
+Message-ID: <20260323134505.445290263@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,37 +52,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Matthew Schwartz <matthew.schwartz@linux.dev>
 
-commit e6d7eba23b666d85cacee0643be280d6ce1ebffc upstream.
+commit 2b76e0cc7803e5ab561c875edaba7f6bbd87fbb0 upstream.
 
-Commit 4ab7bb976343 ("ata: libata-scsi: Refactor ata_scsiop_maint_in()")
-modified ata_scsiop_maint_in() to directly call
-ata_scsi_set_invalid_field() to set the field pointer of the sense data
-of a failed MAINTENANCE IN command. However, in the case of an invalid
-command format, the sense data field incorrectly indicates byte 1 of
-the CDB. Fix this to indicate byte 2 of the command.
+The GL9750 SD host controller has intermittent data corruption during
+DMA write operations. The GM_BURST register's R_OSRC_Lmt field
+(bits 17:16), which limits outstanding DMA read requests from system
+memory, is not being cleared during initialization. The Windows driver
+sets R_OSRC_Lmt to zero, limiting requests to the smallest unit.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Fixes: 4ab7bb976343 ("ata: libata-scsi: Refactor ata_scsiop_maint_in()")
+Clear R_OSRC_Lmt to match the Windows driver behavior. This eliminates
+write corruption verified with f3write/f3read tests while maintaining
+DMA performance.
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: e51df6ce668a ("mmc: host: sdhci-pci: Add Genesys Logic GL975x support")
+Closes: https://lore.kernel.org/linux-mmc/33d12807-5c72-41ce-8679-57aa11831fad@linux.dev/
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
+Reviewed-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-scsi.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-pci-gli.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/drivers/ata/libata-scsi.c
-+++ b/drivers/ata/libata-scsi.c
-@@ -3599,7 +3599,7 @@ static unsigned int ata_scsiop_maint_in(
+--- a/drivers/mmc/host/sdhci-pci-gli.c
++++ b/drivers/mmc/host/sdhci-pci-gli.c
+@@ -68,6 +68,9 @@
+ #define   GLI_9750_MISC_TX1_DLY_VALUE    0x5
+ #define   SDHCI_GLI_9750_MISC_SSC_OFF    BIT(26)
  
- 	if (cdb[2] != 1 && cdb[2] != 3) {
- 		ata_dev_warn(dev, "invalid command format %d\n", cdb[2]);
--		ata_scsi_set_invalid_field(dev, cmd, 1, 0xff);
-+		ata_scsi_set_invalid_field(dev, cmd, 2, 0xff);
- 		return 0;
- 	}
++#define SDHCI_GLI_9750_GM_BURST_SIZE		  0x510
++#define   SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT  GENMASK(17, 16)
++
+ #define SDHCI_GLI_9750_TUNING_CONTROL	          0x540
+ #define   SDHCI_GLI_9750_TUNING_CONTROL_EN          BIT(4)
+ #define   GLI_9750_TUNING_CONTROL_EN_ON             0x1
+@@ -345,10 +348,16 @@ static void gli_set_9750(struct sdhci_ho
+ 	u32 misc_value;
+ 	u32 parameter_value;
+ 	u32 control_value;
++	u32 burst_value;
+ 	u16 ctrl2;
  
+ 	gl9750_wt_on(host);
+ 
++	/* clear R_OSRC_Lmt to avoid DMA write corruption */
++	burst_value = sdhci_readl(host, SDHCI_GLI_9750_GM_BURST_SIZE);
++	burst_value &= ~SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT;
++	sdhci_writel(host, burst_value, SDHCI_GLI_9750_GM_BURST_SIZE);
++
+ 	driving_value = sdhci_readl(host, SDHCI_GLI_9750_DRIVING);
+ 	pll_value = sdhci_readl(host, SDHCI_GLI_9750_PLL);
+ 	sw_ctrl_value = sdhci_readl(host, SDHCI_GLI_9750_SW_CTRL);
 
 
