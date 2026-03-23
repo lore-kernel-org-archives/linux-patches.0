@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9574A3AC0D2;
-	Mon, 23 Mar 2026 13:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41240340298;
+	Mon, 23 Mar 2026 13:51:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273899; cv=none; b=Gd/sErNh6oCBn1cpJ9nHq7PFQqDpiFUCJzRY+9wz2uJdQ2xwOut9cn9J31qyrX8CE6AnQtCh9NoYocP3AELDA8QRHWIdSAMFW1jKp5DBnCb9DDR1DcV2J/mlVpJUvtXfpoRATxWLhtScpYq6tRMTqAiXpZg+pON1G0l4LX7CQVI=
+	t=1774273903; cv=none; b=WwQxho2rMd8EBg0c4FdAA6DcDZJl5GDpAeKN57Y/2AOC8XyZiEfzecrPLHygrXPUMe1HFTq9O15csv1zKb9cw1di+5M6yCPzAt8bh/c2X+tEY4lj6vZ1CUJdNMbkHhAoFEU5e9bL5AW/xduqasLcC0FRr++5fwUheimjYw0fLEg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273899; c=relaxed/simple;
-	bh=1brawcWDg0A1Jz7IgCRBXlNtyRtASP5PFzCm4e7oGJk=;
+	s=arc-20240116; t=1774273903; c=relaxed/simple;
+	bh=fU6iOIGs8vC2LFwFy+4RpF7Q2v7QsKtEp03OZJoNQLs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=h5VAAqDBMfqbdo2l4pvbB8r6MHQF9bGv0I94hz9FJIA4NB/mV8eNQEdjIdh6yGcqb2XkFT2TeQGsMddNBHOeGu6XMaIjqNl8SfCXI87bTaGfddbzawRe3jXBUJgFgSN++iVm8SimOFTalwjFJN9TxixN7r1eN1hOZkzY1BQUnew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4JIID1+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cE/F8PF3zbc9XVLRXYJCN4dJwu9HTywKVQodfpnDnNDuVMv1XNmoNTaamSxjDd6aik59Xhz5YhaMeb3bRrPNKnxr5/XabvyHILZUBxGO7bE3NqZdE+S/jVT2oeILHOvOKw6KGTwkFysA5+YDKzJX+JpNkcgqbO616N0gnWcDy24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzoaSroo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4JIID1+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004EBC4CEF7;
-	Mon, 23 Mar 2026 13:51:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzoaSroo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775B9C2BCB1;
+	Mon, 23 Mar 2026 13:51:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273899;
-	bh=1brawcWDg0A1Jz7IgCRBXlNtyRtASP5PFzCm4e7oGJk=;
+	s=korg; t=1774273902;
+	bh=fU6iOIGs8vC2LFwFy+4RpF7Q2v7QsKtEp03OZJoNQLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L4JIID1+cXR2aQD9Btxg+6M4TQnRnaNkPOzST+KF3QbrB+x8t4juZ8yQadch3PIjm
-	 jnuYD5Uz+tySMfuQnzd2Ce5q2J3tqhp+oIbwA/Cgts84yLPqtauoXYNCBr0j8EkPFI
-	 wIiLU4NBNqkm1TKXTr+U1FlWcpYkKfL3qGCg0b1Y=
+	b=rzoaSrooy6ulUA2UjvgvoGcPVHqzvmgsbdERD2C6uBpGDFkmvNY/bawif1Bp7tIYl
+	 +ZPLjPwThUmyFIxIdO5GOJ92b0AwAQEtih/wAtm89mKdy4vUBbhk3KAl6QXEvD9zUe
+	 pf/045qXY6HLYJD7dQ84HMUFPy+wgZMkxT2j5fhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adam Ford <aford173@gmail.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.19 045/220] pmdomain: mediatek: Fix power domain count
-Date: Mon, 23 Mar 2026 14:43:42 +0100
-Message-ID: <20260323134506.011228379@linuxfoundation.org>
+Subject: [PATCH 6.19 046/220] pmdomain: bcm: bcm2835-power: Increase ASB control timeout
+Date: Mon, 23 Mar 2026 14:43:43 +0100
+Message-ID: <20260323134506.041637554@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -45,55 +45,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Adam Ford <aford173@gmail.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit b22c526569e6af84008b674e66378e771bfbdd94 upstream.
+commit b826d2c0b0ecb844c84431ba6b502e744f5d919a upstream.
 
-The wrong value of the number of domains is wrong which leads to
-failures when trying to enumerate nested power domains.
+The bcm2835_asb_control() function uses a tight polling loop to wait
+for the ASB bridge to acknowledge a request. During intensive workloads,
+this handshake intermittently fails for V3D's master ASB on BCM2711,
+resulting in "Failed to disable ASB master for v3d" errors during
+runtime PM suspend. As a consequence, the failed power-off leaves V3D in
+a broken state, leading to bus faults or system hangs on later accesses.
 
- PM: genpd_xlate_onecell: invalid domain index 0
- PM: genpd_xlate_onecell: invalid domain index 1
- PM: genpd_xlate_onecell: invalid domain index 3
- PM: genpd_xlate_onecell: invalid domain index 4
- PM: genpd_xlate_onecell: invalid domain index 5
- PM: genpd_xlate_onecell: invalid domain index 13
- PM: genpd_xlate_onecell: invalid domain index 14
+As the timeout is insufficient in some scenarios, increase the polling
+timeout from 1us to 5us, which is still negligible in the context of a
+power domain transition. Also, replace the open-coded ktime_get_ns()/
+cpu_relax() polling loop with readl_poll_timeout_atomic().
 
-Attempts to use these power domains fail, so fix this by
-using the correct value of calculated power domains.
-
-Signed-off-by: Adam Ford <aford173@gmail.com>
-Fixes: 88914db077b6 ("pmdomain: mediatek: Add support for Hardware Voter power domains")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/mediatek/mtk-pm-domains.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pmdomain/bcm/bcm2835-power.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/pmdomain/mediatek/mtk-pm-domains.c b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-index f64f24d520dd..e2800aa1bc59 100644
---- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
-+++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
-@@ -1203,7 +1203,7 @@ static int scpsys_probe(struct platform_device *pdev)
- 	scpsys->soc_data = soc;
+--- a/drivers/pmdomain/bcm/bcm2835-power.c
++++ b/drivers/pmdomain/bcm/bcm2835-power.c
+@@ -9,6 +9,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/mfd/bcm2835-pm.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -153,7 +154,6 @@ struct bcm2835_power {
+ static int bcm2835_asb_control(struct bcm2835_power *power, u32 reg, bool enable)
+ {
+ 	void __iomem *base = power->asb;
+-	u64 start;
+ 	u32 val;
  
- 	scpsys->pd_data.domains = scpsys->domains;
--	scpsys->pd_data.num_domains = soc->num_domains;
-+	scpsys->pd_data.num_domains = num_domains;
+ 	switch (reg) {
+@@ -166,8 +166,6 @@ static int bcm2835_asb_control(struct bc
+ 		break;
+ 	}
  
- 	parent = dev->parent;
- 	if (!parent) {
--- 
-2.53.0
-
+-	start = ktime_get_ns();
+-
+ 	/* Enable the module's async AXI bridges. */
+ 	if (enable) {
+ 		val = readl(base + reg) & ~ASB_REQ_STOP;
+@@ -176,11 +174,9 @@ static int bcm2835_asb_control(struct bc
+ 	}
+ 	writel(PM_PASSWORD | val, base + reg);
+ 
+-	while (!!(readl(base + reg) & ASB_ACK) == enable) {
+-		cpu_relax();
+-		if (ktime_get_ns() - start >= 1000)
+-			return -ETIMEDOUT;
+-	}
++	if (readl_poll_timeout_atomic(base + reg, val,
++				      !!(val & ASB_ACK) != enable, 0, 5))
++		return -ETIMEDOUT;
+ 
+ 	return 0;
+ }
 
 
