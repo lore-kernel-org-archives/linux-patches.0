@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE7B3B27F3;
-	Mon, 23 Mar 2026 13:59:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AE63B8D6B;
+	Mon, 23 Mar 2026 13:59:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274380; cv=none; b=b+gagN6zQe2vhkzAhoXC2dqpCZpjGwn6ntdVyAKVNeRq9lMpH9kK2PWKYj4E+6Sl8nrvgK2b0b6YWggv+Kl2/sMsQhpu6vJpBzhqnHzXVlNrJnDdq6fPVxsuMesGS6gVu/V/d8MWUf7/IyU9bVE/400M7N8nhgZIZJzwQnCc5D8=
+	t=1774274383; cv=none; b=aq/w2cElqi1nk44Z62vCyh/KypwGCfBqjENQhZ1IbxpD/E3cW7g0jAT5w2uZd1rCHCb9dOR6HdyAsukj2QQBzOinypEPAT9PGfe4AEv6L4HKviOOiwMDUouNmRKe87NliHOjwnTQpMbg2rpH3rZzn50thbF93X9s5OWLB7s6rZk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274380; c=relaxed/simple;
-	bh=oXa3S/dT7fjmkXwBD9syIFAIjCSbcKB13H83+p6bHT0=;
+	s=arc-20240116; t=1774274383; c=relaxed/simple;
+	bh=37ONiUJe11gT6DRrPL4MgqeQ3u6RPWmUHpos/DIK0Fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j/v4TxVh22KsFat3vKbotuUK3/JVDqHq5X4l9YVtTK6gug9mAwQ6Q2JiQvBlAS+SaggGhmgmrOnff8dRBPWz3mamEA4Her9R2u2R03ttkM17jXZlCaRsY6a6BjbsZp12l6aHcgRqYGbvRKs8t8/04WCJKgN9IckZS9bAnqr874A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rVUj8JSD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WPUJc0C+cJIygwbePcNU0kJXzetHtiRxEPojAVSrlxJ0Q+OUf1vFrtBJkOEgmoJBSQbpV0IG9S1Y07mObIxu6oY8xiLQ+2HeFoSSvnOYtbrYn8dB+CtVej9ztnf1pqsImBVzzzfU0ayaCfLQoW0dnYFpW7tab1hT9Veu7bmhgQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff0yVegD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rVUj8JSD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8CAFC2BCB1;
-	Mon, 23 Mar 2026 13:59:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff0yVegD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A06C4CEF7;
+	Mon, 23 Mar 2026 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274380;
-	bh=oXa3S/dT7fjmkXwBD9syIFAIjCSbcKB13H83+p6bHT0=;
+	s=korg; t=1774274383;
+	bh=37ONiUJe11gT6DRrPL4MgqeQ3u6RPWmUHpos/DIK0Fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rVUj8JSDOU1xtiUmnEXs9RLTzd2RJThk++9NLYrGIfvNsdMo8eZLS1bEj8DpWHO03
-	 jElGeUtqQ8qDjzcIS/HC4FJZPD9KyASrp7TpX8VsWefQkGfpkIT3v6WCmaqLk4x4ki
-	 asTHh7SLZHbf+lGcrMi3ufsrqs7QvzsbnerSsH9E=
+	b=ff0yVegDohqmL7aY5tEFLEOZ0Gli0HPk9ek55Ps1fPlpCj5dch1T/yzrjVxijutdG
+	 +tRvfvUFcOQlxwa2pQ2P3lfuSWTdFGyPL3bNIhucmevJjH8waVyWeuUJQf1yx1nHT1
+	 MYe45xpsmHYkV8gTadjqAJdlpmumDY/0nhBTthHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kamal Dasu <kamal.dasu@broadcom.com>,
 	William Zhang <william.zhang@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 198/220] mtd: rawnand: serialize lock/unlock against other NAND operations
-Date: Mon, 23 Mar 2026 14:46:15 +0100
-Message-ID: <20260323134510.841251881@linuxfoundation.org>
+Subject: [PATCH 6.19 199/220] mtd: rawnand: brcmnand: skip DMA during panic write
+Date: Mon, 23 Mar 2026 14:46:16 +0100
+Message-ID: <20260323134510.868733170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -54,66 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit bab2bc6e850a697a23b9e5f0e21bb8c187615e95 ]
+[ Upstream commit da9ba4dcc01e7cf52b7676f0ee9607b8358c2171 ]
 
-nand_lock() and nand_unlock() call into chip->ops.lock_area/unlock_area
-without holding the NAND device lock. On controllers that implement
-SET_FEATURES via multiple low-level PIO commands, these can race with
-concurrent UBI/UBIFS background erase/write operations that hold the
-device lock, resulting in cmd_pending conflicts on the NAND controller.
+When oops_panic_write is set, the driver disables interrupts and
+switches to PIO polling mode but still falls through into the DMA
+path. DMA cannot be used reliably in panic context, so make the
+DMA path an else branch to ensure only PIO is used during panic
+writes.
 
-Add nand_get_device()/nand_release_device() around the lock/unlock
-operations to serialize them against all other NAND controller access.
-
-Fixes: 92270086b7e5 ("mtd: rawnand: Add support for manufacturer specific lock/unlock operation")
+Fixes: c1ac2dc34b51 ("mtd: rawnand: brcmnand: When oops in progress use pio and interrupt polling")
 Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
 Reviewed-by: William Zhang <william.zhang@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/nand_base.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/mtd/nand/raw/brcmnand/brcmnand.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
-index f2322de93ab41..19e3bbf42931d 100644
---- a/drivers/mtd/nand/raw/nand_base.c
-+++ b/drivers/mtd/nand/raw/nand_base.c
-@@ -4737,11 +4737,16 @@ static void nand_shutdown(struct mtd_info *mtd)
- static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
- {
- 	struct nand_chip *chip = mtd_to_nand(mtd);
-+	int ret;
+diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+index 835653bdd5abc..8f4d001377a1c 100644
+--- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
++++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
+@@ -2350,14 +2350,12 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
+ 	for (i = 0; i < ctrl->max_oob; i += 4)
+ 		oob_reg_write(ctrl, i, 0xffffffff);
  
- 	if (!chip->ops.lock_area)
- 		return -ENOTSUPP;
+-	if (mtd->oops_panic_write)
++	if (mtd->oops_panic_write) {
+ 		/* switch to interrupt polling and PIO mode */
+ 		disable_ctrl_irqs(ctrl);
+-
+-	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
++	} else if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
+ 		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
+ 				    CMD_PROGRAM_PAGE))
+-
+ 			ret = -EIO;
  
--	return chip->ops.lock_area(chip, ofs, len);
-+	nand_get_device(chip);
-+	ret = chip->ops.lock_area(chip, ofs, len);
-+	nand_release_device(chip);
-+
-+	return ret;
- }
- 
- /**
-@@ -4753,11 +4758,16 @@ static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
- static int nand_unlock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
- {
- 	struct nand_chip *chip = mtd_to_nand(mtd);
-+	int ret;
- 
- 	if (!chip->ops.unlock_area)
- 		return -ENOTSUPP;
- 
--	return chip->ops.unlock_area(chip, ofs, len);
-+	nand_get_device(chip);
-+	ret = chip->ops.unlock_area(chip, ofs, len);
-+	nand_release_device(chip);
-+
-+	return ret;
- }
- 
- /* Set default functions */
+ 		goto out;
 -- 
 2.51.0
 
