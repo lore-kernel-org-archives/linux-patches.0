@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D7FB3BFE56;
-	Mon, 23 Mar 2026 16:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30E033B47C9;
+	Mon, 23 Mar 2026 16:28:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283334; cv=none; b=B9Q35Ay1JiL0HnC/dsCZ/kX2bJNPkvv9yOSE0NaUHIKHa3wdVcxO8uUP/tF2RttnjMLZrH+WdFY37anM9yaT0IetAg+qsCib9ZU8CDwlVgODSNWDfEcC5fNKKfVtZSgwdgJGtOnN7kyz90DYr/67/mijdhRvDpio5+kKBZc5X+k=
+	t=1774283337; cv=none; b=NrGs45fcraMn3NdwPGvPmfvqZodJBtT/cMQL2Db1TJLlVirfIEYlbsYSbKkZJrIqVYH8VXeJiHdvYW9HdchX5uX9kRm5hohboeJ8EVsbHSFAzm8ZUjrkD0DC8bg6dYKdAQy7RKSnBoE8hj+3uEZWVvrISko6oMIU0chfKSZoTXA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283334; c=relaxed/simple;
-	bh=eMq2o6HkrSHUV0EK9Xq9ICeULwYU4HIg9TtNsF5oY3I=;
+	s=arc-20240116; t=1774283337; c=relaxed/simple;
+	bh=iKtjEPY9L9IXoeE547y84K3kKyeWO3aapxTdGG7xx8U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lWG7BRIg/cJaZYi1ouRkmTkGQMYZTGPm2KwuNZU7E7w2nKE8SesXfZx1Zow+l+iA2DJDKpPk6wdqkRsTKIewtqPWBbB7vDNab/qDbYheooww+wKQpAmxs6+3GT5DZ3KQd0tcIkBvWOIKyS1a3R9lmijYLyP6LGwM0djpioBAQmU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sF5bptB/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h06ggh4tI4X7pTPJTcsq6BmuG4c7EAkZO+LTLVzn+qi0pYyiRVgi0X+qdYK72XzzXK+R/7RLXhYQGpOfJdNPDBLx+PLtphjwpRUMVXaNIfIcBhNO7F75o1oh6UB5t1u8J2axceZfEvApGte9X0fLpjd8WTmQeM8IOBY/PXwFkiA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jmix2qZW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sF5bptB/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919D5C4CEF7;
-	Mon, 23 Mar 2026 16:28:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jmix2qZW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 509B6C4CEF7;
+	Mon, 23 Mar 2026 16:28:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283333;
-	bh=eMq2o6HkrSHUV0EK9Xq9ICeULwYU4HIg9TtNsF5oY3I=;
+	s=korg; t=1774283336;
+	bh=iKtjEPY9L9IXoeE547y84K3kKyeWO3aapxTdGG7xx8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sF5bptB/aCRORlc+oZ401XLAQjybqX9ZA1b/wM7lTN9vDy1QH021k07KuCeQGv9dE
-	 FihYD92VywWGll92DysLZ4N4HeQFEBaEnb0sW6fStson3rJPIoRd/lVceaqKIoUMap
-	 zH09kzj/1xTAajLJehLDD15wX7Ksx7c25hU6LfM4=
+	b=Jmix2qZWxRPkFn/wtO5INMkqL06jTae8neZDRZpzFVdV3wUJZcjKOpY80Vr+1/0hU
+	 pyQZbGhCgq4qNVdiECv9OKNKbF6O/JWC6A67T6CSecgKaNAL5dFMzqDs9DjLkMNFAV
+	 YmdmKkHH9hTtECwFkXw1fvjc/NgCmZhlaXUXm2w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 418/481] netfilter: xt_time: use unsigned int for monthday bit shift
-Date: Mon, 23 Mar 2026 14:46:40 +0100
-Message-ID: <20260323134535.379148115@linuxfoundation.org>
+	Zqiang <qiang.zhang1211@gmail.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	"Neeraj Upadhyay (AMD)" <neeraj.upadhyay@kernel.org>,
+	Jianqiang kang <jianqkang@sina.cn>
+Subject: [PATCH 6.1 466/481] rcu/nocb: Fix possible invalid rdps->nocb_cb_kthread pointer access
+Date: Mon, 23 Mar 2026 14:47:28 +0100
+Message-ID: <20260323134536.570791934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -47,57 +46,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Zqiang <qiang.zhang1211@gmail.com>
 
-[ Upstream commit 00050ec08cecfda447e1209b388086d76addda3a ]
+[ Upstream commit 1bba3900ca18bdae28d1b9fa10f16a8f8cb2ada1 ]
 
-The monthday field can be up to 31, and shifting a signed integer 1
-by 31 positions (1 << 31) is undefined behavior in C, as the result
-overflows a 32-bit signed int. Use 1U to ensure well-defined behavior
-for all valid monthday values.
+In the preparation stage of CPU online, if the corresponding
+the rdp's->nocb_cb_kthread does not exist, will be created,
+there is a situation where the rdp's rcuop kthreads creation fails,
+and then de-offload this CPU's rdp, does not assign this CPU's
+rdp->nocb_cb_kthread pointer, but this rdp's->nocb_gp_rdp and
+rdp's->rdp_gp->nocb_gp_kthread is still valid.
 
-Change the weekday shift to 1U as well for consistency.
+This will cause the subsequent re-offload operation of this offline
+CPU, which will pass the conditional check and the kthread_unpark()
+will access invalid rdp's->nocb_cb_kthread pointer.
 
-Fixes: ee4411a1b1e0 ("[NETFILTER]: x_tables: add xt_time match")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This commit therefore use rdp's->nocb_gp_kthread instead of
+rdp_gp's->nocb_gp_kthread for safety check.
+
+Signed-off-by: Zqiang <qiang.zhang1211@gmail.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Signed-off-by: Neeraj Upadhyay (AMD) <neeraj.upadhyay@kernel.org>
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_time.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/rcu/tree_nocb.h |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/xt_time.c b/net/netfilter/xt_time.c
-index 6aa12d0f54e23..61de85e02a40f 100644
---- a/net/netfilter/xt_time.c
-+++ b/net/netfilter/xt_time.c
-@@ -227,13 +227,13 @@ time_mt(const struct sk_buff *skb, struct xt_action_param *par)
+--- a/kernel/rcu/tree_nocb.h
++++ b/kernel/rcu/tree_nocb.h
+@@ -1112,7 +1112,6 @@ static long rcu_nocb_rdp_offload(void *a
+ 	struct rcu_segcblist *cblist = &rdp->cblist;
+ 	unsigned long flags;
+ 	int wake_gp;
+-	struct rcu_data *rdp_gp = rdp->nocb_gp_rdp;
  
- 	localtime_2(&current_time, stamp);
+ 	WARN_ON_ONCE(rdp->cpu != raw_smp_processor_id());
+ 	/*
+@@ -1122,7 +1121,7 @@ static long rcu_nocb_rdp_offload(void *a
+ 	if (!rdp->nocb_gp_rdp)
+ 		return -EINVAL;
  
--	if (!(info->weekdays_match & (1 << current_time.weekday)))
-+	if (!(info->weekdays_match & (1U << current_time.weekday)))
- 		return false;
+-	if (WARN_ON_ONCE(!rdp_gp->nocb_gp_kthread))
++	if (WARN_ON_ONCE(!rdp->nocb_gp_kthread))
+ 		return -EINVAL;
  
- 	/* Do not spend time computing monthday if all days match anyway */
- 	if (info->monthdays_match != XT_TIME_ALL_MONTHDAYS) {
- 		localtime_3(&current_time, stamp);
--		if (!(info->monthdays_match & (1 << current_time.monthday)))
-+		if (!(info->monthdays_match & (1U << current_time.monthday)))
- 			return false;
- 	}
- 
--- 
-2.51.0
-
+ 	pr_info("Offloading %d\n", rdp->cpu);
+@@ -1151,7 +1150,7 @@ static long rcu_nocb_rdp_offload(void *a
+ 	 */
+ 	wake_gp = rdp_offload_toggle(rdp, true, flags);
+ 	if (wake_gp)
+-		wake_up_process(rdp_gp->nocb_gp_kthread);
++		wake_up_process(rdp->nocb_gp_kthread);
+ 	swait_event_exclusive(rdp->nocb_state_wq,
+ 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_CB) &&
+ 			      rcu_segcblist_test_flags(cblist, SEGCBLIST_KTHREAD_GP));
 
 
