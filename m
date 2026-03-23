@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934053AE1A8;
-	Mon, 23 Mar 2026 14:01:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75BE3AEF5F;
+	Mon, 23 Mar 2026 14:01:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274492; cv=none; b=IcUOGsQYTSEMpxfJZx0Zia2TXu7XePz73Ml6Twa+45M506FbgYDrPJ43BkY8QLPNKRzgVe974neVdUP2pxdYqpFI/J65bxIYEoAjpFaJf98Q41TC2trNzNzGYsxMKULuJqOBNCuylR6VEBnSPCsHy+zPA2qowSykj/ACTtXm3zk=
+	t=1774274496; cv=none; b=VLy1Qmm9SBUia73HfrctWirx8M6xGmpSYiXdQqXZE3+DZItT+DJkJ+SI0Y7glsI88X07I4OfLx8GiPWZbp9obm0xdkjCAF9FpWRXUyIDYjIqH496a4vgEBV9HeBzwuPJ4Fv01fVev5tBrGlljjA8/Q0VNP0GVRy0PomrKLYob5s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274492; c=relaxed/simple;
-	bh=/OHwpZ3Y1+wkZSLaSBmfjiEzw8+zCpkFaFkAPGmN/vY=;
+	s=arc-20240116; t=1774274496; c=relaxed/simple;
+	bh=K9ToQHmHd3N8ejOPPwMt+wBNhIjjeLWVu858E9rpMtA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rOZCeRUdco4FOsHgQ50LNuvLCeZN8dKX3SnxCkhqnAQmBPUkaHteMoNscQSUPKu5u37VdQNT9rzvHX8hsWSP3dm3yIcFkr7xRuuITAJnNchiPYDpjSdv2Z1DBhwtnWKDX0Kx44F9680ly1XOn4pAShVgmb37igcOSBqZPftNvw4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rdqpKSO0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=luZ17TbV0ENDxVtnRI2jNFxdySHpq+fTWxMuF9/hqFC1mAlAt1q+qTcsBhzc3q1C7NRqlx2X/wTZ1RbvU1BC/8v8aBBe+PkCMK7VF40/IRgabDwpC3LaRLbUJBHcpu0HWXKYZoJfWyXq9O9XbHxV86o4fpy9r+VI8X0SN1xMkCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g51J2q4Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rdqpKSO0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16C1AC4CEF7;
-	Mon, 23 Mar 2026 14:01:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g51J2q4Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A873C4CEF7;
+	Mon, 23 Mar 2026 14:01:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274492;
-	bh=/OHwpZ3Y1+wkZSLaSBmfjiEzw8+zCpkFaFkAPGmN/vY=;
+	s=korg; t=1774274495;
+	bh=K9ToQHmHd3N8ejOPPwMt+wBNhIjjeLWVu858E9rpMtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdqpKSO0aQfOT9PWeoXOT6tiy6ATUA7lJPBFTU0uQYGEd5VkJstte3//xtKvHbtfz
-	 PfAwOsadDnK3jsANy2baybFFc81pR97FW7Kj3TJfErEp2cXKli5YQNUIw0Grkd4U+c
-	 IkkyMaK6+JByIau/mAU5d5H65VQK9vnzF/I9u90M=
+	b=g51J2q4Q1+Ctkjbq75GIEY+knWcSaxsM3TB46dgLdQ9nH6ZKhUURXAg/g4/wML4YQ
+	 KqmKiD0EHlxDqpStWiz4envtG30n2Ei0ZcIyasCy4MRq6NcINZxrR9oZfMIkmUla/k
+	 rtX+knb+aWLJ+sXXRU5YXiF1XW/69ZCtZ0/mijEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Yuhao Jiang <danisjiang@gmail.com>,
+	Junrui Luo <moonafterrain@outlook.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.18 015/212] net: macb: fix use-after-free access to PTP clock
-Date: Mon, 23 Mar 2026 14:43:56 +0100
-Message-ID: <20260323134504.243955686@linuxfoundation.org>
+Subject: [PATCH 6.18 016/212] bnxt_en: fix OOB access in DBG_BUF_PRODUCER async event handler
+Date: Mon, 23 Mar 2026 14:43:57 +0100
+Message-ID: <20260323134504.276174309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,128 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Junrui Luo <moonafterrain@outlook.com>
 
-commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
+commit 64dcbde7f8f870a4f2d9daf24ffb06f9748b5dd3 upstream.
 
-PTP clock is registered on every opening of the interface and destroyed on
-every closing.  However it may be accessed via get_ts_info ethtool call
-which is possible while the interface is just present in the kernel.
+The ASYNC_EVENT_CMPL_EVENT_ID_DBG_BUF_PRODUCER handler in
+bnxt_async_event_process() uses a firmware-supplied 'type' field
+directly as an index into bp->bs_trace[] without bounds validation.
 
-BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
-Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
+The 'type' field is a 16-bit value extracted from DMA-mapped completion
+ring memory that the NIC writes directly to host RAM. A malicious or
+compromised NIC can supply any value from 0 to 65535, causing an
+out-of-bounds access into kernel heap memory.
 
-CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x17f/0x496 mm/kasan/report.c:420
- kasan_report+0xd9/0x180 mm/kasan/report.c:524
- ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
- gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
- macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
- __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
- ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
- __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
- dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- </TASK>
+The bnxt_bs_trace_check_wrap() call then dereferences bs_trace->magic_byte
+and writes to bs_trace->last_offset and bs_trace->wrapped, leading to
+kernel memory corruption or a crash.
 
-Allocated by task 457:
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:699 [inline]
- ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
- gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
- macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
- __dev_open+0x2ce/0x500 net/core/dev.c:1501
- __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
- __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
- rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
- rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
- netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
- netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
- netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
- netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0x14b/0x180 net/socket.c:730
- __sys_sendto+0x320/0x3b0 net/socket.c:2152
- __do_sys_sendto net/socket.c:2164 [inline]
- __se_sys_sendto net/socket.c:2160 [inline]
- __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+Fix by adding a bounds check and defining BNXT_TRACE_MAX as
+DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ERR_QPC_TRACE + 1 to cover all currently
+defined firmware trace types (0x0 through 0xc).
 
-Freed by task 938:
- kasan_slab_free include/linux/kasan.h:177 [inline]
- slab_free_hook mm/slub.c:1729 [inline]
- slab_free_freelist_hook mm/slub.c:1755 [inline]
- slab_free mm/slub.c:3687 [inline]
- __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
- device_release+0xa0/0x240 drivers/base/core.c:2507
- kobject_cleanup lib/kobject.c:681 [inline]
- kobject_release lib/kobject.c:712 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1cd/0x350 lib/kobject.c:729
- put_device+0x1b/0x30 drivers/base/core.c:3805
- ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
- gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
- macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
- __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
- __dev_close net/core/dev.c:1597 [inline]
- __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
- dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
-
-Set the PTP clock pointer to NULL after unregistering.
-
-Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
+Fixes: 84fcd9449fd7 ("bnxt_en: Manage the FW trace context memory")
+Reported-by: Yuhao Jiang <danisjiang@gmail.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
+Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/SYBPR01MB7881A253A1C9775D277F30E9AF42A@SYBPR01MB7881.ausprd01.prod.outlook.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 ++
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -355,8 +355,10 @@ void gem_ptp_remove(struct net_device *n
- {
- 	struct macb *bp = netdev_priv(ndev);
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -2927,6 +2927,8 @@ static int bnxt_async_event_process(stru
+ 		u16 type = (u16)BNXT_EVENT_BUF_PRODUCER_TYPE(data1);
+ 		u32 offset =  BNXT_EVENT_BUF_PRODUCER_OFFSET(data2);
  
--	if (bp->ptp_clock)
-+	if (bp->ptp_clock) {
- 		ptp_clock_unregister(bp->ptp_clock);
-+		bp->ptp_clock = NULL;
-+	}
++		if (type >= ARRAY_SIZE(bp->bs_trace))
++			goto async_event_process_exit;
+ 		bnxt_bs_trace_check_wrap(&bp->bs_trace[type], offset);
+ 		goto async_event_process_exit;
+ 	}
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2134,7 +2134,7 @@ enum board_idx {
+ };
  
- 	gem_ptp_clear_timer(bp);
+ #define BNXT_TRACE_BUF_MAGIC_BYTE ((u8)0xbc)
+-#define BNXT_TRACE_MAX 11
++#define BNXT_TRACE_MAX (DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ERR_QPC_TRACE + 1)
  
+ struct bnxt_bs_trace_info {
+ 	u8 *magic_byte;
 
 
