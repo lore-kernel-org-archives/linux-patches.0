@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E96971A6808;
-	Mon, 23 Mar 2026 14:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A620F1A6808;
+	Mon, 23 Mar 2026 14:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275415; cv=none; b=MLMC30bXLy5MVRq9sIWR4HNWRs16+0FG7u8oNAhP4RZBsJdX9lLccm3D35fmeR5zbY1I2Tr+/t2k0E2dWvyW9luD6BQL0YafpNRdyD2Amu3JdlaHe1thVKukQa/xn7oNf5sXAAJFihFOMuL2r6SMMqfyrdO4lUFvVomNl6izuLQ=
+	t=1774275417; cv=none; b=rLC4AjSlbR0PS9XJzcroCdHUqso8zV70s51Hp3l05duTfByvfYtlksQDaV73y8xadvasqgGZd1FHbZQ8uRz1L+ylE2USpdRgLohcEh1qOVlV7LBtaZmmE6Rb0+eiFfR6A3y5tJBIvyPbsi0Up3dxCo2RYte1snMzgutdSWi3Ilk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275415; c=relaxed/simple;
-	bh=a1XwNuptPJfvTol7yBPLNsAExnd/etJYt6U4hDv+Fxk=;
+	s=arc-20240116; t=1774275417; c=relaxed/simple;
+	bh=tPnGfR3fTcsy3EAK2U3A6iBRZPYTT4fXFsWrizXNa7g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ejeMHJdLvRHcGj2nSjw43w5Emihre7p6TrGFkATrumi/bXmFnhE3J7/QcWvzxexMQ3m+iVlScL/fQxCLG4BCAnoVhNzGWj7lC43FTKgMp8H3ydacNMnXRyx3/mS7JsprO/G4HOn5kOMZTSpnSmJAGAEnUBtgyNjB5dK+ZErZXW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cAGt2T3M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Oi6oV18hsXb0harJgFWFe1EMAXbEJiAF7vPZoYFmLC13W62YRFzJI1ZyHdR1OnTGRiZcaqoINhCO+ZlbJlseImWDE5qKxb4voHoKN1DKXMdjKSPXtapNXyGbw6+atL+3xHL5VcPkJKIoH6HYzo9CNL+Vc5xoTmdERjo5e++wJBw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w5khF4L1; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cAGt2T3M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4937FC4CEF7;
-	Mon, 23 Mar 2026 14:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w5khF4L1"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0D93C4CEF7;
+	Mon, 23 Mar 2026 14:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275414;
-	bh=a1XwNuptPJfvTol7yBPLNsAExnd/etJYt6U4hDv+Fxk=;
+	s=korg; t=1774275417;
+	bh=tPnGfR3fTcsy3EAK2U3A6iBRZPYTT4fXFsWrizXNa7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cAGt2T3MOrUdgDLuqhNoApwdMKdV+htNo6EIsJTK7dErUtQFiOlNhC4QSDD9olNO+
-	 Yo80HN/7HUXaMGu3ryRpFqxPUvvyoHa41M8iakOWU6Od5h+qPfzgOotIBU4iGMIdUz
-	 Qhtlbyffkb7UxL8SqMI8r3xCgkwR/Fws3uKs/kNI=
+	b=w5khF4L16D7lYWlNWdLgQ8oyjMahout7nrEcQiffT5JUpOBDkwr1rjVKOJM5hKxMi
+	 iMU86MIBncGLLLko0F3qapdGgqZotDrqFEfQ9+1KHaJgGCSAv3ym0iYSBma/QKb/Ps
+	 6SS3Bz1Mgjrvw2i4JWJ1HlJsmZ+ABFKjhxUrO9uU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mehul Rao <mehulrao@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.12 090/460] ALSA: pcm: fix use-after-free on linked stream runtime in snd_pcm_drain()
-Date: Mon, 23 Mar 2026 14:41:26 +0100
-Message-ID: <20260323134528.880376602@linuxfoundation.org>
+	Jay Vosburgh <jv@jvosburgh.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 055/460] bonding: fix type confusion in bond_setup_by_slave()
+Date: Mon, 23 Mar 2026 14:40:51 +0100
+Message-ID: <20260323134528.058693667@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -44,85 +47,157 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mehul Rao <mehulrao@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-commit 9b1dbd69ba6f8f8c69bc7b77c2ce3b9c6ed05ba6 upstream.
+[ Upstream commit 950803f7254721c1c15858fbbfae3deaaeeecb11 ]
 
-In the drain loop, the local variable 'runtime' is reassigned to a
-linked stream's runtime (runtime = s->runtime at line 2157).  After
-releasing the stream lock at line 2169, the code accesses
-runtime->no_period_wakeup, runtime->rate, and runtime->buffer_size
-(lines 2170-2178) — all referencing the linked stream's runtime without
-any lock or refcount protecting its lifetime.
+kernel BUG at net/core/skbuff.c:2306!
+Oops: invalid opcode: 0000 [#1] SMP KASAN NOPTI
+RIP: 0010:pskb_expand_head+0xa08/0xfe0 net/core/skbuff.c:2306
+RSP: 0018:ffffc90004aff760 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff88807e3c8780 RCX: ffffffff89593e0e
+RDX: ffff88807b7c4900 RSI: ffffffff89594747 RDI: ffff88807b7c4900
+RBP: 0000000000000820 R08: 0000000000000005 R09: 0000000000000000
+R10: 00000000961a63e0 R11: 0000000000000000 R12: ffff88807e3c8780
+R13: 00000000961a6560 R14: dffffc0000000000 R15: 00000000961a63e0
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fe1a0ed8df0 CR3: 000000002d816000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ ipgre_header+0xdd/0x540 net/ipv4/ip_gre.c:900
+ dev_hard_header include/linux/netdevice.h:3439 [inline]
+ packet_snd net/packet/af_packet.c:3028 [inline]
+ packet_sendmsg+0x3ae5/0x53c0 net/packet/af_packet.c:3108
+ sock_sendmsg_nosec net/socket.c:727 [inline]
+ __sock_sendmsg net/socket.c:742 [inline]
+ ____sys_sendmsg+0xa54/0xc30 net/socket.c:2592
+ ___sys_sendmsg+0x190/0x1e0 net/socket.c:2646
+ __sys_sendmsg+0x170/0x220 net/socket.c:2678
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0x106/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7fe1a0e6c1a9
 
-A concurrent close() on the linked stream's fd triggers
-snd_pcm_release_substream() → snd_pcm_drop() → pcm_release_private()
-→ snd_pcm_unlink() → snd_pcm_detach_substream() → kfree(runtime).
-No synchronization prevents kfree(runtime) from completing while the
-drain path dereferences the stale pointer.
+When a non-Ethernet device (e.g. GRE tunnel) is enslaved to a bond,
+bond_setup_by_slave() directly copies the slave's header_ops to the
+bond device:
 
-Fix by caching the needed runtime fields (no_period_wakeup, rate,
-buffer_size) into local variables while still holding the stream lock,
-and using the cached values after the lock is released.
+    bond_dev->header_ops = slave_dev->header_ops;
 
-Fixes: f2b3614cefb6 ("ALSA: PCM - Don't check DMA time-out too shortly")
-Cc: stable@vger.kernel.org
-Signed-off-by: Mehul Rao <mehulrao@gmail.com>
-Link: https://patch.msgid.link/20260305193508.311096-1-mehulrao@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This causes a type confusion when dev_hard_header() is later called
+on the bond device. Functions like ipgre_header(), ip6gre_header(),all use
+netdev_priv(dev) to access their device-specific private data. When
+called with the bond device, netdev_priv() returns the bond's private
+data (struct bonding) instead of the expected type (e.g. struct
+ip_tunnel), leading to garbage values being read and kernel crashes.
+
+Fix this by introducing bond_header_ops with wrapper functions that
+delegate to the active slave's header_ops using the slave's own
+device. This ensures netdev_priv() in the slave's header functions
+always receives the correct device.
+
+The fix is placed in the bonding driver rather than individual device
+drivers, as the root cause is bond blindly inheriting header_ops from
+the slave without considering that these callbacks expect a specific
+netdev_priv() layout.
+
+The type confusion can be observed by adding a printk in
+ipgre_header() and running the following commands:
+
+    ip link add dummy0 type dummy
+    ip addr add 10.0.0.1/24 dev dummy0
+    ip link set dummy0 up
+    ip link add gre1 type gre local 10.0.0.1
+    ip link add bond1 type bond mode active-backup
+    ip link set gre1 master bond1
+    ip link set gre1 up
+    ip link set bond1 up
+    ip addr add fe80::1/64 dev bond1
+
+Fixes: 1284cd3a2b74 ("bonding: two small fixes for IPoIB support")
+Suggested-by: Jay Vosburgh <jv@jvosburgh.net>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Link: https://patch.msgid.link/20260306021508.222062-1-jiayuan.chen@linux.dev
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/core/pcm_native.c |   19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 46 insertions(+), 1 deletion(-)
 
---- a/sound/core/pcm_native.c
-+++ b/sound/core/pcm_native.c
-@@ -2144,6 +2144,10 @@ static int snd_pcm_drain(struct snd_pcm_
- 	for (;;) {
- 		long tout;
- 		struct snd_pcm_runtime *to_check;
-+		unsigned int drain_rate;
-+		snd_pcm_uframes_t drain_bufsz;
-+		bool drain_no_period_wakeup;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 6f2b4734c9c06..546c9004c9e30 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -1542,6 +1542,50 @@ static netdev_features_t bond_fix_features(struct net_device *dev,
+ 	return features;
+ }
+ 
++static int bond_header_create(struct sk_buff *skb, struct net_device *bond_dev,
++			      unsigned short type, const void *daddr,
++			      const void *saddr, unsigned int len)
++{
++	struct bonding *bond = netdev_priv(bond_dev);
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
 +
- 		if (signal_pending(current)) {
- 			result = -ERESTARTSYS;
- 			break;
-@@ -2163,16 +2167,25 @@ static int snd_pcm_drain(struct snd_pcm_
- 		snd_pcm_group_unref(group, substream);
- 		if (!to_check)
- 			break; /* all drained */
-+		/*
-+		 * Cache the runtime fields needed after unlock.
-+		 * A concurrent close() on the linked stream may free
-+		 * its runtime via snd_pcm_detach_substream() once we
-+		 * release the stream lock below.
-+		 */
-+		drain_no_period_wakeup = to_check->no_period_wakeup;
-+		drain_rate = to_check->rate;
-+		drain_bufsz = to_check->buffer_size;
- 		init_waitqueue_entry(&wait, current);
- 		set_current_state(TASK_INTERRUPTIBLE);
- 		add_wait_queue(&to_check->sleep, &wait);
- 		snd_pcm_stream_unlock_irq(substream);
--		if (runtime->no_period_wakeup)
-+		if (drain_no_period_wakeup)
- 			tout = MAX_SCHEDULE_TIMEOUT;
- 		else {
- 			tout = 100;
--			if (runtime->rate) {
--				long t = runtime->buffer_size * 1100 / runtime->rate;
-+			if (drain_rate) {
-+				long t = drain_bufsz * 1100 / drain_rate;
- 				tout = max(t, tout);
- 			}
- 			tout = msecs_to_jiffies(tout);
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->create)
++			ret = slave_ops->create(skb, slave->dev,
++						type, daddr, saddr, len);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static int bond_header_parse(const struct sk_buff *skb, unsigned char *haddr)
++{
++	struct bonding *bond = netdev_priv(skb->dev);
++	const struct header_ops *slave_ops;
++	struct slave *slave;
++	int ret = 0;
++
++	rcu_read_lock();
++	slave = rcu_dereference(bond->curr_active_slave);
++	if (slave) {
++		slave_ops = READ_ONCE(slave->dev->header_ops);
++		if (slave_ops && slave_ops->parse)
++			ret = slave_ops->parse(skb, haddr);
++	}
++	rcu_read_unlock();
++	return ret;
++}
++
++static const struct header_ops bond_header_ops = {
++	.create	= bond_header_create,
++	.parse	= bond_header_parse,
++};
++
+ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 				struct net_device *slave_dev)
+ {
+@@ -1549,7 +1593,8 @@ static void bond_setup_by_slave(struct net_device *bond_dev,
+ 
+ 	dev_close(bond_dev);
+ 
+-	bond_dev->header_ops	    = slave_dev->header_ops;
++	bond_dev->header_ops	    = slave_dev->header_ops ?
++				      &bond_header_ops : NULL;
+ 
+ 	bond_dev->type		    = slave_dev->type;
+ 	bond_dev->hard_header_len   = slave_dev->hard_header_len;
+-- 
+2.51.0
+
 
 
