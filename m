@@ -1,109 +1,159 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-174.mta1.migadu.com (out-174.mta1.migadu.com [95.215.58.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0F343AEF4E
-	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 17:58:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8323CC9F2
+	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 18:15:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774288721; cv=none; b=p3PYdbtF2M029fvLx44WsvQ1exy06R7m0yPiFaF1FCTDGUwm4y3Dtxelz7fnMSaD6StiDZvd/JaSYJcxksMVrDQB/gSR+SjakOLGfdVd2dIFNZugFx2aZIvknfmxCMIxTapHD6uNhE5EUhJVGEqKj0BpmOEbF5pTCC2wXR6xpow=
+	t=1774289753; cv=none; b=tbRU6T/TTBzFqcZ/asLp0tDLQpTXaSJxQR4eKly/OinuMbiL7hvsECLjxxJK1aYvI90lJ2gOssayvM7oY9NTrQd3NKLY2NVyFqB336t9LE5ZZwdLGDG9Gqs8PZYIi05uErAdwGTTeA4M/ebNJP3O3SXfdUa8WbAUskP0M3NJTL0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774288721; c=relaxed/simple;
-	bh=JoIGIbJWlZ3JqaUmsBKT4AsxRLSJwIJ08kbl2ygi6V8=;
+	s=arc-20240116; t=1774289753; c=relaxed/simple;
+	bh=ZbNwgKzJxYX/zMwWV8EO8YjnqlV6AIsbDklpeDd3IK0=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=X7zNRChs4aRLnB86oT/dtXrzBUXVN1vy3m0fU+jdrpGo9USeiZlQJNr2ATsAe/o4P7dxV4BuFiyiarY5tP/YV4DmCWVj6rg3p1NlX9W4k17g7ci3wnavBHkEbkNbv1L44w31fAmiEq+i/Dq3gtkYYL/lKb+FVc8krFLOTXlNC8Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=IuRO+r8V; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
+	 In-Reply-To:Content-Type; b=j9UcOBeQjAMSPraIQ9cfsk/7OCVpQbTfqStDHSKjZKGHqpmfLn9yHZN0zl12K+qhF4JDKR1E8HO3/u5BHMwv0VtMqeIwk8byrAkjwnGGJCnN1nuJUxxMR/65RCAynNATWuR4BDRJhaBMpDqQwNWwOLrObzGiMJbsvWqTQUTzr70=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=NJTIH8za; arc=none smtp.client-ip=95.215.58.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="IuRO+r8V"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-487012ce896so2400555e9.0
-        for <patches@lists.linux.dev>; Mon, 23 Mar 2026 10:58:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1774288719; x=1774893519; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=NF4TYajtTbEevb0sTKIPHFXOcUrsMVnj5VjH10bWuJ4=;
-        b=IuRO+r8V35Ar2hX/GqbI3yeNciuwTEI+xiq5hjCmhT9vdXhz42GLK5s88s2Up8fOyC
-         AO72+EFN5kcSPI5u6wsbfwReU0NHYpBC0x3f1nIz4V2mX9dSdHOJrIujVu8IgnkUCs+Z
-         TOW9Sl42hVWEef2dNx76gsPMoG9wc/5ANqUtaeMlKmiClsHljWi7rWsFQi+yjLou8x6W
-         /oWFjd4JfvKjOe91+3tSRdHD6pmuETVciB4/t3tWwvAmsVpbalrjOvsNV0iEi7JW4JAp
-         F+Ie8Ke9dmimeSIy09KRHdhFnUS5wt2kxBYgiZLmxXctld0m+rqhrdF/GTfKRnrBZ1kE
-         I8Mg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774288719; x=1774893519;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NF4TYajtTbEevb0sTKIPHFXOcUrsMVnj5VjH10bWuJ4=;
-        b=Dm9GmByy+N0NMUG6DT6Qx8b0W3AwhMXGVGPYZCw4XqcKs6X4QDOjS8Q1BGCAxh0At3
-         5MfwDce0BVy8BqSrtHrNc2iyKMsq4lP+YAwn67ily4Ol607nTmiWoaG9YWZUo/Wc/S30
-         cn8a8vJ8AGINhSq/knEEp+s2Ba9lTAjV662n/wRgZucN3XhvOAKbnsOpA15TGIcRuHp6
-         mu8saU8jh8m5+LrJH24zAWURqYO3O44KdYEbGTfUDcSrct1D1/Gvf3i/UOAl6eEYFwR5
-         LxZxLjWwQq5qMERPJDuxEKUV6FIPXMIVYgM6Su+BSgbDZP2A6W4bhL+cUqVcfaDrHk6i
-         rhfA==
-X-Gm-Message-State: AOJu0YzfousOLxTloK3XAVn2L8nScVojsmayjsWbYzVG0VBaHxlZsrlh
-	jqGeHRp98Q6Emes57gqA0vvrvDkntUq8UHGlWlqgpucQy3xmjOcuCQA=
-X-Gm-Gg: ATEYQzwg3s6NJEDf6I1Hq7UXf4bfmf2bHqZ32Ii49jW2GjYJkf3fWV87C2/7dRZaf6U
-	EOMh53rUerYd5bfnKIacps1nAz2pR+knrfVrvHoIR8XSyx/4Iw/l9QIL3wyucc3v+o3Tu1vJQxr
-	EnO8Lu2ek7r/wxvhowGrGcFMrvjni/qCtdIRSReGioyZsxuQCMJvfm8zUxT4cG3p04fee2h4A7n
-	L5h/ydX9Pf3I9A4hRZFkUhC+PR/NjjKtFOwKjj/iFV3iOrXSA1YNIA7l+rPlvSp9WORrFbIh3r5
-	/u+ngmdnFrCn0ZepB6k1Dd5F619APKp/d+GFcLfJwM++xaek2T6XBcm3Aa24t+c3dFk+AxNYIft
-	X4vdjuw/60K5D/5koV+nBKqjmw0YghSl/gTW34jM0fGTm2xZAUh7GJ8ou7P0a9wkfm8gOFbX25n
-	fIFRPWQHGVejnbsKm5008daxIo2jHCQkuKTO8PwT7JGxVrCz5S4TxYXzM2o0oPsnWDSVzgiSaj/
-	w==
-X-Received: by 2002:a05:600c:5248:b0:485:3a27:a961 with SMTP id 5b1f17b1804b1-486feb5d845mr196954565e9.0.1774288718737;
-        Mon, 23 Mar 2026 10:58:38 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2b444d.dip0.t-ipconnect.de. [91.43.68.77])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-48705135631sm220474025e9.15.2026.03.23.10.58.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 10:58:38 -0700 (PDT)
-Message-ID: <d080ccf9-6417-4144-b14b-646bec74fe1e@googlemail.com>
-Date: Mon, 23 Mar 2026 18:58:37 +0100
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="NJTIH8za"
+Message-ID: <ef531334-b26f-43b1-863e-8f6c3fea0723@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774289746;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ihCmhZcnN8v0P1Lw0vFhlpCVnAb8+HL30hkvGr682/0=;
+	b=NJTIH8zaqWzBRhj8UGPOwk0DfGYsApj23yjO7RvJeDcHxUOfsT543iduFsJbPPmskaeJlD
+	dV1dO7eJPmItyFZ0R1XozKiwI8wVwdVHnKag43VE8olHYXRdR6wAqL+bzsiJB9aqp3LRPZ
+	W9zrmxU4lY4Wa9E2tRpdH4JMIwmB3ps=
+Date: Mon, 23 Mar 2026 11:15:33 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.12 000/460] 6.12.78-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260323134526.647552166@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 094/147] RDMA/rxe: Fix double free in
+ rxe_srq_from_init
+To: Ben Hutchings <ben@decadent.org.uk>, Sasha Levin <sashal@kernel.org>,
+ patches@lists.linux.dev, Zhu Yanjun <yanjun.zhu@linux.dev>
+Cc: Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+ Leon Romanovsky <leon@kernel.org>
+References: <20260228181736.1605592-1-sashal@kernel.org>
+ <20260228181736.1605592-94-sashal@kernel.org>
+ <f7f34b5cf1ddd5a880e0ceba52670bb73f2d21e2.camel@decadent.org.uk>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Yanjun.Zhu" <yanjun.zhu@linux.dev>
+In-Reply-To: <f7f34b5cf1ddd5a880e0ceba52670bb73f2d21e2.camel@decadent.org.uk>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-
-Am 23.03.2026 um 14:39 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.12.78 release.
-> There are 460 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+X-Migadu-Flow: FLOW_OUT
 
 
-Beste Grüße,
-Peter Schneider
+On 3/23/26 5:37 AM, Ben Hutchings wrote:
+> On Sat, 2026-02-28 at 13:16 -0500, Sasha Levin wrote:
+>> From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+>>
+>> [ Upstream commit 0beefd0e15d962f497aad750b2d5e9c3570b66d1 ]
+>>
+>> In rxe_srq_from_init(), the queue pointer 'q' is assigned to
+>> 'srq->rq.queue' before copying the SRQ number to user space.
+>> If copy_to_user() fails, the function calls rxe_queue_cleanup()
+>> to free the queue, but leaves the now-invalid pointer in
+>> 'srq->rq.queue'.
+> [...]
+>> Fix this by moving 'srq->rq.queue = q' after copy_to_user.
+> But this backport to 5.10 only added an assignment to srq->rq.queue and
+> did not remove the existing assignment (on line 101), so the bug is not
+> fixed here.
+  74 int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+  75                       struct ib_srq_init_attr *init, struct 
+ib_udata *udata,
+  76                       struct rxe_create_srq_resp __user *uresp)
+  77 {
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+...
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+100
+
+101         srq->rq.queue = q;       <----This line still exists.
+102
+103         err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata, 
+q->buf,
+104                            q->buf_size, &q->ip);
+105         if (err) {
+106                 vfree(q->buf);
+107                 kfree(q);
+108                 return err;
+109         }
+110
+111         if (uresp) {
+112                 if (copy_to_user(&uresp->srq_num, &srq->srq_num,
+113                                  sizeof(uresp->srq_num))) {
+114                         rxe_queue_cleanup(q);
+115                         return -EFAULT;
+116                 }
+117         }
+
+..
+
+122         return 0;
+
+123 }
+
+Thanks a lot. I think this problem that ("RDMA/rxe: Fix double free in 
+rxe_srq_from_init") mentioned still exists.
+
+In Linux 5.10.252, maybe the following can fix this problem.
+
+"
+diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c 
+b/drivers/infiniband/sw/rxe/rxe_srq.c
+index 9d9baca26949..65bad1ec170e 100644
+--- a/drivers/infiniband/sw/rxe/rxe_srq.c
++++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+@@ -98,8 +98,6 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct 
+rxe_srq *srq,
+                 return -ENOMEM;
+         }
+
+-       srq->rq.queue = q;
+-
+         err = do_mmap_info(rxe, uresp ? &uresp->mi : NULL, udata, q->buf,
+                            q->buf_size, &q->ip);
+         if (err) {
+"
+
+Thanks. Ben.
+
+Zhu Yanjun
+
+>
+> Ben.
+>
+>> Fixes: aae0484e15f0 ("IB/rxe: avoid srq memory leak")
+>> Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+>> Link: https://patch.msgid.link/20260112015412.29458-1-jiashengjiangcool@gmail.com
+>> Reviewed-by: Zhu Yanjun <yanjun.Zhu@linux.dev>
+>> Signed-off-by: Leon Romanovsky <leon@kernel.org>
+>> Signed-off-by: Sasha Levin <sashal@kernel.org>
+>> ---
+>>   drivers/infiniband/sw/rxe/rxe_srq.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/infiniband/sw/rxe/rxe_srq.c b/drivers/infiniband/sw/rxe/rxe_srq.c
+>> index 41b0d1e11bafd..9d9baca269499 100644
+>> --- a/drivers/infiniband/sw/rxe/rxe_srq.c
+>> +++ b/drivers/infiniband/sw/rxe/rxe_srq.c
+>> @@ -116,6 +116,9 @@ int rxe_srq_from_init(struct rxe_dev *rxe, struct rxe_srq *srq,
+>>   		}
+>>   	}
+>>   
+>> +	srq->rq.queue = q;
+>> +	init->attr.max_wr = srq->rq.max_wr;
+>> +
+>>   	return 0;
+>>   }
+>>   
