@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76469245020;
-	Mon, 23 Mar 2026 15:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A89724CEEA;
+	Mon, 23 Mar 2026 15:01:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278075; cv=none; b=mZoXN7+0J8VM/wxCO9huBHJloCwqZ0tDUsqleNf6HcNdTDdV8J8wZ6yFlSaqFKi7zCN2iXcEGTfMJf6SljlgTy61jfBrmQ94C9iVwssESS+nrAl45rhDMIG5sm1e/NEG5gkFidXMVEZjqYFH0fuOtT2MUok1BHkkYr8PQjgnqd4=
+	t=1774278078; cv=none; b=npH6xhqdv8b3Hbxy+ZSH0MU0P25azj6WjujUUV16jHGwW3G1iJEEq3UB+x4PPkIphogdVFSrWxpKa4tCAE/4Dj65pFVcDITJfXEZptqb8VgW6dhgscfm3vyEwm8CEBk8kaw2yk5i1zeSGaFG0J/g6X2k+/qj75y4haE3nJueEBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278075; c=relaxed/simple;
-	bh=KKcYecnD1EOWxiWnyJG8a97RPgwlgJdOygm0iIkgxBk=;
+	s=arc-20240116; t=1774278078; c=relaxed/simple;
+	bh=dLsF34VDWf57mf+1PHWCB2Dcq4Wqx/gFPqr0yuIJB+c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jJapCJ40+6Ok62wcGzJuNyvtHvQWpE11Amfg6gPn0Whh+t2ndJbtoOQkdk4qRTH/Dyj6gaC09TRo5aP9J1LC0ODGnVBw6zPLdXOg/WTSAyBnAv3G2OVcVSokpot5f7guT/MYJFkrSK2RoVO3ay0IldfnqI2Lu2JSh+pulwTka3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bkSCFr2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IWc0Ww0W3agFVRbEE4IOfvxWQlgHqgLughjqxHqaSQIHWVa0wS9gSztxBkC2SZD9lUJzgLh4ahX/GSI9hG1u3RJAW4BPagnaejB76wGVqaR/laWdBoWU0ZGshGy2dlIrXWPdo9fyC2Gj2Nk3w9S1gU7V36YVmwngGo10f5pxzeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nywCgDyG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bkSCFr2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B3CC4CEF7;
-	Mon, 23 Mar 2026 15:01:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nywCgDyG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AE3C4CEF7;
+	Mon, 23 Mar 2026 15:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278075;
-	bh=KKcYecnD1EOWxiWnyJG8a97RPgwlgJdOygm0iIkgxBk=;
+	s=korg; t=1774278078;
+	bh=dLsF34VDWf57mf+1PHWCB2Dcq4Wqx/gFPqr0yuIJB+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkSCFr2tUysdctuXVp2hAbd0uFauUB/ZN7OXWIZhPt+HQaJ2yeEBMKTOxyg72o1zF
-	 JA4p6Wyz9Y1fC73ZSryoy/gZPL1ysbbznmMQcvNSfZq0HecBCpTkCCZDIj9t/gpY2c
-	 oZyr4EcjWCEgEIU/93mK1UDESV5Ev0URh3Z2mbHk=
+	b=nywCgDyG+ncWgPlWCBHL0diS2lbdlkNbNKijqvhJP51PtArZY+YN+D4Uc+ypXs/QE
+	 +WcjDlf4RrXztuL9m64BIEHBdnnomz6GO7SFli4I1maVe/vQGSqpYsfD+FsFkeMUli
+	 FF7bfDKbqwv2dbkQHVopqLoiO9ENHjvnbbWFgKlw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Georgia Garcia <georgia.garcia@canonical.com>,
 	Cengiz Can <cengiz.can@canonical.com>,
 	John Johansen <john.johansen@canonical.com>
-Subject: [PATCH 6.6 194/567] apparmor: fix unprivileged local user can do privileged policy management
-Date: Mon, 23 Mar 2026 14:41:54 +0100
-Message-ID: <20260323134538.651108635@linuxfoundation.org>
+Subject: [PATCH 6.6 195/567] apparmor: fix differential encoding verification
+Date: Mon, 23 Mar 2026 14:41:55 +0100
+Message-ID: <20260323134538.673166329@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,31 +55,30 @@ Content-Transfer-Encoding: 8bit
 
 From: John Johansen <john.johansen@canonical.com>
 
-commit 6601e13e82841879406bf9f369032656f441a425 upstream.
+commit 39440b137546a3aa383cfdabc605fb73811b6093 upstream.
 
-An unprivileged local user can load, replace, and remove profiles by
-opening the apparmorfs interfaces, via a confused deputy attack, by
-passing the opened fd to a privileged process, and getting the
-privileged process to write to the interface.
+Differential encoding allows loops to be created if it is abused. To
+prevent this the unpack should verify that a diff-encode chain
+terminates.
 
-This does require a privileged target that can be manipulated to do
-the write for the unprivileged process, but once such access is
-achieved full policy management is possible and all the possible
-implications that implies: removing confinement, DoS of system or
-target applications by denying all execution, by-passing the
-unprivileged user namespace restriction, to exploiting kernel bugs for
-a local privilege escalation.
+Unfortunately the differential encode verification had two bugs.
 
-The policy management interface can not have its permissions simply
-changed from 0666 to 0600 because non-root processes need to be able
-to load policy to different policy namespaces.
+1. it conflated states that had gone through check and already been
+   marked, with states that were currently being checked and marked.
+   This means that loops in the current chain being verified are treated
+   as a chain that has already been verified.
 
-Instead ensure the task writing the interface has privileges that
-are a subset of the task that opened the interface. This is already
-done via policy for confined processes, but unconfined can delegate
-access to the opened fd, by-passing the usual policy check.
+2. the order bailout on already checked states compared current chain
+   check iterators j,k instead of using the outer loop iterator i.
+   Meaning a step backwards in states in the current chain verification
+   was being mistaken for moving to an already verified state.
 
-Fixes: b7fd2c0340eac ("apparmor: add per policy ns .load, .replace, .remove interface files")
+Move to a double mark scheme where already verified states get a
+different mark, than the current chain being kept. This enables us
+to also drop the backwards verification check that was the cause of
+the second error as any already verified state is already marked.
+
+Fixes: 031dcc8f4e84 ("apparmor: dfa add support for state differential encoding")
 Reported-by: Qualys Security Advisory <qsa@qualys.com>
 Tested-by: Salvatore Bonaccorso <carnil@debian.org>
 Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
@@ -87,148 +86,57 @@ Reviewed-by: Cengiz Can <cengiz.can@canonical.com>
 Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/apparmor/apparmorfs.c     |   16 +++++++++-------
- security/apparmor/include/policy.h |    2 +-
- security/apparmor/policy.c         |   34 +++++++++++++++++++++++++++++++++-
- 3 files changed, 43 insertions(+), 9 deletions(-)
+ security/apparmor/include/match.h |    1 +
+ security/apparmor/match.c         |   23 +++++++++++++++++++----
+ 2 files changed, 20 insertions(+), 4 deletions(-)
 
---- a/security/apparmor/apparmorfs.c
-+++ b/security/apparmor/apparmorfs.c
-@@ -412,7 +412,8 @@ static struct aa_loaddata *aa_simple_wri
- }
+--- a/security/apparmor/include/match.h
++++ b/security/apparmor/include/match.h
+@@ -181,6 +181,7 @@ static inline void aa_put_dfa(struct aa_
+ #define MATCH_FLAG_DIFF_ENCODE 0x80000000
+ #define MARK_DIFF_ENCODE 0x40000000
+ #define MATCH_FLAG_OOB_TRANSITION 0x20000000
++#define MARK_DIFF_ENCODE_VERIFIED 0x10000000
+ #define MATCH_FLAGS_MASK 0xff000000
+ #define MATCH_FLAGS_VALID (MATCH_FLAG_DIFF_ENCODE | MATCH_FLAG_OOB_TRANSITION)
+ #define MATCH_FLAGS_INVALID (MATCH_FLAGS_MASK & ~MATCH_FLAGS_VALID)
+--- a/security/apparmor/match.c
++++ b/security/apparmor/match.c
+@@ -202,16 +202,31 @@ static int verify_dfa(struct aa_dfa *dfa
+ 		size_t j, k;
  
- static ssize_t policy_update(u32 mask, const char __user *buf, size_t size,
--			     loff_t *pos, struct aa_ns *ns)
-+			     loff_t *pos, struct aa_ns *ns,
-+			     const struct cred *ocred)
- {
- 	struct aa_loaddata *data;
- 	struct aa_label *label;
-@@ -423,7 +424,7 @@ static ssize_t policy_update(u32 mask, c
- 	/* high level check about policy management - fine grained in
- 	 * below after unpack
- 	 */
--	error = aa_may_manage_policy(current_cred(), label, ns, mask);
-+	error = aa_may_manage_policy(current_cred(), label, ns, ocred, mask);
- 	if (error)
- 		goto end_section;
+ 		for (j = i;
+-		     (BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE) &&
+-		     !(BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE);
++		     ((BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE) &&
++		      !(BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE_VERIFIED));
+ 		     j = k) {
++			if (BASE_TABLE(dfa)[j] & MARK_DIFF_ENCODE)
++				/* loop in current chain */
++				goto out;
+ 			k = DEFAULT_TABLE(dfa)[j];
+ 			if (j == k)
++				/* self loop */
+ 				goto out;
+-			if (k < j)
+-				break;		/* already verified */
+ 			BASE_TABLE(dfa)[j] |= MARK_DIFF_ENCODE;
+ 		}
++		/* move mark to verified */
++		for (j = i;
++		     (BASE_TABLE(dfa)[j] & MATCH_FLAG_DIFF_ENCODE);
++		     j = k) {
++			k = DEFAULT_TABLE(dfa)[j];
++			if (j < i)
++				/* jumps to state/chain that has been
++				 * verified
++				 */
++				break;
++			BASE_TABLE(dfa)[j] &= ~MARK_DIFF_ENCODE;
++			BASE_TABLE(dfa)[j] |= MARK_DIFF_ENCODE_VERIFIED;
++		}
+ 	}
+ 	error = 0;
  
-@@ -444,7 +445,8 @@ static ssize_t profile_load(struct file
- 			    loff_t *pos)
- {
- 	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
--	int error = policy_update(AA_MAY_LOAD_POLICY, buf, size, pos, ns);
-+	int error = policy_update(AA_MAY_LOAD_POLICY, buf, size, pos, ns,
-+				  f->f_cred);
- 
- 	aa_put_ns(ns);
- 
-@@ -462,7 +464,7 @@ static ssize_t profile_replace(struct fi
- {
- 	struct aa_ns *ns = aa_get_ns(f->f_inode->i_private);
- 	int error = policy_update(AA_MAY_LOAD_POLICY | AA_MAY_REPLACE_POLICY,
--				  buf, size, pos, ns);
-+				  buf, size, pos, ns, f->f_cred);
- 	aa_put_ns(ns);
- 
- 	return error;
-@@ -487,7 +489,7 @@ static ssize_t profile_remove(struct fil
- 	 * below after unpack
- 	 */
- 	error = aa_may_manage_policy(current_cred(), label, ns,
--				     AA_MAY_REMOVE_POLICY);
-+				     f->f_cred, AA_MAY_REMOVE_POLICY);
- 	if (error)
- 		goto out;
- 
-@@ -1819,7 +1821,7 @@ static int ns_mkdir_op(struct mnt_idmap
- 	int error;
- 
- 	label = begin_current_label_crit_section();
--	error = aa_may_manage_policy(current_cred(), label, NULL,
-+	error = aa_may_manage_policy(current_cred(), label, NULL, NULL,
- 				     AA_MAY_LOAD_POLICY);
- 	end_current_label_crit_section(label);
- 	if (error)
-@@ -1869,7 +1871,7 @@ static int ns_rmdir_op(struct inode *dir
- 	int error;
- 
- 	label = begin_current_label_crit_section();
--	error = aa_may_manage_policy(current_cred(), label, NULL,
-+	error = aa_may_manage_policy(current_cred(), label, NULL, NULL,
- 				     AA_MAY_LOAD_POLICY);
- 	end_current_label_crit_section(label);
- 	if (error)
---- a/security/apparmor/include/policy.h
-+++ b/security/apparmor/include/policy.h
-@@ -401,7 +401,7 @@ bool aa_policy_admin_capable(const struc
- 			     struct aa_label *label, struct aa_ns *ns);
- int aa_may_manage_policy(const struct cred *subj_cred,
- 			 struct aa_label *label, struct aa_ns *ns,
--			 u32 mask);
-+			 const struct cred *ocred, u32 mask);
- bool aa_current_policy_view_capable(struct aa_ns *ns);
- bool aa_current_policy_admin_capable(struct aa_ns *ns);
- 
---- a/security/apparmor/policy.c
-+++ b/security/apparmor/policy.c
-@@ -891,17 +891,44 @@ bool aa_current_policy_admin_capable(str
- 	return res;
- }
- 
-+static bool is_subset_of_obj_privilege(const struct cred *cred,
-+				       struct aa_label *label,
-+				       const struct cred *ocred)
-+{
-+	if (cred == ocred)
-+		return true;
-+
-+	if (!aa_label_is_subset(label, cred_label(ocred)))
-+		return false;
-+	/* don't allow crossing userns for now */
-+	if (cred->user_ns != ocred->user_ns)
-+		return false;
-+	if (!cap_issubset(cred->cap_inheritable, ocred->cap_inheritable))
-+		return false;
-+	if (!cap_issubset(cred->cap_permitted, ocred->cap_permitted))
-+		return false;
-+	if (!cap_issubset(cred->cap_effective, ocred->cap_effective))
-+		return false;
-+	if (!cap_issubset(cred->cap_bset, ocred->cap_bset))
-+		return false;
-+	if (!cap_issubset(cred->cap_ambient, ocred->cap_ambient))
-+		return false;
-+	return true;
-+}
-+
-+
- /**
-  * aa_may_manage_policy - can the current task manage policy
-  * @subj_cred; subjects cred
-  * @label: label to check if it can manage policy
-  * @ns: namespace being managed by @label (may be NULL if @label's ns)
-+ * @ocred: object cred if request is coming from an open object
-  * @mask: contains the policy manipulation operation being done
-  *
-  * Returns: 0 if the task is allowed to manipulate policy else error
-  */
- int aa_may_manage_policy(const struct cred *subj_cred, struct aa_label *label,
--			 struct aa_ns *ns, u32 mask)
-+			 struct aa_ns *ns, const struct cred *ocred, u32 mask)
- {
- 	const char *op;
- 
-@@ -917,6 +944,11 @@ int aa_may_manage_policy(const struct cr
- 		return audit_policy(label, op, NULL, NULL, "policy_locked",
- 				    -EACCES);
- 
-+	if (ocred && !is_subset_of_obj_privilege(subj_cred, label, ocred))
-+		return audit_policy(label, op, NULL, NULL,
-+				    "not privileged for target profile",
-+				    -EACCES);
-+
- 	if (!aa_policy_admin_capable(subj_cred, label, ns))
- 		return audit_policy(label, op, NULL, NULL, "not policy admin",
- 				    -EACCES);
 
 
