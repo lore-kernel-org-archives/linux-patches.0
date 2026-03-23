@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6BE242D9D;
-	Mon, 23 Mar 2026 14:49:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD69F38CFE1;
+	Mon, 23 Mar 2026 14:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277355; cv=none; b=Wbr19kaaYo0CfuYkcN9SdRXxJH0ZdjAiz4jOvui2ld18jRCtWYTaaBFtDT5PtnHgSmxJNmZS1j0Oz7p61pGfzngIPwhnJUM1lnhCx4Dl77bb1jq3P3hT4pN+rNwOo9xUqNvxoVJ40zeNBarXg6tjiVH857yqUJ9dy0QBfvQe3gk=
+	t=1774277357; cv=none; b=WZPSaRP7bgCl0Nt2prM6dJyQyAtwjZmULrXvrAi6lO/qWuMftlfb77MGOgdweKHcOvExfxT8aFl9ZQQw1RJ0T5GBaEN7o5KGueB3ojblu2dGDmejzLlNG9Vdy7tA/561TOZjhoxItVUrF1ikOz2sFcCuaRv+K55yZBg5Xe3Pp3U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277355; c=relaxed/simple;
-	bh=Z/HE2h61CNGjyY4687FSitJ9MS37AhaoVQM0skkZLXs=;
+	s=arc-20240116; t=1774277357; c=relaxed/simple;
+	bh=Qad2mGiK7P/Fxt2pA8iDuyOwMOO949HpR+p9LZxy6tc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aEFP4oVG/x/OU1efFkq0hJe9X9JsjYB5MZY8CDr5DbZlq78mq8OrYFWUrI9+kCM7BGfz1I4WOrO0BH+meCb14o5ZXqN8KBRFVHLI0UWqG7yghBZTSLN700LpJOOzxXHMqHHKuWs6pR7rf7lH+2IHz6yT1kKFsnuMyzBm3zwQkfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mQCWA1f7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jgEOj0yZjNqupR/1el7gf5UqxFrvGSwjvLs5mrNyTXa1fmyIIGBnq03Te/Sr2vMDPjIQbMIiIfvBrtcmWg8dnen3Ac4z0ua4bgVq87k2pbhus6yzh4KhzYUXsFocte/PMMxp36JaKib1u41ot/Pd4mOyHG5ILsVAsKSiSSvL4ug=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lrsc3f9H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mQCWA1f7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21B75C4CEF7;
-	Mon, 23 Mar 2026 14:49:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lrsc3f9H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE7E3C2BC9E;
+	Mon, 23 Mar 2026 14:49:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277354;
-	bh=Z/HE2h61CNGjyY4687FSitJ9MS37AhaoVQM0skkZLXs=;
+	s=korg; t=1774277357;
+	bh=Qad2mGiK7P/Fxt2pA8iDuyOwMOO949HpR+p9LZxy6tc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQCWA1f7CTjYgbRW2+gDgCNJeistIW9v0kNjJBVhoOakFWjogfi5K4QoGfmxNH5sq
-	 8niBysSMub6SPs+0xyNdAmx4MLtK+8LIb9pBmQgEOuzpSKb+BkDrTvnypwG86QX2HJ
-	 EsNMrxykmOImzBC73aUa4b8BVGK6CNIKp4+Rf+Q0=
+	b=lrsc3f9HfRU13cztk/th2p2wumkcO/TX972z78wt3f+c768qPEtqwV6uy7BASgNuy
+	 hPN6dPjBtz8gKKlY8cQokBGXoRlw8W6l3aVdaSIWAr7sXQVCiaog3Wh3OatKx3Ok5o
+	 Z9ZsfGb8/O4W8j6gnTeXuXnQuszATUzyXGqkT7QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Eggers <ceggers@arri.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 408/460] net: airoha: read default PSE reserved pages value before updating
-Date: Mon, 23 Mar 2026 14:46:44 +0100
-Message-ID: <20260323134536.582249397@linuxfoundation.org>
+Subject: [PATCH 6.12 382/460] Bluetooth: SMP: make SM/PER/KDU/BI-04-C happy
+Date: Mon, 23 Mar 2026 14:46:18 +0100
+Message-ID: <20260323134535.957072043@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,60 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit 1f3e7ff4f296af1f4350f457d5bd82bc825e645a ]
+[ Upstream commit 0e4d4dcc1a6e82cc6f9abf32193558efa7e1613d ]
 
-Store the default value for the number of PSE reserved pages in orig_val
-at the beginning of airoha_fe_set_pse_oq_rsv routine, before updating it
-with airoha_fe_set_pse_queue_rsv_pages().
-Introduce airoha_fe_get_pse_all_rsv utility routine.
+The last test step ("Test with Invalid public key X and Y, all set to
+0") expects to get an "DHKEY check failed" instead of "unspecified".
 
-Introduced by commit 23020f049327 ("net: airoha: Introduce ethernet support
-for EN7581 SoC")
-
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20241001-airoha-eth-pse-fix-v2-1-9a56cdffd074@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: d4a533ad249e ("net: airoha: Remove airoha_dev_stop() in airoha_remove()")
+Fixes: 6d19628f539f ("Bluetooth: SMP: Fail if remote and local public keys are identical")
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/airoha_eth.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ net/bluetooth/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mediatek/airoha_eth.c b/drivers/net/ethernet/mediatek/airoha_eth.c
-index 20cf7ba9d7508..6aa764b542eb5 100644
---- a/drivers/net/ethernet/mediatek/airoha_eth.c
-+++ b/drivers/net/ethernet/mediatek/airoha_eth.c
-@@ -1116,17 +1116,23 @@ static void airoha_fe_set_pse_queue_rsv_pages(struct airoha_eth *eth,
- 		      PSE_CFG_WR_EN_MASK | PSE_CFG_OQRSV_SEL_MASK);
- }
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 3a33fd06e6a4c..204c5fe3a8d08 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2743,7 +2743,7 @@ static int smp_cmd_public_key(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (!test_bit(SMP_FLAG_DEBUG_KEY, &smp->flags) &&
+ 	    !crypto_memneq(key, smp->local_pk, 64)) {
+ 		bt_dev_err(hdev, "Remote and local public keys are identical");
+-		return SMP_UNSPECIFIED;
++		return SMP_DHKEY_CHECK_FAILED;
+ 	}
  
-+static u32 airoha_fe_get_pse_all_rsv(struct airoha_eth *eth)
-+{
-+	u32 val = airoha_fe_rr(eth, REG_FE_PSE_BUF_SET);
-+
-+	return FIELD_GET(PSE_ALLRSV_MASK, val);
-+}
-+
- static int airoha_fe_set_pse_oq_rsv(struct airoha_eth *eth,
- 				    u32 port, u32 queue, u32 val)
- {
--	u32 orig_val, tmp, all_rsv, fq_limit;
-+	u32 orig_val = airoha_fe_get_pse_queue_rsv_pages(eth, port, queue);
-+	u32 tmp, all_rsv, fq_limit;
- 
- 	airoha_fe_set_pse_queue_rsv_pages(eth, port, queue, val);
- 
- 	/* modify all rsv */
--	orig_val = airoha_fe_get_pse_queue_rsv_pages(eth, port, queue);
--	tmp = airoha_fe_rr(eth, REG_FE_PSE_BUF_SET);
--	all_rsv = FIELD_GET(PSE_ALLRSV_MASK, tmp);
-+	all_rsv = airoha_fe_get_pse_all_rsv(eth);
- 	all_rsv += (val - orig_val);
- 	airoha_fe_rmw(eth, REG_FE_PSE_BUF_SET, PSE_ALLRSV_MASK,
- 		      FIELD_PREP(PSE_ALLRSV_MASK, all_rsv));
+ 	memcpy(smp->remote_pk, key, 64);
 -- 
 2.51.0
 
