@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FB83AF663;
-	Mon, 23 Mar 2026 14:42:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3533B19AF;
+	Mon, 23 Mar 2026 14:42:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276927; cv=none; b=AzXhGrzNMzflmsEA8B/jffLdPqz2qyrCuPGVTJR7cRX9xdfCNtTDhkaY2Vyveicmr0crCnmuz4/AxJXdxUP8YWldOcdF2ykjKv80u9otd1+yAJHtulSMli11wFWIltDUR0EexITKsDxBXte6iZSddf+0Ul1YUgEpMgsD7IhYYXQ=
+	t=1774276929; cv=none; b=XD7TyYS4SzQhmSKIaEbJkRWQt1FO3yfruoJpDlRe+MLg8JwRGomxnFnqQdCrXoHco4J/M+rGc2HIfkJ6VYV62OX1INsUGmVKBaAvKuK8HeAES57CgSttdlXFElb4os2Cxg2nJb8p1ATsKQfj0wqW7zu1dDu5ieop7eJAGHpkUCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276927; c=relaxed/simple;
-	bh=kc4iVDMl1ba5S55d5imYqoREwP19WiJoixE12LTw2Nw=;
+	s=arc-20240116; t=1774276929; c=relaxed/simple;
+	bh=IhA97Pj7W3h5bsOZrW27YYZztvksyLk5S8/k1rjHuSo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=uPlR0uL84omZbGwN7J91nU4Ccj4W/aZBXJrfrkS32gaw33oLvp6x9+kPhVlxmlRRYYfw42mBGWbygr/r3013mCoxkhgRVjZ11dAHP4vy5ry27t3Ds1b8s0bF3gZuCBnLhAat4sCQkuVNBK7NDbKj5p2Die2ylpiRhqiFuO889fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WLM8ZjxS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kDXBVW6Q+yah778Dl25pMe3Wlk0sdf3s9tAKmIV86bIY4lZ/tkzNMch4edaF/kjLt9Lj+i3A9tE6dr/Y6yHjqqu556BJSHpERCc5N/CnMA9+uDM7Li1i1TBuyRzZshrTYW8EzI1XUtbpV9VPG5B2vfkGeHX1BF9ao4QAtu+BuvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka0dAq4F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WLM8ZjxS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B31C4CEF7;
-	Mon, 23 Mar 2026 14:42:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka0dAq4F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A4FC2BCB1;
+	Mon, 23 Mar 2026 14:42:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276926;
-	bh=kc4iVDMl1ba5S55d5imYqoREwP19WiJoixE12LTw2Nw=;
+	s=korg; t=1774276929;
+	bh=IhA97Pj7W3h5bsOZrW27YYZztvksyLk5S8/k1rjHuSo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WLM8ZjxSGDO5e2ADP5drUY+9DOXhFrBxNEcN7oMNvLQOwBgPndH5bcsKgPzNL6zZl
-	 fJbsyIsypa4wgSxQo0WXRStDOYcUZnqyI608sVVF+Iio1qmV4LMjSaZi+iWv+s/kzo
-	 7prdJay8gdi9HFQBxRO1Y8RhdEXgMz22He4Ow3pA=
+	b=Ka0dAq4FmoFNpGQVp8OcFXm/zNCa8iDe1mWs2fobuIqeAxsKWdOk8ZoVUc9DZp8Ms
+	 kNPfBbmU7eWC8MrX7cDzm7pui+3DXe9owc2xVwYBjD9/4mRcRs1ZL/evF2n5fI1mK+
+	 Zr+kcWIl9idthFOU+QPBxR+TzXvIsH3sXiFtGdyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Shengming Hu <hu.shengming@zte.com.cn>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 240/460] can: gs_usb: gs_can_open(): always configure bitrates before starting device
-Date: Mon, 23 Mar 2026 14:43:56 +0100
-Message-ID: <20260323134532.404921345@linuxfoundation.org>
+Subject: [PATCH 6.12 258/460] fgraph: Fix thresh_return clear per-task notrace
+Date: Mon, 23 Mar 2026 14:44:14 +0100
+Message-ID: <20260323134532.825994386@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,98 +52,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Kleine-Budde <mkl@pengutronix.de>
+From: Shengming Hu <hu.shengming@zte.com.cn>
 
-[ Upstream commit 2df6162785f31f1bbb598cfc3b08e4efc88f80b6 ]
+[ Upstream commit 6ca8379b5d36e22b04e6315c3e49a6083377c862 ]
 
-So far the driver populated the struct can_priv::do_set_bittiming() and
-struct can_priv::fd::do_set_data_bittiming() callbacks.
+When tracing_thresh is enabled, function graph tracing uses
+trace_graph_thresh_return() as the return handler. Unlike
+trace_graph_return(), it did not clear the per-task TRACE_GRAPH_NOTRACE
+flag set by the entry handler for set_graph_notrace addresses. This could
+leave the task permanently in "notrace" state and effectively disable
+function graph tracing for that task.
 
-Before bringing up the interface, user space has to configure the bitrates.
-With these callbacks the configuration is directly forwarded into the CAN
-hardware. Then the interface can be brought up.
-
-An ifdown-ifup cycle (without changing the bit rates) doesn't re-configure
-the bitrates in the CAN hardware. This leads to a problem with the
-CANable-2.5 [1] firmware, which resets the configured bit rates during
-ifdown.
-
-To fix the problem remove both bit timing callbacks and always configure
-the bitrates in the struct net_device_ops::ndo_open() callback.
-
-[1] https://github.com/Elmue/CANable-2.5-firmware-Slcan-and-Candlelight
+Mirror trace_graph_return()'s per-task notrace handling by clearing
+TRACE_GRAPH_NOTRACE and returning early when set.
 
 Cc: stable@vger.kernel.org
-Fixes: d08e973a77d1 ("can: gs_usb: Added support for the GS_USB CAN devices")
-Link: https://patch.msgid.link/20260219-gs_usb-always-configure-bitrates-v2-1-671f8ba5b0a5@pengutronix.de
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-[ adapted the `.fd` sub-struct ]
+Link: https://patch.msgid.link/20260221113007819YgrZsMGABff4Rc-O_fZxL@zte.com.cn
+Fixes: b84214890a9bc ("function_graph: Move graph notrace bit to shadow stack global var")
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/gs_usb.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ kernel/trace/trace_functions_graph.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/net/can/usb/gs_usb.c
-+++ b/drivers/net/can/usb/gs_usb.c
-@@ -769,9 +769,8 @@ device_detach:
- 	}
- }
- 
--static int gs_usb_set_bittiming(struct net_device *netdev)
-+static int gs_usb_set_bittiming(struct gs_can *dev)
+--- a/kernel/trace/trace_functions_graph.c
++++ b/kernel/trace/trace_functions_graph.c
+@@ -271,10 +271,12 @@ void trace_graph_return(struct ftrace_gr
+ static void trace_graph_thresh_return(struct ftrace_graph_ret *trace,
+ 				      struct fgraph_ops *gops)
  {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -788,9 +787,8 @@ static int gs_usb_set_bittiming(struct n
- 				    GFP_KERNEL);
- }
- 
--static int gs_usb_set_data_bittiming(struct net_device *netdev)
-+static int gs_usb_set_data_bittiming(struct gs_can *dev)
- {
--	struct gs_can *dev = netdev_priv(netdev);
- 	struct can_bittiming *bt = &dev->can.data_bittiming;
- 	struct gs_device_bittiming dbt = {
- 		.prop_seg = cpu_to_le32(bt->prop_seg),
-@@ -1054,6 +1052,20 @@ static int gs_can_open(struct net_device
- 	if (dev->feature & GS_CAN_FEATURE_HW_TIMESTAMP)
- 		flags |= GS_CAN_MODE_HW_TIMESTAMP;
- 
-+	rc = gs_usb_set_bittiming(dev);
-+	if (rc) {
-+		netdev_err(netdev, "failed to set bittiming: %pe\n", ERR_PTR(rc));
-+		goto out_usb_kill_anchored_urbs;
-+	}
++	unsigned long *task_var = fgraph_get_task_var(gops);
 +
-+	if (ctrlmode & CAN_CTRLMODE_FD) {
-+		rc = gs_usb_set_data_bittiming(dev);
-+		if (rc) {
-+			netdev_err(netdev, "failed to set data bittiming: %pe\n", ERR_PTR(rc));
-+			goto out_usb_kill_anchored_urbs;
-+		}
-+	}
-+
- 	/* finally start device */
- 	dev->can.state = CAN_STATE_ERROR_ACTIVE;
- 	dm.flags = cpu_to_le32(flags);
-@@ -1354,7 +1366,6 @@ static struct gs_can *gs_make_candev(uns
- 	dev->can.state = CAN_STATE_STOPPED;
- 	dev->can.clock.freq = le32_to_cpu(bt_const.fclk_can);
- 	dev->can.bittiming_const = &dev->bt_const;
--	dev->can.do_set_bittiming = gs_usb_set_bittiming;
+ 	ftrace_graph_addr_finish(gops, trace);
  
- 	dev->can.ctrlmode_supported = CAN_CTRLMODE_CC_LEN8_DLC;
- 
-@@ -1378,7 +1389,6 @@ static struct gs_can *gs_make_candev(uns
- 		 * GS_CAN_FEATURE_BT_CONST_EXT is set.
- 		 */
- 		dev->can.data_bittiming_const = &dev->bt_const;
--		dev->can.do_set_data_bittiming = gs_usb_set_data_bittiming;
+-	if (trace_recursion_test(TRACE_GRAPH_NOTRACE_BIT)) {
+-		trace_recursion_clear(TRACE_GRAPH_NOTRACE_BIT);
++	if (*task_var & TRACE_GRAPH_NOTRACE) {
++		*task_var &= ~TRACE_GRAPH_NOTRACE;
+ 		return;
  	}
  
- 	if (feature & GS_CAN_FEATURE_TERMINATION) {
 
 
