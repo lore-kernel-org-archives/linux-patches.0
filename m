@@ -1,36 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E03593BD240;
-	Mon, 23 Mar 2026 16:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FED33B95FD;
+	Mon, 23 Mar 2026 16:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282853; cv=none; b=UZqg9zo0ZT/iz8E1VJaEr6/w1iq8dEbtkKBABZbP6GAXobvcqJmTLpF51k9bCV6oUjzF4mY4JML1q+vnovpxiMJfBCjE+/EjZZmZL1hepf3DknjxOgfndr97EC7Cau8/A7wOiIT5jb/Mig7Nx4JPJPW822WPs3WdmD0kIyCtEAw=
+	t=1774282855; cv=none; b=ohGOR6+YY298BzhgOl7JJLrmYeT+6bMS5fiSpC8YK5R+KnM4sPa9aD67z6oAsYoL/+vqM23R4tZQIrk2kEBzmzgCmzNAm2QwlfdYbMT4XhPej1/XEfI7cuOFUR3zDGjWCFMMlgFzBTcA08nSsmnCyByar0P2nyIIuq8DsVcfNuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282853; c=relaxed/simple;
-	bh=a0WlojgjZjYdwZTEygtY3sOItUkuwFS2osDvmfcX+50=;
+	s=arc-20240116; t=1774282855; c=relaxed/simple;
+	bh=2aNo8iab0AZNjAX5zhJbWqrkeym7fid7QGNcTxdjagM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KltudXepKYEmhzyiYITB065eZx1NwPs7I5MZCN+kkNJA6quzfKzV0/ZsWt7lE32SAjsR0RvDpnGvzwevFcgprVIiRWmrqllalRkGGc5tAG7uxU/kl8CucILd4qmeofaEGO2QY3C2mY1wnUcPDqlqjnZC+vXfFJPo/IZLMF3UulE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+xRAw4L; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PTFMrWosMTi3mOQR1IJ29K/ZpJXkmme0VLb35u1Qu+z23lqvOjzgy4uSlJ6wPY0sW3nDOqXRs9z0lb3nP7coPux+Bys+q7eAOV9h7X2UoGnXHXNxjdV9BvxYk8AA2lo1bjVAjcAAvtoFhR55xDwdP79ppKUfoOjyZ0C68Ycfr4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UmSHRUg7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+xRAw4L"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FD47C4CEF7;
-	Mon, 23 Mar 2026 16:20:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UmSHRUg7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2178CC4CEF7;
+	Mon, 23 Mar 2026 16:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282852;
-	bh=a0WlojgjZjYdwZTEygtY3sOItUkuwFS2osDvmfcX+50=;
+	s=korg; t=1774282855;
+	bh=2aNo8iab0AZNjAX5zhJbWqrkeym7fid7QGNcTxdjagM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+xRAw4Lu755PjWNsdw9CAHB/BpJ9JoQBUh+PK1Nwq8VKup6OUtSZO2xGPweHDAIg
-	 SOyGzlMMiUUnFK2doa8EZtnujRv/rvNb8QkOdPdfpF761CYeOBYAPG1+QJblx1bZ6Z
-	 o4FGL22f1DNlAoHqq+55TCFDtKyef9xqEreNjkaM=
+	b=UmSHRUg7sR/io572kcoics0SkHa4pzfu54olUsr9/Wdb5kMuClo8AYti9p+OUBTdV
+	 7Ze0nKCP9cxMPOo5Hs5wEU4z7jStPvTAgtNdTfoxnku4d8gG1D63DqU07DR+6j050k
+	 A8xS40wvbE1eFb9L1SKRIYFciJ5jrq4LqJ1X2MZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 309/481] drm/amdgpu: apply state adjust rules to some additional HAINAN vairants
-Date: Mon, 23 Mar 2026 14:44:51 +0100
-Message-ID: <20260323134532.637643194@linuxfoundation.org>
+	Jane Chu <jane.chu@oracle.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Oscar Salvador <osalvador@suse.de>,
+	David Hildenbrand <david@redhat.com>,
+	Jann Horn <jannh@google.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Muchun Song <muchun.song@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	"David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PATCH 6.1 310/481] mm/hugetlb: fix copy_hugetlb_page_range() to use ->pt_share_count
+Date: Mon, 23 Mar 2026 14:44:52 +0100
+Message-ID: <20260323134532.660068952@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -49,35 +57,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jane Chu <jane.chu@oracle.com>
 
-commit 9787f7da186ee8143b7b6d914cfa0b6e7fee2648 upstream.
+commit 14967a9c7d247841b0312c48dcf8cd29e55a4cc8 upstream.
 
-They need a similar workaround.
+commit 59d9094df3d79 ("mm: hugetlb: independent PMD page table shared
+count") introduced ->pt_share_count dedicated to hugetlb PMD share count
+tracking, but omitted fixing copy_hugetlb_page_range(), leaving the
+function relying on page_count() for tracking that no longer works.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1839
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 0de31d92a173d3d94f28051b0b80a6c98913aed4)
-Cc: stable@vger.kernel.org
+When lazy page table copy for hugetlb is disabled, that is, revert commit
+bcd51a3c679d ("hugetlb: lazy page table copies in fork()") fork()'ing with
+hugetlb PMD sharing quickly lockup -
+
+[  239.446559] watchdog: BUG: soft lockup - CPU#75 stuck for 27s!
+[  239.446611] RIP: 0010:native_queued_spin_lock_slowpath+0x7e/0x2e0
+[  239.446631] Call Trace:
+[  239.446633]  <TASK>
+[  239.446636]  _raw_spin_lock+0x3f/0x60
+[  239.446639]  copy_hugetlb_page_range+0x258/0xb50
+[  239.446645]  copy_page_range+0x22b/0x2c0
+[  239.446651]  dup_mmap+0x3e2/0x770
+[  239.446654]  dup_mm.constprop.0+0x5e/0x230
+[  239.446657]  copy_process+0xd17/0x1760
+[  239.446660]  kernel_clone+0xc0/0x3e0
+[  239.446661]  __do_sys_clone+0x65/0xa0
+[  239.446664]  do_syscall_64+0x82/0x930
+[  239.446668]  ? count_memcg_events+0xd2/0x190
+[  239.446671]  ? syscall_trace_enter+0x14e/0x1f0
+[  239.446676]  ? syscall_exit_work+0x118/0x150
+[  239.446677]  ? arch_exit_to_user_mode_prepare.constprop.0+0x9/0xb0
+[  239.446681]  ? clear_bhb_loop+0x30/0x80
+[  239.446684]  ? clear_bhb_loop+0x30/0x80
+[  239.446686]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+
+There are two options to resolve the potential latent issue:
+  1. warn against PMD sharing in copy_hugetlb_page_range(),
+  2. fix it.
+This patch opts for the second option.
+While at it, simplify the comment, the details are not actually relevant
+anymore.
+
+Link: https://lkml.kernel.org/r/20250916004520.1604530-1-jane.chu@oracle.com
+Fixes: 59d9094df3d7 ("mm: hugetlb: independent PMD page table shared count")
+Signed-off-by: Jane Chu <jane.chu@oracle.com>
+Reviewed-by: Harry Yoo <harry.yoo@oracle.com>
+Acked-by: Oscar Salvador <osalvador@suse.de>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liu Shixin <liushixin2@huawei.com>
+Cc: Muchun Song <muchun.song@linux.dev>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ David: We don't have ptdesc and the wrappers, so work directly on the
+  page->pt_share_count. CONFIG_HUGETLB_PMD_PAGE_TABLE_SHARING is still
+  called CONFIG_ARCH_WANT_HUGE_PMD_SHARE. ]
+Signed-off-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ mm/hugetlb.c |   13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3439,9 +3439,11 @@ static void si_apply_state_adjust_rules(
- 	if (adev->asic_type == CHIP_HAINAN) {
- 		if ((adev->pdev->revision == 0x81) ||
- 		    (adev->pdev->revision == 0xC3) ||
-+		    (adev->pdev->device == 0x6660) ||
- 		    (adev->pdev->device == 0x6664) ||
- 		    (adev->pdev->device == 0x6665) ||
--		    (adev->pdev->device == 0x6667)) {
-+		    (adev->pdev->device == 0x6667) ||
-+		    (adev->pdev->device == 0x666F)) {
- 			max_sclk = 75000;
+--- a/mm/hugetlb.c
++++ b/mm/hugetlb.c
+@@ -5084,18 +5084,13 @@ int copy_hugetlb_page_range(struct mm_st
+ 			break;
  		}
- 		if ((adev->pdev->revision == 0xC3) ||
+ 
+-		/*
+-		 * If the pagetables are shared don't copy or take references.
+-		 *
+-		 * dst_pte == src_pte is the common case of src/dest sharing.
+-		 * However, src could have 'unshared' and dst shares with
+-		 * another vma. So page_count of ptep page is checked instead
+-		 * to reliably determine whether pte is shared.
+-		 */
+-		if (page_count(virt_to_page(dst_pte)) > 1) {
++#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
++		/* If the pagetables are shared, there is nothing to do */
++		if (atomic_read(&virt_to_page(dst_pte)->pt_share_count)) {
+ 			addr |= last_addr_mask;
+ 			continue;
+ 		}
++#endif
+ 
+ 		dst_ptl = huge_pte_lock(h, dst, dst_pte);
+ 		src_ptl = huge_pte_lockptr(h, src, src_pte);
 
 
