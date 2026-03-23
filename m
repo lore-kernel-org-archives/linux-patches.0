@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F06258CD9;
-	Mon, 23 Mar 2026 16:22:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B82B2285417;
+	Mon, 23 Mar 2026 16:22:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282945; cv=none; b=hp/7jrLUegYriW4CyUJbNjyYhQC7ip/E137038Jx9oSfu8NkrEqeucRrlwaGH+3QYd1qlNsYiLWx9fzKE92YOpzgFUiE4BQOiKIito0aaHyY7uBgnnp0VoPubwVPenTe23OdAUb9sOIl7KoFLWdSmPRFq73+9L7rwZAvcNBcDaI=
+	t=1774282947; cv=none; b=JemMnKWDfry4/eq9nz3PC0zp0f24F5vEJA/Lw/iI6lfgIJY0WttqaPFEeVprs157UD494Gl5ijH2FdGjuQNZPfFU6XeeOGNsgMjL5BL7jRjRK2brvD/hWFiU4q74DaHwLjcaCa+NZWtX8erCzWLR3+R2WnzWdArXxIVH++J6RPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282945; c=relaxed/simple;
-	bh=YJPn7XlaDnpjAUoVwQcNjCcYGvF+nH5zRX3cIiRzrV4=;
+	s=arc-20240116; t=1774282947; c=relaxed/simple;
+	bh=1q+0WZjP//MUfyw1Fq/9isyEHH8sY6SxNJjA/XF4lGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iekCEDsj3eQBA/PPrj05LXD78GuKyNCUAfe548lmEW/BPnWky69a/hxrD6k5TsXLgGu+zA256FZ3nbVdzRGyf+uSygYnBHboYa1IMJrJYxrYFdH7XWlHBLyRXt8FXV2b6gGztFwHuWG1VyAhgTLkKy0wEq+1pt8QQ/b+xx2lcXs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q1mdmyV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dtipnweyLD4nzSlqCMgIcytTS5y9xIYZRZaqk2lB1/acfd05e/Djvdf/trOHin9EZxAbyKIn4Ji/t8CIFgDJXsxdn8AA3+PnoauThxkWGk7gceXFG7yY1TgC72U8axOGVilMIb/qX7UzJERDtRmmMeuEwGFs7xvi8wWxH+aTgyw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RxOxQJ39; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q1mdmyV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D27C4CEF7;
-	Mon, 23 Mar 2026 16:22:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RxOxQJ39"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 467FFC2BC9E;
+	Mon, 23 Mar 2026 16:22:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282944;
-	bh=YJPn7XlaDnpjAUoVwQcNjCcYGvF+nH5zRX3cIiRzrV4=;
+	s=korg; t=1774282947;
+	bh=1q+0WZjP//MUfyw1Fq/9isyEHH8sY6SxNJjA/XF4lGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q1mdmyV2ga8HTggIxYVvNOPsya3Sami3x718Z1JZMzPwGJiaNA9FKZ2Pd6BY2M1Kw
-	 1eVZATfhHMfG1ehZkXiCPMdfW326xpWqzVQus6Desu4/37aptytYiu6iCUISCtXQbR
-	 ST3MA16avBNKnW0GfRUv4ibBq87FuVb8JXLMYKy8=
+	b=RxOxQJ39s/AWLZCSHXx5wgV3ODCQqxD0Gf7OTfm0Ezna/PgW9yyWyBbETD44MFaoP
+	 MYf4V/bynrNJltDWZOOux/68Ef8eg1VOz9BOVhpGH7mI/WNNdMuV4IgwZLl+KqGv0u
+	 ChzvmowwamkXMStG4n4YVGaEmvhc5qtd5d+BEo9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Quanyang Wang <quanyang.wang@windriver.com>,
-	Kevin Hao <haokexin@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ingo Franzki <ifranzki@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 344/481] net: macb: Shuffle the tx ring before enabling tx
-Date: Mon, 23 Mar 2026 14:45:26 +0100
-Message-ID: <20260323134533.487099495@linuxfoundation.org>
+Subject: [PATCH 6.1 345/481] s390/zcrypt: Enable AUTOSEL_DOM for CCA serialnr sysfs attribute
+Date: Mon, 23 Mar 2026 14:45:27 +0100
+Message-ID: <20260323134533.509902815@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,186 +52,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Harald Freudenberger <freude@linux.ibm.com>
 
-[ Upstream commit 881a0263d502e1a93ebc13a78254e9ad19520232 ]
+[ Upstream commit 598bbefa8032cc58b564a81d1ad68bd815c8dc0f ]
 
-Quanyang observed that when using an NFS rootfs on an AMD ZynqMp board,
-the rootfs may take an extended time to recover after a suspend.
-Upon investigation, it was determined that the issue originates from a
-problem in the macb driver.
+The serialnr sysfs attribute for CCA cards when queried always
+used the default domain for sending the request down to the card.
+If for any reason exactly this default domain is disabled then
+the attribute code fails to retrieve the CCA info and the sysfs
+entry shows an empty string. Works as designed but the serial
+number is a card attribute and thus it does not matter which
+domain is used for the query. So if there are other domains on
+this card available, these could be used.
 
-According to the Zynq UltraScale TRM [1], when transmit is disabled,
-the transmit buffer queue pointer resets to point to the address
-specified by the transmit buffer queue base address register.
+So extend the code to use AUTOSEL_DOM for the domain value to
+address any online domain within the card for querying the cca
+info and thus show the serialnr as long as there is one domain
+usable regardless of the default domain setting.
 
-In the current implementation, the code merely resets `queue->tx_head`
-and `queue->tx_tail` to '0'. This approach presents several issues:
-
-- Packets already queued in the tx ring are silently lost,
-  leading to memory leaks since the associated skbs cannot be released.
-
-- Concurrent write access to `queue->tx_head` and `queue->tx_tail` may
-  occur from `macb_tx_poll()` or `macb_start_xmit()` when these values
-  are reset to '0'.
-
-- The transmission may become stuck on a packet that has already been sent
-  out, with its 'TX_USED' bit set, but has not yet been processed. However,
-  due to the manipulation of 'queue->tx_head' and 'queue->tx_tail',
-  `macb_tx_poll()` incorrectly assumes there are no packets to handle
-  because `queue->tx_head == queue->tx_tail`. This issue is only resolved
-  when a new packet is placed at this position. This is the root cause of
-  the prolonged recovery time observed for the NFS root filesystem.
-
-To resolve this issue, shuffle the tx ring and tx skb array so that
-the first unsent packet is positioned at the start of the tx ring.
-Additionally, ensure that updates to `queue->tx_head` and
-`queue->tx_tail` are properly protected with the appropriate lock.
-
-[1] https://docs.amd.com/v/u/en-US/ug1085-zynq-ultrascale-trm
-
-Fixes: bf9cf80cab81 ("net: macb: Fix tx/rx malfunction after phy link down and up")
-Reported-by: Quanyang Wang <quanyang.wang@windriver.com>
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Fixes: 8f291ebf3270 ("s390/zcrypt: enable card/domain autoselect on ep11 cprbs")
+Suggested-by: Ingo Franzki <ifranzki@linux.ibm.com>
+Signed-off-by: Harald Freudenberger <freude@linux.ibm.com>
+Reviewed-by: Ingo Franzki <ifranzki@linux.ibm.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260307-zynqmp-v2-1-6ef98a70e1d0@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ #include context ]
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
+[ preserved zc->online as the fourth argument to cca_get_info() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c |   98 ++++++++++++++++++++++++++++++-
- 1 file changed, 95 insertions(+), 3 deletions(-)
+ drivers/s390/crypto/zcrypt_ccamisc.c |   12 +++++++-----
+ drivers/s390/crypto/zcrypt_cex4.c    |    3 +--
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -39,6 +39,7 @@
- #include <linux/ptp_classify.h>
- #include <linux/reset.h>
- #include <linux/firmware/xlnx-zynqmp.h>
-+#include <linux/gcd.h>
- #include "macb.h"
+--- a/drivers/s390/crypto/zcrypt_ccamisc.c
++++ b/drivers/s390/crypto/zcrypt_ccamisc.c
+@@ -1689,11 +1689,13 @@ static int fetch_cca_info(u16 cardnr, u1
  
- /* This structure is only used for MACB on SiFive FU540 devices */
-@@ -668,6 +669,97 @@ static void macb_mac_link_down(struct ph
- 	netif_tx_stop_all_queues(ndev);
+ 	memset(ci, 0, sizeof(*ci));
+ 
+-	/* get first info from zcrypt device driver about this apqn */
+-	rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
+-	if (rc)
+-		return rc;
+-	ci->hwtype = devstat.hwtype;
++	/* if specific domain given, fetch status and hw info for this apqn */
++	if (domain != AUTOSEL_DOM) {
++		rc = zcrypt_device_status_ext(cardnr, domain, &devstat);
++		if (rc)
++			return rc;
++		ci->hwtype = devstat.hwtype;
++	}
+ 
+ 	/* prep page for rule array and var array use */
+ 	pg = (u8 *)__get_free_page(GFP_KERNEL);
+--- a/drivers/s390/crypto/zcrypt_cex4.c
++++ b/drivers/s390/crypto/zcrypt_cex4.c
+@@ -85,8 +85,7 @@ static ssize_t cca_serialnr_show(struct
+ 
+ 	memset(&ci, 0, sizeof(ci));
+ 
+-	if (ap_domain_index >= 0)
+-		cca_get_info(ac->id, ap_domain_index, &ci, zc->online);
++	cca_get_info(ac->id, AUTOSEL_DOM, &ci, zc->online);
+ 
+ 	return scnprintf(buf, PAGE_SIZE, "%s\n", ci.serial);
  }
- 
-+/* Use juggling algorithm to left rotate tx ring and tx skb array */
-+static void gem_shuffle_tx_one_ring(struct macb_queue *queue)
-+{
-+	unsigned int head, tail, count, ring_size, desc_size;
-+	struct macb_tx_skb tx_skb, *skb_curr, *skb_next;
-+	struct macb_dma_desc *desc_curr, *desc_next;
-+	unsigned int i, cycles, shift, curr, next;
-+	struct macb *bp = queue->bp;
-+	unsigned char desc[24];
-+	unsigned long flags;
-+
-+	desc_size = macb_dma_desc_get_size(bp);
-+
-+	if (WARN_ON_ONCE(desc_size > ARRAY_SIZE(desc)))
-+		return;
-+
-+	spin_lock_irqsave(&queue->tx_ptr_lock, flags);
-+	head = queue->tx_head;
-+	tail = queue->tx_tail;
-+	ring_size = bp->tx_ring_size;
-+	count = CIRC_CNT(head, tail, ring_size);
-+
-+	if (!(tail % ring_size))
-+		goto unlock;
-+
-+	if (!count) {
-+		queue->tx_head = 0;
-+		queue->tx_tail = 0;
-+		goto unlock;
-+	}
-+
-+	shift = tail % ring_size;
-+	cycles = gcd(ring_size, shift);
-+
-+	for (i = 0; i < cycles; i++) {
-+		memcpy(&desc, macb_tx_desc(queue, i), desc_size);
-+		memcpy(&tx_skb, macb_tx_skb(queue, i),
-+		       sizeof(struct macb_tx_skb));
-+
-+		curr = i;
-+		next = (curr + shift) % ring_size;
-+
-+		while (next != i) {
-+			desc_curr = macb_tx_desc(queue, curr);
-+			desc_next = macb_tx_desc(queue, next);
-+
-+			memcpy(desc_curr, desc_next, desc_size);
-+
-+			if (next == ring_size - 1)
-+				desc_curr->ctrl &= ~MACB_BIT(TX_WRAP);
-+			if (curr == ring_size - 1)
-+				desc_curr->ctrl |= MACB_BIT(TX_WRAP);
-+
-+			skb_curr = macb_tx_skb(queue, curr);
-+			skb_next = macb_tx_skb(queue, next);
-+			memcpy(skb_curr, skb_next, sizeof(struct macb_tx_skb));
-+
-+			curr = next;
-+			next = (curr + shift) % ring_size;
-+		}
-+
-+		desc_curr = macb_tx_desc(queue, curr);
-+		memcpy(desc_curr, &desc, desc_size);
-+		if (i == ring_size - 1)
-+			desc_curr->ctrl &= ~MACB_BIT(TX_WRAP);
-+		if (curr == ring_size - 1)
-+			desc_curr->ctrl |= MACB_BIT(TX_WRAP);
-+		memcpy(macb_tx_skb(queue, curr), &tx_skb,
-+		       sizeof(struct macb_tx_skb));
-+	}
-+
-+	queue->tx_head = count;
-+	queue->tx_tail = 0;
-+
-+	/* Make descriptor updates visible to hardware */
-+	wmb();
-+
-+unlock:
-+	spin_unlock_irqrestore(&queue->tx_ptr_lock, flags);
-+}
-+
-+/* Rotate the queue so that the tail is at index 0 */
-+static void gem_shuffle_tx_rings(struct macb *bp)
-+{
-+	struct macb_queue *queue;
-+	int q;
-+
-+	for (q = 0, queue = bp->queues; q < bp->num_queues; q++, queue++)
-+		gem_shuffle_tx_one_ring(queue);
-+}
-+
- static void macb_mac_link_up(struct phylink_config *config,
- 			     struct phy_device *phy,
- 			     unsigned int mode, phy_interface_t interface,
-@@ -706,8 +798,6 @@ static void macb_mac_link_up(struct phyl
- 			ctrl |= MACB_BIT(PAE);
- 
- 		for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
--			queue->tx_head = 0;
--			queue->tx_tail = 0;
- 			queue_writel(queue, IER,
- 				     bp->rx_intr_mask | MACB_TX_INT_FLAGS | MACB_BIT(HRESP));
- 		}
-@@ -721,8 +811,10 @@ static void macb_mac_link_up(struct phyl
- 
- 	spin_unlock_irqrestore(&bp->lock, flags);
- 
--	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC))
-+	if (!(bp->caps & MACB_CAPS_MACB_IS_EMAC)) {
- 		macb_set_tx_clk(bp, speed);
-+		gem_shuffle_tx_rings(bp);
-+	}
- 
- 	/* Enable Rx and Tx; Enable PTP unicast */
- 	ctrl = macb_readl(bp, NCR);
 
 
