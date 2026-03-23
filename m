@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567773AE6EE;
-	Mon, 23 Mar 2026 14:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F7736F414;
+	Mon, 23 Mar 2026 14:13:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275194; cv=none; b=rb1PXlO7QkwUFdJFw487csywI0u9WqGDO3fGGYcoOzbrI6x3MkYhMgXz9NhVU4sC+D0wM6gWrcH2hmhRtgxZjYawq0cw9omzB1hGpEY/VEVeXXhMue+Gd+URgxFyjfJwquMwPDUv6sESlnLKHCeMDZtVLJnnwDhMf1LpgEGupQ4=
+	t=1774275198; cv=none; b=Fv3KTMtxXj+9rpXOcW3b6KyL0yClCyRqRrv9NZu6OH2pgD0nWeFP9adSRUFjk8yQa5ZNBy1lD1ybFTgkXXesrlVZs6X3ZeFhfCupGS5iXpriNez0QKqdyPeZzccmIJicxEWVmemh4XZU73XFl+tFwDE61roVy4jHf9m0LmjrtWs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275194; c=relaxed/simple;
-	bh=BRVhRF2XPZdthfa4y5tN71zl2jgAjEwX0n8mt18iXgs=;
+	s=arc-20240116; t=1774275198; c=relaxed/simple;
+	bh=e+g3DFdRd1NjiEp8cPRmSLwZ0kuR+2mipgpKl4QF6GM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sucwZJKrm7bMaHfi2y5w/GTwD+9xxbB3TEex+W6Cj4lqRMndDyhgGQp6vnadxdEE9TGpQGnYkrLN1V8OzN+8okOl2HBixEuUPHN0CM2a+pCFhio+iIhA39JSFka1rf/yuIn1VGdIlzhUw4DbMpLcQPR4LMyLwLoulhoIAZmp480=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pZAyGlRY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aPGjmZNG+MBk1JJ9nMtF/H4hZyPJJqYVPHDI9hFL9ftu6yjHMt2/aZckn8A2yvNstibWboWKPXCEntTIRe+m+jnGDhYHoYDPebnOCayObh7L8X1E4JT7t/U/Zh2atNqZyUyJEjV1C5erZT266Qnfnqot/Lr5PLPtJXsxnJ83aeE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mZ/BlUvM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pZAyGlRY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18CAC4CEF7;
-	Mon, 23 Mar 2026 14:13:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mZ/BlUvM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF27C4CEF7;
+	Mon, 23 Mar 2026 14:13:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275194;
-	bh=BRVhRF2XPZdthfa4y5tN71zl2jgAjEwX0n8mt18iXgs=;
+	s=korg; t=1774275197;
+	bh=e+g3DFdRd1NjiEp8cPRmSLwZ0kuR+2mipgpKl4QF6GM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZAyGlRYY/bvWmsxyXdHsszfQ8MHqSUJAS91ktHk46+VJ8Dl51Uw1a2SH4nv6ZJ3i
-	 ieuP913ac3amim6wHQCku8XmS9CXq7GGvUPu3NyDusupRnqIeG4+t9lmXFQt2LfENe
-	 qkjHqU8eEEbDycgFCceM2OoYqhGhkSMMEIRUb5pg=
+	b=mZ/BlUvMSzkfUFw0T/nOWoyooJr1vt/KPIR0FAFVAmxq0fkPMTEQPO1NkxriKbvCd
+	 ZE1ALfGYT36kxMtj7OrD3cbLp289Opfhteo5wiL1JAxxZ7ALjUZN2mYZzsZ8FUxIAr
+	 fNZyxm661DVMxAA+eacwasmqOya3oiV8DrID0WUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 009/567] scsi: ufs: core: Move link recovery for hibern8 exit failure to wl_resume
-Date: Mon, 23 Mar 2026 14:38:49 +0100
-Message-ID: <20260323134533.985192808@linuxfoundation.org>
+Subject: [PATCH 6.6 010/567] ALSA: usb-audio: Cap the packet size pre-calculations
+Date: Mon, 23 Mar 2026 14:38:50 +0100
+Message-ID: <20260323134534.012359462@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,61 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 62c015373e1cdb1cdca824bd2dbce2dac0819467 ]
+[ Upstream commit 7fe8dec3f628e9779f1631576f8e693370050348 ]
 
-Move the link recovery trigger from ufshcd_uic_pwr_ctrl() to
-__ufshcd_wl_resume(). Ensure link recovery is only attempted when hibern8
-exit fails during resume, not during hibern8 enter in suspend. Improve
-error handling and prevent unnecessary link recovery attempts.
+We calculate the possible packet sizes beforehand for adaptive and
+synchronous endpoints, but we didn't take care of the max frame size
+for those pre-calculated values.  When a device or a bus limits the
+packet size, a high sample rate or a high number of channels may lead
+to the packet sizes that are larger than the given limit, which
+results in an error from the USB core at submitting URBs.
 
-Fixes: 35dabf4503b9 ("scsi: ufs: core: Use link recovery when h8 exit fails during runtime resume")
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223103906.2533654-1-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+As a simple workaround, just add the sanity checks of pre-calculated
+packet sizes to have the upper boundary of ep->maxframesize.
+
+Fixes: f0bd62b64016 ("ALSA: usb-audio: Improve frames size computation")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ sound/usb/endpoint.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 808b648e1f388..0b74ef63e6721 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -4289,14 +4289,6 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 	spin_unlock_irqrestore(hba->host->host_lock, flags);
- 	mutex_unlock(&hba->uic_cmd_mutex);
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 1092b964167e9..d035b25f67b64 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1396,6 +1396,9 @@ int snd_usb_endpoint_set_params(struct snd_usb_audio *chip,
+ 		goto unlock;
+ 	}
  
--	/*
--	 * If the h8 exit fails during the runtime resume process, it becomes
--	 * stuck and cannot be recovered through the error handler.  To fix
--	 * this, use link recovery instead of the error handler.
--	 */
--	if (ret && hba->pm_op_in_progress)
--		ret = ufshcd_link_recovery(hba);
--
- 	return ret;
- }
- 
-@@ -10016,7 +10008,15 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 		} else {
- 			dev_err(hba->dev, "%s: hibern8 exit failed %d\n",
- 					__func__, ret);
--			goto vendor_suspend;
-+			/*
-+			 * If the h8 exit fails during the runtime resume
-+			 * process, it becomes stuck and cannot be recovered
-+			 * through the error handler. To fix this, use link
-+			 * recovery instead of the error handler.
-+			 */
-+			ret = ufshcd_link_recovery(hba);
-+			if (ret)
-+				goto vendor_suspend;
- 		}
- 	} else if (ufshcd_is_link_off(hba)) {
- 		/*
++	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
++	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
++
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
+ 	ep->freqshift = INT_MIN;
 -- 
 2.51.0
 
