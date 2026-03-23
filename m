@@ -1,36 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B329E39657B;
-	Mon, 23 Mar 2026 15:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E131839657B;
+	Mon, 23 Mar 2026 15:08:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278497; cv=none; b=FUMk8xcQy7Tru3fqI/eK6umPwyH0USh13z5USj6yjeu7Tp0Sm4g95YFVw8xnOKNuubWmjyQMV19/17FdVNEujVaxD/eY6e+D3knh1BR8wBUJZsF19/phXRKfy2q+qILsp8R2aclMw2/AH/nElEZT7O4XKhPStiaMyGuvXodTKio=
+	t=1774278501; cv=none; b=RKI7P4jU3KTQdnFjC2BeRsuf1dlD1zsk08wPIkUvMOq2zq0+5MFPpErYYHukC+mOU9HfalNaEwmvmsULjnYjgRIodfKyKegy9ro0SBox1UUMay8pRgusjUW74fg+3K0miFyFgim17A8DQrDU6thDFSjdwehSV4tPByRFEG4Wcnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278497; c=relaxed/simple;
-	bh=q23OtDahFre6+C32MstwYKjvKkX2pjLO+PWvUWa089Y=;
+	s=arc-20240116; t=1774278501; c=relaxed/simple;
+	bh=Lfn784DPtC3qn2iT2erj82p9kqJHVTASt7bJKDZwFVA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TtZ1dS9szuH/mNyPuvm7DE2oCWPYQ5ZFEZ+7wKY9zBRjmwPagjCeN7DGOwGJ1J9BmVf/hJPVj4q9VH1m9XuV1yXttk/veUzaqcN5aE6xMpYAIqUvT+gzJ9Y8RE7nImVXaffVOU1MnMHMuFBwa4QJHZF+2xEMTBTjpXcy54N5nPU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w+R+GsIt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=u+y71wN9dEz/QzCRxRf0iWCIA8gGwVId17vtoBSqKrqj3+kwz2hF3+rT9Xb2pcO/rOKGhtv+LgIjEBYbEwRmL3Q+TvO/Gytvi+WVzDODeHiYjvBFoT7fbPUzTD/KhoEWtF7LOAJqtsDF4Tc76k+uoUVCjpcxHVCoiH1Hqk4sm9k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nSVa0hgX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w+R+GsIt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB578C2BC9E;
-	Mon, 23 Mar 2026 15:08:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nSVa0hgX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A237C4CEF7;
+	Mon, 23 Mar 2026 15:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278497;
-	bh=q23OtDahFre6+C32MstwYKjvKkX2pjLO+PWvUWa089Y=;
+	s=korg; t=1774278500;
+	bh=Lfn784DPtC3qn2iT2erj82p9kqJHVTASt7bJKDZwFVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w+R+GsItsIgW627/b1Y6c63WeiGbSNfDGBG42vcnp5X6JzN7N8z+ym0Gk8V30t1qQ
-	 9sefpdDrM9lR1qFsQXxN3P9aLahhYHuDt/2TZHuCtMCcvD1h13DBnaSAnoOE8ArNdE
-	 d/ivj+tYPDst/+7clKdQgf+aC+nHQT8pyKOrmzpU=
+	b=nSVa0hgXW7ut/IcgH5DhKZ4V1r26nOEO0USBGqgqhStYlAirV8gdTvOyRXwPI2BCy
+	 sgnpuURHqfb8iqwrFfPH7/KjVyu1iCZ1+DAkF+1PAZMF4zhxS5dLpqvynzwx3sbH1k
+	 YgPAX7ThymQ4VaNIZfLM+lidQXPJpkUu9sJO21po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.6 282/567] USB: core: Limit the length of unkillable synchronous timeouts
-Date: Mon, 23 Mar 2026 14:43:22 +0100
-Message-ID: <20260323134540.806249098@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>,
+	Gui-Dong Han <hanguidong02@gmail.com>
+Subject: [PATCH 6.6 283/567] usb: class: cdc-wdm: fix reordering issue in read code path
+Date: Mon, 23 Mar 2026 14:43:23 +0100
+Message-ID: <20260323134540.829521402@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -49,134 +51,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Oliver Neukum <oneukum@suse.com>
 
-commit 1015c27a5e1a63efae2b18a9901494474b4d1dc3 upstream.
+commit 8df672bfe3ec2268c2636584202755898e547173 upstream.
 
-The usb_control_msg(), usb_bulk_msg(), and usb_interrupt_msg() APIs in
-usbcore allow unlimited timeout durations.  And since they use
-uninterruptible waits, this leaves open the possibility of hanging a
-task for an indefinitely long time, with no way to kill it short of
-unplugging the target device.
+Quoting the bug report:
 
-To prevent this sort of problem, enforce a maximum limit on the length
-of these unkillable timeouts.  The limit chosen here, somewhat
-arbitrarily, is 60 seconds.  On many systems (although not all) this
-is short enough to avoid triggering the kernel's hung-task detector.
+Due to compiler optimization or CPU out-of-order execution, the
+desc->length update can be reordered before the memmove. If this
+happens, wdm_read() can see the new length and call copy_to_user() on
+uninitialized memory. This also violates LKMM data race rules [1].
 
-In addition, clear up the ambiguity of negative timeout values by
-treating them the same as 0, i.e., using the maximum allowed timeout.
+Fix it by using WRITE_ONCE and memory barriers.
 
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/linux-usb/3acfe838-6334-4f6d-be7c-4bb01704b33d@rowland.harvard.edu/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-CC: stable@vger.kernel.org
-Link: https://patch.msgid.link/15fc9773-a007-47b0-a703-df89a8cf83dd@rowland.harvard.edu
+Fixes: afba937e540c9 ("USB: CDC WDM driver")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Oliver Neukum <oneukum@suse.com>
+Closes: https://lore.kernel.org/linux-usb/CALbr=LbrUZn_cfp7CfR-7Z5wDTHF96qeuM=3fO2m-q4cDrnC4A@mail.gmail.com/
+Reported-by: Gui-Dong Han <hanguidong02@gmail.com>
+Reviewed-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://patch.msgid.link/20260304130116.1721682-1-oneukum@suse.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/message.c |   27 +++++++++++++--------------
- include/linux/usb.h        |    3 +++
- 2 files changed, 16 insertions(+), 14 deletions(-)
+ drivers/usb/class/cdc-wdm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/core/message.c
-+++ b/drivers/usb/core/message.c
-@@ -45,6 +45,8 @@ static void usb_api_blocking_completion(
-  * Starts urb and waits for completion or timeout.
-  * Whether or not the wait is killable depends on the flag passed in.
-  * For example, compare usb_bulk_msg() and usb_bulk_msg_killable().
-+ *
-+ * For non-killable waits, we enforce a maximum limit on the timeout value.
-  */
- static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length,
- 		bool killable)
-@@ -61,7 +63,9 @@ static int usb_start_wait_urb(struct urb
- 	if (unlikely(retval))
- 		goto out;
+--- a/drivers/usb/class/cdc-wdm.c
++++ b/drivers/usb/class/cdc-wdm.c
+@@ -225,7 +225,8 @@ static void wdm_in_callback(struct urb *
+ 		/* we may already be in overflow */
+ 		if (!test_bit(WDM_OVERFLOW, &desc->flags)) {
+ 			memmove(desc->ubuf + desc->length, desc->inbuf, length);
+-			desc->length += length;
++			smp_wmb(); /* against wdm_read() */
++			WRITE_ONCE(desc->length, desc->length + length);
+ 		}
+ 	}
+ skip_error:
+@@ -533,6 +534,7 @@ static ssize_t wdm_read
+ 		return -ERESTARTSYS;
  
--	expire = timeout ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
-+	if (!killable && (timeout <= 0 || timeout > USB_MAX_SYNCHRONOUS_TIMEOUT))
-+		timeout = USB_MAX_SYNCHRONOUS_TIMEOUT;
-+	expire = (timeout > 0) ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
- 	if (killable)
- 		rc = wait_for_completion_killable_timeout(&ctx.done, expire);
- 	else
-@@ -127,8 +131,7 @@ static int usb_internal_control_msg(stru
-  * @index: USB message index value
-  * @data: pointer to the data to send
-  * @size: length in bytes of the data to send
-- * @timeout: time in msecs to wait for the message to complete before timing
-- *	out (if 0 the wait is forever)
-+ * @timeout: time in msecs to wait for the message to complete before timing out
-  *
-  * Context: task context, might sleep.
-  *
-@@ -183,8 +186,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg);
-  * @index: USB message index value
-  * @driver_data: pointer to the data to send
-  * @size: length in bytes of the data to send
-- * @timeout: time in msecs to wait for the message to complete before timing
-- *	out (if 0 the wait is forever)
-+ * @timeout: time in msecs to wait for the message to complete before timing out
-  * @memflags: the flags for memory allocation for buffers
-  *
-  * Context: !in_interrupt ()
-@@ -242,8 +244,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg_send);
-  * @index: USB message index value
-  * @driver_data: pointer to the data to be filled in by the message
-  * @size: length in bytes of the data to be received
-- * @timeout: time in msecs to wait for the message to complete before timing
-- *	out (if 0 the wait is forever)
-+ * @timeout: time in msecs to wait for the message to complete before timing out
-  * @memflags: the flags for memory allocation for buffers
-  *
-  * Context: !in_interrupt ()
-@@ -314,8 +315,7 @@ EXPORT_SYMBOL_GPL(usb_control_msg_recv);
-  * @len: length in bytes of the data to send
-  * @actual_length: pointer to a location to put the actual length transferred
-  *	in bytes
-- * @timeout: time in msecs to wait for the message to complete before
-- *	timing out (if 0 the wait is forever)
-+ * @timeout: time in msecs to wait for the message to complete before timing out
-  *
-  * Context: task context, might sleep.
-  *
-@@ -347,8 +347,7 @@ EXPORT_SYMBOL_GPL(usb_interrupt_msg);
-  * @len: length in bytes of the data to send
-  * @actual_length: pointer to a location to put the actual length transferred
-  *	in bytes
-- * @timeout: time in msecs to wait for the message to complete before
-- *	timing out (if 0 the wait is forever)
-+ * @timeout: time in msecs to wait for the message to complete before timing out
-  *
-  * Context: task context, might sleep.
-  *
-@@ -408,12 +407,12 @@ EXPORT_SYMBOL_GPL(usb_bulk_msg);
-  * @actual_length: pointer to a location to put the actual length transferred
-  *	in bytes
-  * @timeout: time in msecs to wait for the message to complete before
-- *	timing out (if 0 the wait is forever)
-+ *	timing out (if <= 0, the wait is as long as possible)
-  *
-  * Context: task context, might sleep.
-  *
-- * This function is just like usb_blk_msg() except that it waits in a
-- * killable state.
-+ * This function is just like usb_blk_msg(), except that it waits in a
-+ * killable state and there is no limit on the timeout length.
-  *
-  * Return:
-  * If successful, 0. Otherwise a negative error number. The number of actual
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -1843,6 +1843,9 @@ void usb_buffer_unmap_sg(const struct us
-  *                         SYNCHRONOUS CALL SUPPORT                  *
-  *-------------------------------------------------------------------*/
- 
-+/* Maximum value allowed for timeout in synchronous routines below */
-+#define USB_MAX_SYNCHRONOUS_TIMEOUT		60000	/* ms */
-+
- extern int usb_control_msg(struct usb_device *dev, unsigned int pipe,
- 	__u8 request, __u8 requesttype, __u16 value, __u16 index,
- 	void *data, __u16 size, int timeout);
+ 	cntr = READ_ONCE(desc->length);
++	smp_rmb(); /* against wdm_in_callback() */
+ 	if (cntr == 0) {
+ 		desc->read = 0;
+ retry:
 
 
