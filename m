@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E92F235C01;
-	Mon, 23 Mar 2026 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC644235C01;
+	Mon, 23 Mar 2026 14:59:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277977; cv=none; b=K+khJ1EHN8fvyrymzzywKTcGILB1wm+pI35ElNnU6S9ep2YbhIdcdm+QCXH1KYa+aVdoVR49FXwvrHqZnBw5JHyiqzFaK/gHtd0LleKwobYKs6Mo2p7jde+CP85wcsjje5h0SbhNg3kcloa+bWR0fXxVord9sZRMAQDD2gZlkyc=
+	t=1774277980; cv=none; b=nfPocLubMQDZ6142tFzILMAWgbIiVLrvtBioeU3FnwkztyEJQZfgpwiO9922hynf2QuGhfKU3lgM4l7TaaSz1YWwxJ8x5M3JkDUVbaRvWVO5kMnmFOslDvR4s8cCP1y2qsVAraxxiUZTb3zoMcacCo7w4puQjZf+NaBKQ7VbCDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277977; c=relaxed/simple;
-	bh=lBwagUOdRGmmmzmP8dgPiikrz0wyTwD35NANTjN2igc=;
+	s=arc-20240116; t=1774277980; c=relaxed/simple;
+	bh=KPP0gk6ht9AHwK5wgvZJmrcBlAUtL39WMa4nfD8wy3Q=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXtI6Cq5T0DwF0GQBV7bypma4lr1QpDM8ndBDb+VwIgAkEPeUcxJqG6OwoTEirEQbKeBy2gJ9klGg5hqKzm6at7D9jEl2e9eP0Bwzk3smsvxXEroeZXiqrA1mDPiMNG7NzjiXEZ9ZDzpLxyAHV3TXRCYmVkCPi7fMElfMr73CbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYgS1p3X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gbQD6xorxs6f79bvKncDChwW3MyOOkrDnBo8GlMV+3sHo+MYPPXQVGdhcitISVp14dA3cL0dQ4qndL/Ama1W1Rkt74bwsLnsdI+AKPOCxeiALVMxIJVyKJ+AhhxS+NrNu2Z0UxW8pCYJaXqOw4/NeWYRDNtxTpSFgA454+ii3Nk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QpxxbvTH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYgS1p3X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ACDC4CEF7;
-	Mon, 23 Mar 2026 14:59:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QpxxbvTH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9239C4CEF7;
+	Mon, 23 Mar 2026 14:59:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277977;
-	bh=lBwagUOdRGmmmzmP8dgPiikrz0wyTwD35NANTjN2igc=;
+	s=korg; t=1774277980;
+	bh=KPP0gk6ht9AHwK5wgvZJmrcBlAUtL39WMa4nfD8wy3Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYgS1p3X55jFfsMi2fRNL+8eBNu0tDp9sRpTDUxe/4Aql7U5XwmLNq+ajan+Wb80E
-	 S87vB8gFrJ36vsby66XxTWClyjzX/Yc2/KQk5YhFt8G8BW4IixYh1Y8sK2VwDnhJf9
-	 VdD0icmO4mXqP8vzHY7vHCUJ2kWwM2/11Itah1vI=
+	b=QpxxbvTHaJ9RlLPkA3kX5X+8mnpr4kQwqw24YMWZlBj0KYQvRX5DBoQEylmaItoun
+	 o7uRMlQ03I7HVQpbzFb86xlaQ0qcQMuX1LXInOJsNTpCeREFbpGTebztIYn0+LBTwq
+	 BRQ1az1AqQVpPGdotzOCSEC23DRBcIB6PhHYHfYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Ahern <dsahern@kernel.org>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 162/567] ipv6: fix NULL pointer deref in ip6_rt_get_dev_rcu()
-Date: Mon, 23 Mar 2026 14:41:22 +0100
-Message-ID: <20260323134537.834575027@linuxfoundation.org>
+Subject: [PATCH 6.6 163/567] amd-xgbe: fix sleep while atomic on suspend/resume
+Date: Mon, 23 Mar 2026 14:41:23 +0100
+Message-ID: <20260323134537.855995140@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,52 +51,118 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 2ffb4f5c2ccb2fa1c049dd11899aee7967deef5a ]
+[ Upstream commit e2f27363aa6d983504c6836dd0975535e2e9dba0 ]
 
-l3mdev_master_dev_rcu() can return NULL when the slave device is being
-un-slaved from a VRF. All other callers deal with this, but we lost
-the fallback to loopback in ip6_rt_pcpu_alloc() -> ip6_rt_get_dev_rcu()
-with commit 4832c30d5458 ("net: ipv6: put host and anycast routes on
-device with address").
+The xgbe_powerdown() and xgbe_powerup() functions use spinlocks
+(spin_lock_irqsave) while calling functions that may sleep:
+- napi_disable() can sleep waiting for NAPI polling to complete
+- flush_workqueue() can sleep waiting for pending work items
 
-  KASAN: null-ptr-deref in range [0x0000000000000108-0x000000000000010f]
-  RIP: 0010:ip6_rt_pcpu_alloc (net/ipv6/route.c:1418)
-  Call Trace:
-   ip6_pol_route (net/ipv6/route.c:2318)
-   fib6_rule_lookup (net/ipv6/fib6_rules.c:115)
-   ip6_route_output_flags (net/ipv6/route.c:2607)
-   vrf_process_v6_outbound (drivers/net/vrf.c:437)
+This causes a "BUG: scheduling while atomic" error during suspend/resume
+cycles on systems using the AMD XGBE Ethernet controller.
 
-I was tempted to rework the un-slaving code to clear the flag first
-and insert synchronize_rcu() before we remove the upper. But looks like
-the explicit fallback to loopback_dev is an established pattern.
-And I guess avoiding the synchronize_rcu() is nice, too.
+The spinlock protection in these functions is unnecessary as these
+functions are called from suspend/resume paths which are already serialized
+by the PM core
 
-Fixes: 4832c30d5458 ("net: ipv6: put host and anycast routes on device with address")
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20260301194548.927324-1-kuba@kernel.org
+Fix this by removing the spinlock. Since only code that takes this lock
+is xgbe_powerdown() and xgbe_powerup(), remove it completely.
+
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Link: https://patch.msgid.link/20260302042124.1386445-1-Raju.Rangoju@amd.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/route.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 10 ----------
+ drivers/net/ethernet/amd/xgbe/xgbe-main.c |  1 -
+ drivers/net/ethernet/amd/xgbe/xgbe.h      |  3 ---
+ 3 files changed, 14 deletions(-)
 
-diff --git a/net/ipv6/route.c b/net/ipv6/route.c
-index ad452a04d7299..72853ef73e821 100644
---- a/net/ipv6/route.c
-+++ b/net/ipv6/route.c
-@@ -1065,7 +1065,8 @@ static struct net_device *ip6_rt_get_dev_rcu(const struct fib6_result *res)
- 		 */
- 		if (netif_is_l3_slave(dev) &&
- 		    !rt6_need_strict(&res->f6i->fib6_dst.addr))
--			dev = l3mdev_master_dev_rcu(dev);
-+			dev = l3mdev_master_dev_rcu(dev) ? :
-+			      dev_net(dev)->loopback_dev;
- 		else if (!netif_is_l3_master(dev))
- 			dev = dev_net(dev)->loopback_dev;
- 		/* last case is netif_is_l3_master(dev) is true in which
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index 3d6f8f3a83366..256969ac2cb9e 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -1181,7 +1181,6 @@ int xgbe_powerdown(struct net_device *netdev, unsigned int caller)
+ {
+ 	struct xgbe_prv_data *pdata = netdev_priv(netdev);
+ 	struct xgbe_hw_if *hw_if = &pdata->hw_if;
+-	unsigned long flags;
+ 
+ 	DBGPR("-->xgbe_powerdown\n");
+ 
+@@ -1192,8 +1191,6 @@ int xgbe_powerdown(struct net_device *netdev, unsigned int caller)
+ 		return -EINVAL;
+ 	}
+ 
+-	spin_lock_irqsave(&pdata->lock, flags);
+-
+ 	if (caller == XGMAC_DRIVER_CONTEXT)
+ 		netif_device_detach(netdev);
+ 
+@@ -1209,8 +1206,6 @@ int xgbe_powerdown(struct net_device *netdev, unsigned int caller)
+ 
+ 	pdata->power_down = 1;
+ 
+-	spin_unlock_irqrestore(&pdata->lock, flags);
+-
+ 	DBGPR("<--xgbe_powerdown\n");
+ 
+ 	return 0;
+@@ -1220,7 +1215,6 @@ int xgbe_powerup(struct net_device *netdev, unsigned int caller)
+ {
+ 	struct xgbe_prv_data *pdata = netdev_priv(netdev);
+ 	struct xgbe_hw_if *hw_if = &pdata->hw_if;
+-	unsigned long flags;
+ 
+ 	DBGPR("-->xgbe_powerup\n");
+ 
+@@ -1231,8 +1225,6 @@ int xgbe_powerup(struct net_device *netdev, unsigned int caller)
+ 		return -EINVAL;
+ 	}
+ 
+-	spin_lock_irqsave(&pdata->lock, flags);
+-
+ 	pdata->power_down = 0;
+ 
+ 	xgbe_napi_enable(pdata, 0);
+@@ -1247,8 +1239,6 @@ int xgbe_powerup(struct net_device *netdev, unsigned int caller)
+ 
+ 	xgbe_start_timers(pdata);
+ 
+-	spin_unlock_irqrestore(&pdata->lock, flags);
+-
+ 	DBGPR("<--xgbe_powerup\n");
+ 
+ 	return 0;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-main.c b/drivers/net/ethernet/amd/xgbe/xgbe-main.c
+index 0e8698928e4d7..6e8fafb2acbaa 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-main.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-main.c
+@@ -185,7 +185,6 @@ struct xgbe_prv_data *xgbe_alloc_pdata(struct device *dev)
+ 	pdata->netdev = netdev;
+ 	pdata->dev = dev;
+ 
+-	spin_lock_init(&pdata->lock);
+ 	spin_lock_init(&pdata->xpcs_lock);
+ 	mutex_init(&pdata->rss_mutex);
+ 	spin_lock_init(&pdata->tstamp_lock);
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
+index a596cd08124fa..82a88d0c15e31 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
+@@ -1083,9 +1083,6 @@ struct xgbe_prv_data {
+ 	unsigned int pp3;
+ 	unsigned int pp4;
+ 
+-	/* Overall device lock */
+-	spinlock_t lock;
+-
+ 	/* XPCS indirect addressing lock */
+ 	spinlock_t xpcs_lock;
+ 	unsigned int xpcs_window_def_reg;
 -- 
 2.51.0
 
