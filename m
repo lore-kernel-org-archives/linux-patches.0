@@ -1,45 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBE927A10F;
-	Mon, 23 Mar 2026 15:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693AD3B5851;
+	Mon, 23 Mar 2026 15:22:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279369; cv=none; b=FE63TVhBHnTcbvaqk6o16I8SQSN205apI1WMSAs0fmXZxecQlyEDj1HZ3566r8G83FQGNdl1n4ROgNNLmSVAourMN5NkKuMrPKHe/eaEDaI8dTRBBP4jFoW1U5oe3rPssAL2STuPdbvquZquapMAX4roKu7yfcxrgjvM8/rh42c=
+	t=1774279372; cv=none; b=JrUna11lH8WVgNlPI67+1ogjwUXC8Z1ysq4hpBXLxPk6aW8Y/9swh9p9NmQ9Whb06sDnml4ErSIZXNeW58EFAb8pa1tkWPfmW2xrwTgQUZI1HayjUO5nittjuUA9OB7WK5i+NQ3cViatJH4qvPkLk62rrnVw+Hv/pPZ7roiQ1JQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279369; c=relaxed/simple;
-	bh=/3AFGUDIxMdGO1UFPGwujHTYBeVomMY8EP6NDmad6+8=;
+	s=arc-20240116; t=1774279372; c=relaxed/simple;
+	bh=3Z0hFRa2wYdefJPr7Qdmd9FmxtUXyKx7GWzMRt7kxhY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MIhNtKQsBYwIveH8TsJ96zCSbVf+1UxbfRB2NMGi6FgQg7rG+56SWkVEJWc46IYAMo6qqAcYIWak9iBd9GUsZEFu16D/eMmYZrCY7pQmqT6FpEw9KXFzFbS/NvB+OYLShW1eENt/YfG4dfxfFj9ErcZk0nZ89vpKOr7VrTx9YLY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EBEbF1l8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=E62lAEXuFbMql/RTe8Ano2MNvYeWsKwJLdC8YStHBtyaEYcDhiHWVQjiDkIyTge+OWUynKgLsLgduR0GsW4MPjICIqhu0CBEBgVdTN9OfzTB+Uetk4J4W73UU/sUp/dXiLRINNmZCIPpyRKEQFVUbgwqH6rOcpKmgojwBsLoxc8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EPw6ZYEW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EBEbF1l8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AF3DC4CEF7;
-	Mon, 23 Mar 2026 15:22:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EPw6ZYEW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0052C4CEF7;
+	Mon, 23 Mar 2026 15:22:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279369;
-	bh=/3AFGUDIxMdGO1UFPGwujHTYBeVomMY8EP6NDmad6+8=;
+	s=korg; t=1774279372;
+	bh=3Z0hFRa2wYdefJPr7Qdmd9FmxtUXyKx7GWzMRt7kxhY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBEbF1l8WCWYHgDC44j7ZXLsnwQLlaIbllQtEowJ0BbKxt0gShtvxNgyeK81e3w9B
-	 Hv8wsTkAYmOYiCkRD3+l139UHnwL0bGUD+gVZoFOVprAiOq7/J8x0sneVVcgegBEEg
-	 PiCdf2//oK2zze3yoEkkw0IMVs1p8t5LkpwQX8Gk=
+	b=EPw6ZYEWhIkTqenAGFddfuGjR8dKYyI/FPoaLJIDOhJkF964sHu0YUMHlcgH09+I0
+	 X8WwmF/K/pkDBcYgT1WHcjbfL8jfFW3XrVSXFB9tY/WDOTiQe3zghW/3nnm94BYnZU
+	 XW5t8OUbXDhA7V48lT7ffqub9FcO7klKpuxi43Ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roman Li <roman.li@amd.com>,
-	Alex Hung <alex.hung@amd.com>,
-	Jerry Zuo <jerry.zuo@amd.com>,
-	Sun peng Li <sunpeng.li@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 562/567] drm/amd/display: Fix DisplayID not-found handling in parse_edid_displayid_vrr()
-Date: Mon, 23 Mar 2026 14:48:02 +0100
-Message-ID: <20260323134547.933607896@linuxfoundation.org>
+Subject: [PATCH 6.6 563/567] ksmbd: fix use-after-free of share_conf in compound request
+Date: Mon, 23 Mar 2026 14:48:03 +0100
+Message-ID: <20260323134547.956367286@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -58,69 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit 2323b019651ad81c20a0f7f817c63392b3110652 ]
+[ Upstream commit c33615f995aee80657b9fdfbc4ee7f49c2bd733d ]
 
-parse_edid_displayid_vrr() searches the EDID extension blocks for a
-DisplayID extension before parsing the dynamic video timing range.
+smb2_get_ksmbd_tcon() reuses work->tcon in compound requests without
+validating tcon->t_state. ksmbd_tree_conn_lookup() checks t_state ==
+TREE_CONNECTED on the initial lookup path, but the compound reuse path
+bypasses this check entirely.
 
-The code previously checked whether edid_ext was NULL after the search
-loop. However, edid_ext is assigned during each iteration of the loop,
-so it will never be NULL once the loop has executed. If no DisplayID
-extension is found, edid_ext ends up pointing to the last extension
-block, and the NULL check does not correctly detect the failure case.
+If a prior command in the compound (SMB2_TREE_DISCONNECT) sets t_state
+to TREE_DISCONNECTED and frees share_conf via ksmbd_share_config_put(),
+subsequent commands dereference the freed share_conf through
+work->tcon->share_conf.
 
-Instead, check whether the loop completed without finding a matching
-DisplayID block by testing "i == edid->extensions". This ensures the
-function exits early when no DisplayID extension is present and avoids
-parsing an unrelated EDID extension block.
+KASAN report:
 
-Also simplify the EDID validation check using "!edid ||
-!edid->extensions".
+[    4.144653] ==================================================================
+[    4.145059] BUG: KASAN: slab-use-after-free in smb2_write+0xc74/0xe70
+[    4.145415] Read of size 4 at addr ffff88810430c194 by task kworker/1:1/44
+[    4.145772]
+[    4.145867] CPU: 1 UID: 0 PID: 44 Comm: kworker/1:1 Not tainted 7.0.0-rc3+ #60 PREEMPTLAZY
+[    4.145871] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    4.145875] Workqueue: ksmbd-io handle_ksmbd_work
+[    4.145888] Call Trace:
+[    4.145892]  <TASK>
+[    4.145894]  dump_stack_lvl+0x64/0x80
+[    4.145910]  print_report+0xce/0x660
+[    4.145919]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    4.145928]  ? smb2_write+0xc74/0xe70
+[    4.145931]  kasan_report+0xce/0x100
+[    4.145934]  ? smb2_write+0xc74/0xe70
+[    4.145937]  smb2_write+0xc74/0xe70
+[    4.145939]  ? __pfx_smb2_write+0x10/0x10
+[    4.145942]  ? _raw_spin_unlock+0xe/0x30
+[    4.145945]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
+[    4.145948]  ? smb2_tree_disconnect+0x31c/0x480
+[    4.145951]  handle_ksmbd_work+0x40f/0x1080
+[    4.145953]  process_one_work+0x5fa/0xef0
+[    4.145962]  ? assign_work+0x122/0x3e0
+[    4.145964]  worker_thread+0x54b/0xf70
+[    4.145967]  ? __pfx_worker_thread+0x10/0x10
+[    4.145970]  kthread+0x346/0x470
+[    4.145976]  ? recalc_sigpending+0x19b/0x230
+[    4.145980]  ? __pfx_kthread+0x10/0x10
+[    4.145984]  ret_from_fork+0x4fb/0x6c0
+[    4.145992]  ? __pfx_ret_from_fork+0x10/0x10
+[    4.145995]  ? __switch_to+0x36c/0xbe0
+[    4.145999]  ? __pfx_kthread+0x10/0x10
+[    4.146003]  ret_from_fork_asm+0x1a/0x30
+[    4.146013]  </TASK>
+[    4.146014]
+[    4.149858] Allocated by task 44:
+[    4.149953]  kasan_save_stack+0x33/0x60
+[    4.150061]  kasan_save_track+0x14/0x30
+[    4.150169]  __kasan_kmalloc+0x8f/0xa0
+[    4.150274]  ksmbd_share_config_get+0x1dd/0xdd0
+[    4.150401]  ksmbd_tree_conn_connect+0x7e/0x600
+[    4.150529]  smb2_tree_connect+0x2e6/0x1000
+[    4.150645]  handle_ksmbd_work+0x40f/0x1080
+[    4.150761]  process_one_work+0x5fa/0xef0
+[    4.150873]  worker_thread+0x54b/0xf70
+[    4.150978]  kthread+0x346/0x470
+[    4.151071]  ret_from_fork+0x4fb/0x6c0
+[    4.151176]  ret_from_fork_asm+0x1a/0x30
+[    4.151286]
+[    4.151332] Freed by task 44:
+[    4.151418]  kasan_save_stack+0x33/0x60
+[    4.151526]  kasan_save_track+0x14/0x30
+[    4.151634]  kasan_save_free_info+0x3b/0x60
+[    4.151751]  __kasan_slab_free+0x43/0x70
+[    4.151861]  kfree+0x1ca/0x430
+[    4.151952]  __ksmbd_tree_conn_disconnect+0xc8/0x190
+[    4.152088]  smb2_tree_disconnect+0x1cd/0x480
+[    4.152211]  handle_ksmbd_work+0x40f/0x1080
+[    4.152326]  process_one_work+0x5fa/0xef0
+[    4.152438]  worker_thread+0x54b/0xf70
+[    4.152545]  kthread+0x346/0x470
+[    4.152638]  ret_from_fork+0x4fb/0x6c0
+[    4.152743]  ret_from_fork_asm+0x1a/0x30
+[    4.152853]
+[    4.152900] The buggy address belongs to the object at ffff88810430c180
+[    4.152900]  which belongs to the cache kmalloc-96 of size 96
+[    4.153226] The buggy address is located 20 bytes inside of
+[    4.153226]  freed 96-byte region [ffff88810430c180, ffff88810430c1e0)
+[    4.153549]
+[    4.153596] The buggy address belongs to the physical page:
+[    4.153750] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88810430ce80 pfn:0x10430c
+[    4.154000] flags: 0x100000000000200(workingset|node=0|zone=2)
+[    4.154160] page_type: f5(slab)
+[    4.154251] raw: 0100000000000200 ffff888100041280 ffff888100040110 ffff888100040110
+[    4.154461] raw: ffff88810430ce80 0000000800200009 00000000f5000000 0000000000000000
+[    4.154668] page dumped because: kasan: bad access detected
+[    4.154820]
+[    4.154866] Memory state around the buggy address:
+[    4.155002]  ffff88810430c080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155196]  ffff88810430c100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155391] >ffff88810430c180: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[    4.155587]                          ^
+[    4.155693]  ffff88810430c200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155891]  ffff88810430c280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.156087] ==================================================================
 
-Fixes the below:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:13079 parse_edid_displayid_vrr() warn: variable dereferenced before check 'edid_ext' (see line 13075)
+Add the same t_state validation to the compound reuse path, consistent
+with ksmbd_tree_conn_lookup().
 
-Fixes: a638b837d0e6 ("drm/amd/display: Fix refresh rate range for some panel")
-Cc: Roman Li <roman.li@amd.com>
-Cc: Alex Hung <alex.hung@amd.com>
-Cc: Jerry Zuo <jerry.zuo@amd.com>
-Cc: Sun peng Li <sunpeng.li@amd.com>
-Cc: Tom Chung <chiahsuan.chung@amd.com>
-Cc: Dan Carpenter <dan.carpenter@linaro.org>
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 91c7e6342e98c846b259c57273436fdea4c043f2)
+Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index 26047109726eb..f51c3921cbc26 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10695,7 +10695,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
- 	u16 min_vfreq;
- 	u16 max_vfreq;
- 
--	if (edid == NULL || edid->extensions == 0)
-+	if (!edid || !edid->extensions)
- 		return;
- 
- 	/* Find DisplayID extension */
-@@ -10705,7 +10705,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
- 			break;
- 	}
- 
--	if (edid_ext == NULL)
-+	if (i == edid->extensions)
- 		return;
- 
- 	while (j < EDID_LENGTH) {
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index e52a05ea25ccc..a647662ca7681 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -118,6 +118,8 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
+ 			pr_err("The first operation in the compound does not have tcon\n");
+ 			return -EINVAL;
+ 		}
++		if (work->tcon->t_state != TREE_CONNECTED)
++			return -ENOENT;
+ 		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
+ 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
+ 					tree_id, work->tcon->id);
 -- 
 2.51.0
 
