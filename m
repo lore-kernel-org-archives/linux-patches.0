@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AAD3B0AE5;
-	Mon, 23 Mar 2026 14:55:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86057387599;
+	Mon, 23 Mar 2026 14:55:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277738; cv=none; b=e+A+xOWSYa87r5KyWyHytPZDUcU9vcFHbkoPApUx/ubvRfUQARHEM9zjAeexYu797T6kpBO9bO+s0LRYLx5yEpzFa5N5LLwCqnQzXVvL+ZBXVGmXlbXhafxtRwGEuid7QErEqHH7fDyBHU1Mbt8vpB0n+qELCjiVwmahF+f0Luo=
+	t=1774277741; cv=none; b=tXMHy2C656tL+BqZITWmpaLq1MiPFJiUjl0rlVRRI6F9sfKUs7rAAOrO/6QsuH0pI8yaHnjrYJcftGdDUU1VuZte0WwQMDMlY3R0/HIYfreTw6ivA7EbzARWdXwOge02FiGeqrdlUDoki9CWinVxE26DvsSiydOwFmQOIHxIDhM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277738; c=relaxed/simple;
-	bh=w1xXU4xAt9YTwbawzppVzsyN3pnETr8l/dzvd7ZXeUk=;
+	s=arc-20240116; t=1774277741; c=relaxed/simple;
+	bh=ysBbX9tuIe8epelh0a+dgF8Ckk0qB4nAcgLiWbvNoxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qqOq40AkCaiRcl97yX0ltNOFei/L0U3gKwFBO3Plqwehnk+4RvUiN/gi42JB2tkk5p9rThz86wAMLZCCFW/fGg9msnMMbtSkBVSFPQMikNr5usbnCKYqVyaKkJ9QBBjpSlxNWN64lio2VwxM0uZ6iKn0Cgc4t9YZX4hs+88x1dk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1Bg/HmXq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ep2W8h7jq/bn0yWR5Zw+vehUdzFnYLKpSdc4TLs8BhsQpRa9dD99hiX3hsX1i/pbIpHsWvMKLGqVKI97tfB/sdovRQ3CT7OVbEOAGt6FTpi4B/1GBY/LCJNmfyrokjDtBZ3RvtqvXB3DNmEpdzRKwHaydPo8mHuYiDlyY8h1tgk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c0/LXpHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1Bg/HmXq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2605C2BCB1;
-	Mon, 23 Mar 2026 14:55:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c0/LXpHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1297CC4CEF7;
+	Mon, 23 Mar 2026 14:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277738;
-	bh=w1xXU4xAt9YTwbawzppVzsyN3pnETr8l/dzvd7ZXeUk=;
+	s=korg; t=1774277741;
+	bh=ysBbX9tuIe8epelh0a+dgF8Ckk0qB4nAcgLiWbvNoxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1Bg/HmXq8g3Bn21tHrhygWjsC5/pHhWIoitT6l49pFs1SosTIpVNkq6o5lRrZ1cUi
-	 dv/fwfvWupQQPVgmaJd3l3xvyim1CiM9s8PqaT2dKoQZzaIhIQnVuxxfLnQ7scHK90
-	 VhLvzzV9Qhubn2p87u01hJ5CzgXpvHG5GAqf5X08=
+	b=c0/LXpHvCV4jybhtUIbqdvjFDHWy7aEw7kewWHhMMk0bbjtGmTca/4mDktOPORTMj
+	 wtuoFehhN6m1vwU7l4XroKx4EMUjx1XFoqM8STeuxfhzTg8KK1vDD/Ilq+7OUv+kkZ
+	 KQsy15/yL4W1Ik5dDaI55YooiVVogjFxxtudLUb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Kleiner <mario.kleiner.de@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 086/567] drm/amdgpu: keep vga memory on MacBooks with switchable graphics
-Date: Mon, 23 Mar 2026 14:40:06 +0100
-Message-ID: <20260323134535.956155446@linuxfoundation.org>
+Subject: [PATCH 6.6 051/567] ext4: get rid of ppath in ext4_split_convert_extents()
+Date: Mon, 23 Mar 2026 14:39:31 +0100
+Message-ID: <20260323134535.073690966@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,48 +53,160 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 096bb75e13cc508d3915b7604e356bcb12b17766 ]
+[ Upstream commit 225057b1af381567ffa4eb813f4a28a5c38a25cf ]
 
-On Intel MacBookPros with switchable graphics, when the iGPU
-is enabled, the address of VRAM gets put at 0 in the dGPU's
-virtual address space.  This is non-standard and seems to cause
-issues with the cursor if it ends up at 0.  We have the framework
-to reserve memory at 0 in the address space, so enable it here if
-the vram start address is 0.
+The use of path and ppath is now very confusing, so to make the code more
+readable, pass path between functions uniformly, and get rid of ppath.
 
-Reviewed-and-tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4302
-Cc: stable@vger.kernel.org
-Cc: Mario Kleiner <mario.kleiner.de@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+To get rid of the ppath in ext4_split_convert_extents(), the following is
+done here:
+
+ * Its caller needs to update ppath if it uses ppath.
+
+No functional changes.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-19-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: feaf2a80e78f ("ext4: don't set EXT4_GET_BLOCKS_CONVERT when splitting before submitting I/O")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/ext4/extents.c | 65 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 33 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index 7d120d4175499..8cb192636368f 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -728,6 +728,16 @@ void amdgpu_gmc_get_vbios_allocations(struct amdgpu_device *adev)
- 	case CHIP_RENOIR:
- 		adev->mman.keep_stolen_vga_memory = true;
- 		break;
-+	case CHIP_POLARIS10:
-+	case CHIP_POLARIS11:
-+	case CHIP_POLARIS12:
-+		/* MacBookPros with switchable graphics put VRAM at 0 when
-+		 * the iGPU is enabled which results in cursor issues if
-+		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
-+		 */
-+		if (adev->gmc.vram_start == 0)
-+			adev->mman.keep_stolen_vga_memory = true;
-+		break;
- 	default:
- 		adev->mman.keep_stolen_vga_memory = false;
- 		break;
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 89d3baac7a79c..27bacfa7d492c 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3707,21 +3707,21 @@ static int ext4_ext_convert_to_initialized(handle_t *handle,
+  * being filled will be convert to initialized by the end_io callback function
+  * via ext4_convert_unwritten_extents().
+  *
+- * Returns the size of unwritten extent to be written on success.
++ * The size of unwritten extent to be written is passed to the caller via the
++ * allocated pointer. Return an extent path pointer on success, or an error
++ * pointer on failure.
+  */
+-static int ext4_split_convert_extents(handle_t *handle,
++static struct ext4_ext_path *ext4_split_convert_extents(handle_t *handle,
+ 					struct inode *inode,
+ 					struct ext4_map_blocks *map,
+-					struct ext4_ext_path **ppath,
+-					int flags)
++					struct ext4_ext_path *path,
++					int flags, unsigned int *allocated)
+ {
+-	struct ext4_ext_path *path = *ppath;
+ 	ext4_lblk_t eof_block;
+ 	ext4_lblk_t ee_block;
+ 	struct ext4_extent *ex;
+ 	unsigned int ee_len;
+ 	int split_flag = 0, depth;
+-	unsigned int allocated = 0;
+ 
+ 	ext_debug(inode, "logical block %llu, max_blocks %u\n",
+ 		  (unsigned long long)map->m_lblk, map->m_len);
+@@ -3749,14 +3749,8 @@ static int ext4_split_convert_extents(handle_t *handle,
+ 		split_flag |= (EXT4_EXT_MARK_UNWRIT2 | EXT4_EXT_DATA_VALID2);
+ 	}
+ 	flags |= EXT4_GET_BLOCKS_PRE_IO;
+-	path = ext4_split_extent(handle, inode, path, map, split_flag, flags,
+-				 &allocated);
+-	if (IS_ERR(path)) {
+-		*ppath = NULL;
+-		return PTR_ERR(path);
+-	}
+-	*ppath = path;
+-	return allocated;
++	return ext4_split_extent(handle, inode, path, map, split_flag, flags,
++				 allocated);
+ }
+ 
+ static int ext4_convert_unwritten_extents_endio(handle_t *handle,
+@@ -3792,11 +3786,14 @@ static int ext4_convert_unwritten_extents_endio(handle_t *handle,
+ 			     inode->i_ino, (unsigned long long)ee_block, ee_len,
+ 			     (unsigned long long)map->m_lblk, map->m_len);
+ #endif
+-		err = ext4_split_convert_extents(handle, inode, map, ppath,
+-						 EXT4_GET_BLOCKS_CONVERT);
+-		if (err < 0)
+-			return err;
+-		path = ext4_find_extent(inode, map->m_lblk, *ppath, 0);
++		path = ext4_split_convert_extents(handle, inode, map, path,
++						EXT4_GET_BLOCKS_CONVERT, NULL);
++		if (IS_ERR(path)) {
++			*ppath = NULL;
++			return PTR_ERR(path);
++		}
++
++		path = ext4_find_extent(inode, map->m_lblk, path, 0);
+ 		if (IS_ERR(path)) {
+ 			*ppath = NULL;
+ 			return PTR_ERR(path);
+@@ -3853,11 +3850,14 @@ convert_initialized_extent(handle_t *handle, struct inode *inode,
+ 		  (unsigned long long)ee_block, ee_len);
+ 
+ 	if (ee_block != map->m_lblk || ee_len > map->m_len) {
+-		err = ext4_split_convert_extents(handle, inode, map, ppath,
+-				EXT4_GET_BLOCKS_CONVERT_UNWRITTEN);
+-		if (err < 0)
+-			return err;
+-		path = ext4_find_extent(inode, map->m_lblk, *ppath, 0);
++		path = ext4_split_convert_extents(handle, inode, map, path,
++				EXT4_GET_BLOCKS_CONVERT_UNWRITTEN, NULL);
++		if (IS_ERR(path)) {
++			*ppath = NULL;
++			return PTR_ERR(path);
++		}
++
++		path = ext4_find_extent(inode, map->m_lblk, path, 0);
+ 		if (IS_ERR(path)) {
+ 			*ppath = NULL;
+ 			return PTR_ERR(path);
+@@ -3923,19 +3923,20 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ 
+ 	/* get_block() before submitting IO, split the extent */
+ 	if (flags & EXT4_GET_BLOCKS_PRE_IO) {
+-		ret = ext4_split_convert_extents(handle, inode, map, ppath,
+-					 flags | EXT4_GET_BLOCKS_CONVERT);
+-		if (ret < 0) {
+-			err = ret;
++		*ppath = ext4_split_convert_extents(handle, inode, map, *ppath,
++				flags | EXT4_GET_BLOCKS_CONVERT, &allocated);
++		if (IS_ERR(*ppath)) {
++			err = PTR_ERR(*ppath);
++			*ppath = NULL;
+ 			goto out2;
+ 		}
+ 		/*
+-		 * shouldn't get a 0 return when splitting an extent unless
++		 * shouldn't get a 0 allocated when splitting an extent unless
+ 		 * m_len is 0 (bug) or extent has been corrupted
+ 		 */
+-		if (unlikely(ret == 0)) {
++		if (unlikely(allocated == 0)) {
+ 			EXT4_ERROR_INODE(inode,
+-					 "unexpected ret == 0, m_len = %u",
++					 "unexpected allocated == 0, m_len = %u",
+ 					 map->m_len);
+ 			err = -EFSCORRUPTED;
+ 			goto out2;
+@@ -3996,9 +3997,9 @@ ext4_ext_handle_unwritten_extents(handle_t *handle, struct inode *inode,
+ 		err = -EFSCORRUPTED;
+ 		goto out2;
+ 	}
++	allocated = ret;
+ 
+ out:
+-	allocated = ret;
+ 	map->m_flags |= EXT4_MAP_NEW;
+ map_out:
+ 	map->m_flags |= EXT4_MAP_MAPPED;
 -- 
 2.51.0
 
