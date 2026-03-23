@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95850285CA8;
-	Mon, 23 Mar 2026 15:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A8239A7EF;
+	Mon, 23 Mar 2026 15:13:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278828; cv=none; b=TyYfs4xbLtFhFmVPMewXd07iffYbq7QKtlpGtuZmWaKA2dk1daCRl9qaoguYfcxgj3Poh5eY1YWqT9p8ETk5Kt2LX/MeljCt0vQYAWqJakAxocahQO10YwKAcQCo06H2Q0Xg+Y4mKPuQFlyoKXPii/XYkDX8S8FOeAHb0UbUCNE=
+	t=1774278831; cv=none; b=VEmK5dbtp3HjcLz9f6I+M3AMyl/F46VzZxE96k35OZpSgW9vVFJZSPWFDyxSI0UXX/9DYPloyavqNN48OTGQaR/GOblmG1QLkGzbFLzdp+xGP37TVRmRf/SdClpuKSqtEMPChHgHSj9tE5zGRVMTXbGf8/ge5XeAGuPV15mMoog=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278828; c=relaxed/simple;
-	bh=WN/2e3q1WzFjr1xTIeHSYvSXentqFfV388F6JYn+NIw=;
+	s=arc-20240116; t=1774278831; c=relaxed/simple;
+	bh=yrVP9z37BGd8etf5VXgSagBQO6XYx4lWY8aSAvwahO4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Kfmo2NNHgF6UoLNDHrxuf4wvGfL2uXJXIbNMgYrXKgMG6BfHpNjEzw0qM5ZY4GhrRkjo9AjTx0bEZIxi0IyDNt1zsW41qBAiR6jtlTdEXQi5JQ0bXD2pyAsNkGogjLLwkLrnfWe5PkjH5Hojv4PNeWvn1nlMdTAA6ttPHiNwz9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHxu4ZC0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jJm1aoTmoVmFr5vTrAFJa91jfLzJnCr7eowFFcEOO99CjFjSaos8cCGsapshvsaHXfQdXN9W8KzqVZFcFVjLwHk2h90p7cNJky5PnM689SfhqaTjrOGLtwS6ghJPG4/cE1kx1cxr3g62aAaVSGI1wAp3okpiZRAhfQK+ETYxe/4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0t45pNPe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHxu4ZC0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F829C4CEF7;
-	Mon, 23 Mar 2026 15:13:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0t45pNPe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BB3C2BCB3;
+	Mon, 23 Mar 2026 15:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278828;
-	bh=WN/2e3q1WzFjr1xTIeHSYvSXentqFfV388F6JYn+NIw=;
+	s=korg; t=1774278831;
+	bh=yrVP9z37BGd8etf5VXgSagBQO6XYx4lWY8aSAvwahO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NHxu4ZC0hpevWa+yqI/VmCZMn9+qDz6zThNUZbNZkKzEPh7HZxR130M4k7pbLS/gt
-	 WsARcySpo8qwZAVXhCMWKBKAVFcujs370KlFullp1Gh0EhAuO2tEhbAuoxMat5XB/A
-	 WGHFVMN3/J47WudtCUrjHxPZDSFO2PN8rBDrm4X0=
+	b=0t45pNPePHBHSboccXjBcWxFsDx5cx9i0Ylpu0wLlhC8WhwLQ7aYq6h/zRtiloBCm
+	 Wfy7b2AsMgr5Gn0dWdo1HrWtCfoMiYeEFd9Chwlr5wYtBJGRMptIsZPtGA3Ch8AfwJ
+	 XOXOUu8bJpd0r/2aIvfmma8Xjsp/PB9w7YlBK1FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeongjun Park <aha310510@gmail.com>,
-	Inki Dae <inki.dae@samsung.com>
-Subject: [PATCH 6.6 433/567] drm/exynos: vidi: use priv->vidi_dev for ctx lookup in vidi_connection_ioctl()
-Date: Mon, 23 Mar 2026 14:45:53 +0100
-Message-ID: <20260323134544.647761881@linuxfoundation.org>
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 6.6 416/567] x86/sev: Harden #VC instruction emulation somewhat
+Date: Mon, 23 Mar 2026 14:45:36 +0100
+Message-ID: <20260323134544.180238029@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,90 +51,182 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeongjun Park <aha310510@gmail.com>
+From: "Borislav Petkov (AMD)" <bp@alien8.de>
 
-[ Upstream commit d3968a0d85b211e197f2f4f06268a7031079e0d0 ]
+[ Upstream commit e3ef461af35a8c74f2f4ce6616491ddb355a208f ]
 
-vidi_connection_ioctl() retrieves the driver_data from drm_dev->dev to
-obtain a struct vidi_context pointer. However, drm_dev->dev is the
-exynos-drm master device, and the driver_data contained therein is not
-the vidi component device, but a completely different device.
+Compare the opcode bytes at rIP for each #VC exit reason to verify the
+instruction which raised the #VC exception is actually the right one.
 
-This can lead to various bugs, ranging from null pointer dereferences and
-garbage value accesses to, in unlucky cases, out-of-bounds errors,
-use-after-free errors, and more.
-
-To resolve this issue, we need to store/delete the vidi device pointer in
-exynos_drm_private->vidi_dev during bind/unbind, and then read this
-exynos_drm_private->vidi_dev within ioctl() to obtain the correct
-struct vidi_context pointer.
-
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jeongjun Park <aha310510@gmail.com>
-Signed-off-by: Inki Dae <inki.dae@samsung.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Link: https://lore.kernel.org/r/20240105101407.11694-1-bp@alien8.de
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/exynos/exynos_drm_drv.h  |    1 +
- drivers/gpu/drm/exynos/exynos_drm_vidi.c |   14 +++++++++++++-
- 2 files changed, 14 insertions(+), 1 deletion(-)
+ arch/x86/boot/compressed/sev.c |    4 +
+ arch/x86/kernel/sev-shared.c   |  102 ++++++++++++++++++++++++++++++++++++++++-
+ arch/x86/kernel/sev.c          |    5 +-
+ 3 files changed, 108 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/exynos/exynos_drm_drv.h
-+++ b/drivers/gpu/drm/exynos/exynos_drm_drv.h
-@@ -199,6 +199,7 @@ struct drm_exynos_file_private {
- struct exynos_drm_private {
- 	struct device *g2d_dev;
- 	struct device *dma_dev;
-+	struct device *vidi_dev;
- 	void *mapping;
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -277,6 +277,10 @@ void do_boot_stage2_vc(struct pt_regs *r
+ 	if (result != ES_OK)
+ 		goto finish;
  
- 	/* for atomic commit */
---- a/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_vidi.c
-@@ -224,9 +224,14 @@ ATTRIBUTE_GROUPS(vidi);
- int vidi_connection_ioctl(struct drm_device *drm_dev, void *data,
- 				struct drm_file *file_priv)
- {
--	struct vidi_context *ctx = dev_get_drvdata(drm_dev->dev);
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
-+	struct device *dev = priv ? priv->vidi_dev : NULL;
-+	struct vidi_context *ctx = dev ? dev_get_drvdata(dev) : NULL;
- 	struct drm_exynos_vidi_connection *vidi = data;
- 
-+	if (!ctx)
-+		return -ENODEV;
++	result = vc_check_opcode_bytes(&ctxt, exit_code);
++	if (result != ES_OK)
++		goto finish;
 +
- 	if (!vidi) {
- 		DRM_DEV_DEBUG_KMS(ctx->dev,
- 				  "user data for vidi is null.\n");
-@@ -386,6 +391,7 @@ static int vidi_bind(struct device *dev,
+ 	switch (exit_code) {
+ 	case SVM_EXIT_RDTSC:
+ 	case SVM_EXIT_RDTSCP:
+--- a/arch/x86/kernel/sev-shared.c
++++ b/arch/x86/kernel/sev-shared.c
+@@ -10,11 +10,15 @@
+  */
+ 
+ #ifndef __BOOT_COMPRESSED
+-#define error(v)	pr_err(v)
+-#define has_cpuflag(f)	boot_cpu_has(f)
++#define error(v)			pr_err(v)
++#define has_cpuflag(f)			boot_cpu_has(f)
++#define sev_printk(fmt, ...)		printk(fmt, ##__VA_ARGS__)
++#define sev_printk_rtl(fmt, ...)	printk_ratelimited(fmt, ##__VA_ARGS__)
+ #else
+ #undef WARN
+ #define WARN(condition, format...) (!!(condition))
++#define sev_printk(fmt, ...)
++#define sev_printk_rtl(fmt, ...)
+ #endif
+ 
+ /* I/O parameters for CPUID-related helpers */
+@@ -570,6 +574,7 @@ void __head do_vc_no_ghcb(struct pt_regs
  {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
- 	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
- 	struct drm_encoder *encoder = &ctx->encoder;
- 	struct exynos_drm_plane *exynos_plane;
- 	struct exynos_drm_plane_config plane_config = { 0 };
-@@ -393,6 +399,8 @@ static int vidi_bind(struct device *dev,
+ 	unsigned int subfn = lower_bits(regs->cx, 32);
+ 	unsigned int fn = lower_bits(regs->ax, 32);
++	u16 opcode = *(unsigned short *)regs->ip;
+ 	struct cpuid_leaf leaf;
  	int ret;
  
- 	ctx->drm_dev = drm_dev;
-+	if (priv)
-+		priv->vidi_dev = dev;
+@@ -577,6 +582,10 @@ void __head do_vc_no_ghcb(struct pt_regs
+ 	if (exit_code != SVM_EXIT_CPUID)
+ 		goto fail;
  
- 	plane_config.pixel_formats = formats;
- 	plane_config.num_pixel_formats = ARRAY_SIZE(formats);
-@@ -438,8 +446,12 @@ static int vidi_bind(struct device *dev,
- static void vidi_unbind(struct device *dev, struct device *master, void *data)
- {
- 	struct vidi_context *ctx = dev_get_drvdata(dev);
-+	struct drm_device *drm_dev = data;
-+	struct exynos_drm_private *priv = drm_dev->dev_private;
++	/* Is it really a CPUID insn? */
++	if (opcode != 0xa20f)
++		goto fail;
++
+ 	leaf.fn = fn;
+ 	leaf.subfn = subfn;
  
- 	del_timer_sync(&ctx->timer);
-+	if (priv)
-+		priv->vidi_dev = NULL;
+@@ -1203,3 +1212,92 @@ static int vmgexit_psc(struct ghcb *ghcb
+ out:
+ 	return ret;
  }
++
++static enum es_result vc_check_opcode_bytes(struct es_em_ctxt *ctxt,
++					    unsigned long exit_code)
++{
++	unsigned int opcode = (unsigned int)ctxt->insn.opcode.value;
++	u8 modrm = ctxt->insn.modrm.value;
++
++	switch (exit_code) {
++
++	case SVM_EXIT_IOIO:
++	case SVM_EXIT_NPF:
++		/* handled separately */
++		return ES_OK;
++
++	case SVM_EXIT_CPUID:
++		if (opcode == 0xa20f)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_INVD:
++		if (opcode == 0x080f)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_MONITOR:
++		if (opcode == 0x010f && modrm == 0xc8)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_MWAIT:
++		if (opcode == 0x010f && modrm == 0xc9)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_MSR:
++		/* RDMSR */
++		if (opcode == 0x320f ||
++		/* WRMSR */
++		    opcode == 0x300f)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_RDPMC:
++		if (opcode == 0x330f)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_RDTSC:
++		if (opcode == 0x310f)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_RDTSCP:
++		if (opcode == 0x010f && modrm == 0xf9)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_READ_DR7:
++		if (opcode == 0x210f &&
++		    X86_MODRM_REG(ctxt->insn.modrm.value) == 7)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_VMMCALL:
++		if (opcode == 0x010f && modrm == 0xd9)
++			return ES_OK;
++
++		break;
++
++	case SVM_EXIT_WRITE_DR7:
++		if (opcode == 0x230f &&
++		    X86_MODRM_REG(ctxt->insn.modrm.value) == 7)
++			return ES_OK;
++		break;
++
++	case SVM_EXIT_WBINVD:
++		if (opcode == 0x90f)
++			return ES_OK;
++		break;
++
++	default:
++		break;
++	}
++
++	sev_printk(KERN_ERR "Wrong/unhandled opcode bytes: 0x%x, exit_code: 0x%lx, rIP: 0x%lx\n",
++		   opcode, exit_code, ctxt->regs->ip);
++
++	return ES_UNSUPPORTED;
++}
+--- a/arch/x86/kernel/sev.c
++++ b/arch/x86/kernel/sev.c
+@@ -1749,7 +1749,10 @@ static enum es_result vc_handle_exitcode
+ 					 struct ghcb *ghcb,
+ 					 unsigned long exit_code)
+ {
+-	enum es_result result;
++	enum es_result result = vc_check_opcode_bytes(ctxt, exit_code);
++
++	if (result != ES_OK)
++		return result;
  
- static const struct component_ops vidi_component_ops = {
+ 	switch (exit_code) {
+ 	case SVM_EXIT_READ_DR7:
 
 
