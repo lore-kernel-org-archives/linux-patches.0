@@ -1,50 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F723AD536;
-	Mon, 23 Mar 2026 14:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB13AD536;
+	Mon, 23 Mar 2026 14:03:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274603; cv=none; b=Kz3v0CjHph+8ZtSiiNFi5LLzLvtvWOJ44gR8/nkhT1SGgrCK5u9anbBFKptIdUZvBcKVEH/dKY5AgsYTBnJO6i6USRCwdJvSwFo6Z/PQmD+AkClLh0+TxbxTsuY+EKZ4Dwq4Rl1njIEkmB9FJZCAsMfXuI46p5R1ciUCFRivHxM=
+	t=1774274605; cv=none; b=kCeTRgdfIu2XdI7u4tkIjBVjBn/kETitNwZ+AX2/3NkZblpMXaNOq9wUoLarF36VNPLSgMppqwK+0JI/Zb5mNsGBmg7J/A77ajs1IE+UHgUPK9/P+by0tz2zmYFsKU2uV8npLscjVsDsV4yCYuZOWBj4tCQ8Rajocrc2mTZbzcY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274603; c=relaxed/simple;
-	bh=zLSeymyGUcZm5anTLOwc4mJbenr0OLiRF7TV43VEPQc=;
+	s=arc-20240116; t=1774274605; c=relaxed/simple;
+	bh=U2uGr57XNtHcf0IbW81hupwiOn44+KMS2rzXjw0RffA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pxVn4Ixm9Mh8B31KNfa/jgGilzrvGJbKi7mHmDdTxEg9UVs7NDCJ1RRcBQ+T+X/z987r3wonOZXtQH8qHYy2S8YyAnk6uwTolYelwgE5ukrUDz5nTNJ8pojqixbH3J63DM8c53hsbssmJf746nkmcvCgYVu/b7w48dxFfXTG5L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJMnWMZQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ftPIvO90p0ZhgwMqmI1/p0uqTPuA/WAzMrsLFv0djFRgfFH9fig+atzrd6HDzMDy39O36OEHkSUGFtlHp1n1Bf9dtu82CNEk4Q/YsvGH9ix9clwQgJZrs09DX8qxkysc3kLEwyr0OXHx95R3dS0Ob9H+3c6l2CPiWz/3J/MOiYI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KV9qw7Ga; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJMnWMZQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03E6C4CEF7;
-	Mon, 23 Mar 2026 14:03:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KV9qw7Ga"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A84FC4CEF7;
+	Mon, 23 Mar 2026 14:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274602;
-	bh=zLSeymyGUcZm5anTLOwc4mJbenr0OLiRF7TV43VEPQc=;
+	s=korg; t=1774274605;
+	bh=U2uGr57XNtHcf0IbW81hupwiOn44+KMS2rzXjw0RffA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CJMnWMZQHAy99KmCn9qZfoMNWUs159+q7X9eyGvhiZff/ez9B3/XVsrLzfcM59hN+
-	 Mi88BIoBVeHtzAbqjek53ENreFfrHAJ28JB655x7FgPFdI2w08625ULLXkB8X6UNvC
-	 2xdd9JoLDafsSVJnHWGAyOy6F7SGhZCZe0WFw9AY=
+	b=KV9qw7GaoBxIXF6k9Gr1SMqnn3Y8IB6w0oHYZVlikyfdsYlmOcVV3OWE2ex5LoFtA
+	 CFIoKGrcWTS/SsjIhqLQx9qP3n+Z7lvfPo8cpbAgeZfcB6xuTAEkcC9lzNoGdOaE92
+	 qqh58tDZck7KW/yPlYOMSVDczcORMAt+rK4q6zwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zi Yan <ziy@nvidia.com>,
-	Bas van Dijk <bas@dfinity.org>,
-	Lance Yang <lance.yang@linux.dev>,
-	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
-	Wei Yang <richard.weiyang@gmail.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Barry Song <baohua@kernel.org>,
-	David Hildenbrand <david@kernel.org>,
-	Dev Jain <dev.jain@arm.com>,
-	Hugh Dickins <hughd@google.com>,
-	Liam Howlett <liam.howlett@oracle.com>,
-	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
-	Nico Pache <npache@redhat.com>,
-	Ryan Roberts <ryan.roberts@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.18 050/212] mm/huge_memory: fix a folio_split() race condition with folio_try_get()
-Date: Mon, 23 Mar 2026 14:44:31 +0100
-Message-ID: <20260323134505.352928865@linuxfoundation.org>
+	Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>,
+	Damien Le Moal <dlemoal@kernel.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH 6.18 051/212] ata: libata-core: disable LPM on ADATA SU680 SSD
+Date: Mon, 23 Mar 2026 14:44:32 +0100
+Message-ID: <20260323134505.383030529@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -63,130 +52,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zi Yan <ziy@nvidia.com>
+From: Damien Le Moal <dlemoal@kernel.org>
 
-During a pagecache folio split, the values in the related xarray should
-not be changed from the original folio at xarray split time until all
-after-split folios are well formed and stored in the xarray.  Current use
-of xas_try_split() in __split_unmapped_folio() lets some after-split
-folios show up at wrong indices in the xarray.  When these misplaced
-after-split folios are unfrozen, before correct folios are stored via
-__xa_store(), and grabbed by folio_try_get(), they are returned to
-userspace at wrong file indices, causing data corruption.  More detailed
-explanation is at the bottom.
+commit ce5ae93d1a216680460040c7c0465a6e3b629dec upstream.
 
-The reproducer is at: https://github.com/dfinity/thp-madv-remove-test
-It
-1. creates a memfd,
-2. forks,
-3. in the child process, maps the file with large folios (via shmem code
-   path) and reads the mapped file continuously with 16 threads,
-4. in the parent process, uses madvise(MADV_REMOVE) to punch poles in the
-   large folio.
+ADATA SU680 SSDs suffer from NCQ read and write commands timeouts or bus
+errors when link power management (LPM) is enabled. Flag these devices
+with the ATA_QUIRK_NOLPM quirk to prevent the use of LPM and avoid these
+command failures.
 
-Data corruption can be observed without the fix.  Basically, data from a
-wrong page->index is returned.
-
-Fix it by using the original folio in xas_try_split() calls, so that
-folio_try_get() can get the right after-split folios after the original
-folio is unfrozen.
-
-Uniform split, split_huge_page*(), is not affected, since it uses
-xas_split_alloc() and xas_split() only once and stores the original folio
-in the xarray.  Change xas_split() used in uniform split branch to use the
-original folio to avoid confusion.
-
-Fixes below points to the commit introduces the code, but folio_split() is
-used in a later commit 7460b470a131f ("mm/truncate: use folio_split() in
-truncate operation").
-
-More details:
-
-For example, a folio f is split non-uniformly into f, f2, f3, f4 like
-below:
-+----------------+---------+----+----+
-|       f        |    f2   | f3 | f4 |
-+----------------+---------+----+----+
-but the xarray would look like below after __split_unmapped_folio() is
-done:
-+----------------+---------+----+----+
-|       f        |    f2   | f3 | f3 |
-+----------------+---------+----+----+
-
-After __split_unmapped_folio(), the code changes the xarray and unfreezes
-after-split folios:
-
-1. unfreezes f2, __xa_store(f2)
-2. unfreezes f3, __xa_store(f3)
-3. unfreezes f4, __xa_store(f4), which overwrites the second f3 to f4.
-4. unfreezes f.
-
-Meanwhile, a parallel filemap_get_entry() can read the second f3 from the
-xarray and use folio_try_get() on it at step 2 when f3 is unfrozen. Then,
-f3 is wrongly returned to user.
-
-After the fix, the xarray looks like below after __split_unmapped_folio():
-+----------------+---------+----+----+
-|       f        |    f    | f  | f  |
-+----------------+---------+----+----+
-so that the race window no longer exists.
-
-[ziy@nvidia.com: move comment, per David]
-  Link: https://lkml.kernel.org/r/5C9FA053-A4C6-4615-BE05-74E47A6462B3@nvidia.com
-Link: https://lkml.kernel.org/r/20260302203159.3208341-1-ziy@nvidia.com
-Fixes: 00527733d0dc ("mm/huge_memory: add two new (not yet used) functions for folio_split()")
-Signed-off-by: Zi Yan <ziy@nvidia.com>
-Reported-by: Bas van Dijk <bas@dfinity.org>
-Closes: https://lore.kernel.org/all/CAKNNEtw5_kZomhkugedKMPOG-sxs5Q5OLumWJdiWXv+C9Yct0w@mail.gmail.com/
-Tested-by: Lance Yang <lance.yang@linux.dev>
-Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
-Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Barry Song <baohua@kernel.org>
-Cc: David Hildenbrand <david@kernel.org>
-Cc: Dev Jain <dev.jain@arm.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Liam Howlett <liam.howlett@oracle.com>
-Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
-Cc: Nico Pache <npache@redhat.com>
-Cc: Ryan Roberts <ryan.roberts@arm.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-(cherry picked from commit 577a1f495fd78d8fb61b67ac3d3b595b01f6fcb0)
-Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>
+Closes: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-6.17/+bug/2144060
+Cc: stable@vger.kernel.org
+Tested-by: Mohammad-Khaled Bayan <mhd.khaled.bayan@gmail.com>
+Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
+Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/huge_memory.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/ata/libata-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/mm/huge_memory.c
-+++ b/mm/huge_memory.c
-@@ -3438,6 +3438,7 @@ static int __split_unmapped_folio(struct
- {
- 	int order = folio_order(folio);
- 	int start_order = uniform_split ? new_order : order - 1;
-+	struct folio *old_folio = folio;
- 	bool stop_split = false;
- 	struct folio *next;
- 	int split_order;
-@@ -3468,12 +3469,16 @@ static int __split_unmapped_folio(struct
- 			 * uniform split has xas_split_alloc() called before
- 			 * irq is disabled to allocate enough memory, whereas
- 			 * non-uniform split can handle ENOMEM.
-+			 * Use the to-be-split folio, so that a parallel
-+			 * folio_try_get() waits on it until xarray is updated
-+			 * with after-split folios and the original one is
-+			 * unfrozen.
- 			 */
- 			if (uniform_split)
--				xas_split(xas, folio, old_order);
-+				xas_split(xas, old_folio, old_order);
- 			else {
- 				xas_set_order(xas, folio->index, split_order);
--				xas_try_split(xas, folio, old_order);
-+				xas_try_split(xas, old_folio, old_order);
- 				if (xas_error(xas)) {
- 					ret = xas_error(xas);
- 					stop_split = true;
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4156,6 +4156,9 @@ static const struct ata_dev_quirks_entry
+ 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_QUIRK_NONCQ |
+ 						ATA_QUIRK_FIRMWARE_WARN },
+ 
++	/* ADATA devices with LPM issues. */
++	{ "ADATA SU680",	NULL,		ATA_QUIRK_NOLPM },
++
+ 	/* Seagate disks with LPM issues */
+ 	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
+ 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
 
 
