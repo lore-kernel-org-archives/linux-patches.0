@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A02DC1459FA;
-	Mon, 23 Mar 2026 14:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 203AF3AF663;
+	Mon, 23 Mar 2026 14:42:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276919; cv=none; b=JmyAB1AVwNM0ZunNrYxzfXnBFWG3OaUoLS56tTxArSvUxPVqxG/6gMLBWMiQYN5bb4UPnBZ/r3HNOkZqygTbfcql3WLG9T+7RFSnAR4fA6sF9CDWvQpn0HQKdM6UNgi3qWoz0pj1z3Sim4NgXynS1VhhBvaRHVYgngpZ2dECAy4=
+	t=1774276922; cv=none; b=tbncVeypo2U3T1V4kmASBZBySoFKsGTpa8jBFQOjn6KlkGuwwnUMmpLJMyjjchh353NVsUQLhVDOvTJ/n2B419zVEPGUWaHGrs8OMUZYmphp6elCKTHOJXq9WUePesrDG9mK+qtj6+edq9Y49ZZjwEqHvHI/2K/QvEHfQTZhqlU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276919; c=relaxed/simple;
-	bh=j5XL2fXCxlC6hBVLhEoFivFkk5LJw/w4mK3WC6Wa8pI=;
+	s=arc-20240116; t=1774276922; c=relaxed/simple;
+	bh=oDZaVU/0tPFimNYgiZbL83GhW5WELR77ywn/FxFoklU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=j6/l2iZj9vU6ye4XyGEq0Ug2Xo1b2YdfZcUSEPg2Fj9Z4rI6oWpqDS9TaKuqVfzWviHgBxMp4tFuVBAWdYr68dIk9TDupKTknufWTr7GXsxI8Lw+aeCksGnFi6nEliMMQ8GGfOAFzPAXODw/cCI/KJoVlz+b1orckdeu94RHbHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GB29z4Mg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fHml1ZW/adUWsdB04xD+3K/lC6TjDm1jmNKBTar5f9av88ODX0n6oxXz4dLbIoCWNo+Z0Jxuw4c63pA7ATa/NYJqTqccIYq7IWYc3E3yML1wRxkha06ZT08xar4SuVY15qKH8FFrVyJ1aJb/uz+JZ/y2Leu93r3g5jc31qtXRU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Kl48hgx5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GB29z4Mg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35335C4CEF7;
-	Mon, 23 Mar 2026 14:41:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Kl48hgx5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE37C4CEF7;
+	Mon, 23 Mar 2026 14:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276919;
-	bh=j5XL2fXCxlC6hBVLhEoFivFkk5LJw/w4mK3WC6Wa8pI=;
+	s=korg; t=1774276922;
+	bh=oDZaVU/0tPFimNYgiZbL83GhW5WELR77ywn/FxFoklU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GB29z4MgiSlfLgzhq+9OL8vMgqAj9v777lihTbv2cmh21oWH2r3r3L8Y6rimAeVYX
-	 xQ40itwh4eFtgBs080aAfnA63t7Dg4/g/a/6gK02aWK+UE5JjRYuUsVChbWiJ4Y9Qt
-	 0swFVFx0+/+DdbESOAJDimvNMvWvRncPnh4Px/sw=
+	b=Kl48hgx5PmLTtqM8tVMHxe8HgqCtdT2uG84TUyDKM2b0PX4fYp3PhlOtITO53GNEN
+	 byIqKwM94cXyvE+2ZK+lArpRAx1iDRqm96Dw5eB6qr9jR+GYb7ttZqwioPyNN36IBK
+	 6ymK4GOOmt6zr03vOdFQKHrLaoGn6v6ioyG8oeJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 255/460] sched_ext: Disable preemption between scx_claim_exit() and kicking helper work
-Date: Mon, 23 Mar 2026 14:44:11 +0100
-Message-ID: <20260323134532.752583513@linuxfoundation.org>
+Subject: [PATCH 6.12 256/460] sched_ext: Fix starvation of scx_enable() under fair-class saturation
+Date: Mon, 23 Mar 2026 14:44:12 +0100
+Message-ID: <20260323134532.781223608@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,80 +52,137 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit 83236b2e43dba00bee5b82eb5758816b1a674f6a ]
+[ Upstream commit b06ccbabe2506fd70b9167a644978b049150224a ]
 
-scx_claim_exit() atomically sets exit_kind, which prevents scx_error() from
-triggering further error handling. After claiming exit, the caller must kick
-the helper kthread work which initiates bypass mode and teardown.
+During scx_enable(), the READY -> ENABLED task switching loop changes the
+calling thread's sched_class from fair to ext. Since fair has higher
+priority than ext, saturating fair-class workloads can indefinitely starve
+the enable thread, hanging the system. This was introduced when the enable
+path switched from preempt_disable() to scx_bypass() which doesn't protect
+against fair-class starvation. Note that the original preempt_disable()
+protection wasn't complete either - in partial switch modes, the calling
+thread could still be starved after preempt_enable() as it may have been
+switched to ext class.
 
-If the calling task gets preempted between claiming exit and kicking the
-helper work, and the BPF scheduler fails to schedule it back (since error
-handling is now disabled), the helper work is never queued, bypass mode
-never activates, tasks stop being dispatched, and the system wedges.
+Fix it by offloading the enable body to a dedicated system-wide RT
+(SCHED_FIFO) kthread which cannot be starved by either fair or ext class
+tasks. scx_enable() lazily creates the kthread on first use and passes the
+ops pointer through a struct scx_enable_cmd containing the kthread_work,
+then synchronously waits for completion.
 
-Disable preemption across scx_claim_exit() and the subsequent work kicking
-in all callers - scx_disable() and scx_vexit(). Add
-lockdep_assert_preemption_disabled() to scx_claim_exit() to enforce the
-requirement.
+The workfn runs on a different kthread from sch->helper (which runs
+disable_work), so it can safely flush disable_work on the error path
+without deadlock.
 
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
+Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
 Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
-[ adapted per-scheduler struct (sch->exit_kind, scx_disable, scx_vexit) to global variables (scx_exit_kind, scx_ops_disable, scx_ops_exit_kind) ]
+[ adapted per-scheduler scx_sched struct references to globals ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   24 ++++++++++++++++++++----
- 1 file changed, 20 insertions(+), 4 deletions(-)
+ kernel/sched/ext.c |   64 ++++++++++++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 54 insertions(+), 10 deletions(-)
 
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -4775,14 +4775,29 @@ static void schedule_scx_ops_disable_wor
- 		kthread_queue_work(helper, &scx_ops_disable_work);
+@@ -5166,19 +5166,29 @@ static int validate_ops(const struct sch
+ 	return 0;
  }
  
--static void scx_ops_disable(enum scx_exit_kind kind)
+-static int scx_ops_enable(struct sched_ext_ops *ops, struct bpf_link *link)
 +/*
-+ * Claim the exit. The caller must ensure that the helper kthread work
-+ * is kicked before the current task can be preempted. Once exit_kind is
-+ * claimed, scx_error() can no longer trigger, so if the current task gets
-+ * preempted and the BPF scheduler fails to schedule it back, the helper work
-+ * will never be kicked and the whole system can wedge.
++ * scx_ops_enable() is offloaded to a dedicated system-wide RT kthread to avoid
++ * starvation. During the READY -> ENABLED task switching loop, the calling
++ * thread's sched_class gets switched from fair to ext. As fair has higher
++ * priority than ext, the calling thread can be indefinitely starved under
++ * fair-class saturation, leading to a system hang.
 + */
-+static bool scx_claim_exit(enum scx_exit_kind kind)
- {
- 	int none = SCX_EXIT_NONE;
- 
-+	lockdep_assert_preemption_disabled();
++struct scx_enable_cmd {
++	struct kthread_work	work;
++	struct sched_ext_ops	*ops;
++	int			ret;
++};
 +
-+	return atomic_try_cmpxchg(&scx_exit_kind, &none, kind);
++static void scx_ops_enable_workfn(struct kthread_work *work)
+ {
++	struct scx_enable_cmd *cmd =
++		container_of(work, struct scx_enable_cmd, work);
++	struct sched_ext_ops *ops = cmd->ops;
+ 	struct scx_task_iter sti;
+ 	struct task_struct *p;
+ 	unsigned long timeout;
+ 	int i, cpu, node, ret;
+ 
+-	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
+-			   cpu_possible_mask)) {
+-		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
+-		return -EINVAL;
+-	}
+-
+ 	mutex_lock(&scx_ops_enable_mutex);
+ 
+ 	if (!scx_ops_helper) {
+@@ -5445,7 +5455,8 @@ static int scx_ops_enable(struct sched_e
+ 
+ 	atomic_long_inc(&scx_enable_seq);
+ 
+-	return 0;
++	cmd->ret = 0;
++	return;
+ 
+ err_del:
+ 	kobject_del(scx_root_kobj);
+@@ -5458,7 +5469,8 @@ err:
+ 	}
+ err_unlock:
+ 	mutex_unlock(&scx_ops_enable_mutex);
+-	return ret;
++	cmd->ret = ret;
++	return;
+ 
+ err_disable_unlock_all:
+ 	scx_cgroup_unlock();
+@@ -5477,7 +5489,39 @@ err_disable:
+ 	 */
+ 	scx_ops_error("scx_ops_enable() failed (%d)", ret);
+ 	kthread_flush_work(&scx_ops_disable_work);
+-	return 0;
++	cmd->ret = 0;
 +}
 +
-+static void scx_ops_disable(enum scx_exit_kind kind)
++static int scx_ops_enable(struct sched_ext_ops *ops, struct bpf_link *link)
 +{
- 	if (WARN_ON_ONCE(kind == SCX_EXIT_NONE || kind == SCX_EXIT_DONE))
- 		kind = SCX_EXIT_ERROR;
- 
--	atomic_try_cmpxchg(&scx_exit_kind, &none, kind);
-+	guard(preempt)();
-+	scx_claim_exit(kind);
- 
- 	schedule_scx_ops_disable_work();
- }
-@@ -5082,10 +5097,11 @@ static __printf(3, 4) void scx_ops_exit_
- 					     const char *fmt, ...)
- {
- 	struct scx_exit_info *ei = scx_exit_info;
--	int none = SCX_EXIT_NONE;
- 	va_list args;
- 
--	if (!atomic_try_cmpxchg(&scx_exit_kind, &none, kind))
-+	guard(preempt)();
++	static struct kthread_worker *helper;
++	static DEFINE_MUTEX(helper_mutex);
++	struct scx_enable_cmd cmd;
 +
-+	if (!scx_claim_exit(kind))
- 		return;
++	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
++			   cpu_possible_mask)) {
++		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
++		return -EINVAL;
++	}
++
++	if (!READ_ONCE(helper)) {
++		mutex_lock(&helper_mutex);
++		if (!helper) {
++			helper = scx_create_rt_helper("scx_ops_enable_helper");
++			if (!helper) {
++				mutex_unlock(&helper_mutex);
++				return -ENOMEM;
++			}
++		}
++		mutex_unlock(&helper_mutex);
++	}
++
++	kthread_init_work(&cmd.work, scx_ops_enable_workfn);
++	cmd.ops = ops;
++
++	kthread_queue_work(READ_ONCE(helper), &cmd.work);
++	kthread_flush_work(&cmd.work);
++	return cmd.ret;
+ }
  
- 	ei->exit_code = exit_code;
+ 
 
 
