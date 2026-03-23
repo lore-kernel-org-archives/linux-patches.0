@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CFE23BF9B;
-	Mon, 23 Mar 2026 14:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271DF27380A;
+	Mon, 23 Mar 2026 14:47:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277273; cv=none; b=I3aplwHLDdZioBJczYlKlUW/Z2CaytPSCkjMIsDOaiXgNVFgW+5Pu71QV5iDJPMGx/xAQDLUF+onFnUb5AlZXPbO2LI5p4JBaA4ueXL3cM0uCfGGpj61/6vQUsxFPfH5Wq+PSOIjY4D52UCblcS8gkN1Xsgx/DLHky3XW3vJkX4=
+	t=1774277276; cv=none; b=pLAH35B53iJf9aYO/bHhjhHChpxhb54krVfzaTy7/sniUzIwVB5uDAn+EyEltFWO9ISPKN9WcV93zeN4eWphODxdCQZzCh+Uvi/HqNubdIUk5ViaLb1517xJqB30nHHk/gDii/zU0di1ui78wXUPK82/V1tYZ//LOYmG/ZkRT+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277273; c=relaxed/simple;
-	bh=DnJCSjL/uSIWNJ1gQSj6T2w4EE9HaDnqvMW/iOLzJxI=;
+	s=arc-20240116; t=1774277276; c=relaxed/simple;
+	bh=rQTbKgf/IpZVcH+H45SECJbUlFskECipKfnVLgVaaAs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QUutGBPzlNVQDltUO6v80seZPYUowIBh1eKXKx4QHQ/DHmgu8uUXNw8a9l7ml2GA2XFWAH0zNiXlKspjnvgPqt1Ltm13arI4e4eYAoFDrwoybHJNkPOrZ/bWYJwOMKjNSWQgwCWCf4DkeFO3K3RdvLQxf4Jw9Ov6wkhw792kNh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Z0xbGR8x; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=OarfC3HEp9iWuQMiC6IwBgZHa9yLxioV+IWGERACjit72O8aqVu+veTx3uIZcUz9nqcT4njCI0+/SaxvJMB0sggd9U5DyVts0XRIoroTzgn0Xpwic/EPwcVoA0Iws68/6g3Z0++6YEShUf5KR8vzjXuEcJGxQX6IL66M5iHU4D0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdwaeSVJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Z0xbGR8x"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B56FC4CEF7;
-	Mon, 23 Mar 2026 14:47:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdwaeSVJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AA8C4CEF7;
+	Mon, 23 Mar 2026 14:47:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277273;
-	bh=DnJCSjL/uSIWNJ1gQSj6T2w4EE9HaDnqvMW/iOLzJxI=;
+	s=korg; t=1774277275;
+	bh=rQTbKgf/IpZVcH+H45SECJbUlFskECipKfnVLgVaaAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0xbGR8xQa8+c6VuuOhPCKZn2P7x+FsJ3kEaU02JMKXg26boGUDJjOt2jNHW1fCPn
-	 XfpQoPOdx1r/OztR2BTVucnDTzK9GFFFJCz1s9/gH1HCFTxieZ0471be10LwCVQdC6
-	 oP6GZR/GXaTeNT1jHaDG+01nsBAdB8bkAd0evhG4=
+	b=qdwaeSVJ7eiLcyvyf9twI01OXQrcxa95m/GdLF+1bw+jL8xPzza/c1GQMvQfoxIdj
+	 5yRMbXdD6uwbDaNYay3t8p2tf+w1SvVTOdj6e2OjQ+49Bjcsr3MH2X29bE2CMGIIGp
+	 AY12QVofvTKwc4qT1FRYu4gcqwxyNZf1WvQ71FCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 377/460] arm64: dts: renesas: r9a09g057: Remove wdt{0,2,3} nodes
-Date: Mon, 23 Mar 2026 14:46:13 +0100
-Message-ID: <20260323134535.829739855@linuxfoundation.org>
+Subject: [PATCH 6.12 378/460] firmware: arm_ffa: Remove vm_id argument in ffa_rxtx_unmap()
+Date: Mon, 23 Mar 2026 14:46:14 +0100
+Message-ID: <20260323134535.854643512@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -45,86 +45,79 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit a3f34651de4287138c0da19ba321ad72622b4af3 ]
+[ Upstream commit a4e8473b775160f3ce978f621cf8dea2c7250433 ]
 
-The HW user manual for the Renesas RZ/V2H(P) SoC (a.k.a r9a09g057)
-states that only WDT1 is supposed to be accessed by the CA55 cores.
-WDT0 is supposed to be used by the CM33 core, WDT2 is supposed
-to be used by the CR8 core 0, and WDT3 is supposed to be used
-by the CR8 core 1.
+According to the FF-A specification (DEN0077, v1.1, §13.7), when
+FFA_RXTX_UNMAP is invoked from any instance other than non-secure
+physical, the w1 register must be zero (MBZ). If a non-zero value is
+supplied in this context, the SPMC must return FFA_INVALID_PARAMETER.
 
-Remove wdt{0,2,3} from the SoC specific device tree to make it
-compliant with the specification from the HW manual.
+The Arm FF-A driver operates exclusively as a guest or non-secure
+physical instance where the partition ID is always zero and is not
+invoked from a hypervisor context where w1 carries a VM ID. In this
+execution model, the partition ID observed by the driver is always zero,
+and passing a VM ID is unnecessary and potentially invalid.
 
-This change is harmless as there are currently no users of the
-wdt{0,2,3} device tree nodes, only the wdt1 node is actually used.
+Remove the vm_id parameter from ffa_rxtx_unmap() and ensure that the
+SMC call is issued with w1 implicitly zeroed, as required by the
+specification. This prevents invalid parameter errors and aligns the
+implementation with the defined FF-A ABI behavior.
 
-Fixes: 095105496e7d ("arm64: dts: renesas: r9a09g057: Add WDT0-WDT3 nodes")
-Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260203124247.7320-3-fabrizio.castro.jz@renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Message-Id: <20260304120953.847671-1-yeoreum.yun@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r9a09g057.dtsi | 30 ----------------------
- 1 file changed, 30 deletions(-)
+ drivers/firmware/arm_ffa/driver.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-index 4676ee7561395..5c7b9e296f439 100644
---- a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
-@@ -201,16 +201,6 @@ ostm7: timer@12c03000 {
- 			status = "disabled";
- 		};
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 9516ee870cd25..bec1fbaff7f34 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -206,12 +206,12 @@ static int ffa_rxtx_map(phys_addr_t tx_buf, phys_addr_t rx_buf, u32 pg_cnt)
+ 	return 0;
+ }
  
--		wdt0: watchdog@11c00400 {
--			compatible = "renesas,r9a09g057-wdt";
--			reg = <0 0x11c00400 0 0x400>;
--			clocks = <&cpg CPG_MOD 0x4b>, <&cpg CPG_MOD 0x4c>;
--			clock-names = "pclk", "oscclk";
--			resets = <&cpg 0x75>;
--			power-domains = <&cpg>;
--			status = "disabled";
--		};
--
- 		wdt1: watchdog@14400000 {
- 			compatible = "renesas,r9a09g057-wdt";
- 			reg = <0 0x14400000 0 0x400>;
-@@ -221,26 +211,6 @@ wdt1: watchdog@14400000 {
- 			status = "disabled";
- 		};
+-static int ffa_rxtx_unmap(u16 vm_id)
++static int ffa_rxtx_unmap(void)
+ {
+ 	ffa_value_t ret;
  
--		wdt2: watchdog@13000000 {
--			compatible = "renesas,r9a09g057-wdt";
--			reg = <0 0x13000000 0 0x400>;
--			clocks = <&cpg CPG_MOD 0x4f>, <&cpg CPG_MOD 0x50>;
--			clock-names = "pclk", "oscclk";
--			resets = <&cpg 0x77>;
--			power-domains = <&cpg>;
--			status = "disabled";
--		};
--
--		wdt3: watchdog@13000400 {
--			compatible = "renesas,r9a09g057-wdt";
--			reg = <0 0x13000400 0 0x400>;
--			clocks = <&cpg CPG_MOD 0x51>, <&cpg CPG_MOD 0x52>;
--			clock-names = "pclk", "oscclk";
--			resets = <&cpg 0x78>;
--			power-domains = <&cpg>;
--			status = "disabled";
--		};
--
- 		rtc: rtc@11c00800 {
- 			compatible = "renesas,r9a09g057-rtca3", "renesas,rz-rtca3";
- 			reg = <0 0x11c00800 0 0x400>;
+ 	invoke_ffa_fn((ffa_value_t){
+-		      .a0 = FFA_RXTX_UNMAP, .a1 = PACK_TARGET_INFO(vm_id, 0),
++		      .a0 = FFA_RXTX_UNMAP,
+ 		      }, &ret);
+ 
+ 	if (ret.a0 == FFA_ERROR)
+@@ -1832,7 +1832,7 @@ static int __init ffa_init(void)
+ 
+ cleanup_notifs:
+ 	ffa_notifications_cleanup();
+-	ffa_rxtx_unmap(drv_info->vm_id);
++	ffa_rxtx_unmap();
+ free_pages:
+ 	if (drv_info->tx_buffer)
+ 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
+@@ -1847,7 +1847,7 @@ static void __exit ffa_exit(void)
+ {
+ 	ffa_notifications_cleanup();
+ 	ffa_partitions_cleanup();
+-	ffa_rxtx_unmap(drv_info->vm_id);
++	ffa_rxtx_unmap();
+ 	free_pages_exact(drv_info->tx_buffer, drv_info->rxtx_bufsz);
+ 	free_pages_exact(drv_info->rx_buffer, drv_info->rxtx_bufsz);
+ 	kfree(drv_info);
 -- 
 2.51.0
 
