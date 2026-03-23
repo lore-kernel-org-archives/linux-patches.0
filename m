@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9D23AD536;
-	Mon, 23 Mar 2026 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1C43AD536;
+	Mon, 23 Mar 2026 13:55:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274125; cv=none; b=HtfFVzFmXXbhW93QSyGs4BUusBxQslJe2RtC1ytlCwBz2lO8wcgGK6VJHJHheeikNPQh/w3BQ0ggRJGrBjrS4021kJrldTkTm+Fe/VZg25m69Mg/Z750CacDbKVTOmPo4TLg/iFNFwdySIHD7xcIVJnkWlkyfHmrMbRcQwZYmQc=
+	t=1774274128; cv=none; b=Hlx3hFWiL8ETp0CTzqNrSbTqTwF1AaUv4RBXTwUGnVLdB5XjIFg68QDRQnMXNIWqgHcxHTYb1QEz4+6W1QknjEZLMpLYDGQM1OY1YyWaCYTvkDbQW6lw/Gr99GXhj4S/A0EcT8SOKv2nHZI0cisSQEMtwRfzC3TkxkuQoP09YvA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274125; c=relaxed/simple;
-	bh=/3Wn+APBblgB/2oQ3VUfsUMctXkA4XwllQ4mTOjdn30=;
+	s=arc-20240116; t=1774274128; c=relaxed/simple;
+	bh=I1snRBp8n03zI8/WvbwdGXtcOcHwhNM+rJG/99yCnJU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Bfrxe5wAmSXM3FeSf/TP+rzGZadFvzvDEGOsumsYVXEPfbpVSPBZOJwOg1GfM1Dc5LRwZ2pDXkOfs+zV76Poo6jpU1qlbeT8pLHxfQ6YIPrfFpTBlaVMYZ7GjJWS5J20K1MzupMqFI6NMCzBbcmsdbK0BTqlz1iUbcEgIa76Tqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jpUadTNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Lw4p0o82gtc0Iz/Dboo/0/1q4Q54vYQ/en/OquWjFqtVWkJ05sXeEoMLr72NLuDgdHokwXAUJ9Iveh7wDDRwjdmwuFGhuUxFVJ4v4VvYhsCOirfGDO8fM5KPZaC3uSEWStKP8YzGBmt+16GpsVIghiA12qz+0sO9Md8B0i12JZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZK88+0XL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jpUadTNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC8FC4CEF7;
-	Mon, 23 Mar 2026 13:55:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZK88+0XL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 862DDC4CEF7;
+	Mon, 23 Mar 2026 13:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274124;
-	bh=/3Wn+APBblgB/2oQ3VUfsUMctXkA4XwllQ4mTOjdn30=;
+	s=korg; t=1774274127;
+	bh=I1snRBp8n03zI8/WvbwdGXtcOcHwhNM+rJG/99yCnJU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpUadTNu0xCgeNU6YZ/AyxtFFJlALudrmhBBppqNNdxC31IrgVzamPwukgR/yCdT2
-	 6N/82QwNIRjdyVrz04yldd8MOUY89LuNPqZtMugM+dUL4Y5G8KZ4MRLZ24YmKWd1DW
-	 gjNPZIRkxlBDYiEnwjKi8Et0YFDZX9hfKBkHmQH4=
+	b=ZK88+0XLq/lEsZJsjHgVz+JmOYpp+JIkVCp6cNZ4nwSh1Ka01EqTfc1Yr5K/xuRyM
+	 27HiqV8zMN0Lif4PP6/hVxeq5fvoxHcxHXbYqr0w99pMZqf7bFNtGuV6LRz58c3NlB
+	 pokxVd3bG3HwLe9MFly9d2SFSYlrGfdLDRWq3uLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Felix Gu <ustc.gu@gmail.com>,
 	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 115/220] firmware: arm_ffa: Remove vm_id argument in ffa_rxtx_unmap()
-Date: Mon, 23 Mar 2026 14:44:52 +0100
-Message-ID: <20260323134508.236241557@linuxfoundation.org>
+Subject: [PATCH 6.19 116/220] firmware: arm_scpi: Fix device_node reference leak in probe path
+Date: Mon, 23 Mar 2026 14:44:53 +0100
+Message-ID: <20260323134508.269579806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -45,79 +45,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit a4e8473b775160f3ce978f621cf8dea2c7250433 ]
+[ Upstream commit 879c001afbac3df94160334fe5117c0c83b2cf48 ]
 
-According to the FF-A specification (DEN0077, v1.1, §13.7), when
-FFA_RXTX_UNMAP is invoked from any instance other than non-secure
-physical, the w1 register must be zero (MBZ). If a non-zero value is
-supplied in this context, the SPMC must return FFA_INVALID_PARAMETER.
+A device_node reference obtained from the device tree is not released
+on all error paths in the arm_scpi probe path. Specifically, a node
+returned by of_parse_phandle() could be leaked when the probe failed
+after the node was acquired. The probe function returns early and
+the shmem reference is not released.
 
-The Arm FF-A driver operates exclusively as a guest or non-secure
-physical instance where the partition ID is always zero and is not
-invoked from a hypervisor context where w1 carries a VM ID. In this
-execution model, the partition ID observed by the driver is always zero,
-and passing a VM ID is unnecessary and potentially invalid.
+Use __free(device_node) scope-based cleanup to automatically release
+the reference when the variable goes out of scope.
 
-Remove the vm_id parameter from ffa_rxtx_unmap() and ensure that the
-SMC call is issued with w1 implicitly zeroed, as required by the
-specification. This prevents invalid parameter errors and aligns the
-implementation with the defined FF-A ABI behavior.
-
-Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Message-Id: <20260304120953.847671-1-yeoreum.yun@arm.com>
+Fixes: ed7ecb883901 ("firmware: arm_scpi: Add compatibility checks for shmem node")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Message-Id: <20260121-arm_scpi_2-v2-1-702d7fa84acb@gmail.com>
 Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/firmware/arm_scpi.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 11a702e7f641c..f6ceae987acbc 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -205,12 +205,12 @@ static int ffa_rxtx_map(phys_addr_t tx_buf, phys_addr_t rx_buf, u32 pg_cnt)
- 	return 0;
- }
+diff --git a/drivers/firmware/arm_scpi.c b/drivers/firmware/arm_scpi.c
+index 87c323de17b90..398642cc25d90 100644
+--- a/drivers/firmware/arm_scpi.c
++++ b/drivers/firmware/arm_scpi.c
+@@ -18,6 +18,7 @@
  
--static int ffa_rxtx_unmap(u16 vm_id)
-+static int ffa_rxtx_unmap(void)
- {
- 	ffa_value_t ret;
+ #include <linux/bitmap.h>
+ #include <linux/bitfield.h>
++#include <linux/cleanup.h>
+ #include <linux/device.h>
+ #include <linux/err.h>
+ #include <linux/export.h>
+@@ -940,13 +941,13 @@ static int scpi_probe(struct platform_device *pdev)
+ 		int idx = scpi_drvinfo->num_chans;
+ 		struct scpi_chan *pchan = scpi_drvinfo->channels + idx;
+ 		struct mbox_client *cl = &pchan->cl;
+-		struct device_node *shmem = of_parse_phandle(np, "shmem", idx);
++		struct device_node *shmem __free(device_node) =
++			of_parse_phandle(np, "shmem", idx);
  
- 	invoke_ffa_fn((ffa_value_t){
--		      .a0 = FFA_RXTX_UNMAP, .a1 = PACK_TARGET_INFO(vm_id, 0),
-+		      .a0 = FFA_RXTX_UNMAP,
- 		      }, &ret);
+ 		if (!of_match_node(shmem_of_match, shmem))
+ 			return -ENXIO;
  
- 	if (ret.a0 == FFA_ERROR)
-@@ -2093,7 +2093,7 @@ static int __init ffa_init(void)
- 
- 	pr_err("failed to setup partitions\n");
- 	ffa_notifications_cleanup();
--	ffa_rxtx_unmap(drv_info->vm_id);
-+	ffa_rxtx_unmap();
- free_pages:
- 	if (drv_info->tx_buffer)
- 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
-@@ -2108,7 +2108,7 @@ static void __exit ffa_exit(void)
- {
- 	ffa_notifications_cleanup();
- 	ffa_partitions_cleanup();
--	ffa_rxtx_unmap(drv_info->vm_id);
-+	ffa_rxtx_unmap();
- 	free_pages_exact(drv_info->tx_buffer, drv_info->rxtx_bufsz);
- 	free_pages_exact(drv_info->rx_buffer, drv_info->rxtx_bufsz);
- 	kfree(drv_info);
+ 		ret = of_address_to_resource(shmem, 0, &res);
+-		of_node_put(shmem);
+ 		if (ret) {
+ 			dev_err(dev, "failed to get SCPI payload mem resource\n");
+ 			return ret;
 -- 
 2.51.0
 
