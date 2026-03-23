@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E2721D00A;
-	Mon, 23 Mar 2026 13:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8785E1A6818;
+	Mon, 23 Mar 2026 13:52:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273921; cv=none; b=a8KL1O7IuT28MYGaPRWE7zVu3xIQwWjkF4QT+eSgSZ/MWq6MrBdCKnfwEFerlHIuaBNs2bl8VuSTCaip+/ipA1wZEW17hXaZJhLI93MYSm84ACrD/bLsrjrSxx+/yj58wqUMrDYlC/TChamqmqSoSikEuOq61r5heZGQNaVrmjk=
+	t=1774273924; cv=none; b=R6g1FcZ3Pj09STuOH+9wC+GjM5RxvUX7xZ5vXur4HFnIHiukeJP7emz6OZd1atxpCj6Hbhr5d5u/tBUTZ0uZdMoC/Y/KUOiAEBdK4yRy7vVzFbW9dsPdw3PLXViH9FpcMExYySsFzTylXlJZ7YeD2e7984mM5kdMUfRL6BUrhDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273921; c=relaxed/simple;
-	bh=HPOSpdORySr3F7p0CnDKJeP1Cii3KsBy1fXPA0ZxaJM=;
+	s=arc-20240116; t=1774273924; c=relaxed/simple;
+	bh=Sg185neczz+Ma96TwtFK0rYaRKz2Exil10sYvaqB3MQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D/EYnHqeDWGEN37j4sLei6s/q3qAHg57BlUudtA0o/5ZUw49g81lNiAEc0kqZCdtalu3/fPUjnErnpZsgnm1JLsSbdy72Z9FCbPhFwd2HAookRx5X6Efp2BDG1QCu3MqYoNFnGyiyfsk51XPGwH88QmLsRJl8nHDyBXkuWCOVGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fLW82nXp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=orjHyZ8nzbBBKcFhJHzoPhKB1GsSeBGwgOV63ZSH2NV9YdQw55EtRDGhWb8NirCDY35lJRPbez6PDYdrpHTVQNM9o2QShdUpJVwVxrTSOTW3bUqADV+n3w6MrEIR0tnL3VkSAZzc9KmTVxCNguklUiuOhnLw925oYuDp8aHALio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kJbd32zZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fLW82nXp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03C88C4CEF7;
-	Mon, 23 Mar 2026 13:52:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kJbd32zZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC45C4CEF7;
+	Mon, 23 Mar 2026 13:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273921;
-	bh=HPOSpdORySr3F7p0CnDKJeP1Cii3KsBy1fXPA0ZxaJM=;
+	s=korg; t=1774273924;
+	bh=Sg185neczz+Ma96TwtFK0rYaRKz2Exil10sYvaqB3MQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLW82nXpYflnxwAJSZKxHfUIArub/PJVlIWLc+begsiQsvfENYm//WE4eucQ4lJkw
-	 7QZBY8RKupRokjtmax9Ud6MaNo4H1JF0BhsaBOaZRHR75p3HwNBokAnJx5yTwt6DaX
-	 TFc+lB2HnwsNFpDDmkikN5CHIKDa4zLm9mS+aA/Q=
+	b=kJbd32zZZs7l3anM58+h1o1ttSlmOdXIsPBUy1hpMUJmTDqU/ygyqUsTUMjBZ5x/9
+	 +CF3kATFFWNSP+XcgVlsBOdHhmP8Dsp9bWgdb2SY7KBO+IWpJ26U9SAHnCimS88TJ6
+	 g62BJA5BqElxGkUu9oK6QQzs0jPMQyGO++bqwpzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
+	Kees Cook <kees@kernel.org>,
+	linux-hardening@vger.kernel.org,
+	Finn Thain <fthain@linux-m68k.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.19 051/220] mtd: rawnand: cadence: Fix error check for dma_alloc_coherent() in cadence_nand_init()
-Date: Mon, 23 Mar 2026 14:43:48 +0100
-Message-ID: <20260323134506.199443031@linuxfoundation.org>
+Subject: [PATCH 6.19 052/220] mtd: Avoid boot crash in RedBoot partition table parser
+Date: Mon, 23 Mar 2026 14:43:49 +0100
+Message-ID: <20260323134506.231583293@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,34 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Finn Thain <fthain@linux-m68k.org>
 
-commit 0410e1a4c545c769c59c6eda897ad5d574d0c865 upstream.
+commit 8e2f8020270af7777d49c2e7132260983e4fc566 upstream.
 
-Fix wrong variable used for error checking after dma_alloc_coherent()
-call. The function checks cdns_ctrl->dma_cdma_desc instead of
-cdns_ctrl->cdma_desc, which could lead to incorrect error handling.
+Given CONFIG_FORTIFY_SOURCE=y and a recent compiler,
+commit 439a1bcac648 ("fortify: Use __builtin_dynamic_object_size() when
+available") produces the warning below and an oops.
 
-Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
+    Searching for RedBoot partition table in 50000000.flash at offset 0x7e0000
+    ------------[ cut here ]------------
+    WARNING: lib/string_helpers.c:1035 at 0xc029e04c, CPU#0: swapper/0/1
+    memcmp: detected buffer overflow: 15 byte read of buffer size 14
+    Modules linked in:
+    CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.19.0 #1 NONE
+
+As Kees said, "'names' is pointing to the final 'namelen' many bytes
+of the allocation ... 'namelen' could be basically any length at all.
+This fortify warning looks legit to me -- this code used to be reading
+beyond the end of the allocation."
+
+Since the size of the dynamic allocation is calculated with strlen()
+we can use strcmp() instead of memcmp() and remain within bounds.
+
+Cc: Kees Cook <kees@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Alok Tiwari <alok.a.tiwari@oracle.com>
+Cc: linux-hardening@vger.kernel.org
+Link: https://lore.kernel.org/all/202602151911.AD092DFFCD@keescook/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Suggested-by: Kees Cook <kees@kernel.org>
+Signed-off-by: Finn Thain <fthain@linux-m68k.org>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/parsers/redboot.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -3133,7 +3133,7 @@ static int cadence_nand_init(struct cdns
- 						  sizeof(*cdns_ctrl->cdma_desc),
- 						  &cdns_ctrl->dma_cdma_desc,
- 						  GFP_KERNEL);
--	if (!cdns_ctrl->dma_cdma_desc)
-+	if (!cdns_ctrl->cdma_desc)
- 		return -ENOMEM;
+--- a/drivers/mtd/parsers/redboot.c
++++ b/drivers/mtd/parsers/redboot.c
+@@ -270,9 +270,9 @@ nogood:
  
- 	cdns_ctrl->buf_size = SZ_16K;
+ 		strcpy(names, fl->img->name);
+ #ifdef CONFIG_MTD_REDBOOT_PARTS_READONLY
+-		if (!memcmp(names, "RedBoot", 8) ||
+-		    !memcmp(names, "RedBoot config", 15) ||
+-		    !memcmp(names, "FIS directory", 14)) {
++		if (!strcmp(names, "RedBoot") ||
++		    !strcmp(names, "RedBoot config") ||
++		    !strcmp(names, "FIS directory")) {
+ 			parts[i].mask_flags = MTD_WRITEABLE;
+ 		}
+ #endif
 
 
