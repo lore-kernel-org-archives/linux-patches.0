@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EEEC823DD;
-	Mon, 23 Mar 2026 14:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90D3337F8A0;
+	Mon, 23 Mar 2026 14:18:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275531; cv=none; b=pATqodyP0fndFOsHvjKVhT/EdIORUY9+vUivLebxrAyH1VQzCoWwoATqBNG9RPpBRZjLIzueuMFcYsT3yiskcvfmUf56mcU1DQNtS8uoTXn3c75cYVow29uIvosEXY10GK+ap6/TnE7Bk0+QZ7YsnFRnXc4Ld630iKc+SZdiKkU=
+	t=1774275534; cv=none; b=TJHGR7iSx658lY8wzpkHgQe0edychz+yMo2Jx6pmrcGB4VvMQMunYvE0dpJ4BcS6QjGTCJdh1Dbxp9oG+ZVlBY90zCfBTIrwfiTK2Ng0yjV+RZ3Kl78S9IAGlEPyqXvYUDyhS8gouTIVrfI5qE/pxrTwlrHWMiGlHAnugt30O0s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275531; c=relaxed/simple;
-	bh=vLtMphh8ydOwYsd64b2KeFZ3eKfO3Ld4P/1pY0BvowM=;
+	s=arc-20240116; t=1774275534; c=relaxed/simple;
+	bh=GhauMfbF2bKgyWoME98GNhxRU2NgENRYTJ5q8UoqNj0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oxCX6vPJFg2QOPInoiwZL8DMjwtbYu9C/tUZCJd3DUzSM+A0RhhaoVQvfSMkw87gMrFLIhMNhLNflrzhvJ6V3TjdB1XsNaMmGi8rqSxEqNza9qGrsBWRB1+9B5IBFrzCyTgnW4gMYEcjJirPschlHMuz2sLUHPVs8d2UKzoovEg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Odi1vjzz; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IC+xQPA2SHZ04zKU3sp4YOX1wDR1v0h1UXNwbvAB9cIMkJYUlHdFWTubfeEs5dSw5TXoy4bfHVckhg/Fh+Ju9ptC46VkDeIDqs4Ko9r8lKfgA9sSsVyqy1dzAiM+Z5oBAF6PD4MHl43v1198j6/s+f2rdCFgLc6BbIMtuY6pgDo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NFNi6SCt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Odi1vjzz"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9D4DC4CEF7;
-	Mon, 23 Mar 2026 14:18:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NFNi6SCt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD1F7C4CEF7;
+	Mon, 23 Mar 2026 14:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275531;
-	bh=vLtMphh8ydOwYsd64b2KeFZ3eKfO3Ld4P/1pY0BvowM=;
+	s=korg; t=1774275534;
+	bh=GhauMfbF2bKgyWoME98GNhxRU2NgENRYTJ5q8UoqNj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Odi1vjzzwu0aXoG1W5ZsHKHTtzTY03SvwmWAD8z+NiONCsfnWLCbhflN9w17uFK/7
-	 beWtNTqjTjXfIrBWUxClelCAPAz6ju6YgmYXZ/9tafYULMaofPyKfbFjMa9APQ2gv+
-	 AD2KyUwpiT4oZGItYSYtbEokVSRxxnPi0lryGYOQ=
+	b=NFNi6SCt3zr8d+QSYslc+mv/g5G+CcPuncQ5nP+wZmS3VA///Y3tjI82jUL80t9CX
+	 sbwS2IZp0MtPXN+ps4JJjdLvfC6+5Q00Gg4q9BsQ0tgBp0prrPQsxU4XmTw0BlLBko
+	 3dGJB0dgIwcEjG6MmYMW8xI49HzGwpCi9iPPhvm0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Thomas Gleixner <tglx@kernel.org>,
+	Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 133/460] time/jiffies: Mark jiffies_64_to_clock_t() notrace
-Date: Mon, 23 Mar 2026 14:42:09 +0100
-Message-ID: <20260323134529.873174669@linuxfoundation.org>
+Subject: [PATCH 6.12 134/460] i3c: dw-i3c-master: Set SIR_REJECT in DAT on device attach and reattach
+Date: Mon, 23 Mar 2026 14:42:10 +0100
+Message-ID: <20260323134529.895455575@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,37 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
 
-[ Upstream commit 755a648e78f12574482d4698d877375793867fa1 ]
+[ Upstream commit f311a05784634febd299f03476b80f3f18489767 ]
 
-The trace_clock_jiffies() function that handles the "uptime" clock for
-tracing calls jiffies_64_to_clock_t(). This causes the function tracer to
-constantly recurse when the tracing clock is set to "uptime". Mark it
-notrace to prevent unnecessary recursion when using the "uptime" clock.
+The DesignWare I3C master controller ACKs IBIs as soon as a valid
+Device Address Table (DAT) entry is present. This can create a race
+between device attachment (after DAA) and the point where the client
+driver enables IBIs via i3c_device_enable_ibi().
 
-Fixes: 58d4e21e50ff3 ("tracing: Fix wraparound problems in "uptime" trace clock")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Link: https://patch.msgid.link/20260306212403.72270bb2@robin
+Set DEV_ADDR_TABLE_SIR_REJECT in the DAT entry during
+attach_i3c_dev() and reattach_i3c_dev() so that IBIs are rejected
+by default. The bit is managed thereafter by the existing
+dw_i3c_master_set_sir_enabled() function, which clears it in
+enable_ibi() after ENEC is issued, and restores it in disable_ibi()
+after DISEC.
+
+Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
+Signed-off-by: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/53f5b8cbdd8af789ec38b95b02873f32f9182dd6.1770962368.git.adrianhoyin.ng@altera.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/time/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i3c/master/dw-i3c-master.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/time/time.c b/kernel/time/time.c
-index 1ad88e97b4ebc..da7e8a02a0964 100644
---- a/kernel/time/time.c
-+++ b/kernel/time/time.c
-@@ -702,7 +702,7 @@ EXPORT_SYMBOL(clock_t_to_jiffies);
-  *
-  * Return: jiffies_64 value converted to 64-bit "clock_t" (CLOCKS_PER_SEC)
-  */
--u64 jiffies_64_to_clock_t(u64 x)
-+notrace u64 jiffies_64_to_clock_t(u64 x)
- {
- #if (TICK_NSEC % (NSEC_PER_SEC / USER_HZ)) == 0
- # if HZ < USER_HZ
+diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
+index 4c019c746f231..e0853a6bde0a4 100644
+--- a/drivers/i3c/master/dw-i3c-master.c
++++ b/drivers/i3c/master/dw-i3c-master.c
+@@ -1013,7 +1013,7 @@ static int dw_i3c_master_reattach_i3c_dev(struct i3c_dev_desc *dev,
+ 		master->free_pos &= ~BIT(pos);
+ 	}
+ 
+-	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr),
++	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr) | DEV_ADDR_TABLE_SIR_REJECT,
+ 	       master->regs +
+ 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
+ 
+@@ -1042,7 +1042,7 @@ static int dw_i3c_master_attach_i3c_dev(struct i3c_dev_desc *dev)
+ 	master->free_pos &= ~BIT(pos);
+ 	i3c_dev_set_master_data(dev, data);
+ 
+-	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr),
++	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr) | DEV_ADDR_TABLE_SIR_REJECT,
+ 	       master->regs +
+ 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
+ 
 -- 
 2.51.0
 
