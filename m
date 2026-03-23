@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB94B3AB295;
-	Mon, 23 Mar 2026 13:50:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 002DE3A961B;
+	Mon, 23 Mar 2026 13:50:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273824; cv=none; b=GQiKDIwI0OgYi+2IImhfbwE2MKYxbrmI2O3p9WKEvLeZ68FPkUvpLs1Eg87vKIKM2zMprmpliRNvsXORG+BTURWd/VBTI8DNdegaQKj+S0BQhqak8iD4AtNVzDJrd/z8ekCVYiqrPVFyPMdr+ZV2Qw0tQpMUUSh4Z4KDp4IJKwg=
+	t=1774273828; cv=none; b=qallW3NCqdRX6AP+7qWFhqi1g7XxpLX3B3ApYh59YD4DDYILaRDWVS7+xOJKq2l+hSNxTLy6A0JlPAGVjmSmkLaZWw00pG/t2DffINWASj8Ss0Neei7qFYhUodPfMX+SPPkHTRUYMbma2TFKJ3f7DGZA6QRE7QmK/YhsXwLiPlQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273824; c=relaxed/simple;
-	bh=J+MvKV9XnyfK9+SoBvG005iXbjfl4FPb2pRTZs7V+BY=;
+	s=arc-20240116; t=1774273828; c=relaxed/simple;
+	bh=q2gD661scyQkbKZ11AWgS0ZP3gQzomaw+OekK4pgcW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ShWlyv6/7+Ht4l8YiVhtO0tpvqtr9Fssj+h9Edq2gNF72pELN4thVatXOyvNutgzfjD/QYLWA9Pj534gKOAN3t+/9tOsc6thei9nRDGSOjSBMQpHOFAC1tliMY6TOtoDPF78klNjQiYUGtiiGE4yf3ueo24yMFhqnMceCNxrNlk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vBYmIkto; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=WuKwsHbGEm3s02aWmx8vSlBbHKxtB7nrk7GiMa4yVKr2cdX4bFhd+xX8tkUaWZOF7HfnBd/Ac3Uj+nevUBPlEQirrdHQ7+lMrj3XLfQ6MzEO1reTlQGTtFdT/9y5M/sM3OineQF8KgeKkuQGNjQf+qzj/iI3vA+lxlHK9scbIHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D8YafWL4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vBYmIkto"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29796C4CEF7;
-	Mon, 23 Mar 2026 13:50:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D8YafWL4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 391DDC4CEF7;
+	Mon, 23 Mar 2026 13:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273824;
-	bh=J+MvKV9XnyfK9+SoBvG005iXbjfl4FPb2pRTZs7V+BY=;
+	s=korg; t=1774273827;
+	bh=q2gD661scyQkbKZ11AWgS0ZP3gQzomaw+OekK4pgcW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vBYmIktoKi3wPWxFYFR7hQq29FnbmnMb7pJgwcQ8Q356xG68QaGN8mIhIPLWls5/B
-	 wgVMR5tFUL1UFWszHGFUhJ2XWW8KsPBlvSd+DlR5A4/AuGZLJZspv/ancEIbU42Cn+
-	 ZFBrA+1h8rRJC/PZH6R6XYqLRwAGWN5aXA+gucwE=
+	b=D8YafWL4Kqawwa4R+617QxUcQWOlQRsiFNipOyNTR9PUCuf6FvodPslV78gpZTfUM
+	 eRJBu1VYJoZf9ZI3+nzzJHWBjxjfhEikkdXROyc4K9YIZpEyVm4QrxVZMJ0JMg2kdF
+	 LIBT0ULVLcJgQEFcwgBXJswkv9eVg1Gw/gvt+/G0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AlanSong-oc <AlanSong-oc@zhaoxin.com>,
-	Eric Biggers <ebiggers@kernel.org>
-Subject: [PATCH 6.19 020/220] crypto: padlock-sha - Disable for Zhaoxin processor
-Date: Mon, 23 Mar 2026 14:43:17 +0100
-Message-ID: <20260323134505.217018421@linuxfoundation.org>
+	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.19 021/220] Bluetooth: L2CAP: Fix type confusion in l2cap_ecred_reconf_rsp()
+Date: Mon, 23 Mar 2026 14:43:18 +0100
+Message-ID: <20260323134505.247631812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -44,65 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: AlanSong-oc <AlanSong-oc@zhaoxin.com>
+From: Lukas Johannes Möller <research@johannes-moeller.dev>
 
-commit ebba09f198078b7a2565004104ef762d1148e7f0 upstream.
+commit 15145675690cab2de1056e7ed68e59cbd0452529 upstream.
 
-For Zhaoxin processors, the XSHA1 instruction requires the total memory
-allocated at %rdi register must be 32 bytes, while the XSHA1 and
-XSHA256 instruction doesn't perform any operation when %ecx is zero.
+l2cap_ecred_reconf_rsp() casts the incoming data to struct
+l2cap_ecred_conn_rsp (the ECRED *connection* response, 8 bytes with
+result at offset 6) instead of struct l2cap_ecred_reconf_rsp (2 bytes
+with result at offset 0).
 
-Due to these requirements, the current padlock-sha driver does not work
-correctly with Zhaoxin processors. It cannot pass the self-tests and
-therefore does not activate the driver on Zhaoxin processors. This issue
-has been reported in Debian [1]. The self-tests fail with the
-following messages [2]:
+This causes two problems:
 
-alg: shash: sha1-padlock-nano test failed (wrong result) on test vector 0, cfg="init+update+final aligned buffer"
-alg: self-tests for sha1 using sha1-padlock-nano failed (rc=-22)
+ - The sizeof(*rsp) length check requires 8 bytes instead of the
+   correct 2, so valid L2CAP_ECRED_RECONF_RSP packets are rejected
+   with -EPROTO.
 
-alg: shash: sha256-padlock-nano test failed (wrong result) on test vector 0, cfg="init+update+final aligned buffer"
-alg: self-tests for sha256 using sha256-padlock-nano failed (rc=-22)
+ - rsp->result reads from offset 6 instead of offset 0, returning
+   wrong data when the packet is large enough to pass the check.
 
-Disable the padlock-sha driver on Zhaoxin processors with the CPU family
-0x07 and newer. Following the suggestion in [3], support for PHE will be
-added to lib/crypto/ instead.
+Fix by using the correct type.  Also pass the already byte-swapped
+result variable to BT_DBG instead of the raw __le16 field.
 
-[1] https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1113996
-[2] https://linux-hardware.org/?probe=271fabb7a4&log=dmesg
-[3] https://lore.kernel.org/linux-crypto/aUI4CGp6kK7mxgEr@gondor.apana.org.au/
-
-Fixes: 63dc06cd12f9 ("crypto: padlock-sha - Use API partial block handling")
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
 Cc: stable@vger.kernel.org
-Signed-off-by: AlanSong-oc <AlanSong-oc@zhaoxin.com>
-Link: https://lore.kernel.org/r/20260313080150.9393-2-AlanSong-oc@zhaoxin.com
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/padlock-sha.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ net/bluetooth/l2cap_core.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/crypto/padlock-sha.c
-+++ b/drivers/crypto/padlock-sha.c
-@@ -332,6 +332,13 @@ static int __init padlock_init(void)
- 	if (!x86_match_cpu(padlock_sha_ids) || !boot_cpu_has(X86_FEATURE_PHE_EN))
- 		return -ENODEV;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5408,7 +5408,7 @@ static inline int l2cap_ecred_reconf_rsp
+ 					 u8 *data)
+ {
+ 	struct l2cap_chan *chan, *tmp;
+-	struct l2cap_ecred_conn_rsp *rsp = (void *) data;
++	struct l2cap_ecred_reconf_rsp *rsp = (void *)data;
+ 	u16 result;
  
-+	/*
-+	 * Skip family 0x07 and newer used by Zhaoxin processors,
-+	 * as the driver's self-tests fail on these CPUs.
-+	 */
-+	if (c->x86 >= 0x07)
-+		return -ENODEV;
-+
- 	/* Register the newly added algorithm module if on *
- 	* VIA Nano processor, or else just do as before */
- 	if (c->x86_model < 0x0f) {
+ 	if (cmd_len < sizeof(*rsp))
+@@ -5416,7 +5416,7 @@ static inline int l2cap_ecred_reconf_rsp
+ 
+ 	result = __le16_to_cpu(rsp->result);
+ 
+-	BT_DBG("result 0x%4.4x", rsp->result);
++	BT_DBG("result 0x%4.4x", result);
+ 
+ 	if (!result)
+ 		return 0;
 
 
