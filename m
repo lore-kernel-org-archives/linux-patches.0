@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC8F02C0298;
-	Mon, 23 Mar 2026 14:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0A743AE70F;
+	Mon, 23 Mar 2026 14:55:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277747; cv=none; b=BiMUhHGyn7fv9nsHX+wmbUpAuDT5ZLgLechWf/I7c91wa6rfFeuwlPFE4m0BtCX94JTY61vssFCw1XkdI2P9Qz/2Kwq7bG5i8S2S3kmOXQr/Qz+nQUWTBCXUr0dW9kXyjEqCmRmRrL2Ri3Y7iiGXD25ghpY1m47ZazRnVEraX9Q=
+	t=1774277750; cv=none; b=JJ1tEMpVFKK42fFFHCrzhYVHR7pjSC/hxGX/5ZESazx57FLEMi5VqstY29q7NeMY3wnbl6kuwZdcbGsv73TTJ29OLsN/dyndchjsTMK7ELCKvtVoVpV0AQSVQWuyvzQK5z0AE+O/dXSYH+aDFHrj1xlU4LvtjRWGESgkb6ok4HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277747; c=relaxed/simple;
-	bh=x2eO0y+1lwg/9q7cvRA7qsLzgCdJmMrxcp7GeVH7vVo=;
+	s=arc-20240116; t=1774277750; c=relaxed/simple;
+	bh=ZajUoLIcjVrVvR7yDEMiE3S4dhbnLd/LOnFz/THuXz4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pFb8iXQHA0foKP1/4JzRhjEmC3CQaWDnGeILuQ6U4vS5A9hkseLY3yqR6OkwQh/QK0MgS0BE4jfFSfDC8Q8RWqS0REU7TiFxY+EB1sIXepZLXPC8wMPwbuZN4GzQOv6FE+YAIrTmYJVNU38MJaIhSfSJoMecrDOsmgBHwIWSr5g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Q3NNGZN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=U5BIeYwkr7s0L2L4u/5DqrCpg3bC+SHfsNM8RKou35RUlFt2hhmQW/VvZX8lMh+dq0/IAtOdKhUIlBjfyG2daG06E0fRxzvKZFkzqMq3rnenHmRW5PZ5xeMmQ0eTpUYj3M+jLVAq93dK/qFj7XBg7xl6xB5uuWGzyc6GlFj81gc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UsHJyase; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Q3NNGZN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3895DC2BCB1;
-	Mon, 23 Mar 2026 14:55:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UsHJyase"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E81C2BC9E;
+	Mon, 23 Mar 2026 14:55:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277747;
-	bh=x2eO0y+1lwg/9q7cvRA7qsLzgCdJmMrxcp7GeVH7vVo=;
+	s=korg; t=1774277750;
+	bh=ZajUoLIcjVrVvR7yDEMiE3S4dhbnLd/LOnFz/THuXz4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Q3NNGZN6AIukrxffogMPRbqjE5f77KK4U4Zbj1hIH/KnR9dehnlkWAyEonNLK6eX
-	 ckPtoTCn/l1CFrgrcBO1rzjh0PGG1U38BGt9t2pvPFHYy5F9S2YeCozaYOdsBk/lo7
-	 0PK7IKC6yR7RpMw8qEz0HHS/tqKGmR0BJ/UnStio=
+	b=UsHJyaseUBSg5lamKNpzFxDRuSB8t2nOflXvHZEHzyFqkLfYc9PymWlrPVuqb45lO
+	 dd8E+BVQlCRSIeZG1EZ93KE4b8OHv1ychkk09BbPP/yCx3l6k0EM5K9WY1Qk5cAUIY
+	 e9LO7zi1nupl/2P+0GYxb64F9tS/DNMCEyeAy0dQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com,
-	Jens Axboe <axboe@kernel.dk>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 6.6 088/567] media: dvb-core: fix wrong reinitialization of ringbuffer on reopen
-Date: Mon, 23 Mar 2026 14:40:08 +0100
-Message-ID: <20260323134536.009491420@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.6 089/567] nfc: pn533: properly drop the usb interface reference on disconnect
+Date: Mon, 23 Mar 2026 14:40:09 +0100
+Message-ID: <20260323134536.032745914@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,52 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit bfbc0b5b32a8f28ce284add619bf226716a59bc0 upstream.
+commit 12133a483dfa832241fbbf09321109a0ea8a520e upstream.
 
-dvb_dvr_open() calls dvb_ringbuffer_init() when a new reader opens the
-DVR device.  dvb_ringbuffer_init() calls init_waitqueue_head(), which
-reinitializes the waitqueue list head to empty.
+When the device is disconnected from the driver, there is a "dangling"
+reference count on the usb interface that was grabbed in the probe
+callback.  Fix this up by properly dropping the reference after we are
+done with it.
 
-Since dmxdev->dvr_buffer.queue is a shared waitqueue (all opens of the
-same DVR device share it), this orphans any existing waitqueue entries
-from io_uring poll or epoll, leaving them with stale prev/next pointers
-while the list head is reset to {self, self}.
-
-The waitqueue and spinlock in dvr_buffer are already properly
-initialized once in dvb_dmxdev_init().  The open path only needs to
-reset the buffer data pointer, size, and read/write positions.
-
-Replace the dvb_ringbuffer_init() call in dvb_dvr_open() with direct
-assignment of data/size and a call to dvb_ringbuffer_reset(), which
-properly resets pread, pwrite, and error with correct memory ordering
-without touching the waitqueue or spinlock.
-
-Cc: stable@vger.kernel.org
-Fixes: 34731df288a5f ("V4L/DVB (3501): Dmxdev: use dvb_ringbuffer")
-Reported-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
-Tested-by: syzbot+ab12f0c08dd7ab8d057c@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/698a26d3.050a0220.3b3015.007d.GAE@google.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Fixes: c46ee38620a2 ("NFC: pn533: add NXP pn533 nfc device driver")
+Link: https://patch.msgid.link/2026022329-flashing-ought-7573@gregkh
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dmxdev.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/nfc/pn533/usb.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/dvb-core/dmxdev.c
-+++ b/drivers/media/dvb-core/dmxdev.c
-@@ -168,7 +168,9 @@ static int dvb_dvr_open(struct inode *in
- 			mutex_unlock(&dmxdev->mutex);
- 			return -ENOMEM;
- 		}
--		dvb_ringbuffer_init(&dmxdev->dvr_buffer, mem, DVR_BUFFER_SIZE);
-+		dmxdev->dvr_buffer.data = mem;
-+		dmxdev->dvr_buffer.size = DVR_BUFFER_SIZE;
-+		dvb_ringbuffer_reset(&dmxdev->dvr_buffer);
- 		if (dmxdev->may_do_mmap)
- 			dvb_vb2_init(&dmxdev->dvr_vb2_ctx, "dvr",
- 				     file->f_flags & O_NONBLOCK);
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -629,6 +629,7 @@ static void pn533_usb_disconnect(struct
+ 	usb_free_urb(phy->out_urb);
+ 	usb_free_urb(phy->ack_urb);
+ 	kfree(phy->ack_buffer);
++	usb_put_dev(phy->udev);
+ 
+ 	nfc_info(&interface->dev, "NXP PN533 NFC device disconnected\n");
+ }
 
 
