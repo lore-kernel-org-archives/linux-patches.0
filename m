@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D6721D00A;
-	Mon, 23 Mar 2026 14:09:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B653ACEFE;
+	Mon, 23 Mar 2026 14:09:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274956; cv=none; b=EkeUS1G9bWsTASHm/PyMDjDomLE9vYCrSfsuuityCnpxbHgovsAGW/eT7nDxaMHKQuy9XqgpS1K1DvFWab+dn73NgR7zNKimSrJPEoJYGjFSb0eHf/UPtMGsClaAektRq59dbmKSTP1hc6BP6EkwuzT6v1CwE6R0pfEQXOC42W8=
+	t=1774274958; cv=none; b=QR6jGvzfT29VyG0QrFXeth0M9ks9Vy1p9D/MHgw7xRqToO9gKDy8Y8GmTBrcf8bwJWns4Iq/PHcR7FtUrJxX9jmqrCxvAj2uREQ71sXAXbzJf1Dkk8voWXGANRIRe+Ro4RL70gSEbDyHuLUXOtuRqB5sA+CNPQMpNOhMpIxCuLE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274956; c=relaxed/simple;
-	bh=QZmiPlYcKQOCP4J8kRXxWg1O9enlnKGTMmQ1WklChBU=;
+	s=arc-20240116; t=1774274958; c=relaxed/simple;
+	bh=kkyGQyF7ihaWwPVKsXkz7NqsWRXlrYNlGy2QpvuQD+U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Iw2Qr3GxIfdHnazYAuSzUVyDJro4PYi1M2fG3dvNkYrIPin/mZhK5bcQS6GYlUncVam9xCxAJMUalOPSpgpYKbjj0p9sflQNnk45BhKPTYPVI1fNSss1aejfvoX517IxQfIMJPjmb4q12IQjRSxXmzr2F+zk6am+bYFi9fWjq2E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJWqLxX7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=skCFdW79jPAvpL+3MKEsiMNOVqjMiVZLsULLansn4gcrCwecpjPqy/cTU6789bGVbv58v55O2f14DluhFaH3/rbKxFf3zaHBV2TS3td7QpY9r0wFq6t1vZ/G2QpAtD6c+WYVwnbAkYaggIDTuV+rICU1O7BXTypKAjc7Zry/P4g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KyKwjM+O; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJWqLxX7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926AAC4CEF7;
-	Mon, 23 Mar 2026 14:09:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KyKwjM+O"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 139BDC2BC9E;
+	Mon, 23 Mar 2026 14:09:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274955;
-	bh=QZmiPlYcKQOCP4J8kRXxWg1O9enlnKGTMmQ1WklChBU=;
+	s=korg; t=1774274958;
+	bh=kkyGQyF7ihaWwPVKsXkz7NqsWRXlrYNlGy2QpvuQD+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jJWqLxX7aNN6RaQBpIkTzebB1hCm3WOJkgkrP2CFRnX5ZqChoxAJo+8HCK87is4TY
-	 wXXANOfxJz11vAa33Ws88WOawGhiIiMoJRO85aZhvCsRyNdk3aI7FIr4e8K64zfZsb
-	 MQGjEvsJJW+u/kVSZM5J5kAWGrorHFEUYedjiTkk=
+	b=KyKwjM+OvonOlBCfgrUcvx5zBwTXeJhuXGNJwuwvyxJgQl+jmoIO7LGe2L4cTKvCN
+	 htFXFetVKRsmfJosF38g0usoBg3CyiILLaOVhuNRfCXdOKhcCRQvDncO3oR8be9DJm
+	 cHJjutIuTRLH6JbAUz93+dRzvyis9p0yw1LYi/rU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+14b6d57fb728e27ce23c@syzkaller.appspotmail.com,
-	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
+	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 129/212] Bluetooth: L2CAP: Fix use-after-free in l2cap_unregister_user
-Date: Mon, 23 Mar 2026 14:45:50 +0100
-Message-ID: <20260323134507.846374370@linuxfoundation.org>
+Subject: [PATCH 6.18 130/212] Bluetooth: qca: fix ROM version reading on WCN3998 chips
+Date: Mon, 23 Mar 2026 14:45:51 +0100
+Message-ID: <20260323134507.881549375@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,87 +52,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 
-[ Upstream commit 752a6c9596dd25efd6978a73ff21f3b592668f4a ]
+[ Upstream commit 99b2c531e0e797119ae1b9195a8764ee98b00e65 ]
 
-After commit ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in
-hci_chan_del"), l2cap_conn_del() uses conn->lock to protect access to
-conn->users. However, l2cap_register_user() and l2cap_unregister_user()
-don't use conn->lock, creating a race condition where these functions can
-access conn->users and conn->hchan concurrently with l2cap_conn_del().
+WCN3998 uses a bit different format for rom version:
 
-This can lead to use-after-free and list corruption bugs, as reported
-by syzbot.
+[    5.479978] Bluetooth: hci0: setting up wcn399x
+[    5.633763] Bluetooth: hci0: QCA Product ID   :0x0000000a
+[    5.645350] Bluetooth: hci0: QCA SOC Version  :0x40010224
+[    5.650906] Bluetooth: hci0: QCA ROM Version  :0x00001001
+[    5.665173] Bluetooth: hci0: QCA Patch Version:0x00006699
+[    5.679356] Bluetooth: hci0: QCA controller version 0x02241001
+[    5.691109] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
+[    6.680102] Bluetooth: hci0: QCA Downloading qca/crnv21.bin
+[    6.842948] Bluetooth: hci0: QCA setup on UART is completed
 
-Fix this by changing l2cap_register_user() and l2cap_unregister_user()
-to use conn->lock instead of hci_dev_lock(), ensuring consistent locking
-for the l2cap_conn structure.
-
-Reported-by: syzbot+14b6d57fb728e27ce23c@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=14b6d57fb728e27ce23c
-Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
-Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+Fixes: 523760b7ff88 ("Bluetooth: hci_qca: Added support for WCN3998")
+Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 20 ++++++++------------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ drivers/bluetooth/btqca.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 05acc2e98f58f..9ea030fc9a9cc 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -1686,17 +1686,15 @@ static void l2cap_info_timeout(struct work_struct *work)
- 
- int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user)
- {
--	struct hci_dev *hdev = conn->hcon->hdev;
- 	int ret;
- 
- 	/* We need to check whether l2cap_conn is registered. If it is not, we
--	 * must not register the l2cap_user. l2cap_conn_del() is unregisters
--	 * l2cap_conn objects, but doesn't provide its own locking. Instead, it
--	 * relies on the parent hci_conn object to be locked. This itself relies
--	 * on the hci_dev object to be locked. So we must lock the hci device
--	 * here, too. */
-+	 * must not register the l2cap_user. l2cap_conn_del() unregisters
-+	 * l2cap_conn objects under conn->lock, and we use the same lock here
-+	 * to protect access to conn->users and conn->hchan.
-+	 */
- 
--	hci_dev_lock(hdev);
-+	mutex_lock(&conn->lock);
- 
- 	if (!list_empty(&user->list)) {
- 		ret = -EINVAL;
-@@ -1717,16 +1715,14 @@ int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user)
- 	ret = 0;
- 
- out_unlock:
--	hci_dev_unlock(hdev);
-+	mutex_unlock(&conn->lock);
- 	return ret;
- }
- EXPORT_SYMBOL(l2cap_register_user);
- 
- void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user)
- {
--	struct hci_dev *hdev = conn->hcon->hdev;
--
--	hci_dev_lock(hdev);
-+	mutex_lock(&conn->lock);
- 
- 	if (list_empty(&user->list))
- 		goto out_unlock;
-@@ -1735,7 +1731,7 @@ void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user)
- 	user->remove(conn, user);
- 
- out_unlock:
--	hci_dev_unlock(hdev);
-+	mutex_unlock(&conn->lock);
- }
- EXPORT_SYMBOL(l2cap_unregister_user);
+diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
+index 7c958d6065bec..86a48d009d1ba 100644
+--- a/drivers/bluetooth/btqca.c
++++ b/drivers/bluetooth/btqca.c
+@@ -804,6 +804,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
+ 	 */
+ 	if (soc_type == QCA_WCN3988)
+ 		rom_ver = ((soc_ver & 0x00000f00) >> 0x05) | (soc_ver & 0x0000000f);
++	else if (soc_type == QCA_WCN3998)
++		rom_ver = ((soc_ver & 0x0000f000) >> 0x07) | (soc_ver & 0x0000000f);
+ 	else
+ 		rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
  
 -- 
 2.51.0
