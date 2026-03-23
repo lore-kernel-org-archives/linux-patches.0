@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216AD3C07A;
-	Mon, 23 Mar 2026 14:07:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC2B53AC0D2;
+	Mon, 23 Mar 2026 14:07:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274825; cv=none; b=aHjXqHej7O3p5L25YHVoFiF7MmU2xuAb3rrVFbDMgzXVkMlvXkPXFTdQcilYDxoBGDAr0BZkitAlIgJo3tPusscSGbofZDBJF83yTZ7iBDMnX8Xv4SbIdDe/1fNO9gkNAyA8UF0Y58iTxwHSPuvc+QNwwjsASJY7EJFdT/h17N4=
+	t=1774274827; cv=none; b=eZPrsaU6WICqhHopYpKzDiw0h6e8zZiA8yqIwZPUw3mvyVrMZFotZfzavrhZdGEHf4GKE7/C9OlpqkFa1+Oyf2qJzshsgGplmpw4R+oSe+ksmRN1uVpbgcLgOun0Is8yFPGmVJfhNLGSyjzRZlbmkhPD0DMNxl3j/x/xa9Ci5Nw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274825; c=relaxed/simple;
-	bh=axOXrUrKHoBXcc2wQXkdBSZ1iuen2a+ubJWgT/pFcug=;
+	s=arc-20240116; t=1774274827; c=relaxed/simple;
+	bh=88Tdd2ntgLslEsWu0tY7IymLFVQ+yEqkgGp+KYdPhhc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cH8chqG/UyBKUA/87wvwMjlJPGniM6BjB53a+3pCMT1LSGzX9JtlMPh4wqcxT/trUFdJ9vEty/MFOlZz3OgD5U4pExnBQxCO5lAhkKxGVkx5axRpMheZozz0MXo1DFs2v8A1eNjv1mBVhf/5uWdBRIvjUYgCxMEes4wy20FQ2v8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Rf38Mwrc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=XDXZqDxGPw+pdUGOgmVEbzKWXw/lYe4WIAi6+OKwXXbhvvwwLFxz1zcXGb/m2/9WNOGxrkJ2L57rS+wU9DWdm917pw3qt41stFpmDujn7N+E0+T3+V2PXWRBKVHt503N8GpxSusUtctvGmr2wcFCYk8Y5WqJrLI3QL4rfPI3JIo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cZHtrqFP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Rf38Mwrc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABA45C4CEF7;
-	Mon, 23 Mar 2026 14:07:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cZHtrqFP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56ACFC4CEF7;
+	Mon, 23 Mar 2026 14:07:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274825;
-	bh=axOXrUrKHoBXcc2wQXkdBSZ1iuen2a+ubJWgT/pFcug=;
+	s=korg; t=1774274827;
+	bh=88Tdd2ntgLslEsWu0tY7IymLFVQ+yEqkgGp+KYdPhhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rf38Mwrc2B5vyYtKDix3GhPQTLx3xM9Li2pkKXkEb7LXCKnYyBaMTV/feQ15zVjdx
-	 QPKlTPKhD8iNU9XfQyAlO8IjxRXVKcFB635wAruC8DnpnPv1nC6wKdh71Z3E8NfyAQ
-	 V14KfJgLW1jjd39LRq/6IVbyECqW4mlK0jiCZRWc=
+	b=cZHtrqFP5goHwZEMU+eNEf6NVBGHk0qCtXklFnPZri1lVflP7TZnvfUuvKSdSABoV
+	 ENQcYNCmNvC6S7Pyu4PyC7u1dWyoI3hpGjPa3GRe9ZJNanV7J7iW8DvD9pXn+6lsYw
+	 ADW0VqqVMB3YMivcYo70z8/PhQd0Dv4rZkfnwfXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Yeoreum Yun <yeoreum.yun@arm.com>,
+	Sudeep Holla <sudeep.holla@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 118/212] arm64: dts: renesas: rzg3s-smarc-som: Set bypass for Versa3 PLL2
-Date: Mon, 23 Mar 2026 14:45:39 +0100
-Message-ID: <20260323134507.501741009@linuxfoundation.org>
+Subject: [PATCH 6.18 119/212] firmware: arm_ffa: Remove vm_id argument in ffa_rxtx_unmap()
+Date: Mon, 23 Mar 2026 14:45:40 +0100
+Message-ID: <20260323134507.530951010@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,68 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
+From: Yeoreum Yun <yeoreum.yun@arm.com>
 
-[ Upstream commit 6dcbb6f070cccabc6a13d640a5a84de581fdd761 ]
+[ Upstream commit a4e8473b775160f3ce978f621cf8dea2c7250433 ]
 
-The default settings for the Versa3 device on the Renesas RZ/G3S SMARC
-SoM board have PLL2 disabled. PLL2 was later enabled together with audio
-support, as it is required to support both 44.1 kHz and 48 kHz audio.
+According to the FF-A specification (DEN0077, v1.1, §13.7), when
+FFA_RXTX_UNMAP is invoked from any instance other than non-secure
+physical, the w1 register must be zero (MBZ). If a non-zero value is
+supplied in this context, the SPMC must return FFA_INVALID_PARAMETER.
 
-With PLL2 enabled, it was observed that Linux occasionally either hangs
-during boot (the last log message being related to the I2C probe) or
-randomly crashes. This was mainly reproducible on cold boots. During
-debugging, it was also noticed that the Unicode replacement character (�)
-sometimes appears on the serial console. Further investigation traced this
-to the configuration applied through the Versa3 register at offset 0x1c,
-which controls PLL enablement.
+The Arm FF-A driver operates exclusively as a guest or non-secure
+physical instance where the partition ID is always zero and is not
+invoked from a hypervisor context where w1 carries a VM ID. In this
+execution model, the partition ID observed by the driver is always zero,
+and passing a VM ID is unnecessary and potentially invalid.
 
-The appearance of the Unicode replacement character suggested an issue
-with the SoC reference clock. The RZ/G3S reference clock is provided by
-the Versa3 clock generator (REF output).
+Remove the vm_id parameter from ffa_rxtx_unmap() and ensure that the
+SMC call is issued with w1 implicitly zeroed, as required by the
+specification. This prevents invalid parameter errors and aligns the
+implementation with the defined FF-A ABI behavior.
 
-After checking with the Renesas Versa3 hardware team, it was found that
-this is related to the PLL2 lock bit being set through the
-renesas,settings DT property.
-
-The PLL lock bit must be set to avoid unstable clock output from the PLL.
-However, due to the Versa3 hardware design, when a PLL lock bit is set,
-all outputs (including the REF clock) are temporarily disabled until the
-configured PLLs become stable.
-
-As an alternative, the bypass bit can be used. This does not interrupt the
-PLL2 output or any other Versa3 outputs, but it may result in temporary
-instability on PLL2 output while the configuration is applied. Since PLL2
-feeds only the audio path and audio is not used during early boot, this is
-acceptable and does not affect system boot.
-
-Drop the PLL2 lock bit and set the bypass bit instead.
-
-This has been tested with more than 1000 cold boots.
-
-Fixes: a94253232b04 ("arm64: dts: renesas: rzg3s-smarc-som: Add versa3 clock generator node")
-Signed-off-by: Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Link: https://patch.msgid.link/20260302135703.162601-1-claudiu.beznea.uj@bp.renesas.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
+Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
+Message-Id: <20260304120953.847671-1-yeoreum.yun@arm.com>
+Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/firmware/arm_ffa/driver.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-index 39845faec8943..a5d4d70e83c90 100644
---- a/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-+++ b/arch/arm64/boot/dts/renesas/rzg3s-smarc-som.dtsi
-@@ -166,7 +166,7 @@ versa3: clock-generator@68 {
- 				       <100000000>;
- 		renesas,settings = [
- 		  80 00 11 19 4c 42 dc 2f 06 7d 20 1a 5f 1e f2 27
--		  00 40 00 00 00 00 00 00 06 0c 19 02 3f f0 90 86
-+		  00 40 00 00 00 00 00 00 06 0c 19 02 3b f0 90 86
- 		  a0 80 30 30 9c
- 		];
- 	};
+diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
+index 11a702e7f641c..f6ceae987acbc 100644
+--- a/drivers/firmware/arm_ffa/driver.c
++++ b/drivers/firmware/arm_ffa/driver.c
+@@ -205,12 +205,12 @@ static int ffa_rxtx_map(phys_addr_t tx_buf, phys_addr_t rx_buf, u32 pg_cnt)
+ 	return 0;
+ }
+ 
+-static int ffa_rxtx_unmap(u16 vm_id)
++static int ffa_rxtx_unmap(void)
+ {
+ 	ffa_value_t ret;
+ 
+ 	invoke_ffa_fn((ffa_value_t){
+-		      .a0 = FFA_RXTX_UNMAP, .a1 = PACK_TARGET_INFO(vm_id, 0),
++		      .a0 = FFA_RXTX_UNMAP,
+ 		      }, &ret);
+ 
+ 	if (ret.a0 == FFA_ERROR)
+@@ -2093,7 +2093,7 @@ static int __init ffa_init(void)
+ 
+ 	pr_err("failed to setup partitions\n");
+ 	ffa_notifications_cleanup();
+-	ffa_rxtx_unmap(drv_info->vm_id);
++	ffa_rxtx_unmap();
+ free_pages:
+ 	if (drv_info->tx_buffer)
+ 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
+@@ -2108,7 +2108,7 @@ static void __exit ffa_exit(void)
+ {
+ 	ffa_notifications_cleanup();
+ 	ffa_partitions_cleanup();
+-	ffa_rxtx_unmap(drv_info->vm_id);
++	ffa_rxtx_unmap();
+ 	free_pages_exact(drv_info->tx_buffer, drv_info->rxtx_bufsz);
+ 	free_pages_exact(drv_info->rx_buffer, drv_info->rxtx_bufsz);
+ 	kfree(drv_info);
 -- 
 2.51.0
 
