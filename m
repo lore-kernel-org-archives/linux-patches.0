@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A393AF650;
-	Mon, 23 Mar 2026 14:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FA013B27D9;
+	Mon, 23 Mar 2026 14:50:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277448; cv=none; b=oWgFd8L3Lw5HeqiUnbPiGAEcE+7dnGJdvWuul2AjOY3wz98/tHIAF1961upl4fDtzkjLXbCH4vurtJ3PpN3APJ27wfyJ6V230Lyfs8c1P2jslUmNMsl/hGeBTGcVUTDhNTxjOQRSBo93zxNsv1KB7udZ2XsvXEnQCqq3e6Ijj0Q=
+	t=1774277450; cv=none; b=U7xiaDDvcyvJxxIrqV7AirLGjzx+qytuKpdA1Zwcx18/BO8x2s3vDoBMKFBglLj2FqwlETwpoymVU77cPtcy6uW9CKiYtS15j2h20ggRpb8f+4IetaKFDQA05iLnYwnYY2CMOKpNMuV/oJV5gXZepbtx/xudKZuubjhNZYw39rA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277448; c=relaxed/simple;
-	bh=MDq1V4EsEkImeJ7XM0k0PfieP+VfuUramSS1XsMLyds=;
+	s=arc-20240116; t=1774277450; c=relaxed/simple;
+	bh=v4fLwQL/NYBrEhg80/5I3eBaqoR5StYLUz1NaQOXyi0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=PiUa1eLPMJv0JYnvRO403euRSA4D3JRzbCVKaSkshsUmRjvns/LagLRpAkxw0ljLX4NaLkwh9PY9CZS44wD3reJd9+HXoinDC+Fhblv9+HCDK3tnxk6kPJVlHrCemOu/Ve0OqMp2HS6A7rIWUITU1rtHSIWvEeB4k3cSQr5GHDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHuvwHVD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AT6Bqg8XBzShRyhJuYkrbTSLSopNS6fVUPJuheaqerfscOiW4Sa4zTU+iJP1qk4HWrye1f28nCNZOHvww0NhPoffHsqS1oD0nmIBroGt97rsBthV5q8yG2+Cjqm71hLqfxvqTmjtAxyWdyIV3xF7ur+G8m9kQm4iUZosa27JYTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fCygplxa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHuvwHVD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2E1C2BC9E;
-	Mon, 23 Mar 2026 14:50:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fCygplxa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E732EC4CEF7;
+	Mon, 23 Mar 2026 14:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277448;
-	bh=MDq1V4EsEkImeJ7XM0k0PfieP+VfuUramSS1XsMLyds=;
+	s=korg; t=1774277450;
+	bh=v4fLwQL/NYBrEhg80/5I3eBaqoR5StYLUz1NaQOXyi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FHuvwHVDDdsf5NdvKX3gnmAI0V/HkXEXL8viKWSLvN+Uf3RjfTiO4IO+h3xyM64RA
-	 Z3szNxVuWu8QAdIjm2w6MPoTPW5Atilhy3XYPOZ+mE73+JthTn3GLBN/vaP3qu5A+s
-	 057YqpkUJbOCPR/0uBKp/ZDlzFh5IsBMws3kZOuM=
+	b=fCygplxaxEhe6WHypvaQKUCDINDXpGnN6K8DwK5lTN+OwYfIG4aD/p3bpdKRFJA44
+	 SbLPNY5v8Q4GLNuqQX0YzViTZXRHIT0Gv6QJqjxCHW6LvkOPFY28Nx417rkgh97pEL
+	 1ysKFrckExUrwSRBBKuNWWPa5YxMzhCrHFaXtbCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pratyush Yadav <p.yadav@ti.com>,
-	Michael Walle <michael@walle.cc>,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Pratyush Yadav <pratyush@kernel.org>
-Subject: [PATCH 6.12 444/460] mtd: spi-nor: core: avoid odd length/address writes in 8D-8D-8D mode
-Date: Mon, 23 Mar 2026 14:47:20 +0100
-Message-ID: <20260323134537.494711058@linuxfoundation.org>
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	"Alex Xu (Hello71)" <alex_y_xu@yahoo.ca>,
+	Kairui Song <ryncsn@gmail.com>,
+	Kairui Song <kasong@tencent.com>,
+	David Hildenbrand <david@redhat.com>,
+	Lance Yang <ioworker0@gmail.com>,
+	Matthew Wilcow <willy@infradead.org>,
+	Hugh Dickins <hughd@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 445/460] mm: shmem: fix potential data corruption during shmem swapin
+Date: Mon, 23 Mar 2026 14:47:21 +0100
+Message-ID: <20260323134537.518504587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,111 +57,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pratyush Yadav <p.yadav@ti.com>
+From: Baolin Wang <baolin.wang@linux.alibaba.com>
 
-commit 17926cd770ec837ed27d9856cf07f2da8dda4131 upstream.
+commit 058313515d5aab10d0a01dd634f92ed4a4e71d4c upstream.
 
-On Octal DTR capable flashes like Micron Xcella the writes cannot start
-or end at an odd address in Octal DTR mode. Extra 0xff bytes need to be
-appended or prepended to make sure the start address and end address are
-even. 0xff is used because on NOR flashes a program operation can only
-flip bits from 1 to 0, not the other way round. 0 to 1 flip needs to
-happen via erases.
+Alex and Kairui reported some issues (system hang or data corruption) when
+swapping out or swapping in large shmem folios.  This is especially easy
+to reproduce when the tmpfs is mount with the 'huge=within_size'
+parameter.  Thanks to Kairui's reproducer, the issue can be easily
+replicated.
 
-Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
-Reviewed-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Link: https://lore.kernel.org/r/20250708091646.292-2-ziniu.wang_1@nxp.com
+The root cause of the problem is that swap readahead may asynchronously
+swap in order 0 folios into the swap cache, while the shmem mapping can
+still store large swap entries.  Then an order 0 folio is inserted into
+the shmem mapping without splitting the large swap entry, which overwrites
+the original large swap entry, leading to data corruption.
+
+When getting a folio from the swap cache, we should split the large swap
+entry stored in the shmem mapping if the orders do not match, to fix this
+issue.
+
+Link: https://lkml.kernel.org/r/2fe47c557e74e9df5fe2437ccdc6c9115fa1bf70.1740476943.git.baolin.wang@linux.alibaba.com
+Fixes: 809bc86517cc ("mm: shmem: support large folio swap out")
+Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Reported-by: Alex Xu (Hello71) <alex_y_xu@yahoo.ca>
+Reported-by: Kairui Song <ryncsn@gmail.com>
+Closes: https://lore.kernel.org/all/1738717785.im3r5g2vxc.none@localhost/
+Tested-by: Kairui Song <kasong@tencent.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Lance Yang <ioworker0@gmail.com>
+Cc: Matthew Wilcow <willy@infradead.org>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+
+[ hughd: removed skip_swapcache dependencies ]
+Signed-off-by: Hugh Dickins <hughd@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |   69 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 68 insertions(+), 1 deletion(-)
+ mm/shmem.c |   30 +++++++++++++++++++++++++++---
+ 1 file changed, 27 insertions(+), 3 deletions(-)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -2152,6 +2152,68 @@ read_err:
- }
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -2132,7 +2132,7 @@ static int shmem_swapin_folio(struct ino
+ 	struct swap_info_struct *si;
+ 	struct folio *folio = NULL;
+ 	swp_entry_t swap;
+-	int error, nr_pages;
++	int error, nr_pages, order, split_order;
  
- /*
-+ * On Octal DTR capable flashes, writes cannot start or end at an odd address
-+ * in Octal DTR mode. Extra 0xff bytes need to be appended or prepended to
-+ * make sure the start address and end address are even. 0xff is used because
-+ * on NOR flashes a program operation can only flip bits from 1 to 0, not the
-+ * other way round. 0 to 1 flip needs to happen via erases.
-+ */
-+static int spi_nor_octal_dtr_write(struct spi_nor *nor, loff_t to, size_t len,
-+				   const u8 *buf)
-+{
-+	u8 *tmp_buf;
-+	size_t bytes_written;
-+	loff_t start, end;
-+	int ret;
-+
-+	if (IS_ALIGNED(to, 2) && IS_ALIGNED(len, 2))
-+		return spi_nor_write_data(nor, to, len, buf);
-+
-+	tmp_buf = kmalloc(nor->params->page_size, GFP_KERNEL);
-+	if (!tmp_buf)
-+		return -ENOMEM;
-+
-+	memset(tmp_buf, 0xff, nor->params->page_size);
-+
-+	start = round_down(to, 2);
-+	end = round_up(to + len, 2);
-+
-+	memcpy(tmp_buf + (to - start), buf, len);
-+
-+	ret = spi_nor_write_data(nor, start, end - start, tmp_buf);
-+	if (ret == 0) {
-+		ret = -EIO;
-+		goto out;
-+	}
-+	if (ret < 0)
-+		goto out;
-+
-+	/*
-+	 * More bytes are written than actually requested, but that number can't
-+	 * be reported to the calling function or it will confuse its
-+	 * calculations. Calculate how many of the _requested_ bytes were
-+	 * written.
-+	 */
-+	bytes_written = ret;
-+
-+	if (to != start)
-+		ret -= to - start;
-+
-+	/*
-+	 * Only account for extra bytes at the end if they were actually
-+	 * written. For example, if for some reason the controller could only
-+	 * complete a partial write then the adjustment for the extra bytes at
-+	 * the end is not needed.
-+	 */
-+	if (start + bytes_written == end)
-+		ret -= end - (to + len);
-+
-+out:
-+	kfree(tmp_buf);
-+	return ret;
-+}
-+
-+/*
-  * Write an address range to the nor chip.  Data must be written in
-  * FLASH_PAGESIZE chunks.  The address range may be any size provided
-  * it is within the physical boundaries.
-@@ -2187,7 +2249,12 @@ static int spi_nor_write(struct mtd_info
- 			goto write_err;
+ 	VM_BUG_ON(!*foliop || !xa_is_value(*foliop));
+ 	swap = radix_to_swp_entry(*foliop);
+@@ -2151,8 +2151,8 @@ static int shmem_swapin_folio(struct ino
+ 
+ 	/* Look it up and read it in.. */
+ 	folio = swap_cache_get_folio(swap, NULL, 0);
++	order = xa_get_order(&mapping->i_pages, index);
+ 	if (!folio) {
+-		int split_order;
+ 
+ 		/* Or update major stats only when swapin succeeds?? */
+ 		if (fault_type) {
+@@ -2189,13 +2189,37 @@ static int shmem_swapin_folio(struct ino
+ 			error = -ENOMEM;
+ 			goto failed;
  		}
++	} else if (order != folio_order(folio)) {
++		/*
++		 * Swap readahead may swap in order 0 folios into swapcache
++		 * asynchronously, while the shmem mapping can still stores
++		 * large swap entries. In such cases, we should split the
++		 * large swap entry to prevent possible data corruption.
++		 */
++		split_order = shmem_split_large_entry(inode, index, swap, gfp);
++		if (split_order < 0) {
++			error = split_order;
++			goto failed;
++		}
++
++		/*
++		 * If the large swap entry has already been split, it is
++		 * necessary to recalculate the new swap entry based on
++		 * the old order alignment.
++		 */
++		if (split_order > 0) {
++			pgoff_t offset = index - round_down(index, 1 << split_order);
++
++			swap = swp_entry(swp_type(swap), swp_offset(swap) + offset);
++		}
+ 	}
  
--		ret = spi_nor_write_data(nor, addr, page_remain, buf + i);
-+		if (nor->write_proto == SNOR_PROTO_8_8_8_DTR)
-+			ret = spi_nor_octal_dtr_write(nor, addr, page_remain,
-+						      buf + i);
-+		else
-+			ret = spi_nor_write_data(nor, addr, page_remain,
-+						 buf + i);
- 		spi_nor_unlock_device(nor);
- 		if (ret < 0)
- 			goto write_err;
+ 	/* We have to do this with folio locked to prevent races */
+ 	folio_lock(folio);
+ 	if (!folio_test_swapcache(folio) ||
+ 	    folio->swap.val != swap.val ||
+-	    !shmem_confirm_swap(mapping, index, swap)) {
++	    !shmem_confirm_swap(mapping, index, swap) ||
++	    xa_get_order(&mapping->i_pages, index) != folio_order(folio)) {
+ 		error = -EEXIST;
+ 		goto unlock;
+ 	}
 
 
