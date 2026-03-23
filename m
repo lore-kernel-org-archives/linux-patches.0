@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23A328504D;
-	Mon, 23 Mar 2026 15:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2F329CE9;
+	Mon, 23 Mar 2026 15:13:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278819; cv=none; b=SclMK4YiCoE9LbVWv6EHJuvg2OtgLlenlv8YoWDtMFo1WDuou47VC4AEw91a72XB1u60/DjoVqqRgpcktvqQVdvt0YqMKHGssIVyfC4g46A+DBdVBMhfGXKoyz/S0sva4vrW940Qs9Dc7G9Z2ywEJgidSHNJWAdHemqPo7zijiU=
+	t=1774278822; cv=none; b=lYM3L4BPWKReLpg4GsJEtvsVbDVVvSgN6YRNEGg84Iz/hTxVQcjWX64PC58uDAf7VDBoI4oalzRbhSpVKswuIKzKzK25m7fEecEWefo+r349qasmo4//Gx3Xe2wDM6c+Qde2lsMKNfBd8Mub9OIulpsdFLV/EnRjckquCktpv6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278819; c=relaxed/simple;
-	bh=yDeTY2TPQ1tStcX7q6G/5zE8H+sNPDJnhGIGc/oRJaE=;
+	s=arc-20240116; t=1774278822; c=relaxed/simple;
+	bh=/LPmMd/xMce0Rpp32OHKv8gjT+1JQjhHS6Fe0fnYXWk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AHVxbfYcV0DjamnyP+otdntnpmo+rMVyVIOdNuoqMxL4pMUIwWqZIQ0n8dNVAbRFg+/r5koF4t/jYinw0Tg5HIjtBaYMKK/LUzqR0FIq/AUHJ+StPv6eMtIXpBFHVaEjkLCIzsg0mBIlCEVM4CTuWx6f46I8RJ8ovCnHOCPu3P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i0UIpTyv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SdVAcjf7sKo3BWoVa9qivuIBE/1EU7Akom1koFBbzwi1ywOEDlSBUFs1+A2WyR3SLDvHydbdEaj6lvRwyrqOWvBUdEfy5u/AGc5NyNRgTih/+fo6ZDYs1sGGaskJfKcZHBnelqxOdLgKPhNJkUszE12YJbAjUwm/uhYEXCzp42M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gnt+cjwk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i0UIpTyv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DD41C4CEF7;
-	Mon, 23 Mar 2026 15:13:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gnt+cjwk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 748E1C4CEF7;
+	Mon, 23 Mar 2026 15:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278818;
-	bh=yDeTY2TPQ1tStcX7q6G/5zE8H+sNPDJnhGIGc/oRJaE=;
+	s=korg; t=1774278821;
+	bh=/LPmMd/xMce0Rpp32OHKv8gjT+1JQjhHS6Fe0fnYXWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i0UIpTyvj7yLQj9mV6SeKL/aGnpH8fH21jUAW+VQ5/ikL4GH1x5B8O/fwYM2pg/LR
-	 HDSOxah1hToA1sXRrJMwGqyJIGaj4K7Nx6+4W9AXdSka1QXZeMJpyyYh3RUVBBm3S/
-	 HgMhBgrcZCUiZzFzdaXcKEPUX84/siEUcZ0bfqFU=
+	b=Gnt+cjwkSmRngDYmb+KuD8KOZJ29NUZPlbpWRI+9Qlgfo8Rtoi0pwZ3HuPUZfB/jm
+	 bM3i0zEYy5lpP0ZbMWoKsyFuEUan8emE85aqQMViKPvkNyRfH3MoaMlKu4fMryQCCe
+	 VdT89NUHumsQtcE8h58hZ4OFqmj01aKsgdBADJ74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rosen Penev <rosenp@gmail.com>
-Subject: [PATCH 6.6 430/567] drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)
-Date: Mon, 23 Mar 2026 14:45:50 +0100
-Message-ID: <20260323134544.568153292@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	James Chapman <jchapman@katalix.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Qingfang Deng <dqfext@gmail.com>
+Subject: [PATCH 6.6 431/567] l2tp: do not use sock_hold() in pppol2tp_session_get_sock()
+Date: Mon, 23 Mar 2026 14:45:51 +0100
+Message-ID: <20260323134544.592923970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,355 +47,114 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 9d73b107a61b73e7101d4b728ddac3d2c77db111 upstream.
+commit 9b8c88f875c04d4cb9111bd5dd9291c7e9691bf5 upstream.
 
-This commit is necessary for DC to function well with chips
-that use the legacy power management code, ie. SI and KV.
-Communicate display information from DC to the legacy PM code.
+pppol2tp_session_get_sock() is using RCU, it must be ready
+for sk_refcnt being zero.
 
-Currently DC uses pm_display_cfg to communicate power management
-requirements from the display code to the DPM code.
-However, the legacy (non-DC) code path used different fields
-and therefore could not take into account anything from DC.
+Commit ee40fb2e1eb5 ("l2tp: protect sock pointer of
+struct pppol2tp_session with RCU") was correct because it
+had a call_rcu(..., pppol2tp_put_sk) which was later removed in blamed commit.
 
-Change the legacy display code to fill the same pm_display_cfg
-struct as DC and use the same in the legacy DPM code.
+pppol2tp_recv() can use pppol2tp_session_get_sock() as well.
 
-To ease review and reduce churn, this commit does not yet
-delete the now unneeded code, that is done in the next commit.
-
-v2:
-Rebase.
-Fix single_display in amdgpu_dpm_pick_power_state.
-
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Fixes: c5cbaef992d6 ("l2tp: refactor ppp socket/session relationship")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: James Chapman <jchapman@katalix.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20250826134435.1683435-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c     |   67 +++++++++++++++++++++++
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h |    2 
- drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c       |    4 -
- drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c   |    6 +-
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c       |   65 +++++++---------------
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c |   11 ---
- 6 files changed, 97 insertions(+), 58 deletions(-)
+ net/l2tp/l2tp_ppp.c |   25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c
-@@ -100,3 +100,70 @@ u32 amdgpu_dpm_get_vrefresh(struct amdgp
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -130,22 +130,12 @@ static const struct ppp_channel_ops pppo
  
- 	return vrefresh;
- }
-+
-+void amdgpu_dpm_get_display_cfg(struct amdgpu_device *adev)
-+{
-+	struct drm_device *ddev = adev_to_drm(adev);
-+	struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
-+	struct single_display_configuration *display_cfg;
-+	struct drm_crtc *crtc;
-+	struct amdgpu_crtc *amdgpu_crtc;
-+	struct amdgpu_connector *conn;
-+	int num_crtcs = 0;
-+	int vrefresh;
-+	u32 vblank_in_pixels, vblank_time_us;
-+
-+	cfg->min_vblank_time = 0xffffffff; /* if the displays are off, vblank time is max */
-+
-+	if (adev->mode_info.num_crtc && adev->mode_info.mode_config_initialized) {
-+		list_for_each_entry(crtc, &ddev->mode_config.crtc_list, head) {
-+			amdgpu_crtc = to_amdgpu_crtc(crtc);
-+
-+			/* The array should only contain active displays. */
-+			if (!amdgpu_crtc->enabled)
-+				continue;
-+
-+			conn = to_amdgpu_connector(amdgpu_crtc->connector);
-+			display_cfg = &adev->pm.pm_display_cfg.displays[num_crtcs++];
-+
-+			if (amdgpu_crtc->hw_mode.clock) {
-+				vrefresh = drm_mode_vrefresh(&amdgpu_crtc->hw_mode);
-+
-+				vblank_in_pixels =
-+					amdgpu_crtc->hw_mode.crtc_htotal *
-+					(amdgpu_crtc->hw_mode.crtc_vblank_end -
-+					amdgpu_crtc->hw_mode.crtc_vdisplay +
-+					(amdgpu_crtc->v_border * 2));
-+
-+				vblank_time_us =
-+					vblank_in_pixels * 1000 / amdgpu_crtc->hw_mode.clock;
-+
-+				/* The legacy (non-DC) code has issues with mclk switching
-+				 * with refresh rates over 120 Hz. Disable mclk switching.
-+				 */
-+				if (vrefresh > 120)
-+					vblank_time_us = 0;
-+
-+				/* Find minimum vblank time. */
-+				if (vblank_time_us < cfg->min_vblank_time)
-+					cfg->min_vblank_time = vblank_time_us;
-+
-+				/* Find vertical refresh rate of first active display. */
-+				if (!cfg->vrefresh)
-+					cfg->vrefresh = vrefresh;
-+			}
-+
-+			if (amdgpu_crtc->crtc_id < cfg->crtc_index) {
-+				/* Find first active CRTC and its line time. */
-+				cfg->crtc_index = amdgpu_crtc->crtc_id;
-+				cfg->line_time_in_us = amdgpu_crtc->line_time;
-+			}
-+
-+			display_cfg->controller_id = amdgpu_crtc->crtc_id;
-+			display_cfg->pixel_clock = conn->pixelclock_for_modeset;
-+		}
-+	}
-+
-+	cfg->display_clk = adev->clock.default_dispclk;
-+	cfg->num_display = num_crtcs;
-+}
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h
-@@ -29,4 +29,6 @@ u32 amdgpu_dpm_get_vblank_time(struct am
+ static const struct proto_ops pppol2tp_ops;
  
- u32 amdgpu_dpm_get_vrefresh(struct amdgpu_device *adev);
- 
-+void amdgpu_dpm_get_display_cfg(struct amdgpu_device *adev);
-+
- #endif
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-@@ -2299,7 +2299,7 @@ static void kv_apply_state_adjust_rules(
- 
- 		if (pi->sys_info.nb_dpm_enable) {
- 			force_high = (mclk >= pi->sys_info.nbp_memory_clock[3]) ||
--				pi->video_start || (adev->pm.dpm.new_active_crtc_count >= 3) ||
-+				pi->video_start || (adev->pm.pm_display_cfg.num_display >= 3) ||
- 				pi->disable_nb_ps3_in_battery;
- 			ps->dpm0_pg_nb_ps_lo = force_high ? 0x2 : 0x3;
- 			ps->dpm0_pg_nb_ps_hi = 0x2;
-@@ -2358,7 +2358,7 @@ static int kv_calculate_nbps_level_setti
- 			return 0;
- 
- 		force_high = ((mclk >= pi->sys_info.nbp_memory_clock[3]) ||
--			      (adev->pm.dpm.new_active_crtc_count >= 3) || pi->video_start);
-+			      (adev->pm.pm_display_cfg.num_display >= 3) || pi->video_start);
- 
- 		if (force_high) {
- 			for (i = pi->lowest_valid; i <= pi->highest_valid; i++)
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-@@ -797,8 +797,7 @@ static struct amdgpu_ps *amdgpu_dpm_pick
- 	int i;
- 	struct amdgpu_ps *ps;
- 	u32 ui_class;
--	bool single_display = (adev->pm.dpm.new_active_crtc_count < 2) ?
--		true : false;
-+	bool single_display = adev->pm.pm_display_cfg.num_display < 2;
- 
- 	/* check if the vblank period is too short to adjust the mclk */
- 	if (single_display && adev->powerplay.pp_funcs->vblank_too_short) {
-@@ -1003,7 +1002,8 @@ void amdgpu_legacy_dpm_compute_clocks(vo
+-/* Retrieves the pppol2tp socket associated to a session.
+- * A reference is held on the returned socket, so this function must be paired
+- * with sock_put().
+- */
++/* Retrieves the pppol2tp socket associated to a session. */
+ static struct sock *pppol2tp_session_get_sock(struct l2tp_session *session)
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+ 	struct pppol2tp_session *ps = l2tp_session_priv(session);
+-	struct sock *sk;
  
--	amdgpu_dpm_get_active_displays(adev);
-+	if (!adev->dc_enabled)
-+		amdgpu_dpm_get_display_cfg(adev);
- 
- 	amdgpu_dpm_change_power_state_locked(adev);
- }
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3058,7 +3058,7 @@ static int si_get_vce_clock_voltage(stru
- static bool si_dpm_vblank_too_short(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
--	u32 vblank_time = amdgpu_dpm_get_vblank_time(adev);
-+	u32 vblank_time = adev->pm.pm_display_cfg.min_vblank_time;
- 	/* we never hit the non-gddr5 limit so disable it */
- 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
- 
-@@ -3424,9 +3424,10 @@ static void rv770_get_engine_memory_ss(s
- static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
- 					struct amdgpu_ps *rps)
- {
-+	const struct amd_pp_display_configuration *display_cfg =
-+		&adev->pm.pm_display_cfg;
- 	struct  si_ps *ps = si_get_ps(rps);
- 	struct amdgpu_clock_and_voltage_limits *max_limits;
--	struct amdgpu_connector *conn;
- 	bool disable_mclk_switching = false;
- 	bool disable_sclk_switching = false;
- 	u32 mclk, sclk;
-@@ -3475,14 +3476,9 @@ static void si_apply_state_adjust_rules(
- 	 * For example, 4K 60Hz and 1080p 144Hz fall into this category.
- 	 * Find number of such displays connected.
- 	 */
--	for (i = 0; i < adev->mode_info.num_crtc; i++) {
--		if (!(adev->pm.dpm.new_active_crtcs & (1 << i)) ||
--			!adev->mode_info.crtcs[i]->enabled)
--			continue;
+-	rcu_read_lock();
+-	sk = rcu_dereference(ps->sk);
+-	if (sk)
+-		sock_hold(sk);
+-	rcu_read_unlock();
 -
--		conn = to_amdgpu_connector(adev->mode_info.crtcs[i]->connector);
--
--		if (conn->pixelclock_for_modeset > 297000)
-+	for (i = 0; i < display_cfg->num_display; i++) {
-+		/* The array only contains active displays. */
-+		if (display_cfg->displays[i].pixel_clock > 297000)
- 			high_pixelclock_count++;
- 	}
- 
-@@ -3515,7 +3511,7 @@ static void si_apply_state_adjust_rules(
- 		rps->ecclk = 0;
- 	}
- 
--	if ((adev->pm.dpm.new_active_crtc_count > 1) ||
-+	if ((adev->pm.pm_display_cfg.num_display > 1) ||
- 	    si_dpm_vblank_too_short(adev))
- 		disable_mclk_switching = true;
- 
-@@ -3663,7 +3659,7 @@ static void si_apply_state_adjust_rules(
- 						   ps->performance_levels[i].mclk,
- 						   max_limits->vddc,  &ps->performance_levels[i].vddc);
- 		btc_apply_voltage_dependency_rules(&adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk,
--						   adev->clock.current_dispclk,
-+						   display_cfg->display_clk,
- 						   max_limits->vddc,  &ps->performance_levels[i].vddc);
- 	}
- 
-@@ -4188,16 +4184,16 @@ static void si_program_ds_registers(stru
- 
- static void si_program_display_gap(struct amdgpu_device *adev)
- {
-+	const struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
- 	u32 tmp, pipe;
--	int i;
- 
- 	tmp = RREG32(CG_DISPLAY_GAP_CNTL) & ~(DISP1_GAP_MASK | DISP2_GAP_MASK);
--	if (adev->pm.dpm.new_active_crtc_count > 0)
-+	if (cfg->num_display > 0)
- 		tmp |= DISP1_GAP(R600_PM_DISPLAY_GAP_VBLANK_OR_WM);
- 	else
- 		tmp |= DISP1_GAP(R600_PM_DISPLAY_GAP_IGNORE);
- 
--	if (adev->pm.dpm.new_active_crtc_count > 1)
-+	if (cfg->num_display > 1)
- 		tmp |= DISP2_GAP(R600_PM_DISPLAY_GAP_VBLANK_OR_WM);
- 	else
- 		tmp |= DISP2_GAP(R600_PM_DISPLAY_GAP_IGNORE);
-@@ -4207,17 +4203,8 @@ static void si_program_display_gap(struc
- 	tmp = RREG32(DCCG_DISP_SLOW_SELECT_REG);
- 	pipe = (tmp & DCCG_DISP1_SLOW_SELECT_MASK) >> DCCG_DISP1_SLOW_SELECT_SHIFT;
- 
--	if ((adev->pm.dpm.new_active_crtc_count > 0) &&
--	    (!(adev->pm.dpm.new_active_crtcs & (1 << pipe)))) {
--		/* find the first active crtc */
--		for (i = 0; i < adev->mode_info.num_crtc; i++) {
--			if (adev->pm.dpm.new_active_crtcs & (1 << i))
--				break;
--		}
--		if (i == adev->mode_info.num_crtc)
--			pipe = 0;
--		else
--			pipe = i;
-+	if (cfg->num_display > 0 && pipe != cfg->crtc_index) {
-+		pipe = cfg->crtc_index;
- 
- 		tmp &= ~DCCG_DISP1_SLOW_SELECT_MASK;
- 		tmp |= DCCG_DISP1_SLOW_SELECT(pipe);
-@@ -4228,7 +4215,7 @@ static void si_program_display_gap(struc
- 	 * This can be a problem on PowerXpress systems or if you want to use the card
- 	 * for offscreen rendering or compute if there are no crtcs enabled.
- 	 */
--	si_notify_smc_display_change(adev, adev->pm.dpm.new_active_crtc_count > 0);
-+	si_notify_smc_display_change(adev, cfg->num_display > 0);
+-	return sk;
++	return rcu_dereference(ps->sk);
  }
  
- static void si_enable_spread_spectrum(struct amdgpu_device *adev, bool enable)
-@@ -5533,7 +5520,7 @@ static int si_convert_power_level_to_smc
- 	    (pl->mclk <= pi->mclk_stutter_mode_threshold) &&
- 	    !eg_pi->uvd_enabled &&
- 	    (RREG32(DPG_PIPE_STUTTER_CONTROL) & STUTTER_ENABLE) &&
--	    (adev->pm.dpm.new_active_crtc_count <= 2)) {
-+	    (adev->pm.pm_display_cfg.num_display <= 2)) {
- 		level->mcFlags |= SISLANDS_SMC_MC_STUTTER_EN;
+ /* Helpers to obtain tunnel/session contexts from sockets.
+@@ -211,14 +201,13 @@ end:
  
- 		if (gmc_pg)
-@@ -5685,7 +5672,7 @@ static bool si_is_state_ulv_compatible(s
- 	/* XXX validate against display requirements! */
- 
- 	for (i = 0; i < adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count; i++) {
--		if (adev->clock.current_dispclk <=
-+		if (adev->pm.pm_display_cfg.display_clk <=
- 		    adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[i].clk) {
- 			if (ulv->pl.vddc <
- 			    adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[i].v)
-@@ -5839,30 +5826,22 @@ static int si_upload_ulv_state(struct am
- 
- static int si_upload_smc_data(struct amdgpu_device *adev)
+ static void pppol2tp_recv(struct l2tp_session *session, struct sk_buff *skb, int data_len)
  {
--	struct amdgpu_crtc *amdgpu_crtc = NULL;
--	int i;
-+	const struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
- 	u32 crtc_index = 0;
- 	u32 mclk_change_block_cp_min = 0;
- 	u32 mclk_change_block_cp_max = 0;
+-	struct pppol2tp_session *ps = l2tp_session_priv(session);
+-	struct sock *sk = NULL;
++	struct sock *sk;
  
--	for (i = 0; i < adev->mode_info.num_crtc; i++) {
--		if (adev->pm.dpm.new_active_crtcs & (1 << i)) {
--			amdgpu_crtc = adev->mode_info.crtcs[i];
--			break;
--		}
--	}
--
- 	/* When a display is plugged in, program these so that the SMC
- 	 * performs MCLK switching when it doesn't cause flickering.
- 	 * When no display is plugged in, there is no need to restrict
- 	 * MCLK switching, so program them to zero.
+ 	/* If the socket is bound, send it in to PPP's input queue. Otherwise
+ 	 * queue it on the session socket.
  	 */
--	if (adev->pm.dpm.new_active_crtc_count && amdgpu_crtc) {
--		crtc_index = amdgpu_crtc->crtc_id;
-+	if (cfg->num_display) {
-+		crtc_index = cfg->crtc_index;
+ 	rcu_read_lock();
+-	sk = rcu_dereference(ps->sk);
++	sk = pppol2tp_session_get_sock(session);
+ 	if (!sk)
+ 		goto no_sock;
  
--		if (amdgpu_crtc->line_time) {
--			mclk_change_block_cp_min = 200 / amdgpu_crtc->line_time;
--			mclk_change_block_cp_max = 100 / amdgpu_crtc->line_time;
-+		if (cfg->line_time_in_us) {
-+			mclk_change_block_cp_min = 200 / cfg->line_time_in_us;
-+			mclk_change_block_cp_max = 100 / cfg->line_time_in_us;
- 		}
+@@ -528,13 +517,14 @@ static void pppol2tp_show(struct seq_fil
+ 	struct l2tp_session *session = arg;
+ 	struct sock *sk;
+ 
++	rcu_read_lock();
+ 	sk = pppol2tp_session_get_sock(session);
+ 	if (sk) {
+ 		struct pppox_sock *po = pppox_sk(sk);
+ 
+ 		seq_printf(m, "   interface %s\n", ppp_dev_name(&po->chan));
+-		sock_put(sk);
+ 	}
++	rcu_read_unlock();
+ }
+ 
+ static void pppol2tp_session_init(struct l2tp_session *session)
+@@ -1540,6 +1530,7 @@ static void pppol2tp_seq_session_show(st
+ 		port = ntohs(inet->inet_sport);
  	}
  
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -1567,16 +1567,7 @@ static void pp_pm_compute_clocks(void *h
- 	struct amdgpu_device *adev = hwmgr->adev;
++	rcu_read_lock();
+ 	sk = pppol2tp_session_get_sock(session);
+ 	if (sk) {
+ 		state = sk->sk_state;
+@@ -1575,8 +1566,8 @@ static void pppol2tp_seq_session_show(st
+ 		struct pppox_sock *po = pppox_sk(sk);
  
- 	if (!adev->dc_enabled) {
--		amdgpu_dpm_get_active_displays(adev);
--		adev->pm.pm_display_cfg.num_display = adev->pm.dpm.new_active_crtc_count;
--		adev->pm.pm_display_cfg.vrefresh = amdgpu_dpm_get_vrefresh(adev);
--		adev->pm.pm_display_cfg.min_vblank_time = amdgpu_dpm_get_vblank_time(adev);
--		/* we have issues with mclk switching with
--		 * refresh rates over 120 hz on the non-DC code.
--		 */
--		if (adev->pm.pm_display_cfg.vrefresh > 120)
--			adev->pm.pm_display_cfg.min_vblank_time = 0;
--
-+		amdgpu_dpm_get_display_cfg(adev);
- 		pp_display_configuration_change(handle,
- 						&adev->pm.pm_display_cfg);
+ 		seq_printf(m, "   interface %s\n", ppp_dev_name(&po->chan));
+-		sock_put(sk);
  	}
++	rcu_read_unlock();
+ }
+ 
+ static int pppol2tp_seq_show(struct seq_file *m, void *v)
 
 
