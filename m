@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007883BED2C;
-	Mon, 23 Mar 2026 16:26:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC1373BD63E;
+	Mon, 23 Mar 2026 16:27:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283219; cv=none; b=jd8UuWg+uJ1KOT7BmIUfJEvu5PR1E+eXFkYY7gVnkHt+6FzDDYOEebAACqhX4s4enjV+SARZuxK4CpiJNsUkDvyesR7UEZmZ9NsxKF8I7zUHDk6u6P/AfnnKGODZCBcRHsSpUIdoKfxKfG1H2HBuDbDa3oHCNZnfHnXgydxFsTg=
+	t=1774283222; cv=none; b=fXQojfZcrs0D4sF6hEY2YlgYcVic+ZrHS4rw9R5oJK441zC6AuKbSMorQvH+mgDdOMfAD39k/9c0rEDSZiT/ah+aWm8I5Dk/ECXFY6MQ7CHA9Dq8RT2WbX9W2l1LlmDc0XX9y4ih7VvYjsdSpjoW6z0PA5biHZ2rjL791G+8Nw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283219; c=relaxed/simple;
-	bh=dw2jx2clebVI7Thz6aHcY/dSUzKafN1mQhURgx0Gt1Y=;
+	s=arc-20240116; t=1774283222; c=relaxed/simple;
+	bh=gIt/7NBqmyutNzlad8fsQJZEGYbDb3AEtY5666O9AmY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Alc/Kx49fU3mSWxVfp6VFkUoh4n3ZD3GFFxRdTWmK7sZVxAjN2kJojnD7G6tWdKEoFOA8gy6WUS3n8wdBJyOlqO8omkKZw2YD1VcOXndiG32cpWfoJdALZ8VRBBaYwi8kBPQ0KExJKQok8cixzM9/MSysFjR4Oho5aP3BkrhMTQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zOJ+gXQ4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Yl0JNmGD0o8U3oIRU4n5G8uER4JPjRoSjmadodHRYeHBS0UHcJj/JSKt/eLq+9iW6D4sWt8bb/M1VdG/YgVZ17nNpy3zjko4ssYGxH/zTyDisiugZ6xU5w56rtjFV4WQPjstFM+ffxew1ekyteme/3dzuf2fj1ZQgQ3NcuEgrhk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Vuz7Gnrp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zOJ+gXQ4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42157C2BC9E;
-	Mon, 23 Mar 2026 16:26:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Vuz7Gnrp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16B36C4CEF7;
+	Mon, 23 Mar 2026 16:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283218;
-	bh=dw2jx2clebVI7Thz6aHcY/dSUzKafN1mQhURgx0Gt1Y=;
+	s=korg; t=1774283221;
+	bh=gIt/7NBqmyutNzlad8fsQJZEGYbDb3AEtY5666O9AmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOJ+gXQ4uXNfM9jIpSO/PGB240AhR8C5aSX/8LKJBZ2OdfEQGG/jEv+XXrtimNGoC
-	 qgGD7aHoN1SQmMHnVYXlEwiccV+R9XY6A9uOWcnX2SyGU4h97hJ7vQBYBK2dQnG6tn
-	 r8xjPaFqOm0FRMtaJ2YTaLVBgphLMzAxgJdN/Lrc=
+	b=Vuz7GnrpuPfkq0HPRLUg7ox8LDb69OGQSJ3kairNql39t+oK2XeXuVkNiyALCpli4
+	 BeZE2q6nzvJDvMtlDTz5jCwbqKJ8Nc4Ve06CfRmTNqpHs3Bdvh32TCp3gdI34N+781
+	 neJErquqWNV2AMvNgBL56Q2rb5tzAALMBWa9G45A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 446/481] USB: serial: f81232: fix incomplete serial port generation
-Date: Mon, 23 Mar 2026 14:47:08 +0100
-Message-ID: <20260323134536.084086033@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.1 447/481] i2c: fsi: Fix a potential leak in fsi_i2c_probe()
+Date: Mon, 23 Mar 2026 14:47:09 +0100
+Message-ID: <20260323134536.108386541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,133 +50,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit cd644b805da8a253198718741bf363c4c58862ff upstream.
+commit be627abcc0d5dbd5882873bd85fbc18aa3d189ed upstream.
 
-The Fintek F81532A/534A/535/536 family relies on the
-F81534A_CTRL_CMD_ENABLE_PORT (116h) register during initialization to
-both determine serial port status and control port creation. If the
-driver experiences fast load/unload cycles, the device state may becomes
-unstable, resulting in the incomplete generation of serial ports.
+In the commit in Fixes:, when the code has been updated to use an explicit
+for loop, instead of for_each_available_child_of_node(), the assumption
+that a reference to a device_node structure would be released at each
+iteration has been broken.
 
-Performing a dummy read operation on the register prior to the initial
-write command resolves the issue. This clears the device's stale internal
-state. Subsequent write operations will correctly generate all serial
-ports.
+Now, an explicit of_node_put() is needed to release the reference.
 
-This patch also removes the retry loop in f81534a_ctrl_set_register()
-because the stale state has been fixed.
-
-Tested on: HygonDM1SLT(Hygon C86 3250 8-core Processor)
-
-Signed-off-by: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 095561f476ab ("i2c: fsi: Create busses for all ports")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Cc: <stable@vger.kernel.org> # v5.3+
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/fd805c39f8de51edf303856103d782138a1633c8.1772382022.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/f81232.c |   77 ++++++++++++++++++++++++++------------------
- 1 file changed, 47 insertions(+), 30 deletions(-)
+ drivers/i2c/busses/i2c-fsi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/serial/f81232.c
-+++ b/drivers/usb/serial/f81232.c
-@@ -70,7 +70,6 @@ MODULE_DEVICE_TABLE(usb, combined_id_tab
- #define F81232_REGISTER_REQUEST		0xa0
- #define F81232_GET_REGISTER		0xc0
- #define F81232_SET_REGISTER		0x40
--#define F81534A_ACCESS_REG_RETRY	2
- 
- #define SERIAL_BASE_ADDRESS		0x0120
- #define RECEIVE_BUFFER_REGISTER		(0x00 + SERIAL_BASE_ADDRESS)
-@@ -822,36 +821,31 @@ static void f81232_lsr_worker(struct wor
- static int f81534a_ctrl_set_register(struct usb_interface *intf, u16 reg,
- 					u16 size, void *val)
- {
--	struct usb_device *dev = interface_to_usbdev(intf);
--	int retry = F81534A_ACCESS_REG_RETRY;
--	int status;
--
--	while (retry--) {
--		status = usb_control_msg_send(dev,
--					      0,
--					      F81232_REGISTER_REQUEST,
--					      F81232_SET_REGISTER,
--					      reg,
--					      0,
--					      val,
--					      size,
--					      USB_CTRL_SET_TIMEOUT,
--					      GFP_KERNEL);
--		if (status) {
--			status = usb_translate_errors(status);
--			if (status == -EIO)
--				continue;
--		}
--
--		break;
--	}
--
--	if (status) {
--		dev_err(&intf->dev, "failed to set register 0x%x: %d\n",
--				reg, status);
--	}
-+	return usb_control_msg_send(interface_to_usbdev(intf),
-+						0,
-+						F81232_REGISTER_REQUEST,
-+						F81232_SET_REGISTER,
-+						reg,
-+						0,
-+						val,
-+						size,
-+						USB_CTRL_SET_TIMEOUT,
-+						GFP_KERNEL);
-+}
- 
--	return status;
-+static int f81534a_ctrl_get_register(struct usb_interface *intf, u16 reg,
-+					u16 size, void *val)
-+{
-+	return usb_control_msg_recv(interface_to_usbdev(intf),
-+						0,
-+						F81232_REGISTER_REQUEST,
-+						F81232_GET_REGISTER,
-+						reg,
-+						0,
-+						val,
-+						size,
-+						USB_CTRL_GET_TIMEOUT,
-+						GFP_KERNEL);
- }
- 
- static int f81534a_ctrl_enable_all_ports(struct usb_interface *intf, bool en)
-@@ -867,6 +861,29 @@ static int f81534a_ctrl_enable_all_ports
- 	 * bit 0~11	: Serial port enable bit.
- 	 */
- 	if (en) {
-+		/*
-+		 * The Fintek F81532A/534A/535/536 family relies on the
-+		 * F81534A_CTRL_CMD_ENABLE_PORT (116h) register during
-+		 * initialization to both determine serial port status and
-+		 * control port creation.
-+		 *
-+		 * If the driver experiences fast load/unload cycles, the
-+		 * device state may becomes unstable, resulting in the
-+		 * incomplete generation of serial ports.
-+		 *
-+		 * Performing a dummy read operation on the register prior
-+		 * to the initial write command resolves the issue.
-+		 *
-+		 * This clears the device's stale internal state. Subsequent
-+		 * write operations will correctly generate all serial ports.
-+		 */
-+		status = f81534a_ctrl_get_register(intf,
-+						F81534A_CTRL_CMD_ENABLE_PORT,
-+						sizeof(enable),
-+						enable);
-+		if (status)
-+			return status;
-+
- 		enable[0] = 0xff;
- 		enable[1] = 0x8f;
- 	}
+--- a/drivers/i2c/busses/i2c-fsi.c
++++ b/drivers/i2c/busses/i2c-fsi.c
+@@ -728,6 +728,7 @@ static int fsi_i2c_probe(struct device *
+ 		rc = i2c_add_adapter(&port->adapter);
+ 		if (rc < 0) {
+ 			dev_err(dev, "Failed to register adapter: %d\n", rc);
++			of_node_put(np);
+ 			kfree(port);
+ 			continue;
+ 		}
 
 
