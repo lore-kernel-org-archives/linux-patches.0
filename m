@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA539C658;
-	Mon, 23 Mar 2026 14:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0EDF3AC0C2;
+	Mon, 23 Mar 2026 14:15:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275305; cv=none; b=Lup7xSQjpTsvje2UvV1zWW7j1+/sUhbWdOBe7Fo2/tGqwjZ//DihJO6KadXGV/fcO+Vx57YhI9peOG6fAEYUXATjnkfAk4iTWSZXWrkBDDA+jqSmzwCQ/W4htRdRu1BaK9pbL3rCvJ1WH0nCHreMDyS5NkkgV5YGWAznmGYAe5k=
+	t=1774275307; cv=none; b=GXr3zXN6jWKoz8vt9Z59K0fpfsZDLH7D/A9rqYrWoObcONzEQXOBg4n8aQKkhMZL9WaGqgsvWh71oCyVt7AWw2/a60SdSbH1keVZWUNUEby3VzpXp3W4wv1p/B/ctATabSfZ96izuK4jodpjH7m2WAeXT3qklMvR8uKSlIeDa+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275305; c=relaxed/simple;
-	bh=xGAimwdS40COwCRRbJ0BrzMRSjGnENOvcTDkj3tBCKQ=;
+	s=arc-20240116; t=1774275307; c=relaxed/simple;
+	bh=blvQ16c+QKeOWG9X0pMrmwCh4V+KLrl0ZtTJjSmPGPQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kHH31b251TxzKSNIKK5FtVeEiZ2Ti6O9PAgc4kEdwhxyP1kz6t8ecaa+VDRdVH0O7UJPA9Nn8aBCmhAFLv3Gs0moxrzH8FhPkGbim3GPBnhYAbWvdN7cyLYllfkh1fPO8THkPvoiIih/yA1FkBHFlv+uIO5K+yhSs8XyeSRBx+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvGzXi8J; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Uplywkl4tH+bf+pzo6Tcaauxmo6k3McsAbbz1iRVHxz2se8wd6gvpAyNeOezOt0KN/Xr0aw6nKA5USPxiDl3Dj2tUd207wOueyJTzyrUbOcqpNQD+RmCWPKOe5o2fla72V1bBVRl9x9RwdKGDyOs4meNl19gSX45cvpw7yRAlMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tRWN1UDu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvGzXi8J"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B30C2BC9E;
-	Mon, 23 Mar 2026 14:15:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tRWN1UDu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 317FAC4CEF7;
+	Mon, 23 Mar 2026 14:15:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275304;
-	bh=xGAimwdS40COwCRRbJ0BrzMRSjGnENOvcTDkj3tBCKQ=;
+	s=korg; t=1774275307;
+	bh=blvQ16c+QKeOWG9X0pMrmwCh4V+KLrl0ZtTJjSmPGPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvGzXi8JZtpRsIb/pMrZ/YAcdjckP4shAO/r8Ukxc7KeuIQo8alKxL1/dSQHnCqfO
-	 FOQUABMr86oioThT2Tcc/I1C1uuLBYniXly99tENzcE4VN3Q+ExaPVmLICFlElrHrS
-	 sXZPW9v358qo1kXV6k19zoNuMZHJqEDdL1dvFdec=
+	b=tRWN1UDuNG6/n2hXKwB9YmoAmKZ+iYHqOBPeczZviZY3q+Tdy7CBphdtLQMfwIFZl
+	 BkK2/FUUdCUZ5TSezvkZ1Efs6Oj01IRjQZld2jzb+gEq8r9D8qI2qKbng1EVuQCZbc
+	 H6Sg4H8FMakiY0H5RLotHrBCdYxc1a5Cjv+Jmbp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
-	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 047/460] serial: caif: hold tty->link reference in ldisc_open and ser_release
-Date: Mon, 23 Mar 2026 14:40:43 +0100
-Message-ID: <20260323134527.869127865@linuxfoundation.org>
+Subject: [PATCH 6.12 048/460] bnxt_en: Fix RSS table size check when changing ethtool channels
+Date: Mon, 23 Mar 2026 14:40:44 +0100
+Message-ID: <20260323134527.892382359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,67 +48,54 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+From: Pavan Chebbi <pavan.chebbi@broadcom.com>
 
-[ Upstream commit 288598d80a068a0e9281de35bcb4ce495f189e2a ]
+[ Upstream commit 0d9a60a0618d255530ca56072c5f39eb58e1ed4a ]
 
-A reproducer triggers a KASAN slab-use-after-free in pty_write_room()
-when caif_serial's TX path calls tty_write_room(). The faulting access
-is on tty->link->port.
+When changing channels, the current check in bnxt_set_channels()
+is not checking for non-default RSS contexts when the RSS table size
+changes. The current check for IFF_RXFH_CONFIGURED is only sufficient
+for the default RSS context. Expand the check to include the presence
+of any non-default RSS contexts.
 
-Hold an extra kref on tty->link for the lifetime of the caif_serial line
-discipline: get it in ldisc_open() and drop it in ser_release(), and
-also drop it on the ldisc_open() error path.
+Allowing such change will result in incorrect configuration of the
+context's RSS table when the table size changes.
 
-With this change applied, the reproducer no longer triggers the UAF in
-my testing.
-
-Link: https://gist.github.com/shuangpengbai/c898debad6bdf170a84be7e6b3d8707f
-Link: https://lore.kernel.org/netdev/20260301220525.1546355-1-shuangpeng.kernel@gmail.com
-Fixes: e31d5a05948e ("caif: tty's are kref objects so take a reference")
-Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
-Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
-Link: https://patch.msgid.link/20260306034006.3395740-1-shuangpeng.kernel@gmail.com
+Fixes: b3d0083caf9a ("bnxt_en: Support RSS contexts in ethtool .{get|set}_rxfh()")
+Reported-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/netdev/20260303181535.2671734-1-bjorn@kernel.org/
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Link: https://patch.msgid.link/20260306225854.3575672-1-michael.chan@broadcom.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/caif/caif_serial.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
-index 699ed0ff461e8..6799dbf80f484 100644
---- a/drivers/net/caif/caif_serial.c
-+++ b/drivers/net/caif/caif_serial.c
-@@ -311,6 +311,7 @@ static void ser_release(struct work_struct *work)
- 			dev_close(ser->dev);
- 			unregister_netdevice(ser->dev);
- 			debugfs_deinit(ser);
-+			tty_kref_put(tty->link);
- 			tty_kref_put(tty);
- 		}
- 		rtnl_unlock();
-@@ -345,6 +346,7 @@ static int ldisc_open(struct tty_struct *tty)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 0a8f3dc3c2f01..0be9c64ae2fad 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -958,8 +958,8 @@ static int bnxt_set_channels(struct net_device *dev,
  
- 	ser = netdev_priv(dev);
- 	ser->tty = tty_kref_get(tty);
-+	tty_kref_get(tty->link);
- 	ser->dev = dev;
- 	debugfs_init(ser, tty);
- 	tty->receive_room = N_TTY_BUF_SIZE;
-@@ -353,6 +355,7 @@ static int ldisc_open(struct tty_struct *tty)
- 	rtnl_lock();
- 	result = register_netdevice(dev);
- 	if (result) {
-+		tty_kref_put(tty->link);
- 		tty_kref_put(tty);
- 		rtnl_unlock();
- 		free_netdev(dev);
+ 	if (bnxt_get_nr_rss_ctxs(bp, req_rx_rings) !=
+ 	    bnxt_get_nr_rss_ctxs(bp, bp->rx_nr_rings) &&
+-	    netif_is_rxfh_configured(dev)) {
+-		netdev_warn(dev, "RSS table size change required, RSS table entries must be default to proceed\n");
++	    (netif_is_rxfh_configured(dev) || bp->num_rss_ctx)) {
++		netdev_warn(dev, "RSS table size change required, RSS table entries must be default (with no additional RSS contexts present) to proceed\n");
+ 		return -EINVAL;
+ 	}
+ 
 -- 
 2.51.0
 
