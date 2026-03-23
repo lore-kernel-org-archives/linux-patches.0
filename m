@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80F82823DD;
-	Mon, 23 Mar 2026 14:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9197323BCFD;
+	Mon, 23 Mar 2026 14:03:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274636; cv=none; b=A90wJBcCTueSRtCcIx/mO9RKhbdVJNC23TEFr/V3geVlYkF5ZYnViOqf6vGqpHOqyrC2swO5/w+jYOXOnMzExVgEDtWD93vCPyeELtqdReFDfvM7iC7/h61+bcxSBEOV+CpvDJQty6wimgcRGumiPwwlQ5QfbWIs49OfKHLWC9o=
+	t=1774274639; cv=none; b=RC+HBl1CPUWF710ngvfKcvXBqMTzAYzMTTctjmCssh0nutrHC7/ClJj59E9QsE9o3KPNwnNtozRvlRWJmyk5w/cS1WnHWmJ/YzLvT4rWrgZupFSTbMj2ZIh1ILNZ+3ytaHVQqRLpAI4FS0yWqqZWrLQh/aBguEekjX/k7062xR0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274636; c=relaxed/simple;
-	bh=NGGWHMXFB/7wuq3JpztR79G9zYXITyto24f0/+VGPf0=;
+	s=arc-20240116; t=1774274639; c=relaxed/simple;
+	bh=Fmv28O1m2maarhqPXvPgEGDY/cUXhAIcFYrc+tp9Tk4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEW4ecl3w7WQ/Qwd4d72IBhMKaRR+ftsluscsEx9wcp0qdUjsoPMen3q/mG2S7ERGdtCMuLZfTDIVjHtVrUdvag91wQ6dskgw3+swdfaiexC0ED2/qViVjQqOvx6kr5RiCRGZxUpMbKRWUD8gsgAdgXlQgsgDM0csugUMKRVhOM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mMZdxxF8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ISEqsU+mCO2EYIPMk9lrME4K85cip//9t7mceVb6yshd89kNveAMt5V2RoLBKXJkiLT8ztfKGcJtwZdPnHrq5tXcL9jALe4cniET3OiMnvNgIRqrYjUT9MAe2pVwFlYRL5t4jO6l4RkMRBHKID+e282ZoNNumKgXqO4lS5fm6Cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YfyoyByp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mMZdxxF8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF09FC4CEF7;
-	Mon, 23 Mar 2026 14:03:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YfyoyByp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11ACCC4CEF7;
+	Mon, 23 Mar 2026 14:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274636;
-	bh=NGGWHMXFB/7wuq3JpztR79G9zYXITyto24f0/+VGPf0=;
+	s=korg; t=1774274639;
+	bh=Fmv28O1m2maarhqPXvPgEGDY/cUXhAIcFYrc+tp9Tk4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mMZdxxF8kkd/Jzyq+29tgGORnedHJwiehaZxPjZGl9uDQUsTh3tMFCVbW8/fXBLaI
-	 Cf+oqY9/cJ9V0JSpKu6DDSisE1Vl0FI6CVX+PLEYX/k0NV1r14UI/Ew4FUuPZ/bLKv
-	 RlKGeQ46WsQ8bjq3wkDT+rAGlf59QFXZju7laOEI=
+	b=YfyoyBypokZ7XljXSBHaia/IRCafx2DYNSujy57kYRLn1iR2bnrJZPgxqh51b4bPj
+	 78P4n3jt1jOsqs5tEbo/wzaBUHGq6hnihwdvoptPA/zZkn971RK8eOvfw2r0kqXrY1
+	 6Ckr8gTOz8Jy2cZr3rbcAQaB5C5/2OxNf+FPdRBQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kees Cook <kees@kernel.org>,
-	linux-hardening@vger.kernel.org,
-	Finn Thain <fthain@linux-m68k.org>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.18 060/212] mtd: Avoid boot crash in RedBoot partition table parser
-Date: Mon, 23 Mar 2026 14:44:41 +0100
-Message-ID: <20260323134505.674364722@linuxfoundation.org>
+	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
+	Shuai Xue <xueshuai@linux.alibaba.com>,
+	Samiullah Khawaja <skhawaja@google.com>,
+	Lu Baolu <baolu.lu@linux.intel.com>,
+	Joerg Roedel <joerg.roedel@amd.com>
+Subject: [PATCH 6.18 061/212] iommu/vt-d: Fix intel iommu iotlb sync hardlockup and retry
+Date: Mon, 23 Mar 2026 14:44:42 +0100
+Message-ID: <20260323134505.704657541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,56 +53,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Finn Thain <fthain@linux-m68k.org>
+From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
 
-commit 8e2f8020270af7777d49c2e7132260983e4fc566 upstream.
+commit fe89277c9ceb0d6af0aa665bcf24a41d8b1b79cd upstream.
 
-Given CONFIG_FORTIFY_SOURCE=y and a recent compiler,
-commit 439a1bcac648 ("fortify: Use __builtin_dynamic_object_size() when
-available") produces the warning below and an oops.
+During the qi_check_fault process after an IOMMU ITE event, requests at
+odd-numbered positions in the queue are set to QI_ABORT, only satisfying
+single-request submissions. However, qi_submit_sync now supports multiple
+simultaneous submissions, and can't guarantee that the wait_desc will be
+at an odd-numbered position. Therefore, if an item times out, IOMMU can't
+re-initiate the request, resulting in an infinite polling wait.
 
-    Searching for RedBoot partition table in 50000000.flash at offset 0x7e0000
-    ------------[ cut here ]------------
-    WARNING: lib/string_helpers.c:1035 at 0xc029e04c, CPU#0: swapper/0/1
-    memcmp: detected buffer overflow: 15 byte read of buffer size 14
-    Modules linked in:
-    CPU: 0 UID: 0 PID: 1 Comm: swapper/0 Not tainted 6.19.0 #1 NONE
+This modifies the process by setting the status of all requests already
+fetched by IOMMU and recorded as QI_IN_USE status (including wait_desc
+requests) to QI_ABORT, thus enabling multiple requests to be resubmitted.
 
-As Kees said, "'names' is pointing to the final 'namelen' many bytes
-of the allocation ... 'namelen' could be basically any length at all.
-This fortify warning looks legit to me -- this code used to be reading
-beyond the end of the allocation."
-
-Since the size of the dynamic allocation is calculated with strlen()
-we can use strcmp() instead of memcmp() and remain within bounds.
-
-Cc: Kees Cook <kees@kernel.org>
+Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
 Cc: stable@vger.kernel.org
-Cc: linux-hardening@vger.kernel.org
-Link: https://lore.kernel.org/all/202602151911.AD092DFFCD@keescook/
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Suggested-by: Kees Cook <kees@kernel.org>
-Signed-off-by: Finn Thain <fthain@linux-m68k.org>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
+Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
+Link: https://lore.kernel.org/r/20260306101516.3885775-1-guanghuifeng@linux.alibaba.com
+Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
+Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per  qi_submit_sync()")
+Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/parsers/redboot.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iommu/intel/dmar.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/mtd/parsers/redboot.c
-+++ b/drivers/mtd/parsers/redboot.c
-@@ -270,9 +270,9 @@ nogood:
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1314,7 +1314,6 @@ static int qi_check_fault(struct intel_i
+ 	if (fault & DMA_FSTS_ITE) {
+ 		head = readl(iommu->reg + DMAR_IQH_REG);
+ 		head = ((head >> shift) - 1 + QI_LENGTH) % QI_LENGTH;
+-		head |= 1;
+ 		tail = readl(iommu->reg + DMAR_IQT_REG);
+ 		tail = ((tail >> shift) - 1 + QI_LENGTH) % QI_LENGTH;
  
- 		strcpy(names, fl->img->name);
- #ifdef CONFIG_MTD_REDBOOT_PARTS_READONLY
--		if (!memcmp(names, "RedBoot", 8) ||
--		    !memcmp(names, "RedBoot config", 15) ||
--		    !memcmp(names, "FIS directory", 14)) {
-+		if (!strcmp(names, "RedBoot") ||
-+		    !strcmp(names, "RedBoot config") ||
-+		    !strcmp(names, "FIS directory")) {
- 			parts[i].mask_flags = MTD_WRITEABLE;
- 		}
- #endif
+@@ -1331,7 +1330,7 @@ static int qi_check_fault(struct intel_i
+ 		do {
+ 			if (qi->desc_status[head] == QI_IN_USE)
+ 				qi->desc_status[head] = QI_ABORT;
+-			head = (head - 2 + QI_LENGTH) % QI_LENGTH;
++			head = (head - 1 + QI_LENGTH) % QI_LENGTH;
+ 		} while (head != tail);
+ 
+ 		/*
 
 
