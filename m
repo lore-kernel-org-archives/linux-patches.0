@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F19402BEC3F;
-	Mon, 23 Mar 2026 16:18:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C273BD25D;
+	Mon, 23 Mar 2026 16:18:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282694; cv=none; b=iLyeiJocz03pQe0gp/+kHx/DhzbOj5Na1j/WaVLSZ5vtJQou7rv36ImjwKP8mgcHhU3Jww8yzutWocZ5HP2QG+/87vyp8HIsPsvmGDnAFmxZRH4fZWWLghRxvjuLNTJlf+a5PRLsV3tkYCykRQ8tWY7XtK1t5IQ4vtEZwhCckNA=
+	t=1774282696; cv=none; b=jFy3VyP5Aoc0LN9roRYkxGC/V/4Ajy2UaXer5q47lwlUWCQN0+teVt+UE7o2kBBU1beG+IKu78fE69QH50+lAOtsQi/bmJ4kowo+0cXrXfXZCWYmGwxyo2HVKHHVvNE0PV0ej4w2fwyu34st+KfC4+jA98/cHUxFf8oH0uQdB8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282694; c=relaxed/simple;
-	bh=BFxBkIlix6S1Ny3tGtNYsr12v2zWIW7liLTs2/X2xuM=;
+	s=arc-20240116; t=1774282696; c=relaxed/simple;
+	bh=2tMW+LeuuGvquACjhba452C38lWmQONr82fqS1EYbf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NJSwA43cl0QHlvoy9DpHvLirVuPrE+pWJwYo9T0BvroqLM1UsR0PjbQWWzTSzrnfGvDJvK/npc37H9OROmB5Wm7gL87SN3gTcNgs7iSM6EMoLTe9cXRmlhMF7V5ue+ESaxiXM7inP+2yM9pMABrXV936D7IxAt/TuTUF3s8nhZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CF4D1gHt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F+uhaWXkqiU6PN74E3VmQK2EtzrriRgqH3zSxC5/ymk5VMxXpBQViSlJMEs50GO7E5esZTnv8BdVV1p0OCgDoZpvVEeu1sf8Zp3hQe6yY0L3MgQ92b07hfiCNUc3+P3FFnFCtBI/+VVan2idrVNDAYbmA4AJ2kIHq8rrIQ7ew0Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pyhaj2W4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CF4D1gHt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EB9C4CEF7;
-	Mon, 23 Mar 2026 16:18:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pyhaj2W4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA858C2BC9E;
+	Mon, 23 Mar 2026 16:18:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282693;
-	bh=BFxBkIlix6S1Ny3tGtNYsr12v2zWIW7liLTs2/X2xuM=;
+	s=korg; t=1774282696;
+	bh=2tMW+LeuuGvquACjhba452C38lWmQONr82fqS1EYbf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CF4D1gHt0OKn3j1KV7xg0JEfNIk3KlMcAa5Wc/mMf96SEsOA9ZEY0nYgO53ZIqBVi
-	 0N/SBn+Hbiuvp0EhrUEqHQY8QMbsPpOlM6dAeLKbwdN/nqb7sjqvjYiwVbWXfrLvjC
-	 umabTCOJMywwMJkWi9D3Fz6FA3w8j14hWrx4dBv8=
+	b=Pyhaj2W4ErO75MC8MQqe5gv8MyYjONyB5ViOkRMZLrKYPrbcd+oad6yFst3tSq9dW
+	 jiw+dQbkte8iVDyzwlH6M/6ptY56I6qiYmGs00LeIV5ePAolxGmWMPpWD3/d//CSEd
+	 Gs3swH6MxJzKyips33kvBZK++DvC3LaDkbtE9ZOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.1 251/481] drm/bridge: ti-sn65dsi83: fix CHA_DSI_CLK_RANGE rounding
-Date: Mon, 23 Mar 2026 14:43:53 +0100
-Message-ID: <20260323134531.272071526@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Calvin Owens <calvin@wbinvd.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 252/481] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
+Date: Mon, 23 Mar 2026 14:43:54 +0100
+Message-ID: <20260323134531.297076103@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,50 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Calvin Owens <calvin@wbinvd.org>
 
-commit 2f22702dc0fee06a240404e0f7ead5b789b253d8 upstream.
+commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
 
-The DSI frequency must be in the range:
+Some of the sizing logic through tracer_alloc_buffers() uses int
+internally, causing unexpected behavior if the user passes a value that
+does not fit in an int (on my x86 machine, the result is uselessly tiny
+buffers).
 
-  (CHA_DSI_CLK_RANGE * 5 MHz) <= DSI freq < ((CHA_DSI_CLK_RANGE + 1) * 5 MHz)
+Fix by plumbing the parameter's real type (unsigned long) through to the
+ring buffer allocation functions, which already use unsigned long.
 
-So the register value should point to the lower range value, but
-DIV_ROUND_UP() rounds the division to the higher range value, resulting in
-an excess of 1 (unless the frequency is an exact multiple of 5 MHz).
+It has always been possible to create larger ring buffers via the sysfs
+interface: this only affects the cmdline parameter.
 
-For example for a 437100000 MHz clock CHA_DSI_CLK_RANGE should be 87 (0x57):
-
-  (87 * 5 = 435) <= 437.1 < (88 * 5 = 440)
-
-but current code returns 88 (0x58).
-
-Fix the computation by removing the DIV_ROUND_UP().
-
-Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
 Cc: stable@vger.kernel.org
-Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
-Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-1-2e15f5a9a6a0@bootlin.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
+Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
+Signed-off-by: Calvin Owens <calvin@wbinvd.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 +++---
+ kernel/trace/trace.c |    6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -303,9 +303,9 @@ static u8 sn65dsi83_get_dsi_range(struct
- 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
- 	 * the 2 is there because the bus is DDR.
- 	 */
--	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
--			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
--			    ctx->dsi->lanes / 2, 40000U, 500000U), 5000U);
-+	return clamp((unsigned int)mode->clock *
-+		     mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
-+		     ctx->dsi->lanes / 2, 40000U, 500000U) / 5000U;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9298,7 +9298,7 @@ static void
+ init_tracer_tracefs(struct trace_array *tr, struct dentry *d_tracer);
+ 
+ static int
+-allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
++allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
+ {
+ 	enum ring_buffer_flags rb_flags;
+ 
+@@ -9334,7 +9334,7 @@ static void free_trace_buffer(struct arr
+ 	}
  }
  
- static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
+-static int allocate_trace_buffers(struct trace_array *tr, int size)
++static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
+ {
+ 	int ret;
+ 
+@@ -10278,7 +10278,7 @@ out:
+ 
+ __init static int tracer_alloc_buffers(void)
+ {
+-	int ring_buf_size;
++	unsigned long ring_buf_size;
+ 	int ret = -ENOMEM;
+ 
+ 
 
 
