@@ -1,39 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C46D35958;
-	Mon, 23 Mar 2026 16:21:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5283AF647;
+	Mon, 23 Mar 2026 16:21:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282912; cv=none; b=SYeeh3E+oxQdXXxVLzDanjjuYcGDsTCqUGh3YpSTZWsOUkEZP7CDXTy0ZwD6lnl5S/zoQP6GFOMPrH2hD/RSJnlgtT77kq8NIObmrhPviOpmN4Ja+Ihi5cSBTj/DY6WqDDX5vBMzUsBt1t004NnwDXuic6M3J5Jfvfvk6HkCCQk=
+	t=1774282915; cv=none; b=BZkOSfu26150MHoQ2MWNGCF6tYp3r3oa2oakKIfR5yopnXIi2K78iOb0G/hpokWIZhsCPJILjfW0qJpN7nP0MkyqxLBAU+YxoIBwLZNPWA6cIdiJVVCK64WzkT/Ics9wj3z8zpU/c2hwcQBnZwDOxb2yyWP7xl+DcikH5TfuUNk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282912; c=relaxed/simple;
-	bh=yW6yA6aWwGvEARyb3nm+RblejYvVEPZE3LCvfYC/Fxs=;
+	s=arc-20240116; t=1774282915; c=relaxed/simple;
+	bh=5X9rS10d7/I5ookLAdxyuv+FD89Jh+i5YyauEdk285U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VcAtbOkubn93zjc1LRlr9ISzYNO4PflGGTl9NbXubN5GwCP/Q8YdihlGJvL964+dcOyf4OMk8WbRUwZusulv7pDX1C5/oVu74srYEBt6WMCi2auKuW+14Rtz6BvOAD/74B6a5Xs28cayrIG+ntvhy0JJPo/GWlbRNTm+TovzXg0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eHN/oUYY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aFcfkl6wsE7ZXYBiD2MMl1Tp827oG8y53T7vNL6ctJDcUaVXIYNcK1HZ5y40chBwacIJeBDIx3h1nwQWLgG/G5DYyB9O5FnutpcUbcKHeEKpELvmooqAwYlmnzvbJA2ARTwvl8oj0w2hncBtYFgm6dhDBa1uM37jD3GjLfLlHvM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFHUz6CK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eHN/oUYY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17EDC4CEF7;
-	Mon, 23 Mar 2026 16:21:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFHUz6CK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D71C4CEF7;
+	Mon, 23 Mar 2026 16:21:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282912;
-	bh=yW6yA6aWwGvEARyb3nm+RblejYvVEPZE3LCvfYC/Fxs=;
+	s=korg; t=1774282915;
+	bh=5X9rS10d7/I5ookLAdxyuv+FD89Jh+i5YyauEdk285U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHN/oUYYjoSneg32nA60apZ8ABsDkCsfl5UYd9XtPS8JeTpW9J8m569AJ/7cXoC3Y
-	 6oJj7dfKPT1SiCDmIZnwCTLSFCuyvl9Tj+vUXLeYLQbswoEZ5JzFY9lJqfn4Ug3s5/
-	 rYkudjEMSIchZe0YT5cSg214oa2GBiSUxB7YPR58=
+	b=KFHUz6CKu610iExhp68kdJ5Ejk1djXDSoDxLefiH9rx1lZHqfUlE2VwgJnHhG48GJ
+	 5cplJELCrPVXd2aE2i8XpK1s+RndS01K//OHPE5QiHlLJBH7HYkYGa8hY+yMlP3H60
+	 K3vYlnTjZ8kWby7KBLz25IQOUqbmR7N/ylp7PjQo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Kees Cook <kees@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 325/481] selftests: mptcp: join: check RM_ADDR not sent over same subflow
-Date: Mon, 23 Mar 2026 14:45:07 +0100
-Message-ID: <20260323134533.022011986@linuxfoundation.org>
+Subject: [PATCH 6.1 334/481] mm/kfence: fix KASAN hardware tag faults during late enablement
+Date: Mon, 23 Mar 2026 14:45:16 +0100
+Message-ID: <20260323134533.237451470@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,112 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit 560edd99b5f58b2d4bbe3c8e51e1eed68d887b0e ]
+[ Upstream commit d155aab90fffa00f93cea1f107aef0a3d548b2ff ]
 
-This validates the previous commit: RM_ADDR were sent over the first
-found active subflow which could be the same as the one being removed.
-It is more likely to loose this notification.
+When KASAN hardware tags are enabled, re-enabling KFENCE late (via
+/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
 
-For this check, RM_ADDR are explicitly dropped when trying to send them
-over the initial subflow, when removing the endpoint attached to it. If
-it is dropped, the test will complain because some RM_ADDR have not been
-received.
+This happens because the KFENCE pool and metadata are allocated via the
+page allocator, which tags the memory, while KFENCE continues to access it
+using untagged pointers during initialization.
 
-Note that only the RM_ADDR are dropped, to allow the linked subflow to
-be quickly and cleanly closed. To only drop those RM_ADDR, a cBPF byte
-code is used. If the IPTables commands fail, that's OK, the tests will
-continue to pass, but not validate this part. This can be ignored:
-another subtest fully depends on such command, and will be marked as
-skipped.
+Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
+ensure the memory remains untagged, consistent with early allocations from
+memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
+__alloc_contig_verify_gfp_mask().
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
-
-Fixes: 8dd5efb1f91b ("mptcp: send ack for rm_addr")
-Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-3-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ adapted chk_subflow_nr calls to include extra empty first argument ]
+Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
+Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Greg KH <gregkh@linuxfoundation.org>
+Cc: Kees Cook <kees@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ expand __GFP_SKIP_KASAN + nr_pages_pool => nr_pages ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   36 ++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ mm/kfence/core.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -64,6 +64,24 @@ CBPF_MPTCP_SUBOPTION_ADD_ADDR="14,
- 			       6 0 0 65535,
- 			       6 0 0 0"
+--- a/mm/kfence/core.c
++++ b/mm/kfence/core.c
+@@ -897,7 +897,8 @@ static int kfence_init_late(void)
+ #ifdef CONFIG_CONTIG_ALLOC
+ 	struct page *pages;
  
-+# IPv4: TCP hdr of 48B, a first suboption of 12B (DACK8), the RM_ADDR suboption
-+# generated using "nfbpf_compile '(ip[32] & 0xf0) == 0xc0 && ip[53] == 0x0c &&
-+#				  (ip[66] & 0xf0) == 0x40'"
-+CBPF_MPTCP_SUBOPTION_RM_ADDR="13,
-+			      48 0 0 0,
-+			      84 0 0 240,
-+			      21 0 9 64,
-+			      48 0 0 32,
-+			      84 0 0 240,
-+			      21 0 6 192,
-+			      48 0 0 53,
-+			      21 0 4 12,
-+			      48 0 0 66,
-+			      84 0 0 240,
-+			      21 0 1 64,
-+			      6 0 0 65535,
-+			      6 0 0 0"
-+
- init_partial()
- {
- 	capout=$(mktemp)
-@@ -3468,6 +3486,14 @@ endpoint_tests()
- 		wait_mpj $ns2
- 		chk_subflow_nr "" "after no reject" 3
- 
-+		# To make sure RM_ADDR are sent over a different subflow, but
-+		# allow the rest to quickly and cleanly close the subflow
-+		local ipt=1
-+		ip netns exec "${ns2}" ${iptables} -I OUTPUT -s "10.0.1.2" \
-+			-p tcp -m tcp --tcp-option 30 \
-+			-m bpf --bytecode \
-+			"$CBPF_MPTCP_SUBOPTION_RM_ADDR" \
-+			-j DROP || ipt=0
- 		local i
- 		for i in $(seq 3); do
- 			pm_nl_del_endpoint $ns2 1 10.0.1.2
-@@ -3478,6 +3504,7 @@ endpoint_tests()
- 			wait_mpj $ns2
- 			chk_subflow_nr "" "after re-add id 0 ($i)" 3
- 		done
-+		[ ${ipt} = 1 ] && ip netns exec "${ns2}" ${iptables} -D OUTPUT 1
- 
- 		kill_wait "${tests_pid}"
- 		kill_events_pids
-@@ -3527,9 +3554,18 @@ endpoint_tests()
- 		wait_mpj $ns2
- 		chk_subflow_nr "" "after re-add" 3
- 
-+		# To make sure RM_ADDR are sent over a different subflow, but
-+		# allow the rest to quickly and cleanly close the subflow
-+		local ipt=1
-+		ip netns exec "${ns1}" ${iptables} -I OUTPUT -s "10.0.1.1" \
-+			-p tcp -m tcp --tcp-option 30 \
-+			-m bpf --bytecode \
-+			"$CBPF_MPTCP_SUBOPTION_RM_ADDR" \
-+			-j DROP || ipt=0
- 		pm_nl_del_endpoint $ns1 42 10.0.1.1
- 		sleep 0.5
- 		chk_subflow_nr "" "after delete ID 0" 2
-+		[ ${ipt} = 1 ] && ip netns exec "${ns1}" ${iptables} -D OUTPUT 1
- 
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 99 flags signal
- 		wait_mpj $ns2
+-	pages = alloc_contig_pages(nr_pages, GFP_KERNEL, first_online_node, NULL);
++	pages = alloc_contig_pages(nr_pages, GFP_KERNEL | __GFP_SKIP_KASAN_UNPOISON |
++				   __GFP_SKIP_KASAN_POISON, first_online_node, NULL);
+ 	if (!pages)
+ 		return -ENOMEM;
+ 	__kfence_pool = page_to_virt(pages);
+@@ -906,7 +907,9 @@ static int kfence_init_late(void)
+ 		pr_warn("KFENCE_NUM_OBJECTS too large for buddy allocator\n");
+ 		return -EINVAL;
+ 	}
+-	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
++	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL |
++					  __GFP_SKIP_KASAN_UNPOISON |
++					  __GFP_SKIP_KASAN_POISON);
+ 	if (!__kfence_pool)
+ 		return -ENOMEM;
+ #endif
 
 
