@@ -1,43 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0764438F630;
-	Mon, 23 Mar 2026 14:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1514739A055;
+	Mon, 23 Mar 2026 14:10:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275020; cv=none; b=GE/JnVGDAHW9Ki8BvGFy+MJLcXCGKyj+NqMvKGsFX6teNjwDzo0+vezUhhcp99/Fg/tPwvLDFuyNQnhoPGSRGI3HQeLz68Me0OGKLfrFiNJUgsXwHMTKpmLt2sxD4A3ZDmR1Y88Jm18H7kUS7wrb43bidm1zNIVbVhfMN2TktLc=
+	t=1774275023; cv=none; b=cmSNyzj0FdpsQLpK7DHG2gbidUqVDVvkzbqJ7nqpZ4STKIOvTOJQUgSYOyJE/rYV7ZNqdA5sx8Um/PW4ANcjVTbBI/klKrL4rHAu8kzIcvcmbjbBMMyT9PTJHQTEsE00zF7PLHndG96j54VZXRZM+WaXic10JUvh/PzLfwE4kRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275020; c=relaxed/simple;
-	bh=InyBuwKelAQQnjq4qOCkDQjYxoFcwPUYnoFVrq/S/QM=;
+	s=arc-20240116; t=1774275023; c=relaxed/simple;
+	bh=7mx4Hvoh8pdyuuGXefqa9+cwgOUfvuKd1O7V8LaT3TY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AO5m1mnIcz904jFeq95Im98yA/CCKKTSIDt8MqxcgJwkaNAmyx8QpynRuz2OsS5+tmzIhU8kDTUrqK7hs/IGXTBCXjk3E3hynsMMSsZUAx8H+33CgefHkPdFoEzxcjCBY6Vt3gfU1WXIZlDycEJatlz5bCPB+Z2ayXRRcsIGZnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R2QxfUx1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aq20zisyXlb/qzdpSNwS0+3J38JXmGyGycFEOpq7V2sNLysaaSS3v1yCbTztSkBgI0ncgYVq60si+Kj04K5i17YayqlhUmbdTa9HrbWFBm+hwGqPjHseB8LDg/K+NQvNwEQv2ZnVqcyUXDElFojow9I7ddpEdn4HkPQCOwu7yfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ygaPGhgV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R2QxfUx1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75817C4CEF7;
-	Mon, 23 Mar 2026 14:10:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ygaPGhgV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89C69C4CEF7;
+	Mon, 23 Mar 2026 14:10:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275019;
-	bh=InyBuwKelAQQnjq4qOCkDQjYxoFcwPUYnoFVrq/S/QM=;
+	s=korg; t=1774275023;
+	bh=7mx4Hvoh8pdyuuGXefqa9+cwgOUfvuKd1O7V8LaT3TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R2QxfUx1I9JswENhj82dePpf30973WfPcKF8WT3w5ZjO0QpRk9eeCAFGGRdeKd7pe
-	 N3jvrWrjoGXHqDgyektalFJBIvCix95alTQ83oZiK7usYoG1RvLzK/EM01uYNmzzuq
-	 en3Hj0SzygxQT/pJOEFyk+L8UCdCI6jtTiNJf4aQ=
+	b=ygaPGhgVbf/3u35LF1K2z/GvrRQThC49nMqNoijluG4K/HkaxgfUPP9X4PSf15lpv
+	 BMDQdXSNI10PipcibTCudH6SUF0t9kV34JjJaqKIOzCkhNr+J74frmj3VrxtFIzTGu
+	 B0D3P7T4JCxd48Wd4ljSWKGGBZNYHA/YdaYuWYUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
-	Cyrill Gorcunov <gorcunov@gmail.com>,
-	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
-	Andrei Vagin <avagin@google.com>,
-	Kees Cook <kees@kernel.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	William Zhang <william.zhang@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 195/212] binfmt_elf_fdpic: fix AUXV size calculation for ELF_HWCAP3 and ELF_HWCAP4
-Date: Mon, 23 Mar 2026 14:46:56 +0100
-Message-ID: <20260323134509.950590270@linuxfoundation.org>
+Subject: [PATCH 6.18 196/212] mtd: rawnand: serialize lock/unlock against other NAND operations
+Date: Mon, 23 Mar 2026 14:46:57 +0100
+Message-ID: <20260323134509.987522481@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,75 +46,74 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Andrei Vagin <avagin@google.com>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit 4ced4cf5c9d172d91f181df3accdf949d3761aab ]
+[ Upstream commit bab2bc6e850a697a23b9e5f0e21bb8c187615e95 ]
 
-Commit 4e6e8c2b757f ("binfmt_elf: Wire up AT_HWCAP3 at AT_HWCAP4") added
-support for AT_HWCAP3 and AT_HWCAP4, but it missed updating the AUX
-vector size calculation in create_elf_fdpic_tables() and
-AT_VECTOR_SIZE_BASE in include/linux/auxvec.h.
+nand_lock() and nand_unlock() call into chip->ops.lock_area/unlock_area
+without holding the NAND device lock. On controllers that implement
+SET_FEATURES via multiple low-level PIO commands, these can race with
+concurrent UBI/UBIFS background erase/write operations that hold the
+device lock, resulting in cmd_pending conflicts on the NAND controller.
 
-Similar to the fix for AT_HWCAP2 in commit c6a09e342f8e ("binfmt_elf_fdpic:
-fix AUXV size calculation when ELF_HWCAP2 is defined"), this omission
-leads to a mismatch between the reserved space and the actual number of
-AUX entries, eventually triggering a kernel BUG_ON(csp != sp).
+Add nand_get_device()/nand_release_device() around the lock/unlock
+operations to serialize them against all other NAND controller access.
 
-Fix this by incrementing nitems when ELF_HWCAP3 or ELF_HWCAP4 are
-defined and updating AT_VECTOR_SIZE_BASE.
-
-Cc: Mark Brown <broonie@kernel.org>
-Cc: Max Filippov <jcmvbkbc@gmail.com>
-Reviewed-by: Michal Koutný <mkoutny@suse.com>
-Reviewed-by: Mark Brown <broonie@kernel.org>
-Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
-Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Fixes: 4e6e8c2b757f ("binfmt_elf: Wire up AT_HWCAP3 at AT_HWCAP4")
-Signed-off-by: Andrei Vagin <avagin@google.com>
-Link: https://patch.msgid.link/20260217180108.1420024-2-avagin@google.com
-Signed-off-by: Kees Cook <kees@kernel.org>
+Fixes: 92270086b7e5 ("mtd: rawnand: Add support for manufacturer specific lock/unlock operation")
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Reviewed-by: William Zhang <william.zhang@broadcom.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_elf_fdpic.c  | 6 ++++++
- include/linux/auxvec.h | 2 +-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ drivers/mtd/nand/raw/nand_base.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
-index 48fd2de3bca05..a3d4e6973b299 100644
---- a/fs/binfmt_elf_fdpic.c
-+++ b/fs/binfmt_elf_fdpic.c
-@@ -595,6 +595,12 @@ static int create_elf_fdpic_tables(struct linux_binprm *bprm,
- #ifdef ELF_HWCAP2
- 	nitems++;
- #endif
-+#ifdef ELF_HWCAP3
-+	nitems++;
-+#endif
-+#ifdef ELF_HWCAP4
-+	nitems++;
-+#endif
+diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
+index ad6d66309597b..b4bd73d7cd05c 100644
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -4737,11 +4737,16 @@ static void nand_shutdown(struct mtd_info *mtd)
+ static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ {
+ 	struct nand_chip *chip = mtd_to_nand(mtd);
++	int ret;
  
- 	csp = sp;
- 	sp -= nitems * 2 * sizeof(unsigned long);
-diff --git a/include/linux/auxvec.h b/include/linux/auxvec.h
-index 407f7005e6d60..8bcb9b7262628 100644
---- a/include/linux/auxvec.h
-+++ b/include/linux/auxvec.h
-@@ -4,6 +4,6 @@
+ 	if (!chip->ops.lock_area)
+ 		return -ENOTSUPP;
  
- #include <uapi/linux/auxvec.h>
+-	return chip->ops.lock_area(chip, ofs, len);
++	nand_get_device(chip);
++	ret = chip->ops.lock_area(chip, ofs, len);
++	nand_release_device(chip);
++
++	return ret;
+ }
  
--#define AT_VECTOR_SIZE_BASE 22 /* NEW_AUX_ENT entries in auxiliary table */
-+#define AT_VECTOR_SIZE_BASE 24 /* NEW_AUX_ENT entries in auxiliary table */
-   /* number of "#define AT_.*" above, minus {AT_NULL, AT_IGNORE, AT_NOTELF} */
- #endif /* _LINUX_AUXVEC_H */
+ /**
+@@ -4753,11 +4758,16 @@ static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ static int nand_unlock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ {
+ 	struct nand_chip *chip = mtd_to_nand(mtd);
++	int ret;
+ 
+ 	if (!chip->ops.unlock_area)
+ 		return -ENOTSUPP;
+ 
+-	return chip->ops.unlock_area(chip, ofs, len);
++	nand_get_device(chip);
++	ret = chip->ops.unlock_area(chip, ofs, len);
++	nand_release_device(chip);
++
++	return ret;
+ }
+ 
+ /* Set default functions */
 -- 
 2.51.0
 
