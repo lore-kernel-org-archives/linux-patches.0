@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D5803B2FD5;
-	Mon, 23 Mar 2026 14:13:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD59E3AC0C8;
+	Mon, 23 Mar 2026 14:13:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275233; cv=none; b=bGouTYzq7TfInn4vf0LzxovjzTB0THGP58jj2lSyh6TYba/7EUaDhw3/B68wMEJnpZP/QDScXRxwrUUUm/UeilgOostRX1cbcBWQkwS2xS3UtLsiPl4KD49xiDzH6YnZYdGIHbtHrx38e7fC4zSNS0h0h2/rok/88JEPDKMifSE=
+	t=1774275235; cv=none; b=HPXsa3kL4oEYQUkkCj9KslNubbarWFOtwB7eBwSDd8RPUMOr9Ww0BDZ8zfeHFLklz4dOJ5yfTAv6EpJVQdrgTeVtUvxXe5H6CZ70wkpvP2BJwLTR2kC0RtVgvEFf6oIsLByEyAMAsNekVbOI2OTJiAAMnkC4JmuP9eBvmOR1/2g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275233; c=relaxed/simple;
-	bh=Mi7XkuYUf7dxHm+0iCHkD5V3llz3G+FFbz+AeHeWaGs=;
+	s=arc-20240116; t=1774275235; c=relaxed/simple;
+	bh=FKUduh5pgw6GAMc3oOMETo22c25AN0jfjkBVGbjUX4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Gj3CajrSKB6By8J+bHm5VVL4NL863RiKp1iV/QdUJJD8et7PkZq8UrZkIfH5aOMXPoZNMEvFFm9lAnnxtjbRGAy6kCI8BXdXLjHWMLzxRjKGNHxtPbF+Y9FZPvnnBu6qW34cK9XkIcHjHBspneQ5pVKLSZABr2rK2cVbzdhJNGw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ns3B5rYL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=HvDz3xgc6IafJnfsg2jnsrkA2JWf7KezZwVWatPhPXkqMoWpgg64S+/KGgLmiZRk7pqiNTUrH57cxlTMSSU/xZVrSyDugP3Dakzt7lhYt/F8VL4prwK2ZKO8OYBwHR+F8/AdY/i03KMG+cWgancFPvLt6JoT2W2TcZhXdLloVrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2EYdGWT2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ns3B5rYL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA217C4CEF7;
-	Mon, 23 Mar 2026 14:13:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2EYdGWT2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A4B7C4CEF7;
+	Mon, 23 Mar 2026 14:13:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275233;
-	bh=Mi7XkuYUf7dxHm+0iCHkD5V3llz3G+FFbz+AeHeWaGs=;
+	s=korg; t=1774275235;
+	bh=FKUduh5pgw6GAMc3oOMETo22c25AN0jfjkBVGbjUX4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ns3B5rYLOEdewOH45ONMDvrlOJw1Qy+zjhF/wFdwDIdGO6GWd5XmedNU0MRw2sazD
-	 oiI7Af12r9lbQ+TqCLZ8GGy6Ks2/hRFs+CNSstN6c6uZLrBdRjOwT5tk+rYNb0CSDb
-	 vKClGfaa+GISefXkEdyIyqfkWCkWfEBqIkcGwkzI=
+	b=2EYdGWT2QYzW0k0e48u2sWaxViGMxKZVoESh4mUaOK4sUiFopCxTEmFO54NIwHiDO
+	 0NtcfsZFf5cR7GC18Bw0+SbkTTnLSdPUhoCB9k4JSG/XXWXlc89j7RQy4cO1vI+jSR
+	 suxyJePG1FmYsSOKbkd6bMnv2Ft0EE2IGnWMd6uA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>,
+	"=?UTF-8?q?J . =20Neusch=C3=A4fer?=" <j.ne@posteo.net>,
+	Heiko Schocher <hs@nabladev.com>,
+	Madhavan Srinivasan <maddy@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 022/460] remoteproc: mediatek: Unprepare SCP clock during system suspend
-Date: Mon, 23 Mar 2026 14:40:18 +0100
-Message-ID: <20260323134527.231391231@linuxfoundation.org>
+Subject: [PATCH 6.12 023/460] powerpc: 83xx: km83xx: Fix keymile vendor prefix
+Date: Mon, 23 Mar 2026 14:40:19 +0100
+Message-ID: <20260323134527.258386914@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,101 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Tzung-Bi Shih <tzungbi@kernel.org>
+From: J. Neuschäfer <j.ne@posteo.net>
 
-[ Upstream commit 35c3f72a2d55dbf52f28f4ecae51c76be1acf545 ]
+[ Upstream commit 691417ffe7821721e0a28bd25ad8c0dc0d4ae4ad ]
 
-Prior to commit d935187cfb27 ("remoteproc: mediatek: Break lock
-dependency to prepare_lock"), `scp->clk` was prepared and enabled only
-when it needs to communicate with the SCP.  The commit d935187cfb27
-moved the prepare operation to remoteproc's prepare(), keeping the clock
-prepared as long as the SCP is running.
+When kmeter.c was refactored into km83xx.c in 2011, the "keymile" vendor
+prefix was changed to upper-case "Keymile". The devicetree at
+arch/powerpc/boot/dts/kmeter1.dts never underwent the same change,
+suggesting that this was simply a mistake.
 
-The power consumption due to the prolonged clock preparation can be
-negligible when the system is running, as SCP is designed to be a very
-power efficient processor.
-
-However, the clock remains prepared even when the system enters system
-suspend.  This prevents the underlying clock controller (and potentially
-the parent PLLs) from shutting down, which increases power consumption
-and may block the system from entering deep sleep states.
-
-Add suspend and resume callbacks.  Unprepare the clock in suspend() if
-it was active and re-prepare it in resume() to ensure the clock is
-properly disabled during system suspend, while maintaining the "always
-prepared" semantics while the system is active.  The driver doesn't
-implement .attach() callback, hence it only checks for RPROC_RUNNING.
-
-Fixes: d935187cfb27 ("remoteproc: mediatek: Break lock dependency to prepare_lock")
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20260206033034.3031781-1-tzungbi@kernel.org
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Fixes: 93e2b95c81042d ("powerpc/83xx: rename and update kmeter1")
+Signed-off-by: J. Neuschäfer <j.ne@posteo.net>
+Reviewed-by: Heiko Schocher <hs@nabladev.com>
+Signed-off-by: Madhavan Srinivasan <maddy@linux.ibm.com>
+Link: https://patch.msgid.link/20260303-keymile-v1-1-463a11e71702@posteo.net
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/mtk_scp.c | 39 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 39 insertions(+)
+ arch/powerpc/platforms/83xx/km83xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/mtk_scp.c b/drivers/remoteproc/mtk_scp.c
-index ae20d2221c8e0..fcd2665f7abbc 100644
---- a/drivers/remoteproc/mtk_scp.c
-+++ b/drivers/remoteproc/mtk_scp.c
-@@ -1544,12 +1544,51 @@ static const struct of_device_id mtk_scp_of_match[] = {
- };
- MODULE_DEVICE_TABLE(of, mtk_scp_of_match);
+diff --git a/arch/powerpc/platforms/83xx/km83xx.c b/arch/powerpc/platforms/83xx/km83xx.c
+index 2b5d187d9b62d..9ef8fb39dd1b1 100644
+--- a/arch/powerpc/platforms/83xx/km83xx.c
++++ b/arch/powerpc/platforms/83xx/km83xx.c
+@@ -155,8 +155,8 @@ machine_device_initcall(mpc83xx_km, mpc83xx_declare_of_platform_devices);
  
-+static int __maybe_unused scp_suspend(struct device *dev)
-+{
-+	struct mtk_scp *scp = dev_get_drvdata(dev);
-+	struct rproc *rproc = scp->rproc;
-+
-+	/*
-+	 * Only unprepare if the SCP is running and holding the clock.
-+	 *
-+	 * Note: `scp_ops` doesn't implement .attach() callback, hence
-+	 * `rproc->state` can never be RPROC_ATTACHED.  Otherwise, it
-+	 * should also be checked here.
-+	 */
-+	if (rproc->state == RPROC_RUNNING)
-+		clk_unprepare(scp->clk);
-+	return 0;
-+}
-+
-+static int __maybe_unused scp_resume(struct device *dev)
-+{
-+	struct mtk_scp *scp = dev_get_drvdata(dev);
-+	struct rproc *rproc = scp->rproc;
-+
-+	/*
-+	 * Only prepare if the SCP was running and holding the clock.
-+	 *
-+	 * Note: `scp_ops` doesn't implement .attach() callback, hence
-+	 * `rproc->state` can never be RPROC_ATTACHED.  Otherwise, it
-+	 * should also be checked here.
-+	 */
-+	if (rproc->state == RPROC_RUNNING)
-+		return clk_prepare(scp->clk);
-+	return 0;
-+}
-+
-+static const struct dev_pm_ops scp_pm_ops = {
-+	SET_SYSTEM_SLEEP_PM_OPS(scp_suspend, scp_resume)
-+};
-+
- static struct platform_driver mtk_scp_driver = {
- 	.probe = scp_probe,
- 	.remove_new = scp_remove,
- 	.driver = {
- 		.name = "mtk-scp",
- 		.of_match_table = mtk_scp_of_match,
-+		.pm = &scp_pm_ops,
- 	},
+ /* list of the supported boards */
+ static char *board[] __initdata = {
+-	"Keymile,KMETER1",
+-	"Keymile,kmpbec8321",
++	"keymile,KMETER1",
++	"keymile,kmpbec8321",
+ 	NULL
  };
  
 -- 
