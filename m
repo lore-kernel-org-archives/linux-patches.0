@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDB593B776A;
-	Mon, 23 Mar 2026 13:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA22D3ACA5C;
+	Mon, 23 Mar 2026 13:59:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274351; cv=none; b=GRqcyLuxWk0vSLlvzAIRaBNeTe9lRmH9AnMQJeZpXueLe0Z1Dt9XnWkSB17Ag81JD6Avhn4HIdQFORM7OG2Giq52Y4x687GpKTRdQ/AwKwaSuSyy5lLQsfoKUdqmO0Rxr0CekKV1gONCFtEuvOScuBbPFXFDqYab5aYha4zyYNA=
+	t=1774274354; cv=none; b=LCaG3FYnUb9hs18P4iGL/EWW0/wSRpghY/ZzP5YpFtxA2giwk1rXfNsTLACof+YKRg4NI8arrSqjwAZ/DaCSydeINDH0NwYGaxVoJZubJGzXhumWu42pf4p/2ClwyFYJscnhtvpGlhQdRkgrHtgydBGV1VAKCZIad0KRR1oIr7g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274351; c=relaxed/simple;
-	bh=XB6eRPE/SDA6AhLgIBP2swOCa7Dg2TNGpjGpk3pxIvg=;
+	s=arc-20240116; t=1774274354; c=relaxed/simple;
+	bh=Xe3mm8Njr3gatif5mFRTL9u3rrY7smcPIDjXUK1NexE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8E+NC0ovqKnutu1kvLMahzYbRGKp7jnM94+UM0joA/oIzmqsJO0BjoDvvjJnQJ4f1FpQi+iAtFpV0MAqbZRAT7UtDItpuc+sf4lE1hTfrMEd/NiDr+BueNCjkQ3BGfzutM2Zbpjs/R26Bh5ebuSkwNA7Sq9jhcsMaL5PYRIujA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YotUsV8a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=TXO/jNpKSAvGAXQNlRtzDwwRdgTYjr7XPZgVBWxBw6d7nK0RewI2JDTjcZSlO+hsz8vsFG7WuZ83siXiIGxZyeT2eKvDnyNPXf2M/ncqjXutn6yNtqjkjJwa5zEYciU5hVOcRv9UkTM8WLpdK0JENrOOCYr1fuSEntO8VAxNH2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkegOeUK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YotUsV8a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 480ABC2BCB1;
-	Mon, 23 Mar 2026 13:59:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkegOeUK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE1EC4CEF7;
+	Mon, 23 Mar 2026 13:59:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274351;
-	bh=XB6eRPE/SDA6AhLgIBP2swOCa7Dg2TNGpjGpk3pxIvg=;
+	s=korg; t=1774274354;
+	bh=Xe3mm8Njr3gatif5mFRTL9u3rrY7smcPIDjXUK1NexE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YotUsV8aBgzRjotPbie0jRFfUXsuoXtRZnQSocMVL+fu4oex1P0fuSMtQaJ/0WnGH
-	 t1ksFGNICEGvMzDiMdKOZjGXre+mmoCAK43FeGE4VUhKsy8RQfkdMtIM8lZ0nycsod
-	 P52W47X60lo4X0rSwZRSap9PEYBtIlCjCgxFvdqg=
+	b=GkegOeUK4tQCRj7OHvNcxKzfMzT65tmmJ258nctQFKPBRsaUeZTw98/bTZDr/Ee0r
+	 xbONZ3hGcrv+kQ8lDkMu+BNs0Qlgi3a5R7FYrx6c4wuP6jSQfudHkc0hjtCrgVz81/
+	 25N/UvTcNxg0bdXqaE7aF4CCqikmUEc0U2c5v72w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xudong Hao <xudong.hao@intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Breno Leitao <leitao@debian.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.19 190/220] perf/x86/intel: Add missing branch counters constraint apply
-Date: Mon, 23 Mar 2026 14:46:07 +0100
-Message-ID: <20260323134510.601494081@linuxfoundation.org>
+Subject: [PATCH 6.19 191/220] perf/x86: Move event pointer setup earlier in x86_pmu_enable()
+Date: Mon, 23 Mar 2026 14:46:08 +0100
+Message-ID: <20260323134510.630680335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,105 +50,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Breno Leitao <leitao@debian.org>
 
-commit 1d07bbd7ea36ea0b8dfa8068dbe67eb3a32d9590 upstream.
+commit 8d5fae6011260de209aaf231120e8146b14bc8e0 upstream.
 
-When running the command:
-'perf record -e "{instructions,instructions:p}" -j any,counter sleep 1',
-a "shift-out-of-bounds" warning is reported on CWF.
+A production AMD EPYC system crashed with a NULL pointer dereference
+in the PMU NMI handler:
 
-  UBSAN: shift-out-of-bounds in /kbuild/src/consumer/arch/x86/events/intel/lbr.c:970:15
-  shift exponent 64 is too large for 64-bit type 'long long unsigned int'
-  ......
-  intel_pmu_lbr_counters_reorder.isra.0.cold+0x2a/0xa7
-  intel_pmu_lbr_save_brstack+0xc0/0x4c0
-  setup_arch_pebs_sample_data+0x114b/0x2400
+  BUG: kernel NULL pointer dereference, address: 0000000000000198
+  RIP: x86_perf_event_update+0xc/0xa0
+  Call Trace:
+   <NMI>
+   amd_pmu_v2_handle_irq+0x1a6/0x390
+   perf_event_nmi_handler+0x24/0x40
 
-The warning occurs because the second "instructions:p" event, which
-involves branch counters sampling, is incorrectly programmed to fixed
-counter 0 instead of the general-purpose (GP) counters 0-3 that support
-branch counters sampling. Currently only GP counters 0-3 support branch
-counters sampling on CWF, any event involving branch counters sampling
-should be programed on GP counters 0-3. Since the counter index of fixed
-counter 0 is 32, it leads to the "src" value in below code is right
-shifted 64 bits and trigger the "shift-out-of-bounds" warning.
+The faulting instruction is `cmpq $0x0, 0x198(%rdi)` with RDI=0,
+corresponding to the `if (unlikely(!hwc->event_base))` check in
+x86_perf_event_update() where hwc = &event->hw and event is NULL.
 
-cnt = (src >> (order[j] * LBR_INFO_BR_CNTR_BITS)) & LBR_INFO_BR_CNTR_MASK;
+drgn inspection of the vmcore on CPU 106 showed a mismatch between
+cpuc->active_mask and cpuc->events[]:
 
-The root cause is the loss of the branch counters constraint for the
-new event in the branch counters sampling event group. Since it isn't
-yet part of the sibling list. This results in the second
-"instructions:p" event being programmed on fixed counter 0 incorrectly
-instead of the appropriate GP counters 0-3.
+  active_mask: 0x1e (bits 1, 2, 3, 4)
+  events[1]:   0xff1100136cbd4f38  (valid)
+  events[2]:   0x0                 (NULL, but active_mask bit 2 set)
+  events[3]:   0xff1100076fd2cf38  (valid)
+  events[4]:   0xff1100079e990a90  (valid)
 
-To address this, we apply the missing branch counters constraint for
-the last event in the group. Additionally, we introduce a new function,
-`intel_set_branch_counter_constr()`, to apply the branch counters
-constraint and avoid code duplication.
+The event that should occupy events[2] was found in event_list[2]
+with hw.idx=2 and hw.state=0x0, confirming x86_pmu_start() had run
+(which clears hw.state and sets active_mask) but events[2] was
+never populated.
 
-Fixes: 33744916196b ("perf/x86/intel: Support branch counters logging")
-Reported-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Another event (event_list[0]) had hw.state=0x7 (STOPPED|UPTODATE|ARCH),
+showing it was stopped when the PMU rescheduled events, confirming the
+throttle-then-reschedule sequence occurred.
+
+The root cause is commit 7e772a93eb61 ("perf/x86: Fix NULL event access
+and potential PEBS record loss") which moved the cpuc->events[idx]
+assignment out of x86_pmu_start() and into step 2 of x86_pmu_enable(),
+after the PERF_HES_ARCH check. This broke any path that calls
+pmu->start() without going through x86_pmu_enable() -- specifically
+the unthrottle path:
+
+  perf_adjust_freq_unthr_events()
+    -> perf_event_unthrottle_group()
+      -> perf_event_unthrottle()
+        -> event->pmu->start(event, 0)
+          -> x86_pmu_start()     // sets active_mask but not events[]
+
+The race sequence is:
+
+  1. A group of perf events overflows, triggering group throttle via
+     perf_event_throttle_group(). All events are stopped: active_mask
+     bits cleared, events[] preserved (x86_pmu_stop no longer clears
+     events[] after commit 7e772a93eb61).
+
+  2. While still throttled (PERF_HES_STOPPED), x86_pmu_enable() runs
+     due to other scheduling activity. Stopped events that need to
+     move counters get PERF_HES_ARCH set and events[old_idx] cleared.
+     In step 2 of x86_pmu_enable(), PERF_HES_ARCH causes these events
+     to be skipped -- events[new_idx] is never set.
+
+  3. The timer tick unthrottles the group via pmu->start(). Since
+     commit 7e772a93eb61 removed the events[] assignment from
+     x86_pmu_start(), active_mask[new_idx] is set but events[new_idx]
+     remains NULL.
+
+  4. A PMC overflow NMI fires. The handler iterates active counters,
+     finds active_mask[2] set, reads events[2] which is NULL, and
+     crashes dereferencing it.
+
+Move the cpuc->events[hwc->idx] assignment in x86_pmu_enable() to
+before the PERF_HES_ARCH check, so that events[] is populated even
+for events that are not immediately started. This ensures the
+unthrottle path via pmu->start() always finds a valid event pointer.
+
+Fixes: 7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
+Signed-off-by: Breno Leitao <leitao@debian.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260228053320.140406-2-dapeng1.mi@linux.intel.com
 Cc: stable@vger.kernel.org
+Link: https://patch.msgid.link/20260310-perf-v2-1-4a3156fce43c@debian.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   31 +++++++++++++++++++++----------
- 1 file changed, 21 insertions(+), 10 deletions(-)
+ arch/x86/events/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4367,6 +4367,19 @@ static inline void intel_pmu_set_acr_cau
- 		event->hw.dyn_constraint &= hybrid(event->pmu, acr_cause_mask64);
- }
+--- a/arch/x86/events/core.c
++++ b/arch/x86/events/core.c
+@@ -1369,6 +1369,8 @@ static void x86_pmu_enable(struct pmu *p
+ 			else if (i < n_running)
+ 				continue;
  
-+static inline int intel_set_branch_counter_constr(struct perf_event *event,
-+						  int *num)
-+{
-+	if (branch_sample_call_stack(event))
-+		return -EINVAL;
-+	if (branch_sample_counters(event)) {
-+		(*num)++;
-+		event->hw.dyn_constraint &= x86_pmu.lbr_counters;
-+	}
++			cpuc->events[hwc->idx] = event;
 +
-+	return 0;
-+}
-+
- static int intel_pmu_hw_config(struct perf_event *event)
- {
- 	int ret = x86_pmu_hw_config(event);
-@@ -4437,21 +4450,19 @@ static int intel_pmu_hw_config(struct pe
- 		 * group, which requires the extra space to store the counters.
- 		 */
- 		leader = event->group_leader;
--		if (branch_sample_call_stack(leader))
-+		if (intel_set_branch_counter_constr(leader, &num))
- 			return -EINVAL;
--		if (branch_sample_counters(leader)) {
--			num++;
--			leader->hw.dyn_constraint &= x86_pmu.lbr_counters;
--		}
- 		leader->hw.flags |= PERF_X86_EVENT_BRANCH_COUNTERS;
+ 			if (hwc->state & PERF_HES_ARCH)
+ 				continue;
  
- 		for_each_sibling_event(sibling, leader) {
--			if (branch_sample_call_stack(sibling))
-+			if (intel_set_branch_counter_constr(sibling, &num))
-+				return -EINVAL;
-+		}
-+
-+		/* event isn't installed as a sibling yet. */
-+		if (event != leader) {
-+			if (intel_set_branch_counter_constr(event, &num))
- 				return -EINVAL;
--			if (branch_sample_counters(sibling)) {
--				num++;
--				sibling->hw.dyn_constraint &= x86_pmu.lbr_counters;
--			}
+@@ -1376,7 +1378,6 @@ static void x86_pmu_enable(struct pmu *p
+ 			 * if cpuc->enabled = 0, then no wrmsr as
+ 			 * per x86_pmu_enable_event()
+ 			 */
+-			cpuc->events[hwc->idx] = event;
+ 			x86_pmu_start(event, PERF_EF_RELOAD);
  		}
- 
- 		if (num > fls(x86_pmu.lbr_counters))
+ 		cpuc->n_added = 0;
 
 
