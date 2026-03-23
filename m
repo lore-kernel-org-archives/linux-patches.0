@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB432741A0;
-	Mon, 23 Mar 2026 14:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45133AA4FD;
+	Mon, 23 Mar 2026 14:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277592; cv=none; b=D1S0y7mhgOpPKPN+H9KcM11Mkbx1qkZdbD44rOFFFfMaenmDYfk42ao2eayP8XBts9BaK6w3oXOvWXSBCrjzIVRBeXaM1rRcWzqqZnXXxVPGUJtkrmfXh1ahydDfg5N/mtxo46FPHZlISNe4gtEPH928ZKTzc0O3eRbQdeEjlDk=
+	t=1774277595; cv=none; b=lKaPlcZQn8jLVPmWTa8Ccchw16uFGis7k16D4ErlrjUql1tbAAxk4eXDkTNbgLZsHRxJ6T6Fk2UWvUg6TK6nf7D9YtbkDmvRembuItdS5pdsbASc7MqLazunRZ9YYTNYqfEci0qm1sSynfoAfIhsGF0rArX8jSp5I/Q569+Ei5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277592; c=relaxed/simple;
-	bh=MWAhZybxcKjdtTtpgy/hJmtiOh10KwCmZIr9B6KLz1E=;
+	s=arc-20240116; t=1774277595; c=relaxed/simple;
+	bh=g3ncOEICZsCbbH2w2sre19uswG354Ttaqf5+NY1UDSg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Lr93izP0hTHge9b93fJTzc7rgnhyFWnXoRwvgC+RYhiz6NJvpc6vMIv2QTjaE8SN5zH4sokXSeFR1iFsTBijrd72lY/8SZ58l+ohy9mvIpfgzPGrCABwvgXXWyh2MIbxAZ+mm/IAEPFHGyOK8p0+wLlSPY+iXaI9lSXoWWRuljk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xinHF6vJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nPSlsMqsnPthcvn/xGM3X/vDJGkk3CtV78g5veT8hU80pe+NvOC/vuYNYCJOOvmy/kIUG1CeP7Zu4ChGmyK+WEUCb+UModCTyq8WMR2QF4/cVDGHf+mcTjtZ5ZvnmphZVBAoplnscR584RykLUt0Wiugf9FBIfa64NNQtFcXzgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wc+8h6t3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xinHF6vJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AB9C4CEF7;
-	Mon, 23 Mar 2026 14:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wc+8h6t3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AF3C4CEF7;
+	Mon, 23 Mar 2026 14:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277592;
-	bh=MWAhZybxcKjdtTtpgy/hJmtiOh10KwCmZIr9B6KLz1E=;
+	s=korg; t=1774277595;
+	bh=g3ncOEICZsCbbH2w2sre19uswG354Ttaqf5+NY1UDSg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xinHF6vJfpZye/9Ug4ufxP+xIkpVpjrev8tKAWSEg4PdgegsYDQMLrQSIYQWKIy38
-	 6yyfkI6bZ4RcVTTdKPv0//+0CwbzVQNEZLCNxsjhoXq8CP+BMCEzIx6anTf3sAOegl
-	 YcLvO61/bm+e6IUNnNJ1LzlckdEgRE5b0MW4eujs=
+	b=wc+8h6t3c3n0oVZPw4E5bad8M8wZQL9gxG/0IVpcLCEDpLIti9ZO+xYQAUnNYEYvv
+	 5PT+x/AiSmo1uV0j56rXckz+APY4fIF/hPPwWWBS6luStpY5sho9+x47jbl+VOKQJP
+	 RCiU0eDm34K9PRfj5Cavv0Bwy2qMIr2vYeJ+v8qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 024/567] btrfs: fix compat mask in error messages in btrfs_check_features()
-Date: Mon, 23 Mar 2026 14:39:04 +0100
-Message-ID: <20260323134534.369436933@linuxfoundation.org>
+Subject: [PATCH 6.6 042/567] bus: omap-ocp2scp: Convert to platform remove callback returning void
+Date: Mon, 23 Mar 2026 14:39:22 +0100
+Message-ID: <20260323134534.835986011@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,63 +44,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 587bb33b10bda645a1028c1737ad3992b3d7cf61 ]
+[ Upstream commit 854f89a5b56354ba4135e0e1f0e57ab2caee59ee ]
 
-Commit d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency
-checks") introduced a regression when it comes to handling unsupported
-incompat or compat_ro flags. Beforehand we only printed the flags that
-we didn't recognize, afterwards we printed them all, which is less
-useful. Fix the error handling so it behaves like it used to.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Fixes: d7f67ac9a928 ("btrfs: relax block-group-tree feature dependency checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
+
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Link: https://lore.kernel.org/r/20231109202830.4124591-3-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Stable-dep-of: 5eb63e9bb65d ("bus: omap-ocp2scp: fix OF populate on driver rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/bus/omap-ocp2scp.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 89e98f9cc2026..23431bc81c64a 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3094,7 +3094,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP) {
- 		btrfs_err(fs_info,
- 		"cannot mount because of unknown incompat features (0x%llx)",
--		    incompat);
-+		    incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP);
- 		return -EINVAL;
- 	}
+diff --git a/drivers/bus/omap-ocp2scp.c b/drivers/bus/omap-ocp2scp.c
+index e02d0656242b8..7d7479ba0a759 100644
+--- a/drivers/bus/omap-ocp2scp.c
++++ b/drivers/bus/omap-ocp2scp.c
+@@ -84,12 +84,10 @@ static int omap_ocp2scp_probe(struct platform_device *pdev)
+ 	return ret;
+ }
  
-@@ -3126,7 +3126,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	if (compat_ro_unsupp && is_rw_mount) {
- 		btrfs_err(fs_info,
- 	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
--		       compat_ro);
-+		       compat_ro_unsupp);
- 		return -EINVAL;
- 	}
+-static int omap_ocp2scp_remove(struct platform_device *pdev)
++static void omap_ocp2scp_remove(struct platform_device *pdev)
+ {
+ 	pm_runtime_disable(&pdev->dev);
+ 	device_for_each_child(&pdev->dev, NULL, ocp2scp_remove_devices);
+-
+-	return 0;
+ }
  
-@@ -3139,7 +3139,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- 	    !btrfs_test_opt(fs_info, NOLOGREPLAY)) {
- 		btrfs_err(fs_info,
- "cannot replay dirty log with unsupported compat_ro features (0x%llx), try rescue=nologreplay",
--			  compat_ro);
-+			  compat_ro_unsupp);
- 		return -EINVAL;
- 	}
+ #ifdef CONFIG_OF
+@@ -103,7 +101,7 @@ MODULE_DEVICE_TABLE(of, omap_ocp2scp_id_table);
  
+ static struct platform_driver omap_ocp2scp_driver = {
+ 	.probe		= omap_ocp2scp_probe,
+-	.remove		= omap_ocp2scp_remove,
++	.remove_new	= omap_ocp2scp_remove,
+ 	.driver		= {
+ 		.name	= "omap-ocp2scp",
+ 		.of_match_table = of_match_ptr(omap_ocp2scp_id_table),
 -- 
 2.51.0
 
