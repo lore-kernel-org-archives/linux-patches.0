@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A21173B0ACB;
-	Mon, 23 Mar 2026 14:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B96AA3B0ACB;
+	Mon, 23 Mar 2026 14:05:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274739; cv=none; b=snQWwL6AdEh07I9WC/4DK52L2er/RPz4oeE15Q90AwhgEyfQeVPrO+pV7uZeLaHiUZGsfG4alnao+Zz/RkVBAuCkJvUZYwB6SN5MyPj4Xga9csBni+VZwEAeuyeks0e3HAsaz08FLbQhx0+1Ftkq2jPbb0kbm8Url2OnIHPqHbA=
+	t=1774274742; cv=none; b=LYMkN6ADBxB83pEZ95mA44GLGieskABjA+DbhfGoQr4fSgJbHi7PK2G/nh+7QyNZ0xg5jK1d+rBhT3gwkQRtCFdl8KA3di/XOSuj582FVTFWolGk/JfBV/h2ROXireL3VFj4iqBvIvYFggp6sj1rV1BrNMgv0vfLArb4pugy2ro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274739; c=relaxed/simple;
-	bh=JZ4eR8diKEBgV1BckWVhCmfRqXODaVcSNNW0Z69m5fQ=;
+	s=arc-20240116; t=1774274742; c=relaxed/simple;
+	bh=nIDdGcl92YxGES5GCdFhQ0e6WzcGs3j3o8l7F+NBLhg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QBLwLcvL4YCl35MI+7vAXviFRQqmkcZ/JE7N9x3gL7COqsoWOzJDbW/gqxy/cb0jlpKMzFp/MQUmqDIw7MsxD91k0S/oFvVBq8ZsZFnHxBpJs8bCDQVkUKCl2JlRMjRvei9m+j87bIT3GHXF9EfM3Yvel11oyqfoQzr2Axp8W4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=esNGEUN6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=t9heew3PJyG92OiB3M6u19YZ5RO1jENbR5OKbn94HoNDyTkqlzVC9klNJppOcoXIr99E2bVIN0j+Up+mlB7RtC7LagRdE0KH/HHH9T9PvUfC6yToZKGjiP1+FTOvyWyN3gyTmbOhj2F/Zlsg0Q0IwBITa7SHVkWlQCgB8tceLho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u2oBWZ35; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="esNGEUN6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26288C4CEF7;
-	Mon, 23 Mar 2026 14:05:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u2oBWZ35"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35922C4CEF7;
+	Mon, 23 Mar 2026 14:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274739;
-	bh=JZ4eR8diKEBgV1BckWVhCmfRqXODaVcSNNW0Z69m5fQ=;
+	s=korg; t=1774274742;
+	bh=nIDdGcl92YxGES5GCdFhQ0e6WzcGs3j3o8l7F+NBLhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=esNGEUN6hCWhoEZkQfxeUf+UmrL5ltKcoQt3dpF6a3+A3sf87YtC0yZpEISVqkH9c
-	 9w8zLhddIhzUpM6dXND7JZjFHLH61ItFPJKssMRJt8Rq7J1AcNl1DB/h0t7ZQj+g5x
-	 ui983E+mRVcnDH0H1LfjWT0ZXyXwsRJB609Nulvc=
+	b=u2oBWZ35hFS/kfQ0ZsVF5baKxve9CR/nu/QnMu4a4pTXRP/z57ro5nSkDv+NVw71m
+	 m3nTJAVpGkNOIMmLXaG6y8LHb1SVDGYZMZAKDkrV5sQ4WyHsb52yELI2MLDeKYxHvE
+	 m0ORirHjWx4AnJTEwroOJs+vEDeU91+oDIDWRIqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhanjun Dong <zhanjun.dong@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Ashutosh Dixit <ashutosh.dixit@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
 	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
-Subject: [PATCH 6.18 094/212] drm/xe/guc: Ensure CT state transitions via STOP before DISABLED
-Date: Mon, 23 Mar 2026 14:45:15 +0100
-Message-ID: <20260323134506.748761296@linuxfoundation.org>
+Subject: [PATCH 6.18 095/212] drm/xe/oa: Allow reading after disabling OA stream
+Date: Mon, 23 Mar 2026 14:45:16 +0100
+Message-ID: <20260323134506.777913118@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,36 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhanjun Dong <zhanjun.dong@intel.com>
+From: Ashutosh Dixit <ashutosh.dixit@intel.com>
 
-commit 7838dd8367419e9fc43b79c038321cb3c04de2a2 upstream.
+commit 9be6fd9fbd2032b683e51374497768af9aaa228a upstream.
 
-The GuC CT state transition requires moving to the STOP state before
-entering the DISABLED state. Update the driver teardown sequence to make
-the proper state machine transitions.
+Some OA data might be present in the OA buffer when OA stream is
+disabled. Allow UMD's to retrieve this data, so that all data till the
+point when OA stream is disabled can be retrieved.
 
-Fixes: ee4b32220a6b ("drm/xe/guc: Add devm release action to safely tear down CT")
+v2: Update tail pointer after disable (Umesh)
+
+Fixes: efb315d0a013 ("drm/xe/oa/uapi: Read file_operation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Zhanjun Dong <zhanjun.dong@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260310225039.1320161-6-zhanjun.dong@intel.com
-(cherry picked from commit dace8cb0032f57ea67c87b3b92ad73c89dd2db44)
+Signed-off-by: Ashutosh Dixit <ashutosh.dixit@intel.com>
+Reviewed-by: Umesh Nerlige Ramappa<umesh.nerlige.ramappa@intel.com>
+Link: https://patch.msgid.link/20260313053630.3176100-1-ashutosh.dixit@intel.com
+(cherry picked from commit 4ff57c5e8dbba23b5457be12f9709d5c016da16e)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_guc_ct.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/xe/xe_oa.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_guc_ct.c
-+++ b/drivers/gpu/drm/xe/xe_guc_ct.c
-@@ -266,6 +266,7 @@ static void guc_action_disable_ct(void *
- {
- 	struct xe_guc_ct *ct = arg;
+--- a/drivers/gpu/drm/xe/xe_oa.c
++++ b/drivers/gpu/drm/xe/xe_oa.c
+@@ -543,8 +543,7 @@ static ssize_t xe_oa_read(struct file *f
+ 	size_t offset = 0;
+ 	int ret;
  
-+	xe_guc_ct_stop(ct);
- 	guc_ct_change_state(ct, XE_GUC_CT_STATE_DISABLED);
+-	/* Can't read from disabled streams */
+-	if (!stream->enabled || !stream->sample)
++	if (!stream->sample)
+ 		return -EINVAL;
+ 
+ 	if (!(file->f_flags & O_NONBLOCK)) {
+@@ -1459,6 +1458,10 @@ static void xe_oa_stream_disable(struct
+ 
+ 	if (stream->sample)
+ 		hrtimer_cancel(&stream->poll_check_timer);
++
++	/* Update stream->oa_buffer.tail to allow any final reports to be read */
++	if (xe_oa_buffer_check_unlocked(stream))
++		wake_up(&stream->poll_wq);
  }
  
+ static int xe_oa_enable_preempt_timeslice(struct xe_oa_stream *stream)
 
 
