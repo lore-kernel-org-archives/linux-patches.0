@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2573AD537;
-	Mon, 23 Mar 2026 14:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25F8F3AD537;
+	Mon, 23 Mar 2026 14:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274966; cv=none; b=jCiXOPIpD1J4cIYQjS2d6fZd5KRpBtzQuUJFMkLaI3FDZpPRWjXVZrkyJyNmMNUgnBUgICnuNG/tzySBPT/U2nEpDwRFW7uc7kpuL+lAkqLZ2IkqVQtvNDygibRsXaHXgRMPDYYDSCjv1Wq+lx7N5AUb3DfH2omFCKkZzjJ59xs=
+	t=1774274969; cv=none; b=q+iOfXrRTfCll4UHRdd6Sb+4fABVacrK0/KHavjPQBsh2wCmSEur8xqWHmLRYrIVVU2gm4i0RFVucBAwGmwzOsgxAgdWjLV67KZbUrFGbudMc/uaQa7gEVN+yHiwj67RlQNPGLGza5VVPj93aOBhP+T4fgmnIDcvpz5tPxXsX2E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274966; c=relaxed/simple;
-	bh=JFnrhPyw7VNZgiOXWtbH2+MKwfM07owT+bQWyISsQ4M=;
+	s=arc-20240116; t=1774274969; c=relaxed/simple;
+	bh=dWe2ZvDg/T3C7C6axrgRkRJrT3vmFToQGzPF+kji2fU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ai/erI2F+D+SPr1ahSEJqtVHKI7QYgzh0fnvgp+sop8HtTgm5Ciuj/yxiSM7QF8rycSI0l0QDMBxmEGxn9RwnK7ig0njSf1vIaB8t9kAGujW3fDMWvORyVomAhwzZe4m6NNqIyZS9Qew4vW6eF4TxQIDaO4glOjxUPuBq8KHPR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qiTuZBQW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BfULpAkJ6LuWis2Nr4tIYd5vfHyZIbV+Qo2tcgRpwE7zUTL4m9CUd+zEA1FdZP10JbYAOA6IS2+SkG4LetYhAQK5parMN8mcPxwa/nDmXvaUj4twvUg6YVjWuNPvneRHTYjKRy16LeR2fMEo6K4341agqTWKwegB/pXHjhgcsjw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DNXVcVgx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qiTuZBQW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1BBFC4CEF7;
-	Mon, 23 Mar 2026 14:09:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DNXVcVgx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67DE0C2BC9E;
+	Mon, 23 Mar 2026 14:09:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274966;
-	bh=JFnrhPyw7VNZgiOXWtbH2+MKwfM07owT+bQWyISsQ4M=;
+	s=korg; t=1774274968;
+	bh=dWe2ZvDg/T3C7C6axrgRkRJrT3vmFToQGzPF+kji2fU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qiTuZBQWXVJC2YoX9oLEyv5RtKQVLr7ld+dwstkRB1ffVbwH6jzMliQi5XJ5v+5wG
-	 GZ0vEKtp1ScrcIJfo/AYRMnkYfDuZxy3dMIlqvPxVlCLqTdEOKOUQ+HctVMJSvWCrU
-	 635pJGgo2ELz2/cGvTkpSYn9+dyDqBHGMxP7eD2Q=
+	b=DNXVcVgxRhIStz3bClzq/9DGEQWc2isZ8gTiQ6QGZvZkyJLTuRN8fA82cCa716XoK
+	 d/lTPCgmHrKMBSm+xEj7Jj5biuQYzRNQvzelAsNp4At5bZX/lDpZTkYSD9pP5dXsSU
+	 KuoMv1Tku89Tx2o8Iqz4ccoYTt+kZkXNJ2qKenuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sabrina Dubroca <sd@queasysnail.net>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Christian Eggers <ceggers@arri.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 133/212] mpls: add missing unregister_netdevice_notifier to mpls_init
-Date: Mon, 23 Mar 2026 14:45:54 +0100
-Message-ID: <20260323134507.976389860@linuxfoundation.org>
+Subject: [PATCH 6.18 124/212] Bluetooth: SMP: make SM/PER/KDU/BI-04-C happy
+Date: Mon, 23 Mar 2026 14:45:45 +0100
+Message-ID: <20260323134507.685832162@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,35 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sabrina Dubroca <sd@queasysnail.net>
+From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit 99600f79b28c83c68bae199a3d8e95049a758308 ]
+[ Upstream commit 0e4d4dcc1a6e82cc6f9abf32193558efa7e1613d ]
 
-If mpls_init() fails after registering mpls_dev_notifier, it never
-gets removed. Add the missing unregister_netdevice_notifier() call to
-the error handling path.
+The last test step ("Test with Invalid public key X and Y, all set to
+0") expects to get an "DHKEY check failed" instead of "unspecified".
 
-Fixes: 5be2062e3080 ("mpls: Handle error of rtnl_register_module().")
-Signed-off-by: Sabrina Dubroca <sd@queasysnail.net>
-Link: https://patch.msgid.link/7c55363c4f743d19e2306204a134407c90a69bbb.1773228081.git.sd@queasysnail.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 6d19628f539f ("Bluetooth: SMP: Fail if remote and local public keys are identical")
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mpls/af_mpls.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mpls/af_mpls.c b/net/mpls/af_mpls.c
-index 25c88cba5c48b..1c70cb26e7ba1 100644
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -2777,6 +2777,7 @@ static int __init mpls_init(void)
- 	rtnl_af_unregister(&mpls_af_ops);
- out_unregister_dev_type:
- 	dev_remove_pack(&mpls_packet_type);
-+	unregister_netdevice_notifier(&mpls_dev_notifier);
- out_unregister_pernet:
- 	unregister_pernet_subsys(&mpls_net_ops);
- 	goto out;
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index 3a1ce04a7a536..9d96040745897 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2743,7 +2743,7 @@ static int smp_cmd_public_key(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (!test_bit(SMP_FLAG_DEBUG_KEY, &smp->flags) &&
+ 	    !crypto_memneq(key, smp->local_pk, 64)) {
+ 		bt_dev_err(hdev, "Remote and local public keys are identical");
+-		return SMP_UNSPECIFIED;
++		return SMP_DHKEY_CHECK_FAILED;
+ 	}
+ 
+ 	memcpy(smp->remote_pk, key, 64);
 -- 
 2.51.0
 
