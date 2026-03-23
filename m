@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CACD7387593;
-	Mon, 23 Mar 2026 14:43:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793BE387593;
+	Mon, 23 Mar 2026 14:43:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277000; cv=none; b=fLyjSJnIt6AjpNPfWYHOAWjvqYILE/ML8cr4fjIr1JUo0EOC/H5u2sIvQbXrjRjJcd4kOZ70yELJTyREPq+mEmPLNSc61A4VrbCMLPMxxLMJHmkY+05i6jjV48OJDAWSbbl2Fbmp8llJMhHbhpcng8u7dxtezyls6ENk6zzVT+s=
+	t=1774277003; cv=none; b=sEav317OxS4jiZJvIHrP9455XMXfpmtU5f0vm0n/9yjmiLTf8e76crsS2FE5C6uRD3mzJTGKaQgC14Ckg0hOU7qekeMWknomKweIHfFvPGEW8lDF2K2zF35iq3Jy4tlo6vcD70l+y0yT/QYKI2tM7K9dk8zhJrJNZ0oKeKzWM90=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277000; c=relaxed/simple;
-	bh=tjz/uXlcYtFBZBGg1uf5qfwY2swGDdUB3UHvBp8sjSk=;
+	s=arc-20240116; t=1774277003; c=relaxed/simple;
+	bh=kqRPCrZ4nE6KG8qmahWuSNm1epCY76tDrPZmox8U0dY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NBCh3XcyQAIOZ5flUrw/0hW++hgLDWTyRXfFwS8Zr3Ami0wWwHA0pNF1J0zWWF6etGFathADL8c0WTTn2OGLHB6gNsTuSqyU/Gb218/+U74S1XCk5CahkkD8X0U3473XCdQe9NsA4SXEsJw+Y3w4BYt2dUDnMy57mP7ao/OQpLo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n8nTsKDe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=TUVLdjQ5dOmx5IFZa68ez3SQel7qVvFprAHIGnZ9cupM0zi9vtena4ITWU6tp4dnnf+SBPCsglnW3E2QY3lxVINp4RuRbWcZtHiAl9L6NYyfT6+qZxHRYs+X6aTSy5CbAb9ppLFHexmOsjKmKfiXCjIuHrSxec5s6jwAuIo8VGk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kvFZe5Fi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n8nTsKDe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60391C4CEF7;
-	Mon, 23 Mar 2026 14:43:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kvFZe5Fi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13946C4CEF7;
+	Mon, 23 Mar 2026 14:43:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277000;
-	bh=tjz/uXlcYtFBZBGg1uf5qfwY2swGDdUB3UHvBp8sjSk=;
+	s=korg; t=1774277003;
+	bh=kqRPCrZ4nE6KG8qmahWuSNm1epCY76tDrPZmox8U0dY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n8nTsKDedLH/PsU5t+jxraWbDW4mgXuygt/tLl9bWfC+RjUmVLxVtugsRqXUQRfpx
-	 oXNZ4a1awdW5Hqry7AxLh79YcNfQImd9tas1nPzt7FBmMVDcFRdj50gHzBau9nZtdi
-	 GnvAdooUw6e043fxAFuH8xLEGf58EeTp+wgmzq90=
+	b=kvFZe5FiMiiRQHFbj3LfcKhJbXW5DP319mlOR18s4nGU81CKyl/1ftKJ5TBxZs5sw
+	 9mR/FsavY/gjtL/1B1t0OYt2Hdti6bj8LOzfufnMqW/roQMl0+2roRH8kK2HtM0jSm
+	 fatJeLsKtndLlJZIv4D4kXV/r2eCrdd9NO/WK7Cs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	Sasha Levin <sashal@kernel.org>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paulo Andrade <pandrade@redhat.com>,
-	Oleg Nesterov <oleg@redhat.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.12 282/460] x86/uprobes: Fix XOL allocation failure for 32-bit tasks
-Date: Mon, 23 Mar 2026 14:44:38 +0100
-Message-ID: <20260323134533.407124029@linuxfoundation.org>
+	Antheas Kapenekakis <lkml@antheas.dev>,
+	"Mario Limonciello (AMD)" <superm1@kernel.org>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Alva Lan <alvalan9@foxmail.com>
+Subject: [PATCH 6.12 283/460] platform/x86/amd/pmc: Add support for Van Gogh SoC
+Date: Mon, 23 Mar 2026 14:44:39 +0100
+Message-ID: <20260323134533.434177889@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,132 +47,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Oleg Nesterov <oleg@redhat.com>
+From: Antheas Kapenekakis <lkml@antheas.dev>
 
-[ Upstream commit d55c571e4333fac71826e8db3b9753fadfbead6a ]
+[ Upstream commit db4a3f0fbedb0398f77b9047e8b8bb2b49f355bb ]
 
-This script
+The ROG Xbox Ally (non-X) SoC features a similar architecture to the
+Steam Deck. While the Steam Deck supports S3 (s2idle causes a crash),
+this support was dropped by the Xbox Ally which only S0ix suspend.
 
-	#!/usr/bin/bash
+Since the handler is missing here, this causes the device to not suspend
+and the AMD GPU driver to crash while trying to resume afterwards due to
+a power hang.
 
-	echo 0 > /proc/sys/kernel/randomize_va_space
-
-	echo 'void main(void) {}' > TEST.c
-
-	# -fcf-protection to ensure that the 1st endbr32 insn can't be emulated
-	gcc -m32 -fcf-protection=branch TEST.c -o test
-
-	bpftrace -e 'uprobe:./test:main {}' -c ./test
-
-"hangs", the probed ./test task enters an endless loop.
-
-The problem is that with randomize_va_space == 0
-get_unmapped_area(TASK_SIZE - PAGE_SIZE) called by xol_add_vma() can not
-just return the "addr == TASK_SIZE - PAGE_SIZE" hint, this addr is used
-by the stack vma.
-
-arch_get_unmapped_area_topdown() doesn't take TIF_ADDR32 into account and
-in_32bit_syscall() is false, this leads to info.high_limit > TASK_SIZE.
-vm_unmapped_area() happily returns the high address > TASK_SIZE and then
-get_unmapped_area() returns -ENOMEM after the "if (addr > TASK_SIZE - len)"
-check.
-
-handle_swbp() doesn't report this failure (probably it should) and silently
-restarts the probed insn. Endless loop.
-
-I think that the right fix should change the x86 get_unmapped_area() paths
-to rely on TIF_ADDR32 rather than in_32bit_syscall(). Note also that if
-CONFIG_X86_X32_ABI=y, in_x32_syscall() falsely returns true in this case
-because ->orig_ax = -1.
-
-But we need a simple fix for -stable, so this patch just sets TS_COMPAT if
-the probed task is 32-bit to make in_ia32_syscall() true.
-
-Fixes: 1b028f784e8c ("x86/mm: Introduce mmap_compat_base() for 32-bit mmap()")
-Reported-by: Paulo Andrade <pandrade@redhat.com>
-Signed-off-by: Oleg Nesterov <oleg@redhat.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/all/aV5uldEvV7pb4RA8@redhat.com/
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/aWO7Fdxn39piQnxu@redhat.com
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4659
+Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
+Reviewed-by: Mario Limonciello (AMD) <superm1@kernel.org>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Link: https://patch.msgid.link/20251024152152.3981721-2-lkml@antheas.dev
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+[ Adjust context ]
+Signed-off-by: Alva Lan <alvalan9@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/uprobes.c |   24 ++++++++++++++++++++++++
- include/linux/uprobes.h   |    1 +
- kernel/events/uprobes.c   |   10 +++++++---
- 3 files changed, 32 insertions(+), 3 deletions(-)
+ drivers/platform/x86/amd/pmc/pmc.c |    3 +++
+ drivers/platform/x86/amd/pmc/pmc.h |    1 +
+ 2 files changed, 4 insertions(+)
 
---- a/arch/x86/kernel/uprobes.c
-+++ b/arch/x86/kernel/uprobes.c
-@@ -1223,3 +1223,27 @@ bool arch_uretprobe_is_alive(struct retu
- 	else
- 		return regs->sp <= ret->stack;
- }
-+
-+#ifdef CONFIG_IA32_EMULATION
-+unsigned long arch_uprobe_get_xol_area(void)
-+{
-+	struct thread_info *ti = current_thread_info();
-+	unsigned long vaddr;
-+
-+	/*
-+	 * HACK: we are not in a syscall, but x86 get_unmapped_area() paths
-+	 * ignore TIF_ADDR32 and rely on in_32bit_syscall() to calculate
-+	 * vm_unmapped_area_info.high_limit.
-+	 *
-+	 * The #ifdef above doesn't cover the CONFIG_X86_X32_ABI=y case,
-+	 * but in this case in_32bit_syscall() -> in_x32_syscall() always
-+	 * (falsely) returns true because ->orig_ax == -1.
-+	 */
-+	if (test_thread_flag(TIF_ADDR32))
-+		ti->status |= TS_COMPAT;
-+	vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
-+	ti->status &= ~TS_COMPAT;
-+
-+	return vaddr;
-+}
-+#endif
---- a/include/linux/uprobes.h
-+++ b/include/linux/uprobes.h
-@@ -146,6 +146,7 @@ extern void arch_uprobe_copy_ixol(struct
- extern void uprobe_handle_trampoline(struct pt_regs *regs);
- extern void *arch_uprobe_trampoline(unsigned long *psize);
- extern unsigned long uprobe_get_trampoline_vaddr(void);
-+extern unsigned long arch_uprobe_get_xol_area(void);
- #else /* !CONFIG_UPROBES */
- struct uprobes_state {
- };
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -1493,6 +1493,12 @@ static const struct vm_special_mapping x
- 	.fault = xol_fault,
- };
- 
-+unsigned long __weak arch_uprobe_get_xol_area(void)
-+{
-+	/* Try to map as high as possible, this is only a hint. */
-+	return get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE, PAGE_SIZE, 0, 0);
-+}
-+
- /* Slot allocation for XOL */
- static int xol_add_vma(struct mm_struct *mm, struct xol_area *area)
- {
-@@ -1508,9 +1514,7 @@ static int xol_add_vma(struct mm_struct
- 	}
- 
- 	if (!area->vaddr) {
--		/* Try to map as high as possible, this is only a hint. */
--		area->vaddr = get_unmapped_area(NULL, TASK_SIZE - PAGE_SIZE,
--						PAGE_SIZE, 0, 0);
-+		area->vaddr = arch_uprobe_get_xol_area();
- 		if (IS_ERR_VALUE(area->vaddr)) {
- 			ret = area->vaddr;
- 			goto fail;
+--- a/drivers/platform/x86/amd/pmc/pmc.c
++++ b/drivers/platform/x86/amd/pmc/pmc.c
+@@ -347,6 +347,7 @@ static void amd_pmc_get_ip_info(struct a
+ 	switch (dev->cpu_id) {
+ 	case AMD_CPU_ID_PCO:
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 		dev->num_ips = 12;
+@@ -765,6 +766,7 @@ static int amd_pmc_get_os_hint(struct am
+ 	case AMD_CPU_ID_PCO:
+ 		return MSG_OS_HINT_PCO;
+ 	case AMD_CPU_ID_RN:
++	case AMD_CPU_ID_VG:
+ 	case AMD_CPU_ID_YC:
+ 	case AMD_CPU_ID_CB:
+ 	case AMD_CPU_ID_PS:
+@@ -977,6 +979,7 @@ static const struct pci_device_id pmc_pc
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_PCO) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_RV) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_SP) },
++	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, AMD_CPU_ID_VG) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M20H_ROOT) },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_AMD, PCI_DEVICE_ID_AMD_1AH_M60H_ROOT) },
+ 	{ }
+--- a/drivers/platform/x86/amd/pmc/pmc.h
++++ b/drivers/platform/x86/amd/pmc/pmc.h
+@@ -62,6 +62,7 @@ void amd_mp2_stb_deinit(struct amd_pmc_d
+ #define AMD_CPU_ID_RN			0x1630
+ #define AMD_CPU_ID_PCO			AMD_CPU_ID_RV
+ #define AMD_CPU_ID_CZN			AMD_CPU_ID_RN
++#define AMD_CPU_ID_VG			0x1645
+ #define AMD_CPU_ID_YC			0x14B5
+ #define AMD_CPU_ID_CB			0x14D8
+ #define AMD_CPU_ID_PS			0x14E8
 
 
