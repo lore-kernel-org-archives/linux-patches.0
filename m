@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C2B33FE1F;
-	Mon, 23 Mar 2026 14:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E6D39EF1E;
+	Mon, 23 Mar 2026 14:42:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276953; cv=none; b=onR8n29DzMJQo8tBGEJR29Pbdfg49Ub70Y35jBwBpUB6zj/zQV9fMEAloqXxUmR6UgfHD7e+xpgHhw1q1mFaxAv1DjnrvM8qjo2Tbe1OpOSWqidjurGRxj1C6S8ngVg+3C9drb6h2HjVn0Kzi60M4dFidGc6oxPHJuWLpPGNdRo=
+	t=1774276956; cv=none; b=ODop3QnuVlWO9wEwe5BzBx80yc7+FDFzfuaBp8GjlLMPPInXk4+HGUqsHqBbRXreekxTQ+ywks7XFT8XTyF6ZUNCrdLA+30z300e/Ph+7VqWGDgtlp984u/nKVeQQO2LmwahLYljSLCZ8bIoAwcwWD9TauGBmUn8ElCj8WyyzQA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276953; c=relaxed/simple;
-	bh=or2hPoX4gWpUMtegZhvZB6f5kGROhT56gKxKuIyMNCg=;
+	s=arc-20240116; t=1774276956; c=relaxed/simple;
+	bh=p3LYv4WO5zPii5nONiS0MIsQjGcRI+tWelbAjs5IyQo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHBZm9rJpQleQLlyXXbSvAVz03D7os0rvFEQ15mSrH9kN/hHQ3rlS4cw1EJIXC3F2DG752yEKF9la2T2ErOZyNj43FJz4UEwkemmrMTC+6CV7+vQQ5+KgHTQYRkT7H1LqwbE1kABXopGC7S8tubsADgMxPBBdJzEDknXKDgdssY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HQ/8pBZS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z8v5JI9nqD0uf8IeKyZj7BMqFiQu5TrYL0oV7iAP6sa04eFhd3kdn6avOF0SbXRqA3KOFoxTXEJP7HlVDmGKeI85s4FR0WVH+5TaThy0ORI1fvWk24KurlWhqxwCFHggaIhWE0C6osmMPNo0L1izFjoA1WRPSioAXCgBFUoFG9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JsdSOoBr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HQ/8pBZS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3320C4CEF7;
-	Mon, 23 Mar 2026 14:42:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JsdSOoBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F520C2BC9E;
+	Mon, 23 Mar 2026 14:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276953;
-	bh=or2hPoX4gWpUMtegZhvZB6f5kGROhT56gKxKuIyMNCg=;
+	s=korg; t=1774276955;
+	bh=p3LYv4WO5zPii5nONiS0MIsQjGcRI+tWelbAjs5IyQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HQ/8pBZSx0CkO7ypbGbC2M7FG6n1aPYezxhTeqPEcw4beHkVys47l3lp2CEt3b/rG
-	 m8ZJFR/2Uc+SbYv0mO/2OM5ykRo92Qe/2QitxcdGrk1Z1pQwqJ2BgB1mqqOq22MFjX
-	 3UKXZRWb4l7x7+xrn0Tfs8fiB6EL5tw1QeWOj8mg=
+	b=JsdSOoBr4YVmicUkJ3nyX0ThmRpfGL9nGouwVL27tx7Qn7Cbpz8v2BxpXfmwhvNg1
+	 fZMsDcM5gjLTgOWj4SuDgAnoqzNpRDVkBCWDnGUc91A8pp/PZg10fnrW1zV6bo3HHD
+	 a/yYKSUagtzkDUX+IuZ8ZEtH6wfzuLZx5nVH4UlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	James Bottomley <James.Bottomley@HansenPartnership.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 267/460] ksmbd: Dont log keys in SMB3 signing and encryption key generation
-Date: Mon, 23 Mar 2026 14:44:23 +0100
-Message-ID: <20260323134533.049050412@linuxfoundation.org>
+Subject: [PATCH 6.12 241/460] cleanup: Provide retain_and_null_ptr()
+Date: Mon, 23 Mar 2026 14:43:57 +0100
+Message-ID: <20260323134532.429027134@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,66 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-[ Upstream commit 441336115df26b966575de56daf7107ed474faed ]
+[ Upstream commit 092d00ead733563f6d278295e0b5c5f97558b726 ]
 
-When KSMBD_DEBUG_AUTH logging is enabled, generate_smb3signingkey() and
-generate_smb3encryptionkey() log the session, signing, encryption, and
-decryption key bytes. Remove the logs to avoid exposing credentials.
+In cases where an allocation is consumed by another function, the
+allocation needs to be retained on success or freed on failure. The code
+pattern is usually:
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ Context ]
+	struct foo *f = kzalloc(sizeof(*f), GFP_KERNEL);
+	struct bar *b;
+
+	,,,
+	// Initialize f
+	...
+	if (ret)
+		goto free;
+        ...
+	bar = bar_create(f);
+	if (!bar) {
+		ret = -ENOMEM;
+	   	goto free;
+	}
+	...
+	return 0;
+free:
+	kfree(f);
+	return ret;
+
+This prevents using __free(kfree) on @f because there is no canonical way
+to tell the cleanup code that the allocation should not be freed.
+
+Abusing no_free_ptr() by force ignoring the return value is not really a
+sensible option either.
+
+Provide an explicit macro retain_and_null_ptr(), which NULLs the cleanup
+pointer. That makes it easy to analyze and reason about.
+
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: James Bottomley <James.Bottomley@HansenPartnership.com>
+Link: https://lore.kernel.org/all/20250319105506.083538907@linutronix.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/auth.c |   22 ++--------------------
- 1 file changed, 2 insertions(+), 20 deletions(-)
+ include/linux/cleanup.h |   19 +++++++++++++++++++
+ 1 file changed, 19 insertions(+)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -803,12 +803,8 @@ static int generate_smb3signingkey(struc
- 	if (!(conn->dialect >= SMB30_PROT_ID && signing->binding))
- 		memcpy(chann->smb3signingkey, key, SMB3_SIGN_KEY_SIZE);
+--- a/include/linux/cleanup.h
++++ b/include/linux/cleanup.h
+@@ -216,6 +216,25 @@ const volatile void * __must_check_fn(co
  
--	ksmbd_debug(AUTH, "dumping generated AES signing keys\n");
-+	ksmbd_debug(AUTH, "generated SMB3 signing key\n");
- 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
--	ksmbd_debug(AUTH, "Session Key   %*ph\n",
--		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
--	ksmbd_debug(AUTH, "Signing Key   %*ph\n",
--		    SMB3_SIGN_KEY_SIZE, key);
- 	return 0;
- }
+ #define return_ptr(p)	return no_free_ptr(p)
  
-@@ -872,23 +868,9 @@ static int generate_smb3encryptionkey(st
- 	if (rc)
- 		return rc;
++/*
++ * Only for situations where an allocation is handed in to another function
++ * and consumed by that function on success.
++ *
++ *	struct foo *f __free(kfree) = kzalloc(sizeof(*f), GFP_KERNEL);
++ *
++ *	setup(f);
++ *	if (some_condition)
++ *		return -EINVAL;
++ *	....
++ *	ret = bar(f);
++ *	if (!ret)
++ *		retain_and_null_ptr(f);
++ *	return ret;
++ *
++ * After retain_and_null_ptr(f) the variable f is NULL and cannot be
++ * dereferenced anymore.
++ */
++#define retain_and_null_ptr(p)		((void)__get_and_null(p, NULL))
  
--	ksmbd_debug(AUTH, "dumping generated AES encryption keys\n");
-+	ksmbd_debug(AUTH, "generated SMB3 encryption/decryption keys\n");
- 	ksmbd_debug(AUTH, "Cipher type   %d\n", conn->cipher_type);
- 	ksmbd_debug(AUTH, "Session Id    %llu\n", sess->id);
--	ksmbd_debug(AUTH, "Session Key   %*ph\n",
--		    SMB2_NTLMV2_SESSKEY_SIZE, sess->sess_key);
--	if (conn->cipher_type == SMB2_ENCRYPTION_AES256_CCM ||
--	    conn->cipher_type == SMB2_ENCRYPTION_AES256_GCM) {
--		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
--			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3encryptionkey);
--		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
--			    SMB3_GCM256_CRYPTKEY_SIZE, sess->smb3decryptionkey);
--	} else {
--		ksmbd_debug(AUTH, "ServerIn Key  %*ph\n",
--			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3encryptionkey);
--		ksmbd_debug(AUTH, "ServerOut Key %*ph\n",
--			    SMB3_GCM128_CRYPTKEY_SIZE, sess->smb3decryptionkey);
--	}
- 	return 0;
- }
- 
+ /*
+  * DEFINE_CLASS(name, type, exit, init, init_args...):
 
 
