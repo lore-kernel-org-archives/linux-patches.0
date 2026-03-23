@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2904282F3D;
-	Mon, 23 Mar 2026 16:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD9F0284881;
+	Mon, 23 Mar 2026 16:10:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282209; cv=none; b=eSNqF+NlvnArhsrYJ6crfeD92QnlVLcSWJ7F8A5F/eokuuH7DjElfY/NWbikW2fYFQ5fmAJbA/T+CxfvL15cwIbwG0I4aPFVk7zzlJIGEeiubFx/j5EcTj7hU/qfOSCw1P9HWyGBaQ4+kz2z9XKSa1L/oVbtLlI61c7BEerj4Fs=
+	t=1774282211; cv=none; b=Z5NHjcsqQWLMhf/Z9Ix+q+I7xkYo36o2UApdQSYKy7slR4SbIQcYCjSkyazbBmfH6kmQB7EeOKexXRQ9SDEwC28njX9bm8LDFIMjyEYaJbgPAXFL+3HMQXr5fo/Lv9evgLpBXeBWqsNoRW/QEsi4dbFgzJKpmENnfOA0Nz5TLfU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282209; c=relaxed/simple;
-	bh=gcr/6Cv6JA0l3lNrn7YLDDBk19DZQ7CdkxqOMQkm+fM=;
+	s=arc-20240116; t=1774282211; c=relaxed/simple;
+	bh=EOGRllbt3+BVLHoG5Tapza5bIBZqNiKi8p1AwAY0PFU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EpuhqCxkGVSXQgSEcrDdoaGMDVnODr3jugCN4sSRgnH0REtow+0FCU5Y2/e/nGZEwiunQEI2vuyrBVbB2dBP52oHzQbUcSy2GmYJ8bhIxya9mNI6nHZXwXbw1K1ijfbZGiqNeqm9g7qpi8ysd1H3TOiaylVP5e2ppEn3ZZHiNFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1FkWFPn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WMs/2FxlTIw/9dJG7er5X7A3XvoPh1LyTNqOuBsBg1VhFmTHCVhXYF74KJoUQz/OZ37WQmUsRn4Fu2+7+x8deIriRYlkgnaX5fxTt6PzVuydkqMY7aw1NKXjnsAzWK5oC/hroOW1yt5Qp7SOZSKt3NMq985pqyOozFRk0el07mo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RoMMpUfn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1FkWFPn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30565C4CEF7;
-	Mon, 23 Mar 2026 16:10:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RoMMpUfn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0F29C4CEF7;
+	Mon, 23 Mar 2026 16:10:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282208;
-	bh=gcr/6Cv6JA0l3lNrn7YLDDBk19DZQ7CdkxqOMQkm+fM=;
+	s=korg; t=1774282211;
+	bh=EOGRllbt3+BVLHoG5Tapza5bIBZqNiKi8p1AwAY0PFU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1FkWFPnKwvHyKkHLSEmmWmKWuYQjCqMKq7Y/cIYiDUxh6kVrsVLULNDbIwkjWqvc
-	 +CaejjOOY0EHFFMe916rahaBdXYhWMeTJt5yMaclNtKalvxZ6hHajRJJKE0sLi90cI
-	 WtgS5E3pjkI6SBezFwfauXSiNHPfsjDeFAoSBB9Y=
+	b=RoMMpUfn02iWo+Qvud7vdCbCbuWQFen9Uw7OVunHC5FhdPX9uE/aHTQ3ap3259w/p
+	 vuLn3xcUaZAILbu+H45Y/GOr10yXDhzurh99aeA93ZacxOEt0uKORRjUkCud/JD7um
+	 osPU+H/xYVpeB9SQylTCoNeX1MWOqGT85+KV0cVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	stable <stable@kernel.org>,
 	Simon Horman <horms@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 071/481] nfc: pn533: properly drop the usb interface reference on disconnect
-Date: Mon, 23 Mar 2026 14:40:53 +0100
-Message-ID: <20260323134526.964889457@linuxfoundation.org>
+Subject: [PATCH 6.1 072/481] net: usb: kaweth: validate USB endpoints
+Date: Mon, 23 Mar 2026 14:40:54 +0100
+Message-ID: <20260323134526.991838834@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,33 +53,52 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 12133a483dfa832241fbbf09321109a0ea8a520e upstream.
+commit 4b063c002ca759d1b299988ee23f564c9609c875 upstream.
 
-When the device is disconnected from the driver, there is a "dangling"
-reference count on the usb interface that was grabbed in the probe
-callback.  Fix this up by properly dropping the reference after we are
-done with it.
+The kaweth driver should validate that the device it is probing has the
+proper number and types of USB endpoints it is expecting before it binds
+to it.  If a malicious device were to not have the same urbs the driver
+will crash later on when it blindly accesses these endpoints.
 
 Cc: stable <stable@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Reviewed-by: Simon Horman <horms@kernel.org>
-Fixes: c46ee38620a2 ("NFC: pn533: add NXP pn533 nfc device driver")
-Link: https://patch.msgid.link/2026022329-flashing-ought-7573@gregkh
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Link: https://patch.msgid.link/2026022305-substance-virtual-c728@gregkh
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nfc/pn533/usb.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/usb/kaweth.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -629,6 +629,7 @@ static void pn533_usb_disconnect(struct
- 	usb_free_urb(phy->out_urb);
- 	usb_free_urb(phy->ack_urb);
- 	kfree(phy->ack_buffer);
-+	usb_put_dev(phy->udev);
+--- a/drivers/net/usb/kaweth.c
++++ b/drivers/net/usb/kaweth.c
+@@ -883,6 +883,13 @@ static int kaweth_probe(
+ 	const eth_addr_t bcast_addr = { 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF };
+ 	int result = 0;
+ 	int rv = -EIO;
++	static const u8 bulk_ep_addr[] = {
++		1 | USB_DIR_IN,
++		2 | USB_DIR_OUT,
++		0};
++	static const u8 int_ep_addr[] = {
++		3 | USB_DIR_IN,
++		0};
  
- 	nfc_info(&interface->dev, "NXP PN533 NFC device disconnected\n");
- }
+ 	dev_dbg(dev,
+ 		"Kawasaki Device Probe (Device number:%d): 0x%4.4x:0x%4.4x:0x%4.4x\n",
+@@ -896,6 +903,12 @@ static int kaweth_probe(
+ 		(int)udev->descriptor.bLength,
+ 		(int)udev->descriptor.bDescriptorType);
+ 
++	if (!usb_check_bulk_endpoints(intf, bulk_ep_addr) ||
++	    !usb_check_int_endpoints(intf, int_ep_addr)) {
++		dev_err(dev, "couldn't find required endpoints\n");
++		return -ENODEV;
++	}
++
+ 	netdev = alloc_etherdev(sizeof(*kaweth));
+ 	if (!netdev)
+ 		return -ENOMEM;
 
 
