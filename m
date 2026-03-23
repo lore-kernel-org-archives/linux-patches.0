@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC5E83BA235;
-	Mon, 23 Mar 2026 14:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBD323BCFD;
+	Mon, 23 Mar 2026 14:00:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274405; cv=none; b=RreR4j8e5P3og2Ek521C1vEy3tIYPuBrtrrDjDGqkDomuIehXO/xTpi3tNBPI0YsEBExz2okxh80QaLHx5egbo9FXBAvYvvPT/1oOf14i8GogrMbmij0B2Qx1MmHAcVglf+tVSHEOrocI5kKL7XBnOrBYDt7Oxv1d4mrbtdj+Vo=
+	t=1774274408; cv=none; b=RLK5j5mg5+c+j3x6J+9Q++7CIfwD3pGB9VYNSc0pOdgc5a7mofCI+zJXoCw8DXLeuovtrphzDiSeNA+h9lj8pF+BB0joOmhQ00R2pPX/nwr6mJNHdQlbiNnz0jrtGPlmP10c6Y7jV0TM+oKiyDk3k9ctStfA0xUIlrwpKDuKO6M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274405; c=relaxed/simple;
-	bh=UB2QMPaWYzT0kzkyfhKdLS3nUGijDQkfZKvz1u+uIS8=;
+	s=arc-20240116; t=1774274408; c=relaxed/simple;
+	bh=VRyb8ZaP21Wos65m34n/rhvQR65bvlaNlx3L2kGZrCM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XAVcbD5LTCgldiIvu2RQGzM2PsS0eLg6gs2qoM6doRYu915hycu6iPWzjd7N/70FHBAtyDNaHXNCLRF+4jzQizdZp+Ok6KNA3XLH5O0HsRxORxQM+e9ShNHVYQxb9uS0sQlzQ5vlYM4cdX/5cggWxs90aqhBBWAugd6xr3vPITI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bHGrFLDO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K+awAIsCwZHaYb2Ro5JW5ICGSh4NQjDfINyTaGibyBBihI4ZZT90BZNEcrK6qO26ZJcSago70Dyd0csxPKdOvT6T9sdIDsb1Q0wO8wt6UWGmZcvpSklYIjgMeQoNLegpLDh9obJToB5cQIUwYHTz0jNIp43M6Qe6k/HINugvQ0E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jmn8brZ8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bHGrFLDO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F376C4CEF7;
-	Mon, 23 Mar 2026 14:00:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jmn8brZ8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4492FC2BC9E;
+	Mon, 23 Mar 2026 14:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274405;
-	bh=UB2QMPaWYzT0kzkyfhKdLS3nUGijDQkfZKvz1u+uIS8=;
+	s=korg; t=1774274408;
+	bh=VRyb8ZaP21Wos65m34n/rhvQR65bvlaNlx3L2kGZrCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHGrFLDOB69AbIWAlm6yK244RYp/AxfkMjVoa0IhlLWf59bNkioL8QWM4gp96XNnI
-	 5OvAusXYLU8kFZaor4K7CRtaF/8Hug1DbhnWWbepe5bHO0sGOV1z4RDat0DdiCUhY3
-	 ZeILr0u8wNvDMjmExTuPcrT+3M1koQluyjFuwiVA=
+	b=Jmn8brZ8c4aLwnUHakkH47xUM26dqQhXheo0MDtpe6oHctsIvGz+BQpW7t18ElW9X
+	 JdpBhrghBporChsH1OIf3qv8vt4n9tVMODyP3vN+SBrxzCCoS4jcUm0dWFa2Y8OLUi
+	 wRmKfjkq8U6GIfY9T+RCB+cTcXiG6HKtCj+sKkhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robin Murphy <robin.murphy@arm.com>,
-	Antheas Kapenekakis <lkml@antheas.dev>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 206/220] iommu: Fix mapping check for 0x0 to avoid re-mapping it
-Date: Mon, 23 Mar 2026 14:46:23 +0100
-Message-ID: <20260323134511.073155680@linuxfoundation.org>
+Subject: [PATCH 6.19 171/220] udp_tunnel: fix NULL deref caused by udp_sock_create6 when CONFIG_IPV6=n
+Date: Mon, 23 Mar 2026 14:45:48 +0100
+Message-ID: <20260323134509.993570597@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -54,72 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Antheas Kapenekakis <lkml@antheas.dev>
+From: Xiang Mei <xmei5@asu.edu>
 
-[ Upstream commit 0a4d00e2e99a39a5698e4b63c394415dcbb39d90 ]
+[ Upstream commit b3a6df291fecf5f8a308953b65ca72b7fc9e015d ]
 
-Commit 789a5913b29c ("iommu/amd: Use the generic iommu page table")
-introduces the shared iommu page table for AMD IOMMU. Some bioses
-contain an identity mapping for address 0x0, which is not parsed
-properly (e.g., certain Strix Halo devices). This causes the DMA
-components of the device to fail to initialize (e.g., the NVMe SSD
-controller), leading to a failed post.
+When CONFIG_IPV6 is disabled, the udp_sock_create6() function returns 0
+(success) without actually creating a socket. Callers such as
+fou_create() then proceed to dereference the uninitialized socket
+pointer, resulting in a NULL pointer dereference.
 
-Specifically, on the GPD Win 5, the NVME and SSD GPU fail to mount,
-making collecting errors difficult. While debugging, it was found that
-a -EADDRINUSE error was emitted and its source was traced to
-iommu_iova_to_phys(). After adding some debug prints, it was found that
-phys_addr becomes 0, which causes the code to try to re-map the 0
-address and fail, causing a cascade leading to a failed post. This is
-because the GPD Win 5 contains a 0x0-0x1 identity mapping for DMA
-devices, causing it to be repeated for each device.
+The captured NULL deref crash:
+  BUG: kernel NULL pointer dereference, address: 0000000000000018
+  RIP: 0010:fou_nl_add_doit (net/ipv4/fou_core.c:590 net/ipv4/fou_core.c:764)
+  [...]
+  Call Trace:
+    <TASK>
+    genl_family_rcv_msg_doit.constprop.0 (net/netlink/genetlink.c:1114)
+    genl_rcv_msg (net/netlink/genetlink.c:1194 net/netlink/genetlink.c:1209)
+    [...]
+    netlink_rcv_skb (net/netlink/af_netlink.c:2550)
+    genl_rcv (net/netlink/genetlink.c:1219)
+    netlink_unicast (net/netlink/af_netlink.c:1319 net/netlink/af_netlink.c:1344)
+    netlink_sendmsg (net/netlink/af_netlink.c:1894)
+    __sock_sendmsg (net/socket.c:727 (discriminator 1) net/socket.c:742 (discriminator 1))
+    __sys_sendto (./include/linux/file.h:62 (discriminator 1) ./include/linux/file.h:83 (discriminator 1) net/socket.c:2183 (discriminator 1))
+    __x64_sys_sendto (net/socket.c:2213 (discriminator 1) net/socket.c:2209 (discriminator 1) net/socket.c:2209 (discriminator 1))
+    do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
+    entry_SYSCALL_64_after_hwframe (net/arch/x86/entry/entry_64.S:130)
 
-The cause of this failure is the following check in
-iommu_create_device_direct_mappings(), where address aliasing is handled
-via the following check:
+This patch makes udp_sock_create6 return -EPFNOSUPPORT instead, so
+callers correctly take their error paths. There is only one caller of
+the vulnerable function and only privileged users can trigger it.
 
-```
-phys_addr = iommu_iova_to_phys(domain, addr);
-if (!phys_addr) {
-        map_size += pg_size;
-        continue;
-}
-````
-
-Obviously, the iommu_iova_to_phys() signature is faulty and aliases
-unmapped and 0 together, causing the allocation code to try to
-re-allocate the 0 address per device. However, it has too many
-instantiations to fix. Therefore, use a ternary so that when addr
-is 0, the check is done for address 1 instead.
-
-Suggested-by: Robin Murphy <robin.murphy@arm.com>
-Fixes: 789a5913b29c ("iommu/amd: Use the generic iommu page table")
-Signed-off-by: Antheas Kapenekakis <lkml@antheas.dev>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: fd384412e199b ("udp_tunnel: Seperate ipv6 functions into its own file.")
+Reported-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Xiang Mei <xmei5@asu.edu>
+Link: https://patch.msgid.link/20260317010241.1893893-1-xmei5@asu.edu
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/iommu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/net/udp_tunnel.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/iommu.c b/drivers/iommu/iommu.c
-index 2ca990dfbb884..3a0c0e4b42fff 100644
---- a/drivers/iommu/iommu.c
-+++ b/drivers/iommu/iommu.c
-@@ -1207,7 +1207,11 @@ static int iommu_create_device_direct_mappings(struct iommu_domain *domain,
- 			if (addr == end)
- 				goto map_end;
+diff --git a/include/net/udp_tunnel.h b/include/net/udp_tunnel.h
+index 9acef2fbd2fdc..d97ee26ba4f66 100644
+--- a/include/net/udp_tunnel.h
++++ b/include/net/udp_tunnel.h
+@@ -47,7 +47,7 @@ int udp_sock_create6(struct net *net, struct udp_port_cfg *cfg,
+ static inline int udp_sock_create6(struct net *net, struct udp_port_cfg *cfg,
+ 				   struct socket **sockp)
+ {
+-	return 0;
++	return -EPFNOSUPPORT;
+ }
+ #endif
  
--			phys_addr = iommu_iova_to_phys(domain, addr);
-+			/*
-+			 * Return address by iommu_iova_to_phys for 0 is
-+			 * ambiguous. Offset to address 1 if addr is 0.
-+			 */
-+			phys_addr = iommu_iova_to_phys(domain, addr ? addr : 1);
- 			if (!phys_addr) {
- 				map_size += pg_size;
- 				continue;
 -- 
 2.51.0
 
