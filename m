@@ -1,123 +1,287 @@
-Received: from mail-dy1-f179.google.com (mail-dy1-f179.google.com [74.125.82.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E13136E478
-	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 13:06:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.179
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774271189; cv=pass; b=D50vUAvSQgaow2nWdNkUHDjE8iNHXCPcGgidpiBMfuXKm8cYEdgsP1sswRWfSheo2lpRzqNAV88Ux7MxyzRIiM297Q3XluwjI0ckJtZne6wqzV1VuiYQ+ym1O6LvjtfujIyRDKABwRXvcNdOgB4INEJC5eAQ/4lV5DL0f2O5aQE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774271189; c=relaxed/simple;
-	bh=mpomDLO8ZlCocmuPtdKICwxv4H57ynvhw4z1RG2BH9k=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=El9A/y9/MDfD8beu5tsgtoAhN5FfD42XKYSdZoO3ZNZ2xx2b2yl1lleR/d67bvSFSMpnxkd0ppla+/HuqWmKl38O2gx8yXuzDuGGU5qouUTdSjpIuxw+OiG01CsZixxFk5UWGFyh5POXD30fFHU3PcLS81MvYCWWhA3C3gOt09s=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kuSIAhck; arc=pass smtp.client-ip=74.125.82.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 826AD3AD537;
+	Mon, 23 Mar 2026 13:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774273787; cv=none; b=I0qACz7GF7qJ4BxQT8LHFv+jsrpwM2HalBhoFtOCs9e+FLvUnsba1vrZIZgiwJSNwXFKOHO5MhmYQUHlFolHeqO6Ei7h0pVsVzIevj6ldiRGR7iE7N5JZnzUxi/4NzOifQzXOKmRkGQld65GXmi2EIuVyploSeOXEmIORnsuGxk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774273787; c=relaxed/simple;
+	bh=irShMOAV9VnPY7fND3Hk/JucwvoflEpupEJPPhP/Vlc=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=qYNvlix+OsRgp48sTd+lpwiZY7Af4tUlG+qwXrZ/Bd5kQ5UTj16JVaCIxAleOe16ew0/+wU+HBEaHsCrGsT+IVOG6FpDyns3LJRd7pqWIVlSo+64HICrXJTqmRY6Jh0XqqKDEZEybGiNziP8L/pj1IK5ZuXcgJezHDYPoOaa8bk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j9cwkRQ5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kuSIAhck"
-Received: by mail-dy1-f179.google.com with SMTP id 5a478bee46e88-2c0b6f22aa4so238214eec.3
-        for <patches@lists.linux.dev>; Mon, 23 Mar 2026 06:06:28 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774271187; cv=none;
-        d=google.com; s=arc-20240605;
-        b=N81/t9bcgSznUnkFHFIsaTz1W/ESIx1/2DorbDx02EGjtrB7LKU8rwFoL4py4Gj/5h
-         6/h9WDZ1mzBk7QlZ/qXfLk9UH8st49VvXBPQ3/ZAP0T09gJ5eQjX51A51VkDxpApITis
-         3nDQSo9x5C6oZ7xZoOsN3SguAopepv+Ee/CFsMpBTzuYFJrV7kbnNvFnJiqvRzdmQN4r
-         fW4bNpHB52t219PdTpualQ8yyjEZPv0O5iP8T2v1M9t+43mBVv310ZFKVa8MYKrTeRIx
-         07Y0TZO393lYqIif18qSU7OVzpFxhWoQFIBL31mmDogqqiB4gocjD1/JySyUi6l8p3sZ
-         YP/A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=ZeosOC78tfRPtRL6p+oZtOws2T4Y/1DZR2wWiWY/WhY=;
-        fh=TkHOr+TK/rAEjMeJn/Ex7Y6Cf7y7P1bgz3bFLEkoXys=;
-        b=HZMe1M3KOcDgHJDFcBwUiHkow+7IZhXZS/0Ozit6+oIF4b2dfDyqlL4X6F49Mw0c4o
-         dg+Gx2zdBhq5dqIGODycgXRapmf21JWPaRoTPKb8wH/kVeU3a4WbhoipgWEQcjSppMkt
-         C0PSvlFODxGykX+RABPnAAtqwWFflu1KypOtsf8HMIDqEL2U2sBQIeF3MvrmnK+Dju+K
-         dqRoQ49Vh7rvVIRRx50MSiG1cauzUwXLTo8d4Gpx+a+ArksxsLXEEK0VrLnnpSl5Xcyi
-         z1hBBgoRCRI1JOjDdcTDJkzYvZVbK/pe14xoxURer7IFtBpMC6nkv4COMI6mYvsPWtHz
-         zT3w==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1774271187; x=1774875987; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZeosOC78tfRPtRL6p+oZtOws2T4Y/1DZR2wWiWY/WhY=;
-        b=kuSIAhckaeaKYiiaSQHGGdQiBIjCzMoc4vClkUtfwWsuojkT12tHkzs/N4en5Wn9UQ
-         yWi+KMmnMhh4kcEqvLF4yBJIl21qOYDziv+hSHLm/b1WCNYJ2Mp2Fs705GUKZdKkcqPd
-         hnsHfE6eD4NweRa7YDGUJBFxaE3XUPn7o/kmu3YY54V/I8g7yCUyVbL38t8OIiUWCx7L
-         qxuJ7Oto0qUAhklOeFqljt6zrN40bua5Sw9O3w5mB8bXYx6vbDErP5++x4x4Z9ApQAbZ
-         G7mj20wGkeXd/fGTJis01GAlympMy1f61ofHiiU5eFjo2+cvVviG95XZjRhQhRLISkBy
-         afzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774271187; x=1774875987;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=ZeosOC78tfRPtRL6p+oZtOws2T4Y/1DZR2wWiWY/WhY=;
-        b=iykBiJMT4rhfgmTrA2RHtEKCTcutn7h68wai7kWx5/0uTBqGeNYPQzRJi/p9wP3vKY
-         Dz7cWeFanjr0yPIDLfEFdKStQsOEjDwf5K8CIZaI8OzsfWX+f9Xaftxc78/nW/R1VgML
-         ArqV0y7mPwG/AV3oAkjPZOdq1kdhJptErGBP4HJ9H2PSFDN3IjRswGJv4By4VDWuzgw2
-         UWNBHYFSI5segRDKHqXheQGX1NL2a6a+HNlcSRZW/XQDJSxnQmQJC0FBUGNonNv7cTpb
-         5A5BH0xXpv5jYwPiEEPp+xAN4MApaTXruLC4tooTeLlj3shLUEb3qfFLjzZFxuYkqGVe
-         TZ4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWuBkM5I+1x9NYU4lK4W0dzEyO8vfBO+//l60HMmDi6AGhEBVD+Npwxy0ByQY8IVW0amOyLRKqB@lists.linux.dev
-X-Gm-Message-State: AOJu0YycjuAlmqfSgbt7D28VRGfbnJUwIziL+OCNi3QT+LqRO1vz62hb
-	qiIlxjdm0a1FqMv7xxU4iw5qDZgx9uBZv6lRUFVhywbAFdtVgCm8sWyDnEEgh8tIcZxj2vyc0OF
-	M341ZZYyfgq5Jrrl7PzIpdncrMkc6jIE=
-X-Gm-Gg: ATEYQzzK2h3rZaqIYyMqqJ1OUJAdVM4nNZK+eNVNb/bfsY6WrE8AQVa5RXFbWU1syfA
-	H0BKU2roHFdvwRurwHvjPPhXy1CTQ7sOmBj6NgaMjQ2QZX9F+GoGyJL+3Vcd2m7uEb3nuVW2nMa
-	+/iNjsfvVZi7NVOIjmylbbtgN+v1e7i6gN6MBjUrly6ke4kb2u0eG1hfiLgv7/ySAjfNHr0+yqm
-	n+NbMbBydYaiIXvkprFhGLRczcUaw51NxlwKhZ0g/4F+C1LrGL+PzLmTUshJimDQIb2faAo2tLv
-	wz318N7CAhGtzJQrQBmfSB40AA7GAE+qvv61MWeb6AxDZyypTNK01uGbNIwUxjA0kBtaF61X1MJ
-	jN//yIuFF63pB2G90t8WsJ+0=
-X-Received: by 2002:a05:7301:4085:b0:2be:1f56:ed0d with SMTP id
- 5a478bee46e88-2c109861f4cmr2413702eec.6.1774271187398; Mon, 23 Mar 2026
- 06:06:27 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j9cwkRQ5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC13EC2BCB4;
+	Mon, 23 Mar 2026 13:49:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774273787;
+	bh=irShMOAV9VnPY7fND3Hk/JucwvoflEpupEJPPhP/Vlc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=j9cwkRQ5hzrojc5rhqRz2Eyx0X7+kQSqXL5YOF3C+HBhmgqvCuTvxJboeJGxES8Hu
+	 TuFgHhaBGYCD8+SSidqaHlili6gvd6ercb/Roep8PpdRIDKHbk3Kw/D+2xrO7xNt0A
+	 xzQZZgCG4VvIXJX5MG8IjFah8bIHUFDrS0kjPsws=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Misbah Anjum N <misanjum@linux.ibm.com>,
+	NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 6.19 001/220] NFSD: Defer sub-object cleanup in export put callbacks
+Date: Mon, 23 Mar 2026 14:42:58 +0100
+Message-ID: <20260323134504.626601703@linuxfoundation.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
+References: <20260323134504.575022936@linuxfoundation.org>
+User-Agent: quilt/0.69
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20241119185747.862544-1-ojeda@kernel.org> <CANiq72n4Fw96hcuqQeorsfH7z4Tb+R1gdf80H_XkD-oA6z5TSA@mail.gmail.com>
- <CANiq72mNJrMMbEcfJMLT4kM-_iviM0AR6oeigCyrb5eMWkn3KQ@mail.gmail.com>
-In-Reply-To: <CANiq72mNJrMMbEcfJMLT4kM-_iviM0AR6oeigCyrb5eMWkn3KQ@mail.gmail.com>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 23 Mar 2026 14:06:14 +0100
-X-Gm-Features: AQROBzDGgsUaXadH-7vInj5g5TFUGkgbxokPDq2lRRDY18_WJ88m9e2GeTeDbRg
-Message-ID: <CANiq72nvR70EOud=4drW6gs=FAndv5o7+8n5NNRkAStTaSJWPg@mail.gmail.com>
-Subject: Re: [RFC PATCH] rust: allow Clang-native `RANDSTRUCT` configs
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Alex Gaynor <alex.gaynor@gmail.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Benno Lossin <benno.lossin@proton.me>, Andreas Hindborg <a.hindborg@kernel.org>, 
-	Alice Ryhl <aliceryhl@google.com>, Trevor Gross <tmgross@umich.edu>, rust-for-linux@vger.kernel.org, 
-	Nick Desaulniers <ndesaulniers@google.com>, Bill Wendling <morbo@google.com>, 
-	Justin Stitt <justinstitt@google.com>, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Aaron Ballman <aaron@aaronballman.com>, 
-	Bill Wendling <isanbard@gmail.com>, Cole Nixon <nixontcole@gmail.com>, 
-	Connor Kuehl <cipkuehl@gmail.com>, Fangrui Song <i@maskray.me>, James Foster <jafosterja@gmail.com>, 
-	Jeff Takahashi <jeffrey.takahashi@gmail.com>, Jordan Cantrell <jordan.cantrell@mail.com>, 
-	Matthew Maurer <mmaurer@google.com>, Nikk Forbus <nicholas.forbus@gmail.com>, 
-	Qing Zhao <qing.zhao@oracle.com>, Sami Tolvanen <samitolvanen@google.com>, 
-	Tim Pugh <nwtpugh@gmail.com>, Kees Cook <kees@kernel.org>, Nicolas Schier <n.schier@avm.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
-On Tue, Apr 29, 2025 at 3:19=E2=80=AFPM Miguel Ojeda
-<miguel.ojeda.sandonis@gmail.com> wrote:
->
-> On top of that, backlinking the seed discussion since I will need to
-> update this patch:
->
->     https://lore.kernel.org/rust-for-linux/CANiq72mwYbg_L8u9NEfRD0Fp9E_zh=
-Ci=3Dt=3DU2jyjsZe_Ls306hw@mail.gmail.com/
+6.19-stable review patch.  If anyone has any objections, please let me know.
 
-I don't think that got merged, so I didn't update it for v2.
+------------------
 
-Cheers,
-Miguel
+From: Chuck Lever <chuck.lever@oracle.com>
+
+commit 48db892356d6cb80f6942885545de4a6dd8d2a29 upstream.
+
+svc_export_put() calls path_put() and auth_domain_put() immediately
+when the last reference drops, before the RCU grace period. RCU
+readers in e_show() and c_show() access both ex_path (via
+seq_path/d_path) and ex_client->name (via seq_escape) without
+holding a reference. If cache_clean removes the entry and drops the
+last reference concurrently, the sub-objects are freed while still
+in use, producing a NULL pointer dereference in d_path.
+
+Commit 2530766492ec ("nfsd: fix UAF when access ex_uuid or
+ex_stats") moved kfree of ex_uuid and ex_stats into the
+call_rcu callback, but left path_put() and auth_domain_put() running
+before the grace period because both may sleep and call_rcu
+callbacks execute in softirq context.
+
+Replace call_rcu/kfree_rcu with queue_rcu_work(), which defers the
+callback until after the RCU grace period and executes it in process
+context where sleeping is permitted. This allows path_put() and
+auth_domain_put() to be moved into the deferred callback alongside
+the other resource releases. Apply the same fix to expkey_put(),
+which has the identical pattern with ek_path and ek_client.
+
+A dedicated workqueue scopes the shutdown drain to only NFSD
+export release work items; flushing the shared
+system_unbound_wq would stall on unrelated work from other
+subsystems. nfsd_export_shutdown() uses rcu_barrier() followed
+by flush_workqueue() to ensure all deferred release callbacks
+complete before the export caches are destroyed.
+
+Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
+Fixes: c224edca7af0 ("nfsd: no need get cache ref when protected by rcu")
+Fixes: 1b10f0b603c0 ("SUNRPC: no need get cache ref when protected by rcu")
+Cc: stable@vger.kernel.org
+Reviwed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ fs/nfsd/export.c |   63 +++++++++++++++++++++++++++++++++++++++++++++++--------
+ fs/nfsd/export.h |    7 ++++--
+ fs/nfsd/nfsctl.c |    8 ++++++
+ 3 files changed, 66 insertions(+), 12 deletions(-)
+
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -36,19 +36,30 @@
+  * second map contains a reference to the entry in the first map.
+  */
+ 
++static struct workqueue_struct *nfsd_export_wq;
++
+ #define	EXPKEY_HASHBITS		8
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+ 
+-static void expkey_put(struct kref *ref)
++static void expkey_release(struct work_struct *work)
+ {
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++	struct svc_expkey *key = container_of(to_rcu_work(work),
++					      struct svc_expkey, ek_rwork);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree_rcu(key, ek_rcu);
++	kfree(key);
++}
++
++static void expkey_put(struct kref *ref)
++{
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++
++	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
++	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
+ }
+ 
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -353,11 +364,13 @@ static void export_stats_destroy(struct
+ 					    EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_release(struct rcu_head *rcu_head)
++static void svc_export_release(struct work_struct *work)
+ {
+-	struct svc_export *exp = container_of(rcu_head, struct svc_export,
+-			ex_rcu);
++	struct svc_export *exp = container_of(to_rcu_work(work),
++					      struct svc_export, ex_rwork);
+ 
++	path_put(&exp->ex_path);
++	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+@@ -369,9 +382,8 @@ static void svc_export_put(struct kref *
+ {
+ 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 
+-	path_put(&exp->ex_path);
+-	auth_domain_put(exp->ex_client);
+-	call_rcu(&exp->ex_rcu, svc_export_release);
++	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
++	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
+ }
+ 
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -1480,6 +1492,36 @@ const struct seq_operations nfs_exports_
+ 	.show	= e_show,
+ };
+ 
++/**
++ * nfsd_export_wq_init - allocate the export release workqueue
++ *
++ * Called once at module load. The workqueue runs deferred svc_export and
++ * svc_expkey release work scheduled by queue_rcu_work() in the cache put
++ * callbacks.
++ *
++ * Return values:
++ *   %0: workqueue allocated
++ *   %-ENOMEM: allocation failed
++ */
++int nfsd_export_wq_init(void)
++{
++	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
++	if (!nfsd_export_wq)
++		return -ENOMEM;
++	return 0;
++}
++
++/**
++ * nfsd_export_wq_shutdown - drain and free the export release workqueue
++ *
++ * Called once at module unload. Per-namespace teardown in
++ * nfsd_export_shutdown() has already drained all deferred work.
++ */
++void nfsd_export_wq_shutdown(void)
++{
++	destroy_workqueue(nfsd_export_wq);
++}
++
+ /*
+  * Initialize the exports module.
+  */
+@@ -1541,6 +1583,9 @@ nfsd_export_shutdown(struct net *net)
+ 
+ 	cache_unregister_net(nn->svc_expkey_cache, net);
+ 	cache_unregister_net(nn->svc_export_cache, net);
++	/* Drain deferred export and expkey release work. */
++	rcu_barrier();
++	flush_workqueue(nfsd_export_wq);
+ 	cache_destroy_net(nn->svc_expkey_cache, net);
+ 	cache_destroy_net(nn->svc_export_cache, net);
+ 	svcauth_unix_purge(net);
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -7,6 +7,7 @@
+ 
+ #include <linux/sunrpc/cache.h>
+ #include <linux/percpu_counter.h>
++#include <linux/workqueue.h>
+ #include <uapi/linux/nfsd/export.h>
+ #include <linux/nfs4.h>
+ 
+@@ -75,7 +76,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_head		ex_rcu;
++	struct rcu_work		ex_rwork;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -92,7 +93,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_head		ek_rcu;
++	struct rcu_work		ek_rwork;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+@@ -110,6 +111,8 @@ __be32 check_nfsd_access(struct svc_expo
+ /*
+  * Function declarations
+  */
++int			nfsd_export_wq_init(void);
++void			nfsd_export_wq_shutdown(void);
+ int			nfsd_export_init(struct net *);
+ void			nfsd_export_shutdown(struct net *);
+ void			nfsd_export_flush(struct net *);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2252,9 +2252,12 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
++	retval = nfsd_export_wq_init();
++	if (retval)
++		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_lockd;
++		goto out_free_export_wq;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -2283,6 +2286,8 @@ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
++out_free_export_wq:
++	nfsd_export_wq_shutdown();
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -2303,6 +2308,7 @@ static void __exit exit_nfsd(void)
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
++	nfsd_export_wq_shutdown();
+ 	nfsd_drc_slab_free();
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
+
+
