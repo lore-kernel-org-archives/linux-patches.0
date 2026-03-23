@@ -1,44 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 918163B9D9F;
-	Mon, 23 Mar 2026 16:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 150313BD22C;
+	Mon, 23 Mar 2026 16:23:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283012; cv=none; b=gkHyYl12QEbVTY4oFuIrsw02DHiMuUG044saz8Z6k+re/XG8K8awPcc7OVYRAIgUXCioQJGjdqUVsgCCoqyJ3PX/KTXjKRRuxVS+Ul2lhEBCoAm7C6SnKf+z2kITmjRN/FQBpayvsAtkstJkH3nVzrYIOGBdrH2i4IwIwJ8+wS8=
+	t=1774283015; cv=none; b=Xczi1I1eYBcJHciWV8jgtil+rR2mz1LnAK7pQ65Qgf3qL9tcXPtS7rTI5LAA7V1ecCcy6bian5PWFxun2it/XW9GNaZ++19xOdcHEq9YCkaJ7W0A7Xzs0Ymox7gNVxQTu7sOQmMRFsRmPymc/IOE+wpk3AbU2DpT2fQdY7hONmQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283012; c=relaxed/simple;
-	bh=dj1nqE7VtOQRN6Y36qNz//lOSqaSBO+gDjtf4Q/8kvA=;
+	s=arc-20240116; t=1774283015; c=relaxed/simple;
+	bh=wEpuMUUOl99fLDVezwdw4sZIDYCe5OcSc5BJdyk5lG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WXTUZFJdOvLHZXc+q+ILKLrDgzO+BA0YaF98LEwcXsafYNQiYoQhZq3oZjyjwUO1jvofetIRcRh5KsQm+d/rpZrZGc410ypU/CDl8htQSJTbOpPfBwybs7VXe5Ti/YdYNQh9DTpf8Oym4hGLhyqXg//QxKYf+Q0wPIcCX76oqig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H2ptk7rk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfu5GcEfpKCSq2QXMC6DbtPTTaee/4O78ezzKIm/VDf/iebFp24BDZY7dXIYa65Xd/ZAuJGbYzMp3GYOkgTuHmVMDWIB5DiqHXD8vvWKZjQ54vEqsiLxngs/TbNVcoazDmM0t9DTgDQLlQyyNrKjk433CwSFVj3xjYYvFECnA0s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SqUc0QB9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H2ptk7rk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC79C2BC9E;
-	Mon, 23 Mar 2026 16:23:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SqUc0QB9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC54C2BC9E;
+	Mon, 23 Mar 2026 16:23:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283012;
-	bh=dj1nqE7VtOQRN6Y36qNz//lOSqaSBO+gDjtf4Q/8kvA=;
+	s=korg; t=1774283015;
+	bh=wEpuMUUOl99fLDVezwdw4sZIDYCe5OcSc5BJdyk5lG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2ptk7rkBqCyC6bEqFq3ICBI8fWEGMmy9q06LWUCdnJOP8ez99D8dASZ6nrXIzInJ
-	 F7iJ6YOSsrBq3e1dLM7/wUe5jLdvA7PDsT7z3JcGLxIgRkuSd1qKxFPUcyTD/S/WOS
-	 SWl1Y68LiGf/ZXJLzrIoH0WLARP2Xxgce3zopthk=
+	b=SqUc0QB9fksskRoRRiuNhUVrU/h3VNLNvuq84XxA4FDG+6VhZaJOaOqDVQ3+Uw/bh
+	 eIvHJuFUaModOhG7xUPkv4/M0aZqYrMeLVl0ZsPYR69CeizNrZerJleUS3A/kNSWUm
+	 p3aYkS/Kj3LrbapmLyLYlMTIlPMgFOFS0onKgVGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Schmidt <mschmidt@redhat.com>,
-	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.1 367/481] ice: reintroduce retry mechanism for indirect AQ
-Date: Mon, 23 Mar 2026 14:45:49 +0100
-Message-ID: <20260323134534.063224661@linuxfoundation.org>
+	Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 368/481] iio: imu: inv_icm42600: fix odr switch when turning buffer off
+Date: Mon, 23 Mar 2026 14:45:50 +0100
+Message-ID: <20260323134534.091426642@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -57,75 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+From: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 
-[ Upstream commit 326256c0a72d4877cec1d4df85357da106233128 ]
+[ Upstream commit ffd32db8263d2d785a2c419486a450dc80693235 ]
 
-Add retry mechanism for indirect Admin Queue (AQ) commands. To do so we
-need to keep the command buffer.
+ODR switch is done in 2 steps when FIFO is on : change the ODR register
+value and acknowledge change when reading the FIFO ODR change flag.
+When we are switching odr and turning buffer off just afterward, we are
+losing the FIFO ODR change flag and ODR switch is blocked.
 
-This technically reverts commit 43a630e37e25
-("ice: remove unused buffer copy code in ice_sq_send_cmd_retry()"),
-but combines it with a fix in the logic by using a kmemdup() call,
-making it more robust and less likely to break in the future due to
-programmer error.
+Fix the issue by force applying any waiting ODR change when turning
+buffer off.
 
-Cc: Michal Schmidt <mschmidt@redhat.com>
+Fixes: ec74ae9fd37c ("iio: imu: inv_icm42600: add accurate timestamping")
+Signed-off-by: Jean-Baptiste Maneyrol <jean-baptiste.maneyrol@tdk.com>
 Cc: stable@vger.kernel.org
-Fixes: 3056df93f7a8 ("ice: Re-send some AQ commands, as result of EBUSY AQ error")
-Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
-Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1596,6 +1596,7 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+--- a/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
++++ b/drivers/iio/imu/inv_icm42600/inv_icm42600_buffer.c
+@@ -377,6 +377,7 @@ out_unlock:
+ static int inv_icm42600_buffer_postdisable(struct iio_dev *indio_dev)
  {
- 	struct ice_aq_desc desc_cpy;
- 	bool is_cmd_for_retry;
-+	u8 *buf_cpy = NULL;
- 	u8 idx = 0;
- 	u16 opcode;
- 	int status;
-@@ -1605,8 +1606,11 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
- 	memset(&desc_cpy, 0, sizeof(desc_cpy));
+ 	struct inv_icm42600_state *st = iio_device_get_drvdata(indio_dev);
++	struct inv_icm42600_timestamp *ts = iio_priv(indio_dev);
+ 	struct device *dev = regmap_get_device(st->map);
+ 	unsigned int sensor;
+ 	unsigned int *watermark;
+@@ -398,6 +399,8 @@ static int inv_icm42600_buffer_postdisab
  
- 	if (is_cmd_for_retry) {
--		/* All retryable cmds are direct, without buf. */
--		WARN_ON(buf);
-+		if (buf) {
-+			buf_cpy = kmemdup(buf, buf_size, GFP_KERNEL);
-+			if (!buf_cpy)
-+				return -ENOMEM;
-+		}
+ 	mutex_lock(&st->lock);
  
- 		memcpy(&desc_cpy, desc, sizeof(desc_cpy));
- 	}
-@@ -1618,12 +1622,14 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
- 		    hw->adminq.sq_last_status != ICE_AQ_RC_EBUSY)
- 			break;
- 
-+		if (buf_cpy)
-+			memcpy(buf, buf_cpy, buf_size);
- 		memcpy(desc, &desc_cpy, sizeof(desc_cpy));
--
- 		msleep(ICE_SQ_SEND_DELAY_TIME_MS);
- 
- 	} while (++idx < ICE_SQ_SEND_MAX_EXECUTE);
- 
-+	kfree(buf_cpy);
- 	return status;
- }
- 
++	inv_icm42600_timestamp_apply_odr(ts, 0, 0, 0);
++
+ 	ret = inv_icm42600_buffer_set_fifo_en(st, st->fifo.en & ~sensor);
+ 	if (ret)
+ 		goto out_unlock;
 
 
