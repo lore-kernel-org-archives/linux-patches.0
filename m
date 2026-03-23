@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FEA0399352;
-	Mon, 23 Mar 2026 14:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA886399352;
+	Mon, 23 Mar 2026 14:44:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277082; cv=none; b=AYXUbOEeFmC+UgoyCm3muqqmalgsKCh+ySXTjq745DXmi1X5Ja76PzPders+ToA62v431fVQO+Y7ogWdGnGd8ZmJvYTElzmWZ0h7L7tm4EgLjiUPhaUvohWjhmBLA1WNDyrw5uP205WCiSmWuvSaaSZYVV3ae2VfbzJwhRIljmc=
+	t=1774277084; cv=none; b=gkhyT5RZmnCsD9Q4kQln5oVqSQEDi8+u/OE0mYvc0HcZt8jXIkdm463Z+Bq79rNpkEWKJ9ljG58PN0Nuu4oW9BXPgx2VshyaduKozDDKQF+JydvvxkA556LPVlWe6nCIFAyi4vWmzP1pwgTqlymI20TxEYlclyeWF/3naZj2NAA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277082; c=relaxed/simple;
-	bh=2f9MO6xDgkBt2C/6+SUeFzFkrXut/ii9C8PBK5dVlsk=;
+	s=arc-20240116; t=1774277084; c=relaxed/simple;
+	bh=Qv4DeCJtXxJ7UPTj2b2y8AiAusX35w36mgpdRRLPcFA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jm/atG9blxNKLmHk0sbnvZlLRy/lFvES3PQRGPB/yqNaN7th/pFh1XlddGyyK9t4apqHPPDoLcCH8QhmaboWfBFp0ZbNgSXBcMLD/GC8ljNeSiQCvsUSKohEKUUzNDwv6769z7iFVBXIOdUlrk3phOOvKXprRp2ZPVWXaV1UfYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OKKdWiRs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lPyaXbDKTfuncGTtDqwA2zeEe1x0lCxHc/zSeHk8dKPWr2RNDlBLciAgJIFlBWL/RSL5r9EOPfZgG11GMsxAuQ3pykdmzKRqbTfPmO3t7WGOh7S5+3LI6nUGh2IliYmkr0pyj99YGmvFrmV7S3JBAFWQ5Dz4qDZtC8WJYM2XQqY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NqrHGI2r; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OKKdWiRs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0C0C4CEF7;
-	Mon, 23 Mar 2026 14:44:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NqrHGI2r"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B423C4CEF7;
+	Mon, 23 Mar 2026 14:44:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277082;
-	bh=2f9MO6xDgkBt2C/6+SUeFzFkrXut/ii9C8PBK5dVlsk=;
+	s=korg; t=1774277084;
+	bh=Qv4DeCJtXxJ7UPTj2b2y8AiAusX35w36mgpdRRLPcFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OKKdWiRsyn3MJEXnXINuQFW0Alc2K3aDkR67IrHhs1KgDKSUTjF5seXF3r4jhGBn1
-	 7PiU7c6O3KDcHBdDJhZSjd5eYpMTNdEGYUxLZWijo64s+7t497pmaESx+soxQkFsif
-	 xzCsWgJomk7kjcEfOSvHWStzIm8lnqmbCiMsN1po=
+	b=NqrHGI2rF1TTDJI8ouPYvFWbc5+VQsEqski1Mze4quXM7Ltd7kXoY5f+oV8F71iDv
+	 oBx4PHMkRsGrgpuL7AcpaxjXyt67jUdjtIEqIyuDWBLJmnbDqn5VglSldFaOtlj9Kc
+	 UFqSEVqDeucO5BqpN1mT98WOKxHIOt494LC173D0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	"stable@vger.kernel.org, Chao Yu" <chao@kernel.org>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.12 314/460] net: macb: fix use-after-free access to PTP clock
-Date: Mon, 23 Mar 2026 14:45:10 +0100
-Message-ID: <20260323134534.216685800@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Robert Garcia <rob_garcia@163.com>
+Subject: [PATCH 6.12 288/460] f2fs: fix to avoid migrating empty section
+Date: Mon, 23 Mar 2026 14:44:44 +0100
+Message-ID: <20260323134533.556944901@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,128 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Chao Yu <chao@kernel.org>
 
-commit 8da13e6d63c1a97f7302d342c89c4a56a55c7015 upstream.
+[ Upstream commit d625a2b08c089397d3a03bff13fa8645e4ec7a01 ]
 
-PTP clock is registered on every opening of the interface and destroyed on
-every closing.  However it may be accessed via get_ts_info ethtool call
-which is possible while the interface is just present in the kernel.
+It reports a bug from device w/ zufs:
 
-BUG: KASAN: use-after-free in ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
-Read of size 4 at addr ffff8880194345cc by task syz.0.6/948
+F2FS-fs (dm-64): Inconsistent segment (173822) type [1, 0] in SSA and SIT
+F2FS-fs (dm-64): Stopped filesystem due to reason: 4
 
-CPU: 1 PID: 948 Comm: syz.0.6 Not tainted 6.1.164+ #109
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:316 [inline]
- print_report+0x17f/0x496 mm/kasan/report.c:420
- kasan_report+0xd9/0x180 mm/kasan/report.c:524
- ptp_clock_index+0x47/0x50 drivers/ptp/ptp_clock.c:426
- gem_get_ts_info+0x138/0x1e0 drivers/net/ethernet/cadence/macb_main.c:3349
- macb_get_ts_info+0x68/0xb0 drivers/net/ethernet/cadence/macb_main.c:3371
- __ethtool_get_ts_info+0x17c/0x260 net/ethtool/common.c:558
- ethtool_get_ts_info net/ethtool/ioctl.c:2367 [inline]
- __dev_ethtool net/ethtool/ioctl.c:3017 [inline]
- dev_ethtool+0x2b05/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
- </TASK>
+Thread A				Thread B
+- f2fs_expand_inode_data
+ - f2fs_allocate_pinning_section
+  - f2fs_gc_range
+   - do_garbage_collect w/ segno #x
+					- writepage
+					 - f2fs_allocate_data_block
+					  - new_curseg
+					   - allocate segno #x
 
-Allocated by task 457:
- kmalloc include/linux/slab.h:563 [inline]
- kzalloc include/linux/slab.h:699 [inline]
- ptp_clock_register+0x144/0x10e0 drivers/ptp/ptp_clock.c:235
- gem_ptp_init+0x46f/0x930 drivers/net/ethernet/cadence/macb_ptp.c:375
- macb_open+0x901/0xd10 drivers/net/ethernet/cadence/macb_main.c:2920
- __dev_open+0x2ce/0x500 net/core/dev.c:1501
- __dev_change_flags+0x56a/0x740 net/core/dev.c:8651
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- do_setlink+0xaf8/0x3a80 net/core/rtnetlink.c:2833
- __rtnl_newlink+0xbf4/0x1940 net/core/rtnetlink.c:3608
- rtnl_newlink+0x63/0xa0 net/core/rtnetlink.c:3655
- rtnetlink_rcv_msg+0x3c6/0xed0 net/core/rtnetlink.c:6150
- netlink_rcv_skb+0x15d/0x430 net/netlink/af_netlink.c:2511
- netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
- netlink_unicast+0x6d7/0xa30 net/netlink/af_netlink.c:1344
- netlink_sendmsg+0x97e/0xeb0 net/netlink/af_netlink.c:1872
- sock_sendmsg_nosec net/socket.c:718 [inline]
- __sock_sendmsg+0x14b/0x180 net/socket.c:730
- __sys_sendto+0x320/0x3b0 net/socket.c:2152
- __do_sys_sendto net/socket.c:2164 [inline]
- __se_sys_sendto net/socket.c:2160 [inline]
- __x64_sys_sendto+0xdc/0x1b0 net/socket.c:2160
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+The root cause is: fallocate on pinning file may race w/ block allocation
+as above, result in do_garbage_collect() from fallocate() may migrate
+segment which is just allocated by a log, the log will update segment type
+in its in-memory structure, however GC will get segment type from on-disk
+SSA block, once segment type changes by log, we can detect such
+inconsistency, then shutdown filesystem.
 
-Freed by task 938:
- kasan_slab_free include/linux/kasan.h:177 [inline]
- slab_free_hook mm/slub.c:1729 [inline]
- slab_free_freelist_hook mm/slub.c:1755 [inline]
- slab_free mm/slub.c:3687 [inline]
- __kmem_cache_free+0xbc/0x320 mm/slub.c:3700
- device_release+0xa0/0x240 drivers/base/core.c:2507
- kobject_cleanup lib/kobject.c:681 [inline]
- kobject_release lib/kobject.c:712 [inline]
- kref_put include/linux/kref.h:65 [inline]
- kobject_put+0x1cd/0x350 lib/kobject.c:729
- put_device+0x1b/0x30 drivers/base/core.c:3805
- ptp_clock_unregister+0x171/0x270 drivers/ptp/ptp_clock.c:391
- gem_ptp_remove+0x4e/0x1f0 drivers/net/ethernet/cadence/macb_ptp.c:404
- macb_close+0x1c8/0x270 drivers/net/ethernet/cadence/macb_main.c:2966
- __dev_close_many+0x1b9/0x310 net/core/dev.c:1585
- __dev_close net/core/dev.c:1597 [inline]
- __dev_change_flags+0x2bb/0x740 net/core/dev.c:8649
- dev_change_flags+0x92/0x170 net/core/dev.c:8722
- dev_ifsioc+0x151/0xe00 net/core/dev_ioctl.c:326
- dev_ioctl+0x33e/0x1070 net/core/dev_ioctl.c:572
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+In this case, on-disk SSA shows type of segno #173822 is 1 (SUM_TYPE_NODE),
+however segno #173822 was just allocated as data type segment, so in-memory
+SIT shows type of segno #173822 is 0 (SUM_TYPE_DATA).
 
-Set the PTP clock pointer to NULL after unregistering.
+Change as below to fix this issue:
+- check whether current section is empty before gc
+- add sanity checks on do_garbage_collect() to avoid any race case, result
+in migrating segment used by log.
+- btw, it fixes misc issue in printed logs: "SSA and SIT" -> "SIT and SSA".
 
-Fixes: c2594d804d5c ("macb: Common code to enable ptp support for MACB/GEM")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
+Cc: Daeho Jeong <daehojeong@google.com>
+Signed-off-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ Use IS_CURSEC instead of is_cursec according to
+commit c1cfc87e49525 ("f2fs: introduce is_cur{seg,sec}()"). ]
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb_ptp.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/f2fs/gc.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/cadence/macb_ptp.c
-+++ b/drivers/net/ethernet/cadence/macb_ptp.c
-@@ -355,8 +355,10 @@ void gem_ptp_remove(struct net_device *n
- {
- 	struct macb *bp = netdev_priv(ndev);
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1805,6 +1805,13 @@ static int do_garbage_collect(struct f2f
+ 					GET_SUM_BLOCK(sbi, segno));
+ 		f2fs_put_page(sum_page, 0);
  
--	if (bp->ptp_clock)
-+	if (bp->ptp_clock) {
- 		ptp_clock_unregister(bp->ptp_clock);
-+		bp->ptp_clock = NULL;
-+	}
++		if (IS_CURSEC(sbi, GET_SEC_FROM_SEG(sbi, segno))) {
++			f2fs_err(sbi, "%s: segment %u is used by log",
++							__func__, segno);
++			f2fs_bug_on(sbi, 1);
++			goto skip;
++		}
++
+ 		if (get_valid_blocks(sbi, segno, false) == 0)
+ 			goto freed;
+ 		if (gc_type == BG_GC && __is_large_section(sbi) &&
+@@ -1815,7 +1822,7 @@ static int do_garbage_collect(struct f2f
  
- 	gem_ptp_clear_timer(bp);
+ 		sum = page_address(sum_page);
+ 		if (type != GET_SUM_TYPE((&sum->footer))) {
+-			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SSA and SIT",
++			f2fs_err(sbi, "Inconsistent segment (%u) type [%d, %d] in SIT and SSA",
+ 				 segno, type, GET_SUM_TYPE((&sum->footer)));
+ 			f2fs_stop_checkpoint(sbi, false,
+ 				STOP_CP_REASON_CORRUPTED_SUMMARY);
+@@ -2079,6 +2086,13 @@ int f2fs_gc_range(struct f2fs_sb_info *s
+ 			.iroot = RADIX_TREE_INIT(gc_list.iroot, GFP_NOFS),
+ 		};
+ 
++		/*
++		 * avoid migrating empty section, as it can be allocated by
++		 * log in parallel.
++		 */
++		if (!get_valid_blocks(sbi, segno, true))
++			continue;
++
+ 		if (IS_CURSEC(sbi, GET_SEC_FROM_SEG(sbi, segno)))
+ 			continue;
  
 
 
