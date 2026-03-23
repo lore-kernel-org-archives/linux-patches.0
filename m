@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16AD73B6BE6;
-	Mon, 23 Mar 2026 15:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EFA284686;
+	Mon, 23 Mar 2026 15:13:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278797; cv=none; b=pb8vlrDHM14GhFI2P/a8xhPrM5y28W+3+bAUQwSAGG2v+z2Hp7/IBxDkBnHPUZaeYg84pAdCue/JH9YRttTM9ZmIWFoeVlrgHIxc8TwRv+RlFuiQn9uPMtU/NPXrcn2E0lJjGcSkyMGILxewU8N4lKWAzzKhs9NDaPbRsK9qfJ4=
+	t=1774278800; cv=none; b=JXBEqpGPVTZmB1e7tkMDaz/rcd3xghlV89MVIcb5UDR7Oe6UmJT8OqpFXB1Q+oqEDY789tXFsaw43JDw4umLm0N5Cku4dWg6w/b5zYJTwo33T6XdSGZxywBixQqiWa/5J/WuKZC7eFOWC6GRjU3liHScvnY5hHRmmRSJVZKcijM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278797; c=relaxed/simple;
-	bh=uJ/4TKIzj5Kpd0VQcHABls/HHktr1YZn4VKH3nh7pV8=;
+	s=arc-20240116; t=1774278800; c=relaxed/simple;
+	bh=+gMT7pp32/tjWJ3xCwdsSdl/Sphsyox4LiUTWNQAL44=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TBFmQ0AmbSERrP3QdofaXRIViH8iY0SViEwaukYCHtrEaOs5vIOvQ7r3+whWZhybvpCffuhX5O1vFLLL82YZ0Gn8cODER2ZIj/0rwngVS9hZ8XN7v6Xz08rxlSU3ksyKPiz02vgjvoSDA2B+eP2zynPHyUAhTKMM5m81VVgVj6U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xPFL7FnW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nIKuvSlfEchR9Kw9h68kwTFzcjfYja6/rpbeVBo4k53PqdhLRFbcyluDTGlh9hH0NvcEfk/01VCjSy5A9YVwHRmqFh28M+qmCe853sMhqDwI5FrbCtJ6IBHDf5Y+Mvzuim7wxMI6Sd9dKTv8pNcefnls2NVwP5fIbeKXKeuWaQ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HZgzVe0G; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xPFL7FnW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A4DFC2BCB4;
-	Mon, 23 Mar 2026 15:13:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HZgzVe0G"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81B39C4CEF7;
+	Mon, 23 Mar 2026 15:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278796;
-	bh=uJ/4TKIzj5Kpd0VQcHABls/HHktr1YZn4VKH3nh7pV8=;
+	s=korg; t=1774278799;
+	bh=+gMT7pp32/tjWJ3xCwdsSdl/Sphsyox4LiUTWNQAL44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xPFL7FnWDQGxcrsMpHk154Wl/AFC6ukzQHyr+6HmwWuBMLmpRflOLjWTcLIPK3fxS
-	 CyX6kxf5CBLkSFVAlOUqziHUfY5uv/m7YpQsqlHlkPGYGkEMxvH8c2Y4lkRO/X1VyX
-	 pdL//BCwDppcH9zIRZlidmh78l0NMAliv38Bw9Go=
+	b=HZgzVe0GUP++vSig/AOaG//A01shFwY76nuOj3PfumKTvuil+LnS8DeNoHLr9/xOI
+	 +WUfy31mKBdS6bntvrLa4BvRFOSS5oJ2FH4/AcE03XuXq6LChzpt89hDE31riIAnl1
+	 P5KxeT29cV/OOts+4hHVltbUmX194bEuR4sasqjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Paolo Abeni <pabeni@redhat.com>,
 	Eric Dumazet <edumazet@google.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Keerthana K <keerthana.kalyanasundaram@broadcom.com>,
-	Shivani Agarwal <shivani.agarwal@broadcom.com>
-Subject: [PATCH 6.6 415/567] ipv6: use RCU in ip6_xmit()
-Date: Mon, 23 Mar 2026 14:45:35 +0100
-Message-ID: <20260323134544.156505052@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 424/567] net: add support for segmenting TCP fraglist GSO packets
+Date: Mon, 23 Mar 2026 14:45:44 +0100
+Message-ID: <20260323134544.380266335@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,109 +54,183 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Dumazet <edumazet@google.com>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 9085e56501d93af9f2d7bd16f7fcfacdde47b99c upstream.
+[ Upstream commit bee88cd5bd83d40b8aec4d6cb729378f707f6197 ]
 
-Use RCU in ip6_xmit() in order to use dst_dev_rcu() to prevent
-possible UAF.
+Preparation for adding TCP fraglist GRO support. It expects packets to be
+combined in a similar way as UDP fraglist GSO packets.
+For IPv4 packets, NAT is handled in the same way as UDP fraglist GSO.
 
-Fixes: 4a6ce2b6f2ec ("net: introduce a new function dst_dev_put()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://patch.msgid.link/20250828195823.3958522-4-edumazet@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Keerthana K <keerthana.kalyanasundaram@broadcom.com>
-Signed-off-by: Shivani Agarwal <shivani.agarwal@broadcom.com>
 ---
- net/ipv6/ip6_output.c |   35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
+ net/ipv4/tcp_offload.c   |   67 +++++++++++++++++++++++++++++++++++++++++++++++
+ net/ipv6/tcpv6_offload.c |   58 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 125 insertions(+)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -261,35 +261,36 @@ bool ip6_autoflowlabel(struct net *net,
- int ip6_xmit(const struct sock *sk, struct sk_buff *skb, struct flowi6 *fl6,
- 	     __u32 mark, struct ipv6_txoptions *opt, int tclass, u32 priority)
- {
--	struct net *net = sock_net(sk);
- 	const struct ipv6_pinfo *np = inet6_sk(sk);
- 	struct in6_addr *first_hop = &fl6->daddr;
- 	struct dst_entry *dst = skb_dst(skb);
--	struct net_device *dev = dst->dev;
- 	struct inet6_dev *idev = ip6_dst_idev(dst);
- 	struct hop_jumbo_hdr *hop_jumbo;
- 	int hoplen = sizeof(*hop_jumbo);
-+	struct net *net = sock_net(sk);
- 	unsigned int head_room;
-+	struct net_device *dev;
- 	struct ipv6hdr *hdr;
- 	u8  proto = fl6->flowi6_proto;
- 	int seg_len = skb->len;
--	int hlimit = -1;
-+	int ret, hlimit = -1;
- 	u32 mtu;
- 
-+	rcu_read_lock();
-+
-+	dev = dst_dev_rcu(dst);
- 	head_room = sizeof(struct ipv6hdr) + hoplen + LL_RESERVED_SPACE(dev);
- 	if (opt)
- 		head_room += opt->opt_nflen + opt->opt_flen;
- 
- 	if (unlikely(head_room > skb_headroom(skb))) {
--		/* Make sure idev stays alive */
--		rcu_read_lock();
-+		/* idev stays alive while we hold rcu_read_lock(). */
- 		skb = skb_expand_head(skb, head_room);
- 		if (!skb) {
- 			IP6_INC_STATS(net, idev, IPSTATS_MIB_OUTDISCARDS);
--			rcu_read_unlock();
--			return -ENOBUFS;
-+			ret = -ENOBUFS;
-+			goto unlock;
- 		}
--		rcu_read_unlock();
+--- a/net/ipv4/tcp_offload.c
++++ b/net/ipv4/tcp_offload.c
+@@ -31,6 +31,70 @@ static void tcp_gso_tstamp(struct sk_buf
  	}
- 
- 	if (opt) {
-@@ -351,17 +352,21 @@ int ip6_xmit(const struct sock *sk, stru
- 		 * skb to its handler for processing
- 		 */
- 		skb = l3mdev_ip6_out((struct sock *)sk, skb);
--		if (unlikely(!skb))
--			return 0;
-+		if (unlikely(!skb)) {
-+			ret = 0;
-+			goto unlock;
-+		}
- 
- 		/* hooks should never assume socket lock is held.
- 		 * we promote our socket to non const
- 		 */
--		return NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
--			       net, (struct sock *)sk, skb, NULL, dev,
--			       dst_output);
-+		ret = NF_HOOK(NFPROTO_IPV6, NF_INET_LOCAL_OUT,
-+			      net, (struct sock *)sk, skb, NULL, dev,
-+			      dst_output);
-+		goto unlock;
- 	}
- 
-+	ret = -EMSGSIZE;
- 	skb->dev = dev;
- 	/* ipv6_local_error() does not require socket lock,
- 	 * we promote our socket to non const
-@@ -370,7 +375,9 @@ int ip6_xmit(const struct sock *sk, stru
- 
- 	IP6_INC_STATS(net, idev, IPSTATS_MIB_FRAGFAILS);
- 	kfree_skb(skb);
--	return -EMSGSIZE;
-+unlock:
-+	rcu_read_unlock();
-+	return ret;
  }
- EXPORT_SYMBOL(ip6_xmit);
  
++static void __tcpv4_gso_segment_csum(struct sk_buff *seg,
++				     __be32 *oldip, __be32 newip,
++				     __be16 *oldport, __be16 newport)
++{
++	struct tcphdr *th;
++	struct iphdr *iph;
++
++	if (*oldip == newip && *oldport == newport)
++		return;
++
++	th = tcp_hdr(seg);
++	iph = ip_hdr(seg);
++
++	inet_proto_csum_replace4(&th->check, seg, *oldip, newip, true);
++	inet_proto_csum_replace2(&th->check, seg, *oldport, newport, false);
++	*oldport = newport;
++
++	csum_replace4(&iph->check, *oldip, newip);
++	*oldip = newip;
++}
++
++static struct sk_buff *__tcpv4_gso_segment_list_csum(struct sk_buff *segs)
++{
++	const struct tcphdr *th;
++	const struct iphdr *iph;
++	struct sk_buff *seg;
++	struct tcphdr *th2;
++	struct iphdr *iph2;
++
++	seg = segs;
++	th = tcp_hdr(seg);
++	iph = ip_hdr(seg);
++	th2 = tcp_hdr(seg->next);
++	iph2 = ip_hdr(seg->next);
++
++	if (!(*(const u32 *)&th->source ^ *(const u32 *)&th2->source) &&
++	    iph->daddr == iph2->daddr && iph->saddr == iph2->saddr)
++		return segs;
++
++	while ((seg = seg->next)) {
++		th2 = tcp_hdr(seg);
++		iph2 = ip_hdr(seg);
++
++		__tcpv4_gso_segment_csum(seg,
++					 &iph2->saddr, iph->saddr,
++					 &th2->source, th->source);
++		__tcpv4_gso_segment_csum(seg,
++					 &iph2->daddr, iph->daddr,
++					 &th2->dest, th->dest);
++	}
++
++	return segs;
++}
++
++static struct sk_buff *__tcp4_gso_segment_list(struct sk_buff *skb,
++					      netdev_features_t features)
++{
++	skb = skb_segment_list(skb, features, skb_mac_header_len(skb));
++	if (IS_ERR(skb))
++		return skb;
++
++	return __tcpv4_gso_segment_list_csum(skb);
++}
++
+ static struct sk_buff *tcp4_gso_segment(struct sk_buff *skb,
+ 					netdev_features_t features)
+ {
+@@ -40,6 +104,9 @@ static struct sk_buff *tcp4_gso_segment(
+ 	if (!pskb_may_pull(skb, sizeof(struct tcphdr)))
+ 		return ERR_PTR(-EINVAL);
+ 
++	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
++		return __tcp4_gso_segment_list(skb, features);
++
+ 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
+ 		const struct iphdr *iph = ip_hdr(skb);
+ 		struct tcphdr *th = tcp_hdr(skb);
+--- a/net/ipv6/tcpv6_offload.c
++++ b/net/ipv6/tcpv6_offload.c
+@@ -40,6 +40,61 @@ INDIRECT_CALLABLE_SCOPE int tcp6_gro_com
+ 	return 0;
+ }
+ 
++static void __tcpv6_gso_segment_csum(struct sk_buff *seg,
++				     __be16 *oldport, __be16 newport)
++{
++	struct tcphdr *th;
++
++	if (*oldport == newport)
++		return;
++
++	th = tcp_hdr(seg);
++	inet_proto_csum_replace2(&th->check, seg, *oldport, newport, false);
++	*oldport = newport;
++}
++
++static struct sk_buff *__tcpv6_gso_segment_list_csum(struct sk_buff *segs)
++{
++	const struct tcphdr *th;
++	const struct ipv6hdr *iph;
++	struct sk_buff *seg;
++	struct tcphdr *th2;
++	struct ipv6hdr *iph2;
++
++	seg = segs;
++	th = tcp_hdr(seg);
++	iph = ipv6_hdr(seg);
++	th2 = tcp_hdr(seg->next);
++	iph2 = ipv6_hdr(seg->next);
++
++	if (!(*(const u32 *)&th->source ^ *(const u32 *)&th2->source) &&
++	    ipv6_addr_equal(&iph->saddr, &iph2->saddr) &&
++	    ipv6_addr_equal(&iph->daddr, &iph2->daddr))
++		return segs;
++
++	while ((seg = seg->next)) {
++		th2 = tcp_hdr(seg);
++		iph2 = ipv6_hdr(seg);
++
++		iph2->saddr = iph->saddr;
++		iph2->daddr = iph->daddr;
++		__tcpv6_gso_segment_csum(seg, &th2->source, th->source);
++		__tcpv6_gso_segment_csum(seg, &th2->dest, th->dest);
++	}
++
++	return segs;
++}
++
++static struct sk_buff *__tcp6_gso_segment_list(struct sk_buff *skb,
++					      netdev_features_t features)
++{
++	skb = skb_segment_list(skb, features, skb_mac_header_len(skb));
++	if (IS_ERR(skb))
++		return skb;
++
++	return __tcpv6_gso_segment_list_csum(skb);
++}
++
+ static struct sk_buff *tcp6_gso_segment(struct sk_buff *skb,
+ 					netdev_features_t features)
+ {
+@@ -51,6 +106,9 @@ static struct sk_buff *tcp6_gso_segment(
+ 	if (!pskb_may_pull(skb, sizeof(*th)))
+ 		return ERR_PTR(-EINVAL);
+ 
++	if (skb_shinfo(skb)->gso_type & SKB_GSO_FRAGLIST)
++		return __tcp6_gso_segment_list(skb, features);
++
+ 	if (unlikely(skb->ip_summed != CHECKSUM_PARTIAL)) {
+ 		const struct ipv6hdr *ipv6h = ipv6_hdr(skb);
+ 		struct tcphdr *th = tcp_hdr(skb);
 
 
