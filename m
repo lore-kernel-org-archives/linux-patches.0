@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36B7C23C4FF;
-	Mon, 23 Mar 2026 14:53:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FD43AB295;
+	Mon, 23 Mar 2026 14:53:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277614; cv=none; b=rmr8hwLfglF0J5CFTh70HCHzYhEdPRTpqu9GP+gTjTxgbpo0SqtRzdVPD0SB94HCrQB2hOaQTL4HUOl1KMJd3Zg14MwkvMYcFOu0CAhRXnBcfvWrxrgOKeR3rsKhExzSNI5zgQ7dyMq51FUW0GRP2rUvaGbiTfGFRShwPdc9hUM=
+	t=1774277618; cv=none; b=PjKsukSmzFl+RsaFYbWwaECDNArJRSE17+5Aypsyq7fzZQ1p8kiM0yYwNHwtljjOYSQqn2erTxcyUbEyNgHNOcjlYViJzi/0X90r91bsdbHV+toHhqOU9axl4CVi5dOzKTwwIlmxD+jH9ql5W+hExX7s7teAnD60ybpVJmpVHwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277614; c=relaxed/simple;
-	bh=SF0wb6HcPhu+AF8ZZly2+cZsmqMCZEHOLFAht5XvMsI=;
+	s=arc-20240116; t=1774277618; c=relaxed/simple;
+	bh=XbjOLcqtP30lVa/It6CUL7Os0hjrdq7GEyj/brI67Rc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=u/bIq5PyyUyvxCqUrIsdVknkjvQmxOXc8sceF1rbNgeVxOXdACIwUm+Arrx6WHnRckJwVkMzt1CtuVsAU6dryKu5BQeo5skVAzno3flddHlOBK9YZ13gW49WVXjr3X6oB4we3Pd1K3uxMwojHci0ejFQn8Dleahcchrq9TTyBWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R1Y/70qn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=imhxSDLc/lE7tH1p6eMGJW5E7TFgIJtxWzbpHKjW96dFKMOob9kuyVuX1rKG7XhznvSco8+j5a/zEPAVIn6o7HqQQ3hYy8SG6FUzQpOFe7jaqzjnqvAPYBDJkITpQcS+0wJGSxJsKDVR0vxhpFpd1nfap2kVPBNJkL5jzIZtozU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sja4mFzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R1Y/70qn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DAAC4CEF7;
-	Mon, 23 Mar 2026 14:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sja4mFzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F31E2C2BCB9;
+	Mon, 23 Mar 2026 14:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277614;
-	bh=SF0wb6HcPhu+AF8ZZly2+cZsmqMCZEHOLFAht5XvMsI=;
+	s=korg; t=1774277617;
+	bh=XbjOLcqtP30lVa/It6CUL7Os0hjrdq7GEyj/brI67Rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R1Y/70qnEb4aoWazI3eVS3G29IKRRIokmMefFPLZR6SMjH/n7vz36Iex837tCzJTi
-	 XchUDpIBc5Nqc+zEmg957jZao6MDng0Gs//FVmYmjCGXgyHOFi0SCMCEKbIWLsjM3p
-	 3KvrkmGOBv8/TpB5Mv/acuDZERjoh/8SN5HPMqOE=
+	b=sja4mFzAexjIdHwfojcC4i7glPP3OJjlItCTmzqIIKV+MujtcxtTv5mR2TJx54Qzd
+	 ECYMVIfhAVSlArnsBqNKNuPsYXLrYT7nu+WJGJFwGw9ZhKa2+i6EaeKQ+J7knhRNaW
+	 pMOOC6F+hLMRBHBDhbDJVoR6mWGH4J/H9o72G8Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Woodhouse <dwmw2@infradead.org>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	=?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kwilczynski@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 026/567] PCI: Correct PCI_CAP_EXP_ENDPOINT_SIZEOF_V2 value
-Date: Mon, 23 Mar 2026 14:39:06 +0100
-Message-ID: <20260323134534.418974729@linuxfoundation.org>
+Subject: [PATCH 6.6 027/567] memory: mtk-smi: Convert to platform remove callback returning void
+Date: Mon, 23 Mar 2026 14:39:07 +0100
+Message-ID: <20260323134534.445279401@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,48 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bjorn Helgaas <bhelgaas@google.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 39195990e4c093c9eecf88f29811c6de29265214 ]
+[ Upstream commit 08c1aeaa45ce0fd18912e92c6705586c8aa5240f ]
 
-fb82437fdd8c ("PCI: Change capability register offsets to hex") incorrectly
-converted the PCI_CAP_EXP_ENDPOINT_SIZEOF_V2 value from decimal 52 to hex
-0x32:
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-  -#define PCI_CAP_EXP_ENDPOINT_SIZEOF_V2 52      /* v2 endpoints with link end here */
-  +#define PCI_CAP_EXP_ENDPOINT_SIZEOF_V2 0x32    /* end of v2 EPs w/ link */
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-This broke PCI capabilities in a VMM because subsequent ones weren't
-DWORD-aligned.
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
 
-Change PCI_CAP_EXP_ENDPOINT_SIZEOF_V2 to the correct value of 0x34.
-
-fb82437fdd8c was from Baruch Siach <baruch@tkos.co.il>, but this was not
-Baruch's fault; it's a mistake I made when applying the patch.
-
-Fixes: fb82437fdd8c ("PCI: Change capability register offsets to hex")
-Reported-by: David Woodhouse <dwmw2@infradead.org>
-Closes: https://lore.kernel.org/all/3ae392a0158e9d9ab09a1d42150429dd8ca42791.camel@infradead.org
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Krzysztof Wilczyński <kwilczynski@kernel.org>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/5c35a33cfdc359842e034ddd2e9358f10e91fa1f.1702822744.git.u.kleine-koenig@pengutronix.de
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Stable-dep-of: 6cfa038bddd7 ("memory: mtk-smi: fix device leaks on common probe")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/pci_regs.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memory/mtk-smi.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/include/uapi/linux/pci_regs.h b/include/uapi/linux/pci_regs.h
-index ade8dabf62108..036991bee1a74 100644
---- a/include/uapi/linux/pci_regs.h
-+++ b/include/uapi/linux/pci_regs.h
-@@ -694,7 +694,7 @@
- #define  PCI_EXP_LNKCTL2_HASD		0x0020 /* HW Autonomous Speed Disable */
- #define PCI_EXP_LNKSTA2		0x32	/* Link Status 2 */
- #define  PCI_EXP_LNKSTA2_FLIT		0x0400 /* Flit Mode Status */
--#define PCI_CAP_EXP_ENDPOINT_SIZEOF_V2	0x32	/* end of v2 EPs w/ link */
-+#define PCI_CAP_EXP_ENDPOINT_SIZEOF_V2	0x34	/* end of v2 EPs w/ link */
- #define PCI_EXP_SLTCAP2		0x34	/* Slot Capabilities 2 */
- #define  PCI_EXP_SLTCAP2_IBPD	0x00000001 /* In-band PD Disable Supported */
- #define PCI_EXP_SLTCTL2		0x38	/* Slot Control 2 */
+diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
+index 6523cb5105182..572c7fbdcfd3a 100644
+--- a/drivers/memory/mtk-smi.c
++++ b/drivers/memory/mtk-smi.c
+@@ -566,14 +566,13 @@ static int mtk_smi_larb_probe(struct platform_device *pdev)
+ 	return ret;
+ }
+ 
+-static int mtk_smi_larb_remove(struct platform_device *pdev)
++static void mtk_smi_larb_remove(struct platform_device *pdev)
+ {
+ 	struct mtk_smi_larb *larb = platform_get_drvdata(pdev);
+ 
+ 	device_link_remove(&pdev->dev, larb->smi_common_dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	component_del(&pdev->dev, &mtk_smi_larb_component_ops);
+-	return 0;
+ }
+ 
+ static int __maybe_unused mtk_smi_larb_resume(struct device *dev)
+@@ -616,7 +615,7 @@ static const struct dev_pm_ops smi_larb_pm_ops = {
+ 
+ static struct platform_driver mtk_smi_larb_driver = {
+ 	.probe	= mtk_smi_larb_probe,
+-	.remove	= mtk_smi_larb_remove,
++	.remove_new = mtk_smi_larb_remove,
+ 	.driver	= {
+ 		.name = "mtk-smi-larb",
+ 		.of_match_table = mtk_smi_larb_of_ids,
+@@ -795,14 +794,13 @@ static int mtk_smi_common_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int mtk_smi_common_remove(struct platform_device *pdev)
++static void mtk_smi_common_remove(struct platform_device *pdev)
+ {
+ 	struct mtk_smi *common = dev_get_drvdata(&pdev->dev);
+ 
+ 	if (common->plat->type == MTK_SMI_GEN2_SUB_COMM)
+ 		device_link_remove(&pdev->dev, common->smi_common_dev);
+ 	pm_runtime_disable(&pdev->dev);
+-	return 0;
+ }
+ 
+ static int __maybe_unused mtk_smi_common_resume(struct device *dev)
+@@ -842,7 +840,7 @@ static const struct dev_pm_ops smi_common_pm_ops = {
+ 
+ static struct platform_driver mtk_smi_common_driver = {
+ 	.probe	= mtk_smi_common_probe,
+-	.remove = mtk_smi_common_remove,
++	.remove_new = mtk_smi_common_remove,
+ 	.driver	= {
+ 		.name = "mtk-smi-common",
+ 		.of_match_table = mtk_smi_common_of_ids,
 -- 
 2.51.0
 
