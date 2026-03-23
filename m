@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385721DA0E1;
-	Mon, 23 Mar 2026 14:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094D21DA0E1;
+	Mon, 23 Mar 2026 14:58:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277911; cv=none; b=AodvJnfgNuGcCfxc1v+nDJcd+sA/r0halwnxrnbAtI59CLPpoJZY4xnchEOZcOQG536yEcZ4E7JdjNardOxpoPgGfgXZ6LrnV0k/3MIiCXM6L/U8rov02w7hc9U9RV6mwxzhIGLPC6QhV+nJEtXTk4ZXWYMKRa8NQ7kgDduKhJs=
+	t=1774277914; cv=none; b=kHEUiXjzwwehgy7zdiQPwADLZsoUKu3PqecoCDvtDWfQ0oLBj0IMyRkfw+m4bk4bOTnb8Jz4fnhqy+7VoCfA90SjBs0MzHVzDb9bN7L6oEm99Sj6uqoet7JIyhcIF+QKTGJ+pYz7Ei9Rqq2bD/VF6lugAB8fnRaD2+DQQPwN82c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277911; c=relaxed/simple;
-	bh=HW8A2uOFnwMexGdV9cY2C+ac0GMkjrP5ksGfbr8huCI=;
+	s=arc-20240116; t=1774277914; c=relaxed/simple;
+	bh=EJoB4/6S2K2JhXF7hIxOmkKY7a75/VZlB6bv5gaJcBQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ih96cKfFPR4QNuyFSt2raP+jXT5r+W6txm3wTs+oAGtmqGhFsPTBe8dMUdunBtZFnYzq4YPxi5Ro58d2ZgEwGsjt702mb96Ifk6e4ky8RddJ0+SLY8jUomQOU0YqpJG0ZYoeztiIX9ulAVr0sSLKM0uoO5SGJ3XGwSds5ffyiS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pLhBD3ee; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Drz3rtl5FPc1fsOD6UAaPyegjgByhul67iyLlCOgo33vvdaMl86JGKJO8NE8t64kaygX7vVmN+FtAepRYr/Jb32SuMvMlkWgTkXB1dC+379Adr2kYsMisEBTIFiIBcc3SWWWW2ZRLjgsRlQDPLAfNIOscl+JBxvGRjpkMnqhIPU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wvqUKztp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pLhBD3ee"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60CA6C4CEF7;
-	Mon, 23 Mar 2026 14:58:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wvqUKztp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A09FC4CEF7;
+	Mon, 23 Mar 2026 14:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277910;
-	bh=HW8A2uOFnwMexGdV9cY2C+ac0GMkjrP5ksGfbr8huCI=;
+	s=korg; t=1774277913;
+	bh=EJoB4/6S2K2JhXF7hIxOmkKY7a75/VZlB6bv5gaJcBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pLhBD3eeBqzhn+KMNfJ+6mLpcigmqT6MWNWtmK7TqCwKcK7rPQcFFE/tEbDr6yGPt
-	 5iV4LWrBXqnS7fwbZNTe18Jat9XnAc/XZSMjOJZZ71eC2R2AQB2jc81R3CRFKBLD8G
-	 Dtv8SNdxykBz2lzNdzageZm+CcPsBIB7h1Q6E1qU=
+	b=wvqUKztpNpEWE9aLFm2vlLTsd+/l/d3QEWxjzeZFZy50v4n7/PJHovuMZ2loZ7V1i
+	 MmYUdpHxTULIust8rvy4Q5jP1Cb+BAErLWVsOK+8qq0aD95o5YDZsX67MEq430PgJS
+	 DG2QDc4qYZ5wzzfwX1ac44FaslYfwG9piJAJ+KPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.6 098/567] can: usb: f81604: handle bulk write errors properly
-Date: Mon, 23 Mar 2026 14:40:18 +0100
-Message-ID: <20260323134536.251176211@linuxfoundation.org>
+	Jiri Kosina <jikos@kernel.org>,
+	Benjamin Tissoires <bentiss@kernel.org>,
+	Bastien Nocera <hadess@hadess.net>,
+	linux-input@vger.kernel.org,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.6 099/567] HID: Add HID_CLAIMED_INPUT guards in raw_event callbacks missing them
+Date: Mon, 23 Mar 2026 14:40:19 +0100
+Message-ID: <20260323134536.274258546@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,59 +55,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 51f94780720fa90c424f67e3e9784cb8ef8190e5 upstream.
+commit ecfa6f34492c493a9a1dc2900f3edeb01c79946b upstream.
 
-If a write urb fails then more needs to be done other than just logging
-the message, otherwise the transmission could be stalled.  Properly
-increment the error counters and wake up the queues so that data will
-continue to flow.
+In commit 2ff5baa9b527 ("HID: appleir: Fix potential NULL dereference at
+raw event handle"), we handle the fact that raw event callbacks
+can happen even for a HID device that has not been "claimed" causing a
+crash if a broken device were attempted to be connected to the system.
 
-Cc: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: Vincent Mailhol <mailhol@kernel.org>
-Cc: stable@kernel.org
+Fix up the remaining in-tree HID drivers that forgot to add this same
+check to resolve the same issue.
+
+Cc: Jiri Kosina <jikos@kernel.org>
+Cc: Benjamin Tissoires <bentiss@kernel.org>
+Cc: Bastien Nocera <hadess@hadess.net>
+Cc: linux-input@vger.kernel.org
+Cc: stable <stable@kernel.org>
 Assisted-by: gkh_clanker_2000
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026022334-slackness-dynamic-9195@gregkh
-Fixes: 88da17436973 ("can: usb: f81604: add Fintek F81604 support")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/f81604.c |   24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ drivers/hid/hid-cmedia.c          |    2 +-
+ drivers/hid/hid-creative-sb0540.c |    2 +-
+ drivers/hid/hid-zydacron.c        |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/can/usb/f81604.c
-+++ b/drivers/net/can/usb/f81604.c
-@@ -891,9 +891,27 @@ static void f81604_write_bulk_callback(s
- 	if (!netif_device_present(netdev))
- 		return;
+--- a/drivers/hid/hid-cmedia.c
++++ b/drivers/hid/hid-cmedia.c
+@@ -99,7 +99,7 @@ static int cmhid_raw_event(struct hid_de
+ {
+ 	struct cmhid *cm = hid_get_drvdata(hid);
  
--	if (urb->status)
--		netdev_info(netdev, "%s: Tx URB error: %pe\n", __func__,
--			    ERR_PTR(urb->status));
-+	if (!urb->status)
-+		return;
-+
-+	switch (urb->status) {
-+	case -ENOENT:
-+	case -ECONNRESET:
-+	case -ESHUTDOWN:
-+		return;
-+	default:
-+		break;
-+	}
-+
-+	if (net_ratelimit())
-+		netdev_err(netdev, "%s: Tx URB error: %pe\n", __func__,
-+			   ERR_PTR(urb->status));
-+
-+	can_free_echo_skb(netdev, 0, NULL);
-+	netdev->stats.tx_dropped++;
-+	netdev->stats.tx_errors++;
-+
-+	netif_wake_queue(netdev);
- }
+-	if (len != CM6533_JD_RAWEV_LEN)
++	if (len != CM6533_JD_RAWEV_LEN || !(hid->claimed & HID_CLAIMED_INPUT))
+ 		goto out;
+ 	if (memcmp(data+CM6533_JD_SFX_OFFSET, ji_sfx, sizeof(ji_sfx)))
+ 		goto out;
+--- a/drivers/hid/hid-creative-sb0540.c
++++ b/drivers/hid/hid-creative-sb0540.c
+@@ -153,7 +153,7 @@ static int creative_sb0540_raw_event(str
+ 	u64 code, main_code;
+ 	int key;
  
- static void f81604_clear_reg_work(struct work_struct *work)
+-	if (len != 6)
++	if (len != 6 || !(hid->claimed & HID_CLAIMED_INPUT))
+ 		return 0;
+ 
+ 	/* From daemons/hw_hiddev.c sb0540_rec() in lirc */
+--- a/drivers/hid/hid-zydacron.c
++++ b/drivers/hid/hid-zydacron.c
+@@ -114,7 +114,7 @@ static int zc_raw_event(struct hid_devic
+ 	unsigned key;
+ 	unsigned short index;
+ 
+-	if (report->id == data[0]) {
++	if (report->id == data[0] && (hdev->claimed & HID_CLAIMED_INPUT)) {
+ 
+ 		/* break keys */
+ 		for (index = 0; index < 4; index++) {
 
 
