@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13EC1A6818;
-	Mon, 23 Mar 2026 13:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA54E3AC0D2;
+	Mon, 23 Mar 2026 13:53:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274013; cv=none; b=hFmbvf+Rq0GmN1stRheAJtFL1nuzNhp9SrzFljZxFI2xznc6Vh2m8TvTzJWlpo33blrEbKTopscmpnQNiKfm+rRF7qHedwbKKCV+zxTqZ9CNpS7xsv2FLqQkX6EFY4z9gpzEKub3EObM3zjJure7mJyBR59PDJPWQfsB1CdPH8w=
+	t=1774274017; cv=none; b=WqcEBlKkTVL4uaTuLAwigrkUwQ0QlfDI7RNLnEAim6OkMM5j5KwSO8+yxopCXngwXN7biP6lY/kWDAtY3a+N9xsjXeoc+7+cdxdow/nJOyZqC1EIndtCJZklAKLixOjfzf4XTCEwnF0IqLVsBcEKgf6x6ZSfcrvtw3xn7YVy81U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274013; c=relaxed/simple;
-	bh=QEV+jNtm9geICJlKV6qjmbg1X3oHEDpczTky+NTgN+E=;
+	s=arc-20240116; t=1774274017; c=relaxed/simple;
+	bh=5swBKE+dd+cNACsBQIRrbeeP09Katip6JdvzHIRarKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BbpLszEYGuWZQ5mZChPGtBE2Nl7I1zc+18ByhlPhjGQmtZiyRikTrS+H7vhRMp8jMSRo4PjSXTq/F7ZdKlqM1ZHbIa9M2p0IGUJn+5ncwCzQH6OrqPW4Opn4DdE8+26N2avwYut5585Lua/IRF/BpGQ1UQZMsTBNVFwX7bn5Pn8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8Frv1Lv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pLWdwZybliEOcqTGAVj/3lrcVwVaoR7Vii2dKj8ZZcPFKEYuAwgVyqCv+QyhRq+Ta2IT7w84+yY71yZXxhSSAsfmK19Tu/hhL3kZnsVd2tNBik13QgwjKotybse32QDaZCcvSsauQ6dUBtj1lUxvHZkAfUwB9JbkpHAzIgTGzM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vd8Z+tqA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8Frv1Lv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5621CC2BC9E;
-	Mon, 23 Mar 2026 13:53:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vd8Z+tqA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DAC1C4CEF7;
+	Mon, 23 Mar 2026 13:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274013;
-	bh=QEV+jNtm9geICJlKV6qjmbg1X3oHEDpczTky+NTgN+E=;
+	s=korg; t=1774274016;
+	bh=5swBKE+dd+cNACsBQIRrbeeP09Katip6JdvzHIRarKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8Frv1LvWNh151+5MZCdPUvZ7UwiQunxwFnlhZUi5d05SUQtLUWZ402EiJkErw4gq
-	 3SHCqvdr/sdDShH0jdhmaRWImad+atK423bhZ93LVoV0OAjZVYWW5/x2Qs8TAjDQf0
-	 U9hnFqWsb0VFjhTz7LfKQJx+222Yamny7dwAQxYI=
+	b=vd8Z+tqAY7cTyOfsihzvzzrRCcXjniC3/lr6D/rr2X6kuRe8+pPpjr2bu1BeNlgL/
+	 +ldki0zS2nwDiVKV0p2JrgXN2dy8hdyQfFMHIvGGoSaXvlShWzRdBvEe8ygxmVbM4w
+	 HmH46AZibKbCP9rgbs6/L5C4Bu8mqm7XdW8tWhhY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Tvrtko Ursulin <tursulin@ursulin.net>
-Subject: [PATCH 6.19 027/220] drm/i915/dsc: Add Selective Update register definitions
-Date: Mon, 23 Mar 2026 14:43:24 +0100
-Message-ID: <20260323134505.436780871@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 075/220] drm/amdgpu/mmhub2.3: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:44:12 +0100
+Message-ID: <20260323134506.966960069@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -45,52 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit c2c79c6d5b939ae8a42ddb884f576bddae685672 upstream.
+commit a54403a534972af5d9ba5aaa3bb6ead612500ec6 upstream.
 
-Add definitions for DSC_SU_PARAMETER_SET_0_DSC0 and
-DSC_SU_PARAMETER_SET_0_DSC1 registers. These are for Selective Update Early
-Transport configuration.
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-Bspec: 71709
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Link: https://patch.msgid.link/20260304113011.626542-3-jouni.hogander@intel.com
-(cherry picked from commit 24f96d903daf3dcf8fafe84d3d22b80ef47ba493)
-Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 89cd90375c19fb45138990b70e9f4ba4806f05c4)
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_vdsc_regs.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/display/intel_vdsc_regs.h
-+++ b/drivers/gpu/drm/i915/display/intel_vdsc_regs.h
-@@ -196,6 +196,18 @@
- #define   DSC_PPS18_NSL_BPG_OFFSET(offset)	REG_FIELD_PREP(DSC_PPS18_NSL_BPG_OFFSET_MASK, offset)
- #define   DSC_PPS18_SL_OFFSET_ADJ(offset)	REG_FIELD_PREP(DSC_PPS18_SL_OFFSET_ADJ_MASK, offset)
- 
-+#define _LNL_DSC0_SU_PARAMETER_SET_0_PA		0x78064
-+#define _LNL_DSC1_SU_PARAMETER_SET_0_PA		0x78164
-+#define _LNL_DSC0_SU_PARAMETER_SET_0_PB		0x78264
-+#define _LNL_DSC1_SU_PARAMETER_SET_0_PB		0x78364
-+#define LNL_DSC0_SU_PARAMETER_SET_0(pipe)	_MMIO_PIPE((pipe), _LNL_DSC0_SU_PARAMETER_SET_0_PA, _LNL_DSC0_SU_PARAMETER_SET_0_PB)
-+#define LNL_DSC1_SU_PARAMETER_SET_0(pipe)	_MMIO_PIPE((pipe), _LNL_DSC1_SU_PARAMETER_SET_0_PA, _LNL_DSC1_SU_PARAMETER_SET_0_PB)
-+
-+#define   DSC_SUPS0_SU_SLICE_ROW_PER_FRAME_MASK		REG_GENMASK(31, 20)
-+#define   DSC_SUPS0_SU_SLICE_ROW_PER_FRAME(rows)	REG_FIELD_PREP(DSC_SUPS0_SU_SLICE_ROW_PER_FRAME_MASK, (rows))
-+#define   DSC_SUPS0_SU_PIC_HEIGHT_MASK			REG_GENMASK(15, 0)
-+#define   DSC_SUPS0_SU_PIC_HEIGHT(h)			REG_FIELD_PREP(DSC_SUPS0_SU_PIC_HEIGHT_MASK, (h))
-+
- /* Icelake Rate Control Buffer Threshold Registers */
- #define DSCA_RC_BUF_THRESH_0			_MMIO(0x6B230)
- #define DSCA_RC_BUF_THRESH_0_UDW		_MMIO(0x6B230 + 4)
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
+@@ -94,7 +94,8 @@ mmhub_v2_3_print_l2_protection_fault_sta
+ 	case IP_VERSION(2, 3, 0):
+ 	case IP_VERSION(2, 4, 0):
+ 	case IP_VERSION(2, 4, 1):
+-		mmhub_cid = mmhub_client_ids_vangogh[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vangogh) ?
++			mmhub_client_ids_vangogh[cid][rw] : NULL;
+ 		break;
+ 	default:
+ 		mmhub_cid = NULL;
 
 
