@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31EAB3B9DBB;
-	Mon, 23 Mar 2026 15:05:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43EDB3B4E8E;
+	Mon, 23 Mar 2026 15:06:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278358; cv=none; b=ZNiAmbzNVxlFUq7989cXQku9cEWNjf2R0C9eW5mcQUNplpr6emygQ1o1hdJmmEtFOHc1Etj/SEPsGFNKZZW9k7+oZKMRHu0O8ifv22ZPUnz4Zo+UMJL5wWn06Wjap26U3vbzPqON3WSph12KL+ex9qJNpj8y2t1xkh0Y5p/hdxE=
+	t=1774278361; cv=none; b=XFOPKITpE31vEtmnw1sl7WHj1S+TcHrwTii5NH5xNxizsoq/VXpzHqHQ1sICVE3X40mdwjO88jYjbVeF1oAwzcE7bvptrjSMxgGRuAhGzK3eUI0HULZH0eOPCVkz+zwwm7AST4o2fOFvcPhdMxp/ItAeQZMvEd0uLGSgGNu5NOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278358; c=relaxed/simple;
-	bh=/eTzFrwSuLt7tEWjNbJZCvQkpWHbUr9xjHrXkxUS4MI=;
+	s=arc-20240116; t=1774278361; c=relaxed/simple;
+	bh=XKkFS/Ph/EfsTPpPTXVVJ7As++2OOxBDsggtSe/Uk50=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jsBQyOF6DsvzMXRgkA4z67ll3oAapuQhqSd1d7KLU4aAQviahWk/1pgf5Ppdc97FJC6dI+SpIXMYU09YvAMY2vOOtbclTN6cbPuTSQKgG+++HBsFiqmbKrwYWzXsPlorsP1ksVRS/CIllx8qYLjDZm8vjC7TiRuRnSVaaMY6IRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uM9MS/NC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QZ2y+PAqSM4d/MlFGZDVNVSSzQk403OpUqXICSDBJfSH5ChbglHptp2VWs7Uv6+Ow3R4cP0LoE6fO5eBlpqZvEQWFA3JB9SJTU751QrsKI3CrwZ5VE1RVw1SrL2S3slmuSELoWQhTSeaa5RZOAYN1hJV7rGlamFP1Jds3CROZ+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YCTpCM1J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uM9MS/NC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC201C2BC9E;
-	Mon, 23 Mar 2026 15:05:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YCTpCM1J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF54C2BC9E;
+	Mon, 23 Mar 2026 15:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278358;
-	bh=/eTzFrwSuLt7tEWjNbJZCvQkpWHbUr9xjHrXkxUS4MI=;
+	s=korg; t=1774278361;
+	bh=XKkFS/Ph/EfsTPpPTXVVJ7As++2OOxBDsggtSe/Uk50=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uM9MS/NCpmN/cgGeiJf7wzy7AjS8E6oo8DGm32BQWShc3cgerzuKFSrm5A8XK/wgb
-	 5F/eSOhiI3ePhu6O3QSqP4yMMhw9Xj2TH9Mdf4b4LwCV4c4vRSWypxAgWvvRh3AR3B
-	 tSMKNffBZpLT1M1svVgDivmnzO0/8qoESfub9Nk4=
+	b=YCTpCM1JsOSQo1lX6lEKwMzrBm9dBY/lgnNibq7SB/q9BFeolJrr20m8kEUo3WHQ/
+	 AFCPi1oKjvH03lscA3iGxRkCzQImWnxAkcaDMkWIigkz/ktf4CU6CtOX+9tKz574nE
+	 Hz4xHzXPAMjIwuEkhb8SKsN/3809BnmWbMp4vxpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 239/567] amd-xgbe: prevent CRC errors during RX adaptation with AN disabled
-Date: Mon, 23 Mar 2026 14:42:39 +0100
-Message-ID: <20260323134539.747902471@linuxfoundation.org>
+Subject: [PATCH 6.6 230/567] net: sfp: re-implement ignoring the hardware TX_FAULT signal
+Date: Mon, 23 Mar 2026 14:42:30 +0100
+Message-ID: <20260323134539.524711093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,166 +52,94 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 27a4dd0c702b3b2b9cf2c045d100cc2fe8720b81 ]
+[ Upstream commit e184e8609f8c1cd9fef703f667245b6ebd89c2ed ]
 
-When operating in 10GBASE-KR mode with auto-negotiation disabled and RX
-adaptation enabled, CRC errors can occur during the RX adaptation
-process. This happens because the driver continues transmitting and
-receiving packets while adaptation is in progress.
+Re-implement how we ignore the hardware TX_FAULT signal. Rather than
+having a separate boolean for this, use a bitmask of the hardware
+signals that we wish to ignore. This gives more flexibility in the
+future to ignore other signals such as RX_LOS.
 
-Fix this by stopping TX/RX immediately when the link goes down and RX
-adaptation needs to be re-triggered, and only re-enabling TX/RX after
-adaptation completes and the link is confirmed up. Introduce a flag to
-track whether TX/RX was disabled for adaptation so it can be restored
-correctly.
-
-This prevents packets from being transmitted or received during the RX
-adaptation window and avoids CRC errors from corrupted frames.
-
-The flag tracking the data path state is synchronized with hardware
-state in xgbe_start() to prevent stale state after device restarts.
-This ensures that after a restart cycle (where xgbe_stop disables
-TX/RX and xgbe_start re-enables them), the flag correctly reflects
-that the data path is active.
-
-Fixes: 4f3b20bfbb75 ("amd-xgbe: add support for rx-adaptation")
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Link: https://patch.msgid.link/20260306111629.1515676-3-Raju.Rangoju@amd.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Tested-by: Christian Marangi <ansuelsmth@gmail.com>
+Link: https://lore.kernel.org/r/E1qnfXc-008UDY-91@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 87d126852158 ("net: sfp: improve Huawei MA5671a fixup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c    |  4 ++
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 63 ++++++++++++++++++++-
- drivers/net/ethernet/amd/xgbe/xgbe.h        |  4 ++
- 3 files changed, 69 insertions(+), 2 deletions(-)
+ drivers/net/phy/sfp.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index 256969ac2cb9e..67e1d8eacdaed 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1338,6 +1338,10 @@ static int xgbe_start(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
+index ff438be4c186e..5d1456e1449fb 100644
+--- a/drivers/net/phy/sfp.c
++++ b/drivers/net/phy/sfp.c
+@@ -257,6 +257,7 @@ struct sfp {
+ 	unsigned int state_hw_drive;
+ 	unsigned int state_hw_mask;
+ 	unsigned int state_soft_mask;
++	unsigned int state_ignore_mask;
+ 	unsigned int state;
  
- 	hw_if->enable_tx(pdata);
- 	hw_if->enable_rx(pdata);
-+	/* Synchronize flag with hardware state after enabling TX/RX.
-+	 * This prevents stale state after device restart cycles.
-+	 */
-+	pdata->data_path_stopped = false;
+ 	struct delayed_work poll;
+@@ -280,7 +281,6 @@ struct sfp {
+ 	unsigned int rs_state_mask;
  
- 	udp_tunnel_nic_reset_ntf(netdev);
+ 	bool have_a2;
+-	bool tx_fault_ignore;
  
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 469b28c159e7d..0a99a21af5815 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -2125,6 +2125,48 @@ static void xgbe_phy_rx_adaptation(struct xgbe_prv_data *pdata)
- 	xgbe_rx_adaptation(pdata);
+ 	const struct sfp_quirk *quirk;
+ 
+@@ -347,7 +347,7 @@ static void sfp_fixup_long_startup(struct sfp *sfp)
+ 
+ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
+ {
+-	sfp->tx_fault_ignore = true;
++	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
  }
  
-+/*
-+ * xgbe_phy_stop_data_path - Stop TX/RX to prevent packet corruption
-+ * @pdata: driver private data
-+ *
-+ * This function stops the data path (TX and RX) to prevent packet
-+ * corruption during critical PHY operations like RX adaptation.
-+ * Must be called before initiating RX adaptation when link goes down.
-+ */
-+static void xgbe_phy_stop_data_path(struct xgbe_prv_data *pdata)
-+{
-+	if (pdata->data_path_stopped)
-+		return;
-+
-+	/* Stop TX/RX to prevent packet corruption during RX adaptation */
-+	pdata->hw_if.disable_tx(pdata);
-+	pdata->hw_if.disable_rx(pdata);
-+	pdata->data_path_stopped = true;
-+
-+	netif_dbg(pdata, link, pdata->netdev,
-+		  "stopping data path for RX adaptation\n");
-+}
-+
-+/*
-+ * xgbe_phy_start_data_path - Re-enable TX/RX after RX adaptation
-+ * @pdata: driver private data
-+ *
-+ * This function re-enables the data path (TX and RX) after RX adaptation
-+ * has completed successfully. Only called when link is confirmed up.
-+ */
-+static void xgbe_phy_start_data_path(struct xgbe_prv_data *pdata)
-+{
-+	if (!pdata->data_path_stopped)
-+		return;
-+
-+	pdata->hw_if.enable_rx(pdata);
-+	pdata->hw_if.enable_tx(pdata);
-+	pdata->data_path_stopped = false;
-+
-+	netif_dbg(pdata, link, pdata->netdev,
-+		  "restarting data path after RX adaptation\n");
-+}
-+
- static void xgbe_phy_rx_reset(struct xgbe_prv_data *pdata)
- {
- 	int reg;
-@@ -2918,13 +2960,27 @@ static int xgbe_phy_link_status(struct xgbe_prv_data *pdata, int *an_restart)
- 	if (pdata->en_rx_adap) {
- 		/* if the link is available and adaptation is done,
- 		 * declare link up
-+		 *
-+		 * Note: When link is up and adaptation is done, we can
-+		 * safely re-enable the data path if it was stopped
-+		 * for adaptation.
- 		 */
--		if ((reg & MDIO_STAT1_LSTATUS) && pdata->rx_adapt_done)
-+		if ((reg & MDIO_STAT1_LSTATUS) && pdata->rx_adapt_done) {
-+			xgbe_phy_start_data_path(pdata);
- 			return 1;
-+		}
- 		/* If either link is not available or adaptation is not done,
- 		 * retrigger the adaptation logic. (if the mode is not set,
- 		 * then issue mailbox command first)
- 		 */
-+
-+		/* CRITICAL: Stop data path BEFORE triggering RX adaptation
-+		 * to prevent CRC errors from packets corrupted during
-+		 * the adaptation process. This is especially important
-+		 * when AN is OFF in 10G KR mode.
-+		 */
-+		xgbe_phy_stop_data_path(pdata);
-+
- 		if (pdata->mode_set) {
- 			xgbe_phy_rx_adaptation(pdata);
- 		} else {
-@@ -2932,8 +2988,11 @@ static int xgbe_phy_link_status(struct xgbe_prv_data *pdata, int *an_restart)
- 			xgbe_phy_set_mode(pdata, phy_data->cur_mode);
- 		}
+ // For 10GBASE-T short-reach modules
+@@ -800,7 +800,8 @@ static void sfp_soft_start_poll(struct sfp *sfp)
  
--		if (pdata->rx_adapt_done)
-+		if (pdata->rx_adapt_done) {
-+			/* Adaptation complete, safe to re-enable data path */
-+			xgbe_phy_start_data_path(pdata);
- 			return 1;
-+		}
- 	} else if (reg & MDIO_STAT1_LSTATUS)
- 		return 1;
+ 	mutex_lock(&sfp->st_mutex);
+ 	// Poll the soft state for hardware pins we want to ignore
+-	sfp->state_soft_mask = ~sfp->state_hw_mask & mask;
++	sfp->state_soft_mask = ~sfp->state_hw_mask & ~sfp->state_ignore_mask &
++			       mask;
  
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
-index 82a88d0c15e31..ac0f728c5c85d 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
-@@ -1321,6 +1321,10 @@ struct xgbe_prv_data {
- 	bool en_rx_adap;
- 	int rx_adapt_retries;
- 	bool rx_adapt_done;
-+	/* Flag to track if data path (TX/RX) was stopped for RX adaptation.
-+	 * This prevents packet corruption during the adaptation window.
-+	 */
-+	bool data_path_stopped;
- 	bool mode_set;
- };
+ 	if (sfp->state_soft_mask & (SFP_F_LOS | SFP_F_TX_FAULT) &&
+ 	    !sfp->need_poll)
+@@ -2325,7 +2326,7 @@ static int sfp_sm_mod_probe(struct sfp *sfp, bool report)
+ 	sfp->module_t_start_up = T_START_UP;
+ 	sfp->module_t_wait = T_WAIT;
  
+-	sfp->tx_fault_ignore = false;
++	sfp->state_ignore_mask = 0;
+ 
+ 	if (sfp->id.base.extended_cc == SFF8024_ECC_10GBASE_T_SFI ||
+ 	    sfp->id.base.extended_cc == SFF8024_ECC_10GBASE_T_SR ||
+@@ -2348,6 +2349,8 @@ static int sfp_sm_mod_probe(struct sfp *sfp, bool report)
+ 
+ 	if (sfp->quirk && sfp->quirk->fixup)
+ 		sfp->quirk->fixup(sfp);
++
++	sfp->state_hw_mask &= ~sfp->state_ignore_mask;
+ 	mutex_unlock(&sfp->st_mutex);
+ 
+ 	return 0;
+@@ -2848,10 +2851,7 @@ static void sfp_check_state(struct sfp *sfp)
+ 	mutex_lock(&sfp->st_mutex);
+ 	state = sfp_get_state(sfp);
+ 	changed = state ^ sfp->state;
+-	if (sfp->tx_fault_ignore)
+-		changed &= SFP_F_PRESENT | SFP_F_LOS;
+-	else
+-		changed &= SFP_F_PRESENT | SFP_F_LOS | SFP_F_TX_FAULT;
++	changed &= SFP_F_PRESENT | SFP_F_LOS | SFP_F_TX_FAULT;
+ 
+ 	for (i = 0; i < GPIO_MAX; i++)
+ 		if (changed & BIT(i))
 -- 
 2.51.0
 
