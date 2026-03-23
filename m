@@ -1,39 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90E73B3884;
-	Mon, 23 Mar 2026 14:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D923B2FFC;
+	Mon, 23 Mar 2026 14:41:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276878; cv=none; b=CDdRisSZrCAkOWnvxkYS+cR92X8HFWbLSYttYv9d1wKDGOXBS7AKCU1WLgMCD6Mb/i4+ViLbQ5hpEcfAPL0c3TJjIjnnOWlIsdFA0apOesZzPOcEnY+r4gISJ4lcUsfv01gXrP3EcVPDfuS7NqjBz/O/Qw4rIylKUbDAMkCgOWQ=
+	t=1774276880; cv=none; b=rhO8nIEgFQ0tx//YtzISLngbb5nVmT9gzrb5w6tH5MHpsSJBcLJIF2B4ZcxrbUoVve1JsWHDuRnMm7tPv/Qj4Atbo1nEVGfCOojYjzHiW8JendRl0XuqVagWXpE6b33oX5vNzETd0qjxoLmU/9j4bh3mwCPMfc5k4UkyMjwgyYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276878; c=relaxed/simple;
-	bh=82OmYBBaa8GiVOjiY2hvpj/KCHuMXq0z2J/RRPYFXn0=;
+	s=arc-20240116; t=1774276880; c=relaxed/simple;
+	bh=E97Jwtv8B9QIG4ywpP9s5or7pti2J2DdiZtw6B0qYEE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hUuEsx874/IhDeGWsxdBOdDwUpQ/lRD66UqEnUJ4bjxftCuza4fUb+rtAcyP9YoDFJJvmr/2OpNjRFsh0kwuZ1D0J+3/nvAWtiWc5oZejip/0o0NHn5QHGU/oliZGMt69tofg3uNtly5sByJJRjoxBndGyD8ZG02LzmoC+h2hls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=taPlFWA9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rSH56ohkfmnu0wc/OqjUIHU/JkrD/PHo2z+9V4MdRmTzubDcnD1QYcIoZMrLYVU/mzpcKX5zNBb1lO8gbh2M0RozCEhm28NystuT/JDNmQ4WcMTjj5HLe8tgaaIbJZQGA/0j8KGx1J/n23DQm6hq4JgR28yGToUVz2JtcRcwJUc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoJAcrcc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="taPlFWA9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2B6C4CEF7;
-	Mon, 23 Mar 2026 14:41:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoJAcrcc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BCBC2BCB3;
+	Mon, 23 Mar 2026 14:41:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276878;
-	bh=82OmYBBaa8GiVOjiY2hvpj/KCHuMXq0z2J/RRPYFXn0=;
+	s=korg; t=1774276880;
+	bh=E97Jwtv8B9QIG4ywpP9s5or7pti2J2DdiZtw6B0qYEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=taPlFWA9Is0hs0tplFNBDJDIaUd28ldvrb4gM6WdLLJaHoAU7oajeU/jEhDqE03e+
-	 SMYKBPECpjyZC+e6Fo97izOb/j2cK5K1a9Z3hYvjUssHOPE983yYcXD2z1jxUZyi0W
-	 uDFhy+XkgW2kbgXlKLxqp/qsqYj/1Wb8enDIZZ4k=
+	b=FoJAcrccLevW6E8VLJJg0tTSQRzhv3cVVkF/MhdBTFvANXAOxByCEVeK8gdR/jUs1
+	 8KaKc15o4l5t1Sc4RHkNlSaPSqa0BWq8TNGPIQDm0Bp5ayk5CMCDBPdiZ+aBtCJdBO
+	 ztJ5k9FYnpdGzpSQr5Ap2sKTuLR5f/KE6NhOdlCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <martineau@kernel.org>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Michal Suchanek <msuchanek@suse.de>,
+	Rainer Fiebig <jrf@mailbox.org>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Nicolas Schier <nsc@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 236/460] selftests: mptcp: join: check RM_ADDR not sent over same subflow
-Date: Mon, 23 Mar 2026 14:43:52 +0100
-Message-ID: <20260323134532.296910120@linuxfoundation.org>
+Subject: [PATCH 6.12 237/460] kbuild: Leave objtool binary around with make clean
+Date: Mon, 23 Mar 2026 14:43:53 +0100
+Message-ID: <20260323134532.328196712@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,113 +55,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 560edd99b5f58b2d4bbe3c8e51e1eed68d887b0e ]
+[ Upstream commit fdb12c8a24a453bdd6759979b6ef1e04ebd4beb4 ]
 
-This validates the previous commit: RM_ADDR were sent over the first
-found active subflow which could be the same as the one being removed.
-It is more likely to loose this notification.
+The difference between 'make clean' and 'make mrproper' is documented in
+'make help' as:
 
-For this check, RM_ADDR are explicitly dropped when trying to send them
-over the initial subflow, when removing the endpoint attached to it. If
-it is dropped, the test will complain because some RM_ADDR have not been
-received.
+  clean     - Remove most generated files but keep the config and
+              enough build support to build external modules
+  mrproper  - Remove all generated files + config + various backup files
 
-Note that only the RM_ADDR are dropped, to allow the linked subflow to
-be quickly and cleanly closed. To only drop those RM_ADDR, a cBPF byte
-code is used. If the IPTables commands fail, that's OK, the tests will
-continue to pass, but not validate this part. This can be ignored:
-another subtest fully depends on such command, and will be marked as
-skipped.
+After commit 68b4fe32d737 ("kbuild: Add objtool to top-level clean
+target"), running 'make clean' then attempting to build an external
+module with the resulting build directory fails with
 
-The 'Fixes' tag here below is the same as the one from the previous
-commit: this patch here is not fixing anything wrong in the selftests,
-but it validates the previous fix for an issue introduced by this commit
-ID.
+  $ make ARCH=x86_64 O=build clean
 
-Fixes: 8dd5efb1f91b ("mptcp: send ack for rm_addr")
+  $ make -C build M=... MO=...
+  ...
+  /bin/sh: line 1: .../build/tools/objtool/objtool: No such file or directory
+
+as 'make clean' removes the objtool binary.
+
+Split the objtool clean target into mrproper and clean like Kbuild does
+and remove all generated artifacts with 'make clean' except for the
+objtool binary, which is removed with 'make mrproper'. To avoid a small
+race when running the objtool clean target through both objtool_mrproper
+and objtool_clean when running 'make mrproper', modify objtool's clean
+up find command to avoid using find's '-delete' command by piping the
+files into 'xargs rm -f' like the rest of Kbuild does.
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Mat Martineau <martineau@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-3-4b5462b6f016@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 68b4fe32d737 ("kbuild: Add objtool to top-level clean target")
+Reported-by: Michal Suchanek <msuchanek@suse.de>
+Closes: https://lore.kernel.org/20260225112633.6123-1-msuchanek@suse.de/
+Reported-by: Rainer Fiebig <jrf@mailbox.org>
+Closes: https://lore.kernel.org/62d12399-76e5-3d40-126a-7490b4795b17@mailbox.org/
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Nicolas Schier <nsc@kernel.org>
+Tested-by: Nicolas Schier <nsc@kernel.org>
+Link: https://patch.msgid.link/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/mptcp_join.sh |   36 ++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ Makefile               |    8 ++++----
+ tools/objtool/Makefile |    8 +++++---
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
-+++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
-@@ -91,6 +91,24 @@ CBPF_MPTCP_SUBOPTION_ADD_ADDR="14,
- 			       6 0 0 65535,
- 			       6 0 0 0"
+--- a/Makefile
++++ b/Makefile
+@@ -1371,13 +1371,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
+ 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
+ endif
  
-+# IPv4: TCP hdr of 48B, a first suboption of 12B (DACK8), the RM_ADDR suboption
-+# generated using "nfbpf_compile '(ip[32] & 0xf0) == 0xc0 && ip[53] == 0x0c &&
-+#				  (ip[66] & 0xf0) == 0x40'"
-+CBPF_MPTCP_SUBOPTION_RM_ADDR="13,
-+			      48 0 0 0,
-+			      84 0 0 240,
-+			      21 0 9 64,
-+			      48 0 0 32,
-+			      84 0 0 240,
-+			      21 0 6 192,
-+			      48 0 0 53,
-+			      21 0 4 12,
-+			      48 0 0 66,
-+			      84 0 0 240,
-+			      21 0 1 64,
-+			      6 0 0 65535,
-+			      6 0 0 0"
+-PHONY += objtool_clean
++PHONY += objtool_clean objtool_mrproper
+ 
+ objtool_O = $(abspath $(objtree))/tools/objtool
+ 
+-objtool_clean:
++objtool_clean objtool_mrproper:
+ ifneq ($(wildcard $(objtool_O)),)
+-	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
++	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) $(patsubst objtool_%,%,$@)
+ endif
+ 
+ tools/: FORCE
+@@ -1548,7 +1548,7 @@ PHONY += $(mrproper-dirs) mrproper
+ $(mrproper-dirs):
+ 	$(Q)$(MAKE) $(clean)=$(patsubst _mrproper_%,%,$@)
+ 
+-mrproper: clean $(mrproper-dirs)
++mrproper: clean objtool_mrproper $(mrproper-dirs)
+ 	$(call cmd,rmfiles)
+ 	@find . $(RCS_FIND_IGNORE) \
+ 		\( -name '*.rmeta' \) \
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -91,10 +91,12 @@ $(LIBSUBCMD)-clean:
+ 	$(Q)$(RM) -r -- $(LIBSUBCMD_OUTPUT)
+ 
+ clean: $(LIBSUBCMD)-clean
+-	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
+-	$(Q)find $(OUTPUT) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
++	$(Q)find $(OUTPUT) \( -name '*.o' -o -name '\.*.cmd' -o -name '\.*.d' \) -type f -print | xargs $(RM)
+ 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/inat-tables.c $(OUTPUT)fixdep
+ 
++mrproper: clean
++	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
 +
- init_partial()
- {
- 	capout=$(mktemp)
-@@ -3867,6 +3885,14 @@ endpoint_tests()
- 		chk_subflow_nr "after no reject" 3
- 		chk_mptcp_info subflows 2 subflows 2
+ FORCE:
  
-+		# To make sure RM_ADDR are sent over a different subflow, but
-+		# allow the rest to quickly and cleanly close the subflow
-+		local ipt=1
-+		ip netns exec "${ns2}" ${iptables} -I OUTPUT -s "10.0.1.2" \
-+			-p tcp -m tcp --tcp-option 30 \
-+			-m bpf --bytecode \
-+			"$CBPF_MPTCP_SUBOPTION_RM_ADDR" \
-+			-j DROP || ipt=0
- 		local i
- 		for i in $(seq 3); do
- 			pm_nl_del_endpoint $ns2 1 10.0.1.2
-@@ -3879,6 +3905,7 @@ endpoint_tests()
- 			chk_subflow_nr "after re-add id 0 ($i)" 3
- 			chk_mptcp_info subflows 3 subflows 3
- 		done
-+		[ ${ipt} = 1 ] && ip netns exec "${ns2}" ${iptables} -D OUTPUT 1
- 
- 		mptcp_lib_kill_group_wait $tests_pid
- 
-@@ -3938,11 +3965,20 @@ endpoint_tests()
- 		chk_mptcp_info subflows 2 subflows 2
- 		chk_mptcp_info add_addr_signal 2 add_addr_accepted 2
- 
-+		# To make sure RM_ADDR are sent over a different subflow, but
-+		# allow the rest to quickly and cleanly close the subflow
-+		local ipt=1
-+		ip netns exec "${ns1}" ${iptables} -I OUTPUT -s "10.0.1.1" \
-+			-p tcp -m tcp --tcp-option 30 \
-+			-m bpf --bytecode \
-+			"$CBPF_MPTCP_SUBOPTION_RM_ADDR" \
-+			-j DROP || ipt=0
- 		pm_nl_del_endpoint $ns1 42 10.0.1.1
- 		sleep 0.5
- 		chk_subflow_nr "after delete ID 0" 2
- 		chk_mptcp_info subflows 2 subflows 2
- 		chk_mptcp_info add_addr_signal 2 add_addr_accepted 2
-+		[ ${ipt} = 1 ] && ip netns exec "${ns1}" ${iptables} -D OUTPUT 1
- 
- 		pm_nl_add_endpoint $ns1 10.0.1.1 id 99 flags signal
- 		wait_mpj $ns2
+-.PHONY: clean FORCE
++.PHONY: clean mrproper FORCE
 
 
