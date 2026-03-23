@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4D493BE166;
-	Mon, 23 Mar 2026 16:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C19D3BAD80;
+	Mon, 23 Mar 2026 16:16:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282564; cv=none; b=rnL65ocrcECcT6S1EJCdeua/8OiJbUUeU8Cyr2Ut6nkn5rGOHtoqTLvmGwdFUAk4BLbXxg+8J8/F7B8KIrQx9Zr0lou0Q5meiv/xZQ/G1WWb3xdosIZtp2efJPTH9FW5JgIJYnh+K2WaSgczT+/juclFRd6EXcIdqTlqqQCIMqI=
+	t=1774282567; cv=none; b=WUNpXcE/VLtnQxII5zd0PZUODuT03k+YnQrBrqVl6yFG+7XVutlkd7zMUCmAMGI4gE19/l3dl/rHaCTUgBw9PWqNfJ5Fx50KLQVavRCsPNu6yrLTq8iuZAo00RSE4IsOFEdOrdkIdHyQHJysX4FcJs6tmLVnw2EQ7fWED95X/bQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282564; c=relaxed/simple;
-	bh=QQAeiDncgIPoQDE61+fRMb0wMUgMAzn706eaxWwyAzQ=;
+	s=arc-20240116; t=1774282567; c=relaxed/simple;
+	bh=P/7IQ6vuON5dfNuhkCvEUueGefzrKOT3ADtMi/DzD7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eIl/cpxl4Z36yKY3JrJrsZZ+249rwcVenC/mNBwI7AqcspKQe8m+DrPFpGaTV3gk2+JY4HYdDPTNB4YLb/Utd9oyISlyLwyc7UVY2f+HODH/SLtXgrk2F2JDcx/b8iuvFGE/wL/5CTnxNiFS1LUcr2vROtGJq3bw+CVQnsybfJ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MjqDZJoF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mQwoZwimNmNZZ9b28g8QztWpTKY4jlnwC69wn3UPp6GF/Z2hP+JfjVDeXAEALAndQDyoxMZ+4EoGbGz59jRJ6W3/hFjn9vvlWszKUrFBBa8r3QTdKwQraJAx56g+MNNMjAz9tvHTwpYsvIfkQzzx21y9LYL2b18GXSjWrWuQjso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u8rVSNK9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MjqDZJoF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A257C2BC9E;
-	Mon, 23 Mar 2026 16:16:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u8rVSNK9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0A5C2BC9E;
+	Mon, 23 Mar 2026 16:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282563;
-	bh=QQAeiDncgIPoQDE61+fRMb0wMUgMAzn706eaxWwyAzQ=;
+	s=korg; t=1774282566;
+	bh=P/7IQ6vuON5dfNuhkCvEUueGefzrKOT3ADtMi/DzD7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjqDZJoFHL8dPDrefeATO5iz3y5ieckww8Xug1ikRfTWR6R//iLPRYkSYDA+GBdjr
-	 VDXpoNWglWl/B18YG/7PnCfpB4PjG6qrJq52Mzc++fooxcmG8Tp6AklD4TxCLe+ya/
-	 Wg4V39alJxai2Pty6Z/ANdoiKY1+XeIjxZg6faMI=
+	b=u8rVSNK96RAC4RhFN36+FbMLaos3eHj0JSvd835G3076tjsI4mstsTL9uARH5TEQO
+	 FDL70sReXir9TkC2yPcSrk9CXboYD65PJvtesJdNFfTxuoxRTiTBEG70bqlEzQRUq+
+	 YnWcF5xrRnTL1BJYIemjn5O0Gx607goFJ/Ssi/ZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 186/481] i40e: fix src IP mask checks and memcpy argument names in cloud filter
-Date: Mon, 23 Mar 2026 14:42:48 +0100
-Message-ID: <20260323134529.735611501@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	A1RM4X <dev@a1rm4x.com>
+Subject: [PATCH 6.1 204/481] USB: add QUIRK_NO_BOS for video capture several devices
+Date: Mon, 23 Mar 2026 14:43:06 +0100
+Message-ID: <20260323134530.145281696@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,85 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: A1RM4X <dev@a1rm4x.com>
 
-[ Upstream commit e809085f492842ce7a519c9ef72d40f4bca89c13 ]
+commit 93cd0d664661f58f7e7bed7373714ab2ace41734 upstream.
 
-Fix following issues in the IPv4 and IPv6 cloud filter handling logic in
-both the add and delete paths:
+Several USB capture devices also need the USB_QUIRK_NO_BOS set for them
+to work properly, odds are they are all the same chip inside, just
+different vendor/product ids.
 
-- The source-IP mask check incorrectly compares mask.src_ip[0] against
-  tcf.dst_ip[0]. Update it to compare against tcf.src_ip[0]. This likely
-  goes unnoticed because the check is in an "else if" path that only
-  executes when dst_ip is not set, most cloud filter use cases focus on
-  destination-IP matching, and the buggy condition can accidentally
-  evaluate true in some cases.
+This fixes up:
+  - ASUS TUF 4K PRO
+  - Avermedia Live Gamer Ultra 2.1 (GC553G2)
+  - UGREEN 35871
+to now run at full speed (10 Gbps/4K 60 fps mode.)
 
-- memcpy() for the IPv4 source address incorrectly uses
-  ARRAY_SIZE(tcf.dst_ip) instead of ARRAY_SIZE(tcf.src_ip), although
-  both arrays are the same size.
-
-- The IPv4 memcpy operations used ARRAY_SIZE(tcf.dst_ip) and ARRAY_SIZE
-  (tcf.src_ip), Update these to use sizeof(cfilter->ip.v4.dst_ip) and
-  sizeof(cfilter->ip.v4.src_ip) to ensure correct and explicit copy size.
-
-- In the IPv6 delete path, memcmp() uses sizeof(src_ip6) when comparing
-  dst_ip6 fields. Replace this with sizeof(dst_ip6) to make the intent
-  explicit, even though both fields are struct in6_addr.
-
-Fixes: e284fc280473 ("i40e: Add and delete cloud filter")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/CACy+XB-f-51xGpNQFCSm5pE_momTQLu=BaZggHYU1DiDmFX=ug@mail.gmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: A1RM4X <dev@a1rm4x.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/usb/core/quirks.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-index 1bba77347efbb..73ef73c69bd0a 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_virtchnl_pf.c
-@@ -3755,10 +3755,10 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		cfilter.n_proto = ETH_P_IP;
- 		if (mask.dst_ip[0] & tcf.dst_ip[0])
- 			memcpy(&cfilter.ip.v4.dst_ip, tcf.dst_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
--		else if (mask.src_ip[0] & tcf.dst_ip[0])
-+			       sizeof(cfilter.ip.v4.dst_ip));
-+		else if (mask.src_ip[0] & tcf.src_ip[0])
- 			memcpy(&cfilter.ip.v4.src_ip, tcf.src_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
-+			       sizeof(cfilter.ip.v4.src_ip));
- 		break;
- 	case VIRTCHNL_TCP_V6_FLOW:
- 		cfilter.n_proto = ETH_P_IPV6;
-@@ -3813,7 +3813,7 @@ static int i40e_vc_del_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		/* for ipv6, mask is set for all sixteen bytes (4 words) */
- 		if (cfilter.n_proto == ETH_P_IPV6 && mask.dst_ip[3])
- 			if (memcmp(&cfilter.ip.v6.dst_ip6, &cf->ip.v6.dst_ip6,
--				   sizeof(cfilter.ip.v6.src_ip6)))
-+				   sizeof(cfilter.ip.v6.dst_ip6)))
- 				continue;
- 		if (mask.vlan_id)
- 			if (cfilter.vlan_id != cf->vlan_id)
-@@ -3901,10 +3901,10 @@ static int i40e_vc_add_cloud_filter(struct i40e_vf *vf, u8 *msg)
- 		cfilter->n_proto = ETH_P_IP;
- 		if (mask.dst_ip[0] & tcf.dst_ip[0])
- 			memcpy(&cfilter->ip.v4.dst_ip, tcf.dst_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
--		else if (mask.src_ip[0] & tcf.dst_ip[0])
-+			       sizeof(cfilter->ip.v4.dst_ip));
-+		else if (mask.src_ip[0] & tcf.src_ip[0])
- 			memcpy(&cfilter->ip.v4.src_ip, tcf.src_ip,
--			       ARRAY_SIZE(tcf.dst_ip));
-+			       sizeof(cfilter->ip.v4.src_ip));
- 		break;
- 	case VIRTCHNL_TCP_V6_FLOW:
- 		cfilter->n_proto = ETH_P_IPV6;
--- 
-2.51.0
-
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -377,6 +377,9 @@ static const struct usb_device_id usb_qu
+ 	/* SanDisk Extreme 55AE */
+ 	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* Avermedia Live Gamer Ultra 2.1 (GC553G2) - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x07ca, 0x2553), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Realforce 87U Keyboard */
+ 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
+ 
+@@ -434,6 +437,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0b05, 0x17e0), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
+ 
++	/* ASUS TUF 4K PRO - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x0b05, 0x1ab9), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Realtek Semiconductor Corp. Mass Storage Device (Multicard Reader)*/
+ 	{ USB_DEVICE(0x0bda, 0x0151), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
+ 
+@@ -562,6 +568,9 @@ static const struct usb_device_id usb_qu
+ 
+ 	{ USB_DEVICE(0x2386, 0x350e), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* UGREEN 35871 - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x2b89, 0x5871), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* APTIV AUTOMOTIVE HUB */
+ 	{ USB_DEVICE(0x2c48, 0x0132), .driver_info =
+ 			USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT },
 
 
