@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43FB43A963B;
-	Mon, 23 Mar 2026 14:49:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5B43AF672;
+	Mon, 23 Mar 2026 14:49:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277373; cv=none; b=RY8VUvDNqu35El5n3ND3ugEoPR+mV9F3aGHHARq10mYKkLgyVSlUDWAGXv4NJtj8dXTpZJzw9/XAiScDbUIDzlPEtkIW1KXhKocPEmoFCrpPGiOB3ldXjrOI0ajRGkOImhEnduAoMFu9844YyyARcNFO1t4B8MQDZXu0KfcvMIo=
+	t=1774277376; cv=none; b=szIXG1O5lMAzY81Wy4nA3ix2fgIgcdIv0Q7ifSeZ3FgYD90EKXc3kP+FlEPTDsMhRB2oARO8sU+i+aJYnhny80HuCU1cWL/P+a51oHrr3ikQpNhprvjScU/jK9F+iabCikn9V2dpMKtHr5CO/IFY7rAeD6IkhPhAN76SPKEZwPI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277373; c=relaxed/simple;
-	bh=jn20MgFsR4ncDyscMXL3uuuQBT5eGLPchil/BWep51c=;
+	s=arc-20240116; t=1774277376; c=relaxed/simple;
+	bh=NmK4NgFt6WXt/612Rs0iexWd+4uSInB1pd39fhcM1OU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyV2NXr4O7epC/qaTwZcc2dJb+zrGnVE8+6SBMXDheOy0ECsf8Vcmcgc4LNTd3SJC1llD60diC4Wco3gdMoq5qX6LKJASUxkUTR3C42xcJEZE2S89AG3TMwPwb7HpgpQ5+Cxt+q1T8h0T2SFDPS3OO5PoXPrEqmhCfF+wJSCRWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jC/p7M6Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BYqUOEzJcdzFNT30caVTtGURZMkV173g03igRfCxqPVa610/5iUC5qov7a+kWOEX3jyIFCxmFGqP8wDfP70wLee4R+1e0AjrVnQ1HQ4xZzMxacW0wETpiQI69XHgGHThNHvNZ+i9dFCOl9UGW4RToAzyTtUNsJe9rF/UfvzTWPE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RubdQG6w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jC/p7M6Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1377C4CEF7;
-	Mon, 23 Mar 2026 14:49:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RubdQG6w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62627C2BC9E;
+	Mon, 23 Mar 2026 14:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277373;
-	bh=jn20MgFsR4ncDyscMXL3uuuQBT5eGLPchil/BWep51c=;
+	s=korg; t=1774277375;
+	bh=NmK4NgFt6WXt/612Rs0iexWd+4uSInB1pd39fhcM1OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jC/p7M6QaZi9X81JUmHc0cV+xwLnxFJUPXik85sxS+rxI0eCiEJPFvW4NE5egzATb
-	 8bJO8KjxctA2RqK1jAlNknyCYtV3ObMeEcv2a6l8cZmxBVI2KLXWk9oR5Pkk+Dc3wP
-	 0ebEdST6kDpBwlmI6Vqco+DxKmrjLxVCxDzLBB6M=
+	b=RubdQG6wLzdx3/ES0wAg/cocc65DOPROgAz+F2VbzvCUZMUtmx/DV1CXn1xjqyAYE
+	 nGB0ZnFaVZY7ROPEui0/jUrgR0ToncW0XgWCK3cHDmxrDTQWOKBf9K+n31MfHMY1qQ
+	 qiAZnA5SXcU0tQI0kGSWgxgKS1vPq3a0nXO6VcPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keenan Dong <keenanat2000@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com,
+	"Nikola Z. Ivanov" <zlatistiv@gmail.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 414/460] clsact: Fix use-after-free in init/destroy rollback asymmetry
-Date: Mon, 23 Mar 2026 14:46:50 +0100
-Message-ID: <20260323134536.720972559@linuxfoundation.org>
+Subject: [PATCH 6.12 415/460] net: usb: aqc111: Do not perform PM inside suspend callback
+Date: Mon, 23 Mar 2026 14:46:51 +0100
+Message-ID: <20260323134536.744779148@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,114 +52,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Borkmann <daniel@iogearbox.net>
+From: Nikola Z. Ivanov <zlatistiv@gmail.com>
 
-[ Upstream commit a0671125d4f55e1e98d9bde8a0b671941987e208 ]
+[ Upstream commit 069c8f5aebe4d5224cf62acc7d4b3486091c658a ]
 
-Fix a use-after-free in the clsact qdisc upon init/destroy rollback asymmetry.
-The latter is achieved by first fully initializing a clsact instance, and
-then in a second step having a replacement failure for the new clsact qdisc
-instance. clsact_init() initializes ingress first and then takes care of the
-egress part. This can fail midway, for example, via tcf_block_get_ext(). Upon
-failure, the kernel will trigger the clsact_destroy() callback.
+syzbot reports "task hung in rpm_resume"
 
-Commit 1cb6f0bae504 ("bpf: Fix too early release of tcx_entry") details the
-way how the transition is happening. If tcf_block_get_ext on the q->ingress_block
-ends up failing, we took the tcx_miniq_inc reference count on the ingress
-side, but not yet on the egress side. clsact_destroy() tests whether the
-{ingress,egress}_entry was non-NULL. However, even in midway failure on the
-replacement, both are in fact non-NULL with a valid egress_entry from the
-previous clsact instance.
+This is caused by aqc111_suspend calling
+the PM variant of its write_cmd routine.
 
-What we really need to test for is whether the qdisc instance-specific ingress
-or egress side previously got initialized. This adds a small helper for checking
-the miniq initialization called mini_qdisc_pair_inited, and utilizes that upon
-clsact_destroy() in order to fix the use-after-free scenario. Convert the
-ingress_destroy() side as well so both are consistent to each other.
+The simplified call trace looks like this:
 
-Fixes: 1cb6f0bae504 ("bpf: Fix too early release of tcx_entry")
-Reported-by: Keenan Dong <keenanat2000@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: Martin KaFai Lau <martin.lau@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://patch.msgid.link/20260313065531.98639-1-daniel@iogearbox.net
+rpm_suspend()
+  usb_suspend_both() - here udev->dev.power.runtime_status == RPM_SUSPENDING
+    aqc111_suspend() - called for the usb device interface
+      aqc111_write32_cmd()
+        usb_autopm_get_interface()
+          pm_runtime_resume_and_get()
+            rpm_resume() - here we call rpm_resume() on our parent
+              rpm_resume() - Here we wait for a status change that will never happen.
+
+At this point we block another task which holds
+rtnl_lock and locks up the whole networking stack.
+
+Fix this by replacing the write_cmd calls with their _nopm variants
+
+Reported-by: syzbot+48dc1e8dfc92faf1124c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=48dc1e8dfc92faf1124c
+Fixes: e58ba4544c77 ("net: usb: aqc111: Add support for wake on LAN by MAGIC packet")
+Signed-off-by: Nikola Z. Ivanov <zlatistiv@gmail.com>
+Link: https://patch.msgid.link/20260313141643.1181386-1-zlatistiv@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sch_generic.h |  5 +++++
- net/sched/sch_ingress.c   | 14 ++++++++------
- 2 files changed, 13 insertions(+), 6 deletions(-)
+ drivers/net/usb/aqc111.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
-index 28a7aaa4c0cdf..d3e1f91f81cde 100644
---- a/include/net/sch_generic.h
-+++ b/include/net/sch_generic.h
-@@ -1406,6 +1406,11 @@ void mini_qdisc_pair_init(struct mini_Qdisc_pair *miniqp, struct Qdisc *qdisc,
- void mini_qdisc_pair_block_init(struct mini_Qdisc_pair *miniqp,
- 				struct tcf_block *block);
+diff --git a/drivers/net/usb/aqc111.c b/drivers/net/usb/aqc111.c
+index 9201ee10a13f7..d316aa66dbc23 100644
+--- a/drivers/net/usb/aqc111.c
++++ b/drivers/net/usb/aqc111.c
+@@ -1400,14 +1400,14 @@ static int aqc111_suspend(struct usb_interface *intf, pm_message_t message)
+ 		aqc111_write16_cmd_nopm(dev, AQ_ACCESS_MAC,
+ 					SFR_MEDIUM_STATUS_MODE, 2, &reg16);
  
-+static inline bool mini_qdisc_pair_inited(struct mini_Qdisc_pair *miniqp)
-+{
-+	return !!miniqp->p_miniq;
-+}
-+
- void mq_change_real_num_tx(struct Qdisc *sch, unsigned int new_real_tx);
+-		aqc111_write_cmd(dev, AQ_WOL_CFG, 0, 0,
+-				 WOL_CFG_SIZE, &wol_cfg);
+-		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
+-				   &aqc111_data->phy_cfg);
++		aqc111_write_cmd_nopm(dev, AQ_WOL_CFG, 0, 0,
++				      WOL_CFG_SIZE, &wol_cfg);
++		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
++					&aqc111_data->phy_cfg);
+ 	} else {
+ 		aqc111_data->phy_cfg |= AQ_LOW_POWER;
+-		aqc111_write32_cmd(dev, AQ_PHY_OPS, 0, 0,
+-				   &aqc111_data->phy_cfg);
++		aqc111_write32_cmd_nopm(dev, AQ_PHY_OPS, 0, 0,
++					&aqc111_data->phy_cfg);
  
- int sch_frag_xmit_hook(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb));
-diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
-index cc6051d4f2ef8..c3e18bae8fbfc 100644
---- a/net/sched/sch_ingress.c
-+++ b/net/sched/sch_ingress.c
-@@ -113,14 +113,15 @@ static void ingress_destroy(struct Qdisc *sch)
- {
- 	struct ingress_sched_data *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
--	struct bpf_mprog_entry *entry = rtnl_dereference(dev->tcx_ingress);
-+	struct bpf_mprog_entry *entry;
- 
- 	if (sch->parent != TC_H_INGRESS)
- 		return;
- 
- 	tcf_block_put_ext(q->block, sch, &q->block_info);
- 
--	if (entry) {
-+	if (mini_qdisc_pair_inited(&q->miniqp)) {
-+		entry = rtnl_dereference(dev->tcx_ingress);
- 		tcx_miniq_dec(entry);
- 		if (!tcx_entry_is_active(entry)) {
- 			tcx_entry_update(dev, NULL, true);
-@@ -290,10 +291,9 @@ static int clsact_init(struct Qdisc *sch, struct nlattr *opt,
- 
- static void clsact_destroy(struct Qdisc *sch)
- {
-+	struct bpf_mprog_entry *ingress_entry, *egress_entry;
- 	struct clsact_sched_data *q = qdisc_priv(sch);
- 	struct net_device *dev = qdisc_dev(sch);
--	struct bpf_mprog_entry *ingress_entry = rtnl_dereference(dev->tcx_ingress);
--	struct bpf_mprog_entry *egress_entry = rtnl_dereference(dev->tcx_egress);
- 
- 	if (sch->parent != TC_H_CLSACT)
- 		return;
-@@ -301,7 +301,8 @@ static void clsact_destroy(struct Qdisc *sch)
- 	tcf_block_put_ext(q->ingress_block, sch, &q->ingress_block_info);
- 	tcf_block_put_ext(q->egress_block, sch, &q->egress_block_info);
- 
--	if (ingress_entry) {
-+	if (mini_qdisc_pair_inited(&q->miniqp_ingress)) {
-+		ingress_entry = rtnl_dereference(dev->tcx_ingress);
- 		tcx_miniq_dec(ingress_entry);
- 		if (!tcx_entry_is_active(ingress_entry)) {
- 			tcx_entry_update(dev, NULL, true);
-@@ -309,7 +310,8 @@ static void clsact_destroy(struct Qdisc *sch)
- 		}
- 	}
- 
--	if (egress_entry) {
-+	if (mini_qdisc_pair_inited(&q->miniqp_egress)) {
-+		egress_entry = rtnl_dereference(dev->tcx_egress);
- 		tcx_miniq_dec(egress_entry);
- 		if (!tcx_entry_is_active(egress_entry)) {
- 			tcx_entry_update(dev, NULL, false);
+ 		/* Disable RX path */
+ 		aqc111_read16_cmd_nopm(dev, AQ_ACCESS_MAC,
 -- 
 2.51.0
 
