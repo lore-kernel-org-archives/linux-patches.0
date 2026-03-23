@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0757F3AC0D2;
-	Mon, 23 Mar 2026 14:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931273B2FC1;
+	Mon, 23 Mar 2026 14:07:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274833; cv=none; b=EwnIriAQRO6oYy4B6BrWmkhMNljvJqP/2lAgK/RF274Pu3amY9GQRSjNYlSb6KYKoKiD3HUxQJh7lfcX4j5zXRbd+h3DWzqMoGZJ6BXf/OSPi0Wm0nQzv5Zzy8mvXJ5jcy1/DhHC/MeJfbA/2l3kBVmCrrOjh3+yztFRpiMpSks=
+	t=1774274835; cv=none; b=YR+Cx6cK9iRhh/jDoXPN3f+yiwgjtX/KteCImSFRSH3SBO7kX/QUe8KeIku4Vofa9fDy8oux+q+A3RHaQICFTCuTbmHZgloeWZS5/BvsImbOY5+N3fAuIjtUMPlUoQ/mnTVK140yysj0IfPTLeUgUIRr1ohjYRO6pDEeb7BYf94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274833; c=relaxed/simple;
-	bh=J0LL6U8opAHylyxxksVd9A2tnyORpi0oAE0OKFoqGmE=;
+	s=arc-20240116; t=1774274835; c=relaxed/simple;
+	bh=EoJToR9SnxbCKQVUK/Ey/OIv4Tt09t/xstUl4o8t3Xk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=a6tu3khb9tMU4zBJVWpyGCpf6MSyV/dYrctJ+pOsSRVjqRrNP1VBqIY6999OStJp/w0oePPMU/AjA2rxT7b7dizEDg147yv2TRW4lZOUK1pZ9JnPBgghW/WT6rsrxrSvnK1Zup6isvNGkq43vwFlLCm7rcxSZwTPRMuCmcpeR04=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1wqmucPs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sigr4vTNudNrP4buH1TN+XiEk8Ql/Z4WQP9QqfIQK2RZI/vbzcGz0EziGHwIS8hB8lJPlZmVMfSmvkwl2dLr8z/nC1p+DLf0+eTjXZUYOM602joNiIcp3OvE4m+F2zF8IPxLKfjU+YqUq0MdEvRsvvwwCmfv/ivJzqsBtLmbXIs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wBt2iTml; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1wqmucPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91380C4CEF7;
-	Mon, 23 Mar 2026 14:07:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wBt2iTml"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F37C4CEF7;
+	Mon, 23 Mar 2026 14:07:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274832;
-	bh=J0LL6U8opAHylyxxksVd9A2tnyORpi0oAE0OKFoqGmE=;
+	s=korg; t=1774274835;
+	bh=EoJToR9SnxbCKQVUK/Ey/OIv4Tt09t/xstUl4o8t3Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1wqmucPsC9SiB2VH6xd/GyXrkB/sXkzl6s4e4OQBqZPC+Ar1sC1zfLC4GldGY7su5
-	 oMkmLJS/fx93z+y7Us3mNR61gmNSa9BDffhWDMj1dh71hpB9CPXtjznfspGYpygj34
-	 mIPcU+8LCHPv1QbKbTk6/g/H9YW2VCQ52/GB4SRo=
+	b=wBt2iTml1AoC0RH9rHSGQvxhM4C9eJSqKQxnDT2/C6XHEloz812EMIxk90vdbZRKf
+	 +/RQR2HObPX79hXslrKdc5+ZiP/UJx8nNIN6yhrm3/tzRoAA9CcgnKYNlWe+K0F0S4
+	 ZhP7ePG6LMIocB094wzLNxuJTVlGkGWOB1fvXkKs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
+	Christian Eggers <ceggers@arri.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 121/212] firmware: arm_scmi: Fix NULL dereference on notify error path
-Date: Mon, 23 Mar 2026 14:45:42 +0100
-Message-ID: <20260323134507.592808249@linuxfoundation.org>
+Subject: [PATCH 6.18 122/212] Bluetooth: LE L2CAP: Disconnect if received packets SDU exceeds IMTU
+Date: Mon, 23 Mar 2026 14:45:43 +0100
+Message-ID: <20260323134507.625539787@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,50 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit 555317d6100164748f7d09f80142739bd29f0cda ]
+[ Upstream commit e1d9a66889867c232657a9b6f25d451d7c3ab96f ]
 
-Since commit b5daf93b809d1 ("firmware: arm_scmi: Avoid notifier
-registration for unsupported events") the call chains leading to the helper
-__scmi_event_handler_get_ops expect an ERR_PTR to be returned on failure to
-get an handler for the requested event key, while the current helper can
-still return a NULL when no handler could be found or created.
+Core 6.0, Vol 3, Part A, 3.4.3:
+"If the SDU length field value exceeds the receiver's MTU, the receiver
+shall disconnect the channel..."
 
-Fix by forcing an ERR_PTR return value when the handler reference is NULL.
+This fixes L2CAP/LE/CFC/BV-26-C (running together with 'l2test -r -P
+0x0027 -V le_public -I 100').
 
-Fixes: b5daf93b809d1 ("firmware: arm_scmi: Avoid notifier registration for unsupported events")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Message-Id: <20260305131011.541444-1-cristian.marussi@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
+Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
+Signed-off-by: Christian Eggers <ceggers@arri.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/notify.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/bluetooth/l2cap_core.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/firmware/arm_scmi/notify.c b/drivers/firmware/arm_scmi/notify.c
-index dee9f238f6fdd..2047edbdc5f6b 100644
---- a/drivers/firmware/arm_scmi/notify.c
-+++ b/drivers/firmware/arm_scmi/notify.c
-@@ -1066,7 +1066,7 @@ static int scmi_register_event_handler(struct scmi_notify_instance *ni,
-  * since at creation time we usually want to have all setup and ready before
-  * events really start flowing.
-  *
-- * Return: A properly refcounted handler on Success, NULL on Failure
-+ * Return: A properly refcounted handler on Success, ERR_PTR on Failure
-  */
- static inline struct scmi_event_handler *
- __scmi_event_handler_get_ops(struct scmi_notify_instance *ni,
-@@ -1113,7 +1113,7 @@ __scmi_event_handler_get_ops(struct scmi_notify_instance *ni,
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 319c87bd795d5..1618fe98dce71 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -6654,8 +6654,10 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 		return -ENOBUFS;
  	}
- 	mutex_unlock(&ni->pending_mtx);
  
--	return hndl;
-+	return hndl ?: ERR_PTR(-ENODEV);
- }
+-	if (chan->imtu < skb->len) {
+-		BT_ERR("Too big LE L2CAP PDU");
++	if (skb->len > chan->imtu) {
++		BT_ERR("Too big LE L2CAP PDU: len %u > %u", skb->len,
++		       chan->imtu);
++		l2cap_send_disconn_req(chan, ECONNRESET);
+ 		return -ENOBUFS;
+ 	}
  
- static struct scmi_event_handler *
+@@ -6681,7 +6683,9 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
+ 		       sdu_len, skb->len, chan->imtu);
+ 
+ 		if (sdu_len > chan->imtu) {
+-			BT_ERR("Too big LE L2CAP SDU length received");
++			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
++			       skb->len, sdu_len);
++			l2cap_send_disconn_req(chan, ECONNRESET);
+ 			err = -EMSGSIZE;
+ 			goto failed;
+ 		}
 -- 
 2.51.0
 
