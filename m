@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C273BD25D;
-	Mon, 23 Mar 2026 16:18:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BEA3A960E;
+	Mon, 23 Mar 2026 16:18:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282696; cv=none; b=jFy3VyP5Aoc0LN9roRYkxGC/V/4Ajy2UaXer5q47lwlUWCQN0+teVt+UE7o2kBBU1beG+IKu78fE69QH50+lAOtsQi/bmJ4kowo+0cXrXfXZCWYmGwxyo2HVKHHVvNE0PV0ej4w2fwyu34st+KfC4+jA98/cHUxFf8oH0uQdB8s=
+	t=1774282699; cv=none; b=Q5IXs/psaNZo2S+4RW9Tn+qu8lHmG0jf5rG0B+4cn6F7FBAyvkmVqjf1omqUX1ehss4oVVPnhVtJO13UFH0/vFsNher4RCaHciXK8GvJuRCuNnTDztSU3SxbVlowyGB1VfFsoQVLFOhdwpC11MPxRLAVkwQ7pTUuN1zvISROX7M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282696; c=relaxed/simple;
-	bh=2tMW+LeuuGvquACjhba452C38lWmQONr82fqS1EYbf4=;
+	s=arc-20240116; t=1774282699; c=relaxed/simple;
+	bh=kUjhK0bSACoSpHCQPf2COROr8xlCVSgYVQFNtauy08k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=F+uhaWXkqiU6PN74E3VmQK2EtzrriRgqH3zSxC5/ymk5VMxXpBQViSlJMEs50GO7E5esZTnv8BdVV1p0OCgDoZpvVEeu1sf8Zp3hQe6yY0L3MgQ92b07hfiCNUc3+P3FFnFCtBI/+VVan2idrVNDAYbmA4AJ2kIHq8rrIQ7ew0Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pyhaj2W4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Xqc/5i0hIMAHDevZvAIbsdTtnizFhOpln9CxPBBfKDSP9aZE1M7tfKsHZ2/SRR6GvifL836Q9oEpnIyNcvUJaNw3E0VvSvonuK3SEQpxFGiLw9fK7gRAXCRVgiIE9IAPgU5fWTWiFWbmtic34dAiQrtZtcB3ECcu6mPFTOj9V80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZeFTPfaW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pyhaj2W4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA858C2BC9E;
-	Mon, 23 Mar 2026 16:18:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZeFTPfaW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDCBC4CEF7;
+	Mon, 23 Mar 2026 16:18:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282696;
-	bh=2tMW+LeuuGvquACjhba452C38lWmQONr82fqS1EYbf4=;
+	s=korg; t=1774282699;
+	bh=kUjhK0bSACoSpHCQPf2COROr8xlCVSgYVQFNtauy08k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pyhaj2W4ErO75MC8MQqe5gv8MyYjONyB5ViOkRMZLrKYPrbcd+oad6yFst3tSq9dW
-	 jiw+dQbkte8iVDyzwlH6M/6ptY56I6qiYmGs00LeIV5ePAolxGmWMPpWD3/d//CSEd
-	 Gs3swH6MxJzKyips33kvBZK++DvC3LaDkbtE9ZOo=
+	b=ZeFTPfaWdFcnAFCbJXjaM6WPnLaYGigkcqPPKX789ipSHSXkrr6azdmCd8hU6eZuA
+	 U+dFm1kCCcv7/cCmbXDQUcYMYfsacl48aSz3HmlXj7x7pirQLXvox5b6KKHUrksnde
+	 509VOMspsevv6Wk1P0W5Qjaikw3tjtldXv2kkVXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Calvin Owens <calvin@wbinvd.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 252/481] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
-Date: Mon, 23 Mar 2026 14:43:54 +0100
-Message-ID: <20260323134531.297076103@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cem@kernel.org>
+Subject: [PATCH 6.1 253/481] xfs: fix undersized l_iclog_roundoff values
+Date: Mon, 23 Mar 2026 14:43:55 +0100
+Message-ID: <20260323134531.321646128@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,61 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
+commit 52a8a1ba883defbfe3200baa22cf4cd21985d51a upstream.
 
-Some of the sizing logic through tracer_alloc_buffers() uses int
-internally, causing unexpected behavior if the user passes a value that
-does not fit in an int (on my x86 machine, the result is uselessly tiny
-buffers).
+If the superblock doesn't list a log stripe unit, we set the incore log
+roundoff value to 512.  This leads to corrupt logs and unmountable
+filesystems in generic/617 on a disk with 4k physical sectors...
 
-Fix by plumbing the parameter's real type (unsigned long) through to the
-ring buffer allocation functions, which already use unsigned long.
+XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
+XFS (sda1): Torn write (CRC failure) detected at log block 0x318e. Truncating head block from 0x3197.
+XFS (sda1): failed to locate log tail
+XFS (sda1): log mount/recovery failed: error -74
+XFS (sda1): log mount failed
+XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
+XFS (sda1): Ending clean mount
 
-It has always been possible to create larger ring buffers via the sysfs
-interface: this only affects the cmdline parameter.
+...on the current xfsprogs for-next which has a broken mkfs.  xfs_info
+shows this...
 
-Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
-Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+meta-data=/dev/sda1              isize=512    agcount=4, agsize=644992 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=1
+         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
+         =                       exchange=1   metadir=1
+data     =                       bsize=4096   blocks=2579968, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1, parent=1
+log      =internal log           bsize=4096   blocks=16384, version=2
+         =                       sectsz=4096  sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+         =                       rgcount=0    rgsize=268435456 extents
+         =                       zoned=0      start=0 reserved=0
+
+...observe that the log section has sectsz=4096 sunit=0, which means
+that the roundoff factor is 512, not 4096 as you'd expect.  We should
+fix mkfs not to generate broken filesystems, but anyone can fuzz the
+ondisk superblock so we should be more cautious.  I think the inadequate
+logic predates commit a6a65fef5ef8d0, but that's clearly going to
+require a different backport.
+
+Cc: stable@vger.kernel.org # v5.14
+Fixes: a6a65fef5ef8d0 ("xfs: log stripe roundoff is a property of the log")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_log.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9298,7 +9298,7 @@ static void
- init_tracer_tracefs(struct trace_array *tr, struct dentry *d_tracer);
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -1549,6 +1549,8 @@ xlog_alloc_log(
  
- static int
--allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
-+allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
- {
- 	enum ring_buffer_flags rb_flags;
- 
-@@ -9334,7 +9334,7 @@ static void free_trace_buffer(struct arr
- 	}
- }
- 
--static int allocate_trace_buffers(struct trace_array *tr, int size)
-+static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
- {
- 	int ret;
- 
-@@ -10278,7 +10278,7 @@ out:
- 
- __init static int tracer_alloc_buffers(void)
- {
--	int ring_buf_size;
-+	unsigned long ring_buf_size;
- 	int ret = -ENOMEM;
- 
+ 	if (xfs_has_logv2(mp) && mp->m_sb.sb_logsunit > 1)
+ 		log->l_iclog_roundoff = mp->m_sb.sb_logsunit;
++	else if (mp->m_sb.sb_logsectsize > 0)
++		log->l_iclog_roundoff = mp->m_sb.sb_logsectsize;
+ 	else
+ 		log->l_iclog_roundoff = BBSIZE;
  
 
 
