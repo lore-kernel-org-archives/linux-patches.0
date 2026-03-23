@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4B7E32470A;
-	Mon, 23 Mar 2026 14:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F680242D9D;
+	Mon, 23 Mar 2026 14:51:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277482; cv=none; b=PZxG1WNij2h0x05Ed3Oj9n+FEmlRJnlTXEUWCyTFDcjRzQNbTmIWpVtFB2en7unl7vylfUKjFtuD+RICdZn5g4tUY3HmBViDQCKn5AfRWznvD3XgLG4HxxCHNDi53MQQiQBLdIhKmjmaf86/sFcZDukBuPWclEpAi+LK2t7trV8=
+	t=1774277485; cv=none; b=QikthDa1BYFpqbK2GrlUss6SsLQqYjYMMmQu97NH0qMEaq7e+VcZZEQzj4JGOPsqYpEnjwVeXwFoWfns8S2rxkbUPJ2ZU7wq/Pde1VQ4XpEKRxrcqDAKapIRrqqkz8fwvkfP5tsli6O/WU4+Eed+HweQd3ZwQY9ogK2teyRW+oo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277482; c=relaxed/simple;
-	bh=9jRb3F855/VZhspygaD4LxpPBWKa5OODgyKOq5sTK+E=;
+	s=arc-20240116; t=1774277485; c=relaxed/simple;
+	bh=lvRzHXaThcWxv9PUXkRO0F53dQTFGnEWgfczB09ShpA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Pwu5h1Tw/bm1T/KRCqVG1O2vb+Mxs+luAuRPXseVQFeAlflKUjC6psSOjIBuvun5wlYSQerzCmDcOLYYn1zFpu/d1GBReoIOmtptNDBh9YvfVfu0y6JIMCiqGZc/qzKaV8BMuDBOn4Ny3KfHbHpv5xD2IP283SX3ehrPHBB/GfU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1Hua3vp; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=I/2OChR5dznsFZ9oDU11qUljmHKY4krwO7soDVbnkWXi0D1pvS40t8NreRHFFatvYtNnis6faySnwWjkqolnKuLT7h282XC4gbJffAlSmtp04Zbfd4AKRchKP2MN3KCSjTnLKEMfB39JomEB+NMiJndhE2ocNWenbV1Y7EafrYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N37tnks9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1Hua3vp"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4911BC4CEF7;
-	Mon, 23 Mar 2026 14:51:22 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N37tnks9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038AAC4CEF7;
+	Mon, 23 Mar 2026 14:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277482;
-	bh=9jRb3F855/VZhspygaD4LxpPBWKa5OODgyKOq5sTK+E=;
+	s=korg; t=1774277485;
+	bh=lvRzHXaThcWxv9PUXkRO0F53dQTFGnEWgfczB09ShpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N1Hua3vpASyhoorHrYEwDnv53yHD2Cfma0XE9JoW17RUa31xRwPFXXLnVSc5Tbf1D
-	 6NpcL5uQlYI7ZiFWDMhCXlu5NjvQ9bc850XIrk7wusuTA9Vsd0PxlrBUhTXEXhps8E
-	 mGsjo4ZNrUs3ETJrbFThb2Dv/FMDb2Hs+S2RxWwY=
+	b=N37tnks98zwwmnTARsDQkyHw96wu9ngyJl2NJcjMOQQV3JqL+gjdIt/joUQtpJRUU
+	 2W6LOolHZHQ7OgVkQojsQ0/XEPT5i7Omao6HHHHo5l8Irb6heKQXcZ5YJX01+ntEUQ
+	 tFZSG3J26LizGnweTj2gx8a9ud9301Nt5A8gezVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 429/460] netfilter: nf_tables: release flowtable after rcu grace period on error
-Date: Mon, 23 Mar 2026 14:47:05 +0100
-Message-ID: <20260323134537.095256409@linuxfoundation.org>
+Subject: [PATCH 6.12 456/460] fs/tests: exec: Remove bad test vector
+Date: Mon, 23 Mar 2026 14:47:32 +0100
+Message-ID: <20260323134537.782346806@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,48 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Kees Cook <kees@kernel.org>
 
-[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
+[ Upstream commit c4192754e836e0ffed95833509b6ada975b74418 ]
 
-Call synchronize_rcu() after unregistering the hooks from error path,
-since a hook that already refers to this flowtable can be already
-registered, exposing this flowtable to packet path and nfnetlink_hook
-control plane.
+Drop an unusable test in the bprm stack limits.
 
-This error path is rare, it should only happen by reaching the maximum
-number hooks or by failing to set up to hardware offload, just call
-synchronize_rcu().
-
-There is a check for already used device hooks by different flowtable
-that could result in EEXIST at this late stage. The hook parser can be
-updated to perform this check earlier to this error path really becomes
-rarely exercised.
-
-Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
-when dumping hooks.
-
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/all/a3e9b1c2-40c1-45df-9fa2-14ee6a7b3fe2@roeck-us.net
+Fixes: 60371f43e56b ("exec: Add KUnit test for bprm_stack_limits()")
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/tests/exec_kunit.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 0c12560e94f3b..663c064135181 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -8966,6 +8966,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
- 	return 0;
- 
- err_flowtable_hooks:
-+	synchronize_rcu();
- 	nft_trans_destroy(trans);
- err_flowtable_trans:
- 	nft_hooks_destroy(&flowtable->hook_list);
+diff --git a/fs/tests/exec_kunit.c b/fs/tests/exec_kunit.c
+index f412d1a0f6bba..1c32cac098cf5 100644
+--- a/fs/tests/exec_kunit.c
++++ b/fs/tests/exec_kunit.c
+@@ -94,9 +94,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
+ 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3 + sizeof(void *)),
+ 	    .argc = 0, .envc = 0 },
+ 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+-	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 *  + sizeof(void *)),
+-	    .argc = 0, .envc = 0 },
+-	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+ 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
+ 	    .argc = 0, .envc = 0 },
+ 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
 -- 
 2.51.0
 
