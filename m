@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B58573B27DE;
-	Mon, 23 Mar 2026 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52443B27EB;
+	Mon, 23 Mar 2026 14:03:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274577; cv=none; b=Lel+WYh5GywLlGkdDM6BTYji0U+Pi749ltkXFGLzo9QF2tRHLFCLDyDHbQL8MT38PDMQ7/Eq7DKHq8PORkeeiNDiH3Jxx7k3ExLXFAfWZ7HuTR5ejhorBIfH1YN+YIp+P+PpC+kxn/ziNK7yicsaEPYT755/sM9PANuV6/SV9gQ=
+	t=1774274580; cv=none; b=dkb3QUOURiBACuFQtf2OnZXx3TJ3wMxJ9c1kTdth4cnfu4ZkG62eVcJQw4oSRYhH+SlqNASrcQJVRNmtp2GrCSPAXD7IeD52D10U1TpePbw1cxV4/7OMzTyC2y+QBri/GDnvT6AxiU9mMc+Lf7IzF6SOUsbH22GXoQN2dVCJp20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274577; c=relaxed/simple;
-	bh=i01wzw7+hKCOC3hzJ9Lq5ULBvjYO928SJnDOvtZLKNU=;
+	s=arc-20240116; t=1774274580; c=relaxed/simple;
+	bh=iW97RUDSYKs8j0+hIbtFzkZmmlKTI+YHWBVhblsJ+iM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKwPII9aNYR7qubVDjQmBmApK89XcL2F3tEEd6odCaB7uDuwDDIpbRWvGfOMdpDOwEAas8HhH3R3Akh6aCcvKCakxdZt6wVNSsjNHJIJ1pO6+P/5RZCDJxJhEN6JXx/MOAUte2NJy1g5J+tjoXYEcIxSLw5TY6fxa2lFUS0mR+E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJtUCoT4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bn5a8qd2O9t3aNnHiNMj4QE2F/D3Jt8l85ojNiw0XuVGKLmWWrCaBOvI1D3S879jM1sL48nkEMRz3Y1UO+ZsZdVU0jB7gTN8A3l7KSCwR8ulA3l8F5+CVdZsrf3tClSiignTS3jQsuoabuwLHxPRtyStxwrJeYN4b1j4oXowjCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtAwhXc5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJtUCoT4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BA4DC4CEF7;
-	Mon, 23 Mar 2026 14:02:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtAwhXc5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF45C4CEF7;
+	Mon, 23 Mar 2026 14:03:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274577;
-	bh=i01wzw7+hKCOC3hzJ9Lq5ULBvjYO928SJnDOvtZLKNU=;
+	s=korg; t=1774274580;
+	bh=iW97RUDSYKs8j0+hIbtFzkZmmlKTI+YHWBVhblsJ+iM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DJtUCoT4JeR1trmyFM19v67HImtTdwDqYApoU0DN3IolCGF3k/OdIZEcYL8lO3vqh
-	 kp45AS8D0Yqbq2oX1N9DsWn9+eTcMY9NCzyfBIIiaDPIhk981Pi/auWUBzjbQNoaKs
-	 51rfw9f8mqpoAtP9NFErnIDvDxetCWjJ8/7k8ncc=
+	b=dtAwhXc5btB9pUyWu5+jV0ezy5zqOnnALqms3VGmIvCzt5s1V2CnyG24tmNupZFm9
+	 FPqxffZ3hqAPhARe7TRByriCT2hMN567JpQcg90uFm7fNPp3wAk9+tVAZVLSIclSBx
+	 X5B2yrcdo8x+Nsfh/WWfp41srm/4ggeC11qHi7MM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 042/212] fgraph: Fix thresh_return nosleeptime double-adjust
-Date: Mon, 23 Mar 2026 14:44:23 +0100
-Message-ID: <20260323134505.097517677@linuxfoundation.org>
+Subject: [PATCH 6.18 043/212] drm/xe/sync: Fix user fence leak on alloc failure
+Date: Mon, 23 Mar 2026 14:44:24 +0100
+Message-ID: <20260323134505.127936350@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,66 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Shuicheng Lin <shuicheng.lin@intel.com>
 
-[ Upstream commit b96d0c59cdbb2a22b2545f6f3d5c6276b05761dd ]
+[ Upstream commit 0879c3f04f67e2a1677c25dcc24669ce21eb6a6c ]
 
-trace_graph_thresh_return() called handle_nosleeptime() and then delegated
-to trace_graph_return(), which calls handle_nosleeptime() again. When
-sleep-time accounting is disabled this double-adjusts calltime and can
-produce bogus durations (including underflow).
+When dma_fence_chain_alloc() fails, properly release the user fence
+reference to prevent a memory leak.
 
-Fix this by computing rettime once, applying handle_nosleeptime() only
-once, using the adjusted calltime for threshold comparison, and writing
-the return event directly via __trace_graph_return() when the threshold is
-met.
-
+Fixes: 0995c2fc39b0 ("drm/xe: Enforce correct user fence signaling order using")
+Cc: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
+Reviewed-by: Matthew Brost <matthew.brost@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260219233516.2938172-6-shuicheng.lin@intel.com
+(cherry picked from commit a5d5634cde48a9fcd68c8504aa07f89f175074a0)
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260221113314048jE4VRwIyZEALiYByGK0My@zte.com.cn
-Fixes: 3c9880f3ab52b ("ftrace: Use a running sleeptime instead of saving on shadow stack")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_functions_graph.c |   15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/xe/xe_sync.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_functions_graph.c
-+++ b/kernel/trace/trace_functions_graph.c
-@@ -378,9 +378,14 @@ static void trace_graph_thresh_return(st
- 				      struct fgraph_ops *gops,
- 				      struct ftrace_regs *fregs)
- {
-+	struct trace_array *tr = gops->private;
- 	struct fgraph_times *ftimes;
-+	unsigned int trace_ctx;
-+	u64 calltime, rettime;
- 	int size;
+--- a/drivers/gpu/drm/xe/xe_sync.c
++++ b/drivers/gpu/drm/xe/xe_sync.c
+@@ -206,8 +206,10 @@ int xe_sync_entry_parse(struct xe_device
+ 			if (XE_IOCTL_DBG(xe, IS_ERR(sync->ufence)))
+ 				return PTR_ERR(sync->ufence);
+ 			sync->ufence_chain_fence = dma_fence_chain_alloc();
+-			if (!sync->ufence_chain_fence)
+-				return -ENOMEM;
++			if (!sync->ufence_chain_fence) {
++				err = -ENOMEM;
++				goto free_sync;
++			}
+ 			sync->ufence_syncobj = ufence_syncobj;
+ 		}
  
-+	rettime = trace_clock_local();
-+
- 	ftrace_graph_addr_finish(gops, trace);
- 
- 	if (trace_recursion_test(TRACE_GRAPH_NOTRACE_BIT)) {
-@@ -394,11 +399,13 @@ static void trace_graph_thresh_return(st
- 
- 	handle_nosleeptime(trace, ftimes, size);
- 
--	if (tracing_thresh &&
--	    (trace_clock_local() - ftimes->calltime < tracing_thresh))
-+	calltime = ftimes->calltime;
-+
-+	if (tracing_thresh && (rettime - calltime < tracing_thresh))
- 		return;
--	else
--		trace_graph_return(trace, gops, fregs);
-+
-+	trace_ctx = tracing_gen_ctx();
-+	__trace_graph_return(tr, trace, trace_ctx, calltime, rettime);
- }
- 
- static struct fgraph_ops funcgraph_ops = {
 
 
