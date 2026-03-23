@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D22931A6808;
-	Mon, 23 Mar 2026 14:43:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEE939EF1E;
+	Mon, 23 Mar 2026 14:43:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277016; cv=none; b=Lde9J97QVDQQba9Y/BxTil/ow5S4mZhueCQJzURLXBnv4sy1cmBm93mpVKmVMAlIvO2e+IUmOnx5tn3kimIvirBiPOZQBfgC4FKdK2x1HvXdTlcFUYH6EirM0zq54F8HvSyd1evR2U453aRXg0qP1TelLHl31N5mhqI/LMo5fJI=
+	t=1774277019; cv=none; b=tmnJgAUL0Ayj5VFzDFJGpOWZ2lJSXmvTfWJmuDns5nb9jzdzMtHjz7ZobYK/RnHO6A9w8ZlXzksQb5+KbvBS8wO8wQsakGTTzFyE6fcN7Ic4uMHXRROE80L3QET9ar8VCTyi5HpJNxI68H5Cjsi72w5hAaHT8ciZLVsC8CF/7yg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277016; c=relaxed/simple;
-	bh=Xq/B19SD6H9UJdLzjNCnBfX857Tv2KC6WBhRiXRHh2s=;
+	s=arc-20240116; t=1774277019; c=relaxed/simple;
+	bh=3r85FM79r8VvIMm/lL2RzBClF5vT5nK/6w897MvIBOY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LcIpc3woOV2CkDIjNAqujGG85+iAwdEyqmFlABe5Lsm/JV2i4qiRTMXcYLAg6ciIu2bT7LFy0bzKNbAb32EmdzpP7GSecJ5jQG67n+S3LxtXHdlnIoVPI5EyKVkCENVwUpTLeWP1Uo8NfT4PJc8+Y0axui04Xg1M7+G343p+11w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N4Ihl1I2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SsPpgqKGNUcg5b03O8hKGAFxVa+IENk98wDjIk9tfQd3WfmASVsto9U8k3paPEP54H7Icgon9egvR/RSt8VMllZ0GlI8v/rgmwOS2u9N/OkU8VpSTaixSdYzBaZOXR/fBTW4SXXU0oMrm/a37kg8XBQ5HKBHYgzLDe32ckdQOyQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVrRm4Dk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N4Ihl1I2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61E8AC4CEF7;
-	Mon, 23 Mar 2026 14:43:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVrRm4Dk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307BFC4CEF7;
+	Mon, 23 Mar 2026 14:43:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277016;
-	bh=Xq/B19SD6H9UJdLzjNCnBfX857Tv2KC6WBhRiXRHh2s=;
+	s=korg; t=1774277019;
+	bh=3r85FM79r8VvIMm/lL2RzBClF5vT5nK/6w897MvIBOY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N4Ihl1I2TnpPAzmiULUYvh0xkMvV/FFKPBmooXqvmPyO1Q/cKnyNHBPgmiZkef3Pr
-	 6sYYOYYNpIHFNgjYFcsQqvwvRHe7puvcX6bRL3Ir7B2cOVxso05nUm4RBh3NBw9vZ4
-	 NtJwZK60VlBrhRxGcXGRvSDAmRKmwzHlmU/s0kzU=
+	b=lVrRm4DkkoxM6X3iN7rpX7/jWlVW2ibbSw4dkeGQSEtpwCjTTF35Q23lUsUw5kUcl
+	 p6qGtRaiIQ66xs/pw+eqj7Ny+DyLAPPl472BH7flPz6Tr12reomXsQBXCuIxukwgeH
+	 7hsqhRH6Sm9XlaH+1uT6cEz6w4HEx/+dQN7yobzo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Jisheng Zhang <jszhang@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 246/460] KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated
-Date: Mon, 23 Mar 2026 14:44:02 +0100
-Message-ID: <20260323134532.543633821@linuxfoundation.org>
+Subject: [PATCH 6.12 247/460] mmc: dw_mmc-rockchip: use modern PM macros
+Date: Mon, 23 Mar 2026 14:44:03 +0100
+Message-ID: <20260323134532.567489090@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -54,98 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jisheng Zhang <jszhang@kernel.org>
 
-[ Upstream commit 87d0f901a9bd8ae6be57249c737f20ac0cace93d ]
+[ Upstream commit 4b43f2bcc84dd550c1a847318db02165d2829573 ]
 
-Explicitly set/clear CR8 write interception when AVIC is (de)activated to
-fix a bug where KVM leaves the interception enabled after AVIC is
-activated.  E.g. if KVM emulates INIT=>WFS while AVIC is deactivated, CR8
-will remain intercepted in perpetuity.
+Use the modern PM macros for the suspend and resume functions to be
+automatically dropped by the compiler when CONFIG_PM or
+CONFIG_PM_SLEEP are disabled, without having to use #ifdef guards.
 
-On its own, the dangling CR8 intercept is "just" a performance issue, but
-combined with the TPR sync bug fixed by commit d02e48830e3f ("KVM: SVM:
-Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active"), the danging
-intercept is fatal to Windows guests as the TPR seen by hardware gets
-wildly out of sync with reality.
+This has the advantage of always compiling these functions in,
+independently of any Kconfig option. Thanks to that, bugs and other
+regressions are subsequently easier to catch.
 
-Note, VMX isn't affected by the bug as TPR_THRESHOLD is explicitly ignored
-when Virtual Interrupt Delivery is enabled, i.e. when APICv is active in
-KVM's world.  I.e. there's no need to trigger update_cr8_intercept(), this
-is firmly an SVM implementation flaw/detail.
-
-WARN if KVM gets a CR8 write #VMEXIT while AVIC is active, as KVM should
-never enter the guest with AVIC enabled and CR8 writes intercepted.
-
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Squash fix to avic_deactivate_vmcb. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Jisheng Zhang <jszhang@kernel.org>
+Link: https://lore.kernel.org/r/20250815013413.28641-39-jszhang@kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 6465a8bbb0f6 ("mmc: dw_mmc-rockchip: Fix runtime PM support for internal phase support")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    7 +++++--
- arch/x86/kvm/svm/svm.c  |    7 ++++---
- 2 files changed, 9 insertions(+), 5 deletions(-)
+ drivers/mmc/host/dw_mmc-rockchip.c |    9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -104,12 +104,12 @@ static void avic_activate_vmcb(struct vc
- 	struct kvm_vcpu *vcpu = &svm->vcpu;
+--- a/drivers/mmc/host/dw_mmc-rockchip.c
++++ b/drivers/mmc/host/dw_mmc-rockchip.c
+@@ -568,11 +568,8 @@ static void dw_mci_rockchip_remove(struc
+ }
  
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
--
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 	vmcb->control.avic_physical_id |= avic_get_max_physical_id(vcpu);
--
- 	vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
+ static const struct dev_pm_ops dw_mci_rockchip_dev_pm_ops = {
+-	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
+-				pm_runtime_force_resume)
+-	SET_RUNTIME_PM_OPS(dw_mci_runtime_suspend,
+-			   dw_mci_runtime_resume,
+-			   NULL)
++	SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
++	RUNTIME_PM_OPS(dw_mci_runtime_suspend, dw_mci_runtime_resume, NULL)
+ };
  
-+	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * Note: KVM supports hybrid-AVIC mode, where KVM emulates x2APIC MSR
- 	 * accesses, while interrupt injection to a running vCPU can be
-@@ -141,6 +141,9 @@ static void avic_deactivate_vmcb(struct
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
+ static struct platform_driver dw_mci_rockchip_pltfm_driver = {
+@@ -582,7 +579,7 @@ static struct platform_driver dw_mci_roc
+ 		.name		= "dwmmc_rockchip",
+ 		.probe_type	= PROBE_PREFER_ASYNCHRONOUS,
+ 		.of_match_table	= dw_mci_rockchip_match,
+-		.pm		= &dw_mci_rockchip_dev_pm_ops,
++		.pm		= pm_ptr(&dw_mci_rockchip_dev_pm_ops),
+ 	},
+ };
  
-+	if (!sev_es_guest(svm->vcpu.kvm))
-+		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+
- 	/*
- 	 * If running nested and the guest uses its own MSR bitmap, there
- 	 * is no need to update L0's msr bitmap
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1246,8 +1246,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	svm_set_intercept(svm, INTERCEPT_CR0_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR3_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR4_WRITE);
--	if (!kvm_vcpu_apicv_active(vcpu))
--		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+	svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
- 
- 	set_dr_intercepts(svm);
- 
-@@ -2862,9 +2861,11 @@ static int dr_interception(struct kvm_vc
- 
- static int cr8_write_interception(struct kvm_vcpu *vcpu)
- {
-+	u8 cr8_prev = kvm_get_cr8(vcpu);
- 	int r;
- 
--	u8 cr8_prev = kvm_get_cr8(vcpu);
-+	WARN_ON_ONCE(kvm_vcpu_apicv_active(vcpu));
-+
- 	/* instruction emulation calls kvm_set_cr8() */
- 	r = cr_interception(vcpu);
- 	if (lapic_in_kernel(vcpu))
 
 
