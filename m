@@ -1,39 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE79250BEC;
-	Mon, 23 Mar 2026 15:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20F82253932;
+	Mon, 23 Mar 2026 15:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278452; cv=none; b=Zcgc/9YZ0AkQjoHdXbV7EprdBQplIgZNUvv6lwfULT5JTx6KDSRWPrEgq8fs68xEjIF/Dc3SiCkqeFo0bmirsHwN424YYVws0Sf9Y+3d4gcxhCbKwuN6JzjBoajGAlQNjU9L4tnuEAsc7e0gmduFi5y/QBsTTYrPnkR0csy0StU=
+	t=1774278456; cv=none; b=OM1hcA3FTIVQE1TdbGmTVZBWgUeerdSQ0fcY2XKTrTR80ZUzD6pXZRtHWKljCZJ2rxzObkdRi9eNWwafHEMOzofoEtl3EJok+UUBxd29Uu+2D26lxEQKvupGEbiYxXkR1s+9gr4NhakgaxcQTtGqaIrYJ/MWUmZ8b+pOa9r1+N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278452; c=relaxed/simple;
-	bh=lO+mjftZh1qJ2JFUc8I+DDzSSUs1EHAb5FPm19qZWIM=;
+	s=arc-20240116; t=1774278456; c=relaxed/simple;
+	bh=hm2qz0IXiCbRYfd8y8OEFaWdUNSJQfzZClrWheHEGmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mM2H4k5y0gfTGgtwvp6RlZf+SlJPnBWzBlJ5SYQYDNMPDvPNDIQCMugrzoWCE71Pyi5svlly013tzFsJiVVGhb923ScRyVRDNdTVpgnyWSU9XSwTcbstbS37HI+hjffKrYKNeDlXt8PxBVzqC3QDtUzoIaxIjlngy9VWg5178vk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mt7kfP9V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=WomIzeGVkwt0BhNn2ccdLxIEKzQST7YYTCumv3cCqb2s9Pn4379MC7Or1azRibwOjG0OE8MviOUshKJjWBg0udpvfeRIx9Du1g2OJX7jugZPOhgWQCxwgGnKiTO/2j80puU2uSHXNH5HfJaSzAx3HXmHgTtf9nxz1e8VCMj/png=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eidLU4Pn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mt7kfP9V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A224C4CEF7;
-	Mon, 23 Mar 2026 15:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eidLU4Pn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A45C4CEF7;
+	Mon, 23 Mar 2026 15:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278452;
-	bh=lO+mjftZh1qJ2JFUc8I+DDzSSUs1EHAb5FPm19qZWIM=;
+	s=korg; t=1774278455;
+	bh=hm2qz0IXiCbRYfd8y8OEFaWdUNSJQfzZClrWheHEGmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mt7kfP9VGR+j5ZwhiAQ77N6XWIJSfLY+f39lF4YZ9GbLiJsvjx8jjbOMEWMbbeaAX
-	 UquDbMIXnCCYUFEii3Pw7bTTrxsBgp6SWbvZS7jqXQVgr9L3zuYFS7K3f8uHlsZ5lO
-	 6lWsrjkE7oRAmPuyOrJU++mK0HlC6ePUhCrjhhVs=
+	b=eidLU4Pnz3Xm3lD7ooPiqafGRm4PQC+W8n0kivhhI4ZB8zPKXG7OO7K1yPST3zpKV
+	 jF9Zq+Pn6LhQ5UfppwD06AJFv3Gsh/nG97VMR6Sbs+lMiMBkG/BdBWUrzFH+j2adFN
+	 0wnJlor6nUIqP6Oqq4B8Z0O4wIbjAgD8FpYlyPm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	Thomas Gleixner <tglx@kernel.org>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Zenghui Yu <zenghui.yu@linux.dev>
-Subject: [PATCH 6.6 311/567] irqchip/gic-v3-its: Limit number of per-device MSIs to the range the ITS supports
-Date: Mon, 23 Mar 2026 14:43:51 +0100
-Message-ID: <20260323134541.517967698@linuxfoundation.org>
+	Michal Schmidt <mschmidt@redhat.com>,
+	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
+	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Rinitha S <sx.rinitha@intel.com>
+Subject: [PATCH 6.6 312/567] ice: reintroduce retry mechanism for indirect AQ
+Date: Mon, 23 Mar 2026 14:43:52 +0100
+Message-ID: <20260323134541.546504498@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,62 +56,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
 
-commit ce9e40a9a5e5cff0b1b0d2fa582b3d71a8ce68e8 upstream.
+commit 326256c0a72d4877cec1d4df85357da106233128 upstream.
 
-The ITS driver blindly assumes that EventIDs are in abundant supply, to the
-point where it never checks how many the hardware actually supports.
+Add retry mechanism for indirect Admin Queue (AQ) commands. To do so we
+need to keep the command buffer.
 
-It turns out that some pretty esoteric integrations make it so that only a
-few bits are available, all the way down to a single bit.
+This technically reverts commit 43a630e37e25
+("ice: remove unused buffer copy code in ice_sq_send_cmd_retry()"),
+but combines it with a fix in the logic by using a kmemdup() call,
+making it more robust and less likely to break in the future due to
+programmer error.
 
-Enforce the advertised limitation at the point of allocating the device
-structure, and hope that the endpoint driver can deal with such limitation.
-
-Fixes: 84a6a2e7fc18d ("irqchip: GICv3: ITS: device allocation and configuration")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Thomas Gleixner <tglx@kernel.org>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Reviewed-by: Zenghui Yu <zenghui.yu@linux.dev>
+Cc: Michal Schmidt <mschmidt@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260206154816.3582887-1-maz@kernel.org
+Fixes: 3056df93f7a8 ("ice: Re-send some AQ commands, as result of EBUSY AQ error")
+Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/irqchip/irq-gic-v3-its.c   |    4 ++++
- include/linux/irqchip/arm-gic-v3.h |    1 +
- 2 files changed, 5 insertions(+)
+ drivers/net/ethernet/intel/ice/ice_common.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/irqchip/irq-gic-v3-its.c
-+++ b/drivers/irqchip/irq-gic-v3-its.c
-@@ -3402,6 +3402,7 @@ static struct its_device *its_create_dev
- 	int lpi_base;
- 	int nr_lpis;
- 	int nr_ites;
-+	int id_bits;
- 	int sz;
+--- a/drivers/net/ethernet/intel/ice/ice_common.c
++++ b/drivers/net/ethernet/intel/ice/ice_common.c
+@@ -1636,6 +1636,7 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ {
+ 	struct ice_aq_desc desc_cpy;
+ 	bool is_cmd_for_retry;
++	u8 *buf_cpy = NULL;
+ 	u8 idx = 0;
+ 	u16 opcode;
+ 	int status;
+@@ -1645,8 +1646,11 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 	memset(&desc_cpy, 0, sizeof(desc_cpy));
  
- 	if (!its_alloc_device_table(its, dev_id))
-@@ -3414,7 +3415,10 @@ static struct its_device *its_create_dev
- 	/*
- 	 * Even if the device wants a single LPI, the ITT must be
- 	 * sized as a power of two (and you need at least one bit...).
-+	 * Also honor the ITS's own EID limit.
- 	 */
-+	id_bits = FIELD_GET(GITS_TYPER_IDBITS, its->typer) + 1;
-+	nvecs = min_t(unsigned int, nvecs, BIT(id_bits));
- 	nr_ites = max(2, nvecs);
- 	sz = nr_ites * (FIELD_GET(GITS_TYPER_ITT_ENTRY_SIZE, its->typer) + 1);
- 	sz = max(sz, ITS_ITT_ALIGN) + ITS_ITT_ALIGN - 1;
---- a/include/linux/irqchip/arm-gic-v3.h
-+++ b/include/linux/irqchip/arm-gic-v3.h
-@@ -394,6 +394,7 @@
- #define GITS_TYPER_VLPIS		(1UL << 1)
- #define GITS_TYPER_ITT_ENTRY_SIZE_SHIFT	4
- #define GITS_TYPER_ITT_ENTRY_SIZE	GENMASK_ULL(7, 4)
-+#define GITS_TYPER_IDBITS		GENMASK_ULL(12, 8)
- #define GITS_TYPER_IDBITS_SHIFT		8
- #define GITS_TYPER_DEVBITS_SHIFT	13
- #define GITS_TYPER_DEVBITS		GENMASK_ULL(17, 13)
+ 	if (is_cmd_for_retry) {
+-		/* All retryable cmds are direct, without buf. */
+-		WARN_ON(buf);
++		if (buf) {
++			buf_cpy = kmemdup(buf, buf_size, GFP_KERNEL);
++			if (!buf_cpy)
++				return -ENOMEM;
++		}
+ 
+ 		memcpy(&desc_cpy, desc, sizeof(desc_cpy));
+ 	}
+@@ -1658,12 +1662,14 @@ ice_sq_send_cmd_retry(struct ice_hw *hw,
+ 		    hw->adminq.sq_last_status != ICE_AQ_RC_EBUSY)
+ 			break;
+ 
++		if (buf_cpy)
++			memcpy(buf, buf_cpy, buf_size);
+ 		memcpy(desc, &desc_cpy, sizeof(desc_cpy));
+-
+ 		msleep(ICE_SQ_SEND_DELAY_TIME_MS);
+ 
+ 	} while (++idx < ICE_SQ_SEND_MAX_EXECUTE);
+ 
++	kfree(buf_cpy);
+ 	return status;
+ }
+ 
 
 
