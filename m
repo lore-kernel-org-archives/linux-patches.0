@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F40A13AD534;
-	Mon, 23 Mar 2026 13:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190F23AEF4F;
+	Mon, 23 Mar 2026 13:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274088; cv=none; b=EkKwolvJf8b4rHwSHW+eXh6j0AJqs8GtG90guvk70wPEjU3asaGt7zSPQDesuId2Bux/000ufug//PTWWp6L9MR569ttybdO3dY6FkjwqepsdmrIi1FL0euO/i1DMgpbp9vz8hLLuEGnPYrwQr655xjtecSXsJJl47VWGxcHp1Q=
+	t=1774274091; cv=none; b=tEbiBEloGyOYoU16jzI/BWUJ2V27CBoJ7NVJTIiTU+7prtrIcKjuey1XSDKk4bH0o79IqDeRoqdqv0TaxDBJU7b418PwySwSquvuQjhKlD6zh9T7xXTFxFHqNV0cbZcM3Q+0jlNwyEWoYdteGF5s9xIO1cTFZVR45wY9ObDECwQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274088; c=relaxed/simple;
-	bh=X+MoVVFeaoP5eU115xSZ9Ru5lo9Y8HyOPHA/6SVxfN8=;
+	s=arc-20240116; t=1774274091; c=relaxed/simple;
+	bh=owaAb4U69Z8d2j/xfeTH2KBWKY0OVYGFueT0UFzKXwM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bOlny+0GwtPKLYUZjA4ZfQ/Ehm5r9cDkX/QB05Mli/KDIl5EfUuX4A4OJmaqbrG6qz0Yxhr8G4rgdoPcgvTsmUPaA/qUbWnHY6ldlyo2WuPKRW/l/pgPQAXimeXT9QEDEujuZa283H08sH77Q9xFfMpapakh/wSYsJrgzWdgi/w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u/66gbN5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iqIWpRMBTjde1jAx2zdMThrV8jQfTK3laWDjR1LJiVgOnR2v48+iTptO7pxQyKuExmuPZSa+zbOHBg2plSlsEVIf3OQkM/+OdR5oIjShEnpm07mBaWsRODTVpFr9ixwGbG8mHldMHNPfPOYkGid+quafgOWtpFsaJ9lp5ye+jTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PQvS8u/y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u/66gbN5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78966C2BCB4;
-	Mon, 23 Mar 2026 13:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PQvS8u/y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 920F3C4CEF7;
+	Mon, 23 Mar 2026 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274087;
-	bh=X+MoVVFeaoP5eU115xSZ9Ru5lo9Y8HyOPHA/6SVxfN8=;
+	s=korg; t=1774274091;
+	bh=owaAb4U69Z8d2j/xfeTH2KBWKY0OVYGFueT0UFzKXwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/66gbN5BFqHJeoaAUqfcGqQag3JitV8G83TderJWtwQvF+SYEYdtGBHCZ0r8iOfp
-	 V51e+G0kqCU6KbHjxP9lKVhiEEidxKuxxtGkVPbhnCv4Em9Sdnf3g9VZKUOIZzzMdt
-	 JC1AhbQDV1aiqHJvZfMLkGkuDpR7GPtJqN4oveqs=
+	b=PQvS8u/y0tEpc3Nfe4EkJx5yDUKYDVxAiViuSAE3Jcl/ou3pnF0U82LjLToVJJTwU
+	 +bxn6CE55Euc5Sp5dnBS1qWsSfV7Fad1pyv3UtS9nssbhNBq3wzcZCWRDe8kGo/8cx
+	 mP1CJvb5LwN2O1dKOR1yrZPUG2W4sTfFuMgBUYRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>,
+	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 104/220] wifi: mac80211: remove keys after disabling beaconing
-Date: Mon, 23 Mar 2026 14:44:41 +0100
-Message-ID: <20260323134507.893440203@linuxfoundation.org>
+Subject: [PATCH 6.19 105/220] wifi: mac80211: use jiffies_delta_to_msecs() for sta_info inactive times
+Date: Mon, 23 Mar 2026 14:44:42 +0100
+Message-ID: <20260323134507.924694737@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,54 +51,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
 
-[ Upstream commit 708bbb45537780a8d3721ca1e0cf1932c1d1bf5f ]
+[ Upstream commit ac6f24cc9c0a9aefa55ec9696dcafa971d4d760b ]
 
-We shouldn't remove keys before disable beaconing, at least when
-beacon protection is used, since that would remove keys that are
-still used for beacon transmission at the same time. Stop before
-removing keys so there's no race.
+Inactive times of around 0xffffffff milliseconds have been observed on
+an ath9k device on ARM.  This is likely due to a memory ordering race in
+the jiffies_to_msecs(jiffies - last_active()) calculation causing an
+overflow when the observed jiffies is below ieee80211_sta_last_active().
 
-Fixes: af2d14b01c32 ("mac80211: Beacon protection using the new BIGTK (STA)")
-Reviewed-by: Miriam Rachel Korenblit <miriam.rachel.korenblit@intel.com>
-Link: https://patch.msgid.link/20260303150339.574e7887b3ab.I50d708f5aa22584506a91d0da7f8a73ba39fceac@changeid
+Use jiffies_delta_to_msecs() instead to avoid this problem.
+
+Fixes: 7bbdd2d98797 ("mac80211: implement station stats retrieval")
+Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+Link: https://patch.msgid.link/20260303161701.31808-1-nicolas.cavallari@green-communications.fr
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/mac80211/sta_info.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index c81091a5cc3a3..e480b48e8365d 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -1889,12 +1889,6 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
+diff --git a/net/mac80211/sta_info.c b/net/mac80211/sta_info.c
+index 1a995bc301b19..b0d9bb830f293 100644
+--- a/net/mac80211/sta_info.c
++++ b/net/mac80211/sta_info.c
+@@ -2759,7 +2759,9 @@ static void sta_set_link_sinfo(struct sta_info *sta,
+ 	}
  
- 	__sta_info_flush(sdata, true, link_id, NULL);
+ 	link_sinfo->inactive_time =
+-		jiffies_to_msecs(jiffies - ieee80211_sta_last_active(sta, link_id));
++		jiffies_delta_to_msecs(jiffies -
++				       ieee80211_sta_last_active(sta,
++								 link_id));
  
--	ieee80211_remove_link_keys(link, &keys);
--	if (!list_empty(&keys)) {
--		synchronize_net();
--		ieee80211_free_key_list(local, &keys);
--	}
--
- 	ieee80211_stop_mbssid(sdata);
- 	RCU_INIT_POINTER(link_conf->tx_bss_conf, NULL);
+ 	if (!(link_sinfo->filled & (BIT_ULL(NL80211_STA_INFO_TX_BYTES64) |
+ 				    BIT_ULL(NL80211_STA_INFO_TX_BYTES)))) {
+@@ -2992,7 +2994,8 @@ void sta_set_sinfo(struct sta_info *sta, struct station_info *sinfo,
+ 	sinfo->connected_time = ktime_get_seconds() - sta->last_connected;
+ 	sinfo->assoc_at = sta->assoc_at;
+ 	sinfo->inactive_time =
+-		jiffies_to_msecs(jiffies - ieee80211_sta_last_active(sta, -1));
++		jiffies_delta_to_msecs(jiffies -
++				       ieee80211_sta_last_active(sta, -1));
  
-@@ -1906,6 +1900,12 @@ static int ieee80211_stop_ap(struct wiphy *wiphy, struct net_device *dev,
- 	ieee80211_link_info_change_notify(sdata, link,
- 					  BSS_CHANGED_BEACON_ENABLED);
- 
-+	ieee80211_remove_link_keys(link, &keys);
-+	if (!list_empty(&keys)) {
-+		synchronize_net();
-+		ieee80211_free_key_list(local, &keys);
-+	}
-+
- 	if (sdata->wdev.links[link_id].cac_started) {
- 		chandef = link_conf->chanreq.oper;
- 		wiphy_delayed_work_cancel(wiphy, &link->dfs_cac_timer_work);
+ 	if (!(sinfo->filled & (BIT_ULL(NL80211_STA_INFO_TX_BYTES64) |
+ 			       BIT_ULL(NL80211_STA_INFO_TX_BYTES)))) {
 -- 
 2.51.0
 
