@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE3719D07A;
-	Mon, 23 Mar 2026 16:17:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A7A3BF698;
+	Mon, 23 Mar 2026 16:17:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282620; cv=none; b=EHMQJx2lwr1Z/hmxWwKtr/sHrAH71q+QjNJ9+5FdENK2EtFhDY9sVFQNb1XbRkjko+5FVf+6yfHA0eLiOiGngEb5vrWmLvikmqH0GGeZJ9EZiVyUqwNoJZK5AVb2ybaDqrhwFYNPpPM1NJkXz42AFIQ8bvux2+x391oMBPkNe7w=
+	t=1774282623; cv=none; b=H26Xm05r2NHpbc15Cf7Zx2L+/gUm6PY2mdKFdaHtSIh1ouJSAOsuG+/zlp4tezHN0d1FvSLbKPROzIdNrt2gGAhtmEGmRLnZ3y+UPTKRwjWe2duAgb7c6w0eya4fHfFV/hG+u5jihhx87rn5/FtSUCnLmBj+Ja4vQrogrDqEU/I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282620; c=relaxed/simple;
-	bh=HEeE8p43+0V3Y9oA1UKurYf3DLivz8agfKdca3xGWvI=;
+	s=arc-20240116; t=1774282623; c=relaxed/simple;
+	bh=7WwfUp59ZieEOhEgWiY2Fp2IRwioMM0h54nwcI83kbI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lwVeonJDc6OOCAATJTqRgWR0cb1m/csuCk0cjw9pVAyyg+bp2cCQRLNRyWEvt2YupYs+lx1l2QWfyX30sbNKR2rAHQF9EeZAGX9AilVJzaNGw8QFs+wUewfHzY1dsawsfCVigqqXaSN5vXBe7O7HE6kWPmRcabNdGmmRjLkiRI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0lf2uVLL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uYSVI0UUr5odoPYtEg+7taOK5SyBW2HEZzMHhzJFfL3ETVdgein3nP5TfX6GMMzPX3dJ2MNDi3AqYBeVKT44Qv5RxK8EHHzkt8JJ+6snQ5rjh95jVu23Rw4zFQxTAupJOANvBEhbeFf37/5VSm0reByOkxl0OGtLoBTAsdra2dQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=boXbiW7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0lf2uVLL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BF41C4CEF7;
-	Mon, 23 Mar 2026 16:16:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="boXbiW7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7821C4CEF7;
+	Mon, 23 Mar 2026 16:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282620;
-	bh=HEeE8p43+0V3Y9oA1UKurYf3DLivz8agfKdca3xGWvI=;
+	s=korg; t=1774282623;
+	bh=7WwfUp59ZieEOhEgWiY2Fp2IRwioMM0h54nwcI83kbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0lf2uVLLOr2EXYN+1uhk7nJjy+lxDIsEueyW3Wllsrfpk3ClvQM9RIieO/lOU3z6h
-	 7F0UW8179eZkQ/JrZ4mRCTsDJthoFjQolPMRrPewskcY70vqzjlnW4g4CINx8TML42
-	 RENY0ztaxw+ScBYOzrPT8v9JatDgbwNVfCTZ1nAo=
+	b=boXbiW7oEHPB/lb9vZtjuXzS3dPUbNJILGHJb8bteUhbTWk0kpr5OJWfVkXEonAkR
+	 Lbu1DIOKltoqlAjandzT9VHS2xilCAV35VEtr4PhhqeA0YM8YxP3f78LgTErVeQazO
+	 55odOSspCxTSiqj+O3tAaHcx2IdJEvPw4VFcS0nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.1 223/481] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
-Date: Mon, 23 Mar 2026 14:43:25 +0100
-Message-ID: <20260323134530.585761186@linuxfoundation.org>
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 188/481] ACPI: OSL: fix __iomem type on return from acpi_os_map_generic_address()
+Date: Mon, 23 Mar 2026 14:42:50 +0100
+Message-ID: <20260323134529.780941499@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,122 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
+[ Upstream commit 393815f57651101f1590632092986d1d5a3a41bd ]
 
-This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
-that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
-ceph_handle_auth_reply(), the value of the payload_len field of such a
-message is stored in a variable of type int. A value greater than
-INT_MAX leads to an integer overflow and is interpreted as a negative
-value. This leads to decrementing the pointer address by this value and
-subsequently accessing it because ceph_decode_need() only checks that
-the memory access does not exceed the end address of the allocation.
+The pointer returned from acpi_os_map_generic_address() is
+tagged with __iomem, so make the rv it is returned to also
+of void __iomem * type.
 
-This patch fixes the issue by changing the data type of payload_len to
-u32. Additionally, the data type of result_msg_len is changed to u32,
-as it is also a variable holding a non-negative length.
+Fixes the following sparse warning:
 
-Also, an additional layer of sanity checks is introduced, ensuring that
-directly after reading it from the message, payload_len and
-result_msg_len are not greater than the overall segment length.
+drivers/acpi/osl.c:1686:20: warning: incorrect type in assignment (different address spaces)
+drivers/acpi/osl.c:1686:20:    expected void *rv
+drivers/acpi/osl.c:1686:20:    got void [noderef] __iomem *
 
-BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
-Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
-
-CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: ceph-msgr ceph_con_workfn [libceph]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x76/0xa0
- print_report+0xd1/0x620
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? kasan_complete_mode_report_info+0x72/0x210
- kasan_report+0xe7/0x130
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- __asan_report_load_n_noabort+0xf/0x20
- ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- mon_dispatch+0x973/0x23d0 [libceph]
- ? apparmor_socket_recvmsg+0x6b/0xa0
- ? __pfx_mon_dispatch+0x10/0x10 [libceph]
- ? __kasan_check_write+0x14/0x30i
- ? mutex_unlock+0x7f/0xd0
- ? __pfx_mutex_unlock+0x10/0x10
- ? __pfx_do_recvmsg+0x10/0x10 [libceph]
- ceph_con_process_message+0x1f1/0x650 [libceph]
- process_message+0x1e/0x450 [libceph]
- ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
- ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
- ? save_fpregs_to_fpstate+0xb0/0x230
- ? raw_spin_rq_unlock+0x17/0xa0
- ? finish_task_switch.isra.0+0x13b/0x760
- ? __switch_to+0x385/0xda0
- ? __kasan_check_write+0x14/0x30
- ? mutex_lock+0x8d/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- ceph_con_workfn+0x248/0x10c0 [libceph]
- process_one_work+0x629/0xf80
- ? __kasan_check_write+0x14/0x30
- worker_thread+0x87f/0x1570
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? __pfx_try_to_wake_up+0x10/0x10
- ? kasan_print_address_stack_frame+0x1f7/0x280
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x396/0x830
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- ? __pfx_kthread+0x10/0x10
- ? __kasan_check_write+0x14/0x30
- ? recalc_sigpending+0x180/0x210
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3f7/0x610
- ? __pfx_ret_from_fork+0x10/0x10
- ? __switch_to+0x385/0xda0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-[ idryomov: replace if statements with ceph_decode_need() for
-  payload_len and result_msg_len ]
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 6915564dc5a8 ("ACPI: OSL: Change the type of acpi_os_map_generic_address() return value")
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+[ rjw: Subject tweak, added Fixes tag ]
+Link: https://patch.msgid.link/20260311105835.463030-1-ben.dooks@codethink.co.uk
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ceph/auth.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/acpi/osl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/ceph/auth.c
-+++ b/net/ceph/auth.c
-@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
- 	s32 result;
- 	u64 global_id;
- 	void *payload, *payload_end;
--	int payload_len;
-+	u32 payload_len;
- 	char *result_msg;
--	int result_msg_len;
-+	u32 result_msg_len;
- 	int ret = -EINVAL;
+diff --git a/drivers/acpi/osl.c b/drivers/acpi/osl.c
+index 3269a888fb7a9..d147c27bc6455 100644
+--- a/drivers/acpi/osl.c
++++ b/drivers/acpi/osl.c
+@@ -1656,7 +1656,7 @@ acpi_status __init acpi_os_initialize(void)
+ 		 * Use acpi_os_map_generic_address to pre-map the reset
+ 		 * register if it's in system memory.
+ 		 */
+-		void *rv;
++		void __iomem *rv;
  
- 	mutex_lock(&ac->mutex);
-@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
- 	result = ceph_decode_32(&p);
- 	global_id = ceph_decode_64(&p);
- 	payload_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, payload_len, bad);
- 	payload = p;
- 	p += payload_len;
- 	ceph_decode_need(&p, end, sizeof(u32), bad);
- 	result_msg_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, result_msg_len, bad);
- 	result_msg = p;
- 	p += result_msg_len;
- 	if (p != end)
+ 		rv = acpi_os_map_generic_address(&acpi_gbl_FADT.reset_register);
+ 		pr_debug("%s: Reset register mapping %s\n", __func__,
+-- 
+2.51.0
+
 
 
