@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B63F35957;
-	Mon, 23 Mar 2026 15:06:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA78027A107;
+	Mon, 23 Mar 2026 15:06:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278395; cv=none; b=P4wOQvLni6/hrIeApDMmU7nUodxnALVZdEDNDOBZUfzSYv0sf2WcEy+nwqahKyYJVyY9k4VtIFxZ2SAL++yUqYJm4LMyyIdQt8xDiopLnawdX5A/PuwGZNohDEZkGx1qAGQ8oxR94RtNl7O3sIZ8WRXvnotPcvG9ZwgK8Ojuj/8=
+	t=1774278398; cv=none; b=l2ztPzHCAeWsfEFo17dB5kR5G9MmT5P806q8eVlEQrj+Be/SBpkLTbk9i2zyq91tRPfuyNehptul5AcnyCJskcKKKySbz592NX4OzNYYryaANjWRejUVHiplil/W0G0eSAQShKALz/B+M3KKmo9FsIPEQSmWn/IqkqsMIquDvEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278395; c=relaxed/simple;
-	bh=MiWQEh0h40Gkklf0kMDuTO1vdcMK8ppmGJD0QmdHBFE=;
+	s=arc-20240116; t=1774278398; c=relaxed/simple;
+	bh=vsO3w0oqKQUq/hPf78Vgb3c2IZgucxF5yXdakitjnS8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eoytlH5FKCKosxqVcZ+e2zmy3tcw4hjWk5iNRgWhcPWpv2grYVzdG0l2Gy0SapZDMdout6hbENVqSHpF2dcY+V1vcVUuI4BNst0YcFBLA0DGhdvqbPOtVqVBRS1jWC0iwlK8NXwHxKzzQsBGNYMSJafitAHrimQZQu66sovVC6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=10Q6YEns; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LTkcMuwQGrjxTXTr9C3pfJCBjeHMGmYwezWpUrWMEuyL2HfzvfBls+is2keyPZQmvlghcHSH4N79jRQ2ujkG4l0PcmcSk5npBY5Rq7EYjuLmPm+71S43w0qoBFoPh0naGXxZ5WXuvfrhjoJPCkiInbGaHTu2EYEN4uUOtOOkNpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EGJoWb7V; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="10Q6YEns"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2EE1C4CEF7;
-	Mon, 23 Mar 2026 15:06:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EGJoWb7V"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2744BC4CEF7;
+	Mon, 23 Mar 2026 15:06:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278395;
-	bh=MiWQEh0h40Gkklf0kMDuTO1vdcMK8ppmGJD0QmdHBFE=;
+	s=korg; t=1774278398;
+	bh=vsO3w0oqKQUq/hPf78Vgb3c2IZgucxF5yXdakitjnS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10Q6YEns8PlTGrvI6pe28aK95KDIJDYgIKm/jJxGMwaj4HePZZv035qFQBDdu60GM
-	 Ko23VI/RayH9tC9JhzzY2lQEs7b5grPq5C8ZuULPNvlfsZSX0WXUos657ICb8r3jTJ
-	 33OOwX1Jw8OrPpychWFzowB8MuXxm2U7Dal+kmNM=
+	b=EGJoWb7VYAY8cti8FegdaofGxOQQlDNearCekJT8SZnGd5GWju44oJ60rEq2639I0
+	 mXi2C5gFnd7tvfAEXnJC3aXotPcV0ih8kABbLPz5Q0ojPNxIlWhJbDQDSafzjwZqhN
+	 N6UzuGsKoC3uqLDSZhKaP0XA2XYPpc3L1+gMJ+Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ilya Dryomov <idryomov@gmail.com>,
-	Alex Markuze <amarkuze@redhat.com>
-Subject: [PATCH 6.6 295/567] libceph: reject preamble if control segment is empty
-Date: Mon, 23 Mar 2026 14:43:35 +0100
-Message-ID: <20260323134541.119049709@linuxfoundation.org>
+	Marc Zyngier <maz@kernel.org>,
+	stable <stable@kernel.org>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 6.6 278/567] usb: cdc-acm: Restore CAP_BRK functionnality to CH343
+Date: Mon, 23 Mar 2026 14:43:18 +0100
+Message-ID: <20260323134540.704664739@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,74 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ilya Dryomov <idryomov@gmail.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit c4c22b846eceff05b1129b8844a80310e55a7f87 upstream.
+commit 14ae24cba291bddfdc296bbcbfd00cd09d0498ef upstream.
 
-While head_onwire_len() has a branch to handle ctrl_len == 0 case,
-prepare_read_control() always sets up a kvec for the CRC meaning that
-a non-empty control segment is effectively assumed.  All frames that
-clients deal with meet that assumption, so let's make it official and
-treat the preamble with an empty control segment as malformed.
+The CH343 USB/serial adapter is as buggy as it is popular (very).
+One of its quirks is that despite being capable of signalling a
+BREAK condition, it doesn't advertise it.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Reviewed-by: Alex Markuze <amarkuze@redhat.com>
+This used to work nonetheless until 66aad7d8d3ec5 ("usb: cdc-acm:
+return correct error code on unsupported break") applied some
+reasonable restrictions, preventing breaks from being emitted on
+devices that do not advertise CAP_BRK.
+
+Add a quirk for this particular device, so that breaks can still
+be produced on some of my machines attached to my console server.
+
+Fixes: 66aad7d8d3ec5 ("usb: cdc-acm: return correct error code on unsupported break")
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable <stable@kernel.org>
+Cc: Oliver Neukum <oneukum@suse.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://patch.msgid.link/20260301124440.1192752-1-maz@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/messenger_v2.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/usb/class/cdc-acm.c |    5 +++++
+ drivers/usb/class/cdc-acm.h |    1 +
+ 2 files changed, 6 insertions(+)
 
---- a/net/ceph/messenger_v2.c
-+++ b/net/ceph/messenger_v2.c
-@@ -392,7 +392,7 @@ static int head_onwire_len(int ctrl_len,
- 	int head_len;
- 	int rem_len;
+--- a/drivers/usb/class/cdc-acm.c
++++ b/drivers/usb/class/cdc-acm.c
+@@ -1379,6 +1379,8 @@ made_compressed_probe:
+ 		acm->ctrl_caps = h.usb_cdc_acm_descriptor->bmCapabilities;
+ 	if (quirks & NO_CAP_LINE)
+ 		acm->ctrl_caps &= ~USB_CDC_CAP_LINE;
++	if (quirks & MISSING_CAP_BRK)
++		acm->ctrl_caps |= USB_CDC_CAP_BRK;
+ 	acm->ctrlsize = ctrlsize;
+ 	acm->readsize = readsize;
+ 	acm->rx_buflimit = num_rx_buf;
+@@ -2002,6 +2004,9 @@ static const struct usb_device_id acm_id
+ 	.driver_info = IGNORE_DEVICE,
+ 	},
  
--	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
-+	BUG_ON(ctrl_len < 1 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
- 
- 	if (secure) {
- 		head_len = CEPH_PREAMBLE_SECURE_LEN;
-@@ -401,9 +401,7 @@ static int head_onwire_len(int ctrl_len,
- 			head_len += padded_len(rem_len) + CEPH_GCM_TAG_LEN;
- 		}
- 	} else {
--		head_len = CEPH_PREAMBLE_PLAIN_LEN;
--		if (ctrl_len)
--			head_len += ctrl_len + CEPH_CRC_LEN;
-+		head_len = CEPH_PREAMBLE_PLAIN_LEN + ctrl_len + CEPH_CRC_LEN;
- 	}
- 	return head_len;
- }
-@@ -528,11 +526,16 @@ static int decode_preamble(void *p, stru
- 		desc->fd_aligns[i] = ceph_decode_16(&p);
- 	}
- 
--	if (desc->fd_lens[0] < 0 ||
-+	/*
-+	 * This would fire for FRAME_TAG_WAIT (it has one empty
-+	 * segment), but we should never get it as client.
-+	 */
-+	if (desc->fd_lens[0] < 1 ||
- 	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
- 		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
- 		return -EINVAL;
- 	}
++	/* CH343 supports CAP_BRK, but doesn't advertise it */
++	{ USB_DEVICE(0x1a86, 0x55d3), .driver_info = MISSING_CAP_BRK, },
 +
- 	if (desc->fd_lens[1] < 0 ||
- 	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
- 		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
-@@ -549,10 +552,6 @@ static int decode_preamble(void *p, stru
- 		return -EINVAL;
- 	}
- 
--	/*
--	 * This would fire for FRAME_TAG_WAIT (it has one empty
--	 * segment), but we should never get it as client.
--	 */
- 	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
- 		pr_err("last segment empty, segment count %d\n",
- 		       desc->fd_seg_cnt);
+ 	/* control interfaces without any protocol set */
+ 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
+ 		USB_CDC_PROTO_NONE) },
+--- a/drivers/usb/class/cdc-acm.h
++++ b/drivers/usb/class/cdc-acm.h
+@@ -113,3 +113,4 @@ struct acm {
+ #define CLEAR_HALT_CONDITIONS		BIT(5)
+ #define SEND_ZERO_PACKET		BIT(6)
+ #define DISABLE_ECHO			BIT(7)
++#define MISSING_CAP_BRK			BIT(8)
 
 
