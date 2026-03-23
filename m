@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540413B27F3;
-	Mon, 23 Mar 2026 14:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF5F3B895A;
+	Mon, 23 Mar 2026 14:03:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274593; cv=none; b=jp3Vf2bI8XxjIiBCkwyNxstsFwvFTR9lEcqGrrK7tdlvSHw0KPFC1Qfy9rSFvxTxKYAxV83Bh1+Zj+8GqFx8h/sdG59HzJOQF1B2L38NoDnDfTeVF479hQR08D7par3NSsRQGTHJrNy7BQFUKSt5kJXltKxLh3eMPkTmx8APd+Y=
+	t=1774274596; cv=none; b=jKzxTzmaHHeJNMlmabqnx5lLmo0yWD0ddfDALbG8xTW5cpJJhve4ntVnFLTPwWx/2sYwnksQTB5h4zyi6eJyDPnI8EA7bsA2kiUM7m1syZXurMfCzfXMMQZ6yCo6yQah2Z/8tri4oHoDVucYVL5kP02kl7bBxw4V6ncA7ibwcco=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274593; c=relaxed/simple;
-	bh=XK0tSo+y1hAYpTtXCLAY0nysb4quFnY/7JufEEbQ+E4=;
+	s=arc-20240116; t=1774274596; c=relaxed/simple;
+	bh=Lc8NcHtdFmPJ9mUVMaoIyjQvJ3bxQCXI7jZ0fm1MoUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c3LAMzog/kA0AGZDRhYe9klxtBUMd2dN6xP88bYMrCueW1V8d8t2CN0RJNTwY0/WalwGIPB25kTJ+UCB1xsg+5T4R+YI37W0JYgphoVLYCcVnC93TOXCcw7+BwCQfsDlU8n7Qpphax5Sf4BH2Kwk1IUYlcd6FcpMO8w9c3ZCrWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Bdf+KMf/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ntq5ABpoTUld9jlJp/csfqUdIJbuoXpwYfn0rtVExL5mSZvDExARGukHy9I/eEgBukLA0GUVPpbUVtma9E25NTFn8hcERNxYTKsiQ5x4v2OlBtnzr1rEpOp8AEtvyoOVFqgtltbwQ2/W331d17CR3rllXTf7QgyPBtD6GS71xUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CoYDYRVt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Bdf+KMf/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD90C4CEF7;
-	Mon, 23 Mar 2026 14:03:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CoYDYRVt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C51C2BC9E;
+	Mon, 23 Mar 2026 14:03:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274593;
-	bh=XK0tSo+y1hAYpTtXCLAY0nysb4quFnY/7JufEEbQ+E4=;
+	s=korg; t=1774274596;
+	bh=Lc8NcHtdFmPJ9mUVMaoIyjQvJ3bxQCXI7jZ0fm1MoUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bdf+KMf/WpRCaMk8KoJtvnFt+iocCrThF/qAh7/uKm5ZisiWPbV21ur1L5p9StXHb
-	 +KlC/HJFiDKjIw3Pxb6rvipxYXduvOdmjunBmC/gUeDjm7CfkZBJJh3tQ0kwDKJyyS
-	 2Oy2GjcGFv3OqaYX4UleoJ2OwWlJ5Ba/bDZsi+8s=
+	b=CoYDYRVt01WY9sjFGhpnU9hLoJaX6MYVHIEEgi+dGVF9+k7R9oMtY2Y7Xtt05n94P
+	 F7YSSYzXFsO/aFZcObEbNmKyceotIfW5IacjN61BLt8zrD61yW+KP0NEQmoi0/XExH
+	 GYgBceNFDwIYkR1GVRAxsg2jUzJXEth9LI1Y+uK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>,
+	Corey Minyard <corey@minyard.net>,
+	Breno Leitao <leitao@debian.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 047/212] sched_ext: Disable preemption between scx_claim_exit() and kicking helper work
-Date: Mon, 23 Mar 2026 14:44:28 +0100
-Message-ID: <20260323134505.258463567@linuxfoundation.org>
+Subject: [PATCH 6.18 048/212] ipmi: Consolidate the run to completion checking for xmit msgs lock
+Date: Mon, 23 Mar 2026 14:44:29 +0100
+Message-ID: <20260323134505.290032736@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,72 +51,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tejun Heo <tj@kernel.org>
+From: Corey Minyard <corey@minyard.net>
 
-[ Upstream commit 83236b2e43dba00bee5b82eb5758816b1a674f6a ]
+[ Upstream commit 1d90e6c1a56f6ab83e5c9d30ded19e7ac8155713 ]
 
-scx_claim_exit() atomically sets exit_kind, which prevents scx_error() from
-triggering further error handling. After claiming exit, the caller must kick
-the helper kthread work which initiates bypass mode and teardown.
+It made things hard to read, move the check to a function.
 
-If the calling task gets preempted between claiming exit and kicking the
-helper work, and the BPF scheduler fails to schedule it back (since error
-handling is now disabled), the helper work is never queued, bypass mode
-never activates, tasks stop being dispatched, and the system wedges.
-
-Disable preemption across scx_claim_exit() and the subsequent work kicking
-in all callers - scx_disable() and scx_vexit(). Add
-lockdep_assert_preemption_disabled() to scx_claim_exit() to enforce the
-requirement.
-
-Fixes: f0e1a0643a59 ("sched_ext: Implement BPF extensible scheduler class")
-Cc: stable@vger.kernel.org # v6.12+
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Signed-off-by: Corey Minyard <corey@minyard.net>
+Reviewed-by: Breno Leitao <leitao@debian.org>
+Stable-dep-of: 62cd145453d5 ("ipmi:msghandler: Handle error returns from the SMI sender")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/char/ipmi/ipmi_msghandler.c |   42 ++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 18 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4066,10 +4066,19 @@ done:
- 	scx_bypass(false);
- }
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -602,6 +602,22 @@ static int __ipmi_bmc_register(struct ip
+ static int __scan_channels(struct ipmi_smi *intf,
+ 				struct ipmi_device_id *id, bool rescan);
  
-+/*
-+ * Claim the exit on @sch. The caller must ensure that the helper kthread work
-+ * is kicked before the current task can be preempted. Once exit_kind is
-+ * claimed, scx_error() can no longer trigger, so if the current task gets
-+ * preempted and the BPF scheduler fails to schedule it back, the helper work
-+ * will never be kicked and the whole system can wedge.
-+ */
- static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
- {
- 	int none = SCX_EXIT_NONE;
- 
-+	lockdep_assert_preemption_disabled();
++static void ipmi_lock_xmit_msgs(struct ipmi_smi *intf, int run_to_completion,
++				unsigned long *flags)
++{
++	if (run_to_completion)
++		return;
++	spin_lock_irqsave(&intf->xmit_msgs_lock, *flags);
++}
 +
- 	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
- 		return false;
++static void ipmi_unlock_xmit_msgs(struct ipmi_smi *intf, int run_to_completion,
++				  unsigned long *flags)
++{
++	if (run_to_completion)
++		return;
++	spin_unlock_irqrestore(&intf->xmit_msgs_lock, *flags);
++}
++
+ static void free_ipmi_user(struct kref *ref)
+ {
+ 	struct ipmi_user *user = container_of(ref, struct ipmi_user, refcount);
+@@ -1878,11 +1894,9 @@ static void smi_send(struct ipmi_smi *in
+ 	int run_to_completion = READ_ONCE(intf->run_to_completion);
+ 	unsigned long flags = 0;
  
-@@ -4092,6 +4101,7 @@ static void scx_disable(enum scx_exit_ki
- 	rcu_read_lock();
- 	sch = rcu_dereference(scx_root);
- 	if (sch) {
-+		guard(preempt)();
- 		scx_claim_exit(sch, kind);
- 		kthread_queue_work(sch->helper, &sch->disable_work);
+-	if (!run_to_completion)
+-		spin_lock_irqsave(&intf->xmit_msgs_lock, flags);
++	ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
+ 	smi_msg = smi_add_send_msg(intf, smi_msg, priority);
+-	if (!run_to_completion)
+-		spin_unlock_irqrestore(&intf->xmit_msgs_lock, flags);
++	ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
+ 
+ 	if (smi_msg)
+ 		handlers->sender(intf->send_info, smi_msg);
+@@ -4822,8 +4836,7 @@ static void smi_work(struct work_struct
+ 	 * message delivery.
+ 	 */
+ restart:
+-	if (!run_to_completion)
+-		spin_lock_irqsave(&intf->xmit_msgs_lock, flags);
++	ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
+ 	if (intf->curr_msg == NULL && !intf->in_shutdown) {
+ 		struct list_head *entry = NULL;
+ 
+@@ -4839,8 +4852,7 @@ restart:
+ 			intf->curr_msg = newmsg;
+ 		}
  	}
-@@ -4414,6 +4424,8 @@ static void scx_vexit(struct scx_sched *
- {
- 	struct scx_exit_info *ei = sch->exit_info;
+-	if (!run_to_completion)
+-		spin_unlock_irqrestore(&intf->xmit_msgs_lock, flags);
++	ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
  
-+	guard(preempt)();
-+
- 	if (!scx_claim_exit(sch, kind))
- 		return;
+ 	if (newmsg) {
+ 		cc = intf->handlers->sender(intf->send_info, newmsg);
+@@ -4848,13 +4860,9 @@ restart:
+ 			if (newmsg->recv_msg)
+ 				deliver_err_response(intf,
+ 						     newmsg->recv_msg, cc);
+-			if (!run_to_completion)
+-				spin_lock_irqsave(&intf->xmit_msgs_lock,
+-						  flags);
++			ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
+ 			intf->curr_msg = NULL;
+-			if (!run_to_completion)
+-				spin_unlock_irqrestore(&intf->xmit_msgs_lock,
+-						       flags);
++			ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
+ 			ipmi_free_smi_msg(newmsg);
+ 			newmsg = NULL;
+ 			goto restart;
+@@ -4924,16 +4932,14 @@ void ipmi_smi_msg_received(struct ipmi_s
+ 		spin_unlock_irqrestore(&intf->waiting_rcv_msgs_lock,
+ 				       flags);
  
+-	if (!run_to_completion)
+-		spin_lock_irqsave(&intf->xmit_msgs_lock, flags);
++	ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
+ 	/*
+ 	 * We can get an asynchronous event or receive message in addition
+ 	 * to commands we send.
+ 	 */
+ 	if (msg == intf->curr_msg)
+ 		intf->curr_msg = NULL;
+-	if (!run_to_completion)
+-		spin_unlock_irqrestore(&intf->xmit_msgs_lock, flags);
++	ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
+ 
+ 	if (run_to_completion)
+ 		smi_work(&intf->smi_work);
 
 
