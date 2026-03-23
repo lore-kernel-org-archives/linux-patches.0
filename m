@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8964A2D9ECB;
-	Mon, 23 Mar 2026 14:42:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D10F387593;
+	Mon, 23 Mar 2026 14:42:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276967; cv=none; b=jOYo5mgJuXY4FNqfabzZoIbe5nno5g02kEdw2sYQOrGnRXwEjyqDOqVL8LHXUqmR6Z/yvdV++EMICdJcR69sn2pSnepnzAZC3QVBMla6TIBKDZgd1X5LfFQYaX6z+hHw+VFH6+f9VKaChTIdJzSmvQci3yPPCgFKi9YeIxwNNoQ=
+	t=1774276970; cv=none; b=oxcLozJCtBDb2DDk5utY92fVdioUpAmbEvxFG7Oj2q/QrIkLcRTBa1/K8q7fgB3eWe0B/S2dWwKHR93Srtwnmai5DVR6kMw+lGdEhE58Rhl4ilofsdaA/Z363r4mAXFzBUiJ2qDbJ7+P9BkiUXRq51rhBDjnRB3yyyU34XuB+uM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276967; c=relaxed/simple;
-	bh=/PtlGsepgMg3+t4TRhp6R7c3i41gdMiQ4k1r+k7imSk=;
+	s=arc-20240116; t=1774276970; c=relaxed/simple;
+	bh=Ujfk0x0K3lJoef7Wx/Ry+Y2ntPOf+KZZy2Uj2695cys=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JRiOjrdTs1DMQhLLya/kO6Ulq0mNhONCMPvuNMN9gCV+FbZuILUj2snxGQcY0cL+hQyBNNAAa4tEw3YFpyAB2w7E8Vcbn9vz6EN8TQMtg3CySTs3qmnfXKNt4MdSoiZ24cvovs0DqwB/iSPFg2s9+ujLiiXOLbteE9Yn9BxeYMw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RX8rYyeO; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fYY9l5VEdibC2VY65VF8/VzBkC+mzxQ0JQwn8gy7/zZ19dvBesoo5UkdDAWCduEPdJPXusERa0ckm1TgM02qZeE9HQ67igdVhYvfCjp5voR/PlJJh6mISPnE7d3+FfE/FzwESRNdv+wB6/jhB+t4g2n5hMR3SwxaN0i8GGdew08=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RnP/kENF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RX8rYyeO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17245C4CEF7;
-	Mon, 23 Mar 2026 14:42:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RnP/kENF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4C52C4CEF7;
+	Mon, 23 Mar 2026 14:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276967;
-	bh=/PtlGsepgMg3+t4TRhp6R7c3i41gdMiQ4k1r+k7imSk=;
+	s=korg; t=1774276970;
+	bh=Ujfk0x0K3lJoef7Wx/Ry+Y2ntPOf+KZZy2Uj2695cys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RX8rYyeOPpCCLuo1ZA/jq60nQ7hrnL7W7p/OpKnoDMbkfg1uAt+ea7+ovA2mlj6jO
-	 UZOf0sNWuHXOKrCBr4qhK1rAD67ot4PoUl8VsCsj44fOFsHtb3zy+9XkEeJHx9nYE5
-	 mHKrXX9lvrIo3kui6L5M3C6QADFCnpysnwbautG8=
+	b=RnP/kENFGKjKpoMV7bBFlDiIL/W/7LndY+vjAv1iaL1QqLhGbmSrRrfqJQp3rpIyB
+	 9jj6qqwM4TbCfGKsObHfhDe2j/beQo/syb8+piJQ3E7lnk6rL73uvDGMHMFZLQKmkv
+	 Bc6i844mcS1yX4cby9uoq4P3FHR3eXx0tssdbmyw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Long Li <leo.lilong@huawei.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 271/460] crypto: atmel-sha204a - Fix OOM ->tfm_count leak
-Date: Mon, 23 Mar 2026 14:44:27 +0100
-Message-ID: <20260323134533.144934535@linuxfoundation.org>
+Subject: [PATCH 6.12 272/460] xfs: fix integer overflow in bmap intent sort comparator
+Date: Mon, 23 Mar 2026 14:44:28 +0100
+Message-ID: <20260323134533.169213671@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,38 +52,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit d240b079a37e90af03fd7dfec94930eb6c83936e ]
+[ Upstream commit 362c490980867930a098b99f421268fbd7ca05fd ]
 
-If memory allocation fails, decrement ->tfm_count to avoid blocking
-future reads.
+xfs_bmap_update_diff_items() sorts bmap intents by inode number using
+a subtraction of two xfs_ino_t (uint64_t) values, with the result
+truncated to int. This is incorrect when two inode numbers differ by
+more than INT_MAX (2^31 - 1), which is entirely possible on large XFS
+filesystems.
 
-Cc: stable@vger.kernel.org
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
+Fix this by replacing the subtraction with cmp_int().
+
+Cc: <stable@vger.kernel.org> # v4.9
+Fixes: 9f3afb57d5f1 ("xfs: implement deferred bmbt map/unmap operations")
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Carlos Maiolino <cem@kernel.org>
+[ No cmp_int() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-sha204a.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/xfs/xfs_bmap_item.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -52,9 +52,10 @@ static int atmel_sha204a_rng_read_nonblo
- 		rng->priv = 0;
- 	} else {
- 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
--		if (!work_data)
-+		if (!work_data) {
-+			atomic_dec(&i2c_priv->tfm_count);
- 			return -ENOMEM;
--
-+		}
- 		work_data->ctx = i2c_priv;
- 		work_data->client = i2c_priv->client;
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -237,7 +237,8 @@ xfs_bmap_update_diff_items(
+ 	struct xfs_bmap_intent		*ba = bi_entry(a);
+ 	struct xfs_bmap_intent		*bb = bi_entry(b);
  
+-	return ba->bi_owner->i_ino - bb->bi_owner->i_ino;
++	return ((ba->bi_owner->i_ino > bb->bi_owner->i_ino) -
++		(ba->bi_owner->i_ino < bb->bi_owner->i_ino));
+ }
+ 
+ /* Log bmap updates in the intent item. */
 
 
