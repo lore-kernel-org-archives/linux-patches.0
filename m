@@ -1,38 +1,50 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF77F3B19CC;
-	Mon, 23 Mar 2026 14:03:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F723AD536;
+	Mon, 23 Mar 2026 14:03:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274599; cv=none; b=FPt7xLQSzPcwVbTLddTgKtij3G7L6PEfAU6qs5+9LGRDpz10lMf4HcO7YT9nVJchEPOUh+vcfx4II/IugyhfdahP449CwvyCPy78m2DN/pfJgtSKCv50RAQRev4AnIchhEFmhDrNVR2KDHpOjrYohkFzvgyDCyhmLm17pewvGYk=
+	t=1774274603; cv=none; b=Kz3v0CjHph+8ZtSiiNFi5LLzLvtvWOJ44gR8/nkhT1SGgrCK5u9anbBFKptIdUZvBcKVEH/dKY5AgsYTBnJO6i6USRCwdJvSwFo6Z/PQmD+AkClLh0+TxbxTsuY+EKZ4Dwq4Rl1njIEkmB9FJZCAsMfXuI46p5R1ciUCFRivHxM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274599; c=relaxed/simple;
-	bh=nHbzVaXb9nn0dpxFtL8/5TKDGhwsB2aGhjfWyYkeUVs=;
+	s=arc-20240116; t=1774274603; c=relaxed/simple;
+	bh=zLSeymyGUcZm5anTLOwc4mJbenr0OLiRF7TV43VEPQc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=t+7/A2KHf1dIzZ0/EBdy1EyebkIEAqG7lMUClyRQOdrkB5wxfZtyliq/UtgP9BvGLg8a+lUqUV/Ym+CAB8GhzWcVepjD1QiaPoabvHhW1sSvEZ7gj0nfQCQ2B/6j5MstL1JdNnYihQeTtV15QqKLAzlraIhkBsxOykYhDSL4+rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mPZKiKIi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pxVn4Ixm9Mh8B31KNfa/jgGilzrvGJbKi7mHmDdTxEg9UVs7NDCJ1RRcBQ+T+X/z987r3wonOZXtQH8qHYy2S8YyAnk6uwTolYelwgE5ukrUDz5nTNJ8pojqixbH3J63DM8c53hsbssmJf746nkmcvCgYVu/b7w48dxFfXTG5L0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CJMnWMZQ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mPZKiKIi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B8BC4CEF7;
-	Mon, 23 Mar 2026 14:03:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CJMnWMZQ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E03E6C4CEF7;
+	Mon, 23 Mar 2026 14:03:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274599;
-	bh=nHbzVaXb9nn0dpxFtL8/5TKDGhwsB2aGhjfWyYkeUVs=;
+	s=korg; t=1774274602;
+	bh=zLSeymyGUcZm5anTLOwc4mJbenr0OLiRF7TV43VEPQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPZKiKIi1yKf7Uy4ZYUKvOVeZxGcCVHVsKqx9G0FDYGUr1sQJZtVx8Z/XL1Pvo2oi
-	 tnttno856rvts5yFE6ZyYMJZcaXqeB2XjRoPvrIfxvpxgNxjhtnLpA4FDZxya8CH3z
-	 MxitJBjZerjNVjIFkI9Zd8TXb4JdObkuKqSPtOzs=
+	b=CJMnWMZQHAy99KmCn9qZfoMNWUs159+q7X9eyGvhiZff/ez9B3/XVsrLzfcM59hN+
+	 Mi88BIoBVeHtzAbqjek53ENreFfrHAJ28JB655x7FgPFdI2w08625ULLXkB8X6UNvC
+	 2xdd9JoLDafsSVJnHWGAyOy6F7SGhZCZe0WFw9AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Corey Minyard <corey@minyard.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 049/212] ipmi:msghandler: Handle error returns from the SMI sender
-Date: Mon, 23 Mar 2026 14:44:30 +0100
-Message-ID: <20260323134505.321326451@linuxfoundation.org>
+	Zi Yan <ziy@nvidia.com>,
+	Bas van Dijk <bas@dfinity.org>,
+	Lance Yang <lance.yang@linux.dev>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Barry Song <baohua@kernel.org>,
+	David Hildenbrand <david@kernel.org>,
+	Dev Jain <dev.jain@arm.com>,
+	Hugh Dickins <hughd@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 050/212] mm/huge_memory: fix a folio_split() race condition with folio_try_get()
+Date: Mon, 23 Mar 2026 14:44:31 +0100
+Message-ID: <20260323134505.352928865@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,213 +63,130 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Corey Minyard <corey@minyard.net>
+From: Zi Yan <ziy@nvidia.com>
 
-[ Upstream commit 62cd145453d577113f993efd025f258dd86aa183 ]
+During a pagecache folio split, the values in the related xarray should
+not be changed from the original folio at xarray split time until all
+after-split folios are well formed and stored in the xarray.  Current use
+of xas_try_split() in __split_unmapped_folio() lets some after-split
+folios show up at wrong indices in the xarray.  When these misplaced
+after-split folios are unfrozen, before correct folios are stored via
+__xa_store(), and grabbed by folio_try_get(), they are returned to
+userspace at wrong file indices, causing data corruption.  More detailed
+explanation is at the bottom.
 
-It used to be, until recently, that the sender operation on the low
-level interfaces would not fail.  That's not the case any more with
-recent changes.
+The reproducer is at: https://github.com/dfinity/thp-madv-remove-test
+It
+1. creates a memfd,
+2. forks,
+3. in the child process, maps the file with large folios (via shmem code
+   path) and reads the mapped file continuously with 16 threads,
+4. in the parent process, uses madvise(MADV_REMOVE) to punch poles in the
+   large folio.
 
-So check the return value from the sender operation, and propagate it
-back up from there and handle the errors in all places.
+Data corruption can be observed without the fix.  Basically, data from a
+wrong page->index is returned.
 
-Reported-by: Rafael J. Wysocki <rafael@kernel.org>
-Fixes: bc3a9d217755 ("ipmi:si: Gracefully handle if the BMC is non-functional")
-Cc: stable@vger.kernel.org # 4.18
-Signed-off-by: Corey Minyard <corey@minyard.net>
-Reviewed-by: Rafael J. Wysocki (Intel) <rafael@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix it by using the original folio in xas_try_split() calls, so that
+folio_try_get() can get the right after-split folios after the original
+folio is unfrozen.
+
+Uniform split, split_huge_page*(), is not affected, since it uses
+xas_split_alloc() and xas_split() only once and stores the original folio
+in the xarray.  Change xas_split() used in uniform split branch to use the
+original folio to avoid confusion.
+
+Fixes below points to the commit introduces the code, but folio_split() is
+used in a later commit 7460b470a131f ("mm/truncate: use folio_split() in
+truncate operation").
+
+More details:
+
+For example, a folio f is split non-uniformly into f, f2, f3, f4 like
+below:
++----------------+---------+----+----+
+|       f        |    f2   | f3 | f4 |
++----------------+---------+----+----+
+but the xarray would look like below after __split_unmapped_folio() is
+done:
++----------------+---------+----+----+
+|       f        |    f2   | f3 | f3 |
++----------------+---------+----+----+
+
+After __split_unmapped_folio(), the code changes the xarray and unfreezes
+after-split folios:
+
+1. unfreezes f2, __xa_store(f2)
+2. unfreezes f3, __xa_store(f3)
+3. unfreezes f4, __xa_store(f4), which overwrites the second f3 to f4.
+4. unfreezes f.
+
+Meanwhile, a parallel filemap_get_entry() can read the second f3 from the
+xarray and use folio_try_get() on it at step 2 when f3 is unfrozen. Then,
+f3 is wrongly returned to user.
+
+After the fix, the xarray looks like below after __split_unmapped_folio():
++----------------+---------+----+----+
+|       f        |    f    | f  | f  |
++----------------+---------+----+----+
+so that the race window no longer exists.
+
+[ziy@nvidia.com: move comment, per David]
+  Link: https://lkml.kernel.org/r/5C9FA053-A4C6-4615-BE05-74E47A6462B3@nvidia.com
+Link: https://lkml.kernel.org/r/20260302203159.3208341-1-ziy@nvidia.com
+Fixes: 00527733d0dc ("mm/huge_memory: add two new (not yet used) functions for folio_split()")
+Signed-off-by: Zi Yan <ziy@nvidia.com>
+Reported-by: Bas van Dijk <bas@dfinity.org>
+Closes: https://lore.kernel.org/all/CAKNNEtw5_kZomhkugedKMPOG-sxs5Q5OLumWJdiWXv+C9Yct0w@mail.gmail.com/
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Barry Song <baohua@kernel.org>
+Cc: David Hildenbrand <david@kernel.org>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Hugh Dickins <hughd@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+(cherry picked from commit 577a1f495fd78d8fb61b67ac3d3b595b01f6fcb0)
+Signed-off-by: Zi Yan <ziy@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |  100 ++++++++++++++++++++++++------------
- 1 file changed, 68 insertions(+), 32 deletions(-)
+ mm/huge_memory.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1887,19 +1887,32 @@ static struct ipmi_smi_msg *smi_add_send
- 	return smi_msg;
- }
- 
--static void smi_send(struct ipmi_smi *intf,
-+static int smi_send(struct ipmi_smi *intf,
- 		     const struct ipmi_smi_handlers *handlers,
- 		     struct ipmi_smi_msg *smi_msg, int priority)
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -3438,6 +3438,7 @@ static int __split_unmapped_folio(struct
  {
- 	int run_to_completion = READ_ONCE(intf->run_to_completion);
- 	unsigned long flags = 0;
-+	int rv = 0;
- 
- 	ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
- 	smi_msg = smi_add_send_msg(intf, smi_msg, priority);
- 	ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
- 
--	if (smi_msg)
--		handlers->sender(intf->send_info, smi_msg);
-+	if (smi_msg) {
-+		rv = handlers->sender(intf->send_info, smi_msg);
-+		if (rv) {
-+			ipmi_lock_xmit_msgs(intf, run_to_completion, &flags);
-+			intf->curr_msg = NULL;
-+			ipmi_unlock_xmit_msgs(intf, run_to_completion, &flags);
-+			/*
-+			 * Something may have been added to the transmit
-+			 * queue, so schedule a check for that.
-+			 */
-+			queue_work(system_wq, &intf->smi_work);
-+		}
-+	}
-+	return rv;
- }
- 
- static bool is_maintenance_mode_cmd(struct kernel_ipmi_msg *msg)
-@@ -2312,6 +2325,7 @@ static int i_ipmi_request(struct ipmi_us
- 	struct ipmi_recv_msg *recv_msg;
- 	int run_to_completion = READ_ONCE(intf->run_to_completion);
- 	int rv = 0;
-+	bool in_seq_table = false;
- 
- 	if (supplied_recv) {
- 		recv_msg = supplied_recv;
-@@ -2365,33 +2379,50 @@ static int i_ipmi_request(struct ipmi_us
- 		rv = i_ipmi_req_ipmb(intf, addr, msgid, msg, smi_msg, recv_msg,
- 				     source_address, source_lun,
- 				     retries, retry_time_ms);
-+		in_seq_table = true;
- 	} else if (is_ipmb_direct_addr(addr)) {
- 		rv = i_ipmi_req_ipmb_direct(intf, addr, msgid, msg, smi_msg,
- 					    recv_msg, source_lun);
- 	} else if (is_lan_addr(addr)) {
- 		rv = i_ipmi_req_lan(intf, addr, msgid, msg, smi_msg, recv_msg,
- 				    source_lun, retries, retry_time_ms);
-+		in_seq_table = true;
- 	} else {
--	    /* Unknown address type. */
-+		/* Unknown address type. */
- 		ipmi_inc_stat(intf, sent_invalid_commands);
- 		rv = -EINVAL;
- 	}
- 
--	if (rv) {
--out_err:
--		if (!supplied_smi)
--			ipmi_free_smi_msg(smi_msg);
--		if (!supplied_recv)
--			ipmi_free_recv_msg(recv_msg);
--	} else {
-+	if (!rv) {
- 		dev_dbg(intf->si_dev, "Send: %*ph\n",
- 			smi_msg->data_size, smi_msg->data);
- 
--		smi_send(intf, intf->handlers, smi_msg, priority);
-+		rv = smi_send(intf, intf->handlers, smi_msg, priority);
-+		if (rv != IPMI_CC_NO_ERROR)
-+			/* smi_send() returns an IPMI err, return a Linux one. */
-+			rv = -EIO;
-+		if (rv && in_seq_table) {
-+			/*
-+			 * If it's in the sequence table, it will be
-+			 * retried later, so ignore errors.
-+			 */
-+			rv = 0;
-+			/* But we need to fix the timeout. */
-+			intf_start_seq_timer(intf, smi_msg->msgid);
-+			ipmi_free_smi_msg(smi_msg);
-+			smi_msg = NULL;
-+		}
- 	}
-+out_err:
- 	if (!run_to_completion)
- 		mutex_unlock(&intf->users_mutex);
- 
-+	if (rv) {
-+		if (!supplied_smi)
-+			ipmi_free_smi_msg(smi_msg);
-+		if (!supplied_recv)
-+			ipmi_free_recv_msg(recv_msg);
-+	}
- 	return rv;
- }
- 
-@@ -3961,12 +3992,12 @@ static int handle_ipmb_get_msg_cmd(struc
- 		dev_dbg(intf->si_dev, "Invalid command: %*ph\n",
- 			msg->data_size, msg->data);
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		ipmb_addr = (struct ipmi_ipmb_addr *) &recv_msg->addr;
-@@ -4040,12 +4071,12 @@ static int handle_ipmb_direct_rcv_cmd(st
- 		msg->data[4] = IPMI_INVALID_CMD_COMPLETION_CODE;
- 		msg->data_size = 5;
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		daddr = (struct ipmi_ipmb_direct_addr *)&recv_msg->addr;
-@@ -4185,7 +4216,7 @@ static int handle_lan_get_msg_cmd(struct
- 				  struct ipmi_smi_msg *msg)
- {
- 	struct cmd_rcvr          *rcvr;
--	int                      rv = 0;
-+	int                      rv = 0; /* Free by default */
- 	unsigned char            netfn;
- 	unsigned char            cmd;
- 	unsigned char            chan;
-@@ -4238,12 +4269,12 @@ static int handle_lan_get_msg_cmd(struct
- 		dev_dbg(intf->si_dev, "Invalid command: %*ph\n",
- 			msg->data_size, msg->data);
- 
--		smi_send(intf, intf->handlers, msg, 0);
--		/*
--		 * We used the message, so return the value that
--		 * causes it to not be freed or queued.
--		 */
--		rv = -1;
-+		if (smi_send(intf, intf->handlers, msg, 0) == IPMI_CC_NO_ERROR)
-+			/*
-+			 * We used the message, so return the value that
-+			 * causes it to not be freed or queued.
-+			 */
-+			rv = -1;
- 	} else if (!IS_ERR(recv_msg)) {
- 		/* Extract the source address from the data. */
- 		lan_addr = (struct ipmi_lan_addr *) &recv_msg->addr;
-@@ -5052,7 +5083,12 @@ static void check_msg_timeout(struct ipm
- 				ipmi_inc_stat(intf,
- 					      retransmitted_ipmb_commands);
- 
--			smi_send(intf, intf->handlers, smi_msg, 0);
-+			/* If this fails we'll retry later or timeout. */
-+			if (smi_send(intf, intf->handlers, smi_msg, 0) != IPMI_CC_NO_ERROR) {
-+				/* But fix the timeout. */
-+				intf_start_seq_timer(intf, smi_msg->msgid);
-+				ipmi_free_smi_msg(smi_msg);
-+			}
- 		} else
- 			ipmi_free_smi_msg(smi_msg);
- 
+ 	int order = folio_order(folio);
+ 	int start_order = uniform_split ? new_order : order - 1;
++	struct folio *old_folio = folio;
+ 	bool stop_split = false;
+ 	struct folio *next;
+ 	int split_order;
+@@ -3468,12 +3469,16 @@ static int __split_unmapped_folio(struct
+ 			 * uniform split has xas_split_alloc() called before
+ 			 * irq is disabled to allocate enough memory, whereas
+ 			 * non-uniform split can handle ENOMEM.
++			 * Use the to-be-split folio, so that a parallel
++			 * folio_try_get() waits on it until xarray is updated
++			 * with after-split folios and the original one is
++			 * unfrozen.
+ 			 */
+ 			if (uniform_split)
+-				xas_split(xas, folio, old_order);
++				xas_split(xas, old_folio, old_order);
+ 			else {
+ 				xas_set_order(xas, folio->index, split_order);
+-				xas_try_split(xas, folio, old_order);
++				xas_try_split(xas, old_folio, old_order);
+ 				if (xas_error(xas)) {
+ 					ret = xas_error(xas);
+ 					stop_split = true;
 
 
