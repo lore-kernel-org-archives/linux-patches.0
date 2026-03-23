@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53D3121D00A;
-	Mon, 23 Mar 2026 13:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CABB286A4;
+	Mon, 23 Mar 2026 13:56:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274212; cv=none; b=dtL2l3YrPOL+haHhGUTb+XMAxh/sOJBXBOB1flhf2sLakeHo368wGXVFvAyik6yTXqKIRUXTMTQfdUSmkPAz08EOsxpPxcf4bgLFjo9noBvTGj05uBp8cSClv3/iKFNTVfOoJRanbpCguG01IMKNxcU12i3nF9TeqtmFEfUvxFs=
+	t=1774274215; cv=none; b=hzescYi+e/fo5/yprehyXqvDVsAagunCcWBqLaR3utREcbFrCndtQ87AmE48CUia3A17QTdMvX6j8U45IT4jO253LdDz7K7ccOo6jFziouXPvRsHqyGuCFBbXYIBanEYGbGO8AnR/wIqxkDiPaFkXSO1850yRe3B9QxZWYJ5MaE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274212; c=relaxed/simple;
-	bh=fXPiHnyQgxw33bexgbslVgdpOce4MdK2Kjrx20grT6w=;
+	s=arc-20240116; t=1774274215; c=relaxed/simple;
+	bh=jGyCIT3HTY4BIf8w7GGLeJBuqoQYMA8ci5QA6GRclZo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RzF1Tof+bdCIa7PHPXoIbMlW+/OL6OUUhSEkF2BuOcSR/eZ/QpYo9PO89n9nmT2MNurUUYCtJ5eGqxIPIsKv+cyuzhlI/hkuo+153xpbev/h0122LDeUldeKAj31b2snEZMNYkWhc6hneftC8Nq9sxXKCvrspRSta58r3MOEvbE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o++iwP/3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Qm9Fy46jaoP2yVCpj3yMM9FteAcOr/FWLEAkNMXL7drhCKUeHT1jcYI5wDVfAdkLFSdWJeocsaLZjsefEtZqEI/HjZi+3i6kqTbNdZR1WM9yrKaTGZ6a0nviv029X46l5UurWTqMLJfmOokmKYQKrmhfA9fUXBr5fDCJ67Em12Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S0f8vBxM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o++iwP/3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90658C4CEF7;
-	Mon, 23 Mar 2026 13:56:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S0f8vBxM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3C28C4CEF7;
+	Mon, 23 Mar 2026 13:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274212;
-	bh=fXPiHnyQgxw33bexgbslVgdpOce4MdK2Kjrx20grT6w=;
+	s=korg; t=1774274215;
+	bh=jGyCIT3HTY4BIf8w7GGLeJBuqoQYMA8ci5QA6GRclZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o++iwP/3QT54ohhtApTl0Qc6AOkDxnyZmuOHj2wBjzjhwqTpjNdtJXVV5L04TS1PG
-	 4YnvCjzEx5mGgU3eFPxzDQTQWfgd+P5Y9FhVscDqFDjoClMh0hl/iXnmsfb4cEF2YU
-	 sSLVuRkc5jOjFnbORlcN/NqZDwuI4kHWHCKWFdsQ=
+	b=S0f8vBxM5lRZAaValWmfR5lctrwa7VXlREAtBbMMfQJP1rZmoiSMdlYkrDPpyEn6F
+	 1gbOohgAFrTGIF9Qx7rQy49vzyY0sIrcK3iT8VDmVHmAJVszQqRbJikCpl23HkBwus
+	 r/Ma8I0xZZDFmIBQ2CfAMASWYY41MNumXRA5hysI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Meghana Malladi <m-malladi@ti.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Qais Yousef <qyousef@layalina.io>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 145/220] net: ti: icssg-prueth: Fix memory leak in XDP_DROP for non-zero-copy mode
-Date: Mon, 23 Mar 2026 14:45:22 +0100
-Message-ID: <20260323134509.176628558@linuxfoundation.org>
+Subject: [PATCH 6.19 146/220] sched: idle: Consolidate the handling of two special cases
+Date: Mon, 23 Mar 2026 14:45:23 +0100
+Message-ID: <20260323134509.203643237@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,50 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Meghana Malladi <m-malladi@ti.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 719d3e71691db7c4f1658ba5a6d1472928121594 ]
+[ Upstream commit f4c31b07b136839e0fb3026f8a5b6543e3b14d2f ]
 
-Page recycling was removed from the XDP_DROP path in emac_run_xdp() to
-avoid conflicts with AF_XDP zero-copy mode, which uses xsk_buff_free()
-instead.
+There are two special cases in the idle loop that are handled
+inconsistently even though they are analogous.
 
-However, this causes a memory leak when running XDP programs that drop
-packets in non-zero-copy mode (standard page pool mode). The pages are
-never returned to the page pool, leading to OOM conditions.
+The first one is when a cpuidle driver is absent and the default CPU
+idle time power management implemented by the architecture code is used.
+In that case, the scheduler tick is stopped every time before invoking
+default_idle_call().
 
-Fix this by handling cleanup in the caller, emac_rx_packet().
-When emac_run_xdp() returns ICSSG_XDP_CONSUMED for XDP_DROP, the
-caller now recycles the page back to the page pool. The zero-copy
-path, emac_rx_packet_zc() already handles cleanup correctly with
-xsk_buff_free().
+The second one is when a cpuidle driver is present, but there is only
+one idle state in its table.  In that case, the scheduler tick is never
+stopped at all.
 
-Fixes: 7a64bb388df3 ("net: ti: icssg-prueth: Add AF_XDP zero copy for RX")
-Signed-off-by: Meghana Malladi <m-malladi@ti.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260311095441.1691636-1-m-malladi@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Since each of these approaches has its drawbacks, reconcile them with
+the help of one simple heuristic.  Namely, stop the tick if the CPU has
+been woken up by it in the previous iteration of the idle loop, or let
+it tick otherwise.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Fixes: ed98c3491998 ("sched: idle: Do not stop the tick before cpuidle_idle_call()")
+[ rjw: Added Fixes tag, changelog edits ]
+Link: https://patch.msgid.link/4741364.LvFx2qVVIh@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/icssg/icssg_common.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/sched/idle.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/icssg/icssg_common.c b/drivers/net/ethernet/ti/icssg/icssg_common.c
-index 090aa74d3ce72..a9b5f86bc71bc 100644
---- a/drivers/net/ethernet/ti/icssg/icssg_common.c
-+++ b/drivers/net/ethernet/ti/icssg/icssg_common.c
-@@ -1075,6 +1075,11 @@ static int emac_rx_packet(struct prueth_emac *emac, u32 flow_id, u32 *xdp_state)
- 		xdp_prepare_buff(&xdp, pa, PRUETH_HEADROOM, pkt_len, false);
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index 69c70d509e1cf..8e00d95fb3388 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -161,6 +161,14 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	return cpuidle_enter(drv, dev, next_state);
+ }
  
- 		*xdp_state = emac_run_xdp(emac, &xdp, &pkt_len);
-+		if (*xdp_state == ICSSG_XDP_CONSUMED) {
-+			page_pool_recycle_direct(pool, page);
-+			goto requeue;
-+		}
++static void idle_call_stop_or_retain_tick(bool stop_tick)
++{
++	if (stop_tick || tick_nohz_tick_stopped())
++		tick_nohz_idle_stop_tick();
++	else
++		tick_nohz_idle_retain_tick();
++}
 +
- 		if (*xdp_state != ICSSG_XDP_PASS)
- 			goto requeue;
- 		headroom = xdp.data - xdp.data_hard_start;
+ /**
+  * cpuidle_idle_call - the main idle function
+  *
+@@ -170,7 +178,7 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+  * set, and it returns with polling set.  If it ever stops polling, it
+  * must clear the polling bit.
+  */
+-static void cpuidle_idle_call(void)
++static void cpuidle_idle_call(bool stop_tick)
+ {
+ 	struct cpuidle_device *dev = cpuidle_get_device();
+ 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
+@@ -186,7 +194,7 @@ static void cpuidle_idle_call(void)
+ 	}
+ 
+ 	if (cpuidle_not_available(drv, dev)) {
+-		tick_nohz_idle_stop_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		default_idle_call();
+ 		goto exit_idle;
+@@ -222,17 +230,19 @@ static void cpuidle_idle_call(void)
+ 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
+ 		call_cpuidle(drv, dev, next_state);
+ 	} else if (drv->state_count > 1) {
+-		bool stop_tick = true;
++		/*
++		 * stop_tick is expected to be true by default by cpuidle
++		 * governors, which allows them to select idle states with
++		 * target residency above the tick period length.
++		 */
++		stop_tick = true;
+ 
+ 		/*
+ 		 * Ask the cpuidle framework to choose a convenient idle state.
+ 		 */
+ 		next_state = cpuidle_select(drv, dev, &stop_tick);
+ 
+-		if (stop_tick || tick_nohz_tick_stopped())
+-			tick_nohz_idle_stop_tick();
+-		else
+-			tick_nohz_idle_retain_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		entered_state = call_cpuidle(drv, dev, next_state);
+ 		/*
+@@ -240,7 +250,7 @@ static void cpuidle_idle_call(void)
+ 		 */
+ 		cpuidle_reflect(dev, entered_state);
+ 	} else {
+-		tick_nohz_idle_retain_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		/*
+ 		 * If there is only a single idle state (or none), there is
+@@ -268,6 +278,7 @@ static void cpuidle_idle_call(void)
+ static void do_idle(void)
+ {
+ 	int cpu = smp_processor_id();
++	bool got_tick = false;
+ 
+ 	/*
+ 	 * Check if we need to update blocked load
+@@ -338,8 +349,9 @@ static void do_idle(void)
+ 			tick_nohz_idle_restart_tick();
+ 			cpu_idle_poll();
+ 		} else {
+-			cpuidle_idle_call();
++			cpuidle_idle_call(got_tick);
+ 		}
++		got_tick = tick_nohz_idle_got_tick();
+ 		arch_cpu_idle_exit();
+ 	}
+ 
 -- 
 2.51.0
 
