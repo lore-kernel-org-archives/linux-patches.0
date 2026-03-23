@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 381281D63F3;
-	Mon, 23 Mar 2026 14:54:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B20B2D9ECB;
+	Mon, 23 Mar 2026 14:54:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277694; cv=none; b=fsqc0Tjzi3H6rF8XbdyiBQu7xVaXlHaXOrcrxxxyEX4c4R0yA+Yo3bP9Xu4czjhn/79WPDiRL2WLUwsBpmQ0zWTGmreT0Tb0YvXr4zzCDkzsewy3rl/+w/eCW3iJh5gPrjqvvpFY2KxhThos+CZ+Q80xhJWv6RO10dPxfTvI10s=
+	t=1774277697; cv=none; b=AcCfHrfCMDNDwWFwyk75vciBc+l0ifK0JRFj3cQt0+CPBHSRzs3HLD9YXHh8Ce/KG8RDYq258zKLh7X9W4tU7K2jgL/XXHvTJmMabtOumyrS6nMW4YjSQGBExjfef2xEc+MG1AcRLf7KwkdNOk251sBNPpUldK+y4vZSOSfPF+c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277694; c=relaxed/simple;
-	bh=ktQLvzUqITeX+rZBoTTobys0URIbGoylUSpgZ2ksOWg=;
+	s=arc-20240116; t=1774277697; c=relaxed/simple;
+	bh=SFbVg+rxA/BVF4kX3itQ7wHB5SU9BaZSFYt78vTo5V0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=WnTbNpEADQtH/0LFkwC5StB/pMD81+4qjsfZFLnayS4x5m9VdSDkulIHBw9qvkXCuTlZVZ/BKqsTEf/WNhQWoXPxHALC1UO3EqVe8IGid5oDue0VI7fArKPTnn+efnMlFOGxs4NPpkpTLvu7EtNY5VdPJw1L+taKan4IsaRw8P8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E6tlbR3E; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M7FNKYLWfgk4yKRLxSP0wyiToqmdZX45T3za7KNZ9TmHurSizilBzE0YZm7nVCULNDWzYace0cfcDT2UV9ImIxDILnh4kx9ehyJKBnnJzyHmXwDqXxufXrvc1FjTVDyPg3c5GYWBDUHlhdc+hdj6yaBnZGsc5MpBdXH4KG6Gp5A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rfPXOBzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E6tlbR3E"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B038FC2BCB1;
-	Mon, 23 Mar 2026 14:54:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rfPXOBzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C493FC4CEF7;
+	Mon, 23 Mar 2026 14:54:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277694;
-	bh=ktQLvzUqITeX+rZBoTTobys0URIbGoylUSpgZ2ksOWg=;
+	s=korg; t=1774277697;
+	bh=SFbVg+rxA/BVF4kX3itQ7wHB5SU9BaZSFYt78vTo5V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E6tlbR3E4VDCFO5Dsuwm5R7XZ/UX2TFRYtOX4ihhAhlfx2Gr7nl7Ou3fYIGvYGPb6
-	 HXGXj0naCaS185hWtFk7Tfxvp9ROCd5NNJBQob8TO2ZHhJh6imWIThvmPryz1Sy4h1
-	 pd6p4e1eo4vFJnx5fgPxz+t25/Osu3ss3Zk6ItTI=
+	b=rfPXOBzjWichBY9xr6Kb6kiyoKp/aHpuY+Mx0pd6mn4aKc7P25RmMuex57NFkGFSO
+	 jn5auGcqMJ9pASFij+fREoRHtp1M45f5F+E8XxRvTVa5QwxLC+MncLWk/Li7Ngk62d
+	 8uueccTvOcxd5afuftX99AZsmbMQF8q3PeZpVNus=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Andreas Kemnade <andreas@kemnade.info>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 073/567] mfd: omap-usb-host: Convert to platform remove callback returning void
-Date: Mon, 23 Mar 2026 14:39:53 +0100
-Message-ID: <20260323134535.633054991@linuxfoundation.org>
+Subject: [PATCH 6.6 074/567] mfd: omap-usb-host: Fix OF populate on driver rebind
+Date: Mon, 23 Mar 2026 14:39:54 +0100
+Message-ID: <20260323134535.660848541@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,67 +46,52 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 418d1e74f8597e0b2d5d0d6e1be8f1f47e68f0a4 ]
+[ Upstream commit 24804ba508a3e240501c521685a1c4eb9f574f8e ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231123165627.492259-11-u.kleine-koenig@pengutronix.de
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Andreas Kemnade <andreas@kemnade.info>
+Link: https://patch.msgid.link/20251219110714.23919-1-johan@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 24804ba508a3 ("mfd: omap-usb-host: Fix OF populate on driver rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/omap-usb-host.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/mfd/omap-usb-host.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/mfd/omap-usb-host.c b/drivers/mfd/omap-usb-host.c
-index 78f1bb55dbc0f..ebc62033db169 100644
+index ebc62033db169..e3aae10295a15 100644
 --- a/drivers/mfd/omap-usb-host.c
 +++ b/drivers/mfd/omap-usb-host.c
-@@ -816,13 +816,12 @@ static int usbhs_omap_remove_child(struct device *dev, void *data)
-  *
-  * Reverses the effect of usbhs_omap_probe().
-  */
--static int usbhs_omap_remove(struct platform_device *pdev)
-+static void usbhs_omap_remove(struct platform_device *pdev)
+@@ -820,8 +820,10 @@ static void usbhs_omap_remove(struct platform_device *pdev)
  {
  	pm_runtime_disable(&pdev->dev);
  
- 	/* remove children */
- 	device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
--	return 0;
+-	/* remove children */
+-	device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
++	if (pdev->dev.of_node)
++		of_platform_depopulate(&pdev->dev);
++	else
++		device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
  }
  
  static const struct dev_pm_ops usbhsomap_dev_pm_ops = {
-@@ -845,7 +844,7 @@ static struct platform_driver usbhs_omap_driver = {
- 		.of_match_table = usbhs_omap_dt_ids,
- 	},
- 	.probe		= usbhs_omap_probe,
--	.remove		= usbhs_omap_remove,
-+	.remove_new	= usbhs_omap_remove,
- };
- 
- MODULE_AUTHOR("Keshava Munegowda <keshava_mgowda@ti.com>");
 -- 
 2.51.0
 
