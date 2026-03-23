@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 647D723AB9D;
-	Mon, 23 Mar 2026 14:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0067626ED4F;
+	Mon, 23 Mar 2026 14:46:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277216; cv=none; b=jjuTbiFRHdCXz65Bzc8S0kqZNj2eA50GFbYjtr2zvcIUUFOcD5d0Vy3u/UI5UxoIO7jXLh7+rBwfVg25MaxXuzWKLhEM5ZHnkFo0R57HFfvg/lL70tboaAEach78YxT5FPm88RJO8lrrGe/mBTmXIDeMUirR2EWovOA+KKHDP/A=
+	t=1774277219; cv=none; b=QHsBwnOj7Z1AL3D5uo4tphmfpeycoTxLNfPs3vwC8HzoOYMlegMwILdwSCsDyZklT7C2LZFw9eB5WDghnWnvdejpHnURRp/huDtgr0W+q3WDpaa/VUzGkqrfKxW3PcEGuJNTjCKKmLiMfLQkie6XeI8mINhIPuDeZTUhWSyrPxk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277216; c=relaxed/simple;
-	bh=0BRj6Sq+B/VL9R34qN5J+pnbEjuC7kk8bsTdmn+ClYg=;
+	s=arc-20240116; t=1774277219; c=relaxed/simple;
+	bh=j6U4A7sM7pbgKQo1UbBd4oau7gihwSdX98hET+9QVbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=N1Rpg/gmsaI7gMQUY11PeGN2THLUm6ZjGRxellA7JYj2m2x0ve/oUPJgM+Q5MiLqyAMhO76xt9A2UFvcsnIlIpeqgw8ZwKQf/YBjSDNkILLg5CKF6t4Yu8w08tF6ElVbDDxUKbnvZkYx47rhtFQolM1YM5KFawg9UH9Nq1yb1nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qSZeB8kN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=trpDE6jOzRZmcm4sknb5N+x9DqaHYHGamG8enOPEP+XKfSLeob48n4B1DDTNJ/JJ70/hPsSbk1eRMejriV9BEIysqMhu+iF15hHW/bITTKO0PYeWytXlj/40vlPtmoKSjepFybzQzYaq/7zLW6kx+Ljr1+TpizF99Nz/kuai0G8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FYEXQ6tv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qSZeB8kN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F227EC4CEF7;
-	Mon, 23 Mar 2026 14:46:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FYEXQ6tv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88BD5C4CEF7;
+	Mon, 23 Mar 2026 14:46:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277216;
-	bh=0BRj6Sq+B/VL9R34qN5J+pnbEjuC7kk8bsTdmn+ClYg=;
+	s=korg; t=1774277218;
+	bh=j6U4A7sM7pbgKQo1UbBd4oau7gihwSdX98hET+9QVbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSZeB8kNjT/9qtvb4Qo8Oo5CgISW4lx6ieedNHKpDIif9D28KzwHaHbvduwf/QUZE
-	 BZfwSsUVhzQyBypogb0GKt8tpuWXruN44Di4jHh6nYUPgVwsJVyS/0w+rPG/uYNfZw
-	 X12GJPK12PIqR81+iB4QMyQDbX1brNH3ewyC+e38=
+	b=FYEXQ6tvPgrNIK6pzPiyw63l3aIDyErzaMaehQOZGQ3oOEPnxI0nCTnkHs7KX5lZe
+	 4xeQgMBl6QTUo7UMdHwMb1D65Qi+rp9pUEKGYMMImhpUsXJePIp+n6ZdxI9oclqFDA
+	 9Vd0eUqYTJ22hLDd9+NbtADcfjOqKBuPU/uhfeQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alessio Belle <alessio.belle@imgtec.com>,
-	Matt Coster <matt.coster@imgtec.com>
-Subject: [PATCH 6.12 358/460] drm/imagination: Fix deadlock in soft reset sequence
-Date: Mon, 23 Mar 2026 14:45:54 +0100
-Message-ID: <20260323134535.351001937@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 359/460] drm/radeon: apply state adjust rules to some additional HAINAN vairants
+Date: Mon, 23 Mar 2026 14:45:55 +0100
+Message-ID: <20260323134535.377977435@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,46 +49,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alessio Belle <alessio.belle@imgtec.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit a55c2a5c8d680156495b7b1e2a9f5a3e313ba524 upstream.
+commit 86650ee2241ff84207eaa298ab318533f3c21a38 upstream.
 
-The soft reset sequence is currently executed from the threaded IRQ
-handler, hence it cannot call disable_irq() which internally waits
-for IRQ handlers, i.e. itself, to complete.
+They need a similar workaround.
 
-Use disable_irq_nosync() during a soft reset instead.
-
-Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/1839
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 87327658c848f56eac166cb382b57b83bf06c5ac)
 Cc: stable@vger.kernel.org
-Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
-Reviewed-by: Matt Coster <matt.coster@imgtec.com>
-Link: https://patch.msgid.link/20260309-fix-soft-reset-v1-1-121113be554f@imgtec.com
-Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/imagination/pvr_power.c |   11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/si_dpm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/imagination/pvr_power.c
-+++ b/drivers/gpu/drm/imagination/pvr_power.c
-@@ -408,7 +408,16 @@ pvr_power_reset(struct pvr_device *pvr_d
- 	}
- 
- 	/* Disable IRQs for the duration of the reset. */
--	disable_irq(pvr_dev->irq);
-+	if (hard_reset) {
-+		disable_irq(pvr_dev->irq);
-+	} else {
-+		/*
-+		 * Soft reset is triggered as a response to a FW command to the Host and is
-+		 * processed from the threaded IRQ handler. This code cannot (nor needs to)
-+		 * wait for any IRQ processing to complete.
-+		 */
-+		disable_irq_nosync(pvr_dev->irq);
-+	}
- 
- 	do {
- 		if (hard_reset) {
+--- a/drivers/gpu/drm/radeon/si_dpm.c
++++ b/drivers/gpu/drm/radeon/si_dpm.c
+@@ -2915,9 +2915,11 @@ static void si_apply_state_adjust_rules(
+ 	if (rdev->family == CHIP_HAINAN) {
+ 		if ((rdev->pdev->revision == 0x81) ||
+ 		    (rdev->pdev->revision == 0xC3) ||
++		    (rdev->pdev->device == 0x6660) ||
+ 		    (rdev->pdev->device == 0x6664) ||
+ 		    (rdev->pdev->device == 0x6665) ||
+-		    (rdev->pdev->device == 0x6667)) {
++		    (rdev->pdev->device == 0x6667) ||
++		    (rdev->pdev->device == 0x666F)) {
+ 			max_sclk = 75000;
+ 		}
+ 		if ((rdev->pdev->revision == 0xC3) ||
 
 
