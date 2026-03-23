@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3533B19AF;
-	Mon, 23 Mar 2026 14:42:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FAE4399352;
+	Mon, 23 Mar 2026 14:42:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276929; cv=none; b=XD7TyYS4SzQhmSKIaEbJkRWQt1FO3yfruoJpDlRe+MLg8JwRGomxnFnqQdCrXoHco4J/M+rGc2HIfkJ6VYV62OX1INsUGmVKBaAvKuK8HeAES57CgSttdlXFElb4os2Cxg2nJb8p1ATsKQfj0wqW7zu1dDu5ieop7eJAGHpkUCc=
+	t=1774276932; cv=none; b=Q+YSpnpkvfJmru1ZYMHMm1bhA/QUCfq5Ezi3b9s7uBGRhxiGOSpcM1luw6qcFiB2+FmHPVy63TwEz+rnNOOpGFd3+5c6cXkF6XZepxQtd5rpXwUPwzi+CaTWLSZs/eXnrxQh6bSFODLVT9zkH13eTvsUrPl27kGL6O8JI1LWQZI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276929; c=relaxed/simple;
-	bh=IhA97Pj7W3h5bsOZrW27YYZztvksyLk5S8/k1rjHuSo=;
+	s=arc-20240116; t=1774276932; c=relaxed/simple;
+	bh=Ia2pqSN+108z8geIkSUtjYI2X1Y2l50XNcMxw8qlWJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kDXBVW6Q+yah778Dl25pMe3Wlk0sdf3s9tAKmIV86bIY4lZ/tkzNMch4edaF/kjLt9Lj+i3A9tE6dr/Y6yHjqqu556BJSHpERCc5N/CnMA9+uDM7Li1i1TBuyRzZshrTYW8EzI1XUtbpV9VPG5B2vfkGeHX1BF9ao4QAtu+BuvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ka0dAq4F; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RDCw4WkMbhduZiuVPweVztSBMfFdEIB/rTvKQIAldfCr/1l1CD0YwRaX1c7ocn1wGTvWXJxOEGrHEM0AvVf5UGunG3I33yKfXd2cn0tUbdG+Ip9FBxri2MhZnK3KaoXGRJcrR3mMAINkoA1MYdkLGdCKZ3YJ+Szp7aGbDGfKds0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wxTjjEpv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ka0dAq4F"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A4FC2BCB1;
-	Mon, 23 Mar 2026 14:42:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wxTjjEpv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F701C4CEF7;
+	Mon, 23 Mar 2026 14:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276929;
-	bh=IhA97Pj7W3h5bsOZrW27YYZztvksyLk5S8/k1rjHuSo=;
+	s=korg; t=1774276931;
+	bh=Ia2pqSN+108z8geIkSUtjYI2X1Y2l50XNcMxw8qlWJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ka0dAq4FmoFNpGQVp8OcFXm/zNCa8iDe1mWs2fobuIqeAxsKWdOk8ZoVUc9DZp8Ms
-	 kNPfBbmU7eWC8MrX7cDzm7pui+3DXe9owc2xVwYBjD9/4mRcRs1ZL/evF2n5fI1mK+
-	 Zr+kcWIl9idthFOU+QPBxR+TzXvIsH3sXiFtGdyE=
+	b=wxTjjEpv05vKi4PUNSVp6EoQd+eGnD3yL1eGyrEtnxpaiQYZKutLouBt6aKdvEZei
+	 CLO/IxdZd3mvqWSPGyNXMygmVdHCgkXFxn6Hruo0R0kN/cVOFA7oTjpc7AgQLIf1FT
+	 4zZEBdR70xBrsVkZpZdOH/a8GT93nrE7hG/HefVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Shengming Hu <hu.shengming@zte.com.cn>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 258/460] fgraph: Fix thresh_return clear per-task notrace
-Date: Mon, 23 Mar 2026 14:44:14 +0100
-Message-ID: <20260323134532.825994386@linuxfoundation.org>
+Subject: [PATCH 6.12 259/460] KVM: x86: Co-locate initialization of feature MSRs in kvm_arch_vcpu_create()
+Date: Mon, 23 Mar 2026 14:44:15 +0100
+Message-ID: <20260323134532.850198722@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,48 +50,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shengming Hu <hu.shengming@zte.com.cn>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 6ca8379b5d36e22b04e6315c3e49a6083377c862 ]
+[ Upstream commit 2142ac663a6a72ac868d0768681b1355e3a703eb ]
 
-When tracing_thresh is enabled, function graph tracing uses
-trace_graph_thresh_return() as the return handler. Unlike
-trace_graph_return(), it did not clear the per-task TRACE_GRAPH_NOTRACE
-flag set by the entry handler for set_graph_notrace addresses. This could
-leave the task permanently in "notrace" state and effectively disable
-function graph tracing for that task.
+Bunch all of the feature MSR initialization in kvm_arch_vcpu_create() so
+that it can be easily quirked in a future patch.
 
-Mirror trace_graph_return()'s per-task notrace handling by clearing
-TRACE_GRAPH_NOTRACE and returning early when set.
+No functional change intended.
 
-Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260221113007819YgrZsMGABff4Rc-O_fZxL@zte.com.cn
-Fixes: b84214890a9bc ("function_graph: Move graph notrace bit to shadow stack global var")
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Shengming Hu <hu.shengming@zte.com.cn>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/20240802185511.305849-2-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: e2ffe85b6d2b ("KVM: x86: Introduce KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_functions_graph.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/x86/kvm/x86.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_functions_graph.c
-+++ b/kernel/trace/trace_functions_graph.c
-@@ -271,10 +271,12 @@ void trace_graph_return(struct ftrace_gr
- static void trace_graph_thresh_return(struct ftrace_graph_ret *trace,
- 				      struct fgraph_ops *gops)
- {
-+	unsigned long *task_var = fgraph_get_task_var(gops);
-+
- 	ftrace_graph_addr_finish(gops, trace);
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -12383,6 +12383,8 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
  
--	if (trace_recursion_test(TRACE_GRAPH_NOTRACE_BIT)) {
--		trace_recursion_clear(TRACE_GRAPH_NOTRACE_BIT);
-+	if (*task_var & TRACE_GRAPH_NOTRACE) {
-+		*task_var &= ~TRACE_GRAPH_NOTRACE;
- 		return;
- 	}
+ 	kvm_async_pf_hash_reset(vcpu);
  
++	vcpu->arch.arch_capabilities = kvm_get_arch_capabilities();
++	vcpu->arch.msr_platform_info = MSR_PLATFORM_INFO_CPUID_FAULT;
+ 	vcpu->arch.perf_capabilities = kvm_caps.supported_perf_cap;
+ 	kvm_pmu_init(vcpu);
+ 
+@@ -12397,8 +12399,6 @@ int kvm_arch_vcpu_create(struct kvm_vcpu
+ 	if (r)
+ 		goto free_guest_fpu;
+ 
+-	vcpu->arch.arch_capabilities = kvm_get_arch_capabilities();
+-	vcpu->arch.msr_platform_info = MSR_PLATFORM_INFO_CPUID_FAULT;
+ 	kvm_xen_init_vcpu(vcpu);
+ 	vcpu_load(vcpu);
+ 	kvm_set_tsc_khz(vcpu, vcpu->kvm->arch.default_tsc_khz);
 
 
