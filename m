@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF7032470A;
-	Mon, 23 Mar 2026 14:52:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B8F23B612;
+	Mon, 23 Mar 2026 14:52:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277526; cv=none; b=K6fNwgyqBJb8ircE4zeEpuaHlOB2lJEkZt2SPLEsqieKRclM02IXJv6F73iLqkSbzc6VFFFw8J7onbfSP+553mitxpgA0wzO4jhdOBq3Ik/kXA/jXHV2N1tENXwY9Jx71mfFBChX739PLTN4Zv9gAKQkdV3wIQMH523VaL/Cbt8=
+	t=1774277529; cv=none; b=H3xuSmyLuy/IQbHChY5RAgbZmGLKKBDy/gfVV1CIY84TnNfMVsqmyx5yX4ErH+JUUImBWAhzCuMwgeTgcoBLoJcktTBuymDK6ADL8mJHwOROam8o8HNYGXJTmt6hhvL6wTWrsgiMu4TOd1GJ7vAZfghW4Hh1Syf/jvhhkJY7Nqc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277526; c=relaxed/simple;
-	bh=eC3VCevqMfUYeVUIsaj/nkwg+pazx4XZrXK0uyX4JtQ=;
+	s=arc-20240116; t=1774277529; c=relaxed/simple;
+	bh=15feyfXLamrmXZ/Sze8NiZp8M3IjcH/FsaUcoTCfNmI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lXdMpkGBSBFyMdUJlY6chrMCC6VicghjTFHlx8wNa9b+6ajUu3MpHd1OMZKi8RDmmWYS5SOlAghuLeQDkQlOpiXeHfJiwqDSYsC3vG8ZXHHmcpkGrvZ4XYkEMqKuspncq24IQ3Q713y2QZyZQVCBrVipWU+Bi3ZFiSQ4MQUpYsw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qqUgHoJU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PsrNGBt7nm/8cZUSgy+tlzfrMVId5TmJSEAMeitF+2KT1+Ur5RkT8XpJ7hK2GTfxe/YxyfnQcxFKzsFmqOorOCNyjwBjgfZJbteN8DnmCrpY3X6Rg/SJ1VWDChMw6LQVjW2aEC1lQOXpafKk87wp/EJqPXOwY8K4ohHdKAqjaHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s6TK6oR6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qqUgHoJU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0549C4CEF7;
-	Mon, 23 Mar 2026 14:52:05 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s6TK6oR6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF22DC4CEF7;
+	Mon, 23 Mar 2026 14:52:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277526;
-	bh=eC3VCevqMfUYeVUIsaj/nkwg+pazx4XZrXK0uyX4JtQ=;
+	s=korg; t=1774277529;
+	bh=15feyfXLamrmXZ/Sze8NiZp8M3IjcH/FsaUcoTCfNmI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqUgHoJULZjT8BKC9j/ZvULayUz0fy4cAhxaT8FmcghXkjtP6/MMcgODPTdShklGN
-	 hjgrcUe2uqqUSrohciKxDkw/9uMAhfuSA8dOwqxYUc9ZrkMv/ExdvjiR4d1cX6lio+
-	 tRH88bFzCwbVbmsg1Xj/dQDzeLCAWpoAuZhm56UQ=
+	b=s6TK6oR6jjaijgwMl7bpAoWWTtFuB+SbjWuSquDt9gsnL5qntK+dJu9aReUvxNfYm
+	 TdH4LileYlF7HMQ1oiqoQPd/qyWsfuJXZa7JvpZa7qa3y4cVmUBJQKdrBq6WDSdzKn
+	 tvcSe26m2oknKlcTAnR2ETYLrR+4ksM5Eccchnns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Johan Hovold <johan@kernel.org>,
 	Krzysztof Kozlowski <krzk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 018/481] memory: mtk-smi: fix device leaks on common probe
-Date: Mon, 23 Mar 2026 14:40:00 +0100
-Message-ID: <20260323134525.690519193@linuxfoundation.org>
+Subject: [PATCH 6.1 019/481] memory: mtk-smi: fix device leak on larb probe
+Date: Mon, 23 Mar 2026 14:40:01 +0100
+Message-ID: <20260323134525.715500024@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -55,46 +55,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 6cfa038bddd710f544076ea2ef7792fc82fbedd6 ]
+[ Upstream commit 9dae65913b32d05dbc8ff4b8a6bf04a0e49a8eb6 ]
 
 Make sure to drop the reference taken when looking up the SMI device
-during common probe on late probe failure (e.g. probe deferral) and on
+during larb probe on late probe failure (e.g. probe deferral) and on
 driver unbind.
 
-Fixes: 47404757702e ("memory: mtk-smi: Add device link for smi-sub-common")
+Fixes: cc8bbe1a8312 ("memory: mediatek: Add SMI driver")
 Fixes: 038ae37c510f ("memory: mtk-smi: add missing put_device() call in mtk_smi_device_link_common")
-Cc: stable@vger.kernel.org	# 5.16: 038ae37c510f
-Cc: stable@vger.kernel.org	# 5.16
+Cc: stable@vger.kernel.org	# 4.6: 038ae37c510f
+Cc: stable@vger.kernel.org	# 4.6
 Cc: Yong Wu <yong.wu@mediatek.com>
 Cc: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20251121164624.13685-2-johan@kernel.org
+Link: https://patch.msgid.link/20251121164624.13685-3-johan@kernel.org
 Signed-off-by: Krzysztof Kozlowski <krzk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/mtk-smi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/memory/mtk-smi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/memory/mtk-smi.c b/drivers/memory/mtk-smi.c
-index c9c444d4a64ab..1326119288c98 100644
+index 1326119288c98..95f1bf2c37785 100644
 --- a/drivers/memory/mtk-smi.c
 +++ b/drivers/memory/mtk-smi.c
-@@ -563,6 +563,7 @@ static int mtk_smi_larb_probe(struct platform_device *pdev)
- err_pm_disable:
- 	pm_runtime_disable(dev);
- 	device_link_remove(dev, larb->smi_common_dev);
-+	put_device(larb->smi_common_dev);
- 	return ret;
- }
- 
-@@ -795,6 +796,7 @@ static void mtk_smi_common_remove(struct platform_device *pdev)
- 	if (common->plat->type == MTK_SMI_GEN2_SUB_COMM)
- 		device_link_remove(&pdev->dev, common->smi_common_dev);
+@@ -574,6 +574,7 @@ static void mtk_smi_larb_remove(struct platform_device *pdev)
+ 	device_link_remove(&pdev->dev, larb->smi_common_dev);
  	pm_runtime_disable(&pdev->dev);
-+	put_device(common->smi_common_dev);
+ 	component_del(&pdev->dev, &mtk_smi_larb_component_ops);
++	put_device(larb->smi_common_dev);
  }
  
- static int __maybe_unused mtk_smi_common_resume(struct device *dev)
+ static int __maybe_unused mtk_smi_larb_resume(struct device *dev)
 -- 
 2.51.0
 
