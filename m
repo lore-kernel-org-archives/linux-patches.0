@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D033B2FD4;
-	Mon, 23 Mar 2026 14:41:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 827CA1A6808;
+	Mon, 23 Mar 2026 14:41:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276889; cv=none; b=b41slMc7uZrG/uLIRtLuKCt73cFMki/S4vOb/00hnyx2z7Ny+8x2QFhKkxg+zwobSWDPfNqtbbjw6gvIMEIzOxV9T8rGNqlmzSnjOkSKY8TZFJ76sm8lThvQ7lKhQGbODQN+/YShzwuKXV9ljBIEnZ8ZMP6NIX6tJi/YyKBvzEE=
+	t=1774276891; cv=none; b=mLbe82w8a4UaB5+EzsbgkkT626VchU7BDQfrId+ZRqtk0ivN4mh5MWYRvtBrqhtTsN2/ecW+vLHikVIshF7yCac3p5Vf+m5E6QJOevNktLvUa4JTlathZg6HeSHO5l7A7/M2c0qi9bysDVRyM6aE67Xxxyt693jWjVCsqBcGsJI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276889; c=relaxed/simple;
-	bh=+YJFKURfNOUtAjHY1X4FnE7kfW8XjTPoFZoDrFKP/ps=;
+	s=arc-20240116; t=1774276891; c=relaxed/simple;
+	bh=urxmdCAmaZK5h+nG8wTJ0JyCuvYdJk+M54pAci/9CXU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z4003P3B+YnAPq1biC/GnGO9YthZxX4tAeYcDDz18SD6czJ/GBqDZ1pHyuFs1XxWBk0EjvS3SYJm2KHw6t+WNRkZu14tXJbg6UngZbofdSsinj9JBYjzOBWBplcUX4n9+DGFNhrjsY8ihp8WEWykFuEfSn1Fo/ioNv8RaxpUOww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=In/B+MFh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MT7kSc1G9hWt5VipuR8d77xtWzvcAU7jtmZPc0efuJNDVirrxqJSTQuuvjamfZuZxUgKT6eaj6EkACW2HUfvnzHVofa2p9WPRNlIOCvMwFHssLpw1jaoMB+K0mUTcWGMdUcxn7Qn47nT4CRQNPEa7194vtnTYHf0quXV7tksHAk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C8iOYAz2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="In/B+MFh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3890CC4CEF7;
-	Mon, 23 Mar 2026 14:41:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C8iOYAz2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFC48C4CEF7;
+	Mon, 23 Mar 2026 14:41:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276888;
-	bh=+YJFKURfNOUtAjHY1X4FnE7kfW8XjTPoFZoDrFKP/ps=;
+	s=korg; t=1774276891;
+	bh=urxmdCAmaZK5h+nG8wTJ0JyCuvYdJk+M54pAci/9CXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=In/B+MFhc0R4oO1YwWf3+kflkS2t6AQqCsnumV2f68BmGalICaMiaCr//2PGyuyTM
-	 68J2crd34zGdoDO9OBfVlqZHwno6/H4KAp9pGYiRoAn8TxFt7+gc9cOP5CkxAmwvoO
-	 v54xladZZlHAWUzeNkKd0nC8frQ6yVCnuHQMO6xo=
+	b=C8iOYAz2+WFfSNtJS+PdYdRzzDkpJ3X8txNQGWT0aVXxSYsbUGv4sttxakYSVQx6n
+	 ogT6peBgoAi4Hn6pCwbnz4JHcVuTqBT4YI5XXiwRScwNIh8Vm2TFRemBpuvmonKT88
+	 /Ug215vy9H4M4dIV2fqiOfVfC5irNLX/wI2pHom0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Dr. Thomas Orgis" <thomas.orgis@uni-hamburg.de>,
+	Enzo Matsumiya <ematsumiya@suse.de>,
 	Henrique Carvalho <henrique.carvalho@suse.com>,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Bharath SM <bharathsm@microsoft.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 198/460] smb: client: fix in-place encryption corruption in SMB2_write()
-Date: Mon, 23 Mar 2026 14:43:14 +0100
-Message-ID: <20260323134531.407077245@linuxfoundation.org>
+Subject: [PATCH 6.12 199/460] smb: client: fix iface port assignment in parse_server_interfaces
+Date: Mon, 23 Mar 2026 14:43:15 +0100
+Message-ID: <20260323134531.431444241@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,53 +52,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bharath SM <bharathsm@microsoft.com>
+From: Henrique Carvalho <henrique.carvalho@suse.com>
 
-commit d78840a6a38d312dc1a51a65317bb67e46f0b929 upstream.
+commit d4c7210d2f3ea481a6481f03040a64d9077a6172 upstream.
 
-SMB2_write() places write payload in iov[1..n] as part of rq_iov.
-smb3_init_transform_rq() pointer-shares rq_iov, so crypt_message()
-encrypts iov[1] in-place, replacing the original plaintext with
-ciphertext. On a replayable error, the retry sends the same iov[1]
-which now contains ciphertext instead of the original data,
-resulting in corruption.
+parse_server_interfaces() initializes interface socket addresses with
+CIFS_PORT. When the mount uses a non-default port this overwrites the
+configured destination port.
 
-The corruption is most likely to be observed when connections are
-unstable, as reconnects trigger write retries that re-send the
-already-encrypted data.
+Later, cifs_chan_update_iface() copies this sockaddr into server->dstaddr,
+causing reconnect attempts to use the wrong port after server interface
+updates.
 
-This affects SFU mknod, MF symlinks, etc. On kernels before
-6.10 (prior to the netfs conversion), sync writes also used
-this path and were similarly affected. The async write path
-wasn't unaffected as it uses rq_iter which gets deep-copied.
+Use the existing port from server->dstaddr instead.
 
-Fix by moving the write payload into rq_iter via iov_iter_kvec(),
-so smb3_init_transform_rq() deep-copies it before encryption.
-
-Cc: stable@vger.kernel.org #6.3+
-Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
-Acked-by: Shyam Prasad N <sprasad@microsoft.com>
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Bharath SM <bharathsm@microsoft.com>
+Cc: stable@vger.kernel.org
+Fixes: fe856be475f7 ("CIFS: parse and store info on iface queries")
+Tested-by: Dr. Thomas Orgis <thomas.orgis@uni-hamburg.de>
+Reviewed-by: Enzo Matsumiya <ematsumiya@suse.de>
+Signed-off-by: Henrique Carvalho <henrique.carvalho@suse.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/smb2pdu.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/smb/client/smb2ops.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -5163,7 +5163,10 @@ replay_again:
+--- a/fs/smb/client/smb2ops.c
++++ b/fs/smb/client/smb2ops.c
+@@ -628,6 +628,7 @@ parse_server_interfaces(struct network_i
+ 	struct iface_info_ipv6 *p6;
+ 	struct cifs_server_iface *info = NULL, *iface = NULL, *niface = NULL;
+ 	struct cifs_server_iface tmp_iface;
++	__be16 port;
+ 	ssize_t bytes_left;
+ 	size_t next = 0;
+ 	int nb_iface = 0;
+@@ -662,6 +663,15 @@ parse_server_interfaces(struct network_i
+ 		goto out;
+ 	}
  
- 	memset(&rqst, 0, sizeof(struct smb_rqst));
- 	rqst.rq_iov = iov;
--	rqst.rq_nvec = n_vec + 1;
-+	/* iov[0] is the SMB header; move payload to rq_iter for encryption safety */
-+	rqst.rq_nvec = 1;
-+	iov_iter_kvec(&rqst.rq_iter, ITER_SOURCE, &iov[1], n_vec,
-+		      io_parms->length);
++	spin_lock(&ses->server->srv_lock);
++	if (ses->server->dstaddr.ss_family == AF_INET)
++		port = ((struct sockaddr_in *)&ses->server->dstaddr)->sin_port;
++	else if (ses->server->dstaddr.ss_family == AF_INET6)
++		port = ((struct sockaddr_in6 *)&ses->server->dstaddr)->sin6_port;
++	else
++		port = cpu_to_be16(CIFS_PORT);
++	spin_unlock(&ses->server->srv_lock);
++
+ 	while (bytes_left >= (ssize_t)sizeof(*p)) {
+ 		memset(&tmp_iface, 0, sizeof(tmp_iface));
+ 		/* default to 1Gbps when link speed is unset */
+@@ -682,7 +692,7 @@ parse_server_interfaces(struct network_i
+ 			memcpy(&addr4->sin_addr, &p4->IPv4Address, 4);
  
- 	if (retries)
- 		smb2_set_replay(server, &rqst);
+ 			/* [MS-SMB2] 2.2.32.5.1.1 Clients MUST ignore these */
+-			addr4->sin_port = cpu_to_be16(CIFS_PORT);
++			addr4->sin_port = port;
+ 
+ 			cifs_dbg(FYI, "%s: ipv4 %pI4\n", __func__,
+ 				 &addr4->sin_addr);
+@@ -696,7 +706,7 @@ parse_server_interfaces(struct network_i
+ 			/* [MS-SMB2] 2.2.32.5.1.2 Clients MUST ignore these */
+ 			addr6->sin6_flowinfo = 0;
+ 			addr6->sin6_scope_id = 0;
+-			addr6->sin6_port = cpu_to_be16(CIFS_PORT);
++			addr6->sin6_port = port;
+ 
+ 			cifs_dbg(FYI, "%s: ipv6 %pI6\n", __func__,
+ 				 &addr6->sin6_addr);
 
 
