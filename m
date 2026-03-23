@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D13C2580D7;
-	Mon, 23 Mar 2026 16:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E643BADA2;
+	Mon, 23 Mar 2026 16:11:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282304; cv=none; b=pA9rrS8/l/C4aN15AzTtPyrd91u51UzzVrVBJHw0Y6AawhGed7PJU16z+KB+iARzYSzimLT/N1hMYO9Pi1eeK3T9cVAkPB0wYVnyTplpI2Sao3bFwnoesDWQbSJcasbYPDQZqcqZOWV2K/4kcbVfdVd04ctvUajcTGv4A08crV0=
+	t=1774282307; cv=none; b=O4/M4aSvZrLsjpWvRzALZW+rsRZGzX/5OrYwdeLSe9J6fEM+Y8kxdV9pmAvxqwuCsAeBCZzGaKxGN99Wq09lHW8r3ucdtasYvPMZDX/ND8vLLPCr4zuy2W3AE2TdRUWJ3OaHipf5dKtTUXFht3GvT7SWBYW5eY7j0Ib1HMOlfIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282304; c=relaxed/simple;
-	bh=+nrVYSUHmsyXqMovfnF/PfGNCjCdSPOqck0y/QGz98s=;
+	s=arc-20240116; t=1774282307; c=relaxed/simple;
+	bh=4bO68dEUu+E9hZilebeWh7W2op/NPfFXh58CpcGRYo0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QI0VmStoRIsr7e9KGdiRJh6MisRF2AAAqraihvPV2haKG3lnlT/sjxpo7jsxLZjbqtudcBhW2s4fNYj19CuSFJ8h+fiYOY2aERY6A/OCmubpcKW1NHGfdcdNoeB0fpfupcTFRpxgsg7S4ahVviAiptnq39xYWj2nSVfoG9gzZ8E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DWZNAp4M; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=q0RH/vrQDDTUrzJPWEKpIipz5u00at4zACjZAs/L8W2OKzEec1zsQwcL1fpjhO7QnUvgAIiQczSVFz2/g9y2sy/ascg1OH9m/aerfdPBYC+/MCQDwmPUBFOGDrl6DZKGUTsEL7l0obbCacho1XBPew/dvD4WEnTJLaJvvotTCkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Todf7KYi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DWZNAp4M"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31689C4CEF7;
-	Mon, 23 Mar 2026 16:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Todf7KYi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C45A5C4CEF7;
+	Mon, 23 Mar 2026 16:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282304;
-	bh=+nrVYSUHmsyXqMovfnF/PfGNCjCdSPOqck0y/QGz98s=;
+	s=korg; t=1774282307;
+	bh=4bO68dEUu+E9hZilebeWh7W2op/NPfFXh58CpcGRYo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWZNAp4MXzJPW6ymtVvQ51JUVKbkwLcH4+huhtufCP2Ki/VBkZsu8HrLkHL2KtAmO
-	 bRhI3CAlpwhVhIpKzCWkcemx8JMawnIhN8LKGU695MNlbBHybam56Tq9X47zzsd+hl
-	 3au2SLQwoksVDeZhOlSk5794ODFWRglD9ySYFTtQ=
+	b=Todf7KYiqwW/il4ci8OVBTZPSuQw7WmsGzWboybs5jteN/NfRC7O+UaQJotUIyqza
+	 xGrF/IME8bhPI2hQU1oYdEDvl/zXjFZ/rL9Viq/57FwtvVXvkGSvZsEMmbKn0KtnbR
+	 Jx6oJrY7I1ypbeXd9SM7BiwfTYN3H5IQkmTu3fX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Gow <davidgow@google.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/481] kunit: tool: print summary of failed tests if a few failed out of a lot
-Date: Mon, 23 Mar 2026 14:41:30 +0100
-Message-ID: <20260323134527.916016790@linuxfoundation.org>
+Subject: [PATCH 6.1 109/481] kunit: tool: make --json do nothing if --raw_ouput is set
+Date: Mon, 23 Mar 2026 14:41:31 +0100
+Message-ID: <20260323134527.939495684@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,34 +54,26 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Latypov <dlatypov@google.com>
 
-[ Upstream commit f19dd011d8de6f0c1d20abea5158aa4f5d9cea44 ]
+[ Upstream commit 309e22effb741a8c65131a2694a49839fd685a27 ]
 
-E.g. all the hw_breakpoint tests are failing right now.
-So if I run `kunit.py run --altests --arch=x86_64`, then I see
-> Testing complete. Ran 408 tests: passed: 392, failed: 9, skipped: 7
+When --raw_output is set (to any value), we don't actually parse the
+test results. So asking to print the test results as json doesn't make
+sense.
 
-Seeing which 9 tests failed out of the hundreds is annoying.
-If my terminal doesn't have scrollback support, I have to resort to
-looking at `.kunit/test.log` for the `not ok` lines.
+We internally create a fake test with one passing subtest, so --json
+would actually print out something misleading.
 
-Teach kunit.py to print a summarized list of failures if the # of tests
-reachs an arbitrary threshold (>=100 tests).
+This patch:
+* Rewords the flag descriptions so hopefully this is more obvious.
+* Also updates --raw_output's description to note the default behavior
+  is to print out only "KUnit" results (actually any KTAP results)
+* also renames and refactors some related logic for clarity (e.g.
+  test_result => test, it's a kunit_parser.Test object).
 
-To try and keep the output from being too long/noisy, this new logic
-a) just reports "parent_test failed" if every child test failed
-b) won't print anything if there are >10 failures (also arbitrary).
-
-With this patch, we get an extra line of output showing:
-> Testing complete. Ran 408 tests: passed: 392, failed: 9, skipped: 7
-> Failures: hw_breakpoint
-
-This also works with parameterized tests, e.g. if I add a fake failure
-> Failures: kcsan.test_atomic_builtins_missing_barrier.threads=6
-
-Note: we didn't have enough tests for this to be a problem before.
-But with commit 980ac3ad0512 ("kunit: tool: rename all_test_uml.config,
-use it for --alltests"), --alltests works and thus running >100 tests
-will probably become more common.
+Notably, this patch does not make it an error to specify --json and
+--raw_output together. This is an edge case, but I know of at least one
+wrapper around kunit.py that always sets --json. You'd never be able to
+use --raw_output with that wrapper.
 
 Signed-off-by: Daniel Latypov <dlatypov@google.com>
 Reviewed-by: David Gow <davidgow@google.com>
@@ -89,114 +81,84 @@ Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Stable-dep-of: 40804c4974b8 ("kunit: tool: copy caller args in run_kernel to prevent mutation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_parser.py    | 47 ++++++++++++++++++++++++++
- tools/testing/kunit/kunit_tool_test.py | 22 ++++++++++++
- 2 files changed, 69 insertions(+)
+ tools/testing/kunit/kunit.py | 34 ++++++++++++++++++----------------
+ 1 file changed, 18 insertions(+), 16 deletions(-)
 
-diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
-index 1ae873e3e3415..94dba66feec50 100644
---- a/tools/testing/kunit/kunit_parser.py
-+++ b/tools/testing/kunit/kunit_parser.py
-@@ -58,6 +58,10 @@ class Test:
- 		self.counts.errors += 1
- 		stdout.print_with_timestamp(stdout.red('[ERROR]') + f' Test: {self.name}: {error_message}')
+diff --git a/tools/testing/kunit/kunit.py b/tools/testing/kunit/kunit.py
+index 4d4663fb578bd..e7b6549712d66 100755
+--- a/tools/testing/kunit/kunit.py
++++ b/tools/testing/kunit/kunit.py
+@@ -192,12 +192,11 @@ def _map_to_overall_status(test_status: kunit_parser.TestStatus) -> KunitStatus:
+ def parse_tests(request: KunitParseRequest, metadata: kunit_json.Metadata, input_data: Iterable[str]) -> Tuple[KunitResult, kunit_parser.Test]:
+ 	parse_start = time.time()
  
-+	def ok_status(self) -> bool:
-+		"""Returns true if the status was ok, i.e. passed or skipped."""
-+		return self.status in (TestStatus.SUCCESS, TestStatus.SKIPPED)
-+
- class TestStatus(Enum):
- 	"""An enumeration class to represent the status of a test."""
- 	SUCCESS = auto()
-@@ -565,6 +569,40 @@ def print_test_footer(test: Test) -> None:
- 	stdout.print_with_timestamp(format_test_divider(message,
- 		len(message) - stdout.color_len()))
+-	test_result = kunit_parser.Test()
+-
+ 	if request.raw_output:
+ 		# Treat unparsed results as one passing test.
+-		test_result.status = kunit_parser.TestStatus.SUCCESS
+-		test_result.counts.passed = 1
++		fake_test = kunit_parser.Test()
++		fake_test.status = kunit_parser.TestStatus.SUCCESS
++		fake_test.counts.passed = 1
  
-+
-+
-+def _summarize_failed_tests(test: Test) -> str:
-+	"""Tries to summarize all the failing subtests in `test`."""
-+
-+	def failed_names(test: Test, parent_name: str) -> List[str]:
-+		# Note: we use 'main' internally for the top-level test.
-+		if not parent_name or parent_name == 'main':
-+			full_name = test.name
-+		else:
-+			full_name = parent_name + '.' + test.name
-+
-+		if not test.subtests:  # this is a leaf node
-+			return [full_name]
-+
-+		# If all the children failed, just say this subtest failed.
-+		# Don't summarize it down "the top-level test failed", though.
-+		failed_subtests = [sub for sub in test.subtests if not sub.ok_status()]
-+		if parent_name and len(failed_subtests) ==  len(test.subtests):
-+			return [full_name]
-+
-+		all_failures = []  # type: List[str]
-+		for t in failed_subtests:
-+			all_failures.extend(failed_names(t, full_name))
-+		return all_failures
-+
-+	failures = failed_names(test, '')
-+	# If there are too many failures, printing them out will just be noisy.
-+	if len(failures) > 10:  # this is an arbitrary limit
-+		return ''
-+
-+	return 'Failures: ' + ', '.join(failures)
-+
-+
- def print_summary_line(test: Test) -> None:
- 	"""
- 	Prints summary line of test object. Color of line is dependent on
-@@ -587,6 +625,15 @@ def print_summary_line(test: Test) -> None:
- 		color = stdout.red
- 	stdout.print_with_timestamp(color(f'Testing complete. {test.counts}'))
+ 		output: Iterable[str] = input_data
+ 		if request.raw_output == 'all':
+@@ -206,14 +205,17 @@ def parse_tests(request: KunitParseRequest, metadata: kunit_json.Metadata, input
+ 			output = kunit_parser.extract_tap_lines(output, lstrip=False)
+ 		for line in output:
+ 			print(line.rstrip())
++		parse_time = time.time() - parse_start
++		return KunitResult(KunitStatus.SUCCESS, parse_time), fake_test
  
-+	# Summarize failures that might have gone off-screen since we had a lot
-+	# of tests (arbitrarily defined as >=100 for now).
-+	if test.ok_status() or test.counts.total() < 100:
-+		return
-+	summarized = _summarize_failed_tests(test)
-+	if not summarized:
-+		return
-+	stdout.print_with_timestamp(color(summarized))
+-	else:
+-		test_result = kunit_parser.parse_run_tests(input_data)
+-	parse_end = time.time()
 +
- # Other methods:
++	# Actually parse the test results.
++	test = kunit_parser.parse_run_tests(input_data)
++	parse_time = time.time() - parse_start
  
- def bubble_up_test_results(test: Test) -> None:
-diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
-index e2cd2cc2e98f6..42cbf28bfa6c6 100755
---- a/tools/testing/kunit/kunit_tool_test.py
-+++ b/tools/testing/kunit/kunit_tool_test.py
-@@ -309,6 +309,28 @@ class KUnitParserTest(unittest.TestCase):
- 				result.status)
- 			self.assertEqual('kunit-resource-test', result.subtests[0].name)
+ 	if request.json:
+ 		json_str = kunit_json.get_json_result(
+-					test=test_result,
++					test=test,
+ 					metadata=metadata)
+ 		if request.json == 'stdout':
+ 			print(json_str)
+@@ -223,10 +225,10 @@ def parse_tests(request: KunitParseRequest, metadata: kunit_json.Metadata, input
+ 			stdout.print_with_timestamp("Test results stored in %s" %
+ 				os.path.abspath(request.json))
  
-+	def test_summarize_failures(self):
-+		output = """
-+		KTAP version 1
-+		1..2
-+			# Subtest: all_failed_suite
-+			1..2
-+			not ok 1 - test1
-+			not ok 2 - test2
-+		not ok 1 - all_failed_suite
-+			# Subtest: some_failed_suite
-+			1..2
-+			ok 1 - test1
-+			not ok 2 - test2
-+		not ok 1 - some_failed_suite
-+		"""
-+		result = kunit_parser.parse_run_tests(output.splitlines())
-+		self.assertEqual(kunit_parser.TestStatus.FAILURE, result.status)
-+
-+		self.assertEqual(kunit_parser._summarize_failed_tests(result),
-+			'Failures: all_failed_suite, some_failed_suite.test2')
-+
-+
- def line_stream_from_strs(strs: Iterable[str]) -> kunit_parser.LineStream:
- 	return kunit_parser.LineStream(enumerate(strs, start=1))
+-	if test_result.status != kunit_parser.TestStatus.SUCCESS:
+-		return KunitResult(KunitStatus.TEST_FAILURE, parse_end - parse_start), test_result
++	if test.status != kunit_parser.TestStatus.SUCCESS:
++		return KunitResult(KunitStatus.TEST_FAILURE, parse_time), test
+ 
+-	return KunitResult(KunitStatus.SUCCESS, parse_end - parse_start), test_result
++	return KunitResult(KunitStatus.SUCCESS, parse_time), test
+ 
+ def run_tests(linux: kunit_kernel.LinuxSourceTree,
+ 	      request: KunitRequest) -> KunitResult:
+@@ -359,14 +361,14 @@ def add_exec_opts(parser) -> None:
+ 			    choices=['suite', 'test'])
+ 
+ def add_parse_opts(parser) -> None:
+-	parser.add_argument('--raw_output', help='If set don\'t format output from kernel. '
+-			    'If set to --raw_output=kunit, filters to just KUnit output.',
++	parser.add_argument('--raw_output', help='If set don\'t parse output from kernel. '
++			    'By default, filters to just KUnit output. Use '
++			    '--raw_output=all to show everything',
+ 			     type=str, nargs='?', const='all', default=None, choices=['all', 'kunit'])
+ 	parser.add_argument('--json',
+ 			    nargs='?',
+-			    help='Stores test results in a JSON, and either '
+-			    'prints to stdout or saves to file if a '
+-			    'filename is specified',
++			    help='Prints parsed test results as JSON to stdout or a file if '
++			    'a filename is specified. Does nothing if --raw_output is set.',
+ 			    type=str, const='stdout', default=None, metavar='FILE')
+ 
  
 -- 
 2.51.0
