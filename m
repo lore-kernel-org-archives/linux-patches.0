@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA0E27B50F;
-	Mon, 23 Mar 2026 16:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 725F63BC69A;
+	Mon, 23 Mar 2026 16:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282537; cv=none; b=mxQtSSC1ygfcxswC5R10VDRf3Wd5uAG/tJY0d7RIffCGMNUFBeFxRSOr1RRSBT1afFwpVzlBQVtC1/aXtXUQ321yeY/fVgOZ1qkRAA07zgbPtSDBJi7qh7d8HV/DwNlfY+iVuELiMOBahfJxa8vvo6kQVLtIoTAVVvs8xhOTqOU=
+	t=1774282539; cv=none; b=ZpZchNKD0Hbbx1+ataa7p8rneg/2qtZqqehmDLbm4ryON9uSIxYXe9KshlRyrC3Hgt3Vl6P6v6d6As4ojBelugW4WY5XTuO4tgRk0RXuOtYWL8Y1OwsgS7bBNG1MuXmu9EZBwWl1DfNo3lt2xtFsCwIQKTutDTn91T+7yRbDcTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282537; c=relaxed/simple;
-	bh=MFC369R8LGp6Pd5EPedRdHJCCrAb5HfFyOe9evrQDCc=;
+	s=arc-20240116; t=1774282539; c=relaxed/simple;
+	bh=tsUjJW8YfbgG3SBEce5CiGowzvXhJ6AuRfjEN68FitY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=guDwVR9AZQr7zPCVWntArt4D2qbJ1oEn36L2qzzbbvLxf3Ab5JC3LfsMOXT0wGO6i/VA2pIJqwjLtb5IAyUj5R23YclyYFdac6s/yjK6045RwAKo2fb19aC/OyKlrJRvBxBtIadTlUmIXd+Ivy3QDBgktJvP1lQBz2soYF+CBK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tjMG5Pgk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oKd/MjCuLdd/4bSDP0gE+hxlmnP/JTgt2bSjQbEhUf9IzjHQXTOsztdOTlAugTmxsNnQ9TyFU0GMdZJUdn0SGOFQS+3XHvccUcMW5mOf04inhWkRA4h25FJgzF99ZgdSxMOYyK7W/ldIHyL7NmX+HRqM8xBp/3h6zuPevZPDdS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Gz4jIphj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tjMG5Pgk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65764C4CEF7;
-	Mon, 23 Mar 2026 16:15:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Gz4jIphj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D8FC4CEF7;
+	Mon, 23 Mar 2026 16:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282536;
-	bh=MFC369R8LGp6Pd5EPedRdHJCCrAb5HfFyOe9evrQDCc=;
+	s=korg; t=1774282539;
+	bh=tsUjJW8YfbgG3SBEce5CiGowzvXhJ6AuRfjEN68FitY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tjMG5Pgk7MN5FxHFfC8iQgZXM5dgr/Lp6x/RiZ1F7+KSpN/RyURCjosQQkqpKb6YQ
-	 08umat1DpCzckyKFqlkKUY8N1+ElPmyL+hfuNI3m1hczl3tsu/8IL97i6K6Hq5JV/E
-	 di6rEPm7TpDnHchRSnDYWjmYqG0pjIyh2V+pN7u8=
+	b=Gz4jIphjL68iHDe37emdNwvMNxuzKP1oCWYd+HJiACMirPj0uRkYkpAakI+lcCrIS
+	 9hqHbrhmisTsTnA1vY79LQ0013LlGxAZe5VmyDuPnz502FD/tHzw//TJbcf0Jg+4yd
+	 8kVRBlNoFosiU3uPG9TPVza6TXBUN+TWHBaRkNXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Seungjin Bae <eeodqql09@gmail.com>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 194/481] octeontx2-af: devlink: fix NIX RAS reporter to use RAS interrupt status
-Date: Mon, 23 Mar 2026 14:42:56 +0100
-Message-ID: <20260323134529.917922889@linuxfoundation.org>
+Subject: [PATCH 6.1 195/481] usb: gadget: f_mass_storage: Fix potential integer overflow in check_command_size_in_blocks()
+Date: Mon, 23 Mar 2026 14:42:57 +0100
+Message-ID: <20260323134529.940548113@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,42 +51,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alok Tiwari <alok.a.tiwari@oracle.com>
+From: Seungjin Bae <eeodqql09@gmail.com>
 
-[ Upstream commit 87f7dff3ec75b91def0024ebaaf732457f47a63b ]
+[ Upstream commit 8479891d1f04a8ce55366fe4ca361ccdb96f02e1 ]
 
-The NIX RAS health report path uses nix_af_rvu_err when handling the
-NIX_AF_RVU_RAS case, so the report prints the ERR interrupt status rather
-than the RAS interrupt status.
+The `check_command_size_in_blocks()` function calculates the data size
+in bytes by left shifting `common->data_size_from_cmnd` by the block
+size (`common->curlun->blkbits`). However, it does not validate whether
+this shift operation will cause an integer overflow.
 
-Use nix_af_rvu_ras for the NIX_AF_RVU_RAS report.
+Initially, the block size is set up in `fsg_lun_open()` , and the
+`common->data_size_from_cmnd` is set up in `do_scsi_command()`. During
+initialization, there is no integer overflow check for the interaction
+between two variables.
 
-Fixes: 5ed66306eab6 ("octeontx2-af: Add devlink health reporters for NIX")
-Signed-off-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Link: https://patch.msgid.link/20260310184824.1183651-2-alok.a.tiwari@oracle.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So if a malicious USB host sends a SCSI READ or WRITE command
+requesting a large amount of data (`common->data_size_from_cmnd`), the
+left shift operation can wrap around. This results in a truncated data
+size, which can bypass boundary checks and potentially lead to memory
+corruption or out-of-bounds accesses.
+
+Fix this by using the check_shl_overflow() macro to safely perform the
+shift and catch any overflows.
+
+Fixes: 144974e7f9e3 ("usb: gadget: mass_storage: support multi-luns with different logic block size")
+Signed-off-by: Seungjin Bae <eeodqql09@gmail.com>
+Reviewed-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://patch.msgid.link/20260228104324.1696455-2-eeodqql09@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_mass_storage.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index ae06742670dc8..d3aed339c69c3 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -327,10 +327,10 @@ static int rvu_nix_report_show(struct devlink_fmsg *fmsg, void *ctx,
- 		rvu_report_pair_end(fmsg);
- 		break;
- 	case NIX_AF_RVU_RAS:
--		intr_val = nix_event_context->nix_af_rvu_err;
-+		intr_val = nix_event_context->nix_af_rvu_ras;
- 		rvu_report_pair_start(fmsg, "NIX_AF_RAS");
- 		devlink_fmsg_u64_pair_put(fmsg, "\tNIX RAS Interrupt Reg ",
--					  nix_event_context->nix_af_rvu_err);
-+					  nix_event_context->nix_af_rvu_ras);
- 		devlink_fmsg_string_put(fmsg, "\n\tPoison Data on:");
- 		if (intr_val & BIT_ULL(34))
- 			devlink_fmsg_string_put(fmsg, "\n\tNIX_AQ_INST_S");
+diff --git a/drivers/usb/gadget/function/f_mass_storage.c b/drivers/usb/gadget/function/f_mass_storage.c
+index d35f30a9cae2c..e364b7b4d82b9 100644
+--- a/drivers/usb/gadget/function/f_mass_storage.c
++++ b/drivers/usb/gadget/function/f_mass_storage.c
+@@ -179,6 +179,7 @@
+ #include <linux/kthread.h>
+ #include <linux/sched/signal.h>
+ #include <linux/limits.h>
++#include <linux/overflow.h>
+ #include <linux/pagemap.h>
+ #include <linux/rwsem.h>
+ #include <linux/slab.h>
+@@ -1852,8 +1853,15 @@ static int check_command_size_in_blocks(struct fsg_common *common,
+ 		int cmnd_size, enum data_direction data_dir,
+ 		unsigned int mask, int needs_medium, const char *name)
+ {
+-	if (common->curlun)
+-		common->data_size_from_cmnd <<= common->curlun->blkbits;
++	if (common->curlun) {
++		if (check_shl_overflow(common->data_size_from_cmnd,
++				       common->curlun->blkbits,
++				       &common->data_size_from_cmnd)) {
++			common->phase_error = 1;
++			return -EINVAL;
++		}
++	}
++
+ 	return check_command(common, cmnd_size, data_dir,
+ 			mask, needs_medium, name);
+ }
 -- 
 2.51.0
 
