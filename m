@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5A912CDA5;
-	Mon, 23 Mar 2026 16:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3C33271A6D;
+	Mon, 23 Mar 2026 16:09:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282186; cv=none; b=Y0Cl8ukRjLcTptzlvsmwTUtuCpMn77cmqLUuONEh3AvZIY85dU19XlY+gi7ozXVXQcdsoEAiRbIj+o/tcX7Wjo0WZ9ETdXvY2LF6wmcr8596ofFbFcWlpA6tm42oIIgLLNbRa90hp4+EVLWXj4oMCGUDckOwHXYdOFibGZG5uNU=
+	t=1774282188; cv=none; b=i62zokCbVeUWeBdgZE/6Vsf27ceXt2D5+VnWvmY3xun4BfCnLpIONRaM9AmJhdWdJqtTcWvJL7uu846NZNrUZ9n//2epvV59I91Bj4wY4+ZMy50juKJjtUwooH2pDx/ci+jj8EGhLIRtDIeJ0un7VDoH4zNdltvNxHQ+rONtIDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282186; c=relaxed/simple;
-	bh=H083cs6Hg0TFcfMw9pLQs+aMP4lJ0mUHiGe4ZKpxGn8=;
+	s=arc-20240116; t=1774282188; c=relaxed/simple;
+	bh=MFs2qtMdC1vF+vXisyuhtiF8s9Dun9htdXuwB0rAuUc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kxcJcSC5SIaMSDsvnv7s3JgNgHH0oX42CVEMr3OwDGEQG7xltQlg7350RktPSrHKg6dmZqQBSJxZxwPom6rZ7QotYmWyGvzMDM2I+9IsW386ZUlG61taD0XJv1pIctOByYpcGww/b2jau9m4zuY0yI1dfFlBKJ7M3B2gl8GAjic=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwK4w/w2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NMo4KdrXTcWKF7+ZPMxsZPBinC/L7jYD4i+1NHkI5thJkh5ZlRplAU9Tn81FyOhm9OhuilTh2B+cQo64ggiqfX+0/Tx6DBYgvZ0NK50qSHcSIxKtBsk5ztHt7O1O0AJdbx3RFU/Eio45Ng0ZgsjC9LIg+F8x1rIL9saRScI4BQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eQ8iIDJF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwK4w/w2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BE7C4CEF7;
-	Mon, 23 Mar 2026 16:09:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eQ8iIDJF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37A8DC2BC9E;
+	Mon, 23 Mar 2026 16:09:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282185;
-	bh=H083cs6Hg0TFcfMw9pLQs+aMP4lJ0mUHiGe4ZKpxGn8=;
+	s=korg; t=1774282188;
+	bh=MFs2qtMdC1vF+vXisyuhtiF8s9Dun9htdXuwB0rAuUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CwK4w/w2/9CaDV+ZvrSjasYXAwv28MG3QynajNuLbiUR/Z0dA8WFA/4OhQOk5clJH
-	 1/YsrDEqMUrcT+7sWkiinQsiHtwXylj04uNiA4VXi0gFyZuqODvwo8L9eiUmffgOK+
-	 kQl1bOlZEgegd2VQN4BQc6YyR3Spbmv79pu3E5OU=
+	b=eQ8iIDJFn58+rN/UxM7OhSCPJ0e1Di3oZMdYzdaoPJgkbaunbmDxEmAjGmX9GXFpW
+	 u5Pe3xFr4kH/X+Oyz5Ta8nuJ+jOicHCTnYMfmbPVFQEwL+ETYnkr+ZhAnPYMrB/icu
+	 smR+EVk+PWR/v++oXnGy2kMpMcnMO7xYsqPVNse8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Ben Hutchings <ben@decadent.org.uk>,
+	Gui-Dong Han <hanguidong02@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/481] ext4: drop extent cache after doing PARTIAL_VALID1 zeroout
-Date: Mon, 23 Mar 2026 14:40:28 +0100
-Message-ID: <20260323134526.353478867@linuxfoundation.org>
+Subject: [PATCH 6.1 064/481] hwmon: (max16065) Use READ/WRITE_ONCE to avoid compiler optimization induced race
+Date: Mon, 23 Mar 2026 14:40:46 +0100
+Message-ID: <20260323134526.789126039@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,87 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Gui-Dong Han <hanguidong02@gmail.com>
 
-[ Upstream commit 6d882ea3b0931b43530d44149b79fcd4ffc13030 ]
+[ Upstream commit 007be4327e443d79c9dd9e56dc16c36f6395d208 ]
 
-When splitting an unwritten extent in the middle and converting it to
-initialized in ext4_split_extent() with the EXT4_EXT_MAY_ZEROOUT and
-EXT4_EXT_DATA_VALID2 flags set, it could leave a stale unwritten extent.
+Simply copying shared data to a local variable cannot prevent data
+races. The compiler is allowed to optimize away the local copy and
+re-read the shared memory, causing a Time-of-Check Time-of-Use (TOCTOU)
+issue if the data changes between the check and the usage.
 
-Assume we have an unwritten file and buffered write in the middle of it
-without dioread_nolock enabled, it will allocate blocks as written
-extent.
+To enforce the use of the local variable, use READ_ONCE() when reading
+the shared data and WRITE_ONCE() when updating it. Apply these macros to
+the three identified locations (curr_sense, adc, and fault) where local
+variables are used for error validation, ensuring the value remains
+consistent.
 
-       0  A      B  N
-       [UUUUUUUUUUUU] on-disk extent      U: unwritten extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDD--]                     D: valid data
-          |<-  ->| ----> this range needs to be initialized
-
-ext4_split_extent() first try to split this extent at B with
-EXT4_EXT_DATA_PARTIAL_VALID1 and EXT4_EXT_MAY_ZEROOUT flag set, but
-ext4_split_extent_at() failed to split this extent due to temporary lack
-of space. It zeroout B to N and leave the entire extent as unwritten.
-
-       0  A      B  N
-       [UUUUUUUUUUUU] on-disk extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDDZZ]                     Z: zeroed data
-
-ext4_split_extent() then try to split this extent at A with
-EXT4_EXT_DATA_VALID2 flag set. This time, it split successfully and
-leave an written extent from A to N.
-
-       0  A      B  N
-       [UUWWWWWWWWWW] on-disk extent      W: written extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDDZZ]
-
-Finally ext4_map_create_blocks() only insert extent A to B to the extent
-status tree, and leave an stale unwritten extent in the status tree.
-
-       0  A      B  N
-       [UUWWWWWWWWWW] on-disk extent      W: written extent
-       [UUWWWWWWWWUU] extent status tree
-       [--DDDDDDDDZZ]
-
-Fix this issue by always cached extent status entry after zeroing out
-the second part.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <20251129103247.686136-7-yi.zhang@huaweicloud.com>
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Reported-by: Ben Hutchings <ben@decadent.org.uk>
+Closes: https://lore.kernel.org/all/6fe17868327207e8b850cf9f88b7dc58b2021f73.camel@decadent.org.uk/
+Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
+Fixes: b8d5acdcf525 ("hwmon: (max16065) Use local variable to avoid TOCTOU")
+Cc: stable@vger.kernel.org
+Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
+Link: https://lore.kernel.org/r/20260203121443.5482-1-hanguidong02@gmail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/hwmon/max16065.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index da7414e84ead8..30b0b25aac9ff 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3304,8 +3304,16 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 			 * extent length and ext4_split_extent() split will the
- 			 * first half again.
- 			 */
--			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1)
-+			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1) {
-+				/*
-+				 * Drop extent cache to prevent stale unwritten
-+				 * extents remaining after zeroing out.
-+				 */
-+				ext4_es_remove_extent(inode,
-+					le32_to_cpu(zero_ex.ee_block),
-+					ext4_ext_get_actual_len(&zero_ex));
- 				goto fix_extent_len;
-+			}
+diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
+index 648eb7e867d10..b61bba4166f78 100644
+--- a/drivers/hwmon/max16065.c
++++ b/drivers/hwmon/max16065.c
+@@ -151,27 +151,27 @@ static struct max16065_data *max16065_update_device(struct device *dev)
+ 		int i;
  
- 			/* update the extent length and mark as initialized */
- 			ex->ee_len = cpu_to_le16(ee_len);
+ 		for (i = 0; i < data->num_adc; i++)
+-			data->adc[i]
+-			  = max16065_read_adc(client, MAX16065_ADC(i));
++			WRITE_ONCE(data->adc[i],
++				   max16065_read_adc(client, MAX16065_ADC(i)));
+ 
+ 		if (data->have_current) {
+-			data->adc[MAX16065_NUM_ADC]
+-			  = max16065_read_adc(client, MAX16065_CSP_ADC);
+-			data->curr_sense
+-			  = i2c_smbus_read_byte_data(client,
+-						     MAX16065_CURR_SENSE);
++			WRITE_ONCE(data->adc[MAX16065_NUM_ADC],
++				   max16065_read_adc(client, MAX16065_CSP_ADC));
++			WRITE_ONCE(data->curr_sense,
++				   i2c_smbus_read_byte_data(client, MAX16065_CURR_SENSE));
+ 		}
+ 
+ 		for (i = 0; i < 2; i++)
+-			data->fault[i]
+-			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
++			WRITE_ONCE(data->fault[i],
++				   i2c_smbus_read_byte_data(client, MAX16065_FAULT(i)));
+ 
+ 		/*
+ 		 * MAX16067 and MAX16068 have separate undervoltage and
+ 		 * overvoltage alarm bits. Squash them together.
+ 		 */
+ 		if (data->chip == max16067 || data->chip == max16068)
+-			data->fault[0] |= data->fault[1];
++			WRITE_ONCE(data->fault[0],
++				   data->fault[0] | data->fault[1]);
+ 
+ 		data->last_updated = jiffies;
+ 		data->valid = true;
+@@ -185,7 +185,7 @@ static ssize_t max16065_alarm_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute_2 *attr2 = to_sensor_dev_attr_2(da);
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int val = data->fault[attr2->nr];
++	int val = READ_ONCE(data->fault[attr2->nr]);
+ 
+ 	if (val < 0)
+ 		return val;
+@@ -203,7 +203,7 @@ static ssize_t max16065_input_show(struct device *dev,
+ {
+ 	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int adc = data->adc[attr->index];
++	int adc = READ_ONCE(data->adc[attr->index]);
+ 
+ 	if (unlikely(adc < 0))
+ 		return adc;
+@@ -216,7 +216,7 @@ static ssize_t max16065_current_show(struct device *dev,
+ 				     struct device_attribute *da, char *buf)
+ {
+ 	struct max16065_data *data = max16065_update_device(dev);
+-	int curr_sense = data->curr_sense;
++	int curr_sense = READ_ONCE(data->curr_sense);
+ 
+ 	if (unlikely(curr_sense < 0))
+ 		return curr_sense;
 -- 
 2.51.0
 
