@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8385199FAB;
-	Mon, 23 Mar 2026 14:21:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A63A0B0B;
+	Mon, 23 Mar 2026 14:21:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275693; cv=none; b=kq72/N2orp688/YMPabClSDelj7jEuDzHY0G6/fBS8Q57BNxJZF6Oi+H7DiGfmlLBoEceTS3Wk0eS6KSNSLl5YXd2aIkZDupVNdViHjSMWymXZXGiE/+S0MXG8zj7RcPNF+fQU6zr9kInU0CsT7fFSe0rzobn4hMzJlyZ1nKtbY=
+	t=1774275696; cv=none; b=JEIwojjD3fBTrHECyN+wwFwhgFuH18CmZb+Z5FGRsydR9yXEnGraTpTB+Fz7t14AcvCHs+vQ7iMvEUj7hifu8PMi5jxUPfeaXEkFinAJIftLApQt5Blk5wqYevpTeaErqz74sAdgfOfIm/8qYJ2TQA23geM072Sj7m2zQXnHARg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275693; c=relaxed/simple;
-	bh=O254SxLn6JbhtO1ZFc1M5v3yYSdwrQ5g2djGWfYlbm0=;
+	s=arc-20240116; t=1774275696; c=relaxed/simple;
+	bh=RAXID0L/3OqCdyVH26A/rMPx0eft2eRjiWNFza+V46E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDyR++iMzaPzjg/cqOCkVyFrlGbSRTo/4CPqxm+nZEWzMt0o8C98ee0BEWJewCOaq7U18P+gSdBZaZI542FYFP6IuJrgQcvX0h7Pf6eCFZgiqSoPsWnZNPkev93AiPm4U2xhNeixlU9phTa9agut+7PrHxmlk8fq+6GE/sAhKWk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uBWsE+rt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LxRF05jhorP5ZthY7O/cIrNxcyQLEd/ZM9J+DFHswf/DNju/dnzwKxCMMEGmjl8MwOIPWCzwsvtFwosLWf9bufkcU4/B5Zcmd9sImsRqM5siqL3HnXrZaRwAyRM4Zv0xOnhOfdAWkkq5RgpaYgapZunC78gVQa27BLu2kaBC820=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jq7imgeL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uBWsE+rt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B189C4CEF7;
-	Mon, 23 Mar 2026 14:21:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jq7imgeL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B925FC4CEF7;
+	Mon, 23 Mar 2026 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275693;
-	bh=O254SxLn6JbhtO1ZFc1M5v3yYSdwrQ5g2djGWfYlbm0=;
+	s=korg; t=1774275696;
+	bh=RAXID0L/3OqCdyVH26A/rMPx0eft2eRjiWNFza+V46E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uBWsE+rtN+mlcd/ETN54bKQ+ZkSkSonoUcB78KYRoNG2Rk59tVN+CB8h8sMtuTSxF
-	 ITXhGYInJjrFkI4crEZbxZaQQF5vBBaAcgmRVjOz2Sp4WVTW5e+NxAhauMKFECfTJF
-	 JXZfIKbwc3lUU/7HwbtGeek5ZIHvs8haiP9Midqs=
+	b=jq7imgeLlISe9PJ+HFBJZTNhiOrYsW2K3vNJcTRNpzobQzbEojkTTg83Nd9HtxuMi
+	 Os5fhkIJvKqHAdI451kOvAh/EvCcl5+QGVuE8hGMZ4NXhjzn9dtijezrZVi1HDORt7
+	 eow0/BRmxV+SSo+4xNuJvLdn9QlsyIBtV9ors/m4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Calvin Owens <calvin@wbinvd.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.12 184/460] tracing: Fix trace_buf_size= cmdline parameter with sizes >= 2G
-Date: Mon, 23 Mar 2026 14:43:00 +0100
-Message-ID: <20260323134531.067899537@linuxfoundation.org>
+	Koen Vandeputte <koen.vandeputte@citymesh.com>,
+	Daniele Palmas <dnlplm@gmail.com>,
+	Laurent Vivier <lvivier@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 185/460] qmi_wwan: allow max_mtu above hard_mtu to control rx_urb_size
+Date: Mon, 23 Mar 2026 14:43:01 +0100
+Message-ID: <20260323134531.096455334@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,61 +52,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Calvin Owens <calvin@wbinvd.org>
+From: Laurent Vivier <lvivier@redhat.com>
 
-commit d008ba8be8984760e36d7dcd4adbd5a41a645708 upstream.
+commit 55f854dd5bdd8e19b936a00ef1f8d776ac32c7b0 upstream.
 
-Some of the sizing logic through tracer_alloc_buffers() uses int
-internally, causing unexpected behavior if the user passes a value that
-does not fit in an int (on my x86 machine, the result is uselessly tiny
-buffers).
+Commit c7159e960f14 ("usbnet: limit max_mtu based on device's hard_mtu")
+capped net->max_mtu to the device's hard_mtu in usbnet_probe(). While
+this correctly prevents oversized packets on standard USB network
+devices, it breaks the qmi_wwan driver.
 
-Fix by plumbing the parameter's real type (unsigned long) through to the
-ring buffer allocation functions, which already use unsigned long.
+qmi_wwan relies on userspace (e.g. ModemManager) setting a large MTU on
+the wwan0 interface to configure rx_urb_size via usbnet_change_mtu().
+QMI modems negotiate USB transfer sizes of 16,383 or 32,767 bytes, and
+the USB receive buffers must be sized accordingly. With max_mtu capped
+to hard_mtu (~1500 bytes), userspace can no longer raise the MTU, the
+receive buffers remain small, and download speeds drop from >300 Mbps
+to ~0.8 Mbps.
 
-It has always been possible to create larger ring buffers via the sysfs
-interface: this only affects the cmdline parameter.
+Introduce a FLAG_NOMAXMTU driver flag that allows individual usbnet
+drivers to opt out of the max_mtu cap. Set this flag in qmi_wwan's
+driver_info structures to restore the previous behavior for QMI devices,
+while keeping the safety fix in place for all other usbnet drivers.
 
+Fixes: c7159e960f14 ("usbnet: limit max_mtu based on device's hard_mtu")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/bff42a4288aada08bdf74da3f5b67a2c28b761f8.1772852067.git.calvin@wbinvd.org
-Fixes: 73c5162aa362 ("tracing: keep ring buffer to minimum size till used")
-Signed-off-by: Calvin Owens <calvin@wbinvd.org>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/lkml/CAPh3n803k8JcBPV5qEzUB-oKzWkAs-D5CU7z=Vd_nLRCr5ZqQg@mail.gmail.com/
+Reported-by: Koen Vandeputte <koen.vandeputte@citymesh.com>
+Tested-by: Daniele Palmas <dnlplm@gmail.com>
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+Link: https://patch.msgid.link/20260304134338.1785002-1-lvivier@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/usb/qmi_wwan.c |    4 ++--
+ drivers/net/usb/usbnet.c   |    7 ++++---
+ include/linux/usb/usbnet.h |    1 +
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9227,7 +9227,7 @@ static void
- init_tracer_tracefs(struct trace_array *tr, struct dentry *d_tracer);
+--- a/drivers/net/usb/qmi_wwan.c
++++ b/drivers/net/usb/qmi_wwan.c
+@@ -928,7 +928,7 @@ err:
  
- static int
--allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, int size)
-+allocate_trace_buffer(struct trace_array *tr, struct array_buffer *buf, unsigned long size)
- {
- 	enum ring_buffer_flags rb_flags;
+ static const struct driver_info	qmi_wwan_info = {
+ 	.description	= "WWAN/QMI device",
+-	.flags		= FLAG_WWAN | FLAG_SEND_ZLP,
++	.flags		= FLAG_WWAN | FLAG_NOMAXMTU | FLAG_SEND_ZLP,
+ 	.bind		= qmi_wwan_bind,
+ 	.unbind		= qmi_wwan_unbind,
+ 	.manage_power	= qmi_wwan_manage_power,
+@@ -937,7 +937,7 @@ static const struct driver_info	qmi_wwan
  
-@@ -9277,7 +9277,7 @@ static void free_trace_buffer(struct arr
- 	}
- }
+ static const struct driver_info	qmi_wwan_info_quirk_dtr = {
+ 	.description	= "WWAN/QMI device",
+-	.flags		= FLAG_WWAN | FLAG_SEND_ZLP,
++	.flags		= FLAG_WWAN | FLAG_NOMAXMTU | FLAG_SEND_ZLP,
+ 	.bind		= qmi_wwan_bind,
+ 	.unbind		= qmi_wwan_unbind,
+ 	.manage_power	= qmi_wwan_manage_power,
+--- a/drivers/net/usb/usbnet.c
++++ b/drivers/net/usb/usbnet.c
+@@ -1797,11 +1797,12 @@ usbnet_probe (struct usb_interface *udev
+ 		if ((dev->driver_info->flags & FLAG_NOARP) != 0)
+ 			net->flags |= IFF_NOARP;
  
--static int allocate_trace_buffers(struct trace_array *tr, int size)
-+static int allocate_trace_buffers(struct trace_array *tr, unsigned long size)
- {
- 	int ret;
+-		if (net->max_mtu > (dev->hard_mtu - net->hard_header_len))
++		if ((dev->driver_info->flags & FLAG_NOMAXMTU) == 0 &&
++		    net->max_mtu > (dev->hard_mtu - net->hard_header_len))
+ 			net->max_mtu = dev->hard_mtu - net->hard_header_len;
  
-@@ -10479,7 +10479,7 @@ __init static void enable_instances(void
+-		if (net->mtu > net->max_mtu)
+-			net->mtu = net->max_mtu;
++		if (net->mtu > (dev->hard_mtu - net->hard_header_len))
++			net->mtu = dev->hard_mtu - net->hard_header_len;
  
- __init static int tracer_alloc_buffers(void)
- {
--	int ring_buf_size;
-+	unsigned long ring_buf_size;
- 	int ret = -ENOMEM;
+ 	} else if (!info->in || !info->out)
+ 		status = usbnet_get_endpoints (dev, udev);
+--- a/include/linux/usb/usbnet.h
++++ b/include/linux/usb/usbnet.h
+@@ -130,6 +130,7 @@ struct driver_info {
+ #define FLAG_MULTI_PACKET	0x2000
+ #define FLAG_RX_ASSEMBLE	0x4000	/* rx packets may span >1 frames */
+ #define FLAG_NOARP		0x8000	/* device can't do ARP */
++#define FLAG_NOMAXMTU		0x10000	/* allow max_mtu above hard_mtu */
  
- 
+ 	/* init device ... can sleep, or cause probe() failure */
+ 	int	(*bind)(struct usbnet *, struct usb_interface *);
 
 
