@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E761B3B0ADD;
-	Mon, 23 Mar 2026 14:43:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A07E3B0AD1;
+	Mon, 23 Mar 2026 14:43:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276984; cv=none; b=RNdVncZPpUnDK0ARmXpb0nYmPcHmNwhaZuBIDAtzk7Tzu8qZqLIX98+WYZkjVVHNRUIC2KamhYzPzXmstn3E8AGtGRisgE//rPC/qM1qRGPKT/kKIrr2d8oHTlCu6MxLdP996+JGwvNIGBnH8msHVHpLeecpUrdfKCcDNY35feQ=
+	t=1774276986; cv=none; b=ZpHjDReZplTyqMTw7Ljpihj5xTElOvee6G9e5Ri+M6CcP/IBCq9mpQq2OB2RY38gFg572BwoIVZiam11NYL0/Iv6g8ldgQ5wdW4k1yPKTNOIqHjxuq4ivLIyzrXnzZSNTlGELKQPePJW6UmnK0CcH0SKLjBA7cGzhYTVuo1N7hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276984; c=relaxed/simple;
-	bh=ynPs1Uk/Cx6+Xe0yqcriABxD0LL/sgzEERzGlHjjyNw=;
+	s=arc-20240116; t=1774276986; c=relaxed/simple;
+	bh=e3WgzwhPMGzQTspl9+K8ILsDLG/t+IhzPzHtJgAl/Tk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Oej7tCr9CpJLWJOe5Kwj8pJeYLKEajNpjRxCaM/O68lHYmTHpJ72s4VieExE0wax0NCgrvNMse4sPyMTavYCTFFIIYVthC6TE0lz3LwYOb473h6y/iJ6wWK97qCTMq7sOZ+agy3stcdoMvmvP944Y/sn8PNQhCzOlL46u/DFtNQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kCwbYT1S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Id78MzR98R7Ykv0P7uCgkeIqXPZn8PU3ZR4t+574+ExfUD7zrOEYuIajUTJ9dzsvtz8uJH1yQYHIJxrRx64gdVCYOdOeSHJbbcdgI/LrDESwn1UjIN/+WcQNfTZ+bDo4QoZ8yTQE+x+Agh3PUoR1C6YGgD41+h57l1naE09L9v4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cqmPXT7o; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kCwbYT1S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80396C4CEF7;
-	Mon, 23 Mar 2026 14:43:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cqmPXT7o"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23A79C4CEF7;
+	Mon, 23 Mar 2026 14:43:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276983;
-	bh=ynPs1Uk/Cx6+Xe0yqcriABxD0LL/sgzEERzGlHjjyNw=;
+	s=korg; t=1774276986;
+	bh=e3WgzwhPMGzQTspl9+K8ILsDLG/t+IhzPzHtJgAl/Tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCwbYT1S2oZzCSpXeNudXxOptv1VCJbQ4Dl7aWXEkaapZ6XYzQdzvC9tLDnmV7IC3
-	 ZWgPg+Vsy2hSCP/nbFkETUtGr6Z6W8++i2s8Ynseh3jqoJYvk+jiKqH45fXvpiWm+2
-	 /KYiTJB41qiry6c4xew9Ne1mBQ0M+liHEQF94RbI=
+	b=cqmPXT7oxsPkV5GlOP/RjRhcGx+h9sO/n4a3kLp6Z2b8PMluT9F8Zafx6elQgJQ9c
+	 bYyKV314gJKJ2Lfd8vFaa7OWgTkXRP9DHtTtJKU0yT9xOmohRwvlNT7gcOfOKF6Y7V
+	 qrVaQPzcEZCWgG2VErM09jTx+jeR1qrTgtEukHOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.12 277/460] btrfs: do not strictly require dirty metadata threshold for metadata writepages
-Date: Mon, 23 Mar 2026 14:44:33 +0100
-Message-ID: <20260323134533.283502160@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Kuen-Han Tsai <khtsai@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 242/460] usb: gadget: f_ncm: Fix net_device lifecycle with device_move
+Date: Mon, 23 Mar 2026 14:43:58 +0100
+Message-ID: <20260323134532.452502467@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,162 +51,210 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Kuen-Han Tsai <khtsai@google.com>
 
-[ Upstream commit 4e159150a9a56d66d247f4b5510bed46fe58aa1c ]
+[ Upstream commit ec35c1969650e7cb6c8a91020e568ed46e3551b0 ]
 
-[BUG]
-There is an internal report that over 1000 processes are
-waiting at the io_schedule_timeout() of balance_dirty_pages(), causing
-a system hang and trigger a kernel coredump.
+The network device outlived its parent gadget device during
+disconnection, resulting in dangling sysfs links and null pointer
+dereference problems.
 
-The kernel is v6.4 kernel based, but the root problem still applies to
-any upstream kernel before v6.18.
+A prior attempt to solve this by removing SET_NETDEV_DEV entirely [1]
+was reverted due to power management ordering concerns and a NO-CARRIER
+regression.
 
-[CAUSE]
->From Jan Kara for his wisdom on the dirty page balance behavior first.
+A subsequent attempt to defer net_device allocation to bind [2] broke
+1:1 mapping between function instance and network device, making it
+impossible for configfs to report the resolved interface name. This
+results in a regression where the DHCP server fails on pmOS.
 
-  This cgroup dirty limit was what was actually playing the role here
-  because the cgroup had only a small amount of memory and so the dirty
-  limit for it was something like 16MB.
+Use device_move to reparent the net_device between the gadget device and
+/sys/devices/virtual/ across bind/unbind cycles. This preserves the
+network interface across USB reconnection, allowing the DHCP server to
+retain their binding.
 
-  Dirty throttling is responsible for enforcing that nobody can dirty
-  (significantly) more dirty memory than there's dirty limit. Thus when
-  a task is dirtying pages it periodically enters into balance_dirty_pages()
-  and we let it sleep there to slow down the dirtying.
+Introduce gether_attach_gadget()/gether_detach_gadget() helpers and use
+__free(detach_gadget) macro to undo attachment on bind failure. The
+bind_count ensures device_move executes only on the first bind.
 
-  When the system is over dirty limit already (either globally or within
-  a cgroup of the running task), we will not let the task exit from
-  balance_dirty_pages() until the number of dirty pages drops below the
-  limit.
+[1] https://lore.kernel.org/lkml/f2a4f9847617a0929d62025748384092e5f35cce.camel@crapouillou.net/
+[2] https://lore.kernel.org/linux-usb/795ea759-7eaf-4f78-81f4-01ffbf2d7961@ixit.cz/
 
-  So in this particular case, as I already mentioned, there was a cgroup
-  with relatively small amount of memory and as a result with dirty limit
-  set at 16MB. A task from that cgroup has dirtied about 28MB worth of
-  pages in btrfs btree inode and these were practically the only dirty
-  pages in that cgroup.
-
-So that means the only way to reduce the dirty pages of that cgroup is
-to writeback the dirty pages of btrfs btree inode, and only after that
-those processes can exit balance_dirty_pages().
-
-Now back to the btrfs part, btree_writepages() is responsible for
-writing back dirty btree inode pages.
-
-The problem here is, there is a btrfs internal threshold that if the
-btree inode's dirty bytes are below the 32M threshold, it will not
-do any writeback.
-
-This behavior is to batch as much metadata as possible so we won't write
-back those tree blocks and then later re-COW them again for another
-modification.
-
-This internal 32MiB is higher than the existing dirty page size (28MiB),
-meaning no writeback will happen, causing a deadlock between btrfs and
-cgroup:
-
-- Btrfs doesn't want to write back btree inode until more dirty pages
-
-- Cgroup/MM doesn't want more dirty pages for btrfs btree inode
-  Thus any process touching that btree inode is put into sleep until
-  the number of dirty pages is reduced.
-
-Thanks Jan Kara a lot for the analysis of the root cause.
-
-[ENHANCEMENT]
-Since kernel commit b55102826d7d ("btrfs: set AS_KERNEL_FILE on the
-btree_inode"), btrfs btree inode pages will only be charged to the root
-cgroup which should have a much larger limit than btrfs' 32MiB
-threshold.
-So it should not affect newer kernels.
-
-But for all current LTS kernels, they are all affected by this problem,
-and backporting the whole AS_KERNEL_FILE may not be a good idea.
-
-Even for newer kernels I still think it's a good idea to get
-rid of the internal threshold at btree_writepages(), since for most cases
-cgroup/MM has a better view of full system memory usage than btrfs' fixed
-threshold.
-
-For internal callers using btrfs_btree_balance_dirty() since that
-function is already doing internal threshold check, we don't need to
-bother them.
-
-But for external callers of btree_writepages(), just respect their
-requests and write back whatever they want, ignoring the internal
-btrfs threshold to avoid such deadlock on btree inode dirty page
-balancing.
-
-CC: stable@vger.kernel.org
-CC: Jan Kara <jack@suse.cz>
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ The context change is due to the commit 5e121ae687b8
-("btrfs: use buffer xarray for extent buffer writeback operations")
-in v6.16 which is irrelevant to the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+Fixes: 40d133d7f542 ("usb: gadget: f_ncm: convert to new function interface with backward compatibility")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Kuen-Han Tsai <khtsai@google.com>
+Link: https://patch.msgid.link/20260309-f-ncm-revert-v2-7-ea2afbc7d9b2@google.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c   |   22 ----------------------
- fs/btrfs/extent_io.c |    3 +--
- fs/btrfs/extent_io.h |    3 +--
- 3 files changed, 2 insertions(+), 26 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c   |   38 ++++++++++++++++++++++------------
+ drivers/usb/gadget/function/u_ether.c |   22 +++++++++++++++++++
+ drivers/usb/gadget/function/u_ether.h |   26 +++++++++++++++++++++++
+ drivers/usb/gadget/function/u_ncm.h   |    2 -
+ 4 files changed, 74 insertions(+), 14 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -498,28 +498,6 @@ static int btree_migrate_folio(struct ad
- #define btree_migrate_folio NULL
- #endif
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -1438,6 +1438,7 @@ static int ncm_bind(struct usb_configura
+ 	struct f_ncm_opts	*ncm_opts;
  
--static int btree_writepages(struct address_space *mapping,
--			    struct writeback_control *wbc)
--{
--	int ret;
--
--	if (wbc->sync_mode == WB_SYNC_NONE) {
--		struct btrfs_fs_info *fs_info;
--
--		if (wbc->for_kupdate)
--			return 0;
--
--		fs_info = inode_to_fs_info(mapping->host);
--		/* this is a bit racy, but that's ok */
--		ret = __percpu_counter_compare(&fs_info->dirty_metadata_bytes,
--					     BTRFS_DIRTY_METADATA_THRESH,
--					     fs_info->dirty_metadata_batch);
--		if (ret < 0)
--			return 0;
+ 	struct usb_os_desc_table	*os_desc_table __free(kfree) = NULL;
++	struct net_device		*net __free(detach_gadget) = NULL;
+ 	struct usb_request		*request __free(free_usb_request) = NULL;
+ 
+ 	if (!can_support_ecm(cdev->gadget))
+@@ -1451,18 +1452,19 @@ static int ncm_bind(struct usb_configura
+ 			return -ENOMEM;
+ 	}
+ 
+-	mutex_lock(&ncm_opts->lock);
+-	gether_set_gadget(ncm_opts->net, cdev->gadget);
+-	if (!ncm_opts->bound) {
+-		ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
+-		status = gether_register_netdev(ncm_opts->net);
 -	}
--	return btree_write_cache_pages(mapping, wbc);
--}
+-	mutex_unlock(&ncm_opts->lock);
 -
- static bool btree_release_folio(struct folio *folio, gfp_t gfp_flags)
+-	if (status)
+-		return status;
+-
+-	ncm_opts->bound = true;
++	scoped_guard(mutex, &ncm_opts->lock)
++		if (ncm_opts->bind_count == 0) {
++			if (!device_is_registered(&ncm_opts->net->dev)) {
++				ncm_opts->net->mtu = (ncm_opts->max_segment_size - ETH_HLEN);
++				gether_set_gadget(ncm_opts->net, cdev->gadget);
++				status = gether_register_netdev(ncm_opts->net);
++			} else
++				status = gether_attach_gadget(ncm_opts->net, cdev->gadget);
++
++			if (status)
++				return status;
++			net = ncm_opts->net;
++		}
+ 
+ 	ncm_string_defs[1].s = ncm->ethaddr;
+ 
+@@ -1564,6 +1566,9 @@ static int ncm_bind(struct usb_configura
+ 	}
+ 	ncm->notify_req = no_free_ptr(request);
+ 
++	ncm_opts->bind_count++;
++	retain_and_null_ptr(net);
++
+ 	DBG(cdev, "CDC Network: IN/%s OUT/%s NOTIFY/%s\n",
+ 			ncm->port.in_ep->name, ncm->port.out_ep->name,
+ 			ncm->notify->name);
+@@ -1655,7 +1660,7 @@ static void ncm_free_inst(struct usb_fun
+ 	struct f_ncm_opts *opts;
+ 
+ 	opts = container_of(f, struct f_ncm_opts, func_inst);
+-	if (opts->bound)
++	if (device_is_registered(&opts->net->dev))
+ 		gether_cleanup(netdev_priv(opts->net));
+ 	else
+ 		free_netdev(opts->net);
+@@ -1718,9 +1723,12 @@ static void ncm_free(struct usb_function
+ static void ncm_unbind(struct usb_configuration *c, struct usb_function *f)
  {
- 	if (folio_test_writeback(folio) || folio_test_dirty(folio))
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2088,8 +2088,7 @@ static int submit_eb_page(struct folio *
- 	return 1;
+ 	struct f_ncm *ncm = func_to_ncm(f);
++	struct f_ncm_opts *ncm_opts;
+ 
+ 	DBG(c->cdev, "ncm unbind\n");
+ 
++	ncm_opts = container_of(f->fi, struct f_ncm_opts, func_inst);
++
+ 	hrtimer_cancel(&ncm->task_timer);
+ 
+ 	kfree(f->os_desc_table);
+@@ -1736,6 +1744,10 @@ static void ncm_unbind(struct usb_config
+ 
+ 	kfree(ncm->notify_req->buf);
+ 	usb_ep_free_request(ncm->notify, ncm->notify_req);
++
++	ncm_opts->bind_count--;
++	if (ncm_opts->bind_count == 0)
++		gether_detach_gadget(ncm_opts->net);
  }
  
--int btree_write_cache_pages(struct address_space *mapping,
--				   struct writeback_control *wbc)
-+int btree_writepages(struct address_space *mapping, struct writeback_control *wbc)
+ static struct usb_function *ncm_alloc(struct usb_function_instance *fi)
+--- a/drivers/usb/gadget/function/u_ether.c
++++ b/drivers/usb/gadget/function/u_ether.c
+@@ -896,6 +896,28 @@ void gether_set_gadget(struct net_device
+ }
+ EXPORT_SYMBOL_GPL(gether_set_gadget);
+ 
++int gether_attach_gadget(struct net_device *net, struct usb_gadget *g)
++{
++	int ret;
++
++	ret = device_move(&net->dev, &g->dev, DPM_ORDER_DEV_AFTER_PARENT);
++	if (ret)
++		return ret;
++
++	gether_set_gadget(net, g);
++	return 0;
++}
++EXPORT_SYMBOL_GPL(gether_attach_gadget);
++
++void gether_detach_gadget(struct net_device *net)
++{
++	struct eth_dev *dev = netdev_priv(net);
++
++	device_move(&net->dev, NULL, DPM_ORDER_NONE);
++	dev->gadget = NULL;
++}
++EXPORT_SYMBOL_GPL(gether_detach_gadget);
++
+ int gether_set_dev_addr(struct net_device *net, const char *dev_addr)
  {
- 	struct btrfs_eb_write_context ctx = { .wbc = wbc };
- 	struct btrfs_fs_info *fs_info = inode_to_fs_info(mapping->host);
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -244,8 +244,7 @@ void extent_write_locked_range(struct in
- 			       u64 start, u64 end, struct writeback_control *wbc,
- 			       bool pages_dirty);
- int btrfs_writepages(struct address_space *mapping, struct writeback_control *wbc);
--int btree_write_cache_pages(struct address_space *mapping,
--			    struct writeback_control *wbc);
-+int btree_writepages(struct address_space *mapping, struct writeback_control *wbc);
- void btrfs_readahead(struct readahead_control *rac);
- int set_folio_extent_mapped(struct folio *folio);
- int set_page_extent_mapped(struct page *page);
+ 	struct eth_dev *dev;
+--- a/drivers/usb/gadget/function/u_ether.h
++++ b/drivers/usb/gadget/function/u_ether.h
+@@ -151,6 +151,32 @@ static inline struct net_device *gether_
+ void gether_set_gadget(struct net_device *net, struct usb_gadget *g);
+ 
+ /**
++ * gether_attach_gadget - Reparent net_device to the gadget device.
++ * @net: The network device to reparent.
++ * @g: The target USB gadget device to parent to.
++ *
++ * This function moves the network device to be a child of the USB gadget
++ * device in the device hierarchy. This is typically done when the function
++ * is bound to a configuration.
++ *
++ * Returns 0 on success, or a negative error code on failure.
++ */
++int gether_attach_gadget(struct net_device *net, struct usb_gadget *g);
++
++/**
++ * gether_detach_gadget - Detach net_device from its gadget parent.
++ * @net: The network device to detach.
++ *
++ * This function moves the network device to be a child of the virtual
++ * devices parent, effectively detaching it from the USB gadget device
++ * hierarchy. This is typically done when the function is unbound
++ * from a configuration but the instance is not yet freed.
++ */
++void gether_detach_gadget(struct net_device *net);
++
++DEFINE_FREE(detach_gadget, struct net_device *, if (_T) gether_detach_gadget(_T))
++
++/**
+  * gether_set_dev_addr - initialize an ethernet-over-usb link with eth address
+  * @net: device representing this link
+  * @dev_addr: eth address of this device
+--- a/drivers/usb/gadget/function/u_ncm.h
++++ b/drivers/usb/gadget/function/u_ncm.h
+@@ -18,7 +18,7 @@
+ struct f_ncm_opts {
+ 	struct usb_function_instance	func_inst;
+ 	struct net_device		*net;
+-	bool				bound;
++	int				bind_count;
+ 
+ 	struct config_group		*ncm_interf_group;
+ 	struct usb_os_desc		ncm_os_desc;
 
 
