@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892F03BC665;
-	Mon, 23 Mar 2026 15:19:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCB13B3BE7;
+	Mon, 23 Mar 2026 15:19:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279193; cv=none; b=ixChgt5sHddHajxDBOfn1YIbKfCDCP74jDoahcbDBDy631t+OmjFhlLg4IHnl5ay8ZSAUA20KfDCfpa1FnGBcMGMTV/nX/+WeAKjstB+aWcpP4BmANN34wWxbYK4eX9XbG5dLUg9IUxgXBColAF+QEUg+EICIahOMDCF745xf5s=
+	t=1774279196; cv=none; b=dp0JeyLtJtQOfxBw7RMN4ePxC7AtWojqerHWERIo8cvPJasV9DNek/PlPbs0QXJAUanduVYe0WWpZtRzJwEb8FHbP8/z10WgwRmwqvDB2Qzp2aInjiKEvVC7dg+88Cs83dwMG+b9ybOlM7ZABYgK+nBbfkYO9RRWB5MmIjTXtBw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279193; c=relaxed/simple;
-	bh=Vepq20FGl41ExSlxdlfRNrq4yWhOzEv6FgrUBcWMdyE=;
+	s=arc-20240116; t=1774279196; c=relaxed/simple;
+	bh=Ui2lZ3iFeRpDuZNkC4pkn3VdJClzjbXDYhMmQNuVMLA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tLnomrj9XHv3lvNZxu+5DtyKIxMUoNNrZ6xb9zHrzQJZ+74GQrBhboKxqV9pk1j/zB3exqf9mqvO58ir3oaC9YRF/NfmGxI0VoSsAkn4RczjaxsN25qa/xbL1wP5aQ/ou5wWvZEToK+8eHwYdzmqv8Nmc7hJQm8gFD1lLrNATCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jprKIvF0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g+BlycvhfIt1ElJfYEOhw/9T4zaqOGLKNTiIBNOzDvtozLGWV3488nqoDzH14iSfBZ3QApsZevH9VYIBC3r3ppNIlIjn5vd+OHRuW7UoCo1Bn7JlGj+5IOaEEHUx1vLd2R30xOTW6LqjldJ19beEZKC8zSzkItW9YHzQ61ViDMo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GgVTDd94; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jprKIvF0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1ABC4CEF7;
-	Mon, 23 Mar 2026 15:19:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GgVTDd94"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2202C2BCB1;
+	Mon, 23 Mar 2026 15:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279193;
-	bh=Vepq20FGl41ExSlxdlfRNrq4yWhOzEv6FgrUBcWMdyE=;
+	s=korg; t=1774279196;
+	bh=Ui2lZ3iFeRpDuZNkC4pkn3VdJClzjbXDYhMmQNuVMLA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jprKIvF06RbDIWnjxwpbth/30ESIE9buhw989KYFZB3ljr1I5sNxMywarDtZ93Sfj
-	 iIPS0G2B9qjZE6bKA9j+xBmViQU8B7ST51zmHQbzkxn+Emlr7KUQ4H81U8IXf13R+O
-	 W7EdRx+A+iFK/5jdR7dhDmm7GznKqEaXTlzOANoA=
+	b=GgVTDd949RirQoI+tH1EvUW28FSb12iWLHYf+jk2PiQdLSCjw+ubZDIFfv4DnZH83
+	 UYdm0BIdSFXIOCaVqTXCxuYrK5SeKEgvpbA+9Z1dnWwm37cNu1ISndjWE8D2WJsgZy
+	 TaqqgSsRgulknpXyhbojNYwWYDwbCldvmTTl5jvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christian Eggers <ceggers@arri.de>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 504/567] Bluetooth: LE L2CAP: Disconnect if sum of payload sizes exceed SDU
-Date: Mon, 23 Mar 2026 14:47:04 +0100
-Message-ID: <20260323134546.489518769@linuxfoundation.org>
+Subject: [PATCH 6.6 505/567] Bluetooth: SMP: make SM/PER/KDU/BI-04-C happy
+Date: Mon, 23 Mar 2026 14:47:05 +0100
+Message-ID: <20260323134546.514509098@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,35 +53,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Eggers <ceggers@arri.de>
 
-[ Upstream commit b6a2bf43aa37670432843bc73ae2a6288ba4d6f8 ]
+[ Upstream commit 0e4d4dcc1a6e82cc6f9abf32193558efa7e1613d ]
 
-Core 6.0, Vol 3, Part A, 3.4.3:
-"... If the sum of the payload sizes for the K-frames exceeds the
-specified SDU length, the receiver shall disconnect the channel."
+The last test step ("Test with Invalid public key X and Y, all set to
+0") expects to get an "DHKEY check failed" instead of "unspecified".
 
-This fixes L2CAP/LE/CFC/BV-27-C (running together with 'l2test -r -P
-0x0027 -V le_public').
-
-Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
+Fixes: 6d19628f539f ("Bluetooth: SMP: Fail if remote and local public keys are identical")
 Signed-off-by: Christian Eggers <ceggers@arri.de>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/smp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 94dee7c227f74..4ab738e651837 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6677,6 +6677,7 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 
- 	if (chan->sdu->len + skb->len > chan->sdu_len) {
- 		BT_ERR("Too much LE L2CAP data received");
-+		l2cap_send_disconn_req(chan, ECONNRESET);
- 		err = -EINVAL;
- 		goto failed;
+diff --git a/net/bluetooth/smp.c b/net/bluetooth/smp.c
+index e7ee13fe83a74..62c8eab1b84a5 100644
+--- a/net/bluetooth/smp.c
++++ b/net/bluetooth/smp.c
+@@ -2744,7 +2744,7 @@ static int smp_cmd_public_key(struct l2cap_conn *conn, struct sk_buff *skb)
+ 	if (!test_bit(SMP_FLAG_DEBUG_KEY, &smp->flags) &&
+ 	    !crypto_memneq(key, smp->local_pk, 64)) {
+ 		bt_dev_err(hdev, "Remote and local public keys are identical");
+-		return SMP_UNSPECIFIED;
++		return SMP_DHKEY_CHECK_FAILED;
  	}
+ 
+ 	memcpy(smp->remote_pk, key, 64);
 -- 
 2.51.0
 
