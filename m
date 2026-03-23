@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3379923815B;
-	Mon, 23 Mar 2026 14:47:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D03E23BF9B;
+	Mon, 23 Mar 2026 14:47:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277254; cv=none; b=pJbhqArkzi2qEeC6+sAmiSIQ5N3di6T4ex8K0+1y1c+f8Vrimj0C6XyYCXXePFnuMiSY6fdZZMEa+qbJ9z909eHhb+IdBzxaBOU6eVem4u9+7Zq7WDEwKFMow6dmrjdqHg+hHhz/Obdq/UXJ54ouyyhL4TfQlXsAM9HSEtw6vvE=
+	t=1774277257; cv=none; b=tbXV2ZTz7STBoTjz/LBzJXHajaWVt+/531ol4NHpUt1gYwuQj6DCBIuTbd50dQao3OtQSbwkNrOINfXVvyCQuo09nFZTZDMgPp6nfviFD0lTzTZLcJ1ziV/Gy1iMijzYiVfrcYviEr62W4LxQQ7GJwSh1cSW9gGdq1Lt1tAiASM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277254; c=relaxed/simple;
-	bh=NN6TkM1QFZzFyIryCFSauukSji8uwuNkqYb0qD5Yvsg=;
+	s=arc-20240116; t=1774277257; c=relaxed/simple;
+	bh=USyR0+2oCRzZaxykn2NX2pSOI6pPtuVeo4e0P3qlcA4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oUCl0RvWom/1ZVEeFpUyX+Z22aETGfkF6CX+ahNa7q/POmDx7jxWiuGKvhmy7SjoCllnNAjEwesXLABRF3cOn4YW5ARNsx5oxhgNIv3J2rXjWxddZypHq/BydIUm50pIQtufeV2RYGp2SNVw/vbUynAXcFzvG5yL1hRSEtxJpOU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FBsQkLf9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cl0F6/M+r7glWBeBZQIX6c0sCaKRXSXyCpXhzHF7JhFOQ0v1mUGPuq+edd1OBs5BpqJnA1HkGrFGWqnGKi0potJempaUEL54ePNY9kKWwQVHpeD+eafs6TeKEYNAbX/jt446inNyMnsJ/AuNfHTLCytSv2ESOIDmBfLYenkGHqw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skNPAKx8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FBsQkLf9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8570C4CEF7;
-	Mon, 23 Mar 2026 14:47:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skNPAKx8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870B3C4CEF7;
+	Mon, 23 Mar 2026 14:47:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277254;
-	bh=NN6TkM1QFZzFyIryCFSauukSji8uwuNkqYb0qD5Yvsg=;
+	s=korg; t=1774277256;
+	bh=USyR0+2oCRzZaxykn2NX2pSOI6pPtuVeo4e0P3qlcA4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBsQkLf98vo6sTp6OQ/4rT4Wyo8VYPchgGYZKtEJpk+Tg0OU2WxSyEHEtNGaWmmIV
-	 RdK8tIM/hLsTNuZAM2+rySjrKoVKUMnhZu2XAKmfBToyiNUdWGfDZOFhPus1ZlO9y0
-	 ujKOl3TF68vXGmIT5r3uhL9qBip6ZBfSYWg7S7PM=
+	b=skNPAKx8heq6/tcZksxXygP0Ta5Fk//N9CLklVu+dVZdl+c8kvwRUP5SBOonPjmZd
+	 nKV8dM9lcl7HZxA0Vy1g2WWOKy59JGXqmrTo5MPl4m7DgUvJZ00ZAlO2ABmvMpWwRN
+	 mMPyWZLrCmuuYTG/XAqr8XBc46pr7srNU2cHEQNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@linaro.org>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 371/460] soc: rockchip: grf: Add missing of_node_put() when returning
-Date: Mon, 23 Mar 2026 14:46:07 +0100
-Message-ID: <20260323134535.680284672@linuxfoundation.org>
+	Luke Wang <ziniu.wang_1@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 336/460] mmc: sdhci: fix timing selection for 1-bit bus width
+Date: Mon, 23 Mar 2026 14:45:32 +0100
+Message-ID: <20260323134534.785735834@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,39 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-[ Upstream commit 24ed11ee5bacf9a9aca18fc6b47667c7f38d578b ]
+commit 5e3486e64094c28a526543f1e8aa0d5964b7f02d upstream.
 
-Fix the smatch checking:
-drivers/soc/rockchip/grf.c:249 rockchip_grf_init()
-warn: inconsistent refcounting 'np->kobj.kref.refcount.refs.counter':
+When 1-bit bus width is used with HS200/HS400 capabilities set,
+mmc_select_hs200() returns 0 without actually switching. This
+causes mmc_select_timing() to skip mmc_select_hs(), leaving eMMC
+in legacy mode (26MHz) instead of High Speed SDR (52MHz).
 
-Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-Fixes: 75fb63ae0312 ("soc: rockchip: grf: Support multiple grf to be handled")
-Closes: https://lore.kernel.org/all/aYXvgTcUJWQL2can@stanley.mountain/
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/1770814957-17762-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Per JEDEC eMMC spec section 5.3.2, 1-bit mode supports High Speed
+SDR. Drop incompatible HS200/HS400/UHS/DDR caps early so timing
+selection falls through to mmc_select_hs() correctly.
+
+Fixes: f2119df6b764 ("mmc: sd: add support for signal voltage switch procedure")
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/rockchip/grf.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/sdhci.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/soc/rockchip/grf.c b/drivers/soc/rockchip/grf.c
-index dddfe349b3da3..6fd02220abf1d 100644
---- a/drivers/soc/rockchip/grf.c
-+++ b/drivers/soc/rockchip/grf.c
-@@ -217,6 +217,7 @@ static int __init rockchip_grf_init(void)
- 		grf = syscon_node_to_regmap(np);
- 		if (IS_ERR(grf)) {
- 			pr_err("%s: could not get grf syscon\n", __func__);
-+			of_node_put(np);
- 			return PTR_ERR(grf);
- 		}
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -4479,8 +4479,15 @@ int sdhci_setup_host(struct sdhci_host *
+ 	 * their platform code before calling sdhci_add_host(), and we
+ 	 * won't assume 8-bit width for hosts without that CAP.
+ 	 */
+-	if (!(host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA))
++	if (host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA) {
++		host->caps1 &= ~(SDHCI_SUPPORT_SDR104 | SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_DDR50);
++		if (host->quirks2 & SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400)
++			host->caps1 &= ~SDHCI_SUPPORT_HS400;
++		mmc->caps2 &= ~(MMC_CAP2_HS200 | MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
++		mmc->caps &= ~(MMC_CAP_DDR | MMC_CAP_UHS);
++	} else {
+ 		mmc->caps |= MMC_CAP_4_BIT_DATA;
++	}
  
--- 
-2.51.0
-
+ 	if (host->quirks2 & SDHCI_QUIRK2_HOST_NO_CMD23)
+ 		mmc->caps &= ~MMC_CAP_CMD23;
 
 
