@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF133B27C1;
-	Mon, 23 Mar 2026 14:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272D23B2FD5;
+	Mon, 23 Mar 2026 14:41:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276862; cv=none; b=INenpmmjNDsy6noxdWgvB4fWIwVms32vojCRhidXyQ7TRRoFlhaoaZOzCAFyyt2dSXKcIkCpzBKHYtCXrkC4PgoJaUuBnajnEk6J2BUty405aZmJx2xQo0HyZw44Rw01twxeFwHftKoO5Fx+juPPEJjNNJN9LbBfrSDlMvopCPg=
+	t=1774276865; cv=none; b=mWob/85TUTWLAa87o97RipHDjlFbHDeBz6cCPVmhtFMPTIKqwiXbkMo3VZorXxjA9RcQTYO8KfT7KXogyQbXHBrnmuyfsdN3amYUSZxjozH1BdNmMLDWRU1A6jyaDbFj3rj9c+HY5j40uAhkv/zDBlUqDMRhyR3hof4LQXXAmGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276862; c=relaxed/simple;
-	bh=L6IJcBX5zoCCMVdNCUtBRC6IIQrI5VBhdd1BX/rAejA=;
+	s=arc-20240116; t=1774276865; c=relaxed/simple;
+	bh=wrHBWuND6Pxg8QZZInWGxfQoCOtI4eGLJVfnUpr9hJQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fOHOx2EUGbNZ1EWbdv3iOx6BANpjXmuEkCs2PyIMajVFgggcdI8RZ4nW7ONk2SC2p8S5dBfJWfuhMH1SuQ8l1w4wqb2M0KQ7L7+ETh2hh9jpVqaeoZ/2wm1bD0P1L5z0OdhBF4NfIs4LQ08E3RRnvSboSH3yOd5I1kUAJodG1i0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJN30IkY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RNdFywoqpAb0Qiw0iORun7QCtrMr91k/FlLGXAyDqtlGlYl+CvwF4iwWeywyMDgu46nLeWLI9mCgjt41sImdnnyRps5YDSy8BgP8lM/pohkp0S8zb3kuw5H/QS+zhFo5G8No8F+kvt46okEtmBv5rRoxo1SCixPiB5cRxJFfSG4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CQKIDksa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJN30IkY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EDFC2BCB5;
-	Mon, 23 Mar 2026 14:41:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CQKIDksa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1332C4CEF7;
+	Mon, 23 Mar 2026 14:41:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276862;
-	bh=L6IJcBX5zoCCMVdNCUtBRC6IIQrI5VBhdd1BX/rAejA=;
+	s=korg; t=1774276865;
+	bh=wrHBWuND6Pxg8QZZInWGxfQoCOtI4eGLJVfnUpr9hJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJN30IkYyy1LFdW3BewrFygF/I239z0sWZPG8H85fRAcfgg4cqW6I6frbwlnRjEQ0
-	 FZiz9CQxtzEF6x7LTo3BJQhpPUF516cfQxq6Og7sRE6yD3G0ZtS4m3QBWVPdvh1vI8
-	 stGQt4QosT85JmzJ38dysCrE11rwA6qFgWkctlEM=
+	b=CQKIDksa/WLN90Awe9bEtyDZqwhR1gV7NP7BeRrzA/IqS632Djm2RjHsK9Pce3KRf
+	 1Q9EhMKq3k6sGpzp2gTg5JQwkI4fYZY6etH9JxF4Fyn6lt4LJZEqlRBftx+IozfD1f
+	 sX/aIiKZf2RLYDGY2MhscksNjf+CntZ8SC4BnAAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.12 195/460] lib/bootconfig: fix snprintf truncation check in xbc_node_compose_key_after()
-Date: Mon, 23 Mar 2026 14:43:11 +0100
-Message-ID: <20260323134531.338512938@linuxfoundation.org>
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Zide Chen <zide.chen@intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 231/460] perf/x86/intel/uncore: Add per-scheduler IMC CAS count events
+Date: Mon, 23 Mar 2026 14:43:47 +0100
+Message-ID: <20260323134532.172888130@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,40 +53,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Zide Chen <zide.chen@intel.com>
 
-commit 1120a36bb1e9b9e22de75ecb4ef0b998f73a97f1 upstream.
+[ Upstream commit 6a8a48644c4b804123e59dbfc5d6cd29a0194046 ]
 
-snprintf() returns the number of characters that would have been
-written excluding the NUL terminator.  Output is truncated when the
-return value is >= the buffer size, not just > the buffer size.
+IMC on SPR and EMR does not support sub-channels.  In contrast, CPUs
+that use gnr_uncores[] (e.g. Granite Rapids and Sierra Forest)
+implement two command schedulers (SCH0/SCH1) per memory channel,
+providing logically independent command and data paths.
 
-When ret == size, the current code takes the non-truncated path,
-advancing buf by ret and reducing size to 0.  This is wrong because
-the output was actually truncated (the last character was replaced by
-NUL).  Fix by using >= so the truncation path is taken correctly.
+Do not reuse the spr_uncore_imc[] configuration for these CPUs.
+Instead, introduce a dedicated gnr_uncore_imc[] with per-scheduler
+events, so userspace can monitor SCH0 and SCH1 independently.
 
-Link: https://lore.kernel.org/all/20260312191143.28719-4-objecting@objecting.org/
+On these CPUs, replace cas_count_{read,write} with
+cas_count_{read,write}_sch{0,1}.  This may break existing userspace
+that relies on cas_count_{read,write}, prompting it to switch to the
+per-scheduler events, as the legacy event reports only partial
+traffic (SCH0).
 
-Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Fixes: 632c4bf6d007 ("perf/x86/intel/uncore: Support Granite Rapids")
+Fixes: cb4a6ccf3583 ("perf/x86/intel/uncore: Support Sierra Forest and Grand Ridge")
+Reported-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Zide Chen <zide.chen@intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Law <objecting@objecting.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://patch.msgid.link/20260210005225.20311-1-zide.chen@intel.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/events/intel/uncore_snbep.c |   28 +++++++++++++++++++++++++++-
+ 1 file changed, 27 insertions(+), 1 deletion(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -316,7 +316,7 @@ int __init xbc_node_compose_key_after(st
- 			       depth ? "." : "");
- 		if (ret < 0)
- 			return ret;
--		if (ret > size) {
-+		if (ret >= size) {
- 			size = 0;
- 		} else {
- 			size -= ret;
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -6607,6 +6607,32 @@ static struct intel_uncore_type gnr_unco
+ 	.attr_update		= uncore_alias_groups,
+ };
+ 
++static struct uncore_event_desc gnr_uncore_imc_events[] = {
++	INTEL_UNCORE_EVENT_DESC(clockticks,      "event=0x01,umask=0x00"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0,  "event=0x05,umask=0xcf"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch0.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1,  "event=0x06,umask=0xcf"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_read_sch1.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0, "event=0x05,umask=0xf0"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch0.unit, "MiB"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1, "event=0x06,umask=0xf0"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.scale, "6.103515625e-5"),
++	INTEL_UNCORE_EVENT_DESC(cas_count_write_sch1.unit, "MiB"),
++	{ /* end: all zeroes */ },
++};
++
++static struct intel_uncore_type gnr_uncore_imc = {
++	SPR_UNCORE_MMIO_COMMON_FORMAT(),
++	.name			= "imc",
++	.fixed_ctr_bits		= 48,
++	.fixed_ctr		= SNR_IMC_MMIO_PMON_FIXED_CTR,
++	.fixed_ctl		= SNR_IMC_MMIO_PMON_FIXED_CTL,
++	.event_descs		= gnr_uncore_imc_events,
++};
++
+ static struct intel_uncore_type gnr_uncore_pciex8 = {
+ 	SPR_UNCORE_PCI_COMMON_FORMAT(),
+ 	.name			= "pciex8",
+@@ -6654,7 +6680,7 @@ static struct intel_uncore_type *gnr_unc
+ 	NULL,
+ 	&spr_uncore_pcu,
+ 	&gnr_uncore_ubox,
+-	&spr_uncore_imc,
++	&gnr_uncore_imc,
+ 	NULL,
+ 	&gnr_uncore_upi,
+ 	NULL,
 
 
