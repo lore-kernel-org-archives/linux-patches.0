@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3AF284881;
-	Mon, 23 Mar 2026 16:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC33537B03B;
+	Mon, 23 Mar 2026 16:19:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282792; cv=none; b=T5va9miuPncwEiB1xbVq6Nbso7msFJJCNtRYxihwRDrV/gqPY4B9X+DFoMylp619d5PYB6a2pUcIfgmEU8mgSmvkxAREitEmDNk+WWk1/AcpYc7p43MQlntenA3eZtNCpWUw73lsI1HapfydE1EiP+hqpMJRQonMirGEFMtM+40=
+	t=1774282794; cv=none; b=OKxTCLQ5N/0iGQLWPZI9ORurA4kgsu72kOWJ1mhTM+nwURL0GG0j5xl4fNHlKxPhcQyIdr1FiTIGUpgzdUgF5qAOFaUU0AH7ZlC9MaYq9WeQnd0quR03PxnaxHImQGr6aKS9TyV0cb+FR4le95K/G+ij1sogz5ZQjuDsieLJ3nU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282792; c=relaxed/simple;
-	bh=FlliSh2lwpYz+itSZUCN2NQxFv4q4Ybg+iAUImnx5do=;
+	s=arc-20240116; t=1774282794; c=relaxed/simple;
+	bh=Tc070GCS/F2sDLOD5vpdnsDhr0/Xhv6nejzaJojK5yE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=evwUZJEeRrvw8VbOagS7o55CCYmHiV+jZ9fvW+pUp93Yt4lTqFXsI/rdpZbITRGROHZqp1jeyqnTr3a1Je1t5nvpvB9vWxpr/DCYlH6yNxGES+6MVAi4bDGfkKQREyliQ8HdPEACjVS23qM9agd8D0ceoAGte7oSavEWN85zHCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eAgqQMb1; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p9hBQrrxdEE5gWjmMkTGFkp1x3y5jCE3uqfmNE0fnWYAl+p5CZN2D814mFQO1qvtbxc7I0Su3wyjeekzNEYVcmKL10Dqn473KAl+FhgXWEJxIvGfc1gi+/ko7Tbv5bfN15jiXTO3zn4BvrgDYh6uE7MYkWXSM4IjS9Aywb2o92g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=la1jPUuv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eAgqQMb1"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F4EBC4CEF7;
-	Mon, 23 Mar 2026 16:19:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="la1jPUuv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C840C4CEF7;
+	Mon, 23 Mar 2026 16:19:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282792;
-	bh=FlliSh2lwpYz+itSZUCN2NQxFv4q4Ybg+iAUImnx5do=;
+	s=korg; t=1774282794;
+	bh=Tc070GCS/F2sDLOD5vpdnsDhr0/Xhv6nejzaJojK5yE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAgqQMb1ot4YYMKTok+uy63+gDFtCEQcDpBYbYmlAbBmFMQK9G1g/7eKfCs9nWQ6d
-	 NGNOUkmSTEbM+IT45m+8jQ0/X9Hj2Acy2Atql+CgbTa/iJh4f5jYLBXlK5rHf5WGD8
-	 b+60FV9OkcRw2/FNsc94Y53vML/cheBZxmQE4QPc=
+	b=la1jPUuvb3BHdBbmpIhwZ4LXoJEnr7pBqTz2Ehr5qdCwQX7uC8dfJIUllsqvEcP2I
+	 CI2HeIV7HY8bze4TvSLQ3VhRL24/Jh/gNNTP6S6QnOEBB3xQP9Rv1rESxbZDe+eehg
+	 e5K3yITGQnQdNHWkEn0y0UGbyJC+0NhdwVoQMGis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 288/481] Bluetooth: L2CAP: Validate L2CAP_INFO_RSP payload length before access
-Date: Mon, 23 Mar 2026 14:44:30 +0100
-Message-ID: <20260323134532.131272013@linuxfoundation.org>
+	Oscar Santos <ossantos@redhat.com>,
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 289/481] smb: client: fix krb5 mount with username option
+Date: Mon, 23 Mar 2026 14:44:31 +0100
+Message-ID: <20260323134532.154001720@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -44,66 +47,73 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Lukas Johannes Möller <research@johannes-moeller.dev>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit dd815e6e3918dc75a49aaabac36e4f024d675101 upstream.
+commit 12b4c5d98cd7ca46d5035a57bcd995df614c14e1 upstream.
 
-l2cap_information_rsp() checks that cmd_len covers the fixed
-l2cap_info_rsp header (type + result, 4 bytes) but then reads
-rsp->data without verifying that the payload is present:
+Customer reported that some of their krb5 mounts were failing against
+a single server as the client was trying to mount the shares with
+wrong credentials.  It turned out the client was reusing SMB session
+from first mount to try mounting the other shares, even though a
+different username= option had been specified to the other mounts.
 
- - L2CAP_IT_FEAT_MASK calls get_unaligned_le32(rsp->data), which reads
-   4 bytes past the header (needs cmd_len >= 8).
+By using username mount option along with sec=krb5 to search for
+principals from keytab is supported by cifs.upcall(8) since
+cifs-utils-4.8.  So fix this by matching username mount option in
+match_session() even with Kerberos.
 
- - L2CAP_IT_FIXED_CHAN reads rsp->data[0], 1 byte past the header
-   (needs cmd_len >= 5).
+For example, the second mount below should fail with -ENOKEY as there
+is no 'foobar' principal in keytab (/etc/krb5.keytab).  The client
+ends up reusing SMB session from first mount to perform the second
+one, which is wrong.
 
-A truncated L2CAP_INFO_RSP with result == L2CAP_IR_SUCCESS triggers an
-out-of-bounds read of adjacent skb data.
+```
+$ ktutil
+ktutil:  add_entry -password -p testuser -k 1 -e aes256-cts
+Password for testuser@ZELDA.TEST:
+ktutil:  write_kt /etc/krb5.keytab
+ktutil:  quit
+$ klist -ke
+Keytab name: FILE:/etc/krb5.keytab
+KVNO Principal
+ ---- ----------------------------------------------------------------
+   1 testuser@ZELDA.TEST (aes256-cts-hmac-sha1-96)
+$ mount.cifs //w22-root2/scratch /mnt/1 -o sec=krb5,username=testuser
+$ mount.cifs //w22-root2/scratch /mnt/2 -o sec=krb5,username=foobar
+$ mount -t cifs | grep -Po 'username=\K\w+'
+testuser
+testuser
+```
 
-Guard each data access with the required payload length check.  If the
-payload is too short, skip the read and let the state machine complete
-with safe defaults (feat_mask and remote_fixed_chan remain zero from
-kzalloc), so the info timer cleanup and l2cap_conn_start() still run
-and the connection is not stalled.
-
-Fixes: 4e8402a3f884 ("[Bluetooth] Retrieve L2CAP features mask on connection setup")
+Reported-by: Oscar Santos <ossantos@redhat.com>
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Cc: David Howells <dhowells@redhat.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/client/connect.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4861,7 +4861,8 @@ static inline int l2cap_information_rsp(
- 
- 	switch (type) {
- 	case L2CAP_IT_FEAT_MASK:
--		conn->feat_mask = get_unaligned_le32(rsp->data);
-+		if (cmd_len >= sizeof(*rsp) + sizeof(u32))
-+			conn->feat_mask = get_unaligned_le32(rsp->data);
- 
- 		if (conn->feat_mask & L2CAP_FEAT_FIXED_CHAN) {
- 			struct l2cap_info_req req;
-@@ -4880,7 +4881,8 @@ static inline int l2cap_information_rsp(
+--- a/fs/smb/client/connect.c
++++ b/fs/smb/client/connect.c
+@@ -1909,6 +1909,10 @@ static int match_session(struct cifs_ses
+ 	case Kerberos:
+ 		if (!uid_eq(ctx->cred_uid, ses->cred_uid))
+ 			return 0;
++		if (strncmp(ses->user_name ?: "",
++			    ctx->username ?: "",
++			    CIFS_MAX_USERNAME_LEN))
++			return 0;
  		break;
- 
- 	case L2CAP_IT_FIXED_CHAN:
--		conn->remote_fixed_chan = rsp->data[0];
-+		if (cmd_len >= sizeof(*rsp) + sizeof(rsp->data[0]))
-+			conn->remote_fixed_chan = rsp->data[0];
- 		conn->info_state |= L2CAP_INFO_FEAT_MASK_REQ_DONE;
- 		conn->info_ident = 0;
- 
+ 	case NTLMv2:
+ 	case RawNTLMSSP:
 
 
