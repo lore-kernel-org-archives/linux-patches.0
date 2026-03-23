@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755043B4EB7;
-	Mon, 23 Mar 2026 15:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75EC2773F0;
+	Mon, 23 Mar 2026 15:10:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278631; cv=none; b=dzFXVRJaFmqvl5XcRnZT8J7XpKIrMld8jL+RyuZkBWn9VVuPycJD2hffTose/r+1dL7E4JlB/GM93WgT7ijb2CALCWoy/EfTZ3kBlQpxsbgQYa3xKrnm43r4hUKlKOrZDAS+4dYeCeIKzrZSwpzQ60SCi8TU+M2FaI+pvDMTCXw=
+	t=1774278634; cv=none; b=QiDFsbi8ngQW4Gis+6LnDFMjZofgHUCgTlKNfafHDp9HHfA1Rx+yD3XCzmHRY22JMCjc8NAETFJpPapRQubc3rMMcZFG+2m/8t8dRNpdbMQpZJXjGKk3+C6NUBMf3Jd6Y8Ely33jZ17hZxY+/BsxfetQ2BZjYfyR6W48K277eG4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278631; c=relaxed/simple;
-	bh=1eyP1xfxPtN+ldoI/lIaHc3mepvgqqt6nvQ/EpCQp0I=;
+	s=arc-20240116; t=1774278634; c=relaxed/simple;
+	bh=cUoBACioXoWfDG6t82y8lKtp7mFtVunPZ91RpRA+jag=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfkmVAZx4CHDsgLywu/10tJTIQ5z3X0o/tdelusvFAEFmWVPXncXb9UevMgwAsclgp/VFrxnm4zKCiyLTpbTHEwjlYNfb8ZdjuF+Cd8hmmE15JYKN8UN1t0Afv80CZXFin/d817hzK9GdG1gennDGhAl1eb9+USv9rOa8pKMwMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSK8aYnN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Bds6kMZU3OKFJxCCGYkzmU19Nqdb7NTcibt0vsYol8FxwyBkm8BUkdgSnWuo6anvcAdnzNk6YtXOnMxN8w05eqw6eRzbQ3OLZCu6NeHVl1Bs7i81YHe8T1VjZMOwz2gJG5dKqROA0HWwUmwd7UkPDmh7FI/S1YT0/RPrUsjE+vo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wCeLUF0H; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSK8aYnN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6FA4C4CEF7;
-	Mon, 23 Mar 2026 15:10:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wCeLUF0H"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C460C2BC9E;
+	Mon, 23 Mar 2026 15:10:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278631;
-	bh=1eyP1xfxPtN+ldoI/lIaHc3mepvgqqt6nvQ/EpCQp0I=;
+	s=korg; t=1774278634;
+	bh=cUoBACioXoWfDG6t82y8lKtp7mFtVunPZ91RpRA+jag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSK8aYnNcYU3024Xcjx2hl8//8iiEkx3NlhLi8hbfIiE3TJNo3Y/kEHvXoaSQAB6T
-	 kG4D+h25W3f/Fg2kcvSjH40XBKsKgwYowpuJ8XLdnDfhsLF9p7LTqpnvBS/sMJkw3t
-	 lntVkH+BTQ5b9XuQVLaDgPQ6qLzpAm/HgXziaZWs=
+	b=wCeLUF0Hyf4+Xib/M9FGsVyu71DAaiLh/FCqwdIX/xlBu5g6aEDA9A4yfsY16P9yu
+	 +MaKbDdjWy/fBP16cI36wKVXKoqWiuBqsAZFu2Un9yXpSp1dBwNZFtbfc/lVgmtXUL
+	 pKA0riXe8Uo/jG3dMNojDNmXRMXD/aSfHSdQGZyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Daniel Hodges <git@danielhodges.dev>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 367/567] ksmbd: call ksmbd_vfs_kern_path_end_removing() on some error paths
-Date: Mon, 23 Mar 2026 14:44:47 +0100
-Message-ID: <20260323134542.898819941@linuxfoundation.org>
+Subject: [PATCH 6.6 368/567] wifi: libertas: fix use-after-free in lbs_free_adapter()
+Date: Mon, 23 Mar 2026 14:44:48 +0100
+Message-ID: <20260323134542.925312208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,65 +51,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Daniel Hodges <git@danielhodges.dev>
 
-[ Upstream commit a09dc10d1353f0e92c21eae2a79af1c2b1ddcde8 ]
+[ Upstream commit 03cc8f90d0537fcd4985c3319b4fafbf2e3fb1f0 ]
 
-There are two places where ksmbd_vfs_kern_path_end_removing() needs to be
-called in order to balance what the corresponding successful call to
-ksmbd_vfs_kern_path_start_removing() has done, i.e. drop inode locks and
-put the taken references.  Otherwise there might be potential deadlocks
-and unbalanced locks which are caught like:
+The lbs_free_adapter() function uses timer_delete() (non-synchronous)
+for both command_timer and tx_lockup_timer before the structure is
+freed. This is incorrect because timer_delete() does not wait for
+any running timer callback to complete.
 
-BUG: workqueue leaked lock or atomic: kworker/5:21/0x00000000/7596
-     last function: handle_ksmbd_work
-2 locks held by kworker/5:21/7596:
- #0: ffff8881051ae448 (sb_writers#3){.+.+}-{0:0}, at: ksmbd_vfs_kern_path_locked+0x142/0x660
- #1: ffff888130e966c0 (&type->i_mutex_dir_key#3/1){+.+.}-{4:4}, at: ksmbd_vfs_kern_path_locked+0x17d/0x660
-CPU: 5 PID: 7596 Comm: kworker/5:21 Not tainted 6.1.162-00456-gc29b353f383b #138
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: ksmbd-io handle_ksmbd_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x44/0x5b
- process_one_work.cold+0x57/0x5c
- worker_thread+0x82/0x600
- kthread+0x153/0x190
- ret_from_fork+0x22/0x30
- </TASK>
+If a timer callback is executing when lbs_free_adapter() is called,
+the callback will access freed memory since lbs_cfg_free() frees the
+containing structure immediately after lbs_free_adapter() returns.
 
-Found by Linux Verification Center (linuxtesting.org).
+Both timer callbacks (lbs_cmd_timeout_handler and lbs_tx_lockup_handler)
+access priv->driver_lock, priv->cur_cmd, priv->dev, and other fields,
+which would all be use-after-free violations.
 
-Fixes: d5fc1400a34b ("smb/server: avoid deadlock when linking with ReplaceIfExists")
+Use timer_delete_sync() instead to ensure any running timer callback
+has completed before returning.
+
+This bug was introduced in commit 8f641d93c38a ("libertas: detect TX
+lockups and reset hardware") where del_timer() was used instead of
+del_timer_sync() in the cleanup path. The command_timer has had the
+same issue since the driver was first written.
+
+Fixes: 8f641d93c38a ("libertas: detect TX lockups and reset hardware")
+Fixes: 954ee164f4f4 ("[PATCH] libertas: reorganize and simplify init sequence")
 Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ ksmbd_vfs_kern_path_end_removing() call -> ksmbd_vfs_kern_path_unlock() ]
+Signed-off-by: Daniel Hodges <git@danielhodges.dev>
+Link: https://patch.msgid.link/20260206195356.15647-1-git@danielhodges.dev
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+[ del_timer() => timer_delete_sync() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    4 ++--
+ drivers/net/wireless/marvell/libertas/main.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6067,14 +6067,14 @@ static int smb2_create_link(struct ksmbd
- 				rc = -EINVAL;
- 				ksmbd_debug(SMB, "cannot delete %s\n",
- 					    link_name);
--				goto out;
- 			}
- 		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
--			goto out;
- 		}
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
-+		if (rc)
-+			goto out;
- 	}
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
+--- a/drivers/net/wireless/marvell/libertas/main.c
++++ b/drivers/net/wireless/marvell/libertas/main.c
+@@ -881,8 +881,8 @@ static void lbs_free_adapter(struct lbs_
+ {
+ 	lbs_free_cmd_buffer(priv);
+ 	kfifo_free(&priv->event_fifo);
+-	del_timer(&priv->command_timer);
+-	del_timer(&priv->tx_lockup_timer);
++	timer_delete_sync(&priv->command_timer);
++	timer_delete_sync(&priv->tx_lockup_timer);
+ 	del_timer(&priv->auto_deepsleep_timer);
+ }
+ 
 
 
