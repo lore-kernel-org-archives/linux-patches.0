@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 588BE3AEF50;
-	Mon, 23 Mar 2026 14:51:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E694323EA97;
+	Mon, 23 Mar 2026 14:51:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277493; cv=none; b=l0JiyWlrROd6yInmG5x0+bvnFOV1NAu6W+xa6OTRhapkAlcZdeDrhAX0aVwLrrsJcwxdRGq3Ga2oQz27wGrQ7dytA7yaa+3dwfl2OE/8G5LRmxYaJTFJXcFCHlDdgSArqTcG95OUeCKfUfsQ9Vkg6AfQwUECsRuZ9IvrmBkszb4=
+	t=1774277496; cv=none; b=lf8ZM9ZIpVHJMTG3Ptz2DIrCdSFHt8oSiDJZ/GGRFB+ea6PX6kY57h+1+CxVYYKyIg2b1OMJS6d5DkW1CjWiksqiVv8bjKv3hIv4N6k0DlYNt19jr6TRm2IhI3nkiQu51RIJi+4DWeDw1ucwChe2Nic0dPs3WZTJVaEsc4E0lfA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277493; c=relaxed/simple;
-	bh=4vxM1+lhVEZUefXpN7jBiUSVVn9mahxGnWOJeDlF0qs=;
+	s=arc-20240116; t=1774277496; c=relaxed/simple;
+	bh=5+vjtCXBqyvn6Q8TtJcxdve9UIaKLQOS+PLMP2EXONo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RZhfEgu7RjcC9VXeIoCHN0vyX0+ng0LqbNHCewrAF/bjfI5RS/L6K07rC9ZLgdONp0lWtceGOSEy+89c2vI3bBDqP3yHe2NT/w+fppD/Cn9GL86A++JZpme0vxpTCW+Qf5RLZWeO9proQXh57DpC1d2de5V4FFwNUfZmsZsYOj0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=UlPOmzGM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sHFn1mTolDY+hcjhDauaLxU3vm/AZzQVK1l0A+vrk9CWfu197wQYFDXrgB9xZ08WOfnOcrmuFq174Yqax7fr8pSGgyflHXN8HspEsLO3ZauV2EwtfEoGl+Cc7uX01N6v21cYke2VMTsK7S1FnFFNwHtP2BGUaVDKCVOxxrsrWAQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+fJbs/a; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="UlPOmzGM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E38BEC4CEF7;
-	Mon, 23 Mar 2026 14:51:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+fJbs/a"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB56C4CEF7;
+	Mon, 23 Mar 2026 14:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277493;
-	bh=4vxM1+lhVEZUefXpN7jBiUSVVn9mahxGnWOJeDlF0qs=;
+	s=korg; t=1774277495;
+	bh=5+vjtCXBqyvn6Q8TtJcxdve9UIaKLQOS+PLMP2EXONo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UlPOmzGMO97zbwkMI84FruFpqjbjl2QZTzd86GRAtP8D8Wd/QA9RkDA6DNy/nJyYB
-	 2OPIjc8ktBXXjFh89Cp4xRnAGGXDnhmSUQq6iPNCayE6sjCLQ1zZuTrPbZDBMVNYwl
-	 BpH5m9M9NcjjfM80akHPD5M+gmF9veJJJjXZYAAA=
+	b=A+fJbs/auiiAkmNofdLEy8y372mNM6kgToHSZOWhSykpF+0ZgocH1N+HX3X4V0S0g
+	 uKmzQB3R9KFWCz29VWPfnvLMbGzDR5M+HakN8GaTtvhWrmqJFxX3+1eqYxagdk44tB
+	 P7uqXbL2fsBnU4GKeL3fQsQbyWvQnoPfFPH8+8jU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Naresh Solanki <naresh.solanki@9elements.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Xudong Hao <xudong.hao@intel.com>,
+	Dapeng Mi <dapeng1.mi@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 459/460] hwmon: (max6639) Fix pulses-per-revolution implementation
-Date: Mon, 23 Mar 2026 14:47:35 +0100
-Message-ID: <20260323134537.856835750@linuxfoundation.org>
+Subject: [PATCH 6.12 460/460] perf/x86/intel: Add missing branch counters constraint apply
+Date: Mon, 23 Mar 2026 14:47:36 +0100
+Message-ID: <20260323134537.878213120@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,66 +52,100 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Dapeng Mi <dapeng1.mi@linux.intel.com>
 
-[ Upstream commit e7bae9a7a5e1251ab414291f4e9304d702bb9221 ]
+[ Upstream commit 1d07bbd7ea36ea0b8dfa8068dbe67eb3a32d9590 ]
 
-The valid range for the pulses-per-revolution devicetree property is
-1..4. The current code checks for a range of 1..5. Fix it.
+When running the command:
+'perf record -e "{instructions,instructions:p}" -j any,counter sleep 1',
+a "shift-out-of-bounds" warning is reported on CWF.
 
-Declare the variable used to retrieve pulses per revolution from
-devicetree as u32 (unsigned) to match the of_property_read_u32() API.
+  UBSAN: shift-out-of-bounds in /kbuild/src/consumer/arch/x86/events/intel/lbr.c:970:15
+  shift exponent 64 is too large for 64-bit type 'long long unsigned int'
+  ......
+  intel_pmu_lbr_counters_reorder.isra.0.cold+0x2a/0xa7
+  intel_pmu_lbr_save_brstack+0xc0/0x4c0
+  setup_arch_pebs_sample_data+0x114b/0x2400
 
-The current code uses a postfix decrement when writing the pulses per
-resolution into the chip. This has no effect since the value is evaluated
-before it is decremented. Fix it by decrementing before evaluating the
-value.
+The warning occurs because the second "instructions:p" event, which
+involves branch counters sampling, is incorrectly programmed to fixed
+counter 0 instead of the general-purpose (GP) counters 0-3 that support
+branch counters sampling. Currently only GP counters 0-3 support branch
+counters sampling on CWF, any event involving branch counters sampling
+should be programed on GP counters 0-3. Since the counter index of fixed
+counter 0 is 32, it leads to the "src" value in below code is right
+shifted 64 bits and trigger the "shift-out-of-bounds" warning.
 
-Fixes: 7506ebcd662b ("hwmon: (max6639) : Configure based on DT property")
-Cc: Naresh Solanki <naresh.solanki@9elements.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+cnt = (src >> (order[j] * LBR_INFO_BR_CNTR_BITS)) & LBR_INFO_BR_CNTR_MASK;
+
+The root cause is the loss of the branch counters constraint for the
+new event in the branch counters sampling event group. Since it isn't
+yet part of the sibling list. This results in the second
+"instructions:p" event being programmed on fixed counter 0 incorrectly
+instead of the appropriate GP counters 0-3.
+
+To address this, we apply the missing branch counters constraint for
+the last event in the group. Additionally, we introduce a new function,
+`intel_set_branch_counter_constr()`, to apply the branch counters
+constraint and avoid code duplication.
+
+Fixes: 33744916196b ("perf/x86/intel: Support branch counters logging")
+Reported-by: Xudong Hao <xudong.hao@intel.com>
+Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260228053320.140406-2-dapeng1.mi@linux.intel.com
+Cc: stable@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/max6639.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/events/intel/core.c |   25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/hwmon/max6639.c b/drivers/hwmon/max6639.c
-index 0b0a9f4c2307f..154250099adf1 100644
---- a/drivers/hwmon/max6639.c
-+++ b/drivers/hwmon/max6639.c
-@@ -234,7 +234,7 @@ static int max6639_read_fan(struct device *dev, u32 attr, int channel,
- static int max6639_set_ppr(struct max6639_data *data, int channel, u8 ppr)
- {
- 	/* Decrement the PPR value and shift left by 6 to match the register format */
--	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), ppr-- << 6);
-+	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), --ppr << 6);
+--- a/arch/x86/events/intel/core.c
++++ b/arch/x86/events/intel/core.c
+@@ -4031,6 +4031,17 @@ end:
+ 	return start;
  }
  
- static int max6639_write_fan(struct device *dev, u32 attr, int channel,
-@@ -536,8 +536,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
- 
++static inline int intel_set_branch_counter_constr(struct perf_event *event,
++						  int *num)
++{
++	if (branch_sample_call_stack(event))
++		return -EINVAL;
++	if (branch_sample_counters(event))
++		(*num)++;
++
++	return 0;
++}
++
+ static int intel_pmu_hw_config(struct perf_event *event)
  {
- 	struct device *dev = &client->dev;
--	u32 i;
--	int err, val;
-+	u32 i, val;
-+	int err;
- 
- 	err = of_property_read_u32(child, "reg", &i);
- 	if (err) {
-@@ -552,8 +552,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
- 
- 	err = of_property_read_u32(child, "pulses-per-revolution", &val);
- 	if (!err) {
--		if (val < 1 || val > 5) {
--			dev_err(dev, "invalid pulses-per-revolution %d of %pOFn\n", val, child);
-+		if (val < 1 || val > 4) {
-+			dev_err(dev, "invalid pulses-per-revolution %u of %pOFn\n", val, child);
+ 	int ret = x86_pmu_hw_config(event);
+@@ -4090,17 +4101,19 @@ static int intel_pmu_hw_config(struct pe
+ 		 * group, which requires the extra space to store the counters.
+ 		 */
+ 		leader = event->group_leader;
+-		if (branch_sample_call_stack(leader))
++		if (intel_set_branch_counter_constr(leader, &num))
  			return -EINVAL;
+-		if (branch_sample_counters(leader))
+-			num++;
+ 		leader->hw.flags |= PERF_X86_EVENT_BRANCH_COUNTERS;
+ 
+ 		for_each_sibling_event(sibling, leader) {
+-			if (branch_sample_call_stack(sibling))
++			if (intel_set_branch_counter_constr(sibling, &num))
++				return -EINVAL;
++		}
++
++		/* event isn't installed as a sibling yet. */
++		if (event != leader) {
++			if (intel_set_branch_counter_constr(event, &num))
+ 				return -EINVAL;
+-			if (branch_sample_counters(sibling))
+-				num++;
  		}
- 		data->ppr[i] = val;
--- 
-2.51.0
-
+ 
+ 		if (num > fls(x86_pmu.lbr_counters))
 
 
