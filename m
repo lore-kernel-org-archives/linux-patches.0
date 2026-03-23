@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52443B27EB;
-	Mon, 23 Mar 2026 14:03:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7323B27D4;
+	Mon, 23 Mar 2026 14:03:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274580; cv=none; b=dkb3QUOURiBACuFQtf2OnZXx3TJ3wMxJ9c1kTdth4cnfu4ZkG62eVcJQw4oSRYhH+SlqNASrcQJVRNmtp2GrCSPAXD7IeD52D10U1TpePbw1cxV4/7OMzTyC2y+QBri/GDnvT6AxiU9mMc+Lf7IzF6SOUsbH22GXoQN2dVCJp20=
+	t=1774274584; cv=none; b=URHrZXHJYsazzWCj/DEuCeOumGvpHHcoAQqKYbNMiF6JU4FLLrCaigmWOsvhKQi/NgacN/xcbogM8g8YhymxHzrLIl3khixHXCIHdiAy4jS+EX2MtP+n5QcxzMaY8hh8pg+THRZU9nb7IRjmXcCPBs81xFDJQqU7o9hjCjOJqBc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274580; c=relaxed/simple;
-	bh=iW97RUDSYKs8j0+hIbtFzkZmmlKTI+YHWBVhblsJ+iM=;
+	s=arc-20240116; t=1774274584; c=relaxed/simple;
+	bh=NHW1td60Obg8bmTUhrgdQncsGfE5ctadAI1aS/DvIKY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bn5a8qd2O9t3aNnHiNMj4QE2F/D3Jt8l85ojNiw0XuVGKLmWWrCaBOvI1D3S879jM1sL48nkEMRz3Y1UO+ZsZdVU0jB7gTN8A3l7KSCwR8ulA3l8F5+CVdZsrf3tClSiignTS3jQsuoabuwLHxPRtyStxwrJeYN4b1j4oXowjCc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dtAwhXc5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sDQsbrjyXzasiFap5CwIte5O3Sc9oQy/KVPyWscrMDzPTYyr7g5RdNjj4o4DJ35W/AHTo4hEWsdh8S2ltiEOcozrsn7Hx/Bn7dcBFZxdYZUx6mSMz+alR7oG1uRgpCWt8bP33YEfc3AyUQM9TLeHXVgm1IpS743PVaa4eEy2k5E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iTpnUCCU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dtAwhXc5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF45C4CEF7;
-	Mon, 23 Mar 2026 14:03:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iTpnUCCU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA4DC4CEF7;
+	Mon, 23 Mar 2026 14:03:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274580;
-	bh=iW97RUDSYKs8j0+hIbtFzkZmmlKTI+YHWBVhblsJ+iM=;
+	s=korg; t=1774274584;
+	bh=NHW1td60Obg8bmTUhrgdQncsGfE5ctadAI1aS/DvIKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dtAwhXc5btB9pUyWu5+jV0ezy5zqOnnALqms3VGmIvCzt5s1V2CnyG24tmNupZFm9
-	 FPqxffZ3hqAPhARe7TRByriCT2hMN567JpQcg90uFm7fNPp3wAk9+tVAZVLSIclSBx
-	 X5B2yrcdo8x+Nsfh/WWfp41srm/4ggeC11qHi7MM=
+	b=iTpnUCCUqOz4hlh1I/851M9vkmu484s6U5ht09ccdUSSqi6y+57vvb877Jm7qtwIq
+	 zVVcsvG8nr9PewW1RBJSlQLE27mNvvfmGjP0Av9bNVfhsnfY5i9P3RpQNvARFQbjik
+	 NGLqB61jEBNEYPz9k2818kp+m/l5fjw2v0AgYPw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Brost <matthew.brost@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 043/212] drm/xe/sync: Fix user fence leak on alloc failure
-Date: Mon, 23 Mar 2026 14:44:24 +0100
-Message-ID: <20260323134505.127936350@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Christian Brauner <brauner@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.18 044/212] nsfs: tighten permission checks for ns iteration ioctls
+Date: Mon, 23 Mar 2026 14:44:25 +0100
+Message-ID: <20260323134505.158619792@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,42 +52,80 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuicheng Lin <shuicheng.lin@intel.com>
+From: Christian Brauner <brauner@kernel.org>
 
-[ Upstream commit 0879c3f04f67e2a1677c25dcc24669ce21eb6a6c ]
+[ Upstream commit e6b899f08066e744f89df16ceb782e06868bd148 ]
 
-When dma_fence_chain_alloc() fails, properly release the user fence
-reference to prevent a memory leak.
+Even privileged services should not necessarily be able to see other
+privileged service's namespaces so they can't leak information to each
+other. Use may_see_all_namespaces() helper that centralizes this policy
+until the nstree adapts.
 
-Fixes: 0995c2fc39b0 ("drm/xe: Enforce correct user fence signaling order using")
-Cc: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Matthew Brost <matthew.brost@intel.com>
-Link: https://patch.msgid.link/20260219233516.2938172-6-shuicheng.lin@intel.com
-(cherry picked from commit a5d5634cde48a9fcd68c8504aa07f89f175074a0)
-Cc: stable@vger.kernel.org
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://patch.msgid.link/20260226-work-visibility-fixes-v1-1-d2c2853313bd@kernel.org
+Fixes: a1d220d9dafa ("nsfs: iterate through mount namespaces")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Cc: stable@kernel.org # v6.12+
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_sync.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/nsfs.c                 |   13 +++++++++++++
+ include/linux/ns_common.h |    2 ++
+ kernel/nscommon.c         |    6 ++++++
+ 3 files changed, 21 insertions(+)
 
---- a/drivers/gpu/drm/xe/xe_sync.c
-+++ b/drivers/gpu/drm/xe/xe_sync.c
-@@ -206,8 +206,10 @@ int xe_sync_entry_parse(struct xe_device
- 			if (XE_IOCTL_DBG(xe, IS_ERR(sync->ufence)))
- 				return PTR_ERR(sync->ufence);
- 			sync->ufence_chain_fence = dma_fence_chain_alloc();
--			if (!sync->ufence_chain_fence)
--				return -ENOMEM;
-+			if (!sync->ufence_chain_fence) {
-+				err = -ENOMEM;
-+				goto free_sync;
-+			}
- 			sync->ufence_syncobj = ufence_syncobj;
- 		}
+--- a/fs/nsfs.c
++++ b/fs/nsfs.c
+@@ -194,6 +194,17 @@ static bool nsfs_ioctl_valid(unsigned in
+ 	return false;
+ }
  
++static bool may_use_nsfs_ioctl(unsigned int cmd)
++{
++	switch (_IOC_NR(cmd)) {
++	case _IOC_NR(NS_MNT_GET_NEXT):
++		fallthrough;
++	case _IOC_NR(NS_MNT_GET_PREV):
++		return may_see_all_namespaces();
++	}
++	return true;
++}
++
+ static long ns_ioctl(struct file *filp, unsigned int ioctl,
+ 			unsigned long arg)
+ {
+@@ -209,6 +220,8 @@ static long ns_ioctl(struct file *filp,
+ 
+ 	if (!nsfs_ioctl_valid(ioctl))
+ 		return -ENOIOCTLCMD;
++	if (!may_use_nsfs_ioctl(ioctl))
++		return -EPERM;
+ 
+ 	ns = get_proc_ns(file_inode(filp));
+ 	switch (ioctl) {
+--- a/include/linux/ns_common.h
++++ b/include/linux/ns_common.h
+@@ -144,6 +144,8 @@ void __ns_common_free(struct ns_common *
+ 
+ #define ns_common_free(__ns) __ns_common_free(to_ns_common((__ns)))
+ 
++bool may_see_all_namespaces(void);
++
+ static __always_inline __must_check bool __ns_ref_put(struct ns_common *ns)
+ {
+ 	return refcount_dec_and_test(&ns->__ns_ref);
+--- a/kernel/nscommon.c
++++ b/kernel/nscommon.c
+@@ -75,3 +75,9 @@ void __ns_common_free(struct ns_common *
+ {
+ 	proc_free_inum(ns->inum);
+ }
++
++bool may_see_all_namespaces(void)
++{
++	return (task_active_pid_ns(current) == &init_pid_ns) &&
++	       ns_capable_noaudit(init_pid_ns.user_ns, CAP_SYS_ADMIN);
++}
 
 
