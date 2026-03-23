@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43DD38837F;
-	Mon, 23 Mar 2026 14:55:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 015E32D9ECB;
+	Mon, 23 Mar 2026 14:55:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277726; cv=none; b=Jyxfxj5rBtAWmj9GkeomWQjkZYCvywzkIMgGQZskZqZ7YzynPp30vF5Z2HPqeo5TZ/SiCGRj4u9+WfSr+wVZwLBxuucA3H1JyyUSArddFxy2pCIWpLSTXmRf4doTelG+aSqu2woy6ub5GJGGA/98Yx1vKES6tM6DxwjktpJg808=
+	t=1774277729; cv=none; b=ZrU1fEEYbB0QZREc+5PdoVSs7g42MOMfFzXfXKkOn0AeZeW7RNUKE7vhlYSV1ECS+Qt44Dv/ZxMGKt6HeWfETGeIfPv6HdkLdND6jErVe0touFNlH5yvWAySdEzWlMbC0Ke1MeTiIanWtAK5bBSTKwf2ml6eh4DCxS0Tgq2Qbvk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277726; c=relaxed/simple;
-	bh=QEc9ZdWLkMBwjdkASUAy8PIJ4KbRYeu7Ki74GAYdhzs=;
+	s=arc-20240116; t=1774277729; c=relaxed/simple;
+	bh=fMT/Z88CzR3I7mI+fKdjnsrQzx0M9S1mqgL95r+V0ts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y+GzFV72GZuFfqxm3QPycZom04C0L04F3RGlYQ0J82fLJxbifvZO2S5+xOTGbqg5aNv7dEqTFekmFGvh8ToEpx3YorasmCMasAv1xPobQZ2mwWqp4YGKsrWeBFUMrGOhDAHPUzqdZ9QzB1S0bAqyRU1CemlW0W8V1mzlaA+7LLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ybk4pfq3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ldjbi8uO3YUg63IRfasuPton8S0vmiExzAaZOEB2iQdyoZsgJND0UaF+8ppnwbzNCw22YSANWKzXmiiKuFMgew+4RzYdz5MpuDYSW3k68eDBJyzmW2rE6CFlG66EZTky7BElQ8/Cu3RtPOjF0U23tfT54kfI9Oap1BzrE76l2Ig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DprGIM4Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ybk4pfq3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CA3C4CEF7;
-	Mon, 23 Mar 2026 14:55:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DprGIM4Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D6FAC4CEF7;
+	Mon, 23 Mar 2026 14:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277725;
-	bh=QEc9ZdWLkMBwjdkASUAy8PIJ4KbRYeu7Ki74GAYdhzs=;
+	s=korg; t=1774277728;
+	bh=fMT/Z88CzR3I7mI+fKdjnsrQzx0M9S1mqgL95r+V0ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybk4pfq3vRWUSV0O0L7OIrpfmyq3BldXf/SFFXY9EPnnDUM5XY/H0AAHrSrwbfV8q
-	 K9iXQYAcMlzDt/S7BSdVle90GIYxkJSvWEW4p6ehAAqJfcBrrbQ1SXGTHHURBFxTH1
-	 eD5yZdnas7w9nfXNcG6LW5fGWBWBiQy7GZ/Hc33I=
+	b=DprGIM4Za5P/Pxi1rpiKgm2mdJXHcptmukLNqRS+UZXbVQ/SqFOGVs74YWCueHaSg
+	 cgJ6k/C9Ims1+N3Vi+xyICkFVQQhae2NYTgCQkeN65MXp86bE2GJuDpHCDbW/v/FDG
+	 Ajh0UBX4S6KhDwMeIkRI+JXYUXyeypyijkQ2fLi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Hutchings <ben@decadent.org.uk>,
-	Gui-Dong Han <hanguidong02@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 082/567] hwmon: (max16065) Use READ/WRITE_ONCE to avoid compiler optimization induced race
-Date: Mon, 23 Mar 2026 14:40:02 +0100
-Message-ID: <20260323134535.857691315@linuxfoundation.org>
+Subject: [PATCH 6.6 083/567] ALSA: hda/conexant: Fix headphone jack handling on Acer Swift SF314
+Date: Mon, 23 Mar 2026 14:40:03 +0100
+Message-ID: <20260323134535.881567956@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,103 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gui-Dong Han <hanguidong02@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 007be4327e443d79c9dd9e56dc16c36f6395d208 ]
+[ Upstream commit 7bc0df86c2384bc1e2012a2c946f82305054da64 ]
 
-Simply copying shared data to a local variable cannot prevent data
-races. The compiler is allowed to optimize away the local copy and
-re-read the shared memory, causing a Time-of-Check Time-of-Use (TOCTOU)
-issue if the data changes between the check and the usage.
+Acer Swift SF314 (SSID 1025:136d) needs a bit of tweaks of the pin
+configurations for NID 0x16 and 0x19 to make the headphone / headset
+jack working.  NID 0x17 can remain as is for the working speaker, and
+the built-in mic is supported via SOF.
 
-To enforce the use of the local variable, use READ_ONCE() when reading
-the shared data and WRITE_ONCE() when updating it. Apply these macros to
-the three identified locations (curr_sense, adc, and fault) where local
-variables are used for error validation, ensuring the value remains
-consistent.
-
-Reported-by: Ben Hutchings <ben@decadent.org.uk>
-Closes: https://lore.kernel.org/all/6fe17868327207e8b850cf9f88b7dc58b2021f73.camel@decadent.org.uk/
-Fixes: f5bae2642e3d ("hwmon: Driver for MAX16065 System Manager and compatibles")
-Fixes: b8d5acdcf525 ("hwmon: (max16065) Use local variable to avoid TOCTOU")
-Cc: stable@vger.kernel.org
-Signed-off-by: Gui-Dong Han <hanguidong02@gmail.com>
-Link: https://lore.kernel.org/r/20260203121443.5482-1-hanguidong02@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221086
+Link: https://patch.msgid.link/20260217104414.62911-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/max16065.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ sound/pci/hda/patch_conexant.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/hwmon/max16065.c b/drivers/hwmon/max16065.c
-index 4c9e7892a73c1..43fbb9b26b102 100644
---- a/drivers/hwmon/max16065.c
-+++ b/drivers/hwmon/max16065.c
-@@ -151,27 +151,27 @@ static struct max16065_data *max16065_update_device(struct device *dev)
- 		int i;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index 192d13f829e19..355b26583eb4e 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -312,6 +312,7 @@ enum {
+ 	CXT_PINCFG_SWS_JS201D,
+ 	CXT_PINCFG_TOP_SPEAKER,
+ 	CXT_FIXUP_HP_A_U,
++	CXT_FIXUP_ACER_SWIFT_HP,
+ };
  
- 		for (i = 0; i < data->num_adc; i++)
--			data->adc[i]
--			  = max16065_read_adc(client, MAX16065_ADC(i));
-+			WRITE_ONCE(data->adc[i],
-+				   max16065_read_adc(client, MAX16065_ADC(i)));
+ /* for hda_fixup_thinkpad_acpi() */
+@@ -1028,6 +1029,14 @@ static const struct hda_fixup cxt_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = cxt_fixup_hp_a_u,
+ 	},
++	[CXT_FIXUP_ACER_SWIFT_HP] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x16, 0x0321403f }, /* Headphone */
++			{ 0x19, 0x40f001f0 }, /* Mic */
++			{ }
++		},
++	},
+ };
  
- 		if (data->have_current) {
--			data->adc[MAX16065_NUM_ADC]
--			  = max16065_read_adc(client, MAX16065_CSP_ADC);
--			data->curr_sense
--			  = i2c_smbus_read_byte_data(client,
--						     MAX16065_CURR_SENSE);
-+			WRITE_ONCE(data->adc[MAX16065_NUM_ADC],
-+				   max16065_read_adc(client, MAX16065_CSP_ADC));
-+			WRITE_ONCE(data->curr_sense,
-+				   i2c_smbus_read_byte_data(client, MAX16065_CURR_SENSE));
- 		}
- 
- 		for (i = 0; i < 2; i++)
--			data->fault[i]
--			  = i2c_smbus_read_byte_data(client, MAX16065_FAULT(i));
-+			WRITE_ONCE(data->fault[i],
-+				   i2c_smbus_read_byte_data(client, MAX16065_FAULT(i)));
- 
- 		/*
- 		 * MAX16067 and MAX16068 have separate undervoltage and
- 		 * overvoltage alarm bits. Squash them together.
- 		 */
- 		if (data->chip == max16067 || data->chip == max16068)
--			data->fault[0] |= data->fault[1];
-+			WRITE_ONCE(data->fault[0],
-+				   data->fault[0] | data->fault[1]);
- 
- 		data->last_updated = jiffies;
- 		data->valid = true;
-@@ -185,7 +185,7 @@ static ssize_t max16065_alarm_show(struct device *dev,
- {
- 	struct sensor_device_attribute_2 *attr2 = to_sensor_dev_attr_2(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int val = data->fault[attr2->nr];
-+	int val = READ_ONCE(data->fault[attr2->nr]);
- 
- 	if (val < 0)
- 		return val;
-@@ -203,7 +203,7 @@ static ssize_t max16065_input_show(struct device *dev,
- {
- 	struct sensor_device_attribute *attr = to_sensor_dev_attr(da);
- 	struct max16065_data *data = max16065_update_device(dev);
--	int adc = data->adc[attr->index];
-+	int adc = READ_ONCE(data->adc[attr->index]);
- 
- 	if (unlikely(adc < 0))
- 		return adc;
-@@ -216,7 +216,7 @@ static ssize_t max16065_current_show(struct device *dev,
- 				     struct device_attribute *da, char *buf)
- {
- 	struct max16065_data *data = max16065_update_device(dev);
--	int curr_sense = data->curr_sense;
-+	int curr_sense = READ_ONCE(data->curr_sense);
- 
- 	if (unlikely(curr_sense < 0))
- 		return curr_sense;
+ static const struct hda_quirk cxt5045_fixups[] = {
+@@ -1077,6 +1086,7 @@ static const struct hda_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x0543, "Acer Aspire One 522", CXT_FIXUP_STEREO_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x054c, "Acer Aspire 3830TG", CXT_FIXUP_ASPIRE_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x054f, "Acer Aspire 4830T", CXT_FIXUP_ASPIRE_DMIC),
++	SND_PCI_QUIRK(0x1025, 0x136d, "Acer Swift SF314", CXT_FIXUP_ACER_SWIFT_HP),
+ 	SND_PCI_QUIRK(0x103c, 0x8079, "HP EliteBook 840 G3", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x807C, "HP EliteBook 820 G3", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x80FD, "HP ProBook 640 G2", CXT_FIXUP_HP_DOCK),
 -- 
 2.51.0
 
