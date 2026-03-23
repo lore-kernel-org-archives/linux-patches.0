@@ -1,41 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8413AC0C9;
-	Mon, 23 Mar 2026 13:54:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2888366570;
+	Mon, 23 Mar 2026 13:54:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274081; cv=none; b=qoOMJj7gMbnUqRp6Z7Nc3xEtOR3PtV26No8EjksM62XhsrLJjFZxwSJPaEyzfx8LEvKT6xWKv0MAkPL3SLihCHUZF4MzLj/n/jjlPteZfLs0v65sCBq3GuG5h2VGpU2OPj5KGMhEsPi7EZoaT5W4HAYMTwYyBhRLTs/drdzkIrA=
+	t=1774274085; cv=none; b=HNrgTKS2U2YA5X+vkjilYNGktsmFZVvVTi25zevjVoLg/8a7ZRldq6zdI+ezhGSzY9KQbCiw4UjlL7M31hKdlz0RUJFNseAHeE9+eN08JXETzpLVsyA9k7eoR5oxPV6B3vfehhoOo6jgeBv0V+LH0B02zl2izIG2iUpcyyNYBwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274081; c=relaxed/simple;
-	bh=6QsYzCe1fLgn5VJpJiKn0Qkq5/zdC02/xtN7S/5La3k=;
+	s=arc-20240116; t=1774274085; c=relaxed/simple;
+	bh=Cty8iNt7seko30I2NUMwJzu7Hm7itQmB8jF5N6e+WVo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Uh1msDF9tTQK7BGLRYVqc9VFrmNZ2wiSPMaVTBTiUei/OjGmvbjU7kjwQ4+9AROuBZbVC1peULlQPb60Rm9p2h4jIEIlErUskRIfCpN+xB+AhTzrJzNWMFVVN0iDZw+pUWEGr1EWHpvJI+1/IN7+ogZRoOKJeJyshK2tjgRSbHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f3tamu2t; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XyFzZ4SdXAkP2zwhclGE7O+wAzRmXizK1OQrYjfBW3Ky2dCxFQjMWLSzj4mHTPQzy2zP7BVSFo5y5OOxWdsVWoduaMlncHbrcXRcSMTLpWyhwO2t6LkawmHo/isL7GQ5s6cqkMQeceB4YYwuPzKuF1Yob4+MCQ8wEgkI2K4q920=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tHATO/il; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f3tamu2t"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 545DAC4CEF7;
-	Mon, 23 Mar 2026 13:54:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tHATO/il"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6522DC2BCB1;
+	Mon, 23 Mar 2026 13:54:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274081;
-	bh=6QsYzCe1fLgn5VJpJiKn0Qkq5/zdC02/xtN7S/5La3k=;
+	s=korg; t=1774274084;
+	bh=Cty8iNt7seko30I2NUMwJzu7Hm7itQmB8jF5N6e+WVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3tamu2tZ4TJMl87/hLlLlQzRvBP68xiXnbS7nCBzggDVXTXwWvNPuTMaXEUh/FIR
-	 7lHu+jtw76peY1FtYuud2n4nvLyPhceZ9GGjaCgI2iW0J9EJsFSHlhfOxTD71sGf5J
-	 4fhRsgQNXJ9AWeuaGqRe1V6cEcrvxJNOQvbx3FVc=
+	b=tHATO/ilTqf7O9gQpDQJjli6N6PNKSYrIHzTL5sjuJFnC4acqgoZ2+c0KP4rRgdi+
+	 aAUqMEcrM/pn17p6T/etcye3CGtlGLpkGT20yaHJOK2AChUkO7I4nQQ9P0b5pXI/hG
+	 UB19hbkV3ZzhZZxQNcYKa/iOnaYPqWzumoMjD394=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	=?UTF-8?q?Sven=20P=C3=BCschel?= <s.pueschel@pengutronix.de>,
-	Matthew Wilcox <willy@infradead.org>,
-	Sumit Garg <sumit.garg@oss.qualcomm.com>,
-	Jens Wiklander <jens.wiklander@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 103/220] tee: shm: Remove refcounting of kernel pages
-Date: Mon, 23 Mar 2026 14:44:40 +0100
-Message-ID: <20260323134507.856329896@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 077/220] drm/amdgpu/mmhub3.0.2: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:44:14 +0100
+Message-ID: <20260323134507.029206743@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -48,97 +44,40 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Wilcox <willy@infradead.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 08d9a4580f71120be3c5b221af32dca00a48ceb0 ]
+commit e5e6d67b1ce9764e67aef2d0eef9911af53ad99a upstream.
 
-Earlier TEE subsystem assumed to refcount all the memory pages to be
-shared with TEE implementation to be refcounted. However, the slab
-allocations within the kernel don't allow refcounting kernel pages.
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-It is rather better to trust the kernel clients to not free pages while
-being shared with TEE implementation. Hence, remove refcounting of kernel
-pages from register_shm_helper() API.
-
-Fixes: b9c0e49abfca ("mm: decline to manipulate the refcount on a slab page")
-Reported-by: Marco Felsch <m.felsch@pengutronix.de>
-Reported-by: Sven Püschel <s.pueschel@pengutronix.de>
-Signed-off-by: Matthew Wilcox <willy@infradead.org>
-Co-developed-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Signed-off-by: Sumit Garg <sumit.garg@oss.qualcomm.com>
-Tested-by: Sven Püschel <s.pueschel@pengutronix.de>
-Signed-off-by: Jens Wiklander <jens.wiklander@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 1441f52c7f6ae6553664aa9e3e4562f6fc2fe8ea)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tee/tee_shm.c | 27 ---------------------------
- 1 file changed, 27 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tee/tee_shm.c b/drivers/tee/tee_shm.c
-index 4a47de4bb2e5c..898707ca21a8e 100644
---- a/drivers/tee/tee_shm.c
-+++ b/drivers/tee/tee_shm.c
-@@ -23,29 +23,11 @@ struct tee_shm_dma_mem {
- 	struct page *page;
- };
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
+@@ -108,7 +108,8 @@ mmhub_v3_0_2_print_l2_protection_fault_s
+ 		"MMVM_L2_PROTECTION_FAULT_STATUS:0x%08X\n",
+ 		status);
  
--static void shm_put_kernel_pages(struct page **pages, size_t page_count)
--{
--	size_t n;
--
--	for (n = 0; n < page_count; n++)
--		put_page(pages[n]);
--}
--
--static void shm_get_kernel_pages(struct page **pages, size_t page_count)
--{
--	size_t n;
--
--	for (n = 0; n < page_count; n++)
--		get_page(pages[n]);
--}
--
- static void release_registered_pages(struct tee_shm *shm)
- {
- 	if (shm->pages) {
- 		if (shm->flags & TEE_SHM_USER_MAPPED)
- 			unpin_user_pages(shm->pages, shm->num_pages);
--		else
--			shm_put_kernel_pages(shm->pages, shm->num_pages);
- 
- 		kfree(shm->pages);
- 	}
-@@ -477,13 +459,6 @@ register_shm_helper(struct tee_context *ctx, struct iov_iter *iter, u32 flags,
- 		goto err_put_shm_pages;
- 	}
- 
--	/*
--	 * iov_iter_extract_kvec_pages does not get reference on the pages,
--	 * get a reference on them.
--	 */
--	if (iov_iter_is_kvec(iter))
--		shm_get_kernel_pages(shm->pages, num_pages);
--
- 	shm->offset = off;
- 	shm->size = len;
- 	shm->num_pages = num_pages;
-@@ -499,8 +474,6 @@ register_shm_helper(struct tee_context *ctx, struct iov_iter *iter, u32 flags,
- err_put_shm_pages:
- 	if (!iov_iter_is_kvec(iter))
- 		unpin_user_pages(shm->pages, shm->num_pages);
--	else
--		shm_put_kernel_pages(shm->pages, shm->num_pages);
- err_free_shm_pages:
- 	kfree(shm->pages);
- err_free_shm:
--- 
-2.51.0
-
+-	mmhub_cid = mmhub_client_ids_v3_0_2[cid][rw];
++	mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_v3_0_2) ?
++		mmhub_client_ids_v3_0_2[cid][rw] : NULL;
+ 	dev_err(adev->dev, "\t Faulty UTCL2 client ID: %s (0x%x)\n",
+ 		mmhub_cid ? mmhub_cid : "unknown", cid);
+ 	dev_err(adev->dev, "\t MORE_FAULTS: 0x%lx\n",
 
 
