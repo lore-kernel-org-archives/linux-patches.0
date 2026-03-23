@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 391ED21D00A;
-	Mon, 23 Mar 2026 14:12:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0995439890A;
+	Mon, 23 Mar 2026 14:13:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275179; cv=none; b=jkLQwaaQW0qLH1eVhVeOeb2ZV5Y+RoGkaW7Cs4r6nK+ayiqNExOM1fkGRUsg0GPrXUpV7TC4M9KKx0HhorARnr5Nu7Vx/Vkrbv/s+Cfc8prQsYSZ7SnjN6DUdqoMHaQKEKXE3wLt2UBdnTHk0TkSFT4UUm2S0vq4WoBCeaxL39M=
+	t=1774275182; cv=none; b=B/GI0l1dnZ2C554FN9AMIeYByYVSYqKj2w1ByunpiWvRHX4gb6imWzamzPyF5we6QoE6BGq65uMKQjPDaybquWKQLilsTEDLQC1tAWLlTFGCNyagldmjoZNVnQ5m9JoOvx1OgURBu53bG36RJkOyYLuRD9qUj/to6DWQnYagSdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275179; c=relaxed/simple;
-	bh=zciGad+s09/KHQKR1GJ2+Y61XM13IFgRRF7UV7xDbsI=;
+	s=arc-20240116; t=1774275182; c=relaxed/simple;
+	bh=RZwuk4o9SncI1tYyXlQ2f0kkAgdTtbl6Md+u40B4CaE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=liHkTLMbjuGgmGIRFyDkShevpfq/AMvDw+jdw+YHwVFO3N6SumjEl3Yh59q2LIL9rYStvCTxl3y5eKWqkLhuuyzBoGjyeu14iK+SpOEL1AbpDuONkdKPh0zCGtfwdkbvQaQdL+Y8AdAfwL8ihjgUnsytM55lpkZQemDcHiCUMkE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r3Pk8e78; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=o32iVbiO/34xJu+a2uZYm8+jw6RrjxbRWWTG0V9Swnu2g0NdhbsAqcvrq/VQaSJPlhiHEiaXOOcAfR2WYLxA/8Jy8tr9dJKPVypJ06Po6DNQDxM6/OWZy71afit1gJIoyq1tVJ4lJNqpZ/auD6f3tARhuOdFAWuRWohN2uJkKXk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGkj1Bvy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r3Pk8e78"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CD27C4CEF7;
-	Mon, 23 Mar 2026 14:12:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGkj1Bvy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CA1C4CEF7;
+	Mon, 23 Mar 2026 14:13:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275178;
-	bh=zciGad+s09/KHQKR1GJ2+Y61XM13IFgRRF7UV7xDbsI=;
+	s=korg; t=1774275181;
+	bh=RZwuk4o9SncI1tYyXlQ2f0kkAgdTtbl6Md+u40B4CaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3Pk8e78UUlLfCezQNFxqstiWjSitdXvsW9I6g8+anpXQm/npo2iNYIsqGjZhHLx2
-	 lDFSJNWBpw1DMCu0YFzWrP1TXYtUNjQU1P2qbCc0TfrciA9bMJ8NVDbo80v+O4J8+q
-	 YAXz64WKd+caMySEcA9eMchG2J8sGkpNdY1y+IIE=
+	b=pGkj1BvyKgzh4DjwtdOhANzy7m/O3xhLpo1F15KpQzO2SfikqcWV4jTPFhk5/xV2u
+	 BQnCyIx7fJ7jstLSl1E+55w+yByBuhQFuegRqE5Kz3+MCTQjbjt7JS5g0GtI0sLBE2
+	 FMatAXTtPrbgALLmeuHaExxxp0vyoag7maRxyYs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 013/481] btrfs: move btrfs_crc32c_final into free-space-cache.c
-Date: Mon, 23 Mar 2026 14:39:55 +0100
-Message-ID: <20260323134525.574672963@linuxfoundation.org>
+Subject: [PATCH 6.1 010/481] ALSA: usb-audio: Cap the packet size pre-calculations
+Date: Mon, 23 Mar 2026 14:39:52 +0100
+Message-ID: <20260323134525.505618300@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,57 +50,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 102f2640a346e84cb5c2d19805a9dd38a776013c ]
+[ Upstream commit 7fe8dec3f628e9779f1631576f8e693370050348 ]
 
-This is the only place this helper is used, take it out of ctree.h and
-move it into free-space-cache.c.
+We calculate the possible packet sizes beforehand for adaptive and
+synchronous endpoints, but we didn't take care of the max frame size
+for those pre-calculated values.  When a device or a bus limits the
+packet size, a high sample rate or a high number of channels may lead
+to the packet sizes that are larger than the given limit, which
+results in an error from the USB core at submitting URBs.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 511dc8912ae3 ("btrfs: fix incorrect key offset in error message in check_dev_extent_item()")
+As a simple workaround, just add the sanity checks of pre-calculated
+packet sizes to have the upper boundary of ep->maxframesize.
+
+Fixes: f0bd62b64016 ("ALSA: usb-audio: Improve frames size computation")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221076
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Link: https://patch.msgid.link/20260225085233.316306-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h            | 5 -----
- fs/btrfs/free-space-cache.c | 5 +++++
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ sound/usb/endpoint.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index bd84a8b774a68..96146b920bdd3 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -2827,11 +2827,6 @@ static inline u32 btrfs_crc32c(u32 crc, const void *address, unsigned length)
- 	return crc32c(crc, address, length);
- }
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 86a8624e8781e..8f486c5c938f2 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -1392,6 +1392,9 @@ int snd_usb_endpoint_set_params(struct snd_usb_audio *chip,
+ 		goto unlock;
+ 	}
  
--static inline void btrfs_crc32c_final(u32 crc, u8 *result)
--{
--	put_unaligned_le32(~crc, result);
--}
--
- static inline u64 btrfs_name_hash(const char *name, int len)
- {
-        return crc32c((u32)~1, name, len);
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index 75ad735322c4a..9f4dae426037b 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -48,6 +48,11 @@ static void bitmap_clear_bits(struct btrfs_free_space_ctl *ctl,
- 			      struct btrfs_free_space *info, u64 offset,
- 			      u64 bytes, bool update_stats);
- 
-+static void btrfs_crc32c_final(u32 crc, u8 *result)
-+{
-+	put_unaligned_le32(~crc, result);
-+}
++	ep->packsize[0] = min(ep->packsize[0], ep->maxframesize);
++	ep->packsize[1] = min(ep->packsize[1], ep->maxframesize);
 +
- static void __btrfs_remove_free_space_cache(struct btrfs_free_space_ctl *ctl)
- {
- 	struct btrfs_free_space *info;
+ 	/* calculate the frequency in 16.16 format */
+ 	ep->freqm = ep->freqn;
+ 	ep->freqshift = INT_MIN;
 -- 
 2.51.0
 
