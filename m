@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4575D23BCFD;
-	Mon, 23 Mar 2026 14:04:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DFCF37F8A0;
+	Mon, 23 Mar 2026 14:04:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274667; cv=none; b=arkW7mdflgBBcSAJ7v+t3//uDFkOk5XxKkdnZkvnn2l+DCwIz4JXqKrY2+3fgoGkvrlrgudnwfy/S5CNpkDUQ6FVagiZ8W0ZtARp+nD7cXMT0Exe5fDcVBY3KZRAalbvUCOo4jLUyrdsdfX8bO3Wo335ExHS5HgK4S6534q2Www=
+	t=1774274670; cv=none; b=bB1294L300i6t5EYPYQ9JQdS/cxrZ1EMc+eFRDtJlpwdzbA1ihumFUS+A7a+a0fT657e4SXnt5/FRQFzCCGK9zfGkRhIeSvOFmWGun3Uk1tT9toK2Jb8EPeooNE4HcUTlx8L8PkBvyf4Fwrjsu0u1P0oT/OMX7gOfbdGjHMYX3Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274667; c=relaxed/simple;
-	bh=PgaB0uceDATYatEzhCR59mT4oJPE7rowdup3pzCU5gI=;
+	s=arc-20240116; t=1774274670; c=relaxed/simple;
+	bh=b1PPCsrFx25rA4vir2uCA3xbpfg+r7juDLCOrs1dcdE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B2ePGhtuaeA8KhaXySyCPE/kk5WAjbk1Aa9F3b6vhyTMYEaQ23Ul3xZgMG/XzX1g5t7S4kX3OnZ7maKLDel5LZue5GQO8/dVgSCtUghEyDYKuKsFFe/GHyZfaPlz0FJoB/1TRuVlbon6HwdCWhkMr/dJ2SAmIYUDwJw1fKa/zl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N29Fe2EN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=bxFHyVmrxBHKDIri/T00gpa/Gnla/39I2Bdi+B5sFSTTCjcOJb79Q8HO56FY8U4lovF1QHQISgQi9xlapdNrwdaEyV1+MnIG0atLMeEz7ilGE7zWprYNlHOpDka8GfJAxLQ9yD60u4jNK/XgDu7RVsWsxn4MWVzxA+XAQl0sUTs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oVEcZnYE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N29Fe2EN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD54BC2BCB4;
-	Mon, 23 Mar 2026 14:04:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oVEcZnYE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D26CDC2BCB3;
+	Mon, 23 Mar 2026 14:04:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274667;
-	bh=PgaB0uceDATYatEzhCR59mT4oJPE7rowdup3pzCU5gI=;
+	s=korg; t=1774274670;
+	bh=b1PPCsrFx25rA4vir2uCA3xbpfg+r7juDLCOrs1dcdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N29Fe2ENG/YjelpC/WV2GIBv3NE0AAd3xcljUmBwjpYtHDg2KMjUn8p1no8eJIjdP
-	 wVpzgYu2uBP3Vnu+yoglJLQEEvZapz3vzg8D4M/DYgadCmJloRVutSH1q1Lm0Monjc
-	 IDMas3w43Tma1iord4Rm3TkM+Z66bvU/z+w8vKno=
+	b=oVEcZnYEiTUmHt7SJytF6ZdG+Qx1sf+V1tf01NiEBcCrdRZv3oEZrqwIfhG1Wc5Pm
+	 wls4rZw6BtK8EDJ8KAb/cC9Hj/9OOFMJf+B5kmTyATdO4sw5y240P7Bn7WykSXjPbE
+	 ES8Gy/AuqYGE6IS0L3kgZocYKFd2cQE7MTtF+g7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Bandal, Shankar" <shankar.bandal@intel.com>,
+	"Murthy, Shanth" <shanth.murthy@intel.com>,
 	stable <stable@kernel.org>,
-	Peng Zhang <zhangpeng.00@bytedance.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Maximilian Lueer <maximilian.lueer@lht.dlh.de>
-Subject: [PATCH 6.18 069/212] serial: 8250: always disable IRQ during THRE test
-Date: Mon, 23 Mar 2026 14:44:50 +0100
-Message-ID: <20260323134505.950339978@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.18 070/212] serial: 8250: Protect LCR write in shutdown
+Date: Mon, 23 Mar 2026 14:44:51 +0100
+Message-ID: <20260323134505.983276919@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -47,60 +47,65 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Peng Zhang <zhangpeng.00@bytedance.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 24b98e8664e157aff0814a0f49895ee8223f382f upstream.
+commit 59a33d83bbe6d73d2071d7ae21590b29faed0503 upstream.
 
-commit 039d4926379b ("serial: 8250: Toggle IER bits on only after irq
-has been set up") moved IRQ setup before the THRE test, in combination
-with commit 205d300aea75 ("serial: 8250: change lock order in
-serial8250_do_startup()") the interrupt handler can run during the
-test and race with its IIR reads. This can produce wrong THRE test
-results and cause spurious registration of the
-serial8250_backup_timeout timer. Unconditionally disable the IRQ for
-the short duration of the test and re-enable it afterwards to avoid
-the race.
+The 8250_dw driver needs to potentially perform very complex operations
+during LCR writes because its BUSY handling prevents updates to LCR
+while UART is BUSY (which is not fully under our control without those
+complex operations). Thus, LCR writes should occur under port's lock.
 
-Fixes: 039d4926379b ("serial: 8250: Toggle IER bits on only after irq has been set up")
-Depends-on: 205d300aea75 ("serial: 8250: change lock order in serial8250_do_startup()")
+Move LCR write under port's lock in serial8250_do_shutdown(). Also
+split the LCR RMW so that the logic is on a separate line for clarity.
+
+Reported-by: Bandal, Shankar <shankar.bandal@intel.com>
+Tested-by: Bandal, Shankar <shankar.bandal@intel.com>
+Tested-by: Murthy, Shanth <shanth.murthy@intel.com>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Peng Zhang <zhangpeng.00@bytedance.com>
-Reviewed-by: Muchun Song <songmuchun@bytedance.com>
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Tested-by: Maximilian Lueer <maximilian.lueer@lht.dlh.de>
-Link: https://patch.msgid.link/20260224121639.579404-1-alban.bedel@lht.dlh.de
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://patch.msgid.link/20260203171049.4353-2-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/tty/serial/8250/8250_port.c |   11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
 --- a/drivers/tty/serial/8250/8250_port.c
 +++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2147,8 +2147,7 @@ static void serial8250_THRE_test(struct
- 	if (up->port.flags & UPF_NO_THRE_TEST)
- 		return;
+@@ -2348,6 +2348,7 @@ static int serial8250_startup(struct uar
+ void serial8250_do_shutdown(struct uart_port *port)
+ {
+ 	struct uart_8250_port *up = up_to_u8250p(port);
++	u32 lcr;
  
--	if (port->irqflags & IRQF_SHARED)
--		disable_irq_nosync(port->irq);
-+	disable_irq(port->irq);
- 
+ 	serial8250_rpm_get(up);
  	/*
- 	 * Test for UARTs that do not reassert THRE when the transmitter is idle and the interrupt
-@@ -2170,8 +2169,7 @@ static void serial8250_THRE_test(struct
- 		serial_port_out(port, UART_IER, 0);
+@@ -2374,13 +2375,13 @@ void serial8250_do_shutdown(struct uart_
+ 			port->mctrl &= ~TIOCM_OUT2;
+ 
+ 		serial8250_set_mctrl(port, port->mctrl);
++
++		/* Disable break condition */
++		lcr = serial_port_in(port, UART_LCR);
++		lcr &= ~UART_LCR_SBC;
++		serial_port_out(port, UART_LCR, lcr);
  	}
  
--	if (port->irqflags & IRQF_SHARED)
--		enable_irq(port->irq);
-+	enable_irq(port->irq);
+-	/*
+-	 * Disable break condition and FIFOs
+-	 */
+-	serial_port_out(port, UART_LCR,
+-			serial_port_in(port, UART_LCR) & ~UART_LCR_SBC);
+ 	serial8250_clear_fifos(up);
  
- 	/*
- 	 * If the interrupt is not reasserted, or we otherwise don't trust the iir, setup a timer to
+ 	rsa_disable(up);
 
 
