@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2661F3B38B1;
-	Mon, 23 Mar 2026 15:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49E853B38BC;
+	Mon, 23 Mar 2026 15:09:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278562; cv=none; b=EZTULQTHzbZY08Izx7+Vq+9V4LG7vw6nVsOhiR3scF/jVeprR0RiB8uxa6+tbiG8pft3KijJq0gtlsCxyk2EVdXUsny/xGJ5pGEOzzcdZBT1ZAm2kkocxcZqKKFU2sT1jFaSHGn8l+fKw2E8cn2BFO6sfIzQPqlSmQ9D+s/FSPs=
+	t=1774278565; cv=none; b=jOyltN70ZtK1KkcpWnWP7G+NEeoc8SeIPolOU6R+n+ZxKZUw6jTSVUG1PeFoMe82aSRVOGfVMbI4eq+C+vYguL76mlGtxVx5aoxshqJ6KfveC3nXi6Xyfbewysrjfl04UiClYvjVXatZHSGi6vhLCo+M3S0G2FgKMesMpT5l6U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278562; c=relaxed/simple;
-	bh=yaDzKXMrbu4OQOK8F7xcC+SjwhPncXP4rAMoWKFcM3Y=;
+	s=arc-20240116; t=1774278565; c=relaxed/simple;
+	bh=+PPZewh7xgbfrkahx/fUymZmQXyBbwQTCfZ9IR2KjnI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=oyu3twazlN97glcF3g69QzyRmSk9I2EwMKoei/DnplBV0O7u/NzxeXJ21SazimBgn83rF7nuuZ3pYRsrw2G505ZDIIcE/aUlG0htRI4w+1JTxgPvBdDzBNcylzvtkzc92/IpmOkAI5Pd4hjYw82vw+hln9MNW6dFo4d+r/p3wsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LNrJd8KC; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QLjh+dcOfmh1Aw4mIcER7EZjaqxJ2yyEbvTszQhPLoMTe4RetI4/b45le0spfckJn/93VAYI4I6p524d2OHvIvHjY7qJnPg+RQ0KprDUvSGbtjk55gR2yXkFUemgtW3Ire4wAEKWWR4KPi27cA/ZnaOkJquhKTF5lvFvJYWGZp8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+sgwnBT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LNrJd8KC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8811C4CEF7;
-	Mon, 23 Mar 2026 15:09:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+sgwnBT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D5AC4CEF7;
+	Mon, 23 Mar 2026 15:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278562;
-	bh=yaDzKXMrbu4OQOK8F7xcC+SjwhPncXP4rAMoWKFcM3Y=;
+	s=korg; t=1774278565;
+	bh=+PPZewh7xgbfrkahx/fUymZmQXyBbwQTCfZ9IR2KjnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LNrJd8KC/mIPZTL0KIj9jxtEb3YjJpdR1DHfdbrF4EZtZPKhYOxSt/ENIav2rDh16
-	 O+M8dDxwQYK+W778VGjgaZbkkWbAp7l1qEQieP9gZqeozPDYXzPRmSQN9pYEHXFARR
-	 /s5GTvtoPIM/4FGsZLtZrk7x/QlZRf7oKl1r33DU=
+	b=m+sgwnBTNfkZlyCuSHAZzDYBUzTjM8WTvh0FKoFJYYzHD8GtoOpvtFS9svCWGefGj
+	 STmx9/1qIDDiKq9+RcpK3+D9j/hRx61LUfU7ZzQXrlDwO17z7/3yDbWzurTs5qBtpb
+	 LG51nF+E3/HOujlPm0LxC8Gb0IQA2d73YKD2OKPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.6 347/567] lib/bootconfig: check bounds before writing in __xbc_open_brace()
-Date: Mon, 23 Mar 2026 14:44:27 +0100
-Message-ID: <20260323134542.421239643@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	David Howells <dhowells@redhat.com>,
+	Henrique Carvalho <henrique.carvalho@suse.com>,
+	Tom Talpey <tom@talpey.com>,
+	linux-cifs@vger.kernel.org,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 348/567] smb: client: fix atomic open with O_DIRECT & O_SYNC
+Date: Mon, 23 Mar 2026 14:44:28 +0100
+Message-ID: <20260323134542.445302689@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,42 +54,102 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Paulo Alcantara <pc@manguebit.org>
 
-commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
+commit 4a7d2729dc99437dbb880a64c47828c0d191b308 upstream.
 
-The bounds check for brace_index happens after the array write.
-While the current call pattern prevents an actual out-of-bounds
-access (the previous call would have returned an error), the
-write-before-check pattern is fragile and would become a real
-out-of-bounds write if the error return were ever not propagated.
+When user application requests O_DIRECT|O_SYNC along with O_CREAT on
+open(2), CREATE_NO_BUFFER and CREATE_WRITE_THROUGH bits were missed in
+CREATE request when performing an atomic open, thus leading to
+potentially data integrity issues.
 
-Move the bounds check before the array write so the function is
-self-contained and safe regardless of caller behavior.
+Fix this by setting those missing bits in CREATE request when
+O_DIRECT|O_SYNC has been specified in cifs_do_create().
 
-Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
-
-Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Reviewed-by: David Howells <dhowells@redhat.com>
+Acked-by: Henrique Carvalho <henrique.carvalho@suse.com>
+Cc: Tom Talpey <tom@talpey.com>
+Cc: linux-cifs@vger.kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Josh Law <objecting@objecting.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/bootconfig.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/client/cifsglob.h |   11 +++++++++++
+ fs/smb/client/dir.c      |    1 +
+ fs/smb/client/file.c     |   18 +++---------------
+ 3 files changed, 15 insertions(+), 15 deletions(-)
 
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -534,9 +534,9 @@ static char *skip_spaces_until_newline(c
- static int __init __xbc_open_brace(char *p)
- {
- 	/* Push the last key as open brace */
--	open_brace[brace_index++] = xbc_node_index(last_parent);
- 	if (brace_index >= XBC_DEPTH_MAX)
- 		return xbc_parse_error("Exceed max depth of braces", p);
-+	open_brace[brace_index++] = xbc_node_index(last_parent);
- 
- 	return 0;
+--- a/fs/smb/client/cifsglob.h
++++ b/fs/smb/client/cifsglob.h
+@@ -20,6 +20,7 @@
+ #include <linux/utsname.h>
+ #include <linux/sched/mm.h>
+ #include <linux/netfs.h>
++#include <linux/fcntl.h>
+ #include "cifs_fs_sb.h"
+ #include "cifsacl.h"
+ #include <crypto/internal/hash.h>
+@@ -2354,4 +2355,14 @@ static inline bool cifs_ses_exiting(stru
+ 	return ret;
  }
+ 
++static inline int cifs_open_create_options(unsigned int oflags, int opts)
++{
++	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
++	if (oflags & O_SYNC)
++		opts |= CREATE_WRITE_THROUGH;
++	if (oflags & O_DIRECT)
++		opts |= CREATE_NO_BUFFER;
++	return opts;
++}
++
+ #endif	/* _CIFS_GLOB_H */
+--- a/fs/smb/client/dir.c
++++ b/fs/smb/client/dir.c
+@@ -304,6 +304,7 @@ static int cifs_do_create(struct inode *
+ 		goto out;
+ 	}
+ 
++	create_options |= cifs_open_create_options(oflags, create_options);
+ 	/*
+ 	 * if we're not using unix extensions, see if we need to set
+ 	 * ATTR_READONLY on the create call
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -459,15 +459,8 @@ static int cifs_nt_open(const char *full
+  *********************************************************************/
+ 
+ 	disposition = cifs_get_disposition(f_flags);
+-
+ 	/* BB pass O_SYNC flag through on file attributes .. BB */
+-
+-	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
+-	if (f_flags & O_SYNC)
+-		create_options |= CREATE_WRITE_THROUGH;
+-
+-	if (f_flags & O_DIRECT)
+-		create_options |= CREATE_NO_BUFFER;
++	create_options |= cifs_open_create_options(f_flags, create_options);
+ 
+ retry_open:
+ 	oparms = (struct cifs_open_parms) {
+@@ -1117,13 +1110,8 @@ cifs_reopen_file(struct cifsFileInfo *cf
+ 		rdwr_for_fscache = 1;
+ 
+ 	desired_access = cifs_convert_flags(cfile->f_flags, rdwr_for_fscache);
+-
+-	/* O_SYNC also has bit for O_DSYNC so following check picks up either */
+-	if (cfile->f_flags & O_SYNC)
+-		create_options |= CREATE_WRITE_THROUGH;
+-
+-	if (cfile->f_flags & O_DIRECT)
+-		create_options |= CREATE_NO_BUFFER;
++	create_options |= cifs_open_create_options(cfile->f_flags,
++						   create_options);
+ 
+ 	if (server->ops->get_lease_key)
+ 		server->ops->get_lease_key(inode, &cfile->fid);
 
 
