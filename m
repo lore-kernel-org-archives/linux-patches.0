@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9E3AD53C;
-	Mon, 23 Mar 2026 14:10:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF3433B2FF6;
+	Mon, 23 Mar 2026 14:10:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275012; cv=none; b=XxhG/nMYERsl0f3eYqeP6X1pSmXq2ElJTnBeAP7wYGQQWmRzfKt3BzFVf0l10iwOMHdgNFs2ICWtp33Qqe6iYFZP7CqQ7dDDaWraxQ+EvxcUcCrgENJ6NKBexSS/jM2z0YvbGJCxb/P9EBneDv+FYhIT5civfMHWZt9Mv4ebZuk=
+	t=1774275016; cv=none; b=VdBcEze3RjRbdER8PDS4v2C7oB6V8ZkQw7ZrPdjOE6af2gy6fe/O29qycX79BXPry5VLS2V3+s5Hg/7Cex6eYSxaqAAvPhmAHIF/AK5mfcHfrRS2kTzHtNPiQRilEebh/w/7Ipe624kgC0YUm+/9AeT4Wspz1vzUw5qnQzcMw7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275012; c=relaxed/simple;
-	bh=rnUWYyReqpmyprWjJiXXLl19KcUFJAjrhOO6GkrOmCw=;
+	s=arc-20240116; t=1774275016; c=relaxed/simple;
+	bh=mmTUF/szwNFwG27eAe8fDFW5Bp8e1hsNtnkNfYh2whc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7hhRifzlzvlbz+HpCwL6e/cEsTptt3d0kEHd8UNMhPYuSyT47cYRGCiQaegCJM0mzG71bpslHjmPdEJucA0J0ekCetb1QAnCcieNrMqqZEdDey0xiGpRLjdvm/EubEluYB3QA+Zy7pAdSzKLpdkJDpwn1470zEayM5npiR6ydY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpKNaaoM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F4r5ph+ZnBL/7bjo8gRapHvm9todsHTYxG67sXi5yxXKaVOJEhGtsZDi6LS3dDAkJE/Yw/QWMS3I8mEeE+JevQT2zRzdalENiCp+XkK+hJ2FSoaiY1eNclkdzIVxTEioYBpuGqYDPFjls1pnb4g1JsTu8ufPFIeVv8PrCTLqFbo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VUVNsLeC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpKNaaoM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26565C4CEF7;
-	Mon, 23 Mar 2026 14:10:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VUVNsLeC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C5F3C4CEF7;
+	Mon, 23 Mar 2026 14:10:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275012;
-	bh=rnUWYyReqpmyprWjJiXXLl19KcUFJAjrhOO6GkrOmCw=;
+	s=korg; t=1774275016;
+	bh=mmTUF/szwNFwG27eAe8fDFW5Bp8e1hsNtnkNfYh2whc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lpKNaaoMlJq6p62hZw97DYgKMxyzCGEvD1jlE1taEHXtI6WhTCLaluISZnQyfqcyg
-	 YyFhi/d3N8GKyueMK1LaefCz2J34dVMaf7SLEXMInfVeeHOLp74SHj6smmgYE/uQ2r
-	 VBpk1CvFwqD25VyEN84fFDGgPprBX1z0uAvlYH9E=
+	b=VUVNsLeCUDpj8UVOGT+7I8xdZT4sY76wBVl/sqSMzILk7thTSS/TqMxI5nKSL+UFt
+	 gi8v1T0ZpfBq8o/Lai1Szp3u4KsIH+HSmLHknjbI0u+U+ke0Kx6WChloT9J3Tn9hHl
+	 NL4/eUVRr+9ExXzpqAWClwebuXXiQJDDqa11+n3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Meyer <kyle.meyer@hpe.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Steve Wahl <steve.wahl@hpe.com>
-Subject: [PATCH 6.18 193/212] x86/platform/uv: Handle deconfigured sockets
-Date: Mon, 23 Mar 2026 14:46:54 +0100
-Message-ID: <20260323134509.827210610@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Sasha Levin <sashal@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.18 194/212] tracing: Fix trace_marker copy link list updates
+Date: Mon, 23 Mar 2026 14:46:55 +0100
+Message-ID: <20260323134509.857786007@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,53 +52,98 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kyle Meyer <kyle.meyer@hpe.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 1f6aa5bbf1d0f81a8a2aafc16136e7dd9a609ff3 upstream.
+[ Upstream commit 07183aac4a6828e474f00b37c9d795d0d99e18a7 ]
 
-When a socket is deconfigured, it's mapped to SOCK_EMPTY (0xffff). This causes
-a panic while allocating UV hub info structures.
+When the "copy_trace_marker" option is enabled for an instance, anything
+written into /sys/kernel/tracing/trace_marker is also copied into that
+instances buffer. When the option is set, that instance's trace_array
+descriptor is added to the marker_copies link list. This list is protected
+by RCU, as all iterations uses an RCU protected list traversal.
 
-Fix this by using NUMA_NO_NODE, allowing UV hub info structures to be
-allocated on valid nodes.
+When the instance is deleted, all the flags that were enabled are cleared.
+This also clears the copy_trace_marker flag and removes the trace_array
+descriptor from the list.
 
-Fixes: 8a50c5851927 ("x86/platform/uv: UV support for sub-NUMA clustering")
-Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Steve Wahl <steve.wahl@hpe.com>
+The issue is after the flags are called, a direct call to
+update_marker_trace() is performed to clear the flag. This function
+returns true if the state of the flag changed and false otherwise. If it
+returns true here, synchronize_rcu() is called to make sure all readers
+see that its removed from the list.
+
+But since the flag was already cleared, the state does not change and the
+synchronization is never called, leaving a possible UAF bug.
+
+Move the clearing of all flags below the updating of the copy_trace_marker
+option which then makes sure the synchronization is performed.
+
+Also use the flag for checking the state in update_marker_trace() instead
+of looking at if the list is empty.
+
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/ab2BmGL0ehVkkjKk@hpe.com
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Link: https://patch.msgid.link/20260318185512.1b6c7db4@gandalf.local.home
+Fixes: 7b382efd5e8a ("tracing: Allow the top level trace_marker to write into another instances")
+Reported-by: Sasha Levin <sashal@kernel.org>
+Closes: https://lore.kernel.org/all/20260225133122.237275-1-sashal@kernel.org/
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/apic/x2apic_uv_x.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ kernel/trace/trace.c |   19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
---- a/arch/x86/kernel/apic/x2apic_uv_x.c
-+++ b/arch/x86/kernel/apic/x2apic_uv_x.c
-@@ -1708,8 +1708,22 @@ static void __init uv_system_init_hub(vo
- 		struct uv_hub_info_s *new_hub;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -569,7 +569,7 @@ static bool update_marker_trace(struct t
+ 	lockdep_assert_held(&event_mutex);
  
- 		/* Allocate & fill new per hub info list */
--		new_hub = (bid == 0) ?  &uv_hub_info_node0
--			: kzalloc_node(bytes, GFP_KERNEL, uv_blade_to_node(bid));
-+		if (bid == 0) {
-+			new_hub = &uv_hub_info_node0;
-+		} else {
-+			int nid;
+ 	if (enabled) {
+-		if (!list_empty(&tr->marker_list))
++		if (tr->trace_flags & TRACE_ITER_COPY_MARKER)
+ 			return false;
+ 
+ 		list_add_rcu(&tr->marker_list, &marker_copies);
+@@ -577,10 +577,10 @@ static bool update_marker_trace(struct t
+ 		return true;
+ 	}
+ 
+-	if (list_empty(&tr->marker_list))
++	if (!(tr->trace_flags & TRACE_ITER_COPY_MARKER))
+ 		return false;
+ 
+-	list_del_init(&tr->marker_list);
++	list_del_rcu(&tr->marker_list);
+ 	tr->trace_flags &= ~TRACE_ITER_COPY_MARKER;
+ 	return true;
+ }
+@@ -10232,18 +10232,19 @@ static int __remove_instance(struct trac
+ 
+ 	list_del(&tr->list);
+ 
+-	/* Disable all the flags that were enabled coming in */
+-	for (i = 0; i < TRACE_FLAGS_MAX_SIZE; i++) {
+-		if ((1 << i) & ZEROED_TRACE_FLAGS)
+-			set_tracer_flag(tr, 1 << i, 0);
+-	}
+-
+ 	if (printk_trace == tr)
+ 		update_printk_trace(&global_trace);
+ 
++	/* Must be done before disabling all the flags */
+ 	if (update_marker_trace(tr, 0))
+ 		synchronize_rcu();
+ 
++	/* Disable all the flags that were enabled coming in */
++	for (i = 0; i < TRACE_FLAGS_MAX_SIZE; i++) {
++		if ((1 << i) & ZEROED_TRACE_FLAGS)
++			set_tracer_flag(tr, 1 << i, 0);
++	}
 +
-+			/*
-+			 * Deconfigured sockets are mapped to SOCK_EMPTY. Use
-+			 * NUMA_NO_NODE to allocate on a valid node.
-+			 */
-+			nid = uv_blade_to_node(bid);
-+			if (nid == SOCK_EMPTY)
-+				nid = NUMA_NO_NODE;
-+
-+			new_hub = kzalloc_node(bytes, GFP_KERNEL, nid);
-+		}
-+
- 		if (WARN_ON_ONCE(!new_hub)) {
- 			/* do not kfree() bid 0, which is statically allocated */
- 			while (--bid > 0)
+ 	tracing_set_nop(tr);
+ 	clear_ftrace_function_probes(tr);
+ 	event_trace_del_tracer(tr);
 
 
