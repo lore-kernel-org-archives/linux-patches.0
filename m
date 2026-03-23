@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188E8258CD9;
-	Mon, 23 Mar 2026 16:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03EE63BB9F0;
+	Mon, 23 Mar 2026 16:20:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282813; cv=none; b=gyhLFjHd26ktJMqE0DLQg73EVP5sWJcGOoAlBlMKqMlmq6z5J7mNIVZeH4grVIqCMotrqZ2ZQzwpYgwBehtjoFi1XTWvEN+BVLQDyvOjxjJ8M5Zgq0monH20b/Hj+6HD3miHtYkFlTdNRsZV01ZZnX+cSWSjuy1aXlOj6uhozro=
+	t=1774282816; cv=none; b=gX93+7eDrm9xeNjmhF5iMfTxnf0H0L4dUdQsl6fmm6n+JzR6zhkQAYQr91Be8mkLLTSvyKfhF6BXa87oHPcnzSB9G0JgkW5oR+4FWMTbAUDCiVQuIHtGQQfb0TKYSex2V/VBKE9SkOm5AeCMu61BS+JshQf7hfpUoI3Yu1y205g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282813; c=relaxed/simple;
-	bh=KzqajnVNTZy2KFYD/PQxSchJiMcwCyJ7Du2cKEBrO3M=;
+	s=arc-20240116; t=1774282816; c=relaxed/simple;
+	bh=bvnmXEIKaym+KN6GPDx7xt/VP0gY/Rh6SZRCtRML6Yo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CWQfrqUZ1z/x1DKZo1VMc9ucAAvRuxmA4YICI0jDDVdVy/hhrFn/JqS/nzamja2rJDRC506RNTG6PikF1g39Hc9Qqip05q8pNHn3cdNjpQOT1/U4jxfEAHoythjpuqkTMFk87PkRqvWv727XV+V9oSvuw/k/bj9bKyU3ZMcIYnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Fvp+CXu9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BeaIxugdLXg4/hmIxIk7NBMy087cZF+CaKiMQhPofdt3vTpldlFYAHK21DYl/i+QHAzcS6EekWVONgIZAKKfhbfobG7mNO3Gu2G7LrcwmQvokUtAN8e8C10sU6LQeAp6EZqpuf7F3l2jSfkYLvO8addFpZJGT3jXeHD613F11AQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DyWGWcy8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Fvp+CXu9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3856C4CEF7;
-	Mon, 23 Mar 2026 16:20:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DyWGWcy8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859EBC4CEF7;
+	Mon, 23 Mar 2026 16:20:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282813;
-	bh=KzqajnVNTZy2KFYD/PQxSchJiMcwCyJ7Du2cKEBrO3M=;
+	s=korg; t=1774282815;
+	bh=bvnmXEIKaym+KN6GPDx7xt/VP0gY/Rh6SZRCtRML6Yo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fvp+CXu9I64VjfBYPQ7TLkbzy1f5fahET9PC2R6LIbzlmQ6PjTVeO7HHwJOLLDz1S
-	 1KhRwQBuGY16FGt711WnZFiTatJTjN46payN2gf2sW7ky/xhoQk0lVr9pYipyRTen8
-	 KLcxayDumUasgQK486NJY0D5GDvNPMA33DxNusvE=
+	b=DyWGWcy8siDiG+LgSA4FQd1DfwG/HQ3HiUhjQPMokle6IOFCqaie3EJd+Xmgi2xbP
+	 3Isi0ix+nePP7CWK7/U29lM34kiygEKQvem/38T8tLXX4/Aazp0FK43Mem2I+/NJsx
+	 +QIkRU+J0c1nYzgc9t42FbvvkqgP8mTue2bQBJ54=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Ni <nichen@iscas.ac.cn>,
-	Alok Tiwari <alok.a.tiwari@oracle.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>
-Subject: [PATCH 6.1 296/481] mtd: rawnand: cadence: Fix error check for dma_alloc_coherent() in cadence_nand_init()
-Date: Mon, 23 Mar 2026 14:44:38 +0100
-Message-ID: <20260323134532.327225499@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	James Chapman <jchapman@katalix.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Qingfang Deng <dqfext@gmail.com>
+Subject: [PATCH 6.1 279/481] l2tp: do not use sock_hold() in pppol2tp_session_get_sock()
+Date: Mon, 23 Mar 2026 14:44:21 +0100
+Message-ID: <20260323134531.917194364@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,34 +53,108 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chen Ni <nichen@iscas.ac.cn>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 0410e1a4c545c769c59c6eda897ad5d574d0c865 upstream.
+commit 9b8c88f875c04d4cb9111bd5dd9291c7e9691bf5 upstream.
 
-Fix wrong variable used for error checking after dma_alloc_coherent()
-call. The function checks cdns_ctrl->dma_cdma_desc instead of
-cdns_ctrl->cdma_desc, which could lead to incorrect error handling.
+pppol2tp_session_get_sock() is using RCU, it must be ready
+for sk_refcnt being zero.
 
-Fixes: ec4ba01e894d ("mtd: rawnand: Add new Cadence NAND driver to MTD subsystem")
-Cc: stable@vger.kernel.org
-Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
-Reviewed-by: Alok Tiwari <alok.a.tiwari@oracle.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Commit ee40fb2e1eb5 ("l2tp: protect sock pointer of
+struct pppol2tp_session with RCU") was correct because it
+had a call_rcu(..., pppol2tp_put_sk) which was later removed in blamed commit.
+
+pppol2tp_recv() can use pppol2tp_session_get_sock() as well.
+
+Fixes: c5cbaef992d6 ("l2tp: refactor ppp socket/session relationship")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: James Chapman <jchapman@katalix.com>
+Reviewed-by: Guillaume Nault <gnault@redhat.com>
+Link: https://patch.msgid.link/20250826134435.1683435-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Qingfang Deng <dqfext@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/nand/raw/cadence-nand-controller.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/l2tp/l2tp_ppp.c |   25 ++++++++-----------------
+ 1 file changed, 8 insertions(+), 17 deletions(-)
 
---- a/drivers/mtd/nand/raw/cadence-nand-controller.c
-+++ b/drivers/mtd/nand/raw/cadence-nand-controller.c
-@@ -2837,7 +2837,7 @@ static int cadence_nand_init(struct cdns
- 						  sizeof(*cdns_ctrl->cdma_desc),
- 						  &cdns_ctrl->dma_cdma_desc,
- 						  GFP_KERNEL);
--	if (!cdns_ctrl->dma_cdma_desc)
-+	if (!cdns_ctrl->cdma_desc)
- 		return -ENOMEM;
+--- a/net/l2tp/l2tp_ppp.c
++++ b/net/l2tp/l2tp_ppp.c
+@@ -130,22 +130,12 @@ static const struct ppp_channel_ops pppo
  
- 	cdns_ctrl->buf_size = SZ_16K;
+ static const struct proto_ops pppol2tp_ops;
+ 
+-/* Retrieves the pppol2tp socket associated to a session.
+- * A reference is held on the returned socket, so this function must be paired
+- * with sock_put().
+- */
++/* Retrieves the pppol2tp socket associated to a session. */
+ static struct sock *pppol2tp_session_get_sock(struct l2tp_session *session)
+ {
+ 	struct pppol2tp_session *ps = l2tp_session_priv(session);
+-	struct sock *sk;
+ 
+-	rcu_read_lock();
+-	sk = rcu_dereference(ps->sk);
+-	if (sk)
+-		sock_hold(sk);
+-	rcu_read_unlock();
+-
+-	return sk;
++	return rcu_dereference(ps->sk);
+ }
+ 
+ /* Helpers to obtain tunnel/session contexts from sockets.
+@@ -211,14 +201,13 @@ end:
+ 
+ static void pppol2tp_recv(struct l2tp_session *session, struct sk_buff *skb, int data_len)
+ {
+-	struct pppol2tp_session *ps = l2tp_session_priv(session);
+-	struct sock *sk = NULL;
++	struct sock *sk;
+ 
+ 	/* If the socket is bound, send it in to PPP's input queue. Otherwise
+ 	 * queue it on the session socket.
+ 	 */
+ 	rcu_read_lock();
+-	sk = rcu_dereference(ps->sk);
++	sk = pppol2tp_session_get_sock(session);
+ 	if (!sk)
+ 		goto no_sock;
+ 
+@@ -528,13 +517,14 @@ static void pppol2tp_show(struct seq_fil
+ 	struct l2tp_session *session = arg;
+ 	struct sock *sk;
+ 
++	rcu_read_lock();
+ 	sk = pppol2tp_session_get_sock(session);
+ 	if (sk) {
+ 		struct pppox_sock *po = pppox_sk(sk);
+ 
+ 		seq_printf(m, "   interface %s\n", ppp_dev_name(&po->chan));
+-		sock_put(sk);
+ 	}
++	rcu_read_unlock();
+ }
+ 
+ static void pppol2tp_session_init(struct l2tp_session *session)
+@@ -1540,6 +1530,7 @@ static void pppol2tp_seq_session_show(st
+ 		port = ntohs(inet->inet_sport);
+ 	}
+ 
++	rcu_read_lock();
+ 	sk = pppol2tp_session_get_sock(session);
+ 	if (sk) {
+ 		state = sk->sk_state;
+@@ -1575,8 +1566,8 @@ static void pppol2tp_seq_session_show(st
+ 		struct pppox_sock *po = pppox_sk(sk);
+ 
+ 		seq_printf(m, "   interface %s\n", ppp_dev_name(&po->chan));
+-		sock_put(sk);
+ 	}
++	rcu_read_unlock();
+ }
+ 
+ static int pppol2tp_seq_show(struct seq_file *m, void *v)
 
 
