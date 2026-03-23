@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097DD23EAB2;
-	Mon, 23 Mar 2026 14:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20801239085;
+	Mon, 23 Mar 2026 14:45:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277154; cv=none; b=oXfBnXYEET2pz/FHlWOfqnOH8SzYh7szFX0EhEp0eFth1WdKMnVqCivSaUiOlZhuQ2/JtJfqxF9pG07Tp7ow3RwnpLW0N2nFLw8dhqWNxq5/WjO86AtK59vBVtvPm6chOj17cCw4wWJ1fSbTWoFrFhaaeX+YmsJYsvNq97Msk6k=
+	t=1774277157; cv=none; b=Fyx7lRzp2PXj3MXXVhgQZIsDgvH9Vabz2JjbXCc6/X7BUE7CVhLFifC4VDiQew5+WbCEqwSospzl0zLX/Z9VkT9J18I1spHSB8/bJ1SiwK/3varN36Pwy3VqiHSVo3TMTI47wbMS9XLz9VBICOS2I8tlM4fjJidFjUlFHofYPlg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277154; c=relaxed/simple;
-	bh=+ATbq+qCFPP4NibcyHkuqUbWD8ijHN4mFi3OMfEoKyw=;
+	s=arc-20240116; t=1774277157; c=relaxed/simple;
+	bh=0kwOgDzg0bl/lz2fgLcTYsn1oElrNyPa33NVaNLSM5Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RkKHsP/LnUTTm4n+0anzIBcRgU659o9+LNaOw3q804rrHPD8jzVj4/mOyOfNZCWRvk6fZ00trkgZx5qrsyhVdCpTbjnQCzDqkMwL+VxaY3awecKS7S2HXANfqG7D+yJGErWK2/Ky+K+eFEGLQRN12g31UFUFf/QslLIHFYdl+pk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=py7FehYS; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qUaPN3e3C/RjwpSEhk9hyeUyZ2hdodELaTEFvzB14ezGX3g/B6++vRcGdTlK10m8qGrRihPBnG8u3Jvs3oW5N+Qo9WIsSP3c2yVKImhgCjfeDyGLpF8RL5Hap+Sm+JJOCHIykQ9xlZaaHFQaaWq7PIp8NqQw+denJnj7QbBcQ0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MN/RO8+c; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="py7FehYS"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83BF0C2BC9E;
-	Mon, 23 Mar 2026 14:45:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MN/RO8+c"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A97C4CEF7;
+	Mon, 23 Mar 2026 14:45:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277153;
-	bh=+ATbq+qCFPP4NibcyHkuqUbWD8ijHN4mFi3OMfEoKyw=;
+	s=korg; t=1774277157;
+	bh=0kwOgDzg0bl/lz2fgLcTYsn1oElrNyPa33NVaNLSM5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=py7FehYSSrXGy12KTT6M7htK/DK7rA+DKUR62qd2LEjM/jNW3400HZMSRKJBmoJYU
-	 wDlJj+S1fX3Al+cyGithnqP3fq6UwZf/zAn5XV2qxDex/iyVHKEQ7zzZZNg5p18s+k
-	 G8lygBCAI4+/K+CI/F6CYNza4B8WJgEe5tITSz+c=
+	b=MN/RO8+cModA26F/JmuMS3LgP6cNVtvAuDBdVenB8HFkmikg7NnxdY4cb5p+KlHIk
+	 iacRXb5n3tnMRtovH7pjY3qPAmUE+6lLJ1moDqU5nkzQn+ARh/qhGKGrHf7HBfdW3Z
+	 KxdSlWN+ZXpdQrCfUbS3KfwHdLVENMyNPz/JdHk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>
-Subject: [PATCH 6.12 294/460] erofs: fix inline data read failure for ztailpacking pclusters
-Date: Mon, 23 Mar 2026 14:44:50 +0100
-Message-ID: <20260323134533.712241610@linuxfoundation.org>
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 285/460] net: stmmac: remove support for lpi_intr_o
+Date: Mon, 23 Mar 2026 14:44:41 +0100
+Message-ID: <20260323134533.487623095@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,116 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit c134a40f86efb8d6b5a949ef70e06d5752209be5 ]
+commit 14eb64db8ff07b58a35b98375f446d9e20765674 upstream.
 
-Compressed folios for ztailpacking pclusters must be valid before adding
-these pclusters to I/O chains. Otherwise, z_erofs_decompress_pcluster()
-may assume they are already valid and then trigger a NULL pointer
-dereference.
+The dwmac databook for v3.74a states that lpi_intr_o is a sideband
+signal which should be used to ungate the application clock, and this
+signal is synchronous to the receive clock. The receive clock can run
+at 2.5, 25 or 125MHz depending on the media speed, and can stop under
+the control of the link partner. This means that the time it takes to
+clear is dependent on the negotiated media speed, and thus can be 8,
+40, or 400ns after reading the LPI control and status register.
 
-It is somewhat hard to reproduce because the inline data is in the same
-block as the tail of the compressed indexes, which are usually read just
-before. However, it may still happen if a fatal signal arrives while
-read_mapping_folio() is running, as shown below:
+It has been observed with some aggressive link partners, this clock
+can stop while lpi_intr_o is still asserted, meaning that the signal
+remains asserted for an indefinite period that the local system has
+no direct control over.
 
- erofs: (device dm-1): z_erofs_pcluster_begin: failed to get inline data -4
- Unable to handle kernel NULL pointer dereference at virtual address 0000000000000008
+The LPI interrupts will still be signalled through the main interrupt
+path in any case, and this path is not dependent on the receive clock.
 
- ...
+This, since we do not gate the application clock, and the chances of
+adding clock gating in the future are slim due to the clocks being
+ill-defined, lpi_intr_o serves no useful purpose. Remove the code which
+requests the interrupt, and all associated code.
 
- pc : z_erofs_decompress_queue+0x4c8/0xa14
- lr : z_erofs_decompress_queue+0x160/0xa14
- sp : ffffffc08b3eb3a0
- x29: ffffffc08b3eb570 x28: ffffffc08b3eb418 x27: 0000000000001000
- x26: ffffff8086ebdbb8 x25: ffffff8086ebdbb8 x24: 0000000000000001
- x23: 0000000000000008 x22: 00000000fffffffb x21: dead000000000700
- x20: 00000000000015e7 x19: ffffff808babb400 x18: ffffffc089edc098
- x17: 00000000c006287d x16: 00000000c006287d x15: 0000000000000004
- x14: ffffff80ba8f8000 x13: 0000000000000004 x12: 00000006589a77c9
- x11: 0000000000000015 x10: 0000000000000000 x9 : 0000000000000000
- x8 : 0000000000000000 x7 : 0000000000000000 x6 : 000000000000003f
- x5 : 0000000000000040 x4 : ffffffffffffffe0 x3 : 0000000000000020
- x2 : 0000000000000008 x1 : 0000000000000000 x0 : 0000000000000000
- Call trace:
-  z_erofs_decompress_queue+0x4c8/0xa14
-  z_erofs_runqueue+0x908/0x97c
-  z_erofs_read_folio+0x128/0x228
-  filemap_read_folio+0x68/0x128
-  filemap_get_pages+0x44c/0x8b4
-  filemap_read+0x12c/0x5b8
-  generic_file_read_iter+0x4c/0x15c
-  do_iter_readv_writev+0x188/0x1e0
-  vfs_iter_read+0xac/0x1a4
-  backing_file_read_iter+0x170/0x34c
-  ovl_read_iter+0xf0/0x140
-  vfs_read+0x28c/0x344
-  ksys_read+0x80/0xf0
-  __arm64_sys_read+0x24/0x34
-  invoke_syscall+0x60/0x114
-  el0_svc_common+0x88/0xe4
-  do_el0_svc+0x24/0x30
-  el0_svc+0x40/0xa8
-  el0t_64_sync_handler+0x70/0xbc
-  el0t_64_sync+0x1bc/0x1c0
-
-Fix this by reading the inline data before allocating and adding
-the pclusters to the I/O chains.
-
-Fixes: cecf864d3d76 ("erofs: support inline data decompression")
-Reported-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Reviewed-and-tested-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Reported-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Tested-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com> # Renesas RZ/V2H board
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Link: https://patch.msgid.link/E1vnJbt-00000007YYN-28nm@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/erofs/zdata.c |   21 +++++++++++----------
- 1 file changed, 11 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/common.h          |    1 
+ drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c     |    4 --
+ drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c  |    7 ---
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h          |    2 -
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c     |   36 ------------------
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |    8 ----
+ include/linux/stmmac.h                                |    1 
+ 7 files changed, 59 deletions(-)
 
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -787,6 +787,7 @@ static int z_erofs_pcluster_begin(struct
- 	struct super_block *sb = fe->inode->i_sb;
- 	erofs_blk_t blknr = erofs_blknr(sb, map->m_pa);
- 	struct z_erofs_pcluster *pcl = NULL;
-+	void *ptr = NULL;
- 	int ret;
+--- a/drivers/net/ethernet/stmicro/stmmac/common.h
++++ b/drivers/net/ethernet/stmicro/stmmac/common.h
+@@ -374,7 +374,6 @@ enum request_irq_err {
+ 	REQ_IRQ_ERR_SFTY,
+ 	REQ_IRQ_ERR_SFTY_UE,
+ 	REQ_IRQ_ERR_SFTY_CE,
+-	REQ_IRQ_ERR_LPI,
+ 	REQ_IRQ_ERR_WOL,
+ 	REQ_IRQ_ERR_MAC,
+ 	REQ_IRQ_ERR_NO,
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+@@ -618,7 +618,6 @@ static int intel_mgbe_common_data(struct
  
- 	DBG_BUGON(fe->pcl);
-@@ -807,6 +808,14 @@ static int z_erofs_pcluster_begin(struct
- 	} else if ((map->m_pa & ~PAGE_MASK) + map->m_plen > PAGE_SIZE) {
- 		DBG_BUGON(1);
- 		return -EFSCORRUPTED;
-+	} else {
-+		ptr = erofs_read_metabuf(&map->buf, sb, map->m_pa, EROFS_NO_KMAP);
-+		if (IS_ERR(ptr)) {
-+			erofs_err(sb, "failed to read inline data %pe @ pa %llu of nid %llu",
-+				  ptr, map->m_pa, EROFS_I(fe->inode)->nid);
-+			return PTR_ERR(ptr);
-+		}
-+		ptr = map->buf.page;
+ 	/* Setup MSI vector offset specific to Intel mGbE controller */
+ 	plat->msi_mac_vec = 29;
+-	plat->msi_lpi_vec = 28;
+ 	plat->msi_sfty_ce_vec = 27;
+ 	plat->msi_sfty_ue_vec = 26;
+ 	plat->msi_rx_base_vec = 0;
+@@ -1004,8 +1003,6 @@ static int stmmac_config_multi_msi(struc
+ 		res->irq = pci_irq_vector(pdev, plat->msi_mac_vec);
+ 	if (plat->msi_wol_vec < STMMAC_MSI_VEC_MAX)
+ 		res->wol_irq = pci_irq_vector(pdev, plat->msi_wol_vec);
+-	if (plat->msi_lpi_vec < STMMAC_MSI_VEC_MAX)
+-		res->lpi_irq = pci_irq_vector(pdev, plat->msi_lpi_vec);
+ 	if (plat->msi_sfty_ce_vec < STMMAC_MSI_VEC_MAX)
+ 		res->sfty_ce_irq = pci_irq_vector(pdev, plat->msi_sfty_ce_vec);
+ 	if (plat->msi_sfty_ue_vec < STMMAC_MSI_VEC_MAX)
+@@ -1087,7 +1084,6 @@ static int intel_eth_pci_probe(struct pc
+ 	 */
+ 	plat->msi_mac_vec = STMMAC_MSI_VEC_MAX;
+ 	plat->msi_wol_vec = STMMAC_MSI_VEC_MAX;
+-	plat->msi_lpi_vec = STMMAC_MSI_VEC_MAX;
+ 	plat->msi_sfty_ce_vec = STMMAC_MSI_VEC_MAX;
+ 	plat->msi_sfty_ue_vec = STMMAC_MSI_VEC_MAX;
+ 	plat->msi_rx_base_vec = STMMAC_MSI_VEC_MAX;
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -476,13 +476,6 @@ static int loongson_dwmac_dt_config(stru
+ 		res->wol_irq = res->irq;
  	}
  
- 	if (pcl) {
-@@ -836,16 +845,8 @@ static int z_erofs_pcluster_begin(struct
- 		/* bind cache first when cached decompression is preferred */
- 		z_erofs_bind_cache(fe);
- 	} else {
--		void *mptr;
+-	res->lpi_irq = of_irq_get_byname(np, "eth_lpi");
+-	if (res->lpi_irq < 0) {
+-		dev_err(&pdev->dev, "IRQ eth_lpi not found\n");
+-		ret = -ENODEV;
+-		goto err_put_node;
+-	}
 -
--		mptr = erofs_read_metabuf(&map->buf, sb, map->m_pa, EROFS_NO_KMAP);
--		if (IS_ERR(mptr)) {
--			ret = PTR_ERR(mptr);
--			erofs_err(sb, "failed to get inline data %d", ret);
--			return ret;
--		}
--		get_page(map->buf.page);
--		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, map->buf.page);
-+		get_page((struct page *)ptr);
-+		WRITE_ONCE(fe->pcl->compressed_bvecs[0].page, ptr);
- 		fe->pcl->pageofs_in = map->m_pa & ~PAGE_MASK;
- 		fe->mode = Z_EROFS_PCLUSTER_FOLLOWED_NOINPLACE;
+ 	ret = device_get_phy_mode(&pdev->dev);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "phy_mode not found\n");
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
+@@ -29,7 +29,6 @@ struct stmmac_resources {
+ 	void __iomem *addr;
+ 	u8 mac[ETH_ALEN];
+ 	int wol_irq;
+-	int lpi_irq;
+ 	int irq;
+ 	int sfty_irq;
+ 	int sfty_ce_irq;
+@@ -314,7 +313,6 @@ struct stmmac_priv {
+ 	bool wol_irq_disabled;
+ 	int clk_csr;
+ 	struct timer_list eee_ctrl_timer;
+-	int lpi_irq;
+ 	int eee_enabled;
+ 	int eee_active;
+ 	int tx_lpi_timer;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -3580,10 +3580,6 @@ static void stmmac_free_irq(struct net_d
+ 			free_irq(priv->sfty_ce_irq, dev);
+ 		fallthrough;
+ 	case REQ_IRQ_ERR_SFTY_CE:
+-		if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq)
+-			free_irq(priv->lpi_irq, dev);
+-		fallthrough;
+-	case REQ_IRQ_ERR_LPI:
+ 		if (priv->wol_irq > 0 && priv->wol_irq != dev->irq)
+ 			free_irq(priv->wol_irq, dev);
+ 		fallthrough;
+@@ -3642,24 +3638,6 @@ static int stmmac_request_irq_multi_msi(
+ 		}
  	}
+ 
+-	/* Request the LPI IRQ in case of another line
+-	 * is used for LPI
+-	 */
+-	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
+-		int_name = priv->int_name_lpi;
+-		sprintf(int_name, "%s:%s", dev->name, "lpi");
+-		ret = request_irq(priv->lpi_irq,
+-				  stmmac_mac_interrupt,
+-				  0, int_name, dev);
+-		if (unlikely(ret < 0)) {
+-			netdev_err(priv->dev,
+-				   "%s: alloc lpi MSI %d (error: %d)\n",
+-				   __func__, priv->lpi_irq, ret);
+-			irq_err = REQ_IRQ_ERR_LPI;
+-			goto irq_error;
+-		}
+-	}
+-
+ 	/* Request the common Safety Feature Correctible/Uncorrectible
+ 	 * Error line in case of another line is used
+ 	 */
+@@ -3800,19 +3778,6 @@ static int stmmac_request_irq_single(str
+ 		}
+ 	}
+ 
+-	/* Request the IRQ lines */
+-	if (priv->lpi_irq > 0 && priv->lpi_irq != dev->irq) {
+-		ret = request_irq(priv->lpi_irq, stmmac_interrupt,
+-				  IRQF_SHARED, dev->name, dev);
+-		if (unlikely(ret < 0)) {
+-			netdev_err(priv->dev,
+-				   "%s: ERROR: allocating the LPI IRQ %d (%d)\n",
+-				   __func__, priv->lpi_irq, ret);
+-			irq_err = REQ_IRQ_ERR_LPI;
+-			goto irq_error;
+-		}
+-	}
+-
+ 	/* Request the common Safety Feature Correctible/Uncorrectible
+ 	 * Error line in case of another line is used
+ 	 */
+@@ -7576,7 +7541,6 @@ int stmmac_dvr_probe(struct device *devi
+ 
+ 	priv->dev->irq = res->irq;
+ 	priv->wol_irq = res->wol_irq;
+-	priv->lpi_irq = res->lpi_irq;
+ 	priv->sfty_irq = res->sfty_irq;
+ 	priv->sfty_ce_irq = res->sfty_ce_irq;
+ 	priv->sfty_ue_irq = res->sfty_ue_irq;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -733,14 +733,6 @@ int stmmac_get_platform_resources(struct
+ 		stmmac_res->wol_irq = stmmac_res->irq;
+ 	}
+ 
+-	stmmac_res->lpi_irq =
+-		platform_get_irq_byname_optional(pdev, "eth_lpi");
+-	if (stmmac_res->lpi_irq < 0) {
+-		if (stmmac_res->lpi_irq == -EPROBE_DEFER)
+-			return -EPROBE_DEFER;
+-		dev_info(&pdev->dev, "IRQ eth_lpi not found\n");
+-	}
+-
+ 	stmmac_res->sfty_irq =
+ 		platform_get_irq_byname_optional(pdev, "sfty");
+ 	if (stmmac_res->sfty_irq < 0) {
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -268,7 +268,6 @@ struct plat_stmmacenet_data {
+ 	int int_snapshot_num;
+ 	int msi_mac_vec;
+ 	int msi_wol_vec;
+-	int msi_lpi_vec;
+ 	int msi_sfty_ce_vec;
+ 	int msi_sfty_ue_vec;
+ 	int msi_rx_base_vec;
 
 
