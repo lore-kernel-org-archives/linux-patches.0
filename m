@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4973B19AF;
-	Mon, 23 Mar 2026 15:28:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 821CC3AE70F;
+	Mon, 23 Mar 2026 15:28:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279716; cv=none; b=hEQxQ+zLLzU55paP+sfi0Jp/rpoQmrJxm3wCKu4DDxHZRgxwQ9vXtTH3tTbHVeyDX2yYmRGXw8NYDCikYqt+pzcDF+YpLnjsG7aDU/xMlIdww5xlFgZj1EVbiquNbvsjKsP1v++jPQ8fK9buIoCzhrnyTgn02oo3pHMcJiszcfM=
+	t=1774279718; cv=none; b=P6Ultgnn99gsubyI256b0rMMHprk1vmsW6hSHvqY+DL1uXIBiIDFCybxnMSf1Uhx0DI/hjpv+1sLSoq8tEgnherA4/z1+U2DTB7QVQZZBhUnvqWZCoK4eeKEXkIDtlrt428ii504ggyfo+wfX2keGdi4UouQ/OyRM4x+oS+lujo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279716; c=relaxed/simple;
-	bh=dP4HAlmRXRnd/S4CF6zBQTQ1Idsp7N+knBUolOP4+xo=;
+	s=arc-20240116; t=1774279718; c=relaxed/simple;
+	bh=iu86mPmzXon6/feiXFvJTBepSBSZdNsoGqMokFwK9to=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rb2mhQIUV+Etvo5cEMdXrWiqb64J5JzvhTFc3SGXdfGlDDTkEMIyIDmei1i6lxOgjRbnuIwUksVxKslht7vQpT+TRN58UQaAvm+OQg487FBw6QUmCnQqEufJPZlL+ypSQWrUhrKtGMEDEaR4/17Wp3s4Ysx63rbEFiB6XlbBsaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=heQgKIvW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=c1X9yOOq3EU4ewXhHV85hJOhOWI6Ae15me2Ua7CoN/qzARvKRvdN2HCtlf9EpTURfT6KRkrai3pEI40v7K0TBcaR149nHDzkXnLrBGdvUwBZDSbWFQyBYMocoJCoxKVDkXSdcoAZTs46X9h1noa5aRS+u13CqgQFhEvF2jpWn1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=U+hCZmS4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="heQgKIvW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC80DC4CEF7;
-	Mon, 23 Mar 2026 15:28:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="U+hCZmS4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CCF1C4CEF7;
+	Mon, 23 Mar 2026 15:28:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279716;
-	bh=dP4HAlmRXRnd/S4CF6zBQTQ1Idsp7N+knBUolOP4+xo=;
+	s=korg; t=1774279718;
+	bh=iu86mPmzXon6/feiXFvJTBepSBSZdNsoGqMokFwK9to=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heQgKIvW/mp4DOKV+vnAR7BuJG3gsqIot67NsWQxGHLdC5i63O92nUs6y8c/M3Mbn
-	 WkRg1E42LaJCAQ3cvMyOTAQl+loCwq3HawgeKZ96fXhe2/o/k3K1R6YthO6qUshbFn
-	 TCDEcMvEZ/tzx4TzcDH3W3aCimQelQA4UjzWVRSQ=
+	b=U+hCZmS4MVmAcB5RoDvGCEtPrurwxNyQP//nI1VhuZBm0D9A1bb1fGCyxI3abA97f
+	 /a50tvoWDnM9xjxx9obLgCBkBDpqnQwH5K53Fk0xRjcZp7k2FXU6ifV/CZ0o0RGKbu
+	 xywiYNluecfdfylg3rIEZrzhqZ8s6o2pqmHnJ5SE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/481] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
-Date: Mon, 23 Mar 2026 14:40:37 +0100
-Message-ID: <20260323134526.566549684@linuxfoundation.org>
+Subject: [PATCH 6.1 056/481] mfd: omap-usb-host: Convert to platform remove callback returning void
+Date: Mon, 23 Mar 2026 14:40:38 +0100
+Message-ID: <20260323134526.588843651@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -47,59 +45,67 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 ]
+[ Upstream commit 418d1e74f8597e0b2d5d0d6e1be8f1f47e68f0a4 ]
 
-Since commit c6e126de43e7 ("of: Keep track of populated platform
-devices") child devices will not be created by of_platform_populate()
-if the devices had previously been deregistered individually so that the
-OF_POPULATED flag is still set in the corresponding OF nodes.
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Switch to using of_platform_depopulate() instead of open coding so that
-the child devices are created if the driver is rebound.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
-Cc: stable@vger.kernel.org	# 3.16
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20231123165627.492259-11-u.kleine-koenig@pengutronix.de
 Signed-off-by: Lee Jones <lee@kernel.org>
+Stable-dep-of: 24804ba508a3 ("mfd: omap-usb-host: Fix OF populate on driver rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8xxx.c | 8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/mfd/omap-usb-host.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 8831448371290..cbcbff3c95ecb 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -581,17 +581,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
- 	return rc;
- }
- 
--static int pm8xxx_remove_child(struct device *dev, void *unused)
--{
--	platform_device_unregister(to_platform_device(dev));
--	return 0;
--}
--
- static void pm8xxx_remove(struct platform_device *pdev)
+diff --git a/drivers/mfd/omap-usb-host.c b/drivers/mfd/omap-usb-host.c
+index 787d2ae863752..b61fb9933aa85 100644
+--- a/drivers/mfd/omap-usb-host.c
++++ b/drivers/mfd/omap-usb-host.c
+@@ -818,13 +818,12 @@ static int usbhs_omap_remove_child(struct device *dev, void *data)
+  *
+  * Reverses the effect of usbhs_omap_probe().
+  */
+-static int usbhs_omap_remove(struct platform_device *pdev)
++static void usbhs_omap_remove(struct platform_device *pdev)
  {
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
+ 	pm_runtime_disable(&pdev->dev);
  
--	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
-+	of_platform_depopulate(&pdev->dev);
- 	irq_domain_remove(chip->irqdomain);
+ 	/* remove children */
+ 	device_for_each_child(&pdev->dev, NULL, usbhs_omap_remove_child);
+-	return 0;
  }
  
+ static const struct dev_pm_ops usbhsomap_dev_pm_ops = {
+@@ -847,7 +846,7 @@ static struct platform_driver usbhs_omap_driver = {
+ 		.of_match_table = usbhs_omap_dt_ids,
+ 	},
+ 	.probe		= usbhs_omap_probe,
+-	.remove		= usbhs_omap_remove,
++	.remove_new	= usbhs_omap_remove,
+ };
+ 
+ MODULE_AUTHOR("Keshava Munegowda <keshava_mgowda@ti.com>");
 -- 
 2.51.0
 
