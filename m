@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CC93A6B88;
-	Mon, 23 Mar 2026 13:50:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52101B4223;
+	Mon, 23 Mar 2026 13:50:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273815; cv=none; b=oSS4khJsQM9jmJFzJMqRlKD6EdK0RzNfiXvfnPrKw+GzbtkS83nLDofU1/+SptMAMBpwVjBocQF7ixCIcuYPbQV0npHQkPSW7MbomZ46+ZKkaJ7m8KbFySjDKoAWIUpsMiUNB1ZoIacj1LlVILfp6T6a5woWzROgnjyeRhQzAwE=
+	t=1774273818; cv=none; b=Q9YdLZHrgksSMDaxJ7A69AGwdsGHAc9MfVx+rNhjYMBDZ0/4dIEKADJFozgME4KUsXH4Qsyz/6dEscxU5WZiLfIUy3VWyMoJCl5AUnVzS8sruJEVo6uWIMiUHlolk9h/ZwFInTzSd/6LZtYBHQmtJzegWQ+6Y+Ac4TFIQN9I81w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273815; c=relaxed/simple;
-	bh=o3SPENsHpovwIKqg1GMB9J+Ce53eW4VHonOyHQLKxmE=;
+	s=arc-20240116; t=1774273818; c=relaxed/simple;
+	bh=s5RiZRtE+V/A9+f0cZUOkk5QZ8Y74YuUSYPviVa7W1c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=egw0pM4SG9c4Hwk8Fiq9PzZiHBwbvD9sHg1F/7XynE+dgoq7vQbc34I2X2pL8DXWBVsf0dfkBkqh19lSGKiZhMoMPERfshPoqrd9nrQZ37HoXZBp3v39XV526z4ZGTbK2lE1rsH8s2FayT64ZDd2i6UE758pLLIVV2F97GH0/kY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oI+x+0XV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/rnUEOlq4I9lWXfk1wSl/+h58iLuSNi1p6SZn1p9aTiXgEzD+MNegLXLKuoFdcMANN6PGShjtLx9eSQBJsByB2CIxyKpBC6QziOiQLA6W0vdViU/4J/NspdeMIWwUsh+vf+NM8a48ZP19IXqiy7MTm3GOEBqGmRrIcDaHngIGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kEbCTnN2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oI+x+0XV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE874C4CEF7;
-	Mon, 23 Mar 2026 13:50:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kEbCTnN2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F216DC4CEF7;
+	Mon, 23 Mar 2026 13:50:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273815;
-	bh=o3SPENsHpovwIKqg1GMB9J+Ce53eW4VHonOyHQLKxmE=;
+	s=korg; t=1774273818;
+	bh=s5RiZRtE+V/A9+f0cZUOkk5QZ8Y74YuUSYPviVa7W1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oI+x+0XVHnK/dHmGtku0v5Zar7s+hu45dSDmk/sajhMB/+nMyXPUJ1g/WJ9WoT7Cm
-	 SC+mz6nE2cFBS6DZp0qoml3IeUKEeDPLo4xat3JO9rHA8EmKh4954CofIg9Q/0GOSd
-	 Ohr9gdzct17GHSBir0m/No4IC/kwOxJ71VnV5liM=
+	b=kEbCTnN2gdjeXbQNmR/5yINrbKGZVGMrTF/99gkFbF+Tf4lLiqtgGP+XmfCSXP562
+	 kOm5aeP+rTe9mQQ5A78GLEewN7+1o+MUJAuz2JaVeRGIg0n7joQlYnDtoYArXMwaKA
+	 Z0omhoAXrCr6LWFuEy4C+h0xIsUeRMjhthI/yHfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Wu <yifanwucs@gmail.com>,
-	Juefei Pu <tomapufckgml@gmail.com>,
-	Yuan Tan <tanyuan98@outlook.com>,
-	Xin Liu <bird@lzu.edu.cn>,
-	Ao Zhou <n05ec@lzu.edu.cn>,
-	Sven Eckelmann <sven@narfation.org>,
-	Simon Wunderlich <sw@simonwunderlich.de>
-Subject: [PATCH 6.19 018/220] batman-adv: avoid OGM aggregation when skb tailroom is insufficient
-Date: Mon, 23 Mar 2026 14:43:15 +0100
-Message-ID: <20260323134505.155897309@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.19 019/220] mac80211: fix crash in ieee80211_chan_bw_change for AP_VLAN stations
+Date: Mon, 23 Mar 2026 14:43:16 +0100
+Message-ID: <20260323134505.185993036@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -55,45 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yang Yang <n05ec@lzu.edu.cn>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 0d4aef630be9d5f9c1227d07669c26c4383b5ad0 upstream.
+commit 672e5229e1ecfc2a3509b53adcb914d8b024a853 upstream.
 
-When OGM aggregation state is toggled at runtime, an existing forwarded
-packet may have been allocated with only packet_len bytes, while a later
-packet can still be selected for aggregation. Appending in this case can
-hit skb_put overflow conditions.
+ieee80211_chan_bw_change() iterates all stations and accesses
+link->reserved.oper via sta->sdata->link[link_id]. For stations on
+AP_VLAN interfaces (e.g. 4addr WDS clients), sta->sdata points to
+the VLAN sdata, whose link never participates in chanctx reservations.
+This leaves link->reserved.oper zero-initialized with chan == NULL,
+causing a NULL pointer dereference in __ieee80211_sta_cap_rx_bw()
+when accessing chandef->chan->band during CSA.
 
-Reject aggregation when the target skb tailroom cannot accommodate the new
-packet. The caller then falls back to creating a new forward packet
-instead of appending.
+Resolve the VLAN sdata to its parent AP sdata using get_bss_sdata()
+before accessing link data.
 
-Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
 Cc: stable@vger.kernel.org
-Reported-by: Yifan Wu <yifanwucs@gmail.com>
-Reported-by: Juefei Pu <tomapufckgml@gmail.com>
-Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
-Signed-off-by: Xin Liu <bird@lzu.edu.cn>
-Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
-Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
-Signed-off-by: Sven Eckelmann <sven@narfation.org>
-Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://patch.msgid.link/20260305170812.2904208-1-nbd@nbd.name
+[also change sta->sdata in ARRAY_SIZE even if it doesn't matter]
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/batman-adv/bat_iv_ogm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/chan.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/net/batman-adv/bat_iv_ogm.c
-+++ b/net/batman-adv/bat_iv_ogm.c
-@@ -473,6 +473,9 @@ batadv_iv_ogm_can_aggregate(const struct
- 	if (aggregated_bytes > max_bytes)
- 		return false;
+--- a/net/mac80211/chan.c
++++ b/net/mac80211/chan.c
+@@ -561,14 +561,16 @@ static void ieee80211_chan_bw_change(str
+ 	rcu_read_lock();
+ 	list_for_each_entry_rcu(sta, &local->sta_list,
+ 				list) {
+-		struct ieee80211_sub_if_data *sdata = sta->sdata;
++		struct ieee80211_sub_if_data *sdata;
+ 		enum ieee80211_sta_rx_bandwidth new_sta_bw;
+ 		unsigned int link_id;
  
-+	if (skb_tailroom(forw_packet->skb) < packet_len)
-+		return false;
+ 		if (!ieee80211_sdata_running(sta->sdata))
+ 			continue;
+ 
+-		for (link_id = 0; link_id < ARRAY_SIZE(sta->sdata->link); link_id++) {
++		sdata = get_bss_sdata(sta->sdata);
 +
- 	if (packet_num >= BATADV_MAX_AGGREGATION_PACKETS)
- 		return false;
- 
++		for (link_id = 0; link_id < ARRAY_SIZE(sdata->link); link_id++) {
+ 			struct ieee80211_link_data *link =
+ 				rcu_dereference(sdata->link[link_id]);
+ 			struct ieee80211_bss_conf *link_conf;
 
 
