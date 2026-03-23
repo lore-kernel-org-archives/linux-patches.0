@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38EE3395DB5;
-	Mon, 23 Mar 2026 14:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D6A9395DB5;
+	Mon, 23 Mar 2026 14:50:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277427; cv=none; b=Z6hYotJ4hAPVLW8jRA3GwCQDAxgxjvDGfieYCffw8Q4UL1RVf2NrjKDxEZNlgkoUAOT6zu0+V8I1Uj69jxlbbzo4mcD9Ftg3dezbTmdGByQyQ6MFba0lOQ2RLNoK0IfvEr3vV6tB7myDx9T4BYLQ+Fx5o2gBNh7TAyDBf4HXtDI=
+	t=1774277430; cv=none; b=odO3D7JR4GGVDF+vcqmOM/TH5eF/oARx+6rkA3ALt+X32BgP3wJ81sG32BJgqfpaM0byfLLjF4bIz+KbGVBHm7hc3um387WONkMf52hcRYnfmmiw6JQ7e6JOQAfSeygI0eXmXpRR3Uf5lMCgeH+Ulx5pQzm13cdDSFAgtUBXIkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277427; c=relaxed/simple;
-	bh=RiZOT8H9TDFGZF6kqXx7qxXv0ZcP4ROfS065EP6RGJA=;
+	s=arc-20240116; t=1774277430; c=relaxed/simple;
+	bh=pcnIaEru2mqbYoXCdWBJsh9ZqLLRbAhFEUV+wkZcMUs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Affvsyxg/Qz75vWolBpHIVN9lSIrkk/vCbS6XpRePXYY6kea9GxISLAHi8X3QHc3hSDEiN5SVExqG9Y6aZ0wo5bDNoLJrVPyDT9xy62hrSOOqrhl+YiFNoU6xctJocYUfp2VAVn52blZ5WrivQ1E9XP7onuCjGH2Zp+nbviqlmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u1v4q20I; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nzRKQxl5VYRiDGjBp8SdkqjLGJKqgPcyh/iwh/p2texQIzw7IPrMYSaGMg2L9ANffb6Vkwz5eNO7s0aDevXgnTpeujZFHp/O4MeDi/mKv2ThaYAepdkzWzuFoF/DzhFj07S473jZoeD+V19IZORtqLq4+wCHXFLWWk49m6eqqmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+yjP2XD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u1v4q20I"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1201C4CEF7;
-	Mon, 23 Mar 2026 14:50:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+yjP2XD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A73C6C4CEF7;
+	Mon, 23 Mar 2026 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277427;
-	bh=RiZOT8H9TDFGZF6kqXx7qxXv0ZcP4ROfS065EP6RGJA=;
+	s=korg; t=1774277430;
+	bh=pcnIaEru2mqbYoXCdWBJsh9ZqLLRbAhFEUV+wkZcMUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1v4q20I2jgt8FsYxyzipeX3AwsjAK0fCuE/WzsJulk3i6ZFyr5kNSyiNBQ3xtXMq
-	 nlpswDoMw10CxQkilZIPjZFZQZ5hIOBED6XgLwnHKhb254fwG9Yd3fR5C/QsoTCI61
-	 dXVV05iJ0raXgCfFPDhYJVOfFup4A6Vc9jKcrbPw=
+	b=a+yjP2XDzPk13rIrEAwXQTjPDjijId6zKnBlrLP3JEaT1NPfma8D8hWeeChTuIN+X
+	 gSLmv3XRDIdR9Yn1jCGxFyzLu6M6JdWpO1by1WqqSu7MrNUvG9ooJSfDMuDGgkEuc8
+	 doQrP9dGN3tfhulBo9F5yhfupLThkJ9HwPi4Ki30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mika Kahola <mika.kahola@intel.com>,
-	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 436/460] drm/i915/psr: Compute PSR entry_setup_frames into intel_crtc_state
-Date: Mon, 23 Mar 2026 14:47:12 +0100
-Message-ID: <20260323134537.275639618@linuxfoundation.org>
+	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.12 437/460] USB: serial: f81232: fix incomplete serial port generation
+Date: Mon, 23 Mar 2026 14:47:13 +0100
+Message-ID: <20260323134537.300799732@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -47,68 +44,139 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jouni Högander <jouni.hogander@intel.com>
+From: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
 
-commit 7caac659a837af9fd4cad85be851982b88859484 upstream.
+commit cd644b805da8a253198718741bf363c4c58862ff upstream.
 
-PSR entry_setup_frames is currently computed directly into struct
-intel_dp:intel_psr:entry_setup_frames. This causes a problem if mode change
-gets rejected after PSR compute config: Psr_entry_setup_frames computed for
-this rejected state is in intel_dp:intel_psr:entry_setup_frame. Fix this by
-computing it into intel_crtc_state and copy the value into
-intel_dp:intel_psr:entry_setup_frames on PSR enable.
+The Fintek F81532A/534A/535/536 family relies on the
+F81534A_CTRL_CMD_ENABLE_PORT (116h) register during initialization to
+both determine serial port status and control port creation. If the
+driver experiences fast load/unload cycles, the device state may becomes
+unstable, resulting in the incomplete generation of serial ports.
 
-Fixes: 2b981d57e480 ("drm/i915/display: Support PSR entry VSC packet to be transmitted one frame earlier")
-Cc: Mika Kahola <mika.kahola@intel.com>
-Cc: <stable@vger.kernel.org> # v6.8+
-Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260312083710.1593781-3-jouni.hogander@intel.com
-(cherry picked from commit 8c229b4aa00262c13787982e998c61c0783285e0)
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-[ dropped intel_psr_needs_wa_18037818876 hunk and adjusted surrounding context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Performing a dummy read operation on the register prior to the initial
+write command resolves the issue. This clears the device's stale internal
+state. Subsequent write operations will correctly generate all serial
+ports.
+
+This patch also removes the retry loop in f81534a_ctrl_set_register()
+because the stale state has been fixed.
+
+Tested on: HygonDM1SLT(Hygon C86 3250 8-core Processor)
+
+Signed-off-by: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/display/intel_display_types.h |    1 +
- drivers/gpu/drm/i915/display/intel_psr.c           |    3 ++-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/serial/f81232.c |   77 ++++++++++++++++++++++++++------------------
+ 1 file changed, 47 insertions(+), 30 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_display_types.h
-+++ b/drivers/gpu/drm/i915/display/intel_display_types.h
-@@ -1218,6 +1218,7 @@ struct intel_crtc_state {
- 	bool wm_level_disabled;
- 	u32 dc3co_exitline;
- 	u16 su_y_granularity;
-+	u8 entry_setup_frames;
+--- a/drivers/usb/serial/f81232.c
++++ b/drivers/usb/serial/f81232.c
+@@ -70,7 +70,6 @@ MODULE_DEVICE_TABLE(usb, combined_id_tab
+ #define F81232_REGISTER_REQUEST		0xa0
+ #define F81232_GET_REGISTER		0xc0
+ #define F81232_SET_REGISTER		0x40
+-#define F81534A_ACCESS_REG_RETRY	2
  
- 	/*
- 	 * Frequence the dpll for the port should run at. Differs from the
---- a/drivers/gpu/drm/i915/display/intel_psr.c
-+++ b/drivers/gpu/drm/i915/display/intel_psr.c
-@@ -1571,7 +1571,7 @@ static bool _psr_compute_config(struct i
- 	entry_setup_frames = intel_psr_entry_setup_frames(intel_dp, adjusted_mode);
+ #define SERIAL_BASE_ADDRESS		0x0120
+ #define RECEIVE_BUFFER_REGISTER		(0x00 + SERIAL_BASE_ADDRESS)
+@@ -824,36 +823,31 @@ static void f81232_lsr_worker(struct wor
+ static int f81534a_ctrl_set_register(struct usb_interface *intf, u16 reg,
+ 					u16 size, void *val)
+ {
+-	struct usb_device *dev = interface_to_usbdev(intf);
+-	int retry = F81534A_ACCESS_REG_RETRY;
+-	int status;
+-
+-	while (retry--) {
+-		status = usb_control_msg_send(dev,
+-					      0,
+-					      F81232_REGISTER_REQUEST,
+-					      F81232_SET_REGISTER,
+-					      reg,
+-					      0,
+-					      val,
+-					      size,
+-					      USB_CTRL_SET_TIMEOUT,
+-					      GFP_KERNEL);
+-		if (status) {
+-			status = usb_translate_errors(status);
+-			if (status == -EIO)
+-				continue;
+-		}
+-
+-		break;
+-	}
+-
+-	if (status) {
+-		dev_err(&intf->dev, "failed to set register 0x%x: %d\n",
+-				reg, status);
+-	}
++	return usb_control_msg_send(interface_to_usbdev(intf),
++						0,
++						F81232_REGISTER_REQUEST,
++						F81232_SET_REGISTER,
++						reg,
++						0,
++						val,
++						size,
++						USB_CTRL_SET_TIMEOUT,
++						GFP_KERNEL);
++}
  
- 	if (entry_setup_frames >= 0) {
--		intel_dp->psr.entry_setup_frames = entry_setup_frames;
-+		crtc_state->entry_setup_frames = entry_setup_frames;
- 	} else {
- 		drm_dbg_kms(display->drm,
- 			    "PSR condition failed: PSR setup timing not met\n");
-@@ -1979,6 +1979,7 @@ static void intel_psr_enable_locked(stru
- 	intel_dp->psr.psr2_sel_fetch_cff_enabled = false;
- 	intel_dp->psr.req_psr2_sdp_prior_scanline =
- 		crtc_state->req_psr2_sdp_prior_scanline;
-+	intel_dp->psr.entry_setup_frames = crtc_state->entry_setup_frames;
+-	return status;
++static int f81534a_ctrl_get_register(struct usb_interface *intf, u16 reg,
++					u16 size, void *val)
++{
++	return usb_control_msg_recv(interface_to_usbdev(intf),
++						0,
++						F81232_REGISTER_REQUEST,
++						F81232_GET_REGISTER,
++						reg,
++						0,
++						val,
++						size,
++						USB_CTRL_GET_TIMEOUT,
++						GFP_KERNEL);
+ }
  
- 	if (!psr_interrupt_error_check(intel_dp))
- 		return;
+ static int f81534a_ctrl_enable_all_ports(struct usb_interface *intf, bool en)
+@@ -869,6 +863,29 @@ static int f81534a_ctrl_enable_all_ports
+ 	 * bit 0~11	: Serial port enable bit.
+ 	 */
+ 	if (en) {
++		/*
++		 * The Fintek F81532A/534A/535/536 family relies on the
++		 * F81534A_CTRL_CMD_ENABLE_PORT (116h) register during
++		 * initialization to both determine serial port status and
++		 * control port creation.
++		 *
++		 * If the driver experiences fast load/unload cycles, the
++		 * device state may becomes unstable, resulting in the
++		 * incomplete generation of serial ports.
++		 *
++		 * Performing a dummy read operation on the register prior
++		 * to the initial write command resolves the issue.
++		 *
++		 * This clears the device's stale internal state. Subsequent
++		 * write operations will correctly generate all serial ports.
++		 */
++		status = f81534a_ctrl_get_register(intf,
++						F81534A_CTRL_CMD_ENABLE_PORT,
++						sizeof(enable),
++						enable);
++		if (status)
++			return status;
++
+ 		enable[0] = 0xff;
+ 		enable[1] = 0x8f;
+ 	}
 
 
