@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D0251A6818;
-	Mon, 23 Mar 2026 13:52:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED1B81A6818;
+	Mon, 23 Mar 2026 13:52:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273927; cv=none; b=MIp0dDkacKPtDIRN8ADeZj0zRrgo5bq6jjnEvrAlv8evWrHJKvG/I4WLIs4kwrhk5Lhp1u1ehHd4X9IDu7K665Awd4sziCKrhhmw6aOYUzcE8oa5JYZxHyTRxrAeE5QJQtyw0P+79na38D7Zj6Ow5BiTXmLNB4XB18bAT4bXfRA=
+	t=1774273931; cv=none; b=daJqnYJOmezh6g9FGEflHd3c3lU10Y4ypvxJMabqfuci5r5HC5YDC6eKWHzd0+N8LXMyNj9SvHGCBg6shgDsCDrARylehsSjNKWwOZH+OUeAKj314IsBhn3J1BV7uq2Ji/BnOA1qoQ1oqpP4oVEcPB9CKqAJdfeW1pYA6ksK1Jg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273927; c=relaxed/simple;
-	bh=2F6nje+JqXoBOANKNLfYd5RHYeh6cGU9vJ/brnIbdPA=;
+	s=arc-20240116; t=1774273931; c=relaxed/simple;
+	bh=P0GDf9yLuQBP2QYIPNmEUlUvU3hNiGeUTWE/PYG1v5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DbFe8kZVwH8QtfSli/4Xjc9iaGdf00A+ON9C0F4PBdyBVZivBET1bzWDEeL/PgMwnMlOiew9GeJ+miY3Ig24nipeoQkxuyY3ChgIRT9FNeTTj00ezOTYUfdt5WFJdPHWZDbcRUH+DPXuOV2VWGWZeVbQcT8+LBOXyHLMtZfOtNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j5dk5tZa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BgqSgZooyueUbE9S6ajGwDusrWz0CzGVn+4p/6GWMGll6e36BU5+yL3NTFDdeIO0IuopEG/EIIgP9os3rpWAff6G1eB654NdZEgKEmkVAyuDNTUIWznrA/iAdy8ud2LMpB/avTxnm8qC0b/5wlgZ2gawBV696iPf1l0ivQS5fB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xxRnq/6v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j5dk5tZa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20CFEC4CEF7;
-	Mon, 23 Mar 2026 13:52:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xxRnq/6v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EAD6C2BC9E;
+	Mon, 23 Mar 2026 13:52:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273927;
-	bh=2F6nje+JqXoBOANKNLfYd5RHYeh6cGU9vJ/brnIbdPA=;
+	s=korg; t=1774273930;
+	bh=P0GDf9yLuQBP2QYIPNmEUlUvU3hNiGeUTWE/PYG1v5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j5dk5tZaWWEuYoVazyp2SG9hbpCAb6ZQMMG+/EU82qIScRZ5+LpFCjz/nSoWSFIW2
-	 QiFvy7K2spEc+EmkKV37PvUKKsjNw60vgXm8AKhS5xlO+usL7xpBPW5Y3cs6CXc5kP
-	 XsOemIllc6Wg8JOKWdPbBv9k926sA8Q30TutHDBU=
+	b=xxRnq/6vzRc1BREzKFVcKV8jzDT45ppvHXz3D1uwoHTUIcMjsaN5OlygSGrdVnatD
+	 V9RmFD4taGCwDwP0nADg4ii1DbnrkvoC3vBgEpM1dXJG0teFHk4Vu7zE9HDrAUKZ/6
+	 wtZA3ph754PXtUtN4JwaE4PxIvyB1bdudBX0A9lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guanghui Feng <guanghuifeng@linux.alibaba.com>,
-	Shuai Xue <xueshuai@linux.alibaba.com>,
-	Samiullah Khawaja <skhawaja@google.com>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Lu Baolu <baolu.lu@linux.intel.com>,
 	Joerg Roedel <joerg.roedel@amd.com>
-Subject: [PATCH 6.19 053/220] iommu/vt-d: Fix intel iommu iotlb sync hardlockup and retry
-Date: Mon, 23 Mar 2026 14:43:50 +0100
-Message-ID: <20260323134506.264460868@linuxfoundation.org>
+Subject: [PATCH 6.19 054/220] iommu/vt-d: Only handle IOPF for SVA when PRI is supported
+Date: Mon, 23 Mar 2026 14:43:51 +0100
+Message-ID: <20260323134506.293916640@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,54 +51,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guanghui Feng <guanghuifeng@linux.alibaba.com>
+From: Lu Baolu <baolu.lu@linux.intel.com>
 
-commit fe89277c9ceb0d6af0aa665bcf24a41d8b1b79cd upstream.
+commit 39c20c4e83b9f78988541d829aa34668904e54a0 upstream.
 
-During the qi_check_fault process after an IOMMU ITE event, requests at
-odd-numbered positions in the queue are set to QI_ABORT, only satisfying
-single-request submissions. However, qi_submit_sync now supports multiple
-simultaneous submissions, and can't guarantee that the wait_desc will be
-at an odd-numbered position. Therefore, if an item times out, IOMMU can't
-re-initiate the request, resulting in an infinite polling wait.
+In intel_svm_set_dev_pasid(), the driver unconditionally manages the IOPF
+handling during a domain transition. However, commit a86fb7717320
+("iommu/vt-d: Allow SVA with device-specific IOPF") introduced support for
+SVA on devices that handle page faults internally without utilizing the
+PCI PRI. On such devices, the IOMMU-side IOPF infrastructure is not
+required. Calling iopf_for_domain_replace() on these devices is incorrect
+and can lead to unexpected failures during PASID attachment or unwinding.
 
-This modifies the process by setting the status of all requests already
-fetched by IOMMU and recorded as QI_IN_USE status (including wait_desc
-requests) to QI_ABORT, thus enabling multiple requests to be resubmitted.
+Add a check for info->pri_supported to ensure that the IOPF queue logic
+is only invoked for devices that actually rely on the IOMMU's PRI-based
+fault handling.
 
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per qi_submit_sync()")
+Fixes: 17fce9d2336d ("iommu/vt-d: Put iopf enablement in domain attach path")
 Cc: stable@vger.kernel.org
-Signed-off-by: Guanghui Feng <guanghuifeng@linux.alibaba.com>
-Tested-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Shuai Xue <xueshuai@linux.alibaba.com>
-Reviewed-by: Samiullah Khawaja <skhawaja@google.com>
-Link: https://lore.kernel.org/r/20260306101516.3885775-1-guanghuifeng@linux.alibaba.com
+Suggested-by: Kevin Tian <kevin.tian@intel.com>
+Reviewed-by: Kevin Tian <kevin.tian@intel.com>
 Signed-off-by: Lu Baolu <baolu.lu@linux.intel.com>
-Fixes: 8a1d82462540 ("iommu/vt-d: Multiple descriptors per  qi_submit_sync()")
+Link: https://lore.kernel.org/r/20260310075520.295104-1-baolu.lu@linux.intel.com
 Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/intel/dmar.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/iommu/intel/svm.c |   12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1314,7 +1314,6 @@ static int qi_check_fault(struct intel_i
- 	if (fault & DMA_FSTS_ITE) {
- 		head = readl(iommu->reg + DMAR_IQH_REG);
- 		head = ((head >> shift) - 1 + QI_LENGTH) % QI_LENGTH;
--		head |= 1;
- 		tail = readl(iommu->reg + DMAR_IQT_REG);
- 		tail = ((tail >> shift) - 1 + QI_LENGTH) % QI_LENGTH;
+--- a/drivers/iommu/intel/svm.c
++++ b/drivers/iommu/intel/svm.c
+@@ -164,9 +164,12 @@ static int intel_svm_set_dev_pasid(struc
+ 	if (IS_ERR(dev_pasid))
+ 		return PTR_ERR(dev_pasid);
  
-@@ -1331,7 +1330,7 @@ static int qi_check_fault(struct intel_i
- 		do {
- 			if (qi->desc_status[head] == QI_IN_USE)
- 				qi->desc_status[head] = QI_ABORT;
--			head = (head - 2 + QI_LENGTH) % QI_LENGTH;
-+			head = (head - 1 + QI_LENGTH) % QI_LENGTH;
- 		} while (head != tail);
+-	ret = iopf_for_domain_replace(domain, old, dev);
+-	if (ret)
+-		goto out_remove_dev_pasid;
++	/* SVA with non-IOMMU/PRI IOPF handling is allowed. */
++	if (info->pri_supported) {
++		ret = iopf_for_domain_replace(domain, old, dev);
++		if (ret)
++			goto out_remove_dev_pasid;
++	}
  
- 		/*
+ 	/* Setup the pasid table: */
+ 	sflags = cpu_feature_enabled(X86_FEATURE_LA57) ? PASID_FLAG_FL5LP : 0;
+@@ -181,7 +184,8 @@ static int intel_svm_set_dev_pasid(struc
+ 
+ 	return 0;
+ out_unwind_iopf:
+-	iopf_for_domain_replace(old, domain, dev);
++	if (info->pri_supported)
++		iopf_for_domain_replace(old, domain, dev);
+ out_remove_dev_pasid:
+ 	domain_remove_dev_pasid(domain, dev, pasid);
+ 	return ret;
 
 
