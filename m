@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19A913CC9E9;
-	Mon, 23 Mar 2026 15:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656433CCFA1;
+	Mon, 23 Mar 2026 15:20:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279212; cv=none; b=GyRR/OwlNxbDr68ZZGpPpIiwgq/1/YbDUoKyPK58dqtGHHQMri6WUSRXuTg8SQ7BBuoSyFRTCy9xbQH0PugttMgnBP+/UiFT1qdn9UGnMMLtuRTia9es1hBZa2dhyhdVhPYSoHnSwyBfBzCu1soC5Pvu5Bax8GI7vAd6znVQ86M=
+	t=1774279215; cv=none; b=WV95d77fAhVxTsX21Ap2aeVmxT34h67acLY7aizVR2XSL0nI+q+E8f1EMPvsGSAfym5FwMVcEiL3CcEXyiGq0kU/x0rGQHi9wUGqlb0GhowCc1V4JB0MjigyiCeSZt6/xmS7z+Amj6rvsyR7wPIX4y3UuKNNdmZABqtf6prhQQ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279212; c=relaxed/simple;
-	bh=ZG2RI/yE7y3T2SbmDcVz2I3yLnhZ09ZVTRTodNEdCWA=;
+	s=arc-20240116; t=1774279215; c=relaxed/simple;
+	bh=SoYOVKsZaxRLv/+3P3YUqkujmW+nxY0rd8+eeyi9j8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ea5/zeqdGV6O+syTOCjReDludqwhzpUuT630+IqG0UFnMQizEgyvCrI4GWQSj+R+oMG+q9zYLIsWKVStmVjH/gIVS4oY3/J9uqCtsHXr/7bl12jYc1Kihdo9QUGdjt1Z1rF9OF+cdOpaueQvJpiCVE1rX3RT+P0JsvqzSqKOmqY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OFajC6r0; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=hEz7hUGp+MasyYPA/KB3K1XLPiJ16FqeeuuCnqn7Rt5vxferByWNIK9fN+bUOTaBT7uYcX7bZ33vIWh7QQUkexvSQBkM5Bc0RAuZiPYRkfWZ45dLUJxpGUaWumKdS5qRJCd7AxksHvcywsytJWCZk5jQvyEowueLAXvF06tFxNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a6ErZ41s; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OFajC6r0"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C31C2BC9E;
-	Mon, 23 Mar 2026 15:20:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a6ErZ41s"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D358C4AF0B;
+	Mon, 23 Mar 2026 15:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279211;
-	bh=ZG2RI/yE7y3T2SbmDcVz2I3yLnhZ09ZVTRTodNEdCWA=;
+	s=korg; t=1774279215;
+	bh=SoYOVKsZaxRLv/+3P3YUqkujmW+nxY0rd8+eeyi9j8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OFajC6r02MwhsrirTd/HrgES1dM/JJVIjN1DUK4PfweTa29MkR6N00se4xTe6NB6z
-	 IUfGEEY3kzD/ux2xe56dnIqCUSDn142wgIfJcziypTzZJ7rndmqd3fcx/qqNLBgb6G
-	 0kKbJyQ8nRNYSww62wTTnxYNEQlli433TuHHVYZg=
+	b=a6ErZ41sBOnZUvAfb2EZ8gPxrpwuk/PFD/qtoVuNlS34nBxodZ0Bsi2Ab4rJJCAmN
+	 Em/XArKKzHqUyLn8YosXWYLcbA0deHMPQ1ATeWtmgoK9bqobwCeEeL8nMI/qpMfTIL
+	 XExabWVTzP/gI02bBWxcB8IMwYMTN3B2VKGVVV5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Antoniu Miclaus <antoniu.miclaus@analog.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 468/567] iio: light: bh1780: fix PM runtime leak on error path
-Date: Mon, 23 Mar 2026 14:46:28 +0100
-Message-ID: <20260323134545.564306673@linuxfoundation.org>
+	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 459/567] Bluetooth: L2CAP: Fix type confusion in l2cap_ecred_reconf_rsp()
+Date: Mon, 23 Mar 2026 14:46:19 +0100
+Message-ID: <20260323134545.339913746@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -47,47 +44,62 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Antoniu Miclaus <antoniu.miclaus@analog.com>
+From: Lukas Johannes Möller <research@johannes-moeller.dev>
 
-[ Upstream commit dd72e6c3cdea05cad24e99710939086f7a113fb5 ]
+commit 15145675690cab2de1056e7ed68e59cbd0452529 upstream.
 
-Move pm_runtime_put_autosuspend() before the error check to ensure
-the PM runtime reference count is always decremented after
-pm_runtime_get_sync(), regardless of whether the read operation
-succeeds or fails.
+l2cap_ecred_reconf_rsp() casts the incoming data to struct
+l2cap_ecred_conn_rsp (the ECRED *connection* response, 8 bytes with
+result at offset 6) instead of struct l2cap_ecred_reconf_rsp (2 bytes
+with result at offset 0).
 
-Fixes: 1f0477f18306 ("iio: light: new driver for the ROHM BH1780")
-Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-[ moved both pm_runtime_mark_last_busy() and pm_runtime_put_autosuspend() before the error check instead of just pm_runtime_put_autosuspend() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This causes two problems:
+
+ - The sizeof(*rsp) length check requires 8 bytes instead of the
+   correct 2, so valid L2CAP_ECRED_RECONF_RSP packets are rejected
+   with -EPROTO.
+
+ - rsp->result reads from offset 6 instead of offset 0, returning
+   wrong data when the packet is large enough to pass the check.
+
+Fix by using the correct type.  Also pass the already byte-swapped
+result variable to BT_DBG instead of the raw __le16 field.
+
+Fixes: 15f02b910562 ("Bluetooth: L2CAP: Add initial code for Enhanced Credit Based Mode")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/light/bh1780.c |    4 ++--
+ net/bluetooth/l2cap_core.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/light/bh1780.c
-+++ b/drivers/iio/light/bh1780.c
-@@ -109,10 +109,10 @@ static int bh1780_read_raw(struct iio_de
- 		case IIO_LIGHT:
- 			pm_runtime_get_sync(&bh1780->client->dev);
- 			value = bh1780_read_word(bh1780, BH1780_REG_DLOW);
--			if (value < 0)
--				return value;
- 			pm_runtime_mark_last_busy(&bh1780->client->dev);
- 			pm_runtime_put_autosuspend(&bh1780->client->dev);
-+			if (value < 0)
-+				return value;
- 			*val = value;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -5372,7 +5372,7 @@ static inline int l2cap_ecred_reconf_rsp
+ 					 u8 *data)
+ {
+ 	struct l2cap_chan *chan, *tmp;
+-	struct l2cap_ecred_conn_rsp *rsp = (void *) data;
++	struct l2cap_ecred_reconf_rsp *rsp = (void *)data;
+ 	u16 result;
  
- 			return IIO_VAL_INT;
+ 	if (cmd_len < sizeof(*rsp))
+@@ -5380,7 +5380,7 @@ static inline int l2cap_ecred_reconf_rsp
+ 
+ 	result = __le16_to_cpu(rsp->result);
+ 
+-	BT_DBG("result 0x%4.4x", rsp->result);
++	BT_DBG("result 0x%4.4x", result);
+ 
+ 	if (!result)
+ 		return 0;
 
 
