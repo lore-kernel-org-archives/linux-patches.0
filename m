@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFB4323B62C;
-	Mon, 23 Mar 2026 14:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3840323B62C;
+	Mon, 23 Mar 2026 14:52:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277539; cv=none; b=ERbbfMxV6dvrU4fLvxxnMq7PfyEiYp/KdmTSzAvbmy2qKzB7p3LaP8ULYvrWi+to1aXLHmbCB/VH7pYBV2jtYXEKGbXfMYfP4XStgJN446Kjhx7rW9Gila7+BAwyZSiRfXXc9i5u25I8WFWpZ/4jHndFuFYuhEwjxl3Q2B640EA=
+	t=1774277542; cv=none; b=pA9x+ITP2o/M0s0+hY+1EKNHAO4CwNhmdws2mWa63ZMcDLHaxa4uHuP0SHYbFqk02Z6XEVt3giGHxkuEnb5kg9k2WpPnVdXSLVIuZwoIBqKf8ExvJy6NInvncS9VWhjP1cmiBXyetZ+o9JHba7bShZnURRECHGFFj6KqrrGJmWo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277539; c=relaxed/simple;
-	bh=OPkzWhV50w1j6dvubLraBzqiy5peUF/SZNnIw9BBOhM=;
+	s=arc-20240116; t=1774277542; c=relaxed/simple;
+	bh=mbD5WIVvIaUpYORxZGbAcQFkzw5kpyR1RB8c2VwwLrk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cLhBEqzwmXS73kfIeqMXrHhEp7+6j15dNq2c0pXW7pVefDqv8WCSxX7iTrqtIt2iAOXdUx1k5HGla0AORcxhJ2xdDKA6mRsQqbq/5qRnUSo2Dgi4VWkIGBbEsv3j8ihxqdDATz9ONR+NqLl9K8Y00yvl3ycLRV1femIDlDJAoPw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Cp6uQ/ey; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s1X1Ovt40EjGORyl1/jBZ4lb7HCuQkSO5SEQEHfZbc2TYatCnu6H85pF2uYYi9A0IQC+dK3kQFgSfFY+Wx8+ifZkD0rS4AHsXR7h8P1x3Vo9BB0PBn08CJsjpEBNhrz/fiokdDzAzMTFyi0SaDmOQ4/4EloybJuPotIwyxTdRnI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXuxdkD6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Cp6uQ/ey"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6568AC2BCB3;
-	Mon, 23 Mar 2026 14:52:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXuxdkD6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE92DC4CEF7;
+	Mon, 23 Mar 2026 14:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277538;
-	bh=OPkzWhV50w1j6dvubLraBzqiy5peUF/SZNnIw9BBOhM=;
+	s=korg; t=1774277542;
+	bh=mbD5WIVvIaUpYORxZGbAcQFkzw5kpyR1RB8c2VwwLrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cp6uQ/eyq2l2dRhcvU9NNKnc5ktc88oKs79Uc4Rff5TNgA4mijDWwmom+6cF/OK0h
-	 GpXg628QIijeHbWj+d9A5my5W+l3p0eD7rDQzsIXiTycb5OVkARTt1rra34vsGcEgS
-	 AIP4l6awa1mTolNo9uYKX7U3SpSHEpXnc/13gikg=
+	b=mXuxdkD6JeN3no6oUXqincMpeV//hY3UK5K6rPYAPWNK6MM7Ge8l0NW00kyzU+1tI
+	 RC+pkAfviia8IiwA3cYNjWlsbi1jsqB+c8FlsnyI7zioe2gm5lBuqQKAipn/37GgGn
+	 x5HV53EhIdMbhzvwL67qXMtr5mPO91ib++IXO+iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 017/567] btrfs: move btrfs_extref_hash into inode-item.h
-Date: Mon, 23 Mar 2026 14:38:57 +0100
-Message-ID: <20260323134534.192225007@linuxfoundation.org>
+Subject: [PATCH 6.6 016/567] btrfs: remove btrfs_crc32c wrapper
+Date: Mon, 23 Mar 2026 14:38:56 +0100
+Message-ID: <20260323134534.168944393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,10 +55,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 98e4f060c4f565a3b62e8cdfe6b89f59167312b6 ]
+[ Upstream commit 03e86348965a5fa13593db8682132033d663f7ee ]
 
-Ideally this would be un-inlined, but that is a cleanup for later.  For
-now move this into inode-item.h, which is where the extref code lives.
+This simply sends the same arguments into crc32c(), and is just used in
+a few places.  Remove this wrapper and directly call crc32c() in these
+instances.
 
 Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: Anand Jain <anand.jain@oracle.com>
@@ -68,55 +69,93 @@ Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 511dc8912ae3 ("btrfs: fix incorrect key offset in error message in check_dev_extent_item()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h      | 9 ---------
- fs/btrfs/inode-item.h | 7 +++++++
- 2 files changed, 7 insertions(+), 9 deletions(-)
+ fs/btrfs/ctree.h            | 5 -----
+ fs/btrfs/extent-tree.c      | 6 +++---
+ fs/btrfs/free-space-cache.c | 4 ++--
+ fs/btrfs/send.c             | 6 +++---
+ 4 files changed, 8 insertions(+), 13 deletions(-)
 
 diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 11691c70ba791..1743aa21fa6e5 100644
+index 3108852ff47d7..11691c70ba791 100644
 --- a/fs/btrfs/ctree.h
 +++ b/fs/btrfs/ctree.h
-@@ -477,15 +477,6 @@ static inline u64 btrfs_name_hash(const char *name, int len)
-        return crc32c((u32)~1, name, len);
- }
+@@ -472,11 +472,6 @@ static inline u32 BTRFS_MAX_XATTR_SIZE(const struct btrfs_fs_info *info)
+ #define BTRFS_BYTES_TO_BLKS(fs_info, bytes) \
+ 				((bytes) >> (fs_info)->sectorsize_bits)
  
--/*
-- * Figure the key offset of an extended inode ref
-- */
--static inline u64 btrfs_extref_hash(u64 parent_objectid, const char *name,
--                                   int len)
+-static inline u32 btrfs_crc32c(u32 crc, const void *address, unsigned length)
 -{
--       return (u64) crc32c(parent_objectid, name, len);
+-	return crc32c(crc, address, length);
 -}
 -
- static inline gfp_t btrfs_alloc_write_mask(struct address_space *mapping)
+ static inline u64 btrfs_name_hash(const char *name, int len)
  {
- 	return mapping_gfp_constraint(mapping, ~__GFP_FS);
-diff --git a/fs/btrfs/inode-item.h b/fs/btrfs/inode-item.h
-index d43633d5620f2..0f1730dabce6d 100644
---- a/fs/btrfs/inode-item.h
-+++ b/fs/btrfs/inode-item.h
-@@ -4,6 +4,7 @@
- #define BTRFS_INODE_ITEM_H
+        return crc32c((u32)~1, name, len);
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 774bdafc822c1..1528a81b2c307 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -414,11 +414,11 @@ u64 hash_extent_data_ref(u64 root_objectid, u64 owner, u64 offset)
+ 	__le64 lenum;
  
- #include <linux/types.h>
-+#include <linux/crc32c.h>
+ 	lenum = cpu_to_le64(root_objectid);
+-	high_crc = btrfs_crc32c(high_crc, &lenum, sizeof(lenum));
++	high_crc = crc32c(high_crc, &lenum, sizeof(lenum));
+ 	lenum = cpu_to_le64(owner);
+-	low_crc = btrfs_crc32c(low_crc, &lenum, sizeof(lenum));
++	low_crc = crc32c(low_crc, &lenum, sizeof(lenum));
+ 	lenum = cpu_to_le64(offset);
+-	low_crc = btrfs_crc32c(low_crc, &lenum, sizeof(lenum));
++	low_crc = crc32c(low_crc, &lenum, sizeof(lenum));
  
- struct btrfs_trans_handle;
- struct btrfs_root;
-@@ -76,6 +77,12 @@ static inline void btrfs_inode_split_flags(u64 inode_item_flags,
- 	*ro_flags = (u32)(inode_item_flags >> 32);
+ 	return ((u64)high_crc << 31) ^ (u64)low_crc;
  }
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index edf3612ba3108..c6e3b9a2921ab 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -545,7 +545,7 @@ static void io_ctl_set_crc(struct btrfs_io_ctl *io_ctl, int index)
+ 	if (index == 0)
+ 		offset = sizeof(u32) * io_ctl->num_pages;
  
-+/* Figure the key offset of an extended inode ref. */
-+static inline u64 btrfs_extref_hash(u64 parent_objectid, const char *name, int len)
-+{
-+       return (u64)crc32c(parent_objectid, name, len);
-+}
-+
- int btrfs_truncate_inode_items(struct btrfs_trans_handle *trans,
- 			       struct btrfs_root *root,
- 			       struct btrfs_truncate_control *control);
+-	crc = btrfs_crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
++	crc = crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
+ 	btrfs_crc32c_final(crc, (u8 *)&crc);
+ 	io_ctl_unmap_page(io_ctl);
+ 	tmp = page_address(io_ctl->pages[0]);
+@@ -567,7 +567,7 @@ static int io_ctl_check_crc(struct btrfs_io_ctl *io_ctl, int index)
+ 	val = *tmp;
+ 
+ 	io_ctl_map_page(io_ctl, 0);
+-	crc = btrfs_crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
++	crc = crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
+ 	btrfs_crc32c_final(crc, (u8 *)&crc);
+ 	if (val != crc) {
+ 		btrfs_err_rl(io_ctl->fs_info,
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index 6768e2231d610..4fa05ee81d434 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -814,7 +814,7 @@ static int send_cmd(struct send_ctx *sctx)
+ 	put_unaligned_le32(sctx->send_size - sizeof(*hdr), &hdr->len);
+ 	put_unaligned_le32(0, &hdr->crc);
+ 
+-	crc = btrfs_crc32c(0, (unsigned char *)sctx->send_buf, sctx->send_size);
++	crc = crc32c(0, (unsigned char *)sctx->send_buf, sctx->send_size);
+ 	put_unaligned_le32(crc, &hdr->crc);
+ 
+ 	ret = write_buf(sctx->send_filp, sctx->send_buf, sctx->send_size,
+@@ -5740,8 +5740,8 @@ static int send_encoded_extent(struct send_ctx *sctx, struct btrfs_path *path,
+ 	hdr = (struct btrfs_cmd_header *)sctx->send_buf;
+ 	hdr->len = cpu_to_le32(sctx->send_size + disk_num_bytes - sizeof(*hdr));
+ 	hdr->crc = 0;
+-	crc = btrfs_crc32c(0, sctx->send_buf, sctx->send_size);
+-	crc = btrfs_crc32c(crc, sctx->send_buf + data_offset, disk_num_bytes);
++	crc = crc32c(0, sctx->send_buf, sctx->send_size);
++	crc = crc32c(crc, sctx->send_buf + data_offset, disk_num_bytes);
+ 	hdr->crc = cpu_to_le32(crc);
+ 
+ 	ret = write_buf(sctx->send_filp, sctx->send_buf, sctx->send_size,
 -- 
 2.51.0
 
