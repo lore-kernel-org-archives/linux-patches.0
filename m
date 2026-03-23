@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A051F246778;
-	Mon, 23 Mar 2026 16:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 712EA283FC8;
+	Mon, 23 Mar 2026 16:26:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283175; cv=none; b=R1X++vzBqsTJCd8Ky5o67v0+UiNH4M7NbplX7YN2vaOfLoGMTePECQVflDQc644wE47Iy4uFKNEbg6XdvOncL1UdjC+5Ie/gLZUqSjB66to2jt286cPcx31yi34X68STgoV49yjIgzL8+t6cy3Rh3abyXDl6tMhx7LLC46uuOMA=
+	t=1774283178; cv=none; b=P+NRxtPaVA8WkgRG+kt45/KVNj8b/t2xo37Vu89A9s/dlYqtSXUNVAduva7ObEVa+JtIL1h8c7h8nAeZ5LVLznjiIKIfQZD3IMZqyyDWoDxLp3N+55mV/B/W6h7c+t67bXPb/rNf5pjOqj2cuzVSC+NrlSrFdTSSGQtr/lZgxV8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283175; c=relaxed/simple;
-	bh=CnJHkERJh01MFzZTIlSVfrKW3Ea3fONsiJxeSWe+/MA=;
+	s=arc-20240116; t=1774283178; c=relaxed/simple;
+	bh=1CUn2DU8t3JX0puNA3BDa4fvm1f9Uw82nply509SDwQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Jsq/FP2AwnwVtIBvBmD8MU1OdsRcSOXU9eqH/T0KahOx0p2zVt1J0EYiX221d9Zv86A1QM0LboMweGfeFRacHi0SsCUn3HKnrSEg/ADTQK/GaZ4q9NTNfPj3YBMWADdZh8AO0JNfQnC27vGjI69J+/1VwtGjCKu5jNw8x/hGYjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QHtqDYE5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=K/93hsguzRM4HYwnYIeSC6Y2LEM8NUkNSQ2RY/zmnLvIvs9v3YpfqnB8O63C1C/GvndenOxt+Jgl2Liyn8h3ZfeXghQJsGsgRBWFvhrIFtZDpQ7favOgvHXqiN468LHMQ6O7BnL0x0IH4FD0UDBaB/jd1N0RbP9s6EbHiWcOMPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XwWg3sZI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QHtqDYE5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 300E7C4CEF7;
-	Mon, 23 Mar 2026 16:26:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XwWg3sZI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02434C4CEF7;
+	Mon, 23 Mar 2026 16:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283175;
-	bh=CnJHkERJh01MFzZTIlSVfrKW3Ea3fONsiJxeSWe+/MA=;
+	s=korg; t=1774283178;
+	bh=1CUn2DU8t3JX0puNA3BDa4fvm1f9Uw82nply509SDwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHtqDYE5s9dI7MZ4/PpPLjl/AHVPtqVrDDpSCUEF4kdEpmofbOhgRSI8X5c0YXA7K
-	 aWHaEB2l2LIrSPRLqjvGmmpmzbFAuGi1lnE8Y7/u2e0ojlHA1+3XVFrkdtqAYCx1hq
-	 chfS2Q+e38Ik+qlG0JcVdGrfidSB5hkTruIeY6ek=
+	b=XwWg3sZIL+Nn8KnC7Y28roCqEFqK09QS2tsWepqWfm6frLw5piXXVy7Rt3wbNstio
+	 06HF+RwokS2hNVOjbJqlVAARsIgOp5Ki5Ii6KoMwVxZzUOTAnUUDjB2A2gnJKvGcyP
+	 roSoK+NmnWeQuoI47UmibS9o+QIb+h8phdAQhUJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 431/481] ACPI: processor: Fix previous acpi_processor_errata_piix4() fix
-Date: Mon, 23 Mar 2026 14:46:53 +0100
-Message-ID: <20260323134535.706034875@linuxfoundation.org>
+Subject: [PATCH 6.1 432/481] net: macb: fix uninitialized rx_fs_lock
+Date: Mon, 23 Mar 2026 14:46:54 +0100
+Message-ID: <20260323134535.730943280@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,72 +51,76 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit bf504b229cb8d534eccbaeaa23eba34c05131e25 ]
+[ Upstream commit 34b11cc56e4369bc08b1f4c4a04222d75ed596ce ]
 
-After commi f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference
-in acpi_processor_errata_piix4()"), device pointers may be dereferenced
-after dropping references to the device objects pointed to by them,
-which may cause a use-after-free to occur.
+If hardware doesn't support RX Flow Filters, rx_fs_lock spinlock is not
+initialized leading to the following assertion splat triggerable via
+set_rxnfc callback.
 
-Moreover, debug messages about enabling the errata may be printed
-if the errata flags corresponding to them are unset.
+INFO: trying to register non-static key.
+The code is fine but needs lockdep annotation, or maybe
+you didn't initialize this object before use?
+turning off the locking correctness validator.
+CPU: 1 PID: 949 Comm: syz.0.6 Not tainted 6.1.164+ #113
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
+ assign_lock_key kernel/locking/lockdep.c:974 [inline]
+ register_lock_class+0x141b/0x17f0 kernel/locking/lockdep.c:1287
+ __lock_acquire+0x74f/0x6c40 kernel/locking/lockdep.c:4928
+ lock_acquire kernel/locking/lockdep.c:5662 [inline]
+ lock_acquire+0x190/0x4b0 kernel/locking/lockdep.c:5627
+ __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
+ _raw_spin_lock_irqsave+0x33/0x50 kernel/locking/spinlock.c:162
+ gem_del_flow_filter drivers/net/ethernet/cadence/macb_main.c:3562 [inline]
+ gem_set_rxnfc+0x533/0xac0 drivers/net/ethernet/cadence/macb_main.c:3667
+ ethtool_set_rxnfc+0x18c/0x280 net/ethtool/ioctl.c:961
+ __dev_ethtool net/ethtool/ioctl.c:2956 [inline]
+ dev_ethtool+0x229c/0x6290 net/ethtool/ioctl.c:3095
+ dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
+ sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
+ sock_ioctl+0x577/0x6d0 net/socket.c:1320
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:46 [inline]
+ do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
+ entry_SYSCALL_64_after_hwframe+0x6e/0xd8
 
-Address all of these issues by moving message printing to the points
-in the code where the errata flags are set.
+A more straightforward solution would be to always initialize rx_fs_lock,
+just like rx_fs_list.  However, in this case the driver set_rxnfc callback
+would return with a rather confusing error code, e.g. -EINVAL.  So deny
+set_rxnfc attempts directly if the RX filtering feature is not supported
+by hardware.
 
-Fixes: f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference in acpi_processor_errata_piix4()")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/linux-acpi/938e2206-def5-4b7a-9b2c-d1fd37681d8a@roeck-us.net/
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5975693.DvuYhMxLoT@rafael.j.wysocki
+Fixes: ae8223de3df5 ("net: macb: Added support for RX filtering")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Link: https://patch.msgid.link/20260316103826.74506-2-pchelkin@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_processor.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index 669398045c0fd..07acdaee6ce5c 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -96,6 +96,10 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
- 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
- 		if (ide_dev) {
- 			errata.piix4.bmisx = pci_resource_start(ide_dev, 4);
-+			if (errata.piix4.bmisx)
-+				dev_dbg(&ide_dev->dev,
-+					"Bus master activity detection (BM-IDE) erratum enabled\n");
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 471e3ebd7c5de..412a821148d7b 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -3770,6 +3770,9 @@ static int gem_set_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd)
+ 	struct macb *bp = netdev_priv(netdev);
+ 	int ret;
+ 
++	if (!(netdev->hw_features & NETIF_F_NTUPLE))
++		return -EOPNOTSUPP;
 +
- 			pci_dev_put(ide_dev);
- 		}
- 
-@@ -114,20 +118,17 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
- 		if (isa_dev) {
- 			pci_read_config_byte(isa_dev, 0x76, &value1);
- 			pci_read_config_byte(isa_dev, 0x77, &value2);
--			if ((value1 & 0x80) || (value2 & 0x80))
-+			if ((value1 & 0x80) || (value2 & 0x80)) {
- 				errata.piix4.fdma = 1;
-+				dev_dbg(&isa_dev->dev,
-+					"Type-F DMA livelock erratum (C3 disabled)\n");
-+			}
- 			pci_dev_put(isa_dev);
- 		}
- 
- 		break;
- 	}
- 
--	if (ide_dev)
--		dev_dbg(&ide_dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
--
--	if (isa_dev)
--		dev_dbg(&isa_dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
--
- 	return 0;
- }
- 
+ 	switch (cmd->cmd) {
+ 	case ETHTOOL_SRXCLSRLINS:
+ 		if ((cmd->fs.location >= bp->max_tuples)
 -- 
 2.51.0
 
