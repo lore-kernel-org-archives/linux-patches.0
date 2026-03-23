@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9433AC0D3;
-	Mon, 23 Mar 2026 16:11:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A0723AD539;
+	Mon, 23 Mar 2026 16:11:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282309; cv=none; b=VG/YGm8TMVjxZdMw8ZiFBoNotSj9j5jazAjoGrCM6f9vpD1Q+vcw5EvXTxdful5YwGJ7pFhsg97Ft5j/NgLfzYdlYsJTUT58nvigFT7qITrcPbK6d4bpOd3zgDZ1OevwLIaub7nU5w/wBpSyTY5D1ChOi2KgC7Y3dn3d+K8Mf20=
+	t=1774282312; cv=none; b=HjxnSi/rN7O4Bh3cS8S4hC3nMUqxMYMSuqgzd/UXdT88Z/KcjSEZVDr523FIpSPxDGtgrkMjM0OgJVd8vArGN+pJXEPk8Cil3bEikNz3nMD0peXQIXJcbY1jVacAcgaXD7B/MdvTkkltUCf9MifvBpZSLqB6YFTYWIOn4b3WYdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282309; c=relaxed/simple;
-	bh=6wJ+NEbOz/+Ftq5PDQHXxSl3uuSh2mzpQn6V0LIndcw=;
+	s=arc-20240116; t=1774282312; c=relaxed/simple;
+	bh=5MUeUEeEe55UjLw2G0kZg9lWAQCf1XY3n9jPXrtlu8o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fp5RDxokqL066+R+XUCTXC7qu4booTfVrYz2UbiuKbiIRvl4SZhiVRbB+4y3WP4jTPTjl3fDDt4mtHDMeni39bpADlDyZllWC4Jx+XVPGz2c0ycrjOdokxC/gGE7CDVY3XijpvROuSBizH89Jrz3p6XfJ62uX0SA+kW1u5gewko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c5u2zSIg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bDkYH7ONrTRl5EEAtoTuVFZdrFlOVNHibIl7Arzh0PyLgmuZbyCR86vhoyt2a/12YMgByU37M7EWUkwfvfc1KB7SFk09lR0OvhidvuIfla44Qh6AkQksGRotb15P8yw5wXMVhIq/Zu/cZsGrAwzyA05POniOTAGNkLYdWjaO4Os=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S5/Cgl7J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c5u2zSIg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45213C4CEF7;
-	Mon, 23 Mar 2026 16:11:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S5/Cgl7J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D462AC4CEF7;
+	Mon, 23 Mar 2026 16:11:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282309;
-	bh=6wJ+NEbOz/+Ftq5PDQHXxSl3uuSh2mzpQn6V0LIndcw=;
+	s=korg; t=1774282312;
+	bh=5MUeUEeEe55UjLw2G0kZg9lWAQCf1XY3n9jPXrtlu8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c5u2zSIguXmtBoP6FP7+j+XxZOZmpd5Pc7yKpkRnk+Qm+tkOgSjt2QZ3LpOML/8mW
-	 ciFDWPvYqrMEEJI/L2A9kzMueB/AZtztQ9t2RV+CSNKj53wu3IDK1/UE4sxSZa2crE
-	 HhlPON1XyBN+Bqiy+GLNDsJWnRVRcTEdyygc2VvM=
+	b=S5/Cgl7JzVUybz7fM7t2JKb5bw2TlC/WLhAf0daAlN1idZ08niDVxzsMKmXVZ6PW3
+	 Px7yAUNcR5tB5Yn2yxRmFQl7vXkFKHrHmeZ8owfS/unjTwhbZkNIcx7Y5/iyQzUHuQ
+	 eTPsWf7UZfCZ4NR0F2FVdv2CSB3RBLF9gyfxYxwk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 092/481] smb: client: Dont log plaintext credentials in cifs_set_cifscreds
-Date: Mon, 23 Mar 2026 14:41:14 +0100
-Message-ID: <20260323134527.520613214@linuxfoundation.org>
+	Rae Moar <rmoar@google.com>,
+	Daniel Latypov <dlatypov@google.com>,
+	David Gow <davidgow@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 110/481] kunit: tool: parse KTAP compliant test output
+Date: Mon, 23 Mar 2026 14:41:32 +0100
+Message-ID: <20260323134527.963358077@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,33 +53,312 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Rae Moar <rmoar@google.com>
 
-commit 2f37dc436d4e61ff7ae0b0353cf91b8c10396e4d upstream.
+[ Upstream commit 434498a6bee3db729dbdb7f131f3506f4dca85e8 ]
 
-When debug logging is enabled, cifs_set_cifscreds() logs the key
-payload and exposes the plaintext username and password. Remove the
-debug log to avoid exposing credentials.
+Change the KUnit parser to be able to parse test output that complies with
+the KTAP version 1 specification format found here:
+https://kernel.org/doc/html/latest/dev-tools/ktap.html. Ensure the parser
+is able to parse tests with the original KUnit test output format as
+well.
 
-Fixes: 8a8798a5ff90 ("cifs: fetch credentials out of keyring for non-krb5 auth multiuser mounts")
-Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+KUnit parser now accepts any of the following test output formats:
+
+Original KUnit test output format:
+
+ TAP version 14
+ 1..1
+   # Subtest: kunit-test-suite
+   1..3
+   ok 1 - kunit_test_1
+   ok 2 - kunit_test_2
+   ok 3 - kunit_test_3
+ # kunit-test-suite: pass:3 fail:0 skip:0 total:3
+ # Totals: pass:3 fail:0 skip:0 total:3
+ ok 1 - kunit-test-suite
+
+KTAP version 1 test output format:
+
+ KTAP version 1
+ 1..1
+   KTAP version 1
+   1..3
+   ok 1 kunit_test_1
+   ok 2 kunit_test_2
+   ok 3 kunit_test_3
+ ok 1 kunit-test-suite
+
+New KUnit test output format (changes made in the next patch of
+this series):
+
+ KTAP version 1
+ 1..1
+   KTAP version 1
+   # Subtest: kunit-test-suite
+   1..3
+   ok 1 kunit_test_1
+   ok 2 kunit_test_2
+   ok 3 kunit_test_3
+ # kunit-test-suite: pass:3 fail:0 skip:0 total:3
+ # Totals: pass:3 fail:0 skip:0 total:3
+ ok 1 kunit-test-suite
+
+Signed-off-by: Rae Moar <rmoar@google.com>
+Reviewed-by: Daniel Latypov <dlatypov@google.com>
+Reviewed-by: David Gow <davidgow@google.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Stable-dep-of: 40804c4974b8 ("kunit: tool: copy caller args in run_kernel to prevent mutation")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/connect.c |    1 -
- 1 file changed, 1 deletion(-)
+ tools/testing/kunit/kunit_parser.py           | 79 ++++++++++++-------
+ tools/testing/kunit/kunit_tool_test.py        | 14 ++++
+ .../test_data/test_parse_ktap_output.log      |  8 ++
+ .../test_data/test_parse_subtest_header.log   |  7 ++
+ 4 files changed, 80 insertions(+), 28 deletions(-)
+ create mode 100644 tools/testing/kunit/test_data/test_parse_ktap_output.log
+ create mode 100644 tools/testing/kunit/test_data/test_parse_subtest_header.log
 
---- a/fs/smb/client/connect.c
-+++ b/fs/smb/client/connect.c
-@@ -2178,7 +2178,6 @@ cifs_set_cifscreds(struct smb3_fs_contex
- 	/* find first : in payload */
- 	payload = upayload->data;
- 	delim = strnchr(payload, upayload->datalen, ':');
--	cifs_dbg(FYI, "payload=%s\n", payload);
- 	if (!delim) {
- 		cifs_dbg(FYI, "Unable to find ':' in payload (datalen=%d)\n",
- 			 upayload->datalen);
+diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
+index 94dba66feec50..259ce7696587b 100644
+--- a/tools/testing/kunit/kunit_parser.py
++++ b/tools/testing/kunit/kunit_parser.py
+@@ -450,6 +450,7 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
+ 	- '# Subtest: [test name]'
+ 	- '[ok|not ok] [test number] [-] [test name] [optional skip
+ 		directive]'
++	- 'KTAP version [version number]'
+ 
+ 	Parameters:
+ 	lines - LineStream of KTAP output to parse
+@@ -458,8 +459,9 @@ def parse_diagnostic(lines: LineStream) -> List[str]:
+ 	Log of diagnostic lines
+ 	"""
+ 	log = []  # type: List[str]
+-	while lines and not TEST_RESULT.match(lines.peek()) and not \
+-			TEST_HEADER.match(lines.peek()):
++	non_diagnostic_lines = [TEST_RESULT, TEST_HEADER, KTAP_START]
++	while lines and not any(re.match(lines.peek())
++			for re in non_diagnostic_lines):
+ 		log.append(lines.pop())
+ 	return log
+ 
+@@ -505,11 +507,15 @@ def print_test_header(test: Test) -> None:
+ 	test - Test object representing current test being printed
+ 	"""
+ 	message = test.name
++	if message != "":
++		# Add a leading space before the subtest counts only if a test name
++		# is provided using a "# Subtest" header line.
++		message += " "
+ 	if test.expected_count:
+ 		if test.expected_count == 1:
+-			message += ' (1 subtest)'
++			message += '(1 subtest)'
+ 		else:
+-			message += f' ({test.expected_count} subtests)'
++			message += f'({test.expected_count} subtests)'
+ 	stdout.print_with_timestamp(format_test_divider(message, len(message)))
+ 
+ def print_log(log: Iterable[str]) -> None:
+@@ -656,7 +662,7 @@ def bubble_up_test_results(test: Test) -> None:
+ 	elif test.counts.get_status() == TestStatus.TEST_CRASHED:
+ 		test.status = TestStatus.TEST_CRASHED
+ 
+-def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
++def parse_test(lines: LineStream, expected_num: int, log: List[str], is_subtest: bool) -> Test:
+ 	"""
+ 	Finds next test to parse in LineStream, creates new Test object,
+ 	parses any subtests of the test, populates Test object with all
+@@ -674,15 +680,32 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
+ 	1..4
+ 	[subtests]
+ 
+-	- Subtest header line
++	- Subtest header (must include either the KTAP version line or
++	  "# Subtest" header line)
+ 
+-	Example:
++	Example (preferred format with both KTAP version line and
++	"# Subtest" line):
++
++	KTAP version 1
++	# Subtest: name
++	1..3
++	[subtests]
++	ok 1 name
++
++	Example (only "# Subtest" line):
+ 
+ 	# Subtest: name
+ 	1..3
+ 	[subtests]
+ 	ok 1 name
+ 
++	Example (only KTAP version line, compliant with KTAP v1 spec):
++
++	KTAP version 1
++	1..3
++	[subtests]
++	ok 1 name
++
+ 	- Test result line
+ 
+ 	Example:
+@@ -694,28 +717,29 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
+ 	expected_num - expected test number for test to be parsed
+ 	log - list of strings containing any preceding diagnostic lines
+ 		corresponding to the current test
++	is_subtest - boolean indicating whether test is a subtest
+ 
+ 	Return:
+ 	Test object populated with characteristics and any subtests
+ 	"""
+ 	test = Test()
+ 	test.log.extend(log)
+-	parent_test = False
+-	main = parse_ktap_header(lines, test)
+-	if main:
+-		# If KTAP/TAP header is found, attempt to parse
++	if not is_subtest:
++		# If parsing the main/top-level test, parse KTAP version line and
+ 		# test plan
+ 		test.name = "main"
++		ktap_line = parse_ktap_header(lines, test)
+ 		parse_test_plan(lines, test)
+ 		parent_test = True
+ 	else:
+-		# If KTAP/TAP header is not found, test must be subtest
+-		# header or test result line so parse attempt to parser
+-		# subtest header
+-		parent_test = parse_test_header(lines, test)
++		# If not the main test, attempt to parse a test header containing
++		# the KTAP version line and/or subtest header line
++		ktap_line = parse_ktap_header(lines, test)
++		subtest_line = parse_test_header(lines, test)
++		parent_test = (ktap_line or subtest_line)
+ 		if parent_test:
+-			# If subtest header is found, attempt to parse
+-			# test plan and print header
++			# If KTAP version line and/or subtest header is found, attempt
++			# to parse test plan and print test header
+ 			parse_test_plan(lines, test)
+ 			print_test_header(test)
+ 	expected_count = test.expected_count
+@@ -730,7 +754,7 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
+ 		sub_log = parse_diagnostic(lines)
+ 		sub_test = Test()
+ 		if not lines or (peek_test_name_match(lines, test) and
+-				not main):
++				is_subtest):
+ 			if expected_count and test_num <= expected_count:
+ 				# If parser reaches end of test before
+ 				# parsing expected number of subtests, print
+@@ -744,20 +768,19 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
+ 				test.log.extend(sub_log)
+ 				break
+ 		else:
+-			sub_test = parse_test(lines, test_num, sub_log)
++			sub_test = parse_test(lines, test_num, sub_log, True)
+ 		subtests.append(sub_test)
+ 		test_num += 1
+ 	test.subtests = subtests
+-	if not main:
++	if is_subtest:
+ 		# If not main test, look for test result line
+ 		test.log.extend(parse_diagnostic(lines))
+-		if (parent_test and peek_test_name_match(lines, test)) or \
+-				not parent_test:
+-			parse_test_result(lines, test, expected_num)
+-		else:
++		if test.name != "" and not peek_test_name_match(lines, test):
+ 			test.add_error('missing subtest result line!')
++		else:
++			parse_test_result(lines, test, expected_num)
+ 
+-	# Check for there being no tests
++	# Check for there being no subtests within parent test
+ 	if parent_test and len(subtests) == 0:
+ 		# Don't override a bad status if this test had one reported.
+ 		# Assumption: no subtests means CRASHED is from Test.__init__()
+@@ -767,11 +790,11 @@ def parse_test(lines: LineStream, expected_num: int, log: List[str]) -> Test:
+ 
+ 	# Add statuses to TestCounts attribute in Test object
+ 	bubble_up_test_results(test)
+-	if parent_test and not main:
++	if parent_test and is_subtest:
+ 		# If test has subtests and is not the main test object, print
+ 		# footer.
+ 		print_test_footer(test)
+-	elif not main:
++	elif is_subtest:
+ 		print_test_result(test)
+ 	return test
+ 
+@@ -794,7 +817,7 @@ def parse_run_tests(kernel_output: Iterable[str]) -> Test:
+ 		test.add_error('could not find any KTAP output!')
+ 		test.status = TestStatus.FAILURE_TO_PARSE_TESTS
+ 	else:
+-		test = parse_test(lines, 0, [])
++		test = parse_test(lines, 0, [], False)
+ 		if test.status != TestStatus.NO_TESTS:
+ 			test.status = test.counts.get_status()
+ 	stdout.print_with_timestamp(DIVIDER)
+diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
+index 42cbf28bfa6c6..8334d660753c4 100755
+--- a/tools/testing/kunit/kunit_tool_test.py
++++ b/tools/testing/kunit/kunit_tool_test.py
+@@ -330,6 +330,20 @@ class KUnitParserTest(unittest.TestCase):
+ 		self.assertEqual(kunit_parser._summarize_failed_tests(result),
+ 			'Failures: all_failed_suite, some_failed_suite.test2')
+ 
++	def test_ktap_format(self):
++		ktap_log = test_data_path('test_parse_ktap_output.log')
++		with open(ktap_log) as file:
++			result = kunit_parser.parse_run_tests(file.readlines())
++		self.assertEqual(result.counts, kunit_parser.TestCounts(passed=3))
++		self.assertEqual('suite', result.subtests[0].name)
++		self.assertEqual('case_1', result.subtests[0].subtests[0].name)
++		self.assertEqual('case_2', result.subtests[0].subtests[1].name)
++
++	def test_parse_subtest_header(self):
++		ktap_log = test_data_path('test_parse_subtest_header.log')
++		with open(ktap_log) as file:
++			result = kunit_parser.parse_run_tests(file.readlines())
++		self.print_mock.assert_any_call(StrContains('suite (1 subtest)'))
+ 
+ def line_stream_from_strs(strs: Iterable[str]) -> kunit_parser.LineStream:
+ 	return kunit_parser.LineStream(enumerate(strs, start=1))
+diff --git a/tools/testing/kunit/test_data/test_parse_ktap_output.log b/tools/testing/kunit/test_data/test_parse_ktap_output.log
+new file mode 100644
+index 0000000000000..ccdf244e53039
+--- /dev/null
++++ b/tools/testing/kunit/test_data/test_parse_ktap_output.log
+@@ -0,0 +1,8 @@
++KTAP version 1
++1..1
++  KTAP version 1
++  1..3
++  ok 1 case_1
++  ok 2 case_2
++  ok 3 case_3
++ok 1 suite
+diff --git a/tools/testing/kunit/test_data/test_parse_subtest_header.log b/tools/testing/kunit/test_data/test_parse_subtest_header.log
+new file mode 100644
+index 0000000000000..216631092e7b1
+--- /dev/null
++++ b/tools/testing/kunit/test_data/test_parse_subtest_header.log
+@@ -0,0 +1,7 @@
++KTAP version 1
++1..1
++  KTAP version 1
++  # Subtest: suite
++  1..1
++  ok 1 test
++ok 1 suite
+\ No newline at end of file
+-- 
+2.51.0
+
 
 
