@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF4D3BBA1C;
-	Mon, 23 Mar 2026 15:06:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4B1C3BC681;
+	Mon, 23 Mar 2026 15:06:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278376; cv=none; b=u5ZttImTjFkKJwQTN1ngEOgu9ctWk+wPysJstpfWz1/nteKJunfM8m/alkP4vpp3iQZIN++9enfyuH5wFBhaiJCy3K3Zxehzz2jD/6Al/pDfeU049CxKfuj3A5zvI/nyqyURVaKh0sX+9nDovMNW6l0W6j4d39h52XTOMxcQVIc=
+	t=1774278379; cv=none; b=RE1htuZoY0nYcMivphjQZg+g2ar1wV3jworOHPpSYKR4lEhXFGJiOENOezsBCuTTR7KgzrVWTZocz/Svcpkv0E8Ku/yL8mQs3UorJX3TNhwVfWdyPtf2RtFOVBU1nKxvkup5tiiQ9023FdSWL10tTOi/BcU2/NQfhkuDcR4WrIg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278376; c=relaxed/simple;
-	bh=ga7q7hsHK8hnHVZlM0pFxuSRpHSACHoOfOdzvaP2QNg=;
+	s=arc-20240116; t=1774278379; c=relaxed/simple;
+	bh=i5WmP7r4N37HTO5bHh70rTpTnNTKvbbzHkt76x1Smqc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cSsMfut5T/M2yqe0eyw7SJmOST2Mvy2fJ8i+lQa2xsAqEPNLJlWlQdQwqR0MKqj3iB4pjYRumKNPsrqUnOg1qo4L71iRVEMu8QFSeHJNs2BlPRRzylKUtUifqA8JcE8/7oDzHRF7++qU13eq+N8gLoARCUQTIoLxiCQSfp3BpX4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2TC3pzby; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=haR3VqZTj912wv6Qd79WplHLJsLvv5IWEtv6cQ2/OIr37YBfsGbZ8JZiiNPmqA6NoOLKS0Ph+c8H0k4aX8eWp+oCEO02kc2I7ryqh2cbAIg4iVzcPpb3hpEy1kzVZNUElykQeFjx9dK2R3F3lmZkVPOEnFT2f+QrP4+ViSQJn7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dcm+WN3T; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2TC3pzby"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F7EC4CEF7;
-	Mon, 23 Mar 2026 15:06:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dcm+WN3T"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD45C4CEF7;
+	Mon, 23 Mar 2026 15:06:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278376;
-	bh=ga7q7hsHK8hnHVZlM0pFxuSRpHSACHoOfOdzvaP2QNg=;
+	s=korg; t=1774278379;
+	bh=i5WmP7r4N37HTO5bHh70rTpTnNTKvbbzHkt76x1Smqc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2TC3pzbyhwPy1vq4S/K1RmfoWCq4gywXWJ3iXsIsg0eR2s/u8o0BsDRC2SrzVJs17
-	 VM1H9M2TaOJjeICN9p8vw6SZEKo+B4XtzbISU/l48HyspyKfyn+6RnUOdDA2m0yN3l
-	 ToxRxhdIKgYk19PL0Y/j+6Tt9GOthA02+N/txtug=
+	b=Dcm+WN3TcTuttkwB9z+sKhExExfLzpmmiwLhgH6Hj2xVuABZx8Vy0NLHY5hP99OxT
+	 Noo0rR4MZ19wjWndh7cvz7rQ2rw+K4Ik+BbNBgfsPrOJA6W2jgJm5KqjCl2b+wPLNK
+	 tiMDs79nffcGbFmV7+JIJSyUl/h9nOPlKitV8wdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.6 289/567] mm/kfence: disable KFENCE upon KASAN HW tags enablement
-Date: Mon, 23 Mar 2026 14:43:29 +0100
-Message-ID: <20260323134540.973125562@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Penghe Geng <pgeng@nvidia.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.6 290/567] mmc: core: Avoid bitfield RMW for claim/retune flags
+Date: Mon, 23 Mar 2026 14:43:30 +0100
+Message-ID: <20260323134540.998257180@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -56,67 +51,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: Penghe Geng <pgeng@nvidia.com>
 
-commit 09833d99db36d74456a4d13eb29c32d56ff8f2b6 upstream.
+commit 901084c51a0a8fb42a3f37d2e9c62083c495f824 upstream.
 
-KFENCE does not currently support KASAN hardware tags.  As a result, the
-two features are incompatible when enabled simultaneously.
+Move claimed and retune control flags out of the bitfield word to
+avoid unrelated RMW side effects in asynchronous contexts.
 
-Given that MTE provides deterministic protection and KFENCE is a
-sampling-based debugging tool, prioritize the stronger hardware
-protections.  Disable KFENCE initialization and free the pre-allocated
-pool if KASAN hardware tags are detected to ensure the system maintains
-the security guarantees provided by MTE.
+The host->claimed bit shared a word with retune flags. Writes to claimed
+in __mmc_claim_host() or retune_now in mmc_mq_queue_rq() can overwrite
+other bits when concurrent updates happen in other contexts, triggering
+spurious WARN_ON(!host->claimed). Convert claimed, can_retune,
+retune_now and retune_paused to bool to remove shared-word coupling.
 
-Link: https://lkml.kernel.org/r/20260213095410.1862978-1-glider@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Marco Elver <elver@google.com>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 6c0cedd1ef952 ("mmc: core: Introduce host claiming by context")
+Fixes: 1e8e55b67030c ("mmc: block: Add CQE support")
+Cc: stable@vger.kernel.org
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Penghe Geng <pgeng@nvidia.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ include/linux/mmc/host.h |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -13,6 +13,7 @@
- #include <linux/hash.h>
- #include <linux/irq_work.h>
- #include <linux/jhash.h>
-+#include <linux/kasan-enabled.h>
- #include <linux/kcsan-checks.h>
- #include <linux/kfence.h>
- #include <linux/kmemleak.h>
-@@ -862,6 +863,20 @@ void __init kfence_alloc_pool_and_metada
- 		return;
+--- a/include/linux/mmc/host.h
++++ b/include/linux/mmc/host.h
+@@ -446,14 +446,12 @@ struct mmc_host {
  
- 	/*
-+	 * If KASAN hardware tags are enabled, disable KFENCE, because it
-+	 * does not support MTE yet.
-+	 */
-+	if (kasan_hw_tags_enabled()) {
-+		pr_info("disabled as KASAN HW tags are enabled\n");
-+		if (__kfence_pool) {
-+			memblock_free(__kfence_pool, KFENCE_POOL_SIZE);
-+			__kfence_pool = NULL;
-+		}
-+		kfence_sample_interval = 0;
-+		return;
-+	}
+ 	struct mmc_ios		ios;		/* current io bus settings */
+ 
++	bool			claimed;	/* host exclusively claimed */
 +
-+	/*
- 	 * If the pool has already been initialized by arch, there is no need to
- 	 * re-allocate the memory pool.
- 	 */
+ 	/* group bitfields together to minimize padding */
+ 	unsigned int		use_spi_crc:1;
+-	unsigned int		claimed:1;	/* host exclusively claimed */
+ 	unsigned int		doing_init_tune:1; /* initial tuning in progress */
+-	unsigned int		can_retune:1;	/* re-tuning can be used */
+ 	unsigned int		doing_retune:1;	/* re-tuning in progress */
+-	unsigned int		retune_now:1;	/* do re-tuning at next req */
+-	unsigned int		retune_paused:1; /* re-tuning is temporarily disabled */
+ 	unsigned int		retune_crc_disable:1; /* don't trigger retune upon crc */
+ 	unsigned int		can_dma_map_merge:1; /* merging can be used */
+ 	unsigned int		vqmmc_enabled:1; /* vqmmc regulator is enabled */
+@@ -461,6 +459,9 @@ struct mmc_host {
+ 	int			rescan_disable;	/* disable card detection */
+ 	int			rescan_entered;	/* used with nonremovable devices */
+ 
++	bool			can_retune;	/* re-tuning can be used */
++	bool			retune_now;	/* do re-tuning at next req */
++	bool			retune_paused;	/* re-tuning is temporarily disabled */
+ 	int			need_retune;	/* re-tuning is needed */
+ 	int			hold_retune;	/* hold off re-tuning */
+ 	unsigned int		retune_period;	/* re-tuning period in secs */
 
 
