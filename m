@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BA03ACEFE;
-	Mon, 23 Mar 2026 14:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B716D3ACEFE;
+	Mon, 23 Mar 2026 14:06:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274770; cv=none; b=N9SKjhCL1t1D4DIoHCKfsIBqoFpMhIgOLhVlLga0k9mUZDY5Hgag6FKblCyUWyDLqK4E1pZZCVbDayBZ3xL/MVo2QKBaX6mRibtI0TKgITy1GeKGHdlzDcmTdxwyQ3wjD2fKAKWNYDw7zKgq1nvahUy4P/2+CPK3kGcZ6BZjlLc=
+	t=1774274773; cv=none; b=uL3JUiC3G4ye5ocY9nzY/QDUNK+kQ+qAS3GYkMZdV9rjWLISnsmD3cHGSiYzR4gO/JPvC9rHsimkth9ZkLiGD8Lw3MSII7uSld1lVWqgSR2Wqg8sFocdq8jsklCJqv1HJsmm2IUR3fzXhg33S6Acl0u+riELStDKCR0FGre0AQs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274770; c=relaxed/simple;
-	bh=8YIBspWmxh/uF8V/a0BmR7osRhRoEFP58kD4q+YITos=;
+	s=arc-20240116; t=1774274773; c=relaxed/simple;
+	bh=j3uEo1fB2tx0U5Ni7NfgqSOMGxOUsV++ZwNVgWNtSbk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k0x02973a00xLrxeo3w6WQxp4Sr5Ph14Sm5PJPB01WZlfYz5UGl51P1/eXlg1/PAq3GlvgoqfX7lYkqbB5/C9JeGJW3MXTrXSjGfsiPzkLRqUPM6HKlDeRksVE0hcslXHQBP/teLWUU6T20qT5DosNzbPiUXkcBjrsgkTdv6CKQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Pt/4D+uH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k1OKePZNpO3Bc+Z6v7QZqHWEOcdYl/PxUvLRS241D/XYH4DO25Cpxa2DUeuetwLzrfVDDe7AEpv7RQYTSjG2/6DK+Qxxg5nNzfKubWZQqbN0W8D2sUOALbfCd4fh/JuZQpVHTrI0SxicEiXwBanvLHlQs+HXkFnBwHOJSiNNofo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KYn8CQU3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Pt/4D+uH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27357C4CEF7;
-	Mon, 23 Mar 2026 14:06:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KYn8CQU3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A858C4CEF7;
+	Mon, 23 Mar 2026 14:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274770;
-	bh=8YIBspWmxh/uF8V/a0BmR7osRhRoEFP58kD4q+YITos=;
+	s=korg; t=1774274773;
+	bh=j3uEo1fB2tx0U5Ni7NfgqSOMGxOUsV++ZwNVgWNtSbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pt/4D+uHPNimO7beJy7pPqMaC6XfYLBHkeLzy8SOzF/zWupavEg8ti9f5ce7vWMMA
-	 evvCBQ8glFcTKamdZ65vQo2docezzzzkQmhClKsEiQtOpWtxyRLirKcgfRIeEu1YTL
-	 Oreg0uzfddyIkANI07KBXRpPS7+d1LJmYW/Te+GA=
+	b=KYn8CQU3lgGZ5Q7/TjPg1JN9v93UiIFrwZJN0nPg0R2YyJNC6BXQQPjYysEAihW+Y
+	 n8DcL2AuQI7CmyPtTfdoP8DD1KQksINpC9OxZfVf4J8WpZxq+HRWjP4DNp0+fo3ABS
+	 6xFF5g2lSPQeODPJORJurGd24nsy3UkrLtiWkSMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Shawn Lin <shawn.lin@rock-chips.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 103/212] cache: ax45mp: Fix device node reference leak in ax45mp_cache_init()
-Date: Mon, 23 Mar 2026 14:45:24 +0100
-Message-ID: <20260323134507.035142065@linuxfoundation.org>
+Subject: [PATCH 6.18 104/212] soc: rockchip: grf: Add missing of_node_put() when returning
+Date: Mon, 23 Mar 2026 14:45:25 +0100
+Message-ID: <20260323134507.067741812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,43 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Shawn Lin <shawn.lin@rock-chips.com>
 
-[ Upstream commit 0528a348b04b327a4611e29589beb4c9ae81304a ]
+[ Upstream commit 24ed11ee5bacf9a9aca18fc6b47667c7f38d578b ]
 
-In ax45mp_cache_init(), of_find_matching_node() returns a device node
-with an incremented reference count that must be released with
-of_node_put(). The current code fails to call of_node_put() which
-causes a reference leak.
+Fix the smatch checking:
+drivers/soc/rockchip/grf.c:249 rockchip_grf_init()
+warn: inconsistent refcounting 'np->kobj.kref.refcount.refs.counter':
 
-Use the __free(device_node) attribute to ensure automatic cleanup when
-the variable goes out of scope.
-
-Fixes: d34599bcd2e4 ("cache: Add L2 cache management for Andes AX45MP RISC-V core")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
+Fixes: 75fb63ae0312 ("soc: rockchip: grf: Support multiple grf to be handled")
+Closes: https://lore.kernel.org/all/aYXvgTcUJWQL2can@stanley.mountain/
+Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
+Link: https://patch.msgid.link/1770814957-17762-1-git-send-email-shawn.lin@rock-chips.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cache/ax45mp_cache.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/soc/rockchip/grf.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/cache/ax45mp_cache.c b/drivers/cache/ax45mp_cache.c
-index 1d7dd3d2c101c..934c5087ec2bd 100644
---- a/drivers/cache/ax45mp_cache.c
-+++ b/drivers/cache/ax45mp_cache.c
-@@ -178,11 +178,11 @@ static const struct of_device_id ax45mp_cache_ids[] = {
- 
- static int __init ax45mp_cache_init(void)
- {
--	struct device_node *np;
- 	struct resource res;
- 	int ret;
- 
--	np = of_find_matching_node(NULL, ax45mp_cache_ids);
-+	struct device_node *np __free(device_node) =
-+		of_find_matching_node(NULL, ax45mp_cache_ids);
- 	if (!of_device_is_available(np))
- 		return -ENODEV;
+diff --git a/drivers/soc/rockchip/grf.c b/drivers/soc/rockchip/grf.c
+index db407fa279850..1f070e0becb52 100644
+--- a/drivers/soc/rockchip/grf.c
++++ b/drivers/soc/rockchip/grf.c
+@@ -216,6 +216,7 @@ static int __init rockchip_grf_init(void)
+ 		grf = syscon_node_to_regmap(np);
+ 		if (IS_ERR(grf)) {
+ 			pr_err("%s: could not get grf syscon\n", __func__);
++			of_node_put(np);
+ 			return PTR_ERR(grf);
+ 		}
  
 -- 
 2.51.0
