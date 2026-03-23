@@ -1,43 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2453F235C01;
-	Mon, 23 Mar 2026 14:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5091A23B1;
+	Mon, 23 Mar 2026 14:59:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277990; cv=none; b=qO//UxT6mdKsm0HdBM2lNkPfsdxjLhVP/XHUtCSTNKK805JFt2ArT8+w46NBqM+uhLPmFkS0V0RHv2i9+y/b3z//0sicq7P/wReOlSKFo3Nx06skbA4IbNtyGkQPKfbU4H6HTLOOfQa5982H2iVevKBq6LWYKKoAnP3gdtoA+cQ=
+	t=1774277993; cv=none; b=jmP5P6zCTblu9AO2TGahBoIEvGNsttmd51llwXqBhEGHCT+o+GhKP3QkHW7HZVNYiyhmDIfDcjeZce/kb5VEn222tkeEEJP9ippt++foQpjqovzSYUaPSc06oRVkdWeQmS7pFP56jxVXaeL7sCfe+uAUJED2k8LXgIWJXV+2R8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277990; c=relaxed/simple;
-	bh=cQrnKTZwBHg1JRlIPuSoqvqEjHt2UXgjHtzUB8fWj/E=;
+	s=arc-20240116; t=1774277993; c=relaxed/simple;
+	bh=4iiz3FFYNh2FEhakyfJXyDMJ97noU7T8Q+KRjz4Sw6s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fslt34oAOJn9mXpTAj9/GxuwOtk+eX+GDG4Bpt0zxLRHniSv3OBr9Tm2uwvzCUCTe8aaURSEgoBNGzA5jRRINM/1wSx8eSy0uJpnCkuF5zOkMnIZCiQe6kxjeZoyfA27yIKrCUmw4AZK4kpYsanc+hS2cqTvRFuoI3ZJZSKsNZ8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i8w+X/4X; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Axg6HYXgFaVZt7ugiJiNqsGVUAr5VNyx4CTuJDolaqcNLrOGTDya6Bk4fTH17dNta3dbmkDzeJAlV8H3rNV6mi8tR79MuSMEAOPLrusQPx0opXWgrDVgCGF9DwoKzlc2JTAsi14hMChgrtcREoThmybDbwdZ8kGRV3gObKVTYDw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2b9d9j+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i8w+X/4X"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C2C6C4CEF7;
-	Mon, 23 Mar 2026 14:59:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2b9d9j+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC444C4CEF7;
+	Mon, 23 Mar 2026 14:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277990;
-	bh=cQrnKTZwBHg1JRlIPuSoqvqEjHt2UXgjHtzUB8fWj/E=;
+	s=korg; t=1774277993;
+	bh=4iiz3FFYNh2FEhakyfJXyDMJ97noU7T8Q+KRjz4Sw6s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8w+X/4X61FvBzv8LO/Ham1wZ6azrs/5jklCrfmw79tUbGiJ15UkrEdGfE5Fb+ANZ
-	 v2BU+Ove8J/jMHc+8HFNY41bxuz9a9rZLoZRQEoZrlfb/F8S72FrsgBoJorFr/EeOs
-	 Lgt1g9neJP94XfWFA45iI8XCjkbXgQsCmN2A3vpo=
+	b=S2b9d9j+XD6GuLepnGQZiVlB1j7jLx+O5/wsSs0Sw4QeOlILgG0cGxZHADpqpnAOh
+	 dgheK77aDID/nW7RZiKvhMcGis9kHEys6YZnuvTPlEFg76IzL3p1NwjYw3qQuCZ3sa
+	 dz1jxa8YTfpsNKeYfD9aivlMSgp8ZISbVvUd2/qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Shi <cshi008@fiu.edu>,
-	Weidong Zhu <weizhu@fiu.edu>,
-	Dave Tian <daveti@purdue.edu>,
-	Christoph Hellwig <hch@lst.de>,
-	Hannes Reinecke <hare@suse.de>,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Keith Busch <kbusch@kernel.org>,
+	Koichiro Den <den@valinux.co.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 166/567] nvme: fix memory allocation in nvme_pr_read_keys()
-Date: Mon, 23 Mar 2026 14:41:26 +0100
-Message-ID: <20260323134537.932532180@linuxfoundation.org>
+Subject: [PATCH 6.6 167/567] net: sched: avoid qdisc_reset_all_tx_gt() vs dequeue race for lockless qdiscs
+Date: Mon, 23 Mar 2026 14:41:27 +0100
+Message-ID: <20260323134537.957034528@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -56,106 +51,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Koichiro Den <den@valinux.co.jp>
 
-[ Upstream commit c3320153769f05fd7fe9d840cb555dd3080ae424 ]
+[ Upstream commit 7f083faf59d14c04e01ec05a7507f036c965acf8 ]
 
-nvme_pr_read_keys() takes num_keys from userspace and uses it to
-calculate the allocation size for rse via struct_size(). The upper
-limit is PR_KEYS_MAX (64K).
+When shrinking the number of real tx queues,
+netif_set_real_num_tx_queues() calls qdisc_reset_all_tx_gt() to flush
+qdiscs for queues which will no longer be used.
 
-A malicious or buggy userspace can pass a large num_keys value that
-results in a 4MB allocation attempt at most, causing a warning in
-the page allocator when the order exceeds MAX_PAGE_ORDER.
+qdisc_reset_all_tx_gt() currently serializes qdisc_reset() with
+qdisc_lock(). However, for lockless qdiscs, the dequeue path is
+serialized by qdisc_run_begin/end() using qdisc->seqlock instead, so
+qdisc_reset() can run concurrently with __qdisc_run() and free skbs
+while they are still being dequeued, leading to UAF.
 
-To fix this, use kvzalloc() instead of kzalloc().
+This can easily be reproduced on e.g. virtio-net by imposing heavy
+traffic while frequently changing the number of queue pairs:
 
-This bug has the same reasoning and fix with the patch below:
-https://lore.kernel.org/linux-block/20251212013510.3576091-1-kartikey406@gmail.com/
+  iperf3 -ub0 -c $peer -t 0 &
+  while :; do
+    ethtool -L eth0 combined 1
+    ethtool -L eth0 combined 2
+  done
 
-Warning log:
-WARNING: mm/page_alloc.c:5216 at __alloc_frozen_pages_noprof+0x5aa/0x2300 mm/page_alloc.c:5216, CPU#1: syz-executor117/272
-Modules linked in:
-CPU: 1 UID: 0 PID: 272 Comm: syz-executor117 Not tainted 6.19.0 #1 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-RIP: 0010:__alloc_frozen_pages_noprof+0x5aa/0x2300 mm/page_alloc.c:5216
-Code: ff 83 bd a8 fe ff ff 0a 0f 86 69 fb ff ff 0f b6 1d f9 f9 c4 04 80 fb 01 0f 87 3b 76 30 ff 83 e3 01 75 09 c6 05 e4 f9 c4 04 01 <0f> 0b 48 c7 85 70 fe ff ff 00 00 00 00 e9 8f fd ff ff 31 c0 e9 0d
-RSP: 0018:ffffc90000fcf450 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 1ffff920001f9ea0
-RDX: 0000000000000000 RSI: 000000000000000b RDI: 0000000000040dc0
-RBP: ffffc90000fcf648 R08: ffff88800b6c3380 R09: 0000000000000001
-R10: ffffc90000fcf840 R11: ffff88807ffad280 R12: 0000000000000000
-R13: 0000000000040dc0 R14: 0000000000000001 R15: ffffc90000fcf620
-FS:  0000555565db33c0(0000) GS:ffff8880be26c000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000002000000c CR3: 0000000003b72000 CR4: 00000000000006f0
-Call Trace:
- <TASK>
- alloc_pages_mpol+0x236/0x4d0 mm/mempolicy.c:2486
- alloc_frozen_pages_noprof+0x149/0x180 mm/mempolicy.c:2557
- ___kmalloc_large_node+0x10c/0x140 mm/slub.c:5598
- __kmalloc_large_node_noprof+0x25/0xc0 mm/slub.c:5629
- __do_kmalloc_node mm/slub.c:5645 [inline]
- __kmalloc_noprof+0x483/0x6f0 mm/slub.c:5669
- kmalloc_noprof include/linux/slab.h:961 [inline]
- kzalloc_noprof include/linux/slab.h:1094 [inline]
- nvme_pr_read_keys+0x8f/0x4c0 drivers/nvme/host/pr.c:245
- blkdev_pr_read_keys block/ioctl.c:456 [inline]
- blkdev_common_ioctl+0x1b71/0x29b0 block/ioctl.c:730
- blkdev_ioctl+0x299/0x700 block/ioctl.c:786
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:597 [inline]
- __se_sys_ioctl fs/ioctl.c:583 [inline]
- __x64_sys_ioctl+0x1bf/0x220 fs/ioctl.c:583
- x64_sys_call+0x1280/0x21b0 mnt/fuzznvme_1/fuzznvme/linux-build/v6.19/./arch/x86/include/generated/asm/syscalls_64.h:17
- do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
- do_syscall_64+0x71/0x330 arch/x86/entry/syscall_64.c:94
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0033:0x7fb893d3108d
-Code: 28 c3 e8 46 1e 00 00 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007ffff61f2f38 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
-RAX: ffffffffffffffda RBX: 00007ffff61f3138 RCX: 00007fb893d3108d
-RDX: 0000000020000040 RSI: 00000000c01070ce RDI: 0000000000000003
-RBP: 0000000000000001 R08: 0000000000000000 R09: 00007ffff61f3138
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000001
-R13: 00007ffff61f3128 R14: 00007fb893dae530 R15: 0000000000000001
- </TASK>
+With KASAN enabled, this leads to reports like:
 
-Fixes: 5fd96a4e15de (nvme: Add pr_ops read_keys support)
-Acked-by: Chao Shi <cshi008@fiu.edu>
-Acked-by: Weidong Zhu <weizhu@fiu.edu>
-Acked-by: Dave Tian <daveti@purdue.edu>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Keith Busch <kbusch@kernel.org>
+  BUG: KASAN: slab-use-after-free in __qdisc_run+0x133f/0x1760
+  ...
+  Call Trace:
+   <TASK>
+   ...
+   __qdisc_run+0x133f/0x1760
+   __dev_queue_xmit+0x248f/0x3550
+   ip_finish_output2+0xa42/0x2110
+   ip_output+0x1a7/0x410
+   ip_send_skb+0x2e6/0x480
+   udp_send_skb+0xb0a/0x1590
+   udp_sendmsg+0x13c9/0x1fc0
+   ...
+   </TASK>
+
+  Allocated by task 1270 on cpu 5 at 44.558414s:
+   ...
+   alloc_skb_with_frags+0x84/0x7c0
+   sock_alloc_send_pskb+0x69a/0x830
+   __ip_append_data+0x1b86/0x48c0
+   ip_make_skb+0x1e8/0x2b0
+   udp_sendmsg+0x13a6/0x1fc0
+   ...
+
+  Freed by task 1306 on cpu 3 at 44.558445s:
+   ...
+   kmem_cache_free+0x117/0x5e0
+   pfifo_fast_reset+0x14d/0x580
+   qdisc_reset+0x9e/0x5f0
+   netif_set_real_num_tx_queues+0x303/0x840
+   virtnet_set_channels+0x1bf/0x260 [virtio_net]
+   ethnl_set_channels+0x684/0xae0
+   ethnl_default_set_doit+0x31a/0x890
+   ...
+
+Serialize qdisc_reset_all_tx_gt() against the lockless dequeue path by
+taking qdisc->seqlock for TCQ_F_NOLOCK qdiscs, matching the
+serialization model already used by dev_reset_queue().
+
+Additionally clear QDISC_STATE_NON_EMPTY after reset so the qdisc state
+reflects an empty queue, avoiding needless re-scheduling.
+
+Fixes: 6b3ba9146fe6 ("net: sched: allow qdiscs to handle locking")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260228145307.3955532-1-den@valinux.co.jp
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/net/sch_generic.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/nvme/host/pr.c b/drivers/nvme/host/pr.c
-index 0636fa4d6f77b..1df7cb3155601 100644
---- a/drivers/nvme/host/pr.c
-+++ b/drivers/nvme/host/pr.c
-@@ -217,7 +217,7 @@ static int nvme_pr_read_keys(struct block_device *bdev,
- 	if (rse_len > U32_MAX)
- 		return -EINVAL;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index 3287988a6a987..232b7b22e993a 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -756,13 +756,23 @@ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
+ static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
+ {
+ 	struct Qdisc *qdisc;
++	bool nolock;
  
--	rse = kzalloc(rse_len, GFP_KERNEL);
-+	rse = kvzalloc(rse_len, GFP_KERNEL);
- 	if (!rse)
- 		return -ENOMEM;
- 
-@@ -242,7 +242,7 @@ static int nvme_pr_read_keys(struct block_device *bdev,
+ 	for (; i < dev->num_tx_queues; i++) {
+ 		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc);
+ 		if (qdisc) {
++			nolock = qdisc->flags & TCQ_F_NOLOCK;
++
++			if (nolock)
++				spin_lock_bh(&qdisc->seqlock);
+ 			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_reset(qdisc);
+ 			spin_unlock_bh(qdisc_lock(qdisc));
++			if (nolock) {
++				clear_bit(__QDISC_STATE_MISSED, &qdisc->state);
++				clear_bit(__QDISC_STATE_DRAINING, &qdisc->state);
++				spin_unlock_bh(&qdisc->seqlock);
++			}
+ 		}
  	}
- 
- free_rse:
--	kfree(rse);
-+	kvfree(rse);
- 	return ret;
  }
- 
 -- 
 2.51.0
 
