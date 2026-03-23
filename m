@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F583BA223;
-	Mon, 23 Mar 2026 15:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 084B03B389F;
+	Mon, 23 Mar 2026 15:19:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279109; cv=none; b=YXulkkvldYdjlQTeyhuAq9LQbPaKioCnPaGWXITT4ipQriwqokO1+eO2HFbh/43OWjlzuoauw4ykgEnWydks/KUhcjcMIIQOkp2W4ARe8a/wNi2R6YbR+SksoT2Z+F202uzo26arJIF34rm9SWvi5UztjpSjQRXoEo6JYbvb2sE=
+	t=1774279150; cv=none; b=LQ8sUkczOUnMYKD7ZJmkGDkzW5uE10ZfGkUfOSf1f+feGCKJfra6Z0uEgUP+IcC9Ps5jJal/fPv3HS6LdfeB8XwbYVEZs86sKPmZ+xelhACqUAJn5ZuXv4BaVR1Az1xjZAa3a6oqkmH3GAUstDhNg7+veQBfqWac7OFPVZLnnwc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279109; c=relaxed/simple;
-	bh=H4Wy/8nylbAqyt2QuBTYWKLIS9F/4mut/EBGsKpiA1Q=;
+	s=arc-20240116; t=1774279150; c=relaxed/simple;
+	bh=qqL0zhly+FuiyFyEetMioI9dR1bobeIhiDAKXWobwa8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IFoqtQFW+aU3H6jZkNRMAmXh/9SNKoOrN6/vDuQxH5kqWvChb9+QqmMhisNIdZQ3ndMK5mbx4772HIAd9yDVNw0xnwHJlzD2M8jdV4Zja84tV9bnuXw+kJOzyGVkA1pIwR9CVCxHdOk0A2UjNF5EZJurSPwwadkdnBH2lMVyLG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qLmBMvop; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=F8vYgQnGFiVuCqbp5rdc6/nemaMvSezjMKRkm+3dAgj2WEq+wOAElxlbttVgWLwthd6wOO4iiP6olu/vLN99WHn53PhEgPyjXzE1PFU9khktT2QzH402asKhY04e2a141sRHT87V/4CAqExX0C9JHZjVpLvTbdURp/8U0atYi2I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lVzde7TN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qLmBMvop"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3438EC4CEF7;
-	Mon, 23 Mar 2026 15:18:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lVzde7TN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4768AC4CEF7;
+	Mon, 23 Mar 2026 15:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279109;
-	bh=H4Wy/8nylbAqyt2QuBTYWKLIS9F/4mut/EBGsKpiA1Q=;
+	s=korg; t=1774279149;
+	bh=qqL0zhly+FuiyFyEetMioI9dR1bobeIhiDAKXWobwa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qLmBMvopTjIaJr22CuQRRBmQxlzdiFtvNNDq+Rg3FBQFexhpW3z4vrZzV5C6p1yo6
-	 Q82HfF0iewvRj1M3LT6FgNihclLxlaQeLX3wvNFD0vstWeyXzqM47RkhYC/zo6p4nC
-	 LSAVE5+f7akBgfZhQRhBQu6nGI6PpfJwgnIBIR6U=
+	b=lVzde7TNihUZml2+0u78ZcnFOYAKQkjET799k3vGd6M822W31gyXawsegR06DBMKZ
+	 jeAiiCq0N1zW4tJBOw10tGnNAd7i1YEHQt+ONVfwja7YHcYzj5Q3nZk4kXBpjT7GXI
+	 pOuOWDAPm7BoraQoH5ciSZ7sw5abn7esfA0OCnIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Benjamin Cheng <benjamin.cheng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 490/567] drm/amdgpu/mmhub3.0.1: add bounds checking for cid
-Date: Mon, 23 Mar 2026 14:46:50 +0100
-Message-ID: <20260323134546.106058263@linuxfoundation.org>
+Subject: [PATCH 6.6 491/567] drm/amdgpu/mmhub3.0.2: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:46:51 +0100
+Message-ID: <20260323134546.129616706@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,7 +52,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 5d4e88bcfef29569a1db224ef15e28c603666c6d upstream.
+commit e5e6d67b1ce9764e67aef2d0eef9911af53ad99a upstream.
 
 The value should never exceed the array size as those
 are the only values the hardware is expected to return,
@@ -60,24 +60,24 @@ but add checks anyway.
 
 Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 5f76083183363c4528a4aaa593f5d38c28fe7d7b)
+(cherry picked from commit 1441f52c7f6ae6553664aa9e3e4562f6fc2fe8ea)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |    3 ++-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-@@ -117,7 +117,8 @@ mmhub_v3_0_1_print_l2_protection_fault_s
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
+@@ -108,7 +108,8 @@ mmhub_v3_0_2_print_l2_protection_fault_s
+ 		"MMVM_L2_PROTECTION_FAULT_STATUS:0x%08X\n",
+ 		status);
  
- 	switch (adev->ip_versions[MMHUB_HWIP][0]) {
- 	case IP_VERSION(3, 0, 1):
--		mmhub_cid = mmhub_client_ids_v3_0_1[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_v3_0_1) ?
-+			mmhub_client_ids_v3_0_1[cid][rw] : NULL;
- 		break;
- 	default:
- 		mmhub_cid = NULL;
+-	mmhub_cid = mmhub_client_ids_v3_0_2[cid][rw];
++	mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_v3_0_2) ?
++		mmhub_client_ids_v3_0_2[cid][rw] : NULL;
+ 	dev_err(adev->dev, "\t Faulty UTCL2 client ID: %s (0x%x)\n",
+ 		mmhub_cid ? mmhub_cid : "unknown", cid);
+ 	dev_err(adev->dev, "\t MORE_FAULTS: 0x%lx\n",
 
 
