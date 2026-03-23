@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A7535957;
-	Mon, 23 Mar 2026 15:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28F32459C6;
+	Mon, 23 Mar 2026 15:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278759; cv=none; b=VxXatTPU1M9rQhxWS3DJ5g3QraQuAZv+SGuejpdNP5KJJ3RrTmRANPqel9bMcx2TlQnSkwHkMUTKa1OQJ+xhNu94Zbwmz6ntW87bmisogs3c0RiDcWcWsHizsJMC0Kya1zmANxBUaxwPYWeIX+Unzyry8UNjV2J1W62CUdhFFs8=
+	t=1774278762; cv=none; b=Ia0ge7Y1Gt6QGfqdTgbTWdrb7Jq4Ny6ksLz8wpJ+QLvojKeR7YWyWg4XsBrnzaT/EYFGQI3PA8I5BPhHvdgWq2NRgGBjsViGk2h01VSNMtWrL9Bm/WtcbJoEq+fpNUhWHcx1AMvHP0vSZFrhVWbRrKw5E94ufyhSv632Zmipu+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278759; c=relaxed/simple;
-	bh=SBuRcldFa7m/pSdo9Au6dSFzs3vwMGpbX5ohhyoJHUk=;
+	s=arc-20240116; t=1774278762; c=relaxed/simple;
+	bh=vVqqMyfohjUeQ4Vn+j5lSsAoT2ZHQjN3GMUrF3+IQgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RAUL3Eo7EZ1bj5BufAf+iuFyG7q2d6FiBLRhIyRL3sZLOv4dGFevFEIXdK/sXmXg/HbAJx3jZNnU0FmlYWKVqyPF8NeEOKA/fwtUC6g+cyWVrfaP8Vt1upRvvM2kxczsFnHvk70uewZiqQf3oYU+iBzCnjrHdERqKojTqv+OUfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gtUgDk5d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dX/+Us9mlQMw2rxvdDJHa4EIuv+jx1YtjXDk6TESLsjPC9tgq0+qpgRpq/DHkrvsK4It063NCQos5qtBb3iOO6MirqfBgITxuJptfXgX8ixeWI4ERnZE7H60V0Ubj3y+zr2EMPNxhRvj48ZzuWVGaOTmwcGACaPK896QF1ogAF8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vEvsUSzj; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gtUgDk5d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 122CCC4CEF7;
-	Mon, 23 Mar 2026 15:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vEvsUSzj"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B5BC4CEF7;
+	Mon, 23 Mar 2026 15:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278759;
-	bh=SBuRcldFa7m/pSdo9Au6dSFzs3vwMGpbX5ohhyoJHUk=;
+	s=korg; t=1774278762;
+	bh=vVqqMyfohjUeQ4Vn+j5lSsAoT2ZHQjN3GMUrF3+IQgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtUgDk5dbFtsvVVWWPELLrrdnt+etN84CoHzrcQgXzOjiv5WFLLuFwaR+5b73Er+f
-	 QO6UQofg+PK2Uy9Qt+FuNuyKV17nsOqocKXwlEb/rk5R26w0xbR2XnOCgqNX9d9u3z
-	 gK4MBvRWbdxFxqB9DozMO7GORcBvhCAO46N6cyl4=
+	b=vEvsUSzjYFDHssEos8Mf3mplNxxpBk4ggxa546VumgDNfS6aWxZpEI39vZTbAlpHP
+	 Ji5K7Zg8KMRU7kq9lA4AYClJAgvO9DoXRBuWjh/8qfvwlX9dEuduc7QRdkLR4OeV6R
+	 vZKBujbh+blEb833uKqY4GSgFNcNfSzlWjSiY7Ts=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalie Vock <natalie.vock@gmx.de>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 373/567] drm/amd/display: Use GFP_ATOMIC in dc_create_stream_for_sink
-Date: Mon, 23 Mar 2026 14:44:53 +0100
-Message-ID: <20260323134543.057952822@linuxfoundation.org>
+	Benjamin Coddington <bcodding@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Li hongliang <1468888505@139.com>
+Subject: [PATCH 6.6 409/567] pNFS: Fix a deadlock when returning a delegation during open()
+Date: Mon, 23 Mar 2026 14:45:29 +0100
+Message-ID: <20260323134543.999296788@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,37 +51,211 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Natalie Vock <natalie.vock@gmx.de>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 28dfe4317541e57fe52f9a290394cd29c348228b ]
+[ Upstream commit 857bf9056291a16785ae3be1d291026b2437fc48 ]
 
-This can be called while preemption is disabled, for example by
-dcn32_internal_validate_bw which is called with the FPU active.
+Ben Coddington reports seeing a hang in the following stack trace:
+  0 [ffffd0b50e1774e0] __schedule at ffffffff9ca05415
+  1 [ffffd0b50e177548] schedule at ffffffff9ca05717
+  2 [ffffd0b50e177558] bit_wait at ffffffff9ca061e1
+  3 [ffffd0b50e177568] __wait_on_bit at ffffffff9ca05cfb
+  4 [ffffd0b50e1775c8] out_of_line_wait_on_bit at ffffffff9ca05ea5
+  5 [ffffd0b50e177618] pnfs_roc at ffffffffc154207b [nfsv4]
+  6 [ffffd0b50e1776b8] _nfs4_proc_delegreturn at ffffffffc1506586 [nfsv4]
+  7 [ffffd0b50e177788] nfs4_proc_delegreturn at ffffffffc1507480 [nfsv4]
+  8 [ffffd0b50e1777f8] nfs_do_return_delegation at ffffffffc1523e41 [nfsv4]
+  9 [ffffd0b50e177838] nfs_inode_set_delegation at ffffffffc1524a75 [nfsv4]
+ 10 [ffffd0b50e177888] nfs4_process_delegation at ffffffffc14f41dd [nfsv4]
+ 11 [ffffd0b50e1778a0] _nfs4_opendata_to_nfs4_state at ffffffffc1503edf [nfsv4]
+ 12 [ffffd0b50e1778c0] _nfs4_open_and_get_state at ffffffffc1504e56 [nfsv4]
+ 13 [ffffd0b50e177978] _nfs4_do_open at ffffffffc15051b8 [nfsv4]
+ 14 [ffffd0b50e1779f8] nfs4_do_open at ffffffffc150559c [nfsv4]
+ 15 [ffffd0b50e177a80] nfs4_atomic_open at ffffffffc15057fb [nfsv4]
+ 16 [ffffd0b50e177ad0] nfs4_file_open at ffffffffc15219be [nfsv4]
+ 17 [ffffd0b50e177b78] do_dentry_open at ffffffff9c09e6ea
+ 18 [ffffd0b50e177ba8] vfs_open at ffffffff9c0a082e
+ 19 [ffffd0b50e177bd0] dentry_open at ffffffff9c0a0935
 
-Fixes "BUG: scheduling while atomic" messages I encounter on my Navi31
-machine.
+The issue is that the delegreturn is being asked to wait for a layout
+return that cannot complete because a state recovery was initiated. The
+state recovery cannot complete until the open() finishes processing the
+delegations it was given.
 
-Signed-off-by: Natalie Vock <natalie.vock@gmx.de>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit b42dae2ebc5c84a68de63ec4ffdfec49362d53f1)
-Cc: stable@vger.kernel.org
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The solution is to propagate the existing flags that indicate a
+non-blocking call to the function pnfs_roc(), so that it knows not to
+wait in this situation.
+
+Reported-by: Benjamin Coddington <bcodding@hammerspace.com>
+Fixes: 29ade5db1293 ("pNFS: Wait on outstanding layoutreturns to complete in pnfs_roc()")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+[ Minor conflict resolved. ]
+Signed-off-by: Li hongliang <1468888505@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_stream.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c |    6 ++---
+ fs/nfs/pnfs.c     |   58 ++++++++++++++++++++++++++++++++++++++----------------
+ fs/nfs/pnfs.h     |   17 ++++++---------
+ 3 files changed, 51 insertions(+), 30 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_stream.c
-@@ -164,7 +164,7 @@ struct dc_stream_state *dc_create_stream
- 	if (sink == NULL)
- 		return NULL;
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -3792,8 +3792,8 @@ int nfs4_do_close(struct nfs4_state *sta
+ 	calldata->res.seqid = calldata->arg.seqid;
+ 	calldata->res.server = server;
+ 	calldata->res.lr_ret = -NFS4ERR_NOMATCHING_LAYOUT;
+-	calldata->lr.roc = pnfs_roc(state->inode,
+-			&calldata->lr.arg, &calldata->lr.res, msg.rpc_cred);
++	calldata->lr.roc = pnfs_roc(state->inode, &calldata->lr.arg,
++				    &calldata->lr.res, msg.rpc_cred, wait);
+ 	if (calldata->lr.roc) {
+ 		calldata->arg.lr_args = &calldata->lr.arg;
+ 		calldata->res.lr_res = &calldata->lr.res;
+@@ -6742,7 +6742,7 @@ static int _nfs4_proc_delegreturn(struct
+ 	data->inode = nfs_igrab_and_active(inode);
+ 	if (data->inode || issync) {
+ 		data->lr.roc = pnfs_roc(inode, &data->lr.arg, &data->lr.res,
+-					cred);
++					cred, issync);
+ 		if (data->lr.roc) {
+ 			data->args.lr_args = &data->lr.arg;
+ 			data->res.lr_res = &data->lr.res;
+--- a/fs/nfs/pnfs.c
++++ b/fs/nfs/pnfs.c
+@@ -1427,10 +1427,9 @@ pnfs_commit_and_return_layout(struct ino
+ 	return ret;
+ }
  
--	stream = kzalloc(sizeof(struct dc_stream_state), GFP_KERNEL);
-+	stream = kzalloc(sizeof(struct dc_stream_state), GFP_ATOMIC);
- 	if (stream == NULL)
- 		goto alloc_fail;
+-bool pnfs_roc(struct inode *ino,
+-		struct nfs4_layoutreturn_args *args,
+-		struct nfs4_layoutreturn_res *res,
+-		const struct cred *cred)
++bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
++	      struct nfs4_layoutreturn_res *res, const struct cred *cred,
++	      bool sync)
+ {
+ 	struct nfs_inode *nfsi = NFS_I(ino);
+ 	struct nfs_open_context *ctx;
+@@ -1441,7 +1440,7 @@ bool pnfs_roc(struct inode *ino,
+ 	nfs4_stateid stateid;
+ 	enum pnfs_iomode iomode = 0;
+ 	bool layoutreturn = false, roc = false;
+-	bool skip_read = false;
++	bool skip_read;
  
+ 	if (!nfs_have_layout(ino))
+ 		return false;
+@@ -1454,20 +1453,14 @@ retry:
+ 		lo = NULL;
+ 		goto out_noroc;
+ 	}
+-	pnfs_get_layout_hdr(lo);
+-	if (test_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags)) {
+-		spin_unlock(&ino->i_lock);
+-		rcu_read_unlock();
+-		wait_on_bit(&lo->plh_flags, NFS_LAYOUT_RETURN,
+-				TASK_UNINTERRUPTIBLE);
+-		pnfs_put_layout_hdr(lo);
+-		goto retry;
+-	}
+ 
+ 	/* no roc if we hold a delegation */
++	skip_read = false;
+ 	if (nfs4_check_delegation(ino, FMODE_READ)) {
+-		if (nfs4_check_delegation(ino, FMODE_WRITE))
++		if (nfs4_check_delegation(ino, FMODE_WRITE)) {
++			lo = NULL;
+ 			goto out_noroc;
++		}
+ 		skip_read = true;
+ 	}
+ 
+@@ -1476,12 +1469,43 @@ retry:
+ 		if (state == NULL)
+ 			continue;
+ 		/* Don't return layout if there is open file state */
+-		if (state->state & FMODE_WRITE)
++		if (state->state & FMODE_WRITE) {
++			lo = NULL;
+ 			goto out_noroc;
++		}
+ 		if (state->state & FMODE_READ)
+ 			skip_read = true;
+ 	}
+ 
++	if (skip_read) {
++		bool writes = false;
++
++		list_for_each_entry(lseg, &lo->plh_segs, pls_list) {
++			if (lseg->pls_range.iomode != IOMODE_READ) {
++				writes = true;
++				break;
++			}
++		}
++		if (!writes) {
++			lo = NULL;
++			goto out_noroc;
++		}
++	}
++
++	pnfs_get_layout_hdr(lo);
++	if (test_bit(NFS_LAYOUT_RETURN_LOCK, &lo->plh_flags)) {
++		if (!sync) {
++			pnfs_set_plh_return_info(
++				lo, skip_read ? IOMODE_RW : IOMODE_ANY, 0);
++			goto out_noroc;
++		}
++		spin_unlock(&ino->i_lock);
++		rcu_read_unlock();
++		wait_on_bit(&lo->plh_flags, NFS_LAYOUT_RETURN,
++			    TASK_UNINTERRUPTIBLE);
++		pnfs_put_layout_hdr(lo);
++		goto retry;
++	}
+ 
+ 	list_for_each_entry_safe(lseg, next, &lo->plh_segs, pls_list) {
+ 		if (skip_read && lseg->pls_range.iomode == IOMODE_READ)
+@@ -1521,7 +1545,7 @@ retry:
+ out_noroc:
+ 	spin_unlock(&ino->i_lock);
+ 	rcu_read_unlock();
+-	pnfs_layoutcommit_inode(ino, true);
++	pnfs_layoutcommit_inode(ino, sync);
+ 	if (roc) {
+ 		struct pnfs_layoutdriver_type *ld = NFS_SERVER(ino)->pnfs_curr_ld;
+ 		if (ld->prepare_layoutreturn)
+--- a/fs/nfs/pnfs.h
++++ b/fs/nfs/pnfs.h
+@@ -295,10 +295,9 @@ int pnfs_mark_matching_lsegs_return(stru
+ 				u32 seq);
+ int pnfs_mark_layout_stateid_invalid(struct pnfs_layout_hdr *lo,
+ 		struct list_head *lseg_list);
+-bool pnfs_roc(struct inode *ino,
+-		struct nfs4_layoutreturn_args *args,
+-		struct nfs4_layoutreturn_res *res,
+-		const struct cred *cred);
++bool pnfs_roc(struct inode *ino, struct nfs4_layoutreturn_args *args,
++	      struct nfs4_layoutreturn_res *res, const struct cred *cred,
++	      bool sync);
+ int pnfs_roc_done(struct rpc_task *task, struct nfs4_layoutreturn_args **argpp,
+ 		  struct nfs4_layoutreturn_res **respp, int *ret);
+ void pnfs_roc_release(struct nfs4_layoutreturn_args *args,
+@@ -769,12 +768,10 @@ pnfs_layoutcommit_outstanding(struct ino
+ 	return false;
+ }
+ 
+-
+-static inline bool
+-pnfs_roc(struct inode *ino,
+-		struct nfs4_layoutreturn_args *args,
+-		struct nfs4_layoutreturn_res *res,
+-		const struct cred *cred)
++static inline bool pnfs_roc(struct inode *ino,
++			    struct nfs4_layoutreturn_args *args,
++			    struct nfs4_layoutreturn_res *res,
++			    const struct cred *cred, bool sync)
+ {
+ 	return false;
+ }
 
 
