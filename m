@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228563B3BE5;
-	Mon, 23 Mar 2026 16:24:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20443B3BE5;
+	Mon, 23 Mar 2026 16:25:01 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283099; cv=none; b=TNZwGWPISePsXGvEeD4hELRsXMjNlfbyVz9yybn6SzYxjFwIg6LPHR2dFnDxs0Y/NYtdztIuTadNF1TUWfiZn1a0i5FnQBvjUF4PHkFu1ieqAPrh10vickUhWx9WykoYGxga6nljl8n0Mvn20pUQZajCJNbK6v0VmDm5ielYrGQ=
+	t=1774283101; cv=none; b=l5NEJE56PsT/mP9t1plhZ3i3/0O2Jysv7+zwHXmWQfOblUueBc8CraMu4GXkwXBywYNdgtG5paylmJjRr5sV620MM7luoep6d1Z5d/aRVEtImhM6rfnNqGifWhCfoM2e6PAALUfzO/I9xO5eYoLeShq90PPLXaH0ekMaLKheB0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283099; c=relaxed/simple;
-	bh=ZugOfbjP6wF7409rPbt6gko0HqrAXQTAEaHdg3uHVUU=;
+	s=arc-20240116; t=1774283101; c=relaxed/simple;
+	bh=Wr2cd3dVJ5nwURdiYxxLALpLyCtNYMhapQAHbsXc+xs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cXGh71vIyJo/LLgCZDikwQBJjyul1kW7gYgD+ioHtC6v76owR01F2QL5rRB86NLPxpqE9KZh1uiE4qu47zWG/R21fbDp3vpTB69KEHMDIN+knHvza33E93zNUG6LMnW7lZgYX+QzLHVGAIGCjI17K6swmJVyDi7SEIboNg6JLFU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAEa+FtK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ya5fQTxVRT93AXE2ALmMKQneGfsYFgJ5bQZrVqLJFRfqKsXIdQJTCEdECct/b9qgFGWi8TBhpywGd9EkvK6PeZiYVTHVDs0qR6cVLkFxTA8g2IaNlZsxtjmewchUCxL3pVab+hNcE4j8093kxj//SkoNsYfO83xzOobFCDG4/UQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=j6sRuKsg; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAEa+FtK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EDCC4CEF7;
-	Mon, 23 Mar 2026 16:24:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="j6sRuKsg"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62CE5C4CEF7;
+	Mon, 23 Mar 2026 16:25:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283099;
-	bh=ZugOfbjP6wF7409rPbt6gko0HqrAXQTAEaHdg3uHVUU=;
+	s=korg; t=1774283101;
+	bh=Wr2cd3dVJ5nwURdiYxxLALpLyCtNYMhapQAHbsXc+xs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dAEa+FtKpdZNqbV+EtleukuK00AqsFuBN9fov9ks9pYsFZpeS6F40/Sn12GMXEezA
-	 cLgdGYcP/wQpFgoA7JSknuoP+syBeVNw0lXz1HuTwirqUqoqGRlkBV21C/3blPxE+c
-	 hS1mKAZgCwcV3dCzM9zfQ6tLmGURy7phivOr7hrI=
+	b=j6sRuKsgn6gwy53SNkbO4ZsXbgd3U+SA+LhJ1KDAlWv7XqCUuvue+MXcvy9R+oo70
+	 iWY6CJ/wJdY0UmmBqKUNcHixNRPu7VKcSOXW1i01qWu7xVocpER9luU3x69VnIwDAP
+	 /8OC9gCgOK5LQqNUIjeqqAKYTEmsxmVdA0DjhkW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 374/481] smb: client: Compare MACs in constant time
-Date: Mon, 23 Mar 2026 14:45:56 +0100
-Message-ID: <20260323134534.246146321@linuxfoundation.org>
+	syzbot+feb9ce36a95341bb47a4@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 401/481] wifi: mac80211: Fix static_branch_dec() underflow for aql_disable.
+Date: Mon, 23 Mar 2026 14:46:23 +0100
+Message-ID: <20260323134534.940792707@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,62 +52,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-commit 26bc83b88bbbf054f0980a4a42047a8d1e210e4c upstream.
+[ Upstream commit b94ae8e0d5fe1bdbbfdc3854ff6ce98f6876a828 ]
 
-To prevent timing attacks, MAC comparisons need to be constant-time.
-Replace the memcmp() with the correct function, crypto_memneq().
+syzbot reported static_branch_dec() underflow in aql_enable_write(). [0]
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The problem is that aql_enable_write() does not serialise concurrent
+write()s to the debugfs.
+
+aql_enable_write() checks static_key_false(&aql_disable.key) and
+later calls static_branch_inc() or static_branch_dec(), but the
+state may change between the two calls.
+
+aql_disable does not need to track inc/dec.
+
+Let's use static_branch_enable() and static_branch_disable().
+
+[0]:
+val == 0
+WARNING: kernel/jump_label.c:311 at __static_key_slow_dec_cpuslocked.part.0+0x107/0x120 kernel/jump_label.c:311, CPU#0: syz.1.3155/20288
+Modules linked in:
+CPU: 0 UID: 0 PID: 20288 Comm: syz.1.3155 Tainted: G     U       L      syzkaller #0 PREEMPT(full)
+Tainted: [U]=USER, [L]=SOFTLOCKUP
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/24/2026
+RIP: 0010:__static_key_slow_dec_cpuslocked.part.0+0x107/0x120 kernel/jump_label.c:311
+Code: f2 c9 ff 5b 5d c3 cc cc cc cc e8 54 f2 c9 ff 48 89 df e8 ac f9 ff ff eb ad e8 45 f2 c9 ff 90 0f 0b 90 eb a2 e8 3a f2 c9 ff 90 <0f> 0b 90 eb 97 48 89 df e8 5c 4b 33 00 e9 36 ff ff ff 0f 1f 80 00
+RSP: 0018:ffffc9000b9f7c10 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffffffff9b3e5d40 RCX: ffffffff823c57b4
+RDX: ffff8880285a0000 RSI: ffffffff823c5846 RDI: ffff8880285a0000
+RBP: 0000000000000000 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000000 R12: 000000000000000a
+R13: 1ffff9200173ef88 R14: 0000000000000001 R15: ffffc9000b9f7e98
+FS:  00007f530dd726c0(0000) GS:ffff8881245e3000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000200000001140 CR3: 000000007cc4a000 CR4: 00000000003526f0
+Call Trace:
+ <TASK>
+ __static_key_slow_dec_cpuslocked kernel/jump_label.c:297 [inline]
+ __static_key_slow_dec kernel/jump_label.c:321 [inline]
+ static_key_slow_dec+0x7c/0xc0 kernel/jump_label.c:336
+ aql_enable_write+0x2b2/0x310 net/mac80211/debugfs.c:343
+ short_proxy_write+0x133/0x1a0 fs/debugfs/file.c:383
+ vfs_write+0x2aa/0x1070 fs/read_write.c:684
+ ksys_pwrite64 fs/read_write.c:793 [inline]
+ __do_sys_pwrite64 fs/read_write.c:801 [inline]
+ __se_sys_pwrite64 fs/read_write.c:798 [inline]
+ __x64_sys_pwrite64+0x1eb/0x250 fs/read_write.c:798
+ do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+ do_syscall_64+0xc9/0xf80 arch/x86/entry/syscall_64.c:94
+ entry_SYSCALL_64_after_hwframe+0x77/0x7f
+RIP: 0033:0x7f530cf9aeb9
+Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f530dd72028 EFLAGS: 00000246 ORIG_RAX: 0000000000000012
+RAX: ffffffffffffffda RBX: 00007f530d215fa0 RCX: 00007f530cf9aeb9
+RDX: 0000000000000003 RSI: 0000000000000000 RDI: 0000000000000010
+RBP: 00007f530d008c1f R08: 0000000000000000 R09: 0000000000000000
+R10: 4200000000000005 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f530d216038 R14: 00007f530d215fa0 R15: 00007ffde89fb978
+ </TASK>
+
+Fixes: e908435e402a ("mac80211: introduce aql_enable node in debugfs")
+Reported-by: syzbot+feb9ce36a95341bb47a4@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69a8979e.a70a0220.b118c.0025.GAE@google.com/
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260306072405.3649474-1-kuniyu@google.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/cifsencrypt.c   |    3 ++-
- fs/smb/client/smb2transport.c |    4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ net/mac80211/debugfs.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/fs/smb/client/cifsencrypt.c
-+++ b/fs/smb/client/cifsencrypt.c
-@@ -23,6 +23,7 @@
- #include <linux/fips.h>
- #include "../common/arc4.h"
- #include <crypto/aead.h>
-+#include <crypto/algapi.h>
+diff --git a/net/mac80211/debugfs.c b/net/mac80211/debugfs.c
+index 78c7d60e8667c..175669aa8e744 100644
+--- a/net/mac80211/debugfs.c
++++ b/net/mac80211/debugfs.c
+@@ -326,7 +326,6 @@ static ssize_t aql_enable_read(struct file *file, char __user *user_buf,
+ static ssize_t aql_enable_write(struct file *file, const char __user *user_buf,
+ 				size_t count, loff_t *ppos)
+ {
+-	bool aql_disabled = static_key_false(&aql_disable.key);
+ 	char buf[3];
+ 	size_t len;
  
- int __cifs_calc_signature(struct smb_rqst *rqst,
- 			struct TCP_Server_Info *server, char *signature,
-@@ -243,7 +244,7 @@ int cifs_verify_signature(struct smb_rqs
- /*	cifs_dump_mem("what we think it should be: ",
- 		      what_we_think_sig_should_be, 16); */
+@@ -341,15 +340,12 @@ static ssize_t aql_enable_write(struct file *file, const char __user *user_buf,
+ 	if (len > 0 && buf[len - 1] == '\n')
+ 		buf[len - 1] = 0;
  
--	if (memcmp(server_response_sig, what_we_think_sig_should_be, 8))
-+	if (crypto_memneq(server_response_sig, what_we_think_sig_should_be, 8))
- 		return -EACCES;
- 	else
- 		return 0;
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -19,6 +19,7 @@
- #include <linux/mempool.h>
- #include <linux/highmem.h>
- #include <crypto/aead.h>
-+#include <crypto/algapi.h>
- #include "cifsglob.h"
- #include "cifsproto.h"
- #include "smb2proto.h"
-@@ -699,7 +700,8 @@ smb2_verify_signature(struct smb_rqst *r
- 	if (rc)
- 		return rc;
+-	if (buf[0] == '0' && buf[1] == '\0') {
+-		if (!aql_disabled)
+-			static_branch_inc(&aql_disable);
+-	} else if (buf[0] == '1' && buf[1] == '\0') {
+-		if (aql_disabled)
+-			static_branch_dec(&aql_disable);
+-	} else {
++	if (buf[0] == '0' && buf[1] == '\0')
++		static_branch_enable(&aql_disable);
++	else if (buf[0] == '1' && buf[1] == '\0')
++		static_branch_disable(&aql_disable);
++	else
+ 		return -EINVAL;
+-	}
  
--	if (memcmp(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(server_response_sig, shdr->Signature,
-+			  SMB2_SIGNATURE_SIZE)) {
- 		cifs_dbg(VFS, "sign fail cmd 0x%x message id 0x%llx\n",
- 			shdr->Command, shdr->MessageId);
- 		return -EACCES;
+ 	return count;
+ }
+-- 
+2.51.0
+
 
 
