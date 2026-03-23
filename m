@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C50282F35;
-	Mon, 23 Mar 2026 16:22:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72EA91DA0E1;
+	Mon, 23 Mar 2026 16:23:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282977; cv=none; b=V++HLP+Bv7H2SPl8nantUUVQLfmrMGvZ0oYgteIPfzerzRkMhOcgSTY18CNbKIlp65xGeWtQ+ZeidRj1R1cSEzsC/6KqZMUZDvn2wuQ/YY8c24YrAQXPg1zUWx53EkSYhnkx7oWDUgDZI7KsJrXRgwi4rn+LRFtrRk1JQ2aToac=
+	t=1774282980; cv=none; b=skRCeJKTcS3Ii/G8F1hVvolDgbDn/R7rvhD5uqAr9dpYEYMQidhHKw2Pkmx41cv6q9iuBScJaXoiB0uhoqwcgOU1IUbWIeBz37IPN9pDga1gaxPBq9nz0un3+pGZcz4ggOlvNRj59UmCcCFQGHYdd4zq0WTvR1i8GDGbLwRxU5E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282977; c=relaxed/simple;
-	bh=9ohquUWFz0TgjZNXm5OBsUBVb9mneefhsGETz6Lj5R0=;
+	s=arc-20240116; t=1774282980; c=relaxed/simple;
+	bh=0BJPYY+aAfmlJiDV+oA8NQ1thgdYrIhJzlCIshiGZfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GKc0BHAEFHw6yI1F3sxxeZxsM0uGcgpuoxNZD1YX5ED8rVVvxmzeXqDL7KY7bYqtyb7CEZg2eS+HpKghOOq6Sl4r9idnhvVVcCKV42DdfUKv90NfGC7JMD/4E5G/+NaLSJLABYBRRUlLyB2lNJPQKLl1Fi7PldIFc6bPmekllDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pzuHx9/V; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uctbUi+DHKpzvKfqgHNxdhYNvOdmjwd00zkjD6BPzW5x5zbRYb6wzO/AuJtpjr0XEXIOBoX++QLdmP17w2NjbNg5SUnHAjzxD9E2mJBIFJ+LuVXDP/Ma6gh7y/YuhiOH3b7Mn41wFbVz1ghVpQgG7yOh6SsSRhzaPI0PepXPXz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zv4jgMKX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pzuHx9/V"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374C4C4CEF7;
-	Mon, 23 Mar 2026 16:22:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zv4jgMKX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B778FC4CEF7;
+	Mon, 23 Mar 2026 16:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282977;
-	bh=9ohquUWFz0TgjZNXm5OBsUBVb9mneefhsGETz6Lj5R0=;
+	s=korg; t=1774282980;
+	bh=0BJPYY+aAfmlJiDV+oA8NQ1thgdYrIhJzlCIshiGZfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzuHx9/VL+aTgNRWA5t2Svd5IWjDszk5otDNxaWsVz608Yoc4DWy2OWDEhdNeE3W4
-	 OGbnT0BAKIuekb4yHvbhLBcHKDoKnSHYTIQ16G7/0bLueNqDWZo3GBHFf1fd6Ecqne
-	 py5dTrtk4yQdfBr+WzYRW46uqrfkTXFsFz2d255Y=
+	b=zv4jgMKX7oiTeTIv7uiwob36TuE/1QT74trOBmujnditfEC3AVigeTs37lSxZ1FGr
+	 54nAIa7ujRd3pl7mkRjsmJNAaWzgzKs7Q6E1fbri7Hdhjh+DiUlo9ExOtIieOeGo6H
+	 NiWwveqdnx7g9KZk24XoodrYytnPePe9uS+JHMCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <asj@kernel.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 355/481] btrfs: fix transaction abort on set received ioctl due to item overflow
-Date: Mon, 23 Mar 2026 14:45:37 +0100
-Message-ID: <20260323134533.759655322@linuxfoundation.org>
+Subject: [PATCH 6.1 356/481] iio: light: bh1780: fix PM runtime leak on error path
+Date: Mon, 23 Mar 2026 14:45:38 +0100
+Message-ID: <20260323134533.783708870@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,143 +53,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-[ Upstream commit 87f2c46003fce4d739138aab4af1942b1afdadac ]
+[ Upstream commit dd72e6c3cdea05cad24e99710939086f7a113fb5 ]
 
-If the set received ioctl fails due to an item overflow when attempting to
-add the BTRFS_UUID_KEY_RECEIVED_SUBVOL we have to abort the transaction
-since we did some metadata updates before.
+Move pm_runtime_put_autosuspend() before the error check to ensure
+the PM runtime reference count is always decremented after
+pm_runtime_get_sync(), regardless of whether the read operation
+succeeds or fails.
 
-This means that if a user calls this ioctl with the same received UUID
-field for a lot of subvolumes, we will hit the overflow, trigger the
-transaction abort and turn the filesystem into RO mode. A malicious user
-could exploit this, and this ioctl does not even requires that a user
-has admin privileges (CAP_SYS_ADMIN), only that he/she owns the subvolume.
-
-Fix this by doing an early check for item overflow before starting a
-transaction. This is also race safe because we are holding the subvol_sem
-semaphore in exclusive (write) mode.
-
-A test case for fstests will follow soon.
-
-Fixes: dd5f9615fc5c ("Btrfs: maintain subvolume items in the UUID tree")
-CC: stable@vger.kernel.org # 3.12+
-Reviewed-by: Anand Jain <asj@kernel.org>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ A whole bunch of small things :) ]
+Fixes: 1f0477f18306 ("iio: light: new driver for the ROHM BH1780")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[ moved both pm_runtime_mark_last_busy() and pm_runtime_put_autosuspend() before the error check instead of just pm_runtime_put_autosuspend() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ctree.h     |    2 ++
- fs/btrfs/ioctl.c     |   21 +++++++++++++++++++--
- fs/btrfs/uuid-tree.c |   46 ++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 67 insertions(+), 2 deletions(-)
+ drivers/iio/light/bh1780.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -3210,6 +3210,8 @@ int btrfs_uuid_tree_add(struct btrfs_tra
- 			u64 subid);
- int btrfs_uuid_tree_remove(struct btrfs_trans_handle *trans, u8 *uuid, u8 type,
- 			u64 subid);
-+int btrfs_uuid_tree_check_overflow(struct btrfs_fs_info *fs_info,
-+				   u8 *uuid, u8 type);
- int btrfs_uuid_tree_iterate(struct btrfs_fs_info *fs_info);
+--- a/drivers/iio/light/bh1780.c
++++ b/drivers/iio/light/bh1780.c
+@@ -109,10 +109,10 @@ static int bh1780_read_raw(struct iio_de
+ 		case IIO_LIGHT:
+ 			pm_runtime_get_sync(&bh1780->client->dev);
+ 			value = bh1780_read_word(bh1780, BH1780_REG_DLOW);
+-			if (value < 0)
+-				return value;
+ 			pm_runtime_mark_last_busy(&bh1780->client->dev);
+ 			pm_runtime_put_autosuspend(&bh1780->client->dev);
++			if (value < 0)
++				return value;
+ 			*val = value;
  
- /* dir-item.c */
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -4883,6 +4883,25 @@ static long _btrfs_ioctl_set_received_su
- 		goto out;
- 	}
- 
-+	received_uuid_changed = memcmp(root_item->received_uuid, sa->uuid,
-+				       BTRFS_UUID_SIZE);
-+
-+	/*
-+	 * Before we attempt to add the new received uuid, check if we have room
-+	 * for it in case there's already an item. If the size of the existing
-+	 * item plus this root's ID (u64) exceeds the maximum item size, we can
-+	 * return here without the need to abort a transaction. If we don't do
-+	 * this check, the btrfs_uuid_tree_add() call below would fail with
-+	 * -EOVERFLOW and result in a transaction abort. Malicious users could
-+	 * exploit this to turn the fs into RO mode.
-+	 */
-+	if (received_uuid_changed && !btrfs_is_empty_uuid(sa->uuid)) {
-+		ret = btrfs_uuid_tree_check_overflow(fs_info, sa->uuid,
-+						     BTRFS_UUID_KEY_RECEIVED_SUBVOL);
-+		if (ret < 0)
-+			goto out;
-+	}
-+
- 	/*
- 	 * 1 - root item
- 	 * 2 - uuid items (received uuid + subvol uuid)
-@@ -4898,8 +4917,6 @@ static long _btrfs_ioctl_set_received_su
- 	sa->rtime.sec = ct.tv_sec;
- 	sa->rtime.nsec = ct.tv_nsec;
- 
--	received_uuid_changed = memcmp(root_item->received_uuid, sa->uuid,
--				       BTRFS_UUID_SIZE);
- 	if (received_uuid_changed &&
- 	    !btrfs_is_empty_uuid(root_item->received_uuid)) {
- 		ret = btrfs_uuid_tree_remove(trans, root_item->received_uuid,
---- a/fs/btrfs/uuid-tree.c
-+++ b/fs/btrfs/uuid-tree.c
-@@ -225,6 +225,52 @@ out:
- 	return ret;
- }
- 
-+/*
-+ * Check if we can add one root ID to a UUID key.
-+ * If the key does not yet exists, we can, otherwise only if extended item does
-+ * not exceeds the maximum item size permitted by the leaf size.
-+ *
-+ * Returns 0 on success, negative value on error.
-+ */
-+int btrfs_uuid_tree_check_overflow(struct btrfs_fs_info *fs_info,
-+				   u8 *uuid, u8 type)
-+{
-+	struct btrfs_path *path = NULL;
-+	int ret;
-+	u32 item_size;
-+	struct btrfs_key key;
-+
-+	if (WARN_ON_ONCE(!fs_info->uuid_root)) {
-+		ret = -EINVAL;
-+		goto out;
-+	}
-+
-+	path = btrfs_alloc_path();
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+
-+	btrfs_uuid_to_key(uuid, type, &key);
-+	ret = btrfs_search_slot(NULL, fs_info->uuid_root, &key, path, 0, 0);
-+	if (ret < 0)
-+		goto out;
-+	if (ret > 0) {
-+		ret = 0;
-+		goto out;
-+	}
-+
-+	item_size = btrfs_item_size(path->nodes[0], path->slots[0]);
-+
-+	if (sizeof(struct btrfs_item) + item_size + sizeof(u64) >
-+	    BTRFS_LEAF_DATA_SIZE(fs_info))
-+		ret = -EOVERFLOW;
-+
-+out:
-+	btrfs_free_path(path);
-+	return ret;
-+}
-+
- static int btrfs_uuid_iter_rem(struct btrfs_root *uuid_root, u8 *uuid, u8 type,
- 			       u64 subid)
- {
+ 			return IIO_VAL_INT;
 
 
