@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00C903BA220;
-	Mon, 23 Mar 2026 15:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 470A727FD5B;
+	Mon, 23 Mar 2026 15:23:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279407; cv=none; b=mEnlUSsKHcV0ZZXQNY7wRL5NjFZ9WPcQBxCnq7a3lYS4DXlcuvTHB/EgZwxr4o9vT5mo+K40QkQYu3w+CKxYqdmqVRSmyVAM/FYGCyFJt1/x5jmPJiERDdzYD785Ls+ymGlwjpWYw4nsr+6UII1agOIMbDC1V+aGhTBKFJ7N96g=
+	t=1774279410; cv=none; b=DPdnObX6rcWFeQ2IAtt0zsmbQJXhoezEuUCgWpCZwoyKN36B3jWNhBR+Ur7LFXL4YQIyByFkxLvq5zI5PmKSuks9VrM4kYR5ct5uBaEL4QM6fiVph1fO2wrS736O0pacZJUI51XhBK+aNW55tnMasbs89XWCdIN5tLwwm+HZ05Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279407; c=relaxed/simple;
-	bh=2jV94pvHXSOuYCuL0dG1jhNApS3Izqa6yDKjYZUKFtU=;
+	s=arc-20240116; t=1774279410; c=relaxed/simple;
+	bh=YKezCIi7T184QUiBpBTyfPNjY1k0u/nS7OREoSRvQTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=fk+/0VF2qv7Y4pRLWmZuTuLtC5qBuPaEupdkAj2K9csG1lRifP7lMBNhJfHvTVtWCJqxRHpl3kEoyYbRCcIPpEEMja6RpXBd7mYAmdtwH5uYF9I/Ny6EQUEVLCV1fMs5bkugxLjMzzPjbKp270FmCgUjDNCYRnvnhU9XLUWXrl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dhmg8H7y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sX7zJi7YULynY3MzcAEUFYXJtZGXMcS9WowuXHK+CKIONc2fWP3d0xu6JQ8Ppp/q1M/6Mkx2wfbQKMMg5O82hcvkKuPngc7HpyOEycvRvloYyaRF14rmLvuJM/vIG5pjdPrf7Hi/JIEhwZ5YRjeaR7mIZbZ0clVimIfV4UYuTes=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zeG9EaUD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dhmg8H7y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 795CEC4CEF7;
-	Mon, 23 Mar 2026 15:23:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zeG9EaUD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85415C2BCB1;
+	Mon, 23 Mar 2026 15:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279406;
-	bh=2jV94pvHXSOuYCuL0dG1jhNApS3Izqa6yDKjYZUKFtU=;
+	s=korg; t=1774279409;
+	bh=YKezCIi7T184QUiBpBTyfPNjY1k0u/nS7OREoSRvQTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dhmg8H7yBG6d9F7kL8dX4fxy/+3Q4I3aGyuYxglQSS+gXPSF/sSVfxN+GA7zxMZGh
-	 7Qhn8YPgYRlk35nQIh72DYbmEsboKSgO7/ULBWCdGw4Vb61DkDmdnLcHYlumx7waaI
-	 8OeYJcor0AzMXSvFbPtKQMwjxbHqz8BgFTONhOH8=
+	b=zeG9EaUDNJ6Gl8anxgB1M1teWzLiqPCZzfae6lJzP49WmaydbtIgSHz2OlFcUz5ql
+	 48r6D4Emasr+A60IGXXQUsODO9ZBu2rsqIxI6wyDcVggaXbpjn49glYj9mcXSUtZ8Q
+	 sLsGkRkYTbmKXqYN4FHIAdZnhAOgKpB9Tw7t+F5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <bence98@sch.bme.hu>,
-	Johan Hovold <johan@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>,
+	Kamal Dasu <kamal.dasu@broadcom.com>,
+	William Zhang <william.zhang@broadcom.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 559/567] i2c: cp2615: fix serial string NULL-deref at probe
-Date: Mon, 23 Mar 2026 14:47:59 +0100
-Message-ID: <20260323134547.864243347@linuxfoundation.org>
+Subject: [PATCH 6.6 560/567] mtd: rawnand: serialize lock/unlock against other NAND operations
+Date: Mon, 23 Mar 2026 14:48:00 +0100
+Message-ID: <20260323134547.887357740@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,47 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Kamal Dasu <kamal.dasu@broadcom.com>
 
-[ Upstream commit aa79f996eb41e95aed85a1bd7f56bcd6a3842008 ]
+[ Upstream commit bab2bc6e850a697a23b9e5f0e21bb8c187615e95 ]
 
-The cp2615 driver uses the USB device serial string as the i2c adapter
-name but does not make sure that the string exists.
+nand_lock() and nand_unlock() call into chip->ops.lock_area/unlock_area
+without holding the NAND device lock. On controllers that implement
+SET_FEATURES via multiple low-level PIO commands, these can race with
+concurrent UBI/UBIFS background erase/write operations that hold the
+device lock, resulting in cmd_pending conflicts on the NAND controller.
 
-Verify that the device has a serial number before accessing it to avoid
-triggering a NULL-pointer dereference (e.g. with malicious devices).
+Add nand_get_device()/nand_release_device() around the lock/unlock
+operations to serialize them against all other NAND controller access.
 
-Fixes: 4a7695429ead ("i2c: cp2615: add i2c driver for Silicon Labs' CP2615 Digital Audio Bridge")
-Cc: stable@vger.kernel.org	# 5.13
-Cc: Bence Csókás <bence98@sch.bme.hu>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Reviewed-by: Bence Csókás <bence98@sch.bme.hu>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260309075016.25612-1-johan@kernel.org
+Fixes: 92270086b7e5 ("mtd: rawnand: Add support for manufacturer specific lock/unlock operation")
+Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
+Reviewed-by: William Zhang <william.zhang@broadcom.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-cp2615.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/nand/raw/nand_base.c | 14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/i2c/busses/i2c-cp2615.c
-+++ b/drivers/i2c/busses/i2c-cp2615.c
-@@ -298,6 +298,9 @@ cp2615_i2c_probe(struct usb_interface *u
- 	if (!adap)
- 		return -ENOMEM;
+diff --git a/drivers/mtd/nand/raw/nand_base.c b/drivers/mtd/nand/raw/nand_base.c
+index fe0b298f8425e..896a7d819e3c7 100644
+--- a/drivers/mtd/nand/raw/nand_base.c
++++ b/drivers/mtd/nand/raw/nand_base.c
+@@ -4849,11 +4849,16 @@ static void nand_shutdown(struct mtd_info *mtd)
+ static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ {
+ 	struct nand_chip *chip = mtd_to_nand(mtd);
++	int ret;
  
-+	if (!usbdev->serial)
-+		return -EINVAL;
+ 	if (!chip->ops.lock_area)
+ 		return -ENOTSUPP;
+ 
+-	return chip->ops.lock_area(chip, ofs, len);
++	nand_get_device(chip);
++	ret = chip->ops.lock_area(chip, ofs, len);
++	nand_release_device(chip);
 +
- 	strscpy(adap->name, usbdev->serial, sizeof(adap->name));
- 	adap->owner = THIS_MODULE;
- 	adap->dev.parent = &usbif->dev;
++	return ret;
+ }
+ 
+ /**
+@@ -4865,11 +4870,16 @@ static int nand_lock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ static int nand_unlock(struct mtd_info *mtd, loff_t ofs, uint64_t len)
+ {
+ 	struct nand_chip *chip = mtd_to_nand(mtd);
++	int ret;
+ 
+ 	if (!chip->ops.unlock_area)
+ 		return -ENOTSUPP;
+ 
+-	return chip->ops.unlock_area(chip, ofs, len);
++	nand_get_device(chip);
++	ret = chip->ops.unlock_area(chip, ofs, len);
++	nand_release_device(chip);
++
++	return ret;
+ }
+ 
+ /* Set default functions */
+-- 
+2.51.0
+
 
 
