@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE773BD62F;
-	Mon, 23 Mar 2026 16:26:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7035212CDA5;
+	Mon, 23 Mar 2026 16:26:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283194; cv=none; b=FIu6RX9wF4Bqvj/BJ3tvlWphPZ7GS+25v3f2ds5plDeWvkLd775luPu3P06QJgZSbnyY25dA9BSRISS5ArdUqUBxz6439MEZ65H5Wa8wlVgZGn0eW4J2BjskI3/NCz1tCCohxHjkGVao9dEmiKHuPSNIDN6v2pF5FsLX2X3VgNQ=
+	t=1774283197; cv=none; b=FvzHStWI9plOX0BJDTWaH9k+uS5A5Girn9qawIS0wNWUItsRH8AWEfL20rssCGF3XsaqHdzdI0dqxGXpsnSfkynpD/ahgriP4AjJPOUdOUyOuE7hquSdmYlw44nYEQaxULYhL5ho2cyjw4s8LIW4gKrluY3/4iJ1xQIg6gJqqtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283194; c=relaxed/simple;
-	bh=7KneFUsKcZgwNifw9ln2J6VPhA/r8+vRT6K3ZtH1PKU=;
+	s=arc-20240116; t=1774283197; c=relaxed/simple;
+	bh=fpGDeq6kYEKNfygvpAuglXyBOcErow9mYFv+a5rsAsk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BIWSkrZjbc8xjjscryzW9qyFzY+8RLM1sOu+ivezts7lxVjEiLMyxl8du2VDz49DHc8odv4/5ourPV9rxFg/2tYSHcwwEQskhyD2SDQBs2Hv4hEzjhhWvkTB4D30fWC8a8XAIltxu/CmlZc1vAY45m76erimlmkwbnqLTkR/eBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCp984Om; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YVxcvF9ftSIWGWyYWCj4f+JiiRsy44IoSXXGyYvU9dr2UAGTL8owkQ7yA0lS10Lh2XmvKc/omFTB2N8+takprB33EI2ZVo2tKY71+uWAYfge0cmTexnVPTKBcz3FodHNlSoNXVc3ALJlSU5nv0iGtaxn6kR3IyVRJimhQJeyu2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jKjxv1f9; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCp984Om"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CDCC4CEF7;
-	Mon, 23 Mar 2026 16:26:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jKjxv1f9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFF2EC4CEF7;
+	Mon, 23 Mar 2026 16:26:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283194;
-	bh=7KneFUsKcZgwNifw9ln2J6VPhA/r8+vRT6K3ZtH1PKU=;
+	s=korg; t=1774283197;
+	bh=fpGDeq6kYEKNfygvpAuglXyBOcErow9mYFv+a5rsAsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCp984OmRQPzmNc8b/I/UnyKmyrpHOa+l3Ovv5UQB/wc8jbUKlAZ5FDs0YNB9agn3
-	 vQoSmPMv+qa/Uwez6YSmIxSXyTK/xw6RqS+VAyPIizVrGTz5cV32SbRNYglCqGECDZ
-	 1eynl2xuIuNosMehfeeun8hEw9ZYaVyMbxSH0t58=
+	b=jKjxv1f9re3XAu6YLKw9jCTKWdiJDjAEC+GUd1oXxv6z7V3puYFRYU6eBpNayRwUF
+	 HIO5GeSXnXgj9NZK9xegxUJSyJ+EdiJDX+v3rJeqbNU5sCngzT64eZAJlnQzxlQ8Py
+	 NYESYPsYhT7auYY+CvLe0cQ+0hNQ/qFqMFlfUqBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justin.chen@broadcom.com>,
+	Jonas Gorski <jonas.gorski@gmail.com>,
 	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Anas Iqbal <mohd.abd.6602@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 420/481] net: bcmgenet: increase WoL poll timeout
-Date: Mon, 23 Mar 2026 14:46:42 +0100
-Message-ID: <20260323134535.429847091@linuxfoundation.org>
+Subject: [PATCH 6.1 438/481] net: dsa: bcm_sf2: fix missing clk_disable_unprepare() in error paths
+Date: Mon, 23 Mar 2026 14:47:00 +0100
+Message-ID: <20260323134535.884996884@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,36 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Justin Chen <justin.chen@broadcom.com>
+From: Anas Iqbal <mohd.abd.6602@gmail.com>
 
-[ Upstream commit 6cfc3bc02b977f2fba5f7268e6504d1931a774f7 ]
+[ Upstream commit b48731849609cbd8c53785a48976850b443153fd ]
 
-Some systems require more than 5ms to get into WoL mode. Increase the
-timeout value to 50ms.
+Smatch reports:
+drivers/net/dsa/bcm_sf2.c:997 bcm_sf2_sw_resume() warn:
+'priv->clk' from clk_prepare_enable() not released on lines: 983,990.
 
-Fixes: c51de7f3976b ("net: bcmgenet: add Wake-on-LAN support code")
-Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+The clock enabled by clk_prepare_enable() in bcm_sf2_sw_resume()
+is not released if bcm_sf2_sw_rst() or bcm_sf2_cfp_resume() fails.
+
+Add the missing clk_disable_unprepare() calls in the error paths
+to properly release the clock resource.
+
+Fixes: e9ec5c3bd238 ("net: dsa: bcm_sf2: request and handle clocks")
+Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
 Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Link: https://patch.msgid.link/20260312191852.3904571-1-justin.chen@broadcom.com
+Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
+Link: https://patch.msgid.link/20260318084212.1287-1-mohd.abd.6602@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/dsa/bcm_sf2.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-index 56781e7214978..3ab506ed94252 100644
---- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-+++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
-@@ -101,7 +101,7 @@ static int bcmgenet_poll_wol_status(struct bcmgenet_priv *priv)
- 	while (!(bcmgenet_rbuf_readl(priv, RBUF_STATUS)
- 		& RBUF_STATUS_WOL)) {
- 		retries++;
--		if (retries > 5) {
-+		if (retries > 50) {
- 			netdev_crit(dev, "polling wol mode timeout\n");
- 			return -ETIMEDOUT;
- 		}
+diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
+index 257df16768750..7defcfd1c213f 100644
+--- a/drivers/net/dsa/bcm_sf2.c
++++ b/drivers/net/dsa/bcm_sf2.c
+@@ -971,15 +971,19 @@ static int bcm_sf2_sw_resume(struct dsa_switch *ds)
+ 	ret = bcm_sf2_sw_rst(priv);
+ 	if (ret) {
+ 		pr_err("%s: failed to software reset switch\n", __func__);
++		if (!priv->wol_ports_mask)
++			clk_disable_unprepare(priv->clk);
+ 		return ret;
+ 	}
+ 
+ 	bcm_sf2_crossbar_setup(priv);
+ 
+ 	ret = bcm_sf2_cfp_resume(ds);
+-	if (ret)
++	if (ret) {
++		if (!priv->wol_ports_mask)
++			clk_disable_unprepare(priv->clk);
+ 		return ret;
+-
++	}
+ 	if (priv->hw_params.num_gphy == 1)
+ 		bcm_sf2_gphy_enable_set(ds, true);
+ 
 -- 
 2.51.0
 
