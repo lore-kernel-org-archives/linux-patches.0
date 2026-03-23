@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E753B19A2;
-	Mon, 23 Mar 2026 16:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8C9C3AE6F8;
+	Mon, 23 Mar 2026 16:09:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282194; cv=none; b=BQ++TMvip14VrhRtkfHZT9YHylHxnf21kVHp/fImw7/zccsM/SLNkdtsNSpm92PyLi92pvesCQNrMNXGL5RqtlqmXuiY36+kWqEQgVOZh9csb3mZqzRYv7nUUCzC7SRrzZDDUjb3SuKBwWv4yon6IJbC6fl8dpKJ7dJKZHsh5y4=
+	t=1774282197; cv=none; b=bqoHEfZfvq09rZ4oEGiiyp/cgy0hY7ePqQB8AsI3rm64X6jCdOiNr1aH313RzWyvWtNFoci/qwtmwfuRNZSEdP9888wtRuGlS0zrcpKOXAwMCJOJjhYGs+/K/YwkmEVktqFZMJ30tMo6m1PRSHzTt4coxW9sIxIUEhbgczT5WH0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282194; c=relaxed/simple;
-	bh=iNzJ3l0tCnfkuWP2/1TMruPfW0Lf4pRiC2U1szVdI9c=;
+	s=arc-20240116; t=1774282197; c=relaxed/simple;
+	bh=Riwuko69TZpd2MBIgQza+YifR1BPGTw5EWaJRi/bTEA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Aqf5SyJeMVSqrno0+4Whb304qVX8t4Cirzi/h4If++2Bi0iXpTBt9dxmLGcN6M2GG4+pVJnlSCFv6zNGE4oG/DOizY1XvJJkE5lYrFyGE+7XO78KmeV2hjEUuvCoknYFYRDOZCKnNNBhz155o8Xcnf9BR9FVHxlUR3pYq6XcWHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=h/8v8vXu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=klKLIcup5HCkXqJdcEu6BR/SzfKRYOYV0mv5bbWwjywb40xSO8SHhZUbhro9+hqZSq2EeY8tLAZoCXdXiavD91B0PD0iTVuQFbijQTgPtfGejMGN1LwiJsi45YA/Sx3N4YYFCUCIHhRPzzVBQTGw7xlO2byfCWptrmjQO3x8Psc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DJVuHZNy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="h/8v8vXu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72EB7C2BC9E;
-	Mon, 23 Mar 2026 16:09:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DJVuHZNy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E32C4CEF7;
+	Mon, 23 Mar 2026 16:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282193;
-	bh=iNzJ3l0tCnfkuWP2/1TMruPfW0Lf4pRiC2U1szVdI9c=;
+	s=korg; t=1774282196;
+	bh=Riwuko69TZpd2MBIgQza+YifR1BPGTw5EWaJRi/bTEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/8v8vXu5TfXshobAh99/ERt+jeIkGCxDD4AGJdi31yyF+iy98dhSzSQAIuhzVhG8
-	 5EYlc4d/r1exQCzeIhm10Vly8s9BFwa08mRmFr0miOo6mQ9gGU37HmnE4IypUvlvoo
-	 m+3LFpQ4InyfJQZSACfOh4xrfzXXWlbApbX1RRHE=
+	b=DJVuHZNyGVzD+pH7AFwvwKHX9KZ0C3A+Hecs3fntD2+nYSCnBhUbKrcQc08EnYo5r
+	 qE4IJT4UBPZ7DsJ5vsWN/1sQcV4z9LCqp0irKEQcsRY+9ETsrmz4XB1wtDLJb6b53q
+	 o1Mi2yB9560eLMkqeqLPsG06z2dJpiHW8TEWCwIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Horman <horms@kernel.org>,
-	Ethan Nelson-Moore <enelsonmoore@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 066/481] net: arcnet: com20020-pci: fix support for 2.5Mbit cards
-Date: Mon, 23 Mar 2026 14:40:48 +0100
-Message-ID: <20260323134526.835887923@linuxfoundation.org>
+Subject: [PATCH 6.1 067/481] drm/amd: Drop special case for yellow carp without discovery
+Date: Mon, 23 Mar 2026 14:40:49 +0100
+Message-ID: <20260323134526.860238296@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,79 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ethan Nelson-Moore <enelsonmoore@gmail.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit c7d9be66b71af490446127c6ffcb66d6bb71b8b9 ]
+[ Upstream commit 3ef07651a5756e7de65615e18eacbf8822c23016 ]
 
-Commit 8c14f9c70327 ("ARCNET: add com20020 PCI IDs with metadata")
-converted the com20020-pci driver to use a card info structure instead
-of a single flag mask in driver_data. However, it failed to take into
-account that in the original code, driver_data of 0 indicates a card
-with no special flags, not a card that should not have any card info
-structure. This introduced a null pointer dereference when cards with
-no flags were probed.
+`amdgpu_gmc_get_vbios_allocations` has a special case for how to
+bring up yellow carp when amdgpu discovery is turned off. As this ASIC
+ships with discovery turned on, it's generally dead code and worse it
+causes `adev->mman.keep_stolen_vga_memory` to not be initialized for
+yellow carp.
 
-Commit bd6f1fd5d33d ("net: arcnet: com20020: Fix null-ptr-deref in
-com20020pci_probe()") then papered over this issue by rejecting cards
-with no driver_data instead of resolving the problem at its source.
+Remove it.
 
-Fix the original issue by introducing a new card info structure for
-2.5Mbit cards that does not set any flags and using it if no
-driver_data is present.
-
-Fixes: 8c14f9c70327 ("ARCNET: add com20020 PCI IDs with metadata")
-Fixes: bd6f1fd5d33d ("net: arcnet: com20020: Fix null-ptr-deref in com20020pci_probe()")
-Cc: stable@vger.kernel.org
-Reviewed-by: Simon Horman <horms@kernel.org>
-Signed-off-by: Ethan Nelson-Moore <enelsonmoore@gmail.com>
-Link: https://patch.msgid.link/20260213045510.32368-1-enelsonmoore@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 096bb75e13cc ("drm/amdgpu: keep vga memory on MacBooks with switchable graphics")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/arcnet/com20020-pci.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/net/arcnet/com20020-pci.c b/drivers/net/arcnet/com20020-pci.c
-index e7db6a4e4dc9d..e9ee32b091a41 100644
---- a/drivers/net/arcnet/com20020-pci.c
-+++ b/drivers/net/arcnet/com20020-pci.c
-@@ -114,6 +114,8 @@ static const struct attribute_group com20020_state_group = {
- 	.attrs = com20020_state_attrs,
- };
- 
-+static struct com20020_pci_card_info card_info_2p5mbit;
-+
- static void com20020pci_remove(struct pci_dev *pdev);
- 
- static int com20020pci_probe(struct pci_dev *pdev,
-@@ -139,7 +141,7 @@ static int com20020pci_probe(struct pci_dev *pdev,
- 
- 	ci = (struct com20020_pci_card_info *)id->driver_data;
- 	if (!ci)
--		return -EINVAL;
-+		ci = &card_info_2p5mbit;
- 
- 	priv->ci = ci;
- 	mm = &ci->misc_map;
-@@ -346,6 +348,18 @@ static struct com20020_pci_card_info card_info_5mbit = {
- 	.flags = ARC_IS_5MBIT,
- };
- 
-+static struct com20020_pci_card_info card_info_2p5mbit = {
-+	.name = "ARC-PCI",
-+	.devcount = 1,
-+	.chan_map_tbl = {
-+		{
-+			.bar = 2,
-+			.offset = 0x00,
-+			.size = 0x08,
-+		},
-+	},
-+};
-+
- static struct com20020_pci_card_info card_info_sohard = {
- 	.name = "SOHARD SH ARC-PCI",
- 	.devcount = 1,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+index fd98d2508a22a..4bc05178504dc 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
+@@ -652,12 +652,6 @@ void amdgpu_gmc_get_vbios_allocations(struct amdgpu_device *adev)
+ 	case CHIP_RENOIR:
+ 		adev->mman.keep_stolen_vga_memory = true;
+ 		break;
+-	case CHIP_YELLOW_CARP:
+-		if (amdgpu_discovery == 0) {
+-			adev->mman.stolen_reserved_offset = 0x1ffb0000;
+-			adev->mman.stolen_reserved_size = 64 * PAGE_SIZE;
+-		}
+-		break;
+ 	default:
+ 		adev->mman.keep_stolen_vga_memory = false;
+ 		break;
 -- 
 2.51.0
 
