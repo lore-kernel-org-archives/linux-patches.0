@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD52C2517AF;
-	Mon, 23 Mar 2026 16:19:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426303AF678;
+	Mon, 23 Mar 2026 16:19:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282767; cv=none; b=oMaL4HDbWDK+gB7R8Jrx/+UFTVMNF1dN7UyIsiaSWUKC9YnxR2RN6WI4ZFWv56eISiKDaQUJFEXowu7mj9QL+Z9pDC42en+ZS+O54NExWA6s99E6RBIrNx8o1BJZvxLDVoGQgJfXcZYHG1XjsBlw4ocAZe67YQWORyEERcxEqRQ=
+	t=1774282770; cv=none; b=lFsK/tHNXTHQqAF7us7Kfw6o5uLoX4R5nHwLUZAdKkR7rYqBDNdG29/KHAh18JxQ/uTOfnVwEwwuy6g6hBoP4OLFM8p4pGPpkgxOPtdC+6rJvNEiM0u2Fkd6M23s2qFX/gC8XHdMeioXk7GabcbzH86ZYvaLeWs9v/a/1hgqDJE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282767; c=relaxed/simple;
-	bh=3uyPiV1d5YXfu4qQA30EhT/VdxSMKSDFZajoMQxB2rk=;
+	s=arc-20240116; t=1774282770; c=relaxed/simple;
+	bh=/uY2nOPjpYlr6g8/PPxT2hrLGJH1jM77uEV1arxxdtM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UGVN7JITyFK0zNlZwCzpmm3DyN4cRn45hE68WDDsNF5Pl5VW3bnHmBjGwU1hFr7a0PlysooD1+NYW2KMsz95hYMavsb8eurn5WJ4EiiEjEMtT1Do6CN/9gsMFCV7rkq+hylCWbY66Q6Xy8JqvzIr1lmzbTvLeGIx1M6Lb88CUjs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK5FH7+d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KbTHlWB72ZB9RO8a2X01THYFrHs+bFFGqfcmqDJ/LH3Z51tbYQ5QcJofdD3ZQTRPbZsUPCZ2fZrIkfhpi2iOESMlJ2QkE74EQxA9FaFwZ16MCqeB0LyKe14q1NN/bfmDsSpzquyED1UvpVvkVY2ITWtaRq/7K29pUFUDVw9BaI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p0rK6aAk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK5FH7+d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E486C4CEF7;
-	Mon, 23 Mar 2026 16:19:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p0rK6aAk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D50C4CEF7;
+	Mon, 23 Mar 2026 16:19:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282767;
-	bh=3uyPiV1d5YXfu4qQA30EhT/VdxSMKSDFZajoMQxB2rk=;
+	s=korg; t=1774282770;
+	bh=/uY2nOPjpYlr6g8/PPxT2hrLGJH1jM77uEV1arxxdtM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PK5FH7+dnrEJbJ30SAPB7b78/AAwYLkqAxoR9Yy/m49YPP2NuwJq8IibOaRLTfnCv
-	 yXBo7stOhx0hkaXGRM9egEAmod83h3jgKry7Zwv1S+z4ag5UPF6zmpZVutKdccmGSl
-	 jhoxdxa9Thus0gd91CqczBag2+gmjwsgvJJKHUgw=
+	b=p0rK6aAkjvBx8TqVKQQArlnD9OePEmq4IYkeWIbkLx3VbEUSK0ABfg9blF3nnUa1i
+	 avoZ96j+xw8DJNSIE7nQr9czDcQroIYv3yc4d77JhPUTwFcD94sid25nAKpOj+qCA9
+	 daS4+8y6UIu9GEXJgKJioN4LkNMNlGX1buW4Vl1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ripple <john.ripple@keysight.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.1 276/481] drm/bridge: ti-sn65dsi86: Add support for DisplayPort mode with HPD
-Date: Mon, 23 Mar 2026 14:44:18 +0100
-Message-ID: <20260323134531.849785301@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Navaneeth K <knavaneeth786@gmail.com>
+Subject: [PATCH 6.1 235/481] staging: rtl8723bs: properly validate the data in rtw_get_ie_ex()
+Date: Mon, 23 Mar 2026 14:43:37 +0100
+Message-ID: <20260323134530.869557200@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,224 +50,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ripple <john.ripple@keysight.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 9133bc3f0564890218cbba6cc7e81ebc0841a6f1 upstream.
+commit f0109b9d3e1e455429279d602f6276e34689750a upstream.
 
-Add support for DisplayPort to the bridge, which entails the following:
-- Get and use an interrupt for HPD;
-- Properly clear all status bits in the interrupt handler;
+Just like in commit 154828bf9559 ("staging: rtl8723bs: fix out-of-bounds
+read in rtw_get_ie() parser"), we don't trust the data in the frame so
+we should check the length better before acting on it
 
-Signed-off-by: John Ripple <john.ripple@keysight.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250915174543.2564994-1-john.ripple@keysight.com
+Cc: stable <stable@kernel.org>
+Assisted-by: gkh_clanker_2000
+Tested-by: Navaneeth K <knavaneeth786@gmail.com>
+Reviewed-by: Navaneeth K <knavaneeth786@gmail.com>
+Link: https://patch.msgid.link/2026022336-arrange-footwork-6e54@gregkh
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c |  112 ++++++++++++++++++++++++++++++++++
- 1 file changed, 112 insertions(+)
+ drivers/staging/rtl8723bs/core/rtw_ieee80211.c |   15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -106,10 +106,21 @@
- #define SN_PWM_EN_INV_REG			0xA5
- #define  SN_PWM_INV_MASK			BIT(0)
- #define  SN_PWM_EN_MASK				BIT(1)
-+
-+#define SN_IRQ_EN_REG				0xE0
-+#define  IRQ_EN					BIT(0)
-+
-+#define SN_IRQ_EVENTS_EN_REG			0xE6
-+#define  HPD_INSERTION_EN			BIT(1)
-+#define  HPD_REMOVAL_EN				BIT(2)
-+
- #define SN_AUX_CMD_STATUS_REG			0xF4
- #define  AUX_IRQ_STATUS_AUX_RPLY_TOUT		BIT(3)
- #define  AUX_IRQ_STATUS_AUX_SHORT		BIT(5)
- #define  AUX_IRQ_STATUS_NAT_I2C_FAIL		BIT(6)
-+#define SN_IRQ_STATUS_REG			0xF5
-+#define  HPD_REMOVAL_STATUS			BIT(2)
-+#define  HPD_INSERTION_STATUS			BIT(1)
+--- a/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
++++ b/drivers/staging/rtl8723bs/core/rtw_ieee80211.c
+@@ -186,20 +186,25 @@ u8 *rtw_get_ie_ex(u8 *in_ie, uint in_len
  
- #define MIN_DSI_CLK_FREQ_MHZ	40
+ 	cnt = 0;
  
-@@ -152,7 +163,9 @@
-  * @ln_assign:    Value to program to the LN_ASSIGN register.
-  * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
-  * @comms_enabled: If true then communication over the aux channel is enabled.
-+ * @hpd_enabled:   If true then HPD events are enabled.
-  * @comms_mutex:   Protects modification of comms_enabled.
-+ * @hpd_mutex:     Protects modification of hpd_enabled.
-  *
-  * @gchip:        If we expose our GPIOs, this is used.
-  * @gchip_output: A cache of whether we've set GPIOs to output.  This
-@@ -190,7 +203,9 @@ struct ti_sn65dsi86 {
- 	u8				ln_assign;
- 	u8				ln_polrs;
- 	bool				comms_enabled;
-+	bool				hpd_enabled;
- 	struct mutex			comms_mutex;
-+	struct mutex			hpd_mutex;
+-	while (cnt < in_len) {
++	while (cnt + 2 <= in_len) {
++		u8 ie_len = in_ie[cnt + 1];
++
++		if (cnt + 2 + ie_len > in_len)
++			break;
++
+ 		if (eid == in_ie[cnt]
+-			&& (!oui || !memcmp(&in_ie[cnt+2], oui, oui_len))) {
++			&& (!oui || (ie_len >= oui_len && !memcmp(&in_ie[cnt + 2], oui, oui_len)))) {
+ 			target_ie = &in_ie[cnt];
  
- #if defined(CONFIG_OF_GPIO)
- 	struct gpio_chip		gchip;
-@@ -221,6 +236,23 @@ static const struct regmap_config ti_sn6
- 	.max_register = 0xFF,
- };
+ 			if (ie)
+-				memcpy(ie, &in_ie[cnt], in_ie[cnt+1]+2);
++				memcpy(ie, &in_ie[cnt], ie_len + 2);
  
-+static int ti_sn65dsi86_read_u8(struct ti_sn65dsi86 *pdata, unsigned int reg,
-+				u8 *val)
-+{
-+	int ret;
-+	unsigned int reg_val;
-+
-+	ret = regmap_read(pdata->regmap, reg, &reg_val);
-+	if (ret) {
-+		dev_err(pdata->dev, "fail to read raw reg %#x: %d\n",
-+			reg, ret);
-+		return ret;
-+	}
-+	*val = (u8)reg_val;
-+
-+	return 0;
-+}
-+
- static int __maybe_unused ti_sn65dsi86_read_u16(struct ti_sn65dsi86 *pdata,
- 						unsigned int reg, u16 *val)
- {
-@@ -362,6 +394,7 @@ static void ti_sn65dsi86_disable_comms(s
- static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
- {
- 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(dev);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
- 	int ret;
+ 			if (ielen)
+-				*ielen = in_ie[cnt+1]+2;
++				*ielen = ie_len + 2;
  
- 	ret = regulator_bulk_enable(SN_REGULATOR_SUPPLY_NUM, pdata->supplies);
-@@ -396,6 +429,13 @@ static int __maybe_unused ti_sn65dsi86_r
- 	if (pdata->refclk)
- 		ti_sn65dsi86_enable_comms(pdata);
+ 			break;
+ 		}
+-		cnt += in_ie[cnt+1]+2; /* goto next */
++		cnt += ie_len + 2; /* goto next */
+ 	}
  
-+	if (client->irq) {
-+		ret = regmap_update_bits(pdata->regmap, SN_IRQ_EN_REG, IRQ_EN,
-+					 IRQ_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to enable IRQ events: %d\n", ret);
-+	}
-+
- 	return ret;
- }
- 
-@@ -1204,6 +1244,8 @@ static void ti_sn65dsi86_debugfs_init(st
- static void ti_sn_bridge_hpd_enable(struct drm_bridge *bridge)
- {
- 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
-+	int ret;
- 
- 	/*
- 	 * Device needs to be powered on before reading the HPD state
-@@ -1212,11 +1254,35 @@ static void ti_sn_bridge_hpd_enable(stru
- 	 */
- 
- 	pm_runtime_get_sync(pdata->dev);
-+
-+	mutex_lock(&pdata->hpd_mutex);
-+	pdata->hpd_enabled = true;
-+	mutex_unlock(&pdata->hpd_mutex);
-+
-+	if (client->irq) {
-+		ret = regmap_set_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
-+				      HPD_REMOVAL_EN | HPD_INSERTION_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to enable HPD events: %d\n", ret);
-+	}
- }
- 
- static void ti_sn_bridge_hpd_disable(struct drm_bridge *bridge)
- {
- 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
-+	int ret;
-+
-+	if (client->irq) {
-+		ret = regmap_clear_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
-+					HPD_REMOVAL_EN | HPD_INSERTION_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to disable HPD events: %d\n", ret);
-+	}
-+
-+	mutex_lock(&pdata->hpd_mutex);
-+	pdata->hpd_enabled = false;
-+	mutex_unlock(&pdata->hpd_mutex);
- 
- 	pm_runtime_put_autosuspend(pdata->dev);
- }
-@@ -1302,6 +1368,41 @@ static int ti_sn_bridge_parse_dsi_host(s
- 	return 0;
- }
- 
-+static irqreturn_t ti_sn_bridge_interrupt(int irq, void *private)
-+{
-+	struct ti_sn65dsi86 *pdata = private;
-+	struct drm_device *dev = pdata->bridge.dev;
-+	u8 status;
-+	int ret;
-+	bool hpd_event;
-+
-+	ret = ti_sn65dsi86_read_u8(pdata, SN_IRQ_STATUS_REG, &status);
-+	if (ret) {
-+		dev_err(pdata->dev, "Failed to read IRQ status: %d\n", ret);
-+		return IRQ_NONE;
-+	}
-+
-+	hpd_event = status & (HPD_REMOVAL_STATUS | HPD_INSERTION_STATUS);
-+
-+	dev_dbg(pdata->dev, "(SN_IRQ_STATUS_REG = %#x)\n", status);
-+	if (!status)
-+		return IRQ_NONE;
-+
-+	ret = regmap_write(pdata->regmap, SN_IRQ_STATUS_REG, status);
-+	if (ret) {
-+		dev_err(pdata->dev, "Failed to clear IRQ status: %d\n", ret);
-+		return IRQ_NONE;
-+	}
-+
-+	/* Only send the HPD event if we are bound with a device. */
-+	mutex_lock(&pdata->hpd_mutex);
-+	if (pdata->hpd_enabled && hpd_event)
-+		drm_kms_helper_hotplug_event(dev);
-+	mutex_unlock(&pdata->hpd_mutex);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 			      const struct auxiliary_device_id *id)
- {
-@@ -1933,6 +2034,7 @@ static int ti_sn65dsi86_probe(struct i2c
- 	dev_set_drvdata(dev, pdata);
- 	pdata->dev = dev;
- 
-+	mutex_init(&pdata->hpd_mutex);
- 	mutex_init(&pdata->comms_mutex);
- 
- 	pdata->regmap = devm_regmap_init_i2c(client,
-@@ -1963,6 +2065,16 @@ static int ti_sn65dsi86_probe(struct i2c
- 	if (ret)
- 		return ret;
- 
-+	if (client->irq) {
-+		ret = devm_request_threaded_irq(pdata->dev, client->irq, NULL,
-+						ti_sn_bridge_interrupt,
-+						IRQF_ONESHOT,
-+						dev_name(pdata->dev), pdata);
-+
-+		if (ret)
-+			return dev_err_probe(dev, ret, "failed to request interrupt\n");
-+	}
-+
- 	/*
- 	 * Break ourselves up into a collection of aux devices. The only real
- 	 * motiviation here is to solve the chicken-and-egg problem of probe
+ 	return target_ie;
 
 
