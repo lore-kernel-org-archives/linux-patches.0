@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F05C1EB9F2;
-	Mon, 23 Mar 2026 14:04:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BFB324B16;
+	Mon, 23 Mar 2026 14:04:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274683; cv=none; b=ARCOn0Y0jAmVaRrpTCdRI/BUXk9O1ZhAzXZbg7Tl2N05fivS9X8jAvFtlDdF/BpqeB8xC5v6dB/lozKPrctJOLU3uYt+cDneBFW0BkdbDf9oKU036pdVFHunL4MZAAlu4gYyL+QAHZCA2vhagR1ZtRSDGkG+DIv5t97GfPm8Hgw=
+	t=1774274686; cv=none; b=ftEubtN46NXpvtQq/c4vDw2Usa3CHRAdIGnYEsUsA/i+526ajL5Rw7kxP38E4NuE8wJzwYRd+7hKglnR+/+7gkwjJU70L3FvyB1ZKg6x9q/l9Aj/Ek72nI3hKl/lny8+nACnSQ67RMaHpEEyguhv2W7fWZcT+X7qapmdK3pY058=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274683; c=relaxed/simple;
-	bh=bp1mBU1r0dQCPG6Eq6Hqgh4Noc2bTg6zzH0Hmu1L6sE=;
+	s=arc-20240116; t=1774274686; c=relaxed/simple;
+	bh=YwF6OKexYZBwAx6aHMZagUY3Z/hDoycPG5FUQtq4x64=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gaKrPMsF/YH8dS7zV0pbuGwbhjMIJpdrvEOcS1Z+UiAB0UzrU0yzy5BM6lsIIm2mcbWBHJ/OoPfTrGrv7AcW37RYp6THquMOaCVOJdZYOqEbgdSq2yAGMEnPPgaiKHDbg9frgdvnVMHLlVdf8ACojZBFVjA/qEY7s+1xQIq1LS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=loCMInXk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=ozegMx6tbYXUmepoFvA37l59Uw23Dpha9V6E51xYVyrXdIsunu8b1q1r3zmvK4kEwpV/GRpcnJGGWaApBnZVhnT5uoB/DDdR+ARWT8J2Gwx2sG+3z4bK0Jj9ieZpD0kCiqT1YeMtwKdw1HbZ8gVQBEtakSTFPdfQJWjkHbHqY1w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gG3GBXWU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="loCMInXk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96865C4CEF7;
-	Mon, 23 Mar 2026 14:04:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gG3GBXWU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4544C4CEF7;
+	Mon, 23 Mar 2026 14:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274683;
-	bh=bp1mBU1r0dQCPG6Eq6Hqgh4Noc2bTg6zzH0Hmu1L6sE=;
+	s=korg; t=1774274686;
+	bh=YwF6OKexYZBwAx6aHMZagUY3Z/hDoycPG5FUQtq4x64=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=loCMInXkAKCk2xccfWTEkmPl+eF6ZScN/W/GqU7k9TQPWf1vVtUDm2sBEz9iYYmEM
-	 aH2BREtTAKHILNiSy+SvjcuJPoPyZEgmgJEnuQXR+Mvw/lnDZ5P72IS5DyVjPvvHj9
-	 hxpMhBMBAB5KOwzekqxa02Ftci7HWMUOJDd65JCc=
+	b=gG3GBXWUPN8OulHq8dg+VS3PXm7BU3ZSKwdpsr38AFBMUc4BQ5Kz83MEw+uOo3cu9
+	 fthU3Nzm5yJWi/IlO17XwhTK/4dT845vEujV04OwEQ2i7kiTHKtMTiOxLFke5jr85F
+	 iL8cVFyrObSJ7bbBH7rzPml2rP18gY02NnPAVpUk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	stable <stable@kernel.org>,
 	"Bandal, Shankar" <shankar.bandal@intel.com>,
 	"Murthy, Shanth" <shanth.murthy@intel.com>,
-	stable <stable@kernel.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.18 073/212] serial: 8250_dw: Rework dw8250_handle_irq() locking and IIR handling
-Date: Mon, 23 Mar 2026 14:44:54 +0100
-Message-ID: <20260323134506.074155377@linuxfoundation.org>
+Subject: [PATCH 6.18 074/212] serial: 8250_dw: Rework IIR_NO_INT handling to stop interrupt storm
+Date: Mon, 23 Mar 2026 14:44:55 +0100
+Message-ID: <20260323134506.105342235@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -56,129 +56,186 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 883c5a2bc934c165c4491d1ef7da0ac4e9765077 upstream.
+commit 73a4ed8f9efaaaf8207614ccc1c9d5ca1888f23a upstream.
 
-dw8250_handle_irq() takes port's lock multiple times with no good
-reason to release it in between and calls serial8250_handle_irq()
-that also takes port's lock.
+INTC10EE UART can end up into an interrupt storm where it reports
+IIR_NO_INT (0x1). If the storm happens during active UART operation, it
+is promptly stopped by IIR value change due to Rx or Tx events.
+However, when there is no activity, either due to idle serial line or
+due to specific circumstances such as during shutdown that writes
+IER=0, there is nothing to stop the storm.
 
-Take port's lock only once in dw8250_handle_irq() and use
-serial8250_handle_irq_locked() to avoid releasing port's lock in
-between.
+During shutdown the storm is particularly problematic because
+serial8250_do_shutdown() calls synchronize_irq() that will hang in
+waiting for the storm to finish which never happens.
 
-As IIR_NO_INT check in serial8250_handle_irq() was outside of port's
-lock, it has to be done already in dw8250_handle_irq().
+This problem can also result in triggering a warning:
 
-DW UART can, in addition to IIR_NO_INT, report BUSY_DETECT (0x7) which
-collided with the IIR_NO_INT (0x1) check in serial8250_handle_irq()
-(because & is used instead of ==) meaning that no other work is done by
-serial8250_handle_irq() during an BUSY_DETECT interrupt.
+  irq 45: nobody cared (try booting with the "irqpoll" option)
+  [...snip...]
+  handlers:
+    serial8250_interrupt
+  Disabling IRQ #45
 
-This allows reorganizing code in dw8250_handle_irq() to do both
-IIR_NO_INT and BUSY_DETECT handling right at the start simplifying
-the logic.
+Normal means to reset interrupt status by reading LSR, MSR, USR, or RX
+register do not result in the UART deasserting the IRQ.
 
+Add a quirk to INTC10EE UARTs to enable Tx interrupts if UART's Tx is
+currently empty and inactive. Rework IIR_NO_INT to keep track of the
+number of consecutive IIR_NO_INT, and on fourth one perform the quirk.
+Enabling Tx interrupts should change IIR value from IIR_NO_INT to
+IIR_THRI which has been observed to stop the storm.
+
+Fixes: e92fad024929 ("serial: 8250_dw: Add ACPI ID for Granite Rapids-D UART")
+Cc: stable <stable@kernel.org>
+Reported-by: Bandal, Shankar <shankar.bandal@intel.com>
 Tested-by: Bandal, Shankar <shankar.bandal@intel.com>
 Tested-by: Murthy, Shanth <shanth.murthy@intel.com>
-Cc: stable <stable@kernel.org>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260203171049.4353-5-ilpo.jarvinen@linux.intel.com
+Link: https://patch.msgid.link/20260203171049.4353-6-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dw.c |   37 +++++++++++++++++++++----------------
- 1 file changed, 21 insertions(+), 16 deletions(-)
+ drivers/tty/serial/8250/8250_dw.c |   67 +++++++++++++++++++++++++++++++++++---
+ 1 file changed, 63 insertions(+), 4 deletions(-)
 
 --- a/drivers/tty/serial/8250/8250_dw.c
 +++ b/drivers/tty/serial/8250/8250_dw.c
-@@ -9,6 +9,9 @@
-  * LCR is written whilst busy.  If it is, then a busy detect interrupt is
-  * raised, the LCR needs to be rewritten and the uart status register read.
-  */
-+#include <linux/bitfield.h>
-+#include <linux/bits.h>
-+#include <linux/cleanup.h>
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-@@ -40,6 +43,8 @@
- #define RZN1_UART_RDMACR 0x110 /* DMA Control Register Receive Mode */
- 
- /* DesignWare specific register fields */
-+#define DW_UART_IIR_IID			GENMASK(3, 0)
+@@ -61,6 +61,13 @@
+ #define DW_UART_QUIRK_IS_DMA_FC		BIT(3)
+ #define DW_UART_QUIRK_APMC0D08		BIT(4)
+ #define DW_UART_QUIRK_CPR_VALUE		BIT(5)
++#define DW_UART_QUIRK_IER_KICK		BIT(6)
 +
- #define DW_UART_MCR_SIRE		BIT(6)
++/*
++ * Number of consecutive IIR_NO_INT interrupts required to trigger interrupt
++ * storm prevention code.
++ */
++#define DW_UART_QUIRK_IER_KICK_THRES	4
  
- /* Renesas specific register fields */
-@@ -312,7 +317,19 @@ static int dw8250_handle_irq(struct uart
- 	bool rx_timeout = (iir & 0x3f) == UART_IIR_RX_TIMEOUT;
+ struct dw8250_platform_data {
+ 	u8 usr_reg;
+@@ -82,6 +89,8 @@ struct dw8250_data {
+ 
+ 	unsigned int		skip_autocfg:1;
+ 	unsigned int		uart_16550_compatible:1;
++
++	u8			no_int_count;
+ };
+ 
+ static inline struct dw8250_data *to_dw8250_data(struct dw8250_port_data *data)
+@@ -308,6 +317,29 @@ static u32 dw8250_serial_in32be(struct u
+        return dw8250_modify_msr(p, offset, value);
+ }
+ 
++/*
++ * INTC10EE UART can IRQ storm while reporting IIR_NO_INT. Inducing IIR value
++ * change has been observed to break the storm.
++ *
++ * If Tx is empty (THRE asserted), we use here IER_THRI to cause IIR_NO_INT ->
++ * IIR_THRI transition.
++ */
++static void dw8250_quirk_ier_kick(struct uart_port *p)
++{
++	struct uart_8250_port *up = up_to_u8250p(p);
++	u32 lsr;
++
++	if (up->ier & UART_IER_THRI)
++		return;
++
++	lsr = serial_lsr_in(up);
++	if (!(lsr & UART_LSR_THRE))
++		return;
++
++	serial_port_out(p, UART_IER, up->ier | UART_IER_THRI);
++	serial_port_in(p, UART_LCR);		/* safe, no side-effects */
++	serial_port_out(p, UART_IER, up->ier);
++}
+ 
+ static int dw8250_handle_irq(struct uart_port *p)
+ {
+@@ -318,18 +350,30 @@ static int dw8250_handle_irq(struct uart
  	unsigned int quirks = d->pdata->quirks;
  	unsigned int status;
--	unsigned long flags;
-+
-+	switch (FIELD_GET(DW_UART_IIR_IID, iir)) {
-+	case UART_IIR_NO_INT:
-+		return 0;
-+
-+	case UART_IIR_BUSY:
-+		/* Clear the USR */
-+		serial_port_in(p, d->pdata->usr_reg);
-+
-+		return 1;
-+	}
-+
+ 
 +	guard(uart_port_lock_irqsave)(p);
++
+ 	switch (FIELD_GET(DW_UART_IIR_IID, iir)) {
+ 	case UART_IIR_NO_INT:
++		if (d->uart_16550_compatible || up->dma)
++			return 0;
++
++		if (quirks & DW_UART_QUIRK_IER_KICK &&
++		    d->no_int_count == (DW_UART_QUIRK_IER_KICK_THRES - 1))
++			dw8250_quirk_ier_kick(p);
++		d->no_int_count = (d->no_int_count + 1) % DW_UART_QUIRK_IER_KICK_THRES;
++
+ 		return 0;
+ 
+ 	case UART_IIR_BUSY:
+ 		/* Clear the USR */
+ 		serial_port_in(p, d->pdata->usr_reg);
+ 
++		d->no_int_count = 0;
++
+ 		return 1;
+ 	}
+ 
+-	guard(uart_port_lock_irqsave)(p);
++	d->no_int_count = 0;
  
  	/*
  	 * There are ways to get Designware-based UARTs into a state where
-@@ -325,20 +342,15 @@ static int dw8250_handle_irq(struct uart
- 	 * so we limit the workaround only to non-DMA mode.
- 	 */
- 	if (!up->dma && rx_timeout) {
--		uart_port_lock_irqsave(p, &flags);
- 		status = serial_lsr_in(up);
- 
- 		if (!(status & (UART_LSR_DR | UART_LSR_BI)))
- 			serial_port_in(p, UART_RX);
--
--		uart_port_unlock_irqrestore(p, flags);
- 	}
- 
- 	/* Manually stop the Rx DMA transfer when acting as flow controller */
- 	if (quirks & DW_UART_QUIRK_IS_DMA_FC && up->dma && up->dma->rx_running && rx_timeout) {
--		uart_port_lock_irqsave(p, &flags);
- 		status = serial_lsr_in(up);
--		uart_port_unlock_irqrestore(p, flags);
- 
- 		if (status & (UART_LSR_DR | UART_LSR_BI)) {
- 			dw8250_writel_ext(p, RZN1_UART_RDMACR, 0);
-@@ -346,17 +358,9 @@ static int dw8250_handle_irq(struct uart
- 		}
- 	}
- 
--	if (serial8250_handle_irq(p, iir))
--		return 1;
--
--	if ((iir & UART_IIR_BUSY) == UART_IIR_BUSY) {
--		/* Clear the USR */
--		serial_port_in(p, d->pdata->usr_reg);
-+	serial8250_handle_irq_locked(p, iir);
- 
--		return 1;
--	}
--
--	return 0;
-+	return 1;
+@@ -562,6 +606,14 @@ static void dw8250_reset_control_assert(
+ 	reset_control_assert(data);
  }
  
- static void dw8250_clk_work_cb(struct work_struct *work)
-@@ -865,6 +869,7 @@ static struct platform_driver dw8250_pla
++static void dw8250_shutdown(struct uart_port *port)
++{
++	struct dw8250_data *d = to_dw8250_data(port->private_data);
++
++	serial8250_do_shutdown(port);
++	d->no_int_count = 0;
++}
++
+ static int dw8250_probe(struct platform_device *pdev)
+ {
+ 	struct uart_8250_port uart = {}, *up = &uart;
+@@ -685,10 +737,12 @@ static int dw8250_probe(struct platform_
+ 		dw8250_quirks(p, data);
  
- module_platform_driver(dw8250_platform_driver);
+ 	/* If the Busy Functionality is not implemented, don't handle it */
+-	if (data->uart_16550_compatible)
++	if (data->uart_16550_compatible) {
+ 		p->handle_irq = NULL;
+-	else if (data->pdata)
++	} else if (data->pdata) {
+ 		p->handle_irq = dw8250_handle_irq;
++		p->shutdown = dw8250_shutdown;
++	}
  
-+MODULE_IMPORT_NS("SERIAL_8250");
- MODULE_AUTHOR("Jamie Iles");
- MODULE_LICENSE("GPL");
- MODULE_DESCRIPTION("Synopsys DesignWare 8250 serial port driver");
+ 	dw8250_setup_dma_filter(p, data);
+ 
+@@ -822,6 +876,11 @@ static const struct dw8250_platform_data
+ 	.quirks = DW_UART_QUIRK_SKIP_SET_RATE,
+ };
+ 
++static const struct dw8250_platform_data dw8250_intc10ee = {
++	.usr_reg = DW_UART_USR,
++	.quirks = DW_UART_QUIRK_IER_KICK,
++};
++
+ static const struct of_device_id dw8250_of_match[] = {
+ 	{ .compatible = "snps,dw-apb-uart", .data = &dw8250_dw_apb },
+ 	{ .compatible = "cavium,octeon-3860-uart", .data = &dw8250_octeon_3860_data },
+@@ -851,7 +910,7 @@ static const struct acpi_device_id dw825
+ 	{ "INT33C5", (kernel_ulong_t)&dw8250_dw_apb },
+ 	{ "INT3434", (kernel_ulong_t)&dw8250_dw_apb },
+ 	{ "INT3435", (kernel_ulong_t)&dw8250_dw_apb },
+-	{ "INTC10EE", (kernel_ulong_t)&dw8250_dw_apb },
++	{ "INTC10EE", (kernel_ulong_t)&dw8250_intc10ee },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(acpi, dw8250_acpi_match);
 
 
