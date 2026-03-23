@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6CF61A6828;
-	Mon, 23 Mar 2026 14:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EC2199FAB;
+	Mon, 23 Mar 2026 14:21:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275704; cv=none; b=NdpgZEe0KX4EtvskWwWUS5RXnTxc06r10m3N7Y3JDDjs0vW6oWAaolj8+pTpd2DxxyAc+9dU+eQ4CNBcmjopxmKnLgOOqZEb27YWoCYVABaRM4vsB5QSlO+k1nUeOcdljJb6yO3BYgGZ5ZiD+l8iZEs7YBDNG/5iUJ2vNcjGckI=
+	t=1774275706; cv=none; b=UuG/awNB8Jl9YJsWjzVouWXzDyZWmDkG5EW7gzwpRyG6Awv6NxsOusDLbElkrquURBHljsOnVVGQoZDLtCkUfNlb+feElzzj9tw8/35zaFbkv1Ii62VwYj/Wle/jdLQ0lfvPxh/5kd3w2TjGX9/8Sksu4gQ2FK736USG0LenVJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275704; c=relaxed/simple;
-	bh=VzSD0nrSgKS9meqLlpVHOnOWniTWtpi2HYbUk+S8Wag=;
+	s=arc-20240116; t=1774275706; c=relaxed/simple;
+	bh=n5Uneys/YL1mNTKSnShkKr8c0sJg9qvr3rqzukXyLts=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nskoB6laD9ahZ/yM3w/EazCgMrfc34gnaW+1YKHOhC4ZNUCjYihXK7Ly0JzW8WVeeEY0PplBi1hD1RXAATu4gPJHBFSYE0M1HVzkpnPQCoYLQt2pPb7D9rb5Hcn79CYSEq6xG1LKdlq/qs8xRn1d74kvEHS0FgDUjMXTchxbed0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=B2oUHeAq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NFO80oNxA3HMelJy+NCQ/eDtiw74I8I61FTorBZb1omsmEATwlBQuPWefdLrRtBoL48GjaWMszklX6x0NexzR1SmAOemq6L3s2pJ9rPYqzgpHVeV0C1dZm1ccUhUdkguzk4dX9KWGC/Y8HNBqY/BN99oZnLii8DCvgFWroM0neM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=P77KLm0/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="B2oUHeAq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5271AC4CEF7;
-	Mon, 23 Mar 2026 14:21:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="P77KLm0/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF98BC4CEF7;
+	Mon, 23 Mar 2026 14:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275703;
-	bh=VzSD0nrSgKS9meqLlpVHOnOWniTWtpi2HYbUk+S8Wag=;
+	s=korg; t=1774275706;
+	bh=n5Uneys/YL1mNTKSnShkKr8c0sJg9qvr3rqzukXyLts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2oUHeAqCh64bHtVwdR8ausOLNLvMX1NLQd4Ju4HMXjnEGYxyFcAvfWjEcfq1F+Xc
-	 Ts7gi5n9wroSqGlRrMxOjAhzyEHYz8g/9V9LIVtdUZHYmmxDs3o6kZvEgILFpgEn/R
-	 s+k7cQRQ3Nw5EJgWcC83etWbSj5c7fDytzRXwuSw=
+	b=P77KLm0/bfHw3rlq/9Gkvi9GVFPhhCVPcPsMt0J4lSTYXv/KzpK94vCunfDM4d+2l
+	 hpX45srEsH8HVRL1T3YI0HyQ8YpIRVwmNf0iewbwCiSurqIVAcwqG8LkVn5hAkSL52
+	 bJv9skPYoPAAA8wP+z/dJi9XboKYRoK8qyKUzP7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Long Li <leo.lilong@huawei.com>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>
-Subject: [PATCH 6.12 188/460] xfs: fix undersized l_iclog_roundoff values
-Date: Mon, 23 Mar 2026 14:43:04 +0100
-Message-ID: <20260323134531.171055884@linuxfoundation.org>
+Subject: [PATCH 6.12 189/460] xfs: ensure dquot item is deleted from AIL only after log shutdown
+Date: Mon, 23 Mar 2026 14:43:05 +0100
+Message-ID: <20260323134531.194845851@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,66 +52,65 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Long Li <leo.lilong@huawei.com>
 
-commit 52a8a1ba883defbfe3200baa22cf4cd21985d51a upstream.
+commit 186ac39b8a7d3ec7ce9c5dd45e5c2730177f375c upstream.
 
-If the superblock doesn't list a log stripe unit, we set the incore log
-roundoff value to 512.  This leads to corrupt logs and unmountable
-filesystems in generic/617 on a disk with 4k physical sectors...
+In xfs_qm_dqflush(), when a dquot flush fails due to corruption
+(the out_abort error path), the original code removed the dquot log
+item from the AIL before calling xfs_force_shutdown(). This ordering
+introduces a subtle race condition that can lead to data loss after
+a crash.
 
-XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
-XFS (sda1): Torn write (CRC failure) detected at log block 0x318e. Truncating head block from 0x3197.
-XFS (sda1): failed to locate log tail
-XFS (sda1): log mount/recovery failed: error -74
-XFS (sda1): log mount failed
-XFS (sda1): Mounting V5 Filesystem ff3121ca-26e6-4b77-b742-aaff9a449e1c
-XFS (sda1): Ending clean mount
+The AIL tracks the oldest dirty metadata in the journal. The position
+of the tail item in the AIL determines the log tail LSN, which is the
+oldest LSN that must be preserved for crash recovery. When an item is
+removed from the AIL, the log tail can advance past the LSN of that item.
 
-...on the current xfsprogs for-next which has a broken mkfs.  xfs_info
-shows this...
+The race window is as follows: if the dquot item happens to be at
+the tail of the log, removing it from the AIL allows the log tail
+to advance. If a concurrent log write is sampling the tail LSN at
+the same time and subsequently writes a complete checkpoint (i.e.,
+one containing a commit record) to disk before the shutdown takes
+effect, the journal will no longer protect the dquot's last
+modification. On the next mount, log recovery will not replay the
+dquot changes, even though they were never written back to disk,
+resulting in silent data loss.
 
-meta-data=/dev/sda1              isize=512    agcount=4, agsize=644992 blks
-         =                       sectsz=4096  attr=2, projid32bit=1
-         =                       crc=1        finobt=1, sparse=1, rmapbt=1
-         =                       reflink=1    bigtime=1 inobtcount=1 nrext64=1
-         =                       exchange=1   metadir=1
-data     =                       bsize=4096   blocks=2579968, imaxpct=25
-         =                       sunit=0      swidth=0 blks
-naming   =version 2              bsize=4096   ascii-ci=0, ftype=1, parent=1
-log      =internal log           bsize=4096   blocks=16384, version=2
-         =                       sectsz=4096  sunit=0 blks, lazy-count=1
-realtime =none                   extsz=4096   blocks=0, rtextents=0
-         =                       rgcount=0    rgsize=268435456 extents
-         =                       zoned=0      start=0 reserved=0
+Fix this by calling xfs_force_shutdown() before xfs_trans_ail_delete()
+in the out_abort path. Once the log is shut down, no new log writes
+can complete with an updated tail LSN, making it safe to remove the
+dquot item from the AIL.
 
-...observe that the log section has sectsz=4096 sunit=0, which means
-that the roundoff factor is 512, not 4096 as you'd expect.  We should
-fix mkfs not to generate broken filesystems, but anyone can fuzz the
-ondisk superblock so we should be more cautious.  I think the inadequate
-logic predates commit a6a65fef5ef8d0, but that's clearly going to
-require a different backport.
-
-Cc: stable@vger.kernel.org # v5.14
-Fixes: a6a65fef5ef8d0 ("xfs: log stripe roundoff is a property of the log")
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: b707fffda6a3 ("xfs: abort consistently on dquot flush failure")
+Signed-off-by: Long Li <leo.lilong@huawei.com>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/xfs/xfs_dquot.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1396,6 +1396,8 @@ xlog_alloc_log(
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -1472,9 +1472,15 @@ xfs_qm_dqflush(
+ 	return 0;
  
- 	if (xfs_has_logv2(mp) && mp->m_sb.sb_logsunit > 1)
- 		log->l_iclog_roundoff = mp->m_sb.sb_logsunit;
-+	else if (mp->m_sb.sb_logsectsize > 0)
-+		log->l_iclog_roundoff = mp->m_sb.sb_logsectsize;
- 	else
- 		log->l_iclog_roundoff = BBSIZE;
- 
+ out_abort:
++	/*
++	 * Shut down the log before removing the dquot item from the AIL.
++	 * Otherwise, the log tail may advance past this item's LSN while
++	 * log writes are still in progress, making these unflushed changes
++	 * unrecoverable on the next mount.
++	 */
++	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+ 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
+ 	xfs_trans_ail_delete(lip, 0);
+-	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+ 	xfs_dqfunlock(dqp);
+ 	return error;
+ }
 
 
