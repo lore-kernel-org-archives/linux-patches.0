@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C14E2737E3;
-	Mon, 23 Mar 2026 14:54:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DA1F3AA518;
+	Mon, 23 Mar 2026 14:54:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277672; cv=none; b=FQXzDsTlUxb7zhVSKl7EhVA63ICVy6ev887ifKHijpvWKPP8Bq49KnWL7d3rH5FzfQ7yKRh1XhW9pFjCCWQNwJtIZUGDFzJXMCdGnlzdh56nzDcx9VhNc0j1e7BSaGhdGVIGLFdvApF34OqmWvm1N2PVlv487rHucHc1wlWHmx4=
+	t=1774277675; cv=none; b=QoHAVMDFxB2c5Z1xH7/qy7cB6sAebVJD95RHIjW9RWOCEqmNZibJBZTIb0bvy0Cy6y55+uW0NXjetcD9Qgesm12C//BtaR3SzUypsVjXh8dB2A7p9StAism9Li/NQT1wOuh0bkIxlIj11cDKi6PkNvRoKq81biWhWMLQLJmKKBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277672; c=relaxed/simple;
-	bh=DBMi5yM5Pk12Fpfq5ZJBkp/wBHQfwt3Fr3Iwfn94YUM=;
+	s=arc-20240116; t=1774277675; c=relaxed/simple;
+	bh=u2bmWsQ50Qp+KL1jlHs5At5tg63XhWc4wGTs9ZLItJg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n8gTWjZClVj7uWaQ+/fdjURBpVIGbZNgpVNfQRepuxzaRefMfA5G6zarA+mO2QR/DWweHbIF09iCbCMpbYTL0/0qRlgDuKWWznEDZ5C9G/EMsQ51SfIcJgxlPC0zXllws+Zha1jVQ6/3xkHiL4BzaQPhUw9rPzBpY2MQdX2Pr/s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yX8ypaP8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=siHMY+NDu0+D1+PGKLDHM2y3F0/e4JyfFycdIXRG5hSs2KRDTJ75+GkV0+n/W6RJATefJypcst1j2wpNksUJc+odEKynx2/rnmHbDLhmLLi/S33F26ZH/qoBk43dxufCOfwr4nj2KcwqG6hgtiN9qYcSug+2GfNWFtW4No+zQf0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cc7unCHs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yX8ypaP8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3136C4CEF7;
-	Mon, 23 Mar 2026 14:54:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cc7unCHs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8619C4CEF7;
+	Mon, 23 Mar 2026 14:54:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277672;
-	bh=DBMi5yM5Pk12Fpfq5ZJBkp/wBHQfwt3Fr3Iwfn94YUM=;
+	s=korg; t=1774277675;
+	bh=u2bmWsQ50Qp+KL1jlHs5At5tg63XhWc4wGTs9ZLItJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yX8ypaP8bk3kWzpcMnYdUzrWxUDuxdh65vRHse3W41RUm9TRixUFvTy0cN9GQkQzJ
-	 qVadOtH7L2j5oC3fkD2xNseMpgHXezGZbExQjOG3AhAPcoI9dpZ3GN7s+Eq4fjuwkG
-	 ltFkfpaUubQXDCU/X9KITXs6bvZHtIJMmjbKi6kQ=
+	b=cc7unCHsLEbOudzxmDFUKnpF8iky8Pm0Hgmt7G5OIuFv2z80XqfXOtyenb6mtM2qc
+	 ONvz9GmvRmGFWJB6KaiX1LUUHHG+oltD9MXhIAAcLHPSbbPpVX0X59JeroLJwyqst2
+	 aP8DIOEpIA+2r2wI2gaDpaunj7/zRDnJPUoInvxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	stable@kernel.org,
+	Gou Hao <gouhao@uniontech.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 049/567] ext4: dont zero the entire extent if EXT4_EXT_DATA_PARTIAL_VALID1
-Date: Mon, 23 Mar 2026 14:39:29 +0100
-Message-ID: <20260323134535.021896110@linuxfoundation.org>
+Subject: [PATCH 6.6 067/567] ext4: delete redundant calculations in ext4_mb_get_buddy_page_lock()
+Date: Mon, 23 Mar 2026 14:39:47 +0100
+Message-ID: <20260323134535.478400614@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,88 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Gou Hao <gouhao@uniontech.com>
 
-[ Upstream commit 1bf6974822d1dba86cf11b5f05498581cf3488a2 ]
+[ Upstream commit f2fec3e99a32d7c14dbf63c824f8286ebc94b18d ]
 
-When allocating initialized blocks from a large unwritten extent, or
-when splitting an unwritten extent during end I/O and converting it to
-initialized, there is currently a potential issue of stale data if the
-extent needs to be split in the middle.
+'blocks_per_page' is always 1 after 'if (blocks_per_page >= 2)',
+'pnum' and 'block' are equal in this case.
 
-       0  A      B  N
-       [UUUUUUUUUUUU]    U: unwritten extent
-       [--DDDDDDDD--]    D: valid data
-          |<-  ->| ----> this range needs to be initialized
-
-ext4_split_extent() first try to split this extent at B with
-EXT4_EXT_DATA_ENTIRE_VALID1 and EXT4_EXT_MAY_ZEROOUT flag set, but
-ext4_split_extent_at() failed to split this extent due to temporary lack
-of space. It zeroout B to N and mark the entire extent from 0 to N
-as written.
-
-       0  A      B  N
-       [WWWWWWWWWWWW]    W: written extent
-       [SSDDDDDDDDZZ]    Z: zeroed, S: stale data
-
-ext4_split_extent() then try to split this extent at A with
-EXT4_EXT_DATA_VALID2 flag set. This time, it split successfully and left
-a stale written extent from 0 to A.
-
-       0  A      B   N
-       [WW|WWWWWWWWWW]
-       [SS|DDDDDDDDZZ]
-
-Fix this by pass EXT4_EXT_DATA_PARTIAL_VALID1 to ext4_split_extent_at()
-when splitting at B, don't convert the entire extent to written and left
-it as unwritten after zeroing out B to N. The remaining work is just
-like the standard two-part split. ext4_split_extent() will pass the
-EXT4_EXT_DATA_VALID2 flag when it calls ext4_split_extent_at() for the
-second time, allowing it to properly handle the split. If the split is
-successful, it will keep extent from 0 to A as unwritten.
-
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Cc: stable@kernel.org
-Message-ID: <20251129103247.686136-3-yi.zhang@huaweicloud.com>
+Signed-off-by: Gou Hao <gouhao@uniontech.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20231024035215.29474-1-gouhao@uniontech.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: bdc56a9c46b2 ("ext4: fix e4b bitmap inconsistency reports")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ fs/ext4/mballoc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 18520281e1b5f..fd9517dbf633e 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -3296,6 +3296,15 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 		}
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index d095c4a218a3a..ade2090155c1c 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1486,9 +1486,8 @@ static int ext4_mb_get_buddy_page_lock(struct super_block *sb,
+ 		return 0;
+ 	}
  
- 		if (!err) {
-+			/*
-+			 * The first half contains partially valid data, the
-+			 * splitting of this extent has not been completed, fix
-+			 * extent length and ext4_split_extent() split will the
-+			 * first half again.
-+			 */
-+			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1)
-+				goto fix_extent_len;
-+
- 			/* update the extent length and mark as initialized */
- 			ex->ee_len = cpu_to_le16(ee_len);
- 			ext4_ext_try_to_merge(handle, inode, path, ex);
-@@ -3371,7 +3380,9 @@ static int ext4_split_extent(handle_t *handle,
- 			split_flag1 |= EXT4_EXT_MARK_UNWRIT1 |
- 				       EXT4_EXT_MARK_UNWRIT2;
- 		if (split_flag & EXT4_EXT_DATA_VALID2)
--			split_flag1 |= EXT4_EXT_DATA_ENTIRE_VALID1;
-+			split_flag1 |= map->m_lblk > ee_block ?
-+				       EXT4_EXT_DATA_PARTIAL_VALID1 :
-+				       EXT4_EXT_DATA_ENTIRE_VALID1;
- 		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk + map->m_len, split_flag1, flags1);
- 		if (IS_ERR(path)) {
+-	block++;
+-	pnum = block / blocks_per_page;
+-	page = find_or_create_page(inode->i_mapping, pnum, gfp);
++	/* blocks_per_page == 1, hence we need another page for the buddy */
++	page = find_or_create_page(inode->i_mapping, block + 1, gfp);
+ 	if (!page)
+ 		return -ENOMEM;
+ 	BUG_ON(page->mapping != inode->i_mapping);
 -- 
 2.51.0
 
