@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7935D21D00A;
-	Mon, 23 Mar 2026 13:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ADF21D00A;
+	Mon, 23 Mar 2026 13:57:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274258; cv=none; b=to3YGpRUwKWgKRWNsefh+QL3kDGw0f3Tavh7EXIcIh+0tOyinCVPSsOJB3CejLloO3wWAgQLxGmwOKvGQ3ecB+X+LJBe8oQxx0x7BUiov8zOKQU/EDIY723PxMyIk9Mo9BD798wP73jCm0jDh0GZ3U7ahlBStcdW8jlG78avtMU=
+	t=1774274261; cv=none; b=acuLyEKLoLOHbr8ROBncxpCBPyKpiKaCacfBNqf00KcVPC2WACC2u1srbhD40NCQN3vhTpCT4KimLUO3Db8YRRQFnN6tQl+IgzPwQXz5OK7j1KEtWe22whK2L0iU5FX5LcYfApvbOpbqbPqN/m1DYZXN/APcwHvM/j4eUgv01kI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274258; c=relaxed/simple;
-	bh=6JOjag13x4GsQt6i57pLLF/J7dY5iOYkU06WqaywZRc=;
+	s=arc-20240116; t=1774274261; c=relaxed/simple;
+	bh=Dw7rr+7SqdB2i1giNiX7Nm8ygamm+lq/Eb9FEJEoZm8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VKaipyyjbt2hpOoztJbx/mm8jlgcModbSpZqTock0vyywIppPxdSsaeaGbulAuhWkKIE0SqTryTIRCw8iNRj7GO5zSat9cegRFiv/TCNCKDkqvhZ6uFy31KXhFiVojKVFfIU826eKz/XyiD2apcE/xW0XQyDydSAVRYAGb6f7wA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/7nBjzP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fFqUK1JNVHTJKFx+iImej0IggACLrA4x74bLVtATMH0JFOa8CPiNkK6M0ty5DAbRGJaVyCVU+jMr7njRIg/79xiA/4Iy0lsT6LxiV1jFR2ECkFc7Nvky26PsaXMRKSAU6Wzf/BE7RV16NEjmouVYGfVYr6AhMIcO0TKD+3l3ufo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nnIWFS6x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/7nBjzP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C05C4CEF7;
-	Mon, 23 Mar 2026 13:57:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nnIWFS6x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1CB6C4CEF7;
+	Mon, 23 Mar 2026 13:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274258;
-	bh=6JOjag13x4GsQt6i57pLLF/J7dY5iOYkU06WqaywZRc=;
+	s=korg; t=1774274261;
+	bh=Dw7rr+7SqdB2i1giNiX7Nm8ygamm+lq/Eb9FEJEoZm8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e/7nBjzP3UCWUQCH1BVuBOo2sBixDR3E0CmE4Y9pvuXi1yu8/y3+foevwnblMRaHY
-	 rq6Zovdb1wG5rlngcfpHEpCFkcBATdQEAmZ+rOrSXBFPtAYw1ojWZeWGtsKaohor4H
-	 U+kmcZu6bmq2gxgIjzEWRSwVODoZh2TGXILUifaQ=
+	b=nnIWFS6xZPsonKBPEbpwyNmmXle9CzT74K27wlAiUgkWSJMgJpdBmHC3uHHsi5YZ8
+	 4i9NRsYCNAUiQf3WjBi8XSRPKh53gLrecYaQ4/HtOPIdq4oCAN6XtlYXMX8Fy9y5wB
+	 qTzW2reKvyNNQs0FjuAcOlUzR/a5DJGa2x3ZyBIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Tao <wangtao554@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Petr Oros <poros@redhat.com>,
+	Rafal Romanowski <rafal.romanowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 123/220] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
-Date: Mon, 23 Mar 2026 14:45:00 +0100
-Message-ID: <20260323134508.478784767@linuxfoundation.org>
+Subject: [PATCH 6.19 159/220] iavf: fix VLAN filter lost on add/delete race
+Date: Mon, 23 Mar 2026 14:45:36 +0100
+Message-ID: <20260323134509.590615782@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,64 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Tao <wangtao554@huawei.com>
+From: Petr Oros <poros@redhat.com>
 
-[ Upstream commit 17f89341cb4281d1da0e2fb0de5406ab7c4e25ef ]
+[ Upstream commit fc9c69be594756b81b54c6bc40803fa6052f35ae ]
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
-mgmt_pending_valid(), which not only validates the pending command but
-also unlinks it from the pending list if it is valid. This change in
-semantics requires updates to several completion handlers to avoid list
-corruption and memory safety issues.
+When iavf_add_vlan() finds an existing filter in IAVF_VLAN_REMOVE
+state, it transitions the filter to IAVF_VLAN_ACTIVE assuming the
+pending delete can simply be cancelled. However, there is no guarantee
+that iavf_del_vlans() has not already processed the delete AQ request
+and removed the filter from the PF. In that case the filter remains in
+the driver's list as IAVF_VLAN_ACTIVE but is no longer programmed on
+the NIC. Since iavf_add_vlans() only picks up filters in
+IAVF_VLAN_ADD state, the filter is never re-added, and spoof checking
+drops all traffic for that VLAN.
 
-This patch addresses two left-over issues from the aforementioned rework:
+  CPU0                       CPU1                     Workqueue
+  ----                       ----                     ---------
+  iavf_del_vlan(vlan 100)
+    f->state = REMOVE
+    schedule AQ_DEL_VLAN
+                             iavf_add_vlan(vlan 100)
+                               f->state = ACTIVE
+                                                      iavf_del_vlans()
+                                                        f is ACTIVE, skip
+                                                      iavf_add_vlans()
+                                                        f is ACTIVE, skip
 
-1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
-is replaced with mgmt_pending_free() in the success path. Since
-mgmt_pending_valid() already unlinks the command at the beginning of
-the function, calling mgmt_pending_remove() leads to a double list_del()
-and subsequent list corruption/kernel panic.
+  Filter is ACTIVE in driver but absent from NIC.
 
-2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
-path is removed. Since the current command is already unlinked by
-mgmt_pending_valid(), this foreach loop would incorrectly target other
-pending mesh commands, potentially freeing them while they are still being
-processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
-is also simplified to use cmd->opcode directly.
+Transition to IAVF_VLAN_ADD instead and schedule
+IAVF_FLAG_AQ_ADD_VLAN_FILTER so iavf_add_vlans() re-programs the
+filter.  A duplicate add is idempotent on the PF.
 
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0c0da0e95105 ("iavf: refactor VLAN filter states")
+Signed-off-by: Petr Oros <poros@redhat.com>
+Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/intel/iavf/iavf_main.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 0e46f9e08b106..2c63f49c33018 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2195,10 +2195,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
- 
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
--				status);
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
- 		goto done;
+diff --git a/drivers/net/ethernet/intel/iavf/iavf_main.c b/drivers/net/ethernet/intel/iavf/iavf_main.c
+index 03ab2a4276bbf..0a72d419782e5 100644
+--- a/drivers/net/ethernet/intel/iavf/iavf_main.c
++++ b/drivers/net/ethernet/intel/iavf/iavf_main.c
+@@ -757,10 +757,13 @@ iavf_vlan_filter *iavf_add_vlan(struct iavf_adapter *adapter,
+ 		adapter->num_vlan_filters++;
+ 		iavf_schedule_aq_request(adapter, IAVF_FLAG_AQ_ADD_VLAN_FILTER);
+ 	} else if (f->state == IAVF_VLAN_REMOVE) {
+-		/* IAVF_VLAN_REMOVE means that VLAN wasn't yet removed.
+-		 * We can safely only change the state here.
++		/* Re-add the filter since we cannot tell whether the
++		 * pending delete has already been processed by the PF.
++		 * A duplicate add is harmless.
+ 		 */
+-		f->state = IAVF_VLAN_ACTIVE;
++		f->state = IAVF_VLAN_ADD;
++		iavf_schedule_aq_request(adapter,
++					 IAVF_FLAG_AQ_ADD_VLAN_FILTER);
  	}
  
-@@ -5377,7 +5374,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
- 
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
- 
- 	hci_dev_unlock(hdev);
- 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
+ clearout:
 -- 
 2.51.0
 
