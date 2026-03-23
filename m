@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284BE3AF66E;
-	Mon, 23 Mar 2026 14:41:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FF133B27C1;
+	Mon, 23 Mar 2026 14:41:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276860; cv=none; b=IwTYml5S9S/3sBsX2Gv89ynC0LS60LiH8BrmTb1DE/BAdgqWyNpx9Ij46p9CGTVFtN9g5I7IT15mMPzHf9D6zC6QHMacNUW0HQLyCIQC1OBEPjNGtyd9c1PeebFaKnXJHsZD714kyyeOH5/QP4st1zy4GGLSMdKvDqpJFNSRr/s=
+	t=1774276862; cv=none; b=INenpmmjNDsy6noxdWgvB4fWIwVms32vojCRhidXyQ7TRRoFlhaoaZOzCAFyyt2dSXKcIkCpzBKHYtCXrkC4PgoJaUuBnajnEk6J2BUty405aZmJx2xQo0HyZw44Rw01twxeFwHftKoO5Fx+juPPEJjNNJN9LbBfrSDlMvopCPg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276860; c=relaxed/simple;
-	bh=NQme2TxZOZDmQoeyiGNATZmiRHxu1dmBDkwxBO4Wx90=;
+	s=arc-20240116; t=1774276862; c=relaxed/simple;
+	bh=L6IJcBX5zoCCMVdNCUtBRC6IIQrI5VBhdd1BX/rAejA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g2lVa7VCbwue6LbaNcKacdnGAB+AvILRiUnGJF1ibIom/4xLGj6d0Hq2w9NPKJPl5cjA8g0hLAsK0WNK9bRvg9tiHV0EP5KE7BpRKUFEUaceASumiBA7VIlVbXVg56yICiXyuIr7B+u8sfGqkmzu25kPcFcODmXLSBAXVrcBuRk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eSzVX67m; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fOHOx2EUGbNZ1EWbdv3iOx6BANpjXmuEkCs2PyIMajVFgggcdI8RZ4nW7ONk2SC2p8S5dBfJWfuhMH1SuQ8l1w4wqb2M0KQ7L7+ETh2hh9jpVqaeoZ/2wm1bD0P1L5z0OdhBF4NfIs4LQ08E3RRnvSboSH3yOd5I1kUAJodG1i0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MJN30IkY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eSzVX67m"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A85D0C2BCB1;
-	Mon, 23 Mar 2026 14:40:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MJN30IkY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29EDFC2BCB5;
+	Mon, 23 Mar 2026 14:41:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276860;
-	bh=NQme2TxZOZDmQoeyiGNATZmiRHxu1dmBDkwxBO4Wx90=;
+	s=korg; t=1774276862;
+	bh=L6IJcBX5zoCCMVdNCUtBRC6IIQrI5VBhdd1BX/rAejA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eSzVX67mE6LFUhtFu0PIG1f4ZZDGC0bjREgOljBdQOlLLRGPyBWlABvB4AhRUC84V
-	 L8XX/VU/X1Z19H9BEPhMdOkVKvdmnvBpiHg7SuFeyNzOfh1NWy4iVIqcS7DkL4xmoE
-	 +gI4z3qxA+TxuBmygW0Q3riagblvHZl1cCoyEwo8=
+	b=MJN30IkYyy1LFdW3BewrFygF/I239z0sWZPG8H85fRAcfgg4cqW6I6frbwlnRjEQ0
+	 FZiz9CQxtzEF6x7LTo3BJQhpPUF516cfQxq6Og7sRE6yD3G0ZtS4m3QBWVPdvh1vI8
+	 stGQt4QosT85JmzJ38dysCrE11rwA6qFgWkctlEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kan Liang <kan.liang@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Eric Hu <eric.hu@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 230/460] perf/x86/intel/uncore: Support more units on Granite Rapids
-Date: Mon, 23 Mar 2026 14:43:46 +0100
-Message-ID: <20260323134532.149497096@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 195/460] lib/bootconfig: fix snprintf truncation check in xbc_node_compose_key_after()
+Date: Mon, 23 Mar 2026 14:43:11 +0100
+Message-ID: <20260323134531.338512938@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,108 +50,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kan Liang <kan.liang@linux.intel.com>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit 6d642735cdb6cdb814d2b6c81652caa53ce04842 ]
+commit 1120a36bb1e9b9e22de75ecb4ef0b998f73a97f1 upstream.
 
-The same CXL PMONs support is also avaiable on GNR. Apply
-spr_uncore_cxlcm and spr_uncore_cxldp to GNR as well.
+snprintf() returns the number of characters that would have been
+written excluding the NUL terminator.  Output is truncated when the
+return value is >= the buffer size, not just > the buffer size.
 
-The other units were broken on early HW samples, so they were ignored in
-the early enabling patch. The issue has been fixed and verified on the
-later production HW. Add UPI, B2UPI, B2HOT, PCIEX16 and PCIEX8 for GNR.
+When ret == size, the current code takes the non-truncated path,
+advancing buf by ret and reducing size to 0.  This is wrong because
+the output was actually truncated (the last character was replaced by
+NUL).  Fix by using >= so the truncation path is taken correctly.
 
-Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Tested-by: Eric Hu <eric.hu@intel.com>
-Link: https://lkml.kernel.org/r/20250108143017.1793781-2-kan.liang@linux.intel.com
-Stable-dep-of: 6a8a48644c4b ("perf/x86/intel/uncore: Add per-scheduler IMC CAS count events")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/all/20260312191143.28719-4-objecting@objecting.org/
+
+Fixes: 76db5a27a827 ("bootconfig: Add Extra Boot Config support")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c |   48 +++++++++++++++++++++++------------
- 1 file changed, 32 insertions(+), 16 deletions(-)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -6597,17 +6597,8 @@ void spr_uncore_mmio_init(void)
- /* GNR uncore support */
- 
- #define UNCORE_GNR_NUM_UNCORE_TYPES	23
--#define UNCORE_GNR_TYPE_15		15
--#define UNCORE_GNR_B2UPI		18
--#define UNCORE_GNR_TYPE_21		21
--#define UNCORE_GNR_TYPE_22		22
- 
- int gnr_uncore_units_ignore[] = {
--	UNCORE_SPR_UPI,
--	UNCORE_GNR_TYPE_15,
--	UNCORE_GNR_B2UPI,
--	UNCORE_GNR_TYPE_21,
--	UNCORE_GNR_TYPE_22,
- 	UNCORE_IGNORE_END
- };
- 
-@@ -6616,6 +6607,31 @@ static struct intel_uncore_type gnr_unco
- 	.attr_update		= uncore_alias_groups,
- };
- 
-+static struct intel_uncore_type gnr_uncore_pciex8 = {
-+	SPR_UNCORE_PCI_COMMON_FORMAT(),
-+	.name			= "pciex8",
-+};
-+
-+static struct intel_uncore_type gnr_uncore_pciex16 = {
-+	SPR_UNCORE_PCI_COMMON_FORMAT(),
-+	.name			= "pciex16",
-+};
-+
-+static struct intel_uncore_type gnr_uncore_upi = {
-+	SPR_UNCORE_PCI_COMMON_FORMAT(),
-+	.name			= "upi",
-+};
-+
-+static struct intel_uncore_type gnr_uncore_b2upi = {
-+	SPR_UNCORE_PCI_COMMON_FORMAT(),
-+	.name			= "b2upi",
-+};
-+
-+static struct intel_uncore_type gnr_uncore_b2hot = {
-+	.name			= "b2hot",
-+	.attr_update		= uncore_alias_groups,
-+};
-+
- static struct intel_uncore_type gnr_uncore_b2cmi = {
- 	SPR_UNCORE_PCI_COMMON_FORMAT(),
- 	.name			= "b2cmi",
-@@ -6640,21 +6656,21 @@ static struct intel_uncore_type *gnr_unc
- 	&gnr_uncore_ubox,
- 	&spr_uncore_imc,
- 	NULL,
-+	&gnr_uncore_upi,
- 	NULL,
- 	NULL,
- 	NULL,
-+	&spr_uncore_cxlcm,
-+	&spr_uncore_cxldp,
- 	NULL,
--	NULL,
--	NULL,
--	NULL,
--	NULL,
-+	&gnr_uncore_b2hot,
- 	&gnr_uncore_b2cmi,
- 	&gnr_uncore_b2cxl,
--	NULL,
-+	&gnr_uncore_b2upi,
- 	NULL,
- 	&gnr_uncore_mdf_sbo,
--	NULL,
--	NULL,
-+	&gnr_uncore_pciex16,
-+	&gnr_uncore_pciex8,
- };
- 
- static struct freerunning_counters gnr_iio_freerunning[] = {
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -316,7 +316,7 @@ int __init xbc_node_compose_key_after(st
+ 			       depth ? "." : "");
+ 		if (ret < 0)
+ 			return ret;
+-		if (ret > size) {
++		if (ret >= size) {
+ 			size = 0;
+ 		} else {
+ 			size -= ret;
 
 
