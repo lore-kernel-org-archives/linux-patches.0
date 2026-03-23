@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980883AEF51;
-	Mon, 23 Mar 2026 14:48:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B93F26D4F9;
+	Mon, 23 Mar 2026 14:48:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277332; cv=none; b=cHfRimQRtl/3mRrMD5E4PXPPzP1UzcKlwwJCsy8vB/juSl5hjIKEwrrpJ5o0I062nDKGvIPk8iIupRxWpXgELDgHf4JooMqSKC6AotV3Dg+s4xJalhyOvHpP3ZG/Cm+R17cldwfSX0UOrYdTK1wBTm3Ja/Zn8cZdLacSpMJ3MAU=
+	t=1774277335; cv=none; b=JvLCvh3VUcUBRyKBYuv1DRp85DAAWt66APEAboEHo43F6NuqRORKlwoVqlKiAjt1PtiD38p3iT7bDF/93IVMJWDxA3lB9Jekad+fOUCe64NrQARfCosYLnucv8nDsBOhL1oCRrHXeItFxXrNLhbd0BSODIxM+K98teXj34eKmTs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277332; c=relaxed/simple;
-	bh=gS0j1ryNCnPU1V5TX6CwlU8rwl7gJwRb/kxWUduzPJw=;
+	s=arc-20240116; t=1774277335; c=relaxed/simple;
+	bh=Hbu9EyEINJIE68gHugAIJ7viTeFGJX0xbrycsZ5aWn4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=X+94ev9lNUJGm7Wh1fIX+0wA1ypwSls3e19Tu2CrNel978Lf9AkV6egudoSnymfpEjWMZoXBJnB5/ublbMvOHwRhcpFkblvybjPfZDDjm3slvLd3s8ycFVOEO401kIZ6Ys/VRRkLnq+NZORdj9hkBnC3oXIPqW57jMQuZHTLGzM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DBnegwKl; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Enwf8YOSyBldPHXVbIZaC2LVNe0yM8+7+cqnPUNqQN+VwbBGnKuGm3Xg3PpzSzITDaQ4pob23ElSTklKPyO56+Em6XPZATGn9tu7tB08mhNyN1P1smw485XPSODG2oDn1jKuEhQUqXm5llRiZak/xnRPNPY/Hh0g+5ZTQGcPDcs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GUgKNgRk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DBnegwKl"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72DEC4CEF7;
-	Mon, 23 Mar 2026 14:48:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GUgKNgRk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD4A2C4CEF7;
+	Mon, 23 Mar 2026 14:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277332;
-	bh=gS0j1ryNCnPU1V5TX6CwlU8rwl7gJwRb/kxWUduzPJw=;
+	s=korg; t=1774277335;
+	bh=Hbu9EyEINJIE68gHugAIJ7viTeFGJX0xbrycsZ5aWn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DBnegwKlQ99ntCSxijy/CzkAHF+95/Xy2jMYk56TJsHNR4+h846SYSx/UnfxYHEYV
-	 s4lcCah1/pE6jKEnr/lKGvVtiY0cXPXM/V8hEtn3/TUzLrle69ztNDFwd2P0rIcTMc
-	 //QXSFFPapTcS2JA9YB8+M3P4HkHA79kCWzDZc9Q=
+	b=GUgKNgRkkT2VZXhas7uWOsEB7+CmShNAAJMjq/R9DCUL0choVymUTd7cxV5P15Xk5
+	 9CtofXSeX9wFUD3SYrhIGSoeceG1ovb4AHcLBT5MfSwAOt3BJAoCWOZdakWe/fT+0d
+	 ndtTRQkBiA9XMLehyZIYlvgMx8WNZJq420k3MXp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 400/460] netfilter: nf_conntrack_h323: check for zero length in DecodeQ931()
-Date: Mon, 23 Mar 2026 14:46:36 +0100
-Message-ID: <20260323134536.392359462@linuxfoundation.org>
+Subject: [PATCH 6.12 401/460] net: bcmgenet: increase WoL poll timeout
+Date: Mon, 23 Mar 2026 14:46:37 +0100
+Message-ID: <20260323134536.417265493@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -47,48 +46,41 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit f173d0f4c0f689173f8cdac79991043a4a89bf66 ]
+[ Upstream commit 6cfc3bc02b977f2fba5f7268e6504d1931a774f7 ]
 
-In DecodeQ931(), the UserUserIE code path reads a 16-bit length from
-the packet, then decrements it by 1 to skip the protocol discriminator
-byte before passing it to DecodeH323_UserInformation(). If the encoded
-length is 0, the decrement wraps to -1, which is then passed as a
-large value to the decoder, leading to an out-of-bounds read.
+Some systems require more than 5ms to get into WoL mode. Increase the
+timeout value to 50ms.
 
-Add a check to ensure len is positive after the decrement.
-
-Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: c51de7f3976b ("net: bcmgenet: add Wake-on-LAN support code")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260312191852.3904571-1-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
-index c972e9488e16f..7b1497ed97d26 100644
---- a/net/netfilter/nf_conntrack_h323_asn1.c
-+++ b/net/netfilter/nf_conntrack_h323_asn1.c
-@@ -924,6 +924,8 @@ int DecodeQ931(unsigned char *buf, size_t sz, Q931 *q931)
- 				break;
- 			p++;
- 			len--;
-+			if (len <= 0)
-+				break;
- 			return DecodeH323_UserInformation(buf, p, len,
- 							  &q931->UUIE);
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
+index 3b082114f2e53..2033fb9d893e0 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
+@@ -123,7 +123,7 @@ static int bcmgenet_poll_wol_status(struct bcmgenet_priv *priv)
+ 	while (!(bcmgenet_rbuf_readl(priv, RBUF_STATUS)
+ 		& RBUF_STATUS_WOL)) {
+ 		retries++;
+-		if (retries > 5) {
++		if (retries > 50) {
+ 			netdev_crit(dev, "polling wol mode timeout\n");
+ 			return -ETIMEDOUT;
  		}
 -- 
 2.51.0
