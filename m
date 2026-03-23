@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0551D1DA0E1;
-	Mon, 23 Mar 2026 16:22:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90EE258CD9;
+	Mon, 23 Mar 2026 16:22:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282959; cv=none; b=ed8gxd4q53FFf37Hh5Mz6IrgH6BBVqkF1WpfUlJ9NhpxdkZ6zW5feipWic7luVKdiX5ThwWbPKd7OVpGpfnEmDEAKUus8nLZHiaUfmSDBrXpA+ujGqv2sg0KXCJ+2rw+6RfJ0lXbwQ32iWGDrBcKgTosbLHGBSBe76iFS1yguBg=
+	t=1774282961; cv=none; b=ru4IZ8RVHhf2dHAJ2C06KHnG7zH5PDsAL6VS1e2WJcz5EehW9HSnasdGRN4ygveyePhJ8bSGRLhdMSZWjxYoC3D/Oi2EWKcVzIJ4DebY+p9KH/2vyeebkWieqXy8aFxiOILZgAQLMrnV+g9UHIuZNGcC/Vp/XmBo+yvNd0I7MTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282959; c=relaxed/simple;
-	bh=63TjOlvONJ7H9leiU8I0ZeOax/2VQYcH2GJm46jO9bY=;
+	s=arc-20240116; t=1774282961; c=relaxed/simple;
+	bh=1ZjLfw+LMGO5yIQQIsuPXz30GBQSBi3VA2Daig9Ftps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=UZH5AGfkMy3hMLx9cbXa/+2y98A5d2mJBD04w0vAezfOVraRX2atVrrIPtNjCj/Xtnh6/F527Ouz9J8sqCKqDQlbc8vJfgN909glCRh2hWVl4SMAmMFotZX2XGFP8ExLqpZONeGMbOuH47KCNGVRD6//iyxXWdfzk5RL82y+O3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBHYxqSa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ac2gaHVqnF5MUZUXjruP1d7u1pD5EdQdfWLv5Dk6NEpA/VEfPoPyS3iR678+gGSvnZdB8l6wY8aTo5DQk3UGPzHVCJTu2Hcct3x/obdW4tvpb53aR3/8Lns9V3uhefKEwb3TqTu6/TxHuL4bQ6KQpTWUMdiUqqpJZhu9CXaqPXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YrT8Q3Va; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBHYxqSa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A392C2BC9E;
-	Mon, 23 Mar 2026 16:22:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YrT8Q3Va"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E2F6C4CEF7;
+	Mon, 23 Mar 2026 16:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282958;
-	bh=63TjOlvONJ7H9leiU8I0ZeOax/2VQYcH2GJm46jO9bY=;
+	s=korg; t=1774282961;
+	bh=1ZjLfw+LMGO5yIQQIsuPXz30GBQSBi3VA2Daig9Ftps=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MBHYxqSaDvg9qOnebva2C2wrbgSnAh1Y/PDi1kLD+zZqisVdKiy9RZUwiHq5IrD9G
-	 jjx/S/Tq6scgPGLKhaPScZWebaacOT21npt+uVvMMWj7f2DsiwP7cAlsHQCP/hHwW4
-	 yznQzaaiDK36M+TYeRU/Jcb1OC39RTlzsqttrVFU=
+	b=YrT8Q3VaST1Ur+lD7SqxiDy9pYWROCRJ+buv48dwouZTKjdMKcFr1JHXZOakYGycf
+	 OnOopplQB6q3b3/18Z1ftZdXCVzXD5pSHBvxG3hpuOn6R1QUUPQ4dfAh6eMZgDGmB6
+	 R4Y8BKI1Kr1MfKCEm0wSdyIOf6U7JIXXPfRS5Oto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	Steve French <stfrench@microsoft.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 349/481] cifs: open files should not hold ref on superblock
-Date: Mon, 23 Mar 2026 14:45:31 +0100
-Message-ID: <20260323134533.605861738@linuxfoundation.org>
+Subject: [PATCH 6.1 350/481] kprobes: Remove unneeded goto
+Date: Mon, 23 Mar 2026 14:45:32 +0100
+Message-ID: <20260323134533.634120709@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,196 +50,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: "Masami Hiramatsu (Google)" <mhiramat@kernel.org>
 
-[ Upstream commit 340cea84f691c5206561bb2e0147158fe02070be ]
+[ Upstream commit 5e5b8b49335971b68b54afeb0e7ded004945af07 ]
 
-Today whenever we deal with a file, in addition to holding
-a reference on the dentry, we also get a reference on the
-superblock. This happens in two cases:
-1. when a new cinode is allocated
-2. when an oplock break is being processed
+Remove unneeded gotos. Since the labels referred by these gotos have
+only one reference for each, we can replace those gotos with the
+referred code.
 
-The reasoning for holding the superblock ref was to make sure
-that when umount happens, if there are users of inodes and
-dentries, it does not try to clean them up and wait for the
-last ref to superblock to be dropped by last of such users.
+Link: https://lore.kernel.org/all/173371211203.480397.13988907319659165160.stgit@devnote2/
 
-But the side effect of doing that is that umount silently drops
-a ref on the superblock and we could have deferred closes and
-lease breaks still holding these refs.
-
-Ideally, we should ensure that all of these users of inodes and
-dentries are cleaned up at the time of umount, which is what this
-code is doing.
-
-This code change allows these code paths to use a ref on the
-dentry (and hence the inode). That way, umount is
-ensured to clean up SMB client resources when it's the last
-ref on the superblock (For ex: when same objects are shared).
-
-The code change also moves the call to close all the files in
-deferred close list to the umount code path. It also waits for
-oplock_break workers to be flushed before calling
-kill_anon_super (which eventually frees up those objects).
-
-Fixes: 24261fc23db9 ("cifs: delay super block destruction until all cifsFileInfo objects are gone")
-Fixes: 705c79101ccf ("smb: client: fix use-after-free in cifs_oplock_break")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ kmalloc_obj() => kmalloc(), remove trace_smb3_tcon_ref() ]
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Stable-dep-of: 5ef268cb7a0a ("kprobes: Remove unneeded warnings from __arm_kprobe_ftrace()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsfs.c    |    9 ++++++---
- fs/smb/client/cifsproto.h |    1 +
- fs/smb/client/file.c      |   11 -----------
- fs/smb/client/misc.c      |   41 +++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 48 insertions(+), 14 deletions(-)
+ kernel/kprobes.c |   45 +++++++++++++++++++++------------------------
+ 1 file changed, 21 insertions(+), 24 deletions(-)
 
---- a/fs/smb/client/cifsfs.c
-+++ b/fs/smb/client/cifsfs.c
-@@ -287,11 +287,15 @@ static void cifs_kill_sb(struct super_bl
- 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -1082,20 +1082,18 @@ static int __arm_kprobe_ftrace(struct kp
  
- 	/*
--	 * We ned to release all dentries for the cached directories
--	 * before we kill the sb.
-+	 * We need to release all dentries for the cached directories
-+	 * and close all deferred file handles before we kill the sb.
- 	 */
- 	if (cifs_sb->root) {
- 		close_all_cached_dirs(cifs_sb);
-+		cifs_close_all_deferred_files_sb(cifs_sb);
-+
-+		/* Wait for all pending oplock breaks to complete */
-+		flush_workqueue(cifsoplockd_wq);
+ 	if (*cnt == 0) {
+ 		ret = register_ftrace_function(ops);
+-		if (WARN(ret < 0, "Failed to register kprobe-ftrace (error %d)\n", ret))
+-			goto err_ftrace;
++		if (WARN(ret < 0, "Failed to register kprobe-ftrace (error %d)\n", ret)) {
++			/*
++			 * At this point, sinec ops is not registered, we should be sefe from
++			 * registering empty filter.
++			 */
++			ftrace_set_filter_ip(ops, (unsigned long)p->addr, 1, 0);
++			return ret;
++		}
+ 	}
  
- 		/* finally release root dentry */
- 		dput(cifs_sb->root);
-@@ -756,7 +760,6 @@ static void cifs_umount_begin(struct sup
- 	spin_unlock(&tcon->tc_lock);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
--	cifs_close_all_deferred_files(tcon);
- 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
- 	/* cancel_notify_requests(tcon); */
- 	if (tcon->ses && tcon->ses->server) {
---- a/fs/smb/client/cifsproto.h
-+++ b/fs/smb/client/cifsproto.h
-@@ -297,6 +297,7 @@ extern void cifs_close_deferred_file(str
- 
- extern void cifs_close_all_deferred_files(struct cifs_tcon *cifs_tcon);
- 
-+void cifs_close_all_deferred_files_sb(struct cifs_sb_info *cifs_sb);
- extern void cifs_close_deferred_file_under_dentry(struct cifs_tcon *cifs_tcon,
- 				const char *path);
- extern struct TCP_Server_Info *
---- a/fs/smb/client/file.c
-+++ b/fs/smb/client/file.c
-@@ -375,8 +375,6 @@ struct cifsFileInfo *cifs_new_fileinfo(s
- 	mutex_init(&cfile->fh_mutex);
- 	spin_lock_init(&cfile->file_info_lock);
- 
--	cifs_sb_active(inode->i_sb);
+ 	(*cnt)++;
+ 	return ret;
 -
- 	/*
- 	 * If the server returned a read oplock and we have mandatory brlocks,
- 	 * set oplock level to None.
-@@ -431,7 +429,6 @@ static void cifsFileInfo_put_final(struc
- 	struct inode *inode = d_inode(cifs_file->dentry);
- 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
- 	struct cifsLockInfo *li, *tmp;
--	struct super_block *sb = inode->i_sb;
- 
- 	/*
- 	 * Delete any outstanding lock records. We'll lose them when the file
-@@ -449,7 +446,6 @@ static void cifsFileInfo_put_final(struc
- 
- 	cifs_put_tlink(cifs_file->tlink);
- 	dput(cifs_file->dentry);
--	cifs_sb_deactive(sb);
- 	kfree(cifs_file->symlink_target);
- 	kfree(cifs_file);
- }
-@@ -5188,12 +5184,6 @@ void cifs_oplock_break(struct work_struc
- 	__u64 persistent_fid, volatile_fid;
- 	__u16 net_fid;
- 
+-err_ftrace:
 -	/*
--	 * Hold a reference to the superblock to prevent it and its inodes from
--	 * being freed while we are accessing cinode. Otherwise, _cifsFileInfo_put()
--	 * may release the last reference to the sb and trigger inode eviction.
+-	 * At this point, sinec ops is not registered, we should be sefe from
+-	 * registering empty filter.
 -	 */
--	cifs_sb_active(sb);
- 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
- 			TASK_UNINTERRUPTIBLE);
+-	ftrace_set_filter_ip(ops, (unsigned long)p->addr, 1, 0);
+-	return ret;
+ }
  
-@@ -5266,7 +5256,6 @@ oplock_break_ack:
- 	cifs_put_tlink(tlink);
- out:
- 	cifs_done_oplock_break(cinode);
--	cifs_sb_deactive(sb);
+ static int arm_kprobe_ftrace(struct kprobe *p)
+@@ -1447,7 +1445,7 @@ _kprobe_addr(kprobe_opcode_t *addr, cons
+ 	     unsigned long offset, bool *on_func_entry)
+ {
+ 	if ((symbol_name && addr) || (!symbol_name && !addr))
+-		goto invalid;
++		return ERR_PTR(-EINVAL);
+ 
+ 	if (symbol_name) {
+ 		/*
+@@ -1477,11 +1475,10 @@ _kprobe_addr(kprobe_opcode_t *addr, cons
+ 	 * at the start of the function.
+ 	 */
+ 	addr = arch_adjust_kprobe_addr((unsigned long)addr, offset, on_func_entry);
+-	if (addr)
+-		return addr;
++	if (!addr)
++		return ERR_PTR(-EINVAL);
+ 
+-invalid:
+-	return ERR_PTR(-EINVAL);
++	return addr;
+ }
+ 
+ static kprobe_opcode_t *kprobe_addr(struct kprobe *p)
+@@ -1504,15 +1501,15 @@ static struct kprobe *__get_valid_kprobe
+ 	if (unlikely(!ap))
+ 		return NULL;
+ 
+-	if (p != ap) {
+-		list_for_each_entry(list_p, &ap->list, list)
+-			if (list_p == p)
+-			/* kprobe p is a valid probe */
+-				goto valid;
+-		return NULL;
+-	}
+-valid:
+-	return ap;
++	if (p == ap)
++		return ap;
++
++	list_for_each_entry(list_p, &ap->list, list)
++		if (list_p == p)
++		/* kprobe p is a valid probe */
++			return ap;
++
++	return NULL;
  }
  
  /*
---- a/fs/smb/client/misc.c
-+++ b/fs/smb/client/misc.c
-@@ -29,6 +29,11 @@
- extern mempool_t *cifs_sm_req_poolp;
- extern mempool_t *cifs_req_poolp;
- 
-+struct tcon_list {
-+	struct list_head entry;
-+	struct cifs_tcon *tcon;
-+};
-+
- /* The xid serves as a useful identifier for each incoming vfs request,
-    in a similar way to the mid which is useful to track each sent smb,
-    and CurrentXid can also provide a running counter (although it
-@@ -809,6 +814,42 @@ cifs_close_all_deferred_files(struct cif
- 		kfree(tmp_list);
- 	}
- }
-+
-+void cifs_close_all_deferred_files_sb(struct cifs_sb_info *cifs_sb)
-+{
-+	struct rb_root *root = &cifs_sb->tlink_tree;
-+	struct rb_node *node;
-+	struct cifs_tcon *tcon;
-+	struct tcon_link *tlink;
-+	struct tcon_list *tmp_list, *q;
-+	LIST_HEAD(tcon_head);
-+
-+	spin_lock(&cifs_sb->tlink_tree_lock);
-+	for (node = rb_first(root); node; node = rb_next(node)) {
-+		tlink = rb_entry(node, struct tcon_link, tl_rbnode);
-+		tcon = tlink_tcon(tlink);
-+		if (IS_ERR(tcon))
-+			continue;
-+		tmp_list = kmalloc(sizeof(struct tcon_list), GFP_ATOMIC);
-+		if (tmp_list == NULL)
-+			break;
-+		tmp_list->tcon = tcon;
-+		/* Take a reference on tcon to prevent it from being freed */
-+		spin_lock(&tcon->tc_lock);
-+		++tcon->tc_count;
-+		spin_unlock(&tcon->tc_lock);
-+		list_add_tail(&tmp_list->entry, &tcon_head);
-+	}
-+	spin_unlock(&cifs_sb->tlink_tree_lock);
-+
-+	list_for_each_entry_safe(tmp_list, q, &tcon_head, entry) {
-+		cifs_close_all_deferred_files(tmp_list->tcon);
-+		list_del(&tmp_list->entry);
-+		cifs_put_tcon(tmp_list->tcon);
-+		kfree(tmp_list);
-+	}
-+}
-+
- void
- cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
- {
 
 
