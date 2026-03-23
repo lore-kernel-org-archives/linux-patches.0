@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24EC53C061A;
-	Mon, 23 Mar 2026 16:16:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DABA43C060B;
+	Mon, 23 Mar 2026 16:16:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282615; cv=none; b=ZoLbfx4HBLmRdunta/2kSjVC3DpJYsB9CFiJZe680swdqMHbSs3aIwtEaWJr46jWOobopGdVkN6FH56K7RxfLDCRM9v/WHF7XZy58Fh1bcL7cEibabIpT6x8L255qylsDyCgfQSB2n+DrPFgScd66z4NDMN5t60tdSQJaGAczws=
+	t=1774282618; cv=none; b=p5R3jhYyz8EEY0oAzrZrdDUZW75wuEYO9H6oy5ZMbAoFbH89OV8RG+wBVDW10dD3pYdDWNil8nsq1+9L/yAQRSdyO6uVbr5317XcRm/JQ0cEeGDWodh3CznC8nt+rrsumunwnQ1yclnXoayZoTpRXAdGdh/3o+F9NWV+YwY5ms4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282615; c=relaxed/simple;
-	bh=MzRXOGDu5ahx6DmYbckUDAvUPoWgfyeK15nbY41LTJ0=;
+	s=arc-20240116; t=1774282618; c=relaxed/simple;
+	bh=n6xcYK2nGJ8es1RYXk0d4H65BR7tCt7OYEJ0hc1FCZI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VJWsz1FyPYOIFrE7AVOacBeXncpgIOocqPeAZg3Dei0UCdrL53Xgd8bF5tpc+5kedO08pb/OjpOf/Ur1uUTmbyWrDah/KEpV6Usd57LcyN8i5hPKzdmPT4tBjfsexqj25+QddE5uCKOfcZaCbBHXsqDkyt1eWE523YbcRfSU5Bo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sEroCZP9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cFZf3Gqvf0kzoRegpfNd3f7ktiFlfIhCdzRat5FJp/e049GdlmUDE3ls939V48b96TtkpjwdbwCB5dEh62n6c2KB3OmESCSkSMAxRhsDFBh/kJaHgUspzHOL4O43FkXDj7AlNwQHGFAFe9kE+jS8/v7SQlhoRHFqsgj3xAwrWDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sB7fCZH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sEroCZP9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8FCC2BCB4;
-	Mon, 23 Mar 2026 16:16:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sB7fCZH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57E36C4CEF7;
+	Mon, 23 Mar 2026 16:16:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282615;
-	bh=MzRXOGDu5ahx6DmYbckUDAvUPoWgfyeK15nbY41LTJ0=;
+	s=korg; t=1774282617;
+	bh=n6xcYK2nGJ8es1RYXk0d4H65BR7tCt7OYEJ0hc1FCZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sEroCZP9uBSLGCmewDmaZw3ZmNocOXyrBm9V+55p5EVj3ysc6a9L6pkGjycNp1x1d
-	 O3KrhZ/8MjUWLoMFJNwJbVaYWDsvrG8+nEemOWs4lHSfz1agpL2TnAFUEoVf2aMctM
-	 wqfmu79H4K07WlFhOcvRa/Qj9oxWqd2IC0JWIf4E=
+	b=sB7fCZH4f794Pe305ZDjNytWSON2OocejW4cDVnBVKqSr6jagJLAx9knj+ZQ871gU
+	 JT+uAA2rb/XjkdYKhJZYyueG1IYf0qX9t4QXrXJina36Q+lRgOeDmDsaPqe40Fte13
+	 Z3XrG69l+gsXV57yvhS5qqyWqf6V7yVMTmklf5OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Penghe Geng <pgeng@nvidia.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 221/481] mmc: core: Avoid bitfield RMW for claim/retune flags
-Date: Mon, 23 Mar 2026 14:43:23 +0100
-Message-ID: <20260323134530.537625594@linuxfoundation.org>
+	Mehul Rao <mehulrao@gmail.com>,
+	Tung Nguyen <tung.quang.nguyen@est.tech>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 222/481] tipc: fix divide-by-zero in tipc_sk_filter_connect()
+Date: Mon, 23 Mar 2026 14:43:24 +0100
+Message-ID: <20260323134530.559590679@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,59 +51,55 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Penghe Geng <pgeng@nvidia.com>
+From: Mehul Rao <mehulrao@gmail.com>
 
-commit 901084c51a0a8fb42a3f37d2e9c62083c495f824 upstream.
+commit 6c5a9baa15de240e747263aba435a0951da8d8d2 upstream.
 
-Move claimed and retune control flags out of the bitfield word to
-avoid unrelated RMW side effects in asynchronous contexts.
+A user can set conn_timeout to any value via
+setsockopt(TIPC_CONN_TIMEOUT), including values less than 4.  When a
+SYN is rejected with TIPC_ERR_OVERLOAD and the retry path in
+tipc_sk_filter_connect() executes:
 
-The host->claimed bit shared a word with retune flags. Writes to claimed
-in __mmc_claim_host() or retune_now in mmc_mq_queue_rq() can overwrite
-other bits when concurrent updates happen in other contexts, triggering
-spurious WARN_ON(!host->claimed). Convert claimed, can_retune,
-retune_now and retune_paused to bool to remove shared-word coupling.
+    delay %= (tsk->conn_timeout / 4);
 
-Fixes: 6c0cedd1ef952 ("mmc: core: Introduce host claiming by context")
-Fixes: 1e8e55b67030c ("mmc: block: Add CQE support")
+If conn_timeout is in the range [0, 3], the integer division yields 0,
+and the modulo operation triggers a divide-by-zero exception, causing a
+kernel oops/panic.
+
+Fix this by clamping conn_timeout to a minimum of 4 at the point of use
+in tipc_sk_filter_connect().
+
+Oops: divide error: 0000 [#1] SMP KASAN NOPTI
+CPU: 0 UID: 0 PID: 119 Comm: poc-F144 Not tainted 7.0.0-rc2+
+RIP: 0010:tipc_sk_filter_rcv (net/tipc/socket.c:2236 net/tipc/socket.c:2362)
+Call Trace:
+ tipc_sk_backlog_rcv (include/linux/instrumented.h:82 include/linux/atomic/atomic-instrumented.h:32 include/net/sock.h:2357 net/tipc/socket.c:2406)
+ __release_sock (include/net/sock.h:1185 net/core/sock.c:3213)
+ release_sock (net/core/sock.c:3797)
+ tipc_connect (net/tipc/socket.c:2570)
+ __sys_connect (include/linux/file.h:62 include/linux/file.h:83 net/socket.c:2098)
+
+Fixes: 6787927475e5 ("tipc: buffer overflow handling in listener socket")
 Cc: stable@vger.kernel.org
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Penghe Geng <pgeng@nvidia.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Reviewed-by: Tung Nguyen <tung.quang.nguyen@est.tech>
+Link: https://patch.msgid.link/20260310170730.28841-1-mehulrao@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/mmc/host.h |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/tipc/socket.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/linux/mmc/host.h
-+++ b/include/linux/mmc/host.h
-@@ -440,14 +440,12 @@ struct mmc_host {
- 
- 	struct mmc_ios		ios;		/* current io bus settings */
- 
-+	bool			claimed;	/* host exclusively claimed */
-+
- 	/* group bitfields together to minimize padding */
- 	unsigned int		use_spi_crc:1;
--	unsigned int		claimed:1;	/* host exclusively claimed */
- 	unsigned int		doing_init_tune:1; /* initial tuning in progress */
--	unsigned int		can_retune:1;	/* re-tuning can be used */
- 	unsigned int		doing_retune:1;	/* re-tuning in progress */
--	unsigned int		retune_now:1;	/* do re-tuning at next req */
--	unsigned int		retune_paused:1; /* re-tuning is temporarily disabled */
- 	unsigned int		retune_crc_disable:1; /* don't trigger retune upon crc */
- 	unsigned int		can_dma_map_merge:1; /* merging can be used */
- 	unsigned int		vqmmc_enabled:1; /* vqmmc regulator is enabled */
-@@ -455,6 +453,9 @@ struct mmc_host {
- 	int			rescan_disable;	/* disable card detection */
- 	int			rescan_entered;	/* used with nonremovable devices */
- 
-+	bool			can_retune;	/* re-tuning can be used */
-+	bool			retune_now;	/* do re-tuning at next req */
-+	bool			retune_paused;	/* re-tuning is temporarily disabled */
- 	int			need_retune;	/* re-tuning is needed */
- 	int			hold_retune;	/* hold off re-tuning */
- 	unsigned int		retune_period;	/* re-tuning period in secs */
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2235,6 +2235,8 @@ static bool tipc_sk_filter_connect(struc
+ 		if (skb_queue_empty(&sk->sk_write_queue))
+ 			break;
+ 		get_random_bytes(&delay, 2);
++		if (tsk->conn_timeout < 4)
++			tsk->conn_timeout = 4;
+ 		delay %= (tsk->conn_timeout / 4);
+ 		delay = msecs_to_jiffies(delay + 100);
+ 		sk_reset_timer(sk, &sk->sk_timer, jiffies + delay);
 
 
