@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4063B279DB3;
-	Mon, 23 Mar 2026 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E12242D60;
+	Mon, 23 Mar 2026 15:12:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278724; cv=none; b=d1qOn8BSJw/HFVvw25f4TcjAZsJj/OGRknvjmG8IfMiNIOgtZaabfT0tK6k5yNwGI/jlHfH6Ig3l30c5Q7fKhXVj1jUfdxitZTmYyrvjqigNvZMv4jl+yXvH2uj0wNybUxp/g0u1zd2osPYmeivV9gD9ON8yNE+a0FtarmEAO4k=
+	t=1774278727; cv=none; b=HGV5zmIjy57FFUDido3w0MZxwBj6yzWNEOfHsAp0nwL7GH5wzCAlA8Q0qxe6Db/Xuss4H+OTet9JPjfhFZrC0WG2kFvMyHwcVEaE/N9kGShujHJo7w+3GrzPUhPvN4Wem6viO+VH1GQOaKPk70eiRU9wu2BLL9jNRuHUpms9fM8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278724; c=relaxed/simple;
-	bh=CwW7jc5wnBmaVi/lDrs+zaH/08qkmDF9NyJfvkN8wPg=;
+	s=arc-20240116; t=1774278727; c=relaxed/simple;
+	bh=S9NDBUMsxmdmIcTrZOVeOv6aO11bvV5qghHzxKg8kXo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QGktkeWAimLWkkGKu28fNw3GoLXS0tqyCZnDGBgx8QEhnSKIY3sgyuX4Qp1Ylsfi0/RlXvhqve+o66Iiz9jm2jUnieB2mKTaNQBbhR3F2C+X61G4aXePdfGQxv81fw0PipeR4LrGH/sZ2YoJspVOYJzuruDfbokYrC1dD6j4qak=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2rGGgyH9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OZP8kZXohPaERdu4v8zC0w0BbfL3Q5uGp5izW1mXspGTG39WIYTrfH7ipXxRbn9zXhZHHdgiAbuBlaT94zJqlxF1ZCtALTAo2xTn5VmuTvMuATR3fufVEiS5QJbo6bmBhm46Kdez58uyOVqdt6ZbJs9AHcShSUQWgN8RNAP02kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slzl9el5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2rGGgyH9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC4EAC4CEF7;
-	Mon, 23 Mar 2026 15:12:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slzl9el5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1BCC2BC9E;
+	Mon, 23 Mar 2026 15:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278724;
-	bh=CwW7jc5wnBmaVi/lDrs+zaH/08qkmDF9NyJfvkN8wPg=;
+	s=korg; t=1774278727;
+	bh=S9NDBUMsxmdmIcTrZOVeOv6aO11bvV5qghHzxKg8kXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2rGGgyH96e3pZ25Qh4q37wAOQbKb39s6O8aIHcc8E2n+Tf9E4xKu3c4exvRzUc3Oo
-	 geU9twzEeKh3URKPmb24OkXIsFkxRBYcYb+polAXYm2ywC1ADrhwnEQG8QdCHRrpTb
-	 BRWb6J3GV+QYMQt3u0xymh1dg/PS+FZW+cp/ViX8=
+	b=slzl9el5FXh92CKxYZADSYnf2KPndLk0Kcn9Z72CNqr+Vrrzs2lkP1M80neuDrQLG
+	 PtxX7xzooklnNpP5623MTpmFKRX8dlpywvQT+PRU8b1fXnBcOhT1NvP5n4nIDPrln6
+	 liUGVNKu8rTzEcqnL4oM8T9ysgGf1QO6LpZkvv4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiji Yang <yangshiji66@outlook.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Brian Foster <bfoster@redhat.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 372/567] net: phy: register phy led_triggers during probe to avoid AB-BA deadlock
-Date: Mon, 23 Mar 2026 14:44:52 +0100
-Message-ID: <20260323134543.031512797@linuxfoundation.org>
+Subject: [PATCH 6.6 399/567] ext4: fix dirtyclusters double decrement on fs shutdown
+Date: Mon, 23 Mar 2026 14:45:19 +0100
+Message-ID: <20260323134543.737971649@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,126 +53,106 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Andrew Lunn <andrew@lunn.ch>
+From: Brian Foster <bfoster@redhat.com>
 
-[ Upstream commit c8dbdc6e380e7e96a51706db3e4b7870d8a9402d ]
+[ Upstream commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 ]
 
-There is an AB-BA deadlock when both LEDS_TRIGGER_NETDEV and
-LED_TRIGGER_PHY are enabled:
+fstests test generic/388 occasionally reproduces a warning in
+ext4_put_super() associated with the dirty clusters count:
 
-[ 1362.049207] [<8054e4b8>] led_trigger_register+0x5c/0x1fc             <-- Trying to get lock "triggers_list_lock" via down_write(&triggers_list_lock);
-[ 1362.054536] [<80662830>] phy_led_triggers_register+0xd0/0x234
-[ 1362.060329] [<8065e200>] phy_attach_direct+0x33c/0x40c
-[ 1362.065489] [<80651fc4>] phylink_fwnode_phy_connect+0x15c/0x23c
-[ 1362.071480] [<8066ee18>] mtk_open+0x7c/0xba0
-[ 1362.075849] [<806d714c>] __dev_open+0x280/0x2b0
-[ 1362.080384] [<806d7668>] __dev_change_flags+0x244/0x24c
-[ 1362.085598] [<806d7698>] dev_change_flags+0x28/0x78
-[ 1362.090528] [<807150e4>] dev_ioctl+0x4c0/0x654                       <-- Hold lock "rtnl_mutex" by calling rtnl_lock();
-[ 1362.094985] [<80694360>] sock_ioctl+0x2f4/0x4e0
-[ 1362.099567] [<802e9c4c>] sys_ioctl+0x32c/0xd8c
-[ 1362.104022] [<80014504>] syscall_common+0x34/0x58
+  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
 
-Here LED_TRIGGER_PHY is registering LED triggers during phy_attach
-while holding RTNL and then taking triggers_list_lock.
+Tracing the failure shows that the warning fires due to an
+s_dirtyclusters_counter value of -1. IOW, this appears to be a
+spurious decrement as opposed to some sort of leak. Further tracing
+of the dirty cluster count deltas and an LLM scan of the resulting
+output identified the cause as a double decrement in the error path
+between ext4_mb_mark_diskspace_used() and the caller
+ext4_mb_new_blocks().
 
-[ 1362.191101] [<806c2640>] register_netdevice_notifier+0x60/0x168      <-- Trying to get lock "rtnl_mutex" via rtnl_lock();
-[ 1362.197073] [<805504ac>] netdev_trig_activate+0x194/0x1e4
-[ 1362.202490] [<8054e28c>] led_trigger_set+0x1d4/0x360                 <-- Hold lock "triggers_list_lock" by down_read(&triggers_list_lock);
-[ 1362.207511] [<8054eb38>] led_trigger_write+0xd8/0x14c
-[ 1362.212566] [<80381d98>] sysfs_kf_bin_write+0x80/0xbc
-[ 1362.217688] [<8037fcd8>] kernfs_fop_write_iter+0x17c/0x28c
-[ 1362.223174] [<802cbd70>] vfs_write+0x21c/0x3c4
-[ 1362.227712] [<802cc0c4>] ksys_write+0x78/0x12c
-[ 1362.232164] [<80014504>] syscall_common+0x34/0x58
+First, note that generic/388 is a shutdown vs. fsstress test and so
+produces a random set of operations and shutdown injections. In the
+problematic case, the shutdown triggers an error return from the
+ext4_handle_dirty_metadata() call(s) made from
+ext4_mb_mark_context(). The changed value is non-zero at this point,
+so ext4_mb_mark_diskspace_used() does not exit after the error
+bubbles up from ext4_mb_mark_context(). Instead, the former
+decrements both cluster counters and returns the error up to
+ext4_mb_new_blocks(). The latter falls into the !ar->len out path
+which decrements the dirty clusters counter a second time, creating
+the inconsistency.
 
-Here LEDS_TRIGGER_NETDEV is being enabled on an LED. It first takes
-triggers_list_lock and then RTNL. A classical AB-BA deadlock.
+To avoid this problem and simplify ownership of the cluster
+reservation in this codepath, lift the counter reduction to a single
+place in the caller. This makes it more clear that
+ext4_mb_new_blocks() is responsible for acquiring cluster
+reservation (via ext4_claim_free_clusters()) in the !delalloc case
+as well as releasing it, regardless of whether it ends up consumed
+or returned due to failure.
 
-phy_led_triggers_registers() does not require the RTNL, it does not
-make any calls into the network stack which require protection. There
-is also no requirement the PHY has been attached to a MAC, the
-triggers only make use of phydev state. This allows the call to
-phy_led_triggers_registers() to be placed elsewhere. PHY probe() and
-release() don't hold RTNL, so solving the AB-BA deadlock.
-
-Reported-by: Shiji Yang <yangshiji66@outlook.com>
-Closes: https://lore.kernel.org/all/OS7PR01MB13602B128BA1AD3FA38B6D1FFBC69A@OS7PR01MB13602.jpnprd01.prod.outlook.com/
-Fixes: 06f502f57d0d ("leds: trigger: Introduce a NETDEV trigger")
-Cc: stable@vger.kernel.org
-Signed-off-by: Andrew Lunn <andrew@lunn.ch>
-Tested-by: Shiji Yang <yangshiji66@outlook.com>
-Link: https://patch.msgid.link/20260222152601.1978655-1-andrew@lunn.ch
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-[ adapted condition to preserve existing `!phy_driver_is_genphy_10g(phydev)` guard ]
+Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
+[ Drop mballoc-test changes ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/phy_device.c |   25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ fs/ext4/mballoc.c |   21 +++++----------------
+ 1 file changed, 5 insertions(+), 16 deletions(-)
 
---- a/drivers/net/phy/phy_device.c
-+++ b/drivers/net/phy/phy_device.c
-@@ -1582,8 +1582,6 @@ int phy_attach_direct(struct net_device
- 		goto error;
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -3999,8 +3999,7 @@ void ext4_exit_mballoc(void)
+  * Returns 0 if success or error code
+  */
+ static noinline_for_stack int
+-ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
+-				handle_t *handle, unsigned int reserv_clstrs)
++ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
+ {
+ 	struct buffer_head *bitmap_bh = NULL;
+ 	struct ext4_group_desc *gdp;
+@@ -4086,13 +4085,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
  
- 	phy_resume(phydev);
--	if (!phydev->is_on_sfp_module)
--		phy_led_triggers_register(phydev);
+ 	ext4_unlock_group(sb, ac->ac_b_ex.fe_group);
+ 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
+-	/*
+-	 * Now reduce the dirty block count also. Should not go negative
+-	 */
+-	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
+-		/* release all the reserved blocks if non delalloc */
+-		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-				   reserv_clstrs);
  
- 	/**
- 	 * If the external phy used by current mac interface is managed by
-@@ -1856,9 +1854,6 @@ void phy_detach(struct phy_device *phyde
- 	phydev->phy_link_change = NULL;
- 	phydev->phylink = NULL;
- 
--	if (!phydev->is_on_sfp_module)
--		phy_led_triggers_unregister(phydev);
--
- 	if (phydev->mdio.dev.driver)
- 		module_put(phydev->mdio.dev.driver->owner);
- 
-@@ -3402,17 +3397,28 @@ static int phy_probe(struct device *dev)
- 	/* Set the state to READY by default */
- 	phydev->state = PHY_READY;
- 
-+	/* Register the PHY LED triggers */
-+	if (!phydev->is_on_sfp_module)
-+		phy_led_triggers_register(phydev);
-+
- 	/* Get the LEDs from the device tree, and instantiate standard
- 	 * LEDs for them.
- 	 */
- 	if (IS_ENABLED(CONFIG_PHYLIB_LEDS) && !phy_driver_is_genphy(phydev) &&
--	    !phy_driver_is_genphy_10g(phydev))
-+	    !phy_driver_is_genphy_10g(phydev)) {
- 		err = of_phy_leds(phydev);
-+		if (err)
-+			goto out;
-+	}
-+
-+	return 0;
- 
+ 	if (sbi->s_log_groups_per_flex) {
+ 		ext4_group_t flex_group = ext4_flex_group(sbi,
+@@ -6265,7 +6257,7 @@ repeat:
+ 			ext4_mb_pa_put_free(ac);
+ 	}
+ 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
+-		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
++		*errp = ext4_mb_mark_diskspace_used(ac, handle);
+ 		if (*errp) {
+ 			ext4_discard_allocated_blocks(ac);
+ 			goto errout;
+@@ -6296,12 +6288,9 @@ errout:
  out:
-+	if (!phydev->is_on_sfp_module)
-+		phy_led_triggers_unregister(phydev);
-+
- 	/* Re-assert the reset signal on error */
--	if (err)
--		phy_device_reset(phydev, 1);
-+	phy_device_reset(phydev, 1);
+ 	if (inquota && ar->len < inquota)
+ 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
+-	if (!ar->len) {
+-		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
+-			/* release all the reserved blocks if non delalloc */
+-			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
+-						reserv_clstrs);
+-	}
++	/* release any reserved blocks */
++	if (reserv_clstrs)
++		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
  
- 	return err;
- }
-@@ -3427,6 +3433,9 @@ static int phy_remove(struct device *dev
- 	    !phy_driver_is_genphy_10g(phydev))
- 		phy_leds_unregister(phydev);
+ 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
  
-+	if (!phydev->is_on_sfp_module)
-+		phy_led_triggers_unregister(phydev);
-+
- 	phydev->state = PHY_DOWN;
- 
- 	sfp_bus_del_upstream(phydev->sfp_bus);
 
 
