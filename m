@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB3C3AF66B;
-	Mon, 23 Mar 2026 14:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61A393AF650;
+	Mon, 23 Mar 2026 14:50:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277445; cv=none; b=cVst42A8tqFTIeRr++hz+A0boLLD+jXNif1JBOvSvhPDPxLgCONAXsoELIEK6uvi+lAvI55sd6bmFNjtOcbDfjbPCMrQmPJRUy5HmUhFJD/6frSMZ/EYtUonT1BcxDcpwqAMdGC0z55sC8bIYULwMmMjrC9CagPK8l9DQx7pjVw=
+	t=1774277448; cv=none; b=oWgFd8L3Lw5HeqiUnbPiGAEcE+7dnGJdvWuul2AjOY3wz98/tHIAF1961upl4fDtzkjLXbCH4vurtJ3PpN3APJ27wfyJ6V230Lyfs8c1P2jslUmNMsl/hGeBTGcVUTDhNTxjOQRSBo93zxNsv1KB7udZ2XsvXEnQCqq3e6Ijj0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277445; c=relaxed/simple;
-	bh=7oXm5ZUM1x1SRkDGpf8SFN11vn/UrhvMkbtgDFI4tMk=;
+	s=arc-20240116; t=1774277448; c=relaxed/simple;
+	bh=MDq1V4EsEkImeJ7XM0k0PfieP+VfuUramSS1XsMLyds=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zd5SG1Qz6c/9pX0qkhl0NZ/Ep28G3bxHbmJi8Gva5J9m1y1o86avYjg1W9aJoUr98CF9epsSSpJdBpEZDjXemMIPScK+q9pe5AT3QzTi47nnfJTlpnja5jdRkJSR69hsDRqRmEOXR1NeuXIcx0L2In/RGjf3eDlPcnv+QDdH7sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=isMsLgHe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PiUa1eLPMJv0JYnvRO403euRSA4D3JRzbCVKaSkshsUmRjvns/LagLRpAkxw0ljLX4NaLkwh9PY9CZS44wD3reJd9+HXoinDC+Fhblv9+HCDK3tnxk6kPJVlHrCemOu/Ve0OqMp2HS6A7rIWUITU1rtHSIWvEeB4k3cSQr5GHDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FHuvwHVD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="isMsLgHe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14BC7C4CEF7;
-	Mon, 23 Mar 2026 14:50:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FHuvwHVD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2E1C2BC9E;
+	Mon, 23 Mar 2026 14:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277445;
-	bh=7oXm5ZUM1x1SRkDGpf8SFN11vn/UrhvMkbtgDFI4tMk=;
+	s=korg; t=1774277448;
+	bh=MDq1V4EsEkImeJ7XM0k0PfieP+VfuUramSS1XsMLyds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isMsLgHeYpaHTFBf0k1Pr4ZPzSWKzFjc+HP7mCMuGMfvmcTHZP3F314Rs0HThuBB0
-	 /A8TYC05HTDVX2LRVxkZZCUDtBgqZxqbLEbt7yd08jVLVLM08cBLHXPAt32O1Bbyuo
-	 lcfMpvcrY0+vsvpTq/kQVZqUgoChZ55qIVLJkUaY=
+	b=FHuvwHVDDdsf5NdvKX3gnmAI0V/HkXEXL8viKWSLvN+Uf3RjfTiO4IO+h3xyM64RA
+	 Z3szNxVuWu8QAdIjm2w6MPoTPW5Atilhy3XYPOZ+mE73+JthTn3GLBN/vaP3qu5A+s
+	 057YqpkUJbOCPR/0uBKp/ZDlzFh5IsBMws3kZOuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Michael Walle <michael@walle.cc>,
 	Luke Wang <ziniu.wang_1@nxp.com>,
 	Pratyush Yadav <pratyush@kernel.org>
-Subject: [PATCH 6.12 443/460] mtd: spi-nor: core: avoid odd length/address reads on 8D-8D-8D mode
-Date: Mon, 23 Mar 2026 14:47:19 +0100
-Message-ID: <20260323134537.468853998@linuxfoundation.org>
+Subject: [PATCH 6.12 444/460] mtd: spi-nor: core: avoid odd length/address writes in 8D-8D-8D mode
+Date: Mon, 23 Mar 2026 14:47:20 +0100
+Message-ID: <20260323134537.494711058@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -54,72 +54,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Pratyush Yadav <p.yadav@ti.com>
 
-commit f156b23df6a84efb2f6686156be94d4988568954 upstream.
+commit 17926cd770ec837ed27d9856cf07f2da8dda4131 upstream.
 
-On Octal DTR capable flashes like Micron Xcella reads cannot start or
-end at an odd address in Octal DTR mode. Extra bytes need to be read at
-the start or end to make sure both the start address and length remain
-even.
-
-To avoid allocating too much extra memory, thereby putting unnecessary
-memory pressure on the system, the temporary buffer containing the extra
-padding bytes is capped at PAGE_SIZE bytes. The rest of the 2-byte
-aligned part should be read directly in the main buffer.
+On Octal DTR capable flashes like Micron Xcella the writes cannot start
+or end at an odd address in Octal DTR mode. Extra 0xff bytes need to be
+appended or prepended to make sure the start address and end address are
+even. 0xff is used because on NOR flashes a program operation can only
+flip bits from 1 to 0, not the other way round. 0 to 1 flip needs to
+happen via erases.
 
 Signed-off-by: Pratyush Yadav <p.yadav@ti.com>
 Reviewed-by: Michael Walle <michael@walle.cc>
 Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
 Signed-off-by: Pratyush Yadav <pratyush@kernel.org>
-Link: https://lore.kernel.org/r/20250708091646.292-1-ziniu.wang_1@nxp.com
+Link: https://lore.kernel.org/r/20250708091646.292-2-ziniu.wang_1@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |   76 ++++++++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 75 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/core.c |   69 ++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 68 insertions(+), 1 deletion(-)
 
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
-@@ -2037,6 +2037,76 @@ static const struct flash_info *spi_nor_
- 	return info;
+@@ -2152,6 +2152,68 @@ read_err:
  }
  
-+/*
-+ * On Octal DTR capable flashes, reads cannot start or end at an odd
-+ * address in Octal DTR mode. Extra bytes need to be read at the start
-+ * or end to make sure both the start address and length remain even.
+ /*
++ * On Octal DTR capable flashes, writes cannot start or end at an odd address
++ * in Octal DTR mode. Extra 0xff bytes need to be appended or prepended to
++ * make sure the start address and end address are even. 0xff is used because
++ * on NOR flashes a program operation can only flip bits from 1 to 0, not the
++ * other way round. 0 to 1 flip needs to happen via erases.
 + */
-+static int spi_nor_octal_dtr_read(struct spi_nor *nor, loff_t from, size_t len,
-+				  u_char *buf)
++static int spi_nor_octal_dtr_write(struct spi_nor *nor, loff_t to, size_t len,
++				   const u8 *buf)
 +{
-+	u_char *tmp_buf;
-+	size_t tmp_len;
++	u8 *tmp_buf;
++	size_t bytes_written;
 +	loff_t start, end;
-+	int ret, bytes_read;
++	int ret;
 +
-+	if (IS_ALIGNED(from, 2) && IS_ALIGNED(len, 2))
-+		return spi_nor_read_data(nor, from, len, buf);
-+	else if (IS_ALIGNED(from, 2) && len > PAGE_SIZE)
-+		return spi_nor_read_data(nor, from, round_down(len, PAGE_SIZE),
-+					 buf);
++	if (IS_ALIGNED(to, 2) && IS_ALIGNED(len, 2))
++		return spi_nor_write_data(nor, to, len, buf);
 +
-+	tmp_buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
++	tmp_buf = kmalloc(nor->params->page_size, GFP_KERNEL);
 +	if (!tmp_buf)
 +		return -ENOMEM;
 +
-+	start = round_down(from, 2);
-+	end = round_up(from + len, 2);
++	memset(tmp_buf, 0xff, nor->params->page_size);
 +
-+	/*
-+	 * Avoid allocating too much memory. The requested read length might be
-+	 * quite large. Allocating a buffer just as large (slightly bigger, in
-+	 * fact) would put unnecessary memory pressure on the system.
-+	 *
-+	 * For example if the read is from 3 to 1M, then this will read from 2
-+	 * to 4098. The reads from 4098 to 1M will then not need a temporary
-+	 * buffer so they can proceed as normal.
-+	 */
-+	tmp_len = min_t(size_t, end - start, PAGE_SIZE);
++	start = round_down(to, 2);
++	end = round_up(to + len, 2);
 +
-+	ret = spi_nor_read_data(nor, start, tmp_len, tmp_buf);
++	memcpy(tmp_buf + (to - start), buf, len);
++
++	ret = spi_nor_write_data(nor, start, end - start, tmp_buf);
 +	if (ret == 0) {
 +		ret = -EIO;
 +		goto out;
@@ -128,45 +116,47 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +		goto out;
 +
 +	/*
-+	 * More bytes are read than actually requested, but that number can't be
-+	 * reported to the calling function or it will confuse its calculations.
-+	 * Calculate how many of the _requested_ bytes were read.
++	 * More bytes are written than actually requested, but that number can't
++	 * be reported to the calling function or it will confuse its
++	 * calculations. Calculate how many of the _requested_ bytes were
++	 * written.
 +	 */
-+	bytes_read = ret;
++	bytes_written = ret;
 +
-+	if (from != start)
-+		ret -= from - start;
++	if (to != start)
++		ret -= to - start;
 +
 +	/*
-+	 * Only account for extra bytes at the end if they were actually read.
-+	 * For example, if the total length was truncated because of temporary
-+	 * buffer size limit then the adjustment for the extra bytes at the end
-+	 * is not needed.
++	 * Only account for extra bytes at the end if they were actually
++	 * written. For example, if for some reason the controller could only
++	 * complete a partial write then the adjustment for the extra bytes at
++	 * the end is not needed.
 +	 */
-+	if (start + bytes_read == end)
-+		ret -= end - (from + len);
++	if (start + bytes_written == end)
++		ret -= end - (to + len);
 +
-+	memcpy(buf, tmp_buf + (from - start), ret);
 +out:
 +	kfree(tmp_buf);
 +	return ret;
 +}
 +
- static int spi_nor_read(struct mtd_info *mtd, loff_t from, size_t len,
- 			size_t *retlen, u_char *buf)
- {
-@@ -2054,7 +2124,11 @@ static int spi_nor_read(struct mtd_info
- 	while (len) {
- 		loff_t addr = from;
++/*
+  * Write an address range to the nor chip.  Data must be written in
+  * FLASH_PAGESIZE chunks.  The address range may be any size provided
+  * it is within the physical boundaries.
+@@ -2187,7 +2249,12 @@ static int spi_nor_write(struct mtd_info
+ 			goto write_err;
+ 		}
  
--		ret = spi_nor_read_data(nor, addr, len, buf);
-+		if (nor->read_proto == SNOR_PROTO_8_8_8_DTR)
-+			ret = spi_nor_octal_dtr_read(nor, addr, len, buf);
+-		ret = spi_nor_write_data(nor, addr, page_remain, buf + i);
++		if (nor->write_proto == SNOR_PROTO_8_8_8_DTR)
++			ret = spi_nor_octal_dtr_write(nor, addr, page_remain,
++						      buf + i);
 +		else
-+			ret = spi_nor_read_data(nor, addr, len, buf);
-+
- 		if (ret == 0) {
- 			/* We shouldn't see 0-length reads */
- 			ret = -EIO;
++			ret = spi_nor_write_data(nor, addr, page_remain,
++						 buf + i);
+ 		spi_nor_unlock_device(nor);
+ 		if (ret < 0)
+ 			goto write_err;
 
 
