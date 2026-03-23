@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E9235957;
-	Mon, 23 Mar 2026 15:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5A93B4EA5;
+	Mon, 23 Mar 2026 15:22:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279330; cv=none; b=FUQXbUHlkG1qn75LumRv80oLEOvVbf50XIYnxxTHU2wFHaajHIDLBb/WVAI04vyg+6l5Pl/RIwUTd9DromYqxOJNtqqInjT7iTTpZhust7D3drA3jdxomwmSQuUHs4qiW1SwfdCV4zLGSVGd9fDxFZ7+sh2SDKElXzKYPuO52TI=
+	t=1774279332; cv=none; b=gcomT3amy08z8oKZbUGavNAD16b7QzVWdmHu1TuWtnP+izG+9nsKN59/fBoUIat9mJ6gbvLNwQV6QvKVaut+ZCtxAvK4cYGhfUJuVk+ZHe/UMI+cFJoJAOqW6mbsCTejMy4tBacU2we8HuggR5sMXaVKjMzWB85T4Yu2GoJT16U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279330; c=relaxed/simple;
-	bh=vqoU2wyiKzkQumlydqRe39P2RQfWLMqsBBFth0p+Fto=;
+	s=arc-20240116; t=1774279332; c=relaxed/simple;
+	bh=i3vqQvXu5NMmREJt+onAPOUpytirnEqFHezf4KzEjxI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLt2xBBKuupOdP8cxTmbM4qx3/p2dMZO6+2z6uoMiV0VLnsNZ1OaFr0tWHCGkBNFuWQ8xd7yRbqOGlIRbuILQGHGVYRC1Y6zkoBN2RBksujRlsmksWzziVivusSJqgSWf4D7RwnZ4tFB9xaKBIapD6nppTHMOUg4LwbKqQhxYJg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FnMiNMgw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g5ukARIQF8nw1tNfBU82Ckr0NY4gEPtUSehUBOrajQNoPiub0DlMaCM9oHzFEcv8q+0xxhvFri8qnhkfQR+oguht8FOCAEnQMNYLW/yUPx7Kq1oRnlnla7rmpBFOEQpTxrpiGkMTdJpmX9MlEzILnrusARpIoHTHf2Y+0QrwU0A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=chG/zs/F; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FnMiNMgw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38E09C4CEF7;
-	Mon, 23 Mar 2026 15:22:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="chG/zs/F"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C3B5C4CEF7;
+	Mon, 23 Mar 2026 15:22:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279329;
-	bh=vqoU2wyiKzkQumlydqRe39P2RQfWLMqsBBFth0p+Fto=;
+	s=korg; t=1774279332;
+	bh=i3vqQvXu5NMmREJt+onAPOUpytirnEqFHezf4KzEjxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnMiNMgwEClpW9LO4bqBjQzz+DTa2evPLchmRtmrYibsLB7p8wE1KOwo+gAQ16BCz
-	 1t0IYXWEOWY1bTEzIVHqyzz+w2Ac2A1a/N8rbydcyXRXLgSF0kKUh5FZJN1+OAeb7S
-	 Moze2TSQ+b9lSMsxX2MJRG/5N8SlhQU70JhMnePk=
+	b=chG/zs/FxjespMHD7H3u/pxi5wTU8u6+hNdMTy+U811vv1ofUmCHxKc/LZYBtiw0g
+	 7vGYvnYuHyoFvAzHmVS1/bu1x/7b7J+XeZzK2Y1kCffTIZZVUXU8g5K7vKX29cxgr7
+	 ZJ2VPVGGs1t66cLm+co0ZJPjm579+wi0W8lkELlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Gorski <jonas.gorski@gmail.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Anas Iqbal <mohd.abd.6602@gmail.com>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 547/567] net: dsa: bcm_sf2: fix missing clk_disable_unprepare() in error paths
-Date: Mon, 23 Mar 2026 14:47:47 +0100
-Message-ID: <20260323134547.541440906@linuxfoundation.org>
+Subject: [PATCH 6.6 548/567] icmp: fix NULL pointer dereference in icmp_tag_validation()
+Date: Mon, 23 Mar 2026 14:47:48 +0100
+Message-ID: <20260323134547.565830461@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,57 +52,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Anas Iqbal <mohd.abd.6602@gmail.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit b48731849609cbd8c53785a48976850b443153fd ]
+[ Upstream commit 614aefe56af8e13331e50220c936fc0689cf5675 ]
 
-Smatch reports:
-drivers/net/dsa/bcm_sf2.c:997 bcm_sf2_sw_resume() warn:
-'priv->clk' from clk_prepare_enable() not released on lines: 983,990.
+icmp_tag_validation() unconditionally dereferences the result of
+rcu_dereference(inet_protos[proto]) without checking for NULL.
+The inet_protos[] array is sparse -- only about 15 of 256 protocol
+numbers have registered handlers. When ip_no_pmtu_disc is set to 3
+(hardened PMTU mode) and the kernel receives an ICMP Fragmentation
+Needed error with a quoted inner IP header containing an unregistered
+protocol number, the NULL dereference causes a kernel panic in
+softirq context.
 
-The clock enabled by clk_prepare_enable() in bcm_sf2_sw_resume()
-is not released if bcm_sf2_sw_rst() or bcm_sf2_cfp_resume() fails.
+ Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] SMP KASAN NOPTI
+ KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+ RIP: 0010:icmp_unreach (net/ipv4/icmp.c:1085 net/ipv4/icmp.c:1143)
+ Call Trace:
+  <IRQ>
+  icmp_rcv (net/ipv4/icmp.c:1527)
+  ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207)
+  ip_local_deliver_finish (net/ipv4/ip_input.c:242)
+  ip_local_deliver (net/ipv4/ip_input.c:262)
+  ip_rcv (net/ipv4/ip_input.c:573)
+  __netif_receive_skb_one_core (net/core/dev.c:6164)
+  process_backlog (net/core/dev.c:6628)
+  handle_softirqs (kernel/softirq.c:561)
+  </IRQ>
 
-Add the missing clk_disable_unprepare() calls in the error paths
-to properly release the clock resource.
+Add a NULL check before accessing icmp_strict_tag_validation. If the
+protocol has no registered handler, return false since it cannot
+perform strict tag validation.
 
-Fixes: e9ec5c3bd238 ("net: dsa: bcm_sf2: request and handle clocks")
-Reviewed-by: Jonas Gorski <jonas.gorski@gmail.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Anas Iqbal <mohd.abd.6602@gmail.com>
-Link: https://patch.msgid.link/20260318084212.1287-1-mohd.abd.6602@gmail.com
+Fixes: 8ed1dc44d3e9 ("ipv4: introduce hardened ip_no_pmtu_disc mode")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Link: https://patch.msgid.link/20260318130558.1050247-4-bestswngs@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/bcm_sf2.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/ipv4/icmp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/bcm_sf2.c b/drivers/net/dsa/bcm_sf2.c
-index 257df16768750..7defcfd1c213f 100644
---- a/drivers/net/dsa/bcm_sf2.c
-+++ b/drivers/net/dsa/bcm_sf2.c
-@@ -971,15 +971,19 @@ static int bcm_sf2_sw_resume(struct dsa_switch *ds)
- 	ret = bcm_sf2_sw_rst(priv);
- 	if (ret) {
- 		pr_err("%s: failed to software reset switch\n", __func__);
-+		if (!priv->wol_ports_mask)
-+			clk_disable_unprepare(priv->clk);
- 		return ret;
- 	}
+diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
+index 784591ed5bb7c..64a0bc633a3eb 100644
+--- a/net/ipv4/icmp.c
++++ b/net/ipv4/icmp.c
+@@ -870,10 +870,12 @@ static void icmp_socket_deliver(struct sk_buff *skb, u32 info)
  
- 	bcm_sf2_crossbar_setup(priv);
+ static bool icmp_tag_validation(int proto)
+ {
++	const struct net_protocol *ipprot;
+ 	bool ok;
  
- 	ret = bcm_sf2_cfp_resume(ds);
--	if (ret)
-+	if (ret) {
-+		if (!priv->wol_ports_mask)
-+			clk_disable_unprepare(priv->clk);
- 		return ret;
--
-+	}
- 	if (priv->hw_params.num_gphy == 1)
- 		bcm_sf2_gphy_enable_set(ds, true);
- 
+ 	rcu_read_lock();
+-	ok = rcu_dereference(inet_protos[proto])->icmp_strict_tag_validation;
++	ipprot = rcu_dereference(inet_protos[proto]);
++	ok = ipprot ? ipprot->icmp_strict_tag_validation : false;
+ 	rcu_read_unlock();
+ 	return ok;
+ }
 -- 
 2.51.0
 
