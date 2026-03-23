@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136753947A6;
-	Mon, 23 Mar 2026 14:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810063AE6E2;
+	Mon, 23 Mar 2026 14:09:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274951; cv=none; b=fUyecDgXyGxZ52mio/72gNX8T66Uy5ZT9U2M8g5HJmmFxC2UVrPtJbrQNLB5LhZeUaQqx+QAPOWv6siwXRfYH2soLk4kHq5W86Spq9il3cTav8dBpMXQDajERUnSUEIuCwoVKX7Msv5JyVHczglfC8QY1sVNyFyY3uv7hJdvzX8=
+	t=1774274953; cv=none; b=C444oHePJwIYTcgIdT7V6F3///QWoxxoXHydVWhJh6NsLD78afWorpRBvLsu+p19p6Kwyjedhdq37GgW2LiZy1CoUViLZqnWRJVYtdrGkkzlMiedl0jB3UBk74y/KljqV0TgImUqLvrLLR56dzjskFoas82kcvxwb4lvcFOCyQg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274951; c=relaxed/simple;
-	bh=n9mEJi1VuRxytVjosdALcm+rDHblzF9bBFym3Ni5DJA=;
+	s=arc-20240116; t=1774274953; c=relaxed/simple;
+	bh=ZEnUZj918DPpMNAxVIVbvXPgpXw/OZM3WQbmvUtccLw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QTSa5uTtlEGe392ITTmZPMJoYl/jcnCEXfyosLTWqBMZvxTHCa28vgJWKHWi8PMk7Nw7qIkSwgoq0brlF0Ggieu7qYparSBEQU5FTZTV9gzjgZ/PPKKJ3wQtumfolEaZky52RvbAFXnrhnhtdsOdBnk58Qd30zmVk84q5NkLsLg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swR5yWb8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rGHb1mDXuhuuheNaZ1J0bN1Mi+U0tvVk5yTsS+VCDfW/G/8FaTz7UggJsnCGRwrR4+Kr3fL6NlICDcN9NkFReDS2uAcsUYSBdUe0Y8XSpfQUZMKBwIc94DBOhwWbqQLgou0pokeMvflAuGqW1SVsl8U0WwR+IBKvmPITdHnEmb4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGuGHz3Z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swR5yWb8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B6A5C4CEF7;
-	Mon, 23 Mar 2026 14:09:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGuGHz3Z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6CCC4CEF7;
+	Mon, 23 Mar 2026 14:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274951;
-	bh=n9mEJi1VuRxytVjosdALcm+rDHblzF9bBFym3Ni5DJA=;
+	s=korg; t=1774274953;
+	bh=ZEnUZj918DPpMNAxVIVbvXPgpXw/OZM3WQbmvUtccLw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swR5yWb8xGnnuBn84Jeer/iGwon8wQNSmYpjERdR3iXo5gnuoippW+rT8rC7Xu3DT
-	 Hs2Qesaqk3fETKwpTNd6/67F+HktaEMzOM/zexm+d1WCKW1ki2yC1Ipvjlkcs4YJLB
-	 z5AlqymoUiVMlihIrSg5UqFVOjwQKXJAEmi1CL14=
+	b=wGuGHz3ZgHMmveZazrWlkAPFRZzQfUTgSvO+8v34qFBnKWWyWeegZDoXfisXsvjGM
+	 UVXe9Z8mgY2yGJiZb1sbssI+jhLofAHnWmm7o65AFmsZ7HAc0nKC4NqqxWNvwSGiFc
+	 tM50N1xS1Q/Cc821i5bOOoWWoA2HdT9ber6DxsR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 167/212] net/mlx5e: Prevent concurrent access to IPSec ASO context
-Date: Mon, 23 Mar 2026 14:46:28 +0100
-Message-ID: <20260323134509.006064335@linuxfoundation.org>
+Subject: [PATCH 6.18 168/212] net/mlx5e: Fix race condition during IPSec ESN update
+Date: Mon, 23 Mar 2026 14:46:29 +0100
+Message-ID: <20260323134509.033312912@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -55,111 +55,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Jianbo Liu <jianbol@nvidia.com>
 
-[ Upstream commit 99b36850d881e2d65912b2520a1c80d0fcc9429a ]
+[ Upstream commit beb6e2e5976a128b0cccf10d158124422210c5ef ]
 
-The query or updating IPSec offload object is through Access ASO WQE.
-The driver uses a single mlx5e_ipsec_aso struct for each PF, which
-contains a shared DMA-mapped context for all ASO operations.
+In IPSec full offload mode, the device reports an ESN (Extended
+Sequence Number) wrap event to the driver. The driver validates this
+event by querying the IPSec ASO and checking that the esn_event_arm
+field is 0x0, which indicates an event has occurred. After handling
+the event, the driver must re-arm the context by setting esn_event_arm
+back to 0x1.
 
-A race condition exists because the ASO spinlock is released before
-the hardware has finished processing WQE. If a second operation is
-initiated immediately after, it overwrites the shared context in the
-DMA area.
+A race condition exists in this handling path. After validating the
+event, the driver calls mlx5_accel_esp_modify_xfrm() to update the
+kernel's xfrm state. This function temporarily releases and
+re-acquires the xfrm state lock.
 
-When the first operation's completion is processed later, it reads
-this corrupted context, leading to unexpected behavior and incorrect
-results.
+So, need to acknowledge the event first by setting esn_event_arm to
+0x1. This prevents the driver from reprocessing the same ESN update if
+the hardware sends events for other reason. Since the next ESN update
+only occurs after nearly 2^31 packets are received, there's no risk of
+missing an update, as it will happen long after this handling has
+finished.
 
-This commit fixes the race by introducing a private context within
-each IPSec offload object. The shared ASO context is now copied to
-this private context while the ASO spinlock is held. Subsequent
-processing uses this saved, per-object context, ensuring its integrity
-is maintained.
+Processing the event twice causes the ESN high-order bits (esn_msb) to
+be incremented incorrectly. The driver then programs the hardware with
+this invalid ESN state, which leads to anti-replay failures and a
+complete halt of IPSec traffic.
 
-Fixes: 1ed78fc03307 ("net/mlx5e: Update IPsec soft and hard limits")
+Fix this by re-arming the ESN event immediately after it is validated,
+before calling mlx5_accel_esp_modify_xfrm(). This ensures that any
+spurious, duplicate events are correctly ignored, closing the race
+window.
+
+Fixes: fef06678931f ("net/mlx5e: Fix ESN update kernel panic")
 Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
 Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260316094603.6999-3-tariqt@nvidia.com
+Link: https://patch.msgid.link/20260316094603.6999-4-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/en_accel/ipsec.h         |  1 +
- .../mellanox/mlx5/core/en_accel/ipsec_offload.c | 17 ++++++++---------
- 2 files changed, 9 insertions(+), 9 deletions(-)
+ .../mlx5/core/en_accel/ipsec_offload.c        | 33 ++++++++-----------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-index f8eaaf37963b1..abcbd38db9dbb 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec.h
-@@ -287,6 +287,7 @@ struct mlx5e_ipsec_sa_entry {
- 	struct mlx5e_ipsec_dwork *dwork;
- 	struct mlx5e_ipsec_limits limits;
- 	u32 rx_mapped_id;
-+	u8 ctx[MLX5_ST_SZ_BYTES(ipsec_aso)];
- };
- 
- struct mlx5_accel_pol_xfrm_attrs {
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-index ef7322d381af6..2739ff490239d 100644
+index 2739ff490239d..e0611fa827971 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-@@ -370,20 +370,18 @@ static void mlx5e_ipsec_aso_update_soft(struct mlx5e_ipsec_sa_entry *sa_entry,
- static void mlx5e_ipsec_handle_limits(struct mlx5e_ipsec_sa_entry *sa_entry)
+@@ -310,10 +310,11 @@ static void mlx5e_ipsec_aso_update(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 	mlx5e_ipsec_aso_query(sa_entry, data);
+ }
+ 
+-static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
+-					 u32 mode_param)
++static void
++mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
++			     u32 mode_param,
++			     struct mlx5_accel_esp_xfrm_attrs *attrs)
  {
- 	struct mlx5_accel_esp_xfrm_attrs *attrs = &sa_entry->attrs;
--	struct mlx5e_ipsec *ipsec = sa_entry->ipsec;
--	struct mlx5e_ipsec_aso *aso = ipsec->aso;
- 	bool soft_arm, hard_arm;
- 	u64 hard_cnt;
+-	struct mlx5_accel_esp_xfrm_attrs attrs = {};
+ 	struct mlx5_wqe_aso_ctrl_seg data = {};
  
- 	lockdep_assert_held(&sa_entry->x->lock);
+ 	if (mode_param < MLX5E_IPSEC_ESN_SCOPE_MID) {
+@@ -323,18 +324,7 @@ static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
+ 		sa_entry->esn_state.overlap = 1;
+ 	}
  
--	soft_arm = !MLX5_GET(ipsec_aso, aso->ctx, soft_lft_arm);
--	hard_arm = !MLX5_GET(ipsec_aso, aso->ctx, hard_lft_arm);
-+	soft_arm = !MLX5_GET(ipsec_aso, sa_entry->ctx, soft_lft_arm);
-+	hard_arm = !MLX5_GET(ipsec_aso, sa_entry->ctx, hard_lft_arm);
- 	if (!soft_arm && !hard_arm)
- 		/* It is not lifetime event */
- 		return;
+-	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, &attrs);
+-
+-	/* It is safe to execute the modify below unlocked since the only flows
+-	 * that could affect this HW object, are create, destroy and this work.
+-	 *
+-	 * Creation flow can't co-exist with this modify work, the destruction
+-	 * flow would cancel this work, and this work is a single entity that
+-	 * can't conflict with it self.
+-	 */
+-	spin_unlock_bh(&sa_entry->x->lock);
+-	mlx5_accel_esp_modify_xfrm(sa_entry, &attrs);
+-	spin_lock_bh(&sa_entry->x->lock);
++	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, attrs);
  
--	hard_cnt = MLX5_GET(ipsec_aso, aso->ctx, remove_flow_pkt_cnt);
-+	hard_cnt = MLX5_GET(ipsec_aso, sa_entry->ctx, remove_flow_pkt_cnt);
- 	if (!hard_cnt || hard_arm) {
- 		/* It is possible to see packet counter equal to zero without
- 		 * hard limit event armed. Such situation can be if packet
-@@ -454,10 +452,8 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
+ 	data.data_offset_condition_operand =
+ 		MLX5_IPSEC_ASO_REMOVE_FLOW_PKT_CNT_OFFSET;
+@@ -451,7 +441,9 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
+ 	struct mlx5e_ipsec_work *work =
  		container_of(_work, struct mlx5e_ipsec_work, work);
  	struct mlx5e_ipsec_sa_entry *sa_entry = work->data;
++	struct mlx5_accel_esp_xfrm_attrs tmp = {};
  	struct mlx5_accel_esp_xfrm_attrs *attrs;
--	struct mlx5e_ipsec_aso *aso;
++	bool need_modify = false;
  	int ret;
  
--	aso = sa_entry->ipsec->aso;
  	attrs = &sa_entry->attrs;
- 
- 	spin_lock_bh(&sa_entry->x->lock);
-@@ -466,8 +462,9 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
+@@ -461,19 +453,22 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
+ 	if (ret)
  		goto unlock;
  
++	if (attrs->lft.soft_packet_limit != XFRM_INF)
++		mlx5e_ipsec_handle_limits(sa_entry);
++
  	if (attrs->replay_esn.trigger &&
--	    !MLX5_GET(ipsec_aso, aso->ctx, esn_event_arm)) {
--		u32 mode_param = MLX5_GET(ipsec_aso, aso->ctx, mode_parameter);
-+	    !MLX5_GET(ipsec_aso, sa_entry->ctx, esn_event_arm)) {
-+		u32 mode_param = MLX5_GET(ipsec_aso, sa_entry->ctx,
-+					  mode_parameter);
+ 	    !MLX5_GET(ipsec_aso, sa_entry->ctx, esn_event_arm)) {
+ 		u32 mode_param = MLX5_GET(ipsec_aso, sa_entry->ctx,
+ 					  mode_parameter);
  
- 		mlx5e_ipsec_update_esn_state(sa_entry, mode_param);
+-		mlx5e_ipsec_update_esn_state(sa_entry, mode_param);
++		mlx5e_ipsec_update_esn_state(sa_entry, mode_param, &tmp);
++		need_modify = true;
  	}
-@@ -629,6 +626,8 @@ int mlx5e_ipsec_aso_query(struct mlx5e_ipsec_sa_entry *sa_entry,
- 			/* We are in atomic context */
- 			udelay(10);
- 	} while (ret && time_is_after_jiffies(expires));
-+	if (!ret)
-+		memcpy(sa_entry->ctx, aso->ctx, MLX5_ST_SZ_BYTES(ipsec_aso));
- 	spin_unlock_bh(&aso->lock);
- 	return ret;
+ 
+-	if (attrs->lft.soft_packet_limit != XFRM_INF)
+-		mlx5e_ipsec_handle_limits(sa_entry);
+-
+ unlock:
+ 	spin_unlock_bh(&sa_entry->x->lock);
++	if (need_modify)
++		mlx5_accel_esp_modify_xfrm(sa_entry, &tmp);
+ 	kfree(work);
  }
+ 
 -- 
 2.51.0
 
