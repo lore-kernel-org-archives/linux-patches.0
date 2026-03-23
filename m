@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929A6383C7C;
-	Mon, 23 Mar 2026 14:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB78038837F;
+	Mon, 23 Mar 2026 14:55:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277700; cv=none; b=bOoV5NpL+kRKf1pSXXQrktWGogAQBf68aaVzvGdbSEIt5WGv/vVbE2MSknr+VCLEzqUX5wo0lMUI+Qopzf+9G8vCnDLddYMHGvL0U+1JaJYU8naM1u7diqAeVX4e92d3iKA6jSmw+Lg/bePsWIdmh0DSF6rsEM6/a6Q1nyMhess=
+	t=1774277703; cv=none; b=jHanBpfOnhszwakiN8cV59/DgOo1XyjnOjjmtoErfneBnlKfn/LYFSGp6N+ZyLeGMUOuwUJYiqMnYPNfSieKpgnYG26MfMbZwmT8NhyRvj8QslvRYgcBQHT0otnuCdfmr/HKfwyTWd+fuiEZMmMW+m8Rt0cqQ2lwjZNME9U5+oU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277700; c=relaxed/simple;
-	bh=bAf7gkQufP+g4PyyZGvaUu71HN8ZG4DXxKeJcl4hSX0=;
+	s=arc-20240116; t=1774277703; c=relaxed/simple;
+	bh=XA/CQHJE2hO6bE0oTB+4fkUwSgfBAJ3y5ZJodPPcriQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pI8EMCtdQ+eczWVnII2UEL2KhZI/BuWi+yu1+XyEfHKdFODqCKlAPnvpNJFg47mv3K6nY00mUShdF6bdbA2+H7hWe9W/C54CtlqBs3yX92AV7WNCPzjz8niOz9tCqtK5EHn7e4Eq964av+Zl2en7KuKGslOruRNPwsiw9Pt/7lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MYQ8hY6R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=M/oWMCUvsTg6XNxHRbvZ6UYk3s5bVVFJmgIaJJpI8ZA3DrHUhvpme4oGXLJbLygN+1jf5kSm9zByvs0Sd/C7EyqlvaqIm6rKXogz5WPbt8+EA5Gpy2h6cyd8In9yqA9OisDhIbx0tgbTwbrwnzqq9/nhvz8lp19/VSkQHonyvmU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s15jdbAq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MYQ8hY6R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEE25C2BC9E;
-	Mon, 23 Mar 2026 14:54:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s15jdbAq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FD84C4CEF7;
+	Mon, 23 Mar 2026 14:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277700;
-	bh=bAf7gkQufP+g4PyyZGvaUu71HN8ZG4DXxKeJcl4hSX0=;
+	s=korg; t=1774277703;
+	bh=XA/CQHJE2hO6bE0oTB+4fkUwSgfBAJ3y5ZJodPPcriQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYQ8hY6RjhJzDG5rkSSR1smHlSDnuDAu/VxjwLcZKTyTSrPUZ6w54unJTCWTvb83j
-	 x81bcxosx88SDnaCfceB+YIJuY2TMhcJL6urVdOQuOG+9uHFPtlkfkDnMrAZppbHDH
-	 kw3XuZE6VwaLrvI8libTgEnJhkK24eJu6p2pQzpo=
+	b=s15jdbAqz3PzVkA8dAbgbjHmduHu3fUOAbnqaQWiH5kzYc3snak/lJY4oE0Ceby4m
+	 mSHWzefuPR0YgtCM0Gp7bCykrmphRh9QthaRUpNvvdo5uMv0w+YurcaPQY7jEZTbos
+	 rPxzXXWSuc+x7Hm3rHf06jprOVWfMeJcHxVfB2Bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Powers-Holmes <aholmes@omnom.net>,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Mikko Perttunen <mperttunen@nvidia.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Johan Hovold <johan@kernel.org>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 075/567] arm64: dts: rockchip: Fix rk356x PCIe range mappings
-Date: Mon, 23 Mar 2026 14:39:55 +0100
-Message-ID: <20260323134535.683801460@linuxfoundation.org>
+Subject: [PATCH 6.6 076/567] clk: tegra: tegra124-emc: fix device leak on set_rate()
+Date: Mon, 23 Mar 2026 14:39:56 +0100
+Message-ID: <20260323134535.708403542@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,63 +53,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit f63ea193a404481f080ca2958f73e9f364682db9 ]
+[ Upstream commit da61439c63d34ae6503d080a847f144d587e3a48 ]
 
-The pcie bus address should be mapped 1:1 to the cpu side MMIO address, so
-that there is no same address allocated from normal system memory. Otherwise
-it's broken if the same address assigned to the EP for DMA purpose.Fix it to
-sync with the vendor BSP.
+Make sure to drop the reference taken when looking up the EMC device and
+its driver data on first set_rate().
 
-Fixes: 568a67e742df ("arm64: dts: rockchip: Fix rk356x PCIe register and range mappings")
-Fixes: 66b51ea7d70f ("arm64: dts: rockchip: Add rk3568 PCIe2x1 controller")
-Cc: stable@vger.kernel.org
-Cc: Andrew Powers-Holmes <aholmes@omnom.net>
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Link: https://patch.msgid.link/1767600929-195341-1-git-send-email-shawn.lin@rock-chips.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Note that holding a reference to a device does not prevent its driver
+data from going away so there is no point in keeping the reference.
+
+Fixes: 2db04f16b589 ("clk: tegra: Add EMC clock driver")
+Fixes: 6d6ef58c2470 ("clk: tegra: tegra124-emc: Fix missing put_device() call in emc_ensure_emc_driver")
+Cc: stable@vger.kernel.org	# 4.2: 6d6ef58c2470
+Cc: Mikko Perttunen <mperttunen@nvidia.com>
+Cc: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3568.dtsi | 4 ++--
- arch/arm64/boot/dts/rockchip/rk356x.dtsi | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/tegra/clk-tegra124-emc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-index f1be76a54ceb0..4305fd20b5c32 100644
---- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
-@@ -97,7 +97,7 @@ pcie3x1: pcie@fe270000 {
- 		      <0x0 0xf2000000 0x0 0x00100000>;
- 		ranges = <0x01000000 0x0 0xf2100000 0x0 0xf2100000 0x0 0x00100000>,
- 			 <0x02000000 0x0 0xf2200000 0x0 0xf2200000 0x0 0x01e00000>,
--			 <0x03000000 0x0 0x40000000 0x3 0x40000000 0x0 0x40000000>;
-+			 <0x03000000 0x3 0x40000000 0x3 0x40000000 0x0 0x40000000>;
- 		reg-names = "dbi", "apb", "config";
- 		resets = <&cru SRST_PCIE30X1_POWERUP>;
- 		reset-names = "pipe";
-@@ -150,7 +150,7 @@ pcie3x2: pcie@fe280000 {
- 		      <0x0 0xf0000000 0x0 0x00100000>;
- 		ranges = <0x01000000 0x0 0xf0100000 0x0 0xf0100000 0x0 0x00100000>,
- 			 <0x02000000 0x0 0xf0200000 0x0 0xf0200000 0x0 0x01e00000>,
--			 <0x03000000 0x0 0x40000000 0x3 0x80000000 0x0 0x40000000>;
-+			 <0x03000000 0x3 0x80000000 0x3 0x80000000 0x0 0x40000000>;
- 		reg-names = "dbi", "apb", "config";
- 		resets = <&cru SRST_PCIE30X2_POWERUP>;
- 		reset-names = "pipe";
-diff --git a/arch/arm64/boot/dts/rockchip/rk356x.dtsi b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-index 2f885bc3665b5..6377f2a0b4017 100644
---- a/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-+++ b/arch/arm64/boot/dts/rockchip/rk356x.dtsi
-@@ -997,7 +997,7 @@ pcie2x1: pcie@fe260000 {
- 		power-domains = <&power RK3568_PD_PIPE>;
- 		ranges = <0x01000000 0x0 0xf4100000 0x0 0xf4100000 0x0 0x00100000>,
- 			 <0x02000000 0x0 0xf4200000 0x0 0xf4200000 0x0 0x01e00000>,
--			 <0x03000000 0x0 0x40000000 0x3 0x00000000 0x0 0x40000000>;
-+			 <0x03000000 0x3 0x00000000 0x3 0x00000000 0x0 0x40000000>;
- 		resets = <&cru SRST_PCIE20_POWERUP>;
- 		reset-names = "pipe";
- 		#address-cells = <3>;
+diff --git a/drivers/clk/tegra/clk-tegra124-emc.c b/drivers/clk/tegra/clk-tegra124-emc.c
+index 0f6fb776b2298..5f1af6dfe7154 100644
+--- a/drivers/clk/tegra/clk-tegra124-emc.c
++++ b/drivers/clk/tegra/clk-tegra124-emc.c
+@@ -197,8 +197,8 @@ static struct tegra_emc *emc_ensure_emc_driver(struct tegra_clk_emc *tegra)
+ 	tegra->emc_node = NULL;
+ 
+ 	tegra->emc = platform_get_drvdata(pdev);
++	put_device(&pdev->dev);
+ 	if (!tegra->emc) {
+-		put_device(&pdev->dev);
+ 		pr_err("%s: cannot find EMC driver\n", __func__);
+ 		return NULL;
+ 	}
 -- 
 2.51.0
 
