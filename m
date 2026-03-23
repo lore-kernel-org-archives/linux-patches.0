@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2104242D9D;
-	Mon, 23 Mar 2026 14:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1E7426ED46;
+	Mon, 23 Mar 2026 14:51:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277477; cv=none; b=LAP1vsGQgo6JyHKdAjGrZfB1EWKzYHvaefyTIZIRCbxWTmik10i+/ZorwzaGoSsARULQGwGR8+uz5/DxllsDTMbYbLs9azcPhac+yNdwIzV29GleHUiOOkTy14yGDRrA3dFwQ0qYvkpFXF5DoaEeCcwBlg8Kafq1aObcgdt/ruU=
+	t=1774277480; cv=none; b=AcYyW4C/MC20Ea9b4t7xvT6BqC0YeP0+jsVtqva8V5n1tQGIp6X/LpqFkZFjK5xXMdBgZ360cvBpwP0HyCYECPPmScch8P3goVjZrlO2/MRrpGfNsIEpY/m3Mhv5tWLFwn5PDDsXYN/BBsSSE1YHsgSYONmW6GtTWaueT04XFNg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277477; c=relaxed/simple;
-	bh=D2yHhazTbF+Q1wsKmg1jNRXwxBxjV/frl7QSZ17jAIM=;
+	s=arc-20240116; t=1774277480; c=relaxed/simple;
+	bh=SmD2UZB8Ds4nNjz73y5NYYai4kImMHLg4LZ/IcXjeDo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zu7mvlKEw1oma0Hct8bp3f4SnkRiW9t6Nnmm5iv/wmIDwEA/FQaFl8TQkQgUbUoEtV366C/AZB7PA1qHoXlH+4IyyRrTAvbv/5J981AD+wK30fuWVoadpo5A54EL9NgJfNPX+tH6GQ2k7UyxvoCQNU0bwVcqg1Q6WtBHM9M+3GQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MOGGqrf2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tauG0+nCYQE+8m2r0GdAW1lcEvABrxhgHGeTu5xyS84Y8V1kAJMgsDwEOHNNRygYW7a9WGfzLlexHZDTzED55/W0JMo+fVMb11cjpa4uqnRqjuukNPkuEgBx9f2NRlCy8FEjurJh3AaIvLqE0tO2f9MlpTv6WxT+tek8fQcikI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DDEAkHns; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MOGGqrf2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FFAC4CEF7;
-	Mon, 23 Mar 2026 14:51:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DDEAkHns"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FA1AC4CEF7;
+	Mon, 23 Mar 2026 14:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277476;
-	bh=D2yHhazTbF+Q1wsKmg1jNRXwxBxjV/frl7QSZ17jAIM=;
+	s=korg; t=1774277479;
+	bh=SmD2UZB8Ds4nNjz73y5NYYai4kImMHLg4LZ/IcXjeDo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MOGGqrf2scj3ZDx89m190BXxJmD2LTfKFuV6Ng7kEmdNliX3FE3NMkITLjkP3JzXm
-	 EhSZSzmW2jZ8zDe9JVW21mgclx/MMBl+8jdy1DIQ7HJGWvdbxiyIZpEKjnSTmXTRbs
-	 eS9qDvkd/YBps8UCQplpvS6gZd43AZK2hPL/paqY=
+	b=DDEAkHns5UHugPy8/n4saQMFGaXGyL533R8BP9zum0Muzr646+GvLd7+/JwLsZ7M3
+	 Iu+oFjNSb/9+y/ArBAFgwxQOn2HWmsgO1Unhn1LvrsMd5daKGrw5mN6wboAAxAG5BG
+	 CulpowcpKnKhzg+nwUpS44S0MuKk39EwhYMRrJ4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Rahul Bukte <rahul.bukte@sony.com>,
+	Suraj Kandpal <suraj.kandpal@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 454/460] ksmbd: fix use-after-free in durable v2 replay of active file handles
-Date: Mon, 23 Mar 2026 14:47:30 +0100
-Message-ID: <20260323134537.734062801@linuxfoundation.org>
+Subject: [PATCH 6.12 455/460] drm/i915/gt: Check set_default_submission() before deferencing
+Date: Mon, 23 Mar 2026 14:47:31 +0100
+Message-ID: <20260323134537.756739080@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,126 +52,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Rahul Bukte <rahul.bukte@sony.com>
 
-[ Upstream commit b425e4d0eb321a1116ddbf39636333181675d8f4 ]
+[ Upstream commit 0162ab3220bac870e43e229e6e3024d1a21c3f26 ]
 
-parse_durable_handle_context() unconditionally assigns dh_info->fp->conn
-to the current connection when handling a DURABLE_REQ_V2 context with
-SMB2_FLAGS_REPLAY_OPERATION. ksmbd_lookup_fd_cguid() does not filter by
-fp->conn, so it returns file handles that are already actively connected.
-The unconditional overwrite replaces fp->conn, and when the overwriting
-connection is subsequently freed, __ksmbd_close_fd() dereferences the
-stale fp->conn via spin_lock(&fp->conn->llist_lock), causing a
-use-after-free.
+When the i915 driver firmware binaries are not present, the
+set_default_submission pointer is not set. This pointer is
+dereferenced during suspend anyways.
 
-KASAN report:
+Add a check to make sure it is set before dereferencing.
 
-[    7.349357] ==================================================================
-[    7.349607] BUG: KASAN: slab-use-after-free in _raw_spin_lock+0x75/0xe0
-[    7.349811] Write of size 4 at addr ffff8881056ac18c by task kworker/1:2/108
-[    7.350010]
-[    7.350064] CPU: 1 UID: 0 PID: 108 Comm: kworker/1:2 Not tainted 7.0.0-rc3+ #58 PREEMPTLAZY
-[    7.350068] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-[    7.350070] Workqueue: ksmbd-io handle_ksmbd_work
-[    7.350083] Call Trace:
-[    7.350087]  <TASK>
-[    7.350087]  dump_stack_lvl+0x64/0x80
-[    7.350094]  print_report+0xce/0x660
-[    7.350100]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
-[    7.350101]  ? __pfx___mod_timer+0x10/0x10
-[    7.350106]  ? _raw_spin_lock+0x75/0xe0
-[    7.350108]  kasan_report+0xce/0x100
-[    7.350109]  ? _raw_spin_lock+0x75/0xe0
-[    7.350114]  kasan_check_range+0x105/0x1b0
-[    7.350116]  _raw_spin_lock+0x75/0xe0
-[    7.350118]  ? __pfx__raw_spin_lock+0x10/0x10
-[    7.350119]  ? __call_rcu_common.constprop.0+0x25e/0x780
-[    7.350125]  ? close_id_del_oplock+0x2cc/0x4e0
-[    7.350128]  __ksmbd_close_fd+0x27f/0xaf0
-[    7.350131]  ksmbd_close_fd+0x135/0x1b0
-[    7.350133]  smb2_close+0xb19/0x15b0
-[    7.350142]  ? __pfx_smb2_close+0x10/0x10
-[    7.350143]  ? xas_load+0x18/0x270
-[    7.350146]  ? _raw_spin_lock+0x84/0xe0
-[    7.350148]  ? __pfx__raw_spin_lock+0x10/0x10
-[    7.350150]  ? _raw_spin_unlock+0xe/0x30
-[    7.350151]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
-[    7.350153]  ? ksmbd_tree_conn_lookup+0xcd/0xf0
-[    7.350154]  handle_ksmbd_work+0x40f/0x1080
-[    7.350156]  process_one_work+0x5fa/0xef0
-[    7.350162]  ? assign_work+0x122/0x3e0
-[    7.350163]  worker_thread+0x54b/0xf70
-[    7.350165]  ? __pfx_worker_thread+0x10/0x10
-[    7.350166]  kthread+0x346/0x470
-[    7.350170]  ? recalc_sigpending+0x19b/0x230
-[    7.350176]  ? __pfx_kthread+0x10/0x10
-[    7.350178]  ret_from_fork+0x4fb/0x6c0
-[    7.350183]  ? __pfx_ret_from_fork+0x10/0x10
-[    7.350185]  ? __switch_to+0x36c/0xbe0
-[    7.350188]  ? __pfx_kthread+0x10/0x10
-[    7.350190]  ret_from_fork_asm+0x1a/0x30
-[    7.350197]  </TASK>
-[    7.350197]
-[    7.355160] Allocated by task 123:
-[    7.355261]  kasan_save_stack+0x33/0x60
-[    7.355373]  kasan_save_track+0x14/0x30
-[    7.355484]  __kasan_kmalloc+0x8f/0xa0
-[    7.355593]  ksmbd_conn_alloc+0x44/0x6d0
-[    7.355711]  ksmbd_kthread_fn+0x243/0xd70
-[    7.355839]  kthread+0x346/0x470
-[    7.355942]  ret_from_fork+0x4fb/0x6c0
-[    7.356051]  ret_from_fork_asm+0x1a/0x30
-[    7.356164]
-[    7.356214] Freed by task 134:
-[    7.356305]  kasan_save_stack+0x33/0x60
-[    7.356416]  kasan_save_track+0x14/0x30
-[    7.356527]  kasan_save_free_info+0x3b/0x60
-[    7.356646]  __kasan_slab_free+0x43/0x70
-[    7.356761]  kfree+0x1ca/0x430
-[    7.356862]  ksmbd_tcp_disconnect+0x59/0xe0
-[    7.356993]  ksmbd_conn_handler_loop+0x77e/0xd40
-[    7.357138]  kthread+0x346/0x470
-[    7.357240]  ret_from_fork+0x4fb/0x6c0
-[    7.357350]  ret_from_fork_asm+0x1a/0x30
-[    7.357463]
-[    7.357513] The buggy address belongs to the object at ffff8881056ac000
-[    7.357513]  which belongs to the cache kmalloc-1k of size 1024
-[    7.357857] The buggy address is located 396 bytes inside of
-[    7.357857]  freed 1024-byte region [ffff8881056ac000, ffff8881056ac400)
+[   23.289926] PM: suspend entry (deep)
+[   23.293558] Filesystems sync: 0.000 seconds
+[   23.298010] Freezing user space processes
+[   23.302771] Freezing user space processes completed (elapsed 0.000 seconds)
+[   23.309766] OOM killer disabled.
+[   23.313027] Freezing remaining freezable tasks
+[   23.318540] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
+[   23.342038] serial 00:05: disabled
+[   23.345719] serial 00:02: disabled
+[   23.349342] serial 00:01: disabled
+[   23.353782] sd 0:0:0:0: [sda] Synchronizing SCSI cache
+[   23.358993] sd 1:0:0:0: [sdb] Synchronizing SCSI cache
+[   23.361635] ata1.00: Entering standby power mode
+[   23.368863] ata2.00: Entering standby power mode
+[   23.445187] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[   23.452194] #PF: supervisor instruction fetch in kernel mode
+[   23.457896] #PF: error_code(0x0010) - not-present page
+[   23.463065] PGD 0 P4D 0
+[   23.465640] Oops: Oops: 0010 [#1] SMP NOPTI
+[   23.469869] CPU: 8 UID: 0 PID: 211 Comm: kworker/u48:18 Tainted: G S      W           6.19.0-rc4-00020-gf0b9d8eb98df #10 PREEMPT(voluntary)
+[   23.482512] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
+[   23.496511] Workqueue: async async_run_entry_fn
+[   23.501087] RIP: 0010:0x0
+[   23.503755] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
+[   23.510324] RSP: 0018:ffffb4a60065fca8 EFLAGS: 00010246
+[   23.515592] RAX: 0000000000000000 RBX: ffff9f428290e000 RCX: 000000000000000f
+[   23.522765] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff9f428290e000
+[   23.529937] RBP: ffff9f4282907070 R08: ffff9f4281130428 R09: 00000000ffffffff
+[   23.537111] R10: 0000000000000000 R11: 0000000000000001 R12: ffff9f42829070f8
+[   23.544284] R13: ffff9f4282906028 R14: ffff9f4282900000 R15: ffff9f4282906b68
+[   23.551457] FS:  0000000000000000(0000) GS:ffff9f466b2cf000(0000) knlGS:0000000000000000
+[   23.559588] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   23.565365] CR2: ffffffffffffffd6 CR3: 000000031c230001 CR4: 0000000000f70ef0
+[   23.572539] PKRU: 55555554
+[   23.575281] Call Trace:
+[   23.577770]  <TASK>
+[   23.579905]  intel_engines_reset_default_submission+0x42/0x60
+[   23.585695]  __intel_gt_unset_wedged+0x191/0x200
+[   23.590360]  intel_gt_unset_wedged+0x20/0x40
+[   23.594675]  gt_sanitize+0x15e/0x170
+[   23.598290]  i915_gem_suspend_late+0x6b/0x180
+[   23.602692]  i915_drm_suspend_late+0x35/0xf0
+[   23.607008]  ? __pfx_pci_pm_suspend_late+0x10/0x10
+[   23.611843]  dpm_run_callback+0x78/0x1c0
+[   23.615817]  device_suspend_late+0xde/0x2e0
+[   23.620037]  async_suspend_late+0x18/0x30
+[   23.624082]  async_run_entry_fn+0x25/0xa0
+[   23.628129]  process_one_work+0x15b/0x380
+[   23.632182]  worker_thread+0x2a5/0x3c0
+[   23.635973]  ? __pfx_worker_thread+0x10/0x10
+[   23.640279]  kthread+0xf6/0x1f0
+[   23.643464]  ? __pfx_kthread+0x10/0x10
+[   23.647263]  ? __pfx_kthread+0x10/0x10
+[   23.651045]  ret_from_fork+0x131/0x190
+[   23.654837]  ? __pfx_kthread+0x10/0x10
+[   23.658634]  ret_from_fork_asm+0x1a/0x30
+[   23.662597]  </TASK>
+[   23.664826] Modules linked in:
+[   23.667914] CR2: 0000000000000000
+[   23.671271] ------------[ cut here ]------------
 
-Fix by removing the unconditional fp->conn assignment and rejecting the
-replay when fp->conn is non-NULL. This is consistent with
-ksmbd_lookup_durable_fd(), which also rejects file handles with a
-non-NULL fp->conn. For disconnected file handles (fp->conn == NULL),
-ksmbd_reopen_durable_fd() handles setting fp->conn.
-
-Fixes: c8efcc786146 ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
+Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
+Link: https://patch.msgid.link/20260203044839.1555147-1-suraj.kandpal@intel.com
+(cherry picked from commit daa199abc3d3d1740c9e3a2c3e9216ae5b447cad)
+Fixes: ff44ad51ebf8 ("drm/i915: Move engine->submit_request selection to a vfunc")
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 9902f77d10483..63c092328752e 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -2835,7 +2835,11 @@ static int parse_durable_handle_context(struct ksmbd_work *work,
- 						goto out;
- 					}
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index 4d30a86016f24..d84b6c2af8607 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -1970,7 +1970,8 @@ void intel_engines_reset_default_submission(struct intel_gt *gt)
+ 		if (engine->sanitize)
+ 			engine->sanitize(engine);
  
--					dh_info->fp->conn = conn;
-+					if (dh_info->fp->conn) {
-+						ksmbd_put_durable_fd(dh_info->fp);
-+						err = -EBADF;
-+						goto out;
-+					}
- 					dh_info->reconnected = true;
- 					goto out;
- 				}
+-		engine->set_default_submission(engine);
++		if (engine->set_default_submission)
++			engine->set_default_submission(engine);
+ 	}
+ }
+ 
 -- 
 2.51.0
 
