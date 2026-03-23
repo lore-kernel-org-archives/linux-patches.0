@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7963AEF25;
-	Mon, 23 Mar 2026 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE1C3B7742;
+	Mon, 23 Mar 2026 13:59:08 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274345; cv=none; b=cMmGzSblOFITpx/PGAFkT3n9ZI4bHnrNNHsFa260zflpPPyksC2sFBsDmsQPM+Pc0ywlhrzjkQemVtDa5B7zM2DYOAMojJPlHzLe7dxc7HEu9ZqAOt9On+BpjK4Q1quGzwAyFBS0BwdV/5FVi0kD0n4jysWQxDTRO8Q5zeDGDBY=
+	t=1774274348; cv=none; b=KfM+zj9BK4WpckdZlKVwhkIQ2Nf9UPBYos2xBD9P+qTiwEodQ7f+jrRGgDdXLgDwoQmSSDCO2g26CLyvWoHdTHixkJDpxfLtw1i9jbAE0BgGL1qT5yEO6f3I8L0f1WgnGad5pd8yQKO8Uy9SSxvghe2aH/HxjSRohX1a1jt3Sok=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274345; c=relaxed/simple;
-	bh=NA5QfgwimWWVNGX4QrCyegrmdQ/FsD2lui2InQvZpPI=;
+	s=arc-20240116; t=1774274348; c=relaxed/simple;
+	bh=lZVilTglRIqc7vOzvDe8Cm7axUJ5iFSvXe703csHhJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V7dezjQvLv1OxdgS+Q1dt8bEjjBLKIQlA3PtkhCX+1zL8b+ydY80NQ6p3pB/zCPpNvkNF9rBuiZWq+0zqp3iyJ7RWJMfsJgQiiSxGXOrR6ATd9jkdo5+jqbwR/f+vhKrxKzlMc83aUgz6W2U2JfqvRwxtNvpD8TE0Ov1iqLdCUo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gIMBFXJN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bqwOevWLCXy3avKqwY5Vv7MpcZAwlro6tVuGQ3HqilUGDy3vryxhrECUlMEBkCryk0kNMsEwJhrBQeOqEEkM7J5s4oIf9IhokeT7y60DgV47ElLBttno87ZaArc0VocPiwjNdKlkULgBl0bqGKrLZGUkhz3ztxJ+vMYAaVChuXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jm6limMb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gIMBFXJN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF22EC2BCB1;
-	Mon, 23 Mar 2026 13:59:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jm6limMb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02194C2BCB9;
+	Mon, 23 Mar 2026 13:59:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274345;
-	bh=NA5QfgwimWWVNGX4QrCyegrmdQ/FsD2lui2InQvZpPI=;
+	s=korg; t=1774274348;
+	bh=lZVilTglRIqc7vOzvDe8Cm7axUJ5iFSvXe703csHhJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIMBFXJNvsSHwcSuQjiqDp8TlsaI50Ch13aS33MenCHIS1EB3jYdwnNizB6g1erFs
-	 dL+P1zGiufwF88lT6EdAq66lrWP+YYyb47c8EGGC7Ceb6c5rKdQfzCraPdj4SqvM9l
-	 QV/iauopmHqlf2hJ1YXZPy3mkQMNT2036g98g8gk=
+	b=Jm6limMbHnt1iEAR0/6R58NJ/2ERda5rY7w6hPk86sQ0EbnOtT8mkWfCuOfb0YZ6m
+	 QdGfs9iOmu2TUo6uGUvLtVUxIQa2rEDygpbz6LI6/5c3kKMF9OPI9wJHTVZpHH4EaX
+	 44F1entuAQpSaDPcIvrdBBbwgCACW+DDtXE9cp1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabor Juhos <j4g8y7@gmail.com>,
-	Robert Marko <robert.marko@sartura.hr>,
-	Linus Walleij <linusw@kernel.org>,
-	Andi Shyti <andi.shyti@kernel.org>
-Subject: [PATCH 6.19 188/220] i2c: pxa: defer reset on Armada 3700 when recovery is used
-Date: Mon, 23 Mar 2026 14:46:05 +0100
-Message-ID: <20260323134510.529401112@linuxfoundation.org>
+	Felix Gu <ustc.gu@gmail.com>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Rahul Pathak <rahul@summations.net>
+Subject: [PATCH 6.19 189/220] irqchip/riscv-rpmi-sysmsi: Fix mailbox channel leak in rpmi_sysmsi_probe()
+Date: Mon, 23 Mar 2026 14:46:06 +0100
+Message-ID: <20260323134510.566310765@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,130 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Gabor Juhos <j4g8y7@gmail.com>
+From: Felix Gu <ustc.gu@gmail.com>
 
-commit 78a6ee14f8b9e1c8f7c77612122444f3be8dc8cc upstream.
+commit 76f0930d6e809234904cf9f0f5f42ee6c1dc694e upstream.
 
-The I2C communication is completely broken on the Armada 3700 platform
-since commit 0b01392c18b9 ("i2c: pxa: move to generic GPIO recovery").
+When riscv_acpi_get_gsi_info() fails, the mailbox channel previously
+requested via mbox_request_channel() is not freed. Add the missing
+mbox_free_channel() call to prevent the resource leak.
 
-For example, on the Methode uDPU board, probing of the two onboard
-temperature sensors fails ...
-
-  [    7.271713] i2c i2c-0: using pinctrl states for GPIO recovery
-  [    7.277503] i2c i2c-0:  PXA I2C adapter
-  [    7.282199] i2c i2c-1: using pinctrl states for GPIO recovery
-  [    7.288241] i2c i2c-1:  PXA I2C adapter
-  [    7.292947] sfp sfp-eth1: Host maximum power 3.0W
-  [    7.299614] sfp sfp-eth0: Host maximum power 3.0W
-  [    7.308178] lm75 1-0048: supply vs not found, using dummy regulator
-  [   32.489631] lm75 1-0048: probe with driver lm75 failed with error -121
-  [   32.496833] lm75 1-0049: supply vs not found, using dummy regulator
-  [   82.890614] lm75 1-0049: probe with driver lm75 failed with error -121
-
-... and accessing the plugged-in SFP modules also does not work:
-
-  [  511.298537] sfp sfp-eth1: please wait, module slow to respond
-  [  536.488530] sfp sfp-eth0: please wait, module slow to respond
-  ...
-  [ 1065.688536] sfp sfp-eth1: failed to read EEPROM: -EREMOTEIO
-  [ 1090.888532] sfp sfp-eth0: failed to read EEPROM: -EREMOTEIO
-
-After a discussion [1], there was an attempt to fix the problem by
-reverting the offending change by commit 7b211c767121 ("Revert "i2c:
-pxa: move to generic GPIO recovery""), but that only helped to fix
-the issue in the 6.1.y stable tree. The reason behind the partial succes
-is that there was another change in commit 20cb3fce4d60 ("i2c: Set i2c
-pinctrl recovery info from it's device pinctrl") in the 6.3-rc1 cycle
-which broke things further.
-
-The cause of the problem is the same in case of both offending commits
-mentioned above. Namely, the I2C core code changes the pinctrl state to
-GPIO while running the recovery initialization code. Although the PXA
-specific initialization also does this, but the key difference is that
-it happens before the controller is getting enabled in i2c_pxa_reset(),
-whereas in the case of the generic initialization it happens after that.
-
-Change the code to reset the controller only before the first transfer
-instead of before registering the controller. This ensures that the
-controller is not enabled at the time when the generic recovery code
-performs the pinctrl state changes, thus avoids the problem described
-above.
-
-As the result this change restores the original behaviour, which in
-turn makes the I2C communication to work again as it can be seen from
-the following log:
-
-  [    7.363250] i2c i2c-0: using pinctrl states for GPIO recovery
-  [    7.369041] i2c i2c-0:  PXA I2C adapter
-  [    7.373673] i2c i2c-1: using pinctrl states for GPIO recovery
-  [    7.379742] i2c i2c-1:  PXA I2C adapter
-  [    7.384506] sfp sfp-eth1: Host maximum power 3.0W
-  [    7.393013] sfp sfp-eth0: Host maximum power 3.0W
-  [    7.399266] lm75 1-0048: supply vs not found, using dummy regulator
-  [    7.407257] hwmon hwmon0: temp1_input not attached to any thermal zone
-  [    7.413863] lm75 1-0048: hwmon0: sensor 'tmp75c'
-  [    7.418746] lm75 1-0049: supply vs not found, using dummy regulator
-  [    7.426371] hwmon hwmon1: temp1_input not attached to any thermal zone
-  [    7.432972] lm75 1-0049: hwmon1: sensor 'tmp75c'
-  [    7.755092] sfp sfp-eth1: module MENTECHOPTO      POS22-LDCC-KR    rev 1.0  sn MNC208U90009     dc 200828
-  [    7.764997] mvneta d0040000.ethernet eth1: unsupported SFP module: no common interface modes
-  [    7.785362] sfp sfp-eth0: module Mikrotik         S-RJ01           rev 1.0  sn 61B103C55C58     dc 201022
-  [    7.803426] hwmon hwmon2: temp1_input not attached to any thermal zone
-
-Link: https://lore.kernel.org/r/20230926160255.330417-1-robert.marko@sartura.hr #1
-
-Cc: stable@vger.kernel.org # 6.3+
-Fixes: 20cb3fce4d60 ("i2c: Set i2c pinctrl recovery info from it's device pinctrl")
-Signed-off-by: Gabor Juhos <j4g8y7@gmail.com>
-Tested-by: Robert Marko <robert.marko@sartura.hr>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
-Link: https://lore.kernel.org/r/20260226-i2c-pxa-fix-i2c-communication-v4-1-797a091dae87@gmail.com
+Fixes: 4752b0cfbc37 ("irqchip/riscv-rpmi-sysmsi: Add ACPI support")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Cc: stable@vger.kernel.org
+Reviewed-by: Rahul Pathak <rahul@summations.net>
+Link: https://patch.msgid.link/20260315-sysmsi-v1-1-5f090c86c2ca@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-pxa.c |   17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-riscv-rpmi-sysmsi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/i2c/busses/i2c-pxa.c
-+++ b/drivers/i2c/busses/i2c-pxa.c
-@@ -268,6 +268,7 @@ struct pxa_i2c {
- 	struct pinctrl		*pinctrl;
- 	struct pinctrl_state	*pinctrl_default;
- 	struct pinctrl_state	*pinctrl_recovery;
-+	bool			reset_before_xfer;
- };
- 
- #define _IBMR(i2c)	((i2c)->reg_ibmr)
-@@ -1144,6 +1145,11 @@ static int i2c_pxa_xfer(struct i2c_adapt
- {
- 	struct pxa_i2c *i2c = adap->algo_data;
- 
-+	if (i2c->reset_before_xfer) {
-+		i2c_pxa_reset(i2c);
-+		i2c->reset_before_xfer = false;
-+	}
-+
- 	return i2c_pxa_internal_xfer(i2c, msgs, num, i2c_pxa_do_xfer);
- }
- 
-@@ -1521,7 +1527,16 @@ static int i2c_pxa_probe(struct platform
+--- a/drivers/irqchip/irq-riscv-rpmi-sysmsi.c
++++ b/drivers/irqchip/irq-riscv-rpmi-sysmsi.c
+@@ -250,6 +250,7 @@ static int rpmi_sysmsi_probe(struct plat
+ 		rc = riscv_acpi_get_gsi_info(fwnode, &priv->gsi_base, &id,
+ 					     &nr_irqs, NULL);
+ 		if (rc) {
++			mbox_free_channel(priv->chan);
+ 			dev_err(dev, "failed to find GSI mapping\n");
+ 			return rc;
  		}
- 	}
- 
--	i2c_pxa_reset(i2c);
-+	/*
-+	 * Skip reset on Armada 3700 when recovery is used to avoid
-+	 * controller hang due to the pinctrl state changes done by
-+	 * the generic recovery initialization code. The reset will
-+	 * be performed later, prior to the first transfer.
-+	 */
-+	if (i2c_type == REGS_A3700 && i2c->adap.bus_recovery_info)
-+		i2c->reset_before_xfer = true;
-+	else
-+		i2c_pxa_reset(i2c);
- 
- 	ret = i2c_add_numbered_adapter(&i2c->adap);
- 	if (ret < 0)
 
 
