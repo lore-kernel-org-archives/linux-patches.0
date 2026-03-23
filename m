@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09A61A5B84;
-	Mon, 23 Mar 2026 14:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB831A5B84;
+	Mon, 23 Mar 2026 14:47:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277246; cv=none; b=YESwrSLuqfTsVxMJxCST/F/EiiozmiFBTdLdgt8qxrA1xvE7K4YBVKXDDgWMnmM0YKmCge/1Bl8wVipGhwW6Eo9H5OSQz2dxAeHjTKAckG1U+n2TISeSvgCtb0Xv/1xMQwXAMZeeD8UrpHTS567T1VvcCj6DhjkXbf4mADOXUF8=
+	t=1774277248; cv=none; b=YxXszVqdDs/v/+7tr9E5ZkcAWezjhWPukPznTZ36By8iAYFsp1EdFzO94/n94qHR+cQ+oDv8YL0rHfAp2SzTbti3MXCvYmbezTeGSWb3OO14YAxGQ/OeBCZnJriInaKAtYSLxLNwvHJU+WzsjHNLZ7+ckFiNk6uxCe83eaAVuUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277246; c=relaxed/simple;
-	bh=cWEqTiW70be5LaelkLdEp9oADPPdCydUKc3x5Q9T5eM=;
+	s=arc-20240116; t=1774277248; c=relaxed/simple;
+	bh=3Z4xaFDWhsIOF+VurN1BF2aBY78FX2NIzYXZ+8sLFOo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=hveA63W5Mw+6Vpf5V4qYAJbDYgwWFqU1avl1jkIdv7bw+8ujEueODZiDd8srxA0TXsW3PaABzHHtlpbPR2IdCGDOyQ6rA4B78npY3SS2rUvWCE1cnOsZDfwLeFqgIs1z7zVz6kCmFSSW+o3sHpI1vnA9mxlhgJtxV+MQKptOmHk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xP4y26sf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZwRrou6R2cL+Y0oSlD6E0UMM9DheA12tNd85jRe3dIXYBUwSTTnwcVPhKAxSjDRjjj/RpitGRmG0f6Y2FlMjyAMaFfOjYu7ToEGBZA6V/VKQMSCqJYlcc3o5QXDIeNnlWuOyoAbDuK4aZwBCbM04It0gVVdjdEkVhawpzIgIb5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giHaf6U4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xP4y26sf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FC04C4CEF7;
-	Mon, 23 Mar 2026 14:47:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giHaf6U4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612A9C4CEF7;
+	Mon, 23 Mar 2026 14:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277245;
-	bh=cWEqTiW70be5LaelkLdEp9oADPPdCydUKc3x5Q9T5eM=;
+	s=korg; t=1774277248;
+	bh=3Z4xaFDWhsIOF+VurN1BF2aBY78FX2NIzYXZ+8sLFOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xP4y26sfPBJUt2vuYnkRpydDBt0qGsJo+kjlYxWGCu9iTaFnLsAkc6Jun+B44+8yj
-	 MMiAJFiXWwb4O7cBooeb8AMTPf50NMLBd3YYz8AoA4Ls7aJYb2KdumVjc+xMZNqjyb
-	 lCyHjISXb52jw6iNqXJuPWeFI4KrK9l+mpBTVb3I=
+	b=giHaf6U4Kvf8McI4kFv4yRwey1GQykWMnrtz6YkTlLz0iK4QQfVTfxOnYk4VDk3/f
+	 FMiHzQ6TVmSDxNPS9nXRaYra9geGYpdf+mccB8xeC7164h6ka7I+pISNrg+hawHuuV
+	 eR3UiPgSXY82WdpsYscHThJ8sHUer/W2W6Fl3i94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianhao Xu <jianhao.xu@seu.edu.cn>,
-	Zilin Guan <zilin@seu.edu.cn>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 368/460] soc: microchip: mpfs: Fix memory leak in mpfs_sys_controller_probe()
-Date: Mon, 23 Mar 2026 14:46:04 +0100
-Message-ID: <20260323134535.606985405@linuxfoundation.org>
+Subject: [PATCH 6.12 369/460] cache: starfive: fix device node leak in starlink_cache_init()
+Date: Mon, 23 Mar 2026 14:46:05 +0100
+Message-ID: <20260323134535.632107525@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,68 +52,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zilin Guan <zilin@seu.edu.cn>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 5a741f8cc6fe62542f955cd8d24933a1b6589cbd ]
+[ Upstream commit 3c85234b979af71cb9db5eb976ea08a468415767 ]
 
-In mpfs_sys_controller_probe(), if of_get_mtd_device_by_node() fails,
-the function returns immediately without freeing the allocated memory
-for sys_controller, leading to a memory leak.
+of_find_matching_node() returns a device_node with refcount incremented.
 
-Fix this by jumping to the out_free label to ensure the memory is
-properly freed.
+Use __free(device_node) attribute to automatically call of_node_put()
+when the variable goes out of scope, preventing the refcount leak.
 
-Also, consolidate the error handling for the mbox_request_channel()
-failure case to use the same label.
-
-Fixes: 742aa6c563d2 ("soc: microchip: mpfs: enable access to the system controller's flash")
-Co-developed-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Jianhao Xu <jianhao.xu@seu.edu.cn>
-Signed-off-by: Zilin Guan <zilin@seu.edu.cn>
+Fixes: cabff60ca77d ("cache: Add StarFive StarLink cache management")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/microchip/mpfs-sys-controller.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/cache/starfive_starlink_cache.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/microchip/mpfs-sys-controller.c b/drivers/soc/microchip/mpfs-sys-controller.c
-index 30bc45d17d343..81636cfecd37e 100644
---- a/drivers/soc/microchip/mpfs-sys-controller.c
-+++ b/drivers/soc/microchip/mpfs-sys-controller.c
-@@ -142,8 +142,10 @@ static int mpfs_sys_controller_probe(struct platform_device *pdev)
+diff --git a/drivers/cache/starfive_starlink_cache.c b/drivers/cache/starfive_starlink_cache.c
+index 24c7d078ca227..3a25d2d7c70ca 100644
+--- a/drivers/cache/starfive_starlink_cache.c
++++ b/drivers/cache/starfive_starlink_cache.c
+@@ -102,11 +102,11 @@ static const struct of_device_id starlink_cache_ids[] = {
  
- 	sys_controller->flash = of_get_mtd_device_by_node(np);
- 	of_node_put(np);
--	if (IS_ERR(sys_controller->flash))
--		return dev_err_probe(dev, PTR_ERR(sys_controller->flash), "Failed to get flash\n");
-+	if (IS_ERR(sys_controller->flash)) {
-+		ret = dev_err_probe(dev, PTR_ERR(sys_controller->flash), "Failed to get flash\n");
-+		goto out_free;
-+	}
+ static int __init starlink_cache_init(void)
+ {
+-	struct device_node *np;
+ 	u32 block_size;
+ 	int ret;
  
- no_flash:
- 	sys_controller->client.dev = dev;
-@@ -155,8 +157,7 @@ static int mpfs_sys_controller_probe(struct platform_device *pdev)
- 	if (IS_ERR(sys_controller->chan)) {
- 		ret = dev_err_probe(dev, PTR_ERR(sys_controller->chan),
- 				    "Failed to get mbox channel\n");
--		kfree(sys_controller);
--		return ret;
-+		goto out_free;
- 	}
+-	np = of_find_matching_node(NULL, starlink_cache_ids);
++	struct device_node *np __free(device_node) =
++		of_find_matching_node(NULL, starlink_cache_ids);
+ 	if (!of_device_is_available(np))
+ 		return -ENODEV;
  
- 	init_completion(&sys_controller->c);
-@@ -174,6 +175,10 @@ static int mpfs_sys_controller_probe(struct platform_device *pdev)
- 	dev_info(&pdev->dev, "Registered MPFS system controller\n");
- 
- 	return 0;
-+
-+out_free:
-+	kfree(sys_controller);
-+	return ret;
- }
- 
- static void mpfs_sys_controller_remove(struct platform_device *pdev)
 -- 
 2.51.0
 
