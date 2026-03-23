@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CE51A5B84;
-	Mon, 23 Mar 2026 14:51:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C687126D4F9;
+	Mon, 23 Mar 2026 14:51:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277506; cv=none; b=N+UXExFfJ8a1WApXEafQGFFSGEQUfT4mkPdCsO0iIR7ogng0mqhhylIm/3UJAKCX7BaZgV6ax6qN+7yXktkFedADV9ulR2cTzjwHI7FLy6pt7wkEfpi16O7zIB3jTmH6ZsVvpHgjo5fnor910PMKKaRapXTbLfbPa/skTFcjjqs=
+	t=1774277509; cv=none; b=H/PCmpo72oLh+PKOI0ap5t213C7PK5Xij4nq0Kd1OOGU5HTrUTBJ+7Ak4YvPhL7/S4jhDIWT7l8bzmF3wg5FVdVRUf8K672ari61dHLdy0HF7pSRUQQ4ksuIt2uVKIc3FbskLgzCw7Z8YFlYMEqkVrpAf40QyXNDQn/QEtzyg0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277506; c=relaxed/simple;
-	bh=Y5oleU44jDc1Xc8pkqQ/RKV5afuzMLqRThIJy4UFhCs=;
+	s=arc-20240116; t=1774277509; c=relaxed/simple;
+	bh=VlabTOk98ggNaKlEq6t37thx/Sbj5g018pyZKYF4jD8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rNJLkQjcUXeYPj7doOf4PhJux+R1YQuJ/6A2YnNJ3R1MWXbIAQZH0d9QhARQJyglEP2hXz59U4NZlKoQFPT3vFFqtC1MkA7Q3JZn0ABNRe8lvq2b9JDqp44M2LLqLgnvvhcXsUg6OnX0VFku3O4DDoPuFTpwlWkFmfWXznQ5JGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aKj3GsFg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Nh0Na0M64wPv04+GA1sBEtIPvEVnxjRImN7Tt1zbJEE2WQ6AoNRPXqELIhb1PWq/hIstuzE36MsjW9SJXjvbuHBJjCfbMLCq5yFD9y/aXcUTeH87ubyv5K3lav8zoKbb32URla0+o93rTjmAw9EPN8heZwc74oZl9I3oBdEJTvU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n4L/8QGF; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aKj3GsFg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABBADC4CEF7;
-	Mon, 23 Mar 2026 14:51:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n4L/8QGF"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33804C4CEF7;
+	Mon, 23 Mar 2026 14:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277506;
-	bh=Y5oleU44jDc1Xc8pkqQ/RKV5afuzMLqRThIJy4UFhCs=;
+	s=korg; t=1774277509;
+	bh=VlabTOk98ggNaKlEq6t37thx/Sbj5g018pyZKYF4jD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aKj3GsFgkgcmH68teXuZmuIltOrZ8vz6lzJksb1tzMTKEUSKj9/EpIM4wi21j62sb
-	 oYE2WsPahnKRgOp86WmG0Tzd0JCmfmp6Pvan1s23aoBc6+RI6VJL5qkbB3NKDWgbMR
-	 tFL7qtMfPgaqkO7fP9mWtaS409YPSdSfchr6ghnQ=
+	b=n4L/8QGF4XiBJ8PXNIp+nT4j5S8gTTSF+Aefbkw4XgTIZKHzMHWOo7gGDFkCbzc+u
+	 oI64IppXSU5kB7QL1FiPCgelSriBaEGLC+bOxAHoCARonVmO/Hp3aLTOms4++J2a0P
+	 6eC+FTW1nVc51SR/gUeeu+8T3R5L4RFmt9VhuekU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 433/460] icmp: fix NULL pointer dereference in icmp_tag_validation()
-Date: Mon, 23 Mar 2026 14:47:09 +0100
-Message-ID: <20260323134537.193948501@linuxfoundation.org>
+	Sanman Pradhan <psanman@juniper.net>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.12 434/460] hwmon: (pmbus/mp2975) Add error check for pmbus_read_word_data() return value
+Date: Mon, 23 Mar 2026 14:47:10 +0100
+Message-ID: <20260323134537.222862863@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,68 +50,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Sanman Pradhan <psanman@juniper.net>
 
-[ Upstream commit 614aefe56af8e13331e50220c936fc0689cf5675 ]
+commit 19d4b9c8a136704d5f2544e7ac550f27918a5004 upstream.
 
-icmp_tag_validation() unconditionally dereferences the result of
-rcu_dereference(inet_protos[proto]) without checking for NULL.
-The inet_protos[] array is sparse -- only about 15 of 256 protocol
-numbers have registered handlers. When ip_no_pmtu_disc is set to 3
-(hardened PMTU mode) and the kernel receives an ICMP Fragmentation
-Needed error with a quoted inner IP header containing an unregistered
-protocol number, the NULL dereference causes a kernel panic in
-softirq context.
+mp2973_read_word_data() XORs the return value of pmbus_read_word_data()
+with PB_STATUS_POWER_GOOD_N without first checking for errors. If the I2C
+transaction fails, a negative error code is XORed with the constant,
+producing a corrupted value that is returned as valid status data instead
+of propagating the error.
 
- Oops: general protection fault, probably for non-canonical address 0xdffffc0000000002: 0000 [#1] SMP KASAN NOPTI
- KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
- RIP: 0010:icmp_unreach (net/ipv4/icmp.c:1085 net/ipv4/icmp.c:1143)
- Call Trace:
-  <IRQ>
-  icmp_rcv (net/ipv4/icmp.c:1527)
-  ip_protocol_deliver_rcu (net/ipv4/ip_input.c:207)
-  ip_local_deliver_finish (net/ipv4/ip_input.c:242)
-  ip_local_deliver (net/ipv4/ip_input.c:262)
-  ip_rcv (net/ipv4/ip_input.c:573)
-  __netif_receive_skb_one_core (net/core/dev.c:6164)
-  process_backlog (net/core/dev.c:6628)
-  handle_softirqs (kernel/softirq.c:561)
-  </IRQ>
+Add the missing error check before modifying the return value.
 
-Add a NULL check before accessing icmp_strict_tag_validation. If the
-protocol has no registered handler, return false since it cannot
-perform strict tag validation.
-
-Fixes: 8ed1dc44d3e9 ("ipv4: introduce hardened ip_no_pmtu_disc mode")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Link: https://patch.msgid.link/20260318130558.1050247-4-bestswngs@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: acda945afb465 ("hwmon: (pmbus/mp2975) Fix PGOOD in READ_STATUS_WORD")
+Cc: stable@vger.kernel.org
+Signed-off-by: Sanman Pradhan <psanman@juniper.net>
+Link: https://lore.kernel.org/r/20260317173308.382545-3-sanman.pradhan@hpe.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/icmp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/pmbus/mp2975.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/ipv4/icmp.c b/net/ipv4/icmp.c
-index 8ab51b51cc9b2..58feb21ff967d 100644
---- a/net/ipv4/icmp.c
-+++ b/net/ipv4/icmp.c
-@@ -877,10 +877,12 @@ static void icmp_socket_deliver(struct sk_buff *skb, u32 info)
- 
- static bool icmp_tag_validation(int proto)
- {
-+	const struct net_protocol *ipprot;
- 	bool ok;
- 
- 	rcu_read_lock();
--	ok = rcu_dereference(inet_protos[proto])->icmp_strict_tag_validation;
-+	ipprot = rcu_dereference(inet_protos[proto]);
-+	ok = ipprot ? ipprot->icmp_strict_tag_validation : false;
- 	rcu_read_unlock();
- 	return ok;
- }
--- 
-2.51.0
-
+--- a/drivers/hwmon/pmbus/mp2975.c
++++ b/drivers/hwmon/pmbus/mp2975.c
+@@ -313,6 +313,8 @@ static int mp2973_read_word_data(struct
+ 	case PMBUS_STATUS_WORD:
+ 		/* MP2973 & MP2971 return PGOOD instead of PB_STATUS_POWER_GOOD_N. */
+ 		ret = pmbus_read_word_data(client, page, phase, reg);
++		if (ret < 0)
++			return ret;
+ 		ret ^= PB_STATUS_POWER_GOOD_N;
+ 		break;
+ 	case PMBUS_OT_FAULT_LIMIT:
 
 
