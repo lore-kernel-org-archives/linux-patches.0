@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41240340298;
-	Mon, 23 Mar 2026 13:51:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 530FA3A6B88;
+	Mon, 23 Mar 2026 13:51:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273903; cv=none; b=WwQxho2rMd8EBg0c4FdAA6DcDZJl5GDpAeKN57Y/2AOC8XyZiEfzecrPLHygrXPUMe1HFTq9O15csv1zKb9cw1di+5M6yCPzAt8bh/c2X+tEY4lj6vZ1CUJdNMbkHhAoFEU5e9bL5AW/xduqasLcC0FRr++5fwUheimjYw0fLEg=
+	t=1774273906; cv=none; b=hLkyjdGu7iGpF/nm45XlnKn6Erg4dQVHfcmuUEfgjI3cdsK2UICnAy5jXL5ZfIeW5ub7g/MASuF4TziqQ5w17ySv/lyXmqOMu5DI+u2vQSC8muWQetNvN6PKftkTU06OOOvq7MSUrRKBUsmu5nytvYtiz6hhkPN4H+adPvuTrQE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273903; c=relaxed/simple;
-	bh=fU6iOIGs8vC2LFwFy+4RpF7Q2v7QsKtEp03OZJoNQLs=;
+	s=arc-20240116; t=1774273906; c=relaxed/simple;
+	bh=k4A2qd/r7V57jk8f8Hv146KCFYkRdJetyL1GsRmjwRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cE/F8PF3zbc9XVLRXYJCN4dJwu9HTywKVQodfpnDnNDuVMv1XNmoNTaamSxjDd6aik59Xhz5YhaMeb3bRrPNKnxr5/XabvyHILZUBxGO7bE3NqZdE+S/jVT2oeILHOvOKw6KGTwkFysA5+YDKzJX+JpNkcgqbO616N0gnWcDy24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rzoaSroo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=nNePyJqd3A7LdTxiDb4FQkLGHWMSRjXTUyiNOWxsN1UdsBDIB8maaJZ/ACuUa94QgpYerctqGUIepCNIrVqkDYP8a3gFsDpzFiGwRVEnrhazlSfEpmh11Gy1e/gmAtpmMwZgeiFrN+5bmzS5AwPCgkoJDl+/EAZYBTRqbpSCLsA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8c9TdhY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rzoaSroo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775B9C2BCB1;
-	Mon, 23 Mar 2026 13:51:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8c9TdhY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9E2C2BC9E;
+	Mon, 23 Mar 2026 13:51:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273902;
-	bh=fU6iOIGs8vC2LFwFy+4RpF7Q2v7QsKtEp03OZJoNQLs=;
+	s=korg; t=1774273906;
+	bh=k4A2qd/r7V57jk8f8Hv146KCFYkRdJetyL1GsRmjwRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzoaSrooy6ulUA2UjvgvoGcPVHqzvmgsbdERD2C6uBpGDFkmvNY/bawif1Bp7tIYl
-	 +ZPLjPwThUmyFIxIdO5GOJ92b0AwAQEtih/wAtm89mKdy4vUBbhk3KAl6QXEvD9zUe
-	 pf/045qXY6HLYJD7dQ84HMUFPy+wgZMkxT2j5fhQ=
+	b=e8c9TdhY7X5aMl58Yvrg3F1rZ1NEnWbiB69u2n6cXYheCK6vM0Iiyz4/Ly7HK1mpv
+	 pBhXmIk0jozXd7tYuqO53x6ViUqQ8qlnNeCmx0yJTbSi5ObpBBXqq0VWUgFIbVHVGm
+	 gpIticeUk7y7vbbmed2h4GkDbZKptGe88o7XqjP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.19 046/220] pmdomain: bcm: bcm2835-power: Increase ASB control timeout
-Date: Mon, 23 Mar 2026 14:43:43 +0100
-Message-ID: <20260323134506.041637554@linuxfoundation.org>
+	=?UTF-8?q?Jouni=20H=C3=B6gander?= <jouni.hogander@intel.com>,
+	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.19 029/220] drm/i915/psr: Write DSC parameters on Selective Update in ET mode
+Date: Mon, 23 Mar 2026 14:43:26 +0100
+Message-ID: <20260323134505.498237990@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,73 +52,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Jouni Högander <jouni.hogander@intel.com>
 
-commit b826d2c0b0ecb844c84431ba6b502e744f5d919a upstream.
+commit 5923a6e0459fdd3edac4ad5abccb24d777d8f1b6 upstream.
 
-The bcm2835_asb_control() function uses a tight polling loop to wait
-for the ASB bridge to acknowledge a request. During intensive workloads,
-this handshake intermittently fails for V3D's master ASB on BCM2711,
-resulting in "Failed to disable ASB master for v3d" errors during
-runtime PM suspend. As a consequence, the failed power-off leaves V3D in
-a broken state, leading to bus faults or system hangs on later accesses.
+There are slice row per frame and pic height parameters in DSC that needs
+to be configured on every Selective Update in Early Transport mode. Use
+helper provided by DSC code to configure these on Selective Update when in
+Early Transport mode. Also fill crtc_state->psr2_su_area with full frame
+area on full frame update for DSC calculation.
 
-As the timeout is insufficient in some scenarios, increase the polling
-timeout from 1us to 5us, which is still negligible in the context of a
-power domain transition. Also, replace the open-coded ktime_get_ns()/
-cpu_relax() polling loop with readl_poll_timeout_atomic().
+v2: move psr2_su_area under skip_sel_fetch_set_loop label
 
-Cc: stable@vger.kernel.org
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Bspec: 68927, 71709
+Fixes: 467e4e061c44 ("drm/i915/psr: Enable psr2 early transport as possible")
+Cc: <stable@vger.kernel.org> # v6.9+
+Signed-off-by: Jouni Högander <jouni.hogander@intel.com>
+Reviewed-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+Link: https://patch.msgid.link/20260304113011.626542-5-jouni.hogander@intel.com
+(cherry picked from commit 3140af2fab505a4cd47d516284529bf1585628be)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/bcm/bcm2835-power.c |   12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/i915/display/intel_psr.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/pmdomain/bcm/bcm2835-power.c
-+++ b/drivers/pmdomain/bcm/bcm2835-power.c
-@@ -9,6 +9,7 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/io.h>
-+#include <linux/iopoll.h>
- #include <linux/mfd/bcm2835-pm.h>
- #include <linux/module.h>
- #include <linux/platform_device.h>
-@@ -153,7 +154,6 @@ struct bcm2835_power {
- static int bcm2835_asb_control(struct bcm2835_power *power, u32 reg, bool enable)
- {
- 	void __iomem *base = power->asb;
--	u64 start;
- 	u32 val;
+--- a/drivers/gpu/drm/i915/display/intel_psr.c
++++ b/drivers/gpu/drm/i915/display/intel_psr.c
+@@ -2597,6 +2597,12 @@ void intel_psr2_program_trans_man_trk_ct
  
- 	switch (reg) {
-@@ -166,8 +166,6 @@ static int bcm2835_asb_control(struct bc
- 		break;
- 	}
- 
--	start = ktime_get_ns();
--
- 	/* Enable the module's async AXI bridges. */
- 	if (enable) {
- 		val = readl(base + reg) & ~ASB_REQ_STOP;
-@@ -176,11 +174,9 @@ static int bcm2835_asb_control(struct bc
- 	}
- 	writel(PM_PASSWORD | val, base + reg);
- 
--	while (!!(readl(base + reg) & ASB_ACK) == enable) {
--		cpu_relax();
--		if (ktime_get_ns() - start >= 1000)
--			return -ETIMEDOUT;
--	}
-+	if (readl_poll_timeout_atomic(base + reg, val,
-+				      !!(val & ASB_ACK) != enable, 0, 5))
-+		return -ETIMEDOUT;
- 
- 	return 0;
+ 	intel_de_write_dsb(display, dsb, PIPE_SRCSZ_ERLY_TPT(crtc->pipe),
+ 			   crtc_state->pipe_srcsz_early_tpt);
++
++	if (!crtc_state->dsc.compression_enable)
++		return;
++
++	intel_dsc_su_et_parameters_configure(dsb, encoder, crtc_state,
++					     drm_rect_height(&crtc_state->psr2_su_area));
  }
+ 
+ static void psr2_man_trk_ctl_calc(struct intel_crtc_state *crtc_state,
+@@ -3017,6 +3023,10 @@ int intel_psr2_sel_fetch_update(struct i
+ 	}
+ 
+ skip_sel_fetch_set_loop:
++	if (full_update)
++		clip_area_update(&crtc_state->psr2_su_area, &crtc_state->pipe_src,
++				 &crtc_state->pipe_src);
++
+ 	psr2_man_trk_ctl_calc(crtc_state, full_update);
+ 	crtc_state->pipe_srcsz_early_tpt =
+ 		psr2_pipe_srcsz_early_tpt_calc(crtc_state, full_update);
 
 
