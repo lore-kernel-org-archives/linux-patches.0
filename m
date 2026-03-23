@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1387037B03B;
-	Mon, 23 Mar 2026 16:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F6D3AF662;
+	Mon, 23 Mar 2026 16:20:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282800; cv=none; b=SpPFx5nCxFoR1xA0RO40We211okRUqbA+3+XPVvs4X8bO2+hDUnW4isMWjmLgs6/b71Sx4Rtq0MnWF452AmafYNybsPFj5Q/zSfIcrkXPh26aYIaVI+3lTR51NxZ0uCFJa+xhNPW7bl7QPYngUuY37LNXVVGMIqGlXBpbHcf474=
+	t=1774282802; cv=none; b=DoIZ9OJ+HoRh4cg9gBFVjZfWbwnxQoyhSX1IBmofq6MnkHweG80wKHLWNf1NUyoreSMcSthDmORfU4Z3lL9eiz9MI9sP4ZgbMcrVJJIQu6gcDoqckOr7Pw7BBhV2iRPV5vDWoAqWvQxFjf6eD1vr+CTAv5WT31d2Jfjba1Iykg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282800; c=relaxed/simple;
-	bh=V7+ogQPnbFHln9nWTNUiplQhFRQWuR3azU6ymp5+17o=;
+	s=arc-20240116; t=1774282802; c=relaxed/simple;
+	bh=0xXBVUyDMzJPPIpC9KvzhYmWOzq/97pG2sBUwfjFl1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=d2NUHajcKcQ/Yrc/k4Isvvb5pZ5bDHD+fngat+H3iQPqdzu0Qe/Wm+seySO3HbXHK/tr+tR3C+0Ey2szF/xwcHsCdNK9tar6Y8L+DCaExICXCvpgc1YLcMYfPKk7vTNTLxfFFBT5aXaA1NcJz3GMRGEtvNorVxw1by8ojomQk9o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jTYTkiKR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Mac62B77rDo8I14mmaDUsmCzdUKSZ7ED35BWCQRwW/plIg0VjzFg7WbkkFgT84wm6mzfSEdIdNELi5aftXTK2xtLrTuoLYM/zR8NMt7b3+UHmVDtU2GhzzUbhcZLbIsTa775/tWlbJPLdmSK1B/oDr/MI1Vw/NqyiBpMm7J5oZA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUBO44+q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jTYTkiKR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9864BC4CEF7;
-	Mon, 23 Mar 2026 16:19:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUBO44+q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62292C4CEF7;
+	Mon, 23 Mar 2026 16:20:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282800;
-	bh=V7+ogQPnbFHln9nWTNUiplQhFRQWuR3azU6ymp5+17o=;
+	s=korg; t=1774282802;
+	bh=0xXBVUyDMzJPPIpC9KvzhYmWOzq/97pG2sBUwfjFl1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jTYTkiKRNC9KlfeJ5cERg31Mn8gUnK28t71gQxt3VVTgT5tKhzdmYiaoz1ME5Lfva
-	 Y8liuV3m5qIsirc7mBlt7v8b+FB1DJLjuwVhsbed9OvPoSOOSKr4CaO6CU9UJLSrt5
-	 NlCKxOCtG738v/cX9aGIbdzVZGRbDpbC6H24Xv7U=
+	b=ZUBO44+qqjXgpvHgs4kF/j7nHXqFtI3INdGLKzXkU0ewSzlM3jWmRJaHTkNpmIkYz
+	 Ksudy6H50UrNpU4gqblUpvMre8BQxxNffAXecGXkWkwEHG144ncmpISiiFjK2WHrpl
+	 XUB946/1SMzayPtkOj54Xkj2f+5sFdCkQNKR7VP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Luke Wang <ziniu.wang_1@nxp.com>,
 	Adrian Hunter <adrian.hunter@intel.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 291/481] mmc: sdhci-pci-gli: fix GL9750 DMA write corruption
-Date: Mon, 23 Mar 2026 14:44:33 +0100
-Message-ID: <20260323134532.201290765@linuxfoundation.org>
+Subject: [PATCH 6.1 292/481] mmc: sdhci: fix timing selection for 1-bit bus width
+Date: Mon, 23 Mar 2026 14:44:34 +0100
+Message-ID: <20260323134532.225949838@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,60 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Luke Wang <ziniu.wang_1@nxp.com>
 
-commit 2b76e0cc7803e5ab561c875edaba7f6bbd87fbb0 upstream.
+commit 5e3486e64094c28a526543f1e8aa0d5964b7f02d upstream.
 
-The GL9750 SD host controller has intermittent data corruption during
-DMA write operations. The GM_BURST register's R_OSRC_Lmt field
-(bits 17:16), which limits outstanding DMA read requests from system
-memory, is not being cleared during initialization. The Windows driver
-sets R_OSRC_Lmt to zero, limiting requests to the smallest unit.
+When 1-bit bus width is used with HS200/HS400 capabilities set,
+mmc_select_hs200() returns 0 without actually switching. This
+causes mmc_select_timing() to skip mmc_select_hs(), leaving eMMC
+in legacy mode (26MHz) instead of High Speed SDR (52MHz).
 
-Clear R_OSRC_Lmt to match the Windows driver behavior. This eliminates
-write corruption verified with f3write/f3read tests while maintaining
-DMA performance.
+Per JEDEC eMMC spec section 5.3.2, 1-bit mode supports High Speed
+SDR. Drop incompatible HS200/HS400/UHS/DDR caps early so timing
+selection falls through to mmc_select_hs() correctly.
 
-Cc: stable@vger.kernel.org
-Fixes: e51df6ce668a ("mmc: host: sdhci-pci: Add Genesys Logic GL975x support")
-Closes: https://lore.kernel.org/linux-mmc/33d12807-5c72-41ce-8679-57aa11831fad@linux.dev/
+Fixes: f2119df6b764 ("mmc: sd: add support for signal voltage switch procedure")
+Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
 Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
+Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/mmc/host/sdhci.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -70,6 +70,9 @@
- #define   GLI_9750_MISC_TX1_DLY_VALUE    0x5
- #define   SDHCI_GLI_9750_MISC_SSC_OFF    BIT(26)
+--- a/drivers/mmc/host/sdhci.c
++++ b/drivers/mmc/host/sdhci.c
+@@ -4523,8 +4523,15 @@ int sdhci_setup_host(struct sdhci_host *
+ 	 * their platform code before calling sdhci_add_host(), and we
+ 	 * won't assume 8-bit width for hosts without that CAP.
+ 	 */
+-	if (!(host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA))
++	if (host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA) {
++		host->caps1 &= ~(SDHCI_SUPPORT_SDR104 | SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_DDR50);
++		if (host->quirks2 & SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400)
++			host->caps1 &= ~SDHCI_SUPPORT_HS400;
++		mmc->caps2 &= ~(MMC_CAP2_HS200 | MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
++		mmc->caps &= ~(MMC_CAP_DDR | MMC_CAP_UHS);
++	} else {
+ 		mmc->caps |= MMC_CAP_4_BIT_DATA;
++	}
  
-+#define SDHCI_GLI_9750_GM_BURST_SIZE		  0x510
-+#define   SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT  GENMASK(17, 16)
-+
- #define SDHCI_GLI_9750_TUNING_CONTROL	          0x540
- #define   SDHCI_GLI_9750_TUNING_CONTROL_EN          BIT(4)
- #define   GLI_9750_TUNING_CONTROL_EN_ON             0x1
-@@ -212,10 +215,16 @@ static void gli_set_9750(struct sdhci_ho
- 	u32 misc_value;
- 	u32 parameter_value;
- 	u32 control_value;
-+	u32 burst_value;
- 	u16 ctrl2;
- 
- 	gl9750_wt_on(host);
- 
-+	/* clear R_OSRC_Lmt to avoid DMA write corruption */
-+	burst_value = sdhci_readl(host, SDHCI_GLI_9750_GM_BURST_SIZE);
-+	burst_value &= ~SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT;
-+	sdhci_writel(host, burst_value, SDHCI_GLI_9750_GM_BURST_SIZE);
-+
- 	driving_value = sdhci_readl(host, SDHCI_GLI_9750_DRIVING);
- 	pll_value = sdhci_readl(host, SDHCI_GLI_9750_PLL);
- 	sw_ctrl_value = sdhci_readl(host, SDHCI_GLI_9750_SW_CTRL);
+ 	if (host->quirks2 & SDHCI_QUIRK2_HOST_NO_CMD23)
+ 		mmc->caps &= ~MMC_CAP_CMD23;
 
 
