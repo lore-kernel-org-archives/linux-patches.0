@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51703AF66E;
-	Mon, 23 Mar 2026 14:12:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B20363AF66E;
+	Mon, 23 Mar 2026 14:12:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275163; cv=none; b=WuF50gGiI7YV+DZjXhpsO3gOmfwSfk4AXcmB0NCxHT6PLFHy60PWADA/xxZwqhhVTGKYEIteg4AX2+5eJdVV/akQNw+DMPfsymyPfDKxV3hmgtRrCV3mPf1luKRBUpH71+jAJsV1oHHICgRRCKgFqyFNuZTQdhmavrAUbf4syAo=
+	t=1774275166; cv=none; b=dZgU0Mn9gkVfJNBH/uxvLW69qoSPEMEnfn+HFW25u5l75U7Sc6xQpNWwUlWPD2NtmBG4qE3AoyQJL9F4Fp1T4iTZfBUE/XstCyDi4RmkLD9Xh7doTC9W6jlvbR+8WOVjSlY7Pq6XM0WWMr1RIz9CU2uIfJKU4sCZlXhv/wo6h9E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275163; c=relaxed/simple;
-	bh=TtqQnZH6EYXX4p+AhtuzMjaGzetAlPIhTpnm4P+lzGA=;
+	s=arc-20240116; t=1774275166; c=relaxed/simple;
+	bh=w82/gtmIFryKQky2UxrntUiZuK1Pieu+FeML7uM79Ww=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l7uafl12fiUmo7oBDrmaDn/J36A231yQBYRtzml1/g+26JSRPlBGwwOxkfdzYG6XI7xULSSWUr+T65m0uGrIDqiwkhFjT35xflyxv+AIxVqqFxrxvr7fl8CIeg7bEqXC+Ru3zvNqZektP7iPjlFTXiynOl/d6fSR/PhA0d5e6UM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwoxM428; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=STbQ9wdidO0zrB6SK2VMyOrmuqx45PRPH1PzTNMRlglrYg6/GiiniIyOFupqedz5JCD4VgiSY2ybnRODF0XflfSeZygF1eHgUmrERiPhGnNR2M7NsyS0ZOfD46OeXgLpz82WXKd/ovs1qr0NBBNl40ypNUpEy8UJO/sF04MXazs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MZphtdMO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwoxM428"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C76C4CEF7;
-	Mon, 23 Mar 2026 14:12:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MZphtdMO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01529C4CEF7;
+	Mon, 23 Mar 2026 14:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275162;
-	bh=TtqQnZH6EYXX4p+AhtuzMjaGzetAlPIhTpnm4P+lzGA=;
+	s=korg; t=1774275166;
+	bh=w82/gtmIFryKQky2UxrntUiZuK1Pieu+FeML7uM79Ww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwoxM428E/FQER1ejtlkxPXoJiy3ScjEtJKQONmsSfzg8qNpDz5D6OTo7l/CoKboS
-	 OVH4hYOXrV+8L3ZRAnZyu+jLqTrVTQsn1HjGYhxVrcIlukXsnECKJvrjFtgcPgLbF1
-	 YdziIZbARX1jO9YpVFzcg3nRD0vkB6/vvkrQq+kI=
+	b=MZphtdMOOk3P0U3UbzKquWsIo8MeFGUiKRtvQqB5/1qzL2yEfvuYodsl0fOR+nWnv
+	 /hb6YWJlks1ytcWZCByASfaPTY2D1YSVXJgl1pwrQpvXRRu4KCHtgdw69r1jSoONX7
+	 ntyl1UWdUE7jwRfI0MnYWn29h0rPEJIRJ9Noc504=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Bart Van Assche <bvanassche@acm.org>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 008/481] scsi: ufs: core: Always initialize the UIC done completion
-Date: Mon, 23 Mar 2026 14:39:50 +0100
-Message-ID: <20260323134525.458722251@linuxfoundation.org>
+Subject: [PATCH 6.1 009/481] scsi: ufs: core: Move link recovery for hibern8 exit failure to wl_resume
+Date: Mon, 23 Mar 2026 14:39:51 +0100
+Message-ID: <20260323134525.482410111@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,72 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit b1e8c53749adb795bfb0bf4e2f7836e26684bb90 ]
+[ Upstream commit 62c015373e1cdb1cdca824bd2dbce2dac0819467 ]
 
-Simplify __ufshcd_send_uic_cmd() by always initializing the
-uic_cmd::done completion. This is fine since the time required to
-initialize a completion is small compared to the time required to
-process an UIC command.
+Move the link recovery trigger from ufshcd_uic_pwr_ctrl() to
+__ufshcd_wl_resume(). Ensure link recovery is only attempted when hibern8
+exit fails during resume, not during hibern8 enter in suspend. Improve
+error handling and prevent unnecessary link recovery attempts.
 
-Reviewed-by: Peter Wang <peter.wang@mediatek.com>
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20240912223019.3510966-5-bvanassche@acm.org
+Fixes: 35dabf4503b9 ("scsi: ufs: core: Use link recovery when h8 exit fails during runtime resume")
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223103906.2533654-1-peter.wang@mediatek.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 62c015373e1c ("scsi: ufs: core: Move link recovery for hibern8 exit failure to wl_resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ drivers/ufs/core/ufshcd.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index 01927facaa203..6d44c2adb251a 100644
+index 6d44c2adb251a..29f232894372c 100644
 --- a/drivers/ufs/core/ufshcd.c
 +++ b/drivers/ufs/core/ufshcd.c
-@@ -2340,13 +2340,11 @@ ufshcd_wait_for_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
-  * __ufshcd_send_uic_cmd - Send UIC commands and retrieve the result
-  * @hba: per adapter instance
-  * @uic_cmd: UIC command
-- * @completion: initialize the completion only if this is set to true
-  *
-  * Returns 0 only if success.
-  */
- static int
--__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
--		      bool completion)
-+__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
- {
- 	lockdep_assert_held(&hba->uic_cmd_mutex);
- 
-@@ -2356,8 +2354,7 @@ __ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
- 		return -EIO;
- 	}
- 
--	if (completion)
--		init_completion(&uic_cmd->done);
-+	init_completion(&uic_cmd->done);
- 
- 	uic_cmd->cmd_active = 1;
- 	ufshcd_dispatch_uic_cmd(hba, uic_cmd);
-@@ -2383,7 +2380,7 @@ int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
- 	mutex_lock(&hba->uic_cmd_mutex);
- 	ufshcd_add_delay_before_dme_cmd(hba);
- 
--	ret = __ufshcd_send_uic_cmd(hba, uic_cmd, true);
-+	ret = __ufshcd_send_uic_cmd(hba, uic_cmd);
- 	if (!ret)
- 		ret = ufshcd_wait_for_uic_cmd(hba, uic_cmd);
- 
-@@ -4081,7 +4078,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
- 		reenable_intr = true;
- 	}
+@@ -4130,14 +4130,6 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
  	spin_unlock_irqrestore(hba->host->host_lock, flags);
--	ret = __ufshcd_send_uic_cmd(hba, cmd, false);
-+	ret = __ufshcd_send_uic_cmd(hba, cmd);
- 	if (ret) {
- 		dev_err(hba->dev,
- 			"pwr ctrl cmd 0x%x with mode 0x%x uic error %d\n",
+ 	mutex_unlock(&hba->uic_cmd_mutex);
+ 
+-	/*
+-	 * If the h8 exit fails during the runtime resume process, it becomes
+-	 * stuck and cannot be recovered through the error handler.  To fix
+-	 * this, use link recovery instead of the error handler.
+-	 */
+-	if (ret && hba->pm_op_in_progress)
+-		ret = ufshcd_link_recovery(hba);
+-
+ 	return ret;
+ }
+ 
+@@ -9250,7 +9242,15 @@ static int __ufshcd_wl_resume(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 		} else {
+ 			dev_err(hba->dev, "%s: hibern8 exit failed %d\n",
+ 					__func__, ret);
+-			goto vendor_suspend;
++			/*
++			 * If the h8 exit fails during the runtime resume
++			 * process, it becomes stuck and cannot be recovered
++			 * through the error handler. To fix this, use link
++			 * recovery instead of the error handler.
++			 */
++			ret = ufshcd_link_recovery(hba);
++			if (ret)
++				goto vendor_suspend;
+ 		}
+ 	} else if (ufshcd_is_link_off(hba)) {
+ 		/*
 -- 
 2.51.0
 
