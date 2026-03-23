@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31193BA240;
-	Mon, 23 Mar 2026 16:19:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD52C2517AF;
+	Mon, 23 Mar 2026 16:19:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282765; cv=none; b=JpMp3etOaLltT4myoZ9T3Zmf7FRMPSZNOuY1lR9B56kTGviabI3Yq6sZcoKSC3ftJz2/xv2CJX9CEn5ns5WMGWghRZ2wim4zHjPZvdMxYjRY5IXR1GGICxUBgYrzDtpiAw8ks5oQWwfQqZwWIdXOAvg/VjB3znjmzcOcYEdR50M=
+	t=1774282767; cv=none; b=oMaL4HDbWDK+gB7R8Jrx/+UFTVMNF1dN7UyIsiaSWUKC9YnxR2RN6WI4ZFWv56eISiKDaQUJFEXowu7mj9QL+Z9pDC42en+ZS+O54NExWA6s99E6RBIrNx8o1BJZvxLDVoGQgJfXcZYHG1XjsBlw4ocAZe67YQWORyEERcxEqRQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282765; c=relaxed/simple;
-	bh=v3V47TfK41LQ81uAhGsj4yG6VEaoKKFbqEdIvaKHE0U=;
+	s=arc-20240116; t=1774282767; c=relaxed/simple;
+	bh=3uyPiV1d5YXfu4qQA30EhT/VdxSMKSDFZajoMQxB2rk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qZv0lAkHcFcBXUE9sOfQ0Trr3GZij5yO2hum50bD5F5wt9TTTR8F+NgMjDOHiCJZy6uOJVYTo8rDBHyWiczxNU5XjQzUsohtoBTJGUhMXEYRae0ToSnrGTuRYTcCrjvEX4hI6GCO9lTOFZ6B1ADzLFjhJA0WfwYoKIy3aMM9p0k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HhTTmgc2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UGVN7JITyFK0zNlZwCzpmm3DyN4cRn45hE68WDDsNF5Pl5VW3bnHmBjGwU1hFr7a0PlysooD1+NYW2KMsz95hYMavsb8eurn5WJ4EiiEjEMtT1Do6CN/9gsMFCV7rkq+hylCWbY66Q6Xy8JqvzIr1lmzbTvLeGIx1M6Lb88CUjs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PK5FH7+d; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HhTTmgc2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 820E1C4CEF7;
-	Mon, 23 Mar 2026 16:19:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PK5FH7+d"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E486C4CEF7;
+	Mon, 23 Mar 2026 16:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282764;
-	bh=v3V47TfK41LQ81uAhGsj4yG6VEaoKKFbqEdIvaKHE0U=;
+	s=korg; t=1774282767;
+	bh=3uyPiV1d5YXfu4qQA30EhT/VdxSMKSDFZajoMQxB2rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HhTTmgc2QabkUeUExpHcBFFG+KePPNLyx7Nz6hblEflsbcdkdND3EP9YAe5eoIEol
-	 TyuAo+msWvxhM7PDCy90YBAJLbFrNgEbLAP5vIwwL6i/xng1lQ4XY9103glBaFmZxa
-	 MrPxprjegjipe7pdZxe0GvCRB9ols5TcqY1bNELA=
+	b=PK5FH7+dnrEJbJ30SAPB7b78/AAwYLkqAxoR9Yy/m49YPP2NuwJq8IibOaRLTfnCv
+	 yXBo7stOhx0hkaXGRM9egEAmod83h3jgKry7Zwv1S+z4ag5UPF6zmpZVutKdccmGSl
+	 jhoxdxa9Thus0gd91CqczBag2+gmjwsgvJJKHUgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 275/481] i3c: mipi-i3c-hci: Add missing TID field to no-op command descriptor
-Date: Mon, 23 Mar 2026 14:44:17 +0100
-Message-ID: <20260323134531.827483023@linuxfoundation.org>
+	John Ripple <john.ripple@keysight.com>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.1 276/481] drm/bridge: ti-sn65dsi86: Add support for DisplayPort mode with HPD
+Date: Mon, 23 Mar 2026 14:44:18 +0100
+Message-ID: <20260323134531.849785301@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,54 +50,224 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: John Ripple <john.ripple@keysight.com>
 
-commit ec3cfd835f7c4bbd23bc9ad909d2fdc772a578bb upstream.
+commit 9133bc3f0564890218cbba6cc7e81ebc0841a6f1 upstream.
 
-The internal control command descriptor used for no-op commands includes a
-Transaction ID (TID) field, but the no-op command constructed in
-hci_dma_dequeue_xfer() omitted it.  As a result, the hardware receives a
-no-op descriptor without the expected TID.
+Add support for DisplayPort to the bridge, which entails the following:
+- Get and use an interrupt for HPD;
+- Properly clear all status bits in the interrupt handler;
 
-This bug has gone unnoticed because the TID is currently not validated in
-the no-op completion path, but the descriptor format requires it to be
-present.
-
-Add the missing TID field when generating a no-op descriptor so that its
-layout matches the defined command structure.
-
-Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-10-adrian.hunter@intel.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Signed-off-by: John Ripple <john.ripple@keysight.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20250915174543.2564994-1-john.ripple@keysight.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/cmd.h |    1 +
- drivers/i3c/master/mipi-i3c-hci/dma.c |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c |  112 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 112 insertions(+)
 
---- a/drivers/i3c/master/mipi-i3c-hci/cmd.h
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd.h
-@@ -17,6 +17,7 @@
- #define CMD_0_TOC			W0_BIT_(31)
- #define CMD_0_ROC			W0_BIT_(30)
- #define CMD_0_ATTR			W0_MASK(2, 0)
-+#define CMD_0_TID			W0_MASK(6, 3)
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -106,10 +106,21 @@
+ #define SN_PWM_EN_INV_REG			0xA5
+ #define  SN_PWM_INV_MASK			BIT(0)
+ #define  SN_PWM_EN_MASK				BIT(1)
++
++#define SN_IRQ_EN_REG				0xE0
++#define  IRQ_EN					BIT(0)
++
++#define SN_IRQ_EVENTS_EN_REG			0xE6
++#define  HPD_INSERTION_EN			BIT(1)
++#define  HPD_REMOVAL_EN				BIT(2)
++
+ #define SN_AUX_CMD_STATUS_REG			0xF4
+ #define  AUX_IRQ_STATUS_AUX_RPLY_TOUT		BIT(3)
+ #define  AUX_IRQ_STATUS_AUX_SHORT		BIT(5)
+ #define  AUX_IRQ_STATUS_NAT_I2C_FAIL		BIT(6)
++#define SN_IRQ_STATUS_REG			0xF5
++#define  HPD_REMOVAL_STATUS			BIT(2)
++#define  HPD_INSERTION_STATUS			BIT(1)
  
- /*
-  * Response Descriptor Structure
---- a/drivers/i3c/master/mipi-i3c-hci/dma.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
-@@ -473,7 +473,7 @@ static bool hci_dma_dequeue_xfer(struct
- 			u32 *ring_data = rh->xfer + rh->xfer_struct_sz * idx;
+ #define MIN_DSI_CLK_FREQ_MHZ	40
  
- 			/* store no-op cmd descriptor */
--			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7);
-+			*ring_data++ = FIELD_PREP(CMD_0_ATTR, 0x7) | FIELD_PREP(CMD_0_TID, xfer->cmd_tid);
- 			*ring_data++ = 0;
- 			if (hci->cmd == &mipi_i3c_hci_cmd_v2) {
- 				*ring_data++ = 0;
+@@ -152,7 +163,9 @@
+  * @ln_assign:    Value to program to the LN_ASSIGN register.
+  * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
+  * @comms_enabled: If true then communication over the aux channel is enabled.
++ * @hpd_enabled:   If true then HPD events are enabled.
+  * @comms_mutex:   Protects modification of comms_enabled.
++ * @hpd_mutex:     Protects modification of hpd_enabled.
+  *
+  * @gchip:        If we expose our GPIOs, this is used.
+  * @gchip_output: A cache of whether we've set GPIOs to output.  This
+@@ -190,7 +203,9 @@ struct ti_sn65dsi86 {
+ 	u8				ln_assign;
+ 	u8				ln_polrs;
+ 	bool				comms_enabled;
++	bool				hpd_enabled;
+ 	struct mutex			comms_mutex;
++	struct mutex			hpd_mutex;
+ 
+ #if defined(CONFIG_OF_GPIO)
+ 	struct gpio_chip		gchip;
+@@ -221,6 +236,23 @@ static const struct regmap_config ti_sn6
+ 	.max_register = 0xFF,
+ };
+ 
++static int ti_sn65dsi86_read_u8(struct ti_sn65dsi86 *pdata, unsigned int reg,
++				u8 *val)
++{
++	int ret;
++	unsigned int reg_val;
++
++	ret = regmap_read(pdata->regmap, reg, &reg_val);
++	if (ret) {
++		dev_err(pdata->dev, "fail to read raw reg %#x: %d\n",
++			reg, ret);
++		return ret;
++	}
++	*val = (u8)reg_val;
++
++	return 0;
++}
++
+ static int __maybe_unused ti_sn65dsi86_read_u16(struct ti_sn65dsi86 *pdata,
+ 						unsigned int reg, u16 *val)
+ {
+@@ -362,6 +394,7 @@ static void ti_sn65dsi86_disable_comms(s
+ static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
+ {
+ 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(dev);
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
+ 	int ret;
+ 
+ 	ret = regulator_bulk_enable(SN_REGULATOR_SUPPLY_NUM, pdata->supplies);
+@@ -396,6 +429,13 @@ static int __maybe_unused ti_sn65dsi86_r
+ 	if (pdata->refclk)
+ 		ti_sn65dsi86_enable_comms(pdata);
+ 
++	if (client->irq) {
++		ret = regmap_update_bits(pdata->regmap, SN_IRQ_EN_REG, IRQ_EN,
++					 IRQ_EN);
++		if (ret)
++			dev_err(pdata->dev, "Failed to enable IRQ events: %d\n", ret);
++	}
++
+ 	return ret;
+ }
+ 
+@@ -1204,6 +1244,8 @@ static void ti_sn65dsi86_debugfs_init(st
+ static void ti_sn_bridge_hpd_enable(struct drm_bridge *bridge)
+ {
+ 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
++	int ret;
+ 
+ 	/*
+ 	 * Device needs to be powered on before reading the HPD state
+@@ -1212,11 +1254,35 @@ static void ti_sn_bridge_hpd_enable(stru
+ 	 */
+ 
+ 	pm_runtime_get_sync(pdata->dev);
++
++	mutex_lock(&pdata->hpd_mutex);
++	pdata->hpd_enabled = true;
++	mutex_unlock(&pdata->hpd_mutex);
++
++	if (client->irq) {
++		ret = regmap_set_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
++				      HPD_REMOVAL_EN | HPD_INSERTION_EN);
++		if (ret)
++			dev_err(pdata->dev, "Failed to enable HPD events: %d\n", ret);
++	}
+ }
+ 
+ static void ti_sn_bridge_hpd_disable(struct drm_bridge *bridge)
+ {
+ 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
++	int ret;
++
++	if (client->irq) {
++		ret = regmap_clear_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
++					HPD_REMOVAL_EN | HPD_INSERTION_EN);
++		if (ret)
++			dev_err(pdata->dev, "Failed to disable HPD events: %d\n", ret);
++	}
++
++	mutex_lock(&pdata->hpd_mutex);
++	pdata->hpd_enabled = false;
++	mutex_unlock(&pdata->hpd_mutex);
+ 
+ 	pm_runtime_put_autosuspend(pdata->dev);
+ }
+@@ -1302,6 +1368,41 @@ static int ti_sn_bridge_parse_dsi_host(s
+ 	return 0;
+ }
+ 
++static irqreturn_t ti_sn_bridge_interrupt(int irq, void *private)
++{
++	struct ti_sn65dsi86 *pdata = private;
++	struct drm_device *dev = pdata->bridge.dev;
++	u8 status;
++	int ret;
++	bool hpd_event;
++
++	ret = ti_sn65dsi86_read_u8(pdata, SN_IRQ_STATUS_REG, &status);
++	if (ret) {
++		dev_err(pdata->dev, "Failed to read IRQ status: %d\n", ret);
++		return IRQ_NONE;
++	}
++
++	hpd_event = status & (HPD_REMOVAL_STATUS | HPD_INSERTION_STATUS);
++
++	dev_dbg(pdata->dev, "(SN_IRQ_STATUS_REG = %#x)\n", status);
++	if (!status)
++		return IRQ_NONE;
++
++	ret = regmap_write(pdata->regmap, SN_IRQ_STATUS_REG, status);
++	if (ret) {
++		dev_err(pdata->dev, "Failed to clear IRQ status: %d\n", ret);
++		return IRQ_NONE;
++	}
++
++	/* Only send the HPD event if we are bound with a device. */
++	mutex_lock(&pdata->hpd_mutex);
++	if (pdata->hpd_enabled && hpd_event)
++		drm_kms_helper_hotplug_event(dev);
++	mutex_unlock(&pdata->hpd_mutex);
++
++	return IRQ_HANDLED;
++}
++
+ static int ti_sn_bridge_probe(struct auxiliary_device *adev,
+ 			      const struct auxiliary_device_id *id)
+ {
+@@ -1933,6 +2034,7 @@ static int ti_sn65dsi86_probe(struct i2c
+ 	dev_set_drvdata(dev, pdata);
+ 	pdata->dev = dev;
+ 
++	mutex_init(&pdata->hpd_mutex);
+ 	mutex_init(&pdata->comms_mutex);
+ 
+ 	pdata->regmap = devm_regmap_init_i2c(client,
+@@ -1963,6 +2065,16 @@ static int ti_sn65dsi86_probe(struct i2c
+ 	if (ret)
+ 		return ret;
+ 
++	if (client->irq) {
++		ret = devm_request_threaded_irq(pdata->dev, client->irq, NULL,
++						ti_sn_bridge_interrupt,
++						IRQF_ONESHOT,
++						dev_name(pdata->dev), pdata);
++
++		if (ret)
++			return dev_err_probe(dev, ret, "failed to request interrupt\n");
++	}
++
+ 	/*
+ 	 * Break ourselves up into a collection of aux devices. The only real
+ 	 * motiviation here is to solve the chicken-and-egg problem of probe
 
 
