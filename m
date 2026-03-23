@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527F03BC666;
-	Mon, 23 Mar 2026 16:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 692383C061F;
+	Mon, 23 Mar 2026 16:29:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283372; cv=none; b=XJERX/TyLDUkKVD8ENroDmxyItuDiXT17j07R8brKysUlyXCF9/MSJfR4Eb1qUfbQz9UHDzeZ8l4mpoq9Sodldkqkxv20WrppFlQunnQFgWkVcGBa3AJ/wzOBPJVFwN5PZpXpNqHpmYAFlW9BbIbw61qfStDIbgIw0hwDj48gR4=
+	t=1774283375; cv=none; b=HOVzj40DRcPhxkhdtwEL3emrHcUNVK8IzSDY7vDyy/h4w+UhPfOQrzNZF8ETbHTGfxyMafRVLLkmqFHGdiJ5ob+XP0J1rdRWjmxs2ltSB3hBX2g5UddFGHJuevzHbDSslLMCcmOai6HOfZJwQW1DxRCfV/H3E8hYllwo0qUzvhw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283372; c=relaxed/simple;
-	bh=3adE1lrSVhu7muIYGjUPxg+Q05VuPN9jkF6WiFyea+c=;
+	s=arc-20240116; t=1774283375; c=relaxed/simple;
+	bh=kpv3JNX7bQfo8rEqNJ7+gaIn/fH7gfBsrz/Rgdpr0XQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DcYP86tAB7ASWVSwvu5pqbyJeCVh1L0CxziYt13BA93Pbbp+HXEXTy/2kHXYcvSlTk3tiU7SkbtBdf4/eMDVVR8QBrVzRsIdLhDDra6xden5fkEOr78mGx5ubosB4bHvwsnNWumydXJ2eUBZ9/MqiZjkhOlb99EGNDrmVuQk7EA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=xLJ7i+/9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SV55XovX19Hpq8QNSD7lf36dPpgBsxYCDG8HE7Eqq15yB48Ia66tEmWRK68Dgn4QqiMtzi12XKLDBATd1R2S+3AtyN4NX+XseE2iFeUH6SgPBdlSQ7gdDIGhChUj6sWOlcD6mRAu2EvWWGgbfBYKTwUC+xkMi2/1DFNm0jHEPoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=t5mQpWMy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="xLJ7i+/9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6866C4CEF7;
-	Mon, 23 Mar 2026 16:29:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="t5mQpWMy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBF2FC4CEF7;
+	Mon, 23 Mar 2026 16:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283372;
-	bh=3adE1lrSVhu7muIYGjUPxg+Q05VuPN9jkF6WiFyea+c=;
+	s=korg; t=1774283375;
+	bh=kpv3JNX7bQfo8rEqNJ7+gaIn/fH7gfBsrz/Rgdpr0XQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLJ7i+/9zRbgJRFOeb3HoURbuZN9HaaNBCfCibHWg6twgoCmLFZ3lXfmysOXTH4+M
-	 oCkp1x2dak19OzVrU5PPqXuWteOeep6yTr0Z0swalPvw8i+fSqvbtF5rCoT5yjWPNd
-	 CzVmnJyGQJPH/IMFxcpdrr5pt2bznhJPf/q86kBc=
+	b=t5mQpWMyvhkyHJLNtKVrmkbk//bz7BigMEjcyhTK0pg3WtArBjVkxB2+I0B/TZDn6
+	 virfUJqg4o2sAMwaMQMK9Sx8gqDWiyeH+TpWK9i+AnrI/9Voj4WmdNfY4yZfA//lK2
+	 JdN+9XrlN2W1v62lMGwh+10wiitZmAt/nHY1UwOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>,
-	Johnny Hao <johnny_haocn@sina.com>
-Subject: [PATCH 6.1 472/481] dlm: fix possible lkb_resource null dereference
-Date: Mon, 23 Mar 2026 14:47:34 +0100
-Message-ID: <20260323134536.721033111@linuxfoundation.org>
+	"pablo@netfilter.org, netdev@vger.kernel.org, sbrivio@redhat.com, XiaoHua Wang" <561399680@139.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	XiaoHua Wang <561399680@139.com>
+Subject: [PATCH 6.1 473/481] netfilter: nf_tables: missing objects with no memcg accounting
+Date: Mon, 23 Mar 2026 14:47:35 +0100
+Message-ID: <20260323134536.746057873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,60 +51,175 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit b98333c67daf887c724cd692e88e2db9418c0861 ]
+[ Upstream commit 69e687cea79fc99a17dfb0116c8644b9391b915e ]
 
-This patch fixes a possible null pointer dereference when this function is
-called from request_lock() as lkb->lkb_resource is not assigned yet,
-only after validate_lock_args() by calling attach_lkb(). Another issue
-is that a resource name could be a non printable bytearray and we cannot
-assume to be ASCII coded.
+Several ruleset objects are still not using GFP_KERNEL_ACCOUNT for
+memory accounting, update them. This includes:
 
-The log functionality is probably never being hit when DLM is used in
-normal way and no debug logging is enabled. The null pointer dereference
-can only occur on a new created lkb that does not have the resource
-assigned yet, it probably never hits the null pointer dereference but we
-should be sure that other changes might not change this behaviour and we
-actually can hit the mentioned null pointer dereference.
+- catchall elements
+- compat match large info area
+- log prefix
+- meta secctx
+- numgen counters
+- pipapo set backend datastructure
+- tunnel private objects
 
-In this patch we just drop the printout of the resource name, the lkb id
-is enough to make a possible connection to a resource name if this
-exists.
-
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-[ The context change is due to the commit e1af8728f600
-("fs: dlm: move internal flags to atomic ops") in v6.4
-which is irrelevant to the logic of this patch. ]
-Signed-off-by: Johnny Hao <johnny_haocn@sina.com>
+Fixes: 33758c891479 ("memcg: enable accounting for nft objects")
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+[ The function pipapo_realloc_mt() does not exist in 6.1.y,
+so the fix for pipapo_realloc_mt() was not backported. ]
+Signed-off-by: XiaoHua Wang <561399680@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lock.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/netfilter/nf_tables_api.c  |    2 +-
+ net/netfilter/nft_compat.c     |    6 +++---
+ net/netfilter/nft_log.c        |    2 +-
+ net/netfilter/nft_meta.c       |    2 +-
+ net/netfilter/nft_numgen.c     |    2 +-
+ net/netfilter/nft_set_pipapo.c |   10 +++++-----
+ net/netfilter/nft_tunnel.c     |    5 +++--
+ 7 files changed, 15 insertions(+), 14 deletions(-)
 
---- a/fs/dlm/lock.c
-+++ b/fs/dlm/lock.c
-@@ -2908,16 +2908,14 @@ static int validate_lock_args(struct dlm
- 	case -EINVAL:
- 		/* annoy the user because dlm usage is wrong */
- 		WARN_ON(1);
--		log_error(ls, "%s %d %x %x %x %d %d %s", __func__,
-+		log_error(ls, "%s %d %x %x %x %d %d", __func__,
- 			  rv, lkb->lkb_id, lkb->lkb_flags, args->flags,
--			  lkb->lkb_status, lkb->lkb_wait_type,
--			  lkb->lkb_resource->res_name);
-+			  lkb->lkb_status, lkb->lkb_wait_type);
- 		break;
- 	default:
--		log_debug(ls, "%s %d %x %x %x %d %d %s", __func__,
-+		log_debug(ls, "%s %d %x %x %x %d %d", __func__,
- 			  rv, lkb->lkb_id, lkb->lkb_flags, args->flags,
--			  lkb->lkb_status, lkb->lkb_wait_type,
--			  lkb->lkb_resource->res_name);
-+			  lkb->lkb_status, lkb->lkb_wait_type);
- 		break;
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6177,7 +6177,7 @@ static int nft_setelem_catchall_insert(c
+ 		}
  	}
  
+-	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL);
++	catchall = kmalloc(sizeof(*catchall), GFP_KERNEL_ACCOUNT);
+ 	if (!catchall)
+ 		return -ENOMEM;
+ 
+--- a/net/netfilter/nft_compat.c
++++ b/net/netfilter/nft_compat.c
+@@ -537,7 +537,7 @@ nft_match_large_init(const struct nft_ct
+ 	struct xt_match *m = expr->ops->data;
+ 	int ret;
+ 
+-	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL);
++	priv->info = kmalloc(XT_ALIGN(m->matchsize), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->info)
+ 		return -ENOMEM;
+ 
+@@ -814,7 +814,7 @@ nft_match_select_ops(const struct nft_ct
+ 		goto err;
+ 	}
+ 
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+@@ -904,7 +904,7 @@ nft_target_select_ops(const struct nft_c
+ 		goto err;
+ 	}
+ 
+-	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL);
++	ops = kzalloc(sizeof(struct nft_expr_ops), GFP_KERNEL_ACCOUNT);
+ 	if (!ops) {
+ 		err = -ENOMEM;
+ 		goto err;
+--- a/net/netfilter/nft_log.c
++++ b/net/netfilter/nft_log.c
+@@ -163,7 +163,7 @@ static int nft_log_init(const struct nft
+ 
+ 	nla = tb[NFTA_LOG_PREFIX];
+ 	if (nla != NULL) {
+-		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL);
++		priv->prefix = kmalloc(nla_len(nla) + 1, GFP_KERNEL_ACCOUNT);
+ 		if (priv->prefix == NULL)
+ 			return -ENOMEM;
+ 		nla_strscpy(priv->prefix, nla, nla_len(nla) + 1);
+--- a/net/netfilter/nft_meta.c
++++ b/net/netfilter/nft_meta.c
+@@ -888,7 +888,7 @@ static int nft_secmark_obj_init(const st
+ 	if (tb[NFTA_SECMARK_CTX] == NULL)
+ 		return -EINVAL;
+ 
+-	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL);
++	priv->ctx = nla_strdup(tb[NFTA_SECMARK_CTX], GFP_KERNEL_ACCOUNT);
+ 	if (!priv->ctx)
+ 		return -ENOMEM;
+ 
+--- a/net/netfilter/nft_numgen.c
++++ b/net/netfilter/nft_numgen.c
+@@ -66,7 +66,7 @@ static int nft_ng_inc_init(const struct
+ 	if (priv->offset + priv->modulus - 1 < priv->offset)
+ 		return -EOVERFLOW;
+ 
+-	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL);
++	priv->counter = kmalloc(sizeof(*priv->counter), GFP_KERNEL_ACCOUNT);
+ 	if (!priv->counter)
+ 		return -ENOMEM;
+ 
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -874,7 +874,7 @@ static void pipapo_lt_bits_adjust(struct
+ 		return;
+ 	}
+ 
+-	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL);
++	new_lt = kvzalloc(lt_size + NFT_PIPAPO_ALIGN_HEADROOM, GFP_KERNEL_ACCOUNT);
+ 	if (!new_lt)
+ 		return;
+ 
+@@ -1150,7 +1150,7 @@ static int pipapo_realloc_scratch(struct
+ 		scratch = kzalloc_node(struct_size(scratch, map,
+ 						   bsize_max * 2) +
+ 				       NFT_PIPAPO_ALIGN_HEADROOM,
+-				       GFP_KERNEL, cpu_to_node(i));
++				       GFP_KERNEL_ACCOUNT, cpu_to_node(i));
+ 		if (!scratch) {
+ 			/* On failure, there's no need to undo previous
+ 			 * allocations: this means that some scratch maps have
+@@ -1324,7 +1324,7 @@ static struct nft_pipapo_match *pipapo_c
+ 	int i;
+ 
+ 	new = kmalloc(sizeof(*new) + sizeof(*dst) * old->field_count,
+-		      GFP_KERNEL);
++		      GFP_KERNEL_ACCOUNT);
+ 	if (!new)
+ 		return ERR_PTR(-ENOMEM);
+ 
+@@ -1354,7 +1354,7 @@ static struct nft_pipapo_match *pipapo_c
+ 		new_lt = kvzalloc(src->groups * NFT_PIPAPO_BUCKETS(src->bb) *
+ 				  src->bsize * sizeof(*dst->lt) +
+ 				  NFT_PIPAPO_ALIGN_HEADROOM,
+-				  GFP_KERNEL);
++				  GFP_KERNEL_ACCOUNT);
+ 		if (!new_lt)
+ 			goto out_lt;
+ 
+@@ -1368,7 +1368,7 @@ static struct nft_pipapo_match *pipapo_c
+ 		if (src->rules > (INT_MAX / sizeof(*src->mt)))
+ 			goto out_mt;
+ 
+-		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL);
++		dst->mt = kvmalloc(src->rules * sizeof(*src->mt), GFP_KERNEL_ACCOUNT);
+ 		if (!dst->mt)
+ 			goto out_mt;
+ 
+--- a/net/netfilter/nft_tunnel.c
++++ b/net/netfilter/nft_tunnel.c
+@@ -503,13 +503,14 @@ static int nft_tunnel_obj_init(const str
+ 			return err;
+ 	}
+ 
+-	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL, GFP_KERNEL);
++	md = metadata_dst_alloc(priv->opts.len, METADATA_IP_TUNNEL,
++				GFP_KERNEL_ACCOUNT);
+ 	if (!md)
+ 		return -ENOMEM;
+ 
+ 	memcpy(&md->u.tun_info, &info, sizeof(info));
+ #ifdef CONFIG_DST_CACHE
+-	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL);
++	err = dst_cache_init(&md->u.tun_info.dst_cache, GFP_KERNEL_ACCOUNT);
+ 	if (err < 0) {
+ 		metadata_dst_free(md);
+ 		return err;
 
 
