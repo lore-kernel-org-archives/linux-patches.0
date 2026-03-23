@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D8223B612;
-	Mon, 23 Mar 2026 14:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FEE26A08F;
+	Mon, 23 Mar 2026 14:47:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277267; cv=none; b=iZdr1dJmulPTke3oHyrUFJrzsh5H9SaN4Y1hMYMiiOJ/Vxkdb5BW5w5Wog1pd+UckRPMnrKYwKyARWrVamC5Cr78jzjEWmOH1NiK7k8sDUop1KXBxbAYLTdaFud/Gm/MK/yCYfPiXL/VoepJNQmykaQZfNuaQ6cv9Cm0RC6jZUE=
+	t=1774277270; cv=none; b=JNeel0AfCdaacja0+B0WH8qnmJVR+aEI0Ohf2opqQAjckeDTSMsnkQmnHnrNIgfzJ75gE5s08rwzC6lWxpfAfnFMiEcTathH4f8Oq1vCY5/SBD8YftUfw4rn0Gj+6oBjB74jU6eag5qfDDS+JUMF4b29Gaa9ZsdtXSN9rsenuMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277267; c=relaxed/simple;
-	bh=jrSvoygXL3NizDn8AVMc2UON2diNtrSAmKlaL+iijGQ=;
+	s=arc-20240116; t=1774277270; c=relaxed/simple;
+	bh=DadZw4+B722EkGymkEsZ3eHgdLYtEEV5wXChFDZUgeg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VZXyDXsz9QEmJvJw5uzW1V2ZxeLPTsLKWrrfrvdk4tBANttcFI+n4rhYQWKosWGbGoTlgMqDBDuODjiTEOuz+i4baBkIQhgXdx1SrFDHRUjqAce7MlLuW/pFpcOYprv6uAL+zjGkYEx/15FVnQ7bc6V4SBxn+WoGzKlSDueATkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZnCDVfNu; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oV20F0gJU1PhdvdvIrmKX78zUiKOQChssRNolGis552+Ks40849ZFitsgbTfCQYrwlDWsy6bkGO3jzlIAwsO1gGFrKALbgbmjk86d5/o5iJeGc7z2sVvkXVQQZoBrV9Hd92aR6qrFQed6UsQr0l66eZI9sAtBObtEYm3fis5W3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=v59LpJh4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZnCDVfNu"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DB54C2BC9E;
-	Mon, 23 Mar 2026 14:47:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="v59LpJh4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72BEC2BCB5;
+	Mon, 23 Mar 2026 14:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277267;
-	bh=jrSvoygXL3NizDn8AVMc2UON2diNtrSAmKlaL+iijGQ=;
+	s=korg; t=1774277270;
+	bh=DadZw4+B722EkGymkEsZ3eHgdLYtEEV5wXChFDZUgeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnCDVfNuDrxL3G9QfAJ0hRQp4Vx1N5v9J6KfGPTU0oyqIgAhS4IHeZOyJF70QQcs8
-	 +G3aQHSHsKMXr1vSe2yjENWx/ZD8Rb7BuVnBa3XN0LCacYRVgPliSUjcE4BRLtsU1+
-	 pQTqMdDbLmjyzlyv7Ug0+S6rtJ55bAg1nluOMyds=
+	b=v59LpJh4vIPTEyQjzs98UWS/+DgjgDSRlbmd1y2m0eApXbc6C4eO2Q3z4zqUHI7yO
+	 MgwM6CDu0GXCLscSItzZ5Z+OAgBlvBRJNwNqav12px1UR4qCh/dQPJvqYDAnMQoBDo
+	 Lwe0IL3BDyk4lJmrPMJAFYW5yd/xkrUplG0S6nTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 375/460] wifi: cfg80211: cancel pmsr_free_wk in cfg80211_pmsr_wdev_down
-Date: Mon, 23 Mar 2026 14:46:11 +0100
-Message-ID: <20260323134535.780726847@linuxfoundation.org>
+Subject: [PATCH 6.12 376/460] arm64: dts: renesas: r9a09g057: Add RTC node
+Date: Mon, 23 Mar 2026 14:46:12 +0100
+Message-ID: <20260323134535.806760815@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,49 +51,48 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
 
-[ Upstream commit 6dccbc9f3e1d38565dff7730d2b7d1e8b16c9b09 ]
+[ Upstream commit cfc733da4e79018f88d8ac5f3a5306abbba8ef89 ]
 
-When the nl80211 socket that originated a PMSR request is
-closed, cfg80211_release_pmsr() sets the request's nl_portid
-to zero and schedules pmsr_free_wk to process the abort
-asynchronously. If the interface is concurrently torn down
-before that work runs, cfg80211_pmsr_wdev_down() calls
-cfg80211_pmsr_process_abort() directly. However, the already-
-scheduled pmsr_free_wk work item remains pending and may run
-after the interface has been removed from the driver. This
-could cause the driver's abort_pmsr callback to operate on a
-torn-down interface, leading to undefined behavior and
-potential crashes.
+Add RTC node to Renesas RZ/V2H ("R9A09G057") SoC DTSI.
 
-Cancel pmsr_free_wk synchronously in cfg80211_pmsr_wdev_down()
-before calling cfg80211_pmsr_process_abort(). This ensures any
-pending or in-progress work is drained before interface teardown
-proceeds, preventing the work from invoking the driver abort
-callback after the interface is gone.
-
-Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
-Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260305160712.1263829-3-peddolla.reddy@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20251107210706.45044-4-ovidiu.panait.rb@renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Stable-dep-of: a3f34651de42 ("arm64: dts: renesas: r9a09g057: Remove wdt{0,2,3} nodes")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/renesas/r9a09g057.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index 0396fa19bdf19..d2b61b6ba58db 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -647,6 +647,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
- 	}
- 	spin_unlock_bh(&wdev->pmsr_lock);
+diff --git a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
+index 1ad5a1b6917fe..4676ee7561395 100644
+--- a/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
++++ b/arch/arm64/boot/dts/renesas/r9a09g057.dtsi
+@@ -241,6 +241,21 @@ wdt3: watchdog@13000400 {
+ 			status = "disabled";
+ 		};
  
-+	cancel_work_sync(&wdev->pmsr_free_wk);
- 	if (found)
- 		cfg80211_pmsr_process_abort(wdev);
- 
++		rtc: rtc@11c00800 {
++			compatible = "renesas,r9a09g057-rtca3", "renesas,rz-rtca3";
++			reg = <0 0x11c00800 0 0x400>;
++			interrupts = <GIC_SPI 524 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 525 IRQ_TYPE_EDGE_RISING>,
++				     <GIC_SPI 526 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "alarm", "period", "carry";
++			clocks = <&cpg CPG_MOD 0x53>, <&rtxin_clk>;
++			clock-names = "bus", "counter";
++			power-domains = <&cpg>;
++			resets = <&cpg 0x79>, <&cpg 0x7a>;
++			reset-names = "rtc", "rtest";
++			status = "disabled";
++		};
++
+ 		scif: serial@11c01400 {
+ 			compatible = "renesas,scif-r9a09g057";
+ 			reg = <0 0x11c01400 0 0x400>;
 -- 
 2.51.0
 
