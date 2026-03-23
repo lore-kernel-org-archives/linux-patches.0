@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F34381B03;
-	Mon, 23 Mar 2026 13:59:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830003AB27F;
+	Mon, 23 Mar 2026 14:00:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274398; cv=none; b=fRargaZyLC3+/OEZZssJAJ7ytRucXW8RqpTjpIbyONzmLXZO5T9sWVbzKEFiouQbG3vT+8UgmRtqDvGRX5nngUkJKsn+4LMJBvm1/vhM9o8Rl47mSQtXrIWJegJ5IVYEpI+c1y50qOcTK9XNJtmrddf2tyJGZv5acnqa/vURnnM=
+	t=1774274402; cv=none; b=BAi0OnQ0sWv+SiEa1gQeVlVIzEJs71UpG3WYc+1GaYMP2jvT2d0ZQEi1afwhG1fzuhx4LHWDnI7xVpQ7NX5Uk9M4aiuUvC2Vv+sqzayvvzrqH3yaa/jgUndts809PwygXMptAktJPAdj/aDmUzcqNeEBiYvBMKladrtyE9vE6pg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274398; c=relaxed/simple;
-	bh=jqLV8td1CH9wKICFIDxRC/4XQ+mOQ1LxRIV3kBZcyl8=;
+	s=arc-20240116; t=1774274402; c=relaxed/simple;
+	bh=UzvTfDE88vnBKsv+w89wHweCGhssCNnxYW17lTHJbZ0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pekRUBzPHRtdhczxbfrrzx8kXpZJQUiX7Wh2Wbh3+G6t34dgVYc3aVrlI7RKozee68VDMDxU8wyZgA8MqYmRweF6SWMA8wZ2Z9DMNpE2B9A8dgQGbMO1Z093TBr1qkb8ijdYv+x3fL/Kxwvh8Gf4BU0QVVyNICiHRYGWAmbTqLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CpBXYG5s; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=GwfvCJqm5u89pfaSfgp2f8yYm/hLgBV4k9vc4y5yTUrQX/r3ukwDUyAytVjXmcbdH0pqSZ1C1xMCPLMl8Qtq/BbSqER3PnjhjvnpfpVsGUkWg9B6EsFx6AV7cUyvmezFcrM/19nr8kNKEdbpcNpoEUDoRiG0DUiAjLAWOYxDCXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LskZTgEs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CpBXYG5s"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0EAFC2BCB4;
-	Mon, 23 Mar 2026 13:59:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LskZTgEs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A42ABC2BCB6;
+	Mon, 23 Mar 2026 14:00:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274398;
-	bh=jqLV8td1CH9wKICFIDxRC/4XQ+mOQ1LxRIV3kBZcyl8=;
+	s=korg; t=1774274402;
+	bh=UzvTfDE88vnBKsv+w89wHweCGhssCNnxYW17lTHJbZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CpBXYG5sRm2wmrkBgKM15TzMphOomRwC7Aqqg746B7Cg1nIBB5WmKOwZaDtE6b38f
-	 Mj/ghYD8oujdZMi2CKV8VnMm+l9OUBKCx5LI9sIA/LrvZklDJHhPsg/EIAlaE3smTU
-	 tugwMmyuW3o/8I2k7Ih02kAFbO+vTjM3CHdnl3c8=
+	b=LskZTgEs2S8pA26uEsn+FIKBkQc4A7oR5kIltt+cr+GSGyanLNUeQPpittIrHloXh
+	 x5l3vQ4fOr2QAjEuAQNLbSafjX0/CfNOO1XPLpn3uYfXQCslK7buN9Qzn31YrnfXnB
+	 RjDbhaN3LTq9+KMk3e/kHTcLd30SsoyGk2L6q9CA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Mika=20Penttil=C3=A4?= <mpenttil@redhat.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Maaz Mombasawala <maaz.mombasawala@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 204/220] spi: amlogic-spisg: Fix memory leak in aml_spisg_probe()
-Date: Mon, 23 Mar 2026 14:46:21 +0100
-Message-ID: <20260323134511.015509800@linuxfoundation.org>
+Subject: [PATCH 6.19 205/220] drm/vmwgfx: Dont overwrite KMS surface dirty tracker
+Date: Mon, 23 Mar 2026 14:46:22 +0100
+Message-ID: <20260323134511.045663705@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -45,72 +47,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit b8db9552997924b750e727a625a30eaa4603bbb9 ]
+[ Upstream commit c6cb77c474a32265e21c4871c7992468bf5e7638 ]
 
-In aml_spisg_probe(), ctlr is allocated by
-spi_alloc_target()/spi_alloc_host(), but fails to call
-spi_controller_put() in several error paths. This leads
-to a memory leak whenever the driver fails to probe after
-the initial allocation.
+We were overwriting the surface's dirty tracker here causing a memory leak.
 
-Convert to use devm_spi_alloc_host()/devm_spi_alloc_target()
-to fix the memory leak.
-
-Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Link: https://patch.msgid.link/20260308-spisg-v1-1-2cace5cafc24@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: Mika Penttilä <mpenttil@redhat.com>
+Closes: https://lore.kernel.org/dri-devel/8c53f3c6-c6de-46fe-a8ca-d98dd52b3abe@redhat.com/
+Fixes: 965544150d1c ("drm/vmwgfx: Refactor cursor handling")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Maaz Mombasawala <maaz.mombasawala@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patch.msgid.link/20260302200330.66763-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-amlogic-spisg.c | 12 ++++--------
- 1 file changed, 4 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
-index bcd7ec291ad07..6045c89c37c83 100644
---- a/drivers/spi/spi-amlogic-spisg.c
-+++ b/drivers/spi/spi-amlogic-spisg.c
-@@ -729,9 +729,9 @@ static int aml_spisg_probe(struct platform_device *pdev)
- 	};
- 
- 	if (of_property_read_bool(dev->of_node, "spi-slave"))
--		ctlr = spi_alloc_target(dev, sizeof(*spisg));
-+		ctlr = devm_spi_alloc_target(dev, sizeof(*spisg));
- 	else
--		ctlr = spi_alloc_host(dev, sizeof(*spisg));
-+		ctlr = devm_spi_alloc_host(dev, sizeof(*spisg));
- 	if (!ctlr)
- 		return -ENOMEM;
- 
-@@ -750,10 +750,8 @@ static int aml_spisg_probe(struct platform_device *pdev)
- 		return dev_err_probe(dev, PTR_ERR(spisg->map), "regmap init failed\n");
- 
- 	irq = platform_get_irq(pdev, 0);
--	if (irq < 0) {
--		ret = irq;
--		goto out_controller;
--	}
-+	if (irq < 0)
-+		return irq;
- 
- 	ret = device_reset_optional(dev);
- 	if (ret)
-@@ -818,8 +816,6 @@ static int aml_spisg_probe(struct platform_device *pdev)
- 	if (spisg->core)
- 		clk_disable_unprepare(spisg->core);
- 	clk_disable_unprepare(spisg->pclk);
--out_controller:
--	spi_controller_put(ctlr);
- 
- 	return ret;
- }
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+index bc51b5d55e38a..35c7277521a90 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -771,7 +771,8 @@ static struct drm_framebuffer *vmw_kms_fb_create(struct drm_device *dev,
+ 		ret = vmw_bo_dirty_add(bo);
+ 		if (!ret && surface && surface->res.func->dirty_alloc) {
+ 			surface->res.coherent = true;
+-			ret = surface->res.func->dirty_alloc(&surface->res);
++			if (surface->res.dirty == NULL)
++				ret = surface->res.func->dirty_alloc(&surface->res);
+ 		}
+ 		ttm_bo_unreserve(&bo->tbo);
+ 	}
 -- 
 2.51.0
 
