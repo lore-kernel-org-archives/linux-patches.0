@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ECA621D00A;
-	Mon, 23 Mar 2026 13:53:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317C63ACA62;
+	Mon, 23 Mar 2026 13:53:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274023; cv=none; b=oA6q66AkMmYXoXpyO2sUd8oj/UlV/lcjPjJu2wPRJL/lkhNIoGuoVzzQxOjGCDoqJo7ErnzHFpHzJGxz6Qxp/nEesbnLW9Mvw+3JWbSIKcZxgLB3SuixDSK45JD0ZnwxyJKh0GbXh+irh81yiocx07Lgu1lEaw4ov3GzFVvcWnU=
+	t=1774274026; cv=none; b=ZRpGy6LVN9k3xIyFlVW6znYiE3de+LyeQ/lXLlkrHHIUPjalNgulzCdKaIsCZC/DDbv/jMjs2uIWdllKWh3PXsW38Y04BaR64zIm2dPWcPKZp66AXlDPFQzWMisvJ5AEvU1VRC7lEdHGgwyjk+odRhaLHQJ3njXpeOP0N9dGZU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274023; c=relaxed/simple;
-	bh=12ossGP4ClQ5Qqb9A8W8mIhv7tZCUTdMJYs2SIgzCRk=;
+	s=arc-20240116; t=1774274026; c=relaxed/simple;
+	bh=HR1YGV6wBB+f1ygl5bYYIQb7NI8ysrjmgQRsdDcCQaQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=AfsvsOG/WtKSoFt+FHtbuT5peU/KOWF9nTaRnbo/ECNbyQcn2Jws4KojyTdsp3FB5T0OLrN0eUjO9Wj5flf1CGy9v+pHVKif7fuevyQakk/JlvDwX80LtT1fUIZJrcqdFWsZv+2MR6SjNdeLnGPfU7n8/T9ahBp9k9Lad+b4VBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u72fzCUm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=JYVc1n64IQighUXdqNvWoWKfAn3vkJrEL5uga/7xP4D3GmGl7K1hxpqEfDQb16LqFTLypVnFTI1cJAjvR7IvQ/GOQuMaj4f9oWZXyrfUcR7qrZo7FhL6RJ+CjLrvCw30WttmowsWn9EDH8QsEDOsk9PpJ4X3d/T3a0g0jvZA1bg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TRgjq79e; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u72fzCUm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98907C4CEF7;
-	Mon, 23 Mar 2026 13:53:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TRgjq79e"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A849FC4CEF7;
+	Mon, 23 Mar 2026 13:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274023;
-	bh=12ossGP4ClQ5Qqb9A8W8mIhv7tZCUTdMJYs2SIgzCRk=;
+	s=korg; t=1774274026;
+	bh=HR1YGV6wBB+f1ygl5bYYIQb7NI8ysrjmgQRsdDcCQaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u72fzCUmDJQQcjnz/F7FXQgSwcriWgy/IOkHI0ONbHZE5NZr6gh7ZqSJJ8HAOEymL
-	 ijz5cXNcRrUeVuVl+4Q7QjfzHyM18r7zUA5l/eeep+bK+zq90Xxd8a4PyEFgq3b9U1
-	 W04Gq9/8fvfP/cWCFwB5SRFGAHfWwjQEM8yp8FvU=
+	b=TRgjq79e/Lx2/ziDROx7TTWlMsnKa7S8lwvHF/qx9FLQKOLkO49rsxW3va/itJoX0
+	 tWNxsYDe2N6Vzl8wfTeZKpnAiaiA/GLmi4hIOTB3O0dqgiFVhtReuA8IKiRIbX6sN7
+	 qnIXqZBMNCvAYhAS0q9SH/sClC/Np1UkmVNEoYqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Prike Liang <Prike.Liang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 085/220] drm/amdgpu: rework how we handle TLB fences
-Date: Mon, 23 Mar 2026 14:44:22 +0100
-Message-ID: <20260323134507.279227581@linuxfoundation.org>
+	Mohammed Thasleem <mohammed.thasleem@intel.com>,
+	Jani Nikula <jani.nikula@linux.intel.com>,
+	Tao Liu <ltao@redhat.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Imre Deak <imre.deak@intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Subject: [PATCH 6.19 086/220] drm/i915/dmc: Fix an unlikely NULL pointer deference at probe
+Date: Mon, 23 Mar 2026 14:44:23 +0100
+Message-ID: <20260323134507.311612426@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -45,81 +48,88 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Imre Deak <imre.deak@intel.com>
 
-commit e9f58ff991dd4be13fd7a651bbf64329c090af09 upstream.
+commit ac57eb3b7d2ad649025b5a0fa207315f755ac4f6 upstream.
 
-Add a new VM flag to indicate whether or not we need
-a TLB fence.  Userqs (KFD or KGD) require a TLB fence.
-A TLB fence is not strictly required for kernel queues,
-but it shouldn't hurt.  That said, enabling this
-unconditionally should be fine, but it seems to tickle
-some issues in KIQ/MES.  Only enable them for KFD,
-or when KGD userq queues are enabled (currently via module
-parameter).
+intel_dmc_update_dc6_allowed_count() oopses when DMC hasn't been
+initialized, and dmc is thus NULL.
 
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4798
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4749
-Fixes: f3854e04b708 ("drm/amdgpu: attach tlb fence to the PTs update")
-Cc: Christian König <christian.koenig@amd.com>
-Cc: Prike Liang <Prike.Liang@amd.com>
-Reviewed-by: Prike Liang <Prike.Liang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 69c5fbd2b93b5ced77c6e79afe83371bca84c788)
-Cc: stable@vger.kernel.org
+That would be the case when the call path is
+intel_power_domains_init_hw() -> {skl,bxt,icl}_display_core_init() ->
+gen9_set_dc_state() -> intel_dmc_update_dc6_allowed_count(), as
+intel_power_domains_init_hw() is called *before* intel_dmc_init().
+
+However, gen9_set_dc_state() calls intel_dmc_update_dc6_allowed_count()
+conditionally, depending on the current and target DC states. At probe,
+the target is disabled, but if DC6 is enabled, the function is called,
+and an oops follows. Apparently it's quite unlikely that DC6 is enabled
+at probe, as we haven't seen this failure mode before.
+
+It is also strange to have DC6 enabled at boot, since that would require
+the DMC firmware (loaded by BIOS); the BIOS loading the DMC firmware and
+the driver stopping / reprogramming the firmware is a poorly specified
+sequence and as such unlikely an intentional BIOS behaviour. It's more
+likely that BIOS is leaving an unintentionally enabled DC6 HW state
+behind (without actually loading the required DMC firmware for this).
+
+The tracking of the DC6 allowed counter only works if starting /
+stopping the counter depends on the _SW_ DC6 state vs. the current _HW_
+DC6 state (since stopping the counter requires the DC5 counter captured
+when the counter was started). Thus, using the HW DC6 state is incorrect
+and it also leads to the above oops. Fix both issues by using the SW DC6
+state for the tracking.
+
+This is v2 of the fix originally sent by Jani, updated based on the
+first Link: discussion below.
+
+Link: https://lore.kernel.org/all/3626411dc9e556452c432d0919821b76d9991217@intel.com
+Link: https://lore.kernel.org/all/20260228130946.50919-2-ltao@redhat.com
+Fixes: 88c1f9a4d36d ("drm/i915/dmc: Create debugfs entry for dc6 counter")
+Cc: Mohammed Thasleem <mohammed.thasleem@intel.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>
+Cc: Tao Liu <ltao@redhat.com>
+Cc: <stable@vger.kernel.org> # v6.16+
+Tested-by: Tao Liu <ltao@redhat.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Imre Deak <imre.deak@intel.com>
+Link: https://patch.msgid.link/20260309164803.1918158-1-imre.deak@intel.com
+(cherry picked from commit 2344b93af8eb5da5d496b4e0529d35f0f559eaf0)
+Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c |    7 ++++++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h |    2 ++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_display_power_well.c |    2 +-
+ drivers/gpu/drm/i915/display/intel_dmc.c                |    3 +--
+ 2 files changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
-@@ -1069,7 +1069,10 @@ amdgpu_vm_tlb_flush(struct amdgpu_vm_upd
- 	}
+--- a/drivers/gpu/drm/i915/display/intel_display_power_well.c
++++ b/drivers/gpu/drm/i915/display/intel_display_power_well.c
+@@ -798,7 +798,7 @@ void gen9_set_dc_state(struct intel_disp
+ 			power_domains->dc_state, val & mask);
  
- 	/* Prepare a TLB flush fence to be attached to PTs */
--	if (!params->unlocked) {
-+	/* The check for need_tlb_fence should be dropped once we
-+	 * sort out the issues with KIQ/MES TLB invalidation timeouts.
-+	 */
-+	if (!params->unlocked && vm->need_tlb_fence) {
- 		amdgpu_vm_tlb_fence_create(params->adev, vm, fence);
+ 	enable_dc6 = state & DC_STATE_EN_UPTO_DC6;
+-	dc6_was_enabled = val & DC_STATE_EN_UPTO_DC6;
++	dc6_was_enabled = power_domains->dc_state & DC_STATE_EN_UPTO_DC6;
+ 	if (!dc6_was_enabled && enable_dc6)
+ 		intel_dmc_update_dc6_allowed_count(display, true);
  
- 		/* Makes sure no PD/PT is freed before the flush */
-@@ -2602,6 +2605,7 @@ int amdgpu_vm_init(struct amdgpu_device
- 	ttm_lru_bulk_move_init(&vm->lru_bulk_move);
+--- a/drivers/gpu/drm/i915/display/intel_dmc.c
++++ b/drivers/gpu/drm/i915/display/intel_dmc.c
+@@ -1591,8 +1591,7 @@ static bool intel_dmc_get_dc6_allowed_co
+ 		return false;
  
- 	vm->is_compute_context = false;
-+	vm->need_tlb_fence = amdgpu_userq_enabled(&adev->ddev);
+ 	mutex_lock(&power_domains->lock);
+-	dc6_enabled = intel_de_read(display, DC_STATE_EN) &
+-		      DC_STATE_EN_UPTO_DC6;
++	dc6_enabled = power_domains->dc_state & DC_STATE_EN_UPTO_DC6;
+ 	if (dc6_enabled)
+ 		intel_dmc_update_dc6_allowed_count(display, false);
  
- 	vm->use_cpu_for_update = !!(adev->vm_manager.vm_update_mode &
- 				    AMDGPU_VM_USE_CPU_FOR_GFX);
-@@ -2739,6 +2743,7 @@ int amdgpu_vm_make_compute(struct amdgpu
- 	dma_fence_put(vm->last_update);
- 	vm->last_update = dma_fence_get_stub();
- 	vm->is_compute_context = true;
-+	vm->need_tlb_fence = true;
- 
- unreserve_bo:
- 	amdgpu_bo_unreserve(vm->root.bo);
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.h
-@@ -440,6 +440,8 @@ struct amdgpu_vm {
- 	struct ttm_lru_bulk_move lru_bulk_move;
- 	/* Flag to indicate if VM is used for compute */
- 	bool			is_compute_context;
-+	/* Flag to indicate if VM needs a TLB fence (KFD or KGD) */
-+	bool			need_tlb_fence;
- 
- 	/* Memory partition number, -1 means any partition */
- 	int8_t			mem_id;
 
 
