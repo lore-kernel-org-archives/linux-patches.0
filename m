@@ -1,42 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D923B2FFC;
-	Mon, 23 Mar 2026 14:41:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9133D3B38A4;
+	Mon, 23 Mar 2026 14:41:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276880; cv=none; b=rhO8nIEgFQ0tx//YtzISLngbb5nVmT9gzrb5w6tH5MHpsSJBcLJIF2B4ZcxrbUoVve1JsWHDuRnMm7tPv/Qj4Atbo1nEVGfCOojYjzHiW8JendRl0XuqVagWXpE6b33oX5vNzETd0qjxoLmU/9j4bh3mwCPMfc5k4UkyMjwgyYQ=
+	t=1774276883; cv=none; b=VBSPQdmsPM+vTpHWAV69WsEOy+Buxi6k5Sk2gKYeWvvalzyJgxeV3RGYgo+52kYS4fFaC2EziGTFFC9NPbQmr/WyGQfG0sVbmuqYyLVxFhh38GdQqSYbOQ5EzUwtpjUboZviC/W1L8SWQAVr7NHe/jinbKUQlOPYi/cruCMWgMg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276880; c=relaxed/simple;
-	bh=E97Jwtv8B9QIG4ywpP9s5or7pti2J2DdiZtw6B0qYEE=;
+	s=arc-20240116; t=1774276883; c=relaxed/simple;
+	bh=ZD8cKvpNcJkyAI4++Gg9qLCE0N8qPj9ulSQuJhZkQok=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rSH56ohkfmnu0wc/OqjUIHU/JkrD/PHo2z+9V4MdRmTzubDcnD1QYcIoZMrLYVU/mzpcKX5zNBb1lO8gbh2M0RozCEhm28NystuT/JDNmQ4WcMTjj5HLe8tgaaIbJZQGA/0j8KGx1J/n23DQm6hq4JgR28yGToUVz2JtcRcwJUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FoJAcrcc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Zt4trmlqoIj/bktdH7HZHnI89XEDvm0JUnT/9LdGexWb3dFVGv8UYxxMkrjmNnrYg7kIhMUWj8y7amWoV+iDxAie0Q5Kcora1HJOn9jEP2tOf90yeWfTcnZyJ+i+pYyRV94G3uZOJUqpmzvUkj8FK0yV4LnGtRfVLGbuPnOr2N8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G6das8au; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FoJAcrcc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BCBC2BCB3;
-	Mon, 23 Mar 2026 14:41:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G6das8au"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E989CC4CEF7;
+	Mon, 23 Mar 2026 14:41:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276880;
-	bh=E97Jwtv8B9QIG4ywpP9s5or7pti2J2DdiZtw6B0qYEE=;
+	s=korg; t=1774276883;
+	bh=ZD8cKvpNcJkyAI4++Gg9qLCE0N8qPj9ulSQuJhZkQok=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FoJAcrccLevW6E8VLJJg0tTSQRzhv3cVVkF/MhdBTFvANXAOxByCEVeK8gdR/jUs1
-	 8KaKc15o4l5t1Sc4RHkNlSaPSqa0BWq8TNGPIQDm0Bp5ayk5CMCDBPdiZ+aBtCJdBO
-	 ztJ5k9FYnpdGzpSQr5Ap2sKTuLR5f/KE6NhOdlCE=
+	b=G6das8auqI8vrAtVrapQsPgpUCKgMwulQpBSihbIBoFYUGv/0KIBLinoyoK4Io4V8
+	 mBbAGoTANRQGhLGOnxGNohP9t9Ns4uGvFw7YyeaThJZIEbi4WIuo5PxbqW9Pf7nU8p
+	 TlhAAorx6Lt0C03CevXwnQnZc3T7Ky02IDOKx+7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Suchanek <msuchanek@suse.de>,
-	Rainer Fiebig <jrf@mailbox.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Nicolas Schier <nsc@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 237/460] kbuild: Leave objtool binary around with make clean
-Date: Mon, 23 Mar 2026 14:43:53 +0100
-Message-ID: <20260323134532.328196712@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.12 196/460] lib/bootconfig: check bounds before writing in __xbc_open_brace()
+Date: Mon, 23 Mar 2026 14:43:12 +0100
+Message-ID: <20260323134531.361510975@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -55,102 +50,42 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit fdb12c8a24a453bdd6759979b6ef1e04ebd4beb4 ]
+commit 560f763baa0f2c9a44da4294c06af071405ac46f upstream.
 
-The difference between 'make clean' and 'make mrproper' is documented in
-'make help' as:
+The bounds check for brace_index happens after the array write.
+While the current call pattern prevents an actual out-of-bounds
+access (the previous call would have returned an error), the
+write-before-check pattern is fragile and would become a real
+out-of-bounds write if the error return were ever not propagated.
 
-  clean     - Remove most generated files but keep the config and
-              enough build support to build external modules
-  mrproper  - Remove all generated files + config + various backup files
+Move the bounds check before the array write so the function is
+self-contained and safe regardless of caller behavior.
 
-After commit 68b4fe32d737 ("kbuild: Add objtool to top-level clean
-target"), running 'make clean' then attempting to build an external
-module with the resulting build directory fails with
+Link: https://lore.kernel.org/all/20260312191143.28719-3-objecting@objecting.org/
 
-  $ make ARCH=x86_64 O=build clean
-
-  $ make -C build M=... MO=...
-  ...
-  /bin/sh: line 1: .../build/tools/objtool/objtool: No such file or directory
-
-as 'make clean' removes the objtool binary.
-
-Split the objtool clean target into mrproper and clean like Kbuild does
-and remove all generated artifacts with 'make clean' except for the
-objtool binary, which is removed with 'make mrproper'. To avoid a small
-race when running the objtool clean target through both objtool_mrproper
-and objtool_clean when running 'make mrproper', modify objtool's clean
-up find command to avoid using find's '-delete' command by piping the
-files into 'xargs rm -f' like the rest of Kbuild does.
-
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
 Cc: stable@vger.kernel.org
-Fixes: 68b4fe32d737 ("kbuild: Add objtool to top-level clean target")
-Reported-by: Michal Suchanek <msuchanek@suse.de>
-Closes: https://lore.kernel.org/20260225112633.6123-1-msuchanek@suse.de/
-Reported-by: Rainer Fiebig <jrf@mailbox.org>
-Closes: https://lore.kernel.org/62d12399-76e5-3d40-126a-7490b4795b17@mailbox.org/
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Nicolas Schier <nsc@kernel.org>
-Tested-by: Nicolas Schier <nsc@kernel.org>
-Link: https://patch.msgid.link/20260227-avoid-objtool-binary-removal-clean-v1-1-122f3e55eae9@kernel.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-[ Context ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Makefile               |    8 ++++----
- tools/objtool/Makefile |    8 +++++---
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Makefile
-+++ b/Makefile
-@@ -1371,13 +1371,13 @@ ifneq ($(wildcard $(resolve_btfids_O)),)
- 	$(Q)$(MAKE) -sC $(srctree)/tools/bpf/resolve_btfids O=$(resolve_btfids_O) clean
- endif
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -532,9 +532,9 @@ static char *skip_spaces_until_newline(c
+ static int __init __xbc_open_brace(char *p)
+ {
+ 	/* Push the last key as open brace */
+-	open_brace[brace_index++] = xbc_node_index(last_parent);
+ 	if (brace_index >= XBC_DEPTH_MAX)
+ 		return xbc_parse_error("Exceed max depth of braces", p);
++	open_brace[brace_index++] = xbc_node_index(last_parent);
  
--PHONY += objtool_clean
-+PHONY += objtool_clean objtool_mrproper
- 
- objtool_O = $(abspath $(objtree))/tools/objtool
- 
--objtool_clean:
-+objtool_clean objtool_mrproper:
- ifneq ($(wildcard $(objtool_O)),)
--	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) clean
-+	$(Q)$(MAKE) -sC $(abs_srctree)/tools/objtool O=$(objtool_O) srctree=$(abs_srctree) $(patsubst objtool_%,%,$@)
- endif
- 
- tools/: FORCE
-@@ -1548,7 +1548,7 @@ PHONY += $(mrproper-dirs) mrproper
- $(mrproper-dirs):
- 	$(Q)$(MAKE) $(clean)=$(patsubst _mrproper_%,%,$@)
- 
--mrproper: clean $(mrproper-dirs)
-+mrproper: clean objtool_mrproper $(mrproper-dirs)
- 	$(call cmd,rmfiles)
- 	@find . $(RCS_FIND_IGNORE) \
- 		\( -name '*.rmeta' \) \
---- a/tools/objtool/Makefile
-+++ b/tools/objtool/Makefile
-@@ -91,10 +91,12 @@ $(LIBSUBCMD)-clean:
- 	$(Q)$(RM) -r -- $(LIBSUBCMD_OUTPUT)
- 
- clean: $(LIBSUBCMD)-clean
--	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
--	$(Q)find $(OUTPUT) -name '*.o' -delete -o -name '\.*.cmd' -delete -o -name '\.*.d' -delete
-+	$(Q)find $(OUTPUT) \( -name '*.o' -o -name '\.*.cmd' -o -name '\.*.d' \) -type f -print | xargs $(RM)
- 	$(Q)$(RM) $(OUTPUT)arch/x86/lib/inat-tables.c $(OUTPUT)fixdep
- 
-+mrproper: clean
-+	$(call QUIET_CLEAN, objtool) $(RM) $(OBJTOOL)
-+
- FORCE:
- 
--.PHONY: clean FORCE
-+.PHONY: clean mrproper FORCE
+ 	return 0;
+ }
 
 
