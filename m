@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7303B5820;
-	Mon, 23 Mar 2026 15:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ACA1277C88;
+	Mon, 23 Mar 2026 15:11:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278705; cv=none; b=PFnnlYTPMI2Cv3BxOessxakBpB4qBonMIfUD1hyS1XYwFgMClSClTr8P/ahwDEv6DCMAHyw4jDqupp62vy+HFVo5z/3no3fKj56uQvx+UjW6OXGvgCxWfRcMqloEkhymPWwvy3Abn55zqh/qybUVP3VW3UW39dSMy7dlZvATWaE=
+	t=1774278708; cv=none; b=JjM8OCsyvJvdnlJsWECGc01EK7A+orLY4F8vUfr3Q1ly90tIdwWbwQ8Q81CzBXrev4dgCsVqisUmlKbNfjpCMJdLSzRyX/4piAO2kBZ3jbTXaG0F7SehfxZC4FEMjuS6czjGeOtj82PsswPrR45ohCD9kZav2xRqP4bwFvRbWBk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278705; c=relaxed/simple;
-	bh=SMHLygjbtTvWlb/4Y1Bo62OWj39W9dKlRetSlf+TBI0=;
+	s=arc-20240116; t=1774278708; c=relaxed/simple;
+	bh=NEk/RfKbSybFBvOCuaCj4tlCkg0AoE5pEBOu5u1PWVE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Av0sLOQsHa2U/qIddLyH3ImHvqEYHbPoU+6SNOWNRQni/e2VB+pXfDHHebI/3n3yl6TH9kllqLNX6jKB17zdC3lCRrepTkavyMqdbqiQWilSe9Y7Sx8bnos8eOwbyw+MAqFITDaATg5DcZQ46DJLD9qmk89W6e3xGDOx7tIkHWs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TlHZjAiK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uV3NKrngXiJB6m2eIMFXmevLVnOqF5qTnECLXTAKZY0v/e/GkBol27esjoWJm0hmCpanf5RIhB95+Y9WTW7Vz9QJXxZAMGdqSZFkcNonuhtfLdAMO7w663sPs+mljfKcNjEMd3JRwdwh9LVO+6pLlabEDUyQNeB2UUQo2XbzB3o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Dy13oPq6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TlHZjAiK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11221C4CEF7;
-	Mon, 23 Mar 2026 15:11:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Dy13oPq6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDADDC4CEF7;
+	Mon, 23 Mar 2026 15:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278705;
-	bh=SMHLygjbtTvWlb/4Y1Bo62OWj39W9dKlRetSlf+TBI0=;
+	s=korg; t=1774278708;
+	bh=NEk/RfKbSybFBvOCuaCj4tlCkg0AoE5pEBOu5u1PWVE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TlHZjAiKT3XbuwD/Tzr+QcDb57/kNon1cdQnunUcd62aYASPTBYaci9KRq6nYTX0a
-	 EeEw4YHwnpQmL7XaWiMrciJ5f+MmFeTZHmRCkSkxjZ9ooVUy74j7PzFSi+A6k0S1qJ
-	 FTShj9tP0xVJSiC9vSN90MTQKVe9CW0w+K6bMYxQ=
+	b=Dy13oPq62clcMMsjejghsAQ5Q6TIyidoOhQk8k3CCRpUdggt6al/HmvgoKovADUn9
+	 N3yrrB7YkiYD4CPob9ywVZt58wfVty5nMlFeVj0WGJ9ytaDTAle3jEeo3H7qeiYOhn
+	 vedGC5c+qvcW3UynDb3pxA1qsBScj0L9oS5OHa7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Long Li <leo.lilong@huawei.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Carlos Maiolino <cem@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 393/567] xfs: fix integer overflow in bmap intent sort comparator
-Date: Mon, 23 Mar 2026 14:45:13 +0100
-Message-ID: <20260323134543.581549379@linuxfoundation.org>
+Subject: [PATCH 6.6 394/567] xfs: ensure dquot item is deleted from AIL only after log shutdown
+Date: Mon, 23 Mar 2026 14:45:14 +0100
+Message-ID: <20260323134543.606483905@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,39 +55,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Long Li <leo.lilong@huawei.com>
 
-[ Upstream commit 362c490980867930a098b99f421268fbd7ca05fd ]
+[ Upstream commit 186ac39b8a7d3ec7ce9c5dd45e5c2730177f375c ]
 
-xfs_bmap_update_diff_items() sorts bmap intents by inode number using
-a subtraction of two xfs_ino_t (uint64_t) values, with the result
-truncated to int. This is incorrect when two inode numbers differ by
-more than INT_MAX (2^31 - 1), which is entirely possible on large XFS
-filesystems.
+In xfs_qm_dqflush(), when a dquot flush fails due to corruption
+(the out_abort error path), the original code removed the dquot log
+item from the AIL before calling xfs_force_shutdown(). This ordering
+introduces a subtle race condition that can lead to data loss after
+a crash.
 
-Fix this by replacing the subtraction with cmp_int().
+The AIL tracks the oldest dirty metadata in the journal. The position
+of the tail item in the AIL determines the log tail LSN, which is the
+oldest LSN that must be preserved for crash recovery. When an item is
+removed from the AIL, the log tail can advance past the LSN of that item.
 
-Cc: <stable@vger.kernel.org> # v4.9
-Fixes: 9f3afb57d5f1 ("xfs: implement deferred bmbt map/unmap operations")
+The race window is as follows: if the dquot item happens to be at
+the tail of the log, removing it from the AIL allows the log tail
+to advance. If a concurrent log write is sampling the tail LSN at
+the same time and subsequently writes a complete checkpoint (i.e.,
+one containing a commit record) to disk before the shutdown takes
+effect, the journal will no longer protect the dquot's last
+modification. On the next mount, log recovery will not replay the
+dquot changes, even though they were never written back to disk,
+resulting in silent data loss.
+
+Fix this by calling xfs_force_shutdown() before xfs_trans_ail_delete()
+in the out_abort path. Once the log is shut down, no new log writes
+can complete with an updated tail LSN, making it safe to remove the
+dquot item from the AIL.
+
+Cc: stable@vger.kernel.org
+Fixes: b707fffda6a3 ("xfs: abort consistently on dquot flush failure")
 Signed-off-by: Long Li <leo.lilong@huawei.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Carlos Maiolino <cem@kernel.org>
-[ replaced `bi_entry()` macro with `container_of()` and inlined `cmp_int()` as a manual three-way comparison expression ]
+[ adapted error path to preserve existing out_unlock label between xfs_trans_ail_delete and xfs_dqfunlock ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_bmap_item.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_dquot.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_bmap_item.c
-+++ b/fs/xfs/xfs_bmap_item.c
-@@ -278,7 +278,8 @@ xfs_bmap_update_diff_items(
+--- a/fs/xfs/xfs_dquot.c
++++ b/fs/xfs/xfs_dquot.c
+@@ -1297,9 +1297,15 @@ xfs_qm_dqflush(
+ 	return 0;
  
- 	ba = container_of(a, struct xfs_bmap_intent, bi_list);
- 	bb = container_of(b, struct xfs_bmap_intent, bi_list);
--	return ba->bi_owner->i_ino - bb->bi_owner->i_ino;
-+	return (ba->bi_owner->i_ino > bb->bi_owner->i_ino) -
-+		(ba->bi_owner->i_ino < bb->bi_owner->i_ino);
- }
- 
- /* Set the map extent flags for this mapping. */
+ out_abort:
++	/*
++	 * Shut down the log before removing the dquot item from the AIL.
++	 * Otherwise, the log tail may advance past this item's LSN while
++	 * log writes are still in progress, making these unflushed changes
++	 * unrecoverable on the next mount.
++	 */
++	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+ 	dqp->q_flags &= ~XFS_DQFLAG_DIRTY;
+ 	xfs_trans_ail_delete(lip, 0);
+-	xfs_force_shutdown(mp, SHUTDOWN_CORRUPT_INCORE);
+ out_unlock:
+ 	xfs_dqfunlock(dqp);
+ 	return error;
 
 
