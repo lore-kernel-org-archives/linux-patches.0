@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B731F91F6;
-	Mon, 23 Mar 2026 13:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92FDB1F91F6;
+	Mon, 23 Mar 2026 13:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274267; cv=none; b=uMWDmRLfa7iMYvlbJ4+f7xbHFBB/k0sGIiimjMBfuMqXjCd53ImmL47vBUsZX/x4zqglnQIFdo86inY1IMycF0mo2JpFM/EvKKKndx2ZFB/rdKKEvcNbyktJpqvY1K36eIU965YBHEb6MEwT8vfyC9FOBisVDz0Jfp3L+Vdtu2g=
+	t=1774274270; cv=none; b=Y7CF7oWGEVp9jw/umow6cIqM5XtxQidnVfLsh94OqrACQsqHqO1eCctAtHdYKlpOcA0IM9UsOyBQAKl3cWaEDV3y2pSA1++3SbKLPvKqQOtn7Wf1T9RjihLHJ7yo1h/LMXF0ACz3fB3yHbaasJB1iZ7xwDhXGU10hkCW62nRcj4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274267; c=relaxed/simple;
-	bh=aqLk4uFXfewWCLuLBxFeicDKnY1O0VwBn+xilYshKKM=;
+	s=arc-20240116; t=1774274270; c=relaxed/simple;
+	bh=FE5bcdLuoBjRzdnobwRPiclxA5F82PO8ghJiKkhOvSM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=poRmCoI1cw7EZ+jtdwfTVdJIcYeOo7+rkZo8pinpaGUuhT1hcweOywDD96dVSmL5Y25pXUii7NlvEDwWY5LUQeTvWd1eQPIZGtcMXU9dg4smvucqml38Hz/CE3k04UjUcZwYzl0U/2K6rlcpqQLnnCGGrXkunWyR+VyvpupfW24=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wKi4pPSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sZrIW5e4JLYxaD3m961FgTONg+SWUxk+sR2I+FtA/cvzZyt61n/RPV92RSqvw+Fj3qC5Xs5CxH+3VqoeOUWeBZ7mtYhON/9cbbL4GLInMUlzTZq1dmgi/bN2hu/QPuomTj1XnLy521OpfcHT0fMsiod8CYl9pZfFzhaKJTFYgJw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J8UN7+ho; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wKi4pPSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 044B1C4CEF7;
-	Mon, 23 Mar 2026 13:57:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J8UN7+ho"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1757AC4CEF7;
+	Mon, 23 Mar 2026 13:57:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274267;
-	bh=aqLk4uFXfewWCLuLBxFeicDKnY1O0VwBn+xilYshKKM=;
+	s=korg; t=1774274270;
+	bh=FE5bcdLuoBjRzdnobwRPiclxA5F82PO8ghJiKkhOvSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKi4pPSnDrOwxYAruZIj+gwHknrsHJpMl2MkwK3Rh3O1r90E0IALLpWmyX1UEJbI4
-	 ou5UoUWIBe81xKpNiYiN1bzvKZGti6hdbSx8x+y5yWJ648fL31H1heIPh+0qgu4NOE
-	 nf67DsACFfweoGqshgRmcgOt0KGULJJ6lo41jT28=
+	b=J8UN7+hoq+0L0mhh01zvYd8MfC9AeSBmxHKgPEiXKCMC1blX7my8alUDlKPWhaNEN
+	 0NDZqvfRIIUXnEZOwRdGc7ZSrtqg/G3YQjtY25veXmP2mpr0eKiKUPIO1lVNWI0jBE
+	 3cTJ2htqhW+LYheXG6OHf8witwrbkrLxFnyqMsMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
+	Peter Astrand <astrand@lysator.liu.se>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 161/220] wifi: mac80211: fix NULL deref in mesh_matches_local()
-Date: Mon, 23 Mar 2026 14:45:38 +0100
-Message-ID: <20260323134509.653870475@linuxfoundation.org>
+Subject: [PATCH 6.19 162/220] wifi: wlcore: Return -ENOMEM instead of -EAGAIN if there is not enough headroom
+Date: Mon, 23 Mar 2026 14:45:39 +0100
+Message-ID: <20260323134509.682985491@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,79 +52,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit c73bb9a2d33bf81f6eecaa0f474b6c6dbe9855bd ]
+[ Upstream commit deb353d9bb009638b7762cae2d0b6e8fdbb41a69 ]
 
-mesh_matches_local() unconditionally dereferences ie->mesh_config to
-compare mesh configuration parameters. When called from
-mesh_rx_csa_frame(), the parsed action-frame elements may not contain a
-Mesh Configuration IE, leaving ie->mesh_config NULL and triggering a
-kernel NULL pointer dereference.
+Since upstream commit e75665dd0968 ("wifi: wlcore: ensure skb headroom
+before skb_push"), wl1271_tx_allocate() and with it
+wl1271_prepare_tx_frame() returns -EAGAIN if pskb_expand_head() fails.
+However, in wlcore_tx_work_locked(), a return value of -EAGAIN from
+wl1271_prepare_tx_frame() is interpreted as the aggregation buffer being
+full. This causes the code to flush the buffer, put the skb back at the
+head of the queue, and immediately retry the same skb in a tight while
+loop.
 
-The other two callers are already safe:
-  - ieee80211_mesh_rx_bcn_presp() checks !elems->mesh_config before
-    calling mesh_matches_local()
-  - mesh_plink_get_event() is only reached through
-    mesh_process_plink_frame(), which checks !elems->mesh_config, too
+Because wlcore_tx_work_locked() holds wl->mutex, and the retry happens
+immediately with GFP_ATOMIC, this will result in an infinite loop and a
+CPU soft lockup. Return -ENOMEM instead so the packet is dropped and
+the loop terminates.
 
-mesh_rx_csa_frame() is the only caller that passes raw parsed elements
-to mesh_matches_local() without guarding mesh_config. An adjacent
-attacker can exploit this by sending a crafted CSA action frame that
-includes a valid Mesh ID IE but omits the Mesh Configuration IE,
-crashing the kernel.
+The problem was found by an experimental code review agent based on
+gemini-3.1-pro while reviewing backports into v6.18.y.
 
-The captured crash log:
-
-Oops: general protection fault, probably for non-canonical address ...
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-Workqueue: events_unbound cfg80211_wiphy_work
-[...]
-Call Trace:
- <TASK>
- ? __pfx_mesh_matches_local (net/mac80211/mesh.c:65)
- ieee80211_mesh_rx_queued_mgmt (net/mac80211/mesh.c:1686)
- [...]
- ieee80211_iface_work (net/mac80211/iface.c:1754 net/mac80211/iface.c:1802)
- [...]
- cfg80211_wiphy_work (net/wireless/core.c:426)
- process_one_work (net/kernel/workqueue.c:3280)
- ? assign_work (net/kernel/workqueue.c:1219)
- worker_thread (net/kernel/workqueue.c:3352)
- ? __pfx_worker_thread (net/kernel/workqueue.c:3385)
- kthread (net/kernel/kthread.c:436)
- [...]
- ret_from_fork_asm (net/arch/x86/entry/entry_64.S:255)
- </TASK>
-
-This patch adds a NULL check for ie->mesh_config at the top of
-mesh_matches_local() to return false early when the Mesh Configuration
-IE is absent.
-
-Fixes: 2e3c8736820b ("mac80211: support functions for mesh")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260318034244.2595020-1-xmei5@asu.edu
+Assisted-by: Gemini:gemini-3.1-pro
+Fixes: e75665dd0968 ("wifi: wlcore: ensure skb headroom before skb_push")
+Cc: Peter Astrand <astrand@lysator.liu.se>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Link: https://patch.msgid.link/20260318064636.3065925-1-linux@roeck-us.net
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/mesh.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/ti/wlcore/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mac80211/mesh.c b/net/mac80211/mesh.c
-index 129e814abe764..d7f691325746c 100644
---- a/net/mac80211/mesh.c
-+++ b/net/mac80211/mesh.c
-@@ -79,6 +79,9 @@ bool mesh_matches_local(struct ieee80211_sub_if_data *sdata,
- 	 *   - MDA enabled
- 	 * - Power management control on fc
- 	 */
-+	if (!ie->mesh_config)
-+		return false;
-+
- 	if (!(ifmsh->mesh_id_len == ie->mesh_id_len &&
- 	     memcmp(ifmsh->mesh_id, ie->mesh_id, ie->mesh_id_len) == 0 &&
- 	     (ifmsh->mesh_pp_id == ie->mesh_config->meshconf_psel) &&
+diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
+index 6241866d39df6..75cfbcfb7626d 100644
+--- a/drivers/net/wireless/ti/wlcore/tx.c
++++ b/drivers/net/wireless/ti/wlcore/tx.c
+@@ -210,7 +210,7 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
+ 		if (skb_headroom(skb) < (total_len - skb->len) &&
+ 		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
+ 			wl1271_free_tx_id(wl, id);
+-			return -EAGAIN;
++			return -ENOMEM;
+ 		}
+ 		desc = skb_push(skb, total_len - skb->len);
+ 
 -- 
 2.51.0
 
