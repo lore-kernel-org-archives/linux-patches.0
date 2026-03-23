@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB0A3803EF;
-	Mon, 23 Mar 2026 14:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13E43803EF;
+	Mon, 23 Mar 2026 14:14:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275270; cv=none; b=Ia2UUmw+Rl8wLSojBLpSqgsdtzEQ+aKvmq/FQdlTCy/h90FN6b8Akl0Fg6P+EbByksU84+NlOXSs5RUGibrbRO0sdAw+oedPbMRNtdti3G+JEPDs3Uk1WjNQEBrJ5VLXp//isl5PLICMf6fE31rrmlDTT0bN09UAVO5sHFo857w=
+	t=1774275273; cv=none; b=D7dlPkrjnX+EZHObWs1Ip1MazoFMVxwNYu8Jlj5GTFz42jo5u7jY3L0bZgihep5+c9tDbV9vBRaOYwa8Yz1Lk2N4y+x/lUfCFGT1crsk5i/KMRqlabSxt+1zn5vxV9I2CKVH+Vh9gXYfWZOvIhUm/pYsCyiBVmhCIwg05obnfMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275270; c=relaxed/simple;
-	bh=mOqh5RsOFJRynXRvEpPKSICtMm4ObOnTTjjsTvJOuA0=;
+	s=arc-20240116; t=1774275273; c=relaxed/simple;
+	bh=qGX1j3n3FlUB+dm1XWkV3bRk+jBlaPZhNXOgrAVuA4A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GYrIaT/gw0qmAT0JWmJNtmSIUQEhO71Bo3Sx95miyRXFfwazgFIRx8CqQxaM8RvHmQxTw3nfoAMZDei5MhEvC12DI4YqA9gvMNKwbcn83YYfA1JnOyQOGXI+OwZf4Fw5aO4aWTKwN8EZwCpD7iRtPXco16NpAdLfQ4q84/92eFw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yGDYmAI4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GgdyzFRaJL1MzWrafxAFH5GNEXvveJUmfYxoT/LAgAwYDJX3smSVdIAbeS16tGHoINhX+E1enxlrw10uDOVUM9YNPWF97a/rDaGPCtUwaI4FaeO0ti3Hl4eQyXlmf9BWPddF8RIT0YygxHHstYDAKbCoLDdkLyYuso0j2WuzsEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bnbAnHoi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yGDYmAI4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E882C4CEF7;
-	Mon, 23 Mar 2026 14:14:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bnbAnHoi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F626C4CEF7;
+	Mon, 23 Mar 2026 14:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275270;
-	bh=mOqh5RsOFJRynXRvEpPKSICtMm4ObOnTTjjsTvJOuA0=;
+	s=korg; t=1774275273;
+	bh=qGX1j3n3FlUB+dm1XWkV3bRk+jBlaPZhNXOgrAVuA4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGDYmAI4kA8I5zJJczX36U4dmtQdV9wkA5WTTl224ztC4voNc4ujPKdbV1LmYYech
-	 1jBH2ujkYo4PdxBAhXw4/GXo4tA+WW/6X1537C3DMB83fmx35a6dqL1faBgDx0GE78
-	 hx7t8Vo7KI2ikyy7eSxHsjf6hes0QnfWEp9kfpP0=
+	b=bnbAnHoi8/DSLQWLvnIWqqKXpyvVsLDhl3gZGuRAxdYc9xb00rgWJBF8jQWB3i1Mf
+	 jpgN4zpQ9rojiY25Gwaw5KfFBKwWaZ++HByAhqODiBp+wyZAM8enlrd7I8A6Sv5mR/
+	 1TdsRk9UwDgzWdmaQSAdwodYUP7CPUH0WKp+GkY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Jurgens <danielj@nvidia.com>,
-	William Tu <witu@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 036/460] net/mlx5: Query to see if host PF is disabled
-Date: Mon, 23 Mar 2026 14:40:32 +0100
-Message-ID: <20260323134527.595250571@linuxfoundation.org>
+Subject: [PATCH 6.12 010/460] ASoC: cs42l43: Report insert for exotic peripherals
+Date: Mon, 23 Mar 2026 14:40:06 +0100
+Message-ID: <20260323134526.913207394@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,78 +51,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniel Jurgens <danielj@nvidia.com>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 9e84de72aef9bcf0e751a0bff3ac91b0cf52366f ]
+[ Upstream commit 6510e1324bcdc8caf21f6d17efe27604c48f0d64 ]
 
-The host PF can be disabled, query firmware to check if the host PF of
-this function exists.
+For some exotic peripherals the type detect can return a reserved value
+of 0x4. This will currently return an error and not report anything to
+user-space, update this to report the insert normally.
 
-Signed-off-by: Daniel Jurgens <danielj@nvidia.com>
-Reviewed-by: William Tu <witu@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/1755112796-467444-2-git-send-email-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: aed763abf0e9 ("net/mlx5: Fix deadlock between devlink lock and esw->wq")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://patch.msgid.link/20260223093616.3800350-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/eswitch.c | 23 +++++++++++++++++++
- .../net/ethernet/mellanox/mlx5/core/eswitch.h |  1 +
- 2 files changed, 24 insertions(+)
+ sound/soc/codecs/cs42l43-jack.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-index 6544546a1153f..b26ab78006ea0 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.c
-@@ -1038,6 +1038,25 @@ const u32 *mlx5_esw_query_functions(struct mlx5_core_dev *dev)
- 	return ERR_PTR(err);
- }
- 
-+static int mlx5_esw_host_functions_enabled_query(struct mlx5_eswitch *esw)
-+{
-+	const u32 *query_host_out;
-+
-+	if (!mlx5_core_is_ecpf_esw_manager(esw->dev))
-+		return 0;
-+
-+	query_host_out = mlx5_esw_query_functions(esw->dev);
-+	if (IS_ERR(query_host_out))
-+		return PTR_ERR(query_host_out);
-+
-+	esw->esw_funcs.host_funcs_disabled =
-+		MLX5_GET(query_esw_functions_out, query_host_out,
-+			 host_params_context.host_pf_not_exist);
-+
-+	kvfree(query_host_out);
-+	return 0;
-+}
-+
- static void mlx5_eswitch_event_handler_register(struct mlx5_eswitch *esw)
- {
- 	if (esw->mode == MLX5_ESWITCH_OFFLOADS && mlx5_eswitch_is_funcs_handler(esw->dev)) {
-@@ -1871,6 +1890,10 @@ int mlx5_eswitch_init(struct mlx5_core_dev *dev)
- 		goto abort;
- 	}
- 
-+	err = mlx5_esw_host_functions_enabled_query(esw);
-+	if (err)
-+		goto abort;
-+
- 	err = mlx5_esw_vports_init(esw);
- 	if (err)
- 		goto abort;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-index 48fd0400ffd4e..be6e60d961689 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch.h
-@@ -316,6 +316,7 @@ struct mlx5_host_work {
- 
- struct mlx5_esw_functions {
- 	struct mlx5_nb		nb;
-+	bool			host_funcs_disabled;
- 	u16			num_vfs;
- 	u16			num_ec_vfs;
- };
+diff --git a/sound/soc/codecs/cs42l43-jack.c b/sound/soc/codecs/cs42l43-jack.c
+index aa0062f3aa918..3a61f222d85fe 100644
+--- a/sound/soc/codecs/cs42l43-jack.c
++++ b/sound/soc/codecs/cs42l43-jack.c
+@@ -711,6 +711,7 @@ static int cs42l43_run_type_detect(struct cs42l43_codec *priv)
+ 	switch (type & CS42L43_HSDET_TYPE_STS_MASK) {
+ 	case 0x0: // CTIA
+ 	case 0x1: // OMTP
++	case 0x4:
+ 		return cs42l43_run_load_detect(priv, true);
+ 	case 0x2: // 3-pole
+ 		return cs42l43_run_load_detect(priv, false);
 -- 
 2.51.0
 
