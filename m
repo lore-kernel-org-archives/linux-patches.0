@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5D7B3B6349;
-	Mon, 23 Mar 2026 15:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABDE27E05E;
+	Mon, 23 Mar 2026 15:06:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278413; cv=none; b=MDPGseHpG/oAsNHuYH8dQ3xyyknfptVp1wVHYAu2j+l1UNWpH1jaQik4KkQjKi9cmfCK/4lM05zLB9eYihkB66GtCNp70XIC+922NZlz9mLzIo+gmVYAd5+rmKobvlZjXIPl7povFxONjH/1ntt25Drv2Ye12H08DZfFPSpuHXI=
+	t=1774278417; cv=none; b=lGyJ3LuVfTKJwtIMNmiDWkkJnO/hv4ueLmHDIVXe2fQFH2EOmjbSpBDLhXHAiLfxd22SkxfqNlPMbpEsaxmN3DBUV9b1IlDspM9qflpv20WvDwS6lVsrNkfFYi19Lo6WLbi2RHIs2GjHXI+NpdBDmlMJ7ztGC9AdZlB84duZXv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278413; c=relaxed/simple;
-	bh=22ol1KI28loqTevb176t2CvH7K/TXGuHAPj1L/CytZE=;
+	s=arc-20240116; t=1774278417; c=relaxed/simple;
+	bh=IrT/NXMySSiHjv8XIdDEJhqJzehgAxVg6ASYQKxWnKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tKfyvf5rykWd1PRbahn0LefDClHfulLlVEjaZ8yhUyUzc/aVghcVvDl9DegofPQR8dPWuYOpUqyV8QtxwJOM3e31VmaxHwZDfASf0Zb7sI7vV0KnICTFNWAYMcbBE1KCV0p1TAeSKBz/QJk/w4sgIKn/IZaOpbs+9SHDwr+BT1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Db75/75j; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=k12kWsEbc6bMWYAnnkUjUHciOhk8OSHy/t/MJaxDhiw78wUoyEQIxsPr0Kj0LlUp1j+7vlW21IfjyH+xlt+V2x4jN4uXm2h+HQScPVVPpVGozUft3XcA85q28rtjSMXOT9pwyIicYUuKfArTbOqO7c5K1MVPomLyeGiX/qpiKNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFQqvvOb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Db75/75j"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4F9C2BCB1;
-	Mon, 23 Mar 2026 15:06:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFQqvvOb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721B9C4CEF7;
+	Mon, 23 Mar 2026 15:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278413;
-	bh=22ol1KI28loqTevb176t2CvH7K/TXGuHAPj1L/CytZE=;
+	s=korg; t=1774278416;
+	bh=IrT/NXMySSiHjv8XIdDEJhqJzehgAxVg6ASYQKxWnKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Db75/75jdJaP9xh8Ohjq9xhjr1wzXsrwLKcLlY2vb1orBaVtg7IYLi5JiCzj6+1Le
-	 AM0YURyxpn1wBHPUYr4sqbyendNJBV5kbKb+TFfkA/YB9ZASRZ4f4JVvkoBc7lDSZ4
-	 yUMBR2dziTt3xUxAkrtyHas3DU9H5v2+Zk9gsVVs=
+	b=YFQqvvOb+bAHsqdaVdX9or/lTaKu5ZZcg3FYq8+lqZo0vy/cPYRgNIrO8uzyZVz5f
+	 wyVQx3bge4ZJ07nlKv0rHXAW4U+JhsQlB8zHHK4r2QZ1sftapXUO3KTZOFOUZCLzWr
+	 kiIXq2x4S3PRzqOpuxXjD8O1O0ctmvjQh63lEm0w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Kellermann <max.kellermann@ionos.com>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.6 300/567] ceph: fix memory leaks in ceph_mdsc_build_path()
-Date: Mon, 23 Mar 2026 14:43:40 +0100
-Message-ID: <20260323134541.240896562@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 301/567] time/jiffies: Mark jiffies_64_to_clock_t() notrace
+Date: Mon, 23 Mar 2026 14:43:41 +0100
+Message-ID: <20260323134541.266078047@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,51 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Max Kellermann <max.kellermann@ionos.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 040d159a45ded7f33201421a81df0aa2a86e5a0b upstream.
+[ Upstream commit 755a648e78f12574482d4698d877375793867fa1 ]
 
-Add __putname() calls to error code paths that did not free the "path"
-pointer obtained by __getname().  If ownership of this pointer is not
-passed to the caller via path_info.path, the function must free it
-before returning.
+The trace_clock_jiffies() function that handles the "uptime" clock for
+tracing calls jiffies_64_to_clock_t(). This causes the function tracer to
+constantly recurse when the tracing clock is set to "uptime". Mark it
+notrace to prevent unnecessary recursion when using the "uptime" clock.
 
-Cc: stable@vger.kernel.org
-Fixes: 3fd945a79e14 ("ceph: encode encrypted name in ceph_mdsc_build_path and dentry release")
-Fixes: 550f7ca98ee0 ("ceph: give up on paths longer than PATH_MAX")
-Signed-off-by: Max Kellermann <max.kellermann@ionos.com>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 58d4e21e50ff3 ("tracing: Fix wraparound problems in "uptime" trace clock")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260306212403.72270bb2@robin
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ceph/mds_client.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/time/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ceph/mds_client.c
-+++ b/fs/ceph/mds_client.c
-@@ -2672,6 +2672,7 @@ retry:
- 			if (ret < 0) {
- 				dput(parent);
- 				dput(cur);
-+				__putname(path);
- 				return ERR_PTR(ret);
- 			}
- 
-@@ -2681,6 +2682,7 @@ retry:
- 				if (len < 0) {
- 					dput(parent);
- 					dput(cur);
-+					__putname(path);
- 					return ERR_PTR(len);
- 				}
- 			}
-@@ -2717,6 +2719,7 @@ retry:
- 		 * cannot ever succeed.  Creating paths that long is
- 		 * possible with Ceph, but Linux cannot use them.
- 		 */
-+		__putname(path);
- 		return ERR_PTR(-ENAMETOOLONG);
- 	}
- 
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index 1ad88e97b4ebc..da7e8a02a0964 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -702,7 +702,7 @@ EXPORT_SYMBOL(clock_t_to_jiffies);
+  *
+  * Return: jiffies_64 value converted to 64-bit "clock_t" (CLOCKS_PER_SEC)
+  */
+-u64 jiffies_64_to_clock_t(u64 x)
++notrace u64 jiffies_64_to_clock_t(u64 x)
+ {
+ #if (TICK_NSEC % (NSEC_PER_SEC / USER_HZ)) == 0
+ # if HZ < USER_HZ
+-- 
+2.51.0
+
 
 
