@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDF74241C8C;
-	Mon, 23 Mar 2026 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECFF2773D8;
+	Mon, 23 Mar 2026 15:15:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278945; cv=none; b=gjh2wobO9oJhBRwWPXncHsYTdOCOVwhizvyTe7+wsgxmlmGXu7mWtnnzCAk861h1IQGEJS5klPBOD4p4Kv33TocWj1svTcpEysp85UdlgvxCq4oNJqU5V5kPmR4vUJ3O2VpKRNYUOw95itoKq/q4CUmRwoeP7YQv8bOVulghYTY=
+	t=1774278948; cv=none; b=QTX0B2TPf0TBawbNaMFiSVE7NrtYiIWAMKo0pSwllXxkGZVlF+iuj7JbiiSnhmEPeQsgMR2L7qHueAdWjCBesJe79PVJsuC/uPfMGimzaw8NGtPG91bTnN0BSF07r5qzO2qOTk8L72Re/V+2BOh3RwbSGzObAnDiUCKk3aPKVTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278945; c=relaxed/simple;
-	bh=uuUsQr6BWKe1JiK9K7S7JPAsjwOSZcJ1NsNkM5bIsjY=;
+	s=arc-20240116; t=1774278948; c=relaxed/simple;
+	bh=ip2UikrUSLlBF8ONThPwIf5nuRH24rU/D9DhjYlnifw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZTeEr2LT2uW2baVeTqWG1BfmwvOyE4K8ZE0/AsHOthdzuqHViPqyNcurt/9hEB4YKFRoYDsdUFakTz+GYRsXCNxdfVY7TtybTFKINZb49AGV7IIyM+LBaPGaEw8jOA8KefWNm5MAFVT5N/9ozJqKHBiDoaJELpy7IUiYcpjaPNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Nls1/j9U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sa4Cq52+ITrKsOU2MOuKhmaI6/JOss1GGZnz2Qji+Z8ZzCc/8q+ikJDL5REu0T0+VygCcQ3/vK0r6IMK3LfdrpYG3VRLrqfecLCJUoNqpeKz+KRudvX5nfsctUqnJLPifAwNq5ln20er7x936GgIvPwL+7/NQX6ktAclT54zDk0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY3W5WJr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Nls1/j9U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A23C2BCB1;
-	Mon, 23 Mar 2026 15:15:45 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY3W5WJr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672B3C4CEF7;
+	Mon, 23 Mar 2026 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278945;
-	bh=uuUsQr6BWKe1JiK9K7S7JPAsjwOSZcJ1NsNkM5bIsjY=;
+	s=korg; t=1774278948;
+	bh=ip2UikrUSLlBF8ONThPwIf5nuRH24rU/D9DhjYlnifw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nls1/j9UHG/y1yH/MDa8t0U+k/j4TWMobiETC2lRHJXvJbBliZeUTaNe6o+QtA0xJ
-	 FS230PwMPwnpGmcApBfvqtyzDkxq+3+/KXOI7OLjFFyUZvNxg4dCi+t/kxqZx1vpKt
-	 FfL/2wFXA3FNjFtx9TRBvdxkHs+tshBW0AhFyqw8=
+	b=vY3W5WJr9qDK1ZMnaK+laDpreDYE105LZmNC5AxYyHNQ1zcd0ob18NoHdKiV9ebOi
+	 CWRLZn5dwfvWNBDApAPlOiwEmcsKY7nAHx60bwRE75BOUMnuBYCSxzzJzUKAUInJt7
+	 rK/IsXbh/tp6In9RgvHqXQm5R1w+v4fm1N4ATNMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Nicholas Carlini <npc@anthropic.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Harini Katakam <harini.katakam@amd.com>,
+	Vineeth Karumanchi <vineeth.karumanchi@amd.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 470/567] nfsd: fix heap overflow in NFSv4.0 LOCK replay cache
-Date: Mon, 23 Mar 2026 14:46:30 +0100
-Message-ID: <20260323134545.614796685@linuxfoundation.org>
+Subject: [PATCH 6.6 471/567] net: macb: queue tie-off or disable during WOL suspend
+Date: Mon, 23 Mar 2026 14:46:31 +0100
+Message-ID: <20260323134545.640113522@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,94 +54,187 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
 
-[ Upstream commit 5133b61aaf437e5f25b1b396b14242a6bb0508e2 ]
+[ Upstream commit 759cc793ebfc2d1a02f357ae97e5dcdcd63f758f ]
 
-The NFSv4.0 replay cache uses a fixed 112-byte inline buffer
-(rp_ibuf[NFSD4_REPLAY_ISIZE]) to store encoded operation responses.
-This size was calculated based on OPEN responses and does not account
-for LOCK denied responses, which include the conflicting lock owner as
-a variable-length field up to 1024 bytes (NFS4_OPAQUE_LIMIT).
+When GEM is used as a wake device, it is not mandatory for the RX DMA
+to be active. The RX engine in IP only needs to receive and identify
+a wake packet through an interrupt. The wake packet is of no further
+significance; hence, it is not required to be copied into memory.
+By disabling RX DMA during suspend, we can avoid unnecessary DMA
+processing of any incoming traffic.
 
-When a LOCK operation is denied due to a conflict with an existing lock
-that has a large owner, nfsd4_encode_operation() copies the full encoded
-response into the undersized replay buffer via read_bytes_from_xdr_buf()
-with no bounds check. This results in a slab-out-of-bounds write of up
-to 944 bytes past the end of the buffer, corrupting adjacent heap memory.
+During suspend, perform either of the below operations:
 
-This can be triggered remotely by an unauthenticated attacker with two
-cooperating NFSv4.0 clients: one sets a lock with a large owner string,
-then the other requests a conflicting lock to provoke the denial.
+- tie-off/dummy descriptor: Disable unused queues by connecting
+  them to a looped descriptor chain without free slots.
 
-We could fix this by increasing NFSD4_REPLAY_ISIZE to allow for a full
-opaque, but that would increase the size of every stateowner, when most
-lockowners are not that large.
+- queue disable: The newer IP version allows disabling individual queues.
 
-Instead, fix this by checking the encoded response length against
-NFSD4_REPLAY_ISIZE before copying into the replay buffer. If the
-response is too large, set rp_buflen to 0 to skip caching the replay
-payload. The status is still cached, and the client already received the
-correct response on the original request.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: stable@kernel.org
-Reported-by: Nicholas Carlini <npc@anthropic.com>
-Tested-by: Nicholas Carlini <npc@anthropic.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-[ replaced `op_status_offset + XDR_UNIT` with existing `post_err_offset` variable ]
+Co-developed-by: Harini Katakam <harini.katakam@amd.com>
+Signed-off-by: Harini Katakam <harini.katakam@amd.com>
+Signed-off-by: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
+Tested-by: Claudiu Beznea <claudiu.beznea@tuxon.dev> # on SAMA7G5
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 718d0766ce4c ("net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4xdr.c |    9 +++++++--
- fs/nfsd/state.h   |   17 ++++++++++++-----
- 2 files changed, 19 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/cadence/macb.h      |    7 +++
+ drivers/net/ethernet/cadence/macb_main.c |   60 +++++++++++++++++++++++++++++--
+ 2 files changed, 64 insertions(+), 3 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -5425,9 +5425,14 @@ nfsd4_encode_operation(struct nfsd4_comp
- 		int len = xdr->buf->len - post_err_offset;
+--- a/drivers/net/ethernet/cadence/macb.h
++++ b/drivers/net/ethernet/cadence/macb.h
+@@ -645,6 +645,10 @@
+ #define GEM_T2OFST_OFFSET			0 /* offset value */
+ #define GEM_T2OFST_SIZE				7
  
- 		so->so_replay.rp_status = op->status;
--		so->so_replay.rp_buflen = len;
--		read_bytes_from_xdr_buf(xdr->buf, post_err_offset,
-+		if (len <= NFSD4_REPLAY_ISIZE) {
-+			so->so_replay.rp_buflen = len;
-+			read_bytes_from_xdr_buf(xdr->buf,
-+						post_err_offset,
- 						so->so_replay.rp_buf, len);
-+		} else {
-+			so->so_replay.rp_buflen = 0;
-+		}
++/* Bitfields in queue pointer registers */
++#define MACB_QUEUE_DISABLE_OFFSET		0 /* disable queue */
++#define MACB_QUEUE_DISABLE_SIZE			1
++
+ /* Offset for screener type 2 compare values (T2CMPOFST).
+  * Note the offset is applied after the specified point,
+  * e.g. GEM_T2COMPOFST_ETYPE denotes the EtherType field, so an offset
+@@ -733,6 +737,7 @@
+ #define MACB_CAPS_NEEDS_RSTONUBR		0x00000100
+ #define MACB_CAPS_MIIONRGMII			0x00000200
+ #define MACB_CAPS_NEED_TSUCLK			0x00000400
++#define MACB_CAPS_QUEUE_DISABLE			0x00000800
+ #define MACB_CAPS_PCS				0x01000000
+ #define MACB_CAPS_HIGH_SPEED			0x02000000
+ #define MACB_CAPS_CLK_HW_CHG			0x04000000
+@@ -1253,6 +1258,8 @@ struct macb {
+ 	u32	(*macb_reg_readl)(struct macb *bp, int offset);
+ 	void	(*macb_reg_writel)(struct macb *bp, int offset, u32 value);
+ 
++	struct macb_dma_desc	*rx_ring_tieoff;
++	dma_addr_t		rx_ring_tieoff_dma;
+ 	size_t			rx_buffer_size;
+ 
+ 	unsigned int		rx_ring_size;
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2573,6 +2573,12 @@ static void macb_free_consistent(struct
+ 	unsigned int q;
+ 	int size;
+ 
++	if (bp->rx_ring_tieoff) {
++		dma_free_coherent(&bp->pdev->dev, macb_dma_desc_get_size(bp),
++				  bp->rx_ring_tieoff, bp->rx_ring_tieoff_dma);
++		bp->rx_ring_tieoff = NULL;
++	}
++
+ 	bp->macbgem_ops.mog_free_rx_buffers(bp);
+ 
+ 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
+@@ -2664,6 +2670,16 @@ static int macb_alloc_consistent(struct
+ 	if (bp->macbgem_ops.mog_alloc_rx_buffers(bp))
+ 		goto out_err;
+ 
++	/* Required for tie off descriptor for PM cases */
++	if (!(bp->caps & MACB_CAPS_QUEUE_DISABLE)) {
++		bp->rx_ring_tieoff = dma_alloc_coherent(&bp->pdev->dev,
++							macb_dma_desc_get_size(bp),
++							&bp->rx_ring_tieoff_dma,
++							GFP_KERNEL);
++		if (!bp->rx_ring_tieoff)
++			goto out_err;
++	}
++
+ 	return 0;
+ 
+ out_err:
+@@ -2671,6 +2687,19 @@ out_err:
+ 	return -ENOMEM;
+ }
+ 
++static void macb_init_tieoff(struct macb *bp)
++{
++	struct macb_dma_desc *desc = bp->rx_ring_tieoff;
++
++	if (bp->caps & MACB_CAPS_QUEUE_DISABLE)
++		return;
++	/* Setup a wrapping descriptor with no free slots
++	 * (WRAP and USED) to tie off/disable unused RX queues.
++	 */
++	macb_set_addr(bp, desc, MACB_BIT(RX_WRAP) | MACB_BIT(RX_USED));
++	desc->ctrl = 0;
++}
++
+ static void gem_init_rings(struct macb *bp)
+ {
+ 	struct macb_queue *queue;
+@@ -2694,6 +2723,7 @@ static void gem_init_rings(struct macb *
+ 		gem_rx_refill(queue);
  	}
- status:
- 	*p = op->status;
---- a/fs/nfsd/state.h
-+++ b/fs/nfsd/state.h
-@@ -430,11 +430,18 @@ struct nfs4_client_reclaim {
- 	struct xdr_netobj	cr_princhash;
- };
  
--/* A reasonable value for REPLAY_ISIZE was estimated as follows:  
-- * The OPEN response, typically the largest, requires 
-- *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +  8(verifier) + 
-- *   4(deleg. type) + 8(deleg. stateid) + 4(deleg. recall flag) + 
-- *   20(deleg. space limit) + ~32(deleg. ace) = 112 bytes 
-+/*
-+ * REPLAY_ISIZE is sized for an OPEN response with delegation:
-+ *   4(status) + 8(stateid) + 20(changeinfo) + 4(rflags) +
-+ *   8(verifier) + 4(deleg. type) + 8(deleg. stateid) +
-+ *   4(deleg. recall flag) + 20(deleg. space limit) +
-+ *   ~32(deleg. ace) = 112 bytes
-+ *
-+ * Some responses can exceed this. A LOCK denial includes the conflicting
-+ * lock owner, which can be up to 1024 bytes (NFS4_OPAQUE_LIMIT). Responses
-+ * larger than REPLAY_ISIZE are not cached in rp_ibuf; only rp_status is
-+ * saved. Enlarging this constant increases the size of every
-+ * nfs4_stateowner.
-  */
++	macb_init_tieoff(bp);
+ }
  
- #define NFSD4_REPLAY_ISIZE       112 
+ static void macb_init_rings(struct macb *bp)
+@@ -2711,6 +2741,8 @@ static void macb_init_rings(struct macb
+ 	bp->queues[0].tx_head = 0;
+ 	bp->queues[0].tx_tail = 0;
+ 	desc->ctrl |= MACB_BIT(TX_WRAP);
++
++	macb_init_tieoff(bp);
+ }
+ 
+ static void macb_reset_hw(struct macb *bp)
+@@ -5302,6 +5334,7 @@ static int __maybe_unused macb_suspend(s
+ 	unsigned long flags;
+ 	unsigned int q;
+ 	int err;
++	u32 tmp;
+ 
+ 	if (!device_may_wakeup(&bp->dev->dev))
+ 		phy_exit(bp->sgmii_phy);
+@@ -5311,17 +5344,38 @@ static int __maybe_unused macb_suspend(s
+ 
+ 	if (bp->wol & MACB_WOL_ENABLED) {
+ 		spin_lock_irqsave(&bp->lock, flags);
+-		/* Flush all status bits */
+-		macb_writel(bp, TSR, -1);
+-		macb_writel(bp, RSR, -1);
++
++		/* Disable Tx and Rx engines before  disabling the queues,
++		 * this is mandatory as per the IP spec sheet
++		 */
++		tmp = macb_readl(bp, NCR);
++		macb_writel(bp, NCR, tmp & ~(MACB_BIT(TE) | MACB_BIT(RE)));
+ 		for (q = 0, queue = bp->queues; q < bp->num_queues;
+ 		     ++q, ++queue) {
++			/* Disable RX queues */
++			if (bp->caps & MACB_CAPS_QUEUE_DISABLE) {
++				queue_writel(queue, RBQP, MACB_BIT(QUEUE_DISABLE));
++			} else {
++				/* Tie off RX queues */
++				queue_writel(queue, RBQP,
++					     lower_32_bits(bp->rx_ring_tieoff_dma));
++#ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
++				queue_writel(queue, RBQPH,
++					     upper_32_bits(bp->rx_ring_tieoff_dma));
++#endif
++			}
+ 			/* Disable all interrupts */
+ 			queue_writel(queue, IDR, -1);
+ 			queue_readl(queue, ISR);
+ 			if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
+ 				queue_writel(queue, ISR, -1);
+ 		}
++		/* Enable Receive engine */
++		macb_writel(bp, NCR, tmp | MACB_BIT(RE));
++		/* Flush all status bits */
++		macb_writel(bp, TSR, -1);
++		macb_writel(bp, RSR, -1);
++
+ 		/* Change interrupt handler and
+ 		 * Enable WoL IRQ on queue 0
+ 		 */
 
 
