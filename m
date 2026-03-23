@@ -1,43 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EC923A0B3D;
-	Mon, 23 Mar 2026 14:13:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BBCF3AE6EE;
+	Mon, 23 Mar 2026 14:13:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275188; cv=none; b=cM7k2WGSXeIJNsxwDhVOdKUXXHOumB3oDlMYvC01IIvGe+fQYJLxD0PMTupU4YNpLTkoikkJvvB723FtB4o0nwvkNBXiR7pt5H6z2mfcFvzlt+TA9qGrY4OOWP7oZc7a3fvGtp27WfVVSuuEJkZMIlwK5dbgkyf439gtGKDeuFY=
+	t=1774275191; cv=none; b=Oh0BFf/6Qeq93rnc97gg4aGPnQUUh0CS4Zsc7CrCLjaOa8L2SLAZVk5U5rYl0P5dGm7zFzXInurTBdCScjxEEI0EqHv9YRFthBypari1Yi31xEyEXvuZJRHVPjJwlzoys3twIwqtA585yFVLPlOb7IWSav9xrPAisAcCQSDqlGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275188; c=relaxed/simple;
-	bh=Ww0LOer8bHsHicDG6DfPgCjAVOM7Mz8u0RgdwEWm4A8=;
+	s=arc-20240116; t=1774275191; c=relaxed/simple;
+	bh=xFvPqxqm+9gta4rKtBJTKmybR9o4YkHYVe2f7RxiBJ8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MXmFFwF3pEVk1YrIOQ31RyZ1+Xu6ZRnWFxp7on57Ohn7vrxbSJKiJy2apscBLaitYNAPBPnwRiEtLP8PPpcpZAnep0yV79D7lrLhJB5U8cAfzCdA2Zdj1Saq5slycUmyrBSpZc3u7C55trcozh99dA8XIar3sojLDWOMOHFhHGo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QVG99h0Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ao1XFpdHxn/N1fDPtJUYYVbRTuek2UwRbO9WR5RVez72dQrP+q3yTWw/hHY4xv7GF6alpO6qB3ZKwdluOsgHSfpBUKRdPlwkBY3+qu3/4Fwo4Biv8TC7weSu6piuIQUF8TiFOS6XyqhkE50I77NGs0v/h1QXZnZh1ps3nooKm+Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m+C6y+Yx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QVG99h0Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF99C4CEF7;
-	Mon, 23 Mar 2026 14:13:07 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m+C6y+Yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB4EEC4CEF7;
+	Mon, 23 Mar 2026 14:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275188;
-	bh=Ww0LOer8bHsHicDG6DfPgCjAVOM7Mz8u0RgdwEWm4A8=;
+	s=korg; t=1774275191;
+	bh=xFvPqxqm+9gta4rKtBJTKmybR9o4YkHYVe2f7RxiBJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QVG99h0Y3HBrRwzysr96eVTAOdWgP6dtdgU1QLQvfbXKf0/iItZcJdpF1nSWR4CYI
-	 U3Qj/DVmWW+D3TAzCbR0JCCqXuROhi8MFsZEGo1oY6wZmYFfqin3FOs4ak0qoE5Bx8
-	 ob4HJ0ZTbsytIvzmCUk+WWD+NfenIKgjKapDpfNM=
+	b=m+C6y+YxWEtjLK8rhiGYP9mSDUTJ/EL2N6fm1kH4K8kCCj2IdfigXeALNI0TI8sWi
+	 MSZL4peef5yQnJAeBYNp9tUyB5mAwpFe4GLRJ5hznFNylJSGucD+JxdKM9CH1pCMS6
+	 96Im+lS/K38ZgGTem8W46wgg2mZ7vM4yfAfKjB7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mason <clm@fb.com>,
-	Qu Wenruo <wqu@suse.com>,
-	Mark Harmstone <mark@harmstone.com>,
-	David Sterba <dsterba@suse.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/481] btrfs: fix incorrect key offset in error message in check_dev_extent_item()
-Date: Mon, 23 Mar 2026 14:39:56 +0100
-Message-ID: <20260323134525.596532378@linuxfoundation.org>
+Subject: [PATCH 6.6 008/567] rseq: Clarify rseq registration rseq_size bound check comment
+Date: Mon, 23 Mar 2026 14:38:48 +0100
+Message-ID: <20260323134533.958431024@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
-References: <20260323134525.256603107@linuxfoundation.org>
+In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
+References: <20260323134533.749096647@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -49,46 +47,45 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.1-stable review patch.  If anyone has any objections, please let me know.
+6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mark Harmstone <mark@harmstone.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit 511dc8912ae3e929c1a182f5e6b2326516fd42a0 ]
+[ Upstream commit 26d43a90be81fc90e26688a51d3ec83188602731 ]
 
-Fix the error message in check_dev_extent_item(), when an overlapping
-stripe is encountered. For dev extents, objectid is the disk number and
-offset the physical address, so prev_key->objectid should actually be
-prev_key->offset.
+The rseq registration validates that the rseq_size argument is greater
+or equal to 32 (the original rseq size), but the comment associated with
+this check does not clearly state this.
 
-(I can't take any credit for this one - this was discovered by Chris and
-his friend Claude.)
+Clarify the comment to that effect.
 
-Reported-by: Chris Mason <clm@fb.com>
-Fixes: 008e2512dc56 ("btrfs: tree-checker: add dev extent item checks")
-Reviewed-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: Mark Harmstone <mark@harmstone.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: ee3e3ac05c26 ("rseq: Introduce extensible rseq ABI")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://patch.msgid.link/20260220200642.1317826-2-mathieu.desnoyers@efficios.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-checker.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/rseq.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/tree-checker.c b/fs/btrfs/tree-checker.c
-index 6108cfab1ba59..d1b6bb8f08dd1 100644
---- a/fs/btrfs/tree-checker.c
-+++ b/fs/btrfs/tree-checker.c
-@@ -1697,7 +1697,7 @@ static int check_dev_extent_item(const struct extent_buffer *leaf,
- 		if (unlikely(prev_key->offset + prev_len > key->offset)) {
- 			generic_err(leaf, slot,
- 		"dev extent overlap, prev offset %llu len %llu current offset %llu",
--				    prev_key->objectid, prev_len, key->offset);
-+				    prev_key->offset, prev_len, key->offset);
- 			return -EUCLEAN;
- 		}
- 	}
+diff --git a/kernel/rseq.c b/kernel/rseq.c
+index 810005f927d7c..e6ee81dd1e457 100644
+--- a/kernel/rseq.c
++++ b/kernel/rseq.c
+@@ -432,8 +432,9 @@ SYSCALL_DEFINE4(rseq, struct rseq __user *, rseq, u32, rseq_len,
+ 	 * auxiliary vector AT_RSEQ_ALIGN. If rseq_len is the original rseq
+ 	 * size, the required alignment is the original struct rseq alignment.
+ 	 *
+-	 * In order to be valid, rseq_len is either the original rseq size, or
+-	 * large enough to contain all supported fields, as communicated to
++	 * The rseq_len is required to be greater or equal to the original rseq
++	 * size. In order to be valid, rseq_len is either the original rseq size,
++	 * or large enough to contain all supported fields, as communicated to
+ 	 * user-space through the ELF auxiliary vector AT_RSEQ_FEATURE_SIZE.
+ 	 */
+ 	if (rseq_len < ORIG_RSEQ_SIZE ||
 -- 
 2.51.0
 
