@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F083BED34;
-	Mon, 23 Mar 2026 16:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D74A3BD22E;
+	Mon, 23 Mar 2026 16:18:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282677; cv=none; b=JXaNURUw6QFD849vt3gkYGT2ph93UbnoRBQqB05WHeBgT/OGf9KI+eRpZe5IHlZQqofkyMqDmQOoWvGzmMxKJaTvzLWyxgBPRSr1qDnZs8dQc5OabY3mf+sE8jPVKDhogKtMhDMOe7dnjQEZVeMjJsUi5Fgexm4s41UOCmOssYs=
+	t=1774282680; cv=none; b=NiSLfbzsSAUvY0IpX05Anx7KpQGzdH9JbYSpdrubEpIeCJiiKLyRUvztdw8qeHmZwNPHLAmvpxyajIzjVUK02BqPRXfCOBlvo5Qryt9tQI56E4idDMKW4hJiM41oM716Is8N6PNi7slE0NsWyCeeFRb6D1OktU+FsYR1OxICI44=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282677; c=relaxed/simple;
-	bh=FqEOeWCpbit8nKQ8yQ1jMcjmxDiDohxaKA5OwbFZYAU=;
+	s=arc-20240116; t=1774282680; c=relaxed/simple;
+	bh=gOSUrDf9lOK4Ab6eA1V1KL4vx5HMdiKxPUkbQUDwdq8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ULHZrmr3XorgAM9waALDgcw5BbhZVOZQyA37SWCeHMJ/TyDKidmVx7xkykHOsJaCpT/OEz0tcEI1tg+2gAGZWvyY1xRzQPOcRFsooh1eRDDlpcA5UEdrdVXB7ulkGZpKyCnN+FsIkqs2u+bgbsr73ZWPsAzxAMR5h8HU2d4GpMU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yMmeRrqT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Tx6xClpvVSFfOcK4fcX3sxvhUX7jFnuDTPUPcPInRsjeYJ0+4g48VHf3AFfpXnEvcWF1Pj7TF9/P9OvG+6QYuUUmrOS7QyLsu8/T97B0sgo3WPyqFTnvI22lkMmnhbDzyFogz/sinpntZQchwuBe23ip2sTntIYxTqCKBpnhdEo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oYvNnQjd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yMmeRrqT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEA77C4CEF7;
-	Mon, 23 Mar 2026 16:17:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oYvNnQjd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93598C2BCB0;
+	Mon, 23 Mar 2026 16:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282677;
-	bh=FqEOeWCpbit8nKQ8yQ1jMcjmxDiDohxaKA5OwbFZYAU=;
+	s=korg; t=1774282679;
+	bh=gOSUrDf9lOK4Ab6eA1V1KL4vx5HMdiKxPUkbQUDwdq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yMmeRrqTathw0sVqQ8LqovBsn04Ok1RZElG/Y+803oANCbIa9ucMGkZ25ENAEZztw
-	 kostl9YtLl7IIrLTlPFC3W7p8SI4k+BXcT4OkSMQFPLVnTVHmYnxztXO6ANQPWh2QP
-	 bU+CQBuknvcXK1meM9Ti2kD3t9o26TQitN2nvQqc=
+	b=oYvNnQjd8msFuWWtLLDVpcWKVy5yNnEYn4ZXt1CmDruipVA2t1EeyAUMByKx3Gy3+
+	 KvLrhJqsRYZMQd8NqXWC3AOTKs4pzPYJOrskRcA4Nh4btzoeNXYvqyCFfO0SRdN/Nd
+	 K5OLuILdfnn6B92iZoyiJNYG0Y3Uzz6YDOjgMfb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 246/481] smb: server: fix use-after-free in smb2_open()
-Date: Mon, 23 Mar 2026 14:43:48 +0100
-Message-ID: <20260323134531.148684742@linuxfoundation.org>
+	Jian Zhang <zhangjian.3032@bytedance.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 247/481] net: ncsi: fix skb leak in error paths
+Date: Mon, 23 Mar 2026 14:43:49 +0100
+Message-ID: <20260323134531.172567319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,44 +50,85 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Jian Zhang <zhangjian.3032@bytedance.com>
 
-commit 1e689a56173827669a35da7cb2a3c78ed5c53680 upstream.
+commit 5c3398a54266541610c8d0a7082e654e9ff3e259 upstream.
 
-The opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is
-dereferenced after rcu_read_unlock(), creating a use-after-free
-window.
+Early return paths in NCSI RX and AEN handlers fail to release
+the received skb, resulting in a memory leak.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Specifically, ncsi_aen_handler() returns on invalid AEN packets
+without consuming the skb. Similarly, ncsi_rcv_rsp() exits early
+when failing to resolve the NCSI device, response handler, or
+request, leaving the skb unfreed.
+
+CC: stable@vger.kernel.org
+Fixes: 7a82ecf4cfb8 ("net/ncsi: NCSI AEN packet handler")
+Fixes: 138635cc27c9 ("net/ncsi: NCSI response packet handler")
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+Link: https://patch.msgid.link/20260305060656.3357250-1-zhangjian.3032@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/ncsi/ncsi-aen.c |    3 ++-
+ net/ncsi/ncsi-rsp.c |   16 ++++++++++++----
+ 2 files changed, 14 insertions(+), 5 deletions(-)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3343,10 +3343,8 @@ int smb2_open(struct ksmbd_work *work)
- 	memcpy(fp->client_guid, conn->ClientGUID, SMB2_CLIENT_GUID_SIZE);
- 
- 	rsp->StructureSize = cpu_to_le16(89);
--	rcu_read_lock();
--	opinfo = rcu_dereference(fp->f_opinfo);
-+	opinfo = opinfo_get(fp);
- 	rsp->OplockLevel = opinfo != NULL ? opinfo->level : 0;
--	rcu_read_unlock();
- 	rsp->Flags = 0;
- 	rsp->CreateAction = cpu_to_le32(file_info);
- 	rsp->CreationTime = cpu_to_le64(fp->create_time);
-@@ -3387,6 +3385,7 @@ int smb2_open(struct ksmbd_work *work)
- 		next_ptr = &lease_ccontext->Next;
- 		next_off = conn->vals->create_lease_size;
+--- a/net/ncsi/ncsi-aen.c
++++ b/net/ncsi/ncsi-aen.c
+@@ -224,7 +224,8 @@ int ncsi_aen_handler(struct ncsi_dev_pri
+ 	if (!nah) {
+ 		netdev_warn(ndp->ndev.dev, "Invalid AEN (0x%x) received\n",
+ 			    h->type);
+-		return -ENOENT;
++		ret = -ENOENT;
++		goto out;
  	}
-+	opinfo_put(opinfo);
  
- 	if (maximal_access_ctxt) {
- 		struct create_context *mxac_ccontext;
+ 	ret = ncsi_validate_aen_pkt(h, nah->payload);
+--- a/net/ncsi/ncsi-rsp.c
++++ b/net/ncsi/ncsi-rsp.c
+@@ -1176,8 +1176,10 @@ int ncsi_rcv_rsp(struct sk_buff *skb, st
+ 	/* Find the NCSI device */
+ 	nd = ncsi_find_dev(orig_dev);
+ 	ndp = nd ? TO_NCSI_DEV_PRIV(nd) : NULL;
+-	if (!ndp)
+-		return -ENODEV;
++	if (!ndp) {
++		ret = -ENODEV;
++		goto err_free_skb;
++	}
+ 
+ 	/* Check if it is AEN packet */
+ 	hdr = (struct ncsi_pkt_hdr *)skb_network_header(skb);
+@@ -1199,7 +1201,8 @@ int ncsi_rcv_rsp(struct sk_buff *skb, st
+ 	if (!nrh) {
+ 		netdev_err(nd->dev, "Received unrecognized packet (0x%x)\n",
+ 			   hdr->type);
+-		return -ENOENT;
++		ret = -ENOENT;
++		goto err_free_skb;
+ 	}
+ 
+ 	/* Associate with the request */
+@@ -1207,7 +1210,8 @@ int ncsi_rcv_rsp(struct sk_buff *skb, st
+ 	nr = &ndp->requests[hdr->id];
+ 	if (!nr->used) {
+ 		spin_unlock_irqrestore(&ndp->lock, flags);
+-		return -ENODEV;
++		ret = -ENODEV;
++		goto err_free_skb;
+ 	}
+ 
+ 	nr->rsp = skb;
+@@ -1261,4 +1265,8 @@ out_netlink:
+ out:
+ 	ncsi_free_request(nr);
+ 	return ret;
++
++err_free_skb:
++	kfree_skb(skb);
++	return ret;
+ }
 
 
