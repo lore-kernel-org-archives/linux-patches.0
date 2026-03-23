@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131FC387593;
-	Mon, 23 Mar 2026 14:44:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6674933CE9A;
+	Mon, 23 Mar 2026 14:44:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277053; cv=none; b=H4Kr3NiN6Z9V5R3cYnuXTR3tsnDzPfnJYqmvYvHfNOR5ajCEyuL38vqdeqrlDLVHtduUfhNsxN1tCwMXYvY12zVzY0ph/J5fBiEN6RSI1GZPI0Z1Vj6JH4e360EPUnxsA7qHJdPZpqlXCSy0F50uYoO/4LOqLs3yqu35fE0sYGo=
+	t=1774277055; cv=none; b=QCMKaeXrSr7GqZ3NzRg9bV5yu+m/pKGArCtZ2xz69lKSyVeR0UwVMXS4hf8FMgImJR+h6L87nX+XXqxirjkhjjB/vtcWD47oeBzAM3E/s28iSkzErZoCCdjR3TMMsSQJy+ZJ919e3d4D/RutdTThYxfMxSjniirSuDvHfIxTSC8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277053; c=relaxed/simple;
-	bh=xIqaGjd67agApr+UvCvaECTQuxLARU0qb+JzvcsrQ04=;
+	s=arc-20240116; t=1774277055; c=relaxed/simple;
+	bh=smf3l4bCQQxttt6naDcbKt7irZuELAR5+LAOyNrcu4c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UXeLrPuli8Goyand8IWjzVGO3ICsPWb1I3XH+gjiyysNQ1VtVKnt7M0EySjSI9qNlpUVyMtlKy2KafM8tuHkJFNUT339HcmWnZpzF3mJUwH6PWd+zTI8aw8lFyKUft2yTW2XXyrNNZHYz2xOMMwcBdSWARVP4fHMv4StQaAXjTs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=1jdOx03U; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B+4m9IKDMv3RRNRoXnMiFN8Ok3aTlrbnUMn4WsXQiKUCcqJguG+gCxBHkMWZv5G1HWjjcZbSGU2YNwfCl2CQUtYDb6cTfVvxqVEZOPtcag/APG706cWgo7IGTHk88Y6GXS2oh0aPmHROW9UdcMMUBDZ0cExGjWrSn+Uv5zVWsi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vaSCBhRe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="1jdOx03U"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6983AC4CEF7;
-	Mon, 23 Mar 2026 14:44:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vaSCBhRe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4169C4CEF7;
+	Mon, 23 Mar 2026 14:44:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277052;
-	bh=xIqaGjd67agApr+UvCvaECTQuxLARU0qb+JzvcsrQ04=;
+	s=korg; t=1774277055;
+	bh=smf3l4bCQQxttt6naDcbKt7irZuELAR5+LAOyNrcu4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jdOx03UX8xWFfbq5a8hlNtLaqwWv4Acm5FnQIOLpQo7NiTUz8utK40UqR7JwwWeS
-	 2EQP0bms8UAfVu6bfnU6j5QN2SAjZARdtpWV0drgyfzkajhryiI2/wBaQI0FB19vOD
-	 sZvLGxJzb7UmDmq9ztjNOn/RcRRrKrPFWYGOnx40=
+	b=vaSCBhRep1D1iLjklYcoegr0Tk3kb8TTHCBTRRezt/bCuhvr//jHIedCFxs2ki8UH
+	 HZOjKOcxdYmxWE8IoxbaZfeOkcivMzTg47+cYzXgj6UTRBy9SAHXAfOm2L1rx/Nh62
+	 rgq95TfTSTONurZYeKaF+TME219FeSQXwV+eq/BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Timur=20Krist=C3=B3f?= <timur.kristof@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Rosen Penev <rosenp@gmail.com>
-Subject: [PATCH 6.12 304/460] drm/amd/pm: Use pm_display_cfg in legacy DPM (v2)
-Date: Mon, 23 Mar 2026 14:45:00 +0100
-Message-ID: <20260323134533.957681837@linuxfoundation.org>
+	Daeho Jeong <daehojeong@google.com>,
+	Zhiguo Niu <zhiguo.niu@unisoc.com>,
+	Baocong Liu <baocong.liu@unisoc.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Bin Lan <lanbincn@139.com>
+Subject: [PATCH 6.12 287/460] f2fs: compress: fix UAF of f2fs_inode_info in f2fs_free_dic
+Date: Mon, 23 Mar 2026 14:44:43 +0100
+Message-ID: <20260323134533.534278122@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -45,355 +48,221 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Timur Kristóf <timur.kristof@gmail.com>
+From: Zhiguo Niu <zhiguo.niu@unisoc.com>
 
-commit 9d73b107a61b73e7101d4b728ddac3d2c77db111 upstream.
+[ Upstream commit 39868685c2a94a70762bc6d77dc81d781d05bff5 ]
 
-This commit is necessary for DC to function well with chips
-that use the legacy power management code, ie. SI and KV.
-Communicate display information from DC to the legacy PM code.
+The decompress_io_ctx may be released asynchronously after
+I/O completion. If this file is deleted immediately after read,
+and the kworker of processing post_read_wq has not been executed yet
+due to high workloads, It is possible that the inode(f2fs_inode_info)
+is evicted and freed before it is used f2fs_free_dic.
 
-Currently DC uses pm_display_cfg to communicate power management
-requirements from the display code to the DPM code.
-However, the legacy (non-DC) code path used different fields
-and therefore could not take into account anything from DC.
+    The UAF case as below:
+    Thread A                                      Thread B
+    - f2fs_decompress_end_io
+     - f2fs_put_dic
+      - queue_work
+        add free_dic work to post_read_wq
+                                                   - do_unlink
+                                                    - iput
+                                                     - evict
+                                                      - call_rcu
+    This file is deleted after read.
 
-Change the legacy display code to fill the same pm_display_cfg
-struct as DC and use the same in the legacy DPM code.
+    Thread C                                 kworker to process post_read_wq
+    - rcu_do_batch
+     - f2fs_free_inode
+      - kmem_cache_free
+     inode is freed by rcu
+                                             - process_scheduled_works
+                                              - f2fs_late_free_dic
+                                               - f2fs_free_dic
+                                                - f2fs_release_decomp_mem
+                                      read (dic->inode)->i_compress_algorithm
 
-To ease review and reduce churn, this commit does not yet
-delete the now unneeded code, that is done in the next commit.
+This patch store compress_algorithm and sbi in dic to avoid inode UAF.
 
-v2:
-Rebase.
-Fix single_display in amdgpu_dpm_pick_power_state.
+In addition, the previous solution is deprecated in [1] may cause system hang.
+[1] https://lore.kernel.org/all/c36ab955-c8db-4a8b-a9d0-f07b5f426c3f@kernel.org
 
-Signed-off-by: Timur Kristóf <timur.kristof@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Rosen Penev <rosenp@gmail.com>
+Cc: Daeho Jeong <daehojeong@google.com>
+Fixes: bff139b49d9f ("f2fs: handle decompress only post processing in softirq")
+Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
+Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+[ Keep the original f2fs_vmalloc(workspace_size) in v6.12.y instead of
+f2fs_vmalloc(dic->sbi, workspace_size) per commit
+54ca9be0bc58 ("f2fs: introduce FAULT_VMALLOC"). ]
+Signed-off-by: Bin Lan <lanbincn@139.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c     |   67 +++++++++++++++++++++++
- drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h |    2 
- drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c       |    4 -
- drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c   |    6 +-
- drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c       |   65 +++++++---------------
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c |   11 ---
- 6 files changed, 97 insertions(+), 58 deletions(-)
+ fs/f2fs/compress.c |   38 +++++++++++++++++++-------------------
+ fs/f2fs/f2fs.h     |    2 ++
+ 2 files changed, 21 insertions(+), 19 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c
-+++ b/drivers/gpu/drm/amd/pm/amdgpu_dpm_internal.c
-@@ -100,3 +100,70 @@ u32 amdgpu_dpm_get_vrefresh(struct amdgp
+--- a/fs/f2fs/compress.c
++++ b/fs/f2fs/compress.c
+@@ -211,13 +211,13 @@ static int lzo_decompress_pages(struct d
+ 	ret = lzo1x_decompress_safe(dic->cbuf->cdata, dic->clen,
+ 						dic->rbuf, &dic->rlen);
+ 	if (ret != LZO_E_OK) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lzo decompress failed, ret:%d", ret);
+ 		return -EIO;
+ 	}
  
- 	return vrefresh;
- }
-+
-+void amdgpu_dpm_get_display_cfg(struct amdgpu_device *adev)
-+{
-+	struct drm_device *ddev = adev_to_drm(adev);
-+	struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
-+	struct single_display_configuration *display_cfg;
-+	struct drm_crtc *crtc;
-+	struct amdgpu_crtc *amdgpu_crtc;
-+	struct amdgpu_connector *conn;
-+	int num_crtcs = 0;
-+	int vrefresh;
-+	u32 vblank_in_pixels, vblank_time_us;
-+
-+	cfg->min_vblank_time = 0xffffffff; /* if the displays are off, vblank time is max */
-+
-+	if (adev->mode_info.num_crtc && adev->mode_info.mode_config_initialized) {
-+		list_for_each_entry(crtc, &ddev->mode_config.crtc_list, head) {
-+			amdgpu_crtc = to_amdgpu_crtc(crtc);
-+
-+			/* The array should only contain active displays. */
-+			if (!amdgpu_crtc->enabled)
-+				continue;
-+
-+			conn = to_amdgpu_connector(amdgpu_crtc->connector);
-+			display_cfg = &adev->pm.pm_display_cfg.displays[num_crtcs++];
-+
-+			if (amdgpu_crtc->hw_mode.clock) {
-+				vrefresh = drm_mode_vrefresh(&amdgpu_crtc->hw_mode);
-+
-+				vblank_in_pixels =
-+					amdgpu_crtc->hw_mode.crtc_htotal *
-+					(amdgpu_crtc->hw_mode.crtc_vblank_end -
-+					amdgpu_crtc->hw_mode.crtc_vdisplay +
-+					(amdgpu_crtc->v_border * 2));
-+
-+				vblank_time_us =
-+					vblank_in_pixels * 1000 / amdgpu_crtc->hw_mode.clock;
-+
-+				/* The legacy (non-DC) code has issues with mclk switching
-+				 * with refresh rates over 120 Hz. Disable mclk switching.
-+				 */
-+				if (vrefresh > 120)
-+					vblank_time_us = 0;
-+
-+				/* Find minimum vblank time. */
-+				if (vblank_time_us < cfg->min_vblank_time)
-+					cfg->min_vblank_time = vblank_time_us;
-+
-+				/* Find vertical refresh rate of first active display. */
-+				if (!cfg->vrefresh)
-+					cfg->vrefresh = vrefresh;
-+			}
-+
-+			if (amdgpu_crtc->crtc_id < cfg->crtc_index) {
-+				/* Find first active CRTC and its line time. */
-+				cfg->crtc_index = amdgpu_crtc->crtc_id;
-+				cfg->line_time_in_us = amdgpu_crtc->line_time;
-+			}
-+
-+			display_cfg->controller_id = amdgpu_crtc->crtc_id;
-+			display_cfg->pixel_clock = conn->pixelclock_for_modeset;
-+		}
-+	}
-+
-+	cfg->display_clk = adev->clock.default_dispclk;
-+	cfg->num_display = num_crtcs;
-+}
---- a/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h
-+++ b/drivers/gpu/drm/amd/pm/inc/amdgpu_dpm_internal.h
-@@ -29,4 +29,6 @@ u32 amdgpu_dpm_get_vblank_time(struct am
+ 	if (dic->rlen != PAGE_SIZE << dic->log_cluster_size) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lzo invalid rlen:%zu, expected:%lu",
+ 				dic->rlen, PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -291,13 +291,13 @@ static int lz4_decompress_pages(struct d
+ 	ret = LZ4_decompress_safe(dic->cbuf->cdata, dic->rbuf,
+ 						dic->clen, dic->rlen);
+ 	if (ret < 0) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lz4 decompress failed, ret:%d", ret);
+ 		return -EIO;
+ 	}
  
- u32 amdgpu_dpm_get_vrefresh(struct amdgpu_device *adev);
+ 	if (ret != PAGE_SIZE << dic->log_cluster_size) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"lz4 invalid ret:%d, expected:%lu",
+ 				ret, PAGE_SIZE << dic->log_cluster_size);
+ 		return -EIO;
+@@ -425,7 +425,7 @@ static int zstd_init_decompress_ctx(stru
  
-+void amdgpu_dpm_get_display_cfg(struct amdgpu_device *adev);
-+
- #endif
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/kv_dpm.c
-@@ -2299,7 +2299,7 @@ static void kv_apply_state_adjust_rules(
+ 	stream = zstd_init_dstream(max_window_size, workspace, workspace_size);
+ 	if (!stream) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s zstd_init_dstream failed", __func__);
+ 		vfree(workspace);
+ 		return -EIO;
+@@ -461,14 +461,14 @@ static int zstd_decompress_pages(struct
  
- 		if (pi->sys_info.nb_dpm_enable) {
- 			force_high = (mclk >= pi->sys_info.nbp_memory_clock[3]) ||
--				pi->video_start || (adev->pm.dpm.new_active_crtc_count >= 3) ||
-+				pi->video_start || (adev->pm.pm_display_cfg.num_display >= 3) ||
- 				pi->disable_nb_ps3_in_battery;
- 			ps->dpm0_pg_nb_ps_lo = force_high ? 0x2 : 0x3;
- 			ps->dpm0_pg_nb_ps_hi = 0x2;
-@@ -2358,7 +2358,7 @@ static int kv_calculate_nbps_level_setti
- 			return 0;
+ 	ret = zstd_decompress_stream(stream, &outbuf, &inbuf);
+ 	if (zstd_is_error(ret)) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s zstd_decompress_stream failed, ret: %d",
+ 				__func__, zstd_get_error_code(ret));
+ 		return -EIO;
+ 	}
  
- 		force_high = ((mclk >= pi->sys_info.nbp_memory_clock[3]) ||
--			      (adev->pm.dpm.new_active_crtc_count >= 3) || pi->video_start);
-+			      (adev->pm.pm_display_cfg.num_display >= 3) || pi->video_start);
+ 	if (dic->rlen != outbuf.pos) {
+-		f2fs_err_ratelimited(F2FS_I_SB(dic->inode),
++		f2fs_err_ratelimited(dic->sbi,
+ 				"%s ZSTD invalid rlen:%zu, expected:%lu",
+ 				__func__, dic->rlen,
+ 				PAGE_SIZE << dic->log_cluster_size);
+@@ -728,7 +728,7 @@ static void f2fs_release_decomp_mem(stru
  
- 		if (force_high) {
- 			for (i = pi->lowest_valid; i <= pi->highest_valid; i++)
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/legacy_dpm.c
-@@ -797,8 +797,7 @@ static struct amdgpu_ps *amdgpu_dpm_pick
+ void f2fs_decompress_cluster(struct decompress_io_ctx *dic, bool in_task)
+ {
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
+ 	struct f2fs_inode_info *fi = F2FS_I(dic->inode);
+ 	const struct f2fs_compress_ops *cops =
+ 			f2fs_cops[fi->i_compress_algorithm];
+@@ -798,7 +798,7 @@ void f2fs_end_read_compressed_page(struc
+ {
+ 	struct decompress_io_ctx *dic =
+ 			(struct decompress_io_ctx *)page_private(page);
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	struct f2fs_sb_info *sbi = dic->sbi;
+ 
+ 	dec_page_count(sbi, F2FS_RD_DATA);
+ 
+@@ -1615,14 +1615,13 @@ static inline bool allow_memalloc_for_de
+ static int f2fs_prepare_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool pre_alloc)
+ {
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
  	int i;
- 	struct amdgpu_ps *ps;
- 	u32 ui_class;
--	bool single_display = (adev->pm.dpm.new_active_crtc_count < 2) ?
--		true : false;
-+	bool single_display = adev->pm.pm_display_cfg.num_display < 2;
  
- 	/* check if the vblank period is too short to adjust the mclk */
- 	if (single_display && adev->powerplay.pp_funcs->vblank_too_short) {
-@@ -994,7 +993,8 @@ void amdgpu_legacy_dpm_compute_clocks(vo
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
+ 		return 0;
+ 
+-	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
++	dic->tpages = page_array_alloc(dic->sbi, dic->cluster_size);
+ 	if (!dic->tpages)
+ 		return -ENOMEM;
+ 
+@@ -1652,10 +1651,9 @@ static int f2fs_prepare_decomp_mem(struc
+ static void f2fs_release_decomp_mem(struct decompress_io_ctx *dic,
+ 		bool bypass_destroy_callback, bool pre_alloc)
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
+-	const struct f2fs_compress_ops *cops =
+-		f2fs_cops[F2FS_I(dic->inode)->i_compress_algorithm];
++	const struct f2fs_compress_ops *cops = f2fs_cops[dic->compress_algorithm];
  
--	amdgpu_dpm_get_active_displays(adev);
-+	if (!adev->dc_enabled)
-+		amdgpu_dpm_get_display_cfg(adev);
+-	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
++	if (!allow_memalloc_for_decomp(dic->sbi, pre_alloc))
+ 		return;
  
- 	amdgpu_dpm_change_power_state_locked(adev);
- }
---- a/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-+++ b/drivers/gpu/drm/amd/pm/legacy-dpm/si_dpm.c
-@@ -3058,7 +3058,7 @@ static int si_get_vce_clock_voltage(stru
- static bool si_dpm_vblank_too_short(void *handle)
+ 	if (!bypass_destroy_callback && cops->destroy_decompress_ctx)
+@@ -1690,6 +1688,8 @@ struct decompress_io_ctx *f2fs_alloc_dic
+ 
+ 	dic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
+ 	dic->inode = cc->inode;
++	dic->sbi = sbi;
++	dic->compress_algorithm = F2FS_I(cc->inode)->i_compress_algorithm;
+ 	atomic_set(&dic->remaining_pages, cc->nr_cpages);
+ 	dic->cluster_idx = cc->cluster_idx;
+ 	dic->cluster_size = cc->cluster_size;
+@@ -1733,7 +1733,8 @@ static void f2fs_free_dic(struct decompr
+ 		bool bypass_destroy_callback)
  {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
--	u32 vblank_time = amdgpu_dpm_get_vblank_time(adev);
-+	u32 vblank_time = adev->pm.pm_display_cfg.min_vblank_time;
- 	/* we never hit the non-gddr5 limit so disable it */
- 	u32 switch_limit = adev->gmc.vram_type == AMDGPU_VRAM_TYPE_GDDR5 ? 450 : 0;
+ 	int i;
+-	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
++	/* use sbi in dic to avoid UFA of dic->inode*/
++	struct f2fs_sb_info *sbi = dic->sbi;
  
-@@ -3424,9 +3424,10 @@ static void rv770_get_engine_memory_ss(s
- static void si_apply_state_adjust_rules(struct amdgpu_device *adev,
- 					struct amdgpu_ps *rps)
- {
-+	const struct amd_pp_display_configuration *display_cfg =
-+		&adev->pm.pm_display_cfg;
- 	struct  si_ps *ps = si_get_ps(rps);
- 	struct amdgpu_clock_and_voltage_limits *max_limits;
--	struct amdgpu_connector *conn;
- 	bool disable_mclk_switching = false;
- 	bool disable_sclk_switching = false;
- 	u32 mclk, sclk;
-@@ -3475,14 +3476,9 @@ static void si_apply_state_adjust_rules(
- 	 * For example, 4K 60Hz and 1080p 144Hz fall into this category.
- 	 * Find number of such displays connected.
- 	 */
--	for (i = 0; i < adev->mode_info.num_crtc; i++) {
--		if (!(adev->pm.dpm.new_active_crtcs & (1 << i)) ||
--			!adev->mode_info.crtcs[i]->enabled)
--			continue;
--
--		conn = to_amdgpu_connector(adev->mode_info.crtcs[i]->connector);
--
--		if (conn->pixelclock_for_modeset > 297000)
-+	for (i = 0; i < display_cfg->num_display; i++) {
-+		/* The array only contains active displays. */
-+		if (display_cfg->displays[i].pixel_clock > 297000)
- 			high_pixelclock_count++;
- 	}
+ 	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
  
-@@ -3515,7 +3511,7 @@ static void si_apply_state_adjust_rules(
- 		rps->ecclk = 0;
- 	}
- 
--	if ((adev->pm.dpm.new_active_crtc_count > 1) ||
-+	if ((adev->pm.pm_display_cfg.num_display > 1) ||
- 	    si_dpm_vblank_too_short(adev))
- 		disable_mclk_switching = true;
- 
-@@ -3663,7 +3659,7 @@ static void si_apply_state_adjust_rules(
- 						   ps->performance_levels[i].mclk,
- 						   max_limits->vddc,  &ps->performance_levels[i].vddc);
- 		btc_apply_voltage_dependency_rules(&adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk,
--						   adev->clock.current_dispclk,
-+						   display_cfg->display_clk,
- 						   max_limits->vddc,  &ps->performance_levels[i].vddc);
- 	}
- 
-@@ -4188,16 +4184,16 @@ static void si_program_ds_registers(stru
- 
- static void si_program_display_gap(struct amdgpu_device *adev)
- {
-+	const struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
- 	u32 tmp, pipe;
--	int i;
- 
- 	tmp = RREG32(CG_DISPLAY_GAP_CNTL) & ~(DISP1_GAP_MASK | DISP2_GAP_MASK);
--	if (adev->pm.dpm.new_active_crtc_count > 0)
-+	if (cfg->num_display > 0)
- 		tmp |= DISP1_GAP(R600_PM_DISPLAY_GAP_VBLANK_OR_WM);
- 	else
- 		tmp |= DISP1_GAP(R600_PM_DISPLAY_GAP_IGNORE);
- 
--	if (adev->pm.dpm.new_active_crtc_count > 1)
-+	if (cfg->num_display > 1)
- 		tmp |= DISP2_GAP(R600_PM_DISPLAY_GAP_VBLANK_OR_WM);
- 	else
- 		tmp |= DISP2_GAP(R600_PM_DISPLAY_GAP_IGNORE);
-@@ -4207,17 +4203,8 @@ static void si_program_display_gap(struc
- 	tmp = RREG32(DCCG_DISP_SLOW_SELECT_REG);
- 	pipe = (tmp & DCCG_DISP1_SLOW_SELECT_MASK) >> DCCG_DISP1_SLOW_SELECT_SHIFT;
- 
--	if ((adev->pm.dpm.new_active_crtc_count > 0) &&
--	    (!(adev->pm.dpm.new_active_crtcs & (1 << pipe)))) {
--		/* find the first active crtc */
--		for (i = 0; i < adev->mode_info.num_crtc; i++) {
--			if (adev->pm.dpm.new_active_crtcs & (1 << i))
--				break;
--		}
--		if (i == adev->mode_info.num_crtc)
--			pipe = 0;
--		else
--			pipe = i;
-+	if (cfg->num_display > 0 && pipe != cfg->crtc_index) {
-+		pipe = cfg->crtc_index;
- 
- 		tmp &= ~DCCG_DISP1_SLOW_SELECT_MASK;
- 		tmp |= DCCG_DISP1_SLOW_SELECT(pipe);
-@@ -4228,7 +4215,7 @@ static void si_program_display_gap(struc
- 	 * This can be a problem on PowerXpress systems or if you want to use the card
- 	 * for offscreen rendering or compute if there are no crtcs enabled.
- 	 */
--	si_notify_smc_display_change(adev, adev->pm.dpm.new_active_crtc_count > 0);
-+	si_notify_smc_display_change(adev, cfg->num_display > 0);
- }
- 
- static void si_enable_spread_spectrum(struct amdgpu_device *adev, bool enable)
-@@ -5532,7 +5519,7 @@ static int si_convert_power_level_to_smc
- 	    (pl->mclk <= pi->mclk_stutter_mode_threshold) &&
- 	    !eg_pi->uvd_enabled &&
- 	    (RREG32(DPG_PIPE_STUTTER_CONTROL) & STUTTER_ENABLE) &&
--	    (adev->pm.dpm.new_active_crtc_count <= 2)) {
-+	    (adev->pm.pm_display_cfg.num_display <= 2)) {
- 		level->mcFlags |= SISLANDS_SMC_MC_STUTTER_EN;
- 	}
- 
-@@ -5681,7 +5668,7 @@ static bool si_is_state_ulv_compatible(s
- 	/* XXX validate against display requirements! */
- 
- 	for (i = 0; i < adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.count; i++) {
--		if (adev->clock.current_dispclk <=
-+		if (adev->pm.pm_display_cfg.display_clk <=
- 		    adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[i].clk) {
- 			if (ulv->pl.vddc <
- 			    adev->pm.dpm.dyn_state.vddc_dependency_on_dispclk.entries[i].v)
-@@ -5835,30 +5822,22 @@ static int si_upload_ulv_state(struct am
- 
- static int si_upload_smc_data(struct amdgpu_device *adev)
- {
--	struct amdgpu_crtc *amdgpu_crtc = NULL;
--	int i;
-+	const struct amd_pp_display_configuration *cfg = &adev->pm.pm_display_cfg;
- 	u32 crtc_index = 0;
- 	u32 mclk_change_block_cp_min = 0;
- 	u32 mclk_change_block_cp_max = 0;
- 
--	for (i = 0; i < adev->mode_info.num_crtc; i++) {
--		if (adev->pm.dpm.new_active_crtcs & (1 << i)) {
--			amdgpu_crtc = adev->mode_info.crtcs[i];
--			break;
--		}
--	}
--
- 	/* When a display is plugged in, program these so that the SMC
- 	 * performs MCLK switching when it doesn't cause flickering.
- 	 * When no display is plugged in, there is no need to restrict
- 	 * MCLK switching, so program them to zero.
- 	 */
--	if (adev->pm.dpm.new_active_crtc_count && amdgpu_crtc) {
--		crtc_index = amdgpu_crtc->crtc_id;
-+	if (cfg->num_display) {
-+		crtc_index = cfg->crtc_index;
- 
--		if (amdgpu_crtc->line_time) {
--			mclk_change_block_cp_min = 200 / amdgpu_crtc->line_time;
--			mclk_change_block_cp_max = 100 / amdgpu_crtc->line_time;
-+		if (cfg->line_time_in_us) {
-+			mclk_change_block_cp_min = 200 / cfg->line_time_in_us;
-+			mclk_change_block_cp_max = 100 / cfg->line_time_in_us;
+@@ -1776,8 +1777,7 @@ static void f2fs_put_dic(struct decompre
+ 			f2fs_free_dic(dic, false);
+ 		} else {
+ 			INIT_WORK(&dic->free_work, f2fs_late_free_dic);
+-			queue_work(F2FS_I_SB(dic->inode)->post_read_wq,
+-					&dic->free_work);
++			queue_work(dic->sbi->post_read_wq, &dic->free_work);
  		}
  	}
+ }
+--- a/fs/f2fs/f2fs.h
++++ b/fs/f2fs/f2fs.h
+@@ -1525,6 +1525,7 @@ struct compress_io_ctx {
+ struct decompress_io_ctx {
+ 	u32 magic;			/* magic number to indicate page is compressed */
+ 	struct inode *inode;		/* inode the context belong to */
++	struct f2fs_sb_info *sbi;	/* f2fs_sb_info pointer */
+ 	pgoff_t cluster_idx;		/* cluster index number */
+ 	unsigned int cluster_size;	/* page count in cluster */
+ 	unsigned int log_cluster_size;	/* log of cluster size */
+@@ -1565,6 +1566,7 @@ struct decompress_io_ctx {
  
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -1569,16 +1569,7 @@ static void pp_pm_compute_clocks(void *h
- 	struct amdgpu_device *adev = hwmgr->adev;
- 
- 	if (!adev->dc_enabled) {
--		amdgpu_dpm_get_active_displays(adev);
--		adev->pm.pm_display_cfg.num_display = adev->pm.dpm.new_active_crtc_count;
--		adev->pm.pm_display_cfg.vrefresh = amdgpu_dpm_get_vrefresh(adev);
--		adev->pm.pm_display_cfg.min_vblank_time = amdgpu_dpm_get_vblank_time(adev);
--		/* we have issues with mclk switching with
--		 * refresh rates over 120 hz on the non-DC code.
--		 */
--		if (adev->pm.pm_display_cfg.vrefresh > 120)
--			adev->pm.pm_display_cfg.min_vblank_time = 0;
--
-+		amdgpu_dpm_get_display_cfg(adev);
- 		pp_display_configuration_change(handle,
- 						&adev->pm.pm_display_cfg);
- 	}
+ 	bool failed;			/* IO error occurred before decompression? */
+ 	bool need_verity;		/* need fs-verity verification after decompression? */
++	unsigned char compress_algorithm;	/* backup algorithm type */
+ 	void *private;			/* payload buffer for specified decompression algorithm */
+ 	void *private2;			/* extra payload buffer */
+ 	struct work_struct verity_work;	/* work to verify the decompressed pages */
 
 
