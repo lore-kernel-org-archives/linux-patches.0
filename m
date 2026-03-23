@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186E23AC0D2;
-	Mon, 23 Mar 2026 14:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE2726ED4F;
+	Mon, 23 Mar 2026 14:48:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277300; cv=none; b=EkEDNxG2T3uh/4EH20G8H5RIDM1LlFV2PrpeBhVlUI+Ul8ODeOyk4pDTHI4bDu+WQhYQKx+hnw3yG5AeC4p8hLgQi5QlZIBrFDbBwHnjLNqqDWj688/XaKZdPQw9O/8gKdq0AkS3kIgCiUfLb4kOBRjRuc9d1dzzUrgwRHxdDj4=
+	t=1774277303; cv=none; b=V8YHmpcAph0BGkaonZYDDNcDZCSBOFoFObCk6KMGdaHYEgEyhGwZYsr5CX12hrScyjxqlg5nmSmcsAvtOpI643V5OomaFtuECMxTJhzxiY474cfs7AFp3fVdNpb42V7rZQe5aBraNtQB6Pc1bv8IpgsrILi5+ve5GzT9bvmvF5Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277300; c=relaxed/simple;
-	bh=11iqDMz2ZKT6XMzUxgP1lGctFblo4EhkpJH7174cmJI=;
+	s=arc-20240116; t=1774277303; c=relaxed/simple;
+	bh=rqfazvXtOXzPIW/uCzyPxkxan2+YDOpuVS7rlkfWyiA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=DGd8iir4zpu++FCqpME0Rf2X8seGGGwcKo2EssaugVBGoSw6SwR/6yVwKzuQS6XJC5wB7pUiQpH/pUmNh6cDgFVzlKIVbOhoeIp7js8ing0ocWhqGIOHStyXwDa8OmVR49AP8wKTEWEBTWVEOWSnKbNxfR3zu2nw1tR8n2x5xoE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GoaUGtXB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpyip2j7uW/fki4AI3KejesMlh9QMOCIDCc0V8WY+BUpEe/whyNEEHrC5prot8O25FqIvDy8KdZdGcpKvDufAs1LgFIcWwA00Qb6JGali9RRgx8SNmCCVFreH48qjU2aQKcXOUPjv0CNckMCwsnBGq1znhakG+v1X9OaBOuFtDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oOyL0rBr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GoaUGtXB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F4FFC4CEF7;
-	Mon, 23 Mar 2026 14:48:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oOyL0rBr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 344A3C4CEF7;
+	Mon, 23 Mar 2026 14:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277299;
-	bh=11iqDMz2ZKT6XMzUxgP1lGctFblo4EhkpJH7174cmJI=;
+	s=korg; t=1774277302;
+	bh=rqfazvXtOXzPIW/uCzyPxkxan2+YDOpuVS7rlkfWyiA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GoaUGtXBIBpWj+boPGlCCgIia5HfOti8Keoy9GN2k/2rWRqecfKyDfABNWMtFEirv
-	 nDE+iMtZiQ0bWunhJ6D3PikuFfRoCTI7Vk++3wlgyI39gEyk6CcK5XWv+1Zw8nfMte
-	 cycCCfoFwBgthLiZxwhR6YAl6H2w3x5H1tSh6dgI=
+	b=oOyL0rBrtF9XWDQJiKU/lm9KmJHmWUmbkgAMsVWWHLvqzJmv9+OVgSqR+Rr43reml
+	 389FaIpRpSZOznhyijCK5zptIbhJgFcsBt81MjvySQ2MpWirhyPzLpMGaeevf1Z63o
+	 eVreGayNczC3ejX/xFyITTPv2FDELcrBo8EPufsY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 389/460] bridge: cfm: Fix race condition in peer_mep deletion
-Date: Mon, 23 Mar 2026 14:46:25 +0100
-Message-ID: <20260323134536.128696526@linuxfoundation.org>
+Subject: [PATCH 6.12 390/460] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
+Date: Mon, 23 Mar 2026 14:46:26 +0100
+Message-ID: <20260323134536.152928170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,73 +53,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 3715a00855316066cdda69d43648336367422127 ]
+[ Upstream commit e1f0a18c9564cdb16523c802e2c6fe5874e3d944 ]
 
-When a peer MEP is being deleted, cancel_delayed_work_sync() is called
-on ccm_rx_dwork before freeing. However, br_cfm_frame_rx() runs in
-softirq context under rcu_read_lock (without RTNL) and can re-schedule
-ccm_rx_dwork via ccm_rx_timer_start() between cancel_delayed_work_sync()
-returning and kfree_rcu() being called.
+syzkaller reported a bug [1], and the reproducer is available at [2].
 
-The following is a simple race scenario:
+ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
+TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
+calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
+(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
 
-           cpu0                                     cpu1
+When rose_connect() is called a second time while the first connection
+attempt is still in progress (TCP_SYN_SENT), it overwrites
+rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
+is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
+When the socket is subsequently closed, rose_release() sees
+ROSE_STATE_1 and calls rose_write_internal() ->
+rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
 
-mep_delete_implementation()
-  cancel_delayed_work_sync(ccm_rx_dwork);
-                                           br_cfm_frame_rx()
-                                             // peer_mep still in hlist
-                                             if (peer_mep->ccm_defect)
-                                               ccm_rx_timer_start()
-                                                 queue_delayed_work(ccm_rx_dwork)
-  hlist_del_rcu(&peer_mep->head);
-  kfree_rcu(peer_mep, rcu);
-                                           ccm_rx_work_expired()
-                                             // on freed peer_mep
+Per connect(2), a second connect() while a connection is already in
+progress should return -EALREADY. Add this missing check for
+TCP_SYN_SENT to complete the state validation in rose_connect().
 
-To prevent this, cancel_delayed_work_sync() is replaced with
-disable_delayed_work_sync() in both peer MEP deletion paths, so
-that subsequent queue_delayed_work() calls from br_cfm_frame_rx()
-are silently rejected.
+[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
 
-The cc_peer_disable() helper retains cancel_delayed_work_sync()
-because it is also used for the CC enable/disable toggle path where
-the work must remain re-schedulable.
-
-Fixes: dc32cbb3dbd7 ("bridge: cfm: Kernel space implementation of CFM. CCM frame RX added.")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
-Reviewed-by: Ido Schimmel <idosch@nvidia.com>
-Link: https://patch.msgid.link/abBgYT5K_FI9rD1a@v4bel
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260311070611.76913-1-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bridge/br_cfm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/rose/af_rose.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/bridge/br_cfm.c b/net/bridge/br_cfm.c
-index a3c755d0a09de..ffa571e38c540 100644
---- a/net/bridge/br_cfm.c
-+++ b/net/bridge/br_cfm.c
-@@ -576,7 +576,7 @@ static void mep_delete_implementation(struct net_bridge *br,
- 
- 	/* Empty and free peer MEP list */
- 	hlist_for_each_entry_safe(peer_mep, n_store, &mep->peer_mep_list, head) {
--		cancel_delayed_work_sync(&peer_mep->ccm_rx_dwork);
-+		disable_delayed_work_sync(&peer_mep->ccm_rx_dwork);
- 		hlist_del_rcu(&peer_mep->head);
- 		kfree_rcu(peer_mep, rcu);
- 	}
-@@ -732,7 +732,7 @@ int br_cfm_cc_peer_mep_remove(struct net_bridge *br, const u32 instance,
- 		return -ENOENT;
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 1676c9f4ab848..0223d6c34f0be 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -810,6 +810,11 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		goto out_release;
  	}
  
--	cc_peer_disable(peer_mep);
-+	disable_delayed_work_sync(&peer_mep->ccm_rx_dwork);
++	if (sk->sk_state == TCP_SYN_SENT) {
++		err = -EALREADY;
++		goto out_release;
++	}
++
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
  
- 	hlist_del_rcu(&peer_mep->head);
- 	kfree_rcu(peer_mep, rcu);
 -- 
 2.51.0
 
