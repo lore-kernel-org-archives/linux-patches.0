@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE3043B8BDB;
-	Mon, 23 Mar 2026 16:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF86E3C1410;
+	Mon, 23 Mar 2026 16:29:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283364; cv=none; b=lwu1nWFjtkBzebsM9t/Ond+FdPw6PNLfZN1aJYgz0I29jN6Zoemoiu7ALr1ZqwUHw/FR909QlNDKio2NyRt1cvezygCQVJF1D1VzWvoMEKmcqo+S5CXmW2m4PRy0prIHqXpuLDDO68oh9bNpSFeizWgpGwZJoGSYY8lLAe0Lx0w=
+	t=1774283366; cv=none; b=g0TbT1NQBdOsB1M8oJj2lCm5g8L0JYp3vAk0pvTHq1RrrgRBvncTqjUukE77WGstl9Q/m1J3R2iA/2zhkSBO6hacKjC0o5yS6jz58prlIYuoRIvAg9S8Jr23r1+d7uA7SBARquYYCQuURqV7mH7NLEZ3I2pmFBH/2XCZyHA1JuI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283364; c=relaxed/simple;
-	bh=QV1VzUubAT43jrPpkG6mle9g0+b3wQdRQqWPiiQNZCw=;
+	s=arc-20240116; t=1774283366; c=relaxed/simple;
+	bh=9ah/OBXbN7VZMreGQyyzC/coEBY9K5h9y47q1Oal2pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Bv82yCOMa5tyxvvMvpLgEHBS/W0sn0+PEVwCZ64T1ISVUO3iGOe8ldeZyK+y53r4+TA4onsEN24jmDxrdYTq3Vnbc6Ux1Sxhwt+VsMs/pIlzsnCwQwjrBIF9aqhClFsCjycVrDldjmXuN1yObjq1AaJM8YOzMZNR5p+O0yV/3F0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C2UPPJVQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EysEexcVpAgct2FMMgbzFNnu4M+MBromDZTbB5fw0lw8o2flAOKS3Gx0uzFgZeehYMfxkyi/ztFu8PTM4hci83kL52/77uj1guWxIuZTnOgd98+ZPrWOmpYCzo3gMB9m4eDOuQhDUvB6lDsZ0eMmfJAoaPtng69UgtpSMIaa+Og=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swb+SXou; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C2UPPJVQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E851CC2BC9E;
-	Mon, 23 Mar 2026 16:29:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swb+SXou"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F2DC4CEF7;
+	Mon, 23 Mar 2026 16:29:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283364;
-	bh=QV1VzUubAT43jrPpkG6mle9g0+b3wQdRQqWPiiQNZCw=;
+	s=korg; t=1774283366;
+	bh=9ah/OBXbN7VZMreGQyyzC/coEBY9K5h9y47q1Oal2pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C2UPPJVQLDO7cGqwsLMuc3Bd+ux1iFFLbULksvHylu92/ddvqitcFFs/JAwQUjbs2
-	 nbmdlS4f4MlkcruV9nLKaId+bAWoT5R9K1CF2utOM75RhQFffSph3Y27+XQd7fWcxL
-	 Cj6TT8wR9BM7WCK77wFA4wU/rDNz1nvCY4SIYoSg=
+	b=swb+SXoubn/FCKe1K4994vA1t0YFeWSsRAd6zwGdHnAlkq4iVzwMzb1FSaemHs6CR
+	 zIBwm1MYwSzQyyInXLO5I+rqbB4n9wskOaeOfGC/xGY7TRtbjO0yRjwdKxCD6SVE+m
+	 V5TogZgeVsJT07FuPeXF4Vgg/8A4JQZkHzyngfec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Furong Xu <0x1207@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 469/481] f2fs: fix to trigger foreground gc during f2fs_map_blocks() in lfs mode
-Date: Mon, 23 Mar 2026 14:47:31 +0100
-Message-ID: <20260323134536.648404669@linuxfoundation.org>
+Subject: [PATCH 6.1 470/481] net: stmmac: fix TSO DMA API usage causing oops
+Date: Mon, 23 Mar 2026 14:47:32 +0100
+Message-ID: <20260323134536.672365608@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,65 +54,84 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit 1005a3ca28e90c7a64fa43023f866b960a60f791 ]
+[ Upstream commit 4c49f38e20a57f8abaebdf95b369295b153d1f8e ]
 
-w/ "mode=lfs" mount option, generic/299 will cause system panic as below:
+Commit 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap
+for non-paged SKB data") moved the assignment of tx_skbuff_dma[]'s
+members to be later in stmmac_tso_xmit().
 
-------------[ cut here ]------------
-kernel BUG at fs/f2fs/segment.c:2835!
-Call Trace:
- <TASK>
- f2fs_allocate_data_block+0x6f4/0xc50
- f2fs_map_blocks+0x970/0x1550
- f2fs_iomap_begin+0xb2/0x1e0
- iomap_iter+0x1d6/0x430
- __iomap_dio_rw+0x208/0x9a0
- f2fs_file_write_iter+0x6b3/0xfa0
- aio_write+0x15d/0x2e0
- io_submit_one+0x55e/0xab0
- __x64_sys_io_submit+0xa5/0x230
- do_syscall_64+0x84/0x2f0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
-RIP: 0010:new_curseg+0x70f/0x720
+The buf (dma cookie) and len stored in this structure are passed to
+dma_unmap_single() by stmmac_tx_clean(). The DMA API requires that
+the dma cookie passed to dma_unmap_single() is the same as the value
+returned from dma_map_single(). However, by moving the assignment
+later, this is not the case when priv->dma_cap.addr64 > 32 as "des"
+is offset by proto_hdr_len.
 
-The root cause of we run out-of-space is: in f2fs_map_blocks(), f2fs may
-trigger foreground gc only if it allocates any physical block, it will be
-a little bit later when there is multiple threads writing data w/
-aio/dio/bufio method in parallel, since we always use OPU in lfs mode, so
-f2fs_map_blocks() does block allocations aggressively.
+This causes problems such as:
 
-In order to fix this issue, let's give a chance to trigger foreground
-gc in prior to block allocation in f2fs_map_blocks().
+  dwc-eth-dwmac 2490000.ethernet eth0: Tx DMA map failed
 
-Fixes: 36abef4e796d ("f2fs: introduce mode=lfs mount option")
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ The context change is due to the commit 2f51ade9524c
-("f2fs: f2fs_do_map_lock") in v6.3 which is irrelevant to 
+and with DMA_API_DEBUG enabled:
+
+  DMA-API: dwc-eth-dwmac 2490000.ethernet: device driver tries to +free DMA memory it has not allocated [device address=0x000000ffffcf65c0] [size=66 bytes]
+
+Fix this by maintaining "des" as the original DMA cookie, and use
+tso_des to pass the offset DMA cookie to stmmac_tso_allocator().
+
+Full details of the crashes can be found at:
+https://lore.kernel.org/all/d8112193-0386-4e14-b516-37c2d838171a@nvidia.com/
+https://lore.kernel.org/all/klkzp5yn5kq5efgtrow6wbvnc46bcqfxs65nz3qy77ujr5turc@bwwhelz2l4dw/
+
+Reported-by: Jon Hunter <jonathanh@nvidia.com>
+Reported-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap for non-paged SKB data")
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Reviewed-by: Furong Xu <0x1207@gmail.com>
+Link: https://patch.msgid.link/E1tJXcx-006N4Z-PC@rmk-PC.armlinux.org.uk
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ The context change is due to the commit 041cc86b3653
+("net: stmmac: Enable TSO on VLANs") in v6.11 which is irrelevant to
 the logic of this patch. ]
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/data.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/fs/f2fs/data.c
-+++ b/fs/f2fs/data.c
-@@ -1537,8 +1537,11 @@ int f2fs_map_blocks(struct inode *inode,
- 	end = pgofs + maxblocks;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -4091,10 +4091,10 @@ static netdev_tx_t stmmac_tso_xmit(struc
+ 	int tmp_pay_len = 0, first_tx;
+ 	struct stmmac_tx_queue *tx_q;
+ 	bool has_vlan, set_ic;
++	dma_addr_t tso_des, des;
+ 	u8 proto_hdr_len, hdr;
+ 	unsigned long flags;
+ 	u32 pay_len, mss;
+-	dma_addr_t des;
+ 	int i;
  
- next_dnode:
--	if (map->m_may_create)
-+	if (map->m_may_create) {
-+		if (f2fs_lfs_mode(sbi))
-+			f2fs_balance_fs(sbi, true);
- 		f2fs_do_map_lock(sbi, flag, true);
-+	}
+ 	tx_q = &priv->dma_conf.tx_queue[queue];
+@@ -4179,14 +4179,15 @@ static netdev_tx_t stmmac_tso_xmit(struc
  
- 	/* When reading holes, we need its node page */
- 	set_new_dnode(&dn, inode, NULL, NULL, 0);
+ 		/* If needed take extra descriptors to fill the remaining payload */
+ 		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
++		tso_des = des;
+ 	} else {
+ 		stmmac_set_desc_addr(priv, first, des);
+ 		tmp_pay_len = pay_len;
+-		des += proto_hdr_len;
++		tso_des = des + proto_hdr_len;
+ 		pay_len = 0;
+ 	}
+ 
+-	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
++	stmmac_tso_allocator(priv, tso_des, tmp_pay_len, (nfrags == 0), queue);
+ 
+ 	/* In case two or more DMA transmit descriptors are allocated for this
+ 	 * non-paged SKB data, the DMA buffer address should be saved to
 
 
