@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B6A2773EE;
-	Mon, 23 Mar 2026 15:10:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45D92773F0;
+	Mon, 23 Mar 2026 15:10:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278625; cv=none; b=r1jnfbod/zozpDe/tgE8ua9M1KCpyPxPvlIH+5nbcM9m9CGAmk15Ag0hdXvxHmx/7pTAGLZ66lMC5oqMKEQ8zajAbl/IwKWWqOgocKX4iBJSmIzk0S6PUQVXblxaKScRuy6EXDgUNNqasioNiEBNEVoEfHWX8vaGzqb8A2wNv4I=
+	t=1774278628; cv=none; b=hYiPscMaUWtoHHUSE0uiF44QeLmmp6BtqOEY2sp2g3n0QsJ0QkfzdEueAPbTe8EXtgv3XyQY8oFu1tGcerh6isXECrqcu5CQEsHZXqyKDDZiianZRlWpwTOIlaqAlcA0ALMd85Hy/V2EWRPn/0GMRx+7tt2w7XgeB+y4DMamXeI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278625; c=relaxed/simple;
-	bh=TrVkD5ij3mCV4XbfyP7HF4lOaqQHQEVP7j8lDlpDAko=;
+	s=arc-20240116; t=1774278628; c=relaxed/simple;
+	bh=umgE/+FpNrAa0uCU7cHJFWVu4PSBDep31pO390Rw3NQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GdqOHU0h/49W3y/eMfOVaCvf9VT0dPakWay5y+9BUaGbGa56SkWpZixamnMTkO77QMbX2+87TO65kL5TRshppNaQ4L2P/Th7LuE5qT2lH9mCcdnXZhZ5y4dqQMoJRGZp6zVy/N2rylRzOVXRZE58ZREV+KpAHSKW3VSq4p6cryY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CM4xt0ID; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IdsAzsKoyNIiwNLJqu/jHOfstkp2XQ5tjcO/mUOtDdAMudD9aMAAS+RGuTkKg/P8x8btJseWeH2WHro300y53p7lYvo5768pB49kcRV0vTYYaPqT2g8baNC+f/agstUAdrVNa+4R85pDfFelh5zoMRLt/H4zty8PsvJjeGMIw88=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fdmWGe3E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CM4xt0ID"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFEE2C4CEF7;
-	Mon, 23 Mar 2026 15:10:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fdmWGe3E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D802EC4CEF7;
+	Mon, 23 Mar 2026 15:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278625;
-	bh=TrVkD5ij3mCV4XbfyP7HF4lOaqQHQEVP7j8lDlpDAko=;
+	s=korg; t=1774278628;
+	bh=umgE/+FpNrAa0uCU7cHJFWVu4PSBDep31pO390Rw3NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CM4xt0IDeANI4iXv1c2u9Gl3HluJSJS7s6wusE+zKP6WzDArSIo+vHIk8I5LYn/5X
-	 vEeQzqEtXPko4HUrBPGEq+UtaUR6Vsk17StB46BV27/7LN4jGi15gY5+WfdhdZ72hz
-	 HLRW56kW07O21W+Q2l9J4EwqQo1h/WwCKyHTdVSg=
+	b=fdmWGe3EMgYIe1AzS6Z7dUui84OUapsbe2z6l8sP3cemibMowDAFQDW5wn5ZO5Kvc
+	 i4/MESfE5nZTRIuAxDdomqbOqp2FKVql9BuaUFACxYQJnkRPbkiCYby2ifsNs8w1K+
+	 27prjYVr90eBTIN3RvIMvJ5AloxxtAbySXu9yL/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Ripple <john.ripple@keysight.com>,
-	Douglas Anderson <dianders@chromium.org>
-Subject: [PATCH 6.6 365/567] drm/bridge: ti-sn65dsi86: Add support for DisplayPort mode with HPD
-Date: Mon, 23 Mar 2026 14:44:45 +0100
-Message-ID: <20260323134542.849772502@linuxfoundation.org>
+	Ankit Garg <nktgrg@google.com>,
+	Jordan Rhee <jordanrhee@google.com>,
+	Harshitha Ramamurthy <hramamurthy@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Joshua Washington <joshwash@google.com>
+Subject: [PATCH 6.6 366/567] gve: defer interrupt enabling until NAPI registration
+Date: Mon, 23 Mar 2026 14:44:46 +0100
+Message-ID: <20260323134542.870894602@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,224 +53,90 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: John Ripple <john.ripple@keysight.com>
+From: Ankit Garg <nktgrg@google.com>
 
-commit 9133bc3f0564890218cbba6cc7e81ebc0841a6f1 upstream.
+[ Upstream commit 3d970eda003441f66551a91fda16478ac0711617 ]
 
-Add support for DisplayPort to the bridge, which entails the following:
-- Get and use an interrupt for HPD;
-- Properly clear all status bits in the interrupt handler;
+Currently, interrupts are automatically enabled immediately upon
+request. This allows interrupt to fire before the associated NAPI
+context is fully initialized and cause failures like below:
 
-Signed-off-by: John Ripple <john.ripple@keysight.com>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20250915174543.2564994-1-john.ripple@keysight.com
+[    0.946369] Call Trace:
+[    0.946369]  <IRQ>
+[    0.946369]  __napi_poll+0x2a/0x1e0
+[    0.946369]  net_rx_action+0x2f9/0x3f0
+[    0.946369]  handle_softirqs+0xd6/0x2c0
+[    0.946369]  ? handle_edge_irq+0xc1/0x1b0
+[    0.946369]  __irq_exit_rcu+0xc3/0xe0
+[    0.946369]  common_interrupt+0x81/0xa0
+[    0.946369]  </IRQ>
+[    0.946369]  <TASK>
+[    0.946369]  asm_common_interrupt+0x22/0x40
+[    0.946369] RIP: 0010:pv_native_safe_halt+0xb/0x10
+
+Use the `IRQF_NO_AUTOEN` flag when requesting interrupts to prevent auto
+enablement and explicitly enable the interrupt in NAPI initialization
+path (and disable it during NAPI teardown).
+
+This ensures that interrupt lifecycle is strictly coupled with
+readiness of NAPI context.
+
+Cc: stable@vger.kernel.org
+Fixes: 893ce44df565 ("gve: Add basic driver framework for Compute Engine Virtual NIC")
+Signed-off-by: Ankit Garg <nktgrg@google.com>
+Reviewed-by: Jordan Rhee <jordanrhee@google.com>
+Signed-off-by: Harshitha Ramamurthy <hramamurthy@google.com>
+Link: https://patch.msgid.link/20251219102945.2193617-1-hramamurthy@google.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+[ modified to re-introduce the irq member to struct gve_notify_block,
+  which was introuduced in commit 9a5e0776d11f ("gve: Avoid rescheduling
+  napi if on wrong cpu"). ]
+Signed-off-by: Joshua Washington <joshwash@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi86.c |  112 ++++++++++++++++++++++++++++++++++
- 1 file changed, 112 insertions(+)
+ drivers/net/ethernet/google/gve/gve.h      |    1 +
+ drivers/net/ethernet/google/gve/gve_main.c |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -106,10 +106,21 @@
- #define SN_PWM_EN_INV_REG			0xA5
- #define  SN_PWM_INV_MASK			BIT(0)
- #define  SN_PWM_EN_MASK				BIT(1)
-+
-+#define SN_IRQ_EN_REG				0xE0
-+#define  IRQ_EN					BIT(0)
-+
-+#define SN_IRQ_EVENTS_EN_REG			0xE6
-+#define  HPD_INSERTION_EN			BIT(1)
-+#define  HPD_REMOVAL_EN				BIT(2)
-+
- #define SN_AUX_CMD_STATUS_REG			0xF4
- #define  AUX_IRQ_STATUS_AUX_RPLY_TOUT		BIT(3)
- #define  AUX_IRQ_STATUS_AUX_SHORT		BIT(5)
- #define  AUX_IRQ_STATUS_NAT_I2C_FAIL		BIT(6)
-+#define SN_IRQ_STATUS_REG			0xF5
-+#define  HPD_REMOVAL_STATUS			BIT(2)
-+#define  HPD_INSERTION_STATUS			BIT(1)
- 
- #define MIN_DSI_CLK_FREQ_MHZ	40
- 
-@@ -152,7 +163,9 @@
-  * @ln_assign:    Value to program to the LN_ASSIGN register.
-  * @ln_polrs:     Value for the 4-bit LN_POLRS field of SN_ENH_FRAME_REG.
-  * @comms_enabled: If true then communication over the aux channel is enabled.
-+ * @hpd_enabled:   If true then HPD events are enabled.
-  * @comms_mutex:   Protects modification of comms_enabled.
-+ * @hpd_mutex:     Protects modification of hpd_enabled.
-  *
-  * @gchip:        If we expose our GPIOs, this is used.
-  * @gchip_output: A cache of whether we've set GPIOs to output.  This
-@@ -190,7 +203,9 @@ struct ti_sn65dsi86 {
- 	u8				ln_assign;
- 	u8				ln_polrs;
- 	bool				comms_enabled;
-+	bool				hpd_enabled;
- 	struct mutex			comms_mutex;
-+	struct mutex			hpd_mutex;
- 
- #if defined(CONFIG_OF_GPIO)
- 	struct gpio_chip		gchip;
-@@ -221,6 +236,23 @@ static const struct regmap_config ti_sn6
- 	.max_register = 0xFF,
+--- a/drivers/net/ethernet/google/gve/gve.h
++++ b/drivers/net/ethernet/google/gve/gve.h
+@@ -585,6 +585,7 @@ struct gve_notify_block {
+ 	struct gve_priv *priv;
+ 	struct gve_tx_ring *tx; /* tx rings on this block */
+ 	struct gve_rx_ring *rx; /* rx rings on this block */
++	u32 irq;
  };
  
-+static int ti_sn65dsi86_read_u8(struct ti_sn65dsi86 *pdata, unsigned int reg,
-+				u8 *val)
-+{
-+	int ret;
-+	unsigned int reg_val;
-+
-+	ret = regmap_read(pdata->regmap, reg, &reg_val);
-+	if (ret) {
-+		dev_err(pdata->dev, "fail to read raw reg %#x: %d\n",
-+			reg, ret);
-+		return ret;
-+	}
-+	*val = (u8)reg_val;
-+
-+	return 0;
-+}
-+
- static int __maybe_unused ti_sn65dsi86_read_u16(struct ti_sn65dsi86 *pdata,
- 						unsigned int reg, u16 *val)
- {
-@@ -362,6 +394,7 @@ static void ti_sn65dsi86_disable_comms(s
- static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
- {
- 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(dev);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
- 	int ret;
+ /* Tracks allowed and current queue settings */
+--- a/drivers/net/ethernet/google/gve/gve_main.c
++++ b/drivers/net/ethernet/google/gve/gve_main.c
+@@ -407,9 +407,10 @@ static int gve_alloc_notify_blocks(struc
+ 		snprintf(block->name, sizeof(block->name), "gve-ntfy-blk%d@pci:%s",
+ 			 i, pci_name(priv->pdev));
+ 		block->priv = priv;
++		block->irq = priv->msix_vectors[msix_idx].vector;
+ 		err = request_irq(priv->msix_vectors[msix_idx].vector,
+ 				  gve_is_gqi(priv) ? gve_intr : gve_intr_dqo,
+-				  0, block->name, block);
++				  IRQF_NO_AUTOEN, block->name, block);
+ 		if (err) {
+ 			dev_err(&priv->pdev->dev,
+ 				"Failed to receive msix vector %d\n", i);
+@@ -575,6 +576,7 @@ static void gve_add_napi(struct gve_priv
+ 	struct gve_notify_block *block = &priv->ntfy_blocks[ntfy_idx];
  
- 	ret = regulator_bulk_enable(SN_REGULATOR_SUPPLY_NUM, pdata->supplies);
-@@ -396,6 +429,13 @@ static int __maybe_unused ti_sn65dsi86_r
- 	if (pdata->refclk)
- 		ti_sn65dsi86_enable_comms(pdata);
- 
-+	if (client->irq) {
-+		ret = regmap_update_bits(pdata->regmap, SN_IRQ_EN_REG, IRQ_EN,
-+					 IRQ_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to enable IRQ events: %d\n", ret);
-+	}
-+
- 	return ret;
+ 	netif_napi_add(priv->dev, &block->napi, gve_poll);
++	enable_irq(block->irq);
  }
  
-@@ -1223,6 +1263,8 @@ static void ti_sn65dsi86_debugfs_init(st
- static void ti_sn_bridge_hpd_enable(struct drm_bridge *bridge)
- {
- 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
-+	int ret;
+ static void gve_remove_napi(struct gve_priv *priv, int ntfy_idx)
+@@ -582,6 +584,7 @@ static void gve_remove_napi(struct gve_p
+ 	struct gve_notify_block *block = &priv->ntfy_blocks[ntfy_idx];
  
- 	/*
- 	 * Device needs to be powered on before reading the HPD state
-@@ -1231,11 +1273,35 @@ static void ti_sn_bridge_hpd_enable(stru
- 	 */
- 
- 	pm_runtime_get_sync(pdata->dev);
-+
-+	mutex_lock(&pdata->hpd_mutex);
-+	pdata->hpd_enabled = true;
-+	mutex_unlock(&pdata->hpd_mutex);
-+
-+	if (client->irq) {
-+		ret = regmap_set_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
-+				      HPD_REMOVAL_EN | HPD_INSERTION_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to enable HPD events: %d\n", ret);
-+	}
+ 	netif_napi_del(&block->napi);
++	disable_irq(block->irq);
  }
  
- static void ti_sn_bridge_hpd_disable(struct drm_bridge *bridge)
- {
- 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
-+	const struct i2c_client *client = to_i2c_client(pdata->dev);
-+	int ret;
-+
-+	if (client->irq) {
-+		ret = regmap_clear_bits(pdata->regmap, SN_IRQ_EVENTS_EN_REG,
-+					HPD_REMOVAL_EN | HPD_INSERTION_EN);
-+		if (ret)
-+			dev_err(pdata->dev, "Failed to disable HPD events: %d\n", ret);
-+	}
-+
-+	mutex_lock(&pdata->hpd_mutex);
-+	pdata->hpd_enabled = false;
-+	mutex_unlock(&pdata->hpd_mutex);
- 
- 	pm_runtime_put_autosuspend(pdata->dev);
- }
-@@ -1321,6 +1387,41 @@ static int ti_sn_bridge_parse_dsi_host(s
- 	return 0;
- }
- 
-+static irqreturn_t ti_sn_bridge_interrupt(int irq, void *private)
-+{
-+	struct ti_sn65dsi86 *pdata = private;
-+	struct drm_device *dev = pdata->bridge.dev;
-+	u8 status;
-+	int ret;
-+	bool hpd_event;
-+
-+	ret = ti_sn65dsi86_read_u8(pdata, SN_IRQ_STATUS_REG, &status);
-+	if (ret) {
-+		dev_err(pdata->dev, "Failed to read IRQ status: %d\n", ret);
-+		return IRQ_NONE;
-+	}
-+
-+	hpd_event = status & (HPD_REMOVAL_STATUS | HPD_INSERTION_STATUS);
-+
-+	dev_dbg(pdata->dev, "(SN_IRQ_STATUS_REG = %#x)\n", status);
-+	if (!status)
-+		return IRQ_NONE;
-+
-+	ret = regmap_write(pdata->regmap, SN_IRQ_STATUS_REG, status);
-+	if (ret) {
-+		dev_err(pdata->dev, "Failed to clear IRQ status: %d\n", ret);
-+		return IRQ_NONE;
-+	}
-+
-+	/* Only send the HPD event if we are bound with a device. */
-+	mutex_lock(&pdata->hpd_mutex);
-+	if (pdata->hpd_enabled && hpd_event)
-+		drm_kms_helper_hotplug_event(dev);
-+	mutex_unlock(&pdata->hpd_mutex);
-+
-+	return IRQ_HANDLED;
-+}
-+
- static int ti_sn_bridge_probe(struct auxiliary_device *adev,
- 			      const struct auxiliary_device_id *id)
- {
-@@ -1951,6 +2052,7 @@ static int ti_sn65dsi86_probe(struct i2c
- 	dev_set_drvdata(dev, pdata);
- 	pdata->dev = dev;
- 
-+	mutex_init(&pdata->hpd_mutex);
- 	mutex_init(&pdata->comms_mutex);
- 
- 	pdata->regmap = devm_regmap_init_i2c(client,
-@@ -1981,6 +2083,16 @@ static int ti_sn65dsi86_probe(struct i2c
- 	if (ret)
- 		return ret;
- 
-+	if (client->irq) {
-+		ret = devm_request_threaded_irq(pdata->dev, client->irq, NULL,
-+						ti_sn_bridge_interrupt,
-+						IRQF_ONESHOT,
-+						dev_name(pdata->dev), pdata);
-+
-+		if (ret)
-+			return dev_err_probe(dev, ret, "failed to request interrupt\n");
-+	}
-+
- 	/*
- 	 * Break ourselves up into a collection of aux devices. The only real
- 	 * motiviation here is to solve the chicken-and-egg problem of probe
+ static int gve_register_xdp_qpls(struct gve_priv *priv)
 
 
