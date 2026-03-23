@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463BC39A7EF;
-	Mon, 23 Mar 2026 16:25:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1F937B02A;
+	Mon, 23 Mar 2026 16:25:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283144; cv=none; b=lwpj4Gv65UANUSBjgyBB7lEsPTm4LZd69qAET41rCWrmV/X4zQATsTQCNz8oUKYOiPfkhvXporykCxIvXvV69OGCEqqRPhXAeP4YPj8VlOemSmJiPODpQbcKPxMhfcTzTFSOTuSXz8WSb2ixgtVzKiqpLnHS36cakXjoDMrcO5M=
+	t=1774283147; cv=none; b=aKNoYDKR+7E3FS2+4bqgy92b3FhVqGoKH5k2vFY004WsZVyfR5inEHQbONcKhvYI9GZdqGXTmHb0b2prl9ZP/1SmkVIML45C6NghwblXfKL8x/GIlEEB7em1XjDrRQ1cIis+Qd4BDDTcYuYo/KDQJUsZKf2m4BzxBgJbR3CL+XU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283144; c=relaxed/simple;
-	bh=kDnytxX5FcU/ziN4F5v2iR2gQojDID0AH2N2RI9SB4k=;
+	s=arc-20240116; t=1774283147; c=relaxed/simple;
+	bh=wQiiuc3vLB9GpJ+jH1nAkKYS7UBS1tgrLrsqd4LsDRQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=c6Heu2xVhPVhxjExgoCxkMLKya8aZdklPMpBr4DbHDe6KFehhv5DTEZudjIOySsYIYcBP8tGCECBAnFD9ZtiSnrP0mxRGS5+j5Pa0mdHY3gO8dYnHthtoGtiQot7tRklck646w2gPpDhXrEP4weUKO0OI8uOGq6z6s43aZe2LMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zLNAdwUo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZFf/07I7HZTUd2TiR0oXGhdO4/ya64BwyG3W3INHwiaoULYXcJZUaZmfor7PKG++R6Zroby6CEqILOAKK/S/rqxFMjH4LsVG6/v+WC8cFn054TV3/mzvr8LgYpHX325zVh483RGN8zDuhkwcFg07yjtuHI8qCjsUF4W1JF9ZQc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxRleNBs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zLNAdwUo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D32DEC4CEF7;
-	Mon, 23 Mar 2026 16:25:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxRleNBs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A884C2BC9E;
+	Mon, 23 Mar 2026 16:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283144;
-	bh=kDnytxX5FcU/ziN4F5v2iR2gQojDID0AH2N2RI9SB4k=;
+	s=korg; t=1774283146;
+	bh=wQiiuc3vLB9GpJ+jH1nAkKYS7UBS1tgrLrsqd4LsDRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zLNAdwUo4o0YLXtrz3AgoGZ4N5csqB9uXkgz9hwTfSOb7hhJXpFBAcqkQwPl0PyrM
-	 PREcdIakdMFR2LU0b3EiZ3oRqffUpw1Ijfunner9/5cn2j1/8aaglBPQitz8gUW8FW
-	 7brZFcbpAikNN+xGI5j2ggWUCtBs7xeMca3g2lYQ=
+	b=bxRleNBsJWHOG9j/8C0H/nSOd8G9bRpbDfDRif/vhNGdFSfbt2Uy5rvkZshevP5ku
+	 o8xZPwbqibzfufUb3F4YOz3tilvxSSrpTLu+ZA1p27h1Fqi9TPgJdGypX1kriyOc0w
+	 7P1P3WNU7v3rcx+16yEmkXNGL/VUYoaivGcYK1RI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 416/481] netfilter: nft_ct: drop pending enqueued packets on removal
-Date: Mon, 23 Mar 2026 14:46:38 +0100
-Message-ID: <20260323134535.326872401@linuxfoundation.org>
+Subject: [PATCH 6.1 417/481] netfilter: xt_CT: drop pending enqueued packets on template removal
+Date: Mon, 23 Mar 2026 14:46:39 +0100
+Message-ID: <20260323134535.353063093@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,66 +54,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 36eae0956f659e48d5366d9b083d9417f3263ddc ]
+[ Upstream commit f62a218a946b19bb59abdd5361da85fa4606b96b ]
 
-Packets sitting in nfqueue might hold a reference to:
+Templates refer to objects that can go away while packets are sitting in
+nfqueue refer to:
 
-- templates that specify the conntrack zone, because a percpu area is
-  used and module removal is possible.
-- conntrack timeout policies and helper, where object removal leave
-  a stale reference.
+- helper, this can be an issue on module removal.
+- timeout policy, nfnetlink_cttimeout might remove it.
 
-Since these objects can just go away, drop enqueued packets to avoid
-stale reference to them.
+The use of templates with zone and event cache filter are safe, since
+this just copies values.
 
-If there is a need for finer grain removal, this logic can be revisited
-to make selective packet drop upon dependencies.
+Flush these enqueued packets in case the template rule gets removed.
 
-Fixes: 7e0b2b57f01d ("netfilter: nft_ct: add ct timeout support")
+Fixes: 24de58f46516 ("netfilter: xt_CT: allow to attach timeout policy + glue code")
 Reported-by: Yiming Qian <yimingqian591@gmail.com>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nft_ct.c | 4 ++++
+ net/netfilter/xt_CT.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
-index 70783671a2b01..c5d78f2525226 100644
---- a/net/netfilter/nft_ct.c
-+++ b/net/netfilter/nft_ct.c
-@@ -23,6 +23,7 @@
- #include <net/netfilter/nf_conntrack_l4proto.h>
- #include <net/netfilter/nf_conntrack_expect.h>
- #include <net/netfilter/nf_conntrack_seqadj.h>
+diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
+index 3ba94c34297cf..498f5871c84a0 100644
+--- a/net/netfilter/xt_CT.c
++++ b/net/netfilter/xt_CT.c
+@@ -16,6 +16,7 @@
+ #include <net/netfilter/nf_conntrack_ecache.h>
+ #include <net/netfilter/nf_conntrack_timeout.h>
+ #include <net/netfilter/nf_conntrack_zones.h>
 +#include "nf_internals.h"
  
- struct nft_ct {
- 	enum nft_ct_keys	key:8;
-@@ -537,6 +538,7 @@ static void __nft_ct_set_destroy(const struct nft_ctx *ctx, struct nft_ct *priv)
- #endif
- #ifdef CONFIG_NF_CONNTRACK_ZONES
- 	case NFT_CT_ZONE:
-+		nf_queue_nf_hook_drop(ctx->net);
- 		mutex_lock(&nft_ct_pcpu_mutex);
- 		if (--nft_ct_pcpu_template_refcnt == 0)
- 			nft_ct_tmpl_put_pcpu();
-@@ -980,6 +982,7 @@ static void nft_ct_timeout_obj_destroy(const struct nft_ctx *ctx,
- 	struct nft_ct_timeout_obj *priv = nft_obj_data(obj);
- 	struct nf_ct_timeout *timeout = priv->timeout;
- 
-+	nf_queue_nf_hook_drop(ctx->net);
- 	nf_ct_untimeout(ctx->net, timeout);
- 	nf_ct_netns_put(ctx->net, ctx->family);
- 	kfree(priv->timeout);
-@@ -1112,6 +1115,7 @@ static void nft_ct_helper_obj_destroy(const struct nft_ctx *ctx,
+ static inline int xt_ct_target(struct sk_buff *skb, struct nf_conn *ct)
  {
- 	struct nft_ct_helper_obj *priv = nft_obj_data(obj);
+@@ -283,6 +284,9 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
+ 	struct nf_conn_help *help;
  
-+	nf_queue_nf_hook_drop(ctx->net);
- 	if (priv->helper4)
- 		nf_conntrack_helper_put(priv->helper4);
- 	if (priv->helper6)
+ 	if (ct) {
++		if (info->helper[0] || info->timeout[0])
++			nf_queue_nf_hook_drop(par->net);
++
+ 		help = nfct_help(ct);
+ 		xt_ct_put_helper(help);
+ 
 -- 
 2.51.0
 
