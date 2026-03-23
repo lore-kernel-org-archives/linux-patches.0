@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE08621D00A;
-	Mon, 23 Mar 2026 13:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF45D3A9D9D;
+	Mon, 23 Mar 2026 13:57:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274276; cv=none; b=tJqCd49kyKLfirODSMH9x5qytI1KGJZ7io1VYhNf7YXfiq6sDYjX4zJr8aGNYxqRHFdQJYdskHqQ5tEkThBzDA4UZiQNPVR4X2KuxGUGV96Hrn0XJaeljJOf9vsTSubVgnxsyKy7xkQ5h00I/xz8Eb++oh0ehTV50exKFpkdx/Q=
+	t=1774274279; cv=none; b=qrMvIggSy+jnbCkeuY4XmX+EXayRCVifiWq4qcfAKMeD1mpx3bW2OrNFP/EeIifB/8lebF34ARrbfB32JisyPwFVBys9mEW1VqzpF59/fhkZYpK6nJCdg1zn8v9CdBI04wACNRAYdcsWMTqWsTIvO25sAyRH4kMTkctbN9qTm8A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274276; c=relaxed/simple;
-	bh=NL4RrKPEJ7i5eA4IDZm6levDYPFVeJbjh7T8JZwk61w=;
+	s=arc-20240116; t=1774274279; c=relaxed/simple;
+	bh=tV6YDoHiXGNZ3P28HswQvxrli5BLI4wJTpE8LlrKD14=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=phwRIV3kCmY+qLDZuK6qEMffJtVD/ZroYKGd51zPzG53igFiacaQLs/4tqMvf0PJnarxTJJJwhzNYvN/DtT0uX21OBXsQmZuMeXliOnWD3M6K9zRuvFoVrNXJmDJTfT7nhHam8SiVA3eFvhSePpaS4Bas/QylUss87M9l5FGC+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nuhfCFA3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XpJfC2iVG5fsx4pytXfUe6QLEYHjN+08T5ee8Y4aUuSqP6hETnQQTvkrdYHAiDRLK0PbiKv5RAspahlXdPEu5A00vSGQTxvPGh2/+mO1f/PFVtUVacTNOV78as8sQuaH+ZPe8xD+VsIKTI8JkSLNt+qCMzmCYjEkq8FPImTivz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eGLIt9eo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nuhfCFA3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E436C2BC9E;
-	Mon, 23 Mar 2026 13:57:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eGLIt9eo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A64C4CEF7;
+	Mon, 23 Mar 2026 13:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274276;
-	bh=NL4RrKPEJ7i5eA4IDZm6levDYPFVeJbjh7T8JZwk61w=;
+	s=korg; t=1774274279;
+	bh=tV6YDoHiXGNZ3P28HswQvxrli5BLI4wJTpE8LlrKD14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuhfCFA3H180R07dvaeoOprchbagy2fcG4VksLuZPLSc8nL5DdwqmAgrp9H2hoRL1
-	 mNFPcg6g1VtODTpQLozgHvJK++0fYfk54WPfah6CxSpnRX+PpDPhAlQTS4yKE5PsFf
-	 Cvhr66kEZt+jm8uawWQCgwwixiYJhZtv2UyGcjEs=
+	b=eGLIt9eoxPNtfzIyT7TBnRHGCCvU/GAjRNH8pRGDV7LORuL/eJAwnXTkqxTqvGzpP
+	 JAQdtEomKGRynB/F2PQ0IDOe0jqWoKsOrVz1b0KWtkKoqF0JyGEvqGWzKNFB7sT52U
+	 tHb2LRSGxP8l5Dz6KxrEGFTLKyJIrGU2iC3phQ7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wesley Atwell <atwellwea@gmail.com>,
+	Daniel Zahka <daniel.zahka@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 164/220] ACPI: processor: Fix previous acpi_processor_errata_piix4() fix
-Date: Mon, 23 Mar 2026 14:45:41 +0100
-Message-ID: <20260323134509.742926426@linuxfoundation.org>
+Subject: [PATCH 6.19 165/220] netdevsim: drop PSP ext ref on forward failure
+Date: Mon, 23 Mar 2026 14:45:42 +0100
+Message-ID: <20260323134509.769728578@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,71 +52,50 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Wesley Atwell <atwellwea@gmail.com>
 
-[ Upstream commit bf504b229cb8d534eccbaeaa23eba34c05131e25 ]
+[ Upstream commit 7d9351435ebba08bbb60f42793175c9dc714d2fb ]
 
-After commi f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference
-in acpi_processor_errata_piix4()"), device pointers may be dereferenced
-after dropping references to the device objects pointed to by them,
-which may cause a use-after-free to occur.
+nsim_do_psp() takes an extra reference to the PSP skb extension so the
+extension survives __dev_forward_skb(). That forward path scrubs the skb
+and drops attached skb extensions before nsim_psp_handle_ext() can
+reattach the PSP metadata.
 
-Moreover, debug messages about enabling the errata may be printed
-if the errata flags corresponding to them are unset.
+If __dev_forward_skb() fails in nsim_forward_skb(), the function returns
+before nsim_psp_handle_ext() can attach that extension to the skb, leaving
+the extra reference leaked.
 
-Address all of these issues by moving message printing to the points
-in the code where the errata flags are set.
+Drop the saved PSP extension reference before returning from the
+forward-failure path. Guard the put because plain or non-decapsulated
+traffic can also fail forwarding without ever taking the extra PSP
+reference.
 
-Fixes: f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference in acpi_processor_errata_piix4()")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/linux-acpi/938e2206-def5-4b7a-9b2c-d1fd37681d8a@roeck-us.net/
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://patch.msgid.link/5975693.DvuYhMxLoT@rafael.j.wysocki
+Fixes: f857478d6206 ("netdevsim: a basic test PSP implementation")
+Signed-off-by: Wesley Atwell <atwellwea@gmail.com>
+Reviewed-by: Daniel Zahka <daniel.zahka@gmail.com>
+Link: https://patch.msgid.link/20260317061431.1482716-1-atwellwea@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_processor.c | 15 ++++++++-------
- 1 file changed, 8 insertions(+), 7 deletions(-)
+ drivers/net/netdevsim/netdev.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
-index 85096ce7b658b..5a562e27d3a80 100644
---- a/drivers/acpi/acpi_processor.c
-+++ b/drivers/acpi/acpi_processor.c
-@@ -113,6 +113,10 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
- 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
- 		if (ide_dev) {
- 			errata.piix4.bmisx = pci_resource_start(ide_dev, 4);
-+			if (errata.piix4.bmisx)
-+				dev_dbg(&ide_dev->dev,
-+					"Bus master activity detection (BM-IDE) erratum enabled\n");
-+
- 			pci_dev_put(ide_dev);
- 		}
+diff --git a/drivers/net/netdevsim/netdev.c b/drivers/net/netdevsim/netdev.c
+index 6927c1962277a..62223ad2d63f9 100644
+--- a/drivers/net/netdevsim/netdev.c
++++ b/drivers/net/netdevsim/netdev.c
+@@ -109,8 +109,11 @@ static int nsim_forward_skb(struct net_device *tx_dev,
+ 	int ret;
  
-@@ -131,20 +135,17 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
- 		if (isa_dev) {
- 			pci_read_config_byte(isa_dev, 0x76, &value1);
- 			pci_read_config_byte(isa_dev, 0x77, &value2);
--			if ((value1 & 0x80) || (value2 & 0x80))
-+			if ((value1 & 0x80) || (value2 & 0x80)) {
- 				errata.piix4.fdma = 1;
-+				dev_dbg(&isa_dev->dev,
-+					"Type-F DMA livelock erratum (C3 disabled)\n");
-+			}
- 			pci_dev_put(isa_dev);
- 		}
+ 	ret = __dev_forward_skb(rx_dev, skb);
+-	if (ret)
++	if (ret) {
++		if (psp_ext)
++			__skb_ext_put(psp_ext);
+ 		return ret;
++	}
  
- 		break;
- 	}
- 
--	if (ide_dev)
--		dev_dbg(&ide_dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
--
--	if (isa_dev)
--		dev_dbg(&isa_dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
--
- 	return 0;
- }
+ 	nsim_psp_handle_ext(skb, psp_ext);
  
 -- 
 2.51.0
