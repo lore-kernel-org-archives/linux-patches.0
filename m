@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F680242D9D;
-	Mon, 23 Mar 2026 14:51:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0AC235045;
+	Mon, 23 Mar 2026 14:51:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277485; cv=none; b=QikthDa1BYFpqbK2GrlUss6SsLQqYjYMMmQu97NH0qMEaq7e+VcZZEQzj4JGOPsqYpEnjwVeXwFoWfns8S2rxkbUPJ2ZU7wq/Pde1VQ4XpEKRxrcqDAKapIRrqqkz8fwvkfP5tsli6O/WU4+Eed+HweQd3ZwQY9ogK2teyRW+oo=
+	t=1774277488; cv=none; b=Hy5fVCLfM99xf3DMSl3+6MvJAst5dtaI1hMEzALlWGOWjAWoh+DlYkF7zytYFfzFarkmF7xGhLlbVY/Rk4naTFJacwRHEpLZkRfjzD2xj5S7XzmPIAjAqmfoExQgMAQioI1nfeA+rCrlKrgdbUWFZoFgsdI4f7CEdBHU6AB1vFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277485; c=relaxed/simple;
-	bh=lvRzHXaThcWxv9PUXkRO0F53dQTFGnEWgfczB09ShpA=;
+	s=arc-20240116; t=1774277488; c=relaxed/simple;
+	bh=zGXWkGWg+NRAQ0Ts9lNXxo5bDRUnFP1kjALYpxlIr/8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=I/2OChR5dznsFZ9oDU11qUljmHKY4krwO7soDVbnkWXi0D1pvS40t8NreRHFFatvYtNnis6faySnwWjkqolnKuLT7h282XC4gbJffAlSmtp04Zbfd4AKRchKP2MN3KCSjTnLKEMfB39JomEB+NMiJndhE2ocNWenbV1Y7EafrYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N37tnks9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RmHiiwaQVoemcYhcr/uR/VJ/bCXHgGs1ApdDstT3THG01xxifeAwzn3piYE3+k9vLk//+Z9YeP6b2P/bpUEPkux2BY1KSuc1WQd0jC7OnCWgd//UIYL5RRF29yCRduCoKJZBUt1zJB7CDEMY6YrMCDThakWQMvwCMWLJ/Pp7I24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N1dcYu7j; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N37tnks9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 038AAC4CEF7;
-	Mon, 23 Mar 2026 14:51:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N1dcYu7j"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2097C4CEF7;
+	Mon, 23 Mar 2026 14:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277485;
-	bh=lvRzHXaThcWxv9PUXkRO0F53dQTFGnEWgfczB09ShpA=;
+	s=korg; t=1774277488;
+	bh=zGXWkGWg+NRAQ0Ts9lNXxo5bDRUnFP1kjALYpxlIr/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N37tnks98zwwmnTARsDQkyHw96wu9ngyJl2NJcjMOQQV3JqL+gjdIt/joUQtpJRUU
-	 2W6LOolHZHQ7OgVkQojsQ0/XEPT5i7Omao6HHHHo5l8Irb6heKQXcZ5YJX01+ntEUQ
-	 tFZSG3J26LizGnweTj2gx8a9ud9301Nt5A8gezVU=
+	b=N1dcYu7jHmQafaWLKhpV9ITk71BLokSSm5meMVxmG3ngMb0gr+KANpckI6kyDFGBS
+	 qUpxmwFpZGaP1wUN87hUnCVwSem/ZEJg7suFa7KJItnVFK9Fz6oWWPYzyBVUngEez/
+	 0FEMdJPw6G/647EdvO3VyQsX4pj0oY59MqkJ6KNI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Kees Cook <kees@kernel.org>,
+	Josh Law <objecting@objecting.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 456/460] fs/tests: exec: Remove bad test vector
-Date: Mon, 23 Mar 2026 14:47:32 +0100
-Message-ID: <20260323134537.782346806@linuxfoundation.org>
+Subject: [PATCH 6.12 457/460] lib/bootconfig: check xbc_init_node() return in override path
+Date: Mon, 23 Mar 2026 14:47:33 +0100
+Message-ID: <20260323134537.805805516@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,35 +51,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kees Cook <kees@kernel.org>
+From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit c4192754e836e0ffed95833509b6ada975b74418 ]
+[ Upstream commit bb288d7d869e86d382f35a0e26242c5ccb05ca82 ]
 
-Drop an unusable test in the bprm stack limits.
+The ':=' override path in xbc_parse_kv() calls xbc_init_node() to
+re-initialize an existing value node but does not check the return
+value. If xbc_init_node() fails (data offset out of range), parsing
+silently continues with stale node data.
 
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Closes: https://lore.kernel.org/all/a3e9b1c2-40c1-45df-9fa2-14ee6a7b3fe2@roeck-us.net
-Fixes: 60371f43e56b ("exec: Add KUnit test for bprm_stack_limits()")
-Signed-off-by: Kees Cook <kees@kernel.org>
+Add the missing error check to match the xbc_add_node() call path
+which already checks for failure.
+
+In practice, a bootconfig using ':=' to override a value near the
+32KB data limit could silently retain the old value, meaning a
+security-relevant boot parameter override (e.g., a trace filter or
+debug setting) would not take effect as intended.
+
+Link: https://lore.kernel.org/all/20260318155847.78065-2-objecting@objecting.org/
+
+Fixes: e5efaeb8a8f5 ("bootconfig: Support mixing a value and subkeys under a key")
+Signed-off-by: Josh Law <objecting@objecting.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/tests/exec_kunit.c | 3 ---
- 1 file changed, 3 deletions(-)
+ lib/bootconfig.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/tests/exec_kunit.c b/fs/tests/exec_kunit.c
-index f412d1a0f6bba..1c32cac098cf5 100644
---- a/fs/tests/exec_kunit.c
-+++ b/fs/tests/exec_kunit.c
-@@ -94,9 +94,6 @@ static const struct bprm_stack_limits_result bprm_stack_limits_results[] = {
- 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 * 3 + sizeof(void *)),
- 	    .argc = 0, .envc = 0 },
- 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
--	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * (_STK_LIM / 4 *  + sizeof(void *)),
--	    .argc = 0, .envc = 0 },
--	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
- 	{ { .p = ULONG_MAX, .rlim_stack.rlim_cur = 4 * _STK_LIM,
- 	    .argc = 0, .envc = 0 },
- 	  .expected_argmin = ULONG_MAX - (_STK_LIM / 4 * 3) + sizeof(void *) },
+diff --git a/lib/bootconfig.c b/lib/bootconfig.c
+index 0728c4a95249b..5d3802eba52a3 100644
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -712,7 +712,8 @@ static int __init xbc_parse_kv(char **k, char *v, int op)
+ 		if (op == ':') {
+ 			unsigned short nidx = child->next;
+ 
+-			xbc_init_node(child, v, XBC_VALUE);
++			if (xbc_init_node(child, v, XBC_VALUE) < 0)
++				return xbc_parse_error("Failed to override value", v);
+ 			child->next = nidx;	/* keep subkeys */
+ 			goto array;
+ 		}
 -- 
 2.51.0
 
