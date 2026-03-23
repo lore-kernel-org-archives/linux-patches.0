@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6653BD655;
-	Mon, 23 Mar 2026 16:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF903B5825;
+	Mon, 23 Mar 2026 16:23:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283025; cv=none; b=mbZsm8iMADNQBiC1Bp2/ApCx95qf6WQLRwyHuq1gmf6nsXgtY23vQ2r79HBvx9R/cYS+0l/K6448UARh0SvokkmVzaG6G8tPZF6DNUcAm/M0G6qcQTL/RcmNkcumxINR4PcSjczVJBF/OREfKTffsce5ZDfpZSixG01up2LjDWU=
+	t=1774283028; cv=none; b=Pu0l2BTS2cDu2zi6I3BQtoFRFY4AXHBCibCM1OxO93ZSqWUQQ+vVfynv5pq2E9NqVAtDu7469P2VsYqUtMsTx0yInfcv3cGsjNwTolHSvPs3XLnVboPermfu6dkMN6bEcvLw+TbROUHoFOZigixVfpdBBFW1qbw3yGBawmgdn54=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283025; c=relaxed/simple;
-	bh=0NrTtWBXdpMbnGqx2WJUhbpjGS9xBazXFZFUyfyD3r0=;
+	s=arc-20240116; t=1774283028; c=relaxed/simple;
+	bh=pIEgZYZbrTlFP+N1igHrAqE/unPYyiIAmLQHu3vqv1o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=U5e3byacHtBphhKt2uiQD/tNOWXWjdthWZ3QWw1GnntYg7Yeyuu+hUPHcOIeV2PEvoBY1l1SklupklY9kXOS88rmVYskOxOY6Rn/jZdkmXS+r7yaZTC/F/BLcdsVJHhcEswaN9rG15G+nuwkipJAYJqk34I/OsYJ7VSoZsJaoAc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=D27i2rOr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bquhnKWb7T7XS/JLhPlUkYy6IQx1f0DpPLBAYfq+jczVt9IQ3VqQn+S/HATeiLr0JlOz6KcOI7OQ+WaOes4LIjkZi4DKmC/xIc2SAvZSQAZ7yjtpcpVRf2n0ceS5JOQu0eKqVYTU/xW0tNUn6C44VP+z2XpV3uqvYWEfDOBlEX8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MglfbDQ7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="D27i2rOr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E3C2BC9E;
-	Mon, 23 Mar 2026 16:23:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MglfbDQ7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0B0C4CEF7;
+	Mon, 23 Mar 2026 16:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283025;
-	bh=0NrTtWBXdpMbnGqx2WJUhbpjGS9xBazXFZFUyfyD3r0=;
+	s=korg; t=1774283027;
+	bh=pIEgZYZbrTlFP+N1igHrAqE/unPYyiIAmLQHu3vqv1o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D27i2rOr3r+z4cennG/L1mDAiWpUO+xqg7Tlyq5LU3eV7cG5/yy8uv/S7U8HME9Xp
-	 UsUot9RjRy8r9ToXMStEYt8LHbEas9mfwzxJiE5jki2JT+rxXxFIFfgdOJbVBk+5Td
-	 mXhK/4bWOfXc46Wy52WpBcNPH+sHpURi1Od90Z74=
+	b=MglfbDQ7rLUbf8xf3w1jNqAV14oOauVAUBJ5YXfC63QtWE2fbm0/Wp14PnslAfdcZ
+	 UA5eLPmhViZMZ3bg7viiTdZeh2qAYQpIKnGOlL5H/EDd3y3WOm0Tm96FEPn0suQFlP
+	 p/rNsxYfoepI+le1u7Exa4jVqRrUDZR2+TskxC5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Mattson <jmattson@google.com>,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	"Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	stable <stable@kernel.org>,
+	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 330/481] KVM: SVM: Set/clear CR8 write interception when AVIC is (de)activated
-Date: Mon, 23 Mar 2026 14:45:12 +0100
-Message-ID: <20260323134533.144898916@linuxfoundation.org>
+Subject: [PATCH 6.1 331/481] usb: gadget: f_tcm: Fix NULL pointer dereferences in nexus handling
+Date: Mon, 23 Mar 2026 14:45:13 +0100
+Message-ID: <20260323134533.168831359@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,96 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
 
-[ Upstream commit 87d0f901a9bd8ae6be57249c737f20ac0cace93d ]
+[ Upstream commit b9fde507355342a2d64225d582dc8b98ff5ecb19 ]
 
-Explicitly set/clear CR8 write interception when AVIC is (de)activated to
-fix a bug where KVM leaves the interception enabled after AVIC is
-activated.  E.g. if KVM emulates INIT=>WFS while AVIC is deactivated, CR8
-will remain intercepted in perpetuity.
+The `tpg->tpg_nexus` pointer in the USB Target driver is dynamically
+managed and tied to userspace configuration via ConfigFS. It can be
+NULL if the USB host sends requests before the nexus is fully
+established or immediately after it is dropped.
 
-On its own, the dangling CR8 intercept is "just" a performance issue, but
-combined with the TPR sync bug fixed by commit d02e48830e3f ("KVM: SVM:
-Sync TPR from LAPIC into VMCB::V_TPR even if AVIC is active"), the danging
-intercept is fatal to Windows guests as the TPR seen by hardware gets
-wildly out of sync with reality.
+Currently, functions like `bot_submit_command()` and the data
+transfer paths retrieve `tv_nexus = tpg->tpg_nexus` and immediately
+dereference `tv_nexus->tvn_se_sess` without any validation. If a
+malicious or misconfigured USB host sends a BOT (Bulk-Only Transport)
+command during this race window, it triggers a NULL pointer
+dereference, leading to a kernel panic (local DoS).
 
-Note, VMX isn't affected by the bug as TPR_THRESHOLD is explicitly ignored
-when Virtual Interrupt Delivery is enabled, i.e. when APICv is active in
-KVM's world.  I.e. there's no need to trigger update_cr8_intercept(), this
-is firmly an SVM implementation flaw/detail.
+This exposes an inconsistent API usage within the module, as peer
+functions like `usbg_submit_command()` and `bot_send_bad_response()`
+correctly implement a NULL check for `tv_nexus` before proceeding.
 
-WARN if KVM gets a CR8 write #VMEXIT while AVIC is active, as KVM should
-never enter the guest with AVIC enabled and CR8 writes intercepted.
+Fix this by bringing consistency to the nexus handling. Add the
+missing `if (!tv_nexus)` checks to the vulnerable BOT command and
+request processing paths, aborting the command gracefully with an
+error instead of crashing the system.
 
-Fixes: 3bbf3565f48c ("svm: Do not intercept CR8 when enable AVIC")
-Cc: stable@vger.kernel.org
-Cc: Jim Mattson <jmattson@google.com>
-Cc: Naveen N Rao (AMD) <naveen@kernel.org>
-Cc: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-3-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-[Squash fix to avic_deactivate_vmcb. - Paolo]
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-[ adjusted context ]
+Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Link: https://patch.msgid.link/20260219023834.17976-1-jiashengjiangcool@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    6 +++++-
- arch/x86/kvm/svm/svm.c  |    7 ++++---
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/function/f_tcm.c |   14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -79,9 +79,10 @@ static void avic_activate_vmcb(struct vc
- 
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
--
- 	vmcb->control.int_ctl |= AVIC_ENABLE_MASK;
- 
-+	svm_clr_intercept(svm, INTERCEPT_CR8_WRITE);
+--- a/drivers/usb/gadget/function/f_tcm.c
++++ b/drivers/usb/gadget/function/f_tcm.c
+@@ -1032,6 +1032,13 @@ static void usbg_cmd_work(struct work_st
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
 +
- 	/* Note:
- 	 * KVM can support hybrid-AVIC mode, where KVM emulates x2APIC
- 	 * MSR accesses, while interrupt injection to a running vCPU
-@@ -116,6 +117,9 @@ static void avic_deactivate_vmcb(struct
- 	vmcb->control.int_ctl &= ~(AVIC_ENABLE_MASK | X2APIC_MODE_MASK);
- 	vmcb->control.avic_physical_id &= ~AVIC_PHYSICAL_MAX_INDEX_MASK;
- 
-+	if (!sev_es_guest(svm->vcpu.kvm))
-+		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
++	}
 +
- 	/*
- 	 * If running nested and the guest uses its own MSR bitmap, there
- 	 * is no need to update L0's msr bitmap
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1192,8 +1192,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	svm_set_intercept(svm, INTERCEPT_CR0_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR3_WRITE);
- 	svm_set_intercept(svm, INTERCEPT_CR4_WRITE);
--	if (!kvm_vcpu_apicv_active(vcpu))
--		svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
-+	svm_set_intercept(svm, INTERCEPT_CR8_WRITE);
- 
- 	set_dr_intercepts(svm);
- 
-@@ -2690,9 +2689,11 @@ static int dr_interception(struct kvm_vc
- 
- static int cr8_write_interception(struct kvm_vcpu *vcpu)
- {
-+	u8 cr8_prev = kvm_get_cr8(vcpu);
- 	int r;
- 
--	u8 cr8_prev = kvm_get_cr8(vcpu);
-+	WARN_ON_ONCE(kvm_vcpu_apicv_active(vcpu));
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0) {
+ 		__target_init_cmd(se_cmd,
+@@ -1160,6 +1167,13 @@ static void bot_cmd_work(struct work_str
+ 	se_cmd = &cmd->se_cmd;
+ 	tpg = cmd->fu->tpg;
+ 	tv_nexus = tpg->tpg_nexus;
++	if (!tv_nexus) {
++		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
 +
- 	/* instruction emulation calls kvm_set_cr8() */
- 	r = cr_interception(vcpu);
- 	if (lapic_in_kernel(vcpu))
++		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
++		return;
++	}
++
+ 	dir = get_cmd_dir(cmd->cmd_buf);
+ 	if (dir < 0) {
+ 		__target_init_cmd(se_cmd,
 
 
