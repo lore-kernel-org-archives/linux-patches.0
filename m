@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC503AC0EB;
-	Mon, 23 Mar 2026 15:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B0B3AC0EB;
+	Mon, 23 Mar 2026 15:05:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278316; cv=none; b=T+FTaQw8WK/1MIdic6FY6WlpDKQGGepy7inDsPnB6FRwvK3OANAkwW3z5hwqcrZhBWsELFCIGjgxW6m0k/+9Ek1AK8aKsK04vNZNp+mo0DuGDazrYrDdlnpPUqQ9+v4BAwFs7dQjfKn6G5XIOC7T3Y+IHr1cLnq/R+vHZqGydkg=
+	t=1774278319; cv=none; b=ekvX2Yz+gXWxqoiuHAkQGrkRe93R8VjDWUA7r8ANcXbjA/8H58hDSmcFYimvOoR9qYllGg1xo+A1VpzGXdh5/hab1UNIm3aWY6JhkN0cjAa4/N1WaFK+6UhmYgk9SlP0jfLETjh1HeXd601DcYJiv4WsaqcTISavmLvAdZKeZ5U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278316; c=relaxed/simple;
-	bh=KF+X9ETunkXjG7cQq/no0fW+zbCQiWPWgEiwQ6I7DC0=;
+	s=arc-20240116; t=1774278319; c=relaxed/simple;
+	bh=eEtclVZgtxEp1L42u0VyXvaj0VPinjwHOaJJLYqdWOg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ksz//be6E3fJN56Cw7sAQbBOl+9FEU4onrFbwLswDUGOggG61rySNPsYo5Zvd7lw3LztruwjgTt136Cf/ILaBL+nqFT8U2Eb/26OJsO28brZk65BaE8VM0TA2oNkA95tQvwldp/sZ+smfEfrGVMVTA4OpiZqHYr2WJKlq6wrx4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ODBiQ705; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RASnp70zRKA8gh6SZIWgfqv9ojPiqHLNmm5FS/dQDUv2B+8i4LmvnOfxh6TiSOQJpTcZtMFezz+DzBkCMTFGksvhrsSK58Pu+p/o3o6QJ8XCOXOOGycYgFp9vkxwtlPJbhpu2C9RnXlsI6kdx1QKPOGQjK3BQG1F40i/dVnBcNs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LEOaxlwA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ODBiQ705"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72979C4CEF7;
-	Mon, 23 Mar 2026 15:05:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LEOaxlwA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BE8C2BC9E;
+	Mon, 23 Mar 2026 15:05:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278315;
-	bh=KF+X9ETunkXjG7cQq/no0fW+zbCQiWPWgEiwQ6I7DC0=;
+	s=korg; t=1774278318;
+	bh=eEtclVZgtxEp1L42u0VyXvaj0VPinjwHOaJJLYqdWOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODBiQ705IVzXhqb0T4D+8WMqcoKUx4esDTXTxqFRuVWc9o7+oSri1Y/ahOumip9o7
-	 Y4qdShR9HTRc9QtND5F7qtuTIq+GbFwy68Qz3J4s5LnRkRYh5rGjPaFAekdm1cMWkW
-	 XzV8tZS2J/AAmIeqVxo7jY+5hdhqEYMyUgyA0BJY=
+	b=LEOaxlwA7YvA7bllk9meqrLvG1FxluUeTnPqkkI9cJjCXhGp9ORDtOnaHVAxHIqk2
+	 cosdkGZYmM7fukjy5BDXhDSYLxUDuCq39s9ubKANE3mvXWHoQme9D/afv2zDgvirhp
+	 pFs5pC1Pnz5/trH9stB009+yiSX9J0GLUXfHeMmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.6 268/567] KVM: SVM: Initialize AVIC VMCB fields if AVIC is enabled with in-kernel APIC
-Date: Mon, 23 Mar 2026 14:43:08 +0100
-Message-ID: <20260323134540.462373236@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	A1RM4X <dev@a1rm4x.com>
+Subject: [PATCH 6.6 269/567] USB: add QUIRK_NO_BOS for video capture several devices
+Date: Mon, 23 Mar 2026 14:43:09 +0100
+Message-ID: <20260323134540.490341319@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,61 +50,59 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: A1RM4X <dev@a1rm4x.com>
 
-commit 3989a6d036c8ec82c0de3614bed23a1dacd45de5 upstream.
+commit 93cd0d664661f58f7e7bed7373714ab2ace41734 upstream.
 
-Initialize all per-vCPU AVIC control fields in the VMCB if AVIC is enabled
-in KVM and the VM has an in-kernel local APIC, i.e. if it's _possible_ the
-vCPU could activate AVIC at any point in its lifecycle.  Configuring the
-VMCB if and only if AVIC is active "works" purely because of optimizations
-in kvm_create_lapic() to speculatively set apicv_active if AVIC is enabled
-*and* to defer updates until the first KVM_RUN.  In quotes because KVM
-likely won't do the right thing if kvm_apicv_activated() is false, i.e. if
-a vCPU is created while APICv is inhibited at the VM level for whatever
-reason.  E.g. if the inhibit is *removed* before KVM_REQ_APICV_UPDATE is
-handled in KVM_RUN, then __kvm_vcpu_update_apicv() will elide calls to
-vendor code due to seeing "apicv_active == activate".
+Several USB capture devices also need the USB_QUIRK_NO_BOS set for them
+to work properly, odds are they are all the same chip inside, just
+different vendor/product ids.
 
-Cleaning up the initialization code will also allow fixing a bug where KVM
-incorrectly leaves CR8 interception enabled when AVIC is activated without
-creating a mess with respect to whether AVIC is activated or not.
+This fixes up:
+  - ASUS TUF 4K PRO
+  - Avermedia Live Gamer Ultra 2.1 (GC553G2)
+  - UGREEN 35871
+to now run at full speed (10 Gbps/4K 60 fps mode.)
 
-Cc: stable@vger.kernel.org
-Fixes: 67034bb9dd5e ("KVM: SVM: Add irqchip_split() checks before enabling AVIC")
-Fixes: 6c3e4422dd20 ("svm: Add support for dynamic APICv")
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/CACy+XB-f-51xGpNQFCSm5pE_momTQLu=BaZggHYU1DiDmFX=ug@mail.gmail.com
+Cc: stable <stable@kernel.org>
+Signed-off-by: A1RM4X <dev@a1rm4x.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    2 +-
- arch/x86/kvm/svm/svm.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -253,7 +253,7 @@ void avic_init_vmcb(struct vcpu_svm *svm
- 	vmcb->control.avic_physical_id = ppa & AVIC_HPA_MASK;
- 	vmcb->control.avic_vapic_bar = APIC_DEFAULT_PHYS_BASE & VMCB_AVIC_APIC_BAR_MASK;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -377,6 +377,9 @@ static const struct usb_device_id usb_qu
+ 	/* SanDisk Extreme 55AE */
+ 	{ USB_DEVICE(0x0781, 0x55ae), .driver_info = USB_QUIRK_NO_LPM },
  
--	if (kvm_apicv_activated(svm->vcpu.kvm))
-+	if (kvm_vcpu_apicv_active(&svm->vcpu))
- 		avic_activate_vmcb(svm);
- 	else
- 		avic_deactivate_vmcb(svm);
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1375,7 +1375,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	if (boot_cpu_has(X86_FEATURE_V_SPEC_CTRL))
- 		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_SPEC_CTRL, 1, 1);
++	/* Avermedia Live Gamer Ultra 2.1 (GC553G2) - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x07ca, 0x2553), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Realforce 87U Keyboard */
+ 	{ USB_DEVICE(0x0853, 0x011b), .driver_info = USB_QUIRK_NO_LPM },
  
--	if (kvm_vcpu_apicv_active(vcpu))
-+	if (enable_apicv && irqchip_in_kernel(vcpu->kvm))
- 		avic_init_vmcb(svm, vmcb);
+@@ -434,6 +437,9 @@ static const struct usb_device_id usb_qu
+ 	{ USB_DEVICE(0x0b05, 0x17e0), .driver_info =
+ 			USB_QUIRK_IGNORE_REMOTE_WAKEUP },
  
- 	if (vnmi)
++	/* ASUS TUF 4K PRO - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x0b05, 0x1ab9), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* Realtek Semiconductor Corp. Mass Storage Device (Multicard Reader)*/
+ 	{ USB_DEVICE(0x0bda, 0x0151), .driver_info = USB_QUIRK_CONFIG_INTF_STRINGS },
+ 
+@@ -562,6 +568,9 @@ static const struct usb_device_id usb_qu
+ 
+ 	{ USB_DEVICE(0x2386, 0x350e), .driver_info = USB_QUIRK_NO_LPM },
+ 
++	/* UGREEN 35871 - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x2b89, 0x5871), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* APTIV AUTOMOTIVE HUB */
+ 	{ USB_DEVICE(0x2c48, 0x0132), .driver_info =
+ 			USB_QUIRK_SHORT_SET_ADDRESS_REQ_TIMEOUT },
 
 
