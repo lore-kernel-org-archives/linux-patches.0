@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 314773B3890;
-	Mon, 23 Mar 2026 13:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466C23B38B9;
+	Mon, 23 Mar 2026 13:58:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274323; cv=none; b=ELKXmjnynUaDEzmJUnMfaXt8KYXy6AscOE+QIEN/CCP9qjuGV+GJ8pbmJp4L8HU4/LP0BEhwIAqX/CH2EE/4HwqqJndEQGEzcWpJ/fQWvk/CT7R6RZisavfixYaWYhv6UR0NnL7+uH4g0BX5h3Y4IZrIfhCIf3he+q6uXiPe0ZY=
+	t=1774274326; cv=none; b=QS0VyRf8aT76fB4zqCL2QgoqH9J7OQPLR8AGDzhf4+Ab+uIbnSzmbNy6jjblZPnOyDLhdkxQXfwStqNC5dbCYTI8iNPUDEZdOvB2qS0hyZ62OeFIpE2QUmilPmOeiiA3aR4UqVZoQSWvODtkFKVvrYoCwoKMZ0P3rTn1M6H3tpc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274323; c=relaxed/simple;
-	bh=vd4ZAOnh06TKWyg+5bUiFTOZzGADuAyF6jReF5AYFgo=;
+	s=arc-20240116; t=1774274326; c=relaxed/simple;
+	bh=uZ9JvnwDJaxokd4c6l3RmyOaBcxyIUMvovuTJy2GZUo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FR203YnZI45HIjnLg5FluoxOAmIE18ueEd075FhkoQ/NaR31c0SUwmhz6NzCq1eXZFliq/Ne39CRqY5hsi7klYKuu5fJjcxxSjPwjlwHLTKlxDYllUopLIz5pEaXgUZvMagehvv8lk5mPcOUYdNmLuawaSmtNyH3NlIBGRI/PPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoqvyvKs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qWXk8RZzPq2eY0aEJ54KrGjGynD91lUWCKge6LFRuUKtjlXBDb0v7nBwoM0+eSKbAVqLjGjuBBRiSwrG8QpqrsU8Pc0os7LxJaOyDSI3yQNtMcY/bybAvUBtDkJtknqvXndZWqvazs8IKIN8Zv4PL6OcbiNV0xH1oVqnSek5suA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O41j7yT8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoqvyvKs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF55DC4AF09;
-	Mon, 23 Mar 2026 13:58:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O41j7yT8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC879C2BCB4;
+	Mon, 23 Mar 2026 13:58:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274323;
-	bh=vd4ZAOnh06TKWyg+5bUiFTOZzGADuAyF6jReF5AYFgo=;
+	s=korg; t=1774274326;
+	bh=uZ9JvnwDJaxokd4c6l3RmyOaBcxyIUMvovuTJy2GZUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yoqvyvKsdvvfqz6pcX0V4T8E05g0F8S3u0m4cPWIkyTZ1u2wo0srqXNFSN08Snona
-	 1BhBk7r55BFWJPgYLtp8C8zb0PPraOsQtu/5lqGX+kXGeMQSbEruTZguxGdV/HidAv
-	 JySCyS2Q+dWpJbm9JqZ1SXd6Wt2lAlQlEIlvjrYA=
+	b=O41j7yT8WHfPILOTVVjQjam0TGmHuRgfaeiiIm/Toz4DpBnduEovxad6yg1oMZS/0
+	 hlnqymLiOwAlv9BAEYTVHU/x19osWYMCPNQ+JDg2/QOXheqN9zppJkfupoccNO4X6r
+	 Ji4zCg/+seXuCI5ZoR7DCaUz4UoNrWNAu43Bg9xM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Sanman Pradhan <psanman@juniper.net>,
 	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.19 182/220] hwmon: (pmbus/ina233) Add error check for pmbus_read_word_data() return value
-Date: Mon, 23 Mar 2026 14:45:59 +0100
-Message-ID: <20260323134510.324874120@linuxfoundation.org>
+Subject: [PATCH 6.19 183/220] hwmon: (pmbus/mp2975) Add error check for pmbus_read_word_data() return value
+Date: Mon, 23 Mar 2026 14:46:00 +0100
+Message-ID: <20260323134510.354893860@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,36 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Sanman Pradhan <psanman@juniper.net>
 
-commit 32f59301b9898c0ab5e72908556d553e2d481945 upstream.
+commit 19d4b9c8a136704d5f2544e7ac550f27918a5004 upstream.
 
-ina233_read_word_data() uses the return value of pmbus_read_word_data()
-directly in a DIV_ROUND_CLOSEST() computation without first checking for
-errors. If the underlying I2C transaction fails, a negative error code is
-used in the arithmetic, producing a garbage sensor value instead of
-propagating the error.
+mp2973_read_word_data() XORs the return value of pmbus_read_word_data()
+with PB_STATUS_POWER_GOOD_N without first checking for errors. If the I2C
+transaction fails, a negative error code is XORed with the constant,
+producing a corrupted value that is returned as valid status data instead
+of propagating the error.
 
-Add the missing error check before using the return value.
+Add the missing error check before modifying the return value.
 
-Fixes: b64b6cb163f16 ("hwmon: Add driver for TI INA233 Current and Power Monitor")
+Fixes: acda945afb465 ("hwmon: (pmbus/mp2975) Fix PGOOD in READ_STATUS_WORD")
 Cc: stable@vger.kernel.org
 Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260317174553.385567-1-sanman.pradhan@hpe.com
+Link: https://lore.kernel.org/r/20260317173308.382545-3-sanman.pradhan@hpe.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/ina233.c |    2 ++
+ drivers/hwmon/pmbus/mp2975.c |    2 ++
  1 file changed, 2 insertions(+)
 
---- a/drivers/hwmon/pmbus/ina233.c
-+++ b/drivers/hwmon/pmbus/ina233.c
-@@ -67,6 +67,8 @@ static int ina233_read_word_data(struct
- 	switch (reg) {
- 	case PMBUS_VIRT_READ_VMON:
- 		ret = pmbus_read_word_data(client, 0, 0xff, MFR_READ_VSHUNT);
+--- a/drivers/hwmon/pmbus/mp2975.c
++++ b/drivers/hwmon/pmbus/mp2975.c
+@@ -313,6 +313,8 @@ static int mp2973_read_word_data(struct
+ 	case PMBUS_STATUS_WORD:
+ 		/* MP2973 & MP2971 return PGOOD instead of PB_STATUS_POWER_GOOD_N. */
+ 		ret = pmbus_read_word_data(client, page, phase, reg);
 +		if (ret < 0)
 +			return ret;
- 
- 		/* Adjust returned value to match VIN coefficients */
- 		/* VIN: 1.25 mV VSHUNT: 2.5 uV LSB */
+ 		ret ^= PB_STATUS_POWER_GOOD_N;
+ 		break;
+ 	case PMBUS_OT_FAULT_LIMIT:
 
 
