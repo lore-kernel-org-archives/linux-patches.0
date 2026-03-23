@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E12242D60;
-	Mon, 23 Mar 2026 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770FB27E1A1;
+	Mon, 23 Mar 2026 15:12:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278727; cv=none; b=HGV5zmIjy57FFUDido3w0MZxwBj6yzWNEOfHsAp0nwL7GH5wzCAlA8Q0qxe6Db/Xuss4H+OTet9JPjfhFZrC0WG2kFvMyHwcVEaE/N9kGShujHJo7w+3GrzPUhPvN4Wem6viO+VH1GQOaKPk70eiRU9wu2BLL9jNRuHUpms9fM8=
+	t=1774278730; cv=none; b=JUMi8rr2WVLMLFbvhUA8T1PefpFZetpZLpRnBkReK+nEZPM+um0GuR2IF8VqOzUf7aMY6UyYUjE7aix0AGpDPZnqxGtJTq4QnqKmLXTqXxIljYwtw0XJIZV2YtgaKE4mPJXCGvTzoqUyQiPEYVYbb96RN6O4ibfj95syWQfsMS4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278727; c=relaxed/simple;
-	bh=S9NDBUMsxmdmIcTrZOVeOv6aO11bvV5qghHzxKg8kXo=;
+	s=arc-20240116; t=1774278730; c=relaxed/simple;
+	bh=xQHmOvadmMHhXFbOorPOjMgthX+BusjItcTh20RTeZQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=OZP8kZXohPaERdu4v8zC0w0BbfL3Q5uGp5izW1mXspGTG39WIYTrfH7ipXxRbn9zXhZHHdgiAbuBlaT94zJqlxF1ZCtALTAo2xTn5VmuTvMuATR3fufVEiS5QJbo6bmBhm46Kdez58uyOVqdt6ZbJs9AHcShSUQWgN8RNAP02kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=slzl9el5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B8EY0lzNWasJEf4zTh3vhVdiixYXLJ0RBKTcB3AYcBcE3/w8jv71+DJNdbM5KdVWBUKQb1cWrFU9j3Lr1o7aDXrq2TmTC8GeQSExtUO/4ZVuprsojqeN4o3IrL+HI72BnCib8/4z763Cwhz9spsMV5sNgznhIVgYAzOAXjPb4Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyXCTe15; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="slzl9el5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF1BCC2BC9E;
-	Mon, 23 Mar 2026 15:12:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyXCTe15"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77A4C4CEF7;
+	Mon, 23 Mar 2026 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278727;
-	bh=S9NDBUMsxmdmIcTrZOVeOv6aO11bvV5qghHzxKg8kXo=;
+	s=korg; t=1774278730;
+	bh=xQHmOvadmMHhXFbOorPOjMgthX+BusjItcTh20RTeZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=slzl9el5FXh92CKxYZADSYnf2KPndLk0Kcn9Z72CNqr+Vrrzs2lkP1M80neuDrQLG
-	 PtxX7xzooklnNpP5623MTpmFKRX8dlpywvQT+PRU8b1fXnBcOhT1NvP5n4nIDPrln6
-	 liUGVNKu8rTzEcqnL4oM8T9ysgGf1QO6LpZkvv4o=
+	b=wyXCTe15jD+e4kLdd3IS5k7RJ6tQku7VM0z/VL+ylMXj0eMqh0LrG0ovkpg60dsjG
+	 oe0MP0j78anm7ZL97kDv+Uq3ae+M7rJkiY0kVP/NK/2gcx2IY99up9prlYJEmQvkDt
+	 kyXdNxQJG6/nXLEmmcc0rFiQ6IvnESq9i6hjI1X4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	linux-btrfs@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Baokun Li <libaokun1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 399/567] ext4: fix dirtyclusters double decrement on fs shutdown
-Date: Mon, 23 Mar 2026 14:45:19 +0100
-Message-ID: <20260323134543.737971649@linuxfoundation.org>
+	Christoph Hellwig <hch@infradead.org>,
+	Filipe Manana <fdmanana@suse.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.6 400/567] btrfs: always fallback to buffered write if the inode requires checksum
+Date: Mon, 23 Mar 2026 14:45:20 +0100
+Message-ID: <20260323134543.763511700@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,106 +53,105 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Brian Foster <bfoster@redhat.com>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 94a8cea54cd935c54fa2fba70354757c0fc245e3 ]
+commit 968f19c5b1b7d5595423b0ac0020cc18dfed8cb5 upstream.
 
-fstests test generic/388 occasionally reproduces a warning in
-ext4_put_super() associated with the dirty clusters count:
+[BUG]
+It is a long known bug that VM image on btrfs can lead to data csum
+mismatch, if the qemu is using direct-io for the image (this is commonly
+known as cache mode 'none').
 
-  WARNING: CPU: 7 PID: 76064 at fs/ext4/super.c:1324 ext4_put_super+0x48c/0x590 [ext4]
+[CAUSE]
+Inside the VM, if the fs is EXT4 or XFS, or even NTFS from Windows, the
+fs is allowed to dirty/modify the folio even if the folio is under
+writeback (as long as the address space doesn't have AS_STABLE_WRITES
+flag inherited from the block device).
 
-Tracing the failure shows that the warning fires due to an
-s_dirtyclusters_counter value of -1. IOW, this appears to be a
-spurious decrement as opposed to some sort of leak. Further tracing
-of the dirty cluster count deltas and an LLM scan of the resulting
-output identified the cause as a double decrement in the error path
-between ext4_mb_mark_diskspace_used() and the caller
-ext4_mb_new_blocks().
+This is a valid optimization to improve the concurrency, and since these
+filesystems have no extra checksum on data, the content change is not a
+problem at all.
 
-First, note that generic/388 is a shutdown vs. fsstress test and so
-produces a random set of operations and shutdown injections. In the
-problematic case, the shutdown triggers an error return from the
-ext4_handle_dirty_metadata() call(s) made from
-ext4_mb_mark_context(). The changed value is non-zero at this point,
-so ext4_mb_mark_diskspace_used() does not exit after the error
-bubbles up from ext4_mb_mark_context(). Instead, the former
-decrements both cluster counters and returns the error up to
-ext4_mb_new_blocks(). The latter falls into the !ar->len out path
-which decrements the dirty clusters counter a second time, creating
-the inconsistency.
+But the final write into the image file is handled by btrfs, which needs
+the content not to be modified during writeback, or the checksum will
+not match the data (checksum is calculated before submitting the bio).
 
-To avoid this problem and simplify ownership of the cluster
-reservation in this codepath, lift the counter reduction to a single
-place in the caller. This makes it more clear that
-ext4_mb_new_blocks() is responsible for acquiring cluster
-reservation (via ext4_claim_free_clusters()) in the !delalloc case
-as well as releasing it, regardless of whether it ends up consumed
-or returned due to failure.
+So EXT4/XFS/NTRFS assume they can modify the folio under writeback, but
+btrfs requires no modification, this leads to the false csum mismatch.
 
-Fixes: 0087d9fb3f29 ("ext4: Fix s_dirty_blocks_counter if block allocation failed with nodelalloc")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Baokun Li <libaokun1@huawei.com>
-Link: https://patch.msgid.link/20260113171905.118284-1-bfoster@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-[ Drop mballoc-test changes ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This is only a controlled example, there are even cases where
+multi-thread programs can submit a direct IO write, then another thread
+modifies the direct IO buffer for whatever reason.
+
+For such cases, btrfs has no sane way to detect such cases and leads to
+false data csum mismatch.
+
+[FIX]
+I have considered the following ideas to solve the problem:
+
+- Make direct IO to always skip data checksum
+  This not only requires a new incompatible flag, as it breaks the
+  current per-inode NODATASUM flag.
+  But also requires extra handling for no csum found cases.
+
+  And this also reduces our checksum protection.
+
+- Let hardware handle all the checksum
+  AKA, just nodatasum mount option.
+  That requires trust for hardware (which is not that trustful in a lot
+  of cases), and it's not generic at all.
+
+- Always fallback to buffered write if the inode requires checksum
+  This was suggested by Christoph, and is the solution utilized by this
+  patch.
+
+  The cost is obvious, the extra buffer copying into page cache, thus it
+  reduces the performance.
+  But at least it's still user configurable, if the end user still wants
+  the zero-copy performance, just set NODATASUM flag for the inode
+  (which is a common practice for VM images on btrfs).
+
+  Since we cannot trust user space programs to keep the buffer
+  consistent during direct IO, we have no choice but always falling back
+  to buffered IO.  At least by this, we avoid the more deadly false data
+  checksum mismatch error.
+
+Cc: stable@vger.kernel.org # 6.6
+[ Conflicts caused by code extracted into direct-io.c ]
+Suggested-by: Christoph Hellwig <hch@infradead.org>
+Reviewed-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/mballoc.c |   21 +++++----------------
- 1 file changed, 5 insertions(+), 16 deletions(-)
+ fs/btrfs/file.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/ext4/mballoc.c
-+++ b/fs/ext4/mballoc.c
-@@ -3999,8 +3999,7 @@ void ext4_exit_mballoc(void)
-  * Returns 0 if success or error code
-  */
- static noinline_for_stack int
--ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac,
--				handle_t *handle, unsigned int reserv_clstrs)
-+ext4_mb_mark_diskspace_used(struct ext4_allocation_context *ac, handle_t *handle)
- {
- 	struct buffer_head *bitmap_bh = NULL;
- 	struct ext4_group_desc *gdp;
-@@ -4086,13 +4085,6 @@ ext4_mb_mark_diskspace_used(struct ext4_
- 
- 	ext4_unlock_group(sb, ac->ac_b_ex.fe_group);
- 	percpu_counter_sub(&sbi->s_freeclusters_counter, ac->ac_b_ex.fe_len);
--	/*
--	 * Now reduce the dirty block count also. Should not go negative
--	 */
--	if (!(ac->ac_flags & EXT4_MB_DELALLOC_RESERVED))
--		/* release all the reserved blocks if non delalloc */
--		percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--				   reserv_clstrs);
- 
- 	if (sbi->s_log_groups_per_flex) {
- 		ext4_group_t flex_group = ext4_flex_group(sbi,
-@@ -6265,7 +6257,7 @@ repeat:
- 			ext4_mb_pa_put_free(ac);
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -1514,6 +1514,22 @@ relock:
+ 		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
+ 		goto buffered;
  	}
- 	if (likely(ac->ac_status == AC_STATUS_FOUND)) {
--		*errp = ext4_mb_mark_diskspace_used(ac, handle, reserv_clstrs);
-+		*errp = ext4_mb_mark_diskspace_used(ac, handle);
- 		if (*errp) {
- 			ext4_discard_allocated_blocks(ac);
- 			goto errout;
-@@ -6296,12 +6288,9 @@ errout:
- out:
- 	if (inquota && ar->len < inquota)
- 		dquot_free_block(ar->inode, EXT4_C2B(sbi, inquota - ar->len));
--	if (!ar->len) {
--		if ((ar->flags & EXT4_MB_DELALLOC_RESERVED) == 0)
--			/* release all the reserved blocks if non delalloc */
--			percpu_counter_sub(&sbi->s_dirtyclusters_counter,
--						reserv_clstrs);
--	}
-+	/* release any reserved blocks */
-+	if (reserv_clstrs)
-+		percpu_counter_sub(&sbi->s_dirtyclusters_counter, reserv_clstrs);
++	/*
++	 * We can't control the folios being passed in, applications can write
++	 * to them while a direct IO write is in progress.  This means the
++	 * content might change after we calculated the data checksum.
++	 * Therefore we can end up storing a checksum that doesn't match the
++	 * persisted data.
++	 *
++	 * To be extra safe and avoid false data checksum mismatch, if the
++	 * inode requires data checksum, just fallback to buffered IO.
++	 * For buffered IO we have full control of page cache and can ensure
++	 * no one is modifying the content during writeback.
++	 */
++	if (!(BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)) {
++		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
++		goto buffered;
++	}
  
- 	trace_ext4_allocate_blocks(ar, (unsigned long long)block);
- 
+ 	/*
+ 	 * The iov_iter can be mapped to the same file range we are writing to.
 
 
