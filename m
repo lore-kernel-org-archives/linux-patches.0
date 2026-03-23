@@ -1,37 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D973BC668;
-	Mon, 23 Mar 2026 16:17:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9A83BA240;
+	Mon, 23 Mar 2026 16:17:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282669; cv=none; b=C1yo9VzZcB+JjAEdJeMaH8m+bwWynlPd5UOrNqfagvlFJgGEsjxbLr9ngecYyAvZqhDKrygtCCAEEzSh0Iby4cnSD1CwZX8fkf7VwknPtOcYNvYdKhK1/k85JMFWgGS8aIoPAGnrjk1BHnPUAqBxvCyveR9eelpsI+Ni1n+eQ5A=
+	t=1774282672; cv=none; b=uecZ0IVLklAuzD3LubyKu6gHDpo/DevUSi5UZeJv6PH5OsYVxp+WVT55KAltpCfL/LJZ2i+7TROiv1BbAAxEwwg7LXnjX6sjHZYq5EJzsobBw/YGSuHdXYVSMX/YxRbFypH9r5g2hIZgBXrTpdGIHtqDxrqOhjCAwXqg9O/UkAM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282669; c=relaxed/simple;
-	bh=FyaVeq1JHEsPCBU5TrJr1vq9PrKcVV4z4JnYQAoYVJ4=;
+	s=arc-20240116; t=1774282672; c=relaxed/simple;
+	bh=qAkKX1t59xEbZSu2y6/UKgxvCTGrQ87Kmfe2KcXWDug=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rZuG45lFUWa7lWVdBNL2sSORRkKfwy2yfXYV8WJtUx+rk/gZFxCVXTg04FBvBYh9OA9o2yeAvKjSoKY0p8LeS1Tx27ein5juC2qK1Ks4x9rdsZ6pEwKBsw0n9Lwhs2HCsYB6NGvTfNb010m8o6mEQ1Eemn5Jbk2Izf0bpcsOyFQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N8eySrVN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZeL/DB0EgvijIeRj4YvBVNIGUvx1Qi7MqPEN/BaQnq4miY3pz8bpGv/Vpdf8GYiO64G6WXHFHzUNfJKETvSMxdUjwxRk5s0NDtXhdBOhSBDrK9an4yT8VwMTzHjseIWPkPaTxK4R39+hRon7S/VWXeA/jcb5KfR9jUl/Eoa3G2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wd3WAd8R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N8eySrVN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCD9C2BC9E;
-	Mon, 23 Mar 2026 16:17:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wd3WAd8R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A604C2BC9E;
+	Mon, 23 Mar 2026 16:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282668;
-	bh=FyaVeq1JHEsPCBU5TrJr1vq9PrKcVV4z4JnYQAoYVJ4=;
+	s=korg; t=1774282671;
+	bh=qAkKX1t59xEbZSu2y6/UKgxvCTGrQ87Kmfe2KcXWDug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8eySrVNqyduuVQcUKRcUUsPpB7WwiaMcw0Nlb15k0eLVDNcSGvXQP/1Ba5MGdfGR
-	 Ikqtmuah7H2Wuhas9R9ccXNacP9RCnyvFsHH1EGiQ3ise9zu2ILejG2bxQNrhYTR71
-	 LYQfIaL53mlsZ6uWoi5HPoB05hsFQoCo8k5hiLFs=
+	b=wd3WAd8RvtGUlpOwnmQk2pNBssVhIv3wPPmOvm+Wy82cPL8jjotXHCNXT5UGWJVe3
+	 7zg9LxPR4ZuHLzMo3t/VCNQZnCmE9V2lhejnYxKAJvFXbNC3y697i36MQpLcOcHBZN
+	 9raKblrgqfeUfgRYSFqebbfwh4Ehnn5zyB0Smf3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.1 243/481] hwmon: (pmbus/q54sj108a2) fix stack overflow in debugfs read
-Date: Mon, 23 Mar 2026 14:43:45 +0100
-Message-ID: <20260323134531.071108814@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 244/481] parisc: Fix initial page table creation for boot
+Date: Mon, 23 Mar 2026 14:43:46 +0100
+Message-ID: <20260323134531.098189982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,86 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Helge Deller <deller@gmx.de>
 
-commit 25dd70a03b1f5f3aa71e1a5091ecd9cd2a13ee43 upstream.
+commit 8475d8fe21ec9c7eb2faca555fbc5b68cf0d2597 upstream.
 
-The q54sj108a2_debugfs_read function suffers from a stack buffer overflow
-due to incorrect arguments passed to bin2hex(). The function currently
-passes 'data' as the destination and 'data_char' as the source.
+The KERNEL_INITIAL_ORDER value defines the initial size (usually 32 or
+64 MB) of the page table during bootup. Up until now the whole area was
+initialized with PTE entries, but there was no check if we filled too
+many entries.  Change the code to fill up with so many entries that the
+"_end" symbol can be reached by the kernel, but not more entries than
+actually fit into the initial PTE tables.
 
-Because bin2hex() converts each input byte into two hex characters, a
-32-byte block read results in 64 bytes of output. Since 'data' is only
-34 bytes (I2C_SMBUS_BLOCK_MAX + 2), this writes 30 bytes past the end
-of the buffer onto the stack.
-
-Additionally, the arguments were swapped: it was reading from the
-zero-initialized 'data_char' and writing to 'data', resulting in
-all-zero output regardless of the actual I2C read.
-
-Fix this by:
-1. Expanding 'data_char' to 66 bytes to safely hold the hex output.
-2. Correcting the bin2hex() argument order and using the actual read count.
-3. Using a pointer to select the correct output buffer for the final
-   simple_read_from_buffer call.
-
-Fixes: d014538aa385 ("hwmon: (pmbus) Driver for Delta power supplies Q54SJ108A2")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260304235116.1045-1-sanman.p211993@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/q54sj108a2.c |   19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ arch/parisc/kernel/head.S |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/hwmon/pmbus/q54sj108a2.c
-+++ b/drivers/hwmon/pmbus/q54sj108a2.c
-@@ -77,7 +77,8 @@ static ssize_t q54sj108a2_debugfs_read(s
- 	int idx = *idxp;
- 	struct q54sj108a2_data *psu = to_psu(idxp, idx);
- 	char data[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
--	char data_char[I2C_SMBUS_BLOCK_MAX + 2] = { 0 };
-+	char data_char[I2C_SMBUS_BLOCK_MAX * 2 + 2] = { 0 };
-+	char *out = data;
- 	char *res;
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -56,6 +56,7 @@ ENTRY(parisc_kernel_start)
  
- 	switch (idx) {
-@@ -148,27 +149,27 @@ static ssize_t q54sj108a2_debugfs_read(s
- 		if (rc < 0)
- 			return rc;
+ 	.import __bss_start,data
+ 	.import __bss_stop,data
++	.import __end,data
  
--		res = bin2hex(data, data_char, 32);
--		rc = res - data;
--
-+		res = bin2hex(data_char, data, rc);
-+		rc = res - data_char;
-+		out = data_char;
- 		break;
- 	case Q54SJ108A2_DEBUGFS_FLASH_KEY:
- 		rc = i2c_smbus_read_block_data(psu->client, PMBUS_FLASH_KEY_WRITE, data);
- 		if (rc < 0)
- 			return rc;
+ 	load32		PA(__bss_start),%r3
+ 	load32		PA(__bss_stop),%r4
+@@ -149,7 +150,11 @@ $cpu_ok:
+ 	 * everything ... it will get remapped correctly later */
+ 	ldo		0+_PAGE_KERNEL_RWX(%r0),%r3 /* Hardwired 0 phys addr start */
+ 	load32		(1<<(KERNEL_INITIAL_ORDER-PAGE_SHIFT)),%r11 /* PFN count */
+-	load32		PA(pg0),%r1
++	load32		PA(_end),%r1
++	SHRREG		%r1,PAGE_SHIFT,%r1  /* %r1 is PFN count for _end symbol */
++	cmpb,<<,n	%r11,%r1,1f
++	copy		%r1,%r11	/* %r1 PFN count smaller than %r11 */
++1:	load32		PA(pg0),%r1
  
--		res = bin2hex(data, data_char, 4);
--		rc = res - data;
--
-+		res = bin2hex(data_char, data, rc);
-+		rc = res - data_char;
-+		out = data_char;
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
--	data[rc] = '\n';
-+	out[rc] = '\n';
- 	rc += 2;
- 
--	return simple_read_from_buffer(buf, count, ppos, data, rc);
-+	return simple_read_from_buffer(buf, count, ppos, out, rc);
- }
- 
- static ssize_t q54sj108a2_debugfs_write(struct file *file, const char __user *buf,
+ $pgt_fill_loop:
+ 	STREGM          %r3,ASM_PTE_ENTRY_SIZE(%r1)
 
 
