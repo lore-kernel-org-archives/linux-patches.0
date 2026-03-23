@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830003AB295;
-	Mon, 23 Mar 2026 14:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0074A1A680B;
+	Mon, 23 Mar 2026 14:18:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275509; cv=none; b=Sqo6xJwraW3FGUPC43tBUjCufETXsU0+1wFdphbnD1lDoHQkLwWSRm29UP8NkLa4sofbDGF5VVjd4x7JdvwDBWAxbSmzOlSeveQZ/PCDf04corXHK1cmK62a65+HJDqp1uH2ObMf1wJetk1HVltxaxU3jWLlZ0yS1gO4Ulgccno=
+	t=1774275513; cv=none; b=MMWVZjtmRbv0UgJyp7eAgJeEyW7hqV0oP8B9lD6S+6WhaR3L7s1P6ijddCIhojouAvVO2c/kPrNiO8UySZpAwFKWDlPAk/jYp0HO3Xgx+hhXc8mD/K7buMXQqhM/5/XKcuU5+i2rDFWy9sd2dIrMocAahlIFymjcKufk3RmTMFk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275509; c=relaxed/simple;
-	bh=fzDAmJO1YGr9oYEU+gfUcVTK5Ke+byR5+gf2RddLtCk=;
+	s=arc-20240116; t=1774275513; c=relaxed/simple;
+	bh=03CdyjTsc2NcpmVC5t3NzKmw185iWUPMSjIDwI+mPsg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gyDnZecj0afM6sFVlrVBpfJnRPjqBoNlUC0LsIg3hTTMPtkLVFIRxTin/1POXNnNZ2GcBLY+btZcdmhF1wbZJlT1pRRi9EzS8WuFtRLTNS0yGdCf6KQ+k5S80ADxit1Id79f/LaB+Hp25r3Ytgho/NxWaMs8V1WBTjhHnQmugd4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JApXxOi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=OzC7TbPI+/JOKR5nPjtd8iMcSm8ZfrMNeX5O48IDhf7StL5rsTN+5cL2E9Za1vIdOt4UwZ0i1RnPW2GPAki5MtMoub6efqDwG5E2HoQL21r/GVTOthO2U5E98FQXQZvTv0DQBLzt/ciqYgHDs9JlnZ3pUbcumV6cZ8E9yl3PHSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AvJL/WHO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JApXxOi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24F0C2BC9E;
-	Mon, 23 Mar 2026 14:18:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AvJL/WHO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FFCBC4CEF7;
+	Mon, 23 Mar 2026 14:18:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275509;
-	bh=fzDAmJO1YGr9oYEU+gfUcVTK5Ke+byR5+gf2RddLtCk=;
+	s=korg; t=1774275512;
+	bh=03CdyjTsc2NcpmVC5t3NzKmw185iWUPMSjIDwI+mPsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0JApXxOiX6g5yc8jznxCwXvyWFJsuWh41wzfJuTl8aOGuaJT8LAHfXIE7CBLZuwlB
-	 JlSKYefQ2hg0AzQ8NXE9fPuW6msSjE+njoHCqzuOZBsRW413228JNvFjTxHKVRrOVH
-	 JVaH1ns8Y4kT7mktpiWDELizQVcWVxI5nIkqp7Lg=
+	b=AvJL/WHOttw90HA4fnmat2Pk0M9XHdrqfrrg/tU2OV7d2CIVje52w7MJHYMLIdPzM
+	 DGMZSxaOFTwm4CPKGX5OPJWVG73xS+IJxp8l/x0VNu8QuSJ3Hp5vkwfUrlankJIL6G
+	 ot0werXK35RaAs6OzsrSL9W1UNkez5WbBxmyvt5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vyacheslav Vahnenko <vahnenko2003@gmail.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 6.12 100/460] USB: ezcap401 needs USB_QUIRK_NO_BOS to function on 10gbs usb speed
-Date: Mon, 23 Mar 2026 14:41:36 +0100
-Message-ID: <20260323134529.110053023@linuxfoundation.org>
+	Ilya Dryomov <idryomov@gmail.com>,
+	Alex Markuze <amarkuze@redhat.com>
+Subject: [PATCH 6.12 127/460] libceph: reject preamble if control segment is empty
+Date: Mon, 23 Mar 2026 14:42:03 +0100
+Message-ID: <20260323134529.735043971@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,34 +50,74 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
+From: Ilya Dryomov <idryomov@gmail.com>
 
-commit d0d9b1f4f5391e6a00cee81d73ed2e8f98446d5f upstream.
+commit c4c22b846eceff05b1129b8844a80310e55a7f87 upstream.
 
-Add USB_QUIRK_NO_BOS for ezcap401 capture card, without it dmesg will show
-"unable to get BOS descriptor or descriptor too short" and "unable to
-read config index 0 descriptor/start: -71" errors and device will not
-able to work at full speed at 10gbs
+While head_onwire_len() has a branch to handle ctrl_len == 0 case,
+prepare_read_control() always sets up a kvec for the CRC meaning that
+a non-empty control segment is effectively assumed.  All frames that
+clients deal with meet that assumption, so let's make it official and
+treat the preamble with an empty control segment as malformed.
 
-Signed-off-by: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
-Cc: stable <stable@kernel.org>
-Link: https://patch.msgid.link/20260313123638.20481-1-vahnenko2003@gmail.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Reviewed-by: Alex Markuze <amarkuze@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ceph/messenger_v2.c |   17 ++++++++---------
+ 1 file changed, 8 insertions(+), 9 deletions(-)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -585,6 +585,9 @@ static const struct usb_device_id usb_qu
- 	/* Alcor Link AK9563 SC Reader used in 2022 Lenovo ThinkPads */
- 	{ USB_DEVICE(0x2ce3, 0x9563), .driver_info = USB_QUIRK_NO_LPM },
+--- a/net/ceph/messenger_v2.c
++++ b/net/ceph/messenger_v2.c
+@@ -392,7 +392,7 @@ static int head_onwire_len(int ctrl_len,
+ 	int head_len;
+ 	int rem_len;
  
-+	/* ezcap401 - BOS descriptor fetch hangs at SuperSpeed Plus */
-+	{ USB_DEVICE(0x32ed, 0x0401), .driver_info = USB_QUIRK_NO_BOS },
+-	BUG_ON(ctrl_len < 0 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
++	BUG_ON(ctrl_len < 1 || ctrl_len > CEPH_MSG_MAX_CONTROL_LEN);
+ 
+ 	if (secure) {
+ 		head_len = CEPH_PREAMBLE_SECURE_LEN;
+@@ -401,9 +401,7 @@ static int head_onwire_len(int ctrl_len,
+ 			head_len += padded_len(rem_len) + CEPH_GCM_TAG_LEN;
+ 		}
+ 	} else {
+-		head_len = CEPH_PREAMBLE_PLAIN_LEN;
+-		if (ctrl_len)
+-			head_len += ctrl_len + CEPH_CRC_LEN;
++		head_len = CEPH_PREAMBLE_PLAIN_LEN + ctrl_len + CEPH_CRC_LEN;
+ 	}
+ 	return head_len;
+ }
+@@ -528,11 +526,16 @@ static int decode_preamble(void *p, stru
+ 		desc->fd_aligns[i] = ceph_decode_16(&p);
+ 	}
+ 
+-	if (desc->fd_lens[0] < 0 ||
++	/*
++	 * This would fire for FRAME_TAG_WAIT (it has one empty
++	 * segment), but we should never get it as client.
++	 */
++	if (desc->fd_lens[0] < 1 ||
+ 	    desc->fd_lens[0] > CEPH_MSG_MAX_CONTROL_LEN) {
+ 		pr_err("bad control segment length %d\n", desc->fd_lens[0]);
+ 		return -EINVAL;
+ 	}
 +
- 	/* DELL USB GEN2 */
- 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
+ 	if (desc->fd_lens[1] < 0 ||
+ 	    desc->fd_lens[1] > CEPH_MSG_MAX_FRONT_LEN) {
+ 		pr_err("bad front segment length %d\n", desc->fd_lens[1]);
+@@ -549,10 +552,6 @@ static int decode_preamble(void *p, stru
+ 		return -EINVAL;
+ 	}
  
+-	/*
+-	 * This would fire for FRAME_TAG_WAIT (it has one empty
+-	 * segment), but we should never get it as client.
+-	 */
+ 	if (!desc->fd_lens[desc->fd_seg_cnt - 1]) {
+ 		pr_err("last segment empty, segment count %d\n",
+ 		       desc->fd_seg_cnt);
 
 
