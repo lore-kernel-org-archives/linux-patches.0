@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F9E1EB9F2;
-	Mon, 23 Mar 2026 13:57:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E756286A4;
+	Mon, 23 Mar 2026 13:57:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274239; cv=none; b=awjOKMy1LX10l/CMD2tSlnnsvCit8MiC4s3Ksnhsp/69erVA2MUvU/GBFM5Y92DH0iTHmeEcXKT0bye/rkE/ficLFgVZHF5U32e0rsa3tW3mXJsoE4bO02kC4aapXCurbTlKN3TC4CLqPsAPGztztx/HwpjnuDmQYLhVScrSmDE=
+	t=1774274243; cv=none; b=RlYJZxDJsFZQMmieGmhs66IhZroWNF668C1xRVDSnFhgCZyH7lPtkbYRZ7zuPBuTy1Aoecn8cgEwMGdrM5pgJ5ppyd5uzy2Md1ljejIc9+0ESIIwJGJZrjrdjxYWcf60WCReEzi9aLHy57QADyS0IpYT/zfiVJ1bWIw+gqKzd1c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274239; c=relaxed/simple;
-	bh=mkmINDK0LUzOs3A5VLV//Z06ZdFsxYod1SbvDtmlQzk=;
+	s=arc-20240116; t=1774274243; c=relaxed/simple;
+	bh=rAFzf61TrFTOlaNSSwxbD7cnKJknnY2x2TZqRoFQ65U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KZ9kEpyopIEPG8xZmfgesrGqZ9MWk66Jm89dVQ0g+pMAKzwJlAlwN0K5udbhTKF56a6ZERTPrdIPQMlpQfT5ru2ID72xy+bZV84QEi5ygAnLAPSKR7Dr7lIug9q4QscfoSw1kGPiMbNJpi72yK7VY0vd/qKbR1gH4wKAAyQaO/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YeeKmfCc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXGPSfh8sMoyS8Ofecy1FsQI95yp5ee64t4BJXMDrKiDVfDbVu3JVNM1+0hkcj5BXNzLUBRM+PcCVFUbiBAdJpAcBkzDZoXORrFChYhTMlHQYBGe/iCGdFugQZu1wU45UhsF0isDhBV3aPA9J/lyFtNFDr6uOmNUNyMDO6xWEEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=inL62ASU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YeeKmfCc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48EA3C4CEF7;
-	Mon, 23 Mar 2026 13:57:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="inL62ASU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61210C4CEF7;
+	Mon, 23 Mar 2026 13:57:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274239;
-	bh=mkmINDK0LUzOs3A5VLV//Z06ZdFsxYod1SbvDtmlQzk=;
+	s=korg; t=1774274242;
+	bh=rAFzf61TrFTOlaNSSwxbD7cnKJknnY2x2TZqRoFQ65U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YeeKmfCcaxRoMc3IG9N//4nyAcvJGZwMlGckI7Cg5abhkn8GZGKhHr1APSyobzPj6
-	 vdlqdU2B16lGNPnWnw2UAUcGOnrxeejLZ9s2qq5xSRmMGQ01F4kFijT06gPy/9fyWX
-	 PLmDuhF56UE/bgwQLJDGFreT7qN9RwYfVA2fFgb8=
+	b=inL62ASUKBrGEfHy/rGk8EK9iorsA0WLe/PfaY1426+iQG8FcTTnmUWRtpG2xWm4p
+	 fPPT3eRmWkCOSawaMmhffBhMExEHK9SPn8rv/aVwa/JyfxHhNRDxiNtYbbUzKUy4Ex
+	 FT5mMc+ymYyvbGd2MMDf3v5J1uvbiEFf+gwWHFKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobi Gaertner <tob.gaertner@me.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Keenan Dong <keenanat2000@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 153/220] net: usb: cdc_ncm: add ndpoffset to NDP32 nframes bounds check
-Date: Mon, 23 Mar 2026 14:45:30 +0100
-Message-ID: <20260323134509.414153043@linuxfoundation.org>
+Subject: [PATCH 6.19 154/220] clsact: Fix use-after-free in init/destroy rollback asymmetry
+Date: Mon, 23 Mar 2026 14:45:31 +0100
+Message-ID: <20260323134509.441929970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,52 +53,114 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tobi Gaertner <tob.gaertner@me.com>
+From: Daniel Borkmann <daniel@iogearbox.net>
 
-[ Upstream commit 77914255155e68a20aa41175edeecf8121dac391 ]
+[ Upstream commit a0671125d4f55e1e98d9bde8a0b671941987e208 ]
 
-The same bounds-check bug fixed for NDP16 in the previous patch also
-exists in cdc_ncm_rx_verify_ndp32(). The DPE array size is validated
-against the total skb length without accounting for ndpoffset, allowing
-out-of-bounds reads when the NDP32 is placed near the end of the NTB.
+Fix a use-after-free in the clsact qdisc upon init/destroy rollback asymmetry.
+The latter is achieved by first fully initializing a clsact instance, and
+then in a second step having a replacement failure for the new clsact qdisc
+instance. clsact_init() initializes ingress first and then takes care of the
+egress part. This can fail midway, for example, via tcf_block_get_ext(). Upon
+failure, the kernel will trigger the clsact_destroy() callback.
 
-Add ndpoffset to the nframes bounds check and use struct_size_t() to
-express the NDP-plus-DPE-array size more clearly.
+Commit 1cb6f0bae504 ("bpf: Fix too early release of tcx_entry") details the
+way how the transition is happening. If tcf_block_get_ext on the q->ingress_block
+ends up failing, we took the tcx_miniq_inc reference count on the ingress
+side, but not yet on the egress side. clsact_destroy() tests whether the
+{ingress,egress}_entry was non-NULL. However, even in midway failure on the
+replacement, both are in fact non-NULL with a valid egress_entry from the
+previous clsact instance.
 
-Compile-tested only.
+What we really need to test for is whether the qdisc instance-specific ingress
+or egress side previously got initialized. This adds a small helper for checking
+the miniq initialization called mini_qdisc_pair_inited, and utilizes that upon
+clsact_destroy() in order to fix the use-after-free scenario. Convert the
+ingress_destroy() side as well so both are consistent to each other.
 
-Fixes: 0fa81b304a79 ("cdc_ncm: Implement the 32-bit version of NCM Transfer Block")
-Signed-off-by: Tobi Gaertner <tob.gaertner@me.com>
-Link: https://patch.msgid.link/20260314054640.2895026-3-tob.gaertner@me.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1cb6f0bae504 ("bpf: Fix too early release of tcx_entry")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Martin KaFai Lau <martin.lau@kernel.org>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://patch.msgid.link/20260313065531.98639-1-daniel@iogearbox.net
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/cdc_ncm.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ include/net/sch_generic.h |  5 +++++
+ net/sched/sch_ingress.c   | 14 ++++++++------
+ 2 files changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/usb/cdc_ncm.c b/drivers/net/usb/cdc_ncm.c
-index a9d0162b5ee01..81d7e99fc0f09 100644
---- a/drivers/net/usb/cdc_ncm.c
-+++ b/drivers/net/usb/cdc_ncm.c
-@@ -1693,6 +1693,7 @@ int cdc_ncm_rx_verify_ndp32(struct sk_buff *skb_in, int ndpoffset)
- 	struct usbnet *dev = netdev_priv(skb_in->dev);
- 	struct usb_cdc_ncm_ndp32 *ndp32;
- 	int ret = -EINVAL;
-+	size_t ndp_len;
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index cafb266a0b80d..c3d657359a3d2 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1457,6 +1457,11 @@ void mini_qdisc_pair_init(struct mini_Qdisc_pair *miniqp, struct Qdisc *qdisc,
+ void mini_qdisc_pair_block_init(struct mini_Qdisc_pair *miniqp,
+ 				struct tcf_block *block);
  
- 	if ((ndpoffset + sizeof(struct usb_cdc_ncm_ndp32)) > skb_in->len) {
- 		netif_dbg(dev, rx_err, dev->net, "invalid NDP offset  <%u>\n",
-@@ -1712,8 +1713,8 @@ int cdc_ncm_rx_verify_ndp32(struct sk_buff *skb_in, int ndpoffset)
- 					sizeof(struct usb_cdc_ncm_dpe32));
- 	ret--; /* we process NDP entries except for the last one */
++static inline bool mini_qdisc_pair_inited(struct mini_Qdisc_pair *miniqp)
++{
++	return !!miniqp->p_miniq;
++}
++
+ void mq_change_real_num_tx(struct Qdisc *sch, unsigned int new_real_tx);
  
--	if ((sizeof(struct usb_cdc_ncm_ndp32) +
--	     ret * (sizeof(struct usb_cdc_ncm_dpe32))) > skb_in->len) {
-+	ndp_len = struct_size_t(struct usb_cdc_ncm_ndp32, dpe32, ret);
-+	if (ndpoffset + ndp_len > skb_in->len) {
- 		netif_dbg(dev, rx_err, dev->net, "Invalid nframes = %d\n", ret);
- 		ret = -EINVAL;
+ int sch_frag_xmit_hook(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb));
+diff --git a/net/sched/sch_ingress.c b/net/sched/sch_ingress.c
+index cc6051d4f2ef8..c3e18bae8fbfc 100644
+--- a/net/sched/sch_ingress.c
++++ b/net/sched/sch_ingress.c
+@@ -113,14 +113,15 @@ static void ingress_destroy(struct Qdisc *sch)
+ {
+ 	struct ingress_sched_data *q = qdisc_priv(sch);
+ 	struct net_device *dev = qdisc_dev(sch);
+-	struct bpf_mprog_entry *entry = rtnl_dereference(dev->tcx_ingress);
++	struct bpf_mprog_entry *entry;
+ 
+ 	if (sch->parent != TC_H_INGRESS)
+ 		return;
+ 
+ 	tcf_block_put_ext(q->block, sch, &q->block_info);
+ 
+-	if (entry) {
++	if (mini_qdisc_pair_inited(&q->miniqp)) {
++		entry = rtnl_dereference(dev->tcx_ingress);
+ 		tcx_miniq_dec(entry);
+ 		if (!tcx_entry_is_active(entry)) {
+ 			tcx_entry_update(dev, NULL, true);
+@@ -290,10 +291,9 @@ static int clsact_init(struct Qdisc *sch, struct nlattr *opt,
+ 
+ static void clsact_destroy(struct Qdisc *sch)
+ {
++	struct bpf_mprog_entry *ingress_entry, *egress_entry;
+ 	struct clsact_sched_data *q = qdisc_priv(sch);
+ 	struct net_device *dev = qdisc_dev(sch);
+-	struct bpf_mprog_entry *ingress_entry = rtnl_dereference(dev->tcx_ingress);
+-	struct bpf_mprog_entry *egress_entry = rtnl_dereference(dev->tcx_egress);
+ 
+ 	if (sch->parent != TC_H_CLSACT)
+ 		return;
+@@ -301,7 +301,8 @@ static void clsact_destroy(struct Qdisc *sch)
+ 	tcf_block_put_ext(q->ingress_block, sch, &q->ingress_block_info);
+ 	tcf_block_put_ext(q->egress_block, sch, &q->egress_block_info);
+ 
+-	if (ingress_entry) {
++	if (mini_qdisc_pair_inited(&q->miniqp_ingress)) {
++		ingress_entry = rtnl_dereference(dev->tcx_ingress);
+ 		tcx_miniq_dec(ingress_entry);
+ 		if (!tcx_entry_is_active(ingress_entry)) {
+ 			tcx_entry_update(dev, NULL, true);
+@@ -309,7 +310,8 @@ static void clsact_destroy(struct Qdisc *sch)
+ 		}
  	}
+ 
+-	if (egress_entry) {
++	if (mini_qdisc_pair_inited(&q->miniqp_egress)) {
++		egress_entry = rtnl_dereference(dev->tcx_egress);
+ 		tcx_miniq_dec(egress_entry);
+ 		if (!tcx_entry_is_active(egress_entry)) {
+ 			tcx_entry_update(dev, NULL, false);
 -- 
 2.51.0
 
