@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AB0223E33D;
-	Mon, 23 Mar 2026 15:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6892D275AF5;
+	Mon, 23 Mar 2026 15:06:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278389; cv=none; b=bq8tx2Fx1ii711J53QDutGsKIIOiP+Wqgd0T+rJ0PVJMcYcS/LRYusNlV01l2KUSIcXBYutD8RqCzGePbhYiBytGCDYuMsS/nZb2PQilwVQHaKp8y853FVP5mGJvwd28/M1tDyuEmlQrA9SujSRIZEyt3U0wz/Z4AzhAXF1ErCw=
+	t=1774278392; cv=none; b=edzGnwtokHueCiMlxXHS1J9UozFIElwZk+MuiLTktC9kz8GV+FzuKzBiAOdcTw5w30RsYBd0z00GGlWJkn+wN1OYJKC7oWYcSq03LXC2FV5bGkInTJ7R4fF3x3fyRIzOm91nly4azEuqDPt4gtJvZHmILcWnc87GxIvjUdsp9WA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278389; c=relaxed/simple;
-	bh=NiA2xy5EsMCTqtwjeb5uqaeUzHD3vqp+NFTUNkx9gFI=;
+	s=arc-20240116; t=1774278392; c=relaxed/simple;
+	bh=5CTNordbXUxrDSQD8c20CtGf+aPBuVjGPyfjUbHo2ic=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EZ4PEec88BRix9i/HmVv8TtaXLZIMwP/PvQKiFPbI36cvI9NKrHTccnEDeCi7UM2npMgoHsVgJTHS43EN6HFsPO+1itHpOJyF9563yf2Lc5ohUR5MOHv86tUV08qAgHgFuMors3rwAjG/OazqCfB/raIfkZ8EgLigmTo+M0ezj8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=k7B0PpHA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J0yAziQmPUYy+a5z2HF7pjvNV+m0zYtLK1qdDV6rOP6VqUO5gWpZZLUmHX4cYE7+zV/aZB9ookrXifvr6HHsyphQHs21XfWXQ20tydBCPqZgbd0fCyP32wQsyTDxKw4ugP+4bc6lZgSe7iYFSqj62cWyE2i9EKLGQjKDHnSIdkE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=J7eRDd02; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="k7B0PpHA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8B6FC4CEF7;
-	Mon, 23 Mar 2026 15:06:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="J7eRDd02"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1670C4CEF7;
+	Mon, 23 Mar 2026 15:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278389;
-	bh=NiA2xy5EsMCTqtwjeb5uqaeUzHD3vqp+NFTUNkx9gFI=;
+	s=korg; t=1774278392;
+	bh=5CTNordbXUxrDSQD8c20CtGf+aPBuVjGPyfjUbHo2ic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7B0PpHAp945EDt5JZB28M3yyUULjVXd7+FBo8IBMtasRDRA/DjlMkBCwT39SrOX4
-	 YR6x7N7eli00CudJwBnvcjU16FWKgvrdlEk3E69zN8EZxthhIkfjp+Nl7RHfJbUbXK
-	 NH8MmuMGmWdsSXTAq6roCl2Xx+5YGeQDFy7TxW9E=
+	b=J7eRDd026eIfzKi9gLakr9u/+eIh4PmXigN1yjCknVoClx7gtsecT5NNEu/GVgtSX
+	 8JEC4hnFg8u5/+h71ndT9IeLyX95UY/4hceELGRKvuih1etcrP/K9t917mEq+jjJP1
+	 ITu7l0/KprdJszaxUL7DwG+NriKvNtFWtehP/ch8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.6 293/567] kprobes: avoid crash when rmmod/insmod after ftrace killed
-Date: Mon, 23 Mar 2026 14:43:33 +0100
-Message-ID: <20260323134541.070493812@linuxfoundation.org>
+	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
+	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 6.6 294/567] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
+Date: Mon, 23 Mar 2026 14:43:34 +0100
+Message-ID: <20260323134541.094151989@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,67 +51,122 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
 
-commit e113f0b46d19626ec15388bcb91432c9a4fd6261 upstream.
+commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
 
-After we hit ftrace is killed by some errors, the kernel crash if
-we remove modules in which kprobe probes.
+This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
+that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
+ceph_handle_auth_reply(), the value of the payload_len field of such a
+message is stored in a variable of type int. A value greater than
+INT_MAX leads to an integer overflow and is interpreted as a negative
+value. This leads to decrementing the pointer address by this value and
+subsequently accessing it because ceph_decode_need() only checks that
+the memory access does not exceed the end address of the allocation.
 
-BUG: unable to handle page fault for address: fffffbfff805000d
-PGD 817fcc067 P4D 817fcc067 PUD 817fc8067 PMD 101555067 PTE 0
-Oops: Oops: 0000 [#1] SMP KASAN PTI
-CPU: 4 UID: 0 PID: 2012 Comm: rmmod Tainted: G        W  OE
-Tainted: [W]=WARN, [O]=OOT_MODULE, [E]=UNSIGNED_MODULE
-RIP: 0010:kprobes_module_callback+0x89/0x790
-RSP: 0018:ffff88812e157d30 EFLAGS: 00010a02
-RAX: 1ffffffff805000d RBX: dffffc0000000000 RCX: ffffffff86a8de90
-RDX: ffffed1025c2af9b RSI: 0000000000000008 RDI: ffffffffc0280068
-RBP: 0000000000000000 R08: 0000000000000001 R09: ffffed1025c2af9a
-R10: ffff88812e157cd7 R11: 205d323130325420 R12: 0000000000000002
-R13: ffffffffc0290488 R14: 0000000000000002 R15: ffffffffc0280040
-FS:  00007fbc450dd740(0000) GS:ffff888420331000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: fffffbfff805000d CR3: 000000010f624000 CR4: 00000000000006f0
+This patch fixes the issue by changing the data type of payload_len to
+u32. Additionally, the data type of result_msg_len is changed to u32,
+as it is also a variable holding a non-negative length.
+
+Also, an additional layer of sanity checks is introduced, ensuring that
+directly after reading it from the message, payload_len and
+result_msg_len are not greater than the overall segment length.
+
+BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
+
+CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+Workqueue: ceph-msgr ceph_con_workfn [libceph]
 Call Trace:
  <TASK>
- notifier_call_chain+0xc6/0x280
- blocking_notifier_call_chain+0x60/0x90
- __do_sys_delete_module.constprop.0+0x32a/0x4e0
- do_syscall_64+0x5d/0xfa0
- entry_SYSCALL_64_after_hwframe+0x76/0x7e
+ dump_stack_lvl+0x76/0xa0
+ print_report+0xd1/0x620
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? kasan_complete_mode_report_info+0x72/0x210
+ kasan_report+0xe7/0x130
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ __asan_report_load_n_noabort+0xf/0x20
+ ceph_handle_auth_reply+0x642/0x7a0 [libceph]
+ mon_dispatch+0x973/0x23d0 [libceph]
+ ? apparmor_socket_recvmsg+0x6b/0xa0
+ ? __pfx_mon_dispatch+0x10/0x10 [libceph]
+ ? __kasan_check_write+0x14/0x30i
+ ? mutex_unlock+0x7f/0xd0
+ ? __pfx_mutex_unlock+0x10/0x10
+ ? __pfx_do_recvmsg+0x10/0x10 [libceph]
+ ceph_con_process_message+0x1f1/0x650 [libceph]
+ process_message+0x1e/0x450 [libceph]
+ ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
+ ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
+ ? save_fpregs_to_fpstate+0xb0/0x230
+ ? raw_spin_rq_unlock+0x17/0xa0
+ ? finish_task_switch.isra.0+0x13b/0x760
+ ? __switch_to+0x385/0xda0
+ ? __kasan_check_write+0x14/0x30
+ ? mutex_lock+0x8d/0xe0
+ ? __pfx_mutex_lock+0x10/0x10
+ ceph_con_workfn+0x248/0x10c0 [libceph]
+ process_one_work+0x629/0xf80
+ ? __kasan_check_write+0x14/0x30
+ worker_thread+0x87f/0x1570
+ ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+ ? __pfx_try_to_wake_up+0x10/0x10
+ ? kasan_print_address_stack_frame+0x1f7/0x280
+ ? __pfx_worker_thread+0x10/0x10
+ kthread+0x396/0x830
+ ? __pfx__raw_spin_lock_irq+0x10/0x10
+ ? __pfx_kthread+0x10/0x10
+ ? __kasan_check_write+0x14/0x30
+ ? recalc_sigpending+0x180/0x210
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork+0x3f7/0x610
+ ? __pfx_ret_from_fork+0x10/0x10
+ ? __switch_to+0x385/0xda0
+ ? __pfx_kthread+0x10/0x10
+ ret_from_fork_asm+0x1a/0x30
+ </TASK>
 
-This is because the kprobe on ftrace does not correctly handles
-the kprobe_ftrace_disabled flag set by ftrace_kill().
+[ idryomov: replace if statements with ceph_decode_need() for
+  payload_len and result_msg_len ]
 
-To prevent this error, check kprobe_ftrace_disabled in
-__disarm_kprobe_ftrace() and skip all ftrace related operations.
-
-Link: https://lore.kernel.org/all/176473947565.1727781.13110060700668331950.stgit@mhiramat.tok.corp.google.com/
-
-Reported-by: Ye Bin <yebin10@huawei.com>
-Closes: https://lore.kernel.org/all/20251125020536.2484381-1-yebin@huaweicloud.com/
-Fixes: ae6aa16fdc16 ("kprobes: introduce ftrace based optimization")
 Cc: stable@vger.kernel.org
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kprobes.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ceph/auth.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -1114,6 +1114,10 @@ static int __disarm_kprobe_ftrace(struct
- 	int ret;
+--- a/net/ceph/auth.c
++++ b/net/ceph/auth.c
+@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	s32 result;
+ 	u64 global_id;
+ 	void *payload, *payload_end;
+-	int payload_len;
++	u32 payload_len;
+ 	char *result_msg;
+-	int result_msg_len;
++	u32 result_msg_len;
+ 	int ret = -EINVAL;
  
- 	lockdep_assert_held(&kprobe_mutex);
-+	if (unlikely(kprobe_ftrace_disabled)) {
-+		/* Now ftrace is disabled forever, disarm is already done. */
-+		return 0;
-+	}
- 
- 	if (*cnt == 1) {
- 		ret = unregister_ftrace_function(ops);
+ 	mutex_lock(&ac->mutex);
+@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
+ 	result = ceph_decode_32(&p);
+ 	global_id = ceph_decode_64(&p);
+ 	payload_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, payload_len, bad);
+ 	payload = p;
+ 	p += payload_len;
+ 	ceph_decode_need(&p, end, sizeof(u32), bad);
+ 	result_msg_len = ceph_decode_32(&p);
++	ceph_decode_need(&p, end, result_msg_len, bad);
+ 	result_msg = p;
+ 	p += result_msg_len;
+ 	if (p != end)
 
 
