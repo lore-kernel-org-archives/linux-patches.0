@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85F5E17C203;
-	Mon, 23 Mar 2026 14:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9CE365A0A;
+	Mon, 23 Mar 2026 14:15:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275299; cv=none; b=QFRV1DqWL1NnN/0XlVVDvSxXBZVaIaj6oRvb8gciSdRgwuKCEiDUfJdGQGjRepRU8mRaX3xNfN7ouz6BBConElflnxUqn/ovyz7O+P9QlPcW7/eYCvFV3XWvDM6lI8C03w6fmPL7cbHSOiljjsmazBiEzSlB+Zunf4Ec3h18MuA=
+	t=1774275302; cv=none; b=iX4R3jfqkHaC46lQXSyRc0daP2MwWCyalCX82wcmgqkjt5nB+9lmQe6Fn0kbITvqhp5vKQe1QywGRrrsWdYZSoEAu3LJiEOB5/cNdr/g83Za9pkJEDswh8KSN21izdThsx/iV6N9XREX2/FIFetQX480l5UZMyWSklXGcSt3woA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275299; c=relaxed/simple;
-	bh=MN8lNK7vSWhphBmcdcSQfWDtjHAT7HSFzV0miFZRpKY=;
+	s=arc-20240116; t=1774275302; c=relaxed/simple;
+	bh=0IWWdmsfDrH/vpr8iI/oaWfl9ugvO4rfOYYQRXT1X1g=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hdYFFOrxx0owSmPkHcKPuY9z3hU/Y1oOILkoUHPLWqdU1i9EM+PlNsKMXneZs3Y5s8OC7C8+antEXak+VcfWeq/Cv5zL3En2Hm3CrEezguGSUnM/CO+yLzF092lQa3u9mW2rXs/9bD91Z3ISt95AUK5WqMuECxAGa/pB/29YKiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p8fJCdnw; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mLSvgcwX7zTHZ1jVRWi493TQXUrVgSsSa3s2jyHZs5c0eP6kDuQIFSMyvQrBpGcLM/tCqy0JBXFB6JAx56thtPmTWn38th2geiuIM+zskvRxYwv6AaJRplgyEEYwpXpiFHoW+GIUELG6W5jZY1Y3j+QqUcihQ+D9Ta+iH+mpvVk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1VTcLeU; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p8fJCdnw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17145C2BCB1;
-	Mon, 23 Mar 2026 14:14:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1VTcLeU"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7200C2BC9E;
+	Mon, 23 Mar 2026 14:15:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275299;
-	bh=MN8lNK7vSWhphBmcdcSQfWDtjHAT7HSFzV0miFZRpKY=;
+	s=korg; t=1774275302;
+	bh=0IWWdmsfDrH/vpr8iI/oaWfl9ugvO4rfOYYQRXT1X1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8fJCdnwDHfniju2YrO2HvaC2SwrvH5b31d9cROUb2g2FHSya1UY0oz79L1su8vsH
-	 xeMI2eM99nDnGAYUrqw2FRjLp83jmezC73dXRX3kGH8TYxBVkjhq1TyDxJO7jQ2hN1
-	 +trtmha54XzQvuqSC6HJ9fHgbodvBcye9DOhTtoY=
+	b=o1VTcLeU0mDLzASToQiInFBaA8yVkfk69kR8MKe77HnK9siJyiFe29MMpu0ITinR4
+	 I5952StUlsvn8MSqFHXLog1FFiizZ/aBAHiZlM8cYxGjFF8pnBbu1QHjLBwU8W8phb
+	 4SyXlMWWD0OkGKtZc17ixSbTSxCvYSZD00X5bo7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=81lvaro=20Fern=C3=A1ndez=20Rojas?= <noltari@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 046/460] net: sfp: improve Huawei MA5671a fixup
-Date: Mon, 23 Mar 2026 14:40:42 +0100
-Message-ID: <20260323134527.845073129@linuxfoundation.org>
+Subject: [PATCH 6.12 011/460] scsi: ufs: core: Fix possible NULL pointer dereference in ufshcd_add_command_trace()
+Date: Mon, 23 Mar 2026 14:40:07 +0100
+Message-ID: <20260323134526.940198327@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,60 +46,80 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Álvaro Fernández Rojas <noltari@gmail.com>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 87d126852158467ab87d5cbc36ccfd3f15464a6c ]
+[ Upstream commit 30df81f2228d65bddf492db3929d9fcaffd38fc5 ]
 
-With the current sfp_fixup_ignore_tx_fault() fixup we ignore the TX_FAULT
-signal, but we also need to apply sfp_fixup_ignore_los() in order to be
-able to communicate with the module even if the fiber isn't connected for
-configuration purposes.
-This is needed for all the MA5671a firmwares, excluding the FS modded
-firmware.
+The kernel log indicates a crash in ufshcd_add_command_trace, due to a NULL
+pointer dereference when accessing hwq->id.  This can happen if
+ufshcd_mcq_req_to_hwq() returns NULL.
 
-Fixes: 2069624dac19 ("net: sfp: Add tx-fault workaround for Huawei MA5671A SFP ONT")
-Signed-off-by: Álvaro Fernández Rojas <noltari@gmail.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://patch.msgid.link/20260306125139.213637-1-noltari@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch adds a NULL check for hwq before accessing its id field to
+prevent a kernel crash.
+
+Kernel log excerpt:
+[<ffffffd5d192dc4c>] notify_die+0x4c/0x8c
+[<ffffffd5d1814e58>] __die+0x60/0xb0
+[<ffffffd5d1814d64>] die+0x4c/0xe0
+[<ffffffd5d181575c>] die_kernel_fault+0x74/0x88
+[<ffffffd5d1864db4>] __do_kernel_fault+0x314/0x318
+[<ffffffd5d2a3cdf8>] do_page_fault+0xa4/0x5f8
+[<ffffffd5d2a3cd34>] do_translation_fault+0x34/0x54
+[<ffffffd5d1864524>] do_mem_abort+0x50/0xa8
+[<ffffffd5d2a297dc>] el1_abort+0x3c/0x64
+[<ffffffd5d2a29718>] el1h_64_sync_handler+0x44/0xcc
+[<ffffffd5d181133c>] el1h_64_sync+0x80/0x88
+[<ffffffd5d255c1dc>] ufshcd_add_command_trace+0x23c/0x320
+[<ffffffd5d255bad8>] ufshcd_compl_one_cqe+0xa4/0x404
+[<ffffffd5d2572968>] ufshcd_mcq_poll_cqe_lock+0xac/0x104
+[<ffffffd5d11c7460>] ufs_mtk_mcq_intr+0x54/0x74 [ufs_mediatek_mod]
+[<ffffffd5d19ab92c>] __handle_irq_event_percpu+0xc8/0x348
+[<ffffffd5d19abca8>] handle_irq_event+0x3c/0xa8
+[<ffffffd5d19b1f0c>] handle_fasteoi_irq+0xf8/0x294
+[<ffffffd5d19aa778>] generic_handle_domain_irq+0x54/0x80
+[<ffffffd5d18102bc>] gic_handle_irq+0x1d4/0x330
+[<ffffffd5d1838210>] call_on_irq_stack+0x44/0x68
+[<ffffffd5d183af30>] do_interrupt_handler+0x78/0xd8
+[<ffffffd5d2a29c00>] el1_interrupt+0x48/0xa8
+[<ffffffd5d2a29ba8>] el1h_64_irq_handler+0x14/0x24
+[<ffffffd5d18113c4>] el1h_64_irq+0x80/0x88
+[<ffffffd5d2527fb4>] arch_local_irq_enable+0x4/0x1c
+[<ffffffd5d25282e4>] cpuidle_enter+0x34/0x54
+[<ffffffd5d195a678>] do_idle+0x1dc/0x2f8
+[<ffffffd5d195a7c4>] cpu_startup_entry+0x30/0x3c
+[<ffffffd5d18155c4>] secondary_start_kernel+0x134/0x1ac
+[<ffffffd5d18640bc>] __secondary_switched+0xc4/0xcc
+
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260223065657.2432447-1-peter.wang@mediatek.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/sfp.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/phy/sfp.c b/drivers/net/phy/sfp.c
-index cae748b762236..dd8d37b44aac8 100644
---- a/drivers/net/phy/sfp.c
-+++ b/drivers/net/phy/sfp.c
-@@ -360,6 +360,12 @@ static void sfp_fixup_ignore_tx_fault(struct sfp *sfp)
- 	sfp->state_ignore_mask |= SFP_F_TX_FAULT;
- }
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index ad5866149e240..726bf4247f1fe 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -483,8 +483,8 @@ static void ufshcd_add_command_trace(struct ufs_hba *hba, unsigned int tag,
  
-+static void sfp_fixup_ignore_tx_fault_and_los(struct sfp *sfp)
-+{
-+	sfp_fixup_ignore_tx_fault(sfp);
-+	sfp_fixup_ignore_los(sfp);
-+}
-+
- static void sfp_fixup_ignore_hw(struct sfp *sfp, unsigned int mask)
- {
- 	sfp->state_hw_mask &= ~mask;
-@@ -523,7 +529,7 @@ static const struct sfp_quirk sfp_quirks[] = {
- 	// Huawei MA5671A can operate at 2500base-X, but report 1.2GBd NRZ in
- 	// their EEPROM
- 	SFP_QUIRK("HUAWEI", "MA5671A", sfp_quirk_2500basex,
--		  sfp_fixup_ignore_tx_fault),
-+		  sfp_fixup_ignore_tx_fault_and_los),
- 
- 	// Lantech 8330-262D-E and 8330-265D can operate at 2500base-X, but
- 	// incorrectly report 2500MBd NRZ in their EEPROM.
+ 	if (hba->mcq_enabled) {
+ 		struct ufs_hw_queue *hwq = ufshcd_mcq_req_to_hwq(hba, rq);
+-
+-		hwq_id = hwq->id;
++		if (hwq)
++			hwq_id = hwq->id;
+ 	} else {
+ 		doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
+ 	}
 -- 
 2.51.0
 
