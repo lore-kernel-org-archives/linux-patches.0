@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156201D63F3;
-	Mon, 23 Mar 2026 14:54:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27E1E2D9ECB;
+	Mon, 23 Mar 2026 14:54:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277688; cv=none; b=HaRgPsx+h1zbaVL7kffYUG8/NqSywABsRd3xTlehLIojYi4HNmJTn+WhNAD68j9rT7nFd4jE2R1bYxzq/UqEQWpOBYE3G7c4pa5P928O9iMGVPyzAziTurM7KD/cLDNO4RpGOICMmj+JFKQYn1Calxcnl4zY3UsxK5JDQ0Qkw74=
+	t=1774277691; cv=none; b=qPpEB2qVcX4Izaif9E3alFg8B7kZnsOKpdDgW7WyDouVvXbzj63HzXacYiVXXtfN0yhcwg3TglnurJx2kLpXU1dQwdpqXk9fg6hJY64746hwQEybCHjdbX5j2FfY1uUXUFybAMuxYnNtKjnQwPwH35vLKjHmhq/ujZzzRmNvK+Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277688; c=relaxed/simple;
-	bh=52nX2W1eqSdpNKJ5wviX8asCxWrOuTWXxteZtxpab6s=;
+	s=arc-20240116; t=1774277691; c=relaxed/simple;
+	bh=seHl/cyquG98Qq0LoSqmFLWo2Z6fHdPwrxlgk+p0Hjg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nczRXXXvg3vcriw3yr45w69w5XzaYckRvrtbnzgsPx7yo+WyyhK8l3qehOMUGugnsJdt7qlCdL+wyr8zhuvECjiPVd1MeWpqLzA/CkPkk5D/wMnRWiX+gI1r40jyOOfgxN02ijhfdvOR/eu3AawvrlopzPKapbdnrLpbCEA+bNI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Yn/mTf2/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=CmmXXbj+g0uWczkoj3ZpgFfYUXuKuHl2WfsqmoBmCE2i4fcWgwlMqiuVK+87fiX9lmyLQzzx1iPIm0y6s1qq8JUL+0vPeYlD1KrwysuS+jgQYEChs1KkKiu3JB7qpvuXrOsqtUgD3tJ2cDH7wfZ9R5jRbzedh4wL/qem+E/3X3Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KewSjpoL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Yn/mTf2/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C23BC2BC9E;
-	Mon, 23 Mar 2026 14:54:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KewSjpoL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1AB0C4CEF7;
+	Mon, 23 Mar 2026 14:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277688;
-	bh=52nX2W1eqSdpNKJ5wviX8asCxWrOuTWXxteZtxpab6s=;
+	s=korg; t=1774277691;
+	bh=seHl/cyquG98Qq0LoSqmFLWo2Z6fHdPwrxlgk+p0Hjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yn/mTf2/DPyfNdXcvsWpd7J9tUZsH8byOOV2x8sGCvBu44mToowyEs+Cniqd19XDX
-	 PBWeDe2XAdF+y3z6HCQsW0QyuLu6LMtuTI8tskhXbGdMi9A/VXa6Uc+GDRxbpm3iE8
-	 5ObKqBWXoqU8hBkBkIThE40behVbCo1vqhAjM4us=
+	b=KewSjpoLwzBRPjwYANdj0c6fEfPaWIDo0g/1yJz0VGV42G+Y4uQOOsqawf4cbvGTg
+	 UcDczd9yHTP0DrY1GlFWthx7yAm+q+wocUpa0fFfPKxZ1q/KHjGE+azfbX/mz6yJig
+	 mFkC1CZ06R5HIdV9cuAQiiNMFm539vjUaRG7r0H4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Johan Hovold <johan@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
 	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 071/567] mfd: qcom-pm8xxx: Convert to platform remove callback returning void
-Date: Mon, 23 Mar 2026 14:39:51 +0100
-Message-ID: <20260323134535.584157152@linuxfoundation.org>
+Subject: [PATCH 6.6 072/567] mfd: qcom-pm8xxx: Fix OF populate on driver rebind
+Date: Mon, 23 Mar 2026 14:39:52 +0100
+Message-ID: <20260323134535.608145399@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,66 +47,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Johan Hovold <johan@kernel.org>
 
-[ Upstream commit 19ea1d3953017518d85db35b69b5aea9bc64d630 ]
+[ Upstream commit 27a8acea47a93fea6ad0e2df4c20a9b51490e4d9 ]
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
+Since commit c6e126de43e7 ("of: Keep track of populated platform
+devices") child devices will not be created by of_platform_populate()
+if the devices had previously been deregistered individually so that the
+OF_POPULATED flag is still set in the corresponding OF nodes.
 
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new(), which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
+Switch to using of_platform_depopulate() instead of open coding so that
+the child devices are created if the driver is rebound.
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
-
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20231123165627.492259-14-u.kleine-koenig@pengutronix.de
+Fixes: c6e126de43e7 ("of: Keep track of populated platform devices")
+Cc: stable@vger.kernel.org	# 3.16
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
+Link: https://patch.msgid.link/20251219110947.24101-1-johan@kernel.org
 Signed-off-by: Lee Jones <lee@kernel.org>
-Stable-dep-of: 27a8acea47a9 ("mfd: qcom-pm8xxx: Fix OF populate on driver rebind")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8xxx.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/mfd/qcom-pm8xxx.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
 diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index 07c531bd1236e..8b6285f687da5 100644
+index 8b6285f687da5..0e490591177a2 100644
 --- a/drivers/mfd/qcom-pm8xxx.c
 +++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -585,19 +585,17 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
- 	return 0;
+@@ -579,17 +579,11 @@ static int pm8xxx_probe(struct platform_device *pdev)
+ 	return rc;
  }
  
--static int pm8xxx_remove(struct platform_device *pdev)
-+static void pm8xxx_remove(struct platform_device *pdev)
+-static int pm8xxx_remove_child(struct device *dev, void *unused)
+-{
+-	platform_device_unregister(to_platform_device(dev));
+-	return 0;
+-}
+-
+ static void pm8xxx_remove(struct platform_device *pdev)
  {
  	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
  
- 	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
+-	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
++	of_platform_depopulate(&pdev->dev);
  	irq_domain_remove(chip->irqdomain);
--
--	return 0;
  }
  
- static struct platform_driver pm8xxx_driver = {
- 	.probe		= pm8xxx_probe,
--	.remove		= pm8xxx_remove,
-+	.remove_new	= pm8xxx_remove,
- 	.driver		= {
- 		.name	= "pm8xxx-core",
- 		.of_match_table = pm8xxx_id_table,
 -- 
 2.51.0
 
