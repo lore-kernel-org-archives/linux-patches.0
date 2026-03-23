@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6383ACEED;
-	Mon, 23 Mar 2026 14:13:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2044D3ACEF1;
+	Mon, 23 Mar 2026 14:13:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275210; cv=none; b=iKGGc0RRigFwO4nnGdnxZf623jCje5Lv0z2VaJDDdK3nu2VLWkeS5Ub9wZnbu6hVhOnqPweKjmCTDhHkQ2+MvENW9BvaljJBvScd7fLV6vg/UzGr4lcY0nLPLSZDQJ1E1oQeDbuVth6d/qPGMpbes9jQFY7Y2f+zzVFJ1sujOR8=
+	t=1774275213; cv=none; b=MbF8cCXIT1Lf7aSoeq8eC+QtvlItceF5l4fu5d0CU3xqeYCVahYQkyGBdygtVjUdTL8+t8ABT98kwkmuxx+Lu6Q0BtcBirVjPt4x3jbUflphCisPN5KuqIcMb42eLk2YCLlVL3kDAodxKjVw7z5RIHonYbOGlv6/1dpcTIXUKxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275210; c=relaxed/simple;
-	bh=jPzUQC55ptPeajPOBKF/hfe3TG2nIfWdmrDvTPWuGeM=;
+	s=arc-20240116; t=1774275213; c=relaxed/simple;
+	bh=pd8LKc48mYDXbPPhK5R7JbnHSCU5xqxoKkhsIJLuaTY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A7i+1n8iroqucMEW8bSHMBIlRmQSnFGOkd5yGsiAZBIfJ3JUJlmOyIqcDEHLZF8krGL+J8svDIK4yvawdYH/pZ2uda+rWQQWtJptz7t9LrxhPCW98V0Z4Z30dwVbBDnUlhr/ylMQDSXFFTFA5UwS7epygBOx8hl/K1+ON99I+Pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeoKwBZx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UmLYtw3wbT8KriyEUOvu4uEBBV2f5UdV87xtixnEJxfSAs5Sb4rz4DL/umr9uB3o10TGyC4MmFnCCCnuDw1l4sJFCIRIEFkuyVgpXO0Y15ajLHHLdFcgS3ErnJTYb3VDYuNJj4PpLH3X8No+N8UKl7UE3e1ZpyvkQ+Kei8ZrRck=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E78zyIaA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeoKwBZx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E48B6C4CEF7;
-	Mon, 23 Mar 2026 14:13:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E78zyIaA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC3AC4CEF7;
+	Mon, 23 Mar 2026 14:13:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275210;
-	bh=jPzUQC55ptPeajPOBKF/hfe3TG2nIfWdmrDvTPWuGeM=;
+	s=korg; t=1774275212;
+	bh=pd8LKc48mYDXbPPhK5R7JbnHSCU5xqxoKkhsIJLuaTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeoKwBZxUzgIHcpNa6OFIVa0kpI7upB4uNCy1QO+Jm4mAxd3Kv3k+n7GfBUaexu1W
-	 GL0l4xFqC5FLY98Lr40wVdp1JXAVDzA47PMUsDOBxouzLr/tdlWFuydFOzQ59xt6tE
-	 cj6jFhgGPnh4hGJpTSyBzF9TSjB2wW4xEzgVmzrs=
+	b=E78zyIaAx2o8G5fImI20PnyjgZJLRqbA65q0ReNRy2spwgj1DxYl7HVwSbZSuDWlM
+	 J+uaZiUD8XUGBdcTUysY16oKFpleeZZuYY7ImaQSgqhrcedH6DIlb0WTIHqBgbh6JF
+	 8FTlizAIEjWXgxd2bWENn+dWRS8aBSMEVADLt5g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 014/567] ALSA: hda: cs35l56: Fix signedness error in cs35l56_hda_posture_put()
-Date: Mon, 23 Mar 2026 14:38:54 +0100
-Message-ID: <20260323134534.117705194@linuxfoundation.org>
+Subject: [PATCH 6.6 015/567] btrfs: move btrfs_crc32c_final into free-space-cache.c
+Date: Mon, 23 Mar 2026 14:38:55 +0100
+Message-ID: <20260323134534.142689587@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,42 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit 003ce8c9b2ca28fbb4860651e76fb1c9a91f2ea1 ]
+[ Upstream commit 102f2640a346e84cb5c2d19805a9dd38a776013c ]
 
-In cs35l56_hda_posture_put() assign ucontrol->value.integer.value[0] to
-a long instead of an unsigned long. ucontrol->value.integer.value[0] is
-a long.
+This is the only place this helper is used, take it out of ctree.h and
+move it into free-space-cache.c.
 
-This fixes the sparse warning:
-
-sound/hda/codecs/side-codecs/cs35l56_hda.c:256:20: warning: unsigned value
-that used to be signed checked against zero?
-sound/hda/codecs/side-codecs/cs35l56_hda.c:252:29: signed value source
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: 73cfbfa9caea8 ("ALSA: hda/cs35l56: Add driver for Cirrus Logic CS35L56 amplifier")
-Link: https://patch.msgid.link/20260226111728.1700431-1-rf@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Stable-dep-of: 511dc8912ae3 ("btrfs: fix incorrect key offset in error message in check_dev_extent_item()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/cs35l56_hda.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/ctree.h            | 5 -----
+ fs/btrfs/free-space-cache.c | 5 +++++
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/sound/pci/hda/cs35l56_hda.c b/sound/pci/hda/cs35l56_hda.c
-index 03b2a6a919b4d..8d86a13b8a960 100644
---- a/sound/pci/hda/cs35l56_hda.c
-+++ b/sound/pci/hda/cs35l56_hda.c
-@@ -238,7 +238,7 @@ static int cs35l56_hda_posture_put(struct snd_kcontrol *kcontrol,
- 				   struct snd_ctl_elem_value *ucontrol)
- {
- 	struct cs35l56_hda *cs35l56 = snd_kcontrol_chip(kcontrol);
--	unsigned long pos = ucontrol->value.integer.value[0];
-+	long pos = ucontrol->value.integer.value[0];
- 	bool changed;
- 	int ret;
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 834af67fac231..3108852ff47d7 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -477,11 +477,6 @@ static inline u32 btrfs_crc32c(u32 crc, const void *address, unsigned length)
+ 	return crc32c(crc, address, length);
+ }
  
+-static inline void btrfs_crc32c_final(u32 crc, u8 *result)
+-{
+-	put_unaligned_le32(~crc, result);
+-}
+-
+ static inline u64 btrfs_name_hash(const char *name, int len)
+ {
+        return crc32c((u32)~1, name, len);
+diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
+index 9a6ec9344c3e0..edf3612ba3108 100644
+--- a/fs/btrfs/free-space-cache.c
++++ b/fs/btrfs/free-space-cache.c
+@@ -57,6 +57,11 @@ static void bitmap_clear_bits(struct btrfs_free_space_ctl *ctl,
+ 			      struct btrfs_free_space *info, u64 offset,
+ 			      u64 bytes, bool update_stats);
+ 
++static void btrfs_crc32c_final(u32 crc, u8 *result)
++{
++	put_unaligned_le32(~crc, result);
++}
++
+ static void __btrfs_remove_free_space_cache(struct btrfs_free_space_ctl *ctl)
+ {
+ 	struct btrfs_free_space *info;
 -- 
 2.51.0
 
