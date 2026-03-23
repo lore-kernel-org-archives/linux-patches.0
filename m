@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44A3B9D9D;
-	Mon, 23 Mar 2026 16:21:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DA4283FC8;
+	Mon, 23 Mar 2026 16:22:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282917; cv=none; b=jsEY/jjB4CRBDRCbiMAy/DEDH5SM5W3keZqNaAxTQ+I/CwcrdHzEb1eV8lqReqwpe++xSdOy74rHAodZn3wB6u7uZUTkEw3gvC7PYXSdlOKCp8G/6+G6e0Vk/s9krtQznQE7sGutfMzWYRJdVB3/5PuLTzCaZIGqX5/PDmrJ6KQ=
+	t=1774282921; cv=none; b=MSJnA6kK8rXLWfPO/OMword3MbdUMfyZBupZtgtVj9DYqB189yullLR5zvmhjr54h17fhj/LyvlSMx8EWRtNeYijRUCipNsucWIHxt9vxAQXX50SAuRya7/w+jCRDbiIk5Ta9hDYIx55Zn5MsJmJw1pkFN0tcQNxpD/p3xijSrg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282917; c=relaxed/simple;
-	bh=rBaU7MS0a+GE3xIXRJFpaRm7qEviipYtfRjEiE7M0+I=;
+	s=arc-20240116; t=1774282921; c=relaxed/simple;
+	bh=/PhyHL0bf6odIHSTAm3+zQjU2k67DTfROaczDiYFL4U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ElPFKbrgjoqVY279+WCLVDSkbz9gDj3UvyiG+52xQ42GQx5lXKWks683ILX1j8UV3HraBBOkG/RHNh5v1FFHKfaUv7KAiXPc7c2e3nSPpE+mWcUYV5/VbWItK16tL9PbSWH650Jbjy6gY6cYosKNClndhO5UsjpbKzQsfIz89J0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3shejrk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FRIbVz92TS7w654TdltPlGLVRpCXQmx9wk1taXSmjhYCxUJWOmDnanjKKrbyhalRZhGi+ksw+gitR/V2AwjtJr5A+8x3F8aL+MQRID+Kjs6ykAt0x9j8ug/bflHfX8gEknF8drinHiKrLVsUlMXxlplP7FQ0r0HBeUoXEJM0AeY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=muJuwdIT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3shejrk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C069C4CEF7;
-	Mon, 23 Mar 2026 16:21:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="muJuwdIT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD63C4CEF7;
+	Mon, 23 Mar 2026 16:22:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282917;
-	bh=rBaU7MS0a+GE3xIXRJFpaRm7qEviipYtfRjEiE7M0+I=;
+	s=korg; t=1774282920;
+	bh=/PhyHL0bf6odIHSTAm3+zQjU2k67DTfROaczDiYFL4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N3shejrk0ed3rKXV/J78i+xjIYsyiMY9HGi/h7YQEq36UH74RypfaSpml+o6YgN7a
-	 iSoSnVOaVdNgVdRAnUSJPDTp2ToxLkB8PsKgpsjvvsoS/E4SJyZS6fL3sf6ovaW0hw
-	 HxFSPKu8XEmxFJSMos8u3flro7yPW1GjZq7C5Oak=
+	b=muJuwdIT9SuPMo6pOd3gZ+KbaSr2Vpz39nQIX6aIOr9twnp932E6Kn0t8JFmiSrIH
+	 2S+2SEPh/Gj7hxoSwQz8o6tQcQObwS+OpCnRuWjMxv/7seZK+szK+THPEr74XQ1Z31
+	 0JX0pNgQ2pvXW9f6GvHVzSxEcRiStDyMZbOxAKuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Marco Elver <elver@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
-	Kees Cook <kees@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 335/481] mm/kfence: disable KFENCE upon KASAN HW tags enablement
-Date: Mon, 23 Mar 2026 14:45:17 +0100
-Message-ID: <20260323134533.260402015@linuxfoundation.org>
+Subject: [PATCH 6.1 336/481] iomap: reject delalloc mappings during writeback
+Date: Mon, 23 Mar 2026 14:45:18 +0100
+Message-ID: <20260323134533.282877639@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -57,69 +53,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit 09833d99db36d74456a4d13eb29c32d56ff8f2b6 ]
+[ Upstream commit d320f160aa5ff36cdf83c645cca52b615e866e32 ]
 
-KFENCE does not currently support KASAN hardware tags.  As a result, the
-two features are incompatible when enabled simultaneously.
+Filesystems should never provide a delayed allocation mapping to
+writeback; they're supposed to allocate the space before replying.
+This can lead to weird IO errors and crashes in the block layer if the
+filesystem is being malicious, or if it hadn't set iomap->dev because
+it's a delalloc mapping.
 
-Given that MTE provides deterministic protection and KFENCE is a
-sampling-based debugging tool, prioritize the stronger hardware
-protections.  Disable KFENCE initialization and free the pre-allocated
-pool if KASAN hardware tags are detected to ensure the system maintains
-the security guarantees provided by MTE.
+Fix this by failing writeback on delalloc mappings.  Currently no
+filesystems actually misbehave in this manner, but we ought to be
+stricter about things like that.
 
-Link: https://lkml.kernel.org/r/20260213095410.1862978-1-glider@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Marco Elver <elver@google.com>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ Context ]
+Cc: stable@vger.kernel.org # v5.5
+Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ switch -> if ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ fs/iomap/buffered-io.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -13,6 +13,7 @@
- #include <linux/hash.h>
- #include <linux/irq_work.h>
- #include <linux/jhash.h>
-+#include <linux/kasan-enabled.h>
- #include <linux/kcsan-checks.h>
- #include <linux/kfence.h>
- #include <linux/kmemleak.h>
-@@ -844,6 +845,20 @@ void __init kfence_alloc_pool(void)
- 	if (!kfence_sample_interval)
- 		return;
- 
-+	/*
-+	 * If KASAN hardware tags are enabled, disable KFENCE, because it
-+	 * does not support MTE yet.
-+	 */
-+	if (kasan_hw_tags_enabled()) {
-+		pr_info("disabled as KASAN HW tags are enabled\n");
-+		if (__kfence_pool) {
-+			memblock_free(__kfence_pool, KFENCE_POOL_SIZE);
-+			__kfence_pool = NULL;
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1620,10 +1620,13 @@ iomap_writepage_map(struct iomap_writepa
+ 		if (error)
+ 			break;
+ 		trace_iomap_writepage_map(inode, &wpc->iomap);
+-		if (WARN_ON_ONCE(wpc->iomap.type == IOMAP_INLINE))
+-			continue;
+ 		if (wpc->iomap.type == IOMAP_HOLE)
+ 			continue;
++		if (WARN_ON_ONCE(wpc->iomap.type != IOMAP_MAPPED &&
++				 wpc->iomap.type != IOMAP_UNWRITTEN)) {
++			error = -EIO;
++			break;
 +		}
-+		kfence_sample_interval = 0;
-+		return;
-+	}
-+
- 	/* if the pool has already been initialized by arch, skip the below. */
- 	if (__kfence_pool)
- 		return;
+ 		iomap_add_to_ioend(inode, pos, folio, iop, wpc, wbc,
+ 				 &submit_list);
+ 		count++;
 
 
