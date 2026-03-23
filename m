@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D800B3B3890;
-	Mon, 23 Mar 2026 15:11:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85E026A1CF;
+	Mon, 23 Mar 2026 15:11:33 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278690; cv=none; b=L9XQ2bmpjNLebgTI+47AbZDLRmROKAgKcz5ul9rIAl0IW797KJ/A4wdtSErGCHl7KaYdjp3usZRXbG4Wc0jmHJN70+guhZyaMW1xqMjtjhb/iSQJakYA4lN0cc88xUujNA/DpqZ0f2j0B2oqDcKiE326JSv9BdYiw1iDelbrw3M=
+	t=1774278694; cv=none; b=jidbXymmpsoEfIiKY4ZcR5Jvx18qi0aTVMXrb2Gb8z7NJOGS6fuN9CxAHBkpBWttxBD7WSPFNVWSnpZKcikbvN3QnS0VFWoZ+dwKbuBym1hcX4Y3m8tiTSiYLKakVN8LCGaUAmgihlstkgDLaxBReopxQherjDhZvdq2qWHnTu4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278690; c=relaxed/simple;
-	bh=jTa8mWvVSbm8Xb0rpmcO5zAm/wjX0yfBRzfQmsfVXMU=;
+	s=arc-20240116; t=1774278694; c=relaxed/simple;
+	bh=1yR+w5CWdRC3NOwOLeIoFC2ielGcAdjhM52IZdNYLjY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=faYcf4DIVTZ273uJcNcwBfX1fQgGRVTXBS4w+6J9ix3jM1E7QrycO8F3icT1Tl4qIaBhX8aeQdhBiMs22IIzR6SHqCJMqeqRv4LWTN7Gu9xxRR/HfHmToSV9W7wgc94EN0DjEPq8xLf9ZX3Uyb4c7fktnJI3o+snSwVD/NlhvD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WaWqoaMW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dFsFOAArbxOTEAanwWdtbXkCov+draHl+eJ3s/s+EqUV4Ld6XsESO9FuDh2skEK+jAD4RlScyqkg98e64T3Mpwsm8WLGUbPbJj4dpYMcqrwgHrDSLD69HWEWnp4vXBB058lkGScekZGz0R8Z4GUzIuXzm3Gn4gt2TGMMK//oIu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CuXXQQ30; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WaWqoaMW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F135C4CEF7;
-	Mon, 23 Mar 2026 15:11:29 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CuXXQQ30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34C1CC4CEF7;
+	Mon, 23 Mar 2026 15:11:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278690;
-	bh=jTa8mWvVSbm8Xb0rpmcO5zAm/wjX0yfBRzfQmsfVXMU=;
+	s=korg; t=1774278693;
+	bh=1yR+w5CWdRC3NOwOLeIoFC2ielGcAdjhM52IZdNYLjY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WaWqoaMWJL72XKwCg8EvaCrg9/DL6/+nEuct4rMHvRbabcg0D6dSSDF8hEEzhBR9D
-	 f5iz7CNZUCvmc36neSggv5K+RtODVFvgbdCbZBnPjCDRqATeg8zVmP6adtSm1vNDmY
-	 /YYl3GLLFufQOUV+ybsOGCtWts/B1ePqPIgsqiL8=
+	b=CuXXQQ30yGpSVrqZUePaeSp5MGk94w6s1GySBA+6KxJKRWEQ3nByS7rv6ixeZs5iA
+	 o8RIUbdmEB4pf97MCPd1+mGSrKX33HfmndwAllacx5CFKxK27ibO5pZAeblyVkTxEX
+	 ffI4kzUw8WRzgpE+nOoefcUmq7Ywi/fnDV8Mcuyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Garg <nktgrg@google.com>,
-	Jordan Rhee <jordanrhee@google.com>,
-	Harshitha Ramamurthy <hramamurthy@google.com>,
-	Joshua Washington <joshwash@google.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Marek Vasut <marek.vasut@mailbox.org>,
+	Luca Ceresoli <luca.ceresoli@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 371/567] gve: fix incorrect buffer cleanup in gve_tx_clean_pending_packets for QPL
-Date: Mon, 23 Mar 2026 14:44:51 +0100
-Message-ID: <20260323134543.004786632@linuxfoundation.org>
+Subject: [PATCH 6.6 389/567] drm/bridge: ti-sn65dsi83: halve horizontal syncs for dual LVDS output
+Date: Mon, 23 Mar 2026 14:45:09 +0100
+Message-ID: <20260323134543.481147572@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,130 +51,70 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ankit Garg <nktgrg@google.com>
+From: Luca Ceresoli <luca.ceresoli@bootlin.com>
 
-[ Upstream commit fb868db5f4bccd7a78219313ab2917429f715cea ]
+[ Upstream commit d0d727746944096a6681dc6adb5f123fc5aa018d ]
 
-In DQ-QPL mode, gve_tx_clean_pending_packets() incorrectly uses the RDA
-buffer cleanup path. It iterates num_bufs times and attempts to unmap
-entries in the dma array.
+Dual LVDS output (available on the SN65DSI84) requires HSYNC_PULSE_WIDTH
+and HORIZONTAL_BACK_PORCH to be divided by two with respect to the values
+used for single LVDS output.
 
-This leads to two issues:
-1. The dma array shares storage with tx_qpl_buf_ids (union).
- Interpreting buffer IDs as DMA addresses results in attempting to
- unmap incorrect memory locations.
-2. num_bufs in QPL mode (counting 2K chunks) can significantly exceed
- the size of the dma array, causing out-of-bounds access warnings
-(trace below is how we noticed this issue).
+While not clearly stated in the datasheet, this is needed according to the
+DSI Tuner [0] output. It also makes sense intuitively because in dual LVDS
+output two pixels at a time are output and so the output clock is half of
+the pixel clock.
 
-UBSAN: array-index-out-of-bounds in
-drivers/net/ethernet/drivers/net/ethernet/google/gve/gve_tx_dqo.c:178:5 index 18 is out of
-range for type 'dma_addr_t[18]' (aka 'unsigned long long[18]')
-Workqueue: gve gve_service_task [gve]
-Call Trace:
-<TASK>
-dump_stack_lvl+0x33/0xa0
-__ubsan_handle_out_of_bounds+0xdc/0x110
-gve_tx_stop_ring_dqo+0x182/0x200 [gve]
-gve_close+0x1be/0x450 [gve]
-gve_reset+0x99/0x120 [gve]
-gve_service_task+0x61/0x100 [gve]
-process_scheduled_works+0x1e9/0x380
+Some dual-LVDS panels refuse to show any picture without this fix.
 
-Fix this by properly checking for QPL mode and delegating to
-gve_free_tx_qpl_bufs() to reclaim the buffers.
+Divide by two HORIZONTAL_FRONT_PORCH too, even though this register is used
+only for test pattern generation which is not currently implemented by this
+driver.
 
+[0] https://www.ti.com/tool/DSI-TUNER
+
+Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
 Cc: stable@vger.kernel.org
-Fixes: a6fb8d5a8b69 ("gve: Tx path for DQO-QPL")
-Signed-off-by: Ankit Garg <nktgrg@google.com>
-Reviewed-by: Jordan Rhee <jordanrhee@google.com>
-Reviewed-by: Harshitha Ramamurthy <hramamurthy@google.com>
-Signed-off-by: Joshua Washington <joshwash@google.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/20260220215324.1631350-1-joshwash@google.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ netmem_dma_unmap_page_attrs() => dma_unmap_page() ]
+Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
+Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-2-2e15f5a9a6a0@bootlin.com
+Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+[ adapted variable declaration placement ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/google/gve/gve_tx_dqo.c |   52 +++++++++++----------------
- 1 file changed, 23 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-+++ b/drivers/net/ethernet/google/gve/gve_tx_dqo.c
-@@ -157,6 +157,24 @@ gve_free_pending_packet(struct gve_tx_ri
- 	}
- }
- 
-+static void gve_unmap_packet(struct device *dev,
-+			     struct gve_tx_pending_packet_dqo *pkt)
-+{
-+	int i;
-+
-+	if (!pkt->num_bufs)
-+		return;
-+
-+	/* SKB linear portion is guaranteed to be mapped */
-+	dma_unmap_single(dev, dma_unmap_addr(pkt, dma[0]),
-+			 dma_unmap_len(pkt, len[0]), DMA_TO_DEVICE);
-+	for (i = 1; i < pkt->num_bufs; i++) {
-+		dma_unmap_page(dev, dma_unmap_addr(pkt, dma[i]),
-+			       dma_unmap_len(pkt, len[i]), DMA_TO_DEVICE);
-+	}
-+	pkt->num_bufs = 0;
-+}
-+
- /* gve_tx_free_desc - Cleans up all pending tx requests and buffers.
-  */
- static void gve_tx_clean_pending_packets(struct gve_tx_ring *tx)
-@@ -166,21 +184,12 @@ static void gve_tx_clean_pending_packets
- 	for (i = 0; i < tx->dqo.num_pending_packets; i++) {
- 		struct gve_tx_pending_packet_dqo *cur_state =
- 			&tx->dqo.pending_packets[i];
--		int j;
- 
--		for (j = 0; j < cur_state->num_bufs; j++) {
--			if (j == 0) {
--				dma_unmap_single(tx->dev,
--					dma_unmap_addr(cur_state, dma[j]),
--					dma_unmap_len(cur_state, len[j]),
--					DMA_TO_DEVICE);
--			} else {
--				dma_unmap_page(tx->dev,
--					dma_unmap_addr(cur_state, dma[j]),
--					dma_unmap_len(cur_state, len[j]),
--					DMA_TO_DEVICE);
--			}
--		}
-+		if (tx->dqo.qpl)
-+			gve_free_tx_qpl_bufs(tx, cur_state);
-+		else
-+			gve_unmap_packet(tx->dev, cur_state);
-+
- 		if (cur_state->skb) {
- 			dev_consume_skb_any(cur_state->skb);
- 			cur_state->skb = NULL;
-@@ -992,21 +1001,6 @@ static void remove_from_list(struct gve_
- 	}
- }
- 
--static void gve_unmap_packet(struct device *dev,
--			     struct gve_tx_pending_packet_dqo *pkt)
--{
--	int i;
--
--	/* SKB linear portion is guaranteed to be mapped */
--	dma_unmap_single(dev, dma_unmap_addr(pkt, dma[0]),
--			 dma_unmap_len(pkt, len[0]), DMA_TO_DEVICE);
--	for (i = 1; i < pkt->num_bufs; i++) {
--		dma_unmap_page(dev, dma_unmap_addr(pkt, dma[i]),
--			       dma_unmap_len(pkt, len[i]), DMA_TO_DEVICE);
--	}
--	pkt->num_bufs = 0;
--}
--
- /* Completion types and expected behavior:
-  * No Miss compl + Packet compl = Packet completed normally.
-  * Miss compl + Re-inject compl = Packet completed normally.
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
+@@ -325,6 +325,7 @@ static void sn65dsi83_atomic_pre_enable(
+ 					struct drm_bridge_state *old_bridge_state)
+ {
+ 	struct sn65dsi83 *ctx = bridge_to_sn65dsi83(bridge);
++	const unsigned int dual_factor = ctx->lvds_dual_link ? 2 : 1;
+ 	struct drm_atomic_state *state = old_bridge_state->base.state;
+ 	const struct drm_bridge_state *bridge_state;
+ 	const struct drm_crtc_state *crtc_state;
+@@ -452,18 +453,18 @@ static void sn65dsi83_atomic_pre_enable(
+ 	/* 32 + 1 pixel clock to ensure proper operation */
+ 	le16val = cpu_to_le16(32 + 1);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_SYNC_DELAY_LOW, &le16val, 2);
+-	le16val = cpu_to_le16(mode->hsync_end - mode->hsync_start);
++	le16val = cpu_to_le16((mode->hsync_end - mode->hsync_start) / dual_factor);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_HSYNC_PULSE_WIDTH_LOW,
+ 			  &le16val, 2);
+ 	le16val = cpu_to_le16(mode->vsync_end - mode->vsync_start);
+ 	regmap_bulk_write(ctx->regmap, REG_VID_CHA_VSYNC_PULSE_WIDTH_LOW,
+ 			  &le16val, 2);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_BACK_PORCH,
+-		     mode->htotal - mode->hsync_end);
++		     (mode->htotal - mode->hsync_end) / dual_factor);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_BACK_PORCH,
+ 		     mode->vtotal - mode->vsync_end);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_HORIZONTAL_FRONT_PORCH,
+-		     mode->hsync_start - mode->hdisplay);
++		     (mode->hsync_start - mode->hdisplay) / dual_factor);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_VERTICAL_FRONT_PORCH,
+ 		     mode->vsync_start - mode->vdisplay);
+ 	regmap_write(ctx->regmap, REG_VID_CHA_TEST_PATTERN, 0x00);
 
 
