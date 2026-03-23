@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFAE438C2CA;
-	Mon, 23 Mar 2026 14:43:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B9E33AF643;
+	Mon, 23 Mar 2026 14:43:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277030; cv=none; b=cWvbW+3/IMmobqI4IMP2QyUHTuJV84w/01Oqrh8PUO/HO9d5ji7iusIksV3cjrr4bmEiU8yRmDm7xGexiDlX3oiRUQlv8nLgL5niIg5DRHRHpriAWQtqEb012w98YuH7UypFnfXFtuWNg9I+26+9AfhGCEknbmedTlWCWg/kHpM=
+	t=1774277033; cv=none; b=iqLu99YYlp0DLeBEtbe7SGSE8iLyPkMue/afJtrru29i+uHMMyujTT5+O2ysexEarkCskxbdlIj6TDOiEma0nvZkJOph6xFZUv9fsNMpNREccd50G7U8srp90ahclmQ+3dj8hHXNKLqaVkCXyHrLQFjNXYo70M0mxImudikU7P4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277030; c=relaxed/simple;
-	bh=xvhPYug+fHnpkMKd5UMVyXxPuwPWgReJQO9RfH28ukg=;
+	s=arc-20240116; t=1774277033; c=relaxed/simple;
+	bh=Dlgz1hQDmwir1+6zLcC89BTwZEFzRrd0Vfs+XDvoYAc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MA3RgAQDE+eyAkEsJQ/1ScwawqihI6LCrOV4yd2HKpSIbTAI2VTs3BaDzo8Op62DWbDtmuYWxkMSGaYcvAIbYVzq3WsVkox6l4RmwvD0rN6riOaUZOcquzagcKvSX4C8mMVVJP0VTXWuMzPNYRoSv60eQbI/WGM9EQjHNfariXQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zZ8Vc1K3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lY1AV2ij+tiNQQpPv2SiDsNIg/aZHhhA7QuGH+TttYb6bSyp+VtYboHLQB9w+ikJtEf46dcXcM3m2f5xXYeypZL3o+Hbfxj5HHQMJ7QPMYJufx6SbydeTuf7j4uP9wQIqL44JbPtG51Im9wnzJinCIfWPjEb+IzDKkNQC5wjmew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N/d997k0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zZ8Vc1K3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47CF6C4CEF7;
-	Mon, 23 Mar 2026 14:43:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N/d997k0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA7EC2BCB3;
+	Mon, 23 Mar 2026 14:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277030;
-	bh=xvhPYug+fHnpkMKd5UMVyXxPuwPWgReJQO9RfH28ukg=;
+	s=korg; t=1774277033;
+	bh=Dlgz1hQDmwir1+6zLcC89BTwZEFzRrd0Vfs+XDvoYAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zZ8Vc1K35rEyO2uK+1y/uYf5vNAanPyK7CuZhdMtBzdHXOHIjc+OnQaQNvTBbDABt
-	 /CeVWFAO/SfgHe69m9xlSGtf9o8CDGUVY4RYxwydbd4IAWMEaW8JHwy01QKMvMtNiE
-	 mC7uoqI3rgKQ+AdZwrklvdqLAazOuVYZ0/vymsg0=
+	b=N/d997k0kYTxT1/NB2Cez/pdb8mpS/qgFgLzZajHgQt0ONvssjgXv/ftMv93k7E6R
+	 UNzoGlbj7/RVBpoMWtP2xjSb7JMbp8azWEuekly+RVfTyMsaFzsfEQtCzCemX9yF9O
+	 XLXBxa5eTQkwA/6k1iXyht6orjmRKW1YXijwnueE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cheng-Yang Chou <yphbchou0911@gmail.com>,
-	Andrea Righi <arighi@nvidia.com>,
-	Tejun Heo <tj@kernel.org>
-Subject: [PATCH 6.12 296/460] sched_ext: Remove redundant css_put() in scx_cgroup_init()
-Date: Mon, 23 Mar 2026 14:44:52 +0100
-Message-ID: <20260323134533.758864579@linuxfoundation.org>
+	Keenan Dong <keenanat2000@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.12 297/460] io_uring/kbuf: check if target buffer list is still legacy on recycle
+Date: Mon, 23 Mar 2026 14:44:53 +0100
+Message-ID: <20260323134533.782553626@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,42 +50,47 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cheng-Yang Chou <yphbchou0911@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 1336b579f6079fb8520be03624fcd9ba443c930b upstream.
+Commit c2c185be5c85d37215397c8e8781abf0a69bec1f upstream.
 
-The iterator css_for_each_descendant_pre() walks the cgroup hierarchy
-under cgroup_lock(). It does not increment the reference counts on
-yielded css structs.
+There's a gap between when the buffer was grabbed and when it
+potentially gets recycled, where if the list is empty, someone could've
+upgraded it to a ring provided type. This can happen if the request
+is forced via io-wq. The legacy recycling is missing checking if the
+buffer_list still exists, and if it's of the correct type. Add those
+checks.
 
-According to the cgroup documentation, css_put() should only be used
-to release a reference obtained via css_get() or css_tryget_online().
-Since the iterator does not use either of these to acquire a reference,
-calling css_put() in the error path of scx_cgroup_init() causes a
-refcount underflow.
-
-Remove the unbalanced css_put() to prevent a potential Use-After-Free
-(UAF) vulnerability.
-
-Fixes: 819513666966 ("sched_ext: Add cgroup support")
-Cc: stable@vger.kernel.org # v6.12+
-Signed-off-by: Cheng-Yang Chou <yphbchou0911@gmail.com>
-Reviewed-by: Andrea Righi <arighi@nvidia.com>
-Signed-off-by: Tejun Heo <tj@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: c7fb19428d67 ("io_uring: add support for ring mapped supplied buffers")
+Reported-by: Keenan Dong <keenanat2000@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |    1 -
- 1 file changed, 1 deletion(-)
+ io_uring/kbuf.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/kernel/sched/ext.c
-+++ b/kernel/sched/ext.c
-@@ -4319,7 +4319,6 @@ static int scx_cgroup_init(void)
- 		ret = SCX_CALL_OP_RET(SCX_KF_UNLOCKED, cgroup_init,
- 				      css->cgroup, &args);
- 		if (ret) {
--			css_put(css);
- 			scx_ops_error("ops.cgroup_init() failed (%d)", ret);
- 			return ret;
- 		}
+--- a/io_uring/kbuf.c
++++ b/io_uring/kbuf.c
+@@ -62,9 +62,17 @@ bool io_kbuf_recycle_legacy(struct io_ki
+ 
+ 	buf = req->kbuf;
+ 	bl = io_buffer_get_list(ctx, buf->bgid);
+-	list_add(&buf->list, &bl->buf_list);
+-	req->flags &= ~REQ_F_BUFFER_SELECTED;
++	/*
++	 * If the buffer list was upgraded to a ring-based one, or removed,
++	 * while the request was in-flight in io-wq, drop it.
++	 */
+ 	req->buf_index = buf->bgid;
++	if (bl && !(bl->flags & IOBL_BUF_RING))
++		list_add(&buf->list, &bl->buf_list);
++	else
++		kmem_cache_free(io_buf_cachep, buf);
++	req->flags &= ~REQ_F_BUFFER_SELECTED;
++	req->kbuf = NULL;
+ 
+ 	io_ring_submit_unlock(ctx, issue_flags);
+ 	return true;
 
 
