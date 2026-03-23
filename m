@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA5226A08F;
-	Mon, 23 Mar 2026 14:53:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E36370D6E;
+	Mon, 23 Mar 2026 14:54:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277639; cv=none; b=r611zkq23B3czKCdYxggvjWu6jxLHqxrILrxx2wiCchfx9tLD4cm0krc1CagZ97oO9RltBa+5iMA6UyChhzsT0StzLbDXzLibT5yGK6JrJpYJdfWnqNmiPDt9zD3sqxgw8BWqft35Cp9Z624Qxwaw4S+C8uqATFInv2d643UKtI=
+	t=1774277643; cv=none; b=s2gyHNS//bMwzqwq82qkIo7FUp66vHaXw7TyRe/1+HocFrC4tRFSrhP3JL2YQUBUnwZ4wL17uaMlVzvC5zrhfl8F4wahR7yaSJWOw4dhTg5Cbsu8c1DowhbMxVOdFkZriuZofAUauLlkTtmBQzXnht3htGYKucXwEf250Edt3sI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277639; c=relaxed/simple;
-	bh=WHviqgNfywEja6Wns09EL9cbUreoUb2YrTJ5LPx8xs4=;
+	s=arc-20240116; t=1774277643; c=relaxed/simple;
+	bh=COgQoufovMOs1AF6UTlvknWupYudhfS2gs3G7xoC4pI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rg4KUzmSVDo5NmhA0CkjimOOdfCuMHubCljjTH2nuaVgFAc7TIjBEQ5FdMWd06cchhx9Er1LFjj4mzHzgG6cFHgmsQ2nLitC4ZQUnXJRPS2yY6hh8GZoyiy2Lvz2gVMCyVlxh76qfdvGWPQ1NJN1u7xOtvczPP9nBCuIuulgwio=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o4IrH4d5; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=oF4g/smM1gqBafaSx4jveWwyIulDVAmd0sW2uSSzPX+A78Bkz/2wKos3YSxO5W/IL4hXefTwqiIm14M4Mk+RnSaqUA6+OE+kZtscPTJHJB8gqrp7A6sRibqCBSaejoBDskhZWXEQmY5l8znDbrBKh8dP5oebsuCjJNvbDtjYFfw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RbFKr0hO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o4IrH4d5"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63545C4CEF7;
-	Mon, 23 Mar 2026 14:53:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RbFKr0hO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72057C4CEF7;
+	Mon, 23 Mar 2026 14:54:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277639;
-	bh=WHviqgNfywEja6Wns09EL9cbUreoUb2YrTJ5LPx8xs4=;
+	s=korg; t=1774277642;
+	bh=COgQoufovMOs1AF6UTlvknWupYudhfS2gs3G7xoC4pI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o4IrH4d55/EB2ttQZP94VBKYIaxv8Af3p2lD9OYQqvxBju/f/HGiI3EScEe/lu7q6
-	 dhFEHHAgGWlu8MIEheIzD0VSR/wZLs88eAeI/supow/RhcNFTfmu1n3o0t47zzJ47d
-	 Ao32SAokv0l0PPlW7X8ZyQhKI6GKhfTR5gCfEauA=
+	b=RbFKr0hOEbbxKv2wO+gkFDWyvGnjICt8lKg7+D/XBbrkekO+AvSDUaI6fHeZYMSVf
+	 uSnKM2hFZny2pwCOZwPYoGVqy1yGC/5a99eSUYkLbXowKXSsGBGWwM4pERAQejfFr9
+	 WnobIF9QU5OpwKp6QROTJ5T9h4e9pAaTvGT3UhOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -33,9 +33,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 057/567] ext4: drop extent cache after doing PARTIAL_VALID1 zeroout
-Date: Mon, 23 Mar 2026 14:39:37 +0100
-Message-ID: <20260323134535.226250944@linuxfoundation.org>
+Subject: [PATCH 6.6 058/567] ext4: drop extent cache when splitting extent fails
+Date: Mon, 23 Mar 2026 14:39:38 +0100
+Message-ID: <20260323134535.249060200@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -56,85 +56,57 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 6d882ea3b0931b43530d44149b79fcd4ffc13030 ]
+[ Upstream commit 79b592e8f1b435796cbc2722190368e3e8ffd7a1 ]
 
-When splitting an unwritten extent in the middle and converting it to
-initialized in ext4_split_extent() with the EXT4_EXT_MAY_ZEROOUT and
-EXT4_EXT_DATA_VALID2 flags set, it could leave a stale unwritten extent.
-
-Assume we have an unwritten file and buffered write in the middle of it
-without dioread_nolock enabled, it will allocate blocks as written
-extent.
-
-       0  A      B  N
-       [UUUUUUUUUUUU] on-disk extent      U: unwritten extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDD--]                     D: valid data
-          |<-  ->| ----> this range needs to be initialized
-
-ext4_split_extent() first try to split this extent at B with
-EXT4_EXT_DATA_PARTIAL_VALID1 and EXT4_EXT_MAY_ZEROOUT flag set, but
-ext4_split_extent_at() failed to split this extent due to temporary lack
-of space. It zeroout B to N and leave the entire extent as unwritten.
-
-       0  A      B  N
-       [UUUUUUUUUUUU] on-disk extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDDZZ]                     Z: zeroed data
-
-ext4_split_extent() then try to split this extent at A with
-EXT4_EXT_DATA_VALID2 flag set. This time, it split successfully and
-leave an written extent from A to N.
-
-       0  A      B  N
-       [UUWWWWWWWWWW] on-disk extent      W: written extent
-       [UUUUUUUUUUUU] extent status tree
-       [--DDDDDDDDZZ]
-
-Finally ext4_map_create_blocks() only insert extent A to B to the extent
-status tree, and leave an stale unwritten extent in the status tree.
-
-       0  A      B  N
-       [UUWWWWWWWWWW] on-disk extent      W: written extent
-       [UUWWWWWWWWUU] extent status tree
-       [--DDDDDDDDZZ]
-
-Fix this issue by always cached extent status entry after zeroing out
-the second part.
+When the split extent fails, we might leave some extents still being
+processed and return an error directly, which will result in stale
+extent entries remaining in the extent status tree. So drop all of the
+remaining potentially stale extents if the splitting fails.
 
 Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
 Reviewed-by: Baokun Li <libaokun1@huawei.com>
 Cc: stable@kernel.org
 Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Message-ID: <20251129103247.686136-7-yi.zhang@huaweicloud.com>
+Message-ID: <20251129103247.686136-8-yi.zhang@huaweicloud.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ext4/extents.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index ed63260d792b1..2818d297ce464 100644
+index 2818d297ce464..b7e9cbe832121 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -3302,8 +3302,16 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
- 			 * extent length and ext4_split_extent() split will the
- 			 * first half again.
- 			 */
--			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1)
-+			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1) {
-+				/*
-+				 * Drop extent cache to prevent stale unwritten
-+				 * extents remaining after zeroing out.
-+				 */
-+				ext4_es_remove_extent(inode,
-+					le32_to_cpu(zero_ex.ee_block),
-+					ext4_ext_get_actual_len(&zero_ex));
- 				goto fix_extent_len;
-+			}
+@@ -3250,7 +3250,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
  
- 			/* update the extent length and mark as initialized */
- 			ex->ee_len = cpu_to_le16(ee_len);
+ 	err = PTR_ERR(path);
+ 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
+-		return path;
++		goto out_path;
+ 
+ 	/*
+ 	 * Get a new path to try to zeroout or fix the extent length.
+@@ -3264,7 +3264,7 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+ 	if (IS_ERR(path)) {
+ 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
+ 				 split, PTR_ERR(path));
+-		return path;
++		goto out_path;
+ 	}
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+@@ -3341,6 +3341,10 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+ 		ext4_free_ext_path(path);
+ 		path = ERR_PTR(err);
+ 	}
++out_path:
++	if (IS_ERR(path))
++		/* Remove all remaining potentially stale extents. */
++		ext4_es_remove_extent(inode, ee_block, ee_len);
+ 	ext4_ext_show_leaf(inode, path);
+ 	return path;
+ }
 -- 
 2.51.0
 
