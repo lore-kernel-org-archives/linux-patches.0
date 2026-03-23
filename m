@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3840323B62C;
-	Mon, 23 Mar 2026 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1189E23B62C;
+	Mon, 23 Mar 2026 14:52:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277542; cv=none; b=pA9x+ITP2o/M0s0+hY+1EKNHAO4CwNhmdws2mWa63ZMcDLHaxa4uHuP0SHYbFqk02Z6XEVt3giGHxkuEnb5kg9k2WpPnVdXSLVIuZwoIBqKf8ExvJy6NInvncS9VWhjP1cmiBXyetZ+o9JHba7bShZnURRECHGFFj6KqrrGJmWo=
+	t=1774277545; cv=none; b=leQsY/mNJdQ/8sjfC0xfGn/PZRuXxbtJd2cyvhY1LeiaFwdXQ0Lcq0JKY2hAM9g+0ftmV3oLsNE3GrNbNLw9bbO2SZoTMRCX8bSAkiD7eOo/ur9tzG7encnRBSWmxC/p9DLedth+E+R9R+FeOPNP9g9kvIxLiNuJpjGZnHP9/20=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277542; c=relaxed/simple;
-	bh=mbD5WIVvIaUpYORxZGbAcQFkzw5kpyR1RB8c2VwwLrk=;
+	s=arc-20240116; t=1774277545; c=relaxed/simple;
+	bh=9DwxnOcl1VdT6xIUCLsqeez4/BkOKQwG15PPWsIoo/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=s1X1Ovt40EjGORyl1/jBZ4lb7HCuQkSO5SEQEHfZbc2TYatCnu6H85pF2uYYi9A0IQC+dK3kQFgSfFY+Wx8+ifZkD0rS4AHsXR7h8P1x3Vo9BB0PBn08CJsjpEBNhrz/fiokdDzAzMTFyi0SaDmOQ4/4EloybJuPotIwyxTdRnI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mXuxdkD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=KX1jdocKZehOYZfA6SLHRkUcsueTDkmf3HXwlwL7P5FQ717LQA8X+DYdNyBsbWitTiPE06rsg8hyjQmAZqRrnljTKLCIO5cTBVvdcBVH0nJom8y5OKP5Bdynh3MXcdUCG7BewHuDGvsz5uIDtWwM0EJIwYNrPYxx4qya547qtL0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lFZX6bYf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mXuxdkD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE92DC4CEF7;
-	Mon, 23 Mar 2026 14:52:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lFZX6bYf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88634C4CEF7;
+	Mon, 23 Mar 2026 14:52:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277542;
-	bh=mbD5WIVvIaUpYORxZGbAcQFkzw5kpyR1RB8c2VwwLrk=;
+	s=korg; t=1774277544;
+	bh=9DwxnOcl1VdT6xIUCLsqeez4/BkOKQwG15PPWsIoo/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mXuxdkD6JeN3no6oUXqincMpeV//hY3UK5K6rPYAPWNK6MM7Ge8l0NW00kyzU+1tI
-	 RC+pkAfviia8IiwA3cYNjWlsbi1jsqB+c8FlsnyI7zioe2gm5lBuqQKAipn/37GgGn
-	 x5HV53EhIdMbhzvwL67qXMtr5mPO91ib++IXO+iw=
+	b=lFZX6bYfwGLdNzzshxWpmh6y2UPm17JtTSvkFxC3nfdynoncSFNhd25fUPpTfcnqq
+	 JifvHHxYo8IWqa7FGL7wQe4oMSjqUBwXDV1cMAoVeMHShhG52hhqFd7P1EWkff/7hw
+	 NMfn0draPNcm9JqaVtTUmmCNto54E5mCy4OU0mIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Josef Bacik <josef@toxicpanda.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 016/567] btrfs: remove btrfs_crc32c wrapper
-Date: Mon, 23 Mar 2026 14:38:56 +0100
-Message-ID: <20260323134534.168944393@linuxfoundation.org>
+Subject: [PATCH 6.6 019/567] btrfs: read raid stripe tree from disk
+Date: Mon, 23 Mar 2026 14:38:59 +0100
+Message-ID: <20260323134534.243214873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,109 +51,124 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 
-[ Upstream commit 03e86348965a5fa13593db8682132033d663f7ee ]
+[ Upstream commit 515020900d447796bc2f0f57064663617a11b65d ]
 
-This simply sends the same arguments into crc32c(), and is just used in
-a few places.  Remove this wrapper and directly call crc32c() in these
-instances.
+If we find the raid-stripe-tree on mount, read it from disk. This is
+a backward incompatible feature. The rescue=ignorebadroots mount option
+will skip this tree.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 511dc8912ae3 ("btrfs: fix incorrect key offset in error message in check_dev_extent_item()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/ctree.h            | 5 -----
- fs/btrfs/extent-tree.c      | 6 +++---
- fs/btrfs/free-space-cache.c | 4 ++--
- fs/btrfs/send.c             | 6 +++---
- 4 files changed, 8 insertions(+), 13 deletions(-)
+ fs/btrfs/block-rsv.c       |  6 ++++++
+ fs/btrfs/disk-io.c         | 18 ++++++++++++++++++
+ fs/btrfs/fs.h              |  1 +
+ include/uapi/linux/btrfs.h |  1 +
+ 4 files changed, 26 insertions(+)
 
-diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
-index 3108852ff47d7..11691c70ba791 100644
---- a/fs/btrfs/ctree.h
-+++ b/fs/btrfs/ctree.h
-@@ -472,11 +472,6 @@ static inline u32 BTRFS_MAX_XATTR_SIZE(const struct btrfs_fs_info *info)
- #define BTRFS_BYTES_TO_BLKS(fs_info, bytes) \
- 				((bytes) >> (fs_info)->sectorsize_bits)
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index 97084ea3af0cc..07bf07431a7f4 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -354,6 +354,11 @@ void btrfs_update_global_block_rsv(struct btrfs_fs_info *fs_info)
+ 		min_items++;
+ 	}
  
--static inline u32 btrfs_crc32c(u32 crc, const void *address, unsigned length)
--{
--	return crc32c(crc, address, length);
--}
--
- static inline u64 btrfs_name_hash(const char *name, int len)
- {
-        return crc32c((u32)~1, name, len);
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index 774bdafc822c1..1528a81b2c307 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -414,11 +414,11 @@ u64 hash_extent_data_ref(u64 root_objectid, u64 owner, u64 offset)
- 	__le64 lenum;
- 
- 	lenum = cpu_to_le64(root_objectid);
--	high_crc = btrfs_crc32c(high_crc, &lenum, sizeof(lenum));
-+	high_crc = crc32c(high_crc, &lenum, sizeof(lenum));
- 	lenum = cpu_to_le64(owner);
--	low_crc = btrfs_crc32c(low_crc, &lenum, sizeof(lenum));
-+	low_crc = crc32c(low_crc, &lenum, sizeof(lenum));
- 	lenum = cpu_to_le64(offset);
--	low_crc = btrfs_crc32c(low_crc, &lenum, sizeof(lenum));
-+	low_crc = crc32c(low_crc, &lenum, sizeof(lenum));
- 
- 	return ((u64)high_crc << 31) ^ (u64)low_crc;
++	if (btrfs_fs_incompat(fs_info, RAID_STRIPE_TREE)) {
++		num_bytes += btrfs_root_used(&fs_info->stripe_root->root_item);
++		min_items++;
++	}
++
+ 	/*
+ 	 * But we also want to reserve enough space so we can do the fallback
+ 	 * global reserve for an unlink, which is an additional
+@@ -405,6 +410,7 @@ void btrfs_init_root_block_rsv(struct btrfs_root *root)
+ 	case BTRFS_EXTENT_TREE_OBJECTID:
+ 	case BTRFS_FREE_SPACE_TREE_OBJECTID:
+ 	case BTRFS_BLOCK_GROUP_TREE_OBJECTID:
++	case BTRFS_RAID_STRIPE_TREE_OBJECTID:
+ 		root->block_rsv = &fs_info->delayed_refs_rsv;
+ 		break;
+ 	case BTRFS_ROOT_TREE_OBJECTID:
+diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
+index 3c26e91a8055f..89e98f9cc2026 100644
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -1179,6 +1179,8 @@ static struct btrfs_root *btrfs_get_global_root(struct btrfs_fs_info *fs_info,
+ 		return btrfs_grab_root(fs_info->block_group_root);
+ 	case BTRFS_FREE_SPACE_TREE_OBJECTID:
+ 		return btrfs_grab_root(btrfs_global_root(fs_info, &key));
++	case BTRFS_RAID_STRIPE_TREE_OBJECTID:
++		return btrfs_grab_root(fs_info->stripe_root);
+ 	default:
+ 		return NULL;
+ 	}
+@@ -1259,6 +1261,7 @@ void btrfs_free_fs_info(struct btrfs_fs_info *fs_info)
+ 	btrfs_put_root(fs_info->fs_root);
+ 	btrfs_put_root(fs_info->data_reloc_root);
+ 	btrfs_put_root(fs_info->block_group_root);
++	btrfs_put_root(fs_info->stripe_root);
+ 	btrfs_check_leaked_roots(fs_info);
+ 	btrfs_extent_buffer_leak_debug_check(fs_info);
+ 	kfree(fs_info->super_copy);
+@@ -1812,6 +1815,7 @@ static void free_root_pointers(struct btrfs_fs_info *info, bool free_chunk_root)
+ 	free_root_extent_buffers(info->fs_root);
+ 	free_root_extent_buffers(info->data_reloc_root);
+ 	free_root_extent_buffers(info->block_group_root);
++	free_root_extent_buffers(info->stripe_root);
+ 	if (free_chunk_root)
+ 		free_root_extent_buffers(info->chunk_root);
  }
-diff --git a/fs/btrfs/free-space-cache.c b/fs/btrfs/free-space-cache.c
-index edf3612ba3108..c6e3b9a2921ab 100644
---- a/fs/btrfs/free-space-cache.c
-+++ b/fs/btrfs/free-space-cache.c
-@@ -545,7 +545,7 @@ static void io_ctl_set_crc(struct btrfs_io_ctl *io_ctl, int index)
- 	if (index == 0)
- 		offset = sizeof(u32) * io_ctl->num_pages;
+@@ -2287,6 +2291,20 @@ static int btrfs_read_roots(struct btrfs_fs_info *fs_info)
+ 		fs_info->uuid_root = root;
+ 	}
  
--	crc = btrfs_crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
-+	crc = crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
- 	btrfs_crc32c_final(crc, (u8 *)&crc);
- 	io_ctl_unmap_page(io_ctl);
- 	tmp = page_address(io_ctl->pages[0]);
-@@ -567,7 +567,7 @@ static int io_ctl_check_crc(struct btrfs_io_ctl *io_ctl, int index)
- 	val = *tmp;
++	if (btrfs_fs_incompat(fs_info, RAID_STRIPE_TREE)) {
++		location.objectid = BTRFS_RAID_STRIPE_TREE_OBJECTID;
++		root = btrfs_read_tree_root(tree_root, &location);
++		if (IS_ERR(root)) {
++			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS)) {
++				ret = PTR_ERR(root);
++				goto out;
++			}
++		} else {
++			set_bit(BTRFS_ROOT_TRACK_DIRTY, &root->state);
++			fs_info->stripe_root = root;
++		}
++	}
++
+ 	return 0;
+ out:
+ 	btrfs_warn(fs_info, "failed to read root (objectid=%llu): %d",
+diff --git a/fs/btrfs/fs.h b/fs/btrfs/fs.h
+index d24d41f7811a6..b8b9ce8921baf 100644
+--- a/fs/btrfs/fs.h
++++ b/fs/btrfs/fs.h
+@@ -371,6 +371,7 @@ struct btrfs_fs_info {
+ 	struct btrfs_root *uuid_root;
+ 	struct btrfs_root *data_reloc_root;
+ 	struct btrfs_root *block_group_root;
++	struct btrfs_root *stripe_root;
  
- 	io_ctl_map_page(io_ctl, 0);
--	crc = btrfs_crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
-+	crc = crc32c(crc, io_ctl->orig + offset, PAGE_SIZE - offset);
- 	btrfs_crc32c_final(crc, (u8 *)&crc);
- 	if (val != crc) {
- 		btrfs_err_rl(io_ctl->fs_info,
-diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
-index 6768e2231d610..4fa05ee81d434 100644
---- a/fs/btrfs/send.c
-+++ b/fs/btrfs/send.c
-@@ -814,7 +814,7 @@ static int send_cmd(struct send_ctx *sctx)
- 	put_unaligned_le32(sctx->send_size - sizeof(*hdr), &hdr->len);
- 	put_unaligned_le32(0, &hdr->crc);
+ 	/* The log root tree is a directory of all the other log roots */
+ 	struct btrfs_root *log_root_tree;
+diff --git a/include/uapi/linux/btrfs.h b/include/uapi/linux/btrfs.h
+index 6f776faaa791c..7b499b90bb779 100644
+--- a/include/uapi/linux/btrfs.h
++++ b/include/uapi/linux/btrfs.h
+@@ -333,6 +333,7 @@ struct btrfs_ioctl_fs_info_args {
+ #define BTRFS_FEATURE_INCOMPAT_RAID1C34		(1ULL << 11)
+ #define BTRFS_FEATURE_INCOMPAT_ZONED		(1ULL << 12)
+ #define BTRFS_FEATURE_INCOMPAT_EXTENT_TREE_V2	(1ULL << 13)
++#define BTRFS_FEATURE_INCOMPAT_RAID_STRIPE_TREE	(1ULL << 14)
  
--	crc = btrfs_crc32c(0, (unsigned char *)sctx->send_buf, sctx->send_size);
-+	crc = crc32c(0, (unsigned char *)sctx->send_buf, sctx->send_size);
- 	put_unaligned_le32(crc, &hdr->crc);
- 
- 	ret = write_buf(sctx->send_filp, sctx->send_buf, sctx->send_size,
-@@ -5740,8 +5740,8 @@ static int send_encoded_extent(struct send_ctx *sctx, struct btrfs_path *path,
- 	hdr = (struct btrfs_cmd_header *)sctx->send_buf;
- 	hdr->len = cpu_to_le32(sctx->send_size + disk_num_bytes - sizeof(*hdr));
- 	hdr->crc = 0;
--	crc = btrfs_crc32c(0, sctx->send_buf, sctx->send_size);
--	crc = btrfs_crc32c(crc, sctx->send_buf + data_offset, disk_num_bytes);
-+	crc = crc32c(0, sctx->send_buf, sctx->send_size);
-+	crc = crc32c(crc, sctx->send_buf + data_offset, disk_num_bytes);
- 	hdr->crc = cpu_to_le32(crc);
- 
- 	ret = write_buf(sctx->send_filp, sctx->send_buf, sctx->send_size,
+ struct btrfs_ioctl_feature_flags {
+ 	__u64 compat_flags;
 -- 
 2.51.0
 
