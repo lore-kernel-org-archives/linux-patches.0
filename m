@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2FF81A00F0;
-	Mon, 23 Mar 2026 15:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 096E317A305;
+	Mon, 23 Mar 2026 15:00:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278053; cv=none; b=RHybW0T5MySmAxmkcG/6tdyOTVoRO1IyQqdrhSBEFG1ttepo6vLJq8X2v2OOtuX8JuCtxub6BFlScsthmP4QJ87WiFeLVBXDFfNbbfF93YS0WjM6UhB+391gQQCMYjzU/Kam63i6P9v5+5YVXA/n2/triWDRRJtnzAtUAQvcsC4=
+	t=1774278057; cv=none; b=q5jabpEYT2H/yr8jqglH+uFTYY0WEV7L+XWpR9P3THjGOLdSO2NZLSI1BuzIXe6I/GA2afpZy/vJYkR5wQXZdoMXItt6H4z7ddMOvTHXx64nc98hD6RcYq4fJzV1dUyKLhbz8shyx21MdHmRTRjb+gKoXQhAD9hsCh8WtG+m6N4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278053; c=relaxed/simple;
-	bh=PIY128Zii2Z7OqlYd3tkpzmi3qRVdCitonA7tVAKTZE=;
+	s=arc-20240116; t=1774278057; c=relaxed/simple;
+	bh=YFWQUb3WTN5QHf14mK5fMJL6i/Rg42tvgiW3nM0WK+M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lTpYsCvW/c5qWy2gOVqpAei2prtxSAkL+pYgwaU2SaO4Ryhg+9Xvo3GUYdZ6mGdaoj3HlGH2vTnYBv2Qsi6MMOpDDkoSxq5Jw7W1hL5Bftg9rIw+DnEgLK42ucU644lJ3kDLmMQXhj3GoQrFrP0RS2N+Ax0JecL1zi6sT3nqOtw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvZ5+Iux; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kMQCRc6yupPCWqR/p9toMX08Wq06VrKqK/PG1upbtQIMksp+xjM1ljDfy1wIMbLTwepVu8fK387p8ClVK8dDqIxg9A3WufQ/cY0Rojfumx6AjlbfvB6i2JyJTHOKS881fEuYHSVqh8nDJryIsq3TGol97CLowZLtGIyexjbQMQs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wkVFKhV7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvZ5+Iux"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3718AC4CEF7;
-	Mon, 23 Mar 2026 15:00:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wkVFKhV7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48876C4CEF7;
+	Mon, 23 Mar 2026 15:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278053;
-	bh=PIY128Zii2Z7OqlYd3tkpzmi3qRVdCitonA7tVAKTZE=;
+	s=korg; t=1774278056;
+	bh=YFWQUb3WTN5QHf14mK5fMJL6i/Rg42tvgiW3nM0WK+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zvZ5+IuxO0yuix1z77coeUw8cGQVmak7Ijwf5uozk2AF0JJirPBbu2V83wGkp+THQ
-	 WxTC2sAVlIbGh0Zj7BbKUaYXWjEjvhW3h6+zv2va8Rte6AdKyOep21BxL+l1O4v3xA
-	 3QxwohM7MWxHtvtZlllvPyf5Cb8oFbrPUA89Xc/U=
+	b=wkVFKhV70g0hyloS3vAWZTR4qxxxqrb5m6Y/kp6Nm1FrO/C49cnmGc4hBZpQ3LTtp
+	 r9btykjDq+EAeXgIk0MFT23UL+NgUQAcHY6WEZZR5hBSs44TzYsYTXMYL1JGLnz4l9
+	 SVKhL2Jq/HH2nyt9mzO9OteCEbwjjp27T32ar+zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alban Bedel <alban.bedel@lht.dlh.de>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Alexandre Courbot <acourbot@nvidia.com>,
+	Alice Ryhl <aliceryhl@google.com>,
+	David Gow <david@davidgow.net>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 144/567] can: mcp251x: fix deadlock in error path of mcp251x_open
-Date: Mon, 23 Mar 2026 14:41:04 +0100
-Message-ID: <20260323134537.389400945@linuxfoundation.org>
+Subject: [PATCH 6.6 145/567] rust: kunit: fix warning when !CONFIG_PRINTK
+Date: Mon, 23 Mar 2026 14:41:05 +0100
+Message-ID: <20260323134537.415402856@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,70 +53,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alban Bedel <alban.bedel@lht.dlh.de>
+From: Alexandre Courbot <acourbot@nvidia.com>
 
-[ Upstream commit ab3f894de216f4a62adc3b57e9191888cbf26885 ]
+[ Upstream commit 7dd34dfc8dfa92a7244242098110388367996ac3 ]
 
-The mcp251x_open() function call free_irq() in its error path with the
-mpc_lock mutex held. But if an interrupt already occurred the
-interrupt handler will be waiting for the mpc_lock and free_irq() will
-deadlock waiting for the handler to finish.
+If `CONFIG_PRINTK` is not set, then the following warnings are issued
+during build:
 
-This issue is similar to the one fixed in commit 7dd9c26bd6cf ("can:
-mcp251x: fix deadlock if an interrupt occurs during mcp251x_open") but
-for the error path.
+  warning: unused variable: `args`
+    --> ../rust/kernel/kunit.rs:16:12
+    |
+  16 | pub fn err(args: fmt::Arguments<'_>) {
+    |            ^^^^ help: if this is intentional, prefix it with an underscore: `_args`
+    |
+    = note: `#[warn(unused_variables)]` (part of `#[warn(unused)]`) on by default
 
-To solve this issue move the call to free_irq() after the lock is
-released. Setting `priv->force_quit = 1` beforehand ensure that the IRQ
-handler will exit right away once it acquired the lock.
+  warning: unused variable: `args`
+    --> ../rust/kernel/kunit.rs:32:13
+    |
+  32 | pub fn info(args: fmt::Arguments<'_>) {
+    |             ^^^^ help: if this is intentional, prefix it with an underscore: `_args`
 
-Signed-off-by: Alban Bedel <alban.bedel@lht.dlh.de>
-Link: https://patch.msgid.link/20260209144706.2261954-1-alban.bedel@lht.dlh.de
-Fixes: bf66f3736a94 ("can: mcp251x: Move to threaded interrupts instead of workqueues.")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fix this by adding a no-op assignment using `args` when `CONFIG_PRINTK`
+is not set.
+
+Fixes: a66d733da801 ("rust: support running Rust documentation tests as KUnit ones")
+Signed-off-by: Alexandre Courbot <acourbot@nvidia.com>
+Reviewed-by: Alice Ryhl <aliceryhl@google.com>
+Reviewed-by: David Gow <david@davidgow.net>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/spi/mcp251x.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ rust/kernel/kunit.rs | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index 8c56f85e87c1a..72ae17b2313ec 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1202,6 +1202,7 @@ static int mcp251x_open(struct net_device *net)
- {
- 	struct mcp251x_priv *priv = netdev_priv(net);
- 	struct spi_device *spi = priv->spi;
-+	bool release_irq = false;
- 	unsigned long flags = 0;
- 	int ret;
- 
-@@ -1245,12 +1246,24 @@ static int mcp251x_open(struct net_device *net)
- 	return 0;
- 
- out_free_irq:
--	free_irq(spi->irq, priv);
-+	/* The IRQ handler might be running, and if so it will be waiting
-+	 * for the lock. But free_irq() must wait for the handler to finish
-+	 * so calling it here would deadlock.
-+	 *
-+	 * Setting priv->force_quit will let the handler exit right away
-+	 * without any access to the hardware. This make it safe to call
-+	 * free_irq() after the lock is released.
-+	 */
-+	priv->force_quit = 1;
-+	release_irq = true;
+diff --git a/rust/kernel/kunit.rs b/rust/kernel/kunit.rs
+index 722655b2d62df..f33d8f5f1851a 100644
+--- a/rust/kernel/kunit.rs
++++ b/rust/kernel/kunit.rs
+@@ -13,6 +13,10 @@
+ /// Public but hidden since it should only be used from KUnit generated code.
+ #[doc(hidden)]
+ pub fn err(args: fmt::Arguments<'_>) {
++    // `args` is unused if `CONFIG_PRINTK` is not set - this avoids a build-time warning.
++    #[cfg(not(CONFIG_PRINTK))]
++    let _ = args;
 +
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
-+	if (release_irq)
-+		free_irq(spi->irq, priv);
- 	return ret;
- }
- 
+     // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
+     // are passing.
+     #[cfg(CONFIG_PRINTK)]
+@@ -29,6 +33,10 @@ pub fn err(args: fmt::Arguments<'_>) {
+ /// Public but hidden since it should only be used from KUnit generated code.
+ #[doc(hidden)]
+ pub fn info(args: fmt::Arguments<'_>) {
++    // `args` is unused if `CONFIG_PRINTK` is not set - this avoids a build-time warning.
++    #[cfg(not(CONFIG_PRINTK))]
++    let _ = args;
++
+     // SAFETY: The format string is null-terminated and the `%pA` specifier matches the argument we
+     // are passing.
+     #[cfg(CONFIG_PRINTK)]
 -- 
 2.51.0
 
