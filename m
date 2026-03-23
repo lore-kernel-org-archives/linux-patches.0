@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 195012737E3;
-	Mon, 23 Mar 2026 14:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C793F23EAB2;
+	Mon, 23 Mar 2026 14:48:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277316; cv=none; b=kHAps/Afzngd483wm2c1MWT45NVbOFdacV8pisy06zSLdolV5dpAvHbq90JA20mFr/+ubCGBGhq40Q6Gdbc4vJ0J7J2sZBpVyGUYgbAWNWwOr95HzYrA9BmW/LuAhBi7VAP1KmTfWdQgJC50Q20Xu73qKJzqk0MZzM7QMe3HcVw=
+	t=1774277318; cv=none; b=Rv4vJXfmCj9XfJ1C7oq3qnUy0Ch6OP+/HIZdG05U3BW47kfaGDfja+uBn9anSlNlyzfgXiAwfPm6ZOgBiAuNigm8hjb7PZuaC8xJDZ0sbkRS0RR1cPuHVg2q2/G7w7ye5AIFthlOXIeqtEURnMwOmbMFcQiBZsvaUq0nfzOAx0o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277316; c=relaxed/simple;
-	bh=m9pdqQa8d0Z8BEeVTqJAMStmaGGLIuz7UvJnjSaSUq4=;
+	s=arc-20240116; t=1774277318; c=relaxed/simple;
+	bh=uOstY6/NXepb3Wi+We2dwtEYGu0UI2xxRuha0LiGDLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gCs4nE2Msbq4dflHM8+St2OSexWr51SBFLAFgQEMUeKNV73K2bL53P5XJm9yMWmAhV5arDv7MQcb8s8mpAgFjxRmPWm3V6mwmNYkDtREFTq0JEB/fa5khxtK7za4fUAoj1N8oCLUonavK0UbsYc/iVZCSrE1OVHSy3XMqLUlj+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fuxWAHHo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=FBNwbBcOrbm5ZfyjVOWFprIR/bXTq8Rli1cgIsIyeXCRtinT3REHJXXud7B8tekdMNQuQIlbMa5mdj1R7ICpyCu2jWEyc4dZQV+mPDsmx40LUD+55+Po80MGReySkX58SMe9w22NNm83/OxNhL5rK9f5WRlbOW3nBWodLuoZO4M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ReekarNB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fuxWAHHo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7014CC2BCB1;
-	Mon, 23 Mar 2026 14:48:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ReekarNB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5688DC4CEF7;
+	Mon, 23 Mar 2026 14:48:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277315;
-	bh=m9pdqQa8d0Z8BEeVTqJAMStmaGGLIuz7UvJnjSaSUq4=;
+	s=korg; t=1774277318;
+	bh=uOstY6/NXepb3Wi+We2dwtEYGu0UI2xxRuha0LiGDLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuxWAHHobChnGtCj29euhySs46ONNsmT+0GnzoiSMe55MN1h7x1y+3C9TofH6xKK+
-	 i49YoEShUfEe0VH7Ls17qRhhbcQwPdpg7Qu8hrCMFWx25GHu+QPBUNAZuSdhmwv+kJ
-	 9KbAsrSwZZlDMNOWLXEy33elM5gqAv+OWFcxjJ8c=
+	b=ReekarNBwDO4VbpCyjxw2asIH22xE74PsAV/5XhfkL5XQkhFsQ+fxLry2vzgmVcn8
+	 /JFzsqEmG4iI8pBn5oybBd1MVUca6veADbMcwaZVD4stviKpgV+iUkWd4tVOTMZ2MQ
+	 HqQy+0ZWFabiiJtp4qsikBVt6jeHcjK5EVlwEHOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
+	Gurpreet Shergill <giki.shergill@proton.me>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 395/460] netfilter: nf_conntrack_h323: fix OOB read in decode_int() CONS case
-Date: Mon, 23 Mar 2026 14:46:31 +0100
-Message-ID: <20260323134536.274931747@linuxfoundation.org>
+Subject: [PATCH 6.12 396/460] nf_tables: nft_dynset: fix possible stateful expression memleak in error path
+Date: Mon, 23 Mar 2026 14:46:32 +0100
+Message-ID: <20260323134536.298471193@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -54,43 +53,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 1e3a3593162c96e8a8de48b1e14f60c3b57fca8a ]
+[ Upstream commit 0548a13b5a145b16e4da0628b5936baf35f51b43 ]
 
-In decode_int(), the CONS case calls get_bits(bs, 2) to read a length
-value, then calls get_uint(bs, len) without checking that len bytes
-remain in the buffer. The existing boundary check only validates the
-2 bits for get_bits(), not the subsequent 1-4 bytes that get_uint()
-reads. This allows a malformed H.323/RAS packet to cause a 1-4 byte
-slab-out-of-bounds read.
+If cloning the second stateful expression in the element via GFP_ATOMIC
+fails, then the first stateful expression remains in place without being
+released.
 
-Add a boundary check for len bytes after get_bits() and before
-get_uint().
+   unreferenced object (percpu) 0x607b97e9cab8 (size 16):
+     comm "softirq", pid 0, jiffies 4294931867
+     hex dump (first 16 bytes on cpu 3):
+       00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+     backtrace (crc 0):
+       pcpu_alloc_noprof+0x453/0xd80
+       nft_counter_clone+0x9c/0x190 [nf_tables]
+       nft_expr_clone+0x8f/0x1b0 [nf_tables]
+       nft_dynset_new+0x2cb/0x5f0 [nf_tables]
+       nft_rhash_update+0x236/0x11c0 [nf_tables]
+       nft_dynset_eval+0x11f/0x670 [nf_tables]
+       nft_do_chain+0x253/0x1700 [nf_tables]
+       nft_do_chain_ipv4+0x18d/0x270 [nf_tables]
+       nf_hook_slow+0xaa/0x1e0
+       ip_local_deliver+0x209/0x330
 
-Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Fixes: 563125a73ac3 ("netfilter: nftables: generalize set extension to support for several expressions")
+Reported-by: Gurpreet Shergill <giki.shergill@proton.me>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/net/netfilter/nf_tables.h |  2 ++
+ net/netfilter/nf_tables_api.c     |  4 ++--
+ net/netfilter/nft_dynset.c        | 10 +++++++++-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
-index 62aa22a078769..c972e9488e16f 100644
---- a/net/netfilter/nf_conntrack_h323_asn1.c
-+++ b/net/netfilter/nf_conntrack_h323_asn1.c
-@@ -331,6 +331,8 @@ static int decode_int(struct bitstr *bs, const struct field_t *f,
- 		if (nf_h323_error_boundary(bs, 0, 2))
- 			return H323_ERROR_BOUND;
- 		len = get_bits(bs, 2) + 1;
-+		if (nf_h323_error_boundary(bs, len, 0))
-+			return H323_ERROR_BOUND;
- 		BYTE_ALIGN(bs);
- 		if (base && (f->attr & DECODE)) {	/* timeToLive */
- 			unsigned int v = get_uint(bs, len) + f->lb;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index 79296ed87b9b3..36964b86d336d 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -873,6 +873,8 @@ struct nft_elem_priv *nft_set_elem_init(const struct nft_set *set,
+ 					u64 timeout, u64 expiration, gfp_t gfp);
+ int nft_set_elem_expr_clone(const struct nft_ctx *ctx, struct nft_set *set,
+ 			    struct nft_expr *expr_array[]);
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr);
+ void nft_set_elem_destroy(const struct nft_set *set,
+ 			  const struct nft_elem_priv *elem_priv,
+ 			  bool destroy_expr);
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 268d00ffee0cb..0c12560e94f3b 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -6637,8 +6637,8 @@ static void __nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+ 	}
+ }
+ 
+-static void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
+-				      struct nft_set_elem_expr *elem_expr)
++void nft_set_elem_expr_destroy(const struct nft_ctx *ctx,
++			       struct nft_set_elem_expr *elem_expr)
+ {
+ 	struct nft_expr *expr;
+ 	u32 size;
+diff --git a/net/netfilter/nft_dynset.c b/net/netfilter/nft_dynset.c
+index e24493d9e7761..0b3c4f6a8decd 100644
+--- a/net/netfilter/nft_dynset.c
++++ b/net/netfilter/nft_dynset.c
+@@ -30,18 +30,26 @@ static int nft_dynset_expr_setup(const struct nft_dynset *priv,
+ 				 const struct nft_set_ext *ext)
+ {
+ 	struct nft_set_elem_expr *elem_expr = nft_set_ext_expr(ext);
++	struct nft_ctx ctx = {
++		.net	= read_pnet(&priv->set->net),
++		.family	= priv->set->table->family,
++	};
+ 	struct nft_expr *expr;
+ 	int i;
+ 
+ 	for (i = 0; i < priv->num_exprs; i++) {
+ 		expr = nft_setelem_expr_at(elem_expr, elem_expr->size);
+ 		if (nft_expr_clone(expr, priv->expr_array[i], GFP_ATOMIC) < 0)
+-			return -1;
++			goto err_out;
+ 
+ 		elem_expr->size += priv->expr_array[i]->ops->size;
+ 	}
+ 
+ 	return 0;
++err_out:
++	nft_set_elem_expr_destroy(&ctx, elem_expr);
++
++	return -1;
+ }
+ 
+ static struct nft_elem_priv *nft_dynset_new(struct nft_set *set,
 -- 
 2.51.0
 
