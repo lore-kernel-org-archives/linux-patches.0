@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D39FE399352;
-	Mon, 23 Mar 2026 14:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F16C3B19DA;
+	Mon, 23 Mar 2026 14:42:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276939; cv=none; b=OD1wipB6FThBkJngvIDrObuS3qAtZbqIlde4/1NBF1zpxMpMiSNfpOmiswjPyJBJ3asBsQvCXV6jafsCpgOJnN/hODbwbqYv0vmpEArqYfCyHA1DjQAvYb/sdzElqwc/DXZCT6pi4+aW/4a0sZogjmYqjeJ/u4H3AloqkAP19nI=
+	t=1774276942; cv=none; b=lrAhlJNw3oQxKY2fik+gOp/tagd3+gCq9l9wnmQ0lDCf+9AeVZi0RNycSj2j6xyyebgqWN3N5xR4+A3G75Tf8QPLt1rj2IUr1ctD3ab5+qe/0395BnpyphF+znkNj4VI3hfkC7utr5PvUDNf2TsnCnUt2tQUN+IbjLORSjY1cb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276939; c=relaxed/simple;
-	bh=Qr5DbG0KPSWCH+ZnzwtBcsrUs0H8H2Wk0hhHbiZkm78=;
+	s=arc-20240116; t=1774276942; c=relaxed/simple;
+	bh=vVuI9J2q8g7SP8yB3gDG8FuljByx7uf4191ekjRO35w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Krqm+Ui8C183FwLlmZY6JDAVQ6OveqfMAh2v4ewsASNi8Qi9cUAJ7nw91jvQ6T21XeIX6AL/YYnTOrH/nQINMdVInHC7D2E35Gnl5XKWl9ClmCD23X0bVxy9YgBliYwQY/I2KxiTDrhEMzLTXiyJOEwMLbWHreiV0aq1oSv1Sec=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=G0wvLm77; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g4PHQlpoKliMNdwiukoRHklunwApBD91VuADc//9bMo6uC5inqNlJZFa/wTaaQiZgqSXOHcw9Rz+XZhxyQ+mOeB5lyUNSMEnC6kB7nKVKDZtIq+NBVSYakB8oaTVsbxqz4i+IWxPANL6Yf/moqoRaPoRWl9daOL5mtselBrRZJM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R3Aa0pHv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="G0wvLm77"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6DAC4CEF7;
-	Mon, 23 Mar 2026 14:42:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R3Aa0pHv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10575C4CEF7;
+	Mon, 23 Mar 2026 14:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276939;
-	bh=Qr5DbG0KPSWCH+ZnzwtBcsrUs0H8H2Wk0hhHbiZkm78=;
+	s=korg; t=1774276942;
+	bh=vVuI9J2q8g7SP8yB3gDG8FuljByx7uf4191ekjRO35w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G0wvLm77GzY91/qVho0oj3rDeHN4cph/4xCCOeyKaJtz/dkSG9qEq/UebwxMPyr/Y
-	 YpJfvJk53N3yDk6nsaQ4xb3oqYB4yYH12xx27swnzfNdielnWp48NwfeNsJO60D1ng
-	 rkLhlYE2+Qg1O4pcFhp6Ydy0/N84oy4ahx2gjkEY=
+	b=R3Aa0pHvLPVEHTA1BQqf39N777RaqV1TO5Kciy7KI1b2/WFuprsr5jZpS+ed/ckjJ
+	 sd09uGaC1FtSrTMadphF612DM7EOM66dI2oRGBT0Jb9PMlzoj34sliNI+bpjZRtP87
+	 uIBwtkbB4Kte61Ak6lJ5fiJViJt8ke08ulXpq70M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Yan Zhao <yan.y.zhao@intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 262/460] KVM: x86: Allow vendor code to disable quirks
-Date: Mon, 23 Mar 2026 14:44:18 +0100
-Message-ID: <20260323134532.923863678@linuxfoundation.org>
+Subject: [PATCH 6.12 263/460] KVM: x86: Introduce supported_quirks to block disabling quirks
+Date: Mon, 23 Mar 2026 14:44:19 +0100
+Message-ID: <20260323134532.946469906@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,86 +51,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Yan Zhao <yan.y.zhao@intel.com>
 
-[ Upstream commit a4dae7c7a41d803a05192015b2d47aca8aca4abf ]
+[ Upstream commit bd7d5362b4c4ac8b951385867a0fadfae0ba3c07 ]
 
-In some cases, the handling of quirks is split between platform-specific
-code and generic code, or it is done entirely in generic code, but the
-relevant bug does not trigger on some platforms; for example,
-this will be the case for "ignore guest PAT".  Allow unaffected vendor
-modules to disable handling of a quirk for all VMs via a new entry in
-kvm_caps.
+Introduce supported_quirks in kvm_caps to store platform-specific force-enabled
+quirks.
 
-Such quirks remain available in KVM_CAP_DISABLE_QUIRKS2, because that API
-tells userspace that KVM *knows* that some of its past behavior was bogus
-or just undesirable.  In other words, it's plausible for userspace to
-refuse to run if a quirk is not listed by KVM_CAP_DISABLE_QUIRKS2, so
-preserve that and make it part of the API.
+No functional changes intended.
 
-As an example, mark KVM_X86_QUIRK_CD_NW_CLEARED as auto-disabled on
-Intel systems.
-
+Signed-off-by: Yan Zhao <yan.y.zhao@intel.com>
+Message-ID: <20250224070832.31394-1-yan.y.zhao@intel.com>
+[Remove unsupported quirks at KVM_ENABLE_CAP time. - Paolo]
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: e2ffe85b6d2b ("KVM: x86: Introduce KVM_X86_QUIRK_VMCS12_ALLOW_FREEZE_IN_SMM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/kvm_host.h |    3 +++
- arch/x86/kvm/svm/svm.c          |    1 +
- arch/x86/kvm/x86.c              |    2 ++
- arch/x86/kvm/x86.h              |    1 +
- 4 files changed, 7 insertions(+)
+ arch/x86/kvm/x86.c |    9 +++++----
+ arch/x86/kvm/x86.h |    2 ++
+ 2 files changed, 7 insertions(+), 4 deletions(-)
 
---- a/arch/x86/include/asm/kvm_host.h
-+++ b/arch/x86/include/asm/kvm_host.h
-@@ -2388,6 +2388,9 @@ int memslot_rmap_alloc(struct kvm_memory
- 	 KVM_X86_QUIRK_SLOT_ZAP_ALL |		\
- 	 KVM_X86_QUIRK_STUFF_FEATURE_MSRS)
- 
-+#define KVM_X86_CONDITIONAL_QUIRKS		\
-+	 KVM_X86_QUIRK_CD_NW_CLEARED
-+
- /*
-  * KVM previously used a u32 field in kvm_run to indicate the hypercall was
-  * initiated from long mode. KVM now sets bit 0 to indicate long mode, but the
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -5563,6 +5563,7 @@ static __init int svm_hardware_setup(voi
- 	 */
- 	allow_smaller_maxphyaddr = !npt_enabled;
- 
-+	kvm_caps.inapplicable_quirks &= ~KVM_X86_QUIRK_CD_NW_CLEARED;
- 	return 0;
- 
- err:
 --- a/arch/x86/kvm/x86.c
 +++ b/arch/x86/kvm/x86.c
+@@ -4801,7 +4801,7 @@ int kvm_vm_ioctl_check_extension(struct
+ 		r = enable_pmu ? KVM_CAP_PMU_VALID_MASK : 0;
+ 		break;
+ 	case KVM_CAP_DISABLE_QUIRKS2:
+-		r = KVM_X86_VALID_QUIRKS;
++		r = kvm_caps.supported_quirks;
+ 		break;
+ 	case KVM_CAP_X86_NOTIFY_VMEXIT:
+ 		r = kvm_caps.has_notify_vmexit;
+@@ -6534,11 +6534,11 @@ int kvm_vm_ioctl_enable_cap(struct kvm *
+ 	switch (cap->cap) {
+ 	case KVM_CAP_DISABLE_QUIRKS2:
+ 		r = -EINVAL;
+-		if (cap->args[0] & ~KVM_X86_VALID_QUIRKS)
++		if (cap->args[0] & ~kvm_caps.supported_quirks)
+ 			break;
+ 		fallthrough;
+ 	case KVM_CAP_DISABLE_QUIRKS:
+-		kvm->arch.disabled_quirks |= cap->args[0];
++		kvm->arch.disabled_quirks |= cap->args[0] & kvm_caps.supported_quirks;
+ 		r = 0;
+ 		break;
+ 	case KVM_CAP_SPLIT_IRQCHIP: {
 @@ -9782,6 +9782,7 @@ int kvm_x86_vendor_init(struct kvm_x86_i
  		kvm_host.xcr0 = xgetbv(XCR_XFEATURE_ENABLED_MASK);
  		kvm_caps.supported_xcr0 = kvm_host.xcr0 & KVM_SUPPORTED_XCR0;
  	}
-+	kvm_caps.inapplicable_quirks = KVM_X86_CONDITIONAL_QUIRKS;
++	kvm_caps.supported_quirks = KVM_X86_VALID_QUIRKS;
+ 	kvm_caps.inapplicable_quirks = KVM_X86_CONDITIONAL_QUIRKS;
  
  	rdmsrl_safe(MSR_EFER, &kvm_host.efer);
- 
-@@ -12780,6 +12781,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
+@@ -12781,7 +12782,7 @@ int kvm_arch_init_vm(struct kvm *kvm, un
  	/* Decided by the vendor code for other VM types.  */
  	kvm->arch.pre_fault_allowed =
  		type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
-+	kvm->arch.disabled_quirks = kvm_caps.inapplicable_quirks;
+-	kvm->arch.disabled_quirks = kvm_caps.inapplicable_quirks;
++	kvm->arch.disabled_quirks = kvm_caps.inapplicable_quirks & kvm_caps.supported_quirks;
  
  	ret = kvm_page_track_init(kvm);
  	if (ret)
 --- a/arch/x86/kvm/x86.h
 +++ b/arch/x86/kvm/x86.h
-@@ -32,6 +32,7 @@ struct kvm_caps {
+@@ -32,6 +32,8 @@ struct kvm_caps {
  	u64 supported_xcr0;
  	u64 supported_xss;
  	u64 supported_perf_cap;
-+	u64 inapplicable_quirks;
++
++	u64 supported_quirks;
+ 	u64 inapplicable_quirks;
  };
  
- struct kvm_host_values {
 
 
