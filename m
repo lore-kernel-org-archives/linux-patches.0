@@ -1,40 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28EA2194A60;
-	Mon, 23 Mar 2026 15:20:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2032737EE;
+	Mon, 23 Mar 2026 15:20:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279244; cv=none; b=nCs4svuAdmk6x59NfcodY+vm0eXpR86nSR8qEaGF0IoFFNNd+xwNrQPEvPeqpgM/U9UTZdJ0hq3MrTVPlL9rCtpfez7VAWsuuZMW8KBQjO3hLuKKnwgMfYkahUw+SXHRFlgcYVp0J8B45IoMhNsxMOlD1M/fCnhIyNh8gMvq4cw=
+	t=1774279247; cv=none; b=KGTfQ3BO6kxfJH/xqL1i2zOBWfiRNChWDiPOQvbpKGOgcv3PPCkMBjYCmvLk+hptc8VOBwtCliwyOk+DYjxmIRQACdRPuImjqN01DfLyaPW640rT6GltH1UNlqP7FeZqwUE5j4l8AsVYEPbBMmP3mG+FbtqlJ3XkYsuTx/e9zy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279244; c=relaxed/simple;
-	bh=2jA2Q2neWtcntCoRe5o8nrmd5jLDr13kYCCZFLu+7vg=;
+	s=arc-20240116; t=1774279247; c=relaxed/simple;
+	bh=FG00HA3rguMbjDgo7g2RB8QLX77Ub6UfBj98QZcF/Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L8SP8MLlekeQ2CnLKwfQgHVYvjQiVL2Ba9rp6/xAczCz02DF2b29mfb4VQ+DK+nMS7GIeVKGyCp2OGf5Ed+NzymjpFEqeEK53xPPK4YmgvAK8qBSdF9ootKPUmdnW47SJucKAEa1NWZjqXFAhzEz3C0GZm2RLCb7OHaq3Z3KdFY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ix2MEUV2; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l+iCgIqiBz/8HdiqqH3+pn/7lnSKIuDFmt7nHBqSXYu6amHeXfuqwP2GnyUA76mqtRN2cYRZQLz8I6qgw0HR64+P3LFtfmkvZciR/gPRLS5+8FAvCedjCM4ZR93lHsfp9VhwnkcTB+V/NARmlFnXdZVtS1e7HQ6HNr8BPZKVE5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IQMhass; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ix2MEUV2"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EF02C4CEF7;
-	Mon, 23 Mar 2026 15:20:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IQMhass"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DDBC4CEF7;
+	Mon, 23 Mar 2026 15:20:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279244;
-	bh=2jA2Q2neWtcntCoRe5o8nrmd5jLDr13kYCCZFLu+7vg=;
+	s=korg; t=1774279247;
+	bh=FG00HA3rguMbjDgo7g2RB8QLX77Ub6UfBj98QZcF/Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ix2MEUV2GF1QVhNgXKDncmZGT4eiHDwSIuc4uB0ICN6y7oSm+MYVWznri/pzGG81f
-	 vdZa+UEvDMylV6yoAkwcshCzpFaYsK7y5jomY+/Xhv0W7ee52qnhvY+m0pB2HQFRWe
-	 P4BqVwxljmuhFvspfmfdT9l9S7+oPFjJnaKnPpYE=
+	b=2IQMhassapkgT8IjajjZpdsTeD3fYrsFVIzZ1sFu5w7G99z40JCPlPe3lC4vfvEwH
+	 TJdZUDMJNyh2ETH2QzYsMlJX6b19E1vy8MKD3nFHhmMDExgaO7CR5udcTbQmbPCPth
+	 u4xtYSXSsY8drt06rfdJl1JDyHlHf8jBn2edLDK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Dipayaan Roy <dipayanroy@linux.microsoft.com>,
-	Simon Horman <horms@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Christian Loehle <christian.loehle@arm.com>,
+	Frederic Weisbecker <frederic@kernel.org>,
+	Qais Yousef <qyousef@layalina.io>,
+	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 523/567] net: mana: fix use-after-free in mana_hwc_destroy_channel() by reordering teardown
-Date: Mon, 23 Mar 2026 14:47:23 +0100
-Message-ID: <20260323134546.944666186@linuxfoundation.org>
+Subject: [PATCH 6.6 524/567] sched: idle: Consolidate the handling of two special cases
+Date: Mon, 23 Mar 2026 14:47:24 +0100
+Message-ID: <20260323134546.968025163@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,64 +54,131 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dipayaan Roy <dipayanroy@linux.microsoft.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit fa103fc8f56954a60699a29215cb713448a39e87 ]
+[ Upstream commit f4c31b07b136839e0fb3026f8a5b6543e3b14d2f ]
 
-A potential race condition exists in mana_hwc_destroy_channel() where
-hwc->caller_ctx is freed before the HWC's Completion Queue (CQ) and
-Event Queue (EQ) are destroyed. This allows an in-flight CQ interrupt
-handler to dereference freed memory, leading to a use-after-free or
-NULL pointer dereference in mana_hwc_handle_resp().
+There are two special cases in the idle loop that are handled
+inconsistently even though they are analogous.
 
-mana_smc_teardown_hwc() signals the hardware to stop but does not
-synchronize against IRQ handlers already executing on other CPUs. The
-IRQ synchronization only happens in mana_hwc_destroy_cq() via
-mana_gd_destroy_eq() -> mana_gd_deregister_irq(). Since this runs
-after kfree(hwc->caller_ctx), a concurrent mana_hwc_rx_event_handler()
-can dereference freed caller_ctx (and rxq->msg_buf) in
-mana_hwc_handle_resp().
+The first one is when a cpuidle driver is absent and the default CPU
+idle time power management implemented by the architecture code is used.
+In that case, the scheduler tick is stopped every time before invoking
+default_idle_call().
 
-Fix this by reordering teardown to reverse-of-creation order: destroy
-the TX/RX work queues and CQ/EQ before freeing hwc->caller_ctx. This
-ensures all in-flight interrupt handlers complete before the memory they
-access is freed.
+The second one is when a cpuidle driver is present, but there is only
+one idle state in its table.  In that case, the scheduler tick is never
+stopped at all.
 
-Fixes: ca9c54d2d6a5 ("net: mana: Add a driver for Microsoft Azure Network Adapter (MANA)")
-Reviewed-by: Haiyang Zhang <haiyangz@microsoft.com>
-Signed-off-by: Dipayaan Roy <dipayanroy@linux.microsoft.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Link: https://patch.msgid.link/abHA3AjNtqa1nx9k@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Since each of these approaches has its drawbacks, reconcile them with
+the help of one simple heuristic.  Namely, stop the tick if the CPU has
+been woken up by it in the previous iteration of the idle loop, or let
+it tick otherwise.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Christian Loehle <christian.loehle@arm.com>
+Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
+Reviewed-by: Qais Yousef <qyousef@layalina.io>
+Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
+Fixes: ed98c3491998 ("sched: idle: Do not stop the tick before cpuidle_idle_call()")
+[ rjw: Added Fixes tag, changelog edits ]
+Link: https://patch.msgid.link/4741364.LvFx2qVVIh@rafael.j.wysocki
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microsoft/mana/hw_channel.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ kernel/sched/idle.c | 30 +++++++++++++++++++++---------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/microsoft/mana/hw_channel.c b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-index 9d6426d4158e3..148dda6570fc5 100644
---- a/drivers/net/ethernet/microsoft/mana/hw_channel.c
-+++ b/drivers/net/ethernet/microsoft/mana/hw_channel.c
-@@ -776,9 +776,6 @@ void mana_hwc_destroy_channel(struct gdma_context *gc)
- 		gc->max_num_cqs = 0;
+diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
+index ecf555ad158ab..20a8f0f972e63 100644
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -134,6 +134,14 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+ 	return cpuidle_enter(drv, dev, next_state);
+ }
+ 
++static void idle_call_stop_or_retain_tick(bool stop_tick)
++{
++	if (stop_tick || tick_nohz_tick_stopped())
++		tick_nohz_idle_stop_tick();
++	else
++		tick_nohz_idle_retain_tick();
++}
++
+ /**
+  * cpuidle_idle_call - the main idle function
+  *
+@@ -143,7 +151,7 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
+  * set, and it returns with polling set.  If it ever stops polling, it
+  * must clear the polling bit.
+  */
+-static void cpuidle_idle_call(void)
++static void cpuidle_idle_call(bool stop_tick)
+ {
+ 	struct cpuidle_device *dev = cpuidle_get_device();
+ 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
+@@ -165,7 +173,7 @@ static void cpuidle_idle_call(void)
+ 	 */
+ 
+ 	if (cpuidle_not_available(drv, dev)) {
+-		tick_nohz_idle_stop_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		default_idle_call();
+ 		goto exit_idle;
+@@ -200,17 +208,19 @@ static void cpuidle_idle_call(void)
+ 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
+ 		call_cpuidle(drv, dev, next_state);
+ 	} else if (drv->state_count > 1) {
+-		bool stop_tick = true;
++		/*
++		 * stop_tick is expected to be true by default by cpuidle
++		 * governors, which allows them to select idle states with
++		 * target residency above the tick period length.
++		 */
++		stop_tick = true;
+ 
+ 		/*
+ 		 * Ask the cpuidle framework to choose a convenient idle state.
+ 		 */
+ 		next_state = cpuidle_select(drv, dev, &stop_tick);
+ 
+-		if (stop_tick || tick_nohz_tick_stopped())
+-			tick_nohz_idle_stop_tick();
+-		else
+-			tick_nohz_idle_retain_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		entered_state = call_cpuidle(drv, dev, next_state);
+ 		/*
+@@ -218,7 +228,7 @@ static void cpuidle_idle_call(void)
+ 		 */
+ 		cpuidle_reflect(dev, entered_state);
+ 	} else {
+-		tick_nohz_idle_retain_tick();
++		idle_call_stop_or_retain_tick(stop_tick);
+ 
+ 		/*
+ 		 * If there is only a single idle state (or none), there is
+@@ -246,6 +256,7 @@ static void cpuidle_idle_call(void)
+ static void do_idle(void)
+ {
+ 	int cpu = smp_processor_id();
++	bool got_tick = false;
+ 
+ 	/*
+ 	 * Check if we need to update blocked load
+@@ -288,8 +299,9 @@ static void do_idle(void)
+ 			tick_nohz_idle_restart_tick();
+ 			cpu_idle_poll();
+ 		} else {
+-			cpuidle_idle_call();
++			cpuidle_idle_call(got_tick);
+ 		}
++		got_tick = tick_nohz_idle_got_tick();
+ 		arch_cpu_idle_exit();
  	}
  
--	kfree(hwc->caller_ctx);
--	hwc->caller_ctx = NULL;
--
- 	if (hwc->txq)
- 		mana_hwc_destroy_wq(hwc, hwc->txq);
- 
-@@ -788,6 +785,9 @@ void mana_hwc_destroy_channel(struct gdma_context *gc)
- 	if (hwc->cq)
- 		mana_hwc_destroy_cq(hwc->gdma_dev->gdma_context, hwc->cq);
- 
-+	kfree(hwc->caller_ctx);
-+	hwc->caller_ctx = NULL;
-+
- 	mana_gd_free_res_map(&hwc->inflight_msg_res);
- 
- 	hwc->num_inflight_msg = 0;
 -- 
 2.51.0
 
