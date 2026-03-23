@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BAC725782D;
-	Mon, 23 Mar 2026 15:01:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2201D25A2B5;
+	Mon, 23 Mar 2026 15:01:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278088; cv=none; b=FSwM8orYWz8+bpG6BXvKobDqk6HWcCtxowGXWqf1nlTQ1wJ3AJdLeV2RixCKBDMDXpkqdFQZ5ZsC3axI2EC+Jylgi81NXo49vqOdY/VQ2NrfRjEU80tAJRf/PLSL4/mgK6yq/M5F7lT10QQfOhjuMOw6cXjo6qXKVo3XC6bramA=
+	t=1774278091; cv=none; b=mrUVXEQAxKpmfEQjjv8eiEtYAKnTpckyD3pJVLti2wJe6EyVdz0yM5orKT82iAL9dSKsBT35pDHcVSXP0ucBoIG9FOqJ6+hMud/kK9yEn/Rct2C0jz8REnGegDpUfvKXVWQZSoS8RN+lepNhCgGDjRmij5Ceff3UtzDtDHScEw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278088; c=relaxed/simple;
-	bh=gLwkZgDe8nNTK3kubJk5M0sQqopkpVL1Re8W+2HcD7E=;
+	s=arc-20240116; t=1774278091; c=relaxed/simple;
+	bh=a0iiakJfTgMGALNxqPtocnXsIqpoTVQG4tn0dFTKsu0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VwPIu0qHd5FrjbcMsPjzW5e0N5pX4lWwP910XFK1ESZEQnoHs3WuJGfLClXy7tHqQHtUKIDrdmKQYopnJkt6VNitlc1v97kSBksQmR53LTyME1KV2FRYDIiiLrSKKoZ4lflrmG69kWfQTSTyD3mBNWxGfrQ0L/5Y3Xa8rPf8LEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JJreKPCr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fwp2dMbgEtKvaMDmCdZgMa4bX4VRZ+YrXm/B/vSK2OrfjTZxQ5dBI/ZmAY/No8R99kPh6w7yn9iKcCwyFh5wbV5PaliM8CprrC2XU/YFfwzn0zNOPIcKKS+VAyKoGpPmZzReqtlt3yLHuA8EBXxbnIUfrqTViddEPWdb+BlO8IQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3FBJPH4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JJreKPCr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5050AC4CEF7;
-	Mon, 23 Mar 2026 15:01:27 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3FBJPH4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B482C2BC9E;
+	Mon, 23 Mar 2026 15:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278087;
-	bh=gLwkZgDe8nNTK3kubJk5M0sQqopkpVL1Re8W+2HcD7E=;
+	s=korg; t=1774278091;
+	bh=a0iiakJfTgMGALNxqPtocnXsIqpoTVQG4tn0dFTKsu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJreKPCrUUiwDh1K2jIi0MvNEzmqOSYvKqMD5Px36/ptk5s7TNzq4K8oSeNTVlQtX
-	 XC2BICeBKSvvCp4SevBeEo19MzHFMdjg0upeL8a/4xsmvbZa0e/dFbHLCTlvLLd/39
-	 yRoaTFSbmVrUK+c4WYHTuz/J5qscYI0aWkt5yJfQ=
+	b=y3FBJPH4eq07PDrRs/v7Kwc6hDyqKq1Vus5mA9bWAx0aBVAHR+H/ofPcgb3jHcaNK
+	 x8kZQNG857EA3qwiE2mA0HU8VZSzTqrbfua+lZcAKZWiIrsmoKxuHIwehjPaHw8DVu
+	 butlkqeJJ8DfEM+/52werzcK4zgACZK2wjRuIRT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kiszka <jan.kiszka@siemens.com>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Michael Kelley <mhklinux@outlook.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Piotr Mazek <pmazek@outlook.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 198/567] scsi: storvsc: Fix scheduling while atomic on PREEMPT_RT
-Date: Mon, 23 Mar 2026 14:41:58 +0100
-Message-ID: <20260323134538.747579285@linuxfoundation.org>
+Subject: [PATCH 6.6 199/567] ACPI: PM: Save NVS memory on Lenovo G70-35
+Date: Mon, 23 Mar 2026 14:41:59 +0100
+Message-ID: <20260323134538.772493628@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,107 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jan Kiszka <jan.kiszka@siemens.com>
+From: Piotr Mazek <pmazek@outlook.com>
 
-[ Upstream commit 57297736c08233987e5d29ce6584c6ca2a831b12 ]
+[ Upstream commit 023cd6d90f8aa2ef7b72d84be84a18e61ecebd64 ]
 
-This resolves the follow splat and lock-up when running with PREEMPT_RT
-enabled on Hyper-V:
+[821d6f0359b0614792ab8e2fb93b503e25a65079] prevented machines
+produced later than 2012 from saving NVS region to accelerate S3.
 
-[  415.140818] BUG: scheduling while atomic: stress-ng-iomix/1048/0x00000002
-[  415.140822] INFO: lockdep is turned off.
-[  415.140823] Modules linked in: intel_rapl_msr intel_rapl_common intel_uncore_frequency_common intel_pmc_core pmt_telemetry pmt_discovery pmt_class intel_pmc_ssram_telemetry intel_vsec ghash_clmulni_intel aesni_intel rapl binfmt_misc nls_ascii nls_cp437 vfat fat snd_pcm hyperv_drm snd_timer drm_client_lib drm_shmem_helper snd sg soundcore drm_kms_helper pcspkr hv_balloon hv_utils evdev joydev drm configfs efi_pstore nfnetlink vsock_loopback vmw_vsock_virtio_transport_common hv_sock vmw_vsock_vmci_transport vsock vmw_vmci efivarfs autofs4 ext4 crc16 mbcache jbd2 sr_mod sd_mod cdrom hv_storvsc serio_raw hid_generic scsi_transport_fc hid_hyperv scsi_mod hid hv_netvsc hyperv_keyboard scsi_common
-[  415.140846] Preemption disabled at:
-[  415.140847] [<ffffffffc0656171>] storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140854] CPU: 8 UID: 0 PID: 1048 Comm: stress-ng-iomix Not tainted 6.19.0-rc7 #30 PREEMPT_{RT,(full)}
-[  415.140856] Hardware name: Microsoft Corporation Virtual Machine/Virtual Machine, BIOS Hyper-V UEFI Release v4.1 09/04/2024
-[  415.140857] Call Trace:
-[  415.140861]  <TASK>
-[  415.140861]  ? storvsc_queuecommand+0x2e1/0xbe0 [hv_storvsc]
-[  415.140863]  dump_stack_lvl+0x91/0xb0
-[  415.140870]  __schedule_bug+0x9c/0xc0
-[  415.140875]  __schedule+0xdf6/0x1300
-[  415.140877]  ? rtlock_slowlock_locked+0x56c/0x1980
-[  415.140879]  ? rcu_is_watching+0x12/0x60
-[  415.140883]  schedule_rtlock+0x21/0x40
-[  415.140885]  rtlock_slowlock_locked+0x502/0x1980
-[  415.140891]  rt_spin_lock+0x89/0x1e0
-[  415.140893]  hv_ringbuffer_write+0x87/0x2a0
-[  415.140899]  vmbus_sendpacket_mpb_desc+0xb6/0xe0
-[  415.140900]  ? rcu_is_watching+0x12/0x60
-[  415.140902]  storvsc_queuecommand+0x669/0xbe0 [hv_storvsc]
-[  415.140904]  ? HARDIRQ_verbose+0x10/0x10
-[  415.140908]  ? __rq_qos_issue+0x28/0x40
-[  415.140911]  scsi_queue_rq+0x760/0xd80 [scsi_mod]
-[  415.140926]  __blk_mq_issue_directly+0x4a/0xc0
-[  415.140928]  blk_mq_issue_direct+0x87/0x2b0
-[  415.140931]  blk_mq_dispatch_queue_requests+0x120/0x440
-[  415.140933]  blk_mq_flush_plug_list+0x7a/0x1a0
-[  415.140935]  __blk_flush_plug+0xf4/0x150
-[  415.140940]  __submit_bio+0x2b2/0x5c0
-[  415.140944]  ? submit_bio_noacct_nocheck+0x272/0x360
-[  415.140946]  submit_bio_noacct_nocheck+0x272/0x360
-[  415.140951]  ext4_read_bh_lock+0x3e/0x60 [ext4]
-[  415.140995]  ext4_block_write_begin+0x396/0x650 [ext4]
-[  415.141018]  ? __pfx_ext4_da_get_block_prep+0x10/0x10 [ext4]
-[  415.141038]  ext4_da_write_begin+0x1c4/0x350 [ext4]
-[  415.141060]  generic_perform_write+0x14e/0x2c0
-[  415.141065]  ext4_buffered_write_iter+0x6b/0x120 [ext4]
-[  415.141083]  vfs_write+0x2ca/0x570
-[  415.141087]  ksys_write+0x76/0xf0
-[  415.141089]  do_syscall_64+0x99/0x1490
-[  415.141093]  ? rcu_is_watching+0x12/0x60
-[  415.141095]  ? finish_task_switch.isra.0+0xdf/0x3d0
-[  415.141097]  ? rcu_is_watching+0x12/0x60
-[  415.141098]  ? lock_release+0x1f0/0x2a0
-[  415.141100]  ? rcu_is_watching+0x12/0x60
-[  415.141101]  ? finish_task_switch.isra.0+0xe4/0x3d0
-[  415.141103]  ? rcu_is_watching+0x12/0x60
-[  415.141104]  ? __schedule+0xb34/0x1300
-[  415.141106]  ? hrtimer_try_to_cancel+0x1d/0x170
-[  415.141109]  ? do_nanosleep+0x8b/0x160
-[  415.141111]  ? hrtimer_nanosleep+0x89/0x100
-[  415.141114]  ? __pfx_hrtimer_wakeup+0x10/0x10
-[  415.141116]  ? xfd_validate_state+0x26/0x90
-[  415.141118]  ? rcu_is_watching+0x12/0x60
-[  415.141120]  ? do_syscall_64+0x1e0/0x1490
-[  415.141121]  ? do_syscall_64+0x1e0/0x1490
-[  415.141123]  ? rcu_is_watching+0x12/0x60
-[  415.141124]  ? do_syscall_64+0x1e0/0x1490
-[  415.141125]  ? do_syscall_64+0x1e0/0x1490
-[  415.141127]  ? irqentry_exit+0x140/0x7e0
-[  415.141129]  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Despite being made after 2012, Lenovo G70-35 still needs NVS memory
+saving during S3. A quirk is introduced for this platform.
 
-get_cpu() disables preemption while the spinlock hv_ringbuffer_write is
-using is converted to an rt-mutex under PREEMPT_RT.
-
-Signed-off-by: Jan Kiszka <jan.kiszka@siemens.com>
-Tested-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Reviewed-by: Michael Kelley <mhklinux@outlook.com>
-Tested-by: Michael Kelley <mhklinux@outlook.com>
-Link: https://patch.msgid.link/0c7fb5cd-fb21-4760-8593-e04bade84744@siemens.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Piotr Mazek <pmazek@outlook.com>
+[ rjw: Subject adjustment ]
+Link: https://patch.msgid.link/GV2PPF3CD5B63CC2442EE3F76F8443EAD90D499A@GV2PPF3CD5B63CC.EURP251.PROD.OUTLOOK.COM
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/storvsc_drv.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/acpi/sleep.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/scsi/storvsc_drv.c b/drivers/scsi/storvsc_drv.c
-index 9dcad02ce4895..106bccaac4276 100644
---- a/drivers/scsi/storvsc_drv.c
-+++ b/drivers/scsi/storvsc_drv.c
-@@ -1861,8 +1861,9 @@ static int storvsc_queuecommand(struct Scsi_Host *host, struct scsi_cmnd *scmnd)
- 	cmd_request->payload_sz = payload_sz;
- 
- 	/* Invokes the vsc to start an IO */
--	ret = storvsc_do_io(dev, cmd_request, get_cpu());
--	put_cpu();
-+	migrate_disable();
-+	ret = storvsc_do_io(dev, cmd_request, smp_processor_id());
-+	migrate_enable();
- 
- 	if (ret)
- 		scsi_dma_unmap(scmnd);
+diff --git a/drivers/acpi/sleep.c b/drivers/acpi/sleep.c
+index 728acfeb774d8..2fd51b18d13c4 100644
+--- a/drivers/acpi/sleep.c
++++ b/drivers/acpi/sleep.c
+@@ -372,6 +372,14 @@ static const struct dmi_system_id acpisleep_dmi_table[] __initconst = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "80E1"),
+ 		},
+ 	},
++	{
++	.callback = init_nvs_save_s3,
++	.ident = "Lenovo G70-35",
++	.matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "80Q5"),
++		},
++	},
+ 	/*
+ 	 * ThinkPad X1 Tablet(2016) cannot do suspend-to-idle using
+ 	 * the Low Power S0 Idle firmware interface (see
 -- 
 2.51.0
 
