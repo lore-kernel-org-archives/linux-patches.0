@@ -1,36 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848C83C07A;
-	Mon, 23 Mar 2026 14:20:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DFC199FAB;
+	Mon, 23 Mar 2026 14:20:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275631; cv=none; b=ICIbLkK9pBhpyvZlu79lekRT59nYCcyG65ZKD/vuIzba8K+4B4RLo0f1nOliOpkQyYI8JdNlxv2uYk6eQ4NN97uuwrgJIazN+7jJmR14zFrXP/aKAcdpy/3kO3s7p8XwpH78z9HGcWrpfPBaj+H0+ZimuoX7c2LlZS/qSAOT664=
+	t=1774275634; cv=none; b=TN8XphpwpiseQ6GwfTn1Fs+ctdYtVoxHNgACLqdL5JiZzTojUcXgYKsoNmJuRF7JrDYCfOPcqKVNTBsxPXjorbJJHZaxLLjx+yIRw+U9RA3LvoaHHgnAw8FQpyU7JUPFh3FMYYf3YDimHMKWX64KjcuwK6djKAsJuuh/tIEkASE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275631; c=relaxed/simple;
-	bh=KVuz//zdj8Wac6LZ0uZ9Boqp8L1y2S7pQKrzAQCWkjI=;
+	s=arc-20240116; t=1774275634; c=relaxed/simple;
+	bh=QY68GLT8PpWj2nSkQlo57g/LhjfMDmGwDExz6TBc0Jw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZuxGoCvHniiVZ361HgbpdbhpP5eHM0BDgKxsCZxlsMwC6JuvpneRJNWTl7BLqvts6/+fmC2tCjYP8jESORzcuNdmRi7kWO7L4NyILtBBeMwu132ovTCSo0dqSiNbTOi4TiqYn3VsFfSGilJsn7gSeCy+zmewL+TBmEPY7+gXFiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pbHvAEc8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=aVN8luE0AINHD4vXF5khYuTzRB55ikiVrOTeuGKZ4V/NZu5eu+2DYujrOsIT6rS6Ql/qiXRM9Mf/2848pn4CQSjXQKcKs/IMVzM279jTa20fcTmzLZ/FO/KteV6zK1ecz9VdiwlTkzXKTN9k+hb25sD/RpPIw7uMyAZLxc/j6gE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=l4srZLEe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pbHvAEc8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E41AC2BC9E;
-	Mon, 23 Mar 2026 14:20:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="l4srZLEe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29AA9C4CEF7;
+	Mon, 23 Mar 2026 14:20:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275631;
-	bh=KVuz//zdj8Wac6LZ0uZ9Boqp8L1y2S7pQKrzAQCWkjI=;
+	s=korg; t=1774275634;
+	bh=QY68GLT8PpWj2nSkQlo57g/LhjfMDmGwDExz6TBc0Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pbHvAEc8HyX46DvBJpOvGUdwjGAwVQAn+d27Y3lwbdvweDe301qHLN4vskdttBHoL
-	 /fwRH/BQM82FGqJl5BK8o/lPcIDZHct/SaupkQJL792ur1dPWEOzDfzpF61go6uwe0
-	 Ln2q6fS4bmeVfM5oqb6DD+zACbMve10rHNkPNdkI=
+	b=l4srZLEet0e8aZMOPAjJNTnUL43AD3VwtwJkOPD6Ffy0EOczezn4zXuGKhp2tGojE
+	 07qTlAM/lpCgg04SblPqk6+QfZxRFeOVoM0dx4JxEU3lPDWuK4BWKm8hgTS7+RZNW1
+	 SdR4Gro5AN56pOrFZL6J0W3yiDpIl/oyCiQ9iJxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.12 166/460] parisc: Check kernel mapping earlier at bootup
-Date: Mon, 23 Mar 2026 14:42:42 +0100
-Message-ID: <20260323134530.630298066@linuxfoundation.org>
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 167/460] pmdomain: bcm: bcm2835-power: Fix broken reset status read
+Date: Mon, 23 Mar 2026 14:42:43 +0100
+Message-ID: <20260323134530.653395836@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -43,66 +46,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Maíra Canal <mcanal@igalia.com>
 
-commit 17c144f1104bfc29a3ce3f7d0931a1bfb7a3558c upstream.
+commit 550bae2c0931dbb664a61b08c21cf156f0a5362a upstream.
 
-The check if the initial mapping is sufficient needs to happen much
-earlier during bootup. Move this test directly to the start_parisc()
-function and use native PDC iodc functions to print the warning, because
-panic() and printk() are not functional yet.
+bcm2835_reset_status() has a misplaced parenthesis on every PM_READ()
+call. Since PM_READ(reg) expands to readl(power->base + (reg)), the
+expression:
 
-This fixes boot when enabling various KALLSYSMS options which need
-much more space.
+    PM_READ(PM_GRAFX & PM_V3DRSTN)
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # v6.0+
+computes the bitwise AND of the register offset PM_GRAFX with the
+bitmask PM_V3DRSTN before using the result as a register offset, reading
+from the wrong MMIO address instead of the intended PM_GRAFX register.
+The same issue affects the PM_IMAGE cases.
+
+Fix by moving the closing parenthesis so PM_READ() receives only the
+register offset, and the bitmask is applied to the value returned by
+the read.
+
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Cc: stable@vger.kernel.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/setup.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/pmdomain/bcm/bcm2835-power.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/arch/parisc/kernel/setup.c
-+++ b/arch/parisc/kernel/setup.c
-@@ -120,14 +120,6 @@ void __init setup_arch(char **cmdline_p)
- #endif
- 	printk(KERN_CONT ".\n");
+--- a/drivers/pmdomain/bcm/bcm2835-power.c
++++ b/drivers/pmdomain/bcm/bcm2835-power.c
+@@ -580,11 +580,11 @@ static int bcm2835_reset_status(struct r
  
--	/*
--	 * Check if initial kernel page mappings are sufficient.
--	 * panic early if not, else we may access kernel functions
--	 * and variables which can't be reached.
--	 */
--	if (__pa((unsigned long) &_end) >= KERNEL_INITIAL_SIZE)
--		panic("KERNEL_INITIAL_ORDER too small!");
--
- #ifdef CONFIG_64BIT
- 	if(parisc_narrow_firmware) {
- 		printk(KERN_INFO "Kernel is using PDC in 32-bit mode.\n");
-@@ -279,6 +271,18 @@ void __init start_parisc(void)
- 	int ret, cpunum;
- 	struct pdc_coproc_cfg coproc_cfg;
- 
-+	/*
-+	 * Check if initial kernel page mapping is sufficient.
-+	 * Print warning if not, because we may access kernel functions and
-+	 * variables which can't be reached yet through the initial mappings.
-+	 * Note that the panic() and printk() functions are not functional
-+	 * yet, so we need to use direct iodc() firmware calls instead.
-+	 */
-+	const char warn1[] = "CRITICAL: Kernel may crash because "
-+			     "KERNEL_INITIAL_ORDER is too small.\n";
-+	if (__pa((unsigned long) &_end) >= KERNEL_INITIAL_SIZE)
-+		pdc_iodc_print(warn1, sizeof(warn1) - 1);
-+
- 	/* check QEMU/SeaBIOS marker in PAGE0 */
- 	running_on_qemu = (memcmp(&PAGE0->pad0, "SeaBIOS", 8) == 0);
- 
+ 	switch (id) {
+ 	case BCM2835_RESET_V3D:
+-		return !PM_READ(PM_GRAFX & PM_V3DRSTN);
++		return !(PM_READ(PM_GRAFX) & PM_V3DRSTN);
+ 	case BCM2835_RESET_H264:
+-		return !PM_READ(PM_IMAGE & PM_H264RSTN);
++		return !(PM_READ(PM_IMAGE) & PM_H264RSTN);
+ 	case BCM2835_RESET_ISP:
+-		return !PM_READ(PM_IMAGE & PM_ISPRSTN);
++		return !(PM_READ(PM_IMAGE) & PM_ISPRSTN);
+ 	default:
+ 		return -EINVAL;
+ 	}
 
 
