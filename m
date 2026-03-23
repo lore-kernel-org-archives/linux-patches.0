@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE523BADAC;
-	Mon, 23 Mar 2026 14:01:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEB9B3B52F5;
+	Mon, 23 Mar 2026 14:01:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274464; cv=none; b=CfPumj7UzgMuhvKNA1tjlBzUmDwlZLBDI7bajdL+rOXSKFf/w+FHUhIyPW+nPanT26cWrE1axjngKTDGFa0bwvWdcyMFcEsqBkbJdo/V/BctceMLpygpkW4+tcBJhy4K/nCb1p61gD5gHgjATBthwZgrFlv971dzEjXSy0dK5oI=
+	t=1774274467; cv=none; b=hA+8Wz+xZ2c2Sz++4S4JKVNXf2oMbdRRAg8JjhkwNeyIpf93cTHgu5xO+f1VTSInSShwMRxjsc2WCrNgGP1DGIro9hleL/fnYpxsq+uEdoSbVOKv6qCxVdY3JFSzJd5Rrft7FGVsPxiL0HPradKu7E2EFhgfY8V48U5RDjnfn6A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274464; c=relaxed/simple;
-	bh=Y7cNYwuCgIXiRJVc4twunvwbJP6jmBgrJGE20m5nejA=;
+	s=arc-20240116; t=1774274467; c=relaxed/simple;
+	bh=x4v58RKB61KnAMXMGA7yMxYGjLN8ymo2GTFp+OA5nFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=rQKIA5rnnXG+ubiM3wipkRQjFIKJH4KBRncZngtHBte0Y049On7jy5FfFb4I7NWCeClZn2AbAvHbcOTuYdTvR+HQAYZbXWp5K0trajTwiJssucvPfzFssvvqOjxjrz/kbuvuZxRuAK8o05aPgqfaMnBLB0pbnoKNmkHhWwtl1nM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cQ7rFxQ6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AFEG08OSRp2wsUiSl2i3bRT4jAug2aFMPxoK5VE6nxeUdA93HxdQ5W4J8vqXy147vgPGh+dY+XwrpaICA8UHm72k7Ueu+WekOh5kx/9dqiOh/G7W4d4gYNRGTW14frAQtAlYd2UIsgEQhEXhNplsIXfzqPKJz1aL3J7cY8unC0g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ySGOz9Yx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cQ7rFxQ6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 218ADC2BC9E;
-	Mon, 23 Mar 2026 14:01:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ySGOz9Yx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AB10C2BC9E;
+	Mon, 23 Mar 2026 14:01:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274464;
-	bh=Y7cNYwuCgIXiRJVc4twunvwbJP6jmBgrJGE20m5nejA=;
+	s=korg; t=1774274467;
+	bh=x4v58RKB61KnAMXMGA7yMxYGjLN8ymo2GTFp+OA5nFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQ7rFxQ6xi2vfeqxD6OegYpw2cHz5OkpQYFqKItLUKnhwDDzjiQ/MAS7z95JHE6fz
-	 zOaqNB2KAaccBluW3ej/Yg265PUVeV6F5k1j9N6u4zBoVhK8NpG62EjEYBpqybXqpl
-	 5Ytx1cD24rJmKORxPOnBHFk6J527mqAMl7DryEmQ=
+	b=ySGOz9YxXD37txhW32of1kJEGoDHSvSZcFtHcD3OJxYZk6BXUKhqVamXw+6J6/He7
+	 skc6FXdd6XfniFbB3s7PsZzZvZi8H5WUzZykEG/IH3Hx1TEbdR3QVRFHqNC/OAj3PW
+	 zZssAyWU7305+jLV/cx1JyIFjUaL7MbsLXE4Ud2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Vinay Belgaumkar <vinay.belgaumkar@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Naresh Solanki <naresh.solanki@9elements.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 219/220] drm/xe/guc: Fail immediately on GuC load error
-Date: Mon, 23 Mar 2026 14:46:36 +0100
-Message-ID: <20260323134511.423617505@linuxfoundation.org>
+Subject: [PATCH 6.19 220/220] hwmon: (max6639) Fix pulses-per-revolution implementation
+Date: Mon, 23 Mar 2026 14:46:37 +0100
+Message-ID: <20260323134511.448259955@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -47,67 +45,70 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit 9b72283ec9b8685acdb3467de8fbc3352fdb70bb ]
+[ Upstream commit e7bae9a7a5e1251ab414291f4e9304d702bb9221 ]
 
-By using the same variable for both the return of poll_timeout_us and
-the return of the polled function guc_wait_ucode, the return value of
-the latter is overwritten and lost after exiting the polling loop. Since
-guc_wait_ucode returns -1 on GuC load failure, we lose that information
-and always continue as if the GuC had been loaded correctly.
+The valid range for the pulses-per-revolution devicetree property is
+1..4. The current code checks for a range of 1..5. Fix it.
 
-This is fixed by simply using 2 separate variables.
+Declare the variable used to retrieve pulses per revolution from
+devicetree as u32 (unsigned) to match the of_property_read_u32() API.
 
-Fixes: a4916b4da448 ("drm/xe/guc: Refactor GuC load to use poll_timeout_us()")
-Signed-off-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Signed-off-by: Vinay Belgaumkar <vinay.belgaumkar@intel.com>
-Link: https://patch.msgid.link/20260303001732.2540493-2-daniele.ceraolospurio@intel.com
-(cherry picked from commit c85ec5c5753a46b5c2aea1292536487be9470ffe)
-Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+The current code uses a postfix decrement when writing the pulses per
+resolution into the chip. This has no effect since the value is evaluated
+before it is decremented. Fix it by decrementing before evaluating the
+value.
+
+Fixes: 7506ebcd662b ("hwmon: (max6639) : Configure based on DT property")
+Cc: Naresh Solanki <naresh.solanki@9elements.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/xe/xe_guc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/hwmon/max6639.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/xe/xe_guc.c b/drivers/gpu/drm/xe/xe_guc.c
-index edb939f262685..2eaa009ba2d8d 100644
---- a/drivers/gpu/drm/xe/xe_guc.c
-+++ b/drivers/gpu/drm/xe/xe_guc.c
-@@ -1121,14 +1121,14 @@ static int guc_wait_ucode(struct xe_guc *guc)
- 	struct xe_guc_pc *guc_pc = &gt->uc.guc.pc;
- 	u32 before_freq, act_freq, cur_freq;
- 	u32 status = 0, tries = 0;
-+	int load_result, ret;
- 	ktime_t before;
- 	u64 delta_ms;
--	int ret;
+diff --git a/drivers/hwmon/max6639.c b/drivers/hwmon/max6639.c
+index 48fde4f1a1561..b6b32286d967a 100644
+--- a/drivers/hwmon/max6639.c
++++ b/drivers/hwmon/max6639.c
+@@ -232,7 +232,7 @@ static int max6639_read_fan(struct device *dev, u32 attr, int channel,
+ static int max6639_set_ppr(struct max6639_data *data, int channel, u8 ppr)
+ {
+ 	/* Decrement the PPR value and shift left by 6 to match the register format */
+-	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), ppr-- << 6);
++	return regmap_write(data->regmap, MAX6639_REG_FAN_PPR(channel), --ppr << 6);
+ }
  
- 	before_freq = xe_guc_pc_get_act_freq(guc_pc);
- 	before = ktime_get();
+ static int max6639_write_fan(struct device *dev, u32 attr, int channel,
+@@ -524,8 +524,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
  
--	ret = poll_timeout_us(ret = guc_load_done(gt, &status, &tries), ret,
-+	ret = poll_timeout_us(load_result = guc_load_done(gt, &status, &tries), load_result,
- 			      10 * USEC_PER_MSEC,
- 			      GUC_LOAD_TIMEOUT_SEC * USEC_PER_SEC, false);
+ {
+ 	struct device *dev = &client->dev;
+-	u32 i;
+-	int err, val;
++	u32 i, val;
++	int err;
  
-@@ -1136,7 +1136,7 @@ static int guc_wait_ucode(struct xe_guc *guc)
- 	act_freq = xe_guc_pc_get_act_freq(guc_pc);
- 	cur_freq = xe_guc_pc_get_cur_freq_fw(guc_pc);
+ 	err = of_property_read_u32(child, "reg", &i);
+ 	if (err) {
+@@ -540,8 +540,8 @@ static int max6639_probe_child_from_dt(struct i2c_client *client,
  
--	if (ret) {
-+	if (ret || load_result <= 0) {
- 		xe_gt_err(gt, "load failed: status = 0x%08X, time = %lldms, freq = %dMHz (req %dMHz)\n",
- 			  status, delta_ms, xe_guc_pc_get_act_freq(guc_pc),
- 			  xe_guc_pc_get_cur_freq_fw(guc_pc));
+ 	err = of_property_read_u32(child, "pulses-per-revolution", &val);
+ 	if (!err) {
+-		if (val < 1 || val > 5) {
+-			dev_err(dev, "invalid pulses-per-revolution %d of %pOFn\n", val, child);
++		if (val < 1 || val > 4) {
++			dev_err(dev, "invalid pulses-per-revolution %u of %pOFn\n", val, child);
+ 			return -EINVAL;
+ 		}
+ 		data->ppr[i] = val;
 -- 
 2.51.0
 
