@@ -1,40 +1,45 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 795A93B38BD;
-	Mon, 23 Mar 2026 14:00:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CCCF397E84;
+	Mon, 23 Mar 2026 14:00:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274415; cv=none; b=qYbGn0fR7AXq2tq4idOvrHhy2S2LgZ3vyMBMPFvzL9zAYyt9qZ0BN0Ho0jPAFM/3R1gQDf0wucbEHZTgOGYq/qpWhOOhbQNorgEZG97kslQvAJWjAXPZE7l8eOTlUtCNH4gTdK1BaGWltEP82EIt43v8PkEeRgH9GJXf/mTWEQY=
+	t=1774274418; cv=none; b=BjzUrulds9Lajde55deehEJNwRUszDzPD3YAKVWXUMsi9kWCB3oe8aj4IKzTfX3qEi3Xt9pur01JolgWnIGn4hHav57SmEZnTFIzpzLRcNsHqrGJXxQwhneIfot7BCd7E4HkTH12RIMWNkdfpNfHz0k3iEvU2lh1POT0SMeUIJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274415; c=relaxed/simple;
-	bh=5ey9fCOULzlMb4jkNKtvBiswmtOl2B7c/VHjkgFcm3I=;
+	s=arc-20240116; t=1774274418; c=relaxed/simple;
+	bh=BW2cF7hiBTzFNVmK74LlGyOsM0oFb8UDkGfUif9gGY0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EyJPatODUZ0WP5xjG6YidvmvlV81DabwsZuwZ+eMS+487MH5gRgF0Qnqlfnubru18MtdpVLHmnEOuNbCII8uRKMxD/sZU+tN6BvbOQj1YkTWvWACAh2Y2jX0T8m4xn9Kj0v/K9l0ij+I6orC5dAIVer0eWj3Ih4unuDShUFDNu8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZb1EwSP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mmVUDSaOimLCNuM0ofmK86PvV9p1ZzLlQa5evWamZ60t671c24+OnAt1LihBf7e+L7aAuzRWETDeoE9hoNk/Ls6r/y3ii+UVA6WM8h6F8eh8BreRhAbs+VC/ltUwCwEwXRIG3YQOFWk+7k69j7XjF2D0WeyK+oXiR/oVhrV1d1k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hwZQ47Cn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZb1EwSP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A18BAC2BC9E;
-	Mon, 23 Mar 2026 14:00:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hwZQ47Cn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904D2C4CEF7;
+	Mon, 23 Mar 2026 14:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274415;
-	bh=5ey9fCOULzlMb4jkNKtvBiswmtOl2B7c/VHjkgFcm3I=;
+	s=korg; t=1774274418;
+	bh=BW2cF7hiBTzFNVmK74LlGyOsM0oFb8UDkGfUif9gGY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZb1EwSPhJZwDt1779L7IYj81Eka5P3GWCwKsLUeTqBh+JPSGCMkh0DxCeiinrJLT
-	 bISquqlENOvUrcn5g+MLCgXphdTJgzCdG9DL5mkBkJRAdPHEcfzo/J8mmNpqpljoyo
-	 XBwdmdNezo1Kg7WyqS8fB+QKmmmllruTOL2MSZI0=
+	b=hwZQ47CnLASFXEbcdEdKdQdDpCRBjiComHXYa2noyV1pg5bxCbwd6TgI2Q/qcs3Kj
+	 NEhrKtav4OgLegsQyFF2Xh7/DbjZ6jK1PbvXUKKb6oalpxwII04dpPlOT9zvvG8AkH
+	 Mdjed2DJcy/ZybV7QQxMtNDri9JchD1McXd2vcIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Damato <joe@dama.to>,
-	Vasant Hegde <vasant.hegde@amd.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Joerg Roedel <joerg.roedel@amd.com>,
+	Roman Li <roman.li@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Jerry Zuo <jerry.zuo@amd.com>,
+	Sun peng Li <sunpeng.li@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Dan Carpenter <dan.carpenter@linaro.org>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 208/220] iommu/amd: Block identity domain when SNP enabled
-Date: Mon, 23 Mar 2026 14:46:25 +0100
-Message-ID: <20260323134511.126623444@linuxfoundation.org>
+Subject: [PATCH 6.19 209/220] drm/amd/display: Fix DisplayID not-found handling in parse_edid_displayid_vrr()
+Date: Mon, 23 Mar 2026 14:46:26 +0100
+Message-ID: <20260323134511.153997876@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,87 +58,69 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joe Damato <joe@dama.to>
+From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
 
-[ Upstream commit ba17de98545d07285d15ce4fe2afe98283338fb0 ]
+[ Upstream commit 2323b019651ad81c20a0f7f817c63392b3110652 ]
 
-Previously, commit 8388f7df936b ("iommu/amd: Do not support
-IOMMU_DOMAIN_IDENTITY after SNP is enabled") prevented users from
-changing the IOMMU domain to identity if SNP was enabled.
+parse_edid_displayid_vrr() searches the EDID extension blocks for a
+DisplayID extension before parsing the dynamic video timing range.
 
-This resulted in an error when writing to sysfs:
+The code previously checked whether edid_ext was NULL after the search
+loop. However, edid_ext is assigned during each iteration of the loop,
+so it will never be NULL once the loop has executed. If no DisplayID
+extension is found, edid_ext ends up pointing to the last extension
+block, and the NULL check does not correctly detect the failure case.
 
-  # echo "identity" > /sys/kernel/iommu_groups/50/type
-  -bash: echo: write error: Cannot allocate memory
+Instead, check whether the loop completed without finding a matching
+DisplayID block by testing "i == edid->extensions". This ensures the
+function exits early when no DisplayID extension is present and avoids
+parsing an unrelated EDID extension block.
 
-However, commit 4402f2627d30 ("iommu/amd: Implement global identity
-domain") changed the flow of the code, skipping the SNP guard and
-allowing users to change the IOMMU domain to identity after a machine
-has booted.
+Also simplify the EDID validation check using "!edid ||
+!edid->extensions".
 
-Once the user does that, they will probably try to bind and the
-device/driver will start to do DMA which will trigger errors:
+Fixes the below:
+drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:13079 parse_edid_displayid_vrr() warn: variable dereferenced before check 'edid_ext' (see line 13075)
 
-  iommu ivhd3: AMD-Vi: Event logged [ILLEGAL_DEV_TABLE_ENTRY device=0000:43:00.0 pasid=0x00000 address=0x3737b01000 flags=0x0020]
-  iommu ivhd3: AMD-Vi: Control Reg : 0xc22000142148d
-  AMD-Vi: DTE[0]: 6000000000000003
-  AMD-Vi: DTE[1]: 0000000000000001
-  AMD-Vi: DTE[2]: 2000003088b3e013
-  AMD-Vi: DTE[3]: 0000000000000000
-  bnxt_en 0000:43:00.0 (unnamed net_device) (uninitialized): Error (timeout: 500015) msg {0x0 0x0} len:0
-  iommu ivhd3: AMD-Vi: Event logged [ILLEGAL_DEV_TABLE_ENTRY device=0000:43:00.0 pasid=0x00000 address=0x3737b01000 flags=0x0020]
-  iommu ivhd3: AMD-Vi: Control Reg : 0xc22000142148d
-  AMD-Vi: DTE[0]: 6000000000000003
-  AMD-Vi: DTE[1]: 0000000000000001
-  AMD-Vi: DTE[2]: 2000003088b3e013
-  AMD-Vi: DTE[3]: 0000000000000000
-  bnxt_en 0000:43:00.0: probe with driver bnxt_en failed with error -16
-
-To prevent this from happening, create an attach wrapper for
-identity_domain_ops which returns EINVAL if amd_iommu_snp_en is true.
-
-With this commit applied:
-
-  # echo "identity" > /sys/kernel/iommu_groups/62/type
-  -bash: echo: write error: Invalid argument
-
-Fixes: 4402f2627d30 ("iommu/amd: Implement global identity domain")
-Signed-off-by: Joe Damato <joe@dama.to>
-Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Joerg Roedel <joerg.roedel@amd.com>
+Fixes: a638b837d0e6 ("drm/amd/display: Fix refresh rate range for some panel")
+Cc: Roman Li <roman.li@amd.com>
+Cc: Alex Hung <alex.hung@amd.com>
+Cc: Jerry Zuo <jerry.zuo@amd.com>
+Cc: Sun peng Li <sunpeng.li@amd.com>
+Cc: Tom Chung <chiahsuan.chung@amd.com>
+Cc: Dan Carpenter <dan.carpenter@linaro.org>
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
+Reviewed-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 91c7e6342e98c846b259c57273436fdea4c043f2)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu.c | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index e216b5a13d49d..cdcce33336826 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -2854,8 +2854,21 @@ static struct iommu_domain blocked_domain = {
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index e84ec4365ca6b..5a54d3f4a3de5 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -13101,7 +13101,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
+ 	u16 min_vfreq;
+ 	u16 max_vfreq;
  
- static struct protection_domain identity_domain;
+-	if (edid == NULL || edid->extensions == 0)
++	if (!edid || !edid->extensions)
+ 		return;
  
-+static int amd_iommu_identity_attach(struct iommu_domain *dom, struct device *dev,
-+				     struct iommu_domain *old)
-+{
-+	/*
-+	 * Don't allow attaching a device to the identity domain if SNP is
-+	 * enabled.
-+	 */
-+	if (amd_iommu_snp_en)
-+		return -EINVAL;
-+
-+	return amd_iommu_attach_device(dom, dev, old);
-+}
-+
- static const struct iommu_domain_ops identity_domain_ops = {
--	.attach_dev = amd_iommu_attach_device,
-+	.attach_dev = amd_iommu_identity_attach,
- };
+ 	/* Find DisplayID extension */
+@@ -13111,7 +13111,7 @@ static void parse_edid_displayid_vrr(struct drm_connector *connector,
+ 			break;
+ 	}
  
- void amd_iommu_init_identity_domain(void)
+-	if (edid_ext == NULL)
++	if (i == edid->extensions)
+ 		return;
+ 
+ 	while (j < EDID_LENGTH) {
 -- 
 2.51.0
 
