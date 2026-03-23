@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D3D13B8D75;
-	Mon, 23 Mar 2026 16:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7C5E3AC0D3;
+	Mon, 23 Mar 2026 16:10:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282243; cv=none; b=eEPms9yybN7YKfOwLp9xt21PRXj7A3zZf3DmcUn1PwS5yCap0KP1KrASpCM33Gcg51QFcW+Pbf+D4kVhq0hw29UByu6PRLhKtZ1cFyjx+bhS1zCB5Q4k8RrAMpc2rbkOICy9wFG0giTS/DbxaCDMGzyZP/a13IVmX6zCd3bNMHk=
+	t=1774282245; cv=none; b=m2GpmluKY1A7IuF+MszGADbQJpSRxYpO2m2kvVLNPZtyHc6nE6gfH5+OZx8pJMpVHZln0S71eeoZlFqCl9v9nNbhHWxjcxcp5d/TydEw1pp0w5lsIsJVp+csXU2etXHfz7Hqw8xGtE0iVMuV30sIsV3DP3H2noxePKJdl4/1vPM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282243; c=relaxed/simple;
-	bh=5T4cFJnaYDb5sAtrVOZzj+G32acNJDuI9qpKfeDv8Hs=;
+	s=arc-20240116; t=1774282245; c=relaxed/simple;
+	bh=zdManzZpe2MUMLbbh7v5Gethcb/9etrvOKevD3uaBkQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zrjil73ApxTMOb9uajC1s6D8IZD8XUtyn37nKm5f2hL27V43lzYahRe06xMa+ApkS+RdGVBXs2asKqHq8olGki/8ekZeWSM5QvlgYhS2eHBT3MHmtH8Gak0qN4rjrN+RRctqlQz5gAURoIxnlDGJlUUJwavzujjb06sF8yaWpXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cu92xMkh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ml+lWktLnuIVo801cEO4pgMngMw/k5NuvDRq1gf0cwYs6Aw6a/cg1jbNjHPErV6HXSG/HGFvtFInguFSI7dFKEUFBsmmhJpohFwAtBW/aZnOY6cceLFecj9xnhO6V6+sIxwd0N46K/D8h7XcJ2w5mAGivQAXfvj25biTICCH+t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GKjKRstf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cu92xMkh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1FD3C4CEF7;
-	Mon, 23 Mar 2026 16:10:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GKjKRstf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E0FC4CEF7;
+	Mon, 23 Mar 2026 16:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282243;
-	bh=5T4cFJnaYDb5sAtrVOZzj+G32acNJDuI9qpKfeDv8Hs=;
+	s=korg; t=1774282245;
+	bh=zdManzZpe2MUMLbbh7v5Gethcb/9etrvOKevD3uaBkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cu92xMkh0edvDEV6kjdPvoiGmNG5HRI/swd0cZkNk15ZPFTgeYht0NAAFQGPO8+d/
-	 V4umjpHOCxOeH/ornNNRzDw1uh8BzT533VdHCAAYGBm8pESdkRZ+0pfIlPYyY2uSMd
-	 dDg/ZH9b037hfyabUH35dF2YliZ4HOMPnRwGnTyI=
+	b=GKjKRstf7e14pZSW2UTq9XyM6PpNkf0VtMg+SsCLHTjX674GVYXsfJ+83sEJ7FNOp
+	 cT3Oh0P6X77PhV4YbkNRcRTcn4RtSSTIXjVgE76qZIc6XhLCSvVVsez911yXWQb0k5
+	 NBXR2Bsh3pxtoNvBkfHl5buaVa+R/SqqUfO5uWis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 083/481] wifi: radiotap: reject radiotap with unknown bits
-Date: Mon, 23 Mar 2026 14:41:05 +0100
-Message-ID: <20260323134527.285769656@linuxfoundation.org>
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 048/481] ext4: remove unnecessary e4b->bd_buddy_page check in ext4_mb_load_buddy_gfp
+Date: Mon, 23 Mar 2026 14:40:30 +0100
+Message-ID: <20260323134526.402114313@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,51 +52,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Kemeng Shi <shikemeng@huaweicloud.com>
 
-commit c854758abe0b8d86f9c43dc060ff56a0ee5b31e0 upstream.
+[ Upstream commit 285164b80175157c18a06425cf25591c9f942b1a ]
 
-The radiotap parser is currently only used with the radiotap
-namespace (not with vendor namespaces), but if the undefined
-field 18 is used, the alignment/size is unknown as well. In
-this case, iterator->_next_ns_data isn't initialized (it's
-only set for skipping vendor namespaces), and syzbot points
-out that we later compare against this uninitialized value.
+e4b->bd_buddy_page is only set if we initialize ext4_buddy successfully. So
+e4b->bd_buddy_page is always NULL in error handle branch. Just remove the
+dead check.
 
-Fix this by moving the rejection of unknown radiotap fields
-down to after the in-namespace lookup, so it will really use
-iterator->_next_ns_data only for vendor namespaces, even in
-case undefined fields are present.
-
-Cc: stable@vger.kernel.org
-Fixes: 33e5a2f776e3 ("wireless: update radiotap parser")
-Reported-by: syzbot+b09c1af8764c0097bb19@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/r/69944a91.a70a0220.2c38d7.00fc.GAE@google.com
-Link: https://patch.msgid.link/20260217120526.162647-2-johannes@sipsolutions.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kemeng Shi <shikemeng@huaweicloud.com>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230303172120.3800725-11-shikemeng@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: bdc56a9c46b2 ("ext4: fix e4b bitmap inconsistency reports")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/radiotap.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/mballoc.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/net/wireless/radiotap.c
-+++ b/net/wireless/radiotap.c
-@@ -239,14 +239,14 @@ int ieee80211_radiotap_iterator_next(
- 		default:
- 			if (!iterator->current_namespace ||
- 			    iterator->_arg_index >= iterator->current_namespace->n_bits) {
--				if (iterator->current_namespace == &radiotap_ns)
--					return -ENOENT;
- 				align = 0;
- 			} else {
- 				align = iterator->current_namespace->align_size[iterator->_arg_index].align;
- 				size = iterator->current_namespace->align_size[iterator->_arg_index].size;
- 			}
- 			if (!align) {
-+				if (iterator->current_namespace == &radiotap_ns)
-+					return -ENOENT;
- 				/* skip all subsequent data */
- 				iterator->_arg = iterator->_next_ns_data;
- 				/* give up on this namespace */
+diff --git a/fs/ext4/mballoc.c b/fs/ext4/mballoc.c
+index 71e15007ffdf4..7431ff97a68c8 100644
+--- a/fs/ext4/mballoc.c
++++ b/fs/ext4/mballoc.c
+@@ -1599,8 +1599,7 @@ ext4_mb_load_buddy_gfp(struct super_block *sb, ext4_group_t group,
+ 		put_page(page);
+ 	if (e4b->bd_bitmap_page)
+ 		put_page(e4b->bd_bitmap_page);
+-	if (e4b->bd_buddy_page)
+-		put_page(e4b->bd_buddy_page);
++
+ 	e4b->bd_buddy = NULL;
+ 	e4b->bd_bitmap = NULL;
+ 	return ret;
+-- 
+2.51.0
+
 
 
