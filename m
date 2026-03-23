@@ -1,40 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F16E1A6818;
-	Mon, 23 Mar 2026 13:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D2F3B27E9;
+	Mon, 23 Mar 2026 13:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274374; cv=none; b=d3aLdQiaRzgdoXEh27DZXJAog+GHs5jrQDeMQTHXf+AS0mJk81uV9Qu5fkNlNYyGMcyJViYP8THY/j1JUCm3JKq6wg6d5+xM77n64oilyIIDvVYub6vmIBeploE6vmiJbBP5VEsD8tfSVUe1PPNKMNkwd12guGHB3/t/J3I7bA8=
+	t=1774274377; cv=none; b=P18fDOvplIhycnVvAE1zS5ugswQDSd3Cx8cg2189pP4lew1FlgvCf9lfHXuUN53ST36cMwNjGKhKvDJb3MqcdKntgIMsfOglYo3I1wbZYzw2D6QxpiEVqPE72GJCzE4TEYo+xWDfj+kIDlhDAK0E/mlL9z28HTbs1e4YR8oESo8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274374; c=relaxed/simple;
-	bh=Ad5HeNV6z/cOPrZGWG1nPwUL906DiRUdfLWxAvb0PQA=;
+	s=arc-20240116; t=1774274377; c=relaxed/simple;
+	bh=qUav43EMErbfPaXqPnUJrbvYi+og5St+1SWa83Z6ve4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Wx0A9K+y5lmre7JeCJ/OSPKfS7q96L9z7tXKG/ZITf88gB6SfAaACaYIG1ndmyXlubBqDOt/kTZ2WW3qxxcHfbnkhwUiAy7vqxzdiZ+EcaHWPOp4JcJ16hJHeB3BwYcT+QD2hwbhIQ1Tilb1NZCQLjT9/cQFKbaYk75KeBVeL3o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KA9C3z3S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LojHU6ihXWRxq84k2WXj3h/8UmOoekQg1RJrXC2BCWjLiyFtPstaB91cWHqLM2RsnIMDwBgdypNcc97jRSu9pyhLZPe/s1NsFv9eTWSUSMpvOKvcuJhmmhTIBwlIxFEQ6xHQUVheg3KvWNw47krxH3QqTuWhqgmqrapqcXpjlUk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m1eerfHS; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KA9C3z3S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D682C2BC9E;
-	Mon, 23 Mar 2026 13:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m1eerfHS"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 909C4C2BCB1;
+	Mon, 23 Mar 2026 13:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274373;
-	bh=Ad5HeNV6z/cOPrZGWG1nPwUL906DiRUdfLWxAvb0PQA=;
+	s=korg; t=1774274377;
+	bh=qUav43EMErbfPaXqPnUJrbvYi+og5St+1SWa83Z6ve4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KA9C3z3SLMYOVqu0V/gILtHOJI4Y1ZqvlFDu4fb8BOCjK3tnB94UrVRXHzWY52Fpe
-	 LdoWCJYFTo/iuPhjYqXZl31rm45CDmvva86YwmRXg9R2km3/GR9g4F5ZP/xPT5ljux
-	 yPma0qF3w3rmT84lxzEPXd8ql79tQacdfQWsNxms=
+	b=m1eerfHSV9I5582XNx9quqaREgEpcGmQSPPwv3euB+x7Jvs9gi4O/lJmN5+F+L2a3
+	 GdL0X8iZR3wLo2J9kLCWfUQGQxlVVMRrap9Cg5xjFL3s2ZEDv60v3jdfbExwCtexr3
+	 +lvrzf3TfLsyEz3W1egLToJBK2v90oYmm6Kx9z1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
+	Max Filippov <jcmvbkbc@gmail.com>,
+	=?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>,
+	Cyrill Gorcunov <gorcunov@gmail.com>,
+	Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>,
+	Andrei Vagin <avagin@google.com>,
+	Kees Cook <kees@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 170/220] net/mlx5e: Fix race condition during IPSec ESN update
-Date: Mon, 23 Mar 2026 14:45:47 +0100
-Message-ID: <20260323134509.965716495@linuxfoundation.org>
+Subject: [PATCH 6.19 197/220] binfmt_elf_fdpic: fix AUXV size calculation for ELF_HWCAP3 and ELF_HWCAP4
+Date: Mon, 23 Mar 2026 14:46:14 +0100
+Message-ID: <20260323134510.813097392@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -47,132 +50,75 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Andrei Vagin <avagin@google.com>
 
-[ Upstream commit beb6e2e5976a128b0cccf10d158124422210c5ef ]
+[ Upstream commit 4ced4cf5c9d172d91f181df3accdf949d3761aab ]
 
-In IPSec full offload mode, the device reports an ESN (Extended
-Sequence Number) wrap event to the driver. The driver validates this
-event by querying the IPSec ASO and checking that the esn_event_arm
-field is 0x0, which indicates an event has occurred. After handling
-the event, the driver must re-arm the context by setting esn_event_arm
-back to 0x1.
+Commit 4e6e8c2b757f ("binfmt_elf: Wire up AT_HWCAP3 at AT_HWCAP4") added
+support for AT_HWCAP3 and AT_HWCAP4, but it missed updating the AUX
+vector size calculation in create_elf_fdpic_tables() and
+AT_VECTOR_SIZE_BASE in include/linux/auxvec.h.
 
-A race condition exists in this handling path. After validating the
-event, the driver calls mlx5_accel_esp_modify_xfrm() to update the
-kernel's xfrm state. This function temporarily releases and
-re-acquires the xfrm state lock.
+Similar to the fix for AT_HWCAP2 in commit c6a09e342f8e ("binfmt_elf_fdpic:
+fix AUXV size calculation when ELF_HWCAP2 is defined"), this omission
+leads to a mismatch between the reserved space and the actual number of
+AUX entries, eventually triggering a kernel BUG_ON(csp != sp).
 
-So, need to acknowledge the event first by setting esn_event_arm to
-0x1. This prevents the driver from reprocessing the same ESN update if
-the hardware sends events for other reason. Since the next ESN update
-only occurs after nearly 2^31 packets are received, there's no risk of
-missing an update, as it will happen long after this handling has
-finished.
+Fix this by incrementing nitems when ELF_HWCAP3 or ELF_HWCAP4 are
+defined and updating AT_VECTOR_SIZE_BASE.
 
-Processing the event twice causes the ESN high-order bits (esn_msb) to
-be incremented incorrectly. The driver then programs the hardware with
-this invalid ESN state, which leads to anti-replay failures and a
-complete halt of IPSec traffic.
-
-Fix this by re-arming the ESN event immediately after it is validated,
-before calling mlx5_accel_esp_modify_xfrm(). This ensures that any
-spurious, duplicate events are correctly ignored, closing the race
-window.
-
-Fixes: fef06678931f ("net/mlx5e: Fix ESN update kernel panic")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260316094603.6999-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Max Filippov <jcmvbkbc@gmail.com>
+Reviewed-by: Michal Koutný <mkoutny@suse.com>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Cyrill Gorcunov <gorcunov@gmail.com>
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Fixes: 4e6e8c2b757f ("binfmt_elf: Wire up AT_HWCAP3 at AT_HWCAP4")
+Signed-off-by: Andrei Vagin <avagin@google.com>
+Link: https://patch.msgid.link/20260217180108.1420024-2-avagin@google.com
+Signed-off-by: Kees Cook <kees@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/en_accel/ipsec_offload.c        | 33 ++++++++-----------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ fs/binfmt_elf_fdpic.c  | 6 ++++++
+ include/linux/auxvec.h | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-index 2739ff490239d..e0611fa827971 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-@@ -310,10 +310,11 @@ static void mlx5e_ipsec_aso_update(struct mlx5e_ipsec_sa_entry *sa_entry,
- 	mlx5e_ipsec_aso_query(sa_entry, data);
- }
+diff --git a/fs/binfmt_elf_fdpic.c b/fs/binfmt_elf_fdpic.c
+index 48fd2de3bca05..a3d4e6973b299 100644
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -595,6 +595,12 @@ static int create_elf_fdpic_tables(struct linux_binprm *bprm,
+ #ifdef ELF_HWCAP2
+ 	nitems++;
+ #endif
++#ifdef ELF_HWCAP3
++	nitems++;
++#endif
++#ifdef ELF_HWCAP4
++	nitems++;
++#endif
  
--static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
--					 u32 mode_param)
-+static void
-+mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
-+			     u32 mode_param,
-+			     struct mlx5_accel_esp_xfrm_attrs *attrs)
- {
--	struct mlx5_accel_esp_xfrm_attrs attrs = {};
- 	struct mlx5_wqe_aso_ctrl_seg data = {};
+ 	csp = sp;
+ 	sp -= nitems * 2 * sizeof(unsigned long);
+diff --git a/include/linux/auxvec.h b/include/linux/auxvec.h
+index 407f7005e6d60..8bcb9b7262628 100644
+--- a/include/linux/auxvec.h
++++ b/include/linux/auxvec.h
+@@ -4,6 +4,6 @@
  
- 	if (mode_param < MLX5E_IPSEC_ESN_SCOPE_MID) {
-@@ -323,18 +324,7 @@ static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
- 		sa_entry->esn_state.overlap = 1;
- 	}
+ #include <uapi/linux/auxvec.h>
  
--	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, &attrs);
--
--	/* It is safe to execute the modify below unlocked since the only flows
--	 * that could affect this HW object, are create, destroy and this work.
--	 *
--	 * Creation flow can't co-exist with this modify work, the destruction
--	 * flow would cancel this work, and this work is a single entity that
--	 * can't conflict with it self.
--	 */
--	spin_unlock_bh(&sa_entry->x->lock);
--	mlx5_accel_esp_modify_xfrm(sa_entry, &attrs);
--	spin_lock_bh(&sa_entry->x->lock);
-+	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, attrs);
- 
- 	data.data_offset_condition_operand =
- 		MLX5_IPSEC_ASO_REMOVE_FLOW_PKT_CNT_OFFSET;
-@@ -451,7 +441,9 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
- 	struct mlx5e_ipsec_work *work =
- 		container_of(_work, struct mlx5e_ipsec_work, work);
- 	struct mlx5e_ipsec_sa_entry *sa_entry = work->data;
-+	struct mlx5_accel_esp_xfrm_attrs tmp = {};
- 	struct mlx5_accel_esp_xfrm_attrs *attrs;
-+	bool need_modify = false;
- 	int ret;
- 
- 	attrs = &sa_entry->attrs;
-@@ -461,19 +453,22 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
- 	if (ret)
- 		goto unlock;
- 
-+	if (attrs->lft.soft_packet_limit != XFRM_INF)
-+		mlx5e_ipsec_handle_limits(sa_entry);
-+
- 	if (attrs->replay_esn.trigger &&
- 	    !MLX5_GET(ipsec_aso, sa_entry->ctx, esn_event_arm)) {
- 		u32 mode_param = MLX5_GET(ipsec_aso, sa_entry->ctx,
- 					  mode_parameter);
- 
--		mlx5e_ipsec_update_esn_state(sa_entry, mode_param);
-+		mlx5e_ipsec_update_esn_state(sa_entry, mode_param, &tmp);
-+		need_modify = true;
- 	}
- 
--	if (attrs->lft.soft_packet_limit != XFRM_INF)
--		mlx5e_ipsec_handle_limits(sa_entry);
--
- unlock:
- 	spin_unlock_bh(&sa_entry->x->lock);
-+	if (need_modify)
-+		mlx5_accel_esp_modify_xfrm(sa_entry, &tmp);
- 	kfree(work);
- }
- 
+-#define AT_VECTOR_SIZE_BASE 22 /* NEW_AUX_ENT entries in auxiliary table */
++#define AT_VECTOR_SIZE_BASE 24 /* NEW_AUX_ENT entries in auxiliary table */
+   /* number of "#define AT_.*" above, minus {AT_NULL, AT_IGNORE, AT_NOTELF} */
+ #endif /* _LINUX_AUXVEC_H */
 -- 
 2.51.0
 
