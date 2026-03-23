@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 255572773C3;
-	Mon, 23 Mar 2026 15:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD071A00F0;
+	Mon, 23 Mar 2026 15:10:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278650; cv=none; b=YpaEQLtaS/aPnYomInxJ0rsY734TviNsOo3sKZd8SWR3HPDJVas04HdXlBz6sbPoeYmaqyUxvGz/xAGBSwmw2FC/CgZSLW7u+1VrG0jYffvrUExighceYHfF+NprLSp0q8KdsDZ/ZlNyUlAQdWXE9lGVYq/+FfF4AyUL2lmHIhk=
+	t=1774278653; cv=none; b=iCLDpjaVTEmUH3vEM6gTwyzlXMTW40Qp7paBofVpVjh+M2HdcQh8ReiVLEVddX4cRWXXnGC4tnw56KvNHk68G7g1k81xf8xQt1XMOak8w3r09wm46JHmZPdGmAscqgvrnfcusvq4KtyaVqqKSw3aWUygV+qrYgn8rwr+qPM++Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278650; c=relaxed/simple;
-	bh=XqeGgNpnJmEMO5KzZuVEtf58QP86GB6TuvqYATz32aw=;
+	s=arc-20240116; t=1774278653; c=relaxed/simple;
+	bh=v44Aew+DQO4lBE5bbMmfbKXbAuj5rgMPWtMIwH0CGDc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNpyaj0jRpHgk6WAbazWFUlEWCrflc6klYKJzytQso4vUFaymDlB93ZJM7GwILEgn0fjdT5FzBLUM+RivzzfrioMJtEJF8B9b3VDaXrudMAmYFGyAu7DgCu7riKxdnxvpaRLdSehPWwfxG1UZmVAuPN21+9O2c3Kkw/TdLWKGNA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lMVv46yg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5XYTkAzAPzOIHRZKfilZjWNZJMlQQRa+jwh2yhbswM1s/AmiAK6mM0GNEccUQYqiwnmxAojiesAN4+fpnYqDo4ckjHZ0JzvO8Dx/ZN95LcQ+fxZACkM61PaY/r0bjjjHxClMFDfSHfUN5o4iXWVPD1cv8bliLaiFpxN3tF2Bag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=n6rwR0BN; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lMVv46yg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D81FC4CEF7;
-	Mon, 23 Mar 2026 15:10:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="n6rwR0BN"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72B2C4CEF7;
+	Mon, 23 Mar 2026 15:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278650;
-	bh=XqeGgNpnJmEMO5KzZuVEtf58QP86GB6TuvqYATz32aw=;
+	s=korg; t=1774278653;
+	bh=v44Aew+DQO4lBE5bbMmfbKXbAuj5rgMPWtMIwH0CGDc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lMVv46ygQsFOS7ALzb1r1oocKGvuzyFqa480w8rfWOxgUmFj6O1vwZvI8CCk001X5
-	 4UvNGpHaUGaqhA68ePEEwhamB8AABqreh3VEn6hSnZOAC3SLjZJ30UiDWbTO6wznaD
-	 0YTU04h6G6gR6zxCva5yNlw/HiEcD+43JM6sI/7k=
+	b=n6rwR0BNvboGv2UfRnl+AguFJQ2eentLoBAyNV+t+gyh88J6VnmAwfJThLqmnATYh
+	 4ZSksTvrcXmcsHYINCImeRMBUnxqgkDKbsw5uza73lMV1yTBNlS3VYyGNxX0yv2v7s
+	 fK9vmydA/iLrVSz83Z9jNLvX3L9N7TsMtY8A/CXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Wu <fanwu01@zju.edu.cn>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 332/567] net: ethernet: arc: emac: quiesce interrupts before requesting IRQ
-Date: Mon, 23 Mar 2026 14:44:12 +0100
-Message-ID: <20260323134542.048778301@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Jianpeng Chang <jianpeng.chang.cn@windriver.com>,
+	Will Deacon <will@kernel.org>,
+	"Huang, Ying" <ying.huang@linux.alibaba.com>,
+	Guenter Roeck <linux@roeck-us.net>
+Subject: [PATCH 6.6 323/567] arm64: mm: Add PTE_DIRTY back to PAGE_KERNEL* to fix kexec/hibernation
+Date: Mon, 23 Mar 2026 14:44:03 +0100
+Message-ID: <20260323134541.823390415@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,53 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fan Wu <fanwu01@zju.edu.cn>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 2503d08f8a2de618e5c3a8183b250ff4a2e2d52c upstream.
+commit c25c4aa3f79a488cc270507935a29c07dc6bddfc upstream.
 
-Normal RX/TX interrupts are enabled later, in arc_emac_open(), so probe
-should not see interrupt delivery in the usual case. However, hardware may
-still present stale or latched interrupt status left by firmware or the
-bootloader.
+Commit 143937ca51cc ("arm64, mm: avoid always making PTE dirty in
+pte_mkwrite()") changed pte_mkwrite_novma() to only clear PTE_RDONLY
+when PTE_DIRTY is set. This was to allow writable-clean PTEs for swap
+pages that haven't actually been written.
 
-If probe later unwinds after devm_request_irq() has installed the handler,
-such a stale interrupt can still reach arc_emac_intr() during teardown and
-race with release of the associated net_device.
+However, this broke kexec and hibernation for some platforms. Both go
+through trans_pgd_create_copy() -> _copy_pte(), which calls
+pte_mkwrite_novma() to make the temporary linear-map copy fully
+writable. With the updated pte_mkwrite_novma(), read-only kernel pages
+(without PTE_DIRTY) remain read-only in the temporary mapping.
+While such behaviour is fine for user pages where hardware DBM or
+trapping will make them writeable, subsequent in-kernel writes by the
+kexec relocation code will fault.
 
-Avoid that window by putting the device into a known quiescent state before
-requesting the IRQ: disable all EMAC interrupt sources and clear any
-pending EMAC interrupt status bits. This keeps the change hardware-focused
-and minimal, while preventing spurious IRQ delivery from leftover state.
+Add PTE_DIRTY back to all _PAGE_KERNEL* protection definitions. This was
+the case prior to 5.4, commit aa57157be69f ("arm64: Ensure
+VM_WRITE|VM_SHARED ptes are clean by default"). With the kernel
+linear-map PTEs always having PTE_DIRTY set, pte_mkwrite_novma()
+correctly clears PTE_RDONLY.
 
-Fixes: e4f2379db6c6 ("ethernet/arc/arc_emac - Add new driver")
+Fixes: 143937ca51cc ("arm64, mm: avoid always making PTE dirty in pte_mkwrite()")
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Fan Wu <fanwu01@zju.edu.cn>
-Link: https://patch.msgid.link/20260309132409.584966-1-fanwu01@zju.edu.cn
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Jianpeng Chang <jianpeng.chang.cn@windriver.com>
+Link: https://lore.kernel.org/r/20251204062722.3367201-1-jianpeng.chang.cn@windriver.com
+Cc: Will Deacon <will@kernel.org>
+Cc: Huang, Ying <ying.huang@linux.alibaba.com>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Huang Ying <ying.huang@linux.alibaba.com>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/arc/emac_main.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/arm64/include/asm/pgtable-prot.h |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/net/ethernet/arc/emac_main.c
-+++ b/drivers/net/ethernet/arc/emac_main.c
-@@ -934,6 +934,17 @@ int arc_emac_probe(struct net_device *nd
- 	/* Set poll rate so that it polls every 1 ms */
- 	arc_reg_set(priv, R_POLLRATE, clock_frequency / 1000000);
+--- a/arch/arm64/include/asm/pgtable-prot.h
++++ b/arch/arm64/include/asm/pgtable-prot.h
+@@ -45,11 +45,11 @@
  
-+	/*
-+	 * Put the device into a known quiescent state before requesting
-+	 * the IRQ. Clear only EMAC interrupt status bits here; leave the
-+	 * MDIO completion bit alone and avoid writing TXPL_MASK, which is
-+	 * used to force TX polling rather than acknowledge interrupts.
-+	 */
-+	arc_reg_set(priv, R_ENABLE, 0);
-+	arc_reg_set(priv, R_STATUS, RXINT_MASK | TXINT_MASK | ERR_MASK |
-+		    TXCH_MASK | MSER_MASK | RXCR_MASK |
-+		    RXFR_MASK | RXFL_MASK);
-+
- 	ndev->irq = irq;
- 	dev_info(dev, "IRQ is %d\n", ndev->irq);
+ #define _PAGE_DEFAULT		(_PROT_DEFAULT | PTE_ATTRINDX(MT_NORMAL))
  
+-#define _PAGE_KERNEL		(PROT_NORMAL)
+-#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY)
+-#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY)
+-#define _PAGE_KERNEL_EXEC	(PROT_NORMAL & ~PTE_PXN)
+-#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT)
++#define _PAGE_KERNEL		(PROT_NORMAL | PTE_DIRTY)
++#define _PAGE_KERNEL_RO		((PROT_NORMAL & ~PTE_WRITE) | PTE_RDONLY | PTE_DIRTY)
++#define _PAGE_KERNEL_ROX	((PROT_NORMAL & ~(PTE_WRITE | PTE_PXN)) | PTE_RDONLY | PTE_DIRTY)
++#define _PAGE_KERNEL_EXEC	((PROT_NORMAL & ~PTE_PXN) | PTE_DIRTY)
++#define _PAGE_KERNEL_EXEC_CONT	((PROT_NORMAL & ~PTE_PXN) | PTE_CONT | PTE_DIRTY)
+ 
+ #define _PAGE_SHARED		(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_UXN | PTE_WRITE)
+ #define _PAGE_SHARED_EXEC	(_PAGE_DEFAULT | PTE_USER | PTE_RDONLY | PTE_NG | PTE_PXN | PTE_WRITE)
 
 
