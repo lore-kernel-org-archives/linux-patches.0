@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ABB3B583D;
-	Mon, 23 Mar 2026 15:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CAE53B5820;
+	Mon, 23 Mar 2026 15:22:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279339; cv=none; b=Tr2Mu4+8M3t+EE36kwPCuIK948tWJfaK/qczMDzp0EIfLpkodaviLJ/UKAXdL7RW2AOwGtYTgeftm8enAHMYz0lj3kBlEokU21p0FtmU3dxBFZA+yfl7CiGNbl3ZQK8UwKd5rTGrUDS54qFfQMcLybTXuP44NF8bFYIYqZY9QnA=
+	t=1774279342; cv=none; b=IWjc39KSU0qHmIIaju53LG0ats1VIYmrMUR5+9V7sMlhdDEJIbzwMEy2ONPpsPr4NyEqZZstRZL4o2hpJDnq9Y6gdlxr5DVnuAE7oKuDVnZAVD18GeRTgX5FI3T3D0NEPdPLxzSpznok5EMDf1VtDNAaBvnn+b6Hla0qdyHhQqs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279339; c=relaxed/simple;
-	bh=8qifCHHti358DAJyAsJekicH8llpzw/UOZT3KANm8R0=;
+	s=arc-20240116; t=1774279342; c=relaxed/simple;
+	bh=wDsFXAWS4xoV0U9bhH42h2DoXNsolcVmqiWbMSbSa1k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GRzAWWbh5ivyHNTGfbNn1q3U94fOJjbEe7+4H6UTqcUzcNYogq8RWnxQ59lCJr49pfUNOvKpc8ATAk6e1TbsnYNaes8D2TZxVmenqji649PPz0p+a1Y1dxN6a2ZjZwu7a53kWKT5DQ0dM6keNTYuLBKQpVQGdbBFL8DBz/V4NZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bsdNN3Ke; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=tNnQ9nsVbOE+G+oNS4m/WykyyWW9mdiduw6zX1MY7DcTEBxBOXoIQzzeLQDUtBe3q0AyxHVvpw19nMKriM6gsQ5gVBk969Ln4qb0N4HrXj2EdbFUGFev2Uie6oCbKZqVK5JjJ22IpbctFaE6qFJpAIcgMjqvFICAYeELket70c4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AGf0r6a0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bsdNN3Ke"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB292C4CEF7;
-	Mon, 23 Mar 2026 15:22:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AGf0r6a0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ECFC2BC9E;
+	Mon, 23 Mar 2026 15:22:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279339;
-	bh=8qifCHHti358DAJyAsJekicH8llpzw/UOZT3KANm8R0=;
+	s=korg; t=1774279342;
+	bh=wDsFXAWS4xoV0U9bhH42h2DoXNsolcVmqiWbMSbSa1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsdNN3KeMDjYtcPKr36fXAk1M5rKJrC9xPPWpw9vjHs3W3rqpfHEYQlVnSQpHKPp0
-	 ypIdSPP2Z3Cb8TwhnzgSgAPhhSmMG+VmZ5TprBvU1Mb8axW5Kc0THd8ClQlcCSD9dB
-	 KxluRLYhksltRSHn71anworLVPvBCIyR1HOyiy3s=
+	b=AGf0r6a0h8PU+kq0GN+bInNTmhoezCBlcBYyzi4dMKFDBaMMgx+ySutZy7trj8z44
+	 ao0caAcasg/LQqa/JsRkOphoqOhwZ1gdJ8pBDS5CScOmt5qFd6D1YKl6EIn98zX96h
+	 KptITbitfnwOy4NRr3RKnm3rD9RnQCge9VhmBjzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.6 550/567] hwmon: (pmbus/isl68137) Fix unchecked return value and use sysfs_emit()
-Date: Mon, 23 Mar 2026 14:47:50 +0100
-Message-ID: <20260323134547.611554642@linuxfoundation.org>
+	syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com,
+	Eric Dumazet <edumazet@google.com>,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.6 511/567] net/rose: fix NULL pointer dereference in rose_transmit_link on reconnect
+Date: Mon, 23 Mar 2026 14:47:11 +0100
+Message-ID: <20260323134546.658741340@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,44 +53,63 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-commit 86259558e422b250aa6aa57163a6d759074573f5 upstream.
+[ Upstream commit e1f0a18c9564cdb16523c802e2c6fe5874e3d944 ]
 
-isl68137_avs_enable_show_page() uses the return value of
-pmbus_read_byte_data() without checking for errors. If the I2C transaction
-fails, a negative error code is passed through bitwise operations,
-producing incorrect output.
+syzkaller reported a bug [1], and the reproducer is available at [2].
 
-Add an error check to propagate the return value if it is negative.
-Additionally, modernize the callback by replacing sprintf()
-with sysfs_emit().
+ROSE sockets use four sk->sk_state values: TCP_CLOSE, TCP_LISTEN,
+TCP_SYN_SENT, and TCP_ESTABLISHED. rose_connect() already rejects
+calls for TCP_ESTABLISHED (-EISCONN) and TCP_CLOSE with SS_CONNECTING
+(-ECONNREFUSED), but lacks a check for TCP_SYN_SENT.
 
-Fixes: 038a9c3d1e424 ("hwmon: (pmbus/isl68137) Add driver for Intersil ISL68137 PWM Controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260318193952.47908-2-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+When rose_connect() is called a second time while the first connection
+attempt is still in progress (TCP_SYN_SENT), it overwrites
+rose->neighbour via rose_get_neigh(). If that returns NULL, the socket
+is left with rose->state == ROSE_STATE_1 but rose->neighbour == NULL.
+When the socket is subsequently closed, rose_release() sees
+ROSE_STATE_1 and calls rose_write_internal() ->
+rose_transmit_link(skb, NULL), causing a NULL pointer dereference.
+
+Per connect(2), a second connect() while a connection is already in
+progress should return -EALREADY. Add this missing check for
+TCP_SYN_SENT to complete the state validation in rose_connect().
+
+[1] https://syzkaller.appspot.com/bug?extid=d00f90e0af54102fb271
+[2] https://gist.github.com/mrpre/9e6779e0d13e2c66779b1653fef80516
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-by: syzbot+d00f90e0af54102fb271@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/69694d6f.050a0220.58bed.0027.GAE@google.com/T/
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Link: https://patch.msgid.link/20260311070611.76913-1-jiayuan.chen@linux.dev
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/pmbus/isl68137.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/rose/af_rose.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/hwmon/pmbus/isl68137.c
-+++ b/drivers/hwmon/pmbus/isl68137.c
-@@ -80,8 +80,11 @@ static ssize_t isl68137_avs_enable_show_
- {
- 	int val = pmbus_read_byte_data(client, page, PMBUS_OPERATION);
+diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
+index 1cc5eaeb1c608..e80bc7788bec5 100644
+--- a/net/rose/af_rose.c
++++ b/net/rose/af_rose.c
+@@ -810,6 +810,11 @@ static int rose_connect(struct socket *sock, struct sockaddr *uaddr, int addr_le
+ 		goto out_release;
+ 	}
  
--	return sprintf(buf, "%d\n",
--		       (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS ? 1 : 0);
-+	if (val < 0)
-+		return val;
++	if (sk->sk_state == TCP_SYN_SENT) {
++		err = -EALREADY;
++		goto out_release;
++	}
 +
-+	return sysfs_emit(buf, "%d\n",
-+			   (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS);
- }
+ 	sk->sk_state   = TCP_CLOSE;
+ 	sock->state = SS_UNCONNECTED;
  
- static ssize_t isl68137_avs_enable_store_page(struct i2c_client *client,
+-- 
+2.51.0
+
 
 
