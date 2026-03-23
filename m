@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2123AC0C2;
-	Mon, 23 Mar 2026 13:54:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DBA3ACA62;
+	Mon, 23 Mar 2026 13:54:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274075; cv=none; b=moPjfZ016+8tCJk+iOSOh/RQdO7LBAYsgl7iK+az59fuoSk1joEjKEkc4L3DhEwiI23XWLsnvaO1MEwo/OKDICDiSnsnQTjwRORzKuJeFYry1MG+aJSKmZ60h6rbka6LR/IWHT9R09/6f0FOQYLr3wioDShzLmtciwB81Ft8JNE=
+	t=1774274078; cv=none; b=S+SxkusuRyaKwm7GRCY3T1fQjXkhwtvBBkUiElh/OIfa55vx0UlCtuxSLvwTOqaJ67jYhWNU8geyfZ4Q6Dr2kUbACjywIL3x3VgZU5TmOJFHW4NTmh8+HNBFGakjCjYpANaAwwkntG2R1M57ixGeMeXR8SOwZhmBZ9eYGtZAKd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274075; c=relaxed/simple;
-	bh=7w9q+Jt9zBcqNX+7eEXxvt59soPgHImIVfOmyQgA9z8=;
+	s=arc-20240116; t=1774274078; c=relaxed/simple;
+	bh=m3YVXj3x7sbV1a93NHzxgV46VUtsjy8k4pScNr9BMZM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u2nrhu6rglAcSzOrPP6LsRFe552rwv4g/gsBpcQWA+/bpIAyPArhsCkh4lfhbj7u8LBti1s/GZZ7x3717nJPinR2hfXpUceAk31NXbxQmkb2ZARqarz93I+TbkRwc3IJVMAPH60Mfw1X9T9GB7udGlOr2ZhZOOSdglspMHUtFXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L3LryyiF; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LM71P3iKrdGRIsfpK/LVhOLKOW/tE8KCUwYN1KzMYuuQvfx6crKgIvzTZFmFgmQhGCURo2pN6V479W3ahpAfGwuOSDyzgIoSwSemFJo43EB853veiUT35DFMxg+lHqDLEAJEgzZZgjVZnu9lub5FG+QT+hoCKVfq/CJY8CQ3EGE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=rFo5P/HW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L3LryyiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38CC8C2BC9E;
-	Mon, 23 Mar 2026 13:54:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="rFo5P/HW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A22C4CEF7;
+	Mon, 23 Mar 2026 13:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274075;
-	bh=7w9q+Jt9zBcqNX+7eEXxvt59soPgHImIVfOmyQgA9z8=;
+	s=korg; t=1774274078;
+	bh=m3YVXj3x7sbV1a93NHzxgV46VUtsjy8k4pScNr9BMZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L3LryyiFDFjHiTJOMadhl0ljv37XkhihLJfhlARywmyZWwgBgc7zw5bqmY+r7kC1h
-	 0ueNozgwS7jrbSwfSJqhkx720doIx1g76KMm7TnPKZkNPefSA2Y/0XQnO0Ep6owQcE
-	 TOCZx7zQSa1o+uTe5LNt73ZNfDokZlMjdCG5quNE=
+	b=rFo5P/HWmEu1yi21CA58j8QA/FzXwYLiMTLqR4GMhqiNItdFGal2v0kATa8pTbmgB
+	 eR7YSQk5gu7oPqVI1605GFgFR/hBIvnnxmaG0hLD6/U+9DxVtT3AZZZcB5324YRh3M
+	 nrbnaBHJI+5HIQigX/QI+agPAcDp06xOeoULN+wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Herve Codina <herve.codina@bootlin.com>,
 	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 101/220] soc: fsl: qbman: fix race condition in qman_destroy_fq
-Date: Mon, 23 Mar 2026 14:44:38 +0100
-Message-ID: <20260323134507.793816079@linuxfoundation.org>
+Subject: [PATCH 6.19 102/220] soc: fsl: cpm1: qmc: Fix error check for devm_ioremap_resource() in qmc_qe_init_resources()
+Date: Mon, 23 Mar 2026 14:44:39 +0100
+Message-ID: <20260323134507.825806740@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,90 +52,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Genoud <richard.genoud@bootlin.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 014077044e874e270ec480515edbc1cadb976cf2 ]
+[ Upstream commit 3f4e403304186d79fddace860360540fc3af97f9 ]
 
-When QMAN_FQ_FLAG_DYNAMIC_FQID is set, there's a race condition between
-fq_table[fq->idx] state and freeing/allocating from the pool and
-WARN_ON(fq_table[fq->idx]) in qman_create_fq() gets triggered.
+Fix wrong variable used for error checking after devm_ioremap_resource()
+call. The function checks qmc->scc_pram instead of qmc->dpram, which
+could lead to incorrect error handling.
 
-Indeed, we can have:
-         Thread A                             Thread B
-    qman_destroy_fq()                    qman_create_fq()
-      qman_release_fqid()
-        qman_shutdown_fq()
-        gen_pool_free()
-           -- At this point, the fqid is available again --
-                                           qman_alloc_fqid()
-           -- so, we can get the just-freed fqid in thread B --
-                                           fq->fqid = fqid;
-                                           fq->idx = fqid * 2;
-                                           WARN_ON(fq_table[fq->idx]);
-                                           fq_table[fq->idx] = fq;
-     fq_table[fq->idx] = NULL;
-
-And adding some logs between qman_release_fqid() and
-fq_table[fq->idx] = NULL makes the WARN_ON() trigger a lot more.
-
-To prevent that, ensure that fq_table[fq->idx] is set to NULL before
-gen_pool_free() is called by using smp_wmb().
-
-Fixes: c535e923bb97 ("soc/fsl: Introduce DPAA 1.x QMan device driver")
-Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
-Tested-by: CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>
-Link: https://lore.kernel.org/r/20251223072549.397625-1-richard.genoud@bootlin.com
+Fixes: eb680d563089 ("soc: fsl: cpm1: qmc: Add support for QUICC Engine (QE) implementation")
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Acked-by: Herve Codina <herve.codina@bootlin.com>
+Link: https://lore.kernel.org/r/20260209015904.871269-1-nichen@iscas.ac.cn
 Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ drivers/soc/fsl/qe/qmc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index 6b392b3ad4b15..39a3e7aab6ff2 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -1827,6 +1827,8 @@ EXPORT_SYMBOL(qman_create_fq);
+diff --git a/drivers/soc/fsl/qe/qmc.c b/drivers/soc/fsl/qe/qmc.c
+index da5ea6d356184..6db5ab05c2c1c 100644
+--- a/drivers/soc/fsl/qe/qmc.c
++++ b/drivers/soc/fsl/qe/qmc.c
+@@ -1799,8 +1799,8 @@ static int qmc_qe_init_resources(struct qmc *qmc, struct platform_device *pdev)
+ 		return -EINVAL;
+ 	qmc->dpram_offset = res->start - qe_muram_dma(qe_muram_addr(0));
+ 	qmc->dpram = devm_ioremap_resource(qmc->dev, res);
+-	if (IS_ERR(qmc->scc_pram))
+-		return PTR_ERR(qmc->scc_pram);
++	if (IS_ERR(qmc->dpram))
++		return PTR_ERR(qmc->dpram);
  
- void qman_destroy_fq(struct qman_fq *fq)
- {
-+	int leaked;
-+
- 	/*
- 	 * We don't need to lock the FQ as it is a pre-condition that the FQ be
- 	 * quiesced. Instead, run some checks.
-@@ -1834,11 +1836,29 @@ void qman_destroy_fq(struct qman_fq *fq)
- 	switch (fq->state) {
- 	case qman_fq_state_parked:
- 	case qman_fq_state_oos:
--		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID))
--			qman_release_fqid(fq->fqid);
-+		/*
-+		 * There's a race condition here on releasing the fqid,
-+		 * setting the fq_table to NULL, and freeing the fqid.
-+		 * To prevent it, this order should be respected:
-+		 */
-+		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID)) {
-+			leaked = qman_shutdown_fq(fq->fqid);
-+			if (leaked)
-+				pr_debug("FQID %d leaked\n", fq->fqid);
-+		}
- 
- 		DPAA_ASSERT(fq_table[fq->idx]);
- 		fq_table[fq->idx] = NULL;
-+
-+		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID) && !leaked) {
-+			/*
-+			 * fq_table[fq->idx] should be set to null before
-+			 * freeing fq->fqid otherwise it could by allocated by
-+			 * qman_alloc_fqid() while still being !NULL
-+			 */
-+			smp_wmb();
-+			gen_pool_free(qm_fqalloc, fq->fqid | DPAA_GENALLOC_OFF, 1);
-+		}
- 		return;
- 	default:
- 		break;
+ 	return 0;
+ }
 -- 
 2.51.0
 
