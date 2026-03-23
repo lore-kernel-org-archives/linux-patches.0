@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF903B5825;
-	Mon, 23 Mar 2026 16:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E566F3BE65C;
+	Mon, 23 Mar 2026 16:23:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283028; cv=none; b=Pu0l2BTS2cDu2zi6I3BQtoFRFY4AXHBCibCM1OxO93ZSqWUQQ+vVfynv5pq2E9NqVAtDu7469P2VsYqUtMsTx0yInfcv3cGsjNwTolHSvPs3XLnVboPermfu6dkMN6bEcvLw+TbROUHoFOZigixVfpdBBFW1qbw3yGBawmgdn54=
+	t=1774283031; cv=none; b=ItCOwToMnwf2Ob8YE7MK1F61O8tXYyKwj+/6JJ0IkXAtTScoSoJhXTtAw8e8E5vHeqyRvEkWOrplSIk/BkN2yjuhN2m3S0ZKl97rJi/Be4Lz0NC208rHny8xrkbv7Vj4jP4KAsc+Let74tf2yIQxQSIDszoCJqffIQr6OHo2y+E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283028; c=relaxed/simple;
-	bh=pIEgZYZbrTlFP+N1igHrAqE/unPYyiIAmLQHu3vqv1o=;
+	s=arc-20240116; t=1774283031; c=relaxed/simple;
+	bh=OQCfr5GHFZKTgE4Q9hn2nXv23DnpgrHIvlkiZZfyubc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bquhnKWb7T7XS/JLhPlUkYy6IQx1f0DpPLBAYfq+jczVt9IQ3VqQn+S/HATeiLr0JlOz6KcOI7OQ+WaOes4LIjkZi4DKmC/xIc2SAvZSQAZ7yjtpcpVRf2n0ceS5JOQu0eKqVYTU/xW0tNUn6C44VP+z2XpV3uqvYWEfDOBlEX8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MglfbDQ7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Rs7FBW6mlahH2wA38A5GBGSQ/dbVW4LiDLz29rMuY/C0bsa8Xt2SSlNixGa6Ro7wOTex+52msBSTgFynk0nmUXYP/n1gZf6EPzTcQIOrZ+TRSJmMaM5y5awMXqnnOWlFAlcGJEsxwfR+w4P9kgZRgFhBhgm2aNE4AyK8v++xyfg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tZFdpFb6; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MglfbDQ7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C0B0C4CEF7;
-	Mon, 23 Mar 2026 16:23:47 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tZFdpFb6"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75CDBC4CEF7;
+	Mon, 23 Mar 2026 16:23:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283027;
-	bh=pIEgZYZbrTlFP+N1igHrAqE/unPYyiIAmLQHu3vqv1o=;
+	s=korg; t=1774283030;
+	bh=OQCfr5GHFZKTgE4Q9hn2nXv23DnpgrHIvlkiZZfyubc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MglfbDQ7rLUbf8xf3w1jNqAV14oOauVAUBJ5YXfC63QtWE2fbm0/Wp14PnslAfdcZ
-	 UA5eLPmhViZMZ3bg7viiTdZeh2qAYQpIKnGOlL5H/EDd3y3WOm0Tm96FEPn0suQFlP
-	 p/rNsxYfoepI+le1u7Exa4jVqRrUDZR2+TskxC5c=
+	b=tZFdpFb6OdWaA2eKKn2TEKoTldIIMBjWBfHXesCamgA5j30fYN4X9wIDwlJ2gzrtU
+	 S+dHwWUu/Tzf+IPPO5xQa9xIXKQDyM1Dp7xomTUs7hnEEtLUHFJ9vmuoyuZv4AjcwQ
+	 OicIpFIVsXNevAVGOP5jN7tHzOt/j/GtGJK2HF5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Jiasheng Jiang <jiashengjiangcool@gmail.com>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Xu Yang <xu.yang_2@nxp.com>,
+	Arnaud Ferraris <arnaud.ferraris@collabora.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 331/481] usb: gadget: f_tcm: Fix NULL pointer dereferences in nexus handling
-Date: Mon, 23 Mar 2026 14:45:13 +0100
-Message-ID: <20260323134533.168831359@linuxfoundation.org>
+Subject: [PATCH 6.1 332/481] usb: roles: get usb role switch from parent only for usb-b-connector
+Date: Mon, 23 Mar 2026 14:45:14 +0100
+Message-ID: <20260323134533.191607371@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,72 +53,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jiasheng Jiang <jiashengjiangcool@gmail.com>
+From: Xu Yang <xu.yang_2@nxp.com>
 
-[ Upstream commit b9fde507355342a2d64225d582dc8b98ff5ecb19 ]
+[ Upstream commit 8345b1539faa49fcf9c9439c3cbd97dac6eca171 ]
 
-The `tpg->tpg_nexus` pointer in the USB Target driver is dynamically
-managed and tied to userspace configuration via ConfigFS. It can be
-NULL if the USB host sends requests before the nexus is fully
-established or immediately after it is dropped.
+usb_role_switch_is_parent() was walking up to the parent node and checking
+for the "usb-role-switch" property regardless of the type of the passed
+fwnode. This could cause unrelated device nodes to be probed as potential
+role switch parent, leading to spurious matches and "-EPROBE_DEFER" being
+returned infinitely.
 
-Currently, functions like `bot_submit_command()` and the data
-transfer paths retrieve `tv_nexus = tpg->tpg_nexus` and immediately
-dereference `tv_nexus->tvn_se_sess` without any validation. If a
-malicious or misconfigured USB host sends a BOT (Bulk-Only Transport)
-command during this race window, it triggers a NULL pointer
-dereference, leading to a kernel panic (local DoS).
+Till now only Type-B connector node will have a parent node which may
+present "usb-role-switch" property and register the role switch device.
+For Type-C connector node, its parent node will always be a Type-C chip
+device which will never register the role switch device. However, it may
+still present a non-boolean "usb-role-switch = <&usb_controller>" property
+for historical compatibility.
 
-This exposes an inconsistent API usage within the module, as peer
-functions like `usbg_submit_command()` and `bot_send_bad_response()`
-correctly implement a NULL check for `tv_nexus` before proceeding.
+So restrict the helper to only operate on Type-B connector when attempting
+to get the role switch from parent node.
 
-Fix this by bringing consistency to the nexus handling. Add the
-missing `if (!tv_nexus)` checks to the vulnerable BOT command and
-request processing paths, aborting the command gracefully with an
-error instead of crashing the system.
-
-Fixes: c52661d60f63 ("usb-gadget: Initial merge of target module for UASP + BOT")
+Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Jiasheng Jiang <jiashengjiangcool@gmail.com>
-Reviewed-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://patch.msgid.link/20260219023834.17976-1-jiashengjiangcool@gmail.com
+Signed-off-by: Xu Yang <xu.yang_2@nxp.com>
+Tested-by: Arnaud Ferraris <arnaud.ferraris@collabora.com>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://patch.msgid.link/20260309074313.2809867-3-xu.yang_2@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+[ replace fwnode_device_is_compatible() call with it's expansion ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_tcm.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/usb/roles/class.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/gadget/function/f_tcm.c
-+++ b/drivers/usb/gadget/function/f_tcm.c
-@@ -1032,6 +1032,13 @@ static void usbg_cmd_work(struct work_st
- 	se_cmd = &cmd->se_cmd;
- 	tpg = cmd->fu->tpg;
- 	tv_nexus = tpg->tpg_nexus;
-+	if (!tv_nexus) {
-+		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -108,9 +108,14 @@ static void *usb_role_switch_match(struc
+ static struct usb_role_switch *
+ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
+ {
+-	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
++	struct fwnode_handle *parent;
+ 	struct device *dev;
+ 
++	if (fwnode_property_match_string(fwnode, "compatible", "usb-b-connector") < 0)
++		return NULL;
 +
-+		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
-+		return;
-+	}
++	parent = fwnode_get_parent(fwnode);
 +
- 	dir = get_cmd_dir(cmd->cmd_buf);
- 	if (dir < 0) {
- 		__target_init_cmd(se_cmd,
-@@ -1160,6 +1167,13 @@ static void bot_cmd_work(struct work_str
- 	se_cmd = &cmd->se_cmd;
- 	tpg = cmd->fu->tpg;
- 	tv_nexus = tpg->tpg_nexus;
-+	if (!tv_nexus) {
-+		struct usb_gadget *gadget = fuas_to_gadget(cmd->fu);
-+
-+		dev_err(&gadget->dev, "Missing nexus, ignoring command\n");
-+		return;
-+	}
-+
- 	dir = get_cmd_dir(cmd->cmd_buf);
- 	if (dir < 0) {
- 		__target_init_cmd(se_cmd,
+ 	if (!fwnode_property_present(parent, "usb-role-switch")) {
+ 		fwnode_handle_put(parent);
+ 		return NULL;
 
 
