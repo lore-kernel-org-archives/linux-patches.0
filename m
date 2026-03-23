@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9CE365A0A;
-	Mon, 23 Mar 2026 14:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41FA539C658;
+	Mon, 23 Mar 2026 14:15:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275302; cv=none; b=iX4R3jfqkHaC46lQXSyRc0daP2MwWCyalCX82wcmgqkjt5nB+9lmQe6Fn0kbITvqhp5vKQe1QywGRrrsWdYZSoEAu3LJiEOB5/cNdr/g83Za9pkJEDswh8KSN21izdThsx/iV6N9XREX2/FIFetQX480l5UZMyWSklXGcSt3woA=
+	t=1774275305; cv=none; b=Lup7xSQjpTsvje2UvV1zWW7j1+/sUhbWdOBe7Fo2/tGqwjZ//DihJO6KadXGV/fcO+Vx57YhI9peOG6fAEYUXATjnkfAk4iTWSZXWrkBDDA+jqSmzwCQ/W4htRdRu1BaK9pbL3rCvJ1WH0nCHreMDyS5NkkgV5YGWAznmGYAe5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275302; c=relaxed/simple;
-	bh=0IWWdmsfDrH/vpr8iI/oaWfl9ugvO4rfOYYQRXT1X1g=;
+	s=arc-20240116; t=1774275305; c=relaxed/simple;
+	bh=xGAimwdS40COwCRRbJ0BrzMRSjGnENOvcTDkj3tBCKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mLSvgcwX7zTHZ1jVRWi493TQXUrVgSsSa3s2jyHZs5c0eP6kDuQIFSMyvQrBpGcLM/tCqy0JBXFB6JAx56thtPmTWn38th2geiuIM+zskvRxYwv6AaJRplgyEEYwpXpiFHoW+GIUELG6W5jZY1Y3j+QqUcihQ+D9Ta+iH+mpvVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=o1VTcLeU; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kHH31b251TxzKSNIKK5FtVeEiZ2Ti6O9PAgc4kEdwhxyP1kz6t8ecaa+VDRdVH0O7UJPA9Nn8aBCmhAFLv3Gs0moxrzH8FhPkGbim3GPBnhYAbWvdN7cyLYllfkh1fPO8THkPvoiIih/yA1FkBHFlv+uIO5K+yhSs8XyeSRBx+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mvGzXi8J; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="o1VTcLeU"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7200C2BC9E;
-	Mon, 23 Mar 2026 14:15:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mvGzXi8J"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80B30C2BC9E;
+	Mon, 23 Mar 2026 14:15:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275302;
-	bh=0IWWdmsfDrH/vpr8iI/oaWfl9ugvO4rfOYYQRXT1X1g=;
+	s=korg; t=1774275304;
+	bh=xGAimwdS40COwCRRbJ0BrzMRSjGnENOvcTDkj3tBCKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o1VTcLeU0mDLzASToQiInFBaA8yVkfk69kR8MKe77HnK9siJyiFe29MMpu0ITinR4
-	 I5952StUlsvn8MSqFHXLog1FFiizZ/aBAHiZlM8cYxGjFF8pnBbu1QHjLBwU8W8phb
-	 4SyXlMWWD0OkGKtZc17ixSbTSxCvYSZD00X5bo7I=
+	b=mvGzXi8JZtpRsIb/pMrZ/YAcdjckP4shAO/r8Ukxc7KeuIQo8alKxL1/dSQHnCqfO
+	 FOQUABMr86oioThT2Tcc/I1C1uuLBYniXly99tENzcE4VN3Q+ExaPVmLICFlElrHrS
+	 sXZPW9v358qo1kXV6k19zoNuMZHJqEDdL1dvFdec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Wang <peter.wang@mediatek.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Shuangpeng Bai <shuangpeng.kernel@gmail.com>,
+	Jiayuan Chen <jiayuan.chen@linux.dev>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 011/460] scsi: ufs: core: Fix possible NULL pointer dereference in ufshcd_add_command_trace()
-Date: Mon, 23 Mar 2026 14:40:07 +0100
-Message-ID: <20260323134526.940198327@linuxfoundation.org>
+Subject: [PATCH 6.12 047/460] serial: caif: hold tty->link reference in ldisc_open and ser_release
+Date: Mon, 23 Mar 2026 14:40:43 +0100
+Message-ID: <20260323134527.869127865@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,74 +52,61 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peter Wang <peter.wang@mediatek.com>
+From: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
 
-[ Upstream commit 30df81f2228d65bddf492db3929d9fcaffd38fc5 ]
+[ Upstream commit 288598d80a068a0e9281de35bcb4ce495f189e2a ]
 
-The kernel log indicates a crash in ufshcd_add_command_trace, due to a NULL
-pointer dereference when accessing hwq->id.  This can happen if
-ufshcd_mcq_req_to_hwq() returns NULL.
+A reproducer triggers a KASAN slab-use-after-free in pty_write_room()
+when caif_serial's TX path calls tty_write_room(). The faulting access
+is on tty->link->port.
 
-This patch adds a NULL check for hwq before accessing its id field to
-prevent a kernel crash.
+Hold an extra kref on tty->link for the lifetime of the caif_serial line
+discipline: get it in ldisc_open() and drop it in ser_release(), and
+also drop it on the ldisc_open() error path.
 
-Kernel log excerpt:
-[<ffffffd5d192dc4c>] notify_die+0x4c/0x8c
-[<ffffffd5d1814e58>] __die+0x60/0xb0
-[<ffffffd5d1814d64>] die+0x4c/0xe0
-[<ffffffd5d181575c>] die_kernel_fault+0x74/0x88
-[<ffffffd5d1864db4>] __do_kernel_fault+0x314/0x318
-[<ffffffd5d2a3cdf8>] do_page_fault+0xa4/0x5f8
-[<ffffffd5d2a3cd34>] do_translation_fault+0x34/0x54
-[<ffffffd5d1864524>] do_mem_abort+0x50/0xa8
-[<ffffffd5d2a297dc>] el1_abort+0x3c/0x64
-[<ffffffd5d2a29718>] el1h_64_sync_handler+0x44/0xcc
-[<ffffffd5d181133c>] el1h_64_sync+0x80/0x88
-[<ffffffd5d255c1dc>] ufshcd_add_command_trace+0x23c/0x320
-[<ffffffd5d255bad8>] ufshcd_compl_one_cqe+0xa4/0x404
-[<ffffffd5d2572968>] ufshcd_mcq_poll_cqe_lock+0xac/0x104
-[<ffffffd5d11c7460>] ufs_mtk_mcq_intr+0x54/0x74 [ufs_mediatek_mod]
-[<ffffffd5d19ab92c>] __handle_irq_event_percpu+0xc8/0x348
-[<ffffffd5d19abca8>] handle_irq_event+0x3c/0xa8
-[<ffffffd5d19b1f0c>] handle_fasteoi_irq+0xf8/0x294
-[<ffffffd5d19aa778>] generic_handle_domain_irq+0x54/0x80
-[<ffffffd5d18102bc>] gic_handle_irq+0x1d4/0x330
-[<ffffffd5d1838210>] call_on_irq_stack+0x44/0x68
-[<ffffffd5d183af30>] do_interrupt_handler+0x78/0xd8
-[<ffffffd5d2a29c00>] el1_interrupt+0x48/0xa8
-[<ffffffd5d2a29ba8>] el1h_64_irq_handler+0x14/0x24
-[<ffffffd5d18113c4>] el1h_64_irq+0x80/0x88
-[<ffffffd5d2527fb4>] arch_local_irq_enable+0x4/0x1c
-[<ffffffd5d25282e4>] cpuidle_enter+0x34/0x54
-[<ffffffd5d195a678>] do_idle+0x1dc/0x2f8
-[<ffffffd5d195a7c4>] cpu_startup_entry+0x30/0x3c
-[<ffffffd5d18155c4>] secondary_start_kernel+0x134/0x1ac
-[<ffffffd5d18640bc>] __secondary_switched+0xc4/0xcc
+With this change applied, the reproducer no longer triggers the UAF in
+my testing.
 
-Signed-off-by: Peter Wang <peter.wang@mediatek.com>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://patch.msgid.link/20260223065657.2432447-1-peter.wang@mediatek.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://gist.github.com/shuangpengbai/c898debad6bdf170a84be7e6b3d8707f
+Link: https://lore.kernel.org/netdev/20260301220525.1546355-1-shuangpeng.kernel@gmail.com
+Fixes: e31d5a05948e ("caif: tty's are kref objects so take a reference")
+Signed-off-by: Shuangpeng Bai <shuangpeng.kernel@gmail.com>
+Reviewed-by: Jiayuan Chen <jiayuan.chen@linux.dev>
+Link: https://patch.msgid.link/20260306034006.3395740-1-shuangpeng.kernel@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/caif/caif_serial.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index ad5866149e240..726bf4247f1fe 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -483,8 +483,8 @@ static void ufshcd_add_command_trace(struct ufs_hba *hba, unsigned int tag,
+diff --git a/drivers/net/caif/caif_serial.c b/drivers/net/caif/caif_serial.c
+index 699ed0ff461e8..6799dbf80f484 100644
+--- a/drivers/net/caif/caif_serial.c
++++ b/drivers/net/caif/caif_serial.c
+@@ -311,6 +311,7 @@ static void ser_release(struct work_struct *work)
+ 			dev_close(ser->dev);
+ 			unregister_netdevice(ser->dev);
+ 			debugfs_deinit(ser);
++			tty_kref_put(tty->link);
+ 			tty_kref_put(tty);
+ 		}
+ 		rtnl_unlock();
+@@ -345,6 +346,7 @@ static int ldisc_open(struct tty_struct *tty)
  
- 	if (hba->mcq_enabled) {
- 		struct ufs_hw_queue *hwq = ufshcd_mcq_req_to_hwq(hba, rq);
--
--		hwq_id = hwq->id;
-+		if (hwq)
-+			hwq_id = hwq->id;
- 	} else {
- 		doorbell = ufshcd_readl(hba, REG_UTP_TRANSFER_REQ_DOOR_BELL);
- 	}
+ 	ser = netdev_priv(dev);
+ 	ser->tty = tty_kref_get(tty);
++	tty_kref_get(tty->link);
+ 	ser->dev = dev;
+ 	debugfs_init(ser, tty);
+ 	tty->receive_room = N_TTY_BUF_SIZE;
+@@ -353,6 +355,7 @@ static int ldisc_open(struct tty_struct *tty)
+ 	rtnl_lock();
+ 	result = register_netdevice(dev);
+ 	if (result) {
++		tty_kref_put(tty->link);
+ 		tty_kref_put(tty);
+ 		rtnl_unlock();
+ 		free_netdev(dev);
 -- 
 2.51.0
 
