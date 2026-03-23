@@ -1,42 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D535958;
-	Mon, 23 Mar 2026 16:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2A9D283FC8;
+	Mon, 23 Mar 2026 16:19:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282781; cv=none; b=stGoDXQSDZ1JCIgYsV3ron1tLx1uyomRUC0hmbbeA8rCfgD5DCVbngyS5jFbbeYfLFYOtsTTL6MFDRLiww2qOWm2ZtqEvsQW0QBpXINCrY9QdKrmdqIZ2rr4ninaUPEJqQuOC+OGH7Fc9KLy8d/qIK6hueem3CEs2QsbgX39a0o=
+	t=1774282783; cv=none; b=tkbKYrMHODpg3Vd/aCPq57VjWyjp2U+Xgbqwd1vo210cBNup08f9OhRSftvtl7RYAUocYAioKzptzEAsjhY0IvbTFT9EFURQ6Nd0dgl3fPdNbNO/uaTVD9cKkSJC7uGUYa5/b8XDqUm63lvlb+5J979oSaUL8JVhE3cRxtSTdiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282781; c=relaxed/simple;
-	bh=QVvprI1ekJgj+WiXVBeATlriePRSAq83kWIC4vtfDxE=;
+	s=arc-20240116; t=1774282783; c=relaxed/simple;
+	bh=QWRqg+tasksi+BWj7tUDiDVEIujMCq/rXRQLtLmCabY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rh24iFVBahHXFpmrorMSJx13Q5bLnLW35N0aIM0Px/+yMRsKTBSW/FRrvcpIwdB28qirvs7FdHzdse8DqCdkUwdHCA3oRqAio5QcdjlBEFQ9unrCnUr5KfWNvIzlCs09vKtPqcSqCz7L5Dn1VQq1P+30mVjQgNykpNsOhP+sY00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=AkxS9Q0B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=bs9hrNYMl8OsRCZjmOCfHvgASANZNjdjlwlG+/AXRKqKBr1+x4LFPdboG8Hrw7V7Wjo1dlrw4E7J/VW1/1zDOHZovNAccoT2l4z5Rn29BPMu/ATeQxov+7jI0Hz9DvZP/pRJdyukfQCcjx1PjRHWPkB/4az2s+hMT5NHymW80RQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gZ9tx3vd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="AkxS9Q0B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76B95C4CEF7;
-	Mon, 23 Mar 2026 16:19:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gZ9tx3vd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3540CC4CEF7;
+	Mon, 23 Mar 2026 16:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282780;
-	bh=QVvprI1ekJgj+WiXVBeATlriePRSAq83kWIC4vtfDxE=;
+	s=korg; t=1774282783;
+	bh=QWRqg+tasksi+BWj7tUDiDVEIujMCq/rXRQLtLmCabY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkxS9Q0B63HYNVgwwJvKTORIQ3lwIAyCPazS4UBkQizHLA1NB29e/Eya1YbtqDkIt
-	 srF+jwYUMy0z6Myt642hkOf1/llAJSFBu6NcnQfbfuNTSuNQkkDYwAY8HF5HkNPO7n
-	 QmBsKHh36bbSwWU9N+uf2Tg8U6V/GnYZV5VFFUOo=
+	b=gZ9tx3vdUsxXLRnznWPEtZhrZsDJOjylN10Zvs8bVkdbnNUA4tbIA+znPBbGNc3XX
+	 BGhsabBDwa5qbA49tCBe33/Huv9nUGvhkGGndU1Er7r7dWKt1jLI7836o4IyRvRlXh
+	 bFqhuwWUAVQsSQ2pdqfgKBmkUZ19rabQ+3c7WQmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Staniszewski <jakub.staniszewski@linux.intel.com>,
-	Dawid Osuchowski <dawid.osuchowski@linux.intel.com>,
-	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
-	Przemek Kitszel <przemyslaw.kitszel@intel.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Rinitha S <sx.rinitha@intel.com>
-Subject: [PATCH 6.1 239/481] ice: fix retry for AQ command 0x06EE
-Date: Mon, 23 Mar 2026 14:43:41 +0100
-Message-ID: <20260323134530.963980942@linuxfoundation.org>
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Thomas Gleixner <tglx@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 230/481] time/jiffies: Mark jiffies_64_to_clock_t() notrace
+Date: Mon, 23 Mar 2026 14:43:32 +0100
+Message-ID: <20260323134530.741524504@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -55,103 +51,39 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit fb4903b3354aed4a2301180cf991226f896c87ed upstream.
+[ Upstream commit 755a648e78f12574482d4698d877375793867fa1 ]
 
-Executing ethtool -m can fail reporting a netlink I/O error while firmware
-link management holds the i2c bus used to communicate with the module.
+The trace_clock_jiffies() function that handles the "uptime" clock for
+tracing calls jiffies_64_to_clock_t(). This causes the function tracer to
+constantly recurse when the tracing clock is set to "uptime". Mark it
+notrace to prevent unnecessary recursion when using the "uptime" clock.
 
-According to Intel(R) Ethernet Controller E810 Datasheet Rev 2.8 [1]
-Section 3.3.10.4 Read/Write SFF EEPROM (0x06EE)
-request should to be retried upon receiving EBUSY from firmware.
-
-Commit e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
-implemented it only for part of ice_get_module_eeprom(), leaving all other
-calls to ice_aq_sff_eeprom() vulnerable to returning early on getting
-EBUSY without retrying.
-
-Remove the retry loop from ice_get_module_eeprom() and add Admin Queue
-(AQ) command with opcode 0x06EE to the list of commands that should be
-retried on receiving EBUSY from firmware.
-
-Cc: stable@vger.kernel.org
-Fixes: e9c9692c8a81 ("ice: Reimplement module reads used by ethtool")
-Signed-off-by: Jakub Staniszewski <jakub.staniszewski@linux.intel.com>
-Co-developed-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Signed-off-by: Dawid Osuchowski <dawid.osuchowski@linux.intel.com>
-Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
-Reviewed-by: Przemek Kitszel <przemyslaw.kitszel@intel.com>
-Link: https://www.intel.com/content/www/us/en/content-details/613875/intel-ethernet-controller-e810-datasheet.html [1]
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Tested-by: Rinitha S <sx.rinitha@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 58d4e21e50ff3 ("tracing: Fix wraparound problems in "uptime" trace clock")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Thomas Gleixner <tglx@kernel.org>
+Link: https://patch.msgid.link/20260306212403.72270bb2@robin
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_common.c  |    1 
- drivers/net/ethernet/intel/ice/ice_ethtool.c |   35 ++++++++++-----------------
- 2 files changed, 15 insertions(+), 21 deletions(-)
+ kernel/time/time.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_common.c
-+++ b/drivers/net/ethernet/intel/ice/ice_common.c
-@@ -1570,6 +1570,7 @@ static bool ice_should_retry_sq_send_cmd
- 	case ice_aqc_opc_lldp_stop:
- 	case ice_aqc_opc_lldp_start:
- 	case ice_aqc_opc_lldp_filter_ctrl:
-+	case ice_aqc_opc_sff_eeprom:
- 		return true;
- 	}
- 
---- a/drivers/net/ethernet/intel/ice/ice_ethtool.c
-+++ b/drivers/net/ethernet/intel/ice/ice_ethtool.c
-@@ -4089,7 +4089,7 @@ ice_get_module_eeprom(struct net_device
- 	struct ice_pf *pf = vsi->back;
- 	struct ice_hw *hw = &pf->hw;
- 	bool is_sfp = false;
--	unsigned int i, j;
-+	unsigned int i;
- 	u16 offset = 0;
- 	u8 page = 0;
- 	int status;
-@@ -4131,26 +4131,19 @@ ice_get_module_eeprom(struct net_device
- 		if (page == 0 || !(data[0x2] & 0x4)) {
- 			u32 copy_len;
- 
--			/* If i2c bus is busy due to slow page change or
--			 * link management access, call can fail. This is normal.
--			 * So we retry this a few times.
--			 */
--			for (j = 0; j < 4; j++) {
--				status = ice_aq_sff_eeprom(hw, 0, addr, offset, page,
--							   !is_sfp, value,
--							   SFF_READ_BLOCK_SIZE,
--							   0, NULL);
--				netdev_dbg(netdev, "SFF %02X %02X %02X %X = %02X%02X%02X%02X.%02X%02X%02X%02X (%X)\n",
--					   addr, offset, page, is_sfp,
--					   value[0], value[1], value[2], value[3],
--					   value[4], value[5], value[6], value[7],
--					   status);
--				if (status) {
--					usleep_range(1500, 2500);
--					memset(value, 0, SFF_READ_BLOCK_SIZE);
--					continue;
--				}
--				break;
-+			status = ice_aq_sff_eeprom(hw, 0, addr, offset, page,
-+						   !is_sfp, value,
-+						   SFF_READ_BLOCK_SIZE,
-+						   0, NULL);
-+			netdev_dbg(netdev, "SFF %02X %02X %02X %X = %02X%02X%02X%02X.%02X%02X%02X%02X (%pe)\n",
-+				   addr, offset, page, is_sfp,
-+				   value[0], value[1], value[2], value[3],
-+				   value[4], value[5], value[6], value[7],
-+				   ERR_PTR(status));
-+			if (status) {
-+				netdev_err(netdev, "%s: error reading module EEPROM: status %pe\n",
-+					   __func__, ERR_PTR(status));
-+				return status;
- 			}
- 
- 			/* Make sure we have enough room for the new block */
+diff --git a/kernel/time/time.c b/kernel/time/time.c
+index be42ace51255c..170f1f8a0046c 100644
+--- a/kernel/time/time.c
++++ b/kernel/time/time.c
+@@ -702,7 +702,7 @@ EXPORT_SYMBOL(clock_t_to_jiffies);
+  *
+  * Return: jiffies_64 value converted to 64-bit "clock_t" (CLOCKS_PER_SEC)
+  */
+-u64 jiffies_64_to_clock_t(u64 x)
++notrace u64 jiffies_64_to_clock_t(u64 x)
+ {
+ #if (TICK_NSEC % (NSEC_PER_SEC / USER_HZ)) == 0
+ # if HZ < USER_HZ
+-- 
+2.51.0
+
 
 
