@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E953246778;
-	Mon, 23 Mar 2026 16:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EBC246778;
+	Mon, 23 Mar 2026 16:25:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283154; cv=none; b=I2mHbUajd6oNGADd3LDIeuQZTAoX1QJeXjL7Y42GsG+Rp6o9uCCp/qAyvWgltC5DckIJqpYf1abxR2KufkJDVqXMJ3H8YWgSSswu07iHd9cUlfJ/KSFQLR6s+AO1r1o1zej9ZxVQSxUUbgHZq0P9+HRa4dAX1gxxx25UIRAIgbw=
+	t=1774283157; cv=none; b=Di2zWO17yMcACj8VOhyeHn7qIFy18XrKMsKl9ljwlSen+0iAk8WPCrnTFxjHUgh7/rPgJly5GG79OxhOR2E1qFhUl0EffL4G9ETlQvT/p4IbXyxNQuUIHAiuzrpdcyD/SRRt/EwG2JoL6vXx9PU89dkvw4BEwgpTA1sHVfngHvI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283154; c=relaxed/simple;
-	bh=K5Y/5WqMqQgwq4UMb4CyTjoUGIZe+K8lt+ucjolOdyk=;
+	s=arc-20240116; t=1774283157; c=relaxed/simple;
+	bh=uiT27NERLVXfJvj6CL3NSzAdx5zve1TgheJBRy9al88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pXgMfHqH/+VM4xTHmhswHoZB3xRtCH76gzddV9Cv9KGx1kojIa1NBplDc2r13T9zJ6+Z1NApvJiUSzNqCtHbSsrdyu81us2zzard3hCtjvstgtCzFdmSZbHD7JPtV2APqotopSKx03Rtn2UN0+rfu61J/vrT520sQS/KITRmjJs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=m5PFJnGT; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VJbSLiemLxCplUTAKiRhahLdTqowhGis8LASrsc1j2vL/LVWVImcZ/ZlaPOo+BsSy6u9nAZdmtwJkh4ISxJcy5zmBW1SLf3Ooy9rvL/9JlwNF+ko26x6Zf8BqU7vp7YSHqADAU2hK8iqZvPQ11ltrikS27cNCxVABFMGlzJKpos=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=krE3FfyW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="m5PFJnGT"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ECA7C4CEF7;
-	Mon, 23 Mar 2026 16:25:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="krE3FfyW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7610C2BC9E;
+	Mon, 23 Mar 2026 16:25:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283154;
-	bh=K5Y/5WqMqQgwq4UMb4CyTjoUGIZe+K8lt+ucjolOdyk=;
+	s=korg; t=1774283157;
+	bh=uiT27NERLVXfJvj6CL3NSzAdx5zve1TgheJBRy9al88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m5PFJnGT4Isjba+ObjAgA0Zh5/mvSsXpd2l5N1L4LTg+zz0h64Hq3XeBsYyGyhsGH
-	 ZGdS+x4ojbwtpKRS+NYBfu3t95Pfc8ZfFn9SIZgFBtbI00utKDEbVl1DoJsODMADj+
-	 LyuP1k4Lh1omGZ7dPCBFwhVsci6zwlU7IFEvMHrk=
+	b=krE3FfyWkPZNlFX28hnKscSuC1nfoFJ2Z79M4ubFjcraBEvLrPGDE2zsII6D1TEoH
+	 ElohOkXMdZF/44xSLlDHG5+lED8ofuQUnzBdL/dDrMF6UxNW+dQwAWbxsMCLxF7UnF
+	 W7r2c6IkgPMiOyS1/VXfWNFuj9JBNjH/LoBfYQVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
+	Wei Fang <wei.fang@nxp.com>,
 	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 378/481] net: enetc: reimplement RFS/RSS memory clearing as PCI quirk
-Date: Mon, 23 Mar 2026 14:46:00 +0100
-Message-ID: <20260323134534.344454915@linuxfoundation.org>
+Subject: [PATCH 6.1 379/481] net: enetc: allocate vf_state during PF probes
+Date: Mon, 23 Mar 2026 14:46:01 +0100
+Message-ID: <20260323134534.371230946@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,200 +52,101 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Wei Fang <wei.fang@nxp.com>
 
-[ Upstream commit f0168042a21292d20007d24ab2e4fc32f79ebf11 ]
+[ Upstream commit e15c5506dd39885cd047f811a64240e2e8ab401b ]
 
-The workaround implemented in commit 3222b5b613db ("net: enetc:
-initialize RFS/RSS memories for unused ports too") is no longer
-effective after commit 6fffbc7ae137 ("PCI: Honor firmware's device
-disabled status"). Thus, it has introduced a regression and we see AER
-errors being reported again:
+In the previous implementation, vf_state is allocated memory only when VF
+is enabled. However, net_device_ops::ndo_set_vf_mac() may be called before
+VF is enabled to configure the MAC address of VF. If this is the case,
+enetc_pf_set_vf_mac() will access vf_state, resulting in access to a null
+pointer. The simplified error log is as follows.
 
-$ ip link set sw2p0 up && dhclient -i sw2p0 && ip addr show sw2p0
-fsl_enetc 0000:00:00.2 eno2: configuring for fixed/internal link mode
-fsl_enetc 0000:00:00.2 eno2: Link is Up - 2.5Gbps/Full - flow control rx/tx
-mscc_felix 0000:00:00.5 swp2: configuring for fixed/sgmii link mode
-mscc_felix 0000:00:00.5 swp2: Link is Up - 1Gbps/Full - flow control off
-sja1105 spi2.2 sw2p0: configuring for phy/rgmii-id link mode
-sja1105 spi2.2 sw2p0: Link is Up - 1Gbps/Full - flow control off
-pcieport 0000:00:1f.0: AER: Multiple Corrected error received: 0000:00:00.0
-pcieport 0000:00:1f.0: AER: can't find device of ID0000
+root@ls1028ardb:~# ip link set eno0 vf 1 mac 00:0c:e7:66:77:89
+[  173.543315] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000004
+[  173.637254] pc : enetc_pf_set_vf_mac+0x3c/0x80 Message from sy
+[  173.641973] lr : do_setlink+0x4a8/0xec8
+[  173.732292] Call trace:
+[  173.734740]  enetc_pf_set_vf_mac+0x3c/0x80
+[  173.738847]  __rtnl_newlink+0x530/0x89c
+[  173.742692]  rtnl_newlink+0x50/0x7c
+[  173.746189]  rtnetlink_rcv_msg+0x128/0x390
+[  173.750298]  netlink_rcv_skb+0x60/0x130
+[  173.754145]  rtnetlink_rcv+0x18/0x24
+[  173.757731]  netlink_unicast+0x318/0x380
+[  173.761665]  netlink_sendmsg+0x17c/0x3c8
 
-Rob's suggestion is to reimplement the enetc driver workaround as a
-PCI fixup, and to modify the PCI core to run the fixups for all PCI
-functions. This change handles the first part.
-
-We refactor the common code in enetc_psi_create() and enetc_psi_destroy(),
-and use the PCI fixup only for those functions for which enetc_pf_probe()
-won't get called. This avoids some work being done twice for the PFs
-which are enabled.
-
-Fixes: 6fffbc7ae137 ("PCI: Honor firmware's device disabled status")
-Link: https://lore.kernel.org/netdev/CAL_JsqLsVYiPLx2kcHkDQ4t=hQVCR7NHziDwi9cCFUFhx48Qow@mail.gmail.com/
-Suggested-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d4fd0404c1c9 ("enetc: Introduce basic PF and VF ENETC ethernet drivers")
+Signed-off-by: Wei Fang <wei.fang@nxp.com>
+Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://patch.msgid.link/20241031060247.1290941-2-wei.fang@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc_pf.c |  103 +++++++++++++++++-------
- 1 file changed, 73 insertions(+), 30 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc_pf.c |   18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
 --- a/drivers/net/ethernet/freescale/enetc/enetc_pf.c
 +++ b/drivers/net/ethernet/freescale/enetc/enetc_pf.c
-@@ -1236,50 +1236,81 @@ static int enetc_pf_register_with_ierb(s
- 	return ret;
- }
+@@ -683,19 +683,11 @@ static int enetc_sriov_configure(struct
  
--static int enetc_pf_probe(struct pci_dev *pdev,
--			  const struct pci_device_id *ent)
-+static struct enetc_si *enetc_psi_create(struct pci_dev *pdev)
- {
--	struct device_node *node = pdev->dev.of_node;
--	struct enetc_ndev_priv *priv;
--	struct net_device *ndev;
- 	struct enetc_si *si;
--	struct enetc_pf *pf;
- 	int err;
+ 	if (!num_vfs) {
+ 		enetc_msg_psi_free(pf);
+-		kfree(pf->vf_state);
+ 		pf->num_vfs = 0;
+ 		pci_disable_sriov(pdev);
+ 	} else {
+ 		pf->num_vfs = num_vfs;
  
--	err = enetc_pf_register_with_ierb(pdev);
--	if (err == -EPROBE_DEFER)
--		return err;
--	if (err)
--		dev_warn(&pdev->dev,
--			 "Could not register with IERB driver: %pe, please update the device tree\n",
--			 ERR_PTR(err));
+-		pf->vf_state = kcalloc(num_vfs, sizeof(struct enetc_vf_state),
+-				       GFP_KERNEL);
+-		if (!pf->vf_state) {
+-			pf->num_vfs = 0;
+-			return -ENOMEM;
+-		}
 -
--	err = enetc_pci_probe(pdev, KBUILD_MODNAME, sizeof(*pf));
--	if (err)
--		return dev_err_probe(&pdev->dev, err, "PCI probing failed\n");
-+	err = enetc_pci_probe(pdev, KBUILD_MODNAME, sizeof(struct enetc_pf));
-+	if (err) {
-+		dev_err_probe(&pdev->dev, err, "PCI probing failed\n");
-+		goto out;
+ 		err = enetc_msg_psi_init(pf);
+ 		if (err) {
+ 			dev_err(&pdev->dev, "enetc_msg_psi_init (%d)\n", err);
+@@ -714,7 +706,6 @@ static int enetc_sriov_configure(struct
+ err_en_sriov:
+ 	enetc_msg_psi_free(pf);
+ err_msg_psi:
+-	kfree(pf->vf_state);
+ 	pf->num_vfs = 0;
+ 
+ 	return err;
+@@ -1322,6 +1313,12 @@ static int enetc_pf_probe(struct pci_dev
+ 	pf = enetc_si_priv(si);
+ 	pf->si = si;
+ 	pf->total_vfs = pci_sriov_get_totalvfs(pdev);
++	if (pf->total_vfs) {
++		pf->vf_state = kcalloc(pf->total_vfs, sizeof(struct enetc_vf_state),
++				       GFP_KERNEL);
++		if (!pf->vf_state)
++			goto err_alloc_vf_state;
 +	}
  
- 	si = pci_get_drvdata(pdev);
- 	if (!si->hw.port || !si->hw.global) {
- 		err = -ENODEV;
- 		dev_err(&pdev->dev, "could not map PF space, probing a VF?\n");
--		goto err_map_pf_space;
-+		goto out_pci_remove;
- 	}
- 
- 	err = enetc_setup_cbdr(&pdev->dev, &si->hw, ENETC_CBDR_DEFAULT_SIZE,
- 			       &si->cbd_ring);
+ 	err = enetc_setup_mac_addresses(node, pf);
  	if (err)
--		goto err_setup_cbdr;
-+		goto out_pci_remove;
- 
- 	err = enetc_init_port_rfs_memory(si);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to initialize RFS memory\n");
--		goto err_init_port_rfs;
-+		goto out_teardown_cbdr;
- 	}
- 
- 	err = enetc_init_port_rss_memory(si);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to initialize RSS memory\n");
--		goto err_init_port_rss;
-+		goto out_teardown_cbdr;
-+	}
-+
-+	return si;
-+
-+out_teardown_cbdr:
-+	enetc_teardown_cbdr(&si->cbd_ring);
-+out_pci_remove:
-+	enetc_pci_remove(pdev);
-+out:
-+	return ERR_PTR(err);
-+}
-+
-+static void enetc_psi_destroy(struct pci_dev *pdev)
-+{
-+	struct enetc_si *si = pci_get_drvdata(pdev);
-+
-+	enetc_teardown_cbdr(&si->cbd_ring);
-+	enetc_pci_remove(pdev);
-+}
-+
-+static int enetc_pf_probe(struct pci_dev *pdev,
-+			  const struct pci_device_id *ent)
-+{
-+	struct device_node *node = pdev->dev.of_node;
-+	struct enetc_ndev_priv *priv;
-+	struct net_device *ndev;
-+	struct enetc_si *si;
-+	struct enetc_pf *pf;
-+	int err;
-+
-+	err = enetc_pf_register_with_ierb(pdev);
-+	if (err == -EPROBE_DEFER)
-+		return err;
-+	if (err)
-+		dev_warn(&pdev->dev,
-+			 "Could not register with IERB driver: %pe, please update the device tree\n",
-+			 ERR_PTR(err));
-+
-+	si = enetc_psi_create(pdev);
-+	if (IS_ERR(si)) {
-+		err = PTR_ERR(si);
-+		goto err_psi_create;
- 	}
- 
- 	if (node && !of_device_is_available(node)) {
-@@ -1365,15 +1396,10 @@ err_alloc_si_res:
- 	si->ndev = NULL;
- 	free_netdev(ndev);
+@@ -1398,6 +1395,8 @@ err_alloc_si_res:
  err_alloc_netdev:
--err_init_port_rss:
--err_init_port_rfs:
  err_device_disabled:
  err_setup_mac_addresses:
--	enetc_teardown_cbdr(&si->cbd_ring);
--err_setup_cbdr:
--err_map_pf_space:
--	enetc_pci_remove(pdev);
--
-+	enetc_psi_destroy(pdev);
-+err_psi_create:
++	kfree(pf->vf_state);
++err_alloc_vf_state:
+ 	enetc_psi_destroy(pdev);
+ err_psi_create:
  	return err;
- }
- 
-@@ -1396,12 +1422,29 @@ static void enetc_pf_remove(struct pci_d
- 	enetc_free_msix(priv);
- 
+@@ -1424,6 +1423,7 @@ static void enetc_pf_remove(struct pci_d
  	enetc_free_si_resources(priv);
--	enetc_teardown_cbdr(&si->cbd_ring);
  
  	free_netdev(si->ndev);
++	kfree(pf->vf_state);
  
--	enetc_pci_remove(pdev);
-+	enetc_psi_destroy(pdev);
-+}
-+
-+static void enetc_fixup_clear_rss_rfs(struct pci_dev *pdev)
-+{
-+	struct device_node *node = pdev->dev.of_node;
-+	struct enetc_si *si;
-+
-+	/* Only apply quirk for disabled functions. For the ones
-+	 * that are enabled, enetc_pf_probe() will apply it.
-+	 */
-+	if (node && of_device_is_available(node))
-+		return;
-+
-+	si = enetc_psi_create(pdev);
-+	if (si)
-+		enetc_psi_destroy(pdev);
+ 	enetc_psi_destroy(pdev);
  }
-+DECLARE_PCI_FIXUP_FINAL(PCI_VENDOR_ID_FREESCALE, ENETC_DEV_ID_PF,
-+			enetc_fixup_clear_rss_rfs);
- 
- static const struct pci_device_id enetc_pf_id_table[] = {
- 	{ PCI_DEVICE(PCI_VENDOR_ID_FREESCALE, ENETC_DEV_ID_PF) },
 
 
