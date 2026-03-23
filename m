@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF86E3C1410;
-	Mon, 23 Mar 2026 16:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC93BD23C;
+	Mon, 23 Mar 2026 16:29:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283366; cv=none; b=g0TbT1NQBdOsB1M8oJj2lCm5g8L0JYp3vAk0pvTHq1RrrgRBvncTqjUukE77WGstl9Q/m1J3R2iA/2zhkSBO6hacKjC0o5yS6jz58prlIYuoRIvAg9S8Jr23r1+d7uA7SBARquYYCQuURqV7mH7NLEZ3I2pmFBH/2XCZyHA1JuI=
+	t=1774283369; cv=none; b=IIaiZRnggSGB34QDaRsSVxrSA00OONg5TUywKnHVP1CvbMXU60ntQwAbO18kBRbhTmREm+trxdNChlS5THpN6N0Qlj+7EvUZqBZYY4RTXQowcEIOKuxfCyhzKkj4zV5Gp3tYoNnCkqpl9c0a/ikCymQ/WHMDlMaH7cuIeU5ajds=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283366; c=relaxed/simple;
-	bh=9ah/OBXbN7VZMreGQyyzC/coEBY9K5h9y47q1Oal2pI=;
+	s=arc-20240116; t=1774283369; c=relaxed/simple;
+	bh=WYG0c5PyXl7GRn1ROMHGrlmoHWt4c37jFOKqrhZ+nEk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EysEexcVpAgct2FMMgbzFNnu4M+MBromDZTbB5fw0lw8o2flAOKS3Gx0uzFgZeehYMfxkyi/ztFu8PTM4hci83kL52/77uj1guWxIuZTnOgd98+ZPrWOmpYCzo3gMB9m4eDOuQhDUvB6lDsZ0eMmfJAoaPtng69UgtpSMIaa+Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=swb+SXou; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=joP3+eShmyjhOH/xGJNt6SyXU4yUKs9cP9689ZTu6/J9gdXNbx3ginNAf5cSI1vm+3Vt5SvCK2nRr1Yl10p79gVj+3dPDMfjYgSxhZaTatps6iocFn9Ho/NEeiDa+E6dnYjpw2FDg5pR/ybJPOdViq28Xp7WD5gdiU5OLA6bHCI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aPnkoQvq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="swb+SXou"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F2DC4CEF7;
-	Mon, 23 Mar 2026 16:29:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aPnkoQvq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211D3C4CEF7;
+	Mon, 23 Mar 2026 16:29:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283366;
-	bh=9ah/OBXbN7VZMreGQyyzC/coEBY9K5h9y47q1Oal2pI=;
+	s=korg; t=1774283369;
+	bh=WYG0c5PyXl7GRn1ROMHGrlmoHWt4c37jFOKqrhZ+nEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=swb+SXoubn/FCKe1K4994vA1t0YFeWSsRAd6zwGdHnAlkq4iVzwMzb1FSaemHs6CR
-	 zIBwm1MYwSzQyyInXLO5I+rqbB4n9wskOaeOfGC/xGY7TRtbjO0yRjwdKxCD6SVE+m
-	 V5TogZgeVsJT07FuPeXF4Vgg/8A4JQZkHzyngfec=
+	b=aPnkoQvqnSINFoX4M7oXkneWrFh4XqTvSMKzErmFNOBwBlEgtFHfoCXYYT8WxxOpZ
+	 ygWEDdQyTnTiC8wIm8BuG969X6Ht1DVPWoJreUOA0jgk5G2uanurgbIbgj8gZwrJ5V
+	 DEmhdr0hg9/GXt/JCPwBuSD2rCqsbiv9CR3V85iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Furong Xu <0x1207@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 470/481] net: stmmac: fix TSO DMA API usage causing oops
-Date: Mon, 23 Mar 2026 14:47:32 +0100
-Message-ID: <20260323134536.672365608@linuxfoundation.org>
+	syzbot+f56f7d56e2c6e11a01b6@syzkaller.appspotmail.com,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 471/481] mptcp: pm: in-kernel: always set ID as avail when rm endp
+Date: Mon, 23 Mar 2026 14:47:33 +0100
+Message-ID: <20260323134536.696929696@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,84 +52,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit 4c49f38e20a57f8abaebdf95b369295b153d1f8e ]
+commit d191101dee25567c2af3b28565f45346c33d65f5 upstream.
 
-Commit 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap
-for non-paged SKB data") moved the assignment of tx_skbuff_dma[]'s
-members to be later in stmmac_tso_xmit().
+Syzkaller managed to find a combination of actions that was generating
+this warning:
 
-The buf (dma cookie) and len stored in this structure are passed to
-dma_unmap_single() by stmmac_tx_clean(). The DMA API requires that
-the dma cookie passed to dma_unmap_single() is the same as the value
-returned from dma_map_single(). However, by moving the assignment
-later, this is not the case when priv->dma_cap.addr64 > 32 as "des"
-is offset by proto_hdr_len.
+  WARNING: net/mptcp/pm_kernel.c:1074 at __mark_subflow_endp_available net/mptcp/pm_kernel.c:1074 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_fullmesh net/mptcp/pm_kernel.c:1446 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_set_flags_all net/mptcp/pm_kernel.c:1474 [inline], CPU#1: syz.7.48/2535
+  WARNING: net/mptcp/pm_kernel.c:1074 at mptcp_pm_nl_set_flags+0x5de/0x640 net/mptcp/pm_kernel.c:1538, CPU#1: syz.7.48/2535
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 2535 Comm: syz.7.48 Not tainted 6.18.0-03987-gea5f5e676cf5 #17 PREEMPT(voluntary)
+  Hardware name: QEMU Ubuntu 25.10 PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_kernel.c:1074 [inline]
+  RIP: 0010:mptcp_pm_nl_fullmesh net/mptcp/pm_kernel.c:1446 [inline]
+  RIP: 0010:mptcp_pm_nl_set_flags_all net/mptcp/pm_kernel.c:1474 [inline]
+  RIP: 0010:mptcp_pm_nl_set_flags+0x5de/0x640 net/mptcp/pm_kernel.c:1538
+  Code: 89 c7 e8 c5 8c 73 fe e9 f7 fd ff ff 49 83 ef 80 e8 b7 8c 73 fe 4c 89 ff be 03 00 00 00 e8 4a 29 e3 fe eb ac e8 a3 8c 73 fe 90 <0f> 0b 90 e9 3d ff ff ff e8 95 8c 73 fe b8 a1 ff ff ff eb 1a e8 89
+  RSP: 0018:ffffc9001535b820 EFLAGS: 00010287
+  netdevsim0: tun_chr_ioctl cmd 1074025677
+  RAX: ffffffff82da294d RBX: 0000000000000001 RCX: 0000000000080000
+  RDX: ffffc900096d0000 RSI: 00000000000006d6 RDI: 00000000000006d7
+  netdevsim0: linktype set to 823
+  RBP: ffff88802cdb2240 R08: 00000000000104ae R09: ffffffffffffffff
+  R10: ffffffff82da27d4 R11: 0000000000000000 R12: 0000000000000000
+  R13: ffff88801246d8c0 R14: ffffc9001535b8b8 R15: ffff88802cdb1800
+  FS:  00007fc6ac5a76c0(0000) GS:ffff8880f90c8000(0000) knlGS:0000000000000000
+  netlink: 'syz.3.50': attribute type 5 has an invalid length.
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  netlink: 1232 bytes leftover after parsing attributes in process `syz.3.50'.
+  CR2: 0000200000010000 CR3: 0000000025b1a000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   mptcp_pm_set_flags net/mptcp/pm_netlink.c:277 [inline]
+   mptcp_pm_nl_set_flags_doit+0x1d7/0x210 net/mptcp/pm_netlink.c:282
+   genl_family_rcv_msg_doit+0x117/0x180 net/netlink/genetlink.c:1115
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0x3a8/0x3f0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x16d/0x240 net/netlink/af_netlink.c:2550
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+   netlink_unicast+0x3e9/0x4c0 net/netlink/af_netlink.c:1344
+   netlink_sendmsg+0x4ab/0x5b0 net/netlink/af_netlink.c:1894
+   sock_sendmsg_nosec net/socket.c:718 [inline]
+   __sock_sendmsg+0xc9/0xf0 net/socket.c:733
+   ____sys_sendmsg+0x272/0x3b0 net/socket.c:2608
+   ___sys_sendmsg+0x2de/0x320 net/socket.c:2662
+   __sys_sendmsg net/socket.c:2694 [inline]
+   __do_sys_sendmsg net/socket.c:2699 [inline]
+   __se_sys_sendmsg net/socket.c:2697 [inline]
+   __x64_sys_sendmsg+0x110/0x1a0 net/socket.c:2697
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0xed/0x360 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7fc6adb66f6d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007fc6ac5a6ff8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007fc6addf5fa0 RCX: 00007fc6adb66f6d
+  RDX: 0000000000048084 RSI: 00002000000002c0 RDI: 000000000000000e
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+  netlink: 'syz.5.51': attribute type 2 has an invalid length.
+  R13: 00007fff25e91fe0 R14: 00007fc6ac5a7ce4 R15: 00007fff25e920d7
+   </TASK>
 
-This causes problems such as:
+The actions that caused that seem to be:
 
-  dwc-eth-dwmac 2490000.ethernet eth0: Tx DMA map failed
+ - Create an MPTCP endpoint for address A without any flags
+ - Create a new MPTCP connection from address A
+ - Remove the MPTCP endpoint: the corresponding subflows will be removed
+ - Recreate the endpoint with the same ID, but with the subflow flag
+ - Change the same endpoint to add the fullmesh flag
 
-and with DMA_API_DEBUG enabled:
+In this case, msk->pm.local_addr_used has been kept to 0 as expected,
+but the corresponding bit in msk->pm.id_avail_bitmap was still unset
+after having removed the endpoint, causing the splat later on.
 
-  DMA-API: dwc-eth-dwmac 2490000.ethernet: device driver tries to +free DMA memory it has not allocated [device address=0x000000ffffcf65c0] [size=66 bytes]
+When removing an endpoint, the corresponding endpoint ID was only marked
+as available for "signal" types with an announced address, plus all
+"subflow" types, but not the other types like an endpoint corresponding
+to the initial subflow. In these cases, re-creating an endpoint with the
+same ID didn't signal/create anything. Here, adding the fullmesh flag
+was creating the splat when calling __mark_subflow_endp_available() from
+mptcp_pm_nl_fullmesh(), because msk->pm.local_addr_used was set to 0
+while the ID was marked as used.
 
-Fix this by maintaining "des" as the original DMA cookie, and use
-tso_des to pass the offset DMA cookie to stmmac_tso_allocator().
+To fix this issue, the corresponding bit in msk->pm.id_avail_bitmap can
+always be set as available when removing an MPTCP in-kernel endpoint. In
+other words, moving the call to __set_bit() to do it in all cases,
+except for "subflow" types where this bit is handled in a dedicated
+helper.
 
-Full details of the crashes can be found at:
-https://lore.kernel.org/all/d8112193-0386-4e14-b516-37c2d838171a@nvidia.com/
-https://lore.kernel.org/all/klkzp5yn5kq5efgtrow6wbvnc46bcqfxs65nz3qy77ujr5turc@bwwhelz2l4dw/
+Note: instead of adding a new spin_(un)lock_bh that would be taken in
+all cases, do all the actions requiring the spin lock under the same
+block.
 
-Reported-by: Jon Hunter <jonathanh@nvidia.com>
-Reported-by: Thierry Reding <thierry.reding@gmail.com>
-Fixes: 66600fac7a98 ("net: stmmac: TSO: Fix unbalanced DMA map/unmap for non-paged SKB data")
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Reviewed-by: Furong Xu <0x1207@gmail.com>
-Link: https://patch.msgid.link/E1tJXcx-006N4Z-PC@rmk-PC.armlinux.org.uk
+This modification potentially fixes another issue reported by syzbot,
+see [1]. But without a reproducer or more details about what exactly
+happened before, it is hard to confirm.
+
+Fixes: e255683c06df ("mptcp: pm: re-using ID of unused removed ADD_ADDR")
+Cc: stable@vger.kernel.org
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/606
+Reported-by: syzbot+f56f7d56e2c6e11a01b6@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/68fcfc4a.050a0220.346f24.02fb.GAE@google.com [1]
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260205-net-mptcp-misc-fixes-6-19-rc8-v2-1-c2720ce75c34@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-[ The context change is due to the commit 041cc86b3653
-("net: stmmac: Enable TSO on VLANs") in v6.11 which is irrelevant to
-the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+[ Conflict in pm_netlink.c, because commit 8617e85e04bd ("mptcp: pm:
+  split in-kernel PM specific code") is not in this version, and move
+  code from pm_netlink.c to pm_kernel.c. Also, commit 636113918508
+  ("mptcp: pm: remove '_nl' from mptcp_pm_nl_rm_addr_received") renamed
+  mptcp_pm_nl_rm_subflow_received() to mptcp_pm_rm_subflow(). Apart from
+  that, the same patch can be applied in pm_netlink.c. ]
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ net/mptcp/pm_netlink.c |   20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -4091,10 +4091,10 @@ static netdev_tx_t stmmac_tso_xmit(struc
- 	int tmp_pay_len = 0, first_tx;
- 	struct stmmac_tx_queue *tx_q;
- 	bool has_vlan, set_ic;
-+	dma_addr_t tso_des, des;
- 	u8 proto_hdr_len, hdr;
- 	unsigned long flags;
- 	u32 pay_len, mss;
--	dma_addr_t des;
- 	int i;
- 
- 	tx_q = &priv->dma_conf.tx_queue[queue];
-@@ -4179,14 +4179,15 @@ static netdev_tx_t stmmac_tso_xmit(struc
- 
- 		/* If needed take extra descriptors to fill the remaining payload */
- 		tmp_pay_len = pay_len - TSO_MAX_BUFF_SIZE;
-+		tso_des = des;
- 	} else {
- 		stmmac_set_desc_addr(priv, first, des);
- 		tmp_pay_len = pay_len;
--		des += proto_hdr_len;
-+		tso_des = des + proto_hdr_len;
- 		pay_len = 0;
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1643,10 +1643,8 @@ static bool mptcp_pm_remove_anno_addr(st
+ 	ret = remove_anno_list_by_saddr(msk, addr);
+ 	if (ret || force) {
+ 		spin_lock_bh(&msk->pm.lock);
+-		if (ret) {
+-			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++		if (ret)
+ 			msk->pm.add_addr_signaled--;
+-		}
+ 		mptcp_pm_remove_addr(msk, &list);
+ 		spin_unlock_bh(&msk->pm.lock);
  	}
+@@ -1684,17 +1682,15 @@ static int mptcp_nl_remove_subflow_and_s
+ 					  !(entry->flags & MPTCP_PM_ADDR_FLAG_IMPLICIT));
  
--	stmmac_tso_allocator(priv, des, tmp_pay_len, (nfrags == 0), queue);
-+	stmmac_tso_allocator(priv, tso_des, tmp_pay_len, (nfrags == 0), queue);
+ 		list.ids[0] = mptcp_endp_get_local_id(msk, addr);
+-		if (remove_subflow) {
+-			spin_lock_bh(&msk->pm.lock);
+-			mptcp_pm_nl_rm_subflow_received(msk, &list);
+-			spin_unlock_bh(&msk->pm.lock);
+-		}
  
- 	/* In case two or more DMA transmit descriptors are allocated for this
- 	 * non-paged SKB data, the DMA buffer address should be saved to
+-		if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW) {
+-			spin_lock_bh(&msk->pm.lock);
++		spin_lock_bh(&msk->pm.lock);
++		if (remove_subflow)
++			mptcp_pm_nl_rm_subflow_received(msk, &list);
++		if (entry->flags & MPTCP_PM_ADDR_FLAG_SUBFLOW)
+ 			__mark_subflow_endp_available(msk, list.ids[0]);
+-			spin_unlock_bh(&msk->pm.lock);
+-		}
++		else /* mark endp ID as available, e.g. Signal or MPC endp */
++			__set_bit(addr->id, msk->pm.id_avail_bitmap);
++		spin_unlock_bh(&msk->pm.lock);
+ 
+ 		if (msk->mpc_endpoint_id == entry->addr.id)
+ 			msk->mpc_endpoint_id = 0;
 
 
