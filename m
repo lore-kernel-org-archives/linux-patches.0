@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E64B3283C82;
-	Mon, 23 Mar 2026 16:24:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932D43B8959;
+	Mon, 23 Mar 2026 16:24:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283074; cv=none; b=kMg+DS8g+tZy4x9n9XykmCIvRTMEFks/nrIq46OLLdQXD/QTdBSvtGxJmdTbNG7xqVdTal9TrtggXkzI/afzeT1Tdn0nrZDDvJo05i5ToKd0UtiPM0mVyMWLyR3SeBIJqshmduwYPXQ2REGwxTmxYGxwFWnd62uSHC37KKY1+Ok=
+	t=1774283076; cv=none; b=iNilGRIGUAN1NRRm5da7S5cbBfZRR0ZH/my3IRyROyJ/1RdzouMIEG1nXVcmnLUvcblOaMLg6CQ6j0iquWAN/Fq+O7BHCSQiU5QAkOpoUg97UqZNNDTj5eT9X9KGStKajBegF4CGQAU+ESk4Xnjb7BN7zIk9izqCPIxJfD6JpLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283074; c=relaxed/simple;
-	bh=16RDQAF0mJ/gXhBBAVlVlM/qsGqF5MrGH+DcxVEjc/c=;
+	s=arc-20240116; t=1774283076; c=relaxed/simple;
+	bh=g2vQ8taGFEVJKCwpo/6gaXq6qFlpHO+W+HcrQnzV2bE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J6or4t4jmPTtQFC6CVCUhh6REGGY+GJVb3Uy8QS+Uxhl6uGZvYtHsEK66ftgcTD9BpVvD2hCMIvvHogYSvWhgHHySFLXBAWJbTcue9MrQo564bmwT1HlaUwmIP4qDVHGxgYQETNBL1v2i2j3YHkU5v/n19/8qdg+SmTfsHfdAvg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MlqaLBLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ci1oXbbxWAbkK+aquvukQ9wXPz/zMnmZDSsEJO2x/WfiSEVLSD7SJdiG/mFgbifXaGThJp3C1RtYNaBoIusrY2vpaEwmcTGYHpVfvWWD++5n5VzhkDXoP+sOZxho0SWcSde7l95gADRr1iZ9HoPrwmZ+jLCfK0WInN4qazr6gWA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mCJp4rPE; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MlqaLBLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F0B2C4CEF7;
-	Mon, 23 Mar 2026 16:24:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mCJp4rPE"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251DDC4CEF7;
+	Mon, 23 Mar 2026 16:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283073;
-	bh=16RDQAF0mJ/gXhBBAVlVlM/qsGqF5MrGH+DcxVEjc/c=;
+	s=korg; t=1774283076;
+	bh=g2vQ8taGFEVJKCwpo/6gaXq6qFlpHO+W+HcrQnzV2bE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlqaLBLeoO4lneYPyqcnzfIR9cV4jQBN3NyRQElMt/IsUFHl2ZJZWDRAT8fFXeAuG
-	 kXf4U9jZtH9B7VNbSXJv1/NxgS568Ma2OvFYFIZisNqoPWV7Tp+67b+G/bvYH8ANOY
-	 cNl7U7pv6tqzmAPH4o2vxsDnMjbBnDPeGQn6tuo8=
+	b=mCJp4rPEdWVpYJLBFGHRZjnR4r7LOBTWG4TpBDHRQy592F9jYqSl+Z7wyYrLDyHkS
+	 oHPVusovIvZuR01bwM4ERJEjmZKAfb7ferSYCJ1Y1nWovqUBZNkKgSNRYUzC1pjIXt
+	 ELB7EUtZqQuhn5ZNVkG2S+YZvuwgXSjakJJ/U0Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Boris Burkov <boris@bur.io>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.1 392/481] btrfs: do not strictly require dirty metadata threshold for metadata writepages
-Date: Mon, 23 Mar 2026 14:46:14 +0100
-Message-ID: <20260323134534.713614370@linuxfoundation.org>
+Subject: [PATCH 6.1 393/481] eth: bnxt: always recalculate features after XDP clearing, fix null-deref
+Date: Mon, 23 Mar 2026 14:46:15 +0100
+Message-ID: <20260323134534.739465493@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,164 +52,158 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 4e159150a9a56d66d247f4b5510bed46fe58aa1c ]
+[ Upstream commit f0aa6a37a3dbb40b272df5fc6db93c114688adcd ]
 
-[BUG]
-There is an internal report that over 1000 processes are
-waiting at the io_schedule_timeout() of balance_dirty_pages(), causing
-a system hang and trigger a kernel coredump.
+Recalculate features when XDP is detached.
 
-The kernel is v6.4 kernel based, but the root problem still applies to
-any upstream kernel before v6.18.
+Before:
+  # ip li set dev eth0 xdp obj xdp_dummy.bpf.o sec xdp
+  # ip li set dev eth0 xdp off
+  # ethtool -k eth0 | grep gro
+  rx-gro-hw: off [requested on]
 
-[CAUSE]
->From Jan Kara for his wisdom on the dirty page balance behavior first.
+After:
+  # ip li set dev eth0 xdp obj xdp_dummy.bpf.o sec xdp
+  # ip li set dev eth0 xdp off
+  # ethtool -k eth0 | grep gro
+  rx-gro-hw: on
 
-  This cgroup dirty limit was what was actually playing the role here
-  because the cgroup had only a small amount of memory and so the dirty
-  limit for it was something like 16MB.
+The fact that HW-GRO doesn't get re-enabled automatically is just
+a minor annoyance. The real issue is that the features will randomly
+come back during another reconfiguration which just happens to invoke
+netdev_update_features(). The driver doesn't handle reconfiguring
+two things at a time very robustly.
 
-  Dirty throttling is responsible for enforcing that nobody can dirty
-  (significantly) more dirty memory than there's dirty limit. Thus when
-  a task is dirtying pages it periodically enters into balance_dirty_pages()
-  and we let it sleep there to slow down the dirtying.
+Starting with commit 98ba1d931f61 ("bnxt_en: Fix RSS logic in
+__bnxt_reserve_rings()") we only reconfigure the RSS hash table
+if the "effective" number of Rx rings has changed. If HW-GRO is
+enabled "effective" number of rings is 2x what user sees.
+So if we are in the bad state, with HW-GRO re-enablement "pending"
+after XDP off, and we lower the rings by / 2 - the HW-GRO rings
+doing 2x and the ethtool -L doing / 2 may cancel each other out,
+and the:
 
-  When the system is over dirty limit already (either globally or within
-  a cgroup of the running task), we will not let the task exit from
-  balance_dirty_pages() until the number of dirty pages drops below the
-  limit.
+  if (old_rx_rings != bp->hw_resc.resv_rx_rings &&
 
-  So in this particular case, as I already mentioned, there was a cgroup
-  with relatively small amount of memory and as a result with dirty limit
-  set at 16MB. A task from that cgroup has dirtied about 28MB worth of
-  pages in btrfs btree inode and these were practically the only dirty
-  pages in that cgroup.
+condition in __bnxt_reserve_rings() will be false.
+The RSS map won't get updated, and we'll crash with:
 
-So that means the only way to reduce the dirty pages of that cgroup is
-to writeback the dirty pages of btrfs btree inode, and only after that
-those processes can exit balance_dirty_pages().
+  BUG: kernel NULL pointer dereference, address: 0000000000000168
+  RIP: 0010:__bnxt_hwrm_vnic_set_rss+0x13a/0x1a0
+    bnxt_hwrm_vnic_rss_cfg_p5+0x47/0x180
+    __bnxt_setup_vnic_p5+0x58/0x110
+    bnxt_init_nic+0xb72/0xf50
+    __bnxt_open_nic+0x40d/0xab0
+    bnxt_open_nic+0x2b/0x60
+    ethtool_set_channels+0x18c/0x1d0
 
-Now back to the btrfs part, btree_writepages() is responsible for
-writing back dirty btree inode pages.
+As we try to access a freed ring.
 
-The problem here is, there is a btrfs internal threshold that if the
-btree inode's dirty bytes are below the 32M threshold, it will not
-do any writeback.
+The issue is present since XDP support was added, really, but
+prior to commit 98ba1d931f61 ("bnxt_en: Fix RSS logic in
+__bnxt_reserve_rings()") it wasn't causing major issues.
 
-This behavior is to batch as much metadata as possible so we won't write
-back those tree blocks and then later re-COW them again for another
-modification.
-
-This internal 32MiB is higher than the existing dirty page size (28MiB),
-meaning no writeback will happen, causing a deadlock between btrfs and
-cgroup:
-
-- Btrfs doesn't want to write back btree inode until more dirty pages
-
-- Cgroup/MM doesn't want more dirty pages for btrfs btree inode
-  Thus any process touching that btree inode is put into sleep until
-  the number of dirty pages is reduced.
-
-Thanks Jan Kara a lot for the analysis of the root cause.
-
-[ENHANCEMENT]
-Since kernel commit b55102826d7d ("btrfs: set AS_KERNEL_FILE on the
-btree_inode"), btrfs btree inode pages will only be charged to the root
-cgroup which should have a much larger limit than btrfs' 32MiB
-threshold.
-So it should not affect newer kernels.
-
-But for all current LTS kernels, they are all affected by this problem,
-and backporting the whole AS_KERNEL_FILE may not be a good idea.
-
-Even for newer kernels I still think it's a good idea to get
-rid of the internal threshold at btree_writepages(), since for most cases
-cgroup/MM has a better view of full system memory usage than btrfs' fixed
-threshold.
-
-For internal callers using btrfs_btree_balance_dirty() since that
-function is already doing internal threshold check, we don't need to
-bother them.
-
-But for external callers of btree_writepages(), just respect their
-requests and write back whatever they want, ignoring the internal
-btrfs threshold to avoid such deadlock on btree inode dirty page
-balancing.
-
-CC: stable@vger.kernel.org
-CC: Jan Kara <jack@suse.cz>
-Reviewed-by: Boris Burkov <boris@bur.io>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-[ The context change is due to the commit 41044b41ad2c
-("btrfs: add helper to get fs_info from struct inode pointer")
-in v6.9 and the commit c66f2afc7148
-("btrfs: remove pointless writepages callback wrapper")
-in v6.10 which are irrelevant to the logic of this patch. ]
+Fixes: 1054aee82321 ("bnxt_en: Use NETIF_F_GRO_HW.")
+Fixes: 98ba1d931f61 ("bnxt_en: Fix RSS logic in __bnxt_reserve_rings()")
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Link: https://patch.msgid.link/20250109043057.2888953-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ The context change is due to the commit 1f6e77cb9b32
+("bnxt_en: Add bnxt_l2_filter hash table.") in v6.8 and the commit
+8336a974f37d ("bnxt_en: Save user configured filters in a lookup list")
+in v6.9 which are irrelevant to the logic of this patch. ]
 Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c   |   22 ----------------------
- fs/btrfs/extent_io.c |    3 +--
- fs/btrfs/extent_io.h |    3 +--
- 3 files changed, 2 insertions(+), 26 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     |   25 ++++++++++++++++++++-----
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     |    2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |    7 -------
+ 3 files changed, 21 insertions(+), 13 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -800,28 +800,6 @@ static int btree_migrate_folio(struct ad
- #define btree_migrate_folio NULL
- #endif
- 
--static int btree_writepages(struct address_space *mapping,
--			    struct writeback_control *wbc)
--{
--	struct btrfs_fs_info *fs_info;
--	int ret;
--
--	if (wbc->sync_mode == WB_SYNC_NONE) {
--
--		if (wbc->for_kupdate)
--			return 0;
--
--		fs_info = BTRFS_I(mapping->host)->root->fs_info;
--		/* this is a bit racy, but that's ok */
--		ret = __percpu_counter_compare(&fs_info->dirty_metadata_bytes,
--					     BTRFS_DIRTY_METADATA_THRESH,
--					     fs_info->dirty_metadata_batch);
--		if (ret < 0)
--			return 0;
--	}
--	return btree_write_cache_pages(mapping, wbc);
--}
--
- static bool btree_release_folio(struct folio *folio, gfp_t gfp_flags)
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -4045,7 +4045,7 @@ void bnxt_set_ring_params(struct bnxt *b
+ /* Changing allocation mode of RX rings.
+  * TODO: Update when extending xdp_rxq_info to support allocation modes.
+  */
+-int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
++static void __bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
  {
- 	if (folio_test_writeback(folio) || folio_test_dirty(folio))
---- a/fs/btrfs/extent_io.c
-+++ b/fs/btrfs/extent_io.c
-@@ -2959,8 +2959,7 @@ static int submit_eb_page(struct page *p
- 	return 1;
+ 	struct net_device *dev = bp->dev;
+ 
+@@ -4066,15 +4066,30 @@ int bnxt_set_rx_skb_mode(struct bnxt *bp
+ 			bp->rx_skb_func = bnxt_rx_page_skb;
+ 		}
+ 		bp->rx_dir = DMA_BIDIRECTIONAL;
+-		/* Disable LRO or GRO_HW */
+-		netdev_update_features(dev);
+ 	} else {
+ 		dev->max_mtu = bp->max_mtu;
+ 		bp->flags &= ~BNXT_FLAG_RX_PAGE_MODE;
+ 		bp->rx_dir = DMA_FROM_DEVICE;
+ 		bp->rx_skb_func = bnxt_rx_skb;
+ 	}
+-	return 0;
++}
++
++void bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode)
++{
++	__bnxt_set_rx_skb_mode(bp, page_mode);
++
++	if (!page_mode) {
++		int rx, tx;
++
++		bnxt_get_max_rings(bp, &rx, &tx, true);
++		if (rx > 1) {
++			bp->flags &= ~BNXT_FLAG_NO_AGG_RINGS;
++			bp->dev->hw_features |= NETIF_F_LRO;
++		}
++	}
++
++	/* Update LRO and GRO_HW availability */
++	netdev_update_features(bp->dev);
  }
  
--int btree_write_cache_pages(struct address_space *mapping,
--				   struct writeback_control *wbc)
-+int btree_writepages(struct address_space *mapping, struct writeback_control *wbc)
- {
- 	struct extent_buffer *eb_context = NULL;
- 	struct extent_page_data epd = {
---- a/fs/btrfs/extent_io.h
-+++ b/fs/btrfs/extent_io.h
-@@ -152,8 +152,7 @@ int btrfs_read_folio(struct file *file,
- int extent_write_locked_range(struct inode *inode, u64 start, u64 end);
- int extent_writepages(struct address_space *mapping,
- 		      struct writeback_control *wbc);
--int btree_write_cache_pages(struct address_space *mapping,
--			    struct writeback_control *wbc);
-+int btree_writepages(struct address_space *mapping, struct writeback_control *wbc);
- void extent_readahead(struct readahead_control *rac);
- int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
- 		  u64 start, u64 len);
+ static void bnxt_free_vnic_attributes(struct bnxt *bp)
+@@ -13778,7 +13793,7 @@ static int bnxt_init_one(struct pci_dev
+ 	if (rc)
+ 		goto init_err_pci_clean;
+ 
+-	bnxt_set_rx_skb_mode(bp, false);
++	__bnxt_set_rx_skb_mode(bp, false);
+ 	bnxt_set_tpa_flags(bp);
+ 	bnxt_set_ring_params(bp);
+ 	rc = bnxt_set_dflt_rings(bp, true);
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -2315,7 +2315,7 @@ void bnxt_reuse_rx_data(struct bnxt_rx_r
+ u32 bnxt_fw_health_readl(struct bnxt *bp, int reg_idx);
+ void bnxt_set_tpa_flags(struct bnxt *bp);
+ void bnxt_set_ring_params(struct bnxt *);
+-int bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode);
++void bnxt_set_rx_skb_mode(struct bnxt *bp, bool page_mode);
+ int bnxt_hwrm_func_drv_rgtr(struct bnxt *bp, unsigned long *bmap,
+ 			    int bmap_size, bool async_only);
+ int bnxt_hwrm_func_drv_unrgtr(struct bnxt *bp);
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -423,14 +423,7 @@ static int bnxt_xdp_set(struct bnxt *bp,
+ 	if (prog) {
+ 		bnxt_set_rx_skb_mode(bp, true);
+ 	} else {
+-		int rx, tx;
+-
+ 		bnxt_set_rx_skb_mode(bp, false);
+-		bnxt_get_max_rings(bp, &rx, &tx, true);
+-		if (rx > 1) {
+-			bp->flags &= ~BNXT_FLAG_NO_AGG_RINGS;
+-			bp->dev->hw_features |= NETIF_F_LRO;
+-		}
+ 	}
+ 	bp->tx_nr_rings_xdp = tx_xdp;
+ 	bp->tx_nr_rings = bp->tx_nr_rings_per_tc * tc + tx_xdp;
 
 
