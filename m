@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E753F3BD64E;
-	Mon, 23 Mar 2026 16:26:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE773BD62F;
+	Mon, 23 Mar 2026 16:26:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283192; cv=none; b=rperFlG7p1sQSwLbC8W10z7UFstvh3qLBAAH/yQyGvlnkEuhU71J5QIxh3HkKlwC+lQmeaXBpKhfz3O2jdwnyLHNhfepkVPy1kM/BsaQDOpb0DPIU3klRCHDiYsbyzSitmFYtKdVWzmQXQBLCp35AEUN6VmnpbbwMmUl2Wnu79M=
+	t=1774283194; cv=none; b=FIu6RX9wF4Bqvj/BJ3tvlWphPZ7GS+25v3f2ds5plDeWvkLd775luPu3P06QJgZSbnyY25dA9BSRISS5ArdUqUBxz6439MEZ65H5Wa8wlVgZGn0eW4J2BjskI3/NCz1tCCohxHjkGVao9dEmiKHuPSNIDN6v2pF5FsLX2X3VgNQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283192; c=relaxed/simple;
-	bh=BAU8UneOQOyfMUOzJSrAWzWP5KNAnyTNF0DwU6ow0bo=;
+	s=arc-20240116; t=1774283194; c=relaxed/simple;
+	bh=7KneFUsKcZgwNifw9ln2J6VPhA/r8+vRT6K3ZtH1PKU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=slwvVGsaH82vY2q0vtZlMC3HCKU7Xmdd4on1ei/pZEB/pJD8ynrtbW4fgoUIvKk1I9CzFCsXtP+/GJMCeoPe8jV8vJgkiz+pWyVCeXeTOVbQKKxhzCz96Frg9k1QEQObqttiLCMIBtOqU/+lbtwd7JIwxfS+Gbwyj2zhoFSggsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZtDnfjwe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=BIWSkrZjbc8xjjscryzW9qyFzY+8RLM1sOu+ivezts7lxVjEiLMyxl8du2VDz49DHc8odv4/5ourPV9rxFg/2tYSHcwwEQskhyD2SDQBs2Hv4hEzjhhWvkTB4D30fWC8a8XAIltxu/CmlZc1vAY45m76erimlmkwbnqLTkR/eBA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZCp984Om; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZtDnfjwe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5E1C4CEF7;
-	Mon, 23 Mar 2026 16:26:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZCp984Om"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CDCC4CEF7;
+	Mon, 23 Mar 2026 16:26:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283191;
-	bh=BAU8UneOQOyfMUOzJSrAWzWP5KNAnyTNF0DwU6ow0bo=;
+	s=korg; t=1774283194;
+	bh=7KneFUsKcZgwNifw9ln2J6VPhA/r8+vRT6K3ZtH1PKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZtDnfjwefXbvpbNFfnYLTiZGJaIVlRXMhphxw/Gaj4IKqQSmvbt8li28UW92vlx1e
-	 fpTfZN8Z+xUkqjmWC5smVymIx8oQxOKoJOWgs7S8eTdqNqnjVT4+0WuI1vUI9R5VhJ
-	 UMG0JQKmwXdPqd9ryPHgwwdydhTc0GKhQGpw5eWA=
+	b=ZCp984OmRQPzmNc8b/I/UnyKmyrpHOa+l3Ovv5UQB/wc8jbUKlAZ5FDs0YNB9agn3
+	 vQoSmPMv+qa/Uwez6YSmIxSXyTK/xw6RqS+VAyPIizVrGTz5cV32SbRNYglCqGECDZ
+	 1eynl2xuIuNosMehfeeun8hEw9ZYaVyMbxSH0t58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Hammad Ijaz <mhijaz@amazon.com>,
-	Gunnar Kudrjavets <gunnarku@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Justin Chen <justin.chen@broadcom.com>,
+	Florian Fainelli <florian.fainelli@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 437/481] net: mvpp2: guard flow control update with global_tx_fc in buffer switching
-Date: Mon, 23 Mar 2026 14:46:59 +0100
-Message-ID: <20260323134535.858871493@linuxfoundation.org>
+Subject: [PATCH 6.1 420/481] net: bcmgenet: increase WoL poll timeout
+Date: Mon, 23 Mar 2026 14:46:42 +0100
+Message-ID: <20260323134535.429847091@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,83 +52,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Muhammad Hammad Ijaz <mhijaz@amazon.com>
+From: Justin Chen <justin.chen@broadcom.com>
 
-[ Upstream commit 8a63baadf08453f66eb582fdb6dd234f72024723 ]
+[ Upstream commit 6cfc3bc02b977f2fba5f7268e6504d1931a774f7 ]
 
-mvpp2_bm_switch_buffers() unconditionally calls
-mvpp2_bm_pool_update_priv_fc() when switching between per-cpu and
-shared buffer pool modes. This function programs CM3 flow control
-registers via mvpp2_cm3_read()/mvpp2_cm3_write(), which dereference
-priv->cm3_base without any NULL check.
+Some systems require more than 5ms to get into WoL mode. Increase the
+timeout value to 50ms.
 
-When the CM3 SRAM resource is not present in the device tree (the
-third reg entry added by commit 60523583b07c ("dts: marvell: add CM3
-SRAM memory to cp11x ethernet device tree")), priv->cm3_base remains
-NULL and priv->global_tx_fc is false. Any operation that triggers
-mvpp2_bm_switch_buffers(), for example an MTU change that crosses
-the jumbo frame threshold, will crash:
-
-  Unable to handle kernel NULL pointer dereference at
-  virtual address 0000000000000000
-  Mem abort info:
-    ESR = 0x0000000096000006
-    EC = 0x25: DABT (current EL), IL = 32 bits
-  pc : readl+0x0/0x18
-  lr : mvpp2_cm3_read.isra.0+0x14/0x20
-  Call trace:
-   readl+0x0/0x18
-   mvpp2_bm_pool_update_fc+0x40/0x12c
-   mvpp2_bm_pool_update_priv_fc+0x94/0xd8
-   mvpp2_bm_switch_buffers.isra.0+0x80/0x1c0
-   mvpp2_change_mtu+0x140/0x380
-   __dev_set_mtu+0x1c/0x38
-   dev_set_mtu_ext+0x78/0x118
-   dev_set_mtu+0x48/0xa8
-   dev_ifsioc+0x21c/0x43c
-   dev_ioctl+0x2d8/0x42c
-   sock_ioctl+0x314/0x378
-
-Every other flow control call site in the driver already guards
-hardware access with either priv->global_tx_fc or port->tx_fc.
-mvpp2_bm_switch_buffers() is the only place that omits this check.
-
-Add the missing priv->global_tx_fc guard to both the disable and
-re-enable calls in mvpp2_bm_switch_buffers(), consistent with the
-rest of the driver.
-
-Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
-Signed-off-by: Muhammad Hammad Ijaz <mhijaz@amazon.com>
-Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
-Link: https://patch.msgid.link/20260316193157.65748-1-mhijaz@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: c51de7f3976b ("net: bcmgenet: add Wake-on-LAN support code")
+Signed-off-by: Justin Chen <justin.chen@broadcom.com>
+Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
+Link: https://patch.msgid.link/20260312191852.3904571-1-justin.chen@broadcom.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-index ec69bb90f5740..b42c2c498faa2 100644
---- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-+++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
-@@ -5009,7 +5009,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
- 	if (priv->percpu_pools)
- 		numbufs = port->nrxqs * 2;
- 
--	if (change_percpu)
-+	if (change_percpu && priv->global_tx_fc)
- 		mvpp2_bm_pool_update_priv_fc(priv, false);
- 
- 	for (i = 0; i < numbufs; i++)
-@@ -5026,7 +5026,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
- 			mvpp2_open(port->dev);
- 	}
- 
--	if (change_percpu)
-+	if (change_percpu && priv->global_tx_fc)
- 		mvpp2_bm_pool_update_priv_fc(priv, true);
- 
- 	return 0;
+diff --git a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
+index 56781e7214978..3ab506ed94252 100644
+--- a/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
++++ b/drivers/net/ethernet/broadcom/genet/bcmgenet_wol.c
+@@ -101,7 +101,7 @@ static int bcmgenet_poll_wol_status(struct bcmgenet_priv *priv)
+ 	while (!(bcmgenet_rbuf_readl(priv, RBUF_STATUS)
+ 		& RBUF_STATUS_WOL)) {
+ 		retries++;
+-		if (retries > 5) {
++		if (retries > 50) {
+ 			netdev_crit(dev, "polling wol mode timeout\n");
+ 			return -ETIMEDOUT;
+ 		}
 -- 
 2.51.0
 
