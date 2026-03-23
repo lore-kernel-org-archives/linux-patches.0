@@ -1,40 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769C53B47FE;
-	Mon, 23 Mar 2026 15:20:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078CC3B47EF;
+	Mon, 23 Mar 2026 15:20:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279221; cv=none; b=j8Jq68/e34fnytjcr0hwAqjExcR4ayXH/DT7ZSK/EmpBD1PreNwLbGD8VT5Q429ScxAKtF/3Xfqr7v9KTHQESB8tW89w7B0WFFmqM9UaiVginYqd6COwcjJL311nJPItDeXXX8p2qCqzpryiSeplHJtgb1kBM/TOQ0JVJoSx530=
+	t=1774279225; cv=none; b=bktXPyMKSdsX9bTuY+IEeJoXyHyajmBXZ6WBgyiqNQQ5zabmEE8K/FIrjm/Jjq3HKliRMagWxaerMUlMK+Bw77zCtRsDXmBVBM5cdI27+vPAm/bzp4lrErxP4M6jH0H+DtSFc4AcDvaHr/Et1DjbY1rFR2rQVf1oxpMWGqmKqyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279221; c=relaxed/simple;
-	bh=e8bSwvkmXKw005kE+Eto/zc7wTE1uoCca+9C1y/NwH8=;
+	s=arc-20240116; t=1774279225; c=relaxed/simple;
+	bh=swSffoPHdDX3WdiaLDYJBsG5WiluHAfaBj9gudp+YFk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Hh3GzsN2eBLBzPGOWWM8TucgcKCwgQKpjEej59x8efEUoTpoRDrcLItW/rpAVMh/lhUnqVGEqzASl0fs9zKhmW9uoqEb0rUhPWZSKBSB4J0kFxtmvVcV2E0ZjErIVKejMeKqXXJrNmS1zQwOeHr+0bDOgbK7elwpXONT34wMpsU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyeP9axB; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LhZ9GvdcKNh29QsQy8KmWWKg9+aegGwmIAmfT23EgawKzMINuetr+MJiv6r+O7Td3bBMR1MPPw1PzbLmC3lqjlZr0IM8v95jM4TWRU0rtcJi9gYGZwA5jUsdeRFBENZgSnoZHOQzy2iKm3tB5qe9lESrBtvNEyYsrET66qM7qGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bmRtkaE4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyeP9axB"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30D9C2BCB3;
-	Mon, 23 Mar 2026 15:20:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bmRtkaE4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46D19C4CEF7;
+	Mon, 23 Mar 2026 15:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279221;
-	bh=e8bSwvkmXKw005kE+Eto/zc7wTE1uoCca+9C1y/NwH8=;
+	s=korg; t=1774279224;
+	bh=swSffoPHdDX3WdiaLDYJBsG5WiluHAfaBj9gudp+YFk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyeP9axBD4uf3rehfB4YKib5efD72B2Z8QoRLhah57e56NFCl/ytAoQdoircDMyYT
-	 8MjXe/3Xes1RkPzTlPKA5aimt8uwjJFkwtAFxEY7hjRd5ayOIXUSn36agW/t7EqG7t
-	 s4oueS2QN/lVjN2fVPTbJ3/yUjFxjG3Qqq7rNZd4=
+	b=bmRtkaE451mNbVi58GHTb48CDBirYQ7fw20W8EMSJCdzcY4fvkqN7kHJAuOmI1yZT
+	 azw2s701iqgn7yw54bLadLyzlGOpCKHk7Ti3m6nCna/f2P/dtezef9OWaeOSInFFH+
+	 Jxt7Iensm9Twuf8ofvK3fWPK8uTGpgO8KOQsuH2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
+	Andrii Melnychenko <a.melnychenko@vyos.io>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 516/567] netfilter: nf_conntrack_h323: fix OOB read in decode_int() CONS case
-Date: Mon, 23 Mar 2026 14:47:16 +0100
-Message-ID: <20260323134546.779918555@linuxfoundation.org>
+Subject: [PATCH 6.6 517/567] netfilter: nft_ct: add seqadj extension for natted connections
+Date: Mon, 23 Mar 2026 14:47:17 +0100
+Message-ID: <20260323134546.803462751@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -47,50 +45,118 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Andrii Melnychenko <a.melnychenko@vyos.io>
 
-[ Upstream commit 1e3a3593162c96e8a8de48b1e14f60c3b57fca8a ]
+[ Upstream commit 90918e3b6404c2a37837b8f11692471b4c512de2 ]
 
-In decode_int(), the CONS case calls get_bits(bs, 2) to read a length
-value, then calls get_uint(bs, len) without checking that len bytes
-remain in the buffer. The existing boundary check only validates the
-2 bits for get_bits(), not the subsequent 1-4 bytes that get_uint()
-reads. This allows a malformed H.323/RAS packet to cause a 1-4 byte
-slab-out-of-bounds read.
+Sequence adjustment may be required for FTP traffic with PASV/EPSV modes.
+due to need to re-write packet payload (IP, port) on the ftp control
+connection. This can require changes to the TCP length and expected
+seq / ack_seq.
 
-Add a boundary check for len bytes after get_bits() and before
-get_uint().
+The easiest way to reproduce this issue is with PASV mode.
+Example ruleset:
+table inet ftp_nat {
+        ct helper ftp_helper {
+                type "ftp" protocol tcp
+                l3proto inet
+        }
 
-Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+        chain prerouting {
+                type filter hook prerouting priority 0; policy accept;
+                tcp dport 21 ct state new ct helper set "ftp_helper"
+        }
+}
+table ip nat {
+        chain prerouting {
+                type nat hook prerouting priority -100; policy accept;
+                tcp dport 21 dnat ip prefix to ip daddr map {
+			192.168.100.1 : 192.168.13.2/32 }
+        }
+
+        chain postrouting {
+                type nat hook postrouting priority 100 ; policy accept;
+                tcp sport 21 snat ip prefix to ip saddr map {
+			192.168.13.2 : 192.168.100.1/32 }
+        }
+}
+
+Note that the ftp helper gets assigned *after* the dnat setup.
+
+The inverse (nat after helper assign) is handled by an existing
+check in nf_nat_setup_info() and will not show the problem.
+
+Topoloy:
+
+ +-------------------+     +----------------------------------+
+ | FTP: 192.168.13.2 | <-> | NAT: 192.168.13.3, 192.168.100.1 |
+ +-------------------+     +----------------------------------+
+                                      |
+                         +-----------------------+
+                         | Client: 192.168.100.2 |
+                         +-----------------------+
+
+ftp nat changes do not work as expected in this case:
+Connected to 192.168.100.1.
+[..]
+ftp> epsv
+EPSV/EPRT on IPv4 off.
+ftp> ls
+227 Entering passive mode (192,168,100,1,209,129).
+421 Service not available, remote server has closed connection.
+
+Kernel logs:
+Missing nfct_seqadj_ext_add() setup call
+WARNING: CPU: 1 PID: 0 at net/netfilter/nf_conntrack_seqadj.c:41
+[..]
+ __nf_nat_mangle_tcp_packet+0x100/0x160 [nf_nat]
+ nf_nat_ftp+0x142/0x280 [nf_nat_ftp]
+ help+0x4d1/0x880 [nf_conntrack_ftp]
+ nf_confirm+0x122/0x2e0 [nf_conntrack]
+ nf_hook_slow+0x3c/0xb0
+ ..
+
+Fix this by adding the required extension when a conntrack helper is assigned
+to a connection that has a nat binding.
+
+Fixes: 1a64edf54f55 ("netfilter: nft_ct: add helper set support")
+Signed-off-by: Andrii Melnychenko <a.melnychenko@vyos.io>
 Signed-off-by: Florian Westphal <fw@strlen.de>
+Stable-dep-of: 36eae0956f65 ("netfilter: nft_ct: drop pending enqueued packets on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/netfilter/nft_ct.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
-index 62aa22a078769..c972e9488e16f 100644
---- a/net/netfilter/nf_conntrack_h323_asn1.c
-+++ b/net/netfilter/nf_conntrack_h323_asn1.c
-@@ -331,6 +331,8 @@ static int decode_int(struct bitstr *bs, const struct field_t *f,
- 		if (nf_h323_error_boundary(bs, 0, 2))
- 			return H323_ERROR_BOUND;
- 		len = get_bits(bs, 2) + 1;
-+		if (nf_h323_error_boundary(bs, len, 0))
-+			return H323_ERROR_BOUND;
- 		BYTE_ALIGN(bs);
- 		if (base && (f->attr & DECODE)) {	/* timeToLive */
- 			unsigned int v = get_uint(bs, len) + f->lb;
+diff --git a/net/netfilter/nft_ct.c b/net/netfilter/nft_ct.c
+index 3ec63852d058f..1070d68f9e77f 100644
+--- a/net/netfilter/nft_ct.c
++++ b/net/netfilter/nft_ct.c
+@@ -22,6 +22,7 @@
+ #include <net/netfilter/nf_conntrack_timeout.h>
+ #include <net/netfilter/nf_conntrack_l4proto.h>
+ #include <net/netfilter/nf_conntrack_expect.h>
++#include <net/netfilter/nf_conntrack_seqadj.h>
+ 
+ struct nft_ct_helper_obj  {
+ 	struct nf_conntrack_helper *helper4;
+@@ -1173,6 +1174,10 @@ static void nft_ct_helper_obj_eval(struct nft_object *obj,
+ 	if (help) {
+ 		rcu_assign_pointer(help->helper, to_assign);
+ 		set_bit(IPS_HELPER_BIT, &ct->status);
++
++		if ((ct->status & IPS_NAT_MASK) && !nfct_seqadj(ct))
++			if (!nfct_seqadj_ext_add(ct))
++				regs->verdict.code = NF_DROP;
+ 	}
+ }
+ 
 -- 
 2.51.0
 
