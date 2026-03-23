@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652152550D5;
-	Mon, 23 Mar 2026 15:24:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A7013BFE3A;
+	Mon, 23 Mar 2026 15:24:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279460; cv=none; b=MdCklcYvamMWQvGvRwd48YzKZDLYHDUyZRjd8cuExH+G+BXjkCSHRNCV6AzVd/Mc/LmS6Q/Qt+Hm+UoWyu8G4ME8lxNaDn7HTC5JdPMmhxfi8FCGCIP+QT6QGaSOPaHQo9Dp2wMASo4W2FbJA54Ni9pT54zdWse0kCmwfjfFQGU=
+	t=1774279463; cv=none; b=gEgyUCDk7YPBJF+Pdgu+JAAMYlhmOPtgyJW36lDdgKAh2wk0Hkei/KiMX7gJH/UTRKSsrQXdNfX9Yo0flNh8ne49uYI9cg14sxb6U4oLHMVzFpUzVt1LizufI5LuyYphCqF5Zp6a9IxhQ8Q5Q1y2sn92Xz3N4eKCMQkRyoo6Q2I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279460; c=relaxed/simple;
-	bh=0FoUH2TB+5SD97NTieD5ujtj7VYseu7wAsO282G0M3E=;
+	s=arc-20240116; t=1774279463; c=relaxed/simple;
+	bh=yWiyBmh18NHD3f6ZJGgzVoVKhpRlJoqAy6GM8V0wWoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q8h9OrnHUbuW7LpaShoXOfcpFW+K4jtsYrc+Wg2iBoTdEEEQYwv02IxQj5/T7JLC5vETJQvUFV7LBThac+NsS6gxv5ulpX8dPVYxUK7Q80npEncFheINodwfz7DH73QeKGh3I8Aceo7H3G0QTLgy9dKd70l4FOf1Uu5ar+98Dhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMFTr3oc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJNYJXAxuzYBwRh6rJKasjb2sx519QrWR/Gv/GsooTq77EOGpf7+A/3Tu4DD7+aJZUFbs7+hN1CZ4g/cKCmh2xrfsBjE9n7po34RPf4/ZWT47P7IXcq7XST8hb6UYJCqduspbpNIsEhQhOBzNhE18tIBnGadksALaBuTukj5agM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fiRuZspi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMFTr3oc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEF2C4CEF7;
-	Mon, 23 Mar 2026 15:24:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fiRuZspi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0401FC4CEF7;
+	Mon, 23 Mar 2026 15:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279460;
-	bh=0FoUH2TB+5SD97NTieD5ujtj7VYseu7wAsO282G0M3E=;
+	s=korg; t=1774279463;
+	bh=yWiyBmh18NHD3f6ZJGgzVoVKhpRlJoqAy6GM8V0wWoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CMFTr3ocbnRCQ6S7Xw1JRxPx3m7X3aKVbTxAJBYFzYNIJLma+QRSf1Dt8wsqCcmK0
-	 cGx6KGouI+PliilZMBRa5OiiMEqwQLlRJyVPlehHpoVVL3hJe0UKhRMvil2bOnLhZf
-	 Tt9T61sI/R8W9CZb8JfLtC5MLC4/euLPCVNObGs0=
+	b=fiRuZspiqx0HMf/TBeFGSQd8GyjgBq+QKmz62uptvYawHvUipMHA+7OuwZ2XaN0/5
+	 TmKEZMGOQAC55Y3h6pk+9/GUXououvhu88wVuLnbhvzWrXJ431bGR9nUiUhfVokthh
+	 c5Vofnq3D8qRciC/lXYJf42mC8WYuiWfgp9va6kQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/481] ext4: get rid of ppath in ext4_split_extent_at()
-Date: Mon, 23 Mar 2026 14:40:25 +0100
-Message-ID: <20260323134526.283062369@linuxfoundation.org>
+Subject: [PATCH 6.1 026/481] KVM: x86/pmu: Provide "error" semantics for unsupported-but-known PMU MSRs
+Date: Mon, 23 Mar 2026 14:40:08 +0100
+Message-ID: <20260323134525.879310874@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,232 +50,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 1de82b1b60d4613753254bf3cbf622a4c02c945c ]
+[ Upstream commit 2de154f541fc5b9f2aed3fe06e218130718ce320 ]
 
-The use of path and ppath is now very confusing, so to make the code more
-readable, pass path between functions uniformly, and get rid of ppath.
+Provide "error" semantics (read zeros, drop writes) for userspace accesses
+to MSRs that are ultimately unsupported for whatever reason, but for which
+KVM told userspace to save and restore the MSR, i.e. for MSRs that KVM
+included in KVM_GET_MSR_INDEX_LIST.
 
-To get rid of the ppath in ext4_split_extent_at(), the following is done
-here:
+Previously, KVM special cased a few PMU MSRs that were problematic at one
+point or another.  Extend the treatment to all PMU MSRs, e.g. to avoid
+spurious unsupported accesses.
 
- * Free the extents path when an error is encountered.
- * Its caller needs to update ppath if it uses ppath.
- * Teach ext4_ext_show_leaf() to skip error pointer.
+Note, the logic can also be used for non-PMU MSRs, but as of today only
+PMU MSRs can end up being unsupported after KVM told userspace to save and
+restore them.
 
-No functional changes.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-16-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 22784ca541c0 ("ext4: subdivide EXT4_EXT_DATA_VALID1")
+Link: https://lore.kernel.org/r/20230124234905.3774678-7-seanjc@google.com
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Stable-dep-of: 5bb9ac186512 ("KVM: x86: Return "unsupported" instead of "invalid" on access to unsupported PV MSR")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 85 ++++++++++++++++++++++++++---------------------
- 1 file changed, 47 insertions(+), 38 deletions(-)
+ arch/x86/kvm/x86.c | 51 ++++++++++++++++++++++++++--------------------
+ 1 file changed, 29 insertions(+), 22 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 59c0bffc691d1..6da0bf3cf406d 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -84,12 +84,11 @@ static void ext4_extent_block_csum_set(struct inode *inode,
- 	et->et_checksum = ext4_extent_block_csum(inode, eh);
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 2253c51e33e36..0b8ec5886d44f 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -3576,6 +3576,18 @@ static void record_steal_time(struct kvm_vcpu *vcpu)
+ 	mark_page_dirty_in_slot(vcpu->kvm, ghc->memslot, gpa_to_gfn(ghc->gpa));
  }
  
--static int ext4_split_extent_at(handle_t *handle,
--			     struct inode *inode,
--			     struct ext4_ext_path **ppath,
--			     ext4_lblk_t split,
--			     int split_flag,
--			     int flags);
-+static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
-+						  struct inode *inode,
-+						  struct ext4_ext_path *path,
-+						  ext4_lblk_t split,
-+						  int split_flag, int flags);
- 
- static int ext4_ext_trunc_restart_fn(struct inode *inode, int *dropped)
- {
-@@ -335,9 +334,15 @@ ext4_force_split_extent_at(handle_t *handle, struct inode *inode,
- 	if (nofail)
- 		flags |= EXT4_GET_BLOCKS_METADATA_NOFAIL | EXT4_EX_NOFAIL;
- 
--	return ext4_split_extent_at(handle, inode, ppath, lblk, unwritten ?
-+	path = ext4_split_extent_at(handle, inode, path, lblk, unwritten ?
- 			EXT4_EXT_MARK_UNWRIT1|EXT4_EXT_MARK_UNWRIT2 : 0,
- 			flags);
-+	if (IS_ERR(path)) {
-+		*ppath = NULL;
-+		return PTR_ERR(path);
-+	}
-+	*ppath = path;
-+	return 0;
- }
- 
- static int
-@@ -689,7 +694,7 @@ static void ext4_ext_show_leaf(struct inode *inode, struct ext4_ext_path *path)
- 	struct ext4_extent *ex;
- 	int i;
- 
--	if (!path)
-+	if (IS_ERR_OR_NULL(path))
- 		return;
- 
- 	eh = path[depth].p_hdr;
-@@ -3155,16 +3160,14 @@ static int ext4_ext_zeroout(struct inode *inode, struct ext4_extent *ex)
-  *  a> the extent are splitted into two extent.
-  *  b> split is not needed, and just mark the extent.
-  *
-- * return 0 on success.
-+ * Return an extent path pointer on success, or an error pointer on failure.
-  */
--static int ext4_split_extent_at(handle_t *handle,
--			     struct inode *inode,
--			     struct ext4_ext_path **ppath,
--			     ext4_lblk_t split,
--			     int split_flag,
--			     int flags)
-+static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
-+						  struct inode *inode,
-+						  struct ext4_ext_path *path,
-+						  ext4_lblk_t split,
-+						  int split_flag, int flags)
- {
--	struct ext4_ext_path *path = *ppath;
- 	ext4_fsblk_t newblock;
- 	ext4_lblk_t ee_block;
- 	struct ext4_extent *ex, newex, orig_ex, zero_ex;
-@@ -3238,14 +3241,12 @@ static int ext4_split_extent_at(handle_t *handle,
- 		ext4_ext_mark_unwritten(ex2);
- 
- 	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
--	if (!IS_ERR(path)) {
--		*ppath = path;
-+	if (!IS_ERR(path))
- 		goto out;
--	}
--	*ppath = NULL;
++static bool kvm_is_msr_to_save(u32 msr_index)
++{
++	unsigned int i;
 +
- 	err = PTR_ERR(path);
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
--		return err;
-+		return path;
- 
- 	/*
- 	 * Get a new path to try to zeroout or fix the extent length.
-@@ -3255,16 +3256,14 @@ static int ext4_split_extent_at(handle_t *handle,
- 	 * in ext4_da_update_reserve_space() due to an incorrect
- 	 * ee_len causing the i_reserved_data_blocks exception.
- 	 */
--	path = ext4_find_extent(inode, ee_block, NULL,
--				flags | EXT4_EX_NOFAIL);
-+	path = ext4_find_extent(inode, ee_block, NULL, flags | EXT4_EX_NOFAIL);
- 	if (IS_ERR(path)) {
- 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
- 				 split, PTR_ERR(path));
--		return PTR_ERR(path);
-+		return path;
- 	}
- 	depth = ext_depth(inode);
- 	ex = path[depth].p_ext;
--	*ppath = path;
- 
- 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
- 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
-@@ -3316,10 +3315,13 @@ static int ext4_split_extent_at(handle_t *handle,
- 	 * and err is a non-zero error code.
- 	 */
- 	ext4_ext_dirty(handle, inode, path + path->p_depth);
--	return err;
- out:
-+	if (err) {
-+		ext4_free_ext_path(path);
-+		path = ERR_PTR(err);
++	for (i = 0; i < num_msrs_to_save; i++) {
++		if (msrs_to_save[i] == msr_index)
++			return true;
 +	}
- 	ext4_ext_show_leaf(inode, path);
--	return err;
-+	return path;
- }
- 
- /*
-@@ -3366,10 +3368,14 @@ static int ext4_split_extent(handle_t *handle,
- 				       EXT4_EXT_MARK_UNWRIT2;
- 		if (split_flag & EXT4_EXT_DATA_VALID2)
- 			split_flag1 |= EXT4_EXT_DATA_VALID1;
--		err = ext4_split_extent_at(handle, inode, ppath,
-+		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk + map->m_len, split_flag1, flags1);
--		if (err)
-+		if (IS_ERR(path)) {
-+			err = PTR_ERR(path);
-+			*ppath = NULL;
- 			goto out;
++
++	return false;
++}
++
+ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ {
+ 	u32 msr = msr_info->index;
+@@ -3896,20 +3908,18 @@ int kvm_set_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 		vcpu->arch.guest_fpu.xfd_err = data;
+ 		break;
+ #endif
+-	case MSR_IA32_PEBS_ENABLE:
+-	case MSR_IA32_DS_AREA:
+-	case MSR_PEBS_DATA_CFG:
+-	case MSR_F15H_PERF_CTL0 ... MSR_F15H_PERF_CTR5:
++	default:
+ 		if (kvm_pmu_is_valid_msr(vcpu, msr))
+ 			return kvm_pmu_set_msr(vcpu, msr_info);
++
+ 		/*
+ 		 * Userspace is allowed to write '0' to MSRs that KVM reports
+ 		 * as to-be-saved, even if an MSRs isn't fully supported.
+ 		 */
+-		return !msr_info->host_initiated || data;
+-	default:
+-		if (kvm_pmu_is_valid_msr(vcpu, msr))
+-			return kvm_pmu_set_msr(vcpu, msr_info);
++		if (msr_info->host_initiated && !data &&
++		    kvm_is_msr_to_save(msr))
++			break;
++
+ 		return KVM_MSR_RET_INVALID;
+ 	}
+ 	return 0;
+@@ -4000,20 +4010,6 @@ int kvm_get_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 	case MSR_DRAM_ENERGY_STATUS:	/* DRAM controller */
+ 		msr_info->data = 0;
+ 		break;
+-	case MSR_IA32_PEBS_ENABLE:
+-	case MSR_IA32_DS_AREA:
+-	case MSR_PEBS_DATA_CFG:
+-	case MSR_F15H_PERF_CTL0 ... MSR_F15H_PERF_CTR5:
+-		if (kvm_pmu_is_valid_msr(vcpu, msr_info->index))
+-			return kvm_pmu_get_msr(vcpu, msr_info);
+-		/*
+-		 * Userspace is allowed to read MSRs that KVM reports as
+-		 * to-be-saved, even if an MSR isn't fully supported.
+-		 */
+-		if (!msr_info->host_initiated)
+-			return 1;
+-		msr_info->data = 0;
+-		break;
+ 	case MSR_K7_EVNTSEL0 ... MSR_K7_EVNTSEL3:
+ 	case MSR_K7_PERFCTR0 ... MSR_K7_PERFCTR3:
+ 	case MSR_P6_PERFCTR0 ... MSR_P6_PERFCTR1:
+@@ -4268,6 +4264,17 @@ int kvm_get_msr_common(struct kvm_vcpu *vcpu, struct msr_data *msr_info)
+ 	default:
+ 		if (kvm_pmu_is_valid_msr(vcpu, msr_info->index))
+ 			return kvm_pmu_get_msr(vcpu, msr_info);
++
++		/*
++		 * Userspace is allowed to read MSRs that KVM reports as
++		 * to-be-saved, even if an MSR isn't fully supported.
++		 */
++		if (msr_info->host_initiated &&
++		    kvm_is_msr_to_save(msr_info->index)) {
++			msr_info->data = 0;
++			break;
 +		}
-+		*ppath = path;
- 	} else {
- 		allocated = ee_len - (map->m_lblk - ee_block);
++
+ 		return KVM_MSR_RET_INVALID;
  	}
-@@ -3377,7 +3383,7 @@ static int ext4_split_extent(handle_t *handle,
- 	 * Update path is required because previous ext4_split_extent_at() may
- 	 * result in split of original leaf or extent zeroout.
- 	 */
--	path = ext4_find_extent(inode, map->m_lblk, *ppath, flags);
-+	path = ext4_find_extent(inode, map->m_lblk, path, flags);
- 	if (IS_ERR(path)) {
- 		*ppath = NULL;
- 		return PTR_ERR(path);
-@@ -3399,13 +3405,17 @@ static int ext4_split_extent(handle_t *handle,
- 			split_flag1 |= split_flag & (EXT4_EXT_MAY_ZEROOUT |
- 						     EXT4_EXT_MARK_UNWRIT2);
- 		}
--		err = ext4_split_extent_at(handle, inode, ppath,
-+		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk, split_flag1, flags);
--		if (err)
-+		if (IS_ERR(path)) {
-+			err = PTR_ERR(path);
-+			*ppath = NULL;
- 			goto out;
-+		}
-+		*ppath = path;
- 	}
- 
--	ext4_ext_show_leaf(inode, *ppath);
-+	ext4_ext_show_leaf(inode, path);
- out:
- 	return err ? err : allocated;
- }
-@@ -5601,22 +5611,21 @@ static int ext4_insert_range(struct file *file, loff_t offset, loff_t len)
- 			if (ext4_ext_is_unwritten(extent))
- 				split_flag = EXT4_EXT_MARK_UNWRIT1 |
- 					EXT4_EXT_MARK_UNWRIT2;
--			ret = ext4_split_extent_at(handle, inode, &path,
-+			path = ext4_split_extent_at(handle, inode, path,
- 					offset_lblk, split_flag,
- 					EXT4_EX_NOCACHE |
- 					EXT4_GET_BLOCKS_PRE_IO |
- 					EXT4_GET_BLOCKS_METADATA_NOFAIL);
- 		}
- 
--		ext4_free_ext_path(path);
--		if (ret < 0) {
-+		if (IS_ERR(path)) {
- 			up_write(&EXT4_I(inode)->i_data_sem);
-+			ret = PTR_ERR(path);
- 			goto out_stop;
- 		}
--	} else {
--		ext4_free_ext_path(path);
- 	}
- 
-+	ext4_free_ext_path(path);
- 	ext4_es_remove_extent(inode, offset_lblk, EXT_MAX_BLOCKS - offset_lblk);
- 
- 	/*
+ 	return 0;
 -- 
 2.51.0
 
