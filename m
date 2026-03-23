@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A4083B2FF2;
-	Mon, 23 Mar 2026 14:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E26A3B38AB;
+	Mon, 23 Mar 2026 14:12:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275121; cv=none; b=kOh5Etv3DfEacCULQ4Uv7QjYQIvSjYl2/4ZzMU0qYEgnB/pgR651RQK7xH37rK7Dto2gV+BizqKBZPAEkYSziavZXt80vNZxXe++FiGsugBfVtv9vy2MhLMH5CslwCMusppnTza9luHctTkApEGQI+JEOLxw/e1IM83Desh8Pg4=
+	t=1774275124; cv=none; b=s6c0hHaMT3WYe20302LQOrpoR0eU3jfWi2gxRSQt2vpFp8qbK+DHuhb8fzj5Y+KC+GSo88nhZjs5uPY4AOlWaq9eFr2NbmpqucRF7cm3e8qNV629mkGM+y8A6gxDxrSh5aPjxFVlpA764ffMLtDGJ2MQTPv83zNWL05/gP0QoOk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275121; c=relaxed/simple;
-	bh=vTv0SIedwz5JXMEjq3a2zevoVLKVOYUZi9muRC8Avw0=;
+	s=arc-20240116; t=1774275124; c=relaxed/simple;
+	bh=TxJ2kHfdLrp9rzZ4NnjXtlqtCYRuraOsrrmHgKpaMs8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tGZ3jYyD6pVMN49wGboy+ojHq6J7XCZvG0qyGniCFKWJ3rsWMjjHE3v4lgYRIr9dMVhghVofvzW5UDROsuRYL3GBnpByo0qzp1oaETG8y4eheu8XKT5WVazdg75IIqFlqRhEB/4mfnH6ovrWz3Fp6vGd31krNP1kbi7d7G/2c7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C4PpRLta; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h1AHF1ArjMJpx76oXJJLaVcU1WrOfv8A01d0xsOMyVa2PXvzj040KiuNg0ai5PE0p5ANpQa+fd7ur7wdWXDpxzUM/+vXB/E2boHaV3HKg9bTHpccYps/lskAY2yZa2jO4Hq7wFWhDwf6UXVg8UhuoeTzvPVU78NBVwMmp1yz5jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fA8YyF7Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C4PpRLta"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB6CC2BCB3;
-	Mon, 23 Mar 2026 14:12:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fA8YyF7Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE358C2BCB1;
+	Mon, 23 Mar 2026 14:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275121;
-	bh=vTv0SIedwz5JXMEjq3a2zevoVLKVOYUZi9muRC8Avw0=;
+	s=korg; t=1774275124;
+	bh=TxJ2kHfdLrp9rzZ4NnjXtlqtCYRuraOsrrmHgKpaMs8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C4PpRLtawFtLCyURt6HhXGq4JWdvrt3Uebm0YNFV5sGYc7HQK3pOEpKN/obja82GA
-	 8meu+CWEhpuUVq8fND7dugHk88Hy3o/xcJ3HehxZU3tfWkYNd8lS3ZHL4M0eBjbehn
-	 rgOMUCj77Gbsyx73qYIkNROQS9NL33OYRNOP3OFA=
+	b=fA8YyF7Yns1J647uYICfgtCwiZE4M6ptrJ/Y2txZIsxcUdulhl0uQXgSaJHiiYuyj
+	 5ZGTEEeu6fFCj7kaPl0Fkqp4UkYeZGqieoUrNzUtHJR6NPzUoR8Ht+F7x0ajz1741R
+	 2TIscvE9pq0kox7DjRzq5eEPwjjByDOv8SBRDeVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Gu <ustc.gu@gmail.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Kory Maincent <kory.maincent@bootlin.com>,
+	Kuzey Arda Bulut <kuzeyardabulut@gmail.com>,
+	Ian Forbes <ian.forbes@broadcom.com>,
+	Zack Rusin <zack.rusin@broadcom.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/481] drm/logicvc: Fix device node reference leak in logicvc_drm_config_parse()
-Date: Mon, 23 Mar 2026 14:39:45 +0100
-Message-ID: <20260323134525.344025330@linuxfoundation.org>
+Subject: [PATCH 6.1 002/481] drm/vmwgfx: Return the correct value in vmw_translate_ptr functions
+Date: Mon, 23 Mar 2026 14:39:44 +0100
+Message-ID: <20260323134525.318682372@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,50 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Gu <ustc.gu@gmail.com>
+From: Ian Forbes <ian.forbes@broadcom.com>
 
-[ Upstream commit fef0e649f8b42bdffe4a916dd46e1b1e9ad2f207 ]
+[ Upstream commit 5023ca80f9589295cb60735016e39fc5cc714243 ]
 
-The logicvc_drm_config_parse() function calls of_get_child_by_name() to
-find the "layers" node but fails to release the reference, leading to a
-device node reference leak.
+Before the referenced fixes these functions used a lookup function that
+returned a pointer. This was changed to another lookup function that
+returned an error code with the pointer becoming an out parameter.
 
-Fix this by using the __free(device_node) cleanup attribute to automatic
-release the reference when the variable goes out of scope.
+The error path when the lookup failed was not changed to reflect this
+change and the code continued to return the PTR_ERR of the now
+uninitialized pointer. This could cause the vmw_translate_ptr functions
+to return success when they actually failed causing further uninitialized
+and OOB accesses.
 
-Fixes: efeeaefe9be5 ("drm: Add support for the LogiCVC display controller")
-Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Reviewed-by: Kory Maincent <kory.maincent@bootlin.com>
-Link: https://patch.msgid.link/20260130-logicvc_drm-v1-1-04366463750c@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Reported-by: Kuzey Arda Bulut <kuzeyardabulut@gmail.com>
+Fixes: a309c7194e8a ("drm/vmwgfx: Remove rcu locks from user resources")
+Signed-off-by: Ian Forbes <ian.forbes@broadcom.com>
+Reviewed-by: Zack Rusin <zack.rusin@broadcom.com>
+Signed-off-by: Zack Rusin <zack.rusin@broadcom.com>
+Link: https://patch.msgid.link/20260113175357.129285-1-ian.forbes@broadcom.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/logicvc/logicvc_drm.c | 4 ++--
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/logicvc/logicvc_drm.c b/drivers/gpu/drm/logicvc/logicvc_drm.c
-index cc9a4e965f779..8cbf4f2debf7d 100644
---- a/drivers/gpu/drm/logicvc/logicvc_drm.c
-+++ b/drivers/gpu/drm/logicvc/logicvc_drm.c
-@@ -90,7 +90,6 @@ static int logicvc_drm_config_parse(struct logicvc_drm *logicvc)
- 	struct device *dev = drm_dev->dev;
- 	struct device_node *of_node = dev->of_node;
- 	struct logicvc_drm_config *config = &logicvc->config;
--	struct device_node *layers_node;
- 	int ret;
- 
- 	logicvc_of_property_parse_bool(of_node, LOGICVC_OF_PROPERTY_DITHERING,
-@@ -126,7 +125,8 @@ static int logicvc_drm_config_parse(struct logicvc_drm *logicvc)
- 	if (ret)
- 		return ret;
- 
--	layers_node = of_get_child_by_name(of_node, "layers");
-+	struct device_node *layers_node __free(device_node) =
-+		of_get_child_by_name(of_node, "layers");
- 	if (!layers_node) {
- 		drm_err(drm_dev, "Missing non-optional layers node\n");
- 		return -EINVAL;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index d8cc99ef7e2a0..34b9161ec7e81 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -1156,7 +1156,7 @@ static int vmw_translate_mob_ptr(struct vmw_private *dev_priv,
+ 	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
+ 	if (ret != 0) {
+ 		drm_dbg(&dev_priv->drm, "Could not find or use MOB buffer.\n");
+-		return PTR_ERR(vmw_bo);
++		return ret;
+ 	}
+ 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, true, false);
+ 	tmp_bo = vmw_bo;
+@@ -1211,7 +1211,7 @@ static int vmw_translate_guest_ptr(struct vmw_private *dev_priv,
+ 	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
+ 	if (ret != 0) {
+ 		drm_dbg(&dev_priv->drm, "Could not find or use GMR region.\n");
+-		return PTR_ERR(vmw_bo);
++		return ret;
+ 	}
+ 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, false, false);
+ 	tmp_bo = vmw_bo;
 -- 
 2.51.0
 
