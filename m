@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2C13BE65C;
-	Mon, 23 Mar 2026 16:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F6A3B8D4F;
+	Mon, 23 Mar 2026 16:23:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283033; cv=none; b=V7n4ZqbTF33Sg/3XqF03v3B/t8VKwYr41d2EI7P/vrykjTLHN02uwBEzHyuwpbqCenu37pJCzmHXwiuCTNfIGMONrJy1oWupESZqU277rdDSpbEL5hs7s/PTMej50bsLqejOcEcFW4HF6F1RLjzJ13wv9F+E5nshAk1Sgba8gd8=
+	t=1774283036; cv=none; b=aGivUkHIRV30qJDr/QEYsBd57OkvmE6vDfIRCavBhFAnTLrBRbqMke0bgtzJcQopYkhI3Vcu6abbAw/dXI47NjciaqS9kXtPa7dN5+StWsDCXwcHT7Qj1MSv8GLESwuJ3uzHFkqu8z7iCjjnqfb+IPll2oQFtiubVnv7ZoXYL+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283033; c=relaxed/simple;
-	bh=DezfdDYu+9cDgK95tyLqcEmIrTrItZ5QvHXsUlB+Ggg=;
+	s=arc-20240116; t=1774283036; c=relaxed/simple;
+	bh=ompl5n+16OfAPGy7Pm8wFrCNmIDZ542ltm8pycW5K0Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKCRUqFuOajGYSIAJfx5Pbgpni0zetDcVuCBloRStkCS3RFyAi0vKNMum8LuXfsx1FV8qyxx7oj8+wVEtlqOkuHZB2KqsqZ256moe96K2ZnF8vTzxdAJh/DvFMCfoKj+iwJfuNQqtKnGbZTCKWhubhORhpCfGbdxck8lhA+eK4c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GISzDs8S; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=a0aSGVCXwtILjof8RIzyUqZt0Er5VI/8WDmvQyZ4hWzIwErlmN1nfDHhl1GbK6AakgfSPtO55oJ0/s4A4S1kVM+UQsxV7J3XGqQ5isaW0dYMRCqT3RPY18V9fxunJIGLpNU/T8qnWW6YSc4iJ/wpcnZqV7jWMCCKit/P9g8sOU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=q8H+cPfL; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GISzDs8S"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B600C4CEF7;
-	Mon, 23 Mar 2026 16:23:53 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="q8H+cPfL"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B2BC4CEF7;
+	Mon, 23 Mar 2026 16:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283033;
-	bh=DezfdDYu+9cDgK95tyLqcEmIrTrItZ5QvHXsUlB+Ggg=;
+	s=korg; t=1774283036;
+	bh=ompl5n+16OfAPGy7Pm8wFrCNmIDZ542ltm8pycW5K0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GISzDs8S1mCwT3YWVy7KEjLrHmjbZ35YhWSQuW1d3hq62RgGPpQ31u3N+NEWCGkC6
-	 eaTsVvqYfqDvLe2ViF+6j9kR/RoXhI6yV9nhHjWh4o9g70I+SyxH2EpmGRmhM8n/A6
-	 bEoZJ+mmofJxMQZtc7rnCAYEB4KpDfnXDSx5Bmlc=
+	b=q8H+cPfLunmxJka/ummWpORoZtCD/7DfikwY5yCS8CuDfn13kqevlmhN1HeKVXSw+
+	 Zyxb8SlJ5/p3oiKCAtIF3NE92retnFheGi03I6UaIlell4wApKJVHazMge4oc7/jWS
+	 N599AAmVYAhNL903q87ovQpizAF97DTyFldoIYx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Hothi <ravi.hothi@oss.qualcomm.com>,
-	Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 333/481] ASoC: qcom: qdsp6: Fix q6apm remove ordering during ADSP stop and start
-Date: Mon, 23 Mar 2026 14:45:15 +0100
-Message-ID: <20260323134533.214333516@linuxfoundation.org>
+Subject: [PATCH 6.1 324/481] mptcp: pm: in-kernel: always mark signal+subflow endp as used
+Date: Mon, 23 Mar 2026 14:45:06 +0100
+Message-ID: <20260323134532.996137117@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -46,166 +46,128 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
+From: "Matthieu Baerts (NGI0)" <matttbe@kernel.org>
 
-[ Upstream commit d6db827b430bdcca3976cebca7bd69cca03cde2c ]
+[ Upstream commit 579a752464a64cb5f9139102f0e6b90a1f595ceb ]
 
-During ADSP stop and start, the kernel crashes due to the order in which
-ASoC components are removed.
+Syzkaller managed to find a combination of actions that was generating
+this warning:
 
-On ADSP stop, the q6apm-audio .remove callback unloads topology and removes
-PCM runtimes during ASoC teardown. This deletes the RTDs that contain the
-q6apm DAI components before their removal pass runs, leaving those
-components still linked to the card and causing crashes on the next rebind.
+  msk->pm.local_addr_used == 0
+  WARNING: net/mptcp/pm_kernel.c:1071 at __mark_subflow_endp_available net/mptcp/pm_kernel.c:1071 [inline], CPU#1: syz.2.17/961
+  WARNING: net/mptcp/pm_kernel.c:1071 at mptcp_nl_remove_subflow_and_signal_addr net/mptcp/pm_kernel.c:1103 [inline], CPU#1: syz.2.17/961
+  WARNING: net/mptcp/pm_kernel.c:1071 at mptcp_pm_nl_del_addr_doit+0x81d/0x8f0 net/mptcp/pm_kernel.c:1210, CPU#1: syz.2.17/961
+  Modules linked in:
+  CPU: 1 UID: 0 PID: 961 Comm: syz.2.17 Not tainted 6.19.0-08368-gfafda3b4b06b #22 PREEMPT(full)
+  Hardware name: QEMU Ubuntu 25.10 PC v2 (i440FX + PIIX, + 10.1 machine, 1996), BIOS 1.17.0-debian-1.17.0-1build1 04/01/2014
+  RIP: 0010:__mark_subflow_endp_available net/mptcp/pm_kernel.c:1071 [inline]
+  RIP: 0010:mptcp_nl_remove_subflow_and_signal_addr net/mptcp/pm_kernel.c:1103 [inline]
+  RIP: 0010:mptcp_pm_nl_del_addr_doit+0x81d/0x8f0 net/mptcp/pm_kernel.c:1210
+  Code: 89 c5 e8 46 30 6f fe e9 21 fd ff ff 49 83 ed 80 e8 38 30 6f fe 4c 89 ef be 03 00 00 00 e8 db 49 df fe eb ac e8 24 30 6f fe 90 <0f> 0b 90 e9 1d ff ff ff e8 16 30 6f fe eb 05 e8 0f 30 6f fe e8 9a
+  RSP: 0018:ffffc90001663880 EFLAGS: 00010293
+  RAX: ffffffff82de1a6c RBX: 0000000000000000 RCX: ffff88800722b500
+  RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
+  RBP: ffff8880158b22d0 R08: 0000000000010425 R09: ffffffffffffffff
+  R10: ffffffff82de18ba R11: 0000000000000000 R12: ffff88800641a640
+  R13: ffff8880158b1880 R14: ffff88801ec3c900 R15: ffff88800641a650
+  FS:  00005555722c3500(0000) GS:ffff8880f909d000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 00007f66346e0f60 CR3: 000000001607c000 CR4: 0000000000350ef0
+  Call Trace:
+   <TASK>
+   genl_family_rcv_msg_doit+0x117/0x180 net/netlink/genetlink.c:1115
+   genl_family_rcv_msg net/netlink/genetlink.c:1195 [inline]
+   genl_rcv_msg+0x3a8/0x3f0 net/netlink/genetlink.c:1210
+   netlink_rcv_skb+0x16d/0x240 net/netlink/af_netlink.c:2550
+   genl_rcv+0x28/0x40 net/netlink/genetlink.c:1219
+   netlink_unicast_kernel net/netlink/af_netlink.c:1318 [inline]
+   netlink_unicast+0x3e9/0x4c0 net/netlink/af_netlink.c:1344
+   netlink_sendmsg+0x4aa/0x5b0 net/netlink/af_netlink.c:1894
+   sock_sendmsg_nosec net/socket.c:727 [inline]
+   __sock_sendmsg+0xc9/0xf0 net/socket.c:742
+   ____sys_sendmsg+0x272/0x3b0 net/socket.c:2592
+   ___sys_sendmsg+0x2de/0x320 net/socket.c:2646
+   __sys_sendmsg net/socket.c:2678 [inline]
+   __do_sys_sendmsg net/socket.c:2683 [inline]
+   __se_sys_sendmsg net/socket.c:2681 [inline]
+   __x64_sys_sendmsg+0x110/0x1a0 net/socket.c:2681
+   do_syscall_x64 arch/x86/entry/syscall_64.c:63 [inline]
+   do_syscall_64+0x143/0x440 arch/x86/entry/syscall_64.c:94
+   entry_SYSCALL_64_after_hwframe+0x77/0x7f
+  RIP: 0033:0x7f66346f826d
+  Code: ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 e8 ff ff ff f7 d8 64 89 01 48
+  RSP: 002b:00007ffc83d8bdc8 EFLAGS: 00000246 ORIG_RAX: 000000000000002e
+  RAX: ffffffffffffffda RBX: 00007f6634985fa0 RCX: 00007f66346f826d
+  RDX: 00000000040000b0 RSI: 0000200000000740 RDI: 0000000000000007
+  RBP: 0000000000000000 R08: 0000000000000000 R09: 0000000000000000
+  R10: 0000000000000000 R11: 0000000000000246 R12: 00007f6634985fa8
+  R13: 00007f6634985fac R14: 0000000000000000 R15: 0000000000001770
+   </TASK>
 
-Fix this by ensuring that all dependent (child) components are removed
-first, and the q6apm component is removed last.
+The actions that caused that seem to be:
 
-[   48.105720] Unable to handle kernel NULL pointer dereference at virtual =
-address 00000000000000d0
-[   48.114763] Mem abort info:
-[   48.117650]   ESR =3D 0x0000000096000004
-[   48.121526]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
-[   48.127010]   SET =3D 0, FnV =3D 0
-[   48.130172]   EA =3D 0, S1PTW =3D 0
-[   48.133415]   FSC =3D 0x04: level 0 translation fault
-[   48.138446] Data abort info:
-[   48.141422]   ISV =3D 0, ISS =3D 0x00000004, ISS2 =3D 0x00000000
-[   48.147079]   CM =3D 0, WnR =3D 0, TnD =3D 0, TagAccess =3D 0
-[   48.152354]   GCS =3D 0, Overlay =3D 0, DirtyBit =3D 0, Xs =3D 0
-[   48.157859] user pgtable: 4k pages, 48-bit VAs, pgdp=3D00000001173cf000
-[   48.164517] [00000000000000d0] pgd=3D0000000000000000, p4d=3D00000000000=
-00000
-[   48.171530] Internal error: Oops: 0000000096000004 [#1]  SMP
-[   48.177348] Modules linked in: q6prm_clocks q6apm_lpass_dais q6apm_dai s=
-nd_q6dsp_common q6prm snd_q6apm 8021q garp mrp stp llc snd_soc_hdmi_codec a=
-pr pdr_interface phy_qcom_edp fastrpc qcom_pd_mapper rpmsg_ctrl qrtr_smd rp=
-msg_char qcom_pdr_msg qcom_iris v4l2_mem2mem videobuf2_dma_contig ath11k_pc=
-i msm ubwc_config at24 ath11k videobuf2_memops mac80211 ocmem videobuf2_v4l=
-2 libarc4 drm_gpuvm mhi qrtr videodev drm_exec snd_soc_sc8280xp gpu_sched v=
-ideobuf2_common nvmem_qcom_spmi_sdam snd_soc_qcom_sdw drm_dp_aux_bus qcom_q=
-6v5_pas qcom_spmi_temp_alarm snd_soc_qcom_common rtc_pm8xxx qcom_pon drm_di=
-splay_helper cec qcom_pil_info qcom_stats soundwire_bus drm_client_lib mc d=
-ispcc0_sa8775p videocc_sa8775p qcom_q6v5 camcc_sa8775p snd_soc_dmic phy_qco=
-m_sgmii_eth snd_soc_max98357a i2c_qcom_geni snd_soc_core dwmac_qcom_ethqos =
-llcc_qcom icc_bwmon qcom_sysmon snd_compress qcom_refgen_regulator coresigh=
-t_stm stmmac_platform snd_pcm_dmaengine qcom_common coresight_tmc stmmac co=
-resight_replicator qcom_glink_smem coresight_cti stm_core
-[   48.177444]  coresight_funnel snd_pcm ufs_qcom phy_qcom_qmp_usb gpi phy_=
-qcom_snps_femto_v2 coresight phy_qcom_qmp_ufs qcom_wdt gpucc_sa8775p pcs_xp=
-cs mdt_loader qcom_ice icc_osm_l3 qmi_helpers snd_timer snd soundcore displ=
-ay_connector qcom_rng nvmem_reboot_mode drm_kms_helper phy_qcom_qmp_pcie sh=
-a256 cfg80211 rfkill socinfo fuse drm backlight ipv6
-[   48.301059] CPU: 2 UID: 0 PID: 293 Comm: kworker/u32:2 Not tainted 6.19.=
-0-rc6-dirty #10 PREEMPT
-[   48.310081] Hardware name: Qualcomm Technologies, Inc. Lemans EVK (DT)
-[   48.316782] Workqueue: pdr_notifier_wq pdr_notifier_work [pdr_interface]
-[   48.323672] pstate: 20400005 (nzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=
-=3D--)
-[   48.330825] pc : mutex_lock+0xc/0x54
-[   48.334514] lr : soc_dapm_shutdown_dapm+0x44/0x174 [snd_soc_core]
-[   48.340794] sp : ffff800084ddb7b0
-[   48.344207] x29: ffff800084ddb7b0 x28: ffff00009cd9cf30 x27: ffff00009cd=
-9cc00
-[   48.351544] x26: ffff000099610190 x25: ffffa31d2f19c810 x24: ffffa31d2f1=
-85098
-[   48.358869] x23: ffff800084ddb7f8 x22: 0000000000000000 x21: 00000000000=
-000d0
-[   48.366198] x20: ffff00009ba6c338 x19: ffff00009ba6c338 x18: 00000000fff=
-fffff
-[   48.373528] x17: 000000040044ffff x16: ffffa31d4ae6dca8 x15: 07200774077=
-5076f
-[   48.380853] x14: 0765076d07690774 x13: 00313a323a656369 x12: 767265733a6=
-37673
-[   48.388182] x11: 00000000000003f9 x10: ffffa31d4c7dea98 x9 : 00000000000=
-00001
-[   48.395519] x8 : ffff00009a2aadc0 x7 : 0000000000000003 x6 : 00000000000=
-00000
-[   48.402854] x5 : 0000000000000000 x4 : 0000000000000028 x3 : ffff000ef39=
-7a698
-[   48.410180] x2 : ffff00009a2aadc0 x1 : 0000000000000000 x0 : 00000000000=
-000d0
-[   48.417506] Call trace:
-[   48.420025]  mutex_lock+0xc/0x54 (P)
-[   48.423712]  snd_soc_dapm_shutdown+0x44/0xbc [snd_soc_core]
-[   48.429447]  soc_cleanup_card_resources+0x30/0x2c0 [snd_soc_core]
-[   48.435719]  snd_soc_bind_card+0x4dc/0xcc0 [snd_soc_core]
-[   48.441278]  snd_soc_add_component+0x27c/0x2c8 [snd_soc_core]
-[   48.447192]  snd_soc_register_component+0x9c/0xf4 [snd_soc_core]
-[   48.453371]  devm_snd_soc_register_component+0x64/0xc4 [snd_soc_core]
-[   48.459994]  apm_probe+0xb4/0x110 [snd_q6apm]
-[   48.464479]  apr_device_probe+0x24/0x40 [apr]
-[   48.468964]  really_probe+0xbc/0x298
-[   48.472651]  __driver_probe_device+0x78/0x12c
-[   48.477132]  driver_probe_device+0x40/0x160
-[   48.481435]  __device_attach_driver+0xb8/0x134
-[   48.486011]  bus_for_each_drv+0x80/0xdc
-[   48.489964]  __device_attach+0xa8/0x1b0
-[   48.493916]  device_initial_probe+0x50/0x54
-[   48.498219]  bus_probe_device+0x38/0xa0
-[   48.502170]  device_add+0x590/0x760
-[   48.505761]  device_register+0x20/0x30
-[   48.509623]  of_register_apr_devices+0x1d8/0x318 [apr]
-[   48.514905]  apr_pd_status+0x2c/0x54 [apr]
-[   48.519114]  pdr_notifier_work+0x8c/0xe0 [pdr_interface]
-[   48.524570]  process_one_work+0x150/0x294
-[   48.528692]  worker_thread+0x2d8/0x3d8
-[   48.532551]  kthread+0x130/0x204
-[   48.535874]  ret_from_fork+0x10/0x20
-[   48.539559] Code: d65f03c0 d5384102 d503201f d2800001 (c8e17c02)
-[   48.545823] ---[ end trace 0000000000000000 ]---
+ - Set the MPTCP subflows limit to 0
+ - Create an MPTCP endpoint with both the 'signal' and 'subflow' flags
+ - Create a new MPTCP connection from a different address: an ADD_ADDR
+   linked to the MPTCP endpoint will be sent ('signal' flag), but no
+   subflows is initiated ('subflow' flag)
+ - Remove the MPTCP endpoint
 
-Fixes: 5477518b8a0e ("ASoC: qdsp6: audioreach: add q6apm support")
+In this case, msk->pm.local_addr_used has been kept to 0 -- because no
+subflows have been created -- but the corresponding bit in
+msk->pm.id_avail_bitmap has been cleared when the ADD_ADDR has been
+sent. This later causes a splat when removing the MPTCP endpoint because
+msk->pm.local_addr_used has been kept to 0.
+
+Now, if an endpoint has both the signal and subflow flags, but it is not
+possible to create subflows because of the limits or the c-flag case,
+then the local endpoint counter is still incremented: the endpoint is
+used at the end. This avoids issues later when removing the endpoint and
+calling __mark_subflow_endp_available(), which expects
+msk->pm.local_addr_used to have been previously incremented if the
+endpoint was marked as used according to msk->pm.id_avail_bitmap.
+
+Note that signal_and_subflow variable is reset to false when the limits
+and the c-flag case allows subflows creation. Also, local_addr_used is
+only incremented for non ID0 subflows.
+
+Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ravi Hothi <ravi.hothi@oss.qualcomm.com>
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260227144534.278568-1-ravi.hothi@oss.qualc=
-omm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Context ]
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/613
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-4-4b5462b6f016@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ pm_kernel.c => pm_netlink.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/qdsp6/q6apm-dai.c        |    1 +
- sound/soc/qcom/qdsp6/q6apm-lpass-dais.c |    1 +
- sound/soc/qcom/qdsp6/q6apm.c            |    1 +
- 3 files changed, 3 insertions(+)
+ net/mptcp/pm_netlink.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/sound/soc/qcom/qdsp6/q6apm-dai.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-dai.c
-@@ -416,6 +416,7 @@ static const struct snd_soc_component_dr
- 	.pointer	=3D q6apm_dai_pointer,
- 	.trigger	=3D q6apm_dai_trigger,
- 	.ack		=3D q6apm_dai_ack,
-+	.remove_order   =3D SND_SOC_COMP_ORDER_EARLY,
- };
-=20
- static int q6apm_dai_probe(struct platform_device *pdev)
---- a/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-+++ b/sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
-@@ -234,6 +234,7 @@ static const struct snd_soc_component_dr
- 	.of_xlate_dai_name =3D q6dsp_audio_ports_of_xlate_dai_name,
- 	.be_pcm_base =3D AUDIOREACH_BE_PCM_BASE,
- 	.use_dai_pcm_id =3D true,
-+	.remove_order   =3D SND_SOC_COMP_ORDER_FIRST,
- };
-=20
- static int q6apm_lpass_dai_dev_probe(struct platform_device *pdev)
---- a/sound/soc/qcom/qdsp6/q6apm.c
-+++ b/sound/soc/qcom/qdsp6/q6apm.c
-@@ -717,6 +717,7 @@ static const struct snd_soc_component_dr
- 	.name		=3D APM_AUDIO_DRV_NAME,
- 	.probe		=3D q6apm_audio_probe,
- 	.remove		=3D q6apm_audio_remove,
-+	.remove_order   =3D SND_SOC_COMP_ORDER_LAST,
- };
-=20
- static int apm_probe(gpr_device_t *gdev)
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -666,6 +666,15 @@ subflow:
+ 	}
+ 
+ exit:
++	/* If an endpoint has both the signal and subflow flags, but it is not
++	 * possible to create subflows -- the 'while' loop body above never
++	 * executed --  then still mark the endp as used, which is somehow the
++	 * case. This avoids issues later when removing the endpoint and calling
++	 * __mark_subflow_endp_available(), which expects the increment here.
++	 */
++	if (signal_and_subflow && local.addr.id != msk->mpc_endpoint_id)
++		msk->pm.local_addr_used++;
++
+ 	mptcp_pm_nl_check_work_pending(msk);
+ }
+ 
 
 
