@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6625F3B6C13;
-	Mon, 23 Mar 2026 15:07:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 738BA282F18;
+	Mon, 23 Mar 2026 15:07:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278423; cv=none; b=JrSu4m/5MpHe+/XJI+0amYLhQz7lvH1Sbq0B7HZE5+DKjwdpD8BdTgycMUX1G3arYa0WB4Abupn4czi3PD7Yvi1qZBE8JB2G3CLynWoLMU3QhYFyc8ZmONRGxZFucBa9P1ttVVDeEgx89GkkS+n6hnUXoPelpCepatQ02C2+ZAU=
+	t=1774278426; cv=none; b=lT0JJCCRwsPBI/bBdq/E5O/MPHGByHilW61B5fv+0mOD1bFEPv8ze+U6niyAgrvA4eZZaWxkAbXGZkDJ/n2JL6hrvotvIZ8d/+Ys7VkSHvtER7gAjOWvnqQjHhk9OWRcn5RHmdgYY9jaU1TwprfxpcBeGiTs45rVit8BOQJBw04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278423; c=relaxed/simple;
-	bh=cXVgWQ5RWzzE+leX5s9EUbI1NmaIibY65AdDGMcaJpg=;
+	s=arc-20240116; t=1774278426; c=relaxed/simple;
+	bh=ndawFQ+Hv+AzD2KN5ABgGpdTBohVQi9bGcQFL3R8QMs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGoaLgDc/iOkTzZE/yamwrNlAdfpqJ9JnU7yE3YSLp8sgI3L7y7w40tqKjPoKlepyUfNZUKb4yVfEdwbE/dyZRN3WJBjdwWOBkjcjIPUtFNVDII52PfQLMCnFIu8XoMrQhyNtdBnqoIWs3gZNh2/nPc6YImYSOg48WG+dkW+Ufk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efPKAbGY; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AWpUtUyDMfIoCNbr1odxGEJ0/+qam2CMZGNd2hV88YUwyX1XHfjAKtjyDymI8z4t7lfgf6+CcfnMZ2/jnA8ni5ty2L9pGgenEP8jKyhn7/foL1S9ds/4SwPQpcnofVdCifXnecOWNISEIKNtTVpjfADVNqyzznCeDSUUbSEe8qQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TduWt5tR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efPKAbGY"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9330FC2BC9E;
-	Mon, 23 Mar 2026 15:07:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TduWt5tR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EADC2BCB3;
+	Mon, 23 Mar 2026 15:07:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278423;
-	bh=cXVgWQ5RWzzE+leX5s9EUbI1NmaIibY65AdDGMcaJpg=;
+	s=korg; t=1774278426;
+	bh=ndawFQ+Hv+AzD2KN5ABgGpdTBohVQi9bGcQFL3R8QMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=efPKAbGYSKfHEW7tcmCY+a2EGvsLEe2oDXqgQo6TBjRlZzguUdbv0FNDcasBdfyrQ
-	 SR7W+K4zdaC50V51S81fYiIKdGNuB7ZMRTCtnlLMYK+n1eU9HV/fn/P4JKc2INMHlL
-	 44tlf0Zkhqp+/gHZ/ubgeYVCLr9ADYBcXkvQ02zs=
+	b=TduWt5tRc5WFs+F0MtN7m7ixpRdWxLzlfRBOS93A/ITOZa+CDFQJUVmwQZTjsIBO5
+	 vApPGBvDQr6TFqJ/eafxzPIr4aEnEi9LiGLR7CiBE/xeENP6S7BzrFAxZ5ugvM+PyF
+	 +5J34z7dQefWfjWtpaPbCucya4kBiAFumWNex+II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bean Huo <beanhuo@iokpp.de>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Wang Shuaiwei <wangshuaiwei1@xiaomi.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Yihang Li <liyihang9@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 303/567] scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend
-Date: Mon, 23 Mar 2026 14:43:43 +0100
-Message-ID: <20260323134541.314721804@linuxfoundation.org>
+Subject: [PATCH 6.6 304/567] scsi: hisi_sas: Add time interval between two H2D FIS following soft reset spec
+Date: Mon, 23 Mar 2026 14:43:44 +0100
+Message-ID: <20260323134541.340993232@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,83 +52,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit b0bd84c39289ef6a6c3827dd52c875659291970a ]
+[ Upstream commit 3c62791322e42d1afd65acfdb5b3a371bde21ede ]
 
-In __ufshcd_wl_suspend(), cancel_delayed_work_sync() is called to cancel
-the UFS RTC work, but it is placed after ufshcd_vops_suspend(hba, pm_op,
-POST_CHANGE). This creates a race condition where ufshcd_rtc_work() can
-still be running while ufshcd_vops_suspend() is executing. When
-UFSHCD_CAP_CLK_GATING is not supported, the condition
-!hba->clk_gating.active_reqs is always true, causing ufshcd_update_rtc()
-to be executed. Since ufshcd_vops_suspend() typically performs clock
-gating operations, executing ufshcd_update_rtc() at that moment triggers
-an SError. The kernel panic trace is as follows:
+Spec says at least 5us between two H2D FIS when do soft reset, but be
+generous and sleep for about 1ms.
 
-Kernel panic - not syncing: Asynchronous SError Interrupt
-Call trace:
- dump_backtrace+0xec/0x128
- show_stack+0x18/0x28
- dump_stack_lvl+0x40/0xa0
- dump_stack+0x18/0x24
- panic+0x148/0x374
- nmi_panic+0x3c/0x8c
- arm64_serror_panic+0x64/0x8c
- do_serror+0xc4/0xc8
- el1h_64_error_handler+0x34/0x4c
- el1h_64_error+0x68/0x6c
- el1_interrupt+0x20/0x58
- el1h_64_irq_handler+0x18/0x24
- el1h_64_irq+0x68/0x6c
- ktime_get+0xc4/0x12c
- ufshcd_mcq_sq_stop+0x4c/0xec
- ufshcd_mcq_sq_cleanup+0x64/0x1dc
- ufshcd_clear_cmd+0x38/0x134
- ufshcd_issue_dev_cmd+0x298/0x4d0
- ufshcd_exec_dev_cmd+0x1a4/0x1c4
- ufshcd_query_attr+0xbc/0x19c
- ufshcd_rtc_work+0x10c/0x1c8
- process_scheduled_works+0x1c4/0x45c
- worker_thread+0x32c/0x3e8
- kthread+0x120/0x1d8
- ret_from_fork+0x10/0x20
-
-Fix this by moving cancel_delayed_work_sync() before the call to
-ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE), ensuring the UFS RTC work is
-fully completed or cancelled at that point.
-
-Cc: Bean Huo <beanhuo@iokpp.de>
-Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
-Link: https://patch.msgid.link/20260307035128.3419687-1-wangshuaiwei1@xiaomi.com
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Link: https://lore.kernel.org/r/20241008021822.2617339-11-liyihang9@huawei.com
+Reviewed-by: Yihang Li <liyihang9@huawei.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 8ddc0c269165 ("scsi: hisi_sas: Fix NULL pointer exception during user_scan()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index d109a0c8f75ff..2dcb0146c17e3 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -9882,6 +9882,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 3ad58250bf6b2..17189703454a2 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1340,6 +1340,7 @@ static int hisi_sas_softreset_ata_disk(struct domain_device *device)
  	}
  
- 	flush_work(&hba->eeh_work);
-+	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+ 	if (rc == TMF_RESP_FUNC_COMPLETE) {
++		usleep_range(900, 1000);
+ 		ata_for_each_link(link, ap, EDGE) {
+ 			int pmp = sata_srst_pmp(link);
  
- 	ret = ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE);
- 	if (ret)
-@@ -9936,7 +9937,6 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
- 	if (ret)
- 		goto set_link_active;
- 
--	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
- 	goto out;
- 
- set_link_active:
 -- 
 2.51.0
 
