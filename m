@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D03E23BF9B;
-	Mon, 23 Mar 2026 14:47:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1917623AB9D;
+	Mon, 23 Mar 2026 14:47:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277257; cv=none; b=tbXV2ZTz7STBoTjz/LBzJXHajaWVt+/531ol4NHpUt1gYwuQj6DCBIuTbd50dQao3OtQSbwkNrOINfXVvyCQuo09nFZTZDMgPp6nfviFD0lTzTZLcJ1ziV/Gy1iMijzYiVfrcYviEr62W4LxQQ7GJwSh1cSW9gGdq1Lt1tAiASM=
+	t=1774277260; cv=none; b=HmoPrt2e3ie9PnESg/mc5CRx1HGx2e1xREhzDWvxikrLV29W3C1gwrtJXcNfwjpuep/pdgyA7z76gRkpAOat3D2KMOwq9z9XGclRj3qKmR5YEf3GNKI1NePlXUb5IkpDgtsl8szI8Aau7uk/5T8h/ffIIzPoXhRoaT3l9BbaU0A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277257; c=relaxed/simple;
-	bh=USyR0+2oCRzZaxykn2NX2pSOI6pPtuVeo4e0P3qlcA4=;
+	s=arc-20240116; t=1774277260; c=relaxed/simple;
+	bh=2vFtXkIC5Llr92Zl+A2r4noxcYTkghs47+QsZjsHFm0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cl0F6/M+r7glWBeBZQIX6c0sCaKRXSXyCpXhzHF7JhFOQ0v1mUGPuq+edd1OBs5BpqJnA1HkGrFGWqnGKi0potJempaUEL54ePNY9kKWwQVHpeD+eafs6TeKEYNAbX/jt446inNyMnsJ/AuNfHTLCytSv2ESOIDmBfLYenkGHqw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=skNPAKx8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PFuCnF8BaaR/A/1C/jKJdS41X/VI3IAzIKu7DYbBrE8/APqZVWfXkpFavo0HwQHln0Zd4jhPnqkukOzcocFMTCjM/T3IGaE1l8Ov2XFEBZZUZQO/uqMbys5Z/UZ63Lze1vTCF5BCPsb91dref7tv2MFe1VF0y4w/dvOGIzcle7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qAoDTjPm; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="skNPAKx8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 870B3C4CEF7;
-	Mon, 23 Mar 2026 14:47:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qAoDTjPm"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E41C4CEF7;
+	Mon, 23 Mar 2026 14:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277256;
-	bh=USyR0+2oCRzZaxykn2NX2pSOI6pPtuVeo4e0P3qlcA4=;
+	s=korg; t=1774277259;
+	bh=2vFtXkIC5Llr92Zl+A2r4noxcYTkghs47+QsZjsHFm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=skNPAKx8heq6/tcZksxXygP0Ta5Fk//N9CLklVu+dVZdl+c8kvwRUP5SBOonPjmZd
-	 nKV8dM9lcl7HZxA0Vy1g2WWOKy59JGXqmrTo5MPl4m7DgUvJZ00ZAlO2ABmvMpWwRN
-	 mMPyWZLrCmuuYTG/XAqr8XBc46pr7srNU2cHEQNA=
+	b=qAoDTjPmZDGBcpnv0m4xhhyo3LxPmjiMz8NDwbpEIAL+FWeoETqG2mGGuKdJY8QnN
+	 r7AQ5oyoWAQRbsYBO7GzB63gzVjdW4kvhv4CsB1CgvUGNVFMuHod7qn8hE1Mys6kNC
+	 gl+5lellhVY1b7y30sAmPbAj/1DisVSs8dJKwc90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 336/460] mmc: sdhci: fix timing selection for 1-bit bus width
-Date: Mon, 23 Mar 2026 14:45:32 +0100
-Message-ID: <20260323134534.785735834@linuxfoundation.org>
+	Richard Genoud <richard.genoud@bootlin.com>,
+	CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>,
+	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.12 372/460] soc: fsl: qbman: fix race condition in qman_destroy_fq
+Date: Mon, 23 Mar 2026 14:46:08 +0100
+Message-ID: <20260323134535.705320119@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,47 +52,92 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Richard Genoud <richard.genoud@bootlin.com>
 
-commit 5e3486e64094c28a526543f1e8aa0d5964b7f02d upstream.
+[ Upstream commit 014077044e874e270ec480515edbc1cadb976cf2 ]
 
-When 1-bit bus width is used with HS200/HS400 capabilities set,
-mmc_select_hs200() returns 0 without actually switching. This
-causes mmc_select_timing() to skip mmc_select_hs(), leaving eMMC
-in legacy mode (26MHz) instead of High Speed SDR (52MHz).
+When QMAN_FQ_FLAG_DYNAMIC_FQID is set, there's a race condition between
+fq_table[fq->idx] state and freeing/allocating from the pool and
+WARN_ON(fq_table[fq->idx]) in qman_create_fq() gets triggered.
 
-Per JEDEC eMMC spec section 5.3.2, 1-bit mode supports High Speed
-SDR. Drop incompatible HS200/HS400/UHS/DDR caps early so timing
-selection falls through to mmc_select_hs() correctly.
+Indeed, we can have:
+         Thread A                             Thread B
+    qman_destroy_fq()                    qman_create_fq()
+      qman_release_fqid()
+        qman_shutdown_fq()
+        gen_pool_free()
+           -- At this point, the fqid is available again --
+                                           qman_alloc_fqid()
+           -- so, we can get the just-freed fqid in thread B --
+                                           fq->fqid = fqid;
+                                           fq->idx = fqid * 2;
+                                           WARN_ON(fq_table[fq->idx]);
+                                           fq_table[fq->idx] = fq;
+     fq_table[fq->idx] = NULL;
 
-Fixes: f2119df6b764 ("mmc: sd: add support for signal voltage switch procedure")
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+And adding some logs between qman_release_fqid() and
+fq_table[fq->idx] = NULL makes the WARN_ON() trigger a lot more.
+
+To prevent that, ensure that fq_table[fq->idx] is set to NULL before
+gen_pool_free() is called by using smp_wmb().
+
+Fixes: c535e923bb97 ("soc/fsl: Introduce DPAA 1.x QMan device driver")
+Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
+Tested-by: CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>
+Link: https://lore.kernel.org/r/20251223072549.397625-1-richard.genoud@bootlin.com
+Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/soc/fsl/qbman/qman.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4479,8 +4479,15 @@ int sdhci_setup_host(struct sdhci_host *
- 	 * their platform code before calling sdhci_add_host(), and we
- 	 * won't assume 8-bit width for hosts without that CAP.
- 	 */
--	if (!(host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA))
-+	if (host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA) {
-+		host->caps1 &= ~(SDHCI_SUPPORT_SDR104 | SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_DDR50);
-+		if (host->quirks2 & SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400)
-+			host->caps1 &= ~SDHCI_SUPPORT_HS400;
-+		mmc->caps2 &= ~(MMC_CAP2_HS200 | MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
-+		mmc->caps &= ~(MMC_CAP_DDR | MMC_CAP_UHS);
-+	} else {
- 		mmc->caps |= MMC_CAP_4_BIT_DATA;
-+	}
+diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
+index 4dc8aba33d9b7..0791b41913383 100644
+--- a/drivers/soc/fsl/qbman/qman.c
++++ b/drivers/soc/fsl/qbman/qman.c
+@@ -1827,6 +1827,8 @@ EXPORT_SYMBOL(qman_create_fq);
  
- 	if (host->quirks2 & SDHCI_QUIRK2_HOST_NO_CMD23)
- 		mmc->caps &= ~MMC_CAP_CMD23;
+ void qman_destroy_fq(struct qman_fq *fq)
+ {
++	int leaked;
++
+ 	/*
+ 	 * We don't need to lock the FQ as it is a pre-condition that the FQ be
+ 	 * quiesced. Instead, run some checks.
+@@ -1834,11 +1836,29 @@ void qman_destroy_fq(struct qman_fq *fq)
+ 	switch (fq->state) {
+ 	case qman_fq_state_parked:
+ 	case qman_fq_state_oos:
+-		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID))
+-			qman_release_fqid(fq->fqid);
++		/*
++		 * There's a race condition here on releasing the fqid,
++		 * setting the fq_table to NULL, and freeing the fqid.
++		 * To prevent it, this order should be respected:
++		 */
++		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID)) {
++			leaked = qman_shutdown_fq(fq->fqid);
++			if (leaked)
++				pr_debug("FQID %d leaked\n", fq->fqid);
++		}
+ 
+ 		DPAA_ASSERT(fq_table[fq->idx]);
+ 		fq_table[fq->idx] = NULL;
++
++		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID) && !leaked) {
++			/*
++			 * fq_table[fq->idx] should be set to null before
++			 * freeing fq->fqid otherwise it could by allocated by
++			 * qman_alloc_fqid() while still being !NULL
++			 */
++			smp_wmb();
++			gen_pool_free(qm_fqalloc, fq->fqid | DPAA_GENALLOC_OFF, 1);
++		}
+ 		return;
+ 	default:
+ 		break;
+-- 
+2.51.0
+
 
 
