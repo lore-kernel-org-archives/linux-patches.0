@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306593B7772;
-	Mon, 23 Mar 2026 15:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 769C53B47FE;
+	Mon, 23 Mar 2026 15:20:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279218; cv=none; b=KkD4zswMyuzVYQJh4oEEMYO5GUs1MDTsTY64YCepW1R3UPWteaqeRRPCd1GY5B55CqZQ+pucMV6JbhINJ2dYUJU8jAjujBZJK4vCBxOtTICoFKIUPT29mZS5gDV5i/IoX4xUYjhpxMjo7zCrySHU02NBX9AZw9FUembfx44xZio=
+	t=1774279221; cv=none; b=j8Jq68/e34fnytjcr0hwAqjExcR4ayXH/DT7ZSK/EmpBD1PreNwLbGD8VT5Q429ScxAKtF/3Xfqr7v9KTHQESB8tW89w7B0WFFmqM9UaiVginYqd6COwcjJL311nJPItDeXXX8p2qCqzpryiSeplHJtgb1kBM/TOQ0JVJoSx530=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279218; c=relaxed/simple;
-	bh=8ZxQAS0K9bg2dWRCT4bot1uowLBfXPaop5idZHHUb4Y=;
+	s=arc-20240116; t=1774279221; c=relaxed/simple;
+	bh=e8bSwvkmXKw005kE+Eto/zc7wTE1uoCca+9C1y/NwH8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jYGHnMwVsgBg7LBhQfYNNwcDv4GzxZFyClD43rW5HTy6YuCLLA5nghx0C3NR5M6Dbc3P00D2WKkkNAjHB6EMDOI7pLVS2iSXT7sCyUWSPOf0H7SMs4MGLtpRQ5P1c07g9tpTugY6weF1MxvGrpmQfdaVmz8GBT/Ju6mza/7cyrA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EjgHRCk3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hh3GzsN2eBLBzPGOWWM8TucgcKCwgQKpjEej59x8efEUoTpoRDrcLItW/rpAVMh/lhUnqVGEqzASl0fs9zKhmW9uoqEb0rUhPWZSKBSB4J0kFxtmvVcV2E0ZjErIVKejMeKqXXJrNmS1zQwOeHr+0bDOgbK7elwpXONT34wMpsU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CyeP9axB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EjgHRCk3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D39C4CEF7;
-	Mon, 23 Mar 2026 15:20:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CyeP9axB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E30D9C2BCB3;
+	Mon, 23 Mar 2026 15:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279218;
-	bh=8ZxQAS0K9bg2dWRCT4bot1uowLBfXPaop5idZHHUb4Y=;
+	s=korg; t=1774279221;
+	bh=e8bSwvkmXKw005kE+Eto/zc7wTE1uoCca+9C1y/NwH8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EjgHRCk3ivTYH0DoVX7pKZTwX3eNPTJ+f5YbGU06E0UTgiDo+aoHS1HVrAxYIXb5W
-	 zrTqAe2Ltc09FsaJAAarNRF5yI+jBk5laLjVV+W9iJLlzGBKkrQt83uyYRx5chTXZB
-	 2iOjr9kYovk/EXLy3eYsAlvpXM2eA267Jf+oeM54=
+	b=CyeP9axBD4uf3rehfB4YKib5efD72B2Z8QoRLhah57e56NFCl/ytAoQdoircDMyYT
+	 8MjXe/3Xes1RkPzTlPKA5aimt8uwjJFkwtAFxEY7hjRd5ayOIXUSn36agW/t7EqG7t
+	 s4oueS2QN/lVjN2fVPTbJ3/yUjFxjG3Qqq7rNZd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Grzeschik <m.grzeschik@pengutronix.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Klaudia Kloc <klaudia@vidocsecurity.com>,
+	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
+	Jenny Guanni Qu <qguanni@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 507/567] Bluetooth: hci_sync: Fix hci_le_create_conn_sync
-Date: Mon, 23 Mar 2026 14:47:07 +0100
-Message-ID: <20260323134546.562615008@linuxfoundation.org>
+Subject: [PATCH 6.6 516/567] netfilter: nf_conntrack_h323: fix OOB read in decode_int() CONS case
+Date: Mon, 23 Mar 2026 14:47:16 +0100
+Message-ID: <20260323134546.779918555@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,56 +47,50 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Michael Grzeschik <m.grzeschik@pengutronix.de>
+From: Jenny Guanni Qu <qguanni@gmail.com>
 
-[ Upstream commit 2cabe7ff1001b7a197009cf50ba71701f9cbd354 ]
+[ Upstream commit 1e3a3593162c96e8a8de48b1e14f60c3b57fca8a ]
 
-While introducing hci_le_create_conn_sync the functionality
-of hci_connect_le was ported to hci_le_create_conn_sync including
-the disable of the scan before starting the connection.
+In decode_int(), the CONS case calls get_bits(bs, 2) to read a length
+value, then calls get_uint(bs, len) without checking that len bytes
+remain in the buffer. The existing boundary check only validates the
+2 bits for get_bits(), not the subsequent 1-4 bytes that get_uint()
+reads. This allows a malformed H.323/RAS packet to cause a 1-4 byte
+slab-out-of-bounds read.
 
-When this code was run non synchronously the immediate call that was
-setting the flag HCI_LE_SCAN_INTERRUPTED had an impact. Since the
-completion handler for the LE_SCAN_DISABLE was not immediately called.
-In the completion handler of the LE_SCAN_DISABLE event, this flag is
-checked to set the state of the hdev to DISCOVERY_STOPPED.
+Add a boundary check for len bytes after get_bits() and before
+get_uint().
 
-With the synchronised approach the later setting of the
-HCI_LE_SCAN_INTERRUPTED flag has not the same effect. The completion
-handler would immediately fire in the LE_SCAN_DISABLE call, check for
-the flag, which is then not yet set and do nothing.
-
-To fix this issue and make the function call work as before, we move the
-setting of the flag HCI_LE_SCAN_INTERRUPTED before disabling the scan.
-
-Fixes: 8e8b92ee60de ("Bluetooth: hci_sync: Add hci_le_create_conn_sync")
-Signed-off-by: Michael Grzeschik <m.grzeschik@pengutronix.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
+Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
+Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 6a14f76071077..6192f70e4d393 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6555,8 +6555,8 @@ static int hci_le_create_conn_sync(struct hci_dev *hdev, void *data)
- 	 * state.
- 	 */
- 	if (hci_dev_test_flag(hdev, HCI_LE_SCAN)) {
--		hci_scan_disable_sync(hdev);
- 		hci_dev_set_flag(hdev, HCI_LE_SCAN_INTERRUPTED);
-+		hci_scan_disable_sync(hdev);
- 	}
- 
- 	/* Update random address, but set require_privacy to false so
+diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
+index 62aa22a078769..c972e9488e16f 100644
+--- a/net/netfilter/nf_conntrack_h323_asn1.c
++++ b/net/netfilter/nf_conntrack_h323_asn1.c
+@@ -331,6 +331,8 @@ static int decode_int(struct bitstr *bs, const struct field_t *f,
+ 		if (nf_h323_error_boundary(bs, 0, 2))
+ 			return H323_ERROR_BOUND;
+ 		len = get_bits(bs, 2) + 1;
++		if (nf_h323_error_boundary(bs, len, 0))
++			return H323_ERROR_BOUND;
+ 		BYTE_ALIGN(bs);
+ 		if (base && (f->attr & DECODE)) {	/* timeToLive */
+ 			unsigned int v = get_uint(bs, len) + f->lb;
 -- 
 2.51.0
 
