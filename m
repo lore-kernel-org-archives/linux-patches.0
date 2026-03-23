@@ -1,109 +1,107 @@
-Received: from mail-lj1-f171.google.com (mail-lj1-f171.google.com [209.85.208.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5432D2DECBF
-	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 18:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8309231E844
+	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 18:48:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774291558; cv=none; b=n7P2VxqFUo02mO7pugRtb4dvFseE1tdQJa1MlFZF8NMWBo3ed5QD1gl5yvQKUR7nZ6/icvM82Vz8UExeRtypb9485yC6kvJTrU06FORSPqFl7Zptt90JNFUztPARok0Rdv3rNRFvhJd3cKfkcN8MtL8QYMEM38SadlRXyP7pvHo=
+	t=1774291734; cv=none; b=GaKLd/cNWi2garDryb2AGjTFnYP6kGN+qU7lRP4s0lDqN6ge5iFg5o15TupWY2dmi9e6whu0970ZtogXKsS42P5OwXfx39BKT46ccmIQUKWnCmCidv6QxWu1e8QYINTzU3XIBgIh+OAVdRKRZUalJmDcHNDN6Vu0k+GODQ7UzLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774291558; c=relaxed/simple;
-	bh=xKWqh2Mq3To1C8FNyFOCYh6IisBe2esHhyb63lXCN4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=C67zWpVlmf/OPK4KhXPqbx1/cmBm/pXGJJz2/LAiZL8TIaTMqkCZzotp9sgFj06iiKHhK23J6Odtf0A5kcaLPBjBvlydBin6HHZrtp1PUdtk1UypUke9wit2NBeyixYwwMu/pMU4CVQX8SB5SW7SWuV99pOSGuQPtoVMxeYojYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com; spf=pass smtp.mailfrom=googlemail.com; dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b=O8hikLaV; arc=none smtp.client-ip=209.85.208.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=googlemail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=googlemail.com header.i=@googlemail.com header.b="O8hikLaV"
-Received: by mail-lj1-f171.google.com with SMTP id 38308e7fff4ca-38ad12fb595so42527121fa.0
-        for <patches@lists.linux.dev>; Mon, 23 Mar 2026 11:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=20251104; t=1774291555; x=1774896355; darn=lists.linux.dev;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=p5I9WcMIMbWgGzcbuEa00kzIbh/DzG5Pp6MMimlIG30=;
-        b=O8hikLaVbIOWJDUwM3cdgFzy77E/nZubYp0r3XKIxj2jcobu2BXXuTRJSyxExzZdJj
-         pvMAwEdEd+S0ZfStLCDjrqKCXeGqnvR5URM+KmFc0YnHbDQIj9VdXmonTmlZmo0DUfvm
-         0/MIjp0I6WTD15XaFSzKoGlZIetO01cnDdNjMiyOcBxOlLcdpttuqb3uizj32p503sJk
-         IqDo1meKM0SGCdADboWngAjawU9sgKoNu13tDNrYiXqg6BsLyzxQsQtjhjVFabCAzzDC
-         zZbiqbPiSRk8suzF48C6MmwYxt6gjcugh4dWjkB/yhVoLedY1qqWNfE/hAHBefNhZh5U
-         5ykg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774291555; x=1774896355;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p5I9WcMIMbWgGzcbuEa00kzIbh/DzG5Pp6MMimlIG30=;
-        b=qkVTFI30WHvJXDtACGqehk3qrN5trEvZ8wft37kqT1QzqYedwCvhDai0B+946YOVNk
-         Fplyw8Qmvc4YdxIGpiZYz6V/kYsSBmUXHsM9l0bZQNFVnjPeMoAOIgPU0t/mAwHirk7M
-         kormC6+GhVIWKaUeuk4bEQ7jYvS+gv/hMhqtrj4z1szueZUUUSDBZiAwqHn3AtleyI50
-         yAKRlHoO0am3R2ABp9Vwt1ctX2EyPC2W5MjCYsi0486Cv7yqZlNz/g/r2R5z9pLwyeqF
-         irBZw8LRVvgG2y9Q3WfdnfU6M9tAvM+7q36zXkie/acBeXsYajc5/RqBmvdwN8GXIATW
-         ttNw==
-X-Gm-Message-State: AOJu0YxQ/FT/JIHoE+BQS/LqdFSK67OMclPDHPuGnHSuTdvraofDkq3Y
-	T2tSJ0QMoQ6lUCNVIfoitPHAM6foO/Z8bNEYezxUFn8dfV2qVqlyZsI=
-X-Gm-Gg: ATEYQzwexViDUdk/eIxuJ+eWiB+SiO5tn4cjtHNkws3irvcyzrIZ00EhvvPz4OIgjlc
-	31x+EA1X7JOg57Y8ltUGE5W2gq/htHFM+PuAcbDvvhWhiuO9Ocew5ZdvHSil1NCmIEEu8Sl4bLx
-	jFvdsW0KCeIxMyWju8AfGkU/Ab4UKgneZbxtHhm6gUvw+rWF6yC4zvj7vxtMlwQLJCXyOY1h8E2
-	CvHHX3XLVu1pWd16wvZqlJlgbTcVj0aQjfFbWjArI5SlGaD+V4LhauGIKELpPxJpqq+pGll60/c
-	rWY1JoaLVN5tgKPsd1CqT/3lWclVvb0Dvdate481zkteArJFAe5NBPQGEAXEvY45E2OL7EnmpHS
-	5RfP1eh86MaF8VALAUQMtgCR42bLyQ6kqBNG+QHDFQWOdHBPGgttZjHzx2aiFQ4YB76H171FNkO
-	GyfCNzwuDMahGtokl79ceoyj2dG7DU6jg7w47XAwn4PBgXQIfPSlBXCsiA8zXPt9vPrMG91G5SG
-	g==
-X-Received: by 2002:a2e:a30e:0:b0:38b:f1c3:cfb6 with SMTP id 38308e7fff4ca-38c327e9c52mr1248601fa.4.1774291555190;
-        Mon, 23 Mar 2026 11:45:55 -0700 (PDT)
-Received: from [192.168.1.3] (p5b2b444d.dip0.t-ipconnect.de. [91.43.68.77])
-        by smtp.gmail.com with ESMTPSA id 38308e7fff4ca-38bf9aa200dsm30082831fa.28.2026.03.23.11.45.53
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Mar 2026 11:45:54 -0700 (PDT)
-Message-ID: <941eaeda-94b3-4726-ba64-3223ea0cc3d2@googlemail.com>
-Date: Mon, 23 Mar 2026 19:45:53 +0100
+	s=arc-20240116; t=1774291734; c=relaxed/simple;
+	bh=wlPP+o8AK/KpvA5ybmA/4On0w1VNoA7dTl3Jv69B9iY=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=bPQmzMxSGqbBHCIEORFwDSqMcWdkaJ6ubH5Os97+4QGyZI7PJPwrS86mYo1WqC4QS5UNd15qRtVQQjKQTV3kAWCe6vnPy+rEUknCVsZaRt0E1/+PCu0fl4otddA9Y2B5OsnPvpx4WRvRpCTXCsXniR1WLfsJgjd7ko9QLVXxzuM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1w4kKa-001ZDt-0S;
+	Mon, 23 Mar 2026 18:48:50 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1w4kKX-000000048rM-0ZuH;
+	Mon, 23 Mar 2026 19:48:49 +0100
+Message-ID: <8b929c0ed7884212931668cc77074cbffa2b2d45.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 142/147] selftests: forwarding: vxlan_bridge_1d:
+ fix test failure with br_netfilter enabled
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Sasha Levin <sashal@kernel.org>, patches@lists.linux.dev
+Cc: Aleksei Oladko <aleksey.oladko@virtuozzo.com>, Ido Schimmel
+	 <idosch@nvidia.com>, Paolo Abeni <pabeni@redhat.com>
+Date: Mon, 23 Mar 2026 19:48:44 +0100
+In-Reply-To: <20260228181736.1605592-142-sashal@kernel.org>
+References: <20260228181736.1605592-1-sashal@kernel.org>
+	 <20260228181736.1605592-142-sashal@kernel.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-VzN/ViiYs1XYyXf4+kif"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Betterbird (Windows)
-Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
-Content-Language: de-DE
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260323134503.770111826@linuxfoundation.org>
-From: Peter Schneider <pschneider1968@googlemail.com>
-In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-
-Am 23.03.2026 um 14:43 schrieb Greg Kroah-Hartman:
-> This is the start of the stable review cycle for the 6.18.20 release.
-> There are 212 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-Builds, boots and works on my 2-socket Ivy Bridge Xeon E5-2697 v2 server. No dmesg oddities or regressions found.
-
-Tested-by: Peter Schneider <pschneider1968@googlemail.com>
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
 
-Beste Grüße,
-Peter Schneider
+--=-VzN/ViiYs1XYyXf4+kif
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--- 
-Climb the mountain not to plant your flag, but to embrace the challenge,
-enjoy the air and behold the view. Climb it so you can see the world,
-not so the world can see you.                    -- David McCullough Jr.
+On Sat, 2026-02-28 at 13:17 -0500, Sasha Levin wrote:
+> From: Aleksei Oladko <aleksey.oladko@virtuozzo.com>
+>=20
+> [ Upstream commit 02cb2e6bacbb08ebf6acb61be816efd11e1f4a21 ]
+>=20
+> The test generates VXLAN traffic using mausezahn, where the encapsulated
+> inner IPv4 packet contains a zero IP header checksum. After VXLAN
+> decapsulation, such packets do not pass sanity checks in br_netfilter
+> and are dropped, which causes the test to fail.
+>=20
+> Fix this by calculating and setting a valid IPv4 header checksum for the
+> encapsulated packet generated by mausezahn, so that the packet is accepte=
+d
+> by br_netfilter. Fixed by using the payload_template_calc_checksum() /
+> payload_template_expand_checksum() helpers that are only available
+                                                      --------------
+> in v6.3 and newer kernels.
+  -------------------------
+[...]
 
-OpenPGP:  0xA3828BD796CCE11A8CADE8866E3A92C92C3FF244
-Download: https://www.peters-netzplatz.de/download/pschneider1968_pub.asc
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@googlemail.com
-https://keys.mailvelope.com/pks/lookup?op=get&search=pschneider1968@gmail.com
+So for 5.10-6.1 you need to either backport commit 952e0ee38c72
+"selftests: forwarding: lib: Add helpers for checksum handling" or
+revert this one.
+
+Ben.
+
+--=20
+Ben Hutchings
+73.46% of all statistics are made up.
+
+--=-VzN/ViiYs1XYyXf4+kif
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnBiwwACgkQ57/I7JWG
+EQmCeA/8C+Ano5Xopy/KWZhRB6O1xb4X3emGJmQNdyP3lz6awtlYWY5HQYi4+JDq
+009sdiDl9AnyZpFl44wfyV57f4FuU7kK23Q3bEFIv13RKhm91xxFcy8iii0GPunu
+rKgta68oIKYTNQOoDmQZzD2Bqamv/Pdq0tWsJIOLXDRSkjkQ3PXZ06G02XuBeQko
+SjNZ3bL+zTPYcJ1FQoFVMOwRjtAxK6QZRdsBlnqDcct6qIV/s2FFQCKcxiOur8Lg
+6p1/MKemsfvP2TnHs6lhY1ORCfRAQvE6/T5xYObNWAIcxfVp2xTn+y9IbeW2IykX
+4T1buQuz23Mu6cnF7Fc+ufZUMUlnKXNuz4cF8Nlr9k0nYNAcEukrmSLKmFkwZb0n
+ISb6xEA/vLii8GFTKPxvhLpjlvM11jjvekuh9bqsnUB1hKItWyyQ5SwOk4JlahQY
+VMBL5rgCHixj83S3yPGs57uIkvgUx1UihZqORFg61j/WRoTkIHrfxytuFzYwa0rf
+GWg2IsYJyAGheGTmg602bsNdNkRp074ViwhV3Bfs6bja8eHeW0tVABqVuwPdh2AK
+sGvB3ZVuFDww9PzglRXpeGmYYLaPN8ZLGtAelRX6bee+R/OZA9+/QZ0zD4eDfYZs
+qokQGgTwlcEJannRrnpU9yzLQOlhq4ESpXWpsLZ2F34hYC5WFO4=
+=8L3C
+-----END PGP SIGNATURE-----
+
+--=-VzN/ViiYs1XYyXf4+kif--
