@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EB012CDA5;
-	Mon, 23 Mar 2026 16:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517A23ABAA;
+	Mon, 23 Mar 2026 16:09:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282181; cv=none; b=cnwc0bNBTwnMgQxNO2g40oT26NgdjPhLKMQXDaqEvcExn2MP5hH0CzDICc+NO8a4z9ab/k0x0siYk8AJN+040o1TxXZnM/SREHD/xIyFdZuEtroGUH3c2wlEcIu4IgnHitObtXtDe3rAic/dmpwLcwGSqjf3I/X9CJsSqheuJLI=
+	t=1774282183; cv=none; b=ro3o6SsGLuCOukmNVrA40smyxov/mnBmoCp9bxyzg1TRN3bRSmMJpVe8/qHLDgpy1FjCTwRM5GanJsSoBhiXAvCbVHPGCuoCWcDjWyH/POTH5pv570GniJVZAtSgYJ6eKb60GnZJsNMyvRgkf7NByR95ZDoapi4Jy8XIoJhajCo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282181; c=relaxed/simple;
-	bh=t/DF04G4JQz0rRLCjJnzDxvlPOAZbFS5lWlb/l4kfgI=;
+	s=arc-20240116; t=1774282183; c=relaxed/simple;
+	bh=6KcsMdxu/l8cmwI/loD/vFtr3N6tks9RosHjciLN2fo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EE7ZwM49LWnYabUsIZXYGZrTswa3OzGO7Ht5FoffNYL3ZfNIr3uZVpZSGg3bCSPBiwsdoFlGPdjFeu8GWcPNe9bpHY4Vplb+0IsDmdujRrTb9iGeDeoeMgoRUI14oTYBfRVQuZRhWBefgRXRsOwo/cTo6TwX42zQ5Fx7RY9QpQ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XT9e07F6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NRtHE4WI1x0SFJWKpwvx/xl0lBvWuL5VMVcqMloWWj+lUFDTkpGInlXAqABT/91lKih/cCweWvklxwOMLKWEbSqr2mx2EkJE2hrKG9qt8fJ10dR2H74DttN++QhT7skPwViZZT0BxlhQ7H3bWqPdOIZRh3AUV381zhUj8mXlf1I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y23k+bjG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XT9e07F6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21CE0C4CEF7;
-	Mon, 23 Mar 2026 16:09:39 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y23k+bjG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7877C4CEF7;
+	Mon, 23 Mar 2026 16:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282180;
-	bh=t/DF04G4JQz0rRLCjJnzDxvlPOAZbFS5lWlb/l4kfgI=;
+	s=korg; t=1774282183;
+	bh=6KcsMdxu/l8cmwI/loD/vFtr3N6tks9RosHjciLN2fo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XT9e07F6kSMtFKj5s2WhJh+QmLvl5SdBiMyTPY1d/Ye0jdfnYwfO6oefu/G0xRW4e
-	 OMUnuOmZefURRHxZOXpxj6Kl7RJ/+nISr6aw2A4k8hOTlWh1PvcZ4MUH9l94SuHQL0
-	 1dxGFYWlGxhQ71SPNRXJylur4GJx84XPaVTsZbqY=
+	b=y23k+bjGBIub9GcXfWgjoF247d63KMJ5xW6qdPxplTc/scjFXtFOgoUqnOVe3pfx1
+	 uwU+SsYkvIyZyEFO444dvy1+sLbBaPCyJlEF8kjH7vwDljdkFyFHImFBXP86lNqeu/
+	 4R/P83krcwV3lkFTYTiQ62Hs8Ta0B/eE2Tnc4Eno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	"Thomas Richard (TI)" <thomas.richard@bootlin.com>,
-	Peter Chen <peter.chen@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 062/481] usb: cdns3: fix role switching during resume
-Date: Mon, 23 Mar 2026 14:40:44 +0100
-Message-ID: <20260323134526.734450788@linuxfoundation.org>
+Subject: [PATCH 6.1 063/481] ALSA: hda/conexant: Add quirk for HP ZBook Studio G4
+Date: Mon, 23 Mar 2026 14:40:45 +0100
+Message-ID: <20260323134526.759766439@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,91 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thomas Richard (TI) <thomas.richard@bootlin.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 87e4b043b98a1d269be0b812f383881abee0ca45 ]
+[ Upstream commit 1585cf83e98db32463e5d54161b06a5f01fe9976 ]
 
-If the role change while we are suspended, the cdns3 driver switches to the
-new mode during resume. However, switching to host mode in this context
-causes a NULL pointer dereference.
+It was reported that we need the same quirk for HP ZBook Studio G4
+(SSID 103c:826b) as other HP models to make the mute-LED working.
 
-The host role's start() operation registers a xhci-hcd device, but its
-probe is deferred while we are in the resume path. The host role's resume()
-operation assumes the xhci-hcd device is already probed, which is not the
-case, leading to the dereference. Since the start() operation of the new
-role is already called, the resume operation can be skipped.
-
-So skip the resume operation for the new role if a role switch occurs
-during resume. Once the resume sequence is complete, the xhci-hcd device
-can be probed in case of host mode.
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000208
-Mem abort info:
-...
-Data abort info:
-...
-[0000000000000208] pgd=0000000000000000, p4d=0000000000000000
-Internal error: Oops: 0000000096000004 [#1]  SMP
-Modules linked in:
-CPU: 0 UID: 0 PID: 146 Comm: sh Not tainted
-6.19.0-rc7-00013-g6e64f4aabfae-dirty #135 PREEMPT
-Hardware name: Texas Instruments J7200 EVM (DT)
-pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : usb_hcd_is_primary_hcd+0x0/0x1c
-lr : cdns_host_resume+0x24/0x5c
-...
-Call trace:
- usb_hcd_is_primary_hcd+0x0/0x1c (P)
- cdns_resume+0x6c/0xbc
- cdns3_controller_resume.isra.0+0xe8/0x17c
- cdns3_plat_resume+0x18/0x24
- platform_pm_resume+0x2c/0x68
- dpm_run_callback+0x90/0x248
- device_resume+0x100/0x24c
- dpm_resume+0x190/0x2ec
- dpm_resume_end+0x18/0x34
- suspend_devices_and_enter+0x2b0/0xa44
- pm_suspend+0x16c/0x5fc
- state_store+0x80/0xec
- kobj_attr_store+0x18/0x2c
- sysfs_kf_write+0x7c/0x94
- kernfs_fop_write_iter+0x130/0x1dc
- vfs_write+0x240/0x370
- ksys_write+0x70/0x108
- __arm64_sys_write+0x1c/0x28
- invoke_syscall+0x48/0x10c
- el0_svc_common.constprop.0+0x40/0xe0
- do_el0_svc+0x1c/0x28
- el0_svc+0x34/0x108
- el0t_64_sync_handler+0xa0/0xe4
- el0t_64_sync+0x198/0x19c
-Code: 52800003 f9407ca5 d63f00a0 17ffffe4 (f9410401)
----[ end trace 0000000000000000 ]---
-
-Cc: stable <stable@kernel.org>
-Fixes: 2cf2581cd229 ("usb: cdns3: add power lost support for system resume")
-Signed-off-by: Thomas Richard (TI) <thomas.richard@bootlin.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
-Link: https://patch.msgid.link/20260130-usb-cdns3-fix-role-switching-during-resume-v1-1-44c456852b52@bootlin.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/64d78753-b9ff-4c64-8920-64d8d31cd20c@gmail.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=221002
+Link: https://patch.msgid.link/20260207131324.2428030-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_conexant.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/cdns3/core.c b/drivers/usb/cdns3/core.c
-index 8e46fd36b0e56..93e93bb9a314f 100644
---- a/drivers/usb/cdns3/core.c
-+++ b/drivers/usb/cdns3/core.c
-@@ -550,7 +550,7 @@ int cdns_resume(struct cdns *cdns)
- 		}
- 	}
- 
--	if (cdns->roles[cdns->role]->resume)
-+	if (!role_changed && cdns->roles[cdns->role]->resume)
- 		cdns->roles[cdns->role]->resume(cdns, power_lost);
- 
- 	return 0;
+diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
+index a3d68b83ebd5f..643d1f7ba5ad3 100644
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -1099,6 +1099,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8174, "HP Spectre x360", CXT_FIXUP_HP_SPECTRE),
+ 	SND_PCI_QUIRK(0x103c, 0x822e, "HP ProBook 440 G4", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x8231, "HP ProBook 450 G4", CXT_FIXUP_MUTE_LED_GPIO),
++	SND_PCI_QUIRK(0x103c, 0x826b, "HP ZBook Studio G4", CXT_FIXUP_MUTE_LED_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x828c, "HP EliteBook 840 G4", CXT_FIXUP_HP_DOCK),
+ 	SND_PCI_QUIRK(0x103c, 0x8299, "HP 800 G3 SFF", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
 -- 
 2.51.0
 
