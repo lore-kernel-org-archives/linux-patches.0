@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A71C26D4F9;
-	Mon, 23 Mar 2026 14:50:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3593626A08F;
+	Mon, 23 Mar 2026 14:50:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277410; cv=none; b=JIwlq1rKnUSuUBnUn1RUly1BDouAGLtQP0OzmjenZjKyKCSZu/O0aWF5GibH8pZLVmwEVRIdCzC1sSGEBedLf7woFW9/k1VKgpmSG0W19Flirnkq5sX2U0YMmcXdrrBVQpx7mtfosTCKHXCHLaLXyD+ytIZZBlK2BPJATt+GUdw=
+	t=1774277413; cv=none; b=AybttwMAy/EXQg/opytilEvcc6567Zoj+u2F3r1b5NX73gsw1DeSo0WW1Mdf9ic0wmZ27MexYxflgHru/1AMX9J7tFUzJpWgHJbPMNBRpFAPGJqt736AAdRYD/KmQxSo6V/5mlI6KDVqt/nsOGlB+w/vjRtYl8D+9Ww2Qet2aIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277410; c=relaxed/simple;
-	bh=NxRrME8uV0AlI95HG+DmFzOvJowEHAsZSq8aMVjVoP8=;
+	s=arc-20240116; t=1774277413; c=relaxed/simple;
+	bh=7roc0gyju2iuCzAY8XZe/V6rn1ZAI67/gIjcxwzYZCs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=VyJodGvuz3gY3khu3qKdq4z7LAb1OSTkezosdnOzM6+XZQ+h6yyRGXoB6+qrSx/W3A52TanUjrPrH5WHDG+3sL/FKGb7Yd0F584WNsIwbhsoA/YVN/PobBzwLVdCbuCVbSAcUHThTUMo0D+V37yfhDQDhTfBcLxzzLPWHCZqv2M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EIDIhoZL; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4DWxTXgNJFdm7ppgz+aiEObSJFpAwTOM356pasz9DpvZpfGNxGSohYvRQ+AFBC+jKb4JJlac1D7algw+6D99FxffHrJ030Srz5pFMQAOy5rcW9mb1Nb5IHEYMzRJZq+s7MXKT9aYVrf3zJEolWA98AgNPs7dz3u8raZPRgl8y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RabBwxpf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EIDIhoZL"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 247A9C4CEF7;
-	Mon, 23 Mar 2026 14:50:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RabBwxpf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDA8C4CEF7;
+	Mon, 23 Mar 2026 14:50:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277410;
-	bh=NxRrME8uV0AlI95HG+DmFzOvJowEHAsZSq8aMVjVoP8=;
+	s=korg; t=1774277413;
+	bh=7roc0gyju2iuCzAY8XZe/V6rn1ZAI67/gIjcxwzYZCs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIDIhoZLHA3EutaZ3oBWPNxMVJAA1SIOsKKnpH1DK4hBKt/+G1/IMU0aVmee71mix
-	 lw5dFuVoqPK4APdoH0CKCiPbvYmXwZItl/qS6yxSe7BUBWQoGtnbgRozhc4GpHkO3D
-	 wnXUjZcOmmBWxuAH0z0Srw7rcWRF+aEg8q0GJXMw=
+	b=RabBwxpfG9FFocIXWT9U0A16EBvlQzu/AIv7mIfEgQ7mAgMhQ9iMkiD178VPV9EkV
+	 vpNfKJPwUVa8qHSeCPjuD8kElYKGSnEXCue4eaTtm3EnNmlt06chfjPrNENGVAK+jo
+	 5WKouZnWK8bD+9Pa8BhX+bJls8xnGEafmh/4cn0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Tao <wangtao554@huawei.com>,
+	soufiane el hachmi <kilwa10@gmail.com>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 385/460] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
-Date: Mon, 23 Mar 2026 14:46:21 +0100
-Message-ID: <20260323134536.029610250@linuxfoundation.org>
+Subject: [PATCH 6.12 386/460] Bluetooth: HIDP: Fix possible UAF
+Date: Mon, 23 Mar 2026 14:46:22 +0100
+Message-ID: <20260323134536.055235786@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,64 +51,235 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Wang Tao <wangtao554@huawei.com>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-[ Upstream commit 17f89341cb4281d1da0e2fb0de5406ab7c4e25ef ]
+[ Upstream commit dbf666e4fc9bdd975a61bf682b3f75cb0145eedd ]
 
-Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
-mgmt_pending_valid(), which not only validates the pending command but
-also unlinks it from the pending list if it is valid. This change in
-semantics requires updates to several completion handlers to avoid list
-corruption and memory safety issues.
+This fixes the following trace caused by not dropping l2cap_conn
+reference when user->remove callback is called:
 
-This patch addresses two left-over issues from the aforementioned rework:
+[   97.809249] l2cap_conn_free: freeing conn ffff88810a171c00
+[   97.809907] CPU: 1 UID: 0 PID: 1419 Comm: repro_standalon Not tainted 7.0.0-rc1-dirty #14 PREEMPT(lazy)
+[   97.809935] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[   97.809947] Call Trace:
+[   97.809954]  <TASK>
+[   97.809961]  dump_stack_lvl (lib/dump_stack.c:122)
+[   97.809990]  l2cap_conn_free (net/bluetooth/l2cap_core.c:1808)
+[   97.810017]  l2cap_conn_del (./include/linux/kref.h:66 net/bluetooth/l2cap_core.c:1821 net/bluetooth/l2cap_core.c:1798)
+[   97.810055]  l2cap_disconn_cfm (net/bluetooth/l2cap_core.c:7347 (discriminator 1) net/bluetooth/l2cap_core.c:7340 (discriminator 1))
+[   97.810086]  ? __pfx_l2cap_disconn_cfm (net/bluetooth/l2cap_core.c:7341)
+[   97.810117]  hci_conn_hash_flush (./include/net/bluetooth/hci_core.h:2152 (discriminator 2) net/bluetooth/hci_conn.c:2644 (discriminator 2))
+[   97.810148]  hci_dev_close_sync (net/bluetooth/hci_sync.c:5360)
+[   97.810180]  ? __pfx_hci_dev_close_sync (net/bluetooth/hci_sync.c:5285)
+[   97.810212]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810242]  ? up_write (./arch/x86/include/asm/atomic64_64.h:87 (discriminator 5) ./include/linux/atomic/atomic-arch-fallback.h:2852 (discriminator 5) ./include/linux/atomic/atomic-long.h:268 (discriminator 5) ./include/linux/atomic/atomic-instrumented.h:3391 (discriminator 5) kernel/locking/rwsem.c:1385 (discriminator 5) kernel/locking/rwsem.c:1643 (discriminator 5))
+[   97.810267]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810290]  ? rcu_is_watching (./arch/x86/include/asm/atomic.h:23 ./include/linux/atomic/atomic-arch-fallback.h:457 ./include/linux/context_tracking.h:128 kernel/rcu/tree.c:752)
+[   97.810320]  hci_unregister_dev (net/bluetooth/hci_core.c:504 net/bluetooth/hci_core.c:2716)
+[   97.810346]  vhci_release (drivers/bluetooth/hci_vhci.c:691)
+[   97.810375]  ? __pfx_vhci_release (drivers/bluetooth/hci_vhci.c:678)
+[   97.810404]  __fput (fs/file_table.c:470)
+[   97.810430]  task_work_run (kernel/task_work.c:235)
+[   97.810451]  ? __pfx_task_work_run (kernel/task_work.c:201)
+[   97.810472]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810495]  ? do_raw_spin_unlock (./include/asm-generic/qspinlock.h:128 (discriminator 5) kernel/locking/spinlock_debug.c:142 (discriminator 5))
+[   97.810527]  do_exit (kernel/exit.c:972)
+[   97.810547]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810574]  ? __pfx_do_exit (kernel/exit.c:897)
+[   97.810594]  ? lock_acquire (kernel/locking/lockdep.c:470 (discriminator 6) kernel/locking/lockdep.c:5870 (discriminator 6) kernel/locking/lockdep.c:5825 (discriminator 6))
+[   97.810616]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810639]  ? do_raw_spin_lock (kernel/locking/spinlock_debug.c:95 (discriminator 4) kernel/locking/spinlock_debug.c:118 (discriminator 4))
+[   97.810664]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810688]  ? find_held_lock (kernel/locking/lockdep.c:5350 (discriminator 1))
+[   97.810721]  do_group_exit (kernel/exit.c:1093)
+[   97.810745]  get_signal (kernel/signal.c:3007 (discriminator 1))
+[   97.810772]  ? security_file_permission (./arch/x86/include/asm/jump_label.h:37 security/security.c:2366)
+[   97.810803]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810826]  ? vfs_read (fs/read_write.c:555)
+[   97.810854]  ? __pfx_get_signal (kernel/signal.c:2800)
+[   97.810880]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810905]  ? __pfx_vfs_read (fs/read_write.c:555)
+[   97.810932]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.810960]  arch_do_signal_or_restart (arch/x86/kernel/signal.c:337 (discriminator 1))
+[   97.810990]  ? __pfx_arch_do_signal_or_restart (arch/x86/kernel/signal.c:334)
+[   97.811021]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.811055]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.811078]  ? ksys_read (fs/read_write.c:707)
+[   97.811106]  ? __pfx_ksys_read (fs/read_write.c:707)
+[   97.811137]  exit_to_user_mode_loop (kernel/entry/common.c:66 kernel/entry/common.c:98)
+[   97.811169]  ? rcu_is_watching (./arch/x86/include/asm/atomic.h:23 ./include/linux/atomic/atomic-arch-fallback.h:457 ./include/linux/context_tracking.h:128 kernel/rcu/tree.c:752)
+[   97.811192]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.811215]  ? trace_hardirqs_off (./include/trace/events/preemptirq.h:36 (discriminator 33) kernel/trace/trace_preemptirq.c:95 (discriminator 33) kernel/trace/trace_preemptirq.c:90 (discriminator 33))
+[   97.811240]  do_syscall_64 (./include/linux/irq-entry-common.h:226 ./include/linux/irq-entry-common.h:256 ./include/linux/entry-common.h:325 arch/x86/entry/syscall_64.c:100)
+[   97.811268]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   97.811292]  ? exc_page_fault (arch/x86/mm/fault.c:1480 (discriminator 3) arch/x86/mm/fault.c:1527 (discriminator 3))
+[   97.811318]  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
+[   97.811338] RIP: 0033:0x445cfe
+[   97.811352] Code: Unable to access opcode bytes at 0x445cd4.
 
-1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
-is replaced with mgmt_pending_free() in the success path. Since
-mgmt_pending_valid() already unlinks the command at the beginning of
-the function, calling mgmt_pending_remove() leads to a double list_del()
-and subsequent list corruption/kernel panic.
+Code starting with the faulting instruction
+===========================================
+[   97.811360] RSP: 002b:00007f65c41c6dc8 EFLAGS: 00000246 ORIG_RAX: 0000000000000000
+[   97.811378] RAX: fffffffffffffe00 RBX: 00007f65c41c76c0 RCX: 0000000000445cfe
+[   97.811391] RDX: 0000000000000400 RSI: 00007f65c41c6e40 RDI: 0000000000000004
+[   97.811403] RBP: 00007f65c41c7250 R08: 0000000000000000 R09: 0000000000000000
+[   97.811415] R10: 0000000000000000 R11: 0000000000000246 R12: ffffffffffffffe8
+[   97.811428] R13: 0000000000000000 R14: 00007fff780a8c00 R15: 00007f65c41c76c0
+[   97.811453]  </TASK>
+[   98.402453] ==================================================================
+[   98.403560] BUG: KASAN: use-after-free in __mutex_lock (kernel/locking/mutex.c:199 kernel/locking/mutex.c:694 kernel/locking/mutex.c:776)
+[   98.404541] Read of size 8 at addr ffff888113ee40a8 by task khidpd_00050004/1430
+[   98.405361]
+[   98.405563] CPU: 1 UID: 0 PID: 1430 Comm: khidpd_00050004 Not tainted 7.0.0-rc1-dirty #14 PREEMPT(lazy)
+[   98.405588] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[   98.405600] Call Trace:
+[   98.405607]  <TASK>
+[   98.405614]  dump_stack_lvl (lib/dump_stack.c:122)
+[   98.405641]  print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
+[   98.405667]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.405691]  ? __virt_addr_valid (arch/x86/mm/physaddr.c:55)
+[   98.405724]  ? __mutex_lock (kernel/locking/mutex.c:199 kernel/locking/mutex.c:694 kernel/locking/mutex.c:776)
+[   98.405748]  kasan_report (mm/kasan/report.c:221 mm/kasan/report.c:597)
+[   98.405778]  ? __mutex_lock (kernel/locking/mutex.c:199 kernel/locking/mutex.c:694 kernel/locking/mutex.c:776)
+[   98.405807]  __mutex_lock (kernel/locking/mutex.c:199 kernel/locking/mutex.c:694 kernel/locking/mutex.c:776)
+[   98.405832]  ? do_raw_spin_lock (kernel/locking/spinlock_debug.c:95 (discriminator 4) kernel/locking/spinlock_debug.c:118 (discriminator 4))
+[   98.405859]  ? l2cap_unregister_user (./include/linux/list.h:381 (discriminator 2) net/bluetooth/l2cap_core.c:1723 (discriminator 2))
+[   98.405888]  ? __pfx_do_raw_spin_lock (kernel/locking/spinlock_debug.c:114)
+[   98.405915]  ? __pfx___mutex_lock (kernel/locking/mutex.c:775)
+[   98.405939]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.405963]  ? lock_acquire (kernel/locking/lockdep.c:470 (discriminator 6) kernel/locking/lockdep.c:5870 (discriminator 6) kernel/locking/lockdep.c:5825 (discriminator 6))
+[   98.405984]  ? find_held_lock (kernel/locking/lockdep.c:5350 (discriminator 1))
+[   98.406015]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406038]  ? lock_release (kernel/locking/lockdep.c:5536 kernel/locking/lockdep.c:5889 kernel/locking/lockdep.c:5875)
+[   98.406061]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406085]  ? _raw_spin_unlock_irqrestore (./arch/x86/include/asm/irqflags.h:42 ./arch/x86/include/asm/irqflags.h:119 ./arch/x86/include/asm/irqflags.h:159 ./include/linux/spinlock_api_smp.h:178 kernel/locking/spinlock.c:194)
+[   98.406107]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406130]  ? __timer_delete_sync (kernel/time/timer.c:1592)
+[   98.406158]  ? l2cap_unregister_user (./include/linux/list.h:381 (discriminator 2) net/bluetooth/l2cap_core.c:1723 (discriminator 2))
+[   98.406186]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406210]  l2cap_unregister_user (./include/linux/list.h:381 (discriminator 2) net/bluetooth/l2cap_core.c:1723 (discriminator 2))
+[   98.406263]  hidp_session_thread (./include/linux/instrumented.h:112 ./include/linux/atomic/atomic-instrumented.h:400 ./include/linux/refcount.h:389 ./include/linux/refcount.h:432 ./include/linux/refcount.h:450 ./include/linux/kref.h:64 net/bluetooth/hidp/core.c:996 net/bluetooth/hidp/core.c:1305)
+[   98.406293]  ? __pfx_hidp_session_thread (net/bluetooth/hidp/core.c:1264)
+[   98.406323]  ? kthread (kernel/kthread.c:433)
+[   98.406340]  ? __pfx_hidp_session_wake_function (net/bluetooth/hidp/core.c:1251)
+[   98.406370]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406393]  ? find_held_lock (kernel/locking/lockdep.c:5350 (discriminator 1))
+[   98.406424]  ? __pfx_hidp_session_wake_function (net/bluetooth/hidp/core.c:1251)
+[   98.406453]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406476]  ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:79 (discriminator 1))
+[   98.406499]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406523]  ? kthread (kernel/kthread.c:433)
+[   98.406539]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406565]  ? kthread (kernel/kthread.c:433)
+[   98.406581]  ? __pfx_hidp_session_thread (net/bluetooth/hidp/core.c:1264)
+[   98.406610]  kthread (kernel/kthread.c:467)
+[   98.406627]  ? __pfx_kthread (kernel/kthread.c:412)
+[   98.406645]  ret_from_fork (arch/x86/kernel/process.c:164)
+[   98.406674]  ? __pfx_ret_from_fork (arch/x86/kernel/process.c:153)
+[   98.406704]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.406728]  ? __pfx_kthread (kernel/kthread.c:412)
+[   98.406747]  ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+[   98.406774]  </TASK>
+[   98.406780]
+[   98.433693] The buggy address belongs to the physical page:
+[   98.434405] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff888113ee7c40 pfn:0x113ee4
+[   98.435557] flags: 0x200000000000000(node=0|zone=2)
+[   98.436198] raw: 0200000000000000 ffffea0004244308 ffff8881f6f3ebc0 0000000000000000
+[   98.437195] raw: ffff888113ee7c40 0000000000000000 00000000ffffffff 0000000000000000
+[   98.438115] page dumped because: kasan: bad access detected
+[   98.438951]
+[   98.439211] Memory state around the buggy address:
+[   98.439871]  ffff888113ee3f80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[   98.440714]  ffff888113ee4000: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[   98.441580] >ffff888113ee4080: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[   98.442458]                                   ^
+[   98.443011]  ffff888113ee4100: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[   98.443889]  ffff888113ee4180: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[   98.444768] ==================================================================
+[   98.445719] Disabling lock debugging due to kernel taint
+[   98.448074] l2cap_conn_free: freeing conn ffff88810c22b400
+[   98.450012] CPU: 1 UID: 0 PID: 1430 Comm: khidpd_00050004 Tainted: G    B               7.0.0-rc1-dirty #14 PREEMPT(lazy)
+[   98.450040] Tainted: [B]=BAD_PAGE
+[   98.450047] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
+[   98.450059] Call Trace:
+[   98.450065]  <TASK>
+[   98.450071]  dump_stack_lvl (lib/dump_stack.c:122)
+[   98.450099]  l2cap_conn_free (net/bluetooth/l2cap_core.c:1808)
+[   98.450125]  l2cap_conn_put (net/bluetooth/l2cap_core.c:1822)
+[   98.450154]  session_free (net/bluetooth/hidp/core.c:990)
+[   98.450181]  hidp_session_thread (net/bluetooth/hidp/core.c:1307)
+[   98.450213]  ? __pfx_hidp_session_thread (net/bluetooth/hidp/core.c:1264)
+[   98.450271]  ? kthread (kernel/kthread.c:433)
+[   98.450293]  ? __pfx_hidp_session_wake_function (net/bluetooth/hidp/core.c:1251)
+[   98.450339]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.450368]  ? find_held_lock (kernel/locking/lockdep.c:5350 (discriminator 1))
+[   98.450406]  ? __pfx_hidp_session_wake_function (net/bluetooth/hidp/core.c:1251)
+[   98.450442]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.450471]  ? trace_hardirqs_on (kernel/trace/trace_preemptirq.c:79 (discriminator 1))
+[   98.450499]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.450528]  ? kthread (kernel/kthread.c:433)
+[   98.450547]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.450578]  ? kthread (kernel/kthread.c:433)
+[   98.450598]  ? __pfx_hidp_session_thread (net/bluetooth/hidp/core.c:1264)
+[   98.450637]  kthread (kernel/kthread.c:467)
+[   98.450657]  ? __pfx_kthread (kernel/kthread.c:412)
+[   98.450680]  ret_from_fork (arch/x86/kernel/process.c:164)
+[   98.450715]  ? __pfx_ret_from_fork (arch/x86/kernel/process.c:153)
+[   98.450752]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[   98.450782]  ? __pfx_kthread (kernel/kthread.c:412)
+[   98.450804]  ret_from_fork_asm (arch/x86/entry/entry_64.S:258)
+[   98.450836]  </TASK>
 
-2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
-path is removed. Since the current command is already unlinked by
-mgmt_pending_valid(), this foreach loop would incorrectly target other
-pending mesh commands, potentially freeing them while they are still being
-processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
-is also simplified to use cmd->opcode directly.
-
-Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
-Signed-off-by: Wang Tao <wangtao554@huawei.com>
+Fixes: b4f34d8d9d26 ("Bluetooth: hidp: add new session-management helpers")
+Reported-by: soufiane el hachmi <kilwa10@gmail.com>
+Tested-by: soufiane el hachmi <kilwa10@gmail.com>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ net/bluetooth/hidp/core.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index 4894e6444900a..b1df591a53805 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -2172,10 +2172,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
- 	sk = cmd->sk;
+diff --git a/net/bluetooth/hidp/core.c b/net/bluetooth/hidp/core.c
+index 707f229f896a1..40a6f1e20babc 100644
+--- a/net/bluetooth/hidp/core.c
++++ b/net/bluetooth/hidp/core.c
+@@ -986,7 +986,8 @@ static void session_free(struct kref *ref)
+ 	skb_queue_purge(&session->intr_transmit);
+ 	fput(session->intr_sock->file);
+ 	fput(session->ctrl_sock->file);
+-	l2cap_conn_put(session->conn);
++	if (session->conn)
++		l2cap_conn_put(session->conn);
+ 	kfree(session);
+ }
  
- 	if (status) {
--		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
--				status);
--		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
--				     cmd_status_rsp, &status);
-+		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
- 		goto done;
- 	}
+@@ -1164,6 +1165,15 @@ static void hidp_session_remove(struct l2cap_conn *conn,
  
-@@ -5354,7 +5351,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
+ 	down_write(&hidp_session_sem);
  
- 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
- 			  mgmt_status(status), &rp, sizeof(rp));
--	mgmt_pending_remove(cmd);
-+	mgmt_pending_free(cmd);
++	/* Drop L2CAP reference immediately to indicate that
++	 * l2cap_unregister_user() shall not be called as it is already
++	 * considered removed.
++	 */
++	if (session->conn) {
++		l2cap_conn_put(session->conn);
++		session->conn = NULL;
++	}
++
+ 	hidp_session_terminate(session);
  
- 	hci_dev_unlock(hdev);
- 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
+ 	cancel_work_sync(&session->dev_init);
+@@ -1301,7 +1311,9 @@ static int hidp_session_thread(void *arg)
+ 	 * Instead, this call has the same semantics as if user-space tried to
+ 	 * delete the session.
+ 	 */
+-	l2cap_unregister_user(session->conn, &session->user);
++	if (session->conn)
++		l2cap_unregister_user(session->conn, &session->user);
++
+ 	hidp_session_put(session);
+ 
+ 	module_put_and_kthread_exit(0);
 -- 
 2.51.0
 
