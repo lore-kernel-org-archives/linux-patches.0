@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F91939A7EF;
-	Mon, 23 Mar 2026 16:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 228563B3BE5;
+	Mon, 23 Mar 2026 16:24:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283096; cv=none; b=NC6tkn5Y6SNoFAidoYQXo2jtHMLjRmq9c84wkW8RIj6SqVicLhYNW4ioWMIsywCTqUk5axIOCHLMhuqDmAJ4a3K2jfRWBHseuNq3TfuAzIwY8QIKxDC8ngmlG+qKFaLhcNQIc/Fz4VqOzpwUP0G/66OpZQPBIbo1f8/SBD0uF3Y=
+	t=1774283099; cv=none; b=TNZwGWPISePsXGvEeD4hELRsXMjNlfbyVz9yybn6SzYxjFwIg6LPHR2dFnDxs0Y/NYtdztIuTadNF1TUWfiZn1a0i5FnQBvjUF4PHkFu1ieqAPrh10vickUhWx9WykoYGxga6nljl8n0Mvn20pUQZajCJNbK6v0VmDm5ielYrGQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283096; c=relaxed/simple;
-	bh=Vcm4WsXYofDTozYh4Q89ZxCse0Fop++YJq/bqjayE70=;
+	s=arc-20240116; t=1774283099; c=relaxed/simple;
+	bh=ZugOfbjP6wF7409rPbt6gko0HqrAXQTAEaHdg3uHVUU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=icq7A8EqSj8I58idh2/rVDUFDI0KeMBATyu8N97UiP7ugUQFVWIAc6SEQWndSJGPQcWV0+3NruPGeEkKDvnKZGYU7tC281OdQbqCdFNLa6+FlAqm/dFGqceTQRWsMPSYX6AUyCs2SAcTW/bpNKFOffqWi0BI7dvbeJwZbODCkG8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kLWI5BQ9; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cXGh71vIyJo/LLgCZDikwQBJjyul1kW7gYgD+ioHtC6v76owR01F2QL5rRB86NLPxpqE9KZh1uiE4qu47zWG/R21fbDp3vpTB69KEHMDIN+knHvza33E93zNUG6LMnW7lZgYX+QzLHVGAIGCjI17K6swmJVyDi7SEIboNg6JLFU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dAEa+FtK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kLWI5BQ9"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30BDEC4CEF7;
-	Mon, 23 Mar 2026 16:24:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dAEa+FtK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1EDCC4CEF7;
+	Mon, 23 Mar 2026 16:24:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283096;
-	bh=Vcm4WsXYofDTozYh4Q89ZxCse0Fop++YJq/bqjayE70=;
+	s=korg; t=1774283099;
+	bh=ZugOfbjP6wF7409rPbt6gko0HqrAXQTAEaHdg3uHVUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kLWI5BQ9D3qLrt29gWQbuJl25U2HAJw6qIBjZqIiKlhCx5jNUOTgm/e4Xmb+Kmxf2
-	 kSxmUeSoA6NpkaMbr7qxBXoDEQNCwfRL6KtSqLmLtNzQzEpzvLO2H3kl/x9Xqaud3D
-	 QS1zmjftzbukggx4K2fAC4cLhNAPcFACKOQwTRgU=
+	b=dAEa+FtKpdZNqbV+EtleukuK00AqsFuBN9fov9ks9pYsFZpeS6F40/Sn12GMXEezA
+	 cLgdGYcP/wQpFgoA7JSknuoP+syBeVNw0lXz1HuTwirqUqoqGRlkBV21C/3blPxE+c
+	 hS1mKAZgCwcV3dCzM9zfQ6tLmGURy7phivOr7hrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Genoud <richard.genoud@bootlin.com>,
-	CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>,
-	"Christophe Leroy (CS GROUP)" <chleroy@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 400/481] soc: fsl: qbman: fix race condition in qman_destroy_fq
-Date: Mon, 23 Mar 2026 14:46:22 +0100
-Message-ID: <20260323134534.916551565@linuxfoundation.org>
+	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 374/481] smb: client: Compare MACs in constant time
+Date: Mon, 23 Mar 2026 14:45:56 +0100
+Message-ID: <20260323134534.246146321@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,92 +51,62 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Richard Genoud <richard.genoud@bootlin.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit 014077044e874e270ec480515edbc1cadb976cf2 ]
+commit 26bc83b88bbbf054f0980a4a42047a8d1e210e4c upstream.
 
-When QMAN_FQ_FLAG_DYNAMIC_FQID is set, there's a race condition between
-fq_table[fq->idx] state and freeing/allocating from the pool and
-WARN_ON(fq_table[fq->idx]) in qman_create_fq() gets triggered.
+To prevent timing attacks, MAC comparisons need to be constant-time.
+Replace the memcmp() with the correct function, crypto_memneq().
 
-Indeed, we can have:
-         Thread A                             Thread B
-    qman_destroy_fq()                    qman_create_fq()
-      qman_release_fqid()
-        qman_shutdown_fq()
-        gen_pool_free()
-           -- At this point, the fqid is available again --
-                                           qman_alloc_fqid()
-           -- so, we can get the just-freed fqid in thread B --
-                                           fq->fqid = fqid;
-                                           fq->idx = fqid * 2;
-                                           WARN_ON(fq_table[fq->idx]);
-                                           fq_table[fq->idx] = fq;
-     fq_table[fq->idx] = NULL;
-
-And adding some logs between qman_release_fqid() and
-fq_table[fq->idx] = NULL makes the WARN_ON() trigger a lot more.
-
-To prevent that, ensure that fq_table[fq->idx] is set to NULL before
-gen_pool_free() is called by using smp_wmb().
-
-Fixes: c535e923bb97 ("soc/fsl: Introduce DPAA 1.x QMan device driver")
-Signed-off-by: Richard Genoud <richard.genoud@bootlin.com>
-Tested-by: CHAMPSEIX Thomas <thomas.champseix@alstomgroup.com>
-Link: https://lore.kernel.org/r/20251223072549.397625-1-richard.genoud@bootlin.com
-Signed-off-by: Christophe Leroy (CS GROUP) <chleroy@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/fsl/qbman/qman.c | 24 ++++++++++++++++++++++--
- 1 file changed, 22 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsencrypt.c   |    3 ++-
+ fs/smb/client/smb2transport.c |    4 +++-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/fsl/qbman/qman.c b/drivers/soc/fsl/qbman/qman.c
-index 7e9074519ad22..bcbf6bf2e8f45 100644
---- a/drivers/soc/fsl/qbman/qman.c
-+++ b/drivers/soc/fsl/qbman/qman.c
-@@ -1827,6 +1827,8 @@ EXPORT_SYMBOL(qman_create_fq);
+--- a/fs/smb/client/cifsencrypt.c
++++ b/fs/smb/client/cifsencrypt.c
+@@ -23,6 +23,7 @@
+ #include <linux/fips.h>
+ #include "../common/arc4.h"
+ #include <crypto/aead.h>
++#include <crypto/algapi.h>
  
- void qman_destroy_fq(struct qman_fq *fq)
- {
-+	int leaked;
-+
- 	/*
- 	 * We don't need to lock the FQ as it is a pre-condition that the FQ be
- 	 * quiesced. Instead, run some checks.
-@@ -1834,11 +1836,29 @@ void qman_destroy_fq(struct qman_fq *fq)
- 	switch (fq->state) {
- 	case qman_fq_state_parked:
- 	case qman_fq_state_oos:
--		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID))
--			qman_release_fqid(fq->fqid);
-+		/*
-+		 * There's a race condition here on releasing the fqid,
-+		 * setting the fq_table to NULL, and freeing the fqid.
-+		 * To prevent it, this order should be respected:
-+		 */
-+		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID)) {
-+			leaked = qman_shutdown_fq(fq->fqid);
-+			if (leaked)
-+				pr_debug("FQID %d leaked\n", fq->fqid);
-+		}
+ int __cifs_calc_signature(struct smb_rqst *rqst,
+ 			struct TCP_Server_Info *server, char *signature,
+@@ -243,7 +244,7 @@ int cifs_verify_signature(struct smb_rqs
+ /*	cifs_dump_mem("what we think it should be: ",
+ 		      what_we_think_sig_should_be, 16); */
  
- 		DPAA_ASSERT(fq_table[fq->idx]);
- 		fq_table[fq->idx] = NULL;
-+
-+		if (fq_isset(fq, QMAN_FQ_FLAG_DYNAMIC_FQID) && !leaked) {
-+			/*
-+			 * fq_table[fq->idx] should be set to null before
-+			 * freeing fq->fqid otherwise it could by allocated by
-+			 * qman_alloc_fqid() while still being !NULL
-+			 */
-+			smp_wmb();
-+			gen_pool_free(qm_fqalloc, fq->fqid | DPAA_GENALLOC_OFF, 1);
-+		}
- 		return;
- 	default:
- 		break;
--- 
-2.51.0
-
+-	if (memcmp(server_response_sig, what_we_think_sig_should_be, 8))
++	if (crypto_memneq(server_response_sig, what_we_think_sig_should_be, 8))
+ 		return -EACCES;
+ 	else
+ 		return 0;
+--- a/fs/smb/client/smb2transport.c
++++ b/fs/smb/client/smb2transport.c
+@@ -19,6 +19,7 @@
+ #include <linux/mempool.h>
+ #include <linux/highmem.h>
+ #include <crypto/aead.h>
++#include <crypto/algapi.h>
+ #include "cifsglob.h"
+ #include "cifsproto.h"
+ #include "smb2proto.h"
+@@ -699,7 +700,8 @@ smb2_verify_signature(struct smb_rqst *r
+ 	if (rc)
+ 		return rc;
+ 
+-	if (memcmp(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(server_response_sig, shdr->Signature,
++			  SMB2_SIGNATURE_SIZE)) {
+ 		cifs_dbg(VFS, "sign fail cmd 0x%x message id 0x%llx\n",
+ 			shdr->Command, shdr->MessageId);
+ 		return -EACCES;
 
 
