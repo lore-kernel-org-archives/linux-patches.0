@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC02D23BF9B;
-	Mon, 23 Mar 2026 15:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B89248896;
+	Mon, 23 Mar 2026 15:02:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278162; cv=none; b=FXsxudSoNf7FPFo+Ass8NAsr5/OXm0uRBG0v8SYpNcnLtffopE9lM6L+nd0ApeNybQ4opCgH9Px68dPvIuE8Nxpgfk+RgjQRIk0VbSG6XSjTYOBG/RLaW2G3UBAyG5kEvDNlfXdHv3+MiVjrkDGkxIzp8l0r8UEQFZCV7m0CVLc=
+	t=1774278165; cv=none; b=ArN5dHTVyLzwzP2jTCFoT/60iy/q0H9oTJL/jIxC+g8+XeRW1h7chM9us4KjIIMEhHkxU3OJl90cNl/BXNADEDYsGYHAducMKUhTqaYEaRPO6TfSGS8lPcpahnHsXOSUL4keBLoUUOgXYfZ1iRyhtO0GWHXXjhSGojNfJZLwa0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278162; c=relaxed/simple;
-	bh=Pjd9AosC/+2Y+GkXUZfW73YhP/TfemWag3BgJnJxa/4=;
+	s=arc-20240116; t=1774278165; c=relaxed/simple;
+	bh=XiebRwaXb2GXSQvTD+Kdeh7j/wUGDxlcMtdOXSAeTLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JVwn9+ubLgnS20JK+qCfHO6UvzbHoLqO9lNYL89v9O2J74VDQHocMiJ4MUXXyBoc5WcXbKoF0BTEAoB2bZMmypMcZEQQtOmEjP0Zw55alw1SdPvFuPxm6zY1AJQOOILUP+d7HlAn4y5zANeYlnHLsxuDXTsVLeKSK4JXIK0sHiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M7vLiF6+; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GzhjUMEui6XNc217WZf9Zsh8ifg3YEInRDtVs6R/OHDxcqFLLPJkpO+j+uTLcJGV466e1wbl2M7Oe8gfHDTt53dhAW9ttKH/pQeE0YR47hbeHOHlsgiaeX+T8gAv+obybzb42vEtOZfll/iusR+F6k8haBkEAAVx3xOxDPsJlXM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cABkO9IP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M7vLiF6+"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70BF6C4CEF7;
-	Mon, 23 Mar 2026 15:02:41 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cABkO9IP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8071BC4CEF7;
+	Mon, 23 Mar 2026 15:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278161;
-	bh=Pjd9AosC/+2Y+GkXUZfW73YhP/TfemWag3BgJnJxa/4=;
+	s=korg; t=1774278164;
+	bh=XiebRwaXb2GXSQvTD+Kdeh7j/wUGDxlcMtdOXSAeTLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M7vLiF6+2cDm94nzsdVULiksU2Pm3oYZvgWIBBh2fizvUIEBMWQ8YVaAfy6hM6JZ1
-	 RuhxbtxVvdzvEMHpFTd6xd6ExD8joZsQYyhIRik+g+YjHMujgB3vZXltZ2s2mnVG/H
-	 v9C5/ASWnyILdpnKHe7m/mJK4Rk1B8jm4fCx7l2c=
+	b=cABkO9IPPKx8JNaYC+UCcMmzqiR+4J2+f7e3ygPzoYAOqI7ap8L+YK3pk5+VPtQPr
+	 laXm63oApvwrXHVpyDSrin8/gnjwkf4CBrs5U/VrRaepQdUp1EaGKdVgwzgGB8yHau
+	 Aat223CqiTqNAjJTk98G3/vBkSSeIGpObCqFs+z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengyu Luo <mitltlatltl@gmail.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 219/567] drm/msm/dsi: fix pclk rate calculation for bonded dsi
-Date: Mon, 23 Mar 2026 14:42:19 +0100
-Message-ID: <20260323134539.247597215@linuxfoundation.org>
+Subject: [PATCH 6.6 220/567] bonding: handle BOND_LINK_FAIL, BOND_LINK_BACK as valid link states
+Date: Mon, 23 Mar 2026 14:42:20 +0100
+Message-ID: <20260323134539.273607436@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,83 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pengyu Luo <mitltlatltl@gmail.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit e4eb11b34d6c84f398d8f08d7cb4d6c38e739dd2 ]
+[ Upstream commit 3348be7978f450ede0c308a4e8416ac716cf1015 ]
 
-Recently, we round up new_hdisplay once at most, for bonded dsi, we
-may need twice, since they are independent links, we should round up
-each half separately. This also aligns with the hdisplay we program
-later in dsi_timing_setup()
+Before the fixed commit, we check slave->new_link during commit
+state, which values are only BOND_LINK_{NOCHANGE, UP, DOWN}. After
+the commit, we start using slave->link_new_state, which state also could
+be BOND_LINK_{FAIL, BACK}.
 
-Example:
-	full_hdisplay = 1904, dsc_bpp = 8, bpc = 8
-	new_full_hdisplay = DIV_ROUND_UP(1904 * 8, 8 * 3) = 635
+For example, when we set updelay/downdelay, after a failover,
+the slave->link_new_state could be set to BOND_LINK_{FAIL, BACK} in
+bond_miimon_inspect(). And later in bond_miimon_commit(), it will treat
+it as invalid and print an error, which would cause confusion for users.
 
-if we use half display
-	new_half_hdisplay = DIV_ROUND_UP(952 * 8, 8 * 3) = 318
-	new_full_display = 636
+[  106.440254] bond0: (slave veth2): link status down for interface, disabling it in 200 ms
+[  106.440265] bond0: (slave veth2): invalid new link 1 on slave
+[  106.648276] bond0: (slave veth2): link status definitely down, disabling slave
+[  107.480271] bond0: (slave veth2): link status up, enabling it in 200 ms
+[  107.480288] bond0: (slave veth2): invalid new link 3 on slave
+[  107.688302] bond0: (slave veth2): link status definitely up, 10000 Mbps full duplex
 
-Fixes: 7c9e4a554d4a ("drm/msm/dsi: Reduce pclk rate for compression")
-Signed-off-by: Pengyu Luo <mitltlatltl@gmail.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Patchwork: https://patchwork.freedesktop.org/patch/709716/
-Link: https://lore.kernel.org/r/20260306163255.215456-1-mitltlatltl@gmail.com
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+Let's handle BOND_LINK_{FAIL, BACK} as valid link states.
+
+Fixes: 1899bb325149 ("bonding: fix state transition issue in link monitoring")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260304-b4-bond_updelay-v1-2-f72eb2e454d0@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 29 +++++++++++++++++++++++------
- 1 file changed, 23 insertions(+), 6 deletions(-)
+ drivers/net/bonding/bond_main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 48a39f8727441..6077331deba97 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -548,13 +548,30 @@ void dsi_link_clk_disable_v2(struct msm_dsi_host *msm_host)
-  *  FIXME: Reconsider this if/when CMD mode handling is rewritten to use
-  *  transfer time and data overhead as a starting point of the calculations.
-  */
--static unsigned long dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
--		const struct drm_dsc_config *dsc)
-+static unsigned long
-+dsi_adjust_pclk_for_compression(const struct drm_display_mode *mode,
-+				const struct drm_dsc_config *dsc,
-+				bool is_bonded_dsi)
- {
--	int new_hdisplay = DIV_ROUND_UP(mode->hdisplay * drm_dsc_get_bpp_int(dsc),
--			dsc->bits_per_component * 3);
-+	int hdisplay, new_hdisplay, new_htotal;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index a2bf7bb12ff7c..b36d1781d8463 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2859,8 +2859,14 @@ static void bond_miimon_commit(struct bonding *bond)
  
--	int new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
-+	/*
-+	 * For bonded DSI, split hdisplay across two links and round up each
-+	 * half separately, passing the full hdisplay would only round up once.
-+	 * This also aligns with the hdisplay we program later in
-+	 * dsi_timing_setup()
-+	 */
-+	hdisplay = mode->hdisplay;
-+	if (is_bonded_dsi)
-+		hdisplay /= 2;
+ 			continue;
+ 
++		case BOND_LINK_FAIL:
++		case BOND_LINK_BACK:
++			slave_dbg(bond->dev, slave->dev, "link_new_state %d on slave\n",
++				  slave->link_new_state);
++			continue;
 +
-+	new_hdisplay = DIV_ROUND_UP(hdisplay * drm_dsc_get_bpp_int(dsc),
-+				    dsc->bits_per_component * 3);
-+
-+	if (is_bonded_dsi)
-+		new_hdisplay *= 2;
-+
-+	new_htotal = mode->htotal - mode->hdisplay + new_hdisplay;
+ 		default:
+-			slave_err(bond->dev, slave->dev, "invalid new link %d on slave\n",
++			slave_err(bond->dev, slave->dev, "invalid link_new_state %d on slave\n",
+ 				  slave->link_new_state);
+ 			bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
  
- 	return mult_frac(mode->clock * 1000u, new_htotal, mode->htotal);
- }
-@@ -567,7 +584,7 @@ static unsigned long dsi_get_pclk_rate(const struct drm_display_mode *mode,
- 	pclk_rate = mode->clock * 1000u;
- 
- 	if (dsc)
--		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc);
-+		pclk_rate = dsi_adjust_pclk_for_compression(mode, dsc, is_bonded_dsi);
- 
- 	/*
- 	 * For bonded DSI mode, the current DRM mode has the complete width of the
 -- 
 2.51.0
 
