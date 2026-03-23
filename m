@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934A3286A4;
-	Mon, 23 Mar 2026 13:56:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AF1A6815;
+	Mon, 23 Mar 2026 13:56:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274195; cv=none; b=rPh2j5PiIh8419KuLHXHOdbXoBAoDTMylvUcZyiebql1zO72mPnS/MMn86pLjURbPFSw2dkn7LV+u8XmQdqJykLChIDfQnxxmNAoV6jJOYoTYittH/ZKVlS+O0I08gTJ5Mh5plXXOV5Se2eyum2EC5P+tyrfvMlb/Sc1u7FnViU=
+	t=1774274198; cv=none; b=dQHSHmcKiNrRWla20HKfiatGEUjGUPktj8wbXNr5qELEYXcowS9DjR/jY6I4jK1EHt35i+3sgM9h3IABMaJLBam+NVisaOQwJBiCFcG/NVwPN7wF839DXExJnGuCKQZJIX+gsZeczYoHApIrTsNczana++fiI5tE6Fo807shdC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274195; c=relaxed/simple;
-	bh=MTNx+IhHZQE+94CguFQBZlKfn94c1IO3+nBlG2rn1Hg=;
+	s=arc-20240116; t=1774274198; c=relaxed/simple;
+	bh=Um30luMYxWKuWS8dIm9gfKJFA154LC2TyQ10aDORglU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=nQnM+D/N/nF/MNf2KPPa4oC7RFoRQbu/PjdHNayc7m4iQLEnQFlCYMLvySnVQe90GM6C/EVzCiUhkXy++SejPb4G1M+Zc3+FmW91b8JY3UDh0aguuBHB2v1I7guvoGk/xB1WrdLi85XakVuqCyiA7NgKH093FRftfPqLTeDTfSg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nRtB2bQX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=gaILcrKnXoYFZuN/95drBF90QNQUANPy6QX2OjcwlK6azp0CGIFTwr8i1i+mfjh2Z0EZX3XLB2a78OXTZpvIz9CJi/oKYleFxKOe8SJ6A2yRwNNttnZ51HZfMdMya4mRAiIODKnVdkOG/laQHYA9shNEQ+np/PI9ZkeC7TJgMBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZPJ2O0n; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nRtB2bQX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16245C4CEF7;
-	Mon, 23 Mar 2026 13:56:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZPJ2O0n"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A73C2BC9E;
+	Mon, 23 Mar 2026 13:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274195;
-	bh=MTNx+IhHZQE+94CguFQBZlKfn94c1IO3+nBlG2rn1Hg=;
+	s=korg; t=1774274198;
+	bh=Um30luMYxWKuWS8dIm9gfKJFA154LC2TyQ10aDORglU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nRtB2bQXo4rWJj7byw7FdXTITtCg+Nxx+6i0D3NwZPViFmHiyKQo4gPHfuGMv5HML
-	 s5GdZPe14TzOH2VH0ndaccT7PPblWUo8Iq6TMZoVs/sHeaa1emKKBXNF73T3wToWCr
-	 ZHOQAYibW0kyGFjc8MgECUlEIm0fxNwjMerFsxu4=
+	b=fZPJ2O0nldtScfGpsgDzhwwUu7K/+nIGHQ84OEw7Ttqqg04GnNTzyucHz3KE+22Vm
+	 bMIP6TsOTFniPiOTSN1RlPshrFNXmIUc1o6vP2k7s8VFYTNjK3j5JqWzPgzj5zx75p
+	 MxNy/CsbpCK4OULvm+8qEmWZZArDAqje9HjxXIEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jenny Guanni Qu <qguanni@gmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 140/220] netfilter: xt_time: use unsigned int for monthday bit shift
-Date: Mon, 23 Mar 2026 14:45:17 +0100
-Message-ID: <20260323134508.989760306@linuxfoundation.org>
+Subject: [PATCH 6.19 141/220] netfilter: nf_conntrack_h323: check for zero length in DecodeQ931()
+Date: Mon, 23 Mar 2026 14:45:18 +0100
+Message-ID: <20260323134509.020340452@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -56,16 +56,17 @@ Content-Transfer-Encoding: 8bit
 
 From: Jenny Guanni Qu <qguanni@gmail.com>
 
-[ Upstream commit 00050ec08cecfda447e1209b388086d76addda3a ]
+[ Upstream commit f173d0f4c0f689173f8cdac79991043a4a89bf66 ]
 
-The monthday field can be up to 31, and shifting a signed integer 1
-by 31 positions (1 << 31) is undefined behavior in C, as the result
-overflows a 32-bit signed int. Use 1U to ensure well-defined behavior
-for all valid monthday values.
+In DecodeQ931(), the UserUserIE code path reads a 16-bit length from
+the packet, then decrements it by 1 to skip the protocol discriminator
+byte before passing it to DecodeH323_UserInformation(). If the encoded
+length is 0, the decrement wraps to -1, which is then passed as a
+large value to the decoder, leading to an out-of-bounds read.
 
-Change the weekday shift to 1U as well for consistency.
+Add a check to ensure len is positive after the decrement.
 
-Fixes: ee4411a1b1e0 ("[NETFILTER]: x_tables: add xt_time match")
+Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
 Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
 Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
 Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
@@ -73,29 +74,22 @@ Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/xt_time.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/netfilter/xt_time.c b/net/netfilter/xt_time.c
-index 6aa12d0f54e23..61de85e02a40f 100644
---- a/net/netfilter/xt_time.c
-+++ b/net/netfilter/xt_time.c
-@@ -227,13 +227,13 @@ time_mt(const struct sk_buff *skb, struct xt_action_param *par)
- 
- 	localtime_2(&current_time, stamp);
- 
--	if (!(info->weekdays_match & (1 << current_time.weekday)))
-+	if (!(info->weekdays_match & (1U << current_time.weekday)))
- 		return false;
- 
- 	/* Do not spend time computing monthday if all days match anyway */
- 	if (info->monthdays_match != XT_TIME_ALL_MONTHDAYS) {
- 		localtime_3(&current_time, stamp);
--		if (!(info->monthdays_match & (1 << current_time.monthday)))
-+		if (!(info->monthdays_match & (1U << current_time.monthday)))
- 			return false;
- 	}
- 
+diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
+index c972e9488e16f..7b1497ed97d26 100644
+--- a/net/netfilter/nf_conntrack_h323_asn1.c
++++ b/net/netfilter/nf_conntrack_h323_asn1.c
+@@ -924,6 +924,8 @@ int DecodeQ931(unsigned char *buf, size_t sz, Q931 *q931)
+ 				break;
+ 			p++;
+ 			len--;
++			if (len <= 0)
++				break;
+ 			return DecodeH323_UserInformation(buf, p, len,
+ 							  &q931->UUIE);
+ 		}
 -- 
 2.51.0
 
