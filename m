@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 459233B8933;
-	Mon, 23 Mar 2026 15:15:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43B3A3B8933;
+	Mon, 23 Mar 2026 15:15:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278921; cv=none; b=U42f8XjZV55ub/z8Nta3rPtC+LM17iRfsQIZ0Fnlz7M9dvaCwcMB/4kPb4S4Y3Fto52m0T4tCiSThCFBBTuVVx/nqaHzBYa4LItS/LcTQY0sPYoohPvExATS2PPyRSXWzWCeFUf1U+JaN0wKpV3L84PRal1qjQB7SzoD798NnSQ=
+	t=1774278924; cv=none; b=p6m/1i/nXUqduRm3r0TpYsOCwomICltOF/58Jd5/l96e7UsYaKPSHAHjaXkbf93fUQqmUZxerJfZK8r1Aze5kd4OIG0cr7aoBLYB1DSSWq0aIqTCiZuxRzJwYvVF0j66Q1Sq8CgEyldhYItFZFXY2cpSC0c7uXVlfMhjAH2hiGw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278921; c=relaxed/simple;
-	bh=IcVKYIqk83fGYz7Tfeg41olf8Obf1xkORYMadpAMdno=;
+	s=arc-20240116; t=1774278924; c=relaxed/simple;
+	bh=NWKIqjJSuPSYwRqv6e6nC92zwhnXs2T1QU9YEcU9dB0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CacEwBAk4I0NIRkf9qfmAENcGzAju/A2u9hbk7iEsMYUeVqKX7IYYtcpn/g3/yYXa3Hxw/iFWPKl/0KHVzBtlp/mA2bfloXaaptDLePb+VAVC57vCQjycCGtiJCTQLiZf3HXlTb48J6kEn86gFm+HECSVpNE/CcwhY3lSNHtOH0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L03J47p8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=YBb5mO8uUkIiJRRscWvTgECLhahtjfLw8jqos0RufR00A7WssHdUJFa43LiI6KpjETejkq1s0KLMrbscJ33mbtEDKJCx8MR39+oQFqVmU736cgOwehlIFLKLhVQnGPWGuQqw54d7MByBHJrQtPtjc1cJ24ZIHC3fC46HkFF6otE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2L6b1nht; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L03J47p8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBFC2BCB1;
-	Mon, 23 Mar 2026 15:15:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2L6b1nht"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71EAC4CEF7;
+	Mon, 23 Mar 2026 15:15:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278920;
-	bh=IcVKYIqk83fGYz7Tfeg41olf8Obf1xkORYMadpAMdno=;
+	s=korg; t=1774278924;
+	bh=NWKIqjJSuPSYwRqv6e6nC92zwhnXs2T1QU9YEcU9dB0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L03J47p8PfKfpEO6Qzs9UJWkSv5g1KjcflsvY+hKkJ9wTPSmjQZ//1CA6x6545Xpl
-	 jxUd86X7U3OJbhmZ+2uc34UF6Sh0RZiqKuYZtUAgFIaXbpVi1WLvI07mUxE0vAKQTp
-	 e+N6kXP29eGgMqr1O1D8RD6lC/fOYcDCmXNLrz4A=
+	b=2L6b1nhtJxYj+8ExHi3H2NJp0oWAGfE0rm1FK2hh0PTSnrad12DMorMSJ9RNLQhSN
+	 GtG/NuFGsmfiJkFQUw5sbmBQ6xRi/gP2RTKZP5SELba/tKTrMc8WpZrrQj7mmCANX2
+	 7v6tlPquc7PKHLZqUjPbPBSZfQi0NOJYjFR/R7vA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christian Brauner <brauner@kernel.org>,
-	Chen Yu <xnguchen@sina.cn>
-Subject: [PATCH 6.6 419/567] iomap: allocate s_dio_done_wq for async reads as well
-Date: Mon, 23 Mar 2026 14:45:39 +0100
-Message-ID: <20260323134544.255084351@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Boris Burkov <boris@bur.io>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Rahul Sharma <black.hawk@163.com>
+Subject: [PATCH 6.6 420/567] btrfs: do not strictly require dirty metadata threshold for metadata writepages
+Date: Mon, 23 Mar 2026 14:45:40 +0100
+Message-ID: <20260323134544.280132858@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,47 +53,164 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christoph Hellwig <hch@lst.de>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 7fd8720dff2d9c70cf5a1a13b7513af01952ec02 upstream.
+[ Upstream commit 4e159150a9a56d66d247f4b5510bed46fe58aa1c ]
 
-Since commit 222f2c7c6d14 ("iomap: always run error completions in user
-context"), read error completions are deferred to s_dio_done_wq.  This
-means the workqueue also needs to be allocated for async reads.
+[BUG]
+There is an internal report that over 1000 processes are
+waiting at the io_schedule_timeout() of balance_dirty_pages(), causing
+a system hang and trigger a kernel coredump.
 
-Fixes: 222f2c7c6d14 ("iomap: always run error completions in user context")
-Reported-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://patch.msgid.link/20251124140013.902853-1-hch@lst.de
-Tested-by: syzbot+a2b9a4ed0d61b1efb3f5@syzkaller.appspotmail.com
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Chen Yu <xnguchen@sina.cn>
+The kernel is v6.4 kernel based, but the root problem still applies to
+any upstream kernel before v6.18.
+
+[CAUSE]
+>From Jan Kara for his wisdom on the dirty page balance behavior first.
+
+  This cgroup dirty limit was what was actually playing the role here
+  because the cgroup had only a small amount of memory and so the dirty
+  limit for it was something like 16MB.
+
+  Dirty throttling is responsible for enforcing that nobody can dirty
+  (significantly) more dirty memory than there's dirty limit. Thus when
+  a task is dirtying pages it periodically enters into balance_dirty_pages()
+  and we let it sleep there to slow down the dirtying.
+
+  When the system is over dirty limit already (either globally or within
+  a cgroup of the running task), we will not let the task exit from
+  balance_dirty_pages() until the number of dirty pages drops below the
+  limit.
+
+  So in this particular case, as I already mentioned, there was a cgroup
+  with relatively small amount of memory and as a result with dirty limit
+  set at 16MB. A task from that cgroup has dirtied about 28MB worth of
+  pages in btrfs btree inode and these were practically the only dirty
+  pages in that cgroup.
+
+So that means the only way to reduce the dirty pages of that cgroup is
+to writeback the dirty pages of btrfs btree inode, and only after that
+those processes can exit balance_dirty_pages().
+
+Now back to the btrfs part, btree_writepages() is responsible for
+writing back dirty btree inode pages.
+
+The problem here is, there is a btrfs internal threshold that if the
+btree inode's dirty bytes are below the 32M threshold, it will not
+do any writeback.
+
+This behavior is to batch as much metadata as possible so we won't write
+back those tree blocks and then later re-COW them again for another
+modification.
+
+This internal 32MiB is higher than the existing dirty page size (28MiB),
+meaning no writeback will happen, causing a deadlock between btrfs and
+cgroup:
+
+- Btrfs doesn't want to write back btree inode until more dirty pages
+
+- Cgroup/MM doesn't want more dirty pages for btrfs btree inode
+  Thus any process touching that btree inode is put into sleep until
+  the number of dirty pages is reduced.
+
+Thanks Jan Kara a lot for the analysis of the root cause.
+
+[ENHANCEMENT]
+Since kernel commit b55102826d7d ("btrfs: set AS_KERNEL_FILE on the
+btree_inode"), btrfs btree inode pages will only be charged to the root
+cgroup which should have a much larger limit than btrfs' 32MiB
+threshold.
+So it should not affect newer kernels.
+
+But for all current LTS kernels, they are all affected by this problem,
+and backporting the whole AS_KERNEL_FILE may not be a good idea.
+
+Even for newer kernels I still think it's a good idea to get
+rid of the internal threshold at btree_writepages(), since for most cases
+cgroup/MM has a better view of full system memory usage than btrfs' fixed
+threshold.
+
+For internal callers using btrfs_btree_balance_dirty() since that
+function is already doing internal threshold check, we don't need to
+bother them.
+
+But for external callers of btree_writepages(), just respect their
+requests and write back whatever they want, ignoring the internal
+btrfs threshold to avoid such deadlock on btree inode dirty page
+balancing.
+
+CC: stable@vger.kernel.org
+CC: Jan Kara <jack@suse.cz>
+Reviewed-by: Boris Burkov <boris@bur.io>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+[ The context change is due to the commit 41044b41ad2c
+("btrfs: add helper to get fs_info from struct inode pointer")
+in v6.9 and the commit c66f2afc7148
+("btrfs: remove pointless writepages callback wrapper")
+in v6.10 which are irrelevant to the logic of this patch. ]
+Signed-off-by: Rahul Sharma <black.hawk@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/iomap/direct-io.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/btrfs/disk-io.c   |   22 ----------------------
+ fs/btrfs/extent_io.c |    3 +--
+ fs/btrfs/extent_io.h |    3 +--
+ 3 files changed, 2 insertions(+), 26 deletions(-)
 
---- a/fs/iomap/direct-io.c
-+++ b/fs/iomap/direct-io.c
-@@ -659,12 +659,12 @@ __iomap_dio_rw(struct kiocb *iocb, struc
- 			}
- 			goto out_free_dio;
- 		}
-+	}
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -470,28 +470,6 @@ static int btree_migrate_folio(struct ad
+ #define btree_migrate_folio NULL
+ #endif
  
--		if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
--			ret = sb_init_dio_done_wq(inode->i_sb);
--			if (ret < 0)
--				goto out_free_dio;
--		}
-+	if (!wait_for_completion && !inode->i_sb->s_dio_done_wq) {
-+		ret = sb_init_dio_done_wq(inode->i_sb);
-+		if (ret < 0)
-+			goto out_free_dio;
- 	}
+-static int btree_writepages(struct address_space *mapping,
+-			    struct writeback_control *wbc)
+-{
+-	struct btrfs_fs_info *fs_info;
+-	int ret;
+-
+-	if (wbc->sync_mode == WB_SYNC_NONE) {
+-
+-		if (wbc->for_kupdate)
+-			return 0;
+-
+-		fs_info = BTRFS_I(mapping->host)->root->fs_info;
+-		/* this is a bit racy, but that's ok */
+-		ret = __percpu_counter_compare(&fs_info->dirty_metadata_bytes,
+-					     BTRFS_DIRTY_METADATA_THRESH,
+-					     fs_info->dirty_metadata_batch);
+-		if (ret < 0)
+-			return 0;
+-	}
+-	return btree_write_cache_pages(mapping, wbc);
+-}
+-
+ static bool btree_release_folio(struct folio *folio, gfp_t gfp_flags)
+ {
+ 	if (folio_test_writeback(folio) || folio_test_dirty(folio))
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -1921,8 +1921,7 @@ static int submit_eb_page(struct page *p
+ 	return 1;
+ }
  
- 	inode_dio_begin(inode);
+-int btree_write_cache_pages(struct address_space *mapping,
+-				   struct writeback_control *wbc)
++int btree_writepages(struct address_space *mapping, struct writeback_control *wbc)
+ {
+ 	struct btrfs_eb_write_context ctx = { .wbc = wbc };
+ 	struct btrfs_fs_info *fs_info = BTRFS_I(mapping->host)->root->fs_info;
+--- a/fs/btrfs/extent_io.h
++++ b/fs/btrfs/extent_io.h
+@@ -189,8 +189,7 @@ void extent_write_locked_range(struct in
+ 			       bool pages_dirty);
+ int extent_writepages(struct address_space *mapping,
+ 		      struct writeback_control *wbc);
+-int btree_write_cache_pages(struct address_space *mapping,
+-			    struct writeback_control *wbc);
++int btree_writepages(struct address_space *mapping, struct writeback_control *wbc);
+ void extent_readahead(struct readahead_control *rac);
+ int extent_fiemap(struct btrfs_inode *inode, struct fiemap_extent_info *fieinfo,
+ 		  u64 start, u64 len);
 
 
