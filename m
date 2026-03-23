@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0C063BC67C;
-	Mon, 23 Mar 2026 16:26:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C883BC668;
+	Mon, 23 Mar 2026 16:26:26 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283184; cv=none; b=Ai2hZD18D0+/MYZq0SYbzmlNxz59UEum548mJmFDNKn/cAa5jq/0cyFak38++V4UXVUTF2yltYj8QLbKBKB5iftQrfMiAJQcObjsKK8fpA5fsAQ0+14cD8ed57V7n1mns74VHWjptpCi0HwfZfjKeoDPStLJbgdZCW+1YFTEHvc=
+	t=1774283186; cv=none; b=E3zwWKUfdCS7XKW4aof0B3EvtQ7RDi9nRocLTP2BIlu+Q+k+rEU0UQttOMjkThiX2573XjFz7gIbUHJwIFZ1D4c1+pPNLdbECathydY6qHG/p3n5LH/ToWMziWVrivueo6BEZuhW7KzYMdVZabpSTdRSNagW0NKQelOLB6UnsI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283184; c=relaxed/simple;
-	bh=PqdT+JZ+uxTrO2aPvHiGbbdMfsrlkAUo4qBDctlD5xo=;
+	s=arc-20240116; t=1774283186; c=relaxed/simple;
+	bh=aGVg/neuvv6ybO9qKsAx8PfsUj+qojtAKQztvxr3u2I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fC7VX2SPm4qD/dneXRjIVCM5JH2OAmAF/V7Rvfr2sJ9MW8VLstw/sjoHch2G3XE40EzS0FWKY4i1l4B7QGvLY8ocSQ3sywzRW9XUVnozBEA5rbD4xGgSUQegbNH3KP9XjKCiUzKZd+M/qQ0pVvWVh3G3O8ugBJgfmbEqoHjHjIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=HBp2ZQnv; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LkPdYadwrer+7/N+yEHNlRnGOfUbkrQfTpf3vWb1+l7QmJS0kFAzsG/3c751FTB8mlYhE0a/DAbODN+XW3QzzEwHIBbsLplGJJy4l6Wt7dk7M3HhBLXM7+etimUZQgzelp2EgEA4qhikYQ30IjhFyr1O9ZoCSrQmYg71Oxw5RK0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R7mE1VvD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="HBp2ZQnv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44634C4CEF7;
-	Mon, 23 Mar 2026 16:26:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R7mE1VvD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03366C4CEF7;
+	Mon, 23 Mar 2026 16:26:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283183;
-	bh=PqdT+JZ+uxTrO2aPvHiGbbdMfsrlkAUo4qBDctlD5xo=;
+	s=korg; t=1774283186;
+	bh=aGVg/neuvv6ybO9qKsAx8PfsUj+qojtAKQztvxr3u2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HBp2ZQnvHMXTxn6l9FZUWIAc0lAovkKu8xwpdxtdz1OgACrjCGpooM9QDeeP0Wq6X
-	 n846vjXIyrl7NTwOwJG7ArMHsZNBHU5g4pT+9foWTc+qIzdsjRlFibQWuDhxaauGDY
-	 iwsBbBPYzaGQBYgilmgOl1ve0CWmBfeMvhpgoT5Q=
+	b=R7mE1VvDyfmHcQGgmxztrA+AiVyNFnirznCdOkSfSOUJKYanbQKRMbZCJ8dkCZMAJ
+	 NDoNbLNTZ+THhVfevuy6sCKknNbMbxCzeJeg0f1MRtkfVDxuyKSH/6IswC6q0F6IOJ
+	 KHT+xEvtwJcf+hZvqbU8KZ2LZe4q5+1HK/1EyS08=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weiming Shi <bestswngs@gmail.com>,
-	Xiang Mei <xmei5@asu.edu>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yiming Qian <yimingqian591@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 434/481] net: bonding: fix NULL deref in bond_debug_rlb_hash_show
-Date: Mon, 23 Mar 2026 14:46:56 +0100
-Message-ID: <20260323134535.781281317@linuxfoundation.org>
+Subject: [PATCH 6.1 435/481] netfilter: nf_tables: release flowtable after rcu grace period on error
+Date: Mon, 23 Mar 2026 14:46:57 +0100
+Message-ID: <20260323134535.806303704@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -47,90 +47,54 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Message-ID: <20260323134657.-lUgtlDMVBINqNDisPwhY967PuNYo-UK8fTEvI2JVjI@z>
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Xiang Mei <xmei5@asu.edu>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 605b52497bf89b3b154674deb135da98f916e390 ]
+[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
 
-rlb_clear_slave intentionally keeps RLB hash-table entries on
-the rx_hashtbl_used_head list with slave set to NULL when no
-replacement slave is available. However, bond_debug_rlb_hash_show
-visites client_info->slave without checking if it's NULL.
+Call synchronize_rcu() after unregistering the hooks from error path,
+since a hook that already refers to this flowtable can be already
+registered, exposing this flowtable to packet path and nfnetlink_hook
+control plane.
 
-Other used-list iterators in bond_alb.c already handle this NULL-slave
-state safely:
+This error path is rare, it should only happen by reaching the maximum
+number hooks or by failing to set up to hardware offload, just call
+synchronize_rcu().
 
-- rlb_update_client returns early on !client_info->slave
-- rlb_req_update_slave_clients, rlb_clear_slave, and rlb_rebalance
-compare slave values before visiting
-- lb_req_update_subnet_clients continues if slave is NULL
+There is a check for already used device hooks by different flowtable
+that could result in EEXIST at this late stage. The hook parser can be
+updated to perform this check earlier to this error path really becomes
+rarely exercised.
 
-The following NULL deref crash can be trigger in
-bond_debug_rlb_hash_show:
+Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
+when dumping hooks.
 
-[    1.289791] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[    1.292058] RIP: 0010:bond_debug_rlb_hash_show (drivers/net/bonding/bond_debugfs.c:41)
-[    1.293101] RSP: 0018:ffffc900004a7d00 EFLAGS: 00010286
-[    1.293333] RAX: 0000000000000000 RBX: ffff888102b48200 RCX: ffff888102b48204
-[    1.293631] RDX: ffff888102b48200 RSI: ffffffff839daad5 RDI: ffff888102815078
-[    1.293924] RBP: ffff888102815078 R08: ffff888102b4820e R09: 0000000000000000
-[    1.294267] R10: 0000000000000000 R11: 0000000000000000 R12: ffff888100f929c0
-[    1.294564] R13: ffff888100f92a00 R14: 0000000000000001 R15: ffffc900004a7ed8
-[    1.294864] FS:  0000000001395380(0000) GS:ffff888196e75000(0000) knlGS:0000000000000000
-[    1.295239] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[    1.295480] CR2: 0000000000000000 CR3: 0000000102adc004 CR4: 0000000000772ef0
-[    1.295897] Call Trace:
-[    1.296134]  seq_read_iter (fs/seq_file.c:231)
-[    1.296341]  seq_read (fs/seq_file.c:164)
-[    1.296493]  full_proxy_read (fs/debugfs/file.c:378 (discriminator 1))
-[    1.296658]  vfs_read (fs/read_write.c:572)
-[    1.296981]  ksys_read (fs/read_write.c:717)
-[    1.297132]  do_syscall_64 (arch/x86/entry/syscall_64.c:63 (discriminator 1) arch/x86/entry/syscall_64.c:94 (discriminator 1))
-[    1.297325]  entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)
-
-Add a NULL check and print "(none)" for entries with no assigned slave.
-
-Fixes: caafa84251b88 ("bonding: add the debugfs interface to see RLB hash table")
-Reported-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Xiang Mei <xmei5@asu.edu>
-Link: https://patch.msgid.link/20260317005034.1888794-1-xmei5@asu.edu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
+Reported-by: Yiming Qian <yimingqian591@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_debugfs.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ net/netfilter/nf_tables_api.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/bonding/bond_debugfs.c b/drivers/net/bonding/bond_debugfs.c
-index 5940945266489..624bf1f745266 100644
---- a/drivers/net/bonding/bond_debugfs.c
-+++ b/drivers/net/bonding/bond_debugfs.c
-@@ -34,11 +34,17 @@ static int bond_debug_rlb_hash_show(struct seq_file *m, void *v)
- 	for (; hash_index != RLB_NULL_INDEX;
- 	     hash_index = client_info->used_next) {
- 		client_info = &(bond_info->rx_hashtbl[hash_index]);
--		seq_printf(m, "%-15pI4 %-15pI4 %-17pM %s\n",
--			&client_info->ip_src,
--			&client_info->ip_dst,
--			&client_info->mac_dst,
--			client_info->slave->dev->name);
-+		if (client_info->slave)
-+			seq_printf(m, "%-15pI4 %-15pI4 %-17pM %s\n",
-+				   &client_info->ip_src,
-+				   &client_info->ip_dst,
-+				   &client_info->mac_dst,
-+				   client_info->slave->dev->name);
-+		else
-+			seq_printf(m, "%-15pI4 %-15pI4 %-17pM (none)\n",
-+				   &client_info->ip_src,
-+				   &client_info->ip_dst,
-+				   &client_info->mac_dst);
- 	}
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index ac36183956515..11a5d5d715d56 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -8279,6 +8279,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
+ 	return 0;
  
- 	spin_unlock_bh(&bond->mode_lock);
+ err_flowtable_hooks:
++	synchronize_rcu();
+ 	nft_trans_destroy(trans);
+ err_flowtable_trans:
+ 	nft_hooks_destroy(&flowtable->hook_list);
 -- 
 2.51.0
 
