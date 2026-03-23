@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0791133CE9A;
-	Mon, 23 Mar 2026 14:44:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A145C33CE9A;
+	Mon, 23 Mar 2026 14:44:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277066; cv=none; b=UJgMMTJirdRzgdFL5cAEUc2r3F8JHGDxWcu/WXXsBy7KvetNnouFeHPmeUoWtqFqfOv7l+oIZ5HP0pwh3xDJEuLfdx10u9yJVVn/dXBFJtb+MWx2NrfiajeIA7suT9Jo6BuAILTZl6sDeZr490xqN4h/n91rJyU9RMKBHMXhauI=
+	t=1774277068; cv=none; b=s3jM0zmPzYH98REx+2hp5pQxc+6dDnp6KgG3ScyrP+3koZTkvr28Gx0rszdvMudZnff3R/q904FUnTrYBhXPuuR4AlOp15td4UmP7nsWS9U3IZ/9WvCIGmatGG+MN3ql6Ojvj7moWCaNXeFuntAcUVx2h7R041OmTD4+XZe4ADE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277066; c=relaxed/simple;
-	bh=rMjDvjNuXTxCXlKP8HyA+rWF+DSX1KXdZa88VSNJFBk=;
+	s=arc-20240116; t=1774277068; c=relaxed/simple;
+	bh=KOWjegGwcsgPa3U8MDbF5s4W8Qr1XTHwj3PqBbLU5Ak=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ufwzTc3NPtVjatafHZsKlzFkjNHlhUsdvX6SXEVHFrnWLXOI6SDqtd1cIdJiLSKQca9zt1NRP6F2v1AGeF47aCttjd4oci1WwmOIXIFX9vpnsIjEpF4AFLlmwogVhgC0YP6aRAxoLgJZwD5lD3Jvcsu49eQBlGa6T9x0HC+pczI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yr3Ge8th; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NTPr04XJv0Su9TbTUP3PPz5DOLVLyulxtiMxPsNpsqYxXcX/sxnIl9zQIR/v5d4kmLf36Ceiy+rhR2vAkv82OSlKnlmVl0LpW27pnAkPg26uCBbixbbSE1q0i01NHLOE+WtUyUfehu8srnXiDb66CWLIkW1Qc5ojLqISRjLvr8k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r+er2zAr; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yr3Ge8th"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95635C4CEF7;
-	Mon, 23 Mar 2026 14:44:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r+er2zAr"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37918C4CEF7;
+	Mon, 23 Mar 2026 14:44:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277065;
-	bh=rMjDvjNuXTxCXlKP8HyA+rWF+DSX1KXdZa88VSNJFBk=;
+	s=korg; t=1774277068;
+	bh=KOWjegGwcsgPa3U8MDbF5s4W8Qr1XTHwj3PqBbLU5Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yr3Ge8th+mgvoM0bbLJ8PjXzcNNrH8u2hK30x1oId5Kn8FTVdxfB1vCTaBHWEDdp8
-	 k14dCMyrcw37fKRGSDZipH+EsvWflGaWRIuFkJ3xldmNStWrHVpeQeFtcjxPWU/boD
-	 5cA1FKJGfhHkfC2t7Yv8RCclUPBsmwGQvstEi5Xw=
+	b=r+er2zArZwdfxtD4SCdMfGMMtJhwZeCduB3NQ5UVFMORIKkwgs8FPHhbcSulJZEOY
+	 JEf6Pth+2u4/1g7aUuqbWlDpC1ScVsZYgjgGBCTEcHcHzoFDv49gKfjNBNzhgI2rhH
+	 aAU31IKLiFrh27JbdVBMYnPe7xEkSEWRxodnLF9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Jiri Kosina <jkosina@suse.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <thomas.weissschuh@linutronix.de>,
 	Benjamin Tissoires <bentiss@kernel.org>
-Subject: [PATCH 6.12 308/460] selftests/hid: fix compilation when bpf_wq and hid_device are not exported
-Date: Mon, 23 Mar 2026 14:45:04 +0100
-Message-ID: <20260323134534.061719162@linuxfoundation.org>
+Subject: [PATCH 6.12 309/460] HID: bpf: prevent buffer overflow in hid_hw_request
+Date: Mon, 23 Mar 2026 14:45:05 +0100
+Message-ID: <20260323134534.089979321@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,7 +44,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -55,64 +52,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Benjamin Tissoires <bentiss@kernel.org>
 
-commit 5d4c6c132ea9a967d48890dd03e6a786c060e968 upstream.
+commit 2b658c1c442ec1cd9eec5ead98d68662c40fe645 upstream.
 
-This can happen in situations when CONFIG_HID_SUPPORT is set to no, or
-some complex situations where struct bpf_wq is not exported.
+right now the returned value is considered to be always valid. However,
+when playing with HID-BPF, the return value can be arbitrary big,
+because it's the return value of dispatch_hid_bpf_raw_requests(), which
+calls the struct_ops and we have no guarantees that the value makes
+sense.
 
-So do the usual dance of hiding them before including vmlinux.h, and
-then redefining them and make use of CO-RE to have the correct offsets.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Closes: https://lore.kernel.org/oe-kbuild-all/202603111558.KLCIxsZB-lkp@intel.com/
-Fixes: fe8d561db3e8 ("selftests/hid: add wq test for hid_bpf_input_report()")
+Fixes: 8bd0488b5ea5 ("HID: bpf: add HID-BPF hooks for hid_hw_raw_requests")
 Cc: stable@vger.kernel.org
 Acked-by: Jiri Kosina <jkosina@suse.com>
-Reviewed-by: Thomas Weißschuh <thomas.weissschuh@linutronix.de>
 Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/hid/progs/hid_bpf_helpers.h |   12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/hid/bpf/hid_bpf_dispatch.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
-+++ b/tools/testing/selftests/hid/progs/hid_bpf_helpers.h
-@@ -6,8 +6,10 @@
- #define __HID_BPF_HELPERS_H
+--- a/drivers/hid/bpf/hid_bpf_dispatch.c
++++ b/drivers/hid/bpf/hid_bpf_dispatch.c
+@@ -450,6 +450,8 @@ hid_bpf_hw_request(struct hid_bpf_ctx *c
+ 					      (u64)(long)ctx,
+ 					      true); /* prevent infinite recursions */
  
- /* "undefine" structs and enums in vmlinux.h, because we "override" them below */
-+#define bpf_wq bpf_wq___not_used
- #define hid_bpf_ctx hid_bpf_ctx___not_used
- #define hid_bpf_ops hid_bpf_ops___not_used
-+#define hid_device hid_device___not_used
- #define hid_report_type hid_report_type___not_used
- #define hid_class_request hid_class_request___not_used
- #define hid_bpf_attach_flags hid_bpf_attach_flags___not_used
-@@ -24,8 +26,10 @@
++	if (ret > size)
++		ret = size;
+ 	if (ret > 0)
+ 		memcpy(buf, dma_data, ret);
  
- #include "vmlinux.h"
- 
-+#undef bpf_wq
- #undef hid_bpf_ctx
- #undef hid_bpf_ops
-+#undef hid_device
- #undef hid_report_type
- #undef hid_class_request
- #undef hid_bpf_attach_flags
-@@ -52,6 +56,14 @@ enum hid_report_type {
- 	HID_REPORT_TYPES,
- };
- 
-+struct hid_device {
-+	unsigned int id;
-+} __attribute__((preserve_access_index));
-+
-+struct bpf_wq {
-+	__u64 __opaque[2];
-+};
-+
- struct hid_bpf_ctx {
- 	struct hid_device *hid;
- 	__u32 allocated_size;
 
 
