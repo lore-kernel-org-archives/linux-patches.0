@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7779D235C01;
-	Mon, 23 Mar 2026 14:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E40938837F;
+	Mon, 23 Mar 2026 14:56:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277778; cv=none; b=tgKpyQB0paenovcNN5bX6zS3aL2v3cjAiQ4A/PeIlnnDQSq7f7AGt9DGOFxDM7IVya0tKGJV2HVsTbUNmpa6zfnzeVkEE6LYKZREhDhCVlMPY9jpgNv2KUdLWzQ2hYiz7Hl7i1d8wznYRl19RsM7dssdg/VctIEIdSeRkzAJHME=
+	t=1774277781; cv=none; b=iHv5DbpL5bcA9x64hDdxPR6PYNoG/5e3DJA445Rl9lu3qbc8StVXrEMHQAy5YHN/G3/vUn2EA3OkV+Ra1NQM7g/qS9x7LCqimDCees7fuGiGly9F64idpZAjgxLR8PIFsWnBtc3aqIkRoN6UltVBYAqhMXPflmoyd8dCrTfcycM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277778; c=relaxed/simple;
-	bh=7tsCBQpRQnPeYLniDvoUHXm+U7mXXEXyaCAqXd7ot1I=;
+	s=arc-20240116; t=1774277781; c=relaxed/simple;
+	bh=60gKl/g6Q+ZkD+Atgz0w4q+4/p0Yzz8WTSYopWxTpzY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nC7oKpSq0rVJiP7L1S72Qrzg6GOevlt/G51Xe4eGpSH3TcfPeg7uidLG52wVvV3GQuyBvtxYAO5gU0lwSCP0pt44VMiheflmmyGJoJX5puAX6+seyAtCtnR/hFdPf/F0jIsoXuaJmQKB1PjMLS0CjzPuowIa6CZZrCR4k/jyp64=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MmXGL/0R; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EBesHisJ+8FOBTsuU67evsXhIeFRPEwjkSzi79Uy+Odb6Oktpm6iBHSrSGAlCduMw6Yk6hz3OUO/778iH50+WgFeY+gWRSWHZjnfyjTmChklJtjiazsvHbArwxeU4gdLQFGrPogA4ELFH2hJWiEq5ZEXhbAbCHbdTDKt+FFm23c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OmdaMrMf; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MmXGL/0R"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 032B0C4CEF7;
-	Mon, 23 Mar 2026 14:56:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OmdaMrMf"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1941CC4CEF7;
+	Mon, 23 Mar 2026 14:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277778;
-	bh=7tsCBQpRQnPeYLniDvoUHXm+U7mXXEXyaCAqXd7ot1I=;
+	s=korg; t=1774277781;
+	bh=60gKl/g6Q+ZkD+Atgz0w4q+4/p0Yzz8WTSYopWxTpzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MmXGL/0RdGJ5aAhtNkgYVvxQO4eEtwv/bf6Axx5Rh7UZrWAyUvvzvLDXTJ1wnEEQj
-	 VuGVWQQbE0gN4C+ZW63Pie0FCMviGWSN0FM4ZBSbm3axo/DWhegOUn1ykPmAOCU3XJ
-	 uQpLGa7fEvYAi50r2qkYebj7wwO+f0Ka+ZhtP4lU=
+	b=OmdaMrMfWCcisQFwoMYTmoX615mjrJW4rPMhZV5ZM2Zf5ziZWIPI2/xIB5IRbN61w
+	 eWCnFGwSYWWBc9+ahqbBMIgjPvUXjpe42hFXRfeFjvzj2kllQL7urKEdct4eYtCh5C
+	 X2vfMzMMddkbUdetvrc49CWtEqjreeiKw+ZM/lpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 047/567] ext4: get rid of ppath in ext4_split_extent_at()
-Date: Mon, 23 Mar 2026 14:39:27 +0100
-Message-ID: <20260323134534.967502250@linuxfoundation.org>
+	"Ji-Ze Hong (Peter Hong)" <peter_hong@fintek.com.tw>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vincent Mailhol <mailhol@kernel.org>,
+	stable@kernel.org
+Subject: [PATCH 6.6 094/567] can: usb: f81604: correctly anchor the urb in the read bulk callback
+Date: Mon, 23 Mar 2026 14:40:14 +0100
+Message-ID: <20260323134536.154525091@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,234 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 1de82b1b60d4613753254bf3cbf622a4c02c945c ]
+commit 952caa5da10bed22be09612433964f6877ba0dde upstream.
 
-The use of path and ppath is now very confusing, so to make the code more
-readable, pass path between functions uniformly, and get rid of ppath.
+When submitting an urb, that is using the anchor pattern, it needs to be
+anchored before submitting it otherwise it could be leaked if
+usb_kill_anchored_urbs() is called.  This logic is correctly done
+elsewhere in the driver, except in the read bulk callback so do that
+here also.
 
-To get rid of the ppath in ext4_split_extent_at(), the following is done
-here:
-
- * Free the extents path when an error is encountered.
- * Its caller needs to update ppath if it uses ppath.
- * Teach ext4_ext_show_leaf() to skip error pointer.
-
-No functional changes.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-16-libaokun@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: 22784ca541c0 ("ext4: subdivide EXT4_EXT_DATA_VALID1")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Ji-Ze Hong (Peter Hong) <peter_hong@fintek.com.tw>
+Cc: Marc Kleine-Budde <mkl@pengutronix.de>
+Cc: Vincent Mailhol <mailhol@kernel.org>
+Cc: stable@kernel.org
+Assisted-by: gkh_clanker_2000
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://patch.msgid.link/2026022334-starlight-scaling-2cea@gregkh
+Fixes: 88da17436973 ("can: usb: f81604: add Fintek F81604 support")
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 85 ++++++++++++++++++++++++++---------------------
- 1 file changed, 47 insertions(+), 38 deletions(-)
+ drivers/net/can/usb/f81604.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 4f15c26bafe53..33ed753ea82e9 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -84,12 +84,11 @@ static void ext4_extent_block_csum_set(struct inode *inode,
- 	et->et_checksum = ext4_extent_block_csum(inode, eh);
- }
- 
--static int ext4_split_extent_at(handle_t *handle,
--			     struct inode *inode,
--			     struct ext4_ext_path **ppath,
--			     ext4_lblk_t split,
--			     int split_flag,
--			     int flags);
-+static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
-+						  struct inode *inode,
-+						  struct ext4_ext_path *path,
-+						  ext4_lblk_t split,
-+						  int split_flag, int flags);
- 
- static int ext4_ext_trunc_restart_fn(struct inode *inode, int *dropped)
+--- a/drivers/net/can/usb/f81604.c
++++ b/drivers/net/can/usb/f81604.c
+@@ -413,6 +413,7 @@ static void f81604_read_bulk_callback(st
  {
-@@ -335,9 +334,15 @@ ext4_force_split_extent_at(handle_t *handle, struct inode *inode,
- 	if (nofail)
- 		flags |= EXT4_GET_BLOCKS_METADATA_NOFAIL | EXT4_EX_NOFAIL;
+ 	struct f81604_can_frame *frame = urb->transfer_buffer;
+ 	struct net_device *netdev = urb->context;
++	struct f81604_port_priv *priv = netdev_priv(netdev);
+ 	int ret;
  
--	return ext4_split_extent_at(handle, inode, ppath, lblk, unwritten ?
-+	path = ext4_split_extent_at(handle, inode, path, lblk, unwritten ?
- 			EXT4_EXT_MARK_UNWRIT1|EXT4_EXT_MARK_UNWRIT2 : 0,
- 			flags);
-+	if (IS_ERR(path)) {
-+		*ppath = NULL;
-+		return PTR_ERR(path);
-+	}
-+	*ppath = path;
-+	return 0;
- }
+ 	if (!netif_device_present(netdev))
+@@ -445,10 +446,15 @@ static void f81604_read_bulk_callback(st
+ 	f81604_process_rx_packet(netdev, frame);
  
- static int
-@@ -689,7 +694,7 @@ static void ext4_ext_show_leaf(struct inode *inode, struct ext4_ext_path *path)
- 	struct ext4_extent *ex;
- 	int i;
- 
--	if (!path)
-+	if (IS_ERR_OR_NULL(path))
- 		return;
- 
- 	eh = path[depth].p_hdr;
-@@ -3153,16 +3158,14 @@ static int ext4_ext_zeroout(struct inode *inode, struct ext4_extent *ex)
-  *  a> the extent are splitted into two extent.
-  *  b> split is not needed, and just mark the extent.
-  *
-- * return 0 on success.
-+ * Return an extent path pointer on success, or an error pointer on failure.
-  */
--static int ext4_split_extent_at(handle_t *handle,
--			     struct inode *inode,
--			     struct ext4_ext_path **ppath,
--			     ext4_lblk_t split,
--			     int split_flag,
--			     int flags)
-+static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
-+						  struct inode *inode,
-+						  struct ext4_ext_path *path,
-+						  ext4_lblk_t split,
-+						  int split_flag, int flags)
- {
--	struct ext4_ext_path *path = *ppath;
- 	ext4_fsblk_t newblock;
- 	ext4_lblk_t ee_block;
- 	struct ext4_extent *ex, newex, orig_ex, zero_ex;
-@@ -3236,14 +3239,12 @@ static int ext4_split_extent_at(handle_t *handle,
- 		ext4_ext_mark_unwritten(ex2);
- 
- 	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
--	if (!IS_ERR(path)) {
--		*ppath = path;
-+	if (!IS_ERR(path))
- 		goto out;
--	}
--	*ppath = NULL;
+ resubmit_urb:
++	usb_anchor_urb(urb, &priv->urbs_anchor);
+ 	ret = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!ret)
++		return;
++	usb_unanchor_urb(urb);
 +
- 	err = PTR_ERR(path);
- 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
--		return err;
-+		return path;
+ 	if (ret == -ENODEV)
+ 		netif_device_detach(netdev);
+-	else if (ret)
++	else
+ 		netdev_err(netdev,
+ 			   "%s: failed to resubmit read bulk urb: %pe\n",
+ 			   __func__, ERR_PTR(ret));
+@@ -646,10 +652,15 @@ static void f81604_read_int_callback(str
+ 		f81604_handle_tx(priv, data);
  
- 	/*
- 	 * Get a new path to try to zeroout or fix the extent length.
-@@ -3253,16 +3254,14 @@ static int ext4_split_extent_at(handle_t *handle,
- 	 * in ext4_da_update_reserve_space() due to an incorrect
- 	 * ee_len causing the i_reserved_data_blocks exception.
- 	 */
--	path = ext4_find_extent(inode, ee_block, NULL,
--				flags | EXT4_EX_NOFAIL);
-+	path = ext4_find_extent(inode, ee_block, NULL, flags | EXT4_EX_NOFAIL);
- 	if (IS_ERR(path)) {
- 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
- 				 split, PTR_ERR(path));
--		return PTR_ERR(path);
-+		return path;
- 	}
- 	depth = ext_depth(inode);
- 	ex = path[depth].p_ext;
--	*ppath = path;
- 
- 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
- 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
-@@ -3314,10 +3313,13 @@ static int ext4_split_extent_at(handle_t *handle,
- 	 * and err is a non-zero error code.
- 	 */
- 	ext4_ext_dirty(handle, inode, path + path->p_depth);
--	return err;
- out:
-+	if (err) {
-+		ext4_free_ext_path(path);
-+		path = ERR_PTR(err);
-+	}
- 	ext4_ext_show_leaf(inode, path);
--	return err;
-+	return path;
+ resubmit_urb:
++	usb_anchor_urb(urb, &priv->urbs_anchor);
+ 	ret = usb_submit_urb(urb, GFP_ATOMIC);
++	if (!ret)
++		return;
++	usb_unanchor_urb(urb);
++
+ 	if (ret == -ENODEV)
+ 		netif_device_detach(netdev);
+-	else if (ret)
++	else
+ 		netdev_err(netdev, "%s: failed to resubmit int urb: %pe\n",
+ 			   __func__, ERR_PTR(ret));
  }
- 
- /*
-@@ -3364,10 +3366,14 @@ static int ext4_split_extent(handle_t *handle,
- 				       EXT4_EXT_MARK_UNWRIT2;
- 		if (split_flag & EXT4_EXT_DATA_VALID2)
- 			split_flag1 |= EXT4_EXT_DATA_VALID1;
--		err = ext4_split_extent_at(handle, inode, ppath,
-+		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk + map->m_len, split_flag1, flags1);
--		if (err)
-+		if (IS_ERR(path)) {
-+			err = PTR_ERR(path);
-+			*ppath = NULL;
- 			goto out;
-+		}
-+		*ppath = path;
- 	} else {
- 		allocated = ee_len - (map->m_lblk - ee_block);
- 	}
-@@ -3375,7 +3381,7 @@ static int ext4_split_extent(handle_t *handle,
- 	 * Update path is required because previous ext4_split_extent_at() may
- 	 * result in split of original leaf or extent zeroout.
- 	 */
--	path = ext4_find_extent(inode, map->m_lblk, *ppath, flags);
-+	path = ext4_find_extent(inode, map->m_lblk, path, flags);
- 	if (IS_ERR(path)) {
- 		*ppath = NULL;
- 		return PTR_ERR(path);
-@@ -3397,13 +3403,17 @@ static int ext4_split_extent(handle_t *handle,
- 			split_flag1 |= split_flag & (EXT4_EXT_MAY_ZEROOUT |
- 						     EXT4_EXT_MARK_UNWRIT2);
- 		}
--		err = ext4_split_extent_at(handle, inode, ppath,
-+		path = ext4_split_extent_at(handle, inode, path,
- 				map->m_lblk, split_flag1, flags);
--		if (err)
-+		if (IS_ERR(path)) {
-+			err = PTR_ERR(path);
-+			*ppath = NULL;
- 			goto out;
-+		}
-+		*ppath = path;
- 	}
- 
--	ext4_ext_show_leaf(inode, *ppath);
-+	ext4_ext_show_leaf(inode, path);
- out:
- 	return err ? err : allocated;
- }
-@@ -5590,22 +5600,21 @@ static int ext4_insert_range(struct file *file, loff_t offset, loff_t len)
- 			if (ext4_ext_is_unwritten(extent))
- 				split_flag = EXT4_EXT_MARK_UNWRIT1 |
- 					EXT4_EXT_MARK_UNWRIT2;
--			ret = ext4_split_extent_at(handle, inode, &path,
-+			path = ext4_split_extent_at(handle, inode, path,
- 					offset_lblk, split_flag,
- 					EXT4_EX_NOCACHE |
- 					EXT4_GET_BLOCKS_PRE_IO |
- 					EXT4_GET_BLOCKS_METADATA_NOFAIL);
- 		}
- 
--		ext4_free_ext_path(path);
--		if (ret < 0) {
-+		if (IS_ERR(path)) {
- 			up_write(&EXT4_I(inode)->i_data_sem);
-+			ret = PTR_ERR(path);
- 			goto out_stop;
- 		}
--	} else {
--		ext4_free_ext_path(path);
- 	}
- 
-+	ext4_free_ext_path(path);
- 	ext4_es_remove_extent(inode, offset_lblk, EXT_MAX_BLOCKS - offset_lblk);
- 
- 	/*
--- 
-2.51.0
-
 
 
