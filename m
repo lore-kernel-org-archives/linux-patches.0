@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16C2440DFC4;
-	Mon, 23 Mar 2026 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2D9E3AD53C;
+	Mon, 23 Mar 2026 14:10:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275010; cv=none; b=V89PtfopvGyAlaHdK1sywDAKrRCTj92CWAesK+qgY63FsJCI+d9XF0sECF1qBpCeGKk0xzl9xP06v4E5ZKXCKfSe2rQ6Sy6gG5OdGB5uFw0hVmR5S5oWii82R2uIV0QPLyfEeggezeIaWJdwh0uMXRunZUHZ9aEsaGAFJmcE9mA=
+	t=1774275012; cv=none; b=XxhG/nMYERsl0f3eYqeP6X1pSmXq2ElJTnBeAP7wYGQQWmRzfKt3BzFVf0l10iwOMHdgNFs2ICWtp33Qqe6iYFZP7CqQ7dDDaWraxQ+EvxcUcCrgENJ6NKBexSS/jM2z0YvbGJCxb/P9EBneDv+FYhIT5civfMHWZt9Mv4ebZuk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275010; c=relaxed/simple;
-	bh=6UuYLhATvAEmBtMTbHL/UtgVaQn63cyol2RconnS9Co=;
+	s=arc-20240116; t=1774275012; c=relaxed/simple;
+	bh=rnUWYyReqpmyprWjJiXXLl19KcUFJAjrhOO6GkrOmCw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=stGbClNaam1M29ooUZcQDlAsCl5vcS3B6+jtWWO/dgDlCX4/g3mUsQUZhE7ZdxFZTRywYT/uPV5dqZ6VPl4Kh841UjxmAQIvQAJWjVehFJnrVpqylBBmR3qHbUw5pfaLagxhydDki+8iNN4I6O3L2zjXH0u4HZvOpDIGdemrxNE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EqpsHJ1G; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=b7hhRifzlzvlbz+HpCwL6e/cEsTptt3d0kEHd8UNMhPYuSyT47cYRGCiQaegCJM0mzG71bpslHjmPdEJucA0J0ekCetb1QAnCcieNrMqqZEdDey0xiGpRLjdvm/EubEluYB3QA+Zy7pAdSzKLpdkJDpwn1470zEayM5npiR6ydY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lpKNaaoM; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EqpsHJ1G"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D473C4CEF7;
-	Mon, 23 Mar 2026 14:10:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lpKNaaoM"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26565C4CEF7;
+	Mon, 23 Mar 2026 14:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275009;
-	bh=6UuYLhATvAEmBtMTbHL/UtgVaQn63cyol2RconnS9Co=;
+	s=korg; t=1774275012;
+	bh=rnUWYyReqpmyprWjJiXXLl19KcUFJAjrhOO6GkrOmCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EqpsHJ1G+ZvmshV3zIGirFx8lKLwQ9i1hqRdBGZFgPT9qcRFigA3bb7Q0wfNyWufW
-	 wcCMUWUbuqEBtrCdFQJPqCemJQnMAo55FsfOlupVnvkxz2OTrEjBP4nKs7jN3EuH6J
-	 HQuE1VzaglHxXC3nh+UrFVWryWrwGe8HHtg0uCKE=
+	b=lpKNaaoMlJq6p62hZw97DYgKMxyzCGEvD1jlE1taEHXtI6WhTCLaluISZnQyfqcyg
+	 YyFhi/d3N8GKyueMK1LaefCz2J34dVMaf7SLEXMInfVeeHOLp74SHj6smmgYE/uQ2r
+	 VBpk1CvFwqD25VyEN84fFDGgPprBX1z0uAvlYH9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.18 192/212] tracing: Fix failure to read user space from system call trace events
-Date: Mon, 23 Mar 2026 14:46:53 +0100
-Message-ID: <20260323134509.797238362@linuxfoundation.org>
+	Kyle Meyer <kyle.meyer@hpe.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Steve Wahl <steve.wahl@hpe.com>
+Subject: [PATCH 6.18 193/212] x86/platform/uv: Handle deconfigured sockets
+Date: Mon, 23 Mar 2026 14:46:54 +0100
+Message-ID: <20260323134509.827210610@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,100 +51,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Kyle Meyer <kyle.meyer@hpe.com>
 
-commit edca33a56297d5741ccf867669debec116681987 upstream.
+commit 1f6aa5bbf1d0f81a8a2aafc16136e7dd9a609ff3 upstream.
 
-The system call trace events call trace_user_fault_read() to read the user
-space part of some system calls. This is done by grabbing a per-cpu
-buffer, disabling migration, enabling preemption, calling
-copy_from_user(), disabling preemption, enabling migration and checking if
-the task was preempted while preemption was enabled. If it was, the buffer
-is considered corrupted and it tries again.
+When a socket is deconfigured, it's mapped to SOCK_EMPTY (0xffff). This causes
+a panic while allocating UV hub info structures.
 
-There's a safety mechanism that will fail out of this loop if it fails 100
-times (with a warning). That warning message was triggered in some
-pi_futex stress tests. Enabling the sched_switch trace event and
-traceoff_on_warning, showed the problem:
+Fix this by using NUMA_NO_NODE, allowing UV hub info structures to be
+allocated on valid nodes.
 
- pi_mutex_hammer-1375    [006] d..21   138.981648: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981651: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981656: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981659: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981664: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981667: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981671: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981675: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981679: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981682: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981687: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981690: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981695: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981698: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981703: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981706: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981711: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981714: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981719: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981722: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981727: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981730: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
- pi_mutex_hammer-1375    [006] d..21   138.981735: sched_switch: prev_comm=pi_mutex_hammer prev_pid=1375 prev_prio=95 prev_state=R+ ==> next_comm=migration/6 next_pid=47 next_prio=0
-     migration/6-47      [006] d..2.   138.981738: sched_switch: prev_comm=migration/6 prev_pid=47 prev_prio=0 prev_state=S ==> next_comm=pi_mutex_hammer next_pid=1375 next_prio=95
-
-What happened was the task 1375 was flagged to be migrated. When
-preemption was enabled, the migration thread woke up to migrate that task,
-but failed because migration for that task was disabled. This caused the
-loop to fail to exit because the task scheduled out while trying to read
-user space.
-
-Every time the task enabled preemption the migration thread would schedule
-in, try to migrate the task, fail and let the task continue. But because
-the loop would only enable preemption with migration disabled, it would
-always fail because each time it enabled preemption to read user space,
-the migration thread would try to migrate it.
-
-To solve this, when the loop fails to read user space without being
-scheduled out, enabled and disable preemption with migration enabled. This
-will allow the migration task to successfully migrate the task and the
-next loop should succeed to read user space without being scheduled out.
-
+Fixes: 8a50c5851927 ("x86/platform/uv: UV support for sub-NUMA clustering")
+Signed-off-by: Kyle Meyer <kyle.meyer@hpe.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Steve Wahl <steve.wahl@hpe.com>
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Link: https://patch.msgid.link/20260316130734.1858a998@gandalf.local.home
-Fixes: 64cf7d058a005 ("tracing: Have trace_marker use per-cpu data to read user space")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://patch.msgid.link/ab2BmGL0ehVkkjKk@hpe.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   17 +++++++++++++++++
- 1 file changed, 17 insertions(+)
+ arch/x86/kernel/apic/x2apic_uv_x.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -7346,6 +7346,23 @@ static char *trace_user_fault_read(struc
+--- a/arch/x86/kernel/apic/x2apic_uv_x.c
++++ b/arch/x86/kernel/apic/x2apic_uv_x.c
+@@ -1708,8 +1708,22 @@ static void __init uv_system_init_hub(vo
+ 		struct uv_hub_info_s *new_hub;
  
- 	do {
- 		/*
-+		 * It is possible that something is trying to migrate this
-+		 * task. What happens then, is when preemption is enabled,
-+		 * the migration thread will preempt this task, try to
-+		 * migrate it, fail, then let it run again. That will
-+		 * cause this to loop again and never succeed.
-+		 * On failures, enabled and disable preemption with
-+		 * migration enabled, to allow the migration thread to
-+		 * migrate this task.
-+		 */
-+		if (trys) {
-+			preempt_enable_notrace();
-+			preempt_disable_notrace();
-+			cpu = smp_processor_id();
-+			buffer = per_cpu_ptr(tinfo->tbuf, cpu)->buf;
+ 		/* Allocate & fill new per hub info list */
+-		new_hub = (bid == 0) ?  &uv_hub_info_node0
+-			: kzalloc_node(bytes, GFP_KERNEL, uv_blade_to_node(bid));
++		if (bid == 0) {
++			new_hub = &uv_hub_info_node0;
++		} else {
++			int nid;
++
++			/*
++			 * Deconfigured sockets are mapped to SOCK_EMPTY. Use
++			 * NUMA_NO_NODE to allocate on a valid node.
++			 */
++			nid = uv_blade_to_node(bid);
++			if (nid == SOCK_EMPTY)
++				nid = NUMA_NO_NODE;
++
++			new_hub = kzalloc_node(bytes, GFP_KERNEL, nid);
 +		}
 +
-+		/*
- 		 * If for some reason, copy_from_user() always causes a context
- 		 * switch, this would then cause an infinite loop.
- 		 * If this task is preempted by another user space task, it
+ 		if (WARN_ON_ONCE(!new_hub)) {
+ 			/* do not kfree() bid 0, which is statically allocated */
+ 			while (--bid > 0)
 
 
