@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DB8D38B7C4;
-	Mon, 23 Mar 2026 16:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0551D1DA0E1;
+	Mon, 23 Mar 2026 16:22:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282956; cv=none; b=D3pHpFFkDvJ1imBdVBeMykO1kKbDN22FJQ4EUo6QbWvhK1uqEQAmXNKhkuENuThOwHuiv4dZ42nQgqR8mBGh4SD03Fnnz6NEbntmtAuHN9mD7gQghFIVLhf4kUcbw4hN69I280T6oBbvSKCqUk0o28Zb+ixIF4XOQc/BQHCSMK8=
+	t=1774282959; cv=none; b=ed8gxd4q53FFf37Hh5Mz6IrgH6BBVqkF1WpfUlJ9NhpxdkZ6zW5feipWic7luVKdiX5ThwWbPKd7OVpGpfnEmDEAKUus8nLZHiaUfmSDBrXpA+ujGqv2sg0KXCJ+2rw+6RfJ0lXbwQ32iWGDrBcKgTosbLHGBSBe76iFS1yguBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282956; c=relaxed/simple;
-	bh=311MuOeqe+Kcxa2VdaK5MdbAKl470hJFhFMdFkI/8ys=;
+	s=arc-20240116; t=1774282959; c=relaxed/simple;
+	bh=63TjOlvONJ7H9leiU8I0ZeOax/2VQYcH2GJm46jO9bY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WVB8TL7EALwJHOvv3/bgkqHPEiVtidNNJXFDZEMGFoZUaE/30ZFyEOGwzTa145CQe5aBTv8yofiDoc0dH6Xasbsfk38uOLVhlBAV36cxjF67sErmSNddiRewDG3AgOTWwjEcGW/Ssvv4j49IaOHxOc56skzkVUXutNvn5DGDMos=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fFG5r9i8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UZH5AGfkMy3hMLx9cbXa/+2y98A5d2mJBD04w0vAezfOVraRX2atVrrIPtNjCj/Xtnh6/F527Ouz9J8sqCKqDQlbc8vJfgN909glCRh2hWVl4SMAmMFotZX2XGFP8ExLqpZONeGMbOuH47KCNGVRD6//iyxXWdfzk5RL82y+O3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=MBHYxqSa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fFG5r9i8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 914B6C4CEF7;
-	Mon, 23 Mar 2026 16:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="MBHYxqSa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A392C2BC9E;
+	Mon, 23 Mar 2026 16:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282955;
-	bh=311MuOeqe+Kcxa2VdaK5MdbAKl470hJFhFMdFkI/8ys=;
+	s=korg; t=1774282958;
+	bh=63TjOlvONJ7H9leiU8I0ZeOax/2VQYcH2GJm46jO9bY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFG5r9i8+N9ZBwjo0dvBqyNuz31ODDkq3EZiGJbk2x3pUDUe6t3o5u+FKlTTbuBR+
-	 yE/Nyu+ETINNKXVm8iACSil0Fxu15qGl8Zg9jo5h5YTMswrvn4UBJNk7N+kC/d27R8
-	 Hrz4inW4IANTU6SIsb1ALiZDDG0ASbuC9tMWdXGc=
+	b=MBHYxqSaDvg9qOnebva2C2wrbgSnAh1Y/PDi1kLD+zZqisVdKiy9RZUwiHq5IrD9G
+	 jjx/S/Tq6scgPGLKhaPScZWebaacOT21npt+uVvMMWj7f2DsiwP7cAlsHQCP/hHwW4
+	 yznQzaaiDK36M+TYeRU/Jcb1OC39RTlzsqttrVFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Shyam Prasad N <sprasad@microsoft.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 348/481] crypto: atmel-sha204a - Fix OOM ->tfm_count leak
-Date: Mon, 23 Mar 2026 14:45:30 +0100
-Message-ID: <20260323134533.582350787@linuxfoundation.org>
+Subject: [PATCH 6.1 349/481] cifs: open files should not hold ref on superblock
+Date: Mon, 23 Mar 2026 14:45:31 +0100
+Message-ID: <20260323134533.605861738@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,38 +51,196 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-[ Upstream commit d240b079a37e90af03fd7dfec94930eb6c83936e ]
+[ Upstream commit 340cea84f691c5206561bb2e0147158fe02070be ]
 
-If memory allocation fails, decrement ->tfm_count to avoid blocking
-future reads.
+Today whenever we deal with a file, in addition to holding
+a reference on the dentry, we also get a reference on the
+superblock. This happens in two cases:
+1. when a new cinode is allocated
+2. when an oplock break is being processed
 
-Cc: stable@vger.kernel.org
-Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
+The reasoning for holding the superblock ref was to make sure
+that when umount happens, if there are users of inodes and
+dentries, it does not try to clean them up and wait for the
+last ref to superblock to be dropped by last of such users.
+
+But the side effect of doing that is that umount silently drops
+a ref on the superblock and we could have deferred closes and
+lease breaks still holding these refs.
+
+Ideally, we should ensure that all of these users of inodes and
+dentries are cleaned up at the time of umount, which is what this
+code is doing.
+
+This code change allows these code paths to use a ref on the
+dentry (and hence the inode). That way, umount is
+ensured to clean up SMB client resources when it's the last
+ref on the superblock (For ex: when same objects are shared).
+
+The code change also moves the call to close all the files in
+deferred close list to the umount code path. It also waits for
+oplock_break workers to be flushed before calling
+kill_anon_super (which eventually frees up those objects).
+
+Fixes: 24261fc23db9 ("cifs: delay super block destruction until all cifsFileInfo objects are gone")
+Fixes: 705c79101ccf ("smb: client: fix use-after-free in cifs_oplock_break")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+[ kmalloc_obj() => kmalloc(), remove trace_smb3_tcon_ref() ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/atmel-sha204a.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/smb/client/cifsfs.c    |    9 ++++++---
+ fs/smb/client/cifsproto.h |    1 +
+ fs/smb/client/file.c      |   11 -----------
+ fs/smb/client/misc.c      |   41 +++++++++++++++++++++++++++++++++++++++++
+ 4 files changed, 48 insertions(+), 14 deletions(-)
 
---- a/drivers/crypto/atmel-sha204a.c
-+++ b/drivers/crypto/atmel-sha204a.c
-@@ -52,9 +52,10 @@ static int atmel_sha204a_rng_read_nonblo
- 		rng->priv = 0;
- 	} else {
- 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
--		if (!work_data)
-+		if (!work_data) {
-+			atomic_dec(&i2c_priv->tfm_count);
- 			return -ENOMEM;
--
-+		}
- 		work_data->ctx = i2c_priv;
- 		work_data->client = i2c_priv->client;
+--- a/fs/smb/client/cifsfs.c
++++ b/fs/smb/client/cifsfs.c
+@@ -287,11 +287,15 @@ static void cifs_kill_sb(struct super_bl
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(sb);
  
+ 	/*
+-	 * We ned to release all dentries for the cached directories
+-	 * before we kill the sb.
++	 * We need to release all dentries for the cached directories
++	 * and close all deferred file handles before we kill the sb.
+ 	 */
+ 	if (cifs_sb->root) {
+ 		close_all_cached_dirs(cifs_sb);
++		cifs_close_all_deferred_files_sb(cifs_sb);
++
++		/* Wait for all pending oplock breaks to complete */
++		flush_workqueue(cifsoplockd_wq);
+ 
+ 		/* finally release root dentry */
+ 		dput(cifs_sb->root);
+@@ -756,7 +760,6 @@ static void cifs_umount_begin(struct sup
+ 	spin_unlock(&tcon->tc_lock);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+-	cifs_close_all_deferred_files(tcon);
+ 	/* cancel_brl_requests(tcon); */ /* BB mark all brl mids as exiting */
+ 	/* cancel_notify_requests(tcon); */
+ 	if (tcon->ses && tcon->ses->server) {
+--- a/fs/smb/client/cifsproto.h
++++ b/fs/smb/client/cifsproto.h
+@@ -297,6 +297,7 @@ extern void cifs_close_deferred_file(str
+ 
+ extern void cifs_close_all_deferred_files(struct cifs_tcon *cifs_tcon);
+ 
++void cifs_close_all_deferred_files_sb(struct cifs_sb_info *cifs_sb);
+ extern void cifs_close_deferred_file_under_dentry(struct cifs_tcon *cifs_tcon,
+ 				const char *path);
+ extern struct TCP_Server_Info *
+--- a/fs/smb/client/file.c
++++ b/fs/smb/client/file.c
+@@ -375,8 +375,6 @@ struct cifsFileInfo *cifs_new_fileinfo(s
+ 	mutex_init(&cfile->fh_mutex);
+ 	spin_lock_init(&cfile->file_info_lock);
+ 
+-	cifs_sb_active(inode->i_sb);
+-
+ 	/*
+ 	 * If the server returned a read oplock and we have mandatory brlocks,
+ 	 * set oplock level to None.
+@@ -431,7 +429,6 @@ static void cifsFileInfo_put_final(struc
+ 	struct inode *inode = d_inode(cifs_file->dentry);
+ 	struct cifsInodeInfo *cifsi = CIFS_I(inode);
+ 	struct cifsLockInfo *li, *tmp;
+-	struct super_block *sb = inode->i_sb;
+ 
+ 	/*
+ 	 * Delete any outstanding lock records. We'll lose them when the file
+@@ -449,7 +446,6 @@ static void cifsFileInfo_put_final(struc
+ 
+ 	cifs_put_tlink(cifs_file->tlink);
+ 	dput(cifs_file->dentry);
+-	cifs_sb_deactive(sb);
+ 	kfree(cifs_file->symlink_target);
+ 	kfree(cifs_file);
+ }
+@@ -5188,12 +5184,6 @@ void cifs_oplock_break(struct work_struc
+ 	__u64 persistent_fid, volatile_fid;
+ 	__u16 net_fid;
+ 
+-	/*
+-	 * Hold a reference to the superblock to prevent it and its inodes from
+-	 * being freed while we are accessing cinode. Otherwise, _cifsFileInfo_put()
+-	 * may release the last reference to the sb and trigger inode eviction.
+-	 */
+-	cifs_sb_active(sb);
+ 	wait_on_bit(&cinode->flags, CIFS_INODE_PENDING_WRITERS,
+ 			TASK_UNINTERRUPTIBLE);
+ 
+@@ -5266,7 +5256,6 @@ oplock_break_ack:
+ 	cifs_put_tlink(tlink);
+ out:
+ 	cifs_done_oplock_break(cinode);
+-	cifs_sb_deactive(sb);
+ }
+ 
+ /*
+--- a/fs/smb/client/misc.c
++++ b/fs/smb/client/misc.c
+@@ -29,6 +29,11 @@
+ extern mempool_t *cifs_sm_req_poolp;
+ extern mempool_t *cifs_req_poolp;
+ 
++struct tcon_list {
++	struct list_head entry;
++	struct cifs_tcon *tcon;
++};
++
+ /* The xid serves as a useful identifier for each incoming vfs request,
+    in a similar way to the mid which is useful to track each sent smb,
+    and CurrentXid can also provide a running counter (although it
+@@ -809,6 +814,42 @@ cifs_close_all_deferred_files(struct cif
+ 		kfree(tmp_list);
+ 	}
+ }
++
++void cifs_close_all_deferred_files_sb(struct cifs_sb_info *cifs_sb)
++{
++	struct rb_root *root = &cifs_sb->tlink_tree;
++	struct rb_node *node;
++	struct cifs_tcon *tcon;
++	struct tcon_link *tlink;
++	struct tcon_list *tmp_list, *q;
++	LIST_HEAD(tcon_head);
++
++	spin_lock(&cifs_sb->tlink_tree_lock);
++	for (node = rb_first(root); node; node = rb_next(node)) {
++		tlink = rb_entry(node, struct tcon_link, tl_rbnode);
++		tcon = tlink_tcon(tlink);
++		if (IS_ERR(tcon))
++			continue;
++		tmp_list = kmalloc(sizeof(struct tcon_list), GFP_ATOMIC);
++		if (tmp_list == NULL)
++			break;
++		tmp_list->tcon = tcon;
++		/* Take a reference on tcon to prevent it from being freed */
++		spin_lock(&tcon->tc_lock);
++		++tcon->tc_count;
++		spin_unlock(&tcon->tc_lock);
++		list_add_tail(&tmp_list->entry, &tcon_head);
++	}
++	spin_unlock(&cifs_sb->tlink_tree_lock);
++
++	list_for_each_entry_safe(tmp_list, q, &tcon_head, entry) {
++		cifs_close_all_deferred_files(tmp_list->tcon);
++		list_del(&tmp_list->entry);
++		cifs_put_tcon(tmp_list->tcon);
++		kfree(tmp_list);
++	}
++}
++
+ void
+ cifs_close_deferred_file_under_dentry(struct cifs_tcon *tcon, const char *path)
+ {
 
 
