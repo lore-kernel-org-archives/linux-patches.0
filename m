@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D431A6818;
-	Mon, 23 Mar 2026 13:51:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E809340298;
+	Mon, 23 Mar 2026 13:51:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273912; cv=none; b=X6ddQoor5ur2VRlYiY9EzaIY5FK6KWe2vZbXdu+nB3OptQHj51Bd8/Y0JVML/X3zrdB6rEZMXUNC2N9wQIRScOEkusr/r78DZYRBN2cfhPl870rYCBpqVbpugqewtfYobco1VmLKYfMeArGfuooMKbnMNSQnwwEzWKuvbSA8iw0=
+	t=1774273915; cv=none; b=t4F3N5qfLeAL18uMtajSKwdiajxfApfIDO3IM3qTt8IKO4plg6sDXyPR/eDO7o7YDy0V5Ql7iIW4Qn3EblK+04/ExvchHtRJ8u2WTsEGS6PQcbsnMSLowB7l41s0E6mf4iBMtA/chEntBrOP5bteKjvDx3y0T20VqeleKl6ZoDc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273912; c=relaxed/simple;
-	bh=W4GQKvEVrfxQJTHn0O+MIPB6kNHsAh8NgH59AFP6bE8=;
+	s=arc-20240116; t=1774273915; c=relaxed/simple;
+	bh=CLYtgUJ4aaAnfa3phsISxPxovvL3yyhj+u8x9pDQ9SQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=M6CFh0ogduSi/kyw7f056xTPkD9YGCn94OocsgmXpWE2Rmt0Q5Tl+aHNOnu+Dyj/RkQzI4rwApYX1dKbC4TD9oy3ZWhsamCtvoqhS0/SZIivTH+VjaHPRJUQS6iSGdSZ2BFtvqG6M6Qxmme0ndQkIEii8n8con2Ffg3RCsOKSeU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oRxE1G7o; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=C9HLJgSTVY2vW8zDoeWHox9u3jLkKecCdSwsZPRZnqHrSv7gICPNO33roDgpPZdnnia3sjG0KT3yZZ6cQVohXBhe7gQys5+EjNkOc2EPqYYvu/6Gu2SOkfMMmwflh+dq9GvCsbuvBMxuXP/4qpDq1/qMu/nHB5cRDCePVeMBn5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qnR3tlaR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oRxE1G7o"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2697C4CEF7;
-	Mon, 23 Mar 2026 13:51:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qnR3tlaR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C884FC4CEF7;
+	Mon, 23 Mar 2026 13:51:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273912;
-	bh=W4GQKvEVrfxQJTHn0O+MIPB6kNHsAh8NgH59AFP6bE8=;
+	s=korg; t=1774273915;
+	bh=CLYtgUJ4aaAnfa3phsISxPxovvL3yyhj+u8x9pDQ9SQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oRxE1G7o6dncn6q4lzjgtLXMf4M7b0gIdAEZY7mjO9k9SEnoZ3e+TBIJDYl4Yu0/p
-	 blbPa4tG028i7aVWvzuGNOVVpW3pYP1GQcwrjPijA4pQK6Bllo4aBByyrlkuBsQKQY
-	 pMop/axE9ZYrb3UgLZ1tgfrZKJVbYXr90szlDHdg=
+	b=qnR3tlaRD9zjtrpJP5tIi5/zxI8g8JsHFfuVUeUc2SxQtvkiR3AcFyFecK076WQpT
+	 Dkaz0Brteh5Y7Tu7YgWilp+zvzHSDx3bUKi2/Vukn05AJf5Yp7xJeo2zIi1h1bKItu
+	 yNShS1ruOoCNWdHvXgLVaLmY/MlIwvr0bSJKyQSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Jander <david@protonic.nl>,
-	Johan Hovold <johan@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.19 048/220] spi: fix statistics allocation
-Date: Mon, 23 Mar 2026 14:43:45 +0100
-Message-ID: <20260323134506.106287328@linuxfoundation.org>
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
+	Takahiro Kuwano <takahiro.kuwano@infineon.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Miquel Raynal <miquel.raynal@bootlin.com>
+Subject: [PATCH 6.19 049/220] mtd: spi-nor: Fix RDCR controller capability core check
+Date: Mon, 23 Mar 2026 14:43:46 +0100
+Message-ID: <20260323134506.138186567@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,76 +52,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Johan Hovold <johan@kernel.org>
+From: Miquel Raynal <miquel.raynal@bootlin.com>
 
-commit dee0774bbb2abb172e9069ce5ffef579b12b3ae9 upstream.
+commit ac512cd351f7e4ab4569f6a52c116f4ab3a239cc upstream.
 
-The controller per-cpu statistics is not allocated until after the
-controller has been registered with driver core, which leaves a window
-where accessing the sysfs attributes can trigger a NULL-pointer
-dereference.
+Commit 5008c3ec3f89 ("mtd: spi-nor: core: Check read CR support") adds a
+controller check to make sure the core will not use CR reads on
+controllers not supporting them. The approach is valid but the fix is
+incorrect. Unfortunately, the author could not catch it, because the
+expected behavior was met. The patch indeed drops the RDCR capability,
+but it does it for all controllers!
 
-Fix this by moving the statistics allocation to controller allocation
-while tying its lifetime to that of the controller (rather than using
-implicit devres).
+The issue comes from the use of spi_nor_spimem_check_op() which is an
+internal helper dedicated to check read/write operations only, despite
+its generic name.
 
-Fixes: 6598b91b5ac3 ("spi: spi.c: Convert statistics to per-cpu u64_stats_t")
-Cc: stable@vger.kernel.org	# 6.0
-Cc: David Jander <david@protonic.nl>
-Signed-off-by: Johan Hovold <johan@kernel.org>
-Link: https://patch.msgid.link/20260312151817.32100-3-johan@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This helper looks for the biggest number of address bytes that can be
+used for a page operation and tries 4 then 3. It then calls the usual
+spi-mem helpers to do the checks. These will always fail because there
+is now an inconsistency: the address cycles are forced to 4 (then 3)
+bytes, but the bus width during the address cycles rightfully remains
+0. There is a non-zero address length but a zero address bus width,
+which is an invalid combination.
+
+The correct check in this case is to directly call spi_mem_supports_op()
+which doesn't messes up with the operation content.
+
+Fixes: 5008c3ec3f89 ("mtd: spi-nor: core: Check read CR support")
+Cc: stable@vger.kernel.org
+Acked-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Acked-by: Takahiro Kuwano <takahiro.kuwano@infineon.com>
+Reviewed-by: Pratyush Yadav <pratyush@kernel.org>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi.c |   17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ drivers/mtd/spi-nor/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -2914,6 +2914,8 @@ static void spi_controller_release(struc
- 	struct spi_controller *ctlr;
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 8ffeb41c3e08..13201908a69f 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -2466,7 +2466,7 @@ spi_nor_spimem_adjust_hwcaps(struct spi_nor *nor, u32 *hwcaps)
  
- 	ctlr = container_of(dev, struct spi_controller, dev);
-+
-+	free_percpu(ctlr->pcpu_statistics);
- 	kfree(ctlr);
- }
+ 		spi_nor_spimem_setup_op(nor, &op, nor->reg_proto);
  
-@@ -3057,6 +3059,12 @@ struct spi_controller *__spi_alloc_contr
- 	if (!ctlr)
- 		return NULL;
- 
-+	ctlr->pcpu_statistics = spi_alloc_pcpu_stats(NULL);
-+	if (!ctlr->pcpu_statistics) {
-+		kfree(ctlr);
-+		return NULL;
-+	}
-+
- 	device_initialize(&ctlr->dev);
- 	INIT_LIST_HEAD(&ctlr->queue);
- 	spin_lock_init(&ctlr->queue_lock);
-@@ -3347,13 +3355,6 @@ int spi_register_controller(struct spi_c
- 		if (status)
- 			goto del_ctrl;
+-		if (spi_nor_spimem_check_op(nor, &op))
++		if (!spi_mem_supports_op(nor->spimem, &op))
+ 			nor->flags |= SNOR_F_NO_READ_CR;
  	}
--	/* Add statistics */
--	ctlr->pcpu_statistics = spi_alloc_pcpu_stats(dev);
--	if (!ctlr->pcpu_statistics) {
--		dev_err(dev, "Error allocating per-cpu statistics\n");
--		status = -ENOMEM;
--		goto destroy_queue;
--	}
- 
- 	mutex_lock(&board_lock);
- 	list_add_tail(&ctlr->list, &spi_controller_list);
-@@ -3366,8 +3367,6 @@ int spi_register_controller(struct spi_c
- 	acpi_register_spi_devices(ctlr);
- 	return status;
- 
--destroy_queue:
--	spi_destroy_queue(ctlr);
- del_ctrl:
- 	device_del(&ctlr->dev);
- free_bus_id:
+ }
+-- 
+2.53.0
+
 
 
