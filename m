@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770FB27E1A1;
-	Mon, 23 Mar 2026 15:12:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B84BB3B9DBC;
+	Mon, 23 Mar 2026 15:12:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278730; cv=none; b=JUMi8rr2WVLMLFbvhUA8T1PefpFZetpZLpRnBkReK+nEZPM+um0GuR2IF8VqOzUf7aMY6UyYUjE7aix0AGpDPZnqxGtJTq4QnqKmLXTqXxIljYwtw0XJIZV2YtgaKE4mPJXCGvTzoqUyQiPEYVYbb96RN6O4ibfj95syWQfsMS4=
+	t=1774278733; cv=none; b=bR38ZG8Z6bPIEj33p1H3jwnYA+H7eufyqxOfrkfp9wliwHy15vO5ekFnVCKzbPl/ssd0+9wF/+bDdXql+lT2hE+zTL+hMvV32V3O1POLgUZl5Jr4zpANgqtcccsys5e1gfCMhQxjR9xsTFiP2h7vatp/tcbItfGWddK/zCAwFtc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278730; c=relaxed/simple;
-	bh=xQHmOvadmMHhXFbOorPOjMgthX+BusjItcTh20RTeZQ=;
+	s=arc-20240116; t=1774278733; c=relaxed/simple;
+	bh=la5VaXFgR7v1DAQ6IEHW/8xk0usWZhK43hfXjAFd3gw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B8EY0lzNWasJEf4zTh3vhVdiixYXLJ0RBKTcB3AYcBcE3/w8jv71+DJNdbM5KdVWBUKQb1cWrFU9j3Lr1o7aDXrq2TmTC8GeQSExtUO/4ZVuprsojqeN4o3IrL+HI72BnCib8/4z763Cwhz9spsMV5sNgznhIVgYAzOAXjPb4Ys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wyXCTe15; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rvpQq8SE6RE1c3Ye/QaeLgOig7H0hsLroBAbcc0O1jiNUMCQ08qobTMqZpMg5HVD7zlqntMiipwFQge5v+QUCRCFELbyQ/9fDpKy/9nDeTKak9ZcgweY7A6HSR6J4XVSjeugZ4yE7BAwsKMQWPQNPW6a0Z0257Wu3YF83KishW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YszDjqdT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wyXCTe15"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E77A4C4CEF7;
-	Mon, 23 Mar 2026 15:12:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YszDjqdT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C860C4CEF7;
+	Mon, 23 Mar 2026 15:12:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278730;
-	bh=xQHmOvadmMHhXFbOorPOjMgthX+BusjItcTh20RTeZQ=;
+	s=korg; t=1774278733;
+	bh=la5VaXFgR7v1DAQ6IEHW/8xk0usWZhK43hfXjAFd3gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wyXCTe15jD+e4kLdd3IS5k7RJ6tQku7VM0z/VL+ylMXj0eMqh0LrG0ovkpg60dsjG
-	 oe0MP0j78anm7ZL97kDv+Uq3ae+M7rJkiY0kVP/NK/2gcx2IY99up9prlYJEmQvkDt
-	 kyXdNxQJG6/nXLEmmcc0rFiQ6IvnESq9i6hjI1X4=
+	b=YszDjqdTZMPlktVLYE/6UPGCHR+HYcQoRwYVREHhG0OKJvjajcgXv2Go/HP8ZE3ae
+	 5uIYBW1I0N7ClEPFyMxkBHWBWzLA8Sb6ItSfyzcuJCVQljW8IlRh4qG8PQyCQKoc7m
+	 0khw2mRb3ZyvLRjKzOlT+6nHsBK4EeCPnzu1Czro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	linux-btrfs@vger.kernel.org
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@infradead.org>,
-	Filipe Manana <fdmanana@suse.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.6 400/567] btrfs: always fallback to buffered write if the inode requires checksum
-Date: Mon, 23 Mar 2026 14:45:20 +0100
-Message-ID: <20260323134543.763511700@linuxfoundation.org>
+	Hongliang Wang <wanghongliang@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.6 401/567] net: stmmac: dwmac-loongson: Set clk_csr_i to 100-150MHz
+Date: Mon, 23 Mar 2026 14:45:21 +0100
+Message-ID: <20260323134543.787540314@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,105 +50,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Qu Wenruo <wqu@suse.com>
+From: Huacai Chen <chenhuacai@loongson.cn>
 
-commit 968f19c5b1b7d5595423b0ac0020cc18dfed8cb5 upstream.
+commit e1aa5ef892fb4fa9014a25e87b64b97347919d37 upstream.
 
-[BUG]
-It is a long known bug that VM image on btrfs can lead to data csum
-mismatch, if the qemu is using direct-io for the image (this is commonly
-known as cache mode 'none').
+Current clk_csr_i setting of Loongson STMMAC (including LS7A1000/2000
+and LS2K1000/2000/3000) are copy & paste from other drivers. In fact,
+Loongson STMMAC use 125MHz clocks and need 62 freq division to within
+2.5MHz, meeting most PHY MDC requirement. So fix by setting clk_csr_i
+to 100-150MHz, otherwise some PHYs may link fail.
 
-[CAUSE]
-Inside the VM, if the fs is EXT4 or XFS, or even NTFS from Windows, the
-fs is allowed to dirty/modify the folio even if the folio is under
-writeback (as long as the address space doesn't have AS_STABLE_WRITES
-flag inherited from the block device).
-
-This is a valid optimization to improve the concurrency, and since these
-filesystems have no extra checksum on data, the content change is not a
-problem at all.
-
-But the final write into the image file is handled by btrfs, which needs
-the content not to be modified during writeback, or the checksum will
-not match the data (checksum is calculated before submitting the bio).
-
-So EXT4/XFS/NTRFS assume they can modify the folio under writeback, but
-btrfs requires no modification, this leads to the false csum mismatch.
-
-This is only a controlled example, there are even cases where
-multi-thread programs can submit a direct IO write, then another thread
-modifies the direct IO buffer for whatever reason.
-
-For such cases, btrfs has no sane way to detect such cases and leads to
-false data csum mismatch.
-
-[FIX]
-I have considered the following ideas to solve the problem:
-
-- Make direct IO to always skip data checksum
-  This not only requires a new incompatible flag, as it breaks the
-  current per-inode NODATASUM flag.
-  But also requires extra handling for no csum found cases.
-
-  And this also reduces our checksum protection.
-
-- Let hardware handle all the checksum
-  AKA, just nodatasum mount option.
-  That requires trust for hardware (which is not that trustful in a lot
-  of cases), and it's not generic at all.
-
-- Always fallback to buffered write if the inode requires checksum
-  This was suggested by Christoph, and is the solution utilized by this
-  patch.
-
-  The cost is obvious, the extra buffer copying into page cache, thus it
-  reduces the performance.
-  But at least it's still user configurable, if the end user still wants
-  the zero-copy performance, just set NODATASUM flag for the inode
-  (which is a common practice for VM images on btrfs).
-
-  Since we cannot trust user space programs to keep the buffer
-  consistent during direct IO, we have no choice but always falling back
-  to buffered IO.  At least by this, we avoid the more deadly false data
-  checksum mismatch error.
-
-Cc: stable@vger.kernel.org # 6.6
-[ Conflicts caused by code extracted into direct-io.c ]
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Reviewed-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: stable@vger.kernel.org
+Fixes: 30bba69d7db40e7 ("stmmac: pci: Add dwmac support for Loongson")
+Signed-off-by: Hongliang Wang <wanghongliang@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/file.c |   16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/btrfs/file.c
-+++ b/fs/btrfs/file.c
-@@ -1514,6 +1514,22 @@ relock:
- 		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
- 		goto buffered;
- 	}
-+	/*
-+	 * We can't control the folios being passed in, applications can write
-+	 * to them while a direct IO write is in progress.  This means the
-+	 * content might change after we calculated the data checksum.
-+	 * Therefore we can end up storing a checksum that doesn't match the
-+	 * persisted data.
-+	 *
-+	 * To be extra safe and avoid false data checksum mismatch, if the
-+	 * inode requires data checksum, just fallback to buffered IO.
-+	 * For buffered IO we have full control of page cache and can ensure
-+	 * no one is modifying the content during writeback.
-+	 */
-+	if (!(BTRFS_I(inode)->flags & BTRFS_INODE_NODATASUM)) {
-+		btrfs_inode_unlock(BTRFS_I(inode), ilock_flags);
-+		goto buffered;
-+	}
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-loongson.c
+@@ -14,7 +14,7 @@
+ static int loongson_default_data(struct plat_stmmacenet_data *plat)
  
- 	/*
- 	 * The iov_iter can be mapped to the same file range we are writing to.
+ {
+-	plat->clk_csr = 2;	/* clk_csr_i = 20-35MHz & MDC = clk_csr_i/16 */
++	plat->clk_csr = 1;	/* clk_csr_i = 100-150MHz & MDC = clk_csr_i/62 */
+ 	plat->has_gmac = 1;
+ 	plat->force_sf_dma_mode = 1;
+ 
 
 
