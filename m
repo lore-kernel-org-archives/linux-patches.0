@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B4C3B388C;
-	Mon, 23 Mar 2026 16:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303032550D5;
+	Mon, 23 Mar 2026 16:27:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283241; cv=none; b=Y6UQkW+0M/OgM1OluzDk5W3wUrfusoiJWs+qw/INkBPF9CSp8QWhKWvV4uDqWSal12gauKeB4cOaH3bYGl7N+LLSKfu1B7ZAaPXIo7+MAdnO0m/tZ1LmdEKlBttXdHYpme8Slq7IFk/4Pq2ZCpMU1/Vpt41aCdQqkTyl5Lm2BKg=
+	t=1774283244; cv=none; b=XS/7jpeDE+PHLLOBJdBbncKWGbHSaafGBHMe7D7H/tlQG6j/TxetSN9hzkcPowtAa9eocosr+F2O3APGELwYCEgdfYcFptQPlN4ejlAJB8jFumqA5G0/J16FhvtJJy4vnvB12M/QynMkjxoUAN6YikAspMU/e96W7E0Frwy5tXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283241; c=relaxed/simple;
-	bh=jUDaXqQt7Ae2EqHBxU1yhasGopStIpTNfY3S+c3CEf4=;
+	s=arc-20240116; t=1774283244; c=relaxed/simple;
+	bh=YvDbJvSLHxdnlF6Bkli3DJtOFhqFDZjVuxz3kVx0Q5w=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IU0q0PWnri1RHmjIvaxftAllJz/5cDEA8db3KwxwZjzguUxuP7UzZCwRby07q+sfCTBT6BG/EtGr671CirZVGbOr1NCMfqVts2qWasEcFgmgk1iA5Iy3M/XF8X7IlzjAiC7xVC7e2Ls1RL1X92MNjy+eV5WsfWI1ppy1uWBXZTg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0n8fC+Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=hcad9atPWN7H21/qeia/PfXotuOt26KlQz5mdcgRxeFAn0jTw9BmMFEthboicEKnTahEgX/0VEbRsCUEqVg3x+YUfBh/t9GsGvlX760hh5I8pWuWvCsUlV6wCUWFCuax5w3Bsbxd4EvdbCLyzV6BgwlwaY5Jd+6WWHxh9PpMfSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zr5s+wCY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0n8fC+Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AF2C4CEF7;
-	Mon, 23 Mar 2026 16:27:20 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zr5s+wCY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B303EC4CEF7;
+	Mon, 23 Mar 2026 16:27:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283241;
-	bh=jUDaXqQt7Ae2EqHBxU1yhasGopStIpTNfY3S+c3CEf4=;
+	s=korg; t=1774283244;
+	bh=YvDbJvSLHxdnlF6Bkli3DJtOFhqFDZjVuxz3kVx0Q5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0n8fC+YNzZUkYbwv0UaroMPKtk2q+hrAm3odW2XoFmlA1F0UdqPdkDTuT/TIhAIL
-	 rElGjSNbWKkNDafi4NVgnlKvsmsJQSxUqUs92kjMMVLr1/d2Wq/k1kOxZ0+DLqLtGO
-	 as7q6woDTTjfXLxzrNlZZhxHnvU5qI1SyZxk7arI=
+	b=Zr5s+wCYUin8bgQrWZ1PQfGiRuY9gd7KZ+zrjR5+8dbVZhOVUXPEafnWFjEsWNcda
+	 guj18+r6NcgbnQ3IfeWkZoEChaGpA2k2TVScLh03pk59YACRd8VIDYyRn8ReZuKurV
+	 oe9GJ/e1MjmtT/mgUOyBpMy+3b00XVCP78aOypSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josh Law <objecting@objecting.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 453/481] tools/bootconfig: fix fd leak in load_xbc_file() on fstat failure
-Date: Mon, 23 Mar 2026 14:47:15 +0100
-Message-ID: <20260323134536.252249532@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>
+Subject: [PATCH 6.1 454/481] netfilter: nf_tables: de-constify set commit ops function argument
+Date: Mon, 23 Mar 2026 14:47:16 +0100
+Message-ID: <20260323134536.274851010@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,44 +49,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Josh Law <objecting@objecting.org>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 3b2c2ab4ceb82af484310c3087541eab00ea288b ]
+commit 256001672153af5786c6ca148114693d7d76d836 upstream.
 
-If fstat() fails after open() succeeds, the function returns without
-closing the file descriptor. Also preserve errno across close(), since
-close() may overwrite it before the error is returned.
+The set backend using this already has to work around this via ugly
+cast, don't spread this pattern.
 
-Link: https://lore.kernel.org/all/20260318155847.78065-3-objecting@objecting.org/
-
-Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
-Signed-off-by: Josh Law <objecting@objecting.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/bootconfig/main.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ include/net/netfilter/nf_tables.h |    2 +-
+ net/netfilter/nft_set_pipapo.c    |    7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
-index 8a48cc2536f56..32cf48f2da9a1 100644
---- a/tools/bootconfig/main.c
-+++ b/tools/bootconfig/main.c
-@@ -157,8 +157,11 @@ static int load_xbc_file(const char *path, char **buf)
- 	if (fd < 0)
- 		return -errno;
- 	ret = fstat(fd, &stat);
--	if (ret < 0)
--		return -errno;
-+	if (ret < 0) {
-+		ret = -errno;
-+		close(fd);
-+		return ret;
-+	}
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -470,7 +470,7 @@ struct nft_set_ops {
+ 					       const struct nft_set *set,
+ 					       const struct nft_set_elem *elem,
+ 					       unsigned int flags);
+-	void				(*commit)(const struct nft_set *set);
++	void				(*commit)(struct nft_set *set);
+ 	void				(*abort)(const struct nft_set *set);
+ 	u64				(*privsize)(const struct nlattr * const nla[],
+ 						    const struct nft_set_desc *desc);
+--- a/net/netfilter/nft_set_pipapo.c
++++ b/net/netfilter/nft_set_pipapo.c
+@@ -1587,12 +1587,11 @@ static void nft_pipapo_gc_deactivate(str
  
- 	ret = load_xbc_fd(fd, buf, stat.st_size);
- 
--- 
-2.51.0
-
+ /**
+  * pipapo_gc() - Drop expired entries from set, destroy start and end elements
+- * @_set:	nftables API set representation
++ * @set:	nftables API set representation
+  * @m:		Matching data
+  */
+-static void pipapo_gc(const struct nft_set *_set, struct nft_pipapo_match *m)
++static void pipapo_gc(struct nft_set *set, struct nft_pipapo_match *m)
+ {
+-	struct nft_set *set = (struct nft_set *) _set;
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct net *net = read_pnet(&set->net);
+ 	u64 tstamp = nft_net_tstamp(net);
+@@ -1707,7 +1706,7 @@ static void pipapo_reclaim_match(struct
+  * We also need to create a new working copy for subsequent insertions and
+  * deletions.
+  */
+-static void nft_pipapo_commit(const struct nft_set *set)
++static void nft_pipapo_commit(struct nft_set *set)
+ {
+ 	struct nft_pipapo *priv = nft_set_priv(set);
+ 	struct nft_pipapo_match *new_clone, *old;
 
 
