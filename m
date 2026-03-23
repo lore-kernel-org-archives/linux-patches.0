@@ -1,40 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43AE63B8D6B;
-	Mon, 23 Mar 2026 13:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9973B9611;
+	Mon, 23 Mar 2026 13:59:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274383; cv=none; b=aq/w2cElqi1nk44Z62vCyh/KypwGCfBqjENQhZ1IbxpD/E3cW7g0jAT5w2uZd1rCHCb9dOR6HdyAsukj2QQBzOinypEPAT9PGfe4AEv6L4HKviOOiwMDUouNmRKe87NliHOjwnTQpMbg2rpH3rZzn50thbF93X9s5OWLB7s6rZk=
+	t=1774274386; cv=none; b=uZVuxsrKrtNyLTG1gcT7l88NnrW3zoFHHw0i/+T3RlyO3fNH9f2qcIPPDXkgP4EIDo7zuUPCWzM5iIZUx9RCp5BjVYaOR/sAAi/+YgkyQ+mBoIJz1AISky2+dxKeA8t7lmRVsLx3ML1tzlwgF4dvTrAj8sp2/3mmMqkoHpuW11Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274383; c=relaxed/simple;
-	bh=37ONiUJe11gT6DRrPL4MgqeQ3u6RPWmUHpos/DIK0Fo=;
+	s=arc-20240116; t=1774274386; c=relaxed/simple;
+	bh=ZJDpME7DHtiVK//m6YaaGGgSG3MS2VqgNCnPo6OGbwY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=WPUJc0C+cJIygwbePcNU0kJXzetHtiRxEPojAVSrlxJ0Q+OUf1vFrtBJkOEgmoJBSQbpV0IG9S1Y07mObIxu6oY8xiLQ+2HeFoSSvnOYtbrYn8dB+CtVej9ztnf1pqsImBVzzzfU0ayaCfLQoW0dnYFpW7tab1hT9Veu7bmhgQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ff0yVegD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qCbdOrsuSoiASJq5Gdq1r7hfskt61o0w7FUy7dcQrKPCDSLGtt3zlKqGeibSYj8IyReC6uAX1Vy8PaAgVQ/R4N2C0QhayXWz+R4r8jx25LhHE99WtkpcvFhcg+gwd4KQNwjIxRkevtq8pdAq/ggFcQMJd6bMYqjjlu5OJXnGuGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=afEV+9NW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ff0yVegD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A06C4CEF7;
-	Mon, 23 Mar 2026 13:59:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="afEV+9NW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A19C2BC9E;
+	Mon, 23 Mar 2026 13:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274383;
-	bh=37ONiUJe11gT6DRrPL4MgqeQ3u6RPWmUHpos/DIK0Fo=;
+	s=korg; t=1774274386;
+	bh=ZJDpME7DHtiVK//m6YaaGGgSG3MS2VqgNCnPo6OGbwY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ff0yVegDohqmL7aY5tEFLEOZ0Gli0HPk9ek55Ps1fPlpCj5dch1T/yzrjVxijutdG
-	 +tRvfvUFcOQlxwa2pQ2P3lfuSWTdFGyPL3bNIhucmevJjH8waVyWeuUJQf1yx1nHT1
-	 MYe45xpsmHYkV8gTadjqAJdlpmumDY/0nhBTthHk=
+	b=afEV+9NWUBGWXoH4AddEamY4V7sUOpgGyix6WUuXMot4h3q5SlsSkWTholo7w5QC0
+	 YeCQJJX3HWFVPglzCC/wtb20GJPWscv58S3rm300+DkORjtud0lugU9HDuovCowHev
+	 Iq5uM9Ko9XzXGAv4JoaUDnZWFaPNIs0MjwvcBKAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 199/220] mtd: rawnand: brcmnand: skip DMA during panic write
-Date: Mon, 23 Mar 2026 14:46:16 +0100
-Message-ID: <20260323134510.868733170@linuxfoundation.org>
+	Mukesh Rathor <mrathor@linux.microsoft.com>,
+	Uros Bizjak <ubizjak@gmail.com>,
+	Wei Liu <wei.liu@kernel.org>,
+	linux-hyperv@vger.kernel.org,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Cooper <andrew.cooper3@citrix.com>
+Subject: [PATCH 6.19 200/220] x86/hyperv: Use __naked attribute to fix stackless C function
+Date: Mon, 23 Mar 2026 14:46:17 +0100
+Message-ID: <20260323134510.896373557@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,47 +55,157 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit da9ba4dcc01e7cf52b7676f0ee9607b8358c2171 ]
+[ Upstream commit 3fde5281b805370a6c3bd2ef462ebff70a0ea2c6 ]
 
-When oops_panic_write is set, the driver disables interrupts and
-switches to PIO polling mode but still falls through into the DMA
-path. DMA cannot be used reliably in panic context, so make the
-DMA path an else branch to ensure only PIO is used during panic
-writes.
+hv_crash_c_entry() is a C function that is entered without a stack,
+and this is only allowed for functions that have the __naked attribute,
+which informs the compiler that it must not emit the usual prologue and
+epilogue or emit any other kind of instrumentation that relies on a
+stack frame.
 
-Fixes: c1ac2dc34b51 ("mtd: rawnand: brcmnand: When oops in progress use pio and interrupt polling")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+So split up the function, and set the __naked attribute on the initial
+part that sets up the stack, GDT, IDT and other pieces that are needed
+for ordinary C execution. Given that function calls are not permitted
+either, use the existing long return coded in an asm() block to call the
+second part of the function, which is an ordinary function that is
+permitted to call other functions as usual.
+
+Reviewed-by: Andrew Cooper <andrew.cooper3@citrix.com> # asm parts, not hv parts
+Reviewed-by: Mukesh Rathor <mrathor@linux.microsoft.com>
+Acked-by: Uros Bizjak <ubizjak@gmail.com>
+Cc: Wei Liu <wei.liu@kernel.org>
+Cc: linux-hyperv@vger.kernel.org
+Fixes: 94212d34618c ("x86/hyperv: Implement hypervisor RAM collection into vmcore")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/x86/hyperv/hv_crash.c | 82 ++++++++++++++++++++------------------
+ 1 file changed, 43 insertions(+), 39 deletions(-)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index 835653bdd5abc..8f4d001377a1c 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2350,14 +2350,12 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
- 	for (i = 0; i < ctrl->max_oob; i += 4)
- 		oob_reg_write(ctrl, i, 0xffffffff);
+diff --git a/arch/x86/hyperv/hv_crash.c b/arch/x86/hyperv/hv_crash.c
+index a78e4fed57203..1d91051daa3de 100644
+--- a/arch/x86/hyperv/hv_crash.c
++++ b/arch/x86/hyperv/hv_crash.c
+@@ -107,14 +107,12 @@ static void __noreturn hv_panic_timeout_reboot(void)
+ 		cpu_relax();
+ }
  
--	if (mtd->oops_panic_write)
-+	if (mtd->oops_panic_write) {
- 		/* switch to interrupt polling and PIO mode */
- 		disable_ctrl_irqs(ctrl);
--
--	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
-+	} else if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
- 		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
- 				    CMD_PROGRAM_PAGE))
--
- 			ret = -EIO;
+-/* This cannot be inlined as it needs stack */
+-static noinline __noclone void hv_crash_restore_tss(void)
++static void hv_crash_restore_tss(void)
+ {
+ 	load_TR_desc();
+ }
  
- 		goto out;
+-/* This cannot be inlined as it needs stack */
+-static noinline void hv_crash_clear_kernpt(void)
++static void hv_crash_clear_kernpt(void)
+ {
+ 	pgd_t *pgd;
+ 	p4d_t *p4d;
+@@ -125,6 +123,25 @@ static noinline void hv_crash_clear_kernpt(void)
+ 	native_p4d_clear(p4d);
+ }
+ 
++
++static void __noreturn hv_crash_handle(void)
++{
++	hv_crash_restore_tss();
++	hv_crash_clear_kernpt();
++
++	/* we are now fully in devirtualized normal kernel mode */
++	__crash_kexec(NULL);
++
++	hv_panic_timeout_reboot();
++}
++
++/*
++ * __naked functions do not permit function calls, not even to __always_inline
++ * functions that only contain asm() blocks themselves. So use a macro instead.
++ */
++#define hv_wrmsr(msr, val) \
++	asm volatile("wrmsr" :: "c"(msr), "a"((u32)val), "d"((u32)(val >> 32)) : "memory")
++
+ /*
+  * This is the C entry point from the asm glue code after the disable hypercall.
+  * We enter here in IA32-e long mode, ie, full 64bit mode running on kernel
+@@ -133,51 +150,38 @@ static noinline void hv_crash_clear_kernpt(void)
+  * available. We restore kernel GDT, and rest of the context, and continue
+  * to kexec.
+  */
+-static asmlinkage void __noreturn hv_crash_c_entry(void)
++static void __naked hv_crash_c_entry(void)
+ {
+-	struct hv_crash_ctxt *ctxt = &hv_crash_ctxt;
+-
+ 	/* first thing, restore kernel gdt */
+-	native_load_gdt(&ctxt->gdtr);
++	asm volatile("lgdt %0" : : "m" (hv_crash_ctxt.gdtr));
+ 
+-	asm volatile("movw %%ax, %%ss" : : "a"(ctxt->ss));
+-	asm volatile("movq %0, %%rsp" : : "m"(ctxt->rsp));
++	asm volatile("movw %0, %%ss\n\t"
++		     "movq %1, %%rsp"
++		     :: "m"(hv_crash_ctxt.ss), "m"(hv_crash_ctxt.rsp));
+ 
+-	asm volatile("movw %%ax, %%ds" : : "a"(ctxt->ds));
+-	asm volatile("movw %%ax, %%es" : : "a"(ctxt->es));
+-	asm volatile("movw %%ax, %%fs" : : "a"(ctxt->fs));
+-	asm volatile("movw %%ax, %%gs" : : "a"(ctxt->gs));
++	asm volatile("movw %0, %%ds" : : "m"(hv_crash_ctxt.ds));
++	asm volatile("movw %0, %%es" : : "m"(hv_crash_ctxt.es));
++	asm volatile("movw %0, %%fs" : : "m"(hv_crash_ctxt.fs));
++	asm volatile("movw %0, %%gs" : : "m"(hv_crash_ctxt.gs));
+ 
+-	native_wrmsrq(MSR_IA32_CR_PAT, ctxt->pat);
+-	asm volatile("movq %0, %%cr0" : : "r"(ctxt->cr0));
++	hv_wrmsr(MSR_IA32_CR_PAT, hv_crash_ctxt.pat);
++	asm volatile("movq %0, %%cr0" : : "r"(hv_crash_ctxt.cr0));
+ 
+-	asm volatile("movq %0, %%cr8" : : "r"(ctxt->cr8));
+-	asm volatile("movq %0, %%cr4" : : "r"(ctxt->cr4));
+-	asm volatile("movq %0, %%cr2" : : "r"(ctxt->cr4));
++	asm volatile("movq %0, %%cr8" : : "r"(hv_crash_ctxt.cr8));
++	asm volatile("movq %0, %%cr4" : : "r"(hv_crash_ctxt.cr4));
++	asm volatile("movq %0, %%cr2" : : "r"(hv_crash_ctxt.cr2));
+ 
+-	native_load_idt(&ctxt->idtr);
+-	native_wrmsrq(MSR_GS_BASE, ctxt->gsbase);
+-	native_wrmsrq(MSR_EFER, ctxt->efer);
++	asm volatile("lidt %0" : : "m" (hv_crash_ctxt.idtr));
++	hv_wrmsr(MSR_GS_BASE, hv_crash_ctxt.gsbase);
++	hv_wrmsr(MSR_EFER, hv_crash_ctxt.efer);
+ 
+ 	/* restore the original kernel CS now via far return */
+-	asm volatile("movzwq %0, %%rax\n\t"
+-		     "pushq %%rax\n\t"
+-		     "pushq $1f\n\t"
+-		     "lretq\n\t"
+-		     "1:nop\n\t" : : "m"(ctxt->cs) : "rax");
+-
+-	/* We are in asmlinkage without stack frame, hence make C function
+-	 * calls which will buy stack frames.
+-	 */
+-	hv_crash_restore_tss();
+-	hv_crash_clear_kernpt();
+-
+-	/* we are now fully in devirtualized normal kernel mode */
+-	__crash_kexec(NULL);
+-
+-	hv_panic_timeout_reboot();
++	asm volatile("pushq %q0\n\t"
++		     "pushq %q1\n\t"
++		     "lretq"
++		     :: "r"(hv_crash_ctxt.cs), "r"(hv_crash_handle));
+ }
+-/* Tell gcc we are using lretq long jump in the above function intentionally */
++/* Tell objtool we are using lretq long jump in the above function intentionally */
+ STACK_FRAME_NON_STANDARD(hv_crash_c_entry);
+ 
+ static void hv_mark_tss_not_busy(void)
 -- 
 2.51.0
 
