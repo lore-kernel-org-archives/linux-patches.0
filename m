@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378B33BE657;
-	Mon, 23 Mar 2026 16:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79B4C3B388C;
+	Mon, 23 Mar 2026 16:27:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283239; cv=none; b=ERFLvAcPqYmckiEm2/+vR+f3JrfoP3Pue2RoZ8v/EzbGWNHwZUFoX27I6OZYRJLtg2ffSY5vjtxDWQy2A/zuuZxv3Fx0NIXOuWlVtt5Xj7AkLyjmDaDCibMsDUvK5BsfND6Lnv3QAErzW4rSp517Y3Urrzbeij8/V2wOb52PO+E=
+	t=1774283241; cv=none; b=Y6UQkW+0M/OgM1OluzDk5W3wUrfusoiJWs+qw/INkBPF9CSp8QWhKWvV4uDqWSal12gauKeB4cOaH3bYGl7N+LLSKfu1B7ZAaPXIo7+MAdnO0m/tZ1LmdEKlBttXdHYpme8Slq7IFk/4Pq2ZCpMU1/Vpt41aCdQqkTyl5Lm2BKg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283239; c=relaxed/simple;
-	bh=aEeapLI7HYCKoZ0Bp8qsuoL9GxFGPud2JYYLVN6WR9c=;
+	s=arc-20240116; t=1774283241; c=relaxed/simple;
+	bh=jUDaXqQt7Ae2EqHBxU1yhasGopStIpTNfY3S+c3CEf4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ze4BuLY10xisS8h0L+YbBzRkxNwZWTfooDKLRlzjV1eJcpHVsb8szMSy2yNyK9izwM03PnDShETgjKCzMNWlUbz4pKrC0e4TPeMUnej4wK4bDQsu1QClv8Ym4yy99e3JGSifxGo/c0VRIhLIU6YUTATzjeAj0EP4UXCqdhRo2pg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q7sLWULG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IU0q0PWnri1RHmjIvaxftAllJz/5cDEA8db3KwxwZjzguUxuP7UzZCwRby07q+sfCTBT6BG/EtGr671CirZVGbOr1NCMfqVts2qWasEcFgmgk1iA5Iy3M/XF8X7IlzjAiC7xVC7e2Ls1RL1X92MNjy+eV5WsfWI1ppy1uWBXZTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=K0n8fC+Y; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q7sLWULG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8487AC2BCB0;
-	Mon, 23 Mar 2026 16:27:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="K0n8fC+Y"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12AF2C4CEF7;
+	Mon, 23 Mar 2026 16:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283238;
-	bh=aEeapLI7HYCKoZ0Bp8qsuoL9GxFGPud2JYYLVN6WR9c=;
+	s=korg; t=1774283241;
+	bh=jUDaXqQt7Ae2EqHBxU1yhasGopStIpTNfY3S+c3CEf4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7sLWULGlPz6l26Si6NmIlzf8mRvXysMN08tJ19hPtJWei7XLdlk2tICxRzLJU/vD
-	 HdX87xeBn7ILr3ogcAZLK1J9WlAKvYmO+MVtogOthJdchSpHmv8ZK27EJzZDcIrBhs
-	 nxKckA6KOLtKYj81GAAgR2xv4M57ZRfe0q/HFYKo=
+	b=K0n8fC+YNzZUkYbwv0UaroMPKtk2q+hrAm3odW2XoFmlA1F0UdqPdkDTuT/TIhAIL
+	 rElGjSNbWKkNDafi4NVgnlKvsmsJQSxUqUs92kjMMVLr1/d2Wq/k1kOxZ0+DLqLtGO
+	 as7q6woDTTjfXLxzrNlZZhxHnvU5qI1SyZxk7arI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josh Law <objecting@objecting.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 452/481] lib/bootconfig: check xbc_init_node() return in override path
-Date: Mon, 23 Mar 2026 14:47:14 +0100
-Message-ID: <20260323134536.229488955@linuxfoundation.org>
+Subject: [PATCH 6.1 453/481] tools/bootconfig: fix fd leak in load_xbc_file() on fstat failure
+Date: Mon, 23 Mar 2026 14:47:15 +0100
+Message-ID: <20260323134536.252249532@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,45 +53,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Josh Law <objecting@objecting.org>
 
-[ Upstream commit bb288d7d869e86d382f35a0e26242c5ccb05ca82 ]
+[ Upstream commit 3b2c2ab4ceb82af484310c3087541eab00ea288b ]
 
-The ':=' override path in xbc_parse_kv() calls xbc_init_node() to
-re-initialize an existing value node but does not check the return
-value. If xbc_init_node() fails (data offset out of range), parsing
-silently continues with stale node data.
+If fstat() fails after open() succeeds, the function returns without
+closing the file descriptor. Also preserve errno across close(), since
+close() may overwrite it before the error is returned.
 
-Add the missing error check to match the xbc_add_node() call path
-which already checks for failure.
+Link: https://lore.kernel.org/all/20260318155847.78065-3-objecting@objecting.org/
 
-In practice, a bootconfig using ':=' to override a value near the
-32KB data limit could silently retain the old value, meaning a
-security-relevant boot parameter override (e.g., a trace filter or
-debug setting) would not take effect as intended.
-
-Link: https://lore.kernel.org/all/20260318155847.78065-2-objecting@objecting.org/
-
-Fixes: e5efaeb8a8f5 ("bootconfig: Support mixing a value and subkeys under a key")
+Fixes: 950313ebf79c ("tools: bootconfig: Add bootconfig command")
 Signed-off-by: Josh Law <objecting@objecting.org>
 Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/bootconfig.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/bootconfig/main.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/lib/bootconfig.c b/lib/bootconfig.c
-index 82f21a9b0aaba..675f34cf32f0d 100644
---- a/lib/bootconfig.c
-+++ b/lib/bootconfig.c
-@@ -714,7 +714,8 @@ static int __init xbc_parse_kv(char **k, char *v, int op)
- 		if (op == ':') {
- 			unsigned short nidx = child->next;
+diff --git a/tools/bootconfig/main.c b/tools/bootconfig/main.c
+index 8a48cc2536f56..32cf48f2da9a1 100644
+--- a/tools/bootconfig/main.c
++++ b/tools/bootconfig/main.c
+@@ -157,8 +157,11 @@ static int load_xbc_file(const char *path, char **buf)
+ 	if (fd < 0)
+ 		return -errno;
+ 	ret = fstat(fd, &stat);
+-	if (ret < 0)
+-		return -errno;
++	if (ret < 0) {
++		ret = -errno;
++		close(fd);
++		return ret;
++	}
  
--			xbc_init_node(child, v, XBC_VALUE);
-+			if (xbc_init_node(child, v, XBC_VALUE) < 0)
-+				return xbc_parse_error("Failed to override value", v);
- 			child->next = nidx;	/* keep subkeys */
- 			goto array;
- 		}
+ 	ret = load_xbc_fd(fd, buf, stat.st_size);
+ 
 -- 
 2.51.0
 
