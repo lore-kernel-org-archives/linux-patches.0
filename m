@@ -1,40 +1,51 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42435387593;
-	Mon, 23 Mar 2026 14:43:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3696E1459FA;
+	Mon, 23 Mar 2026 14:43:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277025; cv=none; b=X69lzCwow9mH01jul1wzkby1xDkXZ1MtAleFeudK3/zNivj2bz9Koeoy75od/1X5fCDpaajWQzkBU+43c3cGFVCEQdQzVH11rCWHjGU5Xmz4qc0KU3NQ8AZzyAXwVj+dHoLQ19tvNCuiOyMtP4oTB7SyBz0iY7slfr6svyjMeyc=
+	t=1774277028; cv=none; b=VdKiza4dUeUMKCA4NlbuJBUa6e6dvY7FXEH0A6CfSBT/3p4UDplLItmJnq0jGhpHaOyxxZ8DprywViFQM8nfgW7wOtU5HahnqLFh9H2nn2QnVama9XFimfWRDwBpC6tR/r2wOlHV7TyVN+iHSNzqmqbUL2vUU6izuRf+L5u/zO0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277025; c=relaxed/simple;
-	bh=blbJAkK1Djn66CQhVcu1Fo5r4Y8D70iHNwG/fZm2adY=;
+	s=arc-20240116; t=1774277028; c=relaxed/simple;
+	bh=L4MLnQGoxbRwPKvgNDqlFdryrKlV7TwZiyQgezZq9/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TkHgBbhIAjiq69YwXTr1II2CIIloMKoBr5hzN3nM4ykPCDO6s5BHj5xhYBlwZq/+VOG6tC4J8q7Zl/5J3KW3wbZnvwJ7i2gWdVsft8JyWk4fgyT42//lBr3rOJO3dDZWUXRPV+fGkiloecMpaOqUgQaJLXkdKSatclYbz3eMkuc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ON3CfLW/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PIg03MoLwiViFUeCnYSzWt8KXDn+JmfjD8CoI9x97QQz+p2EsovL/4RhsZy0N4jz2ZLLYamVMqx2waPndSDVRB4EAgY+cofDcnWkVIBauKBvtXvrOHT9mwCet44V+UmHFjal+uo/DfYro+t1yQh18NQvu/m7xlZFiJYxzLVuJEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pgYzjTpt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ON3CfLW/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC6DC4CEF7;
-	Mon, 23 Mar 2026 14:43:44 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pgYzjTpt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CC2C4CEF7;
+	Mon, 23 Mar 2026 14:43:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277025;
-	bh=blbJAkK1Djn66CQhVcu1Fo5r4Y8D70iHNwG/fZm2adY=;
+	s=korg; t=1774277028;
+	bh=L4MLnQGoxbRwPKvgNDqlFdryrKlV7TwZiyQgezZq9/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ON3CfLW/+kuL3I1dJKCrLiOzTwN7qMa/0HP+Jnn3BM2vkCkW/AolBqlI5EvAcYoGq
-	 XZVvMVWD86mC3EJtlkHOEBOiVBDzMEJrC2HL0W5ABdHsLVS3OnukGjDeNz6UORgZTs
-	 OtpGED6+GNjXIO/HxZh87j+O3Uj3Ej4ywNUtrjb4=
+	b=pgYzjTptjx8Sp8cynXAPH3salIJ/qonh4l13V5A/2sjReLFmCSUS1IONC6at6Pack
+	 uEBPChyVwk6icMqkgc5omexHKH3+28WgZ10o2dzIlELZWEvSfgrjdEyn6SWbAm7xJL
+	 FRyi6YICGwvQnO/O6kcnQgAbq4d9VGar2XH0mFV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiguo Niu <zhiguo.niu@unisoc.com>,
-	Baocong Liu <baocong.liu@unisoc.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Bin Lan <lanbincn@139.com>
-Subject: [PATCH 6.12 286/460] f2fs: compress: change the first parameter of page_array_{alloc,free} to sbi
-Date: Mon, 23 Mar 2026 14:44:42 +0100
-Message-ID: <20260323134533.510150961@linuxfoundation.org>
+	Deepanshu Kartikey <Kartikey406@gmail.com>,
+	syzbot+33a04338019ac7e43a44@syzkaller.appspotmail.com,
+	Lance Yang <lance.yang@linux.dev>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Barry Song <baohua@kernel.org>,
+	Ackerley Tng <ackerleytng@google.com>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Dev Jain <dev.jain@arm.com>,
+	Fangrui Song <i@maskray.me>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Nico Pache <npache@redhat.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Zi Yan <ziy@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.12 295/460] mm: thp: deny THP for files on anonymous inodes
+Date: Mon, 23 Mar 2026 14:44:51 +0100
+Message-ID: <20260323134533.735545970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,190 +64,103 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zhiguo Niu <zhiguo.niu@unisoc.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 8e2a9b656474d67c55010f2c003ea2cf889a19ff ]
+commit dd085fe9a8ebfc5d10314c60452db38d2b75e609 upstream.
 
-No logic changes, just cleanup and prepare for fixing the UAF issue
-in f2fs_free_dic.
+file_thp_enabled() incorrectly allows THP for files on anonymous inodes
+(e.g. guest_memfd and secretmem). These files are created via
+alloc_file_pseudo(), which does not call get_write_access() and leaves
+inode->i_writecount at 0. Combined with S_ISREG(inode->i_mode) being
+true, they appear as read-only regular files when
+CONFIG_READ_ONLY_THP_FOR_FS is enabled, making them eligible for THP
+collapse.
 
-Signed-off-by: Zhiguo Niu <zhiguo.niu@unisoc.com>
-Signed-off-by: Baocong Liu <baocong.liu@unisoc.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Bin Lan <lanbincn@139.com>
+Anonymous inodes can never pass the inode_is_open_for_write() check
+since their i_writecount is never incremented through the normal VFS
+open path. The right thing to do is to exclude them from THP eligibility
+altogether, since CONFIG_READ_ONLY_THP_FOR_FS was designed for real
+filesystem files (e.g. shared libraries), not for pseudo-filesystem
+inodes.
+
+For guest_memfd, this allows khugepaged and MADV_COLLAPSE to create
+large folios in the page cache via the collapse path, but the
+guest_memfd fault handler does not support large folios. This triggers
+WARN_ON_ONCE(folio_test_large(folio)) in kvm_gmem_fault_user_mapping().
+
+For secretmem, collapse_file() tries to copy page contents through the
+direct map, but secretmem pages are removed from the direct map. This
+can result in a kernel crash:
+
+    BUG: unable to handle page fault for address: ffff88810284d000
+    RIP: 0010:memcpy_orig+0x16/0x130
+    Call Trace:
+     collapse_file
+     hpage_collapse_scan_file
+     madvise_collapse
+
+Secretmem is not affected by the crash on upstream as the memory failure
+recovery handles the failed copy gracefully, but it still triggers
+confusing false memory failure reports:
+
+    Memory failure: 0x106d96f: recovery action for clean unevictable
+    LRU page: Recovered
+
+Check IS_ANON_FILE(inode) in file_thp_enabled() to deny THP for all
+anonymous inode files.
+
+Link: https://syzkaller.appspot.com/bug?extid=33a04338019ac7e43a44
+Link: https://lore.kernel.org/linux-mm/CAEvNRgHegcz3ro35ixkDw39ES8=U6rs6S7iP0gkR9enr7HoGtA@mail.gmail.com
+Link: https://lkml.kernel.org/r/20260214001535.435626-1-kartikey406@gmail.com
+Fixes: 7fbb5e188248 ("mm: remove VM_EXEC requirement for THP eligibility")
+Signed-off-by: Deepanshu Kartikey <Kartikey406@gmail.com>
+Reported-by: syzbot+33a04338019ac7e43a44@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=33a04338019ac7e43a44
+Tested-by: syzbot+33a04338019ac7e43a44@syzkaller.appspotmail.com
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Ackerley Tng <ackerleytng@google.com>
+Tested-by: Ackerley Tng <ackerleytng@google.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
+Cc: Dev Jain <dev.jain@arm.com>
+Cc: Fangrui Song <i@maskray.me>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Nico Pache <npache@redhat.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: Zi Yan <ziy@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+[ Ackerley: we don't have IS_ANON_FILE() yet. As guest_memfd does
+  not apply yet, simply check for secretmem explicitly. ]
+Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+Reviewed-by: David Hildenbrand (Arm) <david@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/compress.c |   40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+ include/linux/huge_mm.h |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -23,20 +23,18 @@
- static struct kmem_cache *cic_entry_slab;
- static struct kmem_cache *dic_entry_slab;
+--- a/include/linux/huge_mm.h
++++ b/include/linux/huge_mm.h
+@@ -7,6 +7,7 @@
  
--static void *page_array_alloc(struct inode *inode, int nr)
-+static void *page_array_alloc(struct f2fs_sb_info *sbi, int nr)
- {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	unsigned int size = sizeof(struct page *) * nr;
+ #include <linux/fs.h> /* only for vma_is_dax() */
+ #include <linux/kobject.h>
++#include <linux/secretmem.h>
  
- 	if (likely(size <= sbi->page_array_slab_size))
- 		return f2fs_kmem_cache_alloc(sbi->page_array_slab,
--					GFP_F2FS_ZERO, false, F2FS_I_SB(inode));
-+					GFP_F2FS_ZERO, false, sbi);
- 	return f2fs_kzalloc(sbi, size, GFP_NOFS);
+ vm_fault_t do_huge_pmd_anonymous_page(struct vm_fault *vmf);
+ int copy_huge_pmd(struct mm_struct *dst_mm, struct mm_struct *src_mm,
+@@ -262,6 +263,9 @@ static inline bool file_thp_enabled(stru
+ 
+ 	inode = vma->vm_file->f_inode;
+ 
++	if (secretmem_mapping(inode->i_mapping))
++		return false;
++
+ 	return (IS_ENABLED(CONFIG_READ_ONLY_THP_FOR_FS)) &&
+ 	       !inode_is_open_for_write(inode) && S_ISREG(inode->i_mode);
  }
- 
--static void page_array_free(struct inode *inode, void *pages, int nr)
-+static void page_array_free(struct f2fs_sb_info *sbi, void *pages, int nr)
- {
--	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
- 	unsigned int size = sizeof(struct page *) * nr;
- 
- 	if (!pages)
-@@ -147,13 +145,13 @@ int f2fs_init_compress_ctx(struct compre
- 	if (cc->rpages)
- 		return 0;
- 
--	cc->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	cc->rpages = page_array_alloc(F2FS_I_SB(cc->inode), cc->cluster_size);
- 	return cc->rpages ? 0 : -ENOMEM;
- }
- 
- void f2fs_destroy_compress_ctx(struct compress_ctx *cc, bool reuse)
- {
--	page_array_free(cc->inode, cc->rpages, cc->cluster_size);
-+	page_array_free(F2FS_I_SB(cc->inode), cc->rpages, cc->cluster_size);
- 	cc->rpages = NULL;
- 	cc->nr_rpages = 0;
- 	cc->nr_cpages = 0;
-@@ -616,6 +614,7 @@ static void *f2fs_vmap(struct page **pag
- 
- static int f2fs_compress_pages(struct compress_ctx *cc)
- {
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(cc->inode);
- 	struct f2fs_inode_info *fi = F2FS_I(cc->inode);
- 	const struct f2fs_compress_ops *cops =
- 				f2fs_cops[fi->i_compress_algorithm];
-@@ -636,7 +635,7 @@ static int f2fs_compress_pages(struct co
- 	cc->nr_cpages = DIV_ROUND_UP(max_len, PAGE_SIZE);
- 	cc->valid_nr_cpages = cc->nr_cpages;
- 
--	cc->cpages = page_array_alloc(cc->inode, cc->nr_cpages);
-+	cc->cpages = page_array_alloc(sbi, cc->nr_cpages);
- 	if (!cc->cpages) {
- 		ret = -ENOMEM;
- 		goto destroy_compress_ctx;
-@@ -711,7 +710,7 @@ out_free_cpages:
- 		if (cc->cpages[i])
- 			f2fs_compress_free_page(cc->cpages[i]);
- 	}
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- destroy_compress_ctx:
- 	if (cops->destroy_compress_ctx)
-@@ -1325,7 +1324,7 @@ static int f2fs_write_compressed_pages(s
- 	cic->magic = F2FS_COMPRESSED_PAGE_MAGIC;
- 	cic->inode = inode;
- 	atomic_set(&cic->pending_pages, cc->valid_nr_cpages);
--	cic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	cic->rpages = page_array_alloc(sbi, cc->cluster_size);
- 	if (!cic->rpages)
- 		goto out_put_cic;
- 
-@@ -1427,13 +1426,13 @@ unlock_continue:
- 	spin_unlock(&fi->i_size_lock);
- 
- 	f2fs_put_rpages(cc);
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- 	f2fs_destroy_compress_ctx(cc, false);
- 	return 0;
- 
- out_destroy_crypt:
--	page_array_free(cc->inode, cic->rpages, cc->cluster_size);
-+	page_array_free(sbi, cic->rpages, cc->cluster_size);
- 
- 	for (--i; i >= 0; i--) {
- 		if (!cc->cpages[i])
-@@ -1454,7 +1453,7 @@ out_free:
- 		f2fs_compress_free_page(cc->cpages[i]);
- 		cc->cpages[i] = NULL;
- 	}
--	page_array_free(cc->inode, cc->cpages, cc->nr_cpages);
-+	page_array_free(sbi, cc->cpages, cc->nr_cpages);
- 	cc->cpages = NULL;
- 	return -EAGAIN;
- }
-@@ -1484,7 +1483,7 @@ void f2fs_compress_write_end_io(struct b
- 		end_page_writeback(cic->rpages[i]);
- 	}
- 
--	page_array_free(cic->inode, cic->rpages, cic->nr_rpages);
-+	page_array_free(sbi, cic->rpages, cic->nr_rpages);
- 	kmem_cache_free(cic_entry_slab, cic);
- }
- 
-@@ -1623,7 +1622,7 @@ static int f2fs_prepare_decomp_mem(struc
- 	if (!allow_memalloc_for_decomp(F2FS_I_SB(dic->inode), pre_alloc))
- 		return 0;
- 
--	dic->tpages = page_array_alloc(dic->inode, dic->cluster_size);
-+	dic->tpages = page_array_alloc(F2FS_I_SB(dic->inode), dic->cluster_size);
- 	if (!dic->tpages)
- 		return -ENOMEM;
- 
-@@ -1683,7 +1682,7 @@ struct decompress_io_ctx *f2fs_alloc_dic
- 	if (!dic)
- 		return ERR_PTR(-ENOMEM);
- 
--	dic->rpages = page_array_alloc(cc->inode, cc->cluster_size);
-+	dic->rpages = page_array_alloc(sbi, cc->cluster_size);
- 	if (!dic->rpages) {
- 		kmem_cache_free(dic_entry_slab, dic);
- 		return ERR_PTR(-ENOMEM);
-@@ -1704,7 +1703,7 @@ struct decompress_io_ctx *f2fs_alloc_dic
- 		dic->rpages[i] = cc->rpages[i];
- 	dic->nr_rpages = cc->cluster_size;
- 
--	dic->cpages = page_array_alloc(dic->inode, dic->nr_cpages);
-+	dic->cpages = page_array_alloc(sbi, dic->nr_cpages);
- 	if (!dic->cpages) {
- 		ret = -ENOMEM;
- 		goto out_free;
-@@ -1734,6 +1733,7 @@ static void f2fs_free_dic(struct decompr
- 		bool bypass_destroy_callback)
- {
- 	int i;
-+	struct f2fs_sb_info *sbi = F2FS_I_SB(dic->inode);
- 
- 	f2fs_release_decomp_mem(dic, bypass_destroy_callback, true);
- 
-@@ -1745,7 +1745,7 @@ static void f2fs_free_dic(struct decompr
- 				continue;
- 			f2fs_compress_free_page(dic->tpages[i]);
- 		}
--		page_array_free(dic->inode, dic->tpages, dic->cluster_size);
-+		page_array_free(sbi, dic->tpages, dic->cluster_size);
- 	}
- 
- 	if (dic->cpages) {
-@@ -1754,10 +1754,10 @@ static void f2fs_free_dic(struct decompr
- 				continue;
- 			f2fs_compress_free_page(dic->cpages[i]);
- 		}
--		page_array_free(dic->inode, dic->cpages, dic->nr_cpages);
-+		page_array_free(sbi, dic->cpages, dic->nr_cpages);
- 	}
- 
--	page_array_free(dic->inode, dic->rpages, dic->nr_rpages);
-+	page_array_free(sbi, dic->rpages, dic->nr_rpages);
- 	kmem_cache_free(dic_entry_slab, dic);
- }
- 
 
 
