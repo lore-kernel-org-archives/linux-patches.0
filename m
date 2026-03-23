@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F92E1A6815;
-	Mon, 23 Mar 2026 13:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7935D21D00A;
+	Mon, 23 Mar 2026 13:57:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274255; cv=none; b=IRtaaDrp5bi4Ib5D1p4TiXVABqIIl9h/UVTJew8wWlAQGSSeXVSgE/I+CwoMxiFaXzsDIgjqrZqcwnj6VBN0qNgHrQh/r64gwvwpOZ78PNvzbNmbbucJSiInKLfSfKyfsKxvAPewlrHc/ZdgVaplo3OZQswvsPP3sVDEU4XPEMg=
+	t=1774274258; cv=none; b=to3YGpRUwKWgKRWNsefh+QL3kDGw0f3Tavh7EXIcIh+0tOyinCVPSsOJB3CejLloO3wWAgQLxGmwOKvGQ3ecB+X+LJBe8oQxx0x7BUiov8zOKQU/EDIY723PxMyIk9Mo9BD798wP73jCm0jDh0GZ3U7ahlBStcdW8jlG78avtMU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274255; c=relaxed/simple;
-	bh=GsRe/SJ3+PqFZQeGwc1UHr1gcvij8FRQ1CPx52/TCtg=;
+	s=arc-20240116; t=1774274258; c=relaxed/simple;
+	bh=6JOjag13x4GsQt6i57pLLF/J7dY5iOYkU06WqaywZRc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qX/8V/JV6yPIBlBpGSeaRGf7GJ/yA15FKHiUG9mdzD1b48iU+CDpRtn0RTudT7YoRenWttd7JXgcA+/zT2C2a7T2lsmN90b7gLg63/UkS629JlriNPzDp2553r7nBrlwPgwGbpinZ+vp4PMzJ0KemN9kgq8gLaEYEpVY5CXtuhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=npt3BdMe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=VKaipyyjbt2hpOoztJbx/mm8jlgcModbSpZqTock0vyywIppPxdSsaeaGbulAuhWkKIE0SqTryTIRCw8iNRj7GO5zSat9cegRFiv/TCNCKDkqvhZ6uFy31KXhFiVojKVFfIU826eKz/XyiD2apcE/xW0XQyDydSAVRYAGb6f7wA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e/7nBjzP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="npt3BdMe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4231C4CEF7;
-	Mon, 23 Mar 2026 13:57:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e/7nBjzP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C05C4CEF7;
+	Mon, 23 Mar 2026 13:57:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274255;
-	bh=GsRe/SJ3+PqFZQeGwc1UHr1gcvij8FRQ1CPx52/TCtg=;
+	s=korg; t=1774274258;
+	bh=6JOjag13x4GsQt6i57pLLF/J7dY5iOYkU06WqaywZRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npt3BdMeRm3JHsH2CJQBe6rin0vkMJ0uWDT++KNoKgQzKc+yJbo6QDvhzy+nZxWTc
-	 8Ce36vwUC0RF0otonLaXkUR1k1RusxvwLCJcMb93dTBt7/9jAEWOV7gzjUN2lzxgFz
-	 n54n4WRF2nVg7hQaysxLnMD6mTaYmrXK/3f8wT+M=
+	b=e/7nBjzP3UCWUQCH1BVuBOo2sBixDR3E0CmE4Y9pvuXi1yu8/y3+foevwnblMRaHY
+	 rq6Zovdb1wG5rlngcfpHEpCFkcBATdQEAmZ+rOrSXBFPtAYw1ojWZeWGtsKaohor4H
+	 U+kmcZu6bmq2gxgIjzEWRSwVODoZh2TGXILUifaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zdenek Bouska <zdenek.bouska@siemens.com>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Florian Bezdeka <florian.bezdeka@siemens.com>,
-	Avigail Dahan <avigailx.dahan@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Wang Tao <wangtao554@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 158/220] igc: fix page fault in XDP TX timestamps handling
-Date: Mon, 23 Mar 2026 14:45:35 +0100
-Message-ID: <20260323134509.559837356@linuxfoundation.org>
+Subject: [PATCH 6.19 123/220] Bluetooth: MGMT: Fix list corruption and UAF in command complete handlers
+Date: Mon, 23 Mar 2026 14:45:00 +0100
+Message-ID: <20260323134508.478784767@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -54,116 +51,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Zdenek Bouska <zdenek.bouska@siemens.com>
+From: Wang Tao <wangtao554@huawei.com>
 
-[ Upstream commit 45b33e805bd39f615d9353a7194b2da5281332df ]
+[ Upstream commit 17f89341cb4281d1da0e2fb0de5406ab7c4e25ef ]
 
-If an XDP application that requested TX timestamping is shutting down
-while the link of the interface in use is still up the following kernel
-splat is reported:
+Commit 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs") introduced
+mgmt_pending_valid(), which not only validates the pending command but
+also unlinks it from the pending list if it is valid. This change in
+semantics requires updates to several completion handlers to avoid list
+corruption and memory safety issues.
 
-[  883.803618] [   T1554] BUG: unable to handle page fault for address: ffffcfb6200fd008
-...
-[  883.803650] [   T1554] Call Trace:
-[  883.803652] [   T1554]  <TASK>
-[  883.803654] [   T1554]  igc_ptp_tx_tstamp_event+0xdf/0x160 [igc]
-[  883.803660] [   T1554]  igc_tsync_interrupt+0x2d5/0x300 [igc]
-...
+This patch addresses two left-over issues from the aforementioned rework:
 
-During shutdown of the TX ring the xsk_meta pointers are left behind, so
-that the IRQ handler is trying to touch them.
+1. In mgmt_add_adv_patterns_monitor_complete(), mgmt_pending_remove()
+is replaced with mgmt_pending_free() in the success path. Since
+mgmt_pending_valid() already unlinks the command at the beginning of
+the function, calling mgmt_pending_remove() leads to a double list_del()
+and subsequent list corruption/kernel panic.
 
-This issue is now being fixed by cleaning up the stale xsk meta data on
-TX shutdown. TX timestamps on other queues remain unaffected.
+2. In set_mesh_complete(), the use of mgmt_pending_foreach() in the error
+path is removed. Since the current command is already unlinked by
+mgmt_pending_valid(), this foreach loop would incorrectly target other
+pending mesh commands, potentially freeing them while they are still being
+processed concurrently (leading to UAFs). The redundant mgmt_cmd_status()
+is also simplified to use cmd->opcode directly.
 
-Fixes: 15fd021bc427 ("igc: Add Tx hardware timestamp request for AF_XDP zero-copy packet")
-Signed-off-by: Zdenek Bouska <zdenek.bouska@siemens.com>
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Reviewed-by: Florian Bezdeka <florian.bezdeka@siemens.com>
-Tested-by: Avigail Dahan <avigailx.dahan@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 302a1f674c00 ("Bluetooth: MGMT: Fix possible UAFs")
+Signed-off-by: Wang Tao <wangtao554@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      |  2 ++
- drivers/net/ethernet/intel/igc/igc_main.c |  7 +++++
- drivers/net/ethernet/intel/igc/igc_ptp.c  | 33 +++++++++++++++++++++++
- 3 files changed, 42 insertions(+)
+ net/bluetooth/mgmt.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index a427f05814c1a..17236813965d3 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -781,6 +781,8 @@ int igc_ptp_hwtstamp_set(struct net_device *netdev,
- 			 struct kernel_hwtstamp_config *config,
- 			 struct netlink_ext_ack *extack);
- void igc_ptp_tx_hang(struct igc_adapter *adapter);
-+void igc_ptp_clear_xsk_tx_tstamp_queue(struct igc_adapter *adapter,
-+				       u16 queue_id);
- void igc_ptp_read(struct igc_adapter *adapter, struct timespec64 *ts);
- void igc_ptp_tx_tstamp_event(struct igc_adapter *adapter);
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index 0e46f9e08b106..2c63f49c33018 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -2195,10 +2195,7 @@ static void set_mesh_complete(struct hci_dev *hdev, void *data, int err)
+ 	sk = cmd->sk;
  
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 6a174d46929e2..b1ca2079e5cf3 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -264,6 +264,13 @@ static void igc_clean_tx_ring(struct igc_ring *tx_ring)
- 	/* reset next_to_use and next_to_clean */
- 	tx_ring->next_to_use = 0;
- 	tx_ring->next_to_clean = 0;
-+
-+	/* Clear any lingering XSK TX timestamp requests */
-+	if (test_bit(IGC_RING_FLAG_TX_HWTSTAMP, &tx_ring->flags)) {
-+		struct igc_adapter *adapter = netdev_priv(tx_ring->netdev);
-+
-+		igc_ptp_clear_xsk_tx_tstamp_queue(adapter, tx_ring->queue_index);
-+	}
- }
+ 	if (status) {
+-		mgmt_cmd_status(cmd->sk, hdev->id, MGMT_OP_SET_MESH_RECEIVER,
+-				status);
+-		mgmt_pending_foreach(MGMT_OP_SET_MESH_RECEIVER, hdev, true,
+-				     cmd_status_rsp, &status);
++		mgmt_cmd_status(cmd->sk, hdev->id, cmd->opcode, status);
+ 		goto done;
+ 	}
  
- /**
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 44ee193867661..3d6b2264164af 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -577,6 +577,39 @@ static void igc_ptp_clear_tx_tstamp(struct igc_adapter *adapter)
- 	spin_unlock_irqrestore(&adapter->ptp_tx_lock, flags);
- }
+@@ -5377,7 +5374,7 @@ static void mgmt_add_adv_patterns_monitor_complete(struct hci_dev *hdev,
  
-+/**
-+ * igc_ptp_clear_xsk_tx_tstamp_queue - Clear pending XSK TX timestamps for a queue
-+ * @adapter: Board private structure
-+ * @queue_id: TX queue index to clear timestamps for
-+ *
-+ * Iterates over all TX timestamp registers and releases any pending
-+ * timestamp requests associated with the given TX queue. This is
-+ * called when an XDP pool is being disabled to ensure no stale
-+ * timestamp references remain.
-+ */
-+void igc_ptp_clear_xsk_tx_tstamp_queue(struct igc_adapter *adapter, u16 queue_id)
-+{
-+	unsigned long flags;
-+	int i;
-+
-+	spin_lock_irqsave(&adapter->ptp_tx_lock, flags);
-+
-+	for (i = 0; i < IGC_MAX_TX_TSTAMP_REGS; i++) {
-+		struct igc_tx_timestamp_request *tstamp = &adapter->tx_tstamp[i];
-+
-+		if (tstamp->buffer_type != IGC_TX_BUFFER_TYPE_XSK)
-+			continue;
-+		if (tstamp->xsk_queue_index != queue_id)
-+			continue;
-+		if (!tstamp->xsk_tx_buffer)
-+			continue;
-+
-+		igc_ptp_free_tx_buffer(adapter, tstamp);
-+	}
-+
-+	spin_unlock_irqrestore(&adapter->ptp_tx_lock, flags);
-+}
-+
- static void igc_ptp_disable_tx_timestamp(struct igc_adapter *adapter)
- {
- 	struct igc_hw *hw = &adapter->hw;
+ 	mgmt_cmd_complete(cmd->sk, cmd->hdev->id, cmd->opcode,
+ 			  mgmt_status(status), &rp, sizeof(rp));
+-	mgmt_pending_remove(cmd);
++	mgmt_pending_free(cmd);
+ 
+ 	hci_dev_unlock(hdev);
+ 	bt_dev_dbg(hdev, "add monitor %d complete, status %d",
 -- 
 2.51.0
 
