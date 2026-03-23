@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C543B5303;
-	Mon, 23 Mar 2026 13:58:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73293B635F;
+	Mon, 23 Mar 2026 13:58:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274332; cv=none; b=qLCksZbjHfHWkNHh8LqRvqOWYIPUEpEG/HFr8kGeqjRZzwulHtPJJZuBX6b5EwGJzy4zKddpACnp37Z/kUxYlaccnWVFljSFagfDzczNmQX/80/hwa6TAoNEw79vXIxFT26POTWDrFYpOqNoCpP8h/QghAHO/30OfQSupdD9J9Q=
+	t=1774274335; cv=none; b=YfaINBXyKLUChdFm/6rrGNauIaAK2D7m7cYE8gFjDGc22tiXNacwcts1yp91DkKZuKgRvvUHgoJVtOmzy8M0mPpI3WW3CouZEeh24gMmA8G4G7p1WMo9TSnG9R1ATqUfTIKj83DjQpodeWQ8RSxVFiiJSU7UDt+m29SCgFD9NYM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274332; c=relaxed/simple;
-	bh=UHyJzWMCazCspACIyd94ctY0p52OjbJ9ZUrSk8AkQA0=;
+	s=arc-20240116; t=1774274335; c=relaxed/simple;
+	bh=nrwbwbKG9D8G0vkJIDqKGlpwu4rjG1pbovAQxz1Si1E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NO3s7gZ/efI/LoYPrheHEm7dm0i34fRweMnuB7i03MZGs6Dyb0IsmMrF5vZVogN2OMwDDTa7om6AEt1mPIzE6W7BQca/sipW4JQU2I+KmU7GDfi0xs1QnSgU4sMa6rPnWJmF75q9SMUQfVD3Wrf5eW9Yc7dO3J+x6mCHZ/bNE1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=aDGoflIN; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Hp32byFSL+DBCXqo/nUv2UZ307ja6Akp7E9/n6GXeKzhTtUkVR0Bs963wY2K+YBLE5Tym+EgaGLQTCSm6tfi1GWGmY6l2tygX5GfY9NX94PAMX8OBpa//kVgpOpHbI9Kl/gUFXVRlA3jMQWytwzEZy2DxnYdIfHg+LQMznGXDPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R8zknkgy; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="aDGoflIN"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2636CC2BC9E;
-	Mon, 23 Mar 2026 13:58:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R8zknkgy"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388F3C2BC9E;
+	Mon, 23 Mar 2026 13:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274332;
-	bh=UHyJzWMCazCspACIyd94ctY0p52OjbJ9ZUrSk8AkQA0=;
+	s=korg; t=1774274335;
+	bh=nrwbwbKG9D8G0vkJIDqKGlpwu4rjG1pbovAQxz1Si1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aDGoflINJQ6PQplGcE4+H2uh3MxErt3f4B3SMIy3B/V1UO5onlAEEyOeeyU9Fd86W
-	 /1Oi2ttMlY/yf/Sv9VrDQyTVVbYkuCGjTYPsf7NI+twvFHS6dWkVbOgZw/xxCb94i0
-	 Ps/Ukba90+Q/HsYm2bqhKFdYQE242+JM0wqq7YNI=
+	b=R8zknkgy/dYTHlv+HrhCLKG7Dkz3twGHqz3xW6EN/A1RNRHs0PfOBocZ/eQbSi88S
+	 lsbF8ZD8lGf4cX4lMbsJ2Q9zModUlHl9Axcf97Y01MJKumVzkZpX2WcVdmUChPNMsZ
+	 A2sy5Dfzt7S8wOysactslinIyWMxoTL5H2HQEJYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanman Pradhan <psanman@juniper.net>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 6.19 185/220] hwmon: (pmbus/isl68137) Fix unchecked return value and use sysfs_emit()
-Date: Mon, 23 Mar 2026 14:46:02 +0100
-Message-ID: <20260323134510.423072294@linuxfoundation.org>
+	=?UTF-8?q?Bence=20Cs=C3=B3k=C3=A1s?= <bence98@sch.bme.hu>,
+	Johan Hovold <johan@kernel.org>,
+	Andi Shyti <andi.shyti@kernel.org>
+Subject: [PATCH 6.19 186/220] i2c: cp2615: fix serial string NULL-deref at probe
+Date: Mon, 23 Mar 2026 14:46:03 +0100
+Message-ID: <20260323134510.456877153@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -44,50 +45,46 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Sanman Pradhan <psanman@juniper.net>
+From: Johan Hovold <johan@kernel.org>
 
-commit 86259558e422b250aa6aa57163a6d759074573f5 upstream.
+commit aa79f996eb41e95aed85a1bd7f56bcd6a3842008 upstream.
 
-isl68137_avs_enable_show_page() uses the return value of
-pmbus_read_byte_data() without checking for errors. If the I2C transaction
-fails, a negative error code is passed through bitwise operations,
-producing incorrect output.
+The cp2615 driver uses the USB device serial string as the i2c adapter
+name but does not make sure that the string exists.
 
-Add an error check to propagate the return value if it is negative.
-Additionally, modernize the callback by replacing sprintf()
-with sysfs_emit().
+Verify that the device has a serial number before accessing it to avoid
+triggering a NULL-pointer dereference (e.g. with malicious devices).
 
-Fixes: 038a9c3d1e424 ("hwmon: (pmbus/isl68137) Add driver for Intersil ISL68137 PWM Controller")
-Cc: stable@vger.kernel.org
-Signed-off-by: Sanman Pradhan <psanman@juniper.net>
-Link: https://lore.kernel.org/r/20260318193952.47908-2-sanman.pradhan@hpe.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: 4a7695429ead ("i2c: cp2615: add i2c driver for Silicon Labs' CP2615 Digital Audio Bridge")
+Cc: stable@vger.kernel.org	# 5.13
+Cc: Bence Csókás <bence98@sch.bme.hu>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Reviewed-by: Bence Csókás <bence98@sch.bme.hu>
+Signed-off-by: Andi Shyti <andi.shyti@kernel.org>
+Link: https://lore.kernel.org/r/20260309075016.25612-1-johan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/pmbus/isl68137.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/i2c/busses/i2c-cp2615.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/hwmon/pmbus/isl68137.c
-+++ b/drivers/hwmon/pmbus/isl68137.c
-@@ -98,8 +98,11 @@ static ssize_t isl68137_avs_enable_show_
- {
- 	int val = pmbus_read_byte_data(client, page, PMBUS_OPERATION);
+--- a/drivers/i2c/busses/i2c-cp2615.c
++++ b/drivers/i2c/busses/i2c-cp2615.c
+@@ -298,6 +298,9 @@ cp2615_i2c_probe(struct usb_interface *u
+ 	if (!adap)
+ 		return -ENOMEM;
  
--	return sprintf(buf, "%d\n",
--		       (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS ? 1 : 0);
-+	if (val < 0)
-+		return val;
++	if (!usbdev->serial)
++		return -EINVAL;
 +
-+	return sysfs_emit(buf, "%d\n",
-+			   (val & ISL68137_VOUT_AVS) == ISL68137_VOUT_AVS);
- }
- 
- static ssize_t isl68137_avs_enable_store_page(struct i2c_client *client,
+ 	strscpy(adap->name, usbdev->serial, sizeof(adap->name));
+ 	adap->owner = THIS_MODULE;
+ 	adap->dev.parent = &usbif->dev;
 
 
