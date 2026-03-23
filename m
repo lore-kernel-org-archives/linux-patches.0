@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F1F937B02A;
-	Mon, 23 Mar 2026 16:25:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7074D246778;
+	Mon, 23 Mar 2026 16:25:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283147; cv=none; b=aKNoYDKR+7E3FS2+4bqgy92b3FhVqGoKH5k2vFY004WsZVyfR5inEHQbONcKhvYI9GZdqGXTmHb0b2prl9ZP/1SmkVIML45C6NghwblXfKL8x/GIlEEB7em1XjDrRQ1cIis+Qd4BDDTcYuYo/KDQJUsZKf2m4BzxBgJbR3CL+XU=
+	t=1774283149; cv=none; b=hTAV2gCKKK/+i4tBEPyNf8cH693yJVGX/GTa2ZCjp9zK6x7MJD76vncSeDVkh1cAscblu0HZ1NCOMB3jm4cIm9fRz9eYx+33zA95trPNIm0MGLMnRqEQQjqsN4FomDzLPzaK1jQpsLKYJXojSnbU9GJwItXb6HQtBXxEZIwu+UY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283147; c=relaxed/simple;
-	bh=wQiiuc3vLB9GpJ+jH1nAkKYS7UBS1tgrLrsqd4LsDRQ=;
+	s=arc-20240116; t=1774283149; c=relaxed/simple;
+	bh=HZwU0wZVdw/6UQNzflGYpjbC0EIRhc9squ0bYu39lMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZFf/07I7HZTUd2TiR0oXGhdO4/ya64BwyG3W3INHwiaoULYXcJZUaZmfor7PKG++R6Zroby6CEqILOAKK/S/rqxFMjH4LsVG6/v+WC8cFn054TV3/mzvr8LgYpHX325zVh483RGN8zDuhkwcFg07yjtuHI8qCjsUF4W1JF9ZQc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=bxRleNBs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=p2dwM+MOI2ig/0vzOxanUlJsyAtDkZNmBsTpZgiY8al/cRq6YRyEn9JNqldvT0DqTb7VP1CXWL3ecmQnTzz1ZOQYJLoqJlAvTlZKJDtjGCvmrGPmDm9zG+O7wE9/OdbrrsxctPi54+zZetTvTK5NiUx7Rn9plnH27jIJ7gJfapw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y0sDnu2Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="bxRleNBs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A884C2BC9E;
-	Mon, 23 Mar 2026 16:25:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y0sDnu2Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08E27C4CEF7;
+	Mon, 23 Mar 2026 16:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283146;
-	bh=wQiiuc3vLB9GpJ+jH1nAkKYS7UBS1tgrLrsqd4LsDRQ=;
+	s=korg; t=1774283149;
+	bh=HZwU0wZVdw/6UQNzflGYpjbC0EIRhc9squ0bYu39lMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bxRleNBsJWHOG9j/8C0H/nSOd8G9bRpbDfDRif/vhNGdFSfbt2Uy5rvkZshevP5ku
-	 o8xZPwbqibzfufUb3F4YOz3tilvxSSrpTLu+ZA1p27h1Fqi9TPgJdGypX1kriyOc0w
-	 7P1P3WNU7v3rcx+16yEmkXNGL/VUYoaivGcYK1RI=
+	b=y0sDnu2QUN4PdH078cAoTR24FlP/XutafWrqhqqM+0OvM0pPxcc4H03rCp88rjbq7
+	 LM7Px9Hhotak+OjFb+oGdY7Je+ro7dEawDHFEPhHBwkeHYGyzSWXljJTVIsT9LCeFl
+	 A9yWlA+A4w5HnyZYba180QpsYOP8pm7t3GM/6WBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 417/481] netfilter: xt_CT: drop pending enqueued packets on template removal
-Date: Mon, 23 Mar 2026 14:46:39 +0100
-Message-ID: <20260323134535.353063093@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 376/481] net/tcp-md5: Fix MAC comparison to be constant-time
+Date: Mon, 23 Mar 2026 14:45:58 +0100
+Message-ID: <20260323134534.296568656@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,54 +50,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit f62a218a946b19bb59abdd5361da85fa4606b96b ]
+commit 46d0d6f50dab706637f4c18a470aac20a21900d3 upstream.
 
-Templates refer to objects that can go away while packets are sitting in
-nfqueue refer to:
+To prevent timing attacks, MACs need to be compared in constant
+time.  Use the appropriate helper function for this.
 
-- helper, this can be an issue on module removal.
-- timeout policy, nfnetlink_cttimeout might remove it.
-
-The use of templates with zone and event cache filter are safe, since
-this just copies values.
-
-Flush these enqueued packets in case the template rule gets removed.
-
-Fixes: 24de58f46516 ("netfilter: xt_CT: allow to attach timeout policy + glue code")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: cfb6eeb4c860 ("[TCP]: MD5 Signature Option (RFC2385) support.")
+Fixes: 658ddaaf6694 ("tcp: md5: RST: getting md5 key from listener")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Link: https://patch.msgid.link/20260302203409.13388-1-ebiggers@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/xt_CT.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv4/tcp.c      |    3 ++-
+ net/ipv4/tcp_ipv4.c |    3 ++-
+ net/ipv6/tcp_ipv6.c |    3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/netfilter/xt_CT.c b/net/netfilter/xt_CT.c
-index 3ba94c34297cf..498f5871c84a0 100644
---- a/net/netfilter/xt_CT.c
-+++ b/net/netfilter/xt_CT.c
-@@ -16,6 +16,7 @@
- #include <net/netfilter/nf_conntrack_ecache.h>
- #include <net/netfilter/nf_conntrack_timeout.h>
- #include <net/netfilter/nf_conntrack_zones.h>
-+#include "nf_internals.h"
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -243,6 +243,7 @@
  
- static inline int xt_ct_target(struct sk_buff *skb, struct nf_conn *ct)
- {
-@@ -283,6 +284,9 @@ static void xt_ct_tg_destroy(const struct xt_tgdtor_param *par,
- 	struct nf_conn_help *help;
+ #define pr_fmt(fmt) "TCP: " fmt
  
- 	if (ct) {
-+		if (info->helper[0] || info->timeout[0])
-+			nf_queue_nf_hook_drop(par->net);
-+
- 		help = nfct_help(ct);
- 		xt_ct_put_helper(help);
++#include <crypto/algapi.h>
+ #include <crypto/hash.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+@@ -4680,7 +4681,7 @@ tcp_inbound_md5_hash(const struct sock *
+ 							 hash_expected,
+ 							 NULL, skb);
  
--- 
-2.51.0
-
+-	if (genhash || memcmp(hash_location, newhash, 16) != 0) {
++	if (genhash || crypto_memneq(hash_location, newhash, 16)) {
+ 		NET_INC_STATS(sock_net(sk), LINUX_MIB_TCPMD5FAILURE);
+ 		if (family == AF_INET) {
+ 			net_info_ratelimited("MD5 Hash failed for (%pI4, %d)->(%pI4, %d)%s L3 index %d\n",
+--- a/net/ipv4/tcp_ipv4.c
++++ b/net/ipv4/tcp_ipv4.c
+@@ -78,6 +78,7 @@
+ #include <linux/inetdevice.h>
+ #include <linux/btf_ids.h>
+ 
++#include <crypto/algapi.h>
+ #include <crypto/hash.h>
+ #include <linux/scatterlist.h>
+ 
+@@ -776,7 +777,7 @@ static void tcp_v4_send_reset(const stru
+ 
+ 
+ 		genhash = tcp_v4_md5_hash_skb(newhash, key, NULL, skb);
+-		if (genhash || memcmp(hash_location, newhash, 16) != 0)
++		if (genhash || crypto_memneq(hash_location, newhash, 16))
+ 			goto out;
+ 
+ 	}
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -63,6 +63,7 @@
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+ 
++#include <crypto/algapi.h>
+ #include <crypto/hash.h>
+ #include <linux/scatterlist.h>
+ 
+@@ -1042,7 +1043,7 @@ static void tcp_v6_send_reset(const stru
+ 			goto out;
+ 
+ 		genhash = tcp_v6_md5_hash_skb(newhash, key, NULL, skb);
+-		if (genhash || memcmp(hash_location, newhash, 16) != 0)
++		if (genhash || crypto_memneq(hash_location, newhash, 16))
+ 			goto out;
+ 	}
+ #endif
 
 
