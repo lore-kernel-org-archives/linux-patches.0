@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214B6365A0A;
-	Mon, 23 Mar 2026 14:16:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C741A1FC101;
+	Mon, 23 Mar 2026 14:16:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275365; cv=none; b=Ve0swcj4RjqjErN6sbH5mySVc8GjCbG+JFr2w4zeeJh/LBLNTc8+kQvgvPdYqUAinCkFtwS48x/c9O0TN7uW+iprL4wLNE8+ahQVrTtD6FRz1xzZwoCx3nejX+peNkgbwVsiWWCG1p3snjCYLNLHzH3cObhDclOak6pIh7v2aOA=
+	t=1774275367; cv=none; b=dMI9oZkFjAvmet15486bVb++9iu85EoAT1Cq32Mw7cup0k1GnsZBkCLokbRLTtCc+IODZuQ92U2pD2Mt1/WLcLaebNJ1CVUdCgPPMwyqCdE+D0lRNxJT/VItD616XL7Hl2n6XepkR0RvEEi5zoIWfYQDXwt9pjk3arE0n2x+nAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275365; c=relaxed/simple;
-	bh=VGBjdvAwjcQbIzoncVS28EVFedHUwZn1LDt7iImXrj0=;
+	s=arc-20240116; t=1774275367; c=relaxed/simple;
+	bh=AJefUeFJIdcbLwM2VgrSEOHtAe4SchYrqind1ITXhTQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=hhH95FTKIRS8295b71y2N6uzv8ckzlIpHUiHTgVO+QG6fD0Pu3hAhd3CNmM/lUd5prKZTwdpRbVb+QdL6NMEmeAxl9V74Fvdn8re5x3vkxO5y1yWIFhtsUDluak668nHKTrFKnhPHx0htS+MLrrnBsVAg7H/xMMfHKQ6gdt0u2s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=g/rp3xeh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=IZZzaB+9QLMkUcu3r4LIEdzu+s6j10AP2ryiYr+/dhMZw6/UXVJOLgZeHZixu36/N1Rgy60OGj2Qxx/HtRLfObrN4iJmgi0sh50l+HhOiS3AUQnnW0ZxaAWXldzeigggXVnVId/7Vp9baFVmNK4zgAgHmiLT3XsHi8iyJ8rVrrA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FeQx03q7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="g/rp3xeh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF35C4CEF7;
-	Mon, 23 Mar 2026 14:16:04 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FeQx03q7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 592EBC4CEF7;
+	Mon, 23 Mar 2026 14:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275365;
-	bh=VGBjdvAwjcQbIzoncVS28EVFedHUwZn1LDt7iImXrj0=;
+	s=korg; t=1774275367;
+	bh=AJefUeFJIdcbLwM2VgrSEOHtAe4SchYrqind1ITXhTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/rp3xehSkNjyaGoW21zLM5yzFc9sSBUClLzf1D/ue3HaPyFFBRkpBtA9PVPOtk30
-	 S/uYf0/nccZyNdD6jtsMh75iMYDHlx7qsFaZfmSwHt0QP3eUtUzkZgsnYcvk92BlYX
-	 ACcz3HuOyDbY+m5h3LlV8nRtcslvjmbwci3Woclo=
+	b=FeQx03q7bXA6OR4lXdyEuR+nQIV8y3jqrwMBSUXdYE3ZKQtxfr8AXhX1ZL186Hdgu
+	 I+8CYcWg+Mu2pe3ZYO3Q5nUXCIOu5WckmKNZVRalOJCIqEyQQJRVkr5c+OBAFHeXUL
+	 jwwcWPxVrNrVOmLzu6NztrweM2El/2OIsxw/GQJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,12 +30,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chao Shi <cshi008@fiu.edu>,
 	Weidong Zhu <weizhu@fiu.edu>,
 	Dave Tian <daveti@purdue.edu>,
+	Christoph Hellwig <hch@lst.de>,
 	Sungwoo Kim <iam@sung-woo.kim>,
 	Keith Busch <kbusch@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 072/460] nvme-pci: Fix slab-out-of-bounds in nvme_dbbuf_set
-Date: Mon, 23 Mar 2026 14:41:08 +0100
-Message-ID: <20260323134528.462762171@linuxfoundation.org>
+Subject: [PATCH 6.12 073/460] nvme-pci: Fix race bug in nvme_poll_irqdisable()
+Date: Mon, 23 Mar 2026 14:41:09 +0100
+Message-ID: <20260323134528.485547681@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -48,7 +49,6 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
@@ -57,35 +57,63 @@ Content-Transfer-Encoding: 8bit
 
 From: Sungwoo Kim <iam@sung-woo.kim>
 
-[ Upstream commit b4e78f1427c7d6859229ae9616df54e1fc05a516 ]
+[ Upstream commit fc71f409b22ca831a9f87a2712eaa09ef2bb4a5e ]
 
-dev->online_queues is a count incremented in nvme_init_queue. Thus,
-valid indices are 0 through dev->online_queues − 1.
+In the following scenario, pdev can be disabled between (1) and (3) by
+(2). This sets pdev->msix_enabled = 0. Then, pci_irq_vector() will
+return MSI-X IRQ(>15) for (1) whereas return INTx IRQ(<=15) for (2).
+This causes IRQ warning because it tries to enable INTx IRQ that has
+never been disabled before.
 
-This patch fixes the loop condition to ensure the index stays within the
-valid range. Index 0 is excluded because it is the admin queue.
+To fix this, save IRQ number into a local variable and ensure
+disable_irq() and enable_irq() operate on the same IRQ number.  Even if
+pci_free_irq_vectors() frees the IRQ concurrently, disable_irq() and
+enable_irq() on a stale IRQ number is still valid and safe, and the
+depth accounting reamins balanced.
 
-KASAN splat:
+task 1:
+nvme_poll_irqdisable()
+  disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector)) ...(1)
+  enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector))  ...(3)
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
-BUG: KASAN: slab-out-of-bounds in nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
-Read of size 2 at addr ffff88800592a574 by task kworker/u8:5/74
+task 2:
+nvme_reset_work()
+  nvme_dev_disable()
+    pdev->msix_enable = 0;  ...(2)
 
-CPU: 0 UID: 0 PID: 74 Comm: kworker/u8:5 Not tainted 6.19.0-dirty #10 PREEMPT(voluntary)
+crash log:
+
+------------[ cut here ]------------
+Unbalanced enable for IRQ 10
+WARNING: kernel/irq/manage.c:753 at __enable_irq+0x102/0x190 kernel/irq/manage.c:753, CPU#1: kworker/1:0H/26
+Modules linked in:
+CPU: 1 UID: 0 PID: 26 Comm: kworker/1:0H Not tainted 6.19.0-dirty #9 PREEMPT(voluntary)
 Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.3-0-ga6ed6b701f0a-prebuilt.qemu.org 04/01/2014
-Workqueue: nvme-reset-wq nvme_reset_work
+Workqueue: kblockd blk_mq_timeout_work
+RIP: 0010:__enable_irq+0x107/0x190 kernel/irq/manage.c:753
+Code: ff df 48 89 fa 48 c1 ea 03 0f b6 14 02 48 89 f8 83 e0 07 83 c0 03 38 d0 7c 04 84 d2 75 79 48 8d 3d 2e 7a 3f 05 41 8b 74 24 2c <67> 48 0f b9 3a e8 ef b9 21 00 5b 41 5c 5d e9 46 54 66 03 e8 e1 b9
+RSP: 0018:ffffc900001bf550 EFLAGS: 00010046
+RAX: 0000000000000007 RBX: 0000000000000000 RCX: ffffffffb20c0e90
+RDX: 0000000000000000 RSI: 000000000000000a RDI: ffffffffb74b88f0
+RBP: ffffc900001bf560 R08: ffff88800197cf00 R09: 0000000000000001
+R10: 0000000000000003 R11: 0000000000000003 R12: ffff8880012a6000
+R13: 1ffff92000037eae R14: 000000000000000a R15: 0000000000000293
+FS:  0000000000000000(0000) GS:ffff8880b49f7000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000555da4a25fa8 CR3: 00000000208e8000 CR4: 00000000000006f0
 Call Trace:
  <TASK>
- __dump_stack lib/dump_stack.c:94 [inline]
- dump_stack_lvl+0xea/0x150 lib/dump_stack.c:120
- print_address_description mm/kasan/report.c:378 [inline]
- print_report+0xce/0x5d0 mm/kasan/report.c:482
- kasan_report+0xdc/0x110 mm/kasan/report.c:595
- __asan_report_load2_noabort+0x18/0x20 mm/kasan/report_generic.c:379
- nvme_dbbuf_free drivers/nvme/host/pci.c:377 [inline]
- nvme_dbbuf_set+0x39c/0x400 drivers/nvme/host/pci.c:404
- nvme_reset_work+0x36b/0x8c0 drivers/nvme/host/pci.c:3252
+ enable_irq+0x121/0x1e0 kernel/irq/manage.c:797
+ nvme_poll_irqdisable+0x162/0x1c0 drivers/nvme/host/pci.c:1494
+ nvme_timeout+0x965/0x14b0 drivers/nvme/host/pci.c:1744
+ blk_mq_rq_timed_out block/blk-mq.c:1653 [inline]
+ blk_mq_handle_expired+0x227/0x2d0 block/blk-mq.c:1721
+ bt_iter+0x2fc/0x3a0 block/blk-mq-tag.c:292
+ __sbitmap_for_each_set include/linux/sbitmap.h:269 [inline]
+ sbitmap_for_each_set include/linux/sbitmap.h:290 [inline]
+ bt_for_each block/blk-mq-tag.c:324 [inline]
+ blk_mq_queue_tag_busy_iter+0x969/0x1e80 block/blk-mq-tag.c:536
+ blk_mq_timeout_work+0x627/0x870 block/blk-mq.c:1763
  process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
  process_scheduled_works kernel/workqueue.c:3340 [inline]
  worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
@@ -93,87 +121,54 @@ Call Trace:
  ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
  ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
  </TASK>
+irq event stamp: 74478
+hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] __raw_spin_unlock_irq include/linux/spinlock_api_smp.h:159 [inline]
+hardirqs last  enabled at (74477): [<ffffffffb5720a9c>] _raw_spin_unlock_irq+0x2c/0x60 kernel/locking/spinlock.c:202
+hardirqs last disabled at (74478): [<ffffffffb57207b5>] __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:108 [inline]
+hardirqs last disabled at (74478): [<ffffffffb57207b5>] _raw_spin_lock_irqsave+0x85/0xa0 kernel/locking/spinlock.c:162
+softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
+softirqs last  enabled at (74304): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
+softirqs last  enabled at (74304): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
+softirqs last disabled at (74287): [<ffffffffb1e9466c>] __do_softirq kernel/softirq.c:656 [inline]
+softirqs last disabled at (74287): [<ffffffffb1e9466c>] invoke_softirq kernel/softirq.c:496 [inline]
+softirqs last disabled at (74287): [<ffffffffb1e9466c>] __irq_exit_rcu+0xdc/0x120 kernel/softirq.c:723
+---[ end trace 0000000000000000 ]---
 
-Allocated by task 34 on cpu 1 at 4.241550s:
- kasan_save_stack+0x2c/0x60 mm/kasan/common.c:57
- kasan_save_track+0x1c/0x70 mm/kasan/common.c:78
- kasan_save_alloc_info+0x3c/0x50 mm/kasan/generic.c:570
- poison_kmalloc_redzone mm/kasan/common.c:398 [inline]
- __kasan_kmalloc+0xb5/0xc0 mm/kasan/common.c:415
- kasan_kmalloc include/linux/kasan.h:263 [inline]
- __do_kmalloc_node mm/slub.c:5657 [inline]
- __kmalloc_node_noprof+0x2bf/0x8d0 mm/slub.c:5663
- kmalloc_array_node_noprof include/linux/slab.h:1075 [inline]
- nvme_pci_alloc_dev drivers/nvme/host/pci.c:3479 [inline]
- nvme_probe+0x2f1/0x1820 drivers/nvme/host/pci.c:3534
- local_pci_probe+0xef/0x1c0 drivers/pci/pci-driver.c:324
- pci_call_probe drivers/pci/pci-driver.c:392 [inline]
- __pci_device_probe drivers/pci/pci-driver.c:417 [inline]
- pci_device_probe+0x743/0x920 drivers/pci/pci-driver.c:451
- call_driver_probe drivers/base/dd.c:583 [inline]
- really_probe+0x29b/0xb70 drivers/base/dd.c:661
- __driver_probe_device+0x3b0/0x4a0 drivers/base/dd.c:803
- driver_probe_device+0x56/0x1f0 drivers/base/dd.c:833
- __driver_attach_async_helper+0x155/0x340 drivers/base/dd.c:1159
- async_run_entry_fn+0xa6/0x4b0 kernel/async.c:129
- process_one_work+0x956/0x1aa0 kernel/workqueue.c:3257
- process_scheduled_works kernel/workqueue.c:3340 [inline]
- worker_thread+0x65c/0xe60 kernel/workqueue.c:3421
- kthread+0x41a/0x930 kernel/kthread.c:463
- ret_from_fork+0x6f8/0x8c0 arch/x86/kernel/process.c:158
- ret_from_fork_asm+0x1a/0x30 arch/x86/entry/entry_64.S:246
-
-The buggy address belongs to the object at ffff88800592a000
- which belongs to the cache kmalloc-2k of size 2048
-The buggy address is located 244 bytes to the right of
- allocated 1152-byte region [ffff88800592a000, ffff88800592a480)
-
-The buggy address belongs to the physical page:
-page: refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x5928
-head: order:3 mapcount:0 entire_mapcount:0 nr_pages_mapped:0 pincount:0
-anon flags: 0xfffffc0000040(head|node=0|zone=1|lastcpupid=0x1fffff)
-page_type: f5(slab)
-raw: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-raw: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000040 ffff888001042000 0000000000000000 dead000000000001
-head: 0000000000000000 0000000000080008 00000000f5000000 0000000000000000
-head: 000fffffc0000003 ffffea0000164a01 00000000ffffffff 00000000ffffffff
-head: ffffffffffffffff 0000000000000000 00000000ffffffff 0000000000000008
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88800592a400: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
- ffff88800592a480: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
->ffff88800592a500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-                                                             ^
- ffff88800592a580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88800592a600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-==================================================================
-
-Fixes: 0f0d2c876c96 (nvme: free sq/cq dbbuf pointers when dbbuf set fails)
+Fixes: fa059b856a59 (nvme-pci: Simplify nvme_poll_irqdisable)
 Acked-by: Chao Shi <cshi008@fiu.edu>
 Acked-by: Weidong Zhu <weizhu@fiu.edu>
 Acked-by: Dave Tian <daveti@purdue.edu>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
 Signed-off-by: Keith Busch <kbusch@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/pci.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index b31a2dad361d6..c7d1e9c2b1571 100644
+index c7d1e9c2b1571..6bd02c9116501 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -343,7 +343,7 @@ static void nvme_dbbuf_set(struct nvme_dev *dev)
- 		/* Free memory and continue on */
- 		nvme_dbbuf_dma_free(dev);
+@@ -1201,14 +1201,16 @@ static irqreturn_t nvme_irq_check(int irq, void *data)
+ static void nvme_poll_irqdisable(struct nvme_queue *nvmeq)
+ {
+ 	struct pci_dev *pdev = to_pci_dev(nvmeq->dev->dev);
++	int irq;
  
--		for (i = 1; i <= dev->online_queues; i++)
-+		for (i = 1; i < dev->online_queues; i++)
- 			nvme_dbbuf_free(&dev->queues[i]);
- 	}
+ 	WARN_ON_ONCE(test_bit(NVMEQ_POLLED, &nvmeq->flags));
+ 
+-	disable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
++	irq = pci_irq_vector(pdev, nvmeq->cq_vector);
++	disable_irq(irq);
+ 	spin_lock(&nvmeq->cq_poll_lock);
+ 	nvme_poll_cq(nvmeq, NULL);
+ 	spin_unlock(&nvmeq->cq_poll_lock);
+-	enable_irq(pci_irq_vector(pdev, nvmeq->cq_vector));
++	enable_irq(irq);
  }
+ 
+ static int nvme_poll(struct blk_mq_hw_ctx *hctx, struct io_comp_batch *iob)
 -- 
 2.51.0
 
