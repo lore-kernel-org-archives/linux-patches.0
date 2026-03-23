@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EC253B777A;
-	Mon, 23 Mar 2026 15:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEFF3B4E8F;
+	Mon, 23 Mar 2026 15:14:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278895; cv=none; b=tLmqZ1iS4IA+JTunACBrW+1VyWJxduBEHx590Ql8coyDEKIT1y0YyQbASKBCXRxCjAQ6AbMlqGOFvy0xPUfipkqht+Cdrwj9HprHvh/zkWjc1YKIQ9GmPgcAEnjknOK5pwbx7livI5vvZaeyeeiEUj3dGVfh3vexRKXtjIrzBx8=
+	t=1774278898; cv=none; b=T1SjD76o8BbTaPAu/g0vTm6osqDaGOWvbgjYFCnflye/39XsqLj/L+huPJ0dVzUxDWFRUnwUU7AQLxol/yMrKYzvKQqxhD42l9MR+lz12qyH8NeRuyNd8dPBJ7oS4rgd+UKmpK8tgXZ1bf/ctABr2mJKobUXx+wgMsdLBBGMKZ4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278895; c=relaxed/simple;
-	bh=6LIxRUpgUoM2LnY6VUhHxz0kaIld17XiFGkYczcInSM=;
+	s=arc-20240116; t=1774278898; c=relaxed/simple;
+	bh=gVulUgdbhnJDgIA9gawdzP+KtYrAkUdAqczlQS4rmFw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=b7VY9ZfOEYEjM/L9CsoQLATdI3MzhliI8oN/9fIEcbQTAlHczw9HR5EDYiyqqv5atZuaVqtM2jsfwKeqiVau3N0rsDOWHoppp0po+iwG9EBlOyaDlmdLcROdi8TtwHWBTeQHzaegfi+jnpP6WVypC0o9jz6rfzsqO1HhaXOW+ms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cbpl3uSn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ErQuDBXZbuFXrR9n5HJYGdpuVAljU4Bj0/mEwFd6siCR0eS/xkmXzHtwJ38c8ffcrzAglcxloY9DRcTBCMs/i4cR+PS8fvPEA9i6+w+PTz+F0n+SjOTpnEb41QLr4KmN5YIhVIoIhjwaK3sZLlsRxH27qVoD/MYgKY351DxWjQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=b1P7SYjv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cbpl3uSn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 787D0C2BC9E;
-	Mon, 23 Mar 2026 15:14:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="b1P7SYjv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A013CC4CEF7;
+	Mon, 23 Mar 2026 15:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278894;
-	bh=6LIxRUpgUoM2LnY6VUhHxz0kaIld17XiFGkYczcInSM=;
+	s=korg; t=1774278898;
+	bh=gVulUgdbhnJDgIA9gawdzP+KtYrAkUdAqczlQS4rmFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cbpl3uSnqu3PVFKSvnuL52uITKc7Bku6IYVIRbML8YxErO+7XeO1n7P2lp+s+qMXj
-	 ane7SXmjYTyTKLBdX9p4NInGxWpv1t6TTuYMhKDrzxhKig6JdY5+l5dk5OIQK9+fgh
-	 eFxb2Vq+H5TZqVIaH+vTUQZfCORpUjtU8yVQ/x9o=
+	b=b1P7SYjv6qJItZn4t3ZJ5E9/B73tSZ28SOwITHmUBMJtb18+60aSwj0TkZ6ScibFM
+	 UbDdyAFpALJABFJ+BHTXIXeeMSNYJN0A4taiNXE9NXgIz7XVs5lbpDv26Q/oG6hWUf
+	 PLXH3W42lL5LuqMfIQyPj6TwtGelP300EYkuapLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Misbah Anjum N <misanjum@linux.ibm.com>,
+	NeilBrown <neilb@ownmail.net>,
+	stable@kernel.org,
 	Jeff Layton <jlayton@kernel.org>,
-	NeilBrown <neil@brown.name>,
-	Olga Kornievskaia <okorniev@redhat.com>,
 	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.6 452/567] NFSD: Hold net reference for the lifetime of /proc/fs/nfs/exports fd
-Date: Mon, 23 Mar 2026 14:46:12 +0100
-Message-ID: <20260323134545.167701548@linuxfoundation.org>
+Subject: [PATCH 6.6 453/567] sunrpc: fix cache_request leak in cache_release
+Date: Mon, 23 Mar 2026 14:46:13 +0100
+Message-ID: <20260323134545.192753617@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,80 +52,86 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit e7fcf179b82d3a3730fd8615da01b087cc654d0b upstream.
+commit 17ad31b3a43b72aec3a3d83605891e1397d0d065 upstream.
 
-The /proc/fs/nfs/exports proc entry is created at module init
-and persists for the module's lifetime. exports_proc_open()
-captures the caller's current network namespace and stores
-its svc_export_cache in seq->private, but takes no reference
-on the namespace. If the namespace is subsequently torn down
-(e.g. container destruction after the opener does setns() to a
-different namespace), nfsd_net_exit() calls nfsd_export_shutdown()
-which frees the cache. Subsequent reads on the still-open fd
-dereference the freed cache_detail, walking a freed hash table.
+When a reader's file descriptor is closed while in the middle of reading
+a cache_request (rp->offset != 0), cache_release() decrements the
+request's readers count but never checks whether it should free the
+request.
 
-Hold a reference on the struct net for the lifetime of the open
-file descriptor. This prevents nfsd_net_exit() from running --
-and thus prevents nfsd_export_shutdown() from freeing the cache
--- while any exports fd is open. cache_detail already stores
-its net pointer (cd->net, set by cache_create_net()), so
-exports_release() can retrieve it without additional per-file
-storage.
+In cache_read(), when readers drops to 0 and CACHE_PENDING is clear, the
+cache_request is removed from the queue and freed along with its buffer
+and cache_head reference. cache_release() lacks this cleanup.
 
-Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
-Fixes: 96d851c4d28d ("nfsd: use proper net while reading "exports" file")
-Cc: stable@vger.kernel.org
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
-Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+The only other path that frees requests with readers == 0 is
+cache_dequeue(), but it runs only when CACHE_PENDING transitions from
+set to clear. If that transition already happened while readers was
+still non-zero, cache_dequeue() will have skipped the request, and no
+subsequent call will clean it up.
+
+Add the same cleanup logic from cache_read() to cache_release(): after
+decrementing readers, check if it reached 0 with CACHE_PENDING clear,
+and if so, dequeue and free the cache_request.
+
+Reported-by: NeilBrown <neilb@ownmail.net>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@kernel.org
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ net/sunrpc/cache.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -151,9 +151,19 @@ static int exports_net_open(struct net *
+--- a/net/sunrpc/cache.c
++++ b/net/sunrpc/cache.c
+@@ -1052,14 +1052,25 @@ static int cache_release(struct inode *i
+ 	struct cache_reader *rp = filp->private_data;
  
- 	seq = file->private_data;
- 	seq->private = nn->svc_export_cache;
-+	get_net(net);
- 	return 0;
- }
- 
-+static int exports_release(struct inode *inode, struct file *file)
-+{
-+	struct seq_file *seq = file->private_data;
-+	struct cache_detail *cd = seq->private;
+ 	if (rp) {
++		struct cache_request *rq = NULL;
 +
-+	put_net(cd->net);
-+	return seq_release(inode, file);
-+}
+ 		spin_lock(&queue_lock);
+ 		if (rp->offset) {
+ 			struct cache_queue *cq;
+-			for (cq= &rp->q; &cq->list != &cd->queue;
+-			     cq = list_entry(cq->list.next, struct cache_queue, list))
++			for (cq = &rp->q; &cq->list != &cd->queue;
++			     cq = list_entry(cq->list.next,
++					     struct cache_queue, list))
+ 				if (!cq->reader) {
+-					container_of(cq, struct cache_request, q)
+-						->readers--;
++					struct cache_request *cr =
++						container_of(cq,
++						struct cache_request, q);
++					cr->readers--;
++					if (cr->readers == 0 &&
++					    !test_bit(CACHE_PENDING,
++						      &cr->item->flags)) {
++						list_del(&cr->q.list);
++						rq = cr;
++					}
+ 					break;
+ 				}
+ 			rp->offset = 0;
+@@ -1067,9 +1078,14 @@ static int cache_release(struct inode *i
+ 		list_del(&rp->q.list);
+ 		spin_unlock(&queue_lock);
+ 
++		if (rq) {
++			cache_put(rq->item, cd);
++			kfree(rq->buf);
++			kfree(rq);
++		}
 +
- static int exports_nfsd_open(struct inode *inode, struct file *file)
- {
- 	return exports_net_open(inode->i_sb->s_fs_info, file);
-@@ -163,7 +173,7 @@ static const struct file_operations expo
- 	.open		= exports_nfsd_open,
- 	.read		= seq_read,
- 	.llseek		= seq_lseek,
--	.release	= seq_release,
-+	.release	= exports_release,
- };
- 
- static int export_features_show(struct seq_file *m, void *v)
-@@ -1476,7 +1486,7 @@ static const struct proc_ops exports_pro
- 	.proc_open	= exports_proc_open,
- 	.proc_read	= seq_read,
- 	.proc_lseek	= seq_lseek,
--	.proc_release	= seq_release,
-+	.proc_release	= exports_release,
- };
- 
- static int create_proc_exports_entry(void)
+ 		filp->private_data = NULL;
+ 		kfree(rp);
+-
+ 	}
+ 	if (filp->f_mode & FMODE_WRITE) {
+ 		atomic_dec(&cd->writers);
 
 
