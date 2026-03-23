@@ -1,39 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8DC1A6822;
-	Mon, 23 Mar 2026 15:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED08035959;
+	Mon, 23 Mar 2026 15:01:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278060; cv=none; b=ThIsKqDZP2bstJCbTtWKUzI7/MigoCDtFTVI+tw0/yT44BGOIcOVay3KVqgIQ1cB07rXP9LfddVH1jjy3Dyr2YHnIIRrRidGkDtr16vBC69j+lJoAojpkzJKMSVZqdKTVidVVqppuaSatABG92XkMeKRTQ268Ih62ol+d7pWeuc=
+	t=1774278063; cv=none; b=nNNTq7ShteRpmrL83uFRI3cni+4ZYldlExNupHS06AKktLwwz0opb1Up2ICF6v3R4teZeE1bM4rGI7qMX02sInyuoPvk/FQhh94kWw+DHIadeG1zsM51N1LOlx+WGhbaLQt2RDVRVh7bZCn2A47nG50g63jDsjM8OjIJnnu4doo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278060; c=relaxed/simple;
-	bh=tQGnBmDSCGxkSKEVyiifJfJrZQagBPNq2lScJIvzOl4=;
+	s=arc-20240116; t=1774278063; c=relaxed/simple;
+	bh=nNS12mTq3a7z3/InwXC4IA4EsFEfbL46O99wlcUuHX0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=k+vvd1oqM5VjMNPABcamgpEKX1RLAITctzImMkBTYHYX6W4oKRntNmaMBai7W2YGSw7GLGN9GvNuBRFiL2RiK5BjCFR9dUClbEz1o0useTS9jouGhzF3HIDDs/vl3ZxqyThseR+jC/Gv+zzBCfJ2x3LKgrLKTfaMNyF7tjJft6g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wVbkmdfx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=uvokFpxuu5a7epgmxrCCeMQYqn8Da+syxTOpPPZsAMqrYIJwSDd/7kcioMSZuO97XUJOyGlPAvV+cUP5zpySHNZomB4MH1fTkJjVkTdhEITraoO/bk7EgTD5vkCmBrUZctfqO4+f/049oLJRnzwndEOKWYVapsgojvmoBXnEv34=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lK9YouxD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wVbkmdfx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBF8C4CEF7;
-	Mon, 23 Mar 2026 15:00:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lK9YouxD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 729CCC4CEF7;
+	Mon, 23 Mar 2026 15:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278059;
-	bh=tQGnBmDSCGxkSKEVyiifJfJrZQagBPNq2lScJIvzOl4=;
+	s=korg; t=1774278062;
+	bh=nNS12mTq3a7z3/InwXC4IA4EsFEfbL46O99wlcUuHX0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wVbkmdfxqv/ETutstZnw3FUFfCnIPxAZj8YMAlz19+t5FBqRl1jNnGzkwC5ALEC6t
-	 CPLEeY3au7pMs6XDh3ohwPSlE+WT03ChSQbDVK6zl9LPC4NMXfSxo2HpOjSj+k8eGW
-	 NX8/0VA5zuU8RBKyVuth2BdgoWtF3R4eodJOZSc4=
+	b=lK9YouxDZi2o40IRSKu/i3VhhR98IXsMFQWVdgQRW4iZEW6X6KeFjGYb8qLC3bRIz
+	 18X23Wyy5VJgGjGC/qtu9wY4uidNQ+/1VQ7T3lYLh0cOK1hJJ5nUgwg0omLA787yfq
+	 WBKlaJ4Clc94pnT+A7MIQsiXD1tSvB/Ylb6G9zjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuvam Pandey <shuvampandey1@gmail.com>,
-	David Gow <david@davidgow.net>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
+	Linus Walleij <linusw@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 146/567] kunit: tool: copy caller args in run_kernel to prevent mutation
-Date: Mon, 23 Mar 2026 14:41:06 +0100
-Message-ID: <20260323134537.442153954@linuxfoundation.org>
+Subject: [PATCH 6.6 147/567] net: dsa: realtek: rtl8365mb: fix rtl8365mb_phy_ocp_write return value
+Date: Mon, 23 Mar 2026 14:41:07 +0100
+Message-ID: <20260323134537.468439630@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,83 +54,40 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shuvam Pandey <shuvampandey1@gmail.com>
+From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
 
-[ Upstream commit 40804c4974b8df2adab72f6475d343eaff72b7f6 ]
+[ Upstream commit 7cbe98f7bef965241a5908d50d557008cf998aee ]
 
-run_kernel() appended KUnit flags directly to the caller-provided args
-list. When exec_tests() calls run_kernel() repeatedly (e.g. with
---run_isolated), each call mutated the same list, causing later runs
-to inherit stale filter_glob values and duplicate kunit.enable flags.
+Function rtl8365mb_phy_ocp_write() always returns 0, even when an error
+occurs during register access. This patch fixes the return value to
+propagate the actual error code from regmap operations.
 
-Fix this by copying args at the start of run_kernel(). Add a regression
-test that calls run_kernel() twice with the same list and verifies the
-original remains unchanged.
-
-Fixes: ff9e09a3762f ("kunit: tool: support running each suite/test separately")
-Signed-off-by: Shuvam Pandey <shuvampandey1@gmail.com>
-Reviewed-by: David Gow <david@davidgow.net>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Link: https://lore.kernel.org/netdev/a2dfde3c-d46f-434b-9d16-1e251e449068@yahoo.com/
+Fixes: 2796728460b8 ("net: dsa: realtek: rtl8365mb: serialize indirect PHY register access")
+Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
+Reviewed-by: Linus Walleij <linusw@kernel.org>
+Link: https://patch.msgid.link/20260301-realtek_namiltd_fix1-v1-1-43a6bb707f9c@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_kernel.py    |  6 ++++--
- tools/testing/kunit/kunit_tool_test.py | 26 ++++++++++++++++++++++++++
- 2 files changed, 30 insertions(+), 2 deletions(-)
+ drivers/net/dsa/realtek/rtl8365mb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/kunit/kunit_kernel.py b/tools/testing/kunit/kunit_kernel.py
-index 0b6488efed47a..df7622dac0ff1 100644
---- a/tools/testing/kunit/kunit_kernel.py
-+++ b/tools/testing/kunit/kunit_kernel.py
-@@ -331,8 +331,10 @@ class LinuxSourceTree:
- 		return self.validate_config(build_dir)
+diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
+index 41ea3b5a42b14..318eced8f0d34 100644
+--- a/drivers/net/dsa/realtek/rtl8365mb.c
++++ b/drivers/net/dsa/realtek/rtl8365mb.c
+@@ -766,7 +766,7 @@ static int rtl8365mb_phy_ocp_write(struct realtek_priv *priv, int phy,
+ out:
+ 	mutex_unlock(&priv->map_lock);
  
- 	def run_kernel(self, args: Optional[List[str]]=None, build_dir: str='', filter_glob: str='', filter: str='', filter_action: Optional[str]=None, timeout: Optional[int]=None) -> Iterator[str]:
--		if not args:
--			args = []
-+		# Copy to avoid mutating the caller-supplied list. exec_tests() reuses
-+		# the same args across repeated run_kernel() calls (e.g. --run_isolated),
-+		# so appending to the original would accumulate stale flags on each call.
-+		args = list(args) if args else []
- 		if filter_glob:
- 			args.append('kunit.filter_glob=' + filter_glob)
- 		if filter:
-diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
-index b28c1510be2eb..5254a25ad2d9d 100755
---- a/tools/testing/kunit/kunit_tool_test.py
-+++ b/tools/testing/kunit/kunit_tool_test.py
-@@ -461,6 +461,32 @@ class LinuxSourceTreeTest(unittest.TestCase):
- 			with open(kunit_kernel.get_outfile_path(build_dir), 'rt') as outfile:
- 				self.assertEqual(outfile.read(), 'hi\nbye\n', msg='Missing some output')
+-	return 0;
++	return ret;
+ }
  
-+	def test_run_kernel_args_not_mutated(self):
-+		"""Verify run_kernel() copies args so callers can reuse them."""
-+		start_calls = []
-+
-+		def fake_start(start_args, unused_build_dir):
-+			start_calls.append(list(start_args))
-+			return subprocess.Popen(['printf', 'KTAP version 1\n'],
-+						text=True, stdout=subprocess.PIPE)
-+
-+		with tempfile.TemporaryDirectory('') as build_dir:
-+			tree = kunit_kernel.LinuxSourceTree(build_dir,
-+					kunitconfig_paths=[os.devnull])
-+			with mock.patch.object(tree._ops, 'start', side_effect=fake_start), \
-+			     mock.patch.object(kunit_kernel.subprocess, 'call'):
-+				kernel_args = ['mem=1G']
-+				for _ in tree.run_kernel(args=kernel_args, build_dir=build_dir,
-+							 filter_glob='suite.test1'):
-+					pass
-+				for _ in tree.run_kernel(args=kernel_args, build_dir=build_dir,
-+							 filter_glob='suite.test2'):
-+					pass
-+				self.assertEqual(kernel_args, ['mem=1G'],
-+					'run_kernel() should not modify caller args')
-+				self.assertIn('kunit.filter_glob=suite.test1', start_calls[0])
-+				self.assertIn('kunit.filter_glob=suite.test2', start_calls[1])
-+
- 	def test_build_reconfig_no_config(self):
- 		with tempfile.TemporaryDirectory('') as build_dir:
- 			with open(kunit_kernel.get_kunitconfig_path(build_dir), 'w') as f:
+ static int rtl8365mb_phy_read(struct realtek_priv *priv, int phy, int regnum)
 -- 
 2.51.0
 
