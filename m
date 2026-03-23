@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B8CD3AC0C8;
-	Mon, 23 Mar 2026 14:13:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB0AC3AF643;
+	Mon, 23 Mar 2026 14:14:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275238; cv=none; b=lyZidCgxLw6OyWaIp52rKMD13Kpn4QRsLxtssdd9L2HWNRInSWbPEtP/bGU8wSrQmPMpGtx023jIRcveCI3qNbqDiMmVTVvegc1sEaPYoqgfzvgPbT7C2QfuFJh3DgoCDOJ8p0Z0HZvUGpYByLagAYA3LIMmKz1ugeJBDKbjHSk=
+	t=1774275240; cv=none; b=kvxLiGOgYv7QnWrb9AEcLKh/L5Fpp+pg8r8EPfxYL0hL2p7nwxmTcoK4QV7JgzGezpVUzyjre3CSUk8YpQ3hYqc1LnAiKg7rAvPjcAkXXrJHTiHzgBD0JY5mIBrjlYaJ88HIvzepBHd+0cSH1myMxc6PEGUCuFPfH7qZGh6s5VM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275238; c=relaxed/simple;
-	bh=u1jOhMNJXJcpSaKv++ywbcTp3VRtMGSD+HLJl4r4LZk=;
+	s=arc-20240116; t=1774275240; c=relaxed/simple;
+	bh=B94d4e+yfRBE2tWtVQWkKt2XV3FYyvWIDp6pksrLQFQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KHt/dKmHk4ueYh71nIz/mQkAqH2RxhnuQtSkB/HN2tuKJNp49Tu4+RoCy96B5fymhd0mKsIxbi6451rkAPRTbMFaHGV8bLwOK7wR905p91Vy2nRrD32l8NHdfVGEde1MPJPiW/EuU2UXYsYaAhaT4kBm8axLktAxAs14cnDZ5is=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ISeqVZGx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dcc3LnDdJvNuyv/nINEk59x0paeoZZV1DQfCNwQCjsRjeQfQtS/MlPLzvZzoAhLgOATP76fCKruel8WjQ1cSo3vVzjRJ/58zcU1/W/8QETEaQO64sKVZ/t3pqMB4tOeOYSXAwlHYUMoV6M6J2Nyt/jOPv2Jb5tUsVJT2oprvQAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Y37RcH/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ISeqVZGx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998CFC4CEF7;
-	Mon, 23 Mar 2026 14:13:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Y37RcH/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D3F7C2BCB1;
+	Mon, 23 Mar 2026 14:14:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275237;
-	bh=u1jOhMNJXJcpSaKv++ywbcTp3VRtMGSD+HLJl4r4LZk=;
+	s=korg; t=1774275240;
+	bh=B94d4e+yfRBE2tWtVQWkKt2XV3FYyvWIDp6pksrLQFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISeqVZGxfAcXPG0+cKj9zckjspQ/vveesiQRtCmToS1Sy8eS8dOoPcdb9lxt36AJc
-	 bPVN5t+9iE4vAt6dfkxgbM4ekR/YXh06i92+HK0RxwiUR4yvHePtq2QIplkyTkXflT
-	 286AsWvPA98R8OLMOcKbqVPsRtjZ6ybYVhsED+VQ=
+	b=2Y37RcH/4MrHOVmuezE5KD2HDXw7u6PzTl3rdy3MpKFf+2/8g2eb8w2rsrUyMlRU2
+	 0hwqMwWufhDWM54xoiW3UKyzz/IEGSnoseSqHcGTVppnNQbr3T+T2OGqpDKeb5IOZM
+	 rAmxazRgIBa0l1JQ87pRT3cw70hUF5+l6O2MSyK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Scott Mayhew <smayhew@redhat.com>,
+	Roberto Bergantinos Corpas <rbergant@redhat.com>,
+	Anna Schumaker <anna.schumaker@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 024/460] smb/server: Fix another refcount leak in smb2_open()
-Date: Mon, 23 Mar 2026 14:40:20 +0100
-Message-ID: <20260323134527.285964374@linuxfoundation.org>
+Subject: [PATCH 6.12 025/460] nfs: return EISDIR on nfs3_proc_create if d_alias is a dir
+Date: Mon, 23 Mar 2026 14:40:21 +0100
+Message-ID: <20260323134527.311151796@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,51 +53,56 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Roberto Bergantinos Corpas <rbergant@redhat.com>
 
-[ Upstream commit c15e7c62feb3751cbdd458555819df1d70374890 ]
+[ Upstream commit 410666a298c34ebd57256fde6b24c96bd23059a2 ]
 
-If ksmbd_override_fsids() fails, we jump to err_out2. At that point, fp is
-NULL because it hasn't been assigned dh_info.fp yet, so ksmbd_fd_put(work,
-fp) will not be called. However, dh_info.fp was already inserted into the
-session file table by ksmbd_reopen_durable_fd(), so it will leak in the
-session file table until the session is closed.
+If we found an alias through nfs3_do_create/nfs_add_or_obtain
+/d_splice_alias which happens to be a dir dentry, we don't return
+any error, and simply forget about this alias, but the original
+dentry we were adding and passed as parameter remains negative.
 
-Move fp = dh_info.fp; ahead of the ksmbd_override_fsids() check to fix the
-problem.
+This later causes an oops on nfs_atomic_open_v23/finish_open since we
+supply a negative dentry to do_dentry_open.
 
-Found by an experimental AI code review agent at Google.
+This has been observed running lustre-racer, where dirs and files are
+created/removed concurrently with the same name and O_EXCL is not
+used to open files (frequent file redirection).
 
-Fixes: c8efcc786146a ("ksmbd: add support for durable handles v1/v2")
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+While d_splice_alias typically returns a directory alias or NULL, we
+explicitly check d_is_dir() to ensure that we don't attempt to perform
+file operations (like finish_open) on a directory inode, which triggers
+the observed oops.
+
+Fixes: 7c6c5249f061 ("NFS: add atomic_open for NFSv3 to handle O_TRUNC correctly.")
+Reviewed-by: Olga Kornievskaia <okorniev@redhat.com>
+Reviewed-by: Scott Mayhew <smayhew@redhat.com>
+Signed-off-by: Roberto Bergantinos Corpas <rbergant@redhat.com>
+Signed-off-by: Anna Schumaker <anna.schumaker@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/smb2pdu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfs/nfs3proc.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
-index 0d7ba57c1ca64..d1c2e8779ee18 100644
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -3012,13 +3012,14 @@ int smb2_open(struct ksmbd_work *work)
- 				goto err_out2;
- 			}
+diff --git a/fs/nfs/nfs3proc.c b/fs/nfs/nfs3proc.c
+index 88b0fb343ae04..b02ea9fc812da 100644
+--- a/fs/nfs/nfs3proc.c
++++ b/fs/nfs/nfs3proc.c
+@@ -393,8 +393,13 @@ nfs3_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
+ 	if (status != 0)
+ 		goto out_release_acls;
  
-+			fp = dh_info.fp;
-+
- 			if (ksmbd_override_fsids(work)) {
- 				rc = -ENOMEM;
- 				ksmbd_put_durable_fd(dh_info.fp);
- 				goto err_out2;
- 			}
+-	if (d_alias)
++	if (d_alias) {
++		if (d_is_dir(d_alias)) {
++			status = -EISDIR;
++			goto out_dput;
++		}
+ 		dentry = d_alias;
++	}
  
--			fp = dh_info.fp;
- 			file_info = FILE_OPENED;
- 
- 			rc = ksmbd_vfs_getattr(&fp->filp->f_path, &stat);
+ 	/* When we created the file with exclusive semantics, make
+ 	 * sure we set the attributes afterwards. */
 -- 
 2.51.0
 
