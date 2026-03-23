@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24AF1A6815;
-	Mon, 23 Mar 2026 13:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46661DF25C;
+	Mon, 23 Mar 2026 13:56:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274198; cv=none; b=dQHSHmcKiNrRWla20HKfiatGEUjGUPktj8wbXNr5qELEYXcowS9DjR/jY6I4jK1EHt35i+3sgM9h3IABMaJLBam+NVisaOQwJBiCFcG/NVwPN7wF839DXExJnGuCKQZJIX+gsZeczYoHApIrTsNczana++fiI5tE6Fo807shdC0=
+	t=1774274202; cv=none; b=TYw77PYHpGilUhKRIXS9Zu7yS9116rmIj/sUK/7JoVIcr+Mi4Luew3esu6/zo5TJPIbZs439ibpDK2b0XoT+LvivBoVFf60+EZ3MEy7K32c/sNnI4rL68Wx4PCDCa/SCBtPtIbiqBYUcMkaPVJHbX9MCpBarWU6gqNQXx6Pcs68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274198; c=relaxed/simple;
-	bh=Um30luMYxWKuWS8dIm9gfKJFA154LC2TyQ10aDORglU=;
+	s=arc-20240116; t=1774274202; c=relaxed/simple;
+	bh=bSfoZTqHr25xWyL4fQLf8by0F8YFR6f4PnfODL77654=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gaILcrKnXoYFZuN/95drBF90QNQUANPy6QX2OjcwlK6azp0CGIFTwr8i1i+mfjh2Z0EZX3XLB2a78OXTZpvIz9CJi/oKYleFxKOe8SJ6A2yRwNNttnZ51HZfMdMya4mRAiIODKnVdkOG/laQHYA9shNEQ+np/PI9ZkeC7TJgMBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fZPJ2O0n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UCJs1cYifrd8KPzRJvZyZe+scEIJi3NFXZRWHpDVkChLRpOwGrbkmIPKa9B22Y1NyDg81bb6yYO3mrDstz0b3gwJZtA80v639gFT8xicoc73JtEpE3FSfQpH35YY1BbeTUTUUcePQtFq0UR2URlE/oVNuDsUqRyfwk6fOvLaAgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=whhkCKHe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fZPJ2O0n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A73C2BC9E;
-	Mon, 23 Mar 2026 13:56:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="whhkCKHe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39A54C4CEF7;
+	Mon, 23 Mar 2026 13:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274198;
-	bh=Um30luMYxWKuWS8dIm9gfKJFA154LC2TyQ10aDORglU=;
+	s=korg; t=1774274201;
+	bh=bSfoZTqHr25xWyL4fQLf8by0F8YFR6f4PnfODL77654=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZPJ2O0nldtScfGpsgDzhwwUu7K/+nIGHQ84OEw7Ttqqg04GnNTzyucHz3KE+22Vm
-	 bMIP6TsOTFniPiOTSN1RlPshrFNXmIUc1o6vP2k7s8VFYTNjK3j5JqWzPgzj5zx75p
-	 MxNy/CsbpCK4OULvm+8qEmWZZArDAqje9HjxXIEU=
+	b=whhkCKHeb25BUQvcgPSQAHLxDBZQbrKbzcVsIn+MK2i+0zipzTCzJUrcTSnCyh01u
+	 bmioOnSZOMOpo49cFyTRGZDIChKpAztRfSSKYtr0puO71lRmI3p7S1nkWzqijZpHAZ
+	 B7csHn4/tJUfc2XtSSYnqhBmCiFJVM64VIsAAIds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Klaudia Kloc <klaudia@vidocsecurity.com>,
-	=?UTF-8?q?Dawid=20Moczad=C5=82o?= <dawid@vidocsecurity.com>,
-	Jenny Guanni Qu <qguanni@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	"Tycho Andersen (AMD)" <tycho@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 141/220] netfilter: nf_conntrack_h323: check for zero length in DecodeQ931()
-Date: Mon, 23 Mar 2026 14:45:18 +0100
-Message-ID: <20260323134509.020340452@linuxfoundation.org>
+Subject: [PATCH 6.19 142/220] crypto: ccp - Fix leaking the same page twice
+Date: Mon, 23 Mar 2026 14:45:19 +0100
+Message-ID: <20260323134509.050512167@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -47,49 +47,60 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.19-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Jenny Guanni Qu <qguanni@gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
 
-[ Upstream commit f173d0f4c0f689173f8cdac79991043a4a89bf66 ]
+[ Upstream commit 5c52607c43c397b79a9852ce33fc61de58c3645c ]
 
-In DecodeQ931(), the UserUserIE code path reads a 16-bit length from
-the packet, then decrements it by 1 to skip the protocol discriminator
-byte before passing it to DecodeH323_UserInformation(). If the encoded
-length is 0, the decrement wraps to -1, which is then passed as a
-large value to the decoder, leading to an out-of-bounds read.
+Commit 551120148b67 ("crypto: ccp - Fix a case where SNP_SHUTDOWN is
+missed") fixed a case where SNP is left in INIT state if page reclaim
+fails. It removes the transition to the INIT state for this command and
+adjusts the page state management.
 
-Add a check to ensure len is positive after the decrement.
+While doing this, it added a call to snp_leak_pages() after a call to
+snp_reclaim_pages() failed. Since snp_reclaim_pages() already calls
+snp_leak_pages() internally on the pages it fails to reclaim, calling
+it again leaks the exact same page twice.
 
-Fixes: 5e35941d9901 ("[NETFILTER]: Add H.323 conntrack/NAT helper")
-Reported-by: Klaudia Kloc <klaudia@vidocsecurity.com>
-Reported-by: Dawid Moczadło <dawid@vidocsecurity.com>
-Tested-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fix by removing the extra call to snp_leak_pages().
+
+The problem was found by an experimental code review agent based on
+gemini-3.1-pro while reviewing backports into v6.18.y.
+
+Assisted-by: Gemini:gemini-3.1-pro
+Fixes: 551120148b67 ("crypto: ccp - Fix a case where SNP_SHUTDOWN is missed")
+Cc: Tycho Andersen (AMD) <tycho@kernel.org>
+Cc: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Reviewed-by: Tycho Andersen (AMD) <tycho@kernel.org>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_h323_asn1.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/ccp/sev-dev.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_h323_asn1.c b/net/netfilter/nf_conntrack_h323_asn1.c
-index c972e9488e16f..7b1497ed97d26 100644
---- a/net/netfilter/nf_conntrack_h323_asn1.c
-+++ b/net/netfilter/nf_conntrack_h323_asn1.c
-@@ -924,6 +924,8 @@ int DecodeQ931(unsigned char *buf, size_t sz, Q931 *q931)
- 				break;
- 			p++;
- 			len--;
-+			if (len <= 0)
-+				break;
- 			return DecodeH323_UserInformation(buf, p, len,
- 							  &q931->UUIE);
- 		}
+diff --git a/drivers/crypto/ccp/sev-dev.c b/drivers/crypto/ccp/sev-dev.c
+index 0d90b5f6a4548..a554fe3de3fd2 100644
+--- a/drivers/crypto/ccp/sev-dev.c
++++ b/drivers/crypto/ccp/sev-dev.c
+@@ -2408,10 +2408,8 @@ static int sev_ioctl_do_snp_platform_status(struct sev_issue_cmd *argp)
+ 		 * in Firmware state on failure. Use snp_reclaim_pages() to
+ 		 * transition either case back to Hypervisor-owned state.
+ 		 */
+-		if (snp_reclaim_pages(__pa(data), 1, true)) {
+-			snp_leak_pages(__page_to_pfn(status_page), 1);
++		if (snp_reclaim_pages(__pa(data), 1, true))
+ 			return -EFAULT;
+-		}
+ 	}
+ 
+ 	if (ret)
 -- 
 2.51.0
 
