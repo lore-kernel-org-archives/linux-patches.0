@@ -1,41 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E946120125F;
-	Mon, 23 Mar 2026 13:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43DCE38C2CB;
+	Mon, 23 Mar 2026 13:51:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273862; cv=none; b=ASKZwJ0GvwMc55HmAlTl0sxV3ejyvV4U3trhsqmfqszXO3uMbtxOdhdPuV7ke1aOp1vnvhB+LdOg265T6B9E/zHJpN+lJOyJ3zZWWo3oIhf3edTtrYgrzBQBdPE6+LAssK0DSQJpKlR4AzXvziX9YzvOgxK67EkOS1/sIu2QDGw=
+	t=1774273865; cv=none; b=WSm/r8d1kH5toyXapINe5OUR1AhIaHV2h3ES1Fox5zbFR0kE1VyD7BgdmSrq+5dq8HzpztkOuy13S8lIaQduUFlo3+/9s4+pK3qn27ZC0OQWDZpYZoH0Qe0dqpCtLJzQSY+iiczJy58Etrlb+8hcWcxC3m9bxhMS6PGiyaDNh1Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273862; c=relaxed/simple;
-	bh=YEAgzvquC4WdxAk583jIy218c9PGZlUPYakQGMSWZic=;
+	s=arc-20240116; t=1774273865; c=relaxed/simple;
+	bh=cLaOm7u6TxcK/IpRIdgHDp804f6tJgmDzO9Cm2ntaCE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CyGhIcDZ9cfrbj3fqYL1lsjeQCflfU45hZHbLSIBmg9BYgI1rGijUmS8jwdWOPCHNKp9JKhjcgnaZ7GwhHcSue6vKqTTk7Mc3C3bS8LrYrRPcerbovKMOjK4/Z9eftZNLZlb12VYFGjcdyGvCnQIKJwjQsr1Z8r0f5w24lggIMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XkWTKKc6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=UJdSsErNEBtZva1Mbnk2W9z44O52cJUELYh9cqn2/0exQAnpItWXhCMZVu9rtMmc06cVhOKsG1ro7aEUeYwOper1tTdLao+twpTOfL90G0lUdiO89mn5/UevQpei2dIaQKjviYnrSZ1mzw1CPsKZ30siGRPcMe5wECcks7i41Gs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S2fbthX4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XkWTKKc6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55935C4CEF7;
-	Mon, 23 Mar 2026 13:51:01 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S2fbthX4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 468EEC2BCB1;
+	Mon, 23 Mar 2026 13:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273861;
-	bh=YEAgzvquC4WdxAk583jIy218c9PGZlUPYakQGMSWZic=;
+	s=korg; t=1774273864;
+	bh=cLaOm7u6TxcK/IpRIdgHDp804f6tJgmDzO9Cm2ntaCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XkWTKKc6Gz8bp2YrtKAHhXKM8iweJE1dGc3aoxNOfiSxTftOePH1yyGfG5F6NZf4C
-	 a4NfFlvc+M6xWv4Kuoet392QOWSl0r1am1koSleYFgqdH83Yfc3WRYXS6TJhMirjIb
-	 uiWUncN5vRO1kVsDbjjnwLtSXT/0G2V+VL+dnhjM=
+	b=S2fbthX4bBozU1NRIaRgJRNzZwQS+3vSWFDETXCLHb0M0FxN/msB4GcgqPZNwQIsY
+	 ATNq81xCUzpWK6BEOUHnbZjPDAVIIbI+cVqrRMxMwi0eMnH1ZLRhr0IATVP4ZlrvDf
+	 Zn0arbyV6gV4/NxD82DavyoHJtZo/Wg1PXc1DcLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thorsten Blum <thorsten.blum@linux.dev>,
-	Baoquan He <bhe@redhat.com>,
-	Coiby Xu <coxu@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	Vivek Goyal <vgoyal@redhat.com>,
+	Dev Jain <dev.jain@arm.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	Barry Song <baohua@kernel.org>,
+	Wei Yang <richard.weiyang@gmail.com>,
+	Lance Yang <lance.yang@linux.dev>,
+	Anshuman Khandual <anshuman.khandual@arm.com>,
+	Harry Yoo <harry.yoo@oracle.com>,
+	Jann Horn <jannh@google.com>,
+	Liam Howlett <liam.howlett@oracle.com>,
+	Rik van Riel <riel@surriel.com>,
+	Ryan Roberts <ryan.roberts@arm.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.19 008/220] crash_dump: dont log dm-crypt key bytes in read_key_from_user_keying
-Date: Mon, 23 Mar 2026 14:43:05 +0100
-Message-ID: <20260323134504.843299727@linuxfoundation.org>
+Subject: [PATCH 6.19 009/220] mm/rmap: fix incorrect pte restoration for lazyfree folios
+Date: Mon, 23 Mar 2026 14:43:06 +0100
+Message-ID: <20260323134504.874496083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -54,40 +62,203 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Thorsten Blum <thorsten.blum@linux.dev>
+From: Dev Jain <dev.jain@arm.com>
 
-commit 36f46b0e36892eba08978eef7502ff3c94ddba77 upstream.
+commit 29f40594a28114b9a9bc87f6cf7bbee9609628f2 upstream.
 
-When debug logging is enabled, read_key_from_user_keying() logs the first
-8 bytes of the key payload and partially exposes the dm-crypt key.  Stop
-logging any key bytes.
+We batch unmap anonymous lazyfree folios by folio_unmap_pte_batch.  If the
+batch has a mix of writable and non-writable bits, we may end up setting
+the entire batch writable.  Fix this by respecting writable bit during
+batching.
 
-Link: https://lkml.kernel.org/r/20260227230008.858641-2-thorsten.blum@linux.dev
-Fixes: 479e58549b0f ("crash_dump: store dm crypt keys in kdump reserved memory")
-Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Coiby Xu <coxu@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: Vivek Goyal <vgoyal@redhat.com>
+Although on a successful unmap of a lazyfree folio, the soft-dirty bit is
+lost, preserve it on pte restoration by respecting the bit during
+batching, to make the fix consistent w.r.t both writable bit and
+soft-dirty bit.
+
+I was able to write the below reproducer and crash the kernel.
+Explanation of reproducer (set 64K mTHP to always):
+
+Fault in a 64K large folio.  Split the VMA at mid-point with
+MADV_DONTFORK.  fork() - parent points to the folio with 8 writable ptes
+and 8 non-writable ptes.  Merge the VMAs with MADV_DOFORK so that
+folio_unmap_pte_batch() can determine all the 16 ptes as a batch.  Do
+MADV_FREE on the range to mark the folio as lazyfree.  Write to the memory
+to dirty the pte, eventually rmap will dirty the folio.  Then trigger
+reclaim, we will hit the pte restoration path, and the kernel will crash
+with the trace given below.
+
+The BUG happens at:
+
+	BUG_ON(atomic_inc_return(&ptc->anon_map_count) > 1 && rw);
+
+The code path is asking for anonymous page to be mapped writable into the
+pagetable.  The BUG_ON() firing implies that such a writable page has been
+mapped into the pagetables of more than one process, which breaks
+anonymous memory/CoW semantics.
+
+[   21.134473] kernel BUG at mm/page_table_check.c:118!
+[   21.134497] Internal error: Oops - BUG: 00000000f2000800 [#1]  SMP
+[   21.135917] Modules linked in:
+[   21.136085] CPU: 1 UID: 0 PID: 1735 Comm: dup-lazyfree Not tainted 7.0.0-rc1-00116-g018018a17770 #1028 PREEMPT
+[   21.136858] Hardware name: linux,dummy-virt (DT)
+[   21.137019] pstate: 21400005 (nzCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)
+[   21.137308] pc : page_table_check_set+0x28c/0x2a8
+[   21.137607] lr : page_table_check_set+0x134/0x2a8
+[   21.137885] sp : ffff80008a3b3340
+[   21.138124] x29: ffff80008a3b3340 x28: fffffdffc3d14400 x27: ffffd1a55e03d000
+[   21.138623] x26: 0040000000000040 x25: ffffd1a55f7dd000 x24: 0000000000000001
+[   21.139045] x23: 0000000000000001 x22: 0000000000000001 x21: ffffd1a55f217f30
+[   21.139629] x20: 0000000000134521 x19: 0000000000134519 x18: 005c43e000040000
+[   21.140027] x17: 0001400000000000 x16: 0001700000000000 x15: 000000000000ffff
+[   21.140578] x14: 000000000000000c x13: 005c006000000000 x12: 0000000000000020
+[   21.140828] x11: 0000000000000000 x10: 005c000000000000 x9 : ffffd1a55c079ee0
+[   21.141077] x8 : 0000000000000001 x7 : 005c03e000040000 x6 : 000000004000ffff
+[   21.141490] x5 : ffff00017fffce00 x4 : 0000000000000001 x3 : 0000000000000002
+[   21.141741] x2 : 0000000000134510 x1 : 0000000000000000 x0 : ffff0000c08228c0
+[   21.141991] Call trace:
+[   21.142093]  page_table_check_set+0x28c/0x2a8 (P)
+[   21.142265]  __page_table_check_ptes_set+0x144/0x1e8
+[   21.142441]  __set_ptes_anysz.constprop.0+0x160/0x1a8
+[   21.142766]  contpte_set_ptes+0xe8/0x140
+[   21.142907]  try_to_unmap_one+0x10c4/0x10d0
+[   21.143177]  rmap_walk_anon+0x100/0x250
+[   21.143315]  try_to_unmap+0xa0/0xc8
+[   21.143441]  shrink_folio_list+0x59c/0x18a8
+[   21.143759]  shrink_lruvec+0x664/0xbf0
+[   21.144043]  shrink_node+0x218/0x878
+[   21.144285]  __node_reclaim.constprop.0+0x98/0x338
+[   21.144763]  user_proactive_reclaim+0x2a4/0x340
+[   21.145056]  reclaim_store+0x3c/0x60
+[   21.145216]  dev_attr_store+0x20/0x40
+[   21.145585]  sysfs_kf_write+0x84/0xa8
+[   21.145835]  kernfs_fop_write_iter+0x130/0x1c8
+[   21.145994]  vfs_write+0x2b8/0x368
+[   21.146119]  ksys_write+0x70/0x110
+[   21.146240]  __arm64_sys_write+0x24/0x38
+[   21.146380]  invoke_syscall+0x50/0x120
+[   21.146513]  el0_svc_common.constprop.0+0x48/0xf8
+[   21.146679]  do_el0_svc+0x28/0x40
+[   21.146798]  el0_svc+0x34/0x110
+[   21.146926]  el0t_64_sync_handler+0xa0/0xe8
+[   21.147074]  el0t_64_sync+0x198/0x1a0
+[   21.147225] Code: f9400441 b4fff241 17ffff94 d4210000 (d4210000)
+[   21.147440] ---[ end trace 0000000000000000 ]---
+
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <string.h>
+#include <sys/wait.h>
+#include <sched.h>
+#include <fcntl.h>
+
+void write_to_reclaim() {
+    const char *path = "/sys/devices/system/node/node0/reclaim";
+    const char *value = "409600000000";
+    int fd = open(path, O_WRONLY);
+    if (fd == -1) {
+        perror("open");
+        exit(EXIT_FAILURE);
+    }
+
+    if (write(fd, value, sizeof("409600000000") - 1) == -1) {
+        perror("write");
+        close(fd);
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Successfully wrote %s to %s\n", value, path);
+    close(fd);
+}
+
+int main()
+{
+	char *ptr = mmap((void *)(1UL << 30), 1UL << 16, PROT_READ | PROT_WRITE,
+			 MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+	if ((unsigned long)ptr != (1UL << 30)) {
+		perror("mmap");
+		return 1;
+	}
+
+	/* a 64K folio gets faulted in */
+	memset(ptr, 0, 1UL << 16);
+
+	/* 32K half will not be shared into child */
+	if (madvise(ptr, 1UL << 15, MADV_DONTFORK)) {
+		perror("madvise madv dontfork");
+		return 1;
+	}
+
+	pid_t pid = fork();
+
+	if (pid < 0) {
+		perror("fork");
+		return 1;
+	} else if (pid == 0) {
+		sleep(15);
+	} else {
+		/* merge VMAs. now first half of the 16 ptes are writable, the other half not. */
+		if (madvise(ptr, 1UL << 15, MADV_DOFORK)) {
+			perror("madvise madv fork");
+			return 1;
+		}
+		if (madvise(ptr, (1UL << 16), MADV_FREE)) {
+			perror("madvise madv free");
+			return 1;
+		}
+
+		/* dirty the large folio */
+		(*ptr) += 10;
+
+		write_to_reclaim();
+		// sleep(10);
+		waitpid(pid, NULL, 0);
+
+	}
+}
+
+Link: https://lkml.kernel.org/r/20260303061528.2429162-1-dev.jain@arm.com
+Fixes: 354dffd29575 ("mm: support batched unmap for lazyfree large folios during reclamation")
+Signed-off-by: Dev Jain <dev.jain@arm.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Barry Song <baohua@kernel.org>
+Reviewed-by: Wei Yang <richard.weiyang@gmail.com>
+Tested-by: Lance Yang <lance.yang@linux.dev>
+Cc: Anshuman Khandual <anshuman.khandual@arm.com>
+Cc: Harry Yoo <harry.yoo@oracle.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Liam Howlett <liam.howlett@oracle.com>
+Cc: Rik van Riel <riel@surriel.com>
+Cc: Ryan Roberts <ryan.roberts@arm.com>
+Cc: Vlastimil Babka <vbabka@suse.cz>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/crash_dump_dm_crypt.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ mm/rmap.c |    9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
---- a/kernel/crash_dump_dm_crypt.c
-+++ b/kernel/crash_dump_dm_crypt.c
-@@ -168,8 +168,8 @@ static int read_key_from_user_keying(str
+--- a/mm/rmap.c
++++ b/mm/rmap.c
+@@ -1843,7 +1843,14 @@ static inline unsigned int folio_unmap_p
+ 	if (pte_unused(pte))
+ 		return 1;
  
- 	memcpy(dm_key->data, ukp->data, ukp->datalen);
- 	dm_key->key_size = ukp->datalen;
--	kexec_dprintk("Get dm crypt key (size=%u) %s: %8ph\n", dm_key->key_size,
--		      dm_key->key_desc, dm_key->data);
-+	kexec_dprintk("Get dm crypt key (size=%u) %s\n", dm_key->key_size,
-+		      dm_key->key_desc);
+-	return folio_pte_batch(folio, pvmw->pte, pte, max_nr);
++	/*
++	 * If unmap fails, we need to restore the ptes. To avoid accidentally
++	 * upgrading write permissions for ptes that were not originally
++	 * writable, and to avoid losing the soft-dirty bit, use the
++	 * appropriate FPB flags.
++	 */
++	return folio_pte_batch_flags(folio, vma, pvmw->pte, &pte, max_nr,
++				     FPB_RESPECT_WRITE | FPB_RESPECT_SOFT_DIRTY);
+ }
  
- out:
- 	up_read(&key->sem);
+ /*
 
 
