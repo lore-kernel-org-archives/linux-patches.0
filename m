@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E694323EA97;
-	Mon, 23 Mar 2026 14:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C903AF663;
+	Mon, 23 Mar 2026 14:51:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277496; cv=none; b=lf8ZM9ZIpVHJMTG3Ptz2DIrCdSFHt8oSiDJZ/GGRFB+ea6PX6kY57h+1+CxVYYKyIg2b1OMJS6d5DkW1CjWiksqiVv8bjKv3hIv4N6k0DlYNt19jr6TRm2IhI3nkiQu51RIJi+4DWeDw1ucwChe2Nic0dPs3WZTJVaEsc4E0lfA=
+	t=1774277498; cv=none; b=oOreWVwXpY+bQ1zjpT9bwxbNXU61pxD/VpVPOUgYo+Df4A4NvikS3DTYm5H9f1ReznowYomH7sWKgrdd8a4MKpG/d7Lz8ZXdLXg0RHvHgpsGqJkMbHvfEWOkrrYWXo7moU86LMrSV9cTCtPwULDoGv5I55SyjnvULhSQgsm83sg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277496; c=relaxed/simple;
-	bh=5+vjtCXBqyvn6Q8TtJcxdve9UIaKLQOS+PLMP2EXONo=;
+	s=arc-20240116; t=1774277498; c=relaxed/simple;
+	bh=WKAM2A+qOnkiIxFWqFwajFcz0+r6K8okjuCcDnnkirY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=sHFn1mTolDY+hcjhDauaLxU3vm/AZzQVK1l0A+vrk9CWfu197wQYFDXrgB9xZ08WOfnOcrmuFq174Yqax7fr8pSGgyflHXN8HspEsLO3ZauV2EwtfEoGl+Cc7uX01N6v21cYke2VMTsK7S1FnFFNwHtP2BGUaVDKCVOxxrsrWAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=A+fJbs/a; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XV2mJplcz6mTEzt1jksj+ES759XOoQOYfNMESKGtxjxWhy26rv2iO6++lKKF+RkYKOehaeL5bHS+BR1hGYnz/L7BoVjFOnybF3tVidMFilVstXwEGI4RnwkBE7jTJquCkkkszZcJsFDG+BzPVIUUfYHudN6WN58ysdZ8xzeZ/u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iRMxsI+S; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="A+fJbs/a"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AB56C4CEF7;
-	Mon, 23 Mar 2026 14:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iRMxsI+S"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1474CC4CEF7;
+	Mon, 23 Mar 2026 14:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277495;
-	bh=5+vjtCXBqyvn6Q8TtJcxdve9UIaKLQOS+PLMP2EXONo=;
+	s=korg; t=1774277498;
+	bh=WKAM2A+qOnkiIxFWqFwajFcz0+r6K8okjuCcDnnkirY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A+fJbs/auiiAkmNofdLEy8y372mNM6kgToHSZOWhSykpF+0ZgocH1N+HX3X4V0S0g
-	 uKmzQB3R9KFWCz29VWPfnvLMbGzDR5M+HakN8GaTtvhWrmqJFxX3+1eqYxagdk44tB
-	 P7uqXbL2fsBnU4GKeL3fQsQbyWvQnoPfFPH8+8jU=
+	b=iRMxsI+SKNp9pLQW7rZoM/ssbRlkwF2D2uBzfFtGZZVyWGusK5Y1n25qWF8ODiwK1
+	 ybc+BivoD0HqinRzkO6njXOViTfC+46fXompmCAKgcw2bDm/e5S7WOvjejOZJxobzy
+	 glZ+CPmqAALiUfFI7HQMu7sVxtEf54sjJbKnoMew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xudong Hao <xudong.hao@intel.com>,
-	Dapeng Mi <dapeng1.mi@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Xiang Mei <xmei5@asu.edu>,
+	Weiming Shi <bestswngs@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 460/460] perf/x86/intel: Add missing branch counters constraint apply
-Date: Mon, 23 Mar 2026 14:47:36 +0100
-Message-ID: <20260323134537.878213120@linuxfoundation.org>
+Subject: [PATCH 6.12 430/460] nfnetlink_osf: validate individual option lengths in fingerprints
+Date: Mon, 23 Mar 2026 14:47:06 +0100
+Message-ID: <20260323134537.119730262@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,100 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dapeng Mi <dapeng1.mi@linux.intel.com>
+From: Weiming Shi <bestswngs@gmail.com>
 
-[ Upstream commit 1d07bbd7ea36ea0b8dfa8068dbe67eb3a32d9590 ]
+[ Upstream commit dbdfaae9609629a9569362e3b8f33d0a20fd783c ]
 
-When running the command:
-'perf record -e "{instructions,instructions:p}" -j any,counter sleep 1',
-a "shift-out-of-bounds" warning is reported on CWF.
+nfnl_osf_add_callback() validates opt_num bounds and string
+NUL-termination but does not check individual option length fields.
+A zero-length option causes nf_osf_match_one() to enter the option
+matching loop even when foptsize sums to zero, which matches packets
+with no TCP options where ctx->optp is NULL:
 
-  UBSAN: shift-out-of-bounds in /kbuild/src/consumer/arch/x86/events/intel/lbr.c:970:15
-  shift exponent 64 is too large for 64-bit type 'long long unsigned int'
-  ......
-  intel_pmu_lbr_counters_reorder.isra.0.cold+0x2a/0xa7
-  intel_pmu_lbr_save_brstack+0xc0/0x4c0
-  setup_arch_pebs_sample_data+0x114b/0x2400
+ Oops: general protection fault
+ KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+ RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
+ Call Trace:
+  nf_osf_match (net/netfilter/nfnetlink_osf.c:227)
+  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
+  ipt_do_table (net/ipv4/netfilter/ip_tables.c:293)
+  nf_hook_slow (net/netfilter/core.c:623)
+  ip_local_deliver (net/ipv4/ip_input.c:262)
+  ip_rcv (net/ipv4/ip_input.c:573)
 
-The warning occurs because the second "instructions:p" event, which
-involves branch counters sampling, is incorrectly programmed to fixed
-counter 0 instead of the general-purpose (GP) counters 0-3 that support
-branch counters sampling. Currently only GP counters 0-3 support branch
-counters sampling on CWF, any event involving branch counters sampling
-should be programed on GP counters 0-3. Since the counter index of fixed
-counter 0 is 32, it leads to the "src" value in below code is right
-shifted 64 bits and trigger the "shift-out-of-bounds" warning.
+Additionally, an MSS option (kind=2) with length < 4 causes
+out-of-bounds reads when nf_osf_match_one() unconditionally accesses
+optp[2] and optp[3] for MSS value extraction.  While RFC 9293
+section 3.2 specifies that the MSS option is always exactly 4
+bytes (Kind=2, Length=4), the check uses "< 4" rather than
+"!= 4" because lengths greater than 4 do not cause memory
+safety issues -- the buffer is guaranteed to be at least
+foptsize bytes by the ctx->optsize == foptsize check.
 
-cnt = (src >> (order[j] * LBR_INFO_BR_CNTR_BITS)) & LBR_INFO_BR_CNTR_MASK;
+Reject fingerprints where any option has zero length, or where an MSS
+option has length less than 4, at add time rather than trusting these
+values in the packet matching hot path.
 
-The root cause is the loss of the branch counters constraint for the
-new event in the branch counters sampling event group. Since it isn't
-yet part of the sibling list. This results in the second
-"instructions:p" event being programmed on fixed counter 0 incorrectly
-instead of the appropriate GP counters 0-3.
-
-To address this, we apply the missing branch counters constraint for
-the last event in the group. Additionally, we introduce a new function,
-`intel_set_branch_counter_constr()`, to apply the branch counters
-constraint and avoid code duplication.
-
-Fixes: 33744916196b ("perf/x86/intel: Support branch counters logging")
-Reported-by: Xudong Hao <xudong.hao@intel.com>
-Signed-off-by: Dapeng Mi <dapeng1.mi@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://patch.msgid.link/20260228053320.140406-2-dapeng1.mi@linux.intel.com
-Cc: stable@vger.kernel.org
+Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
+Reported-by: Xiang Mei <xmei5@asu.edu>
+Signed-off-by: Weiming Shi <bestswngs@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/core.c |   25 +++++++++++++++++++------
- 1 file changed, 19 insertions(+), 6 deletions(-)
+ net/netfilter/nfnetlink_osf.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/arch/x86/events/intel/core.c
-+++ b/arch/x86/events/intel/core.c
-@@ -4031,6 +4031,17 @@ end:
- 	return start;
- }
- 
-+static inline int intel_set_branch_counter_constr(struct perf_event *event,
-+						  int *num)
-+{
-+	if (branch_sample_call_stack(event))
-+		return -EINVAL;
-+	if (branch_sample_counters(event))
-+		(*num)++;
-+
-+	return 0;
-+}
-+
- static int intel_pmu_hw_config(struct perf_event *event)
+diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
+index c0fc431991e88..9fc9544d4bc53 100644
+--- a/net/netfilter/nfnetlink_osf.c
++++ b/net/netfilter/nfnetlink_osf.c
+@@ -302,7 +302,9 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
  {
- 	int ret = x86_pmu_hw_config(event);
-@@ -4090,17 +4101,19 @@ static int intel_pmu_hw_config(struct pe
- 		 * group, which requires the extra space to store the counters.
- 		 */
- 		leader = event->group_leader;
--		if (branch_sample_call_stack(leader))
-+		if (intel_set_branch_counter_constr(leader, &num))
- 			return -EINVAL;
--		if (branch_sample_counters(leader))
--			num++;
- 		leader->hw.flags |= PERF_X86_EVENT_BRANCH_COUNTERS;
+ 	struct nf_osf_user_finger *f;
+ 	struct nf_osf_finger *kf = NULL, *sf;
++	unsigned int tot_opt_len = 0;
+ 	int err = 0;
++	int i;
  
- 		for_each_sibling_event(sibling, leader) {
--			if (branch_sample_call_stack(sibling))
-+			if (intel_set_branch_counter_constr(sibling, &num))
-+				return -EINVAL;
-+		}
+ 	if (!capable(CAP_NET_ADMIN))
+ 		return -EPERM;
+@@ -318,6 +320,17 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
+ 	if (f->opt_num > ARRAY_SIZE(f->opt))
+ 		return -EINVAL;
+ 
++	for (i = 0; i < f->opt_num; i++) {
++		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
++			return -EINVAL;
++		if (f->opt[i].kind == OSFOPT_MSS && f->opt[i].length < 4)
++			return -EINVAL;
 +
-+		/* event isn't installed as a sibling yet. */
-+		if (event != leader) {
-+			if (intel_set_branch_counter_constr(event, &num))
- 				return -EINVAL;
--			if (branch_sample_counters(sibling))
--				num++;
- 		}
- 
- 		if (num > fls(x86_pmu.lbr_counters))
++		tot_opt_len += f->opt[i].length;
++		if (tot_opt_len > MAX_IPOPTLEN)
++			return -EINVAL;
++	}
++
+ 	if (!memchr(f->genre, 0, MAXGENRELEN) ||
+ 	    !memchr(f->subtype, 0, MAXGENRELEN) ||
+ 	    !memchr(f->version, 0, MAXGENRELEN))
+-- 
+2.51.0
+
 
 
