@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E5E3B2FEB;
-	Mon, 23 Mar 2026 15:14:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A178B3B27C5;
+	Mon, 23 Mar 2026 15:14:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278860; cv=none; b=svWYMmXK4dg6negj7ZUMbxxqs6gwBkZ3o408tsHH0ueiWZjHc8ob9qQBWapjntpxyMzDuyxemjz/WZlHtszfGVHn/lk5a5zPdvegBAY+TtQIDiieXnrlFbI8s7QRqL2EljcYv3Hv2YK+I0XpBOwY6gE2KW46OFEMn67Felgrr1w=
+	t=1774278863; cv=none; b=sXV+bwas+1sVrfmAtH0I1xZVoirB2X6sIoAagxo0RvMxl0hfOAiSWTCR7OMF9xjp4Vphr0kt4Q0Oq4XwYHTLX5Ejpxir3OaPEGu+36sl8QUTZ+k9UkN2InrKIIq0zLjzadmDMDgSv31Se2PpaS+7LPu0HFVYQ0bpkWG5IRclgiI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278860; c=relaxed/simple;
-	bh=geYQScBO11h6ejrvHJFGvdBWcfQtFe3cmE1ukYwmgkQ=;
+	s=arc-20240116; t=1774278863; c=relaxed/simple;
+	bh=XxvRHXrVlHjJG7faanO8Y3L71JP+FWw6UxB/AEptdCo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KJ7TZXX5Dq6hykRhfincwJxvr1oheQIPEp1OPyPuW0UNfVRyKnlPH/lx60a8o0G/GI0+0oKZmsWQd+rikYgKOdvD6c3y5RxM+ENxvXj+yxY9o1LJfAT+eqpzFoCCbqvosPhJX2ouovipj07Ldmw5mi30U958Ka0D4gcD01Noddc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Zo+JSiCZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GxCo0s6YzyMnRAHuCiNReoB8behSs5Jd1F9TXciL8RtoNWkgO1GdSaHiHMDzfyp0Z7iRoKj4yo/nPb85uaC8kjmouaQXQDwx7kQeWMehC8YzDeF8JWeHFiqJwfylw3y4FbOj2+Wgp4HighKalEc65x9IwuB500pu7laoCB8rYWQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QIsTqpqu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Zo+JSiCZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBA5C2BC9E;
-	Mon, 23 Mar 2026 15:14:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QIsTqpqu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA117C4CEF7;
+	Mon, 23 Mar 2026 15:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278859;
-	bh=geYQScBO11h6ejrvHJFGvdBWcfQtFe3cmE1ukYwmgkQ=;
+	s=korg; t=1774278863;
+	bh=XxvRHXrVlHjJG7faanO8Y3L71JP+FWw6UxB/AEptdCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zo+JSiCZp1fvC8S1dGphr+7xWF7qJRd5CBK1aoi+7bj3kgRMEPDYS5qQjb9wccngD
-	 o8iXWPsmmr0LNwOwD92NWHq9elxfnys2jiNZ75oy4BJPHq5K9U3ihsbG/ko2lIKoA1
-	 5mC7Wkhta4aNJ+Zr6IcBojR6tynR+7JfIRpYnXSo=
+	b=QIsTqpquptEIvdwjuNuZzaujlf7YPt6qm+at67c503+49DJR4+7iRdHXdqBTtP97m
+	 PBARP/VKfttr9fDtTTzajCSmac76o4982FqfkZ1CGR8TZ+gNtX21IE7uVp+EiwHUWw
+	 BjvFP0OmGkFnBKZcaBuSU1LWIYUo1hNA71XqvzVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daeho Jeong <daehojeong@google.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
-	Li hongliang <1468888505@139.com>
-Subject: [PATCH 6.6 442/567] f2fs: zone: fix to avoid inconsistence in between SIT and SSA
-Date: Mon, 23 Mar 2026 14:46:02 +0100
-Message-ID: <20260323134544.889206837@linuxfoundation.org>
+	Samuel Wu <wusamuel@google.com>,
+	Alex Hoh <Alex.Hoh@mediatek.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.6 443/567] sched/fair: Fix pelt clock sync when entering idle
+Date: Mon, 23 Mar 2026 14:46:03 +0100
+Message-ID: <20260323134544.917989409@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,72 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chao Yu <chao@kernel.org>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit 773704c1ef96a8b70d0d186ab725f50548de82c4 ]
+[ Upstream commit 98c88dc8a1ace642d9021b103b28cba7b51e3abc ]
 
-w/ below testcase, it will cause inconsistence in between SIT and SSA.
+Samuel and Alex reported regressions of the util_avg of RT rq with
+commit 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection").
+It happens that fair is updating and syncing the pelt clock with task one
+when pick_next_task_fair() fails to pick a task but before the prev
+scheduling class got a chance to update its pelt signals.
 
-create_null_blk 512 2 1024 1024
-mkfs.f2fs -m /dev/nullb0
-mount /dev/nullb0 /mnt/f2fs/
-touch /mnt/f2fs/file
-f2fs_io pinfile set /mnt/f2fs/file
-fallocate -l 4GiB /mnt/f2fs/file
+Move update_idle_rq_clock_pelt() in set_next_task_idle() which is called
+after prev class has been called.
 
-F2FS-fs (nullb0): Inconsistent segment (0) type [1, 0] in SSA and SIT
-CPU: 5 UID: 0 PID: 2398 Comm: fallocate Tainted: G           O       6.13.0-rc1 #84
-Tainted: [O]=OOT_MODULE
-Hardware name: innotek GmbH VirtualBox/VirtualBox, BIOS VirtualBox 12/01/2006
-Call Trace:
- <TASK>
- dump_stack_lvl+0xb3/0xd0
- dump_stack+0x14/0x20
- f2fs_handle_critical_error+0x18c/0x220 [f2fs]
- f2fs_stop_checkpoint+0x38/0x50 [f2fs]
- do_garbage_collect+0x674/0x6e0 [f2fs]
- f2fs_gc_range+0x12b/0x230 [f2fs]
- f2fs_allocate_pinning_section+0x5c/0x150 [f2fs]
- f2fs_expand_inode_data+0x1cc/0x3c0 [f2fs]
- f2fs_fallocate+0x3c3/0x410 [f2fs]
- vfs_fallocate+0x15f/0x4b0
- __x64_sys_fallocate+0x4a/0x80
- x64_sys_call+0x15e8/0x1b80
- do_syscall_64+0x68/0x130
- entry_SYSCALL_64_after_hwframe+0x67/0x6f
-RIP: 0033:0x7f9dba5197ca
-F2FS-fs (nullb0): Stopped filesystem due to reason: 4
-
-The reason is f2fs_gc_range() may try to migrate block in curseg, however,
-its SSA block is not uptodate due to the last summary block data is still
-in cache of curseg.
-
-In this patch, we add a condition in f2fs_gc_range() to check whether
-section is opened or not, and skip block migration for opened section.
-
-Fixes: 9703d69d9d15 ("f2fs: support file pinning for zoned devices")
-Reviewed-by: Daeho Jeong <daehojeong@google.com>
-Cc: Daeho Jeong <daehojeong@google.com>
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-[ Minor conflict resolved. ]
-Signed-off-by: Li hongliang <1468888505@139.com>
+Fixes: 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection")
+Reported-by: Samuel Wu <wusamuel@google.com>
+Closes: https://lore.kernel.org/all/CAG2KctpO6VKS6GN4QWDji0t92_gNBJ7HjjXrE+6H+RwRXt=iLg@mail.gmail.com/
+Reported-by: Alex Hoh <Alex.Hoh@mediatek.com>
+Closes: https://lore.kernel.org/all/8cf19bf0e0054dcfed70e9935029201694f1bb5a.camel@mediatek.com/
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Samuel Wu <wusamuel@google.com>
+Tested-by: Alex Hoh <Alex.Hoh@mediatek.com>
+Link: https://patch.msgid.link/20260121163317.505635-1-vincent.guittot@linaro.org
+(cherry picked from commit 98c88dc8a1ace642d9021b103b28cba7b51e3abc)
+[ wusamuel: Did not include line 'exec_start = rq_clock_task()', which
+is not present in 6.6.y but found in mainline ]
+Signed-off-by: Samuel Wu <wusamuel@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/sched/fair.c |    6 ------
+ kernel/sched/idle.c |    6 ++++++
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2019,6 +2019,9 @@ int f2fs_gc_range(struct f2fs_sb_info *s
- 		if (!get_valid_blocks(sbi, segno, true))
- 			continue;
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -8557,12 +8557,6 @@ idle:
+ 			goto again;
+ 	}
  
-+		if (IS_CURSEC(sbi, GET_SEC_FROM_SEG(sbi, segno)))
-+			continue;
+-	/*
+-	 * rq is about to be idle, check if we need to update the
+-	 * lost_idle_time of clock_pelt
+-	 */
+-	update_idle_rq_clock_pelt(rq);
+-
+ 	return NULL;
+ }
+ 
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -423,6 +423,12 @@ static void set_next_task_idle(struct rq
+ {
+ 	update_idle_core(rq);
+ 	schedstat_inc(rq->sched_goidle);
 +
- 		do_garbage_collect(sbi, segno, &gc_list, FG_GC,
- 						dry_run_sections == 0);
- 		put_gc_inode(&gc_list);
++	/*
++	 * rq is about to be idle, check if we need to update the
++	 * lost_idle_time of clock_pelt
++	 */
++	update_idle_rq_clock_pelt(rq);
+ }
+ 
+ #ifdef CONFIG_SMP
 
 
