@@ -1,38 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A4CA1D63F3;
-	Mon, 23 Mar 2026 14:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600EA1FFC48;
+	Mon, 23 Mar 2026 14:20:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275622; cv=none; b=Yqvo1bbparQ7ygdgS6CEcT0LNfksp57DNOz+wr9rXzumlVfMAieGiZox/ih02h83lDYX8vqL0HgXmZTP4bJamr0+EyYlSMF6Xu0eez4yykdGs4KmtEdWyqnQbvAQLK7vL2J1A3d60MuHhll2u0LxQFs8IjHSWA7Bb8+qKwb0ZRU=
+	t=1774275625; cv=none; b=NGUelBmgWcstOeuK70C3+nYzr71D+ft6Ox79eNXmnJI3VCertcMZZgR2ei0SQTFQQ4hFEONDnovXs1tRcd9eHorDv+B3Mj4PnS6d2G19zg72OlUbWyDDUm+hp7vRLSyafQr03sDw/G30gwbqxDWAfhjrt/QgqScWEtZ7ad9JH0Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275622; c=relaxed/simple;
-	bh=+6KUUtlb5f8pAA7MEJEga7rX3pz4eS2cfMBT4jFWknE=;
+	s=arc-20240116; t=1774275625; c=relaxed/simple;
+	bh=VdeGb9jqQPqNKU/FpEzeYO0x9hYGtkP7QNYw9mOrwpo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EQJzn3YnkRceIqkG9Bk0nbpN8CUItedL16ufZWklpf8DLSzGYOy/hA3OBldUM+2NsYIRO3To2IQaZgT//iT3ZV2OyFVi0TxK2kzb1i8dHO3EMEum5QyltTrb41kJ8ahwE+oWYQx4B5lxPsOdbp2Vickecp+2rBaSnotLQ1KFNdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=blgretnI; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ZS1jXIme+EHussnFuEKXDe0txZeBAZhmXTL+rrtDuWueHgR3PcFXtaf+qUy5mGM00VGBfXK3PKqjTHp2OrakWiPn//RIb+rq3sn2F3IMSMoTOBosMsOvddxPx+EpJfQ15KT3iKPrbSo/HDoUb+bsbwYWiET5klaCkoqzYqzKom0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oqY8K+Bb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="blgretnI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7DB7C2BCB1;
-	Mon, 23 Mar 2026 14:20:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oqY8K+Bb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8373C4CEF7;
+	Mon, 23 Mar 2026 14:20:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275622;
-	bh=+6KUUtlb5f8pAA7MEJEga7rX3pz4eS2cfMBT4jFWknE=;
+	s=korg; t=1774275625;
+	bh=VdeGb9jqQPqNKU/FpEzeYO0x9hYGtkP7QNYw9mOrwpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blgretnIToSc+/8B78Tc4OKshDxXEOwUOOJtFmoaFgCvZ1DHTdZgBr/h0TMColqaY
-	 96fERg7BwPFu0ZHs1O4LiqybaBUHJSDzwBEEx1RB6zqkiK7WENxywQfuWC2Bvl9c/o
-	 clr/nonS7spBJUqI/+dJNbU5/OGxUxT9+FC8LAtA=
+	b=oqY8K+BbFB0tov2pnJ8mFDr1Y3+HhmEYfliGc5VFHnpcfaXqhmia6RX65CsqxGKMV
+	 t3zXTVeY8FWPriR5R+VoC8m7yikiSjzLWCfuiReDU69aq5jiMMUezYY8eXXaUgAgjn
+	 +yt47r4TSRzF8iUJ8Yrq60ay2LJjYLj+E7J9PU50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@google.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.12 146/460] nfsd: Fix cred ref leak in nfsd_nl_listener_set_doit().
-Date: Mon, 23 Mar 2026 14:42:22 +0100
-Message-ID: <20260323134530.171524629@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.12 164/460] parisc: Fix initial page table creation for boot
+Date: Mon, 23 Mar 2026 14:42:40 +0100
+Message-ID: <20260323134530.584940760@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,41 +49,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kuniyuki Iwashima <kuniyu@google.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 92978c83bb4eef55d02a6c990c01c423131eefa7 upstream.
+commit 8475d8fe21ec9c7eb2faca555fbc5b68cf0d2597 upstream.
 
-nfsd_nl_listener_set_doit() uses get_current_cred() without
-put_cred().
+The KERNEL_INITIAL_ORDER value defines the initial size (usually 32 or
+64 MB) of the page table during bootup. Up until now the whole area was
+initialized with PTE entries, but there was no check if we filled too
+many entries.  Change the code to fill up with so many entries that the
+"_end" symbol can be reached by the kernel, but not more entries than
+actually fit into the initial PTE tables.
 
-As we can see from other callers, svc_xprt_create_from_sa()
-does not require the extra refcount.
-
-nfsd_nl_listener_set_doit() is always in the process context,
-sendmsg(), and current->cred does not go away.
-
-Let's use current_cred() in nfsd_nl_listener_set_doit().
-
-Fixes: 16a471177496 ("NFSD: add listener-{set,get} netlink command")
-Cc: stable@vger.kernel.org
-Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfsctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/parisc/kernel/head.S |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2081,7 +2081,7 @@ int nfsd_nl_listener_set_doit(struct sk_
- 		}
+--- a/arch/parisc/kernel/head.S
++++ b/arch/parisc/kernel/head.S
+@@ -56,6 +56,7 @@ ENTRY(parisc_kernel_start)
  
- 		ret = svc_xprt_create_from_sa(serv, xcl_name, net, sa, 0,
--					      get_current_cred());
-+					      current_cred());
- 		/* always save the latest error */
- 		if (ret < 0)
- 			err = ret;
+ 	.import __bss_start,data
+ 	.import __bss_stop,data
++	.import __end,data
+ 
+ 	load32		PA(__bss_start),%r3
+ 	load32		PA(__bss_stop),%r4
+@@ -149,7 +150,11 @@ $cpu_ok:
+ 	 * everything ... it will get remapped correctly later */
+ 	ldo		0+_PAGE_KERNEL_RWX(%r0),%r3 /* Hardwired 0 phys addr start */
+ 	load32		(1<<(KERNEL_INITIAL_ORDER-PAGE_SHIFT)),%r11 /* PFN count */
+-	load32		PA(pg0),%r1
++	load32		PA(_end),%r1
++	SHRREG		%r1,PAGE_SHIFT,%r1  /* %r1 is PFN count for _end symbol */
++	cmpb,<<,n	%r11,%r1,1f
++	copy		%r1,%r11	/* %r1 PFN count smaller than %r11 */
++1:	load32		PA(pg0),%r1
+ 
+ $pgt_fill_loop:
+ 	STREGM          %r3,ASM_PTE_ENTRY_SIZE(%r1)
 
 
