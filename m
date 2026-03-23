@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC033AE6F8;
-	Mon, 23 Mar 2026 16:11:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 011E83B19AC;
+	Mon, 23 Mar 2026 16:11:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282315; cv=none; b=rsS9SUouzJn2m4ywv4NkthJfeH1DhfdxustedX5lVVn82ZqbuOM58DyMxu8lmXDEYm4pkxbL4D9v+hA7u6EIFiQc2D1VbVBOyKm9DxuxLTLWURC6Sihs3ExvnyxkhhanD4rzrOLAHQxwA1cI6F8CqDuGPuEupzkmr3s93HkEJa0=
+	t=1774282318; cv=none; b=YjHuF4OarKwA5gHc6Ik1MfW+Dq5wE6HKSsinv7+RW4tDpV5xPY4tWdH2o1aOeAuEA2djDfQJfvIjqUcER1S7lbGYgx2F0WuR/LG2EZPhUvQQ9TBahgUcl9sZl4B4xDJ1SdR5EQDUXeqZACtS97CFtTYR/mTf2PbbhmvmEu9MhUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282315; c=relaxed/simple;
-	bh=YXp/3bjrHQvCbg/kHkZjoX1Oem7gmR/Zjj+CauinPuM=;
+	s=arc-20240116; t=1774282318; c=relaxed/simple;
+	bh=kHwjnWTeewhXXdTUsIscWhSrRl3iPZYqGH/wsbmm35A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fboNNhf4oby3nHbES98d8ZmNLkkUQSpTo/laMjeiN4HdsyLCXxdQTBz5qDJ907Ue1N7iGrs4AXJ6+P3SkcOepN8EZielHq6N/+wsBMsIGwXp8SByCRyx0y/cj1snqd6crNFeZe3Zb3NYyhEOgJQxMpxRZx+BBLtLXc/GtPsFOFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zNTul77w; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jonnu4EgfVXbG1MqlgkfTxXg1xWL8BvAloZ2lVIPAudIyg1ZowHpdY/jeZl8bucYNgWEuRDAVjKKgnw9wTmDBM2GBU9p1HbEueLfNDYKSojVkM2lQ9R4nhfTGTsDfbwMXbVpk89iF1DjT03oeMuAuvNkXmxHMZ7gHSNNvoxWABc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mNf30NkA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zNTul77w"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99033C2BCB0;
-	Mon, 23 Mar 2026 16:11:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mNf30NkA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 614D1C2BCB3;
+	Mon, 23 Mar 2026 16:11:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282315;
-	bh=YXp/3bjrHQvCbg/kHkZjoX1Oem7gmR/Zjj+CauinPuM=;
+	s=korg; t=1774282317;
+	bh=kHwjnWTeewhXXdTUsIscWhSrRl3iPZYqGH/wsbmm35A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNTul77wSrhuiXF6YYLtLiu1G/cH32ho7Tbuz8BUheXqOIIr1JLOpMbgzs0zsdH4W
-	 3X+sO4mIEy719AZv6UKs9sDhR8f37IMWvCP4cOZJXifBPP5HtOQ2iyUBwH+OKKgH9w
-	 3dSa0LtJbIyhCBehRb9YHgs7DSu5sm3jkipTe8xc=
+	b=mNf30NkAjC527+uktE4HwC6+JyivtsRwM445Cg4V8erWiwISWo11RwyyyowG//bDh
+	 5A1bb3hGedZY7xUiRh/NJyxZX1sS842W3MVzSh0dmMCEVmy3aH1RcQz0C2Jty08JJ7
+	 qf4D0bb1HgMTC6mdeP2J/II2y9ze/VBFta+/M7wY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	David Gow <davidgow@google.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/481] kunit: tool: dont include KTAP headers and the like in the test log
-Date: Mon, 23 Mar 2026 14:41:33 +0100
-Message-ID: <20260323134527.987142108@linuxfoundation.org>
+Subject: [PATCH 6.1 112/481] kunit: tool: make parser preserve whitespace when printing test log
+Date: Mon, 23 Mar 2026 14:41:34 +0100
+Message-ID: <20260323134528.012259478@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,28 +54,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Daniel Latypov <dlatypov@google.com>
 
-[ Upstream commit 5937e0c04afc7d4b7b737fda93316ba4b74183c0 ]
+[ Upstream commit c2bb92bc4ea13842fdd27819c0d5b48df2b86ea5 ]
 
-We print the "test log" on failure.
-This is meant to be all the kernel output that happened during the test.
+Currently, kunit_parser.py is stripping all leading whitespace to make
+parsing easier. But this means we can't accurately show kernel output
+for failing tests or when the kernel crashes.
 
-But we also include the special KTAP lines in it, which are often
-redundant.
+Embarassingly, this affects even KUnit's own output, e.g.
+[13:40:46] Expected 2 + 1 == 2, but
+[13:40:46] 2 + 1 == 3 (0x3)
+[13:40:46] not ok 1 example_simple_test
+[13:40:46] [FAILED] example_simple_test
 
-E.g. we include the "not ok" line in the log, right before we print
-that the test case failed...
-[13:51:48] Expected 2 + 1 == 2, but
-[13:51:48] 2 + 1 == 3 (0x3)
-[13:51:48] not ok 1 example_simple_test
-[13:51:48] [FAILED] example_simple_test
+After this change, here's what the output in context would look like
+[13:40:46] =================== example (4 subtests) ===================
+[13:40:46] # example_simple_test: initializing
+[13:40:46] # example_simple_test: EXPECTATION FAILED at lib/kunit/kunit-example-test.c:29
+[13:40:46] Expected 2 + 1 == 2, but
+[13:40:46]     2 + 1 == 3 (0x3)
+[13:40:46] [FAILED] example_simple_test
+[13:40:46] [SKIPPED] example_skip_test
+[13:40:46] [SKIPPED] example_mark_skipped_test
+[13:40:46] [PASSED] example_all_expect_macros_test
+[13:40:46]     # example: initializing suite
+[13:40:46] # example: pass:1 fail:1 skip:2 total:4
+[13:40:46] # Totals: pass:1 fail:1 skip:2 total:4
+[13:40:46] ===================== [FAILED] example =====================
 
-More full example after this patch:
-[13:51:48] =================== example (4 subtests) ===================
-[13:51:48] # example_simple_test: initializing
-[13:51:48] # example_simple_test: EXPECTATION FAILED at lib/kunit/kunit-example-test.c:29
-[13:51:48] Expected 2 + 1 == 2, but
-[13:51:48] 2 + 1 == 3 (0x3)
-[13:51:48] [FAILED] example_simple_test
+This example shows one minor cosmetic defect this approach has.
+The test counts lines prevent us from dedenting the suite-level output.
+But at the same time, any form of non-KUnit output would do the same
+unless it happened to be indented as well.
 
 Signed-off-by: Daniel Latypov <dlatypov@google.com>
 Reviewed-by: David Gow <davidgow@google.com>
@@ -83,88 +92,127 @@ Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Stable-dep-of: 40804c4974b8 ("kunit: tool: copy caller args in run_kernel to prevent mutation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/kunit/kunit_parser.py    |  8 ++++----
- tools/testing/kunit/kunit_tool_test.py | 17 +++++++++++++++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+ tools/testing/kunit/kunit.py           |  2 +-
+ tools/testing/kunit/kunit_parser.py    | 27 +++++++++++++-------------
+ tools/testing/kunit/kunit_tool_test.py |  2 ++
+ 3 files changed, 16 insertions(+), 15 deletions(-)
 
+diff --git a/tools/testing/kunit/kunit.py b/tools/testing/kunit/kunit.py
+index e7b6549712d66..43fbe96318fe1 100755
+--- a/tools/testing/kunit/kunit.py
++++ b/tools/testing/kunit/kunit.py
+@@ -202,7 +202,7 @@ def parse_tests(request: KunitParseRequest, metadata: kunit_json.Metadata, input
+ 		if request.raw_output == 'all':
+ 			pass
+ 		elif request.raw_output == 'kunit':
+-			output = kunit_parser.extract_tap_lines(output, lstrip=False)
++			output = kunit_parser.extract_tap_lines(output)
+ 		for line in output:
+ 			print(line.rstrip())
+ 		parse_time = time.time() - parse_start
 diff --git a/tools/testing/kunit/kunit_parser.py b/tools/testing/kunit/kunit_parser.py
-index 259ce7696587b..baf0430be0e33 100644
+index baf0430be0e33..c02100b70af62 100644
 --- a/tools/testing/kunit/kunit_parser.py
 +++ b/tools/testing/kunit/kunit_parser.py
-@@ -304,7 +304,7 @@ def parse_ktap_header(lines: LineStream, test: Test) -> bool:
- 		check_version(version_num, TAP_VERSIONS, 'TAP', test)
- 	else:
- 		return False
--	test.log.append(lines.pop())
-+	lines.pop()
+@@ -12,6 +12,7 @@
+ from __future__ import annotations
+ import re
+ import sys
++import textwrap
+ 
+ from enum import Enum, auto
+ from typing import Iterable, Iterator, List, Optional, Tuple
+@@ -217,12 +218,12 @@ class LineStream:
+ 
+ # Parsing helper methods:
+ 
+-KTAP_START = re.compile(r'KTAP version ([0-9]+)$')
+-TAP_START = re.compile(r'TAP version ([0-9]+)$')
+-KTAP_END = re.compile('(List of all partitions:|'
++KTAP_START = re.compile(r'\s*KTAP version ([0-9]+)$')
++TAP_START = re.compile(r'\s*TAP version ([0-9]+)$')
++KTAP_END = re.compile(r'\s*(List of all partitions:|'
+ 	'Kernel panic - not syncing: VFS:|reboot: System halted)')
+ 
+-def extract_tap_lines(kernel_output: Iterable[str], lstrip=True) -> LineStream:
++def extract_tap_lines(kernel_output: Iterable[str]) -> LineStream:
+ 	"""Extracts KTAP lines from the kernel output."""
+ 	def isolate_ktap_output(kernel_output: Iterable[str]) \
+ 			-> Iterator[Tuple[int, str]]:
+@@ -248,11 +249,8 @@ def extract_tap_lines(kernel_output: Iterable[str], lstrip=True) -> LineStream:
+ 				# stop extracting KTAP lines
+ 				break
+ 			elif started:
+-				# remove the prefix and optionally any leading
+-				# whitespace. Our parsing logic relies on this.
++				# remove the prefix, if any.
+ 				line = line[prefix_len:]
+-				if lstrip:
+-					line = line.lstrip()
+ 				yield line_num, line
+ 	return LineStream(lines=isolate_ktap_output(kernel_output))
+ 
+@@ -307,7 +305,7 @@ def parse_ktap_header(lines: LineStream, test: Test) -> bool:
+ 	lines.pop()
  	return True
  
- TEST_HEADER = re.compile(r'^# Subtest: (.*)$')
-@@ -327,8 +327,8 @@ def parse_test_header(lines: LineStream, test: Test) -> bool:
- 	match = TEST_HEADER.match(lines.peek())
- 	if not match:
- 		return False
--	test.log.append(lines.pop())
- 	test.name = match.group(1)
-+	lines.pop()
+-TEST_HEADER = re.compile(r'^# Subtest: (.*)$')
++TEST_HEADER = re.compile(r'^\s*# Subtest: (.*)$')
+ 
+ def parse_test_header(lines: LineStream, test: Test) -> bool:
+ 	"""
+@@ -331,7 +329,7 @@ def parse_test_header(lines: LineStream, test: Test) -> bool:
+ 	lines.pop()
  	return True
  
- TEST_PLAN = re.compile(r'1\.\.([0-9]+)')
-@@ -354,9 +354,9 @@ def parse_test_plan(lines: LineStream, test: Test) -> bool:
- 	if not match:
- 		test.expected_count = None
- 		return False
--	test.log.append(lines.pop())
- 	expected_count = int(match.group(1))
- 	test.expected_count = expected_count
-+	lines.pop()
+-TEST_PLAN = re.compile(r'1\.\.([0-9]+)')
++TEST_PLAN = re.compile(r'^\s*1\.\.([0-9]+)')
+ 
+ def parse_test_plan(lines: LineStream, test: Test) -> bool:
+ 	"""
+@@ -359,9 +357,9 @@ def parse_test_plan(lines: LineStream, test: Test) -> bool:
+ 	lines.pop()
  	return True
  
- TEST_RESULT = re.compile(r'^(ok|not ok) ([0-9]+) (- )?([^#]*)( # .*)?$')
-@@ -418,7 +418,7 @@ def parse_test_result(lines: LineStream, test: Test,
- 	# Check if line matches test result line format
- 	if not match:
- 		return False
--	test.log.append(lines.pop())
-+	lines.pop()
+-TEST_RESULT = re.compile(r'^(ok|not ok) ([0-9]+) (- )?([^#]*)( # .*)?$')
++TEST_RESULT = re.compile(r'^\s*(ok|not ok) ([0-9]+) (- )?([^#]*)( # .*)?$')
  
- 	# Set name of test object
- 	if skip_match:
+-TEST_RESULT_SKIP = re.compile(r'^(ok|not ok) ([0-9]+) (- )?(.*) # SKIP(.*)$')
++TEST_RESULT_SKIP = re.compile(r'^\s*(ok|not ok) ([0-9]+) (- )?(.*) # SKIP(.*)$')
+ 
+ def peek_test_name_match(lines: LineStream, test: Test) -> bool:
+ 	"""
+@@ -520,8 +518,9 @@ def print_test_header(test: Test) -> None:
+ 
+ def print_log(log: Iterable[str]) -> None:
+ 	"""Prints all strings in saved log for test in yellow."""
+-	for m in log:
+-		stdout.print_with_timestamp(stdout.yellow(m))
++	formatted = textwrap.dedent('\n'.join(log))
++	for line in formatted.splitlines():
++		stdout.print_with_timestamp(stdout.yellow(line))
+ 
+ def format_test_result(test: Test) -> str:
+ 	"""
 diff --git a/tools/testing/kunit/kunit_tool_test.py b/tools/testing/kunit/kunit_tool_test.py
-index 8334d660753c4..7e2f748a24eb2 100755
+index 7e2f748a24eb2..fc13326e5c47a 100755
 --- a/tools/testing/kunit/kunit_tool_test.py
 +++ b/tools/testing/kunit/kunit_tool_test.py
-@@ -81,6 +81,10 @@ class KconfigTest(unittest.TestCase):
+@@ -354,12 +354,14 @@ class KUnitParserTest(unittest.TestCase):
+ 		KTAP version 1
+ 		1..1
+ 		  Test output.
++		    Indented more.
+ 		not ok 1 test1
+ 		"""
+ 		result = kunit_parser.parse_run_tests(output.splitlines())
+ 		self.assertEqual(kunit_parser.TestStatus.FAILURE, result.status)
  
- class KUnitParserTest(unittest.TestCase):
+ 		self.print_mock.assert_any_call(StrContains('Test output.'))
++		self.print_mock.assert_any_call(StrContains('  Indented more.'))
+ 		self.noPrintCallContains('not ok 1 test1')
  
-+	def noPrintCallContains(self, substr: str):
-+		for call in self.print_mock.mock_calls:
-+			self.assertNotIn(substr, call.args[0])
-+
- 	def assertContains(self, needle: str, haystack: kunit_parser.LineStream):
- 		# Clone the iterator so we can print the contents on failure.
- 		copy, backup = itertools.tee(haystack)
-@@ -345,6 +349,19 @@ class KUnitParserTest(unittest.TestCase):
- 			result = kunit_parser.parse_run_tests(file.readlines())
- 		self.print_mock.assert_any_call(StrContains('suite (1 subtest)'))
- 
-+	def test_show_test_output_on_failure(self):
-+		output = """
-+		KTAP version 1
-+		1..1
-+		  Test output.
-+		not ok 1 test1
-+		"""
-+		result = kunit_parser.parse_run_tests(output.splitlines())
-+		self.assertEqual(kunit_parser.TestStatus.FAILURE, result.status)
-+
-+		self.print_mock.assert_any_call(StrContains('Test output.'))
-+		self.noPrintCallContains('not ok 1 test1')
-+
  def line_stream_from_strs(strs: Iterable[str]) -> kunit_parser.LineStream:
- 	return kunit_parser.LineStream(enumerate(strs, start=1))
- 
 -- 
 2.51.0
 
