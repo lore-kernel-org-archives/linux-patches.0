@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3A81A23B1;
-	Mon, 23 Mar 2026 14:59:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E92F235C01;
+	Mon, 23 Mar 2026 14:59:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277973; cv=none; b=E5o1sfxgYJF9RKX+dhw8kK1/ygM0GbuB6o8/abzVnWoO59fkV83F6MlIBbTR4na3rRYwnt41xMHuSsxKAt7q+mjd7LPS4UVuIkUV15IPLWGx/79YnuYHX2oeJbh7hcmok9Yc672KCKz9v0l446L4vWdZkYWcnBPp7G7WF8CGaPg=
+	t=1774277977; cv=none; b=K+khJ1EHN8fvyrymzzywKTcGILB1wm+pI35ElNnU6S9ep2YbhIdcdm+QCXH1KYa+aVdoVR49FXwvrHqZnBw5JHyiqzFaK/gHtd0LleKwobYKs6Mo2p7jde+CP85wcsjje5h0SbhNg3kcloa+bWR0fXxVord9sZRMAQDD2gZlkyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277973; c=relaxed/simple;
-	bh=GzNsi4JIhXOdtc/6tcXaxGp9bze/JLgXaOoH4pegl14=;
+	s=arc-20240116; t=1774277977; c=relaxed/simple;
+	bh=lBwagUOdRGmmmzmP8dgPiikrz0wyTwD35NANTjN2igc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eP/Ve/MluFJyFNy5+lRGjdqAhjU9KWpzBc63JDC6jYikTJLMB1/ouVYb9jN9PTK7DFaV/gvZT2YZsELngTpsCqbyYJ/4n+UxaJBwZ2JyQOdTUE2pXSXbr+xtu5SgYUfOGghxABiWgjepEhfi8ZFOvVcPJ1jO1x/IGkns8/YQS7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=cCJVFwjd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MXtI6Cq5T0DwF0GQBV7bypma4lr1QpDM8ndBDb+VwIgAkEPeUcxJqG6OwoTEirEQbKeBy2gJ9klGg5hqKzm6at7D9jEl2e9eP0Bwzk3smsvxXEroeZXiqrA1mDPiMNG7NzjiXEZ9ZDzpLxyAHV3TXRCYmVkCPi7fMElfMr73CbU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TYgS1p3X; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="cCJVFwjd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580D4C4CEF7;
-	Mon, 23 Mar 2026 14:59:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TYgS1p3X"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0ACDC4CEF7;
+	Mon, 23 Mar 2026 14:59:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277973;
-	bh=GzNsi4JIhXOdtc/6tcXaxGp9bze/JLgXaOoH4pegl14=;
+	s=korg; t=1774277977;
+	bh=lBwagUOdRGmmmzmP8dgPiikrz0wyTwD35NANTjN2igc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCJVFwjdVGh+lruQUKOd5LbNqO9YK+dIKMjpAdssuVdcISLwRtv1soo6wBLCuD/fq
-	 MNPvM0J2/U67yY7K/WqlRmMbJRY2qEyZN6oALonT5G3SvM6by8lVk7N3Iq+OdmoiR+
-	 Gp2+zpuCak5urarJ1NScpSGb/D5UbeXwdr3qDy0c=
+	b=TYgS1p3X55jFfsMi2fRNL+8eBNu0tDp9sRpTDUxe/4Aql7U5XwmLNq+ajan+Wb80E
+	 S87vB8gFrJ36vsby66XxTWClyjzX/Yc2/KQk5YhFt8G8BW4IixYh1Y8sK2VwDnhJf9
+	 VdD0icmO4mXqP8vzHY7vHCUJ2kWwM2/11Itah1vI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong@kylinos.cn>,
-	ZhangGuoDong <zhangguodong@kylinos.cn>,
-	Steve French <stfrench@microsoft.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 161/567] smb/client: fix buffer size for smb311_posix_qinfo in SMB311_posix_query_info()
-Date: Mon, 23 Mar 2026 14:41:21 +0100
-Message-ID: <20260323134537.805639294@linuxfoundation.org>
+Subject: [PATCH 6.6 162/567] ipv6: fix NULL pointer deref in ip6_rt_get_dev_rcu()
+Date: Mon, 23 Mar 2026 14:41:22 +0100
+Message-ID: <20260323134537.834575027@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,39 +51,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: ZhangGuoDong <zhangguodong@kylinos.cn>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 9621b996e4db1dbc2b3dc5d5910b7d6179397320 ]
+[ Upstream commit 2ffb4f5c2ccb2fa1c049dd11899aee7967deef5a ]
 
-SMB311_posix_query_info() is currently unused, but it may still be used in
-some stable versions, so these changes are submitted as a separate patch.
+l3mdev_master_dev_rcu() can return NULL when the slave device is being
+un-slaved from a VRF. All other callers deal with this, but we lost
+the fallback to loopback in ip6_rt_pcpu_alloc() -> ip6_rt_get_dev_rcu()
+with commit 4832c30d5458 ("net: ipv6: put host and anycast routes on
+device with address").
 
-Use `sizeof(struct smb311_posix_qinfo)` instead of sizeof its pointer,
-so the allocated buffer matches the actual struct size.
+  KASAN: null-ptr-deref in range [0x0000000000000108-0x000000000000010f]
+  RIP: 0010:ip6_rt_pcpu_alloc (net/ipv6/route.c:1418)
+  Call Trace:
+   ip6_pol_route (net/ipv6/route.c:2318)
+   fib6_rule_lookup (net/ipv6/fib6_rules.c:115)
+   ip6_route_output_flags (net/ipv6/route.c:2607)
+   vrf_process_v6_outbound (drivers/net/vrf.c:437)
 
-Fixes: b1bc1874b885 ("smb311: Add support for SMB311 query info (non-compounded)")
-Reported-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: ZhangGuoDong <zhangguodong@kylinos.cn>
-Reviewed-by: ChenXiaoSong <chenxiaosong@kylinos.cn>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+I was tempted to rework the un-slaving code to clear the flag first
+and insert synchronize_rcu() before we remove the upper. But looks like
+the explicit fallback to loopback_dev is an established pattern.
+And I guess avoiding the synchronize_rcu() is nice, too.
+
+Fixes: 4832c30d5458 ("net: ipv6: put host and anycast routes on device with address")
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260301194548.927324-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/client/smb2pdu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/route.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/smb/client/smb2pdu.c b/fs/smb/client/smb2pdu.c
-index d1d332f08883a..094f431e428fa 100644
---- a/fs/smb/client/smb2pdu.c
-+++ b/fs/smb/client/smb2pdu.c
-@@ -3927,7 +3927,7 @@ int
- SMB311_posix_query_info(const unsigned int xid, struct cifs_tcon *tcon,
- 		u64 persistent_fid, u64 volatile_fid, struct smb311_posix_qinfo *data, u32 *plen)
- {
--	size_t output_len = sizeof(struct smb311_posix_qinfo *) +
-+	size_t output_len = sizeof(struct smb311_posix_qinfo) +
- 			(sizeof(struct smb_sid) * 2) + (PATH_MAX * 2);
- 	*plen = 0;
- 
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index ad452a04d7299..72853ef73e821 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -1065,7 +1065,8 @@ static struct net_device *ip6_rt_get_dev_rcu(const struct fib6_result *res)
+ 		 */
+ 		if (netif_is_l3_slave(dev) &&
+ 		    !rt6_need_strict(&res->f6i->fib6_dst.addr))
+-			dev = l3mdev_master_dev_rcu(dev);
++			dev = l3mdev_master_dev_rcu(dev) ? :
++			      dev_net(dev)->loopback_dev;
+ 		else if (!netif_is_l3_master(dev))
+ 			dev = dev_net(dev)->loopback_dev;
+ 		/* last case is netif_is_l3_master(dev) is true in which
 -- 
 2.51.0
 
