@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E6203BBA14;
-	Mon, 23 Mar 2026 16:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD049396B85;
+	Mon, 23 Mar 2026 16:14:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282475; cv=none; b=IYropjJ57rmGJiQEdLR4cODDh1Ujb2ofhV6usBBqiCQT30vAp1Ot9O3ZsD5ZvYc4budlrN/L3lJJ6hV0MdiJcIx+HGgn7DSjCtbaywjsrPyA618z4L6Vyh3iOgUqfAxIQHKK8KDONfP4WREW4WEKcdPckcTmQkNSFuljxP/a3OI=
+	t=1774282477; cv=none; b=ffv1vfFOBRoxnIIGV/6IW3tDVIpvgpixIg3fVw7gYHaQS2EbBe8LUlLRAe6hPKupq2Z7z2HEbKzKyYBHEhBFObhIgxQhBlZdeOKH/ZHQ0TPRj8Je/bGGrTD1I3llgowwuauyY5aTXoWZ20q5XmUt7uMELLmc++31qy6QS8/VNmY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282475; c=relaxed/simple;
-	bh=eBfVvYwN+mkjrxMosNz3MIXnz4yYgnmYdpCFxSaarmA=;
+	s=arc-20240116; t=1774282477; c=relaxed/simple;
+	bh=pjytYdGb+uh8058AD5oKer1+41NSrUDtJNBG77mhGyo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=R57aOjphu/Asq4IM/Bx/HMc96ucwoxdG+mEo9O6OxduqPYrOyPsDWX1aaw5bmZKuBdilbKywraQe6OCSwIM8bd360nIwehL5h20NPi6wLMtYoxQ5c/oxjHfjiC8S8u8Be+3zqICO0XsDhV3KBwZ412SoE3dqLhmVpKuqoykkqCQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=grRiSmzH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=KwUMffNB79JZOOPAgug++tt0IfPr1Jhwh6RDcrhJ6kYCG6/J3rzCC9ToeYoijZEf4a0UZGTJ100vjhLNboWpdTy9ITi2rRwMej5l9i2T6LxrmcxZi+y/NrIv7HTRcvKtlgBXMCOu47z3rCa5+wEJ0XNTdbYgZRZRImsNhVO7nRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QiYmyG59; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="grRiSmzH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 998ADC4CEF7;
-	Mon, 23 Mar 2026 16:14:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QiYmyG59"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F86DC4CEF7;
+	Mon, 23 Mar 2026 16:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282475;
-	bh=eBfVvYwN+mkjrxMosNz3MIXnz4yYgnmYdpCFxSaarmA=;
+	s=korg; t=1774282477;
+	bh=pjytYdGb+uh8058AD5oKer1+41NSrUDtJNBG77mhGyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=grRiSmzHec5cxb4SpgVNCX0SnbbMcutsbYqPcwHNEFqG+9QvyfPFn/NIZQF8Hpmhi
-	 9Dgs3jzvZh162lEL770rhq27LRkOUMI/6qdIdtlKQtZr/XsKhxlaYz6Smou5/oduYe
-	 stgmScyI7nL21d7XFNPAKGgajBTuIQUpDuPOykFo=
+	b=QiYmyG59/oBuS1suWNLkBiic6rP51Uxwl6imaHe8kMuR1QcFsJ15SppvMX+FaCopH
+	 6Lhpy5iUg+2p+EmYd2YyJSJQXQIq2fQQx3WgaRvt/zdDv6z2TkzN0w7izimfx9FTyy
+	 +BKFzAhKe3xIxdc1ctE+5zmSsxy0l3L8RyP6InGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -31,9 +31,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/481] ASoC: core: Exit all links before removing their components
-Date: Mon, 23 Mar 2026 14:42:31 +0100
-Message-ID: <20260323134529.343627355@linuxfoundation.org>
+Subject: [PATCH 6.1 170/481] ASoC: core: Do not call link_exit() on uninitialized rtd objects
+Date: Mon, 23 Mar 2026 14:42:32 +0100
+Message-ID: <20260323134529.366025805@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,82 +53,107 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit c7eb967d70446971413061effca3226578cb4dab ]
+[ Upstream commit dd9f9cc1e6b9391140afa5cf27bb47c9e2a08d02 ]
 
-Flows leading to link->init() and link->exit() are not symmetric.
-Currently the relevant part of card probe sequence goes as:
+On init we have sequence:
 
+	for_each_card_prelinks(card, i, dai_link) {
+		ret = snd_soc_add_pcm_runtime(card, dai_link);
+
+	ret = init_some_other_things(...);
+	if (ret)
+		goto probe_end:
+
+	for_each_card_rtds(card, rtd) {
+		ret = soc_init_pcm_runtime(card, rtd);
+
+probe_end:
+
+while on exit:
 	for_each_card_rtds(card, rtd)
-		for_each_rtd_components(rtd, i, component)
-			component->probe()
-	for_each_card_rtds(card, rtd)
-		for_each_rtd_dais(rtd, i, dai)
-			dai->probe()
-	for_each_card_rtds(card, rtd)
-		rtd->init()
+		snd_soc_link_exit(rtd);
 
-On the other side, equivalent remove sequence goes as:
+If init_some_other_things() step fails due to error we end up with
+not fully setup rtds and try to call snd_soc_link_exit on them, which
+depending on contents on .link_exit handler, can end up dereferencing
+NULL pointer.
 
-	for_each_card_rtds(card, rtd)
-		for_each_rtd_dais(rtd, i, dai)
-			dai->remove()
-	for_each_card_rtds(card, rtd)
-		for_each_rtd_components(rtd, i, component)
-			component->remove()
-	for_each_card_rtds(card, rtd)
-		rtd->exit()
-
-what can lead to errors as link->exit() may still operate on resources
-owned by its components despite the probability of them being freed
-during the component->remove().
-
-This change modifies the remove sequence to:
-
-	for_each_card_rtds(card, rtd)
-		rtd->exit()
-	for_each_card_rtds(card, rtd)
-		for_each_rtd_dais(rtd, i, dai)
-			dai->remove()
-	for_each_card_rtds(card, rtd)
-		for_each_rtd_components(rtd, i, component)
-			component->remove()
-
-so code found in link->exit() is safe to touch any component stuff as
-component->remove() has not been called yet.
-
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Reviewed-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Link: https://lore.kernel.org/r/20221027085840.1562698-1-cezary.rojewski@intel.com
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230929103243.705433-2-amadeuszx.slawinski@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Stable-dep-of: 95bc5c225513 ("ASoC: soc-core: flush delayed work before removing DAIs and widgets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/sound/soc.h  |  2 ++
+ sound/soc/soc-core.c | 20 +++++++++++++++-----
+ 2 files changed, 17 insertions(+), 5 deletions(-)
 
+diff --git a/include/sound/soc.h b/include/sound/soc.h
+index d63ac6d9fbdc4..015d5fff397fa 100644
+--- a/include/sound/soc.h
++++ b/include/sound/soc.h
+@@ -1110,6 +1110,8 @@ struct snd_soc_pcm_runtime {
+ 	unsigned int pop_wait:1;
+ 	unsigned int fe_compr:1; /* for Dynamic PCM */
+ 
++	bool initialized;
++
+ 	int num_components;
+ 	struct snd_soc_component *components[]; /* CPU/Codec/Platform */
+ };
 diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index cb95a9293343f..d42cba7de0a3b 100644
+index d42cba7de0a3b..835a9251c074b 100644
 --- a/sound/soc/soc-core.c
 +++ b/sound/soc/soc-core.c
-@@ -941,9 +941,6 @@ void snd_soc_remove_pcm_runtime(struct snd_soc_card *card,
+@@ -1256,7 +1256,7 @@ static int soc_init_pcm_runtime(struct snd_soc_card *card,
+ 	snd_soc_runtime_get_dai_fmt(rtd);
+ 	ret = snd_soc_runtime_set_dai_fmt(rtd, dai_link->dai_fmt);
+ 	if (ret)
+-		return ret;
++		goto err;
  
- 	lockdep_assert_held(&client_mutex);
+ 	/* add DPCM sysfs entries */
+ 	soc_dpcm_debugfs_add(rtd);
+@@ -1281,17 +1281,26 @@ static int soc_init_pcm_runtime(struct snd_soc_card *card,
+ 	/* create compress_device if possible */
+ 	ret = snd_soc_dai_compress_new(cpu_dai, rtd, num);
+ 	if (ret != -ENOTSUPP)
+-		return ret;
++		goto err;
  
--	/* release machine specific resources */
--	snd_soc_link_exit(rtd);
--
- 	/*
- 	 * Notify the machine driver for extra destruction
- 	 */
-@@ -1895,6 +1892,9 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+ 	/* create the pcm */
+ 	ret = soc_new_pcm(rtd, num);
+ 	if (ret < 0) {
+ 		dev_err(card->dev, "ASoC: can't create pcm %s :%d\n",
+ 			dai_link->stream_name, ret);
+-		return ret;
++		goto err;
+ 	}
  
- 	snd_soc_dapm_shutdown(card);
+-	return snd_soc_pcm_dai_new(rtd);
++	ret = snd_soc_pcm_dai_new(rtd);
++	if (ret < 0)
++		goto err;
++
++	rtd->initialized = true;
++
++	return 0;
++err:
++	snd_soc_link_exit(rtd);
++	return ret;
+ }
  
-+	/* release machine specific resources */
-+	for_each_card_rtds(card, rtd)
-+		snd_soc_link_exit(rtd);
+ static void soc_set_name_prefix(struct snd_soc_card *card,
+@@ -1894,7 +1903,8 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
+ 
+ 	/* release machine specific resources */
+ 	for_each_card_rtds(card, rtd)
+-		snd_soc_link_exit(rtd);
++		if (rtd->initialized)
++			snd_soc_link_exit(rtd);
  	/* remove and free each DAI */
  	soc_remove_link_dais(card);
  	soc_remove_link_components(card);
