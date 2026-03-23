@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1859C3B47EB;
-	Mon, 23 Mar 2026 14:00:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68AD43AF65B;
+	Mon, 23 Mar 2026 14:00:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274443; cv=none; b=mrFtqd8slostQhSrbZuKVtnU3Ul9msU9OKpIRjlp/I3dDvb1zVNCDNfTfKZ4MqSiB9eVcjsLeBUqLl7SKBzEdu8PwAc4reS0yOqHim44z8PxSb+/gV0Ol/qSZBtkb+DyokvE0cXMHSu64sEfb8haV00KVcI0fZabPPBrgIxtRcQ=
+	t=1774274446; cv=none; b=DcSbz55P4EwvnAa2qtYg903imv5nD3SOdvr0tZOQh/1F1i/Nubfr4v2b9IlwYynH3SWFv2lIvKMP8JtYrH6hithap2nUslqTBIRNHPwet72tiwagfgg/a8CnpmmhEa07oVNOYObZY7TTnMW9Nhorh1oVxkotQxEe1TzSVHTFkN8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274443; c=relaxed/simple;
-	bh=X36AgmuPdaGYTI8tBwAPrJXihaZiE0No5XPPI0htbPg=;
+	s=arc-20240116; t=1774274446; c=relaxed/simple;
+	bh=IpRCQiFcE0XWGfCUFsmfvd2hOsgVsHNCD2aBoGLZJ7U=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qCIDAv5Bx2Kl3magBdx9lmmnuu9SgxMfJk9a/L0l3NbcySpSZFxFKp4V+eKvJa4AIE9OHMQbrKD3Db/7qNBo1tINu1gVtt8/zpUGGhEthP3V+4YQaON/rwLvfreU3rqBlSndP2AGpFjP5okTYL2m48OC4U1zEB7PGaR5i8p7QAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvKJgI++; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iwEFAcW99DU28NBZotU2JSDbSyxT5N3rNWMcvGpbDF1p5ajV0KKGo9d5kHm0fDQ2dnn6VX4TE7C5sKqLhoPbLK3zO/2OybGO7JfooczKyReKYmLiAv4KfGLLpYPkyLd4pb3e3GYJg3Dqqx0CHWwLuCPYo4uv8JUelNvk2ZHYmc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YzQqyWWw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvKJgI++"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 917CBC4CEF7;
-	Mon, 23 Mar 2026 14:00:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YzQqyWWw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A19C4CEF7;
+	Mon, 23 Mar 2026 14:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274443;
-	bh=X36AgmuPdaGYTI8tBwAPrJXihaZiE0No5XPPI0htbPg=;
+	s=korg; t=1774274446;
+	bh=IpRCQiFcE0XWGfCUFsmfvd2hOsgVsHNCD2aBoGLZJ7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zvKJgI+++oLBNRMj6torV5dwDWMKqsLMA4JQnd/lHIiDoEfPSuSd0AZbN8W75whWF
-	 DxoQqZEnKbrdI81XHXdP6GQ6cXr3jPuLKlGUgaXJbbSPMx61nhw2ZBYpF16dl4xUt9
-	 L2UlRO6ScNlJHtureXG2WkpLHrjay0vF2oqg8h80=
+	b=YzQqyWWw+FkdPAwc5N4qmNmk98k1nTXWwLbI95YTygFN4SkU9AuqvNuM64yZXCDom
+	 QZ3fnX1aJPNcqHrr2E/5Hkeq+FNVTeVW8ApWbozyalFzY5uw1BEZagV1pXXPjGXkKd
+	 ZMmWZRNlcB1Nvs5vMmFbdnkEdrUOsTBb1LCRPikE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiang Mei <xmei5@asu.edu>,
-	Weiming Shi <bestswngs@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
+	Muhammad Hammad Ijaz <mhijaz@amazon.com>,
+	Gunnar Kudrjavets <gunnarku@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 175/220] nfnetlink_osf: validate individual option lengths in fingerprints
-Date: Mon, 23 Mar 2026 14:45:52 +0100
-Message-ID: <20260323134510.108743626@linuxfoundation.org>
+Subject: [PATCH 6.19 176/220] net: mvpp2: guard flow control update with global_tx_fc in buffer switching
+Date: Mon, 23 Mar 2026 14:45:53 +0100
+Message-ID: <20260323134510.139208604@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,81 +52,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Weiming Shi <bestswngs@gmail.com>
+From: Muhammad Hammad Ijaz <mhijaz@amazon.com>
 
-[ Upstream commit dbdfaae9609629a9569362e3b8f33d0a20fd783c ]
+[ Upstream commit 8a63baadf08453f66eb582fdb6dd234f72024723 ]
 
-nfnl_osf_add_callback() validates opt_num bounds and string
-NUL-termination but does not check individual option length fields.
-A zero-length option causes nf_osf_match_one() to enter the option
-matching loop even when foptsize sums to zero, which matches packets
-with no TCP options where ctx->optp is NULL:
+mvpp2_bm_switch_buffers() unconditionally calls
+mvpp2_bm_pool_update_priv_fc() when switching between per-cpu and
+shared buffer pool modes. This function programs CM3 flow control
+registers via mvpp2_cm3_read()/mvpp2_cm3_write(), which dereference
+priv->cm3_base without any NULL check.
 
- Oops: general protection fault
- KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
- RIP: 0010:nf_osf_match_one (net/netfilter/nfnetlink_osf.c:98)
- Call Trace:
-  nf_osf_match (net/netfilter/nfnetlink_osf.c:227)
-  xt_osf_match_packet (net/netfilter/xt_osf.c:32)
-  ipt_do_table (net/ipv4/netfilter/ip_tables.c:293)
-  nf_hook_slow (net/netfilter/core.c:623)
-  ip_local_deliver (net/ipv4/ip_input.c:262)
-  ip_rcv (net/ipv4/ip_input.c:573)
+When the CM3 SRAM resource is not present in the device tree (the
+third reg entry added by commit 60523583b07c ("dts: marvell: add CM3
+SRAM memory to cp11x ethernet device tree")), priv->cm3_base remains
+NULL and priv->global_tx_fc is false. Any operation that triggers
+mvpp2_bm_switch_buffers(), for example an MTU change that crosses
+the jumbo frame threshold, will crash:
 
-Additionally, an MSS option (kind=2) with length < 4 causes
-out-of-bounds reads when nf_osf_match_one() unconditionally accesses
-optp[2] and optp[3] for MSS value extraction.  While RFC 9293
-section 3.2 specifies that the MSS option is always exactly 4
-bytes (Kind=2, Length=4), the check uses "< 4" rather than
-"!= 4" because lengths greater than 4 do not cause memory
-safety issues -- the buffer is guaranteed to be at least
-foptsize bytes by the ctx->optsize == foptsize check.
+  Unable to handle kernel NULL pointer dereference at
+  virtual address 0000000000000000
+  Mem abort info:
+    ESR = 0x0000000096000006
+    EC = 0x25: DABT (current EL), IL = 32 bits
+  pc : readl+0x0/0x18
+  lr : mvpp2_cm3_read.isra.0+0x14/0x20
+  Call trace:
+   readl+0x0/0x18
+   mvpp2_bm_pool_update_fc+0x40/0x12c
+   mvpp2_bm_pool_update_priv_fc+0x94/0xd8
+   mvpp2_bm_switch_buffers.isra.0+0x80/0x1c0
+   mvpp2_change_mtu+0x140/0x380
+   __dev_set_mtu+0x1c/0x38
+   dev_set_mtu_ext+0x78/0x118
+   dev_set_mtu+0x48/0xa8
+   dev_ifsioc+0x21c/0x43c
+   dev_ioctl+0x2d8/0x42c
+   sock_ioctl+0x314/0x378
 
-Reject fingerprints where any option has zero length, or where an MSS
-option has length less than 4, at add time rather than trusting these
-values in the packet matching hot path.
+Every other flow control call site in the driver already guards
+hardware access with either priv->global_tx_fc or port->tx_fc.
+mvpp2_bm_switch_buffers() is the only place that omits this check.
 
-Fixes: 11eeef41d5f6 ("netfilter: passive OS fingerprint xtables match")
-Reported-by: Xiang Mei <xmei5@asu.edu>
-Signed-off-by: Weiming Shi <bestswngs@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Add the missing priv->global_tx_fc guard to both the disable and
+re-enable calls in mvpp2_bm_switch_buffers(), consistent with the
+rest of the driver.
+
+Fixes: 3a616b92a9d1 ("net: mvpp2: Add TX flow control support for jumbo frames")
+Signed-off-by: Muhammad Hammad Ijaz <mhijaz@amazon.com>
+Reviewed-by: Gunnar Kudrjavets <gunnarku@amazon.com>
+Link: https://patch.msgid.link/20260316193157.65748-1-mhijaz@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_osf.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nfnetlink_osf.c b/net/netfilter/nfnetlink_osf.c
-index c0fc431991e88..9fc9544d4bc53 100644
---- a/net/netfilter/nfnetlink_osf.c
-+++ b/net/netfilter/nfnetlink_osf.c
-@@ -302,7 +302,9 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
- {
- 	struct nf_osf_user_finger *f;
- 	struct nf_osf_finger *kf = NULL, *sf;
-+	unsigned int tot_opt_len = 0;
- 	int err = 0;
-+	int i;
+diff --git a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+index 33426fded919a..789e14bb1377a 100644
+--- a/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
++++ b/drivers/net/ethernet/marvell/mvpp2/mvpp2_main.c
+@@ -5018,7 +5018,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
+ 	if (priv->percpu_pools)
+ 		numbufs = port->nrxqs * 2;
  
- 	if (!capable(CAP_NET_ADMIN))
- 		return -EPERM;
-@@ -318,6 +320,17 @@ static int nfnl_osf_add_callback(struct sk_buff *skb,
- 	if (f->opt_num > ARRAY_SIZE(f->opt))
- 		return -EINVAL;
+-	if (change_percpu)
++	if (change_percpu && priv->global_tx_fc)
+ 		mvpp2_bm_pool_update_priv_fc(priv, false);
  
-+	for (i = 0; i < f->opt_num; i++) {
-+		if (!f->opt[i].length || f->opt[i].length > MAX_IPOPTLEN)
-+			return -EINVAL;
-+		if (f->opt[i].kind == OSFOPT_MSS && f->opt[i].length < 4)
-+			return -EINVAL;
-+
-+		tot_opt_len += f->opt[i].length;
-+		if (tot_opt_len > MAX_IPOPTLEN)
-+			return -EINVAL;
-+	}
-+
- 	if (!memchr(f->genre, 0, MAXGENRELEN) ||
- 	    !memchr(f->subtype, 0, MAXGENRELEN) ||
- 	    !memchr(f->version, 0, MAXGENRELEN))
+ 	for (i = 0; i < numbufs; i++)
+@@ -5043,7 +5043,7 @@ static int mvpp2_bm_switch_buffers(struct mvpp2 *priv, bool percpu)
+ 			mvpp2_open(port->dev);
+ 	}
+ 
+-	if (change_percpu)
++	if (change_percpu && priv->global_tx_fc)
+ 		mvpp2_bm_pool_update_priv_fc(priv, true);
+ 
+ 	return 0;
 -- 
 2.51.0
 
