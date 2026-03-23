@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BD63B4E94;
-	Mon, 23 Mar 2026 14:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9AC3B19D4;
+	Mon, 23 Mar 2026 14:06:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274798; cv=none; b=Kv8lqFX1Un8Www/loMTtDTycy8NHm0mpE/jfOzf+ZqliWscI3dklYA5meL0T/75jJak2UHBj9LN6QqM+qTL0XkeOEPvcmLCAU93errK/w6IG7CUr5Qyi4j706UN3Ju0728WzQE4gCBeSnolSsJpjTiks278HI0hzw0CFUZocvS8=
+	t=1774274801; cv=none; b=Lzve8a5Ce2T/doYXnsV0KAsBfj2bc2EnjqXlbru6HOBqLvxl25lR7UFH7W/hrxU4fF6MdkoPM2QPrCaiw/ncgVunNtC/Y8TrnhmivQVipHKlVuX5ZgexdsYFWy6C/GrERL/EtCDvQCOMHFK+a5Jhl99vVmqVaoJ5WejvRG/8t04=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274798; c=relaxed/simple;
-	bh=c5Rv5wd888Klt2kl39JMNmZ+M+LGj1e3y224hpfCg5g=;
+	s=arc-20240116; t=1774274801; c=relaxed/simple;
+	bh=aIUxPv1f0xRm/7lo3OvADgLYXvBQm44HhkFM92Fm4kc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nKKrdQ7LX9854zDF44S5p9VuPzmb6vYu2vwmFX/o+hEm5+JvVg3HvfF1zAcEEQIzJz4O5LLzCjxZFwLYmDRB9sC12A0fPUfd+JaD8ePxs+HX4LR0LbkY2r71BCiD0yhfMdcvRznFmZqMulFhtg/hjwZrOV0Od2u+fZ8SFlF1GTE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=mF5HgvPs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RqZjB8TuMiv201ohr4+Q9zmEE43rqpgcJhfc/z0Pglb2kJacXuHVhq4P652NOBXW/alHglWOJpqD5JdTdmAW1+VzRmGNZzyCr8PHNzu8MKm0EZ9/EXqRFzWjPKoGxuDnq2Pfx7CU6ew7VE6NvnJvH43M8yd1v4gYmbb/iWAmmFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gFKdGe+t; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="mF5HgvPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F014C2BC9E;
-	Mon, 23 Mar 2026 14:06:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gFKdGe+t"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C93BC4CEF7;
+	Mon, 23 Mar 2026 14:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274798;
-	bh=c5Rv5wd888Klt2kl39JMNmZ+M+LGj1e3y224hpfCg5g=;
+	s=korg; t=1774274801;
+	bh=aIUxPv1f0xRm/7lo3OvADgLYXvBQm44HhkFM92Fm4kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mF5HgvPshqCfsERAnRCtkXaakzp5sdqkJhOKZytOBXcnIceNx2g6xnuf8/P6G5Fcg
-	 XtxL8SdezHGfQC1PeCotBLwizwLJUS17a9/An2QdEwgGXWmw5ZqHzGYQFkkCQ8cjD6
-	 8IK1bU+VGNZZLG+AH36DdXGVzeCs5WkKKVDkHSCc=
+	b=gFKdGe+t495vC5RWDCIrbSub8f3Qq1Nzvd3eDK0b1/XsN5pEzDvvTjRLOjMMJipQc
+	 uKRGCAXewU7eIHTylNpNjmlw+S6HsCWXYUNJOd49chdZrzEkFTl1Z3HNaA68FeJhj/
+	 y4dbEBPTC5uqA2JCfu5jQs8F+M2hxqss65CR3EQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 111/212] wifi: cfg80211: cancel pmsr_free_wk in cfg80211_pmsr_wdev_down
-Date: Mon, 23 Mar 2026 14:45:32 +0100
-Message-ID: <20260323134507.286654154@linuxfoundation.org>
+Subject: [PATCH 6.18 112/212] arm64: dts: renesas: rzt2h-n2h-evk: Add ramp delay for SD0 card regulator
+Date: Mon, 23 Mar 2026 14:45:33 +0100
+Message-ID: <20260323134507.315915208@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,48 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
+From: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
 
-[ Upstream commit 6dccbc9f3e1d38565dff7730d2b7d1e8b16c9b09 ]
+[ Upstream commit bb70589b67039e491dd60cf71272884e926a0f95 ]
 
-When the nl80211 socket that originated a PMSR request is
-closed, cfg80211_release_pmsr() sets the request's nl_portid
-to zero and schedules pmsr_free_wk to process the abort
-asynchronously. If the interface is concurrently torn down
-before that work runs, cfg80211_pmsr_wdev_down() calls
-cfg80211_pmsr_process_abort() directly. However, the already-
-scheduled pmsr_free_wk work item remains pending and may run
-after the interface has been removed from the driver. This
-could cause the driver's abort_pmsr callback to operate on a
-torn-down interface, leading to undefined behavior and
-potential crashes.
+Add a ramp delay of 60 uV/us to the vqmmc_sdhi0 voltage regulator to
+fix UHS-I SD card detection failures.
 
-Cancel pmsr_free_wk synchronously in cfg80211_pmsr_wdev_down()
-before calling cfg80211_pmsr_process_abort(). This ensures any
-pending or in-progress work is drained before interface teardown
-proceeds, preventing the work from invoking the driver abort
-callback after the interface is gone.
+Measurements on CN78 pin 4 showed the actual voltage ramp time to be
+21.86ms when switching between 3.3V and 1.8V. A 25ms ramp delay has
+been configured to provide adequate margin. The calculation is based
+on the voltage delta of 1.5V (3.3V - 1.8V):
+  1500000 uV / 60 uV/us = 25000 us (25ms)
 
-Fixes: 9bb7e0f24e7e ("cfg80211: add peer measurement with FTM initiator API")
-Signed-off-by: Peddolla Harshavardhan Reddy <peddolla.reddy@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260305160712.1263829-3-peddolla.reddy@oss.qualcomm.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Prior to this patch, UHS-I cards failed to initialize with:
+
+    mmc0: error -110 whilst initialising SD card
+
+After this patch, UHS-I cards are properly detected on SD0:
+
+    mmc0: new UHS-I speed SDR104 SDXC card at address aaaa
+    mmcblk0: mmc0:aaaa SR64G 59.5 GiB
+
+Fixes: d065453e5ee09 ("arm64: dts: renesas: rzt2h-rzn2h-evk: Enable SD card slot")
+Signed-off-by: Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://patch.msgid.link/20260123225957.1007089-2-prabhakar.mahadev-lad.rj@bp.renesas.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/pmsr.c | 1 +
+ arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/pmsr.c b/net/wireless/pmsr.c
-index a117f5093ca29..13801cf35e9fc 100644
---- a/net/wireless/pmsr.c
-+++ b/net/wireless/pmsr.c
-@@ -647,6 +647,7 @@ void cfg80211_pmsr_wdev_down(struct wireless_dev *wdev)
- 	}
- 	spin_unlock_bh(&wdev->pmsr_lock);
- 
-+	cancel_work_sync(&wdev->pmsr_free_wk);
- 	if (found)
- 		cfg80211_pmsr_process_abort(wdev);
+diff --git a/arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi b/arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi
+index 5384a43837c1d..9c6f712a62eff 100644
+--- a/arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi
++++ b/arch/arm64/boot/dts/renesas/rzt2h-n2h-evk-common.dtsi
+@@ -49,6 +49,7 @@ vqmmc_sdhi0: regulator-vqmmc-sdhi0 {
+ 		regulator-max-microvolt = <3300000>;
+ 		gpios-states = <0>;
+ 		states = <3300000 0>, <1800000 1>;
++		regulator-ramp-delay = <60>;
+ 	};
+ #endif
  
 -- 
 2.51.0
