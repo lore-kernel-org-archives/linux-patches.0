@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CEE91DA0E1;
-	Mon, 23 Mar 2026 14:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8627D383C7C;
+	Mon, 23 Mar 2026 14:58:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277881; cv=none; b=nwooVHCxRDw90bREXAC8bfnW6M6QjzdK8vEWEfIvsIU9opJ3wz7jOjmX053fE9SJuw+It4xJ53thJdk2qmV5ONsFNQXwMM+nHWILXKOaY9ldHWHFd6PJx5LWT5KjcYLVlPri5dKl32EulGXmud+VmRYxz1WCGtNMWGIzO0g+aTM=
+	t=1774277884; cv=none; b=CDwUPI22nAJhg+ecPTjdSUYPqszEsYJBHqb4p3Okud9dbP894OFcKRLodNu97YljU9lgSWkQtQ51Kt33nZoF8i6JB3FtLswqlFBI7fhHZZcjL01xPeqQj8QOhTCjvOdS86xtAN/WFISXtdWVXFgIWiQNh2mbLRlBah/Bm7qp+VE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277881; c=relaxed/simple;
-	bh=mGxDziu/GuyUTnvDun981Tknyk+KoDTQG+QKqsDEXts=;
+	s=arc-20240116; t=1774277884; c=relaxed/simple;
+	bh=Eg6Qo57yXPCj1aYPwUuV6G17if18pUbgaxZHVZB90t4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bJQZ7OkTW96OokDN8DGo5+UskwtQD3BD/g2TmP7p9pKy4PtGgqNah1EmDufG57gyNsAfH+V5n/gAtKkBQYSCYWJefS5oLexSJKXVkB4dzEgJfOvjPQqD86A1BFvrXP4kPaQuL5BZ95T42Cu+f19OOxZSyIr8tsMsYcgOfw0MNt0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VeAVA9Fh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ohVbtn+hNCv5qgjuD+/0aztX7n19ftlPjX37PUbTgK7futE1ObfC/6+6MTYDaRbYZlzUYBchUQ5PZz37sikPsWTCIzgT2NVRpenO/ozF//MW9svLJm1QoWLVR0gGoRuygKn/aL0fIZ4qPmDwWHaqXKOIOuvW0Fh0zCsez9CxLi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zvao9Z5+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VeAVA9Fh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED134C4CEF7;
-	Mon, 23 Mar 2026 14:58:00 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zvao9Z5+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11A73C4CEF7;
+	Mon, 23 Mar 2026 14:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277881;
-	bh=mGxDziu/GuyUTnvDun981Tknyk+KoDTQG+QKqsDEXts=;
+	s=korg; t=1774277884;
+	bh=Eg6Qo57yXPCj1aYPwUuV6G17if18pUbgaxZHVZB90t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VeAVA9Fh4MPVycVFJjOfrIjdg/mW15dgRKL1k0/NAGvAaSnsja+He2drA8I4KbSQR
-	 shLCGproSuoQi5S3sK+BgS0IaTBprw8eaJ/X/h5HzLUy8fPm0xy24k6RBl2hESdSqv
-	 QNW4gMe+kzn07Z98vQ+Ija8vHZwx6LMezOMhf0uk=
+	b=zvao9Z5+RzlnKubPTHdlEfvck9mCvVlf3Hihi3j0RPAQUlLyCuZjmYluZms4QtiIH
+	 eT2CKkBHoUVla2Qn3rk/wJJAmI6hw7hxe84WH4wcPJ46fPMEhLOJhd1V/Bo7xHvWc6
+	 B8nuIeQoHBGq8RXtKcQD327G5uKThF68nQTELhaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
 	Javier Martinez Canillas <javierm@redhat.com>,
-	Maxime Ripard <mripard@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 131/567] drm/ssd130x: Store the HW buffer in the driver-private CRTC state
-Date: Mon, 23 Mar 2026 14:40:51 +0100
-Message-ID: <20260323134537.044968239@linuxfoundation.org>
+Subject: [PATCH 6.6 132/567] drm/ssd130x: Replace .page_height field in device info with a constant
+Date: Mon, 23 Mar 2026 14:40:52 +0100
+Message-ID: <20260323134537.074174677@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,333 +54,187 @@ Content-Transfer-Encoding: 8bit
 
 From: Javier Martinez Canillas <javierm@redhat.com>
 
-[ Upstream commit d51f9fbd98b6d88aef4f6431bbb575378a6c7a24 ]
+[ Upstream commit ec5dceb8180f0cb110dc7029d55d6a83d0583015 ]
 
-The commit 45b58669e532 ("drm/ssd130x: Allocate buffer in the plane's
-.atomic_check() callback") moved the allocation of the intermediate and
-HW buffers from the encoder's .atomic_enable callback, to the plane's
-.atomic_check callback.
+This deemed useful to avoid hardcoding a page height and allow to support
+other Solomon controller families, but dividing the screen in pages seems
+to be something that is specific to the SSD130x chip family.
 
-This was suggested by Maxime Ripard, because drivers aren't allowed to
-fail after the drm_atomic_helper_swap_state() function has been called.
+For example, SSD132x chip family divides the screen in segments (columns)
+and common outputs (rows), so the concept of screen pages does not exist
+for the SSD132x family.
 
-And the encoder's .atomic_enable happens after the new atomic state has
-been swapped, so allocations (that can fail) shouldn't be done there.
+Let's drop this field from the device info struct and just use a constant
+SSD130X_PAGE_HEIGHT macro to define the page height. While being there,
+replace hardcoded 8 values in places where it is used as the page height.
 
-But the HW buffer isn't really tied to the plane's state. It has a fixed
-size that only depends on the (also fixed) display resolution defined in
-the Device Tree Blob.
-
-That buffer can be considered part of the CRTC state, and for this reason
-makes more sense to do its allocation in the CRTC .atomic_check callback.
-
-The other allocated buffer (used to store a conversion from the emulated
-XR24 format to the native R1 format) is part of the plane's state, since
-it will be optional once the driver supports R1 and allows user-space to
-set that pixel format.
-
-So let's keep the allocation for it in the plane's .atomic_check callback,
-this can't be moved to the CRTC's .atomic_check because changing a format
-does not trigger a CRTC mode set.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/dri-devel/CAMuHMdWv_QSatDgihr8=2SXHhvp=icNxumZcZOPwT9Q_QiogNQ@mail.gmail.com/
 Signed-off-by: Javier Martinez Canillas <javierm@redhat.com>
-Acked-by: Maxime Ripard <mripard@kernel.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230913052938.1114651-1-javierm@redhat.com
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20231014071520.1342189-2-javierm@redhat.com
 Stable-dep-of: 36d9579fed6c ("drm/solomon: Fix page start when updating rectangle in page addressing mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/solomon/ssd130x.c | 153 +++++++++++++++++++++++-------
- 1 file changed, 118 insertions(+), 35 deletions(-)
+ drivers/gpu/drm/solomon/ssd130x.c | 37 +++++++++++++++----------------
+ drivers/gpu/drm/solomon/ssd130x.h |  1 -
+ 2 files changed, 18 insertions(+), 20 deletions(-)
 
 diff --git a/drivers/gpu/drm/solomon/ssd130x.c b/drivers/gpu/drm/solomon/ssd130x.c
-index deec6acdcf646..ef3e3832add90 100644
+index ef3e3832add90..81c85e67fa070 100644
 --- a/drivers/gpu/drm/solomon/ssd130x.c
 +++ b/drivers/gpu/drm/solomon/ssd130x.c
-@@ -141,14 +141,23 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+@@ -42,6 +42,8 @@
+ #define DRIVER_MAJOR	1
+ #define DRIVER_MINOR	0
+ 
++#define SSD130X_PAGE_HEIGHT 8
++
+ #define SSD130X_PAGE_COL_START_LOW		0x00
+ #define SSD130X_PAGE_COL_START_HIGH		0x10
+ #define SSD130X_SET_ADDRESS_MODE		0x20
+@@ -102,7 +104,6 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+ 		.default_width = 132,
+ 		.default_height = 64,
+ 		.page_mode_only = 1,
+-		.page_height = 8,
+ 	},
+ 	[SSD1305_ID] = {
+ 		.default_vcomh = 0x34,
+@@ -110,7 +111,6 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+ 		.default_dclk_frq = 7,
+ 		.default_width = 132,
+ 		.default_height = 64,
+-		.page_height = 8,
+ 	},
+ 	[SSD1306_ID] = {
+ 		.default_vcomh = 0x20,
+@@ -119,7 +119,6 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+ 		.need_chargepump = 1,
+ 		.default_width = 128,
+ 		.default_height = 64,
+-		.page_height = 8,
+ 	},
+ 	[SSD1307_ID] = {
+ 		.default_vcomh = 0x20,
+@@ -128,7 +127,6 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+ 		.need_pwm = 1,
+ 		.default_width = 128,
+ 		.default_height = 39,
+-		.page_height = 8,
+ 	},
+ 	[SSD1309_ID] = {
+ 		.default_vcomh = 0x34,
+@@ -136,7 +134,6 @@ const struct ssd130x_deviceinfo ssd130x_variants[] = {
+ 		.default_dclk_frq = 10,
+ 		.default_width = 128,
+ 		.default_height = 64,
+-		.page_height = 8,
+ 	}
  };
  EXPORT_SYMBOL_NS_GPL(ssd130x_variants, DRM_SSD130X);
- 
-+struct ssd130x_crtc_state {
-+	struct drm_crtc_state base;
-+	/* Buffer to store pixels in HW format and written to the panel */
-+	u8 *data_array;
-+};
-+
- struct ssd130x_plane_state {
- 	struct drm_shadow_plane_state base;
- 	/* Intermediate buffer to convert pixels from XRGB8888 to HW format */
- 	u8 *buffer;
--	/* Buffer to store pixels in HW format and written to the panel */
--	u8 *data_array;
- };
- 
-+static inline struct ssd130x_crtc_state *to_ssd130x_crtc_state(struct drm_crtc_state *state)
-+{
-+	return container_of(state, struct ssd130x_crtc_state, base);
-+}
-+
- static inline struct ssd130x_plane_state *to_ssd130x_plane_state(struct drm_plane_state *state)
- {
- 	return container_of(state, struct ssd130x_plane_state, base.base);
-@@ -448,13 +457,11 @@ static int ssd130x_init(struct ssd130x_device *ssd130x)
- }
- 
- static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
--			       struct ssd130x_plane_state *ssd130x_state,
--			       struct drm_rect *rect)
-+			       struct drm_rect *rect, u8 *buf,
-+			       u8 *data_array)
- {
- 	unsigned int x = rect->x1;
- 	unsigned int y = rect->y1;
--	u8 *buf = ssd130x_state->buffer;
--	u8 *data_array = ssd130x_state->data_array;
+@@ -465,13 +462,13 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
  	unsigned int width = drm_rect_width(rect);
  	unsigned int height = drm_rect_height(rect);
  	unsigned int line_length = DIV_ROUND_UP(width, 8);
-@@ -550,12 +557,10 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
- 	return ret;
- }
+-	unsigned int page_height = ssd130x->device_info->page_height;
++	unsigned int page_height = SSD130X_PAGE_HEIGHT;
+ 	unsigned int pages = DIV_ROUND_UP(height, page_height);
+ 	struct drm_device *drm = &ssd130x->drm;
+ 	u32 array_idx = 0;
+ 	int ret, i, j, k;
  
--static void ssd130x_clear_screen(struct ssd130x_device *ssd130x,
--				 struct ssd130x_plane_state *ssd130x_state)
-+static void ssd130x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
+-	drm_WARN_ONCE(drm, y % 8 != 0, "y must be aligned to screen page\n");
++	drm_WARN_ONCE(drm, y % page_height != 0, "y must be aligned to screen page\n");
+ 
+ 	/*
+ 	 * The screen is divided in pages, each having a height of 8
+@@ -503,27 +500,32 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
+ 	 */
+ 
+ 	if (!ssd130x->page_address_mode) {
++		u8 page_start;
++
+ 		/* Set address range for horizontal addressing mode */
+ 		ret = ssd130x_set_col_range(ssd130x, ssd130x->col_offset + x, width);
+ 		if (ret < 0)
+ 			return ret;
+ 
+-		ret = ssd130x_set_page_range(ssd130x, ssd130x->page_offset + y / 8, pages);
++		page_start = ssd130x->page_offset + y / page_height;
++		ret = ssd130x_set_page_range(ssd130x, page_start, pages);
+ 		if (ret < 0)
+ 			return ret;
+ 	}
+ 
+ 	for (i = 0; i < pages; i++) {
+-		int m = 8;
++		int m = page_height;
+ 
+ 		/* Last page may be partial */
+-		if (8 * (y / 8 + i + 1) > ssd130x->height)
+-			m = ssd130x->height % 8;
++		if (page_height * (y / page_height + i + 1) > ssd130x->height)
++			m = ssd130x->height % page_height;
++
+ 		for (j = 0; j < width; j++) {
+ 			u8 data = 0;
+ 
+ 			for (k = 0; k < m; k++) {
+-				u8 byte = buf[(8 * i + k) * line_length + j / 8];
++				u32 idx = (page_height * i + k) * line_length + j / 8;
++				u8 byte = buf[idx];
+ 				u8 bit = (byte >> (j % 8)) & 1;
+ 
+ 				data |= bit << k;
+@@ -559,8 +561,7 @@ static int ssd130x_update_rect(struct ssd130x_device *ssd130x,
+ 
+ static void ssd130x_clear_screen(struct ssd130x_device *ssd130x, u8 *data_array)
  {
- 	unsigned int page_height = ssd130x->device_info->page_height;
- 	unsigned int pages = DIV_ROUND_UP(ssd130x->height, page_height);
--	u8 *data_array = ssd130x_state->data_array;
+-	unsigned int page_height = ssd130x->device_info->page_height;
+-	unsigned int pages = DIV_ROUND_UP(ssd130x->height, page_height);
++	unsigned int pages = DIV_ROUND_UP(ssd130x->height, SSD130X_PAGE_HEIGHT);
  	unsigned int width = ssd130x->width;
  	int ret, i;
  
-@@ -594,15 +599,13 @@ static void ssd130x_clear_screen(struct ssd130x_device *ssd130x,
- 	}
- }
- 
--static int ssd130x_fb_blit_rect(struct drm_plane_state *state,
-+static int ssd130x_fb_blit_rect(struct drm_framebuffer *fb,
- 				const struct iosys_map *vmap,
--				struct drm_rect *rect)
-+				struct drm_rect *rect,
-+				u8 *buf, u8 *data_array)
+@@ -605,14 +606,13 @@ static int ssd130x_fb_blit_rect(struct drm_framebuffer *fb,
+ 				u8 *buf, u8 *data_array)
  {
--	struct drm_framebuffer *fb = state->fb;
  	struct ssd130x_device *ssd130x = drm_to_ssd130x(fb->dev);
- 	unsigned int page_height = ssd130x->device_info->page_height;
--	struct ssd130x_plane_state *ssd130x_state = to_ssd130x_plane_state(state);
--	u8 *buf = ssd130x_state->buffer;
+-	unsigned int page_height = ssd130x->device_info->page_height;
  	struct iosys_map dst;
  	unsigned int dst_pitch;
  	int ret = 0;
-@@ -622,7 +625,7 @@ static int ssd130x_fb_blit_rect(struct drm_plane_state *state,
  
- 	drm_gem_fb_end_cpu_access(fb, DMA_FROM_DEVICE);
+ 	/* Align y to display page boundaries */
+-	rect->y1 = round_down(rect->y1, page_height);
+-	rect->y2 = min_t(unsigned int, round_up(rect->y2, page_height), ssd130x->height);
++	rect->y1 = round_down(rect->y1, SSD130X_PAGE_HEIGHT);
++	rect->y2 = min_t(unsigned int, round_up(rect->y2, SSD130X_PAGE_HEIGHT), ssd130x->height);
  
--	ssd130x_update_rect(ssd130x, ssd130x_state, rect);
-+	ssd130x_update_rect(ssd130x, rect, buf, data_array);
+ 	dst_pitch = DIV_ROUND_UP(drm_rect_width(rect), 8);
  
- 	return ret;
- }
-@@ -634,12 +637,19 @@ static int ssd130x_primary_plane_helper_atomic_check(struct drm_plane *plane,
+@@ -814,8 +814,7 @@ static int ssd130x_crtc_helper_atomic_check(struct drm_crtc *crtc,
  	struct ssd130x_device *ssd130x = drm_to_ssd130x(drm);
- 	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(state, plane);
- 	struct ssd130x_plane_state *ssd130x_state = to_ssd130x_plane_state(plane_state);
+ 	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
+ 	struct ssd130x_crtc_state *ssd130x_state = to_ssd130x_crtc_state(crtc_state);
 -	unsigned int page_height = ssd130x->device_info->page_height;
 -	unsigned int pages = DIV_ROUND_UP(ssd130x->height, page_height);
-+	struct drm_crtc *crtc = plane_state->crtc;
-+	struct drm_crtc_state *crtc_state;
- 	const struct drm_format_info *fi;
- 	unsigned int pitch;
++	unsigned int pages = DIV_ROUND_UP(ssd130x->height, SSD130X_PAGE_HEIGHT);
  	int ret;
  
-+	if (!crtc)
-+		return -EINVAL;
-+
-+	crtc_state = drm_atomic_get_crtc_state(state, crtc);
-+	if (IS_ERR(crtc_state))
-+		return PTR_ERR(crtc_state);
-+
- 	ret = drm_plane_helper_atomic_check(plane, state);
- 	if (ret)
- 		return ret;
-@@ -654,14 +664,6 @@ static int ssd130x_primary_plane_helper_atomic_check(struct drm_plane *plane,
- 	if (!ssd130x_state->buffer)
- 		return -ENOMEM;
- 
--	ssd130x_state->data_array = kcalloc(ssd130x->width, pages, GFP_KERNEL);
--	if (!ssd130x_state->data_array) {
--		kfree(ssd130x_state->buffer);
--		/* Set to prevent a double free in .atomic_destroy_state() */
--		ssd130x_state->buffer = NULL;
--		return -ENOMEM;
--	}
--
- 	return 0;
- }
- 
-@@ -671,6 +673,10 @@ static void ssd130x_primary_plane_helper_atomic_update(struct drm_plane *plane,
- 	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(state, plane);
- 	struct drm_plane_state *old_plane_state = drm_atomic_get_old_plane_state(state, plane);
- 	struct drm_shadow_plane_state *shadow_plane_state = to_drm_shadow_plane_state(plane_state);
-+	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, plane_state->crtc);
-+	struct ssd130x_crtc_state *ssd130x_crtc_state =  to_ssd130x_crtc_state(crtc_state);
-+	struct ssd130x_plane_state *ssd130x_plane_state = to_ssd130x_plane_state(plane_state);
-+	struct drm_framebuffer *fb = plane_state->fb;
- 	struct drm_atomic_helper_damage_iter iter;
- 	struct drm_device *drm = plane->dev;
- 	struct drm_rect dst_clip;
-@@ -687,7 +693,9 @@ static void ssd130x_primary_plane_helper_atomic_update(struct drm_plane *plane,
- 		if (!drm_rect_intersect(&dst_clip, &damage))
- 			continue;
- 
--		ssd130x_fb_blit_rect(plane_state, &shadow_plane_state->data[0], &dst_clip);
-+		ssd130x_fb_blit_rect(fb, &shadow_plane_state->data[0], &dst_clip,
-+				     ssd130x_plane_state->buffer,
-+				     ssd130x_crtc_state->data_array);
- 	}
- 
- 	drm_dev_exit(idx);
-@@ -698,13 +706,21 @@ static void ssd130x_primary_plane_helper_atomic_disable(struct drm_plane *plane,
- {
- 	struct drm_device *drm = plane->dev;
- 	struct ssd130x_device *ssd130x = drm_to_ssd130x(drm);
--	struct ssd130x_plane_state *ssd130x_state = to_ssd130x_plane_state(plane->state);
-+	struct drm_plane_state *plane_state = drm_atomic_get_new_plane_state(state, plane);
-+	struct drm_crtc_state *crtc_state;
-+	struct ssd130x_crtc_state *ssd130x_crtc_state;
- 	int idx;
- 
-+	if (!plane_state->crtc)
-+		return;
-+
-+	crtc_state = drm_atomic_get_new_crtc_state(state, plane_state->crtc);
-+	ssd130x_crtc_state = to_ssd130x_crtc_state(crtc_state);
-+
- 	if (!drm_dev_enter(drm, &idx))
- 		return;
- 
--	ssd130x_clear_screen(ssd130x, ssd130x_state);
-+	ssd130x_clear_screen(ssd130x, ssd130x_crtc_state->data_array);
- 
- 	drm_dev_exit(idx);
- }
-@@ -737,9 +753,8 @@ static struct drm_plane_state *ssd130x_primary_plane_duplicate_state(struct drm_
- 	if (!ssd130x_state)
- 		return NULL;
- 
--	/* The buffers are not duplicated and are allocated in .atomic_check */
-+	/* The buffer is not duplicated and is allocated in .atomic_check */
- 	ssd130x_state->buffer = NULL;
--	ssd130x_state->data_array = NULL;
- 
- 	new_shadow_plane_state = &ssd130x_state->base;
- 
-@@ -753,7 +768,6 @@ static void ssd130x_primary_plane_destroy_state(struct drm_plane *plane,
- {
- 	struct ssd130x_plane_state *ssd130x_state = to_ssd130x_plane_state(state);
- 
--	kfree(ssd130x_state->data_array);
- 	kfree(ssd130x_state->buffer);
- 
- 	__drm_gem_destroy_shadow_plane_state(&ssd130x_state->base);
-@@ -793,6 +807,75 @@ static enum drm_mode_status ssd130x_crtc_helper_mode_valid(struct drm_crtc *crtc
- 	return MODE_OK;
- }
- 
-+static int ssd130x_crtc_helper_atomic_check(struct drm_crtc *crtc,
-+					    struct drm_atomic_state *state)
-+{
-+	struct drm_device *drm = crtc->dev;
-+	struct ssd130x_device *ssd130x = drm_to_ssd130x(drm);
-+	struct drm_crtc_state *crtc_state = drm_atomic_get_new_crtc_state(state, crtc);
-+	struct ssd130x_crtc_state *ssd130x_state = to_ssd130x_crtc_state(crtc_state);
-+	unsigned int page_height = ssd130x->device_info->page_height;
-+	unsigned int pages = DIV_ROUND_UP(ssd130x->height, page_height);
-+	int ret;
-+
-+	ret = drm_crtc_helper_atomic_check(crtc, state);
-+	if (ret)
-+		return ret;
-+
-+	ssd130x_state->data_array = kmalloc(ssd130x->width * pages, GFP_KERNEL);
-+	if (!ssd130x_state->data_array)
-+		return -ENOMEM;
-+
-+	return 0;
-+}
-+
-+/* Called during init to allocate the CRTC's atomic state. */
-+static void ssd130x_crtc_reset(struct drm_crtc *crtc)
-+{
-+	struct ssd130x_crtc_state *ssd130x_state;
-+
-+	WARN_ON(crtc->state);
-+
-+	ssd130x_state = kzalloc(sizeof(*ssd130x_state), GFP_KERNEL);
-+	if (!ssd130x_state)
-+		return;
-+
-+	__drm_atomic_helper_crtc_reset(crtc, &ssd130x_state->base);
-+}
-+
-+static struct drm_crtc_state *ssd130x_crtc_duplicate_state(struct drm_crtc *crtc)
-+{
-+	struct ssd130x_crtc_state *old_ssd130x_state;
-+	struct ssd130x_crtc_state *ssd130x_state;
-+
-+	if (WARN_ON(!crtc->state))
-+		return NULL;
-+
-+	old_ssd130x_state = to_ssd130x_crtc_state(crtc->state);
-+	ssd130x_state = kmemdup(old_ssd130x_state, sizeof(*ssd130x_state), GFP_KERNEL);
-+	if (!ssd130x_state)
-+		return NULL;
-+
-+	/* The buffer is not duplicated and is allocated in .atomic_check */
-+	ssd130x_state->data_array = NULL;
-+
-+	__drm_atomic_helper_crtc_duplicate_state(crtc, &ssd130x_state->base);
-+
-+	return &ssd130x_state->base;
-+}
-+
-+static void ssd130x_crtc_destroy_state(struct drm_crtc *crtc,
-+				       struct drm_crtc_state *state)
-+{
-+	struct ssd130x_crtc_state *ssd130x_state = to_ssd130x_crtc_state(state);
-+
-+	kfree(ssd130x_state->data_array);
-+
-+	__drm_atomic_helper_crtc_destroy_state(state);
-+
-+	kfree(ssd130x_state);
-+}
-+
- /*
-  * The CRTC is always enabled. Screen updates are performed by
-  * the primary plane's atomic_update function. Disabling clears
-@@ -800,16 +883,16 @@ static enum drm_mode_status ssd130x_crtc_helper_mode_valid(struct drm_crtc *crtc
-  */
- static const struct drm_crtc_helper_funcs ssd130x_crtc_helper_funcs = {
- 	.mode_valid = ssd130x_crtc_helper_mode_valid,
--	.atomic_check = drm_crtc_helper_atomic_check,
-+	.atomic_check = ssd130x_crtc_helper_atomic_check,
- };
- 
- static const struct drm_crtc_funcs ssd130x_crtc_funcs = {
--	.reset = drm_atomic_helper_crtc_reset,
-+	.reset = ssd130x_crtc_reset,
- 	.destroy = drm_crtc_cleanup,
- 	.set_config = drm_atomic_helper_set_config,
- 	.page_flip = drm_atomic_helper_page_flip,
--	.atomic_duplicate_state = drm_atomic_helper_crtc_duplicate_state,
--	.atomic_destroy_state = drm_atomic_helper_crtc_destroy_state,
-+	.atomic_duplicate_state = ssd130x_crtc_duplicate_state,
-+	.atomic_destroy_state = ssd130x_crtc_destroy_state,
- };
- 
- static void ssd130x_encoder_helper_atomic_enable(struct drm_encoder *encoder,
+ 	ret = drm_crtc_helper_atomic_check(crtc, state);
+diff --git a/drivers/gpu/drm/solomon/ssd130x.h b/drivers/gpu/drm/solomon/ssd130x.h
+index aa39b13615ebe..bbe374453605b 100644
+--- a/drivers/gpu/drm/solomon/ssd130x.h
++++ b/drivers/gpu/drm/solomon/ssd130x.h
+@@ -39,7 +39,6 @@ struct ssd130x_deviceinfo {
+ 	u32 default_dclk_frq;
+ 	u32 default_width;
+ 	u32 default_height;
+-	u32 page_height;
+ 	bool need_pwm;
+ 	bool need_chargepump;
+ 	bool page_mode_only;
 -- 
 2.51.0
 
