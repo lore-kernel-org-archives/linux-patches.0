@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FD733B531A;
-	Mon, 23 Mar 2026 15:11:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC36B3B9DB7;
+	Mon, 23 Mar 2026 15:11:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278711; cv=none; b=YC+XPBcgqJYZ7E7Q9ujLNIh7fEZU5UIdSKdXSvIlMq0GfaJ6gLgSiNZWh0cCKsoEuFOmlJU4yllqwZ8hAiRRgxfZABlLMCRmas4Qm12NDGxFgaB8V7cuP1iFWRHGXmrMB7lFXjux8h9iwz62zZhBilAcgfWfYJcieaWG6XCmS0Q=
+	t=1774278714; cv=none; b=qi8glk/UuZJBbFor3fGomVajg6a53v+S3jrY2RN0CW02iw7jbjTwz8DvavEfEpEb8v/g516iaHmqvg3SkKvYUK49o6/sD4ZuB6Ird4Sy0pGhdw5RyAgMelPcuS5+zjpADc1Yg6RrUWvck92X2GW7LM8gA5R1EDtK59JbiYVzxaU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278711; c=relaxed/simple;
-	bh=Yvq/pPoGxjYcwKvhDpmwyUYocO2jAEo9sCI/iBWEx+g=;
+	s=arc-20240116; t=1774278714; c=relaxed/simple;
+	bh=0W9jethkkYjdtBG5kGeE2KS9cs8VV12s7+9l4u/9crc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y69AEiytGAdVJHWWbPUaLXFxTPmmDk25gZCK6PWP0DwvObpRdAN0ia/5tmI7mQhgvNN4BjP71pzo/uktrHoYgOdHV/eTL79vtJZdy42jae224vKpCx0mmirlbespMIbJQmFLnuPf8xEPLLP2sefk0OGBDkJIq0xtYy2lPq4CDQs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FdqFCkRk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=RDHxIzGmaTSn88DRJO6ppXIXW0SrYZ7g1lDnvs+quUVA3c5AMNRuwGb7D5fJRXnJm8ObiLw0GoH4sRVxv9pXGiLkEg+LAoUNBS8hfzDOS2rzh02nF0lPcJkj/i567LEqYmCiOxYmHjA0dkIuzFll422zIj2yQK+07RmUBYYnFo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0AAbSNpX; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FdqFCkRk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 027B6C4CEF7;
-	Mon, 23 Mar 2026 15:11:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0AAbSNpX"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC80C4CEF7;
+	Mon, 23 Mar 2026 15:11:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278711;
-	bh=Yvq/pPoGxjYcwKvhDpmwyUYocO2jAEo9sCI/iBWEx+g=;
+	s=korg; t=1774278714;
+	bh=0W9jethkkYjdtBG5kGeE2KS9cs8VV12s7+9l4u/9crc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FdqFCkRkeHaNfw/G3s4LMvgj9zarna40RbByMlPLzXgcJrJ/fVOwo8cju+ya1HHG/
-	 Hs8JD7+20AQ/oJ7lCh+rUToLgE2BGx8U7JYz0jT+SSuQI1vUr/RjDqwZ4FWDfzKOhw
-	 j9Fqr0PK7hx/JCsWkYETbOvFXZlMSv5hkTlNynAU=
+	b=0AAbSNpXQBguOxBitRNndn8mgHLyqNUkZLv86VTry7lvLEKWOpksyme2AXXbpvMsn
+	 np+8cMjSfNIkiKRnE2UA0Yyz9dQba+sCEayNLnlGXZy0PWGzg1B75Nj/y3nhXbu2n0
+	 syEMCQfXfFLo63EgU11l3wKpYG3vcEwRlFXcUCS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (Red Hat)" <pc@manguebit.org>,
 	Eric Biggers <ebiggers@kernel.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 395/567] smb: client: Compare MACs in constant time
-Date: Mon, 23 Mar 2026 14:45:15 +0100
-Message-ID: <20260323134543.631170285@linuxfoundation.org>
+Subject: [PATCH 6.6 396/567] ksmbd: Compare MACs in constant time
+Date: Mon, 23 Mar 2026 14:45:16 +0100
+Message-ID: <20260323134543.656437256@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,60 +53,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-commit 26bc83b88bbbf054f0980a4a42047a8d1e210e4c upstream.
+commit c5794709bc9105935dbedef8b9cf9c06f2b559fa upstream.
 
 To prevent timing attacks, MAC comparisons need to be constant-time.
 Replace the memcmp() with the correct function, crypto_memneq().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (Red Hat) <pc@manguebit.org>
 Signed-off-by: Eric Biggers <ebiggers@kernel.org>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/client/cifsencrypt.c   |    3 ++-
- fs/smb/client/smb2transport.c |    4 +++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/smb/server/Kconfig   |    1 +
+ fs/smb/server/auth.c    |    4 +++-
+ fs/smb/server/smb2pdu.c |    5 +++--
+ 3 files changed, 7 insertions(+), 3 deletions(-)
 
---- a/fs/smb/client/cifsencrypt.c
-+++ b/fs/smb/client/cifsencrypt.c
-@@ -23,6 +23,7 @@
- #include <linux/fips.h>
- #include "../common/arc4.h"
+--- a/fs/smb/server/Kconfig
++++ b/fs/smb/server/Kconfig
+@@ -11,6 +11,7 @@ config SMB_SERVER
+ 	select CRYPTO_HMAC
+ 	select CRYPTO_ECB
+ 	select CRYPTO_LIB_DES
++	select CRYPTO_LIB_UTILS
+ 	select CRYPTO_SHA256
+ 	select CRYPTO_CMAC
+ 	select CRYPTO_SHA512
+--- a/fs/smb/server/auth.c
++++ b/fs/smb/server/auth.c
+@@ -13,6 +13,7 @@
+ #include <linux/xattr.h>
+ #include <crypto/hash.h>
  #include <crypto/aead.h>
 +#include <crypto/utils.h>
+ #include <linux/random.h>
+ #include <linux/scatterlist.h>
  
- /*
-  * Hash data from a BVEC-type iterator.
-@@ -371,7 +372,7 @@ int cifs_verify_signature(struct smb_rqs
- /*	cifs_dump_mem("what we think it should be: ",
- 		      what_we_think_sig_should_be, 16); */
+@@ -283,7 +284,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
+ 		goto out;
+ 	}
  
--	if (memcmp(server_response_sig, what_we_think_sig_should_be, 8))
-+	if (crypto_memneq(server_response_sig, what_we_think_sig_should_be, 8))
- 		return -EACCES;
- 	else
+-	if (memcmp(ntlmv2->ntlmv2_hash, ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE) != 0)
++	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
++			  CIFS_HMAC_MD5_HASH_SIZE))
+ 		rc = -EINVAL;
+ out:
+ 	if (ctx)
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -4,6 +4,7 @@
+  *   Copyright (C) 2018 Samsung Electronics Co., Ltd.
+  */
+ 
++#include <crypto/utils.h>
+ #include <linux/inetdevice.h>
+ #include <net/addrconf.h>
+ #include <linux/syscalls.h>
+@@ -8804,7 +8805,7 @@ int smb2_check_sign_req(struct ksmbd_wor
+ 				signature))
  		return 0;
---- a/fs/smb/client/smb2transport.c
-+++ b/fs/smb/client/smb2transport.c
-@@ -19,6 +19,7 @@
- #include <linux/mempool.h>
- #include <linux/highmem.h>
- #include <crypto/aead.h>
-+#include <crypto/utils.h>
- #include "cifsglob.h"
- #include "cifsproto.h"
- #include "smb2proto.h"
-@@ -732,7 +733,8 @@ smb2_verify_signature(struct smb_rqst *r
- 	if (rc)
- 		return rc;
  
--	if (memcmp(server_response_sig, shdr->Signature, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(server_response_sig, shdr->Signature,
-+			  SMB2_SIGNATURE_SIZE)) {
- 		cifs_dbg(VFS, "sign fail cmd 0x%x message id 0x%llx\n",
- 			shdr->Command, shdr->MessageId);
- 		return -EACCES;
+-	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
+ 		pr_err("bad smb2 signature\n");
+ 		return 0;
+ 	}
+@@ -8892,7 +8893,7 @@ int smb3_check_sign_req(struct ksmbd_wor
+ 	if (ksmbd_sign_smb3_pdu(conn, signing_key, iov, 1, signature))
+ 		return 0;
+ 
+-	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
++	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
+ 		pr_err("bad smb2 signature\n");
+ 		return 0;
+ 	}
 
 
