@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5375321D00A;
-	Mon, 23 Mar 2026 14:11:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F2F3B27C1;
+	Mon, 23 Mar 2026 14:11:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275086; cv=none; b=b+/Iq8L1ncYtdaUqxno7Uy2JCsZvklcc4OwlZz9il6Vf0DmDs+2rR+ci/IaPtVhbr38v86o2rVG1SPX1ljPLzZqZF+avzEVFjIXDPoisyDH78pGAs5PCGDD92MCl48Q956SUufGPXpwSYNbLw70+/GwpdKKfSHCRg5E0xrDGLZc=
+	t=1774275089; cv=none; b=M/gaxPflbMm/FFmvv3VGMgSF0nX+/90xEGb9wAv7KY1yV7Dv5vCXR47MIi2RHHfD1fpPDgsk5LDeovk+F2eaGQUgjkEHK0nPNLfFjDbF+OOqd/x3SHkHbW+FD2aMWUbR2eyP39NAOxixBdACIed5uvUSRw1eFE6btPUCTcQn6qM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275086; c=relaxed/simple;
-	bh=2h3mX10Fgfs2Jwmrjqhf03pQjaN6+g1X26YuxDsEqQg=;
+	s=arc-20240116; t=1774275089; c=relaxed/simple;
+	bh=M7SBWfhUusqgMFHIPe9E+yDtm29oQmJ/PZAIbdge5lQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u/DP9QQ3TstJon1j95B/+ZD+yh69VpSC3wTnLsumz8savmPDYhUZ2zkL+rSqkClb2kPJ+UPHq4q0afJIbln90YktPEVYIZD2LwpNptgilqY3ffQuy3CecgsM3M69Ac8/ZgOiYreq0Sro5dOU9eigsZ3j+I5gpmN3HaepPBUba4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=YFApTyXg; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LoHeOIBrxrP5su+JsB6KdFY2Wynv9R1dISp6SC1/0lCEDoNTQU+VPpSL5VveI0DP1/H8Fh2XjkoLtB802L5WKxrScay1Y9NY9V4E7OhW1luzWGQqDYimWYr3Wj4m5fnknlZVQGQvKh3AXEppqsQf0fNjGdfG6SOGOTC5pyeg5OY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eCqFnAZH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="YFApTyXg"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B593EC4CEF7;
-	Mon, 23 Mar 2026 14:11:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eCqFnAZH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 412A2C2BCB4;
+	Mon, 23 Mar 2026 14:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275086;
-	bh=2h3mX10Fgfs2Jwmrjqhf03pQjaN6+g1X26YuxDsEqQg=;
+	s=korg; t=1774275089;
+	bh=M7SBWfhUusqgMFHIPe9E+yDtm29oQmJ/PZAIbdge5lQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YFApTyXgtFXZXELZnreORm009oK/wRDY9DhhSC+kgcVnekKXbz3Hh8ggrocVhb113
-	 QxUvSevI7CsGTQn/oJx+NOvlP2NY2XPaioj8bH3jsw36+hD+MS0je5RhtqihmnkFO4
-	 Bcy9qTydspVk2r2EPYRm0saXSjggBW1S5rlsrRk4=
+	b=eCqFnAZHqoW0KdPaw9GCxhKQVycRtUazjpgetHI1kAeAaR/+y+H2vmMPIZQZShLFh
+	 5EwLmJ+vLppCfZNL/xbHEbBTKJPQfS+B1qL7G+fYJPOO0EU4/3JYw9SfqdIHNzUuW9
+	 /eKMbLEJJYe1FU/OegHo564XR28WN2Fiz4tfX9ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moses <p@1g4.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 175/212] net: shaper: protect late read accesses to the hierarchy
-Date: Mon, 23 Mar 2026 14:46:36 +0100
-Message-ID: <20260323134509.293932794@linuxfoundation.org>
+Subject: [PATCH 6.18 176/212] net: shaper: protect from late creation of hierarchy
+Date: Mon, 23 Mar 2026 14:46:37 +0100
+Message-ID: <20260323134509.323650959@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -54,90 +53,393 @@ Content-Transfer-Encoding: 8bit
 
 From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0f9ea7141f365b4f27226898e62220fb98ef8dc6 ]
+[ Upstream commit d75ec7e8ba1979a1eb0b9211d94d749cdce849c8 ]
 
 We look up a netdev during prep of Netlink ops (pre- callbacks)
 and take a ref to it. Then later in the body of the callback
 we take its lock or RCU which are the actual protections.
 
-This is not proper, a conversion from a ref to a locked netdev
-must include a liveness check (a check if the netdev hasn't been
-unregistered already). Fix the read cases (those under RCU).
-Writes needs a separate change to protect from creating the
-hierarchy after flush has already run.
+The netdev may get unregistered in between the time we take
+the ref and the time we lock it. We may allocate the hierarchy
+after flush has already run, which would lead to a leak.
 
-Fixes: 4b623f9f0f59 ("net-shapers: implement NL get operation")
-Reported-by: Paul Moses <p@1g4.org>
+Take the instance lock in pre- already, this saves us from the race
+and removes the need for dedicated lock/unlock callbacks completely.
+After all, if there's any chance of write happening concurrently
+with the flush - we're back to leaking the hierarchy.
+
+We may take the lock for devices which don't support shapers but
+we're only dealing with SET operations here, not taking the lock
+would be optimizing for an error case.
+
+Fixes: 93954b40f6a4 ("net-shapers: implement NL set and delete operations")
 Link: https://lore.kernel.org/20260309173450.538026-1-p@1g4.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Link: https://patch.msgid.link/20260317161014.779569-1-kuba@kernel.org
+Link: https://patch.msgid.link/20260317161014.779569-2-kuba@kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/shaper/shaper.c | 26 ++++++++++++++++++++++----
- 1 file changed, 22 insertions(+), 4 deletions(-)
+ Documentation/netlink/specs/net_shaper.yaml |  12 +-
+ net/shaper/shaper.c                         | 134 +++++++++++---------
+ net/shaper/shaper_nl_gen.c                  |  12 +-
+ net/shaper/shaper_nl_gen.h                  |   5 +
+ 4 files changed, 89 insertions(+), 74 deletions(-)
 
+diff --git a/Documentation/netlink/specs/net_shaper.yaml b/Documentation/netlink/specs/net_shaper.yaml
+index 0b1b54be48f92..3f2ad772b64b1 100644
+--- a/Documentation/netlink/specs/net_shaper.yaml
++++ b/Documentation/netlink/specs/net_shaper.yaml
+@@ -247,8 +247,8 @@ operations:
+       flags: [admin-perm]
+ 
+       do:
+-        pre: net-shaper-nl-pre-doit
+-        post: net-shaper-nl-post-doit
++        pre: net-shaper-nl-pre-doit-write
++        post: net-shaper-nl-post-doit-write
+         request:
+           attributes:
+             - ifindex
+@@ -278,8 +278,8 @@ operations:
+       flags: [admin-perm]
+ 
+       do:
+-        pre: net-shaper-nl-pre-doit
+-        post: net-shaper-nl-post-doit
++        pre: net-shaper-nl-pre-doit-write
++        post: net-shaper-nl-post-doit-write
+         request:
+           attributes: *ns-binding
+ 
+@@ -309,8 +309,8 @@ operations:
+       flags: [admin-perm]
+ 
+       do:
+-        pre: net-shaper-nl-pre-doit
+-        post: net-shaper-nl-post-doit
++        pre: net-shaper-nl-pre-doit-write
++        post: net-shaper-nl-post-doit-write
+         request:
+           attributes:
+             - ifindex
 diff --git a/net/shaper/shaper.c b/net/shaper/shaper.c
-index 318a0567a6981..081dac917dc2d 100644
+index 081dac917dc2d..be9999ab62e39 100644
 --- a/net/shaper/shaper.c
 +++ b/net/shaper/shaper.c
-@@ -65,6 +65,21 @@ net_shaper_hierarchy(struct net_shaper_binding *binding)
- 	return NULL;
+@@ -36,24 +36,6 @@ static struct net_shaper_binding *net_shaper_binding_from_ctx(void *ctx)
+ 	return &((struct net_shaper_nl_ctx *)ctx)->binding;
  }
  
-+static struct net_shaper_hierarchy *
-+net_shaper_hierarchy_rcu(struct net_shaper_binding *binding)
+-static void net_shaper_lock(struct net_shaper_binding *binding)
+-{
+-	switch (binding->type) {
+-	case NET_SHAPER_BINDING_TYPE_NETDEV:
+-		netdev_lock(binding->netdev);
+-		break;
+-	}
+-}
+-
+-static void net_shaper_unlock(struct net_shaper_binding *binding)
+-{
+-	switch (binding->type) {
+-	case NET_SHAPER_BINDING_TYPE_NETDEV:
+-		netdev_unlock(binding->netdev);
+-		break;
+-	}
+-}
+-
+ static struct net_shaper_hierarchy *
+ net_shaper_hierarchy(struct net_shaper_binding *binding)
+ {
+@@ -219,12 +201,49 @@ static int net_shaper_ctx_setup(const struct genl_info *info, int type,
+ 	return 0;
+ }
+ 
++/* Like net_shaper_ctx_setup(), but for "write" handlers (never for dumps!)
++ * Acquires the lock protecting the hierarchy (instance lock for netdev).
++ */
++static int net_shaper_ctx_setup_lock(const struct genl_info *info, int type,
++				     struct net_shaper_nl_ctx *ctx)
 +{
-+	/* Readers look up the device and take a ref, then take RCU lock
-+	 * later at which point netdev may have been unregistered and flushed.
-+	 * READ_ONCE() pairs with WRITE_ONCE() in net_shaper_hierarchy_setup.
-+	 */
-+	if (binding->type == NET_SHAPER_BINDING_TYPE_NETDEV &&
-+	    READ_ONCE(binding->netdev->reg_state) <= NETREG_REGISTERED)
-+		return READ_ONCE(binding->netdev->net_shaper_hierarchy);
++	struct net *ns = genl_info_net(info);
++	struct net_device *dev;
++	int ifindex;
 +
-+	/* No other type supported yet. */
-+	return NULL;
++	if (GENL_REQ_ATTR_CHECK(info, type))
++		return -EINVAL;
++
++	ifindex = nla_get_u32(info->attrs[type]);
++	dev = netdev_get_by_index_lock(ns, ifindex);
++	if (!dev) {
++		NL_SET_BAD_ATTR(info->extack, info->attrs[type]);
++		return -ENOENT;
++	}
++
++	if (!dev->netdev_ops->net_shaper_ops) {
++		NL_SET_BAD_ATTR(info->extack, info->attrs[type]);
++		netdev_unlock(dev);
++		return -EOPNOTSUPP;
++	}
++
++	ctx->binding.type = NET_SHAPER_BINDING_TYPE_NETDEV;
++	ctx->binding.netdev = dev;
++	return 0;
 +}
 +
- static const struct net_shaper_ops *
- net_shaper_ops(struct net_shaper_binding *binding)
+ static void net_shaper_ctx_cleanup(struct net_shaper_nl_ctx *ctx)
  {
-@@ -251,9 +266,10 @@ static struct net_shaper *
- net_shaper_lookup(struct net_shaper_binding *binding,
- 		  const struct net_shaper_handle *handle)
- {
--	struct net_shaper_hierarchy *hierarchy = net_shaper_hierarchy(binding);
- 	u32 index = net_shaper_handle_to_index(handle);
-+	struct net_shaper_hierarchy *hierarchy;
+ 	if (ctx->binding.type == NET_SHAPER_BINDING_TYPE_NETDEV)
+ 		netdev_put(ctx->binding.netdev, &ctx->dev_tracker);
+ }
  
-+	hierarchy = net_shaper_hierarchy_rcu(binding);
- 	if (!hierarchy || xa_get_mark(&hierarchy->shapers, index,
- 				      NET_SHAPER_NOT_VALID))
- 		return NULL;
-@@ -778,17 +794,19 @@ int net_shaper_nl_get_dumpit(struct sk_buff *skb,
- 
- 	/* Don't error out dumps performed before any set operation. */
- 	binding = net_shaper_binding_from_ctx(ctx);
--	hierarchy = net_shaper_hierarchy(binding);
--	if (!hierarchy)
--		return 0;
- 
- 	rcu_read_lock();
-+	hierarchy = net_shaper_hierarchy_rcu(binding);
-+	if (!hierarchy)
-+		goto out_unlock;
++static void net_shaper_ctx_cleanup_unlock(struct net_shaper_nl_ctx *ctx)
++{
++	if (ctx->binding.type == NET_SHAPER_BINDING_TYPE_NETDEV)
++		netdev_unlock(ctx->binding.netdev);
++}
 +
- 	for (; (shaper = xa_find(&hierarchy->shapers, &ctx->start_index,
- 				 U32_MAX, XA_PRESENT)); ctx->start_index++) {
- 		ret = net_shaper_fill_one(skb, binding, shaper, info);
- 		if (ret)
- 			break;
- 	}
-+out_unlock:
- 	rcu_read_unlock();
+ static u32 net_shaper_handle_to_index(const struct net_shaper_handle *handle)
+ {
+ 	return FIELD_PREP(NET_SHAPER_SCOPE_MASK, handle->scope) |
+@@ -278,7 +297,7 @@ net_shaper_lookup(struct net_shaper_binding *binding,
+ }
  
+ /* Allocate on demand the per device shaper's hierarchy container.
+- * Called under the net shaper lock
++ * Called under the lock protecting the hierarchy (instance lock for netdev)
+  */
+ static struct net_shaper_hierarchy *
+ net_shaper_hierarchy_setup(struct net_shaper_binding *binding)
+@@ -697,6 +716,22 @@ void net_shaper_nl_post_doit(const struct genl_split_ops *ops,
+ 	net_shaper_generic_post(info);
+ }
+ 
++int net_shaper_nl_pre_doit_write(const struct genl_split_ops *ops,
++				struct sk_buff *skb, struct genl_info *info)
++{
++	struct net_shaper_nl_ctx *ctx = (struct net_shaper_nl_ctx *)info->ctx;
++
++	BUILD_BUG_ON(sizeof(*ctx) > sizeof(info->ctx));
++
++	return net_shaper_ctx_setup_lock(info, NET_SHAPER_A_IFINDEX, ctx);
++}
++
++void net_shaper_nl_post_doit_write(const struct genl_split_ops *ops,
++				   struct sk_buff *skb, struct genl_info *info)
++{
++	net_shaper_ctx_cleanup_unlock((struct net_shaper_nl_ctx *)info->ctx);
++}
++
+ int net_shaper_nl_pre_dumpit(struct netlink_callback *cb)
+ {
+ 	struct net_shaper_nl_ctx *ctx = (struct net_shaper_nl_ctx *)cb->ctx;
+@@ -824,45 +859,38 @@ int net_shaper_nl_set_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	binding = net_shaper_binding_from_ctx(info->ctx);
+ 
+-	net_shaper_lock(binding);
+ 	ret = net_shaper_parse_info(binding, info->attrs, info, &shaper,
+ 				    &exists);
+ 	if (ret)
+-		goto unlock;
++		return ret;
+ 
+ 	if (!exists)
+ 		net_shaper_default_parent(&shaper.handle, &shaper.parent);
+ 
+ 	hierarchy = net_shaper_hierarchy_setup(binding);
+-	if (!hierarchy) {
+-		ret = -ENOMEM;
+-		goto unlock;
+-	}
++	if (!hierarchy)
++		return -ENOMEM;
+ 
+ 	/* The 'set' operation can't create node-scope shapers. */
+ 	handle = shaper.handle;
+ 	if (handle.scope == NET_SHAPER_SCOPE_NODE &&
+-	    !net_shaper_lookup(binding, &handle)) {
+-		ret = -ENOENT;
+-		goto unlock;
+-	}
++	    !net_shaper_lookup(binding, &handle))
++		return -ENOENT;
+ 
+ 	ret = net_shaper_pre_insert(binding, &handle, info->extack);
+ 	if (ret)
+-		goto unlock;
++		return ret;
+ 
+ 	ops = net_shaper_ops(binding);
+ 	ret = ops->set(binding, &shaper, info->extack);
+ 	if (ret) {
+ 		net_shaper_rollback(binding);
+-		goto unlock;
++		return ret;
+ 	}
+ 
+ 	net_shaper_commit(binding, 1, &shaper);
+ 
+-unlock:
+-	net_shaper_unlock(binding);
+-	return ret;
++	return 0;
+ }
+ 
+ static int __net_shaper_delete(struct net_shaper_binding *binding,
+@@ -1091,35 +1119,26 @@ int net_shaper_nl_delete_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	binding = net_shaper_binding_from_ctx(info->ctx);
+ 
+-	net_shaper_lock(binding);
+ 	ret = net_shaper_parse_handle(info->attrs[NET_SHAPER_A_HANDLE], info,
+ 				      &handle);
+ 	if (ret)
+-		goto unlock;
++		return ret;
+ 
+ 	hierarchy = net_shaper_hierarchy(binding);
+-	if (!hierarchy) {
+-		ret = -ENOENT;
+-		goto unlock;
+-	}
++	if (!hierarchy)
++		return -ENOENT;
+ 
+ 	shaper = net_shaper_lookup(binding, &handle);
+-	if (!shaper) {
+-		ret = -ENOENT;
+-		goto unlock;
+-	}
++	if (!shaper)
++		return -ENOENT;
+ 
+ 	if (handle.scope == NET_SHAPER_SCOPE_NODE) {
+ 		ret = net_shaper_pre_del_node(binding, shaper, info->extack);
+ 		if (ret)
+-			goto unlock;
++			return ret;
+ 	}
+ 
+-	ret = __net_shaper_delete(binding, shaper, info->extack);
+-
+-unlock:
+-	net_shaper_unlock(binding);
+-	return ret;
++	return __net_shaper_delete(binding, shaper, info->extack);
+ }
+ 
+ static int net_shaper_group_send_reply(struct net_shaper_binding *binding,
+@@ -1168,21 +1187,17 @@ int net_shaper_nl_group_doit(struct sk_buff *skb, struct genl_info *info)
+ 	if (!net_shaper_ops(binding)->group)
+ 		return -EOPNOTSUPP;
+ 
+-	net_shaper_lock(binding);
+ 	leaves_count = net_shaper_list_len(info, NET_SHAPER_A_LEAVES);
+ 	if (!leaves_count) {
+ 		NL_SET_BAD_ATTR(info->extack,
+ 				info->attrs[NET_SHAPER_A_LEAVES]);
+-		ret = -EINVAL;
+-		goto unlock;
++		return -EINVAL;
+ 	}
+ 
+ 	leaves = kcalloc(leaves_count, sizeof(struct net_shaper) +
+ 			 sizeof(struct net_shaper *), GFP_KERNEL);
+-	if (!leaves) {
+-		ret = -ENOMEM;
+-		goto unlock;
+-	}
++	if (!leaves)
++		return -ENOMEM;
+ 	old_nodes = (void *)&leaves[leaves_count];
+ 
+ 	ret = net_shaper_parse_node(binding, info->attrs, info, &node);
+@@ -1259,9 +1274,6 @@ int net_shaper_nl_group_doit(struct sk_buff *skb, struct genl_info *info)
+ 
+ free_leaves:
+ 	kfree(leaves);
+-
+-unlock:
+-	net_shaper_unlock(binding);
  	return ret;
+ 
+ free_msg:
+@@ -1371,14 +1383,12 @@ static void net_shaper_flush(struct net_shaper_binding *binding)
+ 	if (!hierarchy)
+ 		return;
+ 
+-	net_shaper_lock(binding);
+ 	xa_lock(&hierarchy->shapers);
+ 	xa_for_each(&hierarchy->shapers, index, cur) {
+ 		__xa_erase(&hierarchy->shapers, index);
+ 		kfree(cur);
+ 	}
+ 	xa_unlock(&hierarchy->shapers);
+-	net_shaper_unlock(binding);
+ 
+ 	kfree(hierarchy);
+ }
+diff --git a/net/shaper/shaper_nl_gen.c b/net/shaper/shaper_nl_gen.c
+index 204c8ae8c7b14..c52abf13ff0c9 100644
+--- a/net/shaper/shaper_nl_gen.c
++++ b/net/shaper/shaper_nl_gen.c
+@@ -98,27 +98,27 @@ static const struct genl_split_ops net_shaper_nl_ops[] = {
+ 	},
+ 	{
+ 		.cmd		= NET_SHAPER_CMD_SET,
+-		.pre_doit	= net_shaper_nl_pre_doit,
++		.pre_doit	= net_shaper_nl_pre_doit_write,
+ 		.doit		= net_shaper_nl_set_doit,
+-		.post_doit	= net_shaper_nl_post_doit,
++		.post_doit	= net_shaper_nl_post_doit_write,
+ 		.policy		= net_shaper_set_nl_policy,
+ 		.maxattr	= NET_SHAPER_A_IFINDEX,
+ 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+ 	},
+ 	{
+ 		.cmd		= NET_SHAPER_CMD_DELETE,
+-		.pre_doit	= net_shaper_nl_pre_doit,
++		.pre_doit	= net_shaper_nl_pre_doit_write,
+ 		.doit		= net_shaper_nl_delete_doit,
+-		.post_doit	= net_shaper_nl_post_doit,
++		.post_doit	= net_shaper_nl_post_doit_write,
+ 		.policy		= net_shaper_delete_nl_policy,
+ 		.maxattr	= NET_SHAPER_A_IFINDEX,
+ 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+ 	},
+ 	{
+ 		.cmd		= NET_SHAPER_CMD_GROUP,
+-		.pre_doit	= net_shaper_nl_pre_doit,
++		.pre_doit	= net_shaper_nl_pre_doit_write,
+ 		.doit		= net_shaper_nl_group_doit,
+-		.post_doit	= net_shaper_nl_post_doit,
++		.post_doit	= net_shaper_nl_post_doit_write,
+ 		.policy		= net_shaper_group_nl_policy,
+ 		.maxattr	= NET_SHAPER_A_LEAVES,
+ 		.flags		= GENL_ADMIN_PERM | GENL_CMD_CAP_DO,
+diff --git a/net/shaper/shaper_nl_gen.h b/net/shaper/shaper_nl_gen.h
+index cb7f9026fc239..1e20eebdedd71 100644
+--- a/net/shaper/shaper_nl_gen.h
++++ b/net/shaper/shaper_nl_gen.h
+@@ -17,12 +17,17 @@ extern const struct nla_policy net_shaper_leaf_info_nl_policy[NET_SHAPER_A_WEIGH
+ 
+ int net_shaper_nl_pre_doit(const struct genl_split_ops *ops,
+ 			   struct sk_buff *skb, struct genl_info *info);
++int net_shaper_nl_pre_doit_write(const struct genl_split_ops *ops,
++				 struct sk_buff *skb, struct genl_info *info);
+ int net_shaper_nl_cap_pre_doit(const struct genl_split_ops *ops,
+ 			       struct sk_buff *skb, struct genl_info *info);
+ void
+ net_shaper_nl_post_doit(const struct genl_split_ops *ops, struct sk_buff *skb,
+ 			struct genl_info *info);
+ void
++net_shaper_nl_post_doit_write(const struct genl_split_ops *ops,
++			      struct sk_buff *skb, struct genl_info *info);
++void
+ net_shaper_nl_cap_post_doit(const struct genl_split_ops *ops,
+ 			    struct sk_buff *skb, struct genl_info *info);
+ int net_shaper_nl_pre_dumpit(struct netlink_callback *cb);
 -- 
 2.51.0
 
