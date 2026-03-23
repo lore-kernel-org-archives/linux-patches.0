@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271DF27380A;
-	Mon, 23 Mar 2026 14:47:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C14CC247291;
+	Mon, 23 Mar 2026 14:47:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277276; cv=none; b=pLAH35B53iJf9aYO/bHhjhHChpxhb54krVfzaTy7/sniUzIwVB5uDAn+EyEltFWO9ISPKN9WcV93zeN4eWphODxdCQZzCh+Uvi/HqNubdIUk5ViaLb1517xJqB30nHHk/gDii/zU0di1ui78wXUPK82/V1tYZ//LOYmG/ZkRT+k=
+	t=1774277278; cv=none; b=Fw6T9F8IMSprwc9w0oZlHDeEuK2uPFpEpjd67f3b6IomCQ12yjeegpcDJYk7ympoKbNz9OgDguG4nqK7nKZMxwEZsb49rUadx7owf1lGmIsUTOEW6BVXdM+NGOb1Ky2svkdOXYRF6/hK2bW11kxpsStJA0Dg16ltWMA+xeHs2H0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277276; c=relaxed/simple;
-	bh=rQTbKgf/IpZVcH+H45SECJbUlFskECipKfnVLgVaaAs=;
+	s=arc-20240116; t=1774277278; c=relaxed/simple;
+	bh=wlpYA0AqyD088mQWK0/849FjWtzsIwYCwO9u5E/I5CM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=OarfC3HEp9iWuQMiC6IwBgZHa9yLxioV+IWGERACjit72O8aqVu+veTx3uIZcUz9nqcT4njCI0+/SaxvJMB0sggd9U5DyVts0XRIoroTzgn0Xpwic/EPwcVoA0Iws68/6g3Z0++6YEShUf5KR8vzjXuEcJGxQX6IL66M5iHU4D0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qdwaeSVJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=AWXTQC0h12l1tTGqq933GVYqBIhOohOnprUbpAhmaV29y9JzC7/b56J7XjT8jBDsfj52QbYFT0PBSZiLhSKCrYu1aiuieGLHSR7ozEeU8juBJLm9zi1w5hWruJtT30CxgIP0Evw2tiFvin/ftD2LVLJjLx6dHZN2Y09RQV+9ynI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lv+5drjO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qdwaeSVJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AA8C4CEF7;
-	Mon, 23 Mar 2026 14:47:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lv+5drjO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503B9C2BC9E;
+	Mon, 23 Mar 2026 14:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277275;
-	bh=rQTbKgf/IpZVcH+H45SECJbUlFskECipKfnVLgVaaAs=;
+	s=korg; t=1774277278;
+	bh=wlpYA0AqyD088mQWK0/849FjWtzsIwYCwO9u5E/I5CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qdwaeSVJ7eiLcyvyf9twI01OXQrcxa95m/GdLF+1bw+jL8xPzza/c1GQMvQfoxIdj
-	 5yRMbXdD6uwbDaNYay3t8p2tf+w1SvVTOdj6e2OjQ+49Bjcsr3MH2X29bE2CMGIIGp
-	 AY12QVofvTKwc4qT1FRYu4gcqwxyNZf1WvQ71FCI=
+	b=Lv+5drjOqinH+vgKxg+zFcVcY7eruGGbKQvOUn4JOAco3bKMYaKUBuW5HxJ+SSteO
+	 8JNNlOXthBdlrt/CLBfkMy9lLo3qJ7CGAWEfwqa7/71RQJ7hke7Ho5WC+dxh2wvMj1
+	 0w3xbMZimy5/2CR5C5WxRTuYO5vSihnhNsw7OZaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yeoreum Yun <yeoreum.yun@arm.com>,
-	Sudeep Holla <sudeep.holla@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 378/460] firmware: arm_ffa: Remove vm_id argument in ffa_rxtx_unmap()
-Date: Mon, 23 Mar 2026 14:46:14 +0100
-Message-ID: <20260323134535.854643512@linuxfoundation.org>
+	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
+	Stefan Wahren <wahrenst@gmx.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.12 337/460] pmdomain: bcm: bcm2835-power: Increase ASB control timeout
+Date: Mon, 23 Mar 2026 14:45:33 +0100
+Message-ID: <20260323134534.812514240@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,74 +52,73 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Yeoreum Yun <yeoreum.yun@arm.com>
+From: Maíra Canal <mcanal@igalia.com>
 
-[ Upstream commit a4e8473b775160f3ce978f621cf8dea2c7250433 ]
+commit b826d2c0b0ecb844c84431ba6b502e744f5d919a upstream.
 
-According to the FF-A specification (DEN0077, v1.1, §13.7), when
-FFA_RXTX_UNMAP is invoked from any instance other than non-secure
-physical, the w1 register must be zero (MBZ). If a non-zero value is
-supplied in this context, the SPMC must return FFA_INVALID_PARAMETER.
+The bcm2835_asb_control() function uses a tight polling loop to wait
+for the ASB bridge to acknowledge a request. During intensive workloads,
+this handshake intermittently fails for V3D's master ASB on BCM2711,
+resulting in "Failed to disable ASB master for v3d" errors during
+runtime PM suspend. As a consequence, the failed power-off leaves V3D in
+a broken state, leading to bus faults or system hangs on later accesses.
 
-The Arm FF-A driver operates exclusively as a guest or non-secure
-physical instance where the partition ID is always zero and is not
-invoked from a hypervisor context where w1 carries a VM ID. In this
-execution model, the partition ID observed by the driver is always zero,
-and passing a VM ID is unnecessary and potentially invalid.
+As the timeout is insufficient in some scenarios, increase the polling
+timeout from 1us to 5us, which is still negligible in the context of a
+power domain transition. Also, replace the open-coded ktime_get_ns()/
+cpu_relax() polling loop with readl_poll_timeout_atomic().
 
-Remove the vm_id parameter from ffa_rxtx_unmap() and ensure that the
-SMC call is issued with w1 implicitly zeroed, as required by the
-specification. This prevents invalid parameter errors and aligns the
-implementation with the defined FF-A ABI behavior.
-
-Fixes: 3bbfe9871005 ("firmware: arm_ffa: Add initial Arm FFA driver support")
-Signed-off-by: Yeoreum Yun <yeoreum.yun@arm.com>
-Message-Id: <20260304120953.847671-1-yeoreum.yun@arm.com>
-Signed-off-by: Sudeep Holla <sudeep.holla@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
+Signed-off-by: Maíra Canal <mcanal@igalia.com>
+Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_ffa/driver.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pmdomain/bcm/bcm2835-power.c |   12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/firmware/arm_ffa/driver.c b/drivers/firmware/arm_ffa/driver.c
-index 9516ee870cd25..bec1fbaff7f34 100644
---- a/drivers/firmware/arm_ffa/driver.c
-+++ b/drivers/firmware/arm_ffa/driver.c
-@@ -206,12 +206,12 @@ static int ffa_rxtx_map(phys_addr_t tx_buf, phys_addr_t rx_buf, u32 pg_cnt)
+--- a/drivers/pmdomain/bcm/bcm2835-power.c
++++ b/drivers/pmdomain/bcm/bcm2835-power.c
+@@ -9,6 +9,7 @@
+ #include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/io.h>
++#include <linux/iopoll.h>
+ #include <linux/mfd/bcm2835-pm.h>
+ #include <linux/module.h>
+ #include <linux/platform_device.h>
+@@ -152,7 +153,6 @@ struct bcm2835_power {
+ static int bcm2835_asb_control(struct bcm2835_power *power, u32 reg, bool enable)
+ {
+ 	void __iomem *base = power->asb;
+-	u64 start;
+ 	u32 val;
+ 
+ 	switch (reg) {
+@@ -165,8 +165,6 @@ static int bcm2835_asb_control(struct bc
+ 		break;
+ 	}
+ 
+-	start = ktime_get_ns();
+-
+ 	/* Enable the module's async AXI bridges. */
+ 	if (enable) {
+ 		val = readl(base + reg) & ~ASB_REQ_STOP;
+@@ -175,11 +173,9 @@ static int bcm2835_asb_control(struct bc
+ 	}
+ 	writel(PM_PASSWORD | val, base + reg);
+ 
+-	while (!!(readl(base + reg) & ASB_ACK) == enable) {
+-		cpu_relax();
+-		if (ktime_get_ns() - start >= 1000)
+-			return -ETIMEDOUT;
+-	}
++	if (readl_poll_timeout_atomic(base + reg, val,
++				      !!(val & ASB_ACK) != enable, 0, 5))
++		return -ETIMEDOUT;
+ 
  	return 0;
  }
- 
--static int ffa_rxtx_unmap(u16 vm_id)
-+static int ffa_rxtx_unmap(void)
- {
- 	ffa_value_t ret;
- 
- 	invoke_ffa_fn((ffa_value_t){
--		      .a0 = FFA_RXTX_UNMAP, .a1 = PACK_TARGET_INFO(vm_id, 0),
-+		      .a0 = FFA_RXTX_UNMAP,
- 		      }, &ret);
- 
- 	if (ret.a0 == FFA_ERROR)
-@@ -1832,7 +1832,7 @@ static int __init ffa_init(void)
- 
- cleanup_notifs:
- 	ffa_notifications_cleanup();
--	ffa_rxtx_unmap(drv_info->vm_id);
-+	ffa_rxtx_unmap();
- free_pages:
- 	if (drv_info->tx_buffer)
- 		free_pages_exact(drv_info->tx_buffer, rxtx_bufsz);
-@@ -1847,7 +1847,7 @@ static void __exit ffa_exit(void)
- {
- 	ffa_notifications_cleanup();
- 	ffa_partitions_cleanup();
--	ffa_rxtx_unmap(drv_info->vm_id);
-+	ffa_rxtx_unmap();
- 	free_pages_exact(drv_info->tx_buffer, drv_info->rxtx_bufsz);
- 	free_pages_exact(drv_info->rx_buffer, drv_info->rxtx_bufsz);
- 	kfree(drv_info);
--- 
-2.51.0
-
 
 
