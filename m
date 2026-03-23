@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF68723AB9D;
-	Mon, 23 Mar 2026 14:46:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D40023AB9D;
+	Mon, 23 Mar 2026 14:46:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277193; cv=none; b=QL110/0hRUpuHknlTOhfKvjDbRFCaFFDMemV4pNLTvIwo5xGWWlklVX0yhgbMJPHt7L5hp50angltIMj+ReNNdWITZ3TbqoHPXiqZ+JYJf3opbkFckZTWh+WvwMMGy97subXG4uqPMb/QRZDDFnehEi85742hIktPnQaDPHLSIs=
+	t=1774277197; cv=none; b=qnPuHi/Tj4MqGimR1NVLF/UjKqU87WB4HEx0sIuRkr5Qdbu6WtYQmXx+2OJ8sEjGctDPbGpexlKXjpVp7j0nFs9xunLgR2/fipppal4lUczxag1+tqiRK/itnrH8FTajC5EBxpD+tdWBB+hmPG7pUM9k3kDpyvRovwplkHTUJkg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277193; c=relaxed/simple;
-	bh=QTe91bstFVYFU6/bDh0FY3PGLew0umcp/joTuVBRvLY=;
+	s=arc-20240116; t=1774277197; c=relaxed/simple;
+	bh=Zg7qxLuXwoxeabYhBiuS1Vl/5uKTFJdxOwVrX1+HkYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lnfmSQXEUauEEiCohLjjf3f5w730nS7Ba3JgXE+y1dFu9B3Ko5uWlYhflVv6XhCdU306aM77SKde0qCkJbzzj2zP07GPCcomf3EX4/zF8n/l99wBl1APG+XRk0PXjvy6jhyuOebzSE9hhK/mZLgZaRucL28uiuv7gpPx/uHWSRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vwyN/K2k; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=HdDhAbEm4fN1v81H7KGi/OLfeJRNKO0K1YMKNZS8OTNngTBQAH8Wf6U3RAPDHiml8Lw8Ml4dE+JAEjlXwVz3C+gCeYImqfsa+7J3VoOdkPZTyPEpjIejTanyENZk8rZcuLfKboVxdkjG0801R3Fx8HjvfRNWc66Y9prROdbea04=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=XpCgl9H0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vwyN/K2k"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F69FC4CEF7;
-	Mon, 23 Mar 2026 14:46:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="XpCgl9H0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69193C4CEF7;
+	Mon, 23 Mar 2026 14:46:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277193;
-	bh=QTe91bstFVYFU6/bDh0FY3PGLew0umcp/joTuVBRvLY=;
+	s=korg; t=1774277196;
+	bh=Zg7qxLuXwoxeabYhBiuS1Vl/5uKTFJdxOwVrX1+HkYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vwyN/K2kU+QZ1oDH/NLtq8Oe8d8QVBccwZuY3k2Da2Hv0g/MDoe8Pf5yqnUXkbgoE
-	 aqch2q07rEHdDL15sBBsVNIvhGlUY5m9EbkcQvODhSBZmWi9qZTS3IS0oShkEw9gDf
-	 BCo4C7XwiMaE2lxo2aL1wQF+frkOOa1cfWPLZPzo=
+	b=XpCgl9H0yaQU2U3dBU/mOQzVbZv/vslvJmfsmRbukkUzTHLG/0xEKdW2x24QfjwFC
+	 gIIro0Qgr1e0f6bgkTTDnFu1SgbWj4qmZNfpoGU5tHfw9263k5Y0zVshqKdUanRAnC
+	 P20xggrS0DI1sKf29Ra/v3FIap8BXkObyhxvR8b0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.12 334/460] ata: libata-core: disable LPM on ADATA SU680 SSD
-Date: Mon, 23 Mar 2026 14:45:30 +0100
-Message-ID: <20260323134534.739455995@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.12 352/460] drm/amdgpu/mmhub2.0: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:45:48 +0100
+Message-ID: <20260323134535.202637884@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,38 +50,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ce5ae93d1a216680460040c7c0465a6e3b629dec upstream.
+commit 0b26edac4ac5535df1f63e6e8ab44c24fe1acad7 upstream.
 
-ADATA SU680 SSDs suffer from NCQ read and write commands timeouts or bus
-errors when link power management (LPM) is enabled. Flag these devices
-with the ATA_QUIRK_NOLPM quirk to prevent the use of LPM and avoid these
-command failures.
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-Reported-by: Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-6.17/+bug/2144060
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit e064cef4b53552602bb6ac90399c18f662f3cacd)
 Cc: stable@vger.kernel.org
-Tested-by: Mohammad-Khaled Bayan <mhd.khaled.bayan@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4101,6 +4101,9 @@ static const struct ata_dev_quirks_entry
- 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_QUIRK_NONCQ |
- 						ATA_QUIRK_FIRMWARE_WARN },
- 
-+	/* ADATA devices with LPM issues. */
-+	{ "ADATA SU680",	NULL,		ATA_QUIRK_NOLPM },
-+
- 	/* Seagate disks with LPM issues */
- 	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
- 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
+@@ -154,14 +154,17 @@ mmhub_v2_0_print_l2_protection_fault_sta
+ 	switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
+ 	case IP_VERSION(2, 0, 0):
+ 	case IP_VERSION(2, 0, 2):
+-		mmhub_cid = mmhub_client_ids_navi1x[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_navi1x) ?
++			mmhub_client_ids_navi1x[cid][rw] : NULL;
+ 		break;
+ 	case IP_VERSION(2, 1, 0):
+ 	case IP_VERSION(2, 1, 1):
+-		mmhub_cid = mmhub_client_ids_sienna_cichlid[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_sienna_cichlid) ?
++			mmhub_client_ids_sienna_cichlid[cid][rw] : NULL;
+ 		break;
+ 	case IP_VERSION(2, 1, 2):
+-		mmhub_cid = mmhub_client_ids_beige_goby[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_beige_goby) ?
++			mmhub_client_ids_beige_goby[cid][rw] : NULL;
+ 		break;
+ 	default:
+ 		mmhub_cid = NULL;
 
 
