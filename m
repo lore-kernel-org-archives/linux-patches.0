@@ -1,40 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E48843AEF58;
-	Mon, 23 Mar 2026 14:41:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AFB3396D3D;
+	Mon, 23 Mar 2026 14:41:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276904; cv=none; b=FqiBb9+l9gMU1esRZaSC7d4l5Ky/4L+HPkqm2yP51A4BPrNIpz5bCrB+XX1zaxMhTosbNv+YwhQS0WrO41rLu1jfLzJDnpA3WmP5iMU6adVngz0SBjUeeUfGq59N2E36/V0W6T97Le4cGABm0K4clHBbUKXfr7hPVhgS76hLI7s=
+	t=1774276906; cv=none; b=SF+/BLQP1r+Kb5CuTgg/8EvxLOwTu12/Y4fIHfbQUy7fafbApYnp/tBwjrYFjwErKMSlRs4VHYT6sC0Ahaw26W07OFi9pucYsol0A67F9WQeSlNpufWU1H7/dnMq6Y9bxPpJ4mTFIJ1gCcHLdYHjrU35RhyO9brQd8MsQZb9TqI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276904; c=relaxed/simple;
-	bh=dYKn953fiaqymhgFXUsdtjV3482I0OKqZL3k7ErKtVM=;
+	s=arc-20240116; t=1774276906; c=relaxed/simple;
+	bh=pVEPtLfdr35NL3sccPg0fMdXMHDsCa6dlEOpC+vqEW8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZXrxFmImCAy43yqafmafNxItBo/inyEF+k4hqIbG25oPL9oTj+thOEgB6LvwJ3AYTZS3N+k1E4K8ApatO1rA8c53n444Aykjmv4VSCracFUapAFZ6InAfpXnuIeEtH5j2ElgbkU+wajO7xk1MiZm9XT6xMJyFGCuFtNWIMcaXYU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dcXvFPuM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ibl2VA0tNz4f6MKtDvpvyoKuy6CUVba/diUGlU24jKGPOi5cVt2G+YS+iXU/n7Bt9IRQsNxpocfxFHuSZjbRAw+Va8vYmdeOWFKvYgvvvyF9ikYqeJPBFqeZ0ShrsELSklw+eBxmlmE2g9dJsFrVR61FrTzxogO5FZNy5QjspuE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VQoTKlZz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dcXvFPuM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77ADAC4CEF7;
-	Mon, 23 Mar 2026 14:41:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VQoTKlZz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E6AC4CEF7;
+	Mon, 23 Mar 2026 14:41:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276903;
-	bh=dYKn953fiaqymhgFXUsdtjV3482I0OKqZL3k7ErKtVM=;
+	s=korg; t=1774276906;
+	bh=pVEPtLfdr35NL3sccPg0fMdXMHDsCa6dlEOpC+vqEW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dcXvFPuMmILsZsWvC7i9Qb9pnDcVeJ9Qk93ylfGa9/+7wByOMKIr/RPc/UlxH5NML
-	 Oyyuym6f8h1LcsYLC0Pd4kUB1xv1AwmdOw9vhv3xy+Yt5k2Z+WIoc97PpGrJNeYdkV
-	 RyNYbk4FlzOFU+aDIM1Q4JaaSlPfJee9eegdAFoc=
+	b=VQoTKlZzGM6XBg/P5kKrduab704OGnY5c0/Zg7aKtcSapGrlKuwd9DoRZWGpexIzY
+	 M/osx3U4orUA5uUyo5olYIdoLXDO8FN0Spcj3BURZ7dwoCXIIAwfNKcWXbw7vMFd0h
+	 NLuP5V0rq5XDjz1hqXeTR+eiLBzEV6kjyZWMwX8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shawn Lin <shawn.lin@rock-chips.com>,
-	Marco Schirrmeister <mschirrmeister@gmail.com>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Miaohe Lin <linmiaohe@huawei.com>,
+	Zi Yan <ziy@nvidia.com>,
+	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	Muchun Song <songmuchun@bytedance.com>,
+	William Kucharski <william.kucharski@oracle.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 249/460] mmc: dw_mmc-rockchip: Fix runtime PM support for internal phase support
-Date: Mon, 23 Mar 2026 14:44:05 +0100
-Message-ID: <20260323134532.615228123@linuxfoundation.org>
+Subject: [PATCH 6.12 250/460] mm/page_alloc: move set_page_refcounted() to callers of post_alloc_hook()
+Date: Mon, 23 Mar 2026 14:44:06 +0100
+Message-ID: <20260323134532.638175106@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -53,84 +59,88 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Shawn Lin <shawn.lin@rock-chips.com>
+From: "Matthew Wilcox (Oracle)" <willy@infradead.org>
 
-[ Upstream commit 6465a8bbb0f6ad98aeb66dc9ea19c32c193a610b ]
+[ Upstream commit 8fd10a892a8db797fffb59a9a60bce23a56eef46 ]
 
-RK3576 is the first platform to introduce internal phase support, and
-subsequent platforms are expected to adopt a similar design. In this
-architecture, runtime suspend powers off the attached power domain, which
-resets registers, including vendor-specific ones such as SDMMC_TIMING_CON0,
-SDMMC_TIMING_CON1, and SDMMC_MISC_CON. These registers must be saved and
-restored, a requirement that falls outside the scope of the dw_mmc core.
+In preparation for allocating frozen pages, stop initialising the page
+refcount in post_alloc_hook().
 
-Fixes: 59903441f5e4 ("mmc: dw_mmc-rockchip: Add internal phase support")
-Signed-off-by: Shawn Lin <shawn.lin@rock-chips.com>
-Tested-by: Marco Schirrmeister <mschirrmeister@gmail.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20241125210149.2976098-5-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Reviewed-by: Miaohe Lin <linmiaohe@huawei.com>
+Reviewed-by: Zi Yan <ziy@nvidia.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: William Kucharski <william.kucharski@oracle.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Stable-dep-of: d155aab90fff ("mm/kfence: fix KASAN hardware tag faults during late enablement")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/dw_mmc-rockchip.c |   38 ++++++++++++++++++++++++++++++++++++-
- 1 file changed, 37 insertions(+), 1 deletion(-)
+ mm/compaction.c |    2 ++
+ mm/internal.h   |    3 +--
+ mm/page_alloc.c |    3 ++-
+ 3 files changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/mmc/host/dw_mmc-rockchip.c
-+++ b/drivers/mmc/host/dw_mmc-rockchip.c
-@@ -37,6 +37,8 @@ struct dw_mci_rockchip_priv_data {
- 	int			default_sample_phase;
- 	int			num_phases;
- 	bool			internal_phase;
-+	int                     sample_phase;
-+	int                     drv_phase;
- };
- 
- /*
-@@ -573,9 +575,43 @@ static void dw_mci_rockchip_remove(struc
- 	dw_mci_pltfm_remove(pdev);
+--- a/mm/compaction.c
++++ b/mm/compaction.c
+@@ -83,6 +83,7 @@ static inline bool is_via_compact_memory
+ static struct page *mark_allocated_noprof(struct page *page, unsigned int order, gfp_t gfp_flags)
+ {
+ 	post_alloc_hook(page, order, __GFP_MOVABLE);
++	set_page_refcounted(page);
+ 	return page;
  }
+ #define mark_allocated(...)	alloc_hooks(mark_allocated_noprof(__VA_ARGS__))
+@@ -1869,6 +1870,7 @@ again:
+ 	dst = (struct folio *)freepage;
  
-+static int dw_mci_rockchip_runtime_suspend(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct dw_mci *host = platform_get_drvdata(pdev);
-+	struct dw_mci_rockchip_priv_data *priv = host->priv;
-+
-+	if (priv->internal_phase) {
-+		priv->sample_phase = rockchip_mmc_get_phase(host, true);
-+		priv->drv_phase = rockchip_mmc_get_phase(host, false);
-+	}
-+
-+	return dw_mci_runtime_suspend(dev);
-+}
-+
-+static int dw_mci_rockchip_runtime_resume(struct device *dev)
-+{
-+	struct platform_device *pdev = to_platform_device(dev);
-+	struct dw_mci *host = platform_get_drvdata(pdev);
-+	struct dw_mci_rockchip_priv_data *priv = host->priv;
-+	int ret;
-+
-+	ret = dw_mci_runtime_resume(dev);
-+	if (ret)
-+		return ret;
-+
-+	if (priv->internal_phase) {
-+		rockchip_mmc_set_phase(host, true, priv->sample_phase);
-+		rockchip_mmc_set_phase(host, false, priv->drv_phase);
-+		mci_writel(host, MISC_CON, MEM_CLK_AUTOGATE_ENABLE);
-+	}
-+
-+	return ret;
-+}
-+
- static const struct dev_pm_ops dw_mci_rockchip_dev_pm_ops = {
- 	SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend, pm_runtime_force_resume)
--	RUNTIME_PM_OPS(dw_mci_runtime_suspend, dw_mci_runtime_resume, NULL)
-+	RUNTIME_PM_OPS(dw_mci_rockchip_runtime_suspend, dw_mci_rockchip_runtime_resume, NULL)
- };
+ 	post_alloc_hook(&dst->page, order, __GFP_MOVABLE);
++	set_page_refcounted(&dst->page);
+ 	if (order)
+ 		prep_compound_page(&dst->page, order);
+ 	cc->nr_freepages -= 1 << order;
+--- a/mm/internal.h
++++ b/mm/internal.h
+@@ -729,8 +729,7 @@ static inline void prep_compound_tail(st
  
- static struct platform_driver dw_mci_rockchip_pltfm_driver = {
+ extern void prep_compound_page(struct page *page, unsigned int order);
+ 
+-extern void post_alloc_hook(struct page *page, unsigned int order,
+-					gfp_t gfp_flags);
++void post_alloc_hook(struct page *page, unsigned int order, gfp_t gfp_flags);
+ extern bool free_pages_prepare(struct page *page, unsigned int order);
+ 
+ extern int user_min_free_kbytes;
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -1542,7 +1542,6 @@ inline void post_alloc_hook(struct page
+ 	int i;
+ 
+ 	set_page_private(page, 0);
+-	set_page_refcounted(page);
+ 
+ 	arch_alloc_page(page, order);
+ 	debug_pagealloc_map_pages(page, 1 << order);
+@@ -1598,6 +1597,7 @@ static void prep_new_page(struct page *p
+ 							unsigned int alloc_flags)
+ {
+ 	post_alloc_hook(page, order, gfp_flags);
++	set_page_refcounted(page);
+ 
+ 	if (order && (gfp_flags & __GFP_COMP))
+ 		prep_compound_page(page, order);
+@@ -6591,6 +6591,7 @@ static void split_free_pages(struct list
+ 			int i;
+ 
+ 			post_alloc_hook(page, order, __GFP_MOVABLE);
++			set_page_refcounted(page);
+ 			if (!order)
+ 				continue;
+ 
 
 
