@@ -1,37 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7517A23ABAA;
-	Mon, 23 Mar 2026 16:09:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C5A912CDA5;
+	Mon, 23 Mar 2026 16:09:46 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282183; cv=none; b=ro3o6SsGLuCOukmNVrA40smyxov/mnBmoCp9bxyzg1TRN3bRSmMJpVe8/qHLDgpy1FjCTwRM5GanJsSoBhiXAvCbVHPGCuoCWcDjWyH/POTH5pv570GniJVZAtSgYJ6eKb60GnZJsNMyvRgkf7NByR95ZDoapi4Jy8XIoJhajCo=
+	t=1774282186; cv=none; b=Y0Cl8ukRjLcTptzlvsmwTUtuCpMn77cmqLUuONEh3AvZIY85dU19XlY+gi7ozXVXQcdsoEAiRbIj+o/tcX7Wjo0WZ9ETdXvY2LF6wmcr8596ofFbFcWlpA6tm42oIIgLLNbRa90hp4+EVLWXj4oMCGUDckOwHXYdOFibGZG5uNU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282183; c=relaxed/simple;
-	bh=6KcsMdxu/l8cmwI/loD/vFtr3N6tks9RosHjciLN2fo=;
+	s=arc-20240116; t=1774282186; c=relaxed/simple;
+	bh=H083cs6Hg0TFcfMw9pLQs+aMP4lJ0mUHiGe4ZKpxGn8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NRtHE4WI1x0SFJWKpwvx/xl0lBvWuL5VMVcqMloWWj+lUFDTkpGInlXAqABT/91lKih/cCweWvklxwOMLKWEbSqr2mx2EkJE2hrKG9qt8fJ10dR2H74DttN++QhT7skPwViZZT0BxlhQ7H3bWqPdOIZRh3AUV381zhUj8mXlf1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y23k+bjG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kxcJcSC5SIaMSDsvnv7s3JgNgHH0oX42CVEMr3OwDGEQG7xltQlg7350RktPSrHKg6dmZqQBSJxZxwPom6rZ7QotYmWyGvzMDM2I+9IsW386ZUlG61taD0XJv1pIctOByYpcGww/b2jau9m4zuY0yI1dfFlBKJ7M3B2gl8GAjic=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CwK4w/w2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y23k+bjG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7877C4CEF7;
-	Mon, 23 Mar 2026 16:09:42 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CwK4w/w2"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96BE7C4CEF7;
+	Mon, 23 Mar 2026 16:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282183;
-	bh=6KcsMdxu/l8cmwI/loD/vFtr3N6tks9RosHjciLN2fo=;
+	s=korg; t=1774282185;
+	bh=H083cs6Hg0TFcfMw9pLQs+aMP4lJ0mUHiGe4ZKpxGn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y23k+bjGBIub9GcXfWgjoF247d63KMJ5xW6qdPxplTc/scjFXtFOgoUqnOVe3pfx1
-	 uwU+SsYkvIyZyEFO444dvy1+sLbBaPCyJlEF8kjH7vwDljdkFyFHImFBXP86lNqeu/
-	 4R/P83krcwV3lkFTYTiQ62Hs8Ta0B/eE2Tnc4Eno=
+	b=CwK4w/w2/9CaDV+ZvrSjasYXAwv28MG3QynajNuLbiUR/Z0dA8WFA/4OhQOk5clJH
+	 1/YsrDEqMUrcT+7sWkiinQsiHtwXylj04uNiA4VXi0gFyZuqODvwo8L9eiUmffgOK+
+	 kQl1bOlZEgegd2VQN4BQc6YyR3Spbmv79pu3E5OU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	stable@kernel.org,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/481] ALSA: hda/conexant: Add quirk for HP ZBook Studio G4
-Date: Mon, 23 Mar 2026 14:40:45 +0100
-Message-ID: <20260323134526.759766439@linuxfoundation.org>
+Subject: [PATCH 6.1 046/481] ext4: drop extent cache after doing PARTIAL_VALID1 zeroout
+Date: Mon, 23 Mar 2026 14:40:28 +0100
+Message-ID: <20260323134526.353478867@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,35 +54,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-[ Upstream commit 1585cf83e98db32463e5d54161b06a5f01fe9976 ]
+[ Upstream commit 6d882ea3b0931b43530d44149b79fcd4ffc13030 ]
 
-It was reported that we need the same quirk for HP ZBook Studio G4
-(SSID 103c:826b) as other HP models to make the mute-LED working.
+When splitting an unwritten extent in the middle and converting it to
+initialized in ext4_split_extent() with the EXT4_EXT_MAY_ZEROOUT and
+EXT4_EXT_DATA_VALID2 flags set, it could leave a stale unwritten extent.
 
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/64d78753-b9ff-4c64-8920-64d8d31cd20c@gmail.com
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=221002
-Link: https://patch.msgid.link/20260207131324.2428030-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Assume we have an unwritten file and buffered write in the middle of it
+without dioread_nolock enabled, it will allocate blocks as written
+extent.
+
+       0  A      B  N
+       [UUUUUUUUUUUU] on-disk extent      U: unwritten extent
+       [UUUUUUUUUUUU] extent status tree
+       [--DDDDDDDD--]                     D: valid data
+          |<-  ->| ----> this range needs to be initialized
+
+ext4_split_extent() first try to split this extent at B with
+EXT4_EXT_DATA_PARTIAL_VALID1 and EXT4_EXT_MAY_ZEROOUT flag set, but
+ext4_split_extent_at() failed to split this extent due to temporary lack
+of space. It zeroout B to N and leave the entire extent as unwritten.
+
+       0  A      B  N
+       [UUUUUUUUUUUU] on-disk extent
+       [UUUUUUUUUUUU] extent status tree
+       [--DDDDDDDDZZ]                     Z: zeroed data
+
+ext4_split_extent() then try to split this extent at A with
+EXT4_EXT_DATA_VALID2 flag set. This time, it split successfully and
+leave an written extent from A to N.
+
+       0  A      B  N
+       [UUWWWWWWWWWW] on-disk extent      W: written extent
+       [UUUUUUUUUUUU] extent status tree
+       [--DDDDDDDDZZ]
+
+Finally ext4_map_create_blocks() only insert extent A to B to the extent
+status tree, and leave an stale unwritten extent in the status tree.
+
+       0  A      B  N
+       [UUWWWWWWWWWW] on-disk extent      W: written extent
+       [UUWWWWWWWWUU] extent status tree
+       [--DDDDDDDDZZ]
+
+Fix this issue by always cached extent status entry after zeroing out
+the second part.
+
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Baokun Li <libaokun1@huawei.com>
+Cc: stable@kernel.org
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Message-ID: <20251129103247.686136-7-yi.zhang@huaweicloud.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_conexant.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/extents.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/hda/patch_conexant.c b/sound/pci/hda/patch_conexant.c
-index a3d68b83ebd5f..643d1f7ba5ad3 100644
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -1099,6 +1099,7 @@ static const struct snd_pci_quirk cxt5066_fixups[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8174, "HP Spectre x360", CXT_FIXUP_HP_SPECTRE),
- 	SND_PCI_QUIRK(0x103c, 0x822e, "HP ProBook 440 G4", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x8231, "HP ProBook 450 G4", CXT_FIXUP_MUTE_LED_GPIO),
-+	SND_PCI_QUIRK(0x103c, 0x826b, "HP ZBook Studio G4", CXT_FIXUP_MUTE_LED_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x828c, "HP EliteBook 840 G4", CXT_FIXUP_HP_DOCK),
- 	SND_PCI_QUIRK(0x103c, 0x8299, "HP 800 G3 SFF", CXT_FIXUP_HP_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x103c, 0x829a, "HP 800 G3 DM", CXT_FIXUP_HP_MIC_NO_PRESENCE),
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index da7414e84ead8..30b0b25aac9ff 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -3304,8 +3304,16 @@ static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
+ 			 * extent length and ext4_split_extent() split will the
+ 			 * first half again.
+ 			 */
+-			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1)
++			if (split_flag & EXT4_EXT_DATA_PARTIAL_VALID1) {
++				/*
++				 * Drop extent cache to prevent stale unwritten
++				 * extents remaining after zeroing out.
++				 */
++				ext4_es_remove_extent(inode,
++					le32_to_cpu(zero_ex.ee_block),
++					ext4_ext_get_actual_len(&zero_ex));
+ 				goto fix_extent_len;
++			}
+ 
+ 			/* update the extent length and mark as initialized */
+ 			ex->ee_len = cpu_to_le16(ee_len);
 -- 
 2.51.0
 
