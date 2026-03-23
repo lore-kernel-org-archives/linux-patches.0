@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCEA3AF668;
-	Mon, 23 Mar 2026 14:49:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CF992741A0;
+	Mon, 23 Mar 2026 14:49:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277392; cv=none; b=HllQL2T/raNCq8NiFzIsTh1lHxVxjwntjrFs37nqoF60vDGw/r0vk0Zvny/oXTCjTbiqqIEYP3ZMFTqAdS9YwpKJKFQG4rZCcZiJY1L3r5ASloiKuaCXlm+0Z0lpQRe/GNIzPW7L518kxNZgE6g81zgpLhPg6bDTX7KFcKLBEHA=
+	t=1774277395; cv=none; b=a3Yjgo3FeQ81fJzoAqthIoYIYXqz45q8Vi4w/3VyFuXcEnEYE7PLu4GCcxqRk1fmS1ZXd/rf5iA4mGgd4phE7XnRYIrZw29dbQKQzupkg4vEMttyGc7/dDq51hG/WkBMepaL5gR53fy/3nAqmnztZ0zPiBaofchDyJdDd6KWi88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277392; c=relaxed/simple;
-	bh=/512DfVerBwJ6Pj/ggBVG330dR45Dff50IojU+EazWY=;
+	s=arc-20240116; t=1774277395; c=relaxed/simple;
+	bh=uq+JqhDXeXOWOqduavrwbLFCD7LZ0GM5hKfBo1R5DoU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dzFMXb1Dtr29BJCmvjKUslNl+f+0HdtD88rKYVcaCDT0D2gHeWvYpLVgn85BpdOS9/WisptzoIx0+c2VOxbQwBNH3TIPTiqwD9WOELGLHywxZMGtdF4En6Gd8Uih09OTSam3m4YxDUXTINrqh8AzYJ372bGtajZR+37UN7PyZOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=O6dHGeDH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G1SZEsHJLTwjVhu0rwIPQqG0w9C08z9GnG6TJDRNqNXtfHhEcMd24Bpp7iMahl7Kbn83MrYkOmpfVmHcR2AtLw+HiPdZ2I8lBdSmO/+1QdK4NF0/FSRJpo9SH526JPgH5mZ/nxy2CtkXxC1IrAcYSvJbk9aQKxOMzb0r8QA/CLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H9Y7zd6R; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="O6dHGeDH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D547C4CEF7;
-	Mon, 23 Mar 2026 14:49:51 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H9Y7zd6R"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88B3BC4CEF7;
+	Mon, 23 Mar 2026 14:49:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277391;
-	bh=/512DfVerBwJ6Pj/ggBVG330dR45Dff50IojU+EazWY=;
+	s=korg; t=1774277394;
+	bh=uq+JqhDXeXOWOqduavrwbLFCD7LZ0GM5hKfBo1R5DoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O6dHGeDHlvOwfnBnuymVwYt+b5XVaTEiqxLIfoso7tZdE6B1McnB/qwQLpEpx89p5
-	 cmzmK8DBbQchfDecS3VkN5ja1DwCH82Mk/nQZuCUtbiNIskyT9BJUu5CYQDqYeNpGF
-	 b0m6eubyPU0gek0m4B4FreUwNyFRn4Xi0q0Vgepk=
+	b=H9Y7zd6RGrnrzrMTrNm4ARex7mjSaJtZC3Xu9/oy8gzFplF6cZd0SQJTH/CNyN1tD
+	 qQcgzGBQGs6PMR3DXgqfPDebVV1lmAus9oUB+8/FV0LtmBHruoeBVTfQ7QEc8J8Hoq
+	 qLRxd9eYq1uScWFZu1utSWMm6papAG5PZJOr32qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Astrand <astrand@lysator.liu.se>,
 	Guenter Roeck <linux@roeck-us.net>,
-	Johannes Berg <johannes.berg@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 420/460] wifi: wlcore: Return -ENOMEM instead of -EAGAIN if there is not enough headroom
-Date: Mon, 23 Mar 2026 14:46:56 +0100
-Message-ID: <20260323134536.869397164@linuxfoundation.org>
+Subject: [PATCH 6.12 421/460] ACPI: processor: Fix previous acpi_processor_errata_piix4() fix
+Date: Mon, 23 Mar 2026 14:46:57 +0100
+Message-ID: <20260323134536.895889430@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,50 +51,71 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Guenter Roeck <linux@roeck-us.net>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit deb353d9bb009638b7762cae2d0b6e8fdbb41a69 ]
+[ Upstream commit bf504b229cb8d534eccbaeaa23eba34c05131e25 ]
 
-Since upstream commit e75665dd0968 ("wifi: wlcore: ensure skb headroom
-before skb_push"), wl1271_tx_allocate() and with it
-wl1271_prepare_tx_frame() returns -EAGAIN if pskb_expand_head() fails.
-However, in wlcore_tx_work_locked(), a return value of -EAGAIN from
-wl1271_prepare_tx_frame() is interpreted as the aggregation buffer being
-full. This causes the code to flush the buffer, put the skb back at the
-head of the queue, and immediately retry the same skb in a tight while
-loop.
+After commi f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference
+in acpi_processor_errata_piix4()"), device pointers may be dereferenced
+after dropping references to the device objects pointed to by them,
+which may cause a use-after-free to occur.
 
-Because wlcore_tx_work_locked() holds wl->mutex, and the retry happens
-immediately with GFP_ATOMIC, this will result in an infinite loop and a
-CPU soft lockup. Return -ENOMEM instead so the packet is dropped and
-the loop terminates.
+Moreover, debug messages about enabling the errata may be printed
+if the errata flags corresponding to them are unset.
 
-The problem was found by an experimental code review agent based on
-gemini-3.1-pro while reviewing backports into v6.18.y.
+Address all of these issues by moving message printing to the points
+in the code where the errata flags are set.
 
-Assisted-by: Gemini:gemini-3.1-pro
-Fixes: e75665dd0968 ("wifi: wlcore: ensure skb headroom before skb_push")
-Cc: Peter Astrand <astrand@lysator.liu.se>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://patch.msgid.link/20260318064636.3065925-1-linux@roeck-us.net
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference in acpi_processor_errata_piix4()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/linux-acpi/938e2206-def5-4b7a-9b2c-d1fd37681d8a@roeck-us.net/
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5975693.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ti/wlcore/tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/acpi_processor.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ti/wlcore/tx.c b/drivers/net/wireless/ti/wlcore/tx.c
-index f251627c24c6e..3c0f8f3ba2668 100644
---- a/drivers/net/wireless/ti/wlcore/tx.c
-+++ b/drivers/net/wireless/ti/wlcore/tx.c
-@@ -210,7 +210,7 @@ static int wl1271_tx_allocate(struct wl1271 *wl, struct wl12xx_vif *wlvif,
- 		if (skb_headroom(skb) < (total_len - skb->len) &&
- 		    pskb_expand_head(skb, (total_len - skb->len), 0, GFP_ATOMIC)) {
- 			wl1271_free_tx_id(wl, id);
--			return -EAGAIN;
-+			return -ENOMEM;
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index d8674aee28c2e..848a012cd19fb 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -113,6 +113,10 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
+ 		if (ide_dev) {
+ 			errata.piix4.bmisx = pci_resource_start(ide_dev, 4);
++			if (errata.piix4.bmisx)
++				dev_dbg(&ide_dev->dev,
++					"Bus master activity detection (BM-IDE) erratum enabled\n");
++
+ 			pci_dev_put(ide_dev);
  		}
- 		desc = skb_push(skb, total_len - skb->len);
+ 
+@@ -131,20 +135,17 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 		if (isa_dev) {
+ 			pci_read_config_byte(isa_dev, 0x76, &value1);
+ 			pci_read_config_byte(isa_dev, 0x77, &value2);
+-			if ((value1 & 0x80) || (value2 & 0x80))
++			if ((value1 & 0x80) || (value2 & 0x80)) {
+ 				errata.piix4.fdma = 1;
++				dev_dbg(&isa_dev->dev,
++					"Type-F DMA livelock erratum (C3 disabled)\n");
++			}
+ 			pci_dev_put(isa_dev);
+ 		}
+ 
+ 		break;
+ 	}
+ 
+-	if (ide_dev)
+-		dev_dbg(&ide_dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
+-
+-	if (isa_dev)
+-		dev_dbg(&isa_dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
+-
+ 	return 0;
+ }
  
 -- 
 2.51.0
