@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C6C1FFC48;
-	Mon, 23 Mar 2026 14:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BCF1FFC48;
+	Mon, 23 Mar 2026 14:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275584; cv=none; b=qMLQJMgKj/sgTLcWXVqrkQLLu/yDcQ1FdKyWVzoX3/PFyH/PELccmaDPDn4p/dGd3F6dnhjzVoEcfv7LEsCxBqQVZzr6gqueyARX823qcjLoN9IAqv/G4vKCvMwnD2c/deEwubEc+IsGls5kAmaO/iMrL+fouwdshesEpIHr/Bg=
+	t=1774275587; cv=none; b=qGkUo1aaZCTmkb5IVz8cSWOEX7cejfxxi90+Hm9iN+YMD6HpzBOALtvlPndTr3AIJ9zU0C8Xvxvfs/rPEFxGbF6yxdBBwD841w7n34bwkeL5+/UbFhqDPJAy9BsUEXk7MlIApV/e0cUJcBdNxwkoOubeAydw/bUVu/wP/8z0fBQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275584; c=relaxed/simple;
-	bh=7wm5D8fQIWuN5VCYTZBrVNRHiNphlL4CCYZ02WIO1YY=;
+	s=arc-20240116; t=1774275587; c=relaxed/simple;
+	bh=oO6AxUBBeD7x60f9FxHM9uSpJuw5zj4YfIUEPCU3bPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EM3dlHVs6/LYa34jxhQWsbp8c9k6fVf8Gz6mEi+WWfRJX40Ah4hbhvyhnA0bUjf38QUwn54zXvHXWIAiGoalMfeBPgjIz2rrPoz2V9R3ZaTaYYhjK7cso2OoBG3Rd+I1DGcaU537ZHALBDxGW2PceDhAVnYlXmxvLlepG1Yzsyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p03jTAJX; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=D5fcNdzStkzqaIv6w979/hMK1J5Fkj0yE6XLf7a2EUco8kTINK6IGRklHo3XPm9bf63fSkKJwy1L56ickNcodLN9fZ5XTveqqM0D1fQNGku34RKOvhgGhH3t6knaAEJtvkj4IL6GknyqUokoCyKHV3i8cWsg0y0j+lnRvhLChi8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gg+mREb3; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p03jTAJX"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84AACC4CEF7;
-	Mon, 23 Mar 2026 14:19:43 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gg+mREb3"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44288C4CEF7;
+	Mon, 23 Mar 2026 14:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275584;
-	bh=7wm5D8fQIWuN5VCYTZBrVNRHiNphlL4CCYZ02WIO1YY=;
+	s=korg; t=1774275587;
+	bh=oO6AxUBBeD7x60f9FxHM9uSpJuw5zj4YfIUEPCU3bPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p03jTAJXxPr+I7fftLtbont32qDc5pUaCls3a/SifOvK+l4DOcWSgd9ewXkb/gMEj
-	 X2X5iE1kpad4L9DwxVU3BBZlonL6ktQu4l2kEQOknTlWQxzbIZIFF6Gg+KZDgBdhL1
-	 sJHoX6kKI28M0IHsXEK1KRNqbPJUxEXcHC+CaTl4=
+	b=gg+mREb3DNXUDhIH4KUN2xZ0rFjkUNCDofv6QS+6KmJxJeAHbc4qFh9S1vQfc58vl
+	 5Z7hVbcedHtkdggNefHkpDy/3PT/J3EvXsexFU22lT+wjNTUhVKuN0XVq8sCHQ8xKu
+	 NdWr1YRTxVvBRObJCVKludbnsYutrqQTPo2RulQg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N Rao (AMD)" <naveen@kernel.org>,
-	Jim Mattson <jmattson@google.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.12 097/460] KVM: SVM: Initialize AVIC VMCB fields if AVIC is enabled with in-kernel APIC
-Date: Mon, 23 Mar 2026 14:41:33 +0100
-Message-ID: <20260323134529.041470906@linuxfoundation.org>
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Vasily Gorbik <gor@linux.ibm.com>
+Subject: [PATCH 6.12 145/460] s390/pfault: Fix virtual vs physical address confusion
+Date: Mon, 23 Mar 2026 14:42:21 +0100
+Message-ID: <20260323134530.146034445@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,61 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexander Gordeev <agordeev@linux.ibm.com>
 
-commit 3989a6d036c8ec82c0de3614bed23a1dacd45de5 upstream.
+commit d879ac6756b662a085a743e76023c768c3241579 upstream.
 
-Initialize all per-vCPU AVIC control fields in the VMCB if AVIC is enabled
-in KVM and the VM has an in-kernel local APIC, i.e. if it's _possible_ the
-vCPU could activate AVIC at any point in its lifecycle.  Configuring the
-VMCB if and only if AVIC is active "works" purely because of optimizations
-in kvm_create_lapic() to speculatively set apicv_active if AVIC is enabled
-*and* to defer updates until the first KVM_RUN.  In quotes because KVM
-likely won't do the right thing if kvm_apicv_activated() is false, i.e. if
-a vCPU is created while APICv is inhibited at the VM level for whatever
-reason.  E.g. if the inhibit is *removed* before KVM_REQ_APICV_UPDATE is
-handled in KVM_RUN, then __kvm_vcpu_update_apicv() will elide calls to
-vendor code due to seeing "apicv_active == activate".
+When Linux is running as guest, runs a user space process and the
+user space process accesses a page that the host has paged out,
+the guest gets a pfault interrupt and schedules a different process.
+Without this mechanism the host would have to suspend the whole
+virtual CPU until the page has been paged in.
 
-Cleaning up the initialization code will also allow fixing a bug where KVM
-incorrectly leaves CR8 interception enabled when AVIC is activated without
-creating a mess with respect to whether AVIC is activated or not.
+To setup the pfault interrupt the real address of parameter list
+should be passed to DIAGNOSE 0x258, but a virtual address is passed
+instead.
+
+That has a performance impact, since the pfault setup never succeeds,
+the interrupt is never delivered to a guest and the whole virtual CPU
+is suspended as result.
 
 Cc: stable@vger.kernel.org
-Fixes: 67034bb9dd5e ("KVM: SVM: Add irqchip_split() checks before enabling AVIC")
-Fixes: 6c3e4422dd20 ("svm: Add support for dynamic APICv")
-Reviewed-by: Naveen N Rao (AMD) <naveen@kernel.org>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Link: https://patch.msgid.link/20260203190711.458413-2-seanjc@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Fixes: c98d2ecae08f ("s390/mm: Uncouple physical vs virtual address spaces")
+Reported-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/avic.c |    2 +-
- arch/x86/kvm/svm/svm.c  |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/s390/mm/pfault.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kvm/svm/avic.c
-+++ b/arch/x86/kvm/svm/avic.c
-@@ -253,7 +253,7 @@ void avic_init_vmcb(struct vcpu_svm *svm
- 	vmcb->control.avic_physical_id = ppa & AVIC_HPA_MASK;
- 	vmcb->control.avic_vapic_bar = APIC_DEFAULT_PHYS_BASE & VMCB_AVIC_APIC_BAR_MASK;
+--- a/arch/s390/mm/pfault.c
++++ b/arch/s390/mm/pfault.c
+@@ -61,7 +61,7 @@ int __pfault_init(void)
+ 		"0:	nopr	%%r7\n"
+ 		EX_TABLE(0b, 0b)
+ 		: [rc] "+d" (rc)
+-		: [refbk] "a" (&pfault_init_refbk), "m" (pfault_init_refbk)
++		: [refbk] "a" (virt_to_phys(&pfault_init_refbk)), "m" (pfault_init_refbk)
+ 		: "cc");
+ 	return rc;
+ }
+@@ -83,7 +83,7 @@ void __pfault_fini(void)
+ 		"0:	nopr	%%r7\n"
+ 		EX_TABLE(0b, 0b)
+ 		:
+-		: [refbk] "a" (&pfault_fini_refbk), "m" (pfault_fini_refbk)
++		: [refbk] "a" (virt_to_phys(&pfault_fini_refbk)), "m" (pfault_fini_refbk)
+ 		: "cc");
+ }
  
--	if (kvm_apicv_activated(svm->vcpu.kvm))
-+	if (kvm_vcpu_apicv_active(&svm->vcpu))
- 		avic_activate_vmcb(svm);
- 	else
- 		avic_deactivate_vmcb(svm);
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -1360,7 +1360,7 @@ static void init_vmcb(struct kvm_vcpu *v
- 	if (boot_cpu_has(X86_FEATURE_V_SPEC_CTRL))
- 		set_msr_interception(vcpu, svm->msrpm, MSR_IA32_SPEC_CTRL, 1, 1);
- 
--	if (kvm_vcpu_apicv_active(vcpu))
-+	if (enable_apicv && irqchip_in_kernel(vcpu->kvm))
- 		avic_init_vmcb(svm, vmcb);
- 
- 	if (vnmi)
 
 
