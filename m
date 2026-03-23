@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B6223EA97;
-	Mon, 23 Mar 2026 14:46:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5DE23B62C;
+	Mon, 23 Mar 2026 14:46:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277175; cv=none; b=dhhoBvgR6mZRFseO1RFG2i3kLGqu+IgW6ChzrgJrQTyA/da2ZEQB6eikrR9dxG4NBIz/byEg1vXh3ekYpwP62FFMCc4hlrEQ8LDa7AKNn4uHEZutTjIQ5OpFdE8aZhWcfSExhJ7W/mzOst/PVfmH6CqUdr6SPAaOr9acHJ7xYAs=
+	t=1774277178; cv=none; b=O0Kl1YQHlFmiFo6v6N7xwUVeKBH/JDCCiZ32K49wk437yL/Mwsl23pmOpICGP6s7pz7603oYK+GZ+u1NIGvLWFhck6WeA9hOJltS0DqHJqy4NGUoa0twPQnLZO+M8iFflm9TIyBdlp2VICgUqg1DSmBixmuJl6uSEo3Ol0DZwp0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277175; c=relaxed/simple;
-	bh=luUb80Hzw4WE/eGIBL/3QBX3gtymqt2/wwIVJVbW7Vc=;
+	s=arc-20240116; t=1774277178; c=relaxed/simple;
+	bh=MDCfz7qGMKe+62ZP4i/CQfsMicI54B1MBm0vxf1CHKk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=FRKkeCc5j+W05zsQ91If0210XsRmLnJZP0ZGD+rgYqZbNaJiY8LWaPAbEXxj0TiS0jSa7eKFqBt3wUfP/Kkhw0h122VTTQyLhx7eqgBAxZYNiy4BT4lnH2g8KCh/Wjj9RWEG9XnY+i3awiDD+6L6Uvx8LaVwje4j/xwtGHWupJM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TrTuWIPs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gfC25LTeYnfD6sInPz/p4gVrHSw8xOXxW9Ltg1udZFn4G1JobeQ2KqLFppXroXmYnTEcE5YxgPmGDm5GjBhRttCezALJMHQmpfne1wgwzgCt9t3ApmaSI8pzGlFWV/vJreVnbu9uVU5lV4hp97zV2yq6NYXmhEU8ehC4OyAiTw0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pPNhR3ia; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TrTuWIPs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12C19C4CEF7;
-	Mon, 23 Mar 2026 14:46:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pPNhR3ia"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2232CC4CEF7;
+	Mon, 23 Mar 2026 14:46:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277175;
-	bh=luUb80Hzw4WE/eGIBL/3QBX3gtymqt2/wwIVJVbW7Vc=;
+	s=korg; t=1774277178;
+	bh=MDCfz7qGMKe+62ZP4i/CQfsMicI54B1MBm0vxf1CHKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TrTuWIPscNKPC2a4KIhYae6iUpFAYR7PG24aC1OK2FCLQT5sV00rzE/jUs+9FF2M3
-	 JwjvZBY8Dmg0Udg+13bQ5M2AY/H8H0jAZErCQOasulOVbiKVVG9ekon6XaVRvz9gCj
-	 T7qt8xmg7X8v6WufinH+mMwoYgn4yxgLQgPy5Dks=
+	b=pPNhR3iaM1TZxZUn8oIM52LypV3CIax1e1I7b6B2xXewktFIEdelQg/NFGfZthJTt
+	 pB6ObEU5556HrxcEvfZBFQODmtfN4V3X2TM3BPNNeMw1ROaj7Rc1QdOdxopfkCB/XY
+	 KCwxwhMsu0lcpgO1b1AVhn8iy4hvjLKlfgHCFzKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	"Bandal, Shankar" <shankar.bandal@intel.com>,
-	"Murthy, Shanth" <shanth.murthy@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 6.12 346/460] serial: 8250: Add late synchronize_irq() to shutdown to handle DW UART BUSY
-Date: Mon, 23 Mar 2026 14:45:42 +0100
-Message-ID: <20260323134535.047630878@linuxfoundation.org>
+	Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
+Subject: [PATCH 6.12 347/460] serial: uartlite: fix PM runtime usage count underflow on probe
+Date: Mon, 23 Mar 2026 14:45:43 +0100
+Message-ID: <20260323134535.074073277@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -47,68 +44,59 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
 
-commit e0a368ae79531ff92105a2692f10d83052055856 upstream.
+commit d54801cd509515f674a5aac1d3ea1401d2a05863 upstream.
 
-When DW UART is !uart_16550_compatible, it can indicate BUSY at any
-point (when under constant Rx pressure) unless a complex sequence of
-steps is performed. Any LCR write can run a foul with the condition
-that prevents writing LCR while the UART is BUSY, which triggers
-BUSY_DETECT interrupt that seems unmaskable using IER bits.
+ulite_probe() calls pm_runtime_put_autosuspend() at the end of probe
+without holding a corresponding PM runtime reference for non-console
+ports.
 
-Normal flow is that dw8250_handle_irq() handles BUSY_DETECT condition
-by reading USR register. This BUSY feature, however, breaks the
-assumptions made in serial8250_do_shutdown(), which runs
-synchronize_irq() after clearing IER and assumes no interrupts can
-occur after that point but then proceeds to update LCR, which on DW
-UART can trigger an interrupt.
+During ulite_assign(), uart_add_one_port() triggers uart_configure_port()
+which calls ulite_pm() via uart_change_pm(). For non-console ports, the
+UART core performs a balanced get/put cycle:
 
-If serial8250_do_shutdown() releases the interrupt handler before the
-handler has run and processed the BUSY_DETECT condition by read the USR
-register, the IRQ is not deasserted resulting in interrupt storm that
-triggers "irq x: nobody cared" warning leading to disabling the IRQ.
+  uart_change_pm(ON)  -> ulite_pm() -> pm_runtime_get_sync()        +1
+  uart_change_pm(OFF) -> ulite_pm() -> pm_runtime_put_autosuspend() -1
 
-Add late synchronize_irq() into serial8250_do_shutdown() to ensure
-BUSY_DETECT from DW UART is handled before port's interrupt handler is
-released. Alternative would be to add DW UART specific shutdown
-function but it would mostly duplicate the generic code and the extra
-synchronize_irq() seems pretty harmless in serial8250_do_shutdown().
+This leaves no spare reference for the pm_runtime_put_autosuspend() at
+the end of probe. The PM runtime core prevents the count from actually
+going below zero, and instead triggers a
+"Runtime PM usage count underflow!" warning.
 
-Fixes: 7d4008ebb1c9 ("tty: add a DesignWare 8250 driver")
+For console ports the bug is masked: the UART core skips the
+uart_change_pm(OFF) call, so the UART core's unbalanced get happens to
+pair with probe's trailing put.
+
+Add pm_runtime_get_noresume() before pm_runtime_enable() to take an
+explicit probe-owned reference that the trailing
+pm_runtime_put_autosuspend() can release. This ensures a correct usage
+count regardless of whether the port is a console.
+
+Fixes: 5bbe10a6942d ("tty: serial: uartlite: Add runtime pm support")
 Cc: stable <stable@kernel.org>
-Reported-by: Bandal, Shankar <shankar.bandal@intel.com>
-Tested-by: Bandal, Shankar <shankar.bandal@intel.com>
-Tested-by: Murthy, Shanth <shanth.murthy@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://patch.msgid.link/20260203171049.4353-7-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
+Link: https://patch.msgid.link/20260305123746.4152800-1-maciej.andrzejewski@m-works.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_port.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/tty/serial/uartlite.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/tty/serial/8250/8250_port.c
-+++ b/drivers/tty/serial/8250/8250_port.c
-@@ -2509,6 +2509,12 @@ void serial8250_do_shutdown(struct uart_
- 	 * the IRQ chain.
- 	 */
- 	serial_port_in(port, UART_RX);
-+	/*
-+	 * LCR writes on DW UART can trigger late (unmaskable) IRQs.
-+	 * Handle them before releasing the handler.
-+	 */
-+	synchronize_irq(port->irq);
-+
- 	serial8250_rpm_put(up);
+--- a/drivers/tty/serial/uartlite.c
++++ b/drivers/tty/serial/uartlite.c
+@@ -878,6 +878,7 @@ of_err:
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, UART_AUTOSUSPEND_TIMEOUT);
+ 	pm_runtime_set_active(&pdev->dev);
++	pm_runtime_get_noresume(&pdev->dev);
+ 	pm_runtime_enable(&pdev->dev);
  
- 	up->ops->release_irq(up);
+ 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
 
 
