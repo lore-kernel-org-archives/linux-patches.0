@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E2032737EE;
-	Mon, 23 Mar 2026 15:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499663B7B61;
+	Mon, 23 Mar 2026 15:20:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279247; cv=none; b=KGTfQ3BO6kxfJH/xqL1i2zOBWfiRNChWDiPOQvbpKGOgcv3PPCkMBjYCmvLk+hptc8VOBwtCliwyOk+DYjxmIRQACdRPuImjqN01DfLyaPW640rT6GltH1UNlqP7FeZqwUE5j4l8AsVYEPbBMmP3mG+FbtqlJ3XkYsuTx/e9zy4=
+	t=1774279250; cv=none; b=NiPX7xYayudkvALiK4MlHnA+cSeSD0IXCnoGLTcRLVTVnT6Nf2OxEbaEa9rXq7O96T4hOmOBafwrvT3dBuUCvl6bTZvjGEHC7K54YYYwS3Nd4ZNrhSQ0Bxp2mswXC8S29WY+fgg9NghKxHy34rKWFcVAEBTt+ls6pp4h9ybMcsI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279247; c=relaxed/simple;
-	bh=FG00HA3rguMbjDgo7g2RB8QLX77Ub6UfBj98QZcF/Lg=;
+	s=arc-20240116; t=1774279250; c=relaxed/simple;
+	bh=iXUP43xZZBx3q8RC6u/oLjG7fJ/lDM+C+QVu44X8IRs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+iCgIqiBz/8HdiqqH3+pn/7lnSKIuDFmt7nHBqSXYu6amHeXfuqwP2GnyUA76mqtRN2cYRZQLz8I6qgw0HR64+P3LFtfmkvZciR/gPRLS5+8FAvCedjCM4ZR93lHsfp9VhwnkcTB+V/NARmlFnXdZVtS1e7HQ6HNr8BPZKVE5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2IQMhass; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Sp5b47M7G2ZkyWQ3OWJBvZ9eL4CFlc7T5UB9Hqv6CRrpHLGMwN6tue3YrqbYTwoXVfjE5pD3cGk3zYokbvOHqqmaQkjamNbV/cFm/xiiBys0G3zjSwNs7Ebq5Cl+0aULJJ0S+SxT7WG8veG7VdjNoc4gCaPvXsNEZWzYAhpf32Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2UyEhIzA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2IQMhass"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8DDBC4CEF7;
-	Mon, 23 Mar 2026 15:20:46 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2UyEhIzA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C21E9C4CEF7;
+	Mon, 23 Mar 2026 15:20:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279247;
-	bh=FG00HA3rguMbjDgo7g2RB8QLX77Ub6UfBj98QZcF/Lg=;
+	s=korg; t=1774279250;
+	bh=iXUP43xZZBx3q8RC6u/oLjG7fJ/lDM+C+QVu44X8IRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2IQMhassapkgT8IjajjZpdsTeD3fYrsFVIzZ1sFu5w7G99z40JCPlPe3lC4vfvEwH
-	 TJdZUDMJNyh2ETH2QzYsMlJX6b19E1vy8MKD3nFHhmMDExgaO7CR5udcTbQmbPCPth
-	 u4xtYSXSsY8drt06rfdJl1JDyHlHf8jBn2edLDK4=
+	b=2UyEhIzAiVlW0WuCp1d3epMVyHe9LiOo7yBPQcBZSaHTzpg//RPBe7XR5k/LQUSMF
+	 1ODriRbZO64LETXHeB3EvseIFMdm1/7CPYbMq+kSHilXpBd77c8mLzhXVMpoRCZtYM
+	 si8R7pCqNRf4EV8uJx68M4+eHEwH3ODmefwknb/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Ming Lei <ming.lei@redhat.com>,
+	syzbot+6c905ab800f20cf4086c@syzkaller.appspotmail.com,
+	Bart Van Assche <bvanassche@acm.org>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Christian Loehle <christian.loehle@arm.com>,
-	Frederic Weisbecker <frederic@kernel.org>,
-	Qais Yousef <qyousef@layalina.io>,
-	Aboorva Devarajan <aboorvad@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 524/567] sched: idle: Consolidate the handling of two special cases
-Date: Mon, 23 Mar 2026 14:47:24 +0100
-Message-ID: <20260323134546.968025163@linuxfoundation.org>
+Subject: [PATCH 6.6 525/567] PM: runtime: Fix a race condition related to device removal
+Date: Mon, 23 Mar 2026 14:47:25 +0100
+Message-ID: <20260323134546.992604686@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,130 +53,123 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit f4c31b07b136839e0fb3026f8a5b6543e3b14d2f ]
+[ Upstream commit 29ab768277617452d88c0607c9299cdc63b6e9ff ]
 
-There are two special cases in the idle loop that are handled
-inconsistently even though they are analogous.
+The following code in pm_runtime_work() may dereference the dev->parent
+pointer after the parent device has been freed:
 
-The first one is when a cpuidle driver is absent and the default CPU
-idle time power management implemented by the architecture code is used.
-In that case, the scheduler tick is stopped every time before invoking
-default_idle_call().
+	/* Maybe the parent is now able to suspend. */
+	if (parent && !parent->power.ignore_children) {
+		spin_unlock(&dev->power.lock);
 
-The second one is when a cpuidle driver is present, but there is only
-one idle state in its table.  In that case, the scheduler tick is never
-stopped at all.
+		spin_lock(&parent->power.lock);
+		rpm_idle(parent, RPM_ASYNC);
+		spin_unlock(&parent->power.lock);
 
-Since each of these approaches has its drawbacks, reconcile them with
-the help of one simple heuristic.  Namely, stop the tick if the CPU has
-been woken up by it in the previous iteration of the idle loop, or let
-it tick otherwise.
+		spin_lock(&dev->power.lock);
+	}
 
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Christian Loehle <christian.loehle@arm.com>
-Reviewed-by: Frederic Weisbecker <frederic@kernel.org>
-Reviewed-by: Qais Yousef <qyousef@layalina.io>
-Reviewed-by: Aboorva Devarajan <aboorvad@linux.ibm.com>
-Fixes: ed98c3491998 ("sched: idle: Do not stop the tick before cpuidle_idle_call()")
-[ rjw: Added Fixes tag, changelog edits ]
-Link: https://patch.msgid.link/4741364.LvFx2qVVIh@rafael.j.wysocki
+Fix this by inserting a flush_work() call in pm_runtime_remove().
+
+Without this patch blktest block/001 triggers the following complaint
+sporadically:
+
+BUG: KASAN: slab-use-after-free in lock_acquire+0x70/0x160
+Read of size 1 at addr ffff88812bef7198 by task kworker/u553:1/3081
+Workqueue: pm pm_runtime_work
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x61/0x80
+ print_address_description.constprop.0+0x8b/0x310
+ print_report+0xfd/0x1d7
+ kasan_report+0xd8/0x1d0
+ __kasan_check_byte+0x42/0x60
+ lock_acquire.part.0+0x38/0x230
+ lock_acquire+0x70/0x160
+ _raw_spin_lock+0x36/0x50
+ rpm_suspend+0xc6a/0xfe0
+ rpm_idle+0x578/0x770
+ pm_runtime_work+0xee/0x120
+ process_one_work+0xde3/0x1410
+ worker_thread+0x5eb/0xfe0
+ kthread+0x37b/0x480
+ ret_from_fork+0x6cb/0x920
+ ret_from_fork_asm+0x11/0x20
+ </TASK>
+
+Allocated by task 4314:
+ kasan_save_stack+0x2a/0x50
+ kasan_save_track+0x18/0x40
+ kasan_save_alloc_info+0x3d/0x50
+ __kasan_kmalloc+0xa0/0xb0
+ __kmalloc_noprof+0x311/0x990
+ scsi_alloc_target+0x122/0xb60 [scsi_mod]
+ __scsi_scan_target+0x101/0x460 [scsi_mod]
+ scsi_scan_channel+0x179/0x1c0 [scsi_mod]
+ scsi_scan_host_selected+0x259/0x2d0 [scsi_mod]
+ store_scan+0x2d2/0x390 [scsi_mod]
+ dev_attr_store+0x43/0x80
+ sysfs_kf_write+0xde/0x140
+ kernfs_fop_write_iter+0x3ef/0x670
+ vfs_write+0x506/0x1470
+ ksys_write+0xfd/0x230
+ __x64_sys_write+0x76/0xc0
+ x64_sys_call+0x213/0x1810
+ do_syscall_64+0xee/0xfc0
+ entry_SYSCALL_64_after_hwframe+0x4b/0x53
+
+Freed by task 4314:
+ kasan_save_stack+0x2a/0x50
+ kasan_save_track+0x18/0x40
+ kasan_save_free_info+0x3f/0x50
+ __kasan_slab_free+0x67/0x80
+ kfree+0x225/0x6c0
+ scsi_target_dev_release+0x3d/0x60 [scsi_mod]
+ device_release+0xa3/0x220
+ kobject_cleanup+0x105/0x3a0
+ kobject_put+0x72/0xd0
+ put_device+0x17/0x20
+ scsi_device_dev_release+0xacf/0x12c0 [scsi_mod]
+ device_release+0xa3/0x220
+ kobject_cleanup+0x105/0x3a0
+ kobject_put+0x72/0xd0
+ put_device+0x17/0x20
+ scsi_device_put+0x7f/0xc0 [scsi_mod]
+ sdev_store_delete+0xa5/0x120 [scsi_mod]
+ dev_attr_store+0x43/0x80
+ sysfs_kf_write+0xde/0x140
+ kernfs_fop_write_iter+0x3ef/0x670
+ vfs_write+0x506/0x1470
+ ksys_write+0xfd/0x230
+ __x64_sys_write+0x76/0xc0
+ x64_sys_call+0x213/0x1810
+
+Reported-by: Ming Lei <ming.lei@redhat.com>
+Closes: https://lore.kernel.org/all/ZxdNvLNI8QaOfD2d@fedora/
+Reported-by: syzbot+6c905ab800f20cf4086c@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/68c13942.050a0220.2ff435.000b.GAE@google.com/
+Fixes: 5e928f77a09a ("PM: Introduce core framework for run-time PM of I/O devices (rev. 17)")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://patch.msgid.link/20260312182720.2776083-1-bvanassche@acm.org
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/idle.c | 30 +++++++++++++++++++++---------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/base/power/runtime.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/sched/idle.c b/kernel/sched/idle.c
-index ecf555ad158ab..20a8f0f972e63 100644
---- a/kernel/sched/idle.c
-+++ b/kernel/sched/idle.c
-@@ -134,6 +134,14 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
- 	return cpuidle_enter(drv, dev, next_state);
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index b28fb11cd6db8..2766bdc9158ab 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1854,6 +1854,7 @@ void pm_runtime_reinit(struct device *dev)
+ void pm_runtime_remove(struct device *dev)
+ {
+ 	__pm_runtime_disable(dev, false);
++	flush_work(&dev->power.work);
+ 	pm_runtime_reinit(dev);
  }
- 
-+static void idle_call_stop_or_retain_tick(bool stop_tick)
-+{
-+	if (stop_tick || tick_nohz_tick_stopped())
-+		tick_nohz_idle_stop_tick();
-+	else
-+		tick_nohz_idle_retain_tick();
-+}
-+
- /**
-  * cpuidle_idle_call - the main idle function
-  *
-@@ -143,7 +151,7 @@ static int call_cpuidle(struct cpuidle_driver *drv, struct cpuidle_device *dev,
-  * set, and it returns with polling set.  If it ever stops polling, it
-  * must clear the polling bit.
-  */
--static void cpuidle_idle_call(void)
-+static void cpuidle_idle_call(bool stop_tick)
- {
- 	struct cpuidle_device *dev = cpuidle_get_device();
- 	struct cpuidle_driver *drv = cpuidle_get_cpu_driver(dev);
-@@ -165,7 +173,7 @@ static void cpuidle_idle_call(void)
- 	 */
- 
- 	if (cpuidle_not_available(drv, dev)) {
--		tick_nohz_idle_stop_tick();
-+		idle_call_stop_or_retain_tick(stop_tick);
- 
- 		default_idle_call();
- 		goto exit_idle;
-@@ -200,17 +208,19 @@ static void cpuidle_idle_call(void)
- 		next_state = cpuidle_find_deepest_state(drv, dev, max_latency_ns);
- 		call_cpuidle(drv, dev, next_state);
- 	} else if (drv->state_count > 1) {
--		bool stop_tick = true;
-+		/*
-+		 * stop_tick is expected to be true by default by cpuidle
-+		 * governors, which allows them to select idle states with
-+		 * target residency above the tick period length.
-+		 */
-+		stop_tick = true;
- 
- 		/*
- 		 * Ask the cpuidle framework to choose a convenient idle state.
- 		 */
- 		next_state = cpuidle_select(drv, dev, &stop_tick);
- 
--		if (stop_tick || tick_nohz_tick_stopped())
--			tick_nohz_idle_stop_tick();
--		else
--			tick_nohz_idle_retain_tick();
-+		idle_call_stop_or_retain_tick(stop_tick);
- 
- 		entered_state = call_cpuidle(drv, dev, next_state);
- 		/*
-@@ -218,7 +228,7 @@ static void cpuidle_idle_call(void)
- 		 */
- 		cpuidle_reflect(dev, entered_state);
- 	} else {
--		tick_nohz_idle_retain_tick();
-+		idle_call_stop_or_retain_tick(stop_tick);
- 
- 		/*
- 		 * If there is only a single idle state (or none), there is
-@@ -246,6 +256,7 @@ static void cpuidle_idle_call(void)
- static void do_idle(void)
- {
- 	int cpu = smp_processor_id();
-+	bool got_tick = false;
- 
- 	/*
- 	 * Check if we need to update blocked load
-@@ -288,8 +299,9 @@ static void do_idle(void)
- 			tick_nohz_idle_restart_tick();
- 			cpu_idle_poll();
- 		} else {
--			cpuidle_idle_call();
-+			cpuidle_idle_call(got_tick);
- 		}
-+		got_tick = tick_nohz_idle_got_tick();
- 		arch_cpu_idle_exit();
- 	}
  
 -- 
 2.51.0
