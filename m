@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBFED1DE4E0;
-	Mon, 23 Mar 2026 14:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CCD1DE4E0;
+	Mon, 23 Mar 2026 14:56:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277815; cv=none; b=fpUs38rFu/1oXEFTEsWqxzCAs7FLzai56fQjf1f99bZQAaPeH9ULgE1DDsGsNqUe6dXFXHm4LwiyTm2Nhm3kBUSpFnVlkGwwOE4AYwenCT3oKm6O3MwpdhYnkxV2agPyzByB7bWs91PpxU41H6wIvkQWVBgdqsk4koQimxPZN+A=
+	t=1774277819; cv=none; b=SJjfMsyTRu7hfxTsFhE/OOuNO8NGjSVQzCpljtb8Xb/9s7AwkBLaeG1jC8w/juXN+64PmvWGFVJtai4hRGsANga9VtjPqmAFHsHDNOsBwXaYd07zI0ZQ03gkVXYnqeeG9vVbgZuHkbZE1/7f3OCuf9Kh4nMVpHEtjTFhlbcKJ10=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277815; c=relaxed/simple;
-	bh=W5f31ixmXji09/6s8eDnMrnweP+wrTStkdqJUjiKzR4=;
+	s=arc-20240116; t=1774277819; c=relaxed/simple;
+	bh=6TYAW92zRA2hNaLOvesJEBf8K0y15+kJVWQHZnKUzk0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mQIocY4PgfqzHir1NvDJGK/Y15owsLF2iycfx/Qb1+Hjd5ESgVYtFMM8BeKFhUWCrHdz0kn3acjmsB6nKSg2YDlpROJuZ5b7At0FNCWRsnyAoxu6N2OVlLkN+XbKbJqfFPkKYeuDZnl4ltRNrJ+9WY18A9yCMbLIRGBpW0tcWR0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lphWPA4r; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=iT7ck48wLiY5Zt87j+/NW9r4Il6CBSoFqklGJKMGR3KUNtD+lMCQjLFoxweKsNMV0VAzBmP/MnqurF3WVzb/f7PpkJTNtdgL3fqMtOgaB94FVKDRJRlc2hMVX1t+6Jgtqau/DIk4PtxK24Rh/QpTTM4TdUpgfJZFm1hUI2c8lUA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w1acbxG4; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lphWPA4r"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62F00C4CEF7;
-	Mon, 23 Mar 2026 14:56:55 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w1acbxG4"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2819C4CEF7;
+	Mon, 23 Mar 2026 14:56:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277815;
-	bh=W5f31ixmXji09/6s8eDnMrnweP+wrTStkdqJUjiKzR4=;
+	s=korg; t=1774277819;
+	bh=6TYAW92zRA2hNaLOvesJEBf8K0y15+kJVWQHZnKUzk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lphWPA4r/jl2zhwQ5gQeQUrxI9e0upHmZgyGJyZUsC2cQJi7QVuwmJDzCR6M/n5Wv
-	 CvR/Gsmi6KIg6gqbWAzk5IuHkxokHgGV2/YJKDoNTv7nzqZ6PMtY11TosjTUgCJ/zQ
-	 Nxg8YP935UoeBQCIKgd2Ysgb7mD/WPVb5Hmn9MuI=
+	b=w1acbxG41VstfP3Nmzq/QbAngcVXllfB8doZcw/slruasP70I7YDY8iMhv1RCHWH0
+	 aTpo+PC37a4LVeKlo4IawlmM9vSuQSdaX7QKo0grhB+7gpCleGA1nePKJng0kGqP43
+	 RghYKZfdIcEVflqtHNqWvLhxQUS7k/OoMDe/2C3o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Vincent Mailhol <mailhol@kernel.org>,
-	stable@kernel.org
-Subject: [PATCH 6.6 095/567] can: ucan: Fix infinite loop from zero-length messages
-Date: Mon, 23 Mar 2026 14:40:15 +0100
-Message-ID: <20260323134536.178623756@linuxfoundation.org>
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.6 113/567] drbd: fix "LOGIC BUG" in drbd_al_begin_io_nonblock()
+Date: Mon, 23 Mar 2026 14:40:33 +0100
+Message-ID: <20260323134536.608912635@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -45,49 +45,165 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Lars Ellenberg <lars.ellenberg@linbit.com>
 
-commit 1e446fd0582ad8be9f6dafb115fc2e7245f9bea7 upstream.
+commit ab140365fb62c0bdab22b2f516aff563b2559e3b upstream.
 
-If a broken ucan device gets a message with the message length field set
-to 0, then the driver will loop for forever in
-ucan_read_bulk_callback(), hanging the system.  If the length is 0, just
-skip the message and go on to the next one.
+Even though we check that we "should" be able to do lc_get_cumulative()
+while holding the device->al_lock spinlock, it may still fail,
+if some other code path decided to do lc_try_lock() with bad timing.
 
-This has been fixed in the kvaser_usb driver in the past in commit
-0c73772cd2b8 ("can: kvaser_usb: leaf: Fix potential infinite loop in
-command parsers"), so there must be some broken devices out there like
-this somewhere.
+If that happened, we logged "LOGIC BUG for enr=...",
+but still did not return an error.
 
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>
-Cc: Vincent Mailhol <mailhol@kernel.org>
-Cc: stable@kernel.org
-Assisted-by: gkh_clanker_2000
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Link: https://patch.msgid.link/2026022319-huff-absurd-6a18@gregkh
-Fixes: 9f2d3eae88d2 ("can: ucan: add driver for Theobroma Systems UCAN devices")
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+The rest of the code now assumed that this request has references
+for the relevant activity log extents.
+
+The implcations are that during an active resync, mutual exclusivity of
+resync versus application IO is not guaranteed. And a potential crash
+at this point may not realizs that these extents could have been target
+of in-flight IO and would need to be resynced just in case.
+
+Also, once the request completes, it will give up activity log references it
+does not even hold, which will trigger a BUG_ON(refcnt == 0) in lc_put().
+
+Fix:
+
+Do not crash the kernel for a condition that is harmless during normal
+operation: also catch "e->refcnt == 0", not only "e == NULL"
+when being noisy about "al_complete_io() called on inactive extent %u\n".
+
+And do not try to be smart and "guess" whether something will work, then
+be surprised when it does not.
+Deal with the fact that it may or may not work.  If it does not, remember a
+possible "partially in activity log" state (only possible for requests that
+cross extent boundaries), and return an error code from
+drbd_al_begin_io_nonblock().
+
+A latter call for the same request will then resume from where we left off.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Lars Ellenberg <lars.ellenberg@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/usb/ucan.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_actlog.c   |   53 ++++++++++++++++---------------------
+ drivers/block/drbd/drbd_interval.h |    5 ++-
+ 2 files changed, 27 insertions(+), 31 deletions(-)
 
---- a/drivers/net/can/usb/ucan.c
-+++ b/drivers/net/can/usb/ucan.c
-@@ -749,7 +749,7 @@ static void ucan_read_bulk_callback(stru
- 		len = le16_to_cpu(m->len);
+--- a/drivers/block/drbd/drbd_actlog.c
++++ b/drivers/block/drbd/drbd_actlog.c
+@@ -483,38 +483,20 @@ void drbd_al_begin_io(struct drbd_device
  
- 		/* check sanity (length of content) */
--		if (urb->actual_length - pos < len) {
-+		if ((len == 0) || (urb->actual_length - pos < len)) {
- 			netdev_warn(up->netdev,
- 				    "invalid message (short; no data; l:%d)\n",
- 				    urb->actual_length);
+ int drbd_al_begin_io_nonblock(struct drbd_device *device, struct drbd_interval *i)
+ {
+-	struct lru_cache *al = device->act_log;
+ 	/* for bios crossing activity log extent boundaries,
+ 	 * we may need to activate two extents in one go */
+ 	unsigned first = i->sector >> (AL_EXTENT_SHIFT-9);
+ 	unsigned last = i->size == 0 ? first : (i->sector + (i->size >> 9) - 1) >> (AL_EXTENT_SHIFT-9);
+-	unsigned nr_al_extents;
+-	unsigned available_update_slots;
+ 	unsigned enr;
+ 
+-	D_ASSERT(device, first <= last);
+-
+-	nr_al_extents = 1 + last - first; /* worst case: all touched extends are cold. */
+-	available_update_slots = min(al->nr_elements - al->used,
+-				al->max_pending_changes - al->pending_changes);
+-
+-	/* We want all necessary updates for a given request within the same transaction
+-	 * We could first check how many updates are *actually* needed,
+-	 * and use that instead of the worst-case nr_al_extents */
+-	if (available_update_slots < nr_al_extents) {
+-		/* Too many activity log extents are currently "hot".
+-		 *
+-		 * If we have accumulated pending changes already,
+-		 * we made progress.
+-		 *
+-		 * If we cannot get even a single pending change through,
+-		 * stop the fast path until we made some progress,
+-		 * or requests to "cold" extents could be starved. */
+-		if (!al->pending_changes)
+-			__set_bit(__LC_STARVING, &device->act_log->flags);
+-		return -ENOBUFS;
++	if (i->partially_in_al_next_enr) {
++		D_ASSERT(device, first < i->partially_in_al_next_enr);
++		D_ASSERT(device, last >= i->partially_in_al_next_enr);
++		first = i->partially_in_al_next_enr;
+ 	}
+ 
++	D_ASSERT(device, first <= last);
++
+ 	/* Is resync active in this area? */
+ 	for (enr = first; enr <= last; enr++) {
+ 		struct lc_element *tmp;
+@@ -529,14 +511,21 @@ int drbd_al_begin_io_nonblock(struct drb
+ 		}
+ 	}
+ 
+-	/* Checkout the refcounts.
+-	 * Given that we checked for available elements and update slots above,
+-	 * this has to be successful. */
++	/* Try to checkout the refcounts. */
+ 	for (enr = first; enr <= last; enr++) {
+ 		struct lc_element *al_ext;
+ 		al_ext = lc_get_cumulative(device->act_log, enr);
+-		if (!al_ext)
+-			drbd_info(device, "LOGIC BUG for enr=%u\n", enr);
++
++		if (!al_ext) {
++			/* Did not work. We may have exhausted the possible
++			 * changes per transaction. Or raced with someone
++			 * "locking" it against changes.
++			 * Remember where to continue from.
++			 */
++			if (enr > first)
++				i->partially_in_al_next_enr = enr;
++			return -ENOBUFS;
++		}
+ 	}
+ 	return 0;
+ }
+@@ -556,7 +545,11 @@ void drbd_al_complete_io(struct drbd_dev
+ 
+ 	for (enr = first; enr <= last; enr++) {
+ 		extent = lc_find(device->act_log, enr);
+-		if (!extent) {
++		/* Yes, this masks a bug elsewhere.  However, during normal
++		 * operation this is harmless, so no need to crash the kernel
++		 * by the BUG_ON(refcount == 0) in lc_put().
++		 */
++		if (!extent || extent->refcnt == 0) {
+ 			drbd_err(device, "al_complete_io() called on inactive extent %u\n", enr);
+ 			continue;
+ 		}
+--- a/drivers/block/drbd/drbd_interval.h
++++ b/drivers/block/drbd/drbd_interval.h
+@@ -8,12 +8,15 @@
+ struct drbd_interval {
+ 	struct rb_node rb;
+ 	sector_t sector;		/* start sector of the interval */
+-	unsigned int size;		/* size in bytes */
+ 	sector_t end;			/* highest interval end in subtree */
++	unsigned int size;		/* size in bytes */
+ 	unsigned int local:1		/* local or remote request? */;
+ 	unsigned int waiting:1;		/* someone is waiting for completion */
+ 	unsigned int completed:1;	/* this has been completed already;
+ 					 * ignore for conflict detection */
++
++	/* to resume a partially successful drbd_al_begin_io_nonblock(); */
++	unsigned int partially_in_al_next_enr;
+ };
+ 
+ static inline void drbd_clear_interval(struct drbd_interval *i)
 
 
