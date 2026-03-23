@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBD83B9600;
-	Mon, 23 Mar 2026 16:15:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D72D1340286;
+	Mon, 23 Mar 2026 16:15:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282504; cv=none; b=XsqYGCIfmuGJgJ8u3gaW3KoiAWJ3X0r8RwTXLoVUwulHleLPfBW03IK5CzCTbP5uLa7xHepeDOhPkQVHe2uDp3EycPd8R/DSZ17cvMIXlRKiGTOwTe/AX6XeIgdkigcMKqABZOTLo9w4t5UTNx448rsTW13V1a06Lzkno4PXN/M=
+	t=1774282506; cv=none; b=J4Be9VWnMN7ER72d4lt58LoRhCUa7R9g5p4coOTn2I/Dp4kgeBS0DTpkCzmeO5YBr6K31Bzs5UpXb3AI6hkg+tpKS7ReUwIBuWea8Lshrang7mxoDxZdL4yFnsc3tdep6ZDQver5Qzz60H7Kbauk6PS5PFUWTh29IMmMOjlVuCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282504; c=relaxed/simple;
-	bh=DJiDPOtAddInN/mJhuZDLOxwBx0cx5T3draJUSguge0=;
+	s=arc-20240116; t=1774282506; c=relaxed/simple;
+	bh=xxMPWsnTUa05fu3ARORq04QyqiVrIHWFAEfA77ZXI88=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ipT/stHHJdF48U+fVOGBkNZOeYtnzWR2TUviOViu76OE1x5LltOetoYCoT4Pjhr6tTg4O+1KJo0rHao5bvl6EQ8T4oRTKzhkTgJx5EDKA7/jjo1Ks/6oRpldvZwLdOSm0L6MqxJ0boQZMyQ//TxbQPUo705whodRPiom+eZni0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=gAdESxYi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=os7f6IKjgfl4ph5MiKmNEAiIpiGESQ1rCWQdwBCRT/nitvJBemYhtZcTCYps0+fGip90RkKfljiXmpr3SsQhLMgYTIAm9xdO+LdeRhqg3hD4hBqlR3bNhEVJxKMhufCEwUdZVBuXLCturMgvUrwriP4PTIhH0ct5XH68iWbji4o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NCmW2VqW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="gAdESxYi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC202C4CEF7;
-	Mon, 23 Mar 2026 16:15:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NCmW2VqW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A825C4CEF7;
+	Mon, 23 Mar 2026 16:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282504;
-	bh=DJiDPOtAddInN/mJhuZDLOxwBx0cx5T3draJUSguge0=;
+	s=korg; t=1774282506;
+	bh=xxMPWsnTUa05fu3ARORq04QyqiVrIHWFAEfA77ZXI88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gAdESxYijnCo1j2UUIeEJbPTZZRZmbqlGs5G7AsSGW5J7yPv95xSoEhUsipY/wKif
-	 jQccos1w7hfhJuWEcm/ch75/HYyHTETV4OP7Yzt4PTADYnYGYl1yRo2qVtwQhIMOmI
-	 6nhbX7i42wS33nhqF4e10wd+4e7e3MPThHoIW5K0=
+	b=NCmW2VqW6epolxHiMvwIqLl2GQWoSwZQiblmX3gsL305peFJd84EKNaCGO5PVbD7Y
+	 b3vT4gyjRLnpUzQ5wAPwl9Ns9V1kmCCBfbpw6wxRDKtYrX13NThJRiM/pNVLEY6FBr
+	 7ojBGv8UUrsoqCN8SQC1+svVeTGgZwEIVYtVR6+o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <dstsmallbird@foxmail.com>,
 	Florian Westphal <fw@strlen.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 179/481] netfilter: nfnetlink_cthelper: fix OOB read in nfnl_cthelper_dump_table()
-Date: Mon, 23 Mar 2026 14:42:41 +0100
-Message-ID: <20260323134529.573604163@linuxfoundation.org>
+Subject: [PATCH 6.1 180/481] netfilter: xt_IDLETIMER: reject rev0 reuse of ALARM timer labels
+Date: Mon, 23 Mar 2026 14:42:42 +0100
+Message-ID: <20260323134529.596980949@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,68 +54,52 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Hyunwoo Kim <imv4bel@gmail.com>
+From: Yuan Tan <tanyuan98@outlook.com>
 
-[ Upstream commit 6dcee8496d53165b2d8a5909b3050b62ae71fe89 ]
+[ Upstream commit 329f0b9b48ee6ab59d1ab72fef55fe8c6463a6cf ]
 
-nfnl_cthelper_dump_table() has a 'goto restart' that jumps to a label
-inside the for loop body.  When the "last" helper saved in cb->args[1]
-is deleted between dump rounds, every entry fails the (cur != last)
-check, so cb->args[1] is never cleared.  The for loop finishes with
-cb->args[0] == nf_ct_helper_hsize, and the 'goto restart' jumps back
-into the loop body bypassing the bounds check, causing an 8-byte
-out-of-bounds read on nf_ct_helper_hash[nf_ct_helper_hsize].
+IDLETIMER revision 0 rules reuse existing timers by label and always call
+mod_timer() on timer->timer.
 
-The 'goto restart' block was meant to re-traverse the current bucket
-when "last" is no longer found, but it was placed after the for loop
-instead of inside it.  Move the block into the for loop body so that
-the restart only occurs while cb->args[0] is still within bounds.
+If the label was created first by revision 1 with XT_IDLETIMER_ALARM,
+the object uses alarm timer semantics and timer->timer is never initialized.
+Reusing that object from revision 0 causes mod_timer() on an uninitialized
+timer_list, triggering debugobjects warnings and possible panic when
+panic_on_warn=1.
 
- BUG: KASAN: slab-out-of-bounds in nfnl_cthelper_dump_table+0x9f/0x1b0
- Read of size 8 at addr ffff888104ca3000 by task poc_cthelper/131
- Call Trace:
-  nfnl_cthelper_dump_table+0x9f/0x1b0
-  netlink_dump+0x333/0x880
-  netlink_recvmsg+0x3e2/0x4b0
-  sock_recvmsg+0xde/0xf0
-  __sys_recvfrom+0x150/0x200
-  __x64_sys_recvfrom+0x76/0x90
-  do_syscall_64+0xc3/0x6e0
+Fix this by rejecting revision 0 rule insertion when an existing timer with
+the same label is of ALARM type.
 
- Allocated by task 1:
-  __kvmalloc_node_noprof+0x21b/0x700
-  nf_ct_alloc_hashtable+0x65/0xd0
-  nf_conntrack_helper_init+0x21/0x60
-  nf_conntrack_init_start+0x18d/0x300
-  nf_conntrack_standalone_init+0x12/0xc0
-
-Fixes: 12f7a505331e ("netfilter: add user-space connection tracking helper infrastructure")
-Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Fixes: 68983a354a65 ("netfilter: xtables: Add snapshot of hardidletimer target")
+Co-developed-by: Yifan Wu <yifanwucs@gmail.com>
+Signed-off-by: Yifan Wu <yifanwucs@gmail.com>
+Co-developed-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Xin Liu <dstsmallbird@foxmail.com>
 Signed-off-by: Florian Westphal <fw@strlen.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nfnetlink_cthelper.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/netfilter/xt_IDLETIMER.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/net/netfilter/nfnetlink_cthelper.c b/net/netfilter/nfnetlink_cthelper.c
-index 97248963a7d3b..71a248cca746a 100644
---- a/net/netfilter/nfnetlink_cthelper.c
-+++ b/net/netfilter/nfnetlink_cthelper.c
-@@ -603,10 +603,10 @@ nfnl_cthelper_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
- 				goto out;
- 			}
- 		}
--	}
--	if (cb->args[1]) {
--		cb->args[1] = 0;
--		goto restart;
-+		if (cb->args[1]) {
-+			cb->args[1] = 0;
-+			goto restart;
+diff --git a/net/netfilter/xt_IDLETIMER.c b/net/netfilter/xt_IDLETIMER.c
+index 3f6a9770f74ba..9733f49847a6d 100644
+--- a/net/netfilter/xt_IDLETIMER.c
++++ b/net/netfilter/xt_IDLETIMER.c
+@@ -320,6 +320,12 @@ static int idletimer_tg_checkentry(const struct xt_tgchk_param *par)
+ 
+ 	info->timer = __idletimer_tg_find_by_label(info->label);
+ 	if (info->timer) {
++		if (info->timer->timer_type & XT_IDLETIMER_ALARM) {
++			pr_debug("Adding/Replacing rule with same label and different timer type is not allowed\n");
++			mutex_unlock(&list_mutex);
++			return -EINVAL;
 +		}
- 	}
- out:
- 	rcu_read_unlock();
++
+ 		info->timer->refcnt++;
+ 		mod_timer(&info->timer->timer,
+ 			  msecs_to_jiffies(info->timeout * 1000) + jiffies);
 -- 
 2.51.0
 
