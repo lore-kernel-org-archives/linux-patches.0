@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90E7A59;
-	Mon, 23 Mar 2026 14:22:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99B51A680D;
+	Mon, 23 Mar 2026 14:22:06 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275723; cv=none; b=hR1jQevKDVjR8mt3mk6wFDuvAHO85LqUxQg5jG/GsrOmvqRtRI72U4I9ugHSU29Z9RKn52Y3Q2Vq4Xx5jcKDRCO88f7uXhLSieo8rnuSoZfFjIFDiE4V65nU9nAwIDdbnl0zg5hUFduqEfuvwyVisXcN7qAPcRNYDXTQeZz72hE=
+	t=1774275727; cv=none; b=K5xXTiiXtxA7AbXY2/dFDDKz6yXCrDRyVHIGctUw8JgwntC2xaHBCV079kWTrdYw6n10oVXtzmmH3HpOkXxruV09dd2NKIXSiNUPLvj8Nn8TzBKyMAR40HDKpqR3vZfE0LB7EbCk2p6AEoeP+rNQl6ugGLf2O78nedCU4jDT61Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275723; c=relaxed/simple;
-	bh=PBQpOKme9glVFXX7GWWUT1GmGatcMoyek3/qeCPiHZw=;
+	s=arc-20240116; t=1774275727; c=relaxed/simple;
+	bh=jWcpChWD2YnUni3QLa1Ix0k55EVJg5+PIiELfp71ixo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=SRLmoXkHeAVcVuIMyq6WhdJk6/NuOkZeSa9pYqRZtN+SaNRlB4QE0kPnBnCufaBAS6Y14fbgHl11P2itigSOTku0E+Cn4TZJIsurgoIFLjrG7siRk9pHjx3MWn8Ym5TCdqP83Wz5mr0ZfRbYW+82pDvFRrNzVfgHgnTNZVsGYo8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RdBFZAxh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cpLe3rY4BQZBqrIYtR3NHNnBfMOi1O20AozxdaKybHDStB4eRO/3KGvk64bgqXRCFqV7K8rubzLKa5H3zT/+k3a7pm04xwI2PbmobiHfC4HQGi2aU5mIECkwJHF2IIrgL051EHT9bOuwUbsDLjQZDkfolEVwf+CvUS5gFfVy3ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sHq5GE8z; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RdBFZAxh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD66C4CEF7;
-	Mon, 23 Mar 2026 14:22:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sHq5GE8z"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A387C4CEF7;
+	Mon, 23 Mar 2026 14:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275723;
-	bh=PBQpOKme9glVFXX7GWWUT1GmGatcMoyek3/qeCPiHZw=;
+	s=korg; t=1774275726;
+	bh=jWcpChWD2YnUni3QLa1Ix0k55EVJg5+PIiELfp71ixo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdBFZAxhj7FIVCyNE6tNP0o8W3gBJ7hmGifCPxuvHkr/reKj3441/YQYFZD3fccZx
-	 Z93+IM4Ql/TPNdUM2o3jm01JJ+Q8zvuLW1nykcncQLaFh5v88IKjTORToNue+yvlRd
-	 ZxKUSC+HL2onBwuxyhlnPkzveOGtFQ7TICEBWmi4=
+	b=sHq5GE8zggbw3Q96yG/HesQVbaP9KQFIOVh2TJxnkh5bAAbzZPsqe1JccH3pH7NNQ
+	 EuYdFpC6KEpXMkV4GBRVRokMCesLwXviUond3FRrz9wjbdFUK+hpxTTiDu6oA0Kma4
+	 jHxyZcm/Qk4L1BHzJzAxuvkzFzZkQgk+XP5bpakY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Luka Gejak <luka.gejak@linux.dev>,
-	Dan Carpenter <dan.carpenter@linaro.org>
-Subject: [PATCH 6.12 153/460] staging: rtl8723bs: fix potential out-of-bounds read in rtw_restruct_wmm_ie
-Date: Mon, 23 Mar 2026 14:42:29 +0100
-Message-ID: <20260323134530.330035363@linuxfoundation.org>
+	Franz Schnyder <franz.schnyder@toradex.com>,
+	Douglas Anderson <dianders@chromium.org>
+Subject: [PATCH 6.12 144/460] drm/bridge: ti-sn65dsi86: Enable HPD polling if IRQ is not used
+Date: Mon, 23 Mar 2026 14:42:20 +0100
+Message-ID: <20260323134530.122356084@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,39 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luka Gejak <luka.gejak@linux.dev>
+From: Franz Schnyder <franz.schnyder@toradex.com>
 
-commit a75281626fc8fa6dc6c9cc314ee423e8bc45203b upstream.
+commit 0b87d51690dd5131cbe9fbd23746b037aab89815 upstream.
 
-The current code checks 'i + 5 < in_len' at the end of the if statement.
-However, it accesses 'in_ie[i + 5]' before that check, which can lead
-to an out-of-bounds read. Move the length check to the beginning of the
-conditional to ensure the index is within bounds before accessing the
-array.
+Fallback to polling to detect hotplug events on systems without
+interrupts.
 
-Fixes: 554c0a3abf21 ("staging: Add rtl8723bs sdio wifi driver")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Luka Gejak <luka.gejak@linux.dev>
-Reviewed-by: Dan Carpenter <dan.carpenter@linaro.org>
-Link: https://patch.msgid.link/20260224132647.11642-2-luka.gejak@linux.dev
+On systems where the interrupt line of the bridge is not connected,
+the bridge cannot notify hotplug events. Only add the
+DRM_BRIDGE_OP_HPD flag if an interrupt has been registered
+otherwise remain in polling mode.
+
+Fixes: 55e8ff842051 ("drm/bridge: ti-sn65dsi86: Add HPD for DisplayPort connector type")
+Cc: stable@vger.kernel.org # 6.16: 9133bc3f0564: drm/bridge: ti-sn65dsi86: Add
+Signed-off-by: Franz Schnyder <franz.schnyder@toradex.com>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+[dianders: Adjusted Fixes/stable line based on discussion]
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://patch.msgid.link/20260206123758.374555-1-fra.schnyder@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/rtl8723bs/core/rtw_mlme.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/staging/rtl8723bs/core/rtw_mlme.c
-+++ b/drivers/staging/rtl8723bs/core/rtw_mlme.c
-@@ -1929,7 +1929,10 @@ int rtw_restruct_wmm_ie(struct adapter *
- 	while (i < in_len) {
- 		ielength = initial_out_len;
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -1326,6 +1326,7 @@ static int ti_sn_bridge_probe(struct aux
+ {
+ 	struct ti_sn65dsi86 *pdata = dev_get_drvdata(adev->dev.parent);
+ 	struct device_node *np = pdata->dev->of_node;
++	const struct i2c_client *client = to_i2c_client(pdata->dev);
+ 	int ret;
  
--		if (in_ie[i] == 0xDD && in_ie[i+2] == 0x00 && in_ie[i+3] == 0x50  && in_ie[i+4] == 0xF2 && in_ie[i+5] == 0x02 && i+5 < in_len) { /* WMM element ID and OUI */
-+		if (i + 5 < in_len &&
-+		    in_ie[i] == 0xDD && in_ie[i + 2] == 0x00 &&
-+		    in_ie[i + 3] == 0x50 && in_ie[i + 4] == 0xF2 &&
-+		    in_ie[i + 5] == 0x02) {
- 			for (j = i; j < i + 9; j++) {
- 				out_ie[ielength] = in_ie[j];
- 				ielength++;
+ 	pdata->next_bridge = devm_drm_of_get_bridge(&adev->dev, np, 1, 0);
+@@ -1345,8 +1346,9 @@ static int ti_sn_bridge_probe(struct aux
+ 			   ? DRM_MODE_CONNECTOR_DisplayPort : DRM_MODE_CONNECTOR_eDP;
+ 
+ 	if (pdata->bridge.type == DRM_MODE_CONNECTOR_DisplayPort) {
+-		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT |
+-				    DRM_BRIDGE_OP_HPD;
++		pdata->bridge.ops = DRM_BRIDGE_OP_EDID | DRM_BRIDGE_OP_DETECT;
++		if (client->irq)
++			pdata->bridge.ops |= DRM_BRIDGE_OP_HPD;
+ 		/*
+ 		 * If comms were already enabled they would have been enabled
+ 		 * with the wrong value of HPD_DISABLE. Update it now. Comms
 
 
