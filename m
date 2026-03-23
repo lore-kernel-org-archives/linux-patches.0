@@ -1,41 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DECFF2773D8;
-	Mon, 23 Mar 2026 15:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79C61241C8C;
+	Mon, 23 Mar 2026 15:15:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278948; cv=none; b=QTX0B2TPf0TBawbNaMFiSVE7NrtYiIWAMKo0pSwllXxkGZVlF+iuj7JbiiSnhmEPeQsgMR2L7qHueAdWjCBesJe79PVJsuC/uPfMGimzaw8NGtPG91bTnN0BSF07r5qzO2qOTk8L72Re/V+2BOh3RwbSGzObAnDiUCKk3aPKVTg=
+	t=1774278952; cv=none; b=cLjzyohOuzfRE7qoxKC3o1WSK4/m5pGPjWMiYAWAqmn/83dSnPPymoPgA5FE8femrMGTlLImhDRSo6BG27rTL0EkC392yPs8AezHyKFyQiyagIBJ2LukNLniUhcRt91NPppro2ydec0LqLUOwIzqcePyoYcsm8AaIGxOTR62quc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278948; c=relaxed/simple;
-	bh=ip2UikrUSLlBF8ONThPwIf5nuRH24rU/D9DhjYlnifw=;
+	s=arc-20240116; t=1774278952; c=relaxed/simple;
+	bh=9hMgPdLU2XkNaWlbLHcZyVtoDhGajhKqK39L+Cg0t10=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Sa4Cq52+ITrKsOU2MOuKhmaI6/JOss1GGZnz2Qji+Z8ZzCc/8q+ikJDL5REu0T0+VygCcQ3/vK0r6IMK3LfdrpYG3VRLrqfecLCJUoNqpeKz+KRudvX5nfsctUqnJLPifAwNq5ln20er7x936GgIvPwL+7/NQX6ktAclT54zDk0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vY3W5WJr; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=lSem1orvb1VhSg4fCe8VIa8D9v8HdIP/Wbea2t4oi7TH0SXMAeCRg3N+mIPgT2IZlUyBcC0egQSZgRdQgM1rGCIP1RXLBq2S5lLiT7XonWtD63Vi48LcYYhZ0GUUJiLF/GMVutK22g9mb2aDRT1YIxdkHfXiwmt40FwiyY2rec8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DwvZ/3Jk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vY3W5WJr"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 672B3C4CEF7;
-	Mon, 23 Mar 2026 15:15:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DwvZ/3Jk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81D56C2BCB4;
+	Mon, 23 Mar 2026 15:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278948;
-	bh=ip2UikrUSLlBF8ONThPwIf5nuRH24rU/D9DhjYlnifw=;
+	s=korg; t=1774278952;
+	bh=9hMgPdLU2XkNaWlbLHcZyVtoDhGajhKqK39L+Cg0t10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vY3W5WJr9qDK1ZMnaK+laDpreDYE105LZmNC5AxYyHNQ1zcd0ob18NoHdKiV9ebOi
-	 CWRLZn5dwfvWNBDApAPlOiwEmcsKY7nAHx60bwRE75BOUMnuBYCSxzzJzUKAUInJt7
-	 rK/IsXbh/tp6In9RgvHqXQm5R1w+v4fm1N4ATNMk=
+	b=DwvZ/3JkkTHUyg/xosxmHDUwbjUUedQsmiJjCjPzPPmoCPNj1r1/ahBIgNNPQVeX0
+	 bnrjWfRVr1A48jzQJkGDJjGHyxQ/QEkdHgs9qBAXqkokqeSe1VRbQ5q3HouMG2fIJJ
+	 SxlYBUoFCyHdqK1AYrqIUVm9V3V7X8dinb7no2W4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harini Katakam <harini.katakam@amd.com>,
-	Vineeth Karumanchi <vineeth.karumanchi@amd.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Claudiu Beznea <claudiu.beznea@tuxon.dev>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kevin Hao <haokexin@gmail.com>,
+	Simon Horman <horms@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 471/567] net: macb: queue tie-off or disable during WOL suspend
-Date: Mon, 23 Mar 2026 14:46:31 +0100
-Message-ID: <20260323134545.640113522@linuxfoundation.org>
+Subject: [PATCH 6.6 472/567] net: macb: Introduce gem_init_rx_ring()
+Date: Mon, 23 Mar 2026 14:46:32 +0100
+Message-ID: <20260323134545.667300360@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -54,187 +52,53 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
+From: Kevin Hao <haokexin@gmail.com>
 
-[ Upstream commit 759cc793ebfc2d1a02f357ae97e5dcdcd63f758f ]
+[ Upstream commit 1a7124ecd655bcaf1845197fe416aa25cff4c3ea ]
 
-When GEM is used as a wake device, it is not mandatory for the RX DMA
-to be active. The RX engine in IP only needs to receive and identify
-a wake packet through an interrupt. The wake packet is of no further
-significance; hence, it is not required to be copied into memory.
-By disabling RX DMA during suspend, we can avoid unnecessary DMA
-processing of any incoming traffic.
+Extract the initialization code for the GEM RX ring into a new function.
+This change will be utilized in a subsequent patch. No functional changes
+are introduced.
 
-During suspend, perform either of the below operations:
-
-- tie-off/dummy descriptor: Disable unused queues by connecting
-  them to a looped descriptor chain without free slots.
-
-- queue disable: The newer IP version allows disabling individual queues.
-
-Co-developed-by: Harini Katakam <harini.katakam@amd.com>
-Signed-off-by: Harini Katakam <harini.katakam@amd.com>
-Signed-off-by: Vineeth Karumanchi <vineeth.karumanchi@amd.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@tuxon.dev>
-Tested-by: Claudiu Beznea <claudiu.beznea@tuxon.dev> # on SAMA7G5
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Reviewed-by: Simon Horman <horms@kernel.org>
+Link: https://patch.msgid.link/20260312-macb-versal-v1-1-467647173fa4@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 718d0766ce4c ("net: macb: Reinitialize tx/rx queue pointer registers and rx ring during resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/cadence/macb.h      |    7 +++
- drivers/net/ethernet/cadence/macb_main.c |   60 +++++++++++++++++++++++++++++--
- 2 files changed, 64 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/cadence/macb_main.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/drivers/net/ethernet/cadence/macb.h
-+++ b/drivers/net/ethernet/cadence/macb.h
-@@ -645,6 +645,10 @@
- #define GEM_T2OFST_OFFSET			0 /* offset value */
- #define GEM_T2OFST_SIZE				7
- 
-+/* Bitfields in queue pointer registers */
-+#define MACB_QUEUE_DISABLE_OFFSET		0 /* disable queue */
-+#define MACB_QUEUE_DISABLE_SIZE			1
-+
- /* Offset for screener type 2 compare values (T2CMPOFST).
-  * Note the offset is applied after the specified point,
-  * e.g. GEM_T2COMPOFST_ETYPE denotes the EtherType field, so an offset
-@@ -733,6 +737,7 @@
- #define MACB_CAPS_NEEDS_RSTONUBR		0x00000100
- #define MACB_CAPS_MIIONRGMII			0x00000200
- #define MACB_CAPS_NEED_TSUCLK			0x00000400
-+#define MACB_CAPS_QUEUE_DISABLE			0x00000800
- #define MACB_CAPS_PCS				0x01000000
- #define MACB_CAPS_HIGH_SPEED			0x02000000
- #define MACB_CAPS_CLK_HW_CHG			0x04000000
-@@ -1253,6 +1258,8 @@ struct macb {
- 	u32	(*macb_reg_readl)(struct macb *bp, int offset);
- 	void	(*macb_reg_writel)(struct macb *bp, int offset, u32 value);
- 
-+	struct macb_dma_desc	*rx_ring_tieoff;
-+	dma_addr_t		rx_ring_tieoff_dma;
- 	size_t			rx_buffer_size;
- 
- 	unsigned int		rx_ring_size;
 --- a/drivers/net/ethernet/cadence/macb_main.c
 +++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2573,6 +2573,12 @@ static void macb_free_consistent(struct
- 	unsigned int q;
- 	int size;
- 
-+	if (bp->rx_ring_tieoff) {
-+		dma_free_coherent(&bp->pdev->dev, macb_dma_desc_get_size(bp),
-+				  bp->rx_ring_tieoff, bp->rx_ring_tieoff_dma);
-+		bp->rx_ring_tieoff = NULL;
-+	}
-+
- 	bp->macbgem_ops.mog_free_rx_buffers(bp);
- 
- 	for (q = 0, queue = bp->queues; q < bp->num_queues; ++q, ++queue) {
-@@ -2664,6 +2670,16 @@ static int macb_alloc_consistent(struct
- 	if (bp->macbgem_ops.mog_alloc_rx_buffers(bp))
- 		goto out_err;
- 
-+	/* Required for tie off descriptor for PM cases */
-+	if (!(bp->caps & MACB_CAPS_QUEUE_DISABLE)) {
-+		bp->rx_ring_tieoff = dma_alloc_coherent(&bp->pdev->dev,
-+							macb_dma_desc_get_size(bp),
-+							&bp->rx_ring_tieoff_dma,
-+							GFP_KERNEL);
-+		if (!bp->rx_ring_tieoff)
-+			goto out_err;
-+	}
-+
- 	return 0;
- 
- out_err:
-@@ -2671,6 +2687,19 @@ out_err:
- 	return -ENOMEM;
+@@ -2700,6 +2700,14 @@ static void macb_init_tieoff(struct macb
+ 	desc->ctrl = 0;
  }
  
-+static void macb_init_tieoff(struct macb *bp)
++static void gem_init_rx_ring(struct macb_queue *queue)
 +{
-+	struct macb_dma_desc *desc = bp->rx_ring_tieoff;
++	queue->rx_tail = 0;
++	queue->rx_prepared_head = 0;
 +
-+	if (bp->caps & MACB_CAPS_QUEUE_DISABLE)
-+		return;
-+	/* Setup a wrapping descriptor with no free slots
-+	 * (WRAP and USED) to tie off/disable unused RX queues.
-+	 */
-+	macb_set_addr(bp, desc, MACB_BIT(RX_WRAP) | MACB_BIT(RX_USED));
-+	desc->ctrl = 0;
++	gem_rx_refill(queue);
 +}
 +
  static void gem_init_rings(struct macb *bp)
  {
  	struct macb_queue *queue;
-@@ -2694,6 +2723,7 @@ static void gem_init_rings(struct macb *
- 		gem_rx_refill(queue);
+@@ -2717,10 +2725,7 @@ static void gem_init_rings(struct macb *
+ 		queue->tx_head = 0;
+ 		queue->tx_tail = 0;
+ 
+-		queue->rx_tail = 0;
+-		queue->rx_prepared_head = 0;
+-
+-		gem_rx_refill(queue);
++		gem_init_rx_ring(queue);
  	}
  
-+	macb_init_tieoff(bp);
- }
- 
- static void macb_init_rings(struct macb *bp)
-@@ -2711,6 +2741,8 @@ static void macb_init_rings(struct macb
- 	bp->queues[0].tx_head = 0;
- 	bp->queues[0].tx_tail = 0;
- 	desc->ctrl |= MACB_BIT(TX_WRAP);
-+
-+	macb_init_tieoff(bp);
- }
- 
- static void macb_reset_hw(struct macb *bp)
-@@ -5302,6 +5334,7 @@ static int __maybe_unused macb_suspend(s
- 	unsigned long flags;
- 	unsigned int q;
- 	int err;
-+	u32 tmp;
- 
- 	if (!device_may_wakeup(&bp->dev->dev))
- 		phy_exit(bp->sgmii_phy);
-@@ -5311,17 +5344,38 @@ static int __maybe_unused macb_suspend(s
- 
- 	if (bp->wol & MACB_WOL_ENABLED) {
- 		spin_lock_irqsave(&bp->lock, flags);
--		/* Flush all status bits */
--		macb_writel(bp, TSR, -1);
--		macb_writel(bp, RSR, -1);
-+
-+		/* Disable Tx and Rx engines before  disabling the queues,
-+		 * this is mandatory as per the IP spec sheet
-+		 */
-+		tmp = macb_readl(bp, NCR);
-+		macb_writel(bp, NCR, tmp & ~(MACB_BIT(TE) | MACB_BIT(RE)));
- 		for (q = 0, queue = bp->queues; q < bp->num_queues;
- 		     ++q, ++queue) {
-+			/* Disable RX queues */
-+			if (bp->caps & MACB_CAPS_QUEUE_DISABLE) {
-+				queue_writel(queue, RBQP, MACB_BIT(QUEUE_DISABLE));
-+			} else {
-+				/* Tie off RX queues */
-+				queue_writel(queue, RBQP,
-+					     lower_32_bits(bp->rx_ring_tieoff_dma));
-+#ifdef CONFIG_ARCH_DMA_ADDR_T_64BIT
-+				queue_writel(queue, RBQPH,
-+					     upper_32_bits(bp->rx_ring_tieoff_dma));
-+#endif
-+			}
- 			/* Disable all interrupts */
- 			queue_writel(queue, IDR, -1);
- 			queue_readl(queue, ISR);
- 			if (bp->caps & MACB_CAPS_ISR_CLEAR_ON_WRITE)
- 				queue_writel(queue, ISR, -1);
- 		}
-+		/* Enable Receive engine */
-+		macb_writel(bp, NCR, tmp | MACB_BIT(RE));
-+		/* Flush all status bits */
-+		macb_writel(bp, TSR, -1);
-+		macb_writel(bp, RSR, -1);
-+
- 		/* Change interrupt handler and
- 		 * Enable WoL IRQ on queue 0
- 		 */
+ 	macb_init_tieoff(bp);
 
 
