@@ -1,41 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057123BD655;
-	Mon, 23 Mar 2026 16:12:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666DB28506C;
+	Mon, 23 Mar 2026 16:12:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282334; cv=none; b=bLMHZhc+pyxgcDo60v6dQ9UxWPRGEiegTQ5akYQlgFNRD8FlCRyZd1P8vfNnWbgezoauYCWxQSlyIGDe237X3oSSnBD+S3JYSDMqQjlx0uvPTtEoikRYA/gsZFS3X1048h4r6ypQuZSanp+SrBhHZMtSNBc/6Z2SdV0fRiD2OCw=
+	t=1774282336; cv=none; b=pqSdzW9svf37a1TDxQiYkR8aO4QNtAJksPb/K1vM/zsQXmpnD6IYhKCeQ7AFn92FAAhtkal7tlh3ay0XmZf1U/zxtKvZ8gQ1HjvzeuRd3vVuUM1iqWc+zgXUDya2r98YbA2W4FYufDZMt54SiG5rbKOO5ms96cPMuS6zzkOh1N8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282334; c=relaxed/simple;
-	bh=Sj69weSCJPLnw5ozyoJDoeSBoUceqdwKkxb0zhTYudA=;
+	s=arc-20240116; t=1774282336; c=relaxed/simple;
+	bh=4e+zkIj4eKKJANM9BXd1SnKBlTTHRNNSb4KynggjDYQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Xx/pA3Ad3PNtiYWXOMHbPeoPAK0hYaKOkhgYgPH5h5aLlW/P7dQLF3mHiFArFU5KCoMvMudPY1ESxbAoMLtSHm5OjUV3QImuNB5R5G1TQbwrCb0FIMK7T44DIBNKjed1cqJ+btCDEdtHdgQ6O8eR3WLcuDLGH4dEJpGc8zyBqvk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lltY1Uct; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=mXhgnPAS8fixuWr/1oYEQO1R6q6x3G1hITYZu7wj+A1qnQ75/SXrmUA5Bp9pzHZy4WcwUu45YzbTWX4xrfP2UiK7FyXDEXaUIOrIc13neNzPnXLpobdMUAAO97/4Rqh6njl26Trh+twuX/kkgJXz4wKdhiabrcyCgtMPINE5LDI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L5LhnMwi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lltY1Uct"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76974C4CEF7;
-	Mon, 23 Mar 2026 16:12:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L5LhnMwi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 000EFC4CEF7;
+	Mon, 23 Mar 2026 16:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282333;
-	bh=Sj69weSCJPLnw5ozyoJDoeSBoUceqdwKkxb0zhTYudA=;
+	s=korg; t=1774282336;
+	bh=4e+zkIj4eKKJANM9BXd1SnKBlTTHRNNSb4KynggjDYQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lltY1Uctub4iijbfaRNiCd2/h5yBQbDC2F9RlEJaAKsuhrhTu61+CuEaOterqvMv9
-	 1gqmBOVFeJn85c6iSvzn6kAxXvTlJR895s5WWShtX1/vvbUiNI3gAbrHRgXrp6Qehp
-	 nOPGxilRcM2ofAnwEmi/YVeHC5Kfx8SoffQ8bMcc=
+	b=L5LhnMwitwgWQdLFOuMISScGPRNxCeCv+knWhbyj3aBtbShNRT8YtoQjYZEUc2/5h
+	 3sskAh0uKd7a7XEUou7QrGVA9eKFd/cHp5cTRBgzxJpA95FqBky1LHmGx5g2wNe6Zs
+	 WSjsxaMbTx8DLvtCw17VupbCIbbtr6hQpX59qbUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Linus Walleij <linusw@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sathesh Edara <sedara@marvell.com>,
+	Shinas Rasheed <srasheed@marvell.com>,
+	Vimlesh Kumar <vimleshk@marvell.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 118/481] net: dsa: realtek: rtl8365mb: fix rtl8365mb_phy_ocp_write return value
-Date: Mon, 23 Mar 2026 14:41:40 +0100
-Message-ID: <20260323134528.160275652@linuxfoundation.org>
+Subject: [PATCH 6.1 119/481] octeon_ep: Relocate counter updates before NAPI
+Date: Mon, 23 Mar 2026 14:41:41 +0100
+Message-ID: <20260323134528.185777708@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,40 +53,79 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Vimlesh Kumar <vimleshk@marvell.com>
 
-[ Upstream commit 7cbe98f7bef965241a5908d50d557008cf998aee ]
+[ Upstream commit 18c04a808c436d629d5812ce883e3822a5f5a47f ]
 
-Function rtl8365mb_phy_ocp_write() always returns 0, even when an error
-occurs during register access. This patch fixes the return value to
-propagate the actual error code from regmap operations.
+Relocate IQ/OQ IN/OUT_CNTS updates to occur before NAPI completion,
+and replace napi_complete with napi_complete_done.
 
-Link: https://lore.kernel.org/netdev/a2dfde3c-d46f-434b-9d16-1e251e449068@yahoo.com/
-Fixes: 2796728460b8 ("net: dsa: realtek: rtl8365mb: serialize indirect PHY register access")
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260301-realtek_namiltd_fix1-v1-1-43a6bb707f9c@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Moving the IQ/OQ counter updates before napi_complete_done ensures
+1. Counter registers are updated before re-enabling interrupts.
+2. Prevents a race where new packets arrive but counters aren't properly
+   synchronized.
+napi_complete_done (vs napi_complete) allows for better
+interrupt coalescing.
+
+Fixes: 37d79d0596062 ("octeon_ep: add Tx/Rx processing and interrupt support")
+Signed-off-by: Sathesh Edara <sedara@marvell.com>
+Signed-off-by: Shinas Rasheed <srasheed@marvell.com>
+Signed-off-by: Vimlesh Kumar <vimleshk@marvell.com>
+Link: https://patch.msgid.link/20260227091402.1773833-2-vimleshk@marvell.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../ethernet/marvell/octeon_ep/octep_main.c   | 19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index da31d8b839ac6..abdff73aa9c32 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -764,7 +764,7 @@ static int rtl8365mb_phy_ocp_write(struct realtek_priv *priv, int phy,
- out:
- 	mutex_unlock(&priv->map_lock);
- 
--	return 0;
-+	return ret;
+diff --git a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+index e171097c13654..aa98cc8fd344e 100644
+--- a/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
++++ b/drivers/net/ethernet/marvell/octeon_ep/octep_main.c
+@@ -346,12 +346,12 @@ static void octep_clean_irqs(struct octep_device *oct)
  }
  
- static int rtl8365mb_phy_read(struct realtek_priv *priv, int phy, int regnum)
+ /**
+- * octep_enable_ioq_irq() - Enable MSI-x interrupt of a Tx/Rx queue.
++ * octep_update_pkt() - Update IQ/OQ IN/OUT_CNT registers.
+  *
+  * @iq: Octeon Tx queue data structure.
+  * @oq: Octeon Rx queue data structure.
+  */
+-static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
++static void octep_update_pkt(struct octep_iq *iq, struct octep_oq *oq)
+ {
+ 	u32 pkts_pend = oq->pkts_pending;
+ 
+@@ -367,7 +367,17 @@ static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
+ 	}
+ 
+ 	/* Flush the previous wrties before writing to RESEND bit */
+-	wmb();
++	smp_wmb();
++}
++
++/**
++ * octep_enable_ioq_irq() - Enable MSI-x interrupt of a Tx/Rx queue.
++ *
++ * @iq: Octeon Tx queue data structure.
++ * @oq: Octeon Rx queue data structure.
++ */
++static void octep_enable_ioq_irq(struct octep_iq *iq, struct octep_oq *oq)
++{
+ 	writeq(1UL << OCTEP_OQ_INTR_RESEND_BIT, oq->pkts_sent_reg);
+ 	writeq(1UL << OCTEP_IQ_INTR_RESEND_BIT, iq->inst_cnt_reg);
+ }
+@@ -393,7 +403,8 @@ static int octep_napi_poll(struct napi_struct *napi, int budget)
+ 	if (tx_pending || rx_done >= budget)
+ 		return budget;
+ 
+-	napi_complete(napi);
++	octep_update_pkt(ioq_vector->iq, ioq_vector->oq);
++	napi_complete_done(napi, rx_done);
+ 	octep_enable_ioq_irq(ioq_vector->iq, ioq_vector->oq);
+ 	return rx_done;
+ }
 -- 
 2.51.0
 
