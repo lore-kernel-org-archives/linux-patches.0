@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B78E258CD9;
-	Mon, 23 Mar 2026 16:21:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6037612CDA5;
+	Mon, 23 Mar 2026 16:21:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282901; cv=none; b=ED7zAp+vMQBKnt9k3rY7vB5LnKUTXAZIyaYjEygk9fA07KQH57IOYo+U/4T/m+zjYWGrjbhsxJ9rohLLRR8eT/2xq9RGmYDt+roqbe1+RTCz53qqMEKq4SB9X+eOKVJxWhjUw99o+ratfKgnf8RFSZb8PdZ4xI4YKhPplKbaAxY=
+	t=1774282904; cv=none; b=UvmpkPA+5mC8ii8R/gAI+Ncd+FjZIj3VAD5nRV8YlQGAr7Tmei7dtssHBI+T08yhYGdww/DMWuEl/y4DVOxT5wVVJ/xZl2etgdEWsO9wDeawCABgG/i64vLVB2HpcQk1C0QDtkxtTEYzZpElsXX/U/lHlRKXetfHwjXMrAHla6w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282901; c=relaxed/simple;
-	bh=vDBsOZGF5t49lYMPhsj3Kcl4NI6bj8sxEb1SdS3ppJo=;
+	s=arc-20240116; t=1774282904; c=relaxed/simple;
+	bh=LB/CmAzcjic/HmrcXcN4R1m+d7L/E6FFy4CbilB1CiE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kc4CMUh3QZIYZP/tQn0iojiS9+w36RDcgZ/QtVEXgtv8687Ssi0SChfJhtO5RGrLYZ/HgudMtOJMalNLEFkQ2d0JrDrw7BUcWlmRlkCXCAUvjjigGFQZj0b0lLU4t+jBqo4BToRDrWFL3A7u29h71rxzFPAjvnzpmy5ZPgAGC9M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+z8xEYk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=qJhowMw7Zd6nBcNHFtE91DaEksyHjrp/eH37c0EfEUhYlKNROb5wvGoyPwWjrBF1198jclHCe+Hq0j3tifpJLeAP3J4IZOLYUghhkLlqte9Ulv3iGLbLEln+Bdr984ResSmCQZ3ICU9a+4zvIzECYA56A+APjZt83MCFHQpPEDE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NmatMWe/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+z8xEYk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D266C4CEF7;
-	Mon, 23 Mar 2026 16:21:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NmatMWe/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F57C4CEF7;
+	Mon, 23 Mar 2026 16:21:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282901;
-	bh=vDBsOZGF5t49lYMPhsj3Kcl4NI6bj8sxEb1SdS3ppJo=;
+	s=korg; t=1774282904;
+	bh=LB/CmAzcjic/HmrcXcN4R1m+d7L/E6FFy4CbilB1CiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+z8xEYkYDIwjCFToum69CPm4djei9Q+08Gm0kOVwbq6W3BCJCnEohdpwOoh10RuU
-	 GNXuGxM0LnFlxIyvUnJcKrVIL37uRNo7tYEFhDniuZ5bx10Z2eIN7iY0D9jBIQzZUu
-	 wokvtOpnRR/tEfemuu6wuZ1roaqFvoWR5lW/M1UA=
+	b=NmatMWe/dQZMO0z0kyuVZ2wgTCplWD/YkXjXcYe1dHYWcMq6WskTJi89UBZ/O2TSP
+	 sUrT1hupI7EcL/WAENvXQRi88S6IWggWcSTjYnKB0EfbGkeuLLEivOUJK2BsA9AtX/
+	 wZoVUnIrEIXNsl8HmqxsafL8355jxQSyn9l0BC8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>
-Subject: [PATCH 6.1 284/481] LoongArch: Give more information if kmem access failed
-Date: Mon, 23 Mar 2026 14:44:26 +0100
-Message-ID: <20260323134532.035113623@linuxfoundation.org>
+	Ian Ray <ian.ray@gehealthcare.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 285/481] NFC: nxp-nci: allow GPIOs to sleep
+Date: Mon, 23 Mar 2026 14:44:27 +0100
+Message-ID: <20260323134532.059708581@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -50,64 +50,41 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Ian Ray <ian.ray@gehealthcare.com>
 
-commit a47f0754bdd01f971c9715acdbdd3a07515c8f83 upstream.
+commit 55dc632ab2ac2889b15995a9eef56c753d48ebc7 upstream.
 
-If memory access such as copy_{from, to}_kernel_nofault() failed, its
-users do not know what happened, so it is very useful to print the
-exception code for such cases. Furthermore, it is better to print the
-caller function to know where is the entry.
+Allow the firmware and enable GPIOs to sleep.
 
-Here are the low level call chains:
+This fixes a `WARN_ON' and allows the driver to operate GPIOs which are
+connected to I2C GPIO expanders.
 
-  copy_from_kernel_nofault()
-    copy_from_kernel_nofault_loop()
-      __get_kernel_nofault()
+-- >8 --
+kernel: WARNING: CPU: 3 PID: 2636 at drivers/gpio/gpiolib.c:3880 gpiod_set_value+0x88/0x98
+-- >8 --
 
-  copy_to_kernel_nofault()
-    copy_to_kernel_nofault_loop()
-      __put_kernel_nofault()
-
+Fixes: 43201767b44c ("NFC: nxp-nci: Convert to use GPIO descriptor")
 Cc: stable@vger.kernel.org
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
+Signed-off-by: Ian Ray <ian.ray@gehealthcare.com>
+Link: https://patch.msgid.link/20260317085337.146545-1-ian.ray@gehealthcare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/loongarch/include/asm/uaccess.h |   14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ drivers/nfc/nxp-nci/i2c.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/loongarch/include/asm/uaccess.h
-+++ b/arch/loongarch/include/asm/uaccess.h
-@@ -209,8 +209,13 @@ do {									\
- 									\
- 	__get_kernel_common(*((type *)(dst)), sizeof(type),		\
- 			    (__force type *)(src));			\
--	if (unlikely(__gu_err))						\
-+	if (unlikely(__gu_err))	{					\
-+		pr_info("%s: memory access failed, ecode 0x%x\n",	\
-+			__func__, read_csr_excode());			\
-+		pr_info("%s: the caller is %pS\n",			\
-+			__func__, __builtin_return_address(0));		\
- 		goto err_label;						\
-+	}								\
- } while (0)
+--- a/drivers/nfc/nxp-nci/i2c.c
++++ b/drivers/nfc/nxp-nci/i2c.c
+@@ -47,8 +47,8 @@ static int nxp_nci_i2c_set_mode(void *ph
+ {
+ 	struct nxp_nci_i2c_phy *phy = (struct nxp_nci_i2c_phy *) phy_id;
  
- #define __put_kernel_nofault(dst, src, type, err_label)			\
-@@ -220,8 +225,13 @@ do {									\
- 									\
- 	__pu_val = *(__force type *)(src);				\
- 	__put_kernel_common(((type *)(dst)), sizeof(type));		\
--	if (unlikely(__pu_err))						\
-+	if (unlikely(__pu_err))	{					\
-+		pr_info("%s: memory access failed, ecode 0x%x\n",	\
-+			__func__, read_csr_excode());			\
-+		pr_info("%s: the caller is %pS\n",			\
-+			__func__, __builtin_return_address(0));		\
- 		goto err_label;						\
-+	}								\
- } while (0)
+-	gpiod_set_value(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
+-	gpiod_set_value(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_fw, (mode == NXP_NCI_MODE_FW) ? 1 : 0);
++	gpiod_set_value_cansleep(phy->gpiod_en, (mode != NXP_NCI_MODE_COLD) ? 1 : 0);
+ 	usleep_range(10000, 15000);
  
- extern unsigned long __copy_user(void *to, const void *from, __kernel_size_t n);
+ 	if (mode == NXP_NCI_MODE_COLD)
 
 
