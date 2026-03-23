@@ -1,38 +1,47 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90A0D2343D2;
-	Mon, 23 Mar 2026 14:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 243501D63F3;
+	Mon, 23 Mar 2026 14:15:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275354; cv=none; b=eK4hButazAOgj1cncsjE/Bhvnmc0M1Ekjfv6p4e3J5Fia4WsmHcD8IRnh6xhuibaqv1tqdrcsUCEAFSYYTdxzpnf1CXF7BXZLvh84X24FRwiQUHS+T6BT1AwpkqUhRGAr7AsJa/6OJd2/B1t6B4irWpxzh7kBwfgdLTmudRFQHU=
+	t=1774275357; cv=none; b=iWRYrruI4zacAVRnVtqznDYXL9bG62dAEEc3UtFpnp+SO8ltdCIqlZgNzvMVA+pkEoNMXbxBm6HY6iGZu2dlSY7vwXvaNL90oP4CIPMMy87X4X+/qZNBY/fsc1J+UavaxIdfzPvwJdIOgCH4llV6lexrZLu56yK9pkICnGWUNq0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275354; c=relaxed/simple;
-	bh=HHdRa1IM8ETrjbSK7Irhc3E0vYFufTMMp7dVSaE9ajk=;
+	s=arc-20240116; t=1774275357; c=relaxed/simple;
+	bh=8glqN8qGyjI/k+WtqDqQozaJ7Kpp4iD1HmZBs62p+m8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mhJXf7IFPIe2F1IMGSsUhpJ2Biil1oezxAwPuyOu3I+G/EcrZXvidCGbrm/wzZ30kjmoz9m/JZwZ7QGEsJphD14a43x6x7i9QRePoMxsgQJJdQNLIXvCr9Cocd3ieDsnPQrnRPMtS7lEi1+YDWMtEjmeVY5HHaj1xlNvq4QW6ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=opRUdpr3; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r6y5aAZ8H43t4h5y/GllzcwmPW4PnpmJEdj7xy14xw1FAruu/bCt69LkvFLCrlLF+UCUI/Yizmy7JZRL2Ii0VK5aagSrFkIMArjvF3+fM4/F/K4xedEg1BX6EhBufaFoPj+1cS8TIcayr2yhtKdDfINAKxWZsjjvFEpxg5+r1QI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NHY30QnH; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="opRUdpr3"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C2AFC4CEF7;
-	Mon, 23 Mar 2026 14:15:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NHY30QnH"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71D5AC4CEF7;
+	Mon, 23 Mar 2026 14:15:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275354;
-	bh=HHdRa1IM8ETrjbSK7Irhc3E0vYFufTMMp7dVSaE9ajk=;
+	s=korg; t=1774275357;
+	bh=8glqN8qGyjI/k+WtqDqQozaJ7Kpp4iD1HmZBs62p+m8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=opRUdpr3w4bpMS0Kjb43cavujo25dRAT63N9V1QTRlJS+xDsjgArDo1TAKk7zq1Yh
-	 0ag0gtZDFYkwQQ4gK+jQIiFHWAxVPT5F4uXfejh4pVIr8H5Z5r/49YcREAmrKwxRB1
-	 HHW009GZSjOxyrBcFFPv/OB2KKKtDjmzHMhYzj0E=
+	b=NHY30QnHWFdnJvvKKy3k/Aw5mRaP26G+zmnXeiVMyocWza59HKlLqrSTw5OVOkzef
+	 UFY754nD+aBnO1xrGrTx33h9aYfBlZa99WcemsCotApS64nJjbbUe5TI7gpUsqT4wn
+	 4jDxqiTRm4/pqqRMj8SN9ATUEsoz+bCC6xLWsk20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ian Rogers <irogers@google.com>,
+	Chen Ni <nichen@iscas.ac.cn>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	James Clark <james.clark@linaro.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 069/460] regulator: pca9450: Correct interrupt type
-Date: Mon, 23 Mar 2026 14:41:05 +0100
-Message-ID: <20260323134528.394494689@linuxfoundation.org>
+Subject: [PATCH 6.12 070/460] perf ftrace: Fix hashmap__new() error checking
+Date: Mon, 23 Mar 2026 14:41:06 +0100
+Message-ID: <20260323134528.415955170@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,42 +60,60 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Chen Ni <nichen@iscas.ac.cn>
 
-[ Upstream commit 5d0efaf47ee90ac60efae790acee3a3ed99ebf80 ]
+[ Upstream commit be34705aa527872e5ce83927b7bc9307ba8095ca ]
 
-Kernel warning on i.MX8MP-EVK when doing module test:
-irq: type mismatch, failed to map hwirq-3 for gpio@30200000!
+The hashmap__new() function never returns NULL, it returns error
+pointers. Fix the error checking to match.
 
-Per PCA945[X] specification: The IRQ_B pin is pulled low when any unmasked
-interrupt bit status is changed and it is released high once application
-processor read INT1 register.
+Additionally, set ftrace->profile_hash to NULL on error, and return the
+exact error code from hashmap__new().
 
-So the interrupt should be configured as IRQF_TRIGGER_LOW, not
-IRQF_TRIGGER_FALLING.
-
-Fixes: 0935ff5f1f0a4 ("regulator: pca9450: add pca9450 pmic driver")
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Link: https://patch.msgid.link/20260310-pca9450-irq-v1-1-36adf52c2c55@nxp.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0f223813edd051a5 ("perf ftrace: Add 'profile' command")
+Suggested-by: Ian Rogers <irogers@google.com>
+Signed-off-by: Chen Ni <nichen@iscas.ac.cn>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: James Clark <james.clark@linaro.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/pca9450-regulator.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-ftrace.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/pca9450-regulator.c b/drivers/regulator/pca9450-regulator.c
-index 1ffa145319f23..2a0fac873f9c1 100644
---- a/drivers/regulator/pca9450-regulator.c
-+++ b/drivers/regulator/pca9450-regulator.c
-@@ -965,7 +965,7 @@ static int pca9450_i2c_probe(struct i2c_client *i2c)
- 	if (pca9450->irq) {
- 		ret = devm_request_threaded_irq(pca9450->dev, pca9450->irq, NULL,
- 						pca9450_irq_handler,
--						(IRQF_TRIGGER_FALLING | IRQF_ONESHOT),
-+						(IRQF_TRIGGER_LOW | IRQF_ONESHOT),
- 						"pca9450-irq", pca9450);
- 		if (ret != 0) {
- 			dev_err(pca9450->dev, "Failed to request IRQ: %d\n",
+diff --git a/tools/perf/builtin-ftrace.c b/tools/perf/builtin-ftrace.c
+index a56cf8b0a7d40..09c484182d5bc 100644
+--- a/tools/perf/builtin-ftrace.c
++++ b/tools/perf/builtin-ftrace.c
+@@ -18,6 +18,7 @@
+ #include <poll.h>
+ #include <ctype.h>
+ #include <linux/capability.h>
++#include <linux/err.h>
+ #include <linux/string.h>
+ 
+ #include "debug.h"
+@@ -998,8 +999,12 @@ static int prepare_func_profile(struct perf_ftrace *ftrace)
+ 	ftrace->graph_tail = 1;
+ 
+ 	ftrace->profile_hash = hashmap__new(profile_hash, profile_equal, NULL);
+-	if (ftrace->profile_hash == NULL)
+-		return -ENOMEM;
++	if (IS_ERR(ftrace->profile_hash)) {
++		int err = PTR_ERR(ftrace->profile_hash);
++
++		ftrace->profile_hash = NULL;
++		return err;
++	}
+ 
+ 	return 0;
+ }
 -- 
 2.51.0
 
