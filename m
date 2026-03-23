@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCC73B19A2;
-	Mon, 23 Mar 2026 16:25:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675C9396D28;
+	Mon, 23 Mar 2026 16:25:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283128; cv=none; b=VeRiJRETbGO8sbtiAGPFhAgPgf9l8u1oTEv6q/mV98TC0YMaOvvnjt2MUtzIIVIXxkQVhTRZDjD/QtuVBqm748lR8fCABlY2GB2WlK4Ljs7Vr24lj89GOPLSl7RySmCsqMXg8SHQ6CUxULWvyJ3gvygLIM8hOsqTNxBv9+OpK80=
+	t=1774283131; cv=none; b=foZQfhYIdoE6o9u+cMfSvABourNDNLIuB0W4l2Ek1NuIFwNlrdLbI6EXBUGRCH0DYHUxyyzNm1nZrDm6Xzew/Yz00EIoAUJf/C1yrBM3/ElgCFFCKWUmNodIMP40+asb9nniHsaHTpu58Wzqqh9xU4v+bfAS3tE0pYLQeR/Pmlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283128; c=relaxed/simple;
-	bh=FonFDEUxyr+xsmjCLDddmpl7u4FMh1LS9k8IsF6OQ48=;
+	s=arc-20240116; t=1774283131; c=relaxed/simple;
+	bh=k9udkpc8JWyC5hqLpEfT8zo9jNqGRJpytx8QElcUPoE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=pSOQfVZCPH1sAAjzKf46ZVw2qEGKXXffg+G43g3/I8rSSj0nLgFF/tAy+lfKvGKoJkAYz6IRm79UWIKQ5hyjRKiAckR/lbVJTQUmMSP2WfcOHBt++lcc3IxGFL5XAfwGnzoS0ON/XhWO44DYp2n4PYpf47P4psYw4Fp2kEEbmXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NpPnw77B; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FPRdJJX38BSYWfohUo9PzZwgtLHMofI5iTnJaXfZ/TaT100aNen2o0ZDI+fanzEdPgIiLMKYhReThx2ouA0/2/lleg3S+1tS+iUINn/PdsCXsx3I+AYPKKjm7zw1scuivBFdxeCPH/iBtVZMdyYv6VNQdDzxSvssJLP76uLaJRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c4t+b/5K; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NpPnw77B"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CA59C4CEF7;
-	Mon, 23 Mar 2026 16:25:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c4t+b/5K"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 005A1C4CEF7;
+	Mon, 23 Mar 2026 16:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283128;
-	bh=FonFDEUxyr+xsmjCLDddmpl7u4FMh1LS9k8IsF6OQ48=;
+	s=korg; t=1774283131;
+	bh=k9udkpc8JWyC5hqLpEfT8zo9jNqGRJpytx8QElcUPoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NpPnw77BwnM3auqAEVo8MNlQUZbWNF77r9b7Mg3Swhg0aHxeV+M8ANW1ZNYZeaOAa
-	 aGwr7/RCuF/5mmEFft1NqsoOtgarSpBe2pn0uUeNBdxrcqxNwlQqK6T7D90YiIK5K+
-	 2aGufsgxz9x4blYlsARsZ13zCRJuMaRUKxDO7T7s=
+	b=c4t+b/5K4bjAsTtK0/PLhyVmIYgtziCrwnYuDbRImFz+8V3hGpebIOOIvxCDu/EEn
+	 ZLVDkap+njqaqkiVth7BjyYxA5qbMp/W41hE0yYjbVKTlVAwnuu9TBL4Xq+eNX14rb
+	 AUcx8ECH9AsyLkemkKuztNHB5d9EXxYDXwnwlI1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 375/481] ksmbd: Compare MACs in constant time
-Date: Mon, 23 Mar 2026 14:45:57 +0100
-Message-ID: <20260323134534.270294854@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 411/481] netfilter: ctnetlink: remove refcounting in expectation dumpers
+Date: Mon, 23 Mar 2026 14:46:33 +0100
+Message-ID: <20260323134535.198711477@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,71 +51,165 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Florian Westphal <fw@strlen.de>
 
-commit c5794709bc9105935dbedef8b9cf9c06f2b559fa upstream.
+[ Upstream commit 1492e3dcb2be3aa46d1963da96aa9593e4e4db5a ]
 
-To prevent timing attacks, MAC comparisons need to be constant-time.
-Replace the memcmp() with the correct function, crypto_memneq().
+Same pattern as previous patch: do not keep the expectation object
+alive via refcount, only store a cookie value and then use that
+as the skip hint for dump resumption.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@kernel.org>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+AFAICS this has the same issue as the one resolved in the conntrack
+dumper, when we do
+  if (!refcount_inc_not_zero(&exp->use))
+
+to increment the refcount, there is a chance that exp == last, which
+causes a double-increment of the refcount and subsequent memory leak.
+
+Fixes: cf6994c2b981 ("[NETFILTER]: nf_conntrack_netlink: sync expectation dumping with conntrack table dumping")
+Fixes: e844a928431f ("netfilter: ctnetlink: allow to dump expectation per master conntrack")
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: 5cb81eeda909 ("netfilter: ctnetlink: fix use-after-free in ctnetlink_dump_exp_ct()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/smb/server/auth.c    |    4 +++-
- fs/smb/server/smb2pdu.c |    5 +++--
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ net/netfilter/nf_conntrack_netlink.c | 41 ++++++++++++----------------
+ 1 file changed, 17 insertions(+), 24 deletions(-)
 
---- a/fs/smb/server/auth.c
-+++ b/fs/smb/server/auth.c
-@@ -13,6 +13,7 @@
- #include <linux/xattr.h>
- #include <crypto/hash.h>
- #include <crypto/aead.h>
-+#include <crypto/algapi.h>
- #include <linux/random.h>
- #include <linux/scatterlist.h>
+diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
+index d3e28574ceb94..5bf72773c69f7 100644
+--- a/net/netfilter/nf_conntrack_netlink.c
++++ b/net/netfilter/nf_conntrack_netlink.c
+@@ -3144,23 +3144,27 @@ ctnetlink_expect_event(unsigned int events, const struct nf_exp_event *item)
+ 	return 0;
+ }
+ #endif
+-static int ctnetlink_exp_done(struct netlink_callback *cb)
++
++static unsigned long ctnetlink_exp_id(const struct nf_conntrack_expect *exp)
+ {
+-	if (cb->args[1])
+-		nf_ct_expect_put((struct nf_conntrack_expect *)cb->args[1]);
+-	return 0;
++	unsigned long id = (unsigned long)exp;
++
++	id += nf_ct_get_id(exp->master);
++	id += exp->class;
++
++	return id ? id : 1;
+ }
  
-@@ -281,7 +282,8 @@ int ksmbd_auth_ntlmv2(struct ksmbd_conn
- 		goto out;
+ static int
+ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+ 	struct net *net = sock_net(skb->sk);
+-	struct nf_conntrack_expect *exp, *last;
+ 	struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
+ 	u_int8_t l3proto = nfmsg->nfgen_family;
++	unsigned long last_id = cb->args[1];
++	struct nf_conntrack_expect *exp;
+ 
+ 	rcu_read_lock();
+-	last = (struct nf_conntrack_expect *)cb->args[1];
+ 	for (; cb->args[0] < nf_ct_expect_hsize; cb->args[0]++) {
+ restart:
+ 		hlist_for_each_entry_rcu(exp, &nf_ct_expect_hash[cb->args[0]],
+@@ -3172,7 +3176,7 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 				continue;
+ 
+ 			if (cb->args[1]) {
+-				if (exp != last)
++				if (ctnetlink_exp_id(exp) != last_id)
+ 					continue;
+ 				cb->args[1] = 0;
+ 			}
+@@ -3181,9 +3185,7 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 						    cb->nlh->nlmsg_seq,
+ 						    IPCTNL_MSG_EXP_NEW,
+ 						    exp) < 0) {
+-				if (!refcount_inc_not_zero(&exp->use))
+-					continue;
+-				cb->args[1] = (unsigned long)exp;
++				cb->args[1] = ctnetlink_exp_id(exp);
+ 				goto out;
+ 			}
+ 		}
+@@ -3194,32 +3196,30 @@ ctnetlink_exp_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
  	}
- 
--	if (memcmp(ntlmv2->ntlmv2_hash, ntlmv2_rsp, CIFS_HMAC_MD5_HASH_SIZE) != 0)
-+	if (crypto_memneq(ntlmv2->ntlmv2_hash, ntlmv2_rsp,
-+			  CIFS_HMAC_MD5_HASH_SIZE))
- 		rc = -EINVAL;
  out:
- 	if (ctx)
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -4,6 +4,7 @@
-  *   Copyright (C) 2018 Samsung Electronics Co., Ltd.
-  */
+ 	rcu_read_unlock();
+-	if (last)
+-		nf_ct_expect_put(last);
+-
+ 	return skb->len;
+ }
  
-+#include <crypto/algapi.h>
- #include <linux/inetdevice.h>
- #include <net/addrconf.h>
- #include <linux/syscalls.h>
-@@ -8430,7 +8431,7 @@ int smb2_check_sign_req(struct ksmbd_wor
- 				signature))
+ static int
+ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ {
+-	struct nf_conntrack_expect *exp, *last;
+ 	struct nfgenmsg *nfmsg = nlmsg_data(cb->nlh);
+ 	struct nf_conn *ct = cb->data;
+ 	struct nf_conn_help *help = nfct_help(ct);
+ 	u_int8_t l3proto = nfmsg->nfgen_family;
++	unsigned long last_id = cb->args[1];
++	struct nf_conntrack_expect *exp;
+ 
+ 	if (cb->args[0])
  		return 0;
  
--	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
- 		pr_err("bad smb2 signature\n");
- 		return 0;
+ 	rcu_read_lock();
+-	last = (struct nf_conntrack_expect *)cb->args[1];
++
+ restart:
+ 	hlist_for_each_entry_rcu(exp, &help->expectations, lnode) {
+ 		if (l3proto && exp->tuple.src.l3num != l3proto)
+ 			continue;
+ 		if (cb->args[1]) {
+-			if (exp != last)
++			if (ctnetlink_exp_id(exp) != last_id)
+ 				continue;
+ 			cb->args[1] = 0;
+ 		}
+@@ -3227,9 +3227,7 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 					    cb->nlh->nlmsg_seq,
+ 					    IPCTNL_MSG_EXP_NEW,
+ 					    exp) < 0) {
+-			if (!refcount_inc_not_zero(&exp->use))
+-				continue;
+-			cb->args[1] = (unsigned long)exp;
++			cb->args[1] = ctnetlink_exp_id(exp);
+ 			goto out;
+ 		}
  	}
-@@ -8518,7 +8519,7 @@ int smb3_check_sign_req(struct ksmbd_wor
- 	if (ksmbd_sign_smb3_pdu(conn, signing_key, iov, 1, signature))
- 		return 0;
+@@ -3240,9 +3238,6 @@ ctnetlink_exp_ct_dump_table(struct sk_buff *skb, struct netlink_callback *cb)
+ 	cb->args[0] = 1;
+ out:
+ 	rcu_read_unlock();
+-	if (last)
+-		nf_ct_expect_put(last);
+-
+ 	return skb->len;
+ }
  
--	if (memcmp(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
-+	if (crypto_memneq(signature, signature_req, SMB2_SIGNATURE_SIZE)) {
- 		pr_err("bad smb2 signature\n");
- 		return 0;
- 	}
+@@ -3261,7 +3256,6 @@ static int ctnetlink_dump_exp_ct(struct net *net, struct sock *ctnl,
+ 	struct nf_conntrack_zone zone;
+ 	struct netlink_dump_control c = {
+ 		.dump = ctnetlink_exp_ct_dump_table,
+-		.done = ctnetlink_exp_done,
+ 	};
+ 
+ 	err = ctnetlink_parse_tuple(cda, &tuple, CTA_EXPECT_MASTER,
+@@ -3311,7 +3305,6 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
+ 		else {
+ 			struct netlink_dump_control c = {
+ 				.dump = ctnetlink_exp_dump_table,
+-				.done = ctnetlink_exp_done,
+ 			};
+ 			return netlink_dump_start(info->sk, skb, info->nlh, &c);
+ 		}
+-- 
+2.51.0
+
 
 
