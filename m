@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26E823E33D;
-	Mon, 23 Mar 2026 14:47:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D45D23B612;
+	Mon, 23 Mar 2026 14:47:09 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277227; cv=none; b=fej4p7hwXhmdU8Xm+aiXeVZPdMWWcuiTUzE8cosJM8vsGTtSR3+mUnqX0aeBiUx66knjR073tCPaHWIGkqNjK3VDxZGQ+0+H05QsZRWqvI0Vm8ZW9UsBFagavpENXYU+GXI2qdsrj7KHmSl2rKlZyP86GUyk1d4fPH46g9fah6I=
+	t=1774277229; cv=none; b=KoX/c1z3VaMNAGHdn4hXjkVuQw1j498y3WRDRB8H6VsLdoaBaSMnhQDHurAJ7RKKqEtfSjuTYb6DnyXIhwo0xWL1kdh7beRXo2+J11Cx0PPuM+mTOioeVvj/KsKjmo/Yl6YXRCXeXCcp1+2AOIBkEY1Kk30cP36lHwvqCb6sp/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277227; c=relaxed/simple;
-	bh=IRzvck8ZNTivlcSvm+9M6aCmITvlh5Wt7sdPDT9ZjbQ=;
+	s=arc-20240116; t=1774277229; c=relaxed/simple;
+	bh=C5UkRbHSVZi123O3y4PC0wg73N2G6HjtmHGYn4tpfe0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=L/wZgecGIqS1PERIUHRo30GdtHJbVs27GYMbq2mj7zH2tLL67V/scmkiNUiG93+MSWLDpcXLqVPt3ASM3X6XdPaugRTJgmetHZzcXIf71XpRCiMW4lx4rlgoLVwlPxkQ3IGRiQ6L20EavLOWbZPKX6GXD5zcTQ6bfeKAJC7PnhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jaIGSYVH; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=N7ycNaMrE17w62IArHtmcfccJE5EJYtfgJmYBJdTW498jL2gFqMFTcGc+NMQw2jCBRLlmNjLgXlNVKo1VoCsgVbFymZ+kpjxVNWEyprOuGgp/U+mV4MKB47nHeM/hh7CbG2Uhq27B0we2OQFEu1/xpocEplMM4tCymYaXIZt1jE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0HMt02X8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jaIGSYVH"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 766A7C4CEF7;
-	Mon, 23 Mar 2026 14:47:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0HMt02X8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA9A4C4CEF7;
+	Mon, 23 Mar 2026 14:47:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277226;
-	bh=IRzvck8ZNTivlcSvm+9M6aCmITvlh5Wt7sdPDT9ZjbQ=;
+	s=korg; t=1774277229;
+	bh=C5UkRbHSVZi123O3y4PC0wg73N2G6HjtmHGYn4tpfe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaIGSYVHscpk466PzhDz8SnO5pgzuAhF8pdKdZlhLzrtYTJicAh7W/Aunezsj81mp
-	 3A5fQtz1MJeXa+c3C2pUKqhNaF/eRS3tdJqFLSEc3+9xynuLsibJ3GYRPHGJ6q1voB
-	 KdGryEClOvy/vKuSA2YUxZn//MYoM6rf+ht+MEC4=
+	b=0HMt02X8AljDw3JCH/ROFcBY1tb9I+KNNccCujf2s8BnCp6X6tv8Zoh6LVJAqmFEO
+	 L4J5wIVGAaD2GAivbMT5ayae8hhRSijAo9LnmNIUCjP15elR1o8iDHp+vhsQGFVLTI
+	 g9AV3Me903sgFQVqPIUxrIFph93boSyRQxyT+g5c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Matthew Schwartz <matthew.schwartz@linux.dev>,
-	Ben Chuang <ben.chuang@genesyslogic.com.tw>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.12 335/460] mmc: sdhci-pci-gli: fix GL9750 DMA write corruption
-Date: Mon, 23 Mar 2026 14:45:31 +0100
-Message-ID: <20260323134534.762729486@linuxfoundation.org>
+	Zhanjun Dong <zhanjun.dong@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.12 362/460] drm/xe: Open-code GGTT MMIO access protection
+Date: Mon, 23 Mar 2026 14:45:58 +0100
+Message-ID: <20260323134535.452683655@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -46,66 +45,104 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Matthew Schwartz <matthew.schwartz@linux.dev>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 2b76e0cc7803e5ab561c875edaba7f6bbd87fbb0 upstream.
+commit 01f2557aa684e514005541e71a3d01f4cd45c170 upstream.
 
-The GL9750 SD host controller has intermittent data corruption during
-DMA write operations. The GM_BURST register's R_OSRC_Lmt field
-(bits 17:16), which limits outstanding DMA read requests from system
-memory, is not being cleared during initialization. The Windows driver
-sets R_OSRC_Lmt to zero, limiting requests to the smallest unit.
+GGTT MMIO access is currently protected by hotplug (drm_dev_enter),
+which works correctly when the driver loads successfully and is later
+unbound or unloaded. However, if driver load fails, this protection is
+insufficient because drm_dev_unplug() is never called.
 
-Clear R_OSRC_Lmt to match the Windows driver behavior. This eliminates
-write corruption verified with f3write/f3read tests while maintaining
-DMA performance.
+Additionally, devm release functions cannot guarantee that all BOs with
+GGTT mappings are destroyed before the GGTT MMIO region is removed, as
+some BOs may be freed asynchronously by worker threads.
+
+To address this, introduce an open-coded flag, protected by the GGTT
+lock, that guards GGTT MMIO access. The flag is cleared during the
+dev_fini_ggtt devm release function to ensure MMIO access is disabled
+once teardown begins.
 
 Cc: stable@vger.kernel.org
-Fixes: e51df6ce668a ("mmc: host: sdhci-pci: Add Genesys Logic GL975x support")
-Closes: https://lore.kernel.org/linux-mmc/33d12807-5c72-41ce-8679-57aa11831fad@linux.dev/
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Matthew Schwartz <matthew.schwartz@linux.dev>
-Reviewed-by: Ben Chuang <ben.chuang@genesyslogic.com.tw>
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 919bb54e989c ("drm/xe: Fix missing runtime outer protection for ggtt_remove_node")
+Reviewed-by: Zhanjun Dong <zhanjun.dong@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260310225039.1320161-8-zhanjun.dong@intel.com
+(cherry picked from commit 4f3a998a173b4325c2efd90bdadc6ccd3ad9a431)
+Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-pci-gli.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/xe/xe_ggtt.c       |   10 ++++------
+ drivers/gpu/drm/xe/xe_ggtt_types.h |    5 ++++-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/mmc/host/sdhci-pci-gli.c
-+++ b/drivers/mmc/host/sdhci-pci-gli.c
-@@ -67,6 +67,9 @@
- #define   GLI_9750_MISC_TX1_DLY_VALUE    0x5
- #define   SDHCI_GLI_9750_MISC_SSC_OFF    BIT(26)
+--- a/drivers/gpu/drm/xe/xe_ggtt.c
++++ b/drivers/gpu/drm/xe/xe_ggtt.c
+@@ -202,6 +202,8 @@ static void dev_fini_ggtt(void *arg)
+ {
+ 	struct xe_ggtt *ggtt = arg;
  
-+#define SDHCI_GLI_9750_GM_BURST_SIZE		  0x510
-+#define   SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT  GENMASK(17, 16)
-+
- #define SDHCI_GLI_9750_TUNING_CONTROL	          0x540
- #define   SDHCI_GLI_9750_TUNING_CONTROL_EN          BIT(4)
- #define   GLI_9750_TUNING_CONTROL_EN_ON             0x1
-@@ -271,10 +274,16 @@ static void gli_set_9750(struct sdhci_ho
- 	u32 misc_value;
- 	u32 parameter_value;
- 	u32 control_value;
-+	u32 burst_value;
- 	u16 ctrl2;
++	scoped_guard(mutex, &ggtt->lock)
++		ggtt->flags &= ~XE_GGTT_FLAGS_ONLINE;
+ 	drain_workqueue(ggtt->wq);
+ }
  
- 	gl9750_wt_on(host);
+@@ -261,6 +263,7 @@ int xe_ggtt_init_early(struct xe_ggtt *g
+ 	if (err)
+ 		return err;
  
-+	/* clear R_OSRC_Lmt to avoid DMA write corruption */
-+	burst_value = sdhci_readl(host, SDHCI_GLI_9750_GM_BURST_SIZE);
-+	burst_value &= ~SDHCI_GLI_9750_GM_BURST_SIZE_R_OSRC_LMT;
-+	sdhci_writel(host, burst_value, SDHCI_GLI_9750_GM_BURST_SIZE);
-+
- 	driving_value = sdhci_readl(host, SDHCI_GLI_9750_DRIVING);
- 	pll_value = sdhci_readl(host, SDHCI_GLI_9750_PLL);
- 	sw_ctrl_value = sdhci_readl(host, SDHCI_GLI_9750_SW_CTRL);
++	ggtt->flags |= XE_GGTT_FLAGS_ONLINE;
+ 	err = devm_add_action_or_reset(xe->drm.dev, dev_fini_ggtt, ggtt);
+ 	if (err)
+ 		return err;
+@@ -293,13 +296,10 @@ static void xe_ggtt_initial_clear(struct
+ static void ggtt_node_remove(struct xe_ggtt_node *node)
+ {
+ 	struct xe_ggtt *ggtt = node->ggtt;
+-	struct xe_device *xe = tile_to_xe(ggtt->tile);
+ 	bool bound;
+-	int idx;
+-
+-	bound = drm_dev_enter(&xe->drm, &idx);
+ 
+ 	mutex_lock(&ggtt->lock);
++	bound = ggtt->flags & XE_GGTT_FLAGS_ONLINE;
+ 	if (bound)
+ 		xe_ggtt_clear(ggtt, node->base.start, node->base.size);
+ 	drm_mm_remove_node(&node->base);
+@@ -312,8 +312,6 @@ static void ggtt_node_remove(struct xe_g
+ 	if (node->invalidate_on_remove)
+ 		xe_ggtt_invalidate(ggtt);
+ 
+-	drm_dev_exit(idx);
+-
+ free_node:
+ 	xe_ggtt_node_fini(node);
+ }
+--- a/drivers/gpu/drm/xe/xe_ggtt_types.h
++++ b/drivers/gpu/drm/xe/xe_ggtt_types.h
+@@ -25,11 +25,14 @@ struct xe_ggtt {
+ 	/** @size: Total size of this GGTT */
+ 	u64 size;
+ 
+-#define XE_GGTT_FLAGS_64K BIT(0)
++#define XE_GGTT_FLAGS_64K       BIT(0)
++#define XE_GGTT_FLAGS_ONLINE	BIT(1)
+ 	/**
+ 	 * @flags: Flags for this GGTT
+ 	 * Acceptable flags:
+ 	 * - %XE_GGTT_FLAGS_64K - if PTE size is 64K. Otherwise, regular is 4K.
++	 * - %XE_GGTT_FLAGS_ONLINE - is GGTT online, protected by ggtt->lock
++	 *   after init
+ 	 */
+ 	unsigned int flags;
+ 	/** @scratch: Internal object allocation used as a scratch page */
 
 
