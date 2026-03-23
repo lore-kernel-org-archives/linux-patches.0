@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8DC73AC0D3;
-	Mon, 23 Mar 2026 16:09:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BD5285068;
+	Mon, 23 Mar 2026 16:10:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282199; cv=none; b=drrcd5wDwK7OzofHY16yPboM0sd5xeTG7Pls40q+sY/Vo18XHzZaMkeTKbnUa8pJ8thJZ1EIj6bi8Gfcj333cv4V5aaILmjvVhHlk/yTQe0nqOq3BNu+PXrA3doo8hPLRJAkqmL/IDZEc5dJ6pZR2+CIkLnYyGGcObbAjTifK0o=
+	t=1774282202; cv=none; b=tP8wFR7nyEBYYj5WIZWalkFkmoUGQqaANV6gOIPcoZ2Pffj0dpYCDr+hjxWu5lPuWL2a6zSLL8g3yPZ3b+3w9gRJNyBnVK1ltN/lmNeavxb6kjm9T3HnnXY2DZcTgLGe27PP0c2UioUQETSL93KKUqK58o++ZY9lOmGpxYxY6ek=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282199; c=relaxed/simple;
-	bh=/UeWjjoZSQ0W9mzdRix6CgfyyaleJU06pK9FAOW9nq8=;
+	s=arc-20240116; t=1774282202; c=relaxed/simple;
+	bh=n0KhDbU8gJ/QY0q76aS+7fUtCVBHmNOVgsTkoC6A96E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+PFAsHfFu1Q5vVBWSQ+71YNt0Qd2CbfB+jXjwNA/FNTwZM+2SojGALPm3rXFBTnCnPWM2Ilin0OQoOMOmVhQgHJxdor3gnfDLwgE3vrSL04QL9To6PnReZSjUbf5CCGXoGKkxvApLVITl5ppP07fuZvz0r9HPXLTIQ4mh14oHo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PSjzBrDh; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=SSqaCs5CKpbpK6jD+GfHX3hp+WBI7lRJDe7U5/LLHGe7Gx/rfMljWhEQfDiVBYJaArSurhnxPaM3AsCu2KTptBqkDYKRcW2Zk0GaDZlYB0mkG4N9UeT3JwiIZZu0DAC4Kww8C3GjQZRv6i+6NQntkWw6JV87RTHs0Gz/r1hfK+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M4vxikC0; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PSjzBrDh"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E4CC4CEF7;
-	Mon, 23 Mar 2026 16:09:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M4vxikC0"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6288C4CEF7;
+	Mon, 23 Mar 2026 16:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282199;
-	bh=/UeWjjoZSQ0W9mzdRix6CgfyyaleJU06pK9FAOW9nq8=;
+	s=korg; t=1774282202;
+	bh=n0KhDbU8gJ/QY0q76aS+7fUtCVBHmNOVgsTkoC6A96E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PSjzBrDhpbOWFUcgr7WsrrOY5mLbZvk5nA0kgEIAjz5EndTQoM0ys+keExuBUqpZx
-	 KSgWkD2XlWwjPqG9EKxM6lNhPGxgKuv1AiCe5dhfOh+fdQ8BIYHnD8jsx1tXhUbJwb
-	 SfOUJ4r0S6P1raq4UFlezre1Yh7+thOluYFjQhdM=
+	b=M4vxikC0CNa3y/Uj+cXkiUN9iAvxqv1CpMNhLz1u0r5ySc73OAbMz77kqNHk38PGT
+	 AmJZIuqiVRVAmYMwgCFmBnFDvQiSH6aK+yGGm5YQz1qVn7M+Qo6I20iHGR+OMMsLd2
+	 bJjEqHSOo0wNC+fgPt4qN4IzeT2y77DaewliZptQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mario Kleiner <mario.kleiner.de@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/481] drm/amdgpu: keep vga memory on MacBooks with switchable graphics
-Date: Mon, 23 Mar 2026 14:40:50 +0100
-Message-ID: <20260323134526.888122081@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: [PATCH 6.1 069/481] eventpoll: Fix integer overflow in ep_loop_check_proc()
+Date: Mon, 23 Mar 2026 14:40:51 +0100
+Message-ID: <20260323134526.912736035@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,50 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Jann Horn <jannh@google.com>
 
-[ Upstream commit 096bb75e13cc508d3915b7604e356bcb12b17766 ]
+commit fdcfce93073d990ed4b71752e31ad1c1d6e9d58b upstream.
 
-On Intel MacBookPros with switchable graphics, when the iGPU
-is enabled, the address of VRAM gets put at 0 in the dGPU's
-virtual address space.  This is non-standard and seems to cause
-issues with the cursor if it ends up at 0.  We have the framework
-to reserve memory at 0 in the address space, so enable it here if
-the vram start address is 0.
+If a recursive call to ep_loop_check_proc() hits the `result = INT_MAX`,
+an integer overflow will occur in the calling ep_loop_check_proc() at
+`result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1)`,
+breaking the recursion depth check.
 
-Reviewed-and-tested-by: Mario Kleiner <mario.kleiner.de@gmail.com>
-Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/4302
+Fix it by using a different placeholder value that can't lead to an
+overflow.
+
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Fixes: f2e467a48287 ("eventpoll: Fix semi-unbounded recursion")
 Cc: stable@vger.kernel.org
-Cc: Mario Kleiner <mario.kleiner.de@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Jann Horn <jannh@google.com>
+Link: https://patch.msgid.link/20260223-epoll-int-overflow-v1-1-452f35132224@google.com
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ fs/eventpoll.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-index 4bc05178504dc..3a1576e2f8e3b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gmc.c
-@@ -652,6 +652,16 @@ void amdgpu_gmc_get_vbios_allocations(struct amdgpu_device *adev)
- 	case CHIP_RENOIR:
- 		adev->mman.keep_stolen_vga_memory = true;
- 		break;
-+	case CHIP_POLARIS10:
-+	case CHIP_POLARIS11:
-+	case CHIP_POLARIS12:
-+		/* MacBookPros with switchable graphics put VRAM at 0 when
-+		 * the iGPU is enabled which results in cursor issues if
-+		 * the cursor ends up at 0.  Reserve vram at 0 in that case.
-+		 */
-+		if (adev->gmc.vram_start == 0)
-+			adev->mman.keep_stolen_vga_memory = true;
-+		break;
- 	default:
- 		adev->mman.keep_stolen_vga_memory = false;
- 		break;
--- 
-2.51.0
-
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -1872,7 +1872,8 @@ static int ep_poll(struct eventpoll *ep,
+  * @ep: the &struct eventpoll to be currently checked.
+  * @depth: Current depth of the path being checked.
+  *
+- * Return: depth of the subtree, or INT_MAX if we found a loop or went too deep.
++ * Return: depth of the subtree, or a value bigger than EP_MAX_NESTS if we found
++ * a loop or went too deep.
+  */
+ static int ep_loop_check_proc(struct eventpoll *ep, int depth)
+ {
+@@ -1891,7 +1892,7 @@ static int ep_loop_check_proc(struct eve
+ 			struct eventpoll *ep_tovisit;
+ 			ep_tovisit = epi->ffd.file->private_data;
+ 			if (ep_tovisit == inserting_into || depth > EP_MAX_NESTS)
+-				result = INT_MAX;
++				result = EP_MAX_NESTS+1;
+ 			else
+ 				result = max(result, ep_loop_check_proc(ep_tovisit, depth + 1) + 1);
+ 			if (result > EP_MAX_NESTS)
 
 
