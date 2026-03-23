@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E139E1F91F6;
-	Mon, 23 Mar 2026 14:22:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BAB71F91F6;
+	Mon, 23 Mar 2026 14:22:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275756; cv=none; b=REWXn1aIVFJ0HW3DR5+evPeEJTNECBM+30ybTjpf1A1PgAGEdUXy+tvHIyU31I9xk7CmHe+Ynymtyp+cnJzAPXq54LTNDTjGa8Y/YAUaRV+jz2KhAh1XGK9+zBSXKJww/26KSvAGf/AnCon1ZG3BzlfjAEKsfIkQlcTnEKNr2Yg=
+	t=1774275759; cv=none; b=skLmp2ibxafcDpF2rO9F69OKwH0SZC8Bq8cMHfBk5qU8yFhObX1k00IZaRWPgyJQjGVZEBC0MqP0YzU3vOelBB14lzDn6N3aB/ga5slrMu7dWBg8ctbnaBO6ZHCo6xC/gr6Jbe6Uhg/MQatnOZe4CrUQLeIVdi9UreigsE1eG00=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275756; c=relaxed/simple;
-	bh=tedPrA1sfzn6+B7JZFUuTYlwc21ixOjM7WgXsq+9LkM=;
+	s=arc-20240116; t=1774275759; c=relaxed/simple;
+	bh=IyKIAJGwdXwpZh6Ys13RESgVe4lZXpekzMFRInjcIrs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cjznTWgHRfa2GfY0mzPEvJLEOXWiZGrYuoG5K74K9WBE1fN+dYkrGcoJEmh5dGyWHGGkmiMm91+8qEDUbwhe3ON/SioGhOzkHhN5JhGS+iC/MPuQANhGPlQdnTHbB+CEDyGl64vMA+LWhXeax+qQ9MLTshQJKGyzMJxYtKBPJp0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ewTqoA/Q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=SjfcB2TLdLfeDRVUnFDD27eMDJ+gjhpIASbMtsdKsWS+J3WE64BzqkQt1Ajl0djtI0BITdY/vKaWpUCoIF1Io3LJ3ZO8igFeItvy6dPzesmw3jPRWTEQT1IqBlAmmc/eciPU4GT+NBa/0BhodLgmHfiKJ7p6I2raEobcOTUuhCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OibQwSm5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ewTqoA/Q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5342BC4CEF7;
-	Mon, 23 Mar 2026 14:22:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OibQwSm5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15DFC2BCB3;
+	Mon, 23 Mar 2026 14:22:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275755;
-	bh=tedPrA1sfzn6+B7JZFUuTYlwc21ixOjM7WgXsq+9LkM=;
+	s=korg; t=1774275759;
+	bh=IyKIAJGwdXwpZh6Ys13RESgVe4lZXpekzMFRInjcIrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ewTqoA/Q5cxJfL+lbJiIFs+TyMawFYNa5r3sum/Awy8KKwvlo09pSrwvbQKNcUaT2
-	 7QM+BV5p0f8xlR/m5wd56HWyf+zNWP8Y6vAmI9EphJzTIYfOySYBmJk9TyVtc1+UBE
-	 8LcSfYy6VYXqRQcaMchq7qnp/VKse25Qv8drWO5w=
+	b=OibQwSm5ON3yZnq2psXjhWC9O9RoG+/SSK7cBLUsXqgTWuKVoAi07SpifRuodug3Q
+	 wkN2zb2YQKrioShZI0OSNgccMRp6Oiqg5IYd1t5JAPAKk4E8Yu+CarznGl+Np8f8r9
+	 K74J4kv7bAz4CD5LSxNdr/2DTvhjma2RsP2RmNtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Spencer <spencercw@gmail.com>,
-	Vasileios Amoiridis <vassilisamir@gmail.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	David Lechner <dlechner@baylibre.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.12 208/460] iio: chemical: bme680: Fix measurement wait duration calculation
-Date: Mon, 23 Mar 2026 14:43:24 +0100
-Message-ID: <20260323134531.634438427@linuxfoundation.org>
+Subject: [PATCH 6.12 209/460] iio: buffer: Fix wait_queue not being removed
+Date: Mon, 23 Mar 2026 14:43:25 +0100
+Message-ID: <20260323134531.656192172@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -45,47 +46,45 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Chris Spencer <spencercw@gmail.com>
+From: Nuno Sá <nuno.sa@analog.com>
 
-commit f55b9510cd9437da3a0efa08b089caeb47595ff1 upstream.
+commit 064234044056c93a3719d6893e6e5a26a94a61b6 upstream.
 
-This function refers to the Bosch BME680 API as the source of the
-calculation, but one of the constants does not match the Bosch
-implementation. This appears to be a simple transposition of two digits,
-resulting in a wait time that is too short. This can cause the following
-'device measurement cycle incomplete' check to occasionally fail, returning
-EBUSY to user space.
+In the edge case where the IIO device is unregistered while we're
+buffering, we were directly returning an error without removing the wait
+queue. Instead, set 'ret' and break out of the loop.
 
-Adjust the constant to match the Bosch implementation and resolve the EBUSY
-errors.
-
-Fixes: 4241665e6ea0 ("iio: chemical: bme680: Fix sensor data read operation")
-Link: https://github.com/boschsensortec/BME68x_SensorAPI/blob/v4.4.8/bme68x.c#L521
-Signed-off-by: Chris Spencer <spencercw@gmail.com>
-Acked-by: Vasileios Amoiridis <vassilisamir@gmail.com>
-Cc: stable@vger.kernel.org
+Fixes: 9eeee3b0bf19 ("iio: Add output buffer support")
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Reviewed-by: David Lechner <dlechner@baylibre.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/chemical/bme680_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/industrialio-buffer.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/chemical/bme680_core.c
-+++ b/drivers/iio/chemical/bme680_core.c
-@@ -543,7 +543,7 @@ static int bme680_wait_for_eoc(struct bm
- 	 * + heater duration
- 	 */
- 	int wait_eoc_us = ((data->oversampling_temp + data->oversampling_press +
--			   data->oversampling_humid) * 1936) + (477 * 4) +
-+			   data->oversampling_humid) * 1963) + (477 * 4) +
- 			   (477 * 5) + 1000 + (data->heater_dur * 1000);
+--- a/drivers/iio/industrialio-buffer.c
++++ b/drivers/iio/industrialio-buffer.c
+@@ -228,8 +228,10 @@ static ssize_t iio_buffer_write(struct f
+ 	written = 0;
+ 	add_wait_queue(&rb->pollq, &wait);
+ 	do {
+-		if (!indio_dev->info)
+-			return -ENODEV;
++		if (!indio_dev->info) {
++			ret = -ENODEV;
++			break;
++		}
  
- 	usleep_range(wait_eoc_us, wait_eoc_us + 100);
+ 		if (!iio_buffer_space_available(rb)) {
+ 			if (signal_pending(current)) {
 
 
