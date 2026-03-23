@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2C093AC0C9;
-	Mon, 23 Mar 2026 13:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA83C1A6818;
+	Mon, 23 Mar 2026 13:54:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274044; cv=none; b=B6C+1Gsq5UZaD8ozLL83QqbPQcWvMNJX9pHR3nDawnzoaOCMN3MagoCtZXj3f0KSITd3lmWI4zXQcY6qmqs5xUdpE3A4+G8+9efwKGZTIHgUJlV6R/TgYC/AmteBU/xcXbTOB8m5W42OeB7o8xB1rVbjniBhbjlqRUWoQ6kpGmY=
+	t=1774274047; cv=none; b=UQrtkLB3reEJBPPL+TF1n5PRQxmXoxgxwBjqC751xHfOCJXPmFhePnL6YpQ2Y+Btqs0APqvDqNzzBhy7alCQJa+6Bk+EIdld1dVdj1zuYkElkLa9igtld+9DmcQ3R0f+xotOEqyBIriRlK7g/3sXFHUZy8Oj5ce6m8CvWKiRJ4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274044; c=relaxed/simple;
-	bh=zravM1OCV2U4VbRsW6194yuaeQLOhhfptGHuaxi+nYI=;
+	s=arc-20240116; t=1774274047; c=relaxed/simple;
+	bh=Jqg1hmOH0hd77Zp4XhqPJlam7WWNQT0IAUwn34xGyM0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=cZAUxBUMZg1fvrNNEgF2S2DaAs1WlH/uUwOawuK2rrNME5+lKDzJ3e2LPn3w3gelawXubzwdJnA4+pnA/6h5Im/UwDTE8kQ4eAF9ArpSe6vdHUdqH/WBCFV+3toAimKxpGRvHgtqAkXT0JsRwIviHbmT0caOalR4inHJgo+Ykhw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=PAOiHiBj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=sSYhsVcX6Yzf8Yy3wHk/IwG0MsaEzGLci3gyLPvPkn3EweSwq97bqL4vhhjAYwVLBNZNxu+nePYan4Bzg4IIZoLFpzJC0hxNrNcl87SGMNEuh58YMZwnqmzaRFvLMAbBbzgYs22buXjIN/xhGNFx8ZQVc0fQNqHYQ3/oWkgU7ww=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=EmcQBQKP; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="PAOiHiBj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2739EC2BCB3;
-	Mon, 23 Mar 2026 13:54:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="EmcQBQKP"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F49C4CEF7;
+	Mon, 23 Mar 2026 13:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274044;
-	bh=zravM1OCV2U4VbRsW6194yuaeQLOhhfptGHuaxi+nYI=;
+	s=korg; t=1774274047;
+	bh=Jqg1hmOH0hd77Zp4XhqPJlam7WWNQT0IAUwn34xGyM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PAOiHiBjLSG6yArQprT8Wo+GqoINUDJURP8/jNuGL/8O/rHZba3Jnz9jl8ZAZT+CO
-	 EF38SQWyjofbKHMnJof0WyDG07zmuMCJWID1u5sqb6Le+OKnqlsLdcksYbqpwVKEA7
-	 R983Fmv/xFTs7HtwqeJpo+D1pQcU4rCJFxKwQXO8=
+	b=EmcQBQKP+J+umDdWQUn2amxaPV4qh96uzgYin/4L980SC7kJzGmNJL7wbitVM8bj0
+	 DHbpjbNepNVrtrVZduOqCSaGq+EXWqer3xDU6wd932foAaSy1I34ElkkjEXm0JHoxf
+	 kBOijK9OXQt6NvemwssxKbDkdc/JYtq24Yn7sNgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Zhanjun Dong <zhanjun.dong@intel.com>,
 	Matthew Brost <matthew.brost@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Sanjay Yadav <sanjay.kumar.yadav@intel.com>
-Subject: [PATCH 6.19 092/220] drm/xe: Fix missing runtime PM reference in ccs_mode_store
-Date: Mon, 23 Mar 2026 14:44:29 +0100
-Message-ID: <20260323134507.500304374@linuxfoundation.org>
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>
+Subject: [PATCH 6.19 093/220] drm/xe: Open-code GGTT MMIO access protection
+Date: Mon, 23 Mar 2026 14:44:30 +0100
+Message-ID: <20260323134507.536512331@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -55,64 +52,97 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
+From: Matthew Brost <matthew.brost@intel.com>
 
-commit 65d046b2d8e0d6d855379a981869005fd6b6a41b upstream.
+commit 01f2557aa684e514005541e71a3d01f4cd45c170 upstream.
 
-ccs_mode_store() calls xe_gt_reset() which internally invokes
-xe_pm_runtime_get_noresume(). That function requires the caller
-to already hold an outer runtime PM reference and warns if none
-is held:
+GGTT MMIO access is currently protected by hotplug (drm_dev_enter),
+which works correctly when the driver loads successfully and is later
+unbound or unloaded. However, if driver load fails, this protection is
+insufficient because drm_dev_unplug() is never called.
 
-  [46.891177] xe 0000:03:00.0: [drm] Missing outer runtime PM protection
-  [46.891178] WARNING: drivers/gpu/drm/xe/xe_pm.c:885 at
-  xe_pm_runtime_get_noresume+0x8b/0xc0
+Additionally, devm release functions cannot guarantee that all BOs with
+GGTT mappings are destroyed before the GGTT MMIO region is removed, as
+some BOs may be freed asynchronously by worker threads.
 
-Fix this by protecting xe_gt_reset() with the scope-based
-guard(xe_pm_runtime)(xe), which is the preferred form when
-the reference lifetime matches a single scope.
+To address this, introduce an open-coded flag, protected by the GGTT
+lock, that guards GGTT MMIO access. The flag is cleared during the
+dev_fini_ggtt devm release function to ensure MMIO access is disabled
+once teardown begins.
 
-v2:
-- Use scope-based guard(xe_pm_runtime)(xe) (Shuicheng)
-- Update commit message accordingly
-
-Closes: https://gitlab.freedesktop.org/drm/xe/kernel/-/issues/7593
-Fixes: 480b358e7d8e ("drm/xe: Do not wake device during a GT reset")
-Cc: <stable@vger.kernel.org> # v6.19+
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
-Suggested-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Sanjay Yadav <sanjay.kumar.yadav@intel.com>
-Reviewed-by: Shuicheng Lin <shuicheng.lin@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patch.msgid.link/20260313071608.3459480-2-sanjay.kumar.yadav@intel.com
-(cherry picked from commit 7937ea733f79b3f25e802a0c8360bf7423856f36)
+Cc: stable@vger.kernel.org
+Fixes: 919bb54e989c ("drm/xe: Fix missing runtime outer protection for ggtt_remove_node")
+Reviewed-by: Zhanjun Dong <zhanjun.dong@intel.com>
+Signed-off-by: Matthew Brost <matthew.brost@intel.com>
+Link: https://patch.msgid.link/20260310225039.1320161-8-zhanjun.dong@intel.com
+(cherry picked from commit 4f3a998a173b4325c2efd90bdadc6ccd3ad9a431)
 Signed-off-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/xe/xe_gt_ccs_mode.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/xe/xe_ggtt.c       |   10 ++++------
+ drivers/gpu/drm/xe/xe_ggtt_types.h |    5 ++++-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-+++ b/drivers/gpu/drm/xe/xe_gt_ccs_mode.c
-@@ -12,6 +12,7 @@
- #include "xe_gt_printk.h"
- #include "xe_gt_sysfs.h"
- #include "xe_mmio.h"
-+#include "xe_pm.h"
- #include "xe_sriov.h"
+--- a/drivers/gpu/drm/xe/xe_ggtt.c
++++ b/drivers/gpu/drm/xe/xe_ggtt.c
+@@ -274,6 +274,8 @@ static void dev_fini_ggtt(void *arg)
+ {
+ 	struct xe_ggtt *ggtt = arg;
  
- static void __xe_gt_apply_ccs_mode(struct xe_gt *gt, u32 num_engines)
-@@ -150,6 +151,7 @@ ccs_mode_store(struct device *kdev, stru
- 		xe_gt_info(gt, "Setting compute mode to %d\n", num_engines);
- 		gt->ccs_mode = num_engines;
- 		xe_gt_record_user_engines(gt);
-+		guard(xe_pm_runtime)(xe);
- 		xe_gt_reset(gt);
- 	}
++	scoped_guard(mutex, &ggtt->lock)
++		ggtt->flags &= ~XE_GGTT_FLAGS_ONLINE;
+ 	drain_workqueue(ggtt->wq);
+ }
  
+@@ -332,6 +334,7 @@ int xe_ggtt_init_early(struct xe_ggtt *g
+ 	if (err)
+ 		return err;
+ 
++	ggtt->flags |= XE_GGTT_FLAGS_ONLINE;
+ 	err = devm_add_action_or_reset(xe->drm.dev, dev_fini_ggtt, ggtt);
+ 	if (err)
+ 		return err;
+@@ -365,13 +368,10 @@ static void xe_ggtt_initial_clear(struct
+ static void ggtt_node_remove(struct xe_ggtt_node *node)
+ {
+ 	struct xe_ggtt *ggtt = node->ggtt;
+-	struct xe_device *xe = tile_to_xe(ggtt->tile);
+ 	bool bound;
+-	int idx;
+-
+-	bound = drm_dev_enter(&xe->drm, &idx);
+ 
+ 	mutex_lock(&ggtt->lock);
++	bound = ggtt->flags & XE_GGTT_FLAGS_ONLINE;
+ 	if (bound)
+ 		xe_ggtt_clear(ggtt, node->base.start, node->base.size);
+ 	drm_mm_remove_node(&node->base);
+@@ -384,8 +384,6 @@ static void ggtt_node_remove(struct xe_g
+ 	if (node->invalidate_on_remove)
+ 		xe_ggtt_invalidate(ggtt);
+ 
+-	drm_dev_exit(idx);
+-
+ free_node:
+ 	xe_ggtt_node_fini(node);
+ }
+--- a/drivers/gpu/drm/xe/xe_ggtt_types.h
++++ b/drivers/gpu/drm/xe/xe_ggtt_types.h
+@@ -25,11 +25,14 @@ struct xe_ggtt {
+ 	/** @size: Total size of this GGTT */
+ 	u64 size;
+ 
+-#define XE_GGTT_FLAGS_64K BIT(0)
++#define XE_GGTT_FLAGS_64K       BIT(0)
++#define XE_GGTT_FLAGS_ONLINE	BIT(1)
+ 	/**
+ 	 * @flags: Flags for this GGTT
+ 	 * Acceptable flags:
+ 	 * - %XE_GGTT_FLAGS_64K - if PTE size is 64K. Otherwise, regular is 4K.
++	 * - %XE_GGTT_FLAGS_ONLINE - is GGTT online, protected by ggtt->lock
++	 *   after init
+ 	 */
+ 	unsigned int flags;
+ 	/** @scratch: Internal object allocation used as a scratch page */
 
 
