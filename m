@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E31239182F;
-	Mon, 23 Mar 2026 14:53:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 351433AE70F;
+	Mon, 23 Mar 2026 14:53:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277605; cv=none; b=jd30DSMYdzQRUOCn0x577+cLTqLbah3Adzl+tdmCeKZOjeXRjsffRXW1j2ajzsnAW51gyIRtK3EYLRRnqUzdeIJg+FFO6zGQXxrpc2XDiGpaFwTocvn7JDn9qmRXrL/rpZxwXzOb83VcKn6dg92XR22ML4MQjq5YgE4XvghyqUw=
+	t=1774277608; cv=none; b=eHFhAp8D7PTON2vSF8ofyYSVTt2TIqZP8G7A28/z3AGCcfcXj8tL+7nqw+vQubdtRPSlTTxVfJFqq0ZvYd4fEOB2B/7/4yrAWAB2nhPCXkv9YWMgmWg3LjBUbvMRo1TevhTKTGJtJokHSZ1J21JXkubotQs/nNjDdrvmBUVzgSU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277605; c=relaxed/simple;
-	bh=PJAn8eRjXPZDmlYj1Vb16l/6agwt0qvsvWTY9dlPhDQ=;
+	s=arc-20240116; t=1774277608; c=relaxed/simple;
+	bh=/ecld4miKM/BGggVyrlxx/C48fdaqg5SQsxSLBgFMz0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mkwLEqZb6OFQ4D5e0+l8uBEVoO/li833unkyWuEc9LoqDx5D5xTEv7Jds6rsZs73KiFKBV046AEhcGmGezeynT4uaxNCq+/0fz8T9FrnkYv1eUxAgQHZkDt2dHCxVcYGxfDaSncK40xd/m0DJUA8JEy9dih3H+jtyKOjO989yPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBh1Ltvn; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cypHZJfX+F+Ng/3rgj+ByN8jZ2d8n3CUxtrq1yRcCmow4hsZDETyPh+KJT7efRDdHZV2SMQUD4gPh72lTgjs3rOZItFyxe3NVux6xAjdmez9M3mqvkJyncTocPuf04xJBxATl1Ib3s+Gdd63zlXIcwaRMdCDVkijRxnWEjWwNuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=w8WobSi5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBh1Ltvn"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B4CC4CEF7;
-	Mon, 23 Mar 2026 14:53:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="w8WobSi5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D10C4CEF7;
+	Mon, 23 Mar 2026 14:53:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277604;
-	bh=PJAn8eRjXPZDmlYj1Vb16l/6agwt0qvsvWTY9dlPhDQ=;
+	s=korg; t=1774277607;
+	bh=/ecld4miKM/BGggVyrlxx/C48fdaqg5SQsxSLBgFMz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBh1Ltvn3YPREN2Jtw4pidQSn4xrq4ujfh70tf5bHZp3/UeCRF4fXVB5GYvlkE3cH
-	 0IcBUhRUkK9Z2K34nEnszNwds7vw8ZGCbf2iJGQ5C2k6jXHtPm7TcC+avdCRm9tDBj
-	 30ICQxMpf7u+swxhNlTZ0bsnMhpaYn1QRFOU9ymE=
+	b=w8WobSi5sMkHD3S2r5D0jz8LXsalSzpEqYen6llZzyXQoXlXQTJ/hIulP/0zPsYO3
+	 acWKpTgbhF+EPu6CCsFdqyM30OiByvq9QtE++F5a4BaNGgzOnTcmW3RjApbzRq/EUs
+	 jmQNh9JMA894gRezu2SfsqQyeyiui/UtqLb6AnJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -32,9 +32,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 045/567] ext4: get rid of ppath in ext4_ext_create_new_leaf()
-Date: Mon, 23 Mar 2026 14:39:25 +0100
-Message-ID: <20260323134534.914973641@linuxfoundation.org>
+Subject: [PATCH 6.6 046/567] ext4: get rid of ppath in ext4_ext_insert_extent()
+Date: Mon, 23 Mar 2026 14:39:26 +0100
+Message-ID: <20260323134534.939905793@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -55,16 +55,21 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit a000bc8678cc2bb10a5b80b4e991e77c7b4612fd ]
+[ Upstream commit f7d1331f16a869c76a5102caebb58e840e1d509c ]
 
 The use of path and ppath is now very confusing, so to make the code more
 readable, pass path between functions uniformly, and get rid of ppath.
 
-To get rid of the ppath in ext4_ext_create_new_leaf(), the following is
-done here:
+To get rid of the ppath in ext4_ext_insert_extent(), the following is done
+here:
 
  * Free the extents path when an error is encountered.
  * Its caller needs to update ppath if it uses ppath.
+ * Free path when npath is used, free npath when it is not used.
+ * The got_allocated_blocks label in ext4_ext_map_blocks() does not
+   update err now, so err is updated to 0 if the err returned by
+   ext4_ext_search_right() is greater than 0 and is about to enter
+   got_allocated_blocks.
 
 No functional changes.
 
@@ -72,77 +77,169 @@ Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
 Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
 Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
-Link: https://patch.msgid.link/20240822023545.1994557-14-libaokun@huaweicloud.com
+Link: https://patch.msgid.link/20240822023545.1994557-15-libaokun@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 22784ca541c0 ("ext4: subdivide EXT4_EXT_DATA_VALID1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ fs/ext4/ext4.h        |  7 ++--
+ fs/ext4/extents.c     | 88 ++++++++++++++++++++++++-------------------
+ fs/ext4/fast_commit.c |  8 ++--
+ fs/ext4/migrate.c     |  5 ++-
+ 4 files changed, 61 insertions(+), 47 deletions(-)
 
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index dd0317d66c1db..ce8bd312c1b84 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3708,9 +3708,10 @@ extern int ext4_map_blocks(handle_t *handle, struct inode *inode,
+ extern int ext4_ext_calc_credits_for_single_extent(struct inode *inode,
+ 						   int num,
+ 						   struct ext4_ext_path *path);
+-extern int ext4_ext_insert_extent(handle_t *, struct inode *,
+-				  struct ext4_ext_path **,
+-				  struct ext4_extent *, int);
++extern struct ext4_ext_path *ext4_ext_insert_extent(
++				handle_t *handle, struct inode *inode,
++				struct ext4_ext_path *path,
++				struct ext4_extent *newext, int gb_flags);
+ extern struct ext4_ext_path *ext4_find_extent(struct inode *, ext4_lblk_t,
+ 					      struct ext4_ext_path *,
+ 					      int flags);
 diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index cd5f679648cea..7c2bc5c2c7664 100644
+index 7c2bc5c2c7664..4f15c26bafe53 100644
 --- a/fs/ext4/extents.c
 +++ b/fs/ext4/extents.c
-@@ -1392,13 +1392,12 @@ static int ext4_ext_grow_indepth(handle_t *handle, struct inode *inode,
-  * finds empty index and adds new leaf.
-  * if no free index is found, then it requests in-depth growing.
+@@ -1960,16 +1960,15 @@ static unsigned int ext4_ext_check_overlap(struct ext4_sb_info *sbi,
+  * inserts requested extent as new one into the tree,
+  * creating new leaf in the no-space case.
   */
--static int ext4_ext_create_new_leaf(handle_t *handle, struct inode *inode,
--				    unsigned int mb_flags,
--				    unsigned int gb_flags,
--				    struct ext4_ext_path **ppath,
--				    struct ext4_extent *newext)
-+static struct ext4_ext_path *
-+ext4_ext_create_new_leaf(handle_t *handle, struct inode *inode,
-+			 unsigned int mb_flags, unsigned int gb_flags,
-+			 struct ext4_ext_path *path,
-+			 struct ext4_extent *newext)
+-int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+-				struct ext4_ext_path **ppath,
+-				struct ext4_extent *newext, int gb_flags)
++struct ext4_ext_path *
++ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
++		       struct ext4_ext_path *path,
++		       struct ext4_extent *newext, int gb_flags)
  {
 -	struct ext4_ext_path *path = *ppath;
- 	struct ext4_ext_path *curp;
- 	int depth, i, err = 0;
+ 	struct ext4_extent_header *eh;
+ 	struct ext4_extent *ex, *fex;
+ 	struct ext4_extent *nearex; /* nearest extent */
+-	struct ext4_ext_path *npath = NULL;
+-	int depth, len, err;
++	int depth, len, err = 0;
+ 	ext4_lblk_t next;
+ 	int mb_flags = 0, unwritten;
  
-@@ -1419,28 +1418,25 @@ static int ext4_ext_create_new_leaf(handle_t *handle, struct inode *inode,
- 		 * entry: create all needed subtree and add new leaf */
- 		err = ext4_ext_split(handle, inode, mb_flags, path, newext, i);
- 		if (err)
--			goto out;
-+			goto errout;
- 
- 		/* refill path */
- 		path = ext4_find_extent(inode,
- 				    (ext4_lblk_t)le32_to_cpu(newext->ee_block),
- 				    path, gb_flags);
--		if (IS_ERR(path))
--			err = PTR_ERR(path);
-+		return path;
- 	} else {
- 		/* tree is full, time to grow in depth */
- 		err = ext4_ext_grow_indepth(handle, inode, mb_flags);
- 		if (err)
--			goto out;
-+			goto errout;
- 
- 		/* refill path */
- 		path = ext4_find_extent(inode,
- 				   (ext4_lblk_t)le32_to_cpu(newext->ee_block),
- 				    path, gb_flags);
--		if (IS_ERR(path)) {
--			err = PTR_ERR(path);
--			goto out;
--		}
-+		if (IS_ERR(path))
-+			return path;
- 
- 		/*
- 		 * only first (depth 0 -> 1) produces free space;
-@@ -1452,9 +1448,11 @@ static int ext4_ext_create_new_leaf(handle_t *handle, struct inode *inode,
- 			goto repeat;
- 		}
+@@ -1977,14 +1976,16 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 		mb_flags |= EXT4_MB_DELALLOC_RESERVED;
+ 	if (unlikely(ext4_ext_get_actual_len(newext) == 0)) {
+ 		EXT4_ERROR_INODE(inode, "ext4_ext_get_actual_len(newext) == 0");
+-		return -EFSCORRUPTED;
++		err = -EFSCORRUPTED;
++		goto errout;
  	}
--out:
--	*ppath = IS_ERR(path) ? NULL : path;
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+ 	eh = path[depth].p_hdr;
+ 	if (unlikely(path[depth].p_hdr == NULL)) {
+ 		EXT4_ERROR_INODE(inode, "path[%d].p_hdr == NULL", depth);
+-		return -EFSCORRUPTED;
++		err = -EFSCORRUPTED;
++		goto errout;
+ 	}
+ 
+ 	/* try to insert block into found extent and return */
+@@ -2022,7 +2023,7 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 			err = ext4_ext_get_access(handle, inode,
+ 						  path + depth);
+ 			if (err)
+-				return err;
++				goto errout;
+ 			unwritten = ext4_ext_is_unwritten(ex);
+ 			ex->ee_len = cpu_to_le16(ext4_ext_get_actual_len(ex)
+ 					+ ext4_ext_get_actual_len(newext));
+@@ -2047,7 +2048,7 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 			err = ext4_ext_get_access(handle, inode,
+ 						  path + depth);
+ 			if (err)
+-				return err;
++				goto errout;
+ 
+ 			unwritten = ext4_ext_is_unwritten(ex);
+ 			ex->ee_block = newext->ee_block;
+@@ -2072,21 +2073,26 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 	if (le32_to_cpu(newext->ee_block) > le32_to_cpu(fex->ee_block))
+ 		next = ext4_ext_next_leaf_block(path);
+ 	if (next != EXT_MAX_BLOCKS) {
++		struct ext4_ext_path *npath;
++
+ 		ext_debug(inode, "next leaf block - %u\n", next);
+-		BUG_ON(npath != NULL);
+ 		npath = ext4_find_extent(inode, next, NULL, gb_flags);
+-		if (IS_ERR(npath))
+-			return PTR_ERR(npath);
++		if (IS_ERR(npath)) {
++			err = PTR_ERR(npath);
++			goto errout;
++		}
+ 		BUG_ON(npath->p_depth != path->p_depth);
+ 		eh = npath[depth].p_hdr;
+ 		if (le16_to_cpu(eh->eh_entries) < le16_to_cpu(eh->eh_max)) {
+ 			ext_debug(inode, "next leaf isn't full(%d)\n",
+ 				  le16_to_cpu(eh->eh_entries));
++			ext4_free_ext_path(path);
+ 			path = npath;
+ 			goto has_space;
+ 		}
+ 		ext_debug(inode, "next leaf has no free space(%d,%d)\n",
+ 			  le16_to_cpu(eh->eh_entries), le16_to_cpu(eh->eh_max));
++		ext4_free_ext_path(npath);
+ 	}
+ 
+ 	/*
+@@ -2097,12 +2103,8 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 		mb_flags |= EXT4_MB_USE_RESERVED;
+ 	path = ext4_ext_create_new_leaf(handle, inode, mb_flags, gb_flags,
+ 					path, newext);
+-	if (IS_ERR(path)) {
+-		*ppath = NULL;
+-		err = PTR_ERR(path);
+-		goto cleanup;
+-	}
+-	*ppath = path;
++	if (IS_ERR(path))
++		return path;
+ 	depth = ext_depth(inode);
+ 	eh = path[depth].p_hdr;
+ 
+@@ -2111,7 +2113,7 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 
+ 	err = ext4_ext_get_access(handle, inode, path + depth);
+ 	if (err)
+-		goto cleanup;
++		goto errout;
+ 
+ 	if (!nearex) {
+ 		/* there is no extent in this leaf, create first one */
+@@ -2169,17 +2171,20 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
+ 	if (!(gb_flags & EXT4_GET_BLOCKS_PRE_IO))
+ 		ext4_ext_try_to_merge(handle, inode, path, nearex);
+ 
+-
+ 	/* time to correct all indexes above */
+ 	err = ext4_ext_correct_indexes(handle, inode, path);
+ 	if (err)
+-		goto cleanup;
++		goto errout;
+ 
+ 	err = ext4_ext_dirty(handle, inode, path + path->p_depth);
++	if (err)
++		goto errout;
+ 
+-cleanup:
+-	ext4_free_ext_path(npath);
 -	return err;
 +	return path;
 +
@@ -151,26 +248,120 @@ index cd5f679648cea..7c2bc5c2c7664 100644
 +	return ERR_PTR(err);
  }
  
- /*
-@@ -2097,11 +2095,14 @@ int ext4_ext_insert_extent(handle_t *handle, struct inode *inode,
- 	 */
- 	if (gb_flags & EXT4_GET_BLOCKS_METADATA_NOFAIL)
- 		mb_flags |= EXT4_MB_USE_RESERVED;
--	err = ext4_ext_create_new_leaf(handle, inode, mb_flags, gb_flags,
--				       ppath, newext);
--	if (err)
-+	path = ext4_ext_create_new_leaf(handle, inode, mb_flags, gb_flags,
-+					path, newext);
-+	if (IS_ERR(path)) {
-+		*ppath = NULL;
-+		err = PTR_ERR(path);
- 		goto cleanup;
--	path = *ppath;
-+	}
-+	*ppath = path;
- 	depth = ext_depth(inode);
- 	eh = path[depth].p_hdr;
+ static int ext4_fill_es_cache_info(struct inode *inode,
+@@ -3230,24 +3235,29 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	if (split_flag & EXT4_EXT_MARK_UNWRIT2)
+ 		ext4_ext_mark_unwritten(ex2);
  
+-	err = ext4_ext_insert_extent(handle, inode, ppath, &newex, flags);
+-	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
++	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
++	if (!IS_ERR(path)) {
++		*ppath = path;
+ 		goto out;
++	}
++	*ppath = NULL;
++	err = PTR_ERR(path);
++	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
++		return err;
+ 
+ 	/*
+-	 * Update path is required because previous ext4_ext_insert_extent()
+-	 * may have freed or reallocated the path. Using EXT4_EX_NOFAIL
+-	 * guarantees that ext4_find_extent() will not return -ENOMEM,
+-	 * otherwise -ENOMEM will cause a retry in do_writepages(), and a
+-	 * WARN_ON may be triggered in ext4_da_update_reserve_space() due to
+-	 * an incorrect ee_len causing the i_reserved_data_blocks exception.
++	 * Get a new path to try to zeroout or fix the extent length.
++	 * Using EXT4_EX_NOFAIL guarantees that ext4_find_extent()
++	 * will not return -ENOMEM, otherwise -ENOMEM will cause a
++	 * retry in do_writepages(), and a WARN_ON may be triggered
++	 * in ext4_da_update_reserve_space() due to an incorrect
++	 * ee_len causing the i_reserved_data_blocks exception.
+ 	 */
+-	path = ext4_find_extent(inode, ee_block, *ppath,
++	path = ext4_find_extent(inode, ee_block, NULL,
+ 				flags | EXT4_EX_NOFAIL);
+ 	if (IS_ERR(path)) {
+ 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
+ 				 split, PTR_ERR(path));
+-		*ppath = NULL;
+ 		return PTR_ERR(path);
+ 	}
+ 	depth = ext_depth(inode);
+@@ -3306,7 +3316,7 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	ext4_ext_dirty(handle, inode, path + path->p_depth);
+ 	return err;
+ out:
+-	ext4_ext_show_leaf(inode, *ppath);
++	ext4_ext_show_leaf(inode, path);
+ 	return err;
+ }
+ 
+@@ -4296,6 +4306,7 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 	    get_implied_cluster_alloc(inode->i_sb, map, &ex2, path)) {
+ 		ar.len = allocated = map->m_len;
+ 		newblock = map->m_pblk;
++		err = 0;
+ 		goto got_allocated_blocks;
+ 	}
+ 
+@@ -4368,8 +4379,9 @@ int ext4_ext_map_blocks(handle_t *handle, struct inode *inode,
+ 		map->m_flags |= EXT4_MAP_UNWRITTEN;
+ 	}
+ 
+-	err = ext4_ext_insert_extent(handle, inode, &path, &newex, flags);
+-	if (err) {
++	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
++	if (IS_ERR(path)) {
++		err = PTR_ERR(path);
+ 		if (allocated_clusters) {
+ 			int fb_flags = 0;
+ 
+diff --git a/fs/ext4/fast_commit.c b/fs/ext4/fast_commit.c
+index 62a6960242c5a..be65b5f51d9e2 100644
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1806,12 +1806,12 @@ static int ext4_fc_replay_add_range(struct super_block *sb,
+ 			if (ext4_ext_is_unwritten(ex))
+ 				ext4_ext_mark_unwritten(&newex);
+ 			down_write(&EXT4_I(inode)->i_data_sem);
+-			ret = ext4_ext_insert_extent(
+-				NULL, inode, &path, &newex, 0);
++			path = ext4_ext_insert_extent(NULL, inode,
++						      path, &newex, 0);
+ 			up_write((&EXT4_I(inode)->i_data_sem));
+-			ext4_free_ext_path(path);
+-			if (ret)
++			if (IS_ERR(path))
+ 				goto out;
++			ext4_free_ext_path(path);
+ 			goto next;
+ 		}
+ 
+diff --git a/fs/ext4/migrate.c b/fs/ext4/migrate.c
+index a5e1492bbaaa5..1b0dfd963d3f0 100644
+--- a/fs/ext4/migrate.c
++++ b/fs/ext4/migrate.c
+@@ -37,7 +37,6 @@ static int finish_range(handle_t *handle, struct inode *inode,
+ 	path = ext4_find_extent(inode, lb->first_block, NULL, 0);
+ 	if (IS_ERR(path)) {
+ 		retval = PTR_ERR(path);
+-		path = NULL;
+ 		goto err_out;
+ 	}
+ 
+@@ -53,7 +52,9 @@ static int finish_range(handle_t *handle, struct inode *inode,
+ 	retval = ext4_datasem_ensure_credits(handle, inode, needed, needed, 0);
+ 	if (retval < 0)
+ 		goto err_out;
+-	retval = ext4_ext_insert_extent(handle, inode, &path, &newext, 0);
++	path = ext4_ext_insert_extent(handle, inode, path, &newext, 0);
++	if (IS_ERR(path))
++		retval = PTR_ERR(path);
+ err_out:
+ 	up_write((&EXT4_I(inode)->i_data_sem));
+ 	ext4_free_ext_path(path);
 -- 
 2.51.0
 
