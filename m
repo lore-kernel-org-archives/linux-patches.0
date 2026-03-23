@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401C33B5306;
-	Mon, 23 Mar 2026 15:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EA623BD1D;
+	Mon, 23 Mar 2026 15:03:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278191; cv=none; b=tH0xODE+PWGa2Ey9l4lgL49bOy0dFWvbqf3aq0ui7nGrd26m3An4fT6zEZNJO9T0Bqgv12uYpXUx16J5JLZ6RFT6Uk3ivQHaF0lQDyVABruR9OGuk1e0h/k5oGzkboBXQ19I1U6SgxOwSnhN6IW1fWD36OjXJl+aAMm/oxH0cQ4=
+	t=1774278194; cv=none; b=lQDvlp0AOczsYKeP6wgjU7JCfz6vWc6pj6P/fGTah59rQ2l5MR8PdALGFtPNYByK17MrvIMWaX9xoGZEcLKa/t3/IYOAdGElyNeZyIZAQ42TJcc/cfqZJz3v+9839Ou0flxQJ/Vd2dTmKUlbIu8HbvF7+E1hk7NmL2gnnYaSt2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278191; c=relaxed/simple;
-	bh=8a0/fnvz2bbi1VoMs2UEZz9/cXV8lFDfrnOeEh3/3Nw=;
+	s=arc-20240116; t=1774278194; c=relaxed/simple;
+	bh=wIJlO4i6/PiwqmZA6d2UBL5XF8AAwHNNDJYkHM/EwfQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZBjYrK5sGO9HA6FemAZGK6CyXz1rF8vjEjS0RaIyX+pG2NHoll/M9IK0Fd4m/z08YBx3Lrk7s9Qp2S4Mp4jaNBnuts/u8yn7fgBCRKnMYJMPbHFKOKSnpdkOWGXONbLwouAebmJ6zWd0Mbvpy9n/HEcj/iv1SMnWU5fD3hic8tM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VVbgwdSm; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=e94+CSRdL/+Bs2Zc2tQoDlo2nPNEbsmFcybDMYAJuUP2wR9VCAZfg+YiMU4cvR3GkSE5PSuarEJDBo1A+eCjEAXGkiGAkrpiQsy6h8svcYbJR4RmfgcztdB6qlan4+ylstzHSV1DjnVjHgcnUphRB1MQlnEqfh7U/C69uDpCu1Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=eblTErWW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VVbgwdSm"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 763CDC2BCB4;
-	Mon, 23 Mar 2026 15:03:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="eblTErWW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA25C4CEF7;
+	Mon, 23 Mar 2026 15:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278190;
-	bh=8a0/fnvz2bbi1VoMs2UEZz9/cXV8lFDfrnOeEh3/3Nw=;
+	s=korg; t=1774278194;
+	bh=wIJlO4i6/PiwqmZA6d2UBL5XF8AAwHNNDJYkHM/EwfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VVbgwdSmL+CW/iTyMGg3b5vWx+EyJnPolSjIAHNCYOV61g7ZCXqbDfl68WtP6CZki
-	 2jpgZPDV7tFyMatK7rDYbXGzSxKSbaI52P0wqsRg9r3ER75SSFFCbsNUp3oRbpm3hy
-	 SL1Zh+yyccUuRyJ6eIU/LZI3JGkSnyZDulifz9Oo=
+	b=eblTErWW0/1VrYo2Cf6PAsEsWVR2JQ/V0dEj91hUa6ZAYZT5M89UvwtJLDWKRgFgY
+	 BC7IxPEinc9W4W0/4n0ihM+W0IOKeAjINge86E7e6H625+uR1IAhB/FVS6rbjJ8ADc
+	 mgQA6kOGOZ8r9ZSov924Q9oE0lsbu4Daw8LEYL6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matteo Cotifava <cotifavamatteo@gmail.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 227/567] ASoC: soc-core: flush delayed work before removing DAIs and widgets
-Date: Mon, 23 Mar 2026 14:42:27 +0100
-Message-ID: <20260323134539.451212359@linuxfoundation.org>
+Subject: [PATCH 6.6 228/567] ASoC: simple-card-utils: use __free(device_node) for device node
+Date: Mon, 23 Mar 2026 14:42:28 +0100
+Message-ID: <20260323134539.475007076@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,55 +51,127 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: matteo.cotifava <cotifavamatteo@gmail.com>
+From: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
 
-[ Upstream commit 95bc5c225513fc3c4ce169563fb5e3929fbb938b ]
+[ Upstream commit 419d1918105e5d9926ab02f1f834bb416dc76f65 ]
 
-When a sound card is unbound while a PCM stream is open, a
-use-after-free can occur in snd_soc_dapm_stream_event(), called from
-the close_delayed_work workqueue handler.
+simple-card-utils handles many type of device_node, thus need to
+use of_node_put() in many place. Let's use __free(device_node)
+and avoid it.
 
-During unbind, snd_soc_unbind_card() flushes delayed work and then
-calls soc_cleanup_card_resources(). Inside cleanup,
-snd_card_disconnect_sync() releases all PCM file descriptors, and
-the resulting PCM close path can call snd_soc_dapm_stream_stop()
-which schedules new delayed work with a pmdown_time timer delay.
-Since this happens after the flush in snd_soc_unbind_card(), the
-new work is not caught. soc_remove_link_components() then frees
-DAPM widgets before this work fires, leading to the use-after-free.
-
-The existing flush in soc_free_pcm_runtime() also cannot help as it
-runs after soc_remove_link_components() has already freed the widgets.
-
-Add a flush in soc_cleanup_card_resources() after
-snd_card_disconnect_sync() (after which no new PCM closes can
-schedule further delayed work) and before soc_remove_link_dais()
-and soc_remove_link_components() (which tear down the structures the
-delayed work accesses).
-
-Fixes: e894efef9ac7 ("ASoC: core: add support to card rebind")
-Signed-off-by: Matteo Cotifava <cotifavamatteo@gmail.com>
-Link: https://patch.msgid.link/20260309215412.545628-3-cotifavamatteo@gmail.com
+Signed-off-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://patch.msgid.link/87r06pfre8.wl-kuninori.morimoto.gx@renesas.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
+Stable-dep-of: 4185b95f8a42 ("ASoC: simple-card-utils: fix graph_util_is_ports0() for DT overlays")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/soc-core.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/generic/simple-card-utils.c | 44 +++++++++------------------
+ 1 file changed, 14 insertions(+), 30 deletions(-)
 
-diff --git a/sound/soc/soc-core.c b/sound/soc/soc-core.c
-index 39570e0e92bbc..e2a4ff5414099 100644
---- a/sound/soc/soc-core.c
-+++ b/sound/soc/soc-core.c
-@@ -1996,6 +1996,9 @@ static void soc_cleanup_card_resources(struct snd_soc_card *card)
- 	for_each_card_rtds(card, rtd)
- 		if (rtd->initialized)
- 			snd_soc_link_exit(rtd);
-+	/* flush delayed work before removing DAIs and DAPM widgets */
-+	snd_soc_flush_all_delayed_work(card);
-+
- 	/* remove and free each DAI */
- 	soc_remove_link_dais(card);
- 	soc_remove_link_components(card);
+diff --git a/sound/soc/generic/simple-card-utils.c b/sound/soc/generic/simple-card-utils.c
+index 598b0000df244..9ef3e69683271 100644
+--- a/sound/soc/generic/simple-card-utils.c
++++ b/sound/soc/generic/simple-card-utils.c
+@@ -988,35 +988,27 @@ EXPORT_SYMBOL_GPL(asoc_graph_card_probe);
+ 
+ int asoc_graph_is_ports0(struct device_node *np)
+ {
+-	struct device_node *port, *ports, *ports0, *top;
+-	int ret;
++	struct device_node *parent __free(device_node) = of_get_parent(np);
++	struct device_node *port;
+ 
+ 	/* np is "endpoint" or "port" */
+-	if (of_node_name_eq(np, "endpoint")) {
+-		port = of_get_parent(np);
+-	} else {
++	if (of_node_name_eq(np, "endpoint"))
++		port = parent;
++	else
+ 		port = np;
+-		of_node_get(port);
+-	}
+-
+-	ports	= of_get_parent(port);
+-	top	= of_get_parent(ports);
+-	ports0	= of_get_child_by_name(top, "ports");
+-
+-	ret = ports0 == ports;
+ 
+-	of_node_put(port);
+-	of_node_put(ports);
+-	of_node_put(ports0);
+-	of_node_put(top);
++	struct device_node *ports  __free(device_node) = of_get_parent(port);
++	struct device_node *top    __free(device_node) = of_get_parent(ports);
++	struct device_node *ports0 __free(device_node) = of_get_child_by_name(top, "ports");
+ 
+-	return ret;
++	return ports0 == ports;
+ }
+ EXPORT_SYMBOL_GPL(asoc_graph_is_ports0);
+ 
+ static int graph_get_dai_id(struct device_node *ep)
+ {
+-	struct device_node *node;
++	struct device_node *node __free(device_node) = of_graph_get_port_parent(ep);
++	struct device_node *port __free(device_node) = of_get_parent(ep);
+ 	struct device_node *endpoint;
+ 	struct of_endpoint info;
+ 	int i, id;
+@@ -1039,13 +1031,10 @@ static int graph_get_dai_id(struct device_node *ep)
+ 		if (of_property_present(ep,   "reg"))
+ 			return info.id;
+ 
+-		node = of_get_parent(ep);
+-		ret = of_property_present(node, "reg");
+-		of_node_put(node);
++		ret = of_property_present(port, "reg");
+ 		if (ret)
+ 			return info.port;
+ 	}
+-	node = of_graph_get_port_parent(ep);
+ 
+ 	/*
+ 	 * Non HDMI sound case, counting port/endpoint on its DT
+@@ -1059,8 +1048,6 @@ static int graph_get_dai_id(struct device_node *ep)
+ 		i++;
+ 	}
+ 
+-	of_node_put(node);
+-
+ 	if (id < 0)
+ 		return -ENODEV;
+ 
+@@ -1070,7 +1057,6 @@ static int graph_get_dai_id(struct device_node *ep)
+ int asoc_graph_parse_dai(struct device *dev, struct device_node *ep,
+ 			 struct snd_soc_dai_link_component *dlc, int *is_single_link)
+ {
+-	struct device_node *node;
+ 	struct of_phandle_args args = {};
+ 	struct snd_soc_dai *dai;
+ 	int ret;
+@@ -1078,7 +1064,7 @@ int asoc_graph_parse_dai(struct device *dev, struct device_node *ep,
+ 	if (!ep)
+ 		return 0;
+ 
+-	node = of_graph_get_port_parent(ep);
++	struct device_node *node __free(device_node) = of_graph_get_port_parent(ep);
+ 
+ 	/*
+ 	 * Try to find from DAI node
+@@ -1120,10 +1106,8 @@ int asoc_graph_parse_dai(struct device *dev, struct device_node *ep,
+ 	 *    if he unbinded CPU or Codec.
+ 	 */
+ 	ret = snd_soc_get_dlc(&args, dlc);
+-	if (ret < 0) {
+-		of_node_put(node);
++	if (ret < 0)
+ 		return ret;
+-	}
+ 
+ parse_dai_end:
+ 	if (is_single_link)
 -- 
 2.51.0
 
