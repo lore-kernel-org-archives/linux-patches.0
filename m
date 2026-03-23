@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 678272C0298;
-	Mon, 23 Mar 2026 16:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894638B7C4;
+	Mon, 23 Mar 2026 16:18:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282704; cv=none; b=NcGQNpyeYhLjsgYduSMwkcxoMQfNioJzDhwSrOell/XfJRFgmXMuqDhwy+7H/KTe6adn8LKVxZ42fyJZMYdgoGQku1jAL/hsvc1gBfeR6uqRqB5uy6fie9IZfajJ92tyUgsibS7rgpAXNt8AimM00/fmp/4vhGS09UR6/IlQdtI=
+	t=1774282707; cv=none; b=NswkufzZAjHsNfzfIrR9fZrHuwjfTJv5BztHzk/ZvpInbVKvaJaKjuX3+c/dNQMO4O3YiALdsVjPHRqwPzV7FPWLizO4C/iNL51kS+//bfc2LFvpKkoV3Ldggw2/LyGPOKCtkcynwsLq86LoWF+igsS5mHNU98RywB6mgIcSQhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282704; c=relaxed/simple;
-	bh=iz+tDc3JqXg3XWU+9UksYzYeacaSvUVt2j5YNs+JsKg=;
+	s=arc-20240116; t=1774282707; c=relaxed/simple;
+	bh=1L3JCWHpEA/g7nsyUEzi669NVSItSjOtorhqcQynbG4=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSKL/ZiP/HpJMW2zFVDgSvgq0ZtUQx5WqUNBcIybFrRyDt1FnTAKa/JVjNUz7D9Jcq0UizgeD+oz9SJLkiK+fbux5kKufvy2GRAjyRq1PWjs7iNbEMlNCuu2Su8eqLqE75uVvjnvB4maTaSd0+iCmUyXd0SkokD/tsWqvsDsZ5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=zw1VcEwt; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=G1FPedGGSEP7HZ3i0yooAcJch8Jjd1W5c+/CD7qVCFktYWqMov6wJEDY+gbMAX5Qore4ZnzTB95k9MLM9CFx/PE3pqLx08m0UHxk4apj0ok7ODuuRyjmT6ReElI1d/DioTIRFfxU0CC4wyNV5GIf/rprNxlEkKVwNCy0FTu1XZE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=NWk0ub+E; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="zw1VcEwt"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02E69C4CEF7;
-	Mon, 23 Mar 2026 16:18:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="NWk0ub+E"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C48DBC2BCB0;
+	Mon, 23 Mar 2026 16:18:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282704;
-	bh=iz+tDc3JqXg3XWU+9UksYzYeacaSvUVt2j5YNs+JsKg=;
+	s=korg; t=1774282707;
+	bh=1L3JCWHpEA/g7nsyUEzi669NVSItSjOtorhqcQynbG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zw1VcEwtNJ0rFzulN27A/ZOk4J1T8JUS0brYZ7YTeh5jaFyKPYlo3HZkYApTfiAOJ
-	 wh4jwk88ASMocxACdAaWJn4jY20oGhJKrR5pI5qhqHC1r3rqVje/ednk/KYRXUMvmi
-	 +LV5yj3BdYWb0q7+f261QohzOvcDY1F9kKrFqyhg=
+	b=NWk0ub+E1kqeeyclc889eBeyrFTu/i0fl1zPXOHJ4PVYQbAEkqYo0qi+m8srzUjbU
+	 uXVVrRmZGxCCLilszQUpZmlbT4xFTzRkcYjoWRhmlBmPo16tXWMUsZ1Re9nZWdtCgF
+	 TJxcQn5abIbd93NwwI3ioEUtqWinutmIxngjY9Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Hoeppner <hoeppner@linux.ibm.com>,
-	Eduard Shishkin <edward6@linux.ibm.com>,
-	Stefan Haberland <sth@linux.ibm.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 255/481] s390/dasd: Copy detected format information to secondary device
-Date: Mon, 23 Mar 2026 14:43:57 +0100
-Message-ID: <20260323134531.369917072@linuxfoundation.org>
+	Josh Law <objecting@objecting.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 256/481] lib/bootconfig: fix off-by-one in xbc_verify_tree() unclosed brace error
+Date: Mon, 23 Mar 2026 14:43:58 +0100
+Message-ID: <20260323134531.393988430@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -52,74 +51,43 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Stefan Haberland <sth@linux.ibm.com>
+From: Josh Law <objecting@objecting.org>
 
-commit 4c527c7e030672efd788d0806d7a68972a7ba3c1 upstream.
+commit 39ebc8d7f561e1b64eca87353ef9b18e2825e591 upstream.
 
-During online processing for a DASD device an IO operation is started to
-determine the format of the device. CDL format contains specifically
-sized blocks at the beginning of the disk.
+__xbc_open_brace() pushes entries with post-increment
+(open_brace[brace_index++]), so brace_index always points one past
+the last valid entry.  xbc_verify_tree() reads open_brace[brace_index]
+to report which brace is unclosed, but this is one past the last
+pushed entry and contains stale/zero data, causing the error message
+to reference the wrong node.
 
-For a PPRC secondary device no real IO operation is possible therefore
-this IO request can not be started and this step is skipped for online
-processing of secondary devices. This is generally fine since the
-secondary is a copy of the primary device.
+Use open_brace[brace_index - 1] to correctly identify the unclosed
+brace.  brace_index is known to be > 0 here since we are inside the
+if (brace_index) guard.
 
-In case of an additional partition detection that is run after a swap
-operation the format information is needed to properly drive partition
-detection IO.
+Link: https://lore.kernel.org/all/20260312191143.28719-2-objecting@objecting.org/
 
-Currently the information is not passed leading to IO errors during
-partition detection and a wrongly detected partition table which in turn
-might lead to data corruption on the disk with the wrong partition table.
-
-Fix by passing the format information from primary to secondary device.
-
-Fixes: 413862caad6f ("s390/dasd: add copy pair swap capability")
-Cc: stable@vger.kernel.org #6.1
-Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
-Acked-by: Eduard Shishkin <edward6@linux.ibm.com>
-Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260310142330.4080106-3-sth@linux.ibm.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: ead1e19ad905 ("lib/bootconfig: Fix a bug of breaking existing tree nodes")
+Cc: stable@vger.kernel.org
+Signed-off-by: Josh Law <objecting@objecting.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_eckd.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ lib/bootconfig.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/s390/block/dasd_eckd.c
-+++ b/drivers/s390/block/dasd_eckd.c
-@@ -6186,6 +6186,7 @@ static void copy_pair_set_active(struct
- static int dasd_eckd_copy_pair_swap(struct dasd_device *device, char *prim_busid,
- 				    char *sec_busid)
- {
-+	struct dasd_eckd_private *prim_priv, *sec_priv;
- 	struct dasd_device *primary, *secondary;
- 	struct dasd_copy_relation *copy;
- 	struct dasd_block *block;
-@@ -6206,6 +6207,9 @@ static int dasd_eckd_copy_pair_swap(stru
- 	if (!secondary)
- 		return DASD_COPYPAIRSWAP_SECONDARY;
+--- a/lib/bootconfig.c
++++ b/lib/bootconfig.c
+@@ -793,7 +793,7 @@ static int __init xbc_verify_tree(void)
  
-+	prim_priv = primary->private;
-+	sec_priv = secondary->private;
-+
- 	/*
- 	 * usually the device should be quiesced for swap
- 	 * for paranoia stop device and requeue requests again
-@@ -6238,6 +6242,13 @@ static int dasd_eckd_copy_pair_swap(stru
- 		dasd_device_remove_stop_bits(primary, DASD_STOPPED_QUIESCE);
+ 	/* Brace closing */
+ 	if (brace_index) {
+-		n = &xbc_nodes[open_brace[brace_index]];
++		n = &xbc_nodes[open_brace[brace_index - 1]];
+ 		return xbc_parse_error("Brace is not closed",
+ 					xbc_node_get_data(n));
  	}
- 
-+	/*
-+	 * The secondary device never got through format detection, but since it
-+	 * is a copy of the primary device, the format is exactly the same;
-+	 * therefore, the detected layout can simply be copied.
-+	 */
-+	sec_priv->uses_cdl = prim_priv->uses_cdl;
-+
- 	/* re-enable device */
- 	dasd_device_remove_stop_bits(primary, DASD_STOPPED_PPRC);
- 	dasd_device_remove_stop_bits(secondary, DASD_STOPPED_PPRC);
 
 
