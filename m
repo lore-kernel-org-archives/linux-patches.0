@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B68F3B95F2;
-	Mon, 23 Mar 2026 16:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C72B0283FEF;
+	Mon, 23 Mar 2026 16:14:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282491; cv=none; b=KnWdk0pfVQrU0HF2Xx5y/LO53uG0gKNYlyQKHJbL38KXe8m4pS9nwMGt8hvypA98jU5uDMcmA0TALMn9A+Nee0DCPhUU2rcFoXQJyceYdxuYyPYs1VL4T7U9/H5DB+YAMaiM7o1WDHkVyHRSecseSqYeY2jgqdagMxZIri6wCCU=
+	t=1774282493; cv=none; b=MhoWWKYzvpUqz1wKPr2QLeSrokMzzUDD5nVROTEQWs77CvQKkckkbP6onBWD1vfc11CIoZHsEtHKoDItV1hu/jg9aq+xIJC2aN0sIXsHs1H+aIznYf4XlBGSG9Fyo+8HuwLoYOYFQ1XABt3+ueXg45kq8ErDAJn45Xvz33tN0Kc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282491; c=relaxed/simple;
-	bh=GUceQ3KCw7NdEtgFivbUVo5tuiJEItdA5+fOK5YyltE=;
+	s=arc-20240116; t=1774282493; c=relaxed/simple;
+	bh=X2wmNMSXZgAjMSH0hNjqxpyVvZ88u7QqPM40zJqkpcU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=XarFVIMR4AtdOyMFwse4xHr8YMLkApSCdEs//IOXXHgl0bdAtSMrXObWCl3W1PA4DB61TkQDhFT7MXziQ+3F7/mwzTmzvtlG87RgWppoxalcw3cidkDHsuI03/h7U5FmzAxpxu52xRXmfn36NlqFEIIihQpSh1g8NkCtVtTEcKo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Hf7zRhWG; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=aEg0FYcqh6GJ1wBSrLJLBNUvAfWfjFWiLG/7jzty99s6/WJCWpJij4A8QQgJEUwKLRjJMiHCbO/7NDeOvVbDE5Hs8YCsnFhNI2G1kviUdeNbrKYukHTSXCmHrm4ipKkeVCXuvBhLU+oj/TAQUHEWp8l2+M3WTku/pEjwcwTz0i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wJJX/+dZ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Hf7zRhWG"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9057DC4CEF7;
-	Mon, 23 Mar 2026 16:14:50 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wJJX/+dZ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D6BC4CEF7;
+	Mon, 23 Mar 2026 16:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282490;
-	bh=GUceQ3KCw7NdEtgFivbUVo5tuiJEItdA5+fOK5YyltE=;
+	s=korg; t=1774282493;
+	bh=X2wmNMSXZgAjMSH0hNjqxpyVvZ88u7QqPM40zJqkpcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hf7zRhWGg009d3ttGgkgG0wG3I9Ccr2M3w7sBLFjLLY0Og3fEEIwJwWC5ehK7g2zp
-	 FER64HgP9ImJZaTmJZq20pg2st7aU8N3l+fZfwYXRRMiiRD3q7tDwpFJR5nL+CKvQa
-	 rA3eS5bGFRDIB+FP7KMENMnoRqJH9yIjSo5C968c=
+	b=wJJX/+dZ05Kk4CyOMqX+ra3/E5VjvmLEdpop8JJN1JsyguMbL7+Aa0vR8ahDzLCxJ
+	 4v5Jh28OwaAS4H1TOW3s0ndJ5RK6bDgckKsFnh9B2IjiZea51xN7k7ZB8kqoM+hZTk
+	 5PFzxy6UVQNZd5MZAMEmqP/cbLRUG9YmkQdZIIbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengfeng Ye <dg573847474@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Ruitong Liu <cnitlrt@gmail.com>,
+	Victor Nogueira <victor@mojatatu.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 175/481] mctp: route: hold key->lock in mctp_flow_prepare_output()
-Date: Mon, 23 Mar 2026 14:42:37 +0100
-Message-ID: <20260323134529.483007095@linuxfoundation.org>
+Subject: [PATCH 6.1 140/481] net/sched: act_ife: Fix metalist update behavior
+Date: Mon, 23 Mar 2026 14:42:02 +0100
+Message-ID: <20260323134528.669997399@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,83 +53,399 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chengfeng Ye <dg573847474@gmail.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 7d86aa41c073c4e7eb75fd2e674f1fd8f289728a ]
+[ Upstream commit e2cedd400c3ec0302ffca2490e8751772906ac23 ]
 
-mctp_flow_prepare_output() checks key->dev and may call
-mctp_dev_set_key(), but it does not hold key->lock while doing so.
+Whenever an ife action replace changes the metalist, instead of
+replacing the old data on the metalist, the current ife code is appending
+the new metadata. Aside from being innapropriate behavior, this may lead
+to an unbounded addition of metadata to the metalist which might cause an
+out of bounds error when running the encode op:
 
-mctp_dev_set_key() and mctp_dev_release_key() are annotated with
-__must_hold(&key->lock), so key->dev access is intended to be
-serialized by key->lock. The mctp_sendmsg() transmit path reaches
-mctp_flow_prepare_output() via mctp_local_output() -> mctp_dst_output()
-without holding key->lock, so the check-and-set sequence is racy.
+[  138.423369][    C1] ==================================================================
+[  138.424317][    C1] BUG: KASAN: slab-out-of-bounds in ife_tlv_meta_encode (net/ife/ife.c:168)
+[  138.424906][    C1] Write of size 4 at addr ffff8880077f4ffe by task ife_out_out_bou/255
+[  138.425778][    C1] CPU: 1 UID: 0 PID: 255 Comm: ife_out_out_bou Not tainted 7.0.0-rc1-00169-gfbdfa8da05b6 #624 PREEMPT(full)
+[  138.425795][    C1] Hardware name: Bochs Bochs, BIOS Bochs 01/01/2011
+[  138.425800][    C1] Call Trace:
+[  138.425804][    C1]  <IRQ>
+[  138.425808][    C1]  dump_stack_lvl (lib/dump_stack.c:122)
+[  138.425828][    C1]  print_report (mm/kasan/report.c:379 mm/kasan/report.c:482)
+[  138.425839][    C1]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[  138.425844][    C1]  ? __virt_addr_valid (./arch/x86/include/asm/preempt.h:95 (discriminator 1) ./include/linux/rcupdate.h:975 (discriminator 1) ./include/linux/mmzone.h:2207 (discriminator 1) arch/x86/mm/physaddr.c:54 (discriminator 1))
+[  138.425853][    C1]  ? ife_tlv_meta_encode (net/ife/ife.c:168)
+[  138.425859][    C1]  kasan_report (mm/kasan/report.c:221 mm/kasan/report.c:597)
+[  138.425868][    C1]  ? ife_tlv_meta_encode (net/ife/ife.c:168)
+[  138.425878][    C1]  kasan_check_range (mm/kasan/generic.c:186 (discriminator 1) mm/kasan/generic.c:200 (discriminator 1))
+[  138.425884][    C1]  __asan_memset (mm/kasan/shadow.c:84 (discriminator 2))
+[  138.425889][    C1]  ife_tlv_meta_encode (net/ife/ife.c:168)
+[  138.425893][    C1]  ? ife_tlv_meta_encode (net/ife/ife.c:171)
+[  138.425898][    C1]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[  138.425903][    C1]  ife_encode_meta_u16 (net/sched/act_ife.c:57)
+[  138.425910][    C1]  ? __pfx_do_raw_spin_lock (kernel/locking/spinlock_debug.c:114)
+[  138.425916][    C1]  ? __asan_memcpy (mm/kasan/shadow.c:105 (discriminator 3))
+[  138.425921][    C1]  ? __pfx_ife_encode_meta_u16 (net/sched/act_ife.c:45)
+[  138.425927][    C1]  ? srso_alias_return_thunk (arch/x86/lib/retpoline.S:221)
+[  138.425931][    C1]  tcf_ife_act (net/sched/act_ife.c:847 net/sched/act_ife.c:879)
 
-Example interleaving:
+To solve this issue, fix the replace behavior by adding the metalist to
+the ife rcu data structure.
 
-  CPU0                                  CPU1
-  ----                                  ----
-  mctp_flow_prepare_output(key, devA)
-    if (!key->dev)  // sees NULL
-                                        mctp_flow_prepare_output(
-                                            key, devB)
-                                          if (!key->dev)  // still NULL
-                                          mctp_dev_set_key(devB, key)
-                                            mctp_dev_hold(devB)
-                                            key->dev = devB
-    mctp_dev_set_key(devA, key)
-      mctp_dev_hold(devA)
-      key->dev = devA   // overwrites devB
-
-Now both devA and devB references were acquired, but only the final
-key->dev value is tracked for release. One reference can be lost,
-causing a resource leak as mctp_dev_release_key() would only decrease
-the reference on one dev.
-
-Fix by taking key->lock around the key->dev check and
-mctp_dev_set_key() call.
-
-Fixes: 67737c457281 ("mctp: Pass flow data & flow release events to drivers")
-Signed-off-by: Chengfeng Ye <dg573847474@gmail.com>
-Link: https://patch.msgid.link/20260306031402.857224-1-dg573847474@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: aa9fd9a325d51 ("sched: act: ife: update parameters via rcu handling")
+Reported-by: Ruitong Liu <cnitlrt@gmail.com>
+Tested-by: Ruitong Liu <cnitlrt@gmail.com>
+Co-developed-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Victor Nogueira <victor@mojatatu.com>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Link: https://patch.msgid.link/20260304140603.76500-1-jhs@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/net/tc_act/tc_ife.h |  4 +-
+ net/sched/act_ife.c         | 93 ++++++++++++++++++-------------------
+ 2 files changed, 45 insertions(+), 52 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 62952ad5cb636..fdeaf80691e55 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -267,6 +267,7 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+diff --git a/include/net/tc_act/tc_ife.h b/include/net/tc_act/tc_ife.h
+index c7f24a2da1cad..24d4d5a62b3c2 100644
+--- a/include/net/tc_act/tc_ife.h
++++ b/include/net/tc_act/tc_ife.h
+@@ -13,15 +13,13 @@ struct tcf_ife_params {
+ 	u8 eth_src[ETH_ALEN];
+ 	u16 eth_type;
+ 	u16 flags;
+-
++	struct list_head metalist;
+ 	struct rcu_head rcu;
+ };
+ 
+ struct tcf_ife_info {
+ 	struct tc_action common;
+ 	struct tcf_ife_params __rcu *params;
+-	/* list of metaids allowed */
+-	struct list_head metalist;
+ };
+ #define to_ife(a) ((struct tcf_ife_info *)a)
+ 
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index 1f243ea65443c..a25203a492700 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -292,8 +292,8 @@ static int load_metaops_and_vet(u32 metaid, void *val, int len, bool rtnl_held)
+ /* called when adding new meta information
+ */
+ static int __add_metainfo(const struct tcf_meta_ops *ops,
+-			  struct tcf_ife_info *ife, u32 metaid, void *metaval,
+-			  int len, bool atomic, bool exists)
++			  struct tcf_ife_params *p, u32 metaid, void *metaval,
++			  int len, bool atomic)
  {
- 	struct mctp_sk_key *key;
- 	struct mctp_flow *flow;
-+	unsigned long flags;
+ 	struct tcf_meta_info *mi = NULL;
+ 	int ret = 0;
+@@ -312,45 +312,40 @@ static int __add_metainfo(const struct tcf_meta_ops *ops,
+ 		}
+ 	}
  
- 	flow = skb_ext_find(skb, SKB_EXT_MCTP);
- 	if (!flow)
-@@ -274,12 +275,14 @@ static void mctp_flow_prepare_output(struct sk_buff *skb, struct mctp_dev *dev)
+-	if (exists)
+-		spin_lock_bh(&ife->tcf_lock);
+-	list_add_tail(&mi->metalist, &ife->metalist);
+-	if (exists)
+-		spin_unlock_bh(&ife->tcf_lock);
++	list_add_tail(&mi->metalist, &p->metalist);
  
- 	key = flow->key;
- 
--	if (key->dev) {
-+	spin_lock_irqsave(&key->lock, flags);
-+
-+	if (!key->dev)
-+		mctp_dev_set_key(dev, key);
-+	else
- 		WARN_ON(key->dev != dev);
--		return;
--	}
- 
--	mctp_dev_set_key(dev, key);
-+	spin_unlock_irqrestore(&key->lock, flags);
+ 	return ret;
  }
- #else
- static void mctp_skb_set_flow(struct sk_buff *skb, struct mctp_sk_key *key) {}
+ 
+ static int add_metainfo_and_get_ops(const struct tcf_meta_ops *ops,
+-				    struct tcf_ife_info *ife, u32 metaid,
+-				    bool exists)
++				    struct tcf_ife_params *p, u32 metaid)
+ {
+ 	int ret;
+ 
+ 	if (!try_module_get(ops->owner))
+ 		return -ENOENT;
+-	ret = __add_metainfo(ops, ife, metaid, NULL, 0, true, exists);
++	ret = __add_metainfo(ops, p, metaid, NULL, 0, true);
+ 	if (ret)
+ 		module_put(ops->owner);
+ 	return ret;
+ }
+ 
+-static int add_metainfo(struct tcf_ife_info *ife, u32 metaid, void *metaval,
+-			int len, bool exists)
++static int add_metainfo(struct tcf_ife_params *p, u32 metaid, void *metaval,
++			int len)
+ {
+ 	const struct tcf_meta_ops *ops = find_ife_oplist(metaid);
+ 	int ret;
+ 
+ 	if (!ops)
+ 		return -ENOENT;
+-	ret = __add_metainfo(ops, ife, metaid, metaval, len, false, exists);
++	ret = __add_metainfo(ops, p, metaid, metaval, len, false);
+ 	if (ret)
+ 		/*put back what find_ife_oplist took */
+ 		module_put(ops->owner);
+ 	return ret;
+ }
+ 
+-static int use_all_metadata(struct tcf_ife_info *ife, bool exists)
++static int use_all_metadata(struct tcf_ife_params *p)
+ {
+ 	struct tcf_meta_ops *o;
+ 	int rc = 0;
+@@ -358,7 +353,7 @@ static int use_all_metadata(struct tcf_ife_info *ife, bool exists)
+ 
+ 	read_lock(&ife_mod_lock);
+ 	list_for_each_entry(o, &ifeoplist, list) {
+-		rc = add_metainfo_and_get_ops(o, ife, o->metaid, exists);
++		rc = add_metainfo_and_get_ops(o, p, o->metaid);
+ 		if (rc == 0)
+ 			installed += 1;
+ 	}
+@@ -370,7 +365,7 @@ static int use_all_metadata(struct tcf_ife_info *ife, bool exists)
+ 		return -EINVAL;
+ }
+ 
+-static int dump_metalist(struct sk_buff *skb, struct tcf_ife_info *ife)
++static int dump_metalist(struct sk_buff *skb, struct tcf_ife_params *p)
+ {
+ 	struct tcf_meta_info *e;
+ 	struct nlattr *nest;
+@@ -378,14 +373,14 @@ static int dump_metalist(struct sk_buff *skb, struct tcf_ife_info *ife)
+ 	int total_encoded = 0;
+ 
+ 	/*can only happen on decode */
+-	if (list_empty(&ife->metalist))
++	if (list_empty(&p->metalist))
+ 		return 0;
+ 
+ 	nest = nla_nest_start_noflag(skb, TCA_IFE_METALST);
+ 	if (!nest)
+ 		goto out_nlmsg_trim;
+ 
+-	list_for_each_entry(e, &ife->metalist, metalist) {
++	list_for_each_entry(e, &p->metalist, metalist) {
+ 		if (!e->ops->get(skb, e))
+ 			total_encoded += 1;
+ 	}
+@@ -402,13 +397,11 @@ static int dump_metalist(struct sk_buff *skb, struct tcf_ife_info *ife)
+ 	return -1;
+ }
+ 
+-/* under ife->tcf_lock */
+-static void _tcf_ife_cleanup(struct tc_action *a)
++static void __tcf_ife_cleanup(struct tcf_ife_params *p)
+ {
+-	struct tcf_ife_info *ife = to_ife(a);
+ 	struct tcf_meta_info *e, *n;
+ 
+-	list_for_each_entry_safe(e, n, &ife->metalist, metalist) {
++	list_for_each_entry_safe(e, n, &p->metalist, metalist) {
+ 		list_del(&e->metalist);
+ 		if (e->metaval) {
+ 			if (e->ops->release)
+@@ -421,18 +414,23 @@ static void _tcf_ife_cleanup(struct tc_action *a)
+ 	}
+ }
+ 
++static void tcf_ife_cleanup_params(struct rcu_head *head)
++{
++	struct tcf_ife_params *p = container_of(head, struct tcf_ife_params,
++						rcu);
++
++	__tcf_ife_cleanup(p);
++	kfree(p);
++}
++
+ static void tcf_ife_cleanup(struct tc_action *a)
+ {
+ 	struct tcf_ife_info *ife = to_ife(a);
+ 	struct tcf_ife_params *p;
+ 
+-	spin_lock_bh(&ife->tcf_lock);
+-	_tcf_ife_cleanup(a);
+-	spin_unlock_bh(&ife->tcf_lock);
+-
+ 	p = rcu_dereference_protected(ife->params, 1);
+ 	if (p)
+-		kfree_rcu(p, rcu);
++		call_rcu(&p->rcu, tcf_ife_cleanup_params);
+ }
+ 
+ static int load_metalist(struct nlattr **tb, bool rtnl_held)
+@@ -454,8 +452,7 @@ static int load_metalist(struct nlattr **tb, bool rtnl_held)
+ 	return 0;
+ }
+ 
+-static int populate_metalist(struct tcf_ife_info *ife, struct nlattr **tb,
+-			     bool exists, bool rtnl_held)
++static int populate_metalist(struct tcf_ife_params *p, struct nlattr **tb)
+ {
+ 	int len = 0;
+ 	int rc = 0;
+@@ -467,7 +464,7 @@ static int populate_metalist(struct tcf_ife_info *ife, struct nlattr **tb,
+ 			val = nla_data(tb[i]);
+ 			len = nla_len(tb[i]);
+ 
+-			rc = add_metainfo(ife, i, val, len, exists);
++			rc = add_metainfo(p, i, val, len);
+ 			if (rc)
+ 				return rc;
+ 		}
+@@ -522,6 +519,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
+ 	p = kzalloc(sizeof(*p), GFP_KERNEL);
+ 	if (!p)
+ 		return -ENOMEM;
++	INIT_LIST_HEAD(&p->metalist);
+ 
+ 	if (tb[TCA_IFE_METALST]) {
+ 		err = nla_parse_nested_deprecated(tb2, IFE_META_MAX,
+@@ -566,8 +564,6 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
+ 	}
+ 
+ 	ife = to_ife(*a);
+-	if (ret == ACT_P_CREATED)
+-		INIT_LIST_HEAD(&ife->metalist);
+ 
+ 	err = tcf_action_check_ctrlact(parm->action, tp, &goto_ch, extack);
+ 	if (err < 0)
+@@ -599,8 +595,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
+ 	}
+ 
+ 	if (tb[TCA_IFE_METALST]) {
+-		err = populate_metalist(ife, tb2, exists,
+-					!(flags & TCA_ACT_FLAGS_NO_RTNL));
++		err = populate_metalist(p, tb2);
+ 		if (err)
+ 			goto metadata_parse_err;
+ 	} else {
+@@ -609,7 +604,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
+ 		 * as we can. You better have at least one else we are
+ 		 * going to bail out
+ 		 */
+-		err = use_all_metadata(ife, exists);
++		err = use_all_metadata(p);
+ 		if (err)
+ 			goto metadata_parse_err;
+ 	}
+@@ -625,13 +620,14 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
+ 	if (goto_ch)
+ 		tcf_chain_put_by_act(goto_ch);
+ 	if (p)
+-		kfree_rcu(p, rcu);
++		call_rcu(&p->rcu, tcf_ife_cleanup_params);
+ 
+ 	return ret;
+ metadata_parse_err:
+ 	if (goto_ch)
+ 		tcf_chain_put_by_act(goto_ch);
+ release_idr:
++	__tcf_ife_cleanup(p);
+ 	kfree(p);
+ 	tcf_idr_release(*a, bind);
+ 	return err;
+@@ -678,7 +674,7 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
+ 	if (nla_put(skb, TCA_IFE_TYPE, 2, &p->eth_type))
+ 		goto nla_put_failure;
+ 
+-	if (dump_metalist(skb, ife)) {
++	if (dump_metalist(skb, p)) {
+ 		/*ignore failure to dump metalist */
+ 		pr_info("Failed to dump metalist\n");
+ 	}
+@@ -692,13 +688,13 @@ static int tcf_ife_dump(struct sk_buff *skb, struct tc_action *a, int bind,
+ 	return -1;
+ }
+ 
+-static int find_decode_metaid(struct sk_buff *skb, struct tcf_ife_info *ife,
++static int find_decode_metaid(struct sk_buff *skb, struct tcf_ife_params *p,
+ 			      u16 metaid, u16 mlen, void *mdata)
+ {
+ 	struct tcf_meta_info *e;
+ 
+ 	/* XXX: use hash to speed up */
+-	list_for_each_entry(e, &ife->metalist, metalist) {
++	list_for_each_entry_rcu(e, &p->metalist, metalist) {
+ 		if (metaid == e->metaid) {
+ 			if (e->ops) {
+ 				/* We check for decode presence already */
+@@ -715,10 +711,13 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ {
+ 	struct tcf_ife_info *ife = to_ife(a);
+ 	int action = ife->tcf_action;
++	struct tcf_ife_params *p;
+ 	u8 *ifehdr_end;
+ 	u8 *tlv_data;
+ 	u16 metalen;
+ 
++	p = rcu_dereference_bh(ife->params);
++
+ 	bstats_update(this_cpu_ptr(ife->common.cpu_bstats), skb);
+ 	tcf_lastuse_update(&ife->tcf_tm);
+ 
+@@ -744,7 +743,7 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ 			return TC_ACT_SHOT;
+ 		}
+ 
+-		if (find_decode_metaid(skb, ife, mtype, dlen, curr_data)) {
++		if (find_decode_metaid(skb, p, mtype, dlen, curr_data)) {
+ 			/* abuse overlimits to count when we receive metadata
+ 			 * but dont have an ops for it
+ 			 */
+@@ -768,12 +767,12 @@ static int tcf_ife_decode(struct sk_buff *skb, const struct tc_action *a,
+ /*XXX: check if we can do this at install time instead of current
+  * send data path
+ **/
+-static int ife_get_sz(struct sk_buff *skb, struct tcf_ife_info *ife)
++static int ife_get_sz(struct sk_buff *skb, struct tcf_ife_params *p)
+ {
+-	struct tcf_meta_info *e, *n;
++	struct tcf_meta_info *e;
+ 	int tot_run_sz = 0, run_sz = 0;
+ 
+-	list_for_each_entry_safe(e, n, &ife->metalist, metalist) {
++	list_for_each_entry_rcu(e, &p->metalist, metalist) {
+ 		if (e->ops->check_presence) {
+ 			run_sz = e->ops->check_presence(skb, e);
+ 			tot_run_sz += run_sz;
+@@ -794,7 +793,7 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	   OUTERHDR:TOTMETALEN:{TLVHDR:Metadatum:TLVHDR..}:ORIGDATA
+ 	   where ORIGDATA = original ethernet header ...
+ 	 */
+-	u16 metalen = ife_get_sz(skb, ife);
++	u16 metalen = ife_get_sz(skb, p);
+ 	int hdrm = metalen + skb->dev->hard_header_len + IFE_METAHDRLEN;
+ 	unsigned int skboff = 0;
+ 	int new_len = skb->len + hdrm;
+@@ -832,25 +831,21 @@ static int tcf_ife_encode(struct sk_buff *skb, const struct tc_action *a,
+ 	if (!ife_meta)
+ 		goto drop;
+ 
+-	spin_lock(&ife->tcf_lock);
+-
+ 	/* XXX: we dont have a clever way of telling encode to
+ 	 * not repeat some of the computations that are done by
+ 	 * ops->presence_check...
+ 	 */
+-	list_for_each_entry(e, &ife->metalist, metalist) {
++	list_for_each_entry_rcu(e, &p->metalist, metalist) {
+ 		if (e->ops->encode) {
+ 			err = e->ops->encode(skb, (void *)(ife_meta + skboff),
+ 					     e);
+ 		}
+ 		if (err < 0) {
+ 			/* too corrupt to keep around if overwritten */
+-			spin_unlock(&ife->tcf_lock);
+ 			goto drop;
+ 		}
+ 		skboff += err;
+ 	}
+-	spin_unlock(&ife->tcf_lock);
+ 	oethh = (struct ethhdr *)skb->data;
+ 
+ 	if (!is_zero_ether_addr(p->eth_src))
 -- 
 2.51.0
 
