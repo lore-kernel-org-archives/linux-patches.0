@@ -1,40 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53A8F2550D5;
-	Mon, 23 Mar 2026 15:24:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652152550D5;
+	Mon, 23 Mar 2026 15:24:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279457; cv=none; b=gtVlCpo1xdNQ9oKNFL7AgmXNsJIr3jPyAK+MUnzt37YzJBoUEcHlQxEAQncr0mKiFLqd/2D7j/+kbCopbEAQmM4It4ZQzE/fK2gLJ5Zwf5QH+UmKXj2/q4fxk1s5KJVX7QxThIUc+qauauD6EQ3u61ygO61EPnsp6G+OQRQ9E58=
+	t=1774279460; cv=none; b=MdCklcYvamMWQvGvRwd48YzKZDLYHDUyZRjd8cuExH+G+BXjkCSHRNCV6AzVd/Mc/LmS6Q/Qt+Hm+UoWyu8G4ME8lxNaDn7HTC5JdPMmhxfi8FCGCIP+QT6QGaSOPaHQo9Dp2wMASo4W2FbJA54Ni9pT54zdWse0kCmwfjfFQGU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279457; c=relaxed/simple;
-	bh=ABZlyuhe8URUxfla/POnHLiQIyluiDvLEWSoBRa3DjQ=;
+	s=arc-20240116; t=1774279460; c=relaxed/simple;
+	bh=0FoUH2TB+5SD97NTieD5ujtj7VYseu7wAsO282G0M3E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=s7Z3bEpS/gTVY+tQbLFulMUxFX+YJBV6KHzF5SEJS9o7PN5YuXQMqLlxfaFMs+FuKmimblFjm6bxumRZSn2WOElPNid7b5UWAcLL7rGouQuN4yCKacHBO4im9TENtoFpMdOjHvJBSUUyuhkmJDqNIvW34TIRS1fPa5mmaZYNTqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VGlBEyC4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Q8h9OrnHUbuW7LpaShoXOfcpFW+K4jtsYrc+Wg2iBoTdEEEQYwv02IxQj5/T7JLC5vETJQvUFV7LBThac+NsS6gxv5ulpX8dPVYxUK7Q80npEncFheINodwfz7DH73QeKGh3I8Aceo7H3G0QTLgy9dKd70l4FOf1Uu5ar+98Dhs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CMFTr3oc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VGlBEyC4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB3EAC4CEF7;
-	Mon, 23 Mar 2026 15:24:16 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CMFTr3oc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBEF2C4CEF7;
+	Mon, 23 Mar 2026 15:24:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279457;
-	bh=ABZlyuhe8URUxfla/POnHLiQIyluiDvLEWSoBRa3DjQ=;
+	s=korg; t=1774279460;
+	bh=0FoUH2TB+5SD97NTieD5ujtj7VYseu7wAsO282G0M3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VGlBEyC4Cd2jrFpTCfFn5it0KmBIyLqu11Ax0nfw819J76+APlZbXpwe+EMBp4M1e
-	 03pKANGxXjKmvzOUBAsMi8WsqfZAwk/dWdlms8xN8xx03qq9NzVBKmIScshso+WA9x
-	 m9KfmtyV/BeQdV4EWBgSYm0tSfHh/fbTwFS2/lv8=
+	b=CMFTr3ocbnRCQ6S7Xw1JRxPx3m7X3aKVbTxAJBYFzYNIJLma+QRSf1Dt8wsqCcmK0
+	 cGx6KGouI+PliilZMBRa5OiiMEqwQLlRJyVPlehHpoVVL3hJe0UKhRMvil2bOnLhZf
+	 Tt9T61sI/R8W9CZb8JfLtC5MLC4/euLPCVNObGs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Andy Shevchenko <andriy.shevchenko@intel.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Ojaswin Mujoo <ojaswin@linux.ibm.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 025/481] PCI: Use resource_set_range() that correctly sets ->end
-Date: Mon, 23 Mar 2026 14:40:07 +0100
-Message-ID: <20260323134525.856436316@linuxfoundation.org>
+Subject: [PATCH 6.1 043/481] ext4: get rid of ppath in ext4_split_extent_at()
+Date: Mon, 23 Mar 2026 14:40:25 +0100
+Message-ID: <20260323134526.283062369@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -47,67 +47,238 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-[ Upstream commit 11721c45a8266a9d0c9684153d20e37159465f96 ]
+[ Upstream commit 1de82b1b60d4613753254bf3cbf622a4c02c945c ]
 
-__pci_read_base() sets resource start and end addresses when resource
-is larger than 4G but pci_bus_addr_t or resource_size_t are not capable
-of representing 64-bit PCI addresses. This creates a problematic
-resource that has non-zero flags but the start and end addresses do not
-yield to resource size of 0 but 1.
+The use of path and ppath is now very confusing, so to make the code more
+readable, pass path between functions uniformly, and get rid of ppath.
 
-Replace custom resource addresses setup with resource_set_range()
-that correctly sets end address as -1 which results in resource_size()
-returning 0.
+To get rid of the ppath in ext4_split_extent_at(), the following is done
+here:
 
-For consistency, also use resource_set_range() in the other branch that
-does size based resource setup.
+ * Free the extents path when an error is encountered.
+ * Its caller needs to update ppath if it uses ppath.
+ * Teach ext4_ext_show_leaf() to skip error pointer.
 
-Fixes: 23b13bc76f35 ("PCI: Fail safely if we can't handle BARs larger than 4GB")
-Link: https://lore.kernel.org/all/20251207215359.28895-1-ansuelsmth@gmail.com/T/#m990492684913c5a158ff0e5fc90697d8ad95351b
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
-Cc: stable@vger.kernel.org
-Cc: Christian Marangi <ansuelsmth@gmail.com>
-Link: https://patch.msgid.link/20251208145654.5294-1-ilpo.jarvinen@linux.intel.com
+No functional changes.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Tested-by: Ojaswin Mujoo <ojaswin@linux.ibm.com>
+Link: https://patch.msgid.link/20240822023545.1994557-16-libaokun@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 22784ca541c0 ("ext4: subdivide EXT4_EXT_DATA_VALID1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/probe.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/ext4/extents.c | 85 ++++++++++++++++++++++++++---------------------
+ 1 file changed, 47 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/pci/probe.c b/drivers/pci/probe.c
-index 8f99607e0a526..02f3fbe78c46f 100644
---- a/drivers/pci/probe.c
-+++ b/drivers/pci/probe.c
-@@ -264,8 +264,7 @@ int __pci_read_base(struct pci_dev *dev, enum pci_bar_type type,
- 		if ((sizeof(pci_bus_addr_t) < 8 || sizeof(resource_size_t) < 8)
- 		    && sz64 > 0x100000000ULL) {
- 			res->flags |= IORESOURCE_UNSET | IORESOURCE_DISABLED;
--			res->start = 0;
--			res->end = 0;
-+			resource_set_range(res, 0, 0);
- 			pci_err(dev, "%s: can't handle BAR larger than 4GB (size %#010llx)\n",
- 				res_name, (unsigned long long)sz64);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 59c0bffc691d1..6da0bf3cf406d 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -84,12 +84,11 @@ static void ext4_extent_block_csum_set(struct inode *inode,
+ 	et->et_checksum = ext4_extent_block_csum(inode, eh);
+ }
+ 
+-static int ext4_split_extent_at(handle_t *handle,
+-			     struct inode *inode,
+-			     struct ext4_ext_path **ppath,
+-			     ext4_lblk_t split,
+-			     int split_flag,
+-			     int flags);
++static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
++						  struct inode *inode,
++						  struct ext4_ext_path *path,
++						  ext4_lblk_t split,
++						  int split_flag, int flags);
+ 
+ static int ext4_ext_trunc_restart_fn(struct inode *inode, int *dropped)
+ {
+@@ -335,9 +334,15 @@ ext4_force_split_extent_at(handle_t *handle, struct inode *inode,
+ 	if (nofail)
+ 		flags |= EXT4_GET_BLOCKS_METADATA_NOFAIL | EXT4_EX_NOFAIL;
+ 
+-	return ext4_split_extent_at(handle, inode, ppath, lblk, unwritten ?
++	path = ext4_split_extent_at(handle, inode, path, lblk, unwritten ?
+ 			EXT4_EXT_MARK_UNWRIT1|EXT4_EXT_MARK_UNWRIT2 : 0,
+ 			flags);
++	if (IS_ERR(path)) {
++		*ppath = NULL;
++		return PTR_ERR(path);
++	}
++	*ppath = path;
++	return 0;
+ }
+ 
+ static int
+@@ -689,7 +694,7 @@ static void ext4_ext_show_leaf(struct inode *inode, struct ext4_ext_path *path)
+ 	struct ext4_extent *ex;
+ 	int i;
+ 
+-	if (!path)
++	if (IS_ERR_OR_NULL(path))
+ 		return;
+ 
+ 	eh = path[depth].p_hdr;
+@@ -3155,16 +3160,14 @@ static int ext4_ext_zeroout(struct inode *inode, struct ext4_extent *ex)
+  *  a> the extent are splitted into two extent.
+  *  b> split is not needed, and just mark the extent.
+  *
+- * return 0 on success.
++ * Return an extent path pointer on success, or an error pointer on failure.
+  */
+-static int ext4_split_extent_at(handle_t *handle,
+-			     struct inode *inode,
+-			     struct ext4_ext_path **ppath,
+-			     ext4_lblk_t split,
+-			     int split_flag,
+-			     int flags)
++static struct ext4_ext_path *ext4_split_extent_at(handle_t *handle,
++						  struct inode *inode,
++						  struct ext4_ext_path *path,
++						  ext4_lblk_t split,
++						  int split_flag, int flags)
+ {
+-	struct ext4_ext_path *path = *ppath;
+ 	ext4_fsblk_t newblock;
+ 	ext4_lblk_t ee_block;
+ 	struct ext4_extent *ex, newex, orig_ex, zero_ex;
+@@ -3238,14 +3241,12 @@ static int ext4_split_extent_at(handle_t *handle,
+ 		ext4_ext_mark_unwritten(ex2);
+ 
+ 	path = ext4_ext_insert_extent(handle, inode, path, &newex, flags);
+-	if (!IS_ERR(path)) {
+-		*ppath = path;
++	if (!IS_ERR(path))
+ 		goto out;
+-	}
+-	*ppath = NULL;
++
+ 	err = PTR_ERR(path);
+ 	if (err != -ENOSPC && err != -EDQUOT && err != -ENOMEM)
+-		return err;
++		return path;
+ 
+ 	/*
+ 	 * Get a new path to try to zeroout or fix the extent length.
+@@ -3255,16 +3256,14 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	 * in ext4_da_update_reserve_space() due to an incorrect
+ 	 * ee_len causing the i_reserved_data_blocks exception.
+ 	 */
+-	path = ext4_find_extent(inode, ee_block, NULL,
+-				flags | EXT4_EX_NOFAIL);
++	path = ext4_find_extent(inode, ee_block, NULL, flags | EXT4_EX_NOFAIL);
+ 	if (IS_ERR(path)) {
+ 		EXT4_ERROR_INODE(inode, "Failed split extent on %u, err %ld",
+ 				 split, PTR_ERR(path));
+-		return PTR_ERR(path);
++		return path;
+ 	}
+ 	depth = ext_depth(inode);
+ 	ex = path[depth].p_ext;
+-	*ppath = path;
+ 
+ 	if (EXT4_EXT_MAY_ZEROOUT & split_flag) {
+ 		if (split_flag & (EXT4_EXT_DATA_VALID1|EXT4_EXT_DATA_VALID2)) {
+@@ -3316,10 +3315,13 @@ static int ext4_split_extent_at(handle_t *handle,
+ 	 * and err is a non-zero error code.
+ 	 */
+ 	ext4_ext_dirty(handle, inode, path + path->p_depth);
+-	return err;
+ out:
++	if (err) {
++		ext4_free_ext_path(path);
++		path = ERR_PTR(err);
++	}
+ 	ext4_ext_show_leaf(inode, path);
+-	return err;
++	return path;
+ }
+ 
+ /*
+@@ -3366,10 +3368,14 @@ static int ext4_split_extent(handle_t *handle,
+ 				       EXT4_EXT_MARK_UNWRIT2;
+ 		if (split_flag & EXT4_EXT_DATA_VALID2)
+ 			split_flag1 |= EXT4_EXT_DATA_VALID1;
+-		err = ext4_split_extent_at(handle, inode, ppath,
++		path = ext4_split_extent_at(handle, inode, path,
+ 				map->m_lblk + map->m_len, split_flag1, flags1);
+-		if (err)
++		if (IS_ERR(path)) {
++			err = PTR_ERR(path);
++			*ppath = NULL;
  			goto out;
-@@ -274,8 +273,7 @@ int __pci_read_base(struct pci_dev *dev, enum pci_bar_type type,
- 		if ((sizeof(pci_bus_addr_t) < 8) && l) {
- 			/* Above 32-bit boundary; try to reallocate */
- 			res->flags |= IORESOURCE_UNSET;
--			res->start = 0;
--			res->end = sz64 - 1;
-+			resource_set_range(res, 0, sz64);
- 			pci_info(dev, "%s: can't handle BAR above 4GB (bus address %#010llx)\n",
- 				 res_name, (unsigned long long)l64);
++		}
++		*ppath = path;
+ 	} else {
+ 		allocated = ee_len - (map->m_lblk - ee_block);
+ 	}
+@@ -3377,7 +3383,7 @@ static int ext4_split_extent(handle_t *handle,
+ 	 * Update path is required because previous ext4_split_extent_at() may
+ 	 * result in split of original leaf or extent zeroout.
+ 	 */
+-	path = ext4_find_extent(inode, map->m_lblk, *ppath, flags);
++	path = ext4_find_extent(inode, map->m_lblk, path, flags);
+ 	if (IS_ERR(path)) {
+ 		*ppath = NULL;
+ 		return PTR_ERR(path);
+@@ -3399,13 +3405,17 @@ static int ext4_split_extent(handle_t *handle,
+ 			split_flag1 |= split_flag & (EXT4_EXT_MAY_ZEROOUT |
+ 						     EXT4_EXT_MARK_UNWRIT2);
+ 		}
+-		err = ext4_split_extent_at(handle, inode, ppath,
++		path = ext4_split_extent_at(handle, inode, path,
+ 				map->m_lblk, split_flag1, flags);
+-		if (err)
++		if (IS_ERR(path)) {
++			err = PTR_ERR(path);
++			*ppath = NULL;
  			goto out;
++		}
++		*ppath = path;
+ 	}
+ 
+-	ext4_ext_show_leaf(inode, *ppath);
++	ext4_ext_show_leaf(inode, path);
+ out:
+ 	return err ? err : allocated;
+ }
+@@ -5601,22 +5611,21 @@ static int ext4_insert_range(struct file *file, loff_t offset, loff_t len)
+ 			if (ext4_ext_is_unwritten(extent))
+ 				split_flag = EXT4_EXT_MARK_UNWRIT1 |
+ 					EXT4_EXT_MARK_UNWRIT2;
+-			ret = ext4_split_extent_at(handle, inode, &path,
++			path = ext4_split_extent_at(handle, inode, path,
+ 					offset_lblk, split_flag,
+ 					EXT4_EX_NOCACHE |
+ 					EXT4_GET_BLOCKS_PRE_IO |
+ 					EXT4_GET_BLOCKS_METADATA_NOFAIL);
+ 		}
+ 
+-		ext4_free_ext_path(path);
+-		if (ret < 0) {
++		if (IS_ERR(path)) {
+ 			up_write(&EXT4_I(inode)->i_data_sem);
++			ret = PTR_ERR(path);
+ 			goto out_stop;
+ 		}
+-	} else {
+-		ext4_free_ext_path(path);
+ 	}
+ 
++	ext4_free_ext_path(path);
+ 	ext4_es_remove_extent(inode, offset_lblk, EXT_MAX_BLOCKS - offset_lblk);
+ 
+ 	/*
 -- 
 2.51.0
 
