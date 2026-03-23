@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E847F3AE6E1;
-	Mon, 23 Mar 2026 14:21:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5596F1A6828;
+	Mon, 23 Mar 2026 14:21:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275678; cv=none; b=coYi/GRAzVwdXBxy+o2dAo+jUYxDsgPT51bjVubD9jHW7G8sBBIaa3WH/hqN4iWMwdPWLknucfzvp26wZcSqj7I88wl0DB4D0YWH/g9S4pyzhKlNbzRpj8wNKyUFyQk8oo5Iuku/UetC2HeKcPZA1Oh7v3Oejj2H3SRoQHzU8V8=
+	t=1774275681; cv=none; b=tjYSIrFLO6v+uPX74eNq9aRwrdBz8LXzzd8xbRrViz4Avf0XqwWI53tMyp1X+RWkjm9bmvlSi+7mWXq5/b/W+DVE+koyKeOuZPAbTDnDsio2GcTXkEsAXyTjU/+4sgqXP0qd5btDKYmwRnnyFoMpJoF6E+syurxBvfIQIMTbhQI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275678; c=relaxed/simple;
-	bh=LkEa7slegrk/wAQezVnv0xHhtooTfvwqJcjz8M2CxEM=;
+	s=arc-20240116; t=1774275681; c=relaxed/simple;
+	bh=kabUdi63cCsqc4aUg4I6ucgji0JLQWKEpGeK7yrTZpc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=YyryNxsGwwbSts9nuMXNeeWIKPn9JRci1XN/3PEUobMakUpZzuLnI+aG+Z/F3Ylemi5jhbL7m21M+6fYZVyaZfjKQqYA82lgYO8VPzrIUAHI4s11r32PzDW/JHslR2A3UvpjLoTqOP/EsTTnqOpVGPZkFXbpUvWqQH6AJz2R13U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BWBSqjCi; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Gi1JZADJK+xEirxYY7I1El47X0CmT+VXZpCn4nm0r17bYBT6A3bZBFSWQFgjQx0TBkxYLX5aURj51lgIXSUwAjiByKbMg79ONVF1PaP2AAC4NQvcmlnLBl6MT4WR7Lcc+E/3uUSmp8ehyzfAs4YZAKPa20TXioJTNkPgNc/f20c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=r8sTDMre; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BWBSqjCi"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58055C2BC9E;
-	Mon, 23 Mar 2026 14:21:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="r8sTDMre"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9820C4CEF7;
+	Mon, 23 Mar 2026 14:21:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275677;
-	bh=LkEa7slegrk/wAQezVnv0xHhtooTfvwqJcjz8M2CxEM=;
+	s=korg; t=1774275681;
+	bh=kabUdi63cCsqc4aUg4I6ucgji0JLQWKEpGeK7yrTZpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWBSqjCiF6B4rMmY18KW20ZlOGIf49qf/C+GCsmRuzIeV0ijQq9uUaUlIUEHSWueI
-	 Jqk7RRssSI4WLWdGT7D+99iuCoW1Xkt8/q9LvEG50/r6m9gOKOgT2V/3r+VP75qG0M
-	 u+n1jynIJcz1HG2OvzjXa3PDEayDyqAD9Dr4Evog=
+	b=r8sTDMreuu5eEHDnF5Bajl5y3rgAxyghJPZ84ehG32OR3vYFyxf5mAG38juKFWN2t
+	 FToj4GJ3vQK5LvQh+NxiyEwmXtCV85fELKFar/S5XgFUeWvmBx08SYUR+Da05YbxXx
+	 M/shVRT0Ck4SDNRwQuwTjl/pQVrXjOLYov0yK8hg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marek.vasut@mailbox.org>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>
-Subject: [PATCH 6.12 180/460] drm/bridge: ti-sn65dsi83: fix CHA_DSI_CLK_RANGE rounding
-Date: Mon, 23 Mar 2026 14:42:56 +0100
-Message-ID: <20260323134530.963988066@linuxfoundation.org>
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Tvrtko Ursulin <tursulin@ursulin.net>
+Subject: [PATCH 6.12 181/460] drm/i915: Fix potential overflow of shmem scatterlist length
+Date: Mon, 23 Mar 2026 14:42:57 +0100
+Message-ID: <20260323134530.987741226@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -50,50 +53,91 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
 
-commit 2f22702dc0fee06a240404e0f7ead5b789b253d8 upstream.
+commit 029ae067431ab9d0fca479bdabe780fa436706ea upstream.
 
-The DSI frequency must be in the range:
+When a scatterlists table of a GEM shmem object of size 4 GB or more is
+populated with pages allocated from a folio, unsigned int .length
+attribute of a scatterlist may get overflowed if total byte length of
+pages allocated to that single scatterlist happens to reach or cross the
+4GB limit.  As a consequence, users of the object may suffer from hitting
+unexpected, premature end of the object's backing pages.
 
-  (CHA_DSI_CLK_RANGE * 5 MHz) <= DSI freq < ((CHA_DSI_CLK_RANGE + 1) * 5 MHz)
+[278.780187] ------------[ cut here ]------------
+[278.780377] WARNING: CPU: 1 PID: 2326 at drivers/gpu/drm/i915/i915_mm.c:55 remap_sg+0x199/0x1d0 [i915]
+...
+[278.780654] CPU: 1 UID: 0 PID: 2326 Comm: gem_mmap_offset Tainted: G S   U              6.17.0-rc1-CI_DRM_16981-ged823aaa0607+ #1 PREEMPT(voluntary)
+[278.780656] Tainted: [S]=CPU_OUT_OF_SPEC, [U]=USER
+[278.780658] Hardware name: Intel Corporation Meteor Lake Client Platform/MTL-P LP5x T3 RVP, BIOS MTLPFWI1.R00.3471.D91.2401310918 01/31/2024
+[278.780659] RIP: 0010:remap_sg+0x199/0x1d0 [i915]
+...
+[278.780786] Call Trace:
+[278.780787]  <TASK>
+[278.780788]  ? __apply_to_page_range+0x3e6/0x910
+[278.780795]  ? __pfx_remap_sg+0x10/0x10 [i915]
+[278.780906]  apply_to_page_range+0x14/0x30
+[278.780908]  remap_io_sg+0x14d/0x260 [i915]
+[278.781013]  vm_fault_cpu+0xd2/0x330 [i915]
+[278.781137]  __do_fault+0x3a/0x1b0
+[278.781140]  do_fault+0x322/0x640
+[278.781143]  __handle_mm_fault+0x938/0xfd0
+[278.781150]  handle_mm_fault+0x12c/0x300
+[278.781152]  ? lock_mm_and_find_vma+0x4b/0x760
+[278.781155]  do_user_addr_fault+0x2d6/0x8e0
+[278.781160]  exc_page_fault+0x96/0x2c0
+[278.781165]  asm_exc_page_fault+0x27/0x30
+...
 
-So the register value should point to the lower range value, but
-DIV_ROUND_UP() rounds the division to the higher range value, resulting in
-an excess of 1 (unless the frequency is an exact multiple of 5 MHz).
+That issue was apprehended by the author of a change that introduced it,
+and potential risk even annotated with a comment, but then never addressed.
 
-For example for a 437100000 MHz clock CHA_DSI_CLK_RANGE should be 87 (0x57):
+When adding folio pages to a scatterlist table, take care of byte length
+of any single scatterlist not exceeding max_segment.
 
-  (87 * 5 = 435) <= 437.1 < (88 * 5 = 440)
-
-but current code returns 88 (0x58).
-
-Fix the computation by removing the DIV_ROUND_UP().
-
-Fixes: ceb515ba29ba ("drm/bridge: ti-sn65dsi83: Add TI SN65DSI83 and SN65DSI84 driver")
-Cc: stable@vger.kernel.org
-Reviewed-by: Marek Vasut <marek.vasut@mailbox.org>
-Link: https://patch.msgid.link/20260226-ti-sn65dsi83-dual-lvds-fixes-and-test-pattern-v1-1-2e15f5a9a6a0@bootlin.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+Fixes: 0b62af28f249b ("i915: convert shmem_sg_free_table() to use a folio_batch")
+Closes: https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/14809
+Cc: Matthew Wilcox (Oracle) <willy@infradead.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org # v6.5+
+Signed-off-by: Janusz Krzysztofik <janusz.krzysztofik@linux.intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20260224094944.2447913-2-janusz.krzysztofik@linux.intel.com
+(cherry picked from commit 06249b4e691a75694c014a61708c007fb5755f60)
+Signed-off-by: Tvrtko Ursulin <tursulin@ursulin.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/bridge/ti-sn65dsi83.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/gem/i915_gem_shmem.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi83.c
-@@ -303,9 +303,9 @@ static u8 sn65dsi83_get_dsi_range(struct
- 	 *  DSI_CLK = mode clock * bpp / dsi_data_lanes / 2
- 	 * the 2 is there because the bus is DDR.
- 	 */
--	return DIV_ROUND_UP(clamp((unsigned int)mode->clock *
--			    mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
--			    ctx->dsi->lanes / 2, 40000U, 500000U), 5000U);
-+	return clamp((unsigned int)mode->clock *
-+		     mipi_dsi_pixel_format_to_bpp(ctx->dsi->format) /
-+		     ctx->dsi->lanes / 2, 40000U, 500000U) / 5000U;
- }
+--- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
+@@ -151,8 +151,12 @@ int shmem_sg_alloc_table(struct drm_i915
+ 			}
+ 		} while (1);
  
- static u8 sn65dsi83_get_dsi_div(struct sn65dsi83 *ctx)
+-		nr_pages = min_t(unsigned long,
+-				folio_nr_pages(folio), page_count - i);
++		nr_pages = min_array(((unsigned long[]) {
++					folio_nr_pages(folio),
++					page_count - i,
++					max_segment / PAGE_SIZE,
++				      }), 3);
++
+ 		if (!i ||
+ 		    sg->length >= max_segment ||
+ 		    folio_pfn(folio) != next_pfn) {
+@@ -162,7 +166,9 @@ int shmem_sg_alloc_table(struct drm_i915
+ 			st->nents++;
+ 			sg_set_folio(sg, folio, nr_pages * PAGE_SIZE, 0);
+ 		} else {
+-			/* XXX: could overflow? */
++			nr_pages = min_t(unsigned long, nr_pages,
++					 (max_segment - sg->length) / PAGE_SIZE);
++
+ 			sg->length += nr_pages * PAGE_SIZE;
+ 		}
+ 		next_pfn = folio_pfn(folio) + nr_pages;
 
 
