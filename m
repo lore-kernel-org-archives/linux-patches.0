@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2201D25A2B5;
-	Mon, 23 Mar 2026 15:01:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7587D25B2F4;
+	Mon, 23 Mar 2026 15:01:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278091; cv=none; b=mrUVXEQAxKpmfEQjjv8eiEtYAKnTpckyD3pJVLti2wJe6EyVdz0yM5orKT82iAL9dSKsBT35pDHcVSXP0ucBoIG9FOqJ6+hMud/kK9yEn/Rct2C0jz8REnGegDpUfvKXVWQZSoS8RN+lepNhCgGDjRmij5Ceff3UtzDtDHScEw4=
+	t=1774278094; cv=none; b=cs6U8tOiHQn5BNJDqM967J571L750tMqcWxoi1oyjT5PGzqGUCDBrY9L9AutgAWW0f5bZngw3ftryiCboP907/bc21nlKu2YPJbCunMaDVK6MxJ4Td1j+kgRKLGQWi/TsHdLw0atwzKvGrtvgCfIBgaeP4PcKWlbaA2ItfmNqk0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278091; c=relaxed/simple;
-	bh=a0iiakJfTgMGALNxqPtocnXsIqpoTVQG4tn0dFTKsu0=;
+	s=arc-20240116; t=1774278094; c=relaxed/simple;
+	bh=pxxNd374d8sP7s9PG82LvmpH8AqiFl1Z9SUnPN95idQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=fwp2dMbgEtKvaMDmCdZgMa4bX4VRZ+YrXm/B/vSK2OrfjTZxQ5dBI/ZmAY/No8R99kPh6w7yn9iKcCwyFh5wbV5PaliM8CprrC2XU/YFfwzn0zNOPIcKKS+VAyKoGpPmZzReqtlt3yLHuA8EBXxbnIUfrqTViddEPWdb+BlO8IQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=y3FBJPH4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=sTJ1HE2k8PmIMnlaaSkfP3cbBKlqEjaCV0/M9EGwzY2h75r2h+XapA03SCAuzgHJcsvUzGigFS9zmvmkqNdv3DiR24ENgOG9F9IY6yCkN4Xf6gOk+GOclJuTCltKSHh5o1MWgofC60eVpt1hAkPKIiZmKnCwr/QzGFjkWjV3y6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FXKd0nAv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="y3FBJPH4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B482C2BC9E;
-	Mon, 23 Mar 2026 15:01:30 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FXKd0nAv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA6A7C4CEF7;
+	Mon, 23 Mar 2026 15:01:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278091;
-	bh=a0iiakJfTgMGALNxqPtocnXsIqpoTVQG4tn0dFTKsu0=;
+	s=korg; t=1774278094;
+	bh=pxxNd374d8sP7s9PG82LvmpH8AqiFl1Z9SUnPN95idQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3FBJPH4eq07PDrRs/v7Kwc6hDyqKq1Vus5mA9bWAx0aBVAHR+H/ofPcgb3jHcaNK
-	 x8kZQNG857EA3qwiE2mA0HU8VZSzTqrbfua+lZcAKZWiIrsmoKxuHIwehjPaHw8DVu
-	 butlkqeJJ8DfEM+/52werzcK4zgACZK2wjRuIRT4=
+	b=FXKd0nAvmUXinUVoh/Lsv/lC0IufAGENlHDX5n6xOQkZcwzRTUP/E9kOODMuNCS0I
+	 1u6NGf9osthMPlsbcI2HXGhG6wIy+HFsb99TG5322fDi6mB76HHrMO0tTcyhI03Exp
+	 Y2KKrIWjh5e80sIhPh7AX+s9wQfGN20Cy419MvZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piotr Mazek <pmazek@outlook.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ranjan Kumar <ranjan.kumar@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 199/567] ACPI: PM: Save NVS memory on Lenovo G70-35
-Date: Mon, 23 Mar 2026 14:41:59 +0100
-Message-ID: <20260323134538.772493628@linuxfoundation.org>
+Subject: [PATCH 6.6 200/567] scsi: mpi3mr: Add NULL checks when resetting request and reply queues
+Date: Mon, 23 Mar 2026 14:42:00 +0100
+Message-ID: <20260323134538.795087982@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,44 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Piotr Mazek <pmazek@outlook.com>
+From: Ranjan Kumar <ranjan.kumar@broadcom.com>
 
-[ Upstream commit 023cd6d90f8aa2ef7b72d84be84a18e61ecebd64 ]
+[ Upstream commit fa96392ebebc8fade2b878acb14cce0f71016503 ]
 
-[821d6f0359b0614792ab8e2fb93b503e25a65079] prevented machines
-produced later than 2012 from saving NVS region to accelerate S3.
+The driver encountered a crash during resource cleanup when the reply and
+request queues were NULL due to freed memory.  This issue occurred when the
+creation of reply or request queues failed, and the driver freed the memory
+first, but attempted to mem set the content of the freed memory, leading to
+a system crash.
 
-Despite being made after 2012, Lenovo G70-35 still needs NVS memory
-saving during S3. A quirk is introduced for this platform.
+Add NULL pointer checks for reply and request queues before accessing the
+reply/request memory during cleanup
 
-Signed-off-by: Piotr Mazek <pmazek@outlook.com>
-[ rjw: Subject adjustment ]
-Link: https://patch.msgid.link/GV2PPF3CD5B63CC2442EE3F76F8443EAD90D499A@GV2PPF3CD5B63CC.EURP251.PROD.OUTLOOK.COM
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Ranjan Kumar <ranjan.kumar@broadcom.com>
+Link: https://patch.msgid.link/20260212070026.30263-1-ranjan.kumar@broadcom.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/sleep.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/scsi/mpi3mr/mpi3mr_fw.c | 34 ++++++++++++++++++---------------
+ 1 file changed, 19 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/acpi/sleep.c b/drivers/acpi/sleep.c
-index 728acfeb774d8..2fd51b18d13c4 100644
---- a/drivers/acpi/sleep.c
-+++ b/drivers/acpi/sleep.c
-@@ -372,6 +372,14 @@ static const struct dmi_system_id acpisleep_dmi_table[] __initconst = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "80E1"),
- 		},
- 	},
-+	{
-+	.callback = init_nvs_save_s3,
-+	.ident = "Lenovo G70-35",
-+	.matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "80Q5"),
-+		},
-+	},
- 	/*
- 	 * ThinkPad X1 Tablet(2016) cannot do suspend-to-idle using
- 	 * the Low Power S0 Idle firmware interface (see
+diff --git a/drivers/scsi/mpi3mr/mpi3mr_fw.c b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+index b6ae7ba6de523..b742ece3f0507 100644
+--- a/drivers/scsi/mpi3mr/mpi3mr_fw.c
++++ b/drivers/scsi/mpi3mr/mpi3mr_fw.c
+@@ -4262,21 +4262,25 @@ void mpi3mr_memset_buffers(struct mpi3mr_ioc *mrioc)
+ 	}
+ 
+ 	for (i = 0; i < mrioc->num_queues; i++) {
+-		mrioc->op_reply_qinfo[i].qid = 0;
+-		mrioc->op_reply_qinfo[i].ci = 0;
+-		mrioc->op_reply_qinfo[i].num_replies = 0;
+-		mrioc->op_reply_qinfo[i].ephase = 0;
+-		atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
+-		atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
+-		mpi3mr_memset_op_reply_q_buffers(mrioc, i);
+-
+-		mrioc->req_qinfo[i].ci = 0;
+-		mrioc->req_qinfo[i].pi = 0;
+-		mrioc->req_qinfo[i].num_requests = 0;
+-		mrioc->req_qinfo[i].qid = 0;
+-		mrioc->req_qinfo[i].reply_qid = 0;
+-		spin_lock_init(&mrioc->req_qinfo[i].q_lock);
+-		mpi3mr_memset_op_req_q_buffers(mrioc, i);
++		if (mrioc->op_reply_qinfo) {
++			mrioc->op_reply_qinfo[i].qid = 0;
++			mrioc->op_reply_qinfo[i].ci = 0;
++			mrioc->op_reply_qinfo[i].num_replies = 0;
++			mrioc->op_reply_qinfo[i].ephase = 0;
++			atomic_set(&mrioc->op_reply_qinfo[i].pend_ios, 0);
++			atomic_set(&mrioc->op_reply_qinfo[i].in_use, 0);
++			mpi3mr_memset_op_reply_q_buffers(mrioc, i);
++		}
++
++		if (mrioc->req_qinfo) {
++			mrioc->req_qinfo[i].ci = 0;
++			mrioc->req_qinfo[i].pi = 0;
++			mrioc->req_qinfo[i].num_requests = 0;
++			mrioc->req_qinfo[i].qid = 0;
++			mrioc->req_qinfo[i].reply_qid = 0;
++			spin_lock_init(&mrioc->req_qinfo[i].q_lock);
++			mpi3mr_memset_op_req_q_buffers(mrioc, i);
++		}
+ 	}
+ 
+ 	atomic_set(&mrioc->pend_large_data_sz, 0);
 -- 
 2.51.0
 
