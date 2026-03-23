@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8FB13AD536;
-	Mon, 23 Mar 2026 14:03:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C57F03A9D9D;
+	Mon, 23 Mar 2026 14:03:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274605; cv=none; b=kCeTRgdfIu2XdI7u4tkIjBVjBn/kETitNwZ+AX2/3NkZblpMXaNOq9wUoLarF36VNPLSgMppqwK+0JI/Zb5mNsGBmg7J/A77ajs1IE+UHgUPK9/P+by0tz2zmYFsKU2uV8npLscjVsDsV4yCYuZOWBj4tCQ8Rajocrc2mTZbzcY=
+	t=1774274608; cv=none; b=lblNFyGdyj2weuXC0Yh21x4KN6EWuLszosoDvLIZp5OOOWbXcpObg36AuVZBJypjQVolSrfWyzIXBFgx/FBlNMJYu351fQO4nU4u3UKQibRVxT9iW6/csmGEgYYZH/hsrutrvgi4bvVNX4glh5ialb+gjgrvLC9QhXjBvrp8Qac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274605; c=relaxed/simple;
-	bh=U2uGr57XNtHcf0IbW81hupwiOn44+KMS2rzXjw0RffA=;
+	s=arc-20240116; t=1774274608; c=relaxed/simple;
+	bh=98s1gaOyclYAbiG44fi0zvqsDq+Iq1umpgyH224B3JQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ftPIvO90p0ZhgwMqmI1/p0uqTPuA/WAzMrsLFv0djFRgfFH9fig+atzrd6HDzMDy39O36OEHkSUGFtlHp1n1Bf9dtu82CNEk4Q/YsvGH9ix9clwQgJZrs09DX8qxkysc3kLEwyr0OXHx95R3dS0Ob9H+3c6l2CPiWz/3J/MOiYI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KV9qw7Ga; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=EXo5LSfDLYKpPsomM8rH03rKG5dTbyH2DsU2p0+e5tDqq3wMuxUgZDNQYE9OT5k2HTSuhHE3hElIisRSiUFSlMXlOt1+ZIC/vrnfw2SmEQO6T+QxSfkyAZlU+nBdKG5oo+UUHoDKSAHfI19FHP+HEs7GyUrG8AUWNV74Q8HxwGg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=nhcZlOpk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KV9qw7Ga"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A84FC4CEF7;
-	Mon, 23 Mar 2026 14:03:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="nhcZlOpk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A1C4CEF7;
+	Mon, 23 Mar 2026 14:03:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274605;
-	bh=U2uGr57XNtHcf0IbW81hupwiOn44+KMS2rzXjw0RffA=;
+	s=korg; t=1774274608;
+	bh=98s1gaOyclYAbiG44fi0zvqsDq+Iq1umpgyH224B3JQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KV9qw7GaoBxIXF6k9Gr1SMqnn3Y8IB6w0oHYZVlikyfdsYlmOcVV3OWE2ex5LoFtA
-	 CFIoKGrcWTS/SsjIhqLQx9qP3n+Z7lvfPo8cpbAgeZfcB6xuTAEkcC9lzNoGdOaE92
-	 qqh58tDZck7KW/yPlYOMSVDczcORMAt+rK4q6zwE=
+	b=nhcZlOpk/m2ag+uMqL41vHcoq3PJAqSncnEHLKhuMO8dkZGfE15U8AW+tcddmL3xo
+	 UVQ2DHClepgoCv00nYRqyRE8B6qm0lZtH36yAGW9DvUyxLBEMLxhFjlYVDe7AshEO2
+	 KE5IpiTKGpAamSJCEIg8oI1ttXg8F6DyMSXZEqBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>,
-	Damien Le Moal <dlemoal@kernel.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH 6.18 051/212] ata: libata-core: disable LPM on ADATA SU680 SSD
-Date: Mon, 23 Mar 2026 14:44:32 +0100
-Message-ID: <20260323134505.383030529@linuxfoundation.org>
+	Thorsten Blum <thorsten.blum@linux.dev>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 034/212] crypto: atmel-sha204a - Fix OOM ->tfm_count leak
+Date: Mon, 23 Mar 2026 14:44:15 +0100
+Message-ID: <20260323134504.840855072@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,38 +51,38 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Damien Le Moal <dlemoal@kernel.org>
+From: Thorsten Blum <thorsten.blum@linux.dev>
 
-commit ce5ae93d1a216680460040c7c0465a6e3b629dec upstream.
+[ Upstream commit d240b079a37e90af03fd7dfec94930eb6c83936e ]
 
-ADATA SU680 SSDs suffer from NCQ read and write commands timeouts or bus
-errors when link power management (LPM) is enabled. Flag these devices
-with the ATA_QUIRK_NOLPM quirk to prevent the use of LPM and avoid these
-command failures.
+If memory allocation fails, decrement ->tfm_count to avoid blocking
+future reads.
 
-Reported-by: Mohammad Khaled Bayan <mhd.khaled.bayan@gmail.com>
-Closes: https://bugs.launchpad.net/ubuntu/+source/linux-hwe-6.17/+bug/2144060
 Cc: stable@vger.kernel.org
-Tested-by: Mohammad-Khaled Bayan <mhd.khaled.bayan@gmail.com>
-Signed-off-by: Damien Le Moal <dlemoal@kernel.org>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Niklas Cassel <cassel@kernel.org>
+Fixes: da001fb651b0 ("crypto: atmel-i2c - add support for SHA204A random number generator")
+Signed-off-by: Thorsten Blum <thorsten.blum@linux.dev>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[ adapted kmalloc_obj() macro to kmalloc(sizeof()) ]
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/atmel-sha204a.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -4156,6 +4156,9 @@ static const struct ata_dev_quirks_entry
- 	{ "ST3320[68]13AS",	"SD1[5-9]",	ATA_QUIRK_NONCQ |
- 						ATA_QUIRK_FIRMWARE_WARN },
+--- a/drivers/crypto/atmel-sha204a.c
++++ b/drivers/crypto/atmel-sha204a.c
+@@ -52,9 +52,10 @@ static int atmel_sha204a_rng_read_nonblo
+ 		rng->priv = 0;
+ 	} else {
+ 		work_data = kmalloc(sizeof(*work_data), GFP_ATOMIC);
+-		if (!work_data)
++		if (!work_data) {
++			atomic_dec(&i2c_priv->tfm_count);
+ 			return -ENOMEM;
+-
++		}
+ 		work_data->ctx = i2c_priv;
+ 		work_data->client = i2c_priv->client;
  
-+	/* ADATA devices with LPM issues. */
-+	{ "ADATA SU680",	NULL,		ATA_QUIRK_NOLPM },
-+
- 	/* Seagate disks with LPM issues */
- 	{ "ST1000DM010-2EP102",	NULL,		ATA_QUIRK_NOLPM },
- 	{ "ST2000DM008-2FR102",	NULL,		ATA_QUIRK_NOLPM },
 
 
