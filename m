@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA22D3ACA5C;
-	Mon, 23 Mar 2026 13:59:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EF23803EF;
+	Mon, 23 Mar 2026 13:59:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274354; cv=none; b=LCaG3FYnUb9hs18P4iGL/EWW0/wSRpghY/ZzP5YpFtxA2giwk1rXfNsTLACof+YKRg4NI8arrSqjwAZ/DaCSydeINDH0NwYGaxVoJZubJGzXhumWu42pf4p/2ClwyFYJscnhtvpGlhQdRkgrHtgydBGV1VAKCZIad0KRR1oIr7g=
+	t=1774274358; cv=none; b=PWqVjLSgQxqJm91+HjWb++nvm5uNdA26+IBNm3XLHMml5N61kTNPBHucPH26m0nPpi8wg8Sa3071p4qQGKngak/9GsPj5l5QHf5TQLuLHT2CJCA6Se3IW5l5qjd8nLEZijgEZM+kRCMs7MjByi4YKnZS6wf/SBhSTBGaQgxva24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274354; c=relaxed/simple;
-	bh=Xe3mm8Njr3gatif5mFRTL9u3rrY7smcPIDjXUK1NexE=;
+	s=arc-20240116; t=1774274358; c=relaxed/simple;
+	bh=vBcLsWTHauozpKMoh5IushIfqMsTwmgwoH7IlbhVz78=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TXO/jNpKSAvGAXQNlRtzDwwRdgTYjr7XPZgVBWxBw6d7nK0RewI2JDTjcZSlO+hsz8vsFG7WuZ83siXiIGxZyeT2eKvDnyNPXf2M/ncqjXutn6yNtqjkjJwa5zEYciU5hVOcRv9UkTM8WLpdK0JENrOOCYr1fuSEntO8VAxNH2o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GkegOeUK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DyJH/T2V/13NQOfZsF1ryB+MCauQpq1ezXnE07B1p/a79s+j8XHHNdg9LmKobpEAqBAUaz0L5v0DiG0bzScVATZSdJRN5fiICUlhQWVxWTt/+jOMNAUfYzm/9wTzjeLbqvmZEeHYs63Q1Jdduio8WqH0c/fY3UK68RCc6zzwk50=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=VC+r4Vcs; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GkegOeUK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE1EC4CEF7;
-	Mon, 23 Mar 2026 13:59:14 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="VC+r4Vcs"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E679C2BC9E;
+	Mon, 23 Mar 2026 13:59:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274354;
-	bh=Xe3mm8Njr3gatif5mFRTL9u3rrY7smcPIDjXUK1NexE=;
+	s=korg; t=1774274357;
+	bh=vBcLsWTHauozpKMoh5IushIfqMsTwmgwoH7IlbhVz78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkegOeUK4tQCRj7OHvNcxKzfMzT65tmmJ258nctQFKPBRsaUeZTw98/bTZDr/Ee0r
-	 xbONZ3hGcrv+kQ8lDkMu+BNs0Qlgi3a5R7FYrx6c4wuP6jSQfudHkc0hjtCrgVz81/
-	 25N/UvTcNxg0bdXqaE7aF4CCqikmUEc0U2c5v72w=
+	b=VC+r4VcsozJQ4lnnBaCBZr1V/N3op/NdbECrtL7StsNx53o+FqGyeBlrsUu6cwpqb
+	 pCFvw6izvIzAVrN6QzSlOfrkbKFllzUGpcWtKkLnp5H9YrxrWk4bpplHGc+30u4zCH
+	 ylJ9NqzF/KBMSvhsHBEYytaCR6umLAzChhFgzXLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Breno Leitao <leitao@debian.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>
-Subject: [PATCH 6.19 191/220] perf/x86: Move event pointer setup earlier in x86_pmu_enable()
-Date: Mon, 23 Mar 2026 14:46:08 +0100
-Message-ID: <20260323134510.630680335@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Ian Rogers <irogers@google.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.19 192/220] ring-buffer: Fix to update per-subbuf entries of persistent ring buffer
+Date: Mon, 23 Mar 2026 14:46:09 +0100
+Message-ID: <20260323134510.658764773@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,110 +52,37 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Breno Leitao <leitao@debian.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 8d5fae6011260de209aaf231120e8146b14bc8e0 upstream.
+commit f35dbac6942171dc4ce9398d1d216a59224590a9 upstream.
 
-A production AMD EPYC system crashed with a NULL pointer dereference
-in the PMU NMI handler:
+Since the validation loop in rb_meta_validate_events() updates the same
+cpu_buffer->head_page->entries, the other subbuf entries are not updated.
+Fix to use head_page to update the entries field, since it is the cursor
+in this loop.
 
-  BUG: kernel NULL pointer dereference, address: 0000000000000198
-  RIP: x86_perf_event_update+0xc/0xa0
-  Call Trace:
-   <NMI>
-   amd_pmu_v2_handle_irq+0x1a6/0x390
-   perf_event_nmi_handler+0x24/0x40
-
-The faulting instruction is `cmpq $0x0, 0x198(%rdi)` with RDI=0,
-corresponding to the `if (unlikely(!hwc->event_base))` check in
-x86_perf_event_update() where hwc = &event->hw and event is NULL.
-
-drgn inspection of the vmcore on CPU 106 showed a mismatch between
-cpuc->active_mask and cpuc->events[]:
-
-  active_mask: 0x1e (bits 1, 2, 3, 4)
-  events[1]:   0xff1100136cbd4f38  (valid)
-  events[2]:   0x0                 (NULL, but active_mask bit 2 set)
-  events[3]:   0xff1100076fd2cf38  (valid)
-  events[4]:   0xff1100079e990a90  (valid)
-
-The event that should occupy events[2] was found in event_list[2]
-with hw.idx=2 and hw.state=0x0, confirming x86_pmu_start() had run
-(which clears hw.state and sets active_mask) but events[2] was
-never populated.
-
-Another event (event_list[0]) had hw.state=0x7 (STOPPED|UPTODATE|ARCH),
-showing it was stopped when the PMU rescheduled events, confirming the
-throttle-then-reschedule sequence occurred.
-
-The root cause is commit 7e772a93eb61 ("perf/x86: Fix NULL event access
-and potential PEBS record loss") which moved the cpuc->events[idx]
-assignment out of x86_pmu_start() and into step 2 of x86_pmu_enable(),
-after the PERF_HES_ARCH check. This broke any path that calls
-pmu->start() without going through x86_pmu_enable() -- specifically
-the unthrottle path:
-
-  perf_adjust_freq_unthr_events()
-    -> perf_event_unthrottle_group()
-      -> perf_event_unthrottle()
-        -> event->pmu->start(event, 0)
-          -> x86_pmu_start()     // sets active_mask but not events[]
-
-The race sequence is:
-
-  1. A group of perf events overflows, triggering group throttle via
-     perf_event_throttle_group(). All events are stopped: active_mask
-     bits cleared, events[] preserved (x86_pmu_stop no longer clears
-     events[] after commit 7e772a93eb61).
-
-  2. While still throttled (PERF_HES_STOPPED), x86_pmu_enable() runs
-     due to other scheduling activity. Stopped events that need to
-     move counters get PERF_HES_ARCH set and events[old_idx] cleared.
-     In step 2 of x86_pmu_enable(), PERF_HES_ARCH causes these events
-     to be skipped -- events[new_idx] is never set.
-
-  3. The timer tick unthrottles the group via pmu->start(). Since
-     commit 7e772a93eb61 removed the events[] assignment from
-     x86_pmu_start(), active_mask[new_idx] is set but events[new_idx]
-     remains NULL.
-
-  4. A PMC overflow NMI fires. The handler iterates active counters,
-     finds active_mask[2] set, reads events[2] which is NULL, and
-     crashes dereferencing it.
-
-Move the cpuc->events[hwc->idx] assignment in x86_pmu_enable() to
-before the PERF_HES_ARCH check, so that events[] is populated even
-for events that are not immediately started. This ensures the
-unthrottle path via pmu->start() always finds a valid event pointer.
-
-Fixes: 7e772a93eb61 ("perf/x86: Fix NULL event access and potential PEBS record loss")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Link: https://patch.msgid.link/20260310-perf-v2-1-4a3156fce43c@debian.org
+Cc: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Cc: Ian Rogers <irogers@google.com>
+Fixes: 5f3b6e839f3c ("ring-buffer: Validate boot range memory events")
+Link: https://patch.msgid.link/177391153882.193994.17158784065013676533.stgit@mhiramat.tok.corp.google.com
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/ring_buffer.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/events/core.c
-+++ b/arch/x86/events/core.c
-@@ -1369,6 +1369,8 @@ static void x86_pmu_enable(struct pmu *p
- 			else if (i < n_running)
- 				continue;
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -2052,7 +2052,7 @@ static void rb_meta_validate_events(stru
  
-+			cpuc->events[hwc->idx] = event;
-+
- 			if (hwc->state & PERF_HES_ARCH)
- 				continue;
+ 		entries += ret;
+ 		entry_bytes += local_read(&head_page->page->commit);
+-		local_set(&cpu_buffer->head_page->entries, ret);
++		local_set(&head_page->entries, ret);
  
-@@ -1376,7 +1378,6 @@ static void x86_pmu_enable(struct pmu *p
- 			 * if cpuc->enabled = 0, then no wrmsr as
- 			 * per x86_pmu_enable_event()
- 			 */
--			cpuc->events[hwc->idx] = event;
- 			x86_pmu_start(event, PERF_EF_RELOAD);
- 		}
- 		cpuc->n_added = 0;
+ 		if (head_page == cpu_buffer->commit_page)
+ 			break;
 
 
