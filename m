@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335F83AC0D2;
-	Mon, 23 Mar 2026 13:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481351A680D;
+	Mon, 23 Mar 2026 13:55:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274134; cv=none; b=SVALcHmv3Ae/ehklxxMu6EERWZTgg5G9Wum2I129bP4tBXf+DtlbxfV8g1pcWm1GqlNzPVm1NFWCwFo/ctfHKN/ioDTP90rPTdXKxzhepUq2LcC9RQlLbkZlAw2Lx86C6pfkWhGcUzeNStmP2Zlz+erep31gyyttlcGPuCEniVU=
+	t=1774274137; cv=none; b=T73YYNdq2IgdXAJnVNcBmdZB5UD03XmjsD6ZPAtKusJrbDNmzHQLxpbUOg4oWOebYAf/c8t00WrUHdTUQz37zXP/UyGZ+ezMaMFkn5YMd7Hm/30ipWIo/THUZc4UGAG1zwOKYpoFmFAxAkMjR3YdMXj6EKPfTkGP+ZEXOEkQInU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274134; c=relaxed/simple;
-	bh=WSeVqXUyh9l1DDYVdWrOVFqeiHzXQtFs8AG2NTsqkD0=;
+	s=arc-20240116; t=1774274137; c=relaxed/simple;
+	bh=oduutQ2/EMPNfA5K32PVsaVtAcMlDcyXhXaMFt35l/I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=eK2f2i+bDNuRFWtev/U0v++JzmTKLF8exfRpB07suoT388KhcsjObbrBqoO7uqgmwYDhzon5RXGcYZ4vo+8m/++trRREZiq1JmWgaY78O52TTYlcdlsIgnRhl5QFQvxZT5m0noyonDX3mPcDDK3DipCysHviVBsPe7yZ3e6sbks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SxA+2YPk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=g9BHgBxXGQsTbK367F1vFPkwzKtrAnrftoBXvhN2kuHtBHwPb2fJX4BvvAJCqA+2XTUJTWWaCbJiCK5mhoLOZCFNSXWJ37wHRDMjr+7HplUGl6foYYf8K1Fw4p74DnmUS8auHUj8d5qw6rEGI1VReRxbOsL5+9pND2pih9haWUY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7e4EeLe; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SxA+2YPk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9A10C4CEF7;
-	Mon, 23 Mar 2026 13:55:33 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7e4EeLe"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1849C4CEF7;
+	Mon, 23 Mar 2026 13:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274134;
-	bh=WSeVqXUyh9l1DDYVdWrOVFqeiHzXQtFs8AG2NTsqkD0=;
+	s=korg; t=1774274137;
+	bh=oduutQ2/EMPNfA5K32PVsaVtAcMlDcyXhXaMFt35l/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxA+2YPk61JtFb4Lgpa6IKBJEzuZDWE6bRR1wqNBptyzvF6roBvGkWrkM9nG/YVkx
-	 9aTLTVXYarVTAn3+VUiuK47b7SHh3ANqgdBBu4lhTDG9qdKPLeQoLz1leOWHADcAOy
-	 moyoj25BHPP2ZfG8m6p7yL36cF31R9OJH59sS1JM=
+	b=c7e4EeLeiH+W9fgl0qkrhWxrt+PLoWrsHwdofcks7HV4KWES7BggobWX8eWl0XYNC
+	 725CCGabtLw5kiK1jGCrwf2v8+dqEdMKS70y4/wUZe5A3dvJFJnjIokpjfl7OVRL+w
+	 vbdLsWnwvBquWKk39LWxOiF5YLbj2DgSjDR5iC58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 118/220] Bluetooth: LE L2CAP: Disconnect if received packets SDU exceeds IMTU
-Date: Mon, 23 Mar 2026 14:44:55 +0100
-Message-ID: <20260323134508.332575668@linuxfoundation.org>
+	Benjamin Cheng <benjamin.cheng@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.19 079/220] drm/amdgpu/mmhub4.1.0: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:44:16 +0100
+Message-ID: <20260323134507.091205272@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,55 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Christian Eggers <ceggers@arri.de>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit e1d9a66889867c232657a9b6f25d451d7c3ab96f ]
+commit 3cdd405831d8cc50a5eae086403402697bb98a4a upstream.
 
-Core 6.0, Vol 3, Part A, 3.4.3:
-"If the SDU length field value exceeds the receiver's MTU, the receiver
-shall disconnect the channel..."
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-This fixes L2CAP/LE/CFC/BV-26-C (running together with 'l2test -r -P
-0x0027 -V le_public -I 100').
-
-Fixes: aac23bf63659 ("Bluetooth: Implement LE L2CAP reassembly")
-Signed-off-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 04f063d85090f5dd0c671010ce88ee49d9dcc8ed)
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 319c87bd795d5..1618fe98dce71 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -6654,8 +6654,10 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		return -ENOBUFS;
- 	}
- 
--	if (chan->imtu < skb->len) {
--		BT_ERR("Too big LE L2CAP PDU");
-+	if (skb->len > chan->imtu) {
-+		BT_ERR("Too big LE L2CAP PDU: len %u > %u", skb->len,
-+		       chan->imtu);
-+		l2cap_send_disconn_req(chan, ECONNRESET);
- 		return -ENOBUFS;
- 	}
- 
-@@ -6681,7 +6683,9 @@ static int l2cap_ecred_data_rcv(struct l2cap_chan *chan, struct sk_buff *skb)
- 		       sdu_len, skb->len, chan->imtu);
- 
- 		if (sdu_len > chan->imtu) {
--			BT_ERR("Too big LE L2CAP SDU length received");
-+			BT_ERR("Too big LE L2CAP SDU length: len %u > %u",
-+			       skb->len, sdu_len);
-+			l2cap_send_disconn_req(chan, ECONNRESET);
- 			err = -EMSGSIZE;
- 			goto failed;
- 		}
--- 
-2.51.0
-
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
+@@ -102,7 +102,8 @@ mmhub_v4_1_0_print_l2_protection_fault_s
+ 		status);
+ 	switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
+ 	case IP_VERSION(4, 1, 0):
+-		mmhub_cid = mmhub_client_ids_v4_1_0[cid][rw];
++		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_v4_1_0) ?
++			mmhub_client_ids_v4_1_0[cid][rw] : NULL;
+ 		break;
+ 	default:
+ 		mmhub_cid = NULL;
 
 
