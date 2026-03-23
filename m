@@ -1,44 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1416B3A9D9D;
-	Mon, 23 Mar 2026 15:11:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280ED3A9D9D;
+	Mon, 23 Mar 2026 15:11:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278678; cv=none; b=OVHDtJ5E/jh+Jq5CcTLZ+H5YCNEPqj4Eprj+aADWFfElR3elHOgC/bqg60he5PGNsF+c9bo8GPq4iIzUJFi/+1MM8yFKqFp0Jtzwa6OZ1SwPlF1ohnZrXaoZ+IWP8BYmhZSfu1hVXnexbo9RkueRABzmY90A751VSyiuhBN3d/w=
+	t=1774278681; cv=none; b=PYde7yxmvPMn54sZotI8Cokcz6H+2slUMK0gCNRr8Fzu4pjCtw6FvU2cZjTnOrI4PIiaNC3z/R2QBAPrWkVh0GWlV/P/9E1dZErdZXyotiha3vVfGKsHqQXfjhnp3Y5kS1kOiNk+eO7XqFyBao/2tySRpN3pWfc3+GItc3NCRuA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278678; c=relaxed/simple;
-	bh=+wSBZK6WmXwtKTpR0P7bOOIgqOQ6N7gghYuU4gFYsDM=;
+	s=arc-20240116; t=1774278681; c=relaxed/simple;
+	bh=WQY49k4KVmUQq483SEw/Wbea265DRJqfklYnYCyhoXI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FixMh7LNBb6gDuITQmcuRH5bjS6R3tKU5oW/7jBlfN8gkVJxrd0cjsLAkR7EnOIE10PD8aPtcj0qn6objH1m3FaglUv2X5I94YHah5ZdD23ZCZko6h+rDUFK/Fc1ZZZn7uc0D1XttDB0W88vKNj35y0HjTXeMW4hXoVkA0IOUiw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a2IE7aP7; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pFbZzafP9+7rfvJ5pIyMolqPdYoShXMBBaZGsAoLtamIweQCn4GUsQFiO7abmkcQNsTWZEJ2Anu+Z9ZdbG8xH4BpdwQH2Mdv8IPnejlz/BWB16eQ8t5dr6rfhtruaoVJuTSA15sIN4PdwGsIfdhu87+TMjn+lKWYxVDh9gcRsuo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CSZ7/6on; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a2IE7aP7"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F26C4CEF7;
-	Mon, 23 Mar 2026 15:11:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CSZ7/6on"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9B5CC4CEF7;
+	Mon, 23 Mar 2026 15:11:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278678;
-	bh=+wSBZK6WmXwtKTpR0P7bOOIgqOQ6N7gghYuU4gFYsDM=;
+	s=korg; t=1774278681;
+	bh=WQY49k4KVmUQq483SEw/Wbea265DRJqfklYnYCyhoXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a2IE7aP7rVV9RCmmI+iC3TEHzrKxwCMadDc4B1h3t4X+rBzTfn0Xkm++eyOBhR/wI
-	 hcTd1E29LAjLWwkIEa+kdG/3n9LzqML50FerkF1fC4TfOxuT9UEKQc+RgtPdRzPfXy
-	 yda3lOM1B7NlebWbtYyKBYNrsy5GNG6+2q2CGW/I=
+	b=CSZ7/6onOpUvPfNzQA6HnpbftwRvzt0OX5P5Ssd0swZGcQFACcEyEjHGoso7xGSzX
+	 NqceXytUtWrNEQf/gJfWkITku9S2ZSy049N5Mg04YRC4CyKibOhAqSpLOfcr8mEBtG
+	 dAAFW6rnZMmMFyOB0LmbJ9eyaRD9AlG0J8L47hbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Potapenko <glider@google.com>,
-	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Kees Cook <kees@kernel.org>,
-	Marco Elver <elver@google.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Carlos Maiolino <cmaiolino@redhat.com>,
+	Christian Brauner <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 385/567] mm/kfence: fix KASAN hardware tag faults during late enablement
-Date: Mon, 23 Mar 2026 14:45:05 +0100
-Message-ID: <20260323134543.373004557@linuxfoundation.org>
+Subject: [PATCH 6.6 386/567] iomap: reject delalloc mappings during writeback
+Date: Mon, 23 Mar 2026 14:45:06 +0100
+Message-ID: <20260323134543.398145674@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -57,77 +53,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alexander Potapenko <glider@google.com>
+From: "Darrick J. Wong" <djwong@kernel.org>
 
-[ Upstream commit d155aab90fffa00f93cea1f107aef0a3d548b2ff ]
+[ Upstream commit d320f160aa5ff36cdf83c645cca52b615e866e32 ]
 
-When KASAN hardware tags are enabled, re-enabling KFENCE late (via
-/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
+Filesystems should never provide a delayed allocation mapping to
+writeback; they're supposed to allocate the space before replying.
+This can lead to weird IO errors and crashes in the block layer if the
+filesystem is being malicious, or if it hadn't set iomap->dev because
+it's a delalloc mapping.
 
-This happens because the KFENCE pool and metadata are allocated via the
-page allocator, which tags the memory, while KFENCE continues to access it
-using untagged pointers during initialization.
+Fix this by failing writeback on delalloc mappings.  Currently no
+filesystems actually misbehave in this manner, but we ought to be
+stricter about things like that.
 
-Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
-ensure the memory remains untagged, consistent with early allocations from
-memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
-__alloc_contig_verify_gfp_mask().
-
-Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
-Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Greg KH <gregkh@linuxfoundation.org>
-Cc: Kees Cook <kees@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ dropped page_alloc.c hunk adding __GFP_SKIP_KASAN ]
+Cc: stable@vger.kernel.org # v5.5
+Fixes: 598ecfbaa742ac ("iomap: lift the xfs writeback code to iomap")
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://patch.msgid.link/20260302173002.GL13829@frogsfrogsfrogs
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Carlos Maiolino <cmaiolino@redhat.com>
+Signed-off-by: Christian Brauner <brauner@kernel.org>
+[ no ioend.c ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |   14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ fs/iomap/buffered-io.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/mm/kfence/core.c
-+++ b/mm/kfence/core.c
-@@ -945,14 +945,14 @@ static int kfence_init_late(void)
- #ifdef CONFIG_CONTIG_ALLOC
- 	struct page *pages;
- 
--	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL, first_online_node,
--				   NULL);
-+	pages = alloc_contig_pages(nr_pages_pool, GFP_KERNEL | __GFP_SKIP_KASAN,
-+				   first_online_node, NULL);
- 	if (!pages)
- 		return -ENOMEM;
- 
- 	__kfence_pool = page_to_virt(pages);
--	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL, first_online_node,
--				   NULL);
-+	pages = alloc_contig_pages(nr_pages_meta, GFP_KERNEL | __GFP_SKIP_KASAN,
-+				   first_online_node, NULL);
- 	if (pages)
- 		kfence_metadata_init = page_to_virt(pages);
- #else
-@@ -962,11 +962,13 @@ static int kfence_init_late(void)
- 		return -EINVAL;
- 	}
- 
--	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
-+	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE,
-+					  GFP_KERNEL | __GFP_SKIP_KASAN);
- 	if (!__kfence_pool)
- 		return -ENOMEM;
- 
--	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE, GFP_KERNEL);
-+	kfence_metadata_init = alloc_pages_exact(KFENCE_METADATA_SIZE,
-+						 GFP_KERNEL | __GFP_SKIP_KASAN);
- #endif
- 
- 	if (!kfence_metadata_init)
+--- a/fs/iomap/buffered-io.c
++++ b/fs/iomap/buffered-io.c
+@@ -1838,10 +1838,19 @@ iomap_writepage_map(struct iomap_writepa
+ 		if (error)
+ 			break;
+ 		trace_iomap_writepage_map(inode, &wpc->iomap);
+-		if (WARN_ON_ONCE(wpc->iomap.type == IOMAP_INLINE))
+-			continue;
+-		if (wpc->iomap.type == IOMAP_HOLE)
++		switch (wpc->iomap.type) {
++		case IOMAP_UNWRITTEN:
++		case IOMAP_MAPPED:
++			break;
++		case IOMAP_HOLE:
+ 			continue;
++		default:
++			WARN_ON_ONCE(1);
++			error = -EIO;
++			break;
++		}
++		if (error)
++			break;
+ 		iomap_add_to_ioend(inode, pos, folio, ifs, wpc, wbc,
+ 				 &submit_list);
+ 		count++;
 
 
