@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479C1265CA2;
-	Mon, 23 Mar 2026 15:18:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9949F265CA2;
+	Mon, 23 Mar 2026 15:18:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774279100; cv=none; b=iqUWPW+MT4plG7qaznHc7PKUUmK1cdc8tBhyrHY48eRfr6myi82xrZuovBlsaFLUfEQ37sQ21AFG47NkaTGhti5sIhFU2NVTn96fHzpA7GXh2UkRvrnZYeqySqTymDK6ZafcJ7amWsxwAWrBF/ddFEzHOuBODRtVYi2RNXoqJZ0=
+	t=1774279103; cv=none; b=LWwApPZvlG5b6hVBJv/WSOOY6QZVp1ih+9CWO4V/m1d+v7ZXxqhj17/2x7+0GSpZGPhQM44aGZU6znIeyZq/mOs/1erniNw2r4ZyfvDTBtPXdVwvuKPXgEBni8MCmRjWzZ4JuY5gfHM+8/Yppsmr8vH2gq2BsXKoCUpOj5ZHwvE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774279100; c=relaxed/simple;
-	bh=v7tQXhdxfSFUuRkut3UCA9+TbIUxBaKhX7vOYefESao=;
+	s=arc-20240116; t=1774279103; c=relaxed/simple;
+	bh=qGauyJNVWDKIUiYuhAxbulWy9D4f9EFI9TA4rzkuObg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Rn2ndpgTPZWz5oSLCtk+OI4MdLQk+IV5Z2yZTza+gIxmyj6wlCiPKn3toMUxsMeWHaK59+7+YLmO1qUHfM3iPs7zlijP5FEEeQW4Hv4JG/Hzbvx2Fv20f76HYYaAi1pHfscDfzm09PsvKgA8x/fq6gC464erYp8TWimqftvazLU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=vDeK3lD6; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=desLwhPeDByeNmAHaE4sr30gKuFi+R0aHGk/yrLue0Opy1HkjhXj4VLlGQDztCDrukIDBiuNQM/whZQjdZdDq0UIh/usDiyRmM0DbxdYU9m9doNNVHTeJJYqWBGvQsGVrhPAPFrfF23w7WcSl3Ov1qYINE/KG2q1DnKXByiTuyM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RzVpMQwd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="vDeK3lD6"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCD7C2BCB1;
-	Mon, 23 Mar 2026 15:18:19 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RzVpMQwd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 107EDC4CEF7;
+	Mon, 23 Mar 2026 15:18:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774279100;
-	bh=v7tQXhdxfSFUuRkut3UCA9+TbIUxBaKhX7vOYefESao=;
+	s=korg; t=1774279103;
+	bh=qGauyJNVWDKIUiYuhAxbulWy9D4f9EFI9TA4rzkuObg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vDeK3lD6EzH6LB1nizCEWSUtYfkBGQ5o4JNrdw5nxcoHraO2fhDh1O7w/0h6kG7lj
-	 Au7ItbN0KyIb7hmNUzySepnnZ+GlFsXnABxkEFYUkGnSx/Qc+fiy4iUEjgn2k/9v6R
-	 N4D2l0qsYUpbqu30XSj1SVtI4MfpH5c3S7sVEkkM=
+	b=RzVpMQwddi8nF1dR0sAKtqJXt3viBWDOkU8Z3VEy/nXs1x/x856eqaOs9slAVF+xe
+	 3ukNarCH6E0RPhGHtCRtQC6AGEZiaynz4AJ3f3dhEqClr66GVAOoG3JfjqzBWZT6xv
+	 pHWnG4m2fwPMGZ7fXFexjJvyr5Iqrqmw/xF2fZZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.6 488/567] drm/amdgpu/mmhub2.0: add bounds checking for cid
-Date: Mon, 23 Mar 2026 14:46:48 +0100
-Message-ID: <20260323134546.056098975@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.6 462/567] ksmbd: unset conn->binding on failed binding request
+Date: Mon, 23 Mar 2026 14:46:22 +0100
+Message-ID: <20260323134545.412554061@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,45 +51,35 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 0b26edac4ac5535df1f63e6e8ab44c24fe1acad7 upstream.
+commit 282343cf8a4a5a3603b1cb0e17a7083e4a593b03 upstream.
 
-The value should never exceed the array size as those
-are the only values the hardware is expected to return,
-but add checks anyway.
+When a multichannel SMB2_SESSION_SETUP request with
+SMB2_SESSION_REQ_FLAG_BINDING fails ksmbd sets conn->binding = true
+but never clears it on the error path. This leaves the connection in
+a binding state where all subsequent ksmbd_session_lookup_all() calls
+fall back to the global sessions table. This fix it by clearing
+conn->binding = false in the error path.
 
-Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit e064cef4b53552602bb6ac90399c18f662f3cacd)
 Cc: stable@vger.kernel.org
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/smb/server/smb2pdu.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-@@ -154,14 +154,17 @@ mmhub_v2_0_print_l2_protection_fault_sta
- 	switch (adev->ip_versions[MMHUB_HWIP][0]) {
- 	case IP_VERSION(2, 0, 0):
- 	case IP_VERSION(2, 0, 2):
--		mmhub_cid = mmhub_client_ids_navi1x[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_navi1x) ?
-+			mmhub_client_ids_navi1x[cid][rw] : NULL;
- 		break;
- 	case IP_VERSION(2, 1, 0):
- 	case IP_VERSION(2, 1, 1):
--		mmhub_cid = mmhub_client_ids_sienna_cichlid[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_sienna_cichlid) ?
-+			mmhub_client_ids_sienna_cichlid[cid][rw] : NULL;
- 		break;
- 	case IP_VERSION(2, 1, 2):
--		mmhub_cid = mmhub_client_ids_beige_goby[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_beige_goby) ?
-+			mmhub_client_ids_beige_goby[cid][rw] : NULL;
- 		break;
- 	default:
- 		mmhub_cid = NULL;
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -1934,6 +1934,7 @@ out_err:
+ 			}
+ 		}
+ 		smb2_set_err_rsp(work);
++		conn->binding = false;
+ 	} else {
+ 		unsigned int iov_len;
+ 
 
 
