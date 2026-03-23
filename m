@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5283AF647;
-	Mon, 23 Mar 2026 16:21:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD44A3B9D9D;
+	Mon, 23 Mar 2026 16:21:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282915; cv=none; b=BZkOSfu26150MHoQ2MWNGCF6tYp3r3oa2oakKIfR5yopnXIi2K78iOb0G/hpokWIZhsCPJILjfW0qJpN7nP0MkyqxLBAU+YxoIBwLZNPWA6cIdiJVVCK64WzkT/Ics9wj3z8zpU/c2hwcQBnZwDOxb2yyWP7xl+DcikH5TfuUNk=
+	t=1774282917; cv=none; b=jsEY/jjB4CRBDRCbiMAy/DEDH5SM5W3keZqNaAxTQ+I/CwcrdHzEb1eV8lqReqwpe++xSdOy74rHAodZn3wB6u7uZUTkEw3gvC7PYXSdlOKCp8G/6+G6e0Vk/s9krtQznQE7sGutfMzWYRJdVB3/5PuLTzCaZIGqX5/PDmrJ6KQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282915; c=relaxed/simple;
-	bh=5X9rS10d7/I5ookLAdxyuv+FD89Jh+i5YyauEdk285U=;
+	s=arc-20240116; t=1774282917; c=relaxed/simple;
+	bh=rBaU7MS0a+GE3xIXRJFpaRm7qEviipYtfRjEiE7M0+I=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=aFcfkl6wsE7ZXYBiD2MMl1Tp827oG8y53T7vNL6ctJDcUaVXIYNcK1HZ5y40chBwacIJeBDIx3h1nwQWLgG/G5DYyB9O5FnutpcUbcKHeEKpELvmooqAwYlmnzvbJA2ARTwvl8oj0w2hncBtYFgm6dhDBa1uM37jD3GjLfLlHvM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KFHUz6CK; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=ElPFKbrgjoqVY279+WCLVDSkbz9gDj3UvyiG+52xQ42GQx5lXKWks683ILX1j8UV3HraBBOkG/RHNh5v1FFHKfaUv7KAiXPc7c2e3nSPpE+mWcUYV5/VbWItK16tL9PbSWH650Jbjy6gY6cYosKNClndhO5UsjpbKzQsfIz89J0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N3shejrk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KFHUz6CK"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D71C4CEF7;
-	Mon, 23 Mar 2026 16:21:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N3shejrk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C069C4CEF7;
+	Mon, 23 Mar 2026 16:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282915;
-	bh=5X9rS10d7/I5ookLAdxyuv+FD89Jh+i5YyauEdk285U=;
+	s=korg; t=1774282917;
+	bh=rBaU7MS0a+GE3xIXRJFpaRm7qEviipYtfRjEiE7M0+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KFHUz6CKu610iExhp68kdJ5Ejk1djXDSoDxLefiH9rx1lZHqfUlE2VwgJnHhG48GJ
-	 5cplJELCrPVXd2aE2i8XpK1s+RndS01K//OHPE5QiHlLJBH7HYkYGa8hY+yMlP3H60
-	 K3vYlnTjZ8kWby7KBLz25IQOUqbmR7N/ylp7PjQo=
+	b=N3shejrk0ed3rKXV/J78i+xjIYsyiMY9HGi/h7YQEq36UH74RypfaSpml+o6YgN7a
+	 iSoSnVOaVdNgVdRAnUSJPDTp2ToxLkB8PsKgpsjvvsoS/E4SJyZS6fL3sf6ovaW0hw
+	 HxFSPKu8XEmxFJSMos8u3flro7yPW1GjZq7C5Oak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Potapenko <glider@google.com>,
-	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
+	Marco Elver <elver@google.com>,
 	Andrey Konovalov <andreyknvl@gmail.com>,
 	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
 	Dmitry Vyukov <dvyukov@google.com>,
+	Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>,
 	Kees Cook <kees@kernel.org>,
-	Marco Elver <elver@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 334/481] mm/kfence: fix KASAN hardware tag faults during late enablement
-Date: Mon, 23 Mar 2026 14:45:16 +0100
-Message-ID: <20260323134533.237451470@linuxfoundation.org>
+Subject: [PATCH 6.1 335/481] mm/kfence: disable KFENCE upon KASAN HW tags enablement
+Date: Mon, 23 Mar 2026 14:45:17 +0100
+Message-ID: <20260323134533.260402015@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -59,61 +59,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit d155aab90fffa00f93cea1f107aef0a3d548b2ff ]
+[ Upstream commit 09833d99db36d74456a4d13eb29c32d56ff8f2b6 ]
 
-When KASAN hardware tags are enabled, re-enabling KFENCE late (via
-/sys/module/kfence/parameters/sample_interval) causes KASAN faults.
+KFENCE does not currently support KASAN hardware tags.  As a result, the
+two features are incompatible when enabled simultaneously.
 
-This happens because the KFENCE pool and metadata are allocated via the
-page allocator, which tags the memory, while KFENCE continues to access it
-using untagged pointers during initialization.
+Given that MTE provides deterministic protection and KFENCE is a
+sampling-based debugging tool, prioritize the stronger hardware
+protections.  Disable KFENCE initialization and free the pre-allocated
+pool if KASAN hardware tags are detected to ensure the system maintains
+the security guarantees provided by MTE.
 
-Use __GFP_SKIP_KASAN for late KFENCE pool and metadata allocations to
-ensure the memory remains untagged, consistent with early allocations from
-memblock.  To support this, add __GFP_SKIP_KASAN to the allowlist in
-__alloc_contig_verify_gfp_mask().
-
-Link: https://lkml.kernel.org/r/20260220144940.2779209-1-glider@google.com
+Link: https://lkml.kernel.org/r/20260213095410.1862978-1-glider@google.com
 Fixes: 0ce20dd84089 ("mm: add Kernel Electric-Fence infrastructure")
 Signed-off-by: Alexander Potapenko <glider@google.com>
-Suggested-by: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
+Suggested-by: Marco Elver <elver@google.com>
+Reviewed-by: Marco Elver <elver@google.com>
 Cc: Andrey Konovalov <andreyknvl@gmail.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
 Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Ernesto Martinez Garcia <ernesto.martinezgarcia@tugraz.at>
 Cc: Greg KH <gregkh@linuxfoundation.org>
 Cc: Kees Cook <kees@kernel.org>
-Cc: Marco Elver <elver@google.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[ expand __GFP_SKIP_KASAN + nr_pages_pool => nr_pages ]
+[ Context ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/kfence/core.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ mm/kfence/core.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 --- a/mm/kfence/core.c
 +++ b/mm/kfence/core.c
-@@ -897,7 +897,8 @@ static int kfence_init_late(void)
- #ifdef CONFIG_CONTIG_ALLOC
- 	struct page *pages;
+@@ -13,6 +13,7 @@
+ #include <linux/hash.h>
+ #include <linux/irq_work.h>
+ #include <linux/jhash.h>
++#include <linux/kasan-enabled.h>
+ #include <linux/kcsan-checks.h>
+ #include <linux/kfence.h>
+ #include <linux/kmemleak.h>
+@@ -844,6 +845,20 @@ void __init kfence_alloc_pool(void)
+ 	if (!kfence_sample_interval)
+ 		return;
  
--	pages = alloc_contig_pages(nr_pages, GFP_KERNEL, first_online_node, NULL);
-+	pages = alloc_contig_pages(nr_pages, GFP_KERNEL | __GFP_SKIP_KASAN_UNPOISON |
-+				   __GFP_SKIP_KASAN_POISON, first_online_node, NULL);
- 	if (!pages)
- 		return -ENOMEM;
- 	__kfence_pool = page_to_virt(pages);
-@@ -906,7 +907,9 @@ static int kfence_init_late(void)
- 		pr_warn("KFENCE_NUM_OBJECTS too large for buddy allocator\n");
- 		return -EINVAL;
- 	}
--	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL);
-+	__kfence_pool = alloc_pages_exact(KFENCE_POOL_SIZE, GFP_KERNEL |
-+					  __GFP_SKIP_KASAN_UNPOISON |
-+					  __GFP_SKIP_KASAN_POISON);
- 	if (!__kfence_pool)
- 		return -ENOMEM;
- #endif
++	/*
++	 * If KASAN hardware tags are enabled, disable KFENCE, because it
++	 * does not support MTE yet.
++	 */
++	if (kasan_hw_tags_enabled()) {
++		pr_info("disabled as KASAN HW tags are enabled\n");
++		if (__kfence_pool) {
++			memblock_free(__kfence_pool, KFENCE_POOL_SIZE);
++			__kfence_pool = NULL;
++		}
++		kfence_sample_interval = 0;
++		return;
++	}
++
+ 	/* if the pool has already been initialized by arch, skip the below. */
+ 	if (__kfence_pool)
+ 		return;
 
 
