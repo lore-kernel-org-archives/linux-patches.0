@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD1A3B5306;
-	Mon, 23 Mar 2026 14:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FF83AF66C;
+	Mon, 23 Mar 2026 14:01:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274474; cv=none; b=c5Yf3ElJQfK8l7x5xgAX0yomqXBzt9yXALiVxKXPU71nCf2vZfQOVusI9QrUGv9J27BjXesSsaxfs/Tfdikx0DjhzmcaPCs9UpzS+qDHXsSgF8fmHOdl4wUVpwQX+B4LzcpPu+hn99u8VMTWUPf4beSwLJqle8Q2mHycyz52S3s=
+	t=1774274477; cv=none; b=E9dONEPg5j8XwgtzRF/w0pjGL0hgRB/0jKXFWEu6lZnPFkjF+hQvcPtDIcnnx8Z4K+nHlQQFe0eLeOllg0qCsQi6JxUnSbE2vpA39Gwp3eFw3r1+50FhaunEtwDjy1wihDXA0oi7CISObtvEOnhdQlmcjbTQkl8H3cR9C1gkmg0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274474; c=relaxed/simple;
-	bh=h0g2oM0vsLVCL7u+ipD4mM49nuHU1pJtIj47xbxwMgE=;
+	s=arc-20240116; t=1774274477; c=relaxed/simple;
+	bh=lTos2n9a38JTffA+z10mKyzV0THPbTILnFv5Y6p0Z8k=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cShI5o0fV24EjJ7vFFqGNPQClYprGiBBDedZgb/2edv/xSU16a5RsRFHpMcxPRruPQ2U9vtT/a+LaTNwineECq6jAzfh7fNzM8ZGuFhwb9JjEas2kvdqzpsD+eDhqo4Ds2ipDS+iAQZoyghlBaOh+nHB4999qIpxO5s5KPlwPJk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvOdzKC8; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=XXaoEqjEkT6O0jhS8ULztpwF8vsSAqSPWw3Qw+UXMNEIAOFylRoQQ7xZ1raGPUM4M+uNxrT8CyK6SmriiLkaufZ4TeEesrlqYFLcHAXwVofHf4+gdt5eNdgl7Ic+obbNxZoadwkFe8hqjJJYt7p2qMzfznYTAgxhueX0WrTNrNo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jbSJQ6Fb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvOdzKC8"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9792BC2BCB3;
-	Mon, 23 Mar 2026 14:01:13 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jbSJQ6Fb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF9DC4CEF7;
+	Mon, 23 Mar 2026 14:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274474;
-	bh=h0g2oM0vsLVCL7u+ipD4mM49nuHU1pJtIj47xbxwMgE=;
+	s=korg; t=1774274477;
+	bh=lTos2n9a38JTffA+z10mKyzV0THPbTILnFv5Y6p0Z8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lvOdzKC8W2y4ZMYbq8e+KnZHxYG61XFw+ZHNgjAVEcArFLyDUVgQGkpO7i6/I4TrZ
-	 BV1vrIL8rYbl+d4mjWS1hf51EYD4lbWinCkYlqLrkVRlS5bkjVzJVebXn9Tu5Pe8fe
-	 BP5FIDTqoOQ8J5V8C030A4Tzj+N/qWuG31Vp8yWU=
+	b=jbSJQ6Fb17R4YkdylbZY9fRdRZ24kKOSJNKbQsKDDSrXDr8aBIYtVo3yDmsd0yGxY
+	 8F5Ndly+NNWzxSWrktS6orkOtECwyDIJ/e2GWdS7xw2sWLUtu31n46WbWZf8bYeQfB
+	 uHiD4jAREyYxepy0bsn9g3o6GHL4ceTGEjV0miSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Misbah Anjum N <misanjum@linux.ibm.com>,
-	NeilBrown <neil@brown.name>,
-	Olga Kornievskaia <okorniev@redhat.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 6.18 001/212] NFSD: Defer sub-object cleanup in export put callbacks
-Date: Mon, 23 Mar 2026 14:43:42 +0100
-Message-ID: <20260323134503.818639228@linuxfoundation.org>
+	Chris Down <chris@chrisdown.name>,
+	Lorenzo Stoakes <lorenzo.stoakes@oracle.com>,
+	"David Hildenbrand (Arm)" <david@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.18 010/212] mm/huge_memory: fix use of NULL folio in move_pages_huge_pmd()
+Date: Mon, 23 Mar 2026 14:43:51 +0100
+Message-ID: <20260323134504.095447970@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -53,235 +52,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Chris Down <chris@chrisdown.name>
 
-commit 48db892356d6cb80f6942885545de4a6dd8d2a29 upstream.
+commit fae654083bfa409bb2244f390232e2be47f05bfc upstream.
 
-svc_export_put() calls path_put() and auth_domain_put() immediately
-when the last reference drops, before the RCU grace period. RCU
-readers in e_show() and c_show() access both ex_path (via
-seq_path/d_path) and ex_client->name (via seq_escape) without
-holding a reference. If cache_clean removes the entry and drops the
-last reference concurrently, the sub-objects are freed while still
-in use, producing a NULL pointer dereference in d_path.
+move_pages_huge_pmd() handles UFFDIO_MOVE for both normal THPs and huge
+zero pages.  For the huge zero page path, src_folio is explicitly set to
+NULL, and is used as a sentinel to skip folio operations like lock and
+rmap.
 
-Commit 2530766492ec ("nfsd: fix UAF when access ex_uuid or
-ex_stats") moved kfree of ex_uuid and ex_stats into the
-call_rcu callback, but left path_put() and auth_domain_put() running
-before the grace period because both may sleep and call_rcu
-callbacks execute in softirq context.
+In the huge zero page branch, src_folio is NULL, so folio_mk_pmd(NULL,
+pgprot) passes NULL through folio_pfn() and page_to_pfn().  With
+SPARSEMEM_VMEMMAP this silently produces a bogus PFN, installing a PMD
+pointing to non-existent physical memory.  On other memory models it is a
+NULL dereference.
 
-Replace call_rcu/kfree_rcu with queue_rcu_work(), which defers the
-callback until after the RCU grace period and executes it in process
-context where sleeping is permitted. This allows path_put() and
-auth_domain_put() to be moved into the deferred callback alongside
-the other resource releases. Apply the same fix to expkey_put(),
-which has the identical pattern with ek_path and ek_client.
+Use page_folio(src_page) to obtain the valid huge zero folio from the
+page, which was obtained from pmd_page() and remains valid throughout.
 
-A dedicated workqueue scopes the shutdown drain to only NFSD
-export release work items; flushing the shared
-system_unbound_wq would stall on unrelated work from other
-subsystems. nfsd_export_shutdown() uses rcu_barrier() followed
-by flush_workqueue() to ensure all deferred release callbacks
-complete before the export caches are destroyed.
+After commit d82d09e48219 ("mm/huge_memory: mark PMD mappings of the huge
+zero folio special"), moved huge zero PMDs must remain special so
+vm_normal_page_pmd() continues to treat them as special mappings.
 
-Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
-Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
-Fixes: c224edca7af0 ("nfsd: no need get cache ref when protected by rcu")
-Fixes: 1b10f0b603c0 ("SUNRPC: no need get cache ref when protected by rcu")
-Cc: stable@vger.kernel.org
-Reviwed-by: Jeff Layton <jlayton@kernel.org>
-Reviewed-by: NeilBrown <neil@brown.name>
-Tested-by: Olga Kornievskaia <okorniev@redhat.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+move_pages_huge_pmd() currently reconstructs the destination PMD in the
+huge zero page branch, which drops PMD state such as pmd_special() on
+architectures with CONFIG_ARCH_HAS_PTE_SPECIAL.  As a result,
+vm_normal_page_pmd() can treat the moved huge zero PMD as a normal page
+and corrupt its refcount.
+
+Instead of reconstructing the PMD from the folio, derive the destination
+entry from src_pmdval after pmdp_huge_clear_flush(), then handle the PMD
+metadata the same way move_huge_pmd() does for moved entries by marking it
+soft-dirty and clearing uffd-wp.
+
+Link: https://lkml.kernel.org/r/a1e787dd-b911-474d-8570-f37685357d86@lucifer.local
+Fixes: e3981db444a0 ("mm: add folio_mk_pmd()")
+Signed-off-by: Chris Down <chris@chrisdown.name>
+Signed-off-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Reviewed-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Tested-by: Lorenzo Stoakes <lorenzo.stoakes@oracle.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/export.c |   63 +++++++++++++++++++++++++++++++++++++++++++++++--------
- fs/nfsd/export.h |    7 ++++--
- fs/nfsd/nfsctl.c |    8 ++++++
- 3 files changed, 66 insertions(+), 12 deletions(-)
+ mm/huge_memory.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/export.c
-+++ b/fs/nfsd/export.c
-@@ -36,19 +36,30 @@
-  * second map contains a reference to the entry in the first map.
-  */
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -2639,7 +2639,8 @@ int move_pages_huge_pmd(struct mm_struct
+ 		_dst_pmd = pmd_mkwrite(pmd_mkdirty(_dst_pmd), dst_vma);
+ 	} else {
+ 		src_pmdval = pmdp_huge_clear_flush(src_vma, src_addr, src_pmd);
+-		_dst_pmd = folio_mk_pmd(src_folio, dst_vma->vm_page_prot);
++		_dst_pmd = move_soft_dirty_pmd(src_pmdval);
++		_dst_pmd = clear_uffd_wp_pmd(_dst_pmd);
+ 	}
+ 	set_pmd_at(mm, dst_addr, dst_pmd, _dst_pmd);
  
-+static struct workqueue_struct *nfsd_export_wq;
-+
- #define	EXPKEY_HASHBITS		8
- #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
- #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
- 
--static void expkey_put(struct kref *ref)
-+static void expkey_release(struct work_struct *work)
- {
--	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
-+	struct svc_expkey *key = container_of(to_rcu_work(work),
-+					      struct svc_expkey, ek_rwork);
- 
- 	if (test_bit(CACHE_VALID, &key->h.flags) &&
- 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
- 		path_put(&key->ek_path);
- 	auth_domain_put(key->ek_client);
--	kfree_rcu(key, ek_rcu);
-+	kfree(key);
-+}
-+
-+static void expkey_put(struct kref *ref)
-+{
-+	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
-+
-+	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
-+	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
- }
- 
- static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -353,11 +364,13 @@ static void export_stats_destroy(struct
- 					    EXP_STATS_COUNTERS_NUM);
- }
- 
--static void svc_export_release(struct rcu_head *rcu_head)
-+static void svc_export_release(struct work_struct *work)
- {
--	struct svc_export *exp = container_of(rcu_head, struct svc_export,
--			ex_rcu);
-+	struct svc_export *exp = container_of(to_rcu_work(work),
-+					      struct svc_export, ex_rwork);
- 
-+	path_put(&exp->ex_path);
-+	auth_domain_put(exp->ex_client);
- 	nfsd4_fslocs_free(&exp->ex_fslocs);
- 	export_stats_destroy(exp->ex_stats);
- 	kfree(exp->ex_stats);
-@@ -369,9 +382,8 @@ static void svc_export_put(struct kref *
- {
- 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
- 
--	path_put(&exp->ex_path);
--	auth_domain_put(exp->ex_client);
--	call_rcu(&exp->ex_rcu, svc_export_release);
-+	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
-+	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
- }
- 
- static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
-@@ -1478,6 +1490,36 @@ const struct seq_operations nfs_exports_
- 	.show	= e_show,
- };
- 
-+/**
-+ * nfsd_export_wq_init - allocate the export release workqueue
-+ *
-+ * Called once at module load. The workqueue runs deferred svc_export and
-+ * svc_expkey release work scheduled by queue_rcu_work() in the cache put
-+ * callbacks.
-+ *
-+ * Return values:
-+ *   %0: workqueue allocated
-+ *   %-ENOMEM: allocation failed
-+ */
-+int nfsd_export_wq_init(void)
-+{
-+	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
-+	if (!nfsd_export_wq)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+/**
-+ * nfsd_export_wq_shutdown - drain and free the export release workqueue
-+ *
-+ * Called once at module unload. Per-namespace teardown in
-+ * nfsd_export_shutdown() has already drained all deferred work.
-+ */
-+void nfsd_export_wq_shutdown(void)
-+{
-+	destroy_workqueue(nfsd_export_wq);
-+}
-+
- /*
-  * Initialize the exports module.
-  */
-@@ -1539,6 +1581,9 @@ nfsd_export_shutdown(struct net *net)
- 
- 	cache_unregister_net(nn->svc_expkey_cache, net);
- 	cache_unregister_net(nn->svc_export_cache, net);
-+	/* Drain deferred export and expkey release work. */
-+	rcu_barrier();
-+	flush_workqueue(nfsd_export_wq);
- 	cache_destroy_net(nn->svc_expkey_cache, net);
- 	cache_destroy_net(nn->svc_export_cache, net);
- 	svcauth_unix_purge(net);
---- a/fs/nfsd/export.h
-+++ b/fs/nfsd/export.h
-@@ -7,6 +7,7 @@
- 
- #include <linux/sunrpc/cache.h>
- #include <linux/percpu_counter.h>
-+#include <linux/workqueue.h>
- #include <uapi/linux/nfsd/export.h>
- #include <linux/nfs4.h>
- 
-@@ -75,7 +76,7 @@ struct svc_export {
- 	u32			ex_layout_types;
- 	struct nfsd4_deviceid_map *ex_devid_map;
- 	struct cache_detail	*cd;
--	struct rcu_head		ex_rcu;
-+	struct rcu_work		ex_rwork;
- 	unsigned long		ex_xprtsec_modes;
- 	struct export_stats	*ex_stats;
- };
-@@ -92,7 +93,7 @@ struct svc_expkey {
- 	u32			ek_fsid[6];
- 
- 	struct path		ek_path;
--	struct rcu_head		ek_rcu;
-+	struct rcu_work		ek_rwork;
- };
- 
- #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
-@@ -110,6 +111,8 @@ __be32 check_nfsd_access(struct svc_expo
- /*
-  * Function declarations
-  */
-+int			nfsd_export_wq_init(void);
-+void			nfsd_export_wq_shutdown(void);
- int			nfsd_export_init(struct net *);
- void			nfsd_export_shutdown(struct net *);
- void			nfsd_export_flush(struct net *);
---- a/fs/nfsd/nfsctl.c
-+++ b/fs/nfsd/nfsctl.c
-@@ -2252,9 +2252,12 @@ static int __init init_nfsd(void)
- 	if (retval)
- 		goto out_free_pnfs;
- 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
-+	retval = nfsd_export_wq_init();
-+	if (retval)
-+		goto out_free_lockd;
- 	retval = register_pernet_subsys(&nfsd_net_ops);
- 	if (retval < 0)
--		goto out_free_lockd;
-+		goto out_free_export_wq;
- 	retval = register_cld_notifier();
- 	if (retval)
- 		goto out_free_subsys;
-@@ -2283,6 +2286,8 @@ out_free_cld:
- 	unregister_cld_notifier();
- out_free_subsys:
- 	unregister_pernet_subsys(&nfsd_net_ops);
-+out_free_export_wq:
-+	nfsd_export_wq_shutdown();
- out_free_lockd:
- 	nfsd_lockd_shutdown();
- 	nfsd_drc_slab_free();
-@@ -2303,6 +2308,7 @@ static void __exit exit_nfsd(void)
- 	nfsd4_destroy_laundry_wq();
- 	unregister_cld_notifier();
- 	unregister_pernet_subsys(&nfsd_net_ops);
-+	nfsd_export_wq_shutdown();
- 	nfsd_drc_slab_free();
- 	nfsd_lockd_shutdown();
- 	nfsd4_free_slabs();
 
 
