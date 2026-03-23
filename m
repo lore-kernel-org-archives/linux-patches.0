@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6319E282F1A;
-	Mon, 23 Mar 2026 15:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6625F3B6C13;
+	Mon, 23 Mar 2026 15:07:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278420; cv=none; b=PPJdjSolMmvZvf+SNBeWObU5hYIhSL50L9/KM1sgbrEYJkc4I7JRy48CRaYB9MCFJ1cYKvOmKzKSvrBaXPc3zhmwbi07vtR0fGST0pRKPi1HVBpGu8oBsELyJknGVN/K32GOxrjZ2NI7sPdPbSc/7gtX6amxOmOCF99UDmGa0qs=
+	t=1774278423; cv=none; b=JrSu4m/5MpHe+/XJI+0amYLhQz7lvH1Sbq0B7HZE5+DKjwdpD8BdTgycMUX1G3arYa0WB4Abupn4czi3PD7Yvi1qZBE8JB2G3CLynWoLMU3QhYFyc8ZmONRGxZFucBa9P1ttVVDeEgx89GkkS+n6hnUXoPelpCepatQ02C2+ZAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278420; c=relaxed/simple;
-	bh=pN6wop7CmLvETMjFrLqbKG0004zm07EzLKIW01zdCJ8=;
+	s=arc-20240116; t=1774278423; c=relaxed/simple;
+	bh=cXVgWQ5RWzzE+leX5s9EUbI1NmaIibY65AdDGMcaJpg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=cK7bkbyVgfBkuPWelXTO5kQVvsWxWP8PiBZygs9J2ngo6q+wPZjUCWTrDxD0BmjRt9zaFHo16zzF72P1VPrHg6E/Qc0KRsW9707I50u1sfLeiUNdQUkgXQabnqWrsRGc3SsFMshT8llKUlSdHm86uN6U79vWiEvUAcaL83OduAw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tmF8h/q4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AGoaLgDc/iOkTzZE/yamwrNlAdfpqJ9JnU7yE3YSLp8sgI3L7y7w40tqKjPoKlepyUfNZUKb4yVfEdwbE/dyZRN3WJBjdwWOBkjcjIPUtFNVDII52PfQLMCnFIu8XoMrQhyNtdBnqoIWs3gZNh2/nPc6YImYSOg48WG+dkW+Ufk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=efPKAbGY; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tmF8h/q4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7CCC2BCB1;
-	Mon, 23 Mar 2026 15:06:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="efPKAbGY"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9330FC2BC9E;
+	Mon, 23 Mar 2026 15:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278419;
-	bh=pN6wop7CmLvETMjFrLqbKG0004zm07EzLKIW01zdCJ8=;
+	s=korg; t=1774278423;
+	bh=cXVgWQ5RWzzE+leX5s9EUbI1NmaIibY65AdDGMcaJpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tmF8h/q4Jr7VRHeOZDXqWynpSjljwtWnbbBixEfRT7/O/lPvbeiXwDqfNdgQyjJzq
-	 Q6Irt68PXSiz/REu+k/TmkcPgDZzRAOPVKP/lcrxDIGrjLHcEGlUaiw5ZzJb3YdToD
-	 QiTg3DU0dZjYk8doIPvvS08SMrl9Sc2i6PSuAqqk=
+	b=efPKAbGYSKfHEW7tcmCY+a2EGvsLEe2oDXqgQo6TBjRlZzguUdbv0FNDcasBdfyrQ
+	 SR7W+K4zdaC50V51S81fYiIKdGNuB7ZMRTCtnlLMYK+n1eU9HV/fn/P4JKc2INMHlL
+	 44tlf0Zkhqp+/gHZ/ubgeYVCLr9ADYBcXkvQ02zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>,
-	Frank Li <Frank.Li@nxp.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Bean Huo <beanhuo@iokpp.de>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Wang Shuaiwei <wangshuaiwei1@xiaomi.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 302/567] i3c: dw-i3c-master: Set SIR_REJECT in DAT on device attach and reattach
-Date: Mon, 23 Mar 2026 14:43:42 +0100
-Message-ID: <20260323134541.290209957@linuxfoundation.org>
+Subject: [PATCH 6.6 303/567] scsi: ufs: core: Fix SError in ufshcd_rtc_work() during UFS suspend
+Date: Mon, 23 Mar 2026 14:43:43 +0100
+Message-ID: <20260323134541.314721804@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,54 +53,83 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
+From: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
 
-[ Upstream commit f311a05784634febd299f03476b80f3f18489767 ]
+[ Upstream commit b0bd84c39289ef6a6c3827dd52c875659291970a ]
 
-The DesignWare I3C master controller ACKs IBIs as soon as a valid
-Device Address Table (DAT) entry is present. This can create a race
-between device attachment (after DAA) and the point where the client
-driver enables IBIs via i3c_device_enable_ibi().
+In __ufshcd_wl_suspend(), cancel_delayed_work_sync() is called to cancel
+the UFS RTC work, but it is placed after ufshcd_vops_suspend(hba, pm_op,
+POST_CHANGE). This creates a race condition where ufshcd_rtc_work() can
+still be running while ufshcd_vops_suspend() is executing. When
+UFSHCD_CAP_CLK_GATING is not supported, the condition
+!hba->clk_gating.active_reqs is always true, causing ufshcd_update_rtc()
+to be executed. Since ufshcd_vops_suspend() typically performs clock
+gating operations, executing ufshcd_update_rtc() at that moment triggers
+an SError. The kernel panic trace is as follows:
 
-Set DEV_ADDR_TABLE_SIR_REJECT in the DAT entry during
-attach_i3c_dev() and reattach_i3c_dev() so that IBIs are rejected
-by default. The bit is managed thereafter by the existing
-dw_i3c_master_set_sir_enabled() function, which clears it in
-enable_ibi() after ENEC is issued, and restores it in disable_ibi()
-after DISEC.
+Kernel panic - not syncing: Asynchronous SError Interrupt
+Call trace:
+ dump_backtrace+0xec/0x128
+ show_stack+0x18/0x28
+ dump_stack_lvl+0x40/0xa0
+ dump_stack+0x18/0x24
+ panic+0x148/0x374
+ nmi_panic+0x3c/0x8c
+ arm64_serror_panic+0x64/0x8c
+ do_serror+0xc4/0xc8
+ el1h_64_error_handler+0x34/0x4c
+ el1h_64_error+0x68/0x6c
+ el1_interrupt+0x20/0x58
+ el1h_64_irq_handler+0x18/0x24
+ el1h_64_irq+0x68/0x6c
+ ktime_get+0xc4/0x12c
+ ufshcd_mcq_sq_stop+0x4c/0xec
+ ufshcd_mcq_sq_cleanup+0x64/0x1dc
+ ufshcd_clear_cmd+0x38/0x134
+ ufshcd_issue_dev_cmd+0x298/0x4d0
+ ufshcd_exec_dev_cmd+0x1a4/0x1c4
+ ufshcd_query_attr+0xbc/0x19c
+ ufshcd_rtc_work+0x10c/0x1c8
+ process_scheduled_works+0x1c4/0x45c
+ worker_thread+0x32c/0x3e8
+ kthread+0x120/0x1d8
+ ret_from_fork+0x10/0x20
 
-Fixes: 1dd728f5d4d4 ("i3c: master: Add driver for Synopsys DesignWare IP")
-Signed-off-by: Adrian Ng Ho Yin <adrianhoyin.ng@altera.com>
-Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/53f5b8cbdd8af789ec38b95b02873f32f9182dd6.1770962368.git.adrianhoyin.ng@altera.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fix this by moving cancel_delayed_work_sync() before the call to
+ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE), ensuring the UFS RTC work is
+fully completed or cancelled at that point.
+
+Cc: Bean Huo <beanhuo@iokpp.de>
+Fixes: 6bf999e0eb41 ("scsi: ufs: core: Add UFS RTC support")
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Wang Shuaiwei <wangshuaiwei1@xiaomi.com>
+Link: https://patch.msgid.link/20260307035128.3419687-1-wangshuaiwei1@xiaomi.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i3c/master/dw-i3c-master.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/ufs/core/ufshcd.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/i3c/master/dw-i3c-master.c b/drivers/i3c/master/dw-i3c-master.c
-index cee2805fccd0f..ccb521bcb73e3 100644
---- a/drivers/i3c/master/dw-i3c-master.c
-+++ b/drivers/i3c/master/dw-i3c-master.c
-@@ -941,7 +941,7 @@ static int dw_i3c_master_reattach_i3c_dev(struct i3c_dev_desc *dev,
- 		master->free_pos &= ~BIT(pos);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d109a0c8f75ff..2dcb0146c17e3 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -9882,6 +9882,7 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
  	}
  
--	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr),
-+	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(dev->info.dyn_addr) | DEV_ADDR_TABLE_SIR_REJECT,
- 	       master->regs +
- 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
+ 	flush_work(&hba->eeh_work);
++	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
  
-@@ -970,7 +970,7 @@ static int dw_i3c_master_attach_i3c_dev(struct i3c_dev_desc *dev)
- 	master->free_pos &= ~BIT(pos);
- 	i3c_dev_set_master_data(dev, data);
+ 	ret = ufshcd_vops_suspend(hba, pm_op, PRE_CHANGE);
+ 	if (ret)
+@@ -9936,7 +9937,6 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	if (ret)
+ 		goto set_link_active;
  
--	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr),
-+	writel(DEV_ADDR_TABLE_DYNAMIC_ADDR(master->devs[pos].addr) | DEV_ADDR_TABLE_SIR_REJECT,
- 	       master->regs +
- 	       DEV_ADDR_TABLE_LOC(master->datstartaddr, data->index));
+-	cancel_delayed_work_sync(&hba->ufs_rtc_update_work);
+ 	goto out;
  
+ set_link_active:
 -- 
 2.51.0
 
