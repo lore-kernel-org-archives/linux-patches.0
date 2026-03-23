@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BE8C3B0ADA;
-	Mon, 23 Mar 2026 14:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18A343803EF;
+	Mon, 23 Mar 2026 14:08:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274935; cv=none; b=T5eBvdM1AhjYGWrXXDSopaFbIQjwwkQMtHVnxkR6LRgsxH8ecK4RaFmbfjayJMYUUc+0CSLCnBfVFvMLMW8LJz+Q/a10tTBQfI6m9qt+zbUJN5zHcmUVfigGpHbG4q5TXiyganiye4gAsmKFU9X3X0RPdum3KpkvAhr+GBbHYY8=
+	t=1774274938; cv=none; b=j8PcBvC+1UHsePsdcPPiraulxCWLDvO8bYNg/EmTG6eg6FZ+mHzpA2vcFwVhlC9wmNEeArmnwO90TY0pZo0rcylDqdmEFJpU2tm1Uozk23Nchqzihd2qOBRcXTYPIhKMADgVzX+whxM/r8aYFT9AoF7LdqtnhgRZo79QhMYugRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274935; c=relaxed/simple;
-	bh=5KVLNqs7TAy6OePVTI2jeTFIMb5sMuOiXI9xlYRHNww=;
+	s=arc-20240116; t=1774274938; c=relaxed/simple;
+	bh=rveli3ebJ5wac5cRqhEZVp/j2aqEVFHcSHIWGvrH3Sk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JEyVsZFqpaOHK7XQmOEKSRhsNv7VMf4rvea4tzxU1xRkrQ5y1GQpCNjGw3i1uGHhhrcGRcY/gC3Tfa2WgYnvJfy7RRyiwSeQNEW4s+Y48PsaeUECx1sRTYpBpOx0TW0xIkEiu6XDwO6A4CfBKm2fbfzW3kggCzDV4BS/NRSjVRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=kIs0RN6c; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PJ5IP4sk+tmqlRd55kGTj/zstEEhdO8IwIQuD2KOdJwgdG8qK67StKdcyv/NZY/Loglby176gthwWs9Wk/PQaEL/ROwSiG1X0fGCL7n3W78zWBWNXSlm4vjVnj0vGE5pSDfiigVzi1lPhxLgW0D0XRRFu0fuBTxDM8MavQEKuI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=GZgwYZA5; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="kIs0RN6c"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F34CBC4CEF7;
-	Mon, 23 Mar 2026 14:08:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="GZgwYZA5"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9390FC2BCB1;
+	Mon, 23 Mar 2026 14:08:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274935;
-	bh=5KVLNqs7TAy6OePVTI2jeTFIMb5sMuOiXI9xlYRHNww=;
+	s=korg; t=1774274937;
+	bh=rveli3ebJ5wac5cRqhEZVp/j2aqEVFHcSHIWGvrH3Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIs0RN6c3T0UTzwESZmHbRgInyqmZOyvzEo1B8BPxvwQRXwvCoX7zQJyYnR7O0U5J
-	 pzcOBPW0XdxkPmNANPtZp8iS7Tn5iKOA6zSg4fDtLTwTEJMth7kv8rMaMzasPnzk86
-	 mmi4suwT1nyWuDpf8nbTVdu5+XrIOdwnMnbOG1JE=
+	b=GZgwYZA53e/utFlvXnwjawjpso31rndKzpVOup90bStk/T/2vVGO1bkqkbNxBnFs4
+	 G0rELzF9rSHz6VjzTsE53cW+QRxgct0lZ+l46wEV0YyORVRc+NEZaecf7U6hZUydFJ
+	 bmkLSlrapT1/f/dMmjXjzMb8zlAfjE6IyjiXvJLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 162/212] wifi: mac80211: always free skb on ieee80211_tx_prepare_skb() failure
-Date: Mon, 23 Mar 2026 14:46:23 +0100
-Message-ID: <20260323134508.862461362@linuxfoundation.org>
+Subject: [PATCH 6.18 163/212] ACPI: processor: Fix previous acpi_processor_errata_piix4() fix
+Date: Mon, 23 Mar 2026 14:46:24 +0100
+Message-ID: <20260323134508.888992810@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -51,118 +51,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit d5ad6ab61cbd89afdb60881f6274f74328af3ee9 ]
+[ Upstream commit bf504b229cb8d534eccbaeaa23eba34c05131e25 ]
 
-ieee80211_tx_prepare_skb() has three error paths, but only two of them
-free the skb. The first error path (ieee80211_tx_prepare() returning
-TX_DROP) does not free it, while invoke_tx_handlers() failure and the
-fragmentation check both do.
+After commi f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference
+in acpi_processor_errata_piix4()"), device pointers may be dereferenced
+after dropping references to the device objects pointed to by them,
+which may cause a use-after-free to occur.
 
-Add kfree_skb() to the first error path so all three are consistent,
-and remove the now-redundant frees in callers (ath9k, mt76,
-mac80211_hwsim) to avoid double-free.
+Moreover, debug messages about enabling the errata may be printed
+if the errata flags corresponding to them are unset.
 
-Document the skb ownership guarantee in the function's kdoc.
+Address all of these issues by moving message printing to the points
+in the code where the errata flags are set.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://patch.msgid.link/20260314065455.2462900-1-nbd@nbd.name
-Fixes: 06be6b149f7e ("mac80211: add ieee80211_tx_prepare_skb() helper function")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f132e089fe89 ("ACPI: processor: Fix NULL-pointer dereference in acpi_processor_errata_piix4()")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Closes: https://lore.kernel.org/linux-acpi/938e2206-def5-4b7a-9b2c-d1fd37681d8a@roeck-us.net/
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://patch.msgid.link/5975693.DvuYhMxLoT@rafael.j.wysocki
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/channel.c      | 6 ++----
- drivers/net/wireless/mediatek/mt76/scan.c     | 4 +---
- drivers/net/wireless/virtual/mac80211_hwsim.c | 1 -
- include/net/mac80211.h                        | 4 +++-
- net/mac80211/tx.c                             | 4 +++-
- 5 files changed, 9 insertions(+), 10 deletions(-)
+ drivers/acpi/acpi_processor.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/channel.c b/drivers/net/wireless/ath/ath9k/channel.c
-index 121e51ce1bc0e..8b27d8cc086ab 100644
---- a/drivers/net/wireless/ath/ath9k/channel.c
-+++ b/drivers/net/wireless/ath/ath9k/channel.c
-@@ -1006,7 +1006,7 @@ static void ath_scan_send_probe(struct ath_softc *sc,
- 	skb_set_queue_mapping(skb, IEEE80211_AC_VO);
+diff --git a/drivers/acpi/acpi_processor.c b/drivers/acpi/acpi_processor.c
+index 85096ce7b658b..5a562e27d3a80 100644
+--- a/drivers/acpi/acpi_processor.c
++++ b/drivers/acpi/acpi_processor.c
+@@ -113,6 +113,10 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 				     PCI_ANY_ID, PCI_ANY_ID, NULL);
+ 		if (ide_dev) {
+ 			errata.piix4.bmisx = pci_resource_start(ide_dev, 4);
++			if (errata.piix4.bmisx)
++				dev_dbg(&ide_dev->dev,
++					"Bus master activity detection (BM-IDE) erratum enabled\n");
++
+ 			pci_dev_put(ide_dev);
+ 		}
  
- 	if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, NULL))
--		goto error;
-+		return;
+@@ -131,20 +135,17 @@ static int acpi_processor_errata_piix4(struct pci_dev *dev)
+ 		if (isa_dev) {
+ 			pci_read_config_byte(isa_dev, 0x76, &value1);
+ 			pci_read_config_byte(isa_dev, 0x77, &value2);
+-			if ((value1 & 0x80) || (value2 & 0x80))
++			if ((value1 & 0x80) || (value2 & 0x80)) {
+ 				errata.piix4.fdma = 1;
++				dev_dbg(&isa_dev->dev,
++					"Type-F DMA livelock erratum (C3 disabled)\n");
++			}
+ 			pci_dev_put(isa_dev);
+ 		}
  
- 	txctl.txq = sc->tx.txq_map[IEEE80211_AC_VO];
- 	if (ath_tx_start(sc->hw, skb, &txctl))
-@@ -1119,10 +1119,8 @@ ath_chanctx_send_vif_ps_frame(struct ath_softc *sc, struct ath_vif *avp,
- 
- 		skb->priority = 7;
- 		skb_set_queue_mapping(skb, IEEE80211_AC_VO);
--		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta)) {
--			dev_kfree_skb_any(skb);
-+		if (!ieee80211_tx_prepare_skb(sc->hw, vif, skb, band, &sta))
- 			return false;
--		}
  		break;
- 	default:
- 		return false;
-diff --git a/drivers/net/wireless/mediatek/mt76/scan.c b/drivers/net/wireless/mediatek/mt76/scan.c
-index 5a875aac410fc..3d9cf6f5e137f 100644
---- a/drivers/net/wireless/mediatek/mt76/scan.c
-+++ b/drivers/net/wireless/mediatek/mt76/scan.c
-@@ -63,10 +63,8 @@ mt76_scan_send_probe(struct mt76_dev *dev, struct cfg80211_ssid *ssid)
+ 	}
  
- 	rcu_read_lock();
+-	if (ide_dev)
+-		dev_dbg(&ide_dev->dev, "Bus master activity detection (BM-IDE) erratum enabled\n");
+-
+-	if (isa_dev)
+-		dev_dbg(&isa_dev->dev, "Type-F DMA livelock erratum (C3 disabled)\n");
+-
+ 	return 0;
+ }
  
--	if (!ieee80211_tx_prepare_skb(phy->hw, vif, skb, band, NULL)) {
--		ieee80211_free_txskb(phy->hw, skb);
-+	if (!ieee80211_tx_prepare_skb(phy->hw, vif, skb, band, NULL))
- 		goto out;
--	}
- 
- 	info = IEEE80211_SKB_CB(skb);
- 	if (req->no_cck)
-diff --git a/drivers/net/wireless/virtual/mac80211_hwsim.c b/drivers/net/wireless/virtual/mac80211_hwsim.c
-index 2f263d89d2d69..20815fdc9d376 100644
---- a/drivers/net/wireless/virtual/mac80211_hwsim.c
-+++ b/drivers/net/wireless/virtual/mac80211_hwsim.c
-@@ -3021,7 +3021,6 @@ static void hw_scan_work(struct work_struct *work)
- 						      hwsim->tmp_chan->band,
- 						      NULL)) {
- 				rcu_read_unlock();
--				kfree_skb(probe);
- 				continue;
- 			}
- 
-diff --git a/include/net/mac80211.h b/include/net/mac80211.h
-index a55085cf4ec49..ac2546b121385 100644
---- a/include/net/mac80211.h
-+++ b/include/net/mac80211.h
-@@ -7289,7 +7289,9 @@ void ieee80211_report_wowlan_wakeup(struct ieee80211_vif *vif,
-  * @band: the band to transmit on
-  * @sta: optional pointer to get the station to send the frame to
-  *
-- * Return: %true if the skb was prepared, %false otherwise
-+ * Return: %true if the skb was prepared, %false otherwise.
-+ * On failure, the skb is freed by this function; callers must not
-+ * free it again.
-  *
-  * Note: must be called under RCU lock
-  */
-diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
-index 160667be3f4d2..2f830001b0cd6 100644
---- a/net/mac80211/tx.c
-+++ b/net/mac80211/tx.c
-@@ -1896,8 +1896,10 @@ bool ieee80211_tx_prepare_skb(struct ieee80211_hw *hw,
- 	struct ieee80211_tx_data tx;
- 	struct sk_buff *skb2;
- 
--	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP)
-+	if (ieee80211_tx_prepare(sdata, &tx, NULL, skb) == TX_DROP) {
-+		kfree_skb(skb);
- 		return false;
-+	}
- 
- 	info->band = band;
- 	info->control.vif = vif;
 -- 
 2.51.0
 
