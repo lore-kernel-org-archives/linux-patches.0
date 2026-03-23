@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0F6D3AF662;
-	Mon, 23 Mar 2026 16:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97D6735958;
+	Mon, 23 Mar 2026 16:20:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282802; cv=none; b=DoIZ9OJ+HoRh4cg9gBFVjZfWbwnxQoyhSX1IBmofq6MnkHweG80wKHLWNf1NUyoreSMcSthDmORfU4Z3lL9eiz9MI9sP4ZgbMcrVJJIQu6gcDoqckOr7Pw7BBhV2iRPV5vDWoAqWvQxFjf6eD1vr+CTAv5WT31d2Jfjba1Iykg0=
+	t=1774282805; cv=none; b=jk45XIpiJBOzibMCG6oQK9rJu3EaRMKWpHxn17R1XFBZ5bV0bT19DdM2siYIyR94XEU6/3Sa5PQbNemAuOMoqP0hbRWPMOMf0SxxsXFCQosJbBF7YFAsNPoyFbpMT7I5EiCZjfxHX+UQiPzBDht4tZf9cseeEnjA8miFveoz7xQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282802; c=relaxed/simple;
-	bh=0xXBVUyDMzJPPIpC9KvzhYmWOzq/97pG2sBUwfjFl1E=;
+	s=arc-20240116; t=1774282805; c=relaxed/simple;
+	bh=/Yz5LKbFo9dibWtULSK0IwA0vIi4pP51hE7b8agedoY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Mac62B77rDo8I14mmaDUsmCzdUKSZ7ED35BWCQRwW/plIg0VjzFg7WbkkFgT84wm6mzfSEdIdNELi5aftXTK2xtLrTuoLYM/zR8NMt7b3+UHmVDtU2GhzzUbhcZLbIsTa775/tWlbJPLdmSK1B/oDr/MI1Vw/NqyiBpMm7J5oZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZUBO44+q; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=N4dLlUN2SPsnx/FMYiK1aP6HJdyVBYoUerzI9tRKio4xQk7AheRiDywmkgS8UXryKNUq3u0T9V+xUhG2rU75RDafhbdhwPijZdM11wKZVluADgVyrhDPvcjU76yCeSlAHj8S1YQ0d6gVUmvvQpF92P76M4u6dVknowmzcTmlWO0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ejcghrqB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZUBO44+q"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62292C4CEF7;
-	Mon, 23 Mar 2026 16:20:02 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ejcghrqB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFA08C4CEF7;
+	Mon, 23 Mar 2026 16:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282802;
-	bh=0xXBVUyDMzJPPIpC9KvzhYmWOzq/97pG2sBUwfjFl1E=;
+	s=korg; t=1774282805;
+	bh=/Yz5LKbFo9dibWtULSK0IwA0vIi4pP51hE7b8agedoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUBO44+qqjXgpvHgs4kF/j7nHXqFtI3INdGLKzXkU0ewSzlM3jWmRJaHTkNpmIkYz
-	 Ksudy6H50UrNpU4gqblUpvMre8BQxxNffAXecGXkWkwEHG144ncmpISiiFjK2WHrpl
-	 XUB946/1SMzayPtkOj54Xkj2f+5sFdCkQNKR7VP4=
+	b=ejcghrqBfokKwhYEUowca8GgbCIatWeYKG/3FdxBrpikfwfd1oYe2TZkrGKYghwlX
+	 fkcL3/BsECgXh6RYjsvNpFpulvvEIXDXDYZx6yqGfRc9Wc6KVKPIqx1yxzTeNzPU+d
+	 j/Yp/6hNexXXeWSSrY8zIfPwgZcbozh5WltC36R8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 292/481] mmc: sdhci: fix timing selection for 1-bit bus width
-Date: Mon, 23 Mar 2026 14:44:34 +0100
-Message-ID: <20260323134532.225949838@linuxfoundation.org>
+	David Jander <david@protonic.nl>,
+	Johan Hovold <johan@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 293/481] spi: fix use-after-free on controller registration failure
+Date: Mon, 23 Mar 2026 14:44:35 +0100
+Message-ID: <20260323134532.249809856@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Johan Hovold <johan@kernel.org>
 
-commit 5e3486e64094c28a526543f1e8aa0d5964b7f02d upstream.
+commit 8634e05b08ead636e926022f4a98416e13440df9 upstream.
 
-When 1-bit bus width is used with HS200/HS400 capabilities set,
-mmc_select_hs200() returns 0 without actually switching. This
-causes mmc_select_timing() to skip mmc_select_hs(), leaving eMMC
-in legacy mode (26MHz) instead of High Speed SDR (52MHz).
+Make sure to deregister from driver core also in the unlikely event that
+per-cpu statistics allocation fails during controller registration to
+avoid use-after-free (of driver resources) and unclocked register
+accesses.
 
-Per JEDEC eMMC spec section 5.3.2, 1-bit mode supports High Speed
-SDR. Drop incompatible HS200/HS400/UHS/DDR caps early so timing
-selection falls through to mmc_select_hs() correctly.
-
-Fixes: f2119df6b764 ("mmc: sd: add support for signal voltage switch procedure")
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 6598b91b5ac3 ("spi: spi.c: Convert statistics to per-cpu u64_stats_t")
+Cc: stable@vger.kernel.org	# 6.0
+Cc: David Jander <david@protonic.nl>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Link: https://patch.msgid.link/20260312151817.32100-2-johan@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/spi/spi.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4523,8 +4523,15 @@ int sdhci_setup_host(struct sdhci_host *
- 	 * their platform code before calling sdhci_add_host(), and we
- 	 * won't assume 8-bit width for hosts without that CAP.
- 	 */
--	if (!(host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA))
-+	if (host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA) {
-+		host->caps1 &= ~(SDHCI_SUPPORT_SDR104 | SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_DDR50);
-+		if (host->quirks2 & SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400)
-+			host->caps1 &= ~SDHCI_SUPPORT_HS400;
-+		mmc->caps2 &= ~(MMC_CAP2_HS200 | MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
-+		mmc->caps &= ~(MMC_CAP_DDR | MMC_CAP_UHS);
-+	} else {
- 		mmc->caps |= MMC_CAP_4_BIT_DATA;
-+	}
+--- a/drivers/spi/spi.c
++++ b/drivers/spi/spi.c
+@@ -3212,10 +3212,8 @@ int spi_register_controller(struct spi_c
+ 		dev_info(dev, "controller is unqueued, this is deprecated\n");
+ 	} else if (ctlr->transfer_one || ctlr->transfer_one_message) {
+ 		status = spi_controller_initialize_queue(ctlr);
+-		if (status) {
+-			device_del(&ctlr->dev);
+-			goto free_bus_id;
+-		}
++		if (status)
++			goto del_ctrl;
+ 	}
+ 	/* Add statistics */
+ 	ctlr->pcpu_statistics = spi_alloc_pcpu_stats(dev);
+@@ -3238,6 +3236,8 @@ int spi_register_controller(struct spi_c
  
- 	if (host->quirks2 & SDHCI_QUIRK2_HOST_NO_CMD23)
- 		mmc->caps &= ~MMC_CAP_CMD23;
+ destroy_queue:
+ 	spi_destroy_queue(ctlr);
++del_ctrl:
++	device_del(&ctlr->dev);
+ free_bus_id:
+ 	mutex_lock(&board_lock);
+ 	idr_remove(&spi_master_idr, ctlr->bus_num);
 
 
