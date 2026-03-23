@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E5839890A;
-	Mon, 23 Mar 2026 14:12:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51703AF66E;
+	Mon, 23 Mar 2026 14:12:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275159; cv=none; b=Nk6/zLh8qn5MT5LfqrSunSmK55O8jDucqkcKqpnPczMaBMxFJ771nnPCHyHaQ/awkfyedjC9AimMIDfw8nWU0RGlT/+tKHz8vijJ6OHodAl5eHoj30kPfykPGboebmXLcvnoKGZ7+UgBsafnb2F3ltdsxqarWHw6ktKkdi0p4pg=
+	t=1774275163; cv=none; b=WuF50gGiI7YV+DZjXhpsO3gOmfwSfk4AXcmB0NCxHT6PLFHy60PWADA/xxZwqhhVTGKYEIteg4AX2+5eJdVV/akQNw+DMPfsymyPfDKxV3hmgtRrCV3mPf1luKRBUpH71+jAJsV1oHHICgRRCKgFqyFNuZTQdhmavrAUbf4syAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275159; c=relaxed/simple;
-	bh=/lHSBFgCR+IRiFbttL0IzTVfKQ4wOJHfLF+1OzlGpT0=;
+	s=arc-20240116; t=1774275163; c=relaxed/simple;
+	bh=TtqQnZH6EYXX4p+AhtuzMjaGzetAlPIhTpnm4P+lzGA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Fe93oJlVdSJRmQ2usgNZwKLX0qcAAtkwCRv/mLrB3nUX6VW6gxnGa6TXapLUf3DCBcH9Qtl4LlfX+FXH/x9CRXFkyEGEWc/GWPuRzr3gfdhW1fdbVZgFp3TDoZ51SNSDe8Y85gYxrUgL1AxndUPFxR2BbE04IbyUSOlzyJJdX3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=p7H0fKMo; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=l7uafl12fiUmo7oBDrmaDn/J36A231yQBYRtzml1/g+26JSRPlBGwwOxkfdzYG6XI7xULSSWUr+T65m0uGrIDqiwkhFjT35xflyxv+AIxVqqFxrxvr7fl8CIeg7bEqXC+Ru3zvNqZektP7iPjlFTXiynOl/d6fSR/PhA0d5e6UM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KwoxM428; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="p7H0fKMo"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 178E3C4CEF7;
-	Mon, 23 Mar 2026 14:12:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KwoxM428"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C76C4CEF7;
+	Mon, 23 Mar 2026 14:12:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275159;
-	bh=/lHSBFgCR+IRiFbttL0IzTVfKQ4wOJHfLF+1OzlGpT0=;
+	s=korg; t=1774275162;
+	bh=TtqQnZH6EYXX4p+AhtuzMjaGzetAlPIhTpnm4P+lzGA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7H0fKMolqMDOaFsbs+NaDAJECgq03fMiYnzA5AI6hitWLo7EnAH5pKODIJ9g9UJ+
-	 QU7O8mR6e66M8GywvrcPEg7xY5b0vqurHVQRZ9cH0HaOvT7sRFjULg8wQ9Edwh5ZKE
-	 Mg1WGGUwQJp2V+UuWdwEWbf+UcIPhs8TsZHrnuEc=
+	b=KwoxM428E/FQER1ejtlkxPXoJiy3ScjEtJKQONmsSfzg8qNpDz5D6OTo7l/CoKboS
+	 OVH4hYOXrV+8L3ZRAnZyu+jLqTrVTQsn1HjGYhxVrcIlukXsnECKJvrjFtgcPgLbF1
+	 YdziIZbARX1jO9YpVFzcg3nRD0vkB6/vvkrQq+kI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Geoffrey D. Bennett" <g@b4.vu>,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 007/481] ALSA: usb-audio: Remove VALIDATE_RATES quirk for Focusrite devices
-Date: Mon, 23 Mar 2026 14:39:49 +0100
-Message-ID: <20260323134525.435833446@linuxfoundation.org>
+Subject: [PATCH 6.1 008/481] scsi: ufs: core: Always initialize the UIC done completion
+Date: Mon, 23 Mar 2026 14:39:50 +0100
+Message-ID: <20260323134525.458722251@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,42 +52,72 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Geoffrey D. Bennett <g@b4.vu>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit a8cc55bf81a45772cad44c83ea7bb0e98431094a ]
+[ Upstream commit b1e8c53749adb795bfb0bf4e2f7836e26684bb90 ]
 
-Remove QUIRK_FLAG_VALIDATE_RATES for Focusrite. With the previous
-commit, focusrite_valid_sample_rate() produces correct rate tables
-without USB probing.
+Simplify __ufshcd_send_uic_cmd() by always initializing the
+uic_cmd::done completion. This is fine since the time required to
+initialize a completion is small compared to the time required to
+process an UIC command.
 
-QUIRK_FLAG_VALIDATE_RATES sends SET_CUR requests for each rate (~25ms
-each) and leaves the device at 192kHz. This is a problem because that
-rate: 1) disables the internal mixer, so outputs are silent until an
-application opens the PCM and sets a lower rate, and 2) the Air and
-Safe modes get disabled.
-
-Fixes: 5963e5262180 ("ALSA: usb-audio: Enable rate validation for Scarlett devices")
-Signed-off-by: Geoffrey D. Bennett <g@b4.vu>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Link: https://patch.msgid.link/09b9c012024c998c4ca14bd876ef0dce0d0b6101.1771594828.git.g@b4.vu
+Reviewed-by: Peter Wang <peter.wang@mediatek.com>
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20240912223019.3510966-5-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Stable-dep-of: 62c015373e1c ("scsi: ufs: core: Move link recovery for hibern8 exit failure to wl_resume")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ufs/core/ufshcd.c | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
-diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
-index 755ba2fe05b5a..f9e998fad773c 100644
---- a/sound/usb/quirks.c
-+++ b/sound/usb/quirks.c
-@@ -2298,7 +2298,7 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
- 	VENDOR_FLG(0x07fd, /* MOTU */
- 		   QUIRK_FLAG_VALIDATE_RATES),
- 	VENDOR_FLG(0x1235, /* Focusrite Novation */
--		   QUIRK_FLAG_VALIDATE_RATES),
-+		   0),
- 	VENDOR_FLG(0x1511, /* AURALiC */
- 		   QUIRK_FLAG_DSD_RAW),
- 	VENDOR_FLG(0x152a, /* Thesycon devices */
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index 01927facaa203..6d44c2adb251a 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -2340,13 +2340,11 @@ ufshcd_wait_for_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+  * __ufshcd_send_uic_cmd - Send UIC commands and retrieve the result
+  * @hba: per adapter instance
+  * @uic_cmd: UIC command
+- * @completion: initialize the completion only if this is set to true
+  *
+  * Returns 0 only if success.
+  */
+ static int
+-__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
+-		      bool completion)
++__ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+ {
+ 	lockdep_assert_held(&hba->uic_cmd_mutex);
+ 
+@@ -2356,8 +2354,7 @@ __ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd,
+ 		return -EIO;
+ 	}
+ 
+-	if (completion)
+-		init_completion(&uic_cmd->done);
++	init_completion(&uic_cmd->done);
+ 
+ 	uic_cmd->cmd_active = 1;
+ 	ufshcd_dispatch_uic_cmd(hba, uic_cmd);
+@@ -2383,7 +2380,7 @@ int ufshcd_send_uic_cmd(struct ufs_hba *hba, struct uic_command *uic_cmd)
+ 	mutex_lock(&hba->uic_cmd_mutex);
+ 	ufshcd_add_delay_before_dme_cmd(hba);
+ 
+-	ret = __ufshcd_send_uic_cmd(hba, uic_cmd, true);
++	ret = __ufshcd_send_uic_cmd(hba, uic_cmd);
+ 	if (!ret)
+ 		ret = ufshcd_wait_for_uic_cmd(hba, uic_cmd);
+ 
+@@ -4081,7 +4078,7 @@ static int ufshcd_uic_pwr_ctrl(struct ufs_hba *hba, struct uic_command *cmd)
+ 		reenable_intr = true;
+ 	}
+ 	spin_unlock_irqrestore(hba->host->host_lock, flags);
+-	ret = __ufshcd_send_uic_cmd(hba, cmd, false);
++	ret = __ufshcd_send_uic_cmd(hba, cmd);
+ 	if (ret) {
+ 		dev_err(hba->dev,
+ 			"pwr ctrl cmd 0x%x with mode 0x%x uic error %d\n",
 -- 
 2.51.0
 
