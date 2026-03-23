@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB29823DD;
-	Mon, 23 Mar 2026 14:10:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BC2B37F8A0;
+	Mon, 23 Mar 2026 14:10:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275032; cv=none; b=KKox7X2UVS/BD4btzf8byR/Kh6R5RN59Wih2H9al7uMYz7cNNcD9bkHthervErj3Ku/1aMPzV9L0XdXG0EX69frFBAoq9+vIvZpNU7LJO2//gHslRnf0lz2zrB+Lhn+cLYQ6GnXS4jW8I83UDc9jvzIMakzflUsbALyoyq0rlKY=
+	t=1774275035; cv=none; b=Gxtx4kC4Hbpw+sXmKdqurONNNJVmZGiDVpbtfh1TV6vzN58O+xB0S5iSuLVwvWB9/b9xeYa9Vc1Pz+9fgGIj+Z7rTHef0h/mhgDLJO4F8m3Sxmr77QzcntIx3sCy9rGGNmh4DS1eZH/FJFZuDbLiCQyHPk6m+JIH1pjZlW2c5rw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275032; c=relaxed/simple;
-	bh=czMRImCI0YTC5LVXJg+LgwKCXKQxI412QI334XW4quk=;
+	s=arc-20240116; t=1774275035; c=relaxed/simple;
+	bh=y6NnalIZrokRanI19mudz7gNGNX21B5a8Droz8lX/9c=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lNv1AQ7QyNKICtcVlwCmFKRJ2xfEFUC9AZ6yZ+fZjI9AhIJBvIHy6vfj8v7eiieFU+I3ZDOrnFi1e0fdW3hFOh7nRSjO5HrcKY1reVJAQ2XGri8zXYsIvDVFu9NGepUZ7SdyvYk+NQqekyj2vK7r28Fq6dWDnm200ZGNkqK62TY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=FLM7eWwb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=r2yMk6eSuc033pbXPHg59C2nrG3oUZRR8dDXH5n7Qt1Q62yIpXVj+6+HIEDrmKKITFrz0IYkEm+f1ur0w/5DxyYUkj7fWjPy3kO/Z9MStJVm+iV+3NHZwPV1hF3Fs4C6N8ECxaL8gObe1xW+3wTH/w5sEkjIgc47PQuViqDBeUo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=E3OFLDbn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="FLM7eWwb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C445CC4CEF7;
-	Mon, 23 Mar 2026 14:10:31 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="E3OFLDbn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3E75C4CEF7;
+	Mon, 23 Mar 2026 14:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275032;
-	bh=czMRImCI0YTC5LVXJg+LgwKCXKQxI412QI334XW4quk=;
+	s=korg; t=1774275035;
+	bh=y6NnalIZrokRanI19mudz7gNGNX21B5a8Droz8lX/9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLM7eWwbuSfzgKbFmbxjQOzFGnx8N/8/5rmjpnA0bZd4d63Xl7vHjE1KuMIChqG+w
-	 Npz3apCXGsg1osJgiOtyXEBRqT98YkHSG0mmkjoZlB5AVfVPtDXQXIVJm3ea1alkl6
-	 20LTEcaNRWQtatHfPmV7fUwqc7YYtsup3uNv6LQU=
+	b=E3OFLDbnq7+pUbMfHEBkkkKhJiYtIAyb8J4OZvoATzAm58MZhAft44LZ8gtV62kIX
+	 nzHU/w7gkNfDINias/jcf3yBlWnoxrwJKFCpujT/dIzhuY5AKrZ4HrJe8nxDVOMynv
+	 gJfRPfbUXUZcqvdSwRv18XD+pfm7MJbvgau2iH9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yiming Qian <yimingqian591@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+	Felix Gu <ustc.gu@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 172/212] netfilter: nf_tables: release flowtable after rcu grace period on error
-Date: Mon, 23 Mar 2026 14:46:33 +0100
-Message-ID: <20260323134509.206081955@linuxfoundation.org>
+Subject: [PATCH 6.18 199/212] spi: amlogic-spisg: Fix memory leak in aml_spisg_probe()
+Date: Mon, 23 Mar 2026 14:47:00 +0100
+Message-ID: <20260323134510.079182185@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,48 +51,66 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit d73f4b53aaaea4c95f245e491aa5eeb8a21874ce ]
+[ Upstream commit b8db9552997924b750e727a625a30eaa4603bbb9 ]
 
-Call synchronize_rcu() after unregistering the hooks from error path,
-since a hook that already refers to this flowtable can be already
-registered, exposing this flowtable to packet path and nfnetlink_hook
-control plane.
+In aml_spisg_probe(), ctlr is allocated by
+spi_alloc_target()/spi_alloc_host(), but fails to call
+spi_controller_put() in several error paths. This leads
+to a memory leak whenever the driver fails to probe after
+the initial allocation.
 
-This error path is rare, it should only happen by reaching the maximum
-number hooks or by failing to set up to hardware offload, just call
-synchronize_rcu().
+Convert to use devm_spi_alloc_host()/devm_spi_alloc_target()
+to fix the memory leak.
 
-There is a check for already used device hooks by different flowtable
-that could result in EEXIST at this late stage. The hook parser can be
-updated to perform this check earlier to this error path really becomes
-rarely exercised.
-
-Uncovered by KASAN reported as use-after-free from nfnetlink_hook path
-when dumping hooks.
-
-Fixes: 3b49e2e94e6e ("netfilter: nf_tables: add flow table netlink frontend")
-Reported-by: Yiming Qian <yimingqian591@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Florian Westphal <fw@strlen.de>
+Fixes: cef9991e04ae ("spi: Add Amlogic SPISG driver")
+Signed-off-by: Felix Gu <ustc.gu@gmail.com>
+Link: https://patch.msgid.link/20260308-spisg-v1-1-2cace5cafc24@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_tables_api.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-amlogic-spisg.c | 12 ++++--------
+ 1 file changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 0992869b33b35..a6a7fe216396d 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -9369,6 +9369,7 @@ static int nf_tables_newflowtable(struct sk_buff *skb,
- 	return 0;
+diff --git a/drivers/spi/spi-amlogic-spisg.c b/drivers/spi/spi-amlogic-spisg.c
+index bcd7ec291ad07..6045c89c37c83 100644
+--- a/drivers/spi/spi-amlogic-spisg.c
++++ b/drivers/spi/spi-amlogic-spisg.c
+@@ -729,9 +729,9 @@ static int aml_spisg_probe(struct platform_device *pdev)
+ 	};
  
- err_flowtable_hooks:
-+	synchronize_rcu();
- 	nft_trans_destroy(trans);
- err_flowtable_trans:
- 	nft_hooks_destroy(&flowtable->hook_list);
+ 	if (of_property_read_bool(dev->of_node, "spi-slave"))
+-		ctlr = spi_alloc_target(dev, sizeof(*spisg));
++		ctlr = devm_spi_alloc_target(dev, sizeof(*spisg));
+ 	else
+-		ctlr = spi_alloc_host(dev, sizeof(*spisg));
++		ctlr = devm_spi_alloc_host(dev, sizeof(*spisg));
+ 	if (!ctlr)
+ 		return -ENOMEM;
+ 
+@@ -750,10 +750,8 @@ static int aml_spisg_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, PTR_ERR(spisg->map), "regmap init failed\n");
+ 
+ 	irq = platform_get_irq(pdev, 0);
+-	if (irq < 0) {
+-		ret = irq;
+-		goto out_controller;
+-	}
++	if (irq < 0)
++		return irq;
+ 
+ 	ret = device_reset_optional(dev);
+ 	if (ret)
+@@ -818,8 +816,6 @@ static int aml_spisg_probe(struct platform_device *pdev)
+ 	if (spisg->core)
+ 		clk_disable_unprepare(spisg->core);
+ 	clk_disable_unprepare(spisg->pclk);
+-out_controller:
+-	spi_controller_put(ctlr);
+ 
+ 	return ret;
+ }
 -- 
 2.51.0
 
