@@ -1,41 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D3B3BB9E0;
-	Mon, 23 Mar 2026 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D8243BBA04;
+	Mon, 23 Mar 2026 16:14:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282450; cv=none; b=bqYlqhEi50dUs++JBCsQK5cdRKE7XBV7f/amp5R8sFMrslhDGa2211RF0DJDX95P0J5xvTi3sUdp5hRjMaW4wRbiCgJnRsZbHk6ayvUaKx9vk//vSV4rAES3Okvgu6urnFW+fDLBT6PoyYthSHfWk6ooNk2cmqyYE85ej9gMRJU=
+	t=1774282453; cv=none; b=bbNDUPKR+4xuCQPjgORUXVEuI2iMd3OygdpD6UeLcEs4j/IpNtjtlRB1UF0Dw76xhmx0RHsOk9WomPkiiR3gZe6Xia/az4aEEY260ICwvc1vnVT0UPXVNyhAOT8C08hFNMmtaLNWg3TRQ7wtVRrFGEjOT9qLwTD67Nf0Wy/G1Uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282450; c=relaxed/simple;
-	bh=ItT30xFzQlMVuAqQDVYrhLdB/FQLCsPPtzXms7MoCmo=;
+	s=arc-20240116; t=1774282453; c=relaxed/simple;
+	bh=LTKGobxeC8/8bYFUn9sQ5yychc3qL6MvdqZiA+J3J5M=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KsuruRwcaV8byNguUi/CzdAj61KtIB0iK6eZ7TijrQ2RUf6HRc1kzvNVXWiddgl7LJs5Enu5cA2flyB79AbDYWGdWDeKYu4WfE76BbOKMSmOqpMxWBBSWckOAdHl1Bcu39t2MjpOzky5GRqaPFHeVr9/OggaMDnuDS6yK1m3yp8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RwFF+I3Y; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Z1zh5yLXtJbeUsPmobpFBOKAZrvmToocpbORl3SIneqR3ZXqCqNesI7FcVK6JecL6tI6iwQUrLz3MmGKL/akm20BvplrxNHdpEXWhfQAcSCGec4k0TB17DA367riXFFxXNA/2eQwS4R3wgC+X6mzjRc7mFFuFpsIzyoOJ/zXy2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CBkzf8MD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RwFF+I3Y"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0037C2BC9E;
-	Mon, 23 Mar 2026 16:14:09 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CBkzf8MD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAA40C2BC9E;
+	Mon, 23 Mar 2026 16:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282450;
-	bh=ItT30xFzQlMVuAqQDVYrhLdB/FQLCsPPtzXms7MoCmo=;
+	s=korg; t=1774282453;
+	bh=LTKGobxeC8/8bYFUn9sQ5yychc3qL6MvdqZiA+J3J5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RwFF+I3YiYQpOyBPfPk/rUsgHYaZSIqeSqo1ACeKpGSPADfXbYMAs+Q6TTyeOI5li
-	 iEHt3y0xI2Gtssl2zp5giWXB0LR/e17TlZIels7PGWSzDOIWro/9WKnVkY279ivisc
-	 2iaqmcEwU6qAhTSpOgUnWEgY90+kZw4LZx2ZHXNs=
+	b=CBkzf8MDMxL+sQ7dSl5YzPL3kmx94pSG6QRBqkQ9bftDZGxHbZnxhCAT4MPBST1Ow
+	 5AaWmSaDcIcfCpy0QtYyFuFZyZ/G2feq+s1oZpR2fsWoNfXKwi7fC/AAqBRyQ1+kfg
+	 pz8JOeCLBLSs2cyhdteHboG1cnmzWE5Uvz0MJoUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mieczyslaw Nalewaj <namiltd@yahoo.com>,
-	Luiz Angelo Daros de Luca <luizluca@gmail.com>,
-	Simon Horman <horms@kernel.org>,
-	Linus Walleij <linusw@kernel.org>,
+	Hangbin Liu <liuhangbin@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 161/481] net: dsa: realtek: rtl8365mb: remove ifOutDiscards from rx_packets
-Date: Mon, 23 Mar 2026 14:42:23 +0100
-Message-ID: <20260323134529.157063052@linuxfoundation.org>
+Subject: [PATCH 6.1 162/481] bonding: handle BOND_LINK_FAIL, BOND_LINK_BACK as valid link states
+Date: Mon, 23 Mar 2026 14:42:24 +0100
+Message-ID: <20260323134529.181693629@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -54,46 +51,58 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Mieczyslaw Nalewaj <namiltd@yahoo.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit f76a93241d71fbba8425e3967097b498c29264ed ]
+[ Upstream commit 3348be7978f450ede0c308a4e8416ac716cf1015 ]
 
-rx_packets should report the number of frames successfully received:
-unicast + multicast + broadcast. Subtracting ifOutDiscards (a TX
-counter) is incorrect and can undercount RX packets. RX drops are
-already reported via rx_dropped (e.g. etherStatsDropEvents), so
-there is no need to adjust rx_packets.
+Before the fixed commit, we check slave->new_link during commit
+state, which values are only BOND_LINK_{NOCHANGE, UP, DOWN}. After
+the commit, we start using slave->link_new_state, which state also could
+be BOND_LINK_{FAIL, BACK}.
 
-This patch removes the subtraction of ifOutDiscards from rx_packets
-in rtl8365mb_stats_update().
+For example, when we set updelay/downdelay, after a failover,
+the slave->link_new_state could be set to BOND_LINK_{FAIL, BACK} in
+bond_miimon_inspect(). And later in bond_miimon_commit(), it will treat
+it as invalid and print an error, which would cause confusion for users.
 
-Link: https://lore.kernel.org/netdev/878777925.105015.1763423928520@mail.yahoo.com/
-Fixes: 4af2950c50c8 ("net: dsa: realtek-smi: add rtl8365mb subdriver for RTL8365MB-VC")
-Signed-off-by: Mieczyslaw Nalewaj <namiltd@yahoo.com>
-Signed-off-by: Luiz Angelo Daros de Luca <luizluca@gmail.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Acked-by: Linus Walleij <linusw@kernel.org>
-Link: https://patch.msgid.link/20260303-realtek_namiltd_fix2-v1-1-bfa433d3401e@gmail.com
+[  106.440254] bond0: (slave veth2): link status down for interface, disabling it in 200 ms
+[  106.440265] bond0: (slave veth2): invalid new link 1 on slave
+[  106.648276] bond0: (slave veth2): link status definitely down, disabling slave
+[  107.480271] bond0: (slave veth2): link status up, enabling it in 200 ms
+[  107.480288] bond0: (slave veth2): invalid new link 3 on slave
+[  107.688302] bond0: (slave veth2): link status definitely up, 10000 Mbps full duplex
+
+Let's handle BOND_LINK_{FAIL, BACK} as valid link states.
+
+Fixes: 1899bb325149 ("bonding: fix state transition issue in link monitoring")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Link: https://patch.msgid.link/20260304-b4-bond_updelay-v1-2-f72eb2e454d0@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/realtek/rtl8365mb.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/bonding/bond_main.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/dsa/realtek/rtl8365mb.c b/drivers/net/dsa/realtek/rtl8365mb.c
-index abdff73aa9c32..c22e69ab0deb1 100644
---- a/drivers/net/dsa/realtek/rtl8365mb.c
-+++ b/drivers/net/dsa/realtek/rtl8365mb.c
-@@ -1451,8 +1451,7 @@ static void rtl8365mb_stats_update(struct realtek_priv *priv, int port)
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 8ff1c34b4db63..2296ca9003016 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2801,8 +2801,14 @@ static void bond_miimon_commit(struct bonding *bond)
  
- 	stats->rx_packets = cnt[RTL8365MB_MIB_ifInUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifInMulticastPkts] +
--			    cnt[RTL8365MB_MIB_ifInBroadcastPkts] -
--			    cnt[RTL8365MB_MIB_ifOutDiscards];
-+			    cnt[RTL8365MB_MIB_ifInBroadcastPkts];
+ 			continue;
  
- 	stats->tx_packets = cnt[RTL8365MB_MIB_ifOutUcastPkts] +
- 			    cnt[RTL8365MB_MIB_ifOutMulticastPkts] +
++		case BOND_LINK_FAIL:
++		case BOND_LINK_BACK:
++			slave_dbg(bond->dev, slave->dev, "link_new_state %d on slave\n",
++				  slave->link_new_state);
++			continue;
++
+ 		default:
+-			slave_err(bond->dev, slave->dev, "invalid new link %d on slave\n",
++			slave_err(bond->dev, slave->dev, "invalid link_new_state %d on slave\n",
+ 				  slave->link_new_state);
+ 			bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
+ 
 -- 
 2.51.0
 
