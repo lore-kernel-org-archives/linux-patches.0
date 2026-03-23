@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E144C3BE63F;
-	Mon, 23 Mar 2026 16:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696A13B0ACB;
+	Mon, 23 Mar 2026 16:18:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282735; cv=none; b=XBs5q6gSFd+9fNfGUyzHhbkodluIni7CuCRb+twbKb3D1bKPN5ayGlG4Gxxgr13bT3i1Fv8NJGVm5cQLpmI0WTOz49o7hBMBtJDBf0oxMc+nFAMVWWuBQd8Gnl2WIQ5or1kZ7LcbVBoPc259qkHlNy1x0tLG+4+NeEINTOr65aI=
+	t=1774282737; cv=none; b=Yn0teHGJgoHnc9Qb1GLyfo3eYm9bSpcH4wtNJFIiuGzuzxte20mMy15M/RNk4DsiT5HA/+ov+BGVzoc+nw0tlmPvToChdK4iSs1sip/uaGc6W3gpkyilusuKi4wjwOYrqLGgndQdzPXFooamSU5ArTGK10Hra29ADzYqSrxgvYY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282735; c=relaxed/simple;
-	bh=G+/NpwCzktAm77zb4tkBaG0Q5sfhWsb46XBIK8RXy0k=;
+	s=arc-20240116; t=1774282737; c=relaxed/simple;
+	bh=VEXKhO5p+ScVUy5cthqCTzvynI6UiazImKhQEoFk5XE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jhmxRcpnnSdS59fcTf14Zfeg94JSuOZmRgC57cJHD36g/2muAi0HNhiVXLo1+ENV1Ak1FtyKNbLqFRiI+6Aq0AxFm8i4/CspPTEs3QCzTkT6sD0CKPa3rtgchXY63dL0RyLF2beV4kxJ0OCJprTwanO6Z3+na+I+x4PnGp8E2R8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qfblRFDJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gHz3qqsPP8JDGGtAS7BZ4eN1Jsyc4WImxh/dh6+XKRs2AVO8Oy/lk3c7T2pjP+addoJRDF6Ka3fd9xCOk//EO8dgkcPt/Efx8TGQZWfKp6fiRVsxGi0cT1Ly/6+LFMR55BlnEBfBk3rNbrGRAG4A9HsWb4w0ED4t4eYTsl9Q1s4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fsSgikG7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qfblRFDJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FBC7C2BC9E;
-	Mon, 23 Mar 2026 16:18:54 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fsSgikG7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED241C2BCB0;
+	Mon, 23 Mar 2026 16:18:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282734;
-	bh=G+/NpwCzktAm77zb4tkBaG0Q5sfhWsb46XBIK8RXy0k=;
+	s=korg; t=1774282737;
+	bh=VEXKhO5p+ScVUy5cthqCTzvynI6UiazImKhQEoFk5XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qfblRFDJNmsNj7TH7k0UZyIExAIBGoKgFRFENbKVTfuSyGXEb/6/6ML93RQ7Ts8e0
-	 pj3l3zF7ziPCtcIbBjWFAF3Q/nybOWf3FpUh58KIfjH9NvlJoVz64BgRZVdOlDMvnW
-	 xveoJ/O0fBXkZs5KjptHrKslTxzYnC12RQH0vqpY=
+	b=fsSgikG7WjTodFms7Idtjg8W5gVH/Tui4gb1WFB69G2/WzmC4XP5hLtSlgZDDMs+q
+	 0nw1U4fMzjkctJqD33KaGpD6JiRxhSISE19nOOQ78aahHM4DHGzb3Ws4nfxLTcNIW+
+	 BbNNsvO7u9GMdJw9u+oESdS1we5fQfJpoChU7oWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Antoniu Miclaus <antoniu.miclaus@analog.com>,
+	Tomasz Duszynski <tduszyns@gmail.com>,
 	Andy Shevchenko <andriy.shevchenko@intel.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 265/481] iio: dac: ds4424: reject -128 RAW value
-Date: Mon, 23 Mar 2026 14:44:07 +0100
-Message-ID: <20260323134531.601218908@linuxfoundation.org>
+Subject: [PATCH 6.1 266/481] iio: chemical: sps30_serial: fix buffer size in sps30_serial_read_meas()
+Date: Mon, 23 Mar 2026 14:44:08 +0100
+Message-ID: <20260323134531.623034393@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,39 +53,36 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oleksij Rempel <o.rempel@pengutronix.de>
+From: Antoniu Miclaus <antoniu.miclaus@analog.com>
 
-commit 5187e03b817c26c1c3bcb2645a612ea935c4be89 upstream.
+commit c3914ce1963c4db25e186112c90fa5d2361e9e0a upstream.
 
-The DS442x DAC uses sign-magnitude encoding, so -128 cannot be represented
-in hardware (7-bit magnitude).
+sizeof(num) evaluates to sizeof(size_t) which is 8 bytes on 64-bit,
+but the buffer elements are only 4 bytes. The same function already
+uses sizeof(*meas) on line 312, making the mismatch evident. Use
+sizeof(*meas) consistently.
 
-Previously, passing -128 resulted in a truncated value that programmed
-0mA (magnitude 0) instead of the expected maximum negative current,
-effectively failing silently.
-
-Reject -128 to avoid producing the wrong current.
-
-Fixes: d632a2bd8ffc ("iio: dac: ds4422/ds4424 dac driver")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Fixes: b2e171f5a5c6 ("iio: sps30: add support for serial interface")
+Signed-off-by: Antoniu Miclaus <antoniu.miclaus@analog.com>
+Acked-by: Tomasz Duszynski <tduszyns@gmail.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@intel.com>
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/dac/ds4424.c |    2 +-
+ drivers/iio/chemical/sps30_serial.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/dac/ds4424.c
-+++ b/drivers/iio/dac/ds4424.c
-@@ -141,7 +141,7 @@ static int ds4424_write_raw(struct iio_d
+--- a/drivers/iio/chemical/sps30_serial.c
++++ b/drivers/iio/chemical/sps30_serial.c
+@@ -303,7 +303,7 @@ static int sps30_serial_read_meas(struct
+ 	if (msleep_interruptible(1000))
+ 		return -EINTR;
  
- 	switch (mask) {
- 	case IIO_CHAN_INFO_RAW:
--		if (val < S8_MIN || val > S8_MAX)
-+		if (val <= S8_MIN || val > S8_MAX)
- 			return -EINVAL;
- 
- 		if (val > 0) {
+-	ret = sps30_serial_command(state, SPS30_SERIAL_READ_MEAS, NULL, 0, meas, num * sizeof(num));
++	ret = sps30_serial_command(state, SPS30_SERIAL_READ_MEAS, NULL, 0, meas, num * sizeof(*meas));
+ 	if (ret < 0)
+ 		return ret;
+ 	/* if measurements aren't ready sensor returns empty frame */
 
 
