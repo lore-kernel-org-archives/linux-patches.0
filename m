@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0BA43BC67B;
-	Mon, 23 Mar 2026 16:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7737A3BD646;
+	Mon, 23 Mar 2026 16:12:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282368; cv=none; b=RonVtaDBZV8el5qpXqgkk5T4UbBQ1tU7U9AQgvQ8jI3I+BS3jCb4R6eZq2dXjtGxGRhIBnsW09WkK6+QFo1emkIBinUh15MJBh6znqbU9AleaqE42k1RpF3iH6myg4BbWD7dqhp//VjGwFoXx4R8Fm6oatR+oZbWkMsBLUAP1x8=
+	t=1774282371; cv=none; b=ogx763YdcWOR13LFRoxStyK7Tk4acydjKUNk/i+73KfOPhEBeYCZEtTzHghY+4CuHNFNVlpcMg1B8JU4YwELW3oF/QCx3q/6+Ifm3mbI9fuH6pJfgmU8oceBFNvohVswJnboxccuZVvwa3HAKCaGH+vEG1L5c4KAR9aCXimS0L4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282368; c=relaxed/simple;
-	bh=QWJaEMIm9/0OaKszbdY310pkKGT+CNdUUzRwHUDsHOs=;
+	s=arc-20240116; t=1774282371; c=relaxed/simple;
+	bh=CTX3ZzeEnxo226BfY7lXQ1t1D1brwT2b/1t3xC3D7B8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i2tK+2/Bnx7sEfpELl18EL2LJMiYDxwDoznf9VuC6JzCJr7wngJx1L4YySQxqhNy3jltC08lssWuHXDsoEOE9ICR7uFmOmA/pEXL5xrJIUpMFTcfTCYs+d8xyfPyGlB6LuN9KT68Ey4K2foI2mqFp9L0IlmSzsNhHO0XIOdQMlo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=C3gJUlJE; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=FI5jlVcs8wWBP01kywsX42uijHE4czrZXWkojPnAkoE0wCrkPcAogTVYzoInIbxFnSwl9/0FLykHmATbjMquQokFDHveq+ASZ75ay4mNJvVElBNr9m0HW0HDxZRnI7J9I41eQdcg0+6AxbdN7X3+rJwY08rfdxI34+VMnSLkxXs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H1AEm2Tz; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="C3gJUlJE"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59ABDC4CEF7;
-	Mon, 23 Mar 2026 16:12:48 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H1AEm2Tz"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D770AC2BC9E;
+	Mon, 23 Mar 2026 16:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282368;
-	bh=QWJaEMIm9/0OaKszbdY310pkKGT+CNdUUzRwHUDsHOs=;
+	s=korg; t=1774282371;
+	bh=CTX3ZzeEnxo226BfY7lXQ1t1D1brwT2b/1t3xC3D7B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3gJUlJE+OhgzJuKHKnYqOoXZdoBcslx1bv8GgbLWpvQ+ZUV9kj7A/6+aaM1RYJq6
-	 5/bvQC3lZmQWKNVgw655IkpHVqrG+pLrxA7yJzJrjxgehk+4gRZLMj7bTETfl2rHDL
-	 hYJymVY44f7cjmlIZ2RQlqktYa0AXHycUZHmBU2s=
+	b=H1AEm2TzEXETFevRKyhAhy0OJdwkJB2ugc7kK0Vh73Uk+RMqf3Ii+U/iKg7jLlkYm
+	 b9xV90IPPu6S91QjZo1rQzQulb9Xfcr0r8toCl5AGpyN61fUlCa1RYrkKDjaBhZYdR
+	 POJwwKeI6cKLaIHjTOC/utDW0BY6dOtlJG135tTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 094/481] selftests: mptcp: more stable simult_flows tests
-Date: Mon, 23 Mar 2026 14:41:16 +0100
-Message-ID: <20260323134527.571264699@linuxfoundation.org>
+	Koichiro Den <den@valinux.co.jp>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 130/481] net: sched: avoid qdisc_reset_all_tx_gt() vs dequeue race for lockless qdiscs
+Date: Mon, 23 Mar 2026 14:41:52 +0100
+Message-ID: <20260323134528.437790838@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,60 +51,112 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Koichiro Den <den@valinux.co.jp>
 
-commit 8c09412e584d9bcc0e71d758ec1008d1c8d1a326 upstream.
+[ Upstream commit 7f083faf59d14c04e01ec05a7507f036c965acf8 ]
 
-By default, the netem qdisc can keep up to 1000 packets under its belly
-to deal with the configured rate and delay. The simult flows test-case
-simulates very low speed links, to avoid problems due to slow CPUs and
-the TCP stack tend to transmit at a slightly higher rate than the
-(virtual) link constraints.
+When shrinking the number of real tx queues,
+netif_set_real_num_tx_queues() calls qdisc_reset_all_tx_gt() to flush
+qdiscs for queues which will no longer be used.
 
-All the above causes a relatively large amount of packets being enqueued
-in the netem qdiscs - the longer the transfer, the longer the queue -
-producing increasingly high TCP RTT samples and consequently increasingly
-larger receive buffer size due to DRS.
+qdisc_reset_all_tx_gt() currently serializes qdisc_reset() with
+qdisc_lock(). However, for lockless qdiscs, the dequeue path is
+serialized by qdisc_run_begin/end() using qdisc->seqlock instead, so
+qdisc_reset() can run concurrently with __qdisc_run() and free skbs
+while they are still being dequeued, leading to UAF.
 
-When the receive buffer size becomes considerably larger than the needed
-size, the tests results can flake, i.e. because minimal inaccuracy in the
-pacing rate can lead to a single subflow usage towards the end of the
-connection for a considerable amount of data.
+This can easily be reproduced on e.g. virtio-net by imposing heavy
+traffic while frequently changing the number of queue pairs:
 
-Address the issue explicitly setting netem limits suitable for the
-configured link speeds and unflake all the affected tests.
+  iperf3 -ub0 -c $peer -t 0 &
+  while :; do
+    ethtool -L eth0 combined 1
+    ethtool -L eth0 combined 2
+  done
 
-Fixes: 1a418cb8e888 ("mptcp: simult flow self-tests")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
-Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-1-4b5462b6f016@kernel.org
+With KASAN enabled, this leads to reports like:
+
+  BUG: KASAN: slab-use-after-free in __qdisc_run+0x133f/0x1760
+  ...
+  Call Trace:
+   <TASK>
+   ...
+   __qdisc_run+0x133f/0x1760
+   __dev_queue_xmit+0x248f/0x3550
+   ip_finish_output2+0xa42/0x2110
+   ip_output+0x1a7/0x410
+   ip_send_skb+0x2e6/0x480
+   udp_send_skb+0xb0a/0x1590
+   udp_sendmsg+0x13c9/0x1fc0
+   ...
+   </TASK>
+
+  Allocated by task 1270 on cpu 5 at 44.558414s:
+   ...
+   alloc_skb_with_frags+0x84/0x7c0
+   sock_alloc_send_pskb+0x69a/0x830
+   __ip_append_data+0x1b86/0x48c0
+   ip_make_skb+0x1e8/0x2b0
+   udp_sendmsg+0x13a6/0x1fc0
+   ...
+
+  Freed by task 1306 on cpu 3 at 44.558445s:
+   ...
+   kmem_cache_free+0x117/0x5e0
+   pfifo_fast_reset+0x14d/0x580
+   qdisc_reset+0x9e/0x5f0
+   netif_set_real_num_tx_queues+0x303/0x840
+   virtnet_set_channels+0x1bf/0x260 [virtio_net]
+   ethnl_set_channels+0x684/0xae0
+   ethnl_default_set_doit+0x31a/0x890
+   ...
+
+Serialize qdisc_reset_all_tx_gt() against the lockless dequeue path by
+taking qdisc->seqlock for TCQ_F_NOLOCK qdiscs, matching the
+serialization model already used by dev_reset_queue().
+
+Additionally clear QDISC_STATE_NON_EMPTY after reset so the qdisc state
+reflects an empty queue, avoiding needless re-scheduling.
+
+Fixes: 6b3ba9146fe6 ("net: sched: allow qdiscs to handle locking")
+Signed-off-by: Koichiro Den <den@valinux.co.jp>
+Link: https://patch.msgid.link/20260228145307.3955532-1-den@valinux.co.jp
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/mptcp/simult_flows.sh |   11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ include/net/sch_generic.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/tools/testing/selftests/net/mptcp/simult_flows.sh
-+++ b/tools/testing/selftests/net/mptcp/simult_flows.sh
-@@ -246,10 +246,13 @@ run_test()
- 	for dev in ns2eth1 ns2eth2; do
- 		tc -n $ns2 qdisc del dev $dev root >/dev/null 2>&1
- 	done
--	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1
--	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2
--	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1
--	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2
-+
-+	# keep the queued pkts number low, or the RTT estimator will see
-+	# increasing latency over time.
-+	tc -n $ns1 qdisc add dev ns1eth1 root netem rate ${rate1}mbit $delay1 limit 50
-+	tc -n $ns1 qdisc add dev ns1eth2 root netem rate ${rate2}mbit $delay2 limit 50
-+	tc -n $ns2 qdisc add dev ns2eth1 root netem rate ${rate1}mbit $delay1 limit 50
-+	tc -n $ns2 qdisc add dev ns2eth2 root netem rate ${rate2}mbit $delay2 limit 50
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index b34e9e93a1463..7bb73448de0d3 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -724,13 +724,23 @@ static inline bool skb_skip_tc_classify(struct sk_buff *skb)
+ static inline void qdisc_reset_all_tx_gt(struct net_device *dev, unsigned int i)
+ {
+ 	struct Qdisc *qdisc;
++	bool nolock;
  
- 	# time is measured in ms, account for transfer size, aggregated link speed
- 	# and header overhead (10%)
+ 	for (; i < dev->num_tx_queues; i++) {
+ 		qdisc = rtnl_dereference(netdev_get_tx_queue(dev, i)->qdisc);
+ 		if (qdisc) {
++			nolock = qdisc->flags & TCQ_F_NOLOCK;
++
++			if (nolock)
++				spin_lock_bh(&qdisc->seqlock);
+ 			spin_lock_bh(qdisc_lock(qdisc));
+ 			qdisc_reset(qdisc);
+ 			spin_unlock_bh(qdisc_lock(qdisc));
++			if (nolock) {
++				clear_bit(__QDISC_STATE_MISSED, &qdisc->state);
++				clear_bit(__QDISC_STATE_DRAINING, &qdisc->state);
++				spin_unlock_bh(&qdisc->seqlock);
++			}
+ 		}
+ 	}
+ }
+-- 
+2.51.0
+
 
 
