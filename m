@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 810063AE6E2;
-	Mon, 23 Mar 2026 14:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D6721D00A;
+	Mon, 23 Mar 2026 14:09:16 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274953; cv=none; b=C444oHePJwIYTcgIdT7V6F3///QWoxxoXHydVWhJh6NsLD78afWorpRBvLsu+p19p6Kwyjedhdq37GgW2LiZy1CoUViLZqnWRJVYtdrGkkzlMiedl0jB3UBk74y/KljqV0TgImUqLvrLLR56dzjskFoas82kcvxwb4lvcFOCyQg=
+	t=1774274956; cv=none; b=EkeUS1G9bWsTASHm/PyMDjDomLE9vYCrSfsuuityCnpxbHgovsAGW/eT7nDxaMHKQuy9XqgpS1K1DvFWab+dn73NgR7zNKimSrJPEoJYGjFSb0eHf/UPtMGsClaAektRq59dbmKSTP1hc6BP6EkwuzT6v1CwE6R0pfEQXOC42W8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274953; c=relaxed/simple;
-	bh=ZEnUZj918DPpMNAxVIVbvXPgpXw/OZM3WQbmvUtccLw=;
+	s=arc-20240116; t=1774274956; c=relaxed/simple;
+	bh=QZmiPlYcKQOCP4J8kRXxWg1O9enlnKGTMmQ1WklChBU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rGHb1mDXuhuuheNaZ1J0bN1Mi+U0tvVk5yTsS+VCDfW/G/8FaTz7UggJsnCGRwrR4+Kr3fL6NlICDcN9NkFReDS2uAcsUYSBdUe0Y8XSpfQUZMKBwIc94DBOhwWbqQLgou0pokeMvflAuGqW1SVsl8U0WwR+IBKvmPITdHnEmb4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=wGuGHz3Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Iw2Qr3GxIfdHnazYAuSzUVyDJro4PYi1M2fG3dvNkYrIPin/mZhK5bcQS6GYlUncVam9xCxAJMUalOPSpgpYKbjj0p9sflQNnk45BhKPTYPVI1fNSss1aejfvoX517IxQfIMJPjmb4q12IQjRSxXmzr2F+zk6am+bYFi9fWjq2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jJWqLxX7; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="wGuGHz3Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6CCC4CEF7;
-	Mon, 23 Mar 2026 14:09:12 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jJWqLxX7"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 926AAC4CEF7;
+	Mon, 23 Mar 2026 14:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274953;
-	bh=ZEnUZj918DPpMNAxVIVbvXPgpXw/OZM3WQbmvUtccLw=;
+	s=korg; t=1774274955;
+	bh=QZmiPlYcKQOCP4J8kRXxWg1O9enlnKGTMmQ1WklChBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wGuGHz3ZgHMmveZazrWlkAPFRZzQfUTgSvO+8v34qFBnKWWyWeegZDoXfisXsvjGM
-	 UVXe9Z8mgY2yGJiZb1sbssI+jhLofAHnWmm7o65AFmsZ7HAc0nKC4NqqxWNvwSGiFc
-	 tM50N1xS1Q/Cc821i5bOOoWWoA2HdT9ber6DxsR8=
+	b=jJWqLxX7aNN6RaQBpIkTzebB1hCm3WOJkgkrP2CFRnX5ZqChoxAJo+8HCK87is4TY
+	 wXXANOfxJz11vAa33Ws88WOawGhiIiMoJRO85aZhvCsRyNdk3aI7FIr4e8K64zfZsb
+	 MQGjEvsJJW+u/kVSZM5J5kAWGrorHFEUYedjiTkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianbo Liu <jianbol@nvidia.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+14b6d57fb728e27ce23c@syzkaller.appspotmail.com,
+	Shaurya Rane <ssrane_b23@ee.vjti.ac.in>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 168/212] net/mlx5e: Fix race condition during IPSec ESN update
-Date: Mon, 23 Mar 2026 14:46:29 +0100
-Message-ID: <20260323134509.033312912@linuxfoundation.org>
+Subject: [PATCH 6.18 129/212] Bluetooth: L2CAP: Fix use-after-free in l2cap_unregister_user
+Date: Mon, 23 Mar 2026 14:45:50 +0100
+Message-ID: <20260323134507.846374370@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -53,125 +52,87 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jianbo Liu <jianbol@nvidia.com>
+From: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
 
-[ Upstream commit beb6e2e5976a128b0cccf10d158124422210c5ef ]
+[ Upstream commit 752a6c9596dd25efd6978a73ff21f3b592668f4a ]
 
-In IPSec full offload mode, the device reports an ESN (Extended
-Sequence Number) wrap event to the driver. The driver validates this
-event by querying the IPSec ASO and checking that the esn_event_arm
-field is 0x0, which indicates an event has occurred. After handling
-the event, the driver must re-arm the context by setting esn_event_arm
-back to 0x1.
+After commit ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in
+hci_chan_del"), l2cap_conn_del() uses conn->lock to protect access to
+conn->users. However, l2cap_register_user() and l2cap_unregister_user()
+don't use conn->lock, creating a race condition where these functions can
+access conn->users and conn->hchan concurrently with l2cap_conn_del().
 
-A race condition exists in this handling path. After validating the
-event, the driver calls mlx5_accel_esp_modify_xfrm() to update the
-kernel's xfrm state. This function temporarily releases and
-re-acquires the xfrm state lock.
+This can lead to use-after-free and list corruption bugs, as reported
+by syzbot.
 
-So, need to acknowledge the event first by setting esn_event_arm to
-0x1. This prevents the driver from reprocessing the same ESN update if
-the hardware sends events for other reason. Since the next ESN update
-only occurs after nearly 2^31 packets are received, there's no risk of
-missing an update, as it will happen long after this handling has
-finished.
+Fix this by changing l2cap_register_user() and l2cap_unregister_user()
+to use conn->lock instead of hci_dev_lock(), ensuring consistent locking
+for the l2cap_conn structure.
 
-Processing the event twice causes the ESN high-order bits (esn_msb) to
-be incremented incorrectly. The driver then programs the hardware with
-this invalid ESN state, which leads to anti-replay failures and a
-complete halt of IPSec traffic.
-
-Fix this by re-arming the ESN event immediately after it is validated,
-before calling mlx5_accel_esp_modify_xfrm(). This ensures that any
-spurious, duplicate events are correctly ignored, closing the race
-window.
-
-Fixes: fef06678931f ("net/mlx5e: Fix ESN update kernel panic")
-Signed-off-by: Jianbo Liu <jianbol@nvidia.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
-Link: https://patch.msgid.link/20260316094603.6999-4-tariqt@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+14b6d57fb728e27ce23c@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=14b6d57fb728e27ce23c
+Fixes: ab4eedb790ca ("Bluetooth: L2CAP: Fix corrupted list in hci_chan_del")
+Signed-off-by: Shaurya Rane <ssrane_b23@ee.vjti.ac.in>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mlx5/core/en_accel/ipsec_offload.c        | 33 ++++++++-----------
- 1 file changed, 14 insertions(+), 19 deletions(-)
+ net/bluetooth/l2cap_core.c | 20 ++++++++------------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-index 2739ff490239d..e0611fa827971 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/ipsec_offload.c
-@@ -310,10 +310,11 @@ static void mlx5e_ipsec_aso_update(struct mlx5e_ipsec_sa_entry *sa_entry,
- 	mlx5e_ipsec_aso_query(sa_entry, data);
- }
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 05acc2e98f58f..9ea030fc9a9cc 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -1686,17 +1686,15 @@ static void l2cap_info_timeout(struct work_struct *work)
  
--static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
--					 u32 mode_param)
-+static void
-+mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
-+			     u32 mode_param,
-+			     struct mlx5_accel_esp_xfrm_attrs *attrs)
+ int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user)
  {
--	struct mlx5_accel_esp_xfrm_attrs attrs = {};
- 	struct mlx5_wqe_aso_ctrl_seg data = {};
- 
- 	if (mode_param < MLX5E_IPSEC_ESN_SCOPE_MID) {
-@@ -323,18 +324,7 @@ static void mlx5e_ipsec_update_esn_state(struct mlx5e_ipsec_sa_entry *sa_entry,
- 		sa_entry->esn_state.overlap = 1;
- 	}
- 
--	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, &attrs);
--
--	/* It is safe to execute the modify below unlocked since the only flows
--	 * that could affect this HW object, are create, destroy and this work.
--	 *
--	 * Creation flow can't co-exist with this modify work, the destruction
--	 * flow would cancel this work, and this work is a single entity that
--	 * can't conflict with it self.
--	 */
--	spin_unlock_bh(&sa_entry->x->lock);
--	mlx5_accel_esp_modify_xfrm(sa_entry, &attrs);
--	spin_lock_bh(&sa_entry->x->lock);
-+	mlx5e_ipsec_build_accel_xfrm_attrs(sa_entry, attrs);
- 
- 	data.data_offset_condition_operand =
- 		MLX5_IPSEC_ASO_REMOVE_FLOW_PKT_CNT_OFFSET;
-@@ -451,7 +441,9 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
- 	struct mlx5e_ipsec_work *work =
- 		container_of(_work, struct mlx5e_ipsec_work, work);
- 	struct mlx5e_ipsec_sa_entry *sa_entry = work->data;
-+	struct mlx5_accel_esp_xfrm_attrs tmp = {};
- 	struct mlx5_accel_esp_xfrm_attrs *attrs;
-+	bool need_modify = false;
+-	struct hci_dev *hdev = conn->hcon->hdev;
  	int ret;
  
- 	attrs = &sa_entry->attrs;
-@@ -461,19 +453,22 @@ static void mlx5e_ipsec_handle_event(struct work_struct *_work)
- 	if (ret)
- 		goto unlock;
+ 	/* We need to check whether l2cap_conn is registered. If it is not, we
+-	 * must not register the l2cap_user. l2cap_conn_del() is unregisters
+-	 * l2cap_conn objects, but doesn't provide its own locking. Instead, it
+-	 * relies on the parent hci_conn object to be locked. This itself relies
+-	 * on the hci_dev object to be locked. So we must lock the hci device
+-	 * here, too. */
++	 * must not register the l2cap_user. l2cap_conn_del() unregisters
++	 * l2cap_conn objects under conn->lock, and we use the same lock here
++	 * to protect access to conn->users and conn->hchan.
++	 */
  
-+	if (attrs->lft.soft_packet_limit != XFRM_INF)
-+		mlx5e_ipsec_handle_limits(sa_entry);
-+
- 	if (attrs->replay_esn.trigger &&
- 	    !MLX5_GET(ipsec_aso, sa_entry->ctx, esn_event_arm)) {
- 		u32 mode_param = MLX5_GET(ipsec_aso, sa_entry->ctx,
- 					  mode_parameter);
+-	hci_dev_lock(hdev);
++	mutex_lock(&conn->lock);
  
--		mlx5e_ipsec_update_esn_state(sa_entry, mode_param);
-+		mlx5e_ipsec_update_esn_state(sa_entry, mode_param, &tmp);
-+		need_modify = true;
- 	}
+ 	if (!list_empty(&user->list)) {
+ 		ret = -EINVAL;
+@@ -1717,16 +1715,14 @@ int l2cap_register_user(struct l2cap_conn *conn, struct l2cap_user *user)
+ 	ret = 0;
  
--	if (attrs->lft.soft_packet_limit != XFRM_INF)
--		mlx5e_ipsec_handle_limits(sa_entry);
--
- unlock:
- 	spin_unlock_bh(&sa_entry->x->lock);
-+	if (need_modify)
-+		mlx5_accel_esp_modify_xfrm(sa_entry, &tmp);
- 	kfree(work);
+ out_unlock:
+-	hci_dev_unlock(hdev);
++	mutex_unlock(&conn->lock);
+ 	return ret;
  }
+ EXPORT_SYMBOL(l2cap_register_user);
+ 
+ void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user)
+ {
+-	struct hci_dev *hdev = conn->hcon->hdev;
+-
+-	hci_dev_lock(hdev);
++	mutex_lock(&conn->lock);
+ 
+ 	if (list_empty(&user->list))
+ 		goto out_unlock;
+@@ -1735,7 +1731,7 @@ void l2cap_unregister_user(struct l2cap_conn *conn, struct l2cap_user *user)
+ 	user->remove(conn, user);
+ 
+ out_unlock:
+-	hci_dev_unlock(hdev);
++	mutex_unlock(&conn->lock);
+ }
+ EXPORT_SYMBOL(l2cap_unregister_user);
  
 -- 
 2.51.0
