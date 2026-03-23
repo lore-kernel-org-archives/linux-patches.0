@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0731A00F0;
-	Mon, 23 Mar 2026 15:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3FFE1A00F0;
+	Mon, 23 Mar 2026 15:00:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278023; cv=none; b=LVEL6eZ2AeNTogyNlUelZu3MSchO6+J4LmstaUOTYwmDoIvMWTW7fJU3Bh+EGA6XA6d3ZRVhuXDJmKMOofwDLdgSIvFDHEVnujZdGW4Dj0v4URZ0TdHch04XbAd0CqZxS5s1ucSWsCNYH3Szl1hwh5/3yi/Jg+iriwa+6SFyk6Q=
+	t=1774278025; cv=none; b=PnyFQ5IsLs2lQLD6MUZ90tEyClRY2Gzui87HTxvTevlKBXgBgQG+EdS9l6mfy9WRnRYRQUc2gAUfNgjloIc7683q4rOVPUQHzhw+lhbkt06Fq4p8BKxRmdU3Jiw7n0iZzG45UshHQ4Ilwpu5EeGcn2HFU5o0UJoEfdlnxRxQscE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278023; c=relaxed/simple;
-	bh=WKARneBrtXUlbmhJFVRrtBV9uMC3uRVxfcH3w75H/bk=;
+	s=arc-20240116; t=1774278025; c=relaxed/simple;
+	bh=H75s8/kZ/P6rcJ+HWuPc1KkrEt8TGAh3VpYjc2+HKJE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CMgmwQZRrZKMzp/sUq0Bm/40jHvR1wnRfcZi8ZbU/9EU0svSDqRNWI7MNjC+HFtbIdS7i1oxQlTdg/0rJrGd+4kQYMzEkiT0Hz7Y5GX+4zaiz/HTnAYBaFAvACL4lUG5dpQET33J++QqMlBqHtGw4664IfZcA8D8mHosW5gH/4Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZasVAgk/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=GaAP6yh/ZcsyAm6kkWL9rpMjdHQEYzDbHljt2D4RD9LX27G3828F0ePBs/1OxIZOwkLWMgQ5A0kdwXE3G4jhJHoqtMaoOwTHf7S7WPX+GUpanczjnJG3muP4X4IKSrjICmeGZwPnR5ZtlvoT2ATbaIrRSZa9wep1+1rNRgRPO3c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=fxclhewd; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZasVAgk/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FF77C4CEF7;
-	Mon, 23 Mar 2026 15:00:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="fxclhewd"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7E3C4CEF7;
+	Mon, 23 Mar 2026 15:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278022;
-	bh=WKARneBrtXUlbmhJFVRrtBV9uMC3uRVxfcH3w75H/bk=;
+	s=korg; t=1774278025;
+	bh=H75s8/kZ/P6rcJ+HWuPc1KkrEt8TGAh3VpYjc2+HKJE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZasVAgk/0j1xmckCmDdbRpKSNjM5JLrWmrqQeWijYdF9cucG3xGXJHMIz7AeEvz6v
-	 ycVEi4Gnf978nO1vKOcJqDlWCdOZjqcc82Yr1UgRi6NUmtQToay+7BzqFWgNQHzUE5
-	 GPlO8HY/TQemkHpgzYmrUVXxZ8D4PWS1dS/WPpg0=
+	b=fxclhewdZZ1/vcptchsI8xg+i+Qgn9YWBfDO4qQinRutYauNvqtt7dPffGLXghC0o
+	 mdjc0IR7KtVescmj986gCJFj1SV/VZgDl6ADKVi+tG8icNpDDHYit/7Ypa2SVEeFFD
+	 7Ic9CC24lCsQeZDzXHBHXeSVUiPZP/e/ZXIl3k9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fernando Fernandez Mancera <fmancera@suse.de>,
+	Ido Schimmel <idosch@nvidia.com>,
+	syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com,
+	Jiayuan Chen <jiayuan.chen@shopee.com>,
+	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 175/567] net: vxlan: fix nd_tbl NULL dereference when IPv6 is disabled
-Date: Mon, 23 Mar 2026 14:41:35 +0100
-Message-ID: <20260323134538.168883611@linuxfoundation.org>
+Subject: [PATCH 6.6 176/567] net: ipv6: fix panic when IPv4 route references loopback IPv6 nexthop
+Date: Mon, 23 Mar 2026 14:41:36 +0100
+Message-ID: <20260323134538.194196887@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,61 +54,81 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fernando Fernandez Mancera <fmancera@suse.de>
+From: Jiayuan Chen <jiayuan.chen@shopee.com>
 
-[ Upstream commit 168ff39e4758897d2eee4756977d036d52884c7e ]
+[ Upstream commit 21ec92774d1536f71bdc90b0e3d052eff99cf093 ]
 
-When booting with the 'ipv6.disable=1' parameter, the nd_tbl is never
-initialized because inet6_init() exits before ndisc_init() is called
-which initializes it. If an IPv6 packet is injected into the interface,
-route_shortcircuit() is called and a NULL pointer dereference happens on
-neigh_lookup().
+When a standalone IPv6 nexthop object is created with a loopback device
+(e.g., "ip -6 nexthop add id 100 dev lo"), fib6_nh_init() misclassifies
+it as a reject route. This is because nexthop objects have no destination
+prefix (fc_dst=::), causing fib6_is_reject() to match any loopback
+nexthop. The reject path skips fib_nh_common_init(), leaving
+nhc_pcpu_rth_output unallocated. If an IPv4 route later references this
+nexthop, __mkroute_output() dereferences NULL nhc_pcpu_rth_output and
+panics.
 
- BUG: kernel NULL pointer dereference, address: 0000000000000380
- Oops: Oops: 0000 [#1] SMP NOPTI
- [...]
- RIP: 0010:neigh_lookup+0x20/0x270
- [...]
- Call Trace:
-  <TASK>
-  vxlan_xmit+0x638/0x1ef0 [vxlan]
-  dev_hard_start_xmit+0x9e/0x2e0
-  __dev_queue_xmit+0xbee/0x14e0
-  packet_sendmsg+0x116f/0x1930
-  __sys_sendto+0x1f5/0x200
-  __x64_sys_sendto+0x24/0x30
-  do_syscall_64+0x12f/0x1590
-  entry_SYSCALL_64_after_hwframe+0x76/0x7e
+Simplify the check in fib6_nh_init() to only match explicit reject
+routes (RTF_REJECT) instead of using fib6_is_reject(). The loopback
+promotion heuristic in fib6_is_reject() is handled separately by
+ip6_route_info_create_nh(). After this change, the three cases behave
+as follows:
 
-Fix this by adding an early check on route_shortcircuit() when protocol
-is ETH_P_IPV6. Note that ipv6_mod_enabled() cannot be used here because
-VXLAN can be built-in even when IPv6 is built as a module.
+1. Explicit reject route ("ip -6 route add unreachable 2001:db8::/64"):
+   RTF_REJECT is set, enters reject path, skips fib_nh_common_init().
+   No behavior change.
 
-Fixes: e15a00aafa4b ("vxlan: add ipv6 route short circuit support")
-Signed-off-by: Fernando Fernandez Mancera <fmancera@suse.de>
-Link: https://patch.msgid.link/20260304120357.9778-2-fmancera@suse.de
+2. Implicit loopback reject route ("ip -6 route add 2001:db8::/32 dev lo"):
+   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
+   called. ip6_route_info_create_nh() still promotes it to reject
+   afterward. nhc_pcpu_rth_output is allocated but unused, which is
+   harmless.
+
+3. Standalone nexthop object ("ip -6 nexthop add id 100 dev lo"):
+   RTF_REJECT is not set, takes normal path, fib_nh_common_init() is
+   called. nhc_pcpu_rth_output is properly allocated, fixing the crash
+   when IPv4 routes reference this nexthop.
+
+Suggested-by: Ido Schimmel <idosch@nvidia.com>
+Fixes: 493ced1ac47c ("ipv4: Allow routes to use nexthop objects")
+Reported-by: syzbot+334190e097a98a1b81bb@syzkaller.appspotmail.com
+Closes: https://lore.kernel.org/all/698f8482.a70a0220.2c38d7.00ca.GAE@google.com/T/
+Signed-off-by: Jiayuan Chen <jiayuan.chen@shopee.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://patch.msgid.link/20260304113817.294966-2-jiayuan.chen@linux.dev
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vxlan/vxlan_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ipv6/route.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
-index 1b6b6acd34894..a862998fb3ba6 100644
---- a/drivers/net/vxlan/vxlan_core.c
-+++ b/drivers/net/vxlan/vxlan_core.c
-@@ -2126,6 +2126,11 @@ static bool route_shortcircuit(struct net_device *dev, struct sk_buff *skb)
- 	{
- 		struct ipv6hdr *pip6;
+diff --git a/net/ipv6/route.c b/net/ipv6/route.c
+index 72853ef73e821..7a91e539bbd14 100644
+--- a/net/ipv6/route.c
++++ b/net/ipv6/route.c
+@@ -3567,7 +3567,6 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 	netdevice_tracker *dev_tracker = &fib6_nh->fib_nh_dev_tracker;
+ 	struct net_device *dev = NULL;
+ 	struct inet6_dev *idev = NULL;
+-	int addr_type;
+ 	int err;
  
-+		/* check if nd_tbl is not initiliazed due to
-+		 * ipv6.disable=1 set during boot
-+		 */
-+		if (!ipv6_stub->nd_tbl)
-+			return false;
- 		if (!pskb_may_pull(skb, sizeof(struct ipv6hdr)))
- 			return false;
- 		pip6 = ipv6_hdr(skb);
+ 	fib6_nh->fib_nh_family = AF_INET6;
+@@ -3609,11 +3608,10 @@ int fib6_nh_init(struct net *net, struct fib6_nh *fib6_nh,
+ 
+ 	fib6_nh->fib_nh_weight = 1;
+ 
+-	/* We cannot add true routes via loopback here,
+-	 * they would result in kernel looping; promote them to reject routes
++	/* Reset the nexthop device to the loopback device in case of reject
++	 * routes.
+ 	 */
+-	addr_type = ipv6_addr_type(&cfg->fc_dst);
+-	if (fib6_is_reject(cfg->fc_flags, dev, addr_type)) {
++	if (cfg->fc_flags & RTF_REJECT) {
+ 		/* hold loopback dev/idev if we haven't done so. */
+ 		if (dev != net->loopback_dev) {
+ 			if (dev) {
 -- 
 2.51.0
 
