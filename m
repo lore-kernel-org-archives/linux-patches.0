@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 571023B8BDA;
-	Mon, 23 Mar 2026 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8A23B8BCB;
+	Mon, 23 Mar 2026 15:15:30 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278927; cv=none; b=lEmzeUO/tj6n0B6sCxT+hjODpxjAbHb/oHaOCM95iiDo4LcjD4JdjWnn3i7dpIhVhj1x/FIpKGakNnzl6/k3P2s2eWNH36kik3x4uIOmXtVZSjcbLJcYZ8mLhwXNPGdqTQBPDaP7vQqEe6RLc2lHU4YVKkvp9g+quu/HjJQP4tg=
+	t=1774278930; cv=none; b=nXZMLfF3Z5T2RxVEUGG0F9OLX6HNpNFgU32nnzeZ+WdiQHxXePYylM5ASUmejbephAJSIp8D4N/m89w3o9SuacqhoDjBw6AwpcDOKIL0fapR0nE2r1i+1mUcJBi1gudjBdYkYMTI883dxgZOdbdmTIlK8SEWZebk172rj4ZtLFg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278927; c=relaxed/simple;
-	bh=Ah5UxsNs31Y+aD0M+PltTxBIipUWuCB7qRx0om1Kx6w=;
+	s=arc-20240116; t=1774278930; c=relaxed/simple;
+	bh=SrE+u5v0X6IEMWAWZVIPvdmZzzqDLRuB4HeOgGKEhKQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QFk5IwNyB33MxUE5Ut3XRwMWZfY56WH+FyYf6ZA9JXq5OZJqLB2PVOeTeye/d2+PSdxm+rt9AGiXD+aA5XqTxQhnUypMJC+1+9y+WprVXrErbhu78VZnTqAgE2lbZSSnWBInZEYpLWQMPuA/ThA7dhngYcWDOPi2+c+gWegmejk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R0y8U2Ht; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=B9t9WLvocgwK8hp3OQ5gCJ31pGal3bNxJt/Rc/rYwJHX/l6RG4z+wQrWEZ1mrsBHXmV/pNL/ijc2XvxriUDr/UNbjVwcgq0qWC1AzqVVTPly9EaefECgvp0Vc9GPPwxhkEhIoy8Q1QJTjnJD+DiDeEAiQZVuOeZJVZT24gcKoBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TvgOOQ4N; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R0y8U2Ht"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3041C2BCB1;
-	Mon, 23 Mar 2026 15:15:26 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TvgOOQ4N"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AFEC2BCB1;
+	Mon, 23 Mar 2026 15:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278927;
-	bh=Ah5UxsNs31Y+aD0M+PltTxBIipUWuCB7qRx0om1Kx6w=;
+	s=korg; t=1774278930;
+	bh=SrE+u5v0X6IEMWAWZVIPvdmZzzqDLRuB4HeOgGKEhKQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R0y8U2Hta8ELfX1pAsfp5EcDyykJcNnmRK0Da/btHvfgXI3sjJJ2ColA6J05ANq8j
-	 MB0Vqmq3sAQLHQYkRapvIWdI3Uo4Bi/Lih0cCMga+w3YTlGNMhm2+xXfH/brUngkYb
-	 qMbED0fiLzXEvJYskHuSUpttRlu/1BAwbn2c6ano=
+	b=TvgOOQ4NvyWmOmht5n9cjMVe4F99ww8ZOPGlbhF2HkF9WeH5Pj32X+bel2EltJCBt
+	 UdL48oWxy1ogy4V6+bswchxnFS5fz4J5A5BAYStSWNh2aty2bvt8Q2iHOO2EhB4rp4
+	 FDE5dNFnX9EPRP0F7hcptCTMJ3O4SjNVqjMV8EEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Gerlach <lukas.gerlach@cispa.de>,
-	Paul Walmsley <pjw@kernel.org>,
-	Leon Chen <leonchen.oss@139.com>
-Subject: [PATCH 6.6 421/567] riscv: Sanitize syscall table indexing under speculation
-Date: Mon, 23 Mar 2026 14:45:41 +0100
-Message-ID: <20260323134544.303943009@linuxfoundation.org>
+	Juan Li <lijuan@linux.spacemit.com>,
+	Guodong Xu <guodong@riscstar.com>,
+	Vinod Koul <vkoul@kernel.org>,
+	Wenshan Lan <jetlan9@163.com>
+Subject: [PATCH 6.6 422/567] dmaengine: mmp_pdma: Fix race condition in mmp_pdma_residue()
+Date: Mon, 23 Mar 2026 14:45:42 +0100
+Message-ID: <20260323134544.329562609@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -51,46 +52,82 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Lukas Gerlach <lukas.gerlach@cispa.de>
+From: Guodong Xu <guodong@riscstar.com>
 
-[ Upstream commit 25fd7ee7bf58ac3ec7be3c9f82ceff153451946c ]
+[ Upstream commit a143545855bc2c6e1330f6f57ae375ac44af00a7 ]
 
-The syscall number is a user-controlled value used to index into the
-syscall table. Use array_index_nospec() to clamp this value after the
-bounds check to prevent speculative out-of-bounds access and subsequent
-data leakage via cache side channels.
+Add proper locking in mmp_pdma_residue() to prevent use-after-free when
+accessing descriptor list and descriptor contents.
 
-Signed-off-by: Lukas Gerlach <lukas.gerlach@cispa.de>
-Link: https://patch.msgid.link/20251218191332.35849-3-lukas.gerlach@cispa.de
-Signed-off-by: Paul Walmsley <pjw@kernel.org>
-[ Added linux/nospec.h for array_index_nospec() to make sure compile without error ]
-Signed-off-by: Leon Chen <leonchen.oss@139.com>
+The race occurs when multiple threads call tx_status() while the tasklet
+on another CPU is freeing completed descriptors:
+
+CPU 0                              CPU 1
+-----                              -----
+mmp_pdma_tx_status()
+mmp_pdma_residue()
+  -> NO LOCK held
+     list_for_each_entry(sw, ..)
+                                   DMA interrupt
+                                   dma_do_tasklet()
+                                     -> spin_lock(&desc_lock)
+                                        list_move(sw->node, ...)
+                                        spin_unlock(&desc_lock)
+  |                                     dma_pool_free(sw) <- FREED!
+  -> access sw->desc <- UAF!
+
+This issue can be reproduced when running dmatest on the same channel with
+multiple threads (threads_per_chan > 1).
+
+Fix by protecting the chain_running list iteration and descriptor access
+with the chan->desc_lock spinlock.
+
+Signed-off-by: Juan Li <lijuan@linux.spacemit.com>
+Signed-off-by: Guodong Xu <guodong@riscstar.com>
+Link: https://patch.msgid.link/20251216-mmp-pdma-race-v1-1-976a224bb622@riscstar.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[ Minor context conflict resolved. ]
+Signed-off-by: Wenshan Lan <jetlan9@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/traps.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/dma/mmp_pdma.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/riscv/kernel/traps.c
-+++ b/arch/riscv/kernel/traps.c
-@@ -20,6 +20,7 @@
- #include <linux/irq.h>
- #include <linux/kexec.h>
- #include <linux/entry-common.h>
-+#include <linux/nospec.h>
+--- a/drivers/dma/mmp_pdma.c
++++ b/drivers/dma/mmp_pdma.c
+@@ -764,6 +764,7 @@ static unsigned int mmp_pdma_residue(str
+ {
+ 	struct mmp_pdma_desc_sw *sw;
+ 	u32 curr, residue = 0;
++	unsigned long flags;
+ 	bool passed = false;
+ 	bool cyclic = chan->cyclic_first != NULL;
  
- #include <asm/asm-prototypes.h>
- #include <asm/bug.h>
-@@ -317,8 +318,10 @@ asmlinkage __visible __trap_section void
+@@ -779,6 +780,8 @@ static unsigned int mmp_pdma_residue(str
+ 	else
+ 		curr = readl(chan->phy->base + DSADR(chan->phy->idx));
  
- 		syscall = syscall_enter_from_user_mode(regs, syscall);
++	spin_lock_irqsave(&chan->desc_lock, flags);
++
+ 	list_for_each_entry(sw, &chan->chain_running, node) {
+ 		u32 start, end, len;
  
--		if (syscall >= 0 && syscall < NR_syscalls)
-+		if (syscall >= 0 && syscall < NR_syscalls) {
-+			syscall = array_index_nospec(syscall, NR_syscalls);
- 			syscall_handler(regs, syscall);
-+		}
+@@ -822,6 +825,7 @@ static unsigned int mmp_pdma_residue(str
+ 			continue;
  
- 		syscall_exit_to_user_mode(regs);
- 	} else {
+ 		if (sw->async_tx.cookie == cookie) {
++			spin_unlock_irqrestore(&chan->desc_lock, flags);
+ 			return residue;
+ 		} else {
+ 			residue = 0;
+@@ -829,6 +833,8 @@ static unsigned int mmp_pdma_residue(str
+ 		}
+ 	}
+ 
++	spin_unlock_irqrestore(&chan->desc_lock, flags);
++
+ 	/* We should only get here in case of cyclic transactions */
+ 	return residue;
+ }
 
 
