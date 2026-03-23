@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0446E1A680D;
-	Mon, 23 Mar 2026 14:18:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830003AB295;
+	Mon, 23 Mar 2026 14:18:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275506; cv=none; b=FVNTIevQPjzC80sySfbpdEJZnhCGUJBDup5O7gc5Biz+EeUlVglOcPdJTFt4SL5AwIyZ5OWiOwqKunCOXd6Cq4dvPOorlWvoGs+WF/mWtQiuaZ8t12DVILVzYI6zI01eg1rirCR+4LiDx5mh/08uEvJbrwOqmsK1qp91cQblYQo=
+	t=1774275509; cv=none; b=Sqo6xJwraW3FGUPC43tBUjCufETXsU0+1wFdphbnD1lDoHQkLwWSRm29UP8NkLa4sofbDGF5VVjd4x7JdvwDBWAxbSmzOlSeveQZ/PCDf04corXHK1cmK62a65+HJDqp1uH2ObMf1wJetk1HVltxaxU3jWLlZ0yS1gO4Ulgccno=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275506; c=relaxed/simple;
-	bh=3UtXOoVtTtHSKH2kdrrxtCNl+ektB9rFyAkqAxboqQA=;
+	s=arc-20240116; t=1774275509; c=relaxed/simple;
+	bh=fzDAmJO1YGr9oYEU+gfUcVTK5Ke+byR5+gf2RddLtCk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BCbqgQ6cpTa3gImL7q5Hy3kDsT1Gndw1WBCvN+XXl6MKhmDv3qPG/kTBxFx5I885NQOoHw/QsGZ9TViGmXpmw7Mf9RiNQki6XC4twscFRxdLDrSbrO0Q34i0X/tuSm7JE/ZiTakGURFHlCypVdqZknQWTNdjVvXwF7dyi2L3VO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yoarDkbR; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=gyDnZecj0afM6sFVlrVBpfJnRPjqBoNlUC0LsIg3hTTMPtkLVFIRxTin/1POXNnNZ2GcBLY+btZcdmhF1wbZJlT1pRRi9EzS8WuFtRLTNS0yGdCf6KQ+k5S80ADxit1Id79f/LaB+Hp25r3Ytgho/NxWaMs8V1WBTjhHnQmugd4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=0JApXxOi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yoarDkbR"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 790BFC2BC9E;
-	Mon, 23 Mar 2026 14:18:25 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="0JApXxOi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24F0C2BC9E;
+	Mon, 23 Mar 2026 14:18:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275505;
-	bh=3UtXOoVtTtHSKH2kdrrxtCNl+ektB9rFyAkqAxboqQA=;
+	s=korg; t=1774275509;
+	bh=fzDAmJO1YGr9oYEU+gfUcVTK5Ke+byR5+gf2RddLtCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yoarDkbRRHJOGXkMR54dhHbwmhPoLuO30k9ieE3tUTUCyMsNZ88AjXJCYzmq42kGH
-	 pvnyj/lAY9eZ42Xos57ie/yA5cOom0yv+2X8uymfDmmzyrQYj34fHoDDjsHJ3JucfD
-	 2KUGM5LeDUfayytwR5u5wdZAw9YVgmp8NJefYWy0=
+	b=0JApXxOiX6g5yc8jznxCwXvyWFJsuWh41wzfJuTl8aOGuaJT8LAHfXIE7CBLZuwlB
+	 JlSKYefQ2hg0AzQ8NXE9fPuW6msSjE+njoHCqzuOZBsRW413228JNvFjTxHKVRrOVH
+	 JVaH1ns8Y4kT7mktpiWDELizQVcWVxI5nIkqp7Lg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>,
-	Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>,
-	Ilya Dryomov <idryomov@gmail.com>
-Subject: [PATCH 6.12 126/460] libceph: Fix potential out-of-bounds access in ceph_handle_auth_reply()
-Date: Mon, 23 Mar 2026 14:42:02 +0100
-Message-ID: <20260323134529.713045642@linuxfoundation.org>
+	Vyacheslav Vahnenko <vahnenko2003@gmail.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.12 100/460] USB: ezcap401 needs USB_QUIRK_NO_BOS to function on 10gbs usb speed
+Date: Mon, 23 Mar 2026 14:41:36 +0100
+Message-ID: <20260323134529.110053023@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,122 +50,34 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
+From: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
 
-commit b282c43ed156ae15ea76748fc15cd5c39dc9ab72 upstream.
+commit d0d9b1f4f5391e6a00cee81d73ed2e8f98446d5f upstream.
 
-This patch fixes an out-of-bounds access in ceph_handle_auth_reply()
-that can be triggered by a message of type CEPH_MSG_AUTH_REPLY. In
-ceph_handle_auth_reply(), the value of the payload_len field of such a
-message is stored in a variable of type int. A value greater than
-INT_MAX leads to an integer overflow and is interpreted as a negative
-value. This leads to decrementing the pointer address by this value and
-subsequently accessing it because ceph_decode_need() only checks that
-the memory access does not exceed the end address of the allocation.
+Add USB_QUIRK_NO_BOS for ezcap401 capture card, without it dmesg will show
+"unable to get BOS descriptor or descriptor too short" and "unable to
+read config index 0 descriptor/start: -71" errors and device will not
+able to work at full speed at 10gbs
 
-This patch fixes the issue by changing the data type of payload_len to
-u32. Additionally, the data type of result_msg_len is changed to u32,
-as it is also a variable holding a non-negative length.
-
-Also, an additional layer of sanity checks is introduced, ensuring that
-directly after reading it from the message, payload_len and
-result_msg_len are not greater than the overall segment length.
-
-BUG: KASAN: slab-out-of-bounds in ceph_handle_auth_reply+0x642/0x7a0 [libceph]
-Read of size 4 at addr ffff88811404df14 by task kworker/20:1/262
-
-CPU: 20 UID: 0 PID: 262 Comm: kworker/20:1 Not tainted 6.19.2 #5 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
-Workqueue: ceph-msgr ceph_con_workfn [libceph]
-Call Trace:
- <TASK>
- dump_stack_lvl+0x76/0xa0
- print_report+0xd1/0x620
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? kasan_complete_mode_report_info+0x72/0x210
- kasan_report+0xe7/0x130
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- ? ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- __asan_report_load_n_noabort+0xf/0x20
- ceph_handle_auth_reply+0x642/0x7a0 [libceph]
- mon_dispatch+0x973/0x23d0 [libceph]
- ? apparmor_socket_recvmsg+0x6b/0xa0
- ? __pfx_mon_dispatch+0x10/0x10 [libceph]
- ? __kasan_check_write+0x14/0x30i
- ? mutex_unlock+0x7f/0xd0
- ? __pfx_mutex_unlock+0x10/0x10
- ? __pfx_do_recvmsg+0x10/0x10 [libceph]
- ceph_con_process_message+0x1f1/0x650 [libceph]
- process_message+0x1e/0x450 [libceph]
- ceph_con_v2_try_read+0x2e48/0x6c80 [libceph]
- ? __pfx_ceph_con_v2_try_read+0x10/0x10 [libceph]
- ? save_fpregs_to_fpstate+0xb0/0x230
- ? raw_spin_rq_unlock+0x17/0xa0
- ? finish_task_switch.isra.0+0x13b/0x760
- ? __switch_to+0x385/0xda0
- ? __kasan_check_write+0x14/0x30
- ? mutex_lock+0x8d/0xe0
- ? __pfx_mutex_lock+0x10/0x10
- ceph_con_workfn+0x248/0x10c0 [libceph]
- process_one_work+0x629/0xf80
- ? __kasan_check_write+0x14/0x30
- worker_thread+0x87f/0x1570
- ? __pfx__raw_spin_lock_irqsave+0x10/0x10
- ? __pfx_try_to_wake_up+0x10/0x10
- ? kasan_print_address_stack_frame+0x1f7/0x280
- ? __pfx_worker_thread+0x10/0x10
- kthread+0x396/0x830
- ? __pfx__raw_spin_lock_irq+0x10/0x10
- ? __pfx_kthread+0x10/0x10
- ? __kasan_check_write+0x14/0x30
- ? recalc_sigpending+0x180/0x210
- ? __pfx_kthread+0x10/0x10
- ret_from_fork+0x3f7/0x610
- ? __pfx_ret_from_fork+0x10/0x10
- ? __switch_to+0x385/0xda0
- ? __pfx_kthread+0x10/0x10
- ret_from_fork_asm+0x1a/0x30
- </TASK>
-
-[ idryomov: replace if statements with ceph_decode_need() for
-  payload_len and result_msg_len ]
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Raphael Zimmer <raphael.zimmer@tu-ilmenau.de>
-Reviewed-by: Viacheslav Dubeyko <Slava.Dubeyko@ibm.com>
-Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
-Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Vyacheslav Vahnenko <vahnenko2003@gmail.com>
+Cc: stable <stable@kernel.org>
+Link: https://patch.msgid.link/20260313123638.20481-1-vahnenko2003@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ceph/auth.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/usb/core/quirks.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/ceph/auth.c
-+++ b/net/ceph/auth.c
-@@ -205,9 +205,9 @@ int ceph_handle_auth_reply(struct ceph_a
- 	s32 result;
- 	u64 global_id;
- 	void *payload, *payload_end;
--	int payload_len;
-+	u32 payload_len;
- 	char *result_msg;
--	int result_msg_len;
-+	u32 result_msg_len;
- 	int ret = -EINVAL;
+--- a/drivers/usb/core/quirks.c
++++ b/drivers/usb/core/quirks.c
+@@ -585,6 +585,9 @@ static const struct usb_device_id usb_qu
+ 	/* Alcor Link AK9563 SC Reader used in 2022 Lenovo ThinkPads */
+ 	{ USB_DEVICE(0x2ce3, 0x9563), .driver_info = USB_QUIRK_NO_LPM },
  
- 	mutex_lock(&ac->mutex);
-@@ -217,10 +217,12 @@ int ceph_handle_auth_reply(struct ceph_a
- 	result = ceph_decode_32(&p);
- 	global_id = ceph_decode_64(&p);
- 	payload_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, payload_len, bad);
- 	payload = p;
- 	p += payload_len;
- 	ceph_decode_need(&p, end, sizeof(u32), bad);
- 	result_msg_len = ceph_decode_32(&p);
-+	ceph_decode_need(&p, end, result_msg_len, bad);
- 	result_msg = p;
- 	p += result_msg_len;
- 	if (p != end)
++	/* ezcap401 - BOS descriptor fetch hangs at SuperSpeed Plus */
++	{ USB_DEVICE(0x32ed, 0x0401), .driver_info = USB_QUIRK_NO_BOS },
++
+ 	/* DELL USB GEN2 */
+ 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
+ 
 
 
