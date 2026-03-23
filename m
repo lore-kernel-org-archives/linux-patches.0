@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF8E3BE17D;
-	Mon, 23 Mar 2026 16:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8538D395DB5;
+	Mon, 23 Mar 2026 16:27:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283229; cv=none; b=fHT9MqSsEJOX4fbWDLZilKMruBKYA55r0Q03puTk/8JzbX+GymInTgVdVl0nnjoLRStA/oZV66pQiNVErmfdhcVBhubxYb8+DICnH++lXFA7nVbsLzfKMH19df8bdcjDEhzbWVbhGj75PAnq/YJPMPTo7k+T1NnD5TI+x4QhpW0=
+	t=1774283233; cv=none; b=CRxZMYN+YY+H6aYpftRYEZv0prVNXFyzT/QVpEDa6Vw7uM5rHto7h2A0N0bF65umPqotO8LNDVe28NWuswm85Ebc+VPlrWAbwSdpTThsFG2UeSt6g7BfdEzETH7S8U3bTmXjLIwmFJDzXa7oB756+sVnO1LQg59iMDZ2riBFiCw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283229; c=relaxed/simple;
-	bh=Yn89+znhR9DoSRja4jSXiriumXDddx5rUe0rO5LC/DI=;
+	s=arc-20240116; t=1774283233; c=relaxed/simple;
+	bh=ejoNf5smfYfZhqIM+oCul4245RRC/hAI06UrlvfAmfg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=CiwWz1AoyVzE6CiEdLXG61GgfV+t5Fsd3RFABDTOAOn/oMFjVek1Q7X3q3Xk0yDgjrmkBRmutHmIFCK7X066IVJltEuECYHnEkU8DuUzg6Y41gu/6ypCE75NDOONfWHFc4ZjKfNTsqHZsR6SfjpF4qlilByhoHCo9UEmfj+uRps=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BytGSI9Z; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=J1ryjEXT1ZeNgCwp3+SY9PDyiAakhbhd9f1SzwjI1UmOrg3MGFvAK5uprNWxNbiu2W+xm9s60JnClmgvRKrTalOhmu5itWPI0uMwJQogjNGk+TuhvN9aNfCTAyxOw5jES7ZJzrqidT9GVDnnREzRregEClSo4UKY66GhM1HxCvw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Ragq2fBx; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BytGSI9Z"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 181A9C4CEF7;
-	Mon, 23 Mar 2026 16:27:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Ragq2fBx"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A9CC4CEF7;
+	Mon, 23 Mar 2026 16:27:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283229;
-	bh=Yn89+znhR9DoSRja4jSXiriumXDddx5rUe0rO5LC/DI=;
+	s=korg; t=1774283233;
+	bh=ejoNf5smfYfZhqIM+oCul4245RRC/hAI06UrlvfAmfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BytGSI9Zw283q1jJXfijAFk9SRcgkJoOHmuwgG1igZpf7F3zDye3U1qS/YRNdfvXW
-	 RMd/U4ssJJQyqgQxAxuULCdf4U0Jz+1mjrDUzmaRwb09E5h7wmgGYktIoHxUI/AYfu
-	 ts1Uc6MR3XeEevPJNnoSNhgAbrgHHSdT+8S9XIts=
+	b=Ragq2fBxyh04xn+Ux+RMJ2kiEMduPyLZPk5cKypb7JJNfzpQCiN4pipYVp7nL7//J
+	 8fIJrvPaXENxydrCVeVNVIpWEgeyRb4BzaBoAsJlpfJTISpNNjVpe3nsaVh7Xnh9oM
+	 FNRLOKP7YwtFKl3a0aKrnWEYwDfmNIBwimZPUoUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Dasu <kamal.dasu@broadcom.com>,
-	William Zhang <william.zhang@broadcom.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 449/481] mtd: rawnand: brcmnand: skip DMA during panic write
-Date: Mon, 23 Mar 2026 14:47:11 +0100
-Message-ID: <20260323134536.156962621@linuxfoundation.org>
+Subject: [PATCH 6.1 450/481] ksmbd: fix use-after-free of share_conf in compound request
+Date: Mon, 23 Mar 2026 14:47:12 +0100
+Message-ID: <20260323134536.180088887@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,47 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Kamal Dasu <kamal.dasu@broadcom.com>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit da9ba4dcc01e7cf52b7676f0ee9607b8358c2171 ]
+[ Upstream commit c33615f995aee80657b9fdfbc4ee7f49c2bd733d ]
 
-When oops_panic_write is set, the driver disables interrupts and
-switches to PIO polling mode but still falls through into the DMA
-path. DMA cannot be used reliably in panic context, so make the
-DMA path an else branch to ensure only PIO is used during panic
-writes.
+smb2_get_ksmbd_tcon() reuses work->tcon in compound requests without
+validating tcon->t_state. ksmbd_tree_conn_lookup() checks t_state ==
+TREE_CONNECTED on the initial lookup path, but the compound reuse path
+bypasses this check entirely.
 
-Fixes: c1ac2dc34b51 ("mtd: rawnand: brcmnand: When oops in progress use pio and interrupt polling")
-Signed-off-by: Kamal Dasu <kamal.dasu@broadcom.com>
-Reviewed-by: William Zhang <william.zhang@broadcom.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+If a prior command in the compound (SMB2_TREE_DISCONNECT) sets t_state
+to TREE_DISCONNECTED and frees share_conf via ksmbd_share_config_put(),
+subsequent commands dereference the freed share_conf through
+work->tcon->share_conf.
+
+KASAN report:
+
+[    4.144653] ==================================================================
+[    4.145059] BUG: KASAN: slab-use-after-free in smb2_write+0xc74/0xe70
+[    4.145415] Read of size 4 at addr ffff88810430c194 by task kworker/1:1/44
+[    4.145772]
+[    4.145867] CPU: 1 UID: 0 PID: 44 Comm: kworker/1:1 Not tainted 7.0.0-rc3+ #60 PREEMPTLAZY
+[    4.145871] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    4.145875] Workqueue: ksmbd-io handle_ksmbd_work
+[    4.145888] Call Trace:
+[    4.145892]  <TASK>
+[    4.145894]  dump_stack_lvl+0x64/0x80
+[    4.145910]  print_report+0xce/0x660
+[    4.145919]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    4.145928]  ? smb2_write+0xc74/0xe70
+[    4.145931]  kasan_report+0xce/0x100
+[    4.145934]  ? smb2_write+0xc74/0xe70
+[    4.145937]  smb2_write+0xc74/0xe70
+[    4.145939]  ? __pfx_smb2_write+0x10/0x10
+[    4.145942]  ? _raw_spin_unlock+0xe/0x30
+[    4.145945]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
+[    4.145948]  ? smb2_tree_disconnect+0x31c/0x480
+[    4.145951]  handle_ksmbd_work+0x40f/0x1080
+[    4.145953]  process_one_work+0x5fa/0xef0
+[    4.145962]  ? assign_work+0x122/0x3e0
+[    4.145964]  worker_thread+0x54b/0xf70
+[    4.145967]  ? __pfx_worker_thread+0x10/0x10
+[    4.145970]  kthread+0x346/0x470
+[    4.145976]  ? recalc_sigpending+0x19b/0x230
+[    4.145980]  ? __pfx_kthread+0x10/0x10
+[    4.145984]  ret_from_fork+0x4fb/0x6c0
+[    4.145992]  ? __pfx_ret_from_fork+0x10/0x10
+[    4.145995]  ? __switch_to+0x36c/0xbe0
+[    4.145999]  ? __pfx_kthread+0x10/0x10
+[    4.146003]  ret_from_fork_asm+0x1a/0x30
+[    4.146013]  </TASK>
+[    4.146014]
+[    4.149858] Allocated by task 44:
+[    4.149953]  kasan_save_stack+0x33/0x60
+[    4.150061]  kasan_save_track+0x14/0x30
+[    4.150169]  __kasan_kmalloc+0x8f/0xa0
+[    4.150274]  ksmbd_share_config_get+0x1dd/0xdd0
+[    4.150401]  ksmbd_tree_conn_connect+0x7e/0x600
+[    4.150529]  smb2_tree_connect+0x2e6/0x1000
+[    4.150645]  handle_ksmbd_work+0x40f/0x1080
+[    4.150761]  process_one_work+0x5fa/0xef0
+[    4.150873]  worker_thread+0x54b/0xf70
+[    4.150978]  kthread+0x346/0x470
+[    4.151071]  ret_from_fork+0x4fb/0x6c0
+[    4.151176]  ret_from_fork_asm+0x1a/0x30
+[    4.151286]
+[    4.151332] Freed by task 44:
+[    4.151418]  kasan_save_stack+0x33/0x60
+[    4.151526]  kasan_save_track+0x14/0x30
+[    4.151634]  kasan_save_free_info+0x3b/0x60
+[    4.151751]  __kasan_slab_free+0x43/0x70
+[    4.151861]  kfree+0x1ca/0x430
+[    4.151952]  __ksmbd_tree_conn_disconnect+0xc8/0x190
+[    4.152088]  smb2_tree_disconnect+0x1cd/0x480
+[    4.152211]  handle_ksmbd_work+0x40f/0x1080
+[    4.152326]  process_one_work+0x5fa/0xef0
+[    4.152438]  worker_thread+0x54b/0xf70
+[    4.152545]  kthread+0x346/0x470
+[    4.152638]  ret_from_fork+0x4fb/0x6c0
+[    4.152743]  ret_from_fork_asm+0x1a/0x30
+[    4.152853]
+[    4.152900] The buggy address belongs to the object at ffff88810430c180
+[    4.152900]  which belongs to the cache kmalloc-96 of size 96
+[    4.153226] The buggy address is located 20 bytes inside of
+[    4.153226]  freed 96-byte region [ffff88810430c180, ffff88810430c1e0)
+[    4.153549]
+[    4.153596] The buggy address belongs to the physical page:
+[    4.153750] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88810430ce80 pfn:0x10430c
+[    4.154000] flags: 0x100000000000200(workingset|node=0|zone=2)
+[    4.154160] page_type: f5(slab)
+[    4.154251] raw: 0100000000000200 ffff888100041280 ffff888100040110 ffff888100040110
+[    4.154461] raw: ffff88810430ce80 0000000800200009 00000000f5000000 0000000000000000
+[    4.154668] page dumped because: kasan: bad access detected
+[    4.154820]
+[    4.154866] Memory state around the buggy address:
+[    4.155002]  ffff88810430c080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155196]  ffff88810430c100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155391] >ffff88810430c180: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[    4.155587]                          ^
+[    4.155693]  ffff88810430c200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155891]  ffff88810430c280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.156087] ==================================================================
+
+Add the same t_state validation to the compound reuse path, consistent
+with ksmbd_tree_conn_lookup().
+
+Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/nand/raw/brcmnand/brcmnand.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ fs/smb/server/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/nand/raw/brcmnand/brcmnand.c b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-index 20c6aeef107c8..99e0d7aa2f4bd 100644
---- a/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-+++ b/drivers/mtd/nand/raw/brcmnand/brcmnand.c
-@@ -2410,14 +2410,12 @@ static int brcmnand_write(struct mtd_info *mtd, struct nand_chip *chip,
- 	for (i = 0; i < ctrl->max_oob; i += 4)
- 		oob_reg_write(ctrl, i, 0xffffffff);
- 
--	if (mtd->oops_panic_write)
-+	if (mtd->oops_panic_write) {
- 		/* switch to interrupt polling and PIO mode */
- 		disable_ctrl_irqs(ctrl);
--
--	if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
-+	} else if (use_dma(ctrl) && (has_edu(ctrl) || !oob) && flash_dma_buf_ok(buf)) {
- 		if (ctrl->dma_trans(host, addr, (u32 *)buf, oob, mtd->writesize,
- 				    CMD_PROGRAM_PAGE))
--
- 			ret = -EIO;
- 
- 		goto out;
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index fb756953fec3a..65b55e824aa8b 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -117,6 +117,8 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
+ 			pr_err("The first operation in the compound does not have tcon\n");
+ 			return -EINVAL;
+ 		}
++		if (work->tcon->t_state != TREE_CONNECTED)
++			return -ENOENT;
+ 		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
+ 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
+ 					tree_id, work->tcon->id);
 -- 
 2.51.0
 
