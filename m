@@ -1,37 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0883D1A680B;
-	Mon, 23 Mar 2026 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 212F21A6828;
+	Mon, 23 Mar 2026 14:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774275650; cv=none; b=h9h15aU9Iu4RIuG5s1lFBu8GNJt2q8EeIAWl8uKJpyB4Kq6nRjkPtK40cx4Q90REsVpvK8pNDiEhHiX3sSlDbJ5xrFB92pBQdvDgMkP2B6x2zmWAxFVmaG9cnfZs4QvLweHOD7ATKLu3wJCLyUbBG7SleEzdAm13mTzLf+Lb86Y=
+	t=1774275653; cv=none; b=EGlrq9DUsbPoxIWmGSZM7iHKZt/1UBMYeBsQs7dvLr7aaZ27sosK6OOGUauo6SkGcyyUbTDRAE0sLcAL8ilN4x6D3gAI28C1QF/7LKUPw6lap43ay4mYDpX24PIzPhNNE2I5QSlvj4lPGCSbH4XGX2A4glqXfwf9Lo8sWPJkmJY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774275650; c=relaxed/simple;
-	bh=Y2g9dBfX25Jl58lytbW2cf8CNMtUg7fBRbN36SJuHpQ=;
+	s=arc-20240116; t=1774275653; c=relaxed/simple;
+	bh=cfS8CBFXGbY/Vf3Mec7FrmKJMWd8edR47TDIWp8Kz7A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=V1SZVkkEgl3poGs95s8kXTiSSMVuN5RPZvYY21qLWJNldC1mz196uEnKIWlEW1N9wDFMPvpJGtWQ1vlnnwu2be0gECNA8zLqE/aRwRcBXtBcsURsskBJ95UXZGg62PTUD6UcIEPEblENZipKtAHLmUP7btMgrp0RsoebNIJ6nh8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=dzBNvu63; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=evhAOvdPImjUmaRbOdxXf+PN5634rYh0nKxSTWxqKwvT8P5jg0v0jT6wg9n06iFSJjSHOZcQvPjNeB7Oyq9MJf9OlWQXSAVmsUZpPok9GTzcH0wqoOrRHiDIFLRlK/K16BGXnQY8jSNEVmBpvJtmWVVmCs9rLgSoN+z/+Ghjrvk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=TZU73wbG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="dzBNvu63"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA3CC4CEF7;
-	Mon, 23 Mar 2026 14:20:49 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="TZU73wbG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9828FC4CEF7;
+	Mon, 23 Mar 2026 14:20:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774275649;
-	bh=Y2g9dBfX25Jl58lytbW2cf8CNMtUg7fBRbN36SJuHpQ=;
+	s=korg; t=1774275653;
+	bh=cfS8CBFXGbY/Vf3Mec7FrmKJMWd8edR47TDIWp8Kz7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzBNvu635UKkoAfVHtGI42TAVpDbzslb++EK6O0mwZD95b4JvhfNl+WzuXUP597bY
-	 gaMu7A8iSo3JUknDU8b6s+zEDGnIpmrL0n8xBRAy7CiLND2rT7O44IVwxI5eA0/oYp
-	 6ns0LM/7UhBGEbV/aMKri1VWv8p5UCVKO1HXN0cc=
+	b=TZU73wbGiVnAUbCJg6jwxv0fegJSWg2WYxtSK42GayRQefulHoWXxz5K+j6t/XaAp
+	 R0Corx1quiH42/CWX2uLzMs7VXtPkRx35hWZZ9F6VaX5UHJO4ysGj5o9a3IZVnEpLs
+	 djpar31/aPnCpLqPcGRF0SpuAm3WGgJgLnfY88Bw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.12 172/460] ksmbd: fix use-after-free by using call_rcu() for oplock_info
-Date: Mon, 23 Mar 2026 14:42:48 +0100
-Message-ID: <20260323134530.764490484@linuxfoundation.org>
+	Mehul Rao <mehulrao@gmail.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.12 173/460] net: nexthop: fix percpu use-after-free in remove_nh_grp_entry
+Date: Mon, 23 Mar 2026 14:42:49 +0100
+Message-ID: <20260323134530.786994603@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -44,120 +46,90 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.12-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Mehul Rao <mehulrao@gmail.com>
 
-commit 1dfd062caa165ec9d7ee0823087930f3ab8a6294 upstream.
+commit b2662e7593e94ae09b1cf7ee5f09160a3612bcb2 upstream.
 
-ksmbd currently frees oplock_info immediately using kfree(), even
-though it is accessed under RCU read-side critical sections in places
-like opinfo_get() and proc_show_files().
+When removing a nexthop from a group, remove_nh_grp_entry() publishes
+the new group via rcu_assign_pointer() then immediately frees the
+removed entry's percpu stats with free_percpu(). However, the
+synchronize_net() grace period in the caller remove_nexthop_from_groups()
+runs after the free. RCU readers that entered before the publish still
+see the old group and can dereference the freed stats via
+nh_grp_entry_stats_inc() -> get_cpu_ptr(nhge->stats), causing a
+use-after-free on percpu memory.
 
-Since there is no RCU grace period delay between nullifying the pointer
-and freeing the memory, a reader can still access oplock_info
-structure after it has been freed. This can leads to a use-after-free
-especially in opinfo_get() where atomic_inc_not_zero() is called on
-already freed memory.
+Fix by deferring the free_percpu() until after synchronize_net() in the
+caller. Removed entries are chained via nh_list onto a local deferred
+free list. After the grace period completes and all RCU readers have
+finished, the percpu stats are safely freed.
 
-Fix this by switching to deferred freeing using call_rcu().
-
-Fixes: 18b4fac5ef17 ("ksmbd: fix use-after-free in smb_break_all_levII_oplock()")
+Fixes: f4676ea74b85 ("net: nexthop: Add nexthop group entry stats")
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Mehul Rao <mehulrao@gmail.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Ido Schimmel <idosch@nvidia.com>
+Link: https://patch.msgid.link/20260306233821.196789-1-mehulrao@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |   29 +++++++++++++++++++++--------
- fs/smb/server/oplock.h |    5 +++--
- 2 files changed, 24 insertions(+), 10 deletions(-)
+ net/ipv4/nexthop.c |   14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -120,7 +120,7 @@ static void free_lease(struct oplock_inf
- 	kfree(lease);
+--- a/net/ipv4/nexthop.c
++++ b/net/ipv4/nexthop.c
+@@ -1992,7 +1992,8 @@ static void nh_hthr_group_rebalance(stru
  }
  
--static void free_opinfo(struct oplock_info *opinfo)
-+static void __free_opinfo(struct oplock_info *opinfo)
+ static void remove_nh_grp_entry(struct net *net, struct nh_grp_entry *nhge,
+-				struct nl_info *nlinfo)
++				struct nl_info *nlinfo,
++				struct list_head *deferred_free)
  {
- 	if (opinfo->is_lease)
- 		free_lease(opinfo);
-@@ -129,6 +129,18 @@ static void free_opinfo(struct oplock_in
- 	kfree(opinfo);
- }
+ 	struct nh_grp_entry *nhges, *new_nhges;
+ 	struct nexthop *nhp = nhge->nh_parent;
+@@ -2052,8 +2053,8 @@ static void remove_nh_grp_entry(struct n
+ 	rcu_assign_pointer(nhp->nh_grp, newg);
  
-+static void free_opinfo_rcu(struct rcu_head *rcu)
-+{
-+	struct oplock_info *opinfo = container_of(rcu, struct oplock_info, rcu);
-+
-+	__free_opinfo(opinfo);
-+}
-+
-+static void free_opinfo(struct oplock_info *opinfo)
-+{
-+	call_rcu(&opinfo->rcu, free_opinfo_rcu);
-+}
-+
- struct oplock_info *opinfo_get(struct ksmbd_file *fp)
+ 	list_del(&nhge->nh_list);
+-	free_percpu(nhge->stats);
+ 	nexthop_put(nhge->nh);
++	list_add(&nhge->nh_list, deferred_free);
+ 
+ 	/* Removal of a NH from a resilient group is notified through
+ 	 * bucket notifications.
+@@ -2073,6 +2074,7 @@ static void remove_nexthop_from_groups(s
+ 				       struct nl_info *nlinfo)
  {
- 	struct oplock_info *opinfo;
-@@ -176,9 +188,9 @@ void opinfo_put(struct oplock_info *opin
- 	free_opinfo(opinfo);
+ 	struct nh_grp_entry *nhge, *tmp;
++	LIST_HEAD(deferred_free);
+ 
+ 	/* If there is nothing to do, let's avoid the costly call to
+ 	 * synchronize_net()
+@@ -2081,10 +2083,16 @@ static void remove_nexthop_from_groups(s
+ 		return;
+ 
+ 	list_for_each_entry_safe(nhge, tmp, &nh->grp_list, nh_list)
+-		remove_nh_grp_entry(net, nhge, nlinfo);
++		remove_nh_grp_entry(net, nhge, nlinfo, &deferred_free);
+ 
+ 	/* make sure all see the newly published array before releasing rtnl */
+ 	synchronize_net();
++
++	/* Now safe to free percpu stats — all RCU readers have finished */
++	list_for_each_entry_safe(nhge, tmp, &deferred_free, nh_list) {
++		list_del(&nhge->nh_list);
++		free_percpu(nhge->stats);
++	}
  }
  
--static void opinfo_add(struct oplock_info *opinfo)
-+static void opinfo_add(struct oplock_info *opinfo, struct ksmbd_file *fp)
- {
--	struct ksmbd_inode *ci = opinfo->o_fp->f_ci;
-+	struct ksmbd_inode *ci = fp->f_ci;
- 
- 	down_write(&ci->m_lock);
- 	list_add(&opinfo->op_entry, &ci->m_op_list);
-@@ -1279,20 +1291,21 @@ set_lev:
- 	set_oplock_level(opinfo, req_op_level, lctx);
- 
- out:
--	rcu_assign_pointer(fp->f_opinfo, opinfo);
--	opinfo->o_fp = fp;
--
- 	opinfo_count_inc(fp);
--	opinfo_add(opinfo);
-+	opinfo_add(opinfo, fp);
-+
- 	if (opinfo->is_lease) {
- 		err = add_lease_global_list(opinfo);
- 		if (err)
- 			goto err_out;
- 	}
- 
-+	rcu_assign_pointer(fp->f_opinfo, opinfo);
-+	opinfo->o_fp = fp;
-+
- 	return 0;
- err_out:
--	free_opinfo(opinfo);
-+	__free_opinfo(opinfo);
- 	return err;
- }
- 
---- a/fs/smb/server/oplock.h
-+++ b/fs/smb/server/oplock.h
-@@ -69,8 +69,9 @@ struct oplock_info {
- 	struct lease		*o_lease;
- 	struct list_head        op_entry;
- 	struct list_head        lease_entry;
--	wait_queue_head_t oplock_q; /* Other server threads */
--	wait_queue_head_t oplock_brk; /* oplock breaking wait */
-+	wait_queue_head_t	oplock_q; /* Other server threads */
-+	wait_queue_head_t	oplock_brk; /* oplock breaking wait */
-+	struct rcu_head		rcu;
- };
- 
- struct lease_break_info {
+ static void remove_nexthop_group(struct nexthop *nh, struct nl_info *nlinfo)
 
 
