@@ -1,37 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC8441A00F0;
-	Mon, 23 Mar 2026 15:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F243B52E2;
+	Mon, 23 Mar 2026 15:10:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278637; cv=none; b=BLuXfvLimmQ/3RmmstEU1OwDKN20RLREx8oq+kCpwQHOYFxzR8XN9BkehKU/C4dkdgYy/kuzQC2fr5+cqvqS5VqEndKpuRN2lfuYyMlYJI7Opp68kxz4x8UVZUyWaklVrUMPpC7PZ7RFcpKw+LW0vKRZ1JXoINids5nvtOkeYXg=
+	t=1774278641; cv=none; b=dQOA6QFFBcrRgjszfLhA2VOB3IKsA3A/qt8ZIJ8elUNmXeExiwETLqhSlBVWuf+1Aj8rUZFyDWwITej6q86dd2kGUdfrscWFLM6P68kMkryjB1gXysyF8lnnFghRlnRjiT0zfVxMqzeggUwK11SU2fQSt/9Yx+4z2ixAMziqD4w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278637; c=relaxed/simple;
-	bh=HcomlFf98fbDfsKOGt0R3SmRFkQYqI4K6BpnIRLX9tY=;
+	s=arc-20240116; t=1774278641; c=relaxed/simple;
+	bh=ltvzdzyfF7LKsLTF1bs1mdw/3Pqm77O5ZLR6vIRKpzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=EmQdl4qS9102q1UHEvNguV1UXG/66rFGa/3B2NDe7vV5CaxmwMMeuGytt4MxdHNFA8Ica8Mub0lNR07jc4JM9sWGMRr1L4MWeg4AG50/v6Tf3rsj0kBKVoqPTgBd6zmI9naue+KU4KmyZYIB/Wd8BDreZOc36Posug96bbj9U4U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uGeMa8JV; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jia8orJlx0UIa+0Fz1siT9nbjEuQj3VzSJz+K99fReYR8mAlczuKUjcpoYX8f+OT1Vv506jykcG1Z3RU7kmR7nImpD0u1T7Hqbe9rWBMCHvDD/74zxn4UEemgmFH+4ifEJ80chFryiw2TACFd87yyEy2QqJVb6mDpyGSU5dFqWo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=LInIMCEi; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uGeMa8JV"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 506EFC4CEF7;
-	Mon, 23 Mar 2026 15:10:37 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="LInIMCEi"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F63C4CEF7;
+	Mon, 23 Mar 2026 15:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278637;
-	bh=HcomlFf98fbDfsKOGt0R3SmRFkQYqI4K6BpnIRLX9tY=;
+	s=korg; t=1774278640;
+	bh=ltvzdzyfF7LKsLTF1bs1mdw/3Pqm77O5ZLR6vIRKpzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uGeMa8JVzt8GSX0Kiw3teY0X0luszpglSLwX8t5IK4vHNUH6f1rPea+OOrKdlQaLi
-	 rlaMBS2kaJTmEN2CDgc8OM7RKw8X13fUvVvV7BULilRR4qvYUzoFQrgRYzBy56ic26
-	 cgNUetbg4NFcRMh6EBFbTGBSzTu2L6KaA1tGO168=
+	b=LInIMCEiXl4TTNPIC9FlxYrZYXg3/isPduu+zcOnQ1viP8KC0yAGk71Ggnmmfp+2V
+	 u4cUlsMUiwSanrcph82ZmTZDY3Ejv3z0XC8sQrjRithez5fw2h7+inN1N4AyvcKel8
+	 KHHY3hSdx25KrrPTfWjlspsvD+3HdXaII9zRqTG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Marios Makassikis <mmakassikis@freebox.fr>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.6 328/567] ksmbd: fix use-after-free in smb_lazy_parent_lease_break_close()
-Date: Mon, 23 Mar 2026 14:44:08 +0100
-Message-ID: <20260323134541.947706856@linuxfoundation.org>
+Subject: [PATCH 6.6 329/567] smb: server: fix use-after-free in smb2_open()
+Date: Mon, 23 Mar 2026 14:44:09 +0100
+Message-ID: <20260323134541.971809083@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -50,41 +51,44 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Marios Makassikis <mmakassikis@freebox.fr>
 
-commit eac3361e3d5dd8067b3258c69615888eb45e9f25 upstream.
+commit 1e689a56173827669a35da7cb2a3c78ed5c53680 upstream.
 
-opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is being
-accessed after rcu_read_unlock() has been called. This creates a
-race condition where the memory could be freed by a concurrent
-writer between the unlock and the subsequent pointer dereferences
-(opinfo->is_lease, etc.), leading to a use-after-free.
+The opinfo pointer obtained via rcu_dereference(fp->f_opinfo) is
+dereferenced after rcu_read_unlock(), creating a use-after-free
+window.
 
-Fixes: 5fb282ba4fef ("ksmbd: fix possible null-deref in smb_lazy_parent_lease_break_close")
 Cc: stable@vger.kernel.org
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/oplock.c |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/smb/server/smb2pdu.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/fs/smb/server/oplock.c
-+++ b/fs/smb/server/oplock.c
-@@ -1123,10 +1123,12 @@ void smb_lazy_parent_lease_break_close(s
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -3593,10 +3593,8 @@ int smb2_open(struct ksmbd_work *work)
  
- 	rcu_read_lock();
- 	opinfo = rcu_dereference(fp->f_opinfo);
+ reconnected_fp:
+ 	rsp->StructureSize = cpu_to_le16(89);
+-	rcu_read_lock();
+-	opinfo = rcu_dereference(fp->f_opinfo);
++	opinfo = opinfo_get(fp);
+ 	rsp->OplockLevel = opinfo != NULL ? opinfo->level : 0;
 -	rcu_read_unlock();
+ 	rsp->Flags = 0;
+ 	rsp->CreateAction = cpu_to_le32(file_info);
+ 	rsp->CreationTime = cpu_to_le64(fp->create_time);
+@@ -3637,6 +3635,7 @@ reconnected_fp:
+ 		next_ptr = &lease_ccontext->Next;
+ 		next_off = conn->vals->create_lease_size;
+ 	}
++	opinfo_put(opinfo);
  
--	if (!opinfo || !opinfo->is_lease || opinfo->o_lease->version != 2)
-+	if (!opinfo || !opinfo->is_lease || opinfo->o_lease->version != 2) {
-+		rcu_read_unlock();
- 		return;
-+	}
-+	rcu_read_unlock();
- 
- 	p_ci = ksmbd_inode_lookup_lock(fp->filp->f_path.dentry->d_parent);
- 	if (!p_ci)
+ 	if (maximal_access_ctxt) {
+ 		struct create_context *mxac_ccontext;
 
 
