@@ -1,40 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A4513B3BE7;
-	Mon, 23 Mar 2026 14:00:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3F403B38B5;
+	Mon, 23 Mar 2026 14:00:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274424; cv=none; b=XZCt4DAyIFiiI3wj0b3c6JYEKZ04CeAgRhQx41gglBmDotR9CelRi4pQIkZDujFBoXwgeJOLhSyOikmFvSJdUJkzR2v2YkYEYWy+8+j8i5ywVrQxshTk8boq6GvKC9ZjWLZmTihBGm5Emh8bftxIPtjsgjv2q45Kvb5QAAmabI8=
+	t=1774274427; cv=none; b=LztiHMwr1bSzs+9oWmEeAnBb5qq+r/7S4yhSmjttnLRiD2j2+avzjQlBOUisHuEeOY8WQ4wuEJ+enzHAnBegvJG3maEdOhx723RICXjs1zv8czMqMjq3AVQSFTXiZgzlOz/q2cPBfGAKDIlXQOFtJ+UWb4+xGCa0Ows/nFsPIH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274424; c=relaxed/simple;
-	bh=Zzr/TZdP6nra41VkRssJpCxhyL1WLDsH8wY+cSr1rh0=;
+	s=arc-20240116; t=1774274427; c=relaxed/simple;
+	bh=uQzNyiao2iC4qfK9GRkw3miJRuJ84knuRkNFLy4XJ9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=foLrN9V/qltLlt5FNs9ZZU5c/ymswYITBHf7egdMcp1johh3wln/tDu1Sd1XwEWYNNjW/CpOCfd5ElidcF3RmYalo54qz+Ner8LJ7XWcbVh9UpugGSjNr/3TWtYfZASzjseE8kaScHdkAzyPbssNQE9b1wyOd0ArGvm3Nbq55Zw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ht7Lg/Ju; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QYshA2xocIImwQ1vwtJEJB9hPQlH4/9Q36JJKKYfY135+41xCHA4ns7rhgmTaoRMFhCRiubGkenDlMJ9Q+BMtWjXHBWT0RkzUnEwXp2e3xUp0NQeWgR8pPoFhDF4NF1ZGI70GmivWAl6yG0uC4/N6fb5Rklt0rpSURVfLNK1q5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ML5Sy7ap; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ht7Lg/Ju"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FE5C4CEF7;
-	Mon, 23 Mar 2026 14:00:23 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ML5Sy7ap"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E96E2C4CEF7;
+	Mon, 23 Mar 2026 14:00:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274424;
-	bh=Zzr/TZdP6nra41VkRssJpCxhyL1WLDsH8wY+cSr1rh0=;
+	s=korg; t=1774274427;
+	bh=uQzNyiao2iC4qfK9GRkw3miJRuJ84knuRkNFLy4XJ9E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ht7Lg/JuzeNwH6usdwtWR2rNv8lYgfHa3U0c/fTTRxjEnKA9E4AYvdgN33KIDiZBo
-	 8sRWRUtd12Qf5Fs3mt5GfExjnkzMiXEQqW2Wc/qtnW0Zv9h0Ns3VZIAyYiahhA7dob
-	 TggePKYzgHjtuD3HIdR8I/TG2H4YLRWc8wwLnZ64=
+	b=ML5Sy7apRhdhp52du6DFosEs1gcr8eRljP6uEqD2Vpnp5eio9fdtRw/lFpa/azI8r
+	 iHYw7cYxfSHhODiliWMVOrBe1YOG/Wy1TL3tfXvApDCP7FuURRsbsJZBPF5ljEqQu9
+	 Uj89Ep6ScMzmYpczggUNZyPxsDa21S5xJWuX9HOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Hewitt <christianshewitt@gmail.com>,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 211/220] drm/bridge: dw-hdmi-qp: fix multi-channel audio output
-Date: Mon, 23 Mar 2026 14:46:28 +0100
-Message-ID: <20260323134511.206063437@linuxfoundation.org>
+Subject: [PATCH 6.19 212/220] ksmbd: fix use-after-free of share_conf in compound request
+Date: Mon, 23 Mar 2026 14:46:29 +0100
+Message-ID: <20260323134511.234165685@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -53,42 +52,133 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Hyunwoo Kim <imv4bel@gmail.com>
 
-[ Upstream commit cffcb42c57686e9a801dfcf37a3d0c62e51c1c3e ]
+[ Upstream commit c33615f995aee80657b9fdfbc4ee7f49c2bd733d ]
 
-Channel Allocation (PB4) and Level Shift Information (PB5) are
-configured with values from PB1 and PB2 due to the wrong offset
-being used. This results in missing audio channels or incorrect
-speaker placement when playing multi-channel audio.
+smb2_get_ksmbd_tcon() reuses work->tcon in compound requests without
+validating tcon->t_state. ksmbd_tree_conn_lookup() checks t_state ==
+TREE_CONNECTED on the initial lookup path, but the compound reuse path
+bypasses this check entirely.
 
-Use the correct offset to fix multi-channel audio output.
+If a prior command in the compound (SMB2_TREE_DISCONNECT) sets t_state
+to TREE_DISCONNECTED and frees share_conf via ksmbd_share_config_put(),
+subsequent commands dereference the freed share_conf through
+work->tcon->share_conf.
 
-Fixes: fd0141d1a8a2 ("drm/bridge: synopsys: Add audio support for dw-hdmi-qp")
-Reported-by: Christian Hewitt <christianshewitt@gmail.com>
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Signed-off-by: Christian Hewitt <christianshewitt@gmail.com>
-Reviewed-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-Link: https://patch.msgid.link/20260228112822.4056354-1-christianshewitt@gmail.com
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
+KASAN report:
+
+[    4.144653] ==================================================================
+[    4.145059] BUG: KASAN: slab-use-after-free in smb2_write+0xc74/0xe70
+[    4.145415] Read of size 4 at addr ffff88810430c194 by task kworker/1:1/44
+[    4.145772]
+[    4.145867] CPU: 1 UID: 0 PID: 44 Comm: kworker/1:1 Not tainted 7.0.0-rc3+ #60 PREEMPTLAZY
+[    4.145871] Hardware name: QEMU Ubuntu 24.04 PC v2 (i440FX + PIIX, arch_caps fix, 1996), BIOS 1.16.3-debian-1.16.3-2 04/01/2014
+[    4.145875] Workqueue: ksmbd-io handle_ksmbd_work
+[    4.145888] Call Trace:
+[    4.145892]  <TASK>
+[    4.145894]  dump_stack_lvl+0x64/0x80
+[    4.145910]  print_report+0xce/0x660
+[    4.145919]  ? __pfx__raw_spin_lock_irqsave+0x10/0x10
+[    4.145928]  ? smb2_write+0xc74/0xe70
+[    4.145931]  kasan_report+0xce/0x100
+[    4.145934]  ? smb2_write+0xc74/0xe70
+[    4.145937]  smb2_write+0xc74/0xe70
+[    4.145939]  ? __pfx_smb2_write+0x10/0x10
+[    4.145942]  ? _raw_spin_unlock+0xe/0x30
+[    4.145945]  ? ksmbd_smb2_check_message+0xeb2/0x24c0
+[    4.145948]  ? smb2_tree_disconnect+0x31c/0x480
+[    4.145951]  handle_ksmbd_work+0x40f/0x1080
+[    4.145953]  process_one_work+0x5fa/0xef0
+[    4.145962]  ? assign_work+0x122/0x3e0
+[    4.145964]  worker_thread+0x54b/0xf70
+[    4.145967]  ? __pfx_worker_thread+0x10/0x10
+[    4.145970]  kthread+0x346/0x470
+[    4.145976]  ? recalc_sigpending+0x19b/0x230
+[    4.145980]  ? __pfx_kthread+0x10/0x10
+[    4.145984]  ret_from_fork+0x4fb/0x6c0
+[    4.145992]  ? __pfx_ret_from_fork+0x10/0x10
+[    4.145995]  ? __switch_to+0x36c/0xbe0
+[    4.145999]  ? __pfx_kthread+0x10/0x10
+[    4.146003]  ret_from_fork_asm+0x1a/0x30
+[    4.146013]  </TASK>
+[    4.146014]
+[    4.149858] Allocated by task 44:
+[    4.149953]  kasan_save_stack+0x33/0x60
+[    4.150061]  kasan_save_track+0x14/0x30
+[    4.150169]  __kasan_kmalloc+0x8f/0xa0
+[    4.150274]  ksmbd_share_config_get+0x1dd/0xdd0
+[    4.150401]  ksmbd_tree_conn_connect+0x7e/0x600
+[    4.150529]  smb2_tree_connect+0x2e6/0x1000
+[    4.150645]  handle_ksmbd_work+0x40f/0x1080
+[    4.150761]  process_one_work+0x5fa/0xef0
+[    4.150873]  worker_thread+0x54b/0xf70
+[    4.150978]  kthread+0x346/0x470
+[    4.151071]  ret_from_fork+0x4fb/0x6c0
+[    4.151176]  ret_from_fork_asm+0x1a/0x30
+[    4.151286]
+[    4.151332] Freed by task 44:
+[    4.151418]  kasan_save_stack+0x33/0x60
+[    4.151526]  kasan_save_track+0x14/0x30
+[    4.151634]  kasan_save_free_info+0x3b/0x60
+[    4.151751]  __kasan_slab_free+0x43/0x70
+[    4.151861]  kfree+0x1ca/0x430
+[    4.151952]  __ksmbd_tree_conn_disconnect+0xc8/0x190
+[    4.152088]  smb2_tree_disconnect+0x1cd/0x480
+[    4.152211]  handle_ksmbd_work+0x40f/0x1080
+[    4.152326]  process_one_work+0x5fa/0xef0
+[    4.152438]  worker_thread+0x54b/0xf70
+[    4.152545]  kthread+0x346/0x470
+[    4.152638]  ret_from_fork+0x4fb/0x6c0
+[    4.152743]  ret_from_fork_asm+0x1a/0x30
+[    4.152853]
+[    4.152900] The buggy address belongs to the object at ffff88810430c180
+[    4.152900]  which belongs to the cache kmalloc-96 of size 96
+[    4.153226] The buggy address is located 20 bytes inside of
+[    4.153226]  freed 96-byte region [ffff88810430c180, ffff88810430c1e0)
+[    4.153549]
+[    4.153596] The buggy address belongs to the physical page:
+[    4.153750] page: refcount:0 mapcount:0 mapping:0000000000000000 index:0xffff88810430ce80 pfn:0x10430c
+[    4.154000] flags: 0x100000000000200(workingset|node=0|zone=2)
+[    4.154160] page_type: f5(slab)
+[    4.154251] raw: 0100000000000200 ffff888100041280 ffff888100040110 ffff888100040110
+[    4.154461] raw: ffff88810430ce80 0000000800200009 00000000f5000000 0000000000000000
+[    4.154668] page dumped because: kasan: bad access detected
+[    4.154820]
+[    4.154866] Memory state around the buggy address:
+[    4.155002]  ffff88810430c080: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155196]  ffff88810430c100: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155391] >ffff88810430c180: fa fb fb fb fb fb fb fb fb fb fb fb fc fc fc fc
+[    4.155587]                          ^
+[    4.155693]  ffff88810430c200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.155891]  ffff88810430c280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[    4.156087] ==================================================================
+
+Add the same t_state validation to the compound reuse path, consistent
+with ksmbd_tree_conn_lookup().
+
+Fixes: 5005bcb42191 ("ksmbd: validate session id and tree id in the compound request")
+Signed-off-by: Hyunwoo Kim <imv4bel@gmail.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/smb/server/smb2pdu.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-index 60166919c5b54..ace9d8bcdd197 100644
---- a/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-+++ b/drivers/gpu/drm/bridge/synopsys/dw-hdmi-qp.c
-@@ -838,7 +838,7 @@ static int dw_hdmi_qp_config_audio_infoframe(struct dw_hdmi_qp *hdmi,
- 
- 	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS0, &header_bytes, 1);
- 	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS1, &buffer[3], 1);
--	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS2, &buffer[4], 1);
-+	regmap_bulk_write(hdmi->regm, PKT_AUDI_CONTENTS2, &buffer[7], 1);
- 
- 	/* Enable ACR, AUDI, AMD */
- 	dw_hdmi_qp_mod(hdmi,
+diff --git a/fs/smb/server/smb2pdu.c b/fs/smb/server/smb2pdu.c
+index 1ec9060ffe912..80ca55e28a972 100644
+--- a/fs/smb/server/smb2pdu.c
++++ b/fs/smb/server/smb2pdu.c
+@@ -125,6 +125,8 @@ int smb2_get_ksmbd_tcon(struct ksmbd_work *work)
+ 			pr_err("The first operation in the compound does not have tcon\n");
+ 			return -EINVAL;
+ 		}
++		if (work->tcon->t_state != TREE_CONNECTED)
++			return -ENOENT;
+ 		if (tree_id != UINT_MAX && work->tcon->id != tree_id) {
+ 			pr_err("tree id(%u) is different with id(%u) in first operation\n",
+ 					tree_id, work->tcon->id);
 -- 
 2.51.0
 
