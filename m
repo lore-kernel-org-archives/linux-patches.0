@@ -1,37 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F613A961B;
-	Mon, 23 Mar 2026 13:50:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99CC93A6B88;
+	Mon, 23 Mar 2026 13:50:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273812; cv=none; b=FaCycBAx6I3ChTGu8veWOADal1nMinH8qO5sg70l8nLDt5iifTjV7q/c1jMliF7MMSptLcFuMNoHcY8Vc+sTCxVJFtzGvqKcbc+UaxdrEr7Z014xc/hS8pUU1kx1QSm/l0QWhIttRAm+CRNVlrsaAmgkOtWTMBThDb4Qw3kSsE8=
+	t=1774273815; cv=none; b=oSS4khJsQM9jmJFzJMqRlKD6EdK0RzNfiXvfnPrKw+GzbtkS83nLDofU1/+SptMAMBpwVjBocQF7ixCIcuYPbQV0npHQkPSW7MbomZ46+ZKkaJ7m8KbFySjDKoAWIUpsMiUNB1ZoIacj1LlVILfp6T6a5woWzROgnjyeRhQzAwE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273812; c=relaxed/simple;
-	bh=+WboHKI+MysxoEABOWvKzVgKpeNayEhygek/MmH4juY=;
+	s=arc-20240116; t=1774273815; c=relaxed/simple;
+	bh=o3SPENsHpovwIKqg1GMB9J+Ce53eW4VHonOyHQLKxmE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=NLZ1WzZezKxxu6iPT13o5AlXDKD8kS7Yk50AwuNkN1H31YAAKC/mSbXYHY9TCfQDVKT/tLGeQdcZLnFvIX4ULutj/PdOg9UKtcLizPKgH7bi+fKRRkpmj7OaricFavfUZVuoHNarCIxemgs5VjmcTAqar7jn5+aNkhpmi/18KHI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRqf/MJa; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=egw0pM4SG9c4Hwk8Fiq9PzZiHBwbvD9sHg1F/7XynE+dgoq7vQbc34I2X2pL8DXWBVsf0dfkBkqh19lSGKiZhMoMPERfshPoqrd9nrQZ37HoXZBp3v39XV526z4ZGTbK2lE1rsH8s2FayT64ZDd2i6UE758pLLIVV2F97GH0/kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=oI+x+0XV; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRqf/MJa"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACC3C4CEF7;
-	Mon, 23 Mar 2026 13:50:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="oI+x+0XV"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE874C4CEF7;
+	Mon, 23 Mar 2026 13:50:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273812;
-	bh=+WboHKI+MysxoEABOWvKzVgKpeNayEhygek/MmH4juY=;
+	s=korg; t=1774273815;
+	bh=o3SPENsHpovwIKqg1GMB9J+Ce53eW4VHonOyHQLKxmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JRqf/MJarDG5Dv1IlAePwioJKRHp/M3Iy/YGDArycFKdHKa1ca68ptAG13SXmfVFS
-	 VoxEY9Vb2K4C44U7yB/ZsuCN5LYyWjwQZEgjBueJvMJvihCO/GLQyJ18IPPhEoTBU9
-	 2V78mFW/v2mc5ZE47qZ4xa5YpuSe1/XFBTfdU5Es=
+	b=oI+x+0XVHnK/dHmGtku0v5Zar7s+hu45dSDmk/sajhMB/+nMyXPUJ1g/WJ9WoT7Cm
+	 SC+mz6nE2cFBS6DZp0qoml3IeUKEeDPLo4xat3JO9rHA8EmKh4954CofIg9Q/0GOSd
+	 Ohr9gdzct17GHSBir0m/No4IC/kwOxJ71VnV5liM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Lechner <felix.lechner@lease-up.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.19 017/220] parisc: Flush correct cache in cacheflush() syscall
-Date: Mon, 23 Mar 2026 14:43:14 +0100
-Message-ID: <20260323134505.121422812@linuxfoundation.org>
+	Yifan Wu <yifanwucs@gmail.com>,
+	Juefei Pu <tomapufckgml@gmail.com>,
+	Yuan Tan <tanyuan98@outlook.com>,
+	Xin Liu <bird@lzu.edu.cn>,
+	Ao Zhou <n05ec@lzu.edu.cn>,
+	Sven Eckelmann <sven@narfation.org>,
+	Simon Wunderlich <sw@simonwunderlich.de>
+Subject: [PATCH 6.19 018/220] batman-adv: avoid OGM aggregation when skb tailroom is insufficient
+Date: Mon, 23 Mar 2026 14:43:15 +0100
+Message-ID: <20260323134505.155897309@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,51 +55,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Helge Deller <deller@gmx.de>
+From: Yang Yang <n05ec@lzu.edu.cn>
 
-commit 2c98a8fbd6aa647414c6248dacf254ebe91c79ad upstream.
+commit 0d4aef630be9d5f9c1227d07669c26c4383b5ad0 upstream.
 
-The assembly flush instructions were swapped for I- and D-cache flags:
+When OGM aggregation state is toggled at runtime, an existing forwarded
+packet may have been allocated with only packet_len bytes, while a later
+packet can still be selected for aggregation. Appending in this case can
+hit skb_put overflow conditions.
 
-SYSCALL_DEFINE3(cacheflush, ...)
-{
-	if (cache & DCACHE) {
-			"fic ...\n"
-	}
-	if (cache & ICACHE && error == 0) {
-			"fdc ...\n"
-	}
+Reject aggregation when the target skb tailroom cannot accommodate the new
+packet. The caller then falls back to creating a new forward packet
+instead of appending.
 
-Fix it by using fdc for DCACHE, and fic for ICACHE flushing.
-
-Reported-by: Felix Lechner <felix.lechner@lease-up.com>
-Fixes: c6d96328fecd ("parisc: Add cacheflush() syscall")
-Cc: <stable@vger.kernel.org> # v6.5+
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: c6c8fea29769 ("net: Add batman-adv meshing protocol")
+Cc: stable@vger.kernel.org
+Reported-by: Yifan Wu <yifanwucs@gmail.com>
+Reported-by: Juefei Pu <tomapufckgml@gmail.com>
+Signed-off-by: Yuan Tan <tanyuan98@outlook.com>
+Signed-off-by: Xin Liu <bird@lzu.edu.cn>
+Signed-off-by: Ao Zhou <n05ec@lzu.edu.cn>
+Signed-off-by: Yang Yang <n05ec@lzu.edu.cn>
+Signed-off-by: Sven Eckelmann <sven@narfation.org>
+Signed-off-by: Simon Wunderlich <sw@simonwunderlich.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/cache.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/batman-adv/bat_iv_ogm.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/arch/parisc/kernel/cache.c
-+++ b/arch/parisc/kernel/cache.c
-@@ -953,7 +953,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned lon
- #else
- 			"1: cmpb,<<,n	%0,%2,1b\n"
- #endif
--			"   fic,m	%3(%4,%0)\n"
-+			"   fdc,m	%3(%4,%0)\n"
- 			"2: sync\n"
- 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
- 			: "+r" (start), "+r" (error)
-@@ -968,7 +968,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned lon
- #else
- 			"1: cmpb,<<,n	%0,%2,1b\n"
- #endif
--			"   fdc,m	%3(%4,%0)\n"
-+			"   fic,m	%3(%4,%0)\n"
- 			"2: sync\n"
- 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
- 			: "+r" (start), "+r" (error)
+--- a/net/batman-adv/bat_iv_ogm.c
++++ b/net/batman-adv/bat_iv_ogm.c
+@@ -473,6 +473,9 @@ batadv_iv_ogm_can_aggregate(const struct
+ 	if (aggregated_bytes > max_bytes)
+ 		return false;
+ 
++	if (skb_tailroom(forw_packet->skb) < packet_len)
++		return false;
++
+ 	if (packet_num >= BATADV_MAX_AGGREGATION_PACKETS)
+ 		return false;
+ 
 
 
