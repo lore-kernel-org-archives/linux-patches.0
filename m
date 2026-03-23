@@ -1,39 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8BF3B19CC;
-	Mon, 23 Mar 2026 14:40:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7E83B0AEF;
+	Mon, 23 Mar 2026 14:40:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774276841; cv=none; b=jwyR9f5XaJudnxr0KBYDwBG919MLFrxYWZ4+XsgeMr9qxu2XhX+EwYn88iMh7xEFQf8p0weszfRXzv+25SsWPvA1Hc7Syw28KMO0BlifiCZw6gQDgAfUC5312j0F4e7ZMyubceVdpjUT0vpSoKTr4+DFz//OkMDTD0jZ+21nYhQ=
+	t=1774276844; cv=none; b=S3NDw7FrPc/f+OOzqoe8neXSs1gDWxEc0zjNeinb+LJPqS4TShspoQeilvkQCEPwPvANefnvnxacFmF80tRwAJsRvTcmvBqUZc8HkTJvemjKDcQPRCNaTBiRxzS7wQscRmkz2Ciplnah96D0Qp6mClwFBcsHR0TjjsoeC7MD484=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774276841; c=relaxed/simple;
-	bh=Kf/D00tuGnamHEVT7fRo4J4NgjW6nyeSFe4CcYsma5Y=;
+	s=arc-20240116; t=1774276844; c=relaxed/simple;
+	bh=Cy6kTe8uQC/PW1gIy7TseYylxQkg2Rn5Ql3hReUMOxs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Y7FI3/I/pzX+lFfbnovHf7esW9sv2I3UJjlrZsriOBFRuFDwwJKROfrjr2bM95Ja3zzxKjp/9FvCoBm6jLrrRbDOyTuO3ALgUm+1l/eAkJyB+9V78giZwKUm3+mWcVBAfb5B07kO4/Pf0OzoLdZE921xq5KJhqaXPQI57i8Cqbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=M129wR6n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=shQxJMtky93pWAHYUKV5tGpcSkHv95za+QHNu32X45ng3oqnX385OK0gaxjCVzQ8+yHT3b+Wptyw7+EJHjIarJOh3SXyzhDBtibwgYRZMALJ8DDVRvYTWv/q040xuN10Msm7A8aq4qY69W7myyVrH5tyQk6R5EqcPN5rZUMptNk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Lf4GlYgp; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="M129wR6n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2598CC2BC9E;
-	Mon, 23 Mar 2026 14:40:40 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Lf4GlYgp"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE2B9C2BCB1;
+	Mon, 23 Mar 2026 14:40:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774276841;
-	bh=Kf/D00tuGnamHEVT7fRo4J4NgjW6nyeSFe4CcYsma5Y=;
+	s=korg; t=1774276844;
+	bh=Cy6kTe8uQC/PW1gIy7TseYylxQkg2Rn5Ql3hReUMOxs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M129wR6nYFStTVlWESYrAd2s0jUZblAuqiJOfID1/URLLPuJYTqS+jbfCOQCLvuER
-	 /PwmLBYSp2ucyvag7ecpWEk7151HPubRRyWy82z4zbL9lnQxQhF0cc2JLyIvcgeEiu
-	 9jXVoqeWgz6OGvBl/NCwqe4MDcYOysD8N6qB7agM=
+	b=Lf4GlYgph+ty2kPQOb43azYe5LmEW+2G2tTFRh3uJsQrXScaNlQWeMcpFH/UrvuYW
+	 t/f1Zf02j9pPldeWtcNQcBFLD2dnFFnyjd3ZrsgV6Mycg2+/HRB++/YlTFoTgYZziR
+	 XsjN/oF4qLfJSKDRLXz00a0r4olv1dzTmw6nEeq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	"stable@vger.kernel.org, Khairul Anuar Romli" <khairul.anuar.romli@altera.com>
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 223/460] ksmbd: call ksmbd_vfs_kern_path_end_removing() on some error paths
-Date: Mon, 23 Mar 2026 14:43:39 +0100
-Message-ID: <20260323134531.976470410@linuxfoundation.org>
+	Matthew Gerlach <matthew.gerlach@altera.com>,
+	Niravkumar L Rabara <nirav.rabara@altera.com>,
+	Mark Brown <broonie@kernel.org>,
+	Robert Garcia <rob_garcia@163.com>
+Subject: [PATCH 6.12 224/460] spi: cadence-quadspi: Implement refcount to handle unbind during busy
+Date: Mon, 23 Mar 2026 14:43:40 +0100
+Message-ID: <20260323134532.000418288@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -52,65 +53,120 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
 
-[ Upstream commit a09dc10d1353f0e92c21eae2a79af1c2b1ddcde8 ]
+[ Upstream commit 7446284023e8ef694fb392348185349c773eefb3 ]
 
-There are two places where ksmbd_vfs_kern_path_end_removing() needs to be
-called in order to balance what the corresponding successful call to
-ksmbd_vfs_kern_path_start_removing() has done, i.e. drop inode locks and
-put the taken references.  Otherwise there might be potential deadlocks
-and unbalanced locks which are caught like:
+driver support indirect read and indirect write operation with
+assumption no force device removal(unbind) operation. However
+force device removal(removal) is still available to root superuser.
 
-BUG: workqueue leaked lock or atomic: kworker/5:21/0x00000000/7596
-     last function: handle_ksmbd_work
-2 locks held by kworker/5:21/7596:
- #0: ffff8881051ae448 (sb_writers#3){.+.+}-{0:0}, at: ksmbd_vfs_kern_path_locked+0x142/0x660
- #1: ffff888130e966c0 (&type->i_mutex_dir_key#3/1){+.+.}-{4:4}, at: ksmbd_vfs_kern_path_locked+0x17d/0x660
-CPU: 5 PID: 7596 Comm: kworker/5:21 Not tainted 6.1.162-00456-gc29b353f383b #138
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.17.0-debian-1.17.0-1 04/01/2014
-Workqueue: ksmbd-io handle_ksmbd_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x44/0x5b
- process_one_work.cold+0x57/0x5c
- worker_thread+0x82/0x600
- kthread+0x153/0x190
- ret_from_fork+0x22/0x30
- </TASK>
+Unbinding driver during operation causes kernel crash. This changes
+ensure driver able to handle such operation for indirect read and
+indirect write by implementing refcount to track attached devices
+to the controller and gracefully wait and until attached devices
+remove operation completed before proceed with removal operation.
 
-Found by Linux Verification Center (linuxtesting.org).
-
-Fixes: d5fc1400a34b ("smb/server: avoid deadlock when linking with ReplaceIfExists")
-Cc: stable@vger.kernel.org
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-[ ksmbd_vfs_kern_path_end_removing() call -> ksmbd_vfs_kern_path_unlock() ]
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Khairul Anuar Romli <khairul.anuar.romli@altera.com>
+Reviewed-by: Matthew Gerlach <matthew.gerlach@altera.com>
+Reviewed-by: Niravkumar L Rabara <nirav.rabara@altera.com>
+Link: https://patch.msgid.link/8704fd6bd2ff4d37bba4a0eacf5eba3ba001079e.1756168074.git.khairul.anuar.romli@altera.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Robert Garcia <rob_garcia@163.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/smb/server/smb2pdu.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spi-cadence-quadspi.c |   33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
 
---- a/fs/smb/server/smb2pdu.c
-+++ b/fs/smb/server/smb2pdu.c
-@@ -6090,14 +6090,14 @@ static int smb2_create_link(struct ksmbd
- 				rc = -EINVAL;
- 				ksmbd_debug(SMB, "cannot delete %s\n",
- 					    link_name);
--				goto out;
- 			}
- 		} else {
- 			rc = -EEXIST;
- 			ksmbd_debug(SMB, "link already exists\n");
--			goto out;
- 		}
- 		ksmbd_vfs_kern_path_unlock(&parent_path, &path);
-+		if (rc)
-+			goto out;
+--- a/drivers/spi/spi-cadence-quadspi.c
++++ b/drivers/spi/spi-cadence-quadspi.c
+@@ -105,6 +105,8 @@ struct cqspi_st {
+ 
+ 	bool			is_jh7110; /* Flag for StarFive JH7110 SoC */
+ 	bool			disable_stig_mode;
++	refcount_t		refcount;
++	refcount_t		inflight_ops;
+ 
+ 	const struct cqspi_driver_platdata *ddata;
+ };
+@@ -731,6 +733,9 @@ static int cqspi_indirect_read_execute(s
+ 	u8 *rxbuf_end = rxbuf + n_rx;
+ 	int ret = 0;
+ 
++	if (!refcount_read(&cqspi->refcount))
++		return -ENODEV;
++
+ 	writel(from_addr, reg_base + CQSPI_REG_INDIRECTRDSTARTADDR);
+ 	writel(remaining, reg_base + CQSPI_REG_INDIRECTRDBYTES);
+ 
+@@ -1058,6 +1063,9 @@ static int cqspi_indirect_write_execute(
+ 	unsigned int write_bytes;
+ 	int ret;
+ 
++	if (!refcount_read(&cqspi->refcount))
++		return -ENODEV;
++
+ 	writel(to_addr, reg_base + CQSPI_REG_INDIRECTWRSTARTADDR);
+ 	writel(remaining, reg_base + CQSPI_REG_INDIRECTWRBYTES);
+ 
+@@ -1450,12 +1458,26 @@ static int cqspi_exec_mem_op(struct spi_
+ 	struct cqspi_st *cqspi = spi_controller_get_devdata(mem->spi->controller);
+ 	struct device *dev = &cqspi->pdev->dev;
+ 
++	if (refcount_read(&cqspi->inflight_ops) == 0)
++		return -ENODEV;
++
+ 	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret) {
+ 		dev_err(&mem->spi->dev, "resume failed with %d\n", ret);
+ 		return ret;
  	}
- 	rc = ksmbd_vfs_link(work, target_name, link_name);
- 	if (rc)
+ 
++	if (!refcount_read(&cqspi->refcount))
++		return -EBUSY;
++
++	refcount_inc(&cqspi->inflight_ops);
++
++	if (!refcount_read(&cqspi->refcount)) {
++		if (refcount_read(&cqspi->inflight_ops))
++			refcount_dec(&cqspi->inflight_ops);
++		return -EBUSY;
++	}
++
+ 	ret = cqspi_mem_process(mem, op);
+ 
+ 	pm_runtime_mark_last_busy(dev);
+@@ -1464,6 +1486,9 @@ static int cqspi_exec_mem_op(struct spi_
+ 	if (ret)
+ 		dev_err(&mem->spi->dev, "operation failed with %d\n", ret);
+ 
++	if (refcount_read(&cqspi->inflight_ops) > 1)
++		refcount_dec(&cqspi->inflight_ops);
++
+ 	return ret;
+ }
+ 
+@@ -1916,6 +1941,9 @@ static int cqspi_probe(struct platform_d
+ 		}
+ 	}
+ 
++	refcount_set(&cqspi->refcount, 1);
++	refcount_set(&cqspi->inflight_ops, 1);
++
+ 	ret = devm_request_irq(dev, irq, cqspi_irq_handler, 0,
+ 			       pdev->name, cqspi);
+ 	if (ret) {
+@@ -1978,6 +2006,11 @@ static void cqspi_remove(struct platform
+ {
+ 	struct cqspi_st *cqspi = platform_get_drvdata(pdev);
+ 
++	refcount_set(&cqspi->refcount, 0);
++
++	if (!refcount_dec_and_test(&cqspi->inflight_ops))
++		cqspi_wait_idle(cqspi);
++
+ 	spi_unregister_controller(cqspi->host);
+ 	cqspi_controller_enable(cqspi, 0);
+ 
 
 
