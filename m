@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E821A6815;
-	Mon, 23 Mar 2026 13:58:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44BFB1F91F6;
+	Mon, 23 Mar 2026 13:58:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274292; cv=none; b=PilUhghSHYDr4PoUQ+Xal7kdKgyWPahSRJH47HFYsvDMhGBQg/FVGnZyWdh++O4ZpqF1OSEfySFOc7PPGEB8h5qxivXEyLMTN+rHB/FrWduXGq3Na+twkxBYKCFKQmSzYmiZwmd+YQDIuxFpPpdynWqat7DFCLNZxcPeXoxQqtw=
+	t=1774274295; cv=none; b=u0RlkOHxtIVDjxuv0t+DMr3rjZZHb+R1k/FRJ9LDsiQJj6jj7doRl7B6c0SU/ms7oam5OIrogoFEnK6tCHYx0MCIRRcIZ1jdwS7N4F1XVZ34mZLSwby8ZxBs8nGehBt1xiZpUOniU9qAIEYJNkol3OI7gPV/M8/vM8LWdKa9Oms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274292; c=relaxed/simple;
-	bh=5TPU90jZVnMyhF3Piz+BWR1CD4mS3rMcm7IS4PkbcZ4=;
+	s=arc-20240116; t=1774274295; c=relaxed/simple;
+	bh=DxU1P7HrxKQTgzf8wduP1jCU7DhxdhZDN5ouO6nhrMc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=TYKY2G3dZM9z23sEbxglO36ysYuZimRINZFhKKTF2J+75rpfJmF+DuZ0/UT7D383Z60TSg562VIvfyZ3dEV57c7baYFz8L5B5sPMlk3VRI7Wk53DyIVfIgQaXBPdGgPcVdUP7f7yoxlZ77xzg+V+8T2qa6n6jQYVd2CBIy2IA3A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=u+ZJYtdP; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=nV3brIdEZJs8XvH26Q7CjwDGHl6PKC7PMpJ9t+GFi4tG7XvEIJJ6PhOq+DvziZyy4aujNjZgpN4QLDShnPm+q8tTxaRjyF8zZt5Co01k018w+nmlp1u3S0IQOZJ0timC2zx7lJB2fMft7c7zVHt2tE8xZ4golOeTQiWvFB2gDA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=qIGDQJGt; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="u+ZJYtdP"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F200C2BCB1;
-	Mon, 23 Mar 2026 13:58:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="qIGDQJGt"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B38F1C2BC9E;
+	Mon, 23 Mar 2026 13:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274292;
-	bh=5TPU90jZVnMyhF3Piz+BWR1CD4mS3rMcm7IS4PkbcZ4=;
+	s=korg; t=1774274295;
+	bh=DxU1P7HrxKQTgzf8wduP1jCU7DhxdhZDN5ouO6nhrMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+ZJYtdPc62beYL0Scljp1ZDZMFWNr9Wh3Kp53GF24UPxyzKadBGkqZjPsiRMkQQ0
-	 Lm3f9f4ejkGzW4zFXc49TQTm4ZaX4BSBopm7H55otO400p8rWBcQv4hC/Dz2vUyE9q
-	 P/fBClGrVA2wrtaLFRX0O3C02lSxBwGdaO8Qe/r0=
+	b=qIGDQJGtUJiW3dSOPx4o1DMghSxPfEqf0zZxSe1OHXhP9FonwZi0XGZrz16XCN1kt
+	 eXYXESHIiz320lX2b82BGPrrKZJ/e97t61jfVzNbmgfzwqvBtnhkCBzLJaDVyrZdjn
+	 KO7TR76hXTO8v0LBUV/scUHMQW8dZpf+tYHVArtw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Igor Ushakov <sysroot314@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 126/220] Bluetooth: qca: fix ROM version reading on WCN3998 chips
-Date: Mon, 23 Mar 2026 14:45:03 +0100
-Message-ID: <20260323134508.565784311@linuxfoundation.org>
+Subject: [PATCH 6.19 127/220] af_unix: Give up GC if MSG_PEEK intervened.
+Date: Mon, 23 Mar 2026 14:45:04 +0100
+Message-ID: <20260323134508.596880934@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,44 +52,254 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
+From: Kuniyuki Iwashima <kuniyu@google.com>
 
-[ Upstream commit 99b2c531e0e797119ae1b9195a8764ee98b00e65 ]
+[ Upstream commit e5b31d988a41549037b8d8721a3c3cae893d8670 ]
 
-WCN3998 uses a bit different format for rom version:
+Igor Ushakov reported that GC purged the receive queue of
+an alive socket due to a race with MSG_PEEK with a nice repro.
 
-[    5.479978] Bluetooth: hci0: setting up wcn399x
-[    5.633763] Bluetooth: hci0: QCA Product ID   :0x0000000a
-[    5.645350] Bluetooth: hci0: QCA SOC Version  :0x40010224
-[    5.650906] Bluetooth: hci0: QCA ROM Version  :0x00001001
-[    5.665173] Bluetooth: hci0: QCA Patch Version:0x00006699
-[    5.679356] Bluetooth: hci0: QCA controller version 0x02241001
-[    5.691109] Bluetooth: hci0: QCA Downloading qca/crbtfw21.tlv
-[    6.680102] Bluetooth: hci0: QCA Downloading qca/crnv21.bin
-[    6.842948] Bluetooth: hci0: QCA setup on UART is completed
+This is the exact same issue previously fixed by commit
+cbcf01128d0a ("af_unix: fix garbage collect vs MSG_PEEK").
 
-Fixes: 523760b7ff88 ("Bluetooth: hci_qca: Added support for WCN3998")
-Reviewed-by: Bartosz Golaszewski <bartosz.golaszewski@oss.qualcomm.com>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@oss.qualcomm.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+After GC was replaced with the current algorithm, the cited
+commit removed the locking dance in unix_peek_fds() and
+reintroduced the same issue.
+
+The problem is that MSG_PEEK bumps a file refcount without
+interacting with GC.
+
+Consider an SCC containing sk-A and sk-B, where sk-A is
+close()d but can be recv()ed via sk-B.
+
+The bad thing happens if sk-A is recv()ed with MSG_PEEK from
+sk-B and sk-B is close()d while GC is checking unix_vertex_dead()
+for sk-A and sk-B.
+
+  GC thread                    User thread
+  ---------                    -----------
+  unix_vertex_dead(sk-A)
+  -> true   <------.
+                    \
+                     `------   recv(sk-B, MSG_PEEK)
+              invalidate !!    -> sk-A's file refcount : 1 -> 2
+
+                               close(sk-B)
+                               -> sk-B's file refcount : 2 -> 1
+  unix_vertex_dead(sk-B)
+  -> true
+
+Initially, sk-A's file refcount is 1 by the inflight fd in sk-B
+recvq.  GC thinks sk-A is dead because the file refcount is the
+same as the number of its inflight fds.
+
+However, sk-A's file refcount is bumped silently by MSG_PEEK,
+which invalidates the previous evaluation.
+
+At this moment, sk-B's file refcount is 2; one by the open fd,
+and one by the inflight fd in sk-A.  The subsequent close()
+releases one refcount by the former.
+
+Finally, GC incorrectly concludes that both sk-A and sk-B are dead.
+
+One option is to restore the locking dance in unix_peek_fds(),
+but we can resolve this more elegantly thanks to the new algorithm.
+
+The point is that the issue does not occur without the subsequent
+close() and we actually do not need to synchronise MSG_PEEK with
+the dead SCC detection.
+
+When the issue occurs, close() and GC touch the same file refcount.
+If GC sees the refcount being decremented by close(), it can just
+give up garbage-collecting the SCC.
+
+Therefore, we only need to signal the race during MSG_PEEK with
+a proper memory barrier to make it visible to the GC.
+
+Let's use seqcount_t to notify GC when MSG_PEEK occurs and let
+it defer the SCC to the next run.
+
+This way no locking is needed on the MSG_PEEK side, and we can
+avoid imposing a penalty on every MSG_PEEK unnecessarily.
+
+Note that we can retry within unix_scc_dead() if MSG_PEEK is
+detected, but we do not do so to avoid hung task splat from
+abusive MSG_PEEK calls.
+
+Fixes: 118f457da9ed ("af_unix: Remove lock dance in unix_peek_fds().")
+Reported-by: Igor Ushakov <sysroot314@gmail.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@google.com>
+Link: https://patch.msgid.link/20260311054043.1231316-1-kuniyu@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btqca.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/unix/af_unix.c |  2 ++
+ net/unix/af_unix.h |  1 +
+ net/unix/garbage.c | 79 ++++++++++++++++++++++++++++++----------------
+ 3 files changed, 54 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/bluetooth/btqca.c b/drivers/bluetooth/btqca.c
-index 7c958d6065bec..86a48d009d1ba 100644
---- a/drivers/bluetooth/btqca.c
-+++ b/drivers/bluetooth/btqca.c
-@@ -804,6 +804,8 @@ int qca_uart_setup(struct hci_dev *hdev, uint8_t baudrate,
- 	 */
- 	if (soc_type == QCA_WCN3988)
- 		rom_ver = ((soc_ver & 0x00000f00) >> 0x05) | (soc_ver & 0x0000000f);
-+	else if (soc_type == QCA_WCN3998)
-+		rom_ver = ((soc_ver & 0x0000f000) >> 0x07) | (soc_ver & 0x0000000f);
- 	else
- 		rom_ver = ((soc_ver & 0x00000f00) >> 0x04) | (soc_ver & 0x0000000f);
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 6965b9a49d68a..3db79e83d2114 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1958,6 +1958,8 @@ static void unix_detach_fds(struct scm_cookie *scm, struct sk_buff *skb)
+ static void unix_peek_fds(struct scm_cookie *scm, struct sk_buff *skb)
+ {
+ 	scm->fp = scm_fp_dup(UNIXCB(skb).fp);
++
++	unix_peek_fpl(scm->fp);
+ }
  
+ static void unix_destruct_scm(struct sk_buff *skb)
+diff --git a/net/unix/af_unix.h b/net/unix/af_unix.h
+index c4f1b2da363de..8119dbeef3a3c 100644
+--- a/net/unix/af_unix.h
++++ b/net/unix/af_unix.h
+@@ -29,6 +29,7 @@ void unix_del_edges(struct scm_fp_list *fpl);
+ void unix_update_edges(struct unix_sock *receiver);
+ int unix_prepare_fpl(struct scm_fp_list *fpl);
+ void unix_destroy_fpl(struct scm_fp_list *fpl);
++void unix_peek_fpl(struct scm_fp_list *fpl);
+ void unix_schedule_gc(struct user_struct *user);
+ 
+ /* SOCK_DIAG */
+diff --git a/net/unix/garbage.c b/net/unix/garbage.c
+index 25f65817faab9..aaa5f5bf51cad 100644
+--- a/net/unix/garbage.c
++++ b/net/unix/garbage.c
+@@ -318,6 +318,25 @@ void unix_destroy_fpl(struct scm_fp_list *fpl)
+ 	unix_free_vertices(fpl);
+ }
+ 
++static bool gc_in_progress;
++static seqcount_t unix_peek_seq = SEQCNT_ZERO(unix_peek_seq);
++
++void unix_peek_fpl(struct scm_fp_list *fpl)
++{
++	static DEFINE_SPINLOCK(unix_peek_lock);
++
++	if (!fpl || !fpl->count_unix)
++		return;
++
++	if (!READ_ONCE(gc_in_progress))
++		return;
++
++	/* Invalidate the final refcnt check in unix_vertex_dead(). */
++	spin_lock(&unix_peek_lock);
++	raw_write_seqcount_barrier(&unix_peek_seq);
++	spin_unlock(&unix_peek_lock);
++}
++
+ static bool unix_vertex_dead(struct unix_vertex *vertex)
+ {
+ 	struct unix_edge *edge;
+@@ -351,6 +370,36 @@ static bool unix_vertex_dead(struct unix_vertex *vertex)
+ 	return true;
+ }
+ 
++static LIST_HEAD(unix_visited_vertices);
++static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
++
++static bool unix_scc_dead(struct list_head *scc, bool fast)
++{
++	struct unix_vertex *vertex;
++	bool scc_dead = true;
++	unsigned int seq;
++
++	seq = read_seqcount_begin(&unix_peek_seq);
++
++	list_for_each_entry_reverse(vertex, scc, scc_entry) {
++		/* Don't restart DFS from this vertex. */
++		list_move_tail(&vertex->entry, &unix_visited_vertices);
++
++		/* Mark vertex as off-stack for __unix_walk_scc(). */
++		if (!fast)
++			vertex->index = unix_vertex_grouped_index;
++
++		if (scc_dead)
++			scc_dead = unix_vertex_dead(vertex);
++	}
++
++	/* If MSG_PEEK intervened, defer this SCC to the next round. */
++	if (read_seqcount_retry(&unix_peek_seq, seq))
++		return false;
++
++	return scc_dead;
++}
++
+ static void unix_collect_skb(struct list_head *scc, struct sk_buff_head *hitlist)
+ {
+ 	struct unix_vertex *vertex;
+@@ -404,9 +453,6 @@ static bool unix_scc_cyclic(struct list_head *scc)
+ 	return false;
+ }
+ 
+-static LIST_HEAD(unix_visited_vertices);
+-static unsigned long unix_vertex_grouped_index = UNIX_VERTEX_INDEX_MARK2;
+-
+ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
+ 				     unsigned long *last_index,
+ 				     struct sk_buff_head *hitlist)
+@@ -474,9 +520,7 @@ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
+ 	}
+ 
+ 	if (vertex->index == vertex->scc_index) {
+-		struct unix_vertex *v;
+ 		struct list_head scc;
+-		bool scc_dead = true;
+ 
+ 		/* SCC finalised.
+ 		 *
+@@ -485,18 +529,7 @@ static unsigned long __unix_walk_scc(struct unix_vertex *vertex,
+ 		 */
+ 		__list_cut_position(&scc, &vertex_stack, &vertex->scc_entry);
+ 
+-		list_for_each_entry_reverse(v, &scc, scc_entry) {
+-			/* Don't restart DFS from this vertex in unix_walk_scc(). */
+-			list_move_tail(&v->entry, &unix_visited_vertices);
+-
+-			/* Mark vertex as off-stack. */
+-			v->index = unix_vertex_grouped_index;
+-
+-			if (scc_dead)
+-				scc_dead = unix_vertex_dead(v);
+-		}
+-
+-		if (scc_dead) {
++		if (unix_scc_dead(&scc, false)) {
+ 			unix_collect_skb(&scc, hitlist);
+ 		} else {
+ 			if (unix_vertex_max_scc_index < vertex->scc_index)
+@@ -550,19 +583,11 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 	while (!list_empty(&unix_unvisited_vertices)) {
+ 		struct unix_vertex *vertex;
+ 		struct list_head scc;
+-		bool scc_dead = true;
+ 
+ 		vertex = list_first_entry(&unix_unvisited_vertices, typeof(*vertex), entry);
+ 		list_add(&scc, &vertex->scc_entry);
+ 
+-		list_for_each_entry_reverse(vertex, &scc, scc_entry) {
+-			list_move_tail(&vertex->entry, &unix_visited_vertices);
+-
+-			if (scc_dead)
+-				scc_dead = unix_vertex_dead(vertex);
+-		}
+-
+-		if (scc_dead) {
++		if (unix_scc_dead(&scc, true)) {
+ 			cyclic_sccs--;
+ 			unix_collect_skb(&scc, hitlist);
+ 		}
+@@ -577,8 +602,6 @@ static void unix_walk_scc_fast(struct sk_buff_head *hitlist)
+ 		   cyclic_sccs ? UNIX_GRAPH_CYCLIC : UNIX_GRAPH_NOT_CYCLIC);
+ }
+ 
+-static bool gc_in_progress;
+-
+ static void unix_gc(struct work_struct *work)
+ {
+ 	struct sk_buff_head hitlist;
 -- 
 2.51.0
 
