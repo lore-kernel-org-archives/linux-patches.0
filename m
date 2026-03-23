@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D1A42741A0;
-	Mon, 23 Mar 2026 14:49:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B8923B612;
+	Mon, 23 Mar 2026 14:50:00 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277397; cv=none; b=Yg7izijMJJC8dPGQMRPg7A5oKOXfUdidd7a6sXndJB/tXfmZEXxNtKZ3xKUQ7W02Ui4ClDJhnuUfDuEF2P0DEOwIlR3ILFDZXeUXeoMC7eDs6trBetiXvs+ZGE2BBlfK/pVNdmOTjeMTIa0Do0y3cf6EAclyeRwQEGfRUIy0w/w=
+	t=1774277400; cv=none; b=GlpV+5dyPagMxKr1HcXXqx87q9MBUUyua8VB/fE7rKF8vZDdw3C3n2UtlT7FGViX3RGsEIlEmWfeYr+DrHB6vNHJ/28RWMzmNKDwVhnLn37kON37u64g0FBoX8C1Krn35csQzpZmqpfI2qeMLQJibskJDFL+0HD2OBixnHYuPcU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277397; c=relaxed/simple;
-	bh=frZlOg92wM1KYndlZSqk/+7LapgInuqHVRZcc8MVq/s=;
+	s=arc-20240116; t=1774277400; c=relaxed/simple;
+	bh=7zQBKOllL+fn/JwSuYVYHrToygThvCt1t4Ed7PZqyZE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iDT0gePRQVdzgelTNo7Lwsyju2Q/NKBaSsQkXPYeUBEh48Ep4b9c/wKiu1eaLvMKGjkdDkadxk7FvUlTwv0ni3njEm/EMXhFXnmrJU8U+OIHFpXlAocdUUQcSI9p8ajE+FVeWe24JImmLkmym4oSFF8s5I03mRKq3D7GGQMa+tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JBWMOGZd; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=AtNlhYaIvbB+jaNcd0yy+WCP2xtHLzquxopN0uQ4fEZb/xTh4ZOrVWx+qEAy8Dpg6r7WwwV9HmOUCUrQcpXMci9sf+ZVgMFOM4OXEf7FfyEtSmR6llMfo6/puX6eeqpc3R2/m9lpzL+5F+SFLoJLOzRIRH5/gEf+qIspc3w5/7A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=f9eRef30; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JBWMOGZd"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A470C2BCB1;
-	Mon, 23 Mar 2026 14:49:56 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="f9eRef30"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8A9C4CEF7;
+	Mon, 23 Mar 2026 14:49:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277397;
-	bh=frZlOg92wM1KYndlZSqk/+7LapgInuqHVRZcc8MVq/s=;
+	s=korg; t=1774277400;
+	bh=7zQBKOllL+fn/JwSuYVYHrToygThvCt1t4Ed7PZqyZE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JBWMOGZdz7erPfk651cHID0A7Ka44BldPc8j9Jauib89+Br+abi93agc/GDCoiDKK
-	 wXrRH8AaslJsNRqS9380I50moZP7mFX5Y1HAYM5mGhIo713DadhcR3c9uch4uRt53C
-	 al85RgVcFIp4XOnRcR0gV+AkgCzDDeJ01f8QlmWQ=
+	b=f9eRef30Zm3QjZXRQXot0vgWO8FIQxE/1At/fpCa1KWknGvEVIAMXK67ERmW6W2nf
+	 SW+Iunme1gWjgi8umMN/CdkLrah4jHyS0h+24iJl6efB12/gk0vcnH7ev1c15btT3e
+	 fy6dngtRFNPO00UAqqygeJoxo3PLIB87LhZkLEMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Cosmin Ratiu <cratiu@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 422/460] net: macb: fix uninitialized rx_fs_lock
-Date: Mon, 23 Mar 2026 14:46:58 +0100
-Message-ID: <20260323134536.923129697@linuxfoundation.org>
+Subject: [PATCH 6.12 423/460] net/mlx5: qos: Restrict RTNL area to avoid a lock cycle
+Date: Mon, 23 Mar 2026 14:46:59 +0100
+Message-ID: <20260323134536.951307932@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -51,76 +53,110 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Cosmin Ratiu <cratiu@nvidia.com>
 
-[ Upstream commit 34b11cc56e4369bc08b1f4c4a04222d75ed596ce ]
+[ Upstream commit b7e3a5d9c0d66b7fb44f63aef3bd734821afa0c8 ]
 
-If hardware doesn't support RX Flow Filters, rx_fs_lock spinlock is not
-initialized leading to the following assertion splat triggerable via
-set_rxnfc callback.
+A lock dependency cycle exists where:
+1. mlx5_ib_roce_init -> mlx5_core_uplink_netdev_event_replay ->
+mlx5_blocking_notifier_call_chain (takes notifier_rwsem) ->
+mlx5e_mdev_notifier_event -> mlx5_netdev_notifier_register ->
+register_netdevice_notifier_dev_net (takes rtnl)
+=> notifier_rwsem -> rtnl
 
-INFO: trying to register non-static key.
-The code is fine but needs lockdep annotation, or maybe
-you didn't initialize this object before use?
-turning off the locking correctness validator.
-CPU: 1 PID: 949 Comm: syz.0.6 Not tainted 6.1.164+ #113
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.16.1-0-g3208b098f51a-prebuilt.qemu.org 04/01/2014
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x8d/0xba lib/dump_stack.c:106
- assign_lock_key kernel/locking/lockdep.c:974 [inline]
- register_lock_class+0x141b/0x17f0 kernel/locking/lockdep.c:1287
- __lock_acquire+0x74f/0x6c40 kernel/locking/lockdep.c:4928
- lock_acquire kernel/locking/lockdep.c:5662 [inline]
- lock_acquire+0x190/0x4b0 kernel/locking/lockdep.c:5627
- __raw_spin_lock_irqsave include/linux/spinlock_api_smp.h:110 [inline]
- _raw_spin_lock_irqsave+0x33/0x50 kernel/locking/spinlock.c:162
- gem_del_flow_filter drivers/net/ethernet/cadence/macb_main.c:3562 [inline]
- gem_set_rxnfc+0x533/0xac0 drivers/net/ethernet/cadence/macb_main.c:3667
- ethtool_set_rxnfc+0x18c/0x280 net/ethtool/ioctl.c:961
- __dev_ethtool net/ethtool/ioctl.c:2956 [inline]
- dev_ethtool+0x229c/0x6290 net/ethtool/ioctl.c:3095
- dev_ioctl+0x637/0x1070 net/core/dev_ioctl.c:510
- sock_do_ioctl+0x20d/0x2c0 net/socket.c:1215
- sock_ioctl+0x577/0x6d0 net/socket.c:1320
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x18c/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:46 [inline]
- do_syscall_64+0x35/0x80 arch/x86/entry/common.c:76
- entry_SYSCALL_64_after_hwframe+0x6e/0xd8
+2. mlx5e_probe -> _mlx5e_probe ->
+mlx5_core_uplink_netdev_set (takes uplink_netdev_lock) ->
+mlx5_blocking_notifier_call_chain (takes notifier_rwsem)
+=> uplink_netdev_lock -> notifier_rwsem
 
-A more straightforward solution would be to always initialize rx_fs_lock,
-just like rx_fs_list.  However, in this case the driver set_rxnfc callback
-would return with a rather confusing error code, e.g. -EINVAL.  So deny
-set_rxnfc attempts directly if the RX filtering feature is not supported
-by hardware.
+3: devlink_nl_rate_set_doit -> devlink_nl_rate_set ->
+mlx5_esw_devlink_rate_leaf_tx_max_set -> esw_qos_devlink_rate_to_mbps ->
+mlx5_esw_qos_max_link_speed_get (takes rtnl) ->
+mlx5_esw_qos_lag_link_speed_get_locked ->
+mlx5_uplink_netdev_get (takes uplink_netdev_lock)
+=> rtnl -> uplink_netdev_lock
+=> BOOM! (lock cycle)
 
-Fixes: ae8223de3df5 ("net: macb: Added support for RX filtering")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Link: https://patch.msgid.link/20260316103826.74506-2-pchelkin@ispras.ru
+Fix that by restricting the rtnl-protected section to just the necessary
+part, the call to netdev_master_upper_dev_get and speed querying, so
+that the last lock dependency is avoided and the cycle doesn't close.
+This is safe because mlx5_uplink_netdev_get uses netdev_hold to keep the
+uplink netdev alive while its master device is queried.
+
+Use this opportunity to rename the ambiguously-named "hold_rtnl_lock"
+argument to "take_rtnl" and remove the "_locked" suffix from
+mlx5_esw_qos_lag_link_speed_get_locked.
+
+Fixes: 6b4be64fd9fe ("net/mlx5e: Harden uplink netdev access against device unbind")
+Signed-off-by: Cosmin Ratiu <cratiu@nvidia.com>
+Reviewed-by: Dragos Tatulea <dtatulea@nvidia.com>
+Signed-off-by: Tariq Toukan <tariqt@nvidia.com>
+Link: https://patch.msgid.link/20260316094603.6999-2-tariqt@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ .../net/ethernet/mellanox/mlx5/core/esw/qos.c | 23 ++++++++-----------
+ 1 file changed, 9 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 533bd66fb485c..89aa50893d360 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -3845,6 +3845,9 @@ static int gem_set_rxnfc(struct net_device *netdev, struct ethtool_rxnfc *cmd)
- 	struct macb *bp = netdev_priv(netdev);
- 	int ret;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index d8c304427e2ab..8c2e1d881a1a2 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -713,24 +713,24 @@ int mlx5_esw_qos_set_vport_rate(struct mlx5_eswitch *esw, struct mlx5_vport *vpo
+ 	return err;
+ }
  
-+	if (!(netdev->hw_features & NETIF_F_NTUPLE))
-+		return -EOPNOTSUPP;
-+
- 	switch (cmd->cmd) {
- 	case ETHTOOL_SRXCLSRLINS:
- 		if ((cmd->fs.location >= bp->max_tuples)
+-static u32 mlx5_esw_qos_lag_link_speed_get_locked(struct mlx5_core_dev *mdev)
++static u32 mlx5_esw_qos_lag_link_speed_get(struct mlx5_core_dev *mdev,
++					   bool take_rtnl)
+ {
+ 	struct ethtool_link_ksettings lksettings;
+ 	struct net_device *slave, *master;
+ 	u32 speed = SPEED_UNKNOWN;
+ 
+-	/* Lock ensures a stable reference to master and slave netdevice
+-	 * while port speed of master is queried.
+-	 */
+-	ASSERT_RTNL();
+-
+ 	slave = mlx5_uplink_netdev_get(mdev);
+ 	if (!slave)
+ 		goto out;
+ 
++	if (take_rtnl)
++		rtnl_lock();
+ 	master = netdev_master_upper_dev_get(slave);
+ 	if (master && !__ethtool_get_link_ksettings(master, &lksettings))
+ 		speed = lksettings.base.speed;
++	if (take_rtnl)
++		rtnl_unlock();
+ 
+ out:
+ 	mlx5_uplink_netdev_put(mdev, slave);
+@@ -738,20 +738,15 @@ static u32 mlx5_esw_qos_lag_link_speed_get_locked(struct mlx5_core_dev *mdev)
+ }
+ 
+ static int mlx5_esw_qos_max_link_speed_get(struct mlx5_core_dev *mdev, u32 *link_speed_max,
+-					   bool hold_rtnl_lock, struct netlink_ext_ack *extack)
++					   bool take_rtnl,
++					   struct netlink_ext_ack *extack)
+ {
+ 	int err;
+ 
+ 	if (!mlx5_lag_is_active(mdev))
+ 		goto skip_lag;
+ 
+-	if (hold_rtnl_lock)
+-		rtnl_lock();
+-
+-	*link_speed_max = mlx5_esw_qos_lag_link_speed_get_locked(mdev);
+-
+-	if (hold_rtnl_lock)
+-		rtnl_unlock();
++	*link_speed_max = mlx5_esw_qos_lag_link_speed_get(mdev, take_rtnl);
+ 
+ 	if (*link_speed_max != (u32)SPEED_UNKNOWN)
+ 		return 0;
 -- 
 2.51.0
 
