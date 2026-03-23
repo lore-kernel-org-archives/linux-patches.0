@@ -1,79 +1,66 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB08D387344;
-	Mon, 23 Mar 2026 10:32:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 7201C390CBC
+	for <patches@lists.linux.dev>; Mon, 23 Mar 2026 10:49:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.140.110.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774261977; cv=none; b=dnl5qNC0q2gd9OFltScAs01Kib+vpQoO5SLeIEfk3z2LzgFEbCRtVOLUtGODmurn1/dSsFCbYrTDjN8QdISMa+f3r79lWCw2+wCO4C5e2ASS7jR3lxL79Dv23OAdC0ntDt+aJKmi3B1Gkc9qajpIZcFZFUokn6cEZxmv7i8AXuQ=
+	t=1774262987; cv=none; b=HG+MoabDZHL1pzdqJ/c2dhUFj2nhG0ffxwSC1SBqdm8PFxjPtoMlN034FyMTuCM0m/f2tn7PhzdK3lNeuY/NI6oTbJWZ/U52q1KLqSLVL/HbncJ9/isu4qxvWD4NyJRCf/VWRw4NmV7iknfb6R2dPWorSv5KfGVYeM2SCUrtuTw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774261977; c=relaxed/simple;
-	bh=nu9KpscKUDBHHpMe1GSngED3iiYBegN779XB3oiDq/0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mLCHIVSL/OfKH9Ttk5/6fXn6qa4REglHAtc6OcMF/Ac2+tFfn7RvpFAbQraMIbUqZQ019EdBReaU3ffiZrw2Bo2iT+9ZyQ3BaPaXpOScyd0q6Pp3Tfg84WfOq9uPX0TWzi5mGM8RkdrJ2nGqVCTE+vaO2BJsi23mQ6g2Qc1Nc5I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=04wGH4mC; arc=none smtp.client-ip=10.30.226.201
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="04wGH4mC"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155C6C4CEF7;
-	Mon, 23 Mar 2026 10:32:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774261976;
-	bh=nu9KpscKUDBHHpMe1GSngED3iiYBegN779XB3oiDq/0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=04wGH4mC1KfLOSBXHPTRJfNUuxnMmyK+Lsx5lpOWNqMYwWDLirA8niGIkoAcmghVA
-	 jyiXRHixl+6ydXRyru9sEQgDb3javn5DMXGxej+/A5KEl6Ghpvpk5JMDhhfo10luEX
-	 KFngbqFlqN/0lTu76BpXagjLE/N7QY7WCsuJpGDI=
-Date: Mon, 23 Mar 2026 11:32:35 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>
-Cc: Li hongliang <1468888505@139.com>, srinivasan.shanmugam@amd.com,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	alexander.deucher@amd.com, Xinhui.Pan@amd.com, airlied@gmail.com,
-	daniel@ffwll.ch, sashal@kernel.org, guchun.chen@amd.com,
-	amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org
-Subject: Re: [PATCH 6.1.y] drm/amdgpu: Fix potential out-of-bounds access in
- 'amdgpu_discovery_reg_base_init()'
-Message-ID: <2026032346-ruse-dork-baf3@gregkh>
-References: <20260323071052.4068410-1-1468888505@139.com>
- <f2d125ce-8cb9-4ae8-8f55-0b5a78e66f83@amd.com>
+	s=arc-20240116; t=1774262987; c=relaxed/simple;
+	bh=yT+ywJno7F1fu78c3cW7WYuKxiNBGzt364+YjWo6Dc0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=PtZfy6sjFDv5n4pZMkwM1YGo38/Xl+gWXNex1PeGWSMMl+hO6BKBu33eaHuAnTO/q0v26znldxTFM3jLI53ZPTl7dxc8w+EDEJ4qWEpGkSPu//xUizqLD3AUUbjspuSULMPcOXto7sbEIRrmQRBzAHLL/DsD/7tBQdL2pmCnu90=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com; spf=pass smtp.mailfrom=arm.com; arc=none smtp.client-ip=217.140.110.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 013691516;
+	Mon, 23 Mar 2026 03:49:40 -0700 (PDT)
+Received: from [10.1.196.46] (e134344.arm.com [10.1.196.46])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 0087F3F73B;
+	Mon, 23 Mar 2026 03:49:43 -0700 (PDT)
+Message-ID: <a1a692bd-3e97-483a-aed0-8005a08534de@arm.com>
+Date: Mon, 23 Mar 2026 10:49:42 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <f2d125ce-8cb9-4ae8-8f55-0b5a78e66f83@amd.com>
+User-Agent: Thunderbird Daily
+Subject: Re: [PATCH v2 14/14] fs/resctrl: Inform user space when status buffer
+ overflowed
+To: Reinette Chatre <reinette.chatre@intel.com>, tony.luck@intel.com,
+ james.morse@arm.com, Dave.Martin@arm.com, babu.moger@amd.com, bp@alien8.de,
+ tglx@linutronix.de, dave.hansen@linux.intel.com
+Cc: x86@kernel.org, hpa@zytor.com, fustini@kernel.org, fenghuay@nvidia.com,
+ peternewman@google.com, linux-kernel@vger.kernel.org, patches@lists.linux.dev
+References: <cover.1774043709.git.reinette.chatre@intel.com>
+ <0a2c56ac55725fe3131e214297649b9416671b9e.1774043709.git.reinette.chatre@intel.com>
+Content-Language: en-US
+From: Ben Horgan <ben.horgan@arm.com>
+In-Reply-To: <0a2c56ac55725fe3131e214297649b9416671b9e.1774043709.git.reinette.chatre@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 23, 2026 at 10:51:18AM +0100, Christian König wrote:
-> Hi Li,
+Hi Reinette,
+
+On 3/20/26 22:03, Reinette Chatre wrote:
+> resctrl fs commands are becoming more powerful with, for example, a user
+> able to use syntax like '*' to make broad configuration changes. Such
+> commands that span multiple domains may result in more than one message
+> printed to the last_cmd_status buffer with more planned.
 > 
-> On 3/23/26 08:10, Li hongliang wrote:
-> > From: Srinivasan Shanmugam <srinivasan.shanmugam@amd.com>
-> > 
-> > [ Upstream commit cdb637d339572398821204a1142d8d615668f1e9 ]
-> > 
-> > The issue arises when the array 'adev->vcn.vcn_config' is accessed
-> > before checking if the index 'adev->vcn.num_vcn_inst' is within the
-> > bounds of the array.
-> > 
-> > The fix involves moving the bounds check before the array access. This
-> > ensures that 'adev->vcn.num_vcn_inst' is within the bounds of the array
-> > before it is used as an index.
-> > 
-> > Fixes the below:
-> > drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c:1289 amdgpu_discovery_reg_base_init() error: testing array offset 'adev->vcn.num_vcn_inst' after use.
-> 
-> well this patch only fixed a compiler warning and has not much practical value otherwise.
-> 
-> Why are you sending this for inclusion into the 6.1 kernel?
+> Display "[truncated]" to user space when displaying the last_cmd_status
+> buffer to communicate if it overflowed. Upon encountering this user space
+> is expected to combine details about the failure found in info/last_cmd_status
+> with related resctrl files to learn the accurate system state after the
+> command failure.
 
-Perhaps because it was assigned to CVE-2024-27042?  If this is ONLY a
-compiler warning fix, and NOT an actual vulnerability fix, please let
-cve@kernel.org know about that and they will revoke this CVE.
+LGTM:
 
-thanks,
+Reviewed-by: Ben Horgan <ben.horgan@arm.com>
 
-greg k-h
+Thanks,
+
+Ben
+
