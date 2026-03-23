@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08DC7282F35;
-	Mon, 23 Mar 2026 16:21:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B78E258CD9;
+	Mon, 23 Mar 2026 16:21:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282899; cv=none; b=cCutmh9nRlkKCi+qMyhghKfBs26p2BdvG0mMiX41BQphqC1K/V+h4SOiZLB1su4Vetx8W9s1ZBhO6iw7kGU9F22Dt/H2nOhQurM01SQaiNB6SjyF/dqLTVEP8C/LCRO7BSZU/yBVYLhIFo6Umo3UbkoMJyjSB1sPK6ODI/3XrIw=
+	t=1774282901; cv=none; b=ED7zAp+vMQBKnt9k3rY7vB5LnKUTXAZIyaYjEygk9fA07KQH57IOYo+U/4T/m+zjYWGrjbhsxJ9rohLLRR8eT/2xq9RGmYDt+roqbe1+RTCz53qqMEKq4SB9X+eOKVJxWhjUw99o+ratfKgnf8RFSZb8PdZ4xI4YKhPplKbaAxY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282899; c=relaxed/simple;
-	bh=zIonWaKb5tzsp1WWBpx1H+nEtTyjP1KgUKKR2nsIxEc=;
+	s=arc-20240116; t=1774282901; c=relaxed/simple;
+	bh=vDBsOZGF5t49lYMPhsj3Kcl4NI6bj8sxEb1SdS3ppJo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=kwJ8e3GcYRNRoQQMzsMzwDKmx8hMGiSJdTYnXwIqklPJ2F73ZAxUvBg4vZdnTRsN7IXamtTG73WOUVjF+fmEdmL3rk+80VqO2wHyKg+doHXVvCjYt/XtJXCOGm8PbH/sbq2pQjO921UQFk8UlZwvdHaR36rQ+6S+1lEAvyEmRnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=RKZ4xUcQ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=kc4CMUh3QZIYZP/tQn0iojiS9+w36RDcgZ/QtVEXgtv8687Ssi0SChfJhtO5RGrLYZ/HgudMtOJMalNLEFkQ2d0JrDrw7BUcWlmRlkCXCAUvjjigGFQZj0b0lLU4t+jBqo4BToRDrWFL3A7u29h71rxzFPAjvnzpmy5ZPgAGC9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=H+z8xEYk; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="RKZ4xUcQ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE86C4CEF7;
-	Mon, 23 Mar 2026 16:21:38 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="H+z8xEYk"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D266C4CEF7;
+	Mon, 23 Mar 2026 16:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282898;
-	bh=zIonWaKb5tzsp1WWBpx1H+nEtTyjP1KgUKKR2nsIxEc=;
+	s=korg; t=1774282901;
+	bh=vDBsOZGF5t49lYMPhsj3Kcl4NI6bj8sxEb1SdS3ppJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RKZ4xUcQo9XvbUHY5Z0HM9Sw7bKCXsSDfkrEh9AXah+utI35Iov8NgG2aDYFQezos
-	 OWSpF7CY3Ckbq/UO/flmO6BlVSRLjCefhQMRxB6aB+4I8cjGr6kuR86S8cNaJfbOt+
-	 uffO1LXbjjMLVT1LsP/VYfYwmwNcn3HMVA1Jvhfw=
+	b=H+z8xEYkYDIwjCFToum69CPm4djei9Q+08Gm0kOVwbq6W3BCJCnEohdpwOoh10RuU
+	 GNXuGxM0LnFlxIyvUnJcKrVIL37uRNo7tYEFhDniuZ5bx10Z2eIN7iY0D9jBIQzZUu
+	 wokvtOpnRR/tEfemuu6wuZ1roaqFvoWR5lW/M1UA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dingisoul <dingiso.kernel@gmail.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Ira Weiny <ira.weiny@intel.com>
-Subject: [PATCH 6.1 283/481] nvdimm/bus: Fix potential use after free in asynchronous initialization
-Date: Mon, 23 Mar 2026 14:44:25 +0100
-Message-ID: <20260323134532.010226589@linuxfoundation.org>
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Huacai Chen <chenhuacai@loongson.cn>
+Subject: [PATCH 6.1 284/481] LoongArch: Give more information if kmem access failed
+Date: Mon, 23 Mar 2026 14:44:26 +0100
+Message-ID: <20260323134532.035113623@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,55 +50,64 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ira Weiny <ira.weiny@intel.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit a8aec14230322ed8f1e8042b6d656c1631d41163 upstream.
+commit a47f0754bdd01f971c9715acdbdd3a07515c8f83 upstream.
 
-Dingisoul with KASAN reports a use after free if device_add() fails in
-nd_async_device_register().
+If memory access such as copy_{from, to}_kernel_nofault() failed, its
+users do not know what happened, so it is very useful to print the
+exception code for such cases. Furthermore, it is better to print the
+caller function to know where is the entry.
 
-Commit b6eae0f61db2 ("libnvdimm: Hold reference on parent while
-scheduling async init") correctly added a reference on the parent device
-to be held until asynchronous initialization was complete.  However, if
-device_add() results in an allocation failure the ref count of the
-device drops to 0 prior to the parent pointer being accessed.  Thus
-resulting in use after free.
+Here are the low level call chains:
 
-The bug bot AI correctly identified the fix.  Save a reference to the
-parent pointer to be used to drop the parent reference regardless of the
-outcome of device_add().
+  copy_from_kernel_nofault()
+    copy_from_kernel_nofault_loop()
+      __get_kernel_nofault()
 
-Reported-by: Dingisoul <dingiso.kernel@gmail.com>
-Closes: http://lore.kernel.org/8855544b-be9e-4153-aa55-0bc328b13733@gmail.com
-Fixes: b6eae0f61db2 ("libnvdimm: Hold reference on parent while scheduling async init")
+  copy_to_kernel_nofault()
+    copy_to_kernel_nofault_loop()
+      __put_kernel_nofault()
+
 Cc: stable@vger.kernel.org
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://patch.msgid.link/20260306-fix-uaf-async-init-v1-1-a28fd7526723@intel.com
-Signed-off-by: Ira Weiny <ira.weiny@intel.com>
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Huacai Chen <chenhuacai@loongson.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvdimm/bus.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/loongarch/include/asm/uaccess.h |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/drivers/nvdimm/bus.c
-+++ b/drivers/nvdimm/bus.c
-@@ -486,14 +486,15 @@ EXPORT_SYMBOL_GPL(nd_synchronize);
- static void nd_async_device_register(void *d, async_cookie_t cookie)
- {
- 	struct device *dev = d;
-+	struct device *parent = dev->parent;
+--- a/arch/loongarch/include/asm/uaccess.h
++++ b/arch/loongarch/include/asm/uaccess.h
+@@ -209,8 +209,13 @@ do {									\
+ 									\
+ 	__get_kernel_common(*((type *)(dst)), sizeof(type),		\
+ 			    (__force type *)(src));			\
+-	if (unlikely(__gu_err))						\
++	if (unlikely(__gu_err))	{					\
++		pr_info("%s: memory access failed, ecode 0x%x\n",	\
++			__func__, read_csr_excode());			\
++		pr_info("%s: the caller is %pS\n",			\
++			__func__, __builtin_return_address(0));		\
+ 		goto err_label;						\
++	}								\
+ } while (0)
  
- 	if (device_add(dev) != 0) {
- 		dev_err(dev, "%s: failed\n", __func__);
- 		put_device(dev);
- 	}
- 	put_device(dev);
--	if (dev->parent)
--		put_device(dev->parent);
-+	if (parent)
-+		put_device(parent);
- }
+ #define __put_kernel_nofault(dst, src, type, err_label)			\
+@@ -220,8 +225,13 @@ do {									\
+ 									\
+ 	__pu_val = *(__force type *)(src);				\
+ 	__put_kernel_common(((type *)(dst)), sizeof(type));		\
+-	if (unlikely(__pu_err))						\
++	if (unlikely(__pu_err))	{					\
++		pr_info("%s: memory access failed, ecode 0x%x\n",	\
++			__func__, read_csr_excode());			\
++		pr_info("%s: the caller is %pS\n",			\
++			__func__, __builtin_return_address(0));		\
+ 		goto err_label;						\
++	}								\
+ } while (0)
  
- static void nd_async_device_unregister(void *d, async_cookie_t cookie)
+ extern unsigned long __copy_user(void *to, const void *from, __kernel_size_t n);
 
 
