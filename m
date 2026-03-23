@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B485B3B3BE5;
-	Mon, 23 Mar 2026 16:28:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FD8395DB5;
+	Mon, 23 Mar 2026 16:29:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283339; cv=none; b=q5tdXUziTfxsj4lRioTsmUuO5z+RZ8T9M5X5JnAGe1buyiGgC6hdOfh1CUf8DzbwtgPEFWBE2Xi4EZSK/AeVs5KpFRBiY+W0349VduAMIrohkS1XRvjSu5jzfZIaNjGfFU8jPhCYi55cpPu45WMojGwFdYleFq0uPcQ1/PUpaAg=
+	t=1774283342; cv=none; b=FCco30KkWcfca322iVUtWL1545c/WQvTd8LcdMtGf22aQZ1qHjVN+zvbLtN/OxZKVt2lhVLPEJITMV98bkiJ5DGsfJO0x6P1fH07AJv9GchYfHxpTWqeV0JN7mVbPkNl7/MHoFTVZ5CxMAwyWBspiy29nWNVk4IGHA5u3dLamko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283339; c=relaxed/simple;
-	bh=1BIBfusO/OwtawEAzaiPyr8OqqIbQfa9caL88JJXhAQ=;
+	s=arc-20240116; t=1774283342; c=relaxed/simple;
+	bh=a+lHdsBImeJBCpI3God7Eso43qDuQmwpZtE3rQqneUA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=HY9UbQ0CQRmqr4MxR5oYieMGscTqovknPkAvxM39aFV2ZLqUPHM5NmyFG8UgDS2pttcdq69cVGKaa8i4L2A2/C27fyFEDPL719f7CNCMVlIKUWR7O41nVntTNvrBy2mibUx+9l0+7iUTnlkMyeAncx6BpCLJnhhLwcRZOq7xKSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tdhImHmx; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=rWTTakj6NIVzlxIdxzE6+TsQGzwNNC2wXQ76tnVPAaAvX4BHYgeo6p3GFAgdRi6t5VjJy+JNWKVe1UQRbjIiFqTq9a2NFOoPmlbqbR/UILQRZVUkv/P1u7vykIteCNaXcL05ORuD4u/eUnbs9oZAp12dWTvI1Q4dsCtsbL5b0tI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=R16wdR3w; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tdhImHmx"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDF74C4CEF7;
-	Mon, 23 Mar 2026 16:28:58 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="R16wdR3w"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D65AFC2BC9E;
+	Mon, 23 Mar 2026 16:29:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283339;
-	bh=1BIBfusO/OwtawEAzaiPyr8OqqIbQfa9caL88JJXhAQ=;
+	s=korg; t=1774283342;
+	bh=a+lHdsBImeJBCpI3God7Eso43qDuQmwpZtE3rQqneUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdhImHmx70C+OJx1cfIo526e/beQAJnntypaZakmDmHp6n3bzYbROGf9hBreszoIx
-	 SEC+Wj6aw61tPSFOHBIR5F3Joj9S31gydiz7oZyTqqAlMEhkgYO9aQKRFfheMHiHnQ
-	 kmIZkXrF+iA3uSuWYY7+r7h1fjDCoobxDYPfHihQ=
+	b=R16wdR3wKHCJB8gZc0uulrjNGnn9hb1xPRYtgh4XYE2M3WNhsT3JMOcXQBG9LjRvK
+	 BwiVedIy03xKgVGgZNmNP53nvZmGu963xpingnjT7gH0ODEK0o+f8mtpDKN0/khUyS
+	 pBGKMn0FLPD+2dgjv9LI7xgErMTukCx/jpvXqCCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org,
-	"stable@vger.kernel.org, Duoming Zhou" <duoming@zju.edu.cn>
+To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Robert Garcia <rob_garcia@163.com>
-Subject: [PATCH 6.1 475/481] wifi: brcmfmac: fix use-after-free when rescheduling brcmf_btcoex_info work
-Date: Mon, 23 Mar 2026 14:47:37 +0100
-Message-ID: <20260323134536.796115706@linuxfoundation.org>
+	Jiakai Xu <xujiakai2025@iscas.ac.cn>,
+	Chunyan Zhang <zhangchunyan@iscas.ac.cn>,
+	Paul Walmsley <pjw@kernel.org>,
+	Jianqiang kang <jianqkang@sina.cn>
+Subject: [PATCH 6.1 476/481] riscv: stacktrace: Disable KASAN checks for non-current tasks
+Date: Mon, 23 Mar 2026 14:47:38 +0100
+Message-ID: <20260323134536.818979578@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -46,106 +46,76 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.1-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Duoming Zhou <duoming@zju.edu.cn>
+From: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
 
-[ Upstream commit 9cb83d4be0b9b697eae93d321e0da999f9cdfcfc ]
+[ Upstream commit 060ea84a484e852b52b938f234bf9b5503a6c910 ]
 
-The brcmf_btcoex_detach() only shuts down the btcoex timer, if the
-flag timer_on is false. However, the brcmf_btcoex_timerfunc(), which
-runs as timer handler, sets timer_on to false. This creates critical
-race conditions:
+Unwinding the stack of a task other than current, KASAN would report
+"BUG: KASAN: out-of-bounds in walk_stackframe+0x41c/0x460"
 
-1.If brcmf_btcoex_detach() is called while brcmf_btcoex_timerfunc()
-is executing, it may observe timer_on as false and skip the call to
-timer_shutdown_sync().
+There is a same issue on x86 and has been resolved by the commit
+84936118bdf3 ("x86/unwind: Disable KASAN checks for non-current tasks")
+The solution could be applied to RISC-V too.
 
-2.The brcmf_btcoex_timerfunc() may then reschedule the brcmf_btcoex_info
-worker after the cancel_work_sync() has been executed, resulting in
-use-after-free bugs.
+This patch also can solve the issue:
+https://seclists.org/oss-sec/2025/q4/23
 
-The use-after-free bugs occur in two distinct scenarios, depending on
-the timing of when the brcmf_btcoex_info struct is freed relative to
-the execution of its worker thread.
-
-Scenario 1: Freed before the worker is scheduled
-
-The brcmf_btcoex_info is deallocated before the worker is scheduled.
-A race condition can occur when schedule_work(&bt_local->work) is
-called after the target memory has been freed. The sequence of events
-is detailed below:
-
-CPU0                           | CPU1
-brcmf_btcoex_detach            | brcmf_btcoex_timerfunc
-                               |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)   |
-    ...                        |
-  cancel_work_sync();          |
-  ...                          |
-  kfree(cfg->btcoex); // FREE  |
-                               |   schedule_work(&bt_local->work); // USE
-
-Scenario 2: Freed after the worker is scheduled
-
-The brcmf_btcoex_info is freed after the worker has been scheduled
-but before or during its execution. In this case, statements within
-the brcmf_btcoex_handler() — such as the container_of macro and
-subsequent dereferences of the brcmf_btcoex_info object will cause
-a use-after-free access. The following timeline illustrates this
-scenario:
-
-CPU0                            | CPU1
-brcmf_btcoex_detach             | brcmf_btcoex_timerfunc
-                                |   bt_local->timer_on = false;
-  if (cfg->btcoex->timer_on)    |
-    ...                         |
-  cancel_work_sync();           |
-  ...                           |   schedule_work(); // Reschedule
-                                |
-  kfree(cfg->btcoex); // FREE   |   brcmf_btcoex_handler() // Worker
-  /*                            |     btci = container_of(....); // USE
-   The kfree() above could      |     ...
-   also occur at any point      |     btci-> // USE
-   during the worker's execution|
-   */                           |
-
-To resolve the race conditions, drop the conditional check and call
-timer_shutdown_sync() directly. It can deactivate the timer reliably,
-regardless of its current state. Once stopped, the timer_on state is
-then set to false.
-
-Fixes: 61730d4dfffc ("brcmfmac: support critical protocol API for DHCP")
-Acked-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Duoming Zhou <duoming@zju.edu.cn>
-Link: https://patch.msgid.link/20250822050839.4413-1-duoming@zju.edu.cn
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[ Keep del_timer_sync() instead of timer_shutdown_sync() here. ]
-Signed-off-by: Robert Garcia <rob_garcia@163.com>
+Fixes: 5d8544e2d007 ("RISC-V: Generic library routines and assembly")
+Co-developed-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Jiakai Xu <xujiakai2025@iscas.ac.cn>
+Signed-off-by: Chunyan Zhang <zhangchunyan@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20251022072608.743484-1-zhangchunyan@iscas.ac.cn
+[pjw@kernel.org: clean up checkpatch issues]
+Signed-off-by: Paul Walmsley <pjw@kernel.org>
+[ Minor conflict resolved. ]
+Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/stacktrace.c |   21 +++++++++++++++++++--
+ 1 file changed, 19 insertions(+), 2 deletions(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/btcoex.c
-@@ -392,10 +392,8 @@ void brcmf_btcoex_detach(struct brcmf_cf
- 	if (!cfg->btcoex)
- 		return;
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -16,6 +16,22 @@
  
--	if (cfg->btcoex->timer_on) {
--		cfg->btcoex->timer_on = false;
--		del_timer_sync(&cfg->btcoex->timer);
--	}
-+	del_timer_sync(&cfg->btcoex->timer);
-+	cfg->btcoex->timer_on = false;
+ #ifdef CONFIG_FRAME_POINTER
  
- 	cancel_work_sync(&cfg->btcoex->work);
++/*
++ * This disables KASAN checking when reading a value from another task's stack,
++ * since the other task could be running on another CPU and could have poisoned
++ * the stack in the meantime.
++ */
++#define READ_ONCE_TASK_STACK(task, x)			\
++({							\
++	unsigned long val;				\
++	unsigned long addr = x;				\
++	if ((task) == current)				\
++		val = READ_ONCE(addr);			\
++	else						\
++		val = READ_ONCE_NOCHECK(addr);		\
++	val;						\
++})
++
+ extern asmlinkage void ret_from_exception(void);
  
+ static inline int fp_is_valid(unsigned long fp, unsigned long sp)
+@@ -68,8 +84,9 @@ void notrace walk_stackframe(struct task
+ 			fp = frame->ra;
+ 			pc = regs->ra;
+ 		} else {
+-			fp = frame->fp;
+-			pc = ftrace_graph_ret_addr(current, &graph_idx, frame->ra,
++			fp = READ_ONCE_TASK_STACK(task, frame->fp);
++			pc = READ_ONCE_TASK_STACK(task, frame->ra);
++			pc = ftrace_graph_ret_addr(current, &graph_idx, pc,
+ 						   &frame->ra);
+ 			if (pc == (unsigned long)ret_from_exception) {
+ 				if (unlikely(!__kernel_text_address(pc) || !fn(arg, pc)))
 
 
