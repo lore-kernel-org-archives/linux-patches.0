@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39F573ACA5C;
-	Mon, 23 Mar 2026 13:51:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9574A3AC0D2;
+	Mon, 23 Mar 2026 13:51:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273896; cv=none; b=PKNcltX8IVW9v3R3VuRl5UYDVXvKDG0YS+/Kbcc3boGxS50H44BEZUHWi+wpELeAKRXPOPC/xWAmXqRYwhBr+gi13i5JhIoOVBV+j8UIGXydjRdXZJh7gEbm7V8LLTNoxlGP+lzy4Vg4t+zasqtT/FzlWJy3DNA1IcKmTDKmUFw=
+	t=1774273899; cv=none; b=Gd/sErNh6oCBn1cpJ9nHq7PFQqDpiFUCJzRY+9wz2uJdQ2xwOut9cn9J31qyrX8CE6AnQtCh9NoYocP3AELDA8QRHWIdSAMFW1jKp5DBnCb9DDR1DcV2J/mlVpJUvtXfpoRATxWLhtScpYq6tRMTqAiXpZg+pON1G0l4LX7CQVI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273896; c=relaxed/simple;
-	bh=Q3D75tZayzY8HIO6kArQwrFA9K9IvgQkLBbIq2gVMb8=;
+	s=arc-20240116; t=1774273899; c=relaxed/simple;
+	bh=1brawcWDg0A1Jz7IgCRBXlNtyRtASP5PFzCm4e7oGJk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2t7v9Yyi1Sc0J9jW4uObqtWfREzHDu2DBsV2w/HVHwJoRTcPUvWworCAWDLZLyqIdT9r0KGpdPqDNfarAFjVfytmKva34C1Y0nb2pOxRe9geJgo3J/+H8LBMFWVi4jG1XvOK08bi7Fuecw4j7+tS9xRgt7m9fNoIit7KP3Lpng=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pOLZ8Yeq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=h5VAAqDBMfqbdo2l4pvbB8r6MHQF9bGv0I94hz9FJIA4NB/mV8eNQEdjIdh6yGcqb2XkFT2TeQGsMddNBHOeGu6XMaIjqNl8SfCXI87bTaGfddbzawRe3jXBUJgFgSN++iVm8SimOFTalwjFJN9TxixN7r1eN1hOZkzY1BQUnew=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=L4JIID1+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pOLZ8Yeq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A2B7C2BCB3;
-	Mon, 23 Mar 2026 13:51:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="L4JIID1+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004EBC4CEF7;
+	Mon, 23 Mar 2026 13:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273895;
-	bh=Q3D75tZayzY8HIO6kArQwrFA9K9IvgQkLBbIq2gVMb8=;
+	s=korg; t=1774273899;
+	bh=1brawcWDg0A1Jz7IgCRBXlNtyRtASP5PFzCm4e7oGJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pOLZ8YeqPYVcZ1YdRiAcV9ThpsM8tok0AxzYG7yBJStci+aON/diIYnGWG8rujhQl
-	 p+A2i2j4kDVWxlU3V8dWusA0yWtod4kZdPfY560iroeKsewBzUhBfy8AH9/XTzkFki
-	 F/vyJy3ZerPJG0Bq5uPvugaYM4KkQ5HfHbqApmjI=
+	b=L4JIID1+cXR2aQD9Btxg+6M4TQnRnaNkPOzST+KF3QbrB+x8t4juZ8yQadch3PIjm
+	 jnuYD5Uz+tySMfuQnzd2Ce5q2J3tqhp+oIbwA/Cgts84yLPqtauoXYNCBr0j8EkPFI
+	 wIiLU4NBNqkm1TKXTr+U1FlWcpYkKfL3qGCg0b1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luke Wang <ziniu.wang_1@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Adam Ford <aford173@gmail.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.19 044/220] mmc: sdhci: fix timing selection for 1-bit bus width
-Date: Mon, 23 Mar 2026 14:43:41 +0100
-Message-ID: <20260323134505.981010360@linuxfoundation.org>
+Subject: [PATCH 6.19 045/220] pmdomain: mediatek: Fix power domain count
+Date: Mon, 23 Mar 2026 14:43:42 +0100
+Message-ID: <20260323134506.011228379@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -51,47 +51,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Luke Wang <ziniu.wang_1@nxp.com>
+From: Adam Ford <aford173@gmail.com>
 
-commit 5e3486e64094c28a526543f1e8aa0d5964b7f02d upstream.
+commit b22c526569e6af84008b674e66378e771bfbdd94 upstream.
 
-When 1-bit bus width is used with HS200/HS400 capabilities set,
-mmc_select_hs200() returns 0 without actually switching. This
-causes mmc_select_timing() to skip mmc_select_hs(), leaving eMMC
-in legacy mode (26MHz) instead of High Speed SDR (52MHz).
+The wrong value of the number of domains is wrong which leads to
+failures when trying to enumerate nested power domains.
 
-Per JEDEC eMMC spec section 5.3.2, 1-bit mode supports High Speed
-SDR. Drop incompatible HS200/HS400/UHS/DDR caps early so timing
-selection falls through to mmc_select_hs() correctly.
+ PM: genpd_xlate_onecell: invalid domain index 0
+ PM: genpd_xlate_onecell: invalid domain index 1
+ PM: genpd_xlate_onecell: invalid domain index 3
+ PM: genpd_xlate_onecell: invalid domain index 4
+ PM: genpd_xlate_onecell: invalid domain index 5
+ PM: genpd_xlate_onecell: invalid domain index 13
+ PM: genpd_xlate_onecell: invalid domain index 14
 
-Fixes: f2119df6b764 ("mmc: sd: add support for signal voltage switch procedure")
-Signed-off-by: Luke Wang <ziniu.wang_1@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Attempts to use these power domains fail, so fix this by
+using the correct value of calculated power domains.
+
+Signed-off-by: Adam Ford <aford173@gmail.com>
+Fixes: 88914db077b6 ("pmdomain: mediatek: Add support for Hardware Voter power domains")
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/pmdomain/mediatek/mtk-pm-domains.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/sdhci.c
-+++ b/drivers/mmc/host/sdhci.c
-@@ -4532,8 +4532,15 @@ int sdhci_setup_host(struct sdhci_host *
- 	 * their platform code before calling sdhci_add_host(), and we
- 	 * won't assume 8-bit width for hosts without that CAP.
- 	 */
--	if (!(host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA))
-+	if (host->quirks & SDHCI_QUIRK_FORCE_1_BIT_DATA) {
-+		host->caps1 &= ~(SDHCI_SUPPORT_SDR104 | SDHCI_SUPPORT_SDR50 | SDHCI_SUPPORT_DDR50);
-+		if (host->quirks2 & SDHCI_QUIRK2_CAPS_BIT63_FOR_HS400)
-+			host->caps1 &= ~SDHCI_SUPPORT_HS400;
-+		mmc->caps2 &= ~(MMC_CAP2_HS200 | MMC_CAP2_HS400 | MMC_CAP2_HS400_ES);
-+		mmc->caps &= ~(MMC_CAP_DDR | MMC_CAP_UHS);
-+	} else {
- 		mmc->caps |= MMC_CAP_4_BIT_DATA;
-+	}
+diff --git a/drivers/pmdomain/mediatek/mtk-pm-domains.c b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+index f64f24d520dd..e2800aa1bc59 100644
+--- a/drivers/pmdomain/mediatek/mtk-pm-domains.c
++++ b/drivers/pmdomain/mediatek/mtk-pm-domains.c
+@@ -1203,7 +1203,7 @@ static int scpsys_probe(struct platform_device *pdev)
+ 	scpsys->soc_data = soc;
  
- 	if (host->quirks2 & SDHCI_QUIRK2_HOST_NO_CMD23)
- 		mmc->caps &= ~MMC_CAP_CMD23;
+ 	scpsys->pd_data.domains = scpsys->domains;
+-	scpsys->pd_data.num_domains = soc->num_domains;
++	scpsys->pd_data.num_domains = num_domains;
+ 
+ 	parent = dev->parent;
+ 	if (!parent) {
+-- 
+2.53.0
+
 
 
