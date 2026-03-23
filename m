@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB831A5B84;
-	Mon, 23 Mar 2026 14:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D523815B;
+	Mon, 23 Mar 2026 14:47:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774277248; cv=none; b=YxXszVqdDs/v/+7tr9E5ZkcAWezjhWPukPznTZ36By8iAYFsp1EdFzO94/n94qHR+cQ+oDv8YL0rHfAp2SzTbti3MXCvYmbezTeGSWb3OO14YAxGQ/OeBCZnJriInaKAtYSLxLNwvHJU+WzsjHNLZ7+ckFiNk6uxCe83eaAVuUs=
+	t=1774277251; cv=none; b=ARMD1iA8PYlhPNPpt7RaOrq5MRTBHULdAmVVkxx2H+xZXEwxASjcOchsrMFBkC9KhZxlrXjjlXyhQmRfpZLPtxNYFTtkFgb1aju0DsPkA1YxGcNyGjgyg3nolXxueRr9QvWeiD4xa0mQSNDEzHx0RsJtFlBTYzQ1hMpPKB4YWSM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774277248; c=relaxed/simple;
-	bh=3Z4xaFDWhsIOF+VurN1BF2aBY78FX2NIzYXZ+8sLFOo=;
+	s=arc-20240116; t=1774277251; c=relaxed/simple;
+	bh=TLarNvIdS6zU5M/tq/R45JYd4h9r2R+cnkDCe+h2rsQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ZwRrou6R2cL+Y0oSlD6E0UMM9DheA12tNd85jRe3dIXYBUwSTTnwcVPhKAxSjDRjjj/RpitGRmG0f6Y2FlMjyAMaFfOjYu7ToEGBZA6V/VKQMSCqJYlcc3o5QXDIeNnlWuOyoAbDuK4aZwBCbM04It0gVVdjdEkVhawpzIgIb5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=giHaf6U4; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=DHHURhcOy67pIAWUNKjOGBOzhnrXJVtqsbhnQvKcb8qBZdqNv9Ot2H+I/F4ucTEVquIwJzILRgznWYVz2owqAT0/vDidC2vWss7S3RcT2TyQAC3uLktvYOEsHbS99nv5C8+9RZLsm5pPMfCNndQp/4HfYMta7QfrB2jWQ2cJSEI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=iBgOUM9Q; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="giHaf6U4"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612A9C4CEF7;
-	Mon, 23 Mar 2026 14:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="iBgOUM9Q"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E748C4CEF7;
+	Mon, 23 Mar 2026 14:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774277248;
-	bh=3Z4xaFDWhsIOF+VurN1BF2aBY78FX2NIzYXZ+8sLFOo=;
+	s=korg; t=1774277251;
+	bh=TLarNvIdS6zU5M/tq/R45JYd4h9r2R+cnkDCe+h2rsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giHaf6U4Kvf8McI4kFv4yRwey1GQykWMnrtz6YkTlLz0iK4QQfVTfxOnYk4VDk3/f
-	 FMiHzQ6TVmSDxNPS9nXRaYra9geGYpdf+mccB8xeC7164h6ka7I+pISNrg+hawHuuV
-	 eR3UiPgSXY82WdpsYscHThJ8sHUer/W2W6Fl3i94=
+	b=iBgOUM9QIQQkngcwa+ssp6ke20iI9x64Kb79lR2Vp0qAMpBVknABr7SvMrpx5/hMs
+	 A3T1Uq6ZjqZNV1PCuLoRoX6pCuU3pk/NvBzMZFHqg4W+jKcxNNEPXJObpk96TVH/wD
+	 ktGHar0BBDao5nq/GSp0hMzVbAsUWk7ep+jBDi1M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Felix Gu <ustc.gu@gmail.com>,
-	Jonathan Cameron <jonathan.cameron@huawei.com>,
 	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.12 369/460] cache: starfive: fix device node leak in starlink_cache_init()
-Date: Mon, 23 Mar 2026 14:46:05 +0100
-Message-ID: <20260323134535.632107525@linuxfoundation.org>
+Subject: [PATCH 6.12 370/460] cache: ax45mp: Fix device node reference leak in ax45mp_cache_init()
+Date: Mon, 23 Mar 2026 14:46:06 +0100
+Message-ID: <20260323134535.657812610@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134526.647552166@linuxfoundation.org>
 References: <20260323134526.647552166@linuxfoundation.org>
@@ -54,37 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Felix Gu <ustc.gu@gmail.com>
 
-[ Upstream commit 3c85234b979af71cb9db5eb976ea08a468415767 ]
+[ Upstream commit 0528a348b04b327a4611e29589beb4c9ae81304a ]
 
-of_find_matching_node() returns a device_node with refcount incremented.
+In ax45mp_cache_init(), of_find_matching_node() returns a device node
+with an incremented reference count that must be released with
+of_node_put(). The current code fails to call of_node_put() which
+causes a reference leak.
 
-Use __free(device_node) attribute to automatically call of_node_put()
-when the variable goes out of scope, preventing the refcount leak.
+Use the __free(device_node) attribute to ensure automatic cleanup when
+the variable goes out of scope.
 
-Fixes: cabff60ca77d ("cache: Add StarFive StarLink cache management")
+Fixes: d34599bcd2e4 ("cache: Add L2 cache management for Andes AX45MP RISC-V core")
 Signed-off-by: Felix Gu <ustc.gu@gmail.com>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cache/starfive_starlink_cache.c | 4 ++--
+ drivers/cache/ax45mp_cache.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cache/starfive_starlink_cache.c b/drivers/cache/starfive_starlink_cache.c
-index 24c7d078ca227..3a25d2d7c70ca 100644
---- a/drivers/cache/starfive_starlink_cache.c
-+++ b/drivers/cache/starfive_starlink_cache.c
-@@ -102,11 +102,11 @@ static const struct of_device_id starlink_cache_ids[] = {
+diff --git a/drivers/cache/ax45mp_cache.c b/drivers/cache/ax45mp_cache.c
+index 1d7dd3d2c101c..934c5087ec2bd 100644
+--- a/drivers/cache/ax45mp_cache.c
++++ b/drivers/cache/ax45mp_cache.c
+@@ -178,11 +178,11 @@ static const struct of_device_id ax45mp_cache_ids[] = {
  
- static int __init starlink_cache_init(void)
+ static int __init ax45mp_cache_init(void)
  {
 -	struct device_node *np;
- 	u32 block_size;
+ 	struct resource res;
  	int ret;
  
--	np = of_find_matching_node(NULL, starlink_cache_ids);
+-	np = of_find_matching_node(NULL, ax45mp_cache_ids);
 +	struct device_node *np __free(device_node) =
-+		of_find_matching_node(NULL, starlink_cache_ids);
++		of_find_matching_node(NULL, ax45mp_cache_ids);
  	if (!of_device_is_available(np))
  		return -ENODEV;
  
