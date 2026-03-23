@@ -1,38 +1,41 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DF23AF647;
-	Mon, 23 Mar 2026 16:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C3F12CDA5;
+	Mon, 23 Mar 2026 16:21:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282882; cv=none; b=Ew4jpgsuTyZASDFIq6D608mcNEZ1XOZvMO0jAwrtpRsP8koWqhU5my6gyekRjaifKct0x8vL1gobzypGMqzb3w4ELZgw3QXcQD2Ih0npuWNv2fFFWIjxZL0uxcD2XgUwlRExiKkdsUJc226zqTCefizOuN3FwEVArDnMin0t69E=
+	t=1774282885; cv=none; b=VtzgyaPAWRZKESC3W19f1iHd2/DAyte8YhjnDkT24jOxboykxWbIXqBwBoOS3lG0R+KKB3VeDUfbeMuK1INeMsgXTHx4psBQgAjFtmBmu+mwJfs4LJZTbKXynoU3V8h5+b2dfpPFT89iEVvUniAdGOUxI9BXwDO8EuBj8VqZ0dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282882; c=relaxed/simple;
-	bh=z6KIFDBteynb8IsYUaqZjlSaDbWJ/Mzg9Krlv8DJgL0=;
+	s=arc-20240116; t=1774282885; c=relaxed/simple;
+	bh=HMO8nn4NjjEGGAIfPVbpRX3sq4aSnrQfOcdrrJtUJnc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FsnLOmJNmUlk7yPYh6qc8SdcIjIlRYo9LhqpvBxY3+o0BlfPJWCvhkqQHs9mTcL+NNsjbC9bi0j91DOKtNC/pWPWGtqslrYJBpmq+9yVIxejyMOY5FrUzLB9zGGZYUO+PlTLKV86fTrY4e9tuu+x80IlQTKbmxpEtoF53TRzZPI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=e8ZBO3go; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=dR4UDvjVumZJ82EcEcR1hn091jNQ5qStUKha1HSnrlFnFakWqEelV6cHB4mnDJEVDwNDR2L5ClICwn9HvZOiAhwfq+Qox4n2yO3fDeLPs+EJ8wfxtAGLuCGQSxK+2gayomO7N467Jrzhc7IiWD6KWgM9DXZELQ30D3qxuPd8eag=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=QtvTg6oB; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="e8ZBO3go"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE5FFC2BCB3;
-	Mon, 23 Mar 2026 16:21:21 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="QtvTg6oB"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C49C4CEF7;
+	Mon, 23 Mar 2026 16:21:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282882;
-	bh=z6KIFDBteynb8IsYUaqZjlSaDbWJ/Mzg9Krlv8DJgL0=;
+	s=korg; t=1774282884;
+	bh=HMO8nn4NjjEGGAIfPVbpRX3sq4aSnrQfOcdrrJtUJnc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e8ZBO3go+HzQZD5KYxcOZ6eZX3Knjqv7YeS9Cn5xTP21mr32xufRS76ggdqYDqfs/
-	 ujJiYwafsJOGEFZBFFzzxGGx3QktITEfHuI/EOF/tt7qJDt6Do6T70tBr2scM4cQ6u
-	 5N46ss5DGS7kQfyznQGX6GBWbHt+wUYOoAMda9lw=
+	b=QtvTg6oBNou7IKC9iqp0R4CoGKsy3Zy1Y2heuLkrCJRz2aoifPmQCoksaP4ahOXQD
+	 nFT1qSLa1183CrUX07qToOrMrR124YiJup92Cjcp+k8zVuz7H5N8rbKFA9KUNcubB2
+	 E1eQk1N1E0GCjcAqUpe/uuTcwkuKXFunxCR0q1FE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Dulov <d.dulov@aladdin.ru>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Kim Phillips <kim.phillips@amd.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Nikunj A Dadhania <nikunj@amd.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 319/481] wifi: cfg80211: cancel rfkill_block work in wiphy_unregister()
-Date: Mon, 23 Mar 2026 14:45:01 +0100
-Message-ID: <20260323134532.875834944@linuxfoundation.org>
+Subject: [PATCH 6.1 320/481] x86/sev: Allow IBPB-on-Entry feature for SNP guests
+Date: Mon, 23 Mar 2026 14:45:02 +0100
+Message-ID: <20260323134532.898783114@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,58 +54,67 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Daniil Dulov <d.dulov@aladdin.ru>
+From: Kim Phillips <kim.phillips@amd.com>
 
-[ Upstream commit 767d23ade706d5fa51c36168e92a9c5533c351a1 ]
+[ Upstream commit 9073428bb204d921ae15326bb7d4558d9d269aab ]
 
-There is a use-after-free error in cfg80211_shutdown_all_interfaces found
-by syzkaller:
+The SEV-SNP IBPB-on-Entry feature does not require a guest-side
+implementation. It was added in Zen5 h/w, after the first SNP Zen
+implementation, and thus was not accounted for when the initial set of SNP
+features were added to the kernel.
 
-BUG: KASAN: use-after-free in cfg80211_shutdown_all_interfaces+0x213/0x220
-Read of size 8 at addr ffff888112a78d98 by task kworker/0:5/5326
-CPU: 0 UID: 0 PID: 5326 Comm: kworker/0:5 Not tainted 6.19.0-rc2 #2 PREEMPT(voluntary)
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
-Workqueue: events cfg80211_rfkill_block_work
-Call Trace:
- <TASK>
- dump_stack_lvl+0x116/0x1f0
- print_report+0xcd/0x630
- kasan_report+0xe0/0x110
- cfg80211_shutdown_all_interfaces+0x213/0x220
- cfg80211_rfkill_block_work+0x1e/0x30
- process_one_work+0x9cf/0x1b70
- worker_thread+0x6c8/0xf10
- kthread+0x3c5/0x780
- ret_from_fork+0x56d/0x700
- ret_from_fork_asm+0x1a/0x30
- </TASK>
+In its abundant precaution, commit
 
-The problem arises due to the rfkill_block work is not cancelled when wiphy
-is being unregistered. In order to fix the issue cancel the corresponding
-work in wiphy_unregister().
+  8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+included SEV_STATUS' IBPB-on-Entry bit as a reserved bit, thereby masking
+guests from using the feature.
 
-Fixes: 1f87f7d3a3b4 ("cfg80211: add rfkill support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Daniil Dulov <d.dulov@aladdin.ru>
-Link: https://patch.msgid.link/20260211082024.1967588-1-d.dulov@aladdin.ru
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Allow guests to make use of IBPB-on-Entry when supported by the hypervisor, as
+the bit is now architecturally defined and safe to expose.
+
+Fixes: 8c29f0165405 ("x86/sev: Add SEV-SNP guest feature negotiation support")
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Nikunj A Dadhania <nikunj@amd.com>
+Reviewed-by: Tom Lendacky <thomas.lendacky@amd.com>
+Cc: stable@kernel.org
+Link: https://patch.msgid.link/20260203222405.4065706-2-kim.phillips@amd.com
+[ No SECURE_AVIC ]
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/wireless/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/boot/compressed/sev.c   |    1 +
+ arch/x86/include/asm/msr-index.h |    5 ++++-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/net/wireless/core.c
-+++ b/net/wireless/core.c
-@@ -1125,6 +1125,7 @@ void wiphy_unregister(struct wiphy *wiph
- 	/* this has nothing to do now but make sure it's gone */
- 	cancel_work_sync(&rdev->wiphy_work);
+--- a/arch/x86/boot/compressed/sev.c
++++ b/arch/x86/boot/compressed/sev.c
+@@ -328,6 +328,7 @@ static void enforce_vmpl0(void)
+ 				 MSR_AMD64_SNP_VMSA_REG_PROTECTION |	\
+ 				 MSR_AMD64_SNP_RESERVED_BIT13 |		\
+ 				 MSR_AMD64_SNP_RESERVED_BIT15 |		\
++				 MSR_AMD64_SNP_RESERVED_BITS18_22 |	\
+ 				 MSR_AMD64_SNP_RESERVED_MASK)
  
-+	cancel_work_sync(&rdev->rfkill_block);
- 	cancel_work_sync(&rdev->conn_work);
- 	flush_work(&rdev->event_work);
- 	cancel_delayed_work_sync(&rdev->dfs_update_channels_wk);
+ /*
+--- a/arch/x86/include/asm/msr-index.h
++++ b/arch/x86/include/asm/msr-index.h
+@@ -630,11 +630,14 @@
+ #define MSR_AMD64_SNP_IBS_VIRT			BIT_ULL(14)
+ #define MSR_AMD64_SNP_VMSA_REG_PROTECTION	BIT_ULL(16)
+ #define MSR_AMD64_SNP_SMT_PROTECTION		BIT_ULL(17)
++#define MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT	23
++#define MSR_AMD64_SNP_IBPB_ON_ENTRY		BIT_ULL(MSR_AMD64_SNP_IBPB_ON_ENTRY_BIT)
+ 
+ /* SNP feature bits reserved for future use. */
+ #define MSR_AMD64_SNP_RESERVED_BIT13		BIT_ULL(13)
+ #define MSR_AMD64_SNP_RESERVED_BIT15		BIT_ULL(15)
+-#define MSR_AMD64_SNP_RESERVED_MASK		GENMASK_ULL(63, 18)
++#define MSR_AMD64_SNP_RESERVED_BITS18_22	GENMASK_ULL(22, 18)
++#define MSR_AMD64_SNP_RESERVED_MASK		GENMASK_ULL(63, 24)
+ 
+ #define MSR_AMD64_VIRT_SPEC_CTRL	0xc001011f
+ 
 
 
