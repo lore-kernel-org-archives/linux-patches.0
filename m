@@ -1,40 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DC303B8BCB;
-	Mon, 23 Mar 2026 15:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA83B5308;
+	Mon, 23 Mar 2026 15:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278936; cv=none; b=IE+yT4sTEMzXJVrstiK2Vmj1nWi98Sl8SVGlMM/jmZLJIz0NyUIxv+VVc34tz24dHeVI8aV03xmzEQIHD5igTMC0EYU23i98AJY2ZFF+EUT9l9On2bwVZb7CrjkSjC2Q5GR7ctLlaZtVNHU8erbwGDbEpRNNtwWyX/WolFTQR6c=
+	t=1774278939; cv=none; b=d5V7/jsWhCu8zWvuSBumMAxqkCeCQRU1bq/dDu+ongKZD1kKSjGF7+i5CgCx0X/Yffi1yCNY8+mvNhoeOOW5Dm0vOyjZcRkoJP0ZJ59YE6Y9sTgluH1om4ThyVH4GJMjHesnfLemkGkjlq1YRMSuCfrJV4WeXJSyRs8LvMGicdA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278936; c=relaxed/simple;
-	bh=eXVhKOtywXEPxojTjjgdLADL8uSKsdXMT1zGm8ekus8=;
+	s=arc-20240116; t=1774278939; c=relaxed/simple;
+	bh=ty7j8Q0wyQG56YIiHMSq9CBuiFu0PpkP+qDm9qzopzE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mgknSuuezmBUeVVw72WYkkcX9CZAlwj5pKmkcG8S1pRvg/jEZ0aOzUQzn7njFNuhmB8JGVJcNqBcQyCTqc3qh3XzWKoLd3kbbIR+gvZ1uxAZxmZeLU10l0mKk0TiDXE7qvzlgmtS0TW6FOUZBJ7lBfPTDd5XuklfXVtZKp/cR7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=pGc/y56D; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=LmzSVd2ylpWAArHmzO1S5kf//jct1Z7yp3j6/iUOEgaQ2jDXtIkQlYsATBSGggaxqHGgX2kftqpXPbqbkM+bQjnN8drWQmZZXIrELdx5ftHJUWjDb6Mjelda9aF/SJhlpFbiJ30I6CErHrle6U6qm3UzjAavooE4n9Vz5h3RGWk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tnxLUxod; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="pGc/y56D"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4BD6C2BCB4;
-	Mon, 23 Mar 2026 15:15:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tnxLUxod"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2699DC4CEF7;
+	Mon, 23 Mar 2026 15:15:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278936;
-	bh=eXVhKOtywXEPxojTjjgdLADL8uSKsdXMT1zGm8ekus8=;
+	s=korg; t=1774278939;
+	bh=ty7j8Q0wyQG56YIiHMSq9CBuiFu0PpkP+qDm9qzopzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pGc/y56Dd3eRgayG7fWhyvy3qLpjQNtQ1VwZfgA5LXUzw30ga3zc0DlHxhHTUZ8Rg
-	 4JrZcdBgLo3XfMbuZWkN1l9VNPrwp8+5+Qd1UMpZdjwqAyuOX0cRz4CsIQgOusFP7k
-	 ej1bS5Au37E+8NGqHyGRNukjf/t6JxWOaimontvA=
+	b=tnxLUxodxdozc5E+BU6ZVXsmxK7WuTqfjTy6WMsK48cDzNSw2pRvtO5m3Ho73Ym7z
+	 PvQkhDnbC0SkwrWTYNd9hO3LyLNuF//P4bXJ1JogteSuJnzb1uFjCSXLNjeVkiEhIn
+	 L36oqLchSpUU1GPhPaRtmRbABAJ5Y73CSYgMQLoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Guangwu Zhang <guazhang@redhat.com>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@kernel.org>,
-	Rahul Sharma <black.hawk@163.com>
-Subject: [PATCH 6.6 414/567] dm-verity: disable recursive forward error correction
-Date: Mon, 23 Mar 2026 14:45:34 +0100
-Message-ID: <20260323134544.132034761@linuxfoundation.org>
+	=?UTF-8?q?Lukas=20Johannes=20M=C3=B6ller?= <research@johannes-moeller.dev>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Subject: [PATCH 6.6 460/567] Bluetooth: L2CAP: Validate L2CAP_INFO_RSP payload length before access
+Date: Mon, 23 Mar 2026 14:46:20 +0100
+Message-ID: <20260323134545.365747060@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -47,71 +44,66 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Lukas Johannes Möller <research@johannes-moeller.dev>
 
-[ Upstream commit d9f3e47d3fae0c101d9094bc956ed24e7a0ee801 ]
+commit dd815e6e3918dc75a49aaabac36e4f024d675101 upstream.
 
-There are two problems with the recursive correction:
+l2cap_information_rsp() checks that cmd_len covers the fixed
+l2cap_info_rsp header (type + result, 4 bytes) but then reads
+rsp->data without verifying that the payload is present:
 
-1. It may cause denial-of-service. In fec_read_bufs, there is a loop that
-has 253 iterations. For each iteration, we may call verity_hash_for_block
-recursively. There is a limit of 4 nested recursions - that means that
-there may be at most 253^4 (4 billion) iterations. Red Hat QE team
-actually created an image that pushes dm-verity to this limit - and this
-image just makes the udev-worker process get stuck in the 'D' state.
+ - L2CAP_IT_FEAT_MASK calls get_unaligned_le32(rsp->data), which reads
+   4 bytes past the header (needs cmd_len >= 8).
 
-2. It doesn't work. In fec_read_bufs we store data into the variable
-"fio->bufs", but fio bufs is shared between recursive invocations, if
-"verity_hash_for_block" invoked correction recursively, it would
-overwrite partially filled fio->bufs.
+ - L2CAP_IT_FIXED_CHAN reads rsp->data[0], 1 byte past the header
+   (needs cmd_len >= 5).
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Reported-by: Guangwu Zhang <guazhang@redhat.com>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Eric Biggers <ebiggers@kernel.org>
-[ The context change is due to the commit bdf253d580d7
-("dm-verity: remove support for asynchronous hashes")
-in v6.18 and the commit 9356fcfe0ac4
-("dm verity: set DM_TARGET_SINGLETON feature flag") in v6.9
-which are irrelevant to the logic of this patch. ]
-Signed-off-by: Rahul Sharma <black.hawk@163.com>
+A truncated L2CAP_INFO_RSP with result == L2CAP_IR_SUCCESS triggers an
+out-of-bounds read of adjacent skb data.
+
+Guard each data access with the required payload length check.  If the
+payload is too short, skip the read and let the state machine complete
+with safe defaults (feat_mask and remote_fixed_chan remain zero from
+kzalloc), so the info timer cleanup and l2cap_conn_start() still run
+and the connection is not stalled.
+
+Fixes: 4e8402a3f884 ("[Bluetooth] Retrieve L2CAP features mask on connection setup")
+Cc: stable@vger.kernel.org
+Signed-off-by: Lukas Johannes Möller <research@johannes-moeller.dev>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-verity-fec.c |    4 +---
- drivers/md/dm-verity-fec.h |    3 ---
- 2 files changed, 1 insertion(+), 6 deletions(-)
+ net/bluetooth/l2cap_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/md/dm-verity-fec.c
-+++ b/drivers/md/dm-verity-fec.c
-@@ -439,10 +439,8 @@ int verity_fec_decode(struct dm_verity *
- 	if (!verity_fec_is_enabled(v))
- 		return -EOPNOTSUPP;
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4585,7 +4585,8 @@ static inline int l2cap_information_rsp(
  
--	if (fio->level >= DM_VERITY_FEC_MAX_RECURSION) {
--		DMWARN_LIMIT("%s: FEC: recursion too deep", v->data_dev->name);
-+	if (fio->level)
- 		return -EIO;
--	}
+ 	switch (type) {
+ 	case L2CAP_IT_FEAT_MASK:
+-		conn->feat_mask = get_unaligned_le32(rsp->data);
++		if (cmd_len >= sizeof(*rsp) + sizeof(u32))
++			conn->feat_mask = get_unaligned_le32(rsp->data);
  
- 	fio->level++;
+ 		if (conn->feat_mask & L2CAP_FEAT_FIXED_CHAN) {
+ 			struct l2cap_info_req req;
+@@ -4604,7 +4605,8 @@ static inline int l2cap_information_rsp(
+ 		break;
  
---- a/drivers/md/dm-verity-fec.h
-+++ b/drivers/md/dm-verity-fec.h
-@@ -23,9 +23,6 @@
- #define DM_VERITY_FEC_BUF_MAX \
- 	(1 << (PAGE_SHIFT - DM_VERITY_FEC_BUF_RS_BITS))
+ 	case L2CAP_IT_FIXED_CHAN:
+-		conn->remote_fixed_chan = rsp->data[0];
++		if (cmd_len >= sizeof(*rsp) + sizeof(rsp->data[0]))
++			conn->remote_fixed_chan = rsp->data[0];
+ 		conn->info_state |= L2CAP_INFO_FEAT_MASK_REQ_DONE;
+ 		conn->info_ident = 0;
  
--/* maximum recursion level for verity_fec_decode */
--#define DM_VERITY_FEC_MAX_RECURSION	4
--
- #define DM_VERITY_OPT_FEC_DEV		"use_fec_from_device"
- #define DM_VERITY_OPT_FEC_BLOCKS	"fec_blocks"
- #define DM_VERITY_OPT_FEC_START		"fec_start"
 
 
