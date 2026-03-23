@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 481351A680D;
-	Mon, 23 Mar 2026 13:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 612D61A680D;
+	Mon, 23 Mar 2026 13:55:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274137; cv=none; b=T73YYNdq2IgdXAJnVNcBmdZB5UD03XmjsD6ZPAtKusJrbDNmzHQLxpbUOg4oWOebYAf/c8t00WrUHdTUQz37zXP/UyGZ+ezMaMFkn5YMd7Hm/30ipWIo/THUZc4UGAG1zwOKYpoFmFAxAkMjR3YdMXj6EKPfTkGP+ZEXOEkQInU=
+	t=1774274140; cv=none; b=l3k2HPg2u1UG6oEteQVHY0997vf1ZMvQXp7NpAKU8HMymIg9y4ifJiU7JqCEjsh7Lz0ndOVQiCEMYQ8wR6ev1xUfHZa1U/tFGFWqxF+4EUWs1xyYFyjNGuPQ+DKuecP2SUrJcaL6ebxb6W8ihLW3KxEgN0xyP2N9avpKOnHaxuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274137; c=relaxed/simple;
-	bh=oduutQ2/EMPNfA5K32PVsaVtAcMlDcyXhXaMFt35l/I=;
+	s=arc-20240116; t=1774274140; c=relaxed/simple;
+	bh=tW5rJjv3sFUiw7fw4wcAZxBXNvyYiQzxmPpe3LWSE/A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g9BHgBxXGQsTbK367F1vFPkwzKtrAnrftoBXvhN2kuHtBHwPb2fJX4BvvAJCqA+2XTUJTWWaCbJiCK5mhoLOZCFNSXWJ37wHRDMjr+7HplUGl6foYYf8K1Fw4p74DnmUS8auHUj8d5qw6rEGI1VReRxbOsL5+9pND2pih9haWUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=c7e4EeLe; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=QTTh3kGmJzKYUOBhClQ0Mk45tCQqbZYgHLkj1HjudpZQsTrQpfTms1agL1A1N0yR8XvF2xmlbvXam7sDpblDQs9Aj/P8vIdiOdwYBGx0mTtYJpTWE7o/+zn0D8R0dtxj8RPoMTt/PWbrncUKKr06Vmd3nVaTtjeU/OXKG28/O9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yjr8GgK+; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="c7e4EeLe"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1849C4CEF7;
-	Mon, 23 Mar 2026 13:55:36 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yjr8GgK+"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58BFC4CEF7;
+	Mon, 23 Mar 2026 13:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274137;
-	bh=oduutQ2/EMPNfA5K32PVsaVtAcMlDcyXhXaMFt35l/I=;
+	s=korg; t=1774274140;
+	bh=tW5rJjv3sFUiw7fw4wcAZxBXNvyYiQzxmPpe3LWSE/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c7e4EeLeiH+W9fgl0qkrhWxrt+PLoWrsHwdofcks7HV4KWES7BggobWX8eWl0XYNC
-	 725CCGabtLw5kiK1jGCrwf2v8+dqEdMKS70y4/wUZe5A3dvJFJnjIokpjfl7OVRL+w
-	 vbdLsWnwvBquWKk39LWxOiF5YLbj2DgSjDR5iC58=
+	b=yjr8GgK+qnQJTxgJtKdlOrfxh6ruSrX5Dbmc84tLIFV2diwCh+oO6TgiDBAdpvnBR
+	 CkBHWtp9ZXrBoeYsuNmpQ+arOVzcfOEbbdVCe+/xpCMKVSWNwb4sOuxNWq2DY6HtkH
+	 CjkusmM6WQYA13UqlJvyQQvx+QGXcZajFDFc3DgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <benjamin.cheng@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 079/220] drm/amdgpu/mmhub4.1.0: add bounds checking for cid
-Date: Mon, 23 Mar 2026 14:44:16 +0100
-Message-ID: <20260323134507.091205272@linuxfoundation.org>
+	Alessio Belle <alessio.belle@imgtec.com>,
+	Matt Coster <matt.coster@imgtec.com>
+Subject: [PATCH 6.19 080/220] drm/imagination: Fix deadlock in soft reset sequence
+Date: Mon, 23 Mar 2026 14:44:17 +0100
+Message-ID: <20260323134507.126627235@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -50,34 +50,46 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Alessio Belle <alessio.belle@imgtec.com>
 
-commit 3cdd405831d8cc50a5eae086403402697bb98a4a upstream.
+commit a55c2a5c8d680156495b7b1e2a9f5a3e313ba524 upstream.
 
-The value should never exceed the array size as those
-are the only values the hardware is expected to return,
-but add checks anyway.
+The soft reset sequence is currently executed from the threaded IRQ
+handler, hence it cannot call disable_irq() which internally waits
+for IRQ handlers, i.e. itself, to complete.
 
-Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 04f063d85090f5dd0c671010ce88ee49d9dcc8ed)
+Use disable_irq_nosync() during a soft reset instead.
+
+Fixes: cc1aeedb98ad ("drm/imagination: Implement firmware infrastructure and META FW support")
 Cc: stable@vger.kernel.org
+Signed-off-by: Alessio Belle <alessio.belle@imgtec.com>
+Reviewed-by: Matt Coster <matt.coster@imgtec.com>
+Link: https://patch.msgid.link/20260309-fix-soft-reset-v1-1-121113be554f@imgtec.com
+Signed-off-by: Matt Coster <matt.coster@imgtec.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imagination/pvr_power.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v4_1_0.c
-@@ -102,7 +102,8 @@ mmhub_v4_1_0_print_l2_protection_fault_s
- 		status);
- 	switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
- 	case IP_VERSION(4, 1, 0):
--		mmhub_cid = mmhub_client_ids_v4_1_0[cid][rw];
-+		mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_v4_1_0) ?
-+			mmhub_client_ids_v4_1_0[cid][rw] : NULL;
- 		break;
- 	default:
- 		mmhub_cid = NULL;
+--- a/drivers/gpu/drm/imagination/pvr_power.c
++++ b/drivers/gpu/drm/imagination/pvr_power.c
+@@ -510,7 +510,16 @@ pvr_power_reset(struct pvr_device *pvr_d
+ 	}
+ 
+ 	/* Disable IRQs for the duration of the reset. */
+-	disable_irq(pvr_dev->irq);
++	if (hard_reset) {
++		disable_irq(pvr_dev->irq);
++	} else {
++		/*
++		 * Soft reset is triggered as a response to a FW command to the Host and is
++		 * processed from the threaded IRQ handler. This code cannot (nor needs to)
++		 * wait for any IRQ processing to complete.
++		 */
++		disable_irq_nosync(pvr_dev->irq);
++	}
+ 
+ 	do {
+ 		if (hard_reset) {
 
 
