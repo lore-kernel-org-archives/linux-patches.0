@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA46B3B19AC;
-	Mon, 23 Mar 2026 15:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02DBB26B742;
+	Mon, 23 Mar 2026 15:08:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278516; cv=none; b=ZNHQKeXQ97o6vUpeiSLxdpPJIYEPkPMQ1/JZb8CzKjVKskqEUzDkxEx1wjkA+wenXBedbZwiutLXy7N5KbO8jJqZVKxn87p3Iwrg68p91o+vXrXyJsjlCHBcT4ybMNJ3zrPTSIDtOkxQdNvNgVCnd5s6kN4Zu87TRHaVzf/TUxU=
+	t=1774278519; cv=none; b=Gtew6KJnb2wlng0KW0puZTIkrHsiiItGvj6/Q8ynB1D3TRRN0S7ZBKWj3vrIDL6Q5VprZ9aO7UUGZX5M+x4nE9ATSmQFMCCwlQ+RzohZFuF3fBQM8SD5Rg9kjWcDE25Y7OYvNWTAWI03/dSua6k6eMcw6bKy3MH98G/4Odgk+oc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278516; c=relaxed/simple;
-	bh=g1H2AObblwBCKwla5Xap+Ihb24SdIZ4qnbfkotQQxN4=;
+	s=arc-20240116; t=1774278519; c=relaxed/simple;
+	bh=/ZC7g5KJ08ibVLlLmP2Ro8wnlt84oYV3M1pMMyTYoGg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z72gETz+TMX+YQfbMCYMQRGu2uGNmbbe9ZRe1TMPeqIHbZI/THb9aF51Z1WyXfRbg7o6RdwHHGLXl1I3kMV/JZnpQbMKjCo/yUV8AqySwxawbuJKmsscNO7lha27aFM0ws14TS1Tf6Pe1NA6l8zxjp8mndEHe5nDNWevdk4sxSU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BtJKsp4d; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=P+bpIQg7pyHpdWb6BcCMJF1wBdMxowx1hPjyBPAV5bpwcjx30LdsHkgc4KbdN0DiwNVqa5AE9B3ygSShIbd/w2WoClhDPF6KVx59hmpk3AvrHYu4KfcZGTp/z54FBFYi4sZION1ADCnahODqm4fYjI9FhibIAdC9a9t9cdaPdu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=hGjy6zf/; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BtJKsp4d"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E039C4CEF7;
-	Mon, 23 Mar 2026 15:08:35 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="hGjy6zf/"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78606C4CEF7;
+	Mon, 23 Mar 2026 15:08:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278515;
-	bh=g1H2AObblwBCKwla5Xap+Ihb24SdIZ4qnbfkotQQxN4=;
+	s=korg; t=1774278518;
+	bh=/ZC7g5KJ08ibVLlLmP2Ro8wnlt84oYV3M1pMMyTYoGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BtJKsp4d7AUJbujHAgCVz23VOYjuFQp0hk6s/IDPgqoNYWvfN5F5SIAd5GMcnzsnI
-	 Zll8GdDv5A8IVKhgWe8opPqO+PV/FzzL9NSl9wsaPOXxoVs1t9QXCjb7XQMqi/Fpb/
-	 jQM1/CR4rUSpZVNGewik24fZw/FvVFYJvr55YhtI=
+	b=hGjy6zf/OpWfxMk14kP/SGVYDntuvH4kA9XpIM/d7qFevYdKq6cM3G7hLwfUeF/z6
+	 U1WxODayXAByEadVrpq/G1o7a5TdT3Hr7r0YTvGCOxUM3g14uS6d7oOQUNVTYtm+ft
+	 2Ipih93Att+duHRyrVH7G2G5M/hlTHHG6sFJgk5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Bastien Curutchet (Schneider Electric)" <bastien.curutchet@bootlin.com>,
-	Simon Horman <horms@kernel.org>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.6 333/567] net: dsa: microchip: Fix error path in PTP IRQ setup
-Date: Mon, 23 Mar 2026 14:44:13 +0100
-Message-ID: <20260323134542.071708662@linuxfoundation.org>
+	Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>,
+	Alysa Liu <Alysa.Liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.6 334/567] drm/amdgpu: Fix use-after-free race in VM acquire
+Date: Mon, 23 Mar 2026 14:44:14 +0100
+Message-ID: <20260323134542.094939410@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,56 +51,45 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
+From: Alysa Liu <Alysa.Liu@amd.com>
 
-commit 99c8c16a4aad0b37293cae213e15957c573cf79b upstream.
+commit 2c1030f2e84885cc58bffef6af67d5b9d2e7098f upstream.
 
-If request_threaded_irq() fails during the PTP message IRQ setup, the
-newly created IRQ mapping is never disposed. Indeed, the
-ksz_ptp_irq_setup()'s error path only frees the mappings that were
-successfully set up.
+Replace non-atomic vm->process_info assignment with cmpxchg()
+to prevent race when parent/child processes sharing a drm_file
+both try to acquire the same VM after fork().
 
-Dispose the newly created mapping if the associated
-request_threaded_irq() fails at setup.
-
+Reviewed-by: Harish Kasiviswanathan <Harish.Kasiviswanathan@amd.com>
+Signed-off-by: Alysa Liu <Alysa.Liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit c7c573275ec20db05be769288a3e3bb2250ec618)
 Cc: stable@vger.kernel.org
-Fixes: d0b8fec8ae505 ("net: dsa: microchip: Fix symetry in ksz_ptp_msg_irq_{setup/free}()")
-Signed-off-by: Bastien Curutchet (Schneider Electric) <bastien.curutchet@bootlin.com>
-Reviewed-by: Simon Horman <horms@kernel.org>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://patch.msgid.link/20260309-ksz-ptp-irq-fix-v1-1-757b3b985955@bootlin.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/microchip/ksz_ptp.c |   11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/net/dsa/microchip/ksz_ptp.c
-+++ b/drivers/net/dsa/microchip/ksz_ptp.c
-@@ -1101,6 +1101,7 @@ static int ksz_ptp_msg_irq_setup(struct
- 	const struct ksz_dev_ops *ops = port->ksz_dev->dev_ops;
- 	struct ksz_irq *ptpirq = &port->ptpirq;
- 	struct ksz_ptp_irq *ptpmsg_irq;
-+	int ret;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -1351,7 +1351,10 @@ static int init_kfd_vm(struct amdgpu_vm
+ 		*ef = dma_fence_get(&info->eviction_fence->base);
+ 	}
  
- 	ptpmsg_irq = &port->ptpmsg_irq[n];
- 	ptpmsg_irq->num = irq_create_mapping(ptpirq->domain, n);
-@@ -1112,9 +1113,13 @@ static int ksz_ptp_msg_irq_setup(struct
+-	vm->process_info = *process_info;
++	if (cmpxchg(&vm->process_info, NULL, *process_info) != NULL) {
++		ret = -EINVAL;
++		goto already_acquired;
++	}
  
- 	snprintf(ptpmsg_irq->name, sizeof(ptpmsg_irq->name), name[n]);
- 
--	return request_threaded_irq(ptpmsg_irq->num, NULL,
--				    ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
--				    ptpmsg_irq->name, ptpmsg_irq);
-+	ret = request_threaded_irq(ptpmsg_irq->num, NULL,
-+				   ksz_ptp_msg_thread_fn, IRQF_ONESHOT,
-+				   ptpmsg_irq->name, ptpmsg_irq);
-+	if (ret)
-+		irq_dispose_mapping(ptpmsg_irq->num);
-+
-+	return ret;
- }
- 
- int ksz_ptp_irq_setup(struct dsa_switch *ds, u8 p)
+ 	/* Validate page directory and attach eviction fence */
+ 	ret = amdgpu_bo_reserve(vm->root.bo, true);
+@@ -1389,6 +1392,7 @@ validate_pd_fail:
+ 	amdgpu_bo_unreserve(vm->root.bo);
+ reserve_pd_fail:
+ 	vm->process_info = NULL;
++already_acquired:
+ 	if (info) {
+ 		/* Two fence references: one in info and one in *ef */
+ 		dma_fence_put(&info->eviction_fence->base);
 
 
