@@ -1,39 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CBEA23ED5B;
-	Mon, 23 Mar 2026 15:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398F62773C3;
+	Mon, 23 Mar 2026 15:10:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278616; cv=none; b=vDc4kau4vVPlMWUecYmRfkM5BiL+xlGw6S5No4sYm7lIzuzFow9g11uQkbQp5sf883JmpLVQv3/1TAwG6PTCZdEmbyvZ5g6xC12dlDFybIepohnMumCIC5uTqNusjakYdEb0aFaiNk+IiQxlNAb9paB6qKg1/ab4L2UDwAcQH6Y=
+	t=1774278619; cv=none; b=PGIG+J9Iy3oqKGvARcTuKaYwqXMLSVnfFcpQtneJ/omB6qRR+TcYTLfM1r5EekfULBpXk9Owem0TPhPkGL9NB/MDIWRsFs0YdoQJ4UixSv8a2HaK6TLB2dhNW74a7V7uWOxYPKLcAT58c3Bv/IaCQC6MnYQqxw9b02yFRAV98pU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278616; c=relaxed/simple;
-	bh=J38Isuv2xPSv82Ji5SG0YCzIGaLyvlVoYoiaOGu6wIw=;
+	s=arc-20240116; t=1774278619; c=relaxed/simple;
+	bh=yFRsDeE44w5xi+s3sl+7wrpf0JV6QieOJ8tEf1+flwE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BNA+vQIXU6NtXVFrQax0pgiV2/6giMBgFOPd7LWZgh9WcokZa4ZRd0UYAbAUNrSxCBA0kMjmWxxE5yQln/FuzIJvd8ctPREQI8iaK/5B8nqz0OUyQlMz/JYWZrYRSU7cR3CZWb25Dvwt571Y3qhWvb/6AAjiWsF+ri3Kba0c4Gc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=SLvVxkmW; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=pyu27bqsolzL8wxXic1+2G39s95WuqHSnHxk9y0/aBP/cx7hC+XGesbtcn8TLq+pwC5xorf9XkoDBOb7okKezqIOh8dce98GJIDkeOIfXPbk2ccDokgTEsyukPgUgFHSJuOL7XYoRR8sliHoTx5hoDPKPCi8+HFYij79L2EN1Gg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=i4OEd/Js; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="SLvVxkmW"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865EAC4CEF7;
-	Mon, 23 Mar 2026 15:10:15 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="i4OEd/Js"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97EACC4CEF7;
+	Mon, 23 Mar 2026 15:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278615;
-	bh=J38Isuv2xPSv82Ji5SG0YCzIGaLyvlVoYoiaOGu6wIw=;
+	s=korg; t=1774278619;
+	bh=yFRsDeE44w5xi+s3sl+7wrpf0JV6QieOJ8tEf1+flwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLvVxkmWqgstwleLTKZZMxdGv6nT7Chh0sxRG5paohA2UbcsVgKrI5L7Vw2VgR5pl
-	 kX1zln97CHRvhQ0wBPugM0BxP2wDXuj+rzHiJOCPJx62sAlUsNn4O3S4WRxMcYrouu
-	 u15vwhF9Wg9O8ZkzQcjExu81FqX5p3ufENSC/WE4=
+	b=i4OEd/JsLLZKrj+MJygjBs5KLOp9B8PPa0ueXMBHY8KjKGmX3uvCe5q+w1GG6IXqx
+	 RtCar4zF8YTx9ct6EF0g7I0HytvDQEQmK02TqSL/8IpHiJm6/QcHzNWW60TDkKuonx
+	 pc8lQEaWNGAO5AXCsk8oTh7KY1Y6B3RZ82tJGqfI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ma=C3=ADra=20Canal?= <mcanal@igalia.com>,
-	Florian Fainelli <florian.fainelli@broadcom.com>,
-	Stefan Wahren <wahrenst@gmx.net>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.6 327/567] pmdomain: bcm: bcm2835-power: Fix broken reset status read
-Date: Mon, 23 Mar 2026 14:44:07 +0100
-Message-ID: <20260323134541.923783911@linuxfoundation.org>
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Frank Li <Frank.Li@nxp.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.6 363/567] i3c: mipi-i3c-hci: Restart DMA ring correctly after dequeue abort
+Date: Mon, 23 Mar 2026 14:44:43 +0100
+Message-ID: <20260323134542.805055152@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -46,59 +45,47 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 6.6-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Maíra Canal <mcanal@igalia.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 550bae2c0931dbb664a61b08c21cf156f0a5362a upstream.
+commit b6d586431ae20d5157ee468d0ef62ad26798ef13 upstream.
 
-bcm2835_reset_status() has a misplaced parenthesis on every PM_READ()
-call. Since PM_READ(reg) expands to readl(power->base + (reg)), the
-expression:
+The DMA dequeue path attempts to restart the ring after aborting an
+in-flight transfer, but the current sequence is incomplete. The controller
+must be brought out of the aborted state and the ring control registers
+must be programmed in the correct order: first clearing ABORT, then
+re-enabling the ring and asserting RUN_STOP to resume operation.
 
-    PM_READ(PM_GRAFX & PM_V3DRSTN)
+Add the missing controller resume step and update the ring control writes
+so that the ring is restarted using the proper sequence.
 
-computes the bitwise AND of the register offset PM_GRAFX with the
-bitmask PM_V3DRSTN before using the result as a register offset, reading
-from the wrong MMIO address instead of the intended PM_GRAFX register.
-The same issue affects the PM_IMAGE cases.
-
-Fix by moving the closing parenthesis so PM_READ() receives only the
-register offset, and the bitmask is applied to the value returned by
-the read.
-
-Fixes: 670c672608a1 ("soc: bcm: bcm2835-pm: Add support for power domains under a new binding.")
-Signed-off-by: Maíra Canal <mcanal@igalia.com>
-Reviewed-by: Florian Fainelli <florian.fainelli@broadcom.com>
-Reviewed-by: Stefan Wahren <wahrenst@gmx.net>
+Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Frank Li <Frank.Li@nxp.com>
+Link: https://patch.msgid.link/20260306072451.11131-11-adrian.hunter@intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pmdomain/bcm/bcm2835-power.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/pmdomain/bcm/bcm2835-power.c
-+++ b/drivers/pmdomain/bcm/bcm2835-power.c
-@@ -580,11 +580,11 @@ static int bcm2835_reset_status(struct r
- 
- 	switch (id) {
- 	case BCM2835_RESET_V3D:
--		return !PM_READ(PM_GRAFX & PM_V3DRSTN);
-+		return !(PM_READ(PM_GRAFX) & PM_V3DRSTN);
- 	case BCM2835_RESET_H264:
--		return !PM_READ(PM_IMAGE & PM_H264RSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_H264RSTN);
- 	case BCM2835_RESET_ISP:
--		return !PM_READ(PM_IMAGE & PM_ISPRSTN);
-+		return !(PM_READ(PM_IMAGE) & PM_ISPRSTN);
- 	default:
- 		return -EINVAL;
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -491,7 +491,9 @@ static bool hci_dma_dequeue_xfer(struct
  	}
+ 
+ 	/* restart the ring */
++	mipi_i3c_hci_resume(hci);
+ 	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE);
++	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_RUN_STOP);
+ 
+ 	return did_unqueue;
+ }
 
 
