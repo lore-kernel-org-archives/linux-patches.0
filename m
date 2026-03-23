@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3503AC0C9;
-	Mon, 23 Mar 2026 13:53:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28BCC3AD534;
+	Mon, 23 Mar 2026 13:53:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273992; cv=none; b=LbmHflNs3W2T7bQ3bav4JVjIXeOemk69Wf8cPFoIjDbmkLnsnGp1hkXRUulVOXnNOJjSuf9oF25DffhRz/MQB/SjCEyA0fsqls4Cdn3WPeLSY5h6IMAkuEK7FUOH0hfbyqc1tBPu6AGkWpXotUM8rrAeL2H0g04YYVESiBgjn+c=
+	t=1774273995; cv=none; b=nZ+zB91XoZzS1I1u6o07+gBnYI/lj/yKpwFBrSbeGcvq0LIRdDkPVMi8yjd8wC/KkGGQ7ynUNqxn2KJohE3GQi6ksZKHX+z/Qy1EA67k5vY5NtFK1HEi75MQ8F8ebY+5wjDKuAmSk82LcLoKjVPkXYJKDBZM0WFkNCFRHS0Swsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273992; c=relaxed/simple;
-	bh=L9MOWb1cNo9UtGpzUBiYJZ6DNmw+7HkhcCU0U3al404=;
+	s=arc-20240116; t=1774273995; c=relaxed/simple;
+	bh=D867QGKSkpr7nvA2mf4Pn/u5kbUzUoMrPzlanco5EPY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=MNtOlmfzPiBSoh7dQEcq+hDNr5Dy7mSoDfdemcw0jqjwSrUISZ7MfUoXhYML1v5+TabSvkmqV/4aaDhh+L+h299pbKOI9sPfWIzQSIyT+iXVkE99rJ8pINkrPxzyN/7FTThJKcXTSXkZTgV/ei19l/3uXGzWXIS4N75oq8jYNNg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=N7982YCJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=fuV5Vm5xYUviusCiaC+++uiU5h2hnWRAv6DtE8+BvoqDbL47v4wXLOIsKDVRHCuNK9GcigCyytcp7+XLyhHDwaTpeK2Iqf2FO6Z//wMpzNAQuxd/LMy+zRSBhFStIhdmEtRJ+tYBCED3XukwjSLtFOy2+UCl2hBadlLM15ZQWdc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Q/PinPNn; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="N7982YCJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4E8C4CEF7;
-	Mon, 23 Mar 2026 13:53:11 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Q/PinPNn"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F349C4CEF7;
+	Mon, 23 Mar 2026 13:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273992;
-	bh=L9MOWb1cNo9UtGpzUBiYJZ6DNmw+7HkhcCU0U3al404=;
+	s=korg; t=1774273995;
+	bh=D867QGKSkpr7nvA2mf4Pn/u5kbUzUoMrPzlanco5EPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N7982YCJiu5r1iqrVWowpqNufZI1QxFyEFcjpGxcdGYjsOSbb4joYRKVNfp5tcX3u
-	 pleYzNAI7m9bq/zW+rv8ELbCLtf7ej6rv4C3YHRzesSeUETjCKYUaqDNyzKNcje3aG
-	 glNzpymNNw82Chl+UBR50IkoEk3aG0S6u1/5T8/o=
+	b=Q/PinPNnw6xKLkZb3BrHCst2xoNwQUvZcrY2gUQKqK+j4fkZji0L6CKNjCcdS2m7a
+	 Wd34jK853G5b7yrw8GRMFubwP5JK8+P2Kk/H4cOhB+9w5BxDRqqizQJzCkvR1E8u2Y
+	 JOwbgf6leiK1RBttekhA8OPQe3PFWYz3HyxF6S98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	LiarOnce <liaronce@hotmail.com>,
-	Xi Ruoyao <xry111@xry111.site>,
-	Alex Hung <alex.hung@amd.com>,
+	Benjamin Cheng <benjamin.cheng@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.19 072/220] drm/amd/display: Wrap dcn32_override_min_req_memclk() in DC_FP_{START, END}
-Date: Mon, 23 Mar 2026 14:44:09 +0100
-Message-ID: <20260323134506.870793368@linuxfoundation.org>
+Subject: [PATCH 6.19 073/220] drm/amdgpu/gmc9.0: add bounds checking for cid
+Date: Mon, 23 Mar 2026 14:44:10 +0100
+Message-ID: <20260323134506.903121223@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,41 +50,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Xi Ruoyao <xry111@xry111.site>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit ebe82c6e75cfc547154d0fd843b0dd6cca3d548f upstream.
+commit f39e1270277f4b06db0b2c6ec9405b6dd766fb13 upstream.
 
-[Why]
-The dcn32_override_min_req_memclk function is in dcn32_fpu.c, which is
-compiled with CC_FLAGS_FPU into FP instructions.  So when we call it we
-must use DC_FP_{START,END} to save and restore the FP context, and
-prepare the FP unit on architectures like LoongArch where the FP unit
-isn't always on.
+The value should never exceed the array size as those
+are the only values the hardware is expected to return,
+but add checks anyway.
 
-Reported-by: LiarOnce <liaronce@hotmail.com>
-Fixes: ee7be8f3de1c ("drm/amd/display: Limit DCN32 8 channel or less parts to DPM1 for FPO")
-Signed-off-by: Xi Ruoyao <xry111@xry111.site>
-Reviewed-by: Alex Hung <alex.hung@amd.com>
+Cc: Benjamin Cheng <benjamin.cheng@amd.com>
+Reviewed-by: Benjamin Cheng <benjamin.cheng@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-(cherry picked from commit 25bb1d54ba3983c064361033a8ec15474fece37e)
+(cherry picked from commit e14d468304832bcc4a082d95849bc0a41b18ddea)
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c |   21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/resource/dcn32/dcn32_resource.c
-@@ -1789,7 +1789,10 @@ static bool dml1_validate(struct dc *dc,
- 
- 	dc->res_pool->funcs->calculate_wm_and_dlg(dc, context, pipes, pipe_cnt, vlevel);
- 
-+	DC_FP_START();
- 	dcn32_override_min_req_memclk(dc, context);
-+	DC_FP_END();
-+
- 	dcn32_override_min_req_dcfclk(dc, context);
- 
- 	BW_VAL_TRACE_END_WATERMARKS();
+--- a/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gmc_v9_0.c
+@@ -693,28 +693,35 @@ static int gmc_v9_0_process_interrupt(st
+ 	} else {
+ 		switch (amdgpu_ip_version(adev, MMHUB_HWIP, 0)) {
+ 		case IP_VERSION(9, 0, 0):
+-			mmhub_cid = mmhub_client_ids_vega10[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega10) ?
++				mmhub_client_ids_vega10[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(9, 3, 0):
+-			mmhub_cid = mmhub_client_ids_vega12[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega12) ?
++				mmhub_client_ids_vega12[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(9, 4, 0):
+-			mmhub_cid = mmhub_client_ids_vega20[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_vega20) ?
++				mmhub_client_ids_vega20[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(9, 4, 1):
+-			mmhub_cid = mmhub_client_ids_arcturus[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_arcturus) ?
++				mmhub_client_ids_arcturus[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(9, 1, 0):
+ 		case IP_VERSION(9, 2, 0):
+-			mmhub_cid = mmhub_client_ids_raven[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_raven) ?
++				mmhub_client_ids_raven[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(1, 5, 0):
+ 		case IP_VERSION(2, 4, 0):
+-			mmhub_cid = mmhub_client_ids_renoir[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_renoir) ?
++				mmhub_client_ids_renoir[cid][rw] : NULL;
+ 			break;
+ 		case IP_VERSION(1, 8, 0):
+ 		case IP_VERSION(9, 4, 2):
+-			mmhub_cid = mmhub_client_ids_aldebaran[cid][rw];
++			mmhub_cid = cid < ARRAY_SIZE(mmhub_client_ids_aldebaran) ?
++				mmhub_client_ids_aldebaran[cid][rw] : NULL;
+ 			break;
+ 		default:
+ 			mmhub_cid = NULL;
 
 
