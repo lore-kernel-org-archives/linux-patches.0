@@ -1,38 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8B543BC661;
-	Mon, 23 Mar 2026 16:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5A439A805;
+	Mon, 23 Mar 2026 16:16:27 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282585; cv=none; b=dQrXq7SI+FsaoFah3GwB8Lvgt8nZxBuhw0Eo6tIeR1bs6FC9W8xLBBkmR7R6NhQnTrGxevLJtycYD4MOYxsRA9E6kXcVbMg2MqtWSYPl3v+QibYmFDDgJGcpmbldFXLiZNTZZ7xAlYUVuVaD9fw6hyZakju4HSpBhQYjbynwfyI=
+	t=1774282587; cv=none; b=MDiH7VEKngTbyNbC4/UuAiOVVIKb8GIP/fLqdl3UTFV9aVoqfHnY6tP7RBD2fHhtTl1KGpYck8rzuJDkOJWTKSFlsDLQ0/oLiWA0KR297XcJMnEZBlx/XKfZZ15mgHxiRemkAideDy/Lke6DSHAeJYt+kKa8DYymkmln9AvBeUc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282585; c=relaxed/simple;
-	bh=VrIcAZdwIml6eaUQStZjlCx07mVY2c57P/XAV/zkoOE=;
+	s=arc-20240116; t=1774282587; c=relaxed/simple;
+	bh=EuKf7Jc516x8O0M5zTXyVvkjuNpw0+V5sVpYjqn6Pzg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=tRdlQOjMBH/rTrCRT9b7gH1eNhkaDEzIr3vTK4k2UWVa14Vr2rujHdvsQAwivggFiN1DXVxQvuhXpfx1hK/71/64afZWjXyzk0IuZZNE9TJEkLbfvL0qI1Pa3KjHl10EbdKj6Ixz3Wlv7rrwXRrMPo/rvgisge0ZL7Ifa//s6fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2Xs/DBZc; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=iTILptRMQo7bKbzwnLqhbYKC+nOsROuUlUenaQ7MxBiTDyU9QPV4Ng6sEYFxitHqp9XhSxHUp5LmZ7hSdVjvbewIU/XU6IgXr6MlYbQxTlENp9V4AaPFB3oAvUnr/Do36NCgsu2GKqaDZycq216PeUmZTOIf3jIDcfvntPc6JaE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jsv1oOFW; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2Xs/DBZc"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83B71C4CEF7;
-	Mon, 23 Mar 2026 16:16:24 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jsv1oOFW"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B335C4CEF7;
+	Mon, 23 Mar 2026 16:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282584;
-	bh=VrIcAZdwIml6eaUQStZjlCx07mVY2c57P/XAV/zkoOE=;
+	s=korg; t=1774282587;
+	bh=EuKf7Jc516x8O0M5zTXyVvkjuNpw0+V5sVpYjqn6Pzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Xs/DBZccUcSnaPujPzIjAQx2VKpF8OZW0EuS524teH1sg8rTosuatlZ4yOyZRbKn
-	 C+qNyr+Wel120yDpfdpHnL2zlHkUqsn6mmuN7aQ4KPt8imOQGahuZ3viGV8SHRi64+
-	 ta12FjnoUryTqi1cxffgO1JTKzk1Q0zWrWzVIDYk=
+	b=jsv1oOFWKSCfmI7T9ClnqOC0jFOUfeaStJwUVNbSmTn/gIy12v6QvAkPcrrBg58YX
+	 1pSGHuIFfkU0JhqjD+YM5cbD+estbu31YJPVnZJdEgrDHtZ1A1LXHKW43P6fsR4XT5
+	 1ZsTBdHBWtI8HgxH0ZpTcjFQ1XV13S7PkFwDLSAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>,
-	stable <stable@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
 	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 6.1 211/481] usb: cdc-acm: Restore CAP_BRK functionnality to CH343
-Date: Mon, 23 Mar 2026 14:43:13 +0100
-Message-ID: <20260323134530.307981231@linuxfoundation.org>
+Subject: [PATCH 6.1 212/481] USB: usbcore: Introduce usb_bulk_msg_killable()
+Date: Mon, 23 Mar 2026 14:43:14 +0100
+Message-ID: <20260323134530.330293007@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,62 +50,166 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Marc Zyngier <maz@kernel.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 14ae24cba291bddfdc296bbcbfd00cd09d0498ef upstream.
+commit 416909962e7cdf29fd01ac523c953f37708df93d upstream.
 
-The CH343 USB/serial adapter is as buggy as it is popular (very).
-One of its quirks is that despite being capable of signalling a
-BREAK condition, it doesn't advertise it.
+The synchronous message API in usbcore (usb_control_msg(),
+usb_bulk_msg(), and so on) uses uninterruptible waits.  However,
+drivers may call these routines in the context of a user thread, which
+means it ought to be possible to at least kill them.
 
-This used to work nonetheless until 66aad7d8d3ec5 ("usb: cdc-acm:
-return correct error code on unsupported break") applied some
-reasonable restrictions, preventing breaks from being emitted on
-devices that do not advertise CAP_BRK.
+For this reason, introduce a new usb_bulk_msg_killable() function
+which behaves the same as usb_bulk_msg() except for using
+wait_for_completion_killable_timeout() instead of
+wait_for_completion_timeout().  The same can be done later for
+usb_control_msg() later on, if it turns out to be needed.
 
-Add a quirk for this particular device, so that breaks can still
-be produced on some of my machines attached to my console server.
-
-Fixes: 66aad7d8d3ec5 ("usb: cdc-acm: return correct error code on unsupported break")
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable <stable@kernel.org>
-Cc: Oliver Neukum <oneukum@suse.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://patch.msgid.link/20260301124440.1192752-1-maz@kernel.org
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Suggested-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/linux-usb/3acfe838-6334-4f6d-be7c-4bb01704b33d@rowland.harvard.edu/
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+CC: stable@vger.kernel.org
+Link: https://patch.msgid.link/248628b4-cc83-4e81-a620-3ce4e0376d41@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/class/cdc-acm.c |    5 +++++
- drivers/usb/class/cdc-acm.h |    1 +
- 2 files changed, 6 insertions(+)
+ drivers/usb/core/message.c |   79 +++++++++++++++++++++++++++++++++++++++------
+ include/linux/usb.h        |    5 +-
+ 2 files changed, 72 insertions(+), 12 deletions(-)
 
---- a/drivers/usb/class/cdc-acm.c
-+++ b/drivers/usb/class/cdc-acm.c
-@@ -1355,6 +1355,8 @@ made_compressed_probe:
- 		acm->ctrl_caps = h.usb_cdc_acm_descriptor->bmCapabilities;
- 	if (quirks & NO_CAP_LINE)
- 		acm->ctrl_caps &= ~USB_CDC_CAP_LINE;
-+	if (quirks & MISSING_CAP_BRK)
-+		acm->ctrl_caps |= USB_CDC_CAP_BRK;
- 	acm->ctrlsize = ctrlsize;
- 	acm->readsize = readsize;
- 	acm->rx_buflimit = num_rx_buf;
-@@ -1978,6 +1980,9 @@ static const struct usb_device_id acm_id
- 	.driver_info = IGNORE_DEVICE,
- 	},
+--- a/drivers/usb/core/message.c
++++ b/drivers/usb/core/message.c
+@@ -41,16 +41,17 @@ static void usb_api_blocking_completion(
  
-+	/* CH343 supports CAP_BRK, but doesn't advertise it */
-+	{ USB_DEVICE(0x1a86, 0x55d3), .driver_info = MISSING_CAP_BRK, },
+ 
+ /*
+- * Starts urb and waits for completion or timeout. Note that this call
+- * is NOT interruptible. Many device driver i/o requests should be
+- * interruptible and therefore these drivers should implement their
+- * own interruptible routines.
++ * Starts urb and waits for completion or timeout.
++ * Whether or not the wait is killable depends on the flag passed in.
++ * For example, compare usb_bulk_msg() and usb_bulk_msg_killable().
+  */
+-static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length)
++static int usb_start_wait_urb(struct urb *urb, int timeout, int *actual_length,
++		bool killable)
+ {
+ 	struct api_context ctx;
+ 	unsigned long expire;
+ 	int retval;
++	long rc;
+ 
+ 	init_completion(&ctx.done);
+ 	urb->context = &ctx;
+@@ -60,12 +61,21 @@ static int usb_start_wait_urb(struct urb
+ 		goto out;
+ 
+ 	expire = timeout ? msecs_to_jiffies(timeout) : MAX_SCHEDULE_TIMEOUT;
+-	if (!wait_for_completion_timeout(&ctx.done, expire)) {
++	if (killable)
++		rc = wait_for_completion_killable_timeout(&ctx.done, expire);
++	else
++		rc = wait_for_completion_timeout(&ctx.done, expire);
++	if (rc <= 0) {
+ 		usb_kill_urb(urb);
+-		retval = (ctx.status == -ENOENT ? -ETIMEDOUT : ctx.status);
++		if (ctx.status != -ENOENT)
++			retval = ctx.status;
++		else if (rc == 0)
++			retval = -ETIMEDOUT;
++		else
++			retval = rc;
+ 
+ 		dev_dbg(&urb->dev->dev,
+-			"%s timed out on ep%d%s len=%u/%u\n",
++			"%s timed out or killed on ep%d%s len=%u/%u\n",
+ 			current->comm,
+ 			usb_endpoint_num(&urb->ep->desc),
+ 			usb_urb_dir_in(urb) ? "in" : "out",
+@@ -99,7 +109,7 @@ static int usb_internal_control_msg(stru
+ 	usb_fill_control_urb(urb, usb_dev, pipe, (unsigned char *)cmd, data,
+ 			     len, usb_api_blocking_completion, NULL);
+ 
+-	retv = usb_start_wait_urb(urb, timeout, &length);
++	retv = usb_start_wait_urb(urb, timeout, &length, false);
+ 	if (retv < 0)
+ 		return retv;
+ 	else
+@@ -384,10 +394,59 @@ int usb_bulk_msg(struct usb_device *usb_
+ 		usb_fill_bulk_urb(urb, usb_dev, pipe, data, len,
+ 				usb_api_blocking_completion, NULL);
+ 
+-	return usb_start_wait_urb(urb, timeout, actual_length);
++	return usb_start_wait_urb(urb, timeout, actual_length, false);
+ }
+ EXPORT_SYMBOL_GPL(usb_bulk_msg);
+ 
++/**
++ * usb_bulk_msg_killable - Builds a bulk urb, sends it off and waits for completion in a killable state
++ * @usb_dev: pointer to the usb device to send the message to
++ * @pipe: endpoint "pipe" to send the message to
++ * @data: pointer to the data to send
++ * @len: length in bytes of the data to send
++ * @actual_length: pointer to a location to put the actual length transferred
++ *	in bytes
++ * @timeout: time in msecs to wait for the message to complete before
++ *	timing out (if 0 the wait is forever)
++ *
++ * Context: task context, might sleep.
++ *
++ * This function is just like usb_blk_msg() except that it waits in a
++ * killable state.
++ *
++ * Return:
++ * If successful, 0. Otherwise a negative error number. The number of actual
++ * bytes transferred will be stored in the @actual_length parameter.
++ *
++ */
++int usb_bulk_msg_killable(struct usb_device *usb_dev, unsigned int pipe,
++		 void *data, int len, int *actual_length, int timeout)
++{
++	struct urb *urb;
++	struct usb_host_endpoint *ep;
 +
- 	/* control interfaces without any protocol set */
- 	{ USB_INTERFACE_INFO(USB_CLASS_COMM, USB_CDC_SUBCLASS_ACM,
- 		USB_CDC_PROTO_NONE) },
---- a/drivers/usb/class/cdc-acm.h
-+++ b/drivers/usb/class/cdc-acm.h
-@@ -113,3 +113,4 @@ struct acm {
- #define CLEAR_HALT_CONDITIONS		BIT(5)
- #define SEND_ZERO_PACKET		BIT(6)
- #define DISABLE_ECHO			BIT(7)
-+#define MISSING_CAP_BRK			BIT(8)
++	ep = usb_pipe_endpoint(usb_dev, pipe);
++	if (!ep || len < 0)
++		return -EINVAL;
++
++	urb = usb_alloc_urb(0, GFP_KERNEL);
++	if (!urb)
++		return -ENOMEM;
++
++	if ((ep->desc.bmAttributes & USB_ENDPOINT_XFERTYPE_MASK) ==
++			USB_ENDPOINT_XFER_INT) {
++		pipe = (pipe & ~(3 << 30)) | (PIPE_INTERRUPT << 30);
++		usb_fill_int_urb(urb, usb_dev, pipe, data, len,
++				usb_api_blocking_completion, NULL,
++				ep->desc.bInterval);
++	} else
++		usb_fill_bulk_urb(urb, usb_dev, pipe, data, len,
++				usb_api_blocking_completion, NULL);
++
++	return usb_start_wait_urb(urb, timeout, actual_length, true);
++}
++EXPORT_SYMBOL_GPL(usb_bulk_msg_killable);
++
+ /*-------------------------------------------------------------------*/
+ 
+ static void sg_clean(struct usb_sg_request *io)
+--- a/include/linux/usb.h
++++ b/include/linux/usb.h
+@@ -1804,8 +1804,9 @@ extern int usb_control_msg(struct usb_de
+ extern int usb_interrupt_msg(struct usb_device *usb_dev, unsigned int pipe,
+ 	void *data, int len, int *actual_length, int timeout);
+ extern int usb_bulk_msg(struct usb_device *usb_dev, unsigned int pipe,
+-	void *data, int len, int *actual_length,
+-	int timeout);
++	void *data, int len, int *actual_length, int timeout);
++extern int usb_bulk_msg_killable(struct usb_device *usb_dev, unsigned int pipe,
++	void *data, int len, int *actual_length, int timeout);
+ 
+ /* wrappers around usb_control_msg() for the most common standard requests */
+ int usb_control_msg_send(struct usb_device *dev, __u8 endpoint, __u8 request,
 
 
