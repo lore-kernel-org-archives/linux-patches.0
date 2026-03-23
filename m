@@ -1,37 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D9AB3B27FB;
-	Mon, 23 Mar 2026 14:03:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 456043AC0D2;
+	Mon, 23 Mar 2026 14:03:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274587; cv=none; b=EQmmyacEfgeBEnc66I/K1tJ/E+oSCl8HiL4L5DSeYUnUdPQkiXUHqjvCrInGJVVXy3/pt3bXi4wUi6IRE0hnkVVW/Qu51oDRsFKid+yY+BRepd/9/MXF/9ehuJQv8FBdsPWgTkhSfjT2hpVVcmMMo74oyCkLrNG2ER4oagFS95s=
+	t=1774274590; cv=none; b=LKD+LuxsBGbT6Z3iD86lyg+/RNKxjwiE9NvgsO+LG/EODZ9+aN2Jf2JNOue8zpbGc4CQ9FhUq4ZDVup0fG2GQXCMA9Cwpg0+tpKGw4oyTsE6/zFfBcBFJBCOogkXgjqH+zZCR6RJma0K/gKHcHfmZzG7OTjPv0pNsmqLtMWy3RQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274587; c=relaxed/simple;
-	bh=V4m2wKHCm7HLn2PQLYraIo9oPGErUOUtq3Ysgra3DCM=;
+	s=arc-20240116; t=1774274590; c=relaxed/simple;
+	bh=MuZ7pG5CwJJHA16T1YuztN78P/FbArk6WDHcU0sdHcY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BO3Wr8BQ+Drq80Z8sf+iK9q3wmSE2DI49o79GRCr+hbn/rwRXkckHDAoSiewv1ludlWb54NYL33P6yOcw8yiw+iqJOYQkBKGkiWiEzgXpd06h+uhby3aW1K7dUphv44kaSupl5tQl+272mbjVJCWlcNVr/VLWizFNWSxJxZf+vA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Y49nD/y/; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=Ow3ezr0349lFsRNd4QYcnbkERECnlAowZ25iGVi6e8LP49IHxqGvU1lJ3+siLd/JXkY1Y1OcYryheXIFQY2Y4WeTlGQvscNbdBMcqlbuviWFOAuI67S/glwpoSt9gxFVdywroNXQXTZTD0uAO6Sep0JuXrorQLHxNSF89vY0cxI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=jnUyk9Cw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Y49nD/y/"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9843C4CEF7;
-	Mon, 23 Mar 2026 14:03:06 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="jnUyk9Cw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD24FC2BC9E;
+	Mon, 23 Mar 2026 14:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274587;
-	bh=V4m2wKHCm7HLn2PQLYraIo9oPGErUOUtq3Ysgra3DCM=;
+	s=korg; t=1774274590;
+	bh=MuZ7pG5CwJJHA16T1YuztN78P/FbArk6WDHcU0sdHcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y49nD/y/I8Joj09o8fPZBPSy6pvxRmDdc1fIRp3Q95VlGtXXPMqqHrN6A4N51zsee
-	 hkG6UFePNUzD0DeCCJw1MQYctqLB9P+yqUnQyQoPmYxrkrlQ3vHLgVH5whZd0BrIIi
-	 IdTs+YylIhzDLP9EJglPL9YMZzZ8gWgc69+gj2Hw=
+	b=jnUyk9CwqH2U7Dl6dUIyheNc3mzvFuV7rJdhpbrP0ysQKSWimsL9A+crhWO9RYgw8
+	 yfsuzlJtWA7e8b3U5CPnzdse1vy7H/bvOGO28iZVeKVsb3hxF78eKhBYeyi06FPL1i
+	 bdNG8b4kdh1iDM8AAVLsykuCEShcppGpMtXeQDLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dan Schatzberg <schatzberg.dan@gmail.com>,
+	Emil Tsalapatis <emil@etsalapatis.com>,
+	Andrea Righi <arighi@nvidia.com>,
 	Tejun Heo <tj@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.18 045/212] sched_ext: Fix starvation of scx_enable() under fair-class saturation
-Date: Mon, 23 Mar 2026 14:44:26 +0100
-Message-ID: <20260323134505.190598580@linuxfoundation.org>
+Subject: [PATCH 6.18 046/212] sched_ext: Simplify breather mechanism with scx_aborting flag
+Date: Mon, 23 Mar 2026 14:44:27 +0100
+Message-ID: <20260323134505.222211679@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -52,137 +55,182 @@ Content-Transfer-Encoding: 8bit
 
 From: Tejun Heo <tj@kernel.org>
 
-[ Upstream commit b06ccbabe2506fd70b9167a644978b049150224a ]
+[ Upstream commit a69040ed57f50156e5452474d25c79b9e62075d0 ]
 
-During scx_enable(), the READY -> ENABLED task switching loop changes the
-calling thread's sched_class from fair to ext. Since fair has higher
-priority than ext, saturating fair-class workloads can indefinitely starve
-the enable thread, hanging the system. This was introduced when the enable
-path switched from preempt_disable() to scx_bypass() which doesn't protect
-against fair-class starvation. Note that the original preempt_disable()
-protection wasn't complete either - in partial switch modes, the calling
-thread could still be starved after preempt_enable() as it may have been
-switched to ext class.
+The breather mechanism was introduced in 62dcbab8b0ef ("sched_ext: Avoid
+live-locking bypass mode switching") and e32c260195e6 ("sched_ext: Enable the
+ops breather and eject BPF scheduler on softlockup") to prevent live-locks by
+injecting delays when CPUs are trapped in dispatch paths.
 
-Fix it by offloading the enable body to a dedicated system-wide RT
-(SCHED_FIFO) kthread which cannot be starved by either fair or ext class
-tasks. scx_enable() lazily creates the kthread on first use and passes the
-ops pointer through a struct scx_enable_cmd containing the kthread_work,
-then synchronously waits for completion.
+Currently, it uses scx_breather_depth (atomic_t) and scx_in_softlockup
+(unsigned long) with separate increment/decrement and cleanup operations. The
+breather is only activated when aborting, so tie it directly to the exit
+mechanism. Replace both variables with scx_aborting flag set when exit is
+claimed and cleared after bypass is enabled. Introduce scx_claim_exit() to
+consolidate exit_kind claiming and breather enablement. This eliminates
+scx_clear_softlockup() and simplifies scx_softlockup() and scx_bypass().
 
-The workfn runs on a different kthread from sch->helper (which runs
-disable_work), so it can safely flush disable_work on the error path
-without deadlock.
+The breather mechanism will be replaced by a different abort mechanism in a
+future patch. This simplification prepares for that change.
 
-Fixes: 8c2090c504e9 ("sched_ext: Initialize in bypass mode")
-Cc: stable@vger.kernel.org # v6.12+
+Reviewed-by: Dan Schatzberg <schatzberg.dan@gmail.com>
+Reviewed-by: Emil Tsalapatis <emil@etsalapatis.com>
+Acked-by: Andrea Righi <arighi@nvidia.com>
 Signed-off-by: Tejun Heo <tj@kernel.org>
+Stable-dep-of: 83236b2e43db ("sched_ext: Disable preemption between scx_claim_exit() and kicking helper work")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/ext.c |   66 ++++++++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 56 insertions(+), 10 deletions(-)
+ kernel/sched/ext.c |   54 ++++++++++++++++++++++++-----------------------------
+ 1 file changed, 25 insertions(+), 29 deletions(-)
 
 --- a/kernel/sched/ext.c
 +++ b/kernel/sched/ext.c
-@@ -4598,20 +4598,30 @@ static int validate_ops(struct scx_sched
- 	return 0;
+@@ -33,9 +33,8 @@ static DEFINE_MUTEX(scx_enable_mutex);
+ DEFINE_STATIC_KEY_FALSE(__scx_enabled);
+ DEFINE_STATIC_PERCPU_RWSEM(scx_fork_rwsem);
+ static atomic_t scx_enable_state_var = ATOMIC_INIT(SCX_DISABLED);
+-static unsigned long scx_in_softlockup;
+-static atomic_t scx_breather_depth = ATOMIC_INIT(0);
+ static int scx_bypass_depth;
++static bool scx_aborting;
+ static bool scx_init_task_enabled;
+ static bool scx_switching_all;
+ DEFINE_STATIC_KEY_FALSE(__scx_switched_all);
+@@ -1791,7 +1790,7 @@ static void scx_breather(struct rq *rq)
+ 
+ 	lockdep_assert_rq_held(rq);
+ 
+-	if (likely(!atomic_read(&scx_breather_depth)))
++	if (likely(!READ_ONCE(scx_aborting)))
+ 		return;
+ 
+ 	raw_spin_rq_unlock(rq);
+@@ -1800,9 +1799,9 @@ static void scx_breather(struct rq *rq)
+ 
+ 	do {
+ 		int cnt = 1024;
+-		while (atomic_read(&scx_breather_depth) && --cnt)
++		while (READ_ONCE(scx_aborting) && --cnt)
+ 			cpu_relax();
+-	} while (atomic_read(&scx_breather_depth) &&
++	} while (READ_ONCE(scx_aborting) &&
+ 		 time_before64(ktime_get_ns(), until));
+ 
+ 	raw_spin_rq_lock(rq);
+@@ -3718,30 +3717,14 @@ void scx_softlockup(u32 dur_s)
+ 		goto out_unlock;
+ 	}
+ 
+-	/* allow only one instance, cleared at the end of scx_bypass() */
+-	if (test_and_set_bit(0, &scx_in_softlockup))
+-		goto out_unlock;
+-
+ 	printk_deferred(KERN_ERR "sched_ext: Soft lockup - CPU%d stuck for %us, disabling \"%s\"\n",
+ 			smp_processor_id(), dur_s, scx_root->ops.name);
+ 
+-	/*
+-	 * Some CPUs may be trapped in the dispatch paths. Enable breather
+-	 * immediately; otherwise, we might even be able to get to scx_bypass().
+-	 */
+-	atomic_inc(&scx_breather_depth);
+-
+ 	scx_error(sch, "soft lockup - CPU#%d stuck for %us", smp_processor_id(), dur_s);
+ out_unlock:
+ 	rcu_read_unlock();
  }
  
--static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
-+/*
-+ * scx_enable() is offloaded to a dedicated system-wide RT kthread to avoid
-+ * starvation. During the READY -> ENABLED task switching loop, the calling
-+ * thread's sched_class gets switched from fair to ext. As fair has higher
-+ * priority than ext, the calling thread can be indefinitely starved under
-+ * fair-class saturation, leading to a system hang.
-+ */
-+struct scx_enable_cmd {
-+	struct kthread_work	work;
-+	struct sched_ext_ops	*ops;
-+	int			ret;
-+};
-+
-+static void scx_enable_workfn(struct kthread_work *work)
- {
-+	struct scx_enable_cmd *cmd =
-+		container_of(work, struct scx_enable_cmd, work);
-+	struct sched_ext_ops *ops = cmd->ops;
- 	struct scx_sched *sch;
- 	struct scx_task_iter sti;
- 	struct task_struct *p;
- 	unsigned long timeout;
- 	int i, cpu, ret;
- 
--	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
--			   cpu_possible_mask)) {
--		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
--		return -EINVAL;
--	}
+-static void scx_clear_softlockup(void)
+-{
+-	if (test_and_clear_bit(0, &scx_in_softlockup))
+-		atomic_dec(&scx_breather_depth);
+-}
 -
- 	mutex_lock(&scx_enable_mutex);
+ /**
+  * scx_bypass - [Un]bypass scx_ops and guarantee forward progress
+  * @bypass: true for bypass, false for unbypass
+@@ -3802,8 +3785,6 @@ static void scx_bypass(bool bypass)
+ 				      ktime_get_ns() - bypass_timestamp);
+ 	}
  
- 	if (scx_enable_state() != SCX_DISABLED) {
-@@ -4828,13 +4838,15 @@ static int scx_enable(struct sched_ext_o
+-	atomic_inc(&scx_breather_depth);
+-
+ 	/*
+ 	 * No task property is changing. We just need to make sure all currently
+ 	 * queued tasks are re-queued according to the new scx_rq_bypassing()
+@@ -3860,10 +3841,8 @@ static void scx_bypass(bool bypass)
+ 		raw_spin_rq_unlock(rq);
+ 	}
  
- 	atomic_long_inc(&scx_enable_seq);
+-	atomic_dec(&scx_breather_depth);
+ unlock:
+ 	raw_spin_unlock_irqrestore(&bypass_lock, flags);
+-	scx_clear_softlockup();
+ }
  
--	return 0;
-+	cmd->ret = 0;
-+	return;
+ static void free_exit_info(struct scx_exit_info *ei)
+@@ -3958,6 +3937,7 @@ static void scx_disable_workfn(struct kt
  
- err_free_pseqs:
- 	free_kick_pseqs();
- err_unlock:
- 	mutex_unlock(&scx_enable_mutex);
--	return ret;
-+	cmd->ret = ret;
-+	return;
+ 	/* guarantee forward progress by bypassing scx_ops */
+ 	scx_bypass(true);
++	WRITE_ONCE(scx_aborting, false);
  
- err_disable_unlock_all:
- 	scx_cgroup_unlock();
-@@ -4853,7 +4865,41 @@ err_disable:
- 	 */
- 	scx_error(sch, "scx_enable() failed (%d)", ret);
- 	kthread_flush_work(&sch->disable_work);
--	return 0;
-+	cmd->ret = 0;
+ 	switch (scx_set_enable_state(SCX_DISABLING)) {
+ 	case SCX_DISABLING:
+@@ -4086,9 +4066,24 @@ done:
+ 	scx_bypass(false);
+ }
+ 
+-static void scx_disable(enum scx_exit_kind kind)
++static bool scx_claim_exit(struct scx_sched *sch, enum scx_exit_kind kind)
+ {
+ 	int none = SCX_EXIT_NONE;
++
++	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
++		return false;
++
++	/*
++	 * Some CPUs may be trapped in the dispatch paths. Enable breather
++	 * immediately; otherwise, we might not even be able to get to
++	 * scx_bypass().
++	 */
++	WRITE_ONCE(scx_aborting, true);
++	return true;
 +}
 +
-+static int scx_enable(struct sched_ext_ops *ops, struct bpf_link *link)
++static void scx_disable(enum scx_exit_kind kind)
 +{
-+	static struct kthread_worker *helper;
-+	static DEFINE_MUTEX(helper_mutex);
-+	struct scx_enable_cmd cmd;
-+
-+	if (!cpumask_equal(housekeeping_cpumask(HK_TYPE_DOMAIN),
-+			   cpu_possible_mask)) {
-+		pr_err("sched_ext: Not compatible with \"isolcpus=\" domain isolation\n");
-+		return -EINVAL;
-+	}
-+
-+	if (!READ_ONCE(helper)) {
-+		mutex_lock(&helper_mutex);
-+		if (!helper) {
-+			helper = kthread_run_worker(0, "scx_enable_helper");
-+			if (IS_ERR_OR_NULL(helper)) {
-+				helper = NULL;
-+				mutex_unlock(&helper_mutex);
-+				return -ENOMEM;
-+			}
-+			sched_set_fifo(helper->task);
-+		}
-+		mutex_unlock(&helper_mutex);
-+	}
-+
-+	kthread_init_work(&cmd.work, scx_enable_workfn);
-+	cmd.ops = ops;
-+
-+	kthread_queue_work(READ_ONCE(helper), &cmd.work);
-+	kthread_flush_work(&cmd.work);
-+	return cmd.ret;
- }
+ 	struct scx_sched *sch;
  
+ 	if (WARN_ON_ONCE(kind == SCX_EXIT_NONE || kind == SCX_EXIT_DONE))
+@@ -4097,7 +4092,7 @@ static void scx_disable(enum scx_exit_ki
+ 	rcu_read_lock();
+ 	sch = rcu_dereference(scx_root);
+ 	if (sch) {
+-		atomic_try_cmpxchg(&sch->exit_kind, &none, kind);
++		scx_claim_exit(sch, kind);
+ 		kthread_queue_work(sch->helper, &sch->disable_work);
+ 	}
+ 	rcu_read_unlock();
+@@ -4418,9 +4413,8 @@ static void scx_vexit(struct scx_sched *
+ 		      const char *fmt, va_list args)
+ {
+ 	struct scx_exit_info *ei = sch->exit_info;
+-	int none = SCX_EXIT_NONE;
+ 
+-	if (!atomic_try_cmpxchg(&sch->exit_kind, &none, kind))
++	if (!scx_claim_exit(sch, kind))
+ 		return;
+ 
+ 	ei->exit_code = exit_code;
+@@ -4645,6 +4639,8 @@ static void scx_enable_workfn(struct kth
+ 	 */
+ 	WARN_ON_ONCE(scx_set_enable_state(SCX_ENABLING) != SCX_DISABLED);
+ 	WARN_ON_ONCE(scx_root);
++	if (WARN_ON_ONCE(READ_ONCE(scx_aborting)))
++		WRITE_ONCE(scx_aborting, false);
+ 
+ 	atomic_long_set(&scx_nr_rejected, 0);
  
 
 
