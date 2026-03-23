@@ -1,42 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00CC33B52F5;
-	Mon, 23 Mar 2026 14:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DD1A3B5306;
+	Mon, 23 Mar 2026 14:01:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274471; cv=none; b=DMyPY5ek7+mWhQ+9SGRgNJVI5EYU3pvpi73SSmSc7dB78tmXFdW5fT8hool/bE90DoqI1919ACs0yWtj4gaElPgIHehVbTY1Ly8Gu2WEj9TNLK15k4Aah8IdDWQPrl8tneVyoKiz7UC7SW3S3AorZJXDG9fbm9SvC+vKefp0bkk=
+	t=1774274474; cv=none; b=c5Yf3ElJQfK8l7x5xgAX0yomqXBzt9yXALiVxKXPU71nCf2vZfQOVusI9QrUGv9J27BjXesSsaxfs/Tfdikx0DjhzmcaPCs9UpzS+qDHXsSgF8fmHOdl4wUVpwQX+B4LzcpPu+hn99u8VMTWUPf4beSwLJqle8Q2mHycyz52S3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274471; c=relaxed/simple;
-	bh=0sV07C4vYro8LlX+T/h0g5IBrpL+QJ236Ujzf8fMVKM=;
+	s=arc-20240116; t=1774274474; c=relaxed/simple;
+	bh=h0g2oM0vsLVCL7u+ipD4mM49nuHU1pJtIj47xbxwMgE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Q2XDHwAvSsQge30Eo0mFFh/s6yCpv4a7C1TXrUPn+02iUpZzTPzfk4wOq1zVwfQSVceXngWJ55OAU6OyIfyCdwSUGYvGO93GOPPyWwQZpgMP0crdpjFC61QxRzPO2T6fNYA3skQPP2DTVYtdgBiY0Y5K12ol2GLSAfT5ATHmwxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Jq0MYFqD; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=cShI5o0fV24EjJ7vFFqGNPQClYprGiBBDedZgb/2edv/xSU16a5RsRFHpMcxPRruPQ2U9vtT/a+LaTNwineECq6jAzfh7fNzM8ZGuFhwb9JjEas2kvdqzpsD+eDhqo4Ds2ipDS+iAQZoyghlBaOh+nHB4999qIpxO5s5KPlwPJk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lvOdzKC8; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Jq0MYFqD"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C3EC4CEF7;
-	Mon, 23 Mar 2026 14:01:10 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lvOdzKC8"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9792BC2BCB3;
+	Mon, 23 Mar 2026 14:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274470;
-	bh=0sV07C4vYro8LlX+T/h0g5IBrpL+QJ236Ujzf8fMVKM=;
+	s=korg; t=1774274474;
+	bh=h0g2oM0vsLVCL7u+ipD4mM49nuHU1pJtIj47xbxwMgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jq0MYFqDTcvLsPMj8ATdg6//SL2UpCRKBlSxLOTJeDWsD9fFaS8M7YkjlwXR4gGQ2
-	 cMz7Uplw/F1yxh8wkSlfJ1UjYASLWxJ2Q3rfErlwkGvmwd9IfTx3D0N59EZMIXiL6K
-	 +k3wQYkP+wLfOYNKDf7wUsG0VDyqfJOLFjDWbxDA=
+	b=lvOdzKC8W2y4ZMYbq8e+KnZHxYG61XFw+ZHNgjAVEcArFLyDUVgQGkpO7i6/I4TrZ
+	 BV1vrIL8rYbl+d4mjWS1hf51EYD4lbWinCkYlqLrkVRlS5bkjVzJVebXn9Tu5Pe8fe
+	 BP5FIDTqoOQ8J5V8C030A4Tzj+N/qWuG31Vp8yWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Bukte <rahul.bukte@sony.com>,
-	Suraj Kandpal <suraj.kandpal@intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.19 214/220] drm/i915/gt: Check set_default_submission() before deferencing
-Date: Mon, 23 Mar 2026 14:46:31 +0100
-Message-ID: <20260323134511.287165652@linuxfoundation.org>
+	Misbah Anjum N <misanjum@linux.ibm.com>,
+	NeilBrown <neil@brown.name>,
+	Olga Kornievskaia <okorniev@redhat.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 6.18 001/212] NFSD: Defer sub-object cleanup in export put callbacks
+Date: Mon, 23 Mar 2026 14:43:42 +0100
+Message-ID: <20260323134503.818639228@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
-References: <20260323134504.575022936@linuxfoundation.org>
+In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
+References: <20260323134503.770111826@linuxfoundation.org>
 User-Agent: quilt/0.69
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -48,109 +49,239 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-6.19-stable review patch.  If anyone has any objections, please let me know.
+6.18-stable review patch.  If anyone has any objections, please let me know.
 
 ------------------
 
-From: Rahul Bukte <rahul.bukte@sony.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 0162ab3220bac870e43e229e6e3024d1a21c3f26 ]
+commit 48db892356d6cb80f6942885545de4a6dd8d2a29 upstream.
 
-When the i915 driver firmware binaries are not present, the
-set_default_submission pointer is not set. This pointer is
-dereferenced during suspend anyways.
+svc_export_put() calls path_put() and auth_domain_put() immediately
+when the last reference drops, before the RCU grace period. RCU
+readers in e_show() and c_show() access both ex_path (via
+seq_path/d_path) and ex_client->name (via seq_escape) without
+holding a reference. If cache_clean removes the entry and drops the
+last reference concurrently, the sub-objects are freed while still
+in use, producing a NULL pointer dereference in d_path.
 
-Add a check to make sure it is set before dereferencing.
+Commit 2530766492ec ("nfsd: fix UAF when access ex_uuid or
+ex_stats") moved kfree of ex_uuid and ex_stats into the
+call_rcu callback, but left path_put() and auth_domain_put() running
+before the grace period because both may sleep and call_rcu
+callbacks execute in softirq context.
 
-[   23.289926] PM: suspend entry (deep)
-[   23.293558] Filesystems sync: 0.000 seconds
-[   23.298010] Freezing user space processes
-[   23.302771] Freezing user space processes completed (elapsed 0.000 seconds)
-[   23.309766] OOM killer disabled.
-[   23.313027] Freezing remaining freezable tasks
-[   23.318540] Freezing remaining freezable tasks completed (elapsed 0.001 seconds)
-[   23.342038] serial 00:05: disabled
-[   23.345719] serial 00:02: disabled
-[   23.349342] serial 00:01: disabled
-[   23.353782] sd 0:0:0:0: [sda] Synchronizing SCSI cache
-[   23.358993] sd 1:0:0:0: [sdb] Synchronizing SCSI cache
-[   23.361635] ata1.00: Entering standby power mode
-[   23.368863] ata2.00: Entering standby power mode
-[   23.445187] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[   23.452194] #PF: supervisor instruction fetch in kernel mode
-[   23.457896] #PF: error_code(0x0010) - not-present page
-[   23.463065] PGD 0 P4D 0
-[   23.465640] Oops: Oops: 0010 [#1] SMP NOPTI
-[   23.469869] CPU: 8 UID: 0 PID: 211 Comm: kworker/u48:18 Tainted: G S      W           6.19.0-rc4-00020-gf0b9d8eb98df #10 PREEMPT(voluntary)
-[   23.482512] Tainted: [S]=CPU_OUT_OF_SPEC, [W]=WARN
-[   23.496511] Workqueue: async async_run_entry_fn
-[   23.501087] RIP: 0010:0x0
-[   23.503755] Code: Unable to access opcode bytes at 0xffffffffffffffd6.
-[   23.510324] RSP: 0018:ffffb4a60065fca8 EFLAGS: 00010246
-[   23.515592] RAX: 0000000000000000 RBX: ffff9f428290e000 RCX: 000000000000000f
-[   23.522765] RDX: 0000000000000000 RSI: 0000000000000282 RDI: ffff9f428290e000
-[   23.529937] RBP: ffff9f4282907070 R08: ffff9f4281130428 R09: 00000000ffffffff
-[   23.537111] R10: 0000000000000000 R11: 0000000000000001 R12: ffff9f42829070f8
-[   23.544284] R13: ffff9f4282906028 R14: ffff9f4282900000 R15: ffff9f4282906b68
-[   23.551457] FS:  0000000000000000(0000) GS:ffff9f466b2cf000(0000) knlGS:0000000000000000
-[   23.559588] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   23.565365] CR2: ffffffffffffffd6 CR3: 000000031c230001 CR4: 0000000000f70ef0
-[   23.572539] PKRU: 55555554
-[   23.575281] Call Trace:
-[   23.577770]  <TASK>
-[   23.579905]  intel_engines_reset_default_submission+0x42/0x60
-[   23.585695]  __intel_gt_unset_wedged+0x191/0x200
-[   23.590360]  intel_gt_unset_wedged+0x20/0x40
-[   23.594675]  gt_sanitize+0x15e/0x170
-[   23.598290]  i915_gem_suspend_late+0x6b/0x180
-[   23.602692]  i915_drm_suspend_late+0x35/0xf0
-[   23.607008]  ? __pfx_pci_pm_suspend_late+0x10/0x10
-[   23.611843]  dpm_run_callback+0x78/0x1c0
-[   23.615817]  device_suspend_late+0xde/0x2e0
-[   23.620037]  async_suspend_late+0x18/0x30
-[   23.624082]  async_run_entry_fn+0x25/0xa0
-[   23.628129]  process_one_work+0x15b/0x380
-[   23.632182]  worker_thread+0x2a5/0x3c0
-[   23.635973]  ? __pfx_worker_thread+0x10/0x10
-[   23.640279]  kthread+0xf6/0x1f0
-[   23.643464]  ? __pfx_kthread+0x10/0x10
-[   23.647263]  ? __pfx_kthread+0x10/0x10
-[   23.651045]  ret_from_fork+0x131/0x190
-[   23.654837]  ? __pfx_kthread+0x10/0x10
-[   23.658634]  ret_from_fork_asm+0x1a/0x30
-[   23.662597]  </TASK>
-[   23.664826] Modules linked in:
-[   23.667914] CR2: 0000000000000000
-[   23.671271] ------------[ cut here ]------------
+Replace call_rcu/kfree_rcu with queue_rcu_work(), which defers the
+callback until after the RCU grace period and executes it in process
+context where sleeping is permitted. This allows path_put() and
+auth_domain_put() to be moved into the deferred callback alongside
+the other resource releases. Apply the same fix to expkey_put(),
+which has the identical pattern with ek_path and ek_client.
 
-Signed-off-by: Rahul Bukte <rahul.bukte@sony.com>
-Reviewed-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Signed-off-by: Suraj Kandpal <suraj.kandpal@intel.com>
-Link: https://patch.msgid.link/20260203044839.1555147-1-suraj.kandpal@intel.com
-(cherry picked from commit daa199abc3d3d1740c9e3a2c3e9216ae5b447cad)
-Fixes: ff44ad51ebf8 ("drm/i915: Move engine->submit_request selection to a vfunc")
-Signed-off-by: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+A dedicated workqueue scopes the shutdown drain to only NFSD
+export release work items; flushing the shared
+system_unbound_wq would stall on unrelated work from other
+subsystems. nfsd_export_shutdown() uses rcu_barrier() followed
+by flush_workqueue() to ensure all deferred release callbacks
+complete before the export caches are destroyed.
+
+Reported-by: Misbah Anjum N <misanjum@linux.ibm.com>
+Closes: https://lore.kernel.org/linux-nfs/dcd371d3a95815a84ba7de52cef447b8@linux.ibm.com/
+Fixes: c224edca7af0 ("nfsd: no need get cache ref when protected by rcu")
+Fixes: 1b10f0b603c0 ("SUNRPC: no need get cache ref when protected by rcu")
+Cc: stable@vger.kernel.org
+Reviwed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neil@brown.name>
+Tested-by: Olga Kornievskaia <okorniev@redhat.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_cs.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/nfsd/export.c |   63 +++++++++++++++++++++++++++++++++++++++++++++++--------
+ fs/nfsd/export.h |    7 ++++--
+ fs/nfsd/nfsctl.c |    8 ++++++
+ 3 files changed, 66 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-index b721bbd233567..ce8cdd517daa1 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-@@ -1969,7 +1969,8 @@ void intel_engines_reset_default_submission(struct intel_gt *gt)
- 		if (engine->sanitize)
- 			engine->sanitize(engine);
+--- a/fs/nfsd/export.c
++++ b/fs/nfsd/export.c
+@@ -36,19 +36,30 @@
+  * second map contains a reference to the entry in the first map.
+  */
  
--		engine->set_default_submission(engine);
-+		if (engine->set_default_submission)
-+			engine->set_default_submission(engine);
- 	}
++static struct workqueue_struct *nfsd_export_wq;
++
+ #define	EXPKEY_HASHBITS		8
+ #define	EXPKEY_HASHMAX		(1 << EXPKEY_HASHBITS)
+ #define	EXPKEY_HASHMASK		(EXPKEY_HASHMAX -1)
+ 
+-static void expkey_put(struct kref *ref)
++static void expkey_release(struct work_struct *work)
+ {
+-	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++	struct svc_expkey *key = container_of(to_rcu_work(work),
++					      struct svc_expkey, ek_rwork);
+ 
+ 	if (test_bit(CACHE_VALID, &key->h.flags) &&
+ 	    !test_bit(CACHE_NEGATIVE, &key->h.flags))
+ 		path_put(&key->ek_path);
+ 	auth_domain_put(key->ek_client);
+-	kfree_rcu(key, ek_rcu);
++	kfree(key);
++}
++
++static void expkey_put(struct kref *ref)
++{
++	struct svc_expkey *key = container_of(ref, struct svc_expkey, h.ref);
++
++	INIT_RCU_WORK(&key->ek_rwork, expkey_release);
++	queue_rcu_work(nfsd_export_wq, &key->ek_rwork);
  }
  
--- 
-2.51.0
-
+ static int expkey_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -353,11 +364,13 @@ static void export_stats_destroy(struct
+ 					    EXP_STATS_COUNTERS_NUM);
+ }
+ 
+-static void svc_export_release(struct rcu_head *rcu_head)
++static void svc_export_release(struct work_struct *work)
+ {
+-	struct svc_export *exp = container_of(rcu_head, struct svc_export,
+-			ex_rcu);
++	struct svc_export *exp = container_of(to_rcu_work(work),
++					      struct svc_export, ex_rwork);
+ 
++	path_put(&exp->ex_path);
++	auth_domain_put(exp->ex_client);
+ 	nfsd4_fslocs_free(&exp->ex_fslocs);
+ 	export_stats_destroy(exp->ex_stats);
+ 	kfree(exp->ex_stats);
+@@ -369,9 +382,8 @@ static void svc_export_put(struct kref *
+ {
+ 	struct svc_export *exp = container_of(ref, struct svc_export, h.ref);
+ 
+-	path_put(&exp->ex_path);
+-	auth_domain_put(exp->ex_client);
+-	call_rcu(&exp->ex_rcu, svc_export_release);
++	INIT_RCU_WORK(&exp->ex_rwork, svc_export_release);
++	queue_rcu_work(nfsd_export_wq, &exp->ex_rwork);
+ }
+ 
+ static int svc_export_upcall(struct cache_detail *cd, struct cache_head *h)
+@@ -1478,6 +1490,36 @@ const struct seq_operations nfs_exports_
+ 	.show	= e_show,
+ };
+ 
++/**
++ * nfsd_export_wq_init - allocate the export release workqueue
++ *
++ * Called once at module load. The workqueue runs deferred svc_export and
++ * svc_expkey release work scheduled by queue_rcu_work() in the cache put
++ * callbacks.
++ *
++ * Return values:
++ *   %0: workqueue allocated
++ *   %-ENOMEM: allocation failed
++ */
++int nfsd_export_wq_init(void)
++{
++	nfsd_export_wq = alloc_workqueue("nfsd_export", WQ_UNBOUND, 0);
++	if (!nfsd_export_wq)
++		return -ENOMEM;
++	return 0;
++}
++
++/**
++ * nfsd_export_wq_shutdown - drain and free the export release workqueue
++ *
++ * Called once at module unload. Per-namespace teardown in
++ * nfsd_export_shutdown() has already drained all deferred work.
++ */
++void nfsd_export_wq_shutdown(void)
++{
++	destroy_workqueue(nfsd_export_wq);
++}
++
+ /*
+  * Initialize the exports module.
+  */
+@@ -1539,6 +1581,9 @@ nfsd_export_shutdown(struct net *net)
+ 
+ 	cache_unregister_net(nn->svc_expkey_cache, net);
+ 	cache_unregister_net(nn->svc_export_cache, net);
++	/* Drain deferred export and expkey release work. */
++	rcu_barrier();
++	flush_workqueue(nfsd_export_wq);
+ 	cache_destroy_net(nn->svc_expkey_cache, net);
+ 	cache_destroy_net(nn->svc_export_cache, net);
+ 	svcauth_unix_purge(net);
+--- a/fs/nfsd/export.h
++++ b/fs/nfsd/export.h
+@@ -7,6 +7,7 @@
+ 
+ #include <linux/sunrpc/cache.h>
+ #include <linux/percpu_counter.h>
++#include <linux/workqueue.h>
+ #include <uapi/linux/nfsd/export.h>
+ #include <linux/nfs4.h>
+ 
+@@ -75,7 +76,7 @@ struct svc_export {
+ 	u32			ex_layout_types;
+ 	struct nfsd4_deviceid_map *ex_devid_map;
+ 	struct cache_detail	*cd;
+-	struct rcu_head		ex_rcu;
++	struct rcu_work		ex_rwork;
+ 	unsigned long		ex_xprtsec_modes;
+ 	struct export_stats	*ex_stats;
+ };
+@@ -92,7 +93,7 @@ struct svc_expkey {
+ 	u32			ek_fsid[6];
+ 
+ 	struct path		ek_path;
+-	struct rcu_head		ek_rcu;
++	struct rcu_work		ek_rwork;
+ };
+ 
+ #define EX_ISSYNC(exp)		(!((exp)->ex_flags & NFSEXP_ASYNC))
+@@ -110,6 +111,8 @@ __be32 check_nfsd_access(struct svc_expo
+ /*
+  * Function declarations
+  */
++int			nfsd_export_wq_init(void);
++void			nfsd_export_wq_shutdown(void);
+ int			nfsd_export_init(struct net *);
+ void			nfsd_export_shutdown(struct net *);
+ void			nfsd_export_flush(struct net *);
+--- a/fs/nfsd/nfsctl.c
++++ b/fs/nfsd/nfsctl.c
+@@ -2252,9 +2252,12 @@ static int __init init_nfsd(void)
+ 	if (retval)
+ 		goto out_free_pnfs;
+ 	nfsd_lockd_init();	/* lockd->nfsd callbacks */
++	retval = nfsd_export_wq_init();
++	if (retval)
++		goto out_free_lockd;
+ 	retval = register_pernet_subsys(&nfsd_net_ops);
+ 	if (retval < 0)
+-		goto out_free_lockd;
++		goto out_free_export_wq;
+ 	retval = register_cld_notifier();
+ 	if (retval)
+ 		goto out_free_subsys;
+@@ -2283,6 +2286,8 @@ out_free_cld:
+ 	unregister_cld_notifier();
+ out_free_subsys:
+ 	unregister_pernet_subsys(&nfsd_net_ops);
++out_free_export_wq:
++	nfsd_export_wq_shutdown();
+ out_free_lockd:
+ 	nfsd_lockd_shutdown();
+ 	nfsd_drc_slab_free();
+@@ -2303,6 +2308,7 @@ static void __exit exit_nfsd(void)
+ 	nfsd4_destroy_laundry_wq();
+ 	unregister_cld_notifier();
+ 	unregister_pernet_subsys(&nfsd_net_ops);
++	nfsd_export_wq_shutdown();
+ 	nfsd_drc_slab_free();
+ 	nfsd_lockd_shutdown();
+ 	nfsd4_free_slabs();
 
 
