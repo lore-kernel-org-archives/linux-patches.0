@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40FAD3B9D80;
-	Mon, 23 Mar 2026 16:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1163AB277;
+	Mon, 23 Mar 2026 16:13:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282384; cv=none; b=V99ITrWXrz4SbAlNmhimh6sgfIbaSMIcAbcx7L1AXobyuwxyx6HRou7guUZvgCi+tQSkDLmA0BdaDGWuNaHr2Znl1VL8rpQw+d9FL2/8Zoh5hUX+mWZEp9gxgA5XY6doo/cd3BmWdvT+Jpasi17d/rS+m528CaOZ4ZERAjC0HiU=
+	t=1774282387; cv=none; b=RCj4E109/nrDVR8qnX3tGURQpOv7km/MTxcX2vBxPfnnyoORkQMnFOsSQWpiuUq8kkzu4sqQzrDbGyQGAR5dt0qrjshis2QGT7gaejG/UumECR+/qP8CiZEb1qTn/UclBvrbquZac7l7z1lrUrlIC/WlxUz9HA594u7V4MSH9U8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282384; c=relaxed/simple;
-	bh=qdiGpizDhd5JaMVqEaoRgf5CYWUd1o9H1VEbdGAymJA=;
+	s=arc-20240116; t=1774282387; c=relaxed/simple;
+	bh=BzZl9UXnLdMV+IlRjl6zIYuV0xc87b49TWOi+jWJhYg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=qfRkVFr0kFXEzAB4vixw0RHNYdDF4yV8vpqAD6lpgGNZcqrF5sxZAYWRqFLFoLssg0ZVVcTdkk4s9SijlqcV1tWlnwGQilWFCh4/SIzBTH7pITF0qmegpIVVYXz5d4WI0p6Me5RWZ80wJKI47I8iUBE+ie/1gayYaiBrNUKiQfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=ZAjDFcYs; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=LDf3+VKMXL4oEdcfZkg3YDCqegV6rvrXMBrsVEGcaM8jYgefZvsm2BsUG0DvSxOnKRxnWQccYMngPmbjFcWt6c/c5eY/zXDLwUP4a0L5nu9mKoe3niKntt28VnvH71Y+IXuY0BbozCV89wuyvWZwA7Zvf/EjZAr0K5SAu+0Mo6U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=2W+XgWEq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="ZAjDFcYs"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C749BC4CEF7;
-	Mon, 23 Mar 2026 16:13:03 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="2W+XgWEq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83136C4CEF7;
+	Mon, 23 Mar 2026 16:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282384;
-	bh=qdiGpizDhd5JaMVqEaoRgf5CYWUd1o9H1VEbdGAymJA=;
+	s=korg; t=1774282386;
+	bh=BzZl9UXnLdMV+IlRjl6zIYuV0xc87b49TWOi+jWJhYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZAjDFcYsjmkyviQfGUcSNeYqEm50O0DK8jIXnAwUo6zJAu9FdJOIr0pQiDX4XTL92
-	 oci+/X2flea2diGxP1S9HL77rIriCcUB63PgoaRhEKkMppOQzy7gZ6/67XFynHt80a
-	 +yjptRBoXS1yfzjMpJMXpsoFRFPeqCd77Wbvk6A0=
+	b=2W+XgWEqHtNjNYXOr6hxEUthpFA5hvDILg/JQe/8pPjeyVdGL5RshvSJ346ZrmsOp
+	 4KPEMGIPSS9LBhrBeyEUmBH5GCIu0dhFfbA+wu77IJ5tGZmf7CzBr9HWbpVxg4iUCB
+	 BpirnJOXY6rAVCGOP3jFq6VYU3gSz4CyW4cRnLIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ovidiu Panait <ovidiu.panait.rb@renesas.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 135/481] net: stmmac: Fix error handling in VLAN add and delete paths
-Date: Mon, 23 Mar 2026 14:41:57 +0100
-Message-ID: <20260323134528.554532293@linuxfoundation.org>
+	Mat Martineau <martineau@kernel.org>,
+	"Matthieu Baerts (NGI0)" <matttbe@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 095/481] selftests: mptcp: join: check removing signal+subflow endp
+Date: Mon, 23 Mar 2026 14:41:17 +0100
+Message-ID: <20260323134527.595315873@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,78 +51,57 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
+From: Matthieu Baerts (NGI0) <matttbe@kernel.org>
 
-[ Upstream commit 35dfedce442c4060cfe5b98368bc9643fb995716 ]
+commit 1777f349ff41b62dfe27454b69c27b0bc99ffca5 upstream.
 
-stmmac_vlan_rx_add_vid() updates active_vlans and the VLAN hash
-register before writing the HW filter entry. If the filter write
-fails, it leaves a stale VID in active_vlans and the hash register.
+This validates the previous commit: endpoints with both the signal and
+subflow flags should always be marked as used even if it was not
+possible to create new subflows due to the MPTCP PM limits.
 
-stmmac_vlan_rx_kill_vid() has the reverse problem: it clears
-active_vlans before removing the HW filter. On failure, the VID is
-gone from active_vlans but still present in the HW filter table.
+For this test, an extra endpoint is created with both the signal and the
+subflow flags, and limits are set not to create extra subflows. In this
+case, an ADD_ADDR is sent, but no subflows are created. Still, the local
+endpoint is marked as used, and no warning is fired when removing the
+endpoint, after having sent a RM_ADDR.
 
-To fix this, reorder the operations to update the hash table first,
-then attempt the HW filter operation. If the HW filter fails, roll
-back both the active_vlans bitmap and the hash table by calling
-stmmac_vlan_update() again.
+The 'Fixes' tag here below is the same as the one from the previous
+commit: this patch here is not fixing anything wrong in the selftests,
+but it validates the previous fix for an issue introduced by this commit
+ID.
 
-Fixes: ed64639bc1e0 ("net: stmmac: Add support for VLAN Rx filtering")
-Signed-off-by: Ovidiu Panait <ovidiu.panait.rb@renesas.com>
-Link: https://patch.msgid.link/20260303145828.7845-2-ovidiu.panait.rb@renesas.com
+Fixes: 85df533a787b ("mptcp: pm: do not ignore 'subflow' if 'signal' flag is also set")
+Cc: stable@vger.kernel.org
+Reviewed-by: Mat Martineau <martineau@kernel.org>
+Signed-off-by: Matthieu Baerts (NGI0) <matttbe@kernel.org>
+Link: https://patch.msgid.link/20260303-net-mptcp-misc-fixes-7-0-rc2-v1-5-4b5462b6f016@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../net/ethernet/stmicro/stmmac/stmmac_main.c  | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
+ tools/testing/selftests/net/mptcp/mptcp_join.sh |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index b5de07b84f77b..1b3ea615cbba2 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -6451,9 +6451,13 @@ static int stmmac_vlan_rx_add_vid(struct net_device *ndev, __be16 proto, u16 vid
+--- a/tools/testing/selftests/net/mptcp/mptcp_join.sh
++++ b/tools/testing/selftests/net/mptcp/mptcp_join.sh
+@@ -2389,6 +2389,19 @@ remove_tests()
+ 		chk_rst_nr 0 0
+ 	fi
  
- 	if (priv->hw->num_vlan) {
- 		ret = stmmac_add_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
--		if (ret)
-+		if (ret) {
-+			clear_bit(vid, priv->active_vlans);
-+			stmmac_vlan_update(priv, is_double);
- 			goto err_pm_put;
-+		}
- 	}
++	# signal+subflow with limits, remove
++	if reset "remove signal+subflow with limits"; then
++		pm_nl_set_limits $ns1 0 0
++		pm_nl_add_endpoint $ns1 10.0.2.1 flags signal,subflow
++		pm_nl_set_limits $ns2 0 0
++		addr_nr_ns1=-1 speed=slow \
++			run_tests $ns1 $ns2 10.0.1.1
++		chk_join_nr 0 0 0
++		chk_add_nr 1 1
++		chk_rm_nr 1 0 invert
++		chk_rst_nr 0 0
++	fi
 +
- err_pm_put:
- 	pm_runtime_put(priv->device);
- 
-@@ -6474,15 +6478,21 @@ static int stmmac_vlan_rx_kill_vid(struct net_device *ndev, __be16 proto, u16 vi
- 		is_double = true;
- 
- 	clear_bit(vid, priv->active_vlans);
-+	ret = stmmac_vlan_update(priv, is_double);
-+	if (ret) {
-+		set_bit(vid, priv->active_vlans);
-+		goto del_vlan_error;
-+	}
- 
- 	if (priv->hw->num_vlan) {
- 		ret = stmmac_del_hw_vlan_rx_fltr(priv, ndev, priv->hw, proto, vid);
--		if (ret)
-+		if (ret) {
-+			set_bit(vid, priv->active_vlans);
-+			stmmac_vlan_update(priv, is_double);
- 			goto del_vlan_error;
-+		}
- 	}
- 
--	ret = stmmac_vlan_update(priv, is_double);
--
- del_vlan_error:
- 	pm_runtime_put(priv->device);
- 
--- 
-2.51.0
-
+ 	# addresses remove
+ 	if reset "remove addresses"; then
+ 		pm_nl_set_limits $ns1 3 3
 
 
