@@ -1,39 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DE8F17A305;
-	Mon, 23 Mar 2026 15:00:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAA5DDC5;
+	Mon, 23 Mar 2026 15:00:38 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278035; cv=none; b=Oa/+qBj5Td1Isfd15Xc2SvrCAUT8L8+neZrd1MrTYS6T91oZnnecwME+birHZKfJSb8/6Erp7yMmvclkyi+8U15KzG1RmCY259Im5AWiPf+gLahmn8xurCVeX38vDe7xORTsl8RLr9GTnE3AWcUVaGyXP9/Dik4bqFpMBKLGCh0=
+	t=1774278038; cv=none; b=Meqm+worQVB/XrmCo1Lng/JADqgI98uqesTfsTOfEvevwYKjQwmKg95BHqhKtezyEfiVrplBuszkLq24+i6FkUObIgxF6ICKX1hYe4tbfodf/EvE0J2Bn8msEk0YLu8kcP125nbt51lTSPa7pD4zswj7tdWQ44auytkWS9Im8k4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278035; c=relaxed/simple;
-	bh=ozL/j//4DJpcBCEaMywKlEdfYa44q9UKhbYsCA55yiQ=;
+	s=arc-20240116; t=1774278038; c=relaxed/simple;
+	bh=6KL2A92kyu6E97S2bTd6HbpwO0KpHIeQ1DUB82xpPNU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rBs8Wo9lTz/o4XGE4X0rByrkV3RFLIT1XYHnw7E9cpPVky0avVtpf24NiS9JCxf7pZt/DtCYKoc4dUc5tk7Q+Bu6xsRialkVjHFFarAujRhASTjV/Q/nDNbhI+kvXku9ssy3DQldiahQb4BRhAYH1tIWTWrZjkt6PagB5ZO/vcM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=tffxYFEb; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=MiIGx8035K1ti4PB39nWZ4RLZ9HtWxNUSEsiSocB9XEfWSTSBPUo9rCbmkkhiBPcinom1yGX58Orygk1HvKaYuZBhgytrZdxvJb2OfFllI/uLU3lamsjgAygbcQZAhBas+v1i6H1nJUKx0QcEcCf5bM68OtvGn6Qm08+RqoFIlk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=btZEx8pG; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="tffxYFEb"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B54C2C4CEF7;
-	Mon, 23 Mar 2026 15:00:34 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="btZEx8pG"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3EECC4CEF7;
+	Mon, 23 Mar 2026 15:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278035;
-	bh=ozL/j//4DJpcBCEaMywKlEdfYa44q9UKhbYsCA55yiQ=;
+	s=korg; t=1774278038;
+	bh=6KL2A92kyu6E97S2bTd6HbpwO0KpHIeQ1DUB82xpPNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tffxYFEb4KZkfMTJp4AvnRiX0XW4xMtQNVnwB35PkvUg2kUqaYidUdWwxPrE7h+0G
-	 uwMMjtwcw8dYedNrtKZy6mxDRYPKSdajZH3XrOgjBId6Vr9HPm5uGckiWyaqCkHNV5
-	 hc7qmFnRnrDxLiw4vl6dYyoiCQ2Unp0Gkfy9+6UA=
+	b=btZEx8pGW2ANzgH5czb3flz5eW42n5OYRamzhgJojwnOk6er2Oq1KSNlNz1cM709q
+	 CZ/Npp5JUCn/qjFXLgVo6OoUXoEnZ8XQwyZamLQjKwJPV5nJ+79dZ80nibhxa9G+eW
+	 dW13rjoCkaq9rMDYD/PrEqPJlzXJmukrdFdZpLq0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Aleksandr Loktionov <aleksandr.loktionov@intel.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.6 143/567] can: bcm: fix locking for bcm_op runtime updates
-Date: Mon, 23 Mar 2026 14:41:03 +0100
-Message-ID: <20260323134537.358653389@linuxfoundation.org>
+Subject: [PATCH 6.6 179/567] xsk: introduce helper to determine rxq->frag_size
+Date: Mon, 23 Mar 2026 14:41:39 +0100
+Message-ID: <20260323134538.273178581@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -52,44 +52,54 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Larysa Zaremba <larysa.zaremba@intel.com>
 
-[ Upstream commit c35636e91e392e1540949bbc67932167cb48bc3a ]
+[ Upstream commit 16394d80539937d348dd3b9ea32415c54e67a81b ]
 
-Commit c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
-added a locking for some variables that can be modified at runtime when
-updating the sending bcm_op with a new TX_SETUP command in bcm_tx_setup().
+rxq->frag_size is basically a step between consecutive strictly aligned
+frames. In ZC mode, chunk size fits exactly, but if chunks are unaligned,
+there is no safe way to determine accessible space to grow tailroom.
 
-Usually the RX_SETUP only handles and filters incoming traffic with one
-exception: When the RX_RTR_FRAME flag is set a predefined CAN frame is
-sent when a specific RTR frame is received. Therefore the rx bcm_op uses
-bcm_can_tx() which uses the bcm_tx_lock that was only initialized in
-bcm_tx_setup(). Add the missing spin_lock_init() when allocating the
-bcm_op in bcm_rx_setup() to handle the RTR case properly.
+Report frag_size to be zero, if chunks are unaligned, chunk_size otherwise.
 
-Fixes: c2aba69d0c36 ("can: bcm: add locking for bcm_op runtime updates")
-Reported-by: syzbot+5b11eccc403dd1cea9f8@syzkaller.appspotmail.com
-Closes: https://lore.kernel.org/linux-can/699466e4.a70a0220.2c38d7.00ff.GAE@google.com/
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://patch.msgid.link/20260218-bcm_spin_lock_init-v1-1-592634c8a5b5@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 24ea50127ecf ("xsk: support mbuf on ZC RX")
+Reviewed-by: Aleksandr Loktionov <aleksandr.loktionov@intel.com>
+Signed-off-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://patch.msgid.link/20260305111253.2317394-3-larysa.zaremba@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/bcm.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/net/xdp_sock_drv.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/can/bcm.c b/net/can/bcm.c
-index 75653584f31b9..35039645c4629 100644
---- a/net/can/bcm.c
-+++ b/net/can/bcm.c
-@@ -1128,6 +1128,7 @@ static int bcm_rx_setup(struct bcm_msg_head *msg_head, struct msghdr *msg,
- 		if (!op)
- 			return -ENOMEM;
+diff --git a/include/net/xdp_sock_drv.h b/include/net/xdp_sock_drv.h
+index 91339ffd2f2a8..7dc08a4646242 100644
+--- a/include/net/xdp_sock_drv.h
++++ b/include/net/xdp_sock_drv.h
+@@ -41,6 +41,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+ 	return xsk_pool_get_chunk_size(pool) - xsk_pool_get_headroom(pool);
+ }
  
-+		spin_lock_init(&op->bcm_tx_lock);
- 		op->can_id = msg_head->can_id;
- 		op->nframes = msg_head->nframes;
- 		op->cfsiz = CFSIZ(msg_head->flags);
++static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
++{
++	return pool->unaligned ? 0 : xsk_pool_get_chunk_size(pool);
++}
++
+ static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
+ 					 struct xdp_rxq_info *rxq)
+ {
+@@ -263,6 +268,11 @@ static inline u32 xsk_pool_get_rx_frame_size(struct xsk_buff_pool *pool)
+ 	return 0;
+ }
+ 
++static inline u32 xsk_pool_get_rx_frag_step(struct xsk_buff_pool *pool)
++{
++	return 0;
++}
++
+ static inline void xsk_pool_set_rxq_info(struct xsk_buff_pool *pool,
+ 					 struct xdp_rxq_info *rxq)
+ {
 -- 
 2.51.0
 
