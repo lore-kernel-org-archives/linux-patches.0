@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 389603B38A4;
-	Mon, 23 Mar 2026 16:26:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E34C284881;
+	Mon, 23 Mar 2026 16:26:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774283213; cv=none; b=bP7KKx+lXrW7FqA6KIVWe5BWeLfRlnrtaQvYCAbOXjgEh6p5TKzgHd1Uu3YH4PjB6TuxfeTzbH6+BveeT+AIhPGW5VIKUgF4mRSe/YVsk0B5rh7XbhO+FFo32Ah6YVO/5PyuVqpqjRTFi9bQhbehAPUTmUmsKVNA4daPg/jDEmM=
+	t=1774283216; cv=none; b=pf2lToJqo0DHSxV8WCifWC5QV0uFW0Y1a+sGtNQfug9a9SGySzwxxJZS6DPPv2iV5db+F9U1WsbIl4LkagZSMo3Fn4m7p+MKrCoknnSq+hplBzXzElZ/8zxiGyFD+YxpW38xW1qF2apV/aAd/mm44q93FeL38ubttiP2UDKYOOU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774283213; c=relaxed/simple;
-	bh=JG30R03fY80P14Zx/2LrxZidCgWZ8h9EXjdJsnBYeHQ=;
+	s=arc-20240116; t=1774283216; c=relaxed/simple;
+	bh=1yuim09ubOzXSNmo+9/3QPYCR05c/nEjLTCPmSzps2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Ou3phhDz4mbqLe6vnyDnCnQNPUyOi++QGvjXrTFa5KXpkAqe4i0bP1ygWrk07xIaFzdlhZUV9k6Yk2HGVa1NjUDyvy3aJLyqJuu2HeArpgDRfp0+bjw56bxF6fO3ZgC38oqZzK03MeiGmQ+d9aRB+jndOTBZJTzrYqGW4Hv+VPE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=htS4+GFj; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=s5ucCqUPFnkgW3lA8tyeKRc7Uk89cxI+dxVUpTgZcKnJ4zJoj6SweNEVJaS5a5wSuPi62oUy2Kb/ValIeerlSPnrufjiTSWD8l1i8+SU+wen6oMa3XJ5jUoYDH+mI+a3QgI9Ik4udmYPzI3trFZw32owxN+Iwel9LbL+YqedGD0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=uVV1t9Jv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="htS4+GFj"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C99C4CEF7;
-	Mon, 23 Mar 2026 16:26:52 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="uVV1t9Jv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD5DC2BCB5;
+	Mon, 23 Mar 2026 16:26:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774283213;
-	bh=JG30R03fY80P14Zx/2LrxZidCgWZ8h9EXjdJsnBYeHQ=;
+	s=korg; t=1774283215;
+	bh=1yuim09ubOzXSNmo+9/3QPYCR05c/nEjLTCPmSzps2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=htS4+GFjKRuVJnDtmBq3jYsL0rskUIYBUal0Fg7PyqRfNgZzBZMwMvlSSGSGFWGVQ
-	 nJ4v43AKn5yCdr6lPXvQ+UES5K0giM/tZ2RLErAb9j5ofk1pNSiqmzEBeRkPTPCBiN
-	 +0ZKgCuT3+NLsbS+nRZhg9K+GzzK5MDZARTCZwcc=
+	b=uVV1t9Jvtpb45XMe9bou9/dR3RNgVcfHrtx5WtbXUOLRrhJLhvJEt65t6F9f8FbaV
+	 uX3u0XytmTAAAe/AB6foDQ4OPw0UcMrIVBcEuHSmtT3pW1gOY0mLH5Yf9v3GV/wM74
+	 F+eYHdqAkD3WaAGQzG7ywEn/ORODfPF4Ck6cmqmo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-kernel@vger.kernel.org, sashal@kernel.org,  Joonwon Kang" <joonwonkang@google.com>,
-	Jassi Brar <jassisinghbrar@gmail.com>,
-	Joonwon Kang <joonwonkang@google.com>
-Subject: [PATCH 6.1 444/481] mailbox: Prevent out-of-bounds access in of_mbox_index_xlate()
-Date: Mon, 23 Mar 2026 14:47:06 +0100
-Message-ID: <20260323134536.034942422@linuxfoundation.org>
+	Samuel Wu <wusamuel@google.com>,
+	Alex Hoh <Alex.Hoh@mediatek.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 445/481] sched/fair: Fix pelt clock sync when entering idle
+Date: Mon, 23 Mar 2026 14:47:07 +0100
+Message-ID: <20260323134536.059920879@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -51,44 +52,68 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Joonwon Kang <joonwonkang@google.com>
+From: Vincent Guittot <vincent.guittot@linaro.org>
 
-[ Upstream commit fcd7f96c783626c07ee3ed75fa3739a8a2052310 ]
+[ Upstream commit 98c88dc8a1ace642d9021b103b28cba7b51e3abc ]
 
-Although it is guided that `#mbox-cells` must be at least 1, there are
-many instances of `#mbox-cells = <0>;` in the device tree. If that is
-the case and the corresponding mailbox controller does not provide
-`fw_xlate` and of_xlate` function pointers, `of_mbox_index_xlate()` will
-be used by default and out-of-bounds accesses could occur due to lack of
-bounds check in that function.
+Samuel and Alex reported regressions of the util_avg of RT rq with
+commit 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection").
+It happens that fair is updating and syncing the pelt clock with task one
+when pick_next_task_fair() fails to pick a task but before the prev
+scheduling class got a chance to update its pelt signals.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Joonwon Kang <joonwonkang@google.com>
-Signed-off-by: Jassi Brar <jassisinghbrar@gmail.com>
-[ changed sp->nargs to sp->args_count in the code and
-fw_mbox_index_xlate() to of_mbox_index_xlate() in the commit message. ]
-Signed-off-by: Joonwon Kang <joonwonkang@google.com>
+Move update_idle_rq_clock_pelt() in set_next_task_idle() which is called
+after prev class has been called.
+
+Fixes: 17e3e88ed0b6 ("sched/fair: Fix pelt lost idle time detection")
+Reported-by: Samuel Wu <wusamuel@google.com>
+Closes: https://lore.kernel.org/all/CAG2KctpO6VKS6GN4QWDji0t92_gNBJ7HjjXrE+6H+RwRXt=iLg@mail.gmail.com/
+Reported-by: Alex Hoh <Alex.Hoh@mediatek.com>
+Closes: https://lore.kernel.org/all/8cf19bf0e0054dcfed70e9935029201694f1bb5a.camel@mediatek.com/
+Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Tested-by: Samuel Wu <wusamuel@google.com>
+Tested-by: Alex Hoh <Alex.Hoh@mediatek.com>
+Link: https://patch.msgid.link/20260121163317.505635-1-vincent.guittot@linaro.org
+(cherry picked from commit 98c88dc8a1ace642d9021b103b28cba7b51e3abc)
+[ wusamuel: Did not include line 'exec_start = rq_clock_task()', which
+is not present in 6.1.y but found in mainline ]
+Signed-off-by: Samuel Wu <wusamuel@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mailbox/mailbox.c |    6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ kernel/sched/fair.c |    6 ------
+ kernel/sched/idle.c |    6 ++++++
+ 2 files changed, 6 insertions(+), 6 deletions(-)
 
---- a/drivers/mailbox/mailbox.c
-+++ b/drivers/mailbox/mailbox.c
-@@ -508,12 +508,10 @@ static struct mbox_chan *
- of_mbox_index_xlate(struct mbox_controller *mbox,
- 		    const struct of_phandle_args *sp)
- {
--	int ind = sp->args[0];
--
--	if (ind >= mbox->num_chans)
-+	if (sp->args_count < 1 || sp->args[0] >= mbox->num_chans)
- 		return ERR_PTR(-EINVAL);
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -7924,12 +7924,6 @@ idle:
+ 			goto again;
+ 	}
  
--	return &mbox->chans[ind];
-+	return &mbox->chans[sp->args[0]];
+-	/*
+-	 * rq is about to be idle, check if we need to update the
+-	 * lost_idle_time of clock_pelt
+-	 */
+-	update_idle_rq_clock_pelt(rq);
+-
+ 	return NULL;
  }
  
- /**
+--- a/kernel/sched/idle.c
++++ b/kernel/sched/idle.c
+@@ -456,6 +456,12 @@ static void set_next_task_idle(struct rq
+ {
+ 	update_idle_core(rq);
+ 	schedstat_inc(rq->sched_goidle);
++
++	/*
++	 * rq is about to be idle, check if we need to update the
++	 * lost_idle_time of clock_pelt
++	 */
++	update_idle_rq_clock_pelt(rq);
+ }
+ 
+ #ifdef CONFIG_SMP
 
 
