@@ -1,39 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4616C1B4223;
-	Mon, 23 Mar 2026 13:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93F613A961B;
+	Mon, 23 Mar 2026 13:50:12 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774273809; cv=none; b=AQ8izpNiuoJ+ylNxrQt0/H9NyKnDfg/vDtnZ4WJwj1zuGL9rbrmUZ2I2rlXuoA32ObMyxO8l0StpY2eLxJaBRhJ6oCg0OcDmZP3c3FnvqRA3Z+VlG5GwcN/s1aKUcS0xrUKccoTy10oAx4mSnH8lsippPCRvZcF6ABO3iFlj2LM=
+	t=1774273812; cv=none; b=FaCycBAx6I3ChTGu8veWOADal1nMinH8qO5sg70l8nLDt5iifTjV7q/c1jMliF7MMSptLcFuMNoHcY8Vc+sTCxVJFtzGvqKcbc+UaxdrEr7Z014xc/hS8pUU1kx1QSm/l0QWhIttRAm+CRNVlrsaAmgkOtWTMBThDb4Qw3kSsE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774273809; c=relaxed/simple;
-	bh=I4uB6UiW1vgzTDXtan3cLKYpUVhmpmWTJLNuxs/wGwE=;
+	s=arc-20240116; t=1774273812; c=relaxed/simple;
+	bh=+WboHKI+MysxoEABOWvKzVgKpeNayEhygek/MmH4juY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AHd7Dwwl0bGs7KCAPCzyrNRtxV5ASjH2yFuqoGFXFpcLERMVNlHm0CtWrEFKyHrD2KNpdJBZmkFJSgvNLheuLpiXFdqmDZLSsEO3BELGN+UxruMO/gCymlf7NZn+UvnbgbEQHT974EcEfLwQ3CsoPPdZPJORNASptx8weeGhKWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OZ+r3Utq; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=NLZ1WzZezKxxu6iPT13o5AlXDKD8kS7Yk50AwuNkN1H31YAAKC/mSbXYHY9TCfQDVKT/tLGeQdcZLnFvIX4ULutj/PdOg9UKtcLizPKgH7bi+fKRRkpmj7OaricFavfUZVuoHNarCIxemgs5VjmcTAqar7jn5+aNkhpmi/18KHI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=JRqf/MJa; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OZ+r3Utq"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB3EBC4CEF7;
-	Mon, 23 Mar 2026 13:50:08 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="JRqf/MJa"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CACC3C4CEF7;
+	Mon, 23 Mar 2026 13:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774273809;
-	bh=I4uB6UiW1vgzTDXtan3cLKYpUVhmpmWTJLNuxs/wGwE=;
+	s=korg; t=1774273812;
+	bh=+WboHKI+MysxoEABOWvKzVgKpeNayEhygek/MmH4juY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OZ+r3Utqcj6/hcXSIy7ki3WcY112TV0aRz1IonM8H6Qe4KUCGbLh/DA6x1uJMoJPZ
-	 bHfNRG7XJdvlFifEmj1jNrIrn7K9RhV3EMyVZ5AXBG6w4DGI77uznn+NiEztfXbDD+
-	 BKs1rFROmeNr91QCJX4oRFhGAgTDI6gZDKxgmP/0=
+	b=JRqf/MJarDG5Dv1IlAePwioJKRHp/M3Iy/YGDArycFKdHKa1ca68ptAG13SXmfVFS
+	 VoxEY9Vb2K4C44U7yB/ZsuCN5LYyWjwQZEgjBueJvMJvihCO/GLQyJ18IPPhEoTBU9
+	 2V78mFW/v2mc5ZE47qZ4xa5YpuSe1/XFBTfdU5Es=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuhao Jiang <danisjiang@gmail.com>,
-	Junrui Luo <moonafterrain@outlook.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.19 016/220] bnxt_en: fix OOB access in DBG_BUF_PRODUCER async event handler
-Date: Mon, 23 Mar 2026 14:43:13 +0100
-Message-ID: <20260323134505.090797548@linuxfoundation.org>
+	Felix Lechner <felix.lechner@lease-up.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.19 017/220] parisc: Flush correct cache in cacheflush() syscall
+Date: Mon, 23 Mar 2026 14:43:14 +0100
+Message-ID: <20260323134505.121422812@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 References: <20260323134504.575022936@linuxfoundation.org>
@@ -52,61 +50,51 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Junrui Luo <moonafterrain@outlook.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 64dcbde7f8f870a4f2d9daf24ffb06f9748b5dd3 upstream.
+commit 2c98a8fbd6aa647414c6248dacf254ebe91c79ad upstream.
 
-The ASYNC_EVENT_CMPL_EVENT_ID_DBG_BUF_PRODUCER handler in
-bnxt_async_event_process() uses a firmware-supplied 'type' field
-directly as an index into bp->bs_trace[] without bounds validation.
+The assembly flush instructions were swapped for I- and D-cache flags:
 
-The 'type' field is a 16-bit value extracted from DMA-mapped completion
-ring memory that the NIC writes directly to host RAM. A malicious or
-compromised NIC can supply any value from 0 to 65535, causing an
-out-of-bounds access into kernel heap memory.
+SYSCALL_DEFINE3(cacheflush, ...)
+{
+	if (cache & DCACHE) {
+			"fic ...\n"
+	}
+	if (cache & ICACHE && error == 0) {
+			"fdc ...\n"
+	}
 
-The bnxt_bs_trace_check_wrap() call then dereferences bs_trace->magic_byte
-and writes to bs_trace->last_offset and bs_trace->wrapped, leading to
-kernel memory corruption or a crash.
+Fix it by using fdc for DCACHE, and fic for ICACHE flushing.
 
-Fix by adding a bounds check and defining BNXT_TRACE_MAX as
-DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ERR_QPC_TRACE + 1 to cover all currently
-defined firmware trace types (0x0 through 0xc).
-
-Fixes: 84fcd9449fd7 ("bnxt_en: Manage the FW trace context memory")
-Reported-by: Yuhao Jiang <danisjiang@gmail.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Junrui Luo <moonafterrain@outlook.com>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Link: https://patch.msgid.link/SYBPR01MB7881A253A1C9775D277F30E9AF42A@SYBPR01MB7881.ausprd01.prod.outlook.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Felix Lechner <felix.lechner@lease-up.com>
+Fixes: c6d96328fecd ("parisc: Add cacheflush() syscall")
+Cc: <stable@vger.kernel.org> # v6.5+
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    2 ++
- drivers/net/ethernet/broadcom/bnxt/bnxt.h |    2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ arch/parisc/kernel/cache.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -2927,6 +2927,8 @@ static int bnxt_async_event_process(stru
- 		u16 type = (u16)BNXT_EVENT_BUF_PRODUCER_TYPE(data1);
- 		u32 offset =  BNXT_EVENT_BUF_PRODUCER_OFFSET(data2);
- 
-+		if (type >= ARRAY_SIZE(bp->bs_trace))
-+			goto async_event_process_exit;
- 		bnxt_bs_trace_check_wrap(&bp->bs_trace[type], offset);
- 		goto async_event_process_exit;
- 	}
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -2135,7 +2135,7 @@ enum board_idx {
- };
- 
- #define BNXT_TRACE_BUF_MAGIC_BYTE ((u8)0xbc)
--#define BNXT_TRACE_MAX 11
-+#define BNXT_TRACE_MAX (DBG_LOG_BUFFER_FLUSH_REQ_TYPE_ERR_QPC_TRACE + 1)
- 
- struct bnxt_bs_trace_info {
- 	u8 *magic_byte;
+--- a/arch/parisc/kernel/cache.c
++++ b/arch/parisc/kernel/cache.c
+@@ -953,7 +953,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned lon
+ #else
+ 			"1: cmpb,<<,n	%0,%2,1b\n"
+ #endif
+-			"   fic,m	%3(%4,%0)\n"
++			"   fdc,m	%3(%4,%0)\n"
+ 			"2: sync\n"
+ 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
+ 			: "+r" (start), "+r" (error)
+@@ -968,7 +968,7 @@ SYSCALL_DEFINE3(cacheflush, unsigned lon
+ #else
+ 			"1: cmpb,<<,n	%0,%2,1b\n"
+ #endif
+-			"   fdc,m	%3(%4,%0)\n"
++			"   fic,m	%3(%4,%0)\n"
+ 			"2: sync\n"
+ 			ASM_EXCEPTIONTABLE_ENTRY_EFAULT(1b, 2b, "%1")
+ 			: "+r" (start), "+r" (error)
 
 
