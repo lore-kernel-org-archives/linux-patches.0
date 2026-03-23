@@ -1,37 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55D9A36F414;
-	Mon, 23 Mar 2026 14:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A28C3AEF51;
+	Mon, 23 Mar 2026 14:07:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774274853; cv=none; b=QONuj60zfp64r6w554JYjWWc9DgRRyZ9n1lVhGeVGK8Gz3o0GPN06i4Fi+yU9uEEbg2TFJpg3QOdJwYRkuStmmgR/sjAxsmzNEQtkJJgVgN0VT8t3TqxR+hVm5LWQUziFGek/RQY/MfIqcdSrIQFk0cJi/z83/FGiwnidXypf7c=
+	t=1774274856; cv=none; b=Jg/yXwO4UhdWxzfLLIkhOnOtRwv5H7tvYpsU/aCscq2SFeXvhjMtNYyMCsKB0E9C0avv69kTaEQw8X6VBgxkbJjriJcYppllX78HX4fqMwvN6WFWOQPq3Zf3FjCkMt93ZIEo8AjcAbzviaAx5qQnC9NKAtmhwGqh26iZRFg7on4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774274853; c=relaxed/simple;
-	bh=yuW3ZBaFCvGz+N7t9WASyaN5e0HKyqr2orBzcmDnp3Y=;
+	s=arc-20240116; t=1774274856; c=relaxed/simple;
+	bh=3/MJwTqKaclFx9DobQ5BjuO9GBqhoztWhQE11QYnnsE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=KgZg6RLjKcZXWP0Bovx08IWqtztwfM0ORsJtR+43w+RnUkRLQ3VQrBjxGIOOJ0317xBMPTqoaHsOphxH4MveCgXgzFrks1LxYYPxT0dyNRI03aQOSg6nBE/6ghb5FlTegGmDgzaR7K5IvYTVeDNd7adnckzbST2+m2L4NZRxWyU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=lYzu3r5b; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=jx7ymacBWUnQQoEbynVaK+cRS4J1oX4jysqQRaRZkUvHEcx7VouhKog4VauxbfwTfj+oVtjKIUj5m+8uca3yE4k13SFg5boSbVxr3jpbyMe6nh46Af0GmTkw8Uv26Ez+eRpHHDy2gJi4yidQfhKufhh33bSPNpJ6+K1088Ci1kU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=CI6QUt33; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="lYzu3r5b"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3C53C4CEF7;
-	Mon, 23 Mar 2026 14:07:32 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="CI6QUt33"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E6FC4CEF7;
+	Mon, 23 Mar 2026 14:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774274853;
-	bh=yuW3ZBaFCvGz+N7t9WASyaN5e0HKyqr2orBzcmDnp3Y=;
+	s=korg; t=1774274855;
+	bh=3/MJwTqKaclFx9DobQ5BjuO9GBqhoztWhQE11QYnnsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lYzu3r5bNYbc1BuSVPIOl7Jfa/9Bm+1QLRfR43IYXe0HFpdPIVF3NxRwQCzTR1opm
-	 QSFv1dYFRViM4O9SAXCeCI4xHTaBL8455dWTCZS/oA9v4CfBs6LRj8ZLbBNfIzJ/cp
-	 TBszy08derwEF2kA8oXP8k+vnajJu3K7KSbzI5Vg=
+	b=CI6QUt33bR77B1PXBz1HNjUm+yg8aqkzb6euFGyUd65xV91FQtBG5XxL02/08Erf+
+	 +A9uGxKGslW/EZI2xuxkn0dGqaZIr9t308v7xex7vBRZPDPbdO7Dn4Hl2FRT5OXA+H
+	 soURh+C4zrAblbLmjVTOgji8Ox289eIbm2sGERno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
-Subject: [PATCH 6.18 078/212] serial: uartlite: fix PM runtime usage count underflow on probe
-Date: Mon, 23 Mar 2026 14:44:59 +0100
-Message-ID: <20260323134506.226144263@linuxfoundation.org>
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.18 125/212] Bluetooth: ISO: Fix defer tests being unstable
+Date: Mon, 23 Mar 2026 14:45:46 +0100
+Message-ID: <20260323134507.719260646@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
 References: <20260323134503.770111826@linuxfoundation.org>
@@ -50,53 +50,49 @@ Content-Transfer-Encoding: 8bit
 
 ------------------
 
-From: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
+From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 
-commit d54801cd509515f674a5aac1d3ea1401d2a05863 upstream.
+[ Upstream commit 62bcaa6b351b6dc400f6c6b83762001fd9f5c12d ]
 
-ulite_probe() calls pm_runtime_put_autosuspend() at the end of probe
-without holding a corresponding PM runtime reference for non-console
-ports.
+iso-tester defer tests seem to fail with hci_conn_hash_lookup_cig
+being unable to resolve a cig in set_cig_params_sync due a race
+where it is run immediatelly before hci_bind_cis is able to set
+the QoS settings into the hci_conn object.
 
-During ulite_assign(), uart_add_one_port() triggers uart_configure_port()
-which calls ulite_pm() via uart_change_pm(). For non-console ports, the
-UART core performs a balanced get/put cycle:
+So this moves the assigning of the QoS settings to be done directly
+by hci_le_set_cig_params to prevent that from happening again.
 
-  uart_change_pm(ON)  -> ulite_pm() -> pm_runtime_get_sync()        +1
-  uart_change_pm(OFF) -> ulite_pm() -> pm_runtime_put_autosuspend() -1
-
-This leaves no spare reference for the pm_runtime_put_autosuspend() at
-the end of probe. The PM runtime core prevents the count from actually
-going below zero, and instead triggers a
-"Runtime PM usage count underflow!" warning.
-
-For console ports the bug is masked: the UART core skips the
-uart_change_pm(OFF) call, so the UART core's unbalanced get happens to
-pair with probe's trailing put.
-
-Add pm_runtime_get_noresume() before pm_runtime_enable() to take an
-explicit probe-owned reference that the trailing
-pm_runtime_put_autosuspend() can release. This ensures a correct usage
-count regardless of whether the port is a console.
-
-Fixes: 5bbe10a6942d ("tty: serial: uartlite: Add runtime pm support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Maciej Andrzejewski ICEYE <maciej.andrzejewski@m-works.net>
-Link: https://patch.msgid.link/20260305123746.4152800-1-maciej.andrzejewski@m-works.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 26afbd826ee3 ("Bluetooth: Add initial implementation of CIS connections")
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/uartlite.c |    1 +
- 1 file changed, 1 insertion(+)
+ net/bluetooth/hci_conn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/tty/serial/uartlite.c
-+++ b/drivers/tty/serial/uartlite.c
-@@ -878,6 +878,7 @@ of_err:
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, UART_AUTOSUSPEND_TIMEOUT);
- 	pm_runtime_set_active(&pdev->dev);
-+	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
+diff --git a/net/bluetooth/hci_conn.c b/net/bluetooth/hci_conn.c
+index 6a27ac5a751ca..8906526ff32c5 100644
+--- a/net/bluetooth/hci_conn.c
++++ b/net/bluetooth/hci_conn.c
+@@ -1927,6 +1927,8 @@ static bool hci_le_set_cig_params(struct hci_conn *conn, struct bt_iso_qos *qos)
+ 		return false;
  
- 	ret = ulite_assign(&pdev->dev, id, res->start, irq, pdata);
+ done:
++	conn->iso_qos = *qos;
++
+ 	if (hci_cmd_sync_queue(hdev, set_cig_params_sync,
+ 			       UINT_PTR(qos->ucast.cig), NULL) < 0)
+ 		return false;
+@@ -1996,8 +1998,6 @@ struct hci_conn *hci_bind_cis(struct hci_dev *hdev, bdaddr_t *dst,
+ 	}
+ 
+ 	hci_conn_hold(cis);
+-
+-	cis->iso_qos = *qos;
+ 	cis->state = BT_BOUND;
+ 
+ 	return cis;
+-- 
+2.51.0
+
 
 
