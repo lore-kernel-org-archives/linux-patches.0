@@ -1,38 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8192737E0;
-	Mon, 23 Mar 2026 15:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C3E23B2FC1;
+	Mon, 23 Mar 2026 15:09:03 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774278540; cv=none; b=RSeBc+eSb3btpKTKKR9w1BqZsXjEecyruCdu8dvBpm4wioESmezNhHYrpeZIAeFB8sGlgnR5rOWi7mVlvW3C071bMgymaBSAUKZprQ+SrA1k634NNJAJ3h2qtmmaxiY2OAnkuOZaD1pWWLUmuJQ/vNeHccwlIjh0N5/QVk+X6Ts=
+	t=1774278543; cv=none; b=pbbn0KQaz9AX4j68idZULjpVnRlKN0BZJZsDXrCmSNpQtuzdvOSi4GiSrSuEq0t0mmAcxz3SOEVUco8BxOksSC0fiuG7A1p6pW1FgI2F0MLA8o+VJ4cDgeJ4gruUUhwGElWl/4acZbOkz4PBTZoAVPgPEMAH8Yz3pU8TWBJdRoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774278540; c=relaxed/simple;
-	bh=nlcAXiV/zEwVhPM/bis2bY3O1W1kb2O4oAP9UJCwfxM=;
+	s=arc-20240116; t=1774278543; c=relaxed/simple;
+	bh=fAYJRIEMePh+IHeDeaPib2M04pwI7lBXwizjrN9bUEc=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QExbFqztrXervNk3z5xmIdwfNEJnbYjXXuyj3ND0EpB++WKP5nw76y/TEaIrhv8weOBjzcYkfm35imjZf0kpO+afeoUSkvbuaFRuMK77eqJe1WV5KER/clXqmGGcMCgM9QS/O3uMgF19NndnbMjNCjhmlUzLyHk+93cA7+1H+n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=DRiJvHSf; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=PaTN7f7iT5c+LM8DmUZ6oPvLU0KEbopgi5eIUrSpUIF1eAmI0et72PtME3xbQCfbSYtbneqf9Fld8fOO1n38Hdp3DAK1D66e/gtTb2M2qSDpzqZkR3cTcj9G15EVVFaS6AE/ZrWqM5ygiVq6QuiHI46PmDDaVjd1d2IcKAVSld8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=Up/CsY8x; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="DRiJvHSf"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 102F8C4CEF7;
-	Mon, 23 Mar 2026 15:08:59 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="Up/CsY8x"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27F90C4CEF7;
+	Mon, 23 Mar 2026 15:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774278540;
-	bh=nlcAXiV/zEwVhPM/bis2bY3O1W1kb2O4oAP9UJCwfxM=;
+	s=korg; t=1774278543;
+	bh=fAYJRIEMePh+IHeDeaPib2M04pwI7lBXwizjrN9bUEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRiJvHSfRC4EAMxHN0LeYSOvTBBMgJX4m9NrqMKO/+hbzkmWdecVeAIButuqe4YOj
-	 fIUg7SkRmY4kllVAZAfXC8O91W+PRa3BFaUWYYL4fX2DybAo0XB5XfVPAj2Cd8nEhU
-	 OvUxCNEXvebjnk+Z2aVJlMmGT8vFYpmloxkTujC8=
+	b=Up/CsY8xVZJnP/KqIG/P+HJmRh9phiy6rJ8lPYq+Xd9I9isi05LP+he7wiz+rfJDn
+	 Rlff8B2VjH73w0LP07mTJs6wOkRPjkFXuhU+/BI6Lc61UtCkxpMyYfsF454hszCkTI
+	 67fw58Bg+whtnITUkJtp3gAzJUl5GSBqmlXasLCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Jan Hoeppner <hoeppner@linux.ibm.com>,
+	Eduard Shishkin <edward6@linux.ibm.com>,
 	Stefan Haberland <sth@linux.ibm.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.6 341/567] s390/dasd: Move quiesce state with pprc swap
-Date: Mon, 23 Mar 2026 14:44:21 +0100
-Message-ID: <20260323134542.270360885@linuxfoundation.org>
+Subject: [PATCH 6.6 342/567] s390/dasd: Copy detected format information to secondary device
+Date: Mon, 23 Mar 2026 14:44:22 +0100
+Message-ID: <20260323134542.297843361@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
 References: <20260323134533.749096647@linuxfoundation.org>
@@ -53,41 +54,69 @@ Content-Transfer-Encoding: 8bit
 
 From: Stefan Haberland <sth@linux.ibm.com>
 
-commit 40e9cd4ae8ec43b107ed2bff422a8fa39dcf4e4b upstream.
+commit 4c527c7e030672efd788d0806d7a68972a7ba3c1 upstream.
 
-Quiesce and resume is a mechanism to suspend operations on DASD devices.
-In the context of a controlled copy pair swap operation, the quiesce
-operation is usually issued before the actual swap and a resume
-afterwards.
+During online processing for a DASD device an IO operation is started to
+determine the format of the device. CDL format contains specifically
+sized blocks at the beginning of the disk.
 
-During the swap operation, the underlying device is exchanged. Therefore,
-the quiesce flag must be moved to the secondary device to ensure a
-consistent quiesce state after the swap.
+For a PPRC secondary device no real IO operation is possible therefore
+this IO request can not be started and this step is skipped for online
+processing of secondary devices. This is generally fine since the
+secondary is a copy of the primary device.
 
-The secondary device itself cannot be suspended separately because there
-is no separate block device representation for it.
+In case of an additional partition detection that is run after a swap
+operation the format information is needed to properly drive partition
+detection IO.
+
+Currently the information is not passed leading to IO errors during
+partition detection and a wrongly detected partition table which in turn
+might lead to data corruption on the disk with the wrong partition table.
+
+Fix by passing the format information from primary to secondary device.
 
 Fixes: 413862caad6f ("s390/dasd: add copy pair swap capability")
 Cc: stable@vger.kernel.org #6.1
 Reviewed-by: Jan Hoeppner <hoeppner@linux.ibm.com>
+Acked-by: Eduard Shishkin <edward6@linux.ibm.com>
 Signed-off-by: Stefan Haberland <sth@linux.ibm.com>
-Link: https://patch.msgid.link/20260310142330.4080106-2-sth@linux.ibm.com
+Link: https://patch.msgid.link/20260310142330.4080106-3-sth@linux.ibm.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/s390/block/dasd_eckd.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/s390/block/dasd_eckd.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 --- a/drivers/s390/block/dasd_eckd.c
 +++ b/drivers/s390/block/dasd_eckd.c
-@@ -6232,6 +6232,11 @@ static int dasd_eckd_copy_pair_swap(stru
- 			dev_name(&secondary->cdev->dev), rc);
+@@ -6185,6 +6185,7 @@ static void copy_pair_set_active(struct
+ static int dasd_eckd_copy_pair_swap(struct dasd_device *device, char *prim_busid,
+ 				    char *sec_busid)
+ {
++	struct dasd_eckd_private *prim_priv, *sec_priv;
+ 	struct dasd_device *primary, *secondary;
+ 	struct dasd_copy_relation *copy;
+ 	struct dasd_block *block;
+@@ -6205,6 +6206,9 @@ static int dasd_eckd_copy_pair_swap(stru
+ 	if (!secondary)
+ 		return DASD_COPYPAIRSWAP_SECONDARY;
+ 
++	prim_priv = primary->private;
++	sec_priv = secondary->private;
++
+ 	/*
+ 	 * usually the device should be quiesced for swap
+ 	 * for paranoia stop device and requeue requests again
+@@ -6237,6 +6241,13 @@ static int dasd_eckd_copy_pair_swap(stru
+ 		dasd_device_remove_stop_bits(primary, DASD_STOPPED_QUIESCE);
  	}
  
-+	if (primary->stopped & DASD_STOPPED_QUIESCE) {
-+		dasd_device_set_stop_bits(secondary, DASD_STOPPED_QUIESCE);
-+		dasd_device_remove_stop_bits(primary, DASD_STOPPED_QUIESCE);
-+	}
++	/*
++	 * The secondary device never got through format detection, but since it
++	 * is a copy of the primary device, the format is exactly the same;
++	 * therefore, the detected layout can simply be copied.
++	 */
++	sec_priv->uses_cdl = prim_priv->uses_cdl;
 +
  	/* re-enable device */
  	dasd_device_remove_stop_bits(primary, DASD_STOPPED_PPRC);
