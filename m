@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C4A282F35;
-	Mon, 23 Mar 2026 16:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40DEF3BA238;
+	Mon, 23 Mar 2026 16:19:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774282759; cv=none; b=NpKBWv+jgeDOAZGXJ4mel1gQ9eRJeaLD90+n8GSaNG4qnSscq3sKBlT8kaiQq/jcK37AMMNODB6k1FoaEeWpPWTYhyFFIVBhryCY9mjAPp3xF6f3/PxMMbD4gFK45CHP941+mT6kVO9gonttxil5DDRc6soIiXIlW1aMvoyChjg=
+	t=1774282762; cv=none; b=GlxU7aSfXEnjO7UtDZIKKU4rsWlGPg9+J7JhW+uGwSaS7HSHgJCXSCZIcdGlxSwfV3MOkcSqf5qmJOfiGN4HVLB/7Z5G9WasrKJd0s9DGVQECSTVL+LmzOL8uTiVx89bfFHvcZPtcY0kkCaisGh9DviQp6U/cZv2x/q823UjgdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774282759; c=relaxed/simple;
-	bh=ftV4tm+4OEq+hOOW5YZq/0aBh7SyFpW5YzzalepsHbA=;
+	s=arc-20240116; t=1774282762; c=relaxed/simple;
+	bh=i3hAGPkLWTILLoNYlTW7Hl3hLY5ysr3zD0zde6VAZMI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=D9zOUzmRdA0uw1JhjyjHYah5/Ch8XyxeoI3qeUQzBoBuHWMEitQcaksqQDs7zRpReBt3Z7+H92KFs5EKWw9tCnAX4MutfL9mEdg1SPyiq52zfS8MAw0hSyptj286QABOhNwpobH3WJY0fBqpZaPoY9TclAQofsPv432MHHrMMZk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=WNx27qlk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version; b=i+jlveCc4huxIahwvNeqUi3tMvSm6OcvfAkwD4eeMI+V8Izt9wtFadoegiUHIeRsUBLPTfaO+52q/gPYlXuC03KStowhRkwNsmMp3gDznYxE3bOVxd9mviZdANcx7GLxf6Cyw8rl0/XXCgsF9NxPGpsjub5KkpluBhLabEDBguI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=s+M7R1Gc; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="WNx27qlk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16061C4CEF7;
-	Mon, 23 Mar 2026 16:19:18 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="s+M7R1Gc"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C490DC4CEF7;
+	Mon, 23 Mar 2026 16:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774282759;
-	bh=ftV4tm+4OEq+hOOW5YZq/0aBh7SyFpW5YzzalepsHbA=;
+	s=korg; t=1774282762;
+	bh=i3hAGPkLWTILLoNYlTW7Hl3hLY5ysr3zD0zde6VAZMI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WNx27qlkGu7Djt9luc8PtgtokmbHr2WS68krfQecso+zfBD5kRN7jiVJcs2BaVq3M
-	 +yzO4f2irVJTjUTLTsovtNEWtDT+31xGZ415mGzDr15Ns/4IV4ZL88GzNNgtaE6SKy
-	 4anGqZ31MS8Q0z43zACDJHQN5rhSdtsWUuifpkxI=
+	b=s+M7R1GcJhSlqtHCtVtN15yhpnwCNn3xJEYm5Ep08woN30vqA9yIb6UpXb3XV2ixI
+	 qLMCEIV7jwpLObpbdLzJdbQ3nd4sdhLCQ4zl/glRfGktdlFwE3OvYDMqoDFQ3nVk55
+	 YRBm3/fSzKz2MU+RdxvoX/2UDyFIfRG7+Dj2K9Is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -30,9 +30,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Adrian Hunter <adrian.hunter@intel.com>,
 	Frank Li <Frank.Li@nxp.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>
-Subject: [PATCH 6.1 273/481] i3c: mipi-i3c-hci: Use ETIMEDOUT instead of ETIME for timeout errors
-Date: Mon, 23 Mar 2026 14:44:15 +0100
-Message-ID: <20260323134531.782439165@linuxfoundation.org>
+Subject: [PATCH 6.1 274/481] i3c: mipi-i3c-hci: Restart DMA ring correctly after dequeue abort
+Date: Mon, 23 Mar 2026 14:44:16 +0100
+Message-ID: <20260323134531.805332720@linuxfoundation.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 References: <20260323134525.256603107@linuxfoundation.org>
@@ -53,76 +53,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit 4167b8914463132654e01e16259847d097f8a7f7 upstream.
+commit b6d586431ae20d5157ee468d0ef62ad26798ef13 upstream.
 
-The MIPI I3C HCI driver currently returns -ETIME for various timeout
-conditions, while other I3C master drivers consistently use -ETIMEDOUT
-for the same class of errors.  Align the HCI driver with the rest of the
-subsystem by replacing all uses of -ETIME with -ETIMEDOUT.
+The DMA dequeue path attempts to restart the ring after aborting an
+in-flight transfer, but the current sequence is incomplete. The controller
+must be brought out of the aborted state and the ring control registers
+must be programmed in the correct order: first clearing ABORT, then
+re-enabling the ring and asserting RUN_STOP to resume operation.
+
+Add the missing controller resume step and update the ring control writes
+so that the ring is restarted using the proper sequence.
 
 Fixes: 9ad9a52cce282 ("i3c/master: introduce the mipi-i3c-hci driver")
 Cc: stable@vger.kernel.org
 Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
 Reviewed-by: Frank Li <Frank.Li@nxp.com>
-Link: https://patch.msgid.link/20260306072451.11131-2-adrian.hunter@intel.com
+Link: https://patch.msgid.link/20260306072451.11131-11-adrian.hunter@intel.com
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i3c/master/mipi-i3c-hci/cmd_v1.c |    2 +-
- drivers/i3c/master/mipi-i3c-hci/cmd_v2.c |    2 +-
- drivers/i3c/master/mipi-i3c-hci/core.c   |    6 +++---
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/i3c/master/mipi-i3c-hci/dma.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v1.c
-@@ -335,7 +335,7 @@ static int hci_cmd_v1_daa(struct i3c_hci
- 		hci->io->queue_xfer(hci, xfer, 1);
- 		if (!wait_for_completion_timeout(&done, HZ) &&
- 		    hci->io->dequeue_xfer(hci, xfer, 1)) {
--			ret = -ETIME;
-+			ret = -ETIMEDOUT;
- 			break;
- 		}
- 		if (RESP_STATUS(xfer[0].response) == RESP_ERR_NACK &&
---- a/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/cmd_v2.c
-@@ -277,7 +277,7 @@ static int hci_cmd_v2_daa(struct i3c_hci
- 		hci->io->queue_xfer(hci, xfer, 2);
- 		if (!wait_for_completion_timeout(&done, HZ) &&
- 		    hci->io->dequeue_xfer(hci, xfer, 2)) {
--			ret = -ETIME;
-+			ret = -ETIMEDOUT;
- 			break;
- 		}
- 		if (RESP_STATUS(xfer[0].response) != RESP_SUCCESS) {
---- a/drivers/i3c/master/mipi-i3c-hci/core.c
-+++ b/drivers/i3c/master/mipi-i3c-hci/core.c
-@@ -237,7 +237,7 @@ static int i3c_hci_send_ccc_cmd(struct i
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, HZ) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
+--- a/drivers/i3c/master/mipi-i3c-hci/dma.c
++++ b/drivers/i3c/master/mipi-i3c-hci/dma.c
+@@ -491,7 +491,9 @@ static bool hci_dma_dequeue_xfer(struct
  	}
- 	for (i = prefixed; i < nxfers; i++) {
-@@ -311,7 +311,7 @@ static int i3c_hci_priv_xfers(struct i3c
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, HZ) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
- 	}
- 	for (i = 0; i < nxfers; i++) {
-@@ -359,7 +359,7 @@ static int i3c_hci_i2c_xfers(struct i2c_
- 		goto out;
- 	if (!wait_for_completion_timeout(&done, HZ) &&
- 	    hci->io->dequeue_xfer(hci, xfer, nxfers)) {
--		ret = -ETIME;
-+		ret = -ETIMEDOUT;
- 		goto out;
- 	}
- 	for (i = 0; i < nxfers; i++) {
+ 
+ 	/* restart the ring */
++	mipi_i3c_hci_resume(hci);
+ 	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE);
++	rh_reg_write(RING_CONTROL, RING_CTRL_ENABLE | RING_CTRL_RUN_STOP);
+ 
+ 	return did_unqueue;
+ }
 
 
