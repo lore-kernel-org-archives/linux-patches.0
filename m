@@ -1,172 +1,172 @@
-Received: from mail115-118.sinamail.sina.com.cn (mail115-118.sinamail.sina.com.cn [218.30.115.118])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail11.truemail.it (mail11.truemail.it [217.194.8.81])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83341285CBA
-	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 06:09:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=218.30.115.118
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83C232E68D
+	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 07:35:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.194.8.81
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774332563; cv=none; b=OcsEchhofgVL5CBmZO6yxOmj7VUuaF2I/T1sMcVh+aQXvFHd2imiKGhbuQzR9HhrfdQhQLg6VnsFqzK468FWEFhNbPe3TtYT1pfM3tPOYA48XdJYuIPSv/n7gyRFS8tDBxvmFfEoa2ErV+Ksn5HIKtEA1qZukQAh3DCHkU7jsxM=
+	t=1774337713; cv=none; b=JcLdVKu/if2gOjpinlO0lP40L5mzSljjjB4DEktsu+h2e1rmSeTuqXbvQrPCUqI1uOfRiAXt8hwjKnmYKXIokXz6mWj4+n3tVpb2CUAdVbSgCWD1/inC5s6+3PZEG7DGujSClz0E6cngotcqmsqa+V1kvjXlbGYVDTzVcLwXbeY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774332563; c=relaxed/simple;
-	bh=NHlIIQJlyhTjT8FAs/JqW6E3uA9plhEOOXkdFAwdfe4=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=I6A4Z7kR6kain3DM2Oa6KolmxGKn3ZTsalC0K+ezL6KbNJw6rledlrWm8SGN7i4fXI7l2dv50kRizjlmQom4Xpjh2QEURgLDErM+EUbCDHzMoRjL82ks+7meEPF+C1m+m1bwzw2bD7hFwFomZBuw+cFFIWLpPe5N+9zuxnwwSO4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn; spf=pass smtp.mailfrom=sina.cn; dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b=BEGP32Qx; arc=none smtp.client-ip=218.30.115.118
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=sina.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=sina.cn
+	s=arc-20240116; t=1774337713; c=relaxed/simple;
+	bh=6IlMeXk1WZycISmMe+soaKl+sSsLCkHt660QnGLCx4E=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ktsp89b2cbY3A9RX9P7fPKjxBgCSLkjTA9V2KWOXnAu8uuMBGqleXMiXCxbHU80JBzRiLKbPb3BlfsCCNXXu0WOpYE3KjC9WsrPla3so4ZVy5E/X0vnixwMQ9B4tbC1blGxNGQZl+VBXpz1F5fiYVHTICcIIotFfttUEx/BzJIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it; spf=pass smtp.mailfrom=dolcini.it; dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b=vFWlRqRQ; arc=none smtp.client-ip=217.194.8.81
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=dolcini.it
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=dolcini.it
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=sina.cn header.i=@sina.cn header.b="BEGP32Qx"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sina.cn; s=201208; t=1774332561;
-	bh=qgnBCkgus4C3JeV2aFGnoI4lXC+JO8798ruCRc8QCFk=;
-	h=From:Subject:Date:Message-Id;
-	b=BEGP32QxW07m84ye/mfHjTnvmZ02q+op86KBAD129EXww1hipB1d7IT6zcnGRJhOC
-	 Dm5hO1X/a7ZM6AvSWRaqTZoAP27qREa7/n6L0YuN9/+9rGz6njfsq4BB1YAOGaUMcY
-	 1oY/epRyW6DuoosCirGFsTSmUekY0S8lPvXrh/t0=
-X-SMAIL-HELO: NTT-kernel-dev
-Received: from unknown (HELO NTT-kernel-dev)([60.247.85.88])
-	by sina.cn (10.185.250.24) with ESMTP
-	id 69C22A6000002D58; Tue, 24 Mar 2026 14:08:39 +0800 (CST)
-X-Sender: jianqkang@sina.cn
-X-Auth-ID: jianqkang@sina.cn
-Authentication-Results: sina.cn;
-	 spf=none smtp.mailfrom=jianqkang@sina.cn;
-	 dkim=none header.i=none;
-	 dmarc=none action=none header.from=jianqkang@sina.cn
-X-SMAIL-MID: 25143110748017
-X-SMAIL-UIID: FD7F7D2A21814E41830FC47941554F61-20260324-140839-1
-From: Jianqiang kang <jianqkang@sina.cn>
-To: gregkh@linuxfoundation.org,
-	stable@vger.kernel.org,
-	leitao@debian.org
-Cc: patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	thierry.reding@gmail.com,
-	jonathanh@nvidia.com,
-	skomatineni@nvidia.com,
-	ldewangan@nvidia.com,
-	treding@nvidia.com,
-	broonie@kernel.org,
-	va@nvidia.com,
-	linux-tegra@vger.kernel.org,
-	linux-spi@vger.kernel.org
-Subject: [PATCH 6.12.y] spi: tegra210-quad: Protect curr_xfer check in IRQ handler
-Date: Tue, 24 Mar 2026 14:08:32 +0800
-Message-Id: <20260324060832.724228-1-jianqkang@sina.cn>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=dolcini.it header.i=@dolcini.it header.b="vFWlRqRQ"
+Received: from francesco-nb (248.201.173.83.static.wline.lns.sme.cust.swisscom.ch [83.173.201.248])
+	by mail11.truemail.it (Postfix) with ESMTPA id D6DF31FA0B;
+	Tue, 24 Mar 2026 08:34:51 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dolcini.it;
+	s=default; t=1774337692;
+	bh=o9lLWZpgsou6EOIpHU68Hao9eV/gXb6G0+VKkT/SGGM=; h=From:To:Subject;
+	b=vFWlRqRQoyb6lcNylW6jriGHG2Gdb7azhox6JqvEW6bq8jamfDPd+GDGnWdYIKSq1
+	 za9C5V++WiAbzbQc+tKujZ9ENn6kTxQTfiTuOQCwaeJvFu1DxkhBl61Mg8tkDzjyLe
+	 /oO9oAK+S7WueC2T5wEAFprovrhdH9E17b5Sc4tycF5jFAFxOIszW6kuRNDcDBCDeE
+	 tX11YquOEthemv/XNzUPiywDZSMVEKbfVNj5lOWH8JdZoNJ/a3rvPd+Xb/6K4Y3+xz
+	 DCVYd3+YQxXmaekWwY1I+TBMFGKHopof412H9oNhst53c2cx96DuH1E/L5H9eOM0Er
+	 xbmwrJMyzniDw==
+Date: Tue, 24 Mar 2026 08:34:47 +0100
+From: Francesco Dolcini <francesco@dolcini.it>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Jan Kara <jack@suse.cz>, Brian Foster <bfoster@redhat.com>,
+	Yongjian Sun <sunyongjian1@huawei.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Gou Hao <gouhao@uniontech.com>, Theodore Ts'o <tytso@mit.edu>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Zhang Yi <yi.zhang@huawei.com>, Baokun Li <libaokun1@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
+Message-ID: <20260324073447.GA5062@francesco-nb>
+References: <20260323134525.256603107@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260323134525.256603107@linuxfoundation.org>
 
-From: Breno Leitao <leitao@debian.org>
+Hi Greg,
 
-[ Upstream commit edf9088b6e1d6d88982db7eb5e736a0e4fbcc09e ]
+On Mon, Mar 23, 2026 at 02:39:42PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.167 release.
+> There are 481 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
+> Anything received after that time might be too late.
 
-Now that all other accesses to curr_xfer are done under the lock,
-protect the curr_xfer NULL check in tegra_qspi_isr_thread() with the
-spinlock. Without this protection, the following race can occur:
+Not ok
 
-  CPU0 (ISR thread)              CPU1 (timeout path)
-  ----------------               -------------------
-  if (!tqspi->curr_xfer)
-    // sees non-NULL
-                                 spin_lock()
-                                 tqspi->curr_xfer = NULL
-                                 spin_unlock()
-  handle_*_xfer()
-    spin_lock()
-    t = tqspi->curr_xfer  // NULL!
-    ... t->len ...        // NULL dereference!
+I have an ext4 Oops on arm
 
-With this patch, all curr_xfer accesses are now properly synchronized.
+[   27.908560] 8<--- cut here ---
+[   27.911697] Unable to handle kernel NULL pointer dereference at virtual address 00000000
+[   27.919880] [00000000] *pgd=00000000
+[   27.923482] Internal error: Oops: 5 [#1] SMP ARM
+[   27.928117] Modules linked in: 8021q cfg80211 imx_sdma coda_vpu v4l2_jpeg imx_vdoa dw_hdmi_ahb_audio fuse
+[   27.937784] CPU: 1 PID: 736 Comm: tar Not tainted 6.1.167-rc1-6.8.6-devel+git.67c872a868ac #1
+[   27.946342] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
+[   27.952889] PC is at ext4_mb_load_buddy_gfp+0xac/0x438
+[   27.958083] LR is at 0xe0f39b18
+[   27.961248] pc : [<c035bc54>]    lr : [<e0f39b18>]    psr: 000f0013
+[   27.967536] sp : e0f39b60  ip : 00000000  fp : c43046f8
+[   27.972781] r10: 00000001  r9 : 00000c40  r8 : 00000016
+[   27.978025] r7 : 00000016  r6 : c2b24000  r5 : e0f39bcc  r4 : 00000000
+[   27.984574] r3 : d21b9611  r2 : d21b9611  r1 : c4277e40  r0 : 00000000
+[   27.991123] Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+[   27.998287] Control: 10c5387d  Table: 131c804a  DAC: 00000051
+[   28.004050] Register r0 information: NULL pointer
+[   28.008787] Register r1 information: slab radix_tree_node start c4277e40 pointer offset 0
+[   28.017024] Register r2 information: 0-page vmalloc region starting at 0xd0000000 allocated at iotable_init+0x0/0xf4
+[   28.027619] Register r3 information: 0-page vmalloc region starting at 0xd0000000 allocated at iotable_init+0x0/0xf4
+[   28.038199] Register r4 information: NULL pointer
+[   28.042930] Register r5 information: 2-page vmalloc region starting at 0xe0f38000 allocated at kernel_clone+0x88/0x338
+[   28.053693] Register r6 information: slab kmalloc-1k start c2b24000 pointer offset 0 size 1024
+[   28.062369] Register r7 information: non-paged memory
+[   28.067449] Register r8 information: non-paged memory
+[   28.072527] Register r9 information: non-paged memory
+[   28.077605] Register r10 information: non-paged memory
+[   28.082771] Register r11 information: slab ext4_inode_cache start c4304620 pointer offset 216 size 60
+[   28.092056] Register r12 information: NULL pointer
+[   28.096875] Process tar (pid: 736, stack limit = 0x116a0825)
+[   28.102562] Stack: (0xe0f39b60 to 0xe0f3a000)
+[   28.106955] 9b60: e0f39b5c 00000000 c0c1b414 c2916000 c2b24000 c42e55d8 c2b24000 c29162a8
+[   28.115162] 9b80: 00000048 c4589000 0000000b c035f804 00000001 00000001 00000001 c2b24000
+[   28.123368] 9ba0: c2916000 0000001d 00000010 00000000 00000009 00000024 00000000 00000000
+[   28.131573] 9bc0: c2b92300 00000001 00000000 00000000 e0f39d30 00000000 c2b92300 c42e55d8
+[   28.139778] 9be0: c2b24000 0000000c 0000000b d21b9611 00000000 c4589000 c2b24000 e0f39d30
+[   28.147983] 9c00: 00000001 c2916000 00000000 c42fbf60 00000001 c03628c0 00000001 00000000
+[   28.156188] 9c20: e0f39d14 c2b92300 00000001 00000000 00000029 00000000 00000000 c03328b4
+[   28.164393] 9c40: 00000000 00000000 c4886a60 c033be7c 00000000 c0294008 00000000 00000000
+[   28.172597] 9c60: c48867d0 d21b9611 c2b92300 00000001 00000001 c2916000 00000000 00000000
+[   28.180802] 9c80: 00000000 c48868a8 e0f39e10 c0336970 e0f39d24 47ffffff c2b24000 00000000
+[   28.189007] 9ca0: c48868a8 00000000 e0f39d88 c0330844 00000000 00000001 c2b92300 c42fbf60
+[   28.197212] 9cc0: e0f39d88 ffffffff 00000000 ffffffff c308da80 00000000 00000001 c308da98
+[   28.205416] 9ce0: 00000000 c03362f4 ffffffff ffffffff 00000008 00000010 00000000 cf358340
+[   28.213620] 9d00: c42fbf60 00000000 c0c1b2c8 00000000 c308da80 00000000 00000000 c4540001
+[   28.221825] 9d20: 00000000 c0395154 c2b92300 000009dd c48868a8 00000001 00000000 00000000
+[   28.230029] 9d40: 00000000 c034c0c0 00000000 00000000 00000000 00000000 00000000 00000000
+[   28.238234] 9d60: 00000000 00000000 c4886a60 d21b9611 00000020 e0f39e10 c48868a8 00000000
+[   28.246438] 9d80: 00000001 c42fbf60 c2b92300 00001000 00000000 c034ccdc 00000000 00000000
+[   28.254642] 9da0: 00000000 00000000 c42fbf60 c4886890 00000000 00000000 c48868a8 00000000
+[   28.262847] 9dc0: c4886a60 00000000 ffffffff e0f39e70 ffffffff 47ffffff 00000000 d21b9611
+[   28.271052] 9de0: c2b92300 c48868a8 c48868a8 c42fbf60 c2b92300 00000000 00000001 00001000
+[   28.279256] 9e00: 00000000 c034dc98 c48868a8 c038d7f4 00000000 00000000 00000000 00000001
+[   28.287461] 9e20: 00000000 cf358300 00000000 d21b9611 c48868f0 c48868a8 00000000 c42fbf60
+[   28.295666] 9e40: c2b92300 e0f39ec0 00000001 c034ded0 c48868a8 00000000 c42fbf60 c0367fec
+[   28.303871] 9e60: 0000001d 000041ed 00000000 c42ffcd8 00000000 00000000 00000000 00000001
+[   28.312076] 9e80: 00000000 c48868a8 69c15bf6 d21b9611 119d9a05 c48868a8 c2b24000 00000000
+[   28.320281] 9ea0: 00000000 c42fbf60 c2b92300 c036e134 00000000 c036b544 00000000 c43043e8
+[   28.328486] 9ec0: 00000000 d21b9611 0000000c c48868a8 c48868a8 c42fbf60 c43043e8 c0c1bc80
+[   28.336690] 9ee0: 000041ed c2b92300 c120d3e8 c036e410 c42ffcd8 00000000 00000000 00000000
+[   28.344895] 9f00: 00000004 00000bfa 00000027 c02a9b20 00000000 00000027 c42ffcd8 c42ffcc0
+[   28.353100] 9f20: 00000000 d21b9611 00000002 c43043e8 c036e298 c120d3e8 c42ffcc0 00000000
+[   28.361305] 9f40: 00000002 c2b92300 be83b824 c02ab1a0 c34dc010 d21b9611 01db0478 c34dc000
+[   28.369510] 9f60: c42ffcc0 c34dc000 ffffff9c 000041ed 00000000 c02b0268 be83b824 c20c6910
+[   28.377715] 9f80: c42e2a18 d21b9611 01db0478 01db01f8 00000000 00000027 c01002e8 c2b92300
+[   28.385920] 9fa0: 00000027 c0100080 01db0478 01db01f8 01db0478 000041ed 00000020 00004000
+[   28.394124] 9fc0: 01db0478 01db01f8 00000000 00000027 00000000 00000007 01db01f8 be83b824
+[   28.402330] 9fe0: 00545dbc be83b754 004f9b0b b6e5ff98 600f0030 01db0478 00000000 00000000
+[   28.410535]  ext4_mb_load_buddy_gfp from ext4_mb_regular_allocator+0x318/0xee0
+[   28.417826]  ext4_mb_regular_allocator from ext4_mb_new_blocks+0x724/0x1000
+[   28.424847]  ext4_mb_new_blocks from ext4_ext_map_blocks+0x7d8/0x1600
+[   28.431351]  ext4_ext_map_blocks from ext4_map_blocks+0x21c/0x604
+[   28.437492]  ext4_map_blocks from ext4_getblk+0x68/0x298
+[   28.442844]  ext4_getblk from ext4_bread+0x8/0xa0
+[   28.447587]  ext4_bread from ext4_append+0x98/0x1b4
+[   28.452514]  ext4_append from ext4_init_new_dir+0x7c/0x1e0
+[   28.458061]  ext4_init_new_dir from ext4_mkdir+0x178/0x384
+[   28.463608]  ext4_mkdir from vfs_mkdir+0xcc/0x168
+[   28.468364]  vfs_mkdir from do_mkdirat+0x80/0x104
+[   28.473107]  do_mkdirat from ret_fast_syscall+0x0/0x54
+[   28.478285] Exception stack(0xe0f39fa8 to 0xe0f39ff0)
+[   28.483367] 9fa0:                   01db0478 01db01f8 01db0478 000041ed 00000020 00004000
+[   28.491573] 9fc0: 01db0478 01db01f8 00000000 00000027 00000000 00000007 01db01f8 be83b824
+[   28.499775] 9fe0: 00545dbc be83b754 004f9b0b b6e5ff98
+[   28.504856] Code: ebfbad72 e3700a01 e1a04000 8a00005d (e5903000)
+[   28.511102] ---[ end trace 0000000000000000 ]---
 
-Although all accesses to curr_xfer are done under the lock, in
-tegra_qspi_isr_thread() it checks for NULL, releases the lock and
-reacquires it later in handle_cpu_based_xfer()/handle_dma_based_xfer().
-There is a potential for an update in between, which could cause a NULL
-pointer dereference.
 
-To handle this, add a NULL check inside the handlers after acquiring
-the lock. This ensures that if the timeout path has already cleared
-curr_xfer, the handler will safely return without dereferencing the
-NULL pointer.
+The bug is not systematic, and I do not see myself having the time to
+bisect it in the next couple of days (it was reproduced by our CI / Lava
+infrastructure).
 
-Fixes: b4e002d8a7ce ("spi: tegra210-quad: Fix timeout handling")
-Signed-off-by: Breno Leitao <leitao@debian.org>
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Link: https://patch.msgid.link/20260126-tegra_xfer-v2-6-6d2115e4f387@debian.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-[ Minor conflict resolved. ]
-Signed-off-by: Jianqiang kang <jianqkang@sina.cn>
----
- drivers/spi/spi-tegra210-quad.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+I have added some of the ext4 folks to this thread, in case they know
+how to help.
 
-diff --git a/drivers/spi/spi-tegra210-quad.c b/drivers/spi/spi-tegra210-quad.c
-index edc9d400728a..14dd98b92bd9 100644
---- a/drivers/spi/spi-tegra210-quad.c
-+++ b/drivers/spi/spi-tegra210-quad.c
-@@ -1351,6 +1351,11 @@ static irqreturn_t handle_cpu_based_xfer(struct tegra_qspi *tqspi)
- 	spin_lock_irqsave(&tqspi->lock, flags);
- 	t = tqspi->curr_xfer;
- 
-+	if (!t) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
-+		return IRQ_HANDLED;
-+	}
-+
- 	if (tqspi->tx_status ||  tqspi->rx_status) {
- 		tegra_qspi_handle_error(tqspi);
- 		complete(&tqspi->xfer_completion);
-@@ -1419,6 +1424,11 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- 	spin_lock_irqsave(&tqspi->lock, flags);
- 	t = tqspi->curr_xfer;
- 
-+	if (!t) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
-+		return IRQ_HANDLED;
-+	}
-+
- 	if (err) {
- 		tegra_qspi_dma_unmap_xfer(tqspi, t);
- 		tegra_qspi_handle_error(tqspi);
-@@ -1457,6 +1467,7 @@ static irqreturn_t handle_dma_based_xfer(struct tegra_qspi *tqspi)
- static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- {
- 	struct tegra_qspi *tqspi = context_data;
-+	unsigned long flags;
- 	u32 status;
- 
- 	/*
-@@ -1474,7 +1485,9 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- 	 * If no transfer is in progress, check if this was a real interrupt
- 	 * that the timeout handler already processed, or a spurious one.
- 	 */
-+	spin_lock_irqsave(&tqspi->lock, flags);
- 	if (!tqspi->curr_xfer) {
-+		spin_unlock_irqrestore(&tqspi->lock, flags);
- 		/* Spurious interrupt - transfer not ready */
- 		if (!(status & QSPI_RDY))
- 			return IRQ_NONE;
-@@ -1491,7 +1504,14 @@ static irqreturn_t tegra_qspi_isr_thread(int irq, void *context_data)
- 		tqspi->rx_status = tqspi->status_reg & (QSPI_RX_FIFO_OVF | QSPI_RX_FIFO_UNF);
- 
- 	tegra_qspi_mask_clear_irq(tqspi);
-+	spin_unlock_irqrestore(&tqspi->lock, flags);
- 
-+	/*
-+	 * Lock is released here but handlers safely re-check curr_xfer under
-+	 * lock before dereferencing.
-+	 * DMA handler also needs to sleep in wait_for_completion_*(), which
-+	 * cannot be done while holding spinlock.
-+	 */
- 	if (!tqspi->is_curr_dma_xfer)
- 		return handle_cpu_based_xfer(tqspi);
- 
--- 
-2.34.1
+Francesco
 
