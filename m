@@ -1,128 +1,110 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from smtpbguseast2.qq.com (smtpbguseast2.qq.com [54.204.34.130])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E283DCD82
-	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 09:08:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DBC337107C
+	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 09:55:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.204.34.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774343341; cv=none; b=YHyKfz6sJOzgkDqJDv3zXg25YyLrVOE/mZpY5pTfcZESbAzGH8GfxgohQRMIa4f/oy3p0b0U+WDZX8XeoE32ecPFS3TYp5ofxAWMuLiKBPk+qF5o7XpPSDuxTXIwUrbYF2t9NDpfvEb0rdIZonsM5H+lgZX5tQKjCYW5NAckj5c=
+	t=1774346106; cv=none; b=EeZaztXSZ8CAnjnblAiLImjgfQffXrwLh9vi/u4WDn1YyffEVE2CYr9Ngq8oZXI4HJCs4dBqetcCM1G6+XPDKOLpFh7cMTD8mLIzlFlRDtl6caijCpaoI9JLM957XUSBVKdpc71y3w1QOHRXIcL/46gITO3Ooy0XtzMVvOqHsoo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774343341; c=relaxed/simple;
-	bh=/q08/hJS22kkdBfDNaW+au198b3yybnqZiagyp2PT1o=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=QOyB3qfDZncuvQOdOwOj6i+fZpiuJLRMnPRVfRieYTd80TwxcDmMzoq2vdT+d9pEbfm+d197BPDA8rlXH+63tRXRyRAJOG8UXF1SfsqwROPnb+lcFFMN2Yrd877eY/1tbf1+DeorM2qS4FTubq77wlN3zjeP/SgwqvQB1+/o/uQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b4ioA8KL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=155BLQbW; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1774346106; c=relaxed/simple;
+	bh=LHZ0YYG/lxTn5zqYyd73AUc1BmmDqhxQw03YicpffUE=;
+	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
+	 MIME-Version; b=jWmWoeWx7Uu+M00EGIkh2UK9A4yl5QLev4AT8ysbaSDorFy/ROvGc7zuXumtOWcIPAt7utNNSrAq6Uog3W9nRjARKehJCyL4kv+bOgE4fN1TUKZWDVr02XvO/f1CDL1/0/r29t6LeQpzmn1T8Cb5EvPBTsp/EMeMCaNJQlVqV2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com; spf=pass smtp.mailfrom=uniontech.com; dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b=okQXqjQ7; arc=none smtp.client-ip=54.204.34.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=uniontech.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=uniontech.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b4ioA8KL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="155BLQbW"
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D80F71400220;
-	Tue, 24 Mar 2026 05:08:52 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 24 Mar 2026 05:08:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1774343332;
-	 x=1774429732; bh=QpCnatYRzwCG2zmiscszJ/0kViuwxysZZHdRGdDEVzY=; b=
-	b4ioA8KL4B+aDD0GBxeXeVlft9nI8g9u61k3WdeO5cbSuvwl+Wh6qQWzt9EyTa4W
-	ufepdBlBxvQfQNDh3wkhFaWneO7/sgA+eVDC/glGGQc7xvJa9P4Gj9FJkMqkAKHp
-	+ZVw2uHha1aIzwlGm6Z9s/SLhdb0ZLN4HD6RN8x1sxaYFTLQesAI0BtGjMQDhlYZ
-	peJVEQslDpH17oB8o5oq5HKjo4leRCiSRCZZoHTgJMO6BdYNLlLn4VOPWTC22dDh
-	ES6Ffmuh/t5bIlEFpvZAQp5AM9KwLbtW0379gzzwUgMDre7FQFyUlgQRda0tB1xd
-	ZsXccxf3h4bYttDsFauqXQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1774343332; x=
-	1774429732; bh=QpCnatYRzwCG2zmiscszJ/0kViuwxysZZHdRGdDEVzY=; b=1
-	55BLQbWCubmfSpJx2r28C1iW0iNxfsByJqExyTin8dMHLA4+dN5FQ26SO6rlgmkb
-	8JWapu7Msr+XbAkKIVoLx5xwLKauulR4dbHDA1lhyVpgs/aGMSgAhq9fYmvHNDjW
-	sg56ODqvinfGoFtVLzKV4Kan4T7X2Wl63b1XMGhL7/PC0YJUvfeVLaJIYSdr2nmc
-	aLmZJMjmjRKkwceiknT7ycOmJqIp7zorhwsMdeylbDfOW5LNY+YqL0t3DjKnMPOP
-	7LMptCRUeyLs8uwDBtC38XIA82zDlqdXwTZMuipHe0MB433TG5SHiJ9X6/V+EVG6
-	pGsT9sG0OEWudl11zE1Hg==
-X-ME-Sender: <xms:o1TCaVmSf2Q0wMOm0U9WQ6BYSSezStKHUU0o22SZh5uZkuhvXf9A2Q>
-    <xme:o1TCacuU3FuYnkA7A9yF9c6Y0rUKyRPxZD2S9QTifhTx3Wdv9bkl36Y1DOUohQyV1
-    JQvMYEozl-HU5Cm51now10R0A11LPUNjbqQ1nVguHM4cXeqpWNkceM>
-X-ME-Received: <xmr:o1TCaXKj0Yj4lqW3NdiFdg_14mGWzP9P89AvyYpScnazD8ATs9FAxbjeAE1O0DMsUSrlblxF3KkfjEoyffJKhDDtJN9Hrw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdefvdduudekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
-    rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
-    gurhepkfffgggfuffvvehfhfgjtgfgsehtjeertddtvdejnecuhfhrohhmpedfuegrrhhr
-    hicumfdrucfprghthhgrnhdfuceosggrrhhrhihnsehpohgsohigrdgtohhmqeenucggtf
-    frrghtthgvrhhnpeefleehkeehleekjeelffefhfdvleejteehledtieduffevteffleet
-    gefgfefhjeenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsggrrhhrhihnsehpohgsohigrdgt
-    ohhmpdhnsggprhgtphhtthhopedvtddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohep
-    shhtrggslhgvsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgrthgthh
-    gvsheslhhishhtshdrlhhinhhugidruggvvhdprhgtphhtthhopehlihhnuhigqdhkvghr
-    nhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhrvhgrlhgush
-    eslhhinhhugidqfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoheprghkphhmsehl
-    ihhnuhigqdhfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopehlihhnuhigsehroh
-    gvtghkqdhushdrnhgvthdprhgtphhtthhopehshhhurghhsehkvghrnhgvlhdrohhrghdp
-    rhgtphhtthhopehprghttghhvghssehkvghrnhgvlhgtihdrohhrgh
-X-ME-Proxy: <xmx:o1TCaZjtpXbdMN6a01OrbGgwfQLgl1CfzVeCOIBKryF43orjtj-gOg>
-    <xmx:o1TCabtyqOsYwvtEd_jwgfFHGdRJhuXRBIVk2BYcf9EELkjoWIOgyA>
-    <xmx:o1TCaThyjFyVI07MMI0zjAvI0TJFHKfSGxrwwovnKDhI6j6bJY2XxA>
-    <xmx:o1TCaWcT1Xt7ZUt6L2P-2fgGDDe5TjL1RiClmK-Z7op7pC7zwqYYGQ>
-    <xmx:pFTCaXLBpxWPcdLR-BVIU6i6NXe0CuXmkFpade-Ks0i2L7YZBeXwLiTE>
-Feedback-ID: i6289494f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 24 Mar 2026 05:08:49 -0400 (EDT)
-Message-ID: <4bdd0b5b-520e-41c9-adf1-940b699736c6@pobox.com>
-Date: Tue, 24 Mar 2026 02:08:48 -0700
+	dkim=pass (1024-bit key) header.d=uniontech.com header.i=@uniontech.com header.b="okQXqjQ7"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=uniontech.com;
+	s=onoh2408; t=1774346086;
+	bh=UIoch42Y6pGyIidacBJRSmhpuNOWZOSUEtIFTmwuRM8=;
+	h=From:To:Subject:Date:Message-Id:MIME-Version;
+	b=okQXqjQ7wqCFNigV0a5RAm0zCAYXIK5wS4aXzRVVLoSt62ItVkB4aoCBxxMkoeT0l
+	 gyDdJpJrTWVlF2kFxFq6zxv6jXyGjmj0Ef+d+wkv6e9P4VQAs5ZX/wl+ebaZOVP7R3
+	 uA8zWqpxUDGKKQzABuTspy7Jaywv96oq6oyRPtSM=
+X-QQ-mid: zesmtpip4t1774346080t0d1a2ff5
+X-QQ-Originating-IP: 9t2R4NY0v4jle8e+c/cpfuzUqd30oXgmgWCzR8W5eOo=
+Received: from localhost.localdomain ( [localhost])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Tue, 24 Mar 2026 17:54:38 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 13148438825957856425
+EX-QQ-RecipientCnt: 21
+From: Wentao Guan <guanwentao@uniontech.com>
+To: gregkh@linuxfoundation.org
+Cc: achill@achill.org,
+	akpm@linux-foundation.org,
+	broonie@kernel.org,
+	conor@kernel.org,
+	f.fainelli@gmail.com,
+	hargar@microsoft.com,
+	jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	lkft-triage@lists.linaro.org,
+	patches@kernelci.org,
+	patches@lists.linux.dev,
+	pavel@nabladev.com,
+	rwarsow@gmx.de,
+	shuah@kernel.org,
+	sr@sladewatkins.com,
+	stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com,
+	torvalds@linux-foundation.org,
+	Wentao Guan <guanwentao@uniontech.com>
+Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
+Date: Tue, 24 Mar 2026 17:53:44 +0800
+Message-Id: <20260324095344.565151-1-guanwentao@uniontech.com>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
+References: <20260323134503.770111826@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 6.6 000/567] 6.6.130-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
- conor@kernel.org, hargar@microsoft.com, broonie@kernel.org,
- achill@achill.org, sr@sladewatkins.com
-References: <20260323134533.749096647@linuxfoundation.org>
-Content-Language: en-US
-From: "Barry K. Nathan" <barryn@pobox.com>
-In-Reply-To: <20260323134533.749096647@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpip:uniontech.com:qybglogicsvrgz:qybglogicsvrgz3a-0
+X-QQ-XMAILINFO: OdYC5Mx+c6F+hvigkUQvjMiTNhUaBO0e+8uOEam+Uv/aKfBySu0frlPk
+	kgw567wz6jKNIS+Ne2iGvIce81A+K3t2joKA0MLm+Xtpw3p60ZK5mF9aMQgMYW58+vESbbJ
+	uHXrcIbXyJCbCR/BmCImYSMsMDuBBJFjThKBGfScjkRN2rrvkxzDGY2XxpcUROPzWMZAvMV
+	I/WFG9pPSwFMKX2GKicleAHHAsdtuio7aFX3Nm4WABJoj9urT5Sr3eO1GDfBLX4C3Rq+UvZ
+	5EEiVc2Ldln2VLqi22RnJCLA6lloGGuLTRLN4j7xmcBH+QchQ4lOLEp3nMThcbo/yuRgDe8
+	ONxfFw+LPwXR/3vMEJFaOlKn21DUo6MVClDJHZAqEzU6iQVWIdGIq+FYYSfgWAmsJitmzXr
+	YqXyrifdYBXyAt0KF+9yffD5MXn5agrZACs1K5TsvYHjklVpPjt9Ap67fOOQK/rN0M9uKwE
+	XLwWdeFI2yyacqh/zCJMr0PlHyzj6RPHKQ1P7CakmIJLc+v0KF4CsQ0cZj611ewaBcE/CN4
+	2NcTLCllIlgRflj4Teq+AbOvUulnlnixdYhPhhpMzBwmko0cZ2fuyUNinVfPFxdz/ZHngl5
+	+zL5XJYmxlubI0EdWGjlvxnB2+1i9ftNEXLtUTOmRk5Ujiv6dBbg+OGKrvOStcZOgjBv4Jn
+	1ejbd5qRxifgjNBSU5Oy8V1HVZeELyamIDUMabVa6UTbnc1OyjuscRFuKmUoDboV3sBSspA
+	fVxt8wK488xt5UjzDCBF4y9n2/NCPHAmOzRHW0sbX/oRUUBW9eDqbOUg/KBRac8B1znoWWX
+	zhNew+NZydpX7mCfm6JkEgRscqBbuh7DAx+ScfTDFhiMn5q+t+HqGW4bQq4noXtLEwjmED8
+	yPh6GBMN80jrk0M5pvyVRF84BQEs4AWrPlHjccP6UWpFZ6BDyA8i7yws8adKvTeV1B3thmA
+	x3IVflrOso4E03JRCxAQ0k6Jvlp27Fv1x7Pj3QkP1Gsp7u58UFzYR9gD5jLUdBa+GuNpXuH
+	88oPRa0vQ/TRZcB0Soo3+HWXF9ZD+aLXYaxwMOZm60Ar/EMKr+S3tigWnikpYjrw9th0N4C
+	Q==
+X-QQ-XMRINFO: M/715EihBoGS47X28/vv4NpnfpeBLnr4Qg==
+X-QQ-RECHKSPAM: 0
 
-On 3/23/26 06:38, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.6.130 release.
-> There are 567 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.6.130-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.6.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Build tested in our x86,arm64,loongarch config without error.
 
-Tested on an amd64 laptop (Lenovo ThinkPad T14 Gen 1). Working well,
-no regressions observed.
+Tested-by: Wentao Guan <guanwentao@uniontech.com>
 
-Tested-by: Barry K. Nathan <barryn@pobox.com>
+BRs
+Wentao Guan
 
--- 
--Barry K. Nathan  <barryn@pobox.com>
+defconfigs:
+https://gist.github.com/opsiff/1768e5fc7f76e59c7c97a4b0f56f4adc
+
+Log:
+strings vmlinux-* | grep "Linux version 6.18.20-rc1"
+Linux version 6.18.20-rc1-g81b464548274 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.20-rc1-g81b464548274 (guanwentao@uos-PC) (aarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #1 SMP PREEMPT_DYNAMIC Tue Mar 24 16:11:27 CST 2026
+Linux version 6.18.20-rc1-loong64-desktop-hwe-g81b464548274 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.20-rc1-loong64-desktop-hwe-g81b464548274 (guanwentao@uos-PC) (loongarch64-linux-gnu-gcc-12 (Deepin 12.3.0-17deepin8) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) #2 SMP PREEMPT_DYNAMIC Tue Mar 24 16:36:27 CST 2026
+Linux version 6.18.20-rc1-g81b464548274-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC 
+Linux version 6.18.20-rc1-g81b464548274-dirty (guanwentao@uos-PC) (gcc (Deepin 12.3.0-17deepin14) 12.3.0, GNU ld (GNU Binutils for Deepin) 2.41) # SMP PREEMPT_DYNAMIC Tue Mar 24 11:42:37 CST 2026
+
