@@ -1,112 +1,102 @@
-Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D90E242D70
-	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 05:09:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.208.50
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774328990; cv=pass; b=PP0m3gAZKmLErQQryp3O0XBM81ipalct5YPquAD/GZChrClqlspfjnkeswlnbbMLDYk+h8BADDheGSzbQE/MsM6sJMqLtq8gWU6oqDPXJ4YEqTQj/faWhYUWTixMLYgZp8e0jULNMWcSpfQ9rCWKHgS4RIOfkzGvVumlm4zhWVA=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774328990; c=relaxed/simple;
-	bh=IfqcTmHDAWE8rS1BtGDDkbjcR8fgsXNjMuHL1a4N0zA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Hez8IKZPuRTaXkQChBUOw+vfK2vY78Dy3s8yYUt7nMbl4JZLzj11xrquez8Z6e0dfpErik+o6sAfMxjDioKQrWIcSbcBeKi6B5BiYOHY16e+dzmp6n0Vik2rTMOXrmXvAsRkdkbdC12KWhDTNhgED46/SeYugYEl8TpH73Bd9oE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in; spf=none smtp.mailfrom=rajagiritech.edu.in; dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b=sW32dyMR; arc=pass smtp.client-ip=209.85.208.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=rajagiritech.edu.in
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=rajagiritech.edu.in
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80B93A3E67
+	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 05:48:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774331296; cv=none; b=XqDIqfjFVLWELGOlfk0xyyxLVYG9yV2b2919qq7gPHqtYfeBcZ1CJn+0LrUVLmb3zLenZo2ha31vE49cgxkIr0DDinHoAZdnoc5ny72pxHAHJuyXqliUTONsmITViCdQkRciNDLFSw3hoy/J092I4A7GbhVMV4wIN2rkk6lEk0k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774331296; c=relaxed/simple;
+	bh=SndHFF1+to8KzMdmPz5N+el01Ad0vJk3qbBVeWcxGns=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IhkoA70he/qJYrJYs+TuFqADWQZyaBaBao9YrLd4K4duCiFP0tn/zRAG0z5oemlBR+ryQ/hgBmEbWetC4OZjYj7humVkTdQtuLCprJnLf4JqiuuEm9me2i1Ow/vb0HuREp/WFW3bHDCdyf/ZabKFvJWrko1lKEYJGtYM15ia/JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JfikYLtu; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=rajagiritech-edu-in.20230601.gappssmtp.com header.i=@rajagiritech-edu-in.20230601.gappssmtp.com header.b="sW32dyMR"
-Received: by mail-ed1-f50.google.com with SMTP id 4fb4d7f45d1cf-668e8df29b5so985443a12.2
-        for <patches@lists.linux.dev>; Mon, 23 Mar 2026 22:09:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774328987; cv=none;
-        d=google.com; s=arc-20240605;
-        b=iPlSIVHF/hwK2jAqmgZvEARDK5hjBSrjO/nrryYkq3RP86lgXvUkhXKHjGcVqAj4ab
-         xPzU78f6EZFfu0p+ctiTbby/NtS+jYhGEaR+SIDaHT8GHuLcTwBvkI6/HhAn/VhnDVIe
-         2KrCMVgVB8bthYIvU/wZ/MXLyKxljfDhvKFtKX7/7Vw6J9Eyjlq80zJJT1apQz+yHoa+
-         esGO+iiufeo64aIiLwGw5fgOHydD8qsum9N8LgBacwwUV65H/AVpUTo320TPbcx/i/hk
-         2LKElEl6HtDr+nA5BeF66mGxuvZhtgK5SlHIRubOv+zoq6UlHmdBcX759SMFjWSkZoDL
-         ppKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:dkim-signature;
-        bh=MI3TsyI/afRVwYVxFYP2teMBdppIdDJRMOYMsQlLkN0=;
-        fh=mYBuchL9nNUykg+0pM6C5NTLiugcYDJ5M7fRFxhwBmM=;
-        b=WjfdulxLAyxZI+DgnoNpoa/xgrV5zBJL26xSV1wzR4+IWmxANT3mcKzjqDjrmWcoEn
-         MUOdDzjFM4l2tVYNB8VKl7aZdKzbt/E7Djj6ZJlKIxyxu8QO/61Z6v7RYmOEiTgxFq8G
-         e7430BIg7gzVLfBlPK3QwFgfGSHLQFwwh66Qc52N5nZ/1tNnlGEu2g9S9sgCIy1jW9mk
-         +lNqKZ/Ikz/L5MaHCC9HDvnqaTcxoUaWoK+fscQicGFYW65UZIubaBMj5WB27GGNKdVV
-         OSRb6W2FdQxLx/U5Xz+9+rWBc2emXHk0GMjVDhxtWu46C0/csdH54XvPBpe6sDiAD9so
-         pbQw==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JfikYLtu"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-486fd27754bso6929375e9.3
+        for <patches@lists.linux.dev>; Mon, 23 Mar 2026 22:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=rajagiritech-edu-in.20230601.gappssmtp.com; s=20230601; t=1774328987; x=1774933787; darn=lists.linux.dev;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=MI3TsyI/afRVwYVxFYP2teMBdppIdDJRMOYMsQlLkN0=;
-        b=sW32dyMRRx2SwTSX08pe18X3FGP14mJ4OQUnSCAQF5530WSpHHW8kaTEYEQLXO9m9/
-         ZIAO9g0H+85ajkKijcMZHXy+RLV6uTXoIo7YC8tUBlrforHO82+Mh3dIh+n1vbawrylW
-         JH+z5MCeEKgwuVMPUDZ96SG+3+HIv/bjHS+KDBPjiHUBtG0XhC8QetWOkPZGFvUgiawz
-         B+opw5pLRKOPBVRSIlERndOItaQoMjzIFT4xh1yYLM2BdArPLvRdk8bGVWo/JC332hfR
-         QCIWJh9pvusfG2DJlDCJEBWCFBerdHAr1wucpc7jy7uH+U6gNLg6epglzXP8fsL12dvD
-         EkxQ==
+        d=gmail.com; s=20251104; t=1774331291; x=1774936091; darn=lists.linux.dev;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rolgU/W7afX3h7P7QCO1z6YnDyhgQdhfop9FHg+Z0U0=;
+        b=JfikYLtuWcDnuahXkzQy4bIXkZkSGZ5DUe+bFcU8VAeoId2DRsj08tpXcpmHf0yxFe
+         VjfcilBqC6GC7n2APLPM7I4W1LP4OpzeYAejtBQ3f5Uf/zJVa2ddentzBsr7oVUbS7LF
+         GNum7HyJXlwyrGOE3uG0SwxtB7YbEEwvSkQAhaQhnyvfjjVcWdP23qk6xkaQTt4YvXKX
+         XI7c9R3k85Sm/oNK+XKlpsKjlCLhT83moNNeHgPU5NtUqfe55cA0kuisgI9vmYrO1k6f
+         vewXvmYgeWffk1UanSzEMy/3NJCRZzW6v/hw884sS7ugNoz1l/hifFYWOjJsswrbm9cL
+         FK6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774328987; x=1774933787;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+        d=1e100.net; s=20251104; t=1774331291; x=1774936091;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=MI3TsyI/afRVwYVxFYP2teMBdppIdDJRMOYMsQlLkN0=;
-        b=rDgu2vpMdV5PL0Xahx/1pIY9HBaWBHxv/PoXwg7KaRYaZPIpXlbZp3trMZr2DUGVte
-         pyIkf5ETgjzCzjfJMPOYZp5oTFCpXZq8hGe17pe9xWuszhBHGsjebqchLoEvQG++IP20
-         JlnHBzSgD67K1VDVi+tiHkIxYS5kKNXneATPqyDmEekfoy0Nkyf4RRgfldIoTEjNz3HO
-         hQtZ7iCLfV1bF4Hd6CSCV5dkze73TX74UYOQW4yL9irKLDxzHno314ThsQ1BBME/rokv
-         84I7zKFxKqLLAmr5zmhR0o+z/4/20FnzSjP5PSbEUi4K0DBoAbqyNoUGnYdbXJN+CDoC
-         +azg==
-X-Forwarded-Encrypted: i=1; AJvYcCXYjQ22i5hpSlpilJM0hUi9amA89tYpunwlkn7B1leuS333Df/gvweAQJSQuHSbng3+I8iZSV8Y@lists.linux.dev
-X-Gm-Message-State: AOJu0Yxa0sIDtbWoMv85GPyaK7Z02ypAEU0RceTS+ku2yMLi2HrJjT6/
-	4Y1+FUtaw10L5b3mRVqVJbGbgR0CJDnzny4b4kvZrGS7uqZSJSdVZzyvs0Oiq1ec5L245UTyuRD
-	hDg6sQd3JL1+ck+XzRLkoLDpoO+Zjgfdh9oDjncsR+A==
-X-Gm-Gg: ATEYQzyTAdtSYjX3+c7jbaz6Xb478pkZMrNjLZmLkL3NOkE5KgdGfmPt3vCo1jgzig5
-	FOTJQjhKOMMU1DfJSDWk5QK2667bJZZ8sd3ALvlGNoaGsz2HB+v6Z6vTr16lffeTFHZw2yP5fH7
-	tuenLqL+CYHiZPSw7PYAliObb9T0YozNzj4o2LSAj1GucpUloTjldop/dLdp594Pk92S/SSOaSn
-	n30SYboOrVP2iKIYEManC+jGq1BJRDyf3MrMS62A3SBFbVDvgTnxGdklMmGdv1NgtwfG8e8puBc
-	V4SrE8erDgX5QIgRSuVJ4wsQyWxpvaUrgmt929bdEYVwlQ5Dx5AoMH2IlmMO2xQIhsql0+8=
-X-Received: by 2002:a17:907:3e1e:b0:b98:57ab:3c44 with SMTP id
- a640c23a62f3a-b9857ab3fa7mr543257366b.7.1774328987437; Mon, 23 Mar 2026
- 22:09:47 -0700 (PDT)
+        bh=rolgU/W7afX3h7P7QCO1z6YnDyhgQdhfop9FHg+Z0U0=;
+        b=GVpK3z9836d0Cnpz/eopBXDmKXirCxcwy+kgVws2mB8PGnt5TvCRsVhzYAUtcEPQPj
+         Un8MPMj+/ZFijp+Q2GwV/dcwnCLx7qjmCMdembZTaVKpsO/GGbNHOx+luQaH/Tz5Odh5
+         qOgHOGVyzk+uYH2J6s9739wx0M8wEIgHufUJEWK1aKKbLn57pkADDy4ufnGcTnSOHdLf
+         qCakVICdnNbBYEUi1A8gOp12UaaLie63c58NHXrUJ1AC6caZtt8IkH9vmbtUN3pPsKpH
+         l40f7muk1/0N53jPWF8lJ/OappMbJ3nRtGI2O0zTqFXPh/BPmOWUpqCW9lWkhfqronj0
+         UzkQ==
+X-Gm-Message-State: AOJu0YzkwP57v8KlGrC1wIGaaDy6JDEDAgdcGeQPK+Tek5yZ63/KaRN7
+	ux02oykV9MZrr/TtlqHv+KEG1HC1EFad1hNmdxu8p0y+8v4rCmK4IXu/IgsEkw==
+X-Gm-Gg: ATEYQzydxkNJt4RTRDtkI3AS9MEzSWBJVYz5/3M0R3N3+BVqo83727M1DIhVhyrqCPY
+	CojCxaUhuf/ynG2GzFcSx9IMVLZE8yJKuU9e+Crmz6vMif7cxz73EUilLo5m+x0g43gKu8kTQve
+	rP2auncfaUmRFQ80LvKrpp/oYEQB6YsPPPoP7IB3sgdA7MrkvhSfKalBQVo2KoBrkVKQQ6RXTxL
+	868tl6fp0bRCSTwoGHuN8B06qtzVrZoDQIW0ePHBy0DFXaq7YQrww3jlLSJEysW2rNrbiZ5Wh1N
+	7U1yj5tpMEdbFWEyIq3MDe4QSTqIl3o13QvD/HIWnGi1BoWD2ExBOlBPf5w1a3aF8bBI/bUEzPk
+	3olK0X/HweDBtQUxwkaMFmy2+6yuTUVMCRLFiSk/n14q/RDcUIRytQl1VxmKgZC1ys512mR6/ig
+	aWewZybmD4JsUmVviNsac=
+X-Received: by 2002:a05:600c:8b31:b0:485:9a50:3369 with SMTP id 5b1f17b1804b1-486fee304c4mr208108905e9.29.1774331291127;
+        Mon, 23 Mar 2026 22:48:11 -0700 (PDT)
+Received: from localhost ([212.73.77.104])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-487110115fbsm17566555e9.8.2026.03.23.22.48.09
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Mar 2026 22:48:10 -0700 (PDT)
+From: Askar Safin <safinaskar@gmail.com>
+To: linux-kernel@vger.kernel.org,
+	Joe Perches <joe@perches.com>
+Cc: patches@lists.linux.dev
+Subject: [PATCH] .get_maintainer.ignore: add myself
+Date: Tue, 24 Mar 2026 05:47:47 +0000
+Message-ID: <20260324054747.3171493-1-safinaskar@gmail.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260323134503.770111826@linuxfoundation.org>
-In-Reply-To: <20260323134503.770111826@linuxfoundation.org>
-From: Jeffrin Thalakkottoor <jeffrin@rajagiritech.edu.in>
-Date: Tue, 24 Mar 2026 10:39:10 +0530
-X-Gm-Features: AaiRm51ycle4Dlzbyh1AtKW1eSsjfY-4H5rWphYFfb47-MTxxAPUDLCeC905FS8
-Message-ID: <CAG=yYwmCMf3konCjMAL2rE6-q=CHHLtouV7C5aDPHnpKqKLUkw@mail.gmail.com>
-Subject: Re: [PATCH 6.18 000/212] 6.18.20-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	lkml <linux-kernel@vger.kernel.org>, torvalds@linux-foundation.org, 
-	Andrew Morton <akpm@linux-foundation.org>, Guenter Roeck <linux@roeck-us.net>, 
-	Shuah Khan <shuah@kernel.org>, patches@kernelci.org, lkft-triage@lists.linaro.org, 
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, 
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
-	Slade Watkins <sr@sladewatkins.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-hello,
+I don't want get_maintainer.pl to automatically print my email.
 
- Compiled and booted  6.18.20-rc1+
-No new typical dmesg regressions
-.
+Signed-off-by: Askar Safin <safinaskar@gmail.com>
+---
 
-Tested-by: Jeffrin Jose T <jeffrin@rajagiritech.edu.in>
+Joe Perches, please, apply this.
 
+---
+ .get_maintainer.ignore | 2 ++
+ 1 file changed, 2 insertions(+)
 
---
-software engineer
-rajagiri school of engineering and technology-
+diff --git a/.get_maintainer.ignore b/.get_maintainer.ignore
+index e8d2269ba..2d03b9dd9 100644
+--- a/.get_maintainer.ignore
++++ b/.get_maintainer.ignore
+@@ -1,6 +1,8 @@
+ Alan Cox <alan@lxorguk.ukuu.org.uk>
+ Alan Cox <root@hraefn.swansea.linux.org.uk>
+ Alyssa Rosenzweig <alyssa@rosenzweig.io>
++Askar Safin <safinaskar@gmail.com>
++Askar Safin <safinaskar@zohomail.com>
+ Christoph Hellwig <hch@lst.de>
+ Jeff Kirsher <jeffrey.t.kirsher@intel.com>
+ Marc Gonzalez <marc.w.gonzalez@free.fr>
+
+base-commit: c369299895a591d96745d6492d4888259b004a9e (mainline)
+-- 
+2.47.3
+
