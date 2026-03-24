@@ -1,46 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463AA3EF674;
-	Tue, 24 Mar 2026 11:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929BA3EF0A3;
+	Tue, 24 Mar 2026 11:19:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351186; cv=none; b=a/RGeDfrXFxYjkJ4a1/knH1cWoDZ3eGFpPWm6tNL8PtHYYIof3pqg3D1/MEaHBUG5YWq93oDjRpMO55QgbG9bDNdaxevhG9vuVgI2nDrqZ7r5F7Kihg8DdQqFSWNLFpaw8ays+VB5XhFY5wqsVyU2RxjHtE4iqsiVehvYNCYPfI=
+	t=1774351187; cv=none; b=Ud+edT9DV+2ihzgivzVCcUWIuwRb4WH+OMJ0IC5UAG4ZIBUPO1TYvL+f8Soo4aYkKLrjU7W4swFfUw8MqCsJ1akhQ1QOd6LOEcXyL1ddMTOu4+TLC3duxq50FolpeA9/48ztXD6Rn9Gz9PgfIbdgjfrekAQKMETVVpcAYlIKJpk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351186; c=relaxed/simple;
-	bh=J6CsZUm2/SZdVxQCBkse0l2OsysnPlRn6hCIb5DNLVM=;
+	s=arc-20240116; t=1774351187; c=relaxed/simple;
+	bh=OLXKKHiBPHAQTWM4+ZHHndgcMJT9ozjzLjrRjCSobbE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=DbFlVIvGvGV/UWlHmUvF5cSUxG/KOaFFVQjGrjLWaGyVBNVyOESZ+FmD6ug7QqAh1wCgJ+fEaMCv5B+8PA5I8LK+tw83JZGixtIti9lFXHIQKS3ELDEkcowYOJvGQ/nPozzAcqSKR9N5fUvun2OMetEKl/efvFTT16iOugOWj/U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=AOn0BW3n; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Rmc0TeFpQu38Fd/Wd9pEkqU4/iq8En0v5BATpH9Q4RpwHw/2lWcmx7rQci59gYBW4253AzDkUPmIGveoiFqc6DXUSGvNN/vslhjVGqYKGJ+zj1jZcbxDKD7PpP/l3U7sIzKF8scrBNe/r2jg23j7UU/pv8XjBR8sLbCscioYDz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=rU8NaSSo; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="AOn0BW3n"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7AA8C2BCB1;
-	Tue, 24 Mar 2026 11:19:44 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="rU8NaSSo"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFEAC19424;
+	Tue, 24 Mar 2026 11:19:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351185;
-	bh=J6CsZUm2/SZdVxQCBkse0l2OsysnPlRn6hCIb5DNLVM=;
+	s=k20201202; t=1774351187;
+	bh=OLXKKHiBPHAQTWM4+ZHHndgcMJT9ozjzLjrRjCSobbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AOn0BW3nUi40AYGh070X0D2h41KXwfYYMYPW821iO5GFKvgkdPElRTV4eYB4dCU/5
-	 P+DkeY4jRE28UMCZHSm0MFSBr8q2+2dAllflY+JrlNVZfyK1VzrqppD2ycT6YiYFJ0
-	 mwifNxwgsx8WSnwOUHVPOyN66l9TMj7uMbsJfZXt7VQUeIAWWWrwJ/+kgJl5XzcLUP
-	 vuxqP7aCmTc8nu/zLsbgHjpEl7IFC+S5Wh7EFTemhjty+hh89z10k61Jp028S07WqY
-	 LV3rFMzfocq8ClOh0UougFSYfR8u+ZdB7YV86b/XwtCbz+YfxgrITn3/KtHJUfV0tC
-	 APa/PLbjq6iAw==
+	b=rU8NaSSoyQIkAVXe9M75u0aa53ecgm6VOqpdoO8+h5ntuG3vEK3n6CIYR7X5HTudN
+	 x2CYd8F3kIjxdc5+kfsoD3kzxUx00H0svFPFg3XzcWCWr7HwEsc04AVnYjMDptMhWG
+	 b6vxP+YEG4n8UfsFjjoefkydTdy5yagZZztLbsgTAQeBtKo3u+MY38AWdpSreihEY7
+	 F+MsG0mAuBZ9EC2uz1r6/k4sH9srOFXgK0/aiaZp9s3dtxQOR3sboiPEFJdwkCFcv8
+	 9wvw/G4rf/YkZQc+TJ5I2f3+gRU3wsl1qfxid0lYijdtCz8Qfqic0ulWrvoWBKlCNs
+	 ZuD9cf6EkyKUg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
-	syzbot+f50072212ab792c86925@syzkaller.appspotmail.com,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+Cc: =?UTF-8?q?Beno=C3=AEt=20Sevens?= <bsevens@google.com>,
+	Jason Gerecke <jason.gerecke@wacom.com>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	pabeni@redhat.com,
-	netdev@vger.kernel.org,
+	ping.cheng@wacom.com,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] atm: lec: fix use-after-free in sock_def_readable()
-Date: Tue, 24 Mar 2026 07:19:18 -0400
-Message-ID: <20260324111931.3257972-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-5.10] HID: wacom: fix out-of-bounds read in wacom_intuos_bt_irq
+Date: Tue, 24 Mar 2026 07:19:19 -0400
+Message-ID: <20260324111931.3257972-10-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
 References: <20260324111931.3257972-1-sashal@kernel.org>
@@ -50,399 +50,375 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.9
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deepanshu Kartikey <kartikey406@gmail.com>
+From: Benoît Sevens <bsevens@google.com>
 
-[ Upstream commit 922814879542c2e397b0e9641fd36b8202a8e555 ]
+[ Upstream commit 2f1763f62909ccb6386ac50350fa0abbf5bb16a9 ]
 
-A race condition exists between lec_atm_close() setting priv->lecd
-to NULL and concurrent access to priv->lecd in send_to_lecd(),
-lec_handle_bridge(), and lec_atm_send(). When the socket is freed
-via RCU while another thread is still using it, a use-after-free
-occurs in sock_def_readable() when accessing the socket's wait queue.
+The wacom_intuos_bt_irq() function processes Bluetooth HID reports
+without sufficient bounds checking. A maliciously crafted short report
+can trigger an out-of-bounds read when copying data into the wacom
+structure.
 
-The root cause is that lec_atm_close() clears priv->lecd without
-any synchronization, while callers dereference priv->lecd without
-any protection against concurrent teardown.
+Specifically, report 0x03 requires at least 22 bytes to safely read
+the processed data and battery status, while report 0x04 (which
+falls through to 0x03) requires 32 bytes.
 
-Fix this by converting priv->lecd to an RCU-protected pointer:
-- Mark priv->lecd as __rcu in lec.h
-- Use rcu_assign_pointer() in lec_atm_close() and lecd_attach()
-  for safe pointer assignment
-- Use rcu_access_pointer() for NULL checks that do not dereference
-  the pointer in lec_start_xmit(), lec_push(), send_to_lecd() and
-  lecd_attach()
-- Use rcu_read_lock/rcu_dereference/rcu_read_unlock in send_to_lecd(),
-  lec_handle_bridge() and lec_atm_send() to safely access lecd
-- Use rcu_assign_pointer() followed by synchronize_rcu() in
-  lec_atm_close() to ensure all readers have completed before
-  proceeding. This is safe since lec_atm_close() is called from
-  vcc_release() which holds lock_sock(), a sleeping lock.
-- Remove the manual sk_receive_queue drain from lec_atm_close()
-  since vcc_destroy_socket() already drains it after lec_atm_close()
-  returns.
+Add explicit length checks for these report IDs and log a warning if
+a short report is received.
 
-v2: Switch from spinlock + sock_hold/put approach to RCU to properly
-    fix the race. The v1 spinlock approach had two issues pointed out
-    by Eric Dumazet:
-    1. priv->lecd was still accessed directly after releasing the
-       lock instead of using a local copy.
-    2. The spinlock did not prevent packets being queued after
-       lec_atm_close() drains sk_receive_queue since timer and
-       workqueue paths bypass netif_stop_queue().
-
-Note: Syzbot patch testing was attempted but the test VM terminated
-    unexpectedly with "Connection to localhost closed by remote host",
-    likely due to a QEMU AHCI emulation issue unrelated to this fix.
-    Compile testing with "make W=1 net/atm/lec.o" passes cleanly.
-
-Reported-by: syzbot+f50072212ab792c86925@syzkaller.appspotmail.com
-Closes: https://syzkaller.appspot.com/bug?extid=f50072212ab792c86925
-Link: https://lore.kernel.org/all/20260309093614.502094-1-kartikey406@gmail.com/T/ [v1]
-Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://patch.msgid.link/20260309155908.508768-1-kartikey406@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Benoît Sevens <bsevens@google.com>
+Reviewed-by: Jason Gerecke <jason.gerecke@wacom.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-None of these are specific to the ATM LEC `priv->lecd` race. No prior
-fix for this specific bug exists.
+Now I have enough information for a complete analysis. Let me compile
+everything.
 
-Record: No prior fix for this specific bug in stable.
+---
+
+## PHASE 1: COMMIT MESSAGE FORENSICS
+
+### Step 1.1: Subject Line
+- **Subsystem:** HID: wacom (HID subsystem, Wacom tablet driver)
+- **Action verb:** "fix" — explicit bug fix
+- **Summary:** Fix out-of-bounds read in wacom_intuos_bt_irq when
+  processing short Bluetooth HID reports
+
+### Step 1.2: Tags
+- **Signed-off-by:** Benoît Sevens <bsevens@google.com> (author, Google
+  — security researcher based on commit history)
+- **Reviewed-by:** Jason Gerecke <jason.gerecke@wacom.com> (Wacom
+  subsystem maintainer — strong endorsement)
+- **Signed-off-by:** Jiri Kosina <jkosina@suse.com> (HID subsystem
+  maintainer — merged the patch)
+- **No Fixes: tag** — expected for commits under review
+- **No Cc: stable** — expected
+- **No Reported-by** — likely found through code audit/fuzzing by the
+  Google security team
+
+Record: Author is a Google security researcher (has other OOB fix
+commits: ALSA, UVC). Reviewed by Wacom maintainer. Merged by HID
+maintainer.
+
+### Step 1.3: Commit Body
+The bug: `wacom_intuos_bt_irq()` processes Bluetooth HID reports without
+checking `len`. A short report causes out-of-bounds reads:
+- Report 0x03 needs at least 22 bytes (offset 1 + 10 + 10 + 1 = 22)
+- Report 0x04 needs at least 32 bytes (offset 1 + 10 + 10 + 10 + 1 = 32,
+  due to fallthrough)
+- The commit explicitly mentions "maliciously crafted short report" —
+  security implication
+
+Record: Clear security bug — a malicious Bluetooth device can trigger
+OOB read. Failure mode is memory disclosure or crash.
+
+### Step 1.4: Hidden Bug Fix Detection
+Not hidden — explicitly labeled as a fix for out-of-bounds read. The
+author even describes the exact byte thresholds.
+
+---
+
+## PHASE 2: DIFF ANALYSIS
+
+### Step 2.1: Inventory
+- **Files changed:** 1 (`drivers/hid/wacom_wac.c`)
+- **Lines:** +10 added (two bounds-check blocks with `dev_warn` +
+  `break`)
+- **Functions modified:** `wacom_intuos_bt_irq`
+- **Scope:** Single-file, single-function surgical fix
+
+### Step 2.2: Code Flow Change
+**Hunk 1 (case 0x04):**
+- Before: Immediately calls `wacom_intuos_bt_process_data(wacom, data +
+  1)` regardless of `len`
+- After: Checks `len < 32`, warns and breaks if too short
+
+**Hunk 2 (case 0x03):**
+- Before: Immediately processes data at offset `i` regardless of `len`
+- After: Checks `i == 1 && len < 22` (only when entering directly as
+  0x03, not via fallthrough from 0x04), warns and breaks if too short
+
+### Step 2.3: Bug Mechanism
+**Category:** Buffer overflow / out-of-bounds read (memory safety)
+
+The function accesses `data[i]` where `i` increments by 10 through
+multiple `wacom_intuos_bt_process_data` calls. For report 0x03 (direct
+entry, i=1): accesses up to data[21]. For report 0x04 (falls through):
+accesses up to data[31]. If `len` is smaller than these values, this
+reads beyond the allocated buffer.
+
+With current code (post-5e013ad), `data = kmemdup(wacom->data, len,
+GFP_KERNEL)` — heap OOB read.
+With old code (pre-5e013ad), `unsigned char data[WACOM_PKGLEN_MAX]` +
+`memcpy(data, wacom->data, len)` — reads uninitialized stack data beyond
+`len`.
+
+### Step 2.4: Fix Quality
+- **Obviously correct:** Yes — the length checks match the exact data
+  access patterns
+- **Minimal:** Yes — 10 lines, only adds bounds checks
+- **Regression risk:** Extremely low — only rejects malformed short
+  reports
+- **No red flags:** Single function, no API changes, no locking changes
+
+---
+
+## PHASE 3: GIT HISTORY INVESTIGATION
+
+### Step 3.1: Blame
+The vulnerable code was introduced in commit `81af7e61a774e6` ("Input:
+wacom - handle Intuos 4 BT in wacom.ko") by Benjamin Tissoires on
+2014-08-06. This code was first released in **v3.18**. The bug has been
+present for **~12 years** in every kernel version since.
+
+### Step 3.2: Fixes Tag
+No Fixes: tag present. The implicit fix target is 81af7e61a774e6 from
+2014.
+
+### Step 3.3: File History
+The recent commit `5e013ad206895` ("HID: wacom: Remove static
+WACOM_PKGLEN_MAX limit") went into v6.15 and changed the function from
+using a stack buffer to `kmemdup`. This changes the context for the fix.
+Stable trees v6.14 and earlier have the old stack-buffer code.
+
+### Step 3.4: Author
+Benoît Sevens (bsevens@google.com) has other security-fix commits:
+- `b909df18ce2a9` "ALSA: usb-audio: Fix potential out-of-bound accesses
+  for Extigy and Mbox devices"
+- `ecf2b43018da9` "media: uvcvideo: Skip parsing frames of type
+  UVC_VS_UNDEFINED"
+- `082dd785e2086` "media: uvcvideo: Refactor frame parsing code"
+
+This is consistent with a Google security researcher systematically
+finding OOB bugs.
+
+### Step 3.5: Dependencies
+The fix itself is standalone — it only adds `if (len < N) break;`
+checks. However, for stable trees prior to v6.15, the context will
+differ (stack buffer vs kmemdup). The fix should still apply with minor
+context adjustment.
+
+---
+
+## PHASE 4: MAILING LIST RESEARCH
+
+### Step 4.1: Lore Search
+Found the patch at `https://lore.kernel.org/all/20260303135828.2374069-
+1-bsevens@google.com/`. Replies from Jason Gerecke (2026-03-06) and Jiri
+Kosina (2026-03-09). No Cc: stable in the original submission. The patch
+was accepted and included in a HID pull request for 7.0-rc5 (i.e.,
+6.19-rc5).
+
+### Step 4.2: Bug Report
+No separate bug report link — this appears to be found through code
+audit by the Google security team.
+
+### Step 4.3-4.4: Related Patches / Stable Discussion
+This is a standalone single-patch fix. No evidence of related series or
+prior stable discussion.
+
+---
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+### Step 5.1: Functions Modified
+- `wacom_intuos_bt_irq` — the only function modified
+
+### Step 5.2: Callers
+`wacom_intuos_bt_irq` is called from one location:
+- `drivers/hid/wacom_wac.c:3490` in the `INTUOS4WL` case of the main
+  wacom IRQ handler
+
+This is the Bluetooth HID report interrupt handler for the Wacom Intuos
+4 Wireless tablet. It's triggered every time the device sends a
+Bluetooth HID report.
+
+### Step 5.3-5.4: Call Chain
+The call chain is: HID subsystem receives BT report → `wacom_raw_event`
+→ `wacom_wac_irq` → `wacom_intuos_bt_irq`. This is directly reachable
+from any Bluetooth HID device claiming to be an Intuos 4 WL tablet. A
+malicious BT device can send arbitrary short reports to trigger this.
+
+### Step 5.5: Similar Patterns
+Other wacom IRQ handlers (like `wacom_intuos_irq`) may have similar
+issues but are not addressed by this commit.
+
+---
+
+## PHASE 6: STABLE TREE ANALYSIS
+
+### Step 6.1: Buggy Code in Stable Trees
+The buggy code (81af7e61a774e6) has been in the kernel since v3.18
+(2014). It exists in **ALL** active stable trees (5.10.y, 5.15.y, 6.1.y,
+6.6.y, 6.12.y, 6.14.y).
+
+### Step 6.2: Backport Complications
+- For v6.15+ stable trees: the fix should apply cleanly (same kmemdup
+  code)
+- For v6.14 and earlier: the surrounding context differs (stack buffer
+  `unsigned char data[WACOM_PKGLEN_MAX]` + `memcpy` instead of
+  `kmemdup`). The bounds-check additions themselves are the same, but
+  the diff context won't match. Minor adaptation needed.
+
+### Step 6.3: Related Fixes
+No prior fix for this issue in any stable tree.
+
+---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- **Subsystem:** net/atm (ATM networking, LAN Emulation Client)
-- **Criticality:** PERIPHERAL — ATM is a legacy networking technology,
-  but it's still used in some DSL/broadband environments and the code is
-  compiled into many kernel configs
+### Step 7.1: Subsystem
+- **Subsystem:** HID / Wacom driver (drivers/hid/)
+- **Criticality:** IMPORTANT — Wacom tablets are widely used by artists,
+  designers, and professionals. Bluetooth variant is common for wireless
+  tablets.
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Very low activity (legacy subsystem), but bugs still get fixed when
-found. The fact that syzbot can trigger it means the code is reachable
-and exercised by kernel fuzzing.
+### Step 7.2: Activity
+The wacom driver is actively maintained by Jason Gerecke, with regular
+commits. 43 commits since v5.15.
 
-Record: [net/atm] [PERIPHERAL but still reachable and fuzzed] [Legacy
-but compiled into many configs]
+---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Users with ATM/LEC networking configured (CONFIG_ATM_LANE). This is a
-legacy technology but still compiled in many distribution kernels.
+### Step 8.1: Who Is Affected
+Users of Wacom Intuos 4 Wireless (Bluetooth) tablets. Also any system
+with Bluetooth HID enabled where a malicious device could pair.
 
-Record: Users with ATM LANE support configured. Narrower user base but
-still present in many distro configs.
+### Step 8.2: Trigger Conditions
+- A malicious or malfunctioning Bluetooth HID device sends a short
+  report (< 22 or < 32 bytes) with report ID 0x03 or 0x04
+- This can be triggered by an unprivileged attacker within Bluetooth
+  range
+- No special configuration needed — just BT HID enabled (very common)
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- Race between closing the ATM LEC daemon socket and concurrent network
-  operations (transmit, bridge handling, ARP)
-- Syzbot triggers it via IPv6 MLD workqueue → packet transmission path
-- Can be triggered from userspace (syzbot confirms reproducibility)
-- Timing-dependent race but with a real race window
+### Step 8.3: Failure Mode Severity
+- **Heap OOB read** (current mainline code with kmemdup) → potential
+  info disclosure, crash → **CRITICAL**
+- **Uninitialized stack data use** (older code with stack buffer) →
+  potential info disclosure, incorrect behavior → **HIGH**
+- This is a security-relevant vulnerability exploitable via Bluetooth
+  proximity
 
-Record: Userspace-triggerable race condition. Reproducible by syzbot
-fuzzer.
+### Step 8.4: Risk-Benefit
+- **Benefit:** HIGH — fixes a security-relevant OOB read reachable via
+  Bluetooth, present for 12 years
+- **Risk:** VERY LOW — 10 lines of bounds checking, obviously correct,
+  no behavioral change for well-formed reports
+- **Ratio:** Strongly favorable for backport
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-- **Use-after-free** detected by KASAN
-- Can cause: kernel crash/oops, potential memory corruption, potentially
-  exploitable
-- UAFs are among the most dangerous bug classes — they can lead to
-  privilege escalation
-- **Severity: CRITICAL** (UAF with userspace trigger)
-
-Record: [KASAN slab-use-after-free] [Severity: CRITICAL — UAF with
-userspace trigger, crash/corruption/potential exploit]
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**BENEFIT:** High
-- Fixes a syzbot-confirmed UAF that affects all stable trees (5.4+)
-- Prevents kernel crash/corruption
-- Userspace-triggerable = security relevant
-- Well-reviewed by top networking expert
-
-**RISK:** Low-Medium
-- ~50 lines changed, but all within a single well-contained pattern (RCU
-  conversion)
-- Textbook RCU pattern, well-understood
-- Reviewed by Eric Dumazet
-- synchronize_rcu() is safe in the calling context (sleeping lock held)
-- Low file churn means clean backport likely
-
-Record: [Benefit: HIGH — UAF fix, all stable trees affected, security-
-relevant] [Risk: LOW — textbook RCU, expert-reviewed, well-contained]
-[Ratio: Strongly favorable]
+---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence
+**FOR backporting:**
+- Fixes out-of-bounds read — memory safety / security bug
+- Bug present since v3.18 (2014) — affects all stable trees
+- Exploitable via Bluetooth by any nearby device
+- Author is a Google security researcher with track record of finding
+  OOB bugs
+- Reviewed by the Wacom subsystem maintainer (Jason Gerecke)
+- Merged by the HID subsystem maintainer (Jiri Kosina)
+- Fix is tiny (10 lines), obviously correct, zero regression risk
+- No behavioral change for valid reports
 
-**Evidence FOR backporting:**
-1. Fixes a confirmed use-after-free (KASAN slab-use-after-free in
-   sock_def_readable)
-2. Reported by syzbot — reproducible with concrete trigger
-3. Affects ALL active stable trees (5.4, 5.10, 5.15, 6.1, 6.6)
-4. Userspace-triggerable race condition = security-relevant
-5. Reviewed-by Eric Dumazet (top networking expert)
-6. Committed by Jakub Kicinski (net maintainer)
-7. v2 after expert review iteration — fix quality is high
-8. Textbook RCU pattern — well-understood, low regression risk
-9. Well-contained to single file + header
-10. No prerequisites or dependencies
-11. Low-churn file — clean backport expected
-12. send_to_lecd() has 11 call sites — wide impact surface
+**AGAINST backporting:**
+- For stable trees < v6.15, minor context adaptation needed (stack
+  buffer vs kmemdup) — manageable
+- No explicit Cc: stable in original patch — expected for commits under
+  review
 
-**Evidence AGAINST backporting:**
-1. ~50 lines of change (moderate but not huge)
-2. ATM/LEC is a legacy subsystem with narrower user base
-3. Syzbot VM testing was inconclusive (QEMU issue, not fix issue)
-4. No explicit Cc: stable (expected for candidates under review)
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — simple bounds checks matching
+   exact data access patterns, reviewed by maintainer
+2. **Fixes a real bug?** YES — out-of-bounds read / security
+   vulnerability
+3. **Important issue?** YES — memory safety bug exploitable via
+   Bluetooth
+4. **Small and contained?** YES — 10 lines, single function, single file
+5. **No new features or APIs?** Correct — only adds validation
+6. **Can apply to stable?** YES for v6.15+; needs minor context
+   adaptation for older trees
 
-**UNRESOLVED QUESTIONS:**
-- None significant. All claims verified through git blame, syzbot
-  report, and mailing list discussion.
+### Step 9.3: Exception Categories
+Not an exception category — this is a standard security bug fix (the
+primary category for stable).
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — textbook RCU conversion,
-   reviewed by Eric Dumazet, compile-tested
-2. **Fixes a real bug that affects users?** YES — syzbot-confirmed UAF,
-   all stable trees affected
-3. **Important issue?** YES — UAF (crash, corruption, potential security
-   exploit)
-4. **Small and contained?** YES — 2 files, ~50 lines, single pattern
-   conversion
-5. **No new features or APIs?** CORRECT — pure bug fix
-6. **Can apply to stable trees?** YES — low-churn file, should apply
-   cleanly
+### Step 9.4: Decision
+This is a clear, small, security-relevant fix for an out-of-bounds read
+in a Bluetooth HID handler. It has been present for 12 years, is
+exploitable by a nearby attacker, was reviewed by the subsystem
+maintainer, and carries essentially zero regression risk.
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Not an exception category — this is a straightforward bug fix, the
-primary stable material.
-
-### Step 9.4: DECISION
-
-This is a clear YES. A syzbot-confirmed use-after-free affecting all
-active stable trees, with a well-reviewed RCU-based fix from expert
-networking developers. The fix is textbook, contained, and has no
-dependencies.
+---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reported-by: syzbot, Reviewed-by: Eric Dumazet,
-  Signed-off-by: Jakub Kicinski (net maintainer). v2 after expert
-  review.
-- [Phase 2] Diff analysis: +48/-26 lines across 7 functions in lec.c + 1
-  line in lec.h. All changes convert bare priv->lecd access to RCU-
-  protected access (rcu_read_lock/rcu_dereference/rcu_access_pointer/rcu
-  _assign_pointer/synchronize_rcu).
-- [Phase 3] git blame: Buggy code dates to initial git import (2005,
-  ^1da177e4c3f41) and 2006 ATM rework (d44f77466cfdc6). Present in ALL
-  stable trees.
-- [Phase 3] git log: File has only 15 commits since 2020, very low
-  churn. No prerequisites needed.
-- [Phase 3] Author has 10+ bug-fix commits across multiple subsystems.
-  Fix endorsed by Eric Dumazet and Jakub Kicinski.
-- [Phase 4] Syzbot report confirmed: KASAN slab-use-after-free in
-  sock_def_readable. Affected versions: 5.4, 5.10, 5.15, 6.1, 6.6.
-- [Phase 4] Lore discussion: v2 patch, no NAKs, Eric Dumazet gave
-  Reviewed-by after v1 issues fixed.
-- [Phase 5] send_to_lecd() has 11 call sites in lec.c.
-  lec_handle_bridge() called from transmit path. Bug is userspace-
-  reachable (confirmed by syzbot IPv6 MLD trigger).
-- [Phase 6] Bug exists in all active stable trees. No prior fix for this
-  specific race. Clean backport expected.
-- [Phase 7] net/atm is legacy but compiled in many distro configs and
-  exercised by syzbot.
-- [Phase 8] Failure mode: UAF → crash/corruption/potential exploit.
-  Severity: CRITICAL. Benefit: HIGH, Risk: LOW.
+- [Phase 1] Parsed tags: Reviewed-by Jason Gerecke (Wacom maintainer),
+  SOB Jiri Kosina (HID maintainer), author from Google
+- [Phase 1] Author commit history: confirmed 3 other OOB/security fix
+  commits (ALSA, UVC)
+- [Phase 2] Diff analysis: +10 lines, two bounds checks in
+  `wacom_intuos_bt_irq()`, adds `if (len < 32) break;` and `if (i == 1
+  && len < 22) break;`
+- [Phase 2] Verified math: report 0x04 accesses data[1] through data[31]
+  (1+10+10+10+1=32); report 0x03 accesses data[1] through data[21]
+  (1+10+10+1=22)
+- [Phase 3] git blame: buggy code introduced in 81af7e61a774e6
+  (2014-08-06), confirmed in v3.18
+- [Phase 3] git show 5e013ad206895: confirmed this changed stack buffer
+  to kmemdup, went into v6.15; stable trees have old code
+- [Phase 3] Confirmed 5e013ad not in v6.12, v6.13, v6.14 (via merge-
+  base)
+- [Phase 4] Lore: found patch at
+  20260303135828.2374069-1-bsevens@google.com, accepted with replies
+  from Gerecke and Kosina
+- [Phase 5] Grep callers: `wacom_intuos_bt_irq` called from line 3490 in
+  INTUOS4WL case — BT HID interrupt path
+- [Phase 6] Bug exists in all stable trees (code from 2014)
+- [Phase 8] Failure mode: heap OOB read (mainline) or uninitialized
+  stack read (stable), severity CRITICAL/HIGH
 
 **YES**
 
- net/atm/lec.c | 72 +++++++++++++++++++++++++++++++++------------------
- net/atm/lec.h |  2 +-
- 2 files changed, 48 insertions(+), 26 deletions(-)
+ drivers/hid/wacom_wac.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/net/atm/lec.c b/net/atm/lec.c
-index c39dc5d367979..b6f764e524f7c 100644
---- a/net/atm/lec.c
-+++ b/net/atm/lec.c
-@@ -154,10 +154,19 @@ static void lec_handle_bridge(struct sk_buff *skb, struct net_device *dev)
- 					/* 0x01 is topology change */
+diff --git a/drivers/hid/wacom_wac.c b/drivers/hid/wacom_wac.c
+index 9b2c710f8da18..da1f0ea85625d 100644
+--- a/drivers/hid/wacom_wac.c
++++ b/drivers/hid/wacom_wac.c
+@@ -1208,10 +1208,20 @@ static int wacom_intuos_bt_irq(struct wacom_wac *wacom, size_t len)
  
- 		priv = netdev_priv(dev);
--		atm_force_charge(priv->lecd, skb2->truesize);
--		sk = sk_atm(priv->lecd);
--		skb_queue_tail(&sk->sk_receive_queue, skb2);
--		sk->sk_data_ready(sk);
-+		struct atm_vcc *vcc;
-+
-+		rcu_read_lock();
-+		vcc = rcu_dereference(priv->lecd);
-+		if (vcc) {
-+			atm_force_charge(vcc, skb2->truesize);
-+			sk = sk_atm(vcc);
-+			skb_queue_tail(&sk->sk_receive_queue, skb2);
-+			sk->sk_data_ready(sk);
-+		} else {
-+			dev_kfree_skb(skb2);
+ 	switch (data[0]) {
+ 	case 0x04:
++		if (len < 32) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x04 too short: %zu bytes\n", len);
++			break;
 +		}
-+		rcu_read_unlock();
- 	}
- }
- #endif /* IS_ENABLED(CONFIG_BRIDGE) */
-@@ -216,7 +225,7 @@ static netdev_tx_t lec_start_xmit(struct sk_buff *skb,
- 	int is_rdesc;
- 
- 	pr_debug("called\n");
--	if (!priv->lecd) {
-+	if (!rcu_access_pointer(priv->lecd)) {
- 		pr_info("%s:No lecd attached\n", dev->name);
- 		dev->stats.tx_errors++;
- 		netif_stop_queue(dev);
-@@ -449,10 +458,19 @@ static int lec_atm_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 				break;
- 			skb2->len = sizeof(struct atmlec_msg);
- 			skb_copy_to_linear_data(skb2, mesg, sizeof(*mesg));
--			atm_force_charge(priv->lecd, skb2->truesize);
--			sk = sk_atm(priv->lecd);
--			skb_queue_tail(&sk->sk_receive_queue, skb2);
--			sk->sk_data_ready(sk);
-+			struct atm_vcc *vcc;
-+
-+			rcu_read_lock();
-+			vcc = rcu_dereference(priv->lecd);
-+			if (vcc) {
-+				atm_force_charge(vcc, skb2->truesize);
-+				sk = sk_atm(vcc);
-+				skb_queue_tail(&sk->sk_receive_queue, skb2);
-+				sk->sk_data_ready(sk);
-+			} else {
-+				dev_kfree_skb(skb2);
-+			}
-+			rcu_read_unlock();
- 		}
- 	}
- #endif /* IS_ENABLED(CONFIG_BRIDGE) */
-@@ -468,23 +486,16 @@ static int lec_atm_send(struct atm_vcc *vcc, struct sk_buff *skb)
- 
- static void lec_atm_close(struct atm_vcc *vcc)
- {
--	struct sk_buff *skb;
- 	struct net_device *dev = (struct net_device *)vcc->proto_data;
- 	struct lec_priv *priv = netdev_priv(dev);
- 
--	priv->lecd = NULL;
-+	rcu_assign_pointer(priv->lecd, NULL);
-+	synchronize_rcu();
- 	/* Do something needful? */
- 
- 	netif_stop_queue(dev);
- 	lec_arp_destroy(priv);
- 
--	if (skb_peek(&sk_atm(vcc)->sk_receive_queue))
--		pr_info("%s closing with messages pending\n", dev->name);
--	while ((skb = skb_dequeue(&sk_atm(vcc)->sk_receive_queue))) {
--		atm_return(vcc, skb->truesize);
--		dev_kfree_skb(skb);
--	}
--
- 	pr_info("%s: Shut down!\n", dev->name);
- 	module_put(THIS_MODULE);
- }
-@@ -510,12 +521,14 @@ send_to_lecd(struct lec_priv *priv, atmlec_msg_type type,
- 	     const unsigned char *mac_addr, const unsigned char *atm_addr,
- 	     struct sk_buff *data)
- {
-+	struct atm_vcc *vcc;
- 	struct sock *sk;
- 	struct sk_buff *skb;
- 	struct atmlec_msg *mesg;
- 
--	if (!priv || !priv->lecd)
-+	if (!priv || !rcu_access_pointer(priv->lecd))
- 		return -1;
-+
- 	skb = alloc_skb(sizeof(struct atmlec_msg), GFP_ATOMIC);
- 	if (!skb)
- 		return -1;
-@@ -532,18 +545,27 @@ send_to_lecd(struct lec_priv *priv, atmlec_msg_type type,
- 	if (atm_addr)
- 		memcpy(&mesg->content.normal.atm_addr, atm_addr, ATM_ESA_LEN);
- 
--	atm_force_charge(priv->lecd, skb->truesize);
--	sk = sk_atm(priv->lecd);
-+	rcu_read_lock();
-+	vcc = rcu_dereference(priv->lecd);
-+	if (!vcc) {
-+		rcu_read_unlock();
-+		kfree_skb(skb);
-+		return -1;
-+	}
-+
-+	atm_force_charge(vcc, skb->truesize);
-+	sk = sk_atm(vcc);
- 	skb_queue_tail(&sk->sk_receive_queue, skb);
- 	sk->sk_data_ready(sk);
- 
- 	if (data != NULL) {
- 		pr_debug("about to send %d bytes of data\n", data->len);
--		atm_force_charge(priv->lecd, data->truesize);
-+		atm_force_charge(vcc, data->truesize);
- 		skb_queue_tail(&sk->sk_receive_queue, data);
- 		sk->sk_data_ready(sk);
- 	}
- 
-+	rcu_read_unlock();
- 	return 0;
- }
- 
-@@ -618,7 +640,7 @@ static void lec_push(struct atm_vcc *vcc, struct sk_buff *skb)
- 
- 		atm_return(vcc, skb->truesize);
- 		if (*(__be16 *) skb->data == htons(priv->lecid) ||
--		    !priv->lecd || !(dev->flags & IFF_UP)) {
-+		    !rcu_access_pointer(priv->lecd) || !(dev->flags & IFF_UP)) {
- 			/*
- 			 * Probably looping back, or if lecd is missing,
- 			 * lecd has gone down
-@@ -753,12 +775,12 @@ static int lecd_attach(struct atm_vcc *vcc, int arg)
- 		priv = netdev_priv(dev_lec[i]);
- 	} else {
- 		priv = netdev_priv(dev_lec[i]);
--		if (priv->lecd)
-+		if (rcu_access_pointer(priv->lecd))
- 			return -EADDRINUSE;
- 	}
- 	lec_arp_init(priv);
- 	priv->itfnum = i;	/* LANE2 addition */
--	priv->lecd = vcc;
-+	rcu_assign_pointer(priv->lecd, vcc);
- 	vcc->dev = &lecatm_dev;
- 	vcc_insert_socket(sk_atm(vcc));
- 
-diff --git a/net/atm/lec.h b/net/atm/lec.h
-index be0e2667bd8c3..ec85709bf8185 100644
---- a/net/atm/lec.h
-+++ b/net/atm/lec.h
-@@ -91,7 +91,7 @@ struct lec_priv {
- 						 */
- 	spinlock_t lec_arp_lock;
- 	struct atm_vcc *mcast_vcc;		/* Default Multicast Send VCC */
--	struct atm_vcc *lecd;
-+	struct atm_vcc __rcu *lecd;
- 	struct delayed_work lec_arp_work;	/* C10 */
- 	unsigned int maximum_unknown_frame_count;
- 						/*
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		fallthrough;
+ 	case 0x03:
++		if (i == 1 && len < 22) {
++			dev_warn(wacom->pen_input->dev.parent,
++				 "Report 0x03 too short: %zu bytes\n", len);
++			break;
++		}
+ 		wacom_intuos_bt_process_data(wacom, data + i);
+ 		i += 10;
+ 		wacom_intuos_bt_process_data(wacom, data + i);
 -- 
 2.51.0
 
