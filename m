@@ -1,143 +1,300 @@
-Received: from mail-dy1-f174.google.com (mail-dy1-f174.google.com [74.125.82.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B083E9F90
-	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 11:05:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=74.125.82.174
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774350306; cv=pass; b=dYCBb8upydv6M6bSR4aSd+erNTe7DbdqceBbgNEEZ6G8OVxyyIVZKrJG39JgjUICCX8HPInLXb5XmNDPuybbJSIUMLGMAGUkR0IzTpwNie5qMpkPYW3YDwTTQlF9NXAeS6dEmqGqF6KbhMArS9FinMqg7o6ED1O1qG+wUAHp9lY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774350306; c=relaxed/simple;
-	bh=DmlJkHAT3FaEHvQNFxzSJKU8eAly0RnenTEM62bTSVo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=i/1rbNTN+8bnf4rW22laBZM6MXecr4bJzs5M7FKAhYSOY7Q02wNECJSnkQ7BBTlQcpLoB5A/XQzXFg2BxFU0UX3DP2d7oVwv+g6Z/C3uYufVBqHdxw6hhkuC7BsHW8UY9xuB27VQq10bP9GVte1lNI31OCc5l/82i3LYA/f9mKs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com; spf=pass smtp.mailfrom=futuring-girl.com; dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b=g/0ezNsw; arc=pass smtp.client-ip=74.125.82.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=futuring-girl.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=futuring-girl.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B03F3264D6;
+	Tue, 24 Mar 2026 11:19:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774351174; cv=none; b=OGm+PjCgXib6rkixww3+YC9nYux+QkLvW9n4vuB97ccB6O9dGN5HeQvJ2Kfr4TQSmLNjtSHC3/TQouK5h0f2kRbmBq7fmbxkNYPl5NAEMmuidS3xTUkBBGWMoTew5PukeetH8I+w3ehJPAok6LOedutJbjDkjNMm9TlKOfOp/Uc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774351174; c=relaxed/simple;
+	bh=lelFSv8KIxfumUBSgNRBDGBB2PjvcsMNY6yIMv4a0UE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=mjtTEK2ryudwsXi6ZvRnBCTYaFxmjfWT6RbKZv8tIxXZvDGvGyeo/HLIjF0sv52CBIwmJ2iMyK4WtQqmBA+scH3kHf5+KlYDbNcXHnEMHA1eYonKNWz/WKDS5fR3RB01H9PxDoyuOwQ3inRSYHJPDg0N5MKoszW7lXIhCCUwYis=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=EUgDf5cC; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=futuring-girl.com header.i=@futuring-girl.com header.b="g/0ezNsw"
-Received: by mail-dy1-f174.google.com with SMTP id 5a478bee46e88-2c0c955a481so5164420eec.1
-        for <patches@lists.linux.dev>; Tue, 24 Mar 2026 04:05:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774350303; cv=none;
-        d=google.com; s=arc-20240605;
-        b=Qas+VnrLGm/O5ZJbJWtAcEWogl5EUXbh7hVGHNxxGi555ojnBKdLba0I8eDT4qnkl2
-         jYbYsGFwlH/C5YEvfcGaMFsfCU+gowSm7FDlFihu2/yV8R1XwY6ukoJBz2z0mv5uB/KE
-         rP1gCJc0B3h3Lm5FtZWZ46sZs+9913afFuqi041DjhFW5bQCdDRZqeGhgmtvnJ2a+9eK
-         L+A4ieOzbb8bgY+hviVQAf8A0thMceFa8coOoANieEkYRHC0bveWPIqAkNhEhQoHlEWa
-         Q378KRcIb77pePPCHspozM4w7L1i5+n6kwbSfDP0E+4tPFdorLkcws9o+mppeaKa7Llc
-         M++w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=Jxq/aet/8lEOzabqR4jPUvMy9ol0c4adzGEzqsQ7nhE=;
-        fh=LFLRH0A5KyyLmMut9xIIHOy/7yuV2JXNbYiuf5JAtdU=;
-        b=anA3rtlseXbAkxHKVtxtJB1z21Q6MFMabE7T21KlR9R9wFQLpurWyL66nKswcqx0L6
-         k5HTMgTkSyN5FqZWHUTr53RpxfhCwRTXR5+kpz3fr3bcdaSrxz3U450HBW1bm0KI+h7I
-         JEcMIZXGrnCKX730Cc0ZFYPPdaJkWNEYDbXlpIx+L5/uq6FK2AK547wDMpfPuCGYkgZd
-         wx7PG1ZSfi5GipZ35D1Mf1PX66gcIY1mp7kzAITK0w4MD2XsZpwKfMV8+4O5WJ096OxK
-         PlaXH7rNDhLdn2QFlvTxZYh2sXXcaK/LX0b2qZyMXDCfiovHTfER8tGyTXhz9PSEGgzG
-         WFZg==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=futuring-girl.com; s=google; t=1774350303; x=1774955103; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Jxq/aet/8lEOzabqR4jPUvMy9ol0c4adzGEzqsQ7nhE=;
-        b=g/0ezNswj4r8WQUVtP1UgRReTw8+nOGwmbLDmCMpv1ZJOaRpQJjJ9xpSKbX5ZQZcLS
-         Wd2SaaIxuD4p3T3ZcRlOMAZDNS37fju29sM2IeIOmeNfZ14Bs5Q+NQKv5hASrCfnse7G
-         6r9Ql59807t9RluFOqMSsaEcZaeq40xfKobxXpHN25XjSwvapsWx6iDaIMOznHYp6yTU
-         TfcmMIPJWB6gaWlc9AfHKOfQYSmSQt7WBbpUAw+g125MqLRPYBPvF/R8vBLj4sL3Kcdg
-         HyI9uNTkTz2e1uyBn2nillgPmB/03Rbp+StbhmAQWYUUIyNT72NsEtgdTQrghsD6udrH
-         DYlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774350303; x=1774955103;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Jxq/aet/8lEOzabqR4jPUvMy9ol0c4adzGEzqsQ7nhE=;
-        b=sI4ASYDc6ddkGr7aj77GHZLTZ81jWhtKdWhS/Tn2hezE2gjqAJKnqjnKusZuh2Ixu3
-         o+PCXWhcTPzXZIkjdGPX9Fz0U31fDmq161tQsnjABN8y/aGMCqguNTkduuWzqiyP/RAr
-         9S8m3nPESYWELEDiyoYMJTpwgD6c2WkwtKQ7XeIfh0Zsp4yQkSHblHBV6xgIqWExcVn3
-         Kf4TpgZIdXmBNg0zL99ZGfKzeh4/bio+NkUOOpqEsPw3PmDKFIWDYbMm2TAccnNeR3fi
-         LHFn178JNtKwEiTwI4VmRTna7vEQm5pNIx+MfyXRTRB95/d4TYQXWef80Np93HP3UiOK
-         CuPQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVnlKq6vwY1DgNR8sFxuoRWjQayA7gMqZ293a/VigEF3Urp2P4kOYmvTmOy8Jd+pZOtnfxEdyaL@lists.linux.dev
-X-Gm-Message-State: AOJu0YygwJUIi6fUdSUlIMuB9GYADKBqXvsiyIjiI3vkD9mXEJlRBunA
-	XOg6+fRN6bmRX72tJJ2XNaw3IKXGBHBZGiJwaUSHpjMansNdJ7B4TM6SLZiK/xNkDJrG4pzkmUW
-	Ko1SNmh0tESjZ1qd70U1FV/dv6GK/hRPDRTWY9f3zFQ==
-X-Gm-Gg: ATEYQzxVo2joKvPUN3XAcwycdyHICb1kEScKSX0aqYkggluz9FLySu2mN5upea4rrRD
-	ulmms7iKu8CfRrEXEqHd2IG94MOsykg4hZGHYwEYTwT6Wawj8iMinpFMbot1TL1TwMNEyZ8s+7m
-	HeV8mrDMUo1fvu6xNhorHCj38Yro6+XoKQyTjd8bhsmycSBnY3cJqfX+D7SJt8J8KVHa/E0dDFn
-	FLUQaVuzD52cWuuhGuvn4SK76ZVPSpyYClnzb7jzFQBF9+/3Y09yPhbcuCFaZhQgYl65H2Nrrz1
-	CemkVBlj
-X-Received: by 2002:a05:7022:31a:b0:127:33e0:ea44 with SMTP id
- a92af1059eb24-12a726cfa13mr7698243c88.29.1774350302261; Tue, 24 Mar 2026
- 04:05:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="EUgDf5cC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D7A5C19424;
+	Tue, 24 Mar 2026 11:19:32 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1774351173;
+	bh=lelFSv8KIxfumUBSgNRBDGBB2PjvcsMNY6yIMv4a0UE=;
+	h=From:To:Cc:Subject:Date:From;
+	b=EUgDf5cCCgUbxl4OVUdC7/KhkysJV5oBwJQGqF/iXKd9ZmF1ggFP+YG3ADnO9zFkv
+	 onGmcfP1WZytGeKHE9aSty7GA44uqy2LbPP78yKhm8IbUw/ikE1AjLUUNj47+INml8
+	 6l5oi/fAHxO1MLtS6KsuzxQfgHRbp12b23d44zILlQY5e48aHs3Q0J4+m1V/dLOqYA
+	 KvpROFnxbcsTf8/0V/KtPrwb/BrE7Rz+Uce6QYfYc6U6S6+08dqqbHvWUVzlraDSJo
+	 3kmkCMHjV5KvyaemEwWyaqPgOrjUkaqPJ7YC46D1usvG7P8NMU8Ry9YoQ9+YYFFPn2
+	 C0MUGQZ7sBAzQ==
+From: Sasha Levin <sashal@kernel.org>
+To: patches@lists.linux.dev,
+	stable@vger.kernel.org
+Cc: Alex Hung <alex.hung@amd.com>,
+	Xaver Hugl <xaver.hugl@kde.org>,
+	Melissa Wen <mwen@igalia.com>,
+	Harry Wentland <harry.wentland@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	sunpeng.li@amd.com,
+	christian.koenig@amd.com,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19] drm/amd/display: Fix gamma 2.2 colorop TFs
+Date: Tue, 24 Mar 2026 07:19:10 -0400
+Message-ID: <20260324111931.3257972-1-sashal@kernel.org>
+X-Mailer: git-send-email 2.51.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20260323134504.575022936@linuxfoundation.org>
-In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
-From: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
-Date: Tue, 24 Mar 2026 20:04:46 +0900
-X-Gm-Features: AaiRm53QC1bDu7jJYOzMw-m1ql3o8Nj7l5BNcjGmDunSCA26e1BRNDCkTqFzcQY
-Message-ID: <CAKL4bV42XtCM+xj+wWQhEPNirVPQ-GPfA_TsVfjhqrZqP9-hTg@mail.gmail.com>
-Subject: Re: [PATCH 6.19 000/220] 6.19.10-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, 
-	achill@achill.org, sr@sladewatkins.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-stable: review
+X-Patchwork-Hint: Ignore
+X-stable-base: Linux 6.19.9
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Greg
+From: Alex Hung <alex.hung@amd.com>
 
-On Mon, Mar 23, 2026 at 10:59=E2=80=AFPM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 6.19.10 release.
-> There are 220 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.19.10-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.19.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+[ Upstream commit b49814033cb5224c818cfb04dccb3260da10cc4f ]
 
-6.19.10-rc1 tested.
+Use GAMMA22 for degamma/blend and GAMMA22_INV for shaper so
+curves match the color pipeline.
 
-Build successfully completed.
-Boot successfully completed.
-No dmesg regressions.
-Video output normal.
-Sound output normal.
+Closes: https://gitlab.freedesktop.org/drm/amd/-/issues/5016
+Tested-by: Xaver Hugl <xaver.hugl@kde.org>
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Signed-off-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit d8f9f42effd767ffa7bbcd7e05fbd6b20737e468)
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
 
-Lenovo ThinkPad X1 Carbon Gen10(Intel i7-1260P(x86_64) arch linux)
+LLM Generated explanations, may be completely bogus:
 
-[    0.000000] Linux version 6.19.10-rc1rv-g5cf3b8242cca
-(takeshi@ThinkPadX1Gen10J0764) (gcc (GCC) 15.2.1 20260209, GNU ld (GNU
-Binutils) 2.46) #1 SMP PREEMPT_DYNAMIC Tue Mar 24 19:05:43 JST 2026
+Now I have all the information I need. Let me compile the full analysis.
 
-Thanks
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
+**Step 1.1:** [drm/amd/display] [Fix] [Gamma 2.2 colorop transfer
+functions were swapped between degamma/blend and shaper]
+
+**Step 1.2:** Tags: Closes (gitlab issue #5016), Tested-by (Xaver Hugl,
+KDE), Reviewed-by (Melissa Wen, Igalia; Harry Wentland, AMD), Signed-
+off-by (Alex Hung, AMD + Alex Deucher, AMD maintainer). No Cc: stable,
+no Fixes: tag. Strong review chain.
+
+**Step 1.3:** Bug: GAMMA22 and GAMMA22_INV were swapped in the
+degamma/blend and shaper TF tables, causing incorrect color pipeline
+behavior. Symptom: incorrect gamma 2.2 color rendering. The gitlab issue
+title confirms: "Drm color pipeline has gamma 2.2 and inverse flipped."
+
+**Step 1.4:** Not hidden - explicitly labeled as a fix.
+
+## PHASE 2: DIFF ANALYSIS
+
+**Step 2.1:** 1 file changed, 3 lines modified (value swaps only).
+Functions affected: none - these are static constant array initializers.
+Scope: minimal/surgical.
+
+**Step 2.2:**
+- `amdgpu_dm_supported_degam_tfs`: GAMMA22_INV → GAMMA22
+- `amdgpu_dm_supported_shaper_tfs`: GAMMA22 → GAMMA22_INV
+- `amdgpu_dm_supported_blnd_tfs`: GAMMA22_INV → GAMMA22
+
+**Step 2.3:** Logic/correctness bug. The pattern across all three tables
+makes it clear:
+- Degamma/blend: SRGB_**EOTF**, PQ_125_**EOTF**, BT2020_**INV_OETF** →
+  all "forward" transforms → GAMMA22 (forward) is correct
+- Shaper: SRGB_**INV_EOTF**, PQ_125_**INV_EOTF**, BT2020_**OETF** → all
+  "inverse" transforms → GAMMA22_**INV** is correct
+
+**Step 2.4:** Obviously correct by pattern consistency. Zero regression
+risk - just swapping constants to match the established convention.
+
+## PHASE 3: GIT HISTORY
+
+**Step 3.1:** Git blame confirms all buggy lines were introduced by
+commit `db2bad93fe206` ("Enable support for Gamma 2.2") from 2025-11-14,
+which is v6.19-rc1 material.
+
+**Step 3.2:** No Fixes: tag, but the bug was introduced by
+`db2bad93fe206`.
+
+**Step 3.3:** The file `amdgpu_dm_colorop.c` was created in v6.19-rc1
+cycle. Only one other fix has been backported to 6.19.y stable for this
+file (`c5d11ab0cad0b`). This fix is standalone.
+
+**Step 3.4:** Alex Hung is an AMD display developer, author of the
+original buggy commit and several other colorop-related changes. Fix
+authored by the same person who introduced the bug.
+
+**Step 3.5:** No dependencies. The fix only changes constant values in
+arrays already present.
+
+## PHASE 4: MAILING LIST RESEARCH
+
+**Step 4.1:** Patch submitted 2026-03-11, reviewed by Melissa Wen and
+Harry Wentland, accepted by Alex Deucher. No explicit Cc: stable
+nomination found.
+
+**Step 4.2:** Bug report at gitlab.freedesktop.org/drm/amd/-/issues/5016
+confirms "gamma 2.2 and inverse flipped" in the color pipeline. Tested
+by Xaver Hugl (KDE Plasma compositor developer), indicating real-world
+impact on desktop compositors.
+
+**Step 4.3:** Standalone fix, not part of a series.
+
+**Step 4.4:** No stable-specific discussion found.
+
+## PHASE 5: CODE SEMANTIC ANALYSIS
+
+**Step 5.1:** No functions modified - only constant array definitions.
+
+**Step 5.2:** These constants are used in:
+- `amdgpu_dm_initialize_default_pipeline()` - pipeline initialization
+- `amdgpu_dm_color.c` - multiple places validating colorop state against
+  supported TFs
+
+**Step 5.3-5.4:** The TF bitmasks control which transfer functions are
+advertised as supported to userspace and validated during atomic check.
+With the wrong values, userspace compositors (like KDE Plasma) would see
+incorrect supported TFs and get wrong color output.
+
+**Step 5.5:** The pattern is consistent with all other TFs in the same
+tables (sRGB, PQ, BT.2020).
+
+## PHASE 6: STABLE TREE ANALYSIS
+
+**Step 6.1:** The file `amdgpu_dm_colorop.c` does NOT exist in v6.18 or
+earlier. It was introduced in v6.19-rc1. The bug only exists in 6.19.y
+stable.
+
+**Step 6.2:** The fix would apply cleanly to 6.19.y - the code in 6.19.9
+still has the buggy values (verified).
+
+**Step 6.3:** No related fixes for this specific issue found in stable.
+
+## PHASE 7: SUBSYSTEM CONTEXT
+
+**Step 7.1:** [drm/amd/display] [IMPORTANT - AMD GPU is the most widely
+used GPU on Linux desktops]
+
+**Step 7.2:** Active subsystem with frequent changes to the colorop
+infrastructure.
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+**Step 8.1:** Affects users of AMD GPUs using the new DRM colorop/color
+pipeline API (e.g., KDE Plasma 6 compositor). Driver-specific but widely
+used hardware.
+
+**Step 8.2:** Triggered whenever a compositor uses gamma 2.2 transfer
+functions through the DRM color pipeline. The KDE Plasma compositor is a
+primary consumer.
+
+**Step 8.3:** Incorrect color rendering - not a crash, but produces
+visually wrong output for users. Severity: MEDIUM-HIGH (functional
+incorrectness in display output).
+
+**Step 8.4:**
+- **Benefit:** Fixes incorrect color output for AMD GPU users with
+  compositors using the color pipeline. Tested by KDE developer.
+- **Risk:** Extremely low - 3 constant value swaps, pattern-consistent,
+  no logic changes.
+- **Ratio:** High benefit / Very low risk = Strong candidate.
+
+## PHASE 9: FINAL SYNTHESIS
+
+**Step 9.1 Evidence FOR:**
+- Fixes a real, user-reported bug (gitlab issue #5016)
+- Values were demonstrably swapped (pattern mismatch with other TFs in
+  same tables)
+- Fix is trivial: 3 constant swaps
+- Tested by KDE compositor developer (real-world validation)
+- Reviewed by two color pipeline experts
+- Code exists in 6.19.y stable and still has the bug
+- Obviously correct by pattern analysis
+
+**Step 9.1 Evidence AGAINST:**
+- Only applies to 6.19.y (very limited scope)
+- DRM colorop is new infrastructure, not widely deployed yet
+- Not a crash or security issue (just incorrect color output)
+- No Cc: stable tag or Fixes: tag
+
+**Step 9.2 Stable Rules Checklist:**
+1. Obviously correct? **YES** - pattern analysis proves it
+2. Fixes a real bug? **YES** - reported bug with wrong color output
+3. Important issue? **YES** - incorrect display output for users
+4. Small and contained? **YES** - 3 lines in 1 file
+5. No new features? **YES** - pure bugfix
+6. Can apply to stable? **YES** - verified code matches in 6.19.9
+
+**Step 9.3:** No exception category - standard bugfix.
+
+**Step 9.4:** The fix is trivially correct, minimal, well-reviewed,
+tested, and fixes a real user-reported bug. Despite being limited to
+6.19.y, it meets all stable criteria.
+
+## Verification
+
+- [Phase 1] Parsed tags: Closes gitlab issue, Tested-by KDE developer,
+  two Reviewed-by from display experts
+- [Phase 2] Diff: 3 constant value swaps in static arrays, no logic
+  changes
+- [Phase 2] Pattern analysis: degamma/blend use forward TFs (EOTF,
+  INV_OETF, GAMMA22), shaper uses inverse TFs (INV_EOTF, OETF,
+  GAMMA22_INV) - confirmed correct
+- [Phase 3] git blame: buggy lines from `db2bad93fe206` (v6.19-rc1)
+- [Phase 3] git show v6.18/v6.12: file does not exist in pre-6.19 trees
+- [Phase 3] git show v6.19.9: confirmed buggy code still present in
+  6.19.9 stable
+- [Phase 4] lore.kernel.org: found patch at 20260311211837.2482799-1, no
+  explicit Cc: stable
+- [Phase 4] gitlab issue #5016: title confirms "gamma 2.2 and inverse
+  flipped"
+- [Phase 5] grep: variables used in pipeline init and color state
+  validation (6 callsites in amdgpu_dm_color.c)
+- [Phase 6] Only 6.19.y stable tree affected; patch applies cleanly
+- [Phase 8] Impact: incorrect color rendering for AMD GPU + compositor
+  users; Severity: MEDIUM-HIGH
+
+**YES**
+
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_colorop.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_colorop.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_colorop.c
+index cc124ab6aa7f7..212c13b745d0c 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_colorop.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_colorop.c
+@@ -37,19 +37,19 @@ const u64 amdgpu_dm_supported_degam_tfs =
+ 	BIT(DRM_COLOROP_1D_CURVE_SRGB_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_PQ_125_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_BT2020_INV_OETF) |
+-	BIT(DRM_COLOROP_1D_CURVE_GAMMA22_INV);
++	BIT(DRM_COLOROP_1D_CURVE_GAMMA22);
+ 
+ const u64 amdgpu_dm_supported_shaper_tfs =
+ 	BIT(DRM_COLOROP_1D_CURVE_SRGB_INV_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_PQ_125_INV_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_BT2020_OETF) |
+-	BIT(DRM_COLOROP_1D_CURVE_GAMMA22);
++	BIT(DRM_COLOROP_1D_CURVE_GAMMA22_INV);
+ 
+ const u64 amdgpu_dm_supported_blnd_tfs =
+ 	BIT(DRM_COLOROP_1D_CURVE_SRGB_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_PQ_125_EOTF) |
+ 	BIT(DRM_COLOROP_1D_CURVE_BT2020_INV_OETF) |
+-	BIT(DRM_COLOROP_1D_CURVE_GAMMA22_INV);
++	BIT(DRM_COLOROP_1D_CURVE_GAMMA22);
+ 
+ #define MAX_COLOR_PIPELINE_OPS 10
+ 
+-- 
+2.51.0
+
