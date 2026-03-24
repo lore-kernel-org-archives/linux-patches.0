@@ -1,44 +1,48 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ECE63E928D;
-	Tue, 24 Mar 2026 11:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369D43ECBD2;
+	Tue, 24 Mar 2026 11:19:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351181; cv=none; b=olMw9m93BTOd5+K78A3CXEPmbsEn1k7qUKHKrT/t3bRysFlk3fE4TlhQfJLCOfE8DqG6HS0o6Ev0qT9IDdQgNXsDI2zEraz3KmJupdMwcXfFgFHsLffTzOxn5ImLcQU3wpgaJVCX1EySh4OjvyI1f2sAfZAPLJVVvBUuVjHPMZE=
+	t=1774351183; cv=none; b=CXuLfgmVJGhauTUN4OloVQjvYbp+Nqh4nxdTioWNDj0E/jGu2e3pu7tdYaqF2Mt20R642feggIKPeCSii3WDJwTU0370R/8HwtqUwxqKrQSBGTTRAZ/9/1rY/tI3VkfxsnZC1J1TiCMdoLkCVG3jQZ6qt4hWilQn4Jaiq+ovqMk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351181; c=relaxed/simple;
-	bh=i8NJNEqQp4AYOX7lcXa3kLjYDP4X/LphCTA6DBeClxo=;
+	s=arc-20240116; t=1774351183; c=relaxed/simple;
+	bh=BKTk3rQ25SsxVZEq48IRP2YHJlexTUbR0Y7iATCy0Lg=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Lcx2xnKXr6gxrvfTqIvoGK+cQ6hjI4zfRBDQ2e+ibNICe4vTP0NJ1EOhIrVIZd9KCpKIDxtVqe5KA6czua7nP5nJvlhSc4l+KmeaUqYosSSAwEcQi4v3WW3yBpBruYmAMeSPjEh/LQxmrlvN0OOWJNDBF8N/Y08GECUSxzW4mfw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=roQOV8JA; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=cRM+3Tm9ywWuCZG6fbB+N5brg/vhVz00WeUgtgKBqiGLl2C2oSvUagJ+FyFHcCtVYIs/8NGC5q5xlELX+tDN64RXgxFZvaTJQ1Q9KVmaWWZ+/6OwT76SzTIbf+XoTBwZjdS5ZK3HQEcwgkPOnk/Efx49EzFxhUYrXVw1cSqA5JA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=HLMyUeoT; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="roQOV8JA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3671BC2BCB1;
-	Tue, 24 Mar 2026 11:19:40 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="HLMyUeoT"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D882C2BCB3;
+	Tue, 24 Mar 2026 11:19:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351181;
-	bh=i8NJNEqQp4AYOX7lcXa3kLjYDP4X/LphCTA6DBeClxo=;
+	s=k20201202; t=1774351182;
+	bh=BKTk3rQ25SsxVZEq48IRP2YHJlexTUbR0Y7iATCy0Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roQOV8JAFqaYIrtzdxbhDHDW1Q6UBL9ge93xnsC4VFwhmWaIdxt+MyQDg0zrlogmK
-	 3+D4+E7Ki8SL7kWeoonMqCdWHv+RY3ivOX38Hh2+RWsl9pbGa/gRWRmZBlXneMAjfy
-	 vdASlOHBaFN/CX6cZqkJ6ndRizC76SNSIjPfsJ9WVJ8ixZ2Qty9XFlMPRy2QewNGnS
-	 1E/G3rfFzUU6Q+Qg6lPEinGxXuYhrNxBj7cYlFvia2CUNR+QQJgMOVofpn0A5C35qc
-	 cb1b3FUNzbf/TDxPbOHOSnXsmu1t4gMLJb44uV/pihXmb8U6/kyT1OW2s/zSKDoXqM
-	 d5gajAxVF31Yg==
+	b=HLMyUeoT/xXwI5EE2IM6ErlhVWOTe7etTAhiGJfzXk+1IwtqZjbZCbPW29bHxDilW
+	 f2rlTwKy5iatv9HR9xBBmiHD55diOyOsPc9Ik65jWnB2LoiAhBX8bw1fo1JJRcNoHg
+	 TaXgtQVQoCJx6joKaqQjnZR57tooPJLQCJxnl0knOtSAojnxZDq2OXzy1Ygd+bnO6C
+	 Mr0IKTCTaRD2XLbO0HGsJf1PcGFP4/YzJgytTPk4FkTy6cfW1yVD6rYt5R1DlkwUmB
+	 InNuplX2IgWFkJVCCY767IQELma8Op4P6AKuR8gGiwt7cqwiv2s98qEctkyWXk+Icy
+	 BlvGvnhvRKaDA==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Lee Jones <lee@kernel.org>,
-	=?UTF-8?q?G=C3=BCnther=20Noack?= <gnoack@google.com>,
-	Benjamin Tissoires <bentiss@kernel.org>,
+Cc: Mikko Perttunen <mperttunen@nvidia.com>,
+	Russell King <rmk+kernel@armlinux.org.uk>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.12] HID: logitech-hidpp: Prevent use-after-free on force feedback initialisation failure
-Date: Tue, 24 Mar 2026 07:19:15 -0400
-Message-ID: <20260324111931.3257972-6-sashal@kernel.org>
+	andi.shyti@kernel.org,
+	ldewangan@nvidia.com,
+	thierry.reding@gmail.com,
+	jonathanh@nvidia.com,
+	linux-i2c@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	linux-tegra@vger.kernel.org
+Subject: [PATCH AUTOSEL 6.19-6.1] i2c: tegra: Don't mark devices with pins as IRQ safe
+Date: Tue, 24 Mar 2026 07:19:16 -0400
+Message-ID: <20260324111931.3257972-7-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
 References: <20260324111931.3257972-1-sashal@kernel.org>
@@ -48,216 +52,216 @@ List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lee Jones <lee@kernel.org>
+From: Mikko Perttunen <mperttunen@nvidia.com>
 
-[ Upstream commit f7a4c78bfeb320299c1b641500fe7761eadbd101 ]
+[ Upstream commit ec69c9e88315c4be70c283f18c2ff130da6320b5 ]
 
-Presently, if the force feedback initialisation fails when probing the
-Logitech G920 Driving Force Racing Wheel for Xbox One, an error number
-will be returned and propagated before the userspace infrastructure
-(sysfs and /dev/input) has been torn down.  If userspace ignores the
-errors and continues to use its references to these dangling entities, a
-UAF will promptly follow.
+I2C devices with associated pinctrl states (DPAUX I2C controllers)
+will change pinctrl state during runtime PM. This requires taking
+a mutex, so these devices cannot be marked as IRQ safe.
 
-We have 2 options; continue to return the error, but ensure that all of
-the infrastructure is torn down accordingly or continue to treat this
-condition as a warning by emitting the message but returning success.
-It is thought that the original author's intention was to emit the
-warning but keep the device functional, less the force feedback feature,
-so let's go with that.
+Add PINCTRL as dependency to avoid build errors.
 
-Signed-off-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Günther Noack <gnoack@google.com>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
+Signed-off-by: Mikko Perttunen <mperttunen@nvidia.com>
+Reported-by: Russell King <rmk+kernel@armlinux.org.uk>
+Link: https://lore.kernel.org/all/E1vsNBv-00000009nfA-27ZK@rmk-PC.armlinux.org.uk/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The same bug exists in v6.6 - `hidpp_ff_init` failure leads to `ret`
-being non-zero and the function returning error after userspace
-interfaces are exported. The fix would need minor adaptation for v6.6
-(the code structure is slightly different but the same logic applies).
-
-Record: [Bug exists in all stable trees (v5.15+). In v6.6 and older, the
-code structure is slightly different (g920_get_config is called
-earlier), but the same hidpp_ff_init failure → error return path exists.
-Backport may need minor adaptation for older trees.]
-
-### Step 6.2: BACKPORT COMPLICATIONS
-For v6.12 and later, the patch should apply cleanly (same code
-structure). For v6.6 and v6.1, the code is slightly different but the
-same fix (setting `ret = 0` after the warning) applies to the same
-logical block.
-
-Record: [Clean apply for 6.12.y; minor context adaptation needed for
-6.6.y and older]
+Record for Phase 6:
+- The buggy code exists in ALL active stable trees (v5.15, v6.1, v6.6,
+  v6.12)
+- The condition varies across trees — backporting needs minor adaptation
+  for trees without the ACPI check
+- Pinctrl code has been in the driver since v4.9
+- The Kconfig change (adding PINCTRL dependency) is needed in all trees
+- For v5.15/v6.1: the condition is `if (!i2c_dev->is_vi)` — patch must
+  add `&& !i2c_dev->dev->pins`
+- For v6.6: `if (!IS_VI(i2c_dev))` — same adaptation needed
+- For v6.12+: `if (!IS_VI(i2c_dev) &&
+  !has_acpi_companion(i2c_dev->dev))` — closest to mainline, minor
+  conflict
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- **Subsystem**: HID (Human Interface Devices) - specifically the
-  Logitech HID++ driver
-- **Criticality**: IMPORTANT - USB input devices are common consumer
-  hardware. The G920/G923 are popular gaming wheels.
-- **Maintainer**: Benjamin Tissoires (who signed off on this patch)
+### Step 7.1: SUBSYSTEM CRITICALITY
+- **Subsystem:** drivers/i2c/busses — I2C bus driver (NVIDIA Tegra
+  specific)
+- **Criticality:** PERIPHERAL — affects Tegra SoC users (NVIDIA Jetson
+  platforms, embedded/automotive)
+- However, Tegra is a significant embedded platform used in NVIDIA
+  Jetson (AI/robotics), automotive (NVIDIA Drive), and Nintendo Switch
 
-Record: [HID/logitech-hidpp, IMPORTANT criticality, signed off by
-subsystem maintainer]
+### Step 7.2: SUBSYSTEM ACTIVITY
+The driver has moderate activity — updated regularly for new Tegra
+generations.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Users of the Logitech G920 Driving Force Racing Wheel and G923 Xbox
-version wheel. These are popular gaming peripherals.
+### Step 8.1: WHO IS AFFECTED
+- Users with Tegra SoCs that have DPAUX I2C controllers (Tegra124,
+  Tegra132, Tegra210+)
+- Specifically Jetson Xavier NX was reported as affected (Russell King's
+  report)
+- Platform-specific: only NVIDIA Tegra platforms
 
-Record: [Driver-specific: users of Logitech G920/G923 gaming wheels]
+### Step 8.2: TRIGGER CONDITIONS
+- **Trigger:** Device probe when the I2C controller has associated
+  pinctrl states
+- **How common:** Happens on every boot for affected hardware — not a
+  race condition, not timing-dependent
+- **Unprivileged trigger:** No (hardware-dependent, happens at boot)
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- **Trigger**: Force feedback initialization fails during device probe.
-  This can happen due to communication issues with the device, firmware
-  quirks, or timing issues.
-- **How common**: Not every plug-in, but not rare either (the original
-  commit notes this is about a real failure path)
-- **Unprivileged trigger**: Yes - plugging in a USB device or having it
-  connected at boot
+### Step 8.3: FAILURE MODE SEVERITY
+- **Failure:** BUG: sleeping function called from invalid context
+  (mutex_lock in atomic context)
+- **Severity:** CRITICAL — kernel BUG/panic on every boot for affected
+  hardware
+- The device cannot be used at all — it crashes during probe
 
-Record: [Triggered when FF init fails during probe; can happen during
-normal device use; unprivileged (USB plug-in)]
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-- **UAF**: Use-after-free when userspace continues to use dangling
-  sysfs/input nodes after probe failure
-- **Severity**: HIGH - UAF can lead to crashes, undefined behavior, and
-  potentially security issues (exploitable from userspace via USB
-  device)
-
-Record: [Use-after-free → CRITICAL/HIGH severity. Can cause crashes,
-potential security implications]
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- **BENEFIT**: HIGH - Prevents UAF for users of popular gaming hardware.
-  Simple fix that also improves user experience (device works without FF
-  instead of failing entirely).
-- **RISK**: VERY LOW - 2 lines changed. Setting `ret = 0` is obviously
-  correct. No new code paths, no locking changes, no API changes. Worst
-  case: device appears to work but has no force feedback (which is the
-  intended behavior stated in the commit message).
-
-Record: [Benefit: HIGH (prevents UAF, improves UX). Risk: VERY LOW
-(2-line change, obviously correct). Ratio: strongly favorable]
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** HIGH — fixes kernel BUG on every boot for DPAUX I2C
+  controllers on Tegra
+- **Risk:** VERY LOW — adds one additional condition (`!dev->pins`) to
+  an existing if-statement, plus a Kconfig dependency
+- The fix is obviously correct: if pinctrl operations need a mutex, the
+  device cannot be IRQ-safe
+- **Ratio:** Strongly favors backporting
 
 ## PHASE 9: FINAL SYNTHESIS
 
 ### Step 9.1: COMPILE THE EVIDENCE
 
 **Evidence FOR backporting:**
-- Fixes a use-after-free vulnerability (HIGH severity bug)
-- Extremely small and surgical fix (2 lines: braces + `ret = 0;`)
-- Obviously correct - matches the original author's intent
-- Reviewed by Google engineer, signed off by HID subsystem maintainer
-- Bug has existed since v5.5 (~6 years), affecting all active stable
-  trees
-- Affects real consumer hardware (Logitech G920/G923 gaming wheels)
-- UAF is reachable from userspace (USB device plug-in)
-- No regression risk - device remains functional, just without FF on
-  failure
-- Clean separation from other changes - standalone fix
+1. Fixes a real BUG (sleeping in atomic context) with stack trace from
+   Russell King
+2. Affects every boot on affected hardware (not a theoretical race)
+3. Fix is extremely small and surgical (one condition added + Kconfig
+   dep)
+4. Obviously correct — if runtime PM calls mutex, device cannot be IRQ-
+   safe
+5. Same class of bug was already fixed twice (VI: 9e29420ddb133, ACPI:
+   14d069d92951a) — ACPI fix was Cc'd to stable
+6. Reported by Russell King, a highly respected ARM kernel developer
+7. Merged directly by Linus Torvalds
+8. Buggy code exists in all active stable trees (since v4.9)
+9. Went through 3 patch iterations — well-reviewed
 
 **Evidence AGAINST backporting:**
-- No explicit Cc: stable tag (expected for review candidates)
-- No Fixes: tag (but the bug origin is clear from blame)
-- May need minor context adaptation for older stable trees (6.6.y and
-  earlier)
+1. Tegra-specific — affects only NVIDIA Tegra platform users
+2. Requires minor adaptation for older stable trees (different condition
+   syntax)
+3. The Kconfig PINCTRL dependency might affect COMPILE_TEST
+   configurations
 
-**UNRESOLVED QUESTIONS:**
-- None significant
+**UNRESOLVED:**
+- Exact list of hardware models/boards affected (known: Jetson Xavier
+  NX)
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES - reviewed, applied by
-   maintainer, included in 7.0-rc5
-2. **Fixes a real bug that affects users?** YES - UAF on G920/G923 probe
-   failure
-3. **Important issue?** YES - use-after-free (crash, potential security
-   issue)
-4. **Small and contained?** YES - 2 lines in 1 file
-5. **No new features or APIs?** CORRECT - no new features
-6. **Can apply to stable trees?** YES - cleanly for 6.12.y, with minor
-   adaptation for older
+### Step 9.2: STABLE RULES CHECKLIST
+1. **Obviously correct and tested?** YES — reported and tested by
+   Russell King, 3 patch iterations, merged by Linus
+2. **Fixes a real bug?** YES — BUG: sleeping function called from
+   invalid context, with stack trace
+3. **Important issue?** YES — kernel BUG/crash on every boot for
+   affected hardware
+4. **Small and contained?** YES — ~6 lines changed, single condition
+   addition + Kconfig dep
+5. **No new features or APIs?** CORRECT — no new features
+6. **Can apply to stable trees?** With minor adaptation — the condition
+   syntax differs across stable trees
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Not an exception category - this is a straightforward bug fix that meets
-the core stable criteria.
+### Step 9.3: EXCEPTION CATEGORIES
+Not an exception category — this is a standard bug fix that meets all
+stable rules.
 
-### Step 9.4: MAKE YOUR DECISION
-This is a clear YES. A 2-line fix for a use-after-free vulnerability in
-a popular USB gaming peripheral driver, reviewed by the subsystem
-maintainer, with essentially zero regression risk.
+### Step 9.4: DECISION
+This is a clear bug fix that causes a kernel BUG (crash) on every boot
+for affected Tegra hardware. The fix is small, surgical, obviously
+correct, and follows the same pattern as two previous fixes for the same
+class of bug (one of which was already Cc'd to stable). The previous
+ACPI variant (commit 14d069d92951a) was explicitly marked `Cc: stable` —
+this is the same bug with a different trigger.
 
 ## Verification
 
-- [Phase 1] Parsed subject: "HID: logitech-hidpp:" subsystem, "Prevent"
-  verb, UAF fix for FF init failure
-- [Phase 1] Tags: Reviewed-by Günther Noack (Google), Signed-off-by
-  Benjamin Tissoires (HID maintainer). No Fixes:, no Cc: stable
-  (expected)
-- [Phase 1] Commit body explicitly describes UAF scenario: error return
-  after hid_connect() exports userspace interfaces
-- [Phase 2] Diff: +3/-1 lines in drivers/hid/hid-logitech-hidpp.c,
-  hidpp_probe() function. Adds braces + `ret = 0;`
-- [Phase 2] Before: FF init failure → non-zero ret → probe returns error
-  → userspace interfaces not torn down → UAF. After: FF init failure →
-  ret=0 → probe succeeds → device works without FF
-- [Phase 3] git blame: buggy pattern introduced in abdd3d0b344fdf (v5.5,
-  2019-10-17), present in all active stable trees
-- [Phase 3] git merge-base: confirmed abdd3d0b344fdf is ancestor of
-  v5.5; 219ccfb60003a4 (refactored form) is in v6.7+ but not v6.6
-- [Phase 3] Verified the same bug pattern exists in v6.6 by reading
-  v6.6:drivers/hid/hid-logitech-hidpp.c lines 4538-4546
-- [Phase 3] Author Lee Jones is a prolific kernel contributor with
-  multiple HID patches
-- [Phase 4] Lore: patch submitted 2026-02-27, reviewed without
-  objections, applied by maintainer
-- [Phase 5] HIDPP_QUIRK_CLASS_G920 applies to G920 (0xC262) and G923
-  Xbox (matching 2 USB device entries)
-- [Phase 5] hidpp_probe() is the standard USB device probe path, called
-  during device enumeration
-- [Phase 6] Bug exists in all stable trees (v5.15.y through v6.12.y).
-  Code context differs slightly in v6.6 and older
-- [Phase 7] HID subsystem, IMPORTANT criticality. Maintainer Benjamin
-  Tissoires signed off
-- [Phase 8] Severity: HIGH (UAF). Trigger: FF init failure during device
-  probe. Risk: VERY LOW (2-line fix)
+- [Phase 1] Parsed tags: Reported-by Russell King, Link to lore, merged
+  by Linus Torvalds directly
+- [Phase 1] Commit explains: pinctrl state transitions need mutex, IRQ-
+  safe marking causes BUG
+- [Phase 2] Diff analysis: +1 condition `!i2c_dev->dev->pins` in
+  probe(), +2 lines Kconfig PINCTRL dep, +3 lines comment
+- [Phase 3] git blame: `pm_runtime_irq_safe()` call existed since VI
+  exception was added; pinctrl support added in v4.9 (718917b9875fc)
+- [Phase 3] Related fix 14d069d92951a (ACPI variant) had `Cc: stable
+  v5.17+` — same class of bug
+- [Phase 3] Author Mikko Perttunen is NVIDIA Tegra subsystem contributor
+- [Phase 4] Lore link confirms: BUG sleeping function called from
+  invalid context, stack trace: tegra_i2c_runtime_suspend →
+  pinctrl_pm_select_idle_state → mutex_lock
+- [Phase 4] Patch went through v1/v2/v3, kernel test robot found build
+  issue leading to PINCTRL Kconfig dep
+- [Phase 5] `dev->pins` is `#ifdef CONFIG_PINCTRL` in
+  include/linux/device.h:592 — Kconfig dep ensures it compiles
+- [Phase 5] `tegra_i2c_probe` is platform driver probe, called during
+  device enumeration
+- [Phase 6] Verified buggy code exists in v5.15 (`if
+  (!i2c_dev->is_vi)`), v6.1 (same), v6.6 (`if (!IS_VI(i2c_dev))`), v6.12
+  (has ACPI check) — all need this fix
+- [Phase 6] Backport needs minor adaptation for trees without ACPI check
+  (v5.15, v6.1, v6.6)
+- [Phase 7] Subsystem: Tegra I2C driver, PERIPHERAL but significant
+  embedded platform
+- [Phase 8] Failure mode: kernel BUG on every boot for affected
+  hardware, severity CRITICAL
+- [Phase 8] Risk: VERY LOW (one additional condition in existing if-
+  statement)
 
 **YES**
 
- drivers/hid/hid-logitech-hidpp.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/Kconfig     | 2 ++
+ drivers/i2c/busses/i2c-tegra.c | 5 ++++-
+ 2 files changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
-index c3d53250a7604..65bfad405ac5b 100644
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -4487,10 +4487,12 @@ static int hidpp_probe(struct hid_device *hdev, const struct hid_device_id *id)
- 		if (!ret)
- 			ret = hidpp_ff_init(hidpp, &data);
+diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+index 09ba55bae1fac..7d0afdc7d8862 100644
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -1220,6 +1220,8 @@ config I2C_TEGRA
+ 	tristate "NVIDIA Tegra internal I2C controller"
+ 	depends on ARCH_TEGRA || (COMPILE_TEST && (ARC || ARM || ARM64 || M68K || RISCV || SUPERH || SPARC))
+ 	# COMPILE_TEST needs architectures with readsX()/writesX() primitives
++	depends on PINCTRL
++	# ARCH_TEGRA implies PINCTRL, but the COMPILE_TEST side doesn't.
+ 	help
+ 	  If you say yes to this option, support will be included for the
+ 	  I2C controller embedded in NVIDIA Tegra SOCs
+diff --git a/drivers/i2c/busses/i2c-tegra.c b/drivers/i2c/busses/i2c-tegra.c
+index e533460bccc39..a9aed411e3190 100644
+--- a/drivers/i2c/busses/i2c-tegra.c
++++ b/drivers/i2c/busses/i2c-tegra.c
+@@ -1837,8 +1837,11 @@ static int tegra_i2c_probe(struct platform_device *pdev)
+ 	 *
+ 	 * VI I2C device shouldn't be marked as IRQ-safe because VI I2C won't
+ 	 * be used for atomic transfers. ACPI device is not IRQ safe also.
++	 *
++	 * Devices with pinctrl states cannot be marked IRQ-safe as the pinctrl
++	 * state transitions during runtime PM require mutexes.
+ 	 */
+-	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev))
++	if (!IS_VI(i2c_dev) && !has_acpi_companion(i2c_dev->dev) && !i2c_dev->dev->pins)
+ 		pm_runtime_irq_safe(i2c_dev->dev);
  
--		if (ret)
-+		if (ret) {
- 			hid_warn(hidpp->hid_dev,
- 		     "Unable to initialize force feedback support, errno %d\n",
- 				 ret);
-+			ret = 0;
-+		}
- 	}
- 
- 	/*
+ 	pm_runtime_enable(i2c_dev->dev);
 -- 
 2.51.0
 
