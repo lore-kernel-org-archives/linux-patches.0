@@ -1,47 +1,92 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.223.131])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07773D904F;
-	Tue, 24 Mar 2026 11:57:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997293D6CAB
+	for <patches@lists.linux.dev>; Tue, 24 Mar 2026 13:40:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774353448; cv=none; b=HGhUL2CO3a2x4mZgQ1eoYASAHauHn42Ynbj5Otvdll86nj0j0I5uQtZcgC1q+JaPBoqSPdFurdK4uZ/NYYUhuLKwGDwNeCVdYWKKRZXqzLtpHRkDEteKK0e5BbI/0LCQgSMTUsUHdgULqEQVh8R+aJgTYP3K3cGt2bCbCD/JwVE=
+	t=1774359643; cv=none; b=c1vqed0VkmuT8yB9RaowWqQN3GeD0//7GLJX3E/VB6EXc83PoE2mBmebPmUyFx8lyNBlkYHsIatCO+8IOFYPT1wTk2UG6tcueI4Qx8GyJAGBCX2BBV/brKQ/V9gDun47K8vcmAaVEofiWDyGVMhheuJUuRaJ2czxzVipGHdsNDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774353448; c=relaxed/simple;
-	bh=fjUF/Qfc7qFAcVyComZ4EnFgWjOpyNMI1tCgVep8edA=;
+	s=arc-20240116; t=1774359643; c=relaxed/simple;
+	bh=DB8sj3O8zIEtdMglYDNzhkPxuBV4sfXtfqTz2jAOpAY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=e+N1CQP3rFj0rJaR131k/onix1hzk4Wooj04P11sImWRz3DHONdtLZ842nsCquOmQKHMEv1eycYzRXhEYnfxSe1JClVFXtfOcsS4ZdPJK2RaVIktHJMRqTxyQKVji82yNcogUeOXJeDPBsmCqKZf+FTCdSudlRvt+zGuBhJRFgQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPBJsfpA; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=u5hAN7rtQM8ZStJi4RSCsyivsQTNZQcHn1nBNGbgMdbHt0GAzfn/5PJwYX48TdmT2j3BRQr5tcwDy+bCG2Z6/TuYA3HRPX1ciZooiG/T1+jp9ztjUJ5amnl1SeTy59s3spDc7ZxmucVYKQ9mDr22OnZuK/fvp60MZvuMSKX7BFI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz; spf=pass smtp.mailfrom=suse.cz; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=2TI68cai; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=vdNbABGF; dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b=2TI68cai; dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b=vdNbABGF; arc=none smtp.client-ip=195.135.223.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=suse.cz
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.cz
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPBJsfpA"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B58C19424;
-	Tue, 24 Mar 2026 11:57:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774353448;
-	bh=fjUF/Qfc7qFAcVyComZ4EnFgWjOpyNMI1tCgVep8edA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IPBJsfpA0hgzqW8dM0tveP2y5eaDJ6xcYTuun+ivuPF22sEsyFIc+mJboNtHnKJ/D
-	 9M32DjsJVfMpS8JTUufePzghEg/eWOV2Km5XPFG3pdZNlEykDYDdNHFdtS7RF+xkOY
-	 erytzqUDRL9g7SnrYdoe7LW2p+YlHfUCTeq9yylI=
-Date: Tue, 24 Mar 2026 12:57:05 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="2TI68cai";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="vdNbABGF";
+	dkim=pass (1024-bit key) header.d=suse.cz header.i=@suse.cz header.b="2TI68cai";
+	dkim=permerror (0-bit key) header.d=suse.cz header.i=@suse.cz header.b="vdNbABGF"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out2.suse.de (Postfix) with ESMTPS id 058235BD26;
+	Tue, 24 Mar 2026 13:40:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1774359640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HEowlndxnuwsn9HVqNtXyXIZr2cj2jqZ1HgraebDcfs=;
+	b=2TI68cai5rioLLy0ZZ330ZUge44UFBQsHbCkZl7YwCrfRT66dc6q1zojWFsinWKnoErymc
+	LvXTq7E7EeunhRBMjVcwVbOEHhpHt0pCdfFFsWMTh8AOYURPp9ztWQpir2+VAotMO1hdNy
+	GNscK9D6P/uIGJdrSoDgWpZmkvb96qc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1774359640;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HEowlndxnuwsn9HVqNtXyXIZr2cj2jqZ1HgraebDcfs=;
+	b=vdNbABGFHKDCaDxTQMMeApArn1cqYrZ1T4FBVLDCDnW6wmuUCuW5giIBhkXKriBLqY0Lqm
+	rwJS20YMV8ZlLgBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
+	t=1774359640; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HEowlndxnuwsn9HVqNtXyXIZr2cj2jqZ1HgraebDcfs=;
+	b=2TI68cai5rioLLy0ZZ330ZUge44UFBQsHbCkZl7YwCrfRT66dc6q1zojWFsinWKnoErymc
+	LvXTq7E7EeunhRBMjVcwVbOEHhpHt0pCdfFFsWMTh8AOYURPp9ztWQpir2+VAotMO1hdNy
+	GNscK9D6P/uIGJdrSoDgWpZmkvb96qc=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
+	s=susede2_ed25519; t=1774359640;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=HEowlndxnuwsn9HVqNtXyXIZr2cj2jqZ1HgraebDcfs=;
+	b=vdNbABGFHKDCaDxTQMMeApArn1cqYrZ1T4FBVLDCDnW6wmuUCuW5giIBhkXKriBLqY0Lqm
+	rwJS20YMV8ZlLgBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id EA8B643E77;
+	Tue, 24 Mar 2026 13:40:39 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id jhQ4OVeUwmksNgAAD6G6ig
+	(envelope-from <jack@suse.cz>); Tue, 24 Mar 2026 13:40:39 +0000
+Received: by quack3.suse.cz (Postfix, from userid 1000)
+	id AA894A0B32; Tue, 24 Mar 2026 14:40:31 +0100 (CET)
+Date: Tue, 24 Mar 2026 14:40:31 +0100
+From: Jan Kara <jack@suse.cz>
 To: Francesco Dolcini <francesco@dolcini.it>
-Cc: Jan Kara <jack@suse.cz>, Brian Foster <bfoster@redhat.com>,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Gou Hao <gouhao@uniontech.com>, Theodore Ts'o <tytso@mit.edu>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Zhang Yi <yi.zhang@huawei.com>, Baokun Li <libaokun1@huawei.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Jan Kara <jack@suse.cz>, Brian Foster <bfoster@redhat.com>, 
+	Yongjian Sun <sunyongjian1@huawei.com>, Matthew Wilcox <willy@infradead.org>, 
+	Gou Hao <gouhao@uniontech.com>, Theodore Ts'o <tytso@mit.edu>, 
+	Kemeng Shi <shikemeng@huaweicloud.com>, Zhang Yi <yi.zhang@huawei.com>, Baokun Li <libaokun1@huawei.com>, 
+	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@nabladev.com, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de, 
+	conor@kernel.org, hargar@microsoft.com, broonie@kernel.org, achill@achill.org, 
 	sr@sladewatkins.com
 Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
-Message-ID: <2026032427-musket-upbeat-5fb5@gregkh>
+Message-ID: <mhqesgj3u7dr33zit6iwjhykw2zpuallru4qvoloyyqzdqgvki@bpwwmihh357r>
 References: <20260323134525.256603107@linuxfoundation.org>
  <20260324073447.GA5062@francesco-nb>
 Precedence: bulk
@@ -53,10 +98,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <20260324073447.GA5062@francesco-nb>
+X-Spam-Score: -2.30
+X-Spam-Level: 
+X-Spamd-Result: default: False [-2.30 / 50.00];
+	BAYES_HAM(-3.00)[100.00%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	MID_RHS_NOT_FQDN(0.50)[];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	ARC_NA(0.00)[];
+	MISSING_XM_UA(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de];
+	MIME_TRACE(0.00)[0:+];
+	R_RATELIMIT(0.00)[to_ip_from(RLcbqemsx4jma477jikb7d9ob4)];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	TO_DN_SOME(0.00)[];
+	RCPT_COUNT_TWELVE(0.00)[30];
+	URIBL_BLOCKED(0.00)[suse.com:email,imap1.dmz-prg2.suse.org:helo];
+	RCVD_COUNT_THREE(0.00)[3];
+	FUZZY_RATELIMITED(0.00)[rspamd.com];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[linuxfoundation.org,suse.cz,redhat.com,huawei.com,infradead.org,uniontech.com,mit.edu,huaweicloud.com,vger.kernel.org,lists.linux.dev,linux-foundation.org,roeck-us.net,kernel.org,kernelci.org,lists.linaro.org,nabladev.com,nvidia.com,gmail.com,gmx.de,microsoft.com,achill.org,sladewatkins.com];
+	TAGGED_RCPT(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_TLS_LAST(0.00)[];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	DKIM_SIGNED(0.00)[suse.cz:s=susede2_rsa,suse.cz:s=susede2_ed25519];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[suse.com:email,imap1.dmz-prg2.suse.org:helo]
+X-Spam-Flag: NO
 
-On Tue, Mar 24, 2026 at 08:34:47AM +0100, Francesco Dolcini wrote:
-> Hi Greg,
-> 
+Hi!
+
+On Tue 24-03-26 08:34:47, Francesco Dolcini wrote:
 > On Mon, Mar 23, 2026 at 02:39:42PM +0100, Greg Kroah-Hartman wrote:
 > > This is the start of the stable review cycle for the 6.1.167 release.
 > > There are 481 patches in this series, all will be posted as a response
@@ -78,6 +152,12 @@ On Tue, Mar 24, 2026 at 08:34:47AM +0100, Francesco Dolcini wrote:
 > [   27.937784] CPU: 1 PID: 736 Comm: tar Not tainted 6.1.167-rc1-6.8.6-devel+git.67c872a868ac #1
 > [   27.946342] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
 > [   27.952889] PC is at ext4_mb_load_buddy_gfp+0xac/0x438
+
+Can you run this through "addr2line -i" to get exact position in that big
+function? Because from a quick look it doesn't ring a bell...
+
+								Honza
+
 > [   27.958083] LR is at 0xe0f39b18
 > [   27.961248] pc : [<c035bc54>]    lr : [<e0f39b18>]    psr: 000f0013
 > [   27.967536] sp : e0f39b60  ip : 00000000  fp : c43046f8
@@ -161,10 +241,12 @@ On Tue, Mar 24, 2026 at 08:34:47AM +0100, Francesco Dolcini wrote:
 > The bug is not systematic, and I do not see myself having the time to
 > bisect it in the next couple of days (it was reproduced by our CI / Lava
 > infrastructure).
-
-Odd.  There are loads of ext4 patches in here, so if you get a
-reproducer and can do bisection, that would be great to find out.
-
-thanks,
-
-greg k-h
+> 
+> I have added some of the ext4 folks to this thread, in case they know
+> how to help.
+> 
+> Francesco
+> 
+-- 
+Jan Kara <jack@suse.com>
+SUSE Labs, CR
