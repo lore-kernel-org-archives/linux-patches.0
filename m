@@ -1,279 +1,170 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F72F3F54D3;
-	Tue, 24 Mar 2026 11:19:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07773D904F;
+	Tue, 24 Mar 2026 11:57:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351199; cv=none; b=fCW0c9rDXxRXTn03qxceEUgmEQ1esi2RtPdAv8mx04kaYbf8nDoW9d5KSIuZT6qXKM2+AsHGmAWtBQTOcozLqF/3+lWeRUcvKLunSfPY92cak4TyVmer3RXjbaEVxeiYoqDAAKg0MuKM+Sd/fvJNG5AhlAtpya4E2PnwE1wNvMo=
+	t=1774353448; cv=none; b=HGhUL2CO3a2x4mZgQ1eoYASAHauHn42Ynbj5Otvdll86nj0j0I5uQtZcgC1q+JaPBoqSPdFurdK4uZ/NYYUhuLKwGDwNeCVdYWKKRZXqzLtpHRkDEteKK0e5BbI/0LCQgSMTUsUHdgULqEQVh8R+aJgTYP3K3cGt2bCbCD/JwVE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351199; c=relaxed/simple;
-	bh=MLTjk6bv09SrxmiE4s7AyFcFYXA97AgixW/HTyZL0kY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=pljzNAkZSiXwRE18RUNzAT3GKkaG+YavzCpyInia7s7zGuQ3L2EF+hb+sSkCRaAojttycOVWdDWzove+j9ntAsVnyVgtplmfHPa4g27LKwVqwjdC7U+oJSyo9qkgx3zdUWl0PstX2UycRyUyGyeNNYoIpHNM4KSCFUHB5NbM4fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=LceuVVqI; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1774353448; c=relaxed/simple;
+	bh=fjUF/Qfc7qFAcVyComZ4EnFgWjOpyNMI1tCgVep8edA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e+N1CQP3rFj0rJaR131k/onix1hzk4Wooj04P11sImWRz3DHONdtLZ842nsCquOmQKHMEv1eycYzRXhEYnfxSe1JClVFXtfOcsS4ZdPJK2RaVIktHJMRqTxyQKVji82yNcogUeOXJeDPBsmCqKZf+FTCdSudlRvt+zGuBhJRFgQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=IPBJsfpA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="LceuVVqI"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4C8C19424;
-	Tue, 24 Mar 2026 11:19:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351199;
-	bh=MLTjk6bv09SrxmiE4s7AyFcFYXA97AgixW/HTyZL0kY=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LceuVVqIoh6YFDl9QE8b+9/6rQUe3ygiT8rmD2qq8rYaCgHFvTMKPSjpd/p41bIIo
-	 LWmjHVqPhfahJC26YTVyvNaoZZ/dMQxZQdoFRTSao/ljl7PLJi2ixztrUrng6api/s
-	 F4BOTQgm6XxguUqUgGWYlt66zLwc7D28b552iW2kNkuQkHvnYR+OMxpYjVWDtvCaVD
-	 mNzzI5bWcRMVFAt3AX7zFEuDQuNTsaFKmlQym1PbMIvFmj9mDQKmK9j/Se62PLwySA
-	 QPA+O79Z3j/1hfX6lFvsL9iCXoWIyFXpl7Qq/rdGMguqdFQPUn3Cm7DrIL2PXJOZtE
-	 jkE1E8gcdCU5w==
-From: Sasha Levin <sashal@kernel.org>
-To: patches@lists.linux.dev,
-	stable@vger.kernel.org
-Cc: Lee Jones <lee@kernel.org>,
-	Benjamin Tissoires <bentiss@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	jikos@kernel.org,
-	linux-input@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] HID: multitouch: Check to ensure report responses match the request
-Date: Tue, 24 Mar 2026 07:19:28 -0400
-Message-ID: <20260324111931.3257972-19-sashal@kernel.org>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
-References: <20260324111931.3257972-1-sashal@kernel.org>
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="IPBJsfpA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7B58C19424;
+	Tue, 24 Mar 2026 11:57:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1774353448;
+	bh=fjUF/Qfc7qFAcVyComZ4EnFgWjOpyNMI1tCgVep8edA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IPBJsfpA0hgzqW8dM0tveP2y5eaDJ6xcYTuun+ivuPF22sEsyFIc+mJboNtHnKJ/D
+	 9M32DjsJVfMpS8JTUufePzghEg/eWOV2Km5XPFG3pdZNlEykDYDdNHFdtS7RF+xkOY
+	 erytzqUDRL9g7SnrYdoe7LW2p+YlHfUCTeq9yylI=
+Date: Tue, 24 Mar 2026 12:57:05 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Francesco Dolcini <francesco@dolcini.it>
+Cc: Jan Kara <jack@suse.cz>, Brian Foster <bfoster@redhat.com>,
+	Yongjian Sun <sunyongjian1@huawei.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Gou Hao <gouhao@uniontech.com>, Theodore Ts'o <tytso@mit.edu>,
+	Kemeng Shi <shikemeng@huaweicloud.com>,
+	Zhang Yi <yi.zhang@huawei.com>, Baokun Li <libaokun1@huawei.com>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org,
+	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
+	hargar@microsoft.com, broonie@kernel.org, achill@achill.org,
+	sr@sladewatkins.com
+Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
+Message-ID: <2026032427-musket-upbeat-5fb5@gregkh>
+References: <20260323134525.256603107@linuxfoundation.org>
+ <20260324073447.GA5062@francesco-nb>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-X-stable-base: Linux 6.19.9
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260324073447.GA5062@francesco-nb>
 
-From: Lee Jones <lee@kernel.org>
+On Tue, Mar 24, 2026 at 08:34:47AM +0100, Francesco Dolcini wrote:
+> Hi Greg,
+> 
+> On Mon, Mar 23, 2026 at 02:39:42PM +0100, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 6.1.167 release.
+> > There are 481 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
+> > Anything received after that time might be too late.
+> 
+> Not ok
+> 
+> I have an ext4 Oops on arm
+> 
+> [   27.908560] 8<--- cut here ---
+> [   27.911697] Unable to handle kernel NULL pointer dereference at virtual address 00000000
+> [   27.919880] [00000000] *pgd=00000000
+> [   27.923482] Internal error: Oops: 5 [#1] SMP ARM
+> [   27.928117] Modules linked in: 8021q cfg80211 imx_sdma coda_vpu v4l2_jpeg imx_vdoa dw_hdmi_ahb_audio fuse
+> [   27.937784] CPU: 1 PID: 736 Comm: tar Not tainted 6.1.167-rc1-6.8.6-devel+git.67c872a868ac #1
+> [   27.946342] Hardware name: Freescale i.MX6 Quad/DualLite (Device Tree)
+> [   27.952889] PC is at ext4_mb_load_buddy_gfp+0xac/0x438
+> [   27.958083] LR is at 0xe0f39b18
+> [   27.961248] pc : [<c035bc54>]    lr : [<e0f39b18>]    psr: 000f0013
+> [   27.967536] sp : e0f39b60  ip : 00000000  fp : c43046f8
+> [   27.972781] r10: 00000001  r9 : 00000c40  r8 : 00000016
+> [   27.978025] r7 : 00000016  r6 : c2b24000  r5 : e0f39bcc  r4 : 00000000
+> [   27.984574] r3 : d21b9611  r2 : d21b9611  r1 : c4277e40  r0 : 00000000
+> [   27.991123] Flags: nzcv  IRQs on  FIQs on  Mode SVC_32  ISA ARM  Segment none
+> [   27.998287] Control: 10c5387d  Table: 131c804a  DAC: 00000051
+> [   28.004050] Register r0 information: NULL pointer
+> [   28.008787] Register r1 information: slab radix_tree_node start c4277e40 pointer offset 0
+> [   28.017024] Register r2 information: 0-page vmalloc region starting at 0xd0000000 allocated at iotable_init+0x0/0xf4
+> [   28.027619] Register r3 information: 0-page vmalloc region starting at 0xd0000000 allocated at iotable_init+0x0/0xf4
+> [   28.038199] Register r4 information: NULL pointer
+> [   28.042930] Register r5 information: 2-page vmalloc region starting at 0xe0f38000 allocated at kernel_clone+0x88/0x338
+> [   28.053693] Register r6 information: slab kmalloc-1k start c2b24000 pointer offset 0 size 1024
+> [   28.062369] Register r7 information: non-paged memory
+> [   28.067449] Register r8 information: non-paged memory
+> [   28.072527] Register r9 information: non-paged memory
+> [   28.077605] Register r10 information: non-paged memory
+> [   28.082771] Register r11 information: slab ext4_inode_cache start c4304620 pointer offset 216 size 60
+> [   28.092056] Register r12 information: NULL pointer
+> [   28.096875] Process tar (pid: 736, stack limit = 0x116a0825)
+> [   28.102562] Stack: (0xe0f39b60 to 0xe0f3a000)
+> [   28.106955] 9b60: e0f39b5c 00000000 c0c1b414 c2916000 c2b24000 c42e55d8 c2b24000 c29162a8
+> [   28.115162] 9b80: 00000048 c4589000 0000000b c035f804 00000001 00000001 00000001 c2b24000
+> [   28.123368] 9ba0: c2916000 0000001d 00000010 00000000 00000009 00000024 00000000 00000000
+> [   28.131573] 9bc0: c2b92300 00000001 00000000 00000000 e0f39d30 00000000 c2b92300 c42e55d8
+> [   28.139778] 9be0: c2b24000 0000000c 0000000b d21b9611 00000000 c4589000 c2b24000 e0f39d30
+> [   28.147983] 9c00: 00000001 c2916000 00000000 c42fbf60 00000001 c03628c0 00000001 00000000
+> [   28.156188] 9c20: e0f39d14 c2b92300 00000001 00000000 00000029 00000000 00000000 c03328b4
+> [   28.164393] 9c40: 00000000 00000000 c4886a60 c033be7c 00000000 c0294008 00000000 00000000
+> [   28.172597] 9c60: c48867d0 d21b9611 c2b92300 00000001 00000001 c2916000 00000000 00000000
+> [   28.180802] 9c80: 00000000 c48868a8 e0f39e10 c0336970 e0f39d24 47ffffff c2b24000 00000000
+> [   28.189007] 9ca0: c48868a8 00000000 e0f39d88 c0330844 00000000 00000001 c2b92300 c42fbf60
+> [   28.197212] 9cc0: e0f39d88 ffffffff 00000000 ffffffff c308da80 00000000 00000001 c308da98
+> [   28.205416] 9ce0: 00000000 c03362f4 ffffffff ffffffff 00000008 00000010 00000000 cf358340
+> [   28.213620] 9d00: c42fbf60 00000000 c0c1b2c8 00000000 c308da80 00000000 00000000 c4540001
+> [   28.221825] 9d20: 00000000 c0395154 c2b92300 000009dd c48868a8 00000001 00000000 00000000
+> [   28.230029] 9d40: 00000000 c034c0c0 00000000 00000000 00000000 00000000 00000000 00000000
+> [   28.238234] 9d60: 00000000 00000000 c4886a60 d21b9611 00000020 e0f39e10 c48868a8 00000000
+> [   28.246438] 9d80: 00000001 c42fbf60 c2b92300 00001000 00000000 c034ccdc 00000000 00000000
+> [   28.254642] 9da0: 00000000 00000000 c42fbf60 c4886890 00000000 00000000 c48868a8 00000000
+> [   28.262847] 9dc0: c4886a60 00000000 ffffffff e0f39e70 ffffffff 47ffffff 00000000 d21b9611
+> [   28.271052] 9de0: c2b92300 c48868a8 c48868a8 c42fbf60 c2b92300 00000000 00000001 00001000
+> [   28.279256] 9e00: 00000000 c034dc98 c48868a8 c038d7f4 00000000 00000000 00000000 00000001
+> [   28.287461] 9e20: 00000000 cf358300 00000000 d21b9611 c48868f0 c48868a8 00000000 c42fbf60
+> [   28.295666] 9e40: c2b92300 e0f39ec0 00000001 c034ded0 c48868a8 00000000 c42fbf60 c0367fec
+> [   28.303871] 9e60: 0000001d 000041ed 00000000 c42ffcd8 00000000 00000000 00000000 00000001
+> [   28.312076] 9e80: 00000000 c48868a8 69c15bf6 d21b9611 119d9a05 c48868a8 c2b24000 00000000
+> [   28.320281] 9ea0: 00000000 c42fbf60 c2b92300 c036e134 00000000 c036b544 00000000 c43043e8
+> [   28.328486] 9ec0: 00000000 d21b9611 0000000c c48868a8 c48868a8 c42fbf60 c43043e8 c0c1bc80
+> [   28.336690] 9ee0: 000041ed c2b92300 c120d3e8 c036e410 c42ffcd8 00000000 00000000 00000000
+> [   28.344895] 9f00: 00000004 00000bfa 00000027 c02a9b20 00000000 00000027 c42ffcd8 c42ffcc0
+> [   28.353100] 9f20: 00000000 d21b9611 00000002 c43043e8 c036e298 c120d3e8 c42ffcc0 00000000
+> [   28.361305] 9f40: 00000002 c2b92300 be83b824 c02ab1a0 c34dc010 d21b9611 01db0478 c34dc000
+> [   28.369510] 9f60: c42ffcc0 c34dc000 ffffff9c 000041ed 00000000 c02b0268 be83b824 c20c6910
+> [   28.377715] 9f80: c42e2a18 d21b9611 01db0478 01db01f8 00000000 00000027 c01002e8 c2b92300
+> [   28.385920] 9fa0: 00000027 c0100080 01db0478 01db01f8 01db0478 000041ed 00000020 00004000
+> [   28.394124] 9fc0: 01db0478 01db01f8 00000000 00000027 00000000 00000007 01db01f8 be83b824
+> [   28.402330] 9fe0: 00545dbc be83b754 004f9b0b b6e5ff98 600f0030 01db0478 00000000 00000000
+> [   28.410535]  ext4_mb_load_buddy_gfp from ext4_mb_regular_allocator+0x318/0xee0
+> [   28.417826]  ext4_mb_regular_allocator from ext4_mb_new_blocks+0x724/0x1000
+> [   28.424847]  ext4_mb_new_blocks from ext4_ext_map_blocks+0x7d8/0x1600
+> [   28.431351]  ext4_ext_map_blocks from ext4_map_blocks+0x21c/0x604
+> [   28.437492]  ext4_map_blocks from ext4_getblk+0x68/0x298
+> [   28.442844]  ext4_getblk from ext4_bread+0x8/0xa0
+> [   28.447587]  ext4_bread from ext4_append+0x98/0x1b4
+> [   28.452514]  ext4_append from ext4_init_new_dir+0x7c/0x1e0
+> [   28.458061]  ext4_init_new_dir from ext4_mkdir+0x178/0x384
+> [   28.463608]  ext4_mkdir from vfs_mkdir+0xcc/0x168
+> [   28.468364]  vfs_mkdir from do_mkdirat+0x80/0x104
+> [   28.473107]  do_mkdirat from ret_fast_syscall+0x0/0x54
+> [   28.478285] Exception stack(0xe0f39fa8 to 0xe0f39ff0)
+> [   28.483367] 9fa0:                   01db0478 01db01f8 01db0478 000041ed 00000020 00004000
+> [   28.491573] 9fc0: 01db0478 01db01f8 00000000 00000027 00000000 00000007 01db01f8 be83b824
+> [   28.499775] 9fe0: 00545dbc be83b754 004f9b0b b6e5ff98
+> [   28.504856] Code: ebfbad72 e3700a01 e1a04000 8a00005d (e5903000)
+> [   28.511102] ---[ end trace 0000000000000000 ]---
+> 
+> 
+> The bug is not systematic, and I do not see myself having the time to
+> bisect it in the next couple of days (it was reproduced by our CI / Lava
+> infrastructure).
 
-[ Upstream commit e716edafedad4952fe3a4a273d2e039a84e8681a ]
+Odd.  There are loads of ext4 patches in here, so if you get a
+reproducer and can do bisection, that would be great to find out.
 
-It is possible for a malicious (or clumsy) device to respond to a
-specific report's feature request using a completely different report
-ID.  This can cause confusion in the HID core resulting in nasty
-side-effects such as OOB writes.
+thanks,
 
-Add a check to ensure that the report ID in the response, matches the
-one that was requested.  If it doesn't, omit reporting the raw event and
-return early.
-
-Signed-off-by: Lee Jones <lee@kernel.org>
-Signed-off-by: Benjamin Tissoires <bentiss@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
-
-LLM Generated explanations, may be completely bogus:
-
-As Tissoires noted, `hid-vivaldi-common.c` has the same vulnerable
-pattern. `wacom_sys.c` also has it. This confirms the bug is systemic.
-
-Record: Same vulnerable pattern exists in hid-vivaldi-common.c and
-wacom_sys.c. This is a known systemic issue.
-
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-
-The buggy code was introduced in commit `6d4f5440a3a2bb` from
-2015-10-07, which is approximately kernel v4.4. This means the
-vulnerable code exists in **ALL active stable trees** (5.4.y, 5.10.y,
-5.15.y, 6.1.y, 6.6.y, 6.12.y, etc.).
-
-Record: Buggy code exists in all active stable trees. Very wide
-exposure.
-
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-
-The fix is 7 lines added to a single function. The function has been
-stable since 2015 with only minor modifications (2018 `ret` variable and
-`hid_report_len` changes). The patch should apply cleanly to all stable
-trees or with trivial context adjustments.
-
-Record: Expected backport difficulty: clean apply or trivial conflicts.
-
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-No related fixes for this specific issue found in any stable tree.
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- **Subsystem**: HID (Human Interface Devices) — drivers/hid/
-- **Criticality**: IMPORTANT — HID affects all USB input devices (mice,
-  keyboards, touchscreens, touchpads). Multitouch is used by virtually
-  all modern laptops and tablets.
-- **Security aspect**: USB devices are a common physical attack vector.
-  A malicious USB device can be plugged into any machine.
-
-Record: [HID/multitouch] [IMPORTANT - affects all multitouch devices,
-USB attack vector]
-
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Active subsystem with regular commits. The HID maintainer (Benjamin
-Tissoires) actively reviews and merges patches.
-
-Record: Active subsystem, responsive maintainer.
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Any system using HID multitouch devices (virtually all laptops, tablets,
-kiosks, and touchscreen-equipped systems). The vulnerability is
-triggerable via a malicious USB device.
-
-Record: Affected user population: universal (any system with USB ports
-and HID multitouch support).
-
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- **Trigger**: A USB device sends a HID feature report response with a
-  report ID different from the one requested
-- **Attack scenario**: Malicious USB device (BadUSB-style attack) — plug
-  in a crafted USB device
-- **Also possible**: Buggy/clumsy device firmware (accidental trigger)
-- **Privilege**: Physical access to USB port required (no unprivileged
-  userspace trigger)
-- **Reproducibility**: Deterministic — controlled by the device firmware
-
-Record: Physical access via USB required. Deterministic trigger from
-device side. No unprivileged software trigger.
-
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-- **Failure mode**: Out-of-bounds memory write in kernel space
-- **Consequences**: Memory corruption, potential kernel crash, potential
-  privilege escalation
-- **Severity**: **CRITICAL** — OOB write is one of the most serious
-  vulnerability classes
-
-Record: [OOB write / memory corruption] [Severity: CRITICAL]
-
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-- **BENEFIT**: Very high — prevents OOB kernel memory corruption from
-  malicious USB devices
-- **RISK**: Very low — 7 lines, simple ID comparison check, only affects
-  feature report processing in multitouch driver
-- **Ratio**: Excellent — high benefit, minimal risk
-
-Record: [Benefit: VERY HIGH] [Risk: VERY LOW] [Ratio: strongly favors
-backporting]
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: COMPILE THE EVIDENCE
-
-**FOR backporting:**
-- Fixes OOB write (CRITICAL severity security vulnerability)
-- Exploitable via malicious USB device (physical attack vector)
-- Fix is 7 lines, obviously correct (simple ID comparison)
-- Accepted by HID maintainer Benjamin Tissoires
-- Buggy code exists in ALL stable trees (since 2015, kernel v4.4)
-- No dependencies on other patches (standalone fix)
-- Clean backport expected
-- Verified the OOB mechanism in `hid_report_raw_event()` — the `memset`
-  at line 2062 can write beyond buffer bounds
-
-**AGAINST backporting:**
-- Part of a 2-patch series, but patch 1/2 is independent (different
-  file, different issue)
-- No explicit Cc: stable from author or reviewer (expected, that's why
-  we're reviewing)
-- Requires physical USB access (not remotely exploitable)
-
-**UNRESOLVED:**
-- None significant — the bug mechanism is clearly verified
-
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — simple comparison of
-   report->id vs buf[0], reviewed and accepted by HID maintainer
-2. **Fixes a real bug that affects users?** YES — OOB write from
-   malicious/buggy USB devices
-3. **Important issue?** YES — memory corruption / security vulnerability
-   (CRITICAL)
-4. **Small and contained?** YES — 7 lines in one function in one file
-5. **No new features or APIs?** YES — purely validation logic
-6. **Can apply to stable trees?** YES — code has been stable since 2015
-
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Not an exception category — this is a standard security bug fix, which
-is the primary use case for stable.
-
-### Step 9.4: MAKE YOUR DECISION
-This is a clear YES. It's a small, obviously correct security fix that
-prevents OOB writes from malicious USB devices. The fix has been
-reviewed and accepted by the HID maintainer. It affects all stable trees
-and has minimal regression risk.
-
-## Verification
-
-- [Phase 1] Parsed tags: Signed-off-by Lee Jones (author), Signed-off-by
-  Benjamin Tissoires (HID maintainer). No Fixes/Reported-by/Cc:stable
-  tags.
-- [Phase 2] Diff analysis: 7 lines added to `mt_get_feature()` in hid-
-  multitouch.c, adds report ID validation check before calling
-  `hid_report_raw_event()`
-- [Phase 3] git blame: Buggy code introduced in commit `6d4f5440a3a2bb`
-  (2015-10-07, ~v4.4), present in ALL active stable trees
-- [Phase 3] git log: No previous related fixes for this issue found
-- [Phase 4] lore.kernel.org: Found patch submission at
-  `20260227163031.1166560-2-lee@kernel.org`. Patch 2/2 of series; patch
-  1/2 is independent (different file). Benjamin Tissoires reviewed and
-  accepted. He noted same bug exists in hid-vivaldi-common.c.
-- [Phase 4] RFC v3: Tissoires NACK'd core-level fix, preferred per-
-  driver fixes like this one — confirming this is the maintainer's
-  preferred approach.
-- [Phase 5] Callers: `mt_get_feature()` called from
-  `mt_feature_mapping()` at 3 sites during device enumeration — standard
-  path for multitouch devices
-- [Phase 5] Verified OOB mechanism: `hid_report_raw_event()` at hid-
-  core.c:2040 uses `data[0]` (buf[0]) to look up report; at line 2062,
-  `memset(cdata + csize, 0, rsize - csize)` writes beyond buffer if
-  looked-up report is larger than the buffer allocated for the requested
-  report
-- [Phase 5] Same vulnerable pattern confirmed in hid-vivaldi-common.c:87
-  and wacom_sys.c:397
-- [Phase 6] Code exists in all active stable trees (v4.4+), fix should
-  apply cleanly
-- [Phase 7] HID subsystem: IMPORTANT criticality, affects all multitouch
-  USB devices
-- [Phase 8] Failure mode: OOB kernel memory write, severity CRITICAL.
-  Trigger: malicious USB device (physical access required).
-
-**YES**
-
- drivers/hid/hid-multitouch.c | 7 +++++++
- 1 file changed, 7 insertions(+)
-
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index b8a748bbf0fd8..e82a3c4e5b44e 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -526,12 +526,19 @@ static void mt_get_feature(struct hid_device *hdev, struct hid_report *report)
- 		dev_warn(&hdev->dev, "failed to fetch feature %d\n",
- 			 report->id);
- 	} else {
-+		/* The report ID in the request and the response should match */
-+		if (report->id != buf[0]) {
-+			hid_err(hdev, "Returned feature report did not match the request\n");
-+			goto free;
-+		}
-+
- 		ret = hid_report_raw_event(hdev, HID_FEATURE_REPORT, buf,
- 					   size, 0);
- 		if (ret)
- 			dev_warn(&hdev->dev, "failed to report feature\n");
- 	}
- 
-+free:
- 	kfree(buf);
- }
- 
--- 
-2.51.0
-
+greg k-h
