@@ -1,44 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F340E3F0775;
-	Tue, 24 Mar 2026 11:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525F03F0AB5;
+	Tue, 24 Mar 2026 11:19:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351189; cv=none; b=FAwSRC4MVIP2FmUyPFUb6c7NZnUDjQXy0CAXQ12Lek0/yNrJMWJL6kvyqpcN11lhzIBmTLyN1yDPMxQaaQRFbDC1EfkaAIr/y6GoRTdgFbdG8Ht94d96Cprnh3iPwvPfhZkMVisQthDvMpDctYHIwZDpkebZWGY5x08Sf5VTktY=
+	t=1774351190; cv=none; b=IgJA9UPFTbnr8mG3Tzgoy5Zvnbe7c5FpLFFC+PxlBuWpl7Bd6YHyTFCTO4zoG0aQuZh6vRO/AZ8y9napTZBc2PWyufMwyBnKX+5M3k1fqd226FAROHcFlwFS7RC82NjNvYPWo/N5vkk34dc7uFkckmathOUz7S50lQ+DQnXwY/c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351189; c=relaxed/simple;
-	bh=L7WeZ2HlZmslzL5RLnhKKA7Q4wGl39pNoaAWDw574xQ=;
+	s=arc-20240116; t=1774351190; c=relaxed/simple;
+	bh=6ibyUs+SMMYNaaSILv6M3iISyLlRy+whlfy5hBjAgcE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Yv+ponJoLUiefNM4vpbc5QQp9OyoxQHaneybdpJDAxkU7+aOyly3fO/wM/j2ZKp0lfsBNlRfRtAW2d5NrOgn9TDSLHJtFRhPRUsR9kIZ3TEK8FwZnEzV2SyWlwp4d0Le7d2t3a8atPp8ZqhGTfq22Mq5DCEaqJ9mR8H+EsZ+XgY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=qvSCLJ26; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=J16BuYRbSSBu6E7eUWRSppHW5DA0LFFnniN5cDinDzXAWWh/SYS1jnDyvpuf/iLAF/D5SaLiJoE2LVjJmy3a0m/VYYP/GjTsbcKKrejTmyK17LoQAR0oreRzbxygAkRTLNUetm7mV6pWCNI9plql0MgT9HLVaBlDWTBKZuImlWU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=DuJWyZ5h; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="qvSCLJ26"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8915EC2BCB1;
-	Tue, 24 Mar 2026 11:19:47 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="DuJWyZ5h"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CBEC4AF0B;
+	Tue, 24 Mar 2026 11:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351188;
-	bh=L7WeZ2HlZmslzL5RLnhKKA7Q4wGl39pNoaAWDw574xQ=;
+	s=k20201202; t=1774351189;
+	bh=6ibyUs+SMMYNaaSILv6M3iISyLlRy+whlfy5hBjAgcE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qvSCLJ267nzB++5UHIhKz+yxj0kO4yIZLXAVM1+rEDXMEVYO4ySRhxpedLbMAh+aU
-	 7guDD/TAWg54xYZyWJa+kx08BNJfeY+31cpIk6XsArjGOvQ80c7ko/L+FH+gF2pect
-	 4ql5JmsUGQGXBrVD1jzQ9wOQ+xzwDUPBP/TKcNfkHfMwwpNDu4WDLlxwT63RwZNcWc
-	 q1ipkdAHyW599aAVEK/qkgf/6jISPwD4HEUxVjAIpNGO8qWwStHrRRroePF5n+D0wr
-	 L3r/OVcqdylxwRPRMw+EcbITUZySO0uJ7l6np/xEjTFgfBJcglb88sUphn/F1JgK7q
-	 58oVlJVdHCL1g==
+	b=DuJWyZ5hhW9TY8e15rg5Zw3UgBnc4/IyVCNxCZ3rcKpLQ0KxkdjJ1lll5Hp3AnliI
+	 f6AcxnXt0j4ZRfsimmNSgh+q6NKv37a9swHVXJjJQVK0g0RfTENdcKd6fqPYufXTuq
+	 t0ewLeW/x1ajQQHJH3/FaBuG4z3hlNK1IJx+9oUwcmhHqtMQ3f1zSWAb9pwBr63jwm
+	 8JXm3YRD1UoG/ro+Z5rBTvJAG/j7PUG0CJNGuin8liZlQroW+Hluuf79mZ3Mlv8sCF
+	 EpLYyxCth3/KYCVIoKiDTBjkCewjPHNxXmKoa02vuD3nTq9HFqHaqQAO/bG+7Wwemz
+	 H/kfjvAF1i7Yg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Praveen Talari <praveen.talari@oss.qualcomm.com>,
-	Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>,
-	Mark Brown <broonie@kernel.org>,
+Cc: Deepanshu Kartikey <kartikey406@gmail.com>,
+	syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>,
-	linux-arm-msm@vger.kernel.org,
-	linux-spi@vger.kernel.org,
+	linux-wireless@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] spi: geni-qcom: Check DMA interrupts early in ISR
-Date: Tue, 24 Mar 2026 07:19:20 -0400
-Message-ID: <20260324111931.3257972-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] wifi: mac80211: check tdls flag in ieee80211_tdls_oper
+Date: Tue, 24 Mar 2026 07:19:21 -0400
+Message-ID: <20260324111931.3257972-12-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
 References: <20260324111931.3257972-1-sashal@kernel.org>
@@ -54,185 +54,158 @@ X-stable-base: Linux 6.19.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Praveen Talari <praveen.talari@oss.qualcomm.com>
+From: Deepanshu Kartikey <kartikey406@gmail.com>
 
-[ Upstream commit 8c89a077ca796a2fe248c584e9d7e66cff0388c8 ]
+[ Upstream commit 7d73872d949c488a1d7c308031d6a9d89b5e0a8b ]
 
-The current interrupt handler only checks the GENI main IRQ status
-(m_irq) before deciding to return IRQ_NONE. This can lead to spurious
-IRQ_NONE returns when DMA interrupts are pending but m_irq is zero.
+When NL80211_TDLS_ENABLE_LINK is called, the code only checks if the
+station exists but not whether it is actually a TDLS station. This
+allows the operation to proceed for non-TDLS stations, causing
+unintended side effects like modifying channel context and HT
+protection before failing.
 
-Move the DMA TX/RX status register reads to the beginning of the ISR,
-right after reading m_irq. Update the early return condition to check
-all three status registers (m_irq, dma_tx_status, dma_rx_status) before
-returning IRQ_NONE.
+Add a check for sta->sta.tdls early in the ENABLE_LINK case, before
+any side effects occur, to ensure the operation is only allowed for
+actual TDLS peers.
 
-Signed-off-by: Praveen Talari <praveen.talari@oss.qualcomm.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@oss.qualcomm.com>
-Link: https://patch.msgid.link/20260313-spi-geni-qcom-fix-dma-irq-handling-v1-1-0bd122589e02@oss.qualcomm.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Closes: https://syzkaller.appspot.com/bug?extid=56b6a844a4ea74487b7b
+Tested-by: syzbot+56b6a844a4ea74487b7b@syzkaller.appspotmail.com
+Suggested-by: Johannes Berg <johannes@sipsolutions.net>
+Signed-off-by: Deepanshu Kartikey <kartikey406@gmail.com>
+Link: https://patch.msgid.link/20260313092417.520807-1-kartikey406@gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Record: The ISR function itself hasn't changed significantly between 6.6
-and mainline in the area being patched. The fix should apply cleanly to
-6.6.y and later stable trees.
+Before commit `076fc8775dafe` (2023), the check was `if (!sta) { ret =
+-ENOLINK; break; }`. In older stable trees (5.15, 5.10, 5.4), the fix
+would need to be adapted to this older pattern, but it's still trivial:
+change `if (!sta)` to `if (!sta || !sta->sta.tdls)`. The logic is
+identical.
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem:** drivers/spi (SPI bus drivers)
-- **Specific driver:** spi-geni-qcom — Qualcomm GENI SPI driver
-- **Criticality:** IMPORTANT — used on Qualcomm SoCs (Snapdragon
-  platforms), which power many mobile devices, Chromebooks, and embedded
-  systems
-- The GENI SPI is used for communication with peripherals like sensors,
-  touch controllers, etc.
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: wifi/mac80211 — core wireless networking stack
+- **Criticality**: IMPORTANT — used by all Linux systems with WiFi
+  hardware
+- TDLS (Tunneled Direct Link Setup) is a standard WiFi feature used for
+  direct device-to-device communication
 
-Record: [drivers/spi, Qualcomm GENI] [IMPORTANT — widely used on
-Qualcomm platforms including phones, Chromebooks, embedded]
+### Step 7.2: Subsystem Activity
+mac80211/tdls.c has moderate activity, with both bug fixes and ongoing
+development.
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.1: WHO IS AFFECTED
-Users of Qualcomm SoC platforms that use SPI in DMA mode. This includes
-many Android devices, Chromebooks with Qualcomm chips, and embedded
-systems.
+### Step 8.1: Affected Users
+All Linux users with WiFi hardware that supports TDLS (most modern WiFi
+devices). Reachable from userspace via netlink.
 
-### Step 8.2: TRIGGER CONDITIONS
-The bug triggers when:
-1. The SPI controller is operating in DMA mode (GENI_SE_DMA)
-2. A DMA transfer completes and fires a DMA interrupt
-3. No GENI main interrupt fires at the same time (m_irq == 0)
+### Step 8.2: Trigger Conditions
+- Triggered via `NL80211_CMD_TDLS_OPER` with `NL80211_TDLS_ENABLE_LINK`
+  for a non-TDLS station
+- Can be triggered by an **unprivileged local user** with appropriate
+  netlink access (or by a local attacker)
+- syzbot found and reproduced this reliably
 
-This is a normal operational scenario — DMA completion interrupts can
-arrive without accompanying GENI main interrupts. The trigger is **not
-rare** during normal DMA SPI transfers.
+### Step 8.3: Failure Mode Severity
+- **WARN_ON_ONCE** triggered at tdls.c:1460 — kernel warning
+- **Unintended side effects**: channel context and HT protection
+  modified for non-TDLS station — this could corrupt WiFi connection
+  state
+- Severity: **MEDIUM-HIGH** (WARN + potential state corruption via
+  userspace-reachable path)
 
-### Step 8.3: FAILURE MODE SEVERITY
-When triggered:
-1. The DMA completion interrupt is not acknowledged → **SPI transfer
-   timeout**
-2. On shared interrupt lines, repeated IRQ_NONE → kernel may disable the
-   entire IRQ line → **device becomes non-functional**
-3. Transfer timeouts cause SPI peripheral communication failures →
-   **device malfunction**
-
-Record: Severity: **HIGH** — causes SPI transfer failures/timeouts in
-DMA mode, potential IRQ line disabling.
-
-### Step 8.4: RISK-BENEFIT RATIO
-- **BENEFIT:** HIGH — fixes real hardware communication failure on
-  Qualcomm platforms
-- **RISK:** VERY LOW — the change only moves existing register reads
-  earlier and updates one condition check. No new logic, no new code
-  paths. The DMA status registers were already being read later; moving
-  them earlier is completely safe.
-- **Ratio:** Strongly favorable for backporting.
+### Step 8.4: Risk-Benefit
+- **Benefit**: HIGH — prevents userspace-triggerable WARN and state
+  corruption in WiFi subsystem; affects all stable trees
+- **Risk**: VERY LOW — single additional boolean check, obviously
+  correct, maintainer-suggested
+- **Ratio**: Excellent — minimal risk, clear benefit
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: EVIDENCE COMPILATION
+### Step 9.1: Evidence Compilation
 
 **FOR backporting:**
-- Fixes a real bug: DMA interrupts are silently ignored, causing SPI
-  transfer timeouts
-- Small and surgical: ~7 lines changed in a single function
-- Obviously correct: moves register reads earlier and updates condition
-  (matching what the serial GENI driver already does)
-- Affects widely-used hardware (Qualcomm SoCs)
-- Reviewed by Qualcomm engineer, applied by SPI subsystem maintainer
-- Low regression risk: only behavioral change is properly handling DMA-
-  only interrupts
-- Bug exists since v6.3, present in stable trees 6.6.y+
+- Fixes a syzbot-reported, reproducible bug reachable from userspace
+- Bug exists in ALL active stable trees (since 2014)
+- Single-line, obviously correct fix
+- Suggested by subsystem maintainer (Johannes Berg)
+- Tested by syzbot (confirmed fix)
+- Prevents WARN_ON_ONCE and unintended WiFi state modification
+- Zero regression risk
+- Clean apply expected (trivial adaptation for older trees)
 
 **AGAINST backporting:**
-- No explicit Cc: stable nomination
-- No Reported-by (may indicate the bug is not commonly triggered, or was
-  found during code review)
-- No Fixes: tag (though the fix target is clearly e5f0dfa78ac77)
+- (None significant)
 
-### Step 9.2: STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — reviewed by Qualcomm, applied
-   by maintainer, matches pattern used in serial GENI driver
-2. **Fixes a real bug?** YES — DMA interrupts not handled, causing
-   transfer failures
-3. **Important issue?** YES — device communication failure, potential
-   IRQ line disabling
-4. **Small and contained?** YES — single function, ~7 lines
-5. **No new features or APIs?** Correct — no new features
-6. **Can apply to stable?** YES — likely clean apply to 6.6.y+
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — one additional condition,
+   tested by syzbot
+2. **Fixes a real bug?** YES — syzbot-reported, WARN + state corruption
+3. **Important issue?** YES — userspace-reachable, affects WiFi state
+4. **Small and contained?** YES — 1 line changed
+5. **No new features/APIs?** Correct — pure validation fix
+6. **Can apply to stable?** YES — trivial adaptation needed for pre-6.6
+   trees
 
-### Step 9.3: EXCEPTION CATEGORIES
-Not an exception category — this is a standard bug fix.
+### Step 9.3: Exception Categories
+Not an exception category — this is a straightforward bug fix that meets
+standard stable criteria.
 
-### Step 9.4: DECISION
-The fix is small, obviously correct, fixes a real bug that causes SPI
-transfer failures in DMA mode on Qualcomm platforms, and has very low
-regression risk. It meets all stable kernel criteria.
+### Step 9.4: Decision
+Clear YES. This is a textbook stable backport candidate.
 
 ## Verification
 
-- [Phase 1] Parsed tags: Signed-off-by from Qualcomm author, Reviewed-by
-  from Qualcomm, Link to patch, applied by Mark Brown (SPI maintainer)
-- [Phase 2] Diff analysis: ~7 lines changed in `geni_spi_isr()`, moves
-  DMA status reads to top of ISR, updates early return condition
-- [Phase 3] git blame: Early return (`if (!m_irq)`) introduced in
-  `2ee471a1e28ec7` (2020). DMA mode added in `e5f0dfa78ac77` (v6.3)
-  without updating the early return — this is the root cause
-- [Phase 3] Author check: Praveen Talari is a regular Qualcomm GENI
-  contributor (serial and SPI)
-- [Phase 4] lore.kernel.org: Found patch at msgid link; v1 patch, no
-  NAKs, accepted by maintainer
-- [Phase 5] Callers: `geni_spi_isr` registered via `devm_request_irq()`
-  at line 1167, invoked on every SPI interrupt
-- [Phase 5] Similar pattern: Serial GENI driver (`qcom_geni_serial.c`
-  lines 1065-1070) already reads all IRQ status registers at top of ISR
-  — the SPI driver was inconsistent
-- [Phase 6] Bug introduced in v6.3 (DMA mode commit). Present in stable
-  trees 6.6.y and later
-- [Phase 6] Clean apply expected: ISR area has not been significantly
-  modified since 6.6
-- [Phase 8] Failure mode: DMA transfer timeouts / unhandled interrupts /
-  potential IRQ line disabling, severity HIGH
-- [Phase 8] Risk: VERY LOW — moves existing reads earlier, no new logic
+- **[Phase 1]** Parsed tags: Reported-by syzbot, Tested-by syzbot,
+  Suggested-by Johannes Berg (maintainer), Signed-off-by Johannes Berg
+- **[Phase 2]** Diff analysis: 1 line modified — added `||
+  !sta->sta.tdls` to existing NULL check in `ieee80211_tdls_oper()`
+  ENABLE_LINK case
+- **[Phase 3]** git blame: buggy code introduced in commit
+  `95224fe83e5e78` (2014, v3.16 era), present in all stable trees
+- **[Phase 3]** git show `076fc8775dafe`: confirmed older trees have
+  slightly different code structure (`if (!sta) { ret = -ENOLINK; break;
+  }`) but fix is trivially adaptable
+- **[Phase 3]** Related commit `16ecdab5446f1`: another syzbot-reported
+  TDLS validation fix, independent of this one
+- **[Phase 4]** Syzbot bug report: confirmed affects Linux 5.4, 5.10,
+  5.15, 6.1, 6.6; crash is WARN_ON_ONCE in ieee80211_tdls_oper
+- **[Phase 4]** Lore: v2 patch, approach suggested by Johannes Berg; no
+  NAKs or concerns found
+- **[Phase 5]** `ieee80211_tdls_oper` registered via `.tdls_oper` in
+  cfg.c:5598, reachable from userspace via NL80211_CMD_TDLS_OPER netlink
+- **[Phase 6]** Code exists in all active stable trees (bug from 2014)
+- **[Phase 6]** Backport: clean apply on 6.x trees; trivial context
+  adaptation needed for 5.x trees
+- **[Phase 8]** Failure mode: WARN_ON_ONCE + unintended channel/HT
+  protection state modification; severity MEDIUM-HIGH; userspace-
+  triggerable
 
 **YES**
 
- drivers/spi/spi-geni-qcom.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/mac80211/tdls.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-geni-qcom.c b/drivers/spi/spi-geni-qcom.c
-index acfcf870efd84..736120107184f 100644
---- a/drivers/spi/spi-geni-qcom.c
-+++ b/drivers/spi/spi-geni-qcom.c
-@@ -958,10 +958,13 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
- 	struct spi_controller *spi = data;
- 	struct spi_geni_master *mas = spi_controller_get_devdata(spi);
- 	struct geni_se *se = &mas->se;
--	u32 m_irq;
-+	u32 m_irq, dma_tx_status, dma_rx_status;
- 
- 	m_irq = readl(se->base + SE_GENI_M_IRQ_STATUS);
--	if (!m_irq)
-+	dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
-+	dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
-+
-+	if (!m_irq && !dma_tx_status && !dma_rx_status)
- 		return IRQ_NONE;
- 
- 	if (m_irq & (M_CMD_OVERRUN_EN | M_ILLEGAL_CMD_EN | M_CMD_FAILURE_EN |
-@@ -1009,8 +1012,6 @@ static irqreturn_t geni_spi_isr(int irq, void *data)
+diff --git a/net/mac80211/tdls.c b/net/mac80211/tdls.c
+index dbbfe2d6842fb..1dca2fae05a52 100644
+--- a/net/mac80211/tdls.c
++++ b/net/mac80211/tdls.c
+@@ -1449,7 +1449,7 @@ int ieee80211_tdls_oper(struct wiphy *wiphy, struct net_device *dev,
  		}
- 	} else if (mas->cur_xfer_mode == GENI_SE_DMA) {
- 		const struct spi_transfer *xfer = mas->cur_xfer;
--		u32 dma_tx_status = readl_relaxed(se->base + SE_DMA_TX_IRQ_STAT);
--		u32 dma_rx_status = readl_relaxed(se->base + SE_DMA_RX_IRQ_STAT);
  
- 		if (dma_tx_status)
- 			writel(dma_tx_status, se->base + SE_DMA_TX_IRQ_CLR);
+ 		sta = sta_info_get(sdata, peer);
+-		if (!sta)
++		if (!sta || !sta->sta.tdls)
+ 			return -ENOLINK;
+ 
+ 		iee80211_tdls_recalc_chanctx(sdata, sta);
 -- 
 2.51.0
 
