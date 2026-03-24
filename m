@@ -1,43 +1,43 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 394AD3F1673;
-	Tue, 24 Mar 2026 11:19:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6252B3F2118;
+	Tue, 24 Mar 2026 11:19:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351191; cv=none; b=ORLM8EP4ZvhBP5A9i1GTmWP/ljNbuKNzHnSaY0ZehV4JIndRQ+NZuI30sXqhvbtCplBUGJMygk0wg9um6mRDY+ZxFk71AvySebDDmlKRYOc0uCZEd8LItQB+WTudqoZqYNoSXfwZbubmzGwGQQImpBRfI9OjrwR30pqY0iBc7PE=
+	t=1774351192; cv=none; b=W7zvCD4yDL2SiFLKNtbki7o/l/KPUIWPDcNUgjr2jTunqsXCHZoISYhuDcS2Pk1NYThoSldvUdUTPeL2CZt5shiWF9p64d5yOMGQgv+AgeSRGMFJl2mqFrtvuOEs0fUKxKklUy53gWiC1NvGc2zt0Pe67ZXUmnniVELKvIdgFsM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351191; c=relaxed/simple;
-	bh=TYIvXi33vtcU8lj78uAqidjQegpZ4kOuUi8+f+Vp8JA=;
+	s=arc-20240116; t=1774351192; c=relaxed/simple;
+	bh=VT3AT/WWqPufi5SKMScsvaN96hTQjfYr79XjpwYmz/Y=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mGJOjrmiIbw/MGFGmKIUGKEhsjVAdiMi9wplXT9HyzQzH/Gosi87E57IyO5wR4eJKBuGLwo7VGoP7mL3PNPtD7QetCm4+aknDI315Yci6iAJAPXahuioCZ/qi1oUEAPrzr0613YuOEJYflkQNhbqfZQAdjpNaEky0NvKJgJYsis=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cuE8AJLZ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=RK1+v1dbZ8L38P+zmep/ukCPnq+ehkKC2SfvBsLVthAYhudp9euL7/8eCvUvSLRY+hfXAUBtRkWsQE4Eh7dwz2u4Uw7uO/Kc6rUMK8okq8PErBkAhE/IhPi76UTzR3lJYoERQCbl/vJymtYwprbJhoXK6hwMSxbJi/iYis9EkYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FylAkqkJ; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cuE8AJLZ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11E36C2BCB1;
-	Tue, 24 Mar 2026 11:19:49 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FylAkqkJ"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC3CC2BCB3;
+	Tue, 24 Mar 2026 11:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351190;
-	bh=TYIvXi33vtcU8lj78uAqidjQegpZ4kOuUi8+f+Vp8JA=;
+	s=k20201202; t=1774351192;
+	bh=VT3AT/WWqPufi5SKMScsvaN96hTQjfYr79XjpwYmz/Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cuE8AJLZZk1Z1eFakS6UVoo/M7uAKgFt3odt31XvGiaYwGPlIiLbu2Td/lc9J060s
-	 o7D+2nsaC0BH8uJHwG3xPeTXt5SjS6LDY1eeilVUQxgU+vmTNDFDkc5iMeWicJjpiN
-	 Yz29qdXBXjMA9uk7c94ciqt/0appLEHhReqmqw8yMqHGxopE5GH0Iqv4JgS+kO3IZ+
-	 ooaBmeZYGW03ZaD0XkTu0h5ZqXqU34mOj02CSslLJWsr1FTEsq+DwiDkAjmDa9LOTH
-	 DS0FiahvM1zdAgrOrnZsp5kkaSR9WEu34Swubrf2cB3XnhMVn6o4b9WuysxqFDQpSQ
-	 hg1MHa7Q4Oi3Q==
+	b=FylAkqkJCJtdxGIIUV2BYNtId7r5Em6I/zDBhS3t7Qx+UrzjNRIiN3IsEuuUpXacA
+	 D5A/eEBnvAakguDXNJ/oblyzHLYZJ4UUplW2kDMB5om7+VeLVp6zAcPjD+NvEuNkqf
+	 Agl6RB9/zpLrXdAwBe9GFIbkxJwlWBWA679Jw5vNHOeoHx97dBbX7p/bH2cgsL8uOO
+	 3iJP6pbkWv+gr3IoQG5cyue6JGknS89luNjaSayTkY6+nKJqKRbWxKjOYCHyDXT/XE
+	 QP8gQebNaOpRO+ayCrizikVz/SfLcRL1IjptPpPohsT107av2IitX5pzS8qfdHmXaa
+	 xXJncDT0wXioQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joe Lawrence <joe.lawrence@redhat.com>,
-	Song Liu <song@kernel.org>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
+Cc: Pepper Gray <hello@peppergray.xyz>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	peterz@infradead.org,
+	catalin.marinas@arm.com,
+	linux-arm-kernel@lists.infradead.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19] objtool/klp: fix mkstemp() failure with long paths
-Date: Tue, 24 Mar 2026 07:19:22 -0400
-Message-ID: <20260324111931.3257972-13-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] arm64/scs: Fix handling of advance_loc4
+Date: Tue, 24 Mar 2026 07:19:23 -0400
+Message-ID: <20260324111931.3257972-14-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
 References: <20260324111931.3257972-1-sashal@kernel.org>
@@ -50,231 +50,182 @@ MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.9
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Lawrence <joe.lawrence@redhat.com>
+From: Pepper Gray <hello@peppergray.xyz>
 
-[ Upstream commit 28e367a969b0c54c87ca655ec180715fe469fd14 ]
+[ Upstream commit d499e9627d70b1269020d59b95ed3e18bee6b8cd ]
 
-The elf_create_file() function fails with EINVAL when the build directory
-path is long enough to truncate the "XXXXXX" suffix in the 256-byte
-tmp_name buffer.
+DW_CFA_advance_loc4 is defined but no handler is implemented. Its
+CFA opcode defaults to EDYNSCS_INVALID_CFA_OPCODE triggering an
+error which wrongfully prevents modules from loading.
 
-Simplify the code to remove the unnecessary dirname()/basename() split
-and concatenation.  Instead, allocate the exact number of bytes needed for
-the path.
-
-Acked-by: Song Liu <song@kernel.org>
-Signed-off-by: Joe Lawrence <joe.lawrence@redhat.com>
-Link: https://patch.msgid.link/20260310203751.1479229-3-joe.lawrence@redhat.com
-Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://bugs.gentoo.org/971060
+Signed-off-by: Pepper Gray <hello@peppergray.xyz>
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-**CRITICAL FINDING**: The `elf_create_file()` function was introduced in
-commit `03c19a99ee69f` which first appeared in **v6.19-rc1**. It does
-NOT exist in v6.12, v6.13, v6.14, or v6.15.
+The context around the insertion point is identical in v6.6 and v6.12.
+The fix adds a new `case DW_CFA_advance_loc4:` between `advance_loc2`
+and `DW_CFA_def_cfa`. This should apply cleanly to both stable trees.
 
-The only stable tree that could contain this code is **6.19.y** (the
-current stable tree from which this kernel is tagged as 6.19.9).
+## PHASE 3-7 SYNTHESIS
 
-Record: The buggy code only exists in v6.19+. It does NOT exist in any
-older stable trees (6.12.y, 6.6.y, 6.1.y, 5.15.y, etc.).
+Let me now compile all findings:
 
-### Step 6.2: BACKPORT COMPLICATIONS
-For 6.19.y: The patch should apply cleanly since the code is new and
-there are no intervening changes to this specific function.
-Record: Clean apply expected for 6.19.y. Not applicable to any older
-stable tree.
+### Step 3.1: BLAME THE CHANGED LINES
+The switch statement was introduced in commit `3b619e22c4601b` by Ard
+Biesheuvel in v6.2-rc1. The `DW_CFA_advance_loc4` constant was defined
+but never given a case handler — the bug has existed since the code was
+first introduced.
 
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+### Step 3.2: FIXES TAG
+No Fixes: tag present. The implicit fix target is `3b619e22c4601b`
+("arm64: implement dynamic shadow call stack for Clang") from v6.2.
 
-### Step 7.1: SUBSYSTEM CRITICALITY
-- **Subsystem**: tools/objtool - a build-time tool, not runtime kernel
-  code
-- **Criticality**: PERIPHERAL - only affects users building kernels with
-  livepatch (CONFIG_LIVEPATCH) using the new `objtool klp-diff` feature
-- This is a userspace build tool, not kernel code that runs at runtime
-Record: [tools/objtool] [PERIPHERAL - build tool for livepatch users
-only]
+### Step 3.3-3.5: FILE HISTORY AND DEPENDENCIES
+The file has been modified 7 times total. The fix is self-contained — it
+adds a new case to an existing switch statement following the exact
+pattern of `DW_CFA_advance_loc1` and `DW_CFA_advance_loc2`. No
+dependencies on other patches.
 
-### Step 7.2: SUBSYSTEM ACTIVITY
-The objtool subsystem is actively developed with many recent commits
-related to klp/livepatch support.
-Record: Active development, new feature area.
+### Step 5: CODE SEMANTIC ANALYSIS
+- `scs_handle_fde_frame()` is called from `scs_patch()` which is called
+  from:
+  1. `map_kernel.c` — during early boot (vmlinux SCS patching)
+  2. `module.c` — during module loading
+- The amdgpu driver generates `DW_CFA_advance_loc4` opcodes (likely due
+  to very large functions), triggering the bug on module load.
 
-## PHASE 8: IMPACT AND RISK ASSESSMENT
+### Step 7: SUBSYSTEM AND CRITICALITY
+- **Subsystem:** arm64/scs — Shadow Call Stack security feature
+- **Criticality:** IMPORTANT — affects arm64 platforms with SCS enabled
+  (hardened kernels, Android)
 
-### Step 8.1: WHO IS AFFECTED
-- Only users of `objtool klp-diff` with build paths longer than ~248
-  characters
-- This is a brand new feature in v6.19, so the user base is small
-- Primarily affects enterprise livepatch build systems (Red Hat, SUSE,
-  etc.) with deep directory hierarchies
-Record: Very narrow audience - livepatch builders with long paths on
-6.19+.
+### Step 8: IMPACT AND RISK ASSESSMENT
 
-### Step 8.2: TRIGGER CONDITIONS
-- Requires: building livepatch modules with objtool klp-diff AND having
-  a build path > ~248 chars
-- Long paths are common in CI/build systems (Jenkins, corporate build
-  farms)
-- Trigger is deterministic (not a race) - if your path is long enough,
-  it always fails
-Record: Deterministic failure in specific path-length conditions. Common
-in enterprise CI.
+**Who is affected:** arm64 users with CONFIG_SHADOW_CALL_STACK=y and
+CONFIG_DYNAMIC_SCS=y loading modules with large functions (e.g.,
+amdgpu).
 
-### Step 8.3: FAILURE MODE SEVERITY
-- **Failure mode**: Build failure - mkstemp returns EINVAL, objtool
-  exits with error
-- **Severity**: MEDIUM - prevents building livepatch modules, but no
-  kernel crash or data corruption
-- This is a build-time failure, not a runtime kernel issue
-Record: Build failure only. Severity: MEDIUM (prevents livepatch module
-creation).
+**Trigger:** Loading any kernel module whose compiled code generates
+`DW_CFA_advance_loc4` DWARF opcodes (functions spanning >64KB of
+instructions).
 
-### Step 8.4: RISK-BENEFIT RATIO
-- **Benefit**: Fixes a real build failure for livepatch users with long
-  paths. Deterministic bug.
-- **Risk**: Very low. The fix simplifies code (removes complexity), is
-  obviously correct, and only affects a build tool.
-- **Ratio**: Favorable - low risk fix for a real bug, but limited
-  audience.
-Record: Low risk, moderate benefit for the narrow audience affected.
+**Failure mode in stable (6.6.y, 6.12.y):** SCS patching silently fails
+— the error return is not checked, so the module loads but without
+proper Shadow Call Stack protection. This is a **security degradation**
+— SCS is designed to protect against Return-Oriented Programming
+attacks.
+
+**Failure mode in mainline (v6.18+):** Module loading fails entirely
+(due to `6d4a0fbd34a40`). The Gentoo bug report confirms amdgpu fails to
+load on ARM64 hardened kernels.
+
+**Fix quality:**
+- 8 lines added, following the exact pattern of `advance_loc1` (1 byte)
+  and `advance_loc2` (2 bytes) but for 4 bytes
+- Obviously correct — it reads 4 bytes and advances the location counter
+- Signed off by Will Deacon (arm64 maintainer)
+- Minimal, surgical, no side effects
+- One minor style nit: `break` is outdented compared to the other cases,
+  but functionally correct
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Evidence FOR backporting:
+1. Fixes a real bug that prevents module loading on arm64 (confirmed by
+   Gentoo bug report with amdgpu)
+2. In stable trees, the bug silently disables Shadow Call Stack security
+   protection for affected modules
+3. The buggy code has been present since v6.2 (affects 6.6.y, 6.12.y
+   stable trees)
+4. Fix is small (8 lines), obviously correct, follows the exact pattern
+   of adjacent code
+5. Signed off by Will Deacon (arm64 maintainer)
+6. Link to real user bug report (Gentoo #971060) — actual users hit this
+7. Self-contained — no dependencies on other patches
+8. Should apply cleanly to stable (same code context exists in 6.6 and
+   6.12)
 
-**Evidence FOR backporting:**
-- Fixes a real, deterministic bug (mkstemp EINVAL with long paths)
-- Obviously correct fix (exact allocation vs fixed 256-byte buffer)
-- Small and contained (single function, net code reduction)
-- Acked by livepatch maintainer, committed by objtool maintainer
-- Merged via objtool/urgent branch
-- Also fixes memory leaks in the old code (strdup results not freed)
+### Evidence AGAINST backporting:
+- None significant. The only minor concern is that in current stable
+  trees the error is silently ignored (module still loads), so the
+  immediate user-visible impact is lower (security degradation rather
+  than module load failure). But this is still a bug worth fixing.
 
-**Evidence AGAINST backporting:**
-- The buggy code (`elf_create_file()`) only exists in v6.19+ - it was
-  introduced in v6.19-rc1
-- Very narrow audience (livepatch builders with long paths)
-- Build tool fix, not runtime kernel code
-- Part of a 12-patch series (though this patch is self-contained)
-- No Cc: stable tag
-- The entire klp-diff feature is brand new in v6.19
-
-### Step 9.2: STABLE RULES CHECKLIST
-1. Obviously correct and tested? **YES** - simple, obviously correct
-   allocation fix
-2. Fixes a real bug? **YES** - build failure with long paths
-3. Important issue? **MODERATE** - build failure, not
-   crash/security/corruption
-4. Small and contained? **YES** - single function, net code reduction
-5. No new features? **YES** - pure bug fix
-6. Can apply to stable? **Only to 6.19.y** - code doesn't exist in older
-   trees
-
-### Step 9.3: EXCEPTION CATEGORIES
-No exception category applies - this is a straightforward bug fix.
-
-### Step 9.4: DECISION
-
-This is a legitimate bug fix that is obviously correct and low risk. It
-fixes a real build failure in objtool's klp-diff feature for users with
-long build directory paths. The fix is small, surgical, and simplifies
-the code.
-
-However, the critical factor is that the buggy code was only introduced
-in v6.19-rc1. It only applies to the 6.19.y stable tree. For that
-specific tree, this is a reasonable backport - it's a build fix for a
-new feature, it's low risk, and it prevents a deterministic failure.
-
-For the 6.19.y stable tree specifically, this meets the criteria. The
-fix is small, obviously correct, and prevents a real build failure.
+### Stable Rules Checklist:
+1. **Obviously correct and tested?** YES — follows the pattern of
+   loc1/loc2, tested by Gentoo users
+2. **Fixes a real bug?** YES — prevents module loading (mainline) or
+   silently breaks SCS (stable)
+3. **Important issue?** YES — security feature bypass on hardened arm64
+   kernels
+4. **Small and contained?** YES — 8 lines in one file
+5. **No new features or APIs?** YES — just adds missing case handler
+6. **Can apply to stable trees?** YES — context is identical in 6.6 and
+   6.12
 
 ## Verification
 
-- [Phase 1] Parsed tags: Acked-by Song Liu (livepatch maintainer),
-  Signed-off-by Josh Poimboeuf (objtool maintainer), Link to
-  patch.msgid.link
-- [Phase 2] Diff analysis: Removes ~16 lines of dirname/basename/fixed-
-  buffer code, adds ~4 lines with exact-size allocation. Net
-  simplification.
-- [Phase 3] git blame: All buggy lines from commit 03c19a99ee69f
-  (2025-09-17), first in v6.19-rc1
-- [Phase 3] git merge-base: Confirmed 03c19a99ee69f NOT in v6.12, v6.13,
-  v6.14, v6.15 - only in v6.19+
-- [Phase 4] lore.kernel.org: Found patch is v4 02/12 in series, merged
-  via objtool/urgent branch. No explicit stable nomination found.
-- [Phase 5] grep elf_create_file: Single caller in klp-diff.c:1732 with
-  user-provided path argument
-- [Phase 6] Code only exists in v6.19.y stable tree; not applicable to
-  older stable trees
-- [Phase 7] tools/objtool is a build-time tool, PERIPHERAL criticality
-- [Phase 8] Failure mode: deterministic build failure (EINVAL from
-  mkstemp), severity MEDIUM
+- [Phase 1] Parsed subject: arm64/scs subsystem, "Fix" action verb,
+  missing advance_loc4 handler
+- [Phase 1] Parsed tags: Link to bugs.gentoo.org/971060, Signed-off-by
+  Will Deacon (arm64 maintainer)
+- [Phase 2] Diff analysis: +8 lines in single file, adds
+  DW_CFA_advance_loc4 case to existing switch
+- [Phase 2] Pattern follows DW_CFA_advance_loc1 (1 byte) and
+  DW_CFA_advance_loc2 (2 bytes) exactly
+- [Phase 3] git blame: switch statement introduced in 3b619e22c4601b
+  (v6.2-rc1), bug present since then
+- [Phase 3] git show v6.1: file does not exist — bug only affects 6.2+
+- [Phase 3] git show v6.6, v6.12: confirmed DW_CFA_advance_loc4 defined
+  but no case handler in both
+- [Phase 3] git show 6d4a0fbd34a40: confirmed this commit (v6.18) made
+  module loading actually fail on SCS errors
+- [Phase 3] v6.6/v6.12 module.c: SCS patch error return is NOT checked —
+  module loads with broken SCS
+- [Phase 4] WebFetch bugs.gentoo.org/971060: confirmed amdgpu module
+  fails to load on ARM64 hardened kernel
+- [Phase 4] WebFetch lore.kernel.org: found patch discussion, accepted
+  by Will Deacon, pulled in arm64 fixes
+- [Phase 5] scs_handle_fde_frame called from scs_patch, which is called
+  from module.c and map_kernel.c
+- [Phase 6] Confirmed context around insertion point is identical in
+  v6.6 and v6.12 — clean apply expected
+- [Phase 7] Subsystem: arm64/scs, IMPORTANT criticality (security
+  feature for arm64)
+- [Phase 8] Failure mode: security degradation (stable) or module load
+  failure (mainline), severity HIGH
 
 **YES**
 
- tools/objtool/elf.c | 23 +++--------------------
- 1 file changed, 3 insertions(+), 20 deletions(-)
+ arch/arm64/kernel/pi/patch-scs.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/objtool/elf.c b/tools/objtool/elf.c
-index 3da90686350d7..2ffe3ebfbe37c 100644
---- a/tools/objtool/elf.c
-+++ b/tools/objtool/elf.c
-@@ -16,7 +16,6 @@
- #include <string.h>
- #include <unistd.h>
- #include <errno.h>
--#include <libgen.h>
- #include <ctype.h>
- #include <linux/align.h>
- #include <linux/kernel.h>
-@@ -1189,7 +1188,7 @@ struct elf *elf_open_read(const char *name, int flags)
- struct elf *elf_create_file(GElf_Ehdr *ehdr, const char *name)
- {
- 	struct section *null, *symtab, *strtab, *shstrtab;
--	char *dir, *base, *tmp_name;
-+	char *tmp_name;
- 	struct symbol *sym;
- 	struct elf *elf;
+diff --git a/arch/arm64/kernel/pi/patch-scs.c b/arch/arm64/kernel/pi/patch-scs.c
+index bbe7d30ed12b3..dac568e4a54f2 100644
+--- a/arch/arm64/kernel/pi/patch-scs.c
++++ b/arch/arm64/kernel/pi/patch-scs.c
+@@ -192,6 +192,14 @@ static int scs_handle_fde_frame(const struct eh_frame *frame,
+ 			size -= 2;
+ 			break;
  
-@@ -1203,29 +1202,13 @@ struct elf *elf_create_file(GElf_Ehdr *ehdr, const char *name)
- 
- 	INIT_LIST_HEAD(&elf->sections);
- 
--	dir = strdup(name);
--	if (!dir) {
--		ERROR_GLIBC("strdup");
--		return NULL;
--	}
--
--	dir = dirname(dir);
--
--	base = strdup(name);
--	if (!base) {
--		ERROR_GLIBC("strdup");
--		return NULL;
--	}
--
--	base = basename(base);
--
--	tmp_name = malloc(256);
-+	tmp_name = malloc(strlen(name) + 8);
- 	if (!tmp_name) {
- 		ERROR_GLIBC("malloc");
- 		return NULL;
- 	}
- 
--	snprintf(tmp_name, 256, "%s/%s.XXXXXX", dir, base);
-+	sprintf(tmp_name, "%s.XXXXXX", name);
- 
- 	elf->fd = mkstemp(tmp_name);
- 	if (elf->fd == -1) {
++		case DW_CFA_advance_loc4:
++			loc += *opcode++ * code_alignment_factor;
++			loc += (*opcode++ << 8) * code_alignment_factor;
++			loc += (*opcode++ << 16) * code_alignment_factor;
++			loc += (*opcode++ << 24) * code_alignment_factor;
++			size -= 4;
++		break;
++
+ 		case DW_CFA_def_cfa:
+ 		case DW_CFA_offset_extended:
+ 			size = skip_xleb128(&opcode, size);
 -- 
 2.51.0
 
