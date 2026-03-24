@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6252B3F2118;
-	Tue, 24 Mar 2026 11:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A663F0777;
+	Tue, 24 Mar 2026 11:19:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774351192; cv=none; b=W7zvCD4yDL2SiFLKNtbki7o/l/KPUIWPDcNUgjr2jTunqsXCHZoISYhuDcS2Pk1NYThoSldvUdUTPeL2CZt5shiWF9p64d5yOMGQgv+AgeSRGMFJl2mqFrtvuOEs0fUKxKklUy53gWiC1NvGc2zt0Pe67ZXUmnniVELKvIdgFsM=
+	t=1774351194; cv=none; b=OVQAiNXQOHw9W2mVfbpP8JL8SgZDWH/5PGNrHChkkxhLRt57kdrCl43OV13zpkdBDdCwsc+/vAZOrxQYxWiwF1laEVcb1M6ELazzakk1sJrnESWsa7FMNKosG3VLlhs1sOsRZHWARn3MVsCN9Sc1zzj7FhKlenUIeX0QucWiWDU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774351192; c=relaxed/simple;
-	bh=VT3AT/WWqPufi5SKMScsvaN96hTQjfYr79XjpwYmz/Y=;
+	s=arc-20240116; t=1774351194; c=relaxed/simple;
+	bh=GOBR5zcQknbloOdl9XyMm1giMq6aOgWrahxWYxIRouk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=RK1+v1dbZ8L38P+zmep/ukCPnq+ehkKC2SfvBsLVthAYhudp9euL7/8eCvUvSLRY+hfXAUBtRkWsQE4Eh7dwz2u4Uw7uO/Kc6rUMK8okq8PErBkAhE/IhPi76UTzR3lJYoERQCbl/vJymtYwprbJhoXK6hwMSxbJi/iYis9EkYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FylAkqkJ; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=VKaAavWcfO+rAdivoBBTaB0R6DUTjItH79qdcAEbZuPR1eB//9vYYEg0GumllnybRjdvpxha+IwwQE9QzqfGxJLHksezInB2kT5BDBrkMqCPGs6o/KFPVXNHPJcRGixtA9YE5RPBrQxSbey/k4kbijlKsiGPZYBssIcdWh4iflg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Pi2gcTZv; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FylAkqkJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EC3CC2BCB3;
-	Tue, 24 Mar 2026 11:19:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Pi2gcTZv"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67875C19424;
+	Tue, 24 Mar 2026 11:19:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774351192;
-	bh=VT3AT/WWqPufi5SKMScsvaN96hTQjfYr79XjpwYmz/Y=;
+	s=k20201202; t=1774351193;
+	bh=GOBR5zcQknbloOdl9XyMm1giMq6aOgWrahxWYxIRouk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FylAkqkJCJtdxGIIUV2BYNtId7r5Em6I/zDBhS3t7Qx+UrzjNRIiN3IsEuuUpXacA
-	 D5A/eEBnvAakguDXNJ/oblyzHLYZJ4UUplW2kDMB5om7+VeLVp6zAcPjD+NvEuNkqf
-	 Agl6RB9/zpLrXdAwBe9GFIbkxJwlWBWA679Jw5vNHOeoHx97dBbX7p/bH2cgsL8uOO
-	 3iJP6pbkWv+gr3IoQG5cyue6JGknS89luNjaSayTkY6+nKJqKRbWxKjOYCHyDXT/XE
-	 QP8gQebNaOpRO+ayCrizikVz/SfLcRL1IjptPpPohsT107av2IitX5pzS8qfdHmXaa
-	 xXJncDT0wXioQ==
+	b=Pi2gcTZv9pc45miFWg+sH+3EJ7FtoqM6RMNOC9xZAIN54uKYYW98qGCEtWv8ye3BN
+	 mCoD26gsqCHerBecKIlFgI41vg3R2kKGC6hir4MZzJtosQbBXz/xxgLPWElW92Ibag
+	 eH2OjU/hhsnoxuDw/0shftcTebgiNp4TM20ufExY3gByi56IDgx0NJPc9na2/V+6Ou
+	 uVmbNSwoodwqVpkEAr9meuRB82ztqUbiAcCV8DiFiFdMZzzHE9KHpi9pS6FiKvmFez
+	 +n4morRtAjOaVB8KAvmVI+skF0+K8A1UWOghsuJzDOoF+VF8eLNhtEkAF0HIQ7KBj9
+	 0sInMl1AVe+LQ==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pepper Gray <hello@peppergray.xyz>,
-	Will Deacon <will@kernel.org>,
+Cc: Adrian Freund <adrian@freund.io>,
+	Jiri Kosina <jkosina@suse.com>,
 	Sasha Levin <sashal@kernel.org>,
-	catalin.marinas@arm.com,
-	linux-arm-kernel@lists.infradead.org,
+	jikos@kernel.org,
+	bentiss@kernel.org,
+	linux-input@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.6] arm64/scs: Fix handling of advance_loc4
-Date: Tue, 24 Mar 2026 07:19:23 -0400
-Message-ID: <20260324111931.3257972-14-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] HID: logitech-hidpp: Enable MX Master 4 over bluetooth
+Date: Tue, 24 Mar 2026 07:19:24 -0400
+Message-ID: <20260324111931.3257972-15-sashal@kernel.org>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260324111931.3257972-1-sashal@kernel.org>
 References: <20260324111931.3257972-1-sashal@kernel.org>
@@ -53,179 +54,147 @@ X-stable-base: Linux 6.19.9
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pepper Gray <hello@peppergray.xyz>
+From: Adrian Freund <adrian@freund.io>
 
-[ Upstream commit d499e9627d70b1269020d59b95ed3e18bee6b8cd ]
+[ Upstream commit 70031e70ca15ede6a39db4d978e53a6cc720d454 ]
 
-DW_CFA_advance_loc4 is defined but no handler is implemented. Its
-CFA opcode defaults to EDYNSCS_INVALID_CFA_OPCODE triggering an
-error which wrongfully prevents modules from loading.
+The Logitech MX Master 4 can be connected over bluetooth or through a
+Logitech Bolt receiver. This change adds support for non-standard HID
+features, such as high resolution scrolling when the mouse is connected
+over bluetooth.
+Because no Logitech Bolt receiver driver exists yet those features
+won't be available when the mouse is connected through the receiver.
 
-Link: https://bugs.gentoo.org/971060
-Signed-off-by: Pepper Gray <hello@peppergray.xyz>
-Signed-off-by: Will Deacon <will@kernel.org>
+Signed-off-by: Adrian Freund <adrian@freund.io>
+Signed-off-by: Jiri Kosina <jkosina@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-The context around the insertion point is identical in v6.6 and v6.12.
-The fix adds a new `case DW_CFA_advance_loc4:` between `advance_loc2`
-and `DW_CFA_def_cfa`. This should apply cleanly to both stable trees.
+The table has grown but the addition is at the end before the terminator
+`{}`. It should apply cleanly or with trivial context adjustment to any
+stable tree.
 
-## PHASE 3-7 SYNTHESIS
+Record: [Clean apply expected — insertion point is at end of table
+before terminator]
 
-Let me now compile all findings:
+### Step 6.3: RELATED FIXES IN STABLE
+No related fixes — this is new hardware support.
 
-### Step 3.1: BLAME THE CHANGED LINES
-The switch statement was introduced in commit `3b619e22c4601b` by Ard
-Biesheuvel in v6.2-rc1. The `DW_CFA_advance_loc4` constant was defined
-but never given a case handler — the bug has existed since the code was
-first introduced.
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
-### Step 3.2: FIXES TAG
-No Fixes: tag present. The implicit fix target is `3b619e22c4601b`
-("arm64: implement dynamic shadow call stack for Clang") from v6.2.
+### Step 7.1
+- **Subsystem**: HID (Human Interface Devices) — input peripherals
+- **Criticality**: IMPORTANT — mice are core input devices for desktop
+  users
 
-### Step 3.3-3.5: FILE HISTORY AND DEPENDENCIES
-The file has been modified 7 times total. The fix is self-contained — it
-adds a new case to an existing switch statement following the exact
-pattern of `DW_CFA_advance_loc1` and `DW_CFA_advance_loc2`. No
-dependencies on other patches.
+### Step 7.2
+The HID subsystem and this driver specifically are actively maintained
+with regular device ID additions.
 
-### Step 5: CODE SEMANTIC ANALYSIS
-- `scs_handle_fde_frame()` is called from `scs_patch()` which is called
-  from:
-  1. `map_kernel.c` — during early boot (vmlinux SCS patching)
-  2. `module.c` — during module loading
-- The amdgpu driver generates `DW_CFA_advance_loc4` opcodes (likely due
-  to very large functions), triggering the bug on module load.
+## PHASE 8: IMPACT AND RISK ASSESSMENT
 
-### Step 7: SUBSYSTEM AND CRITICALITY
-- **Subsystem:** arm64/scs — Shadow Call Stack security feature
-- **Criticality:** IMPORTANT — affects arm64 platforms with SCS enabled
-  (hardened kernels, Android)
+### Step 8.1: WHO IS AFFECTED
+Users who own an MX Master 4 mouse and connect it via Bluetooth on
+stable kernels. Without this patch, they don't get high-resolution
+scrolling and other hidpp features.
 
-### Step 8: IMPACT AND RISK ASSESSMENT
+### Step 8.2: TRIGGER CONDITIONS
+Any user who connects an MX Master 4 over Bluetooth is affected.
 
-**Who is affected:** arm64 users with CONFIG_SHADOW_CALL_STACK=y and
-CONFIG_DYNAMIC_SCS=y loading modules with large functions (e.g.,
-amdgpu).
+### Step 8.3: FAILURE MODE
+Without the patch: missing features (high-res scrolling). With the
+patch: device works with full feature set. No crash, no security issue —
+hardware enablement.
 
-**Trigger:** Loading any kernel module whose compiled code generates
-`DW_CFA_advance_loc4` DWARF opcodes (functions spanning >64KB of
-instructions).
-
-**Failure mode in stable (6.6.y, 6.12.y):** SCS patching silently fails
-— the error return is not checked, so the module loads but without
-proper Shadow Call Stack protection. This is a **security degradation**
-— SCS is designed to protect against Return-Oriented Programming
-attacks.
-
-**Failure mode in mainline (v6.18+):** Module loading fails entirely
-(due to `6d4a0fbd34a40`). The Gentoo bug report confirms amdgpu fails to
-load on ARM64 hardened kernels.
-
-**Fix quality:**
-- 8 lines added, following the exact pattern of `advance_loc1` (1 byte)
-  and `advance_loc2` (2 bytes) but for 4 bytes
-- Obviously correct — it reads 4 bytes and advances the location counter
-- Signed off by Will Deacon (arm64 maintainer)
-- Minimal, surgical, no side effects
-- One minor style nit: `break` is outdented compared to the other cases,
-  but functionally correct
+### Step 8.4: RISK-BENEFIT
+- **Benefit**: MEDIUM — enables features for popular Logitech mouse (MX
+  Master line is very popular)
+- **Risk**: VERY LOW — 2-line device ID table addition, zero chance of
+  regression
+- **Ratio**: Favorable
 
 ## PHASE 9: FINAL SYNTHESIS
 
-### Evidence FOR backporting:
-1. Fixes a real bug that prevents module loading on arm64 (confirmed by
-   Gentoo bug report with amdgpu)
-2. In stable trees, the bug silently disables Shadow Call Stack security
-   protection for affected modules
-3. The buggy code has been present since v6.2 (affects 6.6.y, 6.12.y
-   stable trees)
-4. Fix is small (8 lines), obviously correct, follows the exact pattern
-   of adjacent code
-5. Signed off by Will Deacon (arm64 maintainer)
-6. Link to real user bug report (Gentoo #971060) — actual users hit this
-7. Self-contained — no dependencies on other patches
-8. Should apply cleanly to stable (same code context exists in 6.6 and
-   6.12)
+### Step 9.1: EVIDENCE
+**FOR backporting:**
+- This is a NEW DEVICE ID addition — an explicit exception category for
+  stable
+- Trivially small (2 lines), obviously correct, follows exact pattern of
+  dozens of prior entries
+- Zero regression risk — only affects users who have this specific
+  hardware
+- MX Master 4 is a popular consumer mouse; users on stable kernels would
+  benefit
+- The same author successfully added MX Master 3 previously
+- Merged by the HID subsystem maintainer (Jiri Kosina)
 
-### Evidence AGAINST backporting:
-- None significant. The only minor concern is that in current stable
-  trees the error is silently ignored (module still loads), so the
-  immediate user-visible impact is lower (security degradation rather
-  than module load failure). But this is still a bug worth fixing.
+**AGAINST backporting:**
+- This is not a bug fix — it's enabling new hardware support
+- The mouse still works as a basic HID device without this; only
+  advanced features are missing
+- Strictly speaking, this adds new functionality rather than fixing a
+  bug
 
-### Stable Rules Checklist:
-1. **Obviously correct and tested?** YES — follows the pattern of
-   loc1/loc2, tested by Gentoo users
-2. **Fixes a real bug?** YES — prevents module loading (mainline) or
-   silently breaks SCS (stable)
-3. **Important issue?** YES — security feature bypass on hardened arm64
-   kernels
-4. **Small and contained?** YES — 8 lines in one file
-5. **No new features or APIs?** YES — just adds missing case handler
-6. **Can apply to stable trees?** YES — context is identical in 6.6 and
-   6.12
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** — trivial pattern match, merged
+   by maintainer
+2. Fixes a real bug? **NO** — enables hardware features, not a bug fix
+3. Important issue? **N/A** — not a bug, but important for hardware
+   support
+4. Small and contained? **YES** — 2 lines
+5. No new features? **This adds a device ID, which is an allowed
+   exception**
+6. Can apply to stable? **YES** — clean apply expected
+
+### Step 9.3: EXCEPTION CATEGORIES
+**YES — Device ID addition to existing driver.** This falls squarely
+into the "NEW DEVICE IDs" exception category. Adding device IDs to
+existing drivers is explicitly allowed in stable trees because they are
+trivial additions that enable hardware support with zero risk.
+
+### Step 9.4: DECISION
+This is a textbook device ID addition — 2 lines adding a Bluetooth
+product ID for the Logitech MX Master 4 to an existing, well-established
+driver. The stable kernel rules explicitly allow this pattern. The risk
+is essentially zero, and users with this popular mouse benefit from full
+feature support.
 
 ## Verification
-
-- [Phase 1] Parsed subject: arm64/scs subsystem, "Fix" action verb,
-  missing advance_loc4 handler
-- [Phase 1] Parsed tags: Link to bugs.gentoo.org/971060, Signed-off-by
-  Will Deacon (arm64 maintainer)
-- [Phase 2] Diff analysis: +8 lines in single file, adds
-  DW_CFA_advance_loc4 case to existing switch
-- [Phase 2] Pattern follows DW_CFA_advance_loc1 (1 byte) and
-  DW_CFA_advance_loc2 (2 bytes) exactly
-- [Phase 3] git blame: switch statement introduced in 3b619e22c4601b
-  (v6.2-rc1), bug present since then
-- [Phase 3] git show v6.1: file does not exist — bug only affects 6.2+
-- [Phase 3] git show v6.6, v6.12: confirmed DW_CFA_advance_loc4 defined
-  but no case handler in both
-- [Phase 3] git show 6d4a0fbd34a40: confirmed this commit (v6.18) made
-  module loading actually fail on SCS errors
-- [Phase 3] v6.6/v6.12 module.c: SCS patch error return is NOT checked —
-  module loads with broken SCS
-- [Phase 4] WebFetch bugs.gentoo.org/971060: confirmed amdgpu module
-  fails to load on ARM64 hardened kernel
-- [Phase 4] WebFetch lore.kernel.org: found patch discussion, accepted
-  by Will Deacon, pulled in arm64 fixes
-- [Phase 5] scs_handle_fde_frame called from scs_patch, which is called
-  from module.c and map_kernel.c
-- [Phase 6] Confirmed context around insertion point is identical in
-  v6.6 and v6.12 — clean apply expected
-- [Phase 7] Subsystem: arm64/scs, IMPORTANT criticality (security
-  feature for arm64)
-- [Phase 8] Failure mode: security degradation (stable) or module load
-  failure (mainline), severity HIGH
+- [Phase 1] Parsed tags: Author Adrian Freund, merged by HID maintainer
+  Jiri Kosina
+- [Phase 2] Diff analysis: +2 lines adding HID_BLUETOOTH_DEVICE entry
+  (0xb042) to hidpp_devices[] table
+- [Phase 3] git blame: Device ID table exists since 2014, continuously
+  expanded with similar entries
+- [Phase 3] git log --author: Author previously added MX Master 3
+  (commit 04bd68171e018)
+- [Phase 3] git log: File actively maintained, 19+ changes since v6.6
+- [Phase 5] No functions modified — pure data table addition
+- [Phase 6] Driver exists in all active stable trees (since 2014)
+- [Phase 7] HID subsystem, actively maintained, IMPORTANT criticality
+- [Phase 8] Risk: VERY LOW (2-line table entry), Benefit: MEDIUM
+  (popular hardware)
 
 **YES**
 
- arch/arm64/kernel/pi/patch-scs.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/hid/hid-logitech-hidpp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/kernel/pi/patch-scs.c b/arch/arm64/kernel/pi/patch-scs.c
-index bbe7d30ed12b3..dac568e4a54f2 100644
---- a/arch/arm64/kernel/pi/patch-scs.c
-+++ b/arch/arm64/kernel/pi/patch-scs.c
-@@ -192,6 +192,14 @@ static int scs_handle_fde_frame(const struct eh_frame *frame,
- 			size -= 2;
- 			break;
+diff --git a/drivers/hid/hid-logitech-hidpp.c b/drivers/hid/hid-logitech-hidpp.c
+index 02d83c3bd73d4..c3d53250a7604 100644
+--- a/drivers/hid/hid-logitech-hidpp.c
++++ b/drivers/hid/hid-logitech-hidpp.c
+@@ -4668,6 +4668,8 @@ static const struct hid_device_id hidpp_devices[] = {
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb038) },
+ 	{ /* Slim Solar+ K980 Keyboard over Bluetooth */
+ 	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb391) },
++	{ /* MX Master 4 mouse over Bluetooth */
++	  HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH, 0xb042) },
+ 	{}
+ };
  
-+		case DW_CFA_advance_loc4:
-+			loc += *opcode++ * code_alignment_factor;
-+			loc += (*opcode++ << 8) * code_alignment_factor;
-+			loc += (*opcode++ << 16) * code_alignment_factor;
-+			loc += (*opcode++ << 24) * code_alignment_factor;
-+			size -= 4;
-+		break;
-+
- 		case DW_CFA_def_cfa:
- 		case DW_CFA_offset_extended:
- 			size = skip_xleb128(&opcode, size);
 -- 
 2.51.0
 
