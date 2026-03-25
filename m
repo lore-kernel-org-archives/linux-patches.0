@@ -1,53 +1,74 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3972359A8C;
-	Wed, 25 Mar 2026 09:50:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00042750ED
+	for <patches@lists.linux.dev>; Wed, 25 Mar 2026 10:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774432206; cv=none; b=Y+MYGipI/uZR9Zn0sGR1eYJm2Rxf9PLafRN4OdbaZ6U4rdvSHnK9EEVApZ6lN6sopRmkt/WwcsO53alFqYb2l/N0KOh76ilFWu8liT0Vw3SJHGzLoH7LyFZ7uhPc/TP4gmgWJgIWVjVzPjTbJIDjGbx7BprHZBvdEztZEaCKddA=
+	t=1774436163; cv=none; b=oYxpAVHS7mHpeLBGUQO+myFWrHE2n7ykSmB9Tatrq+xwc/SqxAFeGl+rpLH3KqMdEpNY+Zx0iTtUrhS6OCrU1AvuDkCNAonW9nMQUoHMK+YxGcj79pBtOOYy29HPfkXM4ro+7PqfL4YQ7RK7CrHnkUghCiEWBYDXXloaELHYnfM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774432206; c=relaxed/simple;
-	bh=Bf0PBw5Adw8enGJg9vZPnLPb1pWLLwp32Nna1aPLguc=;
+	s=arc-20240116; t=1774436163; c=relaxed/simple;
+	bh=m4571C4KsP5S+tvy3v4ajwODfqrsP5H3SzYFjB/0vtU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LSVbgngZPcSWyKm2gQ77jJ25Esh3nt68TfjkAiSVgeD2aG9Dfp0lpBhvXXHTXsduZEtEraPfdkL22XBpJCjC7y5i7wqODWxnkoz56DxCmoZDGZYIpakBSQuVE2j1n7OIgSKTz4L1HiE6YYtCjYpt64tXAbYFcNKsDAjhEqraq7Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=OpYoACiF; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=fyUmYXwa3BMYnsQ3lIdXZcc4mcAKSCnHqfckQoB+NWEDnwBrk1DbvC8+RgtxXPwu192rOCvnrr/AFWj4bNbMIB1FAWlH+PEUZ6zPL1VOMfO+ca/RRH65WC3Z5vvNZ+uRNSFyIaVavlguGHhJfjy1i6kka4eWceLlZQk/DWpt47Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com; spf=pass smtp.mailfrom=suse.com; dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b=Xn6fWkk7; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=suse.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="OpYoACiF"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7EBEC4CEF7;
-	Wed, 25 Mar 2026 09:50:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1774432206;
-	bh=Bf0PBw5Adw8enGJg9vZPnLPb1pWLLwp32Nna1aPLguc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=OpYoACiFwpZzD7hxqtfIslwJd5mby0S8GfHQLcnUOGVqnykROGMgCTUut5LCxMmvb
-	 8hra4wguoV0cDs1AyXquxLsgH2FSGKmkOnYht1vgwg6eWsSbfCtvcyNYbn2eGVvUj8
-	 Hb7L/v6CfwohnmwYXQNX9+xjojKFdf3MaGJ5Kja4=
-Date: Wed, 25 Mar 2026 10:49:43 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Theodore Tso <tytso@mit.edu>
-Cc: Mark Brown <broonie@kernel.org>, Jan Kara <jack@suse.cz>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Brian Foster <bfoster@redhat.com>,
-	Yongjian Sun <sunyongjian1@huawei.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Gou Hao <gouhao@uniontech.com>,
-	Kemeng Shi <shikemeng@huaweicloud.com>,
-	Zhang Yi <yi.zhang@huawei.com>, Baokun Li <libaokun1@huawei.com>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org,
-	hargar@microsoft.com, achill@achill.org, sr@sladewatkins.com
-Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
-Message-ID: <2026032535-casino-cable-e039@gregkh>
-References: <20260323134525.256603107@linuxfoundation.org>
- <20260324073447.GA5062@francesco-nb>
- <mhqesgj3u7dr33zit6iwjhykw2zpuallru4qvoloyyqzdqgvki@bpwwmihh357r>
- <d8080343-20cd-4a4a-b726-b9e3c6a5c5eb@sirena.org.uk>
- <20260325035931.GC61656@mac.lan>
+	dkim=pass (2048-bit key) header.d=suse.com header.i=@suse.com header.b="Xn6fWkk7"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4852c9b4158so48146365e9.0
+        for <patches@lists.linux.dev>; Wed, 25 Mar 2026 03:56:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=suse.com; s=google; t=1774436160; x=1775040960; darn=lists.linux.dev;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=6cS8MLONKqJ5qnXkc4uPkwYfi3bzAQ6aZbhxWDuF/ZQ=;
+        b=Xn6fWkk7BXboeL1mkcEgyglzRGLOERoTWiR7wVvGLjRc7v5dN3tyrOPk8C09otqg7z
+         IL119HV0YywBuXFmZtrqk99SWxFPJ7VXRDBcO3NUHf5KRsUstVTqZEfp9Psw4tiONrtH
+         Ef50YazNkCEA+vm8dacTMiEMnMndcr9142FWFXCRsOm0VnmKZ6BEwp7M+vLttoWoQvVE
+         U8wGTm5OHMqiTmgPH6m3lgm1q8W7w/fHTfsEfff857hQ5Vn5PvtjVgxzd8u0iM2uu8i3
+         eoMCAjCxoh9EfnD90sYalZNrwjmEpl4mAtrl6VuVY6uwjWxmDRH5hlXz6DXFHTzqucWz
+         Gm6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20251104; t=1774436160; x=1775040960;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6cS8MLONKqJ5qnXkc4uPkwYfi3bzAQ6aZbhxWDuF/ZQ=;
+        b=VJmI5Q85fZJpGyHU5t61ixkh4UEg7Js285DKaq76WqSfJDkrAIubW2cIAX7q9/WtBP
+         2tT1Q9j/vgsxk/07cI9qHysSI4k8BJbIvRWFnUD84XVTciWnl6+lOZLXl9l+gLBc3djX
+         njvBzEAbV6oCVW+ojtFx1FF8LSCyFBKnn5XXr6+xNgosh6ir1m7mX3DAGDiR4O13oEQO
+         8ENPlBJrz2Q1MTyJ9n7RELzWbWiIi71OOp/RlT/ij4H45w/7yDR5XQWX87HDky6v/W0a
+         FZ6vwnld7gEpyEoGDH4XNqQ5jp0Y4eh+p9wONIud4qqAmJr2D/w/DLxM3hquLNTPlTWz
+         Y2IQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXRjjJdYU7RofjntQyNfN+zs+zd6U/t2+4TwYIoNgZisWyhz9L2LQICdWHHcB+p7sTL/NviRdH5@lists.linux.dev
+X-Gm-Message-State: AOJu0YxekHY8u7mcwyA5O3sSxuKb0+ILZrxoVdgPAT4Gv1FzzbLusOKV
+	GQkxrDPUUFQcRuqM/AtsOD6/MqE3lMuoZGLI9oV4v7T4c2Q6rsOhov5hn0vXbJGDIGk=
+X-Gm-Gg: ATEYQzwEZMGr8mTxT+sMZ7aYP96hAeqHQHCBwm+YIAxjAtZQa+5Vuu3r7N3pFsiFoYf
+	2kiHCMRGtY/k+bxXcXlN+mtEYN1c1R62GvGUq0aNz31bqf9wy9Do+vJqdlLn5vk20B4ouvB0uRs
+	QIBNJvFhtd9WMU2F4MEbjTXjlA0vNoY4Y+UAwQ97UhTXx4r92BD33OkgCUqhHuGVj0v0D77rwHJ
+	b5X2kSBw3C50F8RFwwUuguUgSjn1rNUfrkIDcHzW/38Lh4nauHlwnnMi6iA5jOsjhysNxFt5drF
+	mpyPJE+Vdsk+xh72oyS1ZMNXk5twlKyt21L0OkjtzRKddaOwT26RMHoPJbHzGMUUjPLGnAXkvLx
+	KqiEq0jBXgZwDUwVsqW6GZujQwDlkXSJ2qURvexOkF7LKiuxqZpkRciGhzyfFV4KvmdYFmu6uTK
+	Whw6I1KVfBPYDfJR6Hsg==
+X-Received: by 2002:a05:600c:4f53:b0:485:531d:28b9 with SMTP id 5b1f17b1804b1-48715ff74dbmr44190865e9.14.1774436159850;
+        Wed, 25 Mar 2026 03:55:59 -0700 (PDT)
+Received: from u94a ([2401:e180:8d68:92ee:b67c:a5bb:13e0:f6f])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-35c0e919be5sm946775a91.3.2026.03.25.03.55.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Mar 2026 03:55:58 -0700 (PDT)
+Date: Wed, 25 Mar 2026 18:55:48 +0800
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, akpm@linux-foundation.org, 
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org, 
+	lkft-triage@lists.linaro.org, pavel@nabladev.com, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, rwarsow@gmx.de, conor@kernel.org, hargar@microsoft.com, 
+	broonie@kernel.org, achill@achill.org, sr@sladewatkins.com
+Subject: Re: [PATCH 6.19 000/220] 6.19.10-rc1 review
+Message-ID: <v5jifek56gr5vuh2x62uwq6eqxercf4ntfoil7bgwkcyaph2ay@lrgoyh2c6r4u>
+References: <20260323134504.575022936@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -56,63 +77,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260325035931.GC61656@mac.lan>
+In-Reply-To: <20260323134504.575022936@linuxfoundation.org>
 
-On Tue, Mar 24, 2026 at 10:59:31PM -0500, Theodore Tso wrote:
-> On Tue, Mar 24, 2026 at 03:36:21PM +0000, Mark Brown wrote:
-> > I have a bisect for an ext4 issue in v6.1 which comes out at:
-> > 
-> > # first bad commit: [29897d75d6491ffe23cdc9d96caba9282a20dfc3] ext4: convert bd_bitmap_page to bd_bitmap_folio
-> > 
-> > For an oops which looks very similar (but on arm64):
+On Mon, Mar 23, 2026 at 02:42:57PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.19.10 release.
+> There are 220 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> I can confirm this bisection; I was testing on x86_64, and using
-> "kvm-xfstests -c ext4/4k generic/001" on a failure, it would crash
-> before running the first test (in my test runner infrastructure when
-> running syncfs on the results directory --- go figure).
-> 
-> Unfortunately, you can't just revert this commit because of merge
-> conflicts.  In order to get a clean revert, you have to revert (or
-> drop) three commits:
-> 
-> % git log -3
-> commit b12a69d9770b58fb02d3b4f72abe5acd28aa7e76 (HEAD)
-> Author: Theodore Ts'o <tytso@mit.edu>
-> Date:   Tue Mar 24 23:46:15 2026 -0400
-> 
->     Revert "ext4: convert bd_bitmap_page to bd_bitmap_folio"
-> 
->     This reverts commit 29897d75d6491ffe23cdc9d96caba9282a20dfc3.
-> 
-> commit 9c95c376c79f47fe9ee8ce562249d3630a50ab12
-> Author: Theodore Ts'o <tytso@mit.edu>
-> Date:   Tue Mar 24 23:44:23 2026 -0400
-> 
->     Revert "ext4: convert bd_buddy_page to bd_buddy_folio"
-> 
->     This reverts commit fe80bba8f76f9f0995cdc64fc89b65173e1ae828.
-> 
-> commit 98f5de80114f6194af4d9fae572b73440efa67c2
-> Author: Theodore Ts'o <tytso@mit.edu>
-> Date:   Tue Mar 24 23:43:40 2026 -0400
-> 
->     Revert "ext4: fix e4b bitmap inconsistency reports"
-> 
->     This reverts commit cb45b6209aa53979b054bd026d938107d5a3031b.
-> 
-> I haven't had time to investigate this more closely, but I'm assuming
-> the automated stable picker was trying to backport cb45b6209aa5
-> ("ext4: fix e4b bitmap inconsistency reports"), and determined that
-> the fe80bba8f76f ("ext4: convert bd_buddy_page to bd_buddy_folio") and
-> 29897d75d649 ("ext4: convert bd_bitmap_page to bd_bitmap_folio") were
-> prerequisite commits --- and while 29897d75d649 cherry picked
-> correctly, either the git scrwed up the cherry pick, or there was some
-> additional prerequisite commit needed, but wasn't caught by the "it
-> patches cleanly, ship it!" algorithm.
-> 
-> I don't have time to investigate further, but Greg, if you could drop
-> these three patches, that should address this issue.
+> Responses should be made by Wed, 25 Mar 2026 13:44:33 +0000.
+> Anything received after that time might be too late.
 
-All now dropped, thanks!
+test_progs, test_progs-no_alu32, test_progs-cpuv4, test_maps,
+test_verifier in BPF selftests all passes[1] on x86_64.
 
-greg k-h
+Tested-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+
+1: https://github.com/shunghsiyu/libbpf/actions/runs/23507388452/job/68418868804
+
+[...]
