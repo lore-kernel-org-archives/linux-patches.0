@@ -1,130 +1,91 @@
-Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 418352550CD
-	for <patches@lists.linux.dev>; Thu, 26 Mar 2026 01:12:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+Received: from canpmsgout12.his.huawei.com (canpmsgout12.his.huawei.com [113.46.200.227])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED5FDA92E
+	for <patches@lists.linux.dev>; Thu, 26 Mar 2026 03:01:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=113.46.200.227
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774487570; cv=none; b=Qp3Bco8citCGmYSxMSK42/jlUxLirEpRGWc3MJIwHGZ8PpVT0xPycvRU1hHbFuU2tQ+GDztiEbQFDTV7zBYe11aPetfuaMKobm5Ju/G/bwG7xtx53vR3rmV+7hzftYycsTf76KRy//yDWm3b5D2lCMJjmPxjUAgpbv9pfDo/A+I=
+	t=1774494120; cv=none; b=JV4GSbiu6PI1I52ofhJ4o2+WzQcC+wmuNWpGKvKISQIjAid9GuNla+C3fog7qMOlB2xfAVJSCkzvpeWHaY1ffCCrvcOlayg+qg54g71HsBK+9y8zyCKBtG3yuRjxbRRkcmOW0Er4By2sY27862vfCURSjEuKb+K1PEV4cpEM2xk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774487570; c=relaxed/simple;
-	bh=mSNQB/kyfeHjvhCQ1N6GTP8BpN+Ju2famxd6FScXTUo=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
-	 MIME-Version:Message-ID; b=sUOamYUnlWjkzCze2Z5yaIe9naJRSMnTx9YruBLBTbPcMAYZ/5/R6XeT/UsEevXRzzSmL8h1toLJ1enU0XDn/onB50YvMmRIze/MG8Q9g6XDNEs4f3NNOQriI7yK9ZgIKtShfoJ2NZnqHaXZs50g7pKa02HemL5aEnTkzXD6uOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
-Received: from loongson.cn (unknown [223.64.68.17])
-	by gateway (Coremail) with SMTP id _____8BxHMMFiMRpjcQeAA--.21865S3;
-	Thu, 26 Mar 2026 09:12:37 +0800 (CST)
-Received: from chenhuacai$loongson.cn ( [223.64.68.17] ) by
- ajax-webmail-front1 (Coremail) ; Thu, 26 Mar 2026 09:12:22 +0800
- (GMT+08:00)
-Date: Thu, 26 Mar 2026 09:12:22 +0800 (GMT+08:00)
-X-CM-HeaderCharset: UTF-8
-From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
-To: "Miguel Ojeda" <ojeda@kernel.org>
-Cc: gregkh@linuxfoundation.org, achill@achill.org, akpm@linux-foundation.org,
-	broonie@kernel.org, conor@kernel.org, f.fainelli@gmail.com,
-	hargar@microsoft.com, jonathanh@nvidia.com,
-	linux-kernel@vger.kernel.org, linux@roeck-us.net,
-	lkft-triage@lists.linaro.org, patches@kernelci.org,
-	patches@lists.linux.dev, pavel@nabladev.com, rwarsow@gmx.de,
-	shuah@kernel.org, sr@sladewatkins.com, stable@vger.kernel.org,
-	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
-	"Tianyang Zhang" <zhangtianyang@loongson.cn>
-Subject: Re: Re: [PATCH 6.12 000/460] 6.12.78-rc1 review
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
- 20250609(354f7833) Copyright (c) 2002-2026 www.mailtech.cn loongson
-In-Reply-To: <20260325000600.57287-1-ojeda@kernel.org>
-References: <20260323134526.647552166@linuxfoundation.org>
- <20260325000600.57287-1-ojeda@kernel.org>
-Content-Transfer-Encoding: base64
-X-CM-CTRLDATA: CfmPV2Zvb3Rlcl90eHQ9MjM0ODo2MTg=
-Content-Type: text/plain; charset=UTF-8
+	s=arc-20240116; t=1774494120; c=relaxed/simple;
+	bh=thbOWSOqrhQKqwfKETz+0O3aR0qSREUl5isN3IimXjc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:CC:References:From:
+	 In-Reply-To:Content-Type; b=C82hcGYKnVy5GAUN3Gj0TKV0GtzPhrQxqCC7DGRu3s77lMWvPXnwYAMq43KlbLMZkSeG5ApDN8VEYASvxORhbEOjxbcXAI2zTrc3GpwJAVFGc5R1+lKFX4AgrtJthlsrMHWcCLWuvBj4F4K8V62DJ8OK9ulywtNMatmCam054uA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com; spf=pass smtp.mailfrom=huawei.com; dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b=1KaPn96K; arc=none smtp.client-ip=113.46.200.227
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=huawei.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huawei.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=huawei.com header.i=@huawei.com header.b="1KaPn96K"
+dkim-signature: v=1; a=rsa-sha256; d=huawei.com; s=dkim;
+	c=relaxed/relaxed; q=dns/txt;
+	h=From;
+	bh=kcy1jzR3GKVXHVdCc1RqC8re+/bIxuG8qN8lVpGjxF4=;
+	b=1KaPn96KrUqf35EsISAzK+OVzIECrhD4QkFREp414aEQXGf9+ngXpENw1IJ3dy/XSuz1i5Vmp
+	7Kkwt8vVxk1eMZUAJDXhIlj1ir16j270aEA6oIbA8ltJiKGirNklCN7N5vAMZKN0vUh/UJkNRTi
+	AzF35Glo6nzcrphDYde8GjA=
+Received: from mail.maildlp.com (unknown [172.19.163.127])
+	by canpmsgout12.his.huawei.com (SkyGuard) with ESMTPS id 4fh7hQ3n1YznTwR;
+	Thu, 26 Mar 2026 10:56:22 +0800 (CST)
+Received: from kwepemr100006.china.huawei.com (unknown [7.202.194.218])
+	by mail.maildlp.com (Postfix) with ESMTPS id B8654402AB;
+	Thu, 26 Mar 2026 11:01:49 +0800 (CST)
+Received: from [10.174.179.92] (10.174.179.92) by
+ kwepemr100006.china.huawei.com (7.202.194.218) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.36; Thu, 26 Mar 2026 11:01:48 +0800
+Message-ID: <c2fe8cab-2f92-4c82-9743-04ed35003105@huawei.com>
+Date: Thu, 26 Mar 2026 11:01:47 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <7f616aa1.4eda2.19d27b31b8c.Coremail.chenhuacai@loongson.cn>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID:qMiowJDxKOD2h8Rp5oZdAA--.15631W
-X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAgESBmnDeSQV0QABsl
-X-Coremail-Antispam: 1Uk129KBj93XoW7KF15KF4kAr1xCF48ur43twc_yoW5JFWfpF
-	W7Gr4DWa10qwn7Can7u34j9FyUX3Z5CasIgrs5G3s5uF98ur1jqrn7ZFZ8uFn8KryvgF1j
-	vFnrXas2ga45J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUf529EdanIXcx71UUUUU7KY7ZEXa
-	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
-	0xBIdaVrnRJUUUQIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
-	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
-	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
-	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
-	Gr0_Gr1UM2kKe7AKxVWUAVWUtwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
-	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWU
-	twAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
-	8JM4xvF2IEb7IF0Fy264kE64k0F24lFcxC0VAYjxAxZF0Ex2IqxwCY1x0262kKe7AKxVWU
-	tVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxV
-	WUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF
-	67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42
-	IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
-	0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UMVCEFcxC0V
-	AYjxAxZFUvcSsGvfC2KfnxnUUI43ZEXa7IU8SAp5UUUUU==
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 6.1 000/481] 6.1.167-rc1 review
+To: Theodore Tso <tytso@mit.edu>
+CC: Francesco Dolcini <francesco@dolcini.it>, Greg Kroah-Hartman
+	<gregkh@linuxfoundation.org>, <stable@vger.kernel.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@nabladev.com>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <rwarsow@gmx.de>,
+	<conor@kernel.org>, <hargar@microsoft.com>, <broonie@kernel.org>,
+	<achill@achill.org>, <sr@sladewatkins.com>, Jan Kara <jack@suse.cz>, Brian
+ Foster <bfoster@redhat.com>, Matthew Wilcox <willy@infradead.org>, Gou Hao
+	<gouhao@uniontech.com>, Kemeng Shi <shikemeng@huaweicloud.com>, Zhang Yi
+	<yi.zhang@huawei.com>
+References: <20260323134525.256603107@linuxfoundation.org>
+ <20260324073447.GA5062@francesco-nb>
+ <d22ffe9f-8cd5-41ee-9da1-d0d2800a5f16@huawei.com>
+ <20260325133456.GD2107@macsyma.local>
+From: Sun Yongjian <sunyongjian1@huawei.com>
+In-Reply-To: <20260325133456.GD2107@macsyma.local>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: kwepems500001.china.huawei.com (7.221.188.70) To
+ kwepemr100006.china.huawei.com (7.202.194.218)
 
-SGksIEdyZWcsIFNhc2hhLAoKCj4gLS0tLS3ljp/lp4vpgq7ku7YtLS0tLQo+IOWPkeS7tuS6ujog
-Ik1pZ3VlbCBPamVkYSIgPG9qZWRhQGtlcm5lbC5vcmc+Cj4g5Y+R6YCB5pe26Ze0OjIwMjYtMDMt
-MjUgMDg6MDY6MDAgKOaYn+acn+S4iSkKPiDmlLbku7bkuro6IGdyZWdraEBsaW51eGZvdW5kYXRp
-b24ub3JnCj4g5oqE6YCBOiBhY2hpbGxAYWNoaWxsLm9yZywgYWtwbUBsaW51eC1mb3VuZGF0aW9u
-Lm9yZywgYnJvb25pZUBrZXJuZWwub3JnLCBjb25vckBrZXJuZWwub3JnLCBmLmZhaW5lbGxpQGdt
-YWlsLmNvbSwgaGFyZ2FyQG1pY3Jvc29mdC5jb20sIGpvbmF0aGFuaEBudmlkaWEuY29tLCBsaW51
-eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnLCBsaW51eEByb2Vjay11cy5uZXQsIGxrZnQtdHJpYWdl
-QGxpc3RzLmxpbmFyby5vcmcsIHBhdGNoZXNAa2VybmVsY2kub3JnLCBwYXRjaGVzQGxpc3RzLmxp
-bnV4LmRldiwgcGF2ZWxAbmFibGFkZXYuY29tLCByd2Fyc293QGdteC5kZSwgc2h1YWhAa2VybmVs
-Lm9yZywgc3JAc2xhZGV3YXRraW5zLmNvbSwgc3RhYmxlQHZnZXIua2VybmVsLm9yZywgc3VkaXBt
-Lm11a2hlcmplZUBnbWFpbC5jb20sIHRvcnZhbGRzQGxpbnV4LWZvdW5kYXRpb24ub3JnLCAiTWln
-dWVsIE9qZWRhIiA8b2plZGFAa2VybmVsLm9yZz4sICJIdWFjYWkgQ2hlbiIgPGNoZW5odWFjYWlA
-bG9vbmdzb24uY24+LCAiVGlhbnlhbmcgWmhhbmciIDx6aGFuZ3RpYW55YW5nQGxvb25nc29uLmNu
-Pgo+IOS4u+mimDogUmU6IFtQQVRDSCA2LjEyIDAwMC80NjBdIDYuMTIuNzgtcmMxIHJldmlldwo+
-IAo+IE9uIE1vbiwgMjMgTWFyIDIwMjYgMTQ6Mzk6NTYgKzAxMDAgR3JlZyBLcm9haC1IYXJ0bWFu
-IDxncmVna2hAbGludXhmb3VuZGF0aW9uLm9yZz4gd3JvdGU6Cj4gPgo+ID4gVGhpcyBpcyB0aGUg
-c3RhcnQgb2YgdGhlIHN0YWJsZSByZXZpZXcgY3ljbGUgZm9yIHRoZSA2LjEyLjc4IHJlbGVhc2Uu
-Cj4gPiBUaGVyZSBhcmUgNDYwIHBhdGNoZXMgaW4gdGhpcyBzZXJpZXMsIGFsbCB3aWxsIGJlIHBv
-c3RlZCBhcyBhIHJlc3BvbnNlCj4gPiB0byB0aGlzIG9uZS4gIElmIGFueW9uZSBoYXMgYW55IGlz
-c3VlcyB3aXRoIHRoZXNlIGJlaW5nIGFwcGxpZWQsIHBsZWFzZQo+ID4gbGV0IG1lIGtub3cuCj4g
-Pgo+ID4gUmVzcG9uc2VzIHNob3VsZCBiZSBtYWRlIGJ5IFdlZCwgMjUgTWFyIDIwMjYgMTM6NDQ6
-MzMgKzAwMDAuCj4gPiBBbnl0aGluZyByZWNlaXZlZCBhZnRlciB0aGF0IHRpbWUgbWlnaHQgYmUg
-dG9vIGxhdGUuCj4gCj4gQm9vdC10ZXN0ZWQgdW5kZXIgUUVNVSBmb3IgUnVzdCB4ODZfNjQsIGFy
-bTY0IGFuZCByaXNjdjY0OyBidWlsdC10ZXN0ZWQKPiBmb3IgbG9vbmdhcmNoNjQ6Cj4gCj4gVGVz
-dGVkLWJ5OiBNaWd1ZWwgT2plZGEgPG9qZWRhQGtlcm5lbC5vcmc+Cj4gCj4gbG9vbmdhcmNoNjQg
-ZmFpbGVkIHRvIGJ1aWxkIGZvciBtZToKPiAKPiAgICAgYXJjaC9sb29uZ2FyY2gva2VybmVsL21h
-Y2hpbmVfa2V4ZWMuYzoxMzk6MTM6IGVycm9yOiBzdGF0aWMgZGVjbGFyYXRpb24gb2YgJ21hY2hp
-bmVfa2V4ZWNfbWFza19pbnRlcnJ1cHRzJyBmb2xsb3dzIG5vbi1zdGF0aWMgZGVjbGFyYXRpb24K
-PiAgICAgICAxMzkgfCBzdGF0aWMgdm9pZCBtYWNoaW5lX2tleGVjX21hc2tfaW50ZXJydXB0cyh2
-b2lkKQo+ICAgICAgICAgICB8ICAgICAgICAgICAgIF4KPiAgICAgLi9pbmNsdWRlL2xpbnV4L2ly
-cS5oOjY5ODoxMzogbm90ZTogcHJldmlvdXMgZGVjbGFyYXRpb24gaXMgaGVyZQo+ICAgICAgIDY5
-OCB8IGV4dGVybiB2b2lkIG1hY2hpbmVfa2V4ZWNfbWFza19pbnRlcnJ1cHRzKHZvaWQpOwo+ICAg
-ICAgICAgICB8ICAgICAgICAgICAgIF4KPiAKPiBUaGUgYHN0YXRpYyB2b2lkIG1hY2hpbmVfa2V4
-ZWNfbWFza19pbnRlcnJ1cHRzKHZvaWQpYCBmb3IgbG9vbmdhcmNoNjQKPiB3YXMgbm90IHJlbW92
-ZWQgYmVjYXVzZSBpdCB3YXMgYWRqdXN0ZWQgaW46Cj4gCj4gICA0MjliZjNmMDRjMjQgKCJMb29u
-Z0FyY2g6IEFkZCBtYWNoaW5lX2tleGVjX21hc2tfaW50ZXJydXB0cygpIGltcGxlbWVudGF0aW9u
-IikKWWVzLCA0MjliZjNmMDRjMjQgKCJMb29uZ0FyY2g6IEFkZCBtYWNoaW5lX2tleGVjX21hc2tf
-aW50ZXJydXB0cygpIGltcGxlbWVudGF0aW9uIikKc2hvdWxkIGJlIHJldmVydGVkIGZvciB0aGlz
-IHZlcnNpb24uIEJ1dCB3aHkgeW91IGlnbm9yZSBNaWd1ZWwncyByZXBvcnQ/CgpIdWFjYWkKCj4g
-Cj4gd2hpY2ggaXMgb25seSBpbiA2LjEyLgo+IAo+IENjOiBIdWFjYWkgQ2hlbiA8Y2hlbmh1YWNh
-aUBsb29uZ3Nvbi5jbj4KPiBDYzogVGlhbnlhbmcgWmhhbmcgPHpoYW5ndGlhbnlhbmdAbG9vbmdz
-b24uY24+Cj4gCj4gSSBob3BlIHRoYXQgaGVscHMhCj4gCj4gQ2hlZXJzLAo+IE1pZ3VlbAoNCg0K
-5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ6b6Z6Iqv5Lit56eR55qE5ZWG5Lia56eY5a+G5L+h
-5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A5Lit5YiX5Ye655qE5Liq5Lq65oiW
-576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu75L2V5b2i5byP5L2/55So77yI5YyF
-5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE6Zyy44CB5aSN5Yi25oiW5pWj5Y+R
-77yJ5pys6YKu5Lu25Y+K5YW26ZmE5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c5oKo6ZSZ5pS25pys
-6YKu5Lu277yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l5Y+R5Lu25Lq65bm25Yig
-6Zmk5pys6YKu5Lu244CCIA0KVGhpcyBlbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4g
-Y29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGZyb20gTG9vbmdzb24gVGVjaG5vbG9neSAsIHdoaWNo
-IGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3Mg
-aXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVy
-ZWluIGluIGFueSB3YXkgKGluY2x1ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBw
-YXJ0aWFsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlvbiBvciBkaXNzZW1pbmF0aW9uKSBieSBwZXJz
-b25zIG90aGVyIHRoYW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBwcm9oaWJpdGVkLiBJ
-ZiB5b3UgcmVjZWl2ZSB0aGlzIGVtYWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5k
-ZXIgYnkgcGhvbmUgb3IgZW1haWwgaW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdC4gDQoNCg0K
 
+
+在 2026/3/25 21:34, Theodore Tso 写道:
+> I'm confused.  That commit 060913999d7a should be backported to
+> 6.1.yy?  Since 6.1 lacks this patch, I dont understand your statement
+> "the race condition doesn't exist there".  Or were you trying to say
+> that the_fix_ for race condition is missing in 6.1?
+> 
+> Or is there some other commit which fixes 060913999d7a that needs to
+> be backported to 6.1?
+Hi Ted,
+
+Sorry for the confusion. To clarify: commit 060913999d7a is actually the 
+regressing commit that introduced the race condition by reordering the 
+migrate mapping and folio copy operations.
+
+Because 6.1.y does not include this specific commit, the concurrency 
+window it created does not exist in the 6.1 kernel. Therefore, 6.1.y is 
+not affected by this particular issue and does not require this backport 
+(ext4: fix e4b bitmap inconsistency reports).
+
+      	       	   		     	     - Yongjian
