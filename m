@@ -1,179 +1,111 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.14])
+Received: from maynard.decadent.org.uk (maynard.decadent.org.uk [65.21.191.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10F802848A7
-	for <patches@lists.linux.dev>; Thu, 26 Mar 2026 13:04:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176D41E2834;
+	Thu, 26 Mar 2026 13:13:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=65.21.191.19
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774530242; cv=none; b=rD3X9JQCiOcEzJT9L0hOU4JTh1ZVLIsK+w+IJsHtFBRrEDx5Au10JQltaphK/D4zPY8B/yJfCyiO7RJmwSXWpmPvI5/my4jGTfD/2Ot8cNRdcwYGIh+OQKL8UjathpmWjSoBmGzczn7094Zrs6li0wal9bm1BwZS/qL+Croj254=
+	t=1774530815; cv=none; b=cEIr+OAV5dl8N862I8TG2bN4FZWKBryBRplLlJdLPz1NwGbnqDx3tIOEkWuWo1YfOcqTHbbvnjG4aPVEqG4FqFL2ccJ+PrSv6YH12fIjr+eYg3XOFsd8brN4fmV4mHFXqMBsr71LbcPld0iClmJfXveil2bf5HDc3mwo7yYvSTM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774530242; c=relaxed/simple;
-	bh=pxJex+2BKbWlg1hFjQ3Ojgz8flGSCrPNkqxv6T0XDdE=;
-	h=From:Date:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=Fvo5448sIzv4bIAjByYIrUbT5bjJsPOGnaveQX4KBFYkB6FeEPl6vUp5eiVDrmKt1t9r44O9QPvnSSS6tr5yTEYNXMJMuP8hOVuDs4rkVF+V2VrjYj/cMgEMqSJVtIQtlGJx3XK4Tj22zVZhySkSkGf8CQ0WhaoAfUJRZXKw8Zk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com; spf=pass smtp.mailfrom=linux.intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=l1S+iobC; arc=none smtp.client-ip=192.198.163.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.intel.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="l1S+iobC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774530241; x=1806066241;
-  h=from:date:to:cc:subject:in-reply-to:message-id:
-   references:mime-version;
-  bh=pxJex+2BKbWlg1hFjQ3Ojgz8flGSCrPNkqxv6T0XDdE=;
-  b=l1S+iobClMxFJHT3iPr0jGA/j1NclFECwVGTVmbzUsWZq+UpwlR9SHeq
-   RD/gB5k1ni+1UyGoKzEendD8iW3uQlO+gIT+nHvmDcU0Eb7DR/ECQmzWH
-   /YrGNEa60Uauc4mQ8gRwnP2lAY77U71i1/TDa/2SgHpWPiRZpxtuYwrds
-   Ur1E1csWDT/knOhfC7bIbsiCMbFaKUakw9o9++oHPVr8NOBPE/CrxZjKx
-   VG5FQqidui+0mtvRWnOCDiMEBVIRu2mVCEMkx11uX/kHyq7Hl91l3nq/r
-   JzZn+dKyuozD8QQ9zS4qGsRI2N35TVLrisxNSbF+VXPonOBQVIQdDL9Lp
-   w==;
-X-CSE-ConnectionGUID: upPoeBa3Rn2GeNe/d8IqNg==
-X-CSE-MsgGUID: SzoVb9RDSsikXWTAQ/qPxg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11740"; a="75654346"
-X-IronPort-AV: E=Sophos;i="6.23,142,1770624000"; 
-   d="scan'208";a="75654346"
-Received: from fmviesa009.fm.intel.com ([10.60.135.149])
-  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2026 06:04:01 -0700
-X-CSE-ConnectionGUID: KfG/6R/LSN2jHZV1qNHrmQ==
-X-CSE-MsgGUID: aMUDyOIZSraMX/CzBVUOfg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,142,1770624000"; 
-   d="scan'208";a="218402126"
-Received: from ijarvine-mobl1.ger.corp.intel.com (HELO localhost) ([10.245.244.32])
-  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2026 06:03:55 -0700
-From: =?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Date: Thu, 26 Mar 2026 15:03:51 +0200 (EET)
-To: Reinette Chatre <reinette.chatre@intel.com>
-cc: shuah@kernel.org, Dave.Martin@arm.com, james.morse@arm.com, 
-    tony.luck@intel.com, babu.moger@amd.com, fenghuay@nvidia.com, 
-    peternewman@google.com, zide.chen@intel.com, dapeng1.mi@linux.intel.com, 
-    ben.horgan@arm.com, yu.c.chen@intel.com, jason.zeng@intel.com, 
-    linux-kselftest@vger.kernel.org, LKML <linux-kernel@vger.kernel.org>, 
-    patches@lists.linux.dev
-Subject: Re: [PATCH v3 04/10] selftests/resctrl: Prepare for parsing multiple
- events per iMC
-In-Reply-To: <dea5825ffde55254e8b37dfa1a1723854ec257ac.1773432891.git.reinette.chatre@intel.com>
-Message-ID: <cf4e456d-2573-3c11-17d5-8d410e3fc26a@linux.intel.com>
-References: <cover.1773432891.git.reinette.chatre@intel.com> <dea5825ffde55254e8b37dfa1a1723854ec257ac.1773432891.git.reinette.chatre@intel.com>
+	s=arc-20240116; t=1774530815; c=relaxed/simple;
+	bh=wcZPEj3KhU0bhzKLJ+c6QP97jsQ7Iaql8YCNi/kvDJg=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=UVhezQNN1NHsKnoCEAL907Mo1moCeAWFLU/qyFnq7PrmjcJVO5e+6A7as8P2AOwC+Fz58Qw1+zzKYVrociXaCztvbN89XHasGst4gXrB/WdgH/ajTl9jXSX6uAVz091xZGA2XRJwg6BYeewAVNMd4NR1ymYicH2wxPqrM3Sh2VU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk; spf=pass smtp.mailfrom=decadent.org.uk; arc=none smtp.client-ip=65.21.191.19
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=decadent.org.uk
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=decadent.org.uk
+Received: from [2a02:578:851f:1502:391e:c5f5:10e2:b9a3] (helo=deadeye)
+	by maynard with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1w5kWZ-001svC-2K;
+	Thu, 26 Mar 2026 13:13:22 +0000
+Received: from ben by deadeye with local (Exim 4.99.1)
+	(envelope-from <ben@decadent.org.uk>)
+	id 1w5kWX-00000000JEH-0vGB;
+	Thu, 26 Mar 2026 14:13:21 +0100
+Message-ID: <607a6e7f86abd50273cd8af3c08ae7ee51e22ccf.camel@decadent.org.uk>
+Subject: Re: [PATCH 5.10 000/334] 5.10.252-rc2 review
+From: Ben Hutchings <ben@decadent.org.uk>
+To: Sasha Levin <sashal@kernel.org>, linux-kernel@vger.kernel.org, 
+	stable@vger.kernel.org
+Cc: gregkh@linuxfoundation.org, patches@lists.linux.dev, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, 	shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, 	pavel@nabladev.com, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, 	sudipm.mukherjee@gmail.com, rwarsow@gmx.de,
+ conor@kernel.org, hargar@microsoft.com, 	broonie@kernel.org,
+ achill@achill.org, sr@sladewatkins.com
+Date: Thu, 26 Mar 2026 14:13:15 +0100
+In-Reply-To: <20260302161007.2523181-1-sashal@kernel.org>
+References: <20260302161007.2523181-1-sashal@kernel.org>
+Content-Type: multipart/signed; micalg="pgp-sha512";
+	protocol="application/pgp-signature"; boundary="=-HguhDMPYvc51dwp+GxDJ"
+User-Agent: Evolution 3.56.2-9 
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="8323328-886281517-1774530231=:986"
+X-SA-Exim-Connect-IP: 2a02:578:851f:1502:391e:c5f5:10e2:b9a3
+X-SA-Exim-Mail-From: ben@decadent.org.uk
+X-SA-Exim-Scanned: No (on maynard); SAEximRunCond expanded to false
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
 
---8323328-886281517-1774530231=:986
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+--=-HguhDMPYvc51dwp+GxDJ
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, 13 Mar 2026, Reinette Chatre wrote:
+On Mon, 2026-03-02 at 11:10 -0500, Sasha Levin wrote:
+[...]
+>   Bluetooth: l2cap: Check encryption key size on incoming connection
 
-> The events needed to read memory bandwidth are discovered by iterating
-> over every memory controller (iMC) within /sys/bus/event_source/devices.
-> Each iMC's PMU is assumed to have one event to measure read memory
-> bandwidth that is represented by the sysfs cas_count_read file. The event=
-'s
-> configuration is read from "cas_count_read" and stored as an element of
-> imc_counters_config[] by read_from_imc_dir() that receives the
-> index of the array where to store the configuration as argument.
->=20
-> It is possible that an iMC's PMU may have more than one event that should
-> be used to measure memory bandwidth.
->=20
-> Change semantics to not provide the index of the array to
-> read_from_imc_dir() but instead a pointer to the index. This enables
-> read_from_imc_dir() to store configurations for more than one event by
-> incrementing the index to imc_counters_config[] itself.
->=20
-> Ensure that the same type is consistently used for the index as it is
-> passed around during counter configuration.
->=20
-> Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-> Tested-by: Chen Yu <yu.c.chen@intel.com>
-> Reviewed-by: Zide Chen <zide.chen@intel.com>
-> ---
-> Changes since v1:
-> - Add Zide Chen's RB tag.
->=20
-> Changes since v2:
-> - Add Chen Yu's tag.
-> ---
->  tools/testing/selftests/resctrl/resctrl_val.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
->=20
-> diff --git a/tools/testing/selftests/resctrl/resctrl_val.c b/tools/testin=
-g/selftests/resctrl/resctrl_val.c
-> index 71d6f88cc1f7..6d766347e3fc 100644
-> --- a/tools/testing/selftests/resctrl/resctrl_val.c
-> +++ b/tools/testing/selftests/resctrl/resctrl_val.c
-> @@ -73,7 +73,7 @@ static void read_mem_bw_ioctl_perf_event_ioc_disable(in=
-t i)
->   * @cas_count_cfg:=09Config
->   * @count:=09=09iMC number
->   */
-> -static void get_read_event_and_umask(char *cas_count_cfg, int count)
-> +static void get_read_event_and_umask(char *cas_count_cfg, unsigned int c=
-ount)
->  {
->  =09char *token[MAX_TOKENS];
->  =09int i =3D 0;
-> @@ -110,7 +110,7 @@ static int open_perf_read_event(int i, int cpu_no)
->  }
-> =20
->  /* Get type and config of an iMC counter's read event. */
-> -static int read_from_imc_dir(char *imc_dir, int count)
-> +static int read_from_imc_dir(char *imc_dir, unsigned int *count)
->  {
->  =09char cas_count_cfg[1024], imc_counter_cfg[1024], imc_counter_type[102=
-4];
->  =09FILE *fp;
-> @@ -123,7 +123,7 @@ static int read_from_imc_dir(char *imc_dir, int count=
-)
-> =20
->  =09=09return -1;
->  =09}
-> -=09if (fscanf(fp, "%u", &imc_counters_config[count].type) <=3D 0) {
-> +=09if (fscanf(fp, "%u", &imc_counters_config[*count].type) <=3D 0) {
->  =09=09ksft_perror("Could not get iMC type");
->  =09=09fclose(fp);
-> =20
-> @@ -147,7 +147,8 @@ static int read_from_imc_dir(char *imc_dir, int count=
-)
->  =09}
->  =09fclose(fp);
-> =20
-> -=09get_read_event_and_umask(cas_count_cfg, count);
-> +=09get_read_event_and_umask(cas_count_cfg, *count);
-> +=09*count +=3D 1;
-> =20
->  =09return 0;
->  }
-> @@ -196,13 +197,12 @@ static int num_of_imcs(void)
->  =09=09=09if (temp[0] >=3D '0' && temp[0] <=3D '9') {
->  =09=09=09=09sprintf(imc_dir, "%s/%s/", DYN_PMU_PATH,
->  =09=09=09=09=09ep->d_name);
-> -=09=09=09=09ret =3D read_from_imc_dir(imc_dir, count);
-> +=09=09=09=09ret =3D read_from_imc_dir(imc_dir, &count);
->  =09=09=09=09if (ret) {
->  =09=09=09=09=09closedir(dp);
-> =20
->  =09=09=09=09=09return ret;
->  =09=09=09=09}
-> -=09=09=09=09count++;
->  =09=09=09}
->  =09=09}
->  =09=09closedir(dp);
->=20
+This causes a regression, fixed by commit c82b6357a546 "Bluetooth:
+hci_event: Fix not using key encryption size when its known".
 
-Reviewed-by: Ilpo J=E4rvinen <ilpo.jarvinen@linux.intel.com>
+[...]
+>   lan78xx: Fix memory allocation bug
+
+This causes a regression, fixed by commit 03819abbeb11 "net: usb:
+lan78xx: Fix double free issue with interrupt buffer allocation", but I
+see that won't apply cleanly.
+
+[...]
+>   fbdev: vt8500lcdfb: fix missing dma_free_coherent()
+[...]
+
+This depends on commit 63a11adaceb8 "fbdev/vt8500lcdfb: Initialize
+fb_ops with fbdev macros" from 6.8, but that doesn't seem to be
+backportable.  This should either be reverted on all older stable
+branches, or fixed up to use the screen_base field instead of
+screen_buffer.
+
+Ben.
 
 --=20
- i.
+Ben Hutchings
+Theory and practice are closer in theory than in practice - John Levine
 
---8323328-886281517-1774530231=:986--
+--=-HguhDMPYvc51dwp+GxDJ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEErCspvTSmr92z9o8157/I7JWGEQkFAmnFMOsACgkQ57/I7JWG
+EQkIsg/+MqA7pnTHGgSH7h6n6cSifc5pmxSNVJHLAx1kE/8ixZlPUvn3qsZOHLH3
+YNW2KcznEWUbbwVCdFct7WBsTKn/awr9zrT4+YE3ziR0YjCHpFpc73UFUx2f1BJA
+xZ8k0o7LsMXo4xAKeYuOmLM5qyZ9EsODRHGw6mGdYMFOvJ3cWXeMWBdDE3sQTtnx
+13iQUWIwZ3G7JCEgj0NjLg2ywnwWBW0CqaXZ2n4oDlNM8f2ctTytKNz+bSi4XxOH
+FpYgra2MyI61PPLnx7s6pYIW6UIDSyyI/bb7lcZWauLHWK4ed5t5+wxPx+JzJSCW
+CtKLn5SF/H83k26IzVHU1Dx2s0cvB0b/cYW8wXahMLgJ7UPSrA3UfTw7cjfeQl3c
+x4t+Cy82Nr4N3fv/Ww3u/9DMdC+DTZCfeksx+W9QAotff53ZuY1eO+VbB1m5KmZ2
+jOGdJrFOKtcvWIdzh4VucMh8PeSF0G/kisahSXcSo5wEvm2wE5UcMZSloDDxSTaM
+dqu9OvakmXVTtI0Omytf9evgvDa6fUf21OJyE26NwEBZPgXmdkEtIISymsMqL/PX
+pj0ZH0OxLCGVg87RM4HX+0bSodnOlqg1wE8xpcmsbOzh439/xiuAt6M6p+HcjTtv
+rIzlegvTXHTGW8R/Pe92EAau1oKAy6JI8iFJZNbx1ENO0D/CUw8=
+=uEz7
+-----END PGP SIGNATURE-----
+
+--=-HguhDMPYvc51dwp+GxDJ--
