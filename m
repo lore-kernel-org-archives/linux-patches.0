@@ -1,143 +1,130 @@
-Received: from mail-oo1-f53.google.com (mail-oo1-f53.google.com [209.85.161.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6644B1B86C7
-	for <patches@lists.linux.dev>; Wed, 25 Mar 2026 22:16:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=209.85.161.53
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774476979; cv=pass; b=aSdN6uI6pxRGZrNB15U8HB96NO/vYoZl5MJijWMq+B3pr67Tp8V78kyi5wchAS7PQzX3RdlvN/IZ7eaO+N+cODdRbf4NKfS3O1CMXAwgCsD8VDyND0tds//9dlMHpyLkpl1BPXXGn2FjFYGU9TNcnLH6Y8W5KqlJ+Gg6gH3G6Sg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774476979; c=relaxed/simple;
-	bh=CKPaPT6pFzg5mW5MbWk4jzTi2tnODuirpxJdAHgBJAE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OJv3I/eMXjKOReEApxLUuU2X3inxgsvnP6djZ/VTQ58R0e70bKgacjTH8X0yBMZjiH3e40G3Hn9WLuqgw+vt/TQTGBpC9jhbLDfkHIbw8M2rFzDfwge0872yD4cn3yCg2j5Rc1U4prBUeBp0gU7Lu6VddxaElBoY3SbaFTWtefI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=GHvpCyXD; arc=pass smtp.client-ip=209.85.161.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="GHvpCyXD"
-Received: by mail-oo1-f53.google.com with SMTP id 006d021491bc7-67bac077116so216912eaf.1
-        for <patches@lists.linux.dev>; Wed, 25 Mar 2026 15:16:18 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774476977; cv=none;
-        d=google.com; s=arc-20240605;
-        b=hPyIhNsu/N5zorzQiSxxx6luNY8r5f5pib7OFKhXVZTMJE2DfxvBePpb3I93byq/JJ
-         61/GKfER69aj8cy0dE3XPghC8ILocjRBPT0ZAi8XmVYblAKsTTxagVoWgdmlh2v/JQPI
-         tE0lOLNHLF/p/xKnWp/ZcbygShYPkP6AF9z6Dul7xnMUwFKs0QKHVCQrK4ajTxQGWwhc
-         oTCxDWv5cKbABDp8VHgN+fS20iPSzBMln0AYoh5lJpp69cVhwtTMfszdG9Lt5CiE00FR
-         k5Ca+l50mpliw3YwRnC2tPexEu0veAlWQhBAZAlYChChsBdn1BEzsHwCqthhUxaMd2ME
-         QC1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:dkim-signature;
-        bh=cQDzQb/gBIw+MDDDjq7X4ZU1Rk6doOJDsa8UP6sNnoE=;
-        fh=rEniOU5pnQHmMhhRw60IlP7cqhPr37B3FVZB1A/PJAQ=;
-        b=hr5O1nOKmffeAM8ONGqR//xOo5dyNJTSlXa1zg6c1d2mRF4brqL+Cm/uKqfsKNBrz1
-         LOZ1sPw34ww8sW2jFV0zYKrvVCG8RUYceReSvYh6JZxOI0r5XYF1m3kwl/ydn+5pwPY6
-         amBxBqo1vcveezJYMoQ60uuLUg8CoRKkAjmMoneMjGUQYAAYpUFF8RcHqYN3xMOM9aav
-         kI9fXgGfJZkxT5Xct5arWo5zEbfLDF0gU4ed+7H2eCPklSTStfFNvwx+IBqqTouLvywh
-         k+Mf+Uu+tyN1TNdmEtqFDpHxBx6X6wF5DAjrg6IB02O36/gSKFSr/fS385lNEUMc5v55
-         dvzQ==;
-        darn=lists.linux.dev
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20251104; t=1774476977; x=1775081777; darn=lists.linux.dev;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cQDzQb/gBIw+MDDDjq7X4ZU1Rk6doOJDsa8UP6sNnoE=;
-        b=GHvpCyXDSwkkapsPGHxW0jAJI+gHLclrGmIScn9luV3hbpnFLC/Sa3hoOGk7uKyXcd
-         PF3B0aLkS7H6raYEu7WG+F7sxMb8DV2xAjNkcGi1bREcumNXVAgFtcjYEQcmAlhG4U9l
-         OK3B1O4vtB/kQsJEf6NAGJjxhihFevctrGO09BnlyentNiCIOW3hqHNq6Vf3+qBiqB8L
-         Ri5wrBeamTyLF11h86H5tdtIj2k0oiHAaSB43+ua2k2Wc+uzk4LbysWQR7cTBCTkg6Sa
-         JZxl9nGhTIXTU/ZA1jELAMnhs3CiQSttyGRIS9baOEkofUvW20Mxx+rgSuWJGLlLMbzj
-         +4dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1774476977; x=1775081777;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=cQDzQb/gBIw+MDDDjq7X4ZU1Rk6doOJDsa8UP6sNnoE=;
-        b=CrO5TeHeyTmLoRzFuLgHtWEWKBV7Ip+/L638xWP8EHC4H3xDWzJ/MWvldkNRsXE93Z
-         6EbAJCxcZddaRXFAe42i6WFvPrQV67uNr+T7eB1dwgEb+PzNfTQADn+nwrtLvrrAZ1LB
-         +iao5xbBexub1i6zCwgW9fwBQnzcua9nwQ7FpaRKDeGG/R6Aak8uxb7hdPvqo6PXVaZt
-         9LT8iHXqSz1Yh1/n9bJpKUynComE5wg85+hBf0DxPKFGYmCEqUJsEZtJwe8+EaKozb/R
-         8vwSiDv4yQ1ZLboIje/F/6DCfhi/rtZ00dqsTB+mx20H9mkNMFG7B39YYuUUeq55EGng
-         Wpmg==
-X-Forwarded-Encrypted: i=1; AJvYcCVieoRzLInXJtRBKpVVe43aGRptmdLugRDuB0jUUFrW8z8vIyyPL3zBh1zj1PowSwO0LxNPbfvm@lists.linux.dev
-X-Gm-Message-State: AOJu0YzSAsCI92Dm/nvTQs0/4c0P8AO6+qiJ5PY8TmY3ukC+4suLSWON
-	50zDZnWILNqv3Sul5PfrOIvK3RNJoFUM3i0Yci47HLMjv/6uD6nYczsnK/ZXLdEdX6ywn5lpN98
-	1dcnRVxiY8eenkKaVT72Re1tURkLx8laD7kaDXzJ4
-X-Gm-Gg: ATEYQzwVdWOxonTPkhOVUZvKYH0ADHJ8/FKeesqCueGlTV7W395ItEGBykw+XrU2VVV
-	QhFSEvvw/Px7cmqHCwADOoNIeT4pASzh7tWemJeeCZZ2E2zphx9wUSX+MKFYsZVGj3RtZC2fBlr
-	V+DpBHKR+raeMjSTiMf27rHKyQ3YmRfgHnB25FXpS7Xsb4+8phXjrRWKX8IZPcQcdH3iI8H9wqc
-	i+0mjpCzZpnnsGQ1WHwrjQe9M7/WBPSCMN2RRhP3trehG5tQaBPplnKYAnzgxSF91cMLaBZaBuX
-	87oW1SdeVaMeZh+vuV7baI6C0xLLp+HAdKOkxg==
-X-Received: by 2002:a4a:ef81:0:b0:67e:aa1:87fe with SMTP id
- 006d021491bc7-67e0aa18de3mr609126eaf.26.1774476976932; Wed, 25 Mar 2026
- 15:16:16 -0700 (PDT)
+Received: from mail.loongson.cn (mail.loongson.cn [114.242.206.163])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 418352550CD
+	for <patches@lists.linux.dev>; Thu, 26 Mar 2026 01:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=114.242.206.163
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774487570; cv=none; b=Qp3Bco8citCGmYSxMSK42/jlUxLirEpRGWc3MJIwHGZ8PpVT0xPycvRU1hHbFuU2tQ+GDztiEbQFDTV7zBYe11aPetfuaMKobm5Ju/G/bwG7xtx53vR3rmV+7hzftYycsTf76KRy//yDWm3b5D2lCMJjmPxjUAgpbv9pfDo/A+I=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774487570; c=relaxed/simple;
+	bh=mSNQB/kyfeHjvhCQ1N6GTP8BpN+Ju2famxd6FScXTUo=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:Content-Type:
+	 MIME-Version:Message-ID; b=sUOamYUnlWjkzCze2Z5yaIe9naJRSMnTx9YruBLBTbPcMAYZ/5/R6XeT/UsEevXRzzSmL8h1toLJ1enU0XDn/onB50YvMmRIze/MG8Q9g6XDNEs4f3NNOQriI7yK9ZgIKtShfoJ2NZnqHaXZs50g7pKa02HemL5aEnTkzXD6uOY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn; spf=pass smtp.mailfrom=loongson.cn; arc=none smtp.client-ip=114.242.206.163
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=loongson.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=loongson.cn
+Received: from loongson.cn (unknown [223.64.68.17])
+	by gateway (Coremail) with SMTP id _____8BxHMMFiMRpjcQeAA--.21865S3;
+	Thu, 26 Mar 2026 09:12:37 +0800 (CST)
+Received: from chenhuacai$loongson.cn ( [223.64.68.17] ) by
+ ajax-webmail-front1 (Coremail) ; Thu, 26 Mar 2026 09:12:22 +0800
+ (GMT+08:00)
+Date: Thu, 26 Mar 2026 09:12:22 +0800 (GMT+08:00)
+X-CM-HeaderCharset: UTF-8
+From: =?UTF-8?B?6ZmI5Y2O5omN?= <chenhuacai@loongson.cn>
+To: "Miguel Ojeda" <ojeda@kernel.org>
+Cc: gregkh@linuxfoundation.org, achill@achill.org, akpm@linux-foundation.org,
+	broonie@kernel.org, conor@kernel.org, f.fainelli@gmail.com,
+	hargar@microsoft.com, jonathanh@nvidia.com,
+	linux-kernel@vger.kernel.org, linux@roeck-us.net,
+	lkft-triage@lists.linaro.org, patches@kernelci.org,
+	patches@lists.linux.dev, pavel@nabladev.com, rwarsow@gmx.de,
+	shuah@kernel.org, sr@sladewatkins.com, stable@vger.kernel.org,
+	sudipm.mukherjee@gmail.com, torvalds@linux-foundation.org,
+	"Tianyang Zhang" <zhangtianyang@loongson.cn>
+Subject: Re: Re: [PATCH 6.12 000/460] 6.12.78-rc1 review
+X-Priority: 3
+X-Mailer: Coremail Webmail Server Version 2024.3-cmXT6 build
+ 20250609(354f7833) Copyright (c) 2002-2026 www.mailtech.cn loongson
+In-Reply-To: <20260325000600.57287-1-ojeda@kernel.org>
+References: <20260323134526.647552166@linuxfoundation.org>
+ <20260325000600.57287-1-ojeda@kernel.org>
+Content-Transfer-Encoding: base64
+X-CM-CTRLDATA: CfmPV2Zvb3Rlcl90eHQ9MjM0ODo2MTg=
+Content-Type: text/plain; charset=UTF-8
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <0-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com> <14-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
-In-Reply-To: <14-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
-From: Jacob Moroni <jmoroni@google.com>
-Date: Wed, 25 Mar 2026 18:16:05 -0400
-X-Gm-Features: AQROBzA4qyqKM_YfcGn1wN202YeqdJ-wh9W4v93pqVeHVoUP6HSGLEO470XesXs
-Message-ID: <CAHYDg1Rx_o5osDGWX0q_=BES4C-rpbhOXjfWcQV-yAOe38sn3Q@mail.gmail.com>
-Subject: Re: [PATCH v2 14/16] RDMA/irdma: Add missing comp_mask check in alloc_ucontext
-To: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Abhijit Gangurde <abhijit.gangurde@amd.com>, Allen Hubbe <allen.hubbe@amd.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, 
-	Bernard Metzler <bernard.metzler@linux.dev>, Bryan Tan <bryan-bt.tan@broadcom.com>, 
-	Cheng Xu <chengyou@linux.alibaba.com>, Gal Pressman <gal.pressman@linux.dev>, 
-	Junxian Huang <huangjunxian6@hisilicon.com>, Kai Shen <kaishen@linux.alibaba.com>, 
-	Konstantin Taranov <kotaranov@microsoft.com>, Krzysztof Czurylo <krzysztof.czurylo@intel.com>, 
-	Leon Romanovsky <leon@kernel.org>, linux-hyperv@vger.kernel.org, linux-rdma@vger.kernel.org, 
-	Michal Kalderon <mkalderon@marvell.com>, Michael Margolin <mrgolin@amazon.com>, 
-	Nelson Escobar <neescoba@cisco.com>, Satish Kharat <satishkh@cisco.com>, 
-	Selvin Xavier <selvin.xavier@broadcom.com>, Yossi Leybovich <sleybo@amazon.com>, 
-	Chengchang Tang <tangchengchang@huawei.com>, Tatyana Nikolova <tatyana.e.nikolova@intel.com>, 
-	Vishnu Dasa <vishnu.dasa@broadcom.com>, Yishai Hadas <yishaih@nvidia.com>, 
-	Zhu Yanjun <zyjzyj2000@gmail.com>, Long Li <longli@microsoft.com>, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Message-ID: <7f616aa1.4eda2.19d27b31b8c.Coremail.chenhuacai@loongson.cn>
+X-Coremail-Locale: zh_CN
+X-CM-TRANSID:qMiowJDxKOD2h8Rp5oZdAA--.15631W
+X-CM-SenderInfo: hfkh0x5xdftxo6or00hjvr0hdfq/1tbiAgESBmnDeSQV0QABsl
+X-Coremail-Antispam: 1Uk129KBj93XoW7KF15KF4kAr1xCF48ur43twc_yoW5JFWfpF
+	W7Gr4DWa10qwn7Can7u34j9FyUX3Z5CasIgrs5G3s5uF98ur1jqrn7ZFZ8uFn8KryvgF1j
+	vFnrXas2ga45J3gCm3ZEXasCq-sJn29KB7ZKAUJUUUUf529EdanIXcx71UUUUU7KY7ZEXa
+	sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+	0xBIdaVrnRJUUUQIb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+	IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+	e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+	0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+	Gr0_Gr1UM2kKe7AKxVWUAVWUtwAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYI
+	kI8VC2zVCFFI0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWU
+	twAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcxkI7VAKI4
+	8JM4xvF2IEb7IF0Fy264kE64k0F24lFcxC0VAYjxAxZF0Ex2IqxwCY1x0262kKe7AKxVWU
+	tVW8ZwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwCFI7km07C267AKxV
+	WUAVWUtwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF
+	67kF1VAFwI0_GFv_WrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUCVW8JwCI42
+	IY6xIIjxv20xvEc7CjxVAFwI0_Gr0_Cr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF
+	0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UMVCEFcxC0V
+	AYjxAxZFUvcSsGvfC2KfnxnUUI43ZEXa7IU8SAp5UUUUU==
 
-Reviewed-by: Jacob Moroni <jmoroni@google.com>
+SGksIEdyZWcsIFNhc2hhLAoKCj4gLS0tLS3ljp/lp4vpgq7ku7YtLS0tLQo+IOWPkeS7tuS6ujog
+Ik1pZ3VlbCBPamVkYSIgPG9qZWRhQGtlcm5lbC5vcmc+Cj4g5Y+R6YCB5pe26Ze0OjIwMjYtMDMt
+MjUgMDg6MDY6MDAgKOaYn+acn+S4iSkKPiDmlLbku7bkuro6IGdyZWdraEBsaW51eGZvdW5kYXRp
+b24ub3JnCj4g5oqE6YCBOiBhY2hpbGxAYWNoaWxsLm9yZywgYWtwbUBsaW51eC1mb3VuZGF0aW9u
+Lm9yZywgYnJvb25pZUBrZXJuZWwub3JnLCBjb25vckBrZXJuZWwub3JnLCBmLmZhaW5lbGxpQGdt
+YWlsLmNvbSwgaGFyZ2FyQG1pY3Jvc29mdC5jb20sIGpvbmF0aGFuaEBudmlkaWEuY29tLCBsaW51
+eC1rZXJuZWxAdmdlci5rZXJuZWwub3JnLCBsaW51eEByb2Vjay11cy5uZXQsIGxrZnQtdHJpYWdl
+QGxpc3RzLmxpbmFyby5vcmcsIHBhdGNoZXNAa2VybmVsY2kub3JnLCBwYXRjaGVzQGxpc3RzLmxp
+bnV4LmRldiwgcGF2ZWxAbmFibGFkZXYuY29tLCByd2Fyc293QGdteC5kZSwgc2h1YWhAa2VybmVs
+Lm9yZywgc3JAc2xhZGV3YXRraW5zLmNvbSwgc3RhYmxlQHZnZXIua2VybmVsLm9yZywgc3VkaXBt
+Lm11a2hlcmplZUBnbWFpbC5jb20sIHRvcnZhbGRzQGxpbnV4LWZvdW5kYXRpb24ub3JnLCAiTWln
+dWVsIE9qZWRhIiA8b2plZGFAa2VybmVsLm9yZz4sICJIdWFjYWkgQ2hlbiIgPGNoZW5odWFjYWlA
+bG9vbmdzb24uY24+LCAiVGlhbnlhbmcgWmhhbmciIDx6aGFuZ3RpYW55YW5nQGxvb25nc29uLmNu
+Pgo+IOS4u+mimDogUmU6IFtQQVRDSCA2LjEyIDAwMC80NjBdIDYuMTIuNzgtcmMxIHJldmlldwo+
+IAo+IE9uIE1vbiwgMjMgTWFyIDIwMjYgMTQ6Mzk6NTYgKzAxMDAgR3JlZyBLcm9haC1IYXJ0bWFu
+IDxncmVna2hAbGludXhmb3VuZGF0aW9uLm9yZz4gd3JvdGU6Cj4gPgo+ID4gVGhpcyBpcyB0aGUg
+c3RhcnQgb2YgdGhlIHN0YWJsZSByZXZpZXcgY3ljbGUgZm9yIHRoZSA2LjEyLjc4IHJlbGVhc2Uu
+Cj4gPiBUaGVyZSBhcmUgNDYwIHBhdGNoZXMgaW4gdGhpcyBzZXJpZXMsIGFsbCB3aWxsIGJlIHBv
+c3RlZCBhcyBhIHJlc3BvbnNlCj4gPiB0byB0aGlzIG9uZS4gIElmIGFueW9uZSBoYXMgYW55IGlz
+c3VlcyB3aXRoIHRoZXNlIGJlaW5nIGFwcGxpZWQsIHBsZWFzZQo+ID4gbGV0IG1lIGtub3cuCj4g
+Pgo+ID4gUmVzcG9uc2VzIHNob3VsZCBiZSBtYWRlIGJ5IFdlZCwgMjUgTWFyIDIwMjYgMTM6NDQ6
+MzMgKzAwMDAuCj4gPiBBbnl0aGluZyByZWNlaXZlZCBhZnRlciB0aGF0IHRpbWUgbWlnaHQgYmUg
+dG9vIGxhdGUuCj4gCj4gQm9vdC10ZXN0ZWQgdW5kZXIgUUVNVSBmb3IgUnVzdCB4ODZfNjQsIGFy
+bTY0IGFuZCByaXNjdjY0OyBidWlsdC10ZXN0ZWQKPiBmb3IgbG9vbmdhcmNoNjQ6Cj4gCj4gVGVz
+dGVkLWJ5OiBNaWd1ZWwgT2plZGEgPG9qZWRhQGtlcm5lbC5vcmc+Cj4gCj4gbG9vbmdhcmNoNjQg
+ZmFpbGVkIHRvIGJ1aWxkIGZvciBtZToKPiAKPiAgICAgYXJjaC9sb29uZ2FyY2gva2VybmVsL21h
+Y2hpbmVfa2V4ZWMuYzoxMzk6MTM6IGVycm9yOiBzdGF0aWMgZGVjbGFyYXRpb24gb2YgJ21hY2hp
+bmVfa2V4ZWNfbWFza19pbnRlcnJ1cHRzJyBmb2xsb3dzIG5vbi1zdGF0aWMgZGVjbGFyYXRpb24K
+PiAgICAgICAxMzkgfCBzdGF0aWMgdm9pZCBtYWNoaW5lX2tleGVjX21hc2tfaW50ZXJydXB0cyh2
+b2lkKQo+ICAgICAgICAgICB8ICAgICAgICAgICAgIF4KPiAgICAgLi9pbmNsdWRlL2xpbnV4L2ly
+cS5oOjY5ODoxMzogbm90ZTogcHJldmlvdXMgZGVjbGFyYXRpb24gaXMgaGVyZQo+ICAgICAgIDY5
+OCB8IGV4dGVybiB2b2lkIG1hY2hpbmVfa2V4ZWNfbWFza19pbnRlcnJ1cHRzKHZvaWQpOwo+ICAg
+ICAgICAgICB8ICAgICAgICAgICAgIF4KPiAKPiBUaGUgYHN0YXRpYyB2b2lkIG1hY2hpbmVfa2V4
+ZWNfbWFza19pbnRlcnJ1cHRzKHZvaWQpYCBmb3IgbG9vbmdhcmNoNjQKPiB3YXMgbm90IHJlbW92
+ZWQgYmVjYXVzZSBpdCB3YXMgYWRqdXN0ZWQgaW46Cj4gCj4gICA0MjliZjNmMDRjMjQgKCJMb29u
+Z0FyY2g6IEFkZCBtYWNoaW5lX2tleGVjX21hc2tfaW50ZXJydXB0cygpIGltcGxlbWVudGF0aW9u
+IikKWWVzLCA0MjliZjNmMDRjMjQgKCJMb29uZ0FyY2g6IEFkZCBtYWNoaW5lX2tleGVjX21hc2tf
+aW50ZXJydXB0cygpIGltcGxlbWVudGF0aW9uIikKc2hvdWxkIGJlIHJldmVydGVkIGZvciB0aGlz
+IHZlcnNpb24uIEJ1dCB3aHkgeW91IGlnbm9yZSBNaWd1ZWwncyByZXBvcnQ/CgpIdWFjYWkKCj4g
+Cj4gd2hpY2ggaXMgb25seSBpbiA2LjEyLgo+IAo+IENjOiBIdWFjYWkgQ2hlbiA8Y2hlbmh1YWNh
+aUBsb29uZ3Nvbi5jbj4KPiBDYzogVGlhbnlhbmcgWmhhbmcgPHpoYW5ndGlhbnlhbmdAbG9vbmdz
+b24uY24+Cj4gCj4gSSBob3BlIHRoYXQgaGVscHMhCj4gCj4gQ2hlZXJzLAo+IE1pZ3VlbAoNCg0K
+5pys6YKu5Lu25Y+K5YW26ZmE5Lu25ZCr5pyJ6b6Z6Iqv5Lit56eR55qE5ZWG5Lia56eY5a+G5L+h
+5oGv77yM5LuF6ZmQ5LqO5Y+R6YCB57uZ5LiK6Z2i5Zyw5Z2A5Lit5YiX5Ye655qE5Liq5Lq65oiW
+576k57uE44CC56aB5q2i5Lu75L2V5YW25LuW5Lq65Lul5Lu75L2V5b2i5byP5L2/55So77yI5YyF
+5ous5L2G5LiN6ZmQ5LqO5YWo6YOo5oiW6YOo5YiG5Zyw5rOE6Zyy44CB5aSN5Yi25oiW5pWj5Y+R
+77yJ5pys6YKu5Lu25Y+K5YW26ZmE5Lu25Lit55qE5L+h5oGv44CC5aaC5p6c5oKo6ZSZ5pS25pys
+6YKu5Lu277yM6K+35oKo56uL5Y2z55S16K+d5oiW6YKu5Lu26YCa55+l5Y+R5Lu25Lq65bm25Yig
+6Zmk5pys6YKu5Lu244CCIA0KVGhpcyBlbWFpbCBhbmQgaXRzIGF0dGFjaG1lbnRzIGNvbnRhaW4g
+Y29uZmlkZW50aWFsIGluZm9ybWF0aW9uIGZyb20gTG9vbmdzb24gVGVjaG5vbG9neSAsIHdoaWNo
+IGlzIGludGVuZGVkIG9ubHkgZm9yIHRoZSBwZXJzb24gb3IgZW50aXR5IHdob3NlIGFkZHJlc3Mg
+aXMgbGlzdGVkIGFib3ZlLiBBbnkgdXNlIG9mIHRoZSBpbmZvcm1hdGlvbiBjb250YWluZWQgaGVy
+ZWluIGluIGFueSB3YXkgKGluY2x1ZGluZywgYnV0IG5vdCBsaW1pdGVkIHRvLCB0b3RhbCBvciBw
+YXJ0aWFsIGRpc2Nsb3N1cmUsIHJlcHJvZHVjdGlvbiBvciBkaXNzZW1pbmF0aW9uKSBieSBwZXJz
+b25zIG90aGVyIHRoYW4gdGhlIGludGVuZGVkIHJlY2lwaWVudChzKSBpcyBwcm9oaWJpdGVkLiBJ
+ZiB5b3UgcmVjZWl2ZSB0aGlzIGVtYWlsIGluIGVycm9yLCBwbGVhc2Ugbm90aWZ5IHRoZSBzZW5k
+ZXIgYnkgcGhvbmUgb3IgZW1haWwgaW1tZWRpYXRlbHkgYW5kIGRlbGV0ZSBpdC4gDQoNCg0K
 
-On Wed, Mar 25, 2026 at 5:27=E2=80=AFPM Jason Gunthorpe <jgg@nvidia.com> wr=
-ote:
->
-> irdma has a comp_mask field that was never checked for validity, check
-> it.
->
-> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-> ---
->  drivers/infiniband/hw/irdma/verbs.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/=
-irdma/verbs.c
-> index b2978632241900..d695130b187bdd 100644
-> --- a/drivers/infiniband/hw/irdma/verbs.c
-> +++ b/drivers/infiniband/hw/irdma/verbs.c
-> @@ -296,7 +296,9 @@ static int irdma_alloc_ucontext(struct ib_ucontext *u=
-ctx,
->         if (udata->outlen < IRDMA_ALLOC_UCTX_MIN_RESP_LEN)
->                 return -EINVAL;
->
-> -       ret =3D ib_copy_validate_udata_in(udata, req, rsvd8);
-> +       ret =3D ib_copy_validate_udata_in_cm(udata, req, rsvd8,
-> +                                          IRDMA_ALLOC_UCTX_USE_RAW_ATTR =
-|
-> +                                                  IRDMA_SUPPORT_WQE_FORM=
-AT_V2);
->         if (ret)
->                 return ret;
->
-> --
-> 2.43.0
->
->
