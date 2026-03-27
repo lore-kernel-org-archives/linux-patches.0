@@ -1,63 +1,65 @@
-Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013045.outbound.protection.outlook.com [40.107.201.45])
+Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013068.outbound.protection.outlook.com [40.107.201.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA5F33436A;
-	Fri, 27 Mar 2026 15:24:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44402DB791;
+	Fri, 27 Mar 2026 15:25:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.68
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774625057; cv=fail; b=Yk3k7QaVMGkSlslgs88CZLZnhrvayTdKzH6koZwkHTSJRTvz27xhzHKY7t/IJZbst7BDovWpj2s59Tv7Uxtsm35KqYPKfYFXSqFa4BRa7dWvzwXoFo8YREh8BEooTwvNVw+QHqa7vHma3eeTG+TLsRIdHbNKa/eY7QtR0YsCefc=
+	t=1774625147; cv=fail; b=OVs3JgSJO1jFw1um9558J8ejh611PjI7daPESKPyV9dA+zd5xprlcM8X10rKXrFRNidYC7aYX0Cy+7p5BJL9ry9ndXHDXHkrPM0kvF4rl5D47yYI8NQIKVzpCAvcM5xqwueOv+zPFKnDFOwiWwo3AJuZgnEiy75aUIGyb52f4l4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774625057; c=relaxed/simple;
-	bh=WOO+Vu+r6fOhGU5yXM5hujcHXK08dZOr+bv74ZS4wEE=;
+	s=arc-20240116; t=1774625147; c=relaxed/simple;
+	bh=7ARo+2l4tdVAtrVz2QwNHTRIEIDOZORCTnkUp4dX0HM=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=hz7b5m0TTpoHsKVIezj/mZI0UyU6maUu6FpvtfezIIZKgJPGpKArvIrqERIGPqK8kNpfq/ix6tSxiKY/69iIb37o5jyFTicdnZfK5AsOtBmoGrIsbVfjVMWGlJfHRQmb87bG04qfb5oInr1DjkDKCTs+Vx9qHWpNuCfiMBYeNXc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=FKfx7h+f; arc=fail smtp.client-ip=40.107.201.45
+	 Content-Type:MIME-Version; b=jTyp93WuDfp/Yz5nX2K7YcldbLYpwt3kaS9zaZoluOoW4JQ6/CyCR8p1NxB/3oOs6FZS/sPN6bKHNw1LYPyxaSjDpKBGnxiErSZ2edahjUSCWPAbcVFiX4mUZZsPvzBjchcdeQX7b5jDT1/96yD5tv1xtti6OlKN6prCntt/uNw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=N8lRj4DE; arc=fail smtp.client-ip=40.107.201.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="FKfx7h+f"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="N8lRj4DE"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=bxXto6/SvIDNrnbEZ3/YDWw/Vf8FxOV4koMf1REoIcKjRovxqrH6NeNebDcMuf0HcoK0qGlVP36UezW88fd4x6Uwe7MuS+vKHcJZds/Fq0fbWi+jE1++eKi+4ECvaj9zqUHpJpawT9Srd4zIq/ubw1ID1uwWYMTtp/LClKIQcwwHHU2R8RxNuP1/04z9EOgwP2nke3KdjtLhfy3v1+ELe6GjDFOXvLA2A2/PaML8cq9ZLlw8hXYHIMzvxC1RnZO1m7B26qf5atYeej+HTvW3680ZQQNngDqCjf12JCgXCBfnUYHacJHZuBftRZHUl67/TVwROYAV3Qwm8kXbBSYUsQ==
+ b=SYkqWcDU42lOqpA3FlMAZ86UIq6ui90kUD8K2DLzPNkj8pBphmTyOTjAWilcTjuOVciu0weAe9pi/pgpLTzutyhT4i7J8xgLlXdPKE9Hjrk4fhEmx9fV/OfUSimGvk/tbJhssVjIcxzafuIeqnCw5jG6bYJ5Ti1/ISy6hkxfobHyYZeTPchhgLeRdfhSXRKLvWZLAOO0qPmzrz7C9GtpTD6k//9gBbWXks5cuGxF7g53XdkfzCO+b17eJVpD90Dac30pwPRqbD9JQJDb8ohh23q0tkqFQib4gBwTl++WTTfJuxlDNY2uf1FZ5aDsDY8nxdiElMri14R4yegTaPr8RA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+8flRZCEN60NX4YLEbJHMS288oXTkknqVqDhHqH4iz4=;
- b=bK1x3MqzFrWdDiWpTFurzP2U8LwjFaFmTvBXpjdsGe0zSbhjpxrL2CTLq6XhkPFpulUjJnyZ27kL2Vxm2hWCfSSKWhic1sRLP2F7xdIfaOF2ROtNHKHFobyu3gUSSrMR7I+o2pv5KL2vMqKnWGJjZ+wBi3zjg5N7iUQfo6VYtJii/TJZdDsvxxOx9sbKQuKygdTVKNUjlwFTPjE/BTltc6Z9crkQ8aaz8MoIL5ZvUIKQY42KDiFo9KP8njjxDsup2PpmuqBtc8BG9ChVsrynmYKq4WD+HLkgD5/yib53wFunU0j54CHpA64ORB1OxKa5gGUw6ffHMOiBeBNkRnGK3Q==
+ bh=djB5FHZtd7xi9N5G1elm/l+EA5B7ML5rudGr6yHGyFg=;
+ b=Gxjdm9t/5QJ33zOYZxDLjy/rgoAMu1BKkVamer1vGaTdsAHRh//UIlHVU8lJUvEA3sda99OUT2excsyHekv3oFIIYhkafLQtf+5JrvB4o27xMgiDjD55nzzgc6bXbaJ2Lzzs0lvIfbLl0xC9an31L6E8BHTCKyitua92Q1TE1ywJ8nWow9QFA0PZqXD/vEzmy/k0s81uPDeD6CS0ntF6iJq/pGVNVPgJUdRhEktX0VTF6CLWUa1vL291NMluVogSUYYyTCFEidugNv/K2cFdCj1Pm0gc7Pp+M6sPPJDJyJESOvLwmcZj7NfytXuLC37jWHzflGG24wm6KrP3iVt+kQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+8flRZCEN60NX4YLEbJHMS288oXTkknqVqDhHqH4iz4=;
- b=FKfx7h+fnSeK86YjCtOzEZyDTLIv9bOPmMxTYim9vmX/1428TdoGw+gaiw+cT1hLEp70i/W3n43NGOqBgQr/VLO1JWyuTU+dNfO8P0/paf1hrnN1uC4jggqkPoo+yKPDsIV6Y//Rdv/kZw4kfeNUNk9Dvq7Q/XKD0aaZIIuik4gQJHy8Gpy2AXZkuRkArtcX6yFvqtC1VV4BGyrwSroZrQowIbq9oFjEUztDJAB+jTxn3NpbvI1IFgPUZyetIUBzcdmAslxfdvYzDULgaLXJRNLvVODFPmxgIE0CXMv4L/JLKOucsUOtKsGowsid73jfZJtk46FOAL8pr0GjpmZMcQ==
+ bh=djB5FHZtd7xi9N5G1elm/l+EA5B7ML5rudGr6yHGyFg=;
+ b=N8lRj4DEzNbT0aH+ePBhRM2PZToHMns7wkGftGHmaYqtvhw4wu1UAPcnofsRTGxgF7bYWCCPCcaoHxc5kGfV6yKFfOYObi3n+r89a2tFKpUBO2l1AqX3UzKA/VLNGVgzN5xZbEnRP8dsuJJ7jEt/M1wSdMTb6c+0NPzbV7QgN83ZwC0YS1KxmM5xIKywNPIeKe5nTs5p1ItGDjxsAu1OzurY0V++iQ3SSNnchNqdgG6Xuv/+BbVKxdo4zYxK6rSTBvuvurhR/dDHmKVVnHq5o3IdOl2UQZ0WVM1+rR1iUU8MTuj4fZiuJiQnDQ3BFFuZO3uUEGCmWT1o14z+CA6T1A==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by PH8PR12MB7182.namprd12.prod.outlook.com (2603:10b6:510:229::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.8; Fri, 27 Mar
- 2026 15:24:03 +0000
+ 2026 15:25:38 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.006; Fri, 27 Mar 2026
- 15:24:03 +0000
+ 15:25:38 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
-To: iommu@lists.linux.dev,
+To: Lu Baolu <baolu.lu@linux.intel.com>,
+	David Woodhouse <dwmw2@infradead.org>,
+	iommu@lists.linux.dev,
 	Joerg Roedel <joro@8bytes.org>,
+	Kevin Tian <kevin.tian@intel.com>,
 	Robin Murphy <robin.murphy@arm.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
 	Will Deacon <will@kernel.org>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 5/5] iommu/amd: Control INVALIDATE_IOMMU_PAGES PDE from the gather
-Date: Fri, 27 Mar 2026 12:23:59 -0300
-Message-ID: <5-v1-a7b77c25974e+115bf-iommupt_inv_amd_jgg@nvidia.com>
-In-Reply-To: <0-v1-a7b77c25974e+115bf-iommupt_inv_amd_jgg@nvidia.com>
+Subject: [PATCH 1/4] iommu/intel: Split piotlb invalidation into range and all
+Date: Fri, 27 Mar 2026 12:25:34 -0300
+Message-ID: <1-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
+In-Reply-To: <0-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: MN2PR11CA0014.namprd11.prod.outlook.com
- (2603:10b6:208:23b::19) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BLAPR03CA0032.namprd03.prod.outlook.com
+ (2603:10b6:208:32d::7) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -67,287 +69,255 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH8PR12MB7182:EE_
-X-MS-Office365-Filtering-Correlation-Id: e0465d3f-b350-416d-6624-08de8c14e080
+X-MS-Office365-Filtering-Correlation-Id: 23337681-8906-4080-8252-08de8c151969
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
-	BCL:0;ARA:13230040|366016|376014|1800799024|56012099003|18002099003|22082099003;
+	BCL:0;ARA:13230040|1800799024|366016|376014|22082099003|18002099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	rlUFrHf/iI9g6oLoK/Y31N/pvzgOdjSFY8xzoogm5zCcatbXAAGAbcAyTXvURm2F+ayxCIw9myVvs2/Mv80VxnbEsBvA+a3IiUzkcnlGRbOw0VYstolhT4IpfEVf0ayoCxC2UVM5iq4qylPYO6fmRHnMkTDXOYVAjxpT13x+mZosD2882LszuIH7lKBkqPah2F7qCcKJ7a1l43jd/UfAApFkI0RoIhkEtBJ4Zbd7dczqpYBzg9lijp8ct6h2+bKIeQmCqY1rVpqf8HAZf/bHw0gWFeehEaKbMt9dU+CJo8eWoeRIxc7HojvIn9cB4wBsGe5YbuDkhUqDiUaW4oTdAoJCw5UH20sboDUY+l051AxzawCQJUF0kDtIHsyF8wKs3EBgO90o78nM/6pVWTmRtMU5rmjd+F4C6/QudVJFJk7zmypyonY/4WZXmrv3eT2g5JDG/et6isrw55uZ6mxZYNtxoKvaQrr5KQiE1iW1VE6Qhpl0PQY5ZoMO15YC/37DLy5CD2PHeVX2wP2hXj9WsyGFcoqh59XZGM5lF+fd36Tp1BZCz1wvAHUW4UE87ktk9yzioZqVwAxVSa4QxLJujwRtUOQA1kLek03X13TLWZZAta0r2+waQGwZPyHZyQdQdlpsT5jNz2BMufb/aldj3nbWOWy/BEI/MTL+sPWSI8fHXb9yrwq3m+YXSUwjmQ9g8k2inTfkiN/0nBl0LUA0WK7JKfFF1RtcqnrussU5+KU=
+	ZQTKWiM8KmBwkN2PIS+3BAEDY7GNYObxAKaYkK0+6ivHohGB75+69lXcLjKSQzmccUkDIrgW/PiH4s8GgKaty715cPcDMSxtCJVq0vdmZtUoXDO0m3hnVkMrpL7LA5HaYPQ5U4yGi29KnxKelskMPbXeDHno+2oZHB3TLdhfqYMxh1XORk+9c0dSfjhA2mWos46KVkwO2vaeHcOEjFt4w0ipJI95hRZekDzXbcFXypLg8nuj/HqFn0bMJfFvtMFnzjng8ggYJ1PfIjrV4OQCfLgG2LybBEq6ZhbCqOHBzJu+5fRtQJOf/gLzBEXV7niNWPF7dzJuBhsgTxQ188FCZ/kocj2GthOcMraOZfxRIwb1bl4BCYVLYRqQAEmkeMqsu1sWXm/2kUxPi2+RU1IxNu7DYSyYAY36MY7AMrWd3eStpfPkZJ0Z/jyb5G6tJ3qxEEhCAxAIwVrjgvqf7K4/eCrZSypjMe6gni1T3SfWq0NdIbeTc7es7rMSNgL/X0vWw86efi19jKaTI7JK08mjlhf1YL1fwNXnsCk11bJ2aCjx3eoqpZPLM6Z30I88VdxMgudhkt7834wVMtWqGjB4ANgDMzEUvq0Ja+cMP7M8WtS1QeukubSDc9Es6mcFIJXFI+3KA+LLV87Iyef2C0Cu5ioNUyx98wzpvqs5GIxjtwaZ+KmHb2gdgUGim7x2LNYcE34Cxr/5QYdVGLnnPv0ZYZZoorcCSBBuTSI/LwAKwv4=
 X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(56012099003)(18002099003)(22082099003);DIR:OUT;SFP:1101;
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?HbHNRiCKGUFxEOZeOYru1TJASO7aEHLZqO9K2QXLIQV2e6XJ/22vhGLIv/aW?=
- =?us-ascii?Q?7fIpCgzoVtaiMDdAMwNS/N3kH3Xmv4wEsdIuEAXhd3Lh4Cyyz1DlNppm53MV?=
- =?us-ascii?Q?LemFpvruvs+T97Sidxzc1tGvCA9mTgi3n2YebfEx4rjCNeiRf2nM+C1J2Tq5?=
- =?us-ascii?Q?akjCJAFHc/fyF48RAIW+k6urLjwSQXLaW5cUu3+pwqlwNSYbEIKtyDhConvG?=
- =?us-ascii?Q?F9yR2sO2CNXW1ASus1Jdl/mHRzMNV0T0LGUnMpMVrDiHkFXD5dBcbhi9EVkB?=
- =?us-ascii?Q?SAdxOa1655kXR4dweb/+ETASRf9slh4xtpjkgYENwYXBfhJDh9zppMTVPjxk?=
- =?us-ascii?Q?0RvQeIUOYdA7Pt1CN9BMUTRWiThR7/Bn1NIQx/ZWtlLFGIJOCnEWppqq6mcp?=
- =?us-ascii?Q?EkM4CHDVy3KyeElR6GPWB/QRecALZrefFUNSq7+S5FQFeTgG1hJFGktqT7sU?=
- =?us-ascii?Q?0uw645WL1ugBkESTqef2UxO0Fi51np+BepWLQTanhfUgIJlw3qR8O3NzfROp?=
- =?us-ascii?Q?VHTIJzpTuWxC+RxpK+o++iYZXKw2mbLjTAGhzG3t5IYwq/c2EuoadljVx/F3?=
- =?us-ascii?Q?PV5AaB+Vs924Vb+Lly+dnfSvy9sLs9rsLHlaq1gaufyFsWyLO2mQY3VdhuzT?=
- =?us-ascii?Q?XP6ka/4xeE3hmxLkS9v0BC4CdYBU1aUftHqxTnw9GggIJD5hqZXt3btig3xt?=
- =?us-ascii?Q?IjwMjTV/O7XTdn3OvKzPcoa3Q6Sp6CCKNp/2to6qXPg/uwWBZZxit/nBRYWQ?=
- =?us-ascii?Q?XeSaKhVwR36TREo5Mk6N1/kbLRWvUKOTnxkt8idqRltQhaixm9jTpB7p42r3?=
- =?us-ascii?Q?iN261Li9oi+P0CMrBfGEh8xv1eYW6WAwOHs/hgeOyyP1Lp6anwTt8ToAQQZ/?=
- =?us-ascii?Q?KqN16JnNtuQP6huIF1/5AgLvc2Ii/qQeglO3+PZmSzvlBxDIsIZ2Hz544Tyh?=
- =?us-ascii?Q?65Ay/G6ynmRWXG3EI7s+IQ0orrnuu1l6a9NEUWaIhCMt7GZTCRlqxRLufh7B?=
- =?us-ascii?Q?AU01Um0KcRFBd9W4gRvybM7A34AVAQzU87cQFK2/EBoA3uZ+HJwMdyHs7u0L?=
- =?us-ascii?Q?4YQTar7zGTx7OgoGdCqcLWfDmMneFFjDtunh1aC95sYFZ76q6O1BFSbNA518?=
- =?us-ascii?Q?ZkupqmW+ImzeFBP3KwJlvNAuuKEO+FJxKycVykp3M6X31iB2DJYGGs0NW08X?=
- =?us-ascii?Q?dtWTvlqKY5Sxz3xwFmho4MAtiOTCw+hIqhp1M3ZU5LgNtpuInkLGVE0N2/sN?=
- =?us-ascii?Q?3r5HX926M8KK3JvZAcm9RGg5KQF0xndHb1cuUhLnfqx4zAppjyKz7DFdLLwR?=
- =?us-ascii?Q?eZPhH9uR+p4jRZDmgwUcoJBxUMCTdEngyjftNsWVtRjEtAIDJWE/3OK0N05S?=
- =?us-ascii?Q?LrePrTMTYYo7DDaB4xwomvIhb9Ufibk5ONeZLXaLNkTb8rr1pz5RbksKC8M6?=
- =?us-ascii?Q?nqhLCk5hKRTzzMIQGzvuRxosEqcpWAcqTBvbj6qIfPckXKxdrnKPe+GDVJY+?=
- =?us-ascii?Q?gwSoI1dH0qkv2ieL2ROcaCtr0oNXVO/3FwQDnNwvGQe9iP4LYxz9Sl8NwSRo?=
- =?us-ascii?Q?L2h6D1ek0mLxzHF2X30NCh7pY6fMR243ZWYAuiyagp56guo9op61+snWf6PH?=
- =?us-ascii?Q?bk5wazKk9PQ+ULj3v6ElNn1T1ZHINLkitVwQxzuSIBkx2dsB9mBrjc6l5cU2?=
- =?us-ascii?Q?Mqf72IOfmrXaw/v2pehO/B2MWYY8KV3gVnbtQKIDCPODtI5H?=
+	=?us-ascii?Q?nd+6IWq8816KhzGxneRxNuwQHGL9lfMqT6aeuf1vY2HCWcP9prhtyxUHy4G0?=
+ =?us-ascii?Q?0388TRr/YD/4i0gJyyrCgd5BO9/SeDvJjw4B5Ax58X970pDkTEzVs4p5/PEe?=
+ =?us-ascii?Q?S/GCp7WVNxKDDsFA3jA1ShzzNLMG/RStM8M9iohOhrwzbtqtUMQA+9oXIYV2?=
+ =?us-ascii?Q?+D1xfb4x87LRBr1GnXgGN/HFC+C0ucCl0hnFStilNZh119NUY3zD6NNic8eZ?=
+ =?us-ascii?Q?K17nKBrB3gQmmVnMWA1L1MgYGMiIdlD4357MTEv+116As2rA+0S102Aef4bW?=
+ =?us-ascii?Q?sX1wnlvXXsL6ed2uxniqCSY+l6vEwrcEK3haVRK4mNac74Ub3L7xSJ03Tlx4?=
+ =?us-ascii?Q?fIyPd+9A4C+K6A6F7gmorZI3w4LBIqkCBeA/4wjPMvkK9RwqxGKGQar2Wrni?=
+ =?us-ascii?Q?wmZgn7TO6o2HZlj1F3Eng7VKoIO7JSQ/tZw1HFtG45jKDsmrZ+frdNYfKz7x?=
+ =?us-ascii?Q?GHNXURKSry5Rwxtx/HhcFSX5Qq31kY+tnghJlfWfYWDU7+e3tzx5DtrfOfXj?=
+ =?us-ascii?Q?V91el57aHV42+I8GEwady/r1DAgcro97iof3dCKbjsRwOvVeCMQRKc/JU0JE?=
+ =?us-ascii?Q?9MdAaB5MHrFXGLefOPmsdW92/kOKu09ZgANrhEgLmVSmqK10C/Uwn9tv52Sd?=
+ =?us-ascii?Q?BcQDxtb6y+YVqqbzMmGNpSp8j6In8P8hzOrgABStQq3WjpFv0vKT717JO9OL?=
+ =?us-ascii?Q?FEIDc+vr628TeANktDz3/n7/iqw9xrlXBuljXgkV3fVMRTFuKi7OiR1BBuCI?=
+ =?us-ascii?Q?tBmtKy1s54/9d2MFU7j1x1AUYUNA3LGYZP03rG+gw5dXqRNtQ2+DMvuUbDGC?=
+ =?us-ascii?Q?Wd/0IPtWmy+zq6YqQQGFZsZfem6EN2EqIF1ogypZDIvQ9fXn1iRNVVmoTXY0?=
+ =?us-ascii?Q?kqM3e8ED7x0ytIcQtADZT4bi2USGmJ2d1vN3hxw5Tow2k/bXpy5KtnMtXYKA?=
+ =?us-ascii?Q?ECg2AQt+lrTRLz8QBDMyrzBrs3QHBxiQ3Oc7Dx9pBQJZOnjqRnF0Lz8Z+wpL?=
+ =?us-ascii?Q?9WvPjpzhgZo+V4wicGoAmobgDTXu4cgmLnQHyijXcVjjUF792EN8x9ntqXHi?=
+ =?us-ascii?Q?oc8AsjCzQcyMz7Ry+ip9Mq0LV2FCaHGR7RhGn87DyUFLmFVyIePSwK+MQLLA?=
+ =?us-ascii?Q?Hk2P8xN3DQ5oMfJELFBHEXmCnimIQjQTKfhdSzOGdwNqSwlzsOSsey9dyEQG?=
+ =?us-ascii?Q?lgj1KxB2j/+xD2Zmc4PnVQff9sV98FJVlOJ8m6EGHDFTi2JQ25JiB83O5QvR?=
+ =?us-ascii?Q?JXZngSwRi107hzorEFBWRov/sbbBpJderjhvGsOtjZXBAofsusfnHKfmEh6p?=
+ =?us-ascii?Q?Li1JY7i3gvsXjZ1qzwFQGuJk1nUpRU8X4SDh1WccHe334qyTPxoRlWHGpabd?=
+ =?us-ascii?Q?F3grueWpx+OD9U5bIbLXnGSRevq5vP5SD9SPUQX3Mr/c+BdpApq/W7O/GqjK?=
+ =?us-ascii?Q?QLfuRSmDUn2K5y9xK+8Oks9wGdK1ja8QHn0pLc8ddwfsxcXK2tkpcHI8U96/?=
+ =?us-ascii?Q?160k7PxmFKlQFobtQ2sat8btT3lYqjEIK9gq5MQ64UTXbaPJem0tHGz9uscs?=
+ =?us-ascii?Q?oFDD9ItsDju5SPk06S7e+Z2pY9JFSeVyyGCJ0AjYCQ5Iu1CEk3u93CJEGcfX?=
+ =?us-ascii?Q?YbgwqAgYzNYIFsCC04hSniDl7IC9KxmGpyJz4U7SiL51FFZn9R4TIL66Rruj?=
+ =?us-ascii?Q?5mmOVAKcC+xTPf0NbK7N1tbaHwkaOni+43f84+8W15/Gd8cB?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e0465d3f-b350-416d-6624-08de8c14e080
+X-MS-Exchange-CrossTenant-Network-Message-Id: 23337681-8906-4080-8252-08de8c151969
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 15:24:02.9649
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 15:25:38.3933
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: W/q/GVLUhw/mf4Vh/mgW4gx2WJ5qMa6zdG5cAhH3I5IT50JLcCHcUrdlvFPi0jb0
+X-MS-Exchange-CrossTenant-UserPrincipalName: py2DCixuLmAggD9JRTaqTsHoyhIuS/JuQNnRwnIP0Wd9zSmirPFzKxa9fvc63Qu1
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7182
 
-Now that AMD uses iommupt, it is easy to make use of the PDE bit. If
-the gather has no free list then no page directory entries were
-changed.
+Currently these call chains are muddled up by using npages=-1, but
+only one caller has the possibility to do both options.
 
-Pass GN/PDE through the invalidation call chain in a u32 flags field
-that is OR'd into data[2] and set it properly from the gather.
+Simplify qi_flush_piotlb() to qi_flush_piotlb_all() since all
+callers pass npages=-1.
+
+Split qi_batch_add_piotlb() into qi_batch_add_piotlb_all() and
+related helpers.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/amd/amd_iommu.h |  2 +-
- drivers/iommu/amd/iommu.c     | 61 +++++++++++++++++++----------------
- 2 files changed, 35 insertions(+), 28 deletions(-)
+ drivers/iommu/intel/cache.c | 20 +++++++++++++-------
+ drivers/iommu/intel/dmar.c  | 19 ++++---------------
+ drivers/iommu/intel/iommu.h | 37 ++++++++++++++++++-------------------
+ drivers/iommu/intel/pasid.c |  6 +++---
+ drivers/iommu/intel/prq.c   |  2 +-
+ 5 files changed, 39 insertions(+), 45 deletions(-)
 
-diff --git a/drivers/iommu/amd/amd_iommu.h b/drivers/iommu/amd/amd_iommu.h
-index 67d4daaaf6f0ce..364878a923edd0 100644
---- a/drivers/iommu/amd/amd_iommu.h
-+++ b/drivers/iommu/amd/amd_iommu.h
-@@ -88,7 +88,7 @@ int amd_iommu_complete_ppr(struct device *dev, u32 pasid, int status, int tag);
-  */
- void amd_iommu_flush_all_caches(struct amd_iommu *iommu);
- void amd_iommu_domain_flush_pages(struct protection_domain *domain,
--				  u64 address, u64 last);
-+				  u64 address, u64 last, u32 flags);
- void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
- 				     ioasid_t pasid, u64 address, u64 last);
- 
-diff --git a/drivers/iommu/amd/iommu.c b/drivers/iommu/amd/iommu.c
-index 4e057fbc20021e..95f7dc6cf67eaf 100644
---- a/drivers/iommu/amd/iommu.c
-+++ b/drivers/iommu/amd/iommu.c
-@@ -1301,8 +1301,8 @@ static inline u64 build_inv_address(u64 address, u64 last)
+diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
+index 249ab5886c739f..e08253980a6ee7 100644
+--- a/drivers/iommu/intel/cache.c
++++ b/drivers/iommu/intel/cache.c
+@@ -330,15 +330,17 @@ static void qi_batch_add_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid
+ 	qi_batch_increment_index(iommu, batch);
  }
  
- static void build_inv_iommu_pages(struct iommu_cmd *cmd, u64 address,
--				  u64 last, u16 domid,
--				  ioasid_t pasid, bool gn)
-+				  u64 last, u16 domid, ioasid_t pasid,
-+				  u32 flags)
++static void qi_batch_add_piotlb_all(struct intel_iommu *iommu, u16 did,
++				     u32 pasid, struct qi_batch *batch)
++{
++	qi_desc_piotlb_all(did, pasid, &batch->descs[batch->index]);
++	qi_batch_increment_index(iommu, batch);
++}
++
+ static void qi_batch_add_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid,
+ 				u64 addr, unsigned long npages, bool ih,
+ 				struct qi_batch *batch)
  {
- 	u64 inv_address = build_inv_address(address, last);
+-	/*
+-	 * npages == -1 means a PASID-selective invalidation, otherwise,
+-	 * a positive value for Page-selective-within-PASID invalidation.
+-	 * 0 is not a valid input.
+-	 */
+ 	if (!npages)
+ 		return;
  
-@@ -1311,12 +1311,9 @@ static void build_inv_iommu_pages(struct iommu_cmd *cmd, u64 address,
- 	cmd->data[1] |= domid;
- 	cmd->data[2]  = lower_32_bits(inv_address);
- 	cmd->data[3]  = upper_32_bits(inv_address);
--	/* PDE bit - we want to flush everything, not only the PTEs */
--	cmd->data[2] |= CMD_INV_IOMMU_PAGES_PDE_MASK;
--	if (gn) {
-+	cmd->data[2] |= flags;
-+	if (flags & CMD_INV_IOMMU_PAGES_GN_MASK)
- 		cmd->data[0] |= pasid;
--		cmd->data[2] |= CMD_INV_IOMMU_PAGES_GN_MASK;
+@@ -378,8 +380,12 @@ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *
+ 	u64 type = DMA_TLB_PSI_FLUSH;
+ 
+ 	if (intel_domain_use_piotlb(domain)) {
+-		qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid, addr,
+-				    pages, ih, domain->qi_batch);
++		if (pages == -1)
++			qi_batch_add_piotlb_all(iommu, tag->domain_id,
++						tag->pasid, domain->qi_batch);
++		else
++			qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid,
++					    addr, pages, ih, domain->qi_batch);
+ 		return;
+ 	}
+ 
+diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
+index 69222dbd2af0ea..6f496fc6a5ff1a 100644
+--- a/drivers/iommu/intel/dmar.c
++++ b/drivers/iommu/intel/dmar.c
+@@ -1550,23 +1550,12 @@ void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
+ 	qi_submit_sync(iommu, &desc, 1, 0);
+ }
+ 
+-/* PASID-based IOTLB invalidation */
+-void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
+-		     unsigned long npages, bool ih)
++/* PASID-selective IOTLB invalidation */
++void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid)
+ {
+-	struct qi_desc desc = {.qw2 = 0, .qw3 = 0};
++	struct qi_desc desc = {};
+ 
+-	/*
+-	 * npages == -1 means a PASID-selective invalidation, otherwise,
+-	 * a positive value for Page-selective-within-PASID invalidation.
+-	 * 0 is not a valid input.
+-	 */
+-	if (WARN_ON(!npages)) {
+-		pr_err("Invalid input npages = %ld\n", npages);
+-		return;
 -	}
- 	CMD_SET_TYPE(cmd, CMD_INV_IOMMU_PAGES);
+-
+-	qi_desc_piotlb(did, pasid, addr, npages, ih, &desc);
++	qi_desc_piotlb_all(did, pasid, &desc);
+ 	qi_submit_sync(iommu, &desc, 1, 0);
  }
  
-@@ -1523,7 +1520,8 @@ static void amd_iommu_flush_tlb_all(struct amd_iommu *iommu)
- 	for (dom_id = 0; dom_id <= last_bdf; ++dom_id) {
- 		struct iommu_cmd cmd;
- 		build_inv_iommu_pages(&cmd, 0, U64_MAX,
--				      dom_id, IOMMU_NO_PASID, false);
-+				      dom_id, IOMMU_NO_PASID,
-+				      CMD_INV_IOMMU_PAGES_PDE_MASK);
- 		iommu_queue_command(iommu, &cmd);
- 	}
- 
-@@ -1535,13 +1533,15 @@ static void amd_iommu_flush_tlb_domid(struct amd_iommu *iommu, u32 dom_id)
- 	struct iommu_cmd cmd;
- 
- 	build_inv_iommu_pages(&cmd, 0, U64_MAX,
--			      dom_id, IOMMU_NO_PASID, false);
-+			      dom_id, IOMMU_NO_PASID,
-+			      CMD_INV_IOMMU_PAGES_PDE_MASK);
- 	iommu_queue_command(iommu, &cmd);
- 
- 	iommu_completion_wait(iommu);
+diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
+index 599913fb65d59e..40759587729953 100644
+--- a/drivers/iommu/intel/iommu.h
++++ b/drivers/iommu/intel/iommu.h
+@@ -1082,31 +1082,29 @@ static inline void qi_desc_dev_iotlb(u16 sid, u16 pfsid, u16 qdep, u64 addr,
+ 	desc->qw3 = 0;
  }
  
--static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom, u64 address, u64 last)
-+static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom,
-+					 u64 address, u64 last, u32 flags)
++/* PASID-selective IOTLB invalidation */
++static inline void qi_desc_piotlb_all(u16 did, u32 pasid, struct qi_desc *desc)
++{
++	desc->qw0 = QI_EIOTLB_PASID(pasid) | QI_EIOTLB_DID(did) |
++		    QI_EIOTLB_GRAN(QI_GRAN_NONG_PASID) | QI_EIOTLB_TYPE;
++	desc->qw1 = 0;
++}
++
++/* Page-selective-within-PASID IOTLB invalidation */
+ static inline void qi_desc_piotlb(u16 did, u32 pasid, u64 addr,
+ 				  unsigned long npages, bool ih,
+ 				  struct qi_desc *desc)
  {
- 	int ret = 0;
- 	struct amd_iommu_viommu *aviommu;
-@@ -1559,7 +1559,7 @@ static int iommu_flush_pages_v1_hdom_ids(struct protection_domain *pdom, u64 add
- 			pr_debug("%s: iommu=%#x, hdom_id=%#x\n", __func__,
- 				 iommu->devid, gdom_info->hdom_id);
- 			build_inv_iommu_pages(&cmd, address, last, gdom_info->hdom_id,
--					      IOMMU_NO_PASID, false);
-+					      IOMMU_NO_PASID, flags);
- 			ret |= iommu_queue_command(iommu, &cmd);
- 		}
- 		xa_unlock(&aviommu->gdomid_array);
-@@ -1674,7 +1674,7 @@ static int device_flush_dte(struct iommu_dev_data *dev_data)
+-	if (npages == -1) {
+-		desc->qw0 = QI_EIOTLB_PASID(pasid) |
+-				QI_EIOTLB_DID(did) |
+-				QI_EIOTLB_GRAN(QI_GRAN_NONG_PASID) |
+-				QI_EIOTLB_TYPE;
+-		desc->qw1 = 0;
+-	} else {
+-		int mask = ilog2(__roundup_pow_of_two(npages));
+-		unsigned long align = (1ULL << (VTD_PAGE_SHIFT + mask));
++	int mask = ilog2(__roundup_pow_of_two(npages));
++	unsigned long align = (1ULL << (VTD_PAGE_SHIFT + mask));
+ 
+-		if (WARN_ON_ONCE(!IS_ALIGNED(addr, align)))
+-			addr = ALIGN_DOWN(addr, align);
++	if (WARN_ON_ONCE(!IS_ALIGNED(addr, align)))
++		addr = ALIGN_DOWN(addr, align);
+ 
+-		desc->qw0 = QI_EIOTLB_PASID(pasid) |
+-				QI_EIOTLB_DID(did) |
+-				QI_EIOTLB_GRAN(QI_GRAN_PSI_PASID) |
+-				QI_EIOTLB_TYPE;
+-		desc->qw1 = QI_EIOTLB_ADDR(addr) |
+-				QI_EIOTLB_IH(ih) |
+-				QI_EIOTLB_AM(mask);
+-	}
++	desc->qw0 = QI_EIOTLB_PASID(pasid) | QI_EIOTLB_DID(did) |
++		    QI_EIOTLB_GRAN(QI_GRAN_PSI_PASID) | QI_EIOTLB_TYPE;
++	desc->qw1 = QI_EIOTLB_ADDR(addr) | QI_EIOTLB_IH(ih) |
++		    QI_EIOTLB_AM(mask);
  }
  
- static int domain_flush_pages_v2(struct protection_domain *pdom,
--				 u64 address, u64 last)
-+				 u64 address, u64 last, u32 flags)
- {
- 	struct iommu_dev_data *dev_data;
- 	struct iommu_cmd cmd;
-@@ -1685,8 +1685,9 @@ static int domain_flush_pages_v2(struct protection_domain *pdom,
- 		struct amd_iommu *iommu = get_amd_iommu_from_dev(dev_data->dev);
- 		u16 domid = dev_data->gcr3_info.domid;
+ static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
+@@ -1168,6 +1166,7 @@ void qi_flush_iotlb(struct intel_iommu *iommu, u16 did, u64 addr,
+ void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
+ 			u16 qdep, u64 addr, unsigned mask);
  
--		build_inv_iommu_pages(&cmd, address, last,
--				      domid, IOMMU_NO_PASID, true);
-+		build_inv_iommu_pages(&cmd, address, last, domid,
-+				      IOMMU_NO_PASID,
-+				      flags | CMD_INV_IOMMU_PAGES_GN_MASK);
++void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid);
+ void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
+ 		     unsigned long npages, bool ih);
  
- 		ret |= iommu_queue_command(iommu, &cmd);
- 	}
-@@ -1695,7 +1696,7 @@ static int domain_flush_pages_v2(struct protection_domain *pdom,
- }
+diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
+index 9d30015b894057..89541b74ab8ca3 100644
+--- a/drivers/iommu/intel/pasid.c
++++ b/drivers/iommu/intel/pasid.c
+@@ -282,7 +282,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
+ 	pasid_cache_invalidation_with_pasid(iommu, did, pasid);
  
- static int domain_flush_pages_v1(struct protection_domain *pdom,
--				 u64 address, u64 last)
-+				 u64 address, u64 last, u32 flags)
- {
- 	struct pdom_iommu_info *pdom_iommu_info;
- 	struct iommu_cmd cmd;
-@@ -1705,7 +1706,7 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
- 	lockdep_assert_held(&pdom->lock);
+ 	if (pgtt == PASID_ENTRY_PGTT_PT || pgtt == PASID_ENTRY_PGTT_FL_ONLY)
+-		qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
++		qi_flush_piotlb_all(iommu, did, pasid);
+ 	else
+ 		iommu->flush.flush_iotlb(iommu, did, 0, 0, DMA_TLB_DSI_FLUSH);
  
- 	build_inv_iommu_pages(&cmd, address, last,
--			      pdom->id, IOMMU_NO_PASID, false);
-+			      pdom->id, IOMMU_NO_PASID, flags);
+@@ -308,7 +308,7 @@ static void pasid_flush_caches(struct intel_iommu *iommu,
  
- 	xa_for_each(&pdom->iommu_array, i, pdom_iommu_info) {
- 		/*
-@@ -1724,7 +1725,7 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
- 	 * See drivers/iommu/amd/nested.c: amd_iommu_alloc_domain_nested()
- 	 */
- 	if (!list_empty(&pdom->viommu_list))
--		ret |= iommu_flush_pages_v1_hdom_ids(pdom, address, last);
-+		ret |= iommu_flush_pages_v1_hdom_ids(pdom, address, last, flags);
- 
- 	return ret;
- }
-@@ -1734,7 +1735,7 @@ static int domain_flush_pages_v1(struct protection_domain *pdom,
-  * It flushes range of PTEs of the domain.
-  */
- static void __domain_flush_pages(struct protection_domain *domain,
--				 u64 address, u64 last)
-+				 u64 address, u64 last, u32 flags)
- {
- 	struct iommu_dev_data *dev_data;
- 	int ret = 0;
-@@ -1745,9 +1746,9 @@ static void __domain_flush_pages(struct protection_domain *domain,
- 
- 	if (pdom_is_v2_pgtbl_mode(domain)) {
- 		gn = true;
--		ret = domain_flush_pages_v2(domain, address, last);
-+		ret = domain_flush_pages_v2(domain, address, last, flags);
+ 	if (cap_caching_mode(iommu->cap)) {
+ 		pasid_cache_invalidation_with_pasid(iommu, did, pasid);
+-		qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
++		qi_flush_piotlb_all(iommu, did, pasid);
  	} else {
--		ret = domain_flush_pages_v1(domain, address, last);
-+		ret = domain_flush_pages_v1(domain, address, last, flags);
+ 		iommu_flush_write_buffer(iommu);
  	}
+@@ -342,7 +342,7 @@ static void intel_pasid_flush_present(struct intel_iommu *iommu,
+ 	 *      Addr[63:12]=0x7FFFFFFF_FFFFF) to affected functions
+ 	 */
+ 	pasid_cache_invalidation_with_pasid(iommu, did, pasid);
+-	qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
++	qi_flush_piotlb_all(iommu, did, pasid);
  
- 	list_for_each_entry(dev_data, &domain->dev_list, list) {
-@@ -1762,13 +1763,13 @@ static void __domain_flush_pages(struct protection_domain *domain,
+ 	devtlb_invalidation_with_pasid(iommu, dev, pasid);
  }
- 
- void amd_iommu_domain_flush_pages(struct protection_domain *domain,
--				  u64 address, u64 last)
-+				  u64 address, u64 last, u32 flags)
- {
- 	lockdep_assert_held(&domain->lock);
- 
- 	if (likely(!amd_iommu_np_cache) ||
- 	    unlikely(address == 0 && last == U64_MAX)) {
--		__domain_flush_pages(domain, address, last);
-+		__domain_flush_pages(domain, address, last, flags);
- 
- 		/* Wait until IOMMU TLB and all device IOTLB flushes are complete */
- 		domain_flush_complete(domain);
-@@ -1794,7 +1795,7 @@ void amd_iommu_domain_flush_pages(struct protection_domain *domain,
- 			sz_lg2 = min_t(unsigned int, sz_lg2, __ffs64(address));
- 
- 		flush_last = address + (1ULL << sz_lg2) - 1;
--		__domain_flush_pages(domain, address, flush_last);
-+		__domain_flush_pages(domain, address, flush_last, flags);
- 		if (check_add_overflow(flush_last, 1, &address))
- 			break;
+diff --git a/drivers/iommu/intel/prq.c b/drivers/iommu/intel/prq.c
+index ff63c228e6e19d..ed98b1cb06fecf 100644
+--- a/drivers/iommu/intel/prq.c
++++ b/drivers/iommu/intel/prq.c
+@@ -113,7 +113,7 @@ void intel_iommu_drain_pasid_prq(struct device *dev, u32 pasid)
+ 		qi_desc_dev_iotlb(sid, info->pfsid, info->ats_qdep, 0,
+ 				  MAX_AGAW_PFN_WIDTH, &desc[2]);
+ 	} else {
+-		qi_desc_piotlb(did, pasid, 0, -1, 0, &desc[1]);
++		qi_desc_piotlb_all(did, pasid, &desc[1]);
+ 		qi_desc_dev_iotlb_pasid(sid, info->pfsid, pasid, info->ats_qdep,
+ 					0, MAX_AGAW_PFN_WIDTH, &desc[2]);
  	}
-@@ -1806,7 +1807,8 @@ void amd_iommu_domain_flush_pages(struct protection_domain *domain,
- /* Flush the whole IO/TLB for a given protection domain - including PDE */
- static void amd_iommu_domain_flush_all(struct protection_domain *domain)
- {
--	amd_iommu_domain_flush_pages(domain, 0, U64_MAX);
-+	amd_iommu_domain_flush_pages(domain, 0, U64_MAX,
-+				     CMD_INV_IOMMU_PAGES_PDE_MASK);
- }
- 
- void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
-@@ -1816,7 +1818,9 @@ void amd_iommu_dev_flush_pasid_pages(struct iommu_dev_data *dev_data,
- 	struct amd_iommu *iommu = get_amd_iommu_from_dev(dev_data->dev);
- 
- 	build_inv_iommu_pages(&cmd, address, last,
--			      dev_data->gcr3_info.domid, pasid, true);
-+			      dev_data->gcr3_info.domid, pasid,
-+			      CMD_INV_IOMMU_PAGES_GN_MASK |
-+			      CMD_INV_IOMMU_PAGES_PDE_MASK);
- 	iommu_queue_command(iommu, &cmd);
- 
- 	if (dev_data->ats_enabled)
-@@ -2606,7 +2610,8 @@ static int amd_iommu_iotlb_sync_map(struct iommu_domain *dom,
- 		return 0;
- 
- 	spin_lock_irqsave(&domain->lock, flags);
--	amd_iommu_domain_flush_pages(domain, iova, iova + size - 1);
-+	amd_iommu_domain_flush_pages(domain, iova, iova + size - 1,
-+				     CMD_INV_IOMMU_PAGES_PDE_MASK);
- 	spin_unlock_irqrestore(&domain->lock, flags);
- 	return 0;
- }
-@@ -2628,7 +2633,9 @@ static void amd_iommu_iotlb_sync(struct iommu_domain *domain,
- 	unsigned long flags;
- 
- 	spin_lock_irqsave(&dom->lock, flags);
--	amd_iommu_domain_flush_pages(dom, gather->start, gather->end);
-+	amd_iommu_domain_flush_pages(dom, gather->start, gather->end,
-+				     iommu_pages_list_empty(&gather->freelist) ?
-+				     0 : CMD_INV_IOMMU_PAGES_PDE_MASK);
- 	spin_unlock_irqrestore(&dom->lock, flags);
- 	iommu_put_pages_list(&gather->freelist);
- }
 -- 
 2.43.0
 
