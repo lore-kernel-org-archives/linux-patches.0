@@ -1,43 +1,43 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D251368940
-	for <patches@lists.linux.dev>; Fri, 27 Mar 2026 05:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AC3D34CFDA
+	for <patches@lists.linux.dev>; Fri, 27 Mar 2026 05:27:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774589231; cv=none; b=P2IHiUkZyrc9yfkNWRB3lcfwJeH+Jg5Vk1DQc9p9FXYUS+dubnfQVH5YDS0ett87w2XTb/z5ns4ymJMpt53ofFWAbyzEo5VnHAdJS/DFMyEiYHo3bQkzaDZFM2upm7oNk9k2Abqkcn3cwidL1eD5o322kxQS/LtqVwcQs1YGQz4=
+	t=1774589233; cv=none; b=rHEWB9v/pVfj1VtiiqFvhvZUpGDDhKNU23pNlLuTjDZpMqrXiDT+1uHWTgn4I+F9ojjMs7IRpLtbKk3TCF9EyBdgsiXcGFX/zkumSWKPs+tmZufj8dRJfcKEn6mgyYfNyMapomCT9zGJfFepbq7TEOJMp1YBQMOYb4V7nTg1cSQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774589231; c=relaxed/simple;
-	bh=S56Goy31aO+T4okhoU7DEAPJKmH4ZG9kIytdLEeZcgE=;
+	s=arc-20240116; t=1774589233; c=relaxed/simple;
+	bh=GMBYpZmceq0OlfuLFZhD3fmrAyMPVoOz3a4NOzWIB1A=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=A3R+XvVvjXl9pKqtLHT0NF7jLTDFoSE6eY0/c0ax487A2WWFQxfQr6liLTiYc5H747VULbOTVjMhgZcHZ3n8PGFtVjF3X1ZNusQ8fy2GPK55T+r7dmSeGvToJZPLTM4+V2LQwQCE+kPs8dnnfGl+Br2h92frKf0ESKYbt/Oqmf0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=EQzmWhWF; arc=none smtp.client-ip=192.198.163.7
+	 MIME-Version; b=a83MbWrZKa/4Js2HN3qh3hH02PPnGJeiGjUVffYraOPFw1nMcSRmp4MEcA6UQIzKgE8LagoVOwJKwEFwyhBVqIM3762fkLyINaf9hw1Ptfu+ssGClVIQi8KtxfN3+Zu3qs+uvcyoMnXzuN+M0YmjVQBEVdudEoHTWNbRPQyK/mM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=T7916O34; arc=none smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="EQzmWhWF"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="T7916O34"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774589229; x=1806125229;
+  t=1774589231; x=1806125231;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=S56Goy31aO+T4okhoU7DEAPJKmH4ZG9kIytdLEeZcgE=;
-  b=EQzmWhWF9UHkDlysYpunnEmHC9eEtn7XAo7fwN8Uy0vbE+DXTljYWxhJ
-   q4u2GXtjlVLsPb2kXAs5zrZemNYIhkj/NXxXKLGGABRpxLxXgEJCBKnqB
-   ZMcKZDUcbOr4YPjNfRakhttPHCMlry+q/NSqD6WauhsyPLljgsJOjKVPw
-   CbjdsoknR6QhIjOPlxhuEdoLMDBG/foxUJCOz2wa3NZ1vk87kTTKStmXm
-   kRNe6MeQC6O/JxOMg3QSt353VaZObFaqAmeibHwHriKGg8bDxO8aXjqTF
-   LaUx4f05jMfAi5YTspP9hBwBc8n3xQXN8jOamcQZ5/tu6nDqjj9b2E7m5
-   A==;
-X-CSE-ConnectionGUID: z3mWJoahRsqt+LkCWKcePw==
-X-CSE-MsgGUID: sZfz7QU+RWirNtxa5InU1A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="101117958"
+  bh=GMBYpZmceq0OlfuLFZhD3fmrAyMPVoOz3a4NOzWIB1A=;
+  b=T7916O340737CfucWZP42cMv5UT5/tCCXwFqBTHtwtf+NZpolbzwRBY8
+   U+SsqxiNMA40pBKz95pFiwV6TCcEhz8jf6aM+BZbiR25p6jNfZ+N/B9Rx
+   PMbcX2VGuXZSYOfcimEXiQn1+oXhdWo0JOHR+1Kbx5KcugLAylbF1eYg1
+   sMfFfa89uNx2FELcHzUC2lfAVmDl/l1RFl5H6krYOat2gTIuI4Xj+KrQK
+   PQQ/NDQEwton8D+3kDJcEwKpfBN2RBBgm5MOC9CoV0LTgGC5Eba10vMV8
+   AwdvU6twGjiY/cWY9HIRe9Jaep3G76JGmGvm8lQXhOlrJ2txcguZe11ua
+   Q==;
+X-CSE-ConnectionGUID: iSNudnEWQkOct9Kb88+lSA==
+X-CSE-MsgGUID: hINTwue7R7OSB/bcnIIjhQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11741"; a="101117969"
 X-IronPort-AV: E=Sophos;i="6.23,143,1770624000"; 
-   d="scan'208";a="101117958"
+   d="scan'208";a="101117969"
 Received: from fmviesa003.fm.intel.com ([10.60.135.143])
-  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2026 22:27:06 -0700
-X-CSE-ConnectionGUID: w3SL8QsAREq0BAUIa5UkNQ==
-X-CSE-MsgGUID: Jk/NAKIDTi6m83bNJs0Vsg==
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Mar 2026 22:27:07 -0700
+X-CSE-ConnectionGUID: 3udjRQiRRk2bD77S64RF3Q==
+X-CSE-MsgGUID: SVZ295VqRoWn6+WQ0p1bsg==
 X-ExtLoop1: 1
 Received: from dwillia2-desk.jf.intel.com ([10.88.27.145])
   by fmviesa003.fm.intel.com with ESMTP; 26 Mar 2026 22:27:06 -0700
@@ -47,9 +47,9 @@ Cc: patches@lists.linux.dev,
 	linux-cxl@vger.kernel.org,
 	alison.schofield@intel.com,
 	Smita.KoralahalliChannabasappa@amd.com
-Subject: [PATCH 6/9] dax/hmem: Fix singleton confusion between dax_hmem_work and hmem devices
-Date: Thu, 26 Mar 2026 22:28:18 -0700
-Message-ID: <20260327052821.440749-7-dan.j.williams@intel.com>
+Subject: [PATCH 9/9] tools/testing/cxl: Test dax_hmem takeover of CXL regions
+Date: Thu, 26 Mar 2026 22:28:21 -0700
+Message-ID: <20260327052821.440749-10-dan.j.williams@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260327052821.440749-1-dan.j.williams@intel.com>
 References: <20260327052821.440749-1-dan.j.williams@intel.com>
@@ -61,291 +61,317 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-dax_hmem (ab)uses a platform device to allow for a module to autoload in
-the presence of "Soft Reserved" resources. The dax_hmem driver had no
-dependencies on the "hmem_platform" device being a singleton until the
-recent "dax_hmem vs dax_cxl" takeover solution.
+When platform firmware is committed to publishing EFI_CONVENTIONAL_MEMORY
+in the memory map, but CXL fails to assemble the region, dax_hmem can
+attempt to attach a dax device to the memory range.
 
-Replace the layering violation of dax_hmem_work assuming that there will
-never be more than one "hmem_platform" device associated with a global work
-item with a dax_hmem local workqueue that can theoretically support any
-number of hmem_platform devices.
+Take advantage of the new ability to support multiple "hmem_platform"
+devices, and to enable regression testing of several scenarios:
 
-Fixup the reference counting to only pin the device while it is live in the
-queue.
+* CXL correctly assembles a region, check dax_hmem fails to attach dax
+* CXL fails to assemble a region, check dax_hmem successfully attaches dax
+* Check that loading the dax_cxl driver loads the dax_hmem driver
+* Attempt to race cxl_mock_mem async probe vs dax_hmem probe flushing.
+  Check that both positive and negative cases.
 
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 ---
- drivers/dax/bus.h         |  15 +++++-
- drivers/dax/hmem/device.c |  28 ++++++----
- drivers/dax/hmem/hmem.c   | 108 +++++++++++++++++++-------------------
- 3 files changed, 85 insertions(+), 66 deletions(-)
+ tools/testing/cxl/test/mock.h      |  8 +++++
+ tools/testing/cxl/test/cxl.c       | 57 ++++++++++++++++++++++++++++++
+ tools/testing/cxl/test/hmem_test.c | 47 ++++++++++++++++++++++++
+ tools/testing/cxl/test/mem.c       |  3 ++
+ tools/testing/cxl/test/mock.c      | 50 ++++++++++++++++++++++++++
+ tools/testing/cxl/Kbuild           |  7 ++++
+ tools/testing/cxl/test/Kbuild      |  1 +
+ 7 files changed, 173 insertions(+)
+ create mode 100644 tools/testing/cxl/test/hmem_test.c
 
-diff --git a/drivers/dax/bus.h b/drivers/dax/bus.h
-index ebbfe2d6da14..7b1a83f1ce1f 100644
---- a/drivers/dax/bus.h
-+++ b/drivers/dax/bus.h
-@@ -3,7 +3,9 @@
- #ifndef __DAX_BUS_H__
- #define __DAX_BUS_H__
- #include <linux/device.h>
-+#include <linux/platform_device.h>
- #include <linux/range.h>
-+#include <linux/workqueue.h>
+diff --git a/tools/testing/cxl/test/mock.h b/tools/testing/cxl/test/mock.h
+index 2684b89c8aa2..4f57dc80ae7d 100644
+--- a/tools/testing/cxl/test/mock.h
++++ b/tools/testing/cxl/test/mock.h
+@@ -2,6 +2,7 @@
  
- struct dev_dax;
- struct resource;
-@@ -49,8 +51,19 @@ void dax_driver_unregister(struct dax_device_driver *dax_drv);
- void kill_dev_dax(struct dev_dax *dev_dax);
- bool static_dev_dax(struct dev_dax *dev_dax);
+ #include <linux/list.h>
+ #include <linux/acpi.h>
++#include <linux/dax.h>
+ #include <cxl.h>
  
-+struct hmem_platform_device {
-+	struct platform_device pdev;
-+	struct work_struct work;
-+	bool did_probe;
-+};
-+
-+static inline struct hmem_platform_device *
-+to_hmem_platform_device(struct platform_device *pdev)
-+{
-+	return container_of(pdev, struct hmem_platform_device, pdev);
-+}
-+
- #if IS_ENABLED(CONFIG_DEV_DAX_HMEM)
--extern bool dax_hmem_initial_probe;
- void dax_hmem_flush_work(void);
- #else
- static inline void dax_hmem_flush_work(void) { }
-diff --git a/drivers/dax/hmem/device.c b/drivers/dax/hmem/device.c
-index 675d56276d78..d70359b4307b 100644
---- a/drivers/dax/hmem/device.c
-+++ b/drivers/dax/hmem/device.c
-@@ -4,13 +4,11 @@
- #include <linux/module.h>
- #include <linux/dax.h>
- #include <linux/mm.h>
-+#include "../bus.h"
+ struct cxl_mock_ops {
+@@ -27,8 +28,15 @@ struct cxl_mock_ops {
+ 	int (*hmat_get_extended_linear_cache_size)(struct resource *backing_res,
+ 						   int nid,
+ 						   resource_size_t *cache_size);
++	int (*walk_hmem_resources)(struct device *host, walk_hmem_fn fn);
++	int (*region_intersects)(resource_size_t start, size_t size,
++				 unsigned long flags, unsigned long desc);
++	int (*region_intersects_soft_reserve)(resource_size_t start,
++					      size_t size);
+ };
  
- static bool nohmem;
- module_param_named(disable, nohmem, bool, 0444);
- 
--bool dax_hmem_initial_probe;
--EXPORT_SYMBOL_FOR_MODULES(dax_hmem_initial_probe, "dax_hmem");
--
- static bool platform_initialized;
- static DEFINE_MUTEX(hmem_resource_lock);
- static struct resource hmem_active = {
-@@ -36,9 +34,21 @@ int walk_hmem_resources(struct device *host, walk_hmem_fn fn)
++int hmem_test_init(void);
++void hmem_test_exit(void);
+ void register_cxl_mock_ops(struct cxl_mock_ops *ops);
+ void unregister_cxl_mock_ops(struct cxl_mock_ops *ops);
+ struct cxl_mock_ops *get_cxl_mock_ops(int *index);
+diff --git a/tools/testing/cxl/test/cxl.c b/tools/testing/cxl/test/cxl.c
+index 7deeb7ff7bdf..9a9f52090c1d 100644
+--- a/tools/testing/cxl/test/cxl.c
++++ b/tools/testing/cxl/test/cxl.c
+@@ -1121,6 +1121,53 @@ static void mock_cxl_endpoint_parse_cdat(struct cxl_port *port)
+ 	cxl_endpoint_get_perf_coordinates(port, ep_c);
  }
- EXPORT_SYMBOL_GPL(walk_hmem_resources);
  
-+static void hmem_work(struct work_struct *work)
++/*
++ * Simulate that the first half of mock CXL Window 0 is "Soft Reserve" capacity
++ */
++static int mock_walk_hmem_resources(struct device *host, walk_hmem_fn fn)
 +{
-+	/* place holder until dax_hmem driver attaches */
++	struct acpi_cedt_cfmws *cfmws = mock_cfmws[0];
++	struct resource window =
++		DEFINE_RES_MEM(cfmws->base_hpa, cfmws->window_size / 2);
++
++	dev_dbg(host, "walk cxl_test resource: %pr\n", &window);
++	return fn(host, 0, &window);
 +}
 +
-+static struct hmem_platform_device hmem_platform = {
++/*
++ * This should only be called by the dax_hmem case, treat mismatches (negative
++ * result) as "fallback to base region_intersects()". Simulate that the first
++ * half of mock CXL Window 0 is IORES_DESC_CXL capacity.
++ */
++static int mock_region_intersects(resource_size_t start, size_t size,
++				  unsigned long flags, unsigned long desc)
++{
++	struct resource res = DEFINE_RES_MEM(start, size);
++	struct acpi_cedt_cfmws *cfmws = mock_cfmws[0];
++	struct resource window =
++		DEFINE_RES_MEM(cfmws->base_hpa, cfmws->window_size / 2);
++
++	if (resource_overlaps(&res, &window))
++		return REGION_INTERSECTS;
++	pr_debug("warning: no cxl_test CXL intersection for %pr\n", &res);
++	return -1;
++}
++
++
++static int
++mock_region_intersects_soft_reserve(resource_size_t start, size_t size)
++{
++	struct resource res = DEFINE_RES_MEM(start, size);
++	struct acpi_cedt_cfmws *cfmws = mock_cfmws[0];
++	struct resource window =
++		DEFINE_RES_MEM(cfmws->base_hpa, cfmws->window_size / 2);
++
++	if (resource_overlaps(&res, &window))
++		return REGION_INTERSECTS;
++	pr_debug("warning: no cxl_test soft reserve intersection for %pr\n", &res);
++	return -1;
++}
++
+ static struct cxl_mock_ops cxl_mock_ops = {
+ 	.is_mock_adev = is_mock_adev,
+ 	.is_mock_bridge = is_mock_bridge,
+@@ -1136,6 +1183,9 @@ static struct cxl_mock_ops cxl_mock_ops = {
+ 	.devm_cxl_add_dport_by_dev = mock_cxl_add_dport_by_dev,
+ 	.hmat_get_extended_linear_cache_size =
+ 		mock_hmat_get_extended_linear_cache_size,
++	.walk_hmem_resources = mock_walk_hmem_resources,
++	.region_intersects = mock_region_intersects,
++	.region_intersects_soft_reserve = mock_region_intersects_soft_reserve,
+ 	.list = LIST_HEAD_INIT(cxl_mock_ops.list),
+ };
+ 
+@@ -1561,8 +1611,14 @@ static __init int cxl_test_init(void)
+ 	if (rc)
+ 		goto err_root;
+ 
++	rc = hmem_test_init();
++	if (rc)
++		goto err_mem;
++
+ 	return 0;
+ 
++err_mem:
++	cxl_mem_exit();
+ err_root:
+ 	platform_device_put(cxl_acpi);
+ err_rch:
+@@ -1600,6 +1656,7 @@ static __exit void cxl_test_exit(void)
+ {
+ 	int i;
+ 
++	hmem_test_exit();
+ 	cxl_mem_exit();
+ 	platform_device_unregister(cxl_acpi);
+ 	cxl_rch_topo_exit();
+diff --git a/tools/testing/cxl/test/hmem_test.c b/tools/testing/cxl/test/hmem_test.c
+new file mode 100644
+index 000000000000..3a1a089e1721
+--- /dev/null
++++ b/tools/testing/cxl/test/hmem_test.c
+@@ -0,0 +1,47 @@
++// SPDX-License-Identifier: GPL-2.0
++/* Copyright (C) 2026 Intel Corporation */
++#include <linux/moduleparam.h>
++#include <linux/workqueue.h>
++#include "../../../drivers/dax/bus.h"
++
++static bool hmem_test;
++
++static void hmem_test_work(struct work_struct *work)
++{
++}
++
++static void hmem_test_release(struct device *dev)
++{
++	struct hmem_platform_device *hpdev =
++		container_of(dev, typeof(*hpdev), pdev.dev);
++
++	memset(hpdev, 0, sizeof(*hpdev));
++}
++
++static struct hmem_platform_device hmem_test_device = {
 +	.pdev = {
 +		.name = "hmem_platform",
-+		.id = 0,
++		.id = 1,
++		.dev = {
++			.release = hmem_test_release,
++		},
 +	},
-+	.work = __WORK_INITIALIZER(hmem_platform.work, hmem_work),
++	.work = __WORK_INITIALIZER(hmem_test_device.work, hmem_test_work),
 +};
 +
- static void __hmem_register_resource(int target_nid, struct resource *res)
- {
--	struct platform_device *pdev;
- 	struct resource *new;
- 	int rc;
- 
-@@ -54,17 +64,13 @@ static void __hmem_register_resource(int target_nid, struct resource *res)
- 	if (platform_initialized)
- 		return;
- 
--	pdev = platform_device_alloc("hmem_platform", 0);
--	if (!pdev) {
-+	rc = platform_device_register(&hmem_platform.pdev);
-+	if (rc) {
- 		pr_err_once("failed to register device-dax hmem_platform device\n");
- 		return;
- 	}
- 
--	rc = platform_device_add(pdev);
--	if (rc)
--		platform_device_put(pdev);
--	else
--		platform_initialized = true;
-+	platform_initialized = true;
- }
- 
- void hmem_register_resource(int target_nid, struct resource *res)
-diff --git a/drivers/dax/hmem/hmem.c b/drivers/dax/hmem/hmem.c
-index dd3d7f93baee..e1dae83dae8d 100644
---- a/drivers/dax/hmem/hmem.c
-+++ b/drivers/dax/hmem/hmem.c
-@@ -59,20 +59,11 @@ static void release_hmem(void *pdev)
- 	platform_device_unregister(pdev);
- }
- 
--struct dax_defer_work {
--	struct platform_device *pdev;
--	struct work_struct work;
--};
--
--static void process_defer_work(struct work_struct *w);
--
--static struct dax_defer_work dax_hmem_work = {
--	.work = __WORK_INITIALIZER(dax_hmem_work.work, process_defer_work),
--};
-+static struct workqueue_struct *dax_hmem_wq;
- 
- void dax_hmem_flush_work(void)
- {
--	flush_work(&dax_hmem_work.work);
-+	flush_workqueue(dax_hmem_wq);
- }
- EXPORT_SYMBOL_FOR_MODULES(dax_hmem_flush_work, "dax_cxl");
- 
-@@ -134,24 +125,6 @@ static int __hmem_register_device(struct device *host, int target_nid,
- 	return rc;
- }
- 
--static int hmem_register_device(struct device *host, int target_nid,
--				const struct resource *res)
--{
--	if (IS_ENABLED(CONFIG_DEV_DAX_CXL) &&
--	    region_intersects(res->start, resource_size(res), IORESOURCE_MEM,
--			      IORES_DESC_CXL) != REGION_DISJOINT) {
--		if (!dax_hmem_initial_probe) {
--			dev_dbg(host, "await CXL initial probe: %pr\n", res);
--			queue_work(system_long_wq, &dax_hmem_work.work);
--			return 0;
--		}
--		dev_dbg(host, "deferring range to CXL: %pr\n", res);
--		return 0;
--	}
--
--	return __hmem_register_device(host, target_nid, res);
--}
--
- static int hmem_register_cxl_device(struct device *host, int target_nid,
- 				    const struct resource *res)
- {
-@@ -170,35 +143,55 @@ static int hmem_register_cxl_device(struct device *host, int target_nid,
- 
- static void process_defer_work(struct work_struct *w)
- {
--	struct dax_defer_work *work = container_of(w, typeof(*work), work);
--	struct platform_device *pdev;
--
--	if (!work->pdev)
--		return;
--
--	pdev = work->pdev;
-+	struct hmem_platform_device *hpdev = container_of(w, typeof(*hpdev), work);
-+	struct device *dev = &hpdev->pdev.dev;
- 
- 	/* Relies on cxl_acpi and cxl_pci having had a chance to load */
- 	wait_for_device_probe();
- 
--	guard(device)(&pdev->dev);
--	if (!pdev->dev.driver)
--		return;
-+	guard(device)(dev);
-+	if (!dev->driver)
-+		goto out;
- 
--	if (!dax_hmem_initial_probe) {
--		dax_hmem_initial_probe = true;
--		walk_hmem_resources(&pdev->dev, hmem_register_cxl_device);
-+	if (!hpdev->did_probe) {
-+		hpdev->did_probe = true;
-+		walk_hmem_resources(dev, hmem_register_cxl_device);
- 	}
-+out:
-+	put_device(dev);
++int hmem_test_init(void)
++{
++	if (!hmem_test)
++		return 0;
++
++	return platform_device_register(&hmem_test_device.pdev);
 +}
 +
-+static int hmem_register_device(struct device *host, int target_nid,
-+				const struct resource *res)
++void hmem_test_exit(void)
 +{
-+	struct platform_device *pdev = to_platform_device(host);
-+	struct hmem_platform_device *hpdev = to_hmem_platform_device(pdev);
++	if (hmem_test)
++		platform_device_unregister(&hmem_test_device.pdev);
++}
 +
-+	if (IS_ENABLED(CONFIG_DEV_DAX_CXL) &&
-+	    region_intersects(res->start, resource_size(res), IORESOURCE_MEM,
-+			      IORES_DESC_CXL) != REGION_DISJOINT) {
-+		if (!hpdev->did_probe) {
-+			dev_dbg(host, "await CXL initial probe: %pr\n", res);
-+			hpdev->work.func = process_defer_work;
-+			get_device(host);
-+			if (!queue_work(dax_hmem_wq, &hpdev->work))
-+				put_device(host);
-+			return 0;
-+		}
-+		dev_dbg(host, "deferring range to CXL: %pr\n", res);
-+		return 0;
++module_param(hmem_test, bool, 0444);
++MODULE_PARM_DESC(hmem_test, "Enable/disable the dax_hmem test platform device");
+diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
+index cb87e8c0e63c..cc847e9aeceb 100644
+--- a/tools/testing/cxl/test/mem.c
++++ b/tools/testing/cxl/test/mem.c
+@@ -1695,6 +1695,9 @@ static int cxl_mock_mem_probe(struct platform_device *pdev)
+ 	struct cxl_dpa_info range_info = { 0 };
+ 	int rc;
+ 
++	/* Increase async probe race window */
++	usleep_range(500*1000, 1000*1000);
++
+ 	mdata = devm_kzalloc(dev, sizeof(*mdata), GFP_KERNEL);
+ 	if (!mdata)
+ 		return -ENOMEM;
+diff --git a/tools/testing/cxl/test/mock.c b/tools/testing/cxl/test/mock.c
+index b8fcb50c1027..6454b868b122 100644
+--- a/tools/testing/cxl/test/mock.c
++++ b/tools/testing/cxl/test/mock.c
+@@ -251,6 +251,56 @@ struct cxl_dport *__wrap_devm_cxl_add_dport_by_dev(struct cxl_port *port,
+ }
+ EXPORT_SYMBOL_NS_GPL(__wrap_devm_cxl_add_dport_by_dev, "CXL");
+ 
++int __wrap_region_intersects(resource_size_t start, size_t size,
++			     unsigned long flags, unsigned long desc)
++{
++	int rc = -1;
++	int index;
++	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
++
++	if (ops)
++		rc = ops->region_intersects(start, size, flags, desc);
++	if (rc < 0)
++		rc = region_intersects(start, size, flags, desc);
++	put_cxl_mock_ops(index);
++
++	return rc;
++}
++EXPORT_SYMBOL_GPL(__wrap_region_intersects);
++
++int __wrap_region_intersects_soft_reserve(resource_size_t start, size_t size)
++{
++	int rc = -1;
++	int index;
++	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
++
++	if (ops)
++		rc = ops->region_intersects_soft_reserve(start, size);
++	if (rc < 0)
++		rc = region_intersects_soft_reserve(start, size);
++	put_cxl_mock_ops(index);
++
++	return rc;
++}
++EXPORT_SYMBOL_GPL(__wrap_region_intersects_soft_reserve);
++
++int __wrap_walk_hmem_resources(struct device *host, walk_hmem_fn fn)
++{
++	int index, rc = 0;
++	bool is_mock = strcmp(dev_name(host), "hmem_platform.1") == 0;
++	struct cxl_mock_ops *ops = get_cxl_mock_ops(&index);
++
++	if (is_mock) {
++		if (ops)
++			rc = ops->walk_hmem_resources(host, fn);
++	} else {
++		rc = walk_hmem_resources(host, fn);
 +	}
++	put_cxl_mock_ops(index);
++	return rc;
++}
++EXPORT_SYMBOL_GPL(__wrap_walk_hmem_resources);
 +
-+	return __hmem_register_device(host, target_nid, res);
- }
+ MODULE_LICENSE("GPL v2");
+ MODULE_DESCRIPTION("cxl_test: emulation module");
+ MODULE_IMPORT_NS("ACPI");
+diff --git a/tools/testing/cxl/Kbuild b/tools/testing/cxl/Kbuild
+index 53d84a6874b7..540425c7cd41 100644
+--- a/tools/testing/cxl/Kbuild
++++ b/tools/testing/cxl/Kbuild
+@@ -11,8 +11,12 @@ ldflags-y += --wrap=devm_cxl_endpoint_decoders_setup
+ ldflags-y += --wrap=hmat_get_extended_linear_cache_size
+ ldflags-y += --wrap=devm_cxl_add_dport_by_dev
+ ldflags-y += --wrap=devm_cxl_switch_port_decoders_setup
++ldflags-y += --wrap=walk_hmem_resources
++ldflags-y += --wrap=region_intersects
++ldflags-y += --wrap=region_intersects_soft_reserve
  
- static int dax_hmem_platform_probe(struct platform_device *pdev)
- {
--	if (work_pending(&dax_hmem_work.work))
--		return -EBUSY;
-+	struct hmem_platform_device *hpdev = to_hmem_platform_device(pdev);
+ DRIVERS := ../../../drivers
++DAX_HMEM_SRC := $(DRIVERS)/dax/hmem
+ CXL_SRC := $(DRIVERS)/cxl
+ CXL_CORE_SRC := $(DRIVERS)/cxl/core
+ ccflags-y := -I$(srctree)/drivers/cxl/
+@@ -70,6 +74,9 @@ cxl_core-y += config_check.o
+ cxl_core-y += cxl_core_test.o
+ cxl_core-y += cxl_core_exports.o
  
--	if (!dax_hmem_work.pdev)
--		dax_hmem_work.pdev =
--			to_platform_device(get_device(&pdev->dev));
-+	/* queue is only flushed on module unload, fail rebind with pending work */
-+	if (work_pending(&hpdev->work))
-+		return -EBUSY;
- 
- 	return walk_hmem_resources(&pdev->dev, hmem_register_device);
- }
-@@ -224,26 +217,33 @@ static __init int dax_hmem_init(void)
- 		request_module("cxl_pci");
- 	}
- 
-+	dax_hmem_wq = alloc_ordered_workqueue("dax_hmem_wq", 0);
-+	if (!dax_hmem_wq)
-+		return -ENOMEM;
++obj-m += dax_hmem.o
++dax_hmem-y := $(DAX_HMEM_SRC)/hmem.o
 +
- 	rc = platform_driver_register(&dax_hmem_platform_driver);
- 	if (rc)
--		return rc;
-+		goto err_platform_driver;
+ KBUILD_CFLAGS := $(filter-out -Wmissing-prototypes -Wmissing-declarations, $(KBUILD_CFLAGS))
  
- 	rc = platform_driver_register(&dax_hmem_driver);
- 	if (rc)
--		platform_driver_unregister(&dax_hmem_platform_driver);
-+		goto err_driver;
-+
-+	return 0;
-+
-+err_driver:
-+	platform_driver_unregister(&dax_hmem_platform_driver);
-+err_platform_driver:
-+	destroy_workqueue(dax_hmem_wq);
+ obj-m += test/
+diff --git a/tools/testing/cxl/test/Kbuild b/tools/testing/cxl/test/Kbuild
+index af50972c8b6d..c168e3c998a7 100644
+--- a/tools/testing/cxl/test/Kbuild
++++ b/tools/testing/cxl/test/Kbuild
+@@ -7,6 +7,7 @@ obj-m += cxl_mock_mem.o
+ obj-m += cxl_translate.o
  
- 	return rc;
- }
+ cxl_test-y := cxl.o
++cxl_test-y += hmem_test.o
+ cxl_mock-y := mock.o
+ cxl_mock_mem-y := mem.o
  
- static __exit void dax_hmem_exit(void)
- {
--	if (dax_hmem_work.pdev) {
--		flush_work(&dax_hmem_work.work);
--		put_device(&dax_hmem_work.pdev->dev);
--	}
--
- 	platform_driver_unregister(&dax_hmem_driver);
- 	platform_driver_unregister(&dax_hmem_platform_driver);
-+	destroy_workqueue(dax_hmem_wq);
- }
- 
- module_init(dax_hmem_init);
 -- 
 2.53.0
 
