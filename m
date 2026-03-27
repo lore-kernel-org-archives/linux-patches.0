@@ -1,47 +1,47 @@
 Received: from CH4PR04CU002.outbound.protection.outlook.com (mail-northcentralusazon11013068.outbound.protection.outlook.com [40.107.201.68])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44402DB791;
-	Fri, 27 Mar 2026 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73075334685;
+	Fri, 27 Mar 2026 15:25:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.201.68
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774625147; cv=fail; b=OVs3JgSJO1jFw1um9558J8ejh611PjI7daPESKPyV9dA+zd5xprlcM8X10rKXrFRNidYC7aYX0Cy+7p5BJL9ry9ndXHDXHkrPM0kvF4rl5D47yYI8NQIKVzpCAvcM5xqwueOv+zPFKnDFOwiWwo3AJuZgnEiy75aUIGyb52f4l4=
+	t=1774625148; cv=fail; b=m0VJ++BmYpT67w7M2uRCBRGYiH50pwL3wzFxTnxsSuu+r/UjaGBjzN8xtvz2+mZzXnuCJNUE5rdInfsc7/cLbrh71fKcQLS6FWDIM0VsQEOV3pBwinFKjYYTeEkPbMOUO/ULfL7rcDr8xdGMaeVCSkUMTCx4F/Z9njAj6YwPJYg=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774625147; c=relaxed/simple;
-	bh=7ARo+2l4tdVAtrVz2QwNHTRIEIDOZORCTnkUp4dX0HM=;
+	s=arc-20240116; t=1774625148; c=relaxed/simple;
+	bh=UCkQJZFnaoSMiiUSB1vkt1bNtO+Z2oJaBAcANSPv4EE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=jTyp93WuDfp/Yz5nX2K7YcldbLYpwt3kaS9zaZoluOoW4JQ6/CyCR8p1NxB/3oOs6FZS/sPN6bKHNw1LYPyxaSjDpKBGnxiErSZ2edahjUSCWPAbcVFiX4mUZZsPvzBjchcdeQX7b5jDT1/96yD5tv1xtti6OlKN6prCntt/uNw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=N8lRj4DE; arc=fail smtp.client-ip=40.107.201.68
+	 Content-Type:MIME-Version; b=WMCEjnEtJQIdwP20vkGUWujuc8V+t6lgqvOjVOdy6Dg6tLmpxgp2X5PFlxd2hdupAggVIkaM6Zf/SGOhr3/c4EcPE3xBXcXi1/e+5AKHrX1mzcarNCn+cv3YTSe4hNqQfBDdnR47YqUbXgIEmehV1cqPMWuRttg50gOyq5JHz/I=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com; spf=fail smtp.mailfrom=nvidia.com; dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b=DzDF+vmG; arc=fail smtp.client-ip=40.107.201.68
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=nvidia.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="N8lRj4DE"
+	dkim=pass (2048-bit key) header.d=Nvidia.com header.i=@Nvidia.com header.b="DzDF+vmG"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SYkqWcDU42lOqpA3FlMAZ86UIq6ui90kUD8K2DLzPNkj8pBphmTyOTjAWilcTjuOVciu0weAe9pi/pgpLTzutyhT4i7J8xgLlXdPKE9Hjrk4fhEmx9fV/OfUSimGvk/tbJhssVjIcxzafuIeqnCw5jG6bYJ5Ti1/ISy6hkxfobHyYZeTPchhgLeRdfhSXRKLvWZLAOO0qPmzrz7C9GtpTD6k//9gBbWXks5cuGxF7g53XdkfzCO+b17eJVpD90Dac30pwPRqbD9JQJDb8ohh23q0tkqFQib4gBwTl++WTTfJuxlDNY2uf1FZ5aDsDY8nxdiElMri14R4yegTaPr8RA==
+ b=l1XRJkc6siVTfoZFY0zNVzFYM3/lvuotO/hUUu1vEVflHRqUma+x/6vKcccQwX/OnK/MP9o3DImlevuO2Dw94ZGnd5a18hj6Wi8ePFljd0r5NJDDQ0JzTulXElcMrBUDZPmSayWRuME96Bon0HOQmocYR/kG0Wnb8zE1PtNihoI+4UBt09PdqyMMTXydo1ldcGADnzjQnkpz9iZ/zIG8VnQYuHdUI5b28LifYi+Ja6Le6y0xMMlN0K1hQRkXtUef+bEJ4GkTIiPiUmNxqaSOeKm2GW3ULjxZ/yZ0Y5OnQzunAESP7SKq75rSmf63wlwCps+Kcloe6P/dW8V4fsvYCQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=djB5FHZtd7xi9N5G1elm/l+EA5B7ML5rudGr6yHGyFg=;
- b=Gxjdm9t/5QJ33zOYZxDLjy/rgoAMu1BKkVamer1vGaTdsAHRh//UIlHVU8lJUvEA3sda99OUT2excsyHekv3oFIIYhkafLQtf+5JrvB4o27xMgiDjD55nzzgc6bXbaJ2Lzzs0lvIfbLl0xC9an31L6E8BHTCKyitua92Q1TE1ywJ8nWow9QFA0PZqXD/vEzmy/k0s81uPDeD6CS0ntF6iJq/pGVNVPgJUdRhEktX0VTF6CLWUa1vL291NMluVogSUYYyTCFEidugNv/K2cFdCj1Pm0gc7Pp+M6sPPJDJyJESOvLwmcZj7NfytXuLC37jWHzflGG24wm6KrP3iVt+kQ==
+ bh=MO/USKMf+utS3IYjZZJ3NALBVFhbtomoyvvh+55zKKM=;
+ b=HyVzQeTESuHdKQFSlf70svWG/wrqJXtlXuX0HGBeJ4hmm0beMSjTEjwpu9P3VXaYdX/Hf4bdet3rwL+wNIXNdMu0zghKqW14dHDf/KBOG/SzXDr3zE06hJG3eX5NDOD1cniii/IGwNSqj/ml/0vzgbIAJ/Sazv3/ITis6YvRMKM9fNbQYHT0C3N68Tqki1OH3NyiGDgQdCVaAoKGranelKbhZxJ2dDmGQg76gsT0nfsQHmFDb5PuVzDIM3NhBfhVHxZYXErdy0H5WFVTITOmpDTy0kjkuKzf4sSK8Lri1H/LQ3zc3WxPpfYPHjxkGlUiSu9V6XHqhMRw5yxDO75B1g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=djB5FHZtd7xi9N5G1elm/l+EA5B7ML5rudGr6yHGyFg=;
- b=N8lRj4DEzNbT0aH+ePBhRM2PZToHMns7wkGftGHmaYqtvhw4wu1UAPcnofsRTGxgF7bYWCCPCcaoHxc5kGfV6yKFfOYObi3n+r89a2tFKpUBO2l1AqX3UzKA/VLNGVgzN5xZbEnRP8dsuJJ7jEt/M1wSdMTb6c+0NPzbV7QgN83ZwC0YS1KxmM5xIKywNPIeKe5nTs5p1ItGDjxsAu1OzurY0V++iQ3SSNnchNqdgG6Xuv/+BbVKxdo4zYxK6rSTBvuvurhR/dDHmKVVnHq5o3IdOl2UQZ0WVM1+rR1iUU8MTuj4fZiuJiQnDQ3BFFuZO3uUEGCmWT1o14z+CA6T1A==
+ bh=MO/USKMf+utS3IYjZZJ3NALBVFhbtomoyvvh+55zKKM=;
+ b=DzDF+vmGWI0g2OJah2J4A6CyuSXr6yteEA+EDyNgbfdCiA2soFVFrJJaOyQf9L2gMBlgloo0EmTpnwsu8okzVO1e1aS8T8Lc2xPQdr6ccf+Z9CSsOCWH2gVrmQW0tRMgIDXn0o9fVYCJ9p2NvpYuG3VbvpyIl3WoLA7tIn5nx0F6N6PRLxQmn/YYzP3aMkx9izePoeqQu1juwmibwUmhVFdLAEB5jKy+5Go4R09Q46Odt/wA//fH07F1x41r5CvpqWAxT9qsZ2Q1vZzMDea/PAcEBkYg9xWkZ8qWzrAbIvuymzyA/Y1lO43V+t+EPC84KS3cEqo6MPh9w6WlW+5Tww==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com (2603:10b6:408:2a1::19)
  by PH8PR12MB7182.namprd12.prod.outlook.com (2603:10b6:510:229::21) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.8; Fri, 27 Mar
- 2026 15:25:38 +0000
+ 2026 15:25:39 +0000
 Received: from LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528]) by LV8PR12MB9620.namprd12.prod.outlook.com
  ([fe80::299d:f5e0:3550:1528%5]) with mapi id 15.20.9769.006; Fri, 27 Mar 2026
- 15:25:38 +0000
+ 15:25:39 +0000
 From: Jason Gunthorpe <jgg@nvidia.com>
 To: Lu Baolu <baolu.lu@linux.intel.com>,
 	David Woodhouse <dwmw2@infradead.org>,
@@ -51,15 +51,15 @@ To: Lu Baolu <baolu.lu@linux.intel.com>,
 	Robin Murphy <robin.murphy@arm.com>,
 	Will Deacon <will@kernel.org>
 Cc: patches@lists.linux.dev
-Subject: [PATCH 1/4] iommu/intel: Split piotlb invalidation into range and all
-Date: Fri, 27 Mar 2026 12:25:34 -0300
-Message-ID: <1-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
+Subject: [PATCH 4/4] iommu/vt: Simplify calculate_psi_aligned_address()
+Date: Fri, 27 Mar 2026 12:25:37 -0300
+Message-ID: <4-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
 In-Reply-To: <0-v1-f175e27af136+11647-iommupt_inv_vtd_jgg@nvidia.com>
 References:
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BLAPR03CA0032.namprd03.prod.outlook.com
- (2603:10b6:208:32d::7) To LV8PR12MB9620.namprd12.prod.outlook.com
+X-ClientProxiedBy: BL1PR13CA0014.namprd13.prod.outlook.com
+ (2603:10b6:208:256::19) To LV8PR12MB9620.namprd12.prod.outlook.com
  (2603:10b6:408:2a1::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -69,255 +69,138 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR12MB9620:EE_|PH8PR12MB7182:EE_
-X-MS-Office365-Filtering-Correlation-Id: 23337681-8906-4080-8252-08de8c151969
+X-MS-Office365-Filtering-Correlation-Id: 7aedabf5-62b9-44b9-246b-08de8c151976
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam:
 	BCL:0;ARA:13230040|1800799024|366016|376014|22082099003|18002099003|56012099003;
 X-Microsoft-Antispam-Message-Info:
-	ZQTKWiM8KmBwkN2PIS+3BAEDY7GNYObxAKaYkK0+6ivHohGB75+69lXcLjKSQzmccUkDIrgW/PiH4s8GgKaty715cPcDMSxtCJVq0vdmZtUoXDO0m3hnVkMrpL7LA5HaYPQ5U4yGi29KnxKelskMPbXeDHno+2oZHB3TLdhfqYMxh1XORk+9c0dSfjhA2mWos46KVkwO2vaeHcOEjFt4w0ipJI95hRZekDzXbcFXypLg8nuj/HqFn0bMJfFvtMFnzjng8ggYJ1PfIjrV4OQCfLgG2LybBEq6ZhbCqOHBzJu+5fRtQJOf/gLzBEXV7niNWPF7dzJuBhsgTxQ188FCZ/kocj2GthOcMraOZfxRIwb1bl4BCYVLYRqQAEmkeMqsu1sWXm/2kUxPi2+RU1IxNu7DYSyYAY36MY7AMrWd3eStpfPkZJ0Z/jyb5G6tJ3qxEEhCAxAIwVrjgvqf7K4/eCrZSypjMe6gni1T3SfWq0NdIbeTc7es7rMSNgL/X0vWw86efi19jKaTI7JK08mjlhf1YL1fwNXnsCk11bJ2aCjx3eoqpZPLM6Z30I88VdxMgudhkt7834wVMtWqGjB4ANgDMzEUvq0Ja+cMP7M8WtS1QeukubSDc9Es6mcFIJXFI+3KA+LLV87Iyef2C0Cu5ioNUyx98wzpvqs5GIxjtwaZ+KmHb2gdgUGim7x2LNYcE34Cxr/5QYdVGLnnPv0ZYZZoorcCSBBuTSI/LwAKwv4=
+	5Lh4m0s7NVFWoVm9j52pUbyBqgnZUt+ShSs7VQxYDrD9QYa4pyN9MWBB/uaNedoJ8TLbWMkzDRgITjcTLfRojNvZlShkv/bnRceT6s8n9WsOLG5ezkuhM8aIOM/8c0u6BEWN9V3JnopVB1Xf77CKRHn6SyI7bBBEuG88BJVzuVYLwIgJBQtqQp1bj9/aDh/YadwVXxc11fgyJEckGkAMO+GL889TMraJ3Enk6vfym3R0A19d43akRTljaFSNWTOVmvc2v7coLj6pVFjm6D2rr3Z8uyAFsJ9cPZzFl5zIyx6jjPglRtnoREwG29qmsvpoTOAn0Ru55bCP70e2FNbgLi97pduw5IMNRRfvnXn8NKA9QOmKWB76PgYN1SPfHtDAdm0oBFhWXAj3thAzhN6WiZY8N6+Ahv8UarIQVxhLIRR5jMF1E1BOd3+9uLdwShajTXyll7tajtQS0QtfGlitZk5e/dHhcoovPr5iesHu9BhFIfDqGh5FaSSbO3RUJquFDPQFOxa+Uakst20hpRfWqW43P0BBJVS1ctMk+ECxMrmYcWyoTBQ6LOIcCu2QQ5ehQRcvw6ZyPJZzoD74JlYFpu2CCoJRFx2KmnE/C3l+xRRT0BrtnPuhUrB6EjKa9PTbRfvbFUgSYHzw12VOg9bM+VcbiI5GtitnB25DL1GxmmUFToQ0vFdpOhrgAmsiRhS2iB+2oBoRHkOwDqulJOMh+70rUxBn5pSyrU82CdAfT50=
 X-Forefront-Antispam-Report:
 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV8PR12MB9620.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014)(22082099003)(18002099003)(56012099003);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?nd+6IWq8816KhzGxneRxNuwQHGL9lfMqT6aeuf1vY2HCWcP9prhtyxUHy4G0?=
- =?us-ascii?Q?0388TRr/YD/4i0gJyyrCgd5BO9/SeDvJjw4B5Ax58X970pDkTEzVs4p5/PEe?=
- =?us-ascii?Q?S/GCp7WVNxKDDsFA3jA1ShzzNLMG/RStM8M9iohOhrwzbtqtUMQA+9oXIYV2?=
- =?us-ascii?Q?+D1xfb4x87LRBr1GnXgGN/HFC+C0ucCl0hnFStilNZh119NUY3zD6NNic8eZ?=
- =?us-ascii?Q?K17nKBrB3gQmmVnMWA1L1MgYGMiIdlD4357MTEv+116As2rA+0S102Aef4bW?=
- =?us-ascii?Q?sX1wnlvXXsL6ed2uxniqCSY+l6vEwrcEK3haVRK4mNac74Ub3L7xSJ03Tlx4?=
- =?us-ascii?Q?fIyPd+9A4C+K6A6F7gmorZI3w4LBIqkCBeA/4wjPMvkK9RwqxGKGQar2Wrni?=
- =?us-ascii?Q?wmZgn7TO6o2HZlj1F3Eng7VKoIO7JSQ/tZw1HFtG45jKDsmrZ+frdNYfKz7x?=
- =?us-ascii?Q?GHNXURKSry5Rwxtx/HhcFSX5Qq31kY+tnghJlfWfYWDU7+e3tzx5DtrfOfXj?=
- =?us-ascii?Q?V91el57aHV42+I8GEwady/r1DAgcro97iof3dCKbjsRwOvVeCMQRKc/JU0JE?=
- =?us-ascii?Q?9MdAaB5MHrFXGLefOPmsdW92/kOKu09ZgANrhEgLmVSmqK10C/Uwn9tv52Sd?=
- =?us-ascii?Q?BcQDxtb6y+YVqqbzMmGNpSp8j6In8P8hzOrgABStQq3WjpFv0vKT717JO9OL?=
- =?us-ascii?Q?FEIDc+vr628TeANktDz3/n7/iqw9xrlXBuljXgkV3fVMRTFuKi7OiR1BBuCI?=
- =?us-ascii?Q?tBmtKy1s54/9d2MFU7j1x1AUYUNA3LGYZP03rG+gw5dXqRNtQ2+DMvuUbDGC?=
- =?us-ascii?Q?Wd/0IPtWmy+zq6YqQQGFZsZfem6EN2EqIF1ogypZDIvQ9fXn1iRNVVmoTXY0?=
- =?us-ascii?Q?kqM3e8ED7x0ytIcQtADZT4bi2USGmJ2d1vN3hxw5Tow2k/bXpy5KtnMtXYKA?=
- =?us-ascii?Q?ECg2AQt+lrTRLz8QBDMyrzBrs3QHBxiQ3Oc7Dx9pBQJZOnjqRnF0Lz8Z+wpL?=
- =?us-ascii?Q?9WvPjpzhgZo+V4wicGoAmobgDTXu4cgmLnQHyijXcVjjUF792EN8x9ntqXHi?=
- =?us-ascii?Q?oc8AsjCzQcyMz7Ry+ip9Mq0LV2FCaHGR7RhGn87DyUFLmFVyIePSwK+MQLLA?=
- =?us-ascii?Q?Hk2P8xN3DQ5oMfJELFBHEXmCnimIQjQTKfhdSzOGdwNqSwlzsOSsey9dyEQG?=
- =?us-ascii?Q?lgj1KxB2j/+xD2Zmc4PnVQff9sV98FJVlOJ8m6EGHDFTi2JQ25JiB83O5QvR?=
- =?us-ascii?Q?JXZngSwRi107hzorEFBWRov/sbbBpJderjhvGsOtjZXBAofsusfnHKfmEh6p?=
- =?us-ascii?Q?Li1JY7i3gvsXjZ1qzwFQGuJk1nUpRU8X4SDh1WccHe334qyTPxoRlWHGpabd?=
- =?us-ascii?Q?F3grueWpx+OD9U5bIbLXnGSRevq5vP5SD9SPUQX3Mr/c+BdpApq/W7O/GqjK?=
- =?us-ascii?Q?QLfuRSmDUn2K5y9xK+8Oks9wGdK1ja8QHn0pLc8ddwfsxcXK2tkpcHI8U96/?=
- =?us-ascii?Q?160k7PxmFKlQFobtQ2sat8btT3lYqjEIK9gq5MQ64UTXbaPJem0tHGz9uscs?=
- =?us-ascii?Q?oFDD9ItsDju5SPk06S7e+Z2pY9JFSeVyyGCJ0AjYCQ5Iu1CEk3u93CJEGcfX?=
- =?us-ascii?Q?YbgwqAgYzNYIFsCC04hSniDl7IC9KxmGpyJz4U7SiL51FFZn9R4TIL66Rruj?=
- =?us-ascii?Q?5mmOVAKcC+xTPf0NbK7N1tbaHwkaOni+43f84+8W15/Gd8cB?=
+	=?us-ascii?Q?Cy+LMpNCSS5nIWDsPQTDOZHRELyF+nZ4+T/nQDvbZn8FIlSxRmede4NW/QkJ?=
+ =?us-ascii?Q?lBvOE5K6PY+2EAS6xHiKcm/qQilWB0B2pQEwpTOExLJyIaEReBBz6HrPDLZk?=
+ =?us-ascii?Q?WgoSzLKOt1Ge7u9Z8YOCAyQr/aXQ8EisXvNZFUMJVw31kLDOekosyKvi7F1K?=
+ =?us-ascii?Q?SwUiHELMsAs8OU/R5cMZx4QGGEFuVa2PaKDPgUbdGYAKqFpH32K5z+Ii/1ml?=
+ =?us-ascii?Q?5UmsgxYagymNBxgyJj8rfXCpuWaiNaiqRKpPL1saDkap9eUXchx+5d5EnDss?=
+ =?us-ascii?Q?E1u3LvmcuFb0pgQc/SSpLHCtettaE2rKq/34aLyBicLMAf7Y45OkH+mxBcoB?=
+ =?us-ascii?Q?YrytxqpIyXjKCZWZO1CDkqlgVq4yJSblt7USv/rrKBc8/0itdgoreejLFUXt?=
+ =?us-ascii?Q?KaHdO5okb6dHtX8F6dysAuvl+Hnrf8qHxqNnjXw5Y/kvbF4dNJeVwFra69Z6?=
+ =?us-ascii?Q?DYmUXSTKPeuFDlo6M5i/ubuImQFUodCmS0ts+CxUQb7bs9R7Jbthy1Ql4l0s?=
+ =?us-ascii?Q?sIhgvBb3PM9CzHD49dN5HNcbcoqKrZ2BvowVqv8PhzDIbzK0ZAA8YUUW1D6W?=
+ =?us-ascii?Q?uNYfEwQwaRDrKlyg8nQU0G9ngYBqvN+Mdn7ZEvm8Ry7pkIug+lYKKpmPh7t3?=
+ =?us-ascii?Q?PhjIlvMPc/8CHg6NPwMvTVRwxz6QkIDVmGKUBbSc842Wxd1D7djLScJy4OzU?=
+ =?us-ascii?Q?5lIBsdHbtHjlDt1vnUICarnOhIvpml03rLgAunnnbZ6PZKclAJwH1jeI8FW5?=
+ =?us-ascii?Q?VlqKg8ddcYPG9dtBZC6yRhyuN34OM2T1hstV25psqYqjUIV4Ta93j1Flr4Gh?=
+ =?us-ascii?Q?QiawaC8GJyFKn28Vwaj2cD2u63QbOKUDehBqtz7DTWlHTE1Er9TYGnxCwgup?=
+ =?us-ascii?Q?ww7GMuZe1te3kXpxIURWSqTXXvlmgsQyJsWnx17P9Be4f4dYLxYnbZnreoM3?=
+ =?us-ascii?Q?mCXIM/md0pbj3Eo2WWognsH1wR0dVVc9Sbz7vPGjhKhlMFp7Q9nwz1uhe/Ad?=
+ =?us-ascii?Q?VBZjsHGjGNf82iI/V5Mjmn84Z5Thdge/UHclL3UCUrlBFsJRiQavTGh54/oq?=
+ =?us-ascii?Q?oGOAitGwZxnRKFCez1NvIrBotiHsAoAviXwEHFjA8RgB5LLk5U+x7aVnxZKB?=
+ =?us-ascii?Q?1U4HO486122POQ+iskdkEoaLoLsG0eBZwk1NRoaK9B6BBLYyyWGhkXfq4QS/?=
+ =?us-ascii?Q?EirxTNQol+Cai1NTLrxI2DeNbJ0ZIyFEddMBqluzXecm2YxnUpuy8J4hF0I3?=
+ =?us-ascii?Q?dJYwl0ZpPX+6rWM7aHnm8BHospM2+eSZ7ZZhlg4IChnugN23xjzJRB8zWq76?=
+ =?us-ascii?Q?EIN9Hw8DFCflPSwBkC79wWuT6X1WrSyPND9Cwue6sOwb/mvrmVD4bydTvkjw?=
+ =?us-ascii?Q?qox1WveSny8xtIjqMzrqspWeaUBq6dUQjWBv+Mp0wHVlgFpy0Naxz/xlLqn+?=
+ =?us-ascii?Q?t1tWtyJgXHh2I0s87HjicJkulW5QMuBDn8ZPbqghZhvVNOTEoXDGTQUz3lUl?=
+ =?us-ascii?Q?xxp8sRWv/+nrQoAxzNSN6gwOXSatc92RhqfEN0VzoJ5W2j5rf4MAwTpyqHBw?=
+ =?us-ascii?Q?JO0X3irnwzKiYmqLV0GpKwhPYCgiX+n1G2POE2J1WqIosb/wV/wWBWAaka9y?=
+ =?us-ascii?Q?GQl0hOU9oLgmKYOOL3jkiQsOq/0nPyZ9Cena26AQ+dUEV1ClhIYRJu/XMFxn?=
+ =?us-ascii?Q?jLxmmtMZKEiiOkvxV9b6p9DQU7f+HN0pqmkOGH+Ap/Gy1odU?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 23337681-8906-4080-8252-08de8c151969
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7aedabf5-62b9-44b9-246b-08de8c151976
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR12MB9620.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 15:25:38.3933
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Mar 2026 15:25:38.4727
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: py2DCixuLmAggD9JRTaqTsHoyhIuS/JuQNnRwnIP0Wd9zSmirPFzKxa9fvc63Qu1
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0v/J56bUJc0aShSFKfclhO2ppsZSDNEJfj1RlKhfHgxrwJmMuH/1Yf5TDoSZmEsL
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7182
 
-Currently these call chains are muddled up by using npages=-1, but
-only one caller has the possibility to do both options.
-
-Simplify qi_flush_piotlb() to qi_flush_piotlb_all() since all
-callers pass npages=-1.
-
-Split qi_batch_add_piotlb() into qi_batch_add_piotlb_all() and
-related helpers.
+This is doing far too much math for the simple task of finding a
+power of 2 that fully spans the given range. Use fls directly on
+the xor which computes the common binary prefix.
 
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 ---
- drivers/iommu/intel/cache.c | 20 +++++++++++++-------
- drivers/iommu/intel/dmar.c  | 19 ++++---------------
- drivers/iommu/intel/iommu.h | 37 ++++++++++++++++++-------------------
- drivers/iommu/intel/pasid.c |  6 +++---
- drivers/iommu/intel/prq.c   |  2 +-
- 5 files changed, 39 insertions(+), 45 deletions(-)
+ drivers/iommu/intel/cache.c | 49 ++++++++++++-------------------------
+ 1 file changed, 16 insertions(+), 33 deletions(-)
 
 diff --git a/drivers/iommu/intel/cache.c b/drivers/iommu/intel/cache.c
-index 249ab5886c739f..e08253980a6ee7 100644
+index 31d4bfba1842bf..10402a0f0ed7da 100644
 --- a/drivers/iommu/intel/cache.c
 +++ b/drivers/iommu/intel/cache.c
-@@ -330,15 +330,17 @@ static void qi_batch_add_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid
- 	qi_batch_increment_index(iommu, batch);
+@@ -254,37 +254,25 @@ void cache_tag_unassign_domain(struct dmar_domain *domain,
  }
  
-+static void qi_batch_add_piotlb_all(struct intel_iommu *iommu, u16 did,
-+				     u32 pasid, struct qi_batch *batch)
-+{
-+	qi_desc_piotlb_all(did, pasid, &batch->descs[batch->index]);
-+	qi_batch_increment_index(iommu, batch);
-+}
-+
- static void qi_batch_add_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid,
- 				u64 addr, unsigned long npages, bool ih,
- 				struct qi_batch *batch)
+ static unsigned long calculate_psi_aligned_address(unsigned long start,
+-						   unsigned long end,
+-						   unsigned long *_mask)
++						   unsigned long last,
++						   unsigned long *size_order)
  {
--	/*
--	 * npages == -1 means a PASID-selective invalidation, otherwise,
--	 * a positive value for Page-selective-within-PASID invalidation.
--	 * 0 is not a valid input.
--	 */
- 	if (!npages)
- 		return;
- 
-@@ -378,8 +380,12 @@ static void cache_tag_flush_iotlb(struct dmar_domain *domain, struct cache_tag *
- 	u64 type = DMA_TLB_PSI_FLUSH;
- 
- 	if (intel_domain_use_piotlb(domain)) {
--		qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid, addr,
--				    pages, ih, domain->qi_batch);
-+		if (pages == -1)
-+			qi_batch_add_piotlb_all(iommu, tag->domain_id,
-+						tag->pasid, domain->qi_batch);
-+		else
-+			qi_batch_add_piotlb(iommu, tag->domain_id, tag->pasid,
-+					    addr, pages, ih, domain->qi_batch);
- 		return;
- 	}
- 
-diff --git a/drivers/iommu/intel/dmar.c b/drivers/iommu/intel/dmar.c
-index 69222dbd2af0ea..6f496fc6a5ff1a 100644
---- a/drivers/iommu/intel/dmar.c
-+++ b/drivers/iommu/intel/dmar.c
-@@ -1550,23 +1550,12 @@ void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
- 	qi_submit_sync(iommu, &desc, 1, 0);
- }
- 
--/* PASID-based IOTLB invalidation */
--void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
--		     unsigned long npages, bool ih)
-+/* PASID-selective IOTLB invalidation */
-+void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid)
- {
--	struct qi_desc desc = {.qw2 = 0, .qw3 = 0};
-+	struct qi_desc desc = {};
+-	unsigned long pages = aligned_nrpages(start, end - start + 1);
+-	unsigned long aligned_pages = __roundup_pow_of_two(pages);
+-	unsigned long bitmask = aligned_pages - 1;
+-	unsigned long mask = ilog2(aligned_pages);
+-	unsigned long pfn = IOVA_PFN(start);
++	unsigned int sz_lg2;
  
 -	/*
--	 * npages == -1 means a PASID-selective invalidation, otherwise,
--	 * a positive value for Page-selective-within-PASID invalidation.
--	 * 0 is not a valid input.
+-	 * PSI masks the low order bits of the base address. If the
+-	 * address isn't aligned to the mask, then compute a mask value
+-	 * needed to ensure the target range is flushed.
 -	 */
--	if (WARN_ON(!npages)) {
--		pr_err("Invalid input npages = %ld\n", npages);
--		return;
--	}
+-	if (unlikely(bitmask & pfn)) {
+-		unsigned long end_pfn = pfn + pages - 1, shared_bits;
 -
--	qi_desc_piotlb(did, pasid, addr, npages, ih, &desc);
-+	qi_desc_piotlb_all(did, pasid, &desc);
- 	qi_submit_sync(iommu, &desc, 1, 0);
+-		/*
+-		 * Since end_pfn <= pfn + bitmask, the only way bits
+-		 * higher than bitmask can differ in pfn and end_pfn is
+-		 * by carrying. This means after masking out bitmask,
+-		 * high bits starting with the first set bit in
+-		 * shared_bits are all equal in both pfn and end_pfn.
+-		 */
+-		shared_bits = ~(pfn ^ end_pfn) & ~bitmask;
+-		mask = shared_bits ? __ffs(shared_bits) : MAX_AGAW_PFN_WIDTH;
++	/* Compute a sz_lg2 that spans start and last */
++	start &= GENMASK(BITS_PER_LONG - 1, VTD_PAGE_SHIFT);
++	sz_lg2 = fls_long(start ^ last);
++	if (sz_lg2 <= 12) {
++		*size_order = 0;
++		return start;
++	}
++	if (unlikely(sz_lg2 >= MAX_AGAW_PFN_WIDTH)) {
++		*size_order = MAX_AGAW_PFN_WIDTH;
++		return 0;
+ 	}
+ 
+-	*_mask = mask;
+-
+-	return ALIGN_DOWN(start, VTD_PAGE_SIZE << mask);
++	*size_order = sz_lg2 - VTD_PAGE_SHIFT;
++	return start & GENMASK(BITS_PER_LONG - 1, sz_lg2);
  }
  
-diff --git a/drivers/iommu/intel/iommu.h b/drivers/iommu/intel/iommu.h
-index 599913fb65d59e..40759587729953 100644
---- a/drivers/iommu/intel/iommu.h
-+++ b/drivers/iommu/intel/iommu.h
-@@ -1082,31 +1082,29 @@ static inline void qi_desc_dev_iotlb(u16 sid, u16 pfsid, u16 qdep, u64 addr,
- 	desc->qw3 = 0;
- }
+ static void qi_batch_flush_descs(struct intel_iommu *iommu, struct qi_batch *batch)
+@@ -441,12 +429,7 @@ void cache_tag_flush_range(struct dmar_domain *domain, unsigned long start,
+ 	struct cache_tag *tag;
+ 	unsigned long flags;
  
-+/* PASID-selective IOTLB invalidation */
-+static inline void qi_desc_piotlb_all(u16 did, u32 pasid, struct qi_desc *desc)
-+{
-+	desc->qw0 = QI_EIOTLB_PASID(pasid) | QI_EIOTLB_DID(did) |
-+		    QI_EIOTLB_GRAN(QI_GRAN_NONG_PASID) | QI_EIOTLB_TYPE;
-+	desc->qw1 = 0;
-+}
-+
-+/* Page-selective-within-PASID IOTLB invalidation */
- static inline void qi_desc_piotlb(u16 did, u32 pasid, u64 addr,
- 				  unsigned long npages, bool ih,
- 				  struct qi_desc *desc)
- {
--	if (npages == -1) {
--		desc->qw0 = QI_EIOTLB_PASID(pasid) |
--				QI_EIOTLB_DID(did) |
--				QI_EIOTLB_GRAN(QI_GRAN_NONG_PASID) |
--				QI_EIOTLB_TYPE;
--		desc->qw1 = 0;
+-	if (start == 0 && end == ULONG_MAX) {
+-		addr = 0;
+-		mask = MAX_AGAW_PFN_WIDTH;
 -	} else {
--		int mask = ilog2(__roundup_pow_of_two(npages));
--		unsigned long align = (1ULL << (VTD_PAGE_SHIFT + mask));
-+	int mask = ilog2(__roundup_pow_of_two(npages));
-+	unsigned long align = (1ULL << (VTD_PAGE_SHIFT + mask));
- 
--		if (WARN_ON_ONCE(!IS_ALIGNED(addr, align)))
--			addr = ALIGN_DOWN(addr, align);
-+	if (WARN_ON_ONCE(!IS_ALIGNED(addr, align)))
-+		addr = ALIGN_DOWN(addr, align);
- 
--		desc->qw0 = QI_EIOTLB_PASID(pasid) |
--				QI_EIOTLB_DID(did) |
--				QI_EIOTLB_GRAN(QI_GRAN_PSI_PASID) |
--				QI_EIOTLB_TYPE;
--		desc->qw1 = QI_EIOTLB_ADDR(addr) |
--				QI_EIOTLB_IH(ih) |
--				QI_EIOTLB_AM(mask);
+-		addr = calculate_psi_aligned_address(start, end, &mask);
 -	}
-+	desc->qw0 = QI_EIOTLB_PASID(pasid) | QI_EIOTLB_DID(did) |
-+		    QI_EIOTLB_GRAN(QI_GRAN_PSI_PASID) | QI_EIOTLB_TYPE;
-+	desc->qw1 = QI_EIOTLB_ADDR(addr) | QI_EIOTLB_IH(ih) |
-+		    QI_EIOTLB_AM(mask);
- }
++	addr = calculate_psi_aligned_address(start, end, &mask);
  
- static inline void qi_desc_dev_iotlb_pasid(u16 sid, u16 pfsid, u32 pasid,
-@@ -1168,6 +1166,7 @@ void qi_flush_iotlb(struct intel_iommu *iommu, u16 did, u64 addr,
- void qi_flush_dev_iotlb(struct intel_iommu *iommu, u16 sid, u16 pfsid,
- 			u16 qdep, u64 addr, unsigned mask);
- 
-+void qi_flush_piotlb_all(struct intel_iommu *iommu, u16 did, u32 pasid);
- void qi_flush_piotlb(struct intel_iommu *iommu, u16 did, u32 pasid, u64 addr,
- 		     unsigned long npages, bool ih);
- 
-diff --git a/drivers/iommu/intel/pasid.c b/drivers/iommu/intel/pasid.c
-index 9d30015b894057..89541b74ab8ca3 100644
---- a/drivers/iommu/intel/pasid.c
-+++ b/drivers/iommu/intel/pasid.c
-@@ -282,7 +282,7 @@ void intel_pasid_tear_down_entry(struct intel_iommu *iommu, struct device *dev,
- 	pasid_cache_invalidation_with_pasid(iommu, did, pasid);
- 
- 	if (pgtt == PASID_ENTRY_PGTT_PT || pgtt == PASID_ENTRY_PGTT_FL_ONLY)
--		qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
-+		qi_flush_piotlb_all(iommu, did, pasid);
- 	else
- 		iommu->flush.flush_iotlb(iommu, did, 0, 0, DMA_TLB_DSI_FLUSH);
- 
-@@ -308,7 +308,7 @@ static void pasid_flush_caches(struct intel_iommu *iommu,
- 
- 	if (cap_caching_mode(iommu->cap)) {
- 		pasid_cache_invalidation_with_pasid(iommu, did, pasid);
--		qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
-+		qi_flush_piotlb_all(iommu, did, pasid);
- 	} else {
- 		iommu_flush_write_buffer(iommu);
- 	}
-@@ -342,7 +342,7 @@ static void intel_pasid_flush_present(struct intel_iommu *iommu,
- 	 *      Addr[63:12]=0x7FFFFFFF_FFFFF) to affected functions
- 	 */
- 	pasid_cache_invalidation_with_pasid(iommu, did, pasid);
--	qi_flush_piotlb(iommu, did, pasid, 0, -1, 0);
-+	qi_flush_piotlb_all(iommu, did, pasid);
- 
- 	devtlb_invalidation_with_pasid(iommu, dev, pasid);
- }
-diff --git a/drivers/iommu/intel/prq.c b/drivers/iommu/intel/prq.c
-index ff63c228e6e19d..ed98b1cb06fecf 100644
---- a/drivers/iommu/intel/prq.c
-+++ b/drivers/iommu/intel/prq.c
-@@ -113,7 +113,7 @@ void intel_iommu_drain_pasid_prq(struct device *dev, u32 pasid)
- 		qi_desc_dev_iotlb(sid, info->pfsid, info->ats_qdep, 0,
- 				  MAX_AGAW_PFN_WIDTH, &desc[2]);
- 	} else {
--		qi_desc_piotlb(did, pasid, 0, -1, 0, &desc[1]);
-+		qi_desc_piotlb_all(did, pasid, &desc[1]);
- 		qi_desc_dev_iotlb_pasid(sid, info->pfsid, pasid, info->ats_qdep,
- 					0, MAX_AGAW_PFN_WIDTH, &desc[2]);
- 	}
+ 	spin_lock_irqsave(&domain->cache_lock, flags);
+ 	list_for_each_entry(tag, &domain->cache_tags, node) {
 -- 
 2.43.0
 
