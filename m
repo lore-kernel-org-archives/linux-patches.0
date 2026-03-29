@@ -1,203 +1,252 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.13])
+Received: from out-179.mta1.migadu.com (out-179.mta1.migadu.com [95.215.58.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C2262472AE
-	for <patches@lists.linux.dev>; Sat, 28 Mar 2026 03:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.13
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774668036; cv=fail; b=omEIIvZ7qUD2RHz+kmz7iX1BWf8KuFoJVr/M1klZPowulHQ8/QJRhf6sMPktYVCaiHYvYPtP90XxAVs2aGHbC10TVUVbicNhmgoLGVaLFyn0zgv4YnD2UKDDKLW4K2q456rsywSkEOkZkkWDE7PIqqojgPV0FPXMeLB2spglbrg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774668036; c=relaxed/simple;
-	bh=2ymKFJvsssCyBmj2YqAHrmsssUoKm7sujYYB0T0xGzY=;
-	h=From:Date:To:CC:Message-ID:In-Reply-To:References:Subject:
-	 Content-Type:MIME-Version; b=bNgA/1Ec3lCdX96h4nRFLxErkceduGr7b9EG9NSTkPVrFyfwRl4M/l8tvoYpMRGtljlyJZozMoj4PVr6wYNpbbxTZUeR132UAYu2EdspSiyuGINyKvyS9aqhKAM8UZolzsPX2Q472gfwVGVFpRDMP4SzjwnXWx3Htau8nurEZdU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=lxU1mk/2; arc=fail smtp.client-ip=198.175.65.13
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E032230E83F
+	for <patches@lists.linux.dev>; Sun, 29 Mar 2026 11:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.179
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1774785567; cv=none; b=ENz35zrz/kvnXiJx25z4hHetEkM5aiJL66tAZ/cuxNrGrOCL3FmlFprNukCw2qhCxVuw4WmtFv4rtypRvpESA6iKYbJ1tbUQSYLiYacb96WDRwxNjtgyU76hWafBH6r+O4t4SOcQ+tlkTWrumrMb/G1fRaeHera4lkqIzOnAbDc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1774785567; c=relaxed/simple;
+	bh=LfI9pgmBY79Np+lQOxCYoOL1BkzxSFHfIk9gb4Agm8w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ERhDVimPt0ugvOPhzeDed/wRTwo9Fq5vXWgla1IE9P2zeppMAYfPYvEAQ9fMNoVPE1Aic/nSLPWZSLfyF6/t0nf95FO12oD5gBX1ZMifOAa/fxn8tWDI8fCJKVux4jCO3+Jbwtw4GvBWcECx5erMOd8QgnUtqOeliIdhUI89bnA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=WWP5zca0; arc=none smtp.client-ip=95.215.58.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="lxU1mk/2"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1774668034; x=1806204034;
-  h=from:date:to:cc:message-id:in-reply-to:references:
-   subject:content-transfer-encoding:mime-version;
-  bh=2ymKFJvsssCyBmj2YqAHrmsssUoKm7sujYYB0T0xGzY=;
-  b=lxU1mk/2wUUmRu8hi1f2pNVN0GG9IYEAdE/iBC/Y8/KsX1kHBxTSNI+3
-   8Y6js+Z1ouX9GVxoOaUV2oEpZr0mA3PoVxrW2jQB0+qz+8oL9uAOsghBr
-   B5bluCyeqO3KaUwyis4QVrCGnRFYynqE30ccTLNoyxNwCDOkAm3jPpWph
-   lCMU39+b9ZWn+w9j9Cgi73lPyY2OwnrltzICsWqp3Q24mDzT/rbFVvKV+
-   So0zsSgr3eFFbvfoRH7ocDM+otO0LTVDRpHCGp+fnj++RwG2Budly0OTP
-   vNPPMe7wxD0OX3sfxK6smDUJJUx0zQwGWY1erNXwCuFjEjDJREXi/B6/0
-   w==;
-X-CSE-ConnectionGUID: 2vOAYLcVQa2YE/xIn5UXkA==
-X-CSE-MsgGUID: UIb2sZujRWqcSm0Xje1NeA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11742"; a="86820163"
-X-IronPort-AV: E=Sophos;i="6.23,145,1770624000"; 
-   d="scan'208";a="86820163"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
-  by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2026 20:20:34 -0700
-X-CSE-ConnectionGUID: aqvyzp9xRIOK7oPvHD/EhA==
-X-CSE-MsgGUID: eV4gNOUoRE+zL71fkb/URw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,145,1770624000"; 
-   d="scan'208";a="224689375"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
-  by orviesa010.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Mar 2026 20:20:34 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 27 Mar 2026 20:20:33 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Fri, 27 Mar 2026 20:20:33 -0700
-Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.49) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 27 Mar 2026 20:20:33 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PfMUzoRpOvh52QXpIb1hTbQB3YFm+it7mIY+R8bJVz5q99EkMVMPkCrrvkSHB6oMey8F81xYWDVftemZ6xS8VWpTra2c9VunmE5RwJyjsKYELE4Jc4Rl6VBMRBjzwLI9VIdQsz622NCHEqoQBnmr7V+mR1jf+1ZK15rvnAHdQzMD8lYxuXJNu/egF5oz9UVeStyHrqAvUyqlQ2Om3vPC/oIYlIwPwtZh1iQQaCu/VKzQmFX9Tu60pq0xTy7hF4Zp130f39l455dhBSNJzLOGiavSAaKvNS7AXvRDgL5x/bcx2Z3jYfMVKDa1x9dS5SrpwtIWak0ocXQ60/kItkQTMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9PRIeLKBVc5YuCvoxxfHxMUju/Ea3syL011dg09cTqQ=;
- b=QwWUkEpTMDI0dOPpMBKpIVsSakl5y/2eWFyHSanmezpv4MbRj3vpw81HeSyUMOwZ8uF3E98jqwcl2tHHz4lS7yJzTROmC24jl8BzhfGoSla+ONEoTHy3ujdYVO6QNrFoTqOLgpzhxz3dNaCLr3R7Xg+vFlm8CKN+OZqz4sUppBW0+smXO9cnW5plW0/2cU9WhLMgnynbW3BIgsJ7AHitEVkr4XLy/DQ4anG+iTMDwAzz8x09V4nBelSYlWXMCZ/E4Kx8BEgwXtoNCWVAhvGvct3G3oSmoUMp93B3Y1yTNktb/4+Wz0ROvxol3rqg0Y1uZBeN2Mo9DPE6ywadO061cQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com (2603:10b6:510:256::6)
- by SN7PR11MB8112.namprd11.prod.outlook.com (2603:10b6:806:2ea::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9769.8; Sat, 28 Mar
- 2026 03:20:31 +0000
-Received: from PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::1ff:1e09:994b:21ff]) by PH8PR11MB8107.namprd11.prod.outlook.com
- ([fe80::1ff:1e09:994b:21ff%3]) with mapi id 15.20.9769.006; Sat, 28 Mar 2026
- 03:20:31 +0000
-From: Dan Williams <dan.j.williams@intel.com>
-Date: Fri, 27 Mar 2026 20:20:26 -0700
-To: Alison Schofield <alison.schofield@intel.com>, Dan Williams
-	<dan.j.williams@intel.com>
-CC: <dave.jiang@intel.com>, <patches@lists.linux.dev>,
-	<linux-cxl@vger.kernel.org>, <Smita.KoralahalliChannabasappa@amd.com>
-Message-ID: <69c748fabe743_17890410085@dwillia2-mobl4.notmuch>
-In-Reply-To: <accZuj_b1kB7M4AD@aschofie-mobl2.lan>
-References: <20260327052821.440749-1-dan.j.williams@intel.com>
- <20260327052821.440749-10-dan.j.williams@intel.com>
- <accZuj_b1kB7M4AD@aschofie-mobl2.lan>
-Subject: Re: [PATCH 9/9] tools/testing/cxl: Test dax_hmem takeover of CXL
- regions
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR03CA0053.namprd03.prod.outlook.com
- (2603:10b6:303:8e::28) To PH8PR11MB8107.namprd11.prod.outlook.com
- (2603:10b6:510:256::6)
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="WWP5zca0"
+Message-ID: <9ea45648-453b-4578-9b75-c9b4bf70cf6a@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1774785562;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=2/TRxauqrb8y/s8bKO+jkfvWBOuO4JDFCPKCpLe1NBA=;
+	b=WWP5zca0AQV46LJn6/JgCu+x8PTq1a5zjva/cCWfQoV6VM0OMfa/9B3P9MG1liDYADfE1q
+	NfgMSMhJltCFQBq5mrIaTKIxjvsr+x5vwymsxF3gMrlqgdiVyolj6lzlgLGuVfG+9d6IY+
+	73SSwuWr6Btwhfvb+gmnIdCIZTkaYiA=
+Date: Sun, 29 Mar 2026 13:59:15 +0200
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH8PR11MB8107:EE_|SN7PR11MB8112:EE_
-X-MS-Office365-Filtering-Correlation-Id: b180d5f9-6cb4-4c38-d585-08de8c78f753
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: xEcOgaaUPnN12Ox/p15GcEeTWIfr1wJTZmX+VcSwRiUAdNieyOj+SP+TVjouxb8JCzgdE8+oabkqdd/58mjJnSl3VREwWkYQhNs3L3Ip357LZkgMPLXurYQ5renpFufBzhwHs7m2ANFDKdRxG85jCrYXTS1fvBtrquhbK9pNnEJx2N7dSdKdH2IQ/NxDLGQs6gtggluwsdfyTOHk4sedwaAUrHNL7HvOTHB2CfedCn7xr3R3ycx2Yo7AUCYjdNkeksa0dNhN28Mu18/JRRDWY05Ts57A7MTukdfTqkOlayifo6a/jJOZG2U4/JaH4Wsj/Behwq8hyxREtjNxX2dweKN1ygjqhi+ISTwN1vPBazTfq+B30rReUNzTJEMLJvqJhCA3wloSftnBb0M+AdAM8BXap+nEERGc1CSddeCpqOiGpZxWp7lsGl6dAvGZPOcj1NZrsW5RVQyW4BAPHvmQJDzeEJ8zkFpAuqv5mDbr1y/sNY+D76onC1NjWh11NSVL7a1TOaj0yXcl6L8oVE1ONq3W819YB+pu6PRRj+YYEZH5bDPsBuJsCRia9qugyfF8b1c7a1V3zAd8TU6gwvGdmYOb9GTtOOTxXMEc6wRrgBKUJx4kegjcETHOq/g8+CDNKOQYfKzUDYCiEOn2LAULvVIQsuvGJ4zPggduvvLLjuNOGo83q9gMVHopNA2D7oROWiEvMPDlcgephlalh+NWDb9UM7y5ZpQEAU12/zVIcRw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR11MB8107.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(56012099003)(22082099003)(18002099003);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?K1R6b0c0RFgxSDA5S3BydFdZenVlL3FtYmxrRms0VnlZM3BpSmR6dzNDVHJh?=
- =?utf-8?B?NXNCZ2ZmenBNWDJHRXd6UnRSS0p5Zy9mTERKRVJuWE5ZT0RJUjBxM3ZIYUdk?=
- =?utf-8?B?SmwrUjBkcmNvM0NodmxsWnRCUHpWTGpDTHdBRUFKYjNKRkUzRUk1c1V0bDJS?=
- =?utf-8?B?cldiSnBlTHhoVDlzYUhlRTNUaUVDajc3ZWIySHRJM0ZGR01iSGtHWkV2Vkgy?=
- =?utf-8?B?dkpYelZLWUNwWWNIQms3MGZjTUZGdmZ6dlJEbU11TlpQcURCQVpVYjV5VEJP?=
- =?utf-8?B?bGR1ZlhPL2hOQmpXNUVid1NtaUlXMDV1UEE1RUxITmNIV0txUmprMkpxYU53?=
- =?utf-8?B?Z1JPTXBiQXlsWmh2eGpwRUNudG9raGNlTll3TlE3OEtGR3UxbHl3b0s4NzdV?=
- =?utf-8?B?OHZUTnJ5S0o1TGttTjNhQVRPZityQnpPZllRWkxEVitSemxnSEptRVVManJF?=
- =?utf-8?B?blYyWDZUSEh1UkxvSlVkMmt0a2lqMDBIT0pQOElDdDlpc3B1MEt1SjdoaUsv?=
- =?utf-8?B?Z0t2RHhHZDdlUWc5K2dWazhwMVQ4WnZsNHdFcjVaTjJBTExKMFcwVEV6bWxt?=
- =?utf-8?B?andreEp1Z0IzeUpUQlJLcEZkUU5vR0FraW96ZjZIR1JJZ1VPNGpQeU1manVW?=
- =?utf-8?B?OCt5WHNKcGJHbWZEUHR3Q0RiVTRwb3RsYVVhb0EwR1o4VENTbGw5WU5KY2xM?=
- =?utf-8?B?S3NtekpGU2dGZ25sY2JBaENJcFFCSHU1enBMNDVGaXR2ZGdiUFZjbGxBcFhO?=
- =?utf-8?B?VXUwNVErSmpBT0ZVRnU5TVpvRHYzVmF5eHhORTJVODZnZENXQ1VlaHRmZUVz?=
- =?utf-8?B?anErc2tvVVR0WFRJbWlNRlduVGVOVEt2OFdxOTd3ek5rMStlRG0yTlY0OXBT?=
- =?utf-8?B?N1ZWUkk0dE5RaGp4dzRGenJKZVRjMDI5SUQwakhsVWdQSE1UMmZjTlZwWm5o?=
- =?utf-8?B?M1dDd1dsSDNHQW1WNGNDUjQwdmlvcGdRMXBxUktYaEJ0WkJxWlZFVzlLR3Np?=
- =?utf-8?B?RkQ0UmNWOUJPNWYvQlpPcnlQdWNDOTJ0NUp1clNJUVJMVU1lQlY2WXdIeDZh?=
- =?utf-8?B?RzJpaUI4UVN4enJkRlJzd3Uyd1JUeG1Pamtqd0pqN0w1Z1pSMW1hUVZxMCtr?=
- =?utf-8?B?Wm8wdTE4MlNOYS9wbGFtOFMvV3M5UXdaZ1dldUtCa01UdTFJSDBBR0p6eHR2?=
- =?utf-8?B?K3RXWWJXOHJrZ3pQcVJNQ1lGeXRaN2FsQlJOaWoyUjZONHFGSXpzVCt3TmZW?=
- =?utf-8?B?SGtLNnl3OWlQN3BNSVIzZDRXSDM5RE52bGRDVUxMZFh3cm9QeEJ0Qm1IVWc3?=
- =?utf-8?B?SnorcDQ2Y3pYamxacllNK25za01zWlQxeTBWNjZrNXRKU09NMmxyOFdVdVdY?=
- =?utf-8?B?RlYweHFFRitJVzJlM0RROWtyZVBGRE1RMnhTUGMxaTFkZUhtOXhROWNVVXJG?=
- =?utf-8?B?T1dNSWZmNGQxdTljNjBEaEE1L0JKMmNzZ3crOHNpeGlaN04vUE1PbXA2NEdK?=
- =?utf-8?B?VVIzcTBodmVNdSttcTdHNTZ3dkRLQ0FTRW9DT1A1S0ZjYy9qSVU2VG10OUdy?=
- =?utf-8?B?WEJSOFoyR09zakNRT0wxVVdiVlRBVnI5RWF5WDh4S1pSSGlSSktKWDlwYVgv?=
- =?utf-8?B?ZnZEMWhycTdQNmNDRHRBYlhxTXB3QUt0TEcwMXBremNJUGpZSDluUmJIS3Zp?=
- =?utf-8?B?Uy9OSWg0K1BPK2RsMVdEeUw4R3FlM1hROGFqR0NkSm40ZC9XcGxYTk1LUW5p?=
- =?utf-8?B?SDBRY2hLNWU1eHJFTjVWTC8vdEZjWHp0dzNZM0hZcFF2WDdGQXpTM2VvZ0xn?=
- =?utf-8?B?TFdUcmd2VXBid2ZuZ2x4UVRrOHNhWW9SNWVsZkJ6N0k3TnZzOFIwUU1ZMFh5?=
- =?utf-8?B?M1J6ZklXaUdSenZyVkE0MnhaTWJ5NGRLWGhyNjZRdS9QbWdxWDVrYnNiM2hN?=
- =?utf-8?B?cThIMCtqeEVycHpQcEt0ZWRqeW15RE5CYnRVYnNnMHhWRHNqcmUyWGZkZ3Qx?=
- =?utf-8?B?NGxIUTVKUitUYklTM3MxM3cwaUExL0ZTMHVTeEFkQndiZTVaeEk1L1AyRWRB?=
- =?utf-8?B?K0M4SHdLRitpQmFLeVBzK29wSEZtaGxGY0h4ZjhIdmhSM3czUzFKZXg0cGZa?=
- =?utf-8?B?WG9TUm1FQnJvOHhNemloenI5RmtWSXZ1aWFLa0g3SW5VYXc2TDZUaEhBalJS?=
- =?utf-8?B?aVVrRnhVZ1Y0YnFVMDdMVjk5V2xoVCtkMlpxUkZaYzBrclBiblAzaGhkQmU5?=
- =?utf-8?B?clZ3NTRVM3VjYkdRT3A5QWhGN2tTaGRXNmoreTdhL0s2THluU3VuT2RMY2gr?=
- =?utf-8?B?L0s2YjRXMXN0S0k3QTF5T091eHJ4NFJzWXFzend3T2JwRXhqY09aK0Z2amNm?=
- =?utf-8?Q?Se3uY9HCVDAUr0QA=3D?=
-X-Exchange-RoutingPolicyChecked: kU/9mQM/SjSznCQPoZfU/pLB9C1JVtAjqOVPVoHSlF5FLK6QQf/a0c8noqu7uExJT4HPIi3uA3ICiZ4DJpzg/aLLY7jUIV7icjG2V9yXrjDl10vvG7UprVhb5cgdYSj8iIlnvQQ/r3YIJrsj1w3k6DjO5Ewm7AS+mqz8a9kSklkO4tjGdujzmd23gO51tlMDLMOOW/cFlR72fIbZSLwdjmvX9ZWS07IZFWkg7RxTSZdHW9Q7jL8yaKpOFpNwvNjE2lRTbbwBGPrTjoRK3zoTlsjZbobXxj795mm5LXDUtDFVWSXZXgbgnYCgfEJMRDlmo6+Drf5IjOGp1eiMqQqVug==
-X-MS-Exchange-CrossTenant-Network-Message-Id: b180d5f9-6cb4-4c38-d585-08de8c78f753
-X-MS-Exchange-CrossTenant-AuthSource: PH8PR11MB8107.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Mar 2026 03:20:31.0500
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: O14QMku+hFZaFK3zE0CmgmJrTzsg/oOLnRfVDOQTgaHID7W0osTjyemSb2dhAmWU1azSMglOJYsbVyv3mvth++66tuK+0u0c4FGxtWISskM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB8112
-X-OriginatorOrg: intel.com
+Subject: Re: [PATCH v2 03/16] RDMA: Consolidate patterns with sizeof() to
+ ib_copy_validate_udata_in()
+To: Jason Gunthorpe <jgg@nvidia.com>,
+ Abhijit Gangurde <abhijit.gangurde@amd.com>,
+ Allen Hubbe <allen.hubbe@amd.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Bryan Tan <bryan-bt.tan@broadcom.com>, Cheng Xu
+ <chengyou@linux.alibaba.com>, Gal Pressman <gal.pressman@linux.dev>,
+ Junxian Huang <huangjunxian6@hisilicon.com>,
+ Kai Shen <kaishen@linux.alibaba.com>,
+ Konstantin Taranov <kotaranov@microsoft.com>,
+ Krzysztof Czurylo <krzysztof.czurylo@intel.com>,
+ Leon Romanovsky <leon@kernel.org>, linux-hyperv@vger.kernel.org,
+ linux-rdma@vger.kernel.org, Michal Kalderon <mkalderon@marvell.com>,
+ Michael Margolin <mrgolin@amazon.com>, Nelson Escobar <neescoba@cisco.com>,
+ Satish Kharat <satishkh@cisco.com>,
+ Selvin Xavier <selvin.xavier@broadcom.com>,
+ Yossi Leybovich <sleybo@amazon.com>,
+ Chengchang Tang <tangchengchang@huawei.com>,
+ Tatyana Nikolova <tatyana.e.nikolova@intel.com>,
+ Vishnu Dasa <vishnu.dasa@broadcom.com>, Yishai Hadas <yishaih@nvidia.com>,
+ Zhu Yanjun <zyjzyj2000@gmail.com>
+Cc: Long Li <longli@microsoft.com>, patches@lists.linux.dev
+References: <3-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Bernard Metzler <bernard.metzler@linux.dev>
+In-Reply-To: <3-v2-f4ac6f418bd6+12c5-rdma_udata_req_jgg@nvidia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Migadu-Flow: FLOW_OUT
 
-Alison Schofield wrote:
-[..] 
-> > diff --git a/tools/testing/cxl/test/mem.c b/tools/testing/cxl/test/mem.c
-> > index cb87e8c0e63c..cc847e9aeceb 100644
-> > --- a/tools/testing/cxl/test/mem.c
-> > +++ b/tools/testing/cxl/test/mem.c
-> > @@ -1695,6 +1695,9 @@ static int cxl_mock_mem_probe(struct platform_device *pdev)
-> >  	struct cxl_dpa_info range_info = { 0 };
-> >  	int rc;
-> >  
-> > +	/* Increase async probe race window */
-> > +	usleep_range(500*1000, 1000*1000);
-> > +
+On 25.03.2026 22:26, Jason Gunthorpe wrote:
+> Similar to the prior patch, these patterns are open coding an
+> offsetofend() using sizeof(), which targets the last member of the
+> current struct.
 > 
-> I see your words in the commit log "Attempt to race..."
-> and this sleep looks like it is only widening the timing window,
-> not making the order deterministic. Given these tests are typically
-> single-pass tests, what ensure we actually hit the intended ordering?
+> Reviewed-by: Long Li <longli@microsoft.com>
+> Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+> ---
+>   drivers/infiniband/hw/mana/qp.c       | 27 +++++++++------------------
+>   drivers/infiniband/hw/mana/wq.c       | 10 ++--------
+>   drivers/infiniband/hw/mlx4/main.c     |  6 ++----
+>   drivers/infiniband/hw/mlx5/cq.c       |  2 +-
+>   drivers/infiniband/sw/rxe/rxe_verbs.c | 13 ++-----------
+>   drivers/infiniband/sw/siw/siw_verbs.c |  6 +-----
+>   6 files changed, 17 insertions(+), 47 deletions(-)
+> 
+> diff --git a/drivers/infiniband/hw/mana/qp.c b/drivers/infiniband/hw/mana/qp.c
+> index 82f84f7ad37a90..69c8d4f7a1f46b 100644
+> --- a/drivers/infiniband/hw/mana/qp.c
+> +++ b/drivers/infiniband/hw/mana/qp.c
+> @@ -111,16 +111,12 @@ static int mana_ib_create_qp_rss(struct ib_qp *ibqp, struct ib_pd *pd,
+>   	u32 port;
+>   	int ret;
+>   
+> -	if (!udata || udata->inlen < sizeof(ucmd))
+> +	if (!udata)
+>   		return -EINVAL;
+>   
+> -	ret = ib_copy_from_udata(&ucmd, udata, min(sizeof(ucmd), udata->inlen));
+> -	if (ret) {
+> -		ibdev_dbg(&mdev->ib_dev,
+> -			  "Failed copy from udata for create rss-qp, err %d\n",
+> -			  ret);
+> +	ret = ib_copy_validate_udata_in(udata, ucmd, port);
+> +	if (ret)
+>   		return ret;
+> -	}
+>   
+>   	if (attr->cap.max_recv_wr > mdev->adapter_caps.max_qp_wr) {
+>   		ibdev_dbg(&mdev->ib_dev,
+> @@ -282,15 +278,12 @@ static int mana_ib_create_qp_raw(struct ib_qp *ibqp, struct ib_pd *ibpd,
+>   	u32 port;
+>   	int err;
+>   
+> -	if (!mana_ucontext || udata->inlen < sizeof(ucmd))
+> +	if (!mana_ucontext)
+>   		return -EINVAL;
+>   
+> -	err = ib_copy_from_udata(&ucmd, udata, min(sizeof(ucmd), udata->inlen));
+> -	if (err) {
+> -		ibdev_dbg(&mdev->ib_dev,
+> -			  "Failed to copy from udata create qp-raw, %d\n", err);
+> +	err = ib_copy_validate_udata_in(udata, ucmd, port);
+> +	if (err)
+>   		return err;
+> -	}
+>   
+>   	if (attr->cap.max_send_wr > mdev->adapter_caps.max_qp_wr) {
+>   		ibdev_dbg(&mdev->ib_dev,
+> @@ -535,17 +528,15 @@ static int mana_ib_create_rc_qp(struct ib_qp *ibqp, struct ib_pd *ibpd,
+>   	u64 flags = 0;
+>   	u32 doorbell;
+>   
+> -	if (!udata || udata->inlen < sizeof(ucmd))
+> +	if (!udata)
+>   		return -EINVAL;
+>   
+>   	mana_ucontext = rdma_udata_to_drv_context(udata, struct mana_ib_ucontext, ibucontext);
+>   	doorbell = mana_ucontext->doorbell;
+>   	flags = MANA_RC_FLAG_NO_FMR;
+> -	err = ib_copy_from_udata(&ucmd, udata, min(sizeof(ucmd), udata->inlen));
+> -	if (err) {
+> -		ibdev_dbg(&mdev->ib_dev, "Failed to copy from udata, %d\n", err);
+> +	err = ib_copy_validate_udata_in(udata, ucmd, queue_size);
+> +	if (err)
+>   		return err;
+> -	}
+>   
+>   	for (i = 0, j = 0; i < MANA_RC_QUEUE_TYPE_MAX; ++i) {
+>   		/* skip FMR for user-level RC QPs */
+> diff --git a/drivers/infiniband/hw/mana/wq.c b/drivers/infiniband/hw/mana/wq.c
+> index 6206244f762e42..aceeea7f17b339 100644
+> --- a/drivers/infiniband/hw/mana/wq.c
+> +++ b/drivers/infiniband/hw/mana/wq.c
+> @@ -15,15 +15,9 @@ struct ib_wq *mana_ib_create_wq(struct ib_pd *pd,
+>   	struct mana_ib_wq *wq;
+>   	int err;
+>   
+> -	if (udata->inlen < sizeof(ucmd))
+> -		return ERR_PTR(-EINVAL);
+> -
+> -	err = ib_copy_from_udata(&ucmd, udata, min(sizeof(ucmd), udata->inlen));
+> -	if (err) {
+> -		ibdev_dbg(&mdev->ib_dev,
+> -			  "Failed to copy from udata for create wq, %d\n", err);
+> +	err = ib_copy_validate_udata_in(udata, ucmd, reserved);
+> +	if (err)
+>   		return ERR_PTR(err);
+> -	}
+>   
+>   	wq = kzalloc_obj(*wq);
+>   	if (!wq)
+> diff --git a/drivers/infiniband/hw/mlx4/main.c b/drivers/infiniband/hw/mlx4/main.c
+> index 73e17b4339eb60..16e4cffbd7a84d 100644
+> --- a/drivers/infiniband/hw/mlx4/main.c
+> +++ b/drivers/infiniband/hw/mlx4/main.c
+> @@ -50,6 +50,7 @@
+>   #include <rdma/ib_user_verbs.h>
+>   #include <rdma/ib_addr.h>
+>   #include <rdma/ib_cache.h>
+> +#include <rdma/uverbs_ioctl.h>
+>   
+>   #include <net/bonding.h>
+>   
+> @@ -445,10 +446,7 @@ static int mlx4_ib_query_device(struct ib_device *ibdev,
+>   	struct mlx4_clock_params clock_params;
+>   
+>   	if (uhw->inlen) {
+> -		if (uhw->inlen < sizeof(cmd))
+> -			return -EINVAL;
+> -
+> -		err = ib_copy_from_udata(&cmd, uhw, sizeof(cmd));
+> +		err = ib_copy_validate_udata_in(uhw, cmd, reserved);
+>   		if (err)
+>   			return err;
+>   
+> diff --git a/drivers/infiniband/hw/mlx5/cq.c b/drivers/infiniband/hw/mlx5/cq.c
+> index 643b3b7d387834..f5e75e51c6763f 100644
+> --- a/drivers/infiniband/hw/mlx5/cq.c
+> +++ b/drivers/infiniband/hw/mlx5/cq.c
+> @@ -1229,7 +1229,7 @@ static int resize_user(struct mlx5_ib_dev *dev, struct mlx5_ib_cq *cq,
+>   	struct ib_umem *umem;
+>   	int err;
+>   
+> -	err = ib_copy_from_udata(&ucmd, udata, sizeof(ucmd));
+> +	err = ib_copy_validate_udata_in(udata, ucmd, reserved1);
+>   	if (err)
+>   		return err;
+>   
+> diff --git a/drivers/infiniband/sw/rxe/rxe_verbs.c b/drivers/infiniband/sw/rxe/rxe_verbs.c
+> index fe41362c51444c..c9fd40bfa09eb2 100644
+> --- a/drivers/infiniband/sw/rxe/rxe_verbs.c
+> +++ b/drivers/infiniband/sw/rxe/rxe_verbs.c
+> @@ -452,18 +452,9 @@ static int rxe_modify_srq(struct ib_srq *ibsrq, struct ib_srq_attr *attr,
+>   	int err;
+>   
+>   	if (udata) {
+> -		if (udata->inlen < sizeof(cmd)) {
+> -			err = -EINVAL;
+> -			rxe_dbg_srq(srq, "malformed udata\n");
+> +		err = ib_copy_validate_udata_in(udata, cmd, mmap_info_addr);
+> +		if (err)
+>   			goto err_out;
+> -		}
+> -
+> -		err = ib_copy_from_udata(&cmd, udata, sizeof(cmd));
+> -		if (err) {
+> -			err = -EFAULT;
+> -			rxe_dbg_srq(srq, "unable to read udata\n");
+> -			goto err_out;
+> -		}
+>   	}
+>   
+>   	err = rxe_srq_chk_attr(rxe, srq, attr, mask);
+> diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+> index ef504db8f2b48b..1e1d262a4ae2db 100644
+> --- a/drivers/infiniband/sw/siw/siw_verbs.c
+> +++ b/drivers/infiniband/sw/siw/siw_verbs.c
+> @@ -1373,11 +1373,7 @@ struct ib_mr *siw_reg_user_mr(struct ib_pd *pd, u64 start, u64 len,
+>   		struct siw_uresp_reg_mr uresp = {};
+>   		struct siw_mem *mem = mr->mem;
+>   
+> -		if (udata->inlen < sizeof(ureq)) {
+> -			rv = -EINVAL;
+> -			goto err_out;
+> -		}
+> -		rv = ib_copy_from_udata(&ureq, udata, sizeof(ureq));
+> +		rv = ib_copy_validate_udata_in(udata, ureq, pad);
+>   		if (rv)
+>   			goto err_out;
+>   
+Looks good for siw driver. Thank you.
 
-The determinism needed is "async probing will have started before
-dax_hmem starts to probe" comes from the test loading cxl_mock_mem
-before cxl_test, and making sure that dax_hmem is unloaded.
-cxl_test_init() then registers all the mock_mem instances before
-registering the mock hmem_platform device.
-
-Now it seems to be enough to dax_hmem to hit the windows, but to make
-sure the test would need to do dmesg analysis to make sure that
-messages like this:
-
-[   69.111420] mock_walk_hmem_resources: hmem_platform hmem_platform.1: walk cxl_test resource: [mem 0xf010000000-0xf02fffffff flags 0x200]
-[   69.113990] hmem_register_device: hmem_platform hmem_platform.1: await CXL initial probe: [mem 0xf010000000-0xf02fffffff flags 0x200]
-
-...are emitted while the typical CXL startup messages are still firing.
-
-On my runs I indeed typically see a couple seconds of CXL init messages
-before these fire:
-
-[   71.514222] mock_walk_hmem_resources: hmem_platform hmem_platform.1: walk cxl_test resource: [mem 0xf010000000-0xf02fffffff flags 0x200]
-[   71.516478] hmem_register_cxl_device: hmem_platform hmem_platform.1: CXL claims resource, dropping: [mem 0xf010000000-0xf02fffffff flags 0x200]
+Reviewed-by: Bernard Metzler <bernard.metzler@linux.dev>
