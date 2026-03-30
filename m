@@ -1,48 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83203D6664;
-	Mon, 30 Mar 2026 12:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623D13D6CCA;
+	Mon, 30 Mar 2026 12:39:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874355; cv=none; b=AKZHmpbUCSH57PXTBIzqyiUCyFF2znR2xD0PpWqXzeHD5buB6XFNlCSrXow2EirwKzUtPvsIDSjqVYYIt6PTc/JJILsGGBn/8K6uAjITkH4ZEY8iaQVVIxlWyvkLc5NbuVKH0vLaeoW6nuqZ+xjp0GM4uS4xnccIgl6U5Hdp1FA=
+	t=1774874357; cv=none; b=ewXisAFlbzXdASe6C1UjozmG7E2/m1UJLcqg7A+xUbs2p03hA8wxifOmOwNLT0I0qbHDrZlvFrtetzlVcvIHZoXLoMYBWeOBzjq+L0uPsSdU+uGvZkq5Ln9sLmNuwN6I6fujihUm2RQKUaQD35PsWbcBIRMp/6iAy4CZWY+fbUA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874355; c=relaxed/simple;
-	bh=C2YzQJdoXLopSLDEyQSgi7aaS7NKyueiaeg0lyq6DVU=;
+	s=arc-20240116; t=1774874357; c=relaxed/simple;
+	bh=4dyZy//1X+fVVnoNZknAXNXq0USkV3bXJr+4nv7eBKE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CrUnqQ0wi+CeMr08lHRGM1dsJCgFQUNrtuci4I4GWqcKtCBihMFHhB7vsOlOWFYhJxh9hfCoOxfYntydstEH9aTUoHJF5vcl4iPN3t7Ti2VpcdxbsJuF+A5+fmrjjIkLEXPBG2TRn1BTng241PySCfSzUhX7hzsCi6K6jEbILOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Uq3X21EM; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Cn23pMcWwcX0ymkctwn3LqyP4rTD11sMW9UitVs5BjnuiP4mONCDrqozlYsa1wfjEEClMS8TY4gM7n25mO5jOHsVff1TL5aSRJfUXSotAZ2K4yQMDVl1JbCi41Fgq02ZY5vkpTbBSgQawtizCZjtR6MrabjfccZqOKyHydffG/I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=cVEj0m9v; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Uq3X21EM"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3477DC2BCB2;
-	Mon, 30 Mar 2026 12:39:14 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="cVEj0m9v"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6C6FC4CEF7;
+	Mon, 30 Mar 2026 12:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874355;
-	bh=C2YzQJdoXLopSLDEyQSgi7aaS7NKyueiaeg0lyq6DVU=;
+	s=k20201202; t=1774874356;
+	bh=4dyZy//1X+fVVnoNZknAXNXq0USkV3bXJr+4nv7eBKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uq3X21EMU3YwWEk8iVQ2ciQSK9f/4YSvfiyABNiQ1+P5Wvz85AvNdlKFVNFcGiw0V
-	 TSEpdN1bFgBv7BFn+h41JdWpVKyWvkq4Y/Fapk54yoMBHr1RR8LOtg8cwORN6e18ny
-	 7YHd4Jw1ptzg0zzg02Pfn7GvAztIXT9lb25rTg7BpRUDd1JkBzojkd95oURLliKNgn
-	 sJZOAKAevoEVC5L/T6t04X3b+D0gJxXVyODDW9DgnK3ogfgs/C/QmUaTR/prFP+l6y
-	 JLEtEIz+o8lItbQJFRKX1MwEFIrpFXobOm42wNnw5MP9NfVwQeJvuYULXg+z/WfTju
-	 gSg3kul2LD+fg==
+	b=cVEj0m9v1NsfKaOWhAOMvy2A/WDOce/obbDKErN8s8qP/4DQOsEUBYG+f+wcxjAr+
+	 UogHzmLHS2Mx+n9Nxo9RdDQU08EwJehczOIB5MgEYSSZB1WP5EjtCY1cyEmeILxRU+
+	 qw4AOoD3TMWlzviEYgSXOchnkQ0OKkuRncLNneQC4G3mKr4BFBN2FRj+SQyfZ+AG67
+	 5axUWg12zjHm+ktWCadTLQ8o/zqexjIkR5R5+RnUFF9YqF3lelhdz2ZMOMYnP/v0KJ
+	 hoXhl5+xfc40dX0s6fL9x8sb1Ybwf/n/ViWE5ZBQM/WVm0AmFwY5SQpyeHTXAHe0Pj
+	 9d/wvvVYWHwrw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Pablo Neira Ayuso <pablo@netfilter.org>,
-	Florian Westphal <fw@strlen.de>,
+Cc: Jacob Moroni <jmoroni@google.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	davem@davemloft.net,
-	edumazet@google.com,
-	kuba@kernel.org,
-	pabeni@redhat.com,
-	netfilter-devel@vger.kernel.org,
-	coreteam@netfilter.org,
-	netdev@vger.kernel.org,
+	krzysztof.czurylo@intel.com,
+	tatyana.e.nikolova@intel.com,
+	linux-rdma@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] netfilter: ctnetlink: ensure safe access to master conntrack
-Date: Mon, 30 Mar 2026 08:38:35 -0400
-Message-ID: <20260330123842.756154-22-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.6] RDMA/irdma: Fix double free related to rereg_user_mr
+Date: Mon, 30 Mar 2026 08:38:36 -0400
+Message-ID: <20260330123842.756154-23-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -58,612 +54,457 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Jacob Moroni <jmoroni@google.com>
 
-[ Upstream commit bffcaad9afdfe45d7fc777397d3b83c1e3ebffe5 ]
+[ Upstream commit 29a3edd7004bb635d299fb9bc6f0ea4ef13ed5a2 ]
 
-Holding reference on the expectation is not sufficient, the master
-conntrack object can just go away, making exp->master invalid.
+If IB_MR_REREG_TRANS is set during rereg_user_mr, the
+umem will be released and a new one will be allocated
+in irdma_rereg_mr_trans. If any step of irdma_rereg_mr_trans
+fails after the new umem is allocated, it releases the umem,
+but does not set iwmr->region to NULL. The problem is that
+this failure is propagated to the user, who will then call
+ibv_dereg_mr (as they should). Then, the dereg_mr path will
+see a non-NULL umem and attempt to call ib_umem_release again.
 
-To access exp->master safely:
+Fix this by setting iwmr->region to NULL after ib_umem_release.
 
-- Grab the nf_conntrack_expect_lock, this gets serialized with
-  clean_from_lists() which also holds this lock when the master
-  conntrack goes away.
-
-- Hold reference on master conntrack via nf_conntrack_find_get().
-  Not so easy since the master tuple to look up for the master conntrack
-  is not available in the existing problematic paths.
-
-This patch goes for extending the nf_conntrack_expect_lock section
-to address this issue for simplicity, in the cases that are described
-below this is just slightly extending the lock section.
-
-The add expectation command already holds a reference to the master
-conntrack from ctnetlink_create_expect().
-
-However, the delete expectation command needs to grab the spinlock
-before looking up for the expectation. Expand the existing spinlock
-section to address this to cover the expectation lookup. Note that,
-the nf_ct_expect_iterate_net() calls already grabs the spinlock while
-iterating over the expectation table, which is correct.
-
-The get expectation command needs to grab the spinlock to ensure master
-conntrack does not go away. This also expands the existing spinlock
-section to cover the expectation lookup too. I needed to move the
-netlink skb allocation out of the spinlock to keep it GFP_KERNEL.
-
-For the expectation events, the IPEXP_DESTROY event is already delivered
-under the spinlock, just move the delivery of IPEXP_NEW under the
-spinlock too because the master conntrack event cache is reached through
-exp->master.
-
-While at it, add lockdep notations to help identify what codepaths need
-to grab the spinlock.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixed: 5ac388db27c4 ("RDMA/irdma: Add support to re-register a memory region")
+Signed-off-by: Jacob Moroni <jmoroni@google.com>
+Link: https://patch.msgid.link/20260227152743.1183388-1-jmoroni@google.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the verification I need. Let me compile the final
-analysis.
+Now I have all the facts. Here is my complete analysis:
 
-===============================================================
-PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
+---
 
-**Step 1.1: PARSE THE SUBJECT LINE**
-Record: [netfilter: ctnetlink] [ensure] [safe access to master conntrack
-— "ensure" strongly implies a missing safety mechanism, i.e., a bug fix]
+## PHASE 1: COMMIT MESSAGE FORENSICS
 
-**Step 1.2: PARSE ALL COMMIT MESSAGE TAGS**
-Record:
-- Signed-off-by: Florian Westphal <fw@strlen.de> — Author, core
-  netfilter developer
-- Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org> — Netfilter
-  subsystem maintainer
-- No Fixes: tag (expected for manual review)
-- No Cc: stable tag (expected for manual review)
-- No Reported-by:, Tested-by:, Reviewed-by:, or Link: tags
+### Step 1.1: PARSE THE SUBJECT LINE
+Record: [RDMA/irdma] [Fix] [double free related to rereg_user_mr — stale
+`iwmr->region` pointer after error in `irdma_rereg_mr_trans`]
 
-**Step 1.3: ANALYZE THE COMMIT BODY TEXT**
-Record: The commit describes a real lifetime bug: holding a reference on
-the expectation is not sufficient because the master conntrack object
-`exp->master` can be freed independently, leaving a dangling pointer.
-The fix serializes access via `nf_conntrack_expect_lock`, which overlaps
-with `clean_from_lists()` in the conntrack teardown path. Affected
-paths: expectation get, delete, and IPEXP_NEW event delivery. The
-failure mode is a use-after-free / stale pointer dereference through
-`exp->master`.
+### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
+- **Fixed:** `5ac388db27c4` ("RDMA/irdma: Add support to re-register a
+  memory region") — Note: uses `Fixed:` instead of the standard `Fixes:`
+  tag, but semantically identical. This identifies the commit that
+  introduced the bug.
+- **Signed-off-by:** Jacob Moroni <jmoroni@google.com> (author)
+- **Link:**
+  https://patch.msgid.link/20260227152743.1183388-1-jmoroni@google.com
+- **Signed-off-by:** Leon Romanovsky <leon@kernel.org> (RDMA subsystem
+  maintainer)
+- No Reported-by, Tested-by, Reviewed-by, Acked-by, or Cc: stable tags
+  present.
 
-**Step 1.4: DETECT HIDDEN BUG FIXES**
-Record: This IS a bug fix. Despite using "ensure" rather than "fix", the
-body explicitly describes a use-after-free class bug where `exp->master`
-becomes invalid.
+Record: Author from Google with prior RDMA double-free fixes (e.g.,
+`40126bcbefa79 RDMA/umem: Fix double dma_buf_unpin in failure path`).
+Accepted through the RDMA maintainer tree (Leon Romanovsky).
 
-===============================================================
-PHASE 2: DIFF ANALYSIS — LINE BY LINE
-===============================================================
+### Step 1.3: ANALYZE THE COMMIT BODY TEXT
+The commit message precisely describes the bug mechanism:
+1. When `IB_MR_REREG_TRANS` is set, `irdma_rereg_user_mr()` releases the
+   old umem and NULLs `iwmr->region`.
+2. `irdma_rereg_mr_trans()` allocates a new umem and stores it in
+   `iwmr->region` (line 3700).
+3. If a later step fails (page_size check or
+   `irdma_reg_user_mr_type_mem()`), the `err:` path calls
+   `ib_umem_release(region)` but does NOT set `iwmr->region = NULL`.
+4. Error propagates to userspace. User correctly calls `ibv_dereg_mr`.
+5. `irdma_dereg_mr()` sees non-NULL `iwmr->region` at line 3932 and
+   calls `ib_umem_release()` again — double free.
 
-**Step 2.1: INVENTORY THE CHANGES**
-Record:
-- `include/net/netfilter/nf_conntrack_core.h`: +5 lines (new
-  `lockdep_nfct_expect_lock_held()` inline)
-- `net/netfilter/nf_conntrack_ecache.c`: +2 lines (lockdep annotation in
-  `nf_ct_expect_event_report`)
-- `net/netfilter/nf_conntrack_expect.c`: +9/-1 lines (lockdep
-  annotations; IPEXP_NEW moved inside lock)
-- `net/netfilter/nf_conntrack_netlink.c`: +22/-12 lines (spinlock
-  sections extended in get/delete)
+Record: Bug = double free of ib_umem. Symptom = kernel crash, memory
+corruption, or potential security vulnerability. Root cause = stale
+pointer in `iwmr->region` after error-path free.
 
-Total: ~38 insertions, ~13 deletions across 4 files. Scope: small,
-single-subsystem surgical locking fix.
+### Step 1.4: DETECT HIDDEN BUG FIXES
+Record: Not hidden — explicitly labeled "Fix double free." This is a
+direct, clear memory-safety bug fix.
 
-Functions modified: `lockdep_nfct_expect_lock_held()` (new trivial
-helper), `nf_ct_expect_event_report()`, `nf_ct_unlink_expect_report()`,
-`nf_ct_remove_expect()`, `nf_ct_find_expectation()`,
-`__nf_ct_expect_check()`, `nf_ct_expect_related_report()`,
-`ctnetlink_get_expect()`, `ctnetlink_del_expect()`.
+---
 
-**Step 2.2: UNDERSTAND THE CODE FLOW CHANGE**
-- `ctnetlink_get_expect()`: Before — finds expectation via
-  `nf_ct_expect_find_get()` under RCU, then fills reply skb
-  dereferencing `exp->master` without expect lock. After — allocates skb
-  first (GFP_KERNEL), takes `nf_conntrack_expect_lock`, does lookup +
-  fill under lock, releases lock after put.
-- `ctnetlink_del_expect()`: Before — finds expectation and checks ID
-  before taking lock; only deletion protected. After — takes lock first,
-  find + ID check + deletion all under lock.
-- `nf_ct_expect_related_report()`: Before — unlocks before calling
-  `nf_ct_expect_event_report(IPEXP_NEW, ...)`. After — delivers
-  IPEXP_NEW under lock, then unlocks.
-- Lockdep annotations added to `nf_ct_expect_event_report`,
-  `nf_ct_unlink_expect_report`, `nf_ct_remove_expect`,
-  `nf_ct_find_expectation`, and `__nf_ct_expect_check` to document and
-  enforce locking requirements.
+## PHASE 2: DIFF ANALYSIS — LINE BY LINE
 
-**Step 2.3: IDENTIFY THE BUG MECHANISM**
-Record: Category: **Race condition → Use-after-free on `exp->master`**.
+### Step 2.1: INVENTORY THE CHANGES
+Record: **1 file**: `drivers/infiniband/hw/irdma/verbs.c`, **+1 line**
+added. Function modified: `irdma_rereg_mr_trans()`. Scope: single-file,
+single-line surgical fix.
 
-The race:
-1. Thread A (ctnetlink GET/DELETE): calls `nf_ct_expect_find_get()`
-   which bumps `exp->use` but does NOT pin the master conntrack
-2. Thread B (conntrack destruction): `clean_from_lists()` →
-   `nf_ct_remove_expectations()` → takes `nf_conntrack_expect_lock`,
-   removes expectations
-3. Thread B continues: master conntrack `nf_conn` object freed via RCU
-4. Thread A: dereferences `exp->master` → **USE-AFTER-FREE**
+### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
+Before the fix, the `err:` label at line 3721 runs:
 
-Verified: `clean_from_lists()` at line 511 of `nf_conntrack_core.c`
-calls `nf_ct_remove_expectations(ct)`, which takes
-`nf_conntrack_expect_lock` at line 238 of `nf_conntrack_expect.c`. After
-expectations are removed, the master ct is freed.
+```3721:3723:drivers/infiniband/hw/irdma/verbs.c
+err:
+        ib_umem_release(region);
+        return err;
+```
 
-The specific `exp->master` dereferences in `ctnetlink_exp_dump_expect()`
-(lines 3012-3067 of `nf_conntrack_netlink.c`) include:
-- `master->tuplehash[IP_CT_DIR_ORIGINAL].tuple` (line 3029)
-- `nf_ct_l3num(master)` and `nf_ct_protonum(master)` (lines 3043, 3045)
-- `nfct_help(master)` (line 3059)
+After the fix, it becomes:
+```c
+err:
+        ib_umem_release(region);
+        iwmr->region = NULL;
+        return err;
+```
 
-In `nf_ct_expect_event_report()`, `nf_ct_ecache_find(exp->master)`
-dereferences the master conntrack.
+Record: Before = freed memory, left dangling pointer in `iwmr->region`.
+After = freed memory, set `iwmr->region = NULL` to prevent double-free
+in `irdma_dereg_mr()`.
 
-**Step 2.4: ASSESS THE FIX QUALITY**
-Record: The fix is obviously correct — it extends the existing
-`nf_conntrack_expect_lock` to cover accesses that were previously
-unprotected. The `GFP_KERNEL` skb allocation is moved before the lock to
-avoid sleeping under spinlock. IPEXP_DESTROY was already delivered under
-the lock; now IPEXP_NEW is too. Very low regression risk — slightly
-longer lock hold on admin netlink paths.
+### Step 2.3: IDENTIFY THE BUG MECHANISM
+Category: **Double-free / memory safety**.
 
-===============================================================
-PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
+The confirmed double-free path:
+1. Line 3700: `iwmr->region = region;` — stores new umem pointer
+2. Lines 3706-3717: possible failure paths (`goto err`)
+3. Line 3722: `ib_umem_release(region);` — frees the umem
+4. Line 3723: returns error (but `iwmr->region` still points to freed
+   memory)
+5. Later, in `irdma_dereg_mr()`:
 
-**Step 3.1: BLAME THE CHANGED LINES**
-Record: `git blame` confirms the core of `ctnetlink_get_expect()` was
-introduced by `c1d10adb4a521d` (Pablo Neira Ayuso, 2006-01-05) —
-original ctnetlink support. The unlocked expectation lookup pattern has
-existed since kernel 2.6.x and is present in ALL active stable trees.
+```3932:3933:drivers/infiniband/hw/irdma/verbs.c
+        if (iwmr->region)
+                ib_umem_release(iwmr->region);
+```
 
-**Step 3.2: FOLLOW THE FIXES TAG**
-Record: N/A — no Fixes: tag present.
+This calls `ib_umem_release()` on already-freed memory. Verified that
+`ib_umem_release()` dereferences the `umem` object, unpins pages, and
+calls `kfree(umem)` (confirmed in `drivers/infiniband/core/umem.c` lines
+284-298).
 
-**Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES**
-Record: Recent git log for `nf_conntrack_netlink.c` shows multiple
-related UAF/refcount fixes in the same code:
-- `cd541f15b60e2` — "fix use-after-free in ctnetlink_dump_exp_ct()" —
-  KASAN slab-use-after-free confirmed in expectation dumping
-- `1492e3dcb2be3` — "remove refcounting in expectation dumpers"
-- `de788b2e62274` — "fix refcount leak on table dump"
+Record: Double-free of `ib_umem` object. The second `ib_umem_release()`
+dereferences freed memory and kfree's it again.
 
-The `cd541f15b60e2` commit includes an actual KASAN stack trace proving
-UAF bugs in this exact code area are real and exploitable.
+### Step 2.4: ASSESS THE FIX QUALITY
+The fix is obviously correct: it sets `iwmr->region = NULL` after
+freeing the object, which is the standard kernel pattern for preventing
+double-frees. This **exactly matches** the existing pattern in the same
+file — `irdma_rereg_user_mr()` already does this at lines 3775-3777:
 
-**Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS**
-Record: Florian Westphal is a core netfilter developer (verified via
-MAINTAINERS and git log). Pablo Neira Ayuso is THE netfilter subsystem
-maintainer. Both SOBs on this commit.
+```3775:3778:drivers/infiniband/hw/irdma/verbs.c
+                if (iwmr->region) {
+                        ib_umem_release(iwmr->region);
+                        iwmr->region = NULL;
+                }
+```
 
-**Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS**
-Record: The diff is self-contained. The new
-`lockdep_nfct_expect_lock_held()` is trivial (wraps
-`lockdep_assert_held`). All referenced functions and data structures
-exist in current stable trees. No external dependencies detected.
+Record: Fix is obviously correct, minimal, follows existing code
+conventions, zero regression risk.
 
-===============================================================
-PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
+---
 
-**Step 4.1: SEARCH LORE.KERNEL.ORG**
-Record: Direct lore.kernel.org access blocked by Anubis proof-of-work.
-Alternate sources: spinics.net netdev archive and patchwork.ozlabs.org
-confirmed v1→v2→v3 iterations. The v3 cover letter states: "patches 5 to
-10 address long-standing RCU safety bugs in conntrack's handling of
-expectations."
+## PHASE 3: GIT HISTORY INVESTIGATION
 
-**Step 4.2: SEARCH FOR BUG REPORT**
-Record: No standalone syzbot report or specific bug report for this
-exact race, but the related commit `cd541f15b60e2` has a confirmed KASAN
-slab-use-after-free trace proving this class of bugs is real and
-triggerable.
+### Step 3.1: BLAME THE CHANGED LINES
+Git blame confirms every line in `irdma_rereg_mr_trans()` (lines
+3696-3723) was introduced by commit `5ac388db27c4` (Sindhu Devale,
+2023-10-04). The bug has existed since the function was first written.
 
-**Step 4.3: CHECK FOR RELATED PATCHES**
-Record: Part of a multi-patch series addressing expectation safety. This
-specific patch is standalone — it only extends locking and adds lockdep
-annotations, independent of companion patches.
+Record: Buggy code introduced in `5ac388db27c4`, first appeared in
+v6.7-rc1.
 
-**Step 4.4: CHECK STABLE MAILING LIST**
-Record: Could not verify stable-specific discussion due to lore access
-issues.
+### Step 3.2: FOLLOW THE FIXES: TAG
+`git show 5ac388db27c4` confirms it added the entire MR re-registration
+support to irdma, including `irdma_rereg_mr_trans()`,
+`irdma_rereg_user_mr()`, and `.rereg_user_mr` in the device ops table.
 
-===============================================================
-PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
+`git describe --contains 5ac388db27c4` → `v6.7-rc1~96^2~21` — first
+released in v6.7.
 
-**Step 5.1: KEY FUNCTIONS**
-Record: `ctnetlink_get_expect`, `ctnetlink_del_expect`,
-`nf_ct_expect_related_report`, `nf_ct_expect_event_report`,
-`ctnetlink_exp_dump_expect`
+`git merge-base --is-ancestor 5ac388db27c4 v6.6` → exit 1 (NOT in v6.6).
+`git merge-base --is-ancestor 5ac388db27c4 v6.7` → exit 0 (IS in v6.7).
 
-**Step 5.2: TRACE CALLERS**
-Record: Verified `ctnetlink_get_expect` and `ctnetlink_del_expect` are
-wired into the `ctnl_exp_cb` netlink callback table (lines 3830-3848 of
-`nf_conntrack_netlink.c`) for `IPCTNL_MSG_EXP_GET` and
-`IPCTNL_MSG_EXP_DELETE`. These are directly reachable from userspace via
-`AF_NETLINK`/`NETLINK_NETFILTER` (requires `CAP_NET_ADMIN`).
+`git grep irdma_rereg_mr_trans v6.6` → no match.
+`git grep irdma_rereg_mr_trans v6.12` → match (3 references).
 
-`nf_ct_expect_related()` (wrapper around
-`nf_ct_expect_related_report()`) is called from 16+ files including SIP,
-H323, FTP, IRC, TFTP, AMANDA, broadcast, nft_ct, PPTP, SANE, NAT
-helpers, and IPVS. This is NOT a niche path.
+Record: Original buggy commit exists in v6.7+ stable trees. NOT in
+v6.6.y or older. Bug present since inception of the function.
 
-**Step 5.3: TRACE CALLEES**
-Record: `ctnetlink_exp_dump_expect()` (lines 3008-3077) dereferences
-`exp->master` extensively: `master->tuplehash`, `nf_ct_l3num(master)`,
-`nf_ct_protonum(master)`, `nfct_help(master)`.
-`nf_ct_expect_event_report()` calls `nf_ct_ecache_find(exp->master)`.
+### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
+Recent file history shows active irdma maintenance but no related fix
+for this specific double-free. No prerequisite commits needed.
 
-**Step 5.4: FOLLOW CALL CHAIN**
-Record: Userspace → nfnetlink_rcv → nfnetlink_rcv_msg →
-ctnetlink_get/del_expect → nf_ct_expect_find_get → exp->master
-dereference. Directly reachable from userspace with CAP_NET_ADMIN.
+Record: Standalone fix, no dependencies.
 
-**Step 5.5: SIMILAR PATTERNS**
-Record: `expect_iter_name()` in v6.6 also dereferences `exp->master` via
-`nfct_help(exp->master)` — same class of vulnerability in the same file.
+### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
+Jacob Moroni has multiple RDMA commits including `40126bcbefa79
+RDMA/umem: Fix double dma_buf_unpin in failure path` — another double-
+free fix in RDMA umem handling. This demonstrates relevant domain
+expertise.
 
-===============================================================
-PHASE 6: STABLE TREE ANALYSIS
-===============================================================
+Record: Author is an active RDMA contributor with prior double-free
+fixes. Patch accepted by RDMA subsystem maintainer Leon Romanovsky.
 
-**Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?**
-Record: **YES** — verified directly. In v6.6:
-- `ctnetlink_get_expect()` does `nf_ct_expect_find_get()` at line 3333
-  WITHOUT `nf_conntrack_expect_lock`, then calls
-  `ctnetlink_exp_fill_info()` which dereferences `exp->master`
-- `ctnetlink_del_expect()` does `nf_ct_expect_find_get()` at line 3408
-  before taking `nf_conntrack_expect_lock` at line 3421
-- `nf_ct_expect_related_report()` unlocks at line 501, THEN calls
-  `nf_ct_expect_event_report(IPEXP_NEW, ...)` at line 502
+### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
+The fix is a single-line NULL assignment in an existing error path. No
+dependencies.
 
-The buggy code originated in 2006 (`c1d10adb4a521d`) and is present in
-ALL active stable trees (5.4.y, 5.10.y, 5.15.y, 6.1.y, 6.6.y, 6.12.y).
+Record: Fully standalone, clean apply expected.
 
-**Step 6.2: BACKPORT COMPLICATIONS**
-Record: Minor API differences in older trees: `timer_delete` vs
-`del_timer` (treewide rename in `8fa7292fee5c5`), and the `struct
-nfnl_info` ctnetlink interface. Core logic change (extending spinlock
-sections) applies conceptually. Expected: clean or near-clean apply on
-6.6+; minor manual adaptation needed for 5.x trees.
+---
 
-**Step 6.3: RELATED FIXES IN STABLE**
-Record: `cd541f15b60e2` (KASAN UAF fix in ctnetlink_dump_exp_ct) is
-already in stable. No alternative fix for the specific
-get/delete/IPEXP_NEW races addressed by this patch.
+## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-===============================================================
-PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
+### Steps 4.1-4.4
+Lore.kernel.org access was blocked by Anubis proof-of-work page. The
+patch.msgid.link URL was also inaccessible. Web searches did not locate
+a mirror of the exact patch discussion.
 
-**Step 7.1: SUBSYSTEM AND CRITICALITY**
-Record: [netfilter / conntrack / ctnetlink] [IMPORTANT — widely deployed
-in firewalls, NAT gateways, containers, Kubernetes, orchestration
-tooling, conntrack-tools monitoring]
+However, the patch was accepted through the standard RDMA maintainer
+tree (Signed-off-by: Leon Romanovsky), indicating it passed normal
+review.
 
-**Step 7.2: SUBSYSTEM ACTIVITY**
-Record: Active subsystem with frequent fixes. The longstanding nature of
-the bug (2006) means it affects more stable trees.
+Record: UNVERIFIED: Could not access mailing list discussion due to
+anti-bot measures. No additional context about reviewer feedback or
+stable nominations.
 
-===============================================================
-PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
+---
 
-**Step 8.1: DETERMINE WHO IS AFFECTED**
-Record: Systems using conntrack expectations (FTP/SIP/H323/TFTP/IRC/etc.
-helpers) AND userspace tools querying/managing expectations via
-ctnetlink (conntrack-tools, orchestration). Also affected: any path
-creating expectations that triggers IPEXP_NEW events.
+## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 8.2: DETERMINE TRIGGER CONDITIONS**
-Record: Concurrent expectation access (GET/DELETE via netlink, or
-IPEXP_NEW event delivery) with master conntrack destruction (normal
-connection timeout/teardown). Timing-dependent race but realistic under
-load — high conntrack churn with active monitoring is a real-world
-scenario.
+### Step 5.1: IDENTIFY KEY FUNCTIONS
+- `irdma_rereg_mr_trans()` — modified (error path)
+- `irdma_rereg_user_mr()` — caller, wired as `.rereg_user_mr` in device
+  ops
+- `irdma_dereg_mr()` — site of the second (double) free, wired as
+  `.dereg_mr`
 
-**Step 8.3: FAILURE MODE SEVERITY**
-Record: UAF on `exp->master` → kernel crash/oops (accessing freed slab
-memory), memory corruption, or potential security vulnerability.
-Severity: **HIGH**. This is corroborated by the KASAN slab-use-after-
-free trace in the related commit `cd541f15b60e2`.
+### Step 5.2: TRACE CALLERS
+- `irdma_rereg_user_mr()` is registered as `.rereg_user_mr` in the irdma
+  device ops
+- RDMA core's `ib_uverbs_rereg_mr()` (in
+  `drivers/infiniband/core/uverbs_cmd.c`) calls
+  `ib_dev->ops.rereg_user_mr()`
+- This is reachable from userspace via RDMA uverbs
 
-**Step 8.4: RISK-BENEFIT RATIO**
-Record:
-- **Benefit: HIGH** — closes verified unsafe dereference windows in
-  userspace-facing netlink operations and expectation event delivery
-- **Risk: VERY LOW** — extends existing lock scope slightly, no new
-  APIs, no logic changes, GFP_KERNEL allocation correctly moved out of
-  lock
-- **Ratio: Strongly favorable**
+The double-free path:
+- Userspace `ibv_dereg_mr` → RDMA core MR destroy → `ib_dereg_mr_user()`
+  → `irdma_dereg_mr()` → `ib_umem_release(iwmr->region)` on dangling
+  pointer
 
-===============================================================
-PHASE 9: FINAL SYNTHESIS
-===============================================================
+Record: Both entry points (rereg and dereg) are userspace-reachable
+through RDMA uverbs.
 
-**Step 9.1: COMPILE THE EVIDENCE**
+### Step 5.3: TRACE CALLEES
+`ib_umem_release()` (confirmed at `drivers/infiniband/core/umem.c:284`)
+dereferences the `umem` object, unpins pages via `__ib_umem_release()`,
+decrements `pinned_vm`, calls `mmdrop()`, and finally `kfree(umem)`. A
+second call on the same freed pointer is a genuine double-free with
+memory corruption.
 
-Evidence FOR backporting:
-- Fixes a real use-after-free race condition on `exp->master` in
-  ctnetlink
-- Bug has existed since 2006 (commit `c1d10adb4a521d`), present in ALL
-  active stable trees
-- Verified directly: v6.6 has the same vulnerable pattern (unlocked
-  expectation lookup + exp->master dereference)
-- Written by netfilter subsystem maintainer (Pablo Neira Ayuso) and core
-  developer (Florian Westphal)
-- Small, surgical fix (~38 insertions, ~13 deletions) across 4 files in
-  one subsystem
-- Reachable from userspace via AF_NETLINK/NETLINK_NETFILTER
-  (CAP_NET_ADMIN)
-- Related KASAN UAF confirmed in same code area (`cd541f15b60e2`)
-- IPEXP_NEW event path affects 16+ helper/NAT modules — not a niche path
-- Part of a series explicitly described as fixing "long-standing RCU
-  safety bugs" in expectations
-- Low regression risk — only extends existing lock scope
+### Step 5.4: CALL CHAIN REACHABILITY
+Userspace → `ibv_rereg_mr` → `ib_uverbs_rereg_mr()` →
+`irdma_rereg_user_mr()` → `irdma_rereg_mr_trans()` (fails) → returns
+error to user → user calls `ibv_dereg_mr` → `irdma_dereg_mr()` → double
+free.
 
-Evidence AGAINST backporting:
-- No specific crash report or syzbot report for THIS exact race window
-- Part of a multi-patch series (but this patch is standalone)
-- May need minor manual adaptation for older stable trees (API renames)
+Record: Fully userspace-reachable path on systems with irdma hardware.
 
-**Step 9.2: STABLE RULES CHECKLIST**
-1. Obviously correct and tested? **YES** — extends lock to cover
-   unprotected accesses; pattern matches existing serialization
-2. Fixes a real bug? **YES** — UAF on `exp->master`, verified via code
-   analysis and corroborated by related KASAN reports
-3. Important issue? **YES** — crash, memory corruption, potential
-   security (UAF from userspace-triggerable netlink path)
-4. Small and contained? **YES** — ~50 lines net across 4 files in one
-   subsystem
-5. No new features or APIs? **YES** — only lockdep annotation helper
-   added (debug instrumentation)
-6. Can apply to stable? **YES** — may need minor adaptation for API
-   renames in older trees
+### Step 5.5: SIMILAR PATTERNS
+The caller `irdma_rereg_user_mr()` already correctly does
+`ib_umem_release(iwmr->region); iwmr->region = NULL;` at lines
+3775-3777, establishing the pattern. The omission in
+`irdma_rereg_mr_trans()` is an inconsistency with the file's own
+conventions.
 
-**Step 9.3: EXCEPTION CATEGORIES**
-Record: N/A — this is a standard bug fix, not an exception category.
+---
 
-**Step 9.4: DECISION**
-This commit fixes a real, longstanding use-after-free race condition in
-netfilter conntrack expectation handling that can lead to kernel crashes
-or memory corruption. The fix is small, surgical, obviously correct,
-authored by the subsystem maintainer and core developer, and applies to
-all active stable trees. The risk-benefit ratio is strongly favorable.
+## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
+
+### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
+- **v6.6.y**: NOT present (confirmed via `git grep` — no match for
+  `irdma_rereg_mr_trans`)
+- **v6.12.y**: Present (confirmed via `git grep` — 3 references found)
+- **v6.7+**: All trees contain the buggy code
+
+Record: Affects stable trees v6.7 and newer (including 6.12.y). NOT
+applicable to v6.6.y or older.
+
+### Step 6.2: BACKPORT COMPLICATIONS
+The one-line fix in an unchanged error path should apply cleanly to all
+trees containing the function.
+
+Record: Expected clean apply, no conflicts.
+
+### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
+`git log --grep="double free" --grep="rereg_user_mr"` — no results. The
+fix is not yet in any tree.
+
+Record: No related fix already applied.
+
+---
+
+## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
+
+### Step 7.1: SUBSYSTEM CRITICALITY
+- Subsystem: RDMA / irdma driver (`drivers/infiniband/hw/irdma/`)
+- Criticality: IMPORTANT for RDMA deployments — Intel iWARP hardware
+  used in data centers, HPC, and cloud infrastructure. While not core-mm
+  universal, a kernel memory-safety bug on a userspace-reachable path
+  has security implications.
+
+### Step 7.2: SUBSYSTEM ACTIVITY
+Actively maintained — 15+ recent commits show ongoing bug fixes and
+development.
+
+---
+
+## PHASE 8: IMPACT AND RISK ASSESSMENT
+
+### Step 8.1: WHO IS AFFECTED
+Users of Intel RDMA (irdma) hardware who use MR re-registration with the
+`IB_MR_REREG_TRANS` flag.
+
+Record: Driver-specific (irdma users), but these are often production
+data center systems.
+
+### Step 8.2: TRIGGER CONDITIONS
+1. Userspace calls `ibv_rereg_mr` with `IB_MR_REREG_TRANS`
+2. `irdma_rereg_mr_trans()` fails after allocating the new umem (either
+   `ib_umem_find_best_pgsz()` returns 0 or
+   `irdma_reg_user_mr_type_mem()` fails)
+3. User then correctly calls `ibv_dereg_mr` to clean up
+
+This is a deterministic error-path trigger, not a timing race. Any
+application hitting a registration failure and cleaning up properly will
+trigger it.
+
+Record: Deterministic trigger on error path. Userspace-reachable.
+
+### Step 8.3: FAILURE MODE SEVERITY
+Double-free of a `ib_umem` structure. `ib_umem_release()` dereferences
+multiple fields and calls `kfree()`. A second call on freed memory
+causes:
+- Heap corruption (SLAB allocator corruption)
+- Kernel crash / oops
+- Potential security vulnerability (exploitable heap corruption)
+
+Record: Severity: **CRITICAL** (double-free of kernel heap object on
+userspace-triggerable path)
+
+### Step 8.4: RISK-BENEFIT RATIO
+- **Benefit:** HIGH — prevents a double-free / memory corruption on a
+  userspace-reachable error path
+- **Risk:** VERY LOW — single line `iwmr->region = NULL;` after free,
+  follows existing code pattern, obviously correct
+- **Ratio:** Extremely favorable for backporting
+
+---
+
+## PHASE 9: FINAL SYNTHESIS
+
+### Step 9.1: COMPILE THE EVIDENCE
+
+**FOR backporting:**
+- Verified double-free of `ib_umem` object on a userspace-reachable
+  error path
+- `ib_umem_release()` confirmed to dereference and `kfree()` the object
+- Single-line, obviously correct fix (NULL-after-free)
+- Matches existing code pattern in the same file (lines 3775-3777)
+- Bug present since function was introduced in v6.7-rc1 (`5ac388db27c4`)
+- Zero regression risk
+- Author has prior RDMA double-free fix expertise
+- Accepted by RDMA subsystem maintainer
+
+**AGAINST backporting:**
+- None.
+
+**UNRESOLVED:**
+- Could not access lore.kernel.org mailing list discussion (Anubis
+  block)
+- No independent crash report verified (no Reported-by tag)
+
+### Step 9.2: STABLE RULES CHECKLIST
+1. Obviously correct and tested? **YES** — single-line NULL assignment
+   after free, matches existing pattern
+2. Fixes a real bug? **YES** — verified double-free via code path
+   analysis
+3. Important issue? **YES** — double-free = crash/corruption/potential
+   security vulnerability (CRITICAL)
+4. Small and contained? **YES** — 1 line, 1 file, 1 function error path
+5. No new features or APIs? **YES** — pure bug fix
+6. Can apply to stable trees? **YES** — clean apply expected on v6.7+
+   trees
+
+### Step 9.3: EXCEPTION CATEGORIES
+N/A — this is a standard bug fix meeting all criteria directly.
+
+### Step 9.4: DECISION
+This is a textbook stable backport candidate: a one-line fix for a
+verified double-free on a userspace-reachable path, with zero regression
+risk, applicable to stable trees v6.7 and newer (not v6.6.y or older,
+where the code does not exist).
+
+---
 
 ## Verification
 
-- [Phase 1] Parsed commit message: only SOBs from Florian Westphal and
-  Pablo Neira Ayuso; no Fixes/Reported-by/Cc:stable tags
-- [Phase 2] Read `ctnetlink_exp_dump_expect()` at lines 3008-3077 of
-  `nf_conntrack_netlink.c`: confirmed multiple `exp->master`
-  dereferences (`master->tuplehash`, `nf_ct_l3num(master)`,
-  `nfct_help(master)`)
-- [Phase 2] Read `clean_from_lists()` at line 511 of
-  `nf_conntrack_core.c`: confirmed it calls
-  `nf_ct_remove_expectations(ct)` before master ct is freed
-- [Phase 2] Read `nf_ct_remove_expectations()` at line 228 of
-  `nf_conntrack_expect.c`: confirmed it takes `nf_conntrack_expect_lock`
-  at line 238 — this is the serialization point
-- [Phase 2] Read `nf_ct_expect_related_report()` at line 500-507:
-  confirmed `spin_unlock_bh` at line 501 THEN
-  `nf_ct_expect_event_report(IPEXP_NEW)` at line 502 — the unlocked
-  window
-- [Phase 3] `git blame` on `ctnetlink_get_expect`: lines 3342, 3354-3362
-  trace to `c1d10adb4a521d` (Pablo Neira Ayuso, 2006-01-05)
-- [Phase 3] `git log --oneline -20 --
-  net/netfilter/nf_conntrack_netlink.c`: found related UAF fixes
-  `cd541f15b60e2`, `1492e3dcb2be3`, `de788b2e62274`
-- [Phase 3] `git show cd541f15b60e2`: confirmed KASAN slab-use-after-
-  free stack trace in same ctnetlink expectation code
-- [Phase 3] `git log --author` for both authors: verified as core
-  netfilter contributors
-- [Phase 4] Lore.kernel.org blocked by Anubis; used spinics.net and
-  patchwork.ozlabs.org mirrors to verify v1→v2→v3 iterations and cover
-  letter content
-- [Phase 5] Read `ctnl_exp_cb` callback table at lines 3830-3848:
-  confirmed `ctnetlink_get_expect` and `ctnetlink_del_expect` are
-  userspace-reachable via NETLINK_NETFILTER
-- [Phase 5] `rg nf_ct_expect_related` across net/netfilter/: 16 files
-  use this function (SIP, FTP, H323, TFTP, IRC, AMANDA, broadcast,
-  nft_ct, PPTP, SANE, NAT helpers, IPVS)
-- [Phase 6] `git show v6.6:net/netfilter/nf_conntrack_netlink.c`:
-  confirmed unlocked `nf_ct_expect_find_get()` at line 3333 and
-  `ctnetlink_exp_fill_info()` dereferences `exp->master` without expect
-  lock
-- [Phase 6] `git show v6.6:net/netfilter/nf_conntrack_expect.c`:
-  confirmed `spin_unlock_bh` at line 501, then
-  `nf_ct_expect_event_report(IPEXP_NEW)` at line 502 — same vulnerable
-  pattern as mainline
-- [Phase 8] Failure mode: UAF on `exp->master` → kernel
-  crash/corruption; severity HIGH (corroborated by KASAN trace in
-  related commit)
-- UNVERIFIED: Exact privilege requirements for ctnetlink expectation
-  operations (assumed CAP_NET_ADMIN based on netfilter conventions)
-- UNVERIFIED: Whether patch applies cleanly to stable trees older than
-  6.6 (API renames expected)
-- UNVERIFIED: Full lore.kernel.org review thread (blocked by Anubis
-  proof-of-work)
-- UNVERIFIED: Stable trees older than v5.15 individually checked
+- [Phase 1] Parsed all tags from commit message: `Fixed: 5ac388db27c4`,
+  `Link:`, two `Signed-off-by:` (author + maintainer). No Reported-
+  by/Tested-by/Cc:stable.
+- [Phase 2] Read `verbs.c` lines 3690-3724: confirmed `iwmr->region =
+  region` at line 3700, `err:` path at lines 3721-3723 releases region
+  without NULLing `iwmr->region`.
+- [Phase 2] Read `verbs.c` lines 3905-3938: confirmed `irdma_dereg_mr()`
+  checks `if (iwmr->region)` at line 3932 and calls
+  `ib_umem_release(iwmr->region)` — this is the second free.
+- [Phase 2] Read `drivers/infiniband/core/umem.c` lines 284-298:
+  confirmed `ib_umem_release()` dereferences umem fields and calls
+  `kfree(umem)`.
+- [Phase 2] Verified existing NULL-after-free pattern at lines 3775-3777
+  in `irdma_rereg_user_mr()`.
+- [Phase 3] `git blame -L 3696,3723`: all lines from `5ac388db27c4`
+  (Sindhu Devale, 2023-10-04).
+- [Phase 3] `git show 5ac388db27c4`: confirmed it adds MR re-
+  registration support including the buggy function.
+- [Phase 3] `git describe --contains 5ac388db27c4` → `v6.7-rc1~96^2~21`.
+- [Phase 3] `git merge-base --is-ancestor 5ac388db27c4 v6.6` → exit 1
+  (NOT in v6.6).
+- [Phase 3] `git merge-base --is-ancestor 5ac388db27c4 v6.7` → exit 0
+  (IS in v6.7).
+- [Phase 3] `git log --author="Jacob Moroni"`: found 10 RDMA commits
+  including `40126bcbefa79 RDMA/umem: Fix double dma_buf_unpin in
+  failure path`.
+- [Phase 4] UNVERIFIED: Lore/patch discussion blocked by Anubis anti-bot
+  page.
+- [Phase 5] Grep for `if (iwmr->region)` in verbs.c: found at lines
+  3775, 3912, and 3932 — all three sites depend on `iwmr->region`
+  accurately reflecting ownership.
+- [Phase 6] `git grep irdma_rereg_mr_trans v6.6` → no match (code absent
+  from v6.6).
+- [Phase 6] `git grep irdma_rereg_mr_trans v6.12` → 3 matches (code
+  present in v6.12).
+- [Phase 6] `git log --grep="double free" --grep="rereg_user_mr"` → no
+  results (fix not yet applied anywhere).
+- [Phase 8] Failure mode: double-free of `ib_umem` → heap corruption,
+  crash, potential security exploit. Severity CRITICAL.
+- UNVERIFIED: Mailing list reviewer feedback and stable nominations
+  (lore blocked).
+- UNVERIFIED: Whether an independent crash report exists beyond the
+  author's finding.
 
 **YES**
 
- include/net/netfilter/nf_conntrack_core.h |  5 ++++
- net/netfilter/nf_conntrack_ecache.c       |  2 ++
- net/netfilter/nf_conntrack_expect.c       | 10 +++++++-
- net/netfilter/nf_conntrack_netlink.c      | 28 +++++++++++++++--------
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ drivers/infiniband/hw/irdma/verbs.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/net/netfilter/nf_conntrack_core.h b/include/net/netfilter/nf_conntrack_core.h
-index 3384859a89210..8883575adcc1e 100644
---- a/include/net/netfilter/nf_conntrack_core.h
-+++ b/include/net/netfilter/nf_conntrack_core.h
-@@ -83,6 +83,11 @@ void nf_conntrack_lock(spinlock_t *lock);
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index 68fb81b7bd221..18844d24973be 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -3720,6 +3720,7 @@ static int irdma_rereg_mr_trans(struct irdma_mr *iwmr, u64 start, u64 len,
  
- extern spinlock_t nf_conntrack_expect_lock;
+ err:
+ 	ib_umem_release(region);
++	iwmr->region = NULL;
+ 	return err;
+ }
  
-+static inline void lockdep_nfct_expect_lock_held(void)
-+{
-+	lockdep_assert_held(&nf_conntrack_expect_lock);
-+}
-+
- /* ctnetlink code shared by both ctnetlink and nf_conntrack_bpf */
- 
- static inline void __nf_ct_set_timeout(struct nf_conn *ct, u64 timeout)
-diff --git a/net/netfilter/nf_conntrack_ecache.c b/net/netfilter/nf_conntrack_ecache.c
-index 81baf20826046..9df159448b897 100644
---- a/net/netfilter/nf_conntrack_ecache.c
-+++ b/net/netfilter/nf_conntrack_ecache.c
-@@ -247,6 +247,8 @@ void nf_ct_expect_event_report(enum ip_conntrack_expect_events event,
- 	struct nf_ct_event_notifier *notify;
- 	struct nf_conntrack_ecache *e;
- 
-+	lockdep_nfct_expect_lock_held();
-+
- 	rcu_read_lock();
- 	notify = rcu_dereference(net->ct.nf_conntrack_event_cb);
- 	if (!notify)
-diff --git a/net/netfilter/nf_conntrack_expect.c b/net/netfilter/nf_conntrack_expect.c
-index cfc2daa3fc7f3..f9e65f03dc5ea 100644
---- a/net/netfilter/nf_conntrack_expect.c
-+++ b/net/netfilter/nf_conntrack_expect.c
-@@ -51,6 +51,7 @@ void nf_ct_unlink_expect_report(struct nf_conntrack_expect *exp,
- 	struct net *net = nf_ct_exp_net(exp);
- 	struct nf_conntrack_net *cnet;
- 
-+	lockdep_nfct_expect_lock_held();
- 	WARN_ON(!master_help);
- 	WARN_ON(timer_pending(&exp->timeout));
- 
-@@ -118,6 +119,8 @@ nf_ct_exp_equal(const struct nf_conntrack_tuple *tuple,
- 
- bool nf_ct_remove_expect(struct nf_conntrack_expect *exp)
- {
-+	lockdep_nfct_expect_lock_held();
-+
- 	if (timer_delete(&exp->timeout)) {
- 		nf_ct_unlink_expect(exp);
- 		nf_ct_expect_put(exp);
-@@ -177,6 +180,8 @@ nf_ct_find_expectation(struct net *net,
- 	struct nf_conntrack_expect *i, *exp = NULL;
- 	unsigned int h;
- 
-+	lockdep_nfct_expect_lock_held();
-+
- 	if (!cnet->expect_count)
- 		return NULL;
- 
-@@ -442,6 +447,8 @@ static inline int __nf_ct_expect_check(struct nf_conntrack_expect *expect,
- 	unsigned int h;
- 	int ret = 0;
- 
-+	lockdep_nfct_expect_lock_held();
-+
- 	if (!master_help) {
- 		ret = -ESHUTDOWN;
- 		goto out;
-@@ -498,8 +505,9 @@ int nf_ct_expect_related_report(struct nf_conntrack_expect *expect,
- 
- 	nf_ct_expect_insert(expect);
- 
--	spin_unlock_bh(&nf_conntrack_expect_lock);
- 	nf_ct_expect_event_report(IPEXP_NEW, expect, portid, report);
-+	spin_unlock_bh(&nf_conntrack_expect_lock);
-+
- 	return 0;
- out:
- 	spin_unlock_bh(&nf_conntrack_expect_lock);
-diff --git a/net/netfilter/nf_conntrack_netlink.c b/net/netfilter/nf_conntrack_netlink.c
-index d9f33a6c807c8..f5cb09eb31a34 100644
---- a/net/netfilter/nf_conntrack_netlink.c
-+++ b/net/netfilter/nf_conntrack_netlink.c
-@@ -3357,31 +3357,37 @@ static int ctnetlink_get_expect(struct sk_buff *skb,
- 	if (err < 0)
- 		return err;
- 
-+	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
-+	if (!skb2)
-+		return -ENOMEM;
-+
-+	spin_lock_bh(&nf_conntrack_expect_lock);
- 	exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
--	if (!exp)
-+	if (!exp) {
-+		spin_unlock_bh(&nf_conntrack_expect_lock);
-+		kfree_skb(skb2);
- 		return -ENOENT;
-+	}
- 
- 	if (cda[CTA_EXPECT_ID]) {
- 		__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
- 
- 		if (id != nf_expect_get_id(exp)) {
- 			nf_ct_expect_put(exp);
-+			spin_unlock_bh(&nf_conntrack_expect_lock);
-+			kfree_skb(skb2);
- 			return -ENOENT;
- 		}
- 	}
- 
--	skb2 = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
--	if (!skb2) {
--		nf_ct_expect_put(exp);
--		return -ENOMEM;
--	}
--
- 	rcu_read_lock();
- 	err = ctnetlink_exp_fill_info(skb2, NETLINK_CB(skb).portid,
- 				      info->nlh->nlmsg_seq, IPCTNL_MSG_EXP_NEW,
- 				      exp);
- 	rcu_read_unlock();
- 	nf_ct_expect_put(exp);
-+	spin_unlock_bh(&nf_conntrack_expect_lock);
-+
- 	if (err <= 0) {
- 		kfree_skb(skb2);
- 		return -ENOMEM;
-@@ -3431,22 +3437,26 @@ static int ctnetlink_del_expect(struct sk_buff *skb,
- 		if (err < 0)
- 			return err;
- 
-+		spin_lock_bh(&nf_conntrack_expect_lock);
-+
- 		/* bump usage count to 2 */
- 		exp = nf_ct_expect_find_get(info->net, &zone, &tuple);
--		if (!exp)
-+		if (!exp) {
-+			spin_unlock_bh(&nf_conntrack_expect_lock);
- 			return -ENOENT;
-+		}
- 
- 		if (cda[CTA_EXPECT_ID]) {
- 			__be32 id = nla_get_be32(cda[CTA_EXPECT_ID]);
- 
- 			if (id != nf_expect_get_id(exp)) {
- 				nf_ct_expect_put(exp);
-+				spin_unlock_bh(&nf_conntrack_expect_lock);
- 				return -ENOENT;
- 			}
- 		}
- 
- 		/* after list removal, usage count == 1 */
--		spin_lock_bh(&nf_conntrack_expect_lock);
- 		if (timer_delete(&exp->timeout)) {
- 			nf_ct_unlink_expect_report(exp, NETLINK_CB(skb).portid,
- 						   nlmsg_report(info->nlh));
 -- 
 2.53.0
 
