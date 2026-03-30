@@ -1,45 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0023D0916;
-	Mon, 30 Mar 2026 12:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74453D1713;
+	Mon, 30 Mar 2026 12:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874334; cv=none; b=L9P4gsefnRMVSWkQUEdGgsFgES09C8ceRSLyMcDlO3YUNruFc5lR4mgUwFotyCKEW5vFvrzkeYnoOJtCRcgPxxkqWMUJcci93VkhBHRMxUITikHRXsbjoUd/GMP+xz/25ER21zSSkHiIWd2HcocV9/YVFtw5vWrH1srmuPg6UXA=
+	t=1774874335; cv=none; b=Tb3uVpe0ytQY3/Cc02R1t3XrfGVxezMuUZhO14FLSVhDf+9yoxOC30/QBtLMWOy7a8YKLHkSbT/jdXf4tQhmxhyT2jGs2Jb5gEzFyNJHfV8/+Vm2SOv3sgrJ3wihOORgz0i5k6Qqr8yUqG2JZzNuRDCxxz2To5ui+L5CAUqYiWk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874334; c=relaxed/simple;
-	bh=nmLuCXKilewrWUUcq5NfX5N6ZNgzQC+XTkSE2IeJSuE=;
+	s=arc-20240116; t=1774874335; c=relaxed/simple;
+	bh=tP+lre6dq3uVg+ttZiFaRElIPoTiUazPMTJ4WyhtlvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=myubQQcKqlkh4tqzdDJfkmWtjvSMO0RIXeiVk+nQ0XXyiXfgtNfUS/40Sie8cDlthX363IXG8T1HgZ/lFpcL5TFtpevxxUkVHE+m5RLLbzDv5C5BPoxuLfTlMlAZRfeAT1l0a3dlZb2C9RZaXfEQ5/1uKp+za7sWyeAL5JguKdg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ZmJgg+4W; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=knTifj1pUSo1LvYvRYRpmY2IxUgZJO0ejqGEVrK/5hnpT8uCe+QfxnQnfyS9iCeQ+EWfFAruT6npsG27b5liIUotBhOmhbUXVS/5Mdl3TaAuifFsj60Zy1S4DggRW4PIX0oaN+Fl4Ai+4aSW2NATCOTKgZuWl1Rf0qi36nX6IZY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=BXX2QQUI; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ZmJgg+4W"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2376AC2BCB2;
-	Mon, 30 Mar 2026 12:38:51 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="BXX2QQUI"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC559C2BCB1;
+	Mon, 30 Mar 2026 12:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874332;
-	bh=nmLuCXKilewrWUUcq5NfX5N6ZNgzQC+XTkSE2IeJSuE=;
+	s=k20201202; t=1774874334;
+	bh=tP+lre6dq3uVg+ttZiFaRElIPoTiUazPMTJ4WyhtlvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZmJgg+4W4PSwB91QCv8wVqAISP+VYLY/5GUhGPTJZfJ4NdZArNeHQiWPX01l3btug
-	 +s2uOT6i5DLGCyuwsxaByPNaRG+POKeWIJuI1Hy9nVScSY/2frTax9TKYVZqZHJL3Z
-	 OibmsWdIZ9+J9YJGRfoGhu9QLByMk3dMJGoBKYo41ClCW+H0eKv8NdvZveaF4NrpsF
-	 l3h0MGh4yOqILqQhjVwptCKF61swoUrlXKf/iZ6RXvIFtMeUQiLRZx7rNKaZD9KG9C
-	 ADOajIR/o9TLmmBVcjTQCK6vEnj0QS/0ENewsKjqmCmFtTRYGbd2HQTbhVcwhqANWQ
-	 HPR7JUaz88GoA==
+	b=BXX2QQUIVZk+ufPUO/4wYhWhQEwJCvpliRF7mSmuIm83LqYUpSJFN0FdcmQJFeFfN
+	 GkroFQ3djVRDo/4EIN04Jrtv/dn0meNgxsQdx2yE9IPMCmYHn1bsP3GTutzMjF0xPc
+	 0ctyHbMws4R27E/ELx4F9hqWPL93aLfcvfyd8ZAOvuATDj1JluUq1V4OvrrmJiIEOx
+	 Jp969oFvF+VM5QiKpDUFsZ7e88urB6ol3ftw2bIujnOmDUMHB2/Mt9Rygt3hpryu7g
+	 9KbpCsDMoiDPNVwgBzCDQlw2CrIKBwCQN858FuzI6d4C0seCrabMQ58JNO1OsaBfAn
+	 wonZV+nRPCHLg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Joel Fernandes <joelagnelf@nvidia.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Boqun Feng <boqun@kernel.org>,
+Cc: Jiucheng Xu <jiucheng.xu@amlogic.com>,
+	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Chao Yu <chao@kernel.org>,
 	Sasha Levin <sashal@kernel.org>,
-	jiangshanlai@gmail.com,
-	josh@joshtriplett.org,
-	rcu@vger.kernel.org,
+	xiang@kernel.org,
+	linux-erofs@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] srcu: Use irq_work to start GP in tiny SRCU
-Date: Mon, 30 Mar 2026 08:38:19 -0400
-Message-ID: <20260330123842.756154-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.1] erofs: add GFP_NOIO in the bio completion if needed
+Date: Mon, 30 Mar 2026 08:38:21 -0400
+Message-ID: <20260330123842.756154-8-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -55,716 +54,608 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Fernandes <joelagnelf@nvidia.com>
+From: Jiucheng Xu <jiucheng.xu@amlogic.com>
 
-[ Upstream commit a6fc88b22bc8d12ad52e8412c667ec0f5bf055af ]
+[ Upstream commit c23df30915f83e7257c8625b690a1cece94142a0 ]
 
-Tiny SRCU's srcu_gp_start_if_needed() directly calls schedule_work(),
-which acquires the workqueue pool->lock.
+The bio completion path in the process context (e.g. dm-verity)
+will directly call into decompression rather than trigger another
+workqueue context for minimal scheduling latencies, which can
+then call vm_map_ram() with GFP_KERNEL.
 
-This causes a lockdep splat when call_srcu() is called with a scheduler
-lock held, due to:
+Due to insufficient memory, vm_map_ram() may generate memory
+swapping I/O, which can cause submit_bio_wait to deadlock
+in some scenarios.
 
-  call_srcu() [holding pi_lock]
-    srcu_gp_start_if_needed()
-      schedule_work() -> pool->lock
+Trimmed down the call stack, as follows:
 
-  workqueue_init() / create_worker() [holding pool->lock]
-    wake_up_process() -> try_to_wake_up() -> pi_lock
+f2fs_submit_read_io
+  submit_bio                      //bio_list is initialized.
+    mmc_blk_mq_recovery
+      z_erofs_endio
+        vm_map_ram
+          __pte_alloc_kernel
+            __alloc_pages_direct_reclaim
+              shrink_folio_list
+                __swap_writepage
+                  submit_bio_wait  //bio_list is non-NULL, hang!!!
 
-Also add irq_work_sync() to cleanup_srcu_struct() to prevent a
-use-after-free if a queued irq_work fires after cleanup begins.
+Use memalloc_noio_{save,restore}() to wrap up this path.
 
-Tested with rcutorture SRCU-T and no lockdep warnings.
-
-[ Thanks to Boqun for similar fix in patch "rcu: Use an intermediate irq_work
-to start process_srcu()" ]
-
-Signed-off-by: Joel Fernandes <joelagnelf@nvidia.com>
-Reviewed-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Boqun Feng <boqun@kernel.org>
+Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Jiucheng Xu <jiucheng.xu@amlogic.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis. Let
-me compile the full assessment.
+All verified. Here is the complete analysis.
 
-===============================================================
+---
+
 ## PHASE 1: COMMIT MESSAGE FORENSICS
-===============================================================
 
-### Step 1.1: PARSE THE SUBJECT LINE
-Record: [srcu] [Use] [irq_work to defer schedule_work() in Tiny SRCU
-grace-period start to avoid lockdep splat from pi_lock vs pool->lock
-ordering]
+### Step 1.1: Subject Line
+- **Subsystem**: erofs (Enhanced Read-Only File System, compressed I/O
+  path)
+- **Action verb**: "add" — but the body describes a deadlock fix
+- **Summary**: Adds `memalloc_noio_save/restore` scope in BIO completion
+  to prevent deadlock during direct decompression
 
-### Step 1.2: PARSE ALL COMMIT MESSAGE TAGS
-- **Signed-off-by:** Joel Fernandes <joelagnelf@nvidia.com> (author)
-- **Reviewed-by:** Paul E. McKenney <paulmck@kernel.org> (RCU co-
-  maintainer, original Tiny SRCU author)
-- **Signed-off-by:** Boqun Feng <boqun@kernel.org> (RCU
-  maintainer/committer)
-- No `Fixes:` tag (expected — this is why we're reviewing)
+Record: [erofs] [add (really "fix")] [Wraps direct decompression in
+GFP_NOIO scope to prevent deadlock in bio completion]
+
+### Step 1.2: Tags
+- **Reviewed-by**: Gao Xiang <hsiangkao@linux.alibaba.com> — erofs
+  maintainer
+- **Signed-off-by**: Jiucheng Xu <jiucheng.xu@amlogic.com> — patch
+  author (Amlogic, ARM/Android platform vendor)
+- **Reviewed-by**: Chao Yu <chao@kernel.org> — regular erofs reviewer
+- **Signed-off-by**: Gao Xiang <hsiangkao@linux.alibaba.com> — committed
+  through maintainer tree
+- No `Fixes:` tag (expected for commits needing manual review)
 - No `Cc: stable@vger.kernel.org` (expected)
-- No `Reported-by:` tag
-- No `Link:` tag
+- No `Reported-by:` or `Link:` tags
+- Notable: Two reviews from subsystem maintainer and key reviewer;
+  committed by maintainer
 
-Record: Strong maintainer endorsement — reviewed by Paul McKenney (RCU
-authority), committed by Boqun Feng (RCU maintainer). Queued into
-`fixes.v7.0-rc4` branch (verified via mail-archive). No syzbot or
-external bug reporter.
+Record: Two senior reviewers (one is the subsystem maintainer). No Fixes
+tag. Author is from Amlogic (Android SoC vendor, direct user of
+erofs+dm-verity).
 
-### Step 1.3: ANALYZE THE COMMIT BODY TEXT
-The commit describes two bugs:
+### Step 1.3: Commit Body Text
+The commit describes a **concrete deadlock scenario** with a trimmed
+stack trace:
+1. BIO completion runs in process context (e.g., when dm-verity is
+   layered on top)
+2. EROFS directly calls decompression (not via workqueue) to minimize
+   latency
+3. Decompression calls `vm_map_ram()` with `GFP_KERNEL`
+4. Under memory pressure, `vm_map_ram()` → page allocation → direct
+   reclaim → swap writeback → `submit_bio_wait()`
+5. Since `bio_list` is already initialized from the parent `submit_bio`,
+   the new bio gets queued to `bio_list` but is never drained →
+   **deadlock/hang**
 
-**Bug 1 (lockdep/lock ordering):** `srcu_gp_start_if_needed()` calls
-`schedule_work()`, which acquires workqueue `pool->lock`. When
-`call_srcu()` is invoked while holding the scheduler `pi_lock`, this
-creates a lock ordering inversion:
-- Path A: `call_srcu()` [holding `pi_lock`] → `schedule_work()` →
-  `pool->lock`
-- Path B: `workqueue_init()`/`create_worker()` [holding `pool->lock`] →
-  `wake_up_process()` → `try_to_wake_up()` → `pi_lock`
+Stack trace: `f2fs_submit_read_io → submit_bio → mmc_blk_mq_recovery →
+z_erofs_endio → vm_map_ram → __pte_alloc_kernel →
+__alloc_pages_direct_reclaim → shrink_folio_list → __swap_writepage →
+submit_bio_wait //hang`
 
-**Bug 2 (UAF prevention):** With the new irq_work mechanism,
-`irq_work_sync()` must be added to `cleanup_srcu_struct()` to prevent a
-use-after-free if a queued irq_work fires after cleanup begins.
+Record: Real deadlock in BIO completion path. Trigger: erofs on dm-
+verity under memory pressure. Symptom: system hang. Root cause:
+GFP_KERNEL allocation inside bio completion context can recurse into
+block I/O.
 
-Testing: rcutorture SRCU-T with no lockdep warnings.
+### Step 1.4: Hidden Bug Fix Detection
+Despite the subject using "add" rather than "fix", the commit message
+describes a real deadlock and provides a concrete stack trace
+demonstrating the hang. The fix uses the standard kernel mechanism for
+preventing I/O recursion. This is absolutely a bug fix.
 
-Record: [Lock ordering inversion between pi_lock and workqueue
-pool->lock] [Lockdep splat, potential deadlock] [No specific version
-information] [Root cause: schedule_work() acquires pool->lock from
-call_srcu() context that may hold pi_lock]
+Record: Yes, genuine bug fix disguised with "add" verb. The body clearly
+describes a deadlock.
 
-### Step 1.4: DETECT HIDDEN BUG FIXES
-Record: [Not hidden — explicitly describes a lockdep-detected lock
-ordering bug and a UAF risk in cleanup. The UAF aspect is specific to
-the new irq_work mechanism being introduced by the same commit.]
+---
 
-===============================================================
-## PHASE 2: DIFF ANALYSIS - LINE BY LINE
-===============================================================
+## PHASE 2: DIFF ANALYSIS
 
-### Step 2.1: INVENTORY THE CHANGES
-- `include/linux/srcutiny.h`: +4 lines (add `irq_work_types.h` include,
-  `struct irq_work srcu_irq_work` field, function declaration, static
-  initializer entry)
-- `kernel/rcu/srcutiny.c`: +18/-1 lines (add `irq_work.h` include,
-  `init_irq_work()` in init, `irq_work_sync()` in cleanup, new
-  `srcu_tiny_irq_work()` function, change `schedule_work()` to
-  `irq_work_queue()`)
-- Total: ~22 lines added, 1 line changed
-- Functions modified: `init_srcu_struct_fields()`,
-  `cleanup_srcu_struct()`, `srcu_gp_start_if_needed()`
-- New function: `srcu_tiny_irq_work()`
+### Step 2.1: Inventory
+- **Files changed**: 1 (`fs/erofs/zdata.c`)
+- **Lines added**: 3 (1 local variable declaration + 2 API calls)
+- **Lines removed**: 0
+- **Function modified**: `z_erofs_decompress_kickoff()`
+- **Scope**: Single-file, single-function, surgical fix
 
-Record: [2 files, +22/-1, single-subsystem, well-contained surgical fix]
+Record: [fs/erofs/zdata.c: +3/-0 lines] [z_erofs_decompress_kickoff]
+[Surgical single-function fix]
 
-### Step 2.2: UNDERSTAND THE CODE FLOW CHANGE
-- **Before:** `srcu_gp_start_if_needed()` directly calls
-  `schedule_work(&ssp->srcu_work)` when `srcu_init_done`. This acquires
-  `pool->lock` synchronously in whatever context the caller is running.
-- **After:** `irq_work_queue(&ssp->srcu_irq_work)` is called instead.
-  The irq_work handler `srcu_tiny_irq_work()` later calls
-  `schedule_work()`, breaking the direct lock nesting from the
-  `call_srcu()` call site.
-- **Cleanup:** `irq_work_sync()` is added before `flush_work()` in
-  `cleanup_srcu_struct()` to ensure no deferred irq_work runs after the
-  struct begins teardown.
-- **Init:** `init_irq_work()` is added in `init_srcu_struct_fields()`.
+### Step 2.2: Code Flow Change
+**Before** (line 1494 of current code): When
+`z_erofs_decompress_kickoff()` reaches the non-atomic fallthrough path,
+it calls `z_erofs_decompressqueue_work(&io->u.work)` directly with no
+memory allocation restrictions. Any `GFP_KERNEL` allocation in the call
+chain can trigger reclaim I/O.
 
-Record: [Normal GP-start path changed from synchronous schedule_work()
-to deferred irq_work hop. Cleanup path gets irq_work synchronization.
-Init path gets irq_work initialization.]
+**After**: The direct call is wrapped:
+```c
+gfp_flag = memalloc_noio_save();
+z_erofs_decompressqueue_work(&io->u.work);
+memalloc_noio_restore(gfp_flag);
+```
+This sets `PF_MEMALLOC_NOIO` on the current task's flags, causing all
+allocations in the decompression path to have `__GFP_IO` stripped,
+preventing swap/reclaim I/O.
 
-### Step 2.3: IDENTIFY THE BUG MECHANISM
-Category: **(b) Synchronization / Lock ordering** (lockdep-detected
-circular dependency between `pi_lock` and `pool->lock`), plus **(d)
-Memory safety** — UAF prevention in the cleanup path for the newly
-introduced irq_work.
+Record: Before: unrestricted GFP_KERNEL allocations during decompression
+in bio completion. After: GFP_NOIO scope prevents I/O recursion.
 
-Record: [Lock ordering inversion (potential deadlock) detected by
-lockdep. The UAF prevention is specific to the irq_work mechanism
-introduced by this same commit, not a pre-existing UAF in old code.]
+### Step 2.3: Bug Mechanism
+**Category**: Deadlock / I/O recursion
 
-### Step 2.4: ASSESS THE FIX QUALITY
-- **Obviously correct:** Yes. irq_work is specifically designed for
-  deferring work from contexts where direct scheduling is unsafe. This
-  is the same pattern used in Tree RCU (referenced by the commit
-  message).
-- **Minimal/surgical:** Yes. ~22 lines, two files, all within the Tiny
-  SRCU subsystem.
-- **Regression risk:** Very low. The `irq_work` mechanism is mature. The
-  functional behavior is identical (same `schedule_work()` happens, just
-  deferred slightly). The `irq_work_sync()` + `flush_work()` ordering in
-  cleanup is a standard pattern used elsewhere in the kernel.
-- **Red flags:** None. `EXPORT_SYMBOL_GPL(srcu_tiny_irq_work)` is
-  slightly unusual for a callback but harmless (needed for module
-  builds).
+**Mechanism**: I verified the full call chain:
+- `z_erofs_endio()` (bio completion, line 1668) →
+  `z_erofs_decompress_kickoff(q, -1)` → non-atomic branch →
+  `z_erofs_decompressqueue_work()` → `z_erofs_decompress_queue()` →
+  `z_erofs_decompress_pcluster()` → multiple `GFP_KERNEL` allocations:
+  - `kvcalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at lines 1300 and 1304
+    for decompressed/compressed pages
+  - `kmalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at line 1161 for secondary
+    bvecs
+  - `erofs_vm_map_ram()` → `vm_map_ram()` → `vb_alloc(size, GFP_KERNEL)`
+    at `mm/vmalloc.c:3070` or `alloc_vmap_area(..., GFP_KERNEL, ...)` at
+    `mm/vmalloc.c:3078`
 
-Record: [Fix is obviously correct, minimal, low regression risk.
-Standard irq_work deferral pattern, well-established in RCU subsystem]
+Any of these `GFP_KERNEL` allocations can trigger direct reclaim under
+memory pressure, which can attempt swap writeback via
+`submit_bio_wait()`, and since `bio_list` is active from the parent
+`submit_bio()`, the new bio goes to the list but never drains.
 
-===============================================================
+Record: [Deadlock] [Bio completion → direct decompression → GFP_KERNEL
+allocations (vm_map_ram, kvcalloc) → direct reclaim → swap I/O →
+submit_bio_wait hangs because bio_list is active]
+
+### Step 2.4: Fix Quality
+- **Obviously correct**: `memalloc_noio_save/restore` is the standard
+  kernel API for this exact pattern. It is used extensively in dm, md,
+  block, and filesystem layers for the same purpose.
+- **Minimal**: 3 lines added, no logic changes, no data structure
+  changes.
+- **Regression risk**: Very low. The only effect is restricting
+  allocations from triggering I/O in this scope. This could mean more
+  allocation failures under extreme pressure, but the `__GFP_NOFAIL`
+  allocations will still succeed (they just won't trigger I/O for
+  reclaim), and `vm_map_ram` already handles allocation failure
+  gracefully via retry in `erofs_vm_map_ram()`.
+- **No red flags**: No API changes, no locking changes, no new code
+  paths.
+
+Record: [Obviously correct, standard kernel pattern] [Very low
+regression risk] [Minimal scope]
+
+---
+
 ## PHASE 3: GIT HISTORY INVESTIGATION
-===============================================================
 
-### Step 3.1: BLAME THE CHANGED LINES
-The direct `schedule_work(&ssp->srcu_work)` call in
-`srcu_gp_start_if_needed()` was introduced by commit `1a893c711a600`
-("srcu: Provide internal interface to start a Tiny SRCU grace period")
-by Paul E. McKenney, dated 2020-11-13. This first appeared in release
-`v5.12` (verified via `git tag --contains`, earliest non-next tag would
-be p-5.15).
+### Step 3.1: Blame Changed Lines
+`git blame` on lines 1458-1495 shows:
+- `z_erofs_decompress_kickoff()` function structure: commit
+  `7865827c432bf9` (Gao Xiang, 2022-01-21) — a code rearrangement
+- The direct `z_erofs_decompressqueue_work(&io->u.work)` call at line
+  1494: same commit `7865827c432bf9`
+- The direct decompression optimization was **originally introduced** by
+  commit `648f2de053a88` (Huang Jianan, 2021-03-17): "erofs: use
+  workqueue decompression for atomic contexts only"
 
-However, the original `call_srcu()` function called `schedule_work()`
-even before that refactor — the lock ordering issue has existed since
-Tiny SRCU was created.
+The original `648f2de053a88` commit first appeared in tag `v5.13`. I
+verified:
+- `v5.10`: **NOT** ancestor — the buggy direct-call path does not exist
+- `v5.15`: **IS** ancestor — the buggy path exists
+- `v6.1`: **IS** ancestor
+- `v6.6`: **IS** ancestor
 
-Record: [Buggy schedule_work() path introduced in 1a893c711a600 (v5.12
-era). Present in all stable trees from v5.15 onward.]
+Record: Direct decompression path introduced in 648f2de053a88 (v5.13).
+Present in v5.15, v6.1, v6.6, v6.12 and later. NOT present in v5.10.
 
-### Step 3.2: FOLLOW THE FIXES: TAG
-N/A — no `Fixes:` tag present (expected).
+### Step 3.2: Fixes Tag
+No `Fixes:` tag present. (Expected for commits requiring manual review.)
 
-### Step 3.3: CHECK FILE HISTORY FOR RELATED CHANGES
-Recent srcutiny.c history shows:
-- `e6a43aeb71852` - Remove preempt_disable/enable() in
-  srcu_gp_start_if_needed() (recent)
-- `da2ac5623716c` - Make Tiny SRCU able to operate in preemptible
-  kernels (v6.15+, PREEMPT_LAZY)
-- `65b4a59557f6f` - Make Tiny SRCU explicitly disable preemption (v6.12)
+### Step 3.3: Related File History
+Related commits in the same optimization area:
+- `648f2de053a88` (v5.13): Introduced direct decompression in non-atomic
+  context
+- `7865827c432bf9` (v5.17): Rearranged function, same direct-call logic
+- `12d0a24afd9ea` (2023): "Fix detection of atomic context" — 1-line fix
+  to atomic check
+- `c99fab6e80b76` (2025): "fix atomic context detection when
+  !CONFIG_DEBUG_LOCK_ALLOC" — introduced `z_erofs_in_atomic()` helper
 
-The PREEMPT_LAZY change (`da2ac5623716c`, first in v6.15) is
-significant: it allows Tiny SRCU to run on preemptible kernels, making
-the lock ordering issue more practically relevant than on the
-traditional non-preemptible UP configs.
+The non-atomic direct decompression path has needed **multiple follow-up
+fixes**, establishing a pattern that this optimization area is
+correctness-sensitive.
 
-No duplicate irq_work fix for Tiny SRCU was found in the tree. This is
-standalone.
+No prior `memalloc_noio` fix exists in erofs (verified: `git log
+--grep='memalloc_noio' -- fs/erofs` returns empty).
 
-Record: [Related to PREEMPT_LAZY enablement. Standalone fix. No
-prerequisites beyond existing code.]
+Record: Part of a pattern of fixes to the same direct-decompression
+optimization. Standalone fix. No prior NOIO fix in erofs.
 
-### Step 3.4: CHECK THE AUTHOR'S OTHER COMMITS
-Joel Fernandes is a well-known RCU contributor at NVIDIA with multiple
-RCU commits. The fix is reviewed by Paul McKenney (original Tiny SRCU
-author) and committed by Boqun Feng (RCU maintainer).
+### Step 3.4: Author
+- Jiucheng Xu from Amlogic — no prior erofs commits found locally,
+  likely a first-time contributor from the platform vendor side
+- Patch was reviewed by erofs maintainer Gao Xiang and regular reviewer
+  Chao Yu, and committed through Gao Xiang's tree
+- Amlogic makes ARM SoCs used in Android devices — dm-verity + erofs is
+  standard on such platforms
 
-Record: [Joel Fernandes is a regular RCU contributor. Fix has strong
-maintainer endorsement.]
+Record: Author is from platform vendor, fix reviewed and committed by
+erofs maintainer.
 
-### Step 3.5: CHECK FOR DEPENDENT/PREREQUISITE COMMITS
-Key backport consideration: The `#include <linux/irq_work_types.h>` in
-the header requires this file to exist. Verified that `irq_work_types.h`
-was introduced in commit `c809f081fe400` ("irqwork: Move data struct to
-a types header") and first appeared in **v6.19** only. It does NOT exist
-in v6.18, v6.15, v6.12, v6.6, v6.1, or v5.15. For older stable trees,
-the include would need to be changed to `<linux/irq_work.h>` — a trivial
-mechanical adaptation.
+### Step 3.5: Dependencies
+The fix is self-contained:
+- `memalloc_noio_save/restore` exists in `include/linux/sched/mm.h`
+  (verified: 4 occurrences of `memalloc_noio_save` in current tree)
+- These helpers have been available since well before v5.15
+- The direct decompression call path where the fix applies exists in all
+  applicable stable trees (v5.15+)
+- No code structure changes needed
 
-The `__SRCU_STRUCT_INIT` macro has different argument counts across
-versions:
-- v5.15: 2 args `(name, __ignored)`
-- v6.6: 3 args `(name, __ignored, ___ignored)`
-- current: 4 args `(name, __ignored, ___ignored, ____ignored)`
+Record: No dependencies. Fully self-contained. Can apply standalone to
+any tree with the direct-call path.
 
-This means the static initializer addition `.srcu_irq_work = { .func =
-srcu_tiny_irq_work }` would need to go into the appropriate macro
-variant for each stable tree. This is a minor mechanical conflict.
+---
 
-Record: [Standalone logically. Backport needs: 1) `irq_work_types.h` →
-`irq_work.h` for trees < v6.19, 2) minor `__SRCU_STRUCT_INIT` macro
-adaptation. These are mechanical, not logical, changes.]
-
-===============================================================
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-===============================================================
 
-### Step 4.1: SEARCH LORE.KERNEL.ORG FOR THE PATCH DISCUSSION
-Lore was blocked (Anubis anti-bot), but the discussion was found on
-mail-archive.com at:
-https://www.mail-archive.com/linux-
-kernel@vger.kernel.org/msg2619639.html
+### Step 4.1: Lore Discussion
+The related commit `12d0a24afd9ea` ("Fix detection of atomic context")
+has accessible discussion showing:
+- A concrete stack trace from `filemap_fault`/readahead through dm-
+  verity into `z_erofs_decompress_kickoff()`, proving the direct
+  decompression in bio completion context is a real-world scenario
+- The dm-verity + erofs combination is explicitly called out as the
+  trigger
 
-Key findings from the discussion:
-- The patch was dated March 23, 2026
-- Boqun Feng queued it into `fixes.v7.0-rc4` branch (the RCU **fixes**
-  branch, not features)
-- Paul McKenney's `Reviewed-by` was provided in an off-list discussion
-- No NAKs, no concerns raised
-- No explicit stable nomination by reviewers in the visible thread
+The commit was included in erofs rc-fixes targeting mainline, which is
+the standard path for critical fixes.
 
-Record: [Lore discussion found on mail-archive mirror. Queued into fixes
-branch by RCU maintainer. No objections. No explicit Cc: stable
-discussion visible.]
+Record: Related discussion confirms real-world dm-verity + erofs
+scenario. Fix submitted through maintainer's fixes branch.
 
-### Step 4.2: SEARCH FOR THE BUG REPORT
-No external bug report. Found during development/testing. The lockdep
-splat is reproducible with rcutorture SRCU-T.
+### Step 4.2: Bug Report
+No explicit `Reported-by:` or `Link:` tags. The stack trace in the
+commit message references a concrete scenario (f2fs + mmc + erofs/dm-
+verity), indicating real-world observation. The author being from
+Amlogic (Android SoC vendor) strongly suggests this was discovered on
+production Android devices.
 
-Record: [Found during testing, reproducible with rcutorture]
+Record: No formal bug report link, but stack trace indicates real
+observation on Android platform.
 
-### Step 4.3: CHECK FOR RELATED PATCHES AND SERIES
-The commit message references Boqun Feng's similar fix "rcu: Use an
-intermediate irq_work to start process_srcu()" which applies the same
-pattern to Tree SRCU. This confirms the pattern is well-established.
+### Step 4.3: Series Context
+This is a standalone fix, not part of a dependent series.
 
-Record: [Companion to Boqun's Tree SRCU irq_work fix. Same pattern.]
+Record: Standalone fix.
 
-### Step 4.4: CHECK STABLE MAILING LIST HISTORY
-No stable-specific discussion found.
+### Step 4.4: Stable Discussion
+No specific stable discussion found for this patch.
 
-Record: [No stable-specific discussion found]
+Record: No stable-specific discussion found.
 
-===============================================================
+---
+
 ## PHASE 5: CODE SEMANTIC ANALYSIS
-===============================================================
 
-### Step 5.1: IDENTIFY KEY FUNCTIONS IN THE DIFF
-Modified: `init_srcu_struct_fields()`, `cleanup_srcu_struct()`,
-`srcu_gp_start_if_needed()`
-New: `srcu_tiny_irq_work()`
+### Step 5.1: Functions Modified
+Only `z_erofs_decompress_kickoff()` is modified.
 
-### Step 5.2: TRACE CALLERS
-`srcu_gp_start_if_needed()` is called from:
-1. `call_srcu()` — widely used across the kernel
-2. `start_poll_synchronize_srcu()` — used by rcutorture and others
+### Step 5.2: Callers
+`z_erofs_decompress_kickoff()` is called from:
+1. **`z_erofs_endio()`** (line 1668) — BIO completion callback. This is
+   the problematic path — when bio completion runs in process context
+   (dm-verity), this is NOT atomic, and the non-atomic branch takes the
+   direct decompression path.
+2. **`z_erofs_submit_queue()`** (line 1805) — submit path, called after
+   dispatching bios.
 
-`call_srcu()` callers (verified via grep, 14+ call sites in .c files):
-- `virt/kvm/kvm_main.c`
-- `mm/mmu_notifier.c`
-- `block/blk-mq.c`, `block/blk-mq-tag.c`
-- `kernel/events/uprobes.c`
-- `fs/tracefs/event_inode.c`
-- `fs/dlm/midcomms.c`, `fs/dlm/lowcomms.c`
-- `drivers/gpio/gpiolib.c`
-- Plus the RCU subsystem itself
+### Step 5.3: Callees in the non-atomic path
+`z_erofs_decompressqueue_work()` → `z_erofs_decompress_queue()` →
+`z_erofs_decompress_pcluster()` which:
+- Allocates `decompressed_pages` via `kvcalloc(..., GFP_KERNEL |
+  __GFP_NOFAIL)` (line 1300)
+- Allocates `compressed_pages` via `kvcalloc(..., GFP_KERNEL |
+  __GFP_NOFAIL)` (line 1304)
+- Calls decompression algorithm which uses `erofs_vm_map_ram()` →
+  `vm_map_ram()` → `vb_alloc(size, GFP_KERNEL)` (mm/vmalloc.c:3070)
 
-**Important caveat:** On TINY_SRCU kernels, only the Tiny SRCU
-`call_srcu()` is linked. TINY_SRCU requires `TINY_RCU`, which requires
-`!SMP` (UP systems). On older stable trees (v6.12 and before), it
-additionally requires `!PREEMPTION`. On v6.15+, PREEMPT_LAZY allows Tiny
-SRCU to operate on preemptible (but still UP) kernels.
+All of these allocations can trigger direct reclaim.
 
-Record: [Wide caller surface for call_srcu() in general. On TINY_SRCU,
-limited to UP kernels. On v6.15+ with PREEMPT_LAZY, the lock ordering
-issue becomes more practically relevant.]
+### Step 5.4: Reachability
+Full verified call chain from userspace:
+- Userspace read/page fault on compressed erofs file
+- → `z_erofs_read_folio()` (line 1887) or `z_erofs_readahead()` (line
+  1910)
+- → `z_erofs_runqueue()` → `z_erofs_submit_queue()` → `submit_bio()`
+- → bio completion → `z_erofs_endio()` (line 1648)
+- → `z_erofs_decompress_kickoff(q, -1)` (line 1668)
+- → non-atomic branch → `z_erofs_decompressqueue_work()` → `GFP_KERNEL`
+  allocations → deadlock
 
-### Step 5.3: TRACE CALLEES
-`srcu_gp_start_if_needed()` → `schedule_work()` (before) or
-`irq_work_queue()` (after)
-`srcu_tiny_irq_work()` → `schedule_work()`
-`cleanup_srcu_struct()` → `irq_work_sync()` (new) → `flush_work()`
-(existing)
+This is the **primary compressed data read path** for erofs. Any
+unprivileged user reading a file from a mounted erofs filesystem can
+trigger it.
 
-Record: [Standard irq_work deferral pattern]
+Record: Critical primary read path. Reachable from unprivileged
+userspace file reads.
 
-### Step 5.4: FOLLOW THE CALL CHAIN
-`call_srcu()` is a generic kernel API. On TINY_SRCU builds, any code
-path that invokes `call_srcu()` while holding scheduler locks (like
-`pi_lock`) can trigger the lockdep splat. The kernel's scheduler code
-does hold `pi_lock` during task wakeups, and subsystems like KVM and
-uprobes that use `call_srcu()` can be reached from those contexts.
+### Step 5.5: Similar Patterns
+`memalloc_noio_save/restore` is used extensively throughout the kernel
+(dm, md, block layer) for the same purpose. No existing usage in
+`fs/erofs/` — this is the first.
 
-Record: [Reachable from multiple kernel subsystems. The specific
-`pi_lock` → `pool->lock` ordering is mechanically real — verified that
-`schedule_work()` → `__queue_work()` takes `pool->lock`, and
-`create_worker()` holds `pool->lock` while calling `wake_up_process()`
-which takes `pi_lock`.]
+Record: Standard pattern used throughout kernel. First application in
+erofs.
 
-### Step 5.5: SEARCH FOR SIMILAR PATTERNS
-Multiple irq_work-related fixes exist in the RCU subsystem (`git log
---grep=irq_work -- kernel/rcu/`), confirming this is an established
-pattern. Examples:
-- `b41642c87716b` "rcu: Fix rcu_read_unlock() deadloop due to IRQ work"
-- `f596e2ce1c0f2` "rcu: Use IRQ_WORK_INIT_HARD() to avoid
-  rcu_read_unlock() hangs"
-- The referenced Boqun patch for Tree SRCU
+---
 
-Record: [Well-established pattern in RCU subsystem]
+## PHASE 6: STABLE TREE ANALYSIS
 
-===============================================================
-## PHASE 6: CROSS-REFERENCING AND STABLE TREE ANALYSIS
-===============================================================
+### Step 6.1: Does the buggy code exist in stable trees?
+Verified with `git show <version>:fs/erofs/zdata.c | grep`:
+- **v5.10**: Direct-call path does **NOT** exist (648f2de053a88 not
+  ancestor) → NOT APPLICABLE
+- **v5.15**: Direct-call exists at line 802 → **AFFECTED**
+- **v6.1**: Direct-call exists at line 1195 → **AFFECTED**
+- **v6.6**: Direct-call exists at line 1435 → **AFFECTED**
+- **v6.12**: Direct-call exists at line 1373 → **AFFECTED**
 
-### Step 6.1: DOES THE BUGGY CODE EXIST IN STABLE TREES?
-Verified directly. All stable trees from v5.15 onward contain the direct
-`schedule_work()` call in `srcu_gp_start_if_needed()`:
-- **v5.15:** YES — `schedule_work()` at line 168 (with `unsigned short`
-  idx types)
-- **v6.1:** YES — `schedule_work()` at line 168 (with `unsigned long`
-  idx types)
-- **v6.6:** YES — `schedule_work()` at line 168
-- **v6.12:** YES (would also have `preempt_disable()` from
-  `65b4a59557f6f`)
-- **v6.15+:** YES (with PREEMPT_LAZY changes)
+Record: Bug affects all active stable trees v5.15 through v6.12. NOT
+applicable to v5.10 or older.
 
-**Practical impact across versions:**
-- **v5.15, v6.1, v6.6:** `TINY_RCU` requires `!PREEMPTION && !SMP`. On
-  UP non-preemptible kernels, the lock ordering issue is still
-  detectable by lockdep (lockdep tracks lock classes regardless of
-  whether locks spin), but a real deadlock hang is less likely since
-  spinlocks effectively become preemption disablers on UP.
-- **v6.12:** Same as above (`!PREEMPT_RCU && !SMP`, no PREEMPT_LAZY)
-- **v6.15+:** PREEMPT_LAZY enables Tiny SRCU on preemptible UP kernels.
-  The lock ordering inversion becomes more practically concerning
-  because preemption is real.
+### Step 6.2: Backport Complications
+The function context has changed across versions:
+- v5.15: uses `bool sync` parameter, older `in_atomic() ||
+  irqs_disabled()` check
+- v6.1: same older check, some structural changes
+- v6.6: uses different atomic detection
+- v6.12: uses `z_erofs_in_atomic()` helper (from c99fab6e80b76)
 
-Record: [Buggy code present in all stable trees v5.15+. Real practical
-impact increases on v6.15+ with PREEMPT_LAZY. On older trees, lockdep
-still detects the issue.]
+However, the **actual fix location** (wrapping the direct
+`z_erofs_decompressqueue_work()` call) is consistent across all
+versions. The fix should apply with minor context adjustment (fuzz) on
+older trees.
 
-### Step 6.2: CHECK FOR BACKPORT COMPLICATIONS
-Backport complications identified:
-1. `irq_work_types.h` does not exist before v6.19 — must use
-   `irq_work.h` instead
-2. `__SRCU_STRUCT_INIT` macro has different argument counts: 2 in v5.15,
-   3 in v6.6, 4 in current
-3. `srcu_gp_start_if_needed()` has `preempt_disable()/enable()` in v6.12
-   but not in v6.6 (minor context change)
-4. v5.15 uses `unsigned short` for `srcu_idx`/`srcu_idx_max` vs
-   `unsigned long` in v6.1+
+`memalloc_noio_save/restore` helpers exist in all these stable baselines
+(verified in `include/linux/sched/mm.h`).
 
-All of these are minor context/mechanical differences. The core logic
-change (replacing `schedule_work()` with `irq_work_queue()`) is
-identical.
+Record: Minor context adjustment needed for older stable trees. Fix site
+is consistent. Helper APIs available everywhere.
 
-Record: [Expected backport difficulty: minor conflicts. Needs mechanical
-adaptation for include file and macro arguments. Core fix logic applies
-cleanly.]
+### Step 6.3: Related fixes in stable
+No prior `memalloc_noio` fix in erofs exists. The related atomic-context
+fixes (`12d0a24afd9ea`, `c99fab6e80b76`) may or may not be in each
+stable tree, but they are not prerequisites — they only change which
+branch is taken (atomic vs. non-atomic), not the fix itself.
 
-### Step 6.3: CHECK IF RELATED FIXES ARE ALREADY IN STABLE
-No duplicate fix for this specific Tiny SRCU issue found in any stable
-tree or branch.
+Record: No duplicate fix in stable. Not redundant with existing fixes.
 
-Record: [No related fix already in stable]
+---
 
-===============================================================
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-===============================================================
 
-### Step 7.1: IDENTIFY THE SUBSYSTEM AND ITS CRITICALITY
-- **Subsystem:** `kernel/rcu` — SRCU (Sleepable Read-Copy Update), Tiny
-  variant
-- **Criticality:** CORE — RCU/SRCU is fundamental synchronization
-  infrastructure used across the entire kernel. However, the Tiny
-  variant specifically targets UP/embedded systems.
-- **User base:** Embedded/IoT systems, UP configurations, systems that
-  use `CONFIG_TINY_RCU`
+### Step 7.1: Subsystem Criticality
+- **Subsystem**: `fs/erofs` — compressed read-only filesystem
+- **Criticality**: IMPORTANT
+  - Widely used on Android devices (system/vendor partition)
+  - Increasingly used in container/cloud environments (read-only layers)
+  - dm-verity + erofs is the default stack on modern Android
 
-Record: [CORE subsystem (RCU). Tiny SRCU variant targets embedded/UP
-systems.]
+Record: [fs/erofs] [IMPORTANT — Android, embedded, containers]
 
-### Step 7.2: ASSESS SUBSYSTEM ACTIVITY
-Actively maintained by Paul McKenney and Boqun Feng. Regular ongoing
-development, especially around PREEMPT_LAZY support.
+### Step 7.2: Activity Level
+Recent `git log -20 -- fs/erofs/zdata.c` shows active development with
+regular fixes and improvements. Actively maintained by Gao Xiang.
 
-Record: [Active development, strong maintainer oversight]
+Record: Active subsystem with regular maintenance.
 
-===============================================================
+---
+
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
-===============================================================
 
-### Step 8.1: DETERMINE WHO IS AFFECTED
-Systems running with `CONFIG_TINY_SRCU`, which requires
-`CONFIG_TINY_RCU`:
-- **v6.6 and older:** `!PREEMPTION && !SMP` — UP non-preemptible kernels
-  (embedded/IoT)
-- **v6.15+:** `!PREEMPT_RCU && !SMP` with PREEMPT_LAZY possible — UP
-  kernels that may be preemptible
+### Step 8.1: Affected Users
+All users of erofs with compressed data who:
+- Run erofs on dm-verity (standard on Android)
+- Or any other stacking block device where bio completion runs in
+  process context
+- AND experience memory pressure (common on memory-constrained
+  mobile/embedded devices)
 
-Record: [Affected: embedded/UP systems using TINY_SRCU. Narrower than
-general SMP deployments, but these are real production configurations.]
+Record: Large user population (Android devices, embedded systems with
+dm-verity + erofs).
 
-### Step 8.2: DETERMINE THE TRIGGER CONDITIONS
-- `call_srcu()` invoked while a scheduler lock (`pi_lock`) is held
-- This is a realistic scenario in workloads that exercise both scheduler
-  and SRCU paths
-- On PREEMPT_LAZY kernels (v6.15+), the lock ordering is more
-  practically dangerous
-- On older trees, lockdep detects the ordering even if an actual hang is
-  less likely on UP
+### Step 8.2: Trigger Conditions
+- erofs compressed file read (ordinary `read()` or page fault)
+- BIO completion in process context (dm-verity provides this)
+- Memory pressure sufficient to trigger direct reclaim
+- Reclaim attempts swap writeback → `submit_bio_wait` with active
+  `bio_list`
 
-Record: [Trigger: call_srcu() while holding scheduler locks.
-Reproducible with rcutorture SRCU-T. Realistic in production on
-PREEMPT_LAZY.]
+This is realistic on Android devices which frequently run under memory
+pressure. No privileges needed beyond read access to mounted filesystem.
 
-### Step 8.3: DETERMINE THE FAILURE MODE SEVERITY
-- **Lockdep splat:** WARNING level — but lockdep splats in core
-  synchronization primitives are taken seriously because they indicate a
-  real lock ordering design flaw that can hide other real bugs
-- **Potential deadlock on PREEMPT_LAZY:** On v6.15+ UP preemptible
-  kernels, the lock ordering inversion represents a genuine deadlock
-  risk under the right timing conditions — MEDIUM-HIGH
-- **Note on the UAF:** The `irq_work_sync()` in cleanup prevents a UAF
-  that would exist only with the new irq_work mechanism. This is not a
-  pre-existing UAF in old stable trees — it's safety plumbing for the
-  new code introduced by this same commit.
+Record: [Common trigger: ordinary file reads under memory pressure on
+Android/dm-verity] [No special privileges needed]
 
-Record: [Lockdep splat (WARNING) on all affected trees + potential real
-deadlock risk on PREEMPT_LAZY (v6.15+). Severity: MEDIUM-HIGH overall]
+### Step 8.3: Failure Mode Severity
+**CRITICAL**: Complete system deadlock/hang. The `submit_bio_wait()`
+blocks indefinitely because the bio is queued to the active `bio_list`
+but never drained (the draining happens only after the parent bio
+completion returns, which is waiting for this one). This renders the
+system unresponsive and typically requires a hard reboot.
 
-### Step 8.4: CALCULATE RISK-BENEFIT RATIO
-**BENEFIT:**
-- Fixes lockdep-detected lock ordering inversion in a core
-  synchronization primitive
-- On v6.15+: prevents potential real deadlock
-- Queued into `fixes` branch (not features) by RCU maintainer —
-  maintainers consider this a fix
-- Eliminates lockdep noise that can mask real bugs
+Record: [System deadlock/hang] [Severity: CRITICAL]
 
-**RISK:**
-- Very low. ~22 lines, well-understood irq_work deferral pattern
-- Reviewed by Paul McKenney, tested with rcutorture
-- Only adds one extra asynchronous hop to the GP start path
-  (functionally equivalent)
-- Needs minor mechanical adaptation for older trees (include file, macro
-  args)
+### Step 8.4: Risk-Benefit Ratio
+- **BENEFIT**: Very high — prevents a complete system hang on a widely-
+  deployed platform configuration
+- **RISK**: Very low — 3-line addition using a well-established kernel
+  API, no logic changes, no new code paths, no changed return values, no
+  API modifications
+- **Ratio**: Overwhelmingly favorable
 
-Record: [Benefit: fixes real lockdep ordering bug in core
-infrastructure, prevents potential deadlock on newer stables. Risk: very
-low — small, well-reviewed, well-tested.]
+Record: [Benefit: Very High] [Risk: Very Low] [Ratio: Strongly
+favorable]
 
-===============================================================
+---
+
 ## PHASE 9: FINAL SYNTHESIS
-===============================================================
 
-### Step 9.1: COMPILE THE EVIDENCE
+### Step 9.1: Evidence Compilation
 
 **FOR backporting:**
-- Fixes a lockdep-detected lock ordering inversion between `pi_lock` and
-  workqueue `pool->lock`
-- The lock chain is mechanically verified: `schedule_work()` →
-  `__queue_work()` → `pool->lock`, and `create_worker()` →
-  `wake_up_process()` → `pi_lock`
-- Small, surgical fix (~22 lines, 2 files, single subsystem)
-- Reviewed by Paul McKenney (RCU co-creator), committed by Boqun Feng
-  (RCU maintainer)
-- Queued into `fixes.v7.0-rc4` branch (not features) — maintainers
-  consider this a bug fix
-- Tested with rcutorture SRCU-T, no lockdep warnings
-- Well-understood irq_work deferral pattern already used in Tree RCU
-- Buggy `schedule_work()` pattern exists in all stable trees since v5.12
-- On v6.15+ with PREEMPT_LAZY, the lock ordering represents a more
-  practical deadlock risk
-- Lockdep splats in core RCU infrastructure can mask other real bugs
+- Fixes a real deadlock (system hang) with a concrete trigger and stack
+  trace
+- Extremely small and contained fix (3 lines in 1 function in 1 file)
+- Uses the standard, well-established `memalloc_noio_save/restore`
+  kernel API
+- Reviewed by erofs maintainer (Gao Xiang) and key reviewer (Chao Yu)
+- Committed through the maintainer's fixes tree
+- Affects widely-deployed platform configuration (Android + dm-verity +
+  erofs)
+- Bug has existed since v5.13 and is present in all active stable trees
+  v5.15+
+- Multiple `GFP_KERNEL` allocation sites confirmed in the decompression
+  path (vm_map_ram, kvcalloc)
+- Primary read path for compressed erofs — not an obscure corner case
+- Pattern of earlier bugs in same optimization area (648f2de,
+  12d0a24afd9ea, c99fab6e80b76) demonstrates the area is correctness-
+  sensitive
+- No existing `memalloc_noio` protection in erofs anywhere
 
 **AGAINST backporting:**
-- On older stable trees (v5.15 through v6.12), the lock ordering is
-  detectable by lockdep but a real deadlock hang is less likely on UP
-  non-preemptible kernels
-- Needs minor mechanical backport adaptation (`irq_work_types.h` →
-  `irq_work.h`, macro argument counts)
-- No external user reports of actual deadlocks
-- The UAF prevention in the commit is for the *new* irq_work mechanism,
-  not a pre-existing bug
-- `CONFIG_TINY_SRCU` is a narrower configuration than general SMP
-  deployments
+- No explicit `Fixes:` tag or `Cc: stable` (expected for commits needing
+  manual review)
+- Minor context differences across stable tree versions (trivially
+  resolvable)
+- NOIO scope affects the entire decompression call, not just
+  `vm_map_ram()` (intentional and beneficial — there are multiple
+  GFP_KERNEL sites)
 
 **UNRESOLVED:**
-- Could not independently fetch lore.kernel.org (Anubis) — used mail-
-  archive mirror instead
-- Whether lockdep on UP no-op spinlocks still reports this ordering
-  (likely yes, since lockdep tracks lock classes regardless)
-- No verified concrete in-tree path that hits Tiny `call_srcu()` while
-  specifically holding `pi_lock` (though the ordering conflict is
-  mechanically real)
+- Exact frequency of this deadlock in production (but the trigger
+  conditions are realistic)
+- Exact lore.kernel.org discussion thread for this specific patch (anti-
+  bot protections)
 
-### Step 9.2: APPLY THE STABLE RULES CHECKLIST
-1. **Obviously correct and tested?** YES — standard irq_work deferral
-   pattern, reviewed by Paul McKenney, tested with rcutorture
-2. **Fixes a real bug that affects users?** YES — lockdep-detected lock
-   ordering inversion. Lockdep warnings in core RCU are treated as
-   serious issues by maintainers. More practically dangerous on v6.15+.
-3. **Important issue?** YES for v6.15+ (potential deadlock). MEDIUM for
-   older trees (lockdep warning in core infrastructure).
-4. **Small and contained?** YES — ~22 lines, 2 files, single subsystem
-5. **No new features or APIs?** Correct — internal mechanism change only
-6. **Can apply to stable trees?** YES with minor mechanical adaptation
+### Step 9.2: Stable Rules Checklist
+1. **Obviously correct and tested?** YES — standard kernel pattern,
+   reviewed by maintainer
+2. **Fixes a real bug?** YES — deadlock under memory pressure
+3. **Important issue?** YES — system hang/deadlock, CRITICAL severity
+4. **Small and contained?** YES — 3 lines in 1 file, 1 function
+5. **No new features or APIs?** YES — no new features
+6. **Can apply to stable?** YES — applicable to v5.15+ with minor
+   context adjustment; `memalloc_noio_*` helpers available in all target
+   trees
 
-### Step 9.3: CHECK FOR EXCEPTION CATEGORIES
-Not an exception category. This is a standard synchronization/lock-
-ordering bug fix.
+### Step 9.3: Exception Categories
+Not applicable (this is a straightforward critical bug fix).
 
-### Step 9.4: MAKE YOUR DECISION
-This commit fixes a real lockdep-detected lock ordering inversion in the
-Tiny SRCU implementation — a core kernel synchronization primitive. The
-fix is small (~22 lines), well-contained (2 files, single subsystem),
-reviewed by the RCU maintainers (Paul McKenney, Boqun Feng), tested with
-rcutorture, and uses a well-established irq_work deferral pattern.
-
-The fact that this was queued into the RCU `fixes` branch (not features)
-by the maintainers demonstrates they consider it a bug fix, not an
-enhancement. Lockdep warnings in core RCU infrastructure are taken
-seriously because they indicate real design flaws that can cause
-problems under the right conditions and that mask other real bugs.
-
-The practical impact varies across stable trees: on v6.15+ with
-PREEMPT_LAZY, the risk is higher (potential real deadlock); on older
-trees, it's a lockdep warning that nonetheless indicates a genuine lock
-ordering problem. The regression risk is very low given the maturity of
-the irq_work mechanism and the surgical nature of the change.
-
-The minor backport adaptations needed (include file, macro arguments)
-are mechanical and well within the normal scope of stable backport
-adjustments.
+### Step 9.4: Decision
+This is a clear, surgical fix for a critical deadlock in the primary
+read path of a widely-deployed filesystem. The fix is minimal, uses a
+standard kernel API, was reviewed by the subsystem maintainer, and has
+virtually no regression risk. It meets all stable kernel criteria.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed tags: Reviewed-by Paul E. McKenney, Signed-off-by
-  Boqun Feng (RCU maintainers). No Fixes:, no Reported-by:, no Cc:
-  stable.
-- [Phase 2] Diff analysis: +22/-1 lines across 2 files. Core change:
-  `schedule_work()` → `irq_work_queue()` in `srcu_gp_start_if_needed()`,
-  plus `irq_work_sync()` in cleanup, `init_irq_work()` in init, new
-  `srcu_tiny_irq_work()` handler.
-- [Phase 3] git blame: buggy `schedule_work()` introduced in
-  `1a893c711a600` by Paul McKenney (2020-11-13). First in release tags
-  starting around v5.12.
-- [Phase 3] git show `1a893c711a600`: confirmed it created
-  `srcu_gp_start_if_needed()` with direct `schedule_work()`.
-- [Phase 3] git tag --contains `da2ac5623716c`: PREEMPT_LAZY Tiny SRCU
-  enablement first in v6.15.
-- [Phase 3] git show v5.15/v6.1/v6.6 srcutiny.c: all contain direct
-  `schedule_work()` in `srcu_gp_start_if_needed()`.
-- [Phase 3] `irq_work_types.h` (commit `c809f081fe400`) first in v6.19
-  only — not in v6.18, v6.15, v6.12, v6.6, v6.1, v5.15. Verified via
-  `git show v6.18:include/linux/irq_work_types.h` (exit 128) and `git
-  tag --contains`.
-- [Phase 3] v5.15 `__SRCU_STRUCT_INIT` has 2 args, v6.6 has 3 args,
-  current has 4 args — verified via git show of respective headers.
-- [Phase 4] mail-archive.com: found patch discussion at
-  https://www.mail-archive.com/linux-
-  kernel@vger.kernel.org/msg2619639.html — Boqun queued into
-  `fixes.v7.0-rc4`, Paul's Reviewed-by provided off-list. No NAKs.
-- [Phase 5] Traced callers: `call_srcu()` used by KVM, mm, block, fs,
-  GPIO, uprobes — 14+ call sites in .c files.
-- [Phase 5] Verified lock chain: `schedule_work()` → `__queue_work()` →
-  `pool->lock` (48 instances of `raw_spin_lock.*pool->lock` in
-  workqueue.c). `create_worker()` → `wake_up_process()` → `pi_lock`.
-- [Phase 5] Verified irq_work APIs (`init_irq_work`, `irq_work_queue`,
-  `irq_work_sync`) exist in v5.15+ via `git show
-  v5.15:include/linux/irq_work.h`.
-- [Phase 6] Verified Kconfig: v6.6 `TINY_RCU` requires `!PREEMPTION &&
-  !SMP`; current requires `!PREEMPT_RCU && !SMP`.
-- [Phase 6] No duplicate fix found in any stable tree for this Tiny SRCU
-  issue.
-- [Phase 7] RCU is CORE subsystem, actively maintained.
-- [Phase 8] Severity: lockdep warning on all affected trees; potential
-  real deadlock on v6.15+ (PREEMPT_LAZY).
-- UNVERIFIED: Could not fetch lore.kernel.org directly (Anubis anti-
-  bot); used mail-archive mirror.
-- UNVERIFIED: Whether lockdep still reports the ordering on UP
-  configurations where spinlocks are effectively no-ops (likely yes,
-  lockdep tracks classes regardless).
-- UNVERIFIED: Specific in-tree call path where Tiny SRCU `call_srcu()`
-  is invoked while holding `pi_lock` (the ordering conflict is
-  mechanically real but no specific trigger path was traced end-to-end).
+- [Phase 1] Parsed tags: Reviewed-by Gao Xiang (erofs maintainer) and
+  Chao Yu. No Fixes: tag (expected). Signed-off-by Jiucheng Xu (Amlogic
+  author).
+- [Phase 2] Diff analysis: 3 lines added in
+  `z_erofs_decompress_kickoff()`, wrapping
+  `z_erofs_decompressqueue_work()` with `memalloc_noio_save/restore`.
+- [Phase 2] Verified `vm_map_ram()` uses `GFP_KERNEL` at
+  `mm/vmalloc.c:3070` (`vb_alloc(size, GFP_KERNEL)`) and line 3078
+  (`alloc_vmap_area(..., GFP_KERNEL, ...)`).
+- [Phase 2] Verified additional `GFP_KERNEL` allocations in
+  decompression: `kvcalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at
+  `zdata.c:1300,1304` and `kmalloc(..., GFP_KERNEL | __GFP_NOFAIL)` at
+  `zdata.c:1161`.
+- [Phase 2] Verified `erofs_vm_map_ram()` at `internal.h:439-452` calls
+  `vm_map_ram()`.
+- [Phase 3] git blame: Lines 1458-1494 traced to `7865827c432bf9` (Gao
+  Xiang, 2022-01-21, rearrangement) and original logic from
+  `648f2de053a88` (Huang Jianan, 2021-03-17).
+- [Phase 3] `git tag --contains 648f2de053a88`: First appeared in v5.13.
+- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v5.10`: NOT
+  ancestor (path absent in v5.10).
+- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v5.15`: IS
+  ancestor (path present).
+- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v6.1`: IS
+  ancestor.
+- [Phase 3] `git merge-base --is-ancestor 648f2de053a88 v6.6`: IS
+  ancestor.
+- [Phase 3] Related atomic-context fixes verified: `12d0a24afd9ea` (1
+  file, 1 line), `c99fab6e80b76` (1 file, 11 lines).
+- [Phase 3] `git log --grep='memalloc_noio' -- fs/erofs`: empty — no
+  prior NOIO fix in erofs.
+- [Phase 3] `git log --author='Jiucheng Xu' -- fs/erofs`: no prior erofs
+  commits from author.
+- [Phase 4] lore.kernel.org not directly fetchable (anti-bot). Related
+  discussion for 12d0a24afd9ea confirms dm-verity + erofs scenario with
+  real stack traces.
+- [Phase 5] Callers verified: `z_erofs_decompress_kickoff()` called from
+  `z_erofs_endio()` (line 1668) and `z_erofs_submit_queue()` (line
+  1805).
+- [Phase 5] Reachability verified: `z_erofs_read_folio()` (line 1887)
+  and `z_erofs_readahead()` (line 1910) are the address_space_operations
+  (line 1944-1945).
+- [Phase 5] No existing `memalloc_noio_save` in `fs/erofs/` (grep
+  confirmed 0 matches).
+- [Phase 6] Direct-call path verified in: v5.15 (line 802), v6.1 (line
+  1195), v6.6 (line 1435), v6.12 (line 1373).
+- [Phase 6] `memalloc_noio_save` helpers exist in
+  `include/linux/sched/mm.h` (4 occurrences confirmed).
+- [Phase 8] Failure mode: System deadlock/hang in `submit_bio_wait` due
+  to bio queued to active `bio_list`, severity CRITICAL.
+- UNVERIFIED: Exact lore.kernel.org thread for this specific patch
+  (anti-bot protection blocked access).
+- UNVERIFIED: Exact real-world frequency of this deadlock in production
+  (trigger conditions are realistic based on Android + dm-verity +
+  memory pressure).
 
 **YES**
 
- include/linux/srcutiny.h |  4 ++++
- kernel/rcu/srcutiny.c    | 19 ++++++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ fs/erofs/zdata.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/include/linux/srcutiny.h b/include/linux/srcutiny.h
-index e0698024667a7..313a0e17f22fe 100644
---- a/include/linux/srcutiny.h
-+++ b/include/linux/srcutiny.h
-@@ -11,6 +11,7 @@
- #ifndef _LINUX_SRCU_TINY_H
- #define _LINUX_SRCU_TINY_H
- 
-+#include <linux/irq_work_types.h>
- #include <linux/swait.h>
- 
- struct srcu_struct {
-@@ -24,18 +25,21 @@ struct srcu_struct {
- 	struct rcu_head *srcu_cb_head;	/* Pending callbacks: Head. */
- 	struct rcu_head **srcu_cb_tail;	/* Pending callbacks: Tail. */
- 	struct work_struct srcu_work;	/* For driving grace periods. */
-+	struct irq_work srcu_irq_work;	/* Defer schedule_work() to irq work. */
- #ifdef CONFIG_DEBUG_LOCK_ALLOC
- 	struct lockdep_map dep_map;
- #endif /* #ifdef CONFIG_DEBUG_LOCK_ALLOC */
- };
- 
- void srcu_drive_gp(struct work_struct *wp);
-+void srcu_tiny_irq_work(struct irq_work *irq_work);
- 
- #define __SRCU_STRUCT_INIT(name, __ignored, ___ignored, ____ignored)	\
- {									\
- 	.srcu_wq = __SWAIT_QUEUE_HEAD_INITIALIZER(name.srcu_wq),	\
- 	.srcu_cb_tail = &name.srcu_cb_head,				\
- 	.srcu_work = __WORK_INITIALIZER(name.srcu_work, srcu_drive_gp),	\
-+	.srcu_irq_work = { .func = srcu_tiny_irq_work },		\
- 	__SRCU_DEP_MAP_INIT(name)					\
- }
- 
-diff --git a/kernel/rcu/srcutiny.c b/kernel/rcu/srcutiny.c
-index 3450c3751ef7a..a2e2d516e51b9 100644
---- a/kernel/rcu/srcutiny.c
-+++ b/kernel/rcu/srcutiny.c
-@@ -9,6 +9,7 @@
-  */
- 
- #include <linux/export.h>
-+#include <linux/irq_work.h>
- #include <linux/mutex.h>
- #include <linux/preempt.h>
- #include <linux/rcupdate_wait.h>
-@@ -41,6 +42,7 @@ static int init_srcu_struct_fields(struct srcu_struct *ssp)
- 	ssp->srcu_idx_max = 0;
- 	INIT_WORK(&ssp->srcu_work, srcu_drive_gp);
- 	INIT_LIST_HEAD(&ssp->srcu_work.entry);
-+	init_irq_work(&ssp->srcu_irq_work, srcu_tiny_irq_work);
- 	return 0;
- }
- 
-@@ -84,6 +86,7 @@ EXPORT_SYMBOL_GPL(init_srcu_struct);
- void cleanup_srcu_struct(struct srcu_struct *ssp)
+diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
+index b71fcf4be484a..8ba409df1ca70 100644
+--- a/fs/erofs/zdata.c
++++ b/fs/erofs/zdata.c
+@@ -1459,6 +1459,7 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 				       int bios)
  {
- 	WARN_ON(ssp->srcu_lock_nesting[0] || ssp->srcu_lock_nesting[1]);
-+	irq_work_sync(&ssp->srcu_irq_work);
- 	flush_work(&ssp->srcu_work);
- 	WARN_ON(ssp->srcu_gp_running);
- 	WARN_ON(ssp->srcu_gp_waiting);
-@@ -177,6 +180,20 @@ void srcu_drive_gp(struct work_struct *wp)
- }
- EXPORT_SYMBOL_GPL(srcu_drive_gp);
+ 	struct erofs_sb_info *const sbi = EROFS_SB(io->sb);
++	int gfp_flag;
  
-+/*
-+ * Use an irq_work to defer schedule_work() to avoid acquiring the workqueue
-+ * pool->lock while the caller might hold scheduler locks, causing lockdep
-+ * splats due to workqueue_init() doing a wakeup.
-+ */
-+void srcu_tiny_irq_work(struct irq_work *irq_work)
-+{
-+	struct srcu_struct *ssp;
-+
-+	ssp = container_of(irq_work, struct srcu_struct, srcu_irq_work);
-+	schedule_work(&ssp->srcu_work);
-+}
-+EXPORT_SYMBOL_GPL(srcu_tiny_irq_work);
-+
- static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- {
- 	unsigned long cookie;
-@@ -189,7 +206,7 @@ static void srcu_gp_start_if_needed(struct srcu_struct *ssp)
- 	WRITE_ONCE(ssp->srcu_idx_max, cookie);
- 	if (!READ_ONCE(ssp->srcu_gp_running)) {
- 		if (likely(srcu_init_done))
--			schedule_work(&ssp->srcu_work);
-+			irq_work_queue(&ssp->srcu_irq_work);
- 		else if (list_empty(&ssp->srcu_work.entry))
- 			list_add(&ssp->srcu_work.entry, &srcu_boot_list);
+ 	/* wake up the caller thread for sync decompression */
+ 	if (io->sync) {
+@@ -1491,7 +1492,9 @@ static void z_erofs_decompress_kickoff(struct z_erofs_decompressqueue *io,
+ 			sbi->opt.sync_decompress = EROFS_SYNC_DECOMPRESS_FORCE_ON;
+ 		return;
  	}
++	gfp_flag = memalloc_noio_save();
+ 	z_erofs_decompressqueue_work(&io->u.work);
++	memalloc_noio_restore(gfp_flag);
+ }
+ 
+ static void z_erofs_fill_bio_vec(struct bio_vec *bvec,
 -- 
 2.53.0
 
