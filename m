@@ -1,44 +1,46 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8031A3D16E5;
-	Mon, 30 Mar 2026 12:38:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1EC63D2FE0;
+	Mon, 30 Mar 2026 12:38:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874338; cv=none; b=QXArrhZWLTuxPKCIhTKKmGoTVFlVT7m1nCKzxEu/bJ+Ch1UCESW2L1NEmW7XSdV0uIde40AxT0m6Q7EjqyXtMA+gq+TWpTDMUstcl0kS5Z0e9/3kOvBbY/YpASyYJrq66t7BucFzdTixWVr+CQ4GwYGcQOUFQmSGy5i8297S13E=
+	t=1774874339; cv=none; b=Nw68tA4pNe+TH5lj5OX5Qd5VsdgfN3pMi+2+uUL/SknWYrVvVY7CTP5h5eCNKQCIIZKxlDgvsJ8vRq9XuI1/lLMH0Z61ykG07oH10t0qYgLi5Z1R6cK8JUJVvSV+BMjUkeeU0SB85rENZ4Dc+EXbDikmF7uJhn/f57uIV5uHr+A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874338; c=relaxed/simple;
-	bh=lNnTyxFDuhsw1+MjDWI7JngK4wScW9vg6MGq567ugdc=;
+	s=arc-20240116; t=1774874339; c=relaxed/simple;
+	bh=tESJMBX27oDt5eJWNgWE3wG/L/mnZJEOjFSFMeL4a98=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=tSM2KMmiQeUcy6vMJXdFeoQ4g+MWzSQ6Kl9Tt5VNICVt6LsersKxF9flsGI/9IOvvbTRZPJkqgK6EboJB8FsM+m6imwXiEFBr4vkfGj4Sk8HtQBAs3vf9wn+GcBrqLAxsmzkPwmhETWIudMvvkahLVDXLFlmHnC/a2Pcjn21Ucw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=RetctO0l; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=Sl8w7pvHJTyOEjo6AuYMWPCo1lkFcmc+G6FN5CioJbm7q6M0cpUBhsfBofVJcrMAuxYbWmzGiFUpxDaVrfKtqvSmFfI/H9lm2t3I+yO4yQNI6FILw3AA156aml9FPLWVYfVva3KIEXv4pIvAJkfGD44hpS+kHpeWoR7hfV+6gA8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=Z7AzdZfu; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="RetctO0l"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23800C4CEF7;
-	Mon, 30 Mar 2026 12:38:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="Z7AzdZfu"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1524C2BCB1;
+	Mon, 30 Mar 2026 12:38:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874336;
-	bh=lNnTyxFDuhsw1+MjDWI7JngK4wScW9vg6MGq567ugdc=;
+	s=k20201202; t=1774874338;
+	bh=tESJMBX27oDt5eJWNgWE3wG/L/mnZJEOjFSFMeL4a98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RetctO0lb+4wCIK/U6HgjCAFpaGaGZmFl8uCwM6mYXnrt/2oRtCE8iQBplCiOXAxn
-	 HmtbSB2uhwB+QjKVbP/100l59pe9ZC1t9KRlkwHvnrOl9w+8NQistaZwqa20V9Njs+
-	 RSyA4mm0D54a2FLB258Rf49Lm/LCLs6s//DfJ4sXMM/kVTT0418/IHB816YYS/epwb
-	 47ciGxupouslCkT+DdQo40o/avRJpMiUDr4YYqyeqJEhju2o/nhP9gJ/OWONMpocTD
-	 MwQ2QzHbF300kw5vYLwqDOEEqUQpZ3ABQHVLVDnuiNukUw0gAWayM4JMN4qg0QBOJ5
-	 FjAAX2PxWxT/g==
+	b=Z7AzdZfuQmDknOzoc4x1z6C3t6dWPdWV4BgGSEnF7kXZBcB8pCuqKjuw8WarYXK19
+	 OJUKYmQHTxrpaUURWYuW1VQ5duoqD9urK847adXfti5F+x5bM2hNfhUTJ9XQI6/Jcp
+	 jgR512qMN1PRISgl4UQkOuFnFCAr3awLqsRfO7rVeAMffeGs7244BgSZYQitI6HhFh
+	 lnebSu2036NBmix2BEIxuehrkqv05Cdr9tueAzWssLk0s/LaWIFBKb0AHytscX/YKC
+	 wShFzdbWk6h+lKTHBcN56tcyTm42Ql9CT4pGMEMH3Dm27f8XDYW+b/tjjIXjFR1hB9
+	 2G1hx0edkb3Hg==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Krishna Chomal <krishna.chomal108@gmail.com>,
-	WJ Enderlava <jie7172585@gmail.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+Cc: Donet Tom <donettom@linux.ibm.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>,
-	hansg@kernel.org,
-	platform-driver-x86@vger.kernel.org,
+	airlied@gmail.com,
+	simona@ffwll.ch,
+	amd-gfx@lists.freedesktop.org,
+	dri-devel@lists.freedesktop.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-6.18] platform/x86: hp-wmi: Add support for Omen 16-wf1xxx (8C76)
-Date: Mon, 30 Mar 2026 08:38:22 -0400
-Message-ID: <20260330123842.756154-9-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.12] drm/amdgpu: Handle GPU page faults correctly on non-4K page systems
+Date: Mon, 30 Mar 2026 08:38:24 -0400
+Message-ID: <20260330123842.756154-11-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -54,376 +56,442 @@ X-Patchwork-Hint: Ignore
 X-stable-base: Linux 6.19.10
 Content-Transfer-Encoding: 8bit
 
-From: Krishna Chomal <krishna.chomal108@gmail.com>
+From: Donet Tom <donettom@linux.ibm.com>
 
-[ Upstream commit 84d29bfd1929d08f092851162a3d055a2134d043 ]
+[ Upstream commit 4e9597f22a3cb8600c72fc266eaac57981d834c8 ]
 
-The HP Omen 16-wf1xxx (board ID: 8C76) has the same WMI interface as
-other Victus S boards, but requires quirks for correctly switching
-thermal profile (similar to board 8C78).
+During a GPU page fault, the driver restores the SVM range and then maps it
+into the GPU page tables. The current implementation passes a GPU-page-size
+(4K-based) PFN to svm_range_restore_pages() to restore the range.
 
-Add the DMI board name to victus_s_thermal_profile_boards[] table and
-map it to omen_v1_thermal_params.
+SVM ranges are tracked using system-page-size PFNs. On systems where the
+system page size is larger than 4K, using GPU-page-size PFNs to restore the
+range causes two problems:
 
-Testing on board 8C76 confirmed that platform profile is registered
-successfully and fan RPMs are readable and controllable.
+Range lookup fails:
+Because the restore function receives PFNs in GPU (4K) units, the SVM
+range lookup does not find the existing range. This will result in a
+duplicate SVM range being created.
 
-Tested-by: WJ Enderlava <jie7172585@gmail.com>
-Reported-by: WJ Enderlava <jie7172585@gmail.com>
-Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221149
-Signed-off-by: Krishna Chomal <krishna.chomal108@gmail.com>
-Link: https://patch.msgid.link/20260227154106.226809-1-krishna.chomal108@gmail.com
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+VMA lookup failure:
+The restore function also tries to locate the VMA for the faulting address.
+It converts the GPU-page-size PFN into an address using the system page
+size, which results in an incorrect address on non-4K page-size systems.
+As a result, the VMA lookup fails with the message: "address 0xxxx VMA is
+removed".
+
+This patch passes the system-page-size PFN to svm_range_restore_pages() so
+that the SVM range is restored correctly on non-4K page systems.
+
+Acked-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Donet Tom <donettom@linux.ibm.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+(cherry picked from commit 074fe395fb13247b057f60004c7ebcca9f38ef46)
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the data needed for the comprehensive analysis.
+All key facts verified. Here is the complete analysis.
 
 ---
 
 ## PHASE 1: COMMIT MESSAGE FORENSICS
 
 **Step 1.1: Subject Line**
-Record: [platform/x86: hp-wmi] [Add] [DMI board name 8C76 to Victus S
-thermal profile table, mapped to omen_v1_thermal_params]
+Record: [drm/amdgpu] [Handle correctly] [Fix PFN unit conversion for SVM
+range restore on non-4K page systems]
 
 **Step 1.2: Tags**
-Record:
-- `Tested-by: WJ Enderlava <jie7172585@gmail.com>` — real user tested on
-  hardware
-- `Reported-by: WJ Enderlava <jie7172585@gmail.com>` — single reporter,
-  real hardware user
-- `Closes: https://bugzilla.kernel.org/show_bug.cgi?id=221149` — user-
-  filed bugzilla
-- `Signed-off-by: Krishna Chomal` — author
-- `Link: https://patch.msgid.link/20260227154106.226809-1-
-  krishna.chomal108@gmail.com`
-- `Reviewed-by: Ilpo Järvinen` — subsystem maintainer reviewed
-- `Signed-off-by: Ilpo Järvinen` — maintainer committed
-- No `Fixes:` tag (expected for manual review candidates)
-- No `Cc: stable` (expected)
-- No syzbot involvement
+- Acked-by: Christian König (verified AMDGPU co-maintainer via
+  MAINTAINERS)
+- Signed-off-by: Donet Tom <donettom@linux.ibm.com> (author, IBM — Power
+  systems with 64K pages)
+- Signed-off-by: Alex Deucher (verified AMDGPU co-maintainer via
+  MAINTAINERS)
+- Cherry-picked from: 074fe395fb13247b057f60004c7ebcca9f38ef46 (pipeline
+  marker, ignored)
+- No Fixes:, Reported-by:, Link:, Cc: stable, Tested-by: tags (expected
+  for candidates)
 
-**Step 1.3: Body Text**
-Record: Bug: Board 8C76 (HP Omen 16-wf1xxx) has the same WMI interface
-as Victus S boards but requires quirks for correct thermal profile
-switching (similar to 8C78). Symptom: without the entry, the board
-cannot register the platform profile and fan RPMs are not
-readable/controllable. Testing confirmed on real hardware that profile
-registers and fans work after the fix. Root cause: missing DMI board
-name in the quirk table.
+Record: [Acked-by from subsystem co-maintainer; author from IBM; merged
+by subsystem co-maintainer. No reporter or explicit stable nomination.]
+
+**Step 1.3: Commit Body**
+Two concrete bugs described:
+1. **SVM Range lookup failure**: `svm_range_restore_pages()` receives
+   PFNs in GPU (4K) units, but the SVM interval tree is indexed by
+   system-page PFNs. On non-4K systems, the lookup fails and a
+   **duplicate SVM range** is created.
+2. **VMA lookup failure**: The restore function does `vma_lookup(mm,
+   addr << PAGE_SHIFT)`, which reconstructs the byte address from a
+   system-page PFN. When given a GPU-page PFN instead, the computed
+   address is wrong, producing `"address 0xxxx VMA is removed"`.
+
+Record: [Bug: wrong PFN unit passed to SVM restore] [Symptoms: duplicate
+SVM range + false VMA removal] [Root cause: addr /= AMDGPU_GPU_PAGE_SIZE
+gives GPU-page PFN where system-page PFN is expected] [No version info
+in message]
 
 **Step 1.4: Hidden Bug Fix Detection**
-Record: Yes — phrased as "Add support" but this is a hardware-specific
-DMI quirk. Without this entry, the board does not get routed into the
-correct thermal handling path, meaning no platform profile registration
-and no fan control. This is functionally a bug fix for users of this
-specific hardware.
+Record: [Explicit bug fix — "Handle ... correctly" is standard bug-fix
+language with concrete failure modes described]
 
 ---
 
 ## PHASE 2: DIFF ANALYSIS
 
 **Step 2.1: Inventory**
-Record: 1 file changed: `drivers/platform/x86/hp/hp-wmi.c`, +4 lines, 0
-removed. Single table entry added to
-`victus_s_thermal_profile_boards[]`. Scope: single-file, surgical, data-
-only change.
+Record: [1 file: `amdgpu_vm.c`, ~3 logical lines changed] [Function:
+`amdgpu_vm_handle_fault()`] [Scope: single-file, single-function
+surgical fix]
 
 **Step 2.2: Code Flow Change**
-Record: Before: board "8C76" is not in
-`victus_s_thermal_profile_boards[]`, so `dmi_first_match()` in
-`setup_active_thermal_profile_params()` does not match it;
-`is_victus_s_board` stays false; thermal profile, fan, and power-source
-handling all skip the Victus S path. After: "8C76" matches,
-`driver_data` = `&omen_v1_thermal_params` (same as "8C78"), enabling the
-full Victus S / Omen v1 code path.
+
+Before:
+
+```2976:2982:drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+        addr /= AMDGPU_GPU_PAGE_SIZE;
+
+        if (is_compute_context && !svm_range_restore_pages(adev, pasid,
+vmid,
+            node_id, addr, ts, write_fault)) {
+                amdgpu_bo_unref(&root);
+                return true;
+        }
+```
+
+After (from the diff): `addr >> PAGE_SHIFT` is passed to
+`svm_range_restore_pages()`, and `addr /= AMDGPU_GPU_PAGE_SIZE` is moved
+to after the SVM call for the GPU page-table update path.
+
+Record: [Before: one conversion (GPU-page PFN) was reused for both SVM
+restore and GPU PTE update. After: SVM restore gets system-page PFN; GPU
+PTE path still gets GPU-page PFN.]
 
 **Step 2.3: Bug Mechanism**
-Record: Category: Hardware workaround / DMI match table entry. Specific
-mechanism: missing board name in DMI quirk table causes incorrect
-thermal profile handling for this laptop SKU.
+Category: Logic/correctness — address unit mismatch.
+
+Verified from `kfd_svm.c`:
+- `svm_range_from_addr()` documentation says `@addr: address to search
+  range interval tree, in pages` (system pages)
+- `vma_lookup(mm, addr << PAGE_SHIFT)` at line 3136 converts back to
+  byte address using system page shift
+
+`AMDGPU_GPU_PAGE_SIZE` is confirmed as `4096` in `amdgpu_gart.h:35`.
+
+On 4K systems: `addr >> PAGE_SHIFT == addr / 4096` — identical, bug
+invisible.
+On 64K systems: `addr / 4096` gives a value 16x too large compared to
+`addr >> 16`.
+
+Record: [Logic/correctness bug. GPU-page PFN vs system-page PFN mismatch
+breaks SVM range and VMA lookups on non-4K systems.]
 
 **Step 2.4: Fix Quality**
-Record: Obviously correct — identical pattern to adjacent "8C78" entry.
-Minimal and surgical (4 lines). Zero regression risk: only activates on
-exact DMI board name "8C76". No API or ABI changes.
+Record: [Obviously correct — callee contract verified in code. Minimal —
+~3 lines. No regression risk on 4K systems (mathematically identical).
+Very low risk overall.]
 
 ---
 
 ## PHASE 3: GIT HISTORY INVESTIGATION
 
 **Step 3.1: Blame**
-Record: `git blame -L 162,191` shows the entire
-`victus_s_thermal_profile_boards[]` table (in its `dmi_system_id` form
-with `driver_data`) was created by commit `e7cbd37292653` ("fix platform
-profile values for Omen 16-wf1xxx", Krishna Chomal, 2026-01-13). The
-table structure/`};` terminator originates from `6e4ab59b8391a` (Julien
-Robin, 2025-01-16, original Victus S support).
+Verified via `git blame`: The buggy `addr /= AMDGPU_GPU_PAGE_SIZE`
+before the SVM call was introduced by `ea53af8a59c89b` ("drm/amdkfd: SVM
+API call to restore page tables") by Alex Sierra (2020-05-11). First
+appeared in `v5.14-rc1`.
 
-**Step 3.2: Fixes: tag**
-Record: N/A — no Fixes: tag present (expected for manual review). The
-related prerequisite `e7cbd37292653` itself has `Fixes: fb146a38cb119`.
+Record: [Buggy code introduced in ea53af8a59c89b, first in v5.14-rc1.
+Present in all stable trees 5.15+.]
+
+**Step 3.2: Fixes Tag**
+Record: [No Fixes: tag — expected for candidates under review.]
 
 **Step 3.3: File History**
-Record: Recent `hp-wmi.c` history shows: `e7cbd37292653` (per-board
-thermal params refactor), `68779adbabdbb` (DMI ordering),
-`fa0498f804753` (Omen MAX 16-ah0xx), `fb146a38cb119` (Omen 16-wf1xxx fan
-support), `54afb047cd7eb` (Victus 16-r/s). This is a standalone single-
-patch addition, not part of a numbered series.
+Verified via `git log -20`: Recent `amdgpu_vm.c` changes are TLB/VM
+maintenance and unrelated. No conflicting fix for this PFN issue exists.
+
+Record: [No related prior fix found. Standalone change.]
 
 **Step 3.4: Author**
-Record: Krishna Chomal has 2 prior commits in
-`drivers/platform/x86/hp/`: `fb146a38cb119` (Add Omen 16-wf1xxx fan
-support) and `e7cbd37292653` (fix platform profile values for Omen
-16-wf1xxx). Author is the original contributor for this specific
-hardware support. Reviewed and committed by subsystem maintainer Ilpo
-Järvinen.
+Donet Tom (IBM) has 2 AMD-tree commits in local history, including
+`daea2e81c1804` ("drm/amdkfd: Fix GART PTE for non-4K pagesize in
+svm_migrate_gart_map()") — a closely related non-4K fix. Acked by
+Christian König and merged by Alex Deucher, both confirmed as listed
+AMDGPU maintainers in `MAINTAINERS`.
+
+Record: [Author is domain expert for non-4K page issues. Fix endorsed by
+both subsystem maintainers.]
 
 **Step 3.5: Dependencies**
-Record: This patch requires the `dmi_system_id` table format with
-`driver_data` pointing to `struct thermal_profile_params`, introduced by
-`e7cbd37292653`. It also requires `omen_v1_thermal_params` to be defined
-(also from `e7cbd37292653`). Verified: `e7cbd37292653` is contained in
-`v6.19.4~320`; `fb146a38cb119` is contained in `v6.18-rc7~24^2~18`.
+Record: [No dependencies. Only reorders unit conversions within one
+function. Standalone fix.]
 
 ---
 
 ## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
 
-**Step 4.1–4.4:**
-Record: WebFetch attempts to lore.kernel.org, patch.msgid.link, and
-bugzilla.kernel.org were blocked by Anubis bot protection. Could not
-independently verify the mailing list discussion or bugzilla details.
-The commit tags (Reported-by, Tested-by, Reviewed-by, Closes:) provide
-the evidence trail. UNVERIFIED: exact bugzilla content and mailing list
-discussion.
+**Step 4.1-4.4**: Lore.kernel.org was inaccessible due to Anubis bot
+protection. The commit has strong maintainer endorsement (Acked-by +
+Signed-off-by from both AMDGPU co-maintainers). The related patch series
+context (non-4K page support for AMDGPU on Power10/MI210 platforms) is
+documented in public archives.
+
+Record: [Lore inaccessible. Maintainer ack and signoff confirmed from
+tags. UNVERIFIED: detailed reply-thread discussion on lore.]
 
 ---
 
 ## PHASE 5: CODE SEMANTIC ANALYSIS
 
-**Step 5.1: Functions in Diff**
-Record: No function bodies modified. Data change only: one entry added
-to `victus_s_thermal_profile_boards[]`.
+**Step 5.1: Functions Modified**
+Record: [`amdgpu_vm_handle_fault()`]
 
 **Step 5.2: Callers**
-Record: Verified via grep: `victus_s_thermal_profile_boards` is consumed
-by `setup_active_thermal_profile_params()` (line 2288), which calls
-`dmi_first_match()` on this table. On match, it sets `is_victus_s_board
-= true` and `active_thermal_profile_params = id->driver_data`.
+Verified callers in: `gmc_v9_0.c`, `gmc_v10_0.c`, `gmc_v11_0.c`,
+`gmc_v12_0.c` — GPU page fault interrupt handlers for all AMD GPU
+generations 9+.
 
-**Step 5.3: Callees / Impact Surface**
-Record: `is_victus_s_thermal_profile()` (line 1634) returns
-`is_victus_s_board`. This function gates behavior in:
-- `hp_wmi_platform_profile_probe()` — platform profile registration
-  (line 1809, 2009)
-- `hp_wmi_hwmon_is_visible()` — fan sysfs visibility (line 2169)
-- `hp_wmi_hwmon_read()` — fan speed reading (line 2191)
-- `hp_wmi_hwmon_write()` — fan speed control (lines 2227, 2233)
-- `hp_wmi_init()` — power source event handler registration (line 2341)
-- `hp_wmi_exit()` — cleanup (line 2364)
+Confirmed in `gmc_v10_0.c:114`: `addr = (u64)entry->src_data[0] << 12` —
+the fault address is constructed as a **byte address** from hardware
+interrupt data.
 
-**Step 5.4: Reachability**
-Record: Init path: `hp_wmi_init()` →
-`setup_active_thermal_profile_params()` → `platform_driver_probe()` →
-`hp_wmi_bios_setup()` → `thermal_profile_setup()`. This runs on every
-boot/module load on affected hardware. Hwmon paths are userspace-
-reachable via sysfs.
+Record: [Called from GPU page fault interrupt handlers. addr is byte
+address from hardware.]
+
+**Step 5.3: Callees**
+`svm_range_restore_pages()` (verified at `kfd_svm.c:3000`) calls:
+- `svm_range_from_addr()` — interval tree lookup using system-page PFN
+- `vma_lookup(mm, addr << PAGE_SHIFT)` at line 3136 — reconstructs byte
+  address from system-page PFN
+
+Record: [Both callees confirmed to expect system-page PFNs.]
+
+**Step 5.4: Call Chain**
+GPU fault interrupt → `gmc_v*_process_interrupt()` →
+`amdgpu_vm_handle_fault()` → `svm_range_restore_pages()`. Triggered by
+any GPU memory access fault in compute contexts (ROCm/HSA workloads).
+
+Record: [Reachable from normal GPU compute workloads. Not theoretical —
+triggered by SVM retry faults.]
 
 **Step 5.5: Similar Patterns**
-Record: The table already contains identical patterns: "8C78" →
-`&omen_v1_thermal_params`, "8BCA" → `&omen_v1_thermal_params`, "8BCD" →
-`&omen_v1_thermal_params`. This is a routine board-ID addition.
+Record: [Related non-4K fix exists: `daea2e81c1804` by the same author.
+No duplicate of this exact wrong-unit call found.]
 
 ---
 
 ## PHASE 6: STABLE TREE ANALYSIS
 
-**Step 6.1: Code Existence in Stable Trees**
-Record: Verified via `git grep`:
-- **pending-6.6, pending-6.12, pending-6.14**:
-  `victus_s_thermal_profile_boards` NOT found. Not applicable.
-- **pending-6.17**: Table exists (3 references) but uses the OLD string-
-  list format. `omen_v1_thermal_params` and `struct
-  thermal_profile_params` do NOT exist. Patch cannot apply.
-- **pending-6.18**: Table exists in NEW `dmi_system_id` format.
-  `omen_v1_thermal_params` exists. "8C76" NOT yet present. Patch applies
-  cleanly.
-- **pending-6.19**: Table exists in NEW `dmi_system_id` format.
-  `omen_v1_thermal_params` exists. "8C76" NOT yet present. Patch applies
-  cleanly.
+**Step 6.1: Bug Existence in Stable Trees**
+Verified the identical bug pattern (`addr /= AMDGPU_GPU_PAGE_SIZE`
+before `svm_range_restore_pages()`) exists in:
+- **v5.15**: line 3376 (`svm_range_restore_pages(adev, pasid, addr,
+  write_fault)`)
+- **v6.1**: line 2476 (same pattern, 4-param signature)
+- **v6.6**: line 2574 (`svm_range_restore_pages(adev, pasid, vmid,
+  node_id, addr, write_fault)`)
+
+Record: [Bug confirmed in v5.15, v6.1, v6.6 stable trees. All share the
+same `addr /= AMDGPU_GPU_PAGE_SIZE` before SVM call.]
 
 **Step 6.2: Backport Complications**
-Record: Clean apply for `6.18.y` and `6.19.y`. Not standalone for
-`6.17.y` (would need the full `e7cbd37292653` refactor first). Not
-applicable to `6.14.y` and older.
+Function signatures differ across versions:
+- v5.15/v6.1: `svm_range_restore_pages(adev, pasid, addr, write_fault)`
+  — 4 params
+- v6.6: `svm_range_restore_pages(adev, pasid, vmid, node_id, addr,
+  write_fault)` — 6 params
+- v6.12+: `svm_range_restore_pages(adev, pasid, vmid, node_id, addr, ts,
+  write_fault)` — 7 params
 
-**Step 6.3: Related Fixes Already in Stable**
-Record: No alternate "8C76" fix found in any checked branch.
+The core fix (move `addr /= AMDGPU_GPU_PAGE_SIZE` after SVM call, pass
+`addr >> PAGE_SHIFT`) applies identically, but the SVM call arguments
+differ.
+
+Record: [Clean apply on v6.12+. Minor trivial context adaptation needed
+for v6.6 and v5.15/v6.1. Fix concept is identical across all versions.]
+
+**Step 6.3: Related Fixes in Stable**
+Record: [No alternative fix for this specific issue found in any stable
+tree.]
 
 ---
 
 ## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
 
 **Step 7.1: Subsystem**
-Record: `drivers/platform/x86/hp/` — HP laptop WMI driver. Criticality:
-PERIPHERAL (specific HP laptop hardware). However, HP Omen/Victus is a
-popular consumer laptop line.
+Record: [`drivers/gpu/drm/amd/amdgpu` — AMD GPU VM fault handling / KFD
+SVM. Criticality: IMPORTANT (common GPU driver, compute/AI workloads)]
 
 **Step 7.2: Activity**
-Record: Actively maintained — 20 recent commits show ongoing thermal/fan
-work for various HP laptop models.
+Record: [Highly active subsystem with 20+ recent commits.]
 
 ---
 
 ## PHASE 8: IMPACT AND RISK ASSESSMENT
 
 **Step 8.1: Affected Users**
-Record: Platform-specific: users of HP Omen 16-wf1xxx laptops with DMI
-board name "8C76".
+Users of AMD GPUs on systems with non-4K page sizes:
+- Power (ppc64le) with 64K pages — common in HPC/AI (IBM systems with
+  AMD Instinct GPUs)
+- ARM64 systems configured with 16K or 64K pages
+- Not x86_64 (always 4K pages)
+
+Record: [Platform-specific: Power and ARM64 with non-4K pages using
+AMDGPU compute (SVM/XNACK)]
 
 **Step 8.2: Trigger Conditions**
-Record: Triggered every boot on affected hardware. DMI matching is init-
-time, and the resulting behavior affects all platform-profile and fan-
-control operations for the life of the session.
+Any GPU page fault during compute (ROCm/KFD) workloads on non-4K page
+systems.
+
+Record: [Triggered during normal GPU compute workloads on affected
+platforms. Common for those users.]
 
 **Step 8.3: Failure Mode Severity**
-Record: Without the fix: no platform profile registration, fan RPMs not
-readable/controllable via the Victus S path, and power-source event
-handling not set up for this board. Severity: MEDIUM — hardware
-functionality (thermal management, fan control) is missing but no crash,
-corruption, or security issue.
+- SVM range lookup fails → duplicate range created (memory
+  corruption/inconsistency in GPU VM state)
+- VMA lookup fails → fault recovery does not happen, workload broken
+  with "VMA is removed" error
+- This is functional breakage: GPU compute workloads are broken on
+  affected platforms
+
+Record: [Severity: HIGH — GPU compute fault recovery is broken on non-4K
+page systems, leading to functional failure]
 
 **Step 8.4: Risk-Benefit Ratio**
-Record: Benefit: HIGH for affected users — restores correct thermal
-profile switching and fan control on their laptop. Risk: VERY LOW —
-4-line data-only change scoped to a single DMI board name match, cannot
-affect any other hardware. Ratio: strongly favorable.
+- **Benefit**: HIGH for affected platforms — fixes completely broken SVM
+  fault recovery
+- **Risk**: VERY LOW — ~3 lines, no behavior change on 4K systems
+  (mathematically identical), obviously correct unit conversion
+- **Ratio**: Extremely favorable
+
+Record: [Benefit: HIGH. Risk: VERY LOW. Extremely favorable.]
 
 ---
 
 ## PHASE 9: FINAL SYNTHESIS
 
-**Step 9.1: Evidence**
+**Step 9.1: Evidence Compilation**
+
 FOR backporting:
-- Classic hardware quirk / DMI board ID addition (explicit stable
-  exception category)
-- Only 4 lines, data-only change, zero regression risk
-- Reported-by and Tested-by from real user on real hardware
-- Reviewed-by subsystem maintainer (Ilpo Järvinen)
-- Bugzilla bug report (221149) filed
-- Identical pattern to existing adjacent entries (8C78, 8BCA, 8BCD)
-- Prerequisites already present in pending-6.18 and pending-6.19
+- Verified wrong-unit bug in code: `svm_range_from_addr` expects system-
+  page PFN ("in pages" in documentation), `vma_lookup(mm, addr <<
+  PAGE_SHIFT)` expects system-page PFN
+- Callers pass byte addresses from hardware; fix correctly separates
+  system-page and GPU-page conversions
+- Small, surgical fix (~3 lines in 1 file, 1 function)
+- On 4K systems behavior is mathematically identical (no regression
+  risk)
+- Acked by Christian König, merged by Alex Deucher (both verified AMDGPU
+  maintainers)
+- Bug introduced in v5.14-rc1, confirmed present in v5.15, v6.1, v6.6
+- Related non-4K fix by same author already in tree
+- No dependencies; standalone fix
 
 AGAINST backporting:
-- Not a crash/security/corruption fix — hardware enablement for missing
-  fan/thermal control
-- Narrow impact (single laptop model)
-- Only applicable to 6.18.y and 6.19.y; 6.17.y needs prerequisite
-  refactor
+- Affects only non-4K page platforms (niche but real user base: Power +
+  ARM64 with non-4K pages)
+- Minor signature adaptation needed for older stable trees
+- No Reported-by or syzbot report (expected; this is platform-specific,
+  not fuzzable)
 
 UNRESOLVED:
-- Bugzilla 221149 content not fetchable (Anubis blocked)
-- Lore mailing list discussion not fetchable (Anubis blocked)
+- Could not access lore.kernel.org discussion threads
 
 **Step 9.2: Stable Rules Checklist**
-1. Obviously correct and tested? **YES** — identical pattern to existing
-   entries, Tested-by from hardware owner
-2. Fixes a real bug? **YES** — missing quirk prevents thermal/fan
-   control on real hardware
-3. Important issue? **YES** under the hardware quirk exception — enables
-   hardware functionality
-4. Small and contained? **YES** — 4 lines, single table entry, one file
-5. No new features or APIs? **YES** — extends existing quirk table with
-   a board name
-6. Can apply to stable? **YES** — cleanly on 6.18.y and 6.19.y
+1. Obviously correct and tested? **YES** — verified by code inspection;
+   Acked by subsystem maintainer
+2. Fixes a real bug? **YES** — SVM fault recovery broken on non-4K
+   systems
+3. Important issue? **YES** — functional failure (GPU compute broken) on
+   affected platforms
+4. Small and contained? **YES** — ~3 lines in 1 file
+5. No new features or APIs? **YES** — pure correctness fix
+6. Can apply to stable? **YES** — with trivial adaptation for older call
+   signatures
 
 **Step 9.3: Exception Categories**
-Record: This falls squarely into **QUIRKS and WORKAROUNDS** — a DMI
-board name addition to an existing driver's quirk table. This is the
-same category as USB quirks, PCI quirks, and audio codec quirks that are
-explicitly allowed in stable.
+Record: [Not applicable — standard bug fix]
 
 **Step 9.4: Decision**
-This is a textbook hardware quirk addition: a 4-line DMI table entry
-that enables correct thermal profile switching and fan control for a
-specific HP laptop model, using existing driver infrastructure. It
-carries essentially zero regression risk and provides concrete benefit
-to real users of this hardware. It should be backported to stable
-branches that have the per-board thermal parameter infrastructure
-(6.18.y and 6.19.y).
+This is a clear, small, obviously correct bug fix that resolves a real
+functional failure on non-4K page systems. The fix gives
+`svm_range_restore_pages()` a system-page PFN (which it expects) instead
+of a GPU-page PFN (which it cannot use correctly on non-4K page
+systems). It has no behavior change on the dominant 4K-page x86_64
+platforms, and is endorsed by both AMDGPU subsystem maintainers. The bug
+exists in all active stable trees from v5.15 onward. This meets all
+stable kernel criteria with an extremely favorable risk-benefit ratio.
 
 ---
 
 ## Verification
 
-- [Phase 1] Parsed all tags from commit message: Tested-by, Reported-by,
-  Closes (bugzilla 221149), Reviewed-by (Ilpo Järvinen), Link, Signed-
-  off-by x2
-- [Phase 2] Diff analysis: +4 lines adding single DMI entry `{
-  DMI_MATCH(DMI_BOARD_NAME, "8C76"), .driver_data = (void
-  *)&omen_v1_thermal_params }`
-- [Phase 3] `git blame -L 162,191`: confirmed table created by
-  `e7cbd37292653` (Krishna Chomal, 2026-01-13), structure from
-  `6e4ab59b8391a` (2025-01-16)
-- [Phase 3] `git show e7cbd37292653`: confirmed this is the prerequisite
-  commit that refactored the table to `dmi_system_id` format with per-
-  board `thermal_profile_params`
-- [Phase 3] `git describe --contains e7cbd37292653` → `v6.19.4~320`:
-  prerequisite is in v6.19.4
-- [Phase 3] `git describe --contains fb146a38cb119` →
-  `v6.18-rc7~24^2~18`: original Omen 16-wf1xxx support is in v6.18
-- [Phase 3] `git log --author="Krishna Chomal"`: confirmed 2 prior
-  commits to hp-wmi.c
-- [Phase 4] WebFetch to lore/bugzilla blocked by Anubis — UNVERIFIED:
-  exact discussion and bug details
-- [Phase 5] `grep` for `victus_s_thermal_profile_boards`: confirmed
-  consumed by `setup_active_thermal_profile_params()` at line 2288 via
-  `dmi_first_match()`
-- [Phase 5] `grep` for `is_victus_s_thermal_profile`: confirmed it gates
-  platform profile (lines 1809, 2009), hwmon visibility/read/write
-  (lines 2169, 2191, 2227, 2233), init power source handler (line 2341),
-  exit cleanup (line 2364)
-- [Phase 6] `git grep victus_s_thermal_profile_boards` on all pending
-  branches: NOT in 6.6/6.12/6.14; present in 6.17/6.18/6.19
-- [Phase 6] `git grep omen_v1_thermal_params` on pending-6.17: NOT FOUND
-  — old string-list format, patch cannot apply standalone
-- [Phase 6] `git grep omen_v1_thermal_params` on pending-6.18: FOUND
-  (lines 92-114, 159, 167, 179) — full infrastructure present
-- [Phase 6] `git grep omen_v1_thermal_params` on pending-6.19: FOUND
-  (lines 92-114, 167, 175, 187) — full infrastructure present
-- [Phase 6] `git grep '8C76'` on pending-6.18 and pending-6.19: NOT
-  FOUND — patch not yet applied to any stable branch
-- [Phase 8] Failure mode: missing thermal profile/fan control on
-  specific HP Omen laptop; severity MEDIUM (hardware functionality, not
-  crash/security)
-- UNVERIFIED: exact bugzilla 221149 content and severity rating
-- UNVERIFIED: exact mailing list reviewer comments beyond tags in commit
+- [Phase 1] Parsed tags from supplied commit: Acked-by Christian König,
+  SOB Donet Tom (IBM), SOB Alex Deucher
+- [Phase 2] Read current `amdgpu_vm.c` lines 2976-2982: confirmed `addr
+  /= AMDGPU_GPU_PAGE_SIZE` before `svm_range_restore_pages()` (pre-fix
+  code)
+- [Phase 2] Read `kfd_svm.c` line 2657: confirmed `svm_range_from_addr`
+  documents `@addr` as "in pages" (system pages)
+- [Phase 2] Grep on `kfd_svm.c`: confirmed `vma_lookup(mm, addr <<
+  PAGE_SHIFT)` at line 3136
+- [Phase 2] Grep on `amdgpu_gart.h:35`: confirmed `AMDGPU_GPU_PAGE_SIZE`
+  is `4096`
+- [Phase 3] `git blame -L 2976,2982`: confirmed buggy conversion
+  introduced by `ea53af8a59c89b` (Alex Sierra, 2020-05-11)
+- [Phase 3] `git describe --contains ea53af8a59c89b`: confirmed first in
+  `v5.14-rc1`
+- [Phase 3] `git log --author='Donet Tom' -- drivers/gpu/drm/amd/`:
+  found related `daea2e81c1804` non-4K fix
+- [Phase 3] Verified Christian König and Alex Deucher are listed AMDGPU
+  maintainers in `MAINTAINERS`
+- [Phase 5] Grep confirmed callers in `gmc_v9_0.c`, `gmc_v10_0.c`,
+  `gmc_v11_0.c`, `gmc_v12_0.c`
+- [Phase 5] Grep on `gmc_v10_0.c:114`: confirmed `addr =
+  (u64)entry->src_data[0] << 12` (byte address from HW)
+- [Phase 5] Read `kfd_svm.c:3000-3003`: confirmed
+  `svm_range_restore_pages()` signature with `uint64_t addr`
+- [Phase 6] `git show v5.15:amdgpu_vm.c`: confirmed same `addr /=
+  AMDGPU_GPU_PAGE_SIZE` before SVM call at line 3376
+- [Phase 6] `git show v6.1:amdgpu_vm.c`: confirmed same bug pattern at
+  line 2476
+- [Phase 6] `git show v6.6:amdgpu_vm.c`: confirmed same bug pattern at
+  lines 2574-2577 (with 6-param signature)
+- [Phase 6] Confirmed function signatures differ: v5.15/v6.1 use 4
+  params, v6.6 uses 6 params, mainline uses 7 params
+- UNVERIFIED: Could not access lore.kernel.org mailing list discussion
+  (Anubis bot protection)
 
 **YES**
 
- drivers/platform/x86/hp/hp-wmi.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/hp/hp-wmi.c b/drivers/platform/x86/hp/hp-wmi.c
-index 24d065ddfc6ae..9c1bdf8e7b283 100644
---- a/drivers/platform/x86/hp/hp-wmi.c
-+++ b/drivers/platform/x86/hp/hp-wmi.c
-@@ -172,6 +172,10 @@ static const struct dmi_system_id victus_s_thermal_profile_boards[] __initconst
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8BD5") },
- 		.driver_data = (void *)&victus_s_thermal_params,
- 	},
-+	{
-+		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C76") },
-+		.driver_data = (void *)&omen_v1_thermal_params,
-+	},
- 	{
- 		.matches = { DMI_MATCH(DMI_BOARD_NAME, "8C78") },
- 		.driver_data = (void *)&omen_v1_thermal_params,
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+index da25ba1578b4a..1194326e66f5d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_vm.c
+@@ -2973,14 +2973,14 @@ bool amdgpu_vm_handle_fault(struct amdgpu_device *adev, u32 pasid,
+ 	if (!root)
+ 		return false;
+ 
+-	addr /= AMDGPU_GPU_PAGE_SIZE;
+-
+ 	if (is_compute_context && !svm_range_restore_pages(adev, pasid, vmid,
+-	    node_id, addr, ts, write_fault)) {
++	    node_id, addr >> PAGE_SHIFT, ts, write_fault)) {
+ 		amdgpu_bo_unref(&root);
+ 		return true;
+ 	}
+ 
++	addr /= AMDGPU_GPU_PAGE_SIZE;
++
+ 	r = amdgpu_bo_reserve(root, true);
+ 	if (r)
+ 		goto error_unref;
 -- 
 2.53.0
 
