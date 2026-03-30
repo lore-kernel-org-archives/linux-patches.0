@@ -1,43 +1,44 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FBC53D1CD2;
-	Mon, 30 Mar 2026 12:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E57C3D7D6E;
+	Mon, 30 Mar 2026 12:39:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1774874358; cv=none; b=rJaHedqXf+vWa+lgZHOWMwKmkeHInXzmny967SkTLgfvyMIMKP73OWKjyrWbvFpyrkFGb+dEcfTpitTfNEWooca21+Uhs3EhdjuHfy0fZ4MYqSm7c+IxR8Qcd9t7gAf4uAmlgk1br6kxXvj5SA6FK3YRuJffPdp1E9dNFiLbVY0=
+	t=1774874359; cv=none; b=S0Sf5r+v91WGaHIbnidtvnowGPS3q889eeTq3rzwgsrIh8pQQ+TDmogwPLmUDF7k90fUzvoYoCwba2a4hvvE41T583PqsxUulDtE3O6PB5bGjpngX+sHbiOBzkkpuqDclHgnW+KLRoJykSmMdeBlY6m+66Zv6Fdaui0W6UUE2p4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1774874358; c=relaxed/simple;
-	bh=FZXYNhFoXA1WXvQf3jCo3+bbj9MBepKSUhsOMz/+rVk=;
+	s=arc-20240116; t=1774874359; c=relaxed/simple;
+	bh=dKuRGZG4/lteZTFXeqThLHmrHOH19quRHWpiId7Gqnk=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ctK0QZciTzJZlP5M5yhAywZ2HsgRvI4d7zjHfH3HHWMLzXUeF+P4qVap1LdFGqnqSMOm+8PPEFgN5oFZmmxLyr/dcG2D5LYP90qaIjOaALLtHYn2brS6ab+tapn0A2PpnTci69gkA42nADWNHExq4kEZ78+6PCa6bBlB7jJBg7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=KXY0aouk; arc=none smtp.client-ip=10.30.226.201
+	 MIME-Version:Content-Type; b=By3cCT+M2aSioH1yKUbo3XAk/jiX0gOtMiTkGr7udEJGAFAd+vAlW0yTjCRM7C++wRFvVP058Szgwwc1zSKTmQjceKKS1a/nz5EErLnpNa446bR4yMF5TT4d2hz4xlH1vY4l+XS33l2txnBazD8qyXwicd1Se8KED6Q5lqjkLDg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=IUlnilnb; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="KXY0aouk"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43221C2BCB2;
-	Mon, 30 Mar 2026 12:39:17 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="IUlnilnb"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D634C4CEF7;
+	Mon, 30 Mar 2026 12:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1774874358;
-	bh=FZXYNhFoXA1WXvQf3jCo3+bbj9MBepKSUhsOMz/+rVk=;
+	s=k20201202; t=1774874359;
+	bh=dKuRGZG4/lteZTFXeqThLHmrHOH19quRHWpiId7Gqnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KXY0aouk3Ks30hTM2PygVb2NQ2eQzdUP8KwIOeMXizogm5fnM/EG8Fj1oj9yAHBLk
-	 GEcwwkBCJOABw7m5zB2gg2/bUFvqDl9DbDmBAFPZ0A9RjgOqrrOuETASYFF7W0J+/5
-	 h8nV68R1wvVBbvI0mngxOKgmhh72IS9Sqov8KdpxDB6fqp2BSbPp0tQBBEcWOHRK2G
-	 mku1QzMuvWqAtOgu9tHD0/t5D8D5JcccXwhvwuNrwVVq4TEJsDJ0OcAcUvX21R3h7H
-	 W15zNBqA44dNp1hHCYgwcW8XJ50TVUIOuIoKwoHePePG5GTf3PI5MCxqxKpXhUcndU
-	 QcehGSgndmKww==
+	b=IUlnilnbfiMymkgk47ZgCJRTKTLqkffjGbZYZ5SvvMlfyTvsrkv4T/J4ML65dy6B8
+	 XNPpFeY1iizWCEoqofgvQbBY4Amk+nHnnmUl/b+ZRSRYnKGKoMk28VrXtEQbpKsneE
+	 R/BUaFMDP6+CT+62eJrcZH51OLvI+5w9vFrzH62/YuZLNoY2rZyzubuiKAR2AAZGDh
+	 umRlYcwMLbXlGqqIpRnF0eto7uzX6rp7qLzC9P8+BhaFRlmTyewdg8rmKJLf+sAlc2
+	 PCMb6GCgasjgBeXvSieRqZBypV6biDP1FhRVBtSZibK/kNWvTfPFrAdKEnGgCaUrEJ
+	 4+q80tCCYeTuw==
 From: Sasha Levin <sashal@kernel.org>
 To: patches@lists.linux.dev,
 	stable@vger.kernel.org
-Cc: Wenyuan Li <2063309626@qq.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+Cc: Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>,
-	mailhol@kernel.org,
-	linux-can@vger.kernel.org,
+	perex@perex.cz,
+	tiwai@suse.com,
+	linux-sound@vger.kernel.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH AUTOSEL 6.19-5.10] can: mcp251x: add error handling for power enable in open and resume
-Date: Mon, 30 Mar 2026 08:38:37 -0400
-Message-ID: <20260330123842.756154-24-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 6.19-6.18] ALSA: hda/realtek: add HP Laptop 15-fd0xxx mute LED quirk
+Date: Mon, 30 Mar 2026 08:38:38 -0400
+Message-ID: <20260330123842.756154-25-sashal@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260330123842.756154-1-sashal@kernel.org>
 References: <20260330123842.756154-1-sashal@kernel.org>
@@ -53,532 +54,325 @@ X-stable-base: Linux 6.19.10
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenyuan Li <2063309626@qq.com>
+From: Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>
 
-[ Upstream commit 7a57354756c7df223abe2c33774235ad70cb4231 ]
+[ Upstream commit faceb5cf5d7a08f4a40335d22d833bb75f05d99e ]
 
-Add missing error handling for mcp251x_power_enable() calls in both
-mcp251x_open() and mcp251x_can_resume() functions.
+HP Laptop 15-fd0xxx with ALC236 codec does not handle the toggling of
+the mute LED.
+This patch adds a quirk entry for subsystem ID 0x8dd7 using
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 fixup, enabling correct mute LED
+behavior.
 
-In mcp251x_open(), if power enable fails, jump to error path to close
-candev without attempting to disable power again.
-
-In mcp251x_can_resume(), properly check return values of power enable calls
-for both power and transceiver regulators. If any fails, return the error
-code to the PM framework and log the failure.
-
-This ensures the driver properly handles power control failures and
-maintains correct device state.
-
-Signed-off-by: Wenyuan Li <2063309626@qq.com>
-Link: https://patch.msgid.link/tencent_F3EFC5D7738AC548857B91657715E2D3AA06@qq.com
-[mkl: fix patch description]
-[mkl: mcp251x_can_resume(): replace goto by return]
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Kshamendra Kumar Mishra <kshamendrakumarmishra@gmail.com>
+Link: https://patch.msgid.link/DHAB51ISUM96.2K9SZIABIDEQ0@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
 
 LLM Generated explanations, may be completely bogus:
 
-Now I have all the information needed for a comprehensive analysis.
+Now I have all the facts needed. Here is my comprehensive answer:
 
 ---
 
-## PHASE 1: COMMIT MESSAGE FORENSICS
+## Phase 1: Commit Message Forensics
 
-### Step 1.1: Parse the Subject Line
-Record: [Subsystem: can: mcp251x] [Action verb: add] [Summary: add error
-handling for `mcp251x_power_enable()` return values in `mcp251x_open()`
-and `mcp251x_can_resume()`]
+**Step 1.1: Parse the Subject Line**
+Record: [ALSA: hda/realtek] [add] [HP Laptop 15-fd0xxx mute LED quirk —
+adds SND_PCI_QUIRK entry for subsystem ID 0x103c:0x8dd7 using existing
+ALC236_FIXUP_HP_MUTE_LED_COEFBIT2 fixup]
 
-### Step 1.2: Parse All Commit Message Tags
+**Step 1.2: Parse All Commit Message Tags**
 Record:
-- **Signed-off-by:** Wenyuan Li <2063309626@qq.com> (author)
-- **Link:** `https://patch.msgid.link/tencent_F3EFC5D7738AC548857B916577
-  15E2D3AA06@qq.com`
-- `[mkl: fix patch description]` — Marc Kleine-Budde (CAN subsystem
-  maintainer) edited the description
-- `[mkl: mcp251x_can_resume(): replace goto by return]` — maintainer
-  restructured the resume error path
-- **Signed-off-by:** Marc Kleine-Budde <mkl@pengutronix.de> (CAN
-  subsystem maintainer)
-- No Fixes: tag (expected for manual review candidates)
-- No Reported-by: (code inspection find)
-- No Tested-by:, Reviewed-by:, Acked-by:, Cc: stable
-
-Notable pattern: CAN subsystem maintainer actively modified the patch,
-indicating hands-on review and approval.
-
-### Step 1.3: Analyze the Commit Body Text
-Record: Bug description — `mcp251x_power_enable()` return values are
-ignored in both `mcp251x_open()` and `mcp251x_can_resume()`. In
-`open()`, failure to enable the transceiver regulator allows the driver
-to proceed with IRQ/SPI setup on unpowered hardware. The error path at
-`out_close` then calls `mcp251x_power_enable(transceiver, 0)`, which
-attempts to disable a regulator that was never enabled (unbalanced
-disable). In `resume()`, regulator failures are silently ignored and
-success is returned to the PM framework, allowing restart work to
-proceed on failed hardware. No stack trace or specific user report
-referenced.
-
-### Step 1.4: Detect Hidden Bug Fixes
-Record: This is an explicit error-handling bug fix, not hidden. "Add
-error handling" directly addresses missing return-value checks and
-incorrect cleanup. The phrase "ensures the driver properly handles power
-control failures and maintains correct device state" confirms it is
-fixing incorrect behavior.
-
----
-
-## PHASE 2: DIFF ANALYSIS — LINE BY LINE
-
-### Step 2.1: Inventory the Changes
-Record:
-- **Files:** `drivers/net/can/spi/mcp251x.c` (single file)
-- **Net change:** approximately +23/-5 lines
-- **Functions modified:** `mcp251x_open()`, `mcp251x_can_resume()`
-- **Scope classification:** single-file, two-function, surgical fix
-
-### Step 2.2: Understand the Code Flow Change
-
-**Hunk 1 — `mcp251x_open()`:**
-- **Before:** `mcp251x_power_enable(priv->transceiver, 1)` — return
-  value discarded. On failure, driver proceeds with IRQ request, SPI
-  setup, etc. All error paths fall through `out_close` which calls
-  `mcp251x_power_enable(priv->transceiver, 0)`.
-- **After:** Return value checked; on failure, jumps to new
-  `out_close_candev` label that skips the transceiver disable (correct —
-  don't disable what was never enabled) and goes directly to
-  `close_candev(net)` + mutex_unlock.
-
-**Hunk 2 — `mcp251x_can_resume()`:**
-- **Before:** Both `mcp251x_power_enable(priv->power, 1)` and
-  `mcp251x_power_enable(priv->transceiver, 1)` return values discarded.
-  PM framework always told success. `queue_work`, `force_quit = 0`,
-  `enable_irq` all proceed unconditionally.
-- **After:** Each call checked. On power failure, return error
-  immediately. On transceiver failure, roll back power (disable it if it
-  was just enabled), then return error. PM framework gets actual error
-  code.
-
-### Step 2.3: Identify the Bug Mechanism
-
-Record: **Bug category:** Error-path / logic correctness / regulator
-state imbalance.
-
-**Concrete bugs verified:**
-
-1. **Regulator framework WARN() trigger**: I verified in
-   `drivers/regulator/core.c` at line 3179:
-
-```3179:3181:drivers/regulator/core.c
-        if (WARN(regulator->enable_count == 0,
-                 "unbalanced disables for %s\n", rdev_get_name(rdev)))
-                return -EIO;
-```
-
-If `regulator_enable()` fails in `mcp251x_open()`, the `enable_count`
-stays at 0. Then the error path at `out_close` calls
-`mcp251x_power_enable(priv->transceiver, 0)` → `regulator_disable()` →
-hits `enable_count == 0` → **triggers WARN()**.
-
-2. **Silent resume failure**: `mcp251x_can_resume()` returns 0 (success)
-   to PM framework even when power enable fails. The driver then queues
-   `restart_work`, clears `force_quit`, and re-enables IRQs — all
-   operating under the assumption that hardware is powered.
-
-3. **Scope limiter**: `mcp251x_power_enable()` returns 0 for
-   `IS_ERR_OR_NULL(reg)` (verified at line 951), so the bug only
-   manifests on systems with real regulator-backed `vdd`/`xceiver`
-   supplies.
-
-### Step 2.4: Assess the Fix Quality
-Record: The fix is obviously correct — standard error checking and
-rollback patterns matching the existing `mcp251x_can_probe()` style
-(which already checks `mcp251x_power_enable(priv->power, 1)` at line
-1394). The fix is minimal and surgical. Regression risk is extremely low
-— only error paths are affected, and those paths were previously broken.
-The CAN subsystem maintainer personally modified the patch.
-
----
-
-## PHASE 3: GIT HISTORY INVESTIGATION
-
-### Step 3.1: Blame the Changed Lines
-Record: `git blame` confirms:
-- Line 1228: unchecked `mcp251x_power_enable(priv->transceiver, 1)` in
-  `open()` introduced by commit `1ddff7da0faecf` (Alexander Shiyan,
-  2013-08-19, "can: mcp251x: Replace power callbacks with regulator
-  API").
-- Lines 1520-1523: unchecked enables in `resume()` from `1ddff7da0faecf`
-  and `25b401c1816ae6` (Stefan Agner, 2015).
-- `git describe --contains 1ddff7da0faecf` → `v3.12-rc1~132^2~209^2~2` —
-  the buggy code has been present since kernel v3.12 (2013). This means
-  **all active stable trees** contain the buggy code.
-
-### Step 3.2: Follow the Fixes: Tag
-Record: No Fixes: tag present. N/A.
-
-### Step 3.3: Check File History for Related Changes
-Record: `git log --oneline -20 -- drivers/net/can/spi/mcp251x.c` shows
-related commits:
-- `e728f444c913a`: "can: mcp251x: fix deadlock in error path of
-  mcp251x_open" — this restructured the error path to use `release_irq`
-  / deferred `free_irq()`. The candidate patch's new `out_close_candev`
-  label is designed to fit this structure.
-- `7dd9c26bd6cf6`: earlier deadlock fix for `mcp251x_open`
-- `b1a09b63684ce`: "mcp251x_can_probe(): add missing unregister_candev()
-  in error path" — another error-path fix in same file
-
-No evidence this patch is part of a multi-patch series. It is
-standalone.
-
-### Step 3.4: Check the Author's Other Commits
-Record: `git log --oneline --author='Wenyuan Li' -- drivers/net/can/`
-shows:
-- `de39b9320ab36`: "can: hi311x: hi3110_open(): add check for
-  hi3110_power_enable() return value" — the identical class of fix
-  applied to a sibling SPI CAN driver. This commit has already been
-  backported to stable (confirmed by the `[Upstream commit ...]` marker
-  and Sasha Levin's SOB in `git show`). This establishes a clear
-  pattern: the author is systematically fixing unchecked power-enable
-  returns across CAN SPI drivers, and the maintainer and stable tree are
-  accepting them.
-
-### Step 3.5: Check for Dependent/Prerequisite Commits
-Record: The `mcp251x_open()` error path structure depends on commit
-`e728f444c913a` (which introduced the `release_irq` pattern and the
-current `out_close`/`out_free_irq` layout). This prerequisite is present
-in the current tree.
-
-For older stable trees (v5.15, v6.1, v6.6), I verified the `open()`
-error path still has the older structure (direct `free_irq()` inside
-`out_free_irq` without the deferred pattern). The resume-path changes
-should apply cleanly to all trees. The open-path portion may need minor
-context adaptation on trees without `e728f444c913a`.
-
----
-
-## PHASE 4: MAILING LIST AND EXTERNAL RESEARCH
-
-### Step 4.1-4.4: Lore Search
-Record: Lore.kernel.org is behind anti-bot protection and could not be
-accessed. However:
-- The CAN subsystem maintainer Marc Kleine-Budde actively edited and
-  restructured the patch (documented in commit message), confirming
-  hands-on review
-- The sibling `hi311x` fix by the same author was accepted and
-  backported to stable
-- `git log --oneline --grep='mcp251x.*power'` returned no hits —
-  confirming no prior fix for this specific issue exists
-
----
-
-## PHASE 5: CODE SEMANTIC ANALYSIS
-
-### Step 5.1: Key Functions
-Record: `mcp251x_open()`, `mcp251x_can_resume()`,
-`mcp251x_power_enable()`
-
-### Step 5.2: Trace Callers
-Record:
-- `mcp251x_open()` is registered as `.ndo_open = mcp251x_open` in
-  `mcp251x_netdev_ops` (line 1283). Called when user runs `ip link set
-  canX up` — standard interface bring-up path.
-- `mcp251x_can_resume()` is registered via
-  `SIMPLE_DEV_PM_OPS(mcp251x_can_pm_ops, mcp251x_can_suspend,
-  mcp251x_can_resume)` (line 1535). Called by PM framework on system
-  resume.
-
-### Step 5.3: Trace Callees
-Record: `mcp251x_power_enable()` wraps
-`regulator_enable()`/`regulator_disable()` (lines 949-958). Returns 0
-for NULL/error regulators (limiting scope to real regulator setups).
-
-### Step 5.4: Call Chain Reachability
-Record: Both paths are reachable from standard operations:
-- `open()`: userspace/admin brings up CAN interface
-- `resume()`: PM framework resumes the SPI device after system suspend
-Both are realistic, common operations on embedded systems using MCP251x
-with regulator-managed power rails.
-
-### Step 5.5: Similar Patterns
-Record: The probe function (`mcp251x_can_probe()`) at line 1394 already
-properly checks `mcp251x_power_enable(priv->power, 1)` with error
-handling. The candidate patch aligns `open()` and `resume()` with this
-existing correct pattern. The identical bug in sibling driver `hi311x`
-was already fixed (`de39b9320ab36`).
-
----
-
-## PHASE 6: STABLE TREE ANALYSIS
-
-### Step 6.1: Does the Buggy Code Exist in Stable Trees?
-Record: **Yes.** Verified with `git show
-<tag>:drivers/net/can/spi/mcp251x.c | rg 'mcp251x_power_enable'`:
-- **v5.15:** unchecked `mcp251x_power_enable(priv->transceiver, 1)` at
-  line 1208 (open) and lines 1482-1484 (resume)
-- **v6.1:** same at lines 1215, 1491-1493
-- **v6.6:** same at lines 1215, 1491-1493
-
-The buggy code was introduced in v3.12 (2013) and is present in **all
-active stable trees**.
-
-### Step 6.2: Backport Complications
-Record:
-- **Resume path:** Should apply cleanly to all stable trees — the code
-  structure is essentially identical
-- **Open path:** Requires minor adaptation on v5.15/v6.1/v6.6 because
-  those trees have the older `mcp251x_open()` error structure (without
-  the `release_irq`/deferred `free_irq` pattern from `e728f444c913a`).
-  The `out_close_candev` label placement would need adjustment.
-- Overall difficulty: **clean for resume; minor conflicts for open**
-
-### Step 6.3: Related Fixes Already in Stable
-Record: No existing fix for this specific issue found. `git log
---oneline --grep='mcp251x.*power'` returned no results.
-
----
-
-## PHASE 7: SUBSYSTEM AND MAINTAINER CONTEXT
-
-### Step 7.1: Subsystem Criticality
-Record: CAN networking, SPI driver (`drivers/net/can/spi/mcp251x.c`).
-Criticality: **IMPORTANT** for embedded/industrial/automotive CAN users.
-The MCP2510/MCP2515/MCP25625 are among the most popular SPI CAN
-controllers.
-
-### Step 7.2: Subsystem Activity
-Record: The file has 20+ recent commits. Active subsystem with ongoing
-maintenance (deadlock fixes, probe fixes, etc.). Mature code with the
-specific bug present since 2013.
-
----
-
-## PHASE 8: IMPACT AND RISK ASSESSMENT
-
-### Step 8.1: Affected Users
-Record: **Driver-specific + config-specific.** Users of MCP251x CAN
-controllers with regulator-backed `vdd` and/or `xceiver` supplies.
-`mcp251x_power_enable()` returns 0 for `IS_ERR_OR_NULL(reg)`, so systems
-without real regulators are unaffected. Typical use case:
-embedded/industrial/automotive CAN systems.
-
-### Step 8.2: Trigger Conditions
-Record:
-- **Open path:** Triggered when transceiver regulator fails to enable
-  (hardware fault, supply issue, GPIO unavailability, deferred
-  regulator)
-- **Resume path:** Triggered when power/transceiver regulator fails
-  during system resume (battery issues, regulator constraints)
-- These are realistic on embedded systems. Not a constant trigger but a
-  real-world scenario.
-
-### Step 8.3: Failure Mode Severity
-Record:
-- **Kernel WARN() trigger** from regulator framework on the unbalanced
-  disable path in `open()` — **MEDIUM** (kernel warning, noisy logs,
-  stack trace output)
-- **Silent PM resume failure** — PM framework believes success while
-  hardware is unpowered — **MEDIUM-HIGH** (restart_work handler performs
-  SPI operations on unpowered hardware, device non-functional after
-  resume without any error indication)
-- **Regulator state corruption** — enable_count imbalance can affect
-  future operations — **MEDIUM**
-
-Overall severity: **MEDIUM**
-
-### Step 8.4: Risk-Benefit Ratio
-Record:
-- **Benefit:** Prevents kernel WARN(), prevents silent resume failures,
-  maintains regulator state consistency, aligns with existing probe-path
-  error handling. **Moderate-to-high benefit.**
-- **Risk:** ~20 lines of standard error handling in one file, only
-  affects failure paths that were previously broken, reviewed by
-  subsystem maintainer. **Very low risk.**
-- **Ratio:** Strongly favorable for backport.
-
----
-
-## PHASE 9: FINAL SYNTHESIS
-
-### Step 9.1: Compile the Evidence
-
-**Evidence FOR backporting:**
-- Fixes concrete kernel WARN() trigger (verified: regulator
-  `enable_count == 0` → WARN in `drivers/regulator/core.c:3179`)
-- Fixes silent PM resume failure (PM framework told success while
-  hardware is unpowered)
-- Fixes regulator state imbalance (unbalanced disable in error path)
-- Small, surgical, single-file fix (~20 lines)
-- Reviewed and actively modified by CAN subsystem maintainer Marc
-  Kleine-Budde
-- Sibling hi311x driver fix by same author already backported to stable
-  (`de39b9320ab36`)
-- Buggy code present in all stable trees since v3.12 (2013)
-- Aligns with existing probe-path error handling pattern in same driver
-- Standard error-handling patterns — obviously correct
-
-**Evidence AGAINST backporting:**
-- No user-reported crash or syzbot report (found by code inspection)
-- Trigger requires regulator-enable failure (specific hardware
-  conditions)
-- Open-path portion may need minor context adaptation on older stable
-  trees
-- Severity is MEDIUM, not CRITICAL
-
-**Unresolved:**
-- Lore.kernel.org discussion not accessible (anti-bot protection)
-- Exact applicability to stable trees older than v5.15 not verified
-
-### Step 9.2: Stable Rules Checklist
-1. **Obviously correct and tested?** YES — standard error handling,
-   maintainer-reviewed and modified
-2. **Fixes a real bug?** YES — verified WARN() trigger from regulator
-   framework, silent PM resume failure
-3. **Important issue?** YES — kernel warning, incorrect PM behavior,
-   regulator state corruption (MEDIUM severity)
-4. **Small and contained?** YES — ~20 lines in one file, two functions
-5. **No new features or APIs?** YES — purely error handling
-6. **Can apply to stable trees?** YES for resume path (clean); minor
-   adaptation needed for open path on older trees
-
-### Step 9.3: Exception Categories
-Record: Not applicable. This is a standard bug fix, not a device ID,
-quirk, DT update, build fix, or documentation fix.
-
-### Step 9.4: Decision
-The fix addresses verified, concrete bugs (regulator framework WARN
-trigger, silent PM resume failure, regulator state corruption), is small
-and obviously correct, was reviewed by the subsystem maintainer, and the
-identical class of fix for the sibling driver was already backported to
-stable. The risk-benefit ratio is strongly favorable. The buggy code has
-been present since v3.12 and affects all active stable trees.
-
----
+- `Signed-off-by: Kshamendra Kumar Mishra
+  <kshamendrakumarmishra@gmail.com>` — author
+- `Link: https://patch.msgid.link/DHAB51ISUM96.2K9SZIABIDEQ0@gmail.com`
+  — patch submission reference
+- `Signed-off-by: Takashi Iwai <tiwai@suse.de>` — ALSA subsystem
+  maintainer
+- No `Fixes:`, `Reported-by:`, `Tested-by:`, `Reviewed-by:`, `Acked-
+  by:`, or `Cc: stable@vger.kernel.org` (expected for manual review
+  candidates)
+
+**Step 1.3: Analyze the Commit Body Text**
+Record: Bug: HP Laptop 15-fd0xxx with ALC236 codec does not handle mute
+LED toggling. Symptom: Mute LED does not reflect mute state. Root cause:
+Missing SSID-to-fixup mapping in the quirk table. Fix: Add entry for
+subsystem ID 0x8dd7 pointing to existing
+`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`.
+
+**Step 1.4: Detect Hidden Bug Fixes**
+Record: Not a hidden bug fix — this is an explicit hardware quirk
+addition. The message directly describes a non-working mute LED and the
+fixup that corrects it.
+
+## Phase 2: Diff Analysis
+
+**Step 2.1: Inventory the Changes**
+Record: `sound/hda/codecs/realtek/alc269.c`: +1 line, -0 lines. Single
+`SND_PCI_QUIRK` entry added to `alc269_fixup_tbl[]` between existing
+entries 0x8dd4 and 0x8de8. Scope: single-file, single-line, table-data-
+only.
+
+**Step 2.2: Understand the Code Flow Change**
+Record: Before: No quirk entry for 0x103c:0x8dd7; `snd_hda_pick_fixup()`
+cannot select `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` for this machine, so
+the mute LED is not properly controlled. After: The SSID match triggers
+the existing fixup during codec probe, enabling correct mute LED
+behavior.
+
+**Step 2.3: Identify the Bug Mechanism**
+Record: Bug category: Hardware workaround / missing quirk entry. The
+`alc236_fixup_hp_mute_led_coefbit2()` helper programs
+`spec->mute_led_coef.idx = 0x07`, `mask = 1`, `on = 1`, `off = 0` and
+registers `coef_mute_led_set` via `snd_hda_gen_add_mute_led_cdev()`.
+This is an existing, well-tested code path used by 17 other entries in
+this file.
+
+**Step 2.4: Assess the Fix Quality**
+Record: Obviously correct — identical pattern to many existing HP ALC236
+quirk entries. Minimal and surgical. Regression risk is effectively zero
+since the new entry only matches one specific subsystem ID and uses an
+existing, well-exercised fixup chain.
+
+## Phase 3: Git History Investigation
+
+**Step 3.1: Blame the Changed Lines**
+Record: The neighboring entries (0x8dd4 at line 7099, 0x8de8 at line
+7100) confirm the correct insertion point. The new 0x8dd7 entry is not
+present in the current tree (verified by grep).
+
+**Step 3.2: Follow the Fixes Tag**
+Record: N/A — no `Fixes:` tag present.
+
+**Step 3.3: Check File History for Related Changes**
+Record: Recent `alc269.c` history shows a steady stream of similar
+Realtek quirk additions (Acer, Samsung, HP models). This is a standalone
+one-line addition — no patch series marker found.
+
+**Step 3.4: Check the Author's Other Commits**
+Record: The accepting maintainer is Takashi Iwai (`tiwai@suse.de`), the
+long-standing ALSA maintainer, providing strong endorsement of this
+quirk.
+
+**Step 3.5: Check for Dependent/Prerequisite Commits**
+Record: The prerequisite helper `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` was
+introduced by commit `0659400f18c0e6` ("ALSA: hda/realtek: Enable Mute
+LED on HP Laptop 15s-eq2xxx") which first appeared in `v6.5`. That
+commit itself had `Cc: stable@vger.kernel.org`. The helper exists in
+v6.5+, v6.6, and v6.19. It does **not** exist in v6.1 or v5.15.
+
+## Phase 4: Mailing List and External Research
+
+**Step 4.1: Search Lore**
+Record: The `patch.msgid.link` URL returned an anti-bot page. Could not
+retrieve the actual patch discussion thread. UNVERIFIED: exact reviewer
+comments or stable nominations.
+
+**Step 4.2: Search for Bug Report**
+Record: No `Reported-by:` or bugzilla link. The only bug description is
+in the commit message itself.
+
+**Step 4.3: Check for Related Patches**
+Record: This is a standalone single-line quirk addition, not part of a
+multi-patch series.
+
+**Step 4.4: Check Stable Mailing List**
+Record: Similar HP Realtek mute LED quirks have been backported to
+stable before (e.g., the original `0659400f18c0e6` helper commit had
+`Cc: stable`). No specific stable discussion found for this exact patch.
+
+## Phase 5: Code Semantic Analysis
+
+**Step 5.1: Key Functions**
+Record: No function body is modified. The change is data-only in
+`alc269_fixup_tbl[]`. The affected runtime function is the existing
+`alc236_fixup_hp_mute_led_coefbit2()`.
+
+**Step 5.2: Trace Callers**
+Record: `alc269_fixup_tbl[]` → consumed by `snd_hda_pick_fixup()` called
+from `alc269_probe()` → registered as `.probe` in `alc269_codec_ops` /
+`alc269_driver` via `module_hda_codec_driver()`. The fixup runs at codec
+probe time on matching hardware.
+
+**Step 5.3: Trace Callees**
+Record: `alc236_fixup_hp_mute_led_coefbit2()` sets `spec->mute_led_coef`
+fields and calls `snd_hda_gen_add_mute_led_cdev(codec,
+coef_mute_led_set)`. `coef_mute_led_set()` calls
+`alc_update_coef_led()`. This only affects LED control, not audio
+routing or codec initialization logic.
+
+**Step 5.4: Call Chain Reachability**
+Record: HDA codec probe → `alc269_probe()` → `snd_hda_pick_fixup(...
+alc269_fixup_tbl ...)` → `snd_hda_apply_fixup(HDA_FIXUP_ACT_PRE_PROBE)`
+→ `alc236_fixup_hp_mute_led_coefbit2()`. Reachable only on systems with
+the exact matching subsystem ID.
+
+**Step 5.5: Similar Patterns**
+Record: `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` appears 17 times in
+`alc269.c`, confirming it is a well-established fixup used by many HP
+devices. Related one-line commits include `d510acb610e6aa`,
+`d33c3471047fc`, `9ed7a28225af0`.
+
+## Phase 6: Stable Tree Analysis
+
+**Step 6.1: Does the Buggy Code Exist in Stable Trees?**
+Record: The missing quirk (0x8dd7 absent) affects any stable tree that
+carries the `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` helper. Verified:
+- **v6.19**: helper present in `sound/hda/codecs/realtek/alc269.c` —
+  **applicable**
+- **v6.6**: helper present in `sound/pci/hda/patch_realtek.c` (5
+  occurrences) — **applicable** (minor path adjustment needed)
+- **v6.1**: helper **absent** (0 occurrences) — **not standalone
+  applicable**
+- **v5.15**: helper **absent** (0 occurrences) — **not standalone
+  applicable**
+
+**Step 6.2: Backport Complications**
+Record: For v6.19.y: clean apply expected (same file layout). For
+v6.6.y: needs minor mechanical adjustment (file is
+`sound/pci/hda/patch_realtek.c` instead of the new split path, and
+different surrounding context lines). For v6.1.y and v5.15.y: not a
+standalone backport — prerequisite infrastructure absent.
+
+**Step 6.3: Related Fixes Already in Stable**
+Record: The original helper commit `0659400f18c0e6` had `Cc:
+stable@vger.kernel.org` and is present from v6.5 onward. The exact
+0x8dd7 entry is not yet present anywhere (verified by grep).
+
+## Phase 7: Subsystem and Maintainer Context
+
+**Step 7.1: Subsystem Criticality**
+Record: ALSA HDA Realtek codec driver — IMPORTANT level for affected
+laptop users. Not core kernel, but real user-visible hardware
+functionality.
+
+**Step 7.2: Subsystem Activity**
+Record: Highly active — frequent quirk additions and fixes to
+`alc269.c`, typical for ongoing hardware enablement.
+
+## Phase 8: Impact and Risk Assessment
+
+**Step 8.1: Who Is Affected**
+Record: Users of HP Laptop 15-fd0xxx with ALC236 codec and subsystem ID
+0x103c:0x8dd7. Driver-specific, hardware-specific.
+
+**Step 8.2: Trigger Conditions**
+Record: Every time the user mutes/unmutes audio, the LED does not
+correctly reflect the mute state. Affects normal daily use of the
+laptop.
+
+**Step 8.3: Failure Mode Severity**
+Record: Mute LED does not toggle — user cannot visually confirm mute
+state. Severity: LOW-MEDIUM (hardware not working as designed, but no
+crash/corruption/security issue).
+
+**Step 8.4: Risk-Benefit Ratio**
+Record: Benefit: Restores expected mute LED behavior for a specific HP
+laptop model. Risk: Effectively zero — one table entry matching a single
+subsystem ID, using an existing well-tested fixup chain. Ratio: Very
+favorable.
+
+## Phase 9: Final Synthesis
+
+**Step 9.1: Compile the Evidence**
+
+Evidence FOR backporting:
+- Single-line hardware quirk addition — explicit exception category for
+  stable
+- Uses existing, well-tested fixup (`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2`,
+  used by 17 other entries)
+- Zero regression risk (only matches one specific hardware subsystem ID)
+- Accepted by ALSA maintainer Takashi Iwai
+- Fixes real, user-visible hardware behavior for a shipping laptop model
+- The original helper commit had `Cc: stable@vger.kernel.org` — the
+  infrastructure was intended for stable
+
+Evidence AGAINST backporting:
+- Low severity (LED behavior only, not crash/security/corruption)
+- Not standalone for v6.1.y and v5.15.y (helper absent)
+
+Unresolved:
+- Exact mailing list review discussion (blocked by Anubis)
+- Independent testing beyond author and maintainer signoff
+
+**Step 9.2: Stable Rules Checklist**
+1. Obviously correct and tested? **YES** — identical pattern to 17
+   existing entries using the same fixup
+2. Fixes a real bug? **YES** — mute LED non-functional on specific
+   hardware
+3. Important issue? **MEDIUM** — hardware not working as expected; fits
+   the quirk exception
+4. Small and contained? **YES** — 1 line in 1 file
+5. No new features or APIs? **YES** — uses existing fixup
+6. Can apply to stable? **YES** for v6.6.y and v6.19.y; **NO** as
+   standalone for v6.1.y/v5.15.y
+
+**Step 9.3: Exception Category**
+Record: **Audio codec quirk** (`SND_PCI_QUIRK` entry for existing fixup)
+— explicitly listed as an allowed exception for stable backporting.
+
+**Step 9.4: Decision**
+This is a textbook hardware quirk addition: one line, zero regression
+risk, existing infrastructure, maintainer-accepted. It should be
+backported to stable trees that already contain the
+`ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` helper (v6.6.y and newer).
 
 ## Verification
 
-- **[Phase 1]** Parsed all tags from provided commit message: Signed-
-  off-by (author + maintainer), Link, maintainer edit notes. No
-  Fixes/Reported-by/Cc stable.
-- **[Phase 2]** Read current `mcp251x_open()` and `mcp251x_can_resume()`
-  in `drivers/net/can/spi/mcp251x.c`; confirmed unchecked
-  `mcp251x_power_enable()` calls at lines 1228, 1520-1523
-- **[Phase 2]** Read `mcp251x_power_enable()` at lines 949-958;
-  confirmed returns 0 for `IS_ERR_OR_NULL(reg)` — bug scope limited to
-  real regulator setups
-- **[Phase 2]** Verified regulator WARN trigger:
-  `drivers/regulator/core.c` line 3179 — `WARN(regulator->enable_count
-  == 0, "unbalanced disables for %s\n", ...)` — fires when `out_close`
-  calls disable on never-enabled regulator
-- **[Phase 2]** Read current error path in `open()` at lines 1260-1279:
-  confirmed `out_close` calls `mcp251x_power_enable(priv->transceiver,
-  0)` unconditionally
-- **[Phase 3]** `git blame -L 1208,1290`: confirmed unchecked
-  transceiver enable from `1ddff7da0faecf` (2013-08-19)
-- **[Phase 3]** `git blame -L 1500,1560`: confirmed unchecked resume
-  enables from `1ddff7da0faecf` and `25b401c1816ae6`
-- **[Phase 3]** `git describe --contains 1ddff7da0faecf` →
-  `v3.12-rc1~132^2~209^2~2` — buggy code introduced before v3.12
-- **[Phase 3]** `git show --stat 1ddff7da0faecf`: confirmed this was the
-  regulator API conversion that introduced `mcp251x_power_enable()`
-  usage
-- **[Phase 3]** `git log --oneline -20 --
-  drivers/net/can/spi/mcp251x.c`: confirmed related deadlock fixes
-  `e728f444c913a` and `7dd9c26bd6cf6`
-- **[Phase 3]** `git log --oneline --author='Wenyuan Li' --
-  drivers/net/can/`: found sibling fix `de39b9320ab36` (hi311x)
-- **[Phase 3]** `git show de39b9320ab36`: confirmed identical class of
-  fix, already backported to stable (has Upstream commit marker and
-  Sasha Levin SOB)
-- **[Phase 3]** `git log --oneline --grep='mcp251x.*power'`: no prior
-  fix for this specific issue exists
-- **[Phase 4]** Lore.kernel.org: blocked by anti-bot protection;
-  maintainer edits in commit message confirm review
-- **[Phase 5]** Verified `mcp251x_open` is `ndo_open` callback (line
-  1283); `mcp251x_can_resume` registered via `SIMPLE_DEV_PM_OPS` (line
-  1535)
-- **[Phase 5]** Confirmed `mcp251x_can_probe()` at line 1394 already
-  checks `mcp251x_power_enable(priv->power, 1)` — this fix aligns
-  open/resume with probe
-- **[Phase 6]** `git show v5.15:drivers/net/can/spi/mcp251x.c | rg
-  mcp251x_power_enable`: confirmed unchecked calls exist in v5.15
-- **[Phase 6]** `git show v6.1:drivers/net/can/spi/mcp251x.c | rg
-  mcp251x_power_enable`: confirmed unchecked calls exist in v6.1
-- **[Phase 6]** `git show v6.6:drivers/net/can/spi/mcp251x.c | rg
-  mcp251x_power_enable`: confirmed unchecked calls exist in v6.6
-- **[Phase 6]** Inspected v5.15 `mcp251x_open()` error path: confirmed
-  older structure (direct `free_irq` in `out_free_irq`, no `release_irq`
-  pattern) — open-path portion needs minor adaptation for older trees
-- **[Phase 6]** Inspected v5.15 `mcp251x_can_resume()`: confirmed
-  identical unchecked pattern — resume-path portion should apply cleanly
-- **[Phase 8]** Failure mode: regulator WARN() on error path (MEDIUM),
-  silent PM resume failure (MEDIUM-HIGH), overall MEDIUM severity
-- **UNVERIFIED:** Full lore.kernel.org patch discussion and any explicit
-  stable nominations by reviewers (anti-bot blocked). Applicability to
-  stable trees older than v5.15.
+- [Phase 1] Parsed tags: `Signed-off-by` from author and ALSA maintainer
+  Takashi Iwai; `Link:` to patch submission; no `Fixes:`, `Reported-
+  by:`, or `Cc: stable`
+- [Phase 2] Diff analysis: +1 line `SND_PCI_QUIRK(0x103c, 0x8dd7, ...)`
+  in `alc269_fixup_tbl[]`; verified 0x8dd7 not present in current tree
+  (grep returned no matches)
+- [Phase 2] Read `alc236_fixup_hp_mute_led_coefbit2()` at lines
+  1525-1538: confirmed it sets `mute_led_coef.idx = 0x07`, `mask = 1`,
+  `on = 1`, `off = 0` and calls `snd_hda_gen_add_mute_led_cdev()`
+- [Phase 2] Verified 17 occurrences of
+  `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` in `alc269.c` — well-established
+  fixup
+- [Phase 3] `git log -S'ALC236_FIXUP_HP_MUTE_LED_COEFBIT2'` confirmed
+  introduction by `0659400f18c0e6` and subsequent quirk additions
+- [Phase 3] `git show 0659400f18c0e6`: confirmed helper introduction
+  with `Cc: <stable@vger.kernel.org>`
+- [Phase 3] `git tag --contains 0659400f18c0e6`: helper first appeared
+  in v6.5 lineage
+- [Phase 3] Verified insertion point: 0x8dd4 at line 7099, 0x8de8 at
+  line 7100 — correct sorted position
+- [Phase 4] `patch.msgid.link` URL blocked by anti-bot protection —
+  UNVERIFIED: reviewer comments
+- [Phase 5] Traced call chain: `alc269_probe()` → `snd_hda_pick_fixup()`
+  → `snd_hda_apply_fixup()` → helper. Probe-time only.
+- [Phase 6] **v6.6**: `ALC236_FIXUP_HP_MUTE_LED_COEFBIT2` present (5
+  occurrences in `patch_realtek.c`) — applicable
+- [Phase 6] **v6.1**: helper absent (0 occurrences) — NOT standalone
+  applicable
+- [Phase 6] **v5.15**: helper absent (0 occurrences) — NOT standalone
+  applicable
+- [Phase 8] Failure mode: non-functional mute LED only; severity LOW-
+  MEDIUM; no crash/security/data path
+- UNVERIFIED: exact mailing list discussion content and any external
+  test reports for this specific model
 
 **YES**
 
- drivers/net/can/spi/mcp251x.c | 29 ++++++++++++++++++++++++-----
- 1 file changed, 24 insertions(+), 5 deletions(-)
+ sound/hda/codecs/realtek/alc269.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/spi/mcp251x.c b/drivers/net/can/spi/mcp251x.c
-index bb7782582f401..0d0190ae094a1 100644
---- a/drivers/net/can/spi/mcp251x.c
-+++ b/drivers/net/can/spi/mcp251x.c
-@@ -1225,7 +1225,11 @@ static int mcp251x_open(struct net_device *net)
- 	}
- 
- 	mutex_lock(&priv->mcp_lock);
--	mcp251x_power_enable(priv->transceiver, 1);
-+	ret = mcp251x_power_enable(priv->transceiver, 1);
-+	if (ret) {
-+		dev_err(&spi->dev, "failed to enable transceiver power: %pe\n", ERR_PTR(ret));
-+		goto out_close_candev;
-+	}
- 
- 	priv->force_quit = 0;
- 	priv->tx_skb = NULL;
-@@ -1272,6 +1276,7 @@ static int mcp251x_open(struct net_device *net)
- 	mcp251x_hw_sleep(spi);
- out_close:
- 	mcp251x_power_enable(priv->transceiver, 0);
-+out_close_candev:
- 	close_candev(net);
- 	mutex_unlock(&priv->mcp_lock);
- 	if (release_irq)
-@@ -1516,11 +1521,25 @@ static int __maybe_unused mcp251x_can_resume(struct device *dev)
- {
- 	struct spi_device *spi = to_spi_device(dev);
- 	struct mcp251x_priv *priv = spi_get_drvdata(spi);
-+	int ret = 0;
- 
--	if (priv->after_suspend & AFTER_SUSPEND_POWER)
--		mcp251x_power_enable(priv->power, 1);
--	if (priv->after_suspend & AFTER_SUSPEND_UP)
--		mcp251x_power_enable(priv->transceiver, 1);
-+	if (priv->after_suspend & AFTER_SUSPEND_POWER) {
-+		ret = mcp251x_power_enable(priv->power, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore power: %pe\n", ERR_PTR(ret));
-+			return ret;
-+		}
-+	}
-+
-+	if (priv->after_suspend & AFTER_SUSPEND_UP) {
-+		ret = mcp251x_power_enable(priv->transceiver, 1);
-+		if (ret) {
-+			dev_err(dev, "failed to restore transceiver power: %pe\n", ERR_PTR(ret));
-+			if (priv->after_suspend & AFTER_SUSPEND_POWER)
-+				mcp251x_power_enable(priv->power, 0);
-+			return ret;
-+		}
-+	}
- 
- 	if (priv->after_suspend & (AFTER_SUSPEND_POWER | AFTER_SUSPEND_UP))
- 		queue_work(priv->wq, &priv->restart_work);
+diff --git a/sound/hda/codecs/realtek/alc269.c b/sound/hda/codecs/realtek/alc269.c
+index 5adc5db6fd52b..1054191d56fa1 100644
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -7099,6 +7099,7 @@ static const struct hda_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x103c, 0x8da7, "HP 14 Enstrom OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8da8, "HP 16 Piston OmniBook X", ALC287_FIXUP_CS35L41_I2C_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8dd4, "HP EliteStudio 8 AIO", ALC274_FIXUP_HP_AIO_BIND_DACS),
++	SND_PCI_QUIRK(0x103c, 0x8dd7, "HP Laptop 15-fd0xxx", ALC236_FIXUP_HP_MUTE_LED_COEFBIT2),
+ 	SND_PCI_QUIRK(0x103c, 0x8de8, "HP Gemtree", ALC245_FIXUP_TAS2781_SPI_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8de9, "HP Gemtree", ALC245_FIXUP_TAS2781_SPI_2),
+ 	SND_PCI_QUIRK(0x103c, 0x8dec, "HP EliteBook 640 G12", ALC236_FIXUP_HP_GPIO_LED),
 -- 
 2.53.0
 
